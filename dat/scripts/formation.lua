@@ -195,4 +195,17 @@ function formations.random_key()
 end
 
 
+-- Custom formation, used only in missions go there
+
+-- Custom large circle
+function formations.circleLarge(leader)
+   local pilots = leader:followers()
+   local angle = 360 / #pilots -- The angle between each ship, in radians.
+   local radius = 1500
+   for i, p in ipairs(pilots) do
+      leader:msg(p, "form-pos", {angle * i, radius, "absolute"})
+   end
+end
+
+
 return formations

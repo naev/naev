@@ -13,7 +13,7 @@
    8) Land at last system
 --]]
 
---TODO: Set the priority and conditions of this mission
+--TODO: Set the priority and conditions of this mission (should not start at first planet)
 
 require "dat/scripts/nextjump.lua"
 require "proximity.lua"
@@ -26,7 +26,7 @@ npc_name = _("Major Tam")
 npc_desc = _("Major Tam is a very friendly man. At least by Dvaered military standards.")
 
 propose_title = _("In need of a pilot")
-propose_text = _([[As you approach the officer, he hails you. "Hello, citizen %s. I was looking for you. Of course I know your name, you're one of the pilots who destroyed that damn FLF base in Surano. Let me introduce myself: I am Major Tam, from Dvaered High Command, and more precisely from the Space Forces Headquarters. I feel that you are a reliable pilot and the High Command could make more often use of your services. That is why I propose you for now a simple escort mission. Whar do you say?"]])
+propose_text = _([[As you approach the officer, he hails you. "Hello, citizen %s. I was looking for you. Of course I know your name, you're one of the pilots who destroyed that damn FLF base in Surano. Let me introduce myself: I am Major Tam, from Dvaered High Command, and more precisely from the Space Forces Headquarters. I feel that you are a reliable pilot and the High Command could make more often use of your services. That is why I propose you for now a simple escort mission. What do you say?"]])
 
 accept_title = _("Instructions")
 accept_text = _([[Tam seems satisfied with your answer. "I am going to pay a visit to three warlords, for military coordination reasons. They will be waiting for me in their respective Goddards in the systems %s, %s and %s. I need you to stick to my Vendetta and engage any hostile who could try to intercept me."]])
@@ -76,7 +76,7 @@ ambush_broadcast = _("You wanted to meet Lord Jim? What about you meet your doom
 
 saved_title1 = _("Hostiles eliminated")
 saved_text1 = _([[As the remaining attackers run away, you wonder why this Dvaered patrol helped you, contrary to what Tam had explained before. Then you recieve the messages exchanged between Major Tam and the leader of the Dvaered squadron: "This time, I really owe you one, Captain", Tam says. "No problem, sir. " the other answers "But the most dangerous one escaped. The shark, you know, it was Hamelsen, Battleaddict's second in command. After we heared of what the old monkey had done to you, we put him under surveillance and we spot Hamelsen pursuing you with her shark, so we followed her, pretending we're just a police squadron. You know the rest."
-   Tam responds: "By the way, %s, let me introduce you the Capitain Leblanc, she belongs to the Special Operations Force (SOF), part of Dvaered High Command (DHC). I didn't tell you, but her pilots always keep an eye on me from a distance when I have to meet warlords. %s is the private pilot I spoke to you, Captain." Leblanc responds: "Hello, citizen. I'm glad there are civilians like you who make their duity and serve the Dvaered Nation."]])
+   Tam responds: "By the way, %s, let me introduce you the Captain Leblanc, she belongs to the Special Operations Force (SOF), part of Dvaered High Command (DHC). I didn't tell you, but her pilots always keep an eye on me from a distance when I have to meet warlords. %s is the private pilot I spoke to you, Captain." Leblanc responds: "Hello, citizen. I'm glad there are civilians like you who make their duity and serve the Dvaered Nation."]])
 
 saved_title2 = _("Two attacks are one too much")
 saved_text2 = _([["Anyway," says Tam, "I am afraid this ambush is not acceptable." Leblanc responds: "True, sir. Attacking someone in one's system is a standard way of expression for a warlord, but setting an ambush here denotes a true lack of respect."
@@ -406,6 +406,7 @@ function moreBadGuys()
    end
    buff = pilot.add("Dvaered Vigilance", nil, destpla2)[1]
    buff:setFaction("Warlords")
+   buff:rename("Colonel Hamelsen")
    buff = pilot.add("Dvaered Phalanx", nil, destpla2)[1]
    buff:setFaction("Warlords")
    warlord:setFaction("Warlords")
@@ -427,7 +428,7 @@ function hamelsenAmbush()
       y = 1000 * rnd.rnd() + 1000
       pos = jp:pos() + vec2.new(x,y)
 
-      ambush[i] = pilot.addRaw( "Hyena", "baddie_norun", pos, "Warlords" )
+      ambush[i] = pilot.addRaw( "Hyena", "baddie_norun", pos, "Warlords" ) -- TODO: maybe 2 Lancelots instead
       ambush[i]:setHostile()
       hook.pilot(ambush[i], "death", "ambushDied")
       hook.pilot(ambush[i], "land", "ambushDied")
@@ -462,14 +463,14 @@ function hamelsenAmbush()
 
    -- Pre-position Captain Leblanc and her mates, but as Dvaered
    savers = {}
-   for i = 1, 3 do
+   for i = 1, 2 do
       x = 1000 * rnd.rnd() - 2000
       y = 1000 * rnd.rnd() - 2000
       pos = jp:pos() + vec2.new(x,y)
 
       savers[i] = pilot.add( "Dvaered Vendetta", nil, pos )[1]
    end
-   savers[1]:rename("Capitain Leblanc")
+   savers[1]:rename("Captain Leblanc")
    savers[1]:setNoDeath()
    savers[1]:setNoDisable()
 
