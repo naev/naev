@@ -642,6 +642,7 @@ int CollideLinePolygon( const Vector2d* ap, double ad, double al,
    ep[1] = ap->y + al*sin(ad);
 
    real_hits = 0;
+   vectnull( &tmp_crash );
 
    /* Check if the beginning point is inside polygon */
    if ( pointInPolygon( bt, bp, (float) ap->x, (float) ap->y ) ) {

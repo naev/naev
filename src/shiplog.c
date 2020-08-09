@@ -23,7 +23,8 @@ int shiplog_create(const char *idstr, const char *logname, const char *type, con
       shipLog = calloc( sizeof(ShipLog), 1);
    }
    indx = shipLog->nlogs;
-   
+  
+   id = -1;
    if ( overwrite == 1 ) {
       /* check to see whether this idstr or logname and type has been created before, and if so, remove all entries of that logid */
       if ( idstr != NULL ) {
