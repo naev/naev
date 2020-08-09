@@ -315,7 +315,7 @@ static int shipL_slots( lua_State *L )
 /**
  * @brief Get a table of slots of a ship, where a slot is a table with a string size, type, and property
  *
- * @usage for _,v in ipairs( ship.getSlots( ship.get("Llama") ) ) do print(v["type"]) end
+ * @usage for i, v in ipairs( ship.getSlots( ship.get("Llama") ) ) do print(v["type"]) end
  *
  *    @luaparam s Ship to get slots of
  *    @luareturn A table of tables with slot properties string "size", string "type", and string "property"

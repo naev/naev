@@ -14,25 +14,19 @@
    Commodity delivery missions.
 --]]
 
-require "dat/scripts/numstring.lua"
+require "numstring.lua"
 
 --Mission Details
 misn_title = _("%s Delivery")
-misn_reward = _("%s credits per ton")
 misn_desc = _("%s has an insufficient supply of %s to satisfy the current demand. Go to any planet which sells this commodity and bring as much of it back as possible.")
 
 cargo_land_title = _("Delivery success!")
 
-cargo_land_p1 = {}
-cargo_land_p1[1] = _("The crates of ")
-cargo_land_p1[2] = _("The drums of ")
-cargo_land_p1[3] = _("The containers of ")
-
-cargo_land_p2 = {}
-cargo_land_p2[1] = _("%s%s are carried out of your ship and tallied. After several different men double-check the register to confirm the amount, you are paid %s credits and summarily dismissed.")
-cargo_land_p2[2] = _("%s%s are quickly and efficiently unloaded, labeled, and readied for distribution. The delivery manager thanks you with a credit chip worth %s credits.")
-cargo_land_p2[3] = _("%s%s are unloaded from your vessel by a team of dockworkers who are in no rush to finish, eventually delivering %s credits after the number of tonnes is determined.")
-cargo_land_p2[4] = _("%s%s are unloaded by robotic drones that scan and tally the contents. The human overseerer hands you %s credits when they finish.")
+cargo_land = {}
+cargo_land[1] = _("The containers of %s are carried out of your ship and tallied. After several different men double-check the register to confirm the amount, you are paid %s and summarily dismissed.")
+cargo_land[2] = _("The containers of %s are quickly and efficiently unloaded, labeled, and readied for distribution. The delivery manager thanks you with a credit chip worth %s.")
+cargo_land[3] = _("The containers of %s are unloaded from your vessel by a team of dockworkers who are in no rush to finish, eventually delivering %s after the number of tonnes is determined.")
+cargo_land[4] = _("The containers of %s are unloaded by robotic drones that scan and tally the contents. The human overseerer hands you %s when they finish.")
 
 osd_title = _("Commodity Delivery")
 osd_msg    = {}
@@ -89,7 +83,9 @@ function create ()
    misn.setTitle( misn_title:format( chosen_comm ) )
    misn.markerAdd( system.cur(), "computer" )
    misn.setDesc( misn_desc:format( misplanet:name(), chosen_comm ) )
-   misn.setReward( misn_reward:format( numstring( price ) ) )
+   misn.setReward( gettext.ngettext(
+         "%s credit per tonne", "%s credits per tonne",
+         price):format( numstring( price ) ) )
     
 end
 
@@ -121,7 +117,8 @@ function land ()
    local reward = amount * price
 
    if planet.cur() == misplanet and amount > 0 then
-      local txt = string.format(  cargo_land_p2[ rnd.rnd( 1, #cargo_land_p2 ) ], cargo_land_p1[ rnd.rnd( 1, #cargo_land_p1 ) ], chosen_comm, numstring( reward ) )
+      local txt = cargo_land[ rnd.rnd( 1, #cargo_land ) ]:format(
+            chosen_comm, creditstring(reward) )
       tk.msg( cargo_land_title, txt )
       pilot.cargoRm( player.pilot(), chosen_comm, amount )
       player.pay( reward )

@@ -646,7 +646,7 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
-   <faction>Trader</faction>
+   <faction>Traders Guild</faction>
    <faction>Za'lek</faction>
   </avail>
  </mission>
@@ -667,7 +667,7 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
-   <faction>Trader</faction>
+   <faction>Traders Guild</faction>
    <faction>Za'lek</faction>
   </avail>
  </mission>
@@ -687,7 +687,7 @@
    <faction>Goddard</faction>
    <faction>Independent</faction>
    <faction>Soromid</faction>
-   <faction>Trader</faction>
+   <faction>Traders Guild</faction>
    <faction>Za'lek</faction>
   </avail>
  </mission>
@@ -734,7 +734,7 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
-   <faction>Trader</faction>
+   <faction>Traders Guild</faction>
    <faction>Za'lek</faction>
    <cond>not diff.isApplied( "flf_dead" )</cond>
   </avail>
@@ -804,7 +804,7 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
-   <faction>Trader</faction>
+   <faction>Traders Guild</faction>
    <faction>Za'lek</faction>
   </avail>
  </mission>
@@ -1489,7 +1489,7 @@
    <faction>Sirius</faction>
    <faction>Soromid</faction>
    <faction>Thurion</faction>
-   <faction>Trader</faction>
+   <faction>Traders Guild</faction>
    <faction>Za'lek</faction>
   </avail>
  </mission>
@@ -1509,7 +1509,7 @@
    <faction>Sirius</faction>
    <faction>Soromid</faction>
    <faction>Thurion</faction>
-   <faction>Trader</faction>
+   <faction>Traders Guild</faction>
    <faction>Za'lek</faction>
   </avail>
  </mission>
@@ -1534,7 +1534,7 @@
   </avail>
  </mission>
  <mission name="Trader Escort">
-  <lua>neutral/trader_escort</lua>
+  <lua>trader/trader_escort</lua>
   <avail>
    <priority>5</priority>
    <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
@@ -1549,7 +1549,7 @@
    <faction>Sirius</faction>
    <faction>Soromid</faction>
    <faction>Thurion</faction>
-   <faction>Trader</faction>
+   <faction>Traders Guild</faction>
    <faction>Za'lek</faction>
   </avail>
  </mission>
@@ -1568,7 +1568,7 @@
    <faction>Sirius</faction>
    <faction>Soromid</faction>
    <faction>Thurion</faction>
-   <faction>Trader</faction>
+   <faction>Traders Guild</faction>
    <faction>Za'lek</faction>
   </avail>
  </mission>
@@ -1587,7 +1587,7 @@
    <faction>Sirius</faction>
    <faction>Soromid</faction>
    <faction>Thurion</faction>
-   <faction>Trader</faction>
+   <faction>Traders Guild</faction>
    <faction>Za'lek</faction>
   </avail>
  </mission>

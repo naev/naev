@@ -226,7 +226,7 @@ perlin_data_t* noise_new( int dim, float hurst, float lacunarity )
 
    /* Create the buffer and map. */
    if (dim == 3) {
-      for(i=0; i<256; i++) {
+      for (i=0; i<256; i++) {
          pdata->map[i] = (unsigned char)i;
          pdata->buffer[i][0] = RNGF()-0.5;
          pdata->buffer[i][1] = RNGF()-0.5;
@@ -235,7 +235,7 @@ perlin_data_t* noise_new( int dim, float hurst, float lacunarity )
       }
    }
    else if (dim == 2) {
-      for(i=0; i<256; i++) {
+      for (i=0; i<256; i++) {
          pdata->map[i] = (unsigned char)i;
          pdata->buffer[i][0] = RNGF()-0.5;
          pdata->buffer[i][1] = RNGF()-0.5;
@@ -257,7 +257,7 @@ perlin_data_t* noise_new( int dim, float hurst, float lacunarity )
    f = 1.;
    pdata->H = hurst;
    pdata->lacunarity = lacunarity;
-   for(i=0; i<NOISE_MAX_OCTAVES; i++) {
+   for (i=0; i<NOISE_MAX_OCTAVES; i++) {
       /*exponent[i] = powf(f, -H); */
       pdata->exponent[i] = 1. / f;
       f *= lacunarity;
@@ -414,7 +414,7 @@ float noise_turbulence3( perlin_data_t* pdata, float f[3], int octaves )
    tf[2] = f[2];
 
    /* Inner loop of spectral construction, where the fractal is built */
-   for(i=0; i<octaves; i++)
+   for (i=0; i<octaves; i++)
    {
       value += ABS(noise_get3(pdata,tf)) * pdata->exponent[i];
       tf[0] *= pdata->lacunarity;
@@ -445,7 +445,7 @@ float noise_turbulence2( perlin_data_t* pdata, float f[2], int octaves )
    tf[1] = f[1];
 
    /* Inner loop of spectral construction, where the fractal is built */
-   for(i=0; i<octaves; i++)
+   for (i=0; i<octaves; i++)
    {
       value += ABS(noise_get2(pdata,tf)) * pdata->exponent[i];
       tf[0] *= pdata->lacunarity;
@@ -474,7 +474,7 @@ float noise_turbulence1( perlin_data_t* pdata, float f[1], int octaves )
    tf[0] = f[0];
 
    /* Inner loop of spectral construction, where the fractal is built */
-   for(i=0; i<octaves; i++)
+   for (i=0; i<octaves; i++)
    {
       value += ABS(noise_get1(pdata,tf)) * pdata->exponent[i];
       tf[0] *= pdata->lacunarity;

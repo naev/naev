@@ -50,7 +50,8 @@ distributions.
 
 Run: 
 
-```bash
+```
+bash
 ./autogen.sh && ./configure
 make
 ```
@@ -69,6 +70,20 @@ from 16x16 to 256x256 can be found in `extras/logos/`.
 ## WINDOWS
 
 See https://github.com/naev/naev/wiki/Compiling-on-Windows for how to compile on windows.
+
+## UPDATING PO FILES
+
+If you are a developer, you may need to update translation files as
+text is modified. You can update all translation files with the
+following commands:
+
+```
+./utils/update-po.sh # only necessary if files have been added or removed
+make
+make -C po update-po
+```
+
+Again, you will only ever need to do this if you are a developer.
 
 ## CRASHES & PROBLEMS
 

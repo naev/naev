@@ -120,8 +120,7 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title[level]:format( missys:name() ) )
    misn.setDesc( desc )
-   misn.setReward( gettext.ngettext(
-         "%s credit", "%s credits", credits ):format( numstring( credits ) ) )
+   misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
 

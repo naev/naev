@@ -1798,8 +1798,11 @@ char planet_getColourChar( Planet *p )
  */
 const char *planet_getSymbol( Planet *p )
 {
-   if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
+   if (!planet_hasService( p, PLANET_SERVICE_INHABITED )) {
+      if (planet_hasService( p, PLANET_SERVICE_LAND ))
+         return "= ";
       return "";
+   }
 
    if (p->can_land || p->bribed) {
       if (areAllies(FACTION_PLAYER,p->faction))
@@ -2847,9 +2850,9 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
    /* Handle jump point type. */
    xmlr_attr( node, "type", buf );
    if (buf == NULL);
-   else if (!strcmp(buf, "hidden"))
+   else if (strcmp(buf, "hidden") == 0)
       jp_setFlag(j,JP_HIDDEN);
-   else if (!strcmp(buf, "exitonly"))
+   else if (strcmp(buf, "exitonly") == 0)
       jp_setFlag(j,JP_EXITONLY);
 
    /* Handle jump point hide. */
@@ -3837,7 +3840,7 @@ void space_exit (void)
       if (systems_stack[i].background)
          free(systems_stack[i].background);
 
-      if(systems_stack[i].presence)
+      if (systems_stack[i].presence)
          free(systems_stack[i].presence);
 
       if (systems_stack[i].planets != NULL)
@@ -4149,7 +4152,7 @@ static int getPresenceIndex( StarSystem *sys, int faction )
    int i;
 
    /* Check for NULL and display a warning. */
-   if(sys == NULL) {
+   if (sys == NULL) {
       WARN("sys == NULL");
       return 0;
    }
@@ -4296,7 +4299,7 @@ double system_getPresence( StarSystem *sys, int faction )
    int i;
 
    /* Check for NULL and display a warning. */
-   if(sys == NULL) {
+   if (sys == NULL) {
       WARN("sys == NULL");
       return 0;
    }
@@ -4326,12 +4329,12 @@ void system_addAllPlanetsPresence( StarSystem *sys )
    int i;
 
    /* Check for NULL and display a warning. */
-   if(sys == NULL) {
+   if (sys == NULL) {
       WARN("sys == NULL");
       return;
    }
 
-   for(i=0; i<sys->nplanets; i++)
+   for (i=0; i<sys->nplanets; i++)
       system_addPresence(sys, sys->planets[i]->faction, sys->planets[i]->presenceAmount, sys->planets[i]->presenceRange);
 }
 

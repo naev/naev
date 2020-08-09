@@ -31,9 +31,9 @@
   <structure size="small"/>
  </slots>
  <stats>
-  <speed_mod>10</speed_mod>
+  <speed_mod>5</speed_mod>
   <turn_mod>25</turn_mod>
-  <thrust_mod>100</thrust_mod>
-  <armour_mod>-20</armour_mod>
+  <thrust_mod>75</thrust_mod>
+  <armour_mod>-50</armour_mod>
  </stats>
 </ship>

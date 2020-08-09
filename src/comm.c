@@ -289,8 +289,10 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    }
 
    /* Get faction details. */
-   comm_graphic   = gfx;
-   logo           = faction_logoSmall(faction);
+   comm_graphic = gfx;
+   logo = NULL;
+   if ( faction_isKnown(faction) )
+      logo = faction_logoSmall(faction);
 
    /* Get standing colour / text. */
    stand = faction_getStandingBroad( faction, bribed, override );
@@ -568,6 +570,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    }
 
    /* See if player can get refueled. */
+   val = 0.;
    ret = comm_getNumber( &val, "refuel" );
    msg = comm_getString( "refuel_msg" );
    if ((ret != 0) || (msg == NULL) || pilot_isFlag(comm_pilot, PILOT_MANUAL_CONTROL)) {

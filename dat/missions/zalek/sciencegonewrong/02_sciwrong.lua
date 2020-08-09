@@ -234,7 +234,7 @@ function chase_of_drones ()
    t_drone:goto(t_drone:pos() + vec2.new( 400, -400), false)
    t_stats = t_drone:stats()
    t_drone:setHealth(50,100)
-   t_drone:setNodisable()
+   t_drone:setNoDisable()
    dr_a_hook = hook.pilot(t_drone, "attacked", "drone_attacked")
    dr_d_hook = hook.pilot(t_drone, "death", "failed")
    hook.pilot(t_drone, "board", "targetBoard")
@@ -273,7 +273,7 @@ end
 
 function drone_disableable()
    tk.msg(title[3],text[12])
-   t_drone:setNodisable(false)
+   t_drone:setNoDisable(false)
    if jumps == 2 then
       tk.msg(title[3],text[13])
       hook.timer(18000+rnd.rnd(1,4000),"drone_selfdestruct")

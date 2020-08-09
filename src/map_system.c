@@ -114,7 +114,7 @@ int map_system_load( void )
  */
 void map_system_exit( void )
 {
-   for( unsigned int i=0; i<nBgImgs; i++ ) {
+   for ( unsigned int i=0; i<nBgImgs; i++ ) {
       gl_freeTexture( bgImages[i] );
    }
    nBgImgs = 0;
@@ -129,7 +129,7 @@ void map_system_close( unsigned int wid, char *str ) {
    if ( cur_sys_sel != cur_system ) {
      space_gfxUnload( cur_sys_sel );
    }
-   for( unsigned int i=0; i<nBgImgs; i++ ) {
+   for ( unsigned int i=0; i<nBgImgs; i++ ) {
       gl_freeTexture( bgImages[i] );
    }
    nBgImgs = 0;
@@ -297,11 +297,11 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    
    j=0;
    offset = h - pitch*nshow;
-   for( i=0; i<sys->nplanets; i++ ) {
+   for ( i=0; i<sys->nplanets; i++ ) {
      p=sys->planets[i];
-     if( planet_isKnown(p) && (p->real == ASSET_REAL) ) {
+     if ( planet_isKnown(p) && (p->real == ASSET_REAL) ) {
        j++;
-       if( p->gfx_space == NULL) {
+       if ( p->gfx_space == NULL) {
           WARN( _("No gfx for %s...\n"),p->name );
        } else {
 	 ih=pitch;
@@ -422,14 +422,14 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       /* Asteroids. */
       if (sys->nasteroids > 0 ) {
          density = 0.;
-         for( i=0; i<sys->nasteroids; i++ ) {
+         for ( i=0; i<sys->nasteroids; i++ ) {
             density += sys->asteroids[i].area * sys->asteroids[i].density;
          }
          cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _(" Asteroid Field density %g\n"), density );
       }
       /* Faction */
       f = -1;
-      for( i=0; i<sys->nplanets; i++ ) {
+      for ( i=0; i<sys->nplanets; i++ ) {
          if (sys->planets[i]->real == ASSET_REAL && planet_isKnown( sys->planets[i] ) ) {
             if ((f==-1) && (sys->planets[i]->faction>0) ) {
                f = sys->planets[i]->faction;
@@ -454,7 +454,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       /* Get presence. */
       hasPresence = 0;
       unknownPresence = 0;
-      for( i=0; i < sys->npresence; i++ ) {
+      for ( i=0; i < sys->npresence; i++ ) {
          if (sys->presence[i].value <= 0)
             continue;
          hasPresence = 1;
@@ -476,7 +476,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, &cFontWhite, buf );
       
       /* Jumps. */
-      for(  i=0; i<sys->njumps; i++ ) {
+      for (  i=0; i<sys->njumps; i++ ) {
          if ( jp_isUsable ( &sys->jumps[i] ) ) {
             if ( infopos == 0) /* First jump */
                infopos = nsnprintf( infobuf, PATH_MAX, _("   Jump points to:\n") );
@@ -595,7 +595,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       infobuf[0]='\0';
       return;
    }
-   if ( !strcmp( str, MAPSYS_OUTFITS ) ) {
+   if ( ( strcmp( str, MAPSYS_OUTFITS ) == 0 ) ) {
       outfit = outfit_get( name );
 
       /* new text */
@@ -628,7 +628,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                  buf2,
                  buf4 );
       
-   } else if ( !strcmp( str, MAPSYS_SHIPS ) ) {
+   } else if ( ( strcmp( str, MAPSYS_SHIPS ) == 0 ) ) {
       ship = ship_get( name );
 
    /* update text */
@@ -695,7 +695,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       if ( license_text != ship->license )
          free( license_text );
    
-   } else if ( !strcmp( str, MAPSYS_TRADE ) ) {
+   } else if ( ( strcmp( str, MAPSYS_TRADE ) == 0 ) ) {
       Commodity *com;
       credits_t mean;
       double std;
@@ -749,7 +749,7 @@ void map_system_updateSelected( unsigned int wid )
    float g,o,s;
    nameWidth = 0; /* get the widest planet/star name */
    nshow=1;/* start at 1 for the sun*/
-   for( i=0; i<sys->nplanets; i++) {
+   for ( i=0; i<sys->nplanets; i++) {
       p = sys->planets[i];
       if ( planet_isKnown( p ) && (p->real == ASSET_REAL) ) {
          textw = gl_printWidthRaw( &gl_smallFont, p->name );
@@ -881,7 +881,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
       quantity = malloc( sizeof(char*) * noutfits );
       bg       = malloc( sizeof(glColour) * noutfits );
       slottype = malloc( sizeof(char*) * noutfits );
-      for( i=0; i<noutfits; i++ ) {
+      for ( i=0; i<noutfits; i++ ) {
          soutfits[i] = strdup( outfits[i]->name );
          toutfits[i] = outfits[i]->gfx_store;
          /* Background colour. */
@@ -964,7 +964,7 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
    if ( nships > 0  ) {
       sships = malloc( sizeof(char*) * nships );
       tships = malloc( sizeof(glTexture*) * nships );
-      for( i=0; i<nships; i++ ) {
+      for ( i=0; i<nships; i++ ) {
          sships[i] = strdup( ships[i]->name );
          tships[i] = ships[i]->gfx_store;
       }
@@ -1010,7 +1010,7 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
    if ( ngoods > 0 ) {
       goods = malloc( sizeof(char*) * ngoods );
       tgoods    = malloc( sizeof(glTexture*) * ngoods );
-      for( i=0; i<ngoods; i++ ) {
+      for ( i=0; i<ngoods; i++ ) {
          goods[i] = strdup( cur_planetObj_sel->commodities[i]->name);
          tgoods[i] = cur_planetObj_sel->commodities[i]->gfx_store;
       }
@@ -1040,7 +1040,7 @@ void map_system_buyCommodPrice( unsigned int wid, char *str )
    ntime_t t = ntime_get();
 
    /* find number of jumps */
-   if ( !strcmp( cur_system->name, cur_sys_sel->name ) ) {
+   if ( ( strcmp( cur_system->name, cur_sys_sel->name ) == 0 ) ) {
       cost = 500;
       njumps = 0;
    } else {

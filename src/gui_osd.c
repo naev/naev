@@ -93,7 +93,7 @@ static int osd_sortCompare( const void *arg1, const void *arg2 )
 
    /* Compare items. */
    m = MIN(osd1->nitems, osd2->nitems);
-   for(i=0; i<m; i++) {
+   for (i=0; i<m; i++) {
       ret = strcmp( osd1->msg[i], osd2->msg[i] );
       if (ret != 0)
          return ret;
@@ -257,7 +257,7 @@ static int osd_free( OSD_t *osd )
    if (osd->title != NULL)
       free(osd->title);
 
-   for(i=0; i<osd->nitems; i++) {
+   for (i=0; i<osd->nitems; i++) {
       free( osd->msg[i] );
       for (j=0; j<osd->items[i].nchunks; j++)
          free(osd->items[i].chunks[j]);

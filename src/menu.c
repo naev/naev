@@ -49,19 +49,16 @@
 #include "ndata.h"
 
 
-#define MAIN_WIDTH      130 /**< Main menu width. */
+#define MAIN_WIDTH      200 /**< Main menu width. */
 
-#define MENU_WIDTH      130 /**< Escape menu width. */
+#define MENU_WIDTH      200 /**< Escape menu width. */
 #define MENU_HEIGHT     250 /**< Escape menu height. */
 
 
-#define DEATH_WIDTH     130 /**< Death menu width. */
+#define DEATH_WIDTH     200 /**< Death menu width. */
 #define DEATH_HEIGHT    200 /**< Death menu height. */
 
-#define OPTIONS_WIDTH   360 /**< Options menu width. */
-#define OPTIONS_HEIGHT  90  /**< Options menu height. */
-
-#define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
+#define BUTTON_WIDTH    160 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
 
 #define EDITORS_EXTRA_WIDTH  60 /**< Editors menu extra width. */

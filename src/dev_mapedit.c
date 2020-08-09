@@ -783,7 +783,7 @@ void mapedit_saveMapMenu_open (void)
          ns       = &nslist[i];
          /*len      = strlen(ns->sMapName);*/
          names[i] = strdup(ns->sMapName);
-         if ((curMap != NULL) && !strcmp(curMap, ns->sMapName)) {
+         if ((curMap != NULL) && (strcmp(curMap, ns->sMapName) == 0)) {
             iCurrent = i;
          }
       }

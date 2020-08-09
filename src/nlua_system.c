@@ -503,7 +503,7 @@ static int systemL_jumpPath( lua_State *L )
 /**
  * @brief Gets all the adjacent systems to a system.
  *
- * @usage for _,s in ipairs( sys:adjacentSystems() ) do -- Iterate over adjacent systems.
+ * @usage for i, s in ipairs( sys:adjacentSystems() ) do -- Iterate over adjacent systems.
  *
  *    @luatparam System s System to get adjacent systems of.
  *    @luatparam[opt=false] boolean hidden Whether or not to show hidden jumps also.
@@ -542,7 +542,7 @@ static int systemL_adjacent( lua_State *L )
 /**
  * @brief Gets all the jumps in a system.
  *
- * @usage for _,s in ipairs( sys:jumps() ) do -- Iterate over jumps.
+ * @usage for i, s in ipairs( sys:jumps() ) do -- Iterate over jumps.
  *
  *    @luatparam System s System to get the jumps of.
  *    @luatparam[opt=false] boolean exitonly Whether to exclude exit-only jumps.
@@ -747,7 +747,7 @@ static int systemL_planets( lua_State *L )
    lua_newtable(L);
    key = 0;
    for (i=0; i<s->nplanets; i++) {
-      if(s->planets[i]->real == ASSET_REAL) {
+      if (s->planets[i]->real == ASSET_REAL) {
          key++;
          lua_pushnumber(L,key); /* key */
          lua_pushplanet(L,planet_index( s->planets[i] )); /* value */
@@ -799,13 +799,13 @@ static int systemL_presence( lua_State *L )
       used = 1;
 
       /* Check the command string and get the appropriate faction group.*/
-      if(strcmp(cmd, "all") == 0)
+      if (strcmp(cmd, "all") == 0)
          fct = faction_getGroup(&nfct, 0);
-      else if(strcmp(cmd, "friendly") == 0)
+      else if (strcmp(cmd, "friendly") == 0)
          fct = faction_getGroup(&nfct, 1);
-      else if(strcmp(cmd, "hostile") == 0)
+      else if (strcmp(cmd, "hostile") == 0)
          fct = faction_getGroup(&nfct, 3);
-      else if(strcmp(cmd, "neutral") == 0)
+      else if (strcmp(cmd, "neutral") == 0)
          fct = faction_getGroup(&nfct, 2);
       else /* Invalid command string. */
          used = 0;
@@ -821,7 +821,7 @@ static int systemL_presence( lua_State *L )
 
    /* Add up the presence values. */
    presence = 0;
-   for(i=0; i<nfct; i++) {
+   for (i=0; i<nfct; i++) {
       /* Only count positive presences. */
       v = system_getPresence( sys, fct[i] );
       if (v > 0)

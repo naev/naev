@@ -997,7 +997,7 @@ double pilot_aimAngle( Pilot *p, Pilot *target )
    /* Time for shots to reach that distance */
    /* t is the real positive solution of a 2nd order equation*/
    /* if the target is not hittable (i.e., fleeing faster than our shots can fly, determinant <= 0), just face the target */
-   if( ((speed*speed - VMOD(approach_vector)*VMOD(approach_vector)) != 0) && (speed*speed - orthoradial_speed*orthoradial_speed) > 0)
+   if ( ((speed*speed - VMOD(approach_vector)*VMOD(approach_vector)) != 0) && (speed*speed - orthoradial_speed*orthoradial_speed) > 0)
       t = dist * (sqrt( speed*speed - orthoradial_speed*orthoradial_speed ) - radial_speed) /
             (speed*speed - VMOD(approach_vector)*VMOD(approach_vector));
    else
@@ -1437,12 +1437,14 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    if (p->stress > p->armour)
       p->stress = p->armour;
 
+   /* Do not let pilot die. */
+   if ((p->armour <= 0.) && pilot_isFlag( p, PILOT_NODEATH )) {
+      p->armour = 1.;
+      p->stress = 1.;
+   }
+
    /* Disabled always run before dead to ensure combat rating boost. */
    pilot_updateDisable(p, shooter);
-
-   /* Do not let pilot die. */
-   if (pilot_isFlag( p, PILOT_NODEATH ))
-      p->armour = 1.;
 
    /* Officially dead. */
    if (p->armour <= 0.) {
@@ -2489,21 +2491,27 @@ int pilot_hasCredits( Pilot *p, credits_t amount )
  */
 credits_t pilot_modCredits( Pilot *p, credits_t amount )
 {
-   uint64_t ul;
-
-   ul = (uint64_t) ABS(amount);
-
    if (amount > 0) {
-      if (CREDITS_MAX-p->credits < (credits_t)ul)
-         p->credits = CREDITS_MIN;
+      if (CREDITS_MAX - p->credits <= amount)
+         p->credits = CREDITS_MAX;
       else
-         p->credits += ul;
+         p->credits += amount;
    }
    else if (amount < 0) {
-      if ((credits_t)ul > p->credits)
+      /* ABS(CREDITS_MIN) doesn't work properly because it might be
+       * -2,147,483,648, which ABS will try to convert to 2,147,483,648.
+       * Problem is, that value would be represented like this in
+       * binary:
+       * 
+       * 10000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+       * 
+       * Which is actually -2,147,483,648, causing the condition
+       * ABS(amount) >= p->credits to return false (since -2,147,483,648
+       * is less than any amount of credits the player could have). */
+      if ( (amount <= CREDITS_MIN) || (ABS(amount) >= p->credits) )
          p->credits = 0;
       else
-         p->credits -= ul;
+         p->credits += amount;
    }
    return p->credits;
 }
@@ -2541,6 +2549,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* Defaults. */
    pilot->autoweap = 1;
+   pilot->aimLines = 0;
    pilot->dockpilot = dockpilot;
    pilot->dockslot = dockslot;
 

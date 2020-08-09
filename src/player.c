@@ -256,6 +256,21 @@ void player_new (void)
    player.name = dialogue_input( _("Player Name"), 2, 20,
          _("Please write your name:") );
 
+   /* Player cancelled dialogue. */
+   if (player.name == NULL) {
+      menu_main();
+      return;
+   }
+
+   if (nfile_fileExists("%ssaves/%s.ns", nfile_dataPath(), player.name)) {
+      r = dialogue_YesNo(_("Overwrite"),
+            _("You already have a pilot named %s. Overwrite?"),player.name);
+      if (r==0) { /* no */
+         player_new();
+         return;
+      }
+   }
+
    /* Set game speed. */
    title = _("Game Speed");
    caption = _("Your game can be set to normal speed or slow speed. Slow speed"
@@ -272,21 +287,6 @@ void player_new (void)
    player.dt_mod = 1.;
    if ( (ret != NULL) && (strcmp(ret, speed_opts[1]) == 0) )
       player.dt_mod = 0.5;
-
-   /* Player cancelled dialogue. */
-   if (player.name == NULL) {
-      menu_main();
-      return;
-   }
-
-   if (nfile_fileExists("%ssaves/%s.ns", nfile_dataPath(), player.name)) {
-      r = dialogue_YesNo(_("Overwrite"),
-            _("You already have a pilot named %s. Overwrite?"),player.name);
-      if (r==0) { /* no */
-         player_new();
-         return;
-      }
-   }
 
    if (player_newMake())
       return;
@@ -314,7 +314,6 @@ void player_new (void)
 
    /* Load the GUI. */
    gui_load( gui_pick() );
-   player.aimLines = 0;
 }
 
 
@@ -982,7 +981,7 @@ void player_render( double dt )
          !pilot_isFlag( player.p, PILOT_INVISIBLE)) {
 
       /* Render the aiming lines. */
-      if ((player.p->target != PLAYER_ID) && player.aimLines) {
+      if ((player.p->target != PLAYER_ID) && player.p->aimLines) {
          target = pilot_get(player.p->target);
          if (target != NULL) {
             a = player.p->solid->dir;
@@ -2169,7 +2168,7 @@ void player_hail (void)
 
    if (player.p->target != player.p->id)
       comm_openPilot(player.p->target);
-   else if(player.p->nav_planet != -1) {
+   else if (player.p->nav_planet != -1) {
       if (pilot_inRangePlanet( player.p, player.p->nav_planet ))
          comm_openPlanet( cur_system->planets[ player.p->nav_planet ] );
       else
@@ -2963,7 +2962,6 @@ int player_save( xmlTextWriterPtr writer )
       xmlw_elem(writer,"gui","%s",player.gui);
    xmlw_elem(writer,"guiOverride","%d",player.guiOverride);
    xmlw_elem(writer,"mapOverlay","%d",ovr_isOpen());
-   xmlw_elem(writer,"aimLines","%d",player.aimLines);
 
    /* Time. */
    xmlw_startElem(writer,"time");
@@ -3140,9 +3138,10 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship )
    }
    xmlw_endElem(writer); /* "commodities" */
 
-   xmlw_startElem(writer,"weaponsets");
-   xmlw_attr(writer,"autoweap","%d",ship->autoweap);
-   xmlw_attr(writer,"active_set","%d",ship->active_set);
+   xmlw_startElem(writer, "weaponsets");
+   xmlw_attr(writer, "autoweap", "%d", ship->autoweap);
+   xmlw_attr(writer, "active_set", "%d", ship->active_set);
+   xmlw_attr(writer, "aim_lines", "%d", ship->aimLines);
    for (i=0; i<PILOT_WEAPON_SETS; i++) {
       weaps = pilot_weapSetList( ship, i, &n );
       xmlw_startElem(writer,"weaponset");
@@ -3216,7 +3215,7 @@ static Planet* player_parse( xmlNodePtr parent )
    xmlNodePtr node, cur;
    int q;
    Outfit *o;
-   int i, map_overlay, aim_lines;
+   int i, map_overlay;
    StarSystem *sys;
    double a, r;
    Pilot *old_ship;
@@ -3234,7 +3233,6 @@ static Planet* player_parse( xmlNodePtr parent )
    planet      = NULL;
    time_set    = 0;
    map_overlay = 0;
-   aim_lines   = 0;
 
    player.dt_mod = 1.; /* For old saves. */
 
@@ -3256,8 +3254,6 @@ static Planet* player_parse( xmlNodePtr parent )
       xmlr_int(node, "guiOverride", player.guiOverride);
       xmlr_int(node, "mapOverlay", map_overlay);
       ovr_setOpen(map_overlay);
-      xmlr_int(node,"aimLines",aim_lines);
-      player.aimLines = aim_lines;
 
       /* Time. */
       if (xml_isNode(node,"time")) {
@@ -3652,7 +3648,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    Commodity *com;
    PilotFlags flags;
    unsigned int pid;
-   int autoweap, level, weapid, active_set;
+   int autoweap, level, weapid, active_set, aim_lines;
 
    xmlr_attr(parent,"name",name);
    xmlr_attr(parent,"model",model);
@@ -3697,6 +3693,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    /* Defaults. */
    fuel     = -1;
    autoweap = 1;
+   aim_lines = 0;
 
    /* Start parsing. */
    node = parent->xmlChildrenNode;
@@ -3846,6 +3843,13 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          active_set = -1;
       }
 
+      /* Check for aim_lines. */
+      xmlr_attr(node, "aim_lines", id);
+      if (id != NULL) {
+         aim_lines = atoi(id);
+         free(id);
+      }
+
       /* Parse weapon sets. */
       cur = node->xmlChildrenNode;
       do { /* Load each weapon set. */
@@ -3935,6 +3939,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       ship->active_set = active_set;
    else
       pilot_weaponSetDefault( ship );
+
+   /* Set aimLines */
+   ship->aimLines = aim_lines;
 
    return 0;
 }

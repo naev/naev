@@ -377,6 +377,7 @@ static int jumpL_system( lua_State *L )
 {
    StarSystem *sys;
 
+   sys = NULL;
    luaL_validjumpSystem(L, 1, NULL, &sys);
    lua_pushsystem(L,sys->id);
    return 1;
@@ -434,6 +435,7 @@ static int jumpL_setKnown( lua_State *L )
 
    NLUA_CHECKRW(L);
 
+   offset = 0;
    jp = luaL_validjumpSystem(L, 1, &offset, NULL);
 
    /* True if boolean isn't supplied. */

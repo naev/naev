@@ -226,6 +226,7 @@ SDL_RWops* nzip_rwops ( struct zip* arc, const char* filename )
    size_t size;
    SDL_RWops* rwops;
 
+   size = 0;
    data = nzip_readFile ( arc, filename, &size );
    rwops = SDL_RWFromMem ( data,size);
    rwops->close = nzip_rwopsClose;

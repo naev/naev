@@ -781,9 +781,10 @@
   <item>Empire Shark</item>
  </tech>
  <tech name="FLF Ships">
-  <item>FLF Lancelot</item>
-  <item>FLF Vendetta</item>
-  <item>FLF Pacifier</item>
+  <item>Hyena</item>
+  <item>Lancelot</item>
+  <item>Vendetta</item>
+  <item>Pacifier</item>
  </tech>
  <tech name="Dvaered Military Ships">
   <item>Dvaered Ancestor</item>

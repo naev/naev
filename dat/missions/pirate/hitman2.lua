@@ -93,7 +93,9 @@ function trader_death (hook_pilot, hook_attacker, hook_arg)
       return
    end
 
-   if hook_pilot:faction() == faction.get("Trader") and hook_attacker == player.pilot() then
+   if ( hook_pilot:faction() == faction.get("Trader")
+            or hook_pilot:faction() == faction.get("Traders Guild") )
+         and hook_attacker == player.pilot() then
       attack_finished()
    end
 end

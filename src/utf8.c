@@ -278,7 +278,7 @@ size_t u8_codingsize(uint32_t *wcstr, size_t n)
 {
     size_t i, c=0;
 
-    for(i=0; i < n; i++)
+    for (i=0; i < n; i++)
         c += u8_charlen(wcstr[i]);
     return c;
 }

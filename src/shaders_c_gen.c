@@ -103,7 +103,7 @@ static void generate_h_file(FILE *f) {
    fprintf(f, "#include \"opengl.h\"\n\n");
 
    fprintf(f, "typedef struct Shaders_ {\n");
-   for(i = 0; i < nshaders; i++) {
+   for (i = 0; i < nshaders; i++) {
       fprintf(f, "   struct {\n");
 
       fprintf(f, "      GLuint program;\n");
@@ -140,7 +140,7 @@ static void generate_c_file(FILE *f) {
    fprintf(f, "Shaders shaders;\n\n");
 
    fprintf(f, "void shaders_load (void) {\n");
-   for(i = 0; i < nshaders; i++) {
+   for (i = 0; i < nshaders; i++) {
       fprintf(f, "   shaders.%s.program = gl_program_vert_frag(\"%s\", \"%s\");\n",
             shaders[i].name,
             shaders[i].vs_path,
@@ -168,7 +168,7 @@ static void generate_c_file(FILE *f) {
    fprintf(f, "}\n\n");
 
    fprintf(f, "void shaders_unload (void) {\n");
-   for(i = 0; i < nshaders; i++) {
+   for (i = 0; i < nshaders; i++) {
       fprintf(f, "   glDeleteProgram(shaders.%s.program);\n", shaders[i].name);
 
    }
