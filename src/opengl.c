@@ -55,7 +55,7 @@
  * Requirements
  */
 #define OPENGL_WINDOW_MIN_HEIGHT  720 /**< Minimum window height. */
-#define OPENGL_WINDOW_MIN_WIDTH  1280 /**< Minimum window width. */
+#define OPENGL_WINDOW_MIN_WIDTH   960 /**< Minimum window width. */
 #define OPENGL_REQ_MULTITEX         2 /**< 2 is minimum OpenGL 1.2 must have */
 
 
