@@ -31,6 +31,7 @@
 #include "nlua_bkg.h"
 #include "nlua_tex.h"
 #include "nlua_music.h"
+#include "nlua_spfx.h"
 #include "rng.h"
 #include "ndata.h"
 #include "nxml.h"
@@ -274,6 +275,7 @@ static int event_create( int dataid, unsigned int *id )
    nlua_loadTex(ev->env);
    nlua_loadBackground(ev->env);
    nlua_loadMusic(ev->env);
+   nlua_loadSpfx(ev->env);
    nlua_loadTk(ev->env);
 
    /* Load file. */
