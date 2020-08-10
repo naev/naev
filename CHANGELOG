@@ -23,8 +23,11 @@
       * Added Soromid organic ships that level up organs
       * Improved and expanded NPC portraits
       * Commodities can be sold/bought everywhere
-      * More music
       * Added a "slow mode", which runs the game at half speed (like an easy mode)
+      * Added a ship log which records events
+      * Added a "system map" which displays information about known remote planets
+      * Addes support for giving commands to individual escorts
+      * More music
       * New and/or improved missions
          * Completed the FLF campaign
          * Fixed up the Collective campaign
@@ -46,6 +49,4 @@
       * Consolidated the effects of cloaking and jammers under cloaking
       * Added workaround for ALSOFT buggy version that crashes
       * Added a polygon-based collision algorithm
-      * added a ship log which records events
-      * Added a "system map" which displays information about known remote planets
       * Added some symbols for partial colorblind accessibility
