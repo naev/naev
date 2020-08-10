@@ -502,14 +502,15 @@ static void map_update( unsigned int wid )
          continue;
       if (!planet_isKnown(sys->planets[i]))
          continue;
-      if (!faction_isKnown(sys->planets[i]->faction))
+      if ( (sys->planets[i]->faction > 0)
+            && (!faction_isKnown(sys->planets[i]->faction)) )
          continue;
 
-      if ((f==-1) && (sys->planets[i]->faction>0)) {
+      if ((f == -1) && (sys->planets[i]->faction > 0)) {
          f = sys->planets[i]->faction;
       }
-      else if (f != sys->planets[i]->faction && /** @todo more verbosity */
-               (sys->planets[i]->faction>0)) {
+      else if (f != sys->planets[i]->faction /** @todo more verbosity */
+               && (sys->planets[i]->faction > 0)) {
          nsnprintf( buf, PATH_MAX, _("Multiple") );
          break;
       }

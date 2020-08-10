@@ -982,6 +982,10 @@ const char *faction_getStandingText( int f )
    Faction *faction;
    const char *r;
 
+   /* Escorts always have the same standing. */
+   if (f == FACTION_PLAYER)
+      return _("Escort");
+
    faction = &faction_stack[f];
 
    if ( faction->env == LUA_NOREF )
@@ -1030,6 +1034,10 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
 {
    Faction *faction;
    const char *r;
+
+   /* Escorts always have the same standing. */
+   if (f == FACTION_PLAYER)
+      return _("Escort");
 
    faction = &faction_stack[f];
 

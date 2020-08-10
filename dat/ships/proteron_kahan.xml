@@ -6,10 +6,10 @@
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>1400000</price>
- <time_mod>2</time_mod>
+ <time_mod>1.75</time_mod>
  <fabricator>Proteron</fabricator>
  <license>Medium Combat Vessel License</license>
- <description>The Kahan is a cutting-edge vessel. Its design was completed shortly before the Incident, and it was on track to become the Proteron military's primary combat vessel. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its ability to mount higher-tech weapons.</description>
+ <description>The Kahan is a cutting-edge vessel. Its design was completed shortly before the Incident, and it was on track to become the Proteron military's primary combat vessel. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its lower mass and structural space.</description>
  <health>
   <absorb>20</absorb>
   <armour>500</armour>
@@ -17,23 +17,23 @@
  </health>
  <characteristics>
   <crew>20</crew>
-  <mass>330</mass>
+  <mass>300</mass>
   <fuel_consumption>200</fuel_consumption>
   <cargo>40</cargo>
  </characteristics>
  <slots>
   <weapon size="large" x="28" y="0" h="5"/>
   <weapon size="large" x="18" y="0" h="5"/>
-  <weapon size="large" x="-30" y="-8" h="3"/>
-  <weapon size="large" x="-30" y="8" h="3"/>
+  <weapon size="medium" x="-30" y="-8" h="3"/>
+  <weapon size="medium" x="-30" y="8" h="3"/>
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-600 Core System</utility>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="medium"/>
   <utility size="medium"/>
-  <utility size="medium"/>
   <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1200 Engine</structure>
   <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
+  <structure size="large"/>
   <structure size="large"/>
   <structure size="medium"/>
   <structure size="medium"/>
