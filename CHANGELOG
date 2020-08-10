@@ -26,7 +26,11 @@
       * Added a "slow mode", which runs the game at half speed (like an easy mode)
       * Added a ship log which records events
       * Added a "system map" which displays information about known remote planets
-      * Addes support for giving commands to individual escorts
+      * Added support for giving commands to individual escorts
+      * New intro images replacing old placeholders
+      * Increased pirate name variety for bounty missions
+      * Ships now travel with you automatically for free, as with outfits
+      * Added map decorators showing locations of factions and the Nebula
       * More music
       * New and/or improved missions
          * Completed the FLF campaign
@@ -50,3 +54,4 @@
       * Added workaround for ALSOFT buggy version that crashes
       * Added a polygon-based collision algorithm
       * Added some symbols for partial colorblind accessibility
+      * Many bugfixes

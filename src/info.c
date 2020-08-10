@@ -396,7 +396,6 @@ static void info_openShip( unsigned int wid )
          "Class:\n"
          "Crew:\n"
          "\n"
-         "Total CPU:\n"
          "Mass:\n"
          "Jump Time:\n"
          "Thrust:\n"
@@ -442,7 +441,6 @@ static void ship_update( unsigned int wid )
          "%s\n"
          "%d\n"
          "\n"
-         "%d teraflops\n"
          "%.0f tonnes\n"
          "%s average\n"
          "%.0f kN/tonne\n"
@@ -462,7 +460,6 @@ static void ship_update( unsigned int wid )
          _(player.p->ship->name),
          _(ship_class(player.p->ship)),
          (int)floor(player.p->crew),
-         player.p->cpu_max,
          /* Movement. */
          player.p->solid->mass,
          hyp_delay,
