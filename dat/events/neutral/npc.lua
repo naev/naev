@@ -204,6 +204,7 @@ msg_tip =                  {_([["I heard you can set your weapons to only fire w
                               _([["Don't forget to have your target selected. Even if you have forward-facing weapons, the weapons will swivel a bit to track your target. But it's absolutely essential for turreted weapons."]]),
                               _("\"Did you know that you can automatically follow pilot with Autonav? It's true! Just \ableft-click\a0 the pilot to target them and then \abright-click\a0 your target to follow! I like to use this feature for escort missions. It makes them a lot less tedious.\""),
                               _([["The new aiming helper feature is awesome! Simply turn it on in your ship's weapons configuration and you get little guides telling you where you should aim to hit your target! I use it a lot."]]),
+                              _([["Displays tend to shorten large number of credits by using SI prefixes: 'K' for thousands of credits, 'M' for millions of credits, 'G' for billions of credits, etc."]]),
                            }
 
 -- Jump point messages.
