@@ -30,7 +30,7 @@ npc_desc = _("A tall and very large cyborg soldier sits against a wall, right ne
 tam_name = _("Major Tam and Captain Leblanc")
 tam_desc = _("Major Tam and Captain Leblanc seem to be waiting for you.")
 
-team_name = _("Your employeers")
+team_name = _("Your employers")
 team_desc = _("Tam and Leblanc are congratulating their general.")
 
 propose_title = _("Ready for an other mission?")
@@ -39,7 +39,7 @@ propose_text = _([[You sit at Tam's table and wait for him to speak. "Hello, cit
 accept_title = _("The plan")
 accept_text1 = _([["I knew you would accept!" Says Major Tam. "Here is the situation:
    "The general I am working for, General Klank, is in charge of... hem... in charge of a crucial operation the High Command wants to carry on. This operation will involve troops of the High Command, but also Warlords, including Battleaddict. The problem is that General Klank and Lord Battleaddict disagree on everything about this plan. As a consequence, they are going to have a Goddard duel, which is usually what happends when two important Dvaered generals have deep disagrements."]])
-accept_text2 = _([["The problem is that Battleaddict's plan is way too stupid. It would weaken the Dvaered Nation durably and let us at the mercy of all the other nations around us, that are waiting for us to show a sign of weakness in order to attack us and impose their iniquitus and obsolete political system to our citizen." Tam takes a deep breath and looks at you in the eyes. "You don't know, citizen, all the dreadful enemies who are waiting in shadow, their hearth filled with hatred against House Dvaered. Sometimes I look at the constelladet sky and I wonder. I wonder why the Dvaered Nation has to be the only threatened islet of justice and kindness in this... in this Sea of Darkness.
+accept_text2 = _([["The problem is that Battleaddict's plan is way too stupid. It would weaken the Dvaered Nation durably and let us at the mercy of all the other nations around us, that are waiting for us to show a sign of weakness in order to attack us and impose their iniquitus and obsolete political system to our citizen." Tam takes a deep breath and looks at you in the eyes. "You don't know, citizen, all the dreadful enemies who are waiting in shadow, their hearth filled with hatred against House Dvaered. Sometimes I look at the constelladet sky and I wonder. I wonder why the Dvaered Nation has to be the only threatened islet of justice and compassion in this... in this Sea of Darkness.
    "Hey, citizen! But I have good news! We won't fall to the Barbarian hordes! Because me myself, Major Archibald Tom, I have a plan. We will make sure that Lord Battleaddict looses his duel. Please note however that if the very existence of House Dvaered was not threatened, we would never allow ourselves to interfere in a honorful duel between two respectable gentlemen. Go to %s in %s and meet the Captain Hamfresser (his portrait is attached in the data I will give to you). He will explain the details. It is very important that you use a civilian ship that can transport at least %d tons of cargo."]])
 
 refuse_title = _("Refusal")
@@ -79,7 +79,7 @@ escape_text = _([[Once the ship recovers its normal speed after jumping, Hamfres
    A few seconds later, you recieve an encoded inter-system message from Major Tam: "The plan A has leaked. Please do switch to plan C. Do not jump in %s by any means. For information, the leak is under control and the source has been dealed with." The voice makes a pause and continues: "I really hope this messages catches you before you enter %s. Otherwise, may Dvaerius, the patron saint of mace rockets have mercy for your souls..." "Good old Tamtam," Hamfresser says smiling, "he always worries too much for us."]])
 
 next_title = _("The plan C")
-next_text = _([["Allright, everyone, we're now heading to %s in %s. According to our intelligence, there should be a Phalanx from Battleaddict's fleet that will take off from there soon. It's name is 'Gorgon' They are on their way back in a transport mission. According to the analysts, there should be enough free space in this ship for our bomb. We will disable the ship, neutralize the pilot and load our material. After that, %s will report back to the Major on %s and the rest of the team will execute the rest of the plan. I or Sergeant Nikolov will breef you once in the Phalanx."]])
+next_text = _([["Allright, everyone, we're now heading to %s in %s. According to our intelligence, there should be a Phalanx from Battleaddict's fleet that will take off from there soon. It's name is 'Gorgon'. They are on their way back in a transport mission. According to the analysts, there should be enough free space in this ship for our bomb. We will disable the ship, neutralize the pilot and load our material. After that, %s will report back to the Major on %s and the rest of the team will execute the rest of the plan. I or Sergeant Nikolov will brief you once in the Phalanx."]])
 
 board_title = _("Boarding")
 board_text = _([[All the members of the commando have put on their battle suits. Hamfresser gives the last orders. "Nikolov, Tronk and I will enter first and clean the aera. Remember that we don't have our usual Dudley combat androids, we're stuck with the two useless plumber bots and the few security droids of %s's ship. As much to say, we'll have to work by hand. I recall for everyone that corvettes are typically protected by a few 629 Spitfires and an occasionnal 711 Grillmeister. That's not very much, but still enough to send the inattentive soldier ad patres."
@@ -107,26 +107,37 @@ epilogue_text = _([[As you approach, the major tells the General Klank that you 
 phalanx_comm_fight = _("You made a very big mistake!")
 phalanx_comm_flee = _("Just try to catch me, you pirate!")
 
+duel_broadcast = _("Let the fight begin!")
+
 duel_comm1 = _("Come on, boss!")
 duel_comm2 = _("DESTROY HIM!")
 duel_comm3 = _("You're the best, boss!")
 duel_comm4 = _("Yeah!")
 
-disable_comm1 = _("Hu? Come on, fight!")
+disable_comm1 = _("Damn!")
 disable_comm2 = _("Oooooo...")
 disable_comm3 = _("What the?")
-disable_comm4 = _("Come on, boss, it's just a scratch!")
+disable_comm4 = _("Come on!")
 
-disable_comm5 = _("Hey, they have put a bomb in the general's ship as well!")
-disable_comm6 = _("The electricians! We've called electricians recently! They did put the bomb!")
+disable_comm5  = _("Hey, they have put a bomb in the general's ship as well!")
+disable_comm6  = _("The electricians! We've called electricians recently! They did put the bomb!")
+disable_comm12 = _("Cheaters!")
+disable_comm13 = _("Cheaters youselves!")
 
-takoff_comm1 = _("Now, You've managed to piss me off!")
-takoff_comm2 = _("I'll shred you!")
+disable_comm7  = _("Hey, Battleaddict, it seems we are both down...")
+disable_comm8  = _("I still want to kill you!")
+disable_comm9  = _("So do I.")
+disable_comm10 = _("Luckly enough, I've my Vendetta in the fighter bay.")
+disable_comm11 = _("So do I.")
+
+takoff_comm1 = _("Shall we continue?")
+takoff_comm2 = _("Of course, we shall!")
 
 kill_comm1 = _("Aha! In your freaking monkey face!")
 kill_comm2 = _("You're the best, general!")
 kill_comm3 = _("Oooooo...")
 kill_comm4 = _("Nooooo!")
+kill_comm5 = _("The General Klank won the duel!")
 
 osd_title = _("Dvaered Sabotage")
 osd_msg1  = _("Pick up Hamfresser in %s in %s. Use a civilian ship with at least %d tons of free cargo")
@@ -212,7 +223,7 @@ function hamfresser()
       misn.markerRm(mark)
       misn.osdActive(2)
       mark = misn.markerAdd(sabotsys, "low")
-      player.takeoff()
+      player.takeoff() -- TODO: takeoff at loading as well
    else
       tk.msg(not_title, not_text:format(bombMass))
    end
@@ -269,7 +280,7 @@ function enter()
       pilot.clear()
 
       mypos = duelpla:pos()
-      step = 300
+      step = 150
 
       klank = pilot.add("Dvaered Goddard", nil, mypos + vec2.new(-step, step/2))[1]
       klank:rename( "General Klank" )
@@ -283,41 +294,42 @@ function enter()
       battleaddict:setFaction("Warlords")
       equipGoddard( battleaddict, false )
 
-      klank:face(battleaddict:pos())
-      battleaddict:face(klank:pos())
+      klank:face(battleaddict)
+      battleaddict:face(klank)
 
       urnus = pilot.add("Dvaered Vigilance", nil, mypos + vec2.new(0, 3*step/2))[1]
       urnus:rename( "Colonel Urnus" )
       urnus:control(true)
-      urnus:brake()
+      urnus:face( mypos + vec2.new(0, step/2) )
 
-      tam = pilot.add("Dvaered Vigilance", nil, mypos + vec2.new(-step, 3*step/2))[1]
+      tam = pilot.add("Dvaered Vigilance", nil, mypos + vec2.new(-2*step, 3*step/2))[1]
       tam:rename( "Major Tam" )
       tam:control(true)
-      tam:brake()
+      tam:face(battleaddict)
 
-      leblanc = pilot.add("Dvaered Phalanx", nil, mypos + vec2.new(-step, -step/2))[1]
+      leblanc = pilot.add("Dvaered Phalanx", nil, mypos + vec2.new(-2*step, -step/2))[1]
       leblanc:rename( "Captain Leblanc" )
       leblanc:control(true)
-      leblanc:brake()
+      leblanc:face(battleaddict)
 
-      hamelsen = pilot.add("Dvaered Vigilance", nil, mypos + vec2.new(step, 3*step/2))[1]
+      hamelsen = pilot.add("Dvaered Vigilance", nil, mypos + vec2.new(2*step, 3*step/2))[1]
       hamelsen:rename( "Colonel Hamelsen" )
       hamelsen:control(true)
-      hamelsen:brake()
+      hamelsen:face(klank)
 
-      randguy = pilot.add("Dvaered Vigilance", nil, mypos + vec2.new(step, -step/2))[1]
+      randguy = pilot.add("Dvaered Vigilance", nil, mypos + vec2.new(2*step, -step/2))[1]
       randguy:control(true)
-      randguy:brake()
+      randguy:face(klank)
 
       player.pilot():control()
+      player.pilot():goto( mypos + vec2.new(0, -step/2) ) -- To avoid being in the range
       player.cinematics( true, { gui = true } )
 
-      -- TODO: make the Camera move
+      camera.set( mypos + vec2.new(0, step/2) )
 
       hook.timer(5000, "beginDuel")
       hook.timer(15000, "disableDuel")
-      hook.timer(20000, "fighterDuel")
+      hook.timer(55000, "fighterDuel")
    end
 end
 
@@ -350,7 +362,8 @@ function equipVendetta( pilot )
    pilot:addOutfit("Tricon Zephyr II Engine")
    pilot:addOutfit("Shield Capacitor")
    pilot:addOutfit("Milspec Aegis 3601 Core System")
-   pilot:addOutfit("Shredder", 5)
+   pilot:addOutfit("Small Shield Booster")
+   pilot:addOutfit("Unicorp Mace Launcher", 6)
 
    pilot:setHealth(100,100)
    pilot:setEnergy(100)
@@ -379,7 +392,7 @@ end
 
 -- Battleaddict sees that the player is not a plumber
 function killing()
-   tk.msg(kill_title, kill_text)
+   tk.msg(kill_title, kill_text:format(player.name()))
    release_baddies()
    stage = 2
 
@@ -506,10 +519,11 @@ function beginDuel()
    battleaddict:taskClear()
    battleaddict:attack(klank)
 
-   tam:comm( duel_comm1 )
-   leblanc:comm( duel_comm2 )
-   hamelsen:comm( duel_comm3 )
-   randguy:comm( duel_comm4 )
+   urnus:broadcast( duel_broadcast )
+   hook.timer( 1000, "message", {pilot = tam, msg = duel_comm1} )
+   hook.timer( 2000, "message", {pilot = leblanc, msg = duel_comm2} )
+   hook.timer( 3000, "message", {pilot = hamelsen, msg = duel_comm3} )
+   hook.timer( 4000, "message", {pilot = randguy, msg = duel_comm4} )
 
    hook.pilot( battleaddict, "exploded", "battleaddict_killed" )
 end
@@ -519,18 +533,41 @@ function disableDuel()
    klank:disable()
    battleaddict:disable()
 
-   -- TODO: everything shakes
+   -- Explosion and such
+   spfx.soundPlay( "empexplode" )
+   camera.shake()
+   hook.timer(1000, "moreSound1")
+   hook.timer(2000, "moreSound2")
 
-   tam:comm( disable_comm1 )
-   leblanc:comm( disable_comm2 )
-   hamelsen:comm( disable_comm3 )
-   randguy:comm( disable_comm4 )
-   hook.timer(2000, "moreMsg")
+   hook.timer( 2000, "message", {pilot = tam, msg = disable_comm1} )
+   hook.timer( 4000, "message", {pilot = leblanc, msg = disable_comm2} )
+   hook.timer( 6000, "message", {pilot = hamelsen, msg = disable_comm3} )
+   hook.timer( 8000, "message", {pilot = randguy, msg = disable_comm4} )
+
+   hook.timer( 11000, "message", {pilot = tam, msg = disable_comm5} )
+   hook.timer( 15000, "message", {pilot = leblanc, msg = disable_comm6} )
+   hook.timer( 19000, "message", {pilot = tam, msg = disable_comm12} )
+   hook.timer( 23000, "message", {pilot = hamelsen, msg = disable_comm13} )
+
+   hook.timer( 28000, "message", {pilot = klank, msg = disable_comm7} )
+   hook.timer( 30000, "message", {pilot = battleaddict, msg = disable_comm8} )
+   hook.timer( 32000, "message", {pilot = klank, msg = disable_comm9} )
+   hook.timer( 34000, "message", {pilot = klank, msg = disable_comm10} )
+   hook.timer( 36000, "message", {pilot = battleaddict, msg = disable_comm11} )
 end
 
-function moreMsg()
-   tam:comm( disable_comm5 )
-   leblanc:comm( disable_comm6 )
+function moreSound1()
+   spfx.soundPlay( "beam_off0" )
+end
+function moreSound2()
+   spfx.soundPlay( "hyperspace_powerdown" )
+end
+
+-- Gets someone to make a message
+function message( arg )
+   local pilot = arg.pilot
+   local msg = arg.msg
+   pilot:broadcast( msg )
 end
 
 -- Fighter duel
@@ -546,35 +583,39 @@ function fighterDuel()
    battleaddict2:control(true)
    battleaddict2:setFaction("Warlords")
 
-   tam:comm( duel_comm1 )
-   leblanc:comm( duel_comm2 )
-   hamelsen:comm( duel_comm3 )
-   randguy:comm( duel_comm4 )
-   klank2:comm( takoff_comm1 )
-   battleaddict2:comm( takoff_comm2 )
+   battleaddict2:broadcast( takoff_comm2 )
+   hook.timer( 1000, "message", {pilot = klank2, msg = takoff_comm1} )
+   hook.timer( 1500, "message", {pilot = tam, msg = duel_comm1} )
+   hook.timer( 2000, "message", {pilot = leblanc, msg = duel_comm2} )
+   hook.timer( 2500, "message", {pilot = hamelsen, msg = duel_comm3} )
+   hook.timer( 3000, "message", {pilot = randguy, msg = duel_comm4} )
 
    klank2:setNoDeath() -- Actually it should not be necessary, but...
    klank2:setNoDisable()
+
+   klank2:memory().atk = atk_drone  -- Set the AI so that they don't get stuck
+   battleaddict2:memory().atk = atk_drone
+
    battleaddict2:control()
+   battleaddict2:goto( mypos + vec2.new(step,step/4), false, false ) -- Prevent them from staying on the top of their ships
    battleaddict2:attack(klank2)
    klank2:control()
+   klank2:goto( mypos + vec2.new(-step,step/4), false, false )
    klank2:attack(battleaddict2)
    hook.pilot( battleaddict2, "exploded", "battleaddict_killed" )
+
+   --camera.set(klank2)
 end
 
 function battleaddict_killed()
-   -- Everyone lands
-   everyone = { klank, klank2, urnus, tam, leblanc, hamelsen, randguy }
-   for i, p in ipairs(everyone) do
-      p:taskClear()
-      p:land(duelpla)
-   end
+   tam:broadcast( kill_comm1 )
+   leblanc:broadcast( kill_comm2 )
+   hamelsen:broadcast( kill_comm3 )
+   randguy:broadcast( kill_comm4 )
+   urnus:broadcast( kill_comm5 )
 
-   tam:comm( kill_comm1 )
-   leblanc:comm( kill_comm2 )
-   hamelsen:comm( kill_comm3 )
-   randguy:comm( kill_comm4 )
-
+   hook.timer( 2000, "everyoneLands" )
+   camera.set()
    player.pilot():control( false )
    player.cinematics( false )
 
@@ -582,9 +623,17 @@ function battleaddict_killed()
    misn.osdActive(2)
 end
 
+function everyoneLands()
+   everyone = { klank, klank2, urnus, tam, leblanc, hamelsen, randguy }
+   for i, p in ipairs(everyone) do
+      p:taskClear()
+      p:land(duelpla)
+   end
+end
+
 -- Epilogue
 function endMisn()
-   tk.msg( epilogue_title, epilogue_text, credits )
+   tk.msg( epilogue_title, epilogue_text:format(credits) )
    player.pay(credits)
    misn.finish(true)
    shiplog.createLog( "frontier_war", _("Dvaered Military Coordination"), _("Dvaered") ) --TODO: create a common file for this TODO: see if it's possible to rename it afterwards
