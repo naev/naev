@@ -1536,8 +1536,8 @@ static void equipment_genOutfitList( unsigned int wid )
       snprintf( quantity[i], l, "%d", p );
 
       /* Slot type. */
-      if ((strcmp(outfit_slotName(o),_("NA")) != 0) &&
-            (strcmp(outfit_slotName(o),"NULL") != 0)) {
+      if ( (strcmp(outfit_slotName(o), "N/A") != 0)
+            && (strcmp(outfit_slotName(o), "NULL") != 0) ) {
          typename       = outfit_slotName(o);
          slottype[i]    = malloc( 2 );
          slottype[i][0] = typename[0];
