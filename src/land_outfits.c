@@ -385,15 +385,15 @@ void outfits_update( unsigned int wid, char* str )
       window_disableButton( wid, "btnBuyOutfit" );
       window_disableButton( wid, "btnSellOutfit" );
       nsnprintf( buf, PATH_MAX,
-            _("NA\n"
+            _("N/A\n"
             "\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
+            "N/A\n"
+            "N/A\n"
+            "N/A\n"
             "\n"
-            "NA\n"
-            "NA\n"
-            "NA\n") );
+            "N/A\n"
+            "N/A\n"
+            "N/A\n") );
       window_modifyText( wid, "txtDDesc", buf );
       window_modifyText( wid, "txtOutfitName", _("None") );
       window_modifyText( wid, "txtDescShort", NULL );
