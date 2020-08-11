@@ -686,7 +686,7 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
       h = MAX( 300, list_height );
 
    h = MIN( (SCREEN_H*2)/3, h );
-   w = MAX( list_width + 60, 200 );
+   w = MAX( list_width + 60, 500 );
 
    winw = w + extrawidth;
    winh = MAX( h, minheight );
