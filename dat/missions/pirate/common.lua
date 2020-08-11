@@ -6,6 +6,18 @@
 --]]
 
 
+--[[
+   @brief Increases the reputation limit of the player.
+--]]
+function pir_modReputation( increment )
+   local cur = var.peek("_fcap_pirate") or 30
+   var.push( "_fcap_pirate", math.min(cur+increment, 100) )
+end
+
+
+--[[
+   @brief Increases the decay floor (how low reputation can decay to).
+--]]
 function pir_modDecayFloor( n )
    local floor = var.peek("_ffloor_decay_pirate")
    if floor == nil then floor = -20 end

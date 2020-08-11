@@ -11,7 +11,7 @@
 --]]
 function emp_modReputation( increment )
    local cur = var.peek("_fcap_empire") or 30
-   var.push("_fcap_empire", math.min(cur+increment, 100) )
+   var.push( "_fcap_empire", math.min(cur+increment, 100) )
 end
 
 

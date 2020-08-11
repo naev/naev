@@ -570,16 +570,16 @@ function succeed ()
       local bounty_dangerous_done = var.peek( "pir_bounty_dangerous_done" )
       var.push( "pir_bounty_dangerous_done", true )
       if bounty_dangerous_done ~= true then
-         var.push( "_fcap_pirate", var.peek( "_fcap_pirate" ) + 5 )
-         pir_modDecayFloor( 5 )
+         pir_modReputation( 2 )
+         pir_modDecayFloor( 2 )
       end
 
       if level >= 6 then
          local bounty_highly_dangerous_done = var.peek( "pir_bounty_highly_dangerous_done" )
          var.push( "pir_bounty_highly_dangerous_done", true )
          if bounty_highly_dangerous_done ~= true then
-            var.push( "_fcap_pirate", var.peek( "_fcap_pirate" ) + 5 )
-            pir_modDecayFloor( 5 )
+            pir_modReputation( 3 )
+            pir_modDecayFloor( 3 )
          end
       end
    end
