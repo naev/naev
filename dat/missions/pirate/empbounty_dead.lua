@@ -42,7 +42,7 @@ misn_title[5] = _("PIRACY: Dangerous Assassination Job in %s")
 misn_title[6] = _("PIRACY: Highly Dangerous Assassination Job in %s")
 misn_reward = _("%s credits")
 misn_desc   = _("A meddlesome %s pilot was recently seen in the %s system. Local crime lords want this pilot dead.")
-desc_illegal_warning = "\ar" .. _("WARNING: This mission is illegal and will get you in trouble with the authorities!") .. "\a0"
+desc_illegal_warning = _("WARNING: This mission is illegal and will get you in trouble with the authorities!")
 
 -- Messages
 msg    = {}
