@@ -3,6 +3,7 @@
  <general>
   <slot>weapon</slot>
   <size>small</size>
+  <license>Medium Weapon License</license>
   <mass>6</mass>
   <price>13000</price>
   <description>The Vulcan Gun improves over the Gauss Gun with increased range and damage, achieved by using a heavier calibre ammunition. A skilled pilot can wreak some serious havoc with a pair of Vulcan Guns installed in his ship.</description>

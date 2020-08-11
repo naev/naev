@@ -3,6 +3,7 @@
  <general>
   <slot>weapon</slot>
   <size>small</size>
+  <license>Medium Weapon License</license>
   <mass>18</mass>
   <price>16000</price>
   <description>One of the more common countermeasures employed by low-budget merchant ships, the turret version of the Gauss Gun provides basic defense against lone pirates. A more determined attacker is unlikely to be deterred, however.</description>
