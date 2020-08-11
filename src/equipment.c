@@ -1980,7 +1980,7 @@ static void equipment_renameShip( unsigned int wid, char *str )
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    ship = player_getShip(shipname);
-   newname = dialogue_input( _("Ship Name"), 3, 20,
+   newname = dialogue_input( _("Ship Name"), 1, 60,
          _("Please enter a new name for your %s:"), ship->ship->name );
 
    /* Player cancelled the dialogue. */

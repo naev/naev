@@ -253,7 +253,7 @@ void player_new (void)
    player_newSetup();
 
    /* Get the name. */
-   player.name = dialogue_input( _("Player Name"), 2, 20,
+   player.name = dialogue_input( _("Player Name"), 1, 60,
          _("Please write your name:") );
 
    /* Player cancelled dialogue. */
@@ -398,7 +398,7 @@ Pilot* player_newShip( Ship* ship, const char *def_name,
    player_creds = (player.p != NULL) ? player.p->credits : 0;
    player_ship    = ship;
    if (!noname)
-      ship_name      = dialogue_input( _("Ship Name"), 3, 20,
+      ship_name      = dialogue_input( _("Ship Name"), 1, 60,
             _("Please name your new ship:") );
    else
       ship_name      = NULL;
