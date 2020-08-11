@@ -16,6 +16,7 @@
 require "jumpdist.lua"
 require "numstring.lua"
 require "portrait.lua"
+require "dat/factions/equip/generic.lua"
 
 local informer
 local refusal
@@ -53,26 +54,43 @@ success = {
 local base_price = 100000
 
 local ships = {
-   Empire = {
-      fighter   = { "Empire Shark", "Empire Lancelot" },
-      corvette  = { "Empire Admonisher" },
-      destroyer = { "Empire Pacifier" },
-      cruiser   = { "Empire Hawking" },
-      carrier   = { "Empire Peacemaker" }
-   },
    Dvaered = {
       fighter   = { "Dvaered Vendetta" },
       bomber    = { "Dvaered Ancestor" },
       corvette  = { "Dvaered Phalanx" },
       destroyer = { "Dvaered Vigilance" },
-      cruiser   = { "Dvaered Goddard" }
+      cruiser   = { "Dvaered Goddard" },
+   },
+   Empire = {
+      fighter   = { "Empire Shark", "Empire Lancelot" },
+      corvette  = { "Empire Admonisher" },
+      destroyer = { "Empire Pacifier" },
+      cruiser   = { "Empire Hawking" },
+      carrier   = { "Empire Peacemaker" },
+   },
+   Frontier = {
+      fighter   = { "Lancelot", "Vendetta", "Hyena" },
+      bomber    = { "Ancestor" },
+      corvette  = { "Phalanx" },
+      destroyer = { "Pacifier" },
+   },
+   Goddard = {
+      fighter   = { "Lancelot" },
+      cruiser   = { "Goddard" },
+   },
+   Independent = {
+      fighter   = { "Lancelot", "Vendetta", "Hyena", "Shark" },
+      bomber    = { "Ancestor" },
+      corvette  = { "Phalanx", "Admonisher" },
+      destroyer = { "Vigilance", "Pacifier" },
+      cruiser   = { "Kestrel", "Hawking" },
    },
    Sirius = {
       fighter   = { "Sirius Fidelity" },
       bomber    = { "Sirius Shaman" },
       corvette  = { "Sirius Preacher" },
       cruiser   = { "Sirius Dogma" },
-      carrier   = { "Sirius Divinity" }
+      carrier   = { "Sirius Divinity" },
    },
    Soromid = {
       fighter   = { "Soromid Brigand", "Soromid Reaver" },
@@ -80,15 +98,14 @@ local ships = {
       corvette  = { "Soromid Odium" },
       destroyer = { "Soromid Nyx" },
       cruiser   = { "Soromid Ira" },
-      carrier   = { "Soromid Arx" }
+      carrier   = { "Soromid Arx" },
    },
-   Independent = {
-      fighter   = { "Lancelot", "Vendetta", "Hyena", "Shark" },
-      bomber    = { "Ancestor" },
-      corvette  = { "Phalanx", "Admonisher" },
-      destroyer = { "Vigilance", "Pacifier" },
-      cruiser   = { "Kestrel", "Hawking" }
-   }
+   ["Za'lek"] = {
+      corvette  = { "Za'lek Imp", "Za'lek Sting" },
+      destroyer = { "Za'lek Demon" },
+      cruiser   = { "Za'lek Mephisto", "Za'lek Prototype" },
+      carrier   = { "Za'lek Diablo", "Za'lek Hephaestus" },
+   },
 }
 
 local classes = {}
@@ -309,9 +326,8 @@ function land()
       -- too sure what to do about it, but, well…
       player.swapShip(ship.exact_class)
 
-      -- Two cannons should be enough for most not-so-big ships.
-      player.pilot():addOutfit"Laser Cannon MK3"
-      player.pilot():addOutfit"Laser Cannon MK3"
+      -- Equip the new ship.
+      equip_generic( player.pilot() )
 
       -- Hey, stealing a ship isn’t anything! (if you survive, that is)
       faction.modPlayerSingle("Pirate", rnd.rnd(3,5))
@@ -326,11 +342,6 @@ function land()
       if stolen_ships == 0 then
          var.push("_fcap_pirate", var.peek("_fcap_pirate") + 5)
       end
-
-      -- FIXME: We should add a few pursuers. However, if you were able to
-      --        fight a full squadron of whatever ships are used by the
-      --        faction to land on the planet, I say you have already done
-      --        enough. Still, I might be wrong. (:p)
 
       -- If you stole a ship of some value, the faction will have something
       -- to say, even if they can only suspect you.
