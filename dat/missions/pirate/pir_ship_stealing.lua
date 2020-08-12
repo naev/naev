@@ -18,14 +18,10 @@ require "numstring.lua"
 require "portrait.lua"
 require "dat/factions/equip/generic.lua"
 
-local informer
-local refusal
-local approval
-local success
 
-local title = _("Stealing a %s")
-local reward = _("A brand new %s")
-local description = _("Land on %s, in the %s system, and escape with your new %s.")
+title = _("Stealing a %s")
+reward = _("A brand new %s")
+description = _("Land on %s, in the %s system, and escape with your new %s.")
 
 -- localization stuff, translators would work here
 informer = {
@@ -51,9 +47,9 @@ success = {
     Enemy ships will probably be after you as soon as you leave the atmosphere, so you should get ready and use the time you have on this planet wisely.]])
 }
 
-local base_price = 100000
+base_price = 100000
 
-local ships = {
+ships = {
    Dvaered = {
       fighter   = { "Dvaered Vendetta" },
       bomber    = { "Dvaered Ancestor" },
@@ -108,7 +104,7 @@ local ships = {
    },
 }
 
-local classes = {}
+classes = {}
 
 for k,v in pairs(ships) do
    classes[k] = {}
@@ -118,7 +114,7 @@ for k,v in pairs(ships) do
    end
 end
 
-local function price(class)
+function price(class)
    local modifier = 1
    if class == "fighter" then
       modifier = 0.5
@@ -135,7 +131,7 @@ local function price(class)
    return modifier * base_price
 end
 
-local function random_class(faction)
+function random_class(faction)
    local m = #classes[faction]
 
    if m == 0 then
@@ -147,7 +143,7 @@ local function random_class(faction)
    return classes[faction][r]
 end
 
-local function random_ship(faction, class)
+function random_ship(faction, class)
    local m = #ships[faction][class]
 
    if m == 0 then
@@ -159,7 +155,7 @@ local function random_ship(faction, class)
    return ships[faction][class][r]
 end
 
-local function random_planet()
+function random_planet()
    local planets = {}
    local maximum_distance = 6
    local minimum_distance = 0
@@ -186,7 +182,7 @@ local function random_planet()
    end
 end
 
-local function improve_standing(class, faction_name)
+function improve_standing(class, faction_name)
    local enemies = faction.get(faction_name):enemies()
    local standing = 0
 
@@ -211,7 +207,7 @@ local function improve_standing(class, faction_name)
    end
 end
 
-local function damage_standing(class, faction_name)
+function damage_standing(class, faction_name)
    local modifier = 1
 
    -- “Oh dude, that guy is capable! He managed to steal one of our own ships!”
