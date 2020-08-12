@@ -63,7 +63,7 @@ turnintext[2] = _([[It doesn't take Dvaered security long to arrive at your land
     The officer turns and leaves without waiting for an answer, and without rewarding you in any tangible way. You wonder if you should scout out this liaison, in hopes of at least getting something out of this whole situation.]])
     
 misn_title = _("Deal with the FLF agent")
-osd_desc[1] = _("Take Gregar, the FLF agent to the %s system and make contact with the FLF")
+osd_desc[1] = _("Take Gregar, the FLF agent, to the %s system and make contact with the FLF")
 osd_desc[2] = _("Alternatively, turn Gregar in to the nearest Dvaered base")
 
 osd_adddesc = _("Follow the FLF ships to their secret base. Do not lose them!")
