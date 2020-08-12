@@ -232,29 +232,29 @@ function damage_standing(class, faction_name)
 end
 
 function create ()
-   ship = { __save = true }
+   theship = { __save = true }
 
-   ship.planet  = random_planet()
+   theship.planet  = random_planet()
 
-   if not ship.planet or ship.planet:faction() == nil then
+   if not theship.planet or theship.planet:faction() == nil then
       -- If we’re here, it means we couldn’t get a planet close enough.
       misn.finish(false)
    end
 
-   ship.faction = ship.planet:faction():name()
-   ship.class   = random_class(ship.faction)
+   theship.faction = theship.planet:faction():name()
+   theship.class   = random_class(theship.faction)
 
-   if not ship.class then
+   if not theship.class then
       -- If we’re here, it means we couldn’t get a ship of the right faction
       -- and of the right class.
       misn.finish(false)
    end
 
    -- We’re assuming ships[faction][class] is not empty, here…
-   ship.exact_class = random_ship(ship.faction, ship.class)
-   ship.price   = price(ship.class)
+   theship.exact_class = random_ship(theship.faction, theship.class)
+   theship.price   = price(theship.class)
 
-   ship.system = ship.planet:system()
+   theship.system = theship.planet:system()
 
    misn.setNPC( _("A Pirate informer"), getPortrait("Pirate") )
    misn.setDesc( informer.description )
@@ -262,34 +262,34 @@ end
 
 function accept()
    if tk.yesno( informer.title, informer.message:format(
-         ship.faction, ship.class, creditstring(ship.price) ) ) then
-      if player.credits() >= ship.price then
+         theship.faction, theship.class, creditstring(theship.price) ) ) then
+      if player.credits() >= theship.price then
          tk.msg( approval.title, approval.message:format(
-            ship.planet:name(), ship.system:name() ) )
+            theship.planet:name(), theship.system:name() ) )
 
-         player.pay( -ship.price )
+         player.pay( -theship.price )
          misn.accept()
 
          -- Mission title, reward, description
-         misn.setTitle( title:format( ship.class ) )
-         misn.setReward( reward:format( ship.class ) )
+         misn.setTitle( title:format( theship.class ) )
+         misn.setReward( reward:format( theship.class ) )
          misn.setDesc( description:format(
-            ship.planet:name(),  ship.system:name(), ship.class ) )
+            theship.planet:name(),  theship.system:name(), theship.class ) )
 
          -- Mission marker
-         misn.markerAdd( ship.system, "low" )
+         misn.markerAdd( theship.system, "low" )
 
          -- OSD
          misn.osdCreate(
             string.format(
                title,
-               ship.class
+               theship.class
             ), {
                string.format(
                   description,
-                  ship.planet:name(),
-                  ship.system:name(),
-                  ship.class
+                  theship.planet:name(),
+                  theship.system:name(),
+                  theship.class
                )
             }
          )
@@ -308,19 +308,19 @@ end
 
 function land()
    local landed = planet.cur()
-   if landed == ship.planet then
+   if landed == theship.planet then
       -- Oh yeah, we stole the ship. \o/
       tk.msg(
          success.title,
          string.format(
             success.message,
-            ship.exact_class
+            theship.exact_class
          )
       )
 
       -- The old ship the player used will still be on the planet. I’m not 
       -- too sure what to do about it, but, well…
-      player.swapShip(ship.exact_class)
+      player.swapShip(theship.exact_class)
 
       -- Equip the new ship.
       equip_generic( player.pilot() )
@@ -341,7 +341,7 @@ function land()
 
       -- If you stole a ship of some value, the faction will have something
       -- to say, even if they can only suspect you.
-      damage_standing(ship.class, ship.faction)
+      damage_standing(theship.class, theship.faction)
 
       -- This is a success. The player stole his new ship, and everyone is
       -- happy with it. Getting out of the system alive is the player’s 
@@ -352,9 +352,9 @@ end
 
 function enter()
    -- A few faction ships guard the target planet.
-   if system.cur() == ship.system then
+   if system.cur() == theship.system then
       -- We want the player to be able to land on the destination planet…
-      ship.planet:landOverride(true)
+      theship.planet:landOverride(true)
    end
 end
 
