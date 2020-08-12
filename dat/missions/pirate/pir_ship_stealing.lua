@@ -31,8 +31,8 @@ local description = _("Land on %s, in the %s system, and escape with your new %s
 informer = {
    description = _("A pirate informer is looking at you. Maybe they have some useful information to sell?"),
    title = _("Ship to steal"),
-   message = _([["Hi, pilot. I have the location of a %s to be used by the %s. Maybe it interests you, who knows?"
-    "However, I'm going to sell that information only. It'd cost you %s, but the ship is probably worth much more, if you can get it."
+   message = _([["Hi, pilot. I have the location and security codes of an unattended %s %s. Maybe it interests you, who knows?
+    "However, I'm going to sell that information only. It'd cost you %s, but the ship is probably worth much more if you can get to it."
     Do you want to pay to know where that ship is?]])
 }
 
@@ -266,7 +266,7 @@ end
 
 function accept()
    if tk.yesno( informer.title, informer.message:format(
-         ship.class, ship.faction, numstring(ship.price) ) ) then
+         ship.faction, ship.class, creditstring(ship.price) ) ) then
       if player.credits() >= ship.price then
          tk.msg( approval.title, approval.message:format(
             ship.planet:name(), ship.system:name() ) )

@@ -1446,7 +1446,7 @@
    <priority>4</priority>
    <chance>10</chance>
    <location>Bar</location>
-   <cond>faction.playerStanding("Pirate") &gt;= 10</cond>
+   <cond>faction.playerStanding("Pirate") &gt;= 0 or planet.cur():faction() == faction.get("Pirate")</cond>
   </avail>
  </mission>
  <mission name="Cargo Rush">
