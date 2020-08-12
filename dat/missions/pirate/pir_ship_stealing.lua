@@ -21,7 +21,7 @@ require "dat/factions/equip/generic.lua"
 
 title = _("Stealing a %s")
 reward = _("A brand new %s")
-description = _("Land on %s, in the %s system, and escape with your new %s.")
+description = _("Land on %s in the %s system and escape with your new %s")
 
 -- localization stuff, translators would work here
 informer = {
