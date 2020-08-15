@@ -1,6 +1,6 @@
 #!/bin/bash
 # WINDOWS PACKAGING SCRIPT FOR NAEV
-# Requires NSIS to be installed
+# Requires NSIS, and python3-pip to be installed
 #
 # This script should be run after compiling Naev
 # It detects the current environment, and builds the appropriate NSIS installer
@@ -57,6 +57,13 @@ else
     exit -1
 fi
 
+# Download and Install mingw-ldd
+echo "Update pip"
+pip3 install --upgrade pip
+
+echo "Install mingw-ldd script"
+pip3 install mingw-ldd
+
 # Download Inetc
 # This is the Plugin that handles downloading NData, this needed to be 
 # changed as NSISdl does not support secure downloads
@@ -94,13 +101,18 @@ echo "creating staging area"
 mkdir -p extras/windows/installer/bin
 
 # Collect DLLs
-
+ 
 if [[ $ARCH == "32" ]]; then
-    echo "mingw32 is apparently statically built"
+for fn in `mingw-ldd naev.exe --dll-lookup-dirs /mingw32/bin | grep -i "mingw32" | cut -f1 -d"/" --complement`; do
+    fp="/"$fn
+    echo "copying $fp to staging area"
+    cp $fp extras/windows/installer/bin
+done
 elif [[ $ARCH == "64" ]]; then
-for fn in `cygcheck src/naev.exe | grep -i "mingw64"`; do
-    echo "copying $fn to staging area"
-    cp $fn extras/windows/installer/bin
+for fn in `mingw-ldd naev.exe --dll-lookup-dirs /mingw64/bin | grep -i "mingw64" | cut -f1 -d"/" --complement`; do
+    fp="/"$fn
+    echo "copying $fp to staging area"
+    cp $fp extras/windows/installer/bin
 done
 else
     echo "Aw, man, I shot Marvin in the face..."
@@ -138,7 +150,27 @@ else
     exit -1
 fi
 
+echo "Successfully built Windows Installer for win$ARCH"
+
+# Package zip
+
+if [[ $NIGHTLY == true ]]; then
+cd extras/windows/installer/bin
+zip ../../../../naev-win$ARCH.zip *.*
+cd ../../../../
+
+elif [[ $NIGHTLY == false ]]; then
+cd extras/windows/installer/bin
+zip ../../../../naev-win$ARCH.zip *.*
+cd ../../../../
+
+else
+    echo "Cannot think of another movie quote.. again."
+    echo "Something went wrong.."
+    exit -1
+fi
+
+echo "Successfully packaged zipped folder for win$ARCH"
+
 echo "Cleaning up staging area"
 rm -rf extras/windows/installer/bin
-
-echo "Successfully built Windows Installer for win$ARCH"
