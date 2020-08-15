@@ -182,7 +182,7 @@ jobs:
     - name: Package MacOS Release
       run: |
         ./extras/macos/bundle.sh
-        zip naev-macos Naev.app/
+        zip -r naev-macos.zip Naev.app/*
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
