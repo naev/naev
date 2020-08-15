@@ -39,7 +39,9 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: win32
-        path: ${{ github.workspace }}/naev-win32.exe
+        path: |
+          ${{ github.workspace }}/naev-win32.exe
+          ${{ github.workspace }}/naev-win32.zip
 
   "Windows-MinGW64":
     runs-on: windows-latest
@@ -75,7 +77,9 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: win64
-        path: ${{ github.workspace }}/naev-win64.exe
+        path: |
+          ${{ github.workspace }}/naev-win64.exe
+          ${{ github.workspace }}/naev-win64.zip
 
   "Linux-x86_64":
     runs-on: ubuntu-20.04
@@ -236,7 +240,7 @@ jobs:
 
   "Upload-Release":
       runs-on: ubuntu-latest
-      needs: [win64, win32, macos, lin64, ndata]
+      needs: [Windows-MinGW64, Windows-MinGW32, macOS, Linux-x86_64, Generate-NData]
 
       steps:
       - name: Update APT Cache
@@ -304,7 +308,9 @@ jobs:
           mv temp/macos/naev-macos.zip dist/naev-$VERSION-$BUILD_DATE-macos.zip
           mv temp/ndata/ndata.zip dist/ndata-$VERSION-$BUILD_DATE.zip
           mv temp/win32/naev-win32.exe dist/naev-$VERSION-$BUILD_DATE-win32.exe
+          mv temp/win32/naev-win32.zip dist/naev-$VERSION-$BUILD_DATE-win32.zip
           mv temp/win64/naev-win64.exe dist/naev-$VERSION-$BUILD_DATE-win64.exe
+          mv temp/win64/naev-win64.zip dist/naev-$VERSION-$BUILD_DATE-win64.zip
 
       - name: Upload Release Assets
         uses: "marvinpinto/action-automatic-releases@latest"
