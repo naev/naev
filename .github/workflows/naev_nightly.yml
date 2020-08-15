@@ -1,7 +1,7 @@
-
-on:
-  schedule:
-    - cron: '0 0 * * *'
+on: [push, pull_request]
+#on:
+#  schedule:
+#    - cron: '0 0 * * *'
 
 name: Nightly Release
 
