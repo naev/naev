@@ -80,6 +80,7 @@ typedef struct Gatherable_ {
    Vector2d vel; /**< Velocity. */
    double timer; /**< Timer to de-spawn the gatherable. */
    double lifeleng; /**< nb of seconds before de-spawn. */
+   int quantity; /**< Quantity of material. */
 } Gatherable;
 
 
@@ -98,7 +99,7 @@ void commodity_free (void);
 /*
  * Gatherable objects
  */
-void gatherable_init( Commodity* com, Vector2d pos, Vector2d vel );
+int gatherable_init( Commodity* com, Vector2d pos, Vector2d vel, double lifeleng, int qtt );
 void gatherable_render( void );
 int gatherable_getClosest( Vector2d pos, double rad );
 int gatherable_getPos( Vector2d* pos, Vector2d* vel, int id );

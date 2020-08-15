@@ -47,6 +47,7 @@ static int hook_timer( lua_State *L );
 static int hook_date( lua_State *L );
 static int hook_commbuy( lua_State *L );
 static int hook_commsell( lua_State *L );
+static int hook_gather( lua_State *L );
 static int hook_outfitbuy( lua_State *L );
 static int hook_outfitsell( lua_State *L );
 static int hook_shipbuy( lua_State *L );
@@ -72,6 +73,7 @@ static const luaL_Reg hook_methods[] = {
    { "timer", hook_timer },
    { "date", hook_date },
    { "comm_buy", hook_commbuy },
+   { "gather", hook_gather },
    { "comm_sell", hook_commsell },
    { "outfit_buy", hook_outfitbuy },
    { "outfit_sell", hook_outfitsell },
@@ -547,6 +549,23 @@ static int hook_commsell( lua_State *L )
 {
    unsigned int h;
    h = hook_generic( L, "comm_sell", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hooks the function to the player gatehring any sort of commodity in space.
+ *
+ * The hook receives the name of the commodity and the quantity being gathered.
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc gather( funcname, arg )
+ */
+static int hook_gather( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "gather", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }
