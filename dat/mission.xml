@@ -1041,6 +1041,29 @@
    <planet>Gastan</planet>
   </avail>
  </mission>
+ <mission name="Novice Nebula Research">
+  <lua>zalek/neburesearch/neburesearch_00</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Jorla</planet>
+  </avail>
+ </mission>
+ <mission name="Advanced Nebula Research">
+  <lua>zalek/neburesearch/neburesearch_01</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("Novice Nebula Research")</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Vilati Vilata</planet>
+  </avail>
+ </mission>
  <mission name="The Dvaered Championship">
   <lua>dvaered/championship</lua>
   <flags>
