@@ -4469,7 +4469,7 @@ static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_rewa
             pos.y += (RNGF()*30.-15.);
             vel.x += (RNGF()*20.-10.);
             vel.y += (RNGF()*20.-10.);
-            gatherable_init( com, pos, vel );
+            gatherable_init( com, pos, vel, -1., RNG(1,5) );
          }
       }
    }
