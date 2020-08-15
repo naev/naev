@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # This file reads missions data and maps it
 
 import xml.etree.ElementTree as ET
