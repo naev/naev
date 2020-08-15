@@ -165,6 +165,15 @@
   <flags>
   </flags>
  </event>
+ <event name="Betray General Klank">
+  <lua>dvaered/treason</lua>
+  <trigger>enter</trigger>
+  <chance>100</chance>
+  <cond>system.cur():faction() == faction.get("Dvaered") and player.misnDone("Dvaered Sabotage") == true</cond>
+  <flags>
+   <unique />
+  </flags>
+ </event>
  <event name="Naev Needs You!">
   <lua>naev_needs_YOU</lua>
   <trigger>land</trigger>
