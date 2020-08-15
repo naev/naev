@@ -281,6 +281,7 @@ void equipment_open( unsigned int wid )
    buf = _("Name:\n"
       "Model:\n"
       "Class:\n"
+      "Crew:\n"
       "Value:\n"
       "\n"
       "Mass:\n"
@@ -1536,8 +1537,8 @@ static void equipment_genOutfitList( unsigned int wid )
       snprintf( quantity[i], l, "%d", p );
 
       /* Slot type. */
-      if ((strcmp(outfit_slotName(o),_("NA")) != 0) &&
-            (strcmp(outfit_slotName(o),"NULL") != 0)) {
+      if ( (strcmp(outfit_slotName(o), "N/A") != 0)
+            && (strcmp(outfit_slotName(o), "NULL") != 0) ) {
          typename       = outfit_slotName(o);
          slottype[i]    = malloc( 2 );
          slottype[i][0] = typename[0];
@@ -1632,6 +1633,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          _("%s\n"
          "%s\n"
          "%s\n"
+         "\a%c%s%.0f\a0\n"
          "%s credits\n"
          "\n"
          "%.0f\a0 tonnes\n"
@@ -1653,6 +1655,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       ship->name,
       _(ship->ship->name),
       _(ship_class(ship->ship)),
+      EQ_COMP( ship->crew, ship->ship->crew, 0 ),
       buf2,
       /* Movement. */
       ship->solid->mass,
@@ -1977,7 +1980,7 @@ static void equipment_renameShip( unsigned int wid, char *str )
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    ship = player_getShip(shipname);
-   newname = dialogue_input( _("Ship Name"), 3, 20,
+   newname = dialogue_input( _("Ship Name"), 1, 60,
          _("Please enter a new name for your %s:"), ship->ship->name );
 
    /* Player cancelled the dialogue. */

@@ -243,7 +243,7 @@ const char *outfit_slotName( const Outfit* o )
       case OUTFIT_SLOT_NULL:
          return "NULL";
       case OUTFIT_SLOT_NA:
-         return gettext_noop("NA");
+         return gettext_noop("N/A");
       case OUTFIT_SLOT_STRUCTURE:
          return gettext_noop("Structure");
       case OUTFIT_SLOT_UTILITY:
@@ -266,7 +266,7 @@ const char *outfit_slotSize( const Outfit* o )
 {
    switch( o->slot.size) {
       case OUTFIT_SLOT_SIZE_NA:
-         return "NA";
+         return gettext_noop("N/A");
       case OUTFIT_SLOT_SIZE_LIGHT:
          return gettext_noop("Small");
       case OUTFIT_SLOT_SIZE_MEDIUM:
@@ -282,7 +282,7 @@ const char *slotSize( const OutfitSlotSize o )
 {
    switch( o ) {
       case OUTFIT_SLOT_SIZE_NA:
-         return "NA";
+         return gettext_noop("N/A");
       case OUTFIT_SLOT_SIZE_LIGHT:
          return gettext_noop("Small");
       case OUTFIT_SLOT_SIZE_MEDIUM:

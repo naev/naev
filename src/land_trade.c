@@ -144,13 +144,13 @@ void commodity_update( unsigned int wid, char* str )
    if ((comname==NULL) || (strcmp( comname, _("None") )==0)) {
       credits2str( buf3, player.p->credits, 2 );
       nsnprintf( buf, PATH_MAX,
-         _("NA tonnes\n"
+         _("N/A tonnes\n"
            "\n"
-           "NA credits\n"
+           "N/A credits\n"
            "%d tonnes\n"
            "%s credits\n"
-           "NA credits\n"
-           "NA credits"),
+           "N/A credits\n"
+           "N/A credits"),
          pilot_cargoFree(player.p),
          buf3 );
       window_modifyText( wid, "txtDInfo", buf );

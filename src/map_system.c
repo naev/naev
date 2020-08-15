@@ -904,7 +904,8 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
          
          /* Get slot name. */
          slotname = outfit_slotName( outfits[i] );
-         if ( ( strcmp( slotname,"NA") != 0 ) && ( strcmp( slotname,"NULL" ) != 0) ) {
+         if ( ( strcmp(slotname, "N/A") != 0 )
+               && ( strcmp(slotname, "NULL") != 0 ) ) {
             slottype[i]    = malloc( 2 );
             slottype[i][0] = outfit_slotName( outfits[i] )[0];
             slottype[i][1] = '\0';

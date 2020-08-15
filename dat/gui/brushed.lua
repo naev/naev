@@ -765,7 +765,7 @@ function render( dt )
    gui.radarRender( radar_x + mod_x, radar_y + mod_y )
 
    if lockons > 0 then
-      gfx.renderTex( icon_lockon, 378 + mod_x, 50 + mod_y )
+      gfx.renderTex( icon_lockon, 379 + mod_x, 30 + mod_y )
    end
    if autonav then
       --gfx.renderTex( icon_autonav, 246 + mod_x, 52 + mod_y )
@@ -783,7 +783,7 @@ function render( dt )
    end
 
    --Weapon set indicator
-   gfx.print( false, wset_id, 383 + mod_x, 52 + mod_y, col_text, 12, true )
+   gfx.print( false, wset_id, 383 + mod_x, 72 + mod_y, col_text, 12, true )
 
    --Speed Lights
    local nlights = 11

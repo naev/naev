@@ -119,7 +119,7 @@ function game_of_drones ()
    -- add sth so it is not insta disable with one shot?
    --t_drone:addOutfit("Tricon Zephyr II Engine")
    t_drone:setFaction("Civilian")
-   t_drone:rename(_("Za'lek Prototype"))
+   t_drone:rename(_("Prototype Drone"))
    t_drone:setInvincible(true)
    t_drone:control()
    t_drone:setHilight(true)
@@ -210,14 +210,14 @@ function drone_jumped ()
          tk.msg(title[3],text[8])
       end
       fled = false
-   elseif jumps==2 then
+   elseif jumps == 2 then
       t_drone:setHealth(0,0)
       tk.msg(title[3],text[14])
       misn.finish(false)
    else
       mmarker = misn.markerAdd(system.get(t_sys[3]),"high")
    end
-   jumps = jumps +1
+   jumps = jumps + 1
 end
 
 -- the drone behaves differently depending on through how many systems it has been chased so far
@@ -227,7 +227,7 @@ function chase_of_drones ()
    t_drone:addOutfit("Tricon Zephyr II Engine")
    -- add sth so it is not insta disable with one shot?
    t_drone:setFaction("Civilian")
-   t_drone:rename(_("Za'lek Prototype"))
+   t_drone:rename(_("Prototype Drone"))
    t_drone:control()
    t_drone:setHilight(true)
    t_drone:setVisplayer(true)
@@ -243,7 +243,7 @@ function chase_of_drones ()
       t_drone:setSpeedLimit(t_stats.speed_max*2/3)
    elseif jumps == 2 then
       t_drone:setSpeedLimit(t_stats.speed_max*1/3)
-   elseif jumps >2 then
+   elseif jumps > 2 then
       player.msg(_("Something went terribly wrong here! If you see this message please reload and report a bug in this mission. Thank you!"))
    end
    -- just some moving around, stolen from baron missions ;D

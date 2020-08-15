@@ -3,6 +3,7 @@
  <general>
   <slot>weapon</slot>
   <size>small</size>
+  <license>Medium Weapon License</license>
   <mass>10</mass>
   <price>22000</price>
   <description>The Shredder quite lives up to the name its Dvaered manufacturers gave it. The sheer damage dealing capacity of this weapon makes Dvaered fighters dangerous to engage by ships that aren't substantially larger than they are.</description>

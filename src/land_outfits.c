@@ -331,7 +331,7 @@ static void outfits_genList( unsigned int wid )
 
          /* Get slot name. */
          slotname = outfit_slotName(outfits[i]);
-         if ((strcmp(slotname,"NA") != 0) && (strcmp(slotname,"NULL") != 0)) {
+         if ((strcmp(slotname, "N/A") != 0) && (strcmp(slotname, "NULL") != 0)) {
             slottype[i]    = malloc( 2 );
             slottype[i][0] = outfit_slotName(outfits[i])[0];
             slottype[i][1] = '\0';
@@ -385,15 +385,15 @@ void outfits_update( unsigned int wid, char* str )
       window_disableButton( wid, "btnBuyOutfit" );
       window_disableButton( wid, "btnSellOutfit" );
       nsnprintf( buf, PATH_MAX,
-            _("NA\n"
+            _("N/A\n"
             "\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
+            "N/A\n"
+            "N/A\n"
+            "N/A\n"
             "\n"
-            "NA\n"
-            "NA\n"
-            "NA\n") );
+            "N/A\n"
+            "N/A\n"
+            "N/A\n") );
       window_modifyText( wid, "txtDDesc", buf );
       window_modifyText( wid, "txtOutfitName", _("None") );
       window_modifyText( wid, "txtDescShort", NULL );

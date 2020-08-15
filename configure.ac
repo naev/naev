@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.61])
 AC_INIT([naev],
-        [0.8.-1],
+        [0.8.-2],
         [https://github.com/naev/naev/issues],
         [naev],
         [https://naev.org/])
@@ -159,7 +159,7 @@ AC_MSG_RESULT([$enable_debug])
 
 AS_IF([test "x$enable_debug" != "xno"], [
   AS_IF([test "x$ac_cv_prog_cc_g" = "xyes"], [CFLAGS="$CFLAGS -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -Wredundant-decls -Wno-long-long -Wcast-align -Wformat -Wformat-security"], [])
-  AX_CHECK_COMPILE_FLAG([-Wformat-truncation=0],[CFLAGS="$CFLAGS -Wformat-truncation=0"],[])
+  AX_CHECK_COMPILE_FLAG([-Wformat-truncation=0 -Werror],[CFLAGS="$CFLAGS -Wformat-truncation=0"],[])
   case "$host" in
     *-linux-gnu)
       AC_CHECK_LIB([bfd], [bfd_init], [
