@@ -39,11 +39,9 @@ text[2] = _([["Hold up! Look, the problem is that my grant was not permitted to 
 text[3] = _([["You do not have enough free cargo space to accept this mission!"]])
 text[4] = _([["Great! I'll start to load the sensors into your ship right away. We should be ready to take off soon."]])
 text[5] = _([["So it is not a problem at all? I'm still a student and spent all funds I got on the sensor suit. Thank you for helping me out here! I'll start to load the sensors into your ship right away. We should be ready to take off soon."]])
-text[6] = _([[As you enter your ship you notice dozens of cables of various colors stretched across your ship's corridors. It is a complete mess. Even weirder is the fact that it is less than one period ago that you met the student in the bar. What has he done to your ship?
-    You follow the direction where most of the cable seem to lead to. Finally you find the culprit.]])
+text[6] = _([[As you enter your ship you notice dozens of cables of various colors stretched across your ship's corridors. It is a complete mess. Even weirder is the fact that it is less than one period ago that you met the student in the bar. What has he done to your ship? You follow the direction where most of the cable seem to lead to. Finally you find the culprit.]])
 text[7] = _([["Oh, hello again, Captain! I'm done just by now here, so we can take off whenever you're ready. I have to calibrate the sensors during the flight so there is no need to rush. Our first destination is %s."
-    After asking what he has done to your ship he just answers, "Why, I just installed the sensors as appointed. It should have no unwanted side effects on your ship."]])
-text[8] = _([["Just a complete mess? Haven't you noticed the color coding? Well, I have my own system so it may appears confusing to you. Don't worry, I know exactly what I'm doing!"
+    After asking what he has done to your ship he just answers, "Why, I just installed the sensors as appointed. It should have no unwanted side effects on your ship. Just a complete mess? Haven't you noticed the color coding? Well, I have my own system so it may appears confusing to you. Don't worry, I know exactly what I'm doing!"
     His last words are supposed to be reassuring but instead you realize accepting this mission was not the best idea...]])
 text[9] = _([[After reaching the %s system the student enters your cockpit. As he realized he forgot to even tell you his name he introduces himself as Robert Hofer and claims to be a student of professor Voges himself. You haven't ever heard of that name but it sounds like he is famous within House Za'lek.
     "I will now start with the measurements. The density of the nebula is lower in this sector so that it is less volatile. For the real measurements we have to enter %s. I will tell you once we're done here."]])
@@ -57,7 +55,7 @@ text[12] = _([["Sorry for causing trouble. I'm not quite familiar with the elect
 text[13] = _([["Thank you for your trust! I will try to make it quick. No, wait, I'll rather try to make it without another blackout. Haha!"
     You start to think it was a big mistake to come to the %s system. "Anyway, just fly a circle or something. I will tell you once the scan is complete."]])
 text[14] = _([["And that's it! Now, let's head back to %s."
-    Meanwhile while looking out of your ship's window you think you saw something passing by, like a ship - but no one you've ever seen before. Nothing showed up on your radar although the object passed by very close. You could ask the student about it.]])
+    Meanwhile while looking out of your ship's window you think you saw something passing by, like a ship - but not one you've ever seen before. Nothing showed up on your radar although the object passed by very close. You could ask the student about it.]])
 text[15] = _([["It's very unlikely that there are other ships out there," he replied and adds "It was probably something like an asteroid or a ship wreak floating around here or, most likely, you just imagined it. Focus on the task at hand and bring us back to %s so that I can continue my research!"]])
 text[16] = _([[The student has already started to remove all the cables and sensors inside your ship during the flight back to %s. When you land everything is packed into a couple of crates.
     "Once again, thank you for your help. I still have to analyze the data but it looks promising so far. With these results no one is going to question my theories anymore! Also, I decided to increase your reward due to the trouble I caused."
@@ -138,7 +136,6 @@ end
 function takeoff()
     tk.msg(title[3], text[6])
     tk.msg(title[3], string.format(text[7], t_sys[1]))
-    tk.msg(title[3], text[8])
     hook.rm(thook)
 end
 
