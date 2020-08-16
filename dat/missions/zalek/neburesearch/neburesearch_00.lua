@@ -20,7 +20,7 @@ t_sys[2] = "Arandon"
 bar_desc = _("You see a young scientist talking with some pilots, apparently without success.")
 mtitle = {}
 mtitle[1] = _("Novice Nebula Research")
-misn_reward = _("%s credits and the gratitude of a student")
+misn_reward = _("%s and the gratitude of a student")
 mdesc = {}
 mdesc[1] = _("Go to the %s system.")
 title = {}
@@ -33,7 +33,7 @@ title[6] = _("Shadows in the darkness")
 title[7] = _("Mission Success")
 text = {}
 text[1] = _([["Hello Captain! You are a pilot, right? For my project I require a ship heading to the Sol Nebula. Certainly you must be interested in the proposal of researching the phenomenon that cut us off from mankind's patrimony.
-    As this is the point where any other pilots I asked backed out I should start with my problem; due to some unfortunate circumstances the payment for this mission will be only 50000 credits. But rest assured, you will be mentioned in the acknowledgment section of my next paper!"]])
+    As this is the point where any other pilots I asked backed out I should start with my problem; due to some unfortunate circumstances the payment for this mission will be only %s. But rest assured, you will be mentioned in the acknowledgment section of my next paper!"]])
 text[2] = _([["Hold up! Look, the problem is that my grant was not permitted to the extent that I asked for. Those idiots just don't understand the relevance of my research and cut my funds. Only because I'm still a student they completely underestimate my abilities -- by far!
     Now I spent all my credits on this sensor suit without the possibility to use it. You must know how this feels like. I mean, your ship is obviously in a very bad shape. So why don't you just help me out here?"]])
 text[3] = _([["You do not have enough free cargo space to accept this mission!"]])
@@ -61,7 +61,7 @@ text[14] = _([["And that's it! Now, let's head back to %s."
 text[15] = _([["It's very unlikely that there are other ships out there," he replied and adds "It was probably something like an asteroid or a ship wreak floating around here or, most likely, you just imagined it. Focus on the task at hand and bring us back to %s so that I can continue my research!"]])
 text[16] = _([[The student has already started to remove all the cables and sensors inside your ship during the flight back to %s. When you land everything is packed into a couple of crates.
     "Once again, thank you for your help. I still have to analyze the data but it looks promising so far. With these results no one is going to question my theories anymore! Also, I decided to increase your reward due to the trouble I caused."
-    With these words he gives you a credit chip worth %d credits and heads off. More worth than the money though is the insight that working for the Za'lek will be dangerous and tiresome.]])
+    With these words he gives you a credit chip worth %d and heads off. More worth than the money though is the insight that working for the Za'lek will be dangerous and tiresome.]])
 choice1 = _("Ask")
 choice2 = _("Nevermind")
 
@@ -89,11 +89,11 @@ end
 function accept()
     -- Check for cargo space
     if player.pilot():cargoFree() <  5 then
-        tk.msg(title[1], text[3] )
+        tk.msg(title[1], text[3])
         misn.finish()
     end
     
-    if not tk.yesno(title[1], text[1] ) then
+    if not tk.yesno(title[1], string.format(text[1], creditstring(50000))) then
         if not tk.yesno(title[2], text[2] ) then
             misn.finish()
         else
@@ -108,7 +108,7 @@ function accept()
     
     -- Set up mission information
     misn.setTitle(mtitle[1] )
-    misn.setReward(string.format(misn_reward, numstring(50000)))
+    misn.setReward(string.format(misn_reward, creditstring(50000)))
     misn.setDesc(string.format(mdesc[1], t_sys[1]))
     misn_marker = misn.markerAdd(system.get(t_sys[1]), "low")
     
@@ -127,7 +127,7 @@ end
 function land()
     landed = planet.cur()
     if misn_stage == 3 and landed == homeworld then
-        tk.msg(title[7], string.format(text[16], homeworld:name(), credits))
+        tk.msg(title[7], string.format(text[16], homeworld:name(), creditstring(credits)))
         misn.cargoRm(cargo)
         player.pay(credits)
         misn.markerRm(misn_marker)

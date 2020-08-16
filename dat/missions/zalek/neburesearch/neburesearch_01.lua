@@ -14,7 +14,7 @@ include "dat/scripts/numstring.lua"
 
 bar_desc = _("You see a scientist who is apparently looking for someone.")
 mtitle = _("Advanced Nebula Research")
-misn_reward = _("%s credits")
+misn_reward = _("%s")
 mdesc = _("Escort the transport ship to the %s in the %s system. Make sure to stay close to the transport ship and wait until they jumped out of the system safely.")
 title = {}
 title[1] = _("Bar")
@@ -38,7 +38,7 @@ text[5] = _([[Dr. Mensing  pauses, apparently choosing her words with care.
 text[6] = _([["The situation would have escalated anyway." argues Dr. Mensing, this time directly speaking towards you.
     "I must admit, it is suspicious for a refitted transport ship with such advanced sensor suits to show up in Dvaered space. I haven't considered this point.
     I'm counting on you, %s. Please help us."]])
-text[7] = _([[After leaving the ship you meet up with Dr. Mensing who hands you over a chip worth %d credits and thanks you for your help.
+text[7] = _([[After leaving the ship you meet up with Dr. Mensing who hands you over a chip worth %s and thanks you for your help.
     "We'll be able to return to Jorla safely from here on. You did science a great favor today. I'm sure the data we collected will help us to understand the cause for the Sol nebula's volatility."]])
 
 refueltitle = _("A short break")
@@ -103,7 +103,7 @@ function accept()
     -- Set up mission information
     destsys = t_sys[1]
     misn.setTitle(mtitle)
-    misn.setReward(string.format(misn_reward, numstring(credits)))
+    misn.setReward(string.format(misn_reward, creditstring(credits)))
     misn.setDesc(string.format(mdesc, station, t_sys[5]:name()))
     nextsys = getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
     
@@ -179,7 +179,7 @@ function land()
         station_visited = true
         misn.osdActive(3)
     elseif planet.cur() == planet.get(homeworld) then
-        tk.msg(title[5], string.format(text[7], credits))
+        tk.msg(title[5], string.format(text[7], creditstring(credits)))
         player.pay(credits)
         misn.finish(true)
     end
