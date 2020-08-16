@@ -1047,6 +1047,7 @@
    <unique />
   </flags>
   <avail>
+   <priority>4</priority>
    <chance>100</chance>
    <location>Bar</location>
    <planet>Jorla</planet>
@@ -1058,7 +1059,8 @@
    <unique />
   </flags>
   <avail>
-   <cond>player.misnDone("Novice Nebula Research")</cond>
+   <priority>4</priority>
+   <done>Novice Nebula Research</done>
    <chance>100</chance>
    <location>Bar</location>
    <planet>Vilati Vilata</planet>
