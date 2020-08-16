@@ -1,4 +1,4 @@
-![Nightly Build](https://github.com/naev/naev/workflows/Nightly%20Build/badge.svg) ![CI](https://github.com/naev/naev/workflows/CI/badge.svg)
+![Nightly Release](https://github.com/naev/naev/workflows/Nightly%20Release/badge.svg) ![CI](https://github.com/naev/naev/workflows/CI/badge.svg)
 # NAEV README
 
 Naev is a 2D space trading and combat game, taking inspiration from the Escape
