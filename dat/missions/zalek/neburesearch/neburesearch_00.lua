@@ -29,7 +29,7 @@ title[2] = _("Please...")
 title[3] = _("What a mess...")
 title[4] = _("Ready")
 title[5] = _("Technical problems")
-title[6] = _("Shadows in the darkness")
+title[6] = _("Measurements completed")
 title[7] = _("Mission Success")
 text = {}
 text[1] = _([["Hello Captain! You are a pilot, right? For my project I require a ship heading to the Sol Nebula. Certainly you must be interested in the proposal of researching the phenomenon that cut us off from mankind's patrimony.
@@ -54,12 +54,10 @@ text[12] = _([["Sorry for causing trouble. I'm not quite familiar with the elect
     It would probably be the best to just drop him off on the next planet...]])
 text[13] = _([["Thank you for your trust! I will try to make it quick. No, wait, I'll rather try to make it without another blackout. Haha!"
     You start to think it was a big mistake to come to the %s system. "Anyway, just fly a circle or something. I will tell you once the scan is complete."]])
-text[14] = _([["And that's it! Now, let's head back to %s."
-    Meanwhile while looking out of your ship's window you think you saw something passing by, like a ship - but not one you've ever seen before. Nothing showed up on your radar although the object passed by very close. You could ask the student about it.]])
-text[15] = _([["It's very unlikely that there are other ships out there," he replied and adds "It was probably something like an asteroid or a ship wreak floating around here or, most likely, you just imagined it. Focus on the task at hand and bring us back to %s so that I can continue my research!"]])
-text[16] = _([[The student has already started to remove all the cables and sensors inside your ship during the flight back to %s. When you land everything is packed into a couple of crates.
+text[14] = _([["And that's it! Now, let's head back to %s."]])
+text[15] = _([[The student has already started to remove all the cables and sensors inside your ship during the flight back to %s. When you land everything is packed into a couple of crates.
     "Once again, thank you for your help. I still have to analyze the data but it looks promising so far. With these results no one is going to question my theories anymore! Also, I decided to increase your reward due to the trouble I caused."
-    With these words he gives you a credit chip worth %d and heads off. More worth than the money though is the insight that working for the Za'lek will be dangerous and tiresome.]])
+    With these words he gives you a credit chip worth %s and heads off. More worth than the money though is the insight that working for the Za'lek will be dangerous and tiresome.]])
 choice1 = _("Ask")
 choice2 = _("Nevermind")
 
@@ -125,7 +123,7 @@ end
 function land()
     landed = planet.cur()
     if misn_stage == 3 and landed == homeworld then
-        tk.msg(title[7], string.format(text[16], homeworld:name(), creditstring(credits)))
+        tk.msg(title[7], string.format(text[15], homeworld:name(), creditstring(credits)))
         misn.cargoRm(cargo)
         player.pay(credits)
         misn.markerRm(misn_marker)
@@ -192,24 +190,11 @@ end
 
 function beginSecondScan()
     tk.msg(title[4], string.format(text[13], t_sys[2]))
-    ghost = pilot.add("Ghost Ship", nil, system.get(t_sys[1]))[1]
-    ghost:setInvincible()
-    ghost:control()
---    ghost:follow(player.pilot())
-    moveto()
-    hook.timer(5000, "moveto")
     hook.timer(30000, "endSecondScan")
 end
 
-function moveto()
-    ghost:goto(ps:pos(), false, false)
-    hook.timer(5000, "moveto")
-end
-
 function endSecondScan()
-    if tk.choice(title[6], string.format(text[14], homeworld:name()), choice1, choice2) == 1 then
-        tk.msg(title[6], string.format(text[15], homeworld:name()))
-    end
+    tk.msg(title[6], string.format(text[14], homeworld:name()))
     misn_stage = 3
     misn.setDesc(string.format(mdesc[1], homeworld:name()))
     misn.markerMove(misn_marker, homeworld_sys)
