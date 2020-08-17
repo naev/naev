@@ -146,7 +146,7 @@ void map_system_close( unsigned int wid, char *str ) {
 static int map_system_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 {
    (void)mod;
-   if ((key == SDLK_m)) {
+   if (key == SDLK_m) {
       map_system_close( wid, NULL );
       return 1;
    }
