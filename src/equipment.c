@@ -186,7 +186,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
    window_dimWindow( wid, w, h );
 
    /* Calculate image array dimensions. */
-   ssw = 200 + (*w-800);
+   ssw = 120 + (*w-800);
    ssh = (*h - 100);
    if (sw != NULL)
       *sw = ssw;
@@ -281,6 +281,7 @@ void equipment_open( unsigned int wid )
    buf = _("Name:\n"
       "Model:\n"
       "Class:\n"
+      "Crew:\n"
       "Value:\n"
       "\n"
       "Mass:\n"
@@ -302,15 +303,15 @@ void equipment_open( unsigned int wid )
    y = -190;
    window_addText( wid, x, y,
          100, h+y, 0, "txtSDesc", &gl_smallFont, NULL, buf );
-   x += 100;
+   x += 150;
    window_addText( wid, x, y,
          w - x - 20, h+y, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
 
    /* Generate lists. */
    window_addText( wid, 30, -20,
-         130, 200, 0, "txtShipTitle", &gl_defFont, NULL, _("Available Ships") );
+         130, 500, 0, "txtShipTitle", &gl_defFont, NULL, _("Available Ships") );
    window_addText( wid, 30, -40-sh-20,
-         130, 200, 0, "txtOutfitTitle", &gl_defFont, NULL, _("Available Outfits") );
+         130, 500, 0, "txtOutfitTitle", &gl_defFont, NULL, _("Available Outfits") );
    equipment_genLists( wid );
 
    /* Separator. */
@@ -551,7 +552,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    dc = &cGrey60;
    w = 120;
    h = 20;
-   x = bx + 10.;
+   x = bx + 50.;
    y = by + bh - 30 - h;
 
    gl_printMidRaw( &gl_smallFont, w,
@@ -590,7 +591,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
          (1. - p->speed / p->speed_base) * 100);
    }
 
-   x += w/2.;
+   x += w/2. + 50;
 
    /* Render ship graphic. */
    equipment_renderShip( bx, by, bw, bh, x, y, p );
@@ -1536,8 +1537,8 @@ static void equipment_genOutfitList( unsigned int wid )
       snprintf( quantity[i], l, "%d", p );
 
       /* Slot type. */
-      if ((strcmp(outfit_slotName(o),_("NA")) != 0) &&
-            (strcmp(outfit_slotName(o),"NULL") != 0)) {
+      if ( (strcmp(outfit_slotName(o), "N/A") != 0)
+            && (strcmp(outfit_slotName(o), "NULL") != 0) ) {
          typename       = outfit_slotName(o);
          slottype[i]    = malloc( 2 );
          slottype[i][0] = typename[0];
@@ -1632,6 +1633,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          _("%s\n"
          "%s\n"
          "%s\n"
+         "\a%c%s%.0f\a0\n"
          "%s credits\n"
          "\n"
          "%.0f\a0 tonnes\n"
@@ -1653,6 +1655,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       ship->name,
       _(ship->ship->name),
       _(ship_class(ship->ship)),
+      EQ_COMP( ship->crew, ship->ship->crew, 0 ),
       buf2,
       /* Movement. */
       ship->solid->mass,
@@ -1673,7 +1676,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       EQ_COMP( ship->energy_regen, ship->ship->energy_regen, 0 ),
       /* Misc. */
       pilot_cargoUsed(ship), EQ_COMP( cargo, ship->ship->cap_cargo, 0 ),
-      ship->fuel, pilot_getJumps(ship),
+      ship->fuel_max, ship->fuel_max / ship->fuel_consumption,
       pilot_checkSpaceworthy(ship) ? 'r' : '0', errorReport );
    window_modifyText( wid, "txtDDesc", buf );
 
@@ -1977,7 +1980,7 @@ static void equipment_renameShip( unsigned int wid, char *str )
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    ship = player_getShip(shipname);
-   newname = dialogue_input( _("Ship Name"), 3, 20,
+   newname = dialogue_input( _("Ship Name"), 1, 60,
          _("Please enter a new name for your %s:"), ship->ship->name );
 
    /* Player cancelled the dialogue. */

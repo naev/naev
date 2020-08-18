@@ -387,12 +387,12 @@ static const char* ss_printD_colour( double d, const ShipStatsLookup *sl )
 {
    if (sl->inverted) {
       if (d < 0.)
-         return "D";
+         return "g";
       return "r";
    }
 
    if (d > 0.)
-      return "D";
+      return "g";
    return "r";
 }
 /**
@@ -402,12 +402,12 @@ static const char* ss_printI_colour( int i, const ShipStatsLookup *sl )
 {
    if (sl->inverted) {
       if (i < 0)
-         return "D";
+         return "g";
       return "r";
    }
 
    if (i > 0)
-      return "D";
+      return "g";
    return "r";
 }
 

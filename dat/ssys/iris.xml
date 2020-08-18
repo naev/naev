@@ -13,7 +13,8 @@
  <assets>
   <asset>Aluben</asset>
   <asset>Tenal-P</asset>
-  <asset>Virtual Trader Local</asset>
+  <asset>Virtual Trader Area</asset>
+  <asset>Virtual Independent Trader Local</asset>
  </assets>
  <jumps>
   <jump target="Behar">

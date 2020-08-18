@@ -54,7 +54,9 @@
 /*
  * Requirements
  */
-#define OPENGL_REQ_MULTITEX      2 /**< 2 is minimum OpenGL 1.2 must have */
+#define OPENGL_WINDOW_MIN_HEIGHT  720 /**< Minimum window height. */
+#define OPENGL_WINDOW_MIN_WIDTH   960 /**< Minimum window width. */
+#define OPENGL_REQ_MULTITEX         2 /**< 2 is minimum OpenGL 1.2 must have */
 
 
 glInfo gl_screen; /**< Gives data of current opengl settings. */
@@ -505,16 +507,18 @@ static int gl_defState (void)
  */
 static int gl_setupScaling (void)
 {
-   int minwh;
+   double scalew, scaleh;
    /* New window is real window scaled. */
    gl_screen.nw = (double)gl_screen.rw * gl_screen.scale;
    gl_screen.nh = (double)gl_screen.rh * gl_screen.scale;
    /* Small windows get handled here. */
-   minwh = MIN(gl_screen.nw, gl_screen.nh);
-   if (minwh < 600) {
+   if ((gl_screen.nw < OPENGL_WINDOW_MIN_WIDTH) ||
+         (gl_screen.nh < OPENGL_WINDOW_MIN_HEIGHT)) {
       if (gl_screen.scale != 1.)
          DEBUG(_("Screen size too small, upscaling..."));
-      gl_screen.scale = (double)minwh / 600.;
+      scalew = OPENGL_WINDOW_MIN_WIDTH / (double)gl_screen.nw;
+      scaleh = OPENGL_WINDOW_MIN_HEIGHT / (double)gl_screen.nh;
+      gl_screen.scale *= MAX( scalew, scaleh );
       /* Rescale. */
       gl_screen.nw = (double)gl_screen.rw * gl_screen.scale;
       gl_screen.nh = (double)gl_screen.rh * gl_screen.scale;

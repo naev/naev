@@ -327,8 +327,8 @@ function pilot_death_dv ()
 
       job_done = true
       local standing = faction.get("Dvaered"):playerStanding()
-      if standing >= 0 then
-         faction.get("Dvaered"):setPlayerStanding( -1 )
+      if standing > -20 then
+         faction.get("Dvaered"):setPlayerStanding( -20 )
       end
       misn.osdActive( 3 )
       misn.markerRm( marker )

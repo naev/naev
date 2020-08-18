@@ -75,7 +75,7 @@ void q_destroy( Queue q )
 #endif /* DEBUGGING */
 
    /* Free all the data. */
-   while(q->first != NULL)
+   while (q->first != NULL)
       q_dequeue(q);
 
    free(q);

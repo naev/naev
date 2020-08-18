@@ -752,6 +752,7 @@ static int gl_printMidRawBase( const glFont *ft_font, const int width,
    glFontStash *stsh = gl_fontGetStash( ft_font );
 
    /* limit size */
+   n = 0;
    ret = font_limitSize( stsh, &n, text, width );
    x += (double)(width - n)/2.;
 
@@ -872,6 +873,7 @@ static int gl_printTextRawBase( const glFont *ft_font,
    /* Clears restoration. */
    gl_printRestoreClear();
 
+   ch = '\0';
    i = 0;
    s = 0;
    p = 0; /* where we last drew up to */

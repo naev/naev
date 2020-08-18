@@ -169,9 +169,9 @@ function jumpNext ()
       chelsea:taskClear()
       chelsea:control()
       if system.cur() == missys then
-         chelsea:land( misplanet )
+         chelsea:land( misplanet, true )
       else
-         chelsea:hyperspace( getNextSystem( system.cur(), missys ) )
+         chelsea:hyperspace( getNextSystem( system.cur(), missys ), true )
       end
    end
 end
@@ -250,7 +250,7 @@ function chelsea_attacked ()
    if chelsea ~= nil and chelsea:exists() then
       chelsea:control( false )
       if distress_timer_hook ~= nil then hook.rm( distress_timer_hook ) end
-      distress_timer_hook = hook.timer( 5000, "chelsea_distress_timer" )
+      distress_timer_hook = hook.timer( 1000, "chelsea_distress_timer" )
    end
 end
 

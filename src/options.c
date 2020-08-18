@@ -29,7 +29,7 @@
 #include "player.h"
 
 
-#define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
+#define BUTTON_WIDTH    200 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
 
 #define OPT_WIN_GAMEPLAY   0
@@ -110,7 +110,7 @@ void opt_menu (void)
    int w, h;
 
    /* Dimensions. */
-   w = 600;
+   w = 680;
    h = 525;
 
    /* Create window and tabs. */
@@ -272,7 +272,7 @@ static void opt_gameplay( unsigned int wid )
 
 
    /* Compiletime stuff. */
-   cw = (w-60)/2;
+   cw = (w-60)/2 - 40;
    y  = by;
    x  = 20;
 #if defined ENABLE_NLS && ENABLE_NLS
@@ -332,10 +332,11 @@ static void opt_gameplay( unsigned int wid )
 
 
    /* Options. */
+   x = 20 + cw + 20;
    y  = by;
+   cw += 80;
 
    /* Autonav abort. */
-   x = 20 + cw + 20;
    window_addText( wid, x+65, y, 150, 150, 0, "txtAAutonav",
          NULL, NULL, _("Stop Speedup At:") );
    y -= 20;
@@ -377,8 +378,8 @@ static void opt_gameplay( unsigned int wid )
    window_addInput( wid, -50, y, 40, 20, "inpTMax", 4, 1, NULL );
 
    /* Restart text. */
-   window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
-         30, 0, "txtRestart", &gl_smallFont, NULL, NULL );
+   window_addText( wid, 20, 20 + BUTTON_HEIGHT,
+         w - 40, 30, 0, "txtRestart", &gl_smallFont, NULL, NULL );
 
    /* Update. */
    opt_gameplayUpdate( wid, NULL );
@@ -535,7 +536,7 @@ static void menuKeybinds_getDim( unsigned int wid, int *w, int *h,
 
    /* Get list dimensions. */
    if (lw != NULL)
-      *lw = *w - 2*BUTTON_WIDTH - 80;
+      *lw = *w - BUTTON_WIDTH - 60;
    if (lh != NULL)
       *lh = *h - 60;
 }
@@ -554,12 +555,12 @@ static void opt_keybinds( unsigned int wid )
    /* Close button. */
    window_addButton( wid, -20, 20, bw, bh,
          "btnClose", _("OK"), opt_OK );
-   /* Set button. */
-   window_addButton( wid, -20 - bw - 20, 20, bw, bh,
-         "btnSet", _("Set Key"), opt_setKey );
    /* Restore deafaults button. */
-   window_addButton( wid, -20, 20+bh+20, bw, bh,
+   window_addButton( wid, -20, 40 + bh, bw, bh,
          "btnDefaults", _("Defaults"), opt_keyDefaults );
+   /* Set button. */
+   window_addButton( wid, -20, 60 + 2*bh, bw, bh,
+         "btnSet", _("Set Key"), opt_setKey );
 
    /* Text stuff. */
    window_addText( wid, 20+lw+20, -40, w-(20+lw+20), 30, 1, "txtName",
@@ -938,8 +939,8 @@ static void opt_audio( unsigned int wid )
          music_getVolume(), opt_setAudioLevel );
 
    /* Restart text. */
-   window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
-         30, 0, "txtRestart", &gl_smallFont, NULL, NULL );
+   window_addText( wid, 20, 20 + BUTTON_HEIGHT,
+         w - 40, 30, 0, "txtRestart", &gl_smallFont, NULL, NULL );
 
    opt_audioUpdate(wid);
 }
@@ -1350,8 +1351,8 @@ static void opt_video( unsigned int wid )
          "chkMinimize", _("Minimize on focus loss"), NULL, conf.minimize );
 
    /* Restart text. */
-   window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
-         30, 0, "txtRestart", &gl_smallFont, NULL, NULL );
+   window_addText( wid, 20, 20 + BUTTON_HEIGHT,
+         w - 40, 30, 0, "txtRestart", &gl_smallFont, NULL, NULL );
 }
 
 /**

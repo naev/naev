@@ -36,7 +36,7 @@
 #  define DEBUGGING
 #endif /* DEBUGGING */
 #else /* DEBUG */
-#  define DEBUG(str, args...) do {;} while(0)
+#  define DEBUG(str, args...) do {;} while (0)
 #endif /* DEBUG */
 
 

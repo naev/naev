@@ -15,8 +15,8 @@ function create ()
    -- Lines to annoy the player. Shouldn't be too common or Gamma Polaris and such get inundated.
    r = rnd.rnd(0,20)
    if r == 0 then
-     ai.pilot():broadcast(_("The Empire is watching you."))
-    elseif r == 1 then
+      ai.pilot():broadcast(_("The Empire is watching you."))
+   elseif r == 1 then
       ai.pilot():broadcast(_("The Emperor sees all."))
    end
 
@@ -81,7 +81,7 @@ function taunt ( target, offense )
       }
    else
       taunts = {
-            _("You dare attack me!"),
+            _("You dare attack me?!"),
             _("You are no match for the Empire!"),
             _("The Empire will have your head!"),
             _("You'll regret that!"),

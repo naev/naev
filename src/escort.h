@@ -27,6 +27,7 @@ int escorts_hold( Pilot *parent );
 int escorts_return( Pilot *parent );
 int escorts_clear( Pilot *parent );
 int escorts_jump( Pilot *parent, JumpPoint *jp );
+int escort_playerCommand( Pilot *e );
 
 
 #endif /* ESCORT_H */

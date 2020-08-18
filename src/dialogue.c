@@ -381,9 +381,9 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
    window_addText( wid, 20, -40, w-40, h,  0, "txtYesNo",
          font, NULL, msg );
    /* buttons */
-   window_addButtonKey( wid, w/2-50-10, 20, 50, 30, "btnYes", _("Yes"),
+   window_addButtonKey( wid, w/2-100-10, 20, 100, 30, "btnYes", _("Yes"),
          dialogue_YesNoClose, SDLK_y );
-   window_addButtonKey( wid, w/2+10, 20, 50, 30, "btnNo", _("No"),
+   window_addButtonKey( wid, w/2+10, 20, 100, 30, "btnNo", _("No"),
          dialogue_YesNoClose, SDLK_n );
 
    /* tricky secondary loop */
@@ -559,7 +559,7 @@ static void dialogue_listClose( unsigned int wid, char* str )
  */
 static void select_call_wrapper(unsigned int wid, char* wgtname)
 {
-   if(input_dialogue.item_select_cb)
+   if (input_dialogue.item_select_cb)
       input_dialogue.item_select_cb(wid, wgtname,input_dialogue.x,
             input_dialogue.y, input_dialogue.w,
             input_dialogue.h);
@@ -686,7 +686,7 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
       h = MAX( 300, list_height );
 
    h = MIN( (SCREEN_H*2)/3, h );
-   w = MAX( list_width + 60, 200 );
+   w = MAX( list_width + 60, 500 );
 
    winw = w + extrawidth;
    winh = MAX( h, minheight );
@@ -701,10 +701,10 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
    window_setAccept( wid, dialogue_listClose );
    window_setCancel( wid, dialogue_listCancel );
 
-   if(add_widgets)
+   if (add_widgets)
       add_widgets(wid, w, 0, winw, winh);
 
-   if(select_call) {
+   if (select_call) {
       input_dialogue.x = w;
       input_dialogue.y = 0;
       input_dialogue.w = winw;
@@ -718,9 +718,9 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
          "lstDialogue", items, nitems, 0, select_call_wrapper );
 
    /* Create the buttons. */
-   window_addButton( wid, -20, 20, 60, 30,
+   window_addButton( wid, -20, 20, 120, 30,
          "btnOK", _("OK"), dialogue_listClose );
-   window_addButton( wid, -20-60-20, 20, 60, 30,
+   window_addButton( wid, -20-120-20, 20, 120, 30,
          "btnCancel", _("Cancel"), dialogue_listCancel );
 
    dialogue_open++;

@@ -71,8 +71,9 @@ void commodity_exchange_open( unsigned int wid )
          _("Sell"), commodity_sell, SDLK_s );
 
       /* cust draws the modifier : # of tons one click buys or sells */
-   window_addCust( wid, -40-((LAND_BUTTON_WIDTH-20)/2), 60+ 2*LAND_BUTTON_HEIGHT,
-         (LAND_BUTTON_WIDTH-20)/2, LAND_BUTTON_HEIGHT, "cstMod", 0, commodity_renderMod, NULL, NULL );
+   window_addCust( wid, -20, 50 + 2*LAND_BUTTON_HEIGHT,
+         (LAND_BUTTON_WIDTH-20)/2, gl_smallFont.h + 6, "cstMod",
+         0, commodity_renderMod, NULL, NULL );
 
    /* store gfx */
    window_addRect( wid, 20+iw+20+(LAND_BUTTON_WIDTH-128)/2, -40,
@@ -143,13 +144,13 @@ void commodity_update( unsigned int wid, char* str )
    if ((comname==NULL) || (strcmp( comname, _("None") )==0)) {
       credits2str( buf3, player.p->credits, 2 );
       nsnprintf( buf, PATH_MAX,
-         _("NA tonnes\n"
+         _("N/A tonnes\n"
            "\n"
-           "NA credits\n"
+           "N/A credits\n"
            "%d tonnes\n"
            "%s credits\n"
-           "NA credits\n"
-           "NA credits"),
+           "N/A credits\n"
+           "N/A credits"),
          pilot_cargoFree(player.p),
          buf3 );
       window_modifyText( wid, "txtDInfo", buf );

@@ -490,6 +490,8 @@ void input_getKeybindDisplay( const char *keybind, char *buf, int len )
    SDL_Keymod mod;
 
    /* Get the keybinding. */
+   type =  KEYBIND_NULL;
+   mod = NMOD_NONE;
    key = input_getKeybind( keybind, &type, &mod );
 
    /* Handle type. */

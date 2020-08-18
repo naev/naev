@@ -156,10 +156,6 @@
   <item>Unicorp Jammer</item>
   <item>Milspec Jammer</item>
   <item>Sensor Array</item>
-  <item>GUI - Slim</item>
-  <item>GUI - Brushed</item>
-  <item>GUI - Legacy</item>
-  <item>GUI - Slimv2</item>
   <item>Jump Scanner</item>
   <item>Lancelot Fighter Bay</item>
   <item>Empire Lancelot Fighter Bay</item>
@@ -175,8 +171,6 @@
   <item>Medium Combat Vessel License</item>
   <item>Heavy Combat Vessel License</item>
   <item>Mercenary License</item>
-  <item>Tricon Experimental Engine License</item>
-  <item>Pirate Landing Pass</item>
   <item>Previous Generation Small Systems</item>
   <item>Unicorp PT-100 Core System</item>
   <item>Unicorp PT-200 Core System</item>
@@ -357,6 +351,7 @@
   <item>Admonisher</item>
   <item>Pirate Admonisher</item>
   <item>Empire Admonisher</item>
+  <item>Za'lek Imp</item>
   <item>Za'lek Sting</item>
   <item>Thurion Virtuosity</item>
   <item>Vigilance</item>
@@ -376,7 +371,7 @@
   <item>Proteron Archimedes</item>
   <item>Soromid Ira</item>
   <item>Za'lek Mephisto</item>
-  <item>Za'lek Prototype Cruiser</item>
+  <item>Za'lek Prototype</item>
   <item>Hawking</item>
   <item>Empire Hawking</item>
   <item>Sirius Dogma</item>
@@ -781,9 +776,10 @@
   <item>Empire Shark</item>
  </tech>
  <tech name="FLF Ships">
-  <item>FLF Lancelot</item>
-  <item>FLF Vendetta</item>
-  <item>FLF Pacifier</item>
+  <item>Hyena</item>
+  <item>Lancelot</item>
+  <item>Vendetta</item>
+  <item>Pacifier</item>
  </tech>
  <tech name="Dvaered Military Ships">
   <item>Dvaered Ancestor</item>
@@ -833,10 +829,13 @@
   <item>Thurion Certitude</item>
  </tech>
  <tech name="Za'lek Military Ships">
+  <item>Za'lek Imp</item>
   <item>Za'lek Sting</item>
   <item>Za'lek Demon</item>
   <item>Za'lek Mephisto</item>
+  <item>Za'lek Prototype</item>
   <item>Za'lek Diablo</item>
+  <item>Za'lek Hephaestus</item>
  </tech>
  <tech name="Thurion Outfits">
   <item>Energy Dart</item>

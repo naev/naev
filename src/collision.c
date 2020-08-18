@@ -48,7 +48,7 @@ void LoadPolygon( CollPoly* polygon, xmlNodePtr node )
          polygon->x = malloc( sizeof(float) );
          polygon->xmin = 0;
          polygon->xmax = 0;
-         while( ch != NULL ) {
+         while ( ch != NULL ) {
             i++;
             polygon->x = realloc( polygon->x, sizeof(float) * i );
             d = atof(ch);
@@ -66,7 +66,7 @@ void LoadPolygon( CollPoly* polygon, xmlNodePtr node )
          polygon->y = malloc( sizeof(float) );
          polygon->ymin = 0;
          polygon->ymax = 0;
-         while( ch != NULL ) {
+         while ( ch != NULL ) {
             i++;
             polygon->y = realloc( polygon->y, sizeof(float) * i );
             d = atof(ch);
@@ -136,8 +136,8 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
    by2 = by1 + bt->sh - 1;
 
    /* check if bounding boxes intersect */
-   if((bx2 < ax1) || (ax2 < bx1)) return 0;
-   if((by2 < ay1) || (ay2 < by1)) return 0;
+   if ((bx2 < ax1) || (ax2 < bx1)) return 0;
+   if ((by2 < ay1) || (ay2 < by1)) return 0;
 
    /* define the remaining binding box */
    inter_x0 = MAX( ax1, bx1 );
@@ -215,8 +215,8 @@ int CollideSpritePolygon( const CollPoly* at, const Vector2d* ap,
    by2 = by1 + bt->sh - 1;
 
    /* check if bounding boxes intersect */
-   if((bx2 < ax1) || (ax2 < bx1)) return 0;
-   if((by2 < ay1) || (ay2 < by1)) return 0;
+   if ((bx2 < ax1) || (ax2 < bx1)) return 0;
+   if ((by2 < ay1) || (ay2 < by1)) return 0;
 
    /* define the remaining binding box */
    inter_x0 = MAX( ax1, bx1 );
@@ -281,8 +281,8 @@ int CollidePolygon( const CollPoly* at, const Vector2d* ap,
    by2 = (int)VY(*bp) + (int)(bt->ymax);
 
    /* check if bounding boxes intersect */
-   if((bx2 < ax1) || (ax2 < bx1)) return 0;
-   if((by2 < ay1) || (ay2 < by1)) return 0;
+   if ((bx2 < ax1) || (ax2 < bx1)) return 0;
+   if ((by2 < ay1) || (ay2 < by1)) return 0;
 
    /* define the remaining binding box */
    inter_x0 = MAX( ax1, bx1 );
@@ -642,6 +642,7 @@ int CollideLinePolygon( const Vector2d* ap, double ad, double al,
    ep[1] = ap->y + al*sin(ad);
 
    real_hits = 0;
+   vectnull( &tmp_crash );
 
    /* Check if the beginning point is inside polygon */
    if ( pointInPolygon( bt, bp, (float) ap->x, (float) ap->y ) ) {

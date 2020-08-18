@@ -26,6 +26,7 @@
 #include "nlua_player.h"
 #include "nlua_tk.h"
 #include "nlua_faction.h"
+#include "nlua_spfx.h"
 #include "nlua_system.h"
 #include "nlua_tex.h"
 #include "nlua_camera.h"
@@ -129,6 +130,7 @@ int misn_loadLibs( nlua_env env )
    nlua_loadTex(env);
    nlua_loadBackground(env);
    nlua_loadMusic(env);
+   nlua_loadSpfx(env);
    nlua_loadTk(env);
    return 0;
 }
@@ -673,7 +675,7 @@ static int misn_cargoAdd( lua_State *L )
    cargo = commodity_get( cname );
 
    /* Check if the cargo exists. */
-   if(cargo == NULL) {
+   if (cargo == NULL) {
       NLUA_ERROR(L, _("Cargo '%s' not found."), cname);
       return 0;
    }

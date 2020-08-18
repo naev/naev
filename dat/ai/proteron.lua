@@ -12,6 +12,12 @@ function create ()
    -- Not too many credits.
    ai.setcredits( rnd.rnd(ai.pilot():ship():price()/300, ai.pilot():ship():price()/70) )
 
+   -- Lines to annoy the player.
+   r = rnd.rnd(0,20)
+   if r == 0 then
+      ai.pilot():broadcast(_("The Proteron are watching you."))
+   end
+
    -- Get refuel chance
    p = player.pilot()
    if p:exists() then
@@ -33,12 +39,12 @@ function create ()
    -- See if can be bribed
    if rnd.rnd() > 0.6 then
       mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (500. * rnd.rnd() + 1750.)
-      mem.bribe_prompt = string.format(_("\"House Proteron can always use some income. %d credits and you were never here.\""), mem.bribe )
+      mem.bribe_prompt = string.format(_("\"The Proteron can always use some income. %d credits and you were never here.\""), mem.bribe )
       mem.bribe_paid = _("\"Get lost before I have to dispose of you.\"")
    else
      bribe_no = {
             _("\"You won't buy your way out of this one.\""),
-            _("\"House Proteron likes to make examples out of scum like you.\""),
+            _("\"We like to make examples out of scum like you.\""),
             _("\"You've made a huge mistake.\""),
             _("\"Bribery carries a harsh penalty, scum.\""),
             _("\"I'm not interested in your blood money!\""),
@@ -65,19 +71,22 @@ function taunt ( target, offense )
    -- some taunts
    if offense then
       taunts = {
-            _("There is no room in this universe for scum like you!"),
-            _("House Proteron will enjoy your death!"),
-            _("Your head will make a fine addition to my collection!"),
-            _("None survive the wrath of House Proteron!"),
-            _("Enjoy your last moments, criminal!")
+            _("Animals like you don't deserve to live!"),
+            _("Begone from this universe, inferior scum!"),
+            _("We will cleanse you and all other scum from this universe!"),
+            _("Enemies of the state will not be tolerated!"),
+            _("Long live the Proteron!"),
+            _("War is peace!"),
+            _("Freedom is slavery!"),
       }
    else
       taunts = {
-            _("You dare attack me!"),
-            _("You are no match for House Proteron!"),
-            _("The Empire will have your head!"),
+            _("How dare you attack the Proteron?!"),
+            _("I will have your head!"),
             _("You'll regret that!"),
-            _("That was a fatal mistake!")
+            _("Your fate has been sealed, dissident!"),
+            _("You will pay for your treason!"),
+            _("Die along with the old Empire!"),
       }
    end
 

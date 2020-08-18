@@ -43,6 +43,7 @@ static int systemL_jumps( lua_State *L );
 static int systemL_asteroid( lua_State *L );
 static int systemL_asteroidPos( lua_State *L );
 static int systemL_asteroidDestroyed( lua_State *L );
+static int systemL_addGatherable( lua_State *L );
 static int systemL_presences( lua_State *L );
 static int systemL_planets( lua_State *L );
 static int systemL_presence( lua_State *L );
@@ -66,8 +67,9 @@ static const luaL_Reg system_methods[] = {
    { "adjacentSystems", systemL_adjacent },
    { "jumps", systemL_jumps },
    { "asteroid", systemL_asteroid },
-   { "asteroidpos", systemL_asteroidPos },
-   { "asteroiddestroyed", systemL_asteroidDestroyed },
+   { "asteroidPos", systemL_asteroidPos },
+   { "asteroidDestroyed", systemL_asteroidDestroyed },
+   { "addGatherable", systemL_addGatherable },
    { "presences", systemL_presences },
    { "planets", systemL_planets },
    { "presence", systemL_presence },
@@ -503,7 +505,7 @@ static int systemL_jumpPath( lua_State *L )
 /**
  * @brief Gets all the adjacent systems to a system.
  *
- * @usage for _,s in ipairs( sys:adjacentSystems() ) do -- Iterate over adjacent systems.
+ * @usage for i, s in ipairs( sys:adjacentSystems() ) do -- Iterate over adjacent systems.
  *
  *    @luatparam System s System to get adjacent systems of.
  *    @luatparam[opt=false] boolean hidden Whether or not to show hidden jumps also.
@@ -542,7 +544,7 @@ static int systemL_adjacent( lua_State *L )
 /**
  * @brief Gets all the jumps in a system.
  *
- * @usage for _,s in ipairs( sys:jumps() ) do -- Iterate over jumps.
+ * @usage for i, s in ipairs( sys:jumps() ) do -- Iterate over jumps.
  *
  *    @luatparam System s System to get the jumps of.
  *    @luatparam[opt=false] boolean exitonly Whether to exclude exit-only jumps.
@@ -628,13 +630,13 @@ static int systemL_asteroid( lua_State *L )
 /**
  * @brief Gets the position and velocity of an asteroid
  *
- * @usage pos = system.asteroidpos( anchor, ast )
+ * @usage pos = system.asteroidPos( anchor, ast )
  *
  *    @luatparam int anchor Id of the asteroid anchor.
  *    @luatparam int asteroid Id of the asteroid of this anchor.
  *    @luatreturn Vec2 pos position of the asteroid.
  *    @luatreturn Vec2 vel velocity of the asteroid.
- * @luafunc asteroidpos()
+ * @luafunc asteroidPos()
  */
 static int systemL_asteroidPos( lua_State *L )
 {
@@ -660,14 +662,14 @@ static int systemL_asteroidPos( lua_State *L )
 
 
 /**
- * @brief Gets the position and velocity of an asteroid
+ * @brief Sees if a given asteroid has been destroyed recently
  *
- * @usage i = system.asteroiddestroyed( anchor, ast )
+ * @usage i = system.asteroidDestroyed( anchor, ast )
  *
  *    @luatparam int anchor Id of the asteroid anchor.
  *    @luatparam int asteroid Id of the asteroid of this anchor.
  *    @luatreturn bool i true if the asteroid was destroyed.
- * @luafunc asteroidpos()
+ * @luafunc asteroidDestroyed()
  */
 static int systemL_asteroidDestroyed( lua_State *L )
 {
@@ -690,6 +692,48 @@ static int systemL_asteroidDestroyed( lua_State *L )
    isdestroyed = (cur_system->asteroids[field].asteroids[ast].appearing == ASTEROID_GROWING);
    lua_pushboolean(L, isdestroyed);
    return 1;
+}
+
+
+/**
+ * @brief Adds a gatherable object
+ *
+ * @usage i = system.addGatherable( "Gold", 5, vec2.new(0,0), vec2.new(0,0) ) -- creates 5 tons of gold at the origin
+ *
+ *    @luatparam string commodity name of the commodity.
+ *    @luatparam int nb quantity of commodity in the gatherable .
+ *    @luatparam Vec2 pos position of the gatherable.
+ *    @luatparam Vec2 vel velocity of the gatherable.
+ *    @luatparam[opt] number lifelength Lifelength of the gatherable.
+ *    @luatreturn int i Id of the created gatherable object.
+ * @luafunc addGatherable( commodity, nb, pos, vel, lifelength )
+ */
+static int systemL_addGatherable( lua_State *L )
+{
+   int nb;
+   const char *name;
+   Commodity *commodity;
+   Vector2d *pos, *vel;
+   double lifelength;
+
+   /* Handle parameters. */
+   name = luaL_checkstring(L,1);
+   nb = luaL_checkint(L,2);
+   pos = luaL_checkvector(L,3);
+   vel = luaL_checkvector(L,4);
+   if (lua_gettop(L) > 4)
+      lifelength = luaL_checknumber(L,5);
+   else
+      lifelength = -1.; /* This means random life length. */
+
+   /* Get commodity. */
+   commodity = commodity_get( name );
+   if (commodity == NULL) {
+      NLUA_ERROR(L,_("Commodity '%s' not found!"), name);
+      return 0;
+   }
+
+   return gatherable_init( commodity, *pos, *vel, lifelength, nb );
 }
 
 
@@ -747,7 +791,7 @@ static int systemL_planets( lua_State *L )
    lua_newtable(L);
    key = 0;
    for (i=0; i<s->nplanets; i++) {
-      if(s->planets[i]->real == ASSET_REAL) {
+      if (s->planets[i]->real == ASSET_REAL) {
          key++;
          lua_pushnumber(L,key); /* key */
          lua_pushplanet(L,planet_index( s->planets[i] )); /* value */
@@ -799,13 +843,13 @@ static int systemL_presence( lua_State *L )
       used = 1;
 
       /* Check the command string and get the appropriate faction group.*/
-      if(strcmp(cmd, "all") == 0)
+      if (strcmp(cmd, "all") == 0)
          fct = faction_getGroup(&nfct, 0);
-      else if(strcmp(cmd, "friendly") == 0)
+      else if (strcmp(cmd, "friendly") == 0)
          fct = faction_getGroup(&nfct, 1);
-      else if(strcmp(cmd, "hostile") == 0)
+      else if (strcmp(cmd, "hostile") == 0)
          fct = faction_getGroup(&nfct, 3);
-      else if(strcmp(cmd, "neutral") == 0)
+      else if (strcmp(cmd, "neutral") == 0)
          fct = faction_getGroup(&nfct, 2);
       else /* Invalid command string. */
          used = 0;
@@ -821,7 +865,7 @@ static int systemL_presence( lua_State *L )
 
    /* Add up the presence values. */
    presence = 0;
-   for(i=0; i<nfct; i++) {
+   for (i=0; i<nfct; i++) {
       /* Only count positive presences. */
       v = system_getPresence( sys, fct[i] );
       if (v > 0)
