@@ -320,3 +320,4 @@ jobs:
           title: "Nightly Build"
           files: |
             ${{ github.workspace }}/dist/*
+      if: ${{ github.event_name == 'push' && github.repository == naev/naev }}
