@@ -231,8 +231,8 @@ jobs:
           ./configure
           make dist-bzip2
           make VERSION
-          version = $(cat VERSION)
-          mv naev-$version.tar.bz2 source.tar.bz2
+          VERSION="$(cat VERSION)"
+          mv naev-$VERSION.tar.bz2 source.tar.bz2
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
