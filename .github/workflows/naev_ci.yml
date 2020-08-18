@@ -204,21 +204,17 @@ jobs:
           libzip-dev \
           libiberty-dev \
           libluajit-5.1-dev \
-          luarocks \
+          lua-ldoc \
           gettext \
           autopoint \
           intltool \
           itstool
-
-    - name: Install LuaRocks packages 
-      run: luarocks install --local ldoc
 
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
 
     - name: Build Naev Lua Documentation
       run: |
-        export PATH="$PATH:$HOME/.luarocks/bin"
         ./autogen.sh
         ./configure
         make -C docs lua
