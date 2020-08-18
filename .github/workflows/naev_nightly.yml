@@ -361,7 +361,7 @@ jobs:
           mv temp/win32/naev-win32.zip dist/naev-$VERSION-$BUILD_DATE-win32.zip
           mv temp/win64/naev-win64.exe dist/naev-$VERSION-$BUILD_DATE-win64.exe
           mv temp/win64/naev-win64.zip dist/naev-$VERSION-$BUILD_DATE-win64.zip
-          mv temp/source/source.tar.bz2 dist/naev-$VERSION-$BUILD_DATE.tar.bz2
+          mv temp/source/source.tar.bz2 dist/naev-$VERSION-$BUILD_DATE-source.tar.bz2
 
       - name: Upload Release Assets
         uses: "marvinpinto/action-automatic-releases@latest"
