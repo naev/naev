@@ -39,7 +39,7 @@ XMLBASE     = $(wildcard dat/*.xml)
 XMLOUTFITS  = $(wildcard dat/outfits/*/*.xml)
 XMLSHIPS    = $(wildcard dat/ships/*.xml)
 XMLFILES    = $(XMLBASE) $(XMLSHIPS) $(XMLOUTFITS)
-TRANSLATIONITS = $(top_srcdir)/po/translation.its 
+TRANSLATIONITS = $(top_srcdir)/po/translation.its
 XMLPOT      = $(top_srcdir)/po/xml.pot
 CLEANFILES += $(XMLPOT)
 endif # HAVE_NLS
