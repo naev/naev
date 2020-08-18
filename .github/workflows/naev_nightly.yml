@@ -225,17 +225,20 @@ jobs:
       - name: Checkout Naev Repository 
         uses: actions/checkout@v2
 
-      - name: Build Naev on Linux64
+      - name: Generate source archive
         run: |
           ./autogen.sh
           ./configure
-          make "ndata.zip"
+          make dist-bzip2
+          make VERSION
+          version = $(cat VERSION)
+          mv naev-$version.tar.bz2 source.tar.bz2
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ndata
-          path: ${{ github.workspace }}/ndata.zip
+          name: source
+          path: ${{ github.workspace }}/source.tar.bz2
 
   "Generate-NData":
       runs-on: ubuntu-latest
@@ -273,7 +276,7 @@ jobs:
       - name: Checkout Naev Repository 
         uses: actions/checkout@v2
 
-      - name: Build Naev on Linux64
+      - name: Generate ndata
         run: |
           ./autogen.sh
           ./configure
@@ -358,6 +361,7 @@ jobs:
           mv temp/win32/naev-win32.zip dist/naev-$VERSION-$BUILD_DATE-win32.zip
           mv temp/win64/naev-win64.exe dist/naev-$VERSION-$BUILD_DATE-win64.exe
           mv temp/win64/naev-win64.zip dist/naev-$VERSION-$BUILD_DATE-win64.zip
+          mv temp/source/source.tar.bz2 dist/naev-$VERSION-$BUILD_DATE.tar.bz2
 
       - name: Upload Release Assets
         uses: "marvinpinto/action-automatic-releases@latest"
