@@ -230,6 +230,7 @@ jobs:
           ./autogen.sh
           ./configure
           make dist-bzip2
+          # make distcheck This currently doesn't work correctly.
           make VERSION
           VERSION="$(cat VERSION)"
           mv naev-$VERSION.tar.bz2 source.tar.bz2
