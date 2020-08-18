@@ -230,7 +230,14 @@ jobs:
           ./autogen.sh
           ./configure
           make dist-bzip2
-          # make distcheck This currently doesn't work correctly.
+
+      - name: Check if source archive is valid
+        run: |
+          # This currently doesn't work correctly.
+          # make distcheck 
+
+      - name: Prepare source artifact
+        run: |
           make VERSION
           VERSION="$(cat VERSION)"
           mv naev-$VERSION.tar.bz2 source.tar.bz2
