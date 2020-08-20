@@ -906,6 +906,9 @@ void map_renderParams( double bx, double by, double xpos, double ypos,
    *y = round((by - ypos + h/2) * 1.);
 }
 
+/**
+ * @brief Renders the map background decorators.
+ */
 void map_renderDecorators( double x, double y, int editor)
 {
    int i,j;
@@ -918,13 +921,13 @@ void map_renderDecorators( double x, double y, int editor)
 
    /* Fade in the decorators to allow toggling between commodity and nothing */
    double cc = cos ( commod_counter / 200. * M_PI );
-   ccol.a = cc;
+   ccol.a = 2./3.*cc;
      
    for (i=0; i<decorator_nstack; i++) {
 
       decorator = &decorator_stack[i];
 
-      //only if pict couldn't be loaded
+      /* only if pict couldn't be loaded */
       if (decorator->image == NULL)
          continue;
 
@@ -937,8 +940,10 @@ void map_renderDecorators( double x, double y, int editor)
             if (!sys_isKnown(sys))
                continue;
 
-            if (decorator->x < sys->pos.x + decorator->detection_radius && decorator->x > sys->pos.x - decorator->detection_radius
-                  && decorator->y < sys->pos.y + decorator->detection_radius && decorator->y > sys->pos.y - decorator->detection_radius) {
+            if ((decorator->x < sys->pos.x + decorator->detection_radius) &&
+                  (decorator->x > sys->pos.x - decorator->detection_radius) &&
+                  (decorator->y < sys->pos.y + decorator->detection_radius) &&
+                  (decorator->y > sys->pos.y - decorator->detection_radius)) {
                visible=1;
             }
          }
