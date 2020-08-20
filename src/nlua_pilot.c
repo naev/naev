@@ -444,6 +444,8 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    fltname = luaL_checkstring(L,1);
 
    /* pull the fleet */
+   ship = NULL;
+   flt  = NULL;
    if (from_ship) {
       ship = ship_get( fltname );
       if (ship == NULL) {
