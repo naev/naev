@@ -530,7 +530,7 @@ static credits_t outfit_getPrice( Outfit *outfit )
  */
 ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
 {
-   int i, j;
+   int i;
    int l, p;
    double mass;
    const glColour *c;
@@ -595,12 +595,7 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
          }
 
          /* Layers. */
-         if (o->gfx_noverlays > 0) {
-            coutfits[i].nlayers = o->gfx_noverlays;
-            coutfits[i].layers = malloc( coutfits[i].nlayers * sizeof(glTexture*) );
-            for (j=0; j<coutfits[i].nlayers; j++)
-               coutfits[i].layers[j] = gl_dupTexture( o->gfx_overlays[j] );
-         }
+         coutfits[i].layers = gl_copyTexArray( o->gfx_overlays, o->gfx_noverlays, &coutfits[i].nlayers );
       }
    }
    return coutfits;

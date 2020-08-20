@@ -106,8 +106,6 @@ void window_addImageArray( const unsigned int wid,
 
    if (wdw->focus == -1) /* initialize the focus */
       toolkit_nextFocus( wdw );
-
-   iar_render( wgt, 0., 0. );
 }
 
 

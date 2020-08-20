@@ -901,6 +901,24 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          temp->gfx_comm = strdup(str);
          continue;
       }
+      if (xml_isNode(node,"gfx_overlays")) {
+         cur = node->children;
+         m = 2;
+         temp->gfx_overlays = malloc( m*sizeof(glTexture*) );
+         do {
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur,"gfx_overlay")) {
+               temp->gfx_noverlays += 1;
+               if (temp->gfx_noverlays > m) {
+                  m *= 2;
+                  temp->gfx_overlays = realloc( temp->gfx_overlays, m*sizeof(glTexture) );
+               }
+               temp->gfx_overlays[ temp->gfx_noverlays-1 ] = xml_parseTexture( cur,
+                     OVERLAY_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+            }
+         } while (xml_nextNode(cur));
+         continue;
+      }
 
       xmlr_strd(node,"GUI",temp->gui);
       if (xml_isNode(node,"sound")) {

@@ -874,6 +874,27 @@ int gl_needPOT (void)
 
 
 /**
+ * @brief Copy a texture array.
+ */
+glTexture** gl_copyTexArray( glTexture **tex, int texn, int *n )
+{
+   int i;
+   glTexture **t;
+
+   if (texn == 0) {
+      *n = 0;
+      return NULL;
+   }
+
+   t = malloc( texn * sizeof(glTexture*) );
+   for (i=0; i<texn; i++)
+      t[i] = gl_dupTexture( tex[i] );
+   *n = texn;
+   return t;
+}
+
+
+/**
  * @brief Initializes the opengl texture subsystem.
  *
  *    @return 0 on success.
