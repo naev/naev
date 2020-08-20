@@ -995,7 +995,8 @@ void map_renderFactionDisks( double x, double y, int editor)
       c.r = col->r;
       c.g = col->g;
       c.b = col->b;
-      c.a = CLAMP( .6, .75, 20 / presence ) * cc;
+      //c.a = CLAMP( .6, .75, 20 / presence ) * cc;
+      c.a = CLAMP( .4, .5, 13.3 / presence ) * cc;
       
       gl_blitTexture(
             gl_faction_disk,
@@ -1035,7 +1036,7 @@ void map_renderJumps( double x, double y, int editor)
             continue;
 
          /* Choose colours. */
-         cole = &cBlue;
+         cole = &cLightBlue;
          for (k = 0; k < jsys->njumps; k++) {
             if (jsys->jumps[k].target == sys) {
                if (jp_isFlag(&jsys->jumps[k], JP_EXITONLY))
@@ -1050,7 +1051,7 @@ void map_renderJumps( double x, double y, int editor)
          else if (jp_isFlag(&sys->jumps[j], JP_HIDDEN))
             col = &cRed;
          else
-            col = &cBlue;
+            col = &cLightBlue;
 
          /* Draw the lines. */
          vertex[0]  = x + sys->pos.x * map_zoom;
