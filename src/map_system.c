@@ -218,7 +218,7 @@ void map_system_open( int sys_selected )
    /* and reload the images for the current system */
    cur_system = tmp_sys;
    background_load( cur_system->background );
-   
+
    map_system_show( wid, 20, 60, w-40, h-100);
    map_system_updateSelected( wid );
 
@@ -294,7 +294,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    }
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
-   
+
    j=0;
    offset = h - pitch*nshow;
    for ( i=0; i<sys->nplanets; i++ ) {
@@ -390,7 +390,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
      /* display sun information */
      /* Nebula. */
       cnt+=nsnprintf( buf, sizeof(buf), _("System: %s\n%d star system\n"), sys->name, nBgImgs>0 ? nBgImgs-1 : 0 );
-     
+
       if (sys->nebu_density > 0. ) {
          /* Volatility */
          if (sys->nebu_volatility > 700.)
@@ -401,7 +401,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Nebula: Unstable, ") );
          else
             cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Nebula: Stable, ") );
-	 
+	
          /* Density */
          if (sys->nebu_density > 700.)
             cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Dense\n") );
@@ -411,7 +411,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Medium\n") );
       } else
          cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Nebula: None\n") );
-      
+
       /* Interference. */
       if (sys->interference > 0. ) {
          if (sys->interference > 700.)
@@ -474,7 +474,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       txtHeight=gl_printHeightRaw(&gl_smallFont,(w - nameWidth-pitch-60)/2,buf);
       gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
             bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, &cFontWhite, buf );
-      
+
       /* Jumps. */
       for (  i=0; i<sys->njumps; i++ ) {
          if ( jp_isUsable ( &sys->jumps[i] ) ) {
@@ -514,7 +514,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
      }
      /* Add a description */
      cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, "%s", (p->description==NULL?_("No description available"):p->description) );
-     
+
      txtHeight=gl_printHeightRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, buf );
 
      if ( infobuf[0] == '\0' ) {
@@ -526,7 +526,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
                           planet_hasService( p, PLANET_SERVICE_INHABITED) ? _("This system is inhabited") : _("This system is not inhabited"),
                           planet_hasService( p, PLANET_SERVICE_REFUEL) ? _("You can refuel here") : _("You cannot refuel here"),
                           planet_hasService( p, PLANET_SERVICE_BAR) ? _("This system has a bar") : _("This system does not have a bar"),
-                          planet_hasService( p,PLANET_SERVICE_MISSIONS) ? _("This system offers missions") : _("This system does not offer missions"), 
+                          planet_hasService( p,PLANET_SERVICE_MISSIONS) ? _("This system offers missions") : _("This system does not offer missions"),
                           planet_hasService( p, PLANET_SERVICE_COMMODITY) ? _("This system has a trade outlet") : _("This system does not have a trade outlet"),
                           planet_hasService( p, PLANET_SERVICE_OUTFITS) ? _("This system sells ship equipment") : _("This system does not sell ship equipment"),
                           planet_hasService( p, PLANET_SERVICE_SHIPYARD) ? _("This system sells ships") : _("This system does not sell ships"));
@@ -589,7 +589,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
    char *license_text;
    int len;
    char buf2[ECON_CRED_STRLEN], buf4[PATH_MAX];
-   
+
    name = toolkit_getImageArray( wid, str );
    if ( name == NULL ) {
       infobuf[0]='\0';
@@ -627,13 +627,13 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                  mass,
                  buf2,
                  buf4 );
-      
+
    } else if ( ( strcmp( str, MAPSYS_SHIPS ) == 0 ) ) {
       ship = ship_get( name );
 
    /* update text */
       price2str( buf2, ship_buyPrice( ship ), player.p->credits, 2 );
-      
+
       /* Remove the word " License".  It's redundant and makes the text overflow
          into another text box */
       license_text = ship->license;
@@ -694,7 +694,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                  );
       if ( license_text != ship->license )
          free( license_text );
-   
+
    } else if ( ( strcmp( str, MAPSYS_TRADE ) == 0 ) ) {
       Commodity *com;
       credits_t mean;
@@ -718,14 +718,14 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                  name,
                  com->description,
                  owned,
-                 buf4,     
+                 buf4,
                  mean, std,
                  globalmean,globalstd );
    } else {
       infobuf[0]='\0';
       WARN( _("Unexpected call to map_system_array_update\n") );
    }
-      
+
 }
 static void map_system_array_rmouse( unsigned int wid, char* widget_name )
 {
@@ -789,7 +789,7 @@ void map_system_updateSelected( unsigned int wid )
          planetObjChanged = 1;
       }
    }
-         
+
    if ( planetObjChanged ) {
       infobuf[0]='\0';
       if ( cur_planetObj_sel == NULL ) {
@@ -864,7 +864,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
       }
    }
    planetDone = cur_planetObj_sel;
-   
+
    /* set up the outfits to buy/sell */
    if ( cur_planetObj_sel == NULL ) {
       noutfits = 0;
@@ -876,7 +876,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
       moutfits = MAX( 1, noutfits );
       soutfits = malloc( moutfits * sizeof(char*) );
       toutfits = malloc( moutfits * sizeof(glTexture*) );
-      
+
       /* Create the outfit arrays. */
       quantity = malloc( sizeof(char*) * noutfits );
       bg       = malloc( sizeof(glColour) * noutfits );
@@ -890,7 +890,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
             c = &cBlack;
          col_blend( &blend, c, &cGrey70, 0.4 );
          bg[i] = blend;
-         
+
          /* Quantity. */
          owned = player_outfitOwned( outfits[i] );
          len = owned / 10 + 4;
@@ -900,8 +900,8 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
          }
          else
             quantity[i] = NULL;
-         
-         
+
+
          /* Get slot name. */
          slotname = outfit_slotName( outfits[i] );
          if ( ( strcmp(slotname, "N/A") != 0 )
@@ -924,7 +924,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
                             xw, yh, MAPSYS_OUTFITS, 64, 64,
                             toutfits, soutfits, noutfits, map_system_array_update, map_system_array_rmouse );
       toolkit_unsetSelection( wid, MAPSYS_OUTFITS );
-      
+
       toolkit_setImageArrayQuantity( wid, MAPSYS_OUTFITS, quantity );
       toolkit_setImageArraySlotType( wid, MAPSYS_OUTFITS, slottype );
       toolkit_setImageArrayBackground( wid, MAPSYS_OUTFITS, bg );
@@ -954,7 +954,7 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
       }
    }
    planetDone = cur_planetObj_sel;
-   
+
    /* set up the outfits to buy/sell */
    if ( cur_planetObj_sel == NULL ) {
       nships = 0;
