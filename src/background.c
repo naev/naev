@@ -532,6 +532,12 @@ void background_getTextures(unsigned int *n, glTexture ***imgs)
 {
   unsigned int i;
   background_image_t *bkg;
+
+  if (bkg_image_arr_bk == NULL) {
+      *n = 0;
+      return;
+  }
+
   *n = array_size( bkg_image_arr_bk );
   *imgs = malloc( sizeof(glTexture**)*(*n) );
   for ( i=0; i<*n; i++ ) {
