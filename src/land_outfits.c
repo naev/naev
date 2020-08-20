@@ -238,19 +238,13 @@ static void outfits_genList( unsigned int wid )
       _("All"), _("\ab W "), _("\ag U "), _("\ap S "), _("\aRCore"), _("Other")
    };
 
-   int i, active;
+   int active;
    int fx, fy, fw, fh, barw; /* Input filter. */
    Outfit **outfits;
-   char **slottype;
-   glTexture **toutfits;
    ImageArrayCell *coutfits;
-   int noutfits, moutfits;
+   int noutfits;
    int w, h, iw, ih;
-   glColour *bg, blend;
-   const glColour *c;
-   const char *slotname;
    char *filtertext;
-   int no_outfits = 0;
 
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, NULL, NULL );
@@ -290,48 +284,9 @@ static void outfits_genList( unsigned int wid )
 
    /* set up the outfits to buy/sell */
    outfits = tech_getOutfit( land_planet->tech, &noutfits );
-
-   moutfits = MAX( 1, noutfits );
-   toutfits = malloc( moutfits * sizeof(glTexture*) );
-   coutfits = calloc( moutfits, sizeof(ImageArrayCell) );
-
-   noutfits = outfits_filter( outfits, toutfits, noutfits,
+   noutfits = outfits_filter( outfits, noutfits,
          tabfilters[active], filtertext );
-
-   if (noutfits <= 0) { /* No outfits */
-      coutfits[0].image = NULL;
-      coutfits[0].caption = strdup(_("None"));
-      noutfits    = 1;
-      no_outfits  = 1;
-   }
-   else {
-      /* Create the outfit arrays. */
-      bg       = malloc(sizeof(glColour)*noutfits);
-      slottype = malloc(sizeof(char*)*noutfits);
-      for (i=0; i<noutfits; i++) {
-         coutfits[i].image = gl_dupTexture( toutfits[i] );
-         coutfits[i].caption = strdup( outfits[i]->name );
-         coutfits[i].quantity = player_outfitOwned(outfits[i]);
-
-         /* Background colour. */
-         c = outfit_slotSizeColour( &outfits[i]->slot );
-         if (c == NULL)
-            c = &cBlack;
-         col_blend( &blend, c, &cGrey70, 0.4 );
-         bg[i] = blend;
-        /* Get slot name. */
-         slotname = outfit_slotName(outfits[i]);
-         if ((strcmp(slotname, "N/A") != 0) && (strcmp(slotname, "NULL") != 0)) {
-            slottype[i]    = malloc( 2 );
-            slottype[i][0] = outfit_slotName(outfits[i])[0];
-            slottype[i][1] = '\0';
-         }
-         else
-            slottype[i] = NULL;
-      }
-   }
-
-   /* Clean up. */
+   coutfits = outfits_imageArrayCells( outfits, &noutfits );
    free(outfits);
 
    window_addImageArray( wid, 20, 20,
@@ -340,11 +295,6 @@ static void outfits_genList( unsigned int wid )
 
    /* write the outfits stuff */
    outfits_update( wid, NULL );
-
-   if (!no_outfits) {
-      toolkit_setImageArraySlotType( wid, OUTFITS_IAR, slottype );
-      toolkit_setImageArrayBackground( wid, OUTFITS_IAR, bg );
-   }
 }
 
 
@@ -526,7 +476,7 @@ static void outfits_changeTab( unsigned int wid, char *wgt, int old, int tab )
  *    @param name Name fragment that each outfit name must contain.
  *    @return Number of outfits.
  */
-int outfits_filter( Outfit **outfits, glTexture **toutfits, int n,
+int outfits_filter( Outfit **outfits, int n,
       int(*filter)( const Outfit *o ), char *name )
 {
    int i, j;
@@ -541,9 +491,6 @@ int outfits_filter( Outfit **outfits, glTexture **toutfits, int n,
 
       /* Shift matches downward. */
       outfits[j] = outfits[i];
-      if (toutfits != NULL)
-         toutfits[j] = outfits[i]->gfx_store;
-
       j++;
    }
 
@@ -576,6 +523,82 @@ static credits_t outfit_getPrice( Outfit *outfit )
 
    return price;
 }
+
+
+/**
+ * @brief Generates image array cells corresponding to outfits.
+ */
+ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
+{
+   int i;
+   int l, p;
+   double mass;
+   const glColour *c;
+   ImageArrayCell *coutfits;
+   Outfit *o;
+   const char *typename;
+
+   /* Allocate. */
+   coutfits = calloc( MAX(1,*noutfits), sizeof(ImageArrayCell) );
+
+   if (*noutfits == 0) {
+      *noutfits = 1;
+      coutfits[0].image = NULL;
+      coutfits[0].caption = strdup( _("None") );
+   }
+   else {
+      /* Set alt text. */
+      for (i=0; i<*noutfits; i++) {
+         o = outfits[i];
+
+         coutfits[i].image = gl_dupTexture( o->gfx_store );
+         coutfits[i].caption = strdup( o->name );
+         coutfits[i].quantity = player_outfitOwned(o);
+
+         /* Background colour. */
+         c = outfit_slotSizeColour( &o->slot );
+         if (c == NULL)
+            c = &cBlack;
+         col_blend( &coutfits[i].bg, c, &cGrey70, 0.4 );
+
+         /* Short description. */
+         if (o->desc_short == NULL)
+            coutfits[i].alt = NULL;
+         else {
+            mass = o->mass;
+            if ((outfit_isLauncher(o) || outfit_isFighterBay(o)) &&
+                  (outfit_ammo(o) != NULL)) {
+               mass += outfit_amount(o) * outfit_ammo(o)->mass;
+            }
+
+            l = strlen(o->desc_short) + 128;
+            coutfits[i].alt = malloc( l );
+            p  = snprintf( &coutfits[i].alt[0], l, "%s\n", o->name );
+            if ((o->slot.spid!=0) && (p < l))
+               p += snprintf( &coutfits[i].alt[p], l-p, _("\aRSlot %s\a0\n"),
+                     sp_display( o->slot.spid ) );
+            if (p < l)
+               p += snprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );
+            if ((o->mass > 0.) && (p < l))
+               snprintf( &coutfits[i].alt[p], l-p,
+                     _("\n%.0f Tonnes"),
+                     mass );
+         }
+
+         /* Slot type. */
+         if ( (strcmp(outfit_slotName(o), "N/A") != 0)
+               && (strcmp(outfit_slotName(o), "NULL") != 0) ) {
+            typename       = outfit_slotName(o);
+            coutfits[i].slottype = malloc(2);
+            coutfits[i].slottype[0] = typename[0];
+            coutfits[i].slottype[1] = '\0';
+         }
+      }
+   }
+   return coutfits;
+}
+
+
 
 /**
  * @brief Checks to see if the player can buy the outfit.

@@ -33,6 +33,7 @@
 #include "economy.h"
 #include "background.h"
 #include "map_system.h"
+#include "land_outfits.h"
 
 #define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
@@ -57,8 +58,8 @@ unsigned int nBgImgs; /** number of images */
  * extern
  */
 /*land.c*/
-extern int landed;
-extern Planet* land_planet;
+//extern int landed;
+//extern Planet* land_planet;
 
 /*
  * prototypes
@@ -844,14 +845,10 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
 {
    int i;
    Outfit **outfits;
-   char **slottype;
    ImageArrayCell *coutfits;
-   int noutfits, moutfits;
+   int noutfits;
    int w, h;
    int xpos, xw, ypos, yh;
-   glColour *bg, blend;
-   const glColour *c;
-   const char *slotname;
    static Planet *planetDone = NULL;
 
    window_dimWindow( wid, &w, &h );
@@ -873,37 +870,11 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
    } else {
       outfits = tech_getOutfit( cur_planetObj_sel->tech, &noutfits );
    }
-   if ( noutfits > 0 ) {
-      moutfits = MAX( 1, noutfits );
-      coutfits = calloc( moutfits, sizeof(ImageArrayCell) );
 
-      /* Create the outfit arrays. */
-      bg       = malloc( sizeof(glColour) * noutfits );
-      slottype = malloc( sizeof(char*) * noutfits );
-      for ( i=0; i<noutfits; i++ ) {
-         coutfits[i].image    = gl_dupTexture( outfits[i]->gfx_store );
-         coutfits[i].caption  = strdup( outfits[i]->name );
-         coutfits[i].quantity = player_outfitOwned( outfits[i] );
-         /* Background colour. */
-         c = outfit_slotSizeColour( &outfits[i]->slot );
-         if (c == NULL)
-            c = &cBlack;
-         col_blend( &blend, c, &cGrey70, 0.4 );
-         bg[i] = blend;
-
-         /* Get slot name. */
-         slotname = outfit_slotName( outfits[i] );
-         if ( ( strcmp(slotname, "N/A") != 0 )
-               && ( strcmp(slotname, "NULL") != 0 ) ) {
-            slottype[i]    = malloc( 2 );
-            slottype[i][0] = outfit_slotName( outfits[i] )[0];
-            slottype[i][1] = '\0';
-         }
-         else
-            slottype[i] = NULL;
-      }
-      /* Clean up. */
+   if (noutfits > 0) {
+      coutfits = outfits_imageArrayCells( outfits, &noutfits );
       free( outfits );
+
       xw = ( w - nameWidth - pitch - 60 ) / 2;
       xpos = 35 + pitch + nameWidth + xw;
       i = (goodsSpace!=0) + (outfitSpace!=0) + (shipSpace!=0);
@@ -913,9 +884,6 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
                             xw, yh, MAPSYS_OUTFITS, 64, 64,
                             coutfits, noutfits, map_system_array_update, map_system_array_rmouse );
       toolkit_unsetSelection( wid, MAPSYS_OUTFITS );
-
-      toolkit_setImageArraySlotType( wid, MAPSYS_OUTFITS, slottype );
-      toolkit_setImageArrayBackground( wid, MAPSYS_OUTFITS, bg );
    }
 }
 
@@ -994,7 +962,7 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
       ngoods = cur_planetObj_sel->ncommodities;
    }
    if ( ngoods > 0 ) {
-      cgoods = calloc( ngoods, sizeof(char*) );
+      cgoods = calloc( ngoods, sizeof(ImageArrayCell) );
       for ( i=0; i<ngoods; i++ ) {
          cgoods[i].image = gl_dupTexture( cur_planetObj_sel->commodities[i]->gfx_store );
          cgoods[i].caption = strdup( cur_planetObj_sel->commodities[i]->name);

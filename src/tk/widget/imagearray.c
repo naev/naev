@@ -106,6 +106,8 @@ void window_addImageArray( const unsigned int wid,
 
    if (wdw->focus == -1) /* initialize the focus */
       toolkit_nextFocus( wdw );
+
+   iar_render( wgt, 0., 0. );
 }
 
 
@@ -195,7 +197,7 @@ static void iar_render( Widget* iar, double bx, double by )
 
          fontcolour = cFontWhite;
          /* Draw background. */
-         if (iar->dat.iar.background != NULL) {
+         if (iar->dat.iar.images[pos].bg.a > 0.) {
             if (is_selected) {
                toolkit_drawRect( xcurs + 2.,
                      ycurs + 2.,
@@ -203,7 +205,7 @@ static void iar_render( Widget* iar, double bx, double by )
             } else {
                toolkit_drawRect( xcurs + 2.,
                      ycurs + 2.,
-                     w - 5., h - 5., &iar->dat.iar.background[pos], NULL );
+                     w - 5., h - 5., &iar->dat.iar.images[pos].bg, NULL );
             }
          } else if (is_selected) {
             toolkit_drawRect( xcurs + 2.,
@@ -231,13 +233,11 @@ static void iar_render( Widget* iar, double bx, double by )
          }
 
          /* Slot type. */
-         if (iar->dat.iar.slottype != NULL) {
-            if (iar->dat.iar.slottype[pos] != NULL) {
-               /* Slot size letter. */
-               gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
-                     xcurs + iar->dat.iar.iw - 4., ycurs + iar->dat.iar.ih + 7.,
-                     &fontcolour, iar->dat.iar.slottype[pos] );
-            }
+         if (iar->dat.iar.images[pos].slottype != NULL) {
+            /* Slot size letter. */
+            gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
+                  xcurs + iar->dat.iar.iw - 4., ycurs + iar->dat.iar.ih + 7.,
+                  &fontcolour, iar->dat.iar.images[pos].slottype );
          }
 
          /* outline */
@@ -488,24 +488,14 @@ static void iar_cleanup( Widget* iar )
             free( iar->dat.iar.images[i].caption );
          if (iar->dat.iar.images[i].alt != NULL)
             free( iar->dat.iar.images[i].alt );
+         if (iar->dat.iar.images[i].slottype != NULL)
+            free( iar->dat.iar.images[i].slottype );
       }
    }
-
-   /* Clean up slottypes. */
-   if (iar->dat.iar.slottype != NULL) {
-      for (i=0; i<iar->dat.iar.nelements; i++) {
-         if (iar->dat.iar.slottype[i] != NULL)
-            free( iar->dat.iar.slottype[i] );
-      }
-      free(iar->dat.iar.slottype);
-   }
-
 
    /* Free the arrays */
    if (iar->dat.iar.images != NULL)
       free( iar->dat.iar.images );
-   if (iar->dat.iar.background != NULL)
-      free(iar->dat.iar.background);
 }
 
 
@@ -818,61 +808,6 @@ int toolkit_setImageArrayPos( const unsigned int wid, const char* name, int pos 
 
    iar_centerSelected( wgt );
 
-   return 0;
-}
-
-
-/**
- * @brief Sets the slot type text for the images in the image array.
- *
- *    @param wid Window where image array is.
- *    @param name Name of the image array.
- *    @param slottype Array of slot sizes for the images in the array.
- *    @return 0 on success.
- */
-int toolkit_setImageArraySlotType( const unsigned int wid, const char* name,
-      char **slottype )
-{
-   int i;
-   Widget *wgt = iar_getWidget( wid, name );
-   if (wgt == NULL)
-      return -1;
-
-   /* Clean up. */
-   if (wgt->dat.iar.slottype != NULL) {
-      for (i=0; i<wgt->dat.iar.nelements; i++)
-         if (wgt->dat.iar.slottype[i] != NULL)
-            free(wgt->dat.iar.slottype[i]);
-      free(wgt->dat.iar.slottype);
-   }
-
-   /* Set. */
-   wgt->dat.iar.slottype = slottype;
-   return 0;
-}
-
-
-/**
- * @brief Sets the background colour for the images in the image array.
- *
- *    @param wid Window where image array is.
- *    @param name Name of the image array.
- *    @param bg Background colour for the image array.
- *    @return 0 on success.
- */
-int toolkit_setImageArrayBackground( const unsigned int wid, const char* name,
-      glColour *bg )
-{
-   Widget *wgt = iar_getWidget( wid, name );
-   if (wgt == NULL)
-      return -1;
-
-   /* Free if already exists. */
-   if (wgt->dat.iar.background != NULL)
-      free( wgt->dat.iar.background );
-
-   /* Set. */
-   wgt->dat.iar.background = bg;
    return 0;
 }
 

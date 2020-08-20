@@ -17,6 +17,8 @@ typedef struct ImageArrayCell_ {
    char *caption; /**< Corresponding caption. */
    char *alt; /**< Corresponding alt text. */
    int quantity; /**< Corresponding quantity. */
+   glColour bg; /**< Background colour. */
+   char *slottype; /**< Type of slot. */
    /* Additional layers can be set if needed. */
    glTexture** layers; /**< Layers to be added. */
    int nlayers; /**< Total number of layers. */
@@ -28,8 +30,6 @@ typedef struct ImageArrayCell_ {
  */
 typedef struct WidgetImageArrayData_ {
    ImageArrayCell *images; /**< Image array. */
-   char **slottype; /**< Letter in top-right corner. */
-   glColour *background; /**< Background of each of the elements. */
    int nelements; /**< Number of elements. */
    int xelem; /**< Number of horizontal elements. */
    int yelem; /**< Number of vertical elements. */
@@ -70,10 +70,6 @@ int toolkit_getImageArrayPos( const unsigned int wid, const char* name );
 int toolkit_setImageArrayPos( const unsigned int wid, const char* name, int pos );
 double toolkit_getImageArrayOffset( const unsigned int wid, const char* name );
 int toolkit_setImageArrayOffset( const unsigned int wid, const char* name, double off );
-int toolkit_setImageArraySlotType( const unsigned int wid, const char* name,
-      char **slottype );
-int toolkit_setImageArrayBackground( const unsigned int wid, const char* name,
-      glColour *bg );
 int toolkit_saveImageArrayData( const unsigned int wid, const char *name,
       iar_data_t *iar_data );
 int toolkit_unsetSelection( const unsigned int wid, const char *name );

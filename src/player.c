@@ -2562,12 +2562,11 @@ const PlayerOutfit_t* player_getOutfits( int *n )
  * @brief Prepares two arrays for displaying in an image array.
  *
  *    @param[out] outfits Outfits the player owns.
- *    @param[out] toutfits Optional store textures for the image array.
  *    @param[in] filter Function to filter which outfits to get.
  *    @param[in] name Name fragment that each outfit must contain.
  *    @return Number of outfits.
  */
-int player_getOutfitsFiltered( Outfit **outfits, glTexture** toutfits,
+int player_getOutfitsFiltered( Outfit **outfits,
       int(*filter)( const Outfit *o ), char *name )
 {
    int i;
@@ -2582,7 +2581,7 @@ int player_getOutfitsFiltered( Outfit **outfits, glTexture** toutfits,
    for (i=0; i<player_noutfits; i++)
       outfits[i] = (Outfit*)player_outfits[i].o;
 
-   return outfits_filter( outfits, toutfits, player_noutfits, filter, name );
+   return outfits_filter( outfits, player_noutfits, filter, name );
 }
 
 

@@ -1404,15 +1404,9 @@ static void equipment_genOutfitList( unsigned int wid )
       _("All"), "\ab W ", "\ag U ", "\ap S ", _("\aRCore")
    };
 
-   int active, i, l, p, noutfits;
-   char **slottype;
+   int noutfits, active;
    ImageArrayCell *coutfits;
-   glTexture **toutfits;
-   Outfit *o, **outfits;
-   const glColour *c;
-   glColour *bg, blend;
-   const char *typename;
-   double mass;
+   Outfit **outfits;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, NULL, NULL, &ow, &oh,
@@ -1454,9 +1448,7 @@ static void equipment_genOutfitList( unsigned int wid )
 
    /* Allocate space. */
    noutfits = MAX( 1, player_numOutfits() ); /* This is the most we'll need, probably less due to filtering. */
-   coutfits = calloc( noutfits, sizeof(ImageArrayCell) );
    outfits  = calloc( noutfits, sizeof(Outfit*) );
-   toutfits = calloc( noutfits, sizeof(glTexture*) );
 
    filtertext = NULL;
    if (widget_exists(equipment_wid, EQUIPMENT_FILTER)) {
@@ -1466,79 +1458,9 @@ static void equipment_genOutfitList( unsigned int wid )
    }
 
    /* Get the outfits. */
-   noutfits = player_getOutfitsFiltered( outfits, toutfits,
-         tabfilters[active], filtertext );
-
-   if (noutfits == 0) {
-      noutfits = 1;
-      coutfits[0].image = NULL;
-      coutfits[0].caption = strdup( _("None") );
-      /* Clean up. */
-      free(outfits);
-
-      slottype = NULL;
-      bg       = NULL;
-   }
-   else {
-      /* Set alt text. */
-      slottype = malloc( sizeof(char*) * noutfits );
-      bg       = malloc( sizeof(glColour) * noutfits );
-
-      for (i=0; i<noutfits; i++) {
-         o = outfits[i];
-
-         coutfits[i].image = gl_dupTexture( toutfits[i] );
-         coutfits[i].caption = strdup( o->name );
-
-         /* Background colour. */
-         c = outfit_slotSizeColour( &o->slot );
-         if (c == NULL)
-            c = &cBlack;
-         col_blend( &blend, c, &cGrey70, 0.4 );
-         bg[i] = blend;
-
-         /* Short description. */
-         if (o->desc_short == NULL)
-            coutfits[i].alt = NULL;
-         else {
-            mass = o->mass;
-            if ((outfit_isLauncher(o) || outfit_isFighterBay(o)) &&
-                  (outfit_ammo(o) != NULL)) {
-               mass += outfit_amount(o) * outfit_ammo(o)->mass;
-            }
-
-            l = strlen(o->desc_short) + 128;
-            coutfits[i].alt = malloc( l );
-            p  = snprintf( &coutfits[i].alt[0], l, "%s\n", o->name );
-            if ((o->slot.spid!=0) && (p < l))
-               p += snprintf( &coutfits[i].alt[p], l-p, _("\aRSlot %s\a0\n"),
-                     sp_display( o->slot.spid ) );
-            if (p < l)
-               p += snprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );
-            if ((o->mass > 0.) && (p < l))
-               snprintf( &coutfits[i].alt[p], l-p,
-                     _("\n%.0f Tonnes"),
-                     mass );
-         }
-
-         /* Quantity. */
-         coutfits[i].quantity = player_outfitOwned(o);
-
-         /* Slot type. */
-         if ( (strcmp(outfit_slotName(o), "N/A") != 0)
-               && (strcmp(outfit_slotName(o), "NULL") != 0) ) {
-            typename       = outfit_slotName(o);
-            slottype[i]    = malloc( 2 );
-            slottype[i][0] = typename[0];
-            slottype[i][1] = '\0';
-         }
-         else
-            slottype[i] = NULL;
-      }
-   }
-   /* Clean up. */
+   noutfits = player_getOutfitsFiltered( outfits, tabfilters[active], filtertext );
+   coutfits = outfits_imageArrayCells( outfits, &noutfits );
    free(outfits);
-   free(toutfits);
 
    /* Create the actual image array. */
    window_addImageArray( wid, x, y, ow, oh - 31,
@@ -1546,11 +1468,6 @@ static void equipment_genOutfitList( unsigned int wid )
          coutfits, noutfits,
          equipment_updateOutfits,
          equipment_rightClickOutfits );
-
-   if (slottype != NULL)
-      toolkit_setImageArraySlotType( wid,    EQUIPMENT_OUTFITS, slottype );
-   if (bg != NULL)
-      toolkit_setImageArrayBackground( wid,  EQUIPMENT_OUTFITS, bg );
 }
 
 
