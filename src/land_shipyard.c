@@ -161,7 +161,7 @@ void shipyard_open( unsigned int wid )
       free(ships);
    }
    window_addImageArray( wid, 20, 20,
-         iw, ih, "iarShipyard", 64./96.*128., 64.,
+         iw, ih, "iarShipyard", 96., 96.,
          cships, nships, shipyard_update, shipyard_rmouse );
 
    /* write the shipyard stuff */

@@ -930,7 +930,7 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
       yh = (h - 100 - (i+1)*5 ) * shipSpace;
       ypos = 65;
       window_addImageArray( wid, xpos, ypos,
-         xw, yh, MAPSYS_SHIPS, 64./*/96.*128.*/, 64.,
+         xw, yh, MAPSYS_SHIPS, 64., 64.,
          cships, nships, map_system_array_update, map_system_array_rmouse );
       toolkit_unsetSelection( wid, MAPSYS_SHIPS );
    }

@@ -18,7 +18,7 @@
 
 /* target gfx dimensions */
 #define SHIP_TARGET_W   128 /**< Ship target graphic width. */
-#define SHIP_TARGET_H   96 /**< Ship target graphic height. */
+#define SHIP_TARGET_H   128 /**< Ship target graphic height. */
 
 
 /**
