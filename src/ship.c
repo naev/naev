@@ -1210,6 +1210,10 @@ void ships_free (void)
       if (s->gfx_store != NULL)
          gl_freeTexture(s->gfx_store);
       free(s->gfx_comm);
+      for (j=0; j<s->gfx_noverlays; j++)
+         gl_freeTexture(s->gfx_overlays[j]);
+      if (s->gfx_overlays != NULL)
+         free(s->gfx_overlays);
 
       /* Free collision polygons. */
       if (s->npolygon != 0) {
