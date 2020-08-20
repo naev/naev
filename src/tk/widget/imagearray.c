@@ -223,13 +223,11 @@ static void iar_render( Widget* iar, double bx, double by )
                      &fontcolour, iar->dat.iar.images[pos].caption );
 
          /* quantity. */
-         if (iar->dat.iar.quantity != NULL) {
-            if (iar->dat.iar.quantity[pos] != NULL) {
-               /* Quantity number. */
-               gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
-                     xcurs + 5., ycurs + iar->dat.iar.ih + 7.,
-                     &fontcolour, iar->dat.iar.quantity[pos] );
-            }
+         if (iar->dat.iar.images[pos].quantity > 0) {
+            /* Quantity number. */
+            gl_printMax( &gl_smallFont, iar->dat.iar.iw,
+                  xcurs + 5., ycurs + iar->dat.iar.ih + 7.,
+                  &fontcolour, "%d", iar->dat.iar.images[pos].quantity );
          }
 
          /* Slot type. */
@@ -490,8 +488,6 @@ static void iar_cleanup( Widget* iar )
             free( iar->dat.iar.images[i].caption );
          if (iar->dat.iar.images[i].alt != NULL)
             free( iar->dat.iar.images[i].alt );
-         if (iar->dat.iar.quantity && iar->dat.iar.quantity[i])
-            free(iar->dat.iar.quantity[i]);
       }
    }
 
@@ -508,8 +504,6 @@ static void iar_cleanup( Widget* iar )
    /* Free the arrays */
    if (iar->dat.iar.images != NULL)
       free( iar->dat.iar.images );
-   if (iar->dat.iar.quantity != NULL)
-      free(iar->dat.iar.quantity);
    if (iar->dat.iar.background != NULL)
       free(iar->dat.iar.background);
 }
@@ -824,36 +818,6 @@ int toolkit_setImageArrayPos( const unsigned int wid, const char* name, int pos 
 
    iar_centerSelected( wgt );
 
-   return 0;
-}
-
-
-/**
- * @brief Sets the quantity text for the images in the image array.
- *
- *    @param wid Window where image array is.
- *    @param name Name of the image array.
- *    @param quantity Array of quantities for the images in the array.
- *    @return 0 on success.
- */
-int toolkit_setImageArrayQuantity( const unsigned int wid, const char* name,
-      char **quantity )
-{
-   int i;
-   Widget *wgt = iar_getWidget( wid, name );
-   if (wgt == NULL)
-      return -1;
-
-   /* Clean up. */
-   if (wgt->dat.iar.quantity != NULL) {
-      for (i=0; i<wgt->dat.iar.nelements; i++)
-         if (wgt->dat.iar.quantity[i] != NULL)
-            free(wgt->dat.iar.quantity[i]);
-      free(wgt->dat.iar.quantity);
-   }
-
-   /* Set. */
-   wgt->dat.iar.quantity = quantity;
    return 0;
 }
 

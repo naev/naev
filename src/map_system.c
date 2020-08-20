@@ -842,9 +842,9 @@ void map_system_updateSelected( unsigned int wid )
  */
 static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float outfitSpace, float shipSpace )
 {
-   int i, owned, len;
+   int i;
    Outfit **outfits;
-   char **slottype, **quantity;
+   char **slottype;
    ImageArrayCell *coutfits;
    int noutfits, moutfits;
    int w, h;
@@ -878,29 +878,18 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
       coutfits = calloc( moutfits, sizeof(ImageArrayCell) );
 
       /* Create the outfit arrays. */
-      quantity = malloc( sizeof(char*) * noutfits );
       bg       = malloc( sizeof(glColour) * noutfits );
       slottype = malloc( sizeof(char*) * noutfits );
       for ( i=0; i<noutfits; i++ ) {
          coutfits[i].image    = gl_dupTexture( outfits[i]->gfx_store );
          coutfits[i].caption  = strdup( outfits[i]->name );
+         coutfits[i].quantity = player_outfitOwned( outfits[i] );
          /* Background colour. */
          c = outfit_slotSizeColour( &outfits[i]->slot );
          if (c == NULL)
             c = &cBlack;
          col_blend( &blend, c, &cGrey70, 0.4 );
          bg[i] = blend;
-
-         /* Quantity. */
-         owned = player_outfitOwned( outfits[i] );
-         len = owned / 10 + 4;
-         if ( owned >= 1 ) {
-            quantity[i] = malloc( len );
-            nsnprintf( quantity[i], len, "%d", owned );
-         }
-         else
-            quantity[i] = NULL;
-
 
          /* Get slot name. */
          slotname = outfit_slotName( outfits[i] );
@@ -925,7 +914,6 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
                             coutfits, noutfits, map_system_array_update, map_system_array_rmouse );
       toolkit_unsetSelection( wid, MAPSYS_OUTFITS );
 
-      toolkit_setImageArrayQuantity( wid, MAPSYS_OUTFITS, quantity );
       toolkit_setImageArraySlotType( wid, MAPSYS_OUTFITS, slottype );
       toolkit_setImageArrayBackground( wid, MAPSYS_OUTFITS, bg );
    }

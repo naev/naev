@@ -1405,7 +1405,7 @@ static void equipment_genOutfitList( unsigned int wid )
    };
 
    int active, i, l, p, noutfits;
-   char **quantity, **slottype;
+   char **slottype;
    ImageArrayCell *coutfits;
    glTexture **toutfits;
    Outfit *o, **outfits;
@@ -1476,13 +1476,11 @@ static void equipment_genOutfitList( unsigned int wid )
       /* Clean up. */
       free(outfits);
 
-      quantity = NULL;
       slottype = NULL;
       bg       = NULL;
    }
    else {
       /* Set alt text. */
-      quantity = malloc( sizeof(char*) * noutfits );
       slottype = malloc( sizeof(char*) * noutfits );
       bg       = malloc( sizeof(glColour) * noutfits );
 
@@ -1524,10 +1522,7 @@ static void equipment_genOutfitList( unsigned int wid )
          }
 
          /* Quantity. */
-         p = player_outfitOwned(o);
-         l = p / 10 + 4;
-         quantity[i] = malloc( l );
-         snprintf( quantity[i], l, "%d", p );
+         coutfits[i].quantity = player_outfitOwned(o);
 
          /* Slot type. */
          if ( (strcmp(outfit_slotName(o), "N/A") != 0)
@@ -1552,8 +1547,6 @@ static void equipment_genOutfitList( unsigned int wid )
          equipment_updateOutfits,
          equipment_rightClickOutfits );
 
-   if (quantity != NULL)
-      toolkit_setImageArrayQuantity( wid,    EQUIPMENT_OUTFITS, quantity );
    if (slottype != NULL)
       toolkit_setImageArraySlotType( wid,    EQUIPMENT_OUTFITS, slottype );
    if (bg != NULL)

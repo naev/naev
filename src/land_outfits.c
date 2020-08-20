@@ -238,10 +238,10 @@ static void outfits_genList( unsigned int wid )
       _("All"), _("\ab W "), _("\ag U "), _("\ap S "), _("\aRCore"), _("Other")
    };
 
-   int i, active, owned, len;
+   int i, active;
    int fx, fy, fw, fh, barw; /* Input filter. */
    Outfit **outfits;
-   char **slottype, **quantity;
+   char **slottype;
    glTexture **toutfits;
    ImageArrayCell *coutfits;
    int noutfits, moutfits;
@@ -306,12 +306,12 @@ static void outfits_genList( unsigned int wid )
    }
    else {
       /* Create the outfit arrays. */
-      quantity = malloc(sizeof(char*)*noutfits);
       bg       = malloc(sizeof(glColour)*noutfits);
       slottype = malloc(sizeof(char*)*noutfits);
       for (i=0; i<noutfits; i++) {
          coutfits[i].image = gl_dupTexture( toutfits[i] );
          coutfits[i].caption = strdup( outfits[i]->name );
+         coutfits[i].quantity = player_outfitOwned(outfits[i]);
 
          /* Background colour. */
          c = outfit_slotSizeColour( &outfits[i]->slot );
@@ -319,19 +319,7 @@ static void outfits_genList( unsigned int wid )
             c = &cBlack;
          col_blend( &blend, c, &cGrey70, 0.4 );
          bg[i] = blend;
-
-         /* Quantity. */
-         owned = player_outfitOwned(outfits[i]);
-         len = owned / 10 + 4;
-         if (owned >= 1) {
-            quantity[i] = malloc( len );
-            nsnprintf( quantity[i], len, "%d", owned );
-         }
-         else
-            quantity[i] = NULL;
-
-
-         /* Get slot name. */
+        /* Get slot name. */
          slotname = outfit_slotName(outfits[i]);
          if ((strcmp(slotname, "N/A") != 0) && (strcmp(slotname, "NULL") != 0)) {
             slottype[i]    = malloc( 2 );
@@ -354,7 +342,6 @@ static void outfits_genList( unsigned int wid )
    outfits_update( wid, NULL );
 
    if (!no_outfits) {
-      toolkit_setImageArrayQuantity( wid, OUTFITS_IAR, quantity );
       toolkit_setImageArraySlotType( wid, OUTFITS_IAR, slottype );
       toolkit_setImageArrayBackground( wid, OUTFITS_IAR, bg );
    }

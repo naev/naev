@@ -16,6 +16,7 @@ typedef struct ImageArrayCell_ {
    glTexture* image; /**< Image to display. */
    char *caption; /**< Corresponding caption. */
    char *alt; /**< Corresponding alt text. */
+   int quantity; /**< Corresponding quantity. */
    /* Additional layers can be set if needed. */
    glTexture** layers; /**< Layers to be added. */
    int nlayers; /**< Total number of layers. */
@@ -27,7 +28,6 @@ typedef struct ImageArrayCell_ {
  */
 typedef struct WidgetImageArrayData_ {
    ImageArrayCell *images; /**< Image array. */
-   char **quantity; /**< Number in top-left corner. */
    char **slottype; /**< Letter in top-right corner. */
    glColour *background; /**< Background of each of the elements. */
    int nelements; /**< Number of elements. */
