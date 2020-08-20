@@ -398,7 +398,7 @@ static void map_update( unsigned int wid )
    int l;
    int hasPresence, hasPlanets;
    char t;
-   const char *sym;
+   const char *sym, *adj;
    char buf[PATH_MAX];
    int p;
    glTexture *logo;
@@ -641,38 +641,31 @@ static void map_update( unsigned int wid )
    /*
     * System Status, if not showing commodity info
     */
-   if ( cur_commod == -1 ) {
+   if (cur_commod == -1) {
       buf[0] = '\0';
       p = 0;
       /* Nebula. */
       if (sys->nebu_density > 0.) {
-         
+         /* Density. */
+         if (sys->nebu_density > 700.)
+            adj = _("Dense ");
+         else if (sys->nebu_density < 300.)
+            adj = _("Light ");
+         else
+            adj = "";
+        
          /* Volatility */
-         
-         
-         if (sys->nebu_density > 700.) {
-            if (sys->nebu_volatility > 700.)
-               p += nsnprintf(&buf[p], PATH_MAX-p, _("Volatile Dense Nebula"));
-            else if (sys->nebu_volatility > 300.)
-               p += nsnprintf(&buf[p], PATH_MAX-p, _("Dangerous Dense Nebula"));
-            else if (sys->nebu_volatility > 0.)
-               p += nsnprintf(&buf[p], PATH_MAX-p, _("Unstable Dense Nebula"));
-            else
-               p += nsnprintf(&buf[p], PATH_MAX-p, _("Dense Nebula"));
-         } else if (sys->nebu_density < 300.) {
-            if (sys->nebu_volatility > 700.)
-               p += nsnprintf(&buf[p], PATH_MAX-p, _("Volatile Light Nebula"));
-            else if (sys->nebu_volatility > 300.)
-               p += nsnprintf(&buf[p], PATH_MAX-p, _("Dangerous Light Nebula"));
-            else if (sys->nebu_volatility > 0.)
-               p += nsnprintf(&buf[p], PATH_MAX-p, _("Unstable Light Nebula"));
-            else
-               p += nsnprintf(&buf[p], PATH_MAX-p, _("Light Nebula"));
-         }
+         if (sys->nebu_volatility > 700.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Volatile %sNebula"), adj);
+         else if (sys->nebu_volatility > 300.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Dangerous %sNebula"), adj);
+         else if (sys->nebu_volatility > 0.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Unstable %sNebula"), adj);
+         else
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("%sNebula"), adj);
       }
       /* Interference. */
       if (sys->interference > 0.) {
-         
          if (buf[0] != '\0')
             p += nsnprintf(&buf[p], PATH_MAX-p, _(", "));
          
@@ -702,6 +695,7 @@ static void map_update( unsigned int wid )
          else
             p += nsnprintf(&buf[p], PATH_MAX-p, _("Asteroid Field"));
       }
+      window_modifyText( wid, "txtSystemStatus", buf );
    }
 }
 
