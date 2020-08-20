@@ -327,10 +327,10 @@ static void bar_open( unsigned int wid )
  */
 static int bar_genList( unsigned int wid )
 {
-   glTexture **portraits;
-   char **names, *focused;
+   ImageArrayCell *portraits;
+   char *focused;
    int w, h, iw, ih, bw, bh;
-   int n, pos;
+   int i, n, pos;
 
    /* Sanity check. */
    if (wid == 0)
@@ -361,23 +361,23 @@ static int bar_genList( unsigned int wid )
    n = npc_getArraySize();
    if (n <= 0) {
       n            = 1;
-      portraits    = malloc(sizeof(glTexture*));
-      portraits[0] = mission_portrait;
-      names        = malloc(sizeof(char*));
-      names[0]     = strdup(_("News"));
+      portraits    = calloc(1, sizeof(ImageArrayCell));
+      portraits[0].image = gl_dupTexture(mission_portrait);
+      portraits[0].caption = strdup(_("News"));;
    }
    else {
       n            = n+1;
-      portraits    = malloc( sizeof(glTexture*) * n );
-      portraits[0] = mission_portrait;
-      npc_getTextureArray( &portraits[1], n-1 );
-      names        = malloc( sizeof(char*) * n );
-      names[0]     = strdup(_("News"));
-      npc_getNameArray( &names[1], n-1 );
+      portraits    = calloc(n, sizeof(ImageArrayCell));
+      portraits[0].image = gl_dupTexture(mission_portrait);
+      portraits[0].caption = strdup(_("News"));
+      for (i=0; i<npc_getArraySize(); i++) {
+         portraits[i+1].image = gl_dupTexture( npc_getTexture(i) );
+         portraits[i+1].caption = strdup( npc_getName(i) );
+      }
    }
    window_addImageArray( wid, 20, -40,
          iw, ih, "iarMissions", 100, 75,
-         portraits, names, n, bar_update, bar_approach );
+         portraits, n, bar_update, bar_approach );
 
    /* Restore position. */
    toolkit_setImageArrayPos( wid, "iarMissions", pos );

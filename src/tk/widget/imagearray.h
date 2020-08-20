@@ -12,14 +12,21 @@
 #include "font.h"
 #include "colour.h"
 
+typedef struct ImageArrayCell_ {
+   glTexture* image; /**< Image to display. */
+   char *caption; /**< Corresponding caption. */
+   char *alt; /**< Corresponding alt text. */
+   /* Additional layers can be set if needed. */
+   glTexture** layers; /**< Layers to be added. */
+   int nlayers; /**< Total number of layers. */
+} ImageArrayCell;
+
 
 /**
  * @brief The image array widget data.
  */
 typedef struct WidgetImageArrayData_ {
-   glTexture **images; /**< Image array. */
-   char **captions; /**< Corresponding caption array. */
-   char **alts; /**< Alt text when mouse over. */
+   ImageArrayCell *images; /**< Image array. */
    char **quantity; /**< Number in top-left corner. */
    char **slottype; /**< Letter in top-right corner. */
    glColour *background; /**< Background of each of the elements. */
@@ -52,7 +59,7 @@ void window_addImageArray( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
       char* name, const int iw, const int ih, /* name and image sizes */
-      glTexture** tex, char** caption, int nelem, /* elements */
+      ImageArrayCell *img, int nelem, /* elements */
       void (*call) (unsigned int,char*), /* update callback */
       void (*rmcall) (unsigned int,char*) ); /* right click callback */
 
@@ -63,7 +70,6 @@ int toolkit_getImageArrayPos( const unsigned int wid, const char* name );
 int toolkit_setImageArrayPos( const unsigned int wid, const char* name, int pos );
 double toolkit_getImageArrayOffset( const unsigned int wid, const char* name );
 int toolkit_setImageArrayOffset( const unsigned int wid, const char* name, double off );
-int toolkit_setImageArrayAlt( const unsigned int wid, const char* name, char **alt );
 int toolkit_setImageArrayQuantity( const unsigned int wid, const char* name,
       char **quantity );
 int toolkit_setImageArraySlotType( const unsigned int wid, const char* name,

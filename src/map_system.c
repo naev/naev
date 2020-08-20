@@ -844,8 +844,8 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
 {
    int i, owned, len;
    Outfit **outfits;
-   char **soutfits, **slottype, **quantity;
-   glTexture **toutfits;
+   char **slottype, **quantity;
+   ImageArrayCell *coutfits;
    int noutfits, moutfits;
    int w, h;
    int xpos, xw, ypos, yh;
@@ -853,6 +853,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
    const glColour *c;
    const char *slotname;
    static Planet *planetDone = NULL;
+
    window_dimWindow( wid, &w, &h );
    if (planetDone == cur_planetObj_sel) {
       if ( widget_exists( wid, MAPSYS_OUTFITS ) ) {
@@ -874,16 +875,15 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
    }
    if ( noutfits > 0 ) {
       moutfits = MAX( 1, noutfits );
-      soutfits = malloc( moutfits * sizeof(char*) );
-      toutfits = malloc( moutfits * sizeof(glTexture*) );
+      coutfits = calloc( moutfits, sizeof(ImageArrayCell) );
 
       /* Create the outfit arrays. */
       quantity = malloc( sizeof(char*) * noutfits );
       bg       = malloc( sizeof(glColour) * noutfits );
       slottype = malloc( sizeof(char*) * noutfits );
       for ( i=0; i<noutfits; i++ ) {
-         soutfits[i] = strdup( outfits[i]->name );
-         toutfits[i] = outfits[i]->gfx_store;
+         coutfits[i].image    = gl_dupTexture( outfits[i]->gfx_store );
+         coutfits[i].caption  = strdup( outfits[i]->name );
          /* Background colour. */
          c = outfit_slotSizeColour( &outfits[i]->slot );
          if (c == NULL)
@@ -922,7 +922,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
       ypos = 65 + 5*(shipSpace!=0) + (h - 100 - (i+1)*5)*shipSpace;
       window_addImageArray( wid, xpos, ypos,
                             xw, yh, MAPSYS_OUTFITS, 64, 64,
-                            toutfits, soutfits, noutfits, map_system_array_update, map_system_array_rmouse );
+                            coutfits, noutfits, map_system_array_update, map_system_array_rmouse );
       toolkit_unsetSelection( wid, MAPSYS_OUTFITS );
 
       toolkit_setImageArrayQuantity( wid, MAPSYS_OUTFITS, quantity );
@@ -935,8 +935,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
 static void map_system_genShipsList( unsigned int wid, float goodsSpace, float outfitSpace, float shipSpace )
 {
    Ship **ships;
-   char **sships;
-   glTexture **tships;
+   ImageArrayCell *cships;
    int nships;
    int xpos, ypos, xw, yh;
    static Planet *planetDone=NULL;
@@ -962,12 +961,11 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
    } else {
       ships = tech_getShip( cur_planetObj_sel->tech, &nships );
    }
-   if ( nships > 0  ) {
-      sships = malloc( sizeof(char*) * nships );
-      tships = malloc( sizeof(glTexture*) * nships );
+   if (nships > 0) {
+      cships = calloc( nships, sizeof(ImageArrayCell) );
       for ( i=0; i<nships; i++ ) {
-         sships[i] = strdup( ships[i]->name );
-         tships[i] = ships[i]->gfx_store;
+         cships[i].image = gl_dupTexture( ships[i]->gfx_store );
+         cships[i].caption = strdup( ships[i]->name );
       }
       free( ships );
       xw = (w - nameWidth - pitch - 60)/2;
@@ -977,7 +975,7 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
       ypos = 65;
       window_addImageArray( wid, xpos, ypos,
          xw, yh, MAPSYS_SHIPS, 64./*/96.*128.*/, 64.,
-         tships, sships, nships, map_system_array_update, map_system_array_rmouse );
+         cships, nships, map_system_array_update, map_system_array_rmouse );
       toolkit_unsetSelection( wid, MAPSYS_SHIPS );
    }
 }
@@ -986,8 +984,7 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
 {
    static Planet *planetDone=NULL;
    int i, ngoods;
-   char **goods;
-   glTexture **tgoods;
+   ImageArrayCell *cgoods;
    int xpos, ypos, xw, yh, w, h;
    window_dimWindow( wid, &w, &h );
 
@@ -1009,11 +1006,10 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
       ngoods = cur_planetObj_sel->ncommodities;
    }
    if ( ngoods > 0 ) {
-      goods = malloc( sizeof(char*) * ngoods );
-      tgoods    = malloc( sizeof(glTexture*) * ngoods );
+      cgoods = calloc( ngoods, sizeof(char*) );
       for ( i=0; i<ngoods; i++ ) {
-         goods[i] = strdup( cur_planetObj_sel->commodities[i]->name);
-         tgoods[i] = cur_planetObj_sel->commodities[i]->gfx_store;
+         cgoods[i].image = gl_dupTexture( cur_planetObj_sel->commodities[i]->gfx_store );
+         cgoods[i].caption = strdup( cur_planetObj_sel->commodities[i]->name);
       }
       /* set up the goods to buy/sell */
       xw = (w - nameWidth - pitch - 60)/2;
@@ -1024,7 +1020,7 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
 
       window_addImageArray( wid, xpos, ypos,
          xw, yh, MAPSYS_TRADE, 64, 64,
-         tgoods, goods, ngoods, map_system_array_update, map_system_array_rmouse );
+         cgoods, ngoods, map_system_array_update, map_system_array_rmouse );
       toolkit_unsetSelection( wid, MAPSYS_TRADE );
    }
 }

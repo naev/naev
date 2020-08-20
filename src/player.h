@@ -173,6 +173,7 @@ void player_soundResume (void);
  * player ships
  */
 int player_ships( char** sships, glTexture** tships );
+void player_shipsSort (void);
 const PlayerShip_t* player_getShipStack( int *n );
 int player_nships (void);
 int player_hasShip( char* shipname );

@@ -53,7 +53,7 @@ static void iar_cleanup( Widget* iar );
  *    @param name Internal widget name.
  *    @param iw Image width to use.
  *    @param ih Image height to use.
- *    @param tex Texture array to use (not freed).
+ *    @param img Image widget array to use (not freed).
  *    @param caption Caption array to use (freed).
  *    @param nelem Elements in tex and caption.
  *    @param call Callback when modified.
@@ -62,7 +62,7 @@ void window_addImageArray( const unsigned int wid,
                            const int x, const int y, /* position */
                            const int w, const int h, /* size */
                            char* name, const int iw, const int ih,
-                           glTexture** tex, char** caption, int nelem,
+                           ImageArrayCell *img, int nelem,
                            void (*call) (unsigned int wdw, char* wgtname),
                            void (*rmcall) (unsigned int wdw, char* wgtname) )
 {
@@ -89,8 +89,7 @@ void window_addImageArray( const unsigned int wid,
    wgt->mwheelevent        = iar_mwheel;
    wgt->mmoveevent         = iar_mmove;
    wgt_setFlag(wgt, WGT_FLAG_ALWAYSMMOVE);
-   wgt->dat.iar.images     = tex;
-   wgt->dat.iar.captions   = caption;
+   wgt->dat.iar.images     = img;
    wgt->dat.iar.nelements  = nelem;
    wgt->dat.iar.selected   = 0;
    wgt->dat.iar.pos        = 0;
@@ -213,15 +212,15 @@ static void iar_render( Widget* iar, double bx, double by )
          }
 
          /* image */
-         if (iar->dat.iar.images[pos] != NULL)
-            gl_blitScale( iar->dat.iar.images[pos],
+         if (iar->dat.iar.images[pos].image != NULL)
+            gl_blitScale( iar->dat.iar.images[pos].image,
                   xcurs + 5., ycurs + gl_smallFont.h + 7.,
                   iar->dat.iar.iw, iar->dat.iar.ih, NULL );
 
          /* caption */
-         if (iar->dat.iar.captions[pos] != NULL)
+         if (iar->dat.iar.images[pos].caption != NULL)
             gl_printMidRaw( &gl_smallFont, iar->dat.iar.iw, xcurs + 5., ycurs + 5.,
-                     &fontcolour, iar->dat.iar.captions[pos] );
+                     &fontcolour, iar->dat.iar.images[pos].caption );
 
          /* quantity. */
          if (iar->dat.iar.quantity != NULL) {
@@ -278,20 +277,22 @@ static void iar_render( Widget* iar, double bx, double by )
 static void iar_renderOverlay( Widget* iar, double bx, double by )
 {
    double x, y;
+   const char *alt;
 
    /*
     * Draw Alt text if applicable.
     */
-   if ((iar->dat.iar.alts != NULL) && (iar->dat.iar.alt >= 0) &&
-         (iar->dat.iar.altx != -1) && (iar->dat.iar.alty != -1) &&
-         (iar->dat.iar.alts[iar->dat.iar.alt] != NULL)) {
+   if ((iar->dat.iar.alt >= 0) &&
+         (iar->dat.iar.altx != -1) && (iar->dat.iar.alty != -1)) {
 
       /* Calculate position. */
       x = bx + iar->x + iar->dat.iar.altx;
       y = by + iar->y + iar->dat.iar.alty;
 
       /* Draw alt text. */
-      toolkit_drawAltText( x, y, iar->dat.iar.alts[iar->dat.iar.alt] );
+      alt = iar->dat.iar.images[iar->dat.iar.alt].alt;
+      if (alt != NULL)
+         toolkit_drawAltText( x, y, alt );
    }
 }
 
@@ -483,10 +484,12 @@ static void iar_cleanup( Widget* iar )
 
    if (iar->dat.iar.nelements > 0) { /* Free each text individually */
       for (i=0; i<iar->dat.iar.nelements; i++) {
-         if (iar->dat.iar.captions[i])
-            free(iar->dat.iar.captions[i]);
-         if (iar->dat.iar.alts && iar->dat.iar.alts[i])
-            free(iar->dat.iar.alts[i]);
+         if (iar->dat.iar.images[i].image != NULL)
+            gl_freeTexture( iar->dat.iar.images[i].image );
+         if (iar->dat.iar.images[i].caption != NULL)
+            free( iar->dat.iar.images[i].caption );
+         if (iar->dat.iar.images[i].alt != NULL)
+            free( iar->dat.iar.images[i].alt );
          if (iar->dat.iar.quantity && iar->dat.iar.quantity[i])
             free(iar->dat.iar.quantity[i]);
       }
@@ -503,12 +506,8 @@ static void iar_cleanup( Widget* iar )
 
 
    /* Free the arrays */
-   if (iar->dat.iar.captions != NULL)
-      free( iar->dat.iar.captions );
    if (iar->dat.iar.images != NULL)
       free( iar->dat.iar.images );
-   if (iar->dat.iar.alts != NULL)
-      free(iar->dat.iar.alts);
    if (iar->dat.iar.quantity != NULL)
       free(iar->dat.iar.quantity);
    if (iar->dat.iar.background != NULL)
@@ -691,7 +690,7 @@ static char* toolkit_getNameById( Widget *wgt, int elem )
    if (elem == -1)
       return NULL;
 
-   return wgt->dat.iar.captions[ elem ];
+   return wgt->dat.iar.images[ elem ].caption;
 }
 
 
@@ -730,7 +729,7 @@ int toolkit_setImageArray( const unsigned int wid, const char* name, char* elem 
 
    /* Try to find the element. */
    for (i=0; i<wgt->dat.iar.nelements; i++) {
-      if (strcmp(elem,wgt->dat.iar.captions[i])==0) {
+      if (strcmp(elem,wgt->dat.iar.images[i].caption)==0) {
          wgt->dat.iar.selected = i;
          return 0;
       }
@@ -825,35 +824,6 @@ int toolkit_setImageArrayPos( const unsigned int wid, const char* name, int pos 
 
    iar_centerSelected( wgt );
 
-   return 0;
-}
-
-
-/**
- * @brief Sets the alt text for the images in the image array.
- *
- *    @param wid Window where image array is.
- *    @param name Name of the image array.
- *    @param alt Array of alt text the size of the images in the array.
- *    @return 0 on success.
- */
-int toolkit_setImageArrayAlt( const unsigned int wid, const char* name, char **alt )
-{
-   int i;
-   Widget *wgt = iar_getWidget( wid, name );
-   if (wgt == NULL)
-      return -1;
-
-   /* Clean up. */
-   if (wgt->dat.iar.alts != NULL) {
-      for (i=0; i<wgt->dat.iar.nelements; i++)
-         if (wgt->dat.iar.alts[i] != NULL)
-            free(wgt->dat.iar.alts[i]);
-      free(wgt->dat.iar.alts);
-   }
-
-   /* Set. */
-   wgt->dat.iar.alts = alt;
    return 0;
 }
 

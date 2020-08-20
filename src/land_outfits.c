@@ -241,8 +241,9 @@ static void outfits_genList( unsigned int wid )
    int i, active, owned, len;
    int fx, fy, fw, fh, barw; /* Input filter. */
    Outfit **outfits;
-   char **soutfits, **slottype, **quantity;
+   char **slottype, **quantity;
    glTexture **toutfits;
+   ImageArrayCell *coutfits;
    int noutfits, moutfits;
    int w, h, iw, ih;
    glColour *bg, blend;
@@ -291,15 +292,15 @@ static void outfits_genList( unsigned int wid )
    outfits = tech_getOutfit( land_planet->tech, &noutfits );
 
    moutfits = MAX( 1, noutfits );
-   soutfits = malloc( moutfits * sizeof(char*) );
    toutfits = malloc( moutfits * sizeof(glTexture*) );
+   coutfits = calloc( moutfits, sizeof(ImageArrayCell) );
 
    noutfits = outfits_filter( outfits, toutfits, noutfits,
          tabfilters[active], filtertext );
 
    if (noutfits <= 0) { /* No outfits */
-      soutfits[0] = strdup(_("None"));
-      toutfits[0] = NULL;
+      coutfits[0].image = NULL;
+      coutfits[0].caption = strdup(_("None"));
       noutfits    = 1;
       no_outfits  = 1;
    }
@@ -309,7 +310,8 @@ static void outfits_genList( unsigned int wid )
       bg       = malloc(sizeof(glColour)*noutfits);
       slottype = malloc(sizeof(char*)*noutfits);
       for (i=0; i<noutfits; i++) {
-         soutfits[i] = strdup( outfits[i]->name );
+         coutfits[i].image = gl_dupTexture( toutfits[i] );
+         coutfits[i].caption = strdup( outfits[i]->name );
 
          /* Background colour. */
          c = outfit_slotSizeColour( &outfits[i]->slot );
@@ -346,7 +348,7 @@ static void outfits_genList( unsigned int wid )
 
    window_addImageArray( wid, 20, 20,
          iw, ih - 31, OUTFITS_IAR, 64, 64,
-         toutfits, soutfits, noutfits, outfits_update, outfits_rmouse );
+         coutfits, noutfits, outfits_update, outfits_rmouse );
 
    /* write the outfits stuff */
    outfits_update( wid, NULL );

@@ -2387,6 +2387,19 @@ static int player_shipsCompare( const void *arg1, const void *arg2 )
 
 
 /**
+ * @brief Sorts the players ships.
+ */
+void player_shipsSort (void)
+{
+   if (player_nstack == 0)
+      return;
+
+   /* Sort. */
+   qsort( player_stack, player_nstack, sizeof(PlayerShip_t), player_shipsCompare );
+}
+
+
+/**
  * @brief Returns a buffer with all the player's ships names.
  *
  *    @param sships Fills sships with player_nships ship names.
@@ -2402,7 +2415,7 @@ int player_ships( char** sships, glTexture** tships )
       return 0;
 
    /* Sort. */
-   qsort( player_stack, player_nstack, sizeof(PlayerShip_t), player_shipsCompare );
+   player_shipsSort();
 
    /* Create the struct. */
    for (i=0; i < player_nstack; i++) {
