@@ -288,6 +288,7 @@ jobs:
         run: |
           ./autogen.sh
           ./configure
+          make pot
           make "ndata.zip"
 
       - name: Upload Artifact
