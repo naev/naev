@@ -923,3 +923,22 @@ void gl_exitTextures (void)
    }
 }
 
+
+/**
+ * @brief Adds an element to a texture array.
+ */
+glTexture** gl_addTexArray( glTexture **tex, int *n, glTexture *t )
+{
+   if (tex==NULL) {
+      tex = malloc( sizeof(glTexture*) );
+      tex[0] = t;
+      *n = 1;
+      return tex;
+   }
+
+   *n += 1;
+   tex = realloc( tex, (*n)*sizeof(glTexture*) );
+   tex[*n-1] = t;
+   return tex;
+}
+

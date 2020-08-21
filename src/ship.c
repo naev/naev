@@ -935,6 +935,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       xmlr_strd(node,"license",temp->license);
       xmlr_strd(node,"fabricator",temp->fabricator);
       xmlr_strd(node,"description",temp->description);
+      xmlr_int(node,"rarity",temp->rarity);
       if (xml_isNode(node,"movement")) {
          cur = node->children;
          do {

@@ -15,9 +15,10 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "nstring.h"
 #include <math.h>
 #include <assert.h>
+
+#include "nstring.h"
 #include "log.h"
 #include "player.h"
 #include "space.h"
@@ -27,6 +28,7 @@
 #include "map_find.h"
 #include "hook.h"
 #include "land_takeoff.h"
+#include "ndata.h"
 
 
 /*
@@ -61,6 +63,8 @@ void shipyard_open( unsigned int wid )
    int th;
    int y;
    const char *buf;
+   glTexture *t;
+   char s[PATH_MAX];
 
    /* Mark as generated. */
    land_tabGenerate(LAND_WINDOW_SHIPYARD);
@@ -103,11 +107,11 @@ void shipyard_open( unsigned int wid )
          SHIP_TARGET_W, SHIP_TARGET_H, "imgTarget", NULL, 1 );
 
    /* slot types */
-   window_addCust( wid, -20, -160, 148, 70, "cstSlots", 0.,
+   window_addCust( wid, -20, -SHIP_TARGET_H-60, 148, 70, "cstSlots", 0.,
          shipyard_renderSlots, NULL, NULL );
 
    /* stat text */
-   window_addText( wid, -40, -240, 128, 400, 0, "txtStats",
+   window_addText( wid, -40, -SHIP_TARGET_H-60-70-20, 128, 400, 0, "txtStats",
          &gl_smallFont, NULL, NULL );
 
    /* text */
@@ -157,6 +161,11 @@ void shipyard_open( unsigned int wid )
          cships[i].caption = strdup(ships[i]->name);
          cships[i].image = gl_dupTexture(ships[i]->gfx_store);
          cships[i].layers = gl_copyTexArray( ships[i]->gfx_overlays, ships[i]->gfx_noverlays, &cships[i].nlayers );
+         if (ships[i]->rarity > 0) {
+            nsnprintf( s, sizeof(s), OVERLAY_GFX_PATH"rarity_%d.png", ships[i]->rarity );
+            t = gl_newImage( s, OPENGL_TEX_MIPMAPS );
+            cships[i].layers = gl_addTexArray( cships[i].layers, &cships[i].nlayers, t );
+         }
       }
       free(ships);
    }
