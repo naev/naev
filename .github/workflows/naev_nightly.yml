@@ -90,6 +90,7 @@ jobs:
 
     - name: Update APT Cache
       run: |
+        sudo dpkg --add-architecture i386
         sudo apt-get update
 
     - name: Install Build Dependencies
