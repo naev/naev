@@ -67,6 +67,62 @@ jobs:
         name: naev-win64-${{ github.sha }}
         path: ${{ github.workspace }}/src/naev.exe
 
+  "Linux-x86":
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Get current build date
+      run: |
+
+    - name: Update APT Cache
+      run: |
+        sudo dpkg --add-architecture i386
+        sudo apt-get update
+
+    - name: Install Build Dependencies
+      run: |
+        sudo apt-get install \
+          build-essential \
+          automake \
+          autoconf-archive \
+          gcc-multilib \
+          libsdl2-dev:i386 \
+          libsdl2-mixer-dev:i386 \
+          libsdl2-image-dev:i386 \
+          libgl1-mesa-dev:i386 \
+          libglu1-mesa-dev:i386 \
+          libxml2-dev:i386 \
+          libfontconfig1-dev:i386 \
+          libfreetype6-dev:i386 \
+          libpng-dev:i386 \
+          libopenal-dev:i386 \
+          libvorbis-dev:i386 \
+          libzip-dev:i386 \
+          libiberty-dev:i386 \
+          libluajit-5.1-dev:i386 \
+          gettext \
+          autopoint \
+          intltool \
+          itstool
+
+    - name: Checkout Naev Repository 
+      uses: actions/checkout@v2
+
+    - name: Build Naev on Linux32
+      run: |
+        ./autogen.sh
+        ./configure --disable-debug --build=x86_64-linux-gnu --host=i686-linux-gnu
+        make -j$(nproc --all)
+      env:
+        CFLAGS: "-O3 -m32"
+        LDFLAGS: "-m32"
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-lin32-${{ github.sha }}
+        path: ${{ github.workspace }}/src/naev
+
   "Linux-x86_64":
     runs-on: ubuntu-latest
 
@@ -170,7 +226,7 @@ jobs:
 
   "Lua-Documentation":
     runs-on: ubuntu-latest
-    needs: [Windows-MinGW64, Windows-MinGW32, macOS, Linux-x86_64]
+    needs: [Windows-MinGW64, Windows-MinGW32, macOS, Linux-x86_64, Linux-x86]
 
     steps:
     - name: Install SSH Key
