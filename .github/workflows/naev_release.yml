@@ -1,10 +1,10 @@
 on:
   push:
-    #branches:
-    #  - master
-    #tags:   
-    #  - 'naev-*.*.*'
-    #  - '!naev-*.*.*-beta*'
+    branches:
+      - master
+    tags:   
+      - 'naev-*.*.*'
+      - '!naev-*.*.*-beta*'
 
 name: Release
 
@@ -30,7 +30,7 @@ jobs:
     - name: Build Naev on Win32
       run: |
         ./autogen.sh
-        ./configure
+        ./configure --disable-debug
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
@@ -67,7 +67,7 @@ jobs:
     - name: Build Naev on Win64
       run: |
         ./autogen.sh
-        ./configure
+        ./configure --disable-debug
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
@@ -238,7 +238,7 @@ jobs:
         export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/opt/openal-soft/lib/pkgconfig"
         
         ./autogen.sh
-        ./configure
+        ./configure --disable-debug
         make -j$(sysctl -n hw.logicalcpu)
       env:
         CFLAGS: "-O3 -mmacosx-version-min=10.7"
@@ -441,7 +441,6 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
-          title: release test 
           files: |
             ${{ github.workspace }}/dist/*
-        #if: ${{ github.repository == 'naev/naev' }}
+        if: ${{ github.repository == 'naev/naev' }}
