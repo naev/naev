@@ -6,7 +6,7 @@ on:
       - '!naev-*.*.*'
       - 'naev-*.*.*-beta*'
 
-name: Beta Release
+name: Prerelease
 
 jobs:
   "Windows-MinGW32":
