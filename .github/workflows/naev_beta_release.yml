@@ -2,9 +2,9 @@ on:
   push:
     branches:
       - master
-    tags:   
-      - '!naev-*.*.*'
-      - 'naev-*.*.*-beta*'
+    #tags:   
+    #  - '!naev-*.*.*'
+    #  - 'naev-*.*.*-beta*'
 
 name: Beta Release
 
@@ -441,6 +441,7 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: true
+          title: beta test
           files: |
             ${{ github.workspace }}/dist/*
         if: ${{ github.repository == 'naev/naev' }}
