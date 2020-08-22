@@ -2,6 +2,7 @@
 <ship name="Empire Peacemaker">
  <base_type>Peacemaker</base_type>
  <GFX sx="12" sy="12">peacemaker</GFX>
+ <rarity>5</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Carrier</class>

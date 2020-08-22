@@ -2,6 +2,7 @@
 <ship name="Soromid Brigand">
  <base_type>Brigand</base_type>
  <GFX>brigand</GFX>
+ <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>

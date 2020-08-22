@@ -2112,10 +2112,10 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
  */
 static int outfit_parse( Outfit* temp, const char* file )
 {
-   xmlNodePtr cur, node, parent;
+   xmlNodePtr cur, ccur, node, parent;
    char *prop;
    const char *cprop;
-   int group;
+   int group, m;
    size_t bufsize;
    char *buf = ndata_read( file, &bufsize );
 
@@ -2156,6 +2156,24 @@ static int outfit_parse( Outfit* temp, const char* file )
             if (xml_isNode(cur,"gfx_store")) {
                temp->gfx_store = xml_parseTexture( cur,
                      OUTFIT_GFX_PATH"store/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+               continue;
+            }
+            else if (xml_isNode(cur,"gfx_overlays")) {
+               ccur = cur->children;
+               m = 2;
+               temp->gfx_overlays = malloc( m*sizeof(glTexture*) );
+               do {
+                  xml_onlyNodes(ccur);
+                  if (xml_isNode(ccur,"gfx_overlay")) {
+                     temp->gfx_noverlays += 1;
+                     if (temp->gfx_noverlays > m) {
+                        m *= 2;
+                        temp->gfx_overlays = realloc( temp->gfx_overlays, m*sizeof(glTexture) );
+                     }
+                     temp->gfx_overlays[ temp->gfx_noverlays-1 ] = xml_parseTexture( ccur,
+                           OVERLAY_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+                  }
+               } while (xml_nextNode(ccur));
                continue;
             }
             else if (xml_isNode(cur,"slot")) {
@@ -2564,6 +2582,10 @@ void outfit_free (void)
       free(o->name);
       if (o->gfx_store)
          gl_freeTexture(o->gfx_store);
+      for (j=0; j<o->gfx_noverlays; j++)
+         gl_freeTexture(o->gfx_overlays[j]);
+      if (o->gfx_overlays)
+         free(o->gfx_overlays);
    }
 
    array_free(outfit_stack);

@@ -442,4 +442,4 @@ jobs:
           title: "Nightly Build"
           files: |
             ${{ github.workspace }}/dist/*
-      if: ${{ github.repository == 'naev/naev' }}
+        if: ${{ github.repository == 'naev/naev' }}

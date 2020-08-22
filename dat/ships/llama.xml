@@ -2,6 +2,7 @@
 <ship name="Llama">
  <base_type>Llama</base_type>
  <GFX>llama</GFX>
+ <rarity>1</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Yacht</class>

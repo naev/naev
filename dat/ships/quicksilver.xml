@@ -2,6 +2,7 @@
 <ship name="Quicksilver">
  <base_type>Quicksilver</base_type>
  <GFX sx="10" sy="10">quicksilver</GFX>
+ <rarity>1</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Courier</class>

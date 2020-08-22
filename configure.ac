@@ -105,6 +105,14 @@ AS_IF([test -d "$srcdir/utils"], [
 ])
 AC_MSG_RESULT([$have_utils])
 
+AC_MSG_CHECKING([whether we have data])
+AS_IF([test -d "$srcdir/dat"], [
+  have_data=yes
+], [
+  have_data=no
+])
+AC_MSG_RESULT([$have_data])
+
 AC_MSG_CHECKING([whether we have docs])
 AS_IF([test -d "$srcdir/docs"], [
   have_docs=yes
@@ -644,15 +652,17 @@ AM_CONDITIONAL([HAVE_MACOS], [test "x$have_macos" = "xyes"])
 AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 AM_CONDITIONAL([HAVE_LDOC], [test -n "$LDOC"])
 AM_CONDITIONAL([HAVE_UTILS], [test "x$have_utils" = "xyes"])
+AM_CONDITIONAL([HAVE_DATA], [test "x$have_data" = "xyes"])
 AM_CONDITIONAL([HAVE_DOCS], [test "x$have_docs" = "xyes"])
 AM_CONDITIONAL([HAVE_MKSPR], [test "x$have_mkspr" = "xyes"])
 AM_CONDITIONAL([LUA_INTERNAL], [test "x$used_lua" = "xinternal"])
 AM_CONDITIONAL([CSPARSE_INTERNAL], [test "x$used_csparse" = "xinternal"])
-AM_CONDITIONAL([HAVE_NLS], [test "x$USE_NLS" = "xyes"])
-AC_CHECK_FILE([$srcdir/src/shaders_c_gen.c],
-   AM_CONDITIONAL([HAVE_SHADERS_C_GEN],true),
-   AM_CONDITIONAL([HAVE_SHADERS_C_GEN],false))
-
+AM_CONDITIONAL([HAVE_NLS], [test "x$USE_NLS" = "xyes" && test -d "$srcdir/po"])
+# AC_CHECK_FILE breaks cross-compiling, so we check directly
+AM_CONDITIONAL([HAVE_SHADERS_C_GEN], [test -f "$srcdir/src/shaders_c_gen.c"])
+#AC_CHECK_FILE([$srcdir/src/shaders_c_gen.c],
+#   AM_CONDITIONAL([HAVE_SHADERS_C_GEN],true),
+#   AM_CONDITIONAL([HAVE_SHADERS_C_GEN],false))
 
 #
 # Output

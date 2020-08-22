@@ -2,6 +2,7 @@
 <ship name="Sirius Reverence">
  <base_type>Reverence</base_type>
  <GFX sx="10" sy="10">preacher</GFX>
+ <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>

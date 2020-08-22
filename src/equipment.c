@@ -1321,14 +1321,15 @@ static void equipment_genLists( unsigned int wid )
  */
 static void equipment_genShipList( unsigned int wid )
 {
-   int i, l;
-   char **sships;
-   glTexture **tships;
+   int i, l, n;
+   ImageArrayCell *cships;
    int nships;
    int w, h;
    int sw, sh;
-   char **alt;
    Pilot *s;
+   const PlayerShip_t *ps;
+   char r[PATH_MAX];
+   glTexture *t;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, NULL, NULL,
@@ -1341,30 +1342,45 @@ static void equipment_genShipList( unsigned int wid )
          nships   = player_nships()+1;
       else
          nships   = 1;
-      sships   = malloc(sizeof(char*)*nships);
-      tships   = malloc(sizeof(glTexture*)*nships);
+      cships   = calloc( nships, sizeof(ImageArrayCell) );
       /* Add player's current ship. */
-      sships[0] = strdup(player.p->name);
-      tships[0] = player.p->ship->gfx_store;
-      if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
-         player_ships( &sships[1], &tships[1] );
-      window_addImageArray( wid, 20, -40,
-            sw, sh, EQUIPMENT_SHIPS, 64./96.*128., 64.,
-            tships, sships, nships, equipment_updateShips, NULL );
-
-      /* Ship stats in alt text. */
-      alt   = malloc( sizeof(char*) * nships );
-      for (i=0; i<nships; i++) {
-         s        = player_getShip( sships[i] );
-         alt[i]   = malloc( SHIP_ALT_MAX );
-         l        = nsnprintf( &alt[i][0], SHIP_ALT_MAX, _("Ship Stats\n") );
-         l        = equipment_shipStats( &alt[i][l], SHIP_ALT_MAX-l, s, 1 );
-         if (l == 0) {
-            free( alt[i] );
-            alt[i] = NULL;
+      cships[0].image = gl_dupTexture(player.p->ship->gfx_store);
+      cships[0].caption = strdup(player.p->name);
+      cships[0].layers = gl_copyTexArray( player.p->ship->gfx_overlays, player.p->ship->gfx_noverlays, &cships[0].nlayers );
+      if (player.p->ship->rarity > 0) {
+         nsnprintf( r, sizeof(r), OVERLAY_GFX_PATH"rarity_%d.png", player.p->ship->rarity );
+         t = gl_newImage( r, OPENGL_TEX_MIPMAPS );
+         cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
+      }
+      if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
+         player_shipsSort();
+         ps = player_getShipStack( &n );
+         for (i=1; i<n+1; i++) {
+            cships[i].image = gl_dupTexture( ps[i-1].p->ship->gfx_store );
+            cships[i].caption = strdup( ps[i-1].p->name );
+            cships[i].layers = gl_copyTexArray( ps[i-1].p->ship->gfx_overlays, ps[i-1].p->ship->gfx_noverlays, &cships[i].nlayers );
+            if (ps[i-1].p->ship->rarity > 0) {
+               nsnprintf( r, sizeof(r), OVERLAY_GFX_PATH"rarity_%d.png", ps[i-1].p->ship->rarity );
+               t = gl_newImage( r, OPENGL_TEX_MIPMAPS );
+               cships[i].layers = gl_addTexArray( cships[i].layers, &cships[i].nlayers, t );
+            }
          }
       }
-      toolkit_setImageArrayAlt( wid, EQUIPMENT_SHIPS, alt );
+      /* Ship stats in alt text. */
+      for (i=0; i<nships; i++) {
+         s        = player_getShip( cships[i].caption );
+         cships[i].alt = malloc( SHIP_ALT_MAX );
+         l        = nsnprintf( &cships[i].alt[0], SHIP_ALT_MAX, _("Ship Stats\n") );
+         l        = equipment_shipStats( &cships[i].alt[0], SHIP_ALT_MAX-l, s, 1 );
+         if (l == 0) {
+            free( cships[i].alt );
+            cships[i].alt = NULL;
+         }
+      }
+
+      window_addImageArray( wid, 20, -40,
+            sw, sh, EQUIPMENT_SHIPS, 96., 96.,
+            cships, nships, equipment_updateShips, NULL );
    }
 }
 
@@ -1402,14 +1418,9 @@ static void equipment_genOutfitList( unsigned int wid )
       _("All"), "\ab W ", "\ag U ", "\ap S ", _("\aRCore")
    };
 
-   int active, i, l, p, noutfits;
-   char **soutfits, **alt, **quantity, **slottype;
-   glTexture **toutfits;
-   Outfit *o, **outfits;
-   const glColour *c;
-   glColour *bg, blend;
-   const char *typename;
-   double mass;
+   int noutfits, active;
+   ImageArrayCell *coutfits;
+   Outfit **outfits;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, NULL, NULL, &ow, &oh,
@@ -1452,8 +1463,6 @@ static void equipment_genOutfitList( unsigned int wid )
    /* Allocate space. */
    noutfits = MAX( 1, player_numOutfits() ); /* This is the most we'll need, probably less due to filtering. */
    outfits  = calloc( noutfits, sizeof(Outfit*) );
-   soutfits = calloc( noutfits, sizeof(char*) );
-   toutfits = calloc( noutfits, sizeof(glTexture*) );
 
    filtertext = NULL;
    if (widget_exists(equipment_wid, EQUIPMENT_FILTER)) {
@@ -1463,99 +1472,16 @@ static void equipment_genOutfitList( unsigned int wid )
    }
 
    /* Get the outfits. */
-   noutfits = player_getOutfitsFiltered( outfits, toutfits,
-         tabfilters[active], filtertext );
-
-   if (noutfits == 0) {
-      noutfits = 1;
-      soutfits[0] = strdup( _("None") );
-      toutfits[0] = NULL;
-
-      /* Clean up. */
-      free(outfits);
-   }
-   else
-      for (i=0; i<noutfits; i++)
-         soutfits[i] = strdup( outfits[i]->name );
+   noutfits = player_getOutfitsFiltered( outfits, tabfilters[active], filtertext );
+   coutfits = outfits_imageArrayCells( outfits, &noutfits );
+   free(outfits);
 
    /* Create the actual image array. */
    window_addImageArray( wid, x, y, ow, oh - 31,
          EQUIPMENT_OUTFITS, 50., 50.,
-         toutfits, soutfits, noutfits,
+         coutfits, noutfits,
          equipment_updateOutfits,
          equipment_rightClickOutfits );
-
-   /* Case there are none we don't need to do more. */
-   if (strcmp( soutfits[0], _("None") )==0)
-      return;
-
-   /* Set alt text. */
-   alt      = malloc( sizeof(char*) * noutfits );
-   quantity = malloc( sizeof(char*) * noutfits );
-   slottype = malloc( sizeof(char*) * noutfits );
-   bg       = malloc( sizeof(glColour) * noutfits );
-
-   /* Process all the outfits. */
-   for (i=0; i<noutfits; i++) {
-      o = outfits[i];
-
-      /* Background colour. */
-      c = outfit_slotSizeColour( &o->slot );
-      if (c == NULL)
-         c = &cBlack;
-      col_blend( &blend, c, &cGrey70, 0.4 );
-      bg[i] = blend;
-
-      /* Short description. */
-      if (o->desc_short == NULL)
-         alt[i] = NULL;
-      else {
-         mass = o->mass;
-         if ((outfit_isLauncher(o) || outfit_isFighterBay(o)) &&
-               (outfit_ammo(o) != NULL)) {
-            mass += outfit_amount(o) * outfit_ammo(o)->mass;
-         }
-
-         l = strlen(o->desc_short) + 128;
-         alt[i] = malloc( l );
-         p  = snprintf( &alt[i][0], l, "%s\n", o->name );
-         if ((o->slot.spid!=0) && (p < l))
-            p += snprintf( &alt[i][p], l-p, _("\aRSlot %s\a0\n"),
-                  sp_display( o->slot.spid ) );
-         if (p < l)
-            p += snprintf( &alt[i][p], l-p, "\n%s", o->desc_short );
-         if ((o->mass > 0.) && (p < l))
-            snprintf( &alt[i][p], l-p,
-                  _("\n%.0f Tonnes"),
-                  mass );
-      }
-
-      /* Quantity. */
-      p = player_outfitOwned(o);
-      l = p / 10 + 4;
-      quantity[i] = malloc( l );
-      snprintf( quantity[i], l, "%d", p );
-
-      /* Slot type. */
-      if ( (strcmp(outfit_slotName(o), "N/A") != 0)
-            && (strcmp(outfit_slotName(o), "NULL") != 0) ) {
-         typename       = outfit_slotName(o);
-         slottype[i]    = malloc( 2 );
-         slottype[i][0] = typename[0];
-         slottype[i][1] = '\0';
-      }
-      else
-         slottype[i] = NULL;
-   }
-
-   /* Clean up. */
-   free(outfits);
-
-   /* Set misc stuff. */
-   toolkit_setImageArrayAlt( wid,         EQUIPMENT_OUTFITS, alt );
-   toolkit_setImageArrayQuantity( wid,    EQUIPMENT_OUTFITS, quantity );
-   toolkit_setImageArraySlotType( wid,    EQUIPMENT_OUTFITS, slottype );
-   toolkit_setImageArrayBackground( wid,  EQUIPMENT_OUTFITS, bg );
 }
 
 
