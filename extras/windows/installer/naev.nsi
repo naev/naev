@@ -137,7 +137,7 @@ Section "Naev Data (Download)" DataSection
     inetc::get "http://github.com/naev/naev/releases/download/${RELEASE}/ndata-${VERSION}${VERSION_SUFFIX}.zip" "ndata.zip"
     Pop $R0 ;Get the return value
       StrCmp $R0 "OK" skip
-        MessageBox MB_YESNO|MB_ICONEXCLAMATION "Download failed due to: $R0$\n$\nPlease note that naev wont work until you download ndata.zip and put it in the same folder as naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe.$\n$\nRetry?" IDNO skip
+        MessageBox MB_YESNO|MB_ICONEXCLAMATION "Download failed due to: $R0$\n$\nPlease note that naev won't work until you download ndata.zip and put it in the same folder as naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe.$\n$\nRetry?" IDNO skip
       Goto dwn
    skip:
 SectionEnd
