@@ -150,7 +150,7 @@ mv extras/windows/installer/naev-$VERSION-$BUILD_DATE-win$ARCH.exe naev-win$ARCH
 
 elif [[ $NIGHTLY == false ]]; then
     if [[ $BETA == true ]]; then 
-        makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta$BETAVER -DARCH=$ARCH -DRELEASE=$BASEVER.0-beta$BETAVER extras/windows/installer/naev.nsi
+        makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta$BETAVER -DARCH=$ARCH -DRELEASE=naev-$BASEVER.0-beta$BETAVER extras/windows/installer/naev.nsi
     elif [[ $BETA == false ]]; then 
         makensis -DVERSION=$VERSION -DVERSION_SUFFIX= -DARCH=$ARCH -DRELEASE=naev-$VERSION extras/windows/installer/naev.nsi
     else
