@@ -427,12 +427,12 @@ jobs:
           mv temp/linux-x86-64/naev-linux-x86-64 dist/naev-$VERSION-$BUILD_DATE-linux-x86-64
           mv temp/linux-x86-32/naev-linux-x86-32 dist/naev-$VERSION-$BUILD_DATE-linux-x86-32
           mv temp/macos/naev-macos.zip dist/naev-$VERSION-$BUILD_DATE-macos.zip
-          mv temp/ndata/ndata.zip dist/ndata-$VERSION-$BUILD_DATE.zip
-          mv temp/win32/naev-win32.exe dist/naev-$VERSION-$BUILD_DATE-win32.exe
-          mv temp/win32/naev-win32.zip dist/naev-$VERSION-$BUILD_DATE-win32.zip
           mv temp/win64/naev-win64.exe dist/naev-$VERSION-$BUILD_DATE-win64.exe
           mv temp/win64/naev-win64.zip dist/naev-$VERSION-$BUILD_DATE-win64.zip
+          mv temp/win32/naev-win32.exe dist/naev-$VERSION-$BUILD_DATE-win32.exe
+          mv temp/win32/naev-win32.zip dist/naev-$VERSION-$BUILD_DATE-win32.zip
           mv temp/source/source.tar.bz2 dist/naev-$VERSION-$BUILD_DATE-source.tar.bz2
+          mv temp/ndata/ndata.zip dist/ndata-$VERSION-$BUILD_DATE.zip
 
       - name: Upload Release Assets
         uses: "marvinpinto/action-automatic-releases@latest"
