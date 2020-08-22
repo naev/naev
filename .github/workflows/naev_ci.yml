@@ -82,10 +82,9 @@ jobs:
     - name: Install Build Dependencies
       run: |
         sudo apt-get install \
-          build-essential \
+          build-essential:i386 \
           automake \
           autoconf-archive \
-          binutils-dev:i386 \
           gcc-multilib \
           libsdl2-dev:i386 \
           libsdl2-mixer-dev:i386 \
