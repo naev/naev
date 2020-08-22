@@ -874,6 +874,27 @@ int gl_needPOT (void)
 
 
 /**
+ * @brief Copy a texture array.
+ */
+glTexture** gl_copyTexArray( glTexture **tex, int texn, int *n )
+{
+   int i;
+   glTexture **t;
+
+   if (texn == 0) {
+      *n = 0;
+      return NULL;
+   }
+
+   t = malloc( texn * sizeof(glTexture*) );
+   for (i=0; i<texn; i++)
+      t[i] = gl_dupTexture( tex[i] );
+   *n = texn;
+   return t;
+}
+
+
+/**
  * @brief Initializes the opengl texture subsystem.
  *
  *    @return 0 on success.
@@ -900,5 +921,24 @@ void gl_exitTextures (void)
       for (tex=texture_list; tex!=NULL; tex=tex->next)
          DEBUG(_("   '%s' opened %d times"), tex->tex->name, tex->used );
    }
+}
+
+
+/**
+ * @brief Adds an element to a texture array.
+ */
+glTexture** gl_addTexArray( glTexture **tex, int *n, glTexture *t )
+{
+   if (tex==NULL) {
+      tex = malloc( sizeof(glTexture*) );
+      tex[0] = t;
+      *n = 1;
+      return tex;
+   }
+
+   *n += 1;
+   tex = realloc( tex, (*n)*sizeof(glTexture*) );
+   tex[*n-1] = t;
+   return tex;
 }
 

@@ -46,6 +46,7 @@ int npc_getTextureArray( glTexture **tex, int n );
 const char *npc_getName( int i );
 glTexture *npc_getTexture( int i );
 const char *npc_getDesc( int i );
+int npc_isImportant( int i );
 int npc_approach( int i );
 
 

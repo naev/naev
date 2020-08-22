@@ -23,7 +23,7 @@ post_accept[1] = _([[Looking at the picture, you see that the locket matches the
 
 misn_nifiheim = _("After thoroughly searching the spaceport, you decide that she wasn't there.")
 misn_nova_shakar = _("At last! You find her, but she ducks into a tour bus when she sees you. The schedule says it's destined for Torloth. You begin to wonder if she'll want to be found.")
-misn_torloth = _([[After chasing Cynthia through most of the station, you find her curled up at the end of a hall, crying. As you approach, she screams "Why can't you leave me alone? I don't want to go back to my terrible parents!" Will you take her anyway?]])
+misn_torloth = _([[After chasing Cynthia through most of the station, you find her curled up at the end of a hall, crying. As you approach, she screams, "Why can't you leave me alone? I don't want to go back to my terrible parents!" Will you take her anyway?]])
 misn_capture = "Cynthia stops crying and proceeds to hide in the farthest corner of your ship. Attemps to talk to her turn up fruitless."
 misn_release = _([["Please, please, please don't ever come looking for me again, I beg of you!"]])
 misn_release_father = _([[You tell the father that you checked every place on the list, and then some, but his daughter was nowhere to be found. You buy the old man a drink, then go back to the spaceport. Before you leave, he hands you a few credits. "For your troubles."]])

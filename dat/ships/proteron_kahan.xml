@@ -2,6 +2,7 @@
 <ship name="Proteron Kahan">
  <base_type>Kahan</base_type>
  <GFX sx="10" sy="10">kahan</GFX>
+ <rarity>4</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>

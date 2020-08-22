@@ -2,6 +2,7 @@
 <ship name="Admonisher">
  <base_type>Admonisher</base_type>
  <GFX>admonisher</GFX>
+ <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>

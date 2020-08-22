@@ -86,7 +86,7 @@ function create()
    reward     = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
    
    misn.setTitle( string.format(
-      _("ES: Cargo transport (%s of %s)"), tonnestring(amount), cargo ) )
+      _("ES: Cargo transport to %s in %s (%s)"), destplanet:name(), destsys:name(), tonnestring(amount) ) )
    misn.markerAdd(destsys, "computer")
    misn.setDesc(
       misn_desc:format( destplanet:name(), destsys:name() ) .. "\n\n"

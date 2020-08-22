@@ -2,6 +2,7 @@
 <ship name="Hawking">
  <base_type>Hawking</base_type>
  <GFX sx="12" sy="12">hawking</GFX>
+ <rarity>4</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>

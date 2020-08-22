@@ -37,7 +37,7 @@ being disabled.
 Install compile-time dependencies on Ubuntu 16.04 (and hopefully later) with:
 
 ```bash
-apt-get install build-essential automake libsdl2-dev libsdl2-image-dev \
+apt-get install build-essential automake libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev \
 libgl1-mesa-dev libxml2-dev libfreetype6-dev libpng-dev libopenal-dev \
 libvorbis-dev binutils-dev libzip-dev libiberty-dev autopoint intltool libfontconfig-dev itstool autoconf-archive
 ```

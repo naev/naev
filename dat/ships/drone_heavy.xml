@@ -2,6 +2,7 @@
 <ship name="Heavy Drone">
  <base_type>Drone</base_type>
  <GFX sx="10" sy="10">drone_heavy</GFX>
+ <rarity>5</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Heavy Drone</class>

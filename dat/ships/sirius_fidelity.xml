@@ -2,6 +2,7 @@
 <ship name="Sirius Fidelity">
  <base_type>Fidelity</base_type>
  <GFX>fidelity</GFX>
+ <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>

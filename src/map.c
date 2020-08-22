@@ -347,7 +347,7 @@ static void map_update_commod_av_price()
       int totPriceCnt = 0;
       for (i=0; i<systems_nstack; i++) {
          sys = system_getIndex( i );
-         
+
          /* if system is not known, reachable, or marked. and we are not in the editor */
          if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
               && !space_sysReachable(sys)))
@@ -398,14 +398,14 @@ static void map_update( unsigned int wid )
    int l;
    int hasPresence, hasPlanets;
    char t;
-   const char *sym;
+   const char *sym, *adj;
    char buf[PATH_MAX];
    int p;
    glTexture *logo;
    double w;
    double unknownPresence;
    Commodity *c;
-   
+
    /* Needs map to update. */
    if (!map_isOpen())
       return;
@@ -433,11 +433,11 @@ static void map_update( unsigned int wid )
       } else {
          snprintf(buf,PATH_MAX,"Known %s prices shown. Galaxy-wide average: %.2f",c->name,commod_av_gal_price);
          window_modifyText( wid, "txtSystemStatus", buf );
-         
+
       }
    } else {
       window_modifyText( wid, "txtSystemStatus", NULL );
-   }     
+   }
 
    /*
     * Right Text
@@ -641,41 +641,34 @@ static void map_update( unsigned int wid )
    /*
     * System Status, if not showing commodity info
     */
-   if ( cur_commod == -1 ) {
+   if (cur_commod == -1) {
       buf[0] = '\0';
       p = 0;
       /* Nebula. */
       if (sys->nebu_density > 0.) {
-         
+         /* Density. */
+         if (sys->nebu_density > 700.)
+            adj = _("Dense ");
+         else if (sys->nebu_density < 300.)
+            adj = _("Light ");
+         else
+            adj = "";
+
          /* Volatility */
-         
-         
-         if (sys->nebu_density > 700.) {
-            if (sys->nebu_volatility > 700.)
-               p += nsnprintf(&buf[p], PATH_MAX-p, _("Volatile Dense Nebula"));
-            else if (sys->nebu_volatility > 300.)
-               p += nsnprintf(&buf[p], PATH_MAX-p, _("Dangerous Dense Nebula"));
-            else if (sys->nebu_volatility > 0.)
-               p += nsnprintf(&buf[p], PATH_MAX-p, _("Unstable Dense Nebula"));
-            else
-               p += nsnprintf(&buf[p], PATH_MAX-p, _("Dense Nebula"));
-         } else if (sys->nebu_density < 300.) {
-            if (sys->nebu_volatility > 700.)
-               p += nsnprintf(&buf[p], PATH_MAX-p, _("Volatile Light Nebula"));
-            else if (sys->nebu_volatility > 300.)
-               p += nsnprintf(&buf[p], PATH_MAX-p, _("Dangerous Light Nebula"));
-            else if (sys->nebu_volatility > 0.)
-               p += nsnprintf(&buf[p], PATH_MAX-p, _("Unstable Light Nebula"));
-            else
-               p += nsnprintf(&buf[p], PATH_MAX-p, _("Light Nebula"));
-         }
+         if (sys->nebu_volatility > 700.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Volatile %sNebula"), adj);
+         else if (sys->nebu_volatility > 300.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Dangerous %sNebula"), adj);
+         else if (sys->nebu_volatility > 0.)
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("Unstable %sNebula"), adj);
+         else
+            p += nsnprintf(&buf[p], PATH_MAX-p, _("%sNebula"), adj);
       }
       /* Interference. */
       if (sys->interference > 0.) {
-         
          if (buf[0] != '\0')
             p += nsnprintf(&buf[p], PATH_MAX-p, _(", "));
-         
+
          if (sys->interference > 700.)
             p += nsnprintf(&buf[p], PATH_MAX-p, _("Dense Interference"));
          else if (sys->interference < 300.)
@@ -686,15 +679,15 @@ static void map_update( unsigned int wid )
       /* Asteroids. */
       if (sys->nasteroids > 0) {
          double density;
-         
+
          if (buf[0] != '\0')
             p += nsnprintf(&buf[p], PATH_MAX-p, _(", "));
-         
+
          density = 0.;
          for (i=0; i<sys->nasteroids; i++) {
             density += sys->asteroids[i].area * sys->asteroids[i].density;
          }
-         
+
          if (density >= 1.5)
             p += nsnprintf(&buf[p], PATH_MAX-p, _("Dense Asteroid Field"));
          else if (density <= 0.5)
@@ -702,6 +695,7 @@ static void map_update( unsigned int wid )
          else
             p += nsnprintf(&buf[p], PATH_MAX-p, _("Asteroid Field"));
       }
+      window_modifyText( wid, "txtSystemStatus", buf );
    }
 }
 
@@ -906,6 +900,9 @@ void map_renderParams( double bx, double by, double xpos, double ypos,
    *y = round((by - ypos + h/2) * 1.);
 }
 
+/**
+ * @brief Renders the map background decorators.
+ */
 void map_renderDecorators( double x, double y, int editor)
 {
    int i,j;
@@ -918,13 +915,13 @@ void map_renderDecorators( double x, double y, int editor)
 
    /* Fade in the decorators to allow toggling between commodity and nothing */
    double cc = cos ( commod_counter / 200. * M_PI );
-   ccol.a = cc;
-     
+   ccol.a = 2./3.*cc;
+
    for (i=0; i<decorator_nstack; i++) {
 
       decorator = &decorator_stack[i];
 
-      //only if pict couldn't be loaded
+      /* only if pict couldn't be loaded */
       if (decorator->image == NULL)
          continue;
 
@@ -937,8 +934,10 @@ void map_renderDecorators( double x, double y, int editor)
             if (!sys_isKnown(sys))
                continue;
 
-            if (decorator->x < sys->pos.x + decorator->detection_radius && decorator->x > sys->pos.x - decorator->detection_radius
-                  && decorator->y < sys->pos.y + decorator->detection_radius && decorator->y > sys->pos.y - decorator->detection_radius) {
+            if ((decorator->x < sys->pos.x + decorator->detection_radius) &&
+                  (decorator->x > sys->pos.x - decorator->detection_radius) &&
+                  (decorator->y < sys->pos.y + decorator->detection_radius) &&
+                  (decorator->y > sys->pos.y - decorator->detection_radius)) {
                visible=1;
             }
          }
@@ -995,8 +994,9 @@ void map_renderFactionDisks( double x, double y, int editor)
       c.r = col->r;
       c.g = col->g;
       c.b = col->b;
-      c.a = CLAMP( .6, .75, 20 / presence ) * cc;
-      
+      //c.a = CLAMP( .6, .75, 20 / presence ) * cc;
+      c.a = CLAMP( .4, .5, 13.3 / presence ) * cc;
+
       gl_blitTexture(
             gl_faction_disk,
             tx - sw/2, ty - sh/2, sw, sh,
@@ -1035,7 +1035,7 @@ void map_renderJumps( double x, double y, int editor)
             continue;
 
          /* Choose colours. */
-         cole = &cBlue;
+         cole = &cLightBlue;
          for (k = 0; k < jsys->njumps; k++) {
             if (jsys->jumps[k].target == sys) {
                if (jp_isFlag(&jsys->jumps[k], JP_EXITONLY))
@@ -1050,7 +1050,7 @@ void map_renderJumps( double x, double y, int editor)
          else if (jp_isFlag(&sys->jumps[j], JP_HIDDEN))
             col = &cRed;
          else
-            col = &cBlue;
+            col = &cLightBlue;
 
          /* Draw the lines. */
          vertex[0]  = x + sys->pos.x * map_zoom;
@@ -1314,7 +1314,7 @@ static void map_renderMarkers( double x, double y, double r, double a )
 }
 
 #define setcolour(R,G,B) ({ccol.r=(R);ccol.g=(G);ccol.b=(B);ccol.a=1;})
-/* 
+/*
  * Makes all systems dark grey.
  */
 static void map_renderSysBlack(double bx, double by, double x,double y, double w, double h, double r, int editor)
@@ -1326,19 +1326,19 @@ static void map_renderSysBlack(double bx, double by, double x,double y, double w
 
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
-         
+
       /* if system is not known, reachable, or marked. and we are not in the editor */
       if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
            && !space_sysReachable(sys)) && !editor)
          continue;
-      
+
       tx = x + sys->pos.x*map_zoom;
       ty = y + sys->pos.y*map_zoom;
-         
+
       /* Skip if out of bounds. */
       if (!rectOverlap(tx - r, ty - r, r, r, bx, by, w, h))
          continue;
-      
+
       /* If system is known fill it. */
       if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
          setcolour(0.1,0.1,0.1);
@@ -1410,7 +1410,7 @@ void map_renderCommod( double bx, double by, double x, double y,
                      }
                   }
                }
-               
+
             }
             if ( maxPrice == 0 ) {/* no prices are known here */
                textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
@@ -1420,7 +1420,7 @@ void map_renderCommod( double bx, double by, double x, double y,
                gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
                map_renderSysBlack(bx,by,x,y,w,h,r,editor);
                return;
-               
+
             }
             curMaxPrice=maxPrice;
             curMinPrice=minPrice;
@@ -1436,19 +1436,19 @@ void map_renderCommod( double bx, double by, double x, double y,
       }
       for (i=0; i<systems_nstack; i++) {
          sys = system_getIndex( i );
-         
+
          /* if system is not known, reachable, or marked. and we are not in the editor */
          if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
               && !space_sysReachable(sys)) && !editor)
             continue;
-         
+
          tx = x + sys->pos.x*map_zoom;
          ty = y + sys->pos.y*map_zoom;
-         
+
          /* Skip if out of bounds. */
          if (!rectOverlap(tx - r, ty - r, r, r, bx, by, w, h))
             continue;
-         
+
          /* If system is known fill it. */
          if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
             minPrice=0;
@@ -1466,8 +1466,8 @@ void map_renderCommod( double bx, double by, double x, double y,
                   }
                }
             }
-            
-            
+
+
             /* Calculate best and worst profits */
             if ( maxPrice > 0 ) {
                /* Commodity sold at this system */
@@ -1488,7 +1488,7 @@ void map_renderCommod( double bx, double by, double x, double y,
                /* Commodity not sold here */
                setcolour(0.1,0.1,0.1);
                gl_drawCircle( tx, ty , r, &ccol, 1 );
-               
+
             }
          }
       }
@@ -1498,19 +1498,19 @@ void map_renderCommod( double bx, double by, double x, double y,
       /* Now display the costs */
       for (i=0; i<systems_nstack; i++) {
          sys = system_getIndex( i );
-         
+
          /* if system is not known, reachable, or marked. and we are not in the editor */
          if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
               && !space_sysReachable(sys)) && !editor)
             continue;
-         
+
          tx = x + sys->pos.x*map_zoom;
          ty = y + sys->pos.y*map_zoom;
-         
+
          /* Skip if out of bounds. */
          if (!rectOverlap(tx - r, ty - r, r, r, bx, by, w, h))
             continue;
-         
+
          /* If system is known fill it. */
          if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
             double sumPrice=0;
@@ -1528,7 +1528,7 @@ void map_renderCommod( double bx, double by, double x, double y,
                   }
                }
             }
-            
+
             if ( sumCnt > 0 ) {
                /* Commodity sold at this system */
                /* Colour as a % of global average */
@@ -1587,30 +1587,30 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
          map_buttonZoom( 0, "btnZoomOut" );
       /*}*/
       return 1;
-      
+
    case SDL_MOUSEBUTTONDOWN:
       /* Must be in bounds. */
       if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
          return 0;
-      
+
       /* selecting star system */
       else {
          mx -= w/2 - map_xpos;
          my -= h/2 - map_ypos;
          map_drag = 1;
-         
+
          for (i=0; i<systems_nstack; i++) {
             sys = system_getIndex( i );
-            
+
             /* must be reachable */
             if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
                 && !space_sysReachable(sys))
                continue;
-            
+
             /* get position */
             x = sys->pos.x * map_zoom;
             y = sys->pos.y * map_zoom;
-            
+
             if ((pow2(mx-x)+pow2(my-y)) < t) {
                if (map_selected != -1) {
                   if ( sys == system_getIndex( map_selected ) ) {
@@ -1624,12 +1624,12 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
          }
       }
       return 1;
-      
+
    case SDL_MOUSEBUTTONUP:
       if (map_drag)
          map_drag = 0;
       break;
-      
+
    case SDL_MOUSEMOTION:
       if (map_drag) {
          /* axis is inverted */
@@ -1701,7 +1701,7 @@ static void map_genModeList(void)
                   commod_known[totGot] = p->commodities[k];
                   totGot++;
                }
-               
+
             }
          }
       }
@@ -1714,7 +1714,7 @@ static void map_genModeList(void)
    nmap_modes = 2*totGot + 1;
    map_modes = calloc( sizeof(char*), nmap_modes );
    map_modes[0] = strdup("Travel (Default)");
-   
+
    for ( i=0; i<totGot; i++ ) {
       l = strlen(commod_known[i]->name) + 7;
       map_modes[ 2*i + 1 ] = malloc(l);
@@ -1750,7 +1750,7 @@ static void map_modeUpdate( unsigned int wid, char* str )
    if ( cur_commod == -1 )
       commod_counter = 101;
    map_update(wid);
-   
+
 }
 
 /**
@@ -1805,7 +1805,7 @@ static void map_buttonCommodity( unsigned int wid, char* str )
             defpos = 0;
          else
             defpos = cur_commod*2 + 2 - cur_commod_mode;
-         
+
          window_addList( wid, -10, 60, 200, 200,
                          "lstMapMode", this_map_modes, nmap_modes, defpos, map_modeUpdate );
       }

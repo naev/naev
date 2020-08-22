@@ -2,6 +2,7 @@
 <ship name="Empire Pacifier">
  <base_type>Pacifier</base_type>
  <GFX sx="10" sy="10">pacifier_empire</GFX>
+ <rarity>4</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
