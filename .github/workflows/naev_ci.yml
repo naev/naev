@@ -82,7 +82,7 @@ jobs:
     - name: Install Build Dependencies
       run: |
         sudo apt-get install \
-          build-essential:i386 \
+          build-essential \
           automake \
           autoconf-archive \
           gcc-multilib \
@@ -111,7 +111,7 @@ jobs:
     - name: Build Naev on Linux32
       run: |
         ./autogen.sh
-        ./configure --build=x86_64-linux-gnu --host=i686-linux-gnu
+        ./configure --disable-debug --build=x86_64-linux-gnu --host=i686-linux-gnu
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3 -m32"
