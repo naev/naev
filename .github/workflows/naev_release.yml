@@ -1,7 +1,7 @@
 on:
   push:
-    branches:
-      - master
+    #branches:
+    #  - master
     #tags:   
     #  - 'naev-*.*.*'
     #  - '!naev-*.*.*-beta*'
