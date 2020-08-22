@@ -2,6 +2,7 @@
 <ship name="Lancelot">
  <base_type>Lancelot</base_type>
  <GFX>lancelot</GFX>
+ <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>

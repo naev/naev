@@ -2,6 +2,7 @@
 <ship name="Gawain">
  <base_type>Gawain</base_type>
  <GFX>gawain</GFX>
+ <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Luxury Yacht</class>

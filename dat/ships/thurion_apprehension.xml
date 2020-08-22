@@ -2,6 +2,7 @@
 <ship name="Thurion Apprehension">
  <base_type>Apprehension</base_type>
  <GFX sx="12" sy="12">apprehension</GFX>
+ <rarity>4</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>

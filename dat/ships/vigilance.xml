@@ -2,6 +2,7 @@
 <ship name="Vigilance">
  <base_type>Vigilance</base_type>
  <GFX sx="10" sy="10">vigilance</GFX>
+ <rarity>4</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
