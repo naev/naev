@@ -47,11 +47,13 @@ else
 fi
 
 VERSION="$(cat $(pwd)/VERSION)"
+BETA=false
 # Get version, negative minors mean betas
 if [[ -n $(echo "$VERSION" | grep "-") ]]; then
     BASEVER=$(echo "$VERSION" | sed 's/\.-.*//')
     BETAVER=$(echo "$VERSION" | sed 's/.*-//')
     VERSION="$BASEVER.0-beta$BETAVER"
+    BETA=true
 else
     echo "could not find VERSION file"
     exit -1
@@ -134,13 +136,26 @@ fi
 # Build installer
 
 if [[ $NIGHTLY == true ]]; then
-makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta$BETAVER-$BUILD_DATE -DARCH=$ARCH extras/windows/installer/naev-nightly.nsi
+    if [[ $BETA == true ]]; then 
+        makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta$BETAVER-$BUILD_DATE -DARCH=$ARCH -DRELEASE=nightly extras/windows/installer/naev.nsi
+    elif [[ $BETA == false ]]; then 
+        makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-$BUILD_DATE -DARCH=$ARCH -DRELEASE=nightly extras/windows/installer/naev.nsi
+    else
+        echo "Something went wrong determining if this is a beta or not."
+    fi
+    
 
 # Move installer to root directory
 mv extras/windows/installer/naev-$VERSION-$BUILD_DATE-win$ARCH.exe naev-win$ARCH.exe
 
 elif [[ $NIGHTLY == false ]]; then
-makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta$BETAVER -DARCH=$ARCH extras/windows/installer/naev.nsi
+    if [[ $BETA == true ]]; then 
+        makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta$BETAVER -DARCH=$ARCH -DRELEASE=$BASEVER.0-beta$BETAVER extras/windows/installer/naev.nsi
+    elif [[ $BETA == false ]]; then 
+        makensis -DVERSION=$VERSION -DVERSION_SUFFIX= -DARCH=$ARCH -DRELEASE=naev-$VERSION extras/windows/installer/naev.nsi
+    else
+        echo "Something went wrong determining if this is a beta or not."
+    fi
 
 # Move installer to root directory
 mv extras/windows/installer/naev-$VERSION-win$ARCH.exe naev-win$ARCH.exe
