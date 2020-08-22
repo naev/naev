@@ -85,6 +85,7 @@ jobs:
           build-essential \
           automake \
           autoconf-archive \
+          binutils-dev:i386 \
           gcc-multilib \
           libsdl2-dev:i386 \
           libsdl2-mixer-dev:i386 \
