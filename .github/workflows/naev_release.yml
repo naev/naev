@@ -444,4 +444,4 @@ jobs:
           title: release test 
           files: |
             ${{ github.workspace }}/dist/*
-        if: ${{ github.repository == 'naev/naev' }}
+        #if: ${{ github.repository == 'naev/naev' }}
