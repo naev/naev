@@ -102,8 +102,8 @@ jobs:
           libsdl2-dev \
           libsdl2-mixer-dev \
           libsdl2-image-dev \
-          libgl1-mesa-dev \
-          libglu1-mesa-dev \
+          libgl1-mesa-dev:i386 \
+          libglu1-mesa-dev:i386 \
           libxml2-dev \
           libfontconfig1-dev \
           libfreetype6-dev \
@@ -124,7 +124,7 @@ jobs:
     - name: Build Naev on Linux32
       run: |
         ./autogen.sh
-        ./configure --disable-debug --build=x86_64-pc-linux-gnu --host=i686-linux-gnu
+        ./configure --disable-debug --build=x86_64-linux-gnu --host=i686-linux-gnu
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3 -m32"
@@ -182,7 +182,7 @@ jobs:
     - name: Build Naev on Linux64
       run: |
         ./autogen.sh
-        ./configure --disable-debug --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu
+        ./configure --disable-debug --build=x86_64-linux-gnu --host=x86_64-linux-gnu
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
