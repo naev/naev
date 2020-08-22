@@ -373,6 +373,11 @@ static int bar_genList( unsigned int wid )
       for (i=0; i<npc_getArraySize(); i++) {
          portraits[i+1].image = gl_dupTexture( npc_getTexture(i) );
          portraits[i+1].caption = strdup( npc_getName(i) );
+         if (npc_isImportant(i)) {
+            portraits[i+1].layers = malloc( sizeof(glTexture*) );
+            portraits[i+1].layers[0] = gl_newImage( OVERLAY_GFX_PATH"portrait_exclamation.png", 0 );
+            portraits[i+1].nlayers = 1;
+         }
       }
    }
    window_addImageArray( wid, 20, -40,

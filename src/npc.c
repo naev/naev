@@ -547,6 +547,21 @@ const char *npc_getDesc( int i )
 
 
 /**
+ * @brief Checks to see if the NPC is important or not.
+ */
+int npc_isImportant( int i )
+{
+   /* Make sure in bounds. */
+   if ((i<0) || (i>=array_size(npc_array)))
+      return 0;
+
+   if (npc_array[i].priority < 5)
+      return 1;
+   return 0;
+}
+
+
+/**
  * @brief Approaches a mission giver guy.
  *
  *    @brief Returns 1 on destroyed, 0 on not destroyed.
