@@ -1,5 +1,5 @@
 --[[
--- Dvaered Escort
+-- Dvaered Sabotage
 -- This is the second mission of the Frontier War Dvaered campaign.
 -- The player has to sabotage a Warlord's Goddard in prevision of a duel.
 -- The frontier invasion is still not mentionned
@@ -635,7 +635,7 @@ end
 function endMisn()
    tk.msg( epilogue_title, epilogue_text:format(credits) )
    player.pay(credits)
-   misn.finish(true)
    shiplog.createLog( "frontier_war", _("Dvaered Military Coordination"), _("Dvaered") ) --TODO: create a common file for this TODO: see if it's possible to rename it afterwards
    shiplog.appendLog( "frontier_war", log_text )
+   misn.finish(true)
 end
