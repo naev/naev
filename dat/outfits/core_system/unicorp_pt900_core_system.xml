@@ -9,7 +9,7 @@
   <price>500000</price>
   <description>Criticized by some as nothing more than a cluster of PT-600 systems, the PT-900 nevertheless offers acceptable performance for capital ships at a fraction of its competitors' prices.</description>
   <gfx_store>core_system_basic_l1</gfx_store>
- </general>
+ <priority>3</priority></general>
  <specific type="modification">
   <cpu_max>140</cpu_max>
   <shield>600</shield>

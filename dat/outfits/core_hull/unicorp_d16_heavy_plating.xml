@@ -9,7 +9,7 @@
   <price>280000</price>
   <description>Though a respectable design, the D-16 plating is outclassed by modern heavy weapons, with most seasoned captains opting for a heavier, more advanced plating.</description>
   <gfx_store>base_hull_l</gfx_store>
- </general>
+ <priority>3</priority></general>
  <specific type="modification">
   <cargo>70</cargo>
   <absorb>27</absorb>

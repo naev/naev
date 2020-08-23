@@ -9,7 +9,7 @@
   <price>220000</price>
   <description>Milspec cares about your personal safety. Your protection is our concern. The Aegis 4701 grants your ship excellent shield strength while preserving a high level of subsystem control and energy capacity. Fly safe, fly Milspec.</description>
   <gfx_store>core_system_shield_m1</gfx_store>
- </general>
+ <priority>3</priority></general>
  <specific type="modification">
   <cpu_max>68</cpu_max>
   <shield>550</shield>

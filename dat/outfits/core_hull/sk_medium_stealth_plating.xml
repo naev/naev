@@ -9,7 +9,7 @@
   <price>270000</price>
   <description>Medium-sized ships are usually not in the business of remaining undetected, but Schafer &amp; Kane Industries have nevertheless developed a hull modification that helps in this area</description>
   <gfx_store>stealth_hull_m</gfx_store>
- </general>
+ <priority>3</priority></general>
  <specific type="modification">
   <cargo>12</cargo>
   <absorb>15</absorb>

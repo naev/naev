@@ -9,7 +9,7 @@
   <price>0</price>
   <description>On the plus side, it keeps air from venting into space. But that's about it. This kind of hull maintenance is simply unacceptable.</description>
   <gfx_store>plating_patchwork</gfx_store>
- </general>
+ <priority>3</priority></general>
  <specific type="modification">
   <cargo>50</cargo>
   <absorb>24</absorb>

@@ -9,7 +9,7 @@
   <price>110000</price>
   <description>Build by Za'lek Fabricators, this engine doesn't aim to be an efficient engine. It's goal is to  be easily moddable in order to allow Za'lek scinetists to test new refrigiration or propelling systems. These engines are very often modded by students, what makes them unreliable.</description>
   <gfx_store>engine04</gfx_store>
- </general>
+ <priority>3</priority></general>
  <specific type="modification">
   <thrust>150</thrust>
   <turn>130</turn>
