@@ -64,7 +64,6 @@ void shipyard_open( unsigned int wid )
    int y;
    const char *buf;
    glTexture *t;
-   char s[PATH_MAX];
 
    /* Mark as generated. */
    land_tabGenerate(LAND_WINDOW_SHIPYARD);
@@ -162,8 +161,7 @@ void shipyard_open( unsigned int wid )
          cships[i].image = gl_dupTexture(ships[i]->gfx_store);
          cships[i].layers = gl_copyTexArray( ships[i]->gfx_overlays, ships[i]->gfx_noverlays, &cships[i].nlayers );
          if (ships[i]->rarity > 0) {
-            nsnprintf( s, sizeof(s), OVERLAY_GFX_PATH"rarity_%d.png", ships[i]->rarity );
-            t = gl_newImage( s, OPENGL_TEX_MIPMAPS );
+            t = rarity_texture( ships[i]->rarity );
             cships[i].layers = gl_addTexArray( cships[i].layers, &cships[i].nlayers, t );
          }
       }
