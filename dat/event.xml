@@ -160,7 +160,7 @@
  <event name="Warlords battle">
   <lua>dvaered/warlords_battle</lua>
   <trigger>enter</trigger>
-  <chance>2</chance>
+  <chance>10</chance>
   <cond>system.cur():faction() == faction.get("Dvaered") and not player.evtActive ("Warlords battle")</cond>
   <flags>
   </flags>
