@@ -2145,6 +2145,7 @@ static int outfit_parse( Outfit* temp, const char* file )
          cur = node->children;
          do {
             xml_onlyNodes(cur);
+            xmlr_int(cur,"rarity",temp->rarity);
             xmlr_strd(cur,"license",temp->license);
             xmlr_float(cur,"mass",temp->mass);
             xmlr_float(cur,"cpu",temp->cpu);
@@ -2513,6 +2514,17 @@ static void outfit_launcherDesc( Outfit* o )
          outfit_range(a), a->u.amm.duration,
          a->u.amm.speed,
          (a->u.amm.resist <= 0 ? 0. : (1. - 0.5 / a->u.amm.resist) * 100.) );
+}
+
+
+/**
+ * Gets the texture associated to the rarity of an outfit/ship.
+ */
+glTexture* rarity_texture( int rarity )
+{
+   char s[PATH_MAX];
+   nsnprintf( s, sizeof(s), OVERLAY_GFX_PATH"rarity_%d.png", rarity );
+   return gl_newImage( s, OPENGL_TEX_MIPMAPS );
 }
 
 

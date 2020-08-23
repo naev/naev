@@ -537,6 +537,7 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
    ImageArrayCell *coutfits;
    Outfit *o;
    const char *typename;
+   glTexture *t;
 
    /* Allocate. */
    coutfits = calloc( MAX(1,*noutfits), sizeof(ImageArrayCell) );
@@ -596,6 +597,10 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
 
          /* Layers. */
          coutfits[i].layers = gl_copyTexArray( o->gfx_overlays, o->gfx_noverlays, &coutfits[i].nlayers );
+         if (o->rarity > 0) {
+            t = rarity_texture( o->rarity );
+            coutfits[i].layers = gl_addTexArray( coutfits[i].layers, &coutfits[i].nlayers, t );
+         }
       }
    }
    return coutfits;

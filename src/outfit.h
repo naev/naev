@@ -322,6 +322,7 @@ typedef struct OutfitGUIData_ {
 typedef struct Outfit_ {
    char *name;       /**< Name of the outfit. */
    char *typename;   /**< Overrides the base type. */
+   int rarity;       /**< Rarity of the outfit. */
 
    /* general specs */
    OutfitSlot slot;  /**< Slot the outfit fits into. */
@@ -438,6 +439,7 @@ void outfit_free (void);
 int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s );
 int outfit_fitsSlotType( const Outfit* o, const OutfitSlot* s );
 void outfit_freeSlot( OutfitSlot* s );
+glTexture* rarity_texture( int rarity );
 
 
 #endif /* OUTFIT_H */

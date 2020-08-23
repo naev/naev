@@ -1,8 +1,12 @@
 on:
-  schedule:
-    - cron: '0 0 * * *'
+  push:
+    branches:
+      - master
+    tags:   
+      - 'naev-*.*.*'
+      - '!naev-*.*.*-beta*'
 
-name: Nightly Release
+name: Release
 
 jobs:
   "Windows-MinGW32":
@@ -26,13 +30,13 @@ jobs:
     - name: Build Naev on Win32
       run: |
         ./autogen.sh
-        ./configure
+        ./configure --disable-debug
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
 
     - name: Build Windows Installer
-      run: ./extras/windows/packageWindows.sh --nightly
+      run: ./extras/windows/packageWindows.sh
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -63,14 +67,14 @@ jobs:
     - name: Build Naev on Win64
       run: |
         ./autogen.sh
-        ./configure
+        ./configure --disable-debug
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
 
     - name: Build Windows Installer
       run: |
-        ./extras/windows/packageWindows.sh --nightly
+        ./extras/windows/packageWindows.sh
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -228,7 +232,7 @@ jobs:
         export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/opt/openal-soft/lib/pkgconfig"
         
         ./autogen.sh
-        ./configure
+        ./configure --disable-debug
         make -j$(sysctl -n hw.logicalcpu)
       env:
         CFLAGS: "-O3 -mmacosx-version-min=10.7"
@@ -408,8 +412,6 @@ jobs:
         run: |
           mkdir -p dist
 
-          BUILD_DATE="$(date +%m_%d_%Y)"
-
           VERSION="$(cat VERSION)"
            # Get version, negative minors mean betas
           if [[ -n $(echo "${VERSION}" | grep "-") ]]; then
@@ -418,23 +420,21 @@ jobs:
               VERSION="${BASEVER}.0-beta${BETAVER}"
           fi
 
-          mv temp/linux-x86-64/naev-linux-x86-64 dist/naev-$VERSION-$BUILD_DATE-linux-x86-64
-          mv temp/linux-x86-32/naev-linux-x86-32 dist/naev-$VERSION-$BUILD_DATE-linux-x86-32
-          mv temp/macos/naev-macos.zip dist/naev-$VERSION-$BUILD_DATE-macos.zip
-          mv temp/win64/naev-win64.exe dist/naev-$VERSION-$BUILD_DATE-win64.exe
-          mv temp/win64/naev-win64.zip dist/naev-$VERSION-$BUILD_DATE-win64.zip
-          mv temp/win32/naev-win32.exe dist/naev-$VERSION-$BUILD_DATE-win32.exe
-          mv temp/win32/naev-win32.zip dist/naev-$VERSION-$BUILD_DATE-win32.zip
-          mv temp/source/source.tar.bz2 dist/naev-$VERSION-$BUILD_DATE-source.tar.bz2
-          mv temp/ndata/ndata.zip dist/ndata-$VERSION-$BUILD_DATE.zip
+          mv temp/linux-x86-64/naev-linux-x86-64 dist/naev-$VERSION-linux-x86-64
+          mv temp/linux-x86-32/naev-linux-x86-32 dist/naev-$VERSION-linux-x86-32
+          mv temp/macos/naev-macos.zip dist/naev-$VERSION-macos.zip
+          mv temp/win64/naev-win64.exe dist/naev-$VERSION-win64.exe
+          mv temp/win64/naev-win64.zip dist/naev-$VERSION-win64.zip
+          mv temp/win32/naev-win32.exe dist/naev-$VERSION-win32.exe
+          mv temp/win32/naev-win32.zip dist/naev-$VERSION-win32.zip
+          mv temp/source/source.tar.bz2 dist/naev-$VERSION-source.tar.bz2
+          mv temp/ndata/ndata.zip dist/ndata-$VERSION.zip
 
       - name: Upload Release Assets
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "nightly"
-          prerelease: true
-          title: "Nightly Build"
+          prerelease: false
           files: |
             ${{ github.workspace }}/dist/*
         if: ${{ github.repository == 'naev/naev' }}
