@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <outfit name="BioPlasma Organ Stage 3">
  <general>
+  <rarity>4</rarity>
   <slot prop="bio_weapon">weapon</slot>
   <size>small</size>
   <license>Medium Weapon License</license>
