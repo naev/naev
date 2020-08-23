@@ -66,6 +66,7 @@ def csv2xml( csvfile ):
                 tag.text = val
         # save the file
         tree.write( ofile, encoding="UTF-8", xml_declaration=True )
+        # With python 3.9 the line below should work and make everything pretty ;)
         #ET.indent(tree).write( ofile, encoding="UTF-8", xml_declaration=True )
 
 
