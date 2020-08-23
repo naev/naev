@@ -71,9 +71,6 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - name: Get current build date
-      run: |
-
     - name: Update APT Cache
       run: |
         sudo dpkg --add-architecture i386
@@ -127,7 +124,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
     - name: Update APT Cache
       run: |
         sudo apt-get update
