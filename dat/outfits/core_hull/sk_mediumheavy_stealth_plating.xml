@@ -4,7 +4,7 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>medium</size>
-  <rarity>7</rarity>
+  <priority>7</priority>
   <mass>240</mass>
   <price>480000</price>
   <description>Though vessels weighing in at nearly a thousand tonnes can seldom be called stealthy, Schafer &amp; Kane's medium-heavy stealth plating does what it can to reduce sensor signatures, without sacrificing protection.</description>

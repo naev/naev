@@ -4,7 +4,7 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>medium</size>
-  <rarity>7</rarity>
+  <priority>7</priority>
   <mass>140</mass>
   <price>320000</price>
   <description>Schafer &amp; Kane Industries have developed a hull modification that provides both ample cargo space and protection.</description>

@@ -4,7 +4,7 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>large</size>
-  <rarity>7</rarity>
+  <priority>7</priority>
   <mass>1500</mass>
   <price>900000</price>
   <description>Derived from the venerable D-20 plating, the B-20 utilizes high-density composites to provide additional protection while also leaving more room for cargo, at the cost of slightly increased mass.</description>

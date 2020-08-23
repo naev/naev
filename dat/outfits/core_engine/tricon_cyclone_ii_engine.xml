@@ -4,7 +4,7 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>medium</size>
-  <rarity>7</rarity>
+  <priority>7</priority>
   <mass>25</mass>
   <price>675000</price>
   <description>A preferred engine of destroyer and time-focused freighter captains, the Cyclone II retains most of the original Cyclone's performance while more than doubling the engine's mass capacity. Its high power consumption is typically gladly written off given its exemplary performance.</description>
