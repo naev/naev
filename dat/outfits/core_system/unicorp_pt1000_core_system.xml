@@ -4,7 +4,7 @@
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>large</size>
-  <rarity>7</priority>
+  <rarity>7</rarity>
   <mass>875</mass>
   <price>650000</price>
   <description>Criticized by some as nothing more than a cluster of PT-600 systems, the PT-1000 nevertheless offers acceptable performance for capital ships at a fraction of its competitors' prices.</description>

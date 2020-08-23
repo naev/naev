@@ -4,7 +4,7 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>large</size>
-  <rarity>7</priority>
+  <rarity>7</rarity>
   <mass>1350</mass>
   <price>360000</price>
   <description>Though a respectable design, the D-20 plating is outclassed by modern heavy weapons, with most seasoned captains opting for a heavier, more advanced plating.</description>

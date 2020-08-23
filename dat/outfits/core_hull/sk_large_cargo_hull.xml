@@ -4,7 +4,7 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>large</size>
-  <rarity>7</priority>
+  <rarity>7</rarity>
   <mass>1150</mass>
   <price>1100000</price>
   <description>This cargo hull from Schafer &amp; Kane Industries makes use of state-of-the-art defensive alloys, which allows it to free up even more space for cargo without sacrificing too much durability.</description>

@@ -4,7 +4,7 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>small</size>
-  <rarity>7</priority>
+  <rarity>7</rarity>
   <mass>12</mass>
   <price>225000</price>
   <description>A larger version of Tricon's original Zephyr intended for heavy fighters, the Zephyr II affords heavier fighters and bombers to move like scout ships. Its performance has not gone unnoticed by merchants either, resulting in its use for lightweight, time-critical shipping.</description>

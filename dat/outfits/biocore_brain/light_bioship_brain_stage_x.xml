@@ -5,7 +5,7 @@
   <typename>Bioship Brain</typename>
   <slot prop="bio_systems">utility</slot>
   <size>small</size>
-  <rarity>7</priority>
+  <rarity>7</rarity>
   <mass>50</mass>
   <price>105000</price>
   <description>The brain is a Soromid bioship's equivalent to core systems in synthetic ships. Possibly the most important organ, the brain provides processing power and allocates energy to the rest of the organism. This brain has reached Stage X, its full potential.</description>

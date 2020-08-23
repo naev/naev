@@ -4,7 +4,7 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>small</size>
-  <rarity>7</priority>
+  <rarity>7</rarity>
   <mass>12</mass>
   <price>75000</price>
   <description>The Dart 300 is a larger variant of Nexus's popular Dart 150, aimed at heavy fighters and light-duty cargo vessels. Its modest energy consumption allows it to be equipped on most vessels without requiring reactor upgrades.</description>

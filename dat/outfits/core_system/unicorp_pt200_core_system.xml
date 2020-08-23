@@ -4,7 +4,7 @@
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>small</size>
-  <rarity>7</priority>
+  <rarity>7</rarity>
   <mass>40</mass>
   <price>35000</price>
   <description>The PT-200 is an economical core system providing decent performance to small-to-medium vessels.</description>

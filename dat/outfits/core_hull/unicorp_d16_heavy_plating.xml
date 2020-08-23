@@ -4,7 +4,7 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>large</size>
-  <rarity>3</priority>
+  <rarity>3</rarity>
   <mass>800</mass>
   <price>280000</price>
   <description>Though a respectable design, the D-16 plating is outclassed by modern heavy weapons, with most seasoned captains opting for a heavier, more advanced plating.</description>

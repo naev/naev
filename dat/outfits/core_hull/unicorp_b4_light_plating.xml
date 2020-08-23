@@ -4,7 +4,7 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>small</size>
-  <rarity>7</priority>
+  <rarity>7</rarity>
   <mass>60</mass>
   <price>75000</price>
   <description>Built with more sophisticated materials but fundamentally similar to the D-4 plating, the B-4 is a notable improvement over its predecessor in many respects, though it comes at a significantly increased price.</description>

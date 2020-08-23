@@ -4,7 +4,7 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>medium</size>
-  <rarity>3</priority>
+  <rarity>3</rarity>
   <mass>16</mass>
   <price>40000</price>
   <description>The Falcon 550 is a low-budget engine for use on corvettes and similarly-sized vessels. Its middling performance relegates it primarily to use on civilians vessels, as few captains are comfortable relying on bargain-priced propulsion systems when engaged in battle.</description>

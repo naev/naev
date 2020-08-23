@@ -4,7 +4,7 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>large</size>
-  <rarity>7</priority>
+  <rarity>7</rarity>
   <mass>80</mass>
   <price>1200000</price>
   <description>Though lacking the glamour of flagship models from the likes of Tricon, the Nexus Bolt 6500 is nonetheless a respectable engine used by many captains. As a general-purpose engine, it lacks the sheer power of a Melendez engine, can't quite keep up with Tricon offerings, yet costs less than either, and manages to maintain a balance between all of its attributes.</description>

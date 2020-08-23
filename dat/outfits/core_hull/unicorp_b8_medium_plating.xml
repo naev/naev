@@ -4,7 +4,7 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>medium</size>
-  <rarity>3</priority>
+  <rarity>3</rarity>
   <mass>110</mass>
   <price>110000</price>
   <description>Unicorp's B-8 plating is a marked improvement over the more common D-8 offering, bringing significantly improved protection and additional cargo space.</description>

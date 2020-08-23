@@ -4,7 +4,7 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>large</size>
-  <rarity>3</priority>
+  <rarity>3</rarity>
   <mass>50</mass>
   <price>300000</price>
   <description>Inexpensive by capital ship standards, the Eagle 4500 is seldom selected by captains who can afford better. While spaceworthy, the engine's performance renders it a liability in combat and uneconomical for freight hauling.</description>

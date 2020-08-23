@@ -4,7 +4,7 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>small</size>
-  <rarity>7</priority>
+  <rarity>7</rarity>
   <mass>15</mass>
   <price>95000</price>
   <description>Among the most powerful engines available for small vessels, the Ox XL excels at enabling merchants to haul moderate amounts of cargo from system to system with minimal refuelling stops.</description>

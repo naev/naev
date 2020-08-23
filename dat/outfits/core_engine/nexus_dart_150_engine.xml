@@ -4,7 +4,7 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>small</size>
-  <rarity>3</priority>
+  <rarity>3</rarity>
   <mass>8</mass>
   <price>45000</price>
   <description>The Dart 150 is a well-rounded engine for light vessels. While it doesn't excel in any particular respect, it offers good handling and power efficiency for a reasonable price. A very popular engine among civilian and military users alike.</description>
