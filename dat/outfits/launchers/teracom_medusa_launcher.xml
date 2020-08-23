@@ -11,7 +11,7 @@
 TeraCom has built a highly efficient Medusa launcher, capable of locking on and firing faster than the standard specification, and holding a greater amount in the magazine as well.</description>
   <gfx_store>seekerlauncher</gfx_store>
   <cpu>-6</cpu>
- </general>
+ <rarity>3</rarity></general>
  <specific type="launcher" secondary="1">
   <ammo>Medusa Missile</ammo>
   <delay>3.5</delay>

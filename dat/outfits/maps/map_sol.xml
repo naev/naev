@@ -5,7 +5,7 @@
   <price>100000</price>
   <description>This map contains the location of the Sol system, the origin of mankind. Rendered dead by the Incident, it is now covered by a highly unstable nebula which no known ship in the galaxy can safely pass through. What lies beyond Sol, if anything, is unknown.</description>
   <gfx_store>map</gfx_store>
- </general>
+ <rarity>2</rarity></general>
  <specific type="map">
   <sys name="Sol">
   </sys>

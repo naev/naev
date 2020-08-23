@@ -9,7 +9,7 @@
   <description>While one 150mm railgun is a formidable weapon, the ultimate in brute-force capital ship weaponry is the 150mm railgun turret. Mounting two railguns in a specialized turret housing, it manages to mitigate the recoil normally associated with railguns, at a slight velocity cost.</description>
   <gfx_store>railgunturret</gfx_store>
   <cpu>-34</cpu>
- </general>
+ <rarity>4</rarity></general>
  <specific type="turret bolt">
   <gfx>massL</gfx>
   <sound>mass</sound>

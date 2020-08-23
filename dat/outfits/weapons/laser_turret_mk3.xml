@@ -9,7 +9,7 @@
   <description>The Laser Turret MK3 is often found on Imperial fast response fleets, for use against fleets of small to medium ships. This weapon is one of the mainstays in the Imperial space forces.</description>
   <gfx_store>laserturret2</gfx_store>
   <cpu>-18</cpu>
- </general>
+ <rarity>3</rarity></general>
  <specific type="turret bolt">
   <gfx>laser3M</gfx>
   <sound>laser</sound>

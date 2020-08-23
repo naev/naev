@@ -9,7 +9,7 @@
   <price>75000</price>
   <description>The Falcon 1200 is the larger brother to the Falcon 550. Commonly found on mid-sized short-haul freighters, its relatively low performance and fuel capacity makes it a poor choice for longer routes.</description>
   <gfx_store>engine03</gfx_store>
- </general>
+ <rarity>3</rarity></general>
  <specific type="modification">
   <thrust>75</thrust>
   <turn>70</turn>

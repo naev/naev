@@ -11,7 +11,7 @@
 TeraCom's patented launcher hardware considerably reduces the time it takes to achieve a lock. Sometimes, those few seconds can make all the difference.</description>
   <gfx_store>headhunterlauncher</gfx_store>
   <cpu>-10</cpu>
- </general>
+ <rarity>5</rarity></general>
  <specific type="launcher" secondary="1">
   <ammo>Vengeance Missile</ammo>
   <delay>6</delay>

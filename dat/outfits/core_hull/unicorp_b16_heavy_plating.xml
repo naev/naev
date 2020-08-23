@@ -4,7 +4,7 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>large</size>
-  <rarity>3</rarity>
+  <rarity>4</rarity>
   <mass>900</mass>
   <price>700000</price>
   <description>B-16 plating improves on Unicorp's D-16 plating, offering increased protection and cargo capacity, for only slightly increased mass.</description>

@@ -5,7 +5,7 @@
   <price>15000</price>
   <description>This map contains the systems that lead to Sirius controlled space.</description>
   <gfx_store>map</gfx_store>
- </general>
+ <rarity>1</rarity></general>
  <specific type="map">
   <sys name="Esker">
    <jump>Nougat</jump>

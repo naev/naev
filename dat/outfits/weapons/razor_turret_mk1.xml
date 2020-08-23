@@ -9,7 +9,7 @@
   <description>Razor Turrets are popular among traders. Their high damage against shields is a great deterrent against attackers, because nothing puts a space pilot on edge like his shields rapidly coming down.</description>
   <gfx_store>ionturret</gfx_store>
   <cpu>-9</cpu>
- </general>
+ <rarity>2</rarity></general>
  <specific type="turret bolt">
   <gfx>razorS</gfx>
   <sound>ion</sound>

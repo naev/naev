@@ -9,7 +9,7 @@
   <description>The plasma turret essentially takes a plasma blaster and mounts it on a turret. Its short range makes it ill-suited for defense, so it is not especially popular with traders and merchants, but it has found a niche among inexperienced mercenaries who are not as well-practiced at aiming as the pros.</description>
   <gfx_store>plasma2</gfx_store>
   <cpu>-10</cpu>
- </general>
+ <rarity>3</rarity></general>
  <specific type="turret bolt">
   <gfx>plasma</gfx>
   <sound>plasma</sound>

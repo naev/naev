@@ -9,7 +9,7 @@
   <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
   <gfx_store>laserturret2</gfx_store>
   <cpu>-16</cpu>
- </general>
+ <rarity>3</rarity></general>
  <specific type="turret bolt">
   <gfx>laser2M</gfx>
   <sound>laser</sound>

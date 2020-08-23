@@ -9,7 +9,7 @@
   <description>The mark 2 plasma turret isn't especially impressive compared to other medium-size turrets, but it is sometimes favored by corvettes for its unusually low weight compared to its range and damage output.</description>
   <gfx_store>plasma2</gfx_store>
   <cpu>-16</cpu>
- </general>
+ <rarity>3</rarity></general>
  <specific type="turret bolt">
   <gfx>plasma2</gfx>
   <sound>plasma</sound>

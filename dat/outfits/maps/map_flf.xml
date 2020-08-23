@@ -5,7 +5,7 @@
   <price>100000</price>
   <description>This map contains the location of hidden jump points between the FLF base and Frontier space.</description>
   <gfx_store>map</gfx_store>
- </general>
+ <rarity>2</rarity></general>
  <specific type="map">
   <sys name="Sigur">
    <jump>Arcanis</jump>

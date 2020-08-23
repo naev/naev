@@ -9,7 +9,7 @@
   <price>650000</price>
   <description>Criticized by some as nothing more than a cluster of PT-600 systems, the PT-1000 nevertheless offers acceptable performance for capital ships at a fraction of its competitors' prices.</description>
   <gfx_store>core_system_basic_l2</gfx_store>
- </general>
+ <rarity>4</rarity></general>
  <specific type="modification">
   <cpu_max>180</cpu_max>
   <shield>700</shield>

@@ -9,7 +9,7 @@
   <price>25000</price>
   <description>The Hawk 300 is an enlarged version of the Hawk 150 engine, optimized for heavier loads. Like its smaller counterpart, it offers modest performance for a low price.</description>
   <gfx_store>engine04</gfx_store>
- </general>
+ <rarity>2</rarity></general>
  <specific type="modification">
   <thrust>120</thrust>
   <turn>100</turn>

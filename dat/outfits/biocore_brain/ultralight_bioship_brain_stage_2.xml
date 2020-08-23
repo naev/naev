@@ -1,11 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Ultralight Bioship Brain Stage 2">
  <general>
-  <rarity>1</rarity>
+  <rarity>3</rarity>
   <typename>Bioship Brain</typename>
   <slot prop="bio_systems">utility</slot>
   <size>small</size>
-  <rarity>3</rarity>
   <mass>14</mass>
   <price>60000</price>
   <description>The brain is a Soromid bioship's equivalent to core systems in synthetic ships. Possibly the most important organ, the brain provides processing power and allocates energy to the rest of the organism. All brains start off undeveloped, but over time, just like the ships themselves, they grow and improve.</description>

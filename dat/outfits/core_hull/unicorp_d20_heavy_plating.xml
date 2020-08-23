@@ -9,7 +9,7 @@
   <price>360000</price>
   <description>Though a respectable design, the D-20 plating is outclassed by modern heavy weapons, with most seasoned captains opting for a heavier, more advanced plating.</description>
   <gfx_store>base_hull_x</gfx_store>
- </general>
+ <rarity>4</rarity></general>
  <specific type="modification">
   <cargo>90</cargo>
   <absorb>31</absorb>

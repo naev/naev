@@ -9,7 +9,7 @@
   <description>The Neutron Disruptor uses high-energy pulses that modify the base composition of molecules, causing heavy damage. This weapon was first popular with the Collective, as until recently, firing it would produce radiation lethal to humans aboard the ship.</description>
   <gfx_store>neutron</gfx_store>
   <cpu>-8</cpu>
- </general>
+ <rarity>3</rarity></general>
  <specific type="bolt">
   <gfx>neutron</gfx>
   <sound>neutron</sound>

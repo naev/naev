@@ -8,7 +8,7 @@
   <description>This weapon is a cheat. It is not meant to be used by players.</description>
   <gfx_store>ragnarok</gfx_store>
   <cpu>-1</cpu>
- </general>
+ <rarity>6</rarity></general>
  <specific type="beam">
   <delay>2</delay>
   <duration min="2">6</duration>

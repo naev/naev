@@ -9,7 +9,7 @@
   <price>180000</price>
   <description>Designed for military scouting and patrol vessels, Schafer &amp; Kane's Light Stealth Plating configuration features the latest in sensor-absorbing materials and geometry.</description>
   <gfx_store>stealth_hull_s</gfx_store>
- </general>
+ <rarity>3</rarity></general>
  <specific type="modification">
   <cargo>6</cargo>
   <absorb>7</absorb>

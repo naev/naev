@@ -9,7 +9,7 @@
   <gfx_store>misc04</gfx_store>
   <limit>reverse_thruster</limit>
   <cpu>-4</cpu>
- </general>
+ <rarity>2</rarity></general>
  <specific type="modification">
   <energy_usage>5</energy_usage>
   <misc_asteroid_scan>1</misc_asteroid_scan>

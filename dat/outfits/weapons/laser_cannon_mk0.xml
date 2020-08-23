@@ -8,7 +8,7 @@
   <description>A home-made laser cannon for personal use by Captain T. Practice.</description>
   <gfx_store>laser</gfx_store>
   <cpu>-5</cpu>
-  </general>
+  <rarity>1</rarity></general>
  <specific type="bolt">
   <gfx>laser1S</gfx>
   <sound>laser</sound>

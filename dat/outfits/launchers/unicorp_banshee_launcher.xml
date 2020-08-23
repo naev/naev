@@ -9,7 +9,7 @@
   <gfx_store>bansheelauncher</gfx_store>
   <description>The Banshee class heavy dumbfire rocket is sometimes labeled the "poor man's torpedo". It has a relatively weak engine, but packs a powerful punch that can do respectable damage even to capital ships. The launcher is small and light enough to be usable by even small fighters, which makes it a great choice for bombers.</description>
   <cpu>-5</cpu>
- </general>
+ <rarity>2</rarity></general>
  <specific type="launcher" secondary="1">
   <ammo>Banshee Rocket</ammo>
   <delay>4</delay>

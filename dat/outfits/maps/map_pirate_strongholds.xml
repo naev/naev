@@ -5,7 +5,7 @@
   <price>100000</price>
   <description>This map contains the locations of the pirate clan worlds, and a few stations that are known to offer opportunities for pirates in the vicinity.</description>
   <gfx_store>map</gfx_store>
- </general>
+ <rarity>3</rarity></general>
  <specific type="map">
   <sys name="New Haven">
    <jump>Titus</jump>

@@ -6,6 +6,6 @@
   <price>350000</price>
   <gfx_store>license</gfx_store>
   <description>This license will authorize you to buy destroyer and corvette-class ships.</description>
- </general>
+ <rarity>6</rarity></general>
  <specific type="license" />
 </outfit>

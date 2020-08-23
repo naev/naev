@@ -11,7 +11,7 @@
 The Za'lek do not share the secrets of their 'missile' drones lightly. Only trusted allies of the Za'lek are trusted with these weapons.</description>
   <gfx_store>zalek_reaper_launcher</gfx_store>
   <cpu>-34</cpu>
- </general>
+ <rarity>5</rarity></general>
  <specific type="launcher" secondary="1">
   <ammo>Za'lek Reaper Drone</ammo>
   <delay>2</delay>

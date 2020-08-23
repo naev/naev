@@ -9,7 +9,7 @@
   <gfx_store>reactor_i</gfx_store>
   <description>Thurion-designed reactor that uses Positrons for a superior energy output.</description>
   <cpu>-10</cpu>
- </general>
+ <rarity>4</rarity></general>
  <specific type="modification">
   <energy>40</energy>
   <energy_regen>10</energy_regen>

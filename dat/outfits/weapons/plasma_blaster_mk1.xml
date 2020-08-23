@@ -8,7 +8,7 @@
   <description>Highly volatile, the plasma blaster is among the best choices for fast attacks. As a result of its volatility, it is a potent weapon against both shields and armour, though it is known for dissipating quickly after being fired.</description>
   <gfx_store>plasma</gfx_store>
   <cpu>-3</cpu>
- </general>
+ <rarity>1</rarity></general>
  <specific type="bolt">
   <gfx>plasma</gfx>
   <sound>plasma</sound>

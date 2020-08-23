@@ -9,7 +9,7 @@
   <description>This enhancement routes energy from the ship's energy supplies to the engine, giving the ship an increased thrust. It does not increase the ship's max speed nor turning abilities.</description>
   <gfx_store>reroute</gfx_store>
   <cpu>-8</cpu>
- </general>
+ <rarity>4</rarity></general>
  <specific type="modification">
   <thrust>5</thrust>
   <thrust_mod>15</thrust_mod>

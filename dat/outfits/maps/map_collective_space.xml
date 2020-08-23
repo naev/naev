@@ -5,7 +5,7 @@
   <price>25000</price>
   <description>This map charts the known jumps that connect the systems occupied by the Collective. Sadly, the Empire has no accurate intel about Collective assets in the area.</description>
   <gfx_store>map</gfx_store>
- </general>
+ <rarity>2</rarity></general>
  <specific type="map">
   <sys name="Hades">
    <jump>C-43</jump>

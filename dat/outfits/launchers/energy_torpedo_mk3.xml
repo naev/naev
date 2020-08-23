@@ -9,7 +9,7 @@
   <description>One of the greatest advancements the Thurion have made was in the field of non-corporeal computation. While it wasn't the original intention, the self-contained energy cascades that are capable of doing simple calculations are used as weapons. While such weapons have very high computational requirements, the homing energy projectiles have a high chance of hitting an evasive target.</description>
   <gfx_store>energy_torpedo</gfx_store>
   <cpu>-42</cpu>
-  </general>
+  <rarity>4</rarity></general>
  <specific type="launcher" secondary="1">
   <ammo>Thurion Energy Cell III</ammo>
   <delay>1.0</delay>

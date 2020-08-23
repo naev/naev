@@ -9,7 +9,7 @@
   <description>The military grade model of the Heavy Laser is one of the heaviest weapons found in the galaxy. Imperial Capital ships use it to lay down devastating barrages against enemy vessels.</description>
   <gfx_store>laserturret2</gfx_store>
   <cpu>-38</cpu>
- </general>
+ <rarity>5</rarity></general>
  <specific type="turret bolt">
   <gfx>laser4L</gfx>
   <sound>laser</sound>

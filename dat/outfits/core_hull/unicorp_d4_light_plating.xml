@@ -9,7 +9,7 @@
   <price>30000</price>
   <description>Commonly found on civilian vessels, the D-4 plating is popular with ship manufacturers due to its low cost and adequate, if uninspiring performance.</description>
   <gfx_store>base_hull_s</gfx_store>
- </general>
+ <rarity>2</rarity></general>
  <specific type="modification">
   <cargo>9</cargo>
   <absorb>6</absorb>

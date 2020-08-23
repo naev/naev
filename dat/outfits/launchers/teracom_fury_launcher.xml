@@ -11,7 +11,7 @@
 TeraCom's Fury Launcher is a high-performance missile launcher equipped with patented target tracking and missile arming technology, allowing pilots to get a lock on their target faster and more easily than with launchers made by competing brands.</description>
   <gfx_store>teracom_fury_launcher</gfx_store>
   <cpu>-6</cpu>
- </general>
+ <rarity>3</rarity></general>
  <specific type="launcher" secondary="1">
   <ammo>Fury Missile</ammo>
   <delay>2</delay>

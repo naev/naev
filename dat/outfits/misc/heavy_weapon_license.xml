@@ -6,6 +6,6 @@
   <price>125000</price>
   <gfx_store>license</gfx_store>
   <description>This license will authorize you to buy and use heavy weapons like the heavy ion turret.</description>
- </general>
+ <rarity>6</rarity></general>
  <specific type="license" />
 </outfit>

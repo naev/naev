@@ -5,7 +5,7 @@
   <price>1</price>
   <description>For cheating.</description>
   <gfx_store>map</gfx_store>
- </general>
+ <rarity>6</rarity></general>
  <specific type="map">
   <all />
  </specific>

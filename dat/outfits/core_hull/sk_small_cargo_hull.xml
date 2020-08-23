@@ -9,7 +9,7 @@
   <price>120000</price>
   <description>Though a pricey investment for small couriers, this hull modification from Schafer &amp; Kane Industries provides an impressive amount of cargo space without compromising the hull's integrity.</description>
   <gfx_store>small_cargo_hull</gfx_store>
- </general>
+ <rarity>2</rarity></general>
  <specific type="modification">
   <cargo>30</cargo>
   <absorb>4</absorb>

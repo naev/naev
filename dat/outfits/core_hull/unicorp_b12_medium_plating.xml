@@ -9,7 +9,7 @@
   <price>200000</price>
   <description>Unicorp's B-12 plating is based on their D-12 design, substituting denser materials to increase armour effectiveness.</description>
   <gfx_store>refined_hull_h</gfx_store>
- </general>
+ <rarity>3</rarity></general>
  <specific type="modification">
   <cargo>40</cargo>
   <absorb>20</absorb>

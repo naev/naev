@@ -5,7 +5,7 @@
   <price>25000</price>
   <description>This map lists the locations of all Dvaered worlds and stations close to the Dvaered capital.</description>
   <gfx_store>map</gfx_store>
- </general>
+ <rarity>1</rarity></general>
  <specific type="map">
   <sys name="Dvaer">
    <jump>Beeklo</jump>

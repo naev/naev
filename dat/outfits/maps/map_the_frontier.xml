@@ -5,7 +5,7 @@
   <price>50000</price>
   <description>This map contains an east-west route through Frontier space, as well as the location of the Frontier Council.</description>
   <gfx_store>map</gfx_store>
- </general>
+ <rarity>1</rarity></general>
  <specific type="map">
   <sys name="Theras">
    <jump>Haleb</jump>

@@ -9,7 +9,7 @@
   <gfx_store>reactor_i</gfx_store>
   <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need. This does not replace the existing reactor but works alongside it and hooks up directly to the energy flux.</description>
   <cpu>-5</cpu>
- </general>
+ <rarity>2</rarity></general>
  <specific type="modification">
   <energy>20</energy>
   <energy_regen>5</energy_regen>

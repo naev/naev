@@ -9,7 +9,7 @@
   <description>Turreted Vulcan Guns pack the same caliber ammunition as their fixed mount brethren. Ships not nimble enough to evade its relentless stream of projectiles might find themselves riddled with hull punctures before long.</description>
   <gfx_store>vulcanturret</gfx_store>
   <cpu>-16</cpu>
- </general>
+ <rarity>3</rarity></general>
  <specific type="turret bolt">
   <gfx>gatling</gfx>
   <sound>autocannon</sound>

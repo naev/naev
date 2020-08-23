@@ -8,7 +8,7 @@
   <price>85000</price>
   <description>Cargo pods are large containers that increase a ship's cargo capacity.</description>
   <gfx_store>cargo_pod</gfx_store>
- </general>
+ <rarity>2</rarity></general>
  <specific type="modification">
   <cargo>30</cargo>
  </specific>
