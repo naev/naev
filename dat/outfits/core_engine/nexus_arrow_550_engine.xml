@@ -9,7 +9,8 @@
   <price>120000</price>
   <description>The Arrow 550 is a respectable engine for a respectable price, giving the serious captain the means to pilot his ship to effect.</description>
   <gfx_store>engine13</gfx_store>
- <priority>3</priority></general>
+  <priority>3</priority>
+ </general>
  <specific type="modification">
   <thrust>115</thrust>
   <turn>100</turn>

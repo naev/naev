@@ -9,7 +9,8 @@
   <price>45000</price>
   <description>The Dart 150 is a well-rounded engine for light vessels. While it doesn't excel in any particular respect, it offers good handling and power efficiency for a reasonable price. A very popular engine among civilian and military users alike.</description>
   <gfx_store>engine09</gfx_store>
- <priority>3</priority></general>
+  <priority>3</priority>
+ </general>
  <specific type="modification">
   <thrust>165</thrust>
   <turn>140</turn>

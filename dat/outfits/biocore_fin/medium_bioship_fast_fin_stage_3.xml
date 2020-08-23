@@ -9,7 +9,8 @@
   <price>180000</price>
   <description>The fin is a Soromid bioship's equivalent to engines in synthetic ships. It is charged with moving the organism through space and comes in either a strong form (for heavy loads) or a fast form (for greater speed and agility). All fins start off undeveloped, but over time, just like the ships themselves, they grow and improve.</description>
   <gfx_store>organic_engine_fast_m1</gfx_store>
- <priority>3</priority></general>
+  <priority>3</priority>
+ </general>
  <specific type="modification">
   <thrust>114</thrust>
   <turn>99</turn>

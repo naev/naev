@@ -9,7 +9,8 @@
   <price>15000</price>
   <description>The Hawk 150 is a low-budget, general-purpose engine many civilians use to propel their ships. It's not particularly effective, but it's a lightweight engine with low energy demands, making it a solid choice for small vessels.</description>
   <gfx_store>engine04</gfx_store>
- <priority>3</priority></general>
+  <priority>3</priority>
+ </general>
  <specific type="modification">
   <thrust>145</thrust>
   <turn>120</turn>
