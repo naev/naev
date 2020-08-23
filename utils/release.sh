@@ -16,7 +16,7 @@ NAEVDIR="$(pwd)"
 OUTPUTDIR="${NAEVDIR}/dist/"
 STEAMPATH="${NAEVDIR}/steam/tools/linux/"
 LOGFILE="release.log"
-CFLAGS="-j$(nproc --all)"
+THREADS="-j$(nproc --all)"
 
 COMPILED=""
 FAILED=""
@@ -47,7 +47,7 @@ function make_generic {
    make distclean
    ./autogen.sh
    ./configure $1
-   make ${CFLAGS}
+   make ${THREADS}
    get_version
    if [[ -f src/naev ]]; then
       mv src/naev "${OUTPUTDIR}/naev-${VERSION}-$2"
@@ -83,8 +83,8 @@ function make_linux_steam_64 {
    echo "#!/bin/bash" > "${TMPPATH}"
    echo "make distclean" >> "${TMPPATH}"
    echo "./autogen.sh" >> "${TMPPATH}"
-   echo "./configure --enable-lua=internal --without-libzip" >> "${TMPPATH}"
-   echo "make ${CFLAGS}" >> "${TMPPATH}"
+   echo "./configure --enable-lua=internal --without-libzip CFLAGS=-std=gnu99" >> "${TMPPATH}"
+   echo "make ${THREADS}" >> "${TMPPATH}"
    chmod +x "${TMPPATH}"
    ${STEAMPATH}/shell-amd64.sh "${TMPPATH}"
    get_version
