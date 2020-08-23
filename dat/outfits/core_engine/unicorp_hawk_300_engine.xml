@@ -4,7 +4,7 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>small</size>
-  <priority>7</priority>
+  <rarity>7</priority>
   <mass>10</mass>
   <price>25000</price>
   <description>The Hawk 300 is an enlarged version of the Hawk 150 engine, optimized for heavier loads. Like its smaller counterpart, it offers modest performance for a low price.</description>

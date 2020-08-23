@@ -4,7 +4,7 @@
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>medium</size>
-  <priority>7</priority>
+  <rarity>7</priority>
   <mass>160</mass>
   <price>100000</price>
   <description>A heavy-duty variant of the PT-500, the PT-600 exceeds its predecessor in all respects. Its considerably higher mass restricts its use to larger medium vessels such as destroyers.</description>

@@ -4,7 +4,7 @@
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>medium</size>
-  <priority>7</priority>
+  <rarity>7</priority>
   <mass>180</mass>
   <price>400000</price>
   <description>Milspec offers solutions for pilots who believe the best defense is a good offense. The Prometheus 5403 boasts a heavy duty power generator as well as considerable shielding and subsystem control. Fly safe, fly Milspec.</description>

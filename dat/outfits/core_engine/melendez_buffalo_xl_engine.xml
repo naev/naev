@@ -4,7 +4,7 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>medium</size>
-  <priority>7</priority>
+  <rarity>7</priority>
   <mass>30</mass>
   <price>280000</price>
   <description>The Buffalo XL is a staple among mid-sized freighters, particularly those carrying dense cargo. Its considerable power leaves it with few competitors in its size class, and more than a few combat vessels rely on it to move them and their arsenals into battle.</description>

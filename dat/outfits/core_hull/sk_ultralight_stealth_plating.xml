@@ -4,7 +4,7 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>small</size>
-  <priority>3</priority>
+  <rarity>3</priority>
   <mass>30</mass>
   <price>95000</price>
   <description>Designed for military scouting vessels, Schafer &amp; Kane's Ultralight Stealth Plating configuration features the latest in sensor-absorbing materials and geometry.</description>

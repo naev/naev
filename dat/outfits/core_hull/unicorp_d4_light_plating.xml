@@ -4,7 +4,7 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>small</size>
-  <priority>7</priority>
+  <rarity>7</priority>
   <mass>55</mass>
   <price>30000</price>
   <description>Commonly found on civilian vessels, the D-4 plating is popular with ship manufacturers due to its low cost and adequate, if uninspiring performance.</description>

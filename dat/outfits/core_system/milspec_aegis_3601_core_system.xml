@@ -4,7 +4,7 @@
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>small</size>
-  <priority>7</priority>
+  <rarity>7</priority>
   <mass>45</mass>
   <price>140000</price>
   <description>Milspec cares about your personal safety. Your protection is our concern. The Aegis 3601 grants your ship excellent shield strength while preserving a high level of subsystem control and energy capacity. Fly safe, fly Milspec.</description>

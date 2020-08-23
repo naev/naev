@@ -4,7 +4,7 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>large</size>
-  <priority>7</priority>
+  <rarity>7</priority>
   <mass>80</mass>
   <price>3600000</price>
   <description>The largest Tricon engine in production, the Typhoon II boasts surprisingly high performance for a capital ship engine. Its power consumption is markedly higher than anything in its class, but most captains are willing to make the trade for superior manoeuvrability</description>

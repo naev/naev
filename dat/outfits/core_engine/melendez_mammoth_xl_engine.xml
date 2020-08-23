@@ -4,7 +4,7 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>large</size>
-  <priority>7</priority>
+  <rarity>7</priority>
   <mass>100</mass>
   <price>1500000</price>
   <description>The very largest engine that Melendez produces, the Mammoth XL has precious little competition when it comes to moving massive amounts of mass around the galaxy, whether in the form of bulk freight or as the primary engine of a fully-equipped battlecruiser.</description>
