@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Unicorp Jammer">
  <general>
   <rarity>2</rarity>
@@ -12,7 +12,7 @@
   <cpu>-4</cpu>
  </general>
  <specific type="modification" group="7">
-  <active/>
+  <active />
   <ew_hide>70</ew_hide>
   <energy_loss>35</energy_loss>
  </specific>

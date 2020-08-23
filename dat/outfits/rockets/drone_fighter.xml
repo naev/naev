@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Drone Fighter">
  <general>
   <license>Light Combat Vessel License</license>
@@ -11,4 +11,3 @@
   <ship>Drone</ship>
  </specific>
 </outfit>
-<!-- Licenses -->

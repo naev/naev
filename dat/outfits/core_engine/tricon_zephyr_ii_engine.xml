@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Tricon Zephyr II Engine">
  <general>
   <typename>Core Systems (Engine)</typename>
@@ -19,4 +19,3 @@
   <engine_limit>300</engine_limit>
  </specific>
 </outfit>
-<!-- Medium slot engines. -->

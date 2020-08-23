@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Ragnarok Beam">
  <general>
   <slot>weapon</slot>
@@ -10,7 +10,7 @@
   <gfx_store>ragnarok</gfx_store>
   <cpu>-44</cpu>
  </general>
- <specific type="turret beam" >
+ <specific type="turret beam">
   <delay>8</delay>
   <duration min="2">6</duration>
   <range>500</range>

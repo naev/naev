@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Map: Pirate strongholds">
  <general>
   <mass>0</mass>
@@ -69,14 +69,14 @@
   <sys name="Titus">
    <jump>New Haven</jump>
   </sys>
-  <!-- Stations where a few “interesting” quests are available -->
+  
   <sys name="Suna">
    <asset>The Wringer</asset>
   </sys>
   <sys name="Alteris">
    <asset>Darkshed</asset>
   </sys>
-  <!-- And stations that help you to get around -->
+  
   <sys name="Eridani">
    <asset>The Crucible</asset>
   </sys>

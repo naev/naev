@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Milspec Jammer">
  <general>
   <rarity>3</rarity>
@@ -12,7 +12,7 @@
   <cpu>-8</cpu>
  </general>
  <specific type="modification" group="7">
-  <active/>
+  <active />
   <ew_hide>90</ew_hide>
   <energy_loss>40</energy_loss>
  </specific>

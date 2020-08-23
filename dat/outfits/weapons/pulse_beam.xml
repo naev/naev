@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Pulse Beam">
  <general>
   <slot>weapon</slot>
@@ -10,7 +10,7 @@
   <gfx_store>ragnarok</gfx_store>
   <cpu>-14</cpu>
  </general>
- <specific type="turret beam" >
+ <specific type="turret beam">
   <delay>0.2</delay>
   <duration min="0.25">0.25</duration>
   <range>500</range>
