@@ -21,10 +21,6 @@ Jumps: %d
 Travel distance: %d
 %s]])
 
-full = {}
-full[1] = _("No room in ship")
-full[2] = _("You don't have enough cargo space to accept this mission. You need %s of free space (%s more than you have).")
-
 piracyrisk = {}
 piracyrisk[1] = _("Piracy Risk: None")
 piracyrisk[2] = _("Piracy Risk: Low")
@@ -90,7 +86,8 @@ end
 -- Mission is accepted
 function accept()
    if player.pilot():cargoFree() < amount then
-      tk.msg(full[1], full[2]:format(
+      tk.msg( _("No room in ship"), string.format(
+         _("You don't have enough cargo space to accept this mission. It requires %s of free space (%s more than you have)."),
          tonnestring(amount),
          tonnestring( amount - player.pilot():cargoFree() ) ) )
       misn.finish()

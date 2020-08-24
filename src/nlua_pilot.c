@@ -444,6 +444,8 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    fltname = luaL_checkstring(L,1);
 
    /* pull the fleet */
+   ship = NULL;
+   flt  = NULL;
    if (from_ship) {
       ship = ship_get( fltname );
       if (ship == NULL) {
@@ -1059,7 +1061,7 @@ static int pilotL_activeWeapset( lua_State *L )
  * @code
  * ws_name, ws = p:weapset( true )
  * print( "Weapnset Name: " .. ws_name )
- * for _,w in ipairs(ws) do
+ * for i, w in ipairs(ws) do
  *    print( "Name: " .. w.name )
  *    print( "Cooldown: " .. tostring(cooldown) )
  *    print( "Level: " .. tostring(level) )
@@ -1422,7 +1424,7 @@ static int pilotL_weapsetHeat( lua_State *L )
  * @code
  * act_outfits = p:actives()
  * print( "Weapnset Name: " .. ws_name )
- * for _,o in ipairs(act_outfits) do
+ * for i, o in ipairs(act_outfits) do
  *    print( "Name: " .. o.name )
  *    print( "State: " .. o.state )
  * end
@@ -3290,7 +3292,7 @@ static int pilotL_cargoRm( lua_State *L )
  * <li><b>m:</b> true if cargo is for a mission.</li>
  * </ul>
  *
- * @usage for _,v in ipairs(pilot.cargoList(player.pilot())) do print( string.format("%s: %d", v.name, v.q ) ) end
+ * @usage for i, v in ipairs(pilot.cargoList(player.pilot())) do print( string.format("%s: %d", v.name, v.q ) ) end
  *
  *    @luatparam Pilot p Pilot to list cargo of.
  *    @luatreturn table An ordered list with the names of the cargo the pilot has.
@@ -3729,7 +3731,7 @@ static int pilotL_face( lua_State *L )
    else
       t     = pilotL_newtask( L, p, "__face" );
    if (pt != NULL) {
-      lua_pushnil(L);
+      lua_pushpilot(L, pt->id);
    }
    else {
       lua_pushvector(L, *vec);

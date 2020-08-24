@@ -180,6 +180,7 @@ function land()
       if alive >= orig_alive then
          tk.msg( landsuccesstitle, landsuccesstext )
          player.pay( reward )
+         faction.get("Traders Guild"):modPlayer(1)
       elseif alive / orig_alive >= 0.6 then
          tk.msg( landcasualtytitle, landcasualtytext[1] )
          player.pay( reward * alive / orig_alive )
@@ -283,45 +284,68 @@ function spawnConvoy ()
 
    --Spawn the convoy
    convoy = pilot.add(convoyname, nil, origin)
-   for i, j in ipairs(convoy) do
+   local minspeed = nil
+   for i, p in ipairs(convoy) do
       if alive ~= nil and alive < i then
-         j:rm()
+         p:rm()
       end
-      if j:exists() then
-         j:rmOutfit( "cores" )
-         local class = j:ship():class()
+      if p:exists() then
+         p:rmOutfit( "cores" )
+         for j, o in ipairs( p:outfits() ) do
+            if o == "Improved Stabilizer" then
+               p:rmOutfit("Improved Stabilizer")
+               p:addOutfit("Cargo Pod")
+            end
+         end
+
+         for j, c in ipairs( p:cargoList() ) do
+            p:cargoRm( c.name, c.q )
+         end
+
+         local class = p:ship():class()
          if class == "Yacht" or class == "Luxury Yacht" or class == "Scout"
                or class == "Courier" or class == "Fighter" or class == "Bomber"
                or class == "Drone" or class == "Heavy Drone" then
-            j:addOutfit( "Unicorp PT-200 Core System" )
-            j:addOutfit( "Melendez Ox XL Engine" )
-            j:addOutfit( "S&K Small Cargo Hull" )
+            p:addOutfit( "Unicorp PT-200 Core System" )
+            p:addOutfit( "Melendez Ox XL Engine" )
+            p:addOutfit( "S&K Small Cargo Hull" )
          elseif class == "Freighter" or class == "Armoured Transport"
                or class == "Corvette" or class == "Destroyer" then
-            j:addOutfit( "Unicorp PT-600 Core System" )
-            j:addOutfit( "Melendez Buffalo XL Engine" )
-            j:addOutfit( "S&K Medium Cargo Hull" )
+            p:addOutfit( "Unicorp PT-600 Core System" )
+            p:addOutfit( "Melendez Buffalo XL Engine" )
+            p:addOutfit( "S&K Medium Cargo Hull" )
          elseif class == "Cruiser" or class == "Carrier" then
-            j:addOutfit( "Unicorp PT-600 Core System" )
-            j:addOutfit( "Melendez Mammoth XL Engine" )
-            j:addOutfit( "S&K Large Cargo Hull" )
+            p:addOutfit( "Unicorp PT-600 Core System" )
+            p:addOutfit( "Melendez Mammoth XL Engine" )
+            p:addOutfit( "S&K Large Cargo Hull" )
          end
 
-         j:setHealth( 100, 100 )
-         j:setEnergy( 100 )
-         j:setTemp( 0 )
-         j:setFuel( true )
-         j:cargoAdd( cargo, j:cargoFree() )
+         p:setHealth( 100, 100 )
+         p:setEnergy( 100 )
+         p:setTemp( 0 )
+         p:setFuel( true )
+         p:cargoAdd( cargo, p:cargoFree() )
 
-         j:control()
-         j:setHilight(true)
-         j:setInvincPlayer()
-         continueToDest( j )
+         local myspd = p:stats().speed_max
+         if minspeed == nil or myspd < minspeed then
+            minspeed = myspd
+         end
 
-         hook.pilot( j, "death", "traderDeath" )
-         hook.pilot( j, "attacked", "traderAttacked", j )
-         hook.pilot( j, "land", "traderLand" )
-         hook.pilot( j, "jump", "traderJump" )
+         p:control()
+         p:setHilight(true)
+         p:setInvincPlayer()
+         continueToDest( p )
+
+         hook.pilot( p, "death", "traderDeath" )
+         hook.pilot( p, "attacked", "traderAttacked", p )
+         hook.pilot( p, "land", "traderLand" )
+         hook.pilot( p, "jump", "traderJump" )
+      end
+   end
+
+   if minspeed ~= nil then
+      for i, p in ipairs(convoy) do
+         p:setSpeedLimit( minspeed )
       end
    end
 

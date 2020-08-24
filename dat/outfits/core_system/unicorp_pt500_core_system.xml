@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Unicorp PT-500 Core System">
  <general>
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>medium</size>
-  <priority>3</priority>
+  <rarity>3</rarity>
   <mass>70</mass>
   <price>55000</price>
   <description>Continuing Unicorp's PT series of core systems in the medium ship category, the PT-500 gives acceptable performance for an acceptable price.</description>
   <gfx_store>core_system_basic_m1</gfx_store>
- </general>
+ <priority>3</priority></general>
  <specific type="modification">
   <cpu_max>53</cpu_max>
   <shield>300</shield>

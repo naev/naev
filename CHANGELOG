@@ -4,6 +4,8 @@
       * Improved and simplified the look of the interface
          * Interface is much more slick
          * Font uses outlines to be more readable
+      * Added rarity indicator to ships and outfits.
+      * Indicate non-common NPC with exclamation marks.
       * Simple economy model implemented with map visualizations
       * Made missiles and fighter bays reload while in space
       * Modified the balancing of missiles
@@ -24,6 +26,15 @@
       * Added Soromid organic ships that level up organs
       * Improved and expanded NPC portraits
       * Commodities can be sold/bought everywhere
+      * Added a "slow mode", which runs the game at half speed (like an easy mode)
+      * Added a ship log which records events
+      * Added a "system map" which displays information about known remote planets
+      * Added support for giving commands to individual escorts
+      * New intro images replacing old placeholders
+      * Increased pirate name variety for bounty missions
+      * Ships now travel with you automatically for free, as with outfits
+      * Added map decorators showing locations of factions and the Nebula
+      * Added a dogfight aiming helper
       * More music
       * New and/or improved missions
          * Completed the FLF campaign
@@ -46,6 +57,5 @@
       * Consolidated the effects of cloaking and jammers under cloaking
       * Added workaround for ALSOFT buggy version that crashes
       * Added a polygon-based collision algorithm
-      * added a ship log which records events
-      * Added a "system map" which displays information about known remote planets
       * Added some symbols for partial colorblind accessibility
+      * Many bugfixes

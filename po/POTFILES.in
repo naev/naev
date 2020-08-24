@@ -111,6 +111,7 @@ dat/factions/spawn/sirius.lua
 dat/factions/spawn/soromid.lua
 dat/factions/spawn/thurion.lua
 dat/factions/spawn/trader.lua
+dat/factions/spawn/traders_guild.lua
 dat/factions/spawn/zalek.lua
 dat/factions/standing/collective.lua
 dat/factions/standing/dvaered.lua
@@ -118,7 +119,6 @@ dat/factions/standing/empire.lua
 dat/factions/standing/flf.lua
 dat/factions/standing/frontier.lua
 dat/factions/standing/goddard.lua
-dat/factions/standing/miner.lua
 dat/factions/standing/nasin.lua
 dat/factions/standing/pirate.lua
 dat/factions/standing/proteron.lua
@@ -212,7 +212,6 @@ dat/missions/neutral/seek_n_destroy.lua
 dat/missions/neutral/sightseeing.lua
 dat/missions/neutral/spacefamily.lua
 dat/missions/neutral/teenager.lua
-dat/missions/neutral/trader_escort.lua
 dat/missions/neutral/wastedump.lua
 dat/missions/pirate/common.lua
 dat/missions/pirate/empbounty_dead.lua
@@ -260,6 +259,7 @@ dat/missions/soromid/comingout/srm_comingout.lua
 dat/missions/soromid/common.lua
 dat/missions/soromid/srm_rehab.lua
 dat/missions/trader/anxiousmerchant.lua
+dat/missions/trader/trader_escort.lua
 dat/missions/trader/trader_rehab.lua
 dat/missions/tutorial/tutorial.lua
 dat/missions/zalek/common.lua
@@ -378,6 +378,7 @@ src/nlua_player.c
 src/nlua_rnd.c
 src/nlua_ship.c
 src/nlua_shiplog.c
+src/nlua_spfx.c
 src/nlua_system.c
 src/nlua_tex.c
 src/nlua_time.c

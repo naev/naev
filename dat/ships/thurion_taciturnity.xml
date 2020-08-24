@@ -2,6 +2,7 @@
 <ship name="Thurion Taciturnity">
  <base_type>Taciturnity</base_type>
  <GFX sx="10" sy="10">taciturnity</GFX>
+ <rarity>4</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Armoured Transport</class>

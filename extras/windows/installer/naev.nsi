@@ -8,8 +8,8 @@ Unicode true
 ;!define VERSION_SUFFIX "-beta1" ; This string can be used for betas and release candidates.
 ;!define ARCH "32"
 !define URL "https://naev.org"
-!define MUI_ICON "..\logos\logo.ico"
-;!define MUI_UNICON "..\logos\logo.ico"
+!define MUI_ICON "..\..\logos\logo.ico"
+;!define MUI_UNICON "..\..\logos\logo.ico"
 
 ;Miscellaneous defines
 !define MULTIUSER_EXECUTIONLEVEL Highest
@@ -93,9 +93,8 @@ Section "Naev Engine" BinarySection
    SectionIn RO
 
    SetOutPath "$INSTDIR"
-   File bin\*.dll
-   File bin\naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe
-   File ..\logos\logo.ico
+   File bin\*.*
+   File ..\..\logos\logo.ico
    
    IntOp $PortID $PortID & ${SF_SELECTED}
    
@@ -135,10 +134,10 @@ Section "Naev Data (Download)" DataSection
    dwn:
     AddSize 331538 ;Size (kB) of Naev ndata
     ;use inetc due to the fact that NSISdl cannot download via HTTPS   
-    inetc::get "http://github.com/naev/naev/releases/download/naev-${VERSION}${VERSION_SUFFIX}/ndata-${VERSION}${VERSION_SUFFIX}.zip" "ndata.zip"
+    inetc::get "http://github.com/naev/naev/releases/download/${RELEASE}/ndata-${VERSION}${VERSION_SUFFIX}.zip" "ndata.zip"
     Pop $R0 ;Get the return value
       StrCmp $R0 "OK" skip
-        MessageBox MB_YESNO|MB_ICONEXCLAMATION "Download failed due to: $R0$\n$\nPlease note that naev wont work until you download ndata.zip and put it in the same folder as naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe.$\n$\nRetry?" IDNO skip
+        MessageBox MB_YESNO|MB_ICONEXCLAMATION "Download failed due to: $R0$\n$\nPlease note that naev won't work until you download ndata.zip and put it in the same folder as naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe.$\n$\nRetry?" IDNO skip
       Goto dwn
    skip:
 SectionEnd

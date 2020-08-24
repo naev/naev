@@ -6,4 +6,4 @@
 
 require "dat/missions/rehab_common.lua"
 
-fac = faction.get("Trader")
+fac = faction.get("Traders Guild")

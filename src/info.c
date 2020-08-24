@@ -32,7 +32,7 @@
 #include "tk/toolkit_priv.h"
 #include "shiplog.h"
 
-#define BUTTON_WIDTH    125 /**< Button width, standard across menus. */
+#define BUTTON_WIDTH    135 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
 
 #define SETGUI_WIDTH    400 /**< GUI selection window width. */
@@ -69,7 +69,6 @@ static CstSlotWidget info_eq_weaps;
 static int *info_factions;
 
 static int selectedLog = 0;
-static int selectedLogMsg = 0;
 static int selectedLogType = 0;
 static char **logTypes=NULL;
 static int ntypes=0;
@@ -130,7 +129,7 @@ void menu_info( int window )
    }
 
    /* Dimensions. */
-   w = 600;
+   w = 640;
    h = 600;
 
    /* Create the window. */
@@ -221,7 +220,7 @@ static void info_openMain( unsigned int wid )
          creds,
          player.p->name,
          player.p->fuel, pilot_getJumps(player.p) );
-   window_addText( wid, 140, 20,
+   window_addText( wid, 180, 20,
          200, h-80,
          0, "txtPilot", &gl_smallFont, NULL, str );
    free(nt);
@@ -239,9 +238,9 @@ static void info_openMain( unsigned int wid )
    licenses = malloc(sizeof(char*)*nlicenses);
    for (i=0; i<nlicenses; i++)
       licenses[i] = strdup(buf[i]);
-   window_addText( wid, -20, -40, w-80-200-40, 20, 1, "txtList",
+   window_addText( wid, -20, -40, w-80-200-40-40, 20, 1, "txtList",
          NULL, NULL, _("Licenses") );
-   window_addList( wid, -20, -70, w-80-200-40, h-110-BUTTON_HEIGHT,
+   window_addList( wid, -20, -70, w-80-200-40-40, h-110-BUTTON_HEIGHT,
          "lstLicenses", licenses, nlicenses, 0, NULL );
 }
 
@@ -396,7 +395,6 @@ static void info_openShip( unsigned int wid )
          "Class:\n"
          "Crew:\n"
          "\n"
-         "Total CPU:\n"
          "Mass:\n"
          "Jump Time:\n"
          "Thrust:\n"
@@ -413,7 +411,7 @@ static void info_openShip( unsigned int wid )
          "\n"
          "Stats:\n")
          );
-   window_addText( wid, 140, -60, w-300., h-60, 0, "txtDDesc", &gl_smallFont,
+   window_addText( wid, 180, -60, w-300., h-60, 0, "txtDDesc", &gl_smallFont,
          NULL, NULL );
 
    /* Custom widget. */
@@ -442,7 +440,6 @@ static void ship_update( unsigned int wid )
          "%s\n"
          "%d\n"
          "\n"
-         "%d teraflops\n"
          "%.0f tonnes\n"
          "%s average\n"
          "%.0f kN/tonne\n"
@@ -462,7 +459,6 @@ static void ship_update( unsigned int wid )
          _(player.p->ship->name),
          _(ship_class(player.p->ship)),
          (int)floor(player.p->crew),
-         player.p->cpu_max,
          /* Movement. */
          player.p->solid->mass,
          hyp_delay,
@@ -499,15 +495,15 @@ static void info_openWeapons( unsigned int wid )
 
    /* Checkboxes. */
    wlen = w - 220 - 20;
-   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-40, wlen, BUTTON_HEIGHT,
+   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-20, wlen, BUTTON_HEIGHT,
          "chkAutoweap", _("Automatically handle weapons"), weapons_autoweap, player.p->autoweap );
-   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-10, wlen, BUTTON_HEIGHT,
+   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)+10, wlen, BUTTON_HEIGHT,
          "chkFire", _("Enable instant mode (only for weapons)"), weapons_fire,
          (pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons )==WEAPSET_TYPE_WEAPON) );
-   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)+20, wlen, BUTTON_HEIGHT,
+   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)+40, wlen, BUTTON_HEIGHT,
          "chkInrange", _("Only shoot weapons that are in range"), weapons_inrange,
          pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
-   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-70, wlen, BUTTON_HEIGHT,
+   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-50, wlen, BUTTON_HEIGHT,
          "chkHelper", _("Dogfight aiming helper"), aim_lines, player.p->aimLines );
 
    /* Custom widget. */
@@ -1126,19 +1122,17 @@ static void shiplog_menu_update( unsigned int wid, char* str )
 {
    int regenerateEntries=0;
    int w, h;
-   int logType,log, logMsg;
+   int logType, log;
    int nentries;
    char **logentries;
 
    if (!logWidgetsReady)
       return;
 
-   /*This is called when something is selected.
-     If a new log type has been selected, need to regenerate the log lists.
-     If a new log has been selected, need to regenerate the entries.*/
-   if ( strcmp(str, "lstLogEntries" ) == 0 ) {
-      selectedLogMsg = logMsg;
-   } else {
+   /* This is called when something is selected.
+    * If a new log type has been selected, need to regenerate the log lists.
+    * If a new log has been selected, need to regenerate the entries. */
+   if (strcmp(str, "lstLogEntries" ) != 0) {
       /* has selected a type of log or a log */
       window_dimWindow( wid, &w, &h );
       logWidgetsReady=0;

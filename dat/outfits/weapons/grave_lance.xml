@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Grave Lance">
  <general>
   <slot>weapon</slot>
@@ -9,7 +9,7 @@
   <description>The Grave Lance is one of the most powerful Lance weapons around. The technology behind it is poorly understood by everyone except the Za'lek, who use it as a standard weapon.</description>
   <gfx_store>orion</gfx_store>
   <cpu>-20</cpu>
- </general>
+ <rarity>3</rarity></general>
  <specific type="beam">
   <delay>5</delay>
   <duration min="3.5">4.5</duration>

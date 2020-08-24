@@ -752,7 +752,7 @@ function mine ()
 
    ai.setasterotarget( field, ast )
 
-   local target, vel = system.asteroidpos( field, ast )
+   local target, vel = system.asteroidPos( field, ast )
 
    local dist, angle = vec2.polar( p:pos() - target )
 
@@ -779,7 +779,7 @@ function __killasteroid ()
    local ast       = fieldNast[2]
    local wrange    = ai.getweaprange()
 
-   local target = system.asteroidpos( field, ast )
+   local target = system.asteroidPos( field, ast )
    local dir  = ai.face(target)
 
     -- See if there's a gatherable; if so, pop this task and gather instead
@@ -802,7 +802,7 @@ function __killasteroid ()
       ai.shoot()
       ai.shoot(true)
    end
-   if system.asteroiddestroyed( field, ast ) then
+   if system.asteroidDestroyed( field, ast ) then
       ai.poptask()
       -- Last task : gather
       ai.pushtask("gather")

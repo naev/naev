@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Milspec Hermes 2202 Core System">
  <general>
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>small</size>
-  <priority>3</priority>
+  <rarity>3</rarity>
   <mass>12</mass>
   <price>80000</price>
   <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Hermes 2202 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
   <gfx_store>core_system_cpu_s1</gfx_store>
- </general>
+ <priority>3</priority></general>
  <specific type="modification">
   <cpu_max>50</cpu_max>
   <shield>180</shield>

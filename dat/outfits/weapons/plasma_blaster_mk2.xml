@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Plasma Blaster MK2">
  <general>
   <slot>weapon</slot>
@@ -9,7 +9,7 @@
   <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Pirates have taken a liking to this weapon.</description>
   <gfx_store>plasma2</gfx_store>
   <cpu>-5</cpu>
- </general>
+ <rarity>2</rarity></general>
  <specific type="bolt">
   <gfx>plasma2</gfx>
   <sound>plasma</sound>

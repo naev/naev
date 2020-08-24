@@ -54,7 +54,7 @@ msg_lore["general"] =      {_([["I heard the nebula is haunted! My uncle Bobby t
                               _([["Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!"]]),
                               _([["I wouldn't travel north from Alteris if I were you, unless you're a good fighter! That area of space has really gone down the drain since the Incident."]]),
                               _([["Sometimes I look at the stars and wonder... are we the only sentient species in the universe?"]]),
-                              _([["Hey, you ever wonder why we're here?" You respond that it's one of the great mysteries of the universe. Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? You don't know, but it sometimes keeps you up at night. As you say this, the citizen stares at you incredulously. "What?? No, I mean why are we in here, in this bar?"]])
+                              _([["Hey, you ever wonder why we're here?" You respond that it's one of the great mysteries of the universe. Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? You don't know, but it sometimes keeps you up at night. As you say this, the citizen stares at you incredulously. "What?? No, I mean why are we in here, in this bar?"]]),
                            }
 
 msg_lore["Independent"] =  {_([["We're not part of any of the galactic superpowers. We can take care of ourselves!"]]),
@@ -190,7 +190,7 @@ msg_tip =                  {_([["I heard you can set your weapons to only fire w
                               _([["There are passive outfits and active outfits. The passive ones modify your ship continuously, but the active ones only work if you turn them on. You usually can't keep an active outfit on all the time, so you need to be careful only to use it when you need it."]]),
                               _([["If you're new to the galaxy, I recommend you buy a map or two. It can make exploration a bit easier."]]),
                               _([["Scramblers and jammers make it harder for missiles to track you. They can be very handy if your enemies use missiles."]]),
-                              string.format( _([["If you're having trouble with overheating weapons or outfits, you can press %s twice to put your ship into Active Cooldown. Careful though, your energy and shields won't recharge while you do it!"]]), tutGetKey("autobrake") ),
+                              string.format( _([["If you're having trouble with overheating weapons or outfits, you can press %s twice to put your ship into Active Cooldown; that'll dissipate all heat from your ship and also refill your rocket ammunition. Careful though, your energy and shields won't recharge while you do it!"]]), tutGetKey("autobrake") ),
                               _([["If you're having trouble shooting other ships face on, try outfitting with turrets or use an afterburner to avoid them entirely!"]]),
                               _([["You know how time speeds up when Autonav is on, but then goes back to normal when enemies are around? Turns out you can't disable the return to normal speed entirely, but you can control what amount of danger triggers it. Really handy if you want to ignore enemies that aren't actually hitting you."]]),
                               _([["Flying bigger ships is awesome, but it's a bit tougher than flying smaller ships. There's so much more you have to do for the same actions, time just seems to fly by faster. I guess the upside of that is that you don't notice how slow your ship is as much."]]),
@@ -203,6 +203,8 @@ msg_tip =                  {_([["I heard you can set your weapons to only fire w
                               _([["Did you know that turrets' automatic tracking of targets is slowed down by cloaking? Well, now you do! Small ships majorly benefit from a scrambler or two; it makes it much easier to dodge those turrets on the larger ships."]]),
                               _([["Don't forget to have your target selected. Even if you have forward-facing weapons, the weapons will swivel a bit to track your target. But it's absolutely essential for turreted weapons."]]),
                               _("\"Did you know that you can automatically follow pilot with Autonav? It's true! Just \ableft-click\a0 the pilot to target them and then \abright-click\a0 your target to follow! I like to use this feature for escort missions. It makes them a lot less tedious.\""),
+                              _([["The new aiming helper feature is awesome! Simply turn it on in your ship's weapons configuration and you get little guides telling you where you should aim to hit your target! I use it a lot."]]),
+                              _([["Displays tend to shorten large number of credits by using SI prefixes: 'K' for thousands of credits, 'M' for millions of credits, 'G' for billions of credits, etc."]]),
                            }
 
 -- Jump point messages.

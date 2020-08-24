@@ -15,9 +15,10 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "nstring.h"
 #include <math.h>
 #include <assert.h>
+
+#include "nstring.h"
 #include "log.h"
 #include "player.h"
 #include "space.h"
@@ -27,6 +28,7 @@
 #include "map_find.h"
 #include "hook.h"
 #include "land_takeoff.h"
+#include "ndata.h"
 
 
 /*
@@ -53,8 +55,7 @@ void shipyard_open( unsigned int wid )
 {
    int i;
    Ship **ships;
-   char **sships;
-   glTexture **tships;
+   ImageArrayCell *cships;
    int nships;
    int w, h;
    int iw, ih;
@@ -62,6 +63,7 @@ void shipyard_open( unsigned int wid )
    int th;
    int y;
    const char *buf;
+   glTexture *t;
 
    /* Mark as generated. */
    land_tabGenerate(LAND_WINDOW_SHIPYARD);
@@ -104,11 +106,11 @@ void shipyard_open( unsigned int wid )
          SHIP_TARGET_W, SHIP_TARGET_H, "imgTarget", NULL, 1 );
 
    /* slot types */
-   window_addCust( wid, -20, -160, 148, 70, "cstSlots", 0.,
+   window_addCust( wid, -20, -SHIP_TARGET_H-60, 148, 70, "cstSlots", 0.,
          shipyard_renderSlots, NULL, NULL );
 
    /* stat text */
-   window_addText( wid, -40, -240, 128, 400, 0, "txtStats",
+   window_addText( wid, -40, -SHIP_TARGET_H-60-70-20, 128, 400, 0, "txtStats",
          &gl_smallFont, NULL, NULL );
 
    /* text */
@@ -147,25 +149,27 @@ void shipyard_open( unsigned int wid )
 
    /* set up the ships to buy/sell */
    ships = tech_getShip( land_planet->tech, &nships );
+   cships = calloc( MAX(1,nships), sizeof(ImageArrayCell) );
    if (nships <= 0) {
-      sships    = malloc(sizeof(char*));
-      sships[0] = strdup(_("None"));
-      tships    = malloc(sizeof(glTexture*));
-      tships[0] = NULL;
+      cships[0].image = NULL;
+      cships[0].caption = strdup(_("None"));
       nships    = 1;
    }
    else {
-      sships = malloc(sizeof(char*)*nships);
-      tships = malloc(sizeof(glTexture*)*nships);
       for (i=0; i<nships; i++) {
-         sships[i] = strdup(ships[i]->name);
-         tships[i] = ships[i]->gfx_store;
+         cships[i].caption = strdup(ships[i]->name);
+         cships[i].image = gl_dupTexture(ships[i]->gfx_store);
+         cships[i].layers = gl_copyTexArray( ships[i]->gfx_overlays, ships[i]->gfx_noverlays, &cships[i].nlayers );
+         if (ships[i]->rarity > 0) {
+            t = rarity_texture( ships[i]->rarity );
+            cships[i].layers = gl_addTexArray( cships[i].layers, &cships[i].nlayers, t );
+         }
       }
       free(ships);
    }
    window_addImageArray( wid, 20, 20,
-         iw, ih, "iarShipyard", 64./96.*128., 64.,
-         tships, sships, nships, shipyard_update, shipyard_rmouse );
+         iw, ih, "iarShipyard", 96., 96.,
+         cships, nships, shipyard_update, shipyard_rmouse );
 
    /* write the shipyard stuff */
    shipyard_update(wid, NULL);
@@ -194,27 +198,27 @@ void shipyard_update( unsigned int wid, char* str )
       window_disableButton( wid, "btnTradeShip");
       nsnprintf( buf, PATH_MAX,
             _("None\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
+            "N/A\n"
+            "N/A\n"
+            "N/A\n"
             "\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
+            "N/A\n"
+            "N/A\n"
+            "N/A\n"
+            "N/A\n"
+            "N/A\n"
+            "N/A\n"
             "\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n") );
+            "N/A\n"
+            "N/A\n"
+            "N/A\n"
+            "N/A\n"
+            "N/A\n"
+            "N/A\n"
+            "N/A\n"
+            "N/A\n"
+            "N/A\n"
+            "N/A\n") );
       window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
       window_modifyText( wid, "txtStats", NULL );
       window_modifyText( wid, "txtDescription", NULL );

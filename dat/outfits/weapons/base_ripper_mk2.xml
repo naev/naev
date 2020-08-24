@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Base Ripper MK2">
  <general>
   <slot>weapon</slot>
@@ -9,7 +9,7 @@
   <description>This weapon is a cheat. It is not meant to be used by players.</description>
   <gfx_store>ripper</gfx_store>
   <cpu>-12</cpu>
- </general>
+ <rarity>6</rarity></general>
  <specific type="turret bolt">
   <gfx>ripperM</gfx>
   <sound>ripper</sound>

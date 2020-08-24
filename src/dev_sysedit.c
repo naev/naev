@@ -94,12 +94,6 @@ static double sysedit_my      = 0.; /**< Cursor Y position. */
 static int jp_hidden = 0; /**< Jump point hidden checkbox value. */
 static int jp_exit   = 0; /**< Jump point exit only checkbox value. */
 
-/*
- * Property editor stuff.
- */
-static glTexture **sysedit_tex = NULL; /**< Planet textures. */
-static int sysedit_ntex       = 0; /**< Number of planet textures. */
-
 
 /*
  * System editor Prototypes.
@@ -1941,11 +1935,12 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
    unsigned int wid;
    size_t nfiles, i, j;
    char *path, buf[PATH_MAX];
-   char **files, **png_files;
-   glTexture **tex, *t;
+   char **files;
+   glTexture *t;
+   ImageArrayCell *cells;
    int w, h, land;
    Planet *p;
-   glColour *bg, c;
+   glColour c;
 
    land = (strcmp(wgt,"btnLandGFX") == 0);
 
@@ -1970,31 +1965,26 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
    path           = land ? PLANET_GFX_EXTERIOR_PATH : PLANET_GFX_SPACE_PATH;
    files          = ndata_list( path, &nfiles );
    ndata_sortName( files, nfiles );
-   png_files      = malloc( sizeof(char*) * nfiles );
-   tex            = malloc( sizeof(glTexture*) * nfiles );
-   sysedit_tex    = malloc( sizeof(glTexture*) * nfiles );
-   bg             = malloc( sizeof(glColour) * nfiles );
+   cells          = calloc( nfiles, sizeof(ImageArrayCell) );
+
    j              = 0;
    for (i=0; i<nfiles; i++) {
       nsnprintf( buf, sizeof(buf), "%s/%s", path, files[i] );
       t              = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
       if (t != NULL) {
-         tex[j]         = t;
-         sysedit_tex[j] = tex[j];
-         png_files[j]   = strdup( files[i] );
+         cells[j].image   = t;
+         cells[j].caption = strdup( files[i] );
          c = strcmp(files[i], land ? p->gfx_exteriorPath : p->gfx_spacePath)==0 ? cOrange : cBlack;
-         bg[j] = c;
+         memcpy( &cells[j].bg, &c, sizeof(glColour) );
          j++;
       }
       free( files[i] );
    }
    free( files );
-   sysedit_ntex   = j;
 
    /* Add image array. */
-   window_addImageArray( wid, 20, 20, w-60-BUTTON_WIDTH, h-60, "iarGFX", 128, 128, tex, png_files, j, NULL, NULL );
+   window_addImageArray( wid, 20, 20, w-60-BUTTON_WIDTH, h-60, "iarGFX", 128, 128, cells, j, NULL, NULL );
    toolkit_setImageArray( wid, "iarGFX", path );
-   toolkit_setImageArrayBackground( wid, "iarGFX", bg );
 }
 
 
@@ -2003,13 +1993,6 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
  */
 static void sysedit_btnGFXClose( unsigned int wid, char *wgt )
 {
-   int i;
-   for (i=0; i<sysedit_ntex; i++)
-      gl_freeTexture( sysedit_tex[i] );
-   if (sysedit_tex != NULL)
-      free( sysedit_tex );
-   sysedit_tex    = NULL;
-   sysedit_ntex   = 0;
    window_close( wid, wgt );
 }
 

@@ -30,6 +30,7 @@
 #include "rng.h"
 #include "space.h"
 #include "ntime.h"
+#include "hook.h"
 
 
 #define XML_COMMODITY_ID      "Commodities" /**< XML document identifier */
@@ -80,12 +81,14 @@ void credits2str( char *str, credits_t credits, int decimals )
 {
    if (decimals < 0)
       nsnprintf( str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
+   else if (credits >= 1000000000000000000LL)
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fE", decimals, (double)credits / 1000000000000000000. );
    else if (credits >= 1000000000000000LL)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*fQ", decimals, (double)credits / 1000000000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fP", decimals, (double)credits / 1000000000000000. );
    else if (credits >= 1000000000000LL)
       nsnprintf( str, ECON_CRED_STRLEN, "%.*fT", decimals, (double)credits / 1000000000000. );
    else if (credits >= 1000000000L)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*fB", decimals, (double)credits / 1000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fG", decimals, (double)credits / 1000000000. );
    else if (credits >= 1000000)
       nsnprintf( str, ECON_CRED_STRLEN, "%.*fM", decimals, (double)credits / 1000000. );
    else if (credits >= 1000)
@@ -393,7 +396,7 @@ void commodity_Jettison( int pilot, Commodity* com, int quantity )
  *    @param pos Position.
  *    @param vel Velocity.
  */
-void gatherable_init( Commodity* com, Vector2d pos, Vector2d vel )
+int gatherable_init( Commodity* com, Vector2d pos, Vector2d vel, double lifeleng, int qtt )
 {
    gatherable_stack = realloc(gatherable_stack,
                               sizeof(Gatherable)*(++gatherable_nstack));
@@ -402,7 +405,14 @@ void gatherable_init( Commodity* com, Vector2d pos, Vector2d vel )
    gatherable_stack[gatherable_nstack-1].pos = pos;
    gatherable_stack[gatherable_nstack-1].vel = vel;
    gatherable_stack[gatherable_nstack-1].timer = 0.;
-   gatherable_stack[gatherable_nstack-1].lifeleng = RNGF()*100. + 50.;
+   gatherable_stack[gatherable_nstack-1].quantity = qtt;
+
+   if (lifeleng < 0.)
+      gatherable_stack[gatherable_nstack-1].lifeleng = RNGF()*100. + 50.;
+   else
+      gatherable_stack[gatherable_nstack-1].lifeleng = lifeleng;
+
+   return gatherable_nstack-1;
 }
 
 
@@ -526,6 +536,7 @@ void gatherable_gather( int pilot )
    int i, q;
    Gatherable *gat;
    Pilot* p;
+   HookParam hparam[3];
 
    p = pilot_get( pilot );
 
@@ -534,11 +545,20 @@ void gatherable_gather( int pilot )
 
       if (vect_dist( &p->solid->pos, &gat->pos ) < GATHER_DIST ) {
          /* Add cargo to pilot. */
-         q = pilot_cargoAdd( p, gat->type, RNG(1,5), 0 );
+         q = pilot_cargoAdd( p, gat->type, gat->quantity, 0 );
 
          if (q>0) {
-            if (pilot_isPlayer(p))
+            if (pilot_isPlayer(p)) {
                player_message( ngettext("%d ton of %s gathered", "%d tons of %s gathered", q), q, gat->type->name );
+
+               /* Run hooks. */
+               hparam[0].type    = HOOK_PARAM_STRING;
+               hparam[0].u.str   = gat->type->name;
+               hparam[1].type    = HOOK_PARAM_NUMBER;
+               hparam[1].u.num   = q;
+               hparam[2].type    = HOOK_PARAM_SENTINEL;
+               hooks_runParam( "gather", hparam );
+            }
 
             /* Remove the object from space. */
             gatherable_nstack--;

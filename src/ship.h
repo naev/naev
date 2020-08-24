@@ -18,7 +18,7 @@
 
 /* target gfx dimensions */
 #define SHIP_TARGET_W   128 /**< Ship target graphic width. */
-#define SHIP_TARGET_H   96 /**< Ship target graphic height. */
+#define SHIP_TARGET_H   128 /**< Ship target graphic height. */
 
 
 /**
@@ -86,6 +86,7 @@ typedef struct Ship_ {
    char* name;       /**< Ship name */
    char* base_type;  /**< Ship's base type, basically used for figuring out what ships are related. */
    ShipClass class;  /**< Ship class */
+   int rarity;       /**< Rarity. */
 
    /* store stuff */
    credits_t price;  /**< Cost to buy */
@@ -122,6 +123,8 @@ typedef struct Ship_ {
    glTexture *gfx_target; /**< Targeting window graphic. */
    glTexture *gfx_store; /**< Store graphic. */
    char* gfx_comm;   /**< Name of graphic for communication. */
+   glTexture** gfx_overlays; /**< Store overlay graphics. */
+   int gfx_noverlays; /**< Number of overlays. */
 
    /* collision polygon */
    CollPoly *polygon; /**< Collision polygons. */

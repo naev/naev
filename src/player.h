@@ -173,6 +173,7 @@ void player_soundResume (void);
  * player ships
  */
 int player_ships( char** sships, glTexture** tships );
+void player_shipsSort (void);
 const PlayerShip_t* player_getShipStack( int *n );
 int player_nships (void);
 int player_hasShip( char* shipname );
@@ -187,7 +188,7 @@ void player_rmShip( char* shipname );
  */
 int player_outfitOwned( const Outfit *o );
 const PlayerOutfit_t* player_getOutfits( int *n );
-int player_getOutfitsFiltered( Outfit **outfits, glTexture **toutfits,
+int player_getOutfitsFiltered( Outfit **outfits,
       int(*filter)( const Outfit *o ), char *name );
 int player_numOutfits (void);
 int player_addOutfit( const Outfit *o, int quantity );

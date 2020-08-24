@@ -1,14 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Melendez Buffalo Engine">
  <general>
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>medium</size>
-  <priority>3</priority>
+  <rarity>2</rarity>
   <mass>24</mass>
   <price>150000</price>
   <description>The Buffalo is a mid-sized engine intended for light freighters, though it's occasionally seen on particularly well-armed corvettes. As a typical freight-oriented engine, the Buffalo posseses decent top speed, poor handling, and excellent fuel capacity.</description>
   <gfx_store>engine06</gfx_store>
+  <priority>3</priority>
  </general>
  <specific type="modification">
   <thrust>90</thrust>

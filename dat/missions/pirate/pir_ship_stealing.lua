@@ -16,22 +16,19 @@
 require "jumpdist.lua"
 require "numstring.lua"
 require "portrait.lua"
+require "dat/factions/equip/generic.lua"
 
-local informer
-local refusal
-local approval
-local success
 
-local title = _("Stealing a %s")
-local reward = _("A brand new %s")
-local description = _("Land on %s, in the %s system, and escape with your new %s.")
+title = _("Stealing a %s")
+reward = _("A brand new %s")
+description = _("Land on %s in the %s system and escape with your new %s")
 
 -- localization stuff, translators would work here
 informer = {
    description = _("A pirate informer is looking at you. Maybe they have some useful information to sell?"),
    title = _("Ship to steal"),
-   message = _([["Hi, pilot. I have the location of a %s to be used by the %s. Maybe it interests you, who knows?"
-    "However, I'm going to sell that information only. It'd cost you %s, but the ship is probably worth much more, if you can get it."
+   message = _([["Hi, pilot. I have the location and security codes of an unattended %s %s. Maybe it interests you, who knows?
+    "However, I'm going to sell that information only. It'd cost you %s, but the ship is probably worth much more if you can get to it."
     Do you want to pay to know where that ship is?]])
 }
 
@@ -50,29 +47,46 @@ success = {
     Enemy ships will probably be after you as soon as you leave the atmosphere, so you should get ready and use the time you have on this planet wisely.]])
 }
 
-local base_price = 100000
+base_price = 100000
 
-local ships = {
-   Empire = {
-      fighter   = { "Empire Shark", "Empire Lancelot" },
-      corvette  = { "Empire Admonisher" },
-      destroyer = { "Empire Pacifier" },
-      cruiser   = { "Empire Hawking" },
-      carrier   = { "Empire Peacemaker" }
-   },
+ships = {
    Dvaered = {
       fighter   = { "Dvaered Vendetta" },
       bomber    = { "Dvaered Ancestor" },
       corvette  = { "Dvaered Phalanx" },
       destroyer = { "Dvaered Vigilance" },
-      cruiser   = { "Dvaered Goddard" }
+      cruiser   = { "Dvaered Goddard" },
+   },
+   Empire = {
+      fighter   = { "Empire Shark", "Empire Lancelot" },
+      corvette  = { "Empire Admonisher" },
+      destroyer = { "Empire Pacifier" },
+      cruiser   = { "Empire Hawking" },
+      carrier   = { "Empire Peacemaker" },
+   },
+   Frontier = {
+      fighter   = { "Lancelot", "Vendetta", "Hyena" },
+      bomber    = { "Ancestor" },
+      corvette  = { "Phalanx" },
+      destroyer = { "Pacifier" },
+   },
+   Goddard = {
+      fighter   = { "Lancelot" },
+      cruiser   = { "Goddard" },
+   },
+   Independent = {
+      fighter   = { "Lancelot", "Vendetta", "Hyena", "Shark" },
+      bomber    = { "Ancestor" },
+      corvette  = { "Phalanx", "Admonisher" },
+      destroyer = { "Vigilance", "Pacifier" },
+      cruiser   = { "Kestrel", "Hawking" },
    },
    Sirius = {
       fighter   = { "Sirius Fidelity" },
       bomber    = { "Sirius Shaman" },
       corvette  = { "Sirius Preacher" },
       cruiser   = { "Sirius Dogma" },
-      carrier   = { "Sirius Divinity" }
+      carrier   = { "Sirius Divinity" },
    },
    Soromid = {
       fighter   = { "Soromid Brigand", "Soromid Reaver" },
@@ -80,18 +94,17 @@ local ships = {
       corvette  = { "Soromid Odium" },
       destroyer = { "Soromid Nyx" },
       cruiser   = { "Soromid Ira" },
-      carrier   = { "Soromid Arx" }
+      carrier   = { "Soromid Arx" },
    },
-   Independent = {
-      fighter   = { "Lancelot", "Vendetta", "Hyena", "Shark" },
-      bomber    = { "Ancestor" },
-      corvette  = { "Phalanx", "Admonisher" },
-      destroyer = { "Vigilance", "Pacifier" },
-      cruiser   = { "Kestrel", "Hawking" }
-   }
+   ["Za'lek"] = {
+      corvette  = { "Za'lek Imp", "Za'lek Sting" },
+      destroyer = { "Za'lek Demon" },
+      cruiser   = { "Za'lek Mephisto", "Za'lek Prototype" },
+      carrier   = { "Za'lek Diablo", "Za'lek Hephaestus" },
+   },
 }
 
-local classes = {}
+classes = {}
 
 for k,v in pairs(ships) do
    classes[k] = {}
@@ -101,7 +114,7 @@ for k,v in pairs(ships) do
    end
 end
 
-local function price(class)
+function price(class)
    local modifier = 1
    if class == "fighter" then
       modifier = 0.5
@@ -118,7 +131,7 @@ local function price(class)
    return modifier * base_price
 end
 
-local function random_class(faction)
+function random_class(faction)
    local m = #classes[faction]
 
    if m == 0 then
@@ -130,7 +143,7 @@ local function random_class(faction)
    return classes[faction][r]
 end
 
-local function random_ship(faction, class)
+function random_ship(faction, class)
    local m = #ships[faction][class]
 
    if m == 0 then
@@ -142,7 +155,7 @@ local function random_ship(faction, class)
    return ships[faction][class][r]
 end
 
-local function random_planet()
+function random_planet()
    local planets = {}
    local maximum_distance = 6
    local minimum_distance = 0
@@ -169,7 +182,7 @@ local function random_planet()
    end
 end
 
-local function improve_standing(class, faction_name)
+function improve_standing(class, faction_name)
    local enemies = faction.get(faction_name):enemies()
    local standing = 0
 
@@ -194,7 +207,7 @@ local function improve_standing(class, faction_name)
    end
 end
 
-local function damage_standing(class, faction_name)
+function damage_standing(class, faction_name)
    local modifier = 1
 
    -- “Oh dude, that guy is capable! He managed to steal one of our own ships!”
@@ -219,29 +232,29 @@ local function damage_standing(class, faction_name)
 end
 
 function create ()
-   ship = { __save = true }
+   theship = { __save = true }
 
-   ship.planet  = random_planet()
+   theship.planet  = random_planet()
 
-   if not ship.planet or ship.planet:faction() == nil then
+   if not theship.planet or theship.planet:faction() == nil then
       -- If we’re here, it means we couldn’t get a planet close enough.
       misn.finish(false)
    end
 
-   ship.faction = ship.planet:faction():name()
-   ship.class   = random_class(ship.faction)
+   theship.faction = theship.planet:faction():name()
+   theship.class   = random_class(theship.faction)
 
-   if not ship.class then
+   if not theship.class then
       -- If we’re here, it means we couldn’t get a ship of the right faction
       -- and of the right class.
       misn.finish(false)
    end
 
    -- We’re assuming ships[faction][class] is not empty, here…
-   ship.exact_class = random_ship(ship.faction, ship.class)
-   ship.price   = price(ship.class)
+   theship.exact_class = random_ship(theship.faction, theship.class)
+   theship.price   = price(theship.class)
 
-   ship.system = ship.planet:system()
+   theship.system = theship.planet:system()
 
    misn.setNPC( _("A Pirate informer"), getPortrait("Pirate") )
    misn.setDesc( informer.description )
@@ -249,34 +262,34 @@ end
 
 function accept()
    if tk.yesno( informer.title, informer.message:format(
-         ship.class, ship.faction, numstring(ship.price) ) ) then
-      if player.credits() >= ship.price then
+         theship.faction, theship.class, creditstring(theship.price) ) ) then
+      if player.credits() >= theship.price then
          tk.msg( approval.title, approval.message:format(
-            ship.planet:name(), ship.system:name() ) )
+            theship.planet:name(), theship.system:name() ) )
 
-         player.pay( -ship.price )
+         player.pay( -theship.price )
          misn.accept()
 
          -- Mission title, reward, description
-         misn.setTitle( title:format( ship.class ) )
-         misn.setReward( reward:format( ship.class ) )
+         misn.setTitle( title:format( theship.class ) )
+         misn.setReward( reward:format( theship.class ) )
          misn.setDesc( description:format(
-            ship.planet:name(),  ship.system:name(), ship.class ) )
+            theship.planet:name(),  theship.system:name(), theship.class ) )
 
          -- Mission marker
-         misn.markerAdd( ship.system, "low" )
+         misn.markerAdd( theship.system, "low" )
 
          -- OSD
          misn.osdCreate(
             string.format(
                title,
-               ship.class
+               theship.class
             ), {
                string.format(
                   description,
-                  ship.planet:name(),
-                  ship.system:name(),
-                  ship.class
+                  theship.planet:name(),
+                  theship.system:name(),
+                  theship.class
                )
             }
          )
@@ -295,23 +308,22 @@ end
 
 function land()
    local landed = planet.cur()
-   if landed == ship.planet then
+   if landed == theship.planet then
       -- Oh yeah, we stole the ship. \o/
       tk.msg(
          success.title,
          string.format(
             success.message,
-            ship.exact_class
+            theship.exact_class
          )
       )
 
       -- The old ship the player used will still be on the planet. I’m not 
       -- too sure what to do about it, but, well…
-      player.swapShip(ship.exact_class)
+      player.swapShip(theship.exact_class)
 
-      -- Two cannons should be enough for most not-so-big ships.
-      player.pilot():addOutfit"Laser Cannon MK3"
-      player.pilot():addOutfit"Laser Cannon MK3"
+      -- Equip the new ship.
+      equip_generic( player.pilot() )
 
       -- Hey, stealing a ship isn’t anything! (if you survive, that is)
       faction.modPlayerSingle("Pirate", rnd.rnd(3,5))
@@ -327,14 +339,9 @@ function land()
          var.push("_fcap_pirate", var.peek("_fcap_pirate") + 5)
       end
 
-      -- FIXME: We should add a few pursuers. However, if you were able to
-      --        fight a full squadron of whatever ships are used by the
-      --        faction to land on the planet, I say you have already done
-      --        enough. Still, I might be wrong. (:p)
-
       -- If you stole a ship of some value, the faction will have something
       -- to say, even if they can only suspect you.
-      damage_standing(ship.class, ship.faction)
+      damage_standing(theship.class, theship.faction)
 
       -- This is a success. The player stole his new ship, and everyone is
       -- happy with it. Getting out of the system alive is the player’s 
@@ -345,9 +352,9 @@ end
 
 function enter()
    -- A few faction ships guard the target planet.
-   if system.cur() == ship.system then
+   if system.cur() == theship.system then
       -- We want the player to be able to land on the destination planet…
-      ship.planet:landOverride(true)
+      theship.planet:landOverride(true)
    end
 end
 

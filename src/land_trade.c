@@ -42,8 +42,7 @@ static int commodity_mod = 10;
 void commodity_exchange_open( unsigned int wid )
 {
    int i, ngoods;
-   char **goods;
-   glTexture **tgoods;
+   ImageArrayCell *cgoods;
    int w, h;
    int iw, ih;
 
@@ -100,25 +99,23 @@ void commodity_exchange_open( unsigned int wid )
    /* goods list */
    if (land_planet->ncommodities > 0) {
       ngoods = land_planet->ncommodities;
-      goods = malloc(sizeof(char*) * ngoods);
-      tgoods    = malloc(sizeof(glTexture*) * ngoods);
+      cgoods = calloc( ngoods, sizeof(ImageArrayCell) );
       for (i=0; i<ngoods; i++) {
-         goods[i] = strdup(land_planet->commodities[i]->name);
-         tgoods[i] = land_planet->commodities[i]->gfx_store;
+         cgoods[i].image = gl_dupTexture(land_planet->commodities[i]->gfx_store);
+         cgoods[i].caption = strdup(land_planet->commodities[i]->name);
       }
    }
    else {
-      goods    = malloc( sizeof(char*) );
-      goods[0] = strdup(_("None"));
-      tgoods    = malloc(sizeof(glTexture*));
-      tgoods[0] = NULL;
       ngoods   = 1;
+      cgoods   = calloc( ngoods, sizeof(ImageArrayCell) );
+      cgoods[0].image = NULL;
+      cgoods[0].caption = strdup(_("None"));
    }
 
    /* set up the goods to buy/sell */
    window_addImageArray( wid, 20, 20,
          iw, ih, "iarTrade", 64, 64,
-         tgoods, goods, ngoods, commodity_update, commodity_update );
+         cgoods, ngoods, commodity_update, commodity_update );
 
    /* Set default keyboard focuse to the list */
    window_setFocus( wid , "iarTrade" );
@@ -144,13 +141,13 @@ void commodity_update( unsigned int wid, char* str )
    if ((comname==NULL) || (strcmp( comname, _("None") )==0)) {
       credits2str( buf3, player.p->credits, 2 );
       nsnprintf( buf, PATH_MAX,
-         _("NA tonnes\n"
+         _("N/A tonnes\n"
            "\n"
-           "NA credits\n"
+           "N/A credits\n"
            "%d tonnes\n"
            "%s credits\n"
-           "NA credits\n"
-           "NA credits"),
+           "N/A credits\n"
+           "N/A credits"),
          pilot_cargoFree(player.p),
          buf3 );
       window_modifyText( wid, "txtDInfo", buf );

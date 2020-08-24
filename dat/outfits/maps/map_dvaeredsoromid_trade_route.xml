@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Map: Dvaered-Soromid trade route">
  <general>
   <mass>0</mass>
   <price>30000</price>
   <description>This map contains the main route between Dvaered and Soromid controlled space.</description>
   <gfx_store>map</gfx_store>
- </general>
+ <rarity>1</rarity></general>
  <specific type="map">
   <sys name="Draygar">
    <jump>Tau Prime</jump>

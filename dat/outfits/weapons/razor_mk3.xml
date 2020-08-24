@@ -1,14 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Razor MK3">
  <general>
   <slot>weapon</slot>
   <size>small</size>
+  <license>Medium Weapon License</license>
   <mass>6.5</mass>
   <price>23000</price>
   <description>The heaviest version of the Razor is excellent at stripping the shields from those who would stand against House Sirius. In large engagements, Razor MK3s are often employed by support ships, whose task is to weaken a target before the heavy enforcer ships move in.</description>
   <gfx_store>ioncannon</gfx_store>
   <cpu>-8</cpu>
- </general>
+ <rarity>3</rarity></general>
  <specific type="bolt">
   <gfx>razorS</gfx>
   <sound>ion</sound>

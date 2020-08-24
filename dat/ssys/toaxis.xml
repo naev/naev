@@ -12,6 +12,7 @@
  </pos>
  <assets>
   <asset>Virtual Trader Area</asset>
+  <asset>Virtual Independent Trader Area</asset>
  </assets>
  <jumps>
   <jump target="Ingot">

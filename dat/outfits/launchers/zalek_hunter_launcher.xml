@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Za'lek Hunter Launcher">
  <general>
   <slot>weapon</slot>
@@ -11,7 +11,7 @@
 The Za'lek do not share the secrets of their 'missile' drones lightly. Only trusted allies of the Za'lek are trusted with these weapons.</description>
   <gfx_store>empgrenadelauncher</gfx_store>
   <cpu>-19</cpu>
- </general>
+ <rarity>5</rarity></general>
  <specific type="turret launcher" secondary="1">
   <ammo>Za'lek Hunter-Killer</ammo>
   <delay>1.5</delay>

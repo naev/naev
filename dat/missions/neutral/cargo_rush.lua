@@ -3,8 +3,8 @@
    -- These missions require fast ships, but higher tiers may also require increased cargo space.
 --]]
 
-require "dat/scripts/cargo_common.lua"
-require "dat/scripts/numstring.lua"
+require "cargo_common.lua"
+require "numstring.lua"
 
 
 misn_title = {}
@@ -30,14 +30,6 @@ Travel distance: %d
 %s
 Time limit: %s
 ]])
-   
-full = {}
-full[1] = _("No room in ship")
-full[2] = _("You don't have enough cargo space to accept this mission. It requires %s of free space (%s more than you have).")
-
-slow = {}
-slow[1] = _("Too slow")
-slow[2] = _([[This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline. Accept the mission anyway?]])
 
 piracyrisk = {}
 piracyrisk[1] = _("Piracy Risk: None")
@@ -47,7 +39,7 @@ piracyrisk[4] = _("Piracy Risk: High")
 
 --=Landing=--
 
-cargo_land_title = _("Delivery success!")
+cargo_land_title = _("Successful Delivery")
 
 cargo_land = {}
 cargo_land[1] = _("The containers of %s are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you without speaking a word.")
@@ -127,14 +119,20 @@ end
 -- Mission is accepted
 function accept()
    if player.pilot():cargoFree() < amount then
-      tk.msg(full[1], full[2]:format(amount, amount - player.pilot():cargoFree()))
+      tk.msg( _("No room in ship"), string.format(
+         _("You don't have enough cargo space to accept this mission. It requires %s of free space (%s more than you have)."),
+         tonnestring(amount),
+         tonnestring( amount - player.pilot():cargoFree() ) ) )
       misn.finish()
    end
    player.pilot():cargoAdd( cargo, amount ) 
    local playerbest = cargoGetTransit( timelimit, numjumps, traveldist )
    player.pilot():cargoRm( cargo, amount ) 
    if timelimit < playerbest then
-      if not tk.yesno( slow[1], slow[2]:format( (timelimit - time.get()):str(), (playerbest - time.get()):str(), destplanet:name()) ) then
+      if not tk.yesno( _("Too slow"), string.format(
+            _("This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline. Accept the mission anyway?"),
+            (timelimit - time.get()):str(), (playerbest - time.get()):str(),
+            destplanet:name() ) ) then
          misn.finish()
       end
    end

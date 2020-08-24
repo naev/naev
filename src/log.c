@@ -128,10 +128,14 @@ void log_redirect (void)
    errfiledouble = malloc(PATH_MAX);
 
    nsnprintf( outfile, PATH_MAX, "%slogs/stdout.txt", nfile_dataPath() );
-   freopen( outfile, "w", stdout );
+   if (freopen( outfile, "w", stdout )==NULL) {
+      WARN(_("Unable to redirect stdout to file"));
+   }
 
    nsnprintf( errfile, PATH_MAX, "%slogs/stderr.txt", nfile_dataPath() );
-   freopen( errfile, "w", stderr );
+   if (freopen( errfile, "w", stderr )==NULL) {
+      WARN(_("Unable to redirect stderr to file"));
+   }
 
    nsnprintf( outfiledouble, PATH_MAX, "%slogs/%s_stdout.txt", nfile_dataPath(), timestr );
    nsnprintf( errfiledouble, PATH_MAX, "%slogs/%s_stderr.txt", nfile_dataPath(), timestr );

@@ -22,10 +22,11 @@ require "numstring.lua"
 
 misn_title = _("Fake ID")
 misn_desc = _([[This fake ID will allow you to conduct business with all major locations where you are currently wanted. It will be as if you were a new person. However, committing any crime will risk discovery of your identity by authorities, no gains in reputation under your fake ID will ever improve your real name's reputation under any circumstance, and gaining too much reputation with factions where you are wanted can lead to the discovery of your true identity as well. Note that fake ID does not work on pirates, for whom your reputation will be affected as normal (whether good or bad).
-Cost: %s credits]])
+
+Cost: %s]])
 misn_reward = _("None")
 
-lowmoney = _("You don't have enough money to buy a fake ID. The price is %s credits.")
+lowmoney = _("You don't have enough money to buy a fake ID. The price is %s.")
 
 noticed_onplanet = _([[During a routine check, you hand over your fake ID as usual, but the person checking your ID eyes it strangely for a time that seems to be periods long. Eventually you are handed your ID back, but this is not a good sign.
     When you check, you see that the secrecy of your identity is in jeopardy. You're safe for now, but you make a mental note to prepare for the worst when you take off, because your fake ID probably won't be of any further use by then.]])
@@ -65,14 +66,14 @@ function create ()
    credits = 50000 * nhated
 
    misn.setTitle( misn_title )
-   misn.setDesc( misn_desc:format( numstring( credits ) ) )
+   misn.setDesc( misn_desc:format( creditstring( credits ) ) )
    misn.setReward( misn_reward )
 end
 
 
 function accept ()
    if player.credits() < credits then
-      tk.msg( "", lowmoney:format( numstring( credits ) ) )
+      tk.msg( "", lowmoney:format( creditstring( credits ) ) )
       misn.finish()
    end
 

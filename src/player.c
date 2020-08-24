@@ -253,7 +253,7 @@ void player_new (void)
    player_newSetup();
 
    /* Get the name. */
-   player.name = dialogue_input( _("Player Name"), 2, 20,
+   player.name = dialogue_input( _("Player Name"), 1, 60,
          _("Please write your name:") );
 
    /* Player cancelled dialogue. */
@@ -398,7 +398,7 @@ Pilot* player_newShip( Ship* ship, const char *def_name,
    player_creds = (player.p != NULL) ? player.p->credits : 0;
    player_ship    = ship;
    if (!noname)
-      ship_name      = dialogue_input( _("Ship Name"), 3, 20,
+      ship_name      = dialogue_input( _("Ship Name"), 1, 60,
             _("Please name your new ship:") );
    else
       ship_name      = NULL;
@@ -2387,6 +2387,19 @@ static int player_shipsCompare( const void *arg1, const void *arg2 )
 
 
 /**
+ * @brief Sorts the players ships.
+ */
+void player_shipsSort (void)
+{
+   if (player_nstack == 0)
+      return;
+
+   /* Sort. */
+   qsort( player_stack, player_nstack, sizeof(PlayerShip_t), player_shipsCompare );
+}
+
+
+/**
  * @brief Returns a buffer with all the player's ships names.
  *
  *    @param sships Fills sships with player_nships ship names.
@@ -2402,7 +2415,7 @@ int player_ships( char** sships, glTexture** tships )
       return 0;
 
    /* Sort. */
-   qsort( player_stack, player_nstack, sizeof(PlayerShip_t), player_shipsCompare );
+   player_shipsSort();
 
    /* Create the struct. */
    for (i=0; i < player_nstack; i++) {
@@ -2549,12 +2562,11 @@ const PlayerOutfit_t* player_getOutfits( int *n )
  * @brief Prepares two arrays for displaying in an image array.
  *
  *    @param[out] outfits Outfits the player owns.
- *    @param[out] toutfits Optional store textures for the image array.
  *    @param[in] filter Function to filter which outfits to get.
  *    @param[in] name Name fragment that each outfit must contain.
  *    @return Number of outfits.
  */
-int player_getOutfitsFiltered( Outfit **outfits, glTexture** toutfits,
+int player_getOutfitsFiltered( Outfit **outfits,
       int(*filter)( const Outfit *o ), char *name )
 {
    int i;
@@ -2569,7 +2581,7 @@ int player_getOutfitsFiltered( Outfit **outfits, glTexture** toutfits,
    for (i=0; i<player_noutfits; i++)
       outfits[i] = (Outfit*)player_outfits[i].o;
 
-   return outfits_filter( outfits, toutfits, player_noutfits, filter, name );
+   return outfits_filter( outfits, player_noutfits, filter, name );
 }
 
 

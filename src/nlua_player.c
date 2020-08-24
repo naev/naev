@@ -188,12 +188,12 @@ static int playerL_shipname( lua_State *L )
  */
 static int playerL_pay( lua_State *L )
 {
-   double money;
+   credits_t money;
 
    NLUA_CHECKRW(L);
 
-   money = luaL_checknumber(L,1);
-   player_modCredits( (credits_t)round(money) );
+   money = CLAMP( CREDITS_MIN, CREDITS_MAX, (credits_t)round(luaL_checknumber(L,1)) );
+   player_modCredits( money );
 
    return 0;
 }

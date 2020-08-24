@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Heavy Ion Cannon">
  <general>
   <slot>weapon</slot>
@@ -9,7 +9,7 @@
   <description>The Heavy Ion Cannon does a far better job at disabling ships than the standard model, but it requires a medium mount. Most militaries employ these weapons on specialized capture teams, but the design is licensed for public use as well.</description>
   <gfx_store>ioncannon</gfx_store>
   <cpu>-12</cpu>
- </general>
+ <rarity>2</rarity></general>
  <specific type="bolt" secondary="1">
   <gfx>ionL</gfx>
   <sound>ion</sound>

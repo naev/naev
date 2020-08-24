@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Jump Scanner">
  <general>
   <slot>utility</slot>
@@ -8,7 +8,7 @@
   <description>This device installs a secondary scanning array on the ship. The array is programmed with the known characteristics of the spatial anomalies associated with hyperspace jumps. Because the scanner detects a very specific kind of signature, its range can be easily boosted without sacrificing accuracy. In effect, this means that a ship with one or more of these scanners installed can detect jump points at a greater range. The scanner will not detect jump points whose signature differs from the standard type.</description>
   <gfx_store>jammer0</gfx_store>
   <cpu>-1</cpu>
- </general>
+ <rarity>1</rarity></general>
  <specific type="modification">
   <energy_usage>10</energy_usage>
   <ew_jump_detect>60</ew_jump_detect>

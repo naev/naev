@@ -4,52 +4,30 @@
 
 ]]--
 
-require "dat/scripts/cargo_common.lua"
-require "dat/scripts/numstring.lua"
+require "cargo_common.lua"
+require "numstring.lua"
 
-misn_title = _("ES: Cargo transport (%d tonnes of %s)")
-misn_desc = _("The Empire needs to ship %d tonnes of %s to %s in the %s system by %s (%s left).")
-misn_reward = _("%s credits")
 
-title = _([[ES: Cargo transport to %s in the %s system
-Cargo: %s (%d tonnes)
+misn_desc  = _("Official Empire cargo transport to %s in the %s system.")
+
+misn_details = _([[
+Cargo: %s (%s)
 Jumps: %d
 Travel distance: %d
-Piracy risk: %s
-Time limit: %s]])
-
-
-full = {}
-full[1] = _("Ship is full")
-full[2] = _("Your ship is too full. You need to make room for %d more tonnes if you want to be able to accept the mission.")
-
-slow = {}
-slow[1] = _("Too slow")
-slow[2] = _([[This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, and the Empire is not fond of delays. Accept the mission anyway?]])
+%s
+Time limit: %s
+]])
 
 piracyrisk = {}
-piracyrisk[1] = _("None")
-piracyrisk[2] = _("Low")
-piracyrisk[3] = _("Medium")
-piracyrisk[4] = _("High")
-
-msg_title = {}
-msg_title[1] = _("Mission Accepted")
-msg_title[2] = _("Too many missions")
-msg_title[3] = _("Successful Delivery")
-msg_msg = {}
-msg_msg[1] = _("The Empire workers load the %d tonnes of %s onto your ship.")
-msg_msg[2] = _("You have too many active missions.")
-msg_msg[3] = _("The Empire workers unload the %s at the docks.")
+piracyrisk[1] = _("Piracy Risk: None")
+piracyrisk[2] = _("Piracy Risk: Low")
+piracyrisk[3] = _("Piracy Risk: Medium")
+piracyrisk[4] = _("Piracy Risk: High")
 
 msg_timeup = _("MISSION FAILED: You have failed to deliver the goods to the Empire on time!")
 
 osd_title = _("Empire Shipping")
-osd_msg = {}
-osd_msg[1] = _("Fly to %s in the %s system before %s")
-osd_msg[2] = _("You have %s remaining")
-osd_msg1 = _("Fly to %s in the %s system before %s")
-osd_msg2 = _("You have %s remaining") -- Need to reuse.
+osd_msg1 = _("Fly to %s in the %s system before %s\n(%s remaining)")
 
 --[[
 --    Empire shipping missions are always timed, but quite lax on the schedules
@@ -107,10 +85,15 @@ function create()
    distreward = math.log(300*commodity.price(cargo))/100
    reward     = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
    
-   misn.setTitle( string.format( misn_title, amount, cargo ) )
+   misn.setTitle( string.format(
+      _("ES: Cargo transport to %s in %s (%s)"), destplanet:name(), destsys:name(), tonnestring(amount) ) )
    misn.markerAdd(destsys, "computer")
-   misn.setDesc(title:format(destplanet:name(), destsys:name(), cargo, amount, numjumps, traveldist, piracyrisk, (timelimit - time.get()):str()))
-   misn.setReward(misn_reward:format(numstring(reward)))
+   misn.setDesc(
+      misn_desc:format( destplanet:name(), destsys:name() ) .. "\n\n"
+      .. misn_details:format(
+         cargo, tonnestring(amount), numjumps, traveldist, piracyrisk,
+         (timelimit - time.get()):str() ) )
+   misn.setReward( creditstring(reward) )
 
 end
 
@@ -118,33 +101,41 @@ end
 function accept()
    local playerbest = cargoGetTransit( timelimit, numjumps, traveldist )
    if timelimit < playerbest then
-      if not tk.yesno( slow[1], slow[2]:format( (timelimit - time.get()):str(), (playerbest - time.get()):str(), destplanet:name()) ) then
+      if not tk.yesno( _("Too slow"), string.format(
+            _("This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline. Accept the mission anyway?"),
+            (timelimit - time.get()):str(), (playerbest - time.get()):str(),
+            destplanet:name() ) ) then
          misn.finish()
       end
    end
    if player.pilot():cargoFree() < amount then
-      tk.msg( full[1], string.format( full[2], amount-player.pilot():cargoFree() ))
+      tk.msg( _("No room in ship"), string.format(
+         _("You don't have enough cargo space to accept this mission. It requires %s of free space (%s more than you have)."),
+         tonnestring(amount),
+         tonnestring( amount - player.pilot():cargoFree() ) ) )
       misn.finish()
    end
 
-   if misn.accept() then -- able to accept the mission, hooks BREAK after accepting
-      carg_id = misn.cargoAdd( cargo, amount )
-      tk.msg( msg_title[1], string.format( msg_msg[1], amount, cargo ))
-      osd_msg[1] = osd_msg1:format(destplanet:name(), destsys:name(), timelimit:str())
-      osd_msg[2] = osd_msg2:format((timelimit - time.get()):str())
-      misn.osdCreate(osd_title, osd_msg)
-      hook.land( "land" ) -- only hook after accepting
-      hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
-   else
-      tk.msg( msg_title[2], msg_msg [2] )
-      misn.finish()
-   end
+   misn.accept()
+
+   carg_id = misn.cargoAdd( cargo, amount )
+   tk.msg( _("Mission Accepted"), string.format(
+      _("The Empire workers load the %s of %s onto your ship."),
+      tonnestring(amount), cargo ) )
+   local osd_msg = {}
+   osd_msg[1] = osd_msg1:format(
+      destplanet:name(), destsys:name(), timelimit:str(),
+      ( timelimit - time.get() ):str() )
+   misn.osdCreate(osd_title, osd_msg)
+   hook.land( "land" ) -- only hook after accepting
+   hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
 end
 
 -- Land hook
 function land()
    if planet.cur() == destplanet then
-      tk.msg( msg_title[3], string.format( msg_msg[3], cargo ))
+      tk.msg( _("Successful Delivery"), string.format(
+         _("The Empire workers unload the %s at the docks."), cargo ) )
       player.pay(reward)
       n = var.peek("es_misn")
       if n ~= nil then
@@ -163,16 +154,14 @@ end
 function tick()
    if timelimit >= time.get() then
       -- Case still in time
-      osd_msg[1] = osd_msg1:format(destplanet:name(), destsys:name(), timelimit:str())
-      osd_msg[2] = osd_msg2:format((timelimit - time.get()):str())
+      local osd_msg = {}
+      osd_msg[1] = osd_msg1:format(
+         destplanet:name(), destsys:name(), timelimit:str(),
+         ( timelimit - time.get() ):str() )
       misn.osdCreate(osd_title, osd_msg)
    elseif timelimit <= time.get() then
       -- Case missed deadline
       player.msg(msg_timeup)
-      abort()
+      misn.finish(false)
    end
-end
-
-function abort ()
-   misn.finish(false)
 end

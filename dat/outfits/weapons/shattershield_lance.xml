@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Shattershield Lance">
  <general>
   <slot>weapon</slot>
@@ -9,7 +9,7 @@
   <description>This ion-based beam weapon is designed to deliver a powerful stream of charged ions along with an electromagnetic pulse to a ship, short-circuiting its shields with ruthless efficiency. Fighters and ships that rely on shields for protection find this weapon to be devastating, but its weakness versus armor relegates to a secondary weapon.</description>
   <gfx_store>orion</gfx_store>
   <cpu>-12</cpu>
- </general>
+ <rarity>3</rarity></general>
  <specific type="beam" secondary="1">
   <delay>4</delay>
   <duration min="1">4</duration>

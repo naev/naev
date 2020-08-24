@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="BioPlasma Organ Stage 3">
  <general>
+  <rarity>4</rarity>
   <slot prop="bio_weapon">weapon</slot>
   <size>small</size>
   <license>Medium Weapon License</license>
@@ -23,7 +24,7 @@
   <energy>15</energy>
   <heatup>35</heatup>
   <track>2</track>
-  <swivel>7</swivel>
+  <swivel>22</swivel>
   <damage>
    <type>normal</type>
    <penetrate>7</penetrate>

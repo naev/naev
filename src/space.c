@@ -1472,6 +1472,9 @@ void space_init( const char* sysname )
 
       nt = ntime_pretty(0, 2);
       player_message(_("\apEntering System %s on %s."), sysname, nt);
+      if (cur_system->nebu_volatility > 0.) {
+         player_message(_("\arWARNING - Volatile nebula detected in %s! Taking damage!"), sysname);
+      }
       free(nt);
 
       /* Handle background */
@@ -1798,8 +1801,11 @@ char planet_getColourChar( Planet *p )
  */
 const char *planet_getSymbol( Planet *p )
 {
-   if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
+   if (!planet_hasService( p, PLANET_SERVICE_INHABITED )) {
+      if (planet_hasService( p, PLANET_SERVICE_LAND ))
+         return "= ";
       return "";
+   }
 
    if (p->can_land || p->bribed) {
       if (areAllies(FACTION_PLAYER,p->faction))
@@ -4466,7 +4472,7 @@ static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_rewa
             pos.y += (RNGF()*30.-15.);
             vel.x += (RNGF()*20.-10.);
             vel.y += (RNGF()*20.-10.);
-            gatherable_init( com, pos, vel );
+            gatherable_init( com, pos, vel, -1., RNG(1,5) );
          }
       }
    }

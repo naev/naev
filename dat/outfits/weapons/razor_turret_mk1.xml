@@ -1,14 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Razor Turret MK1">
  <general>
   <slot>weapon</slot>
   <size>small</size>
+  <license>Medium Weapon License</license>
   <mass>16</mass>
   <price>14000</price>
   <description>Razor Turrets are popular among traders. Their high damage against shields is a great deterrent against attackers, because nothing puts a space pilot on edge like his shields rapidly coming down.</description>
   <gfx_store>ionturret</gfx_store>
   <cpu>-9</cpu>
- </general>
+ <rarity>2</rarity></general>
  <specific type="turret bolt">
   <gfx>razorS</gfx>
   <sound>ion</sound>

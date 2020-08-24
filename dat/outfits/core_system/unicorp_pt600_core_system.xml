@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Unicorp PT-600 Core System">
  <general>
   <typename>Core Systems (System)</typename>
@@ -9,7 +9,7 @@
   <price>100000</price>
   <description>A heavy-duty variant of the PT-500, the PT-600 exceeds its predecessor in all respects. Its considerably higher mass restricts its use to larger medium vessels such as destroyers.</description>
   <gfx_store>core_system_basic_m2</gfx_store>
- </general>
+ <rarity>4</rarity></general>
  <specific type="modification">
   <cpu_max>77</cpu_max>
   <shield>400</shield>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Milspec Aegis 3601 Core System">
  <general>
   <typename>Core Systems (System)</typename>
@@ -9,7 +9,7 @@
   <price>140000</price>
   <description>Milspec cares about your personal safety. Your protection is our concern. The Aegis 3601 grants your ship excellent shield strength while preserving a high level of subsystem control and energy capacity. Fly safe, fly Milspec.</description>
   <gfx_store>core_system_shield_s2</gfx_store>
- </general>
+ <rarity>4</rarity></general>
  <specific type="modification">
   <cpu_max>50</cpu_max>
   <shield>310</shield>

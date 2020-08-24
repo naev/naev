@@ -378,8 +378,8 @@ static void opt_gameplay( unsigned int wid )
    window_addInput( wid, -50, y, 40, 20, "inpTMax", 4, 1, NULL );
 
    /* Restart text. */
-   window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
-         30, 0, "txtRestart", &gl_smallFont, NULL, NULL );
+   window_addText( wid, 20, 20 + BUTTON_HEIGHT,
+         w - 40, 30, 0, "txtRestart", &gl_smallFont, NULL, NULL );
 
    /* Update. */
    opt_gameplayUpdate( wid, NULL );
@@ -939,8 +939,8 @@ static void opt_audio( unsigned int wid )
          music_getVolume(), opt_setAudioLevel );
 
    /* Restart text. */
-   window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
-         30, 0, "txtRestart", &gl_smallFont, NULL, NULL );
+   window_addText( wid, 20, 20 + BUTTON_HEIGHT,
+         w - 40, 30, 0, "txtRestart", &gl_smallFont, NULL, NULL );
 
    opt_audioUpdate(wid);
 }
@@ -1351,8 +1351,8 @@ static void opt_video( unsigned int wid )
          "chkMinimize", _("Minimize on focus loss"), NULL, conf.minimize );
 
    /* Restart text. */
-   window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
-         30, 0, "txtRestart", &gl_smallFont, NULL, NULL );
+   window_addText( wid, 20, 20 + BUTTON_HEIGHT,
+         w - 40, 30, 0, "txtRestart", &gl_smallFont, NULL, NULL );
 }
 
 /**

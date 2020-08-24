@@ -24,6 +24,7 @@
 #include "opengl.h"
 #include "ai.h"
 #include "hook.h"
+#include "escort.h"
 
 #define COMM_WDWNAME    "Communication Channel" /**< Map window name. */
 
@@ -129,6 +130,12 @@ int comm_openPilot( unsigned int pilot )
    /* Must not be disabled. */
    if (pilot_isFlag(comm_pilot, PILOT_DISABLED)) {
       player_message(_("\a%c%s\ar does not respond"), c, comm_pilot->name);
+      return 0;
+   }
+
+   /* Check for player faction (escorts). */
+   if (comm_pilot->faction == FACTION_PLAYER) {
+      escort_playerCommand( comm_pilot );
       return 0;
    }
 
@@ -570,6 +577,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    }
 
    /* See if player can get refueled. */
+   val = 0.;
    ret = comm_getNumber( &val, "refuel" );
    msg = comm_getString( "refuel_msg" );
    if ((ret != 0) || (msg == NULL) || pilot_isFlag(comm_pilot, PILOT_MANUAL_CONTROL)) {

@@ -42,7 +42,7 @@ misn_title[5] = _("PIRACY: Dangerous Assassination Job in %s")
 misn_title[6] = _("PIRACY: Highly Dangerous Assassination Job in %s")
 misn_reward = _("%s credits")
 misn_desc   = _("A meddlesome %s pilot was recently seen in the %s system. Local crime lords want this pilot dead.")
-desc_illegal_warning = "\ar" .. _("WARNING: This mission is illegal and will get you in trouble with the authorities!") .. "\a0"
+desc_illegal_warning = _("WARNING: This mission is illegal and will get you in trouble with the authorities!")
 
 -- Messages
 msg    = {}
@@ -65,16 +65,18 @@ hunter_hits = {}
 function create ()
    paying_faction = faction.get("Pirate")
 
-   target_factions = {}
-   target_factions[1] = "Empire"
-   target_factions[2] = "Dvaered"
-   target_factions[3] = "Soromid"
-   target_factions[4] = "Civilian"
-   target_factions[5] = "Independent"
-   target_factions[6] = "Trader"
-   target_factions[7] = "Frontier"
-   target_factions[8] = "Sirius"
-   target_factions[9] = "Za'lek"
+   target_factions = {
+      "Civilian",
+      "Dvaered",
+      "Empire",
+      "Frontier",
+      "Independent",
+      "Sirius",
+      "Soromid",
+      "Trader",
+      "Traders Guild",
+      "Za'lek",
+   }
 
    local systems = getsysatdistance( system.cur(), 1, 6,
       function(s)
@@ -243,7 +245,7 @@ function level_setup ()
 
    if target_faction == "Civilian" or target_faction == "Independent" then
       level = 1
-   elseif target_faction == "Trader" then
+   elseif target_faction == "Trader" or target_faction == "Traders Guild" then
       if num_pirates <= 100 then
          level = rnd.rnd( 1, 2 )
       else
@@ -485,6 +487,32 @@ function bounty_setup ()
          credits = 700000 + rnd.sigma() * 80000
          reputation = 3
       end
+   elseif target_faction == "Traders Guild" then
+      if level == 1 then
+         if rnd.rnd() < 0.5 then
+            ship = "Traders Guild Gawain"
+         else
+            ship = "Traders Guild Koala"
+         end
+         credits = 100000 + rnd.sigma() * 5000
+         reputation = 0
+      elseif level == 2 then
+         if rnd.rnd() < 0.5 then
+            ship = "Traders Guild Llama"
+         else
+            ship = "Traders Guild Quicksilver"
+         end
+         credits = 400000 + rnd.sigma() * 50000
+         reputation = 2
+      elseif level >= 3 then
+         if rnd.rnd() < 0.5 then
+            ship = "Traders Guild Rhino"
+         else
+            ship = "Traders Guild Mule"
+         end
+         credits = 800000 + rnd.sigma() * 80000
+         reputation = 3
+      end
    elseif target_faction == "Civilian" then
       local choices = {}
       choices[1] = "Civilian Schroedinger"
@@ -542,16 +570,16 @@ function succeed ()
       local bounty_dangerous_done = var.peek( "pir_bounty_dangerous_done" )
       var.push( "pir_bounty_dangerous_done", true )
       if bounty_dangerous_done ~= true then
-         var.push( "_fcap_pirate", var.peek( "_fcap_pirate" ) + 5 )
-         pir_modDecayFloor( 5 )
+         pir_modReputation( 2 )
+         pir_modDecayFloor( 2 )
       end
 
       if level >= 6 then
          local bounty_highly_dangerous_done = var.peek( "pir_bounty_highly_dangerous_done" )
          var.push( "pir_bounty_highly_dangerous_done", true )
          if bounty_highly_dangerous_done ~= true then
-            var.push( "_fcap_pirate", var.peek( "_fcap_pirate" ) + 5 )
-            pir_modDecayFloor( 5 )
+            pir_modReputation( 3 )
+            pir_modDecayFloor( 3 )
          end
       end
    end

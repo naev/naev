@@ -39,22 +39,30 @@ XMLBASE     = $(wildcard dat/*.xml)
 XMLOUTFITS  = $(wildcard dat/outfits/*/*.xml)
 XMLSHIPS    = $(wildcard dat/ships/*.xml)
 XMLFILES    = $(XMLBASE) $(XMLSHIPS) $(XMLOUTFITS)
-TRANSLATIONITS = $(top_srcdir)/po/translation.its 
+TRANSLATIONITS = $(top_srcdir)/po/translation.its
 XMLPOT      = $(top_srcdir)/po/xml.pot
 CLEANFILES += $(XMLPOT)
 endif # HAVE_NLS
 
 .PHONY: pot docs utils help install-ndata
 
-all-local: $(NAEV) pot $(VERSIONFILE) $(LANGUAGEFILE)
+all-local: $(NAEV) pot $(VERSIONFILE)
 
 if HAVE_NLS
 $(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
 	$(ITSTOOL) -i $(TRANSLATIONITS) $(XMLFILES) > $@
 	@echo "ITSTOOL $@"
 
-pot: $(XMLPOT) $(NAEV)
+if HAVE_DATA
+pot: $(LANGUAGEFILE) $(XMLPOT) $(NAEV)
 	$(MAKE) -C po $(PACKAGE).pot
+
+$(LANGUAGEFILE): po/LINGUAS
+	tail -n +2 $< > $@
+else # HAVE_DATA
+pot:
+endif # HAVE_DATA
+
 else # HAVE_NLS
 pot: $(XMLPOT) $(NAEV)
 	@echo "***"
@@ -69,28 +77,27 @@ $(NAEV):
 $(VERSIONFILE): src/config.h
 	echo $(VERSION) > $@
 
-$(LANGUAGEFILE): po/LINGUAS
-	tail -n +2 $< > $@
-
 if HAVE_UTILS
 utils: $(MKSPR)
 
 $(MKSPR):
 	$(MAKE) -C utils/mkspr
+else # HAVE_UTILS
+utils:
+endif # HAVE_UTILS
 
-$(DATA_ARCHIVE): $(VERSIONFILE) $(LANGUAGEFILE)
+if HAVE_DATA
+$(DATA_ARCHIVE): $(VERSIONFILE)
 	@echo " ZIP   $(DATA_ARCHIVE)"
 	cd "$(top_srcdir)" && \
     zip -0r "$(abs_top_builddir)/$(DATA_ARCHIVE)" AUTHORS $(VERSIONFILE) naev-confupdate.sh dat/
-else # HAVE_UTILS
-utils:
-
+else # HAVE_DATA
 $(DATA_ARCHIVE):
 	@echo "***"
 	@echo "*** You must clone the full git repo to create $(DATA_ARCHIVE)"
 	@echo "***"
 	@false
-endif # HAVE_UTILS
+endif # HAVE_DATA
 
 install-ndata: $(DATA_ARCHIVE)
 	ndata="$(DESTDIR)$(ndata_path)"; \

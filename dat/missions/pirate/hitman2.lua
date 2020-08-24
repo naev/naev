@@ -15,11 +15,11 @@ require "dat/missions/pirate/common.lua"
 bar_desc = _("You see the shifty merchant who hired you previously. He looks somewhat anxious, perhaps he has more business to discuss.")
 
 -- Mission details
-misn_title  = _("Pirate Hitman 2")
-misn_reward = _("Some easy money.") -- Possibly some hard to get contraband once it is introduced
-misn_desc   = {}
-misn_desc[1] = _("Take out some merchant competition in the %s system.")
-misn_desc[2] = _("Return to %s in the %s system for payment.")
+misn_title  = _("Assassin")
+misn_reward = _("Some easy money")
+misn_desc = _("A shifty businessman has tasked you with killing merchant competition in the %s systemm.")
+osd_desc_1 = _("Kill Trader pilots in the %s system")
+osd_desc_2 = _("Return to %s in the %s system for payment")
 
 -- Text
 title    = {}
@@ -68,9 +68,12 @@ function accept ()
    -- Set mission details
    misn.setTitle( string.format( misn_title, targetsystem:name()) )
    misn.setReward( string.format( misn_reward, credits) )
-   misn.setDesc( string.format( misn_desc[1], targetsystem:name() ) )
+   misn.setDesc( string.format( misn_desc, targetsystem:name() ) )
    misn_marker = misn.markerAdd( targetsystem, "low" )
-   misn.osdCreate(misn_title, {misn_desc[1]:format(targetsystem:name())})
+   local osd_desc = {}
+   osd_desc[1] = osd_desc_1:format( targetsystem:name() )
+   osd_desc[2] = osd_desc_2:format( misn_base:name(), misn_base_sys:name() )
+   misn.osdCreate( misn_title, osd_desc )
    -- Some flavour text
    tk.msg( title[1], string.format( text[2], targetsystem:name()) )
 
@@ -93,7 +96,9 @@ function trader_death (hook_pilot, hook_attacker, hook_arg)
       return
    end
 
-   if hook_pilot:faction() == faction.get("Trader") and hook_attacker == player.pilot() then
+   if ( hook_pilot:faction() == faction.get("Trader")
+            or hook_pilot:faction() == faction.get("Traders Guild") )
+         and hook_attacker == player.pilot() then
       attack_finished()
    end
 end
@@ -105,10 +110,9 @@ function attack_finished()
    end
    misn_done = true
    player.msg( msg[1] )
-   misn.setDesc( string.format( misn_desc[2], misn_base:name(), misn_base_sys:name() ) )
    misn.markerRm( misn_marker )
    misn_marker = misn.markerAdd( misn_base_sys, "low" )
-   misn.osdCreate(misn_title, {misn_desc[2]:format(misn_base:name(), misn_base_sys:name())})
+   misn.osdActive(2)
    hook.land("landed")
 end
 
@@ -117,9 +121,10 @@ function landed()
    if planet.cur() == misn_base then
       tk.msg(title[3], text[3])
       player.pay(500000) -- 500k
-      faction.modPlayerSingle("Pirate",5)
-      pir_modDecayFloor( 3 )
-      pir_addMiscLog( log_text )
+      pir_modDecayFloor(3)
+      pir_modReputation(3)
+      faction.modPlayerSingle("Pirate", 5)
+      pir_addMiscLog(log_text)
       misn.finish(true)
    end
 end

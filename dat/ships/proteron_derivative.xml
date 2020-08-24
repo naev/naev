@@ -2,6 +2,7 @@
 <ship name="Proteron Derivative">
  <base_type>Derivative</base_type>
  <GFX>derivative</GFX>
+ <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
@@ -9,7 +10,7 @@
  <time_mod>0.75</time_mod>
  <fabricator>Proteron</fabricator>
  <license>Light Combat Vessel License</license>
- <description>While smaller and less intimidating than it's bigger brothers in the Proteron arsenal, a pack of Derivatives is still a foe to be reckoned with. True to its name, it's the latest in a long line of largely carrier-based fighters. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
+ <description>While smaller and less intimidating than its bigger siblings in the Proteron arsenal, a pack of Derivatives is still a foe to be reckoned with. True to its name, it's the latest in a long line of largely carrier-based fighters. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
  <health>
   <absorb>5</absorb>
   <armour>35</armour>

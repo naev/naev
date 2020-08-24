@@ -18,6 +18,7 @@
 #include "nluadef.h"
 #include "hook.h"
 #include "nstring.h"
+#include "dialogue.h"
 
 
 #define ESCORT_PREALLOC    8 /**< Number of escorts to automatically allocate first. */
@@ -220,6 +221,58 @@ int escorts_clear( Pilot *parent )
    if ((ret == 0) && (parent == player.p))
       player_message(_("\agEscorts: \a0Clearing orders."));
    return ret;
+}
+
+
+/**
+ * @brief Open a dialog for the player to issue a command to an escort.
+ *
+ *    @param e The pilot for the player to issue an order to.
+ *    @return 0 on success, 1 if no orders given.
+ */
+int escort_playerCommand( Pilot *e )
+{
+   int i;
+   char *title, *caption, *ret;
+
+   /* "Attack My Target" order is omitted deliberately since e is your
+    * target, making "Attack My Target" a useless command. */
+   const char *opts[] = {
+      _("Hold Position"),
+      _("Return To Ship"),
+      _("Clear Orders"),
+      _("Cancel")
+   };
+   int nopts = 4;
+
+   /* Must not be NULL */
+   if (e == NULL)
+      return 1;
+
+   title = _("Game Speed");
+   caption = _("Select the order to give to this escort.");
+
+   dialogue_makeChoice( title, caption, nopts );
+   for (i=0; i<nopts; i++) {
+      dialogue_addChoice( title, caption, opts[i] );
+   }
+
+   ret = dialogue_runChoice();
+   if (ret != NULL) {
+      if (strcmp(ret, opts[0]) == 0) { /* Hold position */
+         pilot_msg( player.p, e, "e_hold", 0 );
+         return 0;
+      }
+      else if (strcmp(ret, opts[1]) == 0) { /* Return to ship */
+         pilot_msg( player.p, e, "e_return", 0 );
+         return 0;
+      }
+      else if (strcmp(ret, opts[2]) == 0) { /* Clear orders */
+         pilot_msg( player.p, e, "e_clear", 0 );
+         return 0;
+      }
+   }
+   return 1;
 }
 
 

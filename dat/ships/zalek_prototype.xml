@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ship name="Za'lek Prototype Cruiser">
+<ship name="Za'lek Prototype">
  <base_type>Prototype</base_type>
  <GFX sx="12" sy="12">prototype</GFX>
+ <rarity>6</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>

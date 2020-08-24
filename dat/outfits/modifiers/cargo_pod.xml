@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Cargo Pod">
  <general>
   <typename>Cargo Expansion</typename>
@@ -8,7 +8,7 @@
   <price>35000</price>
   <description>Cargo pods are large containers that increase a ship's cargo capacity.</description>
   <gfx_store>cargo_pod</gfx_store>
- </general>
+ <rarity>1</rarity></general>
  <specific type="modification">
   <cargo>15</cargo>
  </specific>

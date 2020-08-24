@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="TeraCom Banshee Launcher">
  <general>
   <slot>weapon</slot>
@@ -9,7 +9,7 @@
   <gfx_store>bansheelauncher</gfx_store>
   <description>TeraCom has equipped its Banshee launcher model with high grade reload and tube cooling systems, giving a significant boost to rate of fire. These dumbfire rockets, while slow, can do quite respectable damage even to capital ships.</description>
   <cpu>-8</cpu>
- </general>
+ <rarity>3</rarity></general>
  <specific type="launcher" secondary="1">
   <ammo>Banshee Rocket</ammo>
   <delay>3</delay>

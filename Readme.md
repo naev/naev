@@ -1,3 +1,4 @@
+![Nightly Release](https://github.com/naev/naev/workflows/Nightly%20Release/badge.svg) ![CI](https://github.com/naev/naev/workflows/CI/badge.svg)
 # NAEV README
 
 Naev is a 2D space trading and combat game, taking inspiration from the Escape
@@ -36,7 +37,7 @@ being disabled.
 Install compile-time dependencies on Ubuntu 16.04 (and hopefully later) with:
 
 ```bash
-apt-get install build-essential automake libsdl2-dev libsdl2-image-dev \
+apt-get install build-essential automake libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev \
 libgl1-mesa-dev libxml2-dev libfreetype6-dev libpng-dev libopenal-dev \
 libvorbis-dev binutils-dev libzip-dev libiberty-dev autopoint intltool libfontconfig-dev itstool autoconf-archive
 ```
@@ -50,7 +51,8 @@ distributions.
 
 Run: 
 
-```bash
+```
+bash
 ./autogen.sh && ./configure
 make
 ```
@@ -69,6 +71,20 @@ from 16x16 to 256x256 can be found in `extras/logos/`.
 ## WINDOWS
 
 See https://github.com/naev/naev/wiki/Compiling-on-Windows for how to compile on windows.
+
+## UPDATING PO FILES
+
+If you are a developer, you may need to update translation files as
+text is modified. You can update all translation files with the
+following commands:
+
+```
+./utils/update-po.sh # only necessary if files have been added or removed
+make
+make -C po update-po
+```
+
+Again, you will only ever need to do this if you are a developer.
 
 ## CRASHES & PROBLEMS
 

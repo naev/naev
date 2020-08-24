@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Dummy Systems">
  <general>
   <typename>Core Systems (System)</typename>
@@ -8,7 +8,7 @@
   <price>0</price>
   <description>This is a dummy core system for use in missions only, which does nothing. DO NOT BUY.</description>
   <gfx_store>core_system_basic_s1</gfx_store>
- </general>
+ <rarity>6</rarity></general>
  <specific type="modification">
   <cpu_max>0</cpu_max>
   <shield>0</shield>

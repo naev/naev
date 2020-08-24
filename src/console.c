@@ -32,6 +32,7 @@
 #include "nlua_bkg.h"
 #include "nlua_camera.h"
 #include "nlua_music.h"
+#include "nlua_spfx.h"
 #include "font.h"
 #include "toolkit.h"
 #include "nfile.h"
@@ -422,6 +423,7 @@ int cli_init (void)
    nlua_loadCLI( cli_env );
    nlua_loadCamera( cli_env );
    nlua_loadMusic( cli_env );
+   nlua_loadSpfx( cli_env );
    nlua_loadTk( cli_env );
 
    /* Mark as console. */
