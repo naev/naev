@@ -489,6 +489,29 @@ int main( int argc, char** argv )
    /* flushes the event loop since I noticed that when the joystick is loaded it
     * creates button events that results in the player starting out acceling */
    while (SDL_PollEvent(&event));
+
+   /* Incomplete game note. */
+   if (!conf.firstran) {
+      dialogue_msg(
+         _("Welcome to Naev"),
+         _("Welcome to Naev, and thank you for playing! We hope you enjoy"
+            " this game and all it has to offer. This is a passion project"
+            " developed exclusively by volunteers and it gives us all great"
+            " joy to know that there are others who love this game as much as"
+            " we do!\n"
+            "    Of course, please note that this is an incomplete game. You"
+            " will encounter dead ends to storylines, missing storylines, and"
+            " possibly even some bugs, although we try to keep those to a"
+            " minimum of course. So be prepared for some rough edges for the"
+            " time being. That said, we are working on this game every day and"
+            " hope to one day finish this massive project on our hands."
+            " Perhaps you could become one of us, who knows?\n"
+            "    For more information about the game and its development"
+            " state, take a look at naev.org; it has all the relevant links."
+            " And again, thank you for playing!") );
+   }
+   conf.firstran = 1;
+
    /* primary loop */
    while (!quit) {
       while (SDL_PollEvent(&event)) { /* event loop */

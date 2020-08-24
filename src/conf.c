@@ -447,6 +447,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool("devmode",conf.devmode);
       conf_loadBool("devautosave",conf.devautosave);
       conf_loadBool("conf_nosave",conf.nosave);
+      conf_loadBool("firstran", conf.firstran);
 
       /* Debugging. */
       conf_loadBool("fpu_except",conf.fpu_except);
@@ -1126,6 +1127,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Save the config everytime game exits (rewriting this bit)"));
    conf_saveInt("conf_nosave",conf.nosave);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Indicates that the game has been run before, so it won't show first-start messages"));
+   conf_saveBool("firstran", conf.firstran);
    conf_saveEmptyLine();
 
    /* Debugging. */
