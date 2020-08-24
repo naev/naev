@@ -4,6 +4,8 @@
       * Improved and simplified the look of the interface
          * Interface is much more slick
          * Font uses outlines to be more readable
+      * Added rarity indicator to ships and outfits.
+      * Indicate non-common NPC with exclamation marks.
       * Simple economy model implemented with map visualizations
       * Made missiles and fighter bays reload while in space
       * Modified the balancing of missiles
