@@ -147,7 +147,7 @@ typedef struct PlayerConf_s {
    int devmode; /**< Developer mode. */
    int devautosave; /**< Developer mode autosave. */
    int devcsv; /**< Output CSV data. */
-   int firstran; /**< Whether or not the game has been run before. */
+   char *lastversion; /**< The last version the game was ran in. */
 
    /* Debugging. */
    int fpu_except; /**< Enable FPU exceptions? */

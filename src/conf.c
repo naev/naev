@@ -166,6 +166,9 @@ void conf_setDefaults (void)
    conf.devmode      = 0;
    conf.devautosave  = 0;
    conf.devcsv       = 0;
+   if (conf.lastversion != NULL)
+      free( conf.lastversion );
+   conf.lastversion = strdup( "" );
 
    /* Gameplay. */
    conf_setGameplayDefaults();
@@ -300,6 +303,9 @@ void conf_cleanup (void)
       free(conf.sound_backend);
    if (conf.joystick_nam != NULL)
       free(conf.joystick_nam);
+
+   if (conf.lastversion != NULL)
+      free(conf.lastversion);
 
    if (conf.dev_save_sys != NULL)
       free(conf.dev_save_sys);
@@ -447,7 +453,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool("devmode",conf.devmode);
       conf_loadBool("devautosave",conf.devautosave);
       conf_loadBool("conf_nosave",conf.nosave);
-      conf_loadBool("firstran", conf.firstran);
+      conf_loadString("lastversion", conf.lastversion);
 
       /* Debugging. */
       conf_loadBool("fpu_except",conf.fpu_except);
@@ -1129,8 +1135,8 @@ int conf_saveConfig ( const char* file )
    conf_saveInt("conf_nosave",conf.nosave);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Indicates that the game has been run before, so it won't show first-start messages"));
-   conf_saveBool("firstran", conf.firstran);
+   conf_saveComment(_("Indicates the last version the game has run in before"));
+   conf_saveString("lastversion", conf.lastversion);
    conf_saveEmptyLine();
 
    /* Debugging. */
