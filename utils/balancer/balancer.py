@@ -6,9 +6,45 @@ import glob
 import xml.etree.ElementTree as ET
 
 
-class OutfitBalancer:
+class Balancer:
+
+    def __xml2dict( self ):
+        return [], {}
+
+    def __dict2xml( self, data ):
+        pass
+
+    def __write_tree( self, tree, ofile ):
+        # save the file
+        tree.write( ofile, encoding="UTF-8", xml_declaration=True )
+        # With python 3.9 the line below should work and make everything pretty ;)
+        #ET.indent(tree).write( ofile, encoding="UTF-8", xml_declaration=True )
+
 
     def xml2csv( self, csvfile ):
+        fields, data = self.__xml2dict()
+
+        # save the outfit data
+        with open(csvfile,'w') as f:
+            w = csv.DictWriter( f, fieldnames=fields, quotechar='"', quoting=csv.QUOTE_ALL )
+            w.writeheader()
+            for n,d in data.items():
+                w.writerow(d)
+
+    def csv2xml( self, csvfile ):
+        # load the outfit data
+        data = {}
+        with open(csvfile,'r') as f:
+            r = csv.DictReader( f, quotechar='"' )
+            for row in r:
+                data[ row['name'] ] = row
+
+        self.__dict2xml( data )
+
+
+class OutfitBalancer(Balancer):
+
+    def __xml2dict(self):
         # parse the xml files
         fields  = set()
         outfits = {}
@@ -29,20 +65,9 @@ class OutfitBalancer:
         fields.sort()
         fields.insert(0,'name')
 
-        # save the outfit data
-        with open(csvfile,'w') as f:
-            w = csv.DictWriter( f, fieldnames=fields, quotechar='"', quoting=csv.QUOTE_ALL )
-            w.writeheader()
-            for n,o in outfits.items():
-                w.writerow(o)
+        return fields, outfits
 
-    def csv2xml( self, csvfile ):
-        # load the outfit data
-        outfits = {}
-        with open(csvfile,'r') as f:
-            r = csv.DictReader( f, quotechar='"' )
-            for row in r:
-                outfits[ row['name'] ] = row
+    def __dict2xml( self, outfits ):
 
         for ofile in glob.glob('dat/outfits/**/*.xml'):
             tree = ET.parse( ofile )
@@ -67,9 +92,7 @@ class OutfitBalancer:
                     # update existing value
                     tag.text = val
             # save the file
-            tree.write( ofile, encoding="UTF-8", xml_declaration=True )
-            # With python 3.9 the line below should work and make everything pretty ;)
-            #ET.indent(tree).write( ofile, encoding="UTF-8", xml_declaration=True )
+            self.__write_tree( tree, ofile )
 
 
 if __name__ == '__main__':
