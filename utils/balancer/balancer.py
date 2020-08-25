@@ -107,67 +107,24 @@ class ShipBalancer(Balancer):
 
 
 class OutfitBalancer(Balancer):
-
-    def __xml2dict(self):
-        # parse the xml files
-        fields  = set()
-        outfits = {}
-        for ofile in glob.glob('dat/outfits/**/*.xml'):
-            print(ofile)
-            root = ET.parse( ofile ).getroot()
-
-            oname = root.get('name')
-            o = {'name':oname}
-
-            # only getting general stuff for now
-            for tag in root.find('general'):
-                o[tag.tag] = tag.text
-                fields.update( [tag.tag] )
-            outfits[oname] = o
-
-        fields = list(fields)
-        fields.sort()
-        fields.insert(0,'name')
-
-        return fields, outfits
-
-    def __dict2xml( self, outfits ):
-
-        for ofile in glob.glob('dat/outfits/**/*.xml'):
-            tree = ET.parse( ofile )
-            root = tree.getroot()
-            oname = root.get('name')
-            general = root.find('general')
-            for key,val in outfits[oname].items():
-                # skip name and empty cells
-                if key=='name' or val=='':
-                    continue
-                tags = general.findall(key)
-                if len(tags) > 1:
-                    print(f"Found duplicate tag '{key}' in '{oname}'. Removing!")
-                    for i in range(1,len(tags)):
-                        general.remove( tags[i] )
-                tag = general.find(key)
-                if tag==None:
-                    # have to add new tag
-                    new_tag = ET.SubElement(general,key)
-                    new_tag.text = val
-                else:
-                    # update existing value
-                    tag.text = val
-            # save the file
-            self.__write_tree( tree, ofile )
+    def __init__(self):
+        super().__init__()
+        self.searchpath = "dat/outfits/**/*.xml"
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Tool to save Naev xml file data to an csv file and viceversa.')
-    parser.add_argument('mode', choices=['w','r'], help="Either 'r' to read from the xml or 'w' to write to the xml.")
+    parser.add_argument('mode', choices=['outfit','ship'], help="Either 'outfit' to process outfits or 'ship' to process ships.")
+    parser.add_argument('readwrite', choices=['w','r'], help="Either 'r' to read from the xml or 'w' to write to the xml.")
     parser.add_argument('filename', type=str, help="CSV file to either read from or write to.")
     args = parser.parse_args()
 
-    #balancer = OutfitBalancer()
-    balancer = ShipBalancer()
-    if args.mode=='w':
+    if args.mode=='outfit':
+        balancer = OutfitBalancer()
+    else:
+        balancer = ShipBalancer()
+
+    if args.readwrite=='w':
         print( 'Writing to XML files from %s!' % args.filename )
         balancer.csv2xml( args.filename )
     else:
