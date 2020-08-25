@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Demon">
  <base_type>Demon</base_type>
  <GFX sx="12" sy="12">demon</GFX>
@@ -23,21 +23,21 @@
   <cargo>50</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="28" y="0" h="5"/>
-  <weapon size="medium" x="18" y="0" h="5"/>
-  <weapon size="medium" x="-30" y="-8" h="3"/>
-  <weapon size="medium" x="-30" y="8" h="3"/>
+  <weapon size="medium" x="28" y="0" h="5" />
+  <weapon size="medium" x="18" y="0" h="5" />
+  <weapon size="medium" x="-30" y="-8" h="3" />
+  <weapon size="medium" x="-30" y="8" h="3" />
   <utility size="medium" prop="systems">Unicorp PT-600 Core System</utility>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="medium"/>
-  <utility size="medium"/>
-  <utility size="medium"/>
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <utility size="medium" />
   <structure size="medium" prop="engines">Unicorp Falcon 1200 Engine</structure>
   <structure size="medium" prop="hull">Unicorp D-12 Medium Plating</structure>
-  <structure size="large"/>
-  <structure size="medium"/>
-  <structure size="medium"/>
+  <structure size="large" />
+  <structure size="medium" />
+  <structure size="medium" />
  </slots>
  <stats>
   <armour_mod>-30</armour_mod>

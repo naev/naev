@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pirate Rhino">
  <base_type>Rhino</base_type>
  <GFX sx="10" sy="10">rhino_pirate</GFX>
@@ -22,20 +22,20 @@
   <cargo>90</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="25" y="-3" h="4"/>
-  <weapon size="large" x="25" y="3" h="4"/>
-  <weapon size="medium" x="-15" y="-3" h="4"/>
-  <weapon size="medium" x="-15" y="3" h="4"/>
+  <weapon size="large" x="25" y="-3" h="4" />
+  <weapon size="large" x="25" y="3" h="4" />
+  <weapon size="medium" x="-15" y="-3" h="4" />
+  <weapon size="medium" x="-15" y="3" h="4" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Previous Generation Medium Systems</utility>
-  <utility size="medium"/>
-  <utility size="medium"/>
-  <utility size="medium"/>
+  <utility size="medium" />
+  <utility size="medium" />
+  <utility size="medium" />
   <structure size="medium" prop="engines" exclusive="1" required="1">Beat Up Medium Engine</structure>
   <structure size="medium" prop="hull" exclusive="1" required="1">Patchwork Medium Plating</structure>
-  <structure size="medium"/>
-  <structure size="medium"/>
-  <structure size="medium"/>
-  <structure size="medium"/>
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
  </slots>
  <stats>
   <speed_mod>10</speed_mod>

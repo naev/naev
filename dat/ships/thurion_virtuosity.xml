@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Virtuosity">
  <base_type>Virtuosity</base_type>
  <GFX>virtuosity</GFX>
@@ -24,20 +24,20 @@
   <cargo>25</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="16" y="0" h="-2"/>
-  <weapon size="small" x="24" y="0" h="-2"/>
-  <weapon size="small" x="-5" y="11" h="0"/>
-  <weapon size="small" x="-5" y="-11" h="0"/>
+  <weapon size="medium" x="16" y="0" h="-2" />
+  <weapon size="small" x="24" y="0" h="-2" />
+  <weapon size="small" x="-5" y="11" h="0" />
+  <weapon size="small" x="-5" y="-11" h="0" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-500 Core System</utility>
-  <utility size="medium"/>
-  <utility size="medium"/>
-  <utility size="small"/>
-  <utility size="small"/>
+  <utility size="medium" />
+  <utility size="medium" />
+  <utility size="small" />
+  <utility size="small" />
   <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 550 Engine</structure>
   <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-8 Medium Plating</structure>
-  <structure size="medium"/>
-  <structure size="medium"/>
-  <structure size="medium"/>
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
  </slots>
  <stats>
   <cpu_mod>15</cpu_mod>

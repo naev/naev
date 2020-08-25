@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Certitude">
  <base_type>Certitude</base_type>
  <GFX sx="12" sy="12">certitude</GFX>
@@ -23,29 +23,29 @@
   <cargo>180</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="39" y="5" h="3"/>
-  <weapon size="large" x="39" y="-5" h="3"/>
-  <weapon size="large" x="11" y="0" h="7"/>
-  <weapon size="large" x="11" y="0" h="-7"/>
-  <weapon size="large" x="-19" y="12" h="9"/>
-  <weapon size="large" x="-19" y="-12" h="9"/>
+  <weapon size="large" x="39" y="5" h="3" />
+  <weapon size="large" x="39" y="-5" h="3" />
+  <weapon size="large" x="11" y="0" h="7" />
+  <weapon size="large" x="11" y="0" h="-7" />
+  <weapon size="large" x="-19" y="12" h="9" />
+  <weapon size="large" x="-19" y="-12" h="9" />
   <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-1000 Core System</utility>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
   <structure size="large" prop="engines" exclusive="1" required="1">Unicorp Eagle 6500 Engine</structure>
   <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-20 Heavy Plating</structure>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
  </slots>
  <stats>
   <turn_mod>-10</turn_mod>

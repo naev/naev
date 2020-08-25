@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Heavy Drone">
  <base_type>Drone</base_type>
  <GFX sx="10" sy="10">drone_heavy</GFX>
@@ -22,19 +22,19 @@
   <fuel_consumption>100</fuel_consumption>
  </characteristics>
  <slots>
-  <weapon size="medium" x="8" y="1" h="-5"/>
-  <weapon size="medium" x="8" y="-1" h="-5"/>
-  <weapon size="small" x="5" y="5" h="-5"/>
-  <weapon size="small" x="5" y="-5" h="-5"/>
+  <weapon size="medium" x="8" y="1" h="-5" />
+  <weapon size="medium" x="8" y="-1" h="-5" />
+  <weapon size="small" x="5" y="5" h="-5" />
+  <weapon size="small" x="5" y="-5" h="-5" />
   <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-200 Core System</utility>
-  <utility size="small"/>
-  <utility size="small"/>
-  <utility size="small"/>
+  <utility size="small" />
+  <utility size="small" />
+  <utility size="small" />
   <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 300 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-4 Light Plating</structure>
-  <structure size="small"/>
-  <structure size="small"/>
-  <structure size="small"/>
+  <structure size="small" />
+  <structure size="small" />
+  <structure size="small" />
  </slots>
  <stats>
   <turn_mod>10</turn_mod>

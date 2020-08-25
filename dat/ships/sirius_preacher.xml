@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Sirius Preacher">
  <base_type>Preacher</base_type>
  <GFX sx="10" sy="10">preacher</GFX>
@@ -23,20 +23,20 @@
   <cargo>20</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="15" y="1" h="2"/>
-  <weapon size="medium" x="15" y="-1" h="2"/>
-  <weapon size="medium" x="-9" y="-10" h="2"/>
-  <weapon size="medium" x="-9" y="10" h="2"/>
-  <weapon size="medium" x="-9" y="-3" h="2"/>
-  <weapon size="medium" x="-9" y="3" h="2"/>
+  <weapon size="medium" x="15" y="1" h="2" />
+  <weapon size="medium" x="15" y="-1" h="2" />
+  <weapon size="medium" x="-9" y="-10" h="2" />
+  <weapon size="medium" x="-9" y="10" h="2" />
+  <weapon size="medium" x="-9" y="-3" h="2" />
+  <weapon size="medium" x="-9" y="3" h="2" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-500 Core System</utility>
-  <utility size="medium"/>
-  <utility size="medium"/>
-  <utility size="small"/>
+  <utility size="medium" />
+  <utility size="medium" />
+  <utility size="small" />
   <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 550 Engine</structure>
   <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-8 Medium Plating</structure>
-  <structure size="medium"/>
-  <structure size="medium"/>
+  <structure size="medium" />
+  <structure size="medium" />
  </slots>
  <stats>
   <turn_mod>10</turn_mod>

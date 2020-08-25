@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pacifier">
  <base_type>Pacifier</base_type>
  <GFX sx="10" sy="10">pacifier</GFX>
@@ -23,21 +23,21 @@
   <cargo>40</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="-15" y="-10" h="-10"/>
-  <weapon size="large" x="-15" y="10" h="-10"/>
-  <weapon size="medium" x="20" y="0" h="-10"/>
-  <weapon size="medium" x="4" y="-5" h="-10"/>
-  <weapon size="medium" x="4" y="5" h="-10"/>
+  <weapon size="large" x="-15" y="-10" h="-10" />
+  <weapon size="large" x="-15" y="10" h="-10" />
+  <weapon size="medium" x="20" y="0" h="-10" />
+  <weapon size="medium" x="4" y="-5" h="-10" />
+  <weapon size="medium" x="4" y="5" h="-10" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-600 Core System</utility>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="medium"/>
-  <utility size="medium"/>
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="medium" />
+  <utility size="medium" />
   <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1200 Engine</structure>
   <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
-  <structure size="large"/>
-  <structure size="medium"/>
-  <structure size="medium"/>
+  <structure size="large" />
+  <structure size="medium" />
+  <structure size="medium" />
  </slots>
  <stats>
   <shield_mod>10</shield_mod>

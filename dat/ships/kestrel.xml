@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Kestrel">
  <base_type>Kestrel</base_type>
  <GFX sx="10" sy="10">kestrel</GFX>
@@ -23,24 +23,24 @@
   <cargo>80</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="-23" y="-15" h="5"/>
-  <weapon size="large" x="-23" y="15" h="5"/>
-  <weapon size="large" x="44" y="0" h="0"/>
-  <weapon size="large" x="-6" y="0" h="12"/>
-  <weapon size="medium" x="-24" y="-8" h="8"/>
-  <weapon size="medium" x="-24" y="8" h="8"/>
+  <weapon size="large" x="-23" y="-15" h="5" />
+  <weapon size="large" x="-23" y="15" h="5" />
+  <weapon size="large" x="44" y="0" h="0" />
+  <weapon size="large" x="-6" y="0" h="12" />
+  <weapon size="medium" x="-24" y="-8" h="8" />
+  <weapon size="medium" x="-24" y="8" h="8" />
   <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-900 Core System</utility>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="medium"/>
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="medium" />
   <structure size="large" prop="engines" exclusive="1" required="1">Krain Remige Engine</structure>
   <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-16 Heavy Plating</structure>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="medium"/>
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="medium" />
  </slots>
  <stats>
   <ew_hide>5</ew_hide>
