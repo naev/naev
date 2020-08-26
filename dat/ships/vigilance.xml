@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Vigilance">
  <base_type>Vigilance</base_type>
  <GFX sx="10" sy="10">vigilance</GFX>
@@ -23,22 +23,22 @@
   <cargo>50</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="28" y="-3" h="-0"/>
-  <weapon size="large" x="28" y="3" h="-0"/>
-  <weapon size="medium" x="10" y="-3" h="2"/>
-  <weapon size="medium" x="10" y="3" h="2"/>
-  <weapon size="medium" x="-22" y="-8" h="-0"/>
-  <weapon size="medium" x="-22" y="8" h="-0"/>
+  <weapon size="large" x="28" y="-3" h="-0" />
+  <weapon size="large" x="28" y="3" h="-0" />
+  <weapon size="medium" x="10" y="-3" h="2" />
+  <weapon size="medium" x="10" y="3" h="2" />
+  <weapon size="medium" x="-22" y="-8" h="-0" />
+  <weapon size="medium" x="-22" y="8" h="-0" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-600 Core System</utility>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="medium"/>
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="medium" />
   <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1200 Engine</structure>
   <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
-  <structure size="large"/>
-  <structure size="medium"/>
-  <structure size="medium"/>
-  <structure size="medium"/>
+  <structure size="large" />
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
  </slots>
  <stats>
   <speed_mod>-10</speed_mod>

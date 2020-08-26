@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Marauder">
  <base_type>Marauder</base_type>
  <GFX>marauder</GFX>
@@ -23,16 +23,16 @@
   <cargo>10</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" prop="bio_weapon" x="8" y="0" h="0"/>
-  <weapon size="medium" prop="bio_weapon" x="8" y="0" h="0"/>
-  <weapon size="small" prop="bio_weapon" x="-2" y="9" h="-1"/>
-  <weapon size="small" prop="bio_weapon" x="-2" y="-9" h="-1"/>
+  <weapon size="medium" prop="bio_weapon" x="8" y="0" h="0" />
+  <weapon size="medium" prop="bio_weapon" x="8" y="0" h="0" />
+  <weapon size="small" prop="bio_weapon" x="-2" y="9" h="-1" />
+  <weapon size="small" prop="bio_weapon" x="-2" y="-9" h="-1" />
   <utility size="small" prop="bio_systems" exclusive="1" required="1">Light Bioship Brain Stage 1</utility>
-  <utility size="small"/>
-  <utility size="small"/>
+  <utility size="small" />
+  <utility size="small" />
   <structure size="small" prop="bio_engines" exclusive="1" required="1">Light Bioship Strong Fin Stage 1</structure>
   <structure size="small" prop="bio_hull" exclusive="1" required="1">Light Bioship Shell Stage 1</structure>
-  <structure size="small"/>
+  <structure size="small" />
  </slots>
  <stats>
   <speed_mod>-10</speed_mod>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Scout Drone">
  <base_type>Za'lek Scout Drone</base_type>
  <GFX>zalek_drone_scout</GFX>
@@ -21,12 +21,12 @@
   <fuel_consumption>1</fuel_consumption>
  </characteristics>
  <slots>
-  <weapon size="small" x="0" y="0" h="-2"/>
+  <weapon size="small" x="0" y="0" h="-2" />
   <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
-  <utility size="small"/>
+  <utility size="small" />
   <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
-  <structure size="small"/>
+  <structure size="small" />
  </slots>
  <stats>
   <speed_mod>15</speed_mod>

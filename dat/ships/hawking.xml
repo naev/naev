@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Hawking">
  <base_type>Hawking</base_type>
  <GFX sx="12" sy="12">hawking</GFX>
@@ -23,26 +23,26 @@
   <cargo>110</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="40" y="0" h="2"/>
-  <weapon size="large" x="25" y="0" h="2"/>
-  <weapon size="large" x="12" y="-6" h="0"/>
-  <weapon size="large" x="12" y="6" h="0"/>
-  <weapon size="large" x="0" y="0" h="7"/>
-  <weapon size="large" x="-15" y="0" h="7"/>
-  <weapon size="large" x="-33" y="0" h="7"/>
+  <weapon size="large" x="40" y="0" h="2" />
+  <weapon size="large" x="25" y="0" h="2" />
+  <weapon size="large" x="12" y="-6" h="0" />
+  <weapon size="large" x="12" y="6" h="0" />
+  <weapon size="large" x="0" y="0" h="7" />
+  <weapon size="large" x="-15" y="0" h="7" />
+  <weapon size="large" x="-33" y="0" h="7" />
   <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-1000 Core System</utility>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
   <structure size="large" prop="engines" exclusive="1" required="1">Unicorp Eagle 4500 Engine</structure>
   <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-16 Heavy Plating</structure>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
  </slots>
  <stats>
   <shield_mod>10</shield_mod>

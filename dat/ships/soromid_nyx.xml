@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Nyx">
  <base_type>Nyx</base_type>
  <GFX sx="10" sy="10">nyx</GFX>
@@ -23,21 +23,21 @@
   <cargo>40</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" prop="bio_weapon" x="-15" y="-10" h="-10"/>
-  <weapon size="large" prop="bio_weapon" x="-15" y="10" h="-10"/>
-  <weapon size="medium" prop="bio_weapon" x="20" y="0" h="-10"/>
-  <weapon size="medium" prop="bio_weapon" x="4" y="-5" h="-10"/>
-  <weapon size="medium" prop="bio_weapon" x="4" y="5" h="-10"/>
+  <weapon size="large" prop="bio_weapon" x="-15" y="-10" h="-10" />
+  <weapon size="large" prop="bio_weapon" x="-15" y="10" h="-10" />
+  <weapon size="medium" prop="bio_weapon" x="20" y="0" h="-10" />
+  <weapon size="medium" prop="bio_weapon" x="4" y="-5" h="-10" />
+  <weapon size="medium" prop="bio_weapon" x="4" y="5" h="-10" />
   <utility size="medium" prop="bio_systems" exclusive="1" required="1">Medium-Heavy Bioship Brain Stage 1</utility>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="medium"/>
-  <utility size="medium"/>
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="medium" />
+  <utility size="medium" />
   <structure size="medium" prop="bio_engines" exclusive="1" required="1">Medium-Heavy Bioship Fast Fin Stage 1</structure>
   <structure size="medium" prop="bio_hull" exclusive="1" required="1">Medium-Heavy Bioship Shell Stage 1</structure>
-  <structure size="large"/>
-  <structure size="medium"/>
-  <structure size="medium"/>
+  <structure size="large" />
+  <structure size="medium" />
+  <structure size="medium" />
  </slots>
  <stats>
   <armour_mod>-10</armour_mod>

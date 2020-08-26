@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Hyena">
  <base_type>Hyena</base_type>
  <GFX>hyena</GFX>
@@ -22,14 +22,14 @@
   <cargo>5</cargo>
  </characteristics>
  <slots>
-  <weapon size="small" x="15" y="0" h="-3"/>
-  <weapon size="small" x="15" y="0" h="-3"/>
-  <weapon size="small" x="0" y="0" h="0"/>
+  <weapon size="small" x="15" y="0" h="-3" />
+  <weapon size="small" x="15" y="0" h="-3" />
+  <weapon size="small" x="0" y="0" h="0" />
   <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
-  <utility size="small"/>
+  <utility size="small" />
   <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
-  <structure size="small"/>
+  <structure size="small" />
  </slots>
  <stats>
   <speed_mod>5</speed_mod>

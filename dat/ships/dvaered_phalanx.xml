@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Dvaered Phalanx">
  <base_type>Phalanx</base_type>
  <GFX sx="10" sy="10">phalanx_dvaered</GFX>
@@ -23,21 +23,21 @@
   <cargo>25</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="8" y="0" h="2"/>
-  <weapon size="medium" x="4" y="5" h="-2"/>
-  <weapon size="medium" x="4" y="-5" h="-2"/>
-  <weapon size="small" x="0" y="10" h="-2"/>
-  <weapon size="small" x="0" y="-10" h="-2"/>
+  <weapon size="medium" x="8" y="0" h="2" />
+  <weapon size="medium" x="4" y="5" h="-2" />
+  <weapon size="medium" x="4" y="-5" h="-2" />
+  <weapon size="small" x="0" y="10" h="-2" />
+  <weapon size="small" x="0" y="-10" h="-2" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-500 Core System</utility>
-  <utility size="medium"/>
-  <utility size="medium"/>
-  <utility size="small"/>
+  <utility size="medium" />
+  <utility size="medium" />
+  <utility size="small" />
   <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 550 Engine</structure>
   <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-8 Medium Plating</structure>
-  <structure size="medium"/>
-  <structure size="medium"/>
-  <structure size="medium"/>
-  <structure size="medium"/>
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
  </slots>
  <stats>
   <speed_mod>-10</speed_mod>

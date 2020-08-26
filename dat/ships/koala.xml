@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Koala">
  <base_type>Koala</base_type>
  <GFX>koala</GFX>
@@ -22,17 +22,17 @@
   <cargo>30</cargo>
  </characteristics>
  <slots>
-  <weapon size="small" x="11" y="0" h="-7"/>
-  <weapon size="small" x="-5" y="0" h="3"/>
+  <weapon size="small" x="11" y="0" h="-7" />
+  <weapon size="small" x="-5" y="0" h="3" />
   <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
-  <utility size="small"/>
-  <utility size="small"/>
+  <utility size="small" />
+  <utility size="small" />
   <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 300 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-4 Light Plating</structure>
-  <structure size="small"/>
-  <structure size="small"/>
-  <structure size="small"/>
-  <structure size="small"/>
+  <structure size="small" />
+  <structure size="small" />
+  <structure size="small" />
+  <structure size="small" />
  </slots>
  <stats>
   <turn_mod>-20</turn_mod>
