@@ -41,20 +41,20 @@ title[4] = _("...is still my enemy.")
 text[4] = _([["That's too bad. I understand where you're coming from, though. Please feel free to return if you are willing to take on this mission at a later date."]])
 
 title[5] = _("Who are you calling a weakling?")
-text[5] = _([[A scraggly-looking pirate appears on your viewscreen. You realize this must be the leader of the group. "Bwah ha ha!" he laughs. "That has to be the most pathetic excuse for a ship I've ever seen!" You try to ignore his rude remark and start to explain to him that you just want to talk. "Talk?" he responds. "Why, that's the stupidest thing I've ever heard! Why would I want to talk to a weakling like you? Why, I'd bet my mates right here could blow you out of the sky even without my help!"
-    The pirate immediately cuts his connection. Well, if these pirates won't talk to "weaklings", maybe it's time to show him who the real weakling is. Destroying just one or two of his escorts should do the trick.]])
+text[5] = _([[A scraggly-looking pirate appears on your viewscreen. You realize this must be the leader of the group. "Bwah ha ha!" he laughs. "That has to be the most pathetic excuse for a ship I've ever seen!" You try to ignore his rude remark and start to explain to him that you just want to talk. "Talk?" he responds. "Why would I want to talk to a normie like you? Why, I'd bet my mates right here could blow you out of the sky even without my help!"
+    The pirate immediately cuts his connection. Well, if these pirates won't talk to you, maybe it's time to show him what you're made of. Destroying just one or two of his escorts should do the trick.]])
 
 title[6] = _("Mission Failure")
 text[6] = _([[As the Pirate Kestrel is blown out of the sky, it occurs to you that you have made a terrible mistake. Having killed off the leader of the pirate group, you have lost your opportunity to negotiate a trade deal with the pirates. You shamefully transmit your result to Benito via a coded message and abort the mission. Perhaps you will be given another opportunity later.]])
 
 title[7] = _("Still Not Impressed")
-text[7] = _([[The pirate leader comes on your screen once again. "Lucky shot, but you're still a pathetic weakling!" he says before promptly terminating the connection once again. Perhaps you need to destroy some more of his escorts so he can see who the real weakling is.]])
+text[7] = _([[The pirate leader comes on your screen once again. "Lucky shot, normie!" he says before promptly terminating the connection once again. Perhaps you need to destroy some more of his escorts so he can see you're just a bit more than a "normie".]])
 
 title[8] = _("Not So Weak After All")
-text[8] = _([[The pirate comes on your view screen once again, but his expression has changed this time. You come to the realization that he is finally willing to talk and suppress a sigh of relief.
-    "Perhaps you're not so bad after all," he says. Funny how destroying his "mates" impresses him. Not the slightest hint of devotion to his comrades. Still, you hold back the urge to tell him off. He continues. "I've misjudged you lot. I guess FLF pilots can fight after all."]])
+text[8] = _([[The pirate comes on your view screen once again, but his expression has changed this time. He's hiding it, but you can tell that he's afraid of what you might do to him. You come to the realization that he is finally willing to talk and suppress a sigh of relief.
+    "L-look, we got off on the wrong foot, eh? I've misjudged you lot. I guess FLF pilots can fight after all."]])
 
-text[9] = _([[You begin to talk to the pirate about what you and the FLF are after. "Supplies, eh? Yeah, we've got supplies, alright. Heh, heh, heh... but it'll cost you!" You inquire as to what the cost might be. "Simple, really. We want to build another base in the %s system. We can do it ourselves, of course, but if we can get you to pay for it, even better! Specifically, we need %s more tonnes of ore to build the base. So you bring it back to the Anger system, and we'll call it a deal!
+text[9] = _([[You begin to talk to the pirate about what you and the FLF are after, and the look of fear on the pirate's face fades away. "Supplies? Yeah, we've got supplies, alright. But it'll cost you! Heh, heh, heh..." You inquire as to what the cost might be. "Simple, really. We want to build another base in the %s system. We can do it ourselves, of course, but if we can get you to pay for it, even better! Specifically, we need %s more tonnes of ore to build the base. So you bring it back to the Anger system, and we'll call it a deal!
     "Oh yeah, I almost forgot; you don't know how to get to the Anger system, now, do you? Well, since you've proven yourself worthy, I suppose I'll let you in on our little secret." He transfers a file to your ship's computer. When you look at it, you see that it's a map showing a single hidden jump point. "Now, away with you! Meet me in the %s system when you have the loot."]])
 
 title[10] = _("I knew we could work something out")

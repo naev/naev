@@ -35,7 +35,7 @@ abort_text[1] = _("Sick and tired of smelling garbage, you illegally jettison th
 abort_text[2] = _("You decide that the nearest waste dump location is too far away for you to bother to go to and simply jettison the containers of waste. You hope you don't get caught.")
 abort_text[3] = _("You dump the waste containers into space illegally, noting that you should make sure not to get caught by authorities.")
 
-abort_landed_text = _("In your desperation to rid yourself of the garbage, you stupidly eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation away as an accident, the officials let you off with a fine of %s credits.")
+abort_landed_text = _("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation away as an accident, the officials let you off with a fine of %s credits.")
 
 noland_msg = _("Get lost, waste dumping scum! We don't want you here!")
 

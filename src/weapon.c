@@ -346,7 +346,7 @@ static void think_seeker( Weapon* w, const double dt )
             /* Get the angle now. */
             diff = angle_diff(w->solid->dir, VANGLE(v) );
          }
-         /* Other seekers are stupid. */
+         /* Other seekers are simplistic. */
          else {
             diff = angle_diff(w->solid->dir, /* Get angle to target pos */
                   vect_angle(&w->solid->pos, &p->solid->pos));

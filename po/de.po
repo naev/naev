@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.7.0\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues/\n"
-"POT-Creation-Date: 2020-08-25 21:31-0400\n"
+"POT-Creation-Date: 2020-08-25 22:06-0400\n"
 "PO-Revision-Date: 2020-08-17 18:15+0200\n"
 "Last-Translator: Wuzzy <Wuzzy2@mail.ru>\n"
 "Language-Team: \n"
@@ -1479,9 +1479,8 @@ msgid "\"Shut up and give me your money! %d credits now.\""
 msgstr "„Halt’s Maul und gib mir dein Geld! %d Credits sofort.“"
 
 #: ../dat/ai/pirate.lua:43
-#, lua-format
-msgid ""
-"\"You're either really stupid to be chatting or really rich. %d or shut up.\""
+#, fuzzy, lua-format
+msgid "\"You're either really desperate or really rich. %d or shut up.\""
 msgstr ""
 "„Du bist entweder sehr dumm, um mit mir zu reden oder sehr reich. %d oder "
 "Maul halten.“"
@@ -2121,48 +2120,47 @@ msgstr ""
 #. This is the amount of waypoints the pilot will pass through before leaving the system
 #. Finish up creation
 #. Only 50% of actually taunting.
-#. XXX: Put something stupid instead of the Sirian taunts
-#: ../dat/ai/zalek.lua:63
+#: ../dat/ai/zalek.lua:62
 msgid "Move drones in to engage. Cook this clown!"
 msgstr "Schickt die Drohnen zum Angriff los. Kocht diesen Clown!"
 
-#: ../dat/ai/zalek.lua:64
+#: ../dat/ai/zalek.lua:63
 msgid "Say hello to my little friends!"
 msgstr "Sag meinen kleinen Freunden hallo!"
 
-#: ../dat/ai/zalek.lua:65
+#: ../dat/ai/zalek.lua:64
 msgid "Ooh, more victi- ah, volunteers for our experiments!"
 msgstr "Ooh, mehr Opfe-, äh, Freiwillige für unsere Experimente!"
 
-#: ../dat/ai/zalek.lua:66
+#: ../dat/ai/zalek.lua:65
 msgid "We need a test subject to test our attack on; you'll do nicely!"
 msgstr ""
 "Wir brauchen ein Testsubjekt, um unsere Angriffe zu testen; du eignest dich "
 "gut!"
 
-#: ../dat/ai/zalek.lua:67
+#: ../dat/ai/zalek.lua:66
 msgid "Ready for a physics lesson, punk?"
 msgstr "Bereit für eine Physikstunde, Punk?"
 
-#: ../dat/ai/zalek.lua:68
+#: ../dat/ai/zalek.lua:67
 msgid "After we wax you, we can return to our experiments!"
 msgstr ""
 "Nachdem wir mit dir fertig sind, können wir mit unseren Experimenten "
 "weitermachen!"
 
-#: ../dat/ai/zalek.lua:72
+#: ../dat/ai/zalek.lua:71
 msgid "We're being attacked! Prepare defence protocols!"
 msgstr "Wir werden angegriffen! Verteidigungsprotokolle einleiten!"
 
-#: ../dat/ai/zalek.lua:73
+#: ../dat/ai/zalek.lua:72
 msgid "You just made a big mistake!"
 msgstr "Du hast gerade einen großen Fehler gemacht!"
 
-#: ../dat/ai/zalek.lua:74
+#: ../dat/ai/zalek.lua:73
 msgid "Our technology will fix your attitude!"
 msgstr "Unsere Technologie wird deine Haltung reparieren!"
 
-#: ../dat/ai/zalek.lua:75
+#: ../dat/ai/zalek.lua:74
 msgid "You wanna do this? Have it your way."
 msgstr "Das willst du tun? Deine Entscheidung."
 
@@ -5269,9 +5267,10 @@ msgstr ""
 "primitiv. Offensichtlich macht das sie nur unproduktiver.“"
 
 #: ../dat/events/neutral/npc.lua:132
+#, fuzzy
 msgid ""
 "\"The exact cause of the Incident is a tightly-kept secret, but the "
-"government says it was caused by the Empire's stupidity. I would expect "
+"government says it was caused by the Empire's inferiority. I would expect "
 "nothing less.\""
 msgstr ""
 "„Der wahre Grund des Geschehnisses ist ein streng gehütetes Geheimnis, aber "
@@ -5446,9 +5445,11 @@ msgstr ""
 "die Dvaered-Unterdrücker von der Front zu verdrängen.“"
 
 #: ../dat/events/neutral/npc.lua:153
+#, fuzzy
 msgid ""
 "\"Riddle me this: how can we be terrorists if the Dvaereds started it by "
-"encroaching on Frontier territory? It's the stupidest thing I ever heard.\""
+"encroaching on Frontier territory? It's the most ridiculous thing I ever "
+"heard.\""
 msgstr ""
 "„Quizfrage: Wie können wir Terroristen sein, wenn doch die Dvaered damit "
 "angefangen haben, in das Front-Terrotoritum einzudringen? Das ist das "
@@ -5510,9 +5511,10 @@ msgstr ""
 "verdienen, aber dieser innere Nebel macht mir immer noch Angst.“"
 
 #: ../dat/events/neutral/npc.lua:163
+#, fuzzy
 msgid ""
-"\"Stupid Empire stopped my heist a few decaperiods ago. Just wait'll they "
-"see me again...\""
+"\"Damn Empire stopped my heist a few decaperiods ago. Just wait'll they see "
+"me again...\""
 msgstr ""
 "„Das dumme Imperium stoppte meinen Raub vor ein paar Dekaperioden. Warte "
 "nur, bis sie mich wieder sehen …“"
@@ -9705,9 +9707,10 @@ msgid "Imperial Pilot"
 msgstr "Imperialer Pilot"
 
 #: ../dat/missions/dvaered/championship.lua:62
+#, fuzzy
 msgid ""
 "\"What a pity. I am the best in my squad. I trained cycles to be able to "
-"take down these stupid Vendettas with my missiles before they even see my "
+"take down these pitiful Vendettas with my missiles before they even see my "
 "Lancelot on their radar. But in this championship, only armor and firepower "
 "are useful.\""
 msgstr ""
@@ -11179,7 +11182,8 @@ msgid "Khan is dead! Who will be our warlord now?"
 msgstr "Khan ist tot! Wer wird nun unser Kriegsherr sein?"
 
 #: ../dat/missions/dvaered/dv_diversion.lua:69
-msgid "Obviously the one who killed him, idiot!"
+#, fuzzy
+msgid "Obviously the one who killed him!"
 msgstr "Offensichtlich derjenige, der ihn getötet hat, Idiot!"
 
 #: ../dat/missions/dvaered/dv_diversion.lua:70
@@ -14427,17 +14431,17 @@ msgid "Who are you calling a weakling?"
 msgstr "Wenn nennst du einen Schächling?"
 
 #: ../dat/missions/flf/dvk/flf_dvk02.lua:44
+#, fuzzy
 msgid ""
 "A scraggly-looking pirate appears on your viewscreen. You realize this must "
 "be the leader of the group. \"Bwah ha ha!\" he laughs. \"That has to be the "
 "most pathetic excuse for a ship I've ever seen!\" You try to ignore his rude "
 "remark and start to explain to him that you just want to talk. \"Talk?\" he "
-"responds. \"Why, that's the stupidest thing I've ever heard! Why would I "
-"want to talk to a weakling like you? Why, I'd bet my mates right here could "
-"blow you out of the sky even without my help!\"\n"
+"responds. \"Why would I want to talk to a normie like you? Why, I'd bet my "
+"mates right here could blow you out of the sky even without my help!\"\n"
 "    The pirate immediately cuts his connection. Well, if these pirates won't "
-"talk to \"weaklings\", maybe it's time to show him who the real weakling is. "
-"Destroying just one or two of his escorts should do the trick."
+"talk to you, maybe it's time to show him what you're made of. Destroying "
+"just one or two of his escorts should do the trick."
 msgstr ""
 "Ein rau aussehender Pirat erscheint auf deinem Bildschirm. Dir ist klar, "
 "dass dies der Anführer der Gruppe sein muss. „Bwa-ha-ha!“, lacht er. „Das "
@@ -14472,11 +14476,12 @@ msgid "Still Not Impressed"
 msgstr "Immer noch nicht beeindruckt"
 
 #: ../dat/missions/flf/dvk/flf_dvk02.lua:51
+#, fuzzy
 msgid ""
-"The pirate leader comes on your screen once again. \"Lucky shot, but you're "
-"still a pathetic weakling!\" he says before promptly terminating the "
-"connection once again. Perhaps you need to destroy some more of his escorts "
-"so he can see who the real weakling is."
+"The pirate leader comes on your screen once again. \"Lucky shot, normie!\" "
+"he says before promptly terminating the connection once again. Perhaps you "
+"need to destroy some more of his escorts so he can see you're just a bit "
+"more than a \"normie\"."
 msgstr ""
 "Der Piratenanführer erscheint wieder auf deinem Bildschirm. „Glückstreffer, "
 "aber du bist immer noch ein erbärmlicher Schwächling!“, sagt er, bevor er "
@@ -14489,14 +14494,14 @@ msgid "Not So Weak After All"
 msgstr "Doch nicht so schwach"
 
 #: ../dat/missions/flf/dvk/flf_dvk02.lua:54
+#, fuzzy
 msgid ""
 "The pirate comes on your view screen once again, but his expression has "
-"changed this time. You come to the realization that he is finally willing to "
-"talk and suppress a sigh of relief.\n"
-"    \"Perhaps you're not so bad after all,\" he says. Funny how destroying "
-"his \"mates\" impresses him. Not the slightest hint of devotion to his "
-"comrades. Still, you hold back the urge to tell him off. He continues. "
-"\"I've misjudged you lot. I guess FLF pilots can fight after all.\""
+"changed this time. He's hiding it, but you can tell that he's afraid of what "
+"you might do to him. You come to the realization that he is finally willing "
+"to talk and suppress a sigh of relief.\n"
+"    \"L-look, we got off on the wrong foot, eh? I've misjudged you lot. I "
+"guess FLF pilots can fight after all.\""
 msgstr ""
 "Der Pirat erscheint erneut auf deinem Bildschirm, aber sein Gesichtsausdruck "
 "hat sich dieses Mal verändert. Du kommst zu der Erkenntnis, dass er endlich "
@@ -14508,15 +14513,16 @@ msgstr ""
 "schätze, FLF-Piloten können doch kämpfen.“"
 
 #: ../dat/missions/flf/dvk/flf_dvk02.lua:57
-#, lua-format
+#, fuzzy, lua-format
 msgid ""
-"You begin to talk to the pirate about what you and the FLF are after. "
-"\"Supplies, eh? Yeah, we've got supplies, alright. Heh, heh, heh... but "
-"it'll cost you!\" You inquire as to what the cost might be. \"Simple, "
-"really. We want to build another base in the %s system. We can do it "
-"ourselves, of course, but if we can get you to pay for it, even better! "
-"Specifically, we need %s more tonnes of ore to build the base. So you bring "
-"it back to the Anger system, and we'll call it a deal!\n"
+"You begin to talk to the pirate about what you and the FLF are after, and "
+"the look of fear on the pirate's face fades away. \"Supplies? Yeah, we've "
+"got supplies, alright. But it'll cost you! Heh, heh, heh...\" You inquire as "
+"to what the cost might be. \"Simple, really. We want to build another base "
+"in the %s system. We can do it ourselves, of course, but if we can get you "
+"to pay for it, even better! Specifically, we need %s more tonnes of ore to "
+"build the base. So you bring it back to the Anger system, and we'll call it "
+"a deal!\n"
 "    \"Oh yeah, I almost forgot; you don't know how to get to the Anger "
 "system, now, do you? Well, since you've proven yourself worthy, I suppose "
 "I'll let you in on our little secret.\" He transfers a file to your ship's "
@@ -14765,6 +14771,7 @@ msgid "A Decisive Strike"
 msgstr "Ein entscheidender Schlag"
 
 #: ../dat/missions/flf/dvk/flf_dvk03.lua:35
+#, fuzzy
 msgid ""
 "You take a seat among the group. \"Fantastic!\" says Benito. \"Let me get "
 "you caught up, then. Do you remember that mission in Raelid you helped with "
@@ -14772,9 +14779,8 @@ msgid ""
 "a diversion from. \"Yes, well, I never got around to telling you what we "
 "actually did there. See, we've been wanting to destroy Raelid Outpost for "
 "some time, mostly because it's often used as a front for trying to scout us "
-"out. So while you were getting the attention of those idiot Dvaered "
-"oppressors, we rigged a special bomb and covertly installed it onto the "
-"outpost!\""
+"out. So while you were getting the attention of those Dvaereds, we rigged a "
+"special bomb and covertly installed it onto the outpost!\""
 msgstr ""
 "Du nimmst einen Platz in der Gruppe ein. „Fantastisch!“, sagt Benito. „Dann "
 "will ich dich mal involvieren. Erinnerst du dich an die Mission in Raelid, "
@@ -19461,16 +19467,16 @@ msgid "The Dirt"
 msgstr "Der Dreck"
 
 #: ../dat/missions/neutral/kidnapped/traffic_00.lua:41
-#, lua-format
+#, fuzzy, lua-format
 msgid ""
 "You don't even bother sitting down too close to these two pirates "
 "considering how loudly they're talking. It doesn't take too much listening "
 "before you get exactly what you need as one of the pirates is telling his "
 "recent tales to the other.\n"
-"    \"So this dummy thought he could out-fly me in his stupid Llama! So I "
+"    \"So this dummy thought he could out-fly me in his pathetic Llama! So I "
 "took him offline in like 2 seconds, got on that ship, and took the kids. The "
 "guy tried to fight back, but I stopped that quick enough. Then the woman "
-"says they was on a vacation, like I care! Ha! Morons think they can even "
+"says they was on a vacation, like I care! Ha! Fools think they can even "
 "bother to mess with me when I have work to do.\n"
 "    \"So I took the kids to the %s system where they were loaded into this "
 "Trader Koala named the Progeny. Clever name if you ask me! No one will ever "
@@ -23065,13 +23071,15 @@ msgid "It's a lousy job, but..."
 msgstr "Ein lausiger Job, aber …"
 
 #: ../dat/missions/neutral/teenager.lua:19
+#, fuzzy
 msgid ""
 "\"Thank you! The yacht doesn't have a working hyperdrive, so they won't have "
 "left the system. It's a Gawain named Credence. Just disable it and board it, "
-"then transport my idiot son and his girlfriend back here. Don't worry about "
-"the yacht, I'll have it recovered later. Oh, and one more thing, though it "
-"should go without saying: whatever you do, don't destroy the yacht! I don't "
-"want to lose my son over this. Well then, I hope to see you again soon.\""
+"then transport my disobedient son and his girlfriend back here. Don't worry "
+"about the yacht, I'll have it recovered later. Oh, and one more thing, "
+"though it should go without saying: whatever you do, don't destroy the "
+"yacht! I don't want to lose my son over this. Well then, I hope to see you "
+"again soon.\""
 msgstr ""
 "„Vielen Dank! Die Yacht hat keinen funktionierenden Hyperantrieb, so dass "
 "sie das System nicht verlassen haben werden. Es ist ein Gawain namens "
@@ -23294,9 +23302,9 @@ msgstr ""
 "dass du darauf achten solltest, nicht von den Behörden erwischt zu werden."
 
 #: ../dat/missions/neutral/wastedump.lua:38
-#, lua-format
+#, fuzzy, lua-format
 msgid ""
-"In your desperation to rid yourself of the garbage, you stupidly eject it "
+"In your desperation to rid yourself of the garbage, you clumsily eject it "
 "from your cargo pod while you are still landed. Garbage spills all over the "
 "hangar and local officials immediately take notice. After you apologize "
 "profusely and explain the situation away as an accident, the officials let "
@@ -27988,12 +27996,12 @@ msgid ""
 "altered to be straight one hundred percent, in every subject. Can you "
 "believe that? Someone had actually tried to make it look like I was "
 "cheating. What were they thinking? The academy staff wasn't fooled for even "
-"a moment. Nobody would be stupid enough to alter their own scores that way, "
-"so the only reason my scores would have been altered is if someone else did "
-"it, no doubt in order to discredit me. And you guessed it, the prime suspect "
-"was Harja. After all, if I was disqualified, he would certainly have gotten "
-"the promotion. Instead, he got what he deserved, and was expelled for his "
-"low attempt to secure his own success.\"\n"
+"a moment. Nobody would be reckless enough to alter their own scores that "
+"way, so the only reason my scores would have been altered is if someone else "
+"did it, no doubt in order to discredit me. And you guessed it, the prime "
+"suspect was Harja. After all, if I was disqualified, he would certainly have "
+"gotten the promotion. Instead, he got what he deserved, and was expelled for "
+"his low attempt to secure his own success.\"\n"
 "    \"That's basically the history between me and Harja. Up until you came "
 "to me, I just thought of him as an untrustworthy man whose own underhanded "
 "plan backfired on him. But here we are, cycles later, and now he's trying to "
@@ -30449,9 +30457,9 @@ msgid ""
 "    \"I was assigned male at birth, and society tends to see me as a man. "
 "But I've come to the conclusion that... I'm transgender. I feel like I "
 "should be... a woman, I think? I'm not sure. Does... does that make sense? "
-"I'm not stupid, am I?\" You respond that, no, they're not stupid; everyone "
-"is different and no one can know C better than they can. C seems relieved to "
-"hear this."
+"I'm not being ridiculous, am I?\" You respond that, no, they're not "
+"ridiculous; everyone is different and no one can know C better than they "
+"can. C seems relieved to hear this."
 msgstr ""
 
 #: ../dat/missions/soromid/comingout/srm_comingout.lua:46
