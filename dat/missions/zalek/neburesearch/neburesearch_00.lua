@@ -68,6 +68,8 @@ osd_msg[1] = _("Fly to the %s system.")
 osd_msg[2] = _("Fly to the %s system.")
 osd_msg[3] = _("Return to the %s system.")
 
+log_text = _([[You helped a Za'lek student to collect sensor data of the Sol nebula.]])
+
 
 function create()
     -- mission variables
@@ -126,6 +128,7 @@ function land()
         misn.cargoRm(cargo)
         player.pay(credits)
         misn.markerRm(misn_marker)
+        zlk_addNebuResearchLog(log_text)
         misn.finish(true)
     end
 end

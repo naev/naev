@@ -53,12 +53,13 @@ landfailtext = _("You have landed, abandoning your mission to escort the transpo
 transporterdistress = _("We're under attack!")
 
 -- Mission info stuff
-osd_title = {}
 osd_msg   = {}
 osd_title = _("Advanced Nebula Research")
 osd_msg[1] = _("Escort the transport ship to %s in the %s system.")
 osd_msg[2] = _("Land on %s in the %s system.")
 osd_msg[3] = _("Fly back to %s in the %s system.")
+
+log_text = _([[You helped Dr. Mensing to collect sensor data of the PSO nebula.]])
 
 
 function create()
@@ -181,6 +182,7 @@ function land()
     elseif planet.cur() == planet.get(homeworld) then
         tk.msg(title[5], string.format(text[7], creditstring(credits)))
         player.pay(credits)
+        zlk_addNebuResearchLog(log_text)
         misn.finish(true)
     end
     origin = planet.cur()
