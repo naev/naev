@@ -327,7 +327,7 @@ void input_init (void)
    input_numbinds = i;
    input_keybinds = malloc( input_numbinds * sizeof(Keybind) );
 
-   /* Create sane null keybinding for each. */
+   /* Create safe null keybinding for each. */
    for (i=0; i<input_numbinds; i++) {
       temp = &input_keybinds[i];
       memset( temp, 0, sizeof(Keybind) );

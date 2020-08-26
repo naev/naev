@@ -493,7 +493,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
          if (cur_system->njumps > 0) {
             WARN(_("Fleet '%s' jumping in from non-adjacent system '%s' to '%s'."),
                   fltname, ss->name, cur_system->name );
-            jump = RNG_SANE(0,cur_system->njumps-1);
+            jump = RNG_BASE(0,cur_system->njumps-1);
          }
          else
             WARN(_("Fleet '%s' attempting to jump in from '%s', but '%s' has no jump points."),
@@ -545,7 +545,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
       pilot_setFlagRaw( flags, PILOT_HYP_END );
    }
 
-   /* Make sure angle is sane. */
+   /* Make sure angle is valid. */
    a = fmod( a, 2.*M_PI );
    if (a < 0.)
       a += 2.*M_PI;

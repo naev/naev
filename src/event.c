@@ -727,9 +727,9 @@ int event_testClaims( unsigned int eventid, int sys )
 
 
 /**
- * @brief Checks the event sanity and cleans up after them.
+ * @brief Checks the event validity and cleans up after them.
  */
-void event_checkSanity (void)
+void event_checkValidity (void)
 {
    int i;
    Event_t *ev;
@@ -743,10 +743,10 @@ void event_checkSanity (void)
          continue;
 
       /* Must delete. */
-      WARN(_("Detected event '%s' without any hooks and is therefore insane. Removing event."),
+      WARN(_("Detected event '%s' without any hooks and is therefore invalid. Removing event."),
             event_dataName( ev->data ));
       event_remove( ev->id );
-      i--; /* Keep iteration sane. */
+      i--; /* Keep iteration safe. */
    }
 }
 

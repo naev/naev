@@ -1,5 +1,5 @@
 --[[
--- Flintley Event for the Crazy Baron mission string. Only used when NOT doing any Baron missions.
+-- Flintley Event for the Baron mission string. Only used when NOT doing any Baron missions.
 --]]
 
 -- localization stuff, translators would work here

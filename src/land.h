@@ -75,7 +75,7 @@ unsigned int land_getWid( int window );
 void bar_regen (void);
 
 /*
- * Error dialogue generation and associated sanity checks.
+ * Error dialogue generation and associated checks.
  */
 int can_swap( char* shipname );
 int can_swapEquipment( char* shipname );

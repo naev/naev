@@ -27,7 +27,7 @@ int pilot_maxAmmo( Pilot* pilot );
 void pilot_fillAmmo( Pilot* pilot );
 
 /* Checks. */
-int pilot_slotsCheckSanity( Pilot *p );
+int pilot_slotsCheckSafety( Pilot *p );
 int pilot_slotsCheckRequired( Pilot *p );
 const char* pilot_checkSpaceworthy( Pilot *p );
 int pilot_reportSpaceworthy( Pilot *p, char buf[], int buffSize );

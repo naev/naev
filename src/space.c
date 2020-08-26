@@ -936,7 +936,7 @@ Planet* planet_get( const char* planetname )
  */
 Planet* planet_getIndex( int ind )
 {
-   /* Sanity check. */
+   /* Validity check. */
    if ((ind < 0) || (ind >= planet_nstack)) {
       WARN(_("Planet index '%d' out of range (max %d)"), ind, planet_nstack);
       return NULL;
@@ -1972,7 +1972,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
    Commodity **comms;
    int ncomms;
 
-   /* Clear up memory for sane defaults. */
+   /* Clear up memory for safe defaults. */
    flags          = 0;
    planet->real   = ASSET_REAL;
    planet->hide   = 0.01;
@@ -2283,7 +2283,7 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    }
    planet = planet_get(planetname);
    if (planet == NULL) {
-      sys->nplanets--; /* Try to keep sanity if possible. */
+      sys->nplanets--; /* Try to keep safety if possible. */
       return -1;
    }
    sys->planets[sys->nplanets-1]    = planet;
@@ -2651,7 +2651,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    xmlNodePtr cur, node;
    uint32_t flags;
 
-   /* Clear memory for sane defaults. */
+   /* Clear memory for safe defaults. */
    flags          = 0;
    sys->presence  = NULL;
    sys->npresence = 0;
@@ -4209,7 +4209,7 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
       return;
    }
 
-   /* Check that we have a sane faction. (-1 == bobbens == insane)*/
+   /* Check that we have a valid faction. (-1 == bobbens == invalid)*/
    if (faction_isFaction(faction) == 0)
       return;
 
@@ -4523,7 +4523,7 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
    id = getPresenceIndex( cur_system, faction );
    sys->presence[id].curUsed -= amount;
 
-   /* Sanity. */
+   /* Safety. */
    presence = &sys->presence[id];
    presence->curUsed = MAX( 0, sys->presence[id].curUsed );
 

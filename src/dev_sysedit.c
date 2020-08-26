@@ -1121,7 +1121,7 @@ static void sysedit_deselect (void)
    sysedit_nselect   = 0;
    sysedit_mselect   = 0;
 
-   /* Button sanity. */
+   /* Button check. */
    sysedit_checkButtons();
 }
 
@@ -1187,7 +1187,7 @@ static void sysedit_selectAdd( Select_t *sel )
    sysedit_select[ sysedit_nselect ] = *sel;
    sysedit_nselect++;
 
-   /* Button sanity. */
+   /* Button check. */
    sysedit_checkButtons();
 }
 
@@ -1203,7 +1203,7 @@ static void sysedit_selectRm( Select_t *sel )
          sysedit_nselect--;
          memmove( &sysedit_select[i], &sysedit_select[i+1],
                sizeof(Select_t) * (sysedit_nselect - i) );
-         /* Button sanity. */
+         /* Button check. */
          sysedit_checkButtons();
          return;
       }

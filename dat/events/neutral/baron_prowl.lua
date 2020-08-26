@@ -1,5 +1,5 @@
 --[[
--- Prowl Event for the Crazy Baron mission string. Only used when NOT doing any Baron missions.
+-- Prowl Event for the Baron mission string. Only used when NOT doing any Baron missions.
 --]]
 
 function create()

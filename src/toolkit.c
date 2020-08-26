@@ -237,7 +237,7 @@ Widget* window_newWidget( Window* w, const char *name )
    if (wgt == NULL)
       wgt = malloc( sizeof(Widget) );
 
-   /* Sane defaults. */
+   /* Safe defaults. */
    memset( wgt, 0, sizeof(Widget) );
    wgt->type   = WIDGET_NULL;
    wgt->status = WIDGET_STATUS_NORMAL;
@@ -508,7 +508,7 @@ unsigned int window_createFlags( const char* name,
    wdw->id           = wid;
    wdw->name         = strdup(name);
 
-   /* Sane defaults. */
+   /* Safe defaults. */
    wdw->idgen        = -1;
    wdw->focus        = -1;
    wdw->xrel         = -1.;
@@ -1980,7 +1980,7 @@ void toolkit_focusSanitize( Window *wdw )
    /* Clear focus. */
    toolkit_focusClear( wdw );
 
-   /* No focus is always sane. */
+   /* No focus is always safe. */
    if (wdw->focus == -1)
       return;
 

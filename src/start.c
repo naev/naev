@@ -133,7 +133,7 @@ int start_load (void)
    xmlFreeDoc(doc);
    free(buf);
 
-   /* Sanity checking. */
+   /* Safety checking. */
 #define MELEMENT(o,s) \
    if (o) WARN(_("Module start data missing/invalid '%s' element"), s) /**< Define to help check for data errors. */
    MELEMENT( start_data.name==NULL, "name" );

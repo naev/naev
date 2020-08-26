@@ -1521,7 +1521,7 @@ int factions_load (void)
    int i, j, k, r;
    Faction *f, *sf;
 
-   /* Third pass, makes sure allies/enemies are sane. */
+   /* Third pass, makes sure allies/enemies are valid. */
    for (i=0; i<faction_nstack; i++) {
       f = &faction_stack[i];
 

@@ -2607,7 +2607,7 @@ int player_addOutfit( const Outfit *o, int quantity )
 {
    int i;
 
-   /* Sanity check. */
+   /* Validity check. */
    if (quantity == 0)
       return 0;
 
@@ -2841,7 +2841,7 @@ void player_runHooks (void)
 
 
 /**
- * @brief Clears escorts to make sure deployment is sane.
+ * @brief Clears escorts to make sure deployment is safe.
  */
 static void player_clearEscorts (void)
 {
@@ -3241,7 +3241,7 @@ static Planet* player_parse( xmlNodePtr parent )
    player.p = NULL;
    pnt = NULL;
 
-   /* Sane defaults. */
+   /* Safe defaults. */
    planet      = NULL;
    time_set    = 0;
    map_overlay = 0;
@@ -3665,7 +3665,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    xmlr_attr(parent,"name",name);
    xmlr_attr(parent,"model",model);
 
-   /* Sane defaults. */
+   /* Safe defaults. */
    pilot_clearFlagsRaw( flags );
    pilot_setFlagRaw( flags, PILOT_PLAYER );
    pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
@@ -3801,13 +3801,13 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    /* Update stats. */
    pilot_calcStats( ship );
 
-   /* Test for sanity. */
+   /* Test for validity. */
    if (fuel >= 0)
       ship->fuel = MIN(ship->fuel_max, fuel);
    /* ships can now be non-spaceworthy on save
     * str = pilot_checkSpaceworthy( ship ); */
-   if (!pilot_slotsCheckSanity( ship )) {
-      DEBUG(_("Player ship '%s' failed slot sanity check , removing all outfits and adding to stock."),
+   if (!pilot_slotsCheckSafety( ship )) {
+      DEBUG(_("Player ship '%s' failed slot validity check , removing all outfits and adding to stock."),
             ship->name );
       /* Remove all outfits. */
       for (i=0; i<ship->noutfits; i++) {
@@ -3946,7 +3946,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    ship->autoweap = autoweap;
    if (autoweap)
       pilot_weaponAuto( ship );
-   pilot_weaponSane( ship );
+   pilot_weaponSafe( ship );
    if (active_set >= 0 && active_set < PILOT_WEAPON_SETS)
       ship->active_set = active_set;
    else

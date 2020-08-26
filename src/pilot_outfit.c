@@ -461,12 +461,12 @@ int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s )
 }
 //TODO: fix comment to conform to Naev's style and represent changes
 /**
- * @brief Pilot slot sanity check - makes sure stats are sane.
+ * @brief Pilot slot safety check - makes sure stats are safe.
  *
  *    @param p Pilot to check.
  *    @return 0 if a slot doesn't fit, !0 otherwise.
  */
-int pilot_slotsCheckSanity( Pilot *p )
+int pilot_slotsCheckSafety( Pilot *p )
 {
    int i;
    for (i=0; i<p->noutfits; i++)
@@ -502,14 +502,14 @@ int pilot_slotsCheckRequired( Pilot *p )
 }
 //TODO: fix comment to conform to Naev's style and represent change
 /**
- * @brief Pilot sanity check - makes sure stats are sane.
+ * @brief Pilot safety check - makes sure stats are safe.
  *
  *    @param p Pilot to check.
- *    @return The reason why the pilot is not sane (or NULL if sane).
+ *    @return The reason why the pilot is not safe (or NULL if safe).
  */
 const char* pilot_checkSpaceworthy( Pilot *p )
 {
-   if (!pilot_slotsCheckSanity(p))
+   if (!pilot_slotsCheckSafety(p))
       return _("Doesn't fit slot");
 
    /* CPU. */
@@ -554,7 +554,7 @@ const char* pilot_checkSpaceworthy( Pilot *p )
    return NULL;
 }
 /**
- * @brief Pilot sanity report - makes sure stats are sane.
+ * @brief Pilot safety report - makes sure stats are safe.
  *
  *    @param p Pilot to check.
  *    @param buf Buffer to fill.
@@ -1131,7 +1131,7 @@ void pilot_updateMass( Pilot *pilot )
 /* limit the maximum speed if limiter is active */
    if (pilot_isFlag(pilot, PILOT_HASSPEEDLIMIT)) {
       pilot->speed = pilot->speed_limit - pilot->thrust / (mass * 3.);
-      /* Sanity: speed must never go negative. */
+      /* Speed must never go negative. */
       if (pilot->speed < 0.) {
          /* If speed DOES go negative, we have to lower thrust. */
          pilot->thrust = 3 * pilot->speed_limit * mass;

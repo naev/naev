@@ -1,5 +1,5 @@
 --[[
--- Comm Event for the Crazy Baron mission string
+-- Comm Event for the Baron mission string
 --]]
 
 

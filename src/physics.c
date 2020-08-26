@@ -390,7 +390,7 @@ static void solid_update_rk4 (Solid *obj, const double dt)
    vect_cset( &obj->vel, vx, vy );
    vect_cset( &obj->pos, px, py );
 
-   /* Sanity check. */
+   /* Validity check. */
    if (obj->dir >= 2.*M_PI)
       obj->dir -= 2.*M_PI;
    else if (obj->dir < 0.)

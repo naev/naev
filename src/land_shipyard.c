@@ -384,7 +384,7 @@ static void shipyard_buy( unsigned int wid, char* str )
 }
 
 /**
- * @brief Makes sure it's sane to buy a ship.
+ * @brief Makes sure it's valid to buy a ship.
  *    @param shipname Ship being bought.
  */
 int shipyard_canBuy ( char *shipname, Planet *planet )
@@ -412,7 +412,7 @@ int shipyard_canBuy ( char *shipname, Planet *planet )
 }
 
 /**
- * @brief Makes sure it's sane to sell a ship.
+ * @brief Makes sure it's valid to sell a ship.
  *    @param shipname Ship being sold.
  */
 int can_sell( char* shipname )
@@ -427,7 +427,7 @@ int can_sell( char* shipname )
 }
 
 /**
- * @brief Makes sure it's sane to change ships.
+ * @brief Makes sure it's valid to change ships.
  *    @param shipname Ship being changed to.
  */
 int can_swap( char* shipname )
@@ -455,7 +455,7 @@ int can_swap( char* shipname )
 
 
 /**
- * @brief Makes sure it's sane to buy a ship, trading the old one in simultaneously.
+ * @brief Makes sure it's valid to buy a ship, trading the old one in simultaneously.
  *    @param shipname Ship being bought.
  */
 int shipyard_canTrade( char* shipname )

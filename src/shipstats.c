@@ -200,7 +200,7 @@ ShipStatList* ss_listFromXML( xmlNodePtr node )
 
 
 /**
- * @brief Checks for sanity.
+ * @brief Checks for validity.
  */
 int ss_check (void)
 {

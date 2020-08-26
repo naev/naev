@@ -613,7 +613,7 @@ void loadscreen_load (void)
    cam_setZoom( conf.zoom_far );
 
    /* Load the texture */
-   nsnprintf( file_path, PATH_MAX, GFX_PATH"loading/%s", loadscreens[ RNG_SANE(0,nload-1) ] );
+   nsnprintf( file_path, PATH_MAX, GFX_PATH"loading/%s", loadscreens[ RNG_BASE(0,nload-1) ] );
    loading = gl_newImage( file_path, 0 );
 
    /* Create the stars. */

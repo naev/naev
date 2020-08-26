@@ -447,7 +447,7 @@ static int playerL_refuel( lua_State *L )
    else
       player.p->fuel = player.p->fuel_max;
 
-   /* Make sure value is sane. */
+   /* Make sure value is valid. */
    player.p->fuel = CLAMP(0, player.p->fuel_max, player.p->fuel);
 
    return 0;

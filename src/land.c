@@ -163,7 +163,7 @@ int land_doneLoading (void)
 
 
 /**
- * @brief Makes sure it's sane to change ships in the equipment view.
+ * @brief Makes sure it's valid to change ships in the equipment view.
  *    @param shipname Ship being changed to.
  */
 int can_swapEquipment( char* shipname )
@@ -332,7 +332,7 @@ static int bar_genList( unsigned int wid )
    int w, h, iw, ih, bw, bh;
    int i, n, pos;
 
-   /* Sanity check. */
+   /* Validity check. */
    if (wid == 0)
       return 0;
 
@@ -1197,7 +1197,7 @@ static void land_changeTab( unsigned int wid, char *wgt, int old, int tab )
    const char *torun_hook;
    unsigned int to_visit;
 
-   /* Sane defaults. */
+   /* Safe defaults. */
    torun_hook = NULL;
    to_visit   = 0;
 

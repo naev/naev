@@ -1853,7 +1853,7 @@ void map_close (void)
 
 
 /**
- * @brief Sets the map to sane defaults
+ * @brief Sets the map to safe defaults
  */
 void map_clear (void)
 {
@@ -2280,7 +2280,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
          open              = A_add( open, neighbour );
       }
 
-      /* Sanity check in case not linked. */
+      /* Safety check in case not linked. */
       if (open == NULL)
          break;
    }
@@ -2458,7 +2458,7 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
    /* Set zoom. */
    map_setZoom(zoom);
 
-   /* Make sure selected is sane. */
+   /* Make sure selected is valid. */
    sys = system_getIndex( map_selected );
    if (!(sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)) &&
          !sys_isKnown(sys) && !space_sysReachable(sys))

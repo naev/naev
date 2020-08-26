@@ -110,7 +110,7 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
    int mem;
    node = parent->xmlChildrenNode;
 
-   /* Sane defaults and clean up. */
+   /* Safe defaults and clean up. */
    memset( temp, 0, sizeof(Fleet) );
    temp->faction = -1;
 

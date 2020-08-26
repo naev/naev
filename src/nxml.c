@@ -36,7 +36,7 @@ glTexture* xml_parseTexture( xmlNodePtr node,
    glTexture *tex;
 
    /*
-    * Sane defaults.
+    * Safe defaults.
     */
    sx = defsx;
    sy = defsy;
