@@ -2,7 +2,7 @@
    
    Mission: Novice Nebula Research
    
-   Description: A Za'lek student asks the player to help him with his reasearch. The player has to visit Doeston and Arandon.
+   Description: A Za'lek student asks the player to help him with his reasearch. The player has to visit Doeston and Iris.
    Some minor complications on the way have to be expected.
    
    Difficulty: Easy
@@ -14,7 +14,7 @@ include "dat/scripts/numstring.lua"
 
 t_sys = {}
 t_sys[1] = "Doeston"
-t_sys[2] = "Arandon"
+t_sys[2] = "Iris"
 
 -- localization stuff, translators would work here
 bar_desc = _("You see a young scientist talking with some pilots, apparently without success.")
@@ -62,7 +62,6 @@ choice1 = _("Ask")
 choice2 = _("Nevermind")
 
 -- Mission info stuff
-osd_title = {}
 osd_msg   = {}
 osd_title = _("Novice Nebula Research")
 osd_msg[1] = _("Fly to the %s system.")
@@ -103,7 +102,7 @@ function accept()
     cargo = misn.cargoAdd("Nebula Sensor Suit", 5)
     
     -- Set up mission information
-    misn.setTitle(mtitle[1] )
+    misn.setTitle(mtitle[1])
     misn.setReward(string.format(misn_reward, creditstring(50000)))
     misn.setDesc(string.format(mdesc[1], t_sys[1]))
     misn_marker = misn.markerAdd(system.get(t_sys[1]), "low")
