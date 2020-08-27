@@ -30,6 +30,7 @@
   <weapon size="medium" x="-24" y="-8" h="8" />
   <weapon size="medium" x="-24" y="8" h="8" />
   <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-900 Core System</utility>
+  <utility size="large" prop="accessory" exclusive="1" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />

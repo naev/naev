@@ -28,6 +28,7 @@
   <weapon size="small" x="-9" y="-5" h="-9" />
   <weapon size="small" x="-9" y="5" h="-9" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Previous Generation Medium Systems</utility>
+  <utility size="medium" prop="accessory" exclusive="1" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="small" />

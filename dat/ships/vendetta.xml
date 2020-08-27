@@ -30,6 +30,7 @@
   <weapon size="small" x="19" y="0" h="-2" />
   <weapon size="small" x="3" y="0" h="2" />
   <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-200 Core System</utility>
+  <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
   <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 300 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-4 Light Plating</structure>

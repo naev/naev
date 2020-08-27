@@ -31,6 +31,7 @@
   <weapon size="large" prop="bio_weapon" x="-15" y="0" h="7" />
   <weapon size="large" prop="bio_weapon" x="-33" y="0" h="7" />
   <utility size="large" prop="bio_systems" exclusive="1" required="1">Superheavy Bioship Brain Stage 1</utility>
+  <utility size="large" prop="accessory" exclusive="1" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
