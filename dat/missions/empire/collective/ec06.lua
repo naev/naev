@@ -32,7 +32,9 @@ text[2] = _([["The Operation has been dubbed 'Cold Metal'. We're going to mount 
 text[3] = _([[As you do your approach to land on %s you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. When you do land you are saluted by the welcoming committee in charge of saluting all the returning pilots.
     You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective anymore. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]])
 text[4] = _([[She continues. "As a symbol of appreciation, you should find a deposit of 5,000,000 credits in your account. There will be a celebration later today in the officer's room if you want to join in."
-    And so ends the Collective threat...]])
+    And so ends the Collective threat...
+
+   You don't remember much of the after party, but you wake up groggily in your ship clutching an Empire officer's boot.]])
 coward_text = _([[You receive a message signed by Commodore Keer:
     "There is no room for cowards in the Empire's fleet."
     The signature does seem valid.]])
@@ -259,6 +261,7 @@ function land ()
       player.pay( 5000000 ) -- 5m
 
       tk.msg( title[3], text[4] )
+      player.addOutfit("Left Boot")
 
       emp_addCollectiveLog( log_text_succeed )
 
