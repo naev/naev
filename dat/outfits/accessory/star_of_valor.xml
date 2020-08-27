@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Star of Valor">
+ <general>
+  <typename>Accessory</typename>
+  <slot prop="accessory">utility</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>0</mass>
+  <price>0</price>
+  <description>A shiny medal for your contribution to the Dvaered cause. On the back it says "not for rectal use". Wait, what?</description>
+  <gfx_store>placeholder</gfx_store>
+ <rarity>6</rarity></general>
+ <specific type="modification">
+  <armour_mod>10</armour_mod>
+  <fwd_firerate>5</fwd_firerate>
+ </specific>
+</outfit>
+
