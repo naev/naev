@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Toy Drone">
+ <general>
+  <typename>Accessory</typename>
+  <slot prop="accessory">utility</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>0</mass>
+  <price>0</price>
+  <description>A small toy drone that can fly around the ship. The AI doesn't seem to work too well and it has a habit to bump into the walls and beep all the time, but it is rather cute.</description>
+  <gfx_store>placeholder</gfx_store>
+ <rarity>6</rarity></general>
+ <specific type="modification">
+  <shield_regen_mod>5</shield_regen_mod>
+  <speed_mod>5</speed_mod>
+  <fwd_firerate>3</fwd_firerate>
+  <tur_firerate>3</tur_firerate>
+ </specific>
+</outfit>
+
