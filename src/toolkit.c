@@ -1145,6 +1145,52 @@ void toolkit_drawRect( int x, int y, int w, int h,
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
    gl_endSmoothProgram();
 }
+
+
+/**
+ * @brief Draws a rectangle.
+ *
+ *    @param x1 X position of corner 1.
+ *    @param y1 Y position to corner 1.
+ *    @param x2 X position of corner 2.
+ *    @param y2 Y position to corner 2.
+ *    @param x3 X position of corner 3.
+ *    @param y3 Y position to corner 3.
+ *    @param c Colour.
+ */
+void toolkit_drawTriangle( int x1, int y1, int x2, int y2, int x3, int y3,
+                       const glColour* c )
+{
+   GLshort vertex[3][2];
+   glColour colours[3];
+
+   /* Set up vertices and colours. */
+   vertex[0][0] = x1;        /* left-up */
+   vertex[0][1] = y1;
+   colours[0]   = *c;
+
+   vertex[1][0] = x2;        /* left-down */
+   vertex[1][1] = y2;
+   colours[1]   = *c;
+
+   vertex[2][0] = x3;    /* right-up */
+   vertex[2][1] = y3;
+   colours[2]   = *c;
+
+   /* Upload to the VBO. */
+   gl_vboSubData( toolkit_vbo, 0, sizeof(vertex), vertex );
+   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(colours), colours );
+
+   gl_beginSmoothProgram(gl_view_matrix);
+   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex, 0, 2, GL_SHORT, 0 );
+   gl_vboActivateAttribOffset( toolkit_vbo, shaders.smooth.vertex_color,
+         toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 3 );
+   gl_endSmoothProgram();
+}
+
+
+
 /**
  * @brief Draws an alt text.
  *
