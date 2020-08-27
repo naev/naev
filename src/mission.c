@@ -39,7 +39,6 @@
 #include "land.h"
 
 
-#define XML_MISSION_ID        "Missions" /**< XML document identifier */
 #define XML_MISSION_TAG       "mission" /**< XML mission tag. */
 
 #define MISSION_CHUNK         32 /**< Chunk allocation. */
@@ -56,7 +55,6 @@ Mission *player_missions[MISSION_MAX]; /**< Player's active missions. */
  * mission stack
  */
 static MissionData *mission_stack = NULL; /**< Unmutable after creation */
-static int mission_nstack = 0; /**< Missions in stack. */
 
 
 /*
@@ -74,7 +72,8 @@ static int mission_meetReq( int mission, int faction,
 static int mission_matchFaction( MissionData* misn, int faction );
 static int mission_location( const char* loc );
 /* Loading. */
-static int mission_parse( MissionData* temp, const xmlNodePtr parent );
+static int mission_parseFile( const char* file );
+static int mission_parseXML( MissionData *temp, const xmlNodePtr parent );
 static int missions_parseActive( xmlNodePtr parent );
 /* externed */
 int missions_saveActive( xmlTextWriterPtr writer );
@@ -109,7 +108,7 @@ int mission_getID( const char* name )
 {
    int i;
 
-   for (i=0; i<mission_nstack; i++)
+   for (i=0; i<array_size(mission_stack); i++)
       if (strcmp(name,mission_stack[i].name)==0)
          return i;
 
@@ -126,7 +125,7 @@ int mission_getID( const char* name )
  */
 MissionData* mission_get( int id )
 {
-   if ((id < 0) || (id >= mission_nstack)) return NULL;
+   if ((id < 0) || (id >= array_size(mission_stack))) return NULL;
    return &mission_stack[id];
 }
 
@@ -158,8 +157,6 @@ MissionData* mission_getFromName( const char* name )
  */
 static int mission_init( Mission* mission, MissionData* misn, int genid, int create, unsigned int *id )
 {
-   char *buf;
-   size_t bufsize;
    int ret;
 
    /* clear the mission */
@@ -182,20 +179,13 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
    misn_loadLibs( mission->env ); /* load our custom libraries */
 
    /* load the file */
-   buf = ndata_read( misn->lua, &bufsize );
-   if (buf == NULL) {
-      WARN(_("Mission '%s' Lua script not found."), misn->lua );
-      return -1;
-   }
-   if (nlua_dobufenv(mission->env, buf, bufsize, misn->lua) != 0) {
+   if (nlua_dobufenv(mission->env, misn->lua, strlen(misn->lua), misn->sourcefile) != 0) {
       WARN(_("Error loading mission file: %s\n"
           "%s\n"
           "Most likely Lua file has improper syntax, please check"),
-            misn->lua, lua_tostring(naevL, -1));
-      free(buf);
+           misn->sourcefile, lua_tostring(naevL, -1));
       return -1;
    }
-   free(buf);
 
    /* run create function */
    if (create) {
@@ -314,7 +304,7 @@ void missions_run( int loc, int faction, const char* planet, const char* sysname
    int i;
    double chance;
 
-   for (i=0; i<mission_nstack; i++) {
+   for (i=0; i<array_size(mission_stack); i++) {
       misn = &mission_stack[i];
       if (misn->avail.loc != loc)
          continue;
@@ -597,6 +587,8 @@ static void mission_freeData( MissionData* mission )
       free(mission->name);
    if (mission->lua)
       free(mission->lua);
+   if (mission->sourcefile)
+      free(mission->sourcefile);
    if (mission->avail.planet)
       free(mission->avail.planet);
    if (mission->avail.system)
@@ -706,7 +698,7 @@ Mission* missions_genList( int *n, int faction,
    tmp      = NULL;
    m        = 0;
    alloced  = 0;
-   for (i=0; i<mission_nstack; i++) {
+   for (i=0; i<array_size(mission_stack); i++) {
       misn = &mission_stack[i];
       if (misn->avail.loc == loc) {
 
@@ -777,16 +769,9 @@ static int mission_location( const char* loc )
  *    @param parent Node containing the mission.
  *    @return 0 on success.
  */
-static int mission_parse( MissionData* temp, const xmlNodePtr parent )
+static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
 {
    xmlNodePtr cur, node;
-
-#ifdef DEBUGGING
-   /* To check if mission is valid. */
-   int ret;
-   char *buf;
-   size_t len;
-#endif /* DEBUGGING */
 
    /* Clear memory. */
    memset( temp, 0, sizeof(MissionData) );
@@ -801,34 +786,12 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
 
    node = parent->xmlChildrenNode;
 
-   char str[PATH_MAX] = "\0";
-
    do { /* load all the data */
 
       /* Only handle nodes. */
       xml_onlyNodes(node);
 
-      if (xml_isNode(node,"lua")) {
-         nsnprintf( str, PATH_MAX, MISSION_LUA_PATH"%s.lua", xml_get(node) );
-         temp->lua = strdup( str );
-         str[0] = '\0';
-
-#ifdef DEBUGGING
-         /* Check to see if syntax is valid. */
-         buf = ndata_read( temp->lua, &len );
-         ret = luaL_loadbuffer(naevL, buf, len, temp->name );
-         if (ret == LUA_ERRSYNTAX) {
-            WARN(_("Mission Lua '%s' of mission '%s' syntax error: %s"),
-                  temp->name, temp->lua, lua_tostring(naevL,-1) );
-         } else {
-            lua_pop(naevL, 1);
-         }
-         free(buf);
-#endif /* DEBUGGING */
-
-         continue;
-      }
-      else if (xml_isNode(node,"flags")) { /* set the various flags */
+      if (xml_isNode(node,"flags")) { /* set the various flags */
          cur = node->children;
          do {
             xml_onlyNodes(cur);
@@ -871,7 +834,6 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
    if (o) WARN( _("Mission '%s' missing/invalid '%s' element"), temp->name, s)
-   MELEMENT(temp->lua==NULL,"lua");
    MELEMENT(temp->avail.loc==-1,"location");
    MELEMENT((temp->avail.loc!=MIS_AVAIL_NONE) && (temp->avail.chance==0),"chance");
 #undef MELEMENT
@@ -887,63 +849,98 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
  */
 int missions_load (void)
 {
-   int i, m;
-   size_t bufsize;
-   char *buf;
-   xmlNodePtr node;
-   xmlDocPtr doc;
+   size_t i, nfiles;
+   char **mission_files;
 
+   /* Allocate player missions. */
    for (i=0; i<MISSION_MAX; i++)
       player_missions[i] = calloc(1, sizeof(Mission));
 
-   buf = ndata_read( MISSION_DATA_PATH, &bufsize );
-   if (buf == NULL) {
-      WARN(_("Unable to read data from '%s'"), MISSION_DATA_PATH);
-      return -1;
+   /* Run over missions. */
+   mission_stack = array_create(MissionData);
+   mission_files = ndata_listRecursive( MISSION_DATA_PATH, &nfiles );
+   for (i=0; i<nfiles; i++) {
+      mission_parseFile( mission_files[i] );
+      free( mission_files[i] );
+   }
+   free( mission_files );
+   array_shrink(&mission_stack);
+
+   DEBUG( ngettext("Loaded %d Mission", "Loaded %d Missions", array_size(mission_stack) ), array_size(mission_stack) );
+
+   return 0;
+}
+
+
+/**
+ * @brief Parses a single mission.
+ */
+static int mission_parseFile( const char* file )
+{
+   xmlDocPtr doc;
+   xmlNodePtr node;
+   size_t bufsize;
+   char *filebuf, *luabuf;
+   const char *pos;
+   MissionData *temp;
+
+#ifdef DEBUGGING
+   /* To check if mission is valid. */
+   int ret;
+#endif /* DEBUGGING */
+
+   /* Load string. */
+   filebuf = ndata_read( file, &bufsize );
+
+   /* Skip if no XML. */
+   pos = nstrnstr( filebuf, "</mission>", bufsize );
+   if (pos==NULL) {
+      pos = nstrnstr( filebuf, "function create", bufsize );
+      if ((pos != NULL) && !strncmp(pos,"--common",bufsize))
+         WARN(_("Mission '%s' has create function but no XML header!"), file);
+      return 0;
    }
 
-   doc = xmlParseMemory( buf, bufsize );
+   /* Separate XML header and Lua. */
+   pos = nstrnstr( filebuf, "--]]", bufsize );
+   if (pos == NULL) {
+      WARN(_("Mission file '%s' has missing XML header!"), file);
+      return -1;
+   }
+   luabuf = &filebuf[ pos-filebuf+4 ];
+
+   /* Parse the header. */
+   doc = xmlParseMemory( &filebuf[5], pos-filebuf-5 );
    if (doc == NULL) {
-      WARN(_("Unable to parse document '%s'"), MISSION_DATA_PATH);
+      WARN(_("Unable to parse document XML header for Mission '%s'"), file);
       return -1;
    }
 
    node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,XML_MISSION_ID)) {
-      ERR( _("Malformed '%s' file: missing root element '%s'"), MISSION_DATA_PATH, XML_MISSION_ID );
+   if (!xml_isNode(node,XML_MISSION_TAG)) {
+      ERR( _("Malformed XML header for '%s' mission: missing root element '%s'"), file, XML_MISSION_TAG );
       return -1;
    }
 
-   node = node->xmlChildrenNode; /* first mission node */
-   if (node == NULL) {
-      ERR( _("Malformed '%s' file: does not contain elements"), MISSION_DATA_PATH);
-      return -1;
+   temp = &array_grow(&mission_stack);
+   mission_parseXML( temp, node );
+   temp->lua = calloc( 1, bufsize-(luabuf-filebuf)+1 );
+   temp->sourcefile = strdup(file);
+   strncpy( temp->lua, luabuf, bufsize-(luabuf-filebuf) );
+
+#ifdef DEBUGGING
+   /* Check to see if syntax is valid. */
+   ret = luaL_loadbuffer(naevL, temp->lua, strlen(temp->lua), temp->name );
+   if (ret == LUA_ERRSYNTAX) {
+      WARN(_("Mission Lua '%s' syntax error: %s"),
+            file, lua_tostring(naevL,-1) );
+   } else {
+      lua_pop(naevL, 1);
    }
-
-   m = 0;
-   do {
-      if (xml_isNode(node,XML_MISSION_TAG)) {
-
-         /* See if must grow. */
-         mission_nstack++;
-         if (mission_nstack > m) {
-            m += MISSION_CHUNK;
-            mission_stack = realloc(mission_stack, sizeof(MissionData)*m);
-         }
-
-         /* Load it. */
-         mission_parse( &mission_stack[mission_nstack-1], node );
-      }
-   } while (xml_nextNode(node));
-
-   /* Shrink to minimum. */
-   mission_stack = realloc(mission_stack, sizeof(MissionData)*mission_nstack);
+#endif /* DEBUGGING */
 
    /* Clean up. */
    xmlFreeDoc(doc);
-   free(buf);
-
-   DEBUG( ngettext("Loaded %d Mission", "Loaded %d Missions", mission_nstack ), mission_nstack );
 
    return 0;
 }
@@ -960,11 +957,10 @@ void missions_free (void)
    missions_cleanup();
 
    /* Free the mission data. */
-   for (i=0; i<mission_nstack; i++)
+   for (i=0; i<array_size(mission_stack); i++)
       mission_freeData( &mission_stack[i] );
-   free( mission_stack );
+   array_free( mission_stack );
    mission_stack = NULL;
-   mission_nstack = 0;
 
    /* Free the player mission stack. */
    for (i=0; i<MISSION_MAX; i++)

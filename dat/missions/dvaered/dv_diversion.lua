@@ -1,4 +1,19 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="A Small Diversion">
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>faction.playerStanding("Dvaered") &gt; 5</cond>
+   <chance>10</chance>
+   <location>Bar</location>
+   <planet>Doranthex Prime</planet>
+  </avail>
+ </mission>
+ --]]
+--[[
    -- This is a oneoff mission where you help a new Dvaered Warlord takeover a planet
    -- To Do: fix fighters being idle after mission ends
    -- Other editors, feel free to update dialog to make it more dvaered like.

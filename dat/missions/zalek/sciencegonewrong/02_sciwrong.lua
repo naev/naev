@@ -1,4 +1,19 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="The one with the Runaway">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <done>The one with the Visit</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Gastan</planet>
+  </avail>
+ </mission>
+ --]]
+--[[
    Mission: The one with the Runaway
    Description: A prototype drone runs away and needs to be caught by the player
    How to make this more interesting than just go to a system and shoot down the drone w ion or medusa? The ship has to have enough cargo for the drone to be transported back.

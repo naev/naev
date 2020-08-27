@@ -1,4 +1,19 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Empire Shipping 1">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and faction.playerStanding("Dvaered") &gt;= 0 and faction.playerStanding("FLF") &lt; 10 and var.peek("es_misn") ~= nil and var.peek("es_misn") &gt;= 3</cond>
+   <chance>35</chance>
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    Empire Shipping Prisoner Exchange
 

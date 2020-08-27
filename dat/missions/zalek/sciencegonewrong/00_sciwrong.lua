@@ -1,4 +1,18 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="The one with the Shopping">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Gastan</planet>
+  </avail>
+ </mission>
+ --]]
+--[[
    Mission: The one with the Shopping
 
    Description: A Za'lek scientist asks the player to fetch some raw material that he needs to build his prototype.

@@ -1,4 +1,18 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Sirian Bounty">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <planet>The Wringer</planet>
+   <chance>50</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
+ --]]
+--[[
 -- This is the first mission in the Academy Hack minor campaign.
 --]]
 

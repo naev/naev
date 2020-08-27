@@ -1,4 +1,20 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Assault on Raelid">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <chance>30</chance>
+   <done>FLF Pirate Alliance</done>
+   <location>Bar</location>
+   <faction>FLF</faction>
+   <cond>faction.playerStanding("FLF") &gt;= 50</cond>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    Assault on Raelid
 

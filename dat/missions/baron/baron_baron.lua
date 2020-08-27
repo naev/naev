@@ -1,4 +1,17 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Baron">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
+ --]]
+--[[
 -- This is the first mission in the baron string.
 --]]
 

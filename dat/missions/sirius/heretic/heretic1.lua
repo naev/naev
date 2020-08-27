@@ -1,3 +1,19 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="The Return">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <done>The Gauntlet</done>
+   <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Margot</planet>
+  </avail>
+ </mission>
+ --]]
 --[[misn title - the return]]
 --[[after smuggling a small arms shipment to the an'ku system,
    the player is asked to deliver a message to a "shady character"

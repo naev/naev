@@ -1,4 +1,23 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Seek And Destoy">
+  <avail>
+   <priority>4</priority>
+   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+   <chance>875</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    The player searches for an outlaw across several systems
 

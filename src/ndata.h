@@ -32,7 +32,7 @@
 #define OUTFIT_POLYGON_PATH      "dat/gfx/outfit/space_polygon/" /**< Path to ship's collision polygon. */
 
 #define FACTION_DATA_PATH        "dat/faction.xml" /**< Faction xml file. */
-#define MISSION_DATA_PATH        "dat/mission.xml" /**< Path to missions XML. */
+#define MISSION_DATA_PATH        "dat/missions/" /**< Path to missions XML. */
 #define EVENT_DATA_PATH          "dat/event.xml" /**< Path to events XML. */
 #define SPFX_DATA_PATH           "dat/spfx.xml" /**< Location of the spfx datafile. */
 #define DTYPE_DATA_PATH          "dat/damagetype.xml" /**< Location of the spfx datafile. */

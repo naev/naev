@@ -1,4 +1,14 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Kidnapped">
+  <avail>
+   <priority>4</priority>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
+ --]]
+--[[
       MISSION: Kidnapped
       AUTHOR: Superkoop - John Koopman
 

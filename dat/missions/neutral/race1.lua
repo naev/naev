@@ -1,4 +1,18 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Racing Skills 1">
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <cond>(player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht") and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Civilian"] ~= nil and system.cur():presences()["Civilian"] &gt; 0</cond>
+   <chance>10</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
+ --]]
+--[[
 --
 -- MISSION: Racing Skills 1
 -- DESCRIPTION: A person asks you to join a race, where you fly to various checkpoints and board them before landing back at the starting planet

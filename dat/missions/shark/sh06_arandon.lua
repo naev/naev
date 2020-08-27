@@ -1,4 +1,20 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="A Journey To Arandon">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <done>The FLF Contact</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Darkshed</planet>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
+  </avail>
+ </mission>
+  --]]
+--[[
 
    This is the seventh mission of the Shark's teeth campaign. The player has to meet the FLF in Arandon.
 

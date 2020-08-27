@@ -1,4 +1,18 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Empire Recruitment">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <chance>40</chance>
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    Simple cargo mission that opens up the Empire cargo missions.
 

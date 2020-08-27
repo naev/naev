@@ -1,4 +1,20 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Collective Scouting">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <cond>var.peek("es_cargo") == true and faction.playerStanding("Empire") &gt; 5</cond>
+   <chance>40</chance>
+   <location>Bar</location>
+   <done>Empire Shipping 3</done>
+   <planet>Omega Station</planet>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    Collective Scout
 

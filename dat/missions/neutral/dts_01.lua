@@ -1,4 +1,23 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Defend the System 2">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <chance>3</chance>
+   <done>Defend the System 1</done>
+   <location>None</location>
+   <faction>Dvaered</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Soromid</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    MISSION: Defend the System 2
    DESCRIPTION: A mission to defend the system against swarm of pirate ships.

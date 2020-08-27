@@ -77,7 +77,8 @@ typedef struct MissionData_ {
    MissionAvail_t avail; /**< Mission availability. */
 
    unsigned int flags; /**< Flags to store binary properties */
-   char* lua; /**< Lua file to use. */
+   char* lua; /**< Lua data to use. */
+   char* sourcefile; /**< Source file name. */
 } MissionData;
 
 

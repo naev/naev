@@ -1,4 +1,19 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="The Meeting">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <done>Invitation</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Darkshed</planet>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    This is the fifth mission of the Shark's teeth campaign. The player has to go to a planet in Za'lek space.
 

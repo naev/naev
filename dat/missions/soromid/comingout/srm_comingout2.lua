@@ -1,4 +1,20 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Coming of Age">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <done>Coming Out</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Durea</planet>
+   <cond>var.peek("comingout_time") == nil or time.get() &gt;= time.fromnumber(var.peek("comingout_time")) + time.create(0, 20, 0)</cond>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    Coming of Age
 

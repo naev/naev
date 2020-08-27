@@ -1,4 +1,17 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Take the Dvaered crew home">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
+ --]]
+--[[
 -- This is the first mission in the anti-FLF Dvaered campaign. The player is tasked with ferrying home some Dvaered people.
 -- stack variable flfbase_flfshipkilled: Used to determine whether the player destroyed the FLF derelict, as requested. Affects the reward.
 -- stack variable flfbase_intro:
