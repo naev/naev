@@ -29,7 +29,7 @@ reward_desc = _([[%s credits]])
 
 misn_desc = _([[Deliver the love letters to %s in the %s system.]])
 
-misn_accomplished = _([[You deliver the letters to a young woman who excitedly takes them and thanks you profusely. It seems you really made her day. When you check your balance, you see that %s credits have been transferred into your account.]])
+misn_accomplished = _([[You deliver the letters to a young woman who excitedly takes them and thanks you profusely. It seems you really made her day. When you check your balance, you see that %s credits have been transferred into your account. It also seems like you forgot a letter in the ship, but there were enough that you don't think it will be missed.]])
 
 osd_desc = {}
 osd_desc[1] = _("Fly to %s in the %s system.")
@@ -97,6 +97,7 @@ function land()
    if planet.cur() == targetworld then
       player.pay( reward )
       tk.msg( "", misn_accomplished:format( numstring( reward ) ) )
+      player.addOutfit("Love Letter")
       addMiscLog( log_text )
       misn.finish( true )
    end

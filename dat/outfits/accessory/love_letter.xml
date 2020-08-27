@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Love Letter">
+ <general>
+  <typename>Accessory</typename>
+  <slot prop="accessory">utility</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>0</mass>
+  <price>0</price>
+  <description>A misplaced love letter that you were supposed to deliver, reading the first line "My tootlepumps, how frompscious are thein pluckerpumps..." you are fairly certain that you did a favour in not delivering it. At least it makes your ship look cuter.</description>
+  <gfx_store>placeholder</gfx_store>
+ <rarity>6</rarity></general>
+ <specific type="modification">
+  <stress_dissipation>10</stress_dissipation>
+  <crew_mod>10</crew_mod>
+ </specific>
+</outfit>
