@@ -257,27 +257,8 @@ const char *outfit_slotName( const Outfit* o )
 
 
 /**
- * @brief Gets the name of the slot size of an outfit.
- *
- *    @param o Outfit to get slot size of.
- *    @return The human readable name of the slot size.
+ * @brief Gets the slot size as a string.
  */
-const char *outfit_slotSize( const Outfit* o )
-{
-   switch( o->slot.size) {
-      case OUTFIT_SLOT_SIZE_NA:
-         return gettext_noop("N/A");
-      case OUTFIT_SLOT_SIZE_LIGHT:
-         return gettext_noop("Small");
-      case OUTFIT_SLOT_SIZE_MEDIUM:
-         return gettext_noop("Medium");
-      case OUTFIT_SLOT_SIZE_HEAVY:
-         return gettext_noop("Large");
-      default:
-         return gettext_noop("Unknown");
-   }
-}
-
 const char *slotSize( const OutfitSlotSize o )
 {
    switch( o ) {
@@ -292,6 +273,18 @@ const char *slotSize( const OutfitSlotSize o )
       default:
          return gettext_noop("Unknown");
    }
+}
+
+
+/**
+ * @brief Gets the name of the slot size of an outfit.
+ *
+ *    @param o Outfit to get slot size of.
+ *    @return The human readable name of the slot size.
+ */
+const char *outfit_slotSize( const Outfit* o )
+{
+   return slotSize( o->slot.size );
 }
 
 
