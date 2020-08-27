@@ -72,6 +72,7 @@ static int mission_meetReq( int mission, int faction,
 static int mission_matchFaction( MissionData* misn, int faction );
 static int mission_location( const char* loc );
 /* Loading. */
+static int missions_cmp( const void *a, const void *b );
 static int mission_parseFile( const char* file );
 static int mission_parseXML( MissionData *temp, const xmlNodePtr parent );
 static int missions_parseActive( xmlNodePtr parent );
@@ -843,6 +844,22 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
 
 
 /**
+ * @brief Ordering function for missions.
+ */
+static int missions_cmp( const void *a, const void *b )
+{
+   const MissionData *ma, *mb;
+   ma = (const MissionData*) a;
+   mb = (const MissionData*) b;
+   if (ma->avail.priority < mb->avail.priority)
+      return -1;
+   else if (ma->avail.priority > mb->avail.priority)
+      return +1;
+   return strcmp( ma->name, mb->name );
+}
+
+
+/**
  * @brief Loads all the mission data.
  *
  *    @return 0 on success.
@@ -865,6 +882,9 @@ int missions_load (void)
    }
    free( mission_files );
    array_shrink(&mission_stack);
+
+   /* Sort based on priority so higher priority missions can establish claims first. */
+   qsort( mission_stack, array_size(mission_stack), sizeof(MissionData), missions_cmp );
 
    DEBUG( ngettext("Loaded %d Mission", "Loaded %d Missions", array_size(mission_stack) ), array_size(mission_stack) );
 
