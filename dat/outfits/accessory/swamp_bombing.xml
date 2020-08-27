@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Swamp Bombing">
+ <general>
+  <typename>Accessory</typename>
+  <slot prop="accessory">utility</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>0</mass>
+  <price>0</price>
+  <description>A fairly mediocre cocktail that you don't intend to drink. At least it looks good as an accessory.</description>
+  <gfx_store>placeholder</gfx_store>
+ <rarity>6</rarity></general>
+ <specific type="modification">
+  <ew_hide>10</ew_hide>
+  <jump_delay>-10</jump_delay>
+ </specific>
+</outfit>
