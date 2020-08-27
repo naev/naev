@@ -106,7 +106,7 @@ void shipyard_open( unsigned int wid )
          SHIP_TARGET_W, SHIP_TARGET_H, "imgTarget", NULL, 1 );
 
    /* slot types */
-   window_addCust( wid, -20, -SHIP_TARGET_H-60, 148, 70, "cstSlots", 0.,
+   window_addCust( wid, -20, -SHIP_TARGET_H-55, 148, 80, "cstSlots", 0.,
          shipyard_renderSlots, NULL, NULL );
 
    /* stat text */
@@ -568,7 +568,7 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
    y = by + bh;
 
    /* Draw rotated text. */
-   y -= 10;
+   y -= 10+5;
    gl_print( &gl_smallFont, bx, y, &cFontWhite, _("Slots:") );
 
    x = bx + 10.;
