@@ -4,9 +4,10 @@
   <typename>Accessory</typename>
   <slot prop="accessory">utility</slot>
   <size>small</size>
+  <priority>3</priority>
   <mass>0</mass>
   <price>0</price>
-  <description>The fuel pod allows a ship to store more fuel for hyperspace jumps.</description>
+  <description>Racing trophy you won with your excellent piloting skills. Looks great on the wall!</dsecription>
   <gfx_store>placeholder</gfx_store>
  <rarity>6</rarity></general>
  <specific type="modification">
