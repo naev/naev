@@ -1,3 +1,10 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Spaceport Bar NPC">
+  <trigger>land</trigger>
+  <chance>100</chance>
+ </event>
+ --]]
 
 --[[
 -- Event for creating random characters in the spaceport bar.

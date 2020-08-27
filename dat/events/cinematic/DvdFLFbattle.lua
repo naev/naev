@@ -1,4 +1,15 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Cinematic Dvaered/FLF battle">
+  <trigger>enter</trigger>
+  <chance>10</chance>
+  <cond>system.cur():name() == "Tuoladis"</cond>
+  <flags>
+   <unique />
+  </flags>
+ </event>
+ --]]
+--[[
 
     This is the first of many planned eyecandy cinematics.
     In this one, there will be a battle between the Dvaered and the FLF in the Doranthex system.

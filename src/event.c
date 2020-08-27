@@ -22,6 +22,7 @@
 #include <stdlib.h>
 
 #include "log.h"
+#include "array.h"
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_evt.h"
@@ -54,22 +55,23 @@
 /**
  * @brief Event data structure.
  */
-typedef struct EventData_s {
+typedef struct EventData_ {
    char *name; /**< Name of the event. */
-   char *lua; /**< Name of Lua file to use. */
+   char *sourcefile; /**< Source file code. */
+   char *lua; /**< Lua code. */
    unsigned int flags; /**< Bit flags. */
 
    EventTrigger_t trigger; /**< What triggers the event. */
    char *cond; /**< Conditional Lua code to execute. */
    double chance; /**< Chance of appearing. */
-} EventData_t;
+
+} EventData;
 
 
 /*
  * Event data.
  */
-static EventData_t *event_data   = NULL; /**< Allocated event data. */
-static int event_ndata           = 0; /**< Number of actual event data. */
+static EventData *event_data   = NULL; /**< Allocated event data. */
 
 
 /*
@@ -85,8 +87,9 @@ static int event_mactive         = 0; /**< Allocated space for active events. */
  * Prototypes.
  */
 static unsigned int event_genID (void);
-static int event_parse( EventData_t *temp, const xmlNodePtr parent );
-static void event_freeData( EventData_t *event );
+static int event_parseFile( const char* file );
+static int event_parseXML( EventData *temp, const xmlNodePtr parent );
+static void event_freeData( EventData *event );
 static int event_create( int dataid, unsigned int *id );
 int events_saveActive( xmlTextWriterPtr writer );
 int events_loadActive( xmlNodePtr parent );;
@@ -247,7 +250,7 @@ static int event_create( int dataid, unsigned int *id )
    size_t bufsize;
    char *buf;
    Event_t *ev;
-   EventData_t *data;
+   EventData *data;
 
    /* Create the event. */
    event_nactive++;
@@ -400,7 +403,7 @@ void events_trigger( EventTrigger_t trigger )
    int created;
 
    created = 0;
-   for (i=0; i<event_ndata; i++) {
+   for (i=0; i<array_size(event_data); i++) {
       /* Make sure trigger matches. */
       if (event_data[i].trigger != trigger)
          continue;
@@ -443,19 +446,12 @@ void events_trigger( EventTrigger_t trigger )
  *    @param parent Event parent node.
  *    @return 0 on success.
  */
-static int event_parse( EventData_t *temp, const xmlNodePtr parent )
+static int event_parseXML( EventData *temp, const xmlNodePtr parent )
 {
    xmlNodePtr node, cur;
-   char str[PATH_MAX] = "\0";
    char *buf;
 
-#ifdef DEBUGGING
-   /* To check if event is valid. */
-   int ret;
-   size_t len;
-#endif /* DEBUGGING */
-
-   memset( temp, 0, sizeof(EventData_t) );
+   memset( temp, 0, sizeof(EventData) );
 
    /* get the name */
    temp->name = xml_nodeProp(parent, "name");
@@ -469,29 +465,8 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
       /* Only check nodes. */
       xml_onlyNodes(node);
 
-      if (xml_isNode(node,"lua")) {
-         nsnprintf( str, PATH_MAX, EVENT_LUA_PATH"%s.lua", xml_get(node) );
-         temp->lua = strdup( str );
-         str[0] = '\0';
-
-#ifdef DEBUGGING
-         /* Check to see if syntax is valid. */
-         buf = ndata_read( temp->lua, &len );
-         ret = luaL_loadbuffer(naevL, buf, len, temp->name );
-         if (ret == LUA_ERRSYNTAX) {
-            WARN(_("Event Lua '%s' of event '%s' syntax error: %s"),
-                  temp->name, temp->lua, lua_tostring(naevL,-1) );
-         } else {
-            lua_pop(naevL, 1);
-         }
-         free(buf);
-#endif /* DEBUGGING */
-
-         continue;
-      }
-
       /* Trigger. */
-      else if (xml_isNode(node,"trigger")) {
+      if (xml_isNode(node,"trigger")) {
          buf = xml_get(node);
          if (buf == NULL)
             WARN(_("Event '%s': Null trigger type."), temp->name);
@@ -536,8 +511,7 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
    temp->chance /= 100.;
 
 #define MELEMENT(o,s) \
-   if (o) WARN(_("Mission '%s' missing/invalid '%s' element"), temp->name, s)
-   MELEMENT(temp->lua==NULL,"lua");
+   if (o) WARN(_("Event '%s' missing/invalid '%s' element"), temp->name, s)
    MELEMENT((temp->trigger!=EVENT_TRIGGER_NONE) && (temp->chance==0.),"chance");
    MELEMENT(temp->trigger==EVENT_TRIGGER_NULL,"trigger");
 #undef MELEMENT
@@ -553,64 +527,99 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
  */
 int events_load (void)
 {
-   int m;
+   size_t i, nfiles;
+   char **event_files;
+
+   /* Run over events. */
+   event_data = array_create(EventData);
+   event_files = ndata_listRecursive( EVENT_DATA_PATH, &nfiles );
+   for (i=0; i<nfiles; i++) {
+      event_parseFile( event_files[i] );
+      free( event_files[i] );
+   }
+   free( event_files );
+   array_shrink(&event_data);
+
+   DEBUG( ngettext("Loaded %d Event", "Loaded %d Events", array_size(event_data) ), array_size(event_data) );
+
+   return 0;
+}
+
+
+/**
+ * @brief Parses an event file.
+ */
+static int event_parseFile( const char* file )
+{
    size_t bufsize;
-   char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
+   char *filebuf, *luabuf;
+   const char *pos;
+   EventData *temp;
 
-   /* Load the data. */
-   buf = ndata_read( EVENT_DATA_PATH, &bufsize );
-   if (buf == NULL) {
-      WARN(_("Unable to read data from '%s'"), EVENT_DATA_PATH);
+#ifdef DEBUGGING
+   /* To check if event is valid. */
+   int ret;
+#endif /* DEBUGGING */
+
+   /* Load string. */
+   filebuf = ndata_read( file, &bufsize );
+   if (filebuf == NULL) {
+      WARN(_("Unable to read data from '%s'"), file);
       return -1;
    }
 
-   /* Load the document. */
-   doc = xmlParseMemory( buf, bufsize );
+   /* Skip if no XML. */
+   pos = nstrnstr( filebuf, "</event>", bufsize );
+   if (pos==NULL) {
+      pos = nstrnstr( filebuf, "function create", bufsize );
+      if ((pos != NULL) && !strncmp(pos,"--common",bufsize))
+         WARN(_("Event '%s' has create function but no XML header!"), file);
+      return 0;
+   }
+
+   /* Separate XML header and Lua. */
+   pos = nstrnstr( filebuf, "--]]", bufsize );
+   if (pos == NULL) {
+      WARN(_("Event file '%s' has missing XML header!"), file);
+      return -1;
+   }
+   luabuf = &filebuf[ pos-filebuf+4 ];
+
+   /* Parse the header. */
+   doc = xmlParseMemory( &filebuf[5], pos-filebuf-5 );
    if (doc == NULL) {
-      WARN(_("Unable to parse document '%s'"), EVENT_DATA_PATH);
+      WARN(_("Unable to parse document XML header for Event '%s'"), file);
       return -1;
    }
 
    /* Get the root node. */
    node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,XML_EVENT_ID)) {
-      WARN(_("Malformed '%s' file: missing root element '%s'"), EVENT_DATA_PATH, XML_EVENT_ID);
+   if (!xml_isNode(node,XML_EVENT_TAG)) {
+      WARN(_("Malformed '%s' file: missing root element '%s'"), file, XML_EVENT_TAG);
       return -1;
    }
 
-   /* Get the first node. */
-   node = node->xmlChildrenNode; /* first event node */
-   if (node == NULL) {
-      WARN(_("Malformed '%s' file: does not contain elements"), EVENT_DATA_PATH);
-      return -1;
+   temp = &array_grow(&event_data);
+   event_parseXML( temp, node );
+   temp->lua = calloc( 1, bufsize-(luabuf-filebuf)+1 );
+   temp->sourcefile = strdup(file);
+   strncpy( temp->lua, luabuf, bufsize-(luabuf-filebuf) );
+
+#ifdef DEBUGGING
+   /* Check to see if syntax is valid. */
+   ret = luaL_loadbuffer(naevL, temp->lua, strlen(temp->lua), temp->name );
+   if (ret == LUA_ERRSYNTAX) {
+      WARN(_("Event Lua '%s' syntax error: %s"),
+            file, lua_tostring(naevL,-1) );
+   } else {
+      lua_pop(naevL, 1);
    }
-
-   m = 0;
-   do {
-      if (xml_isNode(node,XML_EVENT_TAG)) {
-
-         /* See if must grow. */
-         event_ndata++;
-         if (event_ndata > m) {
-            m += EVENT_CHUNK;
-            event_data = realloc(event_data, sizeof(EventData_t)*m);
-         }
-
-         /* Load it. */
-         event_parse( &event_data[event_ndata-1], node );
-      }
-   } while (xml_nextNode(node));
-
-   /* Shrink to minimum. */
-   event_data = realloc(event_data, sizeof(EventData_t)*event_ndata);
+#endif /* DEBUGGING */
 
    /* Clean up. */
    xmlFreeDoc(doc);
-   free(buf);
-
-   DEBUG( ngettext("Loaded %d Event", "Loaded %d Events", event_ndata ), event_ndata );
 
    return 0;
 }
@@ -621,13 +630,13 @@ int events_load (void)
  *
  *    @param event Event Data to free.
  */
-static void event_freeData( EventData_t *event )
+static void event_freeData( EventData *event )
 {
    free( event->name );
    free( event->lua );
    free( event->cond );
 #if DEBUGGING
-   memset( event, 0, sizeof(EventData_t) );
+   memset( event, 0, sizeof(EventData) );
 #endif /* DEBUGGING */
 }
 
@@ -662,12 +671,11 @@ void events_exit (void)
 
    /* Free data. */
    if (event_data != NULL) {
-      for (i=0; i<event_ndata; i++)
+      for (i=0; i<array_size(event_data); i++)
          event_freeData( &event_data[i] );
       free(event_data);
    }
    event_data  = NULL;
-   event_ndata = 0;
 }
 
 
@@ -681,7 +689,7 @@ int event_dataID( const char *evdata )
 {
    int i;
 
-   for (i=0; i<event_ndata; i++)
+   for (i=0; i<array_size(event_data); i++)
       if (strcmp(event_data[i].name, evdata)==0)
          return i;
    WARN(_("No event data found matching name '%s'."), evdata);

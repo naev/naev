@@ -1,4 +1,11 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Generic News">
+  <trigger>land</trigger>
+  <chance>100</chance>
+ </event>
+ --]]
+--[[
 -- Event for creating news
 --
 --]]

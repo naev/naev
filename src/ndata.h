@@ -33,7 +33,7 @@
 
 #define FACTION_DATA_PATH        "dat/faction.xml" /**< Faction xml file. */
 #define MISSION_DATA_PATH        "dat/missions/" /**< Path to missions XML. */
-#define EVENT_DATA_PATH          "dat/event.xml" /**< Path to events XML. */
+#define EVENT_DATA_PATH          "dat/events/" /**< Path to events XML. */
 #define SPFX_DATA_PATH           "dat/spfx.xml" /**< Location of the spfx datafile. */
 #define DTYPE_DATA_PATH          "dat/damagetype.xml" /**< Location of the spfx datafile. */
 #define COMMODITY_DATA_PATH      "dat/commodity.xml" /**< Commodity XML file. */
