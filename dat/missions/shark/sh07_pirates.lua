@@ -41,7 +41,8 @@ title[4] = _("Mission accomplished")
 text[4] = _("You have killed the four pirates. Now to return to %s and collect your payment...")
 
 title[5] = _("That was impressive")
-text[5] = _([[Smith awaits your arrival at the spaceport. When you exit your ship, he smiles and walks up to you. "Good job," he says. "Our deal is secure, thanks to you. Here is your pay. Thank you for all your help!"]])
+text[5] = _([[Smith awaits your arrival at the spaceport. When you exit your ship, he smiles and walks up to you. "Good job," he says. "Our deal is secure, thanks to you. Here is your pay and something extra for your hard work. Thank you for all your help!"
+    He hands you a credit chip and what appears to be a Nexus Shipyard commemorative sandwich holder.]])
 
 -- Mission details
 misn_title = _("The Last Detail")
@@ -146,6 +147,7 @@ function land()
    if stage == 1 and planet.cur() == planet.get("Darkshed") then
       tk.msg(title[5], text[5])
       player.pay(reward)
+      player.addOutfit("Sandwich Holder")
       misn.osdDestroy(osd)
       hook.rm(enterhook)
       hook.rm(landhook)
