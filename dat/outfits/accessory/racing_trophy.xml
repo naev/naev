@@ -7,7 +7,7 @@
   <mass>0</mass>
   <price>0</price>
   <description>The fuel pod allows a ship to store more fuel for hyperspace jumps.</description>
-  <gfx_store>engine03</gfx_store>
+  <gfx_store>placeholder</gfx_store>
  <rarity>6</rarity></general>
  <specific type="modification">
   <turn_mod>5</turn_mod>
