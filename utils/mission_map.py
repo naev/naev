@@ -4,24 +4,29 @@
 import xml.etree.ElementTree as ET
 import os # Ultimately, we want to use this one
 import pygraphviz as pgv
+import glob
 
-
-path = '../dat/missions/'
-file = '../dat/mission.xml'
-
-tree = ET.parse(file)
-root = tree.getroot()
-
-misnl = root.findall('mission')
-
+i = 0
 namdict = {} # Index from name
 names = []
 dones = []
 uniques = [] #
 
-i = 0 # No of mission
+for missionfile in glob.glob( './dat/missions/**/*.lua', recursive=True ):
+    print(missionfile)
 
-for misn in misnl:
+    with open(missionfile,'r') as f:
+        buf = f.read()
+    if buf.find('</mission>') < 0:
+        continue
+    p = buf.find('--]]')
+    if p < 0:
+        continue
+    xml = buf[5:p]
+
+    tree = ET.ElementTree(ET.fromstring(xml))
+    misn = tree.getroot()
+
     name = misn.attrib['name']
     names.append(name)
     namdict[name] = i
