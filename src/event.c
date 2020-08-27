@@ -247,8 +247,6 @@ static unsigned int event_genID (void)
  */
 static int event_create( int dataid, unsigned int *id )
 {
-   size_t bufsize;
-   char *buf;
    Event_t *ev;
    EventData *data;
 
@@ -282,20 +280,13 @@ static int event_create( int dataid, unsigned int *id )
    nlua_loadTk(ev->env);
 
    /* Load file. */
-   buf = ndata_read( data->lua, &bufsize );
-   if (buf == NULL) {
-      WARN(_("Event '%s' Lua script not found."), data->lua );
-      return -1;
-   }
-   if (nlua_dobufenv(ev->env, buf, bufsize, data->lua) != 0) {
+   if (nlua_dobufenv(ev->env, data->lua, strlen(data->lua), data->sourcefile) != 0) {
       WARN(_("Error loading event file: %s\n"
             "%s\n"
             "Most likely Lua file has improper syntax, please check"),
-            data->lua, lua_tostring(naevL,-1));
-      free(buf);
+            data->sourcefile, lua_tostring(naevL,-1));
       return -1;
    }
-   free(buf);
 
    /* Run Lua. */
    if ((id==NULL) || (*id==0))
@@ -632,9 +623,14 @@ static int event_parseFile( const char* file )
  */
 static void event_freeData( EventData *event )
 {
-   free( event->name );
-   free( event->lua );
-   free( event->cond );
+   if (event->name)
+      free( event->name );
+   if (event->lua)
+      free( event->lua );
+   if (event->sourcefile)
+      free( event->sourcefile );
+   if (event->cond)
+      free( event->cond );
 #if DEBUGGING
    memset( event, 0, sizeof(EventData) );
 #endif /* DEBUGGING */
