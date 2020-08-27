@@ -1,24 +1,24 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Hot dogs from space">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>1</priority>
-   <chance>2</chance>
-   <location>Bar</location>
-   <cond>(function ()
-            local count = 0
-            for i, p in pairs(system.cur():planets()) do
-               if p:services()["inhabited"] then
-                  count=count+1
-               end
-            end
-            return count &gt; 1
-         end)()</cond>
-  </avail>
- </mission>
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>1</priority>
+  <chance>2</chance>
+  <location>Bar</location>
+  <cond>(function ()
+           local count = 0
+           for i, p in pairs(system.cur():planets()) do
+              if p:services()["inhabited"] then
+                 count=count+1
+              end
+           end
+           return count &gt; 1
+        end)()</cond>
+ </avail>
+</mission>
  --]]
 --[[
 
