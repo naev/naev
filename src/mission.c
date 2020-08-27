@@ -671,7 +671,7 @@ static int mission_compare( const void* arg1, const void* arg2 )
       return strcmp( m1->title, m2->title );
 
    /* Tied. */
-   return 0.;
+   return strcmp(m1->data->name, m2->data->name);
 }
 
 
