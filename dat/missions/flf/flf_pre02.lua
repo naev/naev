@@ -68,7 +68,7 @@ text[5] = _([["Welcome back, %s, and congratulations. I didn't expect the Dvaere
 text[6] = _([[Benito takes you to the station's bar and buys you what for lack of a better word must be called a drink.
     "We will of course reward you for your service," she says once you are seated. "Though you must understand the FLF doesn't have that big a budget. Financial support is tricky, and the Frontier doesn't have that much to spare themselves to begin with. Nevertheless, we are willing to pay for good work, and your work is nothing but. What's more, you've ingratiated yourself with many of us, as you've undoubtedly noticed. Our top brass are among those you've impressed, so from today on, you can call yourself one of us! How about that, huh?"]])
 
-text[7] = _([["Of course, our work is only just beginning. No rest for the weary; we must continue the fight against the oppressors. I'm sure the road is still long, but I'm encouraged by the fact that we gained another valuable ally today. Check the mission computer for more tasks you can help us with. Please take this Octogon of Valor as a token of appreciation. I'm sure you'll play an important role in our eventual victory over the Dvaered!"
+text[7] = _([["Of course, our work is only just beginning. No rest for the weary; we must continue the fight against the oppressors. I'm sure the road is still long, but I'm encouraged by the fact that we gained another valuable ally today. Check the mission computer for more tasks you can help us with. Please take this Pentagram of Valor as a token of appreciation. I'm sure you'll play an important role in our eventual victory over the Dvaered!"
     That last part earns a cheer from the assembled FLF soldiers. You decide to raise your glass with them, making a toast to the fortune of battle in the upcoming campaign - and the sweet victory that lies beyond.]])
 
 refusetitle = _("Some other time perhaps")
@@ -377,7 +377,7 @@ function land_flf ()
       tk.msg( title[4], text[6] )
       tk.msg( title[4], text[7] )
       player.pay( 100000 )
-      player.addOutfit('Octogon of Valor')
+      player.addOutfit('Pentagram of Valor')
       flf_setReputation( 10 )
       faction.get("FLF"):modPlayer( 1 )
       var.pop( "flfbase_intro" )
