@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Satellite Mock-up">
+ <general>
+  <typename>Accessory</typename>
+  <slot prop="accessory">utility</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>0</mass>
+  <price>0</price>
+  <description>A mock-up of a satellite you helped launch into the nebula. It even has cute blinking lights!</description>
+  <gfx_store>placeholder</gfx_store>
+ <rarity>6</rarity></general>
+ <specific type="modification">
+  <shield_mod>5</shield_mod>
+  <ew_detect>5</ew_detect>
+ </specific>
+</outfit>
