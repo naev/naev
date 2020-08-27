@@ -1,4 +1,19 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Disrupt a Dvaered Patrol">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <chance>100</chance>
+   <location>Bar</location>
+   <cond>var.peek("flfbase_intro") == 2</cond>
+   <planet>Sindbad</planet>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License version 3 as

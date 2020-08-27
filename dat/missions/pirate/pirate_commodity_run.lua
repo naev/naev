@@ -1,4 +1,16 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Pirate Commodity Run">
+  <avail>
+   <priority>5</priority>
+   <cond>var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
+   <chance>90</chance>
+   <location>Computer</location>
+   <faction>Pirate</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    Pirate Commodity Delivery Mission
 

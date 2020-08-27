@@ -1,4 +1,17 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Deal with the FLF agent">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
+ --]]
+--[[
 -- This is the first "prelude" mission leading to the FLF campaign. The player takes a FLF agent onboard, then either turns him in to the Dvaered or delivers him to a hidden FLF base.
 -- stack variable flfbase_intro:
 --      1 - The player has turned in the FLF agent or rescued the Dvaered crew. Conditional for dv_antiflf02

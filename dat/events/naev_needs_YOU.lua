@@ -1,4 +1,14 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Naev Needs You!">
+  <trigger>land</trigger>
+  <chance>8</chance>
+  <flags>
+   <unique />
+  </flags>
+ </event>
+ --]]
+--[[
 
 EVENT TITLE: Naev Needs You!
 DESCRIPTION: 

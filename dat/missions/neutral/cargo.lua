@@ -1,4 +1,25 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Cargo">
+  <avail>
+   <priority>6</priority>
+   <chance>960</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Proteron</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Thurion</faction>
+   <faction>Traders Guild</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
    -- These are regular cargo delivery missions. Pay is low, but so is difficulty.
    -- Most of these missions require BULK ships. Not for small ships!
 --]]

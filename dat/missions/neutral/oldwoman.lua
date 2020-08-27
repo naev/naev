@@ -1,4 +1,18 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="An old woman">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <chance>3</chance>
+   <location>Bar</location>
+   <faction>Dvaered</faction>  -- Note: additional conditionals present in mission script!
+  </avail>
+ </mission>
+ --]]
+--[[
 --
 -- MISSION: The complaining grandma
 -- DESCRIPTION: The player is taking an old woman from Dvaered space to Sirius space.

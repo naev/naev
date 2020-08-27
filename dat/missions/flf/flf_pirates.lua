@@ -1,4 +1,18 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="FLF Pirate Disturbance">
+  <avail>
+   <priority>4</priority>
+   <chance>330</chance>
+   <done>Alliance of Inconvenience</done>
+   <location>Computer</location>
+   <faction>FLF</faction>
+   <faction>Frontier</faction>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    FLF pirate elimination mission.
 

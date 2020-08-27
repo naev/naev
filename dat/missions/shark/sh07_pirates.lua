@@ -1,4 +1,20 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="The Last Detail">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <done>A Journey To Arandon</done>
+   <chance>50</chance>
+   <location>Bar</location>
+   <planet>Darkshed</planet>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    This is the climax mission of the Shark's teeth campaign. The player has to kill 4 pirates.
 

@@ -1,4 +1,16 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Pirate Shipping">
+  <avail>
+   <priority>4</priority>
+   <cond>faction.playerStanding("Pirate") &gt;= 0</cond>
+   <chance>960</chance>
+   <location>Computer</location>
+   <faction>Pirate</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    Handles the randomly generated Pirate cargo missions.
 

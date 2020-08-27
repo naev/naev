@@ -1,4 +1,19 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="The Search for Cynthia">
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <done>The Runaway</done>
+   <chance>11</chance>
+   <location>Bar</location>
+   <system>Goddard</system>
+  </avail>
+ </mission>
+ --]]
+--[[
    This is the second half of "The Runaway"
    Here, Cynthia's father pays you to track down his daughter.
    It is alluded to that Cynthia ran away due to her abusive mother.

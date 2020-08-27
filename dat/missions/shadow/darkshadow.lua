@@ -1,4 +1,17 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Dark Shadow">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
+ --]]
+--[[
 -- This is the third mission in the "shadow" series, featuring the return of SHITMAN.
 --]]
 

@@ -1,4 +1,28 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="The FLF Contact">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <done>The Meeting</done>
+   <chance>3</chance>
+   <location>Bar</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Traders Guild</faction>
+   <faction>Za'lek</faction>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    This is the sixth mission of the Shark's teeth campaign. The player has to take contact with the FLF.
 

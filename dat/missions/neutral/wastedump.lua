@@ -1,4 +1,25 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Waste Dump">
+  <avail>
+   <priority>9</priority>
+   <done>Garbage Person</done>
+   <chance>100</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Thurion</faction>
+   <faction>Traders Guild</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    Waste Dump
 

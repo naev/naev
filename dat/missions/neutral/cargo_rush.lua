@@ -1,4 +1,25 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Cargo Rush">
+  <avail>
+   <priority>5</priority>
+   <chance>960</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Proteron</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Thurion</faction>
+   <faction>Traders Guild</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
    -- These are rush cargo delivery missions. They can be failed! But, pay is higher to compensate.
    -- These missions require fast ships, but higher tiers may also require increased cargo space.
 --]]

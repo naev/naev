@@ -1,4 +1,16 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Proteron Dissident Dead Or Alive Bounty">
+  <avail>
+   <priority>4</priority>
+   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+   <chance>360</chance>
+   <location>Computer</location>
+   <faction>Proteron</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    Dead or Alive Proteron Dissident Bounty
 

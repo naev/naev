@@ -1,3 +1,16 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="DIY Nerds">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <chance>2</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
+ --]]
    --[[
       MISSION: diy-nerds
       DESCRIPTION: Cart some nerds and their hardware to some DIY

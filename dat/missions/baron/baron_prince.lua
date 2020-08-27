@@ -1,4 +1,22 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Prince">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <done>Baron</done>
+   <chance>2</chance>
+   <location>Bar</location>
+   <faction>Empire</faction>
+   <faction>Dvaered</faction>
+   <faction>Goddard</faction>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 -- This is the second mission in the baron string.
 --]]
 

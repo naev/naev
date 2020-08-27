@@ -1,4 +1,20 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Harja's Vengeance">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <cond>planet.get("Violin Station"):system():jumpDist() &lt; 4</cond>
+   <done>Sirian Bounty</done>
+   <chance>10</chance>
+   <location>Bar</location>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 -- This is the second mission in the Academy Hack minor campaign.
 --]]
 
