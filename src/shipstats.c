@@ -97,7 +97,7 @@ static const ShipStatsLookup ss_lookup[] = {
 
    D__ELEM( SS_TYPE_D_EW_HIDE,            ew_hide,             gettext_noop("Cloaking") ),
    D__ELEM( SS_TYPE_D_EW_DETECT,          ew_detect,           gettext_noop("Detection") ),
-   D__ELEM( SS_TYPE_D_EW_JUMPDETECT,      ew_jump_detect,       gettext_noop("Jump Detection") ),
+   D__ELEM( SS_TYPE_D_EW_JUMPDETECT,      ew_jump_detect,      gettext_noop("Jump Detection") ),
 
    D__ELEM( SS_TYPE_D_LAUNCH_RATE,        launch_rate,         gettext_noop("Launch Rate") ),
    D__ELEM( SS_TYPE_D_LAUNCH_RANGE,       launch_range,        gettext_noop("Launch Range") ),
