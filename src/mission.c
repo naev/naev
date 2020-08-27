@@ -891,6 +891,10 @@ static int mission_parseFile( const char* file )
 
    /* Load string. */
    filebuf = ndata_read( file, &bufsize );
+   if (filebuf == NULL) {
+      WARN(_("Unable to read data from '%s'"), file);
+      return -1;
+   }
 
    /* Skip if no XML. */
    pos = nstrnstr( filebuf, "</mission>", bufsize );
