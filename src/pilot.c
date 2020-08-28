@@ -2468,6 +2468,21 @@ void pilot_untargetAsteroid( int anchor, int asteroid )
 
 
 /**
+ * @brief Checks to see how many of an outfit a pilot has.
+ */
+int pilot_numOutfit( const Pilot *p, const Outfit *o )
+{
+   int i, q;
+   q = 0;
+   for (i=0; i<p->noutfits; i++) {
+      if (p->outfits[i]->outfit == o)
+         q++;
+   }
+   return q;
+}
+
+
+/**
  * @brief Checks to see if the pilot has at least a certain amount of credits.
  *
  *    @param p Pilot to check to see if they have enough credits.
