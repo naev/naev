@@ -89,7 +89,11 @@ function board ()
 
    -- Always available outfits
    -- TODO add more
-   outfits = { 'Air Freshener', 'Valkyrie Ride', 'Hades Torch' }
+   outfits = {
+      'Air Freshener',
+      'Valkyrie Ride',
+      'Hades Torch',
+   }
 
    -- TODO add randomly chosen outfits, maybe conditioned on the current system or something?
 

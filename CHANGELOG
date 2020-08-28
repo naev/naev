@@ -8,6 +8,7 @@
       * Indicate non-common NPC with exclamation marks.
       * Added accessory slot and unique accessory outfits as mission rewards.
       * Simple economy model implemented with map visualizations
+      * Added travelling merchant who sells unique items.
       * Made missiles and fighter bays reload while in space
       * Modified the balancing of missiles
       * Added asteroids and mining
