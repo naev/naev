@@ -39,6 +39,12 @@
 #define  OUTFITS_NTABS  6
 
 
+typedef struct LandOutfitData_ {
+   Outfit *outfits;
+   int noutfits;
+} LandOutfitData;
+
+
 static iar_data_t *iar_data = NULL; /**< Stored image array positions. */
 
 /* Modifier for buying and selling quantity. */
@@ -59,6 +65,7 @@ static void outfits_find( unsigned int wid, char* str );
 static credits_t outfit_getPrice( Outfit *outfit );
 static void outfits_genList( unsigned int wid );
 static void outfits_changeTab( unsigned int wid, char *wgt, int old, int tab );
+static void outfits_onClose( unsigned int wid, char *str );
 
 
 /**
@@ -89,25 +96,56 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
 }
 
 
+/**
+ * @brief For when the widget closes.
+ */
+static void outfits_onClose( unsigned int wid, char *str )
+{
+   (void) str;
+   LandOutfitData *data = window_getData( wid );
+   if (data==NULL)
+      return;
+   free( data->outfits );
+   free( data );
+}
+
+
 
 /**
  * @brief Opens the outfit exchange center window.
+ *
+ *    @params wid Window ID to open at.
+ *    @params Outfits Outfit list to sell. Set to NULL if this is the landed player store.
  */
-void outfits_open( unsigned int wid )
+void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
 {
    int w, h, iw, ih, bw, bh, off;
+   LandOutfitData *data;
+
+   /* Set up window data. */
+   if (outfits!=NULL) {
+      data = calloc( 1, sizeof(LandOutfitData) );
+      data->outfits = calloc( noutfits, sizeof(Outfit*) );
+      memcpy( data->outfits, outfits, sizeof(Outfit*)*noutfits );
+      data->noutfits = noutfits;
+      window_setData( wid, data );
+      window_onClose( wid, outfits_onClose );
+   }
 
    /* Mark as generated. */
-   land_tabGenerate(LAND_WINDOW_OUTFITS);
+   if (outfits==NULL)
+      land_tabGenerate(LAND_WINDOW_OUTFITS);
 
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, &bw, &bh );
 
    /* Initialize stored positions. */
-   if (iar_data == NULL)
-      iar_data = calloc( OUTFITS_NTABS, sizeof(iar_data_t) );
-   else
-      memset( iar_data, 0, sizeof(iar_data_t) * OUTFITS_NTABS );
+   if (outfits==NULL) {
+      if (iar_data == NULL)
+         iar_data = calloc( OUTFITS_NTABS, sizeof(iar_data_t) );
+      else
+         memset( iar_data, 0, sizeof(iar_data_t) * OUTFITS_NTABS );
+   }
 
    /* will allow buying from keyboard */
    window_setAccept( wid, outfits_buy );
@@ -175,9 +213,13 @@ void outfits_regenList( unsigned int wid, char *str )
    (void) str;
    int tab;
    char *focused;
+   LandOutfitData *data;
+
+   /* If local or not. */
+   data = window_getData( wid );
 
    /* Must exist. */
-   if (land_getWid( LAND_WINDOW_OUTFITS ) == 0)
+   if ((data==NULL) && (land_getWid( LAND_WINDOW_OUTFITS ) == 0))
       return;
 
    /* Save focus. */
@@ -245,6 +287,7 @@ static void outfits_genList( unsigned int wid )
    int noutfits;
    int w, h, iw, ih;
    char *filtertext;
+   LandOutfitData *data;
 
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, NULL, NULL );
@@ -282,8 +325,18 @@ static void outfits_genList( unsigned int wid )
          filtertext = NULL;
    }
 
-   /* set up the outfits to buy/sell */
-   outfits = tech_getOutfit( land_planet->tech, &noutfits );
+   /* Set up the outfits to buy/sell */
+   data = window_getData( wid );
+   if (data == NULL) {
+      /* Use landed outfits. */
+      outfits = tech_getOutfit( land_planet->tech, &noutfits );
+   }
+   else {
+      /* Use custom list. */
+      noutfits = data->noutfits;
+      outfits = calloc( noutfits, sizeof(Outfit*) );
+      memcpy( outfits, data->outfits, sizeof(Outfit*)*noutfits );
+   }
    noutfits = outfits_filter( outfits, noutfits,
          tabfilters[active], filtertext );
    coutfits = outfits_imageArrayCells( outfits, &noutfits );

@@ -1020,7 +1020,7 @@ void land_genWindows( int load, int changetab )
       misn_open( land_getWid(LAND_WINDOW_MISSION) );
    /* Outfits. */
    if (should_open( PLANET_SERVICE_OUTFITS, LAND_WINDOW_OUTFITS ))
-      outfits_open( land_getWid(LAND_WINDOW_OUTFITS) );
+      outfits_open( land_getWid(LAND_WINDOW_OUTFITS), NULL, 0 );
    /* Shipyard. */
    if (should_open( PLANET_SERVICE_SHIPYARD, LAND_WINDOW_SHIPYARD ))
       shipyard_open( land_getWid(LAND_WINDOW_SHIPYARD) );
