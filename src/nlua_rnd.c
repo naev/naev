@@ -26,12 +26,14 @@ static int rnd_int( lua_State *L );
 static int rnd_sigma( lua_State *L );
 static int rnd_twosigma( lua_State *L );
 static int rnd_threesigma( lua_State *L );
+static int rnd_permutation( lua_State *L );
 static const luaL_Reg rnd_methods[] = {
    { "int", rnd_int }, /* obsolete, rnd.rnd is preferred. */
    { "rnd", rnd_int },
    { "sigma", rnd_sigma },
    { "twosigma", rnd_twosigma },
    { "threesigma", rnd_threesigma },
+   { "permutation", rnd_permutation },
    {0,0}
 }; /**< Random Lua methods. */
 
@@ -158,3 +160,66 @@ static int rnd_threesigma( lua_State *L )
    lua_pushnumber(L, RNG_3SIGMA());
    return 1;
 }
+
+
+/**
+ * @brief Creates a random permutation
+ *
+ * This creates a list from 1 to input and then randomly permutates it,
+ * however, if an ordered table is passed as a parameter, that is randomly
+ * permuted instead.
+ *
+ * @usage t = rnd.permutation( 5 )
+ * @usage t = rnd.permutation( {"cat", "dog", "cheese"} )
+ *
+ *    @luatparam number|table input Maximum value to permutate to.
+ *    @luatreturn table A randomly permutated table.
+ * @luafunc permutation( max )
+ */
+static int rnd_permutation( lua_State *L )
+{
+   int *values;
+   int i, j, temp, max;
+   int new_table;
+
+   NLUA_MIN_ARGS(1);
+   if (lua_isnumber(L,1)) {
+      max = lua_tointeger(L,1);
+      new_table = 1;
+   }
+   else if (lua_istable(L,1)) {
+      max = (int) lua_objlen(L,1);
+      new_table = 0;
+   }
+   else
+      NLUA_INVALID_PARAMETER(L);
+
+   /* Create the list. */
+   values = malloc( sizeof(int)*max );
+   for (i=0; i<max; i++)
+      values[i]=i;
+
+   /* Fisher-Yates shuffling algorithm */
+   for (i = max-1; i >= 0; --i){
+      /* Generate a random number in the range [0, max-1] */
+      j = randint() % (i+1);
+
+      /* Swap the last element with an element at a random index. */
+      temp      = values[i];
+      values[i] = values[j];
+      values[j] = temp;
+   }
+
+   /* Now either return a new table or permute the given table. */
+   lua_newtable(L);
+   for (i=0; i<max; i++) {
+      lua_pushnumber( L, i+1 );
+      lua_pushnumber( L, values[i]+1 );
+      if (!new_table)
+         lua_gettable(   L, 1 );
+      lua_settable(   L, -3 );
+   }
+
+   return 1;
+}
+
