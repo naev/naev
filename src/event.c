@@ -521,9 +521,9 @@ static int event_cmp( const void* a, const void* b )
    ea = (const EventData*) a;
    eb = (const EventData*) b;
    if (ea->priority < eb->priority)
-      return +1;
-   else if (ea->priority > eb->priority)
       return -1;
+   else if (ea->priority > eb->priority)
+      return +1;
    return strcmp( ea->name, eb->name );
 }
 

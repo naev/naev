@@ -658,9 +658,9 @@ static int mission_compare( const void* arg1, const void* arg2 )
 
    /* Check priority - lower is more important. */
    if (m1->data->avail.priority < m2->data->avail.priority)
-      return +1;
-   else if (m1->data->avail.priority > m2->data->avail.priority)
       return -1;
+   else if (m1->data->avail.priority > m2->data->avail.priority)
+      return +1;
 
    /* Compare NPC. */
    if ((m1->npc != NULL) && (m2->npc != NULL))
@@ -852,9 +852,9 @@ static int missions_cmp( const void *a, const void *b )
    ma = (const MissionData*) a;
    mb = (const MissionData*) b;
    if (ma->avail.priority < mb->avail.priority)
-      return +1;
-   else if (ma->avail.priority > mb->avail.priority)
       return -1;
+   else if (ma->avail.priority > mb->avail.priority)
+      return +1;
    return strcmp( ma->name, mb->name );
 }
 
