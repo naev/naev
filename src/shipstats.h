@@ -52,7 +52,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_LAUNCH_RATE,     /**< Launch rate for missiles. */
    SS_TYPE_D_LAUNCH_RANGE,    /**< Launch range for missiles. */
    SS_TYPE_D_LAUNCH_DAMAGE,   /**< Launch damage for missiles. */
-   SS_TYPE_D_AMMO_CAPACITY,   /**< Capacity of launchers. */     /* TODO */
+   SS_TYPE_D_AMMO_CAPACITY,   /**< Capacity of launchers. */
    SS_TYPE_D_LAUNCH_LOCKON,   /**< Lockon speed of launchers. */
 
    /* Forward mounts. */

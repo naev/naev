@@ -1233,7 +1233,7 @@ static int pilotL_weapset( lua_State *L )
 
          /* Ammo quantity relative. */
             lua_pushstring(L,"left_p");
-            lua_pushnumber( L, (double)slot->u.ammo.quantity / (double)outfit_amount(slot->outfit) );
+            lua_pushnumber( L, (double)slot->u.ammo.quantity / (double)pilot_maxAmmoO(p,slot->outfit) );
             lua_rawset(L,-3);
          }
 

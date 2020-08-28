@@ -268,7 +268,7 @@ void pilot_heatUpdateCooldown( Pilot *p )
          continue;
 
       /* Initial (raw) ammo threshold */
-      ammo_threshold = (int)(t * o->outfit->u.lau.amount);
+      ammo_threshold = round(t * pilot_maxAmmoO(p,o->outfit));
 
       /* Adjust for deployed fighters if needed */
       if ( outfit_isFighterBay( o->outfit ) )

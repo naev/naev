@@ -24,6 +24,7 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity 
 int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity );
 int pilot_countAmmo( Pilot* pilot );
 int pilot_maxAmmo( Pilot* pilot );
+int pilot_maxAmmoO( const Pilot* p, const Outfit *o );
 void pilot_fillAmmo( Pilot* pilot );
 
 /* Checks. */

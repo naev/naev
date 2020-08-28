@@ -1865,6 +1865,8 @@ void pilot_update( Pilot* pilot, const double dt )
 
          /* Initial (raw) ammo threshold */
          ammo_threshold = o->outfit->u.lau.amount;
+         if (outfit_isLauncher(o->outfit))
+            ammo_threshold = round( (double)ammo_threshold * pilot->stats.ammo_capacity );
 
          /* Adjust for deployed fighters if needed */
          if ( outfit_isFighterBay( o->outfit ) )

@@ -596,7 +596,7 @@ static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
          continue;
 
       /* Empty Launchers aren't valid */
-      if (outfit_isLauncher(ws->slots[i].slot->outfit) && ws->slots[i].slot->u.ammo.quantity <= 0)
+      if (outfit_isLauncher(ws->slots[i].slot->outfit) && (ws->slots[i].slot->u.ammo.quantity <= 0))
          continue;
 
       /* Get range. */

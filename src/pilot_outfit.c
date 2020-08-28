@@ -715,7 +715,7 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity 
    s->u.ammo.outfit    = ammo;
 
    /* Add the ammo. */
-   max                 = outfit_amount(s->outfit) - s->u.ammo.deployed;
+   max                 = pilot_maxAmmoO(pilot,s->outfit) - s->u.ammo.deployed;
    q                   = s->u.ammo.quantity; /* Amount have. */
    s->u.ammo.quantity += quantity;
    s->u.ammo.quantity  = MIN( max, s->u.ammo.quantity );
@@ -814,7 +814,24 @@ int pilot_maxAmmo( Pilot* pilot )
         continue;
      max += outfit->u.lau.amount;
   }
+  max = round( (double)max * pilot->stats.ammo_capacity );
   return max;
+}
+
+
+/**
+ * @brief Gets the maximum available ammo for a pilot for a specific outfit.
+ */
+int pilot_maxAmmoO( const Pilot* p, const Outfit *o )
+{
+   int max;
+   if (outfit_isLauncher(o))
+      max = round( (double)o->u.lau.amount * p->stats.ammo_capacity );
+   else if (outfit_isFighterBay(o))
+      max = o->u.bay.amount;
+   else
+      max = 0;
+   return max;
 }
 
 
@@ -841,10 +858,10 @@ void pilot_fillAmmo( Pilot* pilot )
          continue;
 
       /* Initial (raw) ammo threshold */
-      ammo_threshold = o->u.lau.amount;
+      ammo_threshold = pilot_maxAmmoO( pilot, o );
 
       /* Adjust for deployed fighters if needed */
-      if ( outfit_isFighterBay( o ) )
+      if (outfit_isFighterBay( o ))
          ammo_threshold -= pilot->outfits[i]->u.ammo.deployed;
 
       /* Add ammo. */
