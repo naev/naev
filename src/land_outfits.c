@@ -635,6 +635,8 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
             l = strlen(o->desc_short) + 128;
             coutfits[i].alt = malloc( l );
             p  = snprintf( &coutfits[i].alt[0], l, "%s\n", o->name );
+            if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
+               p += snprintf( &coutfits[i].alt[p], l-p, _("\aRUnique\a0\n") );
             if ((o->slot.spid!=0) && (p < l))
                p += snprintf( &coutfits[i].alt[p], l-p, _("\aRSlot %s\a0\n"),
                      sp_display( o->slot.spid ) );
@@ -682,6 +684,12 @@ int outfit_canBuy( char *name, Planet *planet )
    failure = 0;
    outfit  = outfit_get(name);
    price   = outfit_getPrice(outfit);
+
+   /* Unique. */
+   if (outfit_isProp(outfit, OUTFIT_PROP_UNIQUE) && (player_outfitOwned(outfit)>0)) {
+      land_errDialogueBuild( _("You can only own one of this outfit.") );
+      return 0;
+   }
 
    /* Map already mapped */
    if ((outfit_isMap(outfit) && map_isMapped(outfit)) ||
@@ -746,8 +754,12 @@ static void outfits_buy( unsigned int wid, char* str )
       return;
 
    outfit = outfit_get( outfitname );
-
    q = outfits_getMod();
+   /* Can only get one unique item. */
+   if (outfit_isProp(outfit, OUTFIT_PROP_UNIQUE) ||
+         outfit_isMap(outfit) || outfit_isLocalMap(outfit) ||
+         outfit_isGUI(outfit) || outfit_isLicense(outfit))
+      q = MIN(q,1);
 
    /* can buy the outfit? */
    if (land_errDialogue( outfitname, "buyOutfit" ))
@@ -777,6 +789,12 @@ int outfit_canSell( char *name )
 
    failure = 0;
    outfit = outfit_get(name);
+
+   /* Unique item. */
+   if (outfit_isProp(outfit, OUTFIT_PROP_UNIQUE)) {
+      land_errDialogueBuild(_("You can't sell a unique outfit."));
+      failure = 1;
+   }
 
    /* Map check. */
    if (outfit_isMap(outfit) || outfit_isLocalMap(outfit)) {
