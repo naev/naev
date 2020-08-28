@@ -64,7 +64,7 @@ typedef struct EventData_ {
    EventTrigger_t trigger; /**< What triggers the event. */
    char *cond; /**< Conditional Lua code to execute. */
    double chance; /**< Chance of appearing. */
-
+   int priority; /**< Event priority: 0 = main plot, 5 = default, 10 = insignificant. */
 } EventData;
 
 
@@ -87,6 +87,7 @@ static int event_mactive         = 0; /**< Allocated space for active events. */
  * Prototypes.
  */
 static unsigned int event_genID (void);
+static int event_cmp( const void* a, const void* b );
 static int event_parseFile( const char* file );
 static int event_parseXML( EventData *temp, const xmlNodePtr parent );
 static void event_freeData( EventData *event );
@@ -495,6 +496,9 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
       /* Get chance. */
       xmlr_float(node,"chance",temp->chance);
 
+      /* Get proirity. */
+      xmlr_int(node,"priority",temp->priority);
+
       DEBUG(_("Unknown node '%s' in event '%s'"), node->name, temp->name);
    } while (xml_nextNode(node));
 
@@ -508,6 +512,19 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
 #undef MELEMENT
 
    return 0;
+}
+
+
+static int event_cmp( const void* a, const void* b )
+{
+   const EventData *ea, *eb;
+   ea = (const EventData*) a;
+   eb = (const EventData*) b;
+   if (ea->priority < eb->priority)
+      return +1;
+   else if (ea->priority > eb->priority)
+      return -1;
+   return strcmp( ea->name, eb->name );
 }
 
 
@@ -530,6 +547,9 @@ int events_load (void)
    }
    free( event_files );
    array_shrink(&event_data);
+
+   /* Sort based on priority so higher priority missions can establish claims first. */
+   qsort( event_data, array_size(event_data), sizeof(EventData), event_cmp );
 
    DEBUG( ngettext("Loaded %d Event", "Loaded %d Events", array_size(event_data) ), array_size(event_data) );
 
