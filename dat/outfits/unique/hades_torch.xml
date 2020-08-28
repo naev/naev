@@ -12,6 +12,9 @@
   <limit>afterburner</limit>
   <cpu>-6</cpu>
  </general>
+ <stats>
+  <armour_damage>10</armour_damage>
+ </stats>
  <specific type="afterburner" group="9">
   <rumble>0.9</rumble>
   <sound>afterburner</sound>
@@ -23,6 +26,5 @@
   <heatup>20</heatup>
   <heat_base>500</heat_base>
   <heat_cap>750</heat_cap>
-  <armour_damage>30</armour_damage>
  </specific>
 </outfit>
