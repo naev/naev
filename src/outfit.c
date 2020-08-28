@@ -2147,7 +2147,11 @@ static int outfit_parse( Outfit* temp, const char* file )
             xmlr_strd(cur,"description",temp->description);
             xmlr_strd(cur,"typename",temp->typename);
             xmlr_int(cur,"priority",temp->priority);
-            if (xml_isNode(cur,"gfx_store")) {
+            if (xml_isNode(cur,"unique")) {
+               outfit_setProp(temp, OUTFIT_PROP_UNIQUE);
+               continue;
+            }
+            else if (xml_isNode(cur,"gfx_store")) {
                temp->gfx_store = xml_parseTexture( cur,
                      OUTFIT_GFX_PATH"store/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
                continue;
