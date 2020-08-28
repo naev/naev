@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="Travelling Merchant">
  <trigger>enter</trigger>
- <chance>100</chance>
+ <chance>5</chance>
  <cond>system.cur():presence("Pirate") &gt; 20 and system.cur():presence("Pirate") &lt; 200 </cond>
 </event>
 --]]
