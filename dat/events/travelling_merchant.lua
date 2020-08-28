@@ -87,6 +87,16 @@ end
 function board ()
    tk.msg( board_title, board_message )
 
+   --[[
+      Ideas
+   * Vampiric weapon that removes shield regen, but regenerates shield by doing damage.
+   * Hot-dog launcher (for sale after Reynir mission): does no damage, but has decent knockback and unique effect
+   * Money launcher: does fairly good damage, but runs mainly on credits instead of energy
+   * Mask of many faces: outfit that changes bonuses based on the dominant faction of the system you are in (needs event to handle changing outfit)
+   * Weapon that does double damage to the user if misses
+   * Weapon that damages the user each time it is shot (some percent only)
+   --]]
+
    -- Always available outfits
    -- TODO add more
    outfits = {
