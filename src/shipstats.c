@@ -99,8 +99,9 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_EW_DETECT,          ew_detect,           gettext_noop("Detection") ),
    D__ELEM( SS_TYPE_D_EW_JUMPDETECT,      ew_jump_detect,      gettext_noop("Jump Detection") ),
 
-   D__ELEM( SS_TYPE_D_LAUNCH_RATE,        launch_rate,         gettext_noop("Launch Rate") ),
+   D__ELEM( SS_TYPE_D_LAUNCH_RATE,        launch_rate,         gettext_noop("Fire Rate (Launcher)") ),
    D__ELEM( SS_TYPE_D_LAUNCH_RANGE,       launch_range,        gettext_noop("Launch Range") ),
+   D__ELEM( SS_TYPE_D_LAUNCH_DAMAGE,      launch_damage,       gettext_noop("Damage (Launcher)") ),
    D__ELEM( SS_TYPE_D_AMMO_CAPACITY,      ammo_capacity,       gettext_noop("Ammo Capacity") ),
    D__ELEM( SS_TYPE_D_LAUNCH_LOCKON,      launch_lockon,       gettext_noop("Launch Lockon") ),
 

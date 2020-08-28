@@ -1022,6 +1022,10 @@ void pilot_calcStats( Pilot* pilot )
    if (amount.tur_firerate > 0) {
       s->tur_firerate = default_s->tur_firerate + (s->tur_firerate-default_s->tur_firerate) * exp( -0.15 * (double)(MAX(amount.tur_firerate-1.,0)) );
    }
+   /* Launchers. */
+   if (amount.launch_rate > 0) {
+      s->launch_rate = default_s->launch_rate + (s->launch_rate-default_s->launch_rate) * exp( -0.15 * (double)(MAX(amount.launch_rate-1.,0)) );
+   }
    /*
     * Electronic warfare setting base parameters.
     */

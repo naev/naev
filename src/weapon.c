@@ -1442,6 +1442,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    else
       rdir = dir;
 
+   /* Launcher damage. */
+   w->dam_mod *= parent->stats.launch_damage;
    /*if (ammo->u.amm.accuracy != 0.) {
       rdir += RNG_2SIGMA() * ammo->u.amm.accuracy/2. * 1./180.*M_PI;
       if ((rdir > 2.*M_PI) || (rdir < 0.))
@@ -1461,7 +1463,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
 
    /* Set up ammo details. */
    mass        = w->outfit->mass;
-   w->timer    = ammo->u.amm.duration;
+   w->timer    = ammo->u.amm.duration * parent->stats.launch_range;
    w->solid    = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_RK4 );
    if (w->outfit->u.amm.thrust != 0.) {
       weapon_setThrust( w, w->outfit->u.amm.thrust * mass );

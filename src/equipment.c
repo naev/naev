@@ -1263,8 +1263,8 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
             case OUTFIT_TYPE_LAUNCHER:
             case OUTFIT_TYPE_TURRET_LAUNCHER:
                mod_energy = 1.;
-               mod_damage = 1.;
-               mod_shots  = 1.; /* @todo Should be: 2. - s>stats.launch_rate */
+               mod_damage = s->stats.launch_damage;
+               mod_shots  = 2. - s->stats.launch_rate;
                break;
             case OUTFIT_TYPE_BEAM:
             case OUTFIT_TYPE_TURRET_BEAM:

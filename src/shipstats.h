@@ -49,8 +49,9 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_EW_JUMPDETECT,   /**< Electronic warfare jump point detection modifier. */
 
    /* Launchers. */
-   SS_TYPE_D_LAUNCH_RATE,     /**< Launch rate for missiles. */  /* TODO */
-   SS_TYPE_D_LAUNCH_RANGE,    /**< Launch range for missiles. */ /* TODO */
+   SS_TYPE_D_LAUNCH_RATE,     /**< Launch rate for missiles. */
+   SS_TYPE_D_LAUNCH_RANGE,    /**< Launch range for missiles. */
+   SS_TYPE_D_LAUNCH_DAMAGE,   /**< Launch damage for missiles. */
    SS_TYPE_D_AMMO_CAPACITY,   /**< Capacity of launchers. */     /* TODO */
    SS_TYPE_D_LAUNCH_LOCKON,   /**< Lockon speed of launchers. */ /* TODO */
 
