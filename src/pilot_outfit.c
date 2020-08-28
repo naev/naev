@@ -970,6 +970,9 @@ void pilot_calcStats( Pilot* pilot )
       if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
          continue;
 
+      /* Add stats. */
+      ss_statsModFromList( s, o->stats, &amount );
+
       if (outfit_isMod(o)) { /* Modification */
          /* Movement. */
          pilot->thrust_base   += o->u.mod.thrust;
@@ -990,10 +993,6 @@ void pilot_calcStats( Pilot* pilot )
          pilot->cap_cargo     += o->u.mod.cargo;
          pilot->mass_outfit   += o->u.mod.mass_rel * pilot->ship->mass;
          pilot->crew          += o->u.mod.crew_rel * pilot->ship->crew;
-         /*
-          * Stats.
-          */
-         ss_statsModFromList( s, o->u.mod.stats, &amount );
 
       }
       else if (outfit_isAfterburner(o)) { /* Afterburner */
@@ -1061,6 +1060,12 @@ void pilot_calcStats( Pilot* pilot )
    /*
     * Flat increases.
     */
+   pilot->armour_max   += s->armour_flat;
+   pilot->armour       += s->armour_flat;
+   pilot->armour_regen -= s->armour_damage;
+   pilot->shield_max   += s->shield_flat;
+   pilot->shield       += s->shield_flat;
+   pilot->shield_regen -= s->shield_usage;
    pilot->energy_max   += s->energy_flat;
    pilot->energy       += s->energy_flat;
    pilot->energy_regen -= s->energy_usage;

@@ -126,6 +126,10 @@ static const ShipStatsLookup ss_lookup[] = {
 
    A__ELEM( SS_TYPE_A_ENERGY_FLAT,        energy_flat,         gettext_noop("Energy Capacity") ),
    AI_ELEM( SS_TYPE_A_ENERGY_REGEN_FLAT,  energy_usage,        gettext_noop("Energy Usage") ),
+   A__ELEM( SS_TYPE_A_SHIELD_FLAT,        shield_flat,         gettext_noop("Shield Capacity") ),
+   AI_ELEM( SS_TYPE_A_SHIELD_REGEN_FLAT,  shield_usage,        gettext_noop("Shield Usage") ),
+   A__ELEM( SS_TYPE_A_ARMOUR_FLAT,        armour_flat,         gettext_noop("Armour") ),
+   AI_ELEM( SS_TYPE_A_ARMOUR_REGEN_FLAT,  armour_damage,       gettext_noop("Armour Damage") ),
    A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             gettext_noop("CPU Capacity") ),
 
    A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        gettext_noop("Engine Mass Limit") ),

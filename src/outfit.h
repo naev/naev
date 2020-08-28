@@ -256,9 +256,6 @@ typedef struct OutfitModificationData_ {
    double crew_rel;  /**< Relative crew modification. */
    double mass_rel;  /**< Relative mass modification. */
    int fuel;      /**< Maximum fuel modifier. */
-
-   /* Stats. */
-   ShipStatList *stats; /**< Stat list. */
 } OutfitModificationData;
 
 /**
@@ -325,14 +322,14 @@ typedef struct Outfit_ {
    char *typename;   /**< Overrides the base type. */
    int rarity;       /**< Rarity of the outfit. */
 
-   /* general specs */
+   /* General specs */
    OutfitSlot slot;  /**< Slot the outfit fits into. */
    char *license;    /**< Licenses needed to buy it. */
    double mass;      /**< How much weapon capacity is needed. */
    double cpu;       /**< CPU usage. */
    char *limit;      /**< Name to limit to one per ship (ignored if NULL). */
 
-   /* store stuff */
+   /* Store stuff */
    credits_t price;  /**< Base sell price. */
    char *description; /**< Store description. */
    char *desc_short; /**< Short outfit description. */
@@ -343,8 +340,10 @@ typedef struct Outfit_ {
    int gfx_noverlays; /**< Number of overlays. */
 
    unsigned int properties; /**< Properties stored bitwise. */
-
    unsigned int group; /**< Weapon group to use when autoweap is enabled. */
+
+   /* Stats. */
+   ShipStatList *stats; /**< Stat list. */
 
    /* Type dependent */
    OutfitType type; /**< Type of the outfit. */
