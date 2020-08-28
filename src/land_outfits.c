@@ -777,6 +777,9 @@ static void outfits_buy( unsigned int wid, char* str )
    if (land_takeoff)
       takeoff(1);
    free(outfitname);
+
+   /* Regenerate list. */
+   outfits_regenList( wid, NULL );
 }
 /**
  * @brief Checks to see if the player can sell the selected outfit.
@@ -857,7 +860,10 @@ static void outfits_sell( unsigned int wid, char* str )
    hooks_runParam( "outfit_sell", hparam );
    if (land_takeoff)
       takeoff(1);
-  free(outfitname);
+   free(outfitname);
+
+   /* Regenerate list. */
+   outfits_regenList( wid, NULL );
 }
 /**
  * @brief Gets the current modifier status.
