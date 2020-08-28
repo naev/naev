@@ -19,6 +19,7 @@
 #include "SDL_haptic.h"
 
 #include "log.h"
+#include "array.h"
 #include "pilot.h"
 #include "physics.h"
 #include "opengl.h"
@@ -81,7 +82,6 @@ typedef struct SPFX_Base_ {
 } SPFX_Base;
 
 static SPFX_Base *spfx_effects = NULL; /**< Total special effects. */
-static int spfx_neffects = 0; /**< Total number of special effects. */
 
 
 /**
@@ -197,7 +197,7 @@ static void spfx_base_free( SPFX_Base *effect )
 int spfx_get( char* name )
 {
    int i;
-   for (i=0; i<spfx_neffects; i++)
+   for (i=0; i<array_size(spfx_effects); i++)
       if (strcmp(spfx_effects[i].name, name)==0)
          return i;
    return -1;
@@ -213,7 +213,6 @@ int spfx_get( char* name )
  */
 int spfx_load (void)
 {
-   int mem;
    size_t bufsize;
    char *buf;
    xmlNodePtr node;
@@ -248,26 +247,17 @@ int spfx_load (void)
    }
 
    /* First pass, loads up ammunition. */
-   mem = 0;
+   spfx_effects = array_create(SPFX_Base);
    do {
       xml_onlyNodes(node);
       if (xml_isNode(node,SPFX_XML_TAG)) {
-
-         spfx_neffects++;
-         if (spfx_neffects > mem) {
-            if (mem == 0)
-               mem = SPFX_CHUNK_MIN;
-            else
-               mem *= 2;
-            spfx_effects = realloc(spfx_effects, sizeof(SPFX_Base)*mem);
-         }
-         spfx_base_parse( &spfx_effects[spfx_neffects-1], node );
+         spfx_base_parse( &array_grow(&spfx_effects), node );
       }
       else
          WARN( _("'%s' has unknown node '%s'."), SPFX_DATA_PATH, node->name);
    } while (xml_nextNode(node));
    /* Shrink back to minimum - shouldn't change ever. */
-   spfx_effects = realloc(spfx_effects, sizeof(SPFX_Base) * spfx_neffects);
+   array_shrink(&spfx_effects);
 
    /* Clean up. */
    xmlFreeDoc(doc);
@@ -306,11 +296,10 @@ void spfx_free (void)
    spfx_mstack_back = 0;
 
    /* now clear the effects */
-   for (i=0; i<spfx_neffects; i++)
+   for (i=0; i<array_size(spfx_effects); i++)
       spfx_base_free( &spfx_effects[i] );
-   free(spfx_effects);
+   array_free(spfx_effects);
    spfx_effects = NULL;
-   spfx_neffects = 0;
 
    /* Free the noise. */
    noise_delete( shake_noise );
@@ -335,7 +324,7 @@ void spfx_add( int effect,
    SPFX *cur_spfx;
    double ttl, anim;
 
-   if ((effect < 0) || (effect > spfx_neffects)) {
+   if ((effect < 0) || (effect > array_size(spfx_effects))) {
       WARN(_("Trying to add spfx with invalid effect!"));
       return;
    }
