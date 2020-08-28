@@ -377,6 +377,8 @@ static int outfitL_merchant( lua_State *L )
       NLUA_INVALID_PARAMETER(L);
 
    noutfits = (int) lua_objlen(L,2);
+   if (noutfits == 0)
+      NLUA_ERROR(L, _("Unable to create empty outfit merchant."));
    outfits = malloc( sizeof(Outfit*) * noutfits );
    /* Iterate over table. */
    lua_pushnil(L);
