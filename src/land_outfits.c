@@ -686,7 +686,7 @@ int outfit_canBuy( char *name, Planet *planet )
    price   = outfit_getPrice(outfit);
 
    /* Unique. */
-   if (outfit_isProp(outfit, OUTFIT_PROP_UNIQUE) && (player_outfitOwned(outfit)>0)) {
+   if (outfit_isProp(outfit, OUTFIT_PROP_UNIQUE) && (player_outfitOwnedTotal(outfit)>0)) {
       land_errDialogueBuild( _("You can only own one of this outfit.") );
       return 0;
    }

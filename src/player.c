@@ -2530,6 +2530,23 @@ int player_outfitOwned( const Outfit* o )
 
 
 /**
+ * Total number of an outfit owned by the player (including equipped).
+ */
+int player_outfitOwnedTotal( const Outfit* o )
+{
+   int i, q;
+
+   q  = player_outfitOwned(o);
+
+   q += pilot_numOutfit( player.p, o );
+   for (i=0; i<player_nstack; i++)
+      q += pilot_numOutfit( player_stack[i].p, o );
+
+   return q;
+}
+
+
+/**
  * @brief qsort() compare function for PlayerOutfit_t sorting.
  */
 static int player_outfitCompare( const void *arg1, const void *arg2 )

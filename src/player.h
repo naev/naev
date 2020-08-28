@@ -187,6 +187,7 @@ void player_rmShip( char* shipname );
  * player outfits.
  */
 int player_outfitOwned( const Outfit *o );
+int player_outfitOwnedTotal( const Outfit* o );
 const PlayerOutfit_t* player_getOutfits( int *n );
 int player_getOutfitsFiltered( Outfit **outfits,
       int(*filter)( const Outfit *o ), char *name );
