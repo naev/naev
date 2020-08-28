@@ -94,7 +94,7 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
    locked = (o->u.ammo.lockon_timer < 0.);
 
    /* Lower timer. When the timer reaches zero, the lock is established. */
-   max = -o->outfit->u.lau.lockon/3.;
+   max = -o->outfit->u.lau.lockon/3. * p->stats.launch_lockon;
    if (o->u.ammo.lockon_timer > max) {
       /* Compensate for enemy hide factor. */
       o->u.ammo.lockon_timer -= dt * (o->outfit->u.lau.ew_target2 / t->ew_hide);
