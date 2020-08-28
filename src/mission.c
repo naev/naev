@@ -852,9 +852,9 @@ static int missions_cmp( const void *a, const void *b )
    ma = (const MissionData*) a;
    mb = (const MissionData*) b;
    if (ma->avail.priority < mb->avail.priority)
-      return -1;
-   else if (ma->avail.priority > mb->avail.priority)
       return +1;
+   else if (ma->avail.priority > mb->avail.priority)
+      return -1;
    return strcmp( ma->name, mb->name );
 }
 
