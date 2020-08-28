@@ -198,6 +198,7 @@ typedef struct ShipStats_ {
    /* Launchers. */
    double launch_rate;     /**< Fire rate of launchers. */
    double launch_range;    /**< Range of launchers. */
+   double launch_damage;   /**< Damage of launchers. */
    double ammo_capacity;   /**< Capacity of launchers. */
    double launch_lockon;   /**< Lock on speed of launchers. */
 
