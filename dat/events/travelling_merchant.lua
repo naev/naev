@@ -2,8 +2,8 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="Travelling Merchant">
  <trigger>enter</trigger>
- <chance>5</chance>
- <cond>system.cur():presence("Pirate") &gt; 0 and system.cur():presence("Pirate") &lt; 160 </cond>
+ <chance>100</chance>
+ <cond>system.cur():presence("Pirate") &gt; 20 and system.cur():presence("Pirate") &lt; 200 </cond>
 </event>
 --]]
 --[[
@@ -89,7 +89,7 @@ function board ()
 
    -- Always available outfits
    -- TODO add more
-   outfits = { 'Air Freshener' }
+   outfits = { 'Air Freshener', 'Valkyrie Ride', 'Hades Torch' }
 
    -- TODO add randomly chosen outfits, maybe conditioned on the current system or something?
 
