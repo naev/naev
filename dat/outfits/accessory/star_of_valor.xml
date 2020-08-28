@@ -7,7 +7,7 @@
   <size>small</size>
   <priority>3</priority>
   <mass>0</mass>
-  <price>0</price>
+  <price>1000000</price>
   <description>A shiny medal for your contribution to the Dvaered cause. On the back it says "not for rectal use". Wait, what?</description>
   <gfx_store>placeholder</gfx_store>
  <rarity>6</rarity></general>

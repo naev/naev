@@ -7,7 +7,7 @@
   <size>small</size>
   <priority>3</priority>
   <mass>0</mass>
-  <price>0</price>
+  <price>1000000</price>
   <description>A mock-up of a satellite you helped launch into the nebula. It even has cute blinking lights!</description>
   <gfx_store>placeholder</gfx_store>
  <rarity>6</rarity></general>

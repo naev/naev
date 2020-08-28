@@ -7,7 +7,7 @@
   <size>small</size>
   <priority>3</priority>
   <mass>0</mass>
-  <price>0</price>
+  <price>1000000</price>
   <description>A small toy drone that can fly around the ship. The AI doesn't seem to work too well and it has a habit of bumping into the walls and beeping all the time, but it is rather cute.</description>
   <gfx_store>placeholder</gfx_store>
  <rarity>6</rarity></general>

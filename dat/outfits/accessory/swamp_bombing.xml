@@ -7,7 +7,7 @@
   <size>small</size>
   <priority>3</priority>
   <mass>0</mass>
-  <price>0</price>
+  <price>1000000</price>
   <description>A fairly mediocre cocktail that you don't intend to drink. At least it looks good as an accessory.</description>
   <gfx_store>placeholder</gfx_store>
  <rarity>6</rarity></general>

@@ -7,7 +7,7 @@
   <size>small</size>
   <priority>3</priority>
   <mass>0</mass>
-  <price>0</price>
+  <price>1000000</price>
   <description>A token of commitment to the FLF cause. It smells oddly of fish.</description>
   <gfx_store>placeholder</gfx_store>
  <rarity>6</rarity></general>
