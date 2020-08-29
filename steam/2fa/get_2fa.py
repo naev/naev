@@ -8,6 +8,7 @@
 #
 # This script should be run after querying for a Steam Guard code (attempting to login)
 # The 2FA code will be saved to a file called "2fa.txt" in the "extras/steam/2fa/" directory
+# is a bit dirty in it's current state, but does what it's supposed to.
 #
 
 import imaplib
