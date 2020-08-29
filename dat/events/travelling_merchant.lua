@@ -95,6 +95,7 @@ function board ()
    * Mask of many faces: outfit that changes bonuses based on the dominant faction of the system you are in (needs event to handle changing outfit)
    * Weapon that does double damage to the user if misses
    * Weapon that damages the user each time it is shot (some percent only)
+   * Space mines! AOE damage that affects everyone, but they don't move (useful for missions too!)
    --]]
 
    -- Always available outfits
