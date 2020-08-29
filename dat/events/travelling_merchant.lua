@@ -129,7 +129,7 @@ function board ()
    end
 
    -- Start the merchant and unboard.
-   outfit.merchant( store_name, outfits )
+   tk.merchant( store_name, outfits )
    player.unboard()
 end
 

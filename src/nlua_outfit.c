@@ -19,8 +19,6 @@
 #include "log.h"
 #include "rng.h"
 #include "slots.h"
-#include "land_outfits.h"
-#include "toolkit.h"
 
 
 /* Outfit metatable methods. */
@@ -33,7 +31,6 @@ static int outfitL_cpu( lua_State *L );
 static int outfitL_slot( lua_State *L );
 static int outfitL_icon( lua_State *L );
 static int outfitL_price( lua_State *L );
-static int outfitL_merchant( lua_State *L );
 static const luaL_Reg outfitL_methods[] = {
    { "__tostring", outfitL_name },
    { "__eq", outfitL_eq },
@@ -45,7 +42,6 @@ static const luaL_Reg outfitL_methods[] = {
    { "slot", outfitL_slot },
    { "icon", outfitL_icon },
    { "price", outfitL_price },
-   { "merchant", outfitL_merchant },
    {0,0}
 }; /**< Outfit metatable methods. */
 
@@ -350,56 +346,5 @@ static int outfitL_price( lua_State *L )
    Outfit *o = luaL_validoutfit(L,1);
    lua_pushnumber(L, o->price);
    return 1;
-}
-
-
-/**
- * @brief Opens an outfit merchant window.
- *
- * @usage outfit.merchant( 'Laser Merchant', {'Laser Cannon MK0', 'Laser Cannon MK1'} )
- * @usage outfit.merchant( 'Laser Merchant', {outfit.get('Laser Cannon MK0'), outfit.get('Laser Cannon MK1')} )
- *
- *    @luatparam String name Name of the window.
- *    @luatparam Table outfits Table of outfits to sell/buy. It is possible to use either outfits or outfit names (strings).
- * @luafunc merchant( name, outfits )
- */
-static int outfitL_merchant( lua_State *L )
-{
-   Outfit **outfits;
-   int i, noutfits;
-   unsigned int wid;
-   const char *name;
-   int w, h;
-
-   name = luaL_checkstring(L,1);
-
-   if (!lua_istable(L,2))
-      NLUA_INVALID_PARAMETER(L);
-
-   noutfits = (int) lua_objlen(L,2);
-   if (noutfits == 0)
-      NLUA_ERROR(L, _("Unable to create empty outfit merchant."));
-   outfits = malloc( sizeof(Outfit*) * noutfits );
-   /* Iterate over table. */
-   lua_pushnil(L);
-   i = 0;
-   while (lua_next(L, -2) != 0) {
-      outfits[i++] = luaL_validoutfit(L, -1);
-      lua_pop(L,1);
-   }
-
-   /* Create window. */
-   if ((gl_screen.rw < 1024) || (gl_screen.rh < 768)) {
-      w = -1; /* Fullscreen. */
-      h = -1;
-   }
-   else {
-      w = 800 + 0.5 * (SCREEN_W - 800);
-      h = 600 + 0.5 * (SCREEN_H - 600);
-   }
-   wid = window_create( name, -1, -1, w, h );
-   outfits_open( wid, outfits, noutfits );
-
-   return 0;
 }
 
