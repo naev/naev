@@ -22,6 +22,10 @@ function zlk_addSciWrongLog( text )
    shiplog.appendLog( "zlk_sciwrong", text )
 end
 
+function zlk_addNebuResearchLog( text )
+   shiplog.createLog( "zlk_neburesearch", _("Nebula Research"), _("Za'lek") )
+   shiplog.appendLog( "zlk_neburesearch", text )
+end
 
 -- Function for adding log entries for miscellaneous one-off missions.
 function zlk_addMiscLog( text )
