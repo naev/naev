@@ -2,6 +2,8 @@
 # WINDOWS PACKAGING SCRIPT FOR NAEV
 # Requires NSIS, and python3-pip to be installed
 #
+# Written by Jack Greiner (ProjectSynchro on Github: https://github.com/ProjectSynchro/) 
+#
 # This script should be run after compiling Naev
 # It detects the current environment, and builds the appropriate NSIS installer
 # into the root naev directory.
