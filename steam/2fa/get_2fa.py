@@ -1,5 +1,15 @@
 #!/bin/python3
 
+# STEAM 2FA SCRIPT FOR NAEV
+# Requires Python3
+# TFA_USER, TFA_PASS, TFA_IMAP should be exported before running
+#
+# Written by Jack Greiner (ProjectSynchro on Github: https://github.com/ProjectSynchro/) 
+#
+# This script should be run after querying for a Steam Guard code (attempting to login)
+# The 2FA code will be saved to a file called "2fa.txt" in the "extras/steam/2fa/" directory
+#
+
 import imaplib
 import email
 from email.header import decode_header
@@ -15,12 +25,14 @@ file = open("extras/steam/2fa/2fa.txt","w")
 
 # create an IMAP4 class with SSL
 imap = imaplib.IMAP4_SSL(imapServer)
+
 # authenticate
 imap.login(username, password)
-
 status, messages = imap.select("INBOX")
+
 # number of top emails to fetch
 N = 1
+
 # total number of emails
 messages = int(messages[0])
 
