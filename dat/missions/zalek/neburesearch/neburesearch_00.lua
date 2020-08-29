@@ -1,6 +1,5 @@
 --[[
 <mission name="Novice Nebula Research">
- <lua>zalek/neburesearch/neburesearch_00</lua>
  <flags>
   <unique />
  </flags>
