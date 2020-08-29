@@ -908,7 +908,7 @@ function render( dt )
       -- Extend the pane depending on the services available.
       services_h = 44
       if pntflags.land then
-         services_h = services_h + (14 * planet.nservices)
+         services_h = services_h + (18 * planet.nservices)
       end
 
       -- Render background images.
@@ -940,18 +940,17 @@ function render( dt )
       ta_pnt_dir = math.atan2(y2 - y1, x2 - x1) + math.pi
 
       gfx.print( true, planet.class, ta_pnt_pane_x + 130, ta_pnt_pane_y - 34, col_text )
-      gfx.print( true, _("SERVICES:"), ta_pnt_pane_x + 14, ta_pnt_pane_y - 46, col_text )
+      gfx.print( true, _("SERVICES:"), ta_pnt_pane_x + 14, ta_pnt_pane_y - 54, col_text )
 
       -- Space out the text.
-      services_h = 60
       if pntflags.land then
-         local services_h = 60
+         local services_h = 70
          for k,v in ipairs(planet.services) do
             gfx.print(true, v, ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, col_text )
-            services_h = services_h + 14
+            services_h = services_h + 16
          end
       else
-         gfx.print( true, _("none"), ta_pnt_pane_x + 110, ta_pnt_pane_y - 46, col_text )
+         gfx.print( true, _("none"), ta_pnt_pane_x + 110, ta_pnt_pane_y - 54, col_text )
       end
 
       gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, col_text, 63, false )
