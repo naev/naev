@@ -1370,49 +1370,16 @@ static void gl_fontRenderEnd (void)
    gl_checkErr();
 }
 
-/**
- * @brief Tries to find a system font.
- */
-static char *gl_fontFind( const char *fname )
-{
-#ifdef USE_FONTCONFIG
-   FcConfig* config;
-   FcPattern *pat, *font;
-   FcResult result;
-   FcChar8* file;
-   char *fontFile;
-   
-   config = FcInitLoadConfigAndFonts();
-   pat = FcNameParse( (const FcChar8*)fname );
-   FcConfigSubstitute( config, pat, FcMatchPattern );
-   FcDefaultSubstitute(pat);
-   font = FcFontMatch(config, pat, &result);
-   if (font) {
-      file = NULL;
-      if (FcPatternGetString(font, FC_FILE, 0, &file) == FcResultMatch) {
-         fontFile = strdup( (char*)file );
-         FcPatternDestroy(pat);
-         FcPatternDestroy(font);
-         FcConfigDestroy(config);
-         return fontFile;
-      }
-   }
-   FcPatternDestroy(pat);
-   FcConfigDestroy(config);
-#endif
-   return NULL;
-}
-
 
 /**
  * @brief Initializes a font.
  *
  *    @param font Font to load (NULL defaults to gl_defFont).
- *    @param fname Name of the font (from inside packfile, NULL defaults to default font).
+ *    @param fname Name of the font (from inside packfile).
  *    @param h Height of the font to generate.
  *    @return 0 on success.
  */
-int gl_fontInit( glFont* font, const char *fname, const char *fallback, const unsigned int h )
+int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
 {
    FT_Library library;
    FT_Face face;
@@ -1424,11 +1391,11 @@ int gl_fontInit( glFont* font, const char *fname, const char *fallback, const un
 
    /* See if we should override fonts. */
    used_font = NULL;
-   if ((strcmp( fallback, FONT_DEFAULT_PATH )==0) &&
+   if ((strcmp(fname, FONT_DEFAULT_PATH) == 0) &&
       (conf.font_name_default!=NULL)) {
       used_font = strdup( conf.font_name_default );
    }
-   else if ((strcmp( fallback, FONT_MONOSPACE_PATH )==0) &&
+   else if ((strcmp(fname, FONT_MONOSPACE_PATH) == 0) &&
       (conf.font_name_monospace!=NULL)) {
       used_font = strdup( conf.font_name_monospace );
    }
@@ -1440,26 +1407,14 @@ int gl_fontInit( glFont* font, const char *fname, const char *fallback, const un
       }
    }
 
-   /* Try to use system font. */
+   /* Use packaged font. */
    if (used_font==NULL) {
-      used_font = gl_fontFind( fname );
-      if (used_font) {
-         buf = (FT_Byte*)nfile_readFile( &bufsize, used_font );
-         if (buf==NULL) {
-            free(used_font);
-            used_font = NULL;
-         }
-      }
-   }
-
-   /* Fallback to packaged font. */
-   if (used_font==NULL) {
-      buf = ndata_read( (fallback!=NULL) ? fallback : FONT_DEFAULT_PATH, &bufsize );
+      buf = ndata_read( fname, &bufsize );
       if (buf == NULL) {
-         WARN(_("Unable to read font: %s"), (fallback!=NULL) ? fallback : FONT_DEFAULT_PATH);
+         WARN(_("Unable to read font: %s"), fname);
          return -1;
       }
-      used_font = strdup( fallback );
+      used_font = strdup( fname );
    }
 
    /* Get default font if not set. */

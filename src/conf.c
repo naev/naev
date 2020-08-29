@@ -156,7 +156,7 @@ void conf_setDefaults (void)
    conf.font_size_console = 10;
    conf.font_size_intro   = 18;
    conf.font_size_def     = 12;
-   conf.font_size_small   = 10;
+   conf.font_size_small   = 11;
    conf.font_name_default = NULL;
    conf.font_name_monospace = NULL;
 
