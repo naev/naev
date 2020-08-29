@@ -1,7 +1,6 @@
-on: push
-#on:
-#  schedule:
-#    - cron: '0 0 * * *'
+on:
+  schedule:
+    - cron: '0 0 * * *'
 
 name: Nightly Release
 
