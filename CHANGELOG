@@ -5,6 +5,7 @@
          * Interface is much more slick
          * Font uses outlines to be more readable
       * Added rarity indicator to ships and outfits
+      * Changed fonts
       * Indicate non-common NPC with exclamation marks
       * Added accessory slot and unique accessory outfits as mission rewards
       * Simple economy model implemented with map visualizations
