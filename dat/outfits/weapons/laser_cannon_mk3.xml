@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Laser Cannon MK3">
  <general>
   <slot>weapon</slot>
@@ -9,7 +9,7 @@
   <description>A high-powered version of the Laser Cannon, the MK3 is usually found on Imperial law enforcement ships. Its superior firepower helps keep order among the civilian populace, though it has limited applications in full blown military engagements.</description>
   <gfx_store>laser2</gfx_store>
   <cpu>-7</cpu>
-  </general>
+  <rarity>2</rarity></general>
  <specific type="bolt">
   <gfx>laser3S</gfx>
   <sound>laser</sound>

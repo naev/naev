@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Convulsion Launcher">
  <general>
   <slot>weapon</slot>
@@ -9,7 +9,7 @@
   <description>The Thurion interceptor class missile focus on high agility rather than destructive power. While it does little damage to physical objects it is quite effective at disrupting shields.</description>
   <gfx_store>convulsion_launcher</gfx_store>
   <cpu>-12</cpu>
- </general>
+ <rarity>1</rarity></general>
  <specific type="launcher" secondary="1">
   <ammo>Convulsion Missile</ammo>
   <delay>3</delay>

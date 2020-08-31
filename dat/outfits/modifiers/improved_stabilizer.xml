@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Improved Stabilizer">
  <general>
   <typename>Manoevrability Modifier</typename>
@@ -9,7 +9,7 @@
   <description>By improving your ship's stabilization systems drastically, this modification will allow you to reach higher speeds while still keeping the ship stable.</description>
   <gfx_store>stabilizer</gfx_store>
   <cpu>-2</cpu>
- </general>
+ <rarity>3</rarity></general>
  <specific type="modification">
   <speed_mod>10</speed_mod>
   <engine_limit_rel>-5</engine_limit_rel>

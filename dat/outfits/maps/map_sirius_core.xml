@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Map: Sirius Core">
  <general>
   <mass>0</mass>
   <price>25000</price>
   <description>This map contains the location of Mutris, home of Sirichana and capital to the Sirians, as well as the surrounding systems.</description>
   <gfx_store>map</gfx_store>
- </general>
+ <rarity>1</rarity></general>
  <specific type="map">
   <sys name="Aesir">
    <jump>Vanir</jump>

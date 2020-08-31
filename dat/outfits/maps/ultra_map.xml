@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Ultra Map">
  <general>
   <mass>0</mass>
   <price>1</price>
   <description>For cheating.</description>
   <gfx_store>map</gfx_store>
- </general>
+ <rarity>6</rarity></general>
  <specific type="map">
-  <all/>
+  <all />
  </specific>
 </outfit>

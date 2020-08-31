@@ -16,7 +16,7 @@ jobs:
       with:
         msystem: MINGW32
         update: true
-        install: mingw-w64-i686-libtool mingw-w64-i686-toolchain mingw-w64-i686-gcc mingw-w64-i686-SDL2 mingw-w64-i686-SDL2_mixer mingw-w64-i686-SDL2_image mingw-w64-i686-libxml2 mingw-w64-i686-libpng mingw-w64-i686-openal mingw-w64-i686-libvorbis mingw-w64-i686-binutils mingw-w64-i686-freetype mingw-w64-i686-libzip mingw-w64-i686-gettext mingw-w64-i686-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool
+        install: mingw-w64-i686-libtool mingw-w64-i686-toolchain mingw-w64-i686-gcc mingw-w64-i686-SDL2 mingw-w64-i686-SDL2_mixer mingw-w64-i686-SDL2_image mingw-w64-i686-libxml2 mingw-w64-i686-libpng mingw-w64-i686-openal mingw-w64-i686-libvorbis mingw-w64-i686-binutils mingw-w64-i686-fontconfig mingw-w64-i686-libzip mingw-w64-i686-gettext mingw-w64-i686-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool
     
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
@@ -48,7 +48,7 @@ jobs:
       with:
         msystem: MINGW64
         update: true
-        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool
+        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool
 
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
@@ -67,11 +67,63 @@ jobs:
         name: naev-win64-${{ github.sha }}
         path: ${{ github.workspace }}/src/naev.exe
 
+  "Linux-x86":
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Update APT Cache
+      run: |
+        sudo dpkg --add-architecture i386
+        sudo apt-get update
+
+    - name: Install Build Dependencies
+      run: |
+        sudo apt-get install \
+          build-essential \
+          automake \
+          autoconf-archive \
+          gcc-multilib \
+          libsdl2-dev:i386 \
+          libsdl2-mixer-dev:i386 \
+          libsdl2-image-dev:i386 \
+          libgl1-mesa-dev:i386 \
+          libglu1-mesa-dev:i386 \
+          libxml2-dev:i386 \
+          libfontconfig1-dev:i386 \
+          libfreetype6-dev:i386 \
+          libpng-dev:i386 \
+          libopenal-dev:i386 \
+          libvorbis-dev:i386 \
+          libzip-dev:i386 \
+          libiberty-dev:i386 \
+          libluajit-5.1-dev:i386 \
+          gettext \
+          autopoint \
+          intltool \
+          itstool
+
+    - name: Checkout Naev Repository 
+      uses: actions/checkout@v2
+
+    - name: Build Naev on Linux32
+      run: |
+        ./autogen.sh
+        ./configure --build=x86_64-linux-gnu --host=i686-linux-gnu
+        make -j$(nproc --all)
+      env:
+        CFLAGS: "-O3 -m32"
+        LDFLAGS: "-m32"
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-lin32-${{ github.sha }}
+        path: ${{ github.workspace }}/src/naev
+
   "Linux-x86_64":
     runs-on: ubuntu-latest
 
     steps:
-
     - name: Update APT Cache
       run: |
         sudo apt-get update
@@ -107,7 +159,7 @@ jobs:
     - name: Test-Build Naev on Linux64
       run: |
         ./autogen.sh
-        ./configure
+        ./configure --build=x86_64-linux-gnu --host=x86_64-linux-gnu
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
@@ -170,6 +222,7 @@ jobs:
 
   "Lua-Documentation":
     runs-on: ubuntu-latest
+    needs: [Windows-MinGW64, Windows-MinGW32, macOS, Linux-x86_64, Linux-x86]
 
     steps:
     - name: Install SSH Key
@@ -178,7 +231,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         name: id_rsa # optional
         known_hosts: ${{ secrets.KNOWN_HOSTS }}
-      if: ${{ github.event_name == 'push' }}
+      if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
 
     - name: Update APT Cache
       run: |
@@ -204,28 +257,24 @@ jobs:
           libzip-dev \
           libiberty-dev \
           libluajit-5.1-dev \
-          luarocks \
+          lua-ldoc \
           gettext \
           autopoint \
           intltool \
           itstool
-
-    - name: Install LuaRocks packages 
-      run: luarocks install --local ldoc
 
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
 
     - name: Build Naev Lua Documentation
       run: |
-        export PATH="$PATH:$HOME/.luarocks/bin"
         ./autogen.sh
         ./configure
         make -C docs lua
     
     - name: Upload Lua Documentation
       run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete docs/html/ travis@iandouglasscott.com:/srv/naevdoc
-      if: ${{ github.event_name == 'push' }}
+      if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2

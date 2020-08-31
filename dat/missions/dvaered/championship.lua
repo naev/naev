@@ -1,4 +1,18 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="The Dvaered Championship">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <chance>50</chance>
+   <location>Bar</location>
+   <planet>Dvaer Prime</planet>
+  </avail>
+ </mission>
+ --]]
+--[[
    
    The player takes part into a challemge between fighter pilots in Dvaered space, he has to defeat 5 opponents to win.
    
@@ -59,7 +73,7 @@ comptitle[2] = _("Hello")
 comptext[2] = _([["Are you here for the Dvaered dogfight championship? I am a competitor. I fly a Shark, so I don't hope to win lots of rounds... But I still enjoy the battle. Every cycle, a Dvaered pilot wins. Do you know why? It's because the rules of the championship advantage heavy armoured, well armed fighters, like the Vendetta. Imperial pilots are used to electronical war with guided missiles and stealth ships. Dvaered pilots, on the other hand, only understand basic dogfighting."]])
 
 comptitle[3] = _("Imperial Pilot")
-comptext[3] = _([["What a pity. I am the best in my squad. I trained cycles to be able to take down these stupid Vendettas with my missiles before they even see my Lancelot on their radar. But in this championship, only armor and firepower are useful."]])
+comptext[3] = _([["What a pity. I am the best in my squad. I trained cycles to be able to take down these pitiful Vendettas with my missiles before they even see my Lancelot on their radar. But in this championship, only armor and firepower are useful."]])
 
 comptitle[4] = _("Dvaered Pilot")
 comptext[4] = _([["Nice to see you. I am a Vendetta pilot. I hope I win this time! For us, being the champion here means that you become member of the senior staff, which makes you closer to Dvaered High Command! Who knows? Maybe one day I will become a Warlord."]])

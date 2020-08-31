@@ -1,3 +1,11 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Kidnapped">
+  <trigger>enter</trigger>
+  <chance>15</chance>
+  <cond>player.misnDone("Kidnapped") == false and var.peek("traffic_00_active") == nil and system.cur():name() == "Arcturus" and player.numOutfit("Mercenary License") &gt; 0</cond>
+ </event>
+--]]
 --[[ 
 --Event for kidnapped mission.
 --]]

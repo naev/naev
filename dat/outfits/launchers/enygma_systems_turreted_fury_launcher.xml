@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Enygma Systems Turreted Fury Launcher">
  <general>
   <slot>weapon</slot>
@@ -9,7 +9,7 @@
   <description>Enygma Systems has developed a turret mounted Fury launcher. It comes at a steep price, but Fury missiles can be a powerful means of discouraging pirate fighters and an effective means of defending against hostile bombers.</description>
   <gfx_store>turreted_fury_launcher</gfx_store>
   <cpu>-9</cpu>
- </general>
+ <rarity>2</rarity></general>
  <specific type="turret launcher" secondary="1">
   <ammo>Fury Missile</ammo>
   <delay>1.5</delay>

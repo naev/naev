@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Odium">
  <base_type>Odium</base_type>
  <GFX>odium</GFX>
+ <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>
@@ -22,20 +23,21 @@
   <cargo>25</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" prop="bio_weapon" x="15" y="0" h="2"/>
-  <weapon size="medium" prop="bio_weapon" x="4" y="2" h="-5"/>
-  <weapon size="medium" prop="bio_weapon" x="4" y="-2" h="-5"/>
-  <weapon size="small" prop="bio_weapon" x="-9" y="-5" h="-9"/>
-  <weapon size="small" prop="bio_weapon" x="-9" y="5" h="-9"/>
+  <weapon size="medium" prop="bio_weapon" x="15" y="0" h="2" />
+  <weapon size="medium" prop="bio_weapon" x="4" y="2" h="-5" />
+  <weapon size="medium" prop="bio_weapon" x="4" y="-2" h="-5" />
+  <weapon size="small" prop="bio_weapon" x="-9" y="-5" h="-9" />
+  <weapon size="small" prop="bio_weapon" x="-9" y="5" h="-9" />
   <utility size="medium" prop="bio_systems" exclusive="1" required="1">Medium Bioship Brain Stage 1</utility>
-  <utility size="medium"/>
-  <utility size="medium"/>
-  <utility size="small"/>
+  <utility size="medium" prop="accessory" exclusive="1" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <utility size="small" />
   <structure size="medium" prop="bio_engines" exclusive="1" required="1">Medium Bioship Fast Fin Stage 1</structure>
   <structure size="medium" prop="bio_hull" exclusive="1" required="1">Medium Bioship Shell Stage 1</structure>
-  <structure size="medium"/>
-  <structure size="medium"/>
-  <structure size="medium"/>
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
  </slots>
  <stats>
   <armour_mod>-10</armour_mod>

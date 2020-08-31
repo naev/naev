@@ -1,4 +1,20 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="The FLF Split">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <chance>30</chance>
+   <done>Assault on Haleb</done>
+   <location>Bar</location>
+   <faction>FLF</faction>
+   <cond>faction.playerStanding("FLF") &gt;= 90</cond>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    The FLF Split
 

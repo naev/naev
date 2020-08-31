@@ -382,9 +382,9 @@ static void board_stealAmmo( unsigned int wdw, char* str )
      if (nreloaded <= 0)
         player_message(_("\arThere is no ammo compatible with your launchers on board."));
      pilot_updateMass(player.p);
-     pilot_weaponSane(player.p);
+     pilot_weaponSafe(player.p);
      pilot_updateMass(p);
-     pilot_weaponSane(p);
+     pilot_weaponSafe(p);
      board_update(wdw);
 }
 
@@ -523,7 +523,7 @@ int pilot_board( Pilot *p )
    Pilot *target;
    HookParam hparam[2];
 
-   /* Make sure target is sane. */
+   /* Make sure target is valid. */
    target = pilot_get(p->target);
    if (target == NULL) {
       DEBUG("NO TARGET");
@@ -574,7 +574,7 @@ void pilot_boardComplete( Pilot *p )
    credits_t worth;
    char creds[ ECON_CRED_STRLEN ];
 
-   /* Make sure target is sane. */
+   /* Make sure target is valid. */
    target = pilot_get(p->target);
    if (target == NULL)
       return;

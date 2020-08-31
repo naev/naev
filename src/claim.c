@@ -191,8 +191,13 @@ int claim_testSys( Claim_t *claim, int sys )
 void claim_destroy( Claim_t *claim )
 {
    int i;
-   if (claim->ids != NULL)
+
+   if (claim->ids != NULL) {
+      for (i=0; i<array_size(claim->ids); i++)
+         sys_rmFlag( system_getIndex(claim->ids[i]), SYSTEM_CLAIMED );
       array_free( claim->ids );
+   }
+
    if (claim->strs != NULL) {
       for (i=0; i<array_size(claim->strs); i++)
          free( claim->strs[i] );

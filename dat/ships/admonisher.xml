@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Admonisher">
  <base_type>Admonisher</base_type>
  <GFX>admonisher</GFX>
+ <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>
@@ -22,20 +23,21 @@
   <cargo>25</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="15" y="0" h="2"/>
-  <weapon size="medium" x="4" y="2" h="-5"/>
-  <weapon size="medium" x="4" y="-2" h="-5"/>
-  <weapon size="small" x="-9" y="-5" h="-9"/>
-  <weapon size="small" x="-9" y="5" h="-9"/>
+  <weapon size="medium" x="15" y="0" h="2" />
+  <weapon size="medium" x="4" y="2" h="-5" />
+  <weapon size="medium" x="4" y="-2" h="-5" />
+  <weapon size="small" x="-9" y="-5" h="-9" />
+  <weapon size="small" x="-9" y="5" h="-9" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-500 Core System</utility>
-  <utility size="medium"/>
-  <utility size="medium"/>
-  <utility size="small"/>
+  <utility size="medium" prop="accessory" exclusive="1" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <utility size="small" />
   <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 550 Engine</structure>
   <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-8 Medium Plating</structure>
-  <structure size="medium"/>
-  <structure size="medium"/>
-  <structure size="medium"/>
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
  </slots>
  <stats>
   <shield_mod>10</shield_mod>

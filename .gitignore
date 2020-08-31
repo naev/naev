@@ -50,13 +50,16 @@ release.log
 Naev.app
 core
 ABOUT-NLS
+ABOUT-NLS~
 po/xml.pot
 po/naev.pot
 po/POTFILES
 po/Makefile.in.in
 po/Makefile.in.in~
 po/Makevars.template
+po/Makevars.template~
 po/Rules-quot
+po/Rules-quot~
 po/boldquot.sed
 po/en@boldquot.header
 po/en@quot.header

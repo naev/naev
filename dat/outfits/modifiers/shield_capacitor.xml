@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Shield Capacitor">
  <general>
   <typename>Shield Power Modifier</typename>
@@ -8,7 +8,7 @@
   <price>60000</price>
   <description>An enhancement for the shield power system, giving small ships a better chance of escaping attackers.</description>
   <gfx_store>capacitor</gfx_store>
- </general>
+ <rarity>2</rarity></general>
  <specific type="modification">
   <shield>40</shield>
  </specific>

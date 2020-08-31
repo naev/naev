@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Shredder">
  <general>
   <slot>weapon</slot>
@@ -9,7 +9,7 @@
   <description>The Shredder quite lives up to the name its Dvaered manufacturers gave it. The sheer damage dealing capacity of this weapon makes Dvaered fighters dangerous to engage by ships that aren't substantially larger than they are.</description>
   <gfx_store>shredder</gfx_store>
   <cpu>-8</cpu>
- </general>
+ <rarity>2</rarity></general>
  <specific type="bolt">
   <gfx>gatling</gfx>
   <sound>autocannon</sound>

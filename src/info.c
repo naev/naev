@@ -69,7 +69,6 @@ static CstSlotWidget info_eq_weaps;
 static int *info_factions;
 
 static int selectedLog = 0;
-static int selectedLogMsg = 0;
 static int selectedLogType = 0;
 static char **logTypes=NULL;
 static int ntypes=0;
@@ -1123,19 +1122,17 @@ static void shiplog_menu_update( unsigned int wid, char* str )
 {
    int regenerateEntries=0;
    int w, h;
-   int logType,log, logMsg;
+   int logType, log;
    int nentries;
    char **logentries;
 
    if (!logWidgetsReady)
       return;
 
-   /*This is called when something is selected.
-     If a new log type has been selected, need to regenerate the log lists.
-     If a new log has been selected, need to regenerate the entries.*/
-   if ( strcmp(str, "lstLogEntries" ) == 0 ) {
-      selectedLogMsg = logMsg;
-   } else {
+   /* This is called when something is selected.
+    * If a new log type has been selected, need to regenerate the log lists.
+    * If a new log has been selected, need to regenerate the entries. */
+   if (strcmp(str, "lstLogEntries" ) != 0) {
       /* has selected a type of log or a log */
       window_dimWindow( wid, &w, &h );
       logWidgetsReady=0;

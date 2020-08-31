@@ -52,7 +52,7 @@ Forma = {
 -- Create a new object based on the Forma "class".
 -- Usage: forma = Forma:new(table_of_pilots, "formation_name")
 function Forma:new(fleet, formation, combat_dist, lead_ship)
-   -- Sanity: we want to make sure a fleet was specified. The formation can be nil.
+   -- We want to make sure a fleet was specified. The formation can be nil.
    if not fleet then
       error( _("Forma must have a fleet.") )
       return
@@ -95,7 +95,7 @@ function Forma:destroy()
       hook.rm(self.thook)
    end
 
-   -- Sanity: remove any pilots that might still be around.
+   -- Remove any pilots that might still be around.
    for _, p in ipairs(self.fleet) do
       p:rm()
    end

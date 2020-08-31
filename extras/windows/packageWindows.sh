@@ -47,11 +47,13 @@ else
 fi
 
 VERSION="$(cat $(pwd)/VERSION)"
+BETA=false
 # Get version, negative minors mean betas
 if [[ -n $(echo "$VERSION" | grep "-") ]]; then
     BASEVER=$(echo "$VERSION" | sed 's/\.-.*//')
     BETAVER=$(echo "$VERSION" | sed 's/.*-//')
     VERSION="$BASEVER.0-beta$BETAVER"
+    BETA=true
 else
     echo "could not find VERSION file"
     exit -1
@@ -72,26 +74,30 @@ echo "Creating Temp Folder"
 mkdir -p ~/temp
 
 echo "Downloading Inetc release"
-wget https://nsis.sourceforge.io/mediawiki/images/c/c9/Inetc.zip -P ~/temp
+if wget https://github.com/DigitalMediaServer/NSIS-INetC-plugin/releases/download/v1.0.5.6/INetC.zip -P ~/temp --tries=3; then
 
-echo "Decompressing Inetc release"
-unzip ~/temp/Inetc.zip -d ~/temp
+    echo "Decompressing Inetc release"
+    unzip ~/temp/Inetc.zip -d ~/temp
 
-# Install Inetc
+    # Install Inetc
 
-echo "Installing Inetc"
-if [[ $ARCH == "32" ]]; then
-    cp -r ~/temp/Plugins/x86-unicode/* /mingw32/share/nsis/Plugins/unicode
-    echo "Cleaning up temp folder"
-    rm -rf ~/temp
-elif [[ $ARCH == "64" ]]; then
-    cp -r ~/temp/Plugins/amd64-unicode/* /mingw64/share/nsis/Plugins/unicode
-    echo "Cleaning up temp folder"
-    rm -rf ~/temp
+    echo "Installing Inetc"
+    if [[ $ARCH == "32" ]]; then
+        cp -r ~/temp/x86-unicode/* /mingw32/share/nsis/Plugins/unicode
+        echo "Cleaning up temp folder"
+        rm -rf ~/temp
+    elif [[ $ARCH == "64" ]]; then
+        cp -r ~/temp/x64-unicode/* /mingw64/share/nsis/Plugins/unicode
+        echo "Cleaning up temp folder"
+        rm -rf ~/temp
+    else
+        echo "I'm afraid I can't do that Dave..."
+        echo "Cleaning up temp folder"
+        rm -rf ~/temp
+        exit -1
+    fi
 else
-    echo "I'm afraid I can't do that Dave..."
-    echo "Cleaning up temp folder"
-    rm -rf ~/temp
+    echo "Something went wrong while downloading Inetc release"
     exit -1
 fi
 
@@ -134,13 +140,26 @@ fi
 # Build installer
 
 if [[ $NIGHTLY == true ]]; then
-makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta$BETAVER-$BUILD_DATE -DARCH=$ARCH extras/windows/installer/naev-nightly.nsi
+    if [[ $BETA == true ]]; then 
+        makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta$BETAVER-$BUILD_DATE -DARCH=$ARCH -DRELEASE=nightly extras/windows/installer/naev.nsi
+    elif [[ $BETA == false ]]; then 
+        makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-$BUILD_DATE -DARCH=$ARCH -DRELEASE=nightly extras/windows/installer/naev.nsi
+    else
+        echo "Something went wrong determining if this is a beta or not."
+    fi
+    
 
 # Move installer to root directory
 mv extras/windows/installer/naev-$VERSION-$BUILD_DATE-win$ARCH.exe naev-win$ARCH.exe
 
 elif [[ $NIGHTLY == false ]]; then
-makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta$BETAVER -DARCH=$ARCH extras/windows/installer/naev.nsi
+    if [[ $BETA == true ]]; then 
+        makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta$BETAVER -DARCH=$ARCH -DRELEASE=naev-$BASEVER.0-beta$BETAVER extras/windows/installer/naev.nsi
+    elif [[ $BETA == false ]]; then 
+        makensis -DVERSION=$VERSION -DVERSION_SUFFIX= -DARCH=$ARCH -DRELEASE=naev-$VERSION extras/windows/installer/naev.nsi
+    else
+        echo "Something went wrong determining if this is a beta or not."
+    fi
 
 # Move installer to root directory
 mv extras/windows/installer/naev-$VERSION-win$ARCH.exe naev-win$ARCH.exe

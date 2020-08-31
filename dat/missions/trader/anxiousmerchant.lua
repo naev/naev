@@ -1,4 +1,23 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Anxious Merchant">
+  <avail>
+   <priority>3</priority>
+   <chance>1</chance>
+   <location>Bar</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Traders Guild</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    Anxious Merchant
    Author: PhoenixRiver (from an idea on the wiki)

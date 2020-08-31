@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Tricon Cyclone II Engine">
  <general>
   <typename>Core Systems (Engine)</typename>
@@ -9,6 +9,7 @@
   <price>675000</price>
   <description>A preferred engine of destroyer and time-focused freighter captains, the Cyclone II retains most of the original Cyclone's performance while more than doubling the engine's mass capacity. Its high power consumption is typically gladly written off given its exemplary performance.</description>
   <gfx_store>engine07</gfx_store>
+  <rarity>4</rarity>
  </general>
  <specific type="modification">
   <thrust>100</thrust>

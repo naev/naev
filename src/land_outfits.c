@@ -39,6 +39,12 @@
 #define  OUTFITS_NTABS  6
 
 
+typedef struct LandOutfitData_ {
+   Outfit *outfits;
+   int noutfits;
+} LandOutfitData;
+
+
 static iar_data_t *iar_data = NULL; /**< Stored image array positions. */
 
 /* Modifier for buying and selling quantity. */
@@ -59,6 +65,7 @@ static void outfits_find( unsigned int wid, char* str );
 static credits_t outfit_getPrice( Outfit *outfit );
 static void outfits_genList( unsigned int wid );
 static void outfits_changeTab( unsigned int wid, char *wgt, int old, int tab );
+static void outfits_onClose( unsigned int wid, char *str );
 
 
 /**
@@ -89,33 +96,71 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
 }
 
 
+/**
+ * @brief For when the widget closes.
+ */
+static void outfits_onClose( unsigned int wid, char *str )
+{
+   (void) str;
+   LandOutfitData *data = window_getData( wid );
+   if (data==NULL)
+      return;
+   free( data->outfits );
+   free( data );
+}
+
+
 
 /**
  * @brief Opens the outfit exchange center window.
+ *
+ *    @params wid Window ID to open at.
+ *    @params Outfits Outfit list to sell. Set to NULL if this is the landed player store.
  */
-void outfits_open( unsigned int wid )
+void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
 {
    int w, h, iw, ih, bw, bh, off;
+   LandOutfitData *data = NULL;
+
+   /* Set up window data. */
+   if (outfits!=NULL) {
+      data = calloc( 1, sizeof(LandOutfitData) );
+      data->outfits = calloc( noutfits, sizeof(Outfit*) );
+      memcpy( data->outfits, outfits, sizeof(Outfit*)*noutfits );
+      data->noutfits = noutfits;
+      window_setData( wid, data );
+      window_onClose( wid, outfits_onClose );
+   }
 
    /* Mark as generated. */
-   land_tabGenerate(LAND_WINDOW_OUTFITS);
+   if (outfits==NULL)
+      land_tabGenerate(LAND_WINDOW_OUTFITS);
 
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, &bw, &bh );
 
    /* Initialize stored positions. */
-   if (iar_data == NULL)
-      iar_data = calloc( OUTFITS_NTABS, sizeof(iar_data_t) );
-   else
-      memset( iar_data, 0, sizeof(iar_data_t) * OUTFITS_NTABS );
+   if (outfits==NULL) {
+      if (iar_data == NULL)
+         iar_data = calloc( OUTFITS_NTABS, sizeof(iar_data_t) );
+      else
+         memset( iar_data, 0, sizeof(iar_data_t) * OUTFITS_NTABS );
+   }
 
    /* will allow buying from keyboard */
    window_setAccept( wid, outfits_buy );
 
    /* buttons */
-   window_addButtonKey( wid, off = -20, 20,
-         bw, bh, "btnCloseOutfits",
-         _("Take Off"), land_buttonTakeoff, SDLK_t );
+   if (data==NULL) {
+      window_addButtonKey( wid, off = -20, 20,
+            bw, bh, "btnCloseOutfits",
+            _("Take Off"), land_buttonTakeoff, SDLK_t );
+   }
+   else {
+      window_addButtonKey( wid, off = -20, 20,
+            bw, bh, "btnCloseOutfits",
+            _("Close"), window_close, SDLK_t );
+   }
    window_addButtonKey( wid, off -= 20+bw, 20,
          bw, bh, "btnSellOutfit",
          _("Sell"), outfits_sell, SDLK_s );
@@ -175,9 +220,13 @@ void outfits_regenList( unsigned int wid, char *str )
    (void) str;
    int tab;
    char *focused;
+   LandOutfitData *data;
+
+   /* If local or not. */
+   data = window_getData( wid );
 
    /* Must exist. */
-   if (land_getWid( LAND_WINDOW_OUTFITS ) == 0)
+   if ((data==NULL) && (land_getWid( LAND_WINDOW_OUTFITS ) == 0))
       return;
 
    /* Save focus. */
@@ -238,18 +287,14 @@ static void outfits_genList( unsigned int wid )
       _("All"), _("\ab W "), _("\ag U "), _("\ap S "), _("\aRCore"), _("Other")
    };
 
-   int i, active, owned, len;
+   int active;
    int fx, fy, fw, fh, barw; /* Input filter. */
    Outfit **outfits;
-   char **soutfits, **slottype, **quantity;
-   glTexture **toutfits;
-   int noutfits, moutfits;
+   ImageArrayCell *coutfits;
+   int noutfits;
    int w, h, iw, ih;
-   glColour *bg, blend;
-   const glColour *c;
-   const char *slotname;
    char *filtertext;
-   int no_outfits = 0;
+   LandOutfitData *data;
 
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, NULL, NULL );
@@ -287,75 +332,29 @@ static void outfits_genList( unsigned int wid )
          filtertext = NULL;
    }
 
-   /* set up the outfits to buy/sell */
-   outfits = tech_getOutfit( land_planet->tech, &noutfits );
-
-   moutfits = MAX( 1, noutfits );
-   soutfits = malloc( moutfits * sizeof(char*) );
-   toutfits = malloc( moutfits * sizeof(glTexture*) );
-
-   noutfits = outfits_filter( outfits, toutfits, noutfits,
-         tabfilters[active], filtertext );
-
-   if (noutfits <= 0) { /* No outfits */
-      soutfits[0] = strdup(_("None"));
-      toutfits[0] = NULL;
-      noutfits    = 1;
-      no_outfits  = 1;
+   /* Set up the outfits to buy/sell */
+   data = window_getData( wid );
+   if (data == NULL) {
+      /* Use landed outfits. */
+      outfits = tech_getOutfit( land_planet->tech, &noutfits );
    }
    else {
-      /* Create the outfit arrays. */
-      quantity = malloc(sizeof(char*)*noutfits);
-      bg       = malloc(sizeof(glColour)*noutfits);
-      slottype = malloc(sizeof(char*)*noutfits);
-      for (i=0; i<noutfits; i++) {
-         soutfits[i] = strdup( outfits[i]->name );
-
-         /* Background colour. */
-         c = outfit_slotSizeColour( &outfits[i]->slot );
-         if (c == NULL)
-            c = &cBlack;
-         col_blend( &blend, c, &cGrey70, 0.4 );
-         bg[i] = blend;
-
-         /* Quantity. */
-         owned = player_outfitOwned(outfits[i]);
-         len = owned / 10 + 4;
-         if (owned >= 1) {
-            quantity[i] = malloc( len );
-            nsnprintf( quantity[i], len, "%d", owned );
-         }
-         else
-            quantity[i] = NULL;
-
-
-         /* Get slot name. */
-         slotname = outfit_slotName(outfits[i]);
-         if ((strcmp(slotname, "N/A") != 0) && (strcmp(slotname, "NULL") != 0)) {
-            slottype[i]    = malloc( 2 );
-            slottype[i][0] = outfit_slotName(outfits[i])[0];
-            slottype[i][1] = '\0';
-         }
-         else
-            slottype[i] = NULL;
-      }
+      /* Use custom list. */
+      noutfits = data->noutfits;
+      outfits = calloc( noutfits, sizeof(Outfit*) );
+      memcpy( outfits, data->outfits, sizeof(Outfit*)*noutfits );
    }
-
-   /* Clean up. */
+   noutfits = outfits_filter( outfits, noutfits,
+         tabfilters[active], filtertext );
+   coutfits = outfits_imageArrayCells( outfits, &noutfits );
    free(outfits);
 
    window_addImageArray( wid, 20, 20,
          iw, ih - 31, OUTFITS_IAR, 64, 64,
-         toutfits, soutfits, noutfits, outfits_update, outfits_rmouse );
+         coutfits, noutfits, outfits_update, outfits_rmouse );
 
    /* write the outfits stuff */
    outfits_update( wid, NULL );
-
-   if (!no_outfits) {
-      toolkit_setImageArrayQuantity( wid, OUTFITS_IAR, quantity );
-      toolkit_setImageArraySlotType( wid, OUTFITS_IAR, slottype );
-      toolkit_setImageArrayBackground( wid, OUTFITS_IAR, bg );
-   }
 }
 
 
@@ -537,7 +536,7 @@ static void outfits_changeTab( unsigned int wid, char *wgt, int old, int tab )
  *    @param name Name fragment that each outfit name must contain.
  *    @return Number of outfits.
  */
-int outfits_filter( Outfit **outfits, glTexture **toutfits, int n,
+int outfits_filter( Outfit **outfits, int n,
       int(*filter)( const Outfit *o ), char *name )
 {
    int i, j;
@@ -552,9 +551,6 @@ int outfits_filter( Outfit **outfits, glTexture **toutfits, int n,
 
       /* Shift matches downward. */
       outfits[j] = outfits[i];
-      if (toutfits != NULL)
-         toutfits[j] = outfits[i]->gfx_store;
-
       j++;
    }
 
@@ -588,6 +584,92 @@ static credits_t outfit_getPrice( Outfit *outfit )
    return price;
 }
 
+
+/**
+ * @brief Generates image array cells corresponding to outfits.
+ */
+ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
+{
+   int i;
+   int l, p;
+   double mass;
+   const glColour *c;
+   ImageArrayCell *coutfits;
+   Outfit *o;
+   const char *typename;
+   glTexture *t;
+
+   /* Allocate. */
+   coutfits = calloc( MAX(1,*noutfits), sizeof(ImageArrayCell) );
+
+   if (*noutfits == 0) {
+      *noutfits = 1;
+      coutfits[0].image = NULL;
+      coutfits[0].caption = strdup( _("None") );
+   }
+   else {
+      /* Set alt text. */
+      for (i=0; i<*noutfits; i++) {
+         o = outfits[i];
+
+         coutfits[i].image = gl_dupTexture( o->gfx_store );
+         coutfits[i].caption = strdup( o->name );
+         coutfits[i].quantity = player_outfitOwned(o);
+
+         /* Background colour. */
+         c = outfit_slotSizeColour( &o->slot );
+         if (c == NULL)
+            c = &cBlack;
+         col_blend( &coutfits[i].bg, c, &cGrey70, 0.4 );
+
+         /* Short description. */
+         if (o->desc_short == NULL)
+            coutfits[i].alt = NULL;
+         else {
+            mass = o->mass;
+            if ((outfit_isLauncher(o) || outfit_isFighterBay(o)) &&
+                  (outfit_ammo(o) != NULL)) {
+               mass += outfit_amount(o) * outfit_ammo(o)->mass;
+            }
+
+            l = strlen(o->desc_short) + 128;
+            coutfits[i].alt = malloc( l );
+            p  = snprintf( &coutfits[i].alt[0], l, "%s\n", o->name );
+            if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
+               p += snprintf( &coutfits[i].alt[p], l-p, _("\aRUnique\a0\n") );
+            if ((o->slot.spid!=0) && (p < l))
+               p += snprintf( &coutfits[i].alt[p], l-p, _("\aRSlot %s\a0\n"),
+                     sp_display( o->slot.spid ) );
+            if (p < l)
+               p += snprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );
+            if ((o->mass > 0.) && (p < l))
+               snprintf( &coutfits[i].alt[p], l-p,
+                     _("\n%.0f Tonnes"),
+                     mass );
+         }
+
+         /* Slot type. */
+         if ( (strcmp(outfit_slotName(o), "N/A") != 0)
+               && (strcmp(outfit_slotName(o), "NULL") != 0) ) {
+            typename       = outfit_slotName(o);
+            coutfits[i].slottype = malloc(2);
+            coutfits[i].slottype[0] = typename[0];
+            coutfits[i].slottype[1] = '\0';
+         }
+
+         /* Layers. */
+         coutfits[i].layers = gl_copyTexArray( o->gfx_overlays, o->gfx_noverlays, &coutfits[i].nlayers );
+         if (o->rarity > 0) {
+            t = rarity_texture( o->rarity );
+            coutfits[i].layers = gl_addTexArray( coutfits[i].layers, &coutfits[i].nlayers, t );
+         }
+      }
+   }
+   return coutfits;
+}
+
+
+
 /**
  * @brief Checks to see if the player can buy the outfit.
  *    @param outfit Outfit to buy.
@@ -602,6 +684,12 @@ int outfit_canBuy( char *name, Planet *planet )
    failure = 0;
    outfit  = outfit_get(name);
    price   = outfit_getPrice(outfit);
+
+   /* Unique. */
+   if (outfit_isProp(outfit, OUTFIT_PROP_UNIQUE) && (player_outfitOwnedTotal(outfit)>0)) {
+      land_errDialogueBuild( _("You can only own one of this outfit.") );
+      return 0;
+   }
 
    /* Map already mapped */
    if ((outfit_isMap(outfit) && map_isMapped(outfit)) ||
@@ -666,8 +754,12 @@ static void outfits_buy( unsigned int wid, char* str )
       return;
 
    outfit = outfit_get( outfitname );
-
    q = outfits_getMod();
+   /* Can only get one unique item. */
+   if (outfit_isProp(outfit, OUTFIT_PROP_UNIQUE) ||
+         outfit_isMap(outfit) || outfit_isLocalMap(outfit) ||
+         outfit_isGUI(outfit) || outfit_isLicense(outfit))
+      q = MIN(q,1);
 
    /* can buy the outfit? */
    if (land_errDialogue( outfitname, "buyOutfit" ))
@@ -685,6 +777,9 @@ static void outfits_buy( unsigned int wid, char* str )
    if (land_takeoff)
       takeoff(1);
    free(outfitname);
+
+   /* Regenerate list. */
+   outfits_regenList( wid, NULL );
 }
 /**
  * @brief Checks to see if the player can sell the selected outfit.
@@ -697,6 +792,12 @@ int outfit_canSell( char *name )
 
    failure = 0;
    outfit = outfit_get(name);
+
+   /* Unique item. */
+   if (outfit_isProp(outfit, OUTFIT_PROP_UNIQUE)) {
+      land_errDialogueBuild(_("You can't sell a unique outfit."));
+      failure = 1;
+   }
 
    /* Map check. */
    if (outfit_isMap(outfit) || outfit_isLocalMap(outfit)) {
@@ -759,7 +860,10 @@ static void outfits_sell( unsigned int wid, char* str )
    hooks_runParam( "outfit_sell", hparam );
    if (land_takeoff)
       takeoff(1);
-  free(outfitname);
+   free(outfitname);
+
+   /* Regenerate list. */
+   outfits_regenList( wid, NULL );
 }
 /**
  * @brief Gets the current modifier status.

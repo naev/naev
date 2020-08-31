@@ -1,3 +1,10 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Pirate Fame">
+  <trigger>enter</trigger>
+  <chance>100</chance>
+ </event>
+ --]]
 
 --[[
 -- Pirate Fame/Faction Standing script

@@ -1,4 +1,19 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="The one with the Visit">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <done>The one with the Shopping</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Gastan</planet>
+  </avail>
+ </mission>
+ --]]
+--[[
 --
 -- MISSION: The one with the Visit
 -- DESCRIPTION: Dr. Geller asks you to disable a soromid ship to retrieve some technology

@@ -1,4 +1,17 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Empire Shipping">
+  <avail>
+   <priority>3</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <chance>350</chance>
+   <done>Empire Recruitment</done>
+   <location>Computer</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    Handles the randomly generated Empire cargo missions.
 
@@ -86,7 +99,7 @@ function create()
    reward     = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
    
    misn.setTitle( string.format(
-      _("ES: Cargo transport (%s of %s)"), tonnestring(amount), cargo ) )
+      _("ES: Cargo transport to %s in %s (%s)"), destplanet:name(), destsys:name(), tonnestring(amount) ) )
    misn.markerAdd(destsys, "computer")
    misn.setDesc(
       misn_desc:format( destplanet:name(), destsys:name() ) .. "\n\n"

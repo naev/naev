@@ -1,4 +1,17 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Long Distance Empire Shipping">
+  <avail>
+   <priority>3</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
+   <chance>350</chance>
+   <done>Empire Long Distance Recruitment</done>
+   <location>Computer</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
    
    Handles the randomly generated Empire long-distance cargo missions.
    

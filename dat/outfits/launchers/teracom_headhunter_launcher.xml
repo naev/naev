@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="TeraCom Headhunter Launcher">
  <general>
   <slot>weapon</slot>
@@ -11,7 +11,7 @@
 This is TeraCom's model Headhunter launcher. Though somewhat pricey and demanding on the ship's resources, the patented tracking and missile arming technology allows pilots to fire their missiles before the competition does.</description>
   <gfx_store>headhunterlauncher</gfx_store>
   <cpu>-8</cpu>
- </general>
+ <rarity>4</rarity></general>
  <specific type="launcher" secondary="1">
   <ammo>Headhunter Missile</ammo>
   <delay>3.5</delay>

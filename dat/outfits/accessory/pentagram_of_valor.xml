@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Pentagram of Valor">
+ <general>
+  <unique/>
+  <typename>Accessory</typename>
+  <slot prop="accessory">utility</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>0</mass>
+  <price>1000000</price>
+  <description>A token of commitment to the FLF cause. It smells oddly of fish.</description>
+  <gfx_store>placeholder</gfx_store>
+ <rarity>6</rarity></general>
+ <specific type="modification">
+  <armour_mod>10</armour_mod>
+  <fwd_firerate>5</fwd_firerate>
+ </specific>
+</outfit>
+
+

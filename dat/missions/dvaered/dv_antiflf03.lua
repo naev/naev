@@ -1,4 +1,19 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Destroy the FLF base!">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <chance>10</chance>
+   <location>Bar</location>
+   <cond>var.peek("flfbase_intro") == 3</cond>
+   <faction>Dvaered</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 -- This is the third mission in the anti-FLF Dvaered campaign. The player joins the battle to destroy the FLF base.
 -- stack variable flfbase_intro:
 --      1 - The player has turned in the FLF agent or rescued the Dvaered crew. Conditional for dv_antiflf02
@@ -195,6 +210,7 @@ function land()
         dv_modReputation( 5 )
         faction.get("Dvaered"):modPlayerSingle(10)
         player.pay(1000000) -- 1M
+        player.addOutfit("Star of Valor")
         var.pop("flfbase_intro")
         var.pop("flfbase_sysname")
         diff.apply("FLF_base")

@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Rhino">
  <base_type>Rhino</base_type>
  <GFX sx="10" sy="10">rhino</GFX>
+ <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Armoured Transport</class>
@@ -22,20 +23,21 @@
   <cargo>100</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="25" y="-3" h="4"/>
-  <weapon size="large" x="25" y="3" h="4"/>
-  <weapon size="medium" x="-15" y="-3" h="4"/>
-  <weapon size="medium" x="-15" y="3" h="4"/>
+  <weapon size="large" x="25" y="-3" h="4" />
+  <weapon size="large" x="25" y="3" h="4" />
+  <weapon size="medium" x="-15" y="-3" h="4" />
+  <weapon size="medium" x="-15" y="3" h="4" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-600 Core System</utility>
-  <utility size="medium"/>
-  <utility size="medium"/>
-  <utility size="medium"/>
+  <utility size="medium" prop="accessory" exclusive="1" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <utility size="medium" />
   <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1200 Engine</structure>
   <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
-  <structure size="medium"/>
-  <structure size="medium"/>
-  <structure size="medium"/>
-  <structure size="medium"/>
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
  </slots>
  <stats>
   <cargo_mod>20</cargo_mod>

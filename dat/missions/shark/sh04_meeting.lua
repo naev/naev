@@ -1,4 +1,19 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="The Meeting">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <done>Invitation</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Darkshed</planet>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    This is the fifth mission of the Shark's teeth campaign. The player has to go to a planet in Za'lek space.
 
@@ -40,7 +55,7 @@ text[4] = _([[As you land, you see a group of people that were waiting for your 
     A few periods later, he comes back and explains that he wasn't able to improve Nexus sales in the Frontier, but he was able to stop House Sirius from entering the picture, at least.]])
 
 title[5] = _("What is going on?")
-text[5] = _([[Suddenly, a Za'lek drone starts attacking you! As you wonder what to do, you hear a comm from a remote Za'lek ship. "Attention please, it seems some of our drones have been hacked. If a drone is attacking you and you aren't wanted by the authorities, you are hereby granted authorization to destroy it."]])
+text[5] = _([[Suddenly, a Za'lek drone starts attacking you! As you wonder what to do, you hear a broadcast from a remote Za'lek ship. "Attention please, it seems some of our drones have gone haywire. If a drone attacks you and you aren't wanted by the authorities, you are hereby granted authorization to destroy it."]])
 
 -- Mission details
 misn_title = _("The Meeting")

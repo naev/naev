@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Left Boot">
+ <general>
+  <unique/>
+  <typename>Accessory</typename>
+  <slot prop="accessory">utility</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>0</mass>
+  <price>1000000</price>
+  <description>The left boot of a high-ranking Empire official. It doesn't seem to fit you and is full of confetti. You're not sure what to do with it, but it might liven up the ship.</description>
+  <gfx_store>placeholder</gfx_store>
+ <rarity>6</rarity></general>
+ <specific type="modification">
+  <cpu_mod>10</cpu_mod>
+  <shield_mod>5</shield_mod>
+  <armour_mod>5</armour_mod>
+  <energy_mod>5</energy_mod>
+ </specific>
+</outfit>
+

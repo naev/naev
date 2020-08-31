@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Cheater's Laser Cannon">
  <general>
   <slot>weapon</slot>
@@ -8,7 +8,7 @@
   <description>This weapon is a cheat. It is not meant to be used by players.</description>
   <gfx_store>laser2</gfx_store>
   <cpu>-1</cpu>
-  </general>
+  <rarity>6</rarity></general>
  <specific type="bolt">
   <gfx>laser2S</gfx>
   <sound>laser</sound>

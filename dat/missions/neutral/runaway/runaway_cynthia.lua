@@ -1,4 +1,18 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="The Runaway">
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <chance>11</chance>
+   <location>Bar</location>
+   <system>Gamma Polaris</system>
+  </avail>
+ </mission>
+ --]]
+--[[
 This is the "The Runaway" mission as described on the wiki.
 There will be more missions to detail how you are percieved as the kidnapper of "Cynthia"
 --]]

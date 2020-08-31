@@ -112,6 +112,8 @@ int gl_texHasCompress (void);
 int gl_isTrans( const glTexture* t, const int x, const int y );
 void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir );
 int gl_needPOT (void);
+glTexture** gl_copyTexArray( glTexture **tex, int texn, int *n );
+glTexture** gl_addTexArray( glTexture **tex, int *n, glTexture *t );
 
 
 #endif /* OPENGL_TEX_H */

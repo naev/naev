@@ -1,4 +1,17 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Eliminate an Empire Patrol">
+  <avail>
+   <priority>3</priority>
+   <chance>550</chance>
+   <location>Computer</location>
+   <faction>FLF</faction>
+   <faction>Frontier</faction>
+   <cond>diff.isApplied("flf_vs_empire") and not diff.isApplied( "flf_dead" )</cond>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    FLF Empire patrol elimination mission
 

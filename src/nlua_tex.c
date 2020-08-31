@@ -274,7 +274,7 @@ static int texL_spriteFromDir( lua_State *L )
    else
       a = luaL_checknumber( L, 2 ) / 180. * M_PI;
 
-   /* Calculate with parameter sanity.. */
+   /* Calculate with parameter validity.. */
    if ((a >= 2.*M_PI) || (a < 0.)) {
       a = fmod( a, 2.*M_PI );
       if (a < 0.)

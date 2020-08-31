@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="S&amp;K Medium Cargo Hull">
  <general>
   <typename>Core Systems (Hull)</typename>
@@ -9,7 +9,7 @@
   <price>320000</price>
   <description>Schafer &amp; Kane Industries have developed a hull modification that provides both ample cargo space and protection.</description>
   <gfx_store>medium_cargo_hull</gfx_store>
- </general>
+ <rarity>3</rarity></general>
  <specific type="modification">
   <cargo>120</cargo>
   <absorb>12</absorb>

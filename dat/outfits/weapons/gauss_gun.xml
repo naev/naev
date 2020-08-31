@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Gauss Gun">
  <general>
   <slot>weapon</slot>
@@ -8,7 +8,7 @@
   <description>The Gauss Gun is one of the oldest weapon designs in the galaxy today, dating back to the times of the Federation. It fires a rapid stream of high velocity projectiles at a target, dealing damage through sheer kinetic impact. Gauss Guns are popular among small time pirates for being a cheap, reliable weapon.</description>
   <gfx_store>gaussgun</gfx_store>
   <cpu>-4</cpu>
- </general>
+ <rarity>1</rarity></general>
  <specific type="bolt">
   <gfx>gatling</gfx>
   <sound>autocannon</sound>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Reverse Thrusters">
  <general>
   <slot>utility</slot>
@@ -9,7 +9,7 @@
   <gfx_store>afterburner</gfx_store>
   <limit>reverse_thruster</limit>
   <cpu>-2</cpu>
- </general>
+ <rarity>1</rarity></general>
  <specific type="modification">
   <misc_reverse_thrust>1</misc_reverse_thrust>
  </specific>

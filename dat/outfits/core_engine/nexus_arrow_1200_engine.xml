@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Nexus Arrow 1200 Engine">
  <general>
   <typename>Core Systems (Engine)</typename>
@@ -9,6 +9,7 @@
   <price>225000</price>
   <description>Derived from the smaller Arrow 550, the Arrow 1200 is intended for use on destroyers and mid-sized freighters. With moderate power consumption and solid performance, it's found on many seasoned captains' ships.</description>
   <gfx_store>engine14</gfx_store>
+  <rarity>2</rarity>
  </general>
  <specific type="modification">
   <thrust>87</thrust>

@@ -1,3 +1,10 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Spaceport Bar NPC">
+  <trigger>land</trigger>
+  <chance>100</chance>
+ </event>
+ --]]
 
 --[[
 -- Event for creating random characters in the spaceport bar.
@@ -129,7 +136,7 @@ msg_lore["Proteron"] =     {_([["Our system of government is clearly superior to
                               _([["The Empire is weak, obsolete. That is why we must replace them."]]),
                               _([["Slaves? Of course we're not slaves. Slaves are beaten and starved. We are in top shape so we can serve our country better."]]),
                               _([["I can't believe the Empire continues to allow families. So primitive. Obviously, all this does is make them less productive."]]),
-                              _([["The exact cause of the Incident is a tightly-kept secret, but the government says it was caused by the Empire's stupidity. I would expect nothing less."]]),
+                              _([["The exact cause of the Incident is a tightly-kept secret, but the government says it was caused by the Empire's inferiority. I would expect nothing less."]]),
                               _([["I came across some heathen a few months back who claimed, get this, that we Proterons were the cause of the Incident! What slanderous nonsense. Being the perfect society we are, of course we would never cause such a massive catastrophe."]]),
                            }
 
@@ -150,7 +157,7 @@ msg_lore["FLF"] =          {_([["I can't stand Dvaereds. I just want to wipe the
                               _([["Yeah, it's true, lots of Frontier officials fund our operations. If they didn't, we'd have a really hard time landing on Frontier planets, what with the kinds of operations we perform against the Dvaereds."]]),
                               _([["Yeah, some civilians die because of our efforts, but that's just a sacrifice we have to make. It's for the greater good."]]),
                               _([["No, we're not terrorists. We're soldiers. True terrorists kill and destroy without purpose. Our operations do have a purpose: to drive out the Dvaered oppressors from the Frontier."]]),
-                              _([["Riddle me this: how can we be terrorists if the Dvaereds started it by encroaching on Frontier territory? It's the stupidest thing I ever heard."]]),
+                              _([["Riddle me this: how can we be terrorists if the Dvaereds started it by encroaching on Frontier territory? It's the most ridiculous thing I ever heard."]]),
                               _([["Well, no, the Dvaereds never actually attacked Frontier ships, but that's not the point. They have their ships in Frontier territory. What other reason could they possibly have them there for if not to set up an invasion?"]]),
                            }
 
@@ -160,7 +167,7 @@ msg_lore["Pirate"] =       {_([["Hi mate. Money or your life! Heh heh, just mess
                               _([["My gran once said to me, 'Never trust a pirate.' Well, she was right! I got a pretty credit chip outta her wallet last time I saw her, and I'd do it again."]]),
                               _([["I don't understand why some pirates talk like 16th-century Earth pirates even though that planet is literally dead."]]),
                               _([["I may be a pirate who blows up ships and steals for a living, but that inner nebula still kind of freaks me out."]]),
-                              _([["Stupid Empire stopped my heist a few decaperiods ago. Just wait'll they see me again..."]]),
+                              _([["Damn Empire stopped my heist a few decaperiods ago. Just wait'll they see me again..."]]),
                               _([["I tried to get into a pirate clanworld, but they wouldn't let me in because I'm a 'small-time pirate'! Sometimes I think I'll never make it in this line of work..."]]),
                               _([["Don't forget, true pirates fly pirate ships! You won't hold onto your reputation very long if you fly around in those pathetic normie vessels. I once met a pirate who kept flying his standard Lancelot. Let's just say, he didn't make it very long."]]),
                               _([["I was around before Haven was destroyed, you know! Funny times. All the pirates were panicking and the Empire was cheering thinking that we were done for. Ha! As if! It barely even made a difference. We just relocated to New Haven and resumed business as usual."]]),

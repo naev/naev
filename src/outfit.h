@@ -20,11 +20,12 @@
  */
 #define outfit_isProp(o,p)          ((o)->properties & p) /**< Checks an outfit for property. */
 /* property flags */
-#define OUTFIT_PROP_WEAP_SECONDARY     (1<<0) /**< Is a secondary weapon? */
-#define OUTFIT_PROP_WEAP_SPIN          (1<<1) /**< Should weapon spin around? */
-#define OUTFIT_PROP_WEAP_BLOWUP_ARMOUR (1<<2) /**< Weapon blows up (armour spfx)
+#define OUTFIT_PROP_UNIQUE             (1<<0) /**< Unique item (can only have one). Not sellable.*/
+#define OUTFIT_PROP_WEAP_SECONDARY     (1<<10) /**< Is a secondary weapon? */
+#define OUTFIT_PROP_WEAP_SPIN          (1<<11) /**< Should weapon spin around? */
+#define OUTFIT_PROP_WEAP_BLOWUP_ARMOUR (1<<12) /**< Weapon blows up (armour spfx)
                                                    when timer is up. */
-#define OUTFIT_PROP_WEAP_BLOWUP_SHIELD (1<<3) /**< Weapon blows up (shield spfx)
+#define OUTFIT_PROP_WEAP_BLOWUP_SHIELD (1<<13) /**< Weapon blows up (shield spfx)
                                                    when timer is up. */
 
 
@@ -255,9 +256,6 @@ typedef struct OutfitModificationData_ {
    double crew_rel;  /**< Relative crew modification. */
    double mass_rel;  /**< Relative mass modification. */
    int fuel;      /**< Maximum fuel modifier. */
-
-   /* Stats. */
-   ShipStatList *stats; /**< Stat list. */
 } OutfitModificationData;
 
 /**
@@ -322,25 +320,30 @@ typedef struct OutfitGUIData_ {
 typedef struct Outfit_ {
    char *name;       /**< Name of the outfit. */
    char *typename;   /**< Overrides the base type. */
+   int rarity;       /**< Rarity of the outfit. */
 
-   /* general specs */
+   /* General specs */
    OutfitSlot slot;  /**< Slot the outfit fits into. */
    char *license;    /**< Licenses needed to buy it. */
    double mass;      /**< How much weapon capacity is needed. */
    double cpu;       /**< CPU usage. */
    char *limit;      /**< Name to limit to one per ship (ignored if NULL). */
 
-   /* store stuff */
+   /* Store stuff */
    credits_t price;  /**< Base sell price. */
    char *description; /**< Store description. */
    char *desc_short; /**< Short outfit description. */
    int priority;     /**< Sort priority, highest first. */
 
    glTexture* gfx_store; /**< Store graphic. */
+   glTexture** gfx_overlays; /**< Store overlay graphics. */
+   int gfx_noverlays; /**< Number of overlays. */
 
    unsigned int properties; /**< Properties stored bitwise. */
-
    unsigned int group; /**< Weapon group to use when autoweap is enabled. */
+
+   /* Stats. */
+   ShipStatList *stats; /**< Stat list. */
 
    /* Type dependent */
    OutfitType type; /**< Type of the outfit. */
@@ -436,6 +439,7 @@ void outfit_free (void);
 int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s );
 int outfit_fitsSlotType( const Outfit* o, const OutfitSlot* s );
 void outfit_freeSlot( OutfitSlot* s );
+glTexture* rarity_texture( int rarity );
 
 
 #endif /* OUTFIT_H */

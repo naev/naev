@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Hephaestus">
  <base_type>Hephaestus</base_type>
  <GFX sx="12" sy="12">hephaestus</GFX>
+ <rarity>5</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Carrier</class>
@@ -22,30 +23,31 @@
   <fuel_consumption>400</fuel_consumption>
  </characteristics>
  <slots>
-  <weapon size="large" x="40" y="-20" h="0"/>
-  <weapon size="large" x="40" y="20" h="0"/>
-  <weapon size="large" x="0" y="-20" h="0"/>
-  <weapon size="large" x="0" y="20" h="0"/>
-  <weapon size="large" x="-20" y="-20" h="0"/>
-  <weapon size="large" x="-20" y="20" h="0"/>
-  <weapon size="large" x="-40" y="-20" h="0"/>
-  <weapon size="large" x="-40" y="20" h="0"/>
+  <weapon size="large" x="40" y="-20" h="0" />
+  <weapon size="large" x="40" y="20" h="0" />
+  <weapon size="large" x="0" y="-20" h="0" />
+  <weapon size="large" x="0" y="20" h="0" />
+  <weapon size="large" x="-20" y="-20" h="0" />
+  <weapon size="large" x="-20" y="20" h="0" />
+  <weapon size="large" x="-40" y="-20" h="0" />
+  <weapon size="large" x="-40" y="20" h="0" />
   <utility size="large" prop="systems">Unicorp PT-1000 Core System</utility>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
+  <utility size="large" prop="accessory" exclusive="1" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
   <structure size="large" prop="engines">Unicorp Eagle 6500 Engine</structure>
   <structure size="large" prop="hull">Unicorp D-20 Heavy Plating</structure>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
  </slots>
  <stats>
   <shield_mod>50</shield_mod>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Orion Lance">
  <general>
   <slot>weapon</slot>
@@ -9,7 +9,7 @@
   <description>The Orion Lance is a fixed-mount weapon designed to be mounted on fighters and up. Based on a heavily-modified, liquid-cooled laser, it's capable of bursts of continuous fire, resulting in a destructive beam.</description>
   <gfx_store>orion</gfx_store>
   <cpu>-8</cpu>
- </general>
+ <rarity>3</rarity></general>
  <specific type="beam">
   <delay>3</delay>
   <duration>4</duration>

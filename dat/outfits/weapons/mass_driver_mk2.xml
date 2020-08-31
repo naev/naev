@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Mass Driver MK2">
  <general>
   <slot>weapon</slot>
@@ -9,7 +9,7 @@
   <description>The MK2 version of the Mass Driver differs little from its weaker model in its working. Rather, the parts it's made of have a better performance curve, allowing the driver rounds to be fired with increased force.</description>
   <gfx_store>gatling</gfx_store>
   <cpu>-15</cpu>
- </general>
+ <rarity>2</rarity></general>
  <specific type="bolt">
   <gfx>autocannon</gfx>
   <sound>autocannon</sound>

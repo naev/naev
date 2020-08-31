@@ -1,3 +1,14 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Preacher">
+  <trigger>enter</trigger>
+  <chance>10</chance>
+  <cond>system.cur():presence(faction.get("Sirius"))&gt;50 and (not player.evtActive ("Preacher")) and ( (var.peek("si_convert")==nil) or rnd.rnd(1,var.peek("si_convert")+1)==1)</cond>
+  <flags>
+   <unique />
+  </flags>
+ </event>
+ --]]
 --Preliminary draft of a new event where the player meets one of the Touched, who tries to convert him
 --Sudarshan S <ssoxygen@users.sf.net>
 

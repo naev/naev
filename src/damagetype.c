@@ -17,6 +17,7 @@
 #include "SDL.h"
 
 #include "log.h"
+#include "array.h"
 #include "pilot.h"
 #include "pause.h"
 #include "rng.h"
@@ -27,8 +28,6 @@
 
 #define DTYPE_XML_ID     "dtypes"   /**< XML Document tag. */
 #define DTYPE_XML_TAG    "dtype"    /**< DTYPE XML node tag. */
-
-#define DTYPE_CHUNK_MIN  256     /**< Minimum chunk to alloc when needed */
 
 /**
  * @struct DTYPE
@@ -45,7 +44,6 @@ typedef struct DTYPE_ {
 } DTYPE;
 
 static DTYPE* dtype_types  = NULL;  /**< Total damage types. */
-static int dtype_ntypes    = 0;     /**< Total number of damage types. */
 
 
 /*
@@ -141,7 +139,7 @@ static void DTYPE_free( DTYPE *damtype )
 int dtype_get( char* name )
 {
    int i;
-   for (i=0; i<dtype_ntypes; i++)
+   for (i=0; i<array_size(dtype_types); i++)
       if (strcmp(dtype_types[i].name, name)==0)
          return i;
    WARN("Damage type '%s' not found in stack.", name);
@@ -154,7 +152,7 @@ int dtype_get( char* name )
  */
 static DTYPE* dtype_validType( int type )
 {
-   if ((type < 0) || (type >= dtype_ntypes)) {
+   if ((type < 0) || (type >= array_size(dtype_types))) {
       WARN("Damage type '%d' is invalid.", type);
       return NULL;
    }
@@ -181,7 +179,6 @@ char* dtype_damageTypeToStr( int type )
  */
 int dtype_load (void)
 {
-   int mem;
    size_t bufsize;
    char *buf;
    xmlNodePtr node;
@@ -216,7 +213,7 @@ int dtype_load (void)
    }
 
    /* Load up the individual damage types. */
-   mem = 0;
+   dtype_types = array_create(DTYPE);
    do {
       xml_onlyNodes(node);
 
@@ -225,19 +222,11 @@ int dtype_load (void)
          continue;
       }
 
-      dtype_ntypes++;
-      if (dtype_ntypes > mem) {
-         if (mem == 0)
-            mem = DTYPE_CHUNK_MIN;
-         else
-            mem *= 2;
-         dtype_types = realloc(dtype_types, sizeof(DTYPE)*mem);
-      }
-      DTYPE_parse( &dtype_types[dtype_ntypes-1], node );
+      DTYPE_parse( &array_grow( &dtype_types ), node );
 
    } while (xml_nextNode(node));
    /* Shrink back to minimum - shouldn't change ever. */
-   dtype_types = realloc(dtype_types, sizeof(DTYPE) * dtype_ntypes);
+   array_shrink( &dtype_types );
 
    /* Clean up. */
    xmlFreeDoc(doc);
@@ -255,11 +244,10 @@ void dtype_free (void)
    int i;
 
    /* clear the damtypes */
-   for (i=0; i<dtype_ntypes; i++)
+   for (i=0; i<array_size(dtype_types); i++)
       DTYPE_free( &dtype_types[i] );
-   free( dtype_types );
+   array_free( dtype_types );
    dtype_types    = NULL;
-   dtype_ntypes   = 0;
 }
 
 

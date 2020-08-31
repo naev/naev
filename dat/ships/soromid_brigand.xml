@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Brigand">
  <base_type>Brigand</base_type>
  <GFX>brigand</GFX>
+ <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
@@ -22,16 +23,17 @@
   <cargo>10</cargo>
  </characteristics>
  <slots>
-  <weapon size="small" prop="bio_weapon" x="12" y="0" h="0"/>
-  <weapon size="small" prop="bio_weapon" x="-3" y="0" h="2"/>
-  <weapon size="small" prop="bio_weapon" x="3" y="0" h="2"/>
+  <weapon size="small" prop="bio_weapon" x="12" y="0" h="0" />
+  <weapon size="small" prop="bio_weapon" x="-3" y="0" h="2" />
+  <weapon size="small" prop="bio_weapon" x="3" y="0" h="2" />
   <utility size="small" prop="bio_systems" exclusive="1" required="1">Ultralight Bioship Brain Stage 1</utility>
-  <utility size="small"/>
-  <utility size="small"/>
+  <utility size="small" prop="accessory" exclusive="1" />
+  <utility size="small" />
+  <utility size="small" />
   <structure size="small" prop="bio_engines" exclusive="1" required="1">Ultralight Bioship Fast Fin Stage 1</structure>
   <structure size="small" prop="bio_hull" exclusive="1" required="1">Ultralight Bioship Shell Stage 1</structure>
-  <structure size="small"/>
-  <structure size="small"/>
+  <structure size="small" />
+  <structure size="small" />
  </slots>
  <stats>
   <armour_mod>-10</armour_mod>

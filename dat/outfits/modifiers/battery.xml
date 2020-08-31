@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Battery">
  <general>
   <typename>Power Modifier</typename>
@@ -8,7 +8,7 @@
   <price>40000</price>
   <description>A large battery unit designed to hold 200 MJ of energy. Small enough to mount on many light vessels.</description>
   <gfx_store>capacitor-g</gfx_store>
- </general>
+ <rarity>1</rarity></general>
  <specific type="modification">
   <energy>200</energy>
  </specific>

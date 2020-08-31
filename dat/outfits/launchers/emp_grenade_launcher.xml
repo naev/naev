@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="EMP Grenade Launcher">
  <general>
   <slot>weapon</slot>
@@ -8,7 +8,7 @@
   <gfx_store>empgrenadelauncher_blue</gfx_store>
   <description>This launcher can fire EMP grenades in any direction using a unique internal guidance system. The grenades unleash an electromagnetic pulse, rapidly disabling the electronics of enemy ships. Useful for taking ships alive; the EM pulses rarely destroy the ship, leaving it floating disabled in space. These are favoured by traders for keeping pirates at bay.</description>
   <cpu>-8</cpu>
- </general>
+ <rarity>1</rarity></general>
  <specific type="turret launcher" secondary="1">
   <ammo>EMP Grenade</ammo>
   <delay>2</delay>

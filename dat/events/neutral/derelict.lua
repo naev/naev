@@ -1,4 +1,12 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Derelict">
+  <trigger>enter</trigger>
+  <chance>10</chance>
+  <cond>system.cur():faction() ~= nil</cond>
+ </event>
+ --]]
+--[[
 -- Derelict Event
 --
 -- Creates a derelict ship that spawns random events.

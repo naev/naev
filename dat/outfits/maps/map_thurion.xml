@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Map: Thurion Core">
  <general>
   <mass>0</mass>
   <price>500000</price>
   <description>This map provides the hidden route to the Thurion core systems outside of the nebula.</description>
   <gfx_store>map</gfx_store>
- </general>
+ <rarity>3</rarity></general>
  <specific type="map">
   <sys name="Metsys">
    <jump>Booster</jump>

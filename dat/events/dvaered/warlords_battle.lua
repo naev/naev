@@ -1,3 +1,13 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Warlords battle">
+  <trigger>enter</trigger>
+  <chance>10</chance>
+  <cond>system.cur():faction() == faction.get("Dvaered") and not player.evtActive ("Warlords battle")</cond>
+  <flags>
+  </flags>
+ </event>
+ --]]
 --  A battle between two dvaered warlords. The player can join one of them and get a reward
 
 require "fleethelper.lua"

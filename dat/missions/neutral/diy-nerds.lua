@@ -1,3 +1,16 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="DIY Nerds">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <chance>2</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
+ --]]
    --[[
       MISSION: diy-nerds
       DESCRIPTION: Cart some nerds and their hardware to some DIY
@@ -63,7 +76,7 @@ text[8] = [[As soon as you get of your ship, you are surrounded by the group of 
 -- you pick up the nerds in time, they didn't win
 title[9] = _("Sad nerds")
 text[9] = [[As you get of your ship, you do not immediately see the nerds. You finally find them in a dark corner of the landing pad quietly sitting on their box, obviously not in a good mood. You greet them, but nobody speaks a word. You ask them what's wrong. The nerds warily glance at each other before Mia bursts out in frustration.
-    "That aristocratic ass of a bored teenager! He snatched the prize from us! It wasn't even fair play. His box wasn't home built. It was a brand new ship's processing unit, on which he banged his hammer until it looked acceptable. And the corrupt idiots in the jury pretended not to notice!"
+    "That aristocratic ass of a bored teenager! He snatched the prize from us! It wasn't even fair play. His box wasn't home built. It was a brand new ship's processing unit, on which he banged his hammer until it looked acceptable. And the corrupt assholes in the jury pretended not to notice!"
     "So no, we didn't win" she adds after taking a few breaths to calm down. "Take us back to %s.]]
 
 -- you do not pickup the nerds in time

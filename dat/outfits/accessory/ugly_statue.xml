@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Ugly Statue">
+ <general>
+  <unique/>
+  <typename>Accessory</typename>
+  <slot prop="accessory">utility</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>0</mass>
+  <price>1000000</price>
+  <description>A statue given to you by Baron Sauterfeldt for your fine work. You would feel more grateful if he hadn't mentioned that his lover was making him get rid of it. The statue seems to depict a shrimp wearing a bowtie playing an ukelele and its head bobbles around with the ship acceleration. How tasteful...</description>
+  <gfx_store>placeholder</gfx_store>
+ <rarity>6</rarity></general>
+ <specific type="modification">
+  <armour_mod>10</armour_mod>
+ </specific>
+</outfit>

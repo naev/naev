@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Proteron Archimedes">
  <base_type>Archimedes</base_type>
  <GFX sx="12" sy="12">archimedes</GFX>
+ <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>
@@ -22,27 +23,28 @@
   <cargo>120</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="40" y="0" h="0"/>
-  <weapon size="large" x="25" y="-4" h="0"/>
-  <weapon size="large" x="25" y="4" h="0"/>
-  <weapon size="large" x="0" y="-6" h="2"/>
-  <weapon size="large" x="0" y="6" h="2"/>
-  <weapon size="large" x="-25" y="-8" h="3"/>
-  <weapon size="large" x="-25" y="8" h="3"/>
+  <weapon size="large" x="40" y="0" h="0" />
+  <weapon size="large" x="25" y="-4" h="0" />
+  <weapon size="large" x="25" y="4" h="0" />
+  <weapon size="large" x="0" y="-6" h="2" />
+  <weapon size="large" x="0" y="6" h="2" />
+  <weapon size="large" x="-25" y="-8" h="3" />
+  <weapon size="large" x="-25" y="8" h="3" />
   <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-1000 Core System</utility>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
+  <utility size="large" prop="accessory" exclusive="1" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
   <structure size="large" prop="engines" exclusive="1" required="1">Unicorp Eagle 6500 Engine</structure>
   <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-20 Heavy Plating</structure>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
  </slots>
  <stats>
   <shield_mod>15</shield_mod>

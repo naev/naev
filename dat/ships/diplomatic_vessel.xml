@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Diplomatic Vessel">
  <base_type>Gawain</base_type>
  <GFX>gawain</GFX>
@@ -9,7 +9,7 @@
  <time_mod>1</time_mod>
  <fabricator>Sirius Systems</fabricator>
  <description>This is a diplomatic vessel. Not to be used by the player or the normal AIs.</description>
- <mission/>
+ <mission />
  <movement>
   <thrust>100</thrust>
   <turn>135</turn>
@@ -33,11 +33,11 @@
   <cargo>10</cargo>
  </characteristics>
  <slots>
-  <weapon size="small" x="9" y="0" h="-2"/>
-  <utility size="small"/>
-  <utility size="small"/>
-  <utility size="small"/>
-  <utility size="small"/>
-  <structure size="small"/>
+  <weapon size="small" x="9" y="0" h="-2" />
+  <utility size="small" />
+  <utility size="small" />
+  <utility size="small" />
+  <utility size="small" />
+  <structure size="small" />
  </slots>
 </ship>

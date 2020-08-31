@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="S&amp;K Small Cargo Hull">
  <general>
   <typename>Core Systems (Hull)</typename>
@@ -9,7 +9,7 @@
   <price>120000</price>
   <description>Though a pricey investment for small couriers, this hull modification from Schafer &amp; Kane Industries provides an impressive amount of cargo space without compromising the hull's integrity.</description>
   <gfx_store>small_cargo_hull</gfx_store>
- </general>
+ <rarity>2</rarity></general>
  <specific type="modification">
   <cargo>30</cargo>
   <absorb>4</absorb>
@@ -18,4 +18,3 @@
   <ew_hide>0</ew_hide>
  </specific>
 </outfit>
-<!-- Medium slot hull mods. -->

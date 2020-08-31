@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Unicorp B-20 Heavy Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
@@ -9,7 +9,7 @@
   <price>900000</price>
   <description>Derived from the venerable D-20 plating, the B-20 utilizes high-density composites to provide additional protection while also leaving more room for cargo, at the cost of slightly increased mass.</description>
   <gfx_store>refined_hull_x</gfx_store>
- </general>
+ <rarity>5</rarity></general>
  <specific type="modification">
   <cargo>100</cargo>
   <absorb>35</absorb>

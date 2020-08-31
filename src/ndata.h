@@ -18,6 +18,7 @@
 #define PLANET_GFX_SPACE_PATH    "dat/gfx/planet/space/" /**< Location of planet space graphics. */
 #define PLANET_GFX_EXTERIOR_PATH "dat/gfx/planet/exterior/" /**< Location of planet exterior graphics (when landed). */
 #define GFX_PATH                 "dat/gfx/" /**< Location of the graphics root. */
+#define OVERLAY_GFX_PATH         "dat/gfx/overlays/" /**< Location of overlays such as those used with graphics and ships. */
 #define GUI_GFX_PATH             "dat/gfx/gui/" /**< Location of the GUI graphics. */
 #define PORTRAIT_GFX_PATH        "dat/gfx/portraits/" /**< Location of the portrait graphics. */
 #define SHIP_GFX_PATH            "dat/gfx/ship/" /**< Location of ship graphics. */
@@ -31,8 +32,8 @@
 #define OUTFIT_POLYGON_PATH      "dat/gfx/outfit/space_polygon/" /**< Path to ship's collision polygon. */
 
 #define FACTION_DATA_PATH        "dat/faction.xml" /**< Faction xml file. */
-#define MISSION_DATA_PATH        "dat/mission.xml" /**< Path to missions XML. */
-#define EVENT_DATA_PATH          "dat/event.xml" /**< Path to events XML. */
+#define MISSION_DATA_PATH        "dat/missions/" /**< Path to missions XML. */
+#define EVENT_DATA_PATH          "dat/events/" /**< Path to events XML. */
 #define SPFX_DATA_PATH           "dat/spfx.xml" /**< Location of the spfx datafile. */
 #define DTYPE_DATA_PATH          "dat/damagetype.xml" /**< Location of the spfx datafile. */
 #define COMMODITY_DATA_PATH      "dat/commodity.xml" /**< Commodity XML file. */
@@ -59,8 +60,8 @@
 
 #define START_DATA_PATH          "dat/start.xml" /**< Path to module start file. */
 
-#define FONT_DEFAULT_PATH        "dat/font.ttf" /**< Default font path. */
-#define FONT_MONOSPACE_PATH      "dat/mono.ttf" /**< Default monospace font path. */
+#define FONT_DEFAULT_PATH        "dat/fonts/Cabin-SemiBold.otf" /**< Default font path. */
+#define FONT_MONOSPACE_PATH      "dat/fonts/SourceCodePro-Semibold.ttf" /**< Default monospace font path. */
 
 #define LUA_INCLUDE_PATH         "dat/scripts/" /**< Path for Lua includes. */
 #define AI_PATH                  "dat/ai/" /**< Location of the AI files. */

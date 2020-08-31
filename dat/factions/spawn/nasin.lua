@@ -38,7 +38,7 @@ scom.createSpawnTable = function( weights )
       spawn_table[ #spawn_table+1 ] = { chance = max, func = k }
    end
 
-   -- Sanity check
+   -- Safety check
    if max == 0 then
       error(_("No weight specified"))
    end

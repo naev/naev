@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Cheater's Drone Fighter Bay">
  <general>
   <slot>weapon</slot>
@@ -9,7 +9,7 @@
   <gfx_store>drone_fighter</gfx_store>
   <description>The Drone Fighter bay uses the advanced collective technologies to sustain a trio of Drone Fighters. Drone Fighters require no pilot making them a safer approach in dangerous situations. They do however need some careful maintenance. All the tools needed to take care of them are provided with the bay.</description>
   <cpu>-10</cpu>
- </general>
+ <rarity>6</rarity></general>
  <specific type="fighter bay" secondary="1">
   <ammo>Drone Fighter</ammo>
   <delay>2</delay>

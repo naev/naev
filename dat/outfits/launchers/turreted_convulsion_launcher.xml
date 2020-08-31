@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Turreted Convulsion Launcher">
  <general>
   <slot>weapon</slot>
@@ -11,7 +11,7 @@
 This launcher is mounted on a turret and has more ammo capacity than the standard launcher.</description>
   <gfx_store>turreted_convulsion_launcher</gfx_store>
   <cpu>-18</cpu>
- </general>
+ <rarity>4</rarity></general>
  <specific type="turret launcher" secondary="1">
   <ammo>Convulsion Missile</ammo>
   <delay>2.5</delay>

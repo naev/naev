@@ -1,4 +1,26 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Commodity Run">
+  <avail>
+   <priority>5</priority>
+   <cond>var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
+   <chance>90</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Proteron</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Thurion</faction>
+   <faction>Traders Guild</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License version 3 as

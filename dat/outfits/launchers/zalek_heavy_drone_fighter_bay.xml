@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Za'lek Heavy Drone Fighter Bay">
  <general>
   <slot>weapon</slot>
@@ -9,7 +9,7 @@
   <gfx_store>zalek_drone_heavy_fighter</gfx_store>
   <description>The Za'lek Heavy Drone is a fearsome craft using very advanced AI techniques to be able to pilot itself. Three heavy drones can be operated from this bay, giving the mothership a good deal of punch.</description>
   <cpu>-35</cpu>
- </general>
+ <rarity>5</rarity></general>
  <specific type="fighter bay" secondary="1">
   <ammo>Za'lek Heavy Drone Fighter</ammo>
   <delay>5</delay>

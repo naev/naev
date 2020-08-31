@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Battery III">
  <general>
   <typename>Power Modifier</typename>
@@ -8,7 +8,7 @@
   <price>360000</price>
   <description>A massive battery unit designed to hold 800 MJ of energy. Given the mass of this battery, it's advisable to only mount it on capital ships.</description>
   <gfx_store>capacitor4-g</gfx_store>
- </general>
+ <rarity>3</rarity></general>
  <specific type="modification">
   <energy>800</energy>
  </specific>

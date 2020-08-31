@@ -83,8 +83,11 @@ int nlua_loadEvt( nlua_env env )
  */
 void event_setupLua( Event_t *ev, const char *func )
 {
+   Event_t **evptr;
+
    /* Set up event pointer. */
-   lua_pushlightuserdata( naevL, ev );
+   evptr = lua_newuserdata( naevL, sizeof(Event_t*) );
+   *evptr = ev;
    nlua_setenv( ev->env, "__evt" );
 
    /* Get function. */
@@ -111,10 +114,10 @@ int event_runLua( Event_t *ev, const char *func )
  */
 Event_t *event_getFromLua( lua_State *L )
 {
-   Event_t *ev;
-
+   Event_t *ev, **evptr;
    nlua_getenv(__NLUA_CURENV, "__evt");
-   ev = (Event_t*) lua_touserdata( L, -1 );
+   evptr = lua_touserdata( L, -1 );
+   ev = evptr ? *evptr : NULL;
    lua_pop( L, 1 );
    return ev;
 }

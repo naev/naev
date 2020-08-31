@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Vox">
  <base_type>Vox</base_type>
  <GFX sx="12" sy="12">vox</GFX>
+ <rarity>5</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>
@@ -22,29 +23,30 @@
   <fuel_consumption>400</fuel_consumption>
  </characteristics>
  <slots>
-  <weapon size="large" prop="bio_weapon" x="40" y="0" h="0"/>
-  <weapon size="large" prop="bio_weapon" x="40" y="0" h="0"/>
-  <weapon size="large" prop="bio_weapon" x="20" y="0" h="0"/>
-  <weapon size="large" prop="bio_weapon" x="20" y="0" h="0"/>
-  <weapon size="large" prop="bio_weapon" x="-20" y="0" h="0"/>
-  <weapon size="large" prop="bio_weapon" x="-20" y="0" h="0"/>
-  <weapon size="large" prop="bio_weapon" x="-40" y="0" h="0"/>
-  <weapon size="large" prop="bio_weapon" x="-40" y="0" h="0"/>
+  <weapon size="large" prop="bio_weapon" x="40" y="0" h="0" />
+  <weapon size="large" prop="bio_weapon" x="40" y="0" h="0" />
+  <weapon size="large" prop="bio_weapon" x="20" y="0" h="0" />
+  <weapon size="large" prop="bio_weapon" x="20" y="0" h="0" />
+  <weapon size="large" prop="bio_weapon" x="-20" y="0" h="0" />
+  <weapon size="large" prop="bio_weapon" x="-20" y="0" h="0" />
+  <weapon size="large" prop="bio_weapon" x="-40" y="0" h="0" />
+  <weapon size="large" prop="bio_weapon" x="-40" y="0" h="0" />
   <utility size="large" prop="bio_systems" exclusive="1" required="1">Superheavy Bioship Brain Stage 1</utility>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
+  <utility size="large" prop="accessory" exclusive="1" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
   <structure size="large" prop="bio_engines" exclusive="1" required="1">Superheavy Bioship Strong Fin Stage 1</structure>
   <structure size="large" prop="bio_hull" exclusive="1" required="1">Superheavy Bioship Shell Stage 1</structure>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
  </slots>
  <stats>
   <armour_mod>90</armour_mod>

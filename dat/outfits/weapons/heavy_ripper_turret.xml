@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Heavy Ripper Turret">
  <general>
   <slot>weapon</slot>
@@ -9,7 +9,7 @@
   <description>While limited in range compared to true capital-class weaponry, the heavy ripper turret's pair of heavy ripper cannons deliver exceptional firepower for dealing with lighter threats such as corvettes.</description>
   <gfx_store>ripperturret</gfx_store>
   <cpu>-26</cpu>
- </general>
+ <rarity>3</rarity></general>
  <specific type="turret bolt">
   <gfx>ripperM</gfx>
   <sound>ripper</sound>

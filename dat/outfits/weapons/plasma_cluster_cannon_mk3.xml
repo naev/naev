@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Plasma Cluster Cannon MK3">
  <general>
   <slot>weapon</slot>
@@ -9,7 +9,7 @@
   <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
   <gfx_store>plasma2</gfx_store>
   <cpu>-34</cpu>
- </general>
+ <rarity>3</rarity></general>
  <specific type="bolt">
   <gfx>plasma2</gfx>
   <sound>plasma</sound>

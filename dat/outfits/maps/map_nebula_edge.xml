@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Map: Nebula Edge">
  <general>
   <mass>0</mass>
   <price>25000</price>
   <description>This map contains the route leading from Dvaered/Imperial space to the edge of the Nebula. It also lists the two Imperial stations along the route.</description>
   <gfx_store>map</gfx_store>
- </general>
+ <rarity>2</rarity></general>
  <specific type="map">
   <sys name="Zacron">
    <jump>Raelid</jump>

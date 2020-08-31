@@ -1,4 +1,26 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Unfair Competition">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <cond>player.misnDone("Sharkman Is Back") and player.misnDone("Operation Cold Metal")</cond>
+   <chance>3</chance>
+   <location>Bar</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Soromid</faction>
+   <faction>Traders Guild</faction>
+   <faction>Za'lek</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    This is the third mission of the Shark's teeth campaign. The player has to take illegal holophone recordings in his ship.
 

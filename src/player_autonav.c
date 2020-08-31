@@ -126,7 +126,7 @@ static int player_autonavSetup (void)
       player.tc_max = MAX( 1., player.tc_max );
    }
 
-   /* Sane values. */
+   /* Safe values. */
    tc_rampdown  = 0;
    tc_down      = 0.;
    lasts        = player.p->shield / player.p->shield_max;

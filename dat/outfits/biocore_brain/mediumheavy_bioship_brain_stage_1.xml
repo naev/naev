@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Medium-Heavy Bioship Brain Stage 1">
  <general>
+  <rarity>2</rarity>
   <typename>Bioship Brain</typename>
   <slot prop="bio_systems">utility</slot>
   <size>medium</size>

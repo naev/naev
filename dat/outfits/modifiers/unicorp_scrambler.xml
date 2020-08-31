@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Unicorp Scrambler">
  <general>
   <slot>utility</slot>
@@ -8,7 +8,7 @@
   <description>Scramblers distort a ship's electromagnetic signature, making it harder for various sensors to pick it up. In effect, a scrambler reduces the distance at which the ship can be detected and scanned, and makes it harder for missiles to lock on. The effect is quite limited however, and multiple scramblers may be required for the desired effect. On the upside, scramblers put a minimal strain on the ship's resources, and are always active.</description>
   <gfx_store>jammer0</gfx_store>
   <cpu>-1</cpu>
- </general>
+ <rarity>3</rarity></general>
  <specific type="modification">
   <energy_usage>4</energy_usage>
   <ew_hide>10</ew_hide>

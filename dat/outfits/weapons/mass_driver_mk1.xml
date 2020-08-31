@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Mass Driver MK1">
  <general>
   <slot>weapon</slot>
@@ -9,7 +9,7 @@
   <description>Mass Drivers fire massive slugs of matter at enemy ships, dealing damage through kinetic impact and knocking the target back. One of the most economical heavy weapons in the galaxy.</description>
   <gfx_store>gatling</gfx_store>
   <cpu>-12</cpu>
- </general>
+ <rarity>2</rarity></general>
  <specific type="bolt">
   <gfx>autocannon</gfx>
   <sound>autocannon</sound>

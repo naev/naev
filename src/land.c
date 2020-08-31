@@ -163,7 +163,7 @@ int land_doneLoading (void)
 
 
 /**
- * @brief Makes sure it's sane to change ships in the equipment view.
+ * @brief Makes sure it's valid to change ships in the equipment view.
  *    @param shipname Ship being changed to.
  */
 int can_swapEquipment( char* shipname )
@@ -327,12 +327,12 @@ static void bar_open( unsigned int wid )
  */
 static int bar_genList( unsigned int wid )
 {
-   glTexture **portraits;
-   char **names, *focused;
+   ImageArrayCell *portraits;
+   char *focused;
    int w, h, iw, ih, bw, bh;
-   int n, pos;
+   int i, n, pos;
 
-   /* Sanity check. */
+   /* Validity check. */
    if (wid == 0)
       return 0;
 
@@ -361,23 +361,28 @@ static int bar_genList( unsigned int wid )
    n = npc_getArraySize();
    if (n <= 0) {
       n            = 1;
-      portraits    = malloc(sizeof(glTexture*));
-      portraits[0] = mission_portrait;
-      names        = malloc(sizeof(char*));
-      names[0]     = strdup(_("News"));
+      portraits    = calloc(1, sizeof(ImageArrayCell));
+      portraits[0].image = gl_dupTexture(mission_portrait);
+      portraits[0].caption = strdup(_("News"));;
    }
    else {
       n            = n+1;
-      portraits    = malloc( sizeof(glTexture*) * n );
-      portraits[0] = mission_portrait;
-      npc_getTextureArray( &portraits[1], n-1 );
-      names        = malloc( sizeof(char*) * n );
-      names[0]     = strdup(_("News"));
-      npc_getNameArray( &names[1], n-1 );
+      portraits    = calloc(n, sizeof(ImageArrayCell));
+      portraits[0].image = gl_dupTexture(mission_portrait);
+      portraits[0].caption = strdup(_("News"));
+      for (i=0; i<npc_getArraySize(); i++) {
+         portraits[i+1].image = gl_dupTexture( npc_getTexture(i) );
+         portraits[i+1].caption = strdup( npc_getName(i) );
+         if (npc_isImportant(i)) {
+            portraits[i+1].layers = malloc( sizeof(glTexture*) );
+            portraits[i+1].layers[0] = gl_newImage( OVERLAY_GFX_PATH"portrait_exclamation.png", 0 );
+            portraits[i+1].nlayers = 1;
+         }
+      }
    }
    window_addImageArray( wid, 20, -40,
          iw, ih, "iarMissions", 100, 75,
-         portraits, names, n, bar_update, bar_approach );
+         portraits, n, bar_update, bar_approach );
 
    /* Restore position. */
    toolkit_setImageArrayPos( wid, "iarMissions", pos );
@@ -1015,7 +1020,7 @@ void land_genWindows( int load, int changetab )
       misn_open( land_getWid(LAND_WINDOW_MISSION) );
    /* Outfits. */
    if (should_open( PLANET_SERVICE_OUTFITS, LAND_WINDOW_OUTFITS ))
-      outfits_open( land_getWid(LAND_WINDOW_OUTFITS) );
+      outfits_open( land_getWid(LAND_WINDOW_OUTFITS), NULL, 0 );
    /* Shipyard. */
    if (should_open( PLANET_SERVICE_SHIPYARD, LAND_WINDOW_SHIPYARD ))
       shipyard_open( land_getWid(LAND_WINDOW_SHIPYARD) );
@@ -1192,7 +1197,7 @@ static void land_changeTab( unsigned int wid, char *wgt, int old, int tab )
    const char *torun_hook;
    unsigned int to_visit;
 
-   /* Sane defaults. */
+   /* Safe defaults. */
    torun_hook = NULL;
    to_visit   = 0;
 

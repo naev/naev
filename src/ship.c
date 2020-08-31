@@ -815,7 +815,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          /* Load the polygon. */
          ship_loadPLG( temp, buf );
 
-         /* Sanity check: there must be 1 polygon per sprite. */
+         /* Validity check: there must be 1 polygon per sprite. */
          if (temp->npolygon != sx*sy) {
             WARN(_("Ship '%s': the number of collision polygons is wrong.\n \
                     npolygon = %i and sx*sy = %i"),
@@ -901,6 +901,24 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          temp->gfx_comm = strdup(str);
          continue;
       }
+      if (xml_isNode(node,"gfx_overlays")) {
+         cur = node->children;
+         m = 2;
+         temp->gfx_overlays = malloc( m*sizeof(glTexture*) );
+         do {
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur,"gfx_overlay")) {
+               temp->gfx_noverlays += 1;
+               if (temp->gfx_noverlays > m) {
+                  m *= 2;
+                  temp->gfx_overlays = realloc( temp->gfx_overlays, m*sizeof(glTexture) );
+               }
+               temp->gfx_overlays[ temp->gfx_noverlays-1 ] = xml_parseTexture( cur,
+                     OVERLAY_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+            }
+         } while (xml_nextNode(cur));
+         continue;
+      }
 
       xmlr_strd(node,"GUI",temp->gui);
       if (xml_isNode(node,"sound")) {
@@ -917,6 +935,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       xmlr_strd(node,"license",temp->license);
       xmlr_strd(node,"fabricator",temp->fabricator);
       xmlr_strd(node,"description",temp->description);
+      xmlr_int(node,"rarity",temp->rarity);
       if (xml_isNode(node,"movement")) {
          cur = node->children;
          do {
@@ -1031,7 +1050,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          continue;
       }
 
-      /* Used by in-sanity and NSH utils, no in-game meaning. */
+      /* Used by in-valid and NSH utils, no in-game meaning. */
       if (xml_isNode(node,"mission"))
          continue;
 
@@ -1086,7 +1105,7 @@ int ships_load (void)
    xmlNodePtr node;
    xmlDocPtr doc;
 
-   /* Sanity. */
+   /* Validity. */
    ss_check();
 
    /* Initialize stack if needed. */
@@ -1192,6 +1211,10 @@ void ships_free (void)
       if (s->gfx_store != NULL)
          gl_freeTexture(s->gfx_store);
       free(s->gfx_comm);
+      for (j=0; j<s->gfx_noverlays; j++)
+         gl_freeTexture(s->gfx_overlays[j]);
+      if (s->gfx_overlays != NULL)
+         free(s->gfx_overlays);
 
       /* Free collision polygons. */
       if (s->npolygon != 0) {

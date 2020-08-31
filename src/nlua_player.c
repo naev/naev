@@ -188,12 +188,12 @@ static int playerL_shipname( lua_State *L )
  */
 static int playerL_pay( lua_State *L )
 {
-   double money;
+   credits_t money;
 
    NLUA_CHECKRW(L);
 
-   money = CLAMP( CREDITS_MIN, CREDITS_MAX, luaL_checknumber(L,1) );
-   player_modCredits( (credits_t)round(money) );
+   money = CLAMP( CREDITS_MIN, CREDITS_MAX, (credits_t)round(luaL_checknumber(L,1)) );
+   player_modCredits( money );
 
    return 0;
 }
@@ -447,7 +447,7 @@ static int playerL_refuel( lua_State *L )
    else
       player.p->fuel = player.p->fuel_max;
 
-   /* Make sure value is sane. */
+   /* Make sure value is valid. */
    player.p->fuel = CLAMP(0, player.p->fuel_max, player.p->fuel);
 
    return 0;
@@ -841,20 +841,22 @@ static int playerL_outfits( lua_State *L )
 /**
  * @brief Gets the number of outfits the player owns in their list (excludes equipped on ships).
  *
- * @usage q = player.numOutfit( "Laser Cannon" ) -- Number of 'Laser Cannons' the player owns (unequipped)
+ * @usage q = player.numOutfit( "Laser Cannon MK0", true ) -- Number of 'Laser Cannon MK0' the player owns (unequipped)
  *
  *    @luatparam string name Name of the outfit to give.
+ *    @luatparam[opt] bool unequipped_only Whether or not to check only the unequipped outfits and not equipped outfits. Defaults to false.
  *    @luatreturn number The quantity the player owns.
- * @luafunc numOutfit( name )
+ * @luafunc numOutfit( name, unequipped_only )
  */
 static int playerL_numOutfit( lua_State *L )
 {
    const char *str;
    Outfit *o;
-   int q;
+   int q, unequipped_only;
 
    /* Handle parameters. */
    str = luaL_checkstring(L, 1);
+   unequipped_only = lua_toboolean(L, 2);
 
    /* Get outfit. */
    o = outfit_get( str );
@@ -864,7 +866,10 @@ static int playerL_numOutfit( lua_State *L )
    }
 
    /* Count the outfit. */
-   q = player_outfitOwned( o );
+   if (unequipped_only)
+      q = player_outfitOwned( o );
+   else
+      q = player_outfitOwnedTotal( o );
    lua_pushnumber( L, q );
 
    return 1;

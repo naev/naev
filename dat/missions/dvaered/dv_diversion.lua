@@ -1,4 +1,19 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="A Small Diversion">
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>faction.playerStanding("Dvaered") &gt; 5</cond>
+   <chance>10</chance>
+   <location>Bar</location>
+   <planet>Doranthex Prime</planet>
+  </avail>
+ </mission>
+ --]]
+--[[
    -- This is a oneoff mission where you help a new Dvaered Warlord takeover a planet
    -- To Do: fix fighters being idle after mission ends
    -- Other editors, feel free to update dialog to make it more dvaered like.
@@ -66,7 +81,7 @@ chatter[2] = _("You heard Warlord Khan, blow them to pieces!")
 chatter[3] = _("They're attacking us, blow them to pieces!")
 chatter[4] = _("Arrgh!")
 chatter[5] = _("Khan is dead! Who will be our warlord now?")
-chatter[6] = _("Obviously the one who killed him, idiot!")
+chatter[6] = _("Obviously the one who killed him!")
 chatter[7] = _("I will never serve a different warlord than Khan! Die, you traitors!")
 chatter[8] = _("%s will be ours! Khan, prepare to die!")
 chatter[9] = _("All units, defend Hawk, we are under attack!")

@@ -42,6 +42,7 @@
 #define MAX_ROWS 128 /**< Max number of rows per texture cache. */
 #define DEFAULT_TEXTURE_SIZE 1024 /**< Default size of texture caches for glyphs. */
 
+
 static gl_Matrix4 font_projection_mat;
 
 
@@ -152,6 +153,33 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch );
 static void gl_fontRenderStart( const glFontStash *stsh, double x, double y, const glColour *c );
 static int gl_fontRenderGlyph( glFontStash *stsh, uint32_t ch, const glColour *c, int state, int forceColor );
 static void gl_fontRenderEnd (void);
+
+/*
+ * Raw printing functions.
+ */
+static void gl_printHalo( const glFont *ft_font,
+      const int width, const int height,
+      double bx, double by,
+      const glColour* c, const char *text,
+      int (*func)(const glFont*,
+         const int, const int, const double, const double,
+         const glColour*, const char*, const int ));
+static int gl_printRawBase( const glFont *ft_font,
+      const int unused1, const int unused2,
+      const double x, const double y,
+      const glColour* c, const char *text, const int forceColor );
+static int gl_printMaxRawBase( const glFont *ft_font,
+      const int max, const int unused,
+      const double x, const double y,
+      const glColour* c, const char *text, const int forceColor );
+static int gl_printMidRawBase( const glFont *ft_font,
+      const int width, const int unused,
+      double x, const double y,
+      const glColour* c, const char *text, const int forceColor );
+static int gl_printTextRawBase( const glFont *ft_font,
+      const int width, const int height,
+      double bx, double by,
+      const glColour* c, const char *text, const int forceColor );
 
 
 /**
@@ -518,6 +546,42 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
    return i;
 }
 
+/**
+ * @brief Shows a halo for increased contrast around the text.
+ */
+static void gl_printHalo( const glFont *ft_font,
+      const int width, const int height,
+      double bx, double by,
+      const glColour* c, const char *text,
+      int (*func)(const glFont*,
+         const int, const int, const double, const double,
+         const glColour*, const char*, const int ))
+{
+   const glColour *bg;
+   /* TODO: This method works, but is inefficient. Should probably be
+    * ultimately replaced with use of signed distance fields or some
+    * other more efficient method (signed distance fields seem to be
+    * the "right" solution). */
+   if ((c == NULL) || (c->a >= 1.)) {
+      if ((c==NULL) || (c->r+c->b+c->g > 1.5))
+         bg = &cBlack;
+      else
+         bg = &cWhite;
+      func( ft_font, width, height, bx - 1, by, bg, text, 1 );
+      func( ft_font, width, height, bx + 1, by, bg, text, 1 );
+      func( ft_font, width, height, bx, by - 1, bg, text, 1 );
+      func( ft_font, width, height, bx, by + 1, bg, text, 1 );
+      func( ft_font, width, height, bx - 2, by, bg, text, 1 );
+      func( ft_font, width, height, bx + 2, by, bg, text, 1 );
+      func( ft_font, width, height, bx, by - 2, bg, text, 1 );
+      func( ft_font, width, height, bx, by + 2, bg, text, 1 );
+      func( ft_font, width, height, bx - 1, by - 1, bg, text, 1 );
+      func( ft_font, width, height, bx - 1, by + 1, bg, text, 1 );
+      func( ft_font, width, height, bx + 1, by - 1, bg, text, 1 );
+      func( ft_font, width, height, bx + 1, by + 1, bg, text, 1 );
+   }
+}
+
 
 /**
  * @brief Wrapped by gl_printRaw.
@@ -529,10 +593,13 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
  *    @param text String to display.
  *    @param forceColor Whether or not to force the color.
  */
-static void gl_printRawBase( const glFont *ft_font,
+static int gl_printRawBase( const glFont *ft_font,
+      const int unused1, const int unused2,
       const double x, const double y,
-      const glColour* c, const char *text, int forceColor )
+      const glColour* c, const char *text, const int forceColor )
 {
+   (void) unused1;
+   (void) unused2;
    int s;
    size_t i;
    uint32_t ch;
@@ -548,6 +615,7 @@ static void gl_printRawBase( const glFont *ft_font,
    while ((ch = u8_nextchar( text, &i )))
       s = gl_fontRenderGlyph( stsh, ch, c, s, forceColor );
    gl_fontRenderEnd();
+   return 0;
 }
 
 
@@ -566,26 +634,8 @@ void gl_printRaw( const glFont *ft_font,
       const double x, const double y,
       const glColour* c, const char *text )
 {
-   /* TODO: This method works, but is inefficient. Should probably be
-    * ultimately replaced with use of signed distance fields or some
-    * other more efficient method (signed distance fields seem to be
-    * the "right" solution). */
-   if ( (c == NULL) || (c->a >= 1.) ) {
-      gl_printRawBase( ft_font, x - 1, y, &cBlack, text, 1 );
-      gl_printRawBase( ft_font, x + 1, y, &cBlack, text, 1 );
-      gl_printRawBase( ft_font, x, y - 1, &cBlack, text, 1 );
-      gl_printRawBase( ft_font, x, y + 1, &cBlack, text, 1 );
-      gl_printRawBase( ft_font, x - 2, y, &cBlack, text, 1 );
-      gl_printRawBase( ft_font, x + 2, y, &cBlack, text, 1 );
-      gl_printRawBase( ft_font, x, y - 2, &cBlack, text, 1 );
-      gl_printRawBase( ft_font, x, y + 2, &cBlack, text, 1 );
-      gl_printRawBase( ft_font, x - 1, y - 1, &cBlack, text, 1 );
-      gl_printRawBase( ft_font, x - 1, y + 1, &cBlack, text, 1 );
-      gl_printRawBase( ft_font, x + 1, y - 1, &cBlack, text, 1 );
-      gl_printRawBase( ft_font, x + 1, y + 1, &cBlack, text, 1 );
-   }
-
-   gl_printRawBase( ft_font, x, y, c, text, 0 );
+   gl_printHalo( ft_font, 0, 0, x, y, c, text, gl_printRawBase );
+   gl_printRawBase( ft_font, 0, 0, x, y, c, text, 0 );
 }
 
 
@@ -631,10 +681,12 @@ void gl_print( const glFont *ft_font,
  *    @param forceColor Whether or not to force the color.
  *    @return The number of characters it had to suppress.
  */
-static int gl_printMaxRawBase( const glFont *ft_font, const int max,
+static int gl_printMaxRawBase( const glFont *ft_font,
+      const int max, const int unused,
       const double x, const double y,
-      const glColour* c, const char *text, int forceColor )
+      const glColour* c, const char *text, const int forceColor )
 {
+   (void) unused;
    int s;
    size_t ret, i;
    uint32_t ch;
@@ -673,26 +725,8 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
       const double x, const double y,
       const glColour* c, const char *text )
 {
-   /* TODO: This method works, but is inefficient. Should probably be
-    * ultimately replaced with use of signed distance fields or some
-    * other more efficient method (signed distance fields seem to be
-    * the "right" solution). */
-   if ( (c == NULL) || (c->a >= 1.) ) {
-      gl_printMaxRawBase( ft_font, max, x - 1, y, &cBlack, text, 1 );
-      gl_printMaxRawBase( ft_font, max, x + 1, y, &cBlack, text, 1 );
-      gl_printMaxRawBase( ft_font, max, x, y - 1, &cBlack, text, 1 );
-      gl_printMaxRawBase( ft_font, max, x, y + 1, &cBlack, text, 1 );
-      gl_printMaxRawBase( ft_font, max, x - 2, y, &cBlack, text, 1 );
-      gl_printMaxRawBase( ft_font, max, x + 2, y, &cBlack, text, 1 );
-      gl_printMaxRawBase( ft_font, max, x, y - 2, &cBlack, text, 1 );
-      gl_printMaxRawBase( ft_font, max, x, y + 2, &cBlack, text, 1 );
-      gl_printMaxRawBase( ft_font, max, x - 1, y - 1, &cBlack, text, 1 );
-      gl_printMaxRawBase( ft_font, max, x - 1, y + 1, &cBlack, text, 1 );
-      gl_printMaxRawBase( ft_font, max, x + 1, y - 1, &cBlack, text, 1 );
-      gl_printMaxRawBase( ft_font, max, x + 1, y + 1, &cBlack, text, 1 );
-   }
-
-   return gl_printMaxRawBase( ft_font, max, x, y, c, text, 0 );
+   gl_printHalo( ft_font, max, 0, x, y, c, text, gl_printMaxRawBase );
+   return gl_printMaxRawBase( ft_font, max, 0, x, y, c, text, 0 );
 }
 
 
@@ -738,10 +772,12 @@ int gl_printMax( const glFont *ft_font, const int max,
  *    @param forceColor Whether or not to force the color.
  *    @return The number of characters it had to truncate.
  */
-static int gl_printMidRawBase( const glFont *ft_font, const int width,
+static int gl_printMidRawBase( const glFont *ft_font,
+      const int width, const int unused,
       double x, const double y,
-      const glColour* c, const char *text, int forceColor )
+      const glColour* c, const char *text, const int forceColor )
 {
+   (void) unused;
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
    int n, s;
    size_t ret, i;
@@ -785,26 +821,8 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
       double x, const double y,
       const glColour* c, const char *text )
 {
-   /* TODO: This method works, but is inefficient. Should probably be
-    * ultimately replaced with use of signed distance fields or some
-    * other more efficient method (signed distance fields seem to be
-    * the "right" solution). */
-   if ( (c == NULL) || (c->a >= 1.) ) {
-      gl_printMidRawBase( ft_font, width, x - 1, y, &cBlack, text, 1 );
-      gl_printMidRawBase( ft_font, width, x + 1, y, &cBlack, text, 1 );
-      gl_printMidRawBase( ft_font, width, x, y - 1, &cBlack, text, 1 );
-      gl_printMidRawBase( ft_font, width, x, y + 1, &cBlack, text, 1 );
-      gl_printMidRawBase( ft_font, width, x - 2, y, &cBlack, text, 1 );
-      gl_printMidRawBase( ft_font, width, x + 2, y, &cBlack, text, 1 );
-      gl_printMidRawBase( ft_font, width, x, y - 2, &cBlack, text, 1 );
-      gl_printMidRawBase( ft_font, width, x, y + 2, &cBlack, text, 1 );
-      gl_printMidRawBase( ft_font, width, x - 1, y - 1, &cBlack, text, 1 );
-      gl_printMidRawBase( ft_font, width, x - 1, y + 1, &cBlack, text, 1 );
-      gl_printMidRawBase( ft_font, width, x + 1, y - 1, &cBlack, text, 1 );
-      gl_printMidRawBase( ft_font, width, x + 1, y + 1, &cBlack, text, 1 );
-   }
-
-   return gl_printMidRawBase( ft_font, width, x, y, c, text, 0 );
+   gl_printHalo( ft_font, width, 0, x, y, c, text, gl_printMidRawBase );
+   return gl_printMidRawBase( ft_font, width, 0, x, y, c, text, 0 );
 }
 
 
@@ -856,7 +874,7 @@ int gl_printMid( const glFont *ft_font, const int width,
 static int gl_printTextRawBase( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
-      const glColour* c, const char *text, int forceColor )
+      const glColour* c, const char *text, const int forceColor )
 {
    int p, s;
    double x,y;
@@ -924,25 +942,7 @@ int gl_printTextRaw( const glFont *ft_font,
       double bx, double by,
       const glColour* c, const char *text )
 {
-   /* TODO: This method works, but is inefficient. Should probably be
-    * ultimately replaced with use of signed distance fields or some
-    * other more efficient method (signed distance fields seem to be
-    * the "right" solution). */
-   if ( (c == NULL) || (c->a >= 1.) ) {
-      gl_printTextRawBase( ft_font, width, height, bx - 1, by, &cBlack, text, 1 );
-      gl_printTextRawBase( ft_font, width, height, bx + 1, by, &cBlack, text, 1 );
-      gl_printTextRawBase( ft_font, width, height, bx, by - 1, &cBlack, text, 1 );
-      gl_printTextRawBase( ft_font, width, height, bx, by + 1, &cBlack, text, 1 );
-      gl_printTextRawBase( ft_font, width, height, bx - 2, by, &cBlack, text, 1 );
-      gl_printTextRawBase( ft_font, width, height, bx + 2, by, &cBlack, text, 1 );
-      gl_printTextRawBase( ft_font, width, height, bx, by - 2, &cBlack, text, 1 );
-      gl_printTextRawBase( ft_font, width, height, bx, by + 2, &cBlack, text, 1 );
-      gl_printTextRawBase( ft_font, width, height, bx - 1, by - 1, &cBlack, text, 1 );
-      gl_printTextRawBase( ft_font, width, height, bx - 1, by + 1, &cBlack, text, 1 );
-      gl_printTextRawBase( ft_font, width, height, bx + 1, by - 1, &cBlack, text, 1 );
-      gl_printTextRawBase( ft_font, width, height, bx + 1, by + 1, &cBlack, text, 1 );
-   }
-
+   gl_printHalo( ft_font, width, height, bx, by, c, text, gl_printTextRawBase );
    return gl_printTextRawBase( ft_font, width, height, bx, by, c, text, 0 );
 }
 
@@ -1306,7 +1306,7 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch )
 /**
  * @brief Renders a character.
  */
-static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c, int state, int forceColor )
+static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c, int state, const int forceColor )
 {
    double a;
    const glColour *col;
@@ -1370,49 +1370,16 @@ static void gl_fontRenderEnd (void)
    gl_checkErr();
 }
 
-/**
- * @brief Tries to find a system font.
- */
-static char *gl_fontFind( const char *fname )
-{
-#ifdef USE_FONTCONFIG
-   FcConfig* config;
-   FcPattern *pat, *font;
-   FcResult result;
-   FcChar8* file;
-   char *fontFile;
-   
-   config = FcInitLoadConfigAndFonts();
-   pat = FcNameParse( (const FcChar8*)fname );
-   FcConfigSubstitute( config, pat, FcMatchPattern );
-   FcDefaultSubstitute(pat);
-   font = FcFontMatch(config, pat, &result);
-   if (font) {
-      file = NULL;
-      if (FcPatternGetString(font, FC_FILE, 0, &file) == FcResultMatch) {
-         fontFile = strdup( (char*)file );
-         FcPatternDestroy(pat);
-         FcPatternDestroy(font);
-         FcConfigDestroy(config);
-         return fontFile;
-      }
-   }
-   FcPatternDestroy(pat);
-   FcConfigDestroy(config);
-#endif
-   return NULL;
-}
-
 
 /**
  * @brief Initializes a font.
  *
  *    @param font Font to load (NULL defaults to gl_defFont).
- *    @param fname Name of the font (from inside packfile, NULL defaults to default font).
+ *    @param fname Name of the font (from inside packfile).
  *    @param h Height of the font to generate.
  *    @return 0 on success.
  */
-int gl_fontInit( glFont* font, const char *fname, const char *fallback, const unsigned int h )
+int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
 {
    FT_Library library;
    FT_Face face;
@@ -1424,11 +1391,11 @@ int gl_fontInit( glFont* font, const char *fname, const char *fallback, const un
 
    /* See if we should override fonts. */
    used_font = NULL;
-   if ((strcmp( fallback, FONT_DEFAULT_PATH )==0) &&
+   if ((strcmp(fname, FONT_DEFAULT_PATH) == 0) &&
       (conf.font_name_default!=NULL)) {
       used_font = strdup( conf.font_name_default );
    }
-   else if ((strcmp( fallback, FONT_MONOSPACE_PATH )==0) &&
+   else if ((strcmp(fname, FONT_MONOSPACE_PATH) == 0) &&
       (conf.font_name_monospace!=NULL)) {
       used_font = strdup( conf.font_name_monospace );
    }
@@ -1440,26 +1407,14 @@ int gl_fontInit( glFont* font, const char *fname, const char *fallback, const un
       }
    }
 
-   /* Try to use system font. */
+   /* Use packaged font. */
    if (used_font==NULL) {
-      used_font = gl_fontFind( fname );
-      if (used_font) {
-         buf = (FT_Byte*)nfile_readFile( &bufsize, used_font );
-         if (buf==NULL) {
-            free(used_font);
-            used_font = NULL;
-         }
-      }
-   }
-
-   /* Fallback to packaged font. */
-   if (used_font==NULL) {
-      buf = ndata_read( (fallback!=NULL) ? fallback : FONT_DEFAULT_PATH, &bufsize );
+      buf = ndata_read( fname, &bufsize );
       if (buf == NULL) {
-         WARN(_("Unable to read font: %s"), (fallback!=NULL) ? fallback : FONT_DEFAULT_PATH);
+         WARN(_("Unable to read font: %s"), fname);
          return -1;
       }
-      used_font = strdup( fallback );
+      used_font = strdup( fname );
    }
 
    /* Get default font if not set. */
