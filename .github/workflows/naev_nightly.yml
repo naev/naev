@@ -520,15 +520,46 @@ jobs:
           sudo add-apt-repository multiverse
           sudo dpkg --add-architecture i386
           sudo apt-get update
-
+          
       - name: Install Build Dependencies
+        run: |
+          sudo apt-get install \
+            build-essential \
+            automake \
+            autoconf-archive \
+            libsdl2-dev \
+            libsdl2-mixer-dev \
+            libsdl2-image-dev \
+            libgl1-mesa-dev \
+            libxml2-dev \
+            libfontconfig1-dev \
+            libfreetype6-dev \
+            libpng-dev \
+            libopenal-dev \
+            libvorbis-dev \
+            binutils-dev \
+            libzip-dev \
+            libiberty-dev \
+            libluajit-5.1-dev \
+            gettext \
+            autopoint \
+            intltool \
+            itstool
+
+      - name: Install SteamCMD
         run: |
           echo steamcmd steam/question select "I AGREE" | sudo debconf-set-selections
           sudo apt install lib32gcc1 steamcmd
 
       - name: Checkout Naev Repository 
         uses: actions/checkout@v2
-
+        
+      - name: Get VERSION
+        run: |
+          ./autogen.sh
+          ./configure
+          make VERSION
+          
       - name: Create Release Staging Area
         run: |
           mkdir -p ${{ github.workspace }}/extras/steam/temp/ 
