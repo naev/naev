@@ -44,8 +44,6 @@ XMLPOT      = $(top_srcdir)/po/xml.pot
 CLEANFILES += $(XMLPOT)
 endif # HAVE_NLS
 
-MUSICFILES  = $(wildcard dat/snd/music/*.ogg)
-
 .PHONY: pot docs utils help install-ndata soundtrack
 
 all-local: $(NAEV) pot $(VERSIONFILE)
@@ -125,8 +123,8 @@ docs:
 
 soundtrack: naev-$(VERSION)-soundtrack.zip
 
-naev-$(VERSION)-soundtrack.zip: $(MUSICFILES)
-	zip --junk-paths $@ $(MUSICFILES)
+naev-$(VERSION)-soundtrack.zip: utils/soundtrack.py dat/snd/soundtrack.yaml
+	./utils/soundtrack.py
 
 help:
 	@echo "Possible targets are:"
