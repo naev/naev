@@ -54,9 +54,7 @@
  * @note Nothing in this file can be considered reentrant.  Plan accordingly.
  *
  * @todo Clean up most of the code, it was written as one of the first
- *         subsystems and is pretty lacking in quite a few aspects. Notably
- *         removing the entire lightuserdata thing and actually go with full
- *         userdata.
+ *         subsystems and is pretty lacking in quite a few aspects.
  */
 
 
