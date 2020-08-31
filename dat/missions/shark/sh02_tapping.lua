@@ -6,7 +6,8 @@
   </flags>
   <avail>
    <priority>3</priority>
-   <cond>player.misnDone("Sharkman Is Back") and player.misnDone("Operation Cold Metal")</cond>
+   <cond>diff.isApplied("collective_dead")</cond>
+   <done>Sharkman Is Back</done>
    <chance>3</chance>
    <location>Bar</location>
    <faction>Dvaered</faction>
@@ -18,6 +19,9 @@
    <faction>Traders Guild</faction>
    <faction>Za'lek</faction>
   </avail>
+  <note_done name="Operation Cold Metal">
+   Collective must be dead
+  </note_done>
  </mission>
  --]]
 --[[
