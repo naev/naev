@@ -21,6 +21,7 @@
 #define _(String) String
 #define gettext_noop(String) String
 #endif /* defined ENABLE_NLS && ENABLE_NLS */
+#define N_(String) String
 
 #define LOG(str, args...)  (logprintf(stdout, 1, str, ## args))
 #ifdef DEBUG_PARANOID /* Will cause WARNs to blow up */
