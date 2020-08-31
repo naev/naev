@@ -2,7 +2,6 @@
 # This file reads missions data and maps it
 
 import xml.etree.ElementTree as ET
-import os # Ultimately, we want to use this one
 import pygraphviz as pgv
 import glob
 
@@ -11,8 +10,9 @@ namdict = {} # Index from name
 names = []
 dones = []
 uniques = [] #
+extra_links = [] # List of links given by extra info
 
-for missionfile in glob.glob( './dat/missions/**/*.lua', recursive=True ):
+for missionfile in glob.glob( '../dat/missions/**/*.lua', recursive=True ):
     print(missionfile)
 
     with open(missionfile,'r') as f:
@@ -44,7 +44,12 @@ for missionfile in glob.glob( './dat/missions/**/*.lua', recursive=True ):
             uniques.append(False)
         else:
             uniques.append(True)
-    # TODO: harder: open the lua code and analyze annotations in there
+    
+    # Read the notes
+    notes_done = misn.findall('note_done')
+    for nd in notes_done:
+        previous = nd.attrib['name']
+        extra_links.append( (previous, name, nd.text)  ) # TODO: add the note
     
     i += 1
 
@@ -62,13 +67,16 @@ for i in range(len(dones)):
     done = dones[i]
     if done == None:
         continue
-    
     name = names[i]
     G.add_edge(done.text,name)
+    
+for i in range(len(extra_links)):
+    link = extra_links[i]
+    G.add_edge( link[0], link[1], label=link[2], color='red' )
 
 
 # TODO: set the layout (I guess subgraph is what we need)
-G.graph_attr['label']='Naev missions map'
+G.graph_attr['label']='Naev missions map. Red edges come from <note_done> nodes from mission xml'
 #G.edge_attr['len']='3'
     
 G.layout(prog='dot')
