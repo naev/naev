@@ -1,4 +1,20 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+ <mission name="Dvaered Escape">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <chance>100</chance>
+   <done>Dvaered Sabotage</done>
+   <location>Bar</location>
+   <cond>var.peek("loyal2klank") == true</cond>
+   <faction>Dvaered</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 -- Dvaered Escape
 -- This is the third mission of the Frontier War Dvaered campaign.
 -- The player has to set up the evasion of a Goddard executive.

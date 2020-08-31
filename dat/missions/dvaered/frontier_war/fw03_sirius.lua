@@ -1,4 +1,19 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+ <mission name="Dvaered Diplomacy">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <chance>100</chance>
+   <done>Dvaered Escape</done>
+   <location>Bar</location>
+   <faction>Dvaered</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 -- Dvaered Diplomacy
 -- It does not go together well, does it?
 -- This is the 4th mission of the Frontier War Dvaered campaign.

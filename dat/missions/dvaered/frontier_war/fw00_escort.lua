@@ -1,4 +1,18 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+ <mission name="Dvaered Escort">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <chance>100</chance>
+   <location>Bar</location>
+   <faction>Dvaered</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 -- Dvaered Escort
 -- This is the first mission of the Frontier War Dvaered campaign.
 -- The player has to escort a representative of Dvaered high Command who meets warlords.

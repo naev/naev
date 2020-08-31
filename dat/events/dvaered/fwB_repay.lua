@@ -1,3 +1,12 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+ <event name="Repay General Klank">
+  <trigger>none</trigger>
+  <flags>
+   <unique />
+  </flags>
+ </event>
+ --]]
 --[[ 
 --Event for Frontier Invasion campaign. The player must repay general Klank
 --]]

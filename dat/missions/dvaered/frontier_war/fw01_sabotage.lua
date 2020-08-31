@@ -1,4 +1,19 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+ <mission name="Dvaered Sabotage">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <chance>100</chance>
+   <done>Dvaered Escort</done>
+   <location>Bar</location>
+   <faction>Dvaered</faction>
+  </avail>
+ </mission>
+ --]]
+--[[
 -- Dvaered Sabotage
 -- This is the second mission of the Frontier War Dvaered campaign.
 -- The player has to sabotage a Warlord's Goddard in prevision of a duel.

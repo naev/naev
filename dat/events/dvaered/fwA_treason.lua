@@ -1,3 +1,14 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+ <event name="Betray General Klank">
+  <trigger>enter</trigger>
+  <chance>100</chance>
+  <cond>system.cur():faction() == faction.get("Dvaered") and player.misnDone("Dvaered Sabotage") == true</cond>
+  <flags>
+   <unique />
+  </flags>
+ </event>
+ --]]
 --[[ 
 --Event for Frontier Invasion campaign. One proposes to the player to betray Klank
 
