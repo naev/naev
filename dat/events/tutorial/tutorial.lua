@@ -1,10 +1,10 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Tutorial Event">
-  <trigger>land</trigger>
-  <chance>100</chance>
- </event>
- --]]
+ <trigger>land</trigger>
+ <chance>100</chance>
+</event>
+--]]
 --[[
 
    Tutorial Event

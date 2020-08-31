@@ -4,7 +4,7 @@ on:
       - '!naev-*.*.*'
       - 'naev-*.*.*-beta*'
 
-name: Prerelease
+name: Release
 
 jobs:
   "Windows-MinGW32":
@@ -139,6 +139,43 @@ jobs:
         name: linux-x86-32
         path: ${{ github.workspace }}/src/naev-linux-x86-32
 
+
+  "Linux-Steam-x86":
+    runs-on: ubuntu-latest
+    container:
+      image: dosowisko/steam-runtime-i386
+      volumes:
+        - ${{ github.workspace }}:${{ github.workspace }}
+        
+    steps:
+    - name: Clone Naev Repository 
+      run: |
+        git clone https://github.com/naev/naev.git ${{ github.workspace }}
+
+    - name: Install Additional Build Dependencies
+      run: |
+        sudo apt-get -y install autoconf-archive intltool itstool
+
+    - name: Build Naev for Steam on Linux32
+      run: |
+        cd ${{ github.workspace }}
+        ./autogen.sh
+        ./configure --disable-debug --without-libzip --build=i386-linux-gnu --host=i386-linux-gnu
+        make -j$(nproc --all)
+      env:
+        CFLAGS: "-O3 -std=gnu11"
+
+    - name: Collect Steam Linux32 Release
+      run: |
+        mv ${{ github.workspace }}/src/naev ${{ github.workspace }}/naev.x32
+        chmod +x ${{ github.workspace }}/naev.x32
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: steam-x86-32
+        path: ${{ github.workspace }}/naev.x32
+
   "Linux-x86_64":
     runs-on: ubuntu-20.04
 
@@ -193,6 +230,42 @@ jobs:
       with:
         name: linux-x86-64
         path: ${{ github.workspace }}/src/naev-linux-x86-64
+
+  "Linux-Steam-x86_64":
+    runs-on: ubuntu-latest
+    container:
+      image: dosowisko/steam-runtime-amd64
+      volumes:
+        - ${{ github.workspace }}:${{ github.workspace }}
+
+    steps:
+    - name: Clone Naev Repository 
+      run: |
+        git clone https://github.com/naev/naev.git ${{ github.workspace }}
+
+    - name: Install Additional Build Dependencies
+      run: |
+        sudo apt-get -y install autoconf-archive intltool itstool
+
+    - name: Build Naev for Steam on Linux64
+      run: |
+        cd ${{ github.workspace }}
+        ./autogen.sh
+        ./configure --disable-debug --without-libzip --build=x86_64-linux-gnu
+        make -j$(nproc --all)
+      env:
+        CFLAGS: "-O3 -std=gnu11"
+
+    - name: Collect Steam Linux64 Release
+      run: |
+        mv ${{ github.workspace }}/src/naev ${{ github.workspace }}/naev.x64
+        chmod +x ${{ github.workspace }}/naev.x64
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: steam-x86-64
+        path: ${{ github.workspace }}/naev.x64
 
   "macOS":
     runs-on: macos-latest
@@ -357,7 +430,8 @@ jobs:
   "Upload-Release":
       runs-on: ubuntu-latest
       needs: [Windows-MinGW64, Windows-MinGW32, macOS, Linux-x86_64, Linux-x86, Generate-NData, Generate-Source]
-
+      if: ${{ github.repository == 'naev/naev' }}
+      
       steps:
       - name: Update APT Cache
         run: |
@@ -435,4 +509,73 @@ jobs:
           prerelease: true
           files: |
             ${{ github.workspace }}/dist/*
-        if: ${{ github.repository == 'naev/naev' }}
+
+  "Upload-Steam":
+      runs-on: ubuntu-latest
+      needs: [Windows-MinGW64, Windows-MinGW32, Linux-Steam-x86_64, Linux-Steam-x86, Generate-NData]
+      if: ${{ github.repository == 'naev/naev' }}
+      
+      steps:
+      - name: Update APT Cache
+        run: |
+          sudo add-apt-repository multiverse
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+
+      - name: Install Build Dependencies
+        run: |
+          sudo apt-get install \
+            build-essential \
+            automake \
+            autoconf-archive \
+            libsdl2-dev \
+            libsdl2-mixer-dev \
+            libsdl2-image-dev \
+            libgl1-mesa-dev \
+            libxml2-dev \
+            libfontconfig1-dev \
+            libfreetype6-dev \
+            libpng-dev \
+            libopenal-dev \
+            libvorbis-dev \
+            binutils-dev \
+            libzip-dev \
+            libiberty-dev \
+            libluajit-5.1-dev \
+            gettext \
+            autopoint \
+            intltool \
+            itstool
+
+      - name: Install SteamCMD
+        run: |
+          echo steamcmd steam/question select "I AGREE" | sudo debconf-set-selections
+          sudo apt install lib32gcc1 steamcmd
+
+      - name: Checkout Naev Repository 
+        uses: actions/checkout@v2
+
+      - name: Get VERSION
+        run: |
+          ./autogen.sh
+          ./configure
+          make VERSION
+
+      - name: Create Release Staging Area
+        run: |
+          mkdir -p ${{ github.workspace }}/extras/steam/temp/ 
+
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: ${{ github.workspace }}/extras/steam/temp/
+          
+      - name: Build and Upload Steam Release
+        run: |
+          ./extras/steam/SteamDeploy.sh
+        env:
+          STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
+          STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}
+          TFA_IMAP: ${{ secrets.TFA_IMAP }}
+          TFA_PASS: ${{ secrets.TFA_PASS }}
+          TFA_USER: ${{ secrets.TFA_USER }}

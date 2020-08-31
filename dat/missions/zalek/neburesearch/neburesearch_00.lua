@@ -25,108 +25,80 @@
 include "dat/scripts/numstring.lua"
 
 
-t_sys = {}
-t_sys[1] = "Doeston"
-t_sys[2] = "Iris"
-
--- localization stuff, translators would work here
-bar_desc = _("You see a young scientist talking with some pilots, apparently without success.")
-mtitle = {}
-mtitle[1] = _("Novice Nebula Research")
-misn_reward = _("%s and the gratitude of a student")
-mdesc = {}
-mdesc[1] = _("Go to the %s system.")
-title = {}
-title[1] = _("Bar")
-title[2] = _("Please...")
-title[3] = _("What a mess...")
-title[4] = _("Ready")
-title[5] = _("Technical problems")
-title[6] = _("Measurements completed")
-title[7] = _("Mission Success")
 text = {}
-text[1] = _([["Hello Captain! You are a pilot, right? For my project I require a ship heading to the Sol Nebula. Certainly you must be interested in the proposal of researching the phenomenon that cut us off from mankind's patrimony.
-    As this is the point where any other pilots I asked backed out I should start with my problem; due to some unfortunate circumstances the payment for this mission will be only %s. But rest assured, you will be mentioned in the acknowledgment section of my next paper!"]])
-text[2] = _([["Hold up! Look, the problem is that my grant was not permitted to the extent that I asked for. Those idiots just don't understand the relevance of my research and cut my funds. Only because I'm still a student they completely underestimate my abilities -- by far!
-    Now I spent all my credits on this sensor suit without the possibility to use it. You must know how this feels like. I mean, your ship is obviously in a very bad shape. So why don't you just help me out here?"]])
-text[3] = _([["You do not have enough free cargo space to accept this mission!"]])
-text[4] = _([["Great! I'll start to load the sensors into your ship right away. We should be ready to take off soon."]])
-text[5] = _([["So it is not a problem at all? I'm still a student and spent all funds I got on the sensor suit. Thank you for helping me out here! I'll start to load the sensors into your ship right away. We should be ready to take off soon."]])
-text[6] = _([[As you enter your ship you notice dozens of cables of various colors stretched across your ship's corridors. It is a complete mess. Even weirder is the fact that it is less than one period ago that you met the student in the bar. What has he done to your ship? You follow the direction where most of the cable seem to lead to. Finally you find the culprit.]])
-text[7] = _([["Oh, hello again, Captain! I'm done just by now here, so we can take off whenever you're ready. I have to calibrate the sensors during the flight so there is no need to rush. Our first destination is %s."
-    After asking what he has done to your ship he just answers, "Why, I just installed the sensors as appointed. It should have no unwanted side effects on your ship. Just a complete mess? Haven't you noticed the color coding? Well, I have my own system so it may appears confusing to you. Don't worry, I know exactly what I'm doing!"
-    His last words are supposed to be reassuring but instead you realize accepting this mission was not the best idea...]])
-text[9] = _([[After reaching the %s system the student enters your cockpit. As he realized he forgot to even tell you his name he introduces himself as Robert Hofer and claims to be a student of professor Voges himself. You haven't ever heard of that name but it sounds like he is famous within House Za'lek.
-    "I will now start with the measurements. The density of the nebula is lower in this sector so that it is less volatile. For the real measurements we have to enter %s. I will tell you once we're done here."]])
-text[10] = _([[Suddenly you lose control over your ship. Apparently most core systems were shut down. Something drains your ship's energy and there are black outs in several parts of your ship.
+bar_ask_text = _([["Hello there! You are a pilot, right? For my project I require a ship that can go to the Nebula. Certainly you must be interested in the proposal of researching the phenomenon that cut us off from mankind's patrimony.
+    "As this is the point where any other pilots I asked backed out, I should start by mentioning that due to some unfortunate circumstances the payment for this mission will be only %s. But rest assured, you will be mentioned in the acknowledgment section of my next paper!"]])
+bar_ask_again_text = _([["Hold up! Look, the problem is that my grant was not permitted to the extent that I asked for. Those simpletons cut my funds because they just don't understand the relevance of my research. Just because I'm still a student they completely underestimate my abilities!
+    "Now I've spent all my credits on this sensor suit without the ability to use it. You must know how this feels. I mean, your ship obviously could use some work. So why don't you just help me out here?"]])
+takeoff_text = _([[As you enter your ship you notice dozens of cables of various colors stretched across your ship's corridors. It is a complete mess. You follow the direction most of the cables seem to lead to and find the culprit.
+    "Oh, hello again, Captain! I'm done with my work here, so we can take off whenever you're ready. I have to calibrate the sensors during the flight so there is no need to rush. Our first destination is %s." You try to maintain composure as you ask him what he has done to your ship. "Oh, I just installed the sensors. It should have no unwanted side effects on your ship.
+    "A mess, you say? Haven't you noticed the color coding? Don't worry, I know exactly what I'm doing!" His last words are supposed to be reassuring but instead you start to think that accepting this mission was not the best idea.]])
+scan_1_text = _([[The student enters your cockpit as you arrive in the %s system. "Greetings, Captain! I realize I forgot to introduce myself. My name is Robert Hofer, student of Professor Voges himself! I'm sure you must have heard of him?" You tell him that the name doesn't sound familiar to you. "How can that be? Well, you would understand if you were a Za'lek.
+    "Anyway, I will now start with the measurements. The density of the nebula is lower in this sector, so it's not particularly volatile. For the real measurements we have to enter %s. I will let you know when we're done here."]])
+problems_text = _([[Suddenly you lose control of your ship. Apparently most core systems were shut down. Something drains your ship's energy and there are black outs in several parts of your ship.
     You realize that your shields are down as well. In an environment like this... That's it, your going to die here! You knew accepting this mission was a mistake from the very first moment.]])
-text[11] = _([[It seems you are still alive and all core components are back online!
-    There is a certain someone you should have a serious talk to.]])
-text[12] = _([["Sorry for causing trouble. I'm not quite familiar with the electronics of this ship type. You really should fly a Za'lek ship instead. It wouldn't have possibly happened!"
-    After telling him that your ship was almost destroyed he just replies "That's interesting! So the nebula is corrosive as well? I should investigate the damage it caused to the armour once we landed. But first bring us to the %s system! Don't worry the blackout will not occur again!"
-    It would probably be the best to just drop him off on the next planet...]])
-text[13] = _([["Thank you for your trust! I will try to make it quick. No, wait, I'll rather try to make it without another blackout. Haha!"
-    You start to think it was a big mistake to come to the %s system. "Anyway, just fly a circle or something. I will tell you once the scan is complete."]])
-text[14] = _([["And that's it! Now, let's head back to %s."]])
-text[15] = _([[The student has already started to remove all the cables and sensors inside your ship during the flight back to %s. When you land everything is packed into a couple of crates.
-    "Once again, thank you for your help. I still have to analyze the data but it looks promising so far. With these results no one is going to question my theories anymore! Also, I decided to increase your reward due to the trouble I caused."
-    With these words he gives you a credit chip worth %s and heads off. More worth than the money though is the insight that working for the Za'lek will be dangerous and tiresome.]])
-choice1 = _("Ask")
-choice2 = _("Nevermind")
-
--- Mission info stuff
-osd_msg   = {}
-osd_title = _("Novice Nebula Research")
-osd_msg[1] = _("Fly to the %s system.")
-osd_msg[2] = _("Fly to the %s system.")
-osd_msg[3] = _("Return to the %s system.")
-
-log_text = _([[You helped a Za'lek student to collect sensor data of the Sol nebula.]])
+problems_end_text = _([[You breathe a sigh of relief. It seems you're still alive. You try not to glare at Robert Hofer, but apparently aren't particularly successful considering his response. "Sorry for causing trouble. I'm not quite familiar with the electronics of this ship type. You really should fly a Za'lek ship instead. Those are so much better!
+    "I should investigate the damage it caused to the armor once we land. But first we must go to the %s system. Don't worry, the blackout will not occur again!"]])
+finish_text = _([[The student has already removed all the cables and sensors inside your ship during the flight back to %s. Everything is packed into a couple of crates by the time you land.
+    "Once again, thank you for your help. I still have to analyze the data but it looks promising so far. With these results no one is going to question my theories anymore! Also, I decided to increase your reward to compensate for the trouble I caused."
+    He gives you a credit chip worth %s and heads off. The money is nice, but not worth as much as the insight that working for the Za'lek will be dangerous and tiresome.]])
 
 
 function create()
     -- mission variables
     misn_stage = 0
-    homeworld = planet.get("Jorla")
-    homeworld_sys = system.get("Regas")
+    t_sys = {}
+    t_sys[1] = "Doeston"
+    t_sys[2] = "Iris"
+    homeworld, homeworld_sys = planet.get("Jorla")
     credits = 100000
     
     -- Spaceport bar stuff
     misn.setNPC(_("A young scientist"),  "zalek/unique/student")
-    misn.setDesc(bar_desc)
+    misn.setDesc( _("You see a young scientist talking with some pilots, apparently without success.") )
 end
 
 function accept()
+    local bar_title = _("Science Needs You")
+
     -- Check for cargo space
     if player.pilot():cargoFree() <  5 then
-        tk.msg(title[1], text[3])
+        tk.msg( "", _([["Sorry, I need a ship with more cargo space than you have."]]) )
         misn.finish()
     end
     
-    if not tk.yesno(title[1], string.format(text[1], creditstring(50000))) then
-        if not tk.yesno(title[2], text[2] ) then
+    if not tk.yesno(bar_title, string.format(bar_ask_text, creditstring(50000))) then
+        if not tk.yesno(bar_title, bar_ask_again_text ) then
             misn.finish()
         else
-            tk.msg(title[1], string.format(text[4], t_sys[1]))
+            tk.msg( bar_title, string.format(
+                _([["Great! I'll start loading the sensors into your ship right away. We should be ready to take off soon."]]),
+                t_sys[1] ) )
         end
     else
-        tk.msg(title[1], string.format(text[5], t_sys[1]))
+        tk.msg( bar_title, string.format(
+            _([["So it is not a problem at all? I'm still a student and spent all funds I got on the sensor suit. Thank you for helping me out here! I'll start to load the sensors into your ship right away. We should be ready to take off soon."]]),
+            t_sys[1] ) )
     end
     
     -- Add cargo
     cargo = misn.cargoAdd("Nebula Sensor Suit", 5)
     
     -- Set up mission information
-    misn.setTitle(mtitle[1])
-    misn.setReward(string.format(misn_reward, creditstring(50000)))
-    misn.setDesc(string.format(mdesc[1], t_sys[1]))
+    misn.setTitle( _("Novice Nebula Research") )
+    misn.setReward( string.format(
+        _("%s and the gratitude of a student"), creditstring(50000) ) )
+    misn.setDesc( _("You have been asked by a Za'lek student to fly into the Nebula for some kind of research.") )
     misn_marker = misn.markerAdd(system.get(t_sys[1]), "low")
     
     -- Add mission
     misn.accept()
-    osd_msg[1] = string.format(osd_msg[1], t_sys[1])
-    osd_msg[2] = string.format(osd_msg[2], t_sys[2])
-    osd_msg[3] = string.format(osd_msg[3], homeworld_sys:name())
+    osd_msg = {}
+    osd_msg[1] = string.format( _("Fly to the %s system"), t_sys[1] )
+    osd_msg[2] = string.format( _("Fly to the %s system"), t_sys[2] )
+    osd_msg[3] = string.format(
+        _("Return to %s in the %s system"), homeworld:name(),
+        homeworld_sys:name() )
     misn.osdCreate(osd_title, osd_msg)
     
     thook = hook.takeoff("takeoff")
@@ -137,18 +109,20 @@ end
 function land()
     landed = planet.cur()
     if misn_stage == 3 and landed == homeworld then
-        tk.msg(title[7], string.format(text[15], homeworld:name(), creditstring(credits)))
+        tk.msg( "", finish_text:format(
+            homeworld:name(), creditstring(credits) ) )
         misn.cargoRm(cargo)
         player.pay(credits)
         misn.markerRm(misn_marker)
-        zlk_addNebuResearchLog(log_text)
+        zlk_addNebuResearchLog(
+            _("You helped a Za'lek student to collect sensor data in the Nebula.") )
         misn.finish(true)
     end
 end
 
 function takeoff()
-    tk.msg(title[3], text[6])
-    tk.msg(title[3], string.format(text[7], t_sys[1]))
+    local title = _("A Mess On Your Ship")
+    tk.msg(title, string.format(takeoff_text, t_sys[1]))
     hook.rm(thook)
 end
 
@@ -163,7 +137,7 @@ function jumpin()
 end
 
 function beginFirstScan()
-    tk.msg(title[4], string.format(text[9], t_sys[1], t_sys[2]))
+    tk.msg("", string.format(scan_1_text, t_sys[1], t_sys[2]))
     shook = hook.timer(30000, "startProblems")
 end
 
@@ -186,17 +160,15 @@ function drainShields()
 end
 
 function noticeProblems()
-    tk.msg(title[5], text[10])
+    tk.msg("", problems_text)
     hook.timer(10000, "stopProblems")
 end
 
 function stopProblems()
     ps:control(false)
     ps:setEnergy(100)
-    tk.msg(title[5], text[11])
-    tk.msg(title[5], string.format(text[12], t_sys[2]))
+    tk.msg("", string.format(problems_end_text, t_sys[2]))
     misn_stage = 1
-    misn.setDesc(string.format(mdesc[1], t_sys[2]))
     misn.markerMove(misn_marker, system.get(t_sys[2]))
     misn.osdActive(2)
     hook.rm(phook)
@@ -204,14 +176,17 @@ function stopProblems()
 end
 
 function beginSecondScan()
-    tk.msg(title[4], string.format(text[13], t_sys[2]))
+    tk.msg( "", string.format(
+        _("You arrive in the %s system and Robert Hofer tells you that he will let you know when his scan is complete. This had better not cause another blackout..."),
+        t_sys[2] ) )
     hook.timer(30000, "endSecondScan")
 end
 
 function endSecondScan()
-    tk.msg(title[6], string.format(text[14], homeworld:name()))
+    tk.msg( "", string.format(
+        _([["OK, my measurements are complete! Let's go back to %s."]]),
+        homeworld:name() ) )
     misn_stage = 3
-    misn.setDesc(string.format(mdesc[1], homeworld:name()))
     misn.markerMove(misn_marker, homeworld_sys)
     misn.osdActive(3)
 end

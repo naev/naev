@@ -197,10 +197,11 @@ int misn_run( Mission *misn, const char *func )
  */
 Mission* misn_getFromLua( lua_State *L )
 {
-   Mission *misn;
+   Mission *misn, **misnptr;
 
    nlua_getenv(__NLUA_CURENV, "__misn");
-   misn = (Mission*) lua_touserdata( L, -1 );
+   misnptr = lua_touserdata( L, -1 );
+   misn = misnptr ? *misnptr : NULL;
    lua_pop( L, 1 );
 
    return misn;
@@ -212,7 +213,9 @@ Mission* misn_getFromLua( lua_State *L )
  */
 void misn_runStart( Mission *misn, const char *func )
 {
-   lua_pushlightuserdata( naevL, misn );
+   Mission **misnptr;
+   misnptr = lua_newuserdata( naevL, sizeof(Mission*) );
+   *misnptr = misn;
    nlua_setenv( misn->env, "__misn" );
 
    /* Set the Lua state. */
@@ -241,7 +244,7 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
 
    /* The mission can change if accepted. */
    nlua_getenv(env, "__misn");
-   cur_mission = (Mission*) lua_touserdata(naevL, -1);
+   cur_mission = *(Mission**) lua_touserdata(naevL, -1);
    lua_pop(naevL, 1);
 
    if (ret != 0) { /* error has occurred */
@@ -585,7 +588,7 @@ static int misn_factions( lua_State *L )
 static int misn_accept( lua_State *L )
 {
    int i, ret;
-   Mission *cur_mission;
+   Mission *cur_mission, **misnptr;
 
    ret = 0;
 
@@ -608,7 +611,8 @@ static int misn_accept( lua_State *L )
       cur_mission->accepted = 1; /* Mark as accepted. */
 
       /* Need to change pointer. */
-      lua_pushlightuserdata(L,cur_mission);
+      misnptr = lua_newuserdata( L, sizeof(Mission*) );
+      *misnptr = cur_mission;
       nlua_setenv(cur_mission->env, "__misn");
    }
 

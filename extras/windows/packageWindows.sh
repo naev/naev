@@ -74,26 +74,30 @@ echo "Creating Temp Folder"
 mkdir -p ~/temp
 
 echo "Downloading Inetc release"
-wget https://nsis.sourceforge.io/mediawiki/images/c/c9/Inetc.zip -P ~/temp
+if wget https://github.com/DigitalMediaServer/NSIS-INetC-plugin/releases/download/v1.0.5.6/INetC.zip -P ~/temp --tries=3; then
 
-echo "Decompressing Inetc release"
-unzip ~/temp/Inetc.zip -d ~/temp
+    echo "Decompressing Inetc release"
+    unzip ~/temp/Inetc.zip -d ~/temp
 
-# Install Inetc
+    # Install Inetc
 
-echo "Installing Inetc"
-if [[ $ARCH == "32" ]]; then
-    cp -r ~/temp/Plugins/x86-unicode/* /mingw32/share/nsis/Plugins/unicode
-    echo "Cleaning up temp folder"
-    rm -rf ~/temp
-elif [[ $ARCH == "64" ]]; then
-    cp -r ~/temp/Plugins/amd64-unicode/* /mingw64/share/nsis/Plugins/unicode
-    echo "Cleaning up temp folder"
-    rm -rf ~/temp
+    echo "Installing Inetc"
+    if [[ $ARCH == "32" ]]; then
+        cp -r ~/temp/x86-unicode/* /mingw32/share/nsis/Plugins/unicode
+        echo "Cleaning up temp folder"
+        rm -rf ~/temp
+    elif [[ $ARCH == "64" ]]; then
+        cp -r ~/temp/x64-unicode/* /mingw64/share/nsis/Plugins/unicode
+        echo "Cleaning up temp folder"
+        rm -rf ~/temp
+    else
+        echo "I'm afraid I can't do that Dave..."
+        echo "Cleaning up temp folder"
+        rm -rf ~/temp
+        exit -1
+    fi
 else
-    echo "I'm afraid I can't do that Dave..."
-    echo "Cleaning up temp folder"
-    rm -rf ~/temp
+    echo "Something went wrong while downloading Inetc release"
     exit -1
 fi
 

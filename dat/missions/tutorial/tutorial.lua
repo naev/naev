@@ -1,15 +1,15 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Tutorial">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>1</priority>
-   <location>None</location>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>1</priority>
+  <location>None</location>
+ </avail>
+</mission>
+--]]
 --[[
 
    Tutorial Mission
