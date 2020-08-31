@@ -21,11 +21,12 @@ require "dat/scripts/nextjump.lua"
 require "selectiveclear.lua"
 require "proximity.lua"
 require "portrait.lua"
+require "dat/missions/dvaered/frontier_war/fw_common.lua"
+require "numstring.lua"
 
 -- TODO: Set the priority and conditions of this mission
 -- TODO: add news comments about all this
 -- TODO: check that no blockade has been forgotten
--- TODO: warlords and DHC should be known factions (same flags as associates and such)
 
 portrait_name = _("Captain Leblanc")
 portrait_desc = _("Captain Leblanc is the top pilot of General Klank's task force. Her presence in this bar means that the High Command needs your help.")
@@ -34,7 +35,7 @@ hamfr_name = _("Captain Hamfresser")
 hamfr_desc = _("Hamfresser and his team are together at a table. The captain drinks with his favorite pink straw while incessantly scanning the room.")
 hamfr_des2 = _("The captain sits alone at a remote table. He nervously chews his pink straw, while waiting for your signal to infiltrate the hospital.")
 nikol_name = _("Sergeant Nikolov")
-nikol_desc = _("The second in command of Hamfresser's squad seems to be as laid back as an hyperactive kid under cocaine. Clearly, open spaces like this bar with many people around are not suited to commando members, who are used to see any stranger as a potential hostile.")
+nikol_desc = _("The second in command of Hamfresser's squad seems to be as laid back as a Totoran gladiator on cocaine. Clearly, open spaces like this bar with many people around are not suited to commando members, who are used to see any stranger as a potential hostile.")
 tronk_name = _("Private Tronk")
 tronk_desc = _("The young cyborg sits to the left of his captain, and looks suspiciously at his sparklong water glass.")
 theru_name = _("Caporal Therus")
@@ -108,10 +109,10 @@ die_text = _([[After having outrun your enemies, you start inquiring about how t
    Suddently, the soldier opens his eyes wide and calls the medic: "Therus! I know why Major Tam can catch the turtle! Each time, when he reaches the point where the turtle previously was, the time he needs for that is smaller. And at some point, it becomes so infinitely small that even if you have an infinity of steps to go, the total time is finite." The medic looks at the dying man: "Tronky, how did you? Tronky?" She then stops and takes the pulse at Tronk's neck "It's over, captain." Hamfresser answers: "Damn! It's the fifth kid who dies under my command and it still hurts as much. I just can't get used to that."]])
 
 bloc_title = _("Troubles straight ahead!")
-bloc_text = _([[When approaching the jump point, your sensors pick up a wing of %s ships, that stationnate close to the jump point in a tight formation. No doubt those ships are here for you, and it looks more than chancy to try to force the blockade.]])  -- Works for both Za'lek and Empire
+bloc_text = _([[When approaching the jump point, your sensors pick up a squadron of military ships, that stationnate close to the jump point in a tight formation. No doubt those ships are here for you, and it looks more than chancy to try to force the blockade.]]) 
 
 info_title = _("A friend in the dark")
-info_text = _([[When you respond to the Gawain's hail, you hear a familiar voice. "Strafer here. I was wondering why you were so long. It looks like you had troubles with the Za'lek after all. There are blockades in %s, %s, %s and %s. They scan all ships, you have no chance to cross these systems alive. What have you done to them to upset them like that? Anyway, I did not come empty-handed. I've got as much fuel as you want. Unfortunately, I can't board you as they would chase me as well, so I have jettison a few tanks at coordinates I will give to you. Just go there and scoop them. Good luck!"]])
+info_text = _([[The Gawain's hails you. When you respond, you hear a familiar voice. "Strafer here. I was wondering why you were so long. It looks like you had troubles with the Za'lek after all. There are blockades in %s, %s, %s and %s. They scan all ships, you have no chance to cross these systems alive. What have you done to them to upset them like that? Anyway, I did not come empty-handed. I've got as much fuel as you want. Unfortunately, I can't board you as they would chase me as well, so I have jettison a few tanks at coordinates I will give to you. Just go there and scoop them. Good luck!"]])
 
 kill_title = _("The mission failed")
 kill_text = _([[The rule was not to kill anybody, did you remember?]])
@@ -136,10 +137,10 @@ imp_no_text = _([["Mwell." Says the agent. "I guess you want to check by yoursel
 
 
 pirate_title = _("Other help offer")
-pirate_text1 = _([[As you land, someone seems to be waiting for you on the spaceport. "Hello, colleague! Someone is in trouble with the authorities, out there. You seem to have had an argument with the Za'lek, and now the Imperials help them. I've seen blockades everywhere on the borders of Imperial space. Even the way to the secret jumps is impassable. It looks like the Empire wants to get you at all costs, but luckly enough, I have the solution. You probably already got a fake transponder, but they seem to have identified it, so what about recieving an other one? I can sell you an authentic fake transponder, coming straight outta Skulls and Bones factory. What do you say?"
-   This person is for sure a pirate who wants to take the opportunuity to get a few cash. The idea is not bad as the imperial ships would not look for a ship with a Skulls and Bones fake transponder. So you ask him how much credits he wants. "%d" he answers. "That sounds a great many, doesn't it? But maybe it's a suitable amount of money for your life and the success of whatever unscrupulous mission you're trying to carry on. Of course, you may not have such an amount right here, so I'll accept if you give your word to pay me at some point. Your word and your DNA signature as well, so that I can find you if you try to trick me."
-   You know that if you agree, you will have to pay whatever happends, otherwise you will be harassed by hitmen until the end of your life. But actually, paying %d credits could allow you to skirt the messy and compromising deal you will otherwise have to do with the Imperial secret services. What do you say?]])
-pirate_text2 = _("Do you accept the deal with the pirates? It costs %d credits, and you'll be able to skirt any imperial blocus.")
+pirate_text1 = _([[As you land, someone seems to be waiting for you on the spaceport. "Hello, colleague! Someone is in trouble with the authorities, out there. You seem to have had an argument with the Za'lek, and now the Imperials help them. I've seen blockades everywhere on the borders of Imperial space. Even the way to the secret jumps is impassable. It looks like the Empire wants to get you at all costs, but luckly enough, I have the solution. You probably already got a fake transponder, but they seem to have identified it, so what about recieving an other one? I can sell you an authentic fake transponder, coming straight outta Skulls and Bones factory."
+   This person is for sure a pirate who wants to take the opportunuity to get a few cash. The idea is not bad as the imperial ships would not look for a ship with a Skulls and Bones fake transponder. So you ask him how much credits he wants. "%s" is the answer. "That sounds a great many, doesn't it? But maybe it's a suitable amount of money for your life and the success of whatever unscrupulous mission you're trying to carry on. Of course, you may not have such an amount right here, so I'll accept if you give your word to pay me at some point. Your word and your DNA signature as well, so that I can find you if you try to trick me."
+   You know that if you agree, you will have to pay whatever happends, otherwise you will be harassed by hitmen until the end of your life. But actually, paying %s credits could allow you to skirt the messy and compromising deal you will otherwise have to do with the Imperial secret services. Meet the fake transponder dealer at the bar if interested.]])
+pirate_text2 = _("Do you accept the deal with the pirates? It costs %s credits, and you'll be able to skirt any imperial blocus.")
 
 pir_yes_answer = _("Accept, immediate payment")
 pir_yes_title = _("Immediate payment")
@@ -158,8 +159,8 @@ pir_no_text = _([["As you wish," says the pirate. "Just come back when you've un
 
 vip_title = _("Shock of two worlds")
 vip_text = _([[You hear an unusual and edgy voice coming from the living quarters. When you go there, you see that the VIP is back on his feets. "To sum up, a dvaered general, whose name you don't want to tell, sent you to free me from the Za'lek, for a reason you don't want to tell, right?" Hamfresser answers: "Totally correct, sir."
-   The executive moans and shakes his head "You Dvaered are crazy! Do you think that violence is the solution to any problem?" Hamfresser seems surprised "Is there any other way to solve a problem?" The VIP then looks at you: "Hey, you seem a bit less fussy than the others... You're not a Dvaered, right? You know what? My grandma was always saying that the worse in the universe were the Dvaered and the Za'lek. And she was right. First the Za'lek imprisoned me under charge of 'scientific embezzlement' for alien motives, and now, you Dvaered shred your way to my cell and kidnap me."
-   Hamfresser defends himself: "But sir, if the operation succeeds, you'll be back to buisness really soon. Isn't that wonderful?" "... and if the operation fails, we all die! No, strong-arm, learn that patience, negotiation, bribing and craftiness can achieve much more than fury and savagery. I have paid the best lawers in Za'lek space and my assistants negociate with the authorities, I was sure to get out in about half a cycle." Hamfresser simply rases his shoulders: "Dvaered warriors don't use patience, nor craftiness. Dvaered warriors use respectable methods instead, like savagery."]])
+   The executive moans and shakes his head "You Dvaered are silly! Do you think that violence is the solution to any problem?" Hamfresser seems surprised "Is there any other way to solve a problem?" The VIP then looks at you: "Hey, you seem a bit less fussy than the others... You're not a Dvaered, right? You know what? My grandma was always saying that the worse in the universe were the Dvaered and the Za'lek. And she was right. First the Za'lek imprisoned me under charge of 'scientific embezzlement' for alien motives, and now, you Dvaered shred your way to my cell and kidnap me."
+   Hamfresser defends himself: "But sir, if the operation succeeds, you'll be back to buisness really soon. Isn't that wonderful?" "... and if the operation fails, we all die! No, strong-arm, learn that patience, negotiation, bribing and craftiness can achieve much more than violence and destruction. I have paid the best lawers in Za'lek space and my assistants negociate with the authorities, I was sure to get out in about half a cycle." Hamfresser simply rases his shoulders: "Dvaered warriors don't use deception, not patience, nor craftiness. Dvaered warriors use respectable methods instead, like violence and destruction."]])
 
 back_title = _("Finally back")
 back_text = _([[Upon landing, Hamfresser, the VIP and you go to the spaceport's military office, where the Major Tam is waiting for you along with a few other soldiers. He warmly greets the executive and adresses to Hamfresser: "Do you know that you scared us, people? We learned by the diplomatic canal that you destroyed an hospital's pharmacy quasi-entirely, along with two police tanks and half a dozen battle androids on %s. Apparently, you did not kill anyone at least, but the Za'lek were really upset".
@@ -168,33 +169,37 @@ back_text = _([[Upon landing, Hamfresser, the VIP and you go to the spaceport's 
 
 back_debt_title = _("Everything is almost alright")
 back_debt_text = _([[You explain to the major what problems you encountered. You talk about the strange deal the Empire has tried to make with you. "Yes, the Imperial intelligence services are formidable. It is very hard for us to hide them our intentions. It was right from you not to accept their offer. So you bought a pirate fake transponder, right? I hope it was not too expensive!"
-  When you tell him the sum you had to promise to pay, Major Tam squeaks. "Whawhawhat? %d credits for a fake transponder! This is not trade, it is theft!" "Well, technically..." You answer "those folks are pirates, so it's their job to rob people." The major calms down "Alright. I'll take care of the payment, so that they don't kill you, but you'll have to refund us, don't forget that!"
-   The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are %d credits."]])
+  When you tell him the sum you had to promise to pay, Major Tam squeaks. "Whawhawhat? %s credits for a fake transponder! This is not trade, it is theft!" "Well, technically..." You answer "those folks are pirates, so it's their job to rob people." The major calms down "Alright. I'll take care of the payment, so that they don't kill you, but you'll have to refund us, don't forget that! Oh, and by the way, I made sure with the Za'lek that they don't blame you personnaly for what happened. They should accept you in their space now."
+   The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are %s credits."]])
 
 back_pay_title = _("No major problem to report")
 back_pay_text = _([[You explain to the major what problems you encountered. You talk about the strange deal the Empire has tried to make with you. "Yes, the Imperial intelligence services are formidable. It is very hard for us to hide them our intentions. It was right from you not to accept their offer. So you bought a pirate fake transponder, right? I hope it was not too expensive!"
-  You consider requesting to be refunded for your mission expenses, but then you remember that the Dvaered are tightfisted and violent, so you give up and simply answer: "Oh, no... not... really."
-  The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are %d credits."]])
+   You consider requesting to be refunded for your mission expenses, but then you remember that the Dvaered are tightfisted and violent, so you give up and simply answer: "Oh, no... not... really."
+   Tam looks satisfied, and answers: "By the way, I made sure with the Za'lek that they don't blame you personnaly for what happened. They should accept you in their space now."
+   The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are %s credits."]])
 
 back_nodeal_title = _("No major problem to report")
-back_nodeal_text = _([[You explain to the major what problems you encountered. You talk about the strange deal the Empire has tried to make with you. "Yes, the Imperial intelligence services are formidable. It is very hard for us to hide them our intentions. It was right from you not to accept their offer. I guess it should have been very hard and risky to skirt the imperial blocus, congratualtions!"
-  The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are %d credits."]])
+back_nodeal_text = _([[You explain to the major what problems you encountered. You talk about the strange deal the Empire has tried to make with you. "Yes, the Imperial intelligence services are formidable. It is very hard for us to hide them our intentions. It was right from you not to accept their offer. I guess it should have been very hard and risky to skirt the imperial blocus, congratualtions! Oh, and by the way, I made sure with the Za'lek that they don't blame you personnaly for what happened. They should accept you in their space now."
+  The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are %s credits."]])
 
 back_empire_title = _("A problem with the Empire")
 back_empire_text = _([[You explain to the major what problems you encountered. You talk about the strange deal the Empire has forced you to make with them and the major's face turns red: "You did WHAT? The imperial intelligence service is the strongest in the world, they can deduce things you would not even imagine just by looking at someone, and you let them discuss with a black ops commando leader!"
-   As you argue that you had no other choice, he seems to calm down a little bit "I will interrogate Hamfresser to see if one can understand what they were looking for. Damn! I'm afraid something awful may happend to us somehow because of that."
-   The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are %d credits."]])
+   As you argue that you had no other choice, he seems to calm down a little bit "I will interrogate Hamfresser to see if one can understand what they were looking for. Damn! I'm afraid something awful may happend to us somehow because of that. Oh, and by the way, I made sure with the Za'lek that they don't blame you personnaly for what happened. They should accept you in their space now."
+   The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are %s credits."]])
 
 
-instr_title = _("Instructions to Strafer")
-instr_text = _("What do you want Strafer to do?")
-in_free = _("Attack nearby enemies")
-in_follow = _("Follow me")
-in_nevermind = _("Nevermind")
+edie_title = _("Mission Failed: escort destroyed")
+edie_text = _("Your escort died. You have to abort the mission")
+
+tdie_title = _("Mission Failed: target destroyed")
+tdie_text = _("You were supposed to disable that ship, not to destroy it. How are you supposed to free anyone now?")
+
+tesc_title = _("Mission Failed: target escaped")
+tesc_text = _("You were supposed to disable that ship, not to let it escape. How are you supposed to free anyone now?")
 
 
-misn_desc = _("You will help a Goddard executive to evade his Za'lek prison.") -- TODO: update description
-misn_reward = _("Contribute to the greatness of House Dvaered.")
+misn_desc = _("You will help a Goddard executive to evade his Za'lek prison.")
+misn_reward = _("Hopefully something better than Gauss Guns...")
 
 log_text_emp = _("You helped the Dvaered High Command to liberate Mr Danftang, public relations executive at Goddard, who was imprisoned by the Za'lek for obscure reasons. This executive is likely to help House Dvaered on the diplomatic point of view. Many unexpected events happened during this operation, that forced you to make a deal with the Empire secret services.")
 log_text_debt = _("You helped the Dvaered High Command to liberate Mr Danftang, public relations executive at Goddard, who was imprisoned by the Za'lek for obscure reasons. This executive is likely to help House Dvaered on the diplomatic point of view. Many unexpected events happened during this operation, that forced you to get into debt with House Dvaered. It is very likely they won't entrust you with important missions until you repay them.")
@@ -211,9 +216,10 @@ osd_msg5  = _("Escape to on %s in %s. Do NOT destroy any Za'lek inhabited ship (
 osd_msg6  = _("Escape to on %s in %s. Thanks to your deal with the Empire, the squadron in Alteris won't prevent you from jumping to Goddard")
 osd_msg7  = _("Escape to on %s in %s. Thanks to your new fake transponder, the squadrons should not stop you anymore")
 
-commMass = 5
-credits = 200000
-price = 10000000 -- 10M
+sting_comm_fight = _("You made a very big mistake!")
+sting_comm_flee = _("Just try to catch me, you pirate!")
+
+commMass = 4
 
 mark_name = _("FUEL")
 fuelMsg = _("You filled your fuel tanks")
@@ -278,37 +284,38 @@ function land()
 
    -- Land at an Imperial planet and meet the agents
    elseif stage == 5 and planet.cur():faction() == faction.get("Empire") then
-      tk.msg(pirate_title, pirate_text1:format(price,price)) -- TODO: reformulate and say: "meet me at the bar"
+      tk.msg(pirate_title, pirate_text1:format(numstring(pirate_price),numstring(pirate_price)))
       pirag = misn.npcAdd("pirateDealer", pir_name, getPortrait("Pirate"), pir_desc)
       impag = misn.npcAdd("imperialAgent", imp_name, getPortrait(), imp_desc)
       stage = 6
 
-   -- Landed to end the mission TODO: see if th's not stage >= 4
-   elseif stage >= 5 and planet.cur() == reppla then
-      tk.msg(back_title, back_text:format(hospPlanet:name(),player.name())) -- TODO: store the name of the planet where the hospital stuff happened
+   -- Land to end the mission
+   elseif stage >= 4 and planet.cur() == reppla then
+      tk.msg(back_title, back_text:format(hospPlanet:name(),player.name()))
       var.push("dv_empire_deal", false)
       var.push("dv_pirate_debt", false)
-      shiplog.createLog( "frontier_war", _("Dvaered Military Coordination"), _("Dvaered") ) --TODO: create a common file for this TODO: rename it "Frontier Invasion"
+      shiplog.createLog( "fw02", _("Frontier War"), _("Dvaered") )
       if stage == 7 then -- Empire solution
-         tk.msg(back_empire_title, back_empire_text:format(credits))
+         tk.msg(back_empire_title, back_empire_text:format(numstring(credits_02)))
          var.push("dv_empire_deal", true)
-         shiplog.appendLog( "frontier_war", log_text_emp )
+         shiplog.appendLog( "fw02", log_text_emp )
       elseif stage == 8 then -- Pirate debt
-         tk.msg(back_debt_title, back_debt_text:format(price,credits))
+         tk.msg(back_debt_title, back_debt_text:format(numstring(pirate_price),numstring(credits_02)))
          var.push("dv_pirate_debt", true)
-         shiplog.appendLog( "frontier_war", log_text_debt )
+         shiplog.appendLog( "fw02", log_text_debt )
       elseif stage == 9 then -- Pirate cash
-         tk.msg(back_pay_title, back_pay_text:format(credits))
-         shiplog.appendLog( "frontier_war", log_text_pay )
+         tk.msg(back_pay_title, back_pay_text:format(numstring(credits_02)))
+         shiplog.appendLog( "fw02", log_text_pay )
       else -- Normally, the player should not achieve that (maybe with a trick I did not forsee, but it should be Xtremely hard)
-         tk.msg(back_nodeal_title, back_nodeal_text:format(credits))
-         shiplog.appendLog( "frontier_war", log_text_raw )
+         tk.msg(back_nodeal_title, back_nodeal_text:format(numstring(credits_02)))
+         shiplog.appendLog( "fw02", log_text_raw )
       end
-      player.pay(credits)
+      player.pay(credits_02)
 
-      -- Reset the zlk standing. TODO: explain why
+      -- Reset the zlk standing.
       stand1 = fzlk:playerStanding()
       fzlk:modPlayerRaw( stand0-stand1 )
+      var.pop("loyal2klank") -- We don't need this one anymore
       misn.finish(true)
    end
 
@@ -341,7 +348,7 @@ function discussTro()
    tk.msg(tronk_title, tronk_text)
 end
 function discussThe()
-   tk.msg(therus_title, therus_text:format("Buritt")) -- TODO maybe: keep track if the planet is changed on fw01
+   tk.msg(therus_title, therus_text:format(wlrd_planet))
 end
 function discussStr()
    tk.msg(strafer_title, strafer_text)
@@ -367,7 +374,7 @@ end
 function killed_zlk(pilot,killer)
    if pilot:faction() == faction.get("Za'lek") and killer == player.pilot() then
       killed_ship = pilot:ship():name()
-      if not elt_inlist( killed_ship, {"Za'lek Scout Drone", "Za'lek Light Drone", "Za'lek Heavy Drone", "Za'lek Bomber Drone"} ) then
+      if (elt_inlist( killed_ship, {"Za'lek Scout Drone", "Za'lek Light Drone", "Za'lek Heavy Drone", "Za'lek Bomber Drone"} ) == 0) then
          tk.msg(kill_title, kill_text)
          misn.finish(false)
       end
@@ -385,7 +392,7 @@ function enter()
       prevsys = getNextSystem(system.cur(), prisys)
       nextsys = getNextSystem(system.cur(), zlksys)
 
-      hook.timer(5000, "convoyEnter") -- TODO: tell you should wait
+      hook.timer(5000, "convoyEnter")
 
    -- At first jump, it gets announced that you've got to land
    elseif stage == 2 then
@@ -401,9 +408,8 @@ function enter()
       hook.timer(10000, "backDialog")  -- And some dialog with the VIP
    end
 
-   -- TODO: explain how to release Strafer
+   -- Spawn Strafer
    if stage == 1 then
-
       if lastSys == system.cur() then -- We're taking off
          origin = lastPla
       else
@@ -442,12 +448,10 @@ function enter()
 
       -- Zlk Blocus:
       -- Pultatis -> Provectus Nova
-      --         -> Limbo
+      --          -> Limbo
       -- Stone Table -> Sollav
       -- Xavier -> Sheffield
       -- Straight Row -> Nunavut
---      zlk_list = { system.get("Pultatis"), system.get("Stone Table"), system.get("Xavier"), system.get("Straight Row") }
---      zlk_lisj = { {system.get("Provectus Nova"), system.get("Limbo"}, {system.get("Sollav")}, {system.get("Sheffield")}, {system.get("Nunavut")} }
       zlk_list = { "Pultatis", "Stone Table", "Xavier", "Straight Row" }
       zlk_lisj = { {"Provectus Nova", "Limbo"}, {"Sollav"}, {"Sheffield"}, {"Nunavut"} }
 
@@ -507,19 +511,8 @@ end
 
 -- Functions for the escort
 function escort_died()
-   -- TODO: text
+   tk.msg(edie_title, edie_text)
    misn.finish(false)
-end
-function escort_hailed()
-   local c = tk.choice(instr_title, instr_text, in_free, in_follow, in_nevermind)
-   if c == 1 then
-      strafer:control(false)
-   elseif c == 2 then
-      strafer:control(true)
-      strafer:taskClear()
-      strafer:follow( player.pilot(), true )
-   end
-   player.commClose()
 end
 
 -- Makes the carceral convoy enter the system
@@ -545,19 +538,32 @@ function convoyEnter()
 
    attackhook = hook.pilot(target, "attacked", "targetAttacked")
    boardhook  = hook.pilot(target, "board", "targetBoarded")
+   hook.pilot( target, "death", "targetDied" )
+   hook.pilot( target, "jump", "targetEscaped" )
+   hook.pilot( target, "land", "targetEscaped" )
+   -- TODO: not possible to jump nor to land
 end
 
+-- Hooks for the interception target
 function targetAttacked()
-   -- TODO: better behaviour TODO: the Sting should be hostile or flee
-   target:control(false)
    strafer:control(false)
    hook.rm(attackhook)
    for i, j in ipairs(athooks) do
       hook.rm(j)
       escort[i]:setFaction("Warlords") -- Hack so that Strafer attacks them and not the Sting
    end
-end
+   target:setHostile(true)
 
+   -- Decide between fight or runaway
+   if playerMoreThanCorvette() then
+      target:taskClear()
+      target:comm( sting_comm_flee )
+      target:runaway(player.pilot())
+   else
+      target:control(false)
+      target:comm( sting_comm_fight )
+   end
+end
 function targetBoarded()
    tk.msg(board_title, board_text)
    player.unboard()
@@ -571,6 +577,14 @@ function targetBoarded()
    -- Reset the zlk standing
    stand1 = fzlk:playerStanding()
    fzlk:modPlayerRaw( stand0-stand1 )
+end
+function targetDied()
+   tk.msg(tdie_title, tdie_text)
+   misn.finish(false)
+end
+function targetEscaped()
+   tk.msg(tesc_title, tesc_text)
+   misn.finish(false)
 end
 
 -- Hamfresser explains that we need to land at an hospital
@@ -594,9 +608,17 @@ end
 function takeoff( )
    -- Player takes off from planet after attacking the hospital
    if stage == 4 and lastPlanet:faction() == fzlk then
-      fzlk:modPlayerRaw( -100 ) -- TODO: don't forget to turn that back at the end of mission
-      hook.timer(3000, "spawnDrones")
-      -- TODO: if possible kill all Zlk pilots in a given radius of the player to avoid insta-kill
+      fzlk:modPlayerRaw( -100 )
+      hook.timer(1000, "spawnDrones")
+
+      -- Clear all Zlk pilots in a given radius of the player to avoid being insta-killed at takeoff
+      local dmin2 = 500^2
+      zlkPilots = pilot.get("Za'lek")
+      for i, p in ipairs(zlkPilots) do
+         if vec2.dist2(player.pilot():pos()-p:pos()) < dmin2 then
+            p:rm()
+         end
+      end
    end
 end
 
@@ -663,25 +685,28 @@ end
 -- The player sees the blocus fleet
 function scanBloc()
    if firstBloc then -- avoid having that happening twice in systems where there are 2 blocus
-      tk.msg(bloc_title, bloc_text:format("military")) -- TODO: actually, it should be Empire or Zalek...
-      -- TODO: cinematic
+      tk.msg(bloc_title, bloc_text)
 
       player.pilot():control()
       player.pilot():brake() -- Normally, nobody should want to kill the player
       player.cinematics( true )
-      camera.set( squad[1]:pos() ) -- TODO: choose the right squad
+      camera.set( squad[1]:pos() ) -- TODO if possible: choose the right squad
 
-      strafer = pilot.add("Trader Gawain")[1]
-      strafer:setHilight(true)
-      strafer:setVisible(true)
-      strafer:control(true)
-      strafer:follow( player.pilot() )
-      camera.set( strafer )
-
-      prox = hook.timer(500, "proximity", {anchor = strafer, radius = 2000, funcname = "straferDiscuss", focus = player.pilot()})
       rmScanHooksRaw()
-      firstBloc = false -- TODO: see it it's understandable that one should wait for strafer
+      firstBloc = false
+      hook.timer(4000, "spawnStrafer")
    end
+end
+
+-- Strafer enters the system
+function spawnStrafer()
+   strafer = pilot.add("Trader Gawain")[1]
+   strafer:setHilight(true)
+   strafer:setVisible(true)
+   strafer:control(true)
+   strafer:follow( player.pilot() )
+   camera.set( strafer )
+   prox = hook.timer(500, "proximity", {anchor = strafer, radius = 2000, funcname = "straferDiscuss", focus = player.pilot()})
 end
 
 -- The player discuss with Strafer
@@ -691,7 +716,7 @@ function straferDiscuss()
    player.cinematics(false)
    player.pilot():control(false)
 
-   tk.msg(info_title, info_text:format( zlk_list[1], zlk_list[2], zlk_list[3], zlk_list[4] ) ) -- TODO: change the text: there is no hail
+   tk.msg(info_title, info_text:format( zlk_list[1], zlk_list[2], zlk_list[3], zlk_list[4] ) )
    strafer:control(false)  -- Strafer stops following the player
 
    -- Add some fuel, far away so that no npc gathers it
@@ -735,16 +760,16 @@ end
 function hailMe()
    hook.rm(hailie)
    player.commClose()
-   tk.msg( imperial_title1, imperial_text1:format(player.name(),player.name()) ) -- TODO maybe: add info that the Empire won't be happy if you decline their offer
+   tk.msg( imperial_title1, imperial_text1:format(player.name(),player.name()) )
    stage = 5
 end
 
 -- Discuss with the Pirate or Imperial agent
 function pirateDealer()
-   local c = tk.choice(pirate_title, pirate_text2:format(price), pir_yes_answer, pir_debt_answer, pir_no_answer)
+   local c = tk.choice(pirate_title, pirate_text2:format(numstring(pirate_price)), pir_yes_answer, pir_debt_answer, pir_no_answer)
    if c == 1 then
-      if player.credits() >= price then
-         player.pay(-price)
+      if player.credits() >= pirate_price then
+         player.pay(-pirate_price)
          tk.msg(pir_yes_title,pir_yes_text)
          misn.osdDestroy()
          misn.osdCreate( osd_title, {osd_msg7:format(reppla:name(),repsys:name())} )
@@ -763,7 +788,7 @@ function pirateDealer()
       tk.msg(pir_no_title,pir_no_text)
    end
 end
-function imperialAgent() -- TODO: shorter the second time ?
+function imperialAgent()
    if tk.yesno(imperial_title2, imperial_text2:format(player.name())) then
       tk.msg(imp_yes_title,imp_yes_text)
       misn.osdDestroy()
@@ -786,14 +811,4 @@ function abort()
       stand1 = fzlk:playerStanding()
       fzlk:modPlayerRaw( stand0-stand1 )
    end
-end
-
--- Test if an element is in a list
-function elt_inlist( elt, list )
-   for i, elti in ipairs(list) do
-      if elti == elt then
-         return i
-      end
-   end
-   return 0
 end

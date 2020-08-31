@@ -9,9 +9,12 @@
 -- TODO: at some point before, it should have been suggested that it's a bad idea to try to betray Klank
 -- TODO: see chance for this event
 
+require "dat/missions/dvaered/frontier_war/fw_common.lua"
+
 yesno_title = _("You are needed for a special job")
-yesno_text = _([[The pilot of the fighter uses the encrypted canal: "I have finally found you, %s. Better late than never. My employers want to congratulate you about how effective you have been with Lord Battleaddict. I am afraid there won't be many people to regret him." You answer that you don't know what it is about, and that as far as you know, Lord Battleaddict has been killed in a loyal duel by the General Klank. The interlocutor laughs "You're playing your part, eh? I can understand you, after all, they pay you well... Wait, no, they don't pay well. Not at all! How much was it for risking your life twice with this EMP bomb trick? %d? Haw haw haw! You can make better money with a cargo mission!
-   "Now, let's talk seriously: you want money and I want a pilot. We're made to get along, you and me! I need you for a special task. I won't deny it implies going against the interests of General Klank and Major Tam and co, but if you do it well, they won't ever know that you are implied, and you'll recieve %d credits in the process. Oh yes, that's different from what you're used for! What do you say?"]])
+yesno_text = _([[The pilot of the fighter uses the encrypted canal: "I have finally found you, %s. Better late than never. My employers want to congratulate you about how effective you have been with Lord Battleaddict. I am afraid there won't be many people to regret him." You answer that you don't know what it is about, and that as far as you know, Lord Battleaddict has been killed in a loyal duel by the General Klank. The interlocutor laughs "You're playing your part, eh? I can understand you, after all, they pay you well... Wait, no, they don't pay well. Not at all! How much was it for risking your life twice with this EMP bomb trick? %s? Haw haw haw! You can make better money with a cargo mission!
+   "I've even heard that once, they paid you with gauss guns! Those guys are so pityful, aren't they?
+   "Now, let's talk seriously: you want money and I want a pilot. We're made to get along, you and me! I need you for a special task. I won't deny it implies going against the interests of General Klank and Major Tam and co, but if you do it well, they won't ever know that you are implied, and you'll recieve %s credits in the process. Oh yes, that's different from what you're used for! What do you say?"]])
 
 yes_answer = _("Accept the offer")
 no_answer =  _("Refuse and miss an unique opportunity")
@@ -40,11 +43,13 @@ loyal_answer = _("Money is not important, captain")
 traitor_title = _("You tried to betray us")
 traitor_text = _([[As you land, you see the Captain Leblanc at the dock and she reprimands you: "It was a trap, %s. The fact that you fell in it proves that you are disloyal. Disloyal and stupid by the way, as the trap was quite obvious if I may add. And the High Command can not afford to work with disloyal and stupid people. With regards to how well you have helped us in the past, we will exceptionally let you live, but don't expect us to entrust you any more!"]])
 
+log_text_loyal   = _("Major Tam and Captain Leblanc, from the DHC, have tested your loyalty to the General Klank. The test has proven to be conclusive, and Leblanc revealed to you that they will soon need your services in the framework of the preparation of the invasion of the Frontier.")
+log_text_traitor = _("Major Tam and Captain Leblanc, from the DHC, have tested your loyalty to the General Klank... and you miserably failed. By chance, they did ton kill you, but you'll have to find out others employers.")
 
-cred01 = 50000
-credits = 2000000 -- TODO: use M and K
+credits = 2000000
 
--- Starts at previous system
+
+-- Start at previous system
 function create ()
    source_system = system.cur()
    jumphook = hook.jumpin("begin")
@@ -85,7 +90,7 @@ end
 -- Player answers to hail
 function hail()
    player.commClose()
-   local c = tk.choice(yesno_title, yesno_text:format(player.name(),cred01,credits), yes_answer, no_answer)
+   local c = tk.choice(yesno_title, yesno_text:format(player.name(),numstring(credits_01),numstring(credits)), yes_answer, no_answer)
    if c == 1 then
       tk.msg(accept_title, accept_text:format(targetsys:name()))
       stage = 1
@@ -102,6 +107,8 @@ function reaction()
    if stage == 1 then -- Traitor
       tk.msg(traitor_title, traitor_text:format(player.name()), "portraits/dvaered/dv_military_f8.png")
       var.push( "loyal2klank", false )
+      shiplog.createLog( "dv_klank_treason", _("Dvaered Military Coordination"), _("Dvaered") )
+      shiplog.appendLog( "dv_klank_treason", log_text_traitor )
       evt.finish(true)
    else -- Loyal
       tk.choice(loyal_title, loyal_text1:format(player.name()), money_answer, loyal_answer) -- Actually we don't care of the answer
@@ -109,6 +116,8 @@ function reaction()
       tk.msg(loyal_title, loyal_text3)
       tk.msg(loyal_title, loyal_text4)
       var.push( "loyal2klank", true )
+      shiplog.createLog( "fwA", _("Dvaered Military Coordination"), _("Dvaered") )
+      shiplog.appendLog( "fwA", log_text_loyal )
       evt.finish(true)
    end
 end

@@ -569,6 +569,9 @@
   <logo>dvaered</logo>
   <colour>brown</colour>
   <longname>Dvaered High Command</longname>
+  <static />
+  <invisible />
+  <known />
   <player>10</player>
   <standing>static</standing>
   <equip>dvaered</equip>
@@ -583,6 +586,9 @@
   <logo>dvaered</logo>
   <colour>brown</colour>
   <longname>Dvaered Warlords</longname>
+  <static />
+  <invisible />
+  <known />
   <player>-10</player>
   <standing>static</standing>
   <equip>dvaered</equip>

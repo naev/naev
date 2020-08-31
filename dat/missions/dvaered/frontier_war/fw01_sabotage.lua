@@ -18,6 +18,8 @@
 require "dat/scripts/nextjump.lua"
 require "proximity.lua"
 require "selectiveclear.lua"
+require "dat/missions/dvaered/frontier_war/fw_common.lua"
+require "numstring.lua"
 
 --TODO: Set the priority and conditions of this mission (should not start at first planet)
 
@@ -101,7 +103,7 @@ duel1_text = _([[Colonel Urnus's ship broadcasts the message: "I, Colonel Urnus,
 
 epilogue_title = _("A good thing done")
 epilogue_text = _([[As you approach, the major tells the General Klank that you are the private pilot they had hired recently. "I see," says the general "so you are part of the people I have to thank for still being alive now." You answer that he apparently would not have needed help if Battleaddict had not cheated as well, and he responds: "Damn fake electricians I should have suspected something. Anyway, citizen, be ensured that we will need your services again." A group of generals then approaches and congratulate Klank. He stands up and goes away with them, loudly exchanging dubious pleasantries with them.
-   Major Tam then speaks to you: "Apparently, Battleaddict had got a commando to dress like electricians and to hide an EMP bomb in the General's Goddard, that exploded during the fight, right like our own bomb. And now, both ships have their systems ruined. Well, anyway, thank you for your help, here are %d credits for you!"]])
+   Major Tam then speaks to you: "Apparently, Battleaddict had got a commando to dress like electricians and to hide an EMP bomb in the General's Goddard, that exploded during the fight, right like our own bomb. And now, both ships have their systems ruined. Well, anyway, thank you for your help, here are %s credits for you!"]])
 
 
 phalanx_comm_fight = _("You made a very big mistake!")
@@ -157,12 +159,11 @@ misn_reward = _("Focus on the mission, pilot.")
 log_text = _("Major Tam's superior, General Klank, made a Goddard duel with Lord Battleaddict. You took part to an operation to sabotage Battleaddict's cruiser. Lord Battleaddict made sabotage Klank's cruiser as well, but at the end of the day, General Klank won the duel.")
 
 bombMass = 100
-credits = 50000
 
 
 function create()
    hampla, hamsys     = planet.get("Morgan Station")
-   sabotpla, sabotsys = planet.get("Buritt")
+   sabotpla, sabotsys = planet.get(wlrd_planet)
    duelpla, duelsys   = planet.get("Dvaer Prime")
    intpla, intsys     = planet.get("Timu")
 
@@ -223,7 +224,7 @@ function hamfresser()
       misn.markerRm(mark)
       misn.osdActive(2)
       mark = misn.markerAdd(sabotsys, "low")
-      player.takeoff() -- TODO: takeoff at loading as well
+      player.takeoff()
    else
       tk.msg(not_title, not_text:format(bombMass))
    end
@@ -454,8 +455,7 @@ end
 -- Decide if the Phalanx flees or fight
 function phalanx_attacked()
    hook.rm(pattacked)
-   --if weakerThanPlayer(p) then
-   if true then
+   if playerMoreThanCorvette() then
       p:taskClear()
       p:comm( phalanx_comm_flee )
       p:runaway(player.pilot())
@@ -492,13 +492,6 @@ end
 function phalanx_safe()
    tk.msg( pesc_title, pesc_text )
    misn.finish(false)
-end
-
--- TODO: base it on ship class otherwise, it incitates the player to sabotage their own firepower
-function weakerThanPlayer( target_ship )
-   pstat = player.pilot():stats()
-   tstat = target_ship:stats()
-   return ( ((pstat.armour + pstat.shield)) > (tstat.armour + tstat.shield) ) 
 end
 
 function majorTam()
@@ -633,9 +626,10 @@ end
 
 -- Epilogue
 function endMisn()
-   tk.msg( epilogue_title, epilogue_text:format(credits) )
-   player.pay(credits)
-   shiplog.createLog( "frontier_war", _("Dvaered Military Coordination"), _("Dvaered") ) --TODO: create a common file for this TODO: see if it's possible to rename it afterwards
-   shiplog.appendLog( "frontier_war", log_text )
+   tk.msg( epilogue_title, epilogue_text:format(numstring(credits_01)) )
+   player.pay(credits_01)
+   shiplog.createLog( "fw01", _("Dvaered Military Coordination"), _("Dvaered") )
+   shiplog.appendLog( "fw01", log_text )
+   var.push( "loyal2klank", false ) -- This ensures the next mission will be avaliable only once the traitor event is done
    misn.finish(true)
 end

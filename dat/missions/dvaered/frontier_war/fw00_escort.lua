@@ -18,6 +18,8 @@
 require "dat/scripts/nextjump.lua"
 require "proximity.lua"
 require "selectiveclear.lua"
+require "dat/missions/dvaered/frontier_war/fw_common.lua"
+require "numstring.lua"
 
 portrait_name = _("Dvaered officer")
 portrait_desc = _("This Dvaered senior officer could be looking for a pilot for hire. Why else would he stay at this bar?")
@@ -64,7 +66,7 @@ ready_title = _("Major Tam is ready")
 ready_text = _([["Anyway, citizen, if you want to take off, I'm ready."]])
 
 end_title = _("Thank you, citizen")
-end_text = _([[As you land, Major Tam greets you at the spaceport. "After the losses they got today, I doubt those mercenaries will come back at me before long. I need to report back at the Dvaer High Command station in Dvaer, and I don't need anymore escort. Meanwhile, please recieve those %d credits."]])
+end_text = _([[As you land, Major Tam greets you at the spaceport. "After the losses they got today, I doubt those mercenaries will come back at me before long. I need to report back at the Dvaer High Command station in Dvaer, and I don't need anymore escort. Oh, and, err... about the payment, I am afraid there is a little setback..." You start getting afraid he would try not to pay you, but he continues: "I don't know why, but the High Command has not credited the payment account yet... Well do you know what we are going to do? I will give you a set of %s credits worth Gauss Gun! One always needs Gauss Guns, no?"]])
 
 explain_title = _("That was really close!")
 explain_text = _([[You send a message to Major Tam to ask if you are safe now. "I think so" he answers, "Lord Battleaddict's troops won't follow us if we head to %s at once as the planet belongs to his deadliest enemy, Lady Pointblank." As you ask to him what happened, he answers: "You know, don't let Lord Battleaddict's reaction mislead you. He is not a bad person, he is just... hem... a bit old school. He is not in par with the ideas of the new generation of generals at Dvaered High Command, and wanted to make his point clear."
@@ -97,19 +99,13 @@ osd_msg4 = _("Land on %s")
 misn_desc = _("You agreed to escort a senior officer of the Dvaered High Command who is visiting three warlords.")
 misn_reward = _("Dvaered never talk about money.")
 
-credits = 100000
 
 function create()
-   destsys1 = system.get("Tarsus")
-   destsys2 = system.get("Ginger")
-   destsys3 = system.get("Dvaer")
+   destpla1, destsys1 = planet.get("Ginni")
+   destpla2, destsys2 = planet.get(wlrd_planet)
+   destpla3, destsys3 = planet.get("Laarss")
 
-   destpla1 = planet.get("Ginni")
-   destpla2 = planet.get("Buritt")
-   destpla3 = planet.get("Laarss")
-
-   fleesys = system.get("Awowa")
-   fleepla = planet.get("Odonga m1")
+   fleepla, fleesys = planet.get("Odonga m1")
 
    if not misn.claim ( {destsys1, destsys2, destsys3} ) then
       misn.finish(false)
@@ -312,10 +308,14 @@ function land() -- The player is only allowed to land on special occasions
       misn.markerRm(mark2)
       mark3 = misn.markerAdd(destsys3, "low")
    elseif stage == 8 then
-      shiplog.createLog( "frontier_war", _("Dvaered Military Coordination"), _("Dvaered") ) --TODO: create a common file for this TODO: see if it's possible to rename it afterwards
-      shiplog.appendLog( "frontier_war", log_text )
-      tk.msg(end_title, end_text:format(credits))
-      player.pay(credits)
+      shiplog.createLog( "fw00", _("Dvaered Military Coordination"), _("Dvaered") )
+      shiplog.appendLog( "fw00", log_text )
+      tk.msg(end_title, end_text:format(numstring(credits_00)))
+
+      -- Major Tam gives Gauss Guns instead of credits, because Major Tam is a freak.
+      GGprice = outfit.get("Gauss Gun"):price()
+      nb = math.floor(credits_00/GGprice+0.5)
+      player.addoutfit("Gauss Gun", nb)
       misn.finish(true)
    else
       tk.msg(flee_title, flee_text)
@@ -423,20 +423,20 @@ function hamelsenAmbush()
 
    jp     = jump.get(system.cur(), previous)
    ambush = {}
-   for i = 1, 3 do
+   for i = 1, 2 do
       x = 1000 * rnd.rnd() + 1000
       y = 1000 * rnd.rnd() + 1000
       pos = jp:pos() + vec2.new(x,y)
 
-      ambush[i] = pilot.addRaw( "Hyena", "baddie_norun", pos, "Warlords" ) -- TODO: maybe 2 Lancelots instead
+      ambush[i] = pilot.addRaw( "Lancelot", "baddie_norun", pos, "Warlords" )
       ambush[i]:setHostile()
       hook.pilot(ambush[i], "death", "ambushDied")
       hook.pilot(ambush[i], "land", "ambushDied")
       hook.pilot(ambush[i], "jump", "ambushDied")
    end
 
-   x = 1000 * rnd.rnd() + 1000
-   y = 1000 * rnd.rnd() + 1000
+   x = 1000 * rnd.rnd() + 2000
+   y = 1000 * rnd.rnd() + 2000
    pos = jp:pos() + vec2.new(x,y)
    hamelsen = pilot.addRaw( "Shark", "baddie_norun", pos, "Warlords" )
 
