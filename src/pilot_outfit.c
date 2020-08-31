@@ -94,7 +94,7 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
    locked = (o->u.ammo.lockon_timer < 0.);
 
    /* Lower timer. When the timer reaches zero, the lock is established. */
-   max = -o->outfit->u.lau.lockon/3.;
+   max = -o->outfit->u.lau.lockon/3. * p->stats.launch_lockon;
    if (o->u.ammo.lockon_timer > max) {
       /* Compensate for enemy hide factor. */
       o->u.ammo.lockon_timer -= dt * (o->outfit->u.lau.ew_target2 / t->ew_hide);
@@ -461,12 +461,12 @@ int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s )
 }
 //TODO: fix comment to conform to Naev's style and represent changes
 /**
- * @brief Pilot slot sanity check - makes sure stats are sane.
+ * @brief Pilot slot safety check - makes sure stats are safe.
  *
  *    @param p Pilot to check.
  *    @return 0 if a slot doesn't fit, !0 otherwise.
  */
-int pilot_slotsCheckSanity( Pilot *p )
+int pilot_slotsCheckSafety( Pilot *p )
 {
    int i;
    for (i=0; i<p->noutfits; i++)
@@ -502,14 +502,14 @@ int pilot_slotsCheckRequired( Pilot *p )
 }
 //TODO: fix comment to conform to Naev's style and represent change
 /**
- * @brief Pilot sanity check - makes sure stats are sane.
+ * @brief Pilot safety check - makes sure stats are safe.
  *
  *    @param p Pilot to check.
- *    @return The reason why the pilot is not sane (or NULL if sane).
+ *    @return The reason why the pilot is not safe (or NULL if safe).
  */
 const char* pilot_checkSpaceworthy( Pilot *p )
 {
-   if (!pilot_slotsCheckSanity(p))
+   if (!pilot_slotsCheckSafety(p))
       return _("Doesn't fit slot");
 
    /* CPU. */
@@ -554,7 +554,7 @@ const char* pilot_checkSpaceworthy( Pilot *p )
    return NULL;
 }
 /**
- * @brief Pilot sanity report - makes sure stats are sane.
+ * @brief Pilot safety report - makes sure stats are safe.
  *
  *    @param p Pilot to check.
  *    @param buf Buffer to fill.
@@ -715,7 +715,7 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity 
    s->u.ammo.outfit    = ammo;
 
    /* Add the ammo. */
-   max                 = outfit_amount(s->outfit) - s->u.ammo.deployed;
+   max                 = pilot_maxAmmoO(pilot,s->outfit) - s->u.ammo.deployed;
    q                   = s->u.ammo.quantity; /* Amount have. */
    s->u.ammo.quantity += quantity;
    s->u.ammo.quantity  = MIN( max, s->u.ammo.quantity );
@@ -814,7 +814,24 @@ int pilot_maxAmmo( Pilot* pilot )
         continue;
      max += outfit->u.lau.amount;
   }
+  max = round( (double)max * pilot->stats.ammo_capacity );
   return max;
+}
+
+
+/**
+ * @brief Gets the maximum available ammo for a pilot for a specific outfit.
+ */
+int pilot_maxAmmoO( const Pilot* p, const Outfit *o )
+{
+   int max;
+   if (outfit_isLauncher(o))
+      max = round( (double)o->u.lau.amount * p->stats.ammo_capacity );
+   else if (outfit_isFighterBay(o))
+      max = o->u.bay.amount;
+   else
+      max = 0;
+   return max;
 }
 
 
@@ -841,10 +858,10 @@ void pilot_fillAmmo( Pilot* pilot )
          continue;
 
       /* Initial (raw) ammo threshold */
-      ammo_threshold = o->u.lau.amount;
+      ammo_threshold = pilot_maxAmmoO( pilot, o );
 
       /* Adjust for deployed fighters if needed */
-      if ( outfit_isFighterBay( o ) )
+      if (outfit_isFighterBay( o ))
          ammo_threshold -= pilot->outfits[i]->u.ammo.deployed;
 
       /* Add ammo. */
@@ -970,6 +987,9 @@ void pilot_calcStats( Pilot* pilot )
       if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
          continue;
 
+      /* Add stats. */
+      ss_statsModFromList( s, o->stats, &amount );
+
       if (outfit_isMod(o)) { /* Modification */
          /* Movement. */
          pilot->thrust_base   += o->u.mod.thrust;
@@ -990,10 +1010,6 @@ void pilot_calcStats( Pilot* pilot )
          pilot->cap_cargo     += o->u.mod.cargo;
          pilot->mass_outfit   += o->u.mod.mass_rel * pilot->ship->mass;
          pilot->crew          += o->u.mod.crew_rel * pilot->ship->crew;
-         /*
-          * Stats.
-          */
-         ss_statsModFromList( s, o->u.mod.stats, &amount );
 
       }
       else if (outfit_isAfterburner(o)) { /* Afterburner */
@@ -1022,6 +1038,10 @@ void pilot_calcStats( Pilot* pilot )
    /* Cruiser. */
    if (amount.tur_firerate > 0) {
       s->tur_firerate = default_s->tur_firerate + (s->tur_firerate-default_s->tur_firerate) * exp( -0.15 * (double)(MAX(amount.tur_firerate-1.,0)) );
+   }
+   /* Launchers. */
+   if (amount.launch_rate > 0) {
+      s->launch_rate = default_s->launch_rate + (s->launch_rate-default_s->launch_rate) * exp( -0.15 * (double)(MAX(amount.launch_rate-1.,0)) );
    }
    /*
     * Electronic warfare setting base parameters.
@@ -1061,6 +1081,12 @@ void pilot_calcStats( Pilot* pilot )
    /*
     * Flat increases.
     */
+   pilot->armour_max   += s->armour_flat;
+   pilot->armour       += s->armour_flat;
+   pilot->armour_regen -= s->armour_damage;
+   pilot->shield_max   += s->shield_flat;
+   pilot->shield       += s->shield_flat;
+   pilot->shield_regen -= s->shield_usage;
    pilot->energy_max   += s->energy_flat;
    pilot->energy       += s->energy_flat;
    pilot->energy_regen -= s->energy_usage;
@@ -1131,7 +1157,7 @@ void pilot_updateMass( Pilot *pilot )
 /* limit the maximum speed if limiter is active */
    if (pilot_isFlag(pilot, PILOT_HASSPEEDLIMIT)) {
       pilot->speed = pilot->speed_limit - pilot->thrust / (mass * 3.);
-      /* Sanity: speed must never go negative. */
+      /* Speed must never go negative. */
       if (pilot->speed < 0.) {
          /* If speed DOES go negative, we have to lower thrust. */
          pilot->thrust = 3 * pilot->speed_limit * mass;

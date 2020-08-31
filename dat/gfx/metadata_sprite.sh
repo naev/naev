@@ -7,7 +7,7 @@ TMPFILE="/tmp/tmpfile.npngcrush"
 SX="$2"
 SY="$3"
 
-# Sanity checks
+# Safety checks
 if [ -z $FILE ] || [ $SX -le 0 ] || [ $SY -le 0 ]; then
    echo "Usage is: $0 image sx sy"
    exit 1

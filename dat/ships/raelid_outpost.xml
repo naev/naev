@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Raelid Outpost">
  <base_type>Raelid Outpost</base_type>
  <gfx_space sx="1" sy="1">planet/space/002.png</gfx_space>
@@ -10,7 +10,7 @@
  <time_mod>1</time_mod>
  <fabricator>N/A</fabricator>
  <description>This is a base. It's for AI use only. Don't buy it. Seriously.</description>
- <mission/>
+ <mission />
  <movement>
   <thrust>1</thrust>
   <turn>100</turn>
@@ -34,14 +34,14 @@
   <cargo>5000</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="0" y="0" h="5"/>
-  <weapon size="large" x="0" y="0" h="5"/>
-  <weapon size="large" x="0" y="0" h="5"/>
-  <weapon size="large" x="0" y="0" h="5"/>
-  <weapon size="large" x="0" y="0" h="5"/>
-  <weapon size="large" x="0" y="0" h="5"/>
-  <weapon size="large" x="0" y="0" h="5"/>
-  <weapon size="large" x="0" y="0" h="5"/>
+  <weapon size="large" x="0" y="0" h="5" />
+  <weapon size="large" x="0" y="0" h="5" />
+  <weapon size="large" x="0" y="0" h="5" />
+  <weapon size="large" x="0" y="0" h="5" />
+  <weapon size="large" x="0" y="0" h="5" />
+  <weapon size="large" x="0" y="0" h="5" />
+  <weapon size="large" x="0" y="0" h="5" />
+  <weapon size="large" x="0" y="0" h="5" />
   <utility size="large" prop="systems" exclusive="1" required="1">Dummy Systems</utility>
   <structure size="large" prop="engines" exclusive="1" required="1">Dummy Engine</structure>
   <structure size="large" prop="hull" exclusive="1" required="1">Dummy Plating</structure>

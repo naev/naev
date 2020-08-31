@@ -1,4 +1,19 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Animal transport">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <chance>10</chance>
+   <location>Bar</location>
+   <faction>Sirius</faction>
+   <cond>planet.cur():class() ~= "0" and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3"</cond>
+  </avail>
+ </mission>
+ --]]
+--[[
 --
 -- MISSION: Animal transport
 -- DESCRIPTION: A man asks you to transport a crate of specially bred creatures for

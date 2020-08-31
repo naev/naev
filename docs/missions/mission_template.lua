@@ -1,4 +1,17 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Mission Template (mission name goes here)">
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>5</chance>
+  <location>Bar</location>
+ </avail>
+</mission>
+--]]
+--[[
 
    Mission Template (mission name goes here)
 
@@ -72,12 +85,6 @@ are portions that will be filled in later by the mission via the
 --]]
 ask_text = _([[As you approach the guy, he looks up in curiosity. You sit down and ask him how his day is. "Why, fine," he answers. "How are you?" You answer that you are fine as well and compliment him on his suit, which seems to make his eyes light up. "Why, thanks! It's my favorite suit! I had it custom tailored, you know.
     "Actually, that reminds me! There was a special suit on %s in the %s system, the last one I need to complete my collection, but I don't have a ship. You do have a ship, don't you? So I'll tell you what, give me a ride and I'll pay you %s for it! What do you say?"]])
-
--- OSD description. Leave empty for now; we will modify this later.
--- However, we will set "__save" to true; this will prevent it from
--- being reset when the player quits and resumes the game.
-osd_desc = {}
-osd_desc["__save"] = true
 
 
 --[[ 
@@ -158,6 +165,7 @@ function accept ()
       misn.markerAdd( missys, "low" )
 
       -- The OSD shows your objectives.
+      local osd_desc = {}
       osd_desc[1] = _("Fly to %s in the %s system"):format( misplanet:name(), missys:name() )
       misn.osdCreate( _("Suits Me Fine"), osd_desc )
 

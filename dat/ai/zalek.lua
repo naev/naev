@@ -57,7 +57,6 @@ function taunt ( target, offense )
       return
    end
 
-   -- XXX: Put something stupid instead of the Sirian taunts
    if offense then
       taunts = {
          _("Move drones in to engage. Cook this clown!"),

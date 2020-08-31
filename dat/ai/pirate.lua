@@ -40,7 +40,7 @@ function create ()
             _("\"Your money or your life. %d credits and make the choice quickly.\""),
             _("\"Money talks bub. %d up front or get off my channel.\""),
             _("\"Shut up and give me your money! %d credits now.\""),
-            _("\"You're either really stupid to be chatting or really rich. %d or shut up.\""),
+            _("\"You're either really desperate or really rich. %d or shut up.\""),
             _("\"If you're willing to negotiate I'll gladly take %d credits to not kill you.\""),
             _("\"You give me %d credits and I'll act like I never saw you.\""),
             _("\"So this is the part where you pay up or get shot up. Your choice. What'll be, %d or...\""),

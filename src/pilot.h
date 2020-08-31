@@ -482,6 +482,10 @@ void pilot_cooldownEnd( Pilot *p, const char *reason );
 double pilot_aimAngle( Pilot *p, Pilot *target );
 
 
+/* Outfits */
+int pilot_numOutfit( const Pilot *p, const Outfit *o );
+
+
 /* Misc. */
 int pilot_hasCredits( Pilot *p, credits_t amount );
 credits_t pilot_modCredits( Pilot *p, credits_t amount );

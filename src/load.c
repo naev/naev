@@ -634,8 +634,8 @@ int load_game( const char* file, int version_diff )
    shiplog_new();
    shiplog_load(node);
    
-   /* Check sanity. */
-   event_checkSanity();
+   /* Check validity. */
+   event_checkValidity();
 
    /* Run the load event trigger. */
    events_trigger( EVENT_TRIGGER_LOAD );

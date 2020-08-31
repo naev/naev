@@ -815,7 +815,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          /* Load the polygon. */
          ship_loadPLG( temp, buf );
 
-         /* Sanity check: there must be 1 polygon per sprite. */
+         /* Validity check: there must be 1 polygon per sprite. */
          if (temp->npolygon != sx*sy) {
             WARN(_("Ship '%s': the number of collision polygons is wrong.\n \
                     npolygon = %i and sx*sy = %i"),
@@ -1050,7 +1050,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          continue;
       }
 
-      /* Used by in-sanity and NSH utils, no in-game meaning. */
+      /* Used by in-valid and NSH utils, no in-game meaning. */
       if (xml_isNode(node,"mission"))
          continue;
 
@@ -1105,7 +1105,7 @@ int ships_load (void)
    xmlNodePtr node;
    xmlDocPtr doc;
 
-   /* Sanity. */
+   /* Validity. */
    ss_check();
 
    /* Initialize stack if needed. */

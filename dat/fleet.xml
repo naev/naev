@@ -1122,6 +1122,20 @@
    <pilot name="Thurion Certitude" ship="Thurion Certitude"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Ghost Ship">
+  <ai>thurion</ai>
+  <faction>Thurion</faction>
+  <pilots>
+   <pilot name="Ghost Ship" ship="Thurion Ingenuity"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Nebula Research Shuttle">
+  <ai>zalek</ai>
+  <faction>Za'lek</faction>
+  <pilots>
+   <pilot name="Nebula Research Shuttle" ship="Rhino"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Sirius Recon Force">
   <ai>sirius</ai>
   <faction>Sirius</faction>

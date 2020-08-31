@@ -246,7 +246,7 @@ void equipment_open( unsigned int wid )
    else
       memset( iar_data, 0, sizeof(iar_data_t) * OUTFIT_TABS );
 
-   /* Sane defaults. */
+   /* Safe defaults. */
    equipment_lastick    = SDL_GetTicks();
    equipment_dir        = 0.;
    eq_wgt.selected      = NULL;
@@ -786,6 +786,8 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    pos = nsnprintf( alt, sizeof(alt),
          "%s",
          o->name );
+   if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
+      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aRUnique\a0") );
    if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
       pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aRSlot %s\a0"),
             sp_display( o->slot.spid ) );
@@ -1117,7 +1119,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
    /* Update weapon sets if needed. */
    if (eq_wgt.selected->autoweap)
       pilot_weaponAuto( eq_wgt.selected );
-   pilot_weaponSane( eq_wgt.selected );
+   pilot_weaponSafe( eq_wgt.selected );
 
    /* Notify GUI of modification. */
    gui_setShip();
@@ -1216,7 +1218,7 @@ void equipment_addAmmo (void)
    /* Update weapon sets if needed. */
    if (p->autoweap)
       pilot_weaponAuto( p );
-   pilot_weaponSane( p );
+   pilot_weaponSafe( p );
 
    /* Notify GUI of modification. */
    gui_setShip();
@@ -1261,8 +1263,8 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
             case OUTFIT_TYPE_LAUNCHER:
             case OUTFIT_TYPE_TURRET_LAUNCHER:
                mod_energy = 1.;
-               mod_damage = 1.;
-               mod_shots  = 1.; /* @todo Should be: 2. - s>stats.launch_rate */
+               mod_damage = s->stats.launch_damage;
+               mod_shots  = 2. - s->stats.launch_rate;
                break;
             case OUTFIT_TYPE_BEAM:
             case OUTFIT_TYPE_TURRET_BEAM:
@@ -1828,7 +1830,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
    /* Update weapon sets if needed. */
    if (ship->autoweap)
       pilot_weaponAuto( ship );
-   pilot_weaponSane( ship );
+   pilot_weaponSafe( ship );
 
    /* Notify GUI of modification. */
    gui_setShip();

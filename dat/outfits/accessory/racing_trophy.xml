@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Racing Trophy">
+ <general>
+  <unique/>
+  <typename>Accessory</typename>
+  <slot prop="accessory">utility</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>0</mass>
+  <price>1000000</price>
+  <description>Racing trophy you won with your excellent piloting skills. Looks great on the wall!</description>
+  <gfx_store>placeholder</gfx_store>
+ <rarity>6</rarity></general>
+ <specific type="modification">
+  <turn_mod>5</turn_mod>
+  <speed_mod>5</speed_mod>
+  <thrust_mod>5</thrust_mod>
+ </specific>
+</outfit>

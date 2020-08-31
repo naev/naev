@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Goddard">
  <base_type>Goddard</base_type>
  <GFX sx="12" sy="12">goddard</GFX>
@@ -23,27 +23,28 @@
   <cargo>140</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="-10" y="-13" h="2"/>
-  <weapon size="large" x="-10" y="13" h="2"/>
-  <weapon size="large" x="-15" y="-25" h="3"/>
-  <weapon size="large" x="-15" y="25" h="3"/>
-  <weapon size="large" x="16" y="0" h="3"/>
-  <weapon size="large" x="0" y="0" h="5"/>
-  <weapon size="large" x="-20" y="0" h="5"/>
+  <weapon size="large" x="-10" y="-13" h="2" />
+  <weapon size="large" x="-10" y="13" h="2" />
+  <weapon size="large" x="-15" y="-25" h="3" />
+  <weapon size="large" x="-15" y="25" h="3" />
+  <weapon size="large" x="16" y="0" h="3" />
+  <weapon size="large" x="0" y="0" h="5" />
+  <weapon size="large" x="-20" y="0" h="5" />
   <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-1000 Core System</utility>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
+  <utility size="large" prop="accessory" exclusive="1" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
   <structure size="large" prop="engines" exclusive="1" required="1">Unicorp Eagle 6500 Engine</structure>
   <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-20 Heavy Plating</structure>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
  </slots>
  <stats>
   <speed_mod>-10</speed_mod>

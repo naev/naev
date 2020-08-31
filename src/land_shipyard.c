@@ -106,7 +106,7 @@ void shipyard_open( unsigned int wid )
          SHIP_TARGET_W, SHIP_TARGET_H, "imgTarget", NULL, 1 );
 
    /* slot types */
-   window_addCust( wid, -20, -SHIP_TARGET_H-60, 148, 70, "cstSlots", 0.,
+   window_addCust( wid, -20, -SHIP_TARGET_H-55, 148, 80, "cstSlots", 0.,
          shipyard_renderSlots, NULL, NULL );
 
    /* stat text */
@@ -384,7 +384,7 @@ static void shipyard_buy( unsigned int wid, char* str )
 }
 
 /**
- * @brief Makes sure it's sane to buy a ship.
+ * @brief Makes sure it's valid to buy a ship.
  *    @param shipname Ship being bought.
  */
 int shipyard_canBuy ( char *shipname, Planet *planet )
@@ -412,7 +412,7 @@ int shipyard_canBuy ( char *shipname, Planet *planet )
 }
 
 /**
- * @brief Makes sure it's sane to sell a ship.
+ * @brief Makes sure it's valid to sell a ship.
  *    @param shipname Ship being sold.
  */
 int can_sell( char* shipname )
@@ -427,7 +427,7 @@ int can_sell( char* shipname )
 }
 
 /**
- * @brief Makes sure it's sane to change ships.
+ * @brief Makes sure it's valid to change ships.
  *    @param shipname Ship being changed to.
  */
 int can_swap( char* shipname )
@@ -455,7 +455,7 @@ int can_swap( char* shipname )
 
 
 /**
- * @brief Makes sure it's sane to buy a ship, trading the old one in simultaneously.
+ * @brief Makes sure it's valid to buy a ship, trading the old one in simultaneously.
  *    @param shipname Ship being bought.
  */
 int shipyard_canTrade( char* shipname )
@@ -568,7 +568,7 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
    y = by + bh;
 
    /* Draw rotated text. */
-   y -= 10;
+   y -= 10+5;
    gl_print( &gl_smallFont, bx, y, &cFontWhite, _("Slots:") );
 
    x = bx + 10.;
@@ -611,5 +611,11 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str,
 
       x += 15.;
       toolkit_drawRect( x, by, 10, 10, c, NULL );
+
+      /* Add colour stripe depending on required/exclusiveness. */
+      if (s[i].required)
+         toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cFontRed );
+      else if (s[i].exclusive)
+         toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cDRestricted );
    }
 }

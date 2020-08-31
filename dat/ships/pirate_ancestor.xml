@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pirate Ancestor">
  <base_type>Ancestor</base_type>
  <GFX>ancestor_pirate</GFX>
@@ -22,16 +22,17 @@
   <cargo>10</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="8" y="0" h="0"/>
-  <weapon size="medium" x="8" y="0" h="0"/>
-  <weapon size="small" x="-2" y="9" h="-1"/>
-  <weapon size="small" x="-2" y="-9" h="-1"/>
+  <weapon size="medium" x="8" y="0" h="0" />
+  <weapon size="medium" x="8" y="0" h="0" />
+  <weapon size="small" x="-2" y="9" h="-1" />
+  <weapon size="small" x="-2" y="-9" h="-1" />
   <utility size="small" prop="systems" exclusive="1" required="1">Previous Generation Small Systems</utility>
-  <utility size="small"/>
-  <utility size="small"/>
+  <utility size="small" prop="accessory" exclusive="1" />
+  <utility size="small" />
+  <utility size="small" />
   <structure size="small" prop="engines" exclusive="1" required="1">Beat Up Small Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Patchwork Light Plating</structure>
-  <structure size="small"/>
+  <structure size="small" />
  </slots>
  <stats>
   <speed_mod>-10</speed_mod>

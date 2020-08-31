@@ -254,7 +254,7 @@ static void fad_setValue( Widget *fad, double value )
    fad->dat.fad.value  = value * (fad->dat.fad.max - fad->dat.fad.min);
    fad->dat.fad.value += fad->dat.fad.min;
 
-   /* Sanity check. */
+   /* Safety check. */
    fad->dat.fad.value = CLAMP( fad->dat.fad.min, fad->dat.fad.max,
          fad->dat.fad.value );
 

@@ -348,4 +348,3 @@ static int outfitL_price( lua_State *L )
    return 1;
 }
 
-

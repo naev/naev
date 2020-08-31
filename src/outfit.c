@@ -257,27 +257,8 @@ const char *outfit_slotName( const Outfit* o )
 
 
 /**
- * @brief Gets the name of the slot size of an outfit.
- *
- *    @param o Outfit to get slot size of.
- *    @return The human readable name of the slot size.
+ * @brief Gets the slot size as a string.
  */
-const char *outfit_slotSize( const Outfit* o )
-{
-   switch( o->slot.size) {
-      case OUTFIT_SLOT_SIZE_NA:
-         return gettext_noop("N/A");
-      case OUTFIT_SLOT_SIZE_LIGHT:
-         return gettext_noop("Small");
-      case OUTFIT_SLOT_SIZE_MEDIUM:
-         return gettext_noop("Medium");
-      case OUTFIT_SLOT_SIZE_HEAVY:
-         return gettext_noop("Large");
-      default:
-         return gettext_noop("Unknown");
-   }
-}
-
 const char *slotSize( const OutfitSlotSize o )
 {
    switch( o ) {
@@ -292,6 +273,18 @@ const char *slotSize( const OutfitSlotSize o )
       default:
          return gettext_noop("Unknown");
    }
+}
+
+
+/**
+ * @brief Gets the name of the slot size of an outfit.
+ *
+ *    @param o Outfit to get slot size of.
+ *    @return The human readable name of the slot size.
+ */
+const char *outfit_slotSize( const Outfit* o )
+{
+   return slotSize( o->slot.size );
 }
 
 
@@ -1176,7 +1169,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          buf = xml_get(node);
          outfit_loadPLG( temp, buf, 1 );
 
-         /* Sanity check: there must be 1 polygon per sprite. */
+         /* Validity check: there must be 1 polygon per sprite. */
          if (temp->u.blt.npolygon != 36) {
             WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
                     npolygon = %i and sx*sy = %i"),
@@ -1532,7 +1525,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          buf = xml_get(node);
          outfit_loadPLG( temp, buf, 0 );
 
-         /* Sanity check: there must be 1 polygon per sprite. */
+         /* Validity check: there must be 1 polygon per sprite. */
          if (temp->u.amm.npolygon != 36) {
             WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
                     npolygon = %i and sx*sy = %i"),
@@ -1616,8 +1609,8 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 {
    int i;
    xmlNodePtr node;
-   ShipStatList *ll;
    char *buf;
+   ShipStatList *ll;
    node = parent->children;
 
    do { /* load all the data */
@@ -1658,8 +1651,8 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       /* Stats. */
       ll = ss_listFromXML( node );
       if (ll != NULL) {
-         ll->next          = temp->u.mod.stats;
-         temp->u.mod.stats = ll;
+         ll->next    = temp->stats;
+         temp->stats = ll;
          continue;
       }
 
@@ -1708,8 +1701,6 @@ if ((x) != 0) \
 #undef DESC_ADD0
 #undef DESC_ADD_INT
 #undef DESC_ADD
-   /*i +=*/ ss_statsListDesc( temp->u.mod.stats,
-         &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, 1 );
 
    /* More processing. */
    temp->u.mod.turn       *= M_PI / 180.;
@@ -2115,8 +2106,9 @@ static int outfit_parse( Outfit* temp, const char* file )
    xmlNodePtr cur, ccur, node, parent;
    char *prop;
    const char *cprop;
-   int group, m;
+   int group, m, l;
    size_t bufsize;
+   ShipStatList *ll;
    char *buf = ndata_read( file, &bufsize );
 
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
@@ -2154,7 +2146,11 @@ static int outfit_parse( Outfit* temp, const char* file )
             xmlr_strd(cur,"description",temp->description);
             xmlr_strd(cur,"typename",temp->typename);
             xmlr_int(cur,"priority",temp->priority);
-            if (xml_isNode(cur,"gfx_store")) {
+            if (xml_isNode(cur,"unique")) {
+               outfit_setProp(temp, OUTFIT_PROP_UNIQUE);
+               continue;
+            }
+            else if (xml_isNode(cur,"gfx_store")) {
                temp->gfx_store = xml_parseTexture( cur,
                      OUTFIT_GFX_PATH"store/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
                continue;
@@ -2206,6 +2202,22 @@ static int outfit_parse( Outfit* temp, const char* file )
          continue;
       }
 
+      if (xml_isNode(node,"stats")) {
+         cur = node->children;
+         do {
+            xml_onlyNodes(cur);
+            /* Stats. */
+            ll = ss_listFromXML( cur );
+            if (ll != NULL) {
+               ll->next    = temp->stats;
+               temp->stats = ll;
+               continue;
+            }
+            WARN(_("Outfit '%s' has unknown node '%s'"), temp->name, cur->name);
+         } while (xml_nextNode(cur));
+         continue;
+      }
+
       if (xml_isNode(node,"specific")) { /* has to be processed separately */
 
          /* get the type */
@@ -2236,6 +2248,9 @@ static int outfit_parse( Outfit* temp, const char* file )
             free(prop);
          }
 
+         /*
+          * Parse type.
+          */
          if (temp->type==OUTFIT_TYPE_NULL)
             WARN(_("Outfit '%s' is of type NONE"), temp->name);
          else if (outfit_isBolt(temp))
@@ -2265,6 +2280,12 @@ static int outfit_parse( Outfit* temp, const char* file )
             outfit_parseSGUI( temp, node );
          else if (outfit_isLicense(temp))
             outfit_parseSLicense( temp, node );
+
+         /* We add the ship stats to the description here. */
+         if (temp->desc_short) {
+            l = strlen(temp->desc_short);
+            ss_statsListDesc( temp->stats, &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l, 1 );
+         }
 
          continue;
       }
@@ -2535,15 +2556,19 @@ void outfit_free (void)
 {
    int i, j;
    Outfit *o;
+
    for (i=0; i < array_size(outfit_stack); i++) {
       o = &outfit_stack[i];
 
-      /* free graphics */
-      if (outfit_gfx(&outfit_stack[i]))
-         gl_freeTexture(outfit_gfx(&outfit_stack[i]));
+      /* Free graphics */
+      if (outfit_gfx(o))
+         gl_freeTexture(outfit_gfx(o));
 
       /* Free slot. */
       outfit_freeSlot( &outfit_stack[i].slot );
+
+      /* Free stats. */
+      ss_free( o->stats );
 
       if (outfit_isAmmo(o)) {
          /* Free collision polygons. */
@@ -2576,8 +2601,6 @@ void outfit_free (void)
          free(o->u.fig.ship);
       if (outfit_isGUI(o) && o->u.gui.gui)
          free(o->u.gui.gui);
-      if (o->type == OUTFIT_TYPE_MODIFICATION)
-         ss_free( o->u.mod.stats );
       if (outfit_isMap(o)) {
          array_free( o->u.map->systems );
          array_free( o->u.map->assets );

@@ -1,4 +1,15 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Shipwreck">
+  <trigger>enter</trigger>
+  <chance>3</chance>
+  <cond>system.cur():presence("Pirate") &gt; 0</cond>
+  <flags>
+   <unique />
+  </flags>
+ </event>
+ --]]
+--[[
 -- Shipwreck Event
 -- 
 -- Creates a wrecked ship that asks for help. If the player boards it, the event switches to the Space Family mission.

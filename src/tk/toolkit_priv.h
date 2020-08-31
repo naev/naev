@@ -206,6 +206,8 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
 void toolkit_drawScrollbar( int x, int y, int w, int h, double pos );
 void toolkit_drawRect( int x, int y, int w, int h,
                        const glColour* c, const glColour* lc );
+void toolkit_drawTriangle( int x1, int y1, int x2, int y2, int x3, int y3,
+                       const glColour* c );
 void toolkit_drawAltText( int bx, int by, const char *alt );
 
 

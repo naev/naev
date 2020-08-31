@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Hades Torch">
+ <general>
+  <rarity>6</rarity>
+  <unique />
+  <slot>utility</slot>
+  <size>small</size>
+  <mass>10</mass>
+  <price>2000000</price>
+  <description>The Hades Torch would be an exceptional afterburner except for the minor detail that to obtain maximum performance it has a tendency to burn the hull of the ship it is attached too.</description>
+  <gfx_store>afterburner2</gfx_store>
+  <limit>afterburner</limit>
+  <cpu>-6</cpu>
+ </general>
+ <stats>
+  <armour_damage>10</armour_damage>
+ </stats>
+ <specific type="afterburner" group="9">
+  <rumble>0.9</rumble>
+  <sound>afterburner</sound>
+  <sound_off>afb_disengage</sound_off>
+  <thrust>500</thrust>
+  <speed>85</speed>
+  <energy>85</energy>
+  <mass_limit>350</mass_limit>
+  <heatup>20</heatup>
+  <heat_base>500</heat_base>
+  <heat_cap>750</heat_cap>
+ </specific>
+</outfit>

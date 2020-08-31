@@ -1,3 +1,19 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="The Egress">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <done>The Assault</done>
+   <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>The Wringer</planet>
+  </avail>
+ </mission>
+ --]]
 --[[misn title - the egress]]
 --[[this mission begins with the frenetic nasin wanting to escape
    the wringer due to being overwhelmed by house sirius. the player

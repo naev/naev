@@ -1807,7 +1807,7 @@ void pilot_update( Pilot* pilot, const double dt )
    double stress_falloff;
    double efficiency, thrust;
 
-   /* Check target sanity. */
+   /* Check target validity. */
    if (pilot->target != pilot->id) {
       target = pilot_get(pilot->target);
       if (target == NULL)
@@ -1865,6 +1865,8 @@ void pilot_update( Pilot* pilot, const double dt )
 
          /* Initial (raw) ammo threshold */
          ammo_threshold = o->outfit->u.lau.amount;
+         if (outfit_isLauncher(o->outfit))
+            ammo_threshold = round( (double)ammo_threshold * pilot->stats.ammo_capacity );
 
          /* Adjust for deployed fighters if needed */
          if ( outfit_isFighterBay( o->outfit ) )
@@ -2468,6 +2470,21 @@ void pilot_untargetAsteroid( int anchor, int asteroid )
 
 
 /**
+ * @brief Checks to see how many of an outfit a pilot has.
+ */
+int pilot_numOutfit( const Pilot *p, const Outfit *o )
+{
+   int i, q;
+   q = 0;
+   for (i=0; i<p->noutfits; i++) {
+      if (p->outfits[i]->outfit == o)
+         q++;
+   }
+   return q;
+}
+
+
+/**
  * @brief Checks to see if the pilot has at least a certain amount of credits.
  *
  *    @param p Pilot to check to see if they have enough credits.
@@ -2542,7 +2559,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* Clear memory. */
    memset(pilot, 0, sizeof(Pilot));
 
-   if (pilot_isFlagRaw(flags, PILOT_PLAYER)) /* Set player ID, should probably be fixed to something sane someday. */
+   if (pilot_isFlagRaw(flags, PILOT_PLAYER)) /* Set player ID, should probably be fixed to something better someday. */
       pilot->id = PLAYER_ID;
    else
       pilot->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
@@ -2631,11 +2648,11 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    if (dslot != NULL)
       dslot->u.ammo.deployed++;
 
-   /* Sanity check. */
+   /* Safety check. */
 #ifdef DEBUGGING
    const char *str = pilot_checkSpaceworthy( pilot );
    if (str != NULL)
-      DEBUG( _("Pilot '%s' failed sanity check: %s"), pilot->name, str );
+      DEBUG( _("Pilot '%s' failed safety check: %s"), pilot->name, str );
 #endif /* DEBUGGING */
 
    /* set flags and functions */
@@ -2881,7 +2898,7 @@ void pilot_choosePoint( Vector2d *vp, int *planet, int *jump, int lf, int ignore
       }
    }
 
-   /* Crazy case no landable nor presence, we'll just jump in randomly. */
+   /* Unusual case no landable nor presence, we'll just jump in randomly. */
    if ((nind == 0) && (njumpind==0)) {
       if (guerilla) /* Guerilla ships are created far away in deep space. */
          vect_pset ( vp, 1.5*cur_system->radius, RNGF()*2*M_PI );
@@ -2903,10 +2920,10 @@ void pilot_choosePoint( Vector2d *vp, int *planet, int *jump, int lf, int ignore
 
       /* Random jump in. */
       if ((ind == NULL) || ((RNGF() <= chance) && (jumpind != NULL)))
-         *jump = jumpind[ RNG_SANE(0,njumpind-1) ];
+         *jump = jumpind[ RNG_BASE(0,njumpind-1) ];
       /* Random take off. */
       else if (ind !=NULL && nind != 0) {
-         *planet = cur_system->planets[ ind[ RNG_SANE(0,nind-1) ] ]->id;
+         *planet = cur_system->planets[ ind[ RNG_BASE(0,nind-1) ] ]->id;
       }
    }
 

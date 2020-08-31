@@ -1,4 +1,18 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Za'lek Shipping Delivery">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <chance>25</chance>
+   <location>Bar</location>
+   <planet>Niflheim</planet>
+  </avail>
+ </mission>
+ --]]
+--[[
 
 Za'lek Cargo Run. adapted from Drunkard Mission
 ]]--

@@ -1121,7 +1121,7 @@ void hook_cleanup (void)
       hook_free( h );
       h = hn;
    }
-   /* sane defaults just in case */
+   /* safe defaults just in case */
    hook_list  = NULL;
 }
 

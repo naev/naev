@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Sirius Reverence">
  <base_type>Reverence</base_type>
  <GFX sx="10" sy="10">preacher</GFX>
@@ -11,7 +11,7 @@
  <fabricator>Sirius Systems</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>A modified version of the more common Preacher, the Reverence is only available to the purest of the pure, those who carry a fraction of the Sirichana's will within themselves. Protected by the best shields money can buy, the Reverence is nevertheless weak in offense.</description>
- <mission/>
+ <mission />
  <movement>
   <thrust>100</thrust>
   <turn>100</turn>
@@ -29,18 +29,19 @@
   <cargo>40</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="15" y="1" h="2"/>
-  <weapon size="medium" x="15" y="-1" h="2"/>
-  <weapon size="small" x="-9" y="-3" h="2"/>
-  <weapon size="small" x="-9" y="3" h="2"/>
+  <weapon size="medium" x="15" y="1" h="2" />
+  <weapon size="medium" x="15" y="-1" h="2" />
+  <weapon size="small" x="-9" y="-3" h="2" />
+  <weapon size="small" x="-9" y="3" h="2" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-500 Core System</utility>
-  <utility size="medium"/>
-  <utility size="medium"/>
-  <utility size="small"/>
+  <utility size="medium" prop="accessory" exclusive="1" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <utility size="small" />
   <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 550 Engine</structure>
   <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-8 Medium Plating</structure>
-  <structure size="medium"/>
-  <structure size="medium"/>
+  <structure size="medium" />
+  <structure size="medium" />
  </slots>
  <stats>
   <armour_mod>400</armour_mod>

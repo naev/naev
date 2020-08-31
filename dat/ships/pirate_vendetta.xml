@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pirate Vendetta">
  <base_type>Vendetta</base_type>
  <GFX>vendetta_pirate</GFX>
@@ -22,17 +22,18 @@
   <cargo>15</cargo>
  </characteristics>
  <slots>
-  <weapon size="small" x="16" y="-9" h="0"/>
-  <weapon size="small" x="16" y="9" h="0"/>
-  <weapon size="small" x="13" y="-13" h="0"/>
-  <weapon size="small" x="13" y="13" h="0"/>
-  <weapon size="small" x="19" y="0" h="-2"/>
-  <weapon size="small" x="3" y="0" h="2"/>
+  <weapon size="small" x="16" y="-9" h="0" />
+  <weapon size="small" x="16" y="9" h="0" />
+  <weapon size="small" x="13" y="-13" h="0" />
+  <weapon size="small" x="13" y="13" h="0" />
+  <weapon size="small" x="19" y="0" h="-2" />
+  <weapon size="small" x="3" y="0" h="2" />
   <utility size="small" prop="systems" exclusive="1" required="1">Previous Generation Small Systems</utility>
-  <utility size="small"/>
+  <utility size="small" prop="accessory" exclusive="1" />
+  <utility size="small" />
   <structure size="small" prop="engines" exclusive="1" required="1">Beat Up Small Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Patchwork Light Plating</structure>
-  <structure size="small"/>
+  <structure size="small" />
  </slots>
  <stats>
   <turn_mod>5</turn_mod>

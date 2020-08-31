@@ -1,3 +1,19 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="The Assault">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <done>The Patrol</done>
+   <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>The Wringer</planet>
+  </avail>
+ </mission>
+ --]]
 --[[misn title - the assault]]
 --[[in this mission, the wringer is assaulted by a full assault fleet
    sent in by the threatened sirius. the player attempts to defend,

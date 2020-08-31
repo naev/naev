@@ -3,7 +3,7 @@
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=80:
 
 __doc__ = """
-A sanity check tool to know where the crap is.
+A validity check tool to know where the crap is.
 
 For usage information, run ``main.py --usage``
 
@@ -251,8 +251,8 @@ class sanitizer:
 if __name__ == "__main__":
 
     parser = ArgumentParser(description="""
-                Naev sanity check v%s.
-                Please, don't go insane.
+                Naev validity check v%s.
+                You are valid.
              """ %  __version__)
     parser.add_argument('--use', '-u',
                         choices=['xml','rawfiles'], default='xml',
@@ -276,8 +276,8 @@ if __name__ == "__main__":
 
     basepath = os.path.abspath(args.basepath)
     luapath = os.path.abspath(basepath + '/dat/')
-    insanity = sanitizer(basepath=basepath, luapath=luapath,
-                         verbose=args.verbose,use=args.use,
-                         show_unused=args.show_unused)
+    invalid = sanitizer(basepath=basepath, luapath=luapath,
+                        verbose=args.verbose,use=args.use,
+                        show_unused=args.show_unused)
 
-    insanity.dah_doctor()
+    invalid.dah_doctor()

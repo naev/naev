@@ -596,7 +596,7 @@ static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
          continue;
 
       /* Empty Launchers aren't valid */
-      if (outfit_isLauncher(ws->slots[i].slot->outfit) && ws->slots[i].slot->u.ammo.quantity <= 0)
+      if (outfit_isLauncher(ws->slots[i].slot->outfit) && (ws->slots[i].slot->u.ammo.quantity <= 0))
          continue;
 
       /* Get range. */
@@ -1108,7 +1108,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
     */
    else if (outfit_isLauncher(w->outfit)) {
 
-      /* Shooter can't be the target - sanity check for the player.p */
+      /* Shooter can't be the target - safety check for the player.p */
       if ((w->outfit->u.lau.ammo->u.amm.ai != AMMO_AI_DUMB) && (p->id==p->target))
          return 0;
 
@@ -1355,11 +1355,11 @@ void pilot_weaponSetDefault( Pilot *p )
 
 
 /**
- * @brief Sets the weapon set as sane.
+ * @brief Sets the weapon set as safe.
  *
- *    @param p Pilot to set weapons as sane.
+ *    @param p Pilot to set weapons as safe.
  */
-void pilot_weaponSane( Pilot *p )
+void pilot_weaponSafe( Pilot *p )
 {
    int i, j;
    int n, l;

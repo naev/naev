@@ -19,6 +19,9 @@
 #include "nluadef.h"
 #include "log.h"
 #include "dialogue.h"
+#include "nlua_outfit.h"
+#include "toolkit.h"
+#include "land_outfits.h"
 
 
 /* Toolkit methods. */
@@ -27,12 +30,14 @@ static int tk_yesno( lua_State *L );
 static int tk_input( lua_State *L );
 static int tk_choice( lua_State *L );
 static int tk_list( lua_State *L );
+static int tk_merchant( lua_State *L );
 static const luaL_Reg tk_methods[] = {
    { "msg", tk_msg },
    { "yesno", tk_yesno },
    { "input", tk_input },
    { "choice", tk_choice },
    { "list", tk_list },
+   { "merchant", tk_merchant },
    {0,0}
 }; /**< Toolkit Lua methods. */
 
@@ -262,3 +267,54 @@ static int tk_list( lua_State *L )
 
    return 2;
 }
+
+/**
+ * @brief Opens an outfit merchant window.
+ *
+ * @usage tk.merchant( 'Laser Merchant', {'Laser Cannon MK0', 'Laser Cannon MK1'} )
+ * @usage tk.merchant( 'Laser Merchant', {outfit.get('Laser Cannon MK0'), outfit.get('Laser Cannon MK1')} )
+ *
+ *    @luatparam String name Name of the window.
+ *    @luatparam Table outfits Table of outfits to sell/buy. It is possible to use either outfits or outfit names (strings).
+ * @luafunc merchant( name, outfits )
+ */
+static int tk_merchant( lua_State *L )
+{
+   Outfit **outfits;
+   int i, noutfits;
+   unsigned int wid;
+   const char *name;
+   int w, h;
+
+   name = luaL_checkstring(L,1);
+
+   if (!lua_istable(L,2))
+      NLUA_INVALID_PARAMETER(L);
+
+   noutfits = (int) lua_objlen(L,2);
+   if (noutfits == 0)
+      NLUA_ERROR(L, _("Unable to create empty outfit merchant."));
+   outfits = malloc( sizeof(Outfit*) * noutfits );
+   /* Iterate over table. */
+   lua_pushnil(L);
+   i = 0;
+   while (lua_next(L, -2) != 0) {
+      outfits[i++] = luaL_validoutfit(L, -1);
+      lua_pop(L,1);
+   }
+
+   /* Create window. */
+   if ((gl_screen.rw < 1024) || (gl_screen.rh < 768)) {
+      w = -1; /* Fullscreen. */
+      h = -1;
+   }
+   else {
+      w = 800 + 0.5 * (SCREEN_W - 800);
+      h = 600 + 0.5 * (SCREEN_H - 600);
+   }
+   wid = window_create( name, -1, -1, w, h );
+   outfits_open( wid, outfits, noutfits );
+
+   return 0;
+}
+

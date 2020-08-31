@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Apprehension">
  <base_type>Apprehension</base_type>
  <GFX sx="12" sy="12">apprehension</GFX>
@@ -23,20 +23,21 @@
   <cargo>50</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="23" y="0" h="4"/>
-  <weapon size="large" x="6" y="0" h="6"/>
-  <weapon size="medium" x="8" y="0" h="-6"/>
+  <weapon size="large" x="23" y="0" h="4" />
+  <weapon size="large" x="6" y="0" h="6" />
+  <weapon size="medium" x="8" y="0" h="-6" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-600 Core System</utility>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="medium"/>
-  <utility size="medium"/>
+  <utility size="medium" prop="accessory" exclusive="1" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="medium" />
+  <utility size="medium" />
   <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1200 Engine</structure>
   <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="medium"/>
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="medium" />
  </slots>
  <stats>
   <shield_mod>10</shield_mod>

@@ -1,4 +1,19 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="The macho teenager">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <chance>5</chance>
+   <location>Bar</location>
+   <faction>Dvaered</faction>
+   <cond>player.numOutfit("Mercenary License") &gt; 0 and planet.cur():class() ~= "0" and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3"</cond>
+  </avail>
+ </mission>
+ --]]
+--[[
 --
 -- MISSION: The macho teenager
 -- DESCRIPTION: A man tells you that his son has taken one of his yachts without permission and
@@ -16,7 +31,7 @@ title[1] = _("Youngsters these days")
 text[1] = _([["Excuse me," the man says as you approach him. "I'm looking for a capable pilot to resolve a small matter for me. Perhaps you can help me? You see, it's my son. He's taken my yacht to space without my permission, taking along his girlfriend. That boy is such a handful. I'm sure he's trying to show off his piloting skills to impress her. I need you to get out there, disable the yacht and take them both back here. Can you do this for me? I'll make it worth your while."]])
 
 title[2] = _("It's a lousy job, but...")
-text[2] = _([["Thank you! The yacht doesn't have a working hyperdrive, so they won't have left the system. It's a Gawain named Credence. Just disable it and board it, then transport my idiot son and his girlfriend back here. Don't worry about the yacht, I'll have it recovered later. Oh, and one more thing, though it should go without saying: whatever you do, don't destroy the yacht! I don't want to lose my son over this. Well then, I hope to see you again soon."]])
+text[2] = _([["Thank you! The yacht doesn't have a working hyperdrive, so they won't have left the system. It's a Gawain named Credence. Just disable it and board it, then transport my disobedient son and his girlfriend back here. Don't worry about the yacht, I'll have it recovered later. Oh, and one more thing, though it should go without saying: whatever you do, don't destroy the yacht! I don't want to lose my son over this. Well then, I hope to see you again soon."]])
 
 title[3] = _("Whoops!")
 text[3] = _([[You have destroyed the Gawain! The family presses charges, and you are sentenced to a %d fine in absence of attendance.]])

@@ -344,6 +344,7 @@ static int nlua_loadBasic( lua_State* L )
 
    /* Gettext functionality. */
    lua_register(L, "_", nlua_gettext);
+   lua_register(L, "N_", nlua_gettext_noop);
    luaL_register(L, "gettext", gettext_methods);
 
    /* Add our own */

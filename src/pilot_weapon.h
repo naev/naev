@@ -58,7 +58,7 @@ void pilot_weapSetInrange( Pilot* p, int id, int inrange );
 void pilot_weaponClear( Pilot *p );
 void pilot_weaponAuto( Pilot *p );
 void pilot_weaponSetDefault( Pilot *p );
-void pilot_weaponSane( Pilot *p );
+void pilot_weaponSafe( Pilot *p );
 void pilot_afterburn ( Pilot *p );
 void pilot_afterburnOver ( Pilot *p );
 int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o );

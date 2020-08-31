@@ -543,7 +543,7 @@ int economy_update( unsigned int dt )
 
       /*
        * I'm not sure I like the filtering of the results, but it would take
-       * much more work to get a sane system working without the need of post
+       * much more work to get a good system working without the need of post
        * filtering.
        */
       scale    = 1.;

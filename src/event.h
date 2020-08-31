@@ -41,7 +41,7 @@ typedef enum EventTrigger_s {
 int events_load (void);
 void events_exit (void);
 void events_cleanup (void);
-void event_checkSanity (void);
+void event_checkValidity (void);
 
 
 /*

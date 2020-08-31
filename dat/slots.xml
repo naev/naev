@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Slots>
+ <slot name="accessory">
+  <display>Accessory</display>
+  <description>This slot is used to equip accessories that can enhance the ship's performance.</description>
+  <exclusive/>
+ </slot>
  <slot name="systems">
   <display>Core Systems</display>
   <description>This slot is used for dedicated core systems of the ship. Other subsystems rely on this system to manage them, and the bulk of the ship's power and shield generation also happens here.</description>

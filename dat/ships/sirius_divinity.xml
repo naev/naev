@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Sirius Divinity">
  <base_type>Divinity</base_type>
  <GFX sx="12" sy="12">divinity</GFX>
@@ -23,23 +23,24 @@
   <cargo>110</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="40" y="0" h="0"/>
-  <weapon size="large" x="20" y="0" h="0"/>
-  <weapon size="large" x="20" y="0" h="0"/>
-  <weapon size="large" x="-20" y="0" h="0"/>
-  <weapon size="large" x="-40" y="0" h="0"/>
+  <weapon size="large" x="40" y="0" h="0" />
+  <weapon size="large" x="20" y="0" h="0" />
+  <weapon size="large" x="20" y="0" h="0" />
+  <weapon size="large" x="-20" y="0" h="0" />
+  <weapon size="large" x="-40" y="0" h="0" />
   <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-1000 Core System</utility>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
+  <utility size="large" prop="accessory" exclusive="1" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
   <structure size="large" prop="engines" exclusive="1" required="1">Unicorp Eagle 6500 Engine</structure>
   <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-20 Heavy Plating</structure>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
  </slots>
  <stats>
   <thrust_mod>10</thrust_mod>

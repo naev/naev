@@ -83,24 +83,25 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_SPEED_MOD,          speed_mod,           gettext_noop("Speed") ),
    D__ELEM( SS_TYPE_D_TURN_MOD,           turn_mod,            gettext_noop("Turn") ),
    D__ELEM( SS_TYPE_D_THRUST_MOD,         thrust_mod,          gettext_noop("Thrust") ),
-   D__ELEM( SS_TYPE_D_CARGO_MOD,          cargo_mod,           gettext_noop("Cargo space") ),
-   D__ELEM( SS_TYPE_D_ARMOUR_MOD,         armour_mod,          gettext_noop("Armour strength") ),
-   D__ELEM( SS_TYPE_D_ARMOUR_REGEN_MOD,   armour_regen_mod,    gettext_noop("Armour regeneration") ),
-   D__ELEM( SS_TYPE_D_SHIELD_MOD,         shield_mod,          gettext_noop("Shield strength") ),
-   D__ELEM( SS_TYPE_D_SHIELD_REGEN_MOD,   shield_regen_mod,    gettext_noop("Shield regeneration") ),
-   D__ELEM( SS_TYPE_D_ENERGY_MOD,         energy_mod,          gettext_noop("Energy capacity") ),
-   D__ELEM( SS_TYPE_D_ENERGY_REGEN_MOD,   energy_regen_mod,    gettext_noop("Energy regeneration") ),
-   D__ELEM( SS_TYPE_D_CPU_MOD,            cpu_mod,             gettext_noop("CPU capacity") ),
+   D__ELEM( SS_TYPE_D_CARGO_MOD,          cargo_mod,           gettext_noop("Cargo Space") ),
+   D__ELEM( SS_TYPE_D_ARMOUR_MOD,         armour_mod,          gettext_noop("Armour Strength") ),
+   D__ELEM( SS_TYPE_D_ARMOUR_REGEN_MOD,   armour_regen_mod,    gettext_noop("Armour Regeneration") ),
+   D__ELEM( SS_TYPE_D_SHIELD_MOD,         shield_mod,          gettext_noop("Shield Strength") ),
+   D__ELEM( SS_TYPE_D_SHIELD_REGEN_MOD,   shield_regen_mod,    gettext_noop("Shield Regeneration") ),
+   D__ELEM( SS_TYPE_D_ENERGY_MOD,         energy_mod,          gettext_noop("Energy Capacity") ),
+   D__ELEM( SS_TYPE_D_ENERGY_REGEN_MOD,   energy_regen_mod,    gettext_noop("Energy Regeneration") ),
+   D__ELEM( SS_TYPE_D_CPU_MOD,            cpu_mod,             gettext_noop("CPU Capacity") ),
 
    DI_ELEM( SS_TYPE_D_JUMP_DELAY,         jump_delay,          gettext_noop("Jump Time") ),
    DI_ELEM( SS_TYPE_D_CARGO_INERTIA,      cargo_inertia,       gettext_noop("Cargo Inertia") ),
 
    D__ELEM( SS_TYPE_D_EW_HIDE,            ew_hide,             gettext_noop("Cloaking") ),
    D__ELEM( SS_TYPE_D_EW_DETECT,          ew_detect,           gettext_noop("Detection") ),
-   D__ELEM( SS_TYPE_D_EW_JUMPDETECT,      ew_jump_detect,       gettext_noop("Jump Detection") ),
+   D__ELEM( SS_TYPE_D_EW_JUMPDETECT,      ew_jump_detect,      gettext_noop("Jump Detection") ),
 
-   D__ELEM( SS_TYPE_D_LAUNCH_RATE,        launch_rate,         gettext_noop("Launch Rate") ),
+   D__ELEM( SS_TYPE_D_LAUNCH_RATE,        launch_rate,         gettext_noop("Fire Rate (Launcher)") ),
    D__ELEM( SS_TYPE_D_LAUNCH_RANGE,       launch_range,        gettext_noop("Launch Range") ),
+   D__ELEM( SS_TYPE_D_LAUNCH_DAMAGE,      launch_damage,       gettext_noop("Damage (Launcher)") ),
    D__ELEM( SS_TYPE_D_AMMO_CAPACITY,      ammo_capacity,       gettext_noop("Ammo Capacity") ),
    D__ELEM( SS_TYPE_D_LAUNCH_LOCKON,      launch_lockon,       gettext_noop("Launch Lockon") ),
 
@@ -126,6 +127,10 @@ static const ShipStatsLookup ss_lookup[] = {
 
    A__ELEM( SS_TYPE_A_ENERGY_FLAT,        energy_flat,         gettext_noop("Energy Capacity") ),
    AI_ELEM( SS_TYPE_A_ENERGY_REGEN_FLAT,  energy_usage,        gettext_noop("Energy Usage") ),
+   A__ELEM( SS_TYPE_A_SHIELD_FLAT,        shield_flat,         gettext_noop("Shield Capacity") ),
+   AI_ELEM( SS_TYPE_A_SHIELD_REGEN_FLAT,  shield_usage,        gettext_noop("Shield Usage") ),
+   A__ELEM( SS_TYPE_A_ARMOUR_FLAT,        armour_flat,         gettext_noop("Armour") ),
+   AI_ELEM( SS_TYPE_A_ARMOUR_REGEN_FLAT,  armour_damage,       gettext_noop("Armour Damage") ),
    A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             gettext_noop("CPU Capacity") ),
 
    A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        gettext_noop("Engine Mass Limit") ),
@@ -200,7 +205,7 @@ ShipStatList* ss_listFromXML( xmlNodePtr node )
 
 
 /**
- * @brief Checks for sanity.
+ * @brief Checks for validity.
  */
 int ss_check (void)
 {

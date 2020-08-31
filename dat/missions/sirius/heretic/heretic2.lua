@@ -1,3 +1,19 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="The Patrol">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <done>The Return</done>
+   <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>The Wringer</planet>
+  </avail>
+ </mission>
+ --]]
 --[[misn title - the patrol]]
 --[[in this mission, the player will be guarding the "high command" of the
    nasin, the wringer/suna. house sirius is sending in recon parties.

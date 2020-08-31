@@ -1,4 +1,20 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Collective Extraction">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("emp_commando") ~= nil and time.get() &gt; time.fromnumber( var.peek("emp_commando") )</cond>
+   <done>Collective Distraction</done>
+   <chance>100</chance>
+   <location>Land</location>
+   <planet>Omega Station</planet>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    Collective Extraction
 

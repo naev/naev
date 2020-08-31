@@ -1,4 +1,15 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Animal trouble">
+  <trigger>enter</trigger>
+  <chance>20</chance>
+  <cond>var.peek("shipinfested") == true</cond>
+  <flags>
+   <unique />
+  </flags>
+ </event>
+ --]]
+--[[
 -- Animal Trouble event
 --
 -- Temporarily makes the player's ship behave erratically.

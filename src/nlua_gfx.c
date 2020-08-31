@@ -144,7 +144,7 @@ static int gfxL_renderTex( lua_State *L )
          col = luaL_checkcolour(L,4);
    }
 
-   /* Some sanity checking. */
+   /* Some safety checking. */
 #if DEBUGGING
    if (sx >= tex->sx)
       NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."),
@@ -209,7 +209,7 @@ static int gfxL_renderTexRaw( lua_State *L )
    if (lua_iscolour( L, 12 ))
       col = lua_tocolour( L, 12 );
 
-   /* Some sanity checking. */
+   /* Some safety checking. */
 #if DEBUGGING
    if (sx >= t->sx)
       NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."),

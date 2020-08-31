@@ -324,7 +324,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
 {
    int i, p;
 
-   /* Sane defaults. */
+   /* Safe defaults. */
    news_pos    = h/3;
    news_tick   = SDL_GetTicks();
 

@@ -1,3 +1,18 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Visiting Family">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <done>A Friend's Aid</done>
+   <chance>10</chance>
+   <location>Bar</location>
+   <faction>Soromid</faction>
+  </avail>
+ </mission>
+ --]]
  --[[
 
    Visiting Family

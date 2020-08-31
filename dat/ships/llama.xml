@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Llama">
  <base_type>Llama</base_type>
  <GFX>llama</GFX>
@@ -22,15 +22,16 @@
   <armour_regen>0</armour_regen>
  </health>
  <slots>
-  <weapon size="small" x="7" y="0" h="1"/>
-  <weapon size="small" x="-3" y="0" h="2"/>
+  <weapon size="small" x="7" y="0" h="1" />
+  <weapon size="small" x="-3" y="0" h="2" />
   <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
-  <utility size="small"/>
-  <utility size="small"/>
+  <utility size="small" prop="accessory" exclusive="1" />
+  <utility size="small" />
+  <utility size="small" />
   <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
-  <structure size="small"/>
-  <structure size="small"/>
+  <structure size="small" />
+  <structure size="small" />
  </slots>
  <stats>
   <turn_mod>-20</turn_mod>

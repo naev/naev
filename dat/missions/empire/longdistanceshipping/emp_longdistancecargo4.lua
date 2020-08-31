@@ -1,4 +1,20 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Frontier Long Distance Recruitment">
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
+   <chance>75</chance>
+   <done>Za'lek Long Distance Recruitment</done>   
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission> 
+ --]]
+--[[
 
    Fourth diplomatic mission to Frontier space that opens up the Empire long-distance cargo missions.
 

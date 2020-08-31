@@ -13,7 +13,7 @@
 #include "tk/widget/imagearray.h"
 
 
-void outfits_open( unsigned int wid );
+void outfits_open( unsigned int wid, Outfit **outfits, int noutfits );
 void outfits_regenList( unsigned int wid, char *str );
 void outfits_update( unsigned int wid, char* str );
 void outfits_updateEquipmentOutfits( void );

@@ -44,7 +44,7 @@ XMLPOT      = $(top_srcdir)/po/xml.pot
 CLEANFILES += $(XMLPOT)
 endif # HAVE_NLS
 
-.PHONY: pot docs utils help install-ndata
+.PHONY: pot docs utils help install-ndata soundtrack
 
 all-local: $(NAEV) pot $(VERSIONFILE)
 
@@ -121,11 +121,17 @@ uninstall-hook:
 docs:
 	$(MAKE) -C docs
 
+soundtrack: naev-$(VERSION)-soundtrack.zip
+
+naev-$(VERSION)-soundtrack.zip: utils/soundtrack.py dat/snd/soundtrack.yaml
+	./utils/soundtrack.py
+
 help:
 	@echo "Possible targets are:"
 	@echo "        all - builds everything"
 	@echo "  ndata.zip - creates the ndata file"
 	@echo "       docs - creates the doxygen documentation"
+	@echo " soundtrack - creates the soundtrack zip file"
 	@echo "      clean - removes binaries and object files"
 	@echo "    install - installs naev"
 	@echo "  uninstall - removes previously installed files"
