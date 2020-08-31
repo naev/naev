@@ -1,0 +1,152 @@
+- Vega Strike:
+   license: GPLv2+
+   music:
+     - agriculture.ogg
+     - cosmostation.ogg
+     - galacticbattle.ogg
+     - launch2.ogg
+     - launch3chatstart.ogg
+     - liftoff.ogg
+     - machina.ogg
+     - mission.ogg
+     - ocean.ogg
+     - peace1.ogg
+     - peace2.ogg
+     - peace4.ogg
+     - peace6.ogg
+     - snow.ogg
+   sounds:
+     - afterburner.wav
+     - beam0.wav
+     - beam_off0.wav
+     - engine.wav
+     - explosion0.wav
+     - explosion1.wav
+     - explosion2.wav
+     - ion.wav
+     - jump.wav
+     - laser.wav
+     - mass.wav
+     - missile.wav
+     - nav.wav
+     - neutron.wav
+     - target.wav
+- Nikola Whallon <6.saturn.6@gmail.com>:
+   license: GPLv3 / CC-by 3
+   music:
+     - ambient1.ogg
+     - ambient2.ogg
+     - ambient2_5.ogg
+     - ambient3.ogg
+     - collective1.ogg
+     - collective2.ogg
+     - landing_sinister.ogg
+     - tension.ogg
+     - intro.ogg
+     - empire1.ogg
+     - empire2.ogg
+     - nebu_battle1.ogg
+     - nebu_battle2.ogg
+     - upbeat.ogg
+     - flf_battle1.ogg
+     - sirius1.ogg
+     - battlesomething1.ogg
+     - battlesomething2.ogg
+     - zalek1.ogg
+     - zalek2.ogg
+     - intrigue.ogg
+     - automat.ogg
+   sounds:
+     - grenade.wav
+- junggle:
+   license: GPLv3
+   sounds:
+     - plasma.wav
+- Tenshihan (http://tenshihan.nexuizninjaz.com/):
+   license: GPLv3
+   sounds:
+     - ripper.ogg
+     - autocannon.ogg
+     - medexp0.ogg
+     - medexp1.ogg
+     - grenadefire.ogg
+     - empexplode.ogg
+     - lrgexp0.ogg
+     - bansheeexp.ogg
+- inferno:
+   license: GPLv3
+   sounds:
+     - mace.wav
+     - seeker.wav
+- MrTLikesRobots?:
+   license: GPLv3
+   sounds:
+     - hyperspace_engine.ogg
+     - hyperspace_jump.ogg
+     - hyperspace_powerdown.ogg
+     - hyperspace_powerup.ogg
+     - hyperspace_powerupjump.ogg
+- Zeropage:
+   license: CC-by 3
+   music:
+     - void_sensor.ogg
+     - ambiphonic.ogg
+- Destructavator:
+   license: CC-by 3
+   sounds:
+     - hail.ogg
+- Askyel:
+   license: CC-by-sa 3.0
+   music:
+     - ambient4.ogg
+     - combat1.ogg
+     - combat2.ogg
+     - combat3.ogg
+     - dvaered1.ogg
+     - dvaered2.ogg
+     - sirius2.ogg
+     - eureka.ogg
+     - terminal.ogg
+- Sean Hildebrand:
+   license: PD
+   sounds:
+     - compression.ogg
+- pengo_au:
+   license: PD
+   sounds:
+     - afb_disengage.wav
+- Jonathon Trumbo:
+   license: GPLv2+
+   sounds:
+     - 1-second-attachment.ogg
+     - 1-second-detachment.ogg
+     - computer_jam.ogg
+     - computer_lock.ogg
+     - mouse_click.ogg
+     - outfit-activation.ogg
+     - outfit-deactivation.ogg
+- iamoneabe <https://opengameart.org/users/iamoneabe>:
+   license: CC-by-sa 4.0
+   music:
+     - motherload.ogg
+- Olivier Bérubé <https://opengameart.org/users/loliver1814>:
+   license: CC0
+   music:
+     - pirate1_theme1.ogg
+- Dizzy Crow <https://opengameart.org/users/dizzy-crow>:
+   license: CC0
+   music:
+     - pirates_orchestra.ogg
+- Alexandr Zhelanov <https://opengameart.org/users/alexandr-zhelanov>:
+   license: CC-by 3.0
+   music:
+     - heartofmachine.ogg
+- Muncheybobo <https://opengameart.org/users/muncheybobo>:
+   license: CC-by 3.0
+   music:
+     - dark_city.ogg
+- Matthew Pablo <http://www.matthewpablo.com>:
+   license: CC-by 3.0
+   music:
+     - blackmoor_tides.ogg
+     - imminent_threat.ogg
