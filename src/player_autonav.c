@@ -40,7 +40,7 @@ static double lasta;
 static int player_autonavSetup (void);
 static void player_autonav (void);
 static int player_autonavApproach( const Vector2d *pos, double *dist2, int count_target );
-static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel );
+static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow );
 static int player_autonavBrake (void);
 
 
@@ -396,7 +396,7 @@ static void player_autonav (void)
             player_autonavEnd();
          }
          else
-            player_autonavFollow( &p->solid->pos, &p->solid->vel );
+            player_autonavFollow( &p->solid->pos, &p->solid->vel, pilot_isDisabled(p)==0 );
          break;
    }
 }
@@ -456,8 +456,9 @@ static int player_autonavApproach( const Vector2d *pos, double *dist2, int count
  *
  *    @param[in] pos Position to go to.
  *    @param[in] vel Velocity of the target.
+ *    @param[in] follow Whether to follow, or arrive at
  */
-static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel )
+static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow )
 {
    double Kp, Kd, angle, radius, d;
    Vector2d dir, point;
@@ -468,7 +469,9 @@ static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel )
    Kd = 20;
    radius = 100;
 
-   /* Find a point behind the target at a distance of radius */
+   /* Find a point behind the target at a distance of radius unless stationary, or not following */
+   if ( !follow || ( vel->x == 0 && vel->y == 0 ) )
+      radius = 0;
    angle = M_PI + vel->angle;
    vect_cset( &point, pos->x + radius * cos(angle),
               pos->y + radius * sin(angle) );
