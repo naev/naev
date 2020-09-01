@@ -7,6 +7,10 @@
   <flags>
    <unique />
   </flags>
+  <notes>
+   <campaign>Join the FLF</campaign>
+   <tier>1</tier>
+  </notes>
  </event>
  --]]
 --[[

@@ -11,6 +11,9 @@
    <location>Bar</location>
    <planet>Doranthex Prime</planet>
   </avail>
+  <notes>
+   <tier>2</tier>
+  </notes>
  </mission>
  --]]
 --[[

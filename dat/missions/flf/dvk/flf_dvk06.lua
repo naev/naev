@@ -12,6 +12,9 @@
    <faction>FLF</faction>
    <cond>faction.playerStanding("FLF") &gt;= 80</cond>
   </avail>
+  <notes>
+   <campaign>Save the Frontier</campaign>
+  </notes>
  </mission>
  --]]
 --[[

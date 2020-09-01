@@ -6,6 +6,11 @@
   <cond>system.cur():presence("hostile") &lt; 300 and player.misnDone("Shadowrun") and not (player.misnDone("Shadow Vigil") or var.peek("shadowvigil_active") == true)</cond>
   <flags>
   </flags>
+  <notes>
+   <done_misn name="Shadowrun"/>
+   <campaign>Shadow</campaign>
+   <tier>3</tier>
+  </notes>
  </event>
  --]]
 --[[

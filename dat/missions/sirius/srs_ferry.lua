@@ -8,6 +8,9 @@
    <location>Computer</location>
    <faction>Sirius</faction>
   </avail>
+  <notes>
+   <tier>1</tier>
+  </notes>
  </mission>
  --]]
 --[[

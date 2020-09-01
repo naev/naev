@@ -490,6 +490,9 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
          continue;
       }
 
+      /* Notes for the python mission mapping script. */
+      else if (xml_isNode(node,"notes")) continue;
+
       /* Condition. */
       xmlr_strd(node,"cond",temp->cond);
 

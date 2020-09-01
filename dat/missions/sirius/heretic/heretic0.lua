@@ -11,6 +11,9 @@
    <location>Bar</location>
    <faction>Sirius</faction>
   </avail>
+  <notes>
+   <campaign>Heretic</campaign>
+  </notes>
  </mission>
  --]]
 --[[misn name - the gauntlet]]--

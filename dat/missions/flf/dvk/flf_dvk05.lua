@@ -11,6 +11,9 @@
    <location>Bar</location>
    <faction>FLF</faction>
   </avail>
+  <notes>
+   <campaign>Save the Frontier</campaign>
+  </notes>
  </mission>
  --]]
 --[[

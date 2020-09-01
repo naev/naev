@@ -6,6 +6,9 @@
   <cond>system.cur():faction() == faction.get("Dvaered") and not player.evtActive ("Warlords battle")</cond>
   <flags>
   </flags>
+  <notes>
+   <tier>3</tier>
+  </notes>
  </event>
  --]]
 --  A battle between two dvaered warlords. The player can join one of them and get a reward

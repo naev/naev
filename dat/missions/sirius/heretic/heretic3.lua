@@ -12,6 +12,9 @@
    <location>Bar</location>
    <planet>The Wringer</planet>
   </avail>
+  <notes>
+   <campaign>Heretic</campaign>
+  </notes>
  </mission>
  --]]
 --[[misn title - the assault]]

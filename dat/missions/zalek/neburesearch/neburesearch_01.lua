@@ -10,6 +10,9 @@
   <location>Bar</location>
   <planet>Vilati Vilata</planet>
  </avail>
+  <notes>
+   <campaign>Nebula Research</campaign>
+  </notes>
 </mission>
 --]]
 --[[

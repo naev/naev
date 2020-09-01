@@ -9,6 +9,10 @@
    <chance>100</chance>
    <location>None</location>
   </avail>
+  <notes>
+   <done_evt name="Baroncomm_baron">Triggers</done_evt>
+   <campaign>Baron Sauterfeldt</campaign>
+  </notes>
  </mission>
  --]]
 --[[

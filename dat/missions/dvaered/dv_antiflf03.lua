@@ -11,6 +11,10 @@
    <cond>var.peek("flfbase_intro") == 3</cond>
    <faction>Dvaered</faction>
   </avail>
+  <notes>
+   <requires name="The Dvaered know where Sindbad is"/>
+   <campaign>Doom the FLF</campaign>
+  </notes>
  </mission>
  --]]
 --[[

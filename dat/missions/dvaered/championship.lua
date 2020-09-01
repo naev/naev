@@ -10,6 +10,9 @@
    <location>Bar</location>
    <planet>Dvaer Prime</planet>
   </avail>
+  <notes>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --[[

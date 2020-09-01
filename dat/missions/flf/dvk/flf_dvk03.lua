@@ -12,6 +12,10 @@
    <faction>FLF</faction>
    <cond>faction.playerStanding("FLF") &gt;= 50</cond>
   </avail>
+  <notes>
+   <provides name="The Empire and the FLF are enemies">Because they're caught in the battle</provides>
+   <campaign>Save the Frontier</campaign>
+  </notes>
  </mission>
  --]]
 --[[

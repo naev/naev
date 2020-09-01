@@ -12,6 +12,10 @@
    <location>Bar</location>
    <planet>Omega Station</planet>
   </avail>
+  <notes>
+   <campaign>Collective</campaign>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --[[

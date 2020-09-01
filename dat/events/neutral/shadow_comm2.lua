@@ -6,6 +6,10 @@
   <cond>system.cur():presence("hostile") &lt; 300 and player.misnDone("Shadow Vigil") and not (player.misnDone("Dark Shadow") or var.peek("darkshadow_active") == true)</cond>
   <flags>
   </flags>
+  <notes>
+   <done_misn name="Shadow Vigil"/>
+   <campaign>Shadow</campaign>
+  </notes>
  </event>
  --]]
 --[[

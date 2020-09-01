@@ -12,6 +12,10 @@
    <location>Bar</location>
    <planet>The Wringer</planet>
   </avail>
+  <notes>
+   <campaign>Heretic</campaign>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --[[misn title - the patrol]]

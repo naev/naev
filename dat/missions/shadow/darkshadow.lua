@@ -9,6 +9,10 @@
    <chance>100</chance>
    <location>None</location>
   </avail>
+  <notes>
+   <done_evt name="Shadowcomm2">Triggers</done_evt>
+   <campaign>Shadow</campaign>
+  </notes>
  </mission>
  --]]
 --[[

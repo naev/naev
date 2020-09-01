@@ -12,6 +12,9 @@
    <done>Empire Shipping 3</done>
    <planet>Omega Station</planet>
   </avail>
+  <notes>
+   <campaign>Collective</campaign>
+  </notes>
  </mission>
  --]]
 --[[

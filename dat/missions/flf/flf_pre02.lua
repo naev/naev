@@ -11,6 +11,12 @@
    <cond>var.peek("flfbase_intro") == 2</cond>
    <planet>Sindbad</planet>
   </avail>
+  <notes>
+   <done_misn name="Deal with the FLF agent">If you return Gregar to Sindbad</done_misn>
+   <provides name="The Dvaered know where Sindbad is">If you betray the FLF</provides>
+   <campaign>Join the FLF</campaign>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --[[

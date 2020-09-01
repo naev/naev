@@ -7,6 +7,9 @@
    <location>Bar</location>
    <cond>faction.playerStanding("Pirate") &gt;= 0 or planet.cur():faction() == faction.get("Pirate")</cond>
   </avail>
+  <notes>
+   <tier>2</tier>
+  </notes>
  </mission>
  --]]
 --[[

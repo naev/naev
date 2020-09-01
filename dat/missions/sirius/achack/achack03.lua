@@ -11,6 +11,9 @@
    <location>Bar</location>
    <faction>Sirius</faction>
   </avail>
+  <notes>
+   <campaign>Academy Hack</campaign>
+  </notes>
  </mission>
  --]]
 --[[

@@ -10,6 +10,9 @@
    <location>Bar</location>
    <cond>system.cur() == system.get("Alteris")</cond>
   </avail>
+  <notes>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --[[

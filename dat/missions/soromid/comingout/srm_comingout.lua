@@ -10,6 +10,9 @@
    <location>Bar</location>
    <faction>Soromid</faction>
   </avail>
+  <notes>
+   <campaign>Coming Out</campaign>
+  </notes>
  </mission>
  --]]
 --[[

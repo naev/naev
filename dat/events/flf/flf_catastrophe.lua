@@ -4,6 +4,10 @@
   <trigger>enter</trigger>
   <chance>70</chance>
   <cond>system.cur():name() == "Sigur" and faction.get("FLF"):playerStanding() &gt;= 98 and player.misnDone("The FLF Split")</cond>
+  <notes>
+   <done_misn name="The FLF Split"/>
+   <campaign>Save the Frontier</campaign>
+  </notes>
  </event>
  --]]
 --[[

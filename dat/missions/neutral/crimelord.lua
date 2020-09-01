@@ -10,6 +10,9 @@
    <location>Bar</location>
    <cond>system.get("Ogat"):jumpDist() == 4 and player.jumps() &gt;= 4</cond>
   </avail>
+  <notes>
+   <tier>2</tier>
+  </notes>
  </mission>
  --]]
 --[[ Test for a chase mission
