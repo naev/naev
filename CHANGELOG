@@ -14,7 +14,6 @@
       * Modified the balancing of missiles
       * Added asteroids and mining
       * Improved player GUI
-         * New solar system map with planetary details
       * Brushed GUI is now the default
       * Improved and fixed escort system
       * Made Pirates and FLF spawn in a fairer way
