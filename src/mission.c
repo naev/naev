@@ -829,6 +829,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
          } while (xml_nextNode(cur));
          continue;
       }
+      else if (xml_isNode(node,"notes")) continue; /* Notes for the python mission mapping script */
 
       DEBUG(_("Unknown node '%s' in mission '%s'"),node->name,temp->name);
    } while (xml_nextNode(node));

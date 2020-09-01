@@ -12,6 +12,9 @@
    <location>Bar</location>
    <faction>Empire</faction>
   </avail>
+  <notes>
+   <campaign>Long Distance Shipping</campaign>
+  </notes>
  </mission>
  --]]
 --[[

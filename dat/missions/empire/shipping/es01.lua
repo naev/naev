@@ -12,6 +12,9 @@
    <location>Bar</location>
    <planet>Halir</planet>
   </avail>
+  <notes>
+   <campaign>Empire Shipping</campaign>
+  </notes>
  </mission>
  --]]
 --[[

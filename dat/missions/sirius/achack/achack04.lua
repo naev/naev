@@ -8,6 +8,10 @@
    <priority>3</priority>
    <location>None</location>
   </avail>
+  <notes>
+   <done_evt name="Achack04 Helper">Triggers</done_evt>
+   <campaign>Academy Hack</campaign>
+  </notes>
  </mission>
  --]]
 --[[

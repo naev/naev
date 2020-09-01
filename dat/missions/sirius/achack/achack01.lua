@@ -10,6 +10,9 @@
    <chance>50</chance>
    <location>Bar</location>
   </avail>
+  <notes>
+   <campaign>Academy Hack</campaign>
+  </notes>
  </mission>
  --]]
 --[[

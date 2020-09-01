@@ -9,6 +9,10 @@
    <chance>100</chance>
    <location>None</location>
   </avail>
+  <notes>
+   <done_evt name="FLF/DV Derelicts">If you choose to help the Dvaered</done_evt>
+   <campaign>Doom the FLF</campaign>
+  </notes>
  </mission>
  --]]
 --[[

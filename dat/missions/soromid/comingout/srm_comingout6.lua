@@ -12,6 +12,9 @@
    <faction>Soromid</faction>
    <cond>var.peek("comingout_time") == nil or time.get() &gt;= time.fromnumber(var.peek("comingout_time")) + time.create(0, 20, 0)</cond>
   </avail>
+  <notes>
+   <campaign>Coming Out</campaign>
+  </notes>
  </mission>
  --]]
 --[[

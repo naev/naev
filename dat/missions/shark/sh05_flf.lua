@@ -20,6 +20,9 @@
    <faction>Za'lek</faction>
    <cond>not diff.isApplied( "flf_dead" )</cond>
   </avail>
+  <notes>
+   <campaign>Nexus show their teeth</campaign>
+  </notes>
  </mission>
  --]]
 --[[

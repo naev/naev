@@ -12,6 +12,10 @@
    <location>Bar</location>
    <faction>Sirius</faction>
   </avail>
+  <notes>
+   <campaign>Academy Hack</campaign>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --[[

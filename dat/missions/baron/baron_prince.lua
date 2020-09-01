@@ -14,6 +14,9 @@
    <faction>Goddard</faction>
    <faction>Sirius</faction>
   </avail>
+  <notes>
+   <campaign>Baron Sauterfeldt</campaign>
+  </notes>
  </mission>
  --]]
 --[[

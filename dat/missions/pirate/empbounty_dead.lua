@@ -10,6 +10,9 @@
    <faction>Independent</faction>
    <faction>FLF</faction>
   </avail>
+  <notes>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --[[

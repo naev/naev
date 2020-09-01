@@ -14,6 +14,9 @@
    <faction>Independent</faction>
    <faction>Soromid</faction>
   </avail>
+  <notes>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --[[

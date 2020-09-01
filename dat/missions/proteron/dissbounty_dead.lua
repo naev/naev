@@ -8,6 +8,9 @@
    <location>Computer</location>
    <faction>Proteron</faction>
   </avail>
+  <notes>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --[[

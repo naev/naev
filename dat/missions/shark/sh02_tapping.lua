@@ -19,9 +19,10 @@
    <faction>Traders Guild</faction>
    <faction>Za'lek</faction>
   </avail>
-  <note_done name="Operation Cold Metal">
-   Collective must be dead
-  </note_done>
+  <notes>
+   <requires name="The Collective is dead and no one will miss them"/>
+   <campaign>Nexus show their teeth</campaign>
+  </notes>
  </mission>
  --]]
 --[[

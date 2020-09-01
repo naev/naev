@@ -10,6 +10,9 @@
    <location>Bar</location>
    <planet>Gastan</planet>
   </avail>
+  <notes>
+   <tier>2</tier>
+  </notes>
  </mission>
  --]]
 --[[

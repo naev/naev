@@ -7,6 +7,9 @@
    <location>Computer</location>
    <faction>Pirate</faction>
   </avail>
+  <notes>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --[[

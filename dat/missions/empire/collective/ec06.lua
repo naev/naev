@@ -12,6 +12,10 @@
    <location>Bar</location>
    <planet>Omega Station</planet>
   </avail>
+  <notes>
+   <provides name="The Collective is dead and no one will miss them"/>
+   <campaign>Collective</campaign>
+  </notes>
  </mission>
  --]]
 --[[

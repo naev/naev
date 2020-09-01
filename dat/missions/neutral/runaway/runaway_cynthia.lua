@@ -10,6 +10,9 @@
    <location>Bar</location>
    <system>Gamma Polaris</system>
   </avail>
+  <notes>
+   <tier>1</tier>
+  </notes>
  </mission>
  --]]
 --[[

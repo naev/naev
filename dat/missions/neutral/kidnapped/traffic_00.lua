@@ -6,6 +6,10 @@
    <chance>100</chance>
    <location>None</location>
   </avail>
+  <notes>
+   <done_evt name="Kidnapped">Triggers</done_evt>
+   <campaign>Kidnapping</campaign>
+  </notes>
  </mission>
  --]]
 --[[

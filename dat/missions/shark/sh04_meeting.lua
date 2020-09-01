@@ -11,6 +11,9 @@
    <location>Bar</location>
    <planet>Darkshed</planet>
   </avail>
+  <notes>
+   <campaign>Nexus show their teeth</campaign>
+  </notes>
  </mission>
  --]]
 --[[

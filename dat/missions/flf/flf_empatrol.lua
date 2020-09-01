@@ -9,6 +9,9 @@
    <faction>Frontier</faction>
    <cond>diff.isApplied("flf_vs_empire") and not diff.isApplied( "flf_dead" )</cond>
   </avail>
+  <notes>
+   <requires name="The Empire and the FLF are enemies"/>
+  </notes>
  </mission>
  --]]
 --[[

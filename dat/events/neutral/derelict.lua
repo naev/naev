@@ -4,6 +4,9 @@
   <trigger>enter</trigger>
   <chance>10</chance>
   <cond>system.cur():faction() ~= nil</cond>
+  <notes>
+   <tier>1</tier>
+  </notes>
  </event>
  --]]
 --[[

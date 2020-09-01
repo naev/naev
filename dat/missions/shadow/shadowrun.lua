@@ -10,6 +10,9 @@
    <location>Bar</location>
    <cond>system.get("Klantar"):jumpDist() &lt; 3</cond>
   </avail>
+  <notes>
+   <campaign>Shadow</campaign>
+  </notes>
  </mission>
  --]]
 --[[

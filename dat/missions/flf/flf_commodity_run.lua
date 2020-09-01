@@ -8,6 +8,9 @@
    <location>Computer</location>
    <faction>FLF</faction>
   </avail>
+  <notes>
+   <done_misn name="Deal with the FLF agent"/>
+  </notes>
  </mission>
  --]]
 --[[

@@ -15,6 +15,9 @@
    <faction>Goddard</faction>
    <faction>Sirius</faction>
   </avail>
+  <notes>
+   <campaign>Kidnapping</campaign>
+  </notes>
  </mission>
  --]]
 --[[

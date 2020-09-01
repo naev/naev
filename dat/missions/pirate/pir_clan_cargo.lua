@@ -8,6 +8,9 @@
    <location>Bar</location>
    <faction>Pirate</faction>
   </avail>
+  <notes>
+   <tier>2</tier>
+  </notes>
  </mission>
  --]]
 --[[

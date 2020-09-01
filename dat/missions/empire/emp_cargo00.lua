@@ -10,6 +10,9 @@
    <location>Bar</location>
    <faction>Empire</faction>
   </avail>
+  <notes>
+   <tier>1</tier>
+  </notes>
  </mission>
  --]]
 --[[

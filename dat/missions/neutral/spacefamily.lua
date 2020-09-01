@@ -9,6 +9,9 @@
    <chance>100</chance>
    <location>None</location>
   </avail>
+  <notes>
+   <done_evt name="Shipwreck">If you make the mistake to help Harrus</done_evt>
+  </notes>
  </mission>
  --]]
 --[[

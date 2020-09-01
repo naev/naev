@@ -12,6 +12,9 @@
    <location>Bar</location>
    <planet>Margot</planet>
   </avail>
+  <notes>
+   <campaign>Heretic</campaign>
+  </notes>
  </mission>
  --]]
 --[[misn title - the return]]

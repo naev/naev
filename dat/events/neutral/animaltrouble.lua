@@ -7,6 +7,9 @@
   <flags>
    <unique />
   </flags>
+  <notes>
+   <done_misn name="Animal transport">The rodents sabotage your ship</done_misn>
+  </notes>
  </event>
  --]]
 --[[

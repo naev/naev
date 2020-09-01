@@ -8,6 +8,9 @@
    <location>Computer</location>
    <done>Empire Shipping 3</done>
   </avail>
+  <notes>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --[[

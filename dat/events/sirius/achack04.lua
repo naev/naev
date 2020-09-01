@@ -6,6 +6,10 @@
   <cond>not player.misnActive("Sirian Truce") and not player.misnDone("Sirian Truce") and player.misnDone("Joanne's Doubt") and system.cur():presences()["Sirius"] ~= nil and (var.peek("achack04repeat") == nil or time.get() - time.fromnumber(var.peek("achack04repeat")) &gt; time.create(0, 30, 0))</cond>
   <flags>
   </flags>
+  <notes>
+   <done_misn name="Joanne's Doubt"/>
+   <campaign>Academy Hack</campaign>
+  </notes>
  </event>
  --]]
 --[[
