@@ -66,11 +66,11 @@ for missionfile in glob.glob( prefix+'/dat/missions/**/*.lua', recursive=True ):
     name = 'Misn: '+misn.attrib['name']
     names.append(name)
     namdict[name] = i
-    
+
     avail = misn.find('avail')
     done = avail.find('done') # TODO: I guess findall is needed if there are more than one
     dones.append(done)
-    
+
     flags = misn.find('flags')
     if flags == None:
         uniques.append(False)
@@ -80,7 +80,7 @@ for missionfile in glob.glob( prefix+'/dat/missions/**/*.lua', recursive=True ):
             uniques.append(False)
         else:
             uniques.append(True)
-        
+
     # Read the notes
     campaign = None
     tier = None
@@ -88,21 +88,21 @@ for missionfile in glob.glob( prefix+'/dat/missions/**/*.lua', recursive=True ):
     if notes != None:
         campaign = notes.find("campaign")
         tier = notes.find("tier")
-        
+
     if campaign == None:
         campTxt = "Generic Missions"
     else:
         campTxt = campaign.text
-        
+
     if tier == None:
         tierV = None
     else:
         tierV = int(tier.text)
-        
+
     campTxt = 'cluster: '+campTxt
-    camp.append(campTxt) 
-    tierL.append(tierV)    
-        
+    camp.append(campTxt)
+    tierL.append(tierV)
+
     if notes != None:
         done_misn = notes.findall('done_misn')
         for dm in done_misn:
@@ -110,14 +110,14 @@ for missionfile in glob.glob( prefix+'/dat/missions/**/*.lua', recursive=True ):
             if dm.text == None:
                 dm.text = ""
             extra_links.append( (previous, name, dm.text)  )
-            
+
         done_evt = notes.findall('done_evt')
         for dm in done_evt:
             previous = 'Evt: '+dm.attrib['name']
             if dm.text == None:
                 dm.text = ""
             extra_links.append( (previous, name, dm.text)  )
-            
+
         provides = notes.findall('provides')
         for p in provides:
             nextt = p.attrib['name']
@@ -126,7 +126,7 @@ for missionfile in glob.glob( prefix+'/dat/missions/**/*.lua', recursive=True ):
             extra_links.append( (name, nextt, p.text)  )
             if (not (nextt in meta_nodes)):
                 meta_nodes.append((nextt,campTxt))
-            
+
         requires = notes.findall('requires')
         for r in requires:
             previous = r.attrib['name']
@@ -135,9 +135,9 @@ for missionfile in glob.glob( prefix+'/dat/missions/**/*.lua', recursive=True ):
             extra_links.append( (previous, name, r.text)  )
             if (not (previous in meta_nodes)):
                 meta_nodes.append((previous,campTxt)) # TODO: there will be conflicts between differnent requires
-    
+
     i += 1
-    
+
 namdictE  = {} # Index from name
 namesE    = []
 uniquesE  = [] #
@@ -165,7 +165,7 @@ for eventfile in glob.glob( prefix+'/dat/events/**/*.lua', recursive=True ):
     name = 'Evt: '+evt.attrib['name']
     namesE.append(name)
     namdictE[name] = i
-    
+
     flags = evt.find('flags')
     if flags == None:
         uniquesE.append(False)
@@ -175,30 +175,30 @@ for eventfile in glob.glob( prefix+'/dat/events/**/*.lua', recursive=True ):
             uniquesE.append(False)
         else:
             uniquesE.append(True)
-            
+
     # Read the notes TODO: one function
     campaign = None
     tier = None
     notes = evt.find('notes')
-    
+
     if notes != None:
         campaign = notes.find("campaign")
         tier = notes.find("tier")
-        
+
     if campaign == None:
         campTxt = "Generic Events"
     else:
         campTxt = campaign.text
-        
+
     if tier == None:
         tierV = None
     else:
         tierV = int(tier.text)
-        
-    campTxt = 'cluster: '+campTxt 
+
+    campTxt = 'cluster: '+campTxt
     campE.append(campTxt)
     tierLE.append(tierV)
-    
+
     if notes != None:
         done_misn = notes.findall('done_misn')
         for dm in done_misn:
@@ -206,7 +206,7 @@ for eventfile in glob.glob( prefix+'/dat/events/**/*.lua', recursive=True ):
             if dm.text == None:
                 dm.text = ""
             extra_links.append( (previous, name, dm.text)  )
-            
+
         provides = notes.findall('provides')
         for p in provides:
             nextt = p.attrib['name']
@@ -215,7 +215,7 @@ for eventfile in glob.glob( prefix+'/dat/events/**/*.lua', recursive=True ):
             extra_links.append( (name, nextt, p.text)  )
             if (not (nextt in meta_nodes)):
                 meta_nodes.append((nextt,campTxt))
-            
+
         requires = notes.findall('requires')
         for r in requires:
             previous = r.attrib['name']
@@ -225,7 +225,7 @@ for eventfile in glob.glob( prefix+'/dat/events/**/*.lua', recursive=True ):
             if (not (previous in meta_nodes)):
                 meta_nodes.append((previous,campTxt))
 
-        
+
     i += 1
 
 # Generate graph
@@ -251,7 +251,7 @@ if not ignore_tier:
         sub.add_node(tierNames[i], shape='octagon')
         if i>0:
             G.add_edge(tierNames[i-1], tierNames[i], style='invis')
-   
+
 # Add meta nodes
 for node in meta_nodes:
     name = node[0]
@@ -264,7 +264,7 @@ for node in meta_nodes:
         if sub is None:
             G.add_subgraph(name=campagn,label=campagn)
             sub = G.get_subgraph(campagn)
-            
+
         sub.add_node(name,shape='hexagon',color='red')
 
 
@@ -273,7 +273,7 @@ for i in range(len(names)):
     name = names[i]
     subN = camp[i]
     tier = tierL[i]
-    
+
     #if True:
     if subN == "cluster: Generic Missions" or ignore_camp:
         if uniques[i]:
@@ -285,56 +285,56 @@ for i in range(len(names)):
         if sub is None:
             G.add_subgraph(name=subN,label=subN)
             sub = G.get_subgraph(subN)
-        
+
         if uniques[i]:
             sub.add_node(name,shape='ellipse')
         else:
             sub.add_node(name,shape='ellipse',color='grey')
-            
+
     if tier != None and (not ignore_tier):
         sub = G.get_subgraph(str(tier))
         sub.add_node(name)
 
-# Same thing for events    
+# Same thing for events
 for i in range(len(namesE)):
     name = namesE[i]
     subN = campE[i]
     tier = tierLE[i]
-    
+
     #if True:
     if subN == "cluster: Generic Events" or ignore_camp:
         if uniquesE[i]:
             G.add_node(name,shape='box')
         else:
             G.add_node(name,shape='box',color='grey')
-        
+
     else:
         sub = G.get_subgraph(subN)
         if sub is None:
             G.add_subgraph(name=subN,label=subN)
             sub = G.get_subgraph(subN)
-            
+
         if uniquesE[i]:
             sub.add_node(name,shape='box')
         else:
             sub.add_node(name,shape='box',color='grey')
-            
+
     if tier != None and (not ignore_tier):
         sub = G.get_subgraph(str(tier))
         sub.add_node(name)
 
-    
+
 for i in range(len(dones)):
     done = dones[i]
     if done == None:
         continue
     name = names[i]
     G.add_edge('Misn: '+done.text,name)
-    
+
 for i in range(len(extra_links)):
     link = extra_links[i]
     G.add_edge( link[0], link[1], label=link[2], color='red' ) #
-    
+
 #G.graph_attr['rank']='same'
 G.layout(prog='dot')
 #G.layout(prog='neato')
