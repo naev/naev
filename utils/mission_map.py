@@ -41,14 +41,14 @@ tierL = []
 
 directory = os.path.split(os.getcwd())
 if directory[1] == 'utils':
-    relative_path = '../dat/missions/**/*.lua'
+    prefix = '..'
 elif directory[1] == 'naev':
-    relative_path = './dat/missions/**/*.lua'
+    prefix = '.'
 else:
     print("Failed to detect where you're running this script from\nPlease enter your path manually")
 
 # Reads all the missions
-for missionfile in glob.glob( relative_path, recursive=True ):
+for missionfile in glob.glob( prefix+'/dat/missions/**/*.lua', recursive=True ):
     print(missionfile)
 
     with open(missionfile,'r') as f:
@@ -147,7 +147,7 @@ tierLE     = []
 i = 0
 
 # Reads all the Events
-for eventfile in glob.glob( '../dat/events/**/*.lua', recursive=True ):
+for eventfile in glob.glob( prefix+'/dat/events/**/*.lua', recursive=True ):
     print(eventfile)
 
     with open(eventfile,'r') as f:
