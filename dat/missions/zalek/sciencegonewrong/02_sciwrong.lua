@@ -1,18 +1,18 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The one with the Runaway">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <done>The one with the Visit</done>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>Gastan</planet>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <done>The one with the Visit</done>
+  <chance>100</chance>
+  <location>Bar</location>
+  <planet>Gastan</planet>
+ </avail>
+</mission>
+--]]
 --[[
    Mission: The one with the Runaway
    Description: A prototype drone runs away and needs to be caught by the player
@@ -25,7 +25,6 @@
 --]]
 
 require "fleethelper.lua"
-require "factions/spawn/zalek/lua"
 require "dat/missions/zalek/common.lua"
 
 
