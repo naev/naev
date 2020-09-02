@@ -68,6 +68,7 @@ def generate_soundtrack():
             # Write to zip
             audio.save()
             zipf.write( temp, number+"_"+song['filename'] )
+            os.remove( temp )
             i += 1
 
     if len(all_songs) > 0:
