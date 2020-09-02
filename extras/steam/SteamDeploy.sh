@@ -113,6 +113,7 @@ elif [[ $NIGHTLY == false ]]; then
         echo "Something went wrong determining if this is a beta or not."
     fi
 elif [[ $SOUNDTRACK == true ]]; then
+    echo "TODO"
 else
     echo "Something went wrong.."
     exit -1
