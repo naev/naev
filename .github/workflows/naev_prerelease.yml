@@ -4,7 +4,7 @@ on:
       - '!v*.*.*'
       - 'v*.*.*-beta*'
 
-name: Release
+name: Pre-Release
 
 jobs:
   "Windows-MinGW32":
