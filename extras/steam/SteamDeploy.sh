@@ -48,7 +48,7 @@ BETA=false
 if [[ -n $(echo "$VERSION" | grep "-") ]]; then
     BASEVER=$(echo "$VERSION" | sed 's/\.-.*//')
     BETAVER=$(echo "$VERSION" | sed 's/.*-//')
-    VERSION="$BASEVER.0-beta$BETAVER"
+    VERSION="$BASEVER.0-beta.$BETAVER"
     BETA=true
 else
     echo "could not find VERSION file"
@@ -83,7 +83,7 @@ unzip extras/steam/temp/ndata/ndata.zip -d extras/steam/content/ndata
 
 # Runs STEAMCMD, and builds the app as well as all needed depots.
 
-if [[ $NIGHTLY == true ]]; then
+if [[ $NIGHTLY == true && $SOUNDTRACK == false ]]; then
     # Trigger 2FA request and get 2FA code
     steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
 
@@ -95,7 +95,7 @@ if [[ $NIGHTLY == true ]]; then
     # Run steam upload with 2fa key
     steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_598530_nightly.vdf +quit
 
-elif [[ $NIGHTLY == false ]]; then
+elif [[ $NIGHTLY == false && $SOUNDTRACK == false ]]; then
     # Trigger 2FA request and get 2FA code
     steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
 
@@ -116,7 +116,11 @@ elif [[ $NIGHTLY == false ]]; then
         echo "Something went wrong determining if this is a beta or not."
     fi
 elif [[ $SOUNDTRACK == true ]]; then
-# Trigger 2FA request and get 2FA code
+    # Move soundtrack stuff to deployment area
+    unzip extras/steam/temp/soundtrack/soundtrack.zip -d extras/steam/content/soundtrack
+    cp extras/steam/naev_soundtrack_cover.png extras/steam/content/soundtrack/naev_soundtrack_cover.png
+    
+    # Trigger 2FA request and get 2FA code
     steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
 
     # Wait a few seconds for the email to arrive
