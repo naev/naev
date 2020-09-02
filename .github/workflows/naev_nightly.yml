@@ -486,7 +486,7 @@ jobs:
           if [[ -n $(echo "${VERSION}" | grep "-") ]]; then
               BASEVER=$(echo "${VERSION}" | sed 's/\.-.*//')
               BETAVER=$(echo "${VERSION}" | sed 's/.*-//')
-              VERSION="${BASEVER}.0-beta${BETAVER}"
+              VERSION="${BASEVER}.0-beta.${BETAVER}"
           fi
 
           mv temp/linux-x86-64/naev-linux-x86-64 dist/naev-$VERSION-$BUILD_DATE-linux-x86-64

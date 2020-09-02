@@ -37,7 +37,7 @@ function get_version {
    if [[ -n $(echo "${VERSION}" | grep "-") ]]; then
       BASEVER=$(echo "${VERSION}" | sed 's/\.-.*//')
       BETAVER=$(echo "${VERSION}" | sed 's/.*-//')
-      VERSION="${BASEVER}.0-beta${BETAVER}"
+      VERSION="${BASEVER}.0-beta.${BETAVER}"
    fi
    return 0
 }

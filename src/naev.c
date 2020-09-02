@@ -1213,7 +1213,7 @@ int naev_versionString( char *str, size_t slen, int major, int minor, int rev )
 {
    int n;
    if (rev<0)
-      n = nsnprintf( str, slen, "%d.%d.0-beta%d", major, minor, ABS(rev) );
+      n = nsnprintf( str, slen, "%d.%d.0-beta.%d", major, minor, ABS(rev) );
    else
       n = nsnprintf( str, slen, "%d.%d.%d", major, minor, rev );
    return n;
