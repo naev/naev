@@ -7,6 +7,7 @@
 #
 # This script should be run after downloading all build artefacts
 # If --nightly is passed to the script, a nightly build will be generated
+# If --soundtrack is passed to the script, the soundtrack will be generated
 # and uploaded to Steam
 #
 
@@ -15,11 +16,19 @@
 if [[ $1 == "--nightly" ]]; then
     echo "Deploying for nightly release"
     NIGHTLY=true
+elif [[ $1 == "--soundtrack" ]]; then
+    echo "Deploying the soundtrack"
+    SOUNDTRACK=true
+    exit -1
 elif [[ $1 == "" ]]; then
     echo "No arguments passed, assuming normal release"
     NIGHTLY=false
 elif [[ $1 != "--nightly" ]]; then
     echo "Please use argument --nightly if you are deploying this as a nightly release"
+    exit -1
+elif [[ $1 != "--soundtrack" ]]; then
+    echo "Please use argument --soundtrack if you are deploying the soundtrack"
+    SOUNDTRACK=false
     exit -1
 else
     echo "Something went wrong."
@@ -48,7 +57,7 @@ fi
 
 # Create deployment locations
 mkdir -p extras/steam/{content,output}
-mkdir -p extras/steam/content/{lin32,lin64,ndata,win32,win64}
+mkdir -p extras/steam/content/{lin32,lin64,ndata,win32,win64,soundtrack}
 
 # Move all build artefacts to deployment locations
 
@@ -106,8 +115,17 @@ elif [[ $NIGHTLY == false ]]; then
     else
         echo "Something went wrong determining if this is a beta or not."
     fi
+elif [[ $SOUNDTRACK == true ]]; then
+# Trigger 2FA request and get 2FA code
+    steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
+
+    # Wait a few seconds for the email to arrive
+    sleep 10
+    python3 extras/steam/2fa/get_2fa.py
+    STEAMCMD_TFA="$(cat extras/steam/2fa/2fa.txt)"
+    
+    steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_1411430.vdf +quit
 else
-    echo "Cannot determine NIGHTLY"
     echo "Something went wrong.."
     exit -1
 fi
