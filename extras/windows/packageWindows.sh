@@ -143,7 +143,7 @@ if [[ $NIGHTLY == true ]]; then
     if [[ $BETA == true ]]; then 
         makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta.$BETAVER-$BUILD_DATE -DARCH=$ARCH -DRELEASE=nightly extras/windows/installer/naev.nsi
     elif [[ $BETA == false ]]; then 
-        makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-$BUILD_DATE -DARCH=$ARCH -DRELEASE=nightly extras/windows/installer/naev.nsi
+        makensis -DVERSION=$VERSION -DVERSION_SUFFIX=-$BUILD_DATE -DARCH=$ARCH -DRELEASE=nightly extras/windows/installer/naev.nsi
     else
         echo "Something went wrong determining if this is a beta or not."
     fi
@@ -154,9 +154,9 @@ mv extras/windows/installer/naev-$VERSION-$BUILD_DATE-win$ARCH.exe naev-win$ARCH
 
 elif [[ $NIGHTLY == false ]]; then
     if [[ $BETA == true ]]; then 
-        makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta.$BETAVER -DARCH=$ARCH -DRELEASE=naev-$BASEVER.0-beta.$BETAVER extras/windows/installer/naev.nsi
+        makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta.$BETAVER -DARCH=$ARCH -DRELEASE=v$BASEVER.0-beta.$BETAVER extras/windows/installer/naev.nsi
     elif [[ $BETA == false ]]; then 
-        makensis -DVERSION=$VERSION -DVERSION_SUFFIX= -DARCH=$ARCH -DRELEASE=naev-$VERSION extras/windows/installer/naev.nsi
+        makensis -DVERSION=$VERSION -DVERSION_SUFFIX= -DARCH=$ARCH -DRELEASE=v$VERSION extras/windows/installer/naev.nsi
     else
         echo "Something went wrong determining if this is a beta or not."
     fi
