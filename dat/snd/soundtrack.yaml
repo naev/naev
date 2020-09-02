@@ -22,6 +22,8 @@
   filename: peace4.ogg
 - name: Peace 6
   filename: peace6.ogg
+- name: Ambient 2.5
+  filename: ambient2_5.ogg
 - name: Ambiphonic
   filename: ambiphonic.ogg
 - name: Void Sensor
@@ -37,7 +39,7 @@
 - name: Combat 2
   filename: combat2.ogg
 - name: Combat 3
-  filename: combat2.ogg
+  filename: combat3.ogg
 
 # Landing
 - name: Agricultural Planet
@@ -52,6 +54,8 @@
   filename: upbeat.ogg
 
 # Nebula stuff
+- name: Intrigue
+  filename: intrigue.ogg
 - name: Ambient 3
   filename: ambient3.ogg
 - name: Nebula Battle 1
@@ -60,6 +64,8 @@
   filename: nebu_battle2.ogg
 
 # Empire
+- name: Tension
+  filename: tension.ogg
 - name: Launch 3
   filename: launch3chatstart.ogg
 - name: Empire 1
@@ -116,5 +122,9 @@
 # Collective
 - name: Landing Sinister
   filename: landing_sinister.ogg
+- name: Collective 1
+  filename: collective1.ogg
 - name: Collective 2
   filename: collective2.ogg
+- name: Automat
+  filename: automat.ogg
