@@ -1,8 +1,8 @@
 on:
   push:
     tags:   
-      - 'naev-*.*.*'
-      - '!naev-*.*.*-beta*'
+      - 'v*.*.*'
+      - '!v*.*.*-beta*'
 
 name: Release
 
