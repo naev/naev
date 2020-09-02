@@ -16,10 +16,15 @@ import xml.etree.ElementTree as ET
 import pygraphviz as pgv
 import glob
 import os
+import argparse
 
 # Should we represent different campaigns and different tiers?
-ignore_camp = True
-ignore_tier = False
+parser = argparse.ArgumentParser(description='Tool to display the relationships between the missions in Naev.')
+parser.add_argument('--campaigns', metavar='c', type=bool, default=False, help="Ignore the campaign relationships when creating the graph." )
+parser.add_argument('--tiers', metavar='t', type=bool, default=True, help="Ignore the tier relationships when creating the graph." )
+args = parser.parse_args()
+ignore_camp = not args.campaigns
+ignore_tier = not args.tiers
 
 tierNames = ["Automatic",
              "Basic piloting",
