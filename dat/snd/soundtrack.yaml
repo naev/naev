@@ -1,4 +1,120 @@
+# Start with intro
+- name: Introduction
+  filename: intro.ogg
+- name: Machina
+  filename: machina.ogg
+# Some neutral stuff
+- name: Launch 2
+  filename: launch2.ogg
 - name: Ambient 1
   filename: ambient1.ogg
 - name: Ambient 2
   filename: ambient2.ogg
+- name: Ambient 4
+  filename: ambient4.ogg
+- name: Mission
+  filename: mission.ogg
+- name: Peace 1
+  filename: peace1.ogg
+- name: Peace 2
+  filename: peace2.ogg
+- name: Peace 4
+  filename: peace4.ogg
+- name: Peace 6
+  filename: peace6.ogg
+- name: Ambiphonic
+  filename: ambiphonic.ogg
+- name: Void Sensor
+  filename: void_sensor.ogg
+- name: Terminal
+  filename: terminal.ogg
+- name: Eureka!
+  filename: eureka.ogg
+- name: Lift-off
+  filename: liftoff.ogg
+- name: Combat 1
+  filename: combat1.ogg
+- name: Combat 2
+  filename: combat2.ogg
+- name: Combat 3
+  filename: combat2.ogg
+
+# Landing
+- name: Agricultural Planet
+  filename: agriculture.ogg
+- name: Ocean Planet
+  filename: ocean.ogg
+- name: Snowy Planet
+  filename: snow.ogg
+- name: Cosmostation
+  filename: cosmostation.ogg
+- name: upbeat
+  filename: upbeat.ogg
+
+# Nebula stuff
+- name: Ambient 3
+  filename: ambient3.ogg
+- name: Nebula Battle 1
+  filename: nebu_battle1.ogg
+- name: Nebula Battle 2
+  filename: nebu_battle2.ogg
+
+# Empire
+- name: Launch 3
+  filename: launch3chatstart.ogg
+- name: Empire 1
+  filename: empire1.ogg
+- name: Empire 2
+  filename: empire2.ogg
+- name: Galactic Battle
+  filename: galacticbattle.ogg
+- name: Battle Something 2
+  filename: battlesomething2.ogg
+
+# Pirate
+- name: Pirate Theme
+  filename: pirate1_theme1.ogg
+- name: Pirate Orchestra
+  filename: pirates_orchestra.ogg
+- name: Blackmoor Tides
+  filename: blackmoor_tides.ogg
+
+# Sirius
+- name: Sirius 1
+  filename: sirius1.ogg
+- name: Sirius 2
+  filename: sirius2.ogg
+
+# Dvaered
+- name: Dvaered 1
+  filename: dvaered1.ogg
+- name: Dvaered 2
+  filename: dvaered2.ogg
+- name: Battle Something 1
+  filename: battlesomething1.ogg
+- name: FLF Battle 1
+  filename: flf_battle1.ogg
+
+# Za'lek
+- name: Za'lek 1
+  filename: zalek1.ogg
+- name: Za'lek 2
+  filename: zalek2.ogg
+
+# Thurion
+- name: Motherload
+  filename: motherload.ogg
+- name: Dark City
+  filename: dark_city.ogg
+
+# Proteron
+- name: Heart of Machine
+  filename: heartofmachine.ogg
+- name: Imminent Threat
+  filename: imminent_threat.ogg
+
+# Collective
+- name: Landing Sinister
+  filename: landing_sinister.ogg
+- name: Collective 2
+  filename: collective2.ogg
