@@ -64,7 +64,7 @@ def generate_soundtrack():
             audio['TRACKNUMBER'] = number
             audio['ORGANIZATION'] = 'Naev DevTeam'
             audio['ALBUM']      = 'Naev Soundtrack'
-            print( f"{number}. {song['filename']} ({length})" )
+            print( f"{number}. {song['name']} ({length})" )
             # Write to zip
             audio.save()
             zipf.write( temp, number+"_"+song['filename'] )
