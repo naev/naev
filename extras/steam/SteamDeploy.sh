@@ -16,19 +16,11 @@
 if [[ $1 == "--nightly" ]]; then
     echo "Deploying for nightly release"
     NIGHTLY=true
-elif [[ $1 == "--soundtrack" ]]; then
-    echo "Deploying the soundtrack"
-    SOUNDTRACK=true
-    exit -1
 elif [[ $1 == "" ]]; then
     echo "No arguments passed, assuming normal release"
     NIGHTLY=false
 elif [[ $1 != "--nightly" ]]; then
     echo "Please use argument --nightly if you are deploying this as a nightly release"
-    exit -1
-elif [[ $1 != "--soundtrack" ]]; then
-    echo "Please use argument --soundtrack if you are deploying the soundtrack"
-    SOUNDTRACK=false
     exit -1
 else
     echo "Something went wrong."
@@ -83,7 +75,7 @@ unzip extras/steam/temp/ndata/ndata.zip -d extras/steam/content/ndata
 
 # Runs STEAMCMD, and builds the app as well as all needed depots.
 
-if [[ $NIGHTLY == true && $SOUNDTRACK == false ]]; then
+if [[ $NIGHTLY == true ]]; then
     # Trigger 2FA request and get 2FA code
     steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
 
@@ -95,7 +87,11 @@ if [[ $NIGHTLY == true && $SOUNDTRACK == false ]]; then
     # Run steam upload with 2fa key
     steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_598530_nightly.vdf +quit
 
-elif [[ $NIGHTLY == false && $SOUNDTRACK == false ]]; then
+elif [[ $NIGHTLY == false ]]; then
+    # Move soundtrack stuff to deployment area
+    unzip extras/steam/temp/soundtrack/soundtrack.zip -d extras/steam/content/soundtrack
+    cp extras/steam/naev_soundtrack_cover.png extras/steam/content/soundtrack/naev_soundtrack_cover.png
+
     # Trigger 2FA request and get 2FA code
     steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
 
@@ -111,24 +107,12 @@ elif [[ $NIGHTLY == false && $SOUNDTRACK == false ]]; then
     elif [[ $BETA == false ]]; then 
         # Run steam upload with 2fa key
         steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_598530_release.vdf +quit
+        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_1411430.vdf +quit
 
     else
         echo "Something went wrong determining if this is a beta or not."
     fi
 elif [[ $SOUNDTRACK == true ]]; then
-    # Move soundtrack stuff to deployment area
-    unzip extras/steam/temp/soundtrack/soundtrack.zip -d extras/steam/content/soundtrack
-    cp extras/steam/naev_soundtrack_cover.png extras/steam/content/soundtrack/naev_soundtrack_cover.png
-    
-    # Trigger 2FA request and get 2FA code
-    steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
-
-    # Wait a few seconds for the email to arrive
-    sleep 10
-    python3 extras/steam/2fa/get_2fa.py
-    STEAMCMD_TFA="$(cat extras/steam/2fa/2fa.txt)"
-    
-    steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_1411430.vdf +quit
 else
     echo "Something went wrong.."
     exit -1
