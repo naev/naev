@@ -5,43 +5,6 @@ on:
 name: Nightly Release
 
 jobs:
-  "Windows-MinGW32":
-    runs-on: windows-latest
-
-    defaults:
-      run:
-        shell: msys2 {0}
-
-    steps:
-    - name: Setup MINGW32 Environment
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: MINGW32
-        update: true
-        install: mingw-w64-i686-libtool mingw-w64-i686-toolchain mingw-w64-i686-gcc mingw-w64-i686-SDL2 mingw-w64-i686-SDL2_mixer mingw-w64-i686-SDL2_image mingw-w64-i686-libxml2 mingw-w64-i686-libpng mingw-w64-i686-openal mingw-w64-i686-libvorbis mingw-w64-i686-binutils mingw-w64-i686-fontconfig mingw-w64-i686-freetype mingw-w64-i686-libzip mingw-w64-i686-gettext mingw-w64-i686-luajit mingw-w64-i686-nsis libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool zip unzip python3-pip
-    
-    - name: Checkout Naev Repository 
-      uses: actions/checkout@v2
-
-    - name: Build Naev on Win32
-      run: |
-        ./autogen.sh
-        ./configure --disable-debug
-        make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3"
-
-    - name: Build Windows Installer
-      run: ./extras/windows/packageWindows.sh --nightly
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: win32
-        path: |
-          ${{ github.workspace }}/naev-win32.exe
-          ${{ github.workspace }}/naev-win32.zip
-
   "Windows-MinGW64":
     runs-on: windows-latest
 
@@ -79,98 +42,6 @@ jobs:
         path: |
           ${{ github.workspace }}/naev-win64.exe
           ${{ github.workspace }}/naev-win64.zip
-
-  "Linux-x86":
-    runs-on: ubuntu-20.04
-
-    steps:
-    - name: Update APT Cache
-      run: |
-        sudo dpkg --add-architecture i386
-        sudo apt-get update
-
-    - name: Install Build Dependencies
-      run: |
-        sudo apt-get install \
-          build-essential \
-          automake \
-          autoconf-archive \
-          gcc-multilib \
-          libsdl2-dev:i386 \
-          libsdl2-mixer-dev:i386 \
-          libsdl2-image-dev:i386 \
-          libgl1-mesa-dev:i386 \
-          libglu1-mesa-dev:i386 \
-          libxml2-dev:i386 \
-          libfontconfig1-dev:i386 \
-          libfreetype6-dev:i386 \
-          libpng-dev:i386 \
-          libopenal-dev:i386 \
-          libvorbis-dev:i386 \
-          libzip-dev:i386 \
-          libiberty-dev:i386 \
-          libluajit-5.1-dev:i386 \
-          gettext \
-          autopoint \
-          intltool \
-          itstool
-
-    - name: Checkout Naev Repository 
-      uses: actions/checkout@v2
-
-    - name: Build Naev on Linux32
-      run: |
-        ./autogen.sh
-        ./configure --disable-debug --build=x86_64-linux-gnu --host=i686-linux-gnu
-        make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3 -m32"
-        LDFLAGS: "-m32"
-
-    - name: Package Linux32 Release
-      run: |
-        mv src/naev src/naev-linux-x86-32
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: linux-x86-32
-        path: ${{ github.workspace }}/src/naev-linux-x86-32
-
-  "Linux-Steam-x86":
-    runs-on: ubuntu-latest
-    container:
-      image: dosowisko/steam-runtime-i386
-      volumes:
-        - ${{ github.workspace }}:${{ github.workspace }}
-    steps:
-    - name: Clone Naev Repository 
-      run: |
-        git clone https://github.com/naev/naev.git ${{ github.workspace }}
-
-    - name: Install Additional Build Dependencies
-      run: |
-        sudo apt-get -y install autoconf-archive intltool itstool
-
-    - name: Build Naev for Steam on Linux32
-      run: |
-        cd ${{ github.workspace }}
-        ./autogen.sh
-        ./configure --disable-debug --without-libzip --build=i386-linux-gnu --host=i386-linux-gnu
-        make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3 -std=gnu11"
-
-    - name: Collect Steam Linux32 Release
-      run: |
-        mv ${{ github.workspace }}/src/naev ${{ github.workspace }}/naev.x32
-        chmod +x ${{ github.workspace }}/naev.x32
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: steam-x86-32
-        path: ${{ github.workspace }}/naev.x32
 
   "Linux-x86_64":
     runs-on: ubuntu-20.04
@@ -424,7 +295,7 @@ jobs:
 
   "Upload-Release":
       runs-on: ubuntu-latest
-      needs: [Windows-MinGW64, Windows-MinGW32, macOS, Linux-x86_64, Linux-x86, Generate-NData, Generate-Source]
+      needs: [Linux-x86_64, Windows-MinGW64, macOS, Generate-NData, Generate-Source]
       if: ${{ github.repository == 'naev/naev' }}
 
       steps:
@@ -468,16 +339,16 @@ jobs:
 
       - name: Create Release Staging Area
         run: |
-          mkdir -p temp   
+          mkdir -p dist   
 
       - name: Download Build Artifacts
         uses: actions/download-artifact@v2
         with:
-          path: ${{ github.workspace }}/temp/
+          path: ${{ github.workspace }}/dist
           
       - name: Collect files for distribution
         run: |
-          mkdir -p dist
+          mkdir -p dist/release
 
           BUILD_DATE="$(date +%m_%d_%Y)"
 
@@ -489,15 +360,11 @@ jobs:
               VERSION="${BASEVER}.0-beta.${BETAVER}"
           fi
 
-          mv temp/linux-x86-64/naev-linux-x86-64 dist/naev-$VERSION-$BUILD_DATE-linux-x86-64
-          mv temp/linux-x86-32/naev-linux-x86-32 dist/naev-$VERSION-$BUILD_DATE-linux-x86-32
-          mv temp/macos/naev-macos.zip dist/naev-$VERSION-$BUILD_DATE-macos.zip
-          mv temp/win64/naev-win64.exe dist/naev-$VERSION-$BUILD_DATE-win64.exe
-          mv temp/win64/naev-win64.zip dist/naev-$VERSION-$BUILD_DATE-win64.zip
-          mv temp/win32/naev-win32.exe dist/naev-$VERSION-$BUILD_DATE-win32.exe
-          mv temp/win32/naev-win32.zip dist/naev-$VERSION-$BUILD_DATE-win32.zip
-          mv temp/source/source.tar.bz2 dist/naev-$VERSION-$BUILD_DATE-source.tar.bz2
-          mv temp/ndata/ndata.zip dist/ndata-$VERSION-$BUILD_DATE.zip
+          mv dist/linux-x86-64/naev-linux-x86-64 dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64
+          mv dist/macos/naev-macos.zip dist/release/naev-$VERSION-$BUILD_DATE-macos.zip
+          mv dist/win64/naev-win64.exe dist/release/naev-$VERSION-$BUILD_DATE-win64.exe
+          mv dist/win64/naev-win64.zip dist/release/naev-$VERSION-$BUILD_DATE-win64.zip
+          mv dist/source/source.tar.bz2 dist/release/naev-$VERSION-$BUILD_DATE-source.tar.bz2
 
       - name: Upload Release Assets
         uses: "marvinpinto/action-automatic-releases@latest"
@@ -507,11 +374,11 @@ jobs:
           prerelease: true
           title: "Nightly Build"
           files: |
-            ${{ github.workspace }}/dist/*
+            ${{ github.workspace }}/dist/release/*
 
   "Upload-Steam":
       runs-on: ubuntu-latest
-      needs: [Windows-MinGW64, Windows-MinGW32, Linux-Steam-x86_64, Linux-Steam-x86, Generate-NData]
+      needs: [Linux-Steam-x86_64, Windows-MinGW64, macOS, Generate-NData]
       if: ${{ github.repository == 'naev/naev' }}
 
       steps:
@@ -562,12 +429,12 @@ jobs:
           
       - name: Create Release Staging Area
         run: |
-          mkdir -p ${{ github.workspace }}/extras/steam/temp/ 
+          mkdir -p ${{ github.workspace }}/dist/steam
 
       - name: Download Build Artifacts
         uses: actions/download-artifact@v2
         with:
-          path: ${{ github.workspace }}/extras/steam/temp/
+          path: ${{ github.workspace }}/dist/steam
           
       - name: Build and Upload Steam Release
         run: |
