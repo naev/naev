@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Valkyrie Ride">
+<outfit name="Valkyrie Beam">
  <general>
   <slot>weapon</slot>
   <unique />
@@ -7,7 +7,7 @@
   <license>Heavy Weapon License</license>
   <mass>90</mass>
   <price>3000000</price>
-  <description>The Valkyrie Ride is a heavily modified version of the Ragnarok Beam, where the shields of the ship are significantly rerouted to to the beam weapon to increase the output damage. The result is an incredibly potent beam that has a tendency to leave the ship as a sitting duck if it is unable to destroy the target in a single swipe.</description>
+  <description>The Valkyrie Beam is a heavily modified version of the Ragnarok Beam, where the shields of the ship are significantly rerouted to to the beam weapon to increase the output damage. The result is an incredibly potent beam that has a tendency to leave the ship as a sitting duck if it is unable to destroy the target in a single swipe.</description>
   <gfx_store>ragnarok</gfx_store>
   <cpu>-50</cpu>
  <rarity>6</rarity></general>
@@ -30,7 +30,7 @@
   </damage>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <gfx>beam_ragnarok</gfx>
+  <gfx>beam_ragnarok2</gfx>
   <sound>beam0</sound>
   <sound_off>beam_off0</sound_off>
  </specific>

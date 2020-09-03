@@ -102,7 +102,7 @@ function board ()
    -- TODO add more
    outfits = {
       'Air Freshener',
-      'Valkyrie Ride',
+      'Valkyrie Beam',
       'Hades Torch',
    }
 
