@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unidiff name="Thurion_found">
+ <system name="Metsys">
+  <asset name="FD-24">add</asset>
+ </system>
+ <system name="Tobanna">
+  <asset name="HS-232">add</asset>
+  <asset name="SY-1206">add</asset>
+  <asset name="SY-894">add</asset>
+  <asset name="SY-920">add</asset>
+ </system>
+ <system name="Rotide">
+  <asset name="SY-1025">add</asset>
+  <asset name="SY-612">add</asset>
+ </system>
+ <system name="Rauthia">
+  <asset name="NS-144">add</asset>
+  <asset name="SY-237">add</asset>
+  <asset name="SY-413">add</asset>
+ </system>
+ <system name="Seport">
+  <asset name="HS-224">add</asset>
+  <asset name="SY-314">add</asset>
+ </system>
+ <system name="Aet">
+  <asset name="SY-159">add</asset>
+  <asset name="SY-256">add</asset>
+ </system>
+ <system name="Katami">
+  <asset name="Virtual Thurion Local">add</asset>
+ </system>
+ <system name="Booster">
+  <asset name="Virtual Thurion Local">add</asset>
+ </system>
+ <system name="Adran">
+  <asset name="Virtual Thurion Local">add</asset>
+ </system>
+ <system name="Midoros">
+  <asset name="Virtual Thurion Local">add</asset>
+ </system>
+ <system name="Seran">
+  <asset name="Virtual Thurion Local">add</asset>
+ </system>
+ <system name="South Bell">
+  <asset name="Virtual Thurion Local">add</asset>
+ </system>
+ <system name="Tide">
+  <asset name="Virtual Thurion Local">add</asset>
+ </system>
+</unidiff>
+

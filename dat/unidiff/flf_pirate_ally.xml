@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unidiff name="flf_pirate_ally">
+ <faction name="FLF">
+  <faction name="Pirate">ally</faction>
+ </faction>
+</unidiff>
+
