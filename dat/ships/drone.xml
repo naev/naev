@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Drone">
  <base_type>Drone</base_type>
- <rarity>4</rarity>
  <GFX>drone</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>

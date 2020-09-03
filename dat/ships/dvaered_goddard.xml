@@ -3,7 +3,7 @@
  <base_type>Goddard</base_type>
  <GFX sx="12" sy="12">goddard_dvaered</GFX>
  <GUI>brushed</GUI>
- <rarity>5</rarity>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>7000000</price>

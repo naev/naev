@@ -3,7 +3,7 @@
  <base_type>Phalanx</base_type>
  <GFX sx="10" sy="10">phalanx_dvaered</GFX>
  <GUI>brushed</GUI>
- <rarity>3</rarity>
+ <rarity>1</rarity>
  <sound>engine</sound>
  <class>Corvette</class>
  <price>650000</price>

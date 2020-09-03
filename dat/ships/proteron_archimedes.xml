@@ -2,7 +2,7 @@
 <ship name="Proteron Archimedes">
  <base_type>Archimedes</base_type>
  <GFX sx="12" sy="12">archimedes</GFX>
- <rarity>3</rarity>
+ <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>

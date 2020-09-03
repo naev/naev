@@ -2,7 +2,7 @@
 <ship name="Thurion Scintillation">
  <base_type>Scintillation</base_type>
  <GFX>scintillation</GFX>
- <rarity>3</rarity>
+ <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Bomber</class>

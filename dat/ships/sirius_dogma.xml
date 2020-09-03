@@ -2,7 +2,7 @@
 <ship name="Sirius Dogma">
  <base_type>Dogma</base_type>
  <GFX sx="12" sy="12">dogma</GFX>
- <rarity>4</rarity>
+ <rarity>1</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>

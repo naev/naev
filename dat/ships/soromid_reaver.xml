@@ -2,7 +2,7 @@
 <ship name="Soromid Reaver">
  <base_type>Reaver</base_type>
  <GFX>reaver</GFX>
- <rarity>3</rarity>
+ <rarity>1</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>

@@ -2,7 +2,7 @@
 <ship name="Pirate Ancestor">
  <base_type>Ancestor</base_type>
  <GFX>ancestor_pirate</GFX>
- <rarity>3</rarity>
+ <rarity>1</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Bomber</class>

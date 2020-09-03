@@ -2,7 +2,7 @@
 <ship name="Thurion Ingenuity">
  <base_type>Ingenuity</base_type>
  <GFX>ingenuity</GFX>
- <rarity>3</rarity>
+ <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>

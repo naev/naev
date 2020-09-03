@@ -2,7 +2,7 @@
 <ship name="Pirate Shark">
  <base_type>Shark</base_type>
  <GFX>shark_pirate</GFX>
- <rarity>3</rarity>
+ <rarity>1</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>

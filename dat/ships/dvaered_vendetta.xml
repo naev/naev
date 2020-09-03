@@ -2,7 +2,7 @@
 <ship name="Dvaered Vendetta">
  <base_type>Vendetta</base_type>
  <GFX>vendetta_dvaered</GFX>
- <rarity>3</rarity>
+ <rarity>1</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>

@@ -2,7 +2,7 @@
 <ship name="Za'lek Hephaestus">
  <base_type>Hephaestus</base_type>
  <GFX sx="12" sy="12">hephaestus</GFX>
- <rarity>5</rarity>
+ <rarity>1</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Carrier</class>

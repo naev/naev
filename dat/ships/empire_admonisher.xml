@@ -2,7 +2,7 @@
 <ship name="Empire Admonisher">
  <base_type>Admonisher</base_type>
  <GFX>admonisher_empire</GFX>
- <rarity>3</rarity>
+ <rarity>1</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>

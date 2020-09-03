@@ -2,7 +2,6 @@
 <ship name="Mule">
  <base_type>Mule</base_type>
  <GFX sx="10" sy="10">mule</GFX>
- <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Freighter</class>
