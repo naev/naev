@@ -1121,10 +1121,12 @@ int diff_save( xmlTextWriterPtr writer )
    UniDiff_t *diff;
 
    xmlw_startElem(writer,"diffs");
-   for (i=0; i<array_size(diff_stack); i++) {
-      diff = &diff_stack[i];
+   if (diff_stack != NULL) {
+      for (i=0; i<array_size(diff_stack); i++) {
+         diff = &diff_stack[i];
 
-      xmlw_elem(writer, "diff", "%s", diff->name);
+         xmlw_elem(writer, "diff", "%s", diff->name);
+      }
    }
    xmlw_endElem(writer); /* "diffs" */
 
