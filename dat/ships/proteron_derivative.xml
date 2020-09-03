@@ -27,7 +27,6 @@
   <weapon size="small" x="0" y="-4" h="-3" />
   <weapon size="small" x="0" y="4" h="-3" />
   <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
-  <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
   <utility size="small" />
   <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>

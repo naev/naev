@@ -70,7 +70,7 @@ text[12] = _([["There you go! Get it!"]])
 text[13] = _([["This is strange, the engines are starting to heat up... oh, shit, if they continue like this the drone will explode in about 20 seconds! You'd better hurry!"]])
 text[14] = _([["NOOOOOOOOO! My drone! You imbecile! You failed me!"]])
 -- final msg when returning to gastan
-text[15] = _([["The things I do for science! Now let me go back to my lab and analyze the drone. I need to figure out exactly what happened and what went wrong. Once I know more I might need you again. Oh, and here, for your service!" A small bag containing a credit chip and a tiny toy drone is tossed your way.]])
+text[15] = _([["The things I do for science! Now let me go back to my lab and analyze the drone. I need to figure out exactly what happened and what went wrong. Once I know more I might need you again. Oh, and here, for your service!" A credit chip is tossed your way.]])
 
 -- text if the mission is failed
 fail_text = _([["NOOOOOO! What have you done!? My prototype! It's going to take me weeks to rebuild it! You incompetent nincompoop!"]])
@@ -298,7 +298,6 @@ function land_home()
    if planet.cur() == planet.get(t_pla[2]) then
       tk.msg(title[4]:format(t_pla[2]),text[15])
       player.pay(reward)
-      player.addOutfit("Toy Drone")
       zlk_addSciWrongLog( log_text )
       misn.finish(true)
    end

@@ -214,7 +214,6 @@ function land()
         dv_modReputation( 5 )
         faction.get("Dvaered"):modPlayerSingle(10)
         player.pay(1000000) -- 1M
-        player.addOutfit("Star of Valor")
         var.pop("flfbase_intro")
         var.pop("flfbase_sysname")
         diff.apply("FLF_base")

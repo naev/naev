@@ -30,7 +30,6 @@
   <weapon size="large" x="0" y="0" h="5" />
   <weapon size="large" x="-20" y="0" h="5" />
   <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-1000 Core System</utility>
-  <utility size="large" prop="accessory" exclusive="1" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />

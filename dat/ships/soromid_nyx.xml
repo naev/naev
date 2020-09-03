@@ -29,7 +29,6 @@
   <weapon size="medium" prop="bio_weapon" x="4" y="-5" h="-10" />
   <weapon size="medium" prop="bio_weapon" x="4" y="5" h="-10" />
   <utility size="medium" prop="bio_systems" exclusive="1" required="1">Medium-Heavy Bioship Brain Stage 1</utility>
-  <utility size="medium" prop="accessory" exclusive="1" />
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />

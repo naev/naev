@@ -30,7 +30,6 @@
   <weapon size="medium" x="-9" y="-3" h="2" />
   <weapon size="medium" x="-9" y="3" h="2" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-500 Core System</utility>
-  <utility size="medium" prop="accessory" exclusive="1" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="small" />
