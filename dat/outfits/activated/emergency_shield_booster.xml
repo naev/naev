@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Emergency Shield Booster">
  <general>
-  <rarity>2</rarity>
   <slot>utility</slot>
   <size>small</size>
   <mass>2</mass>

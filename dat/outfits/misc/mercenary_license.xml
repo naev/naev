@@ -5,6 +5,6 @@
   <price>250000</price>
   <gfx_store>license</gfx_store>
   <description>This license will authorize you to do mercenary missions and collect bounties.</description>
- <rarity>6</rarity></general>
+ </general>
  <specific type="license" />
 </outfit>

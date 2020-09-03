@@ -9,7 +9,7 @@
   <gfx_store>afterburner</gfx_store>
   <limit>reverse_thruster</limit>
   <cpu>-2</cpu>
- <rarity>1</rarity></general>
+ </general>
  <specific type="modification">
   <misc_reverse_thrust>1</misc_reverse_thrust>
  </specific>

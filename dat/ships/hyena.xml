@@ -2,7 +2,6 @@
 <ship name="Hyena">
  <base_type>Hyena</base_type>
  <GFX>hyena</GFX>
- <rarity>1</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>

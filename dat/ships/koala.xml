@@ -2,7 +2,6 @@
 <ship name="Koala">
  <base_type>Koala</base_type>
  <GFX>koala</GFX>
- <rarity>1</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Courier</class>

@@ -9,7 +9,7 @@
   <description>Featuring the improved firepower of the mark 2 laser cannon, the Laser Point Defense MK2 is a favourite among light merchant pilots.</description>
   <gfx_store>laserturret2</gfx_store>
   <cpu>-10</cpu>
- <rarity>2</rarity></general>
+ </general>
  <specific type="turret bolt">
   <gfx>laser2S</gfx>
   <sound>laser</sound>

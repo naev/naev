@@ -4,12 +4,13 @@
   <typename>Energy Modifier</typename>
   <slot>utility</slot>
   <size>medium</size>
+  <rarity>3</rarity>
   <mass>30</mass>
   <price>970000</price>
   <gfx_store>reactor_ii</gfx_store>
   <description>Thurion-designed reactor that uses Positrons for a superior energy output.</description>
   <cpu>-20</cpu>
- <rarity>4</rarity></general>
+ </general>
  <specific type="modification">
   <energy>120</energy>
   <energy_regen>20</energy_regen>

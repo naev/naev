@@ -9,7 +9,7 @@
   <description>The Spearhead class shieldbreaker missile is one of Enygma Systems' more specialised pieces of hardware. Its sole function is to do massive damage to shielding. It uses a special energy discharge warhead that is quite effective at disrupting shields, but has little effect on physical objects. The Spearhead's limited agility make it primarily suited to fighting corvette class ships or heavier.</description>
   <gfx_store>headhunterlauncher</gfx_store>
   <cpu>-7</cpu>
- <rarity>2</rarity></general>
+ </general>
  <specific type="launcher" secondary="1">
   <ammo>Spearhead Missile</ammo>
   <delay>4</delay>

@@ -9,7 +9,7 @@
   <description>The Pulse Beam is an aptly named beam weapon designed to counter fighters with a rapid-firing, short-lived pulse. It doesn't do very much damage against larger targets, but fighters who get near ships equipped with this weapon will have a bad day.</description>
   <gfx_store>ragnarok</gfx_store>
   <cpu>-14</cpu>
- <rarity>3</rarity></general>
+ </general>
  <specific type="turret beam">
   <delay>0.2</delay>
   <duration min="0.25">0.25</duration>

@@ -8,7 +8,7 @@
   <price>125000</price>
   <description>The fuel pod allows a ship to store more fuel for hyperspace jumps.</description>
   <gfx_store>large_fuel_pod</gfx_store>
- <rarity>3</rarity></general>
+ </general>
  <specific type="modification">
   <fuel>800</fuel>
  </specific>
