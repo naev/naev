@@ -655,6 +655,9 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o )
       /* Check outfit limit. */
       if ((o->limit != NULL) && pilot_hasOutfitLimit( p, o->limit ))
          return _("Already have an outfit of this type installed");
+      /* Check to see if already equipped unique. */
+      if (outfit_isProp(o,OUTFIT_PROP_UNIQUE) && (pilot_numOutfit(p,o)>0))
+         return _("Can only install unique outfit once.");
    }
    else {
       /* Check fighter bay. */

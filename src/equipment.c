@@ -105,6 +105,8 @@ static void equipment_unequipShip( unsigned int wid, char* str );
 static void equipment_filterOutfits( unsigned int wid, char *str );
 static void equipment_rightClickOutfits( unsigned int wid, char* str );
 static void equipment_changeTab( unsigned int wid, char *wgt, int old, int tab );
+static int equipment_playerAddOutfit( const Outfit *o, int quantity );
+static int equipment_playerRmOutfit( const Outfit *o, int quantity );
 
 
 /**
@@ -1074,7 +1076,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
       /* Remove outfit. */
       ret = pilot_rmOutfit( eq_wgt.selected, slot );
       if (ret == 0)
-         player_addOutfit( o, 1 );
+         equipment_playerAddOutfit( o, 1 );
    }
    /* Add outfit. */
    else {
@@ -1092,7 +1094,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
          return 0;
 
       /* Add outfit to ship. */
-      ret = player_rmOutfit( o, 1 );
+      ret = equipment_playerRmOutfit( o, 1 );
       if (ret == 1) {
          pilot_addOutfitRaw( eq_wgt.selected, o, slot );
 
@@ -1814,7 +1816,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
       /* Remove rest. */
       ret = pilot_rmOutfitRaw( ship, ship->outfits[i] );
       if (ret==0)
-         player_addOutfit( o, 1 );
+         equipment_playerAddOutfit( o, 1 );
    }
 
    /* Recalculate stats. */
@@ -1929,6 +1931,28 @@ static void equipment_renameShip( unsigned int wid, char *str )
 
    /* Destroy widget - must be before widget. */
    equipment_regenLists( wid, 0, 1 );
+}
+
+
+/**
+ * @brief Wrapper to only add unique outfits.
+ */
+static int equipment_playerAddOutfit( const Outfit *o, int quantity )
+{
+   if (outfit_isProp(o,OUTFIT_PROP_UNIQUE) && (player_outfitOwned(o)>0))
+      return 1;
+   return player_addOutfit(o,quantity);
+}
+
+
+/**
+ * @brief Wrapper to only remove unique outfits.
+ */
+static int equipment_playerRmOutfit( const Outfit *o, int quantity )
+{
+   if (outfit_isProp(o,OUTFIT_PROP_UNIQUE))
+      return 1;
+   return player_rmOutfit(o,quantity);
 }
 
 
