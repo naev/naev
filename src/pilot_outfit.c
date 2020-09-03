@@ -590,7 +590,8 @@ int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
    /* Misc. */
    SPACEWORTHY_CHECK( p->fuel_max < 0,         _("!! Insufficient Fuel Maximum\n") );
    SPACEWORTHY_CHECK( p->fuel_consumption < 0, _("!! Insufficient Fuel Consumption\n") );
-   SPACEWORTHY_CHECK( p->cargo_free < 0,        _("!! Insufficient Free Cargo Space\n") );
+   SPACEWORTHY_CHECK( p->cargo_free < 0,       _("!! Insufficient Free Cargo Space\n") );
+   SPACEWORTHY_CHECK( p->crew < 0,             _("!! Insufficient Crew\n") );
 
    /*buffer is full, lets write that there is more then what's copied */
    if (pos > bufSize-1) {
