@@ -4,12 +4,12 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>medium</size>
-  <rarity>3</rarity>
+  <priority>3</priority>
   <mass>90</mass>
   <price>0</price>
   <description>On the plus side, it keeps air from venting into space. But that's about it. This kind of hull maintenance is simply unacceptable.</description>
   <gfx_store>plating_patchwork</gfx_store>
- <priority>3</priority></general>
+ </general>
  <specific type="modification">
   <cargo>12</cargo>
   <absorb>11</absorb>

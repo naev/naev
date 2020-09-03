@@ -2,7 +2,7 @@
 <ship name="Za'lek Sting">
  <base_type>Sting</base_type>
  <GFX sx="10" sy="10">sting</GFX>
- <rarity>4</rarity>
+ <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>

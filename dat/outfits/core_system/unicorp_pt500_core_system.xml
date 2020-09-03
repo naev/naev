@@ -4,12 +4,12 @@
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>medium</size>
-  <rarity>3</rarity>
   <mass>70</mass>
   <price>55000</price>
   <description>Continuing Unicorp's PT series of core systems in the medium ship category, the PT-500 gives acceptable performance for an acceptable price.</description>
   <gfx_store>core_system_basic_m1</gfx_store>
- <priority>3</priority></general>
+  <priority>3</priority>
+ </general>
  <specific type="modification">
   <cpu_max>53</cpu_max>
   <shield>300</shield>

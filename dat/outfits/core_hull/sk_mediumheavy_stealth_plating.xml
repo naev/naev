@@ -9,7 +9,7 @@
   <price>480000</price>
   <description>Though vessels weighing in at nearly a thousand tonnes can seldom be called stealthy, Schafer &amp; Kane's medium-heavy stealth plating does what it can to reduce sensor signatures, without sacrificing protection.</description>
   <gfx_store>stealth_hull_h</gfx_store>
- <rarity>4</rarity></general>
+ </general>
  <specific type="modification">
   <cargo>25</cargo>
   <absorb>21</absorb>

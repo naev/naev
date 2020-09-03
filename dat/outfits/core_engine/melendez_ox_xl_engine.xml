@@ -9,7 +9,6 @@
   <price>95000</price>
   <description>Among the most powerful engines available for small vessels, the Ox XL excels at enabling merchants to haul moderate amounts of cargo from system to system with minimal refuelling stops.</description>
   <gfx_store>engine15</gfx_store>
-  <rarity>2</rarity>
  </general>
  <specific type="modification">
   <thrust>115</thrust>

@@ -8,7 +8,7 @@
   <description>Razors fire concentrated pockets of high energy ions that are very effective at draining shields, but have only limited effect on a ship's armour. As such, Razors are best used in the initial phase of an engagement, and swapped out for other weapons once the target's shields come down.</description>
   <gfx_store>ioncannon</gfx_store>
   <cpu>-5</cpu>
- <rarity>1</rarity></general>
+ </general>
  <specific type="bolt">
   <gfx>razorS</gfx>
   <sound>ion</sound>

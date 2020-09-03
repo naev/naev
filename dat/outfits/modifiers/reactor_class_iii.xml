@@ -9,7 +9,7 @@
   <gfx_store>reactor_iii</gfx_store>
   <description>The immense class III reactor provides enough power for nearly anything. The technology used in this reactor is particularly groundbreaking, with the best energy density of the three reactor classes. The huge size of the class III results in it only fitting comfortably on large vessels, though its energy output would be excessive for anything less.</description>
   <cpu>-20</cpu>
- <rarity>3</rarity></general>
+ </general>
  <specific type="modification">
   <energy>180</energy>
   <energy_regen>20</energy_regen>

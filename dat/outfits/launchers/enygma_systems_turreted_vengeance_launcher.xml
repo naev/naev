@@ -11,7 +11,7 @@
 Turreted Vengeance launchers aren't commonly seen in interplanetary combat. Only heavy cruisers can afford to mount these weapons, and they usually have other means of taking out corvette class enemies.</description>
   <gfx_store>headhunterlauncher</gfx_store>
   <cpu>-14</cpu>
- <rarity>3</rarity></general>
+ </general>
  <specific type="turret launcher" secondary="1">
   <ammo>Vengeance Missile</ammo>
   <delay>5.5</delay>

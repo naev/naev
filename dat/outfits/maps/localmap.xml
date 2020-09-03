@@ -5,7 +5,7 @@
   <price>5000</price>
   <description>This map contains information about the local system.</description>
   <gfx_store>map</gfx_store>
- <rarity>1</rarity></general>
+ </general>
  <specific type="localmap">
   <jump_detect>1.25</jump_detect>
   <asset_detect>0.75</asset_detect>

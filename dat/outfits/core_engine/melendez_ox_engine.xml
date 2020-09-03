@@ -4,7 +4,6 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>small</size>
-  <rarity>1</rarity>
   <mass>10</mass>
   <price>55000</price>
   <description>A powerful engine for its size, though not a particularly manoeuvrable one. The Ox enables small vessels to haul more cargo or weapons without resorting to larger and more power-hungry models.</description>

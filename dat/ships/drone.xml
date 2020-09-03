@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Drone">
  <base_type>Drone</base_type>
- <rarity>4</rarity>
  <GFX>drone</GFX>
  <GUI>brushed</GUI>
+ <rarity>3</rarity>
  <sound>engine</sound>
  <class>Drone</class>
  <price>300000</price>

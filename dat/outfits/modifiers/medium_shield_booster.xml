@@ -9,7 +9,7 @@
   <description>A shield generator that feeds off the ship's main energy line. It will allow you to regenerate your shield faster and give you a small shield capacity boost, at the expense of draining some of the ship's energy.</description>
   <gfx_store>shield</gfx_store>
   <cpu>-8</cpu>
- <rarity>2</rarity></general>
+ </general>
  <specific type="modification">
   <shield>30</shield>
   <shield_regen>1.5</shield_regen>

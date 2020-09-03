@@ -2,7 +2,7 @@
 <ship name="Dvaered Ancestor">
  <base_type>Ancestor</base_type>
  <GFX>ancestor_dvaered</GFX>
- <rarity>3</rarity>
+ <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Bomber</class>
