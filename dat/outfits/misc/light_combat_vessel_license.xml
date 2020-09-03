@@ -5,6 +5,6 @@
   <price>175000</price>
   <gfx_store>license</gfx_store>
   <description>This license will authorize you to buy fighter and bomber class ships.</description>
- <rarity>6</rarity></general>
+ </general>
  <specific type="license" />
 </outfit>

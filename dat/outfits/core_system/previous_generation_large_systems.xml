@@ -8,7 +8,7 @@
   <price>0</price>
   <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
   <gfx_store>core_system_basic_l1</gfx_store>
- <rarity>1</rarity></general>
+ </general>
  <specific type="modification">
   <cpu_max>145</cpu_max>
   <shield>500</shield>

@@ -6,10 +6,11 @@
   <mass>12</mass>
   <price>36500</price>
   <license>Heavy Weapon License</license>
+  <rarity>3</rarity>
   <description>The Heavy Neutron Disruptor improves upon the processes behind the smaller Neutron Disruptor, giving this weapon greater damage and range.</description>
   <gfx_store>neutronheavy</gfx_store>
   <cpu>-12</cpu>
- <rarity>3</rarity></general>
+ </general>
  <specific type="bolt">
   <gfx>neutron</gfx>
   <sound>neutron</sound>

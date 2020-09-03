@@ -9,7 +9,7 @@
   <price>2900000</price>
   <description>Considered the best standard plating configuration on the market, this hull modification from Schafer &amp; Kane Industries is generally found only on important capital ships.</description>
   <gfx_store>combat_hull_x</gfx_store>
- <rarity>5</rarity></general>
+ </general>
  <specific type="modification">
   <cargo>80</cargo>
   <absorb>40</absorb>

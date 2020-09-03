@@ -1,6 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Tutorial Event">
+<event name="Land Tutorial Event">
  <trigger>land</trigger>
  <chance>100</chance>
 </event>

@@ -21,6 +21,7 @@
 #include "nstring.h"
 
 #include "log.h"
+#include "array.h"
 #include "nxml.h"
 #include "space.h"
 #include "ndata.h"
@@ -30,6 +31,16 @@
 
 
 #define CHUNK_SIZE      32 /**< Size of chunk to allocate. */
+
+
+/**
+ * @brief Universe diff filepath list.
+ */
+typedef struct UniDiffData_ {
+   char *name; /**< Name of the diff (read from XML). */
+   char *filename; /**< Filename of the diff. */
+} UniDiffData_t;
+static UniDiffData_t *diff_available = NULL; /**< Available diffs. */
 
 
 /**
@@ -131,8 +142,6 @@ typedef struct UniDiff_ {
  * Diff stack.
  */
 static UniDiff_t *diff_stack = NULL; /**< Currently applied universe diffs. */
-static int diff_nstack = 0; /**< Number of diffs in the stack. */
-static int diff_mstack = 0; /**< Currently allocated diffs. */
 
 
 /*
@@ -152,6 +161,57 @@ static void diff_cleanupHunk( UniHunk_t *hunk );
 /* Externed. */
 int diff_save( xmlTextWriterPtr writer ); /**< Used in save.c */
 int diff_load( xmlNodePtr parent ); /**< Used in save.c */
+
+
+/**
+ * @brief Loads available universe diffs.
+ *
+ *    @return 0 on success.
+ */
+int diff_loadAvailable (void)
+{
+   size_t i, nfiles;
+   char **diff_files;
+   size_t bufsize;
+   char *filebuf;
+   xmlDocPtr doc;
+   xmlNodePtr node;
+   UniDiffData_t *diff;
+
+   diff_available = array_create(UniDiffData_t);
+   diff_files = ndata_listRecursive( UNIDIFF_DATA_PATH, &nfiles );
+   for (i=0; i<nfiles; i++) {
+      /* Load string. */
+      filebuf = ndata_read( diff_files[i], &bufsize );
+      if (filebuf == NULL) {
+         WARN(_("Unable to read data from '%s'"), diff_files[i]);
+         return -1;
+      }
+
+      /* Parse the header. */
+      doc = xmlParseMemory( filebuf, bufsize );
+      if (doc == NULL) {
+         WARN(_("Unable to parse document XML for UniDiff '%s'"), diff_files[i]);
+         return -1;
+      }
+
+      node = doc->xmlChildrenNode;
+      if (!xml_isNode(node,"unidiff")) {
+         ERR( _("Malformed XML header for '%s' UniDiff: missing root element '%s'"), diff_files[i], "unidiff" );
+         return -1;
+      }
+
+      diff = &array_grow(&diff_available);
+      diff->filename = strdup( diff_files[i] );
+      xmlr_attr(node, "name", diff->name);
+   }
+   free( diff_files );
+   array_shrink(&diff_available);
+
+   DEBUG( ngettext("Loaded %d UniDiff", "Loaded %d UniDiffs", array_size(diff_available) ), array_size(diff_available) );
+
+   return 0;
+}
 
 
 /**
@@ -177,7 +237,9 @@ int diff_isApplied( const char *name )
 static UniDiff_t* diff_get( const char *name )
 {
    int i;
-   for (i=0; i<diff_nstack; i++)
+   if (diff_stack == NULL)
+      return NULL;
+   for (i=0; i<array_size(diff_stack); i++)
       if (strcmp(diff_stack[i].name,name)==0)
          return &diff_stack[i];
    return NULL;
@@ -196,56 +258,45 @@ int diff_apply( const char *name )
    xmlDocPtr doc;
    size_t bufsize;
    char *buf;
-   char *diffname;
+   char *filename;
+   int i;
 
    /* Check if already applied. */
    if (diff_isApplied(name))
       return 0;
 
-   buf = ndata_read( DIFF_DATA_PATH, &bufsize );
+   filename = NULL;
+   for (i=0; i<array_size(diff_available); i++) {
+      if (strcmp(diff_available[i].name,name)==0) {
+         filename = diff_available[i].filename;
+         break;
+      }
+   }
+   if (filename == NULL) {
+      WARN(_("UniDiff '%s' not found in %s!"), name, UNIDIFF_DATA_PATH);
+      return -1;
+   }
+
+   buf = ndata_read( filename, &bufsize );
    doc = xmlParseMemory( buf, bufsize );
 
    node = doc->xmlChildrenNode;
-   if (strcmp((char*)node->name,"unidiffs")) {
-      ERR(_("Malformed unidiff file: missing root element 'unidiffs'"));
+   if (strcmp((char*)node->name,"unidiff")) {
+      ERR(_("Malformed unidiff file: missing root element 'unidiff'"));
       return 0;
    }
 
-   node = node->xmlChildrenNode; /* first system node */
-   if (node == NULL) {
-      ERR(_("Malformed unidiff file: does not contain elements"));
-      return 0;
-   }
+   /* Apply it. */
+   diff_patch( node );
 
-   do {
-      if (xml_isNode(node,"unidiff")) {
-         /* Check to see if it's the diff we're looking for. */
-         xmlr_attr(node,"name",diffname);
-         if (strcmp(diffname,name)==0) {
-            /* Apply it. */
-            diff_patch( node );
-
-            /* Clean up. */
-            free(diffname);
-            xmlFreeDoc(doc);
-            free(buf);
-
-            /* Re-compute the economy. */
-            economy_execQueued();
-            economy_initialiseCommodityPrices();
-
-            return 0;
-         }
-         free(diffname);
-      }
-   } while (xml_nextNode(node));
-
-   /* More clean up. */
    xmlFreeDoc(doc);
    free(buf);
 
-   WARN(_("UniDiff '%s' not found in %s."), name, DIFF_DATA_PATH);
-   return -1;
+   /* Re-compute the economy. */
+   economy_execQueued();
+   economy_initialiseCommodityPrices();
+
+   return 0;
 }
 
 
@@ -894,8 +945,11 @@ void diff_remove( const char *name )
  */
 void diff_clear (void)
 {
-   while (diff_nstack > 0)
-      diff_removeDiff(&diff_stack[diff_nstack-1]);
+   if (diff_stack==NULL)
+      return;
+
+   while (array_size(diff_stack) > 0)
+      diff_removeDiff(&diff_stack[array_size(diff_stack)-1]);
 
    economy_execQueued();
 }
@@ -909,21 +963,9 @@ void diff_clear (void)
 static UniDiff_t *diff_newDiff (void)
 {
    /* Check if needs initialization. */
-   if (diff_stack == NULL) {
-      diff_mstack = CHUNK_SIZE;
-      diff_stack = malloc(diff_mstack * sizeof(UniDiff_t));
-      diff_nstack = 1;
-      return &diff_stack[0];
-   }
-
-   diff_nstack++;
-   /* Check if need to grow. */
-   if (diff_nstack > diff_mstack) {
-      diff_mstack += CHUNK_SIZE;
-      diff_stack = realloc(diff_stack, diff_mstack * sizeof(UniDiff_t));
-   }
-
-   return &diff_stack[diff_nstack-1];
+   if (diff_stack == NULL)
+      diff_stack = array_create(UniDiff_t);
+   return &array_grow(&diff_stack);
 }
 
 
@@ -1001,10 +1043,7 @@ static int diff_removeDiff( UniDiff_t *diff )
    }
 
    diff_cleanup(diff);
-   diff_nstack--;
-   i = diff - diff_stack;
-   memmove(&diff_stack[i], &diff_stack[i+1], sizeof(UniDiff_t) * (diff_nstack-i));
-
+   array_erase( &diff_stack, diff, &diff[1] );
    return 0;
 }
 
@@ -1082,10 +1121,12 @@ int diff_save( xmlTextWriterPtr writer )
    UniDiff_t *diff;
 
    xmlw_startElem(writer,"diffs");
-   for (i=0; i<diff_nstack; i++) {
-      diff = &diff_stack[i];
+   if (diff_stack != NULL) {
+      for (i=0; i<array_size(diff_stack); i++) {
+         diff = &diff_stack[i];
 
-      xmlw_elem(writer, "diff", "%s", diff->name);
+         xmlw_elem(writer, "diff", "%s", diff->name);
+      }
    }
    xmlw_endElem(writer); /* "diffs" */
 

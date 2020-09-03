@@ -30,14 +30,14 @@ static int tk_yesno( lua_State *L );
 static int tk_input( lua_State *L );
 static int tk_choice( lua_State *L );
 static int tk_list( lua_State *L );
-static int tk_merchant( lua_State *L );
+static int tk_merchantOutfit( lua_State *L );
 static const luaL_Reg tk_methods[] = {
    { "msg", tk_msg },
    { "yesno", tk_yesno },
    { "input", tk_input },
    { "choice", tk_choice },
    { "list", tk_list },
-   { "merchant", tk_merchant },
+   { "merchantOutfit", tk_merchantOutfit },
    {0,0}
 }; /**< Toolkit Lua methods. */
 
@@ -271,14 +271,14 @@ static int tk_list( lua_State *L )
 /**
  * @brief Opens an outfit merchant window.
  *
- * @usage tk.merchant( 'Laser Merchant', {'Laser Cannon MK0', 'Laser Cannon MK1'} )
- * @usage tk.merchant( 'Laser Merchant', {outfit.get('Laser Cannon MK0'), outfit.get('Laser Cannon MK1')} )
+ * @usage tk.merchantOutfit( 'Laser Merchant', {'Laser Cannon MK0', 'Laser Cannon MK1'} )
+ * @usage tk.merchantOutfit( 'Laser Merchant', {outfit.get('Laser Cannon MK0'), outfit.get('Laser Cannon MK1')} )
  *
  *    @luatparam String name Name of the window.
  *    @luatparam Table outfits Table of outfits to sell/buy. It is possible to use either outfits or outfit names (strings).
- * @luafunc merchant( name, outfits )
+ * @luafunc merchantOutfit( name, outfits )
  */
-static int tk_merchant( lua_State *L )
+static int tk_merchantOutfit( lua_State *L )
 {
    Outfit **outfits;
    int i, noutfits;

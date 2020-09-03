@@ -4,6 +4,7 @@
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon License</license>
+  <rarity>3</rarity>
   <mass>25</mass>
   <price>120000</price>
   <description>The Thurion interceptor class missile focus on high agility rather than destructive power. While it does little damage to physical objects it is quite effective at disrupting shields.
@@ -11,7 +12,7 @@
 This launcher is mounted on a turret and has more ammo capacity than the standard launcher.</description>
   <gfx_store>turreted_convulsion_launcher</gfx_store>
   <cpu>-18</cpu>
- <rarity>4</rarity></general>
+ </general>
  <specific type="turret launcher" secondary="1">
   <ammo>Convulsion Missile</ammo>
   <delay>2.5</delay>

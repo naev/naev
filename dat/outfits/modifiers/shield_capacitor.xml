@@ -8,7 +8,7 @@
   <price>60000</price>
   <description>An enhancement for the shield power system, giving small ships a better chance of escaping attackers.</description>
   <gfx_store>capacitor</gfx_store>
- <rarity>2</rarity></general>
+ </general>
  <specific type="modification">
   <shield>40</shield>
  </specific>

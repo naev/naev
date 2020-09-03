@@ -9,7 +9,7 @@
   <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Pirates have taken a liking to this weapon.</description>
   <gfx_store>plasma2</gfx_store>
   <cpu>-5</cpu>
- <rarity>2</rarity></general>
+ </general>
  <specific type="bolt">
   <gfx>plasma2</gfx>
   <sound>plasma</sound>

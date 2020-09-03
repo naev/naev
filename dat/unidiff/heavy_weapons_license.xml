@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unidiff name="heavy_weapons_license">
+ <tech name="Basic Outfits 1">
+  <add>__Heavy Weapon License</add>
+ </tech>
+ <tech name="Basic Outfits 2">
+  <add>__Heavy Weapon License</add>
+ </tech>
+</unidiff>
