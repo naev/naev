@@ -4,7 +4,7 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>large</size>
-  <rarity>5</rarity>
+  <rarity>1</rarity>
   <mass>40</mass>
   <price>2400000</price>
   <description>The Remige was developed by Krain Industries exclusively for their flagship cruiser, the Kestrel. Optimized for the Kestrel's needs, the Remige delivers performance exceeding most other cruiser engines in every respect, though its tuning renders it ill-suited to heavier vessels.</description>

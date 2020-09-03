@@ -9,7 +9,7 @@
   <description>If ever there was a clear example of House Dvaered's lack of subtlety, then the Mass Driver MK3 would be it. Typically mounted on medium escorts, these weapons can reduce any other ship to an inert lump of metal.</description>
   <gfx_store>gatling</gfx_store>
   <cpu>-18</cpu>
- <rarity>3</rarity></general>
+ </general>
  <specific type="bolt">
   <gfx>autocannon</gfx>
   <sound>autocannon</sound>

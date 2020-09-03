@@ -1,11 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Heavy Weapon License">
  <general>
+  <rarity>1</rarity>
   <license>Medium Weapon License</license>
   <mass>0</mass>
   <price>125000</price>
   <gfx_store>license</gfx_store>
   <description>This license will authorize you to buy and use heavy weapons like the heavy ion turret.</description>
- <rarity>6</rarity></general>
+ </general>
  <specific type="license" />
 </outfit>

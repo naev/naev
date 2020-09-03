@@ -4,6 +4,7 @@
   <slot>weapon</slot>
   <size>medium</size>
   <license>Heavy Weapon License</license>
+  <rarity>1</rarity>
   <mass>28</mass>
   <price>250000</price>
   <description>The Za'lek began to find conventional missiles and torpedoes to be woefully primitive compared to their miniaturized drone technology. Thus, they began work on kamikaze drone fabricators to replace them. The results have born deadly fruit with the hunter-killer drone. It accelerates towards its target and unleashes its ferromagnetohydraulic payload to deadly effect.
@@ -11,7 +12,7 @@
 The Za'lek do not share the secrets of their 'missile' drones lightly. Only trusted allies of the Za'lek are trusted with these weapons.</description>
   <gfx_store>empgrenadelauncher</gfx_store>
   <cpu>-19</cpu>
- <rarity>5</rarity></general>
+ </general>
  <specific type="turret launcher" secondary="1">
   <ammo>Za'lek Hunter-Killer</ammo>
   <delay>1.5</delay>

@@ -1,11 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Map: New Haven's hidden jump points">
  <general>
+  <rarity>1</rarity>
   <mass>0</mass>
   <price>250000</price>
   <description>This map contains the position of a set of hidden jump points in and around the New Haven system. Only a minority of pirates have access to this map.</description>
   <gfx_store>map</gfx_store>
- <rarity>3</rarity></general>
+ </general>
  <specific type="map">
   <sys name="Andres">
    <jump>Gamel</jump>

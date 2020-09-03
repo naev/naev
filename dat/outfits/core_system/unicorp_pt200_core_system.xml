@@ -9,7 +9,7 @@
   <price>35000</price>
   <description>The PT-200 is an economical core system providing decent performance to small-to-medium vessels.</description>
   <gfx_store>core_system_basic_s2</gfx_store>
- <rarity>3</rarity></general>
+ </general>
  <specific type="modification">
   <cpu_max>38</cpu_max>
   <shield>175</shield>

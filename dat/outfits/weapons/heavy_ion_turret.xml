@@ -9,7 +9,7 @@
   <description>The Heavy Ion Turret is a Sirius military design, applying brute force to its target's internal systems. When coupled with Razor weaponry, it is terribly efficient at reducing enemy warships to tumbling hunks of junk.</description>
   <gfx_store>ionturret</gfx_store>
   <cpu>-24</cpu>
- <rarity>3</rarity></general>
+ </general>
  <specific type="turret bolt" secondary="1">
   <gfx>ionL</gfx>
   <sound>ion</sound>

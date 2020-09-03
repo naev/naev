@@ -4,7 +4,7 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>large</size>
-  <rarity>4</rarity>
+  <rarity>1</rarity>
   <mass>60</mass>
   <price>2700000</price>
   <description>Development of the Typhoon engine was something of a prestige project for Tricon. Providing light cruisers with superb handling and speed, it's a favourite of many captains, though its high power consumption limits it to ships with powerful reactors.</description>

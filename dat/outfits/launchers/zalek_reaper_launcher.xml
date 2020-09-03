@@ -4,6 +4,7 @@
   <slot>weapon</slot>
   <size>large</size>
   <license>Heavy Weapon License</license>
+  <rarity>1</rarity>
   <mass>80</mass>
   <price>420000</price>
   <description>This weapon stretches the term 'miniturized drone' nearly to its breaking point. It is effectivly a slimmed-down standard drone platform with almost everything replaced in favor of a huge ferromegetohydraulic bomb. It is the Za'lek's answer to torpedoes from less advanced nations, and an eloquent answer it certainly is.
@@ -11,7 +12,7 @@
 The Za'lek do not share the secrets of their 'missile' drones lightly. Only trusted allies of the Za'lek are trusted with these weapons.</description>
   <gfx_store>zalek_reaper_launcher</gfx_store>
   <cpu>-34</cpu>
- <rarity>5</rarity></general>
+ </general>
  <specific type="launcher" secondary="1">
   <ammo>Za'lek Reaper Drone</ammo>
   <delay>2</delay>

@@ -4,7 +4,7 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>medium</size>
-  <rarity>2</rarity>
+  <rarity>1</rarity>
   <mass>24</mass>
   <price>150000</price>
   <description>The Buffalo is a mid-sized engine intended for light freighters, though it's occasionally seen on particularly well-armed corvettes. As a typical freight-oriented engine, the Buffalo posseses decent top speed, poor handling, and excellent fuel capacity.</description>

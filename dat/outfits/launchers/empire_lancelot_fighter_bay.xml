@@ -4,12 +4,13 @@
   <slot>weapon</slot>
   <size>large</size>
   <license>Light Combat Vessel License</license>
+  <rarity>1</rarity>
   <mass>280</mass>
   <price>930000</price>
   <gfx_store>lancelot_empire_fighter_bay</gfx_store>
   <description>This fighter bay allows your ship to carry a pair of Empire Lancelot class fighters. It comes with all the devices required for the maintenance and flight of the fighters.</description>
   <cpu>-40</cpu>
- <rarity>5</rarity></general>
+ </general>
  <specific type="fighter bay" secondary="1">
   <ammo>Empire Lancelot Fighter</ammo>
   <delay>6</delay>

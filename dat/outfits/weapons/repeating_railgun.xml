@@ -9,7 +9,7 @@
   <description>While the Railgun was devastating in its effects, it wasn't quite devastating enough for Dvaered High Command. They had their engineers enhance the weapon into a heavier, faster firing variant that isn't so much a gun as it is a miniature meteor shower generator.</description>
   <gfx_store>railgun</gfx_store>
   <cpu>-32</cpu>
- <rarity>4</rarity></general>
+ </general>
  <specific type="bolt">
   <gfx>massL</gfx>
   <sound>mass</sound>

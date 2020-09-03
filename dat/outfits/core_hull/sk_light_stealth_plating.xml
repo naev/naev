@@ -4,12 +4,13 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>small</size>
+  <rarity>1</rarity>
   <priority>7</priority>
   <mass>60</mass>
   <price>180000</price>
   <description>Designed for military scouting and patrol vessels, Schafer &amp; Kane's Light Stealth Plating configuration features the latest in sensor-absorbing materials and geometry.</description>
   <gfx_store>stealth_hull_s</gfx_store>
- <rarity>3</rarity></general>
+ </general>
  <specific type="modification">
   <cargo>6</cargo>
   <absorb>7</absorb>

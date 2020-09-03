@@ -9,7 +9,7 @@
   <description>The railgun is a cannon that uses heavy magnetic pulses to accelerate pieces of debris to extremely high velocities. The impact caused by the pieces of debris can tear apart even the strongest ship hulls.</description>
   <gfx_store>railgun</gfx_store>
   <cpu>-26</cpu>
- <rarity>3</rarity></general>
+ </general>
  <specific type="bolt">
   <gfx>massL</gfx>
   <sound>mass</sound>

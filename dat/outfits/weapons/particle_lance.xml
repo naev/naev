@@ -9,7 +9,7 @@
   <description>This is the smallest direct beam weapon built, purpose-built by the Za'lek for their drones.</description>
   <gfx_store>orion</gfx_store>
   <cpu>-5</cpu>
- <rarity>2</rarity></general>
+ </general>
  <specific type="beam">
   <delay>1.5</delay>
   <duration>2</duration>

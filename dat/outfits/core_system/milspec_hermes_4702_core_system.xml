@@ -4,12 +4,13 @@
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>medium</size>
-  <rarity>4</rarity>
+  <rarity>1</rarity>
   <mass>80</mass>
   <price>220000</price>
   <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Hermes 4702 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
   <gfx_store>core_system_cpu_m1</gfx_store>
- <priority>3</priority></general>
+  <priority>3</priority>
+ </general>
  <specific type="modification">
   <cpu_max>95</cpu_max>
   <shield>400</shield>

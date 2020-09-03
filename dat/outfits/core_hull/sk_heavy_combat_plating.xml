@@ -4,12 +4,12 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>large</size>
-  <rarity>4</rarity>
+  <rarity>1</rarity>
   <mass>1150</mass>
   <price>2200000</price>
   <description>This heavy plating developed by Schafer &amp; Kane Industries can endure prolonged battle. Quite a few captains and their crews owe their lives to this armour configuration.</description>
   <gfx_store>combat_hull_l</gfx_store>
- <priority>3</priority></general>
+ </general>
  <specific type="modification">
   <cargo>65</cargo>
   <absorb>34</absorb>

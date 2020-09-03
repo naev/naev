@@ -4,12 +4,13 @@
   <typename>Armour Modifier</typename>
   <slot>structure</slot>
   <size>medium</size>
+  <rarity>2</rarity>
   <mass />
   <price>200000</price>
   <gfx_store>active_plating</gfx_store>
   <description>As the Thurion favour defense over offensive capabilities they developed this light-weight yet strong armour plating, at the expense of CPU usage.</description>
   <cpu>-10</cpu>
- <rarity>3</rarity></general>
+ </general>
  <specific type="modification">
   <absorb>4</absorb>
   <armour_mod>10</armour_mod>

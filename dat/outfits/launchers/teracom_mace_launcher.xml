@@ -11,7 +11,7 @@
 TeraCom's Mace launcher uses an advanced reload mechanism that allows the launcher to fire more rockets in less time.</description>
   <gfx_store>macelauncher</gfx_store>
   <cpu>-5</cpu>
- <rarity>2</rarity></general>
+ </general>
  <specific type="launcher" secondary="1">
   <ammo>Mace Rocket</ammo>
   <delay>0.3</delay>

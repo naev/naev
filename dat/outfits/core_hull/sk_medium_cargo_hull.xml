@@ -4,12 +4,13 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>medium</size>
+  <rarity>1</rarity>
   <priority>7</priority>
   <mass>140</mass>
   <price>320000</price>
   <description>Schafer &amp; Kane Industries have developed a hull modification that provides both ample cargo space and protection.</description>
   <gfx_store>medium_cargo_hull</gfx_store>
- <rarity>3</rarity></general>
+ </general>
  <specific type="modification">
   <cargo>120</cargo>
   <absorb>12</absorb>

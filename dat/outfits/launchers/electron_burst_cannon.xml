@@ -9,7 +9,7 @@
   <description>This powerful energy weapon is built to bombard a target from great range with ion bursts, causing debilitating damage to a target's shields and electrical systems, which can leave a ship effectively crippled. It is unclear who originally designed this weapon: Robosys or the Za'lek. Either way, the drones that use this weapon are rightly feared and respected.</description>
   <gfx_store>weapon01</gfx_store>
   <cpu>-10</cpu>
- <rarity>1</rarity></general>
+ </general>
  <specific type="launcher" secondary="1">
   <ammo>Electron Energy Cell</ammo>
   <delay>0.3</delay>

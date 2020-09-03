@@ -9,7 +9,7 @@
   <description>The Fury class interceptor missile is a lightweight missile propelled by a powerful engine, delivering its payload to its target quickly and efficiently. Its high agility comes at the cost of destructive power, however, limiting its effectiveness to light, nimble fighters.</description>
   <gfx_store>unicorp_fury_launcher</gfx_store>
   <cpu>-4</cpu>
- <rarity>2</rarity></general>
+ </general>
  <specific type="launcher" secondary="1">
   <ammo>Fury Missile</ammo>
   <delay>2</delay>

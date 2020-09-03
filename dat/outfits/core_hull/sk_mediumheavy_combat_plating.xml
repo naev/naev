@@ -4,12 +4,13 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>medium</size>
+  <rarity>1</rarity>
   <priority>7</priority>
   <mass>310</mass>
   <price>640000</price>
   <description>Designed for destroyers and similarly-sized vessels, Schafer &amp; Kane's medium-heavy combat plating provides excellent protection from everything save capital-class threats.</description>
   <gfx_store>combat_hull_h</gfx_store>
- <rarity>4</rarity></general>
+ </general>
  <specific type="modification">
   <cargo>32</cargo>
   <absorb>23</absorb>
