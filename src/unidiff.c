@@ -21,6 +21,7 @@
 #include "nstring.h"
 
 #include "log.h"
+#include "array.h"
 #include "nxml.h"
 #include "space.h"
 #include "ndata.h"
@@ -131,8 +132,6 @@ typedef struct UniDiff_ {
  * Diff stack.
  */
 static UniDiff_t *diff_stack = NULL; /**< Currently applied universe diffs. */
-static int diff_nstack = 0; /**< Number of diffs in the stack. */
-static int diff_mstack = 0; /**< Currently allocated diffs. */
 
 
 /*
@@ -177,7 +176,9 @@ int diff_isApplied( const char *name )
 static UniDiff_t* diff_get( const char *name )
 {
    int i;
-   for (i=0; i<diff_nstack; i++)
+   if (diff_stack == NULL)
+      return NULL;
+   for (i=0; i<array_size(diff_stack); i++)
       if (strcmp(diff_stack[i].name,name)==0)
          return &diff_stack[i];
    return NULL;
@@ -894,8 +895,11 @@ void diff_remove( const char *name )
  */
 void diff_clear (void)
 {
-   while (diff_nstack > 0)
-      diff_removeDiff(&diff_stack[diff_nstack-1]);
+   if (diff_stack==NULL)
+      return;
+
+   while (array_size(diff_stack) > 0)
+      diff_removeDiff(&diff_stack[array_size(diff_stack)-1]);
 
    economy_execQueued();
 }
@@ -909,21 +913,9 @@ void diff_clear (void)
 static UniDiff_t *diff_newDiff (void)
 {
    /* Check if needs initialization. */
-   if (diff_stack == NULL) {
-      diff_mstack = CHUNK_SIZE;
-      diff_stack = malloc(diff_mstack * sizeof(UniDiff_t));
-      diff_nstack = 1;
-      return &diff_stack[0];
-   }
-
-   diff_nstack++;
-   /* Check if need to grow. */
-   if (diff_nstack > diff_mstack) {
-      diff_mstack += CHUNK_SIZE;
-      diff_stack = realloc(diff_stack, diff_mstack * sizeof(UniDiff_t));
-   }
-
-   return &diff_stack[diff_nstack-1];
+   if (diff_stack == NULL)
+      diff_stack = array_create(UniDiff_t);
+   return &array_grow(&diff_stack);
 }
 
 
@@ -1001,10 +993,7 @@ static int diff_removeDiff( UniDiff_t *diff )
    }
 
    diff_cleanup(diff);
-   diff_nstack--;
-   i = diff - diff_stack;
-   memmove(&diff_stack[i], &diff_stack[i+1], sizeof(UniDiff_t) * (diff_nstack-i));
-
+   array_erase( &diff_stack, diff, &diff[1] );
    return 0;
 }
 
@@ -1082,7 +1071,7 @@ int diff_save( xmlTextWriterPtr writer )
    UniDiff_t *diff;
 
    xmlw_startElem(writer,"diffs");
-   for (i=0; i<diff_nstack; i++) {
+   for (i=0; i<array_size(diff_stack); i++) {
       diff = &diff_stack[i];
 
       xmlw_elem(writer, "diff", "%s", diff->name);
