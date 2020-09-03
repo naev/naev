@@ -9,7 +9,7 @@
   <description>Enygma Systems has developed a turret mounted Fury launcher. It comes at a steep price, but Fury missiles can be a powerful means of discouraging pirate fighters and an effective means of defending against hostile bombers.</description>
   <gfx_store>turreted_fury_launcher</gfx_store>
   <cpu>-9</cpu>
- <rarity>2</rarity></general>
+ </general>
  <specific type="turret launcher" secondary="1">
   <ammo>Fury Missile</ammo>
   <delay>1.5</delay>

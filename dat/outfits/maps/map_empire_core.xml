@@ -5,7 +5,7 @@
   <price>25000</price>
   <description>This map lists the locations of all Imperial worlds and stations close to the Imperial capital.</description>
   <gfx_store>map</gfx_store>
- <rarity>1</rarity></general>
+ </general>
  <specific type="map">
   <sys name="Gamma Polaris">
    <jump>Apez</jump>

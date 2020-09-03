@@ -2,7 +2,6 @@
 <ship name="Shark">
  <base_type>Shark</base_type>
  <GFX>shark</GFX>
- <rarity>1</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>

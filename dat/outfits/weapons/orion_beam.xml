@@ -9,7 +9,7 @@
   <description>The turret-mounted edition of the Orion design offers mid-sized ships exceptional short-duration firepower, a potent deterrent against lighter vessels.</description>
   <gfx_store>ragnarok</gfx_store>
   <cpu>-16</cpu>
- <rarity>3</rarity></general>
+ </general>
  <specific type="turret beam">
   <delay>4</delay>
   <duration>4</duration>

@@ -8,6 +8,7 @@
 #  define UNIDIFF_H
 
 
+int diff_loadAvailable (void);
 int diff_apply( const char *name );
 void diff_remove( const char *name );
 void diff_clear (void);

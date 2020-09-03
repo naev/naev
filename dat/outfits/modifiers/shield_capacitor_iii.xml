@@ -8,7 +8,7 @@
   <price>220000</price>
   <description>A heavy duty shield enhancer for ships that face combat on a regular basis.</description>
   <gfx_store>capacitor4</gfx_store>
- <rarity>3</rarity></general>
+ </general>
  <specific type="modification">
   <shield>145</shield>
  </specific>

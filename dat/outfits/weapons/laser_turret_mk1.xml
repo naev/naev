@@ -9,7 +9,7 @@
   <description>A pair of laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. With a full 360 degrees of rotation, laser turrets provide affordable, energy-efficient firepower to less manoeuvrable ships.</description>
   <gfx_store>laserturret</gfx_store>
   <cpu>-14</cpu>
- <rarity>2</rarity></general>
+ </general>
  <specific type="turret bolt">
   <gfx>laser1M</gfx>
   <sound>laser</sound>

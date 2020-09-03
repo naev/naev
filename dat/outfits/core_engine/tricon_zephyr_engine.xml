@@ -4,7 +4,6 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>small</size>
-  <rarity>3</rarity>
   <mass>8</mass>
   <price>135000</price>
   <description>For light vessel pilots who demand unparalleled performance, Tricon's Zephyr is the engine of choice. Its best-in-class handling does come with the caveat of markedly increased power consumption, but those flying with Tricon engines can usually afford the requisite reactor upgrades.</description>

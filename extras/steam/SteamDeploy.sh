@@ -7,6 +7,7 @@
 #
 # This script should be run after downloading all build artefacts
 # If --nightly is passed to the script, a nightly build will be generated
+# If --soundtrack is passed to the script, the soundtrack will be generated
 # and uploaded to Steam
 #
 
@@ -39,7 +40,7 @@ BETA=false
 if [[ -n $(echo "$VERSION" | grep "-") ]]; then
     BASEVER=$(echo "$VERSION" | sed 's/\.-.*//')
     BETAVER=$(echo "$VERSION" | sed 's/.*-//')
-    VERSION="$BASEVER.0-beta$BETAVER"
+    VERSION="$BASEVER.0-beta.$BETAVER"
     BETA=true
 else
     echo "could not find VERSION file"
@@ -48,7 +49,7 @@ fi
 
 # Create deployment locations
 mkdir -p extras/steam/{content,output}
-mkdir -p extras/steam/content/{lin32,lin64,ndata,win32,win64}
+mkdir -p extras/steam/content/{lin32,lin64,ndata,win32,win64,soundtrack}
 
 # Move all build artefacts to deployment locations
 
@@ -87,6 +88,10 @@ if [[ $NIGHTLY == true ]]; then
     steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_598530_nightly.vdf +quit
 
 elif [[ $NIGHTLY == false ]]; then
+    # Move soundtrack stuff to deployment area
+    unzip extras/steam/temp/soundtrack/soundtrack.zip -d extras/steam/content/soundtrack
+    cp extras/steam/naev_soundtrack_cover.png extras/steam/content/soundtrack/naev_soundtrack_cover.png
+
     # Trigger 2FA request and get 2FA code
     steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
 
@@ -102,12 +107,14 @@ elif [[ $NIGHTLY == false ]]; then
     elif [[ $BETA == false ]]; then 
         # Run steam upload with 2fa key
         steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_598530_release.vdf +quit
+        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_1411430.vdf +quit
 
     else
         echo "Something went wrong determining if this is a beta or not."
     fi
+elif [[ $SOUNDTRACK == true ]]; then
+    echo "TODO"
 else
-    echo "Cannot determine NIGHTLY"
     echo "Something went wrong.."
     exit -1
 fi

@@ -590,7 +590,8 @@ int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
    /* Misc. */
    SPACEWORTHY_CHECK( p->fuel_max < 0,         _("!! Insufficient Fuel Maximum\n") );
    SPACEWORTHY_CHECK( p->fuel_consumption < 0, _("!! Insufficient Fuel Consumption\n") );
-   SPACEWORTHY_CHECK( p->cargo_free < 0,        _("!! Insufficient Free Cargo Space\n") );
+   SPACEWORTHY_CHECK( p->cargo_free < 0,       _("!! Insufficient Free Cargo Space\n") );
+   SPACEWORTHY_CHECK( p->crew < 0,             _("!! Insufficient Crew\n") );
 
    /*buffer is full, lets write that there is more then what's copied */
    if (pos > bufSize-1) {
@@ -654,6 +655,9 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o )
       /* Check outfit limit. */
       if ((o->limit != NULL) && pilot_hasOutfitLimit( p, o->limit ))
          return _("Already have an outfit of this type installed");
+      /* Check to see if already equipped unique. */
+      if (outfit_isProp(o,OUTFIT_PROP_UNIQUE) && (pilot_numOutfit(p,o)>0))
+         return _("Can only install unique outfit once.");
    }
    else {
       /* Check fighter bay. */

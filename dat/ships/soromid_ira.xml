@@ -3,7 +3,7 @@
  <base_type>Ira</base_type>
  <GFX sx="12" sy="12">ira</GFX>
  <GUI>brushed</GUI>
- <rarity>5</rarity>
+ <rarity>2</rarity>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>4500000</price>

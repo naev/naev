@@ -5,11 +5,12 @@ import zipfile
 import glob
 import os
 import tempfile
+import argparse
 
 import mutagen
 
 
-def generate_soundtrack():
+def generate_soundtrack( generate_csv=False ):
 
     # Load licensing information
     with open('dat/snd/SOUND_LICENSE.yaml','r') as f:
@@ -42,6 +43,9 @@ def generate_soundtrack():
     duplicated_songs = []
     with zipfile.ZipFile(f"naev-{version}-soundtrack.zip", 'w', zipfile.ZIP_DEFLATED) as zipf:
         i = 1
+        if generate_csv:
+            csvfile = open( f"naev-{version}-soundtrack.csv", 'w' )
+            csvfile.write( '"Disc Number","Track Number","Original Name","Original Name Language (ie., ""es"", ""jp"") (optional)","International Name (optional)","Duration (""m:ss"")","ISRC (optional)"\n' )
         for song in soundtrack:
             if song['filename'] in all_songs:
                 all_songs.remove( song['filename'] )
@@ -69,7 +73,12 @@ def generate_soundtrack():
             audio.save()
             zipf.write( temp, number+"_"+song['filename'] )
             os.remove( temp )
+
+            if generate_csv:
+                csvfile.write( f"01,{number},{song['name']},en,,{length},\n" )
             i += 1
+        if generate_csv:
+            csvfile.close()
 
     if len(all_songs) > 0:
         print( 'MISSING SONGS:' )
@@ -80,4 +89,9 @@ def generate_soundtrack():
 
 
 if __name__=="__main__":
-    generate_soundtrack()
+    parser = argparse.ArgumentParser(description='Tool generate the Naev soundtrack.')
+    parser.add_argument('--csv', type=bool, default=False, help="Create CSV file that con be used to upload steam metadata.")
+    args = parser.parse_args()
+    generate_soundtrack( generate_csv=args.csv )
+
+

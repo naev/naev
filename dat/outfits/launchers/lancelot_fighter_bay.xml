@@ -9,7 +9,7 @@
   <gfx_store>lancelot_fighter_bay</gfx_store>
   <description>This fighter bay allows your ship to carry a pair of Lancelot class fighters. It comes with all the devices required for the maintenance and flight of the fighters.</description>
   <cpu>-35</cpu>
- <rarity>5</rarity></general>
+ </general>
  <specific type="fighter bay" secondary="1">
   <ammo>Lancelot Fighter</ammo>
   <delay>6</delay>

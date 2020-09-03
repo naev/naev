@@ -712,7 +712,7 @@ static void loadscreen_unload (void)
 /**
  * @brief Loads all the data, makes main() simpler.
  */
-#define LOADING_STAGES     12. /**< Amount of loading stages. */
+#define LOADING_STAGES     13. /**< Amount of loading stages. */
 void load_all (void)
 {
    /* We can do fast stuff here. */
@@ -743,7 +743,9 @@ void load_all (void)
    tech_load(); /* dep for space */
    loadscreen_render( 11./LOADING_STAGES, _("Loading the Universe...") );
    space_load();
-   loadscreen_render( 12./LOADING_STAGES, _("Populating Maps...") );
+   loadscreen_render( 12./LOADING_STAGES, _("Loading the UniDiffs...") );
+   diff_loadAvailable();
+   loadscreen_render( 13./LOADING_STAGES, _("Populating Maps...") );
    outfit_mapParse();
    background_init();
    map_load();

@@ -9,7 +9,7 @@
   <description>A turret-mounted particle beam. The smallest possible turreted beam weapon, used as a last-ditch weapon against light enemies.</description>
   <gfx_store>ragnarok</gfx_store>
   <cpu>-9</cpu>
- <rarity>3</rarity></general>
+ </general>
  <specific type="turret beam">
   <delay>2</delay>
   <duration>2</duration>

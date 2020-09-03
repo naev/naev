@@ -9,7 +9,6 @@
   <price>1200000</price>
   <description>Though lacking the glamour of flagship models from the likes of Tricon, the Nexus Bolt 6500 is nonetheless a respectable engine used by many captains. As a general-purpose engine, it lacks the sheer power of a Melendez engine, can't quite keep up with Tricon offerings, yet costs less than either, and manages to maintain a balance between all of its attributes.</description>
   <gfx_store>engine11</gfx_store>
-  <rarity>4</rarity>
  </general>
  <specific type="modification">
   <thrust>45</thrust>

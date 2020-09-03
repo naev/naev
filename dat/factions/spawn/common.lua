@@ -70,6 +70,11 @@ function scom.spawn( pilots, faction, guerilla )
    local spawned = {}
    local leader = nil
 
+   -- Case no pilots
+   if pilots == nil then
+      return nil
+   end
+
    local origin = pilot.choosePoint( faction, false, guerilla ) -- Find a suitable spawn point
    for k,v in ipairs(pilots) do
       local p

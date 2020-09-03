@@ -1,9 +1,9 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="start_event">
-  <trigger>none</trigger>
- </event>
- --]]
+ <trigger>none</trigger>
+</event>
+--]]
 function name()
    local names = {
       _("Pathfinder"),

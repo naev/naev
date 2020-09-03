@@ -2,7 +2,7 @@
 <ship name="Soromid Arx">
  <base_type>Arx</base_type>
  <GFX sx="12" sy="12">arx</GFX>
- <rarity>5</rarity>
+ <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Carrier</class>

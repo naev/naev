@@ -3354,6 +3354,9 @@ credits_t pilot_worth( const Pilot *p )
    for (i=0; i<p->noutfits; i++) {
       if (p->outfits[i]->outfit == NULL)
          continue;
+      /* Don't count unique outfits. */
+      if (outfit_isProp(p->outfits[i]->outfit,OUTFIT_PROP_UNIQUE))
+         continue;
       price += p->outfits[i]->outfit->price;
    }
 

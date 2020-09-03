@@ -2,7 +2,6 @@
 <ship name="Schroedinger">
  <base_type>Schroedinger</base_type>
  <GFX>schroedinger</GFX>
- <rarity>1</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Scout</class>
