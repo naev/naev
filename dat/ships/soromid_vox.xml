@@ -2,7 +2,7 @@
 <ship name="Soromid Vox">
  <base_type>Vox</base_type>
  <GFX sx="12" sy="12">vox</GFX>
- <rarity>1</rarity>
+ <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>

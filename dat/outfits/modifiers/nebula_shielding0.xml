@@ -4,7 +4,7 @@
   <typename>Shield Power Modifier</typename>
   <slot>structure</slot>
   <size>small</size>
-  <rarity>2</rarity>
+  <rarity>3</rarity>
   <mass>15</mass>
   <price>10000</price>
   <description>A modification to the ship's shields that allows them to resist nebular volatility.</description>

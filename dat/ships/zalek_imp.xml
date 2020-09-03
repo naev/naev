@@ -2,7 +2,7 @@
 <ship name="Za'lek Imp">
  <base_type>Imp</base_type>
  <GFX sx="12" sy="12">imp</GFX>
- <rarity>1</rarity>
+ <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>

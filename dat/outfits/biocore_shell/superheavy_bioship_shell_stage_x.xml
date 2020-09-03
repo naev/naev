@@ -4,7 +4,7 @@
   <typename>Bioship Shell</typename>
   <slot prop="bio_hull">structure</slot>
   <size>large</size>
-  <rarity>1</rarity>
+  <rarity>2</rarity>
   <priority>7</priority>
   <mass>1950</mass>
   <price>1450000</price>

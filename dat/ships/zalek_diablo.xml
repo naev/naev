@@ -2,7 +2,7 @@
 <ship name="Za'lek Diablo">
  <base_type>Diablo</base_type>
  <GFX sx="12" sy="12">diablo</GFX>
- <rarity>1</rarity>
+ <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Carrier</class>

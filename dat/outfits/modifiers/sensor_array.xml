@@ -3,7 +3,7 @@
  <general>
   <slot>utility</slot>
   <size>small</size>
-  <rarity>2</rarity>
+  <rarity>3</rarity>
   <mass>2</mass>
   <price>250000</price>
   <description>To detect other ships despite heavy ambient radiation the Thurion have developed powerful sensor arrays. By installing these additional sensors, the distance at which ships can be detected is increased.</description>

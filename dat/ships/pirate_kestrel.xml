@@ -2,7 +2,7 @@
 <ship name="Pirate Kestrel">
  <base_type>Kestrel</base_type>
  <GFX sx="10" sy="10">kestrel_pirate</GFX>
- <rarity>1</rarity>
+ <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>

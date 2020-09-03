@@ -3,6 +3,7 @@
  <base_type>Drone</base_type>
  <GFX>drone</GFX>
  <GUI>brushed</GUI>
+ <rarity>3</rarity>
  <sound>engine</sound>
  <class>Drone</class>
  <price>300000</price>

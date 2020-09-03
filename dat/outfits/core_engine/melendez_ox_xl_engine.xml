@@ -4,7 +4,6 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>small</size>
-  <rarity>1</rarity>
   <priority>7</priority>
   <mass>15</mass>
   <price>95000</price>

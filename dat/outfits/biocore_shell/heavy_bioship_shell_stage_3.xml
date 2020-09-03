@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Heavy Bioship Shell Stage 3">
  <general>
+  <rarity>1</rarity>
   <typename>Bioship Shell</typename>
   <slot prop="bio_hull">structure</slot>
   <size>large</size>

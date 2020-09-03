@@ -4,7 +4,7 @@
   <typename>Bioship Fin</typename>
   <slot prop="bio_engines">structure</slot>
   <size>small</size>
-  <rarity>1</rarity>
+  <rarity>2</rarity>
   <priority>7</priority>
   <mass>12</mass>
   <price>110000</price>

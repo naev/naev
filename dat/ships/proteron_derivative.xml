@@ -2,7 +2,7 @@
 <ship name="Proteron Derivative">
  <base_type>Derivative</base_type>
  <GFX>derivative</GFX>
- <rarity>2</rarity>
+ <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>

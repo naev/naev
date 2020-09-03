@@ -2,7 +2,7 @@
 <ship name="Empire Shark">
  <base_type>Shark</base_type>
  <GFX>shark_empire</GFX>
- <rarity>1</rarity>
+ <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>

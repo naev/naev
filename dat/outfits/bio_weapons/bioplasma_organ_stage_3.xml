@@ -4,6 +4,7 @@
   <slot prop="bio_weapon">weapon</slot>
   <size>small</size>
   <license>Medium Weapon License</license>
+  <rarity>1</rarity>
   <mass>7</mass>
   <price>18000</price>
   <description>The BioPlasma Organ is the most basic organic weaponry available, and one of the most common. While it is not especially powerful and lags slightly behind its synthetic cousin, the Plasma Blaster MK3, in terms of raw power, it is prized for its reliability and low cognitive requirements. As with all organs, it starts out weak, but over time it grows and improves.</description>

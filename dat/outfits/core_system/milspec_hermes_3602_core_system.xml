@@ -4,7 +4,6 @@
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>small</size>
-  <rarity>1</rarity>
   <priority>7</priority>
   <mass>45</mass>
   <price>140000</price>

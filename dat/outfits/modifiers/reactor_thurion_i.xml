@@ -4,7 +4,7 @@
   <typename>Energy Modifier</typename>
   <slot>utility</slot>
   <size>small</size>
-  <rarity>2</rarity>
+  <rarity>3</rarity>
   <mass>10</mass>
   <price>530000</price>
   <gfx_store>reactor_i</gfx_store>

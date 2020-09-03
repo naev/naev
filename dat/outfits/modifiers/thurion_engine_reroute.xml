@@ -4,7 +4,7 @@
   <typename>Manoevrability Modifier</typename>
   <slot>structure</slot>
   <size>small</size>
-  <rarity>2</rarity>
+  <rarity>3</rarity>
   <mass>0</mass>
   <price>175000</price>
   <description>This enhancement routes energy from the ship's energy supplies to the engine, giving the ship an increased thrust. It does not increase the ship's max speed nor turning abilities.</description>

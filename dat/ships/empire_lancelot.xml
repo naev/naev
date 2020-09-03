@@ -2,7 +2,7 @@
 <ship name="Empire Lancelot">
  <base_type>Lancelot</base_type>
  <GFX>lancelot_empire</GFX>
- <rarity>1</rarity>
+ <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>

@@ -2,7 +2,7 @@
 <ship name="Dvaered Vigilance">
  <base_type>Vigilance</base_type>
  <GFX sx="10" sy="10">vigilance_dvaered</GFX>
- <rarity>1</rarity>
+ <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>

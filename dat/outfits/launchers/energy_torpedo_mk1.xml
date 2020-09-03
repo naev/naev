@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon License</license>
-  <rarity>2</rarity>
+  <rarity>3</rarity>
   <mass>5</mass>
   <price>50000</price>
   <description>One of the greatest advancements the Thurion have made was in the field of non-corporeal computation. While it wasn't the original intention, the self-contained energy cascades that are capable of doing simple calculations are used as weapons. While such weapons have very high computational requirements, the homing energy projectiles have a high chance of hitting an evasive target.</description>

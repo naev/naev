@@ -2,7 +2,7 @@
 <ship name="Thurion Perspicacity">
  <base_type>Perspicacity</base_type>
  <GFX>perspicacity</GFX>
- <rarity>2</rarity>
+ <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>

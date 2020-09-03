@@ -4,7 +4,7 @@
   <typename>Armour Modifier</typename>
   <slot>structure</slot>
   <size>small</size>
-  <rarity>2</rarity>
+  <rarity>3</rarity>
   <mass />
   <price>150000</price>
   <gfx_store>stealth_plating</gfx_store>

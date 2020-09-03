@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Medium-Heavy Bioship Fast Fin Stage X">
  <general>
-  <rarity>1</rarity>
+  <rarity>2</rarity>
   <typename>Bioship Fin</typename>
   <slot prop="bio_engines">structure</slot>
   <size>medium</size>
