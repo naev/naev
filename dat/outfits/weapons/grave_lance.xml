@@ -4,6 +4,7 @@
   <slot>weapon</slot>
   <size>medium</size>
   <license>Heavy Weapon License</license>
+  <rarity>1</rarity>
   <mass>25</mass>
   <price>80000</price>
   <description>The Grave Lance is one of the most powerful Lance weapons around. The technology behind it is poorly understood by everyone except the Za'lek, who use it as a standard weapon.</description>

@@ -4,6 +4,7 @@
   <slot>weapon</slot>
   <size>large</size>
   <license>Heavy Weapon License</license>
+  <rarity>1</rarity>
   <mass>40</mass>
   <price>68000</price>
   <description>While limited in range compared to true capital-class weaponry, the heavy ripper turret's pair of heavy ripper cannons deliver exceptional firepower for dealing with lighter threats such as corvettes.</description>
