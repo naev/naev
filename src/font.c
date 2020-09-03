@@ -1077,7 +1077,7 @@ int gl_printHeightRaw( const glFont *ft_font,
       y += 1.5*(double)ft_font->h; /* move position down */
    } while (text[p-1] != '\0');
 
-   return (int) (y - 0.5*(double)ft_font->h);
+   return (int) (y - 0.5*(double)ft_font->h) + 1;
 }
 
 /**

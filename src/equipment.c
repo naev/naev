@@ -704,7 +704,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    double tw;
    int n, m;
    PilotOutfitSlot *slot;
-   char alt[512];
+   char alt[1024];
    int pos;
    Outfit *o;
    CstSlotWidget *wgt;
