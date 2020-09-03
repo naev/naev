@@ -29,7 +29,7 @@
 
 --]]
 
-require "dat/events/tutorial/tutorial-common.lua"
+require "dat/events/tutorial/tutorial_common.lua"
 require "dat/missions/neutral/common.lua"
 
 

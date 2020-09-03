@@ -2,7 +2,6 @@
 <ship name="Vendetta">
  <base_type>Vendetta</base_type>
  <GFX>vendetta</GFX>
- <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>

@@ -4,12 +4,13 @@
   <slot>weapon</slot>
   <size>large</size>
   <license>Light Combat Vessel License</license>
+  <rarity>2</rarity>
   <mass>240</mass>
   <price>1200000</price>
   <gfx_store>zalek_drone_light_fighter</gfx_store>
   <description>A quartet of light drones are maintained and launched from this bay. The Drones themselves are frail, but very cheap.</description>
   <cpu>-30</cpu>
- <rarity>5</rarity></general>
+ </general>
  <specific type="fighter bay" secondary="1">
   <ammo>Za'lek Light Drone Fighter</ammo>
   <delay>3</delay>

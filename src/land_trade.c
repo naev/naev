@@ -70,7 +70,7 @@ void commodity_exchange_open( unsigned int wid )
          _("Sell"), commodity_sell, SDLK_s );
 
       /* cust draws the modifier : # of tons one click buys or sells */
-   window_addCust( wid, -20, 50 + 2*LAND_BUTTON_HEIGHT,
+   window_addCust( wid, -20, 46 + 2*LAND_BUTTON_HEIGHT,
          (LAND_BUTTON_WIDTH-20)/2, gl_smallFont.h + 6, "cstMod",
          0, commodity_renderMod, NULL, NULL );
 

@@ -2,7 +2,7 @@
 <ship name="Soromid Marauder">
  <base_type>Marauder</base_type>
  <GFX>marauder</GFX>
- <rarity>3</rarity>
+ <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Bomber</class>

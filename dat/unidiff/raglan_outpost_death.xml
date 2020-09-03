@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unidiff name="raglan_outpost_death">
+ <system name="Haleb">
+  <asset name="Raglan Outpost">remove</asset>
+ </system>
+</unidiff>
+

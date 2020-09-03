@@ -8,7 +8,7 @@
   <description>While little more than a mark 1 laser cannon mounted on a turret, the Laser Point Defense MK1 is nevertheless a decent defensive weapon for light vessels.</description>
   <gfx_store>laserturret</gfx_store>
   <cpu>-8</cpu>
- <rarity>1</rarity></general>
+ </general>
  <specific type="turret bolt">
   <gfx>laser1S</gfx>
   <sound>laser</sound>

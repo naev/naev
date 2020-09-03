@@ -34,12 +34,12 @@
 #define FACTION_DATA_PATH        "dat/faction.xml" /**< Faction xml file. */
 #define MISSION_DATA_PATH        "dat/missions/" /**< Path to missions XML. */
 #define EVENT_DATA_PATH          "dat/events/" /**< Path to events XML. */
+#define UNIDIFF_DATA_PATH        "dat/unidiff/" /**< Path to unidiff XML. */
 #define SPFX_DATA_PATH           "dat/spfx.xml" /**< Location of the spfx datafile. */
 #define DTYPE_DATA_PATH          "dat/damagetype.xml" /**< Location of the spfx datafile. */
 #define COMMODITY_DATA_PATH      "dat/commodity.xml" /**< Commodity XML file. */
 #define FLEET_DATA_PATH          "dat/fleet.xml" /**< Where to find fleet data. */
 #define TECH_DATA_PATH           "dat/tech.xml"   /**< XML file containing techs. */
-#define DIFF_DATA_PATH           "dat/unidiff.xml" /**< Unidiff XML file. */
 #define ASTERO_DATA_PATH         "dat/asteroids.xml" /**< Asteroid types XML file. */
 #define MAP_DECORATOR_DATA_PATH  "dat/map.xml" /**< Commodity XML file. */
 

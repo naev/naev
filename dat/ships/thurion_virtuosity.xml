@@ -2,7 +2,7 @@
 <ship name="Thurion Virtuosity">
  <base_type>Virtuosity</base_type>
  <GFX>virtuosity</GFX>
- <rarity>4</rarity>
+ <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>

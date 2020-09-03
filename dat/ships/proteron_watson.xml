@@ -2,7 +2,7 @@
 <ship name="Proteron Watson">
  <base_type>Watson</base_type>
  <GFX sx="12" sy="12">watson</GFX>
- <rarity>5</rarity>
+ <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Carrier</class>
