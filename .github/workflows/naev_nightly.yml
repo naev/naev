@@ -33,7 +33,7 @@ jobs:
 
     - name: Build Windows Installer
       run: |
-        ./extras/windows/packageWindows.sh --nightly ##rewrite parts
+        ./extras/windows/packageWindows.sh --nightly
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
