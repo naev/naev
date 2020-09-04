@@ -1,16 +1,16 @@
 #!/bin/bash
 # Renders audio to mp3, while retaining metadata
 
-# Pass in -i <inputDir> (no trailing '/') -e <fileextension> -o <outputDir> (no trailing '/')
+# Pass in -i <inputDir> (no trailing '/') -f <fileextension> -o <outputDir> (no trailing '/')
 
 set -e
 
-while getopts d:e:i:o: OPTION "$@"; do
+while getopts d:f:i:o: OPTION "$@"; do
     case $OPTION in
     d)
         set -x
         ;;
-    e)
+    f)
         FILEEXTENSION=${OPTARG}
         ;;
     i)
@@ -35,7 +35,7 @@ fi
 
 mkdir -p $OUTPUTDIR
 for f in $INPUTDIR/*.$FILEEXTENSION; do
-    outfile=$(basename "$f" $FILEEXTENSION)
-    echo "Converting $f to $outfile.mp3"
-    ffmpeg -n -i "$f" -c:a libmp3lame -q:a 1 -ar 44100 -map_metadata 0 -map_metadata 0:s:0 -id3v2_version 3 -vn $OUTPUTDIR/$outfile.mp3 
+    OUTFILE=$(basename "$f" .$FILEEXTENSION)
+    echo "Converting $f to $OUTFILE.mp3"
+    ffmpeg -n -i "$f" -c:a libmp3lame -q:a 1 -ar 44100 -map_metadata 0 -map_metadata 0:s:0 -id3v2_version 3 -vn $OUTPUTDIR/$OUTFILE.mp3 
 done
