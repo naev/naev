@@ -60,46 +60,12 @@ else
 fi
 
 # Download and Install mingw-ldd
+
 echo "Update pip"
 pip3 install --upgrade pip
 
 echo "Install mingw-ldd script"
 pip3 install mingw-ldd
-
-# Download Inetc
-# This is the Plugin that handles downloading NData, this needed to be 
-# changed as NSISdl does not support secure downloads
-
-echo "Creating Temp Folder"
-mkdir -p ~/temp
-
-echo "Downloading Inetc release"
-if wget https://github.com/DigitalMediaServer/NSIS-INetC-plugin/releases/download/v1.0.5.6/INetC.zip -P ~/temp --tries=3; then
-
-    echo "Decompressing Inetc release"
-    unzip ~/temp/Inetc.zip -d ~/temp
-
-    # Install Inetc
-
-    echo "Installing Inetc"
-    if [[ $ARCH == "32" ]]; then
-        cp -r ~/temp/x86-unicode/* /mingw32/share/nsis/Plugins/unicode
-        echo "Cleaning up temp folder"
-        rm -rf ~/temp
-    elif [[ $ARCH == "64" ]]; then
-        cp -r ~/temp/x64-unicode/* /mingw64/share/nsis/Plugins/unicode
-        echo "Cleaning up temp folder"
-        rm -rf ~/temp
-    else
-        echo "I'm afraid I can't do that Dave..."
-        echo "Cleaning up temp folder"
-        rm -rf ~/temp
-        exit -1
-    fi
-else
-    echo "Something went wrong while downloading Inetc release"
-    exit -1
-fi
 
 # Move compiled binary to staging folder.
 
@@ -137,32 +103,37 @@ else
     exit -1
 fi
 
+# Create distribution folder
+
+echo "creating distribution folder"
+mkdir -p dist/release
+
 # Build installer
 
 if [[ $NIGHTLY == true ]]; then
     if [[ $BETA == true ]]; then 
-        makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta.$BETAVER-$BUILD_DATE -DARCH=$ARCH -DRELEASE=nightly extras/windows/installer/naev.nsi
+        makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta.$BETAVER-$BUILD_DATE -DARCH=$ARCH extras/windows/installer/naev.nsi
     elif [[ $BETA == false ]]; then 
-        makensis -DVERSION=$VERSION -DVERSION_SUFFIX=-$BUILD_DATE -DARCH=$ARCH -DRELEASE=nightly extras/windows/installer/naev.nsi
+        makensis -DVERSION=$VERSION -DVERSION_SUFFIX=-$BUILD_DATE -DARCH=$ARCH extras/windows/installer/naev.nsi
     else
         echo "Something went wrong determining if this is a beta or not."
     fi
     
 
-# Move installer to root directory
-mv extras/windows/installer/naev-$VERSION-$BUILD_DATE-win$ARCH.exe naev-win$ARCH.exe
+# Move installer to distribution directory
+mv extras/windows/installer/naev-$VERSION-$BUILD_DATE-win$ARCH.exe dist/release/naev-win$ARCH.exe
 
 elif [[ $NIGHTLY == false ]]; then
     if [[ $BETA == true ]]; then 
-        makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta.$BETAVER -DARCH=$ARCH -DRELEASE=v$BASEVER.0-beta.$BETAVER extras/windows/installer/naev.nsi
+        makensis -DVERSION=$BASEVER.0 -DVERSION_SUFFIX=-beta.$BETAVER -DARCH=$ARCH extras/windows/installer/naev.nsi
     elif [[ $BETA == false ]]; then 
-        makensis -DVERSION=$VERSION -DVERSION_SUFFIX= -DARCH=$ARCH -DRELEASE=v$VERSION extras/windows/installer/naev.nsi
+        makensis -DVERSION=$VERSION -DVERSION_SUFFIX= -DARCH=$ARCH extras/windows/installer/naev.nsi
     else
         echo "Something went wrong determining if this is a beta or not."
     fi
 
-# Move installer to root directory
-mv extras/windows/installer/naev-$VERSION-win$ARCH.exe naev-win$ARCH.exe
+# Move installer to distribution directory
+mv extras/windows/installer/naev-$VERSION-win$ARCH.exe dist/release/naev-win$ARCH.exe
 else
     echo "Cannot think of another movie quote.. again."
     echo "Something went wrong.."
@@ -175,13 +146,13 @@ echo "Successfully built Windows Installer for win$ARCH"
 
 if [[ $NIGHTLY == true ]]; then
 cd extras/windows/installer/bin
-zip ../../../../naev-win$ARCH.zip *.*
-cd ../../../../
+zip ../../../../dist/release/naev-win$ARCH.zip *.*
+cd ../../../../dist/release/
 
 elif [[ $NIGHTLY == false ]]; then
 cd extras/windows/installer/bin
-zip ../../../../naev-win$ARCH.zip *.*
-cd ../../../../
+zip ../../../../dist/release/naev-win$ARCH.zip *.*
+cd ../../../../dist/release/
 
 else
     echo "Cannot think of another movie quote.. again."
