@@ -36,9 +36,9 @@ mdesc = _("Take Dr. Mensing to %s in the %s system as fast as possible!")
 bar_title = _("Bar")
 landing_title = _("Mission accomplished")
 bar_text = _([["Well met, %s! In fact, it's a lucky coincidence that we meet. You see, I'm in dire need of your service. I'm here on a... conference of sorts, not a real one. We are obligated to present the newest results of our research to scientists of the Empire once per period - even though these simpletons lack the skills to understand our works! It's just a pointless ritual anyway. But I just got an ingenious idea on how to prevent the volatile Sol nebula from disrupting ship shields! I will spare you with the details - to ensure my idea is not going to be stolen, nothing personal. You can never be sure who is listening."
-    "Anyway, you have to take me back to my lab on %s in the %s system immediately! I'd also pay %s if neccessary."]])
+    "Anyway, you have to take me back to my lab on %s in the %s system immediately! I'd also pay %s if necessary."]])
 accept_text = _([["Splendid! I'd like to start with my work as soon as possible, so please hurry! Off to %s we go!"
-    With that being said she drags you out of the bar. When realizing that she actually does not know on wich landing pad your ship is parked she lets you loose and orders you to lead the way.]])
+    With that being said she drags you out of the bar. When realizing that she actually does not know on which landing pad your ship is parked she lets you loose and orders you to lead the way.]])
 arrival_text = _([["Finally! I can't await getting started. Before I forget -" She hands you over a credit chip worth %s.
     %s]])
 late_arrival_text = _([["That took long enough! I can't await getting started. I doubt you deserve full payment. I'll rather give you a reduced payment of %s for educational reasons." She hands you over a credit chip.
@@ -51,7 +51,7 @@ osd_msg   = {}
 osd_title = _("Emergency of Immediate Inspiration")
 osd_msg[1] = _("Fly to %s in the %s system.")
 
-log_text = _([[You brought Dr. Mensing back from a scientific Empire conference.]])
+log_text = _([[You brought Dr. Mensing back from a Empire scientific conference.]])
 
 
 function create()
