@@ -4,7 +4,6 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>small</size>
-  <rarity>6</rarity>
   <mass>24</mass>
   <price>0</price>
   <description>This is a dummy  hull for use in missions only, which does nothing. DO NOT BUY.</description>
