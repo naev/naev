@@ -157,8 +157,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: steam-x86-64
-        path: |
-          dist/release/naev.x64
+        path: ${{ github.workspace }}/dist/release/naev.x64
 
   "macOS":
     runs-on: macos-latest
