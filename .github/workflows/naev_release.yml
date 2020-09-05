@@ -422,7 +422,6 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "test"
           prerelease: false
-          title: "Release ${{ github.ref }}"
           files: |
             ${{ github.workspace }}/dist/release/*
 

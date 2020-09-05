@@ -350,7 +350,6 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: true
-          title: "Beta ${{ github.ref }}"
           files: |
             ${{ github.workspace }}/dist/release/*
 
