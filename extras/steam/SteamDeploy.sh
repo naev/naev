@@ -61,11 +61,8 @@ chmod +x extras/steam/content/lin64/naev.x64
 unzip dist/steam/macos/naev-macos.zip -d extras/steam/content/macos/
 
 # Unzip Windows binary and DLLs and move to deployment location
-mkdir -p dist/steam/win64/temp
-unzip dist/steam/win64/naev-win64.zip -d dist/steam/win64/temp
-
-mv dist/steam/win64/temp/*.dll extras/steam/content/win64/
-mv dist/steam/win64/temp/naev*.exe extras/steam/content/win64/naev.exe
+unzip dist/steam/win64/naev-win64.zip -d extras/steam/content/win64/
+mv extras/steam/content/win64/naev*.exe extras/steam/content/win64/naev.exe
 
 # Move data to deployment location
 cp -r dist/steam/ndata/* extras/steam/content/ndata
