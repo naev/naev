@@ -69,27 +69,19 @@ cp -r dist/steam/ndata/* extras/steam/content/ndata
 
 # Runs STEAMCMD, and builds the app as well as all needed depots.
 
+# Trigger 2FA request and get 2FA code
+steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
+
+# Wait a few seconds for the email to arrive
+sleep 10
+python3 extras/steam/2fa/get_2fa.py
+STEAMCMD_TFA="$(cat extras/steam/2fa/2fa.txt)"
+
 if [[ $NIGHTLY == true ]]; then
-    # Trigger 2FA request and get 2FA code
-    steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
-
-    # Wait a few seconds for the email to arrive
-    sleep 10
-    python3 extras/steam/2fa/get_2fa.py
-    STEAMCMD_TFA="$(cat extras/steam/2fa/2fa.txt)"
-
     # Run steam upload with 2fa key
     steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_598530_nightly.vdf +quit
 
 elif [[ $NIGHTLY == false ]]; then
-    # Trigger 2FA request and get 2FA code
-    steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
-
-    # Wait a few seconds for the email to arrive
-    sleep 10
-    python3 extras/steam/2fa/get_2fa.py
-    STEAMCMD_TFA="$(cat extras/steam/2fa/2fa.txt)"
-
     if [[ $BETA == true ]]; then 
         # Run steam upload with 2fa key
         steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_598530_prerelease.vdf +quit
