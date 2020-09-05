@@ -93,7 +93,7 @@ elif [[ $NIGHTLY == false ]]; then
 
         # Run steam upload with 2fa key
         steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_598530_release.vdf +quit
-        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_1411430.vdf +quit
+        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_1411430_soundtrack.vdf +quit
 
     else
         echo "Something went wrong determining if this is a beta or not."
