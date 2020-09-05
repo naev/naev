@@ -49,29 +49,26 @@ fi
 
 # Create deployment locations
 mkdir -p extras/steam/{content,output}
-mkdir -p extras/steam/content/{lin32,lin64,ndata,win32,win64,soundtrack}
+mkdir -p extras/steam/content/{lin64,win64,macos,ndata,soundtrack}
 
 # Move all build artefacts to deployment locations
 
-# Move Linux binaries and set as executable
-mv extras/steam/temp/steam-x86-64/naev.x64 extras/steam/content/lin64/naev.x64
+# Move Linux binary and set as executable
+mv dist/steam/steam-x86-64/naev.x64 extras/steam/content/lin64/naev.x64
 chmod +x extras/steam/content/lin64/naev.x64
-
-mv extras/steam/temp/steam-x86-32/naev.x32 extras/steam/content/lin32/naev.x32
-chmod +x extras/steam/content/lin32/naev.x32
           
-# Will figure this out soon TM. (might need a separate mac depot with all of the files pre-assembled.)
-# unzip extras/steam/temp/macos/naev-macos.zip -d extras/steam/content/macos/
+# Move macOS bundle to deployment location
+unzip dist/steam/macos/naev-macos.zip -d extras/steam/content/macos/
 
-# Unzip Windows binaries and DLLs and move to deployment locations
-unzip extras/steam/temp/win64/naev-win64.zip -d extras/steam/content/win64/
-mv extras/steam/content/win64/naev*.exe extras/steam/content/win64/naev.exe
+# Unzip Windows binary and DLLs and move to deployment location
+mkdir -p dist/steam/win64/temp
+unzip dist/steam/win64/naev-win64.zip -d dist/steam/win64/temp
 
-unzip extras/steam/temp/win32/naev-win32.zip -d extras/steam/content/win32/
-mv extras/steam/content/win32/naev*.exe extras/steam/content/win32/naev.exe
+mv dist/steam/win64/temp/*.dll extras/steam/content/win64/
+mv dist/steam/win64/temp/naev*.exe extras/steam/content/win64/naev.exe
 
-#Unzip ndata and move to deployment location
-unzip extras/steam/temp/ndata/ndata.zip -d extras/steam/content/ndata
+# Move data to deployment location
+cp -r dist/steam/ndata/* extras/steam/content/ndata
 
 # Runs STEAMCMD, and builds the app as well as all needed depots.
 
@@ -88,10 +85,6 @@ if [[ $NIGHTLY == true ]]; then
     steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_598530_nightly.vdf +quit
 
 elif [[ $NIGHTLY == false ]]; then
-    # Move soundtrack stuff to deployment area
-    unzip extras/steam/temp/soundtrack/soundtrack.zip -d extras/steam/content/soundtrack
-    cp extras/steam/naev_soundtrack_cover.png extras/steam/content/soundtrack/naev_soundtrack_cover.png
-
     # Trigger 2FA request and get 2FA code
     steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
 
@@ -105,9 +98,13 @@ elif [[ $NIGHTLY == false ]]; then
         steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_598530_prerelease.vdf +quit
 
     elif [[ $BETA == false ]]; then 
+        # Move soundtrack stuff to deployment area
+        mv dist/steam/soundtrack/*.mp3 extras/steam/content/soundtrack
+        mv dist/steam/soundtrack/*.png extras/steam/content/soundtrack
+
         # Run steam upload with 2fa key
         steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_598530_release.vdf +quit
-        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_1411430.vdf +quit
+        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_1411430.vdf +quit
 
     else
         echo "Something went wrong determining if this is a beta or not."
