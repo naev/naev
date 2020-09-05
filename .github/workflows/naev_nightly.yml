@@ -111,7 +111,7 @@ jobs:
         cp VERSION dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64
 
         cd dist/release/tar
-        tar -czvf naev-$VERSION-$BUILD_DATE-linux-x86-64.tar.gz naev-$VERSION-$BUILD_DATE-linux-x86-64/*
+        tar -czvf naev-$VERSION-$BUILD_DATE-linux-x86-64.tar.gz naev-$VERSION-$BUILD_DATE-linux-x86-64
         
 
     - name: Upload Artifact
