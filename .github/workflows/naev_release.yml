@@ -1,8 +1,8 @@
-on:
-  push:
-    tags:   
-      - 'v*.*.*'
-      - '!v*.*.*-beta*'
+on: [push]
+#  push:
+#    tags:   
+#      - 'v*.*.*'
+#      - '!v*.*.*-beta*'
 
 name: Release
 
