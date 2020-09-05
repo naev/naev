@@ -96,8 +96,8 @@ elif [[ $NIGHTLY == false ]]; then
 
     elif [[ $BETA == false ]]; then 
         # Move soundtrack stuff to deployment area
-        mv dist/steam/soundtrack/*.mp3 extras/steam/content/soundtrack
-        mv dist/steam/soundtrack/*.png extras/steam/content/soundtrack
+        mv dist/steam/soundtrack/soundtrack/*.mp3 extras/steam/content/soundtrack
+        mv dist/steam/soundtrack/soundtrack/*.png extras/steam/content/soundtrack
 
         # Run steam upload with 2fa key
         steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http /home/runner/work/naev/naev/extras/steam/scripts/app_build_598530_release.vdf +quit
