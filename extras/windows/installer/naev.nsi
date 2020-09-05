@@ -88,12 +88,12 @@ Var StartMenuFolder
 
 Var PortID
 
-Section "Naev Engine" BinarySection
+Section "Naev Engine and Data" BinarySection
 
    SectionIn RO
 
    SetOutPath "$INSTDIR"
-   File bin\*
+   File /r bin\*
    File ..\..\logos\logo.ico
    
    IntOp $PortID $PortID & ${SF_SELECTED}
@@ -175,12 +175,8 @@ FunctionEnd
 Section "Uninstall"
 
    Delete "$INSTDIR\Uninstall.exe"
-   Delete "$INSTDIR\naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe"
-   Delete "$INSTDIR\logo.ico"
-   Delete "$INSTDIR\ndata.zip"
-   Delete "$INSTDIR\*.dll"
-   Delete "$INSTDIR\stderr.txt"
-   Delete "$INSTDIR\stdout.txt"
+   Delete "$INSTDIR\*"
+   RMDir /r "$INSTDIR\dat"
    RMDir "$INSTDIR"
 
    !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
