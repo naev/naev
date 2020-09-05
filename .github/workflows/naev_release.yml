@@ -414,7 +414,7 @@ jobs:
           mv dist/macos/naev-macos.zip dist/release/naev-$VERSION-macos.zip
           mv dist/win64/naev-win64.exe dist/release/naev-$VERSION-win64.exe
           mv dist/source/source.tar.gz dist/release/naev-$VERSION-source.tar.gz
-          mv dist/soundtrack/soundtrack.zip dist/release/naev-$VERSION-soundtrack.zip
+          mv dist/soundtrack/release/soundtrack.zip dist/release/naev-$VERSION-soundtrack.zip
 
       - name: Upload Release Assets
         uses: "marvinpinto/action-automatic-releases@latest"
