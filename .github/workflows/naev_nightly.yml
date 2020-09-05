@@ -102,7 +102,7 @@ jobs:
           VERSION="${BASEVER}.0-beta.${BETAVER}"
         fi 
 
-        mkdir -p dist/release/naev-linux-x86-64
+        mkdir -p dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64
         mkdir -p dist/release/tar
 
         mv src/naev dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64/naev-$VERSION-$BUILD_DATE-linux-x86-64
