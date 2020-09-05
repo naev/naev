@@ -93,7 +93,7 @@ Section "Naev Engine" BinarySection
    SectionIn RO
 
    SetOutPath "$INSTDIR"
-   File bin\*.*
+   File bin\*
    File ..\..\logos\logo.ico
    
    IntOp $PortID $PortID & ${SF_SELECTED}
@@ -128,18 +128,6 @@ Section "Naev Engine" BinarySection
    File "datapath.lua"
    ${EndUnless}
 
-SectionEnd
-
-Section "Naev Data (Download)" DataSection
-   dwn:
-    AddSize 331538 ;Size (kB) of Naev ndata
-    ;use inetc due to the fact that NSISdl cannot download via HTTPS   
-    inetc::get "http://github.com/naev/naev/releases/download/${RELEASE}/ndata-${VERSION}${VERSION_SUFFIX}.zip" "ndata.zip"
-    Pop $R0 ;Get the return value
-      StrCmp $R0 "OK" skip
-        MessageBox MB_YESNO|MB_ICONEXCLAMATION "Download failed due to: $R0$\n$\nPlease note that naev won't work until you download ndata.zip and put it in the same folder as naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe.$\n$\nRetry?" IDNO skip
-      Goto dwn
-   skip:
 SectionEnd
 
 Section /o "Do a portable install" Portable
@@ -177,8 +165,7 @@ FunctionEnd
 
    ;Assign descriptions to sections
    !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-      !insertmacro MUI_DESCRIPTION_TEXT ${BinarySection} "Naev engine. Requires ndata.zip to run."
-      !insertmacro MUI_DESCRIPTION_TEXT ${DataSection} "Provides all content and media."
+      !insertmacro MUI_DESCRIPTION_TEXT ${BinarySection} "Naev engine and data."
      !insertmacro MUI_DESCRIPTION_TEXT ${Portable} "Perform a portable install. No uninstaller or registry entries are created and you can run off a pen drive"
    !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
