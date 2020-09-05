@@ -31,7 +31,7 @@ jobs:
       env:
         CFLAGS: "-O3"
 
-    - name: Build Windows Installer
+    - name: Build Windows Artifacts
       run: |
         ./extras/windows/packageWindows.sh --nightly
 
