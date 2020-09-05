@@ -244,7 +244,6 @@ jobs:
             binutils-dev \
             libzip-dev \
             libiberty-dev \
-            libluajit-5.1-dev \
             gettext \
             autopoint \
             intltool \
@@ -304,7 +303,6 @@ jobs:
             binutils-dev \
             libzip-dev \
             libiberty-dev \
-            libluajit-5.1-dev \
             gettext \
             ffmpeg \
             autopoint \
@@ -376,7 +374,6 @@ jobs:
             binutils-dev \
             libzip-dev \
             libiberty-dev \
-            libluajit-5.1-dev \
             gettext \
             autopoint \
             intltool \
@@ -455,7 +452,6 @@ jobs:
             binutils-dev \
             libzip-dev \
             libiberty-dev \
-            libluajit-5.1-dev \
             gettext \
             autopoint \
             intltool \
