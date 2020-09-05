@@ -208,7 +208,7 @@ jobs:
         ./extras/macos/bundle.sh
         cp AUTHORS Naev.app/Contents/Resources/
         cp VERSION Naev.app/Contents/Resources/
-        cp -r  dat/ Naev.app/Contents/Resources/
+        cp -r dat/ Naev.app/Contents/Resources/
         zip -r dist/release/naev-macos.zip Naev.app/*
 
     - name: Upload Artifact
