@@ -158,7 +158,7 @@ jobs:
       with:
         name: steam-x86-64
         path: |
-          ${{ github.workspace }}/dist/release/naev.x64
+          dist/release/naev.x64
 
   "macOS":
     runs-on: macos-latest
