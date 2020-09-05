@@ -102,7 +102,7 @@ jobs:
           VERSION="${BASEVER}.0-beta.${BETAVER}"
         fi 
 
-        mkdir -p dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64
+        mkdir -p dist/release/naev-linux-x86-64
         mkdir -p dist/release/tar
 
         mv src/naev dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64/naev-$VERSION-$BUILD_DATE-linux-x86-64
@@ -113,14 +113,14 @@ jobs:
         cp VERSION dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64
 
         cd dist/release
-        tar -czvf naev-$VERSION-$BUILD_DATE-linux-x86-64.tar.gz naev-$VERSION-$BUILD_DATE-linux-x86-64
-        mv naev-$VERSION-$BUILD_DATE-linux-x86-64.tar.gz ../tar
+        tar -czvf linux-x86-64.tar.gz naev-$VERSION-$BUILD_DATE-linux-x86-64
+        mv linux-x86-64.tar.gz ../tar
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: linux-x86-64
-        path: ${{ github.workspace }}/dist/release/tar/*
+        path: ${{ github.workspace }}/dist/release/tar/linux-x86-64.tar.gz
 
   "Linux-x86_64-SteamRuntime":
     runs-on: ubuntu-latest
