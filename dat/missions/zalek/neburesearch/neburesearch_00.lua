@@ -97,7 +97,8 @@ function accept()
     
     -- Add mission
     misn.accept()
-    osd_msg = {}
+    local osd_title = _("Novice Nebula Research")
+    local osd_msg = {}
     osd_msg[1] = string.format( _("Fly to the %s system"), t_sys[1] )
     osd_msg[2] = string.format( _("Fly to the %s system"), t_sys[2] )
     osd_msg[3] = string.format(
