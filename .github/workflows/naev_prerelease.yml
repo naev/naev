@@ -105,19 +105,21 @@ jobs:
         mkdir -p dist/release/tar
 
         mv src/naev dist/release/naev-$VERSION-linux-x86-64/naev-$VERSION-linux-x86-64
+        chmod +x dist/release/naev-$VERSION-linux-x86-64/naev-$VERSION-linux-x86-64
+
         cp -r dat/ dist/release/naev-$VERSION-linux-x86-64
         cp AUTHORS dist/release/naev-$VERSION-linux-x86-64
         cp VERSION dist/release/naev-$VERSION-linux-x86-64
 
-        cd dist/release/tar
-        tar -czvf naev-$VERSION-linux-x86-64.tar.gz naev-$VERSION-linux-x86-64/*
-        
+        cd dist/release
+        tar -czvf linux-x86-64.tar.gz naev-$VERSION-linux-x86-64
+        mv linux-x86-64.tar.gz tar/
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: linux-x86-64
-        path: ${{ github.workspace }}/dist/release/tar/*
+        path: ${{ github.workspace }}/dist/release/tar/linux-x86-64.tar.gz
 
   "Linux-x86_64-SteamRuntime":
     runs-on: ubuntu-latest
@@ -156,8 +158,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: steam-x86-64
-        path: |
-          ${{ github.workspace }}/dist/release/naev.x64
+        path: ${{ github.workspace }}/dist/release/naev.x64
 
   "macOS":
     runs-on: macos-latest
@@ -339,7 +340,7 @@ jobs:
               VERSION="${BASEVER}.0-beta.${BETAVER}"
           fi
 
-          mv dist/linux-x86-64/*.tar.gz dist/release/
+          mv dist/linux-x86-64/linux-x86-64.tar.gz dist/release/naev-$VERSION-linux-x86-64.tar.gz
           mv dist/macos/naev-macos.zip dist/release/naev-$VERSION-macos.zip
           mv dist/win64/naev-win64.exe dist/release/naev-$VERSION-win64.exe
           mv dist/source/source.tar.gz dist/release/naev-$VERSION-source.tar.gz
@@ -355,7 +356,7 @@ jobs:
 
   "Upload-Steam":
       runs-on: ubuntu-latest
-      needs: [Linux-Steam-x86_64, Windows-MinGW64, macOS]
+      needs: [Linux-x86_64-SteamRuntime, Windows-MinGW64, macOS]
       if: ${{ github.repository == 'naev/naev' }}
 
       steps:
