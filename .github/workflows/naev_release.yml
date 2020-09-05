@@ -310,11 +310,15 @@ jobs:
             autopoint \
             intltool \
             itstool
+      
+      - name: Generate Soundtrack
+        run: |
+          pip3 install mutagen
 
       - name: Checkout Naev Repository 
         uses: actions/checkout@v2
 
-      - name: Generate soundtrack
+      - name: Generate Soundtrack
         run: |
           ./autogen.sh
           ./configure
