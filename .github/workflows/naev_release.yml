@@ -407,7 +407,6 @@ jobs:
           mv dist/linux-x86-64/*.tar.gz dist/release/
           mv dist/macos/naev-macos.zip dist/release/naev-$VERSION-macos.zip
           mv dist/win64/naev-win64.exe dist/release/naev-$VERSION-win64.exe
-          mv dist/win64/naev-win64.zip dist/release/naev-$VERSION-win64.zip
           mv dist/source/source.tar.gz dist/release/naev-$VERSION-source.tar.gz
           mv dist/soundtrack/soundtrack.zip dist/release/naev-$VERSION-soundtrack.zip
 
