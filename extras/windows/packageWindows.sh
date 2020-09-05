@@ -150,21 +150,9 @@ echo "Successfully built Windows Installer for win$ARCH"
 
 # Package zip
 
-if [[ $NIGHTLY == true ]]; then
 cd extras/windows/installer/bin
-zip ../../../../dist/release/naev-win$ARCH.zip *.*
-cd ../../../../dist/release/
-
-elif [[ $NIGHTLY == false ]]; then
-cd extras/windows/installer/bin
-zip ../../../../dist/release/naev-win$ARCH.zip *.*
-cd ../../../../dist/release/
-
-else
-    echo "Cannot think of another movie quote.. again."
-    echo "Something went wrong.."
-    exit -1
-fi
+zip ../../../../dist/release/naev-win$ARCH.zip *.dll *.exe
+cd ../../../../
 
 echo "Successfully packaged zipped folder for win$ARCH"
 
