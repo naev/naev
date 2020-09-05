@@ -114,7 +114,7 @@ jobs:
 
         cd dist/release
         tar -czvf linux-x86-64.tar.gz naev-$VERSION-$BUILD_DATE-linux-x86-64
-        mv linux-x86-64.tar.gz ../tar
+        mv linux-x86-64.tar.gz tar/
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
