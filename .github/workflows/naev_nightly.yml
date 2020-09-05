@@ -89,14 +89,36 @@ jobs:
 
     - name: Package Linux64 Release
       run: |
-        mkdir -p dist/release/
-        mv src/naev dist/release/naev-linux-x86-64
+        chmod +x src/naev
+
+        BUILD_DATE="$(date +%m_%d_%Y)"
+
+        VERSION="$(cat VERSION)"
+
+        # Get version, negative minors mean betas
+        if [[ -n $(echo "${VERSION}" | grep "-") ]]; then
+          BASEVER=$(echo "${VERSION}" | sed 's/\.-.*//')
+          BETAVER=$(echo "${VERSION}" | sed 's/.*-//')
+          VERSION="${BASEVER}.0-beta.${BETAVER}"
+        fi 
+
+        mkdir -p dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64
+        mkdir -p dist/release/tar
+
+        mv src/naev dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64/naev-$VERSION-$BUILD_DATE-linux-x86-64
+        cp -r dat/ dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64
+        cp AUTHORS dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64
+        cp VERSION dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64
+
+        cd dist/release/tar
+        tar -czvf naev-$VERSION-$BUILD_DATE-linux-x86-64.tar.gz naev-$VERSION-$BUILD_DATE-linux-x86-64/*
+        
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: linux-x86-64
-        path: ${{ github.workspace }}/src/naev-linux-x86-64
+        path: ${{ github.workspace }}/dist/release/tar/*
 
   "Linux-x86_64-SteamRuntime":
     runs-on: ubuntu-latest
@@ -127,6 +149,7 @@ jobs:
     - name: Collect Steam Linux64 Release
       run: |
         mkdir -p ${{ github.workspace }}/dist/release/
+
         mv ${{ github.workspace }}/src/naev ${{ github.workspace }}/dist/release/naev.x64
         chmod +x ${{ github.workspace }}/dist/release/naev.x64
 
@@ -134,7 +157,8 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: steam-x86-64
-        path: ${{ github.workspace }}/dist/release/naev.x64
+        path: |
+          ${{ github.workspace }}/dist/release/naev.x64
 
   "macOS":
     runs-on: macos-latest
@@ -179,7 +203,10 @@ jobs:
     
     - name: Package MacOS Release
       run: |
-        ./extras/macos/bundle.sh ##TODO rewrite parts
+        ./extras/macos/bundle.sh
+        cp AUTHORS Naev.app/Contents/Resources/
+        cp VERSION Naev.app/Contents/Resources/
+        cp -r  dat/ Naev.app/Contents/Resources/
         zip -r naev-macos.zip Naev.app/*
 
     - name: Upload Artifact
@@ -228,7 +255,7 @@ jobs:
         run: |
           ./autogen.sh
           ./configure
-          make dist-bzip2
+          make dist-gzip
 
       - name: Check if source archive is valid
         run: |
@@ -240,13 +267,13 @@ jobs:
           make VERSION
           VERSION="$(cat VERSION)"
           mkdir -p dist/release
-          mv naev-$VERSION.tar.bz2 dist/release/source.tar.bz2
+          mv naev-$VERSION.tar.gz dist/release/source.tar.gz
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: source
-          path: ${{ github.workspace }}/dist/release/source.tar.bz2
+          path: ${{ github.workspace }}/dist/release/source.tar.gz
 
   "Upload-Release":
       runs-on: ubuntu-latest
@@ -294,7 +321,7 @@ jobs:
 
       - name: Create Release Staging Area
         run: |
-          mkdir -p dist   
+          mkdir -p dist/release
 
       - name: Download Build Artifacts
         uses: actions/download-artifact@v2
@@ -303,8 +330,6 @@ jobs:
           
       - name: Collect files for distribution
         run: |
-          mkdir -p dist/release
-
           BUILD_DATE="$(date +%m_%d_%Y)"
 
           VERSION="$(cat VERSION)"
@@ -315,11 +340,11 @@ jobs:
               VERSION="${BASEVER}.0-beta.${BETAVER}"
           fi
 
-          mv dist/linux-x86-64/naev-linux-x86-64 dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64
+          mv dist/linux-x86-64/*.tar.gz dist/release/
           mv dist/macos/naev-macos.zip dist/release/naev-$VERSION-$BUILD_DATE-macos.zip
           mv dist/win64/naev-win64.exe dist/release/naev-$VERSION-$BUILD_DATE-win64.exe
           mv dist/win64/naev-win64.zip dist/release/naev-$VERSION-$BUILD_DATE-win64.zip
-          mv dist/source/source.tar.bz2 dist/release/naev-$VERSION-$BUILD_DATE-source.tar.bz2
+          mv dist/source/source.tar.gz dist/release/naev-$VERSION-$BUILD_DATE-source.tar.gz
 
       - name: Upload Release Assets
         uses: "marvinpinto/action-automatic-releases@latest"
@@ -333,7 +358,7 @@ jobs:
 
   "Upload-Steam":
       runs-on: ubuntu-latest
-      needs: [Linux-Steam-x86_64, Windows-MinGW64, macOS, Generate-NData]
+      needs: [Linux-x86_64-SteamRuntime, Windows-MinGW64, macOS]
       if: ${{ github.repository == 'naev/naev' }}
 
       steps:
@@ -381,10 +406,19 @@ jobs:
           ./autogen.sh
           ./configure
           make VERSION
-          
+
       - name: Create Release Staging Area
         run: |
-          mkdir -p ${{ github.workspace }}/dist/steam
+          mkdir -p ${{ github.workspace }}/dist/steam/ndata
+
+      - name: Make data
+        run: |
+          ./autogen.sh
+          ./configure
+          make POT
+          cp -r dat/ dist/steam/ndata
+          cp AUTHORS dist/steam/ndata
+          cp VERSION dist/steam/ndata
 
       - name: Download Build Artifacts
         uses: actions/download-artifact@v2
@@ -393,7 +427,7 @@ jobs:
           
       - name: Build and Upload Steam Release
         run: |
-          ./extras/steam/SteamDeploy.sh --nightly ##TODO rewrite
+          ./extras/steam/SteamDeploy.sh --nightly
         env:
           STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
           STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}
