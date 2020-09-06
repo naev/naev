@@ -26,7 +26,7 @@
 
 ]]--
 
-include "dat/scripts/numstring.lua"
+require "dat/scripts/numstring.lua"
 
 
 text = {}
