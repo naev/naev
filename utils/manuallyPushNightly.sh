@@ -17,7 +17,7 @@ while getopts d:t: OPTION "$@"; do
 done
 
 if [[ -z "$TOKEN" ]]; then
-    echo "usage: `basename $0` [-d] -t <token>
+    echo "usage: `basename $0` [-d] -t <token>"
     exit 1
 fi
 
