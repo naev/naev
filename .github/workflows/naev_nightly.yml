@@ -1,5 +1,6 @@
 on:
   repository_dispatch:
+    types: manual-nightly
   schedule:
     - cron: '0 0 * * *'
 
