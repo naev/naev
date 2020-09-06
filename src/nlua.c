@@ -195,7 +195,7 @@ nlua_env nlua_newEnv(int rw) {
    lua_setfield(naevL, -2, "__index");
    lua_setmetatable(naevL, -2);
 
-   /* Replace include() function with one that considers fenv */
+   /* Replace require() function with one that considers fenv */
    lua_pushvalue(naevL, -1);
    lua_pushcclosure(naevL, nlua_packfileLoader, 1);
    lua_setfield(naevL, -2, "require");
@@ -347,11 +347,6 @@ static int nlua_loadBasic( lua_State* L )
    lua_register(L, "N_", nlua_gettext_noop);
    luaL_register(L, "gettext", gettext_methods);
 
-   /* Add our own */
-   lua_pushvalue(L, LUA_GLOBALSINDEX);
-   lua_pushcclosure(L, nlua_packfileLoader, 1);
-   lua_setglobal(L, "include");
-
    return 0;
 }
 
@@ -428,7 +423,6 @@ static int nlua_packfileLoader( lua_State* L )
 
    /* Must have buf by now. */
    if (buf == NULL) {
-      DEBUG(_("include(): %s not found in ndata."), filename);
       luaL_error(L, _("include(): %s not found in ndata."), filename);
       return 1;
    }
