@@ -5,7 +5,7 @@
 
 set -e
 
-while getopts d:w: OPTION "$@"; do
+while getopts d:t: OPTION "$@"; do
     case $OPTION in
     d)
         set -x
@@ -15,6 +15,11 @@ while getopts d:w: OPTION "$@"; do
         ;;
     esac
 done
+
+if [[ -z "$TOKEN" ]]; then
+    echo "usage: `basename $0` [-d] -t <token>
+    exit 1
+fi
 
 curl -H "Accept: application/vnd.github.everest-preview+json" \
    -H "Authorization: token $TOKEN" \
