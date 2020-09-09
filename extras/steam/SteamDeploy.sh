@@ -73,7 +73,7 @@ cp -r dist/steam/ndata/* extras/steam/content/ndata
 steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
 
 # Wait a few seconds for the email to arrive
-sleep 10
+sleep 30
 python3 extras/steam/2fa/get_2fa.py
 STEAMCMD_TFA="$(cat extras/steam/2fa/2fa.txt)"
 
