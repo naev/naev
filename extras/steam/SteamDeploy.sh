@@ -72,8 +72,8 @@ cp -r dist/steam/ndata/* extras/steam/content/ndata
 # Trigger 2FA request and get 2FA code
 steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
 
-# Wait a few seconds for the email to arrive
-sleep 10
+# Wait a bit for the email to arrive
+sleep 60s
 python3 extras/steam/2fa/get_2fa.py
 STEAMCMD_TFA="$(cat extras/steam/2fa/2fa.txt)"
 
