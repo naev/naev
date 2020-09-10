@@ -168,7 +168,9 @@ static int playerL_getname( lua_State *L )
    return 1;
 }
 /**
- * @brief Gets the player's ship's name.
+ * @brief Gets the player's ship's name (given by the player).
+ *
+ * @note Not to be confused with getting the player's ship that can be done with player.pilot():ship().
  *
  *    @luatreturn string The name of the ship the player is currently in.
  * @luafunc ship()
