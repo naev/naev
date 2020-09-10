@@ -21,8 +21,8 @@ dist_pkgdata_DATA = naev-confupdate.sh
 
 dist_man6_MANS = naev.6
 dist_doc_DATA = AUTHORS README TODO LICENSE
+nobase_dist_pkgdata_DATA = dat/* po/*
 
-DATA_ARCHIVE = ndata.zip
 if HAVE_UTILS
 MKSPR      = utils/mkspr/mkspr$(EXEEXT)
 endif
@@ -32,7 +32,7 @@ VERSIONFILE = VERSION
 LANGUAGEFILE = $(top_srcdir)/dat/LANGUAGES
 
 EXTRA_DIST = build/config.rpath LICENSE extras naev.desktop naev.appdata.xml
-CLEANFILES = $(DATA_ARCHIVE) $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE)
+CLEANFILES = $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE)
 
 if HAVE_NLS
 XMLBASE     = $(wildcard dat/*.xml)
@@ -85,32 +85,6 @@ $(MKSPR):
 else # HAVE_UTILS
 utils:
 endif # HAVE_UTILS
-
-if HAVE_DATA
-$(DATA_ARCHIVE): $(VERSIONFILE)
-	@echo " ZIP   $(DATA_ARCHIVE)"
-	cd "$(top_srcdir)" && \
-    zip -0r "$(abs_top_builddir)/$(DATA_ARCHIVE)" AUTHORS $(VERSIONFILE) naev-confupdate.sh dat/
-else # HAVE_DATA
-$(DATA_ARCHIVE):
-	@echo "***"
-	@echo "*** You must clone the full git repo to create $(DATA_ARCHIVE)"
-	@echo "***"
-	@false
-endif # HAVE_DATA
-
-install-ndata: $(DATA_ARCHIVE)
-	ndata="$(DESTDIR)$(ndata_path)"; \
-	dir=$$(echo "$$ndata" | sed 's/\(.*\)[\/\\].*/\1/'); \
-	echo " $(MKDIR_P) '$$dir'"; \
-	$(MKDIR_P) "$$dir"; \
-	echo " $(INSTALL_DATA) -c '$(DATA_ARCHIVE)' '$$ndata'"; \
-	$(INSTALL_DATA) -c "$(DATA_ARCHIVE)" "$$ndata"
-
-install-data-hook:
-	if test -e $(top_srcdir)/dat && test -e $(top_srcdir)/dat/gfx; then \
-	  $(MAKE) install-ndata; \
-	fi
 
 uninstall-hook:
 	echo " rm -rf '$(DESTDIR)$(pkgdatadir)'"; \

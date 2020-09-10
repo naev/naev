@@ -26,7 +26,8 @@
 
 ]]--
 
-require "dat/scripts/numstring.lua"
+require "numstring.lua"
+require "dat/missions/zalek/common.lua"
 
 
 text = {}
