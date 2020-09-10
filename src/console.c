@@ -104,13 +104,11 @@ static int cli_printCore( lua_State *L, int cli_only )
 {
    int n; /* number of arguments */
    int i;
-   char buf[CLI_MAX_INPUT];
-   int p;
+   int p, l, slen;
    const char *s;
-   char *line, *nextline, *tmp;
+   char *tmp;
 
    n = lua_gettop(L);
-   p = 0;
 
    lua_getglobal(L, "tostring");
    for (i=1; i<=n; i++) {
@@ -126,24 +124,19 @@ static int cli_printCore( lua_State *L, int cli_only )
 
       /* Add to console. */
       tmp = strdup(s);
-      line = strtok(tmp, "\n");
-      while (line != NULL) {
-         nextline = strtok(NULL, "\n");
-         p += nsnprintf( &buf[p], CLI_MAX_INPUT-p, "%s%s",
-                         (i>1) ? "   " : "", line );
-         if ((p >= CLI_MAX_INPUT) || (nextline != NULL)) {
-            cli_addMessage(buf);
-            p = 0;
-         }
-         line = nextline;
-      }
+      slen = strlen(s);
+      p = 0;
+      do {
+         if (tmp[p] == ' ')
+            p++;
+         l = gl_printWidthForText(cli_font, &tmp[p], CLI_WIDTH-40 );
+         cli_addMessageMax( &tmp[p], l );
+         p += l;
+      } while (p < slen);
       free(tmp);
+
       lua_pop(L, 1);  /* pop result */
    }
-
-   /* Add last line if needed. */
-   if (n > 0)
-      cli_addMessage(buf);
 
    return 0;
 }
@@ -227,9 +220,22 @@ void cli_addMessage( const char *msg )
    /* Not initialized. */
    if (cli_env == LUA_NOREF)
       return;
-
    array_grow(&cli_buffer) = strdup((msg != NULL) ? msg : "");
+   cli_history = array_size(cli_buffer) - 1;
+}
 
+
+/**
+ * @brief Adds a message to the buffer.
+ *
+ *    @param msg Message to add.
+ */
+void cli_addMessageMax( const char *msg, const int l )
+{
+   /* Not initialized. */
+   if (cli_env == LUA_NOREF)
+      return;
+   array_grow(&cli_buffer) = nstrndup((msg != NULL) ? msg : "", l);
    cli_history = array_size(cli_buffer) - 1;
 }
 
