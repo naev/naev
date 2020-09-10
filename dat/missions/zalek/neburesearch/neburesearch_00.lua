@@ -42,7 +42,9 @@ scan_1_text = _([[The student enters your cockpit as you arrive in the %s system
     "Anyway, I will now start with the measurements. The density of the nebula is lower in this sector, so it's not particularly volatile. For the real measurements we have to enter %s. I will let you know when we're done here."]])
 problems_text = _([[Suddenly you lose control of your ship. Apparently most core systems were shut down. Something drains your ship's energy and there are black outs in several parts of your ship.
     You realize that your shields are down as well. In an environment like this... That's it, your going to die here! You knew accepting this mission was a mistake from the very first moment.]])
-problems_end_text = _([[You breathe a sigh of relief. It seems you're still alive. You try not to glare at Robert Hofer, but apparently aren't particularly successful considering his response. "Sorry for causing trouble. I'm not quite familiar with the electronics of this ship type. You really should fly a Za'lek ship instead. Those are so much better!
+problems_end_text = _([[You breathe a sigh of relief. It seems you're still alive. You try not to glare at Robert Hofer, but apparently aren't particularly successful considering his response. "Sorry for causing trouble. I'm not quite familiar with the electronics of this ship type. You really should fly a Za'lek ship instead. Those are so much better!"
+    "I should investigate the damage it caused to the armor once we land. But first we must go to the %s system. Don't worry, the blackout will not occur again!"]])
+problems_end_text_has_zalek = _([[You breathe a sigh of relief. It seems you're still alive. You try not to glare at Robert Hofer, but apparently aren't particularly successful considering his response. "Sorry for causing trouble. I seem to have underestimated the polarity feedback loop granularity. If it weren't for your Za'lek ship the problem would have been much worse!"
     "I should investigate the damage it caused to the armor once we land. But first we must go to the %s system. Don't worry, the blackout will not occur again!"]])
 finish_text = _([[The student has already removed all the cables and sensors inside your ship during the flight back to %s. Everything is packed into a couple of crates by the time you land.
     "Once again, thank you for your help. I still have to analyze the data but it looks promising so far. With these results no one is going to question my theories anymore! Also, I decided to increase your reward to compensate for the trouble I caused."
@@ -173,7 +175,11 @@ end
 function stopProblems()
     ps:control(false)
     ps:setEnergy(100)
-    tk.msg("", string.format(problems_end_text, t_sys[2]))
+    if zlk_hasZalekShip() then
+      tk.msg("", string.format(problems_end_text_has_zalek, t_sys[2]))
+    else
+      tk.msg("", string.format(problems_end_text, t_sys[2]))
+    end
     misn_stage = 1
     misn.markerMove(misn_marker, system.get(t_sys[2]))
     misn.osdActive(2)
