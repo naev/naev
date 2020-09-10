@@ -4,15 +4,27 @@ require("dat/factions/spawn/common.lua")
 -- @brief Spawns a single small ship.
 function spawn_patrol ()
     local pilots = {}
-    local civships = {{"Civilian Schroedinger", 8},
-                      {"Civilian Llama", 8},
-                      {"Civilian Gawain", 8},
-                      {"Civilian Hyena", 13}
-                     }
+    local r = rnd.rnd()
+
+    if r < 0.5 then
+       local civships = {{"Advertiser Schroedinger", 8},
+                         {"Advertiser Llama", 8},
+                         {"Advertiser Gawain", 8},
+                         {"Advertiser Hyena", 13}
+                        }
+       local select = rnd.rnd(1, #civships)
+       scom.addPilot( pilots, civships[select][1], civships[select][2] );
+    else
+       local adships = {{"Civilian Schroedinger", 8},
+                         {"Civilian Llama", 8},
+                         {"Civilian Gawain", 8},
+                         {"Civilian Hyena", 13}
+                        }
+       local select = rnd.rnd(1, #adships)
+       scom.addPilot( pilots, adships[select][1], adships[select][2] );
+    end
     
-    local select = rnd.rnd(1, #civships)
-    
-    scom.addPilot( pilots, civships[select][1], civships[select][2] );
+
 
     return pilots
 end

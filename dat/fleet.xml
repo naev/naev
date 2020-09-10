@@ -63,6 +63,34 @@
    <pilot name="Civilian Gawain" ship="Gawain"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Advertiser Schroedinger">
+  <ai>advertiser</ai>
+  <faction>Civilian</faction>
+  <pilots>
+   <pilot name="Advertiser Schroedinger" ship="Schroedinger"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Advertiser Hyena">
+  <ai>advertiser</ai>
+  <faction>Civilian</faction>
+  <pilots>
+   <pilot name="Advertiser Hyena" ship="Hyena"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Advertiser Llama">
+  <ai>advertiser</ai>
+  <faction>Civilian</faction>
+  <pilots>
+   <pilot name="Advertiser Llama" ship="Llama"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Advertiser Gawain">
+  <ai>advertiser</ai>
+  <faction>Civilian</faction>
+  <pilots>
+   <pilot name="Advertiser Gawain" ship="Gawain"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Miner Llama">
   <ai>miner</ai>
   <faction>Miner</faction>
