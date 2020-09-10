@@ -423,7 +423,7 @@ static int nlua_packfileLoader( lua_State* L )
 
    /* Must have buf by now. */
    if (buf == NULL) {
-      luaL_error(L, _("include(): %s not found in ndata."), filename);
+      NLUA_ERROR(L, _("include(): %s not found in ndata."), filename);
       return 1;
    }
 

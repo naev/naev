@@ -24,6 +24,7 @@
 #include "log.h"
 #include "naev.h"
 #include "nlua.h"
+#include "nluadef.h"
 #include "ndata.h"
 #include "nlua_cli.h"
 #include "nlua_tk.h"
@@ -118,7 +119,7 @@ static int cli_printCore( lua_State *L, int cli_only )
       lua_call(L, 1, 1);
       s = lua_tostring(L, -1);  /* get result */
       if (s == NULL)
-         return luaL_error(L, LUA_QL("tostring") " must return a string to "
+         return NLUA_ERROR(L, LUA_QL("tostring") " must return a string to "
                LUA_QL("print"));
       if (!cli_only)
          LOG( "%s", s );
@@ -517,6 +518,7 @@ static void cli_input( unsigned int wid, char *unused )
       else {
          /* Real error, spew message and break. */
          cli_addMessage( lua_tostring(naevL, -1) );
+         WARN( "%s", lua_tostring(naevL, -1) );
          lua_settop(naevL, 0);
          cli_firstline = 1;
       }
