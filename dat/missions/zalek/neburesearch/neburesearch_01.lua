@@ -238,7 +238,7 @@ function transporterJump(p, j)
     exited = true
     if p:exists() then
         player.msg(string.format(
-            "%s has jumped to %s.", p:name(), j:dest():name()))
+            _("%s has jumped to %s."), p:name(), j:dest():name()))
     end
 end
 
@@ -246,7 +246,7 @@ function transporterLand(p, j)
     exited = true
     if p:exists() then
         player.msg(string.format(
-            "%s has landed on %s.", p:name(), destplanet:name()))
+            _("%s has landed on %s."), p:name(), destplanet:name()))
     end
 end
 
@@ -290,7 +290,7 @@ function spawnTransporter()
     transporter:setVisplayer()
     transporter:setVisible() -- Hack to make ambushes more reliable.
     transporter:setFriendly()
-    transporter:rename("Research Shuttle")
+    transporter:rename( _("Research Shuttle") )
     continueToDest(transporter)
     hook.timer( 2000, "timer_transporterSafe" )
 end
