@@ -64,7 +64,7 @@ function create ()
    if system.cur():presence(faction.get("Empire")) > 1 then
       msg[#msg+1] = _("Do you love your Emperor as much as he loves you?")
       msg[#msg+1] = _("You're quick and dependable? The Emperor needs you in the Armada!")
-      msg[#msg+1] = _("Help the police help you: denunce the dissidents.")
+      msg[#msg+1] = _("Help the police help you: denounce the dissidents.")
    end
 
    if system.cur():presence(faction.get("Dvaered")) > 1 then
