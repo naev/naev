@@ -1,17 +1,17 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Kidnapped">
-  <avail>
-   <priority>4</priority>
-   <chance>100</chance>
-   <location>None</location>
-  </avail>
-  <notes>
-   <done_evt name="Kidnapped">Triggers</done_evt>
-   <campaign>Kidnapping</campaign>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>4</priority>
+  <chance>100</chance>
+  <location>None</location>
+ </avail>
+ <notes>
+  <done_evt name="Kidnapped">Triggers</done_evt>
+  <campaign>Kidnapping</campaign>
+ </notes>
+</mission>
+--]]
 --[[
       MISSION: Kidnapped
       AUTHOR: Superkoop - John Koopman
