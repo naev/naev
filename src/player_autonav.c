@@ -388,7 +388,7 @@ static void player_autonav (void)
          p = pilot_get( player.p->target );
          if (p == NULL)
             p = pilot_get( PLAYER_ID );
-         if ((p->id == PLAYER_ID) || (!pilot_inRangePilot( player.p, p ))) {
+         if ((p->id == PLAYER_ID) || (!pilot_inRangePilot( player.p, p, NULL ))) {
             /* TODO : handle the different reasons: pilot is too far, jumped, landed or died. */
             player_message( _("\ap%s has been lost."),
                               player.autonavmsg );
@@ -542,7 +542,7 @@ int player_autonavShouldResetSpeed (void)
    pstk = pilot_getAll( &n );
    for (i=0; i<n; i++) {
       if ( ( pstk[i]->id != PLAYER_ID ) && pilot_isHostile( pstk[i] )
-            && pilot_inRangePilot( player.p, pstk[i] )
+            && pilot_inRangePilot( player.p, pstk[i], NULL ) == 1
             && !pilot_isDisabled( pstk[i] ) ) {
          hostiles = 1;
          break;

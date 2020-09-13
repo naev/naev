@@ -108,7 +108,7 @@ int comm_openPilot( unsigned int pilot )
 
    /* Make sure pilot in range. */
    if (!pilot_isFlag(p, PILOT_HAILING) &&
-         pilot_inRangePilot( player.p, comm_pilot ) <= 0) {
+         pilot_inRangePilot( player.p, comm_pilot, NULL ) <= 0) {
       player_message(_("\arTarget is out of communications range"));
       comm_pilot = NULL;
       return -1;

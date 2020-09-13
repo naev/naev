@@ -146,7 +146,7 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
          if (((pilot_stack[p]->faction != FACTION_PLAYER) ||
                   pilot_isDisabled(pilot_stack[p])) &&
                !pilot_isFlag( pilot_stack[p], PILOT_INVISIBLE ) &&
-               pilot_inRangePilot( player.p, pilot_stack[p] ))
+               pilot_inRangePilot( player.p, pilot_stack[p], NULL ))
             return pilot_stack[p]->id;
          p++;
       }
@@ -156,7 +156,7 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
       while (p < pilot_nstack) {
          if ( ( pilot_stack[p]->faction != FACTION_PLAYER ) &&
                !pilot_isFlag( pilot_stack[p], PILOT_INVISIBLE ) &&
-               pilot_inRangePilot( player.p, pilot_stack[p] ) &&
+               pilot_inRangePilot( player.p, pilot_stack[p], NULL ) == 1 &&
                pilot_isHostile( pilot_stack[p] ) )
             return pilot_stack[p]->id;
          p++;
@@ -199,7 +199,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
          if (((pilot_stack[p]->faction != FACTION_PLAYER) ||
                   (pilot_isDisabled(pilot_stack[p]))) &&
                !pilot_isFlag( pilot_stack[p], PILOT_INVISIBLE ) &&
-               pilot_inRangePilot( player.p, pilot_stack[p] ))
+               pilot_inRangePilot( player.p, pilot_stack[p], NULL ))
             return pilot_stack[p]->id;
          p--;
       }
@@ -209,7 +209,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
       while (p >= 0) {
          if ( ( pilot_stack[p]->faction != FACTION_PLAYER ) &&
                !pilot_isFlag( pilot_stack[p], PILOT_INVISIBLE ) &&
-               pilot_inRangePilot( player.p, pilot_stack[p] ) &&
+               pilot_inRangePilot( player.p, pilot_stack[p], NULL ) == 1 &&
                pilot_isHostile( pilot_stack[p] ) )
             return pilot_stack[p]->id;
          p--;
@@ -240,7 +240,7 @@ int pilot_validTarget( const Pilot* p, const Pilot* target )
       return 0;
 
    /* Must be in range. */
-   if (!pilot_inRangePilot( p, target ))
+   if (!pilot_inRangePilot( p, target, NULL ))
       return 0;
 
    /* Pilot is a valid target. */
@@ -421,7 +421,7 @@ unsigned int pilot_getBoss( const Pilot* p )
    for (i=0; i<pilot_nstack; i++) {
 
       /* Must be in range. */
-      if (!pilot_inRangePilot( p, pilot_stack[i] ))
+      if (!pilot_inRangePilot( p, pilot_stack[i], NULL ))
          continue;
 
       /* Must not be self. */
@@ -550,7 +550,7 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
          continue;
 
       /* Must be in range. */
-      if (!pilot_inRangePilot( p, pilot_stack[i] ))
+      if (!pilot_inRangePilot( p, pilot_stack[i], NULL ))
          continue;
 
       /* Only allow selection if off-screen. */
@@ -1098,7 +1098,7 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_i
       return;
 
    /* Must be in range. */
-   if (!ignore_int && !pilot_inRangePilot( player.p, p ))
+   if (!ignore_int && !pilot_inRangePilot( player.p, p, NULL ))
       return;
 
    /* Only really affects player.p atm. */
@@ -1128,7 +1128,7 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
       return;
 
    /* Check if should ignore interference. */
-   if (!ignore_int && !pilot_inRangePilot( player.p, p ))
+   if (!ignore_int && !pilot_inRangePilot( player.p, p, NULL ))
       return;
 
    c = pilot_getFactionColourChar( p );
@@ -1189,7 +1189,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int 
          continue;
 
       if (!ignore_int) {
-         if (!pilot_inRangePilot(p, pilot_stack[i])) {
+         if (!pilot_inRangePilot(p, pilot_stack[i], NULL)) {
             /*
              * If the pilots are within sensor range of each other, send the
              * distress signal, regardless of electronic warfare hide values.
@@ -1295,7 +1295,7 @@ const glColour* pilot_getColour( const Pilot* p )
 {
    const glColour *col;
 
-   if (pilot_inRangePilot(player.p, p) == -1) col = &cMapNeutral;
+   if (pilot_inRangePilot(player.p, p, NULL) == -1) col = &cMapNeutral;
    else if (pilot_isDisabled(p) || pilot_isFlag(p,PILOT_DEAD)) col = &cInert;
    else if (pilot_isFriendly(p)) col = &cFriend;
    else if (pilot_isHostile(p)) col = &cHostile;
