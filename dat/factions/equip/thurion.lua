@@ -167,7 +167,7 @@ equip_typeOutfits_structurals["Apprehension"] = {
 equip_typeOutfits_structurals["Certitude"] = {
    {
       varied = true;
-      "Biometal Armour", "Nanobond Plating", "Large Fuel Pod", "Battery III",
+      "Biometal Armor", "Nanobond Plating", "Large Fuel Pod", "Battery III",
       "Shield Capacitor IV"
    }
 }

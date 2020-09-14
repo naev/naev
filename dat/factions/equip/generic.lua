@@ -490,7 +490,7 @@ equip_classOutfits_structurals = {
          varied = true, probability = {
             ["Nanobond Plating"] = 3, ["Shield Capacitor IV"] = 2
          };
-         "Biometal Armour", "Nanobond Plating", "Large Fuel Pod",
+         "Biometal Armor", "Nanobond Plating", "Large Fuel Pod",
          "Battery III", "Shield Capacitor III", "Shield Capacitor IV"
       }
    },
@@ -498,9 +498,9 @@ equip_classOutfits_structurals = {
       {
          varied = true, probability = {
             ["Nanobond Plating"] = 6, ["Shield Capacitor IV"] = 4,
-            ["Large Fuel Pod"] = 3, ["Biometal Armour"] = 2
+            ["Large Fuel Pod"] = 3, ["Biometal Armor"] = 2
          };
-         "Biometal Armour", "Nanobond Plating", "Large Fuel Pod",
+         "Biometal Armor", "Nanobond Plating", "Large Fuel Pod",
          "Battery III", "Shield Capacitor III", "Shield Capacitor IV"
       }
    },

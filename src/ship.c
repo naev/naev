@@ -176,7 +176,7 @@ char* ship_class( Ship* s )
       case SHIP_CLASS_COURIER:
          return gettext_noop("Courier");
       case SHIP_CLASS_ARMOURED_TRANSPORT:
-         return gettext_noop("Armoured Transport");
+         return gettext_noop("Armored Transport");
       case SHIP_CLASS_FREIGHTER:
          return gettext_noop("Freighter");
       case SHIP_CLASS_BULK_CARRIER:
@@ -233,7 +233,7 @@ ShipClass ship_classFromString( char* str )
       return SHIP_CLASS_COURIER;
    else if (strcmp(str,"Freighter")==0)
       return SHIP_CLASS_FREIGHTER;
-   else if (strcmp(str,"Armoured Transport")==0)
+   else if (strcmp(str,"Armored Transport")==0)
       return SHIP_CLASS_ARMOURED_TRANSPORT;
    else if (strcmp(str,"Bulk Carrier")==0)
       return SHIP_CLASS_BULK_CARRIER;
