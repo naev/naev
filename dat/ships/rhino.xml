@@ -4,7 +4,7 @@
  <GFX sx="10" sy="10">rhino</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
- <class>Armoured Transport</class>
+ <class>Armored Transport</class>
  <price>1100000</price>
  <time_mod>2</time_mod>
  <fabricator>Melendez Corp.</fabricator>

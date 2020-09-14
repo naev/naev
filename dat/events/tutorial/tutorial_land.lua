@@ -40,7 +40,7 @@ end
 function ship_buy( shp )
    if not var.peek( "tutorial_time_dilation" ) then
       local class = ship.get(shp):class()
-      if class == "Freighter" or class == "Armoured Transport"
+      if class == "Freighter" or class == "Armored Transport"
             or class == "Corvette" or class == "Destroyer"
             or class == "Cruiser" or class == "Carrier" then
          tk.msg( "", time_dilation_text:format(shp) )

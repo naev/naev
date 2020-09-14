@@ -18,7 +18,7 @@ equip_classOutfits_coreSystems = {
    ["Freighter"] = {
       "Unicorp PT-600 Core System", "Milspec Aegis 5401 Core System"
    },
-   ["Armoured Transport"] = {
+   ["Armored Transport"] = {
       "Milspec Aegis 5401 Core System", "Milspec Orion 5501 Core System"
    },
    ["Fighter"] = {
@@ -67,7 +67,7 @@ equip_classOutfits_engines = {
    ["Freighter"] = {
       "Unicorp Falcon 1200 Engine", "Melendez Buffalo XL Engine"
    },
-   ["Armoured Transport"] = {
+   ["Armored Transport"] = {
       "Melendez Buffalo XL Engine"
    },
    ["Fighter"] = {
@@ -121,7 +121,7 @@ equip_classOutfits_hulls = {
    ["Freighter"] = {
       "Unicorp D-12 Medium Plating", "S&K Medium Cargo Hull"
    },
-   ["Armoured Transport"] = {
+   ["Armored Transport"] = {
       "S&K Medium Cargo Hull"
    },
    ["Fighter"] = {
@@ -192,7 +192,7 @@ equip_classOutfits_weapons = {
          "Pulse Beam"
       }
    },
-   ["Armoured Transport"] = {
+   ["Armored Transport"] = {
       {
          num = 2, varied = true;
          "Pulse Beam", "Enygma Systems Turreted Fury Launcher",
@@ -338,7 +338,7 @@ equip_classOutfits_utilities = {
          "Droid Repair Crew", "Boarding Androids MKI"
       }
    },
-   ["Armoured Transport"] = {
+   ["Armored Transport"] = {
       {
          varied = true;
          "Reactor Class II", "Medium Shield Booster", "Milspec Scrambler",
@@ -444,7 +444,7 @@ equip_classOutfits_structurals = {
          "Cargo Pod", "Medium Fuel Pod"
       }
    },
-   ["Armoured Transport"] = {
+   ["Armored Transport"] = {
       {
          varied = true, probability = {
             ["Cargo Pod"] = 15, ["Medium Fuel Pod"] = 3

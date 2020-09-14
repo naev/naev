@@ -5,7 +5,7 @@
  <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
- <class>Armoured Transport</class>
+ <class>Armored Transport</class>
  <price>1600000</price>
  <time_mod>2</time_mod>
  <fabricator>Thurion shipyards</fabricator>

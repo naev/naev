@@ -191,7 +191,7 @@ end
 -- NOTE: This should be replaced by something better in time.
 function getshipmod()
    local light = {"Yacht", "Luxury Yacht", "Drone", "Fighter", "Bomber", "Scout"}
-   local medium = {"Destroyer", "Corvette", "Courier", "Armoured Transport", "Freighter"}
+   local medium = {"Destroyer", "Corvette", "Courier", "Armored Transport", "Freighter"}
    local heavy = {"Cruiser", "Carrier"}
    local ps = player.pilot():ship()
    for _, j in ipairs(light) do
