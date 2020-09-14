@@ -138,7 +138,7 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
          break;
 
       case 2:
-         pixelcolour = *(Uint16 *)p;
+         memcpy(&pixelcolour, p, sizeof(Uint16));
          break;
 
       case 3:
@@ -150,7 +150,7 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
          break;
 
       case 4:
-         pixelcolour = *(Uint32 *)p;
+         memcpy(&pixelcolour, p, sizeof(Uint32));
          break;
    }
 

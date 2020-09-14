@@ -16,7 +16,7 @@
 #include "log.h"
 
 
-#define BUFFER_OFFSET(i) ((char *)NULL + (i)) /**< Taken from OpengL spec. */
+#define BUFFER_OFFSET(i) ((char *)(sizeof(char) * (i))) /**< Taken from OpengL spec. */
 
 
 /**
