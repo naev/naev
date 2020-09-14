@@ -10,7 +10,7 @@
  <time_mod>2</time_mod>
  <fabricator>Thurion shipyards</fabricator>
  <license>Large Civilian Vessel License</license>
- <description>The Thurion Taciturnity is an armoured and stealthy transport capable both of surviving the harsh nebula and defending itself from attack.</description>
+ <description>The Thurion Taciturnity is an armored and stealthy transport capable both of surviving the harsh nebula and defending itself from attack.</description>
  <health>
   <absorb>20</absorb>
   <armour>500</armour>

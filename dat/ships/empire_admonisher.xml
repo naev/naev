@@ -10,7 +10,7 @@
  <time_mod>1.5</time_mod>
  <fabricator>Nexus Shipyards</fabricator>
  <license>Medium Combat Vessel License</license>
- <description>This military grade version of the Admonisher is mostly identical in function to a standard Admonisher, but with slightly better armour, shields, and heat dissipation.</description>
+ <description>This military grade version of the Admonisher is mostly identical in function to a standard Admonisher, but with slightly better armor, shields, and heat dissipation.</description>
  <health>
   <absorb>15</absorb>
   <armour>240</armour>

@@ -10,7 +10,7 @@
  <time_mod>1</time_mod>
  <fabricator>House Dvaered</fabricator>
  <license>Light Combat Vessel License</license>
- <description>This military grade version of the Vendetta has stronger armour and better weapon cooling facilities than the standard Vendetta, but its turning thrusters are less optimally placed than its standard counterpart to make space for the improved weapon cooling facilities, reducing the ship's turning rate slightly.</description>
+ <description>This military grade version of the Vendetta has stronger armor and better weapon cooling facilities than the standard Vendetta, but its turning thrusters are less optimally placed than its standard counterpart to make space for the improved weapon cooling facilities, reducing the ship's turning rate slightly.</description>
  <health>
   <absorb>7</absorb>
   <armour>110</armour>

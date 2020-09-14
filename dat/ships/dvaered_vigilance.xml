@@ -10,7 +10,7 @@
  <time_mod>2</time_mod>
  <fabricator>House Dvaered</fabricator>
  <license>Medium Combat Vessel License</license>
- <description>This military grade version of the Vigilance has stronger armour and diverts more of its energy to its forward-mounted weapons than its standard counterpart, resulting in increased damage at the cost of slightly increased power consumption and heat production.</description>
+ <description>This military grade version of the Vigilance has stronger armor and diverts more of its energy to its forward-mounted weapons than its standard counterpart, resulting in increased damage at the cost of slightly increased power consumption and heat production.</description>
  <health>
   <absorb>19</absorb>
   <armour>650</armour>

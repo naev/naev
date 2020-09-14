@@ -10,7 +10,7 @@
  <time_mod>1.5</time_mod>
  <fabricator>House Dvaered</fabricator>
  <license>Medium Combat Vessel License</license>
- <description>This military grade version of the Phalanx has slightly stronger armour compared to its standard counterpart, and it also features a special cooling chamber for its forward-mounted weapons that doubles as additional cargo space.</description>
+ <description>This military grade version of the Phalanx has slightly stronger armor compared to its standard counterpart, and it also features a special cooling chamber for its forward-mounted weapons that doubles as additional cargo space.</description>
  <health>
   <absorb>15</absorb>
   <armour>220</armour>
