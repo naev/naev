@@ -6,7 +6,7 @@
   <size>medium</size>
   <mass>100</mass>
   <price>45000</price>
-  <description>D-8 plating provides a serviceable layer of armour to medium ships, and doesn't weigh too much.</description>
+  <description>D-8 plating provides a serviceable layer of armor to medium ships, and doesn't weigh too much.</description>
   <gfx_store>base_hull_m</gfx_store>
   <priority>3</priority>
  </general>

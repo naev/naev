@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Nanobond Plating">
  <general>
-  <typename>Armour Modifier</typename>
+  <typename>Armor Modifier</typename>
   <slot>structure</slot>
   <size>large</size>
   <mass />

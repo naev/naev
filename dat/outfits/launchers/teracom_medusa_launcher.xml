@@ -6,9 +6,9 @@
   <license>Medium Weapon License</license>
   <mass>17</mass>
   <price>40000</price>
-  <description>The Medusa class EMP cruise missile is a nonlethal weapon designed to knock out a ship's internal systems, rendering it harmless and ready for boarding. The warhead does only limited damage, so even lightly armoured targets can effectively be disabled with this weapon. However, the Medusa is not the most agile missile on the market.
+  <description>The Medusa class EMP cruise missile is a nonlethal weapon designed to knock out a ship's internal systems, rendering it harmless and ready for boarding. The warhead does only limited damage, so even lightly armored targets can effectively be disabled with this weapon. However, the Medusa is not the most agile missile on the market.
 
-TeraCom has built a highly efficient Medusa launcher, capable of locking on and firing faster than the standard specification, and holding a greater amount in the magazine as well.</description>
+TeraCom has built a highly efficient Medusa launcher, capable of locking on and firing faster than the standard specification. TeraCom's offering also holds a greater amount in the magazine.</description>
   <gfx_store>seekerlauncher</gfx_store>
   <cpu>-6</cpu>
  </general>

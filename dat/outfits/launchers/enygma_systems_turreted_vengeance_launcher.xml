@@ -6,7 +6,7 @@
   <license>Medium Weapon License</license>
   <mass>60</mass>
   <price>200000</price>
-  <description>Vengeance class interceptor missiles are the heaviest interceptor missiles currently in production. Almost half the missile hull is used for payload, which decreases its ability to catch fast targets. It's designed to excel at killing armoured targets at the expense of making it poor against shields.
+  <description>Vengeance class interceptor missiles are the heaviest interceptor missiles currently in production. Almost half the missile hull is used for payload, which decreases its ability to catch fast targets. It's designed to excel at killing armored targets at the expense of effectiveness against shields.
 
 Turreted Vengeance launchers aren't commonly seen in interplanetary combat. Only heavy cruisers can afford to mount these weapons, and they usually have other means of taking out corvette class enemies.</description>
   <gfx_store>headhunterlauncher</gfx_store>

@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Active Plating">
  <general>
-  <typename>Armour Modifier</typename>
+  <typename>Armor Modifier</typename>
   <slot>structure</slot>
   <size>medium</size>
   <rarity>3</rarity>
   <mass />
   <price>200000</price>
   <gfx_store>active_plating</gfx_store>
-  <description>As the Thurion favour defense over offensive capabilities they developed this light-weight yet strong armour plating, at the expense of CPU usage.</description>
+  <description>This Thurion-developed armor modifier equips the hull of a ship with specialized electrodes that selectively bind parts of the hull together on an as-needed basis, improving durability without much increase in mass. However, due to the active nature of this plating, it leads to latent CPU and energy usage.</description>
   <cpu>-10</cpu>
  </general>
  <specific type="modification">

@@ -6,7 +6,7 @@
   <license>Medium Weapon License</license>
   <mass>15</mass>
   <price>70000</price>
-  <description>Vengeance class interceptor missiles are the heaviest interceptor missiles currently in production. Almost half the missile hull is used for payload, which decreases its ability to catch fast targets. It's designed to excel at killing armoured targets at the expense of making it poor against shields. Best paired with anti-shield weapons.</description>
+  <description>Vengeance class interceptor missiles are the heaviest interceptor missiles currently in production. Almost half the missile hull is used for payload, which decreases its ability to catch fast targets. It's designed to excel at killing armored targets at the expense of effectiveness against shields. Best paired with anti-shield weapons.</description>
   <gfx_store>headhunterlauncher</gfx_store>
   <cpu>-6</cpu>
  </general>
