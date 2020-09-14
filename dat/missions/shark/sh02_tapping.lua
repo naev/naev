@@ -1,29 +1,29 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Unfair Competition">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>3</priority>
-   <cond>diff.isApplied("collective_dead")</cond>
-   <done>Sharkman Is Back</done>
-   <chance>3</chance>
-   <location>Bar</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Soromid</faction>
-   <faction>Traders Guild</faction>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <requires name="The Collective is dead and no one will miss them"/>
-   <campaign>Nexus show their teeth</campaign>
-  </notes>
- </mission>
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>3</priority>
+  <cond>diff.isApplied("collective_dead")</cond>
+  <done>Sharkman Is Back</done>
+  <chance>3</chance>
+  <location>Bar</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Soromid</faction>
+  <faction>Traders Guild</faction>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <requires name="The Collective is dead and no one will miss them"/>
+  <campaign>Nexus show their teeth</campaign>
+ </notes>
+</mission>
  --]]
 --[[
 
@@ -219,7 +219,7 @@ function ambush()
          hvy_intercept()
       end
 
-      elseif playerclass == "Cruiser" or playerclass == "Armoured Transport" or playerclass == "Carrier" then
+      elseif playerclass == "Cruiser" or playerclass == "Armored Transport" or playerclass == "Carrier" then
 
       if rnd.rnd() < 0.7 then
          bombers()

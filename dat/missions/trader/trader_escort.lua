@@ -1,27 +1,27 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Trader Escort">
-  <avail>
-   <priority>5</priority>
-   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
-   <chance>560</chance>
-   <location>Computer</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Proteron</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Thurion</faction>
-   <faction>Traders Guild</faction>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <tier>3</tier>
-  </notes>
- </mission>
+ <avail>
+  <priority>5</priority>
+  <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+  <chance>560</chance>
+  <location>Computer</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Proteron</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Thurion</faction>
+  <faction>Traders Guild</faction>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <tier>3</tier>
+ </notes>
+</mission>
  --]]
 --Escort a convoy of traders to a destination--
 
@@ -334,7 +334,7 @@ function spawnConvoy ()
             p:addOutfit( "Unicorp PT-200 Core System" )
             p:addOutfit( "Melendez Ox XL Engine" )
             p:addOutfit( "S&K Small Cargo Hull" )
-         elseif class == "Freighter" or class == "Armoured Transport"
+         elseif class == "Freighter" or class == "Armored Transport"
                or class == "Corvette" or class == "Destroyer" then
             p:addOutfit( "Unicorp PT-600 Core System" )
             p:addOutfit( "Melendez Buffalo XL Engine" )
