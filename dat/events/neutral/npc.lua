@@ -1,10 +1,10 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Spaceport Bar NPC">
-  <trigger>land</trigger>
-  <chance>100</chance>
- </event>
- --]]
+ <trigger>land</trigger>
+ <chance>100</chance>
+</event>
+--]]
 
 --[[
 -- Event for creating random characters in the spaceport bar.
@@ -106,7 +106,7 @@ msg_lore["Soromid"] =      {_("Hello. Can I interest you in one of our galaxy fa
 
 msg_lore["Za'lek"] =       {_([["It's not easy, dancing to those scientists' tunes. They give you the most impossible tasks! Like, where am I supposed to get a triple redundant helitron converter? Honestly."]]),
                               _([["The Soromids? Hah! We Za'lek are the only true scientists in this galaxy."]]),
-                              _([["I don't understand why we bother sending our research results to the Empire. These simpletons can't understand the simplest formulas!"]]),
+                              _([["I don't understand why we bother sending our research results to the Empire. These asshats can't understand the simplest formulas!"]]),
                               _([["Do you know why many optimization algorithms require your objective function to be convex? It's not only because of the question of local minima, but also because if your function is locally concave around the current iterate, the next one will lead to a greater value of your objective function. There are still too many people who don't know this!"]]),
                               _([["There are so many algorithms for solving the non-linear eigenvalues problem, I never know which one to choose. Which one do you prefer?"]]),
                               _([["I recently attended a very interesting conference about the history of applied mathematics before the space age. Even in those primitive times, people used to do numerical algebra. They didn't even have quantic computers back at that time! Imagine: they had to wait for hours to solve a problem with only a dozen billion degrees of freedom!"]]),
