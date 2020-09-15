@@ -1,18 +1,18 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The one with the Visit">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <done>The one with the Shopping</done>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>Gastan</planet>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <done>The one with the Shopping</done>
+  <chance>100</chance>
+  <location>Bar</location>
+  <planet>Gastan</planet>
+ </avail>
+</mission>
+--]]
 --[[
 --
 -- MISSION: The one with the Visit
@@ -53,7 +53,7 @@ text[2] = _([["Excellent. From what I have been told it looks like this." He ges
 -- msgs by soromid forces
 title[3] = _([[In the ship]])
 text[4] = _([[You make your way through the living ship after taking care of its crew. You note the feeling that the ship is personally angry at you which, given the rumors that Soromid ships are alive, gives you the creeps. In any case, you begin to search through the ship and the handheld in your pocket starts beeping.
-    You manage to locate a box on a table in the crew's chambers. Apparently nobody expected somebody to be nuts enough to try to do what you are doing. You grab the box and head back to your ship.]])
+    You manage to locate a box on a table in the crew's chambers. Apparently nobody expected anyone to be foolish enough to try to do what you are doing. You grab the box and head back to your ship.]])
 
 text[5] = _([["How'd it go?" asks Dr. Geller. You show him the box. "Ah, marvelous! Do you know what this is? This is a quantum sharpener. It's like a quantum eraser, but it does not erase but sharpen. This is exactly what I needed. I think with this I should be able to finish my prototype." He tosses you a credit chip before walking off, smiling.]])
 -- if the player kills the ship before getting the tech
