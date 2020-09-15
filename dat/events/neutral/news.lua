@@ -1,10 +1,10 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Generic News">
-  <trigger>land</trigger>
-  <chance>100</chance>
- </event>
- --]]
+ <trigger>land</trigger>
+ <chance>100</chance>
+</event>
+--]]
 --[[
 -- Event for creating news
 --
@@ -261,7 +261,7 @@ articles["Sirius"] = {
    --]]
    {
       tag = N_("Dvaered extorting pilgrims"),
-      desc = _("Recent pilgrims headed to Mutris have been telling stories of extortion and violations by Dvaered operators. Dvaered Warlord Kra'tok claims that these are \"delusions of the touched\". Official complaints have been made to the Emperor.")
+      desc = _("Recent pilgrims headed to Mutris have been telling stories of extortion and violations by Dvaered operators. Dvaered Warlord Kra'tok claims that these are \"figments of the touched's imagination\". Official complaints have been made to the Emperor.")
    },
    --[[
       Human interest.
