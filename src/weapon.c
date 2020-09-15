@@ -927,7 +927,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
             }
          }
       }
-      /* dumb weapons hit anything not of the same faction */
+      /* unguided weapons hit anything not of the same faction */
       else {
          if (weapon_checkCanHit(w,p)) {
             if (usePoly) {
@@ -1471,7 +1471,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    }
 
    /* Handle seekers. */
-   if (w->outfit->u.amm.ai != AMMO_AI_DUMB) {
+   if (w->outfit->u.amm.ai != AMMO_AI_UNGUIDED) {
       w->think = think_seeker; /* AI is the same atm. */
 
       /* If they are seeking a pilot, increment lockon counter. */
