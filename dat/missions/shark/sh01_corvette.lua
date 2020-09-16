@@ -197,7 +197,7 @@ function lets_go()
    stage = 1
 
    shark_dead_hook = hook.pilot( sharkboy, "death", "shark_dead" )
-   disaabled_hook = hook.pilot( player.pilot(), "disable", "disabled" )
+   disabled_hook = hook.pilot( player.pilot(), "disable", "disabled" )
 end
 
 function shark_dead()  --you killed the shark
@@ -220,5 +220,5 @@ function disabled(pilot, attacker)
 
    -- Clean up now unneeded hooks
    hook.rm(shark_dead_hook)
-   hook.rm(disaabled_hook)
+   hook.rm(disabled_hook)
 end
