@@ -726,18 +726,10 @@ int space_sysReachable( StarSystem *sys )
       return 1; /* it is known */
 
    /* check to see if it is adjacent to known */
-   for (i=0; i<sys->njumps; i++) {
-      if (jp_isFlag( &sys->jumps[i], JP_HYPERGATE )) {
-         for (j=0; j<array_size(hypergate_stack); j++) {
-            if (&sys->jumps[i] != hypergate_stack[j] && jp_isKnown( hypergate_stack[j] ))
-               return 1;
-         }
-      }
-      else {
-         jp = sys->jumps[i].returnJump;
-         if (jp && jp_isKnown( jp ))
-            return 1;
-         }
+   i = j = 0;
+   while ( (jp = system_loopAdjacent( sys, -1, 0, 1, &i, &j )) != NULL ) {
+      if ( jp_isKnown( jp ) )
+         return 1;
    }
 
    return 0;
@@ -794,6 +786,67 @@ StarSystem* system_getAll( int *nsys )
    return systems_stack;
 }
 
+/**
+ * @brief Loops through adjacent systems for you. You provide the indexors, we provide the systems. 
+ *
+ *    @param sys[in] System to search.
+ *    @param direction[in]
+ *             1 : Search out. Return systems that can be reached from this one.
+ *             -1: Search in. Return systems that can reach this one.
+ *             0 : Bidirectional.
+ *    @param includeHidden[in] When true, hidden jump points will be considered when determining adjacency.
+ *    @param includeHypergates[in] When true, hypergates will be considered when determining adjacency.
+ *    @param i[in,out] Initilize to 0. Don't touch after.
+ *    @param j[in,out] Initilize to 0. Don't touch after.
+ *    @return Jump point leading from the next adjacent star system. NULL when there are no more.
+ */
+JumpPoint* system_loopAdjacent( const StarSystem *sys, const int direction, const int includeHidden, const int includeHypergates, int *i, int *j )
+{
+   JumpPoint *nextOurs;
+   JumpPoint *nextTheirs;
+   JumpPoint **hypergates;
+   int nHypergates;
+
+   hypergates = system_getHypergates( &nHypergates );
+
+   while (*i < sys->njumps) {
+      nextOurs = &sys->jumps[*i];
+      nextTheirs = nextOurs->returnJump;
+
+      if ( includeHypergates && jp_isFlag( nextOurs, JP_HYPERGATE ) && *j < nHypergates) {
+         do {
+            nextTheirs = hypergates[ *j ];
+
+            *j += 1;
+            if (nextTheirs->from == sys)
+               continue;
+
+            break;
+         } while (*j < nHypergates);
+      }
+      else {
+         *i += 1;
+      }
+
+      if (nextTheirs == NULL)
+         continue;
+      if ( direction >= 1 && jp_isFlag( nextOurs, JP_EXITONLY ))
+         continue;
+      if ( direction <= -1 && jp_isFlag( nextTheirs, JP_EXITONLY ))
+         continue;
+
+      if (  !includeHidden
+         && !( // If one of the following criteria pass, this route should be included.
+               (direction >= 0 && !jp_isFlag( nextOurs, JP_HIDDEN ))   // Searching out, looking for visible (not hidden) jump point.
+            || (direction <= 0 && !jp_isFlag( nextTheirs, JP_HIDDEN )) // Searching in, looking for visible (not hidden) return jump point.
+            ))
+         continue;
+      
+      return nextTheirs;
+   }
+
+   return NULL;
+}
 
 /**
  * @brief Gets all the star systems with hypergates.
@@ -4337,9 +4390,11 @@ static int getPresenceIndex( StarSystem *sys, int faction )
  */
 void system_addPresence( StarSystem *sys, int faction, double amount, int range )
 {
-   int i, x, curSpill;
+   int i, j;
+   int x, curSpill;
    Queue q, qn;
    StarSystem *cur;
+   JumpPoint *adjacent;
 
    /* Check for NULL and display a warning. */
    if (sys == NULL) {
@@ -4370,12 +4425,14 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
    qn             = q_create();
 
    /* Create the initial queue consisting of sys adjacencies. */
-   for (i=0; i < sys->njumps; i++) {
-      if (!jp_isFlag( &sys->jumps[i], JP_HYPERGATE) && sys->jumps[i].target->spilled == 0 &&
-            !jp_isFlag( &sys->jumps[i], JP_HIDDEN ) && !jp_isFlag( &sys->jumps[i], JP_EXITONLY )) {
-         q_enqueue( q, sys->jumps[i].target );
-         sys->jumps[i].target->spilled = 1;
-      }
+   i = j = 0;
+   while ( (adjacent = system_loopAdjacent( sys, 1, 0, 1, &i, &j )) != NULL )
+   {
+      if (adjacent->from->spilled != 0)
+         continue;
+
+      q_enqueue( q, adjacent );
+      adjacent->from->spilled = 1;
    }
 
    /* If it's empty, something's wrong. */
@@ -4390,18 +4447,21 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
 
    while (curSpill < range) {
       /* Pull one off the current range queue. */
-      cur = q_dequeue(q);
+      cur = ((JumpPoint*)q_dequeue(q))->from;
 
       /* Ran out of candidates before running out of spill range! */
       if (cur == NULL)
          break;
 
       /* Enqueue all its adjacencies to the next range queue. */
-      for (i=0; i<cur->njumps; i++) {
-         if (cur->jumps[i].target->spilled == 0 && !jp_isFlag( &cur->jumps[i], JP_HIDDEN ) && !jp_isFlag( &cur->jumps[i], JP_EXITONLY )) {
-            q_enqueue( qn, cur->jumps[i].target );
-            cur->jumps[i].target->spilled = 1;
-         }
+      i = j = 0;
+      while (( adjacent = system_loopAdjacent( cur, 1, 0, 1, &i, &j )) != NULL )
+      {
+         if (adjacent->from->spilled != 0)
+            continue;
+
+         q_enqueue( qn, adjacent );
+         adjacent->from->spilled = 1;
       }
 
       /* Spill some presence. */

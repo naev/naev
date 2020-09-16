@@ -509,32 +509,31 @@ static int systemL_jumpPath( lua_State *L )
  *
  *    @luatparam System s System to get adjacent systems of.
  *    @luatparam[opt=false] boolean hidden Whether or not to show hidden jumps also.
+ *    @luatparam[opt=true] boolean hypergate Whether or not to show hypergates.
  *    @luatreturn {System,...} An ordered table with all the adjacent systems.
  * @luafunc adjacentSystems( s, hidden )
  */
 static int systemL_adjacent( lua_State *L )
 {
-   int i, id, h;
-   LuaSystem sysp;
-   StarSystem *s;
+   // Lua params
+   StarSystem *s  = luaL_validsystem(L,1);
+   int hidden    = lua_toboolean(L,2);
+   int hypergate = lua_toboolean(L,3);
 
-   id = 1;
-   s  = luaL_validsystem(L,1);
-   h  = lua_toboolean(L,2);
+   // Variables
+   int id = 1;
+   int i = 0;
+   int j = 0;
+   StarSystem* adjacent;
 
    /* Push all adjacent systems. */
    lua_newtable(L);
-   for (i=0; i<s->njumps; i++) {
-      if (jp_isFlag(&s->jumps[i], JP_EXITONLY ))
-         continue;
-      if (!h && jp_isFlag(&s->jumps[i], JP_HIDDEN))
-         continue;
-      sysp = system_index( s->jumps[i].target );
-      lua_pushnumber(L, id);   /* key. */
-      lua_pushsystem(L, sysp); /* value. */
-      lua_rawset(L,-3);
-
-      id++;
+   while ((adjacent = system_loopAdjacent( s, hidden, hypergate, &i, &j )) != NULL)
+   {
+      lua_pushnumber(L, id); /* key. */
+      lua_pushsystem(L, adjacent->id); /* value. */
+      lua_rawset(L, -3);
+      id += 1;
    }
 
    return 1;
@@ -566,10 +565,11 @@ static int systemL_jumps( lua_State *L )
    /* Push all jumps. */
    lua_newtable(L);
    for (i=0; i<s->njumps; i++) {
-      if (jp_isFlag( &s->jumps[i], JP_HYPERGATE )) {
+      if ( jp_isFlag( &s->jumps[i], JP_HYPERGATE )) {
          if (hypergate)
             continue;
       }
+
       /* Skip exit-only jumps if requested. */
       else if ((exitonly) && (jp_isFlag( &s->jumps[i],  JP_EXITONLY)))
             continue;

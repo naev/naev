@@ -439,7 +439,7 @@ char* space_getRndPlanet( int landable, unsigned int services,
       int (*filter)(Planet *p));
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y );
 double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y, double ang );
-StarSystem* system_loopAdjacent( const StarSystem *sys, const int includeHidden, const int includeHypergates, int *i, int *j );
+JumpPoint* system_loopAdjacent( const StarSystem *sys, const int direction, const int includeHidden, const int includeHypergates, int *i, int *j );
 
 
 /*

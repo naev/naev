@@ -371,6 +371,8 @@ static int econ_createGMatrix (void)
 
       /* Set some values. */
       for (j=0; j < sys->njumps; j++) {
+         if (jp_isFlag( &sys->jumps[j], JP_HYPERGATE ))
+            continue;
 
          /* Get the resistances. */
          R     = econ_calcJumpR( sys, sys->jumps[j].target );
@@ -770,27 +772,29 @@ static void economy_smoothCommodityPrice(StarSystem *sys)
    int nav=sys->ncommodities;
    CommodityPrice *avprice=sys->averagePrice;
    double price;
-   int n,i,j,k;
+   int n, i, j, myComIndex, neighbourComIndex;
    /*Now modify based on neighbouring systems */
    /*First, calculate mean price of neighbouring systems */
    
-   for ( j =0; j<nav; j++ ) {/* for each commodity in this system */
+   for ( myComIndex =0; myComIndex<nav; myComIndex++ ) { /* for each commodity in this system */
       price=0.;
       n=0;
-      for ( i=0; i<sys->njumps; i++ ) {/* for each neighbouring system */
-         neighbour=sys->jumps[i].target;
-         for ( k=0; k<neighbour->ncommodities; k++ ) {
-            if ( ( strcmp( neighbour->averagePrice[k].name, avprice[j].name ) == 0 ) ) {
-               price+=neighbour->averagePrice[k].price;
+
+      i = j = 0;
+      while ( (neighbour = system_loopAdjacent( sys, 0, 1, &i, &j )) != NULL)
+      {
+         for ( neighbourComIndex=0; neighbourComIndex<neighbour->ncommodities; neighbourComIndex++ ) {
+            if ( ( strcmp( neighbour->averagePrice[neighbourComIndex].name, avprice[myComIndex].name ) == 0 ) ) {
+               price+=neighbour->averagePrice[neighbourComIndex].price;
                n++;
                break;
             }
          }
       }
       if (n!=0)
-         avprice[j].sum=price/n;
+         avprice[myComIndex].sum=price/n;
       else
-         avprice[j].sum=avprice[j].price;
+         avprice[myComIndex].sum=avprice[myComIndex].price;
    }
 }
 
