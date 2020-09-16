@@ -1400,14 +1400,27 @@ void space_update( const double dt )
       for (i=0; i<cur_system->njumps; i++)
          if (( !jp_isKnown( &cur_system->jumps[i] )) && ( pilot_inRangeJump( player.p, i ))) {
             jp_setFlag( &cur_system->jumps[i], JP_KNOWN );
-            player_message( _("You discovered a Jump Point.") );
-            hparam[0].type  = HOOK_PARAM_STRING;
-            hparam[0].u.str = "jump";
-            hparam[1].type  = HOOK_PARAM_JUMP;
-            hparam[1].u.lj.srcid = cur_system->id;
-            hparam[1].u.lj.destid = cur_system->jumps[i].target->id;
-            hparam[2].type  = HOOK_PARAM_SENTINEL;
-            hooks_runParam( "discover", hparam );
+
+            if ( jp_isFlag( &cur_system->jumps[i], JP_HYPERGATE )) {
+               player_message( _("You discovered a Hypergate.") );
+               hparam[0].type  = HOOK_PARAM_STRING;
+               hparam[0].u.str = "jump";
+               hparam[1].type  = HOOK_PARAM_JUMP;
+               hparam[1].u.lj.srcid = cur_system->id;
+               hparam[1].u.lj.destid = -1;
+               hparam[2].type  = HOOK_PARAM_SENTINEL;
+               hooks_runParam( "discover", hparam );
+            }
+            else {
+               player_message( _("You discovered a Jump Point.") );
+               hparam[0].type  = HOOK_PARAM_STRING;
+               hparam[0].u.str = "jump";
+               hparam[1].type  = HOOK_PARAM_JUMP;
+               hparam[1].u.lj.srcid = cur_system->id;
+               hparam[1].u.lj.destid = cur_system->jumps[i].target->id;
+               hparam[2].type  = HOOK_PARAM_SENTINEL;
+               hooks_runParam( "discover", hparam );
+            }
          }
    }
 
@@ -4160,7 +4173,10 @@ int space_sysSave( xmlTextWriterPtr writer )
 
       for (j=0; j<sys->njumps; j++) {
          if (!jp_isKnown(&sys->jumps[j])) continue; /* not known */
-         xmlw_elem(writer,"jump","%s",(&sys->jumps[j])->target->name);
+         if ( jp_isFlag( &sys->jumps[j], JP_HYPERGATE ))
+            xmlw_elem(writer,"hypergate","%s",(sys->name));
+         else
+            xmlw_elem(writer,"jump","%s",(&sys->jumps[j])->target->name);
       }
 
       xmlw_endElem(writer);
