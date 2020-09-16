@@ -70,7 +70,7 @@ typedef struct {
 } _private_container;
 
 
-void *_array_create_helper(size_t e_size);
+void *_array_create_helper(size_t e_size, int initial_size);
 void *_array_grow_helper(void **a, size_t e_size);
 void _array_resize_helper(void **a, size_t e_size, int new_size);
 void _array_erase_helper(void **a, size_t e_size, void *first, void *last);
@@ -115,7 +115,15 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
  *    @param basic_type Type of the array to create.
  */
 #define array_create(basic_type) \
-      ((basic_type *)(_array_create_helper(sizeof(basic_type))))
+      ((basic_type *)(_array_create_helper(sizeof(basic_type), 1)))
+
+/**
+ * @brief Creates a new dynamic array of `basic_type' with an initial capacity
+ *
+ *    @param basic_type Type of the array to create.
+ */
+#define array_create_size(basic_type, capacity) \
+      ((basic_type *)(_array_create_helper(sizeof(basic_type), capacity)))
 /**
  * @brief Resizes the array to accomodate new_size elements.
  *

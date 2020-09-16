@@ -185,10 +185,11 @@ int load_refresh (void)
 
    if (load_saves != NULL)
       load_free();
-   load_saves = array_create( nsave_t );
 
    /* load the saves */
    files = nfile_readDir( &nfiles, "%ssaves", nfile_dataPath() );
+   load_saves = array_create_size( nsave_t, nfiles );
+
    for (i=0; i<nfiles; i++) {
       len = strlen(files[i]);
 

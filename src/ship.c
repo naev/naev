@@ -1108,12 +1108,13 @@ int ships_load (void)
    /* Validity. */
    ss_check();
 
+   ship_files = ndata_list( SHIP_DATA_PATH, &nfiles );
+
    /* Initialize stack if needed. */
    if (ship_stack == NULL) {
-      ship_stack = array_create(Ship);
+      ship_stack = array_create_size(Ship, nfiles);
    }
 
-   ship_files = ndata_list( SHIP_DATA_PATH, &nfiles );
    for (i=0; i<(int)nfiles; i++) {
 
       /* Get the file name .*/

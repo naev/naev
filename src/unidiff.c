@@ -178,8 +178,8 @@ int diff_loadAvailable (void)
    xmlNodePtr node;
    UniDiffData_t *diff;
 
-   diff_available = array_create(UniDiffData_t);
    diff_files = ndata_listRecursive( UNIDIFF_DATA_PATH, &nfiles );
+   diff_available = array_create_size(UniDiffData_t, nfiles);
    for (i=0; i<nfiles; i++) {
       /* Load string. */
       filebuf = ndata_read( diff_files[i], &bufsize );

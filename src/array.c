@@ -5,13 +5,16 @@
 
 #include "nstring.h"
 
-void *_array_create_helper(size_t e_size)
+void *_array_create_helper(size_t e_size, int capacity)
 {
-   _private_container *c = malloc(sizeof(_private_container) + e_size);
+   if ( capacity <= 0 )
+      capacity = 1;
+
+   _private_container *c = malloc(sizeof(_private_container) + e_size * capacity);
 #ifdef DEBUGGING
    c->_sentinel = SENTINEL;
 #endif
-   c->_reserved = 1;
+   c->_reserved = capacity;
    c->_size = 0;
    return c->_array;
 }
