@@ -90,7 +90,7 @@ typedef enum OutfitSlotSize_ {
  * @brief Ammo AI types.
  */
 typedef enum OutfitAmmoAI_ {
-   AMMO_AI_DUMB, /**< No AI. */
+   AMMO_AI_UNGUIDED, /**< No AI. */
    AMMO_AI_SEEK, /**< Aims at the target. */
    AMMO_AI_SMART /**< Aims at the target, correcting for relative velocity. */
 } OutfitAmmoAI;

@@ -144,7 +144,7 @@ class sanitizer:
         # massive memory consumption.
         line = dict()
 
-        print("Blind check now ...")
+        print("Basic check now ...")
         for file in self.luaScripts:
             if self.config['verbose']:
                 print("Processing file {0}...".format(file), end='       ')

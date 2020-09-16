@@ -11,6 +11,8 @@ mkspr
 mkspr.exe
 naev
 naev.exe
+naikari
+naikari.exe
 pack
 pack.exe
 docs/doxygen/*
@@ -32,6 +34,7 @@ config.status
 configure
 m4/pkg.m4
 naev_csv
+naikari_csv
 bintray.json
 /*.dll
 /*.exe
@@ -52,11 +55,13 @@ dist/*
 dat/LANGUAGES
 release.log
 Naev.app
+Naikari.app
 core
 ABOUT-NLS
 ABOUT-NLS~
 po/xml.pot
 po/naev.pot
+po/naikari.pot
 po/POTFILES
 po/Makefile.in.in
 po/Makefile.in.in~
