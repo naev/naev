@@ -548,24 +548,30 @@ static int systemL_adjacent( lua_State *L )
  *
  *    @luatparam System s System to get the jumps of.
  *    @luatparam[opt=false] boolean exitonly Whether to exclude exit-only jumps.
+ *    @luatparam[opt=false] boolean hypergate Whether to exclude hypergates.
  *    @luatreturn {Jump,...} An ordered table with all the jumps.
  * @luafunc jumps( s, exitonly )
  */
 static int systemL_jumps( lua_State *L )
 {
-   int i, exitonly, pushed;
+   int i, exitonly, hypergate, pushed;
    LuaJump lj;
    StarSystem *s;
 
    s = luaL_validsystem(L,1);
    exitonly = lua_toboolean(L,2);
+   hypergate = lua_toboolean(L,3);
    pushed = 0;
 
    /* Push all jumps. */
    lua_newtable(L);
    for (i=0; i<s->njumps; i++) {
+      if (jp_isFlag( &s->jumps[i], JP_HYPERGATE )) {
+         if (hypergate)
+            continue;
+      }
       /* Skip exit-only jumps if requested. */
-      if ((exitonly) && (jp_isFlag( &s->jumps[i],  JP_EXITONLY)))
+      else if ((exitonly) && (jp_isFlag( &s->jumps[i],  JP_EXITONLY)))
             continue;
 
       lj.srcid  = s->id;

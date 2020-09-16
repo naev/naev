@@ -1764,7 +1764,8 @@ int player_jump (void)
 
       player.p->nav_hyperspace = j;
       player_soundPlayGUI(snd_nav,1);
-      map_select( cur_system->jumps[player.p->nav_hyperspace].target, 0 );
+      if (!jp_isFlag( &cur_system->jumps[player.p->nav_hyperspace], JP_HYPERGATE ))
+         map_select( cur_system->jumps[player.p->nav_hyperspace].target, 0 );
       gui_setNav();
 
       /* Only follow through if within range. */
@@ -1787,6 +1788,8 @@ int player_jump (void)
       player_message(_("\arHyperspace drive is offline."));
    else if (i == -3)
       player_message(_("\arYou do not have enough fuel to hyperspace jump."));
+   else if (i == -4 && jp_isFlag(&cur_system->jumps[player.p->nav_hyperspace], JP_HYPERGATE))
+      player_message(_("\arSelect a hypergate target before jumping."));
    else {
       player_message(_("\apPreparing for hyperspace."));
       /* Stop acceleration noise. */
@@ -1809,7 +1812,7 @@ int player_jump (void)
 void player_brokeHyperspace (void)
 {
    ntime_t t;
-   StarSystem *sys;
+   StarSystem *sys, *dest;
    JumpPoint *jp;
    int i;
 
@@ -1834,7 +1837,11 @@ void player_brokeHyperspace (void)
 
    /* enter the new system */
    jp = &cur_system->jumps[player.p->nav_hyperspace];
-   space_init( jp->target->name );
+   if (jp_isFlag( jp, JP_HYPERGATE ))
+      dest = map_getDestination(NULL);
+   else
+      dest = jp->target;
+   space_init( dest->name );
 
    /* set position, the pilot_update will handle lowering vel */
    space_calcJumpInPos( cur_system, sys, &player.p->solid->pos, &player.p->solid->vel, &player.p->solid->dir );

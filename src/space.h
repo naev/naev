@@ -375,6 +375,7 @@ int planet_setRadiusFromGFX(Planet* planet);
  */
 JumpPoint* jump_get( const char* jumpname, const StarSystem* sys );
 JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys );
+JumpPoint* system_getHypergate( const StarSystem* sys );
 
 /*
  * system adding/removing stuff.
@@ -423,6 +424,7 @@ void space_gfxUnload( StarSystem *sys );
  * Getting stuff.
  */
 StarSystem* system_getAll( int *nsys );
+JumpPoint** system_getHypergates( int *nsys );
 int system_exists( const char* sysname );
 const char *system_existsCase( const char* sysname );
 char **system_searchFuzzyCase( const char* sysname, int *n );
@@ -437,6 +439,7 @@ char* space_getRndPlanet( int landable, unsigned int services,
       int (*filter)(Planet *p));
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y );
 double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y, double ang );
+StarSystem* system_loopAdjacent( const StarSystem *sys, const int includeHidden, const int includeHypergates, int *i, int *j );
 
 
 /*

@@ -339,6 +339,8 @@ int space_hyperspace( Pilot* p )
       return -3;
    if (!space_canHyperspace(p))
       return -1;
+   if (space_sysReachable(map_getDestination(NULL)) <= 0)
+      return -4;
 
    /* pilot is now going to get automatically ready for hyperspace */
    pilot_setFlag(p, PILOT_HYP_PREP);
@@ -357,20 +359,36 @@ int space_hyperspace( Pilot* p )
 int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir )
 {
    int i;
-   JumpPoint *jp;
+   JumpPoint *jp = NULL;
+   JumpPoint *hg = NULL;
    double a, d, x, y;
    double ea, ed;
 
    /* Find the entry system. */
-   jp = NULL;
-   for (i=0; i<in->njumps; i++)
-      if (in->jumps[i].target == out)
+   for (i=0; i<in->njumps; i++) {
+      if (jp_isFlag(&in->jumps[i], JP_HYPERGATE))
+         hg = &in->jumps[i];
+      else if (in->jumps[i].target == out) {
          jp = &in->jumps[i];
+         break;
+      }
+   }
 
-   /* Must have found the jump. */
+   /* Check for hypergates */
    if (jp == NULL) {
-      WARN(_("Unable to find jump in point for '%s' in '%s': not connected"), out->name, in->name);
-      return -1;
+      if (hg != NULL) {
+         for (i=0; i<out->njumps; i++) {
+            if (jp_isFlag(&out->jumps[i], JP_HYPERGATE)) {
+               jp = hg;
+               break;
+            }
+         }
+      }
+      /* Not connected. */
+      else {
+         WARN(_("Unable to find jump in point for '%s' in '%s': not connected"), out->name, in->name);
+         return -1;
+      }
    }
 
    /* Base position target. */
@@ -698,17 +716,28 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
  */
 int space_sysReachable( StarSystem *sys )
 {
-   int i;
+   int i, j;
    JumpPoint *jp;
+
+   if (sys == NULL)
+      return 0;
 
    if (sys_isKnown(sys))
       return 1; /* it is known */
 
    /* check to see if it is adjacent to known */
    for (i=0; i<sys->njumps; i++) {
-      jp = sys->jumps[i].returnJump;
-      if (jp && jp_isKnown( jp ))
-         return 1;
+      if (jp_isFlag( &sys->jumps[i], JP_HYPERGATE )) {
+         for (j=0; j<array_size(hypergate_stack); j++) {
+            if (&sys->jumps[i] != hypergate_stack[j] && jp_isKnown( hypergate_stack[j] ))
+               return 1;
+         }
+      }
+      else {
+         jp = sys->jumps[i].returnJump;
+         if (jp && jp_isKnown( jp ))
+            return 1;
+         }
    }
 
    return 0;
@@ -763,6 +792,19 @@ StarSystem* system_getAll( int *nsys )
 {
    *nsys = systems_nstack;
    return systems_stack;
+}
+
+
+/**
+ * @brief Gets all the star systems with hypergates.
+ *
+ *    @param[out] Number of star systems gotten.
+ *    @return The star systems gotten.
+ */
+JumpPoint** system_getHypergates( int *nsys )
+{
+   *nsys = array_size(hypergate_stack);
+   return hypergate_stack;
 }
 
 
@@ -1061,6 +1103,7 @@ JumpPoint* jump_get( const char* jumpname, const StarSystem* sys )
 {
    int i;
    JumpPoint *jp;
+   JumpPoint *hg;
 
    if (jumpname==NULL) {
       WARN(_("Trying to find NULL jump point..."));
@@ -1069,8 +1112,17 @@ JumpPoint* jump_get( const char* jumpname, const StarSystem* sys )
 
    for (i=0; i<sys->njumps; i++) {
       jp = &sys->jumps[i];
-      if (strcmp(jp->target->name,jumpname)==0)
+      if (jp_isFlag( jp, JP_HYPERGATE ))
+         hg = jp;
+      else if (strcmp(jp->target->name,jumpname)==0)
          return jp;
+   }
+
+   if (hg != NULL) {
+      for (i=0; i<array_size(hypergate_stack); i++) {
+         if (strcmp(hypergate_stack[i]->from->name,jumpname)==0)
+            return hg;
+      }
    }
 
    WARN(_("Jump point '%s' not found in %s"), jumpname, sys->name);
@@ -1089,11 +1141,20 @@ JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys )
 {
    int i;
    JumpPoint *jp;
+   JumpPoint *hg;
+
    for (i=0; i<sys->njumps; i++) {
       jp = &sys->jumps[i];
-      if (jp->target == target)
+      if (jp_isFlag( jp, JP_HYPERGATE ))
+         hg = jp;
+      else if (jp->target == target)
          return jp;
    }
+   if (hg != NULL)
+      for (i=0; i<target->njumps; i++)
+         if (jp_isFlag( &target->jumps[i], JP_HYPERGATE ))
+            return hg;
+
    WARN(_("Jump point to '%s' not found in %s"), target->name, sys->name);
    return NULL;
 }

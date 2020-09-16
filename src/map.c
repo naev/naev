@@ -2053,6 +2053,7 @@ static SysNode* A_in( SysNode *first, StarSystem *cur );
 static SysNode* A_lowest( SysNode *first );
 static void A_freeList( SysNode *first );
 static int map_decorator_parse( MapDecorator *temp, xmlNodePtr parent );
+static void map_getJumpPathHelper( int ignore_known, int show_hidden, int cost, StarSystem *sys, JumpPoint *jp, SysNode *cur, SysNode **neighbour, SysNode **open, SysNode **closed, SysNode **ocost, SysNode **ccost );
 /** @brief Creates a new node link to star system. */
 static SysNode* A_newNode( StarSystem* sys )
 {
@@ -2167,6 +2168,43 @@ void map_setZoom(double zoom)
    map_zoom = zoom;
 }
 
+static void map_getJumpPathHelper( int ignore_known, int show_hidden, int cost, StarSystem *sys, JumpPoint *jp, SysNode *cur, SysNode **neighbour, SysNode **open, SysNode **closed, SysNode **ocost, SysNode **ccost )
+{
+   /* Make sure it's reachable */
+   if (!ignore_known) {
+      if (!jp_isKnown(jp))
+         return;
+      if (!sys_isKnown(sys) && !space_sysReachable(sys))
+         return;
+   }
+   if (jp_isFlag( jp, JP_EXITONLY ))
+      return;
+
+   /* Skip hidden jumps if they're not specifically requested */
+   if (!show_hidden && jp_isFlag( jp, JP_HIDDEN ))
+      return;
+
+   /* Check to see if it's already in the closed set. */
+   *ccost = A_in(*closed, sys);
+   if ((*ccost != NULL) && (cost >= A_g(*ccost)))
+      return;
+
+   /* Remove if it exists and current is better. */
+   *ocost = A_in(*open, sys);
+   if (*ocost != NULL) {
+      if (cost < A_g(*ocost))
+         *open = A_rm( *open, sys ); /* New path is better */
+      else
+         return;
+   }
+
+   /* Create the node. */
+   *neighbour           = A_newNode( sys );
+   (*neighbour)->parent = cur;
+   (*neighbour)->g      = cost;
+   *open                = A_add( *open, *neighbour );
+}
+
 /**
  * @brief Gets the jump path between two systems.
  *
@@ -2175,21 +2213,24 @@ void map_setZoom(double zoom)
  *    @param sysend Name of the system to end at.
  *    @param ignore_known Whether or not to ignore if systems and jump points are known.
  *    @param show_hidden Whether or not to use hidden jumps points.
- *    @param the old star system (if we're merely extending the list)
+ *    @param old_data The old star system (if we're merely extending the list)
  *    @return NULL on failure, the list of njumps elements systems in the path.
  */
 StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
     const char* sysend, int ignore_known, int show_hidden,
     StarSystem** old_data )
 {
-   int i, j, cost, ojumps;
+   int i, j, k, cost, ojumps;
 
-   StarSystem *sys, *ssys, *esys, **res;
+   StarSystem *ssys, *esys, **res;
    JumpPoint *jp;
 
    SysNode *cur,   *neighbour;
    SysNode *open,  *closed;
    SysNode *ocost, *ccost;
+
+   JumpPoint **hg_stack;
+   int hg_nstack;
 
    A_gc = NULL;
 
@@ -2228,6 +2269,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    cur->g   = 0;
    open     = A_add( open, cur ); /* Initial open node is the start system */
 
+   hg_stack = system_getHypergates(&hg_nstack);
    j = 0;
    while ((cur = A_lowest(open))) {
       /* End condition. */
@@ -2246,42 +2288,13 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
 
       for (i=0; i<cur->sys->njumps; i++) {
          jp  = &cur->sys->jumps[i];
-         sys = jp->target;
-
-         /* Make sure it's reachable */
-         if (!ignore_known) {
-            if (!jp_isKnown(jp))
-               continue;
-            if (!sys_isKnown(sys) && !space_sysReachable(sys))
-               continue;
+         if (jp_isFlag( jp, JP_HYPERGATE )) {
+            for (k=0; k<hg_nstack; k++)
+               if (hg_stack[k]->from != cur->sys)
+                  map_getJumpPathHelper( ignore_known, show_hidden, cost, hg_stack[k]->from, jp, cur, &neighbour, &open, &closed, &ocost, &ccost );
          }
-         if (jp_isFlag( jp, JP_EXITONLY ))
-            continue;
-
-         /* Skip hidden jumps if they're not specifically requested */
-         if (!show_hidden && jp_isFlag( jp, JP_HIDDEN ))
-            continue;
-
-         /* Check to see if it's already in the closed set. */
-         ccost = A_in(closed, sys);
-         if ((ccost != NULL) && (cost >= A_g(ccost)))
-            continue;
-            //closed = A_rm( closed, sys );
-
-         /* Remove if it exists and current is better. */
-         ocost = A_in(open, sys);
-         if (ocost != NULL) {
-            if (cost < A_g(ocost))
-               open = A_rm( open, sys ); /* New path is better */
-            else
-               continue; /* This node is worse, so ignore it. */
-         }
-
-         /* Create the node. */
-         neighbour         = A_newNode( sys );
-         neighbour->parent = cur;
-         neighbour->g      = cost;
-         open              = A_add( open, neighbour );
+         else
+            map_getJumpPathHelper( ignore_known, show_hidden, cost, jp->target, jp, cur, &neighbour, &open, &closed, &ocost, &ccost );
       }
 
       /* Safety check in case not linked. */
