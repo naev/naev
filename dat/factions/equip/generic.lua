@@ -335,14 +335,14 @@ equip_classOutfits_utilities = {
       {
          varied = true;
          "Reactor Class II", "Medium Shield Booster", "Milspec Scrambler",
-         "Droid Repair Crew", "Boarding Androids MKI"
+         "Droid Repair Crew", "Boarding Androids MK1"
       }
    },
    ["Armored Transport"] = {
       {
          varied = true;
          "Reactor Class II", "Medium Shield Booster", "Milspec Scrambler",
-         "Droid Repair Crew", "Boarding Androids MKI"
+         "Droid Repair Crew", "Boarding Androids MK1"
       }
    },
    ["Fighter"] = {
@@ -363,28 +363,28 @@ equip_classOutfits_utilities = {
       {
          varied = true;
          "Reactor Class II", "Medium Shield Booster", "Milspec Scrambler",
-         "Droid Repair Crew", "Boarding Androids MKI", "Hellburner"
+         "Droid Repair Crew", "Boarding Androids MK1", "Hellburner"
       }
    },
    ["Destroyer"] = {
       {
          varied = true;
          "Reactor Class II", "Medium Shield Booster", "Droid Repair Crew",
-         "Boarding Androids MKI"
+         "Boarding Androids MK1"
       }
    },
    ["Cruiser"] = {
       {
          varied = true;
          "Reactor Class III", "Large Shield Booster", "Droid Repair Crew",
-         "Boarding Androids MKII"
+         "Boarding Androids MK2"
       }
    },
    ["Carrier"] = {
       {
          varied = true;
          "Reactor Class III", "Large Shield Booster", "Droid Repair Crew",
-         "Boarding Androids MKII"
+         "Boarding Androids MK2"
       }
    },
    ["Drone"] = {

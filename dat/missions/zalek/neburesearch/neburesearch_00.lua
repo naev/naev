@@ -30,10 +30,10 @@ require "numstring.lua"
 require "dat/missions/zalek/common.lua"
 
 
-text = {}
+-- Mission Text
 bar_ask_text = _([["Hello there! You are a pilot, right? For my project I require a ship that can go to the Nebula. Certainly you must be interested in the proposal of researching the phenomenon that cut us off from mankind's patrimony.
     "As this is the point where any other pilots I asked backed out, I should start by mentioning that due to some unfortunate circumstances the payment for this mission will be only %s. But rest assured, you will be mentioned in the acknowledgment section of my next paper!"]])
-bar_ask_again_text = _([["Hold up! Look, the problem is that my grant was not permitted to the extent that I asked for. Those simpletons cut my funds because they just don't understand the relevance of my research. Just because I'm still a student they completely underestimate my abilities!
+bar_ask_again_text = _([["Hold up! Look, the problem is that my grant was not permitted to the extent that I asked for. Those assholes cut my funds because they just don't understand the relevance of my research. Just because I'm still a student they completely underestimate my abilities!
     "Now I've spent all my credits on this sensor suit without the ability to use it. You must know how this feels. I mean, your ship obviously could use some work. So why don't you just help me out here?"]])
 takeoff_text = _([[As you enter your ship you notice dozens of cables of various colors stretched across your ship's corridors. It is a complete mess. You follow the direction most of the cables seem to lead to and find the culprit.
     "Oh, hello again, Captain! I'm done with my work here, so we can take off whenever you're ready. I have to calibrate the sensors during the flight so there is no need to rush. Our first destination is %s." You try to maintain composure as you ask him what he has done to your ship. "Oh, I just installed the sensors. It should have no unwanted side effects on your ship.
@@ -50,13 +50,15 @@ finish_text = _([[The student has already removed all the cables and sensors ins
     "Once again, thank you for your help. I still have to analyze the data but it looks promising so far. With these results no one is going to question my theories anymore! Also, I decided to increase your reward to compensate for the trouble I caused."
     He gives you a credit chip worth %s and heads off. The money is nice, but not worth as much as the insight that working for the Za'lek will be dangerous and tiresome.]])
 
+-- Target Systems
+t_sys = {}
+t_sys[1] = "Doeston"
+t_sys[2] = "Iris"
+
 
 function create()
     -- mission variables
     misn_stage = 0
-    t_sys = {}
-    t_sys[1] = "Doeston"
-    t_sys[2] = "Iris"
     homeworld, homeworld_sys = planet.get("Jorla")
     credits = 100000
     

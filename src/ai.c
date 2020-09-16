@@ -1784,7 +1784,7 @@ static int aiL_careful_face( lua_State *L )
       if (pilot_isDisabled(p_i) ) continue;
       if (p_i->id == cur_pilot->id) continue;
       if (p_i->id == p->id) continue; 
-      if (pilot_inRangePilot(cur_pilot, p_i) != 1) continue;
+      if (pilot_inRangePilot(cur_pilot, p_i, NULL) != 1) continue;
 
       /* If the enemy is too close, ignore it*/
       dist = vect_dist(&p_i->solid->pos, &cur_pilot->solid->pos);

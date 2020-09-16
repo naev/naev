@@ -921,18 +921,18 @@ int u8_reverse(char *dest, char * src, size_t len)
             case 0xC:
             case 0xD:
                 di -= 2;
-                *((int16_t*)&dest[di]) = *((int16_t*)&src[si]);
+                memcpy(&dest[di], &src[si], sizeof(int16_t));
                 si += 2;
                 break;
             case 0xE:
                 di -= 3;
                 dest[di] = src[si];
-                *((int16_t*)&dest[di+1]) = *((int16_t*)&src[si+1]);
+                memcpy(&dest[di+1], &src[si+1], sizeof(int16_t));
                 si += 3;
                 break;
             case 0xF:
                 di -= 4;
-                *((int32_t*)&dest[di]) = *((int32_t*)&src[si]);
+                memcpy(&dest[di], &src[si], sizeof(int32_t));
                 si += 4;
                 break;
             default:

@@ -163,7 +163,7 @@ md5_process(md5_state_t *pms, const md5_byte_t *data /*[64]*/)
         */
        if (!((data - (const md5_byte_t *)0) & 3)) {
       /* data are properly aligned */
-      X = (const md5_word_t *)data;
+      memcpy(&X, &data, sizeof(md5_word_t *));
        } else {
       /* not aligned */
       memcpy(xbuf, data, 64);

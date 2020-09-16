@@ -132,7 +132,7 @@ function spawnBaddies ()
       pilot_object:addOutfit("Shield Capacitor II")
       if system.cur() ~= targetsystem then
          pilot_object:control() --switch to manual control
-         pilot_object:attack( player.pilot() ) --they blindly attack you and only you
+         pilot_object:attack( player.pilot() ) --they attack you and only you
       else
          thugs_alive = #thugs
          hook.pilot(pilot_object, "exploded", "pilotKilled") --trigger when one of them is killed

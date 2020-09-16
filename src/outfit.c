@@ -833,7 +833,7 @@ const char* outfit_getTypeBroad( const Outfit* o )
 const char* outfit_getAmmoAI( const Outfit *o )
 {
    const char *ai_type[] = {
-      gettext_noop("Dumb"),
+      gettext_noop("Unguided"),
       gettext_noop("Seek"),
       gettext_noop("Smart")
    };
@@ -1557,8 +1557,8 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          buf = xml_get(node);
          if (buf != NULL) {
 
-            if (strcmp(buf,"dumb")==0)
-               temp->u.amm.ai = AMMO_AI_DUMB;
+            if (strcmp(buf,"unguided")==0)
+               temp->u.amm.ai = AMMO_AI_UNGUIDED;
             else if (strcmp(buf,"seek")==0)
                temp->u.amm.ai = AMMO_AI_SEEK;
             else if (strcmp(buf,"smart")==0)
@@ -1586,7 +1586,7 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
    MELEMENT(temp->u.amm.spfx_armour==-1,"spfx_armour");
    MELEMENT((sound_disabled!=0) && (temp->u.amm.sound<0),"sound");
    /* MELEMENT(temp->u.amm.thrust==0,"thrust"); */
-   /* Dumb missiles don't need everything */
+   /* Unguided missiles don't need everything */
    if (outfit_isSeeker(temp)) {
       MELEMENT(temp->u.amm.turn==0,"turn");
    }

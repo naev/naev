@@ -512,7 +512,7 @@ static void gui_renderPilotTarget( double dt )
    }
 
    /* Make sure target is still in range. */
-   if (!pilot_inRangePilot( player.p, p )) {
+   if (!pilot_inRangePilot( player.p, p, NULL )) {
       pilot_setTarget( player.p, player.p->id );
       gui_setTarget();
       return;
@@ -687,7 +687,7 @@ static void gui_renderBorder( double dt )
       plt = pilot_stack[i];
 
       /* See if in sensor range. */
-      if (!pilot_inRangePilot(player.p, plt))
+      if (!pilot_inRangePilot(player.p, plt, NULL))
          continue;
 
       /* Check if out of range. */
@@ -1201,7 +1201,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    glColour col;
 
    /* Make sure is in range. */
-   if (!pilot_inRangePilot( player.p, p ))
+   if (!pilot_inRangePilot( player.p, p, NULL ))
       return;
 
    /* Get position. */

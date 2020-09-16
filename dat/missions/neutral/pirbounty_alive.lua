@@ -1,24 +1,24 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Alive Bounty">
-  <avail>
-   <priority>4</priority>
-   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
-   <chance>360</chance>
-   <location>Computer</location>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <tier>3</tier>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>4</priority>
+  <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+  <chance>360</chance>
+  <location>Computer</location>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <tier>3</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    Alive Pirate Bounty
@@ -60,7 +60,7 @@ pay_capture_text[2] = _("The officer seems to think your acceptance of the alive
 pay_capture_text[3] = _("The officer you deal with seems to especially dislike %s. They take the pirate off your hands and hand you your pay without speaking a word.")
 pay_capture_text[4] = _("A fearful-looking officer rushes %s into a secure hold, pays you the appropriate bounty, and then hurries off.")
 pay_capture_text[5] = _("The officer you deal with thanks you profusely for capturing %s alive, pays you, and sends you off.")
-pay_capture_text[6] = _("Upon learning that you managed to capture %s alive, the previously depressed-looking officer suddenly brightens up. The pirate is swiftly taken into custody as you are handed your pay.")
+pay_capture_text[6] = _("Upon learning that you managed to capture %s alive, the officer who previously sported a defeated look suddenly brightens up. The pirate is swiftly taken into custody as you are handed your pay.")
 pay_capture_text[7] = _("When you ask the officer for your bounty on %s, they sigh, take the pirate into custody, go through some paperwork, and hand you your pay, mumbling something about how useless capturing pirates alive is.")
 
 pay_kill_text    = {}

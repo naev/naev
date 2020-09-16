@@ -48,7 +48,7 @@ text[2] = _([["While the data recorded by Robert is of good quality he seems to 
 text[3] = _([["Please follow us, %s. Make sure to jump to the next system after we jumped out. We'll have to land on some planets on our way to refuel."]])
 text[4] = _([[Suddenly your comm system turns on, receiving a conversation between the ship you are escorting and a Dvaered patrol ship.
     "I assure you, we mean no harm. We are just a convoy of scientists passing through Dvaered space." says Dr. Mensing.
-    The responce sounds harsh. "Do you think we're stupid or something? You're obviously a spy scouting our systems' defences."
+    The response sounds harsh. "Do you think we're naïve? You're obviously a spy scouting our systems' defences."
     "Please calm down. I'm sure there is a diplomatic solution for our misunderstanding."
     The dvaered officer replies "We can see that your ship is stuffed with sensors. Your intentions are obvious. Prepare for your ship being boarded."]])
 text[5] = _([[Dr. Mensing  pauses, apparently choosing her words with care.

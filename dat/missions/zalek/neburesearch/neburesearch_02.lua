@@ -1,18 +1,18 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
- <mission name="Emergency of Immediate Inspiration">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <done>Advanced Nebula Research</done>
-   <chance>30</chance>
-   <location>Bar</location>
-   <faction>Empire</faction>
-   <cond>system.get("Gamma Polaris"):jumpDist() &lt; 3 and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3"</cond>
-  </avail>
- </mission>
+<mission name="Emergency of Immediate Inspiration">
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <done>Advanced Nebula Research</done>
+  <chance>30</chance>
+  <location>Bar</location>
+  <faction>Empire</faction>
+  <cond>system.get("Gamma Polaris"):jumpDist() &lt; 3 and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3"</cond>
+ </avail>
+</mission>
 --]]
 --[[
    
@@ -35,7 +35,7 @@ misn_reward = _("%s")
 mdesc = _("Take Dr. Mensing to %s in the %s system as fast as possible!")
 bar_title = _("Bar")
 landing_title = _("Mission accomplished")
-bar_text = _([["Well met, %s! In fact, it's a lucky coincidence that we meet. You see, I'm in dire need of your service. I'm here on a... conference of sorts, not a real one. We are obligated to present the newest results of our research to scientists of the Empire once per period - even though these simpletons lack the skills to understand our works! It's just a pointless ritual anyway. But I just got an ingenious idea on how to prevent the volatile Sol nebula from disrupting ship shields! I will spare you with the details - to ensure my idea is not going to be stolen, nothing personal. You can never be sure who is listening."
+bar_text = _([["Well met, %s! In fact, it's a lucky coincidence that we meet. You see, I'm in dire need of your service. I'm here on a... conference of sorts, not a real one. We are obligated to present the newest results of our research to scientists of the Empire once per period - even though these jokers lack the skills to understand our works! It's just a pointless ritual anyway. But I just got an ingenious idea on how to prevent the volatile Sol nebula from disrupting ship shields! I will spare you with the details - to ensure my idea is not going to be stolen, nothing personal. You can never be sure who is listening."
     "Anyway, you have to take me back to my lab on %s in the %s system immediately! I'd also pay %s if necessary."]])
 accept_text = _([["Splendid! I'd like to start with my work as soon as possible, so please hurry! Off to %s we go!"
     With that being said she drags you out of the bar. When realizing that she actually does not know on which landing pad your ship is parked she lets you loose and orders you to lead the way.]])
