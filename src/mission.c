@@ -875,8 +875,8 @@ int missions_load (void)
       player_missions[i] = calloc(1, sizeof(Mission));
 
    /* Run over missions. */
-   mission_stack = array_create(MissionData);
    mission_files = ndata_listRecursive( MISSION_DATA_PATH, &nfiles );
+   mission_stack = array_create_size( MissionData, nfiles );
    for (i=0; i<nfiles; i++) {
       mission_parseFile( mission_files[i] );
       free( mission_files[i] );
