@@ -2882,7 +2882,7 @@ void pilot_choosePoint( Vector2d *vp, int *planet, int *jump, int lf, int ignore
           * (excepted if the pilot is guerilla) and have faction
           * presence matching the pilot's on the remote side.
           */
-         target = jump_getTarget( cur_system, cur_system->jumps[i].target );
+         target = cur_system->jumps[i].returnJump;
 
          limit = 0.;
          if (guerilla) {/* Test enemy presence on the other side. */

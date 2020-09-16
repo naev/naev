@@ -565,8 +565,7 @@ static int systemL_jumps( lua_State *L )
    lua_newtable(L);
    for (i=0; i<s->njumps; i++) {
       /* Skip exit-only jumps if requested. */
-      if ((exitonly) && (jp_isFlag( jump_getTarget( s->jumps[i].target, s ),
-            JP_EXITONLY)))
+      if ((exitonly) && (jp_isFlag( &s->jumps[i],  JP_EXITONLY)))
             continue;
 
       lj.srcid  = s->id;
