@@ -123,8 +123,8 @@
   <item>Cargo Pod</item>
   <item>Medium Cargo Pod</item>
   <item>Large Cargo Pod</item>
-  <item>Boarding Androids MKI</item>
-  <item>Boarding Androids MKII</item>
+  <item>Boarding Androids MK1</item>
+  <item>Boarding Androids MK2</item>
   <item>Targeting Array</item>
   <item>Asteroid Scanner</item>
   <item>Forward Shock Absorbers</item>
@@ -529,7 +529,7 @@
   <item>Cargo Pod</item>
   <item>Medium Cargo Pod</item>
   <item>Large Cargo Pod</item>
-  <item>Boarding Androids MKI</item>
+  <item>Boarding Androids MK1</item>
   <item>Star Maps</item>
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
@@ -606,8 +606,8 @@
   <item>Cargo Pod</item>
   <item>Medium Cargo Pod</item>
   <item>Large Cargo Pod</item>
-  <item>Boarding Androids MKI</item>
-  <item>Boarding Androids MKII</item>
+  <item>Boarding Androids MK1</item>
+  <item>Boarding Androids MK2</item>
   <item>Star Maps</item>
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
@@ -636,8 +636,8 @@
   <item>Cargo Pod</item>
   <item>Medium Cargo Pod</item>
   <item>Large Cargo Pod</item>
-  <item>Boarding Androids MKI</item>
-  <item>Boarding Androids MKII</item>
+  <item>Boarding Androids MK1</item>
+  <item>Boarding Androids MK2</item>
   <item>Targeting Array</item>
   <item>Forward Shock Absorbers</item>
   <item>Power Regulation Override</item>

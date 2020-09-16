@@ -138,7 +138,7 @@ equip_typeOutfits_utilities["Demon"] = {
    },
    {
       varied = true;
-      "Droid Repair Crew", "Milspec Scrambler", "Boarding Androids MKI"
+      "Droid Repair Crew", "Milspec Scrambler", "Boarding Androids MK1"
    }
 }
 

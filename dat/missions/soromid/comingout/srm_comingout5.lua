@@ -1,24 +1,24 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Garbage Person">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <done>Visiting Family</done>
-   <chance>30</chance>
-   <location>Bar</location>
-   <faction>Soromid</faction>
-  </avail>
-  <notes>
-   <campaign>Coming Out</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <done>Visiting Family</done>
+  <chance>30</chance>
+  <location>Bar</location>
+  <faction>Soromid</faction>
+ </avail>
+ <notes>
+  <campaign>Coming Out</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 
-   Garbage Person
+   Waste Collector
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -127,7 +127,7 @@ function spawnChelseaShip( param )
    chelsea:addOutfit( "Fury Missile", 80 )
    chelsea:addOutfit( "Droid Repair Crew" )
    chelsea:addOutfit( "Milspec Scrambler" )
-   chelsea:addOutfit( "Boarding Androids MKI" )
+   chelsea:addOutfit( "Boarding Androids MK1" )
    chelsea:addOutfit( "Cargo Pod", 4 )
 
    chelsea:setHealth( 100, 100 )
