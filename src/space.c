@@ -699,7 +699,7 @@ int space_sysReachable( StarSystem *sys )
 
    /* check to see if it is adjacent to known */
    for (i=0; i<sys->njumps; i++) {
-      jp = jump_getTarget( sys, sys->jumps[i].target );
+      jp = sys->jumps[i].returnJump;
       if (jp && jp_isKnown( jp ))
          return 1;
    }
