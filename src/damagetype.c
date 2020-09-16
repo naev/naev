@@ -264,6 +264,7 @@ void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *
 {
    DTYPE *dtype;
    char *ptr;
+   double multiplier;
 
    /* Must be valid. */
    dtype = dtype_validType( dmg->type );
@@ -283,8 +284,9 @@ void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *
           * ss_statsInit and turn the value into a multiplier.
           */
          ptr = (char*) s;
+         memcpy(&multiplier, &ptr[ dtype->soffset ], sizeof(double));
          *dshield = dtype->sdam * dmg->damage * absorb *
-               (2. - *(double*) &ptr[ dtype->soffset ]);
+               (2. - multiplier);
       }
    }
    if (darmour != NULL) {
@@ -292,8 +294,9 @@ void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *
          *darmour    = dtype->adam * dmg->damage * absorb;
       else {
          ptr = (char*) s;
+         memcpy(&multiplier, &ptr[ dtype->aoffset ], sizeof(double));
          *darmour = dtype->adam * dmg->damage * absorb *
-               (2. - *(double*) &ptr[ dtype->aoffset ]);
+               (2. - multiplier);
       }
    }
 
