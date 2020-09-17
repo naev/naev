@@ -4,9 +4,20 @@ require("dat/factions/spawn/common.lua")
 -- @brief Spawns a single small ship.
 function spawn_patrol ()
     local pilots = {}
-    local r = rnd.rnd()
 
-    if r < 0.5 then
+    -- Compute the hostile presence
+    local host = 0
+    for k,fact in pairs(faction.get("Civilian"):enemies()) do 
+       host = host + system.cur():presence(fact)
+    end
+    host = host / system.cur():presence(faction.get("Civilian"))
+
+    -- The more hostiles, the less advertisers
+    local prop = .5 -- Advertisers proportion at host = 0
+    local h0   = 3  -- At this hostile presence, advertiser prop is 5% of original proportion
+    local r = rnd.rnd() + prop*(1-math.exp(-3*host/h0))
+
+    if r < prop then
        local civships = {{"Advertiser Schroedinger", 8},
                          {"Advertiser Llama", 8},
                          {"Advertiser Gawain", 8},

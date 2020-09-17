@@ -1,30 +1,6 @@
 require("dat/ai/tpl/generic.lua")
 require("dat/ai/personality/advertiser.lua")
-
-
--- Sends a distress signal which causes faction loss
-function sos ()
-   msg = {
-      _("Mayday! We are under attack!"),
-      _("Requesting assistance. We are under attack!"),
-      _("Civilian vessel under attack! Requesting help!"),
-      _("Help! Ship under fire!"),
-      _("Taking hostile fire! Need assistance!"),
-      _("We are under attack, require support!"),
-      _("Mayday! Ship taking damage!"),
-      string.format(_("Mayday! Civilian %s being assaulted!"), string.lower( ai.pilot():ship():class() ))
-   }
-   ai.settarget( ai.target() )
-   ai.distress( msg[ rnd.int(1,#msg) ])
-end
-
-
-mem.shield_run = 100
-mem.armour_run = 100
-mem.defensive  = false
-mem.enemyclose = 500
-mem.distressmsgfunc = sos
-mem.careful   = true
+require("dat/ai/distress_behaviour.lua")
 
 
 function create ()
@@ -53,9 +29,9 @@ function create ()
    msg = {
       _("Fly safe, fly Milspec."),
       _("Reynir's Hot Dogs: enjoy the authentic taste of tradition."),
-      _("Everyone is faster that light, but only Tricon engines are faster than thought!"),
+      _("Everyone is faster than light, but only Tricon engines are faster than thought!"),
       _("Dare excellence! Dare Teracom rockets!"),
-      _("Because being unique is hard at times, Nexus invented the Shark fighter."),
+      _("Most people are ordinary. For the others, Nexus designed the Shark fighter."),
       _("Never take off without your courage. Never take off without your Vendetta."),
       _("Unicorp: low price and high quality!")
    }
