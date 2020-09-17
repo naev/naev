@@ -699,7 +699,7 @@ int space_sysReachable( StarSystem *sys )
 
    /* check to see if it is adjacent to known */
    for (i=0; i<sys->njumps; i++) {
-      jp = jump_getTarget( sys, sys->jumps[i].target );
+      jp = sys->jumps[i].returnJump;
       if (jp && jp_isKnown( jp ))
          return 1;
    }
@@ -2583,8 +2583,10 @@ void system_reconstructJumps (StarSystem *sys)
    double a;
 
    for (j=0; j<sys->njumps; j++) {
-      jp          = &sys->jumps[j];
-      jp->target  = system_getIndex( jp->targetid );
+      jp             = &sys->jumps[j];
+      jp->from       = sys;
+      jp->target     = system_getIndex( jp->targetid );
+      jp->returnJump = jump_getTarget( sys, jp->target );
 
       /* Get heading. */
       dx = jp->target->pos.x - sys->pos.x;
@@ -2932,6 +2934,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    memset( j, 0, sizeof(JumpPoint) );
 
    /* Set some stuff. */
+   j->from = sys;
    j->target = target;
    free(buf);
    j->targetid = j->target->id;

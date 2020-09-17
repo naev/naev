@@ -172,9 +172,12 @@ typedef struct SystemPresence_ {
 /**
  * @brief Represents a jump lane.
  */
-typedef struct JumpPoint_ {
-   StarSystem *target; /**< Target star system to jump to. */
+typedef struct JumpPoint_ JumpPoint;
+struct JumpPoint_ {
+   StarSystem *from; /**< System containing this jump point. */
    int targetid; /**< ID of the target star system. */
+   StarSystem *target; /**< Target star system to jump to. */
+   JumpPoint *returnJump; /**< How to get back. Can be NULL */
    Vector2d pos; /**< Position in the system. */
    double radius; /**< Radius of jump range. */
    unsigned int flags; /**< Flags related to the jump point's status. */
@@ -184,7 +187,7 @@ typedef struct JumpPoint_ {
    double sina; /**< Sinus of the angle. */
    int sx; /**< X sprite to use. */
    int sy; /**< Y sprite to use. */
-} JumpPoint;
+};
 extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
 
 
