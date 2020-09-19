@@ -92,3 +92,9 @@ utils/starmap/*.png
 utils/starmap/*.jpg
 utils/starmap/*.log
 /compile_commands.json
+*.ninja_deps
+*.ninja_log
+builddir/
+/subprojects/*
+!/subprojects/packagefiles
+!/subprojects/*.wrap

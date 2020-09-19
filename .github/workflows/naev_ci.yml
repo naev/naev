@@ -34,16 +34,16 @@ jobs:
           gettext \
           autopoint \
           intltool \
-          itstool
+          itstool \
+          meson
 
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
 
     - name: Test-Build Naev on Linux64
       run: |
-        ./autogen.sh
-        ./configure --build=x86_64-linux-gnu --host=x86_64-linux-gnu
-        make -j$(nproc --all)
+        meson setup builddir
+        meson compile -C builddir
       env:
         CFLAGS: "-O3"
 

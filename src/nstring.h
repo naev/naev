@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <ncompat.h>
+#include "ncompat.h"
 
 
 const char *nstrnstr( const char *haystack, const char *needle, size_t size );
