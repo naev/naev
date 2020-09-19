@@ -3,7 +3,7 @@ project('naev', 'c',
    default_options : [
       'warning_level=1',
       'optimization=g',
-      'c_std=gnu18',
+      'c_std=gnu11',
       'werror=false'
    ],
    meson_version: '>=0.55.0')
