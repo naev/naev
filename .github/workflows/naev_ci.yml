@@ -11,7 +11,7 @@ jobs:
       run: |
         sudo apt-get update
 
-    - name: Install Additional Build Dependencies
+    - name: Install APT Build Dependencies
       run: |
         sudo apt-get install \
           build-essential \
@@ -35,15 +35,21 @@ jobs:
           autopoint \
           intltool \
           itstool \
-          meson
+          python3 \
+          python3-setuptools \
+          ninja-build
+
+    - name: Install Meson
+      run: |
+        pip3 install --user meson
 
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
 
     - name: Test-Build Naev on Linux64
       run: |
-        meson setup builddir
-        meson compile -C builddir
+        ~/.local/bin/meson setup builddir
+        ~/.local/bin/meson compile -C builddir
       env:
         CFLAGS: "-O3"
 

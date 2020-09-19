@@ -5,7 +5,8 @@ project('naev', 'c',
       'optimization=g',
       'c_std=gnu18',
       'werror=false'
-   ])
+   ],
+   meson_version: '>=0.55.0')
 
 config_data = configuration_data({
    'VMAJOR': meson.project_version().split('.')[0],
