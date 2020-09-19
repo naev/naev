@@ -27,15 +27,26 @@ add_project_arguments('-include', 'config.h', language: 'c')
 
 cc = meson.get_compiler('c')
 
-csparse = cc.find_library('libcsparse', required: false)
-if not csparse.found()
-   csparse = cc.find_library('libcxsparse', required: false)
+if 'SuiteSparse' not in get_option('force_fallback_for')
+   csparse_names = ['csparse', 'cxsparse', 'libcsparse', 'libcxsparse', 'libcsparse3', 'libcxsparse3']
+   foreach n : csparse_names
+      csparse = cc.find_library(n, required: false)
+      if csparse.found()
+         break
+      endif
+   endforeach
+endif
+
+if not is_variable('csparse') or not csparse.found()
+   csparse = dependency(
+      'SuiteSparse',
+      fallback: ['SuiteSparse', 'CSparse_dep'],
+      required: true)
 endif
 
 system_deps = [
    cc.find_library('dl', required : true),
    cc.find_library('m', required : true),
-   cc.find_library('libcxsparse', required : true),
    csparse
 ]
 
