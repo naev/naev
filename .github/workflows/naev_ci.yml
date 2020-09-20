@@ -7,16 +7,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Update APT Cache
+    - name: Setup Python
+      uses: actions/setup-python@v2
+
+    - name: Checkout Naev Repository 
+      uses: actions/checkout@v2
+      
+    - name: Update APT Build Dependencies
       run: |
         sudo apt-get update
-
-    - name: Install APT Build Dependencies
-      run: |
         sudo apt-get install \
           build-essential \
-          automake \
-          autoconf-archive \
           libsdl2-dev \
           libsdl2-mixer-dev \
           libsdl2-image-dev \
@@ -34,24 +35,15 @@ jobs:
           gettext \
           autopoint \
           intltool \
-          itstool \
-          python3 \
-          python3-setuptools \
-          ninja-build
+          itstool
 
-    - name: Install Meson
-      run: |
-        pip3 install --user meson
-
-    - name: Checkout Naev Repository 
-      uses: actions/checkout@v2
-
-    - name: Test-Build Naev on Linux64
-      run: |
-        ~/.local/bin/meson setup builddir
-        ~/.local/bin/meson compile -C builddir
-      env:
-        CFLAGS: "-O3"
+    - name: Meson Build
+      uses: BSFishy/meson-build@v1.0.1
+      with:
+        action: build
+        directory: builddir
+        setup-options: --optimization=3
+        meson-version: 0.55.3
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -62,31 +54,20 @@ jobs:
   "Windows-MinGW64":
     runs-on: windows-latest
 
-    defaults:
-      run:
-        shell: msys2 {0}
-
     steps:
-    - name: Setup MINGW64 Environment
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: MINGW64
-        update: true
-        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool
-
-    - name: Install Meson
-      run: |
-        pip3 install --user meson
+    - name: Setup Python
+      uses: actions/setup-python@v2
 
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
 
-    - name: Test-Build Naev on Win64
-      run: |
-        %APPDATA%\Python\meson setup builddir
-        %APPDATA%\Python\meson compile -C builddir
-      env:
-        CFLAGS: "-O3"
+    - name: Meson Build
+      uses: BSFishy/meson-build@v1.0.1
+      with:
+        action: build
+        directory: builddir
+        setup-options: --backend=vs2019
+        meson-version: 0.55.3
     
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -121,19 +102,24 @@ jobs:
       run: |
         brew uninstall --ignore-dependencies perl
         
+    - name: Setup Python
+      uses: actions/setup-python@v2
+
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
-
-    - name: Test-Build Naev on MacOS
+    
+    - name: PKGCONFIG
       run: |
         # PKGCONFIG configuration for OpenAL
         export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/opt/openal-soft/lib/pkgconfig"
-        
-        ./autogen.sh
-        ./configure
-        make -j$(sysctl -n hw.logicalcpu)
-      env:
-        CFLAGS: "-O3 -mmacosx-version-min=10.7"
+
+    - name: Meson Build
+      uses: BSFishy/meson-build@v1.0.1
+      with:
+        action: build
+        directory: builddir
+        setup-options: --optimization=3
+        meson-version: 0.55.3
     
     - name: Build MacOS Bundle
       run: ./extras/macos/bundle.sh
