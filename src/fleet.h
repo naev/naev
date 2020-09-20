@@ -6,6 +6,8 @@
 #ifndef FLEET_H
 #  define FLEET_H
 
+typedef struct Fleet_ Fleet;
+
 
 #include "pilot.h"
 

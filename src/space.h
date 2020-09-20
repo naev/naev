@@ -7,6 +7,9 @@
 #ifndef SPACE_H
 #  define SPACE_H
 
+typedef struct Planet_ Planet;
+typedef struct JumpPoint_ JumpPoint;
+
 
 #include "faction.h"
 #include "opengl.h"

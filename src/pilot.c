@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <limits.h>
 
+#include "array.h"
 #include "nxml.h"
 #include "nstring.h"
 #include "log.h"
@@ -2853,11 +2854,12 @@ Pilot* pilot_copy( Pilot* src )
  *
  *
  */
-void pilot_choosePoint( Vector2d *vp, int *planet, int *jump, int lf, int ignore_rules, int guerilla )
+void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf, int ignore_rules, int guerilla )
 {
-   int njumpind, nind, i, j, *jumpind, *ind;
+   int nind, i, j, *ind;
    int nfact, *fact;
    double chance, limit;
+   JumpPoint **validJumpPoints;
    JumpPoint *target;
 
    /* Build landable planet table. */
@@ -2872,10 +2874,8 @@ void pilot_choosePoint( Vector2d *vp, int *planet, int *jump, int lf, int ignore
    }
 
    /* Build jumpable jump table. */
-   jumpind  = NULL;
-   njumpind = 0;
+   validJumpPoints = array_create_size( JumpPoint*, cur_system->njumps );
    if (cur_system->njumps > 0) {
-      jumpind = malloc( sizeof(int) * cur_system->njumps );
       for (i=0; i<cur_system->njumps; i++) {
          /* The jump into the system must not be exit-only, and unless
           * ignore_rules is set, must also be non-hidden 
@@ -2894,18 +2894,17 @@ void pilot_choosePoint( Vector2d *vp, int *planet, int *jump, int lf, int ignore
          if (!jp_isFlag( target, JP_EXITONLY ) && (ignore_rules ||
                ( (!jp_isFlag( &cur_system->jumps[i], JP_HIDDEN ) || guerilla ) &&
                (system_getPresence( cur_system->jumps[i].target, lf ) > limit))))
-            jumpind[ njumpind++ ] = i;
+            array_push_back(&validJumpPoints, target);
       }
    }
 
    /* Unusual case no landable nor presence, we'll just jump in randomly. */
-   if ((nind == 0) && (njumpind==0)) {
+   if ((nind == 0) && (array_size(validJumpPoints)==0)) {
       if (guerilla) /* Guerilla ships are created far away in deep space. */
          vect_pset ( vp, 1.5*cur_system->radius, RNGF()*2*M_PI );
       else if (cur_system->njumps > 0) {
-         jumpind = malloc( sizeof(int) * cur_system->njumps );
          for (i=0; i<cur_system->njumps; i++)
-            jumpind[ njumpind++ ] = i;
+            array_push_back(&validJumpPoints, cur_system->jumps[i].returnJump);
       }
       else {
          WARN(_("Creating pilot in system with no jumps nor planets to take off from!"));
@@ -2914,22 +2913,22 @@ void pilot_choosePoint( Vector2d *vp, int *planet, int *jump, int lf, int ignore
    }
 
    /* Calculate jump chance. */
-   if ((nind != 0) || (njumpind != 0)) {
-      chance = njumpind;
+   if ((nind > 0) || (array_size(validJumpPoints) > 0)) {
+      chance = array_size(validJumpPoints);
       chance = chance / (chance + nind);
 
       /* Random jump in. */
-      if ((ind == NULL) || ((RNGF() <= chance) && (jumpind != NULL)))
-         *jump = jumpind[ RNG_BASE(0,njumpind-1) ];
+      if ((ind == NULL) || ((RNGF() <= chance) && (validJumpPoints != NULL)))
+         *jump = validJumpPoints[ RNG_BASE(0,array_size(validJumpPoints)-1) ];
       /* Random take off. */
       else if (ind !=NULL && nind != 0) {
-         *planet = cur_system->planets[ ind[ RNG_BASE(0,nind-1) ] ]->id;
+         *planet = cur_system->planets[ ind[ RNG_BASE(0,nind-1) ] ];
       }
    }
 
    /* Free memory allocated. */
    free( ind );
-   free( jumpind );
+   array_free(validJumpPoints);
 }
 
 

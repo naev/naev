@@ -386,7 +386,9 @@ int lua_ispilot( lua_State *L, int ind )
 static int pilotL_choosePoint( lua_State *L )
 {
    LuaFaction lf;
-   int ignore_rules, guerilla, planetind, jump;
+   int ignore_rules, guerilla;
+   Planet *planet = NULL;
+   JumpPoint *jump = NULL;
    Vector2d vp;
 
    lf = faction_get( luaL_checkstring(L,1) );
@@ -399,13 +401,12 @@ static int pilotL_choosePoint( lua_State *L )
    if (lua_isboolean(L,3) && lua_toboolean(L,3))
       guerilla = 1;
 
-   planetind = jump = -1;
-   pilot_choosePoint( &vp, &planetind, &jump, lf, ignore_rules, guerilla );
+   pilot_choosePoint( &vp, &planet, &jump, lf, ignore_rules, guerilla );
 
-   if (planetind >= 0)
-      lua_pushplanet(L, planetind );
-   else if (jump >= 0)
-      lua_pushsystem(L, cur_system->jumps[jump].target->id);
+   if (planet != NULL)
+      lua_pushplanet(L, planet->id );
+   else if (jump != NULL)
+      lua_pushsystem(L, jump->from->id);
    else
       lua_pushvector(L, vp);
 
@@ -429,15 +430,14 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    LuaFaction lf;
    StarSystem *ss;
    Planet *planet;
-   int planetind;
-   int jump;
+   JumpPoint *jump;
    PilotFlags flags;
    int ignore_rules;
 
    /* Default values. */
    pilot_clearFlagsRaw( flags );
    vectnull(&vn); /* Need to determine angle. */
-   jump = -1;
+   jump = NULL;
    a    = 0.;
 
    /* Parse first argument - Fleet Name */
@@ -485,15 +485,15 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
       for (i=0; i<cur_system->njumps; i++) {
          if ((cur_system->jumps[i].target == ss)
                && !jp_isFlag( cur_system->jumps[i].returnJump, JP_EXITONLY )) {
-            jump = i;
+            jump = cur_system->jumps[i].returnJump;
             break;
          }
       }
-      if (jump < 0) {
+      if (jump == NULL) {
          if (cur_system->njumps > 0) {
             WARN(_("Fleet '%s' jumping in from non-adjacent system '%s' to '%s'."),
                   fltname, ss->name, cur_system->name );
-            jump = RNG_BASE(0,cur_system->njumps-1);
+            jump = cur_system->jumps[RNG_BASE(0,cur_system->njumps-1)].returnJump;
          }
          else
             WARN(_("Fleet '%s' attempting to jump in from '%s', but '%s' has no jump points."),
@@ -519,11 +519,9 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
          ignore_rules = 1;
 
       /* Choose the spawn point and act in consequence.*/
-      planetind = -1;
-      pilot_choosePoint( &vp, &planetind, &jump, lf, ignore_rules, 0 );
+      pilot_choosePoint( &vp, &planet, &jump, lf, ignore_rules, 0 );
 
-      if (planetind >= 0) {
-         planet = planet_getIndex( planetind );
+      if (planet != NULL) {
          pilot_setFlagRaw( flags, PILOT_TAKEOFF );
          a = RNGF() * 2. * M_PI;
          r = RNGF() * planet->radius;
@@ -540,8 +538,8 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    }
 
    /* Set up velocities and such. */
-   if (jump >= 0) {
-      space_calcJumpInPos( cur_system, cur_system->jumps[jump].target, &vp, &vv, &a );
+   if (jump != NULL) {
+      space_calcJumpInPos( cur_system, jump->from, &vp, &vv, &a );
       pilot_setFlagRaw( flags, PILOT_HYP_END );
    }
 
