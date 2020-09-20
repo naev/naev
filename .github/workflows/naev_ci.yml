@@ -74,14 +74,17 @@ jobs:
         update: true
         install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool
 
+    - name: Install Meson
+      run: |
+        pip3 install --user meson
+
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
 
     - name: Test-Build Naev on Win64
       run: |
-        ./autogen.sh
-        ./configure
-        make -j$(nproc --all)
+        %APPDATA%\Python\meson setup builddir
+        %APPDATA%\Python\meson compile -C builddir
       env:
         CFLAGS: "-O3"
     
