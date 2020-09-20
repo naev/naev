@@ -289,6 +289,7 @@ CODE_SOURCE = \
 	pilot.h \
 	pilot_cargo.h \
 	pilot_ew.h \
+	pilot_flags.h \
 	pilot_heat.h \
 	pilot_hook.h \
 	pilot_outfit.h \
