@@ -1,28 +1,9 @@
 require("dat/ai/tpl/generic.lua")
 require("dat/ai/personality/civilian.lua")
+require("dat/ai/distress_behaviour.lua")
 
 
-mem.shield_run = 100
-mem.armour_run = 100
-mem.defensive  = false
-mem.enemyclose = 500
-mem.distressmsgfunc = sos
-
-
--- Sends a distress signal which causes faction loss
-function sos ()
-   msg = {
-      _("Local security: requesting assistance!"),
-      _("Requesting assistance. We are under attack!"),
-      _("Vessel under attack! Requesting help!"),
-      _("Help! Ship under fire!"),
-      _("Taking hostile fire! Need assistance!"),
-      _("We are under attack, require support!"),
-      _("Mayday! Ship taking damage!"),
-   }
-   ai.settarget( ai.target() )
-   ai.distress( msg[ rnd.int(1,#msg) ])
-end
+mem.careful   = false
 
 
 function create ()
