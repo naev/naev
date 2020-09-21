@@ -226,6 +226,12 @@ source = files(
    'src/tk/widget/list.c',
 )
 
+if host_machine.system() == 'darwin'
+   add_languages('objc')
+   source += files('src/glue_macos.m')
+   deps += dependency('Foundation', required: true )
+endif
+
 shaders_c_gen = executable(
    'shaders_c_gen',
    'src/shaders_c_gen.c',
