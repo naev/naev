@@ -45,15 +45,14 @@ if not is_variable('csparse') or not csparse.found()
 endif
 
 system_deps = [
-   cc.find_library('dl', required : true),
+   cc.find_library('dl', required : false),
    cc.find_library('m', required : true),
    csparse
 ]
 
-sdl = dependency('sdl2', required: true)
 deps = [
    dependency('freetype2', required: true),
-   sdl,
+   dependency('sdl2', required: true),
    declare_dependency(
       dependencies: dependency('libpng', required: true),
       compile_args: '-DNOLOGPRINTFCONSOLE',
@@ -235,7 +234,7 @@ endif
 shaders_c_gen = executable(
    'shaders_c_gen',
    'src/shaders_c_gen.c',
-   dependencies: sdl,
+   dependencies: dependency('sdl2', required: true),
    install: false,
    native: true)
 

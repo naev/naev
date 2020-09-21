@@ -53,28 +53,31 @@ jobs:
 
   "Windows-MinGW64":
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
 
     steps:
-    - name: Setup Python
-      uses: actions/setup-python@v2
-
     - name: Setup MINGW64 Environment
       uses: msys2/setup-msys2@v2
       with:
         msystem: MINGW64
         update: true
-        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-glib2 mingw-w64-x86_64-dlfcn mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit mingw-w64-x86_64-nsis libtool gettext pkgconfig intltool itstool zip unzip glib2 glib2-devel
+        install: mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-clang mingw-w64-x86_64-pkg-config mingw-w64-x86_64-freetype mingw-w64-x86_64-SDL2 mingw-w64-x86_64-libxml2 git
 
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
 
     - name: Meson Build
-      uses: BSFishy/meson-build@v1.0.1
-      with:
-        action: build
-        directory: builddir
-        setup-options: --optimization=3
-        meson-version: 0.55.3
+      run: |
+        meson setup builddir --optimization 3
+        meson compile -C builddir
+      # uses: BSFishy/meson-build@v1.0.1
+      # with:
+      #   action: build
+      #   directory: builddir
+      #   setup-options: --optimization=3
+      #   meson-version: 0.55.3
     
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
