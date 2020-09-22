@@ -1,1 +1,2 @@
 option('paranoid', type: 'boolean', value: false)
+option('no_build', type: 'boolean', value: false)
