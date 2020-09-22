@@ -156,11 +156,18 @@ jobs:
     - name: Remove Homebrew Perl
       run: |
         brew uninstall --ignore-dependencies perl
-
+      
     - name: PKGCONFIG
       run: |
         # PKGCONFIG configuration for OpenAL
         export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/opt/openal-soft/lib/pkgconfig"
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+
+    - name: Install Meson
+      run: |
+        pip install meson ninja
         
     - name: Get Source
       uses: actions/download-artifact@v2
