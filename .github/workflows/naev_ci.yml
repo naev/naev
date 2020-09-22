@@ -2,6 +2,9 @@ on: [push, pull_request]
 
 name: CI
 
+env:
+  CC: clang
+
 jobs:
   "Linux-x86_64":
     runs-on: ubuntu-latest
@@ -72,13 +75,7 @@ jobs:
       run: |
         meson setup builddir --optimization 3
         meson compile -C builddir
-      # uses: BSFishy/meson-build@v1.0.1
-      # with:
-      #   action: build
-      #   directory: builddir
-      #   setup-options: --optimization=3
-      #   meson-version: 0.55.3
-    
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
