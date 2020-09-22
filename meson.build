@@ -252,3 +252,24 @@ executable(
    dependencies: [system_deps, deps],
    default: true,
    install: true)
+
+install_data(
+   'AUTHORS',
+   'LICENSE',
+   'README',
+   install_dir: get_option('datadir') / 'doc/naev'
+)
+
+install_data('naev.appdata.xml', install_dir: get_option('datadir') / 'appdata/naev')
+
+install_data('naev.desktop', install_dir: get_option('datadir') / 'applications/naev')
+
+install_data(
+   'naev-confupdate.sh',
+   'extras/logos/naev.png',
+   install_dir: get_option('datadir') / 'naev'
+)
+
+install_subdir('dat', install_dir: get_option('datadir') / 'naev')
+
+install_man('naev.6')
