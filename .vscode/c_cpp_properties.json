@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "defines": [],
+            "cStandard": "gnu99",
+            "includePath": [
+                "${workspaceFolder}/src"
+            ],
+            "compileCommands": "${workspaceFolder}/compile_commands.json"
+        }
+    ],
+    "version": 4
+}
