@@ -418,7 +418,7 @@ if get_option('configure_build') == true
 
    if host_machine.system() == 'darwin'
       add_languages('objc')
-      source += mac_source
+      naev_source += mac_source
       deps += dependency('Foundation', required: true )
    endif
 
@@ -435,10 +435,11 @@ if get_option('configure_build') == true
       output: ['shaders.gen.c', 'shaders.gen.h']
    )
 
+   naev_source += shader_source
+
    executable(
       'naev',
       naev_source,
-      shader_source,
       include_directories: include_dirs,
       dependencies: [system_deps, deps],
       default: true,
