@@ -1,4 +1,4 @@
-#version 130
+#version 140
 
 in vec4 vertex;
 uniform mat4 projection;

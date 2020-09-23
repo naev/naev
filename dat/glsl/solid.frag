@@ -1,4 +1,4 @@
-#version 130
+#version 140
 
 uniform vec4 color;
 out vec4 color_out;

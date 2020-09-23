@@ -1,4 +1,4 @@
-#version 130
+#version 140
 
 in vec4 vertex;
 in vec4 vertex_color;
