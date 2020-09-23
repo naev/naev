@@ -46,13 +46,6 @@ function _atk_decide_zz()
    local m, d2 = vec2.polar( target:pos() - pilot:pos() )
    local d = d1-d2
 
---   print(dist)
---   print(1.1*range)
---   print(d)
---   print(dir)
---   print( ( (dist > (1.1*range)) and (ai.hasprojectile())
---           and (dir < 10) and (dir > -10) and (d < 10) and (d > -10) ) )
-
    return ( (dist > (1.1*range)) and (ai.hasprojectile())
            and (dir < 10) and (dir > -10) and (d < 10) and (d > -10) )
 end
