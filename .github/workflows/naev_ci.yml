@@ -22,7 +22,7 @@ jobs:
 
     - name: Meson Build
       run: |
-        meson setup builddir -Dno_build=true
+        meson setup builddir -Dconfigure_build=false -Dconfigure_doc=false
         meson dist -C builddir --no-tests
 
     - name: Upload Artifact
@@ -82,7 +82,8 @@ jobs:
       run: |
         meson setup build source \
             --optimization 3 \
-            --prefix="${{ github.workspace }}/dist/"
+            --prefix="${{ github.workspace }}/dist/" \
+            -Dconfigure_doc=false
         meson install -C build
 
     - name: Upload Artifact
@@ -121,7 +122,8 @@ jobs:
       run: |
         meson setup build source \
             --optimization 3 \
-            --prefix="${{ github.workspace }}/dist/"
+            --prefix="${{ github.workspace }}/dist/" \
+            -Dconfigure_doc=false
         meson install -C build
 
     - name: Upload Artifact
@@ -185,7 +187,8 @@ jobs:
             --optimization 3 \
             --prefix="${{ github.workspace }}/dist/naev.app" \
             --bindir=Contents/MacOS \
-            --datadir=Contents/Resources
+            --datadir=Contents/Resources \
+            -Dconfigure_doc=false
         meson install -C build
     
     - name: Upload Artifact
@@ -195,11 +198,46 @@ jobs:
         path: ${{ github.workspace }}/dist/*
         if-no-files-found: error
 
-  "Lua-Documentation":
+  "Documentation":
     runs-on: ubuntu-latest
     needs: dist
 
     steps:
+    - name: Update APT Cache
+      run: |
+        sudo apt-get update
+
+    - name: Install Additional Build Dependencies
+      run: |
+        sudo apt-get install \
+          ldoc \
+          graphviz \
+          doxygen
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+
+    - name: Install Meson
+      run: |
+        pip install meson ninja
+
+    - name: Get Source
+      uses: actions/download-artifact@v2
+      with:
+        name: naev-${{ github.sha }}
+
+    - name: Extract Source
+      run: |
+        mkdir source
+        tar -xf naev-*.tar.xz -C source --strip 1
+
+    - name: Meson Build
+      run: |
+        meson setup build source \
+            --prefix="${{ github.workspace }}/dist/" \
+            -Dconfigure_build=false
+        meson install -C build ldoc cdoc
+    
     - name: Install SSH Key
       uses: shimataro/ssh-key-action@v2.0.3
       with:
@@ -208,52 +246,13 @@ jobs:
         known_hosts: ${{ secrets.KNOWN_HOSTS }}
       if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
 
-    - name: Update APT Cache
-      run: |
-        sudo apt-get update
-
-    - name: Install Additional Build Dependencies
-      run: |
-        sudo apt-get install \
-          build-essential \
-          automake \
-          autoconf-archive \
-          libsdl2-dev \
-          libsdl2-mixer-dev \
-          libsdl2-image-dev \
-          libgl1-mesa-dev \
-          libxml2-dev \
-          libfontconfig1-dev \
-          libfreetype6-dev \
-          libpng-dev \
-          libopenal-dev \
-          libvorbis-dev \
-          binutils-dev \
-          libzip-dev \
-          libiberty-dev \
-          libluajit-5.1-dev \
-          lua-ldoc \
-          gettext \
-          autopoint \
-          intltool \
-          itstool
-
-    - name: Checkout Naev Repository 
-      uses: actions/checkout@v2
-
-    - name: Build Naev Lua Documentation
-      run: |
-        ./autogen.sh
-        ./configure
-        make -C docs lua
-    
     - name: Upload Lua Documentation
-      run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete docs/html/ travis@iandouglasscott.com:/srv/naevdoc
+      run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete build/ldoc/ travis@iandouglasscott.com:/srv/naevdoc
       if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-luadocs-${{ github.sha }}
-        path: ${{ github.workspace }}/docs/html/
+        name: naev-docs-${{ github.sha }}
+        path: ${{ github.workspace }}/dist/*
         if-no-files-found: error

@@ -1,2 +1,3 @@
-option('paranoid', type: 'boolean', value: false)
-option('no_build', type: 'boolean', value: false)
+option('paranoid'       , type: 'boolean', value: false)
+option('configure_build', type: 'boolean', value: true)
+option('configure_doc'  , type: 'boolean', value: true)
