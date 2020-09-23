@@ -356,7 +356,7 @@ if get_option('configure_build') == true
       'VMAJOR'        : meson.project_version().split('.')[0],
       'VMINOR'        : meson.project_version().split('.')[1],
       'VREV'          : meson.project_version().split('.')[2],
-      'HOST'          : '"x86_64-linux-gnu"',
+      'HOST'          : '"' + host_machine.system() + '-' + host_machine.cpu_family() + '"',
       'DEBUG'         : get_option('debug')    ? 1 : false,
       'DEBUGGING'     : get_option('debug')    ? 1 : false,
       'DEBUG_PARANOID': get_option('paranoid') ? 1 : false
