@@ -365,6 +365,7 @@ typedef struct Pilot_ {
    double dtimer_accum; /**< Accumulated disable timer. */
    int hail_pos;     /**< Hail animation position. */
    int lockons;      /**< Stores how many seeking weapons are targeting pilot */
+   int projectiles;      /**< Stores how many weapons are after the pilot */
    int *mounted;     /**< Number of mounted outfits on the mount. */
    double player_damage; /**< Accumulates damage done by player for hostileness.
                               In per one of max shield + armour. */
