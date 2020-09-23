@@ -210,7 +210,7 @@ jobs:
     - name: Install Additional Build Dependencies
       run: |
         sudo apt-get install \
-          ldoc \
+          lua-ldoc \
           graphviz \
           doxygen
 
