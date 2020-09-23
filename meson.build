@@ -491,13 +491,18 @@ if get_option('configure_doc') == true
          configuration: doxy_conf,
          install      : false)
 
-      custom_target(
+      cdoc = custom_target(
          'cdoc',
          input      : [source, lua_source, mac_source, headers],
          output     : 'cdoc',
          command    : [doxygen, doxyfile],
-         install    : true,
-         install_dir: 'docs/c')
+         install    : false)
+
+      install_subdir(
+         cdoc.full_path(),
+         strip_directory: true,
+         install_dir: 'docs/c'
+      )
    endif
 
    ldoc = find_program('ldoc', required: false)
@@ -514,18 +519,23 @@ if get_option('configure_doc') == true
 
       lconfig = files('docs/lua/config.ld')
 
-      custom_target(
+      ldoc = custom_target(
          'ldoc',
          input: ldoc_source,
          output : 'ldoc',
          command: [
             ldoc,
             '-c', lconfig,
-            '-d', '@OUTDIR@/ldoc',
+            '-d', '@OUTPUT@',
             '-l', meson.source_root() / 'docs/lua',
             '-s', meson.source_root() / 'docs/lua',
             '@PRIVATE_DIR@'],
-         install    : true,
-         install_dir: 'docs/lua')
+         install: false)
+
+      install_subdir(
+         ldoc.full_path(),
+         strip_directory: true,
+         install_dir: 'docs/lua'
+      )
    endif
 endif
