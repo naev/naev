@@ -362,11 +362,6 @@ if get_option('configure_build') == true
       'DEBUG_PARANOID': get_option('paranoid') ? 1 : false
    })
 
-   configure_file(
-      output: 'config.h',
-      configuration: config_data
-   )
-
    add_project_arguments('-include', 'config.h', language: 'c')
 
    cc = meson.get_compiler('c')
@@ -395,6 +390,7 @@ if get_option('configure_build') == true
    ]
 
    deps = [
+      # Hard deps
       dependency('freetype2', required: true),
       dependency('sdl2', required: true),
       declare_dependency(
@@ -404,6 +400,26 @@ if get_option('configure_build') == true
       dependency('libxml-2.0', required: true),
       dependency('lua51', fallback: ['lua', 'lua_dep'], required: true),
    ]
+
+   # Soft deps
+   openal = dependency('openal', required: false)
+   vorbis = dependency('vorbis', required: false)
+   vorbisfile = dependency('vorbisfile', required: false)
+   config_data.set10('USE_OPENAL', openal.found() and vorbis.found() and vorbisfile.found())
+   if openal.found()
+      if not vorbis.found()
+         message('Found OpenAL, but not using it because libvorbis is missing.')
+      elif not vorbisfile.found()
+         message('Found OpenAL, but not using it because libvorbisfile is missing.')
+      else
+         deps += [openal, vorbis, vorbisfile]
+      endif
+   endif
+
+   configure_file(
+      output: 'config.h',
+      configuration: config_data
+   )
 
    include_dirs = include_directories(
       'src',
