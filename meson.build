@@ -372,7 +372,7 @@ if get_option('configure_build') == true
    cc = meson.get_compiler('c')
 
    if 'SuiteSparse' not in get_option('force_fallback_for')
-      csparse_names = ['csparse', 'cxsparse', 'libcsparse', 'libcxsparse', 'libcsparse3', 'libcxsparse3']
+      csparse_names = ['csparse', 'cxsparse']
       foreach n : csparse_names
          csparse = cc.find_library(n, required: false)
          if csparse.found()
