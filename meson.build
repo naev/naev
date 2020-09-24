@@ -442,7 +442,6 @@ if get_option('configure_build') == true
       naev_source,
       include_directories: include_dirs,
       dependencies: [system_deps, deps],
-      default: true,
       install: true)
 
    install_data(
