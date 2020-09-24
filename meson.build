@@ -438,6 +438,11 @@ if get_option('configure_build') == true
    deps += sdl_mixer
    config_data.set10('USE_SDLMIX', sdl_mixer.found())
 
+   # FontConfig
+   fontconfig = dependency('fontconfig', required: false)
+   deps += fontconfig
+   config_data.set10('USE_FONTCONFIG', fontconfig.found())
+
    configure_file(
       output: 'config.h',
       configuration: config_data
