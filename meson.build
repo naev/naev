@@ -383,7 +383,7 @@ if get_option('configure_build') == true
 
    if not is_variable('csparse') or not csparse.found()
       csparse = dependency(
-         'SuiteSparse',
+         '',
          fallback: ['SuiteSparse', 'CSparse_dep'],
          required: true)
    endif
