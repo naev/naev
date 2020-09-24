@@ -402,7 +402,7 @@ if get_option('configure_build') == true
          compile_args: '-DNOLOGPRINTFCONSOLE',
          link_args: '-DNOLOGPRINTFCONSOLE'),
       dependency('libxml-2.0', required: true),
-      dependency('lua51', fallback: ['lua', 'lua_dep'], static: true, required: true)
+      dependency('lua51', fallback: ['lua', 'lua_dep'], required: true),
    ]
 
    include_dirs = include_directories(
