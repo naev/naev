@@ -81,7 +81,7 @@ jobs:
     - name: Meson Build
       run: |
         meson setup build source \
-            --optimization 3 \
+            --buildtype release \
             --prefix="${{ github.workspace }}/dist/" \
             -Dconfigure_doc=false
         meson install -C build
@@ -121,7 +121,7 @@ jobs:
     - name: Meson Build
       run: |
         meson setup build source \
-            --optimization 3 \
+            --buildtype release \
             --prefix="${{ github.workspace }}/dist/" \
             -Dconfigure_doc=false
         meson install -C build
@@ -184,7 +184,7 @@ jobs:
     - name: Meson Build
       run: |
         meson setup build source \
-            --optimization 3 \
+            --buildtype release \
             --prefix="${{ github.workspace }}/dist/naev.app" \
             --bindir=Contents/MacOS \
             --datadir=Contents/Resources \
