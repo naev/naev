@@ -3078,6 +3078,7 @@ void pilots_clean (int persist)
          pilot_stack[i] = p;
          /* Misc clean up. */
          pilot_stack[persist_count]->lockons = 0; /* Clear lockons. */
+         pilot_stack[persist_count]->projectiles = 0; /* Clear projectiles. */
          pilot_clearTimers( pilot_stack[persist_count] ); /* Reset timers. */
          persist_count++;
       }

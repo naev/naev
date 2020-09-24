@@ -175,6 +175,7 @@ static int aiL_isstopped( lua_State *L ); /* boolean isstopped() */
 static int aiL_isenemy( lua_State *L ); /* boolean isenemy( number ) */
 static int aiL_isally( lua_State *L ); /* boolean isally( number ) */
 static int aiL_haslockon( lua_State *L ); /* boolean haslockon() */
+static int aiL_hasprojectile( lua_State *L ); /* boolean hasprojectile() */
 
 /* movement */
 static int aiL_accel( lua_State *L ); /* accel(number); number <= 1. */
@@ -261,6 +262,7 @@ static const luaL_Reg aiL_methods[] = {
    { "isenemy", aiL_isenemy },
    { "isally", aiL_isally },
    { "haslockon", aiL_haslockon },
+   { "hasprojectile", aiL_hasprojectile },
    /* get */
    { "pilot", aiL_pilot },
    { "rndpilot", aiL_getrndpilot },
@@ -1510,7 +1512,9 @@ static int aiL_getstanding( lua_State *L )
  */
 static int aiL_ismaxvel( lua_State *L )
 {
-   lua_pushboolean(L,(VMOD(cur_pilot->solid->vel) > cur_pilot->speed-MIN_VEL_ERR));
+   //lua_pushboolean(L,(VMOD(cur_pilot->solid->vel) > (cur_pilot->speed-MIN_VEL_ERR)));
+   lua_pushboolean(L,(VMOD(cur_pilot->solid->vel) >
+                   (solid_maxspeed(cur_pilot->solid, cur_pilot->speed, cur_pilot->thrust)-MIN_VEL_ERR)));
    return 1;
 }
 
@@ -1590,6 +1594,20 @@ static int aiL_isally( lua_State *L )
 static int aiL_haslockon( lua_State *L )
 {
    lua_pushboolean(L, cur_pilot->lockons > 0);
+   return 1;
+}
+
+
+/**
+ * @brief Checks to see if pilot has a projectile after him.
+ *
+ *    @luatreturn boolean Whether the pilot has a projectile after him.
+ *    @luafunc hasprojectile()
+ */
+
+static int aiL_hasprojectile( lua_State *L )
+{
+   lua_pushboolean(L, cur_pilot->projectiles > 0);
    return 1;
 }
 

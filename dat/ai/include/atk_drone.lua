@@ -55,6 +55,11 @@ function _atk_drone_ranged( target, dist )
    -- Check if in range
    if dist < ai.getweaprange( 4 ) and dir < 30 then
       ai.weapset( 4 )
+   else
+      -- First test if we should zz
+      if _atk_decide_zz() then
+         ai.pushsubtask("_atk_zigzag")
+      end
    end
 
    -- Always launch fighters
@@ -105,6 +110,11 @@ function _atk_d_flyby( target, dist )
    local range = ai.getweaprange(3)
    local dir = 0
    ai.weapset( 3 ) -- Forward/turrets
+
+   -- First test if we should zz
+   if _atk_decide_zz() then
+      ai.pushsubtask("_atk_zigzag")
+   end
 
    -- Far away, must approach
    if dist > (3 * range) then
@@ -164,6 +174,11 @@ function _atk_d_space_sup( target, dist )
    local range = ai.getweaprange(3)
    local dir   = 0
    ai.weapset( 3 ) -- Forward/turrets
+
+   -- First test if we should zz
+   if _atk_decide_zz() then
+      ai.pushsubtask("_atk_zigzag")
+   end
 
    --if we're far away from the target, then turn and approach
    if dist > (1.1*range) then
