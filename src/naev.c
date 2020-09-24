@@ -41,6 +41,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <bfd.h>
+#include <assert.h>
 #endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 
 /* local */

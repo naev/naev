@@ -353,18 +353,22 @@ headers = files(
 if get_option('configure_build') == true
 
    config_data = configuration_data({
-      'VMAJOR'        : meson.project_version().split('.')[0],
-      'VMINOR'        : meson.project_version().split('.')[1],
-      'VREV'          : meson.project_version().split('.')[2],
-      'HOST'          : '"' + host_machine.system() + '-' + host_machine.cpu_family() + '"',
-      'DEBUG'         : get_option('debug')    ? 1 : false,
-      'DEBUGGING'     : get_option('debug')    ? 1 : false,
-      'DEBUG_PARANOID': get_option('paranoid') ? 1 : false
+      'VMAJOR'         : meson.project_version().split('.')[0],
+      'VMINOR'         : meson.project_version().split('.')[1],
+      'VREV'           : meson.project_version().split('.')[2],
+      'HOST'           : '"' + host_machine.system() + '-' + host_machine.cpu_family() + '"',
+      'DEBUG'          : get_option('debug')    ? 1 : false,
+      'DEBUGGING'      : get_option('debug')    ? 1 : false,
+      'DEBUG_PARANOID' : get_option('paranoid') ? 1 : false,
+      'PACKAGE'        : meson.project_name(),
+      'PACKAGE_VERSION': meson.project_version()
    })
 
    add_project_arguments('-include', 'config.h', language: 'c')
 
    cc = meson.get_compiler('c')
+
+   ### Hard deps (required: true)
 
    if 'SuiteSparse' not in get_option('force_fallback_for')
       csparse_names = ['csparse', 'cxsparse']
@@ -383,10 +387,11 @@ if get_option('configure_build') == true
          required: true)
    endif
 
-   # Hard deps
+   libdl = cc.find_library('dl', required : host_machine.system() not in ['windows', 'cygwin'])
+
    system_deps = [
-      cc.find_library('dl', required : host_machine.system() not in ['windows', 'cygwin']),
       cc.find_library('m', required : true),
+      libdl,
       csparse
    ]
 
@@ -401,7 +406,19 @@ if get_option('configure_build') == true
       dependency('lua51', fallback: ['lua', 'lua_dep'], required: true),
    ]
 
-   # Soft deps
+   ### Soft deps (required: false
+
+   # BFD
+   if libdl.found()
+      bfd = cc.find_library('bfd', required: false)
+   else
+      bfd = dependency('', required: false)
+   endif
+   
+   system_deps += bfd
+   config_data.set10('HAS_BFD', bfd.found())
+
+   # OpenAL
    openal = dependency('openal', required: false)
    vorbis = dependency('vorbis', required: false)
    vorbisfile = dependency('vorbisfile', required: false)
@@ -458,6 +475,7 @@ if get_option('configure_build') == true
       naev_source,
       include_directories: include_dirs,
       dependencies: [system_deps, deps],
+      export_dynamic: bfd.found(),
       install: true)
 
    install_data(
