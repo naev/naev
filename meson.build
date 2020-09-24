@@ -409,7 +409,7 @@ if get_option('configure_build') == true
    ### Soft deps (required: false
 
    # BFD
-   if libdl.found()
+   if libdl.found() and get_option('debug')
       bfd = cc.find_library('bfd', required: false)
    else
       bfd = dependency('', required: false)
