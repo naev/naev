@@ -460,7 +460,7 @@ if get_option('configure_build') == true
 
    install_subdir('dat', install_dir: get_option('datadir') / 'naev')
 
-   if host_machine.system() == 'linux'
+   if host_machine.system() not in ['windows', 'cygwin', 'emscripten', 'android']
       install_data('naev.appdata.xml', install_dir: get_option('datadir') / 'appdata/naev')
       install_data('naev.desktop', install_dir: get_option('datadir') / 'applications/naev')
       install_man('naev.6')
