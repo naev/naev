@@ -433,6 +433,11 @@ if get_option('configure_build') == true
       endif
    endif
 
+   # SDL Mixer
+   sdl_mixer = dependency('SDL2_mixer', required: false)
+   deps += sdl_mixer
+   config_data.set10('USE_SDLMIX', sdl_mixer.found())
+
    configure_file(
       output: 'config.h',
       configuration: config_data
