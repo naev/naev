@@ -180,7 +180,12 @@ static void generate_c_file(FILE *f) {
 int main( int argc, char** argv ) {
    (void) argc;
    (void) argv;
-   generate_h_file(fopen("shaders.gen.h", "w"));
-   generate_c_file(fopen("shaders.gen.c", "w"));
+   FILE *shaders_gen_h, *shaders_gen_c;
+   shaders_gen_h = fopen("shaders.gen.h", "w");
+   shaders_gen_c = fopen("shaders.gen.c", "w");
+   generate_h_file( shaders_gen_h );
+   generate_c_file( shaders_gen_c );
+   fclose( shaders_gen_h );
+   fclose( shaders_gen_c );
    return 0;
 }
