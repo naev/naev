@@ -383,14 +383,14 @@ if get_option('configure_build') == true
          required: true)
    endif
 
+   # Hard deps
    system_deps = [
-      cc.find_library('dl', required : false),
+      cc.find_library('dl', required : host_machine.system() not in ['windows', 'cygwin']),
       cc.find_library('m', required : true),
       csparse
    ]
 
    deps = [
-      # Hard deps
       dependency('freetype2', required: true),
       dependency('sdl2', required: true),
       declare_dependency(
