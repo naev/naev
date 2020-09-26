@@ -402,9 +402,20 @@ if get_option('configure_build') == true
          dependencies: dependency('libpng', required: true),
          compile_args: '-DNOLOGPRINTFCONSOLE',
          link_args: '-DNOLOGPRINTFCONSOLE'),
-      dependency('libxml-2.0', required: true),
-      dependency('lua51', fallback: ['lua', 'lua_dep'], required: true),
+      dependency('libxml-2.0', required: true)
    ]
+
+   # Lua
+   lua = dependency('', required: false)
+   if get_option('use_luajit')
+      lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: false)
+   endif
+
+   if not lua.found()
+      lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
+   endif
+
+   deps += lua
 
    ### Soft deps (required: false
 

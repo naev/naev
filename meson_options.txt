@@ -1,3 +1,4 @@
 option('paranoid'       , type: 'boolean', value: false)
 option('configure_build', type: 'boolean', value: true)
 option('configure_doc'  , type: 'boolean', value: true)
+option('use_luajit'     , type: 'boolean', value: true)
