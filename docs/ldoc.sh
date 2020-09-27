@@ -6,7 +6,7 @@ test -d lua || mkdir lua
 
 # Convert Doxygen comments to Luadoc comments
 for F in ../src/nlua_*.c ../src/ai.c; do
-   ./c2luadoc.sh $F lua/"$(basename $F)".luadoc
+   ./lua/c2luadoc.sh $F lua/"$(basename $F)".luadoc
 done
 
 # Run Luadoc, put HTML files into html/ dir
