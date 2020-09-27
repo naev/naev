@@ -8,6 +8,10 @@ project('naev', 'c',
    ],
    meson_version: '>=0.55.0')
 
+issue_address = 'https://github.com/naev/naev/issues'
+copyright_holder = 'Naev Dev Team'
+
+subdir('po')
 
 ####
 # Source lists
