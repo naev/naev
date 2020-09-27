@@ -1,19 +1,21 @@
 #!/usr/bin/python3
 
-import yaml
-import zipfile
+import argparse
 import glob
 import os
 import tempfile
-import argparse
+import yaml
+import zipfile
 
 import mutagen
 
 
-def generate_soundtrack( generate_csv=False ):
+
+
+def generate_soundtrack( source_dir, output, generate_csv=False ):
 
     # Load licensing information
-    with open('dat/snd/SOUND_LICENSE.yaml','r') as f:
+    with open(os.path.join(source_dir, 'dat/snd/SOUND_LICENSE.yaml'),'r') as f:
         sound_license = yaml.safe_load(f)
     song_licensing = {}
     for author in sound_license:
@@ -26,25 +28,21 @@ def generate_soundtrack( generate_csv=False ):
         for song in songs:
             song_licensing[song] = {'artist':name,'license':license}
 
-    # Get version information
-    with open('VERSION', 'r') as f:
-        version = f.read().strip()
-
     # Get all existing songs to check for duplicates and missing songs
     all_songs = []
-    for song in glob.glob("dat/snd/music/*.ogg"):
+    for song in glob.glob(os.path.join(source_dir, "dat/snd/music/*.ogg")):
         all_songs.append( os.path.basename(song) )
 
     # Get the soundtrack information
-    with open('dat/snd/soundtrack.yaml','r') as f:
+    with open(os.path.join(source_dir, 'dat/snd/soundtrack.yaml'),'r') as f:
         soundtrack = yaml.safe_load(f)
 
     # Run over the soundtrack to create it as a zipfile
     duplicated_songs = []
-    with zipfile.ZipFile(f"naev-{version}-soundtrack.zip", 'w', zipfile.ZIP_DEFLATED) as zipf:
+    with zipfile.ZipFile(f"{output}.zip", 'w', zipfile.ZIP_DEFLATED) as zipf:
         i = 1
         if generate_csv:
-            csvfile = open( f"naev-{version}-soundtrack.csv", 'w' )
+            csvfile = open( f"{output}.csv", 'w' )
             csvfile.write( '"Disc Number","Track Number","Original Name","Original Name Language (ie., ""es"", ""jp"") (optional)","International Name (optional)","Duration (""m:ss"")","ISRC (optional)"\n' )
         for song in soundtrack:
             if song['filename'] in all_songs:
@@ -52,7 +50,7 @@ def generate_soundtrack( generate_csv=False ):
             else:
                 duplicated_songs.append( song['filename'] )
 
-            filename = 'dat/snd/music/'+song['filename']
+            filename = os.path.join(source_dir, f"dat/snd/music/{song['filename']}")
             temp = tempfile.NamedTemporaryFile().name
             with open( temp, 'wb' ) as outf:
                 with open( filename, 'rb' ) as inf:
@@ -91,7 +89,20 @@ def generate_soundtrack( generate_csv=False ):
 if __name__=="__main__":
     parser = argparse.ArgumentParser(description='Tool generate the Naev soundtrack.')
     parser.add_argument('--csv', type=bool, default=False, help="Create CSV file that con be used to upload steam metadata.")
+    parser.add_argument('--source-dir', default='.', help="Path to Naev's source directory.")
+    parser.add_argument('--output', default=None, help="Name of the output file.")
     args = parser.parse_args()
-    generate_soundtrack( generate_csv=args.csv )
 
+    output = args.output
+    if output is not None:
+        if output.endswith('.zip'):
+            output = output[0:-4]
+    else:
+        # Get version information
+        with open(os.path.join(args.source_dir, 'VERSION'), 'r') as f:
+            version = f.read().strip()
+        output = f"naev-{version}-soundtrack"
 
+    print(f"Generating {output}.zip")
+
+    generate_soundtrack( source_dir=args.source_dir, output=output, generate_csv=args.csv )

@@ -527,3 +527,21 @@ if get_option('configure_build') == true
 endif
 
 subdir('docs')
+
+####
+# Soundtrack
+####
+soundtrackpy = find_program('utils/soundtrack.py')
+custom_target(
+   'soundtrack',
+   command: [
+      soundtrackpy,
+      '--csv', 'yes',
+      '--source-dir', meson.source_root(),
+      '--output', '@OUTPUT0@'
+   ],
+   output: [
+      'naev-' + meson.project_version() + '-soundtrack.zip',
+      'naev-' + meson.project_version() + '-soundtrack.csv'
+   ]
+)
