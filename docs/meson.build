@@ -26,7 +26,7 @@ if get_option('configure_doc') == true
             output     : doxy_output,
             command    : [doxygen, doxyfile],
             install    : true,
-            install_dir: 'docs')
+            install_dir: 'doc/naev')
     endif
 
     # Lua documentation
@@ -56,7 +56,7 @@ if get_option('configure_doc') == true
             '-s', meson.source_root() / 'docs/lua',
             '@PRIVATE_DIR@'],
             install: true,
-            install_dir: 'docs')
+            install_dir: 'doc/naev')
     endif
 
 endif
