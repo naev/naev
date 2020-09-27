@@ -34,24 +34,11 @@ LANGUAGEFILE = $(top_srcdir)/dat/LANGUAGES
 EXTRA_DIST = build/config.rpath LICENSE extras naev.desktop naev.appdata.xml
 CLEANFILES = $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE)
 
-if HAVE_NLS
-XMLBASE     = $(wildcard dat/*.xml)
-XMLOUTFITS  = $(wildcard dat/outfits/*/*.xml)
-XMLSHIPS    = $(wildcard dat/ships/*.xml)
-XMLFILES    = $(XMLBASE) $(XMLSHIPS) $(XMLOUTFITS)
-TRANSLATIONITS = $(top_srcdir)/po/translation.its
-XMLPOT      = $(top_srcdir)/po/xml.pot
-CLEANFILES += $(XMLPOT)
-endif # HAVE_NLS
-
 .PHONY: pot docs utils help install-ndata soundtrack
 
 all-local: $(NAEV) pot $(VERSIONFILE)
 
 if HAVE_NLS
-$(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
-	$(ITSTOOL) -i $(TRANSLATIONITS) $(XMLFILES) > $@
-	@echo "ITSTOOL $@"
 
 if HAVE_DATA
 pot: $(LANGUAGEFILE) $(XMLPOT) $(NAEV)

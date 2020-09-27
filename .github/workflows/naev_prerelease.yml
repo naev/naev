@@ -20,7 +20,7 @@ jobs:
       with:
         msystem: MINGW64
         update: true
-        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit mingw-w64-x86_64-nsis libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool zip unzip python3-pip
+        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit mingw-w64-x86_64-nsis libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool zip unzip python3-pip
 
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
@@ -74,8 +74,7 @@ jobs:
           libiberty-dev \
           gettext \
           autopoint \
-          intltool \
-          itstool
+          intltool
 
     - name: Checkout Naev Repository 
       uses: actions/checkout@v2
@@ -136,7 +135,7 @@ jobs:
 
     - name: Install Additional Build Dependencies
       run: |
-        sudo apt-get -y install autoconf-archive intltool itstool
+        sudo apt-get -y install autoconf-archive intltool
 
     - name: Build Naev for Steam on Linux64
       run: |
@@ -177,7 +176,6 @@ jobs:
           fontconfig \
           luajit \
           intltool \
-          itstool \
           sdl2 \
           sdl2_mixer \
           sdl2_image \
@@ -246,8 +244,7 @@ jobs:
             libiberty-dev \
             gettext \
             autopoint \
-            intltool \
-            itstool
+            intltool
 
       - name: Checkout Naev Repository 
         uses: actions/checkout@v2
@@ -307,8 +304,7 @@ jobs:
             libiberty-dev \
             gettext \
             autopoint \
-            intltool \
-            itstool
+            intltool
 
       - name: Checkout Naev Repository 
         uses: actions/checkout@v2
@@ -384,8 +380,7 @@ jobs:
             libiberty-dev \
             gettext \
             autopoint \
-            intltool \
-            itstool
+            intltool
 
       - name: Install SteamCMD
         run: |
