@@ -58,8 +58,7 @@ jobs:
           libluajit-5.1-dev \
           gettext \
           autopoint \
-          intltool \
-          itstool
+          intltool
 
     - name: Setup Python
       uses: actions/setup-python@v2
@@ -149,7 +148,6 @@ jobs:
           fontconfig \
           luajit \
           intltool \
-          itstool \
           sdl2 \
           sdl2_mixer \
           sdl2_image \
