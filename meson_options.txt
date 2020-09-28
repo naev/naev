@@ -1,4 +1,4 @@
-option('paranoid'       , type: 'boolean', value: false)
-option('configure_build', type: 'boolean', value: true)
-option('configure_doc'  , type: 'boolean', value: true)
-option('use_luajit'     , type: 'boolean', value: true)
+option('paranoid'       , type: 'boolean', value: false, description: 'Add file and line number to WARNING messages.')
+option('configure_build', type: 'boolean', value: true , description: 'Enable compilation of Naev\'s binary.')
+option('configure_doc'  , type: 'boolean', value: true , description: 'Enable compilation of Naev\'s documentation.')
+option('use_luajit'     , type: 'boolean', value: true , description: 'Use LuaJIT rather than standard Lua.')
