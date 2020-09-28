@@ -2,3 +2,4 @@ option('paranoid'       , type: 'boolean', value: false, description: 'Add file 
 option('configure_build', type: 'boolean', value: true , description: 'Enable compilation of Naev\'s binary.')
 option('configure_doc'  , type: 'boolean', value: true , description: 'Enable compilation of Naev\'s documentation.')
 option('use_luajit'     , type: 'boolean', value: true , description: 'Use LuaJIT rather than standard Lua.')
+option('ndata_path'     , type: 'string' , value: ''   , description: 'Set the path ndata will be installed to (relative to the install prefix).')
