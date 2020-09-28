@@ -17,7 +17,7 @@ TMPFILE=$(mktemp)
 echo "src/log.h" > "$TMPFILE"
 find src/ -name "*.c" | sort >> "$TMPFILE"
 find dat/ -name "*.lua" | sort >> "$TMPFILE"
-find dat/ -name "*.xml" -maxdepth 1 | sort >> "$TMPFILE"
+find dat/ -maxdepth 1 -name "*.xml" | sort >> "$TMPFILE"
 find dat/assets -name "*.xml" | sort >> "$TMPFILE"
 find dat/outfits -name "*.xml" | sort >> "$TMPFILE"
 find dat/ships -name "*.xml" | sort >> "$TMPFILE"
