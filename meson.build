@@ -435,7 +435,7 @@ if get_option('configure_build') == true
    else
       bfd = dependency('', required: false)
    endif
-   
+
    system_deps += bfd
    config_data.set10('HAS_BFD', bfd.found())
 
@@ -525,6 +525,15 @@ if get_option('configure_build') == true
    install_subdir(
       'dat',
       install_dir: ndata_path,
+   )
+
+   custom_target(
+      'version',
+      output: 'VERSION',
+      command: ['echo', meson.project_version()],
+      capture: true,
+      install: true,
+      install_dir: ndata_path
    )
 
    if host_machine.system() not in ['windows', 'cygwin', 'emscripten', 'android']
