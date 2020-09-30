@@ -259,7 +259,7 @@ int main( int argc, char** argv )
    conf_parseCLIPath( argc, argv );
 
    /* Create the home directory if needed. */
-   if (nfile_dirMakeExist("%s", nfile_configPath()))
+   if ( nfile_dirMakeExist( nfile_configPath() ) )
       WARN( _("Unable to create config directory '%s'"), nfile_configPath());
 
    /* Set the configuration. */

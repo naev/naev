@@ -79,7 +79,6 @@ void ndata_close (void);
  */
 int ndata_check( const char* path );
 int ndata_setPath( const char* path );
-const char* ndata_getDirname(void);
 const char* ndata_getPath (void);
 const char* ndata_name (void);
 
@@ -89,7 +88,7 @@ const char* ndata_name (void);
 int ndata_exists( const char* filename );
 void* ndata_read( const char* filename, size_t *filesize );
 char** ndata_list( const char *path, size_t* nfiles );
-char** ndata_listRecursive( const char *path, size_t* nfiles );
+char** ndata_listRecursive( const char *path );
 void ndata_sortName( char **files, size_t nfiles );
 
 

@@ -687,8 +687,7 @@ double outfit_speed( const Outfit* o )
       else {     /*Gets the average speed*/
          t = o->u.amm.speed / o->u.amm.thrust; /*time to reach max speed*/
          if (t < o->u.amm.duration)
-            return (o->u.amm.thrust * t*t/2 + 
-                  o->u.amm.speed*(o->u.amm.duration-t))/o->u.amm.duration;
+            return ( o->u.amm.thrust * t * t / 2 + o->u.amm.speed * ( o->u.amm.duration - t ) ) / o->u.amm.duration;
          else return o->u.amm.thrust * o->u.amm.duration/2;
       }
    }
@@ -2319,15 +2318,15 @@ if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< 
  */
 static int outfit_loadDir( char *dir )
 {
-   size_t i, nfiles;
+   int    i;
    char **outfit_files;
 
-   outfit_files = ndata_listRecursive( dir, &nfiles );
-   for (i=0; i<nfiles; i++) {
+   outfit_files = ndata_listRecursive( dir );
+   for ( i = 0; i < array_size( outfit_files ); i++ ) {
       outfit_parse( &array_grow(&outfit_stack), outfit_files[i] );
       free( outfit_files[i] );
    }
-   free( outfit_files );
+   array_free( outfit_files );
 
    /* Reduce size. */
    array_shrink( &outfit_stack );

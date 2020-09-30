@@ -43,7 +43,6 @@
 
 #include "log.h"
 #include "nxml.h"
-#include "nzip.h"
 #include "nfile.h"
 #include "conf.h"
 #include "npng.h"
@@ -57,28 +56,25 @@
 #endif /* NDATA_DEF */
 
 
-#define NDATA_SRC_LAIDOUT        0
-#define NDATA_SRC_DIRNAME        1
-#define NDATA_SRC_NDATADEF       2
-#define NDATA_SRC_BINARY         3
+#define NDATA_SRC_CWD     0 /**< Current working directory. (debug builds only) */
+#define NDATA_SRC_USER    1 /**< User defined directory. */
+#define NDATA_SRC_DEFAULT 2 /**< Default derectory. (Set at compile time) */
+#define NDATA_SRC_BINARY  3 /**< Next to the Naev binary */
+
+#if DEBUGING
+#define NDATA_SRC_SEARCH_START NDATA_SRC_CWD
+#else /* DEBUGING */
+#define NDATA_SRC_SEARCH_START NDATA_SRC_USER
+#endif /* DEBUGING */
 
 
 /*
  * ndata archive.
  */
 static char* ndata_filename         = NULL; /**< ndata archive name. */
-static char* ndata_dirname          = NULL; /**< Directory name. */
-static struct zip* ndata_archive    = NULL; /**< ndata file on disk */
-static char* ndata_arcName          = NULL; /**< Name of the ndata module. */
 static SDL_mutex *ndata_lock        = NULL; /**< Lock for ndata creation. */
-static int ndata_loadedfile         = 0; /**< Already loaded a file? */
-static int ndata_source             = 0;
-
-/*
- * File list.
- */
-static char **ndata_fileList  = NULL; /**< List of files in the archive. */
-static size_t ndata_fileNList     = 0; /**< Number of files in ndata_fileList. */
+static int ndata_loadedfile         = 0;    /**< Already loaded a file? */
+static int ndata_source             = NDATA_SRC_SEARCH_START;
 
 
 /*
@@ -86,28 +82,9 @@ static size_t ndata_fileNList     = 0; /**< Number of files in ndata_fileList. *
  */
 static void ndata_testVersion (void);
 static char *ndata_findInDir( const char *path );
-static int ndata_openFile (void);
-static int ndata_isndata( const char *path, ... );
+static int ndata_isndata( const char *path );
 static int ndata_prompt( void *data );
 static int ndata_notfound (void);
-static char** ndata_listBackend( const char* path, size_t* nfiles, int dirs );
-static char **stripPath( const char **list, int nlist, const char *path );
-static char** filterList( const char** list, int nlist,
-      const char* path, size_t* nfiles, int recursive );
-
-
-/**
- * @brief Checks to see if path is a ndata file.
- *
- * Should be called before ndata_open.
- *
- *    @param path Path to check to see if it's an ndata file.
- *    @return 1 if it is an ndata file, 0 else.
- */
-int ndata_check( const char* path )
-{
-   return nzip_isZip( path );
-}
 
 
 /**
@@ -118,28 +95,61 @@ int ndata_check( const char* path )
  *    @param path Path to set.
  *    @return 0 on success.
  */
-int ndata_setPath( const char* path )
+int ndata_setPath( const char *path )
 {
    int len;
+   char *buf;
 
-   free(ndata_filename);
-   free(ndata_dirname);
-   ndata_filename = NULL;
-   ndata_dirname  = NULL;
+   if ( ndata_filename != NULL ) {
+      free( ndata_filename );
+      ndata_filename = NULL;
+   }
 
-   if (path == NULL)
-      return 0;
-   else if (nfile_dirExists(path)) {
-      len = strlen(path);
-      ndata_dirname = strdup(path);
-      if (nfile_isSeparator(ndata_dirname[len - 1]))
-         ndata_dirname[len - 1] = '\0';
+   if ( path != NULL && ndata_isndata( path ) ) {
+      len            = strlen( path );
+      ndata_filename = strdup( path );
+      if ( nfile_isSeparator( ndata_filename[ len - 1 ] ) )
+         ndata_filename[ len - 1 ] = '\0';
+      ndata_source = NDATA_SRC_USER;
    }
-   else if (nfile_fileExists(path)) {
-      char *tmp = strdup(path);
-      ndata_filename = strdup(path);
-      ndata_dirname  = nfile_dirname(tmp);
+   else {
+      ndata_source = NDATA_SRC_SEARCH_START;
+
+      switch ( ndata_source ) {
+      case NDATA_SRC_CWD:
+         ndata_filename = ndata_findInDir( "." );
+         if ( ndata_filename != NULL ) {
+            ndata_source = NDATA_SRC_CWD;
+            break;
+         }
+         __attribute__( ( fallthrough ) );
+      case NDATA_SRC_USER:
+         // This already didn't work out when we checked the provided path.
+         __attribute__( ( fallthrough ) );
+      case NDATA_SRC_DEFAULT:
+         if ( ndata_isndata( NDATA_DEF ) ) {
+            ndata_filename = strdup( NDATA_DEF );
+            ndata_source   = NDATA_SRC_DEFAULT;
+            break;
+         }
+         __attribute__( ( fallthrough ) );
+      case NDATA_SRC_BINARY:
+         buf            = strdup( naev_binary() );
+         ndata_filename = ndata_findInDir( nfile_dirname( buf ) );
+         free( buf );
+         if ( ndata_filename != NULL ) {
+            ndata_source = NDATA_SRC_BINARY;
+            break;
+         }
+         __attribute__( ( fallthrough ) );
+      default:
+         // Couldn't find ndata
+         return -1;
+      }
    }
+
+   ndata_testVersion();
+
    return 0;
 }
 
@@ -265,42 +275,24 @@ static int ndata_notfound (void)
 
 
 /**
- * @brief Checks to see if a file is an ndata.
+ * @brief Checks to see if a directory is an ndata.
  */
-static int ndata_isndata( const char *path, ... )
+static int ndata_isndata( const char *dir )
 {
-   char file[PATH_MAX];
-   va_list ap;
-   struct zip *arc;
-
-   if (path == NULL)
+   if ( dir == NULL )
       return 0;
-   else { /* get the message */
-      va_start(ap, path);
-      vsnprintf(file, PATH_MAX, path, ap);
-      va_end(ap);
-   }
 
    /* File must exist. */
-   if (!nfile_fileExists(file))
-      return 0;
-
-   /* Must be ndata. */
-   if (!nzip_isZip(file))
+   if ( !nfile_dirExists( dir ) )
       return 0;
 
    /* Verify that the zip contains dat/start.xml
     * This is arbitrary, but it's one of the many hard-coded files that must
     * be present for Naev to run.
     */
-   arc = nzip_open(file);
-
-   if (!nzip_hasFile(arc, START_DATA_PATH)) {
-      nzip_close(arc);
+   if ( !nfile_fileExists( dir, START_DATA_PATH ) )
       return 0;
-   }
 
-   nzip_close(arc);
    return 1;
 }
 
@@ -338,7 +330,7 @@ static char *ndata_findInDir( const char *path )
          nsnprintf( ndata_file, l, "%s/%s", path, files[i] );
 
          /* Must be zip file. */
-         if (!nzip_isZip(ndata_file)) {
+         if ( !ndata_isndata( ndata_file ) ) {
             free(ndata_file);
             ndata_file = NULL;
             continue;
@@ -355,112 +347,6 @@ static char *ndata_findInDir( const char *path )
    }
 
    return ndata_file;
-}
-
-
-/**
- * @brief Opens an ndata archive if needed.
- *
- *    @return 0 on success.
- */
-static int ndata_openFile (void)
-{
-   char path[PATH_MAX], *buf;
-   char pathname[PATH_MAX];
-
-   /* Must be thread safe. */
-   SDL_mutexP(ndata_lock);
-
-   /* Was opened while locked. */
-   if (ndata_archive != NULL) {
-      SDL_mutexV(ndata_lock);
-      return 0;
-   }
-
-   /* Check dirname first. */
-   if ((ndata_filename == NULL) && (ndata_dirname != NULL))
-      ndata_filename = ndata_findInDir( ndata_dirname );
-
-#if HAS_MACOS
-   /* Look in the bundle resources directory */
-   if ((ndata_filename == NULL) && macos_isBundle()) {
-      if (macos_resourcesPath( pathname, PATH_MAX ) == 0) {
-         ndata_filename = ndata_findInDir( pathname );
-      }
-   }
-#endif /* HAS_MACOS */
-
-   /*
-    * Try to find the ndata file.
-    */
-   if (ndata_filename == NULL) {
-
-      /* Check ndata with version appended. */
-#if VREV < 0
-      nsnprintf ( pathname, PATH_MAX, "%s-%d.%d.0-beta.%d", NDATA_FILENAME, VMAJOR, VMINOR, ABS ( VREV ) );
-#else /* VREV < 0 */
-      nsnprintf ( pathname, PATH_MAX, "%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV );
-#endif /* VREV < 0 */
-
-      if (ndata_isndata(pathname)) {
-         ndata_filename = malloc(PATH_MAX);
-         strncpy(ndata_filename, pathname, PATH_MAX);
-      }
-      else if (ndata_isndata(strncat(pathname, ".zip", PATH_MAX-1))) {
-         ndata_filename = malloc(PATH_MAX);
-         strncpy(ndata_filename, pathname, PATH_MAX);
-      }
-      /* Check default ndata. */
-      else if (ndata_isndata(NDATA_DEF))
-         ndata_filename = strdup(NDATA_DEF);
-
-      /* Try to open any ndata in path. */
-      else {
-         /* Check in NDATA_DEF path. */
-         buf = strdup(NDATA_DEF);
-         nsnprintf( path, PATH_MAX, "%s", nfile_dirname( buf ) );
-         ndata_filename = ndata_findInDir( path );
-         free(buf);
-
-         /* Check in current directory. */
-         if (ndata_filename == NULL)
-            ndata_filename = ndata_findInDir( "." );
-
-         /* Keep looking. */
-         if (ndata_filename == NULL) {
-            buf = strdup( naev_binary() );
-            nsnprintf( path, PATH_MAX, "%s", nfile_dirname( buf ) );
-            ndata_filename = ndata_findInDir( path );
-            free(buf);
-         }
-      }
-   }
-
-   /* Open the archive. */
-   if (ndata_isndata( ndata_filename ) != 1) {
-      if (!ndata_loadedfile) {
-         WARN(_("Cannot find ndata file!"));
-         WARN(_("Please run with ndata path suffix or specify in conf.lua."));
-         WARN(_("E.g. naev ~/ndata or data = \"~/ndata\""));
-
-         /* Display the not found message. */
-         if (!ndata_notfound())
-            exit(1);
-      }
-      else
-         return -1;
-   }
-   ndata_archive = nzip_open( ndata_filename );
-   if (ndata_archive == NULL)
-      WARN(_("Unable to open ndata from '%s'."), ndata_filename );
-
-   /* Close lock. */
-   SDL_mutexV(ndata_lock);
-
-   /* Test version. */
-   ndata_testVersion();
-
-   return 0;
 }
 
 
@@ -512,13 +398,6 @@ int ndata_open (void)
    /* Set path to configuration. */
    ndata_setPath(conf.ndata);
 
-   /* If user enforces ndata filename, we'll respect that. */
-   if (ndata_isndata(ndata_filename))
-      return ndata_openFile();
-
-   free(ndata_filename);
-   ndata_filename = NULL;
-
    return 0;
 }
 
@@ -528,28 +407,9 @@ int ndata_open (void)
  */
 void ndata_close (void)
 {
-   unsigned int i;
-
-   /* Destroy the name. */
-   if (ndata_arcName != NULL) {
-      free(ndata_arcName);
-      ndata_arcName = NULL;
-   }
-
-   /* Destroy the list. */
-   if (ndata_fileList != NULL) {
-      for (i=0; i<ndata_fileNList; i++)
-         free(ndata_fileList[i]);
-
-      free(ndata_fileList);
-      ndata_fileList  = NULL;
-      ndata_fileNList = 0;
-   }
-
-   /* Close the archive. */
-   if (ndata_archive) {
-      nzip_close(ndata_archive);
-      ndata_archive = NULL;
+   if ( ndata_filename != NULL ) {
+      free( ndata_filename );
+      ndata_filename = NULL;
    }
 
    /* Destroy the lock. */
@@ -570,35 +430,6 @@ const char* ndata_name (void)
    return start_name();
 }
 
-
-/**
- * @brief Gets the directory where ndata is loaded from.
- *
- *    @return Directory name that ndata is inside of.
- */
-const char* ndata_getDirname(void)
-{
-   char *path;
-
-   path = (char*)ndata_getPath();
-   if (path != NULL)
-      return nfile_dirname( path );
-
-   switch (ndata_source) {
-      case NDATA_SRC_LAIDOUT:
-         return ".";
-      case NDATA_SRC_DIRNAME:
-         return ndata_dirname;
-      case NDATA_SRC_NDATADEF:
-         return nfile_dirname( strdup( NDATA_DEF ) );
-      case NDATA_SRC_BINARY:
-         return nfile_dirname( strdup( naev_binary() ) );
-   }
-
-   return NULL;
-}
-
-
 /**
  * @brief Checks to see if a file is in the NDATA.
  *    @param filename Name of the file to check.
@@ -606,46 +437,7 @@ const char* ndata_getDirname(void)
  */
 int ndata_exists( const char* filename )
 {
-   char *buf, path[PATH_MAX];
-
-   /* See if needs to load ndata archive. */
-   if (ndata_archive == NULL) {
-
-      /* Try to read the file as locally. */
-      if (nfile_fileExists( filename ) && (ndata_source <= NDATA_SRC_LAIDOUT))
-         return 1;
-
-      /* We can try to use the dirname path. */
-      if ((ndata_filename == NULL) && (ndata_dirname != NULL) &&
-            (ndata_source <= NDATA_SRC_DIRNAME)) {
-         nsnprintf( path, sizeof(path), "%s/%s", ndata_dirname, filename );
-         if (nfile_fileExists( path ))
-            return 1;
-      }
-
-      /* We can also try default location. */
-      if (ndata_source <= NDATA_SRC_NDATADEF) {
-         buf = strdup( NDATA_DEF );
-         nsnprintf( path, sizeof(path), "%s/%s", nfile_dirname(buf), filename );
-         free(buf);
-         if (nfile_fileExists( path ))
-            return 1;
-      }
-
-      /* Try binary location. */
-      if (ndata_source <= NDATA_SRC_BINARY) {
-         buf = strdup( naev_binary() );
-         nsnprintf( path, sizeof(path), "%s/%s", nfile_dirname(buf), filename );
-         free(buf);
-         if (nfile_fileExists( path ))
-            return 1;
-      }
-
-      return 0;
-   }
-
-   /* Try to get it from the archive. */
-   return nzip_hasFile( ndata_archive, filename );
+   return nfile_fileExists( ndata_filename, filename );
 }
 
 
@@ -658,85 +450,18 @@ int ndata_exists( const char* filename )
  */
 void* ndata_read( const char* filename, size_t *filesize )
 {
-   char *buf, path[PATH_MAX];
-   size_t nbuf;
+   char *buf;
 
-   /* See if needs to load ndata archive. */
-   if (ndata_archive == NULL) {
-
-      /* Try to read the file as locally. */
-      if (nfile_fileExists( filename ) && (ndata_source <= NDATA_SRC_LAIDOUT)) {
-         buf = nfile_readFile( &nbuf, filename );
-         if (buf != NULL) {
-            ndata_loadedfile = 1;
-            *filesize = nbuf;
-            return buf;
-         }
-      }
-
-      /* We can try to use the dirname path. */
-      if ((ndata_filename == NULL) && (ndata_dirname != NULL) &&
-            (ndata_source <= NDATA_SRC_DIRNAME)) {
-         nsnprintf( path, sizeof(path), "%s/%s", ndata_dirname, filename );
-         if (nfile_fileExists( path )) {
-            buf = nfile_readFile( &nbuf, path );
-            if (buf != NULL) {
-               ndata_source = NDATA_SRC_DIRNAME;
-               ndata_loadedfile = 1;
-               *filesize = nbuf;
-               return buf;
-            }
-         }
-      }
-
-      /* We can also try default location. */
-      if (ndata_source <= NDATA_SRC_NDATADEF) {
-         buf = strdup( NDATA_DEF );
-         nsnprintf( path, sizeof(path), "%s/%s", nfile_dirname(buf), filename );
-         free(buf);
-         if (nfile_fileExists( path )) {
-            buf = nfile_readFile( &nbuf, path );
-            if (buf != NULL) {
-               ndata_source = NDATA_SRC_NDATADEF;
-               ndata_loadedfile = 1;
-               *filesize = nbuf;
-               return buf;
-            }
-         }
-      }
-
-      /* Try binary location. */
-      if (ndata_source <= NDATA_SRC_BINARY) {
-         buf = strdup( naev_binary() );
-         nsnprintf( path, sizeof(path), "%s/%s", nfile_dirname(buf), filename );
-         free(buf);
-         if (nfile_fileExists( path )) {
-            buf = nfile_readFile( &nbuf, path );
-            if (buf != NULL) {
-               ndata_source = NDATA_SRC_BINARY;
-               ndata_loadedfile = 1;
-               *filesize = nbuf;
-               return buf;
-            }
-         }
-      }
-
-      /* Load the ndata archive. */
-      ndata_openFile();
+   buf = nfile_readFile( filesize, ndata_filename, filename );
+   if ( buf != NULL ) {
+      ndata_loadedfile = 1;
+      return buf;
    }
 
    /* Wasn't able to open the file. */
-   if (ndata_archive == NULL) {
-      WARN(_("Unable to open file '%s': not found."), filename);
-      *filesize = 0;
-      return NULL;
-   }
-
-   /* Mark that we loaded a file. */
-   ndata_loadedfile = 1;
-
-   /* Get data from ndata archive. */
-   return nzip_readFile( ndata_archive, filename, filesize );
+   WARN( _( "Unable to open file '%s': not found." ), filename );
+   *filesize = 0;
+   return NULL;
 }
 
 
@@ -748,272 +473,45 @@ void* ndata_read( const char* filename, size_t *filesize )
  */
 SDL_RWops *ndata_rwops( const char* filename )
 {
-   char path[PATH_MAX], *tmp;
+   char       path[ PATH_MAX ];
    SDL_RWops *rw;
 
-   if (ndata_archive == NULL) {
-
-      /* Try to open from file. */
-      if (ndata_source <= NDATA_SRC_LAIDOUT) {
-         rw = SDL_RWFromFile( filename, "rb" );
-         if (rw != NULL) {
-            ndata_loadedfile = 1;
-            return rw;
-         }
-      }
-
-      /* Try to open from dirname. */
-      if ((ndata_filename == NULL) && (ndata_dirname != NULL) &&
-            (ndata_source <= NDATA_SRC_DIRNAME)) {
-         nsnprintf( path, sizeof(path), "%s/%s", ndata_dirname, filename );
-         rw = SDL_RWFromFile( path, "rb" );
-         if (rw != NULL) {
-            ndata_source = NDATA_SRC_DIRNAME;
-            ndata_loadedfile = 1;
-            return rw;
-         }
-      }
-
-      /* Try to open from def. */
-      if (ndata_source <= NDATA_SRC_NDATADEF) {
-         tmp = strdup( NDATA_DEF );
-         nsnprintf( path, sizeof(path), "%s/%s", nfile_dirname(tmp), filename );
-         free(tmp);
-         rw = SDL_RWFromFile( path, "rb" );
-         if (rw != NULL) {
-            ndata_source = NDATA_SRC_NDATADEF;
-            ndata_loadedfile = 1;
-            return rw;
-         }
-      }
-
-      /* Try to open from binary. */
-      if (ndata_source <= NDATA_SRC_BINARY) {
-         tmp = strdup( naev_binary() );
-         nsnprintf( path, sizeof(path), "%s/%s", nfile_dirname(tmp), filename );
-         free(tmp);
-         rw = SDL_RWFromFile( path, "rb" );
-         if (rw != NULL) {
-            ndata_source = NDATA_SRC_BINARY;
-            ndata_loadedfile = 1;
-            return rw;
-         }
-      }
-
-      /* Load the ndata archive. */
-      ndata_openFile();
-   }
-
-   /* Wasn't able to open the file. */
-   if (ndata_archive == NULL) {
-      WARN(_("Unable to open file '%s': not found."), filename);
+   if ( nfile_concatPaths( path, PATH_MAX, ndata_filename, filename ) ) {
+      WARN( _( "Unable to open file '%s': file path too long." ), filename );
       return NULL;
    }
 
-   /* Mark that we loaded a file. */
-   ndata_loadedfile = 1;
-
-   return nzip_rwops( ndata_archive, filename );
-}
-
-
-/**
- * @brief Removes a common path from a list of files, if present.
- *
- *    @param list List of files to filter.
- *    @param nlist Number of files in the list.
- *    @param path Path to remove from the filenames.
- */
-static char **stripPath( const char **list, int nlist, const char *path )
-{
-   int i, len;
-   char **out, *buf;
-
-   out = malloc(sizeof(char*) * nlist);
-   len = strlen( path );
-
-   /* Slash-terminate as needed. */
-   if (strcmp(&path[len],"/")!=0) {
-      len++;
-      buf = malloc(len + 1);
-      nsnprintf(buf, len+1,  "%s/", path );
-   }
-   else
-      buf = strdup(path);
-
-   for (i=0; i<nlist; i++) {
-      if (strncmp(list[i],buf,len)==0)
-         out[i] = strdup( &list[i][len] );
-      else
-         out[i] = strdup( list[i] );
-   }
-
-   free(buf);
-   return out;
-}
-
-
-/**
- * @brief Filters a file list to match path.
- *
- *    @param list List to filter.
- *    @param nlist Members in list.
- *    @param path Path to filter.
- *    @param recursive Whether all children at any depth should be listed.
- *    @param[out] nfiles Files that match.
- */
-static char** filterList( const char** list, int nlist,
-      const char* path, size_t* nfiles, int recursive )
-{
-   char **filtered;
-   int i, j, k, len;
-
-   /* Maximum size by default. */
-   filtered = malloc(sizeof(char*) * nlist);
-   len = strlen( path );
-
-   /* Filter list. */
-   j = 0;
-   for (i=0; i<nlist; i++) {
-      /* Must match path. */
-      if (strncmp(list[i], path, len)!=0)
-         continue;
-
-      /* Make sure there are no stray file delimitors. */
-      for (k=len; list[i][k] != '\0'; k++)
-         if (nfile_isSeparator(list[i][k]))
-            if (!recursive)
-               break;
-
-      if (list[i][k] != '\0')
-         continue;
-
-      /* Copy the file name without the path. */
-      if (!recursive)
-         filtered[j++] = strdup(&list[i][len]);
-      else /* Recursive needs paths. */
-         filtered[j++] = strdup(list[i]);
-   }
-
-   /* Return results. */
-   *nfiles = j;
-   return filtered;
-}
-
-
-/**
- * @brief Gets the list of files in the ndata.
- *
- * @note Strips the path.
- *
- *    @param path List files in path.
- *    @param nfiles Number of files found.
- *    @return List of files found.
- */
-static char** ndata_listBackend( const char* path, size_t* nfiles, int recursive )
-{
-   (void) path;
-   char **files, **tfiles, buf[PATH_MAX], *tmp;
-   size_t n;
-   char** (*nfile_readFunc) ( size_t* nfiles, const char* path, ... ) = NULL;
-
-   if (recursive)
-      nfile_readFunc = nfile_readDirRecursive;
-   else
-      nfile_readFunc = nfile_readDir;
-
-   /* Already loaded the list. */
-   if (ndata_fileList != NULL)
-      return filterList( (const char**) ndata_fileList, ndata_fileNList, path, nfiles, recursive );
-
-   /* See if can load from local directory. */
-   if (ndata_archive == NULL) {
-
-      /* Local search. */
-      if (ndata_source <= NDATA_SRC_LAIDOUT) {
-         files = nfile_readFunc( &n, path );
-         if (files != NULL) {
-            *nfiles = n;
-            return files;
-         }
-      }
-
-      /* Dirname search. */
-      if ((ndata_filename == NULL) && (ndata_dirname != NULL) &&
-            (ndata_source <= NDATA_SRC_DIRNAME)) {
-         nsnprintf( buf, sizeof(buf), "%s/%s", ndata_dirname, path );
-         tfiles = nfile_readFunc( &n, buf );
-         files = stripPath( (const char**)tfiles, n, ndata_dirname );
-         free(tfiles);
-         if (files != NULL) {
-            *nfiles = n;
-            return files;
-         }
-      }
-
-      /* NDATA_DEF. */
-      if (ndata_source <= NDATA_SRC_NDATADEF) {
-         tmp = strdup( NDATA_DEF );
-         nsnprintf( buf, sizeof(buf), "%s/%s", nfile_dirname(tmp), path );
-         tfiles = nfile_readFunc( &n, buf );
-         files = stripPath( (const char**)tfiles, n, tmp );
-         free(tmp);
-         free(tfiles);
-         if (files != NULL) {
-            *nfiles = n;
-            return files;
-         }
-      }
-
-      /* Binary. */
-      if (ndata_source <= NDATA_SRC_BINARY) {
-         tmp = strdup( naev_binary() );
-         nsnprintf( buf, sizeof(buf), "%s/%s", nfile_dirname(tmp), path );
-         tfiles = nfile_readFunc( &n, buf );
-         files = stripPath( (const char**)tfiles, n, nfile_dirname(tmp) );
-         free(tmp);
-         free(tfiles);
-         if (files != NULL) {
-            *nfiles = n;
-            return files;
-         }
-      }
-
-      /* Open ndata archive. */
-      ndata_openFile();
+   rw = SDL_RWFromFile( path, "rb" );
+   if ( rw != NULL ) {
+      ndata_loadedfile = 1;
+      return rw;
    }
 
    /* Wasn't able to open the file. */
-   if (ndata_archive == NULL) {
-      *nfiles = 0;
-      return NULL;
-   }
-
-   /* Load list. */
-   ndata_fileList = nzip_listFiles( ndata_archive, &ndata_fileNList );
-
-   return filterList( (const char**) ndata_fileList, ndata_fileNList, path, nfiles, recursive );
+   WARN( _( "Unable to open file '%s': not found." ), filename );
+   return NULL;
 }
+
 
 /**
  * @brief Gets a list of files in the ndata that are direct children of a path.
  *
- *    @sa ndata_listBackend
+ *    @sa nfile_readDir
  */
 char** ndata_list( const char* path, size_t* nfiles )
 {
-   return ndata_listBackend( path, nfiles, 0 );
+   return nfile_readDir( nfiles, ndata_filename, path );
 }
 
 
 /**
  * @brief Gets a list of files in the ndata below a certain path.
  *
- *    @sa ndata_listBackend
+ *    @sa nfile_readDirRecursive
  */
-char** ndata_listRecursive( const char* path, size_t* nfiles )
+char **ndata_listRecursive( const char *path )
 {
-   return ndata_listBackend( path, nfiles, 1 );
+   return nfile_readDirRecursive( ndata_filename, path );
 }
 
 

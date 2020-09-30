@@ -187,7 +187,7 @@ int load_refresh (void)
       load_free();
 
    /* load the saves */
-   files = nfile_readDir( &nfiles, "%ssaves", nfile_dataPath() );
+   files      = nfile_readDir( &nfiles, nfile_dataPath(), "saves" );
    load_saves = array_create_size( nsave_t, nfiles );
 
    for (i=0; i<nfiles; i++) {

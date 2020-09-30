@@ -123,7 +123,6 @@ CODE_SOURCE = \
 	ntime.c \
 	nxml.c \
 	nxml_lua.c \
-	nzip.c \
 	opengl.c \
 	opengl_matrix.c \
 	opengl_render.c \
