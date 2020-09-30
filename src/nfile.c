@@ -380,7 +380,7 @@ int _nfile_dirMakeExist( const char *path )
 #if HAS_POSIX
    if ( mkpath( path, S_IRWXU | S_IRWXG | S_IRWXO ) < 0 ) {
 #elif HAS_WIN32
-   if (mkpath(file) < 0) {
+   if ( mkpath( path ) < 0 ) {
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
