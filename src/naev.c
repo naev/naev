@@ -422,11 +422,13 @@ int main( int argc, char** argv )
    /* Tell the player to migrate their configuration files */
    /* TODO get rid of this cruft ASAP. */
    if ((oldconfig[0] != '\0') && (!conf.datapath)) {
-      char path[PATH_MAX], *script, *home;
+      char   path[ PATH_MAX ], *script, *home, *ndata_dir;
       size_t scriptsize;
       int ret;
 
-      nsnprintf( path, PATH_MAX, "%s/naev-confupdate.sh", ndata_getDirname() );
+      ndata_dir = strdup( ndata_getPath() );
+      nsnprintf( path, PATH_MAX, "%s/naev-confupdate.sh", nfile_dirname( ndata_dir ) );
+      free( ndata_dir );
       home = SDL_getenv("HOME");
       ret = dialogue_YesNo( _("Warning"), _("Your configuration files are in a deprecated location and must be migrated:\n"
             "   \ar%s\a0\n\n"
