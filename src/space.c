@@ -554,7 +554,7 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
    *ast = -1;
    *fie = -1;
    d    = INFINITY;
-   
+
    /* Planets. */
    for (i=0; i<sys->nplanets; i++) {
       p  = sys->planets[i];
@@ -1345,7 +1345,7 @@ void space_update( const double dt )
 
    /* Update the gatherable objects. */
    gatherable_update(dt);
-   
+
    /* Asteroids/Debris update */
    for (i=0; i<cur_system->nasteroids; i++) {
       ast = &cur_system->asteroids[i];
@@ -2304,10 +2304,9 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    planetname_stack[spacename_nstack-1] = planet->name;
    systemname_stack[spacename_nstack-1] = sys->name;
 
-   economy_addQueuedUpdate();
    /* This is required to clear the player statistics for this planet */
    economy_clearSinglePlanet(planet);
-   
+
    /* Add the presence. */
    if (!systems_loading) {
       system_addPresence( sys, planet->faction, planet->presenceAmount, planet->presenceRange );
@@ -2377,15 +2376,11 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
 
    system_setFaction(sys);
 
-   economy_addQueuedUpdate();
-
    return 0;
 }
 
 /**
  * @brief Adds a jump point to a star system from a diff.
- *
- * Note that economy_execQueued should always be run after this.
  *
  *    @param sys Star System to add jump point to.
  *    @param jumpname Name of the jump point to add.
@@ -2396,7 +2391,6 @@ int system_addJumpDiff( StarSystem *sys, xmlNodePtr node )
    if (system_parseJumpPointDiff(node, sys) <= -1)
       return 0;
    systems_reconstructJumps();
-   economy_addQueuedUpdate();
 
    return 1;
 }
@@ -2404,8 +2398,6 @@ int system_addJumpDiff( StarSystem *sys, xmlNodePtr node )
 
 /**
  * @brief Adds a jump point to a star system.
- *
- * Note that economy_execQueued should always be run after this.
  *
  *    @param sys Star System to add jump point to.
  *    @param jumpname Name of the jump point to add.
@@ -2416,7 +2408,6 @@ int system_addJump( StarSystem *sys, xmlNodePtr node )
    if (system_parseJumpPoint(node, sys) <= -1)
       return 0;
    systems_reconstructJumps();
-   economy_refresh();
 
    return 1;
 }
@@ -2424,8 +2415,6 @@ int system_addJump( StarSystem *sys, xmlNodePtr node )
 
 /**
  * @brief Removes a jump point from a star system.
- *
- * Note that economy_execQueued should always be run after this.
  *
  *    @param sys Star System to remove jump point from.
  *    @param jumpname Name of the jump point to remove.
@@ -2458,8 +2447,6 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
 
    /* Refresh presence */
    system_setFaction(sys);
-
-   economy_addQueuedUpdate();
 
    return 0;
 }
@@ -3856,7 +3843,7 @@ void space_exit (void)
 
       /* Free the asteroids. */
       sys = &systems_stack[i];
-      
+
       for (j=0; j < sys->nasteroids; j++) {
          ast = &sys->asteroids[j];
          free(ast->asteroids);

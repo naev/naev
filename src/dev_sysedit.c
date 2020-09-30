@@ -269,7 +269,7 @@ static void sysedit_close( unsigned int wid, char *wgt )
 {
    /* Unload graphics. */
    space_gfxLoad( sysedit_sys );
-   
+
    /* Unload VBO */
    if (sysedit_vbo != NULL) {
       gl_vboDestroy(sysedit_vbo);
@@ -391,9 +391,6 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
    /* Add new planet. */
    system_addPlanet( sysedit_sys, name );
 
-   /* Update economy due to galaxy modification. */
-   economy_execQueued();
-
    if (conf.devautosave)
       dpl_savePlanet( p );
 
@@ -480,9 +477,6 @@ static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
             system_rmPlanet( sysedit_sys, sysedit_sys->planets[ sel->u.planet ]->name );
          }
       }
-
-      /* Update economy due to galaxy modification. */
-      economy_execQueued();
    }
 }
 

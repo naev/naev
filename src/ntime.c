@@ -79,8 +79,8 @@ void ntime_update( double dt )
    if (!ntime_enable)
       return;
 
-   /* Calculate the effective time. */ dtt = naev_remainder + 
-   dt*NT_SECONDS_DT*NT_SECONDS_DIV;
+   /* Calculate the effective time. */
+   dtt = naev_remainder + dt * NT_SECONDS_DT * NT_SECONDS_DIV;
 
    /* Time to update. */
    tu             = floor( dtt );
@@ -254,7 +254,6 @@ void ntime_setR( int cycles, int periods, int seconds, double rem )
 void ntime_inc( ntime_t t )
 {
    naev_time += t;
-   economy_update( t );
 
    /* Run hooks. */
    if (t > 0)
@@ -317,7 +316,6 @@ void ntime_refresh (void)
 
       /* Run hook stuff and actually update time. */
       naev_time += ntu->inc;
-      economy_update( ntu->inc );
 
       /* Remove the increment. */
       ntime_inclist = ntu->next;

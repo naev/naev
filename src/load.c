@@ -628,13 +628,12 @@ int load_game( const char* file, int version_diff )
    space_sysLoad(node);
 
    /* Initialize the economy. */
-   economy_init();
    economy_sysLoad(node);
 
    /* Initialise the ship log */
    shiplog_new();
    shiplog_load(node);
-   
+
    /* Check validity. */
    event_checkValidity();
 

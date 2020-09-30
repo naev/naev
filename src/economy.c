@@ -61,9 +61,6 @@ extern int commodity_nstack;
 /*
  * Nodal analysis simulation for dynamic economies.
  */
-static int econ_initialized   = 0; /**< Is economy system initialized? */
-static int econ_queued        = 0; /**< Whether there are any queued updates. */
-static cs *econ_G             = NULL; /**< Admittance matrix. */
 int *econ_comm         = NULL; /**< Commodities to calculate. */
 int econ_nprices       = 0; /**< Number of prices to calculate. */
 
@@ -118,8 +115,8 @@ credits_t economy_getPriceAtTime( const Commodity *com,
    CommodityPrice *commPrice;
    (void) sys;
    /* Get current time in periods.
-    * Note, taking off and landing takes about 1e7 ntime, which is 1 period.  
-    * Time does not advance when on a planet. 
+    * Note, taking off and landing takes about 1e7 ntime, which is 1 period.
+    * Time does not advance when on a planet.
     * Journey with a single jump takes approx 3e7, so about 3 periods.
     */
    t = ntime_convertSeconds( tme ) / NT_PERIOD_SECONDS;
@@ -407,191 +404,8 @@ static int econ_createGMatrix (void)
 
 
 /**
- * @brief Initializes the economy.
- *
- *    @return 0 on success.
- */
-int economy_init (void)
-{
-   int i;
-
-   /* Must not be initialized. */
-   if (econ_initialized)
-      return 0;
-
-   /* Allocate price space. */
-   for (i=0; i<systems_nstack; i++) {
-      if (systems_stack[i].prices != NULL)
-         free(systems_stack[i].prices);
-      systems_stack[i].prices = calloc(econ_nprices, sizeof(double));
-   }
-
-   /* Mark economy as initialized. */
-   econ_initialized = 1;
-
-   /* Refresh economy. */
-   economy_refresh();
-
-   return 0;
-}
-
-
-/**
- * @brief Increments the queued update counter.
- *
- * @sa economy_execQueued
- */
-void economy_addQueuedUpdate (void)
-{
-   econ_queued++;
-}
-
-
-/**
- * @brief Calls economy_refresh if an economy update is queued.
- */
-int economy_execQueued (void)
-{
-   if (econ_queued)
-      return economy_refresh();
-
-   return 0;
-}
-
-
-/**
- * @brief Regenerates the economy matrix.  Should be used if the universe
- *  changes in any permanent way.
- */
-int economy_refresh (void)
-{
-   /* Economy must be initialized. */
-   if (econ_initialized == 0)
-      return 0;
-
-   /* Create the resistance matrix. */
-   //if (econ_createGMatrix())
-   //   return -1;
-
-   /* Initialize the prices. */
-   economy_update( 0 );
-
-   return 0;
-}
-
-
-/**
- * @brief Updates the economy.
- *
- *    @param dt Deltatick in NTIME.
- */
-int economy_update( unsigned int dt )
-{
-   (void)dt;
-   int i, j;
-   double *X;
-   double scale, offset;
-   /*double min, max;*/
-
-   /* Economy must be initialized. */
-   if (econ_initialized == 0)
-      return 0;
-
-   /* Create the vector to solve the system. */
-   X = malloc(sizeof(double)*systems_nstack);
-   if (X == NULL) {
-      WARN(_("Out of Memory"));
-      return -1;
-   }
-
-   /* Calculate the results for each price set. */
-   for (j=0; j<econ_nprices; j++) {
-
-#if 0
-      /* First we must load the vector with intensities. */
-      for (i=0; i<systems_nstack; i++)
-         X[i] = econ_calcSysI( dt, &systems_stack[i], j );
-
-      /* Solve the system. */
-      /** @TODO This should be improved to try to use better factorizations (LU/Cholesky)
-       * if possible or just outright try to use some other library that does fancy stuff
-       * like UMFPACK. Would be also interesting to see if it could be optimized so we
-       * store the factorization or update that instead of handling it individually. Another
-       * point of interest would be to split loops out to make the solving faster, however,
-       * this may be trickier to do (although it would surely let us use cholesky always if we
-       * enforce that condition). */
-      ret = cs_qrsol( 3, econ_G, X );
-      if (ret != 1)
-         WARN(_("Failed to solve the Economy System."));
-#endif
-
-      /*
-       * Get the minimum and maximum to scale.
-       */
-      /*
-      min = +HUGE_VALF;
-      max = -HUGE_VALF;
-      for (i=0; i<systems_nstack; i++) {
-         if (X[i] < min)
-            min = X[i];
-         if (X[i] > max)
-            max = X[i];
-      }
-      scale = 1. / (max - min);
-      offset = 0.5 - min * scale;
-      */
-
-      /*
-       * I'm not sure I like the filtering of the results, but it would take
-       * much more work to get a good system working without the need of post
-       * filtering.
-       */
-      scale    = 1.;
-      offset   = 1.;
-      for (i=0; i<systems_nstack; i++)
-         systems_stack[i].prices[j] = X[i] * scale + offset;
-   }
-
-   /* Clean up. */
-   free(X);
-
-   econ_queued = 0;
-   return 0;
-}
-
-
-/**
- * @brief Destroys the economy.
- */
-void economy_destroy (void)
-{
-   int i;
-
-   /* Must be initialized. */
-   if (!econ_initialized)
-      return;
-
-   /* Clean up the prices in the systems stack. */
-   for (i=0; i<systems_nstack; i++) {
-      if (systems_stack[i].prices != NULL) {
-         free(systems_stack[i].prices);
-         systems_stack[i].prices = NULL;
-      }
-   }
-
-   /* Destroy the economy matrix. */
-   if (econ_G != NULL) {
-      cs_spfree( econ_G );
-      econ_G = NULL;
-   }
-
-   /* Economy is now deinitialized. */
-   econ_initialized = 0;
-}
-
-/**
  * @brief Used during startup to set price and variation of the economy, depending on planet information.
- * 
+ *
  *    @param planet The planet to set price on.
  *    @param commodity The commodity to set the price of.
  *    @param commodityPrice Where to write the commodity price to.
@@ -611,7 +425,7 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
 
    /* Reset price to the base commodity price. */
    commodityPrice->price = commodity->price;
-   
+
    /* Get the cost modifier suitable for planet type/class. */
    cm = commodity->planet_modifier;
    scale = 1.;
@@ -634,13 +448,13 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
    commodity->period = 32 * (planet->gfx_spaceName[strlen(PLANET_GFX_SPACE_PATH)] % 32) + planet->gfx_spaceName[strlen(PLANET_GFX_SPACE_PATH) + 1] % 32;
    commodityPrice->planetPeriod = commodity->period + base;
 
-   /* Use filename of exterior graphic to modify the variation period.  
+   /* Use filename of exterior graphic to modify the variation period.
       No rhyme or reason, just gives some variability. */
    scale = 1 + (strlen(planet->gfx_exterior) - strlen(PLANET_GFX_EXTERIOR_PATH) - 19) / 100.;
    commodityPrice->planetPeriod *= scale;
 
    /* Use population to modify price and variability.  The tanh function scales from -1 (small population)
-      to +1 (large population), done on a log scale.  Price is then modified by this factor, scaled by a 
+      to +1 (large population), done on a log scale.  Price is then modified by this factor, scaled by a
       value defined in the xml, as is variation.  So for some commodities, prices increase with population,
       while for others, prices decrease. */
    factor = -1;
@@ -651,7 +465,7 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
    commodityPrice->planetVariation *= 0.5 - factor * 0.25;
    commodityPrice->planetPeriod *= 1 + factor * 0.5;
 
-   /* Modify price based on faction (as defined in the xml). 
+   /* Modify price based on faction (as defined in the xml).
       Some factions place a higher value on certain goods.
       Some factions are more stable than others.*/
    scale = 1.;
@@ -690,12 +504,12 @@ static void economy_modifySystemCommodityPrice(StarSystem *sys)
    Planet *planet;
    CommodityPrice *avprice=NULL;
    int nav=0;
-   
+
    for ( i=0; i<sys->nplanets; i++ ) {
       planet=sys->planets[i];
       for ( j=0; j<planet->ncommodities; j++ ) {
-        /* Largest is approx 35000.  Increased radius will increase price since further to travel, 
-           and also increase stability, since longer for prices to fluctuate, but by a larger amount when they do.*/
+         /* Largest is approx 35000.  Increased radius will increase price since further to travel,
+            and also increase stability, since longer for prices to fluctuate, but by a larger amount when they do.*/
          planet->commodityPrice[j].price *= 1 + sys->radius/200000;
          planet->commodityPrice[j].planetPeriod *= 1 / (1 - sys->radius/200000.);
          planet->commodityPrice[j].planetVariation *= 1 / (1 - sys->radius/300000.);
@@ -704,11 +518,11 @@ static void economy_modifySystemCommodityPrice(StarSystem *sys)
             And with interference, since systems are harder to find, which goes up to about 1000.*/
          planet->commodityPrice[j].price *= 1 + sys->nebu_volatility/6000.;
          planet->commodityPrice[j].price *= 1 + sys->interference/10000.;
-         
+
          /* Use number of jumps to determine sytsem time period.  More jumps means more options for trade
             so shorter period.  Between 1 to 6 jumps.  Make the base time 1000.*/
          planet->commodityPrice[j].sysPeriod = 2000. / (sys->njumps + 1);
-         
+
          for ( k=0; k<nav; k++) {
             if ( ( strcmp( planet->commodities[j]->name, avprice[k].name ) == 0 ) ) {
                avprice[k].updateTime++;
@@ -773,7 +587,7 @@ static void economy_smoothCommodityPrice(StarSystem *sys)
    int n,i,j,k;
    /*Now modify based on neighbouring systems */
    /*First, calculate mean price of neighbouring systems */
-   
+
    for ( j =0; j<nav; j++ ) {/* for each commodity in this system */
       price=0.;
       n=0;
@@ -856,7 +670,7 @@ void economy_initialiseCommodityPrices(void)
          }
       }
    }
-   
+
    /* Modify prices and availability based on system attributes, and do some inter-planet averaging to smooth prices */
    for ( i=0; i<systems_nstack; i++ ) {
       sys = &systems_stack[i];

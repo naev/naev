@@ -304,9 +304,6 @@ struct StarSystem_ {
    int nfleets; /**< total number of fleets */
    double avg_pilot; /**< Target amount of pilots in the system. */
 
-   /* Calculated. */
-   double *prices; /**< Handles the prices in the system. */
-
    /* Presence. */
    SystemPresence *presence; /**< Pointer to an array of presences in this system. */
    int npresence; /**< Number of elements in the presence array. */
@@ -322,7 +319,7 @@ struct StarSystem_ {
    /* Economy. */
    CommodityPrice *averagePrice;
    int ncommodities;
-  
+
    /* Misc. */
    unsigned int flags; /**< flags for system properties */
 };
