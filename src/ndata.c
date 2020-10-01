@@ -37,6 +37,7 @@
 #include "glue_macos.h"
 #endif /* HAS_MACOS */
 #include <stdarg.h>
+#include <string.h>
 
 #include "SDL.h"
 #include "SDL_mutex.h"
@@ -116,7 +117,7 @@ int ndata_setPath( const char *path )
       switch ( ndata_source ) {
       case NDATA_SRC_CWD:
          if (ndata_isndata( "." )) {
-            ndata_dir    = ".";
+            ndata_dir    = strdup( "." );
             ndata_source = NDATA_SRC_CWD;
             break;
          }
