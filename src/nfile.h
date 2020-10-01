@@ -10,7 +10,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-__attribute__( ( sentinel ) ) int _nfile_concatPaths( char *buf, int maxLength, ... );
+__attribute__( ( sentinel ) ) int _nfile_concatPaths( char buf[static 1], int maxLength, const char path[static 1], ... );
 /**
  * @brief Concatenates paths. The result is always NULL terminated.
  *
@@ -20,7 +20,7 @@ __attribute__( ( sentinel ) ) int _nfile_concatPaths( char *buf, int maxLength, 
  *    @param ... Rest of the path components to be contacenated.
  *    @return 0 on success. -1 if the constructed path was longer than maxLength.
  */
-#define nfile_concatPaths( buf, maxLength, ... ) _nfile_concatPaths( buf, maxLength, ##__VA_ARGS__, NULL )
+#define nfile_concatPaths( buf, maxLength, path, ... ) _nfile_concatPaths( buf, maxLength, path, ##__VA_ARGS__, NULL )
 
 #define _nfile_unwrap( ... ) __VA_ARGS__
 

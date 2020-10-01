@@ -892,17 +892,17 @@ int nfile_isSeparator( uint32_t c )
 }
 
 
-int _nfile_concatPaths( char *buf, int maxLength, ... )
+int _nfile_concatPaths( char buf[static 1], int maxLength, const char path[static 1], ... )
 {
    char *bufPos;
    char *bufEnd;
-   char *section;
+   const char *section;
    va_list ap;
 
    bufPos = buf;
    bufEnd = buf + maxLength;
-   va_start( ap, maxLength );
-   section = va_arg( ap, char * );
+   va_start( ap, path );
+   section = path;
 
 #if DEBUGGING
    if ( section == NULL )
