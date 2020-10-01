@@ -61,11 +61,11 @@
 #define NDATA_SRC_DEFAULT 2 /**< Default derectory. (Set at compile time) */
 #define NDATA_SRC_BINARY  3 /**< Next to the Naev binary */
 
-#if DEBUGING
+#if DEBUGGING
 #define NDATA_SRC_SEARCH_START NDATA_SRC_CWD
-#else /* DEBUGING */
+#else /* DEBUGGING */
 #define NDATA_SRC_SEARCH_START NDATA_SRC_USER
-#endif /* DEBUGING */
+#endif /* DEBUGGING */
 
 
 /*
