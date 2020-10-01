@@ -160,9 +160,6 @@ const char* ndata_getPath (void)
 }
 
 
-#define NONDATA
-#include "nondata.c"
-
 /**
  * @brief Checks to see if a directory is an ndata.
  */

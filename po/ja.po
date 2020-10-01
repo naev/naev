@@ -37830,10 +37830,6 @@ msgstr ""
 msgid "   -G, --generate        regenerates the nebula (slow)"
 msgstr ""
 
-#: src/conf.c:106
-msgid "   -N, --nondata         do not use ndata and try to use laid out files"
-msgstr ""
-
 #: src/conf.c:107
 msgid ""
 "   -d, --datapath        specifies a custom path for all user data (saves, "

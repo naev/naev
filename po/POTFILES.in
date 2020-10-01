@@ -2488,7 +2488,6 @@ src/nlua_tk.c
 src/nlua_var.c
 src/nlua_vec2.c
 src/nmath.c
-src/nondata.c
 src/nopenal.c
 src/npc.c
 src/npng.c
