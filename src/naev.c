@@ -265,19 +265,6 @@ int main( int argc, char** argv )
    /* Set the configuration. */
    nsnprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
 
-#if HAS_MACOS
-   /* TODO get rid of this cruft ASAP. */
-   char oldconfig[PATH_MAX] = "";
-   if (!nfile_fileExists( buf )) {
-      char *home = SDL_getenv( "HOME" );
-      if (home != NULL) {
-         nsnprintf( oldconfig, PATH_MAX, "%s/.config/naev/"CONF_FILE, home );
-         if (!nfile_fileExists( oldconfig ))
-            oldconfig[0] = '\0';
-      }
-   }
-#endif /* HAS_MACOS */
-
    conf_loadConfig(buf); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
 
@@ -418,71 +405,6 @@ int main( int argc, char** argv )
       SDL_Delay( NAEV_INIT_DELAY - (SDL_GetTicks() - time_ms) );
    fps_init(); /* initializes the time_ms */
 
-#if HAS_MACOS
-   /* Tell the player to migrate their configuration files */
-   /* TODO get rid of this cruft ASAP. */
-   if ((oldconfig[0] != '\0') && (!conf.datapath)) {
-      char   path[ PATH_MAX ], *script, *home, *ndata_dir;
-      size_t scriptsize;
-      int ret;
-
-      ndata_dir = strdup( ndata_getPath() );
-      nsnprintf( path, PATH_MAX, "%s/naev-confupdate.sh", nfile_dirname( ndata_dir ) );
-      free( ndata_dir );
-      home = SDL_getenv("HOME");
-      ret = dialogue_YesNo( _("Warning"), _("Your configuration files are in a deprecated location and must be migrated:\n"
-            "   \ar%s\a0\n\n"
-            "The update script can likely be found in your Naev data directory:\n"
-            "   \ar%s\a0\n\n"
-            "Would you like to run it automatically?"), oldconfig, path );
-
-      /* Try to run the script. */
-      if (ret) {
-         ret = -1;
-         /* Running from ndata. */
-         if (ndata_getPath() != NULL) {
-            script = ndata_read( "naev-confupdate.sh", &scriptsize );
-            if (script != NULL)
-               ret = system(script);
-         }
-
-         /* Running from laid-out files or ndata_read failed. */
-         if ((nfile_fileExists(path)) && (ret == -1)) {
-            script = nfile_readFile( &scriptsize, path );
-            if (script != NULL)
-               ret = system(script);
-         }
-
-         /* We couldn't find the script. */
-         if (ret == -1) {
-            dialogue_alert( _("The update script was not found at:\n\ar%s\a0\n\n"
-                  "Please locate and run it manually."), path );
-         }
-         /* Restart, as the script succeeded. */
-         else if (!ret) {
-            dialogue_msg( _("Update Completed"),
-                  _("Configuration files were successfully migrated. Naev will now restart.") );
-            execv(argv[0], argv);
-         }
-         else { /* I sincerely hope this else is never hit. */
-            dialogue_alert( _("The update script encountered an error. Please exit Naev and move your config and save files manually:\n\n"
-                  "\ar%s/%s\a0 =>\n   \ag%s\a0\n\n"
-                  "\ar%s/%s\a0 =>\n   \ag%s\a0\n\n"
-                  "\ar%s/%s\a0 =>\n   \ag%snebula/\a0\n\n"),
-                  home, ".naev/conf.lua", nfile_configPath(),
-                  home, ".naev/{saves,screenshots}/", nfile_dataPath(),
-                  home, ".naev/gen/*.png", nfile_cachePath() );
-         }
-      }
-      else {
-         dialogue_alert(
-               _("To manually migrate your configuration files "
-               "please exit Naev and run the update script, "
-               "likely found in your Naev data directory:\n"
-               "   \ar%s/naev-confupdate.sh\a0"), home, path );
-      }
-   }
-#endif /* HAS_MACOS */
 
    /*
     * main loop
