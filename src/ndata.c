@@ -71,10 +71,10 @@
 /*
  * ndata archive.
  */
-static char* ndata_filename         = NULL; /**< ndata archive name. */
-static SDL_mutex *ndata_lock        = NULL; /**< Lock for ndata creation. */
-static int ndata_loadedfile         = 0;    /**< Already loaded a file? */
-static int ndata_source             = NDATA_SRC_SEARCH_START;
+static char      *ndata_dir        = NULL; /**< ndata archive name. */
+static SDL_mutex *ndata_lock       = NULL; /**< Lock for ndata creation. */
+static int        ndata_loadedfile = 0;    /**< Already loaded a file? */
+static int        ndata_source     = NDATA_SRC_SEARCH_START;
 
 
 /*
@@ -98,16 +98,16 @@ int ndata_setPath( const char *path )
    int len;
    char *buf;
 
-   if ( ndata_filename != NULL ) {
-      free( ndata_filename );
-      ndata_filename = NULL;
+   if ( ndata_dir != NULL ) {
+      free( ndata_dir );
+      ndata_dir = NULL;
    }
 
    if ( path != NULL && ndata_isndata( path ) ) {
       len            = strlen( path );
-      ndata_filename = strdup( path );
-      if ( nfile_isSeparator( ndata_filename[ len - 1 ] ) )
-         ndata_filename[ len - 1 ] = '\0';
+      ndata_dir      = strdup( path );
+      if ( nfile_isSeparator( ndata_dir[ len - 1 ] ) )
+         ndata_dir[ len - 1 ] = '\0';
       ndata_source = NDATA_SRC_USER;
    }
    else {
@@ -116,7 +116,7 @@ int ndata_setPath( const char *path )
       switch ( ndata_source ) {
       case NDATA_SRC_CWD:
          if (ndata_isndata( "." )) {
-            ndata_filename = ".";
+            ndata_dir    = ".";
             ndata_source = NDATA_SRC_CWD;
             break;
          }
@@ -125,16 +125,16 @@ int ndata_setPath( const char *path )
          // This already didn't work out when we checked the provided path.
       case NDATA_SRC_DEFAULT:
          if ( ndata_isndata( NDATA_DEF ) ) {
-            ndata_filename = strdup( NDATA_DEF );
-            ndata_source   = NDATA_SRC_DEFAULT;
+            ndata_dir    = strdup( NDATA_DEF );
+            ndata_source = NDATA_SRC_DEFAULT;
             break;
          }
          __attribute__( ( fallthrough ) );
       case NDATA_SRC_BINARY:
          buf            = strdup( naev_binary() );
-         ndata_filename = ndata_findInDir( nfile_dirname( buf ) );
+         ndata_dir      = ndata_findInDir( nfile_dirname( buf ) );
          free( buf );
-         if ( ndata_filename != NULL ) {
+         if ( ndata_dir != NULL ) {
             ndata_source = NDATA_SRC_BINARY;
             break;
          }
@@ -145,7 +145,7 @@ int ndata_setPath( const char *path )
       }
    }
 
-   LOG(_("Found ndata: %s"), ndata_filename);
+   LOG( _( "Found ndata: %s" ), ndata_dir );
    ndata_testVersion();
 
    return 0;
@@ -155,11 +155,10 @@ int ndata_setPath( const char *path )
 /**
  * @brief Get the current ndata path.
  */
-const char* ndata_getPath (void)
+const char *ndata_getPath( void )
 {
-   return ndata_filename;
+   return ndata_dir;
 }
-
 
 /**
  * @brief Checks to see if a directory is an ndata.
@@ -294,9 +293,9 @@ int ndata_open (void)
  */
 void ndata_close (void)
 {
-   if ( ndata_filename != NULL ) {
-      free( ndata_filename );
-      ndata_filename = NULL;
+   if ( ndata_dir != NULL ) {
+      free( ndata_dir );
+      ndata_dir = NULL;
    }
 
    /* Destroy the lock. */
@@ -322,9 +321,9 @@ const char* ndata_name (void)
  *    @param filename Name of the file to check.
  *    @return 1 if the file exists, 0 otherwise.
  */
-int ndata_exists( const char* filename )
+int ndata_exists( const char *filename )
 {
-   return nfile_fileExists( ndata_filename, filename );
+   return nfile_fileExists( ndata_dir, filename );
 }
 
 
@@ -339,7 +338,7 @@ void* ndata_read( const char* filename, size_t *filesize )
 {
    char *buf;
 
-   buf = nfile_readFile( filesize, ndata_filename, filename );
+   buf = nfile_readFile( filesize, ndata_dir, filename );
    if ( buf != NULL ) {
       ndata_loadedfile = 1;
       return buf;
@@ -363,7 +362,7 @@ SDL_RWops *ndata_rwops( const char* filename )
    char       path[ PATH_MAX ];
    SDL_RWops *rw;
 
-   if ( nfile_concatPaths( path, PATH_MAX, ndata_filename, filename ) ) {
+   if ( nfile_concatPaths( path, PATH_MAX, ndata_dir, filename ) ) {
       WARN( _( "Unable to open file '%s': file path too long." ), filename );
       return NULL;
    }
@@ -385,9 +384,9 @@ SDL_RWops *ndata_rwops( const char* filename )
  *
  *    @sa nfile_readDir
  */
-char** ndata_list( const char* path, size_t* nfiles )
+char **ndata_list( const char *path, size_t *nfiles )
 {
-   return nfile_readDir( nfiles, ndata_filename, path );
+   return nfile_readDir( nfiles, ndata_dir, path );
 }
 
 
@@ -398,7 +397,7 @@ char** ndata_list( const char* path, size_t* nfiles )
  */
 char **ndata_listRecursive( const char *path )
 {
-   return nfile_readDirRecursive( ndata_filename, path );
+   return nfile_readDirRecursive( ndata_dir, path );
 }
 
 
