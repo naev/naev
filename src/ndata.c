@@ -125,7 +125,6 @@ int ndata_setPath( const char *path )
          __attribute__( ( fallthrough ) );
       case NDATA_SRC_USER:
          // This already didn't work out when we checked the provided path.
-         __attribute__( ( fallthrough ) );
       case NDATA_SRC_DEFAULT:
          if ( ndata_isndata( NDATA_DEF ) ) {
             ndata_filename = strdup( NDATA_DEF );
