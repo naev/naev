@@ -115,8 +115,8 @@ int ndata_setPath( const char *path )
 
       switch ( ndata_source ) {
       case NDATA_SRC_CWD:
-         ndata_filename = ndata_findInDir( "." );
-         if ( ndata_filename != NULL ) {
+         if (ndata_isndata( "." )) {
+            ndata_filename = ".";
             ndata_source = NDATA_SRC_CWD;
             break;
          }
@@ -145,6 +145,7 @@ int ndata_setPath( const char *path )
       }
    }
 
+   LOG(_("Found ndata: %s"), ndata_filename);
    ndata_testVersion();
 
    return 0;
@@ -215,7 +216,6 @@ static char *ndata_findInDir( const char *path )
          ndata_file  = malloc( l );
          nsnprintf( ndata_file, l, "%s/%s", path, files[i] );
 
-         /* Must be zip file. */
          if ( !ndata_isndata( ndata_file ) ) {
             free(ndata_file);
             ndata_file = NULL;
@@ -282,7 +282,8 @@ int ndata_open (void)
    ndata_lock = SDL_CreateMutex();
 
    /* Set path to configuration. */
-   ndata_setPath(conf.ndata);
+   if (ndata_setPath(conf.ndata))
+      ERR(_("Couldn't find ndata"));
 
    return 0;
 }
