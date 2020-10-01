@@ -83,8 +83,6 @@ static int ndata_source             = NDATA_SRC_SEARCH_START;
 static void ndata_testVersion (void);
 static char *ndata_findInDir( const char *path );
 static int ndata_isndata( const char *path );
-static int ndata_prompt( void *data );
-static int ndata_notfound (void);
 
 
 /**
@@ -162,116 +160,8 @@ const char* ndata_getPath (void)
 }
 
 
-static int ndata_prompt( void *data )
-{
-   int ret;
-
-   ret = SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, _("Missing Data"),
-         _("Ndata could not be found. If you have the ndata file, drag\n"
-         "and drop it onto the 'NAEV - INSERT NDATA' window.\n\n"
-         "If you don't have the ndata, download it from naev.org"), (SDL_Window*)data );
-
-   return ret;
-}
-
-
 #define NONDATA
 #include "nondata.c"
-/**
- * @brief Displays an ndata not found message and dies.
- */
-static int ndata_notfound (void)
-{
-   SDL_Surface *screen;
-   SDL_Event event;
-   SDL_Surface *sur;
-   SDL_RWops *rw;
-   npng_t *npng;
-   const char *title = _("NAEV - INSERT NDATA");
-   int found;
-
-   /* Make sure it's initialized. */
-   if (SDL_InitSubSystem(SDL_INIT_VIDEO) != 0) {
-      WARN(_("Unable to init SDL Video subsystem"));
-      return 0;
-   }
-
-   /* Create the window. */
-   SDL_Window *window;
-   SDL_Renderer *renderer;
-   window = SDL_CreateWindow( title,
-         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-         320, 240, SDL_WINDOW_SHOWN);
-   renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_SOFTWARE );
-   screen = SDL_GetWindowSurface( window );
-
-   /* Create the surface. */
-   rw    = SDL_RWFromConstMem( nondata_png, sizeof(nondata_png) );
-   npng  = npng_open( rw );
-   sur   = npng_readSurface( npng, 0, 0 );
-   npng_close( npng );
-   SDL_RWclose( rw );
-
-   /* Render. */
-   SDL_BlitSurface( sur, NULL, screen, NULL );
-   SDL_EventState( SDL_DROPFILE, SDL_ENABLE );
-#if SDL_VERSION_ATLEAST(2,0,2)
-   SDL_Thread *thread = SDL_CreateThread( &ndata_prompt, "Prompt", window );
-   SDL_DetachThread(thread);
-#else /* SDL_VERSION_ATLEAST(2,0,2) */
-   /* Ignore return value because SDL_DetachThread is only present in
-    * SDL >= 2.0.2 */
-   SDL_CreateThread( &ndata_prompt, "Prompt", window );
-#endif /* SDL_VERSION_ATLEAST(2,0,2) */
-
-   /* TODO substitute. */
-   SDL_RenderPresent( renderer );
-
-   found = 0;
-
-   /* Infinite loop. */
-   while (1) {
-      SDL_WaitEvent(&event);
-
-      /* Listen on a certain amount of events. */
-      if (event.type == SDL_QUIT)
-         exit(1);
-      else if (event.type == SDL_KEYDOWN) {
-         switch (event.key.keysym.sym) {
-            case SDLK_ESCAPE:
-            case SDLK_q:
-               exit(1);
-
-            default:
-               break;
-         }
-      }
-      else if (event.type == SDL_DROPFILE) {
-         found = ndata_isndata( event.drop.file );
-         if (found) {
-            ndata_setPath( event.drop.file );
-
-            /* Minor hack so ndata filename is saved in conf.lua */
-            conf.ndata = strdup( event.drop.file );
-            free( event.drop.file );
-            break;
-         }
-         else
-            free( event.drop.file );
-      }
-
-      /* Render. */
-      SDL_BlitSurface( sur, NULL, screen, NULL );
-      /* TODO substitute. */
-      SDL_RenderPresent( renderer );
-   }
-
-   SDL_EventState( SDL_DROPFILE, SDL_DISABLE );
-   SDL_DestroyWindow(window);
-
-   return found;
-}
-
 
 /**
  * @brief Checks to see if a directory is an ndata.
