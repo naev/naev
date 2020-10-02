@@ -2111,6 +2111,10 @@ static int outfit_parse( Outfit* temp, const char* file )
    char *buf = ndata_read( file, &bufsize );
 
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+   if (doc == NULL) {
+      WARN(_("%s file is invalid xml!"),file);
+      free(buf);
+   }
 
    parent = doc->xmlChildrenNode; /* first system node */
    if (parent == NULL) {
