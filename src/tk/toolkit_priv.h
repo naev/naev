@@ -150,6 +150,7 @@ typedef struct Window_ {
 
    unsigned int id; /**< Unique ID. */
    char *name; /**< Window name - should be unique. */
+   char *displayname; /**< Display name obtained with gettext. */
    unsigned int flags; /**< Window flags. */
    int idgen; /**< ID generator for widgets. */
 
