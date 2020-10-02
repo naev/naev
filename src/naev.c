@@ -296,8 +296,11 @@ int main( int argc, char** argv )
       lang = "C";
    else
       lang = conf.language;
+   setenv( "LANGUAGE", lang, 1 );
+   /*
    if (setlocale( LC_ALL, lang )==NULL)
       WARN(_("Unable to set the locale to '%s'!"), lang );
+   */
    if (setlocale( LC_NUMERIC, "C" )==NULL) /* Disable numeric locale part. */
       WARN(_("Unable to set LC_NUMERIC to 'C'!"));
    nsnprintf( langbuf, sizeof(langbuf), "%s/dat/gettext/", ndata_getPath() );
