@@ -2331,7 +2331,7 @@ static int outfit_loadDir( char *dir )
       ret = outfit_parse( &array_grow(&outfit_stack), outfit_files[i] );
       if (ret < 0) {
          n = array_size(outfit_stack);
-         array_erase( &outfit_stack, &outfit_stack[n], &outfit_stack[n+1] );
+         array_erase( &outfit_stack, &outfit_stack[n-1], &outfit_stack[n] );
       }
       free( outfit_files[i] );
    }
