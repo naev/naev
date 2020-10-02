@@ -2445,6 +2445,12 @@ int outfit_mapParse (void)
 
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
+      if (doc == NULL) {
+         WARN(_("%s file is invalid xml!"), file);
+         free(file);
+         free(buf);
+         continue;
+      }
 
       node = doc->xmlChildrenNode; /* first system node */
       if (node == NULL) {
@@ -2452,7 +2458,7 @@ int outfit_mapParse (void)
          free(file);
          xmlFreeDoc(doc);
          free(buf);
-         return -1;
+         continue;
       }
 
       n = xml_nodeProp( node,"name" );
