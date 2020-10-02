@@ -296,9 +296,9 @@ int main( int argc, char** argv )
       lang = "C";
    else
       lang = conf.language;
-#if defined HAVE_DECL_SETENV
+#if HAVE_DECL_SETENV
    setenv( "LANGUAGE", lang, 1 );
-#elif defined HAVE_DECL__PUTENV_S
+#elif HAVE_DECL__PUTENV_S
    _putenv_s( "LANGUAGE", lang );
 #else
    nsprintf( langbuf, sizeof(langbuf), "LANGUAGE=%s", lang );
