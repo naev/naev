@@ -2114,6 +2114,7 @@ static int outfit_parse( Outfit* temp, const char* file )
    if (doc == NULL) {
       WARN(_("%s file is invalid xml!"),file);
       free(buf);
+      return -1;
    }
 
    parent = doc->xmlChildrenNode; /* first system node */
