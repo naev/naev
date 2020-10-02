@@ -296,7 +296,12 @@ int main( int argc, char** argv )
       lang = "C";
    else
       lang = conf.language;
+#if defined HAVE_DECL_SETENV
    setenv( "LANGUAGE", lang, 1 );
+#else /* defined HAVE_DECL_SETENV */
+   nsprintf( langbuf, sizeof(langbuf), "LANGUAGE=%s", lang );
+   putenv( langbuf );
+#endif /* defined HAVE_DECL_SETENV */
    /*
    if (setlocale( LC_ALL, lang )==NULL)
       WARN(_("Unable to set the locale to '%s'!"), lang );

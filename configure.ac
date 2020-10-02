@@ -280,6 +280,7 @@ AC_SUBST([ndata_path])
 
 # "Newish" GCC
 AC_CHECK_HEADERS([stdalign.h])
+AC_CHECK_DECLS([setenv])
 
 # SDL
 AM_PATH_SDL2(2.0.0, [], [
