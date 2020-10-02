@@ -2323,12 +2323,16 @@ if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< 
  */
 static int outfit_loadDir( char *dir )
 {
-   int    i;
+   int i, n, ret;
    char **outfit_files;
 
    outfit_files = ndata_listRecursive( dir );
    for ( i = 0; i < array_size( outfit_files ); i++ ) {
-      outfit_parse( &array_grow(&outfit_stack), outfit_files[i] );
+      ret = outfit_parse( &array_grow(&outfit_stack), outfit_files[i] );
+      if (ret < 0) {
+         n = array_size(outfit_stack);
+         array_erase( &outfit_stack, &outfit_stack[n], &outfit_stack[n+1] );
+      }
       free( outfit_files[i] );
    }
    array_free( outfit_files );
