@@ -53,6 +53,7 @@ extras/steam/output
 extras/windows/installer/bin
 dist/*
 dat/LANGUAGES
+dat/gettext
 release.log
 Naev.app
 Naikari.app
