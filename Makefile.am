@@ -43,6 +43,9 @@ if HAVE_NLS
 if HAVE_DATA
 pot: $(LANGUAGEFILE) $(XMLPOT) $(NAEV)
 	$(MAKE) -C po $(PACKAGE).pot
+	$(MAKE) -C po
+	./utils/gettext.sh
+
 
 $(LANGUAGEFILE): po/LINGUAS
 	tail -n +2 $< > $@
