@@ -176,7 +176,7 @@ void naev_quit (void)
  */
 int main( int argc, char** argv )
 {
-   char buf[PATH_MAX];
+   char buf[PATH_MAX], langbuf[PATH_MAX], *lang;
 
    if (!log_isTerminal())
       log_copy(1);
@@ -197,7 +197,8 @@ int main( int argc, char** argv )
     * numeric type of the locale. */
    setlocale( LC_ALL, "" );
    setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
-   bindtextdomain( PACKAGE_NAME, LOCALEDIR );
+   /* We haven't loaded the ndata yet, so just try a path quickly. */
+   bindtextdomain( PACKAGE_NAME, "dat/gettext/" );
    //bindtextdomain("naev", "po/");
    textdomain( PACKAGE_NAME );
 #endif /* defined ENABLE_NLS && ENABLE_NLS */
@@ -275,19 +276,6 @@ int main( int argc, char** argv )
    else
       log_purge();
 
-#if defined ENABLE_NLS && ENABLE_NLS
-   /* Try to set the language again if Naev is attempting to override the locale stuff.
-    * This is done late because this is the first stage at which we have the conf file
-    * fully loaded. */
-   if (conf.language != NULL) {
-      setlocale( LC_ALL, (strcmp(conf.language,"en")==0) ? "C" : conf.language );
-      setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
-      bindtextdomain( PACKAGE_NAME, LOCALEDIR );
-      textdomain( PACKAGE_NAME );
-      DEBUG(_("Reset language to \"%s\""), conf.language);
-   }
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
-
    /* Enable FPU exceptions. */
 #if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING)
    if (conf.fpu_except)
@@ -297,6 +285,26 @@ int main( int argc, char** argv )
    /* Open data. */
    if (ndata_open() != 0)
       ERR( _("Failed to open ndata.") );
+
+#if defined ENABLE_NLS && ENABLE_NLS
+   /* Try to set the language again if Naev is attempting to override the locale stuff.
+    * This is done late because this is the first stage at which we have the conf file
+    * fully loaded. */
+   if (conf.language == NULL)
+      lang = "";
+   else if (strcmp(conf.language,"en")==0)
+      lang = "C";
+   else
+      lang = conf.language;
+   if (setlocale( LC_ALL, lang )==NULL)
+      WARN(_("Unable to set the locale to '%s'!"), lang );
+   if (setlocale( LC_NUMERIC, "C" )==NULL) /* Disable numeric locale part. */
+      WARN(_("Unable to set LC_NUMERIC to 'C'!"));
+   nsnprintf( langbuf, sizeof(langbuf), "%s/dat/gettext/", ndata_getPath() );
+   bindtextdomain( PACKAGE_NAME, langbuf );
+   textdomain( PACKAGE_NAME );
+   DEBUG(_("Reset language to \"%s\""), lang);
+#endif /* defined ENABLE_NLS && ENABLE_NLS */
 
    /* Load the start info. */
    if (start_load())
