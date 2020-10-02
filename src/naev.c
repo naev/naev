@@ -298,14 +298,12 @@ int main( int argc, char** argv )
       lang = conf.language;
 #if defined HAVE_DECL_SETENV
    setenv( "LANGUAGE", lang, 1 );
-#else /* defined HAVE_DECL_SETENV */
-#if defined HAVE_DECL__PUTENV_S
+#elif defined HAVE_DECL__PUTENV_S
    _putenv_s( "LANGUAGE", lang );
-#else /* defined HAVE_DECL__PUTENV_S */
+#else
    nsprintf( langbuf, sizeof(langbuf), "LANGUAGE=%s", lang );
    putenv( langbuf );
-#endif /* defined HAVE_DECL__PUTENV_S */
-#endif /* defined HAVE_DECL_SETENV */
+#endif
    /*
    if (setlocale( LC_ALL, lang )==NULL)
       WARN(_("Unable to set the locale to '%s'!"), lang );
