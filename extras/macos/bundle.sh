@@ -18,6 +18,8 @@ rm -fr Naev.app
 
 # Build basic structure.
 mkdir -p Naev.app/Contents/{MacOS,Resources,Frameworks}/
+mkdir -p Naev.app/Contents/Resources/ndata
+
 cp extras/macos/Info.plist Naev.app/Contents/
 cp extras/macos/naev.icns Naev.app/Contents/Resources/
 cp src/naev Naev.app/Contents/MacOS/
