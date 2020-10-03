@@ -182,7 +182,7 @@ static int ndata_isndata( const char *dir )
    if ( !nfile_dirExists( dir ) )
       return 0;
 
-   /* Verify that the folder contains dat/start.xml
+   /* Verify that the directory contains dat/start.xml
     * This is arbitrary, but it's one of the many hard-coded files that must
     * be present for Naev to run.
     */
@@ -229,7 +229,7 @@ static void ndata_testVersion (void)
 
 
 /**
- * @brief Opens the ndata folder.
+ * @brief Opens the ndata directory.
  *
  *    @return 0 on success.
  */
@@ -247,7 +247,7 @@ int ndata_open (void)
 
 
 /**
- * @brief Closes and cleans up the ndata folder.
+ * @brief Closes and cleans up the ndata directory.
  */
 void ndata_close (void)
 {
