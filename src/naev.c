@@ -154,6 +154,7 @@ static void fps_control (void);
 static void update_all (void);
 static void render_all (void);
 /* Misc. */
+int nsetenv( const char *name, const char *value, int overwrite );
 void loadscreen_render( double done, const char *msg ); /* nebula.c */
 void main_loop( int update ); /* dialogue.c */
 
@@ -198,7 +199,8 @@ int main( int argc, char** argv )
    setlocale( LC_ALL, "" );
    setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
    /* We haven't loaded the ndata yet, so just try a path quickly. */
-   bindtextdomain( PACKAGE_NAME, "dat/gettext/" );
+   nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, naev_binary() );
+   bindtextdomain( PACKAGE_NAME, langbuf );
    //bindtextdomain("naev", "po/");
    textdomain( PACKAGE_NAME );
 #endif /* defined ENABLE_NLS && ENABLE_NLS */
@@ -223,7 +225,7 @@ int main( int argc, char** argv )
 
 #if HAS_UNIX
    /* Set window class and name. */
-   setenv("SDL_VIDEO_X11_WMCLASS", APPNAME, 0);
+   nsetenv("SDL_VIDEO_X11_WMCLASS", APPNAME, 0);
 #endif /* HAS_UNIX */
 
    /* Must be initialized before input_init is called. */
@@ -296,21 +298,14 @@ int main( int argc, char** argv )
       lang = "C";
    else
       lang = conf.language;
-#if HAVE_DECL_SETENV
-   setenv( "LANGUAGE", lang, 1 );
-#elif HAVE_DECL__PUTENV_S
-   _putenv_s( "LANGUAGE", lang );
-#else
-   nsprintf( langbuf, sizeof(langbuf), "LANGUAGE=%s", lang );
-   putenv( langbuf );
-#endif
+   nsetenv( "LANGUAGE", lang, 1 );
    /*
    if (setlocale( LC_ALL, lang )==NULL)
       WARN(_("Unable to set the locale to '%s'!"), lang );
    */
    if (setlocale( LC_NUMERIC, "C" )==NULL) /* Disable numeric locale part. */
       WARN(_("Unable to set LC_NUMERIC to 'C'!"));
-   nsnprintf( langbuf, sizeof(langbuf), "%s/dat/gettext/", ndata_getPath() );
+   nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, ndata_getPath() );
    bindtextdomain( PACKAGE_NAME, langbuf );
    textdomain( PACKAGE_NAME );
    DEBUG(_("Reset language to \"%s\""), lang);
@@ -1268,6 +1263,29 @@ int naev_versionCompare( int version[3] )
 char *naev_binary (void)
 {
    return binary_path;
+}
+
+
+/**
+ * @brief Sets an environment variable.
+ */
+int nsetenv( const char *name, const char *value, int overwrite )
+{
+#if HAVE_DECL_SETENV
+   setenv( "LANGUAGE", lang, 1 );
+#elif HAVE_DECL__PUTENV_S
+   int errcode = 0;
+   if(!overwrite) {
+      size_t envsize = 0;
+      errcode = getenv_s(&envsize, NULL, 0, name);
+      if(errcode || envsize) return errcode;
+   }
+   return _putenv_s(name, value);
+#else
+   char buf[PATH_MAX];
+   nsprintf( buf, sizeof(buf), "LANGUAGE=%s", lang );
+   putenv( buf );
+#endif
 }
 
 
