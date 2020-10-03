@@ -29,14 +29,15 @@ endif
 NAEV	     = $(PACKAGE)$(EXEEXT)
 
 VERSIONFILE = VERSION
+VERSIONDATAFILE = dat/VERSION
 LANGUAGEFILE = $(top_srcdir)/dat/LANGUAGES
 
 EXTRA_DIST = build/config.rpath LICENSE extras naev.desktop naev.appdata.xml
-CLEANFILES = $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE)
+CLEANFILES = $(NAEV) $(VERSIONFILE) $(VERSIONDATAFILE) $(LANGUAGEFILE)
 
 .PHONY: pot docs utils help install-ndata soundtrack
 
-all-local: $(NAEV) pot $(VERSIONFILE)
+all-local: $(NAEV) pot $(VERSIONFILE) $(VERSIONDATAFILE)
 
 if HAVE_NLS
 
@@ -65,6 +66,9 @@ $(NAEV):
 	$(LN_S) "src/$(NAEV)" "$(NAEV)"
 
 $(VERSIONFILE): src/config.h
+	echo $(VERSION) > $@
+
+$(VERSIONDATAFILE): src/config.h
 	echo $(VERSION) > $@
 
 if HAVE_UTILS
