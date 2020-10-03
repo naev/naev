@@ -70,13 +70,13 @@ pip3 install mingw-ldd
 # Move compiled binary to staging folder.
 
 echo "creating staging area"
-mkdir -p extras/windows/installer/bin
+mkdir -p extras/windows/installer/bin/ndata
 
 # Move data to staging folder
 echo "moving data to staging area"
-cp -r dat/ extras/windows/installer/bin
-cp AUTHORS extras/windows/installer/bin
-cp VERSION extras/windows/installer/bin
+cp -r dat/ extras/windows/installer/bin/ndata
+cp AUTHORS extras/windows/installer/bin/ndata
+cp VERSION extras/windows/installer/bin/ndata
 
 # Collect DLLs
  
