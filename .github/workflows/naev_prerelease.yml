@@ -100,15 +100,15 @@ jobs:
           VERSION="${BASEVER}.0-beta.${BETAVER}"
         fi 
 
-        mkdir -p dist/release/naev-$VERSION-linux-x86-64
+        mkdir -p dist/release/naev-$VERSION-linux-x86-64/ndata
         mkdir -p dist/release/tar
 
         mv src/naev dist/release/naev-$VERSION-linux-x86-64/naev-$VERSION-linux-x86-64
         chmod +x dist/release/naev-$VERSION-linux-x86-64/naev-$VERSION-linux-x86-64
 
-        cp -r dat/ dist/release/naev-$VERSION-linux-x86-64
-        cp AUTHORS dist/release/naev-$VERSION-linux-x86-64
-        cp VERSION dist/release/naev-$VERSION-linux-x86-64
+        cp -r dat/ dist/release/naev-$VERSION-linux-x86-64/ndata
+        cp AUTHORS dist/release/naev-$VERSION-linux-x86-64/ndata
+        cp VERSION dist/release/naev-$VERSION-linux-x86-64/ndata
 
         cd dist/release
         tar -czvf linux-x86-64.tar.gz naev-$VERSION-linux-x86-64
@@ -204,9 +204,9 @@ jobs:
         mkdir -p dist/release
 
         ./extras/macos/bundle.sh
-        cp AUTHORS Naev.app/Contents/Resources/
-        cp VERSION Naev.app/Contents/Resources/
-        cp -r dat/ Naev.app/Contents/Resources/dat/
+        cp AUTHORS Naev.app/Contents/Resources/ndata/
+        cp VERSION Naev.app/Contents/Resources/ndata/
+        cp -r dat/ Naev.app/Contents/Resources/ndata/
         zip -r dist/release/naev-macos.zip Naev.app/*
 
     - name: Upload Artifact
