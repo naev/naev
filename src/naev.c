@@ -1272,10 +1272,10 @@ char *naev_binary (void)
 int nsetenv( const char *name, const char *value, int overwrite )
 {
 #if HAVE_DECL_SETENV
-   setenv( "LANGUAGE", lang, 1 );
+   return setenv( name, value, overwrite );
 #elif HAVE_DECL__PUTENV_S
    int errcode = 0;
-   if(!overwrite) {
+   if (!overwrite) {
       size_t envsize = 0;
       errcode = getenv_s(&envsize, NULL, 0, name);
       if(errcode || envsize) return errcode;
@@ -1283,8 +1283,8 @@ int nsetenv( const char *name, const char *value, int overwrite )
    return _putenv_s(name, value);
 #else
    char buf[PATH_MAX];
-   nsprintf( buf, sizeof(buf), "LANGUAGE=%s", lang );
-   putenv( buf );
+   nsprintf( buf, sizeof(buf), "%s=%s", name, value );
+   return putenv( buf );
 #endif
 }
 
