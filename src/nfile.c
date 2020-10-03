@@ -16,11 +16,13 @@
 #include "naev.h"
 #include "conf.h"
 
-#include <stdio.h>
 #include "nstring.h"
-#include <stdarg.h>
-#include <stdlib.h>
 #include <dirent.h>
+#include <limits.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <sys/stat.h>
 #if HAS_POSIX
 #include <sys/types.h>
@@ -363,10 +365,7 @@ static int mkpath( const char *path )
 
 
 /**
- * @brief Creates a directory if it doesn't exist.
- *
- *    @param path Path to create directory if it doesn't exist.
- *    @return 0 on success.
+ * @see nfile_dirMakeExist
  */
 int _nfile_dirMakeExist( const char *path )
 {
@@ -392,9 +391,6 @@ int _nfile_dirMakeExist( const char *path )
 }
 
 
-/**
- * @brief Checks to see if a directory exists.
- */
 int _nfile_dirExists( const char *path )
 {
    DIR *d;
@@ -629,7 +625,7 @@ char **_nfile_readDirRecursive( char ***_files, const char *base_dir, const char
    for ( size_t i = 0; i < n_cur_path_contents; i += 1 ) {
       if ( sub_dir == NULL )
          child_path = cur_path_contents[ i ];
-      else if ( nfile_concatPaths( child_path_buf, PATH_MAX, sub_dir, cur_path_contents[ i ] ) ) {
+      else if ( nfile_concatPaths( child_path_buf, PATH_MAX, sub_dir, cur_path_contents[ i ] ) < 0 ) {
          WARN( _( "Error while opening %s/%s: Path is too long" ), sub_dir, cur_path_contents[ i ] );
          free( cur_path_contents );
          return NULL;
@@ -939,5 +935,5 @@ int _nfile_concatPaths( char buf[static 1], int maxLength, const char path[stati
    if ( section != NULL )
       return -1;
 
-   return 0;
+   return bufPos - buf;
 }

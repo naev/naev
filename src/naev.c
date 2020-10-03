@@ -45,60 +45,61 @@
 #endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 
 /* local */
-#include "conf.h"
-#include "physics.h"
-#include "opengl.h"
-#include "font.h"
-#include "ship.h"
-#include "pilot.h"
-#include "fleet.h"
-#include "player.h"
-#include "input.h"
-#include "joystick.h"
-#include "space.h"
-#include "rng.h"
 #include "ai.h"
-#include "outfit.h"
-#include "weapon.h"
-#include "faction.h"
-#include "nxml.h"
-#include "toolkit.h"
-#include "pause.h"
-#include "sound.h"
-#include "music.h"
-#include "spfx.h"
-#include "damagetype.h"
-#include "economy.h"
-#include "menu.h"
-#include "mission.h"
-#include "nlua_misn.h"
-#include "nfile.h"
-#include "nebula.h"
-#include "unidiff.h"
-#include "ndata.h"
-#include "gui.h"
-#include "news.h"
-#include "nlua_var.h"
-#include "map.h"
-#include "map_system.h"
-#include "event.h"
-#include "cond.h"
-#include "land.h"
-#include "tech.h"
-#include "hook.h"
-#include "npc.h"
-#include "console.h"
-#include "npng.h"
-#include "dev.h"
 #include "background.h"
 #include "camera.h"
-#include "map_overlay.h"
-#include "start.h"
-#include "threadpool.h"
-#include "load.h"
-#include "options.h"
+#include "cond.h"
+#include "conf.h"
+#include "console.h"
+#include "damagetype.h"
+#include "dev.h"
 #include "dialogue.h"
+#include "economy.h"
+#include "env.h"
+#include "event.h"
+#include "faction.h"
+#include "fleet.h"
+#include "font.h"
+#include "gui.h"
+#include "hook.h"
+#include "input.h"
+#include "joystick.h"
+#include "land.h"
+#include "load.h"
+#include "map.h"
+#include "map_overlay.h"
+#include "map_system.h"
+#include "menu.h"
+#include "mission.h"
+#include "music.h"
+#include "ndata.h"
+#include "nebula.h"
+#include "news.h"
+#include "nfile.h"
+#include "nlua_misn.h"
+#include "nlua_var.h"
+#include "npc.h"
+#include "npng.h"
+#include "nxml.h"
+#include "opengl.h"
+#include "options.h"
+#include "outfit.h"
+#include "pause.h"
+#include "physics.h"
+#include "pilot.h"
+#include "player.h"
+#include "rng.h"
+#include "ship.h"
 #include "slots.h"
+#include "sound.h"
+#include "space.h"
+#include "spfx.h"
+#include "start.h"
+#include "tech.h"
+#include "threadpool.h"
+#include "toolkit.h"
+#include "unidiff.h"
+#include "weapon.h"
 
 #if defined ENABLE_NLS && ENABLE_NLS
 #include <locale.h>
@@ -180,6 +181,8 @@ int main( int argc, char** argv )
 {
    char buf[PATH_MAX], langbuf[PATH_MAX], *lang;
 
+   env_detect( argv );
+
    if (!log_isTerminal())
       log_copy(1);
 #if HAS_WIN32
@@ -207,13 +210,18 @@ int main( int argc, char** argv )
 #endif /* defined ENABLE_NLS && ENABLE_NLS */
 
    /* Save the binary path. */
-   binary_path = strdup(argv[0]);
+   binary_path = strdup( env.argv0 );
 
    /* Print the version */
    LOG( " %s v%s (%s)", APPNAME, naev_version(0), HOST );
 #ifdef GIT_COMMIT
    DEBUG( _(" git HEAD at %s"), GIT_COMMIT );
 #endif /* GIT_COMMIT */
+
+   if ( env.isAppImage )
+      LOG( "AppImage detected. Running from: %s", env.appdir );
+   else
+      DEBUG( "AppImage not detected." );
 
    /* Initializes SDL for possible warnings. */
    SDL_Init(0);

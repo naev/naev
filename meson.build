@@ -41,6 +41,7 @@ source = files(
    'src/dev_uniedit.c',
    'src/dialogue.c',
    'src/economy.c',
+   'src/env.c',
    'src/equipment.c',
    'src/escort.c',
    'src/event.c',
