@@ -52,9 +52,9 @@
 #define BACKEND_DEFAULT                      "sdlmix"
 #endif /* USE_OPENAL */
 /* Editor Options */
-#define DEV_SAVE_SYSTEM_DEFAULT           "dat/ssys/"
-#define DEV_SAVE_ASSET_DEFAULT            "dat/assets/"
-#define DEV_SAVE_MAP_DEFAULT              "dat/outfits/maps/"
+#define DEV_SAVE_SYSTEM_DEFAULT           "ssys/"
+#define DEV_SAVE_ASSET_DEFAULT            "assets/"
+#define DEV_SAVE_MAP_DEFAULT              "outfits/maps/"
 
 
 /**

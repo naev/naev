@@ -34,7 +34,7 @@
 require "nextjump.lua"
 require "proximity.lua"
 require "numstring.lua"
-require "dat/missions/empire/common.lua"
+require "missions/empire/common.lua"
 
 misn_title = _("Collective Extraction")
 misn_reward = _("%s credits")

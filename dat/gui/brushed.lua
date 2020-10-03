@@ -2,7 +2,7 @@
    The new "brushed" UI.
 --]]
 
-playerform = require "dat/scripts/playerform.lua"
+playerform = require "scripts/playerform.lua"
 
 function create()
 
@@ -40,7 +40,7 @@ function create()
    col_lgray = colour.new( 160/255, 160/255, 160/255 )
 
    --Images
-   local base = "dat/gfx/gui/brushed/"
+   local base = "gfx/gui/brushed/"
    main = tex.open( base .. "main.png" )
    ext_right = tex.open( base .. "extRight.png" )
    end_right = tex.open( base .. "endRight.png" )

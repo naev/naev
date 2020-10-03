@@ -28,7 +28,7 @@
    involve smuggling elements.]]
 
 require "numstring.lua"
-require "dat/missions/sirius/common.lua"
+require "missions/sirius/common.lua"
 
 
 --beginning messages

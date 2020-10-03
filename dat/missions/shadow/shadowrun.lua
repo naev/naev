@@ -24,7 +24,7 @@
 --]]
 
 require "portrait.lua"
-require "dat/missions/shadow/common.lua"
+require "missions/shadow/common.lua"
 
 
 planetname = "Durea" -- The planet where SHITMAN lives

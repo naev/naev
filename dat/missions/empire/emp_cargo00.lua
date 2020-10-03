@@ -26,7 +26,7 @@
 
 require "numstring.lua"
 require "jumpdist.lua"
-require "dat/missions/empire/common.lua"
+require "missions/empire/common.lua"
 
 bar_desc = _("You see an Empire Lieutenant who seems to be looking at you.")
 misn_title = _("Empire Recruitment")

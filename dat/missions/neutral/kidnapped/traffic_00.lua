@@ -20,7 +20,7 @@
 --]]
 
 require "portrait.lua"
-require "dat/missions/neutral/common.lua"
+require "missions/neutral/common.lua"
 
 
 sysname1 = "Arcturus"

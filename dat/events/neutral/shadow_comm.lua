@@ -18,7 +18,7 @@
 --]]
 
 require "proximity.lua"
-require "dat/missions/shadow/common.lua"
+require "missions/shadow/common.lua"
 
 
 -- localization stuff, translators would work here

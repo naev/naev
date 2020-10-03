@@ -38,7 +38,7 @@
 
 require "numstring.lua"
 require "fleethelper.lua"
-require "dat/missions/flf/flf_common.lua"
+require "missions/flf/flf_common.lua"
 
 -- Localization
 title = {}

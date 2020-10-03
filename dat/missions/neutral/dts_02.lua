@@ -41,7 +41,7 @@ Because of bad planning, this mission is badly organized.
 Anyone looking for a model of good mission-making should look elsewhere! -- the author
 ]]--
 
-require "dat/scripts/numstring.lua"
+require "scripts/numstring.lua"
 
 -- This section stores the strings (text) for the mission.
 

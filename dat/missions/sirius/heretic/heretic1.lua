@@ -23,7 +23,7 @@
    on the wringer in the suna system.]]
    
 require "numstring.lua"
-require "dat/missions/sirius/common.lua"
+require "missions/sirius/common.lua"
 
 
 --all the messages before the mission starts

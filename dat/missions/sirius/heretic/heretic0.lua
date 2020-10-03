@@ -23,7 +23,7 @@
     and to BTAxis for the word "discombobulate"]]
 
 require "numstring.lua"
-require "dat/missions/sirius/common.lua"
+require "missions/sirius/common.lua"
 
     
 --the intro messages

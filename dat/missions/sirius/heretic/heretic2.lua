@@ -24,7 +24,7 @@
    the players job is to take out any and all sirius in the system.]]
 
 require "numstring.lua"
-require "dat/missions/sirius/common.lua"
+require "missions/sirius/common.lua"
 
 
 bmsg = {}

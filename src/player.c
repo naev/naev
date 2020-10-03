@@ -292,7 +292,7 @@ void player_new (void)
       return;
 
    /* Display the intro. */
-   intro_display( "dat/intro", "intro" );
+   intro_display( INTRO_PATH, "intro" );
 
    /* Play music. */
    music_choose( "ambient" );

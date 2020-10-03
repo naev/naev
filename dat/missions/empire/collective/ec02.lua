@@ -30,7 +30,7 @@
 
 ]]--
 
-require "dat/missions/empire/common.lua"
+require "missions/empire/common.lua"
 
 bar_desc = _("You notice Lt. Commander Dimitri at one of the booths.")
 misn_title = _("Collective Espionage")

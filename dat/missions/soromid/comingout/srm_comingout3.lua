@@ -40,7 +40,7 @@
 require "numstring.lua"
 require "cargo_common.lua"
 require "nextjump.lua"
-require "dat/missions/soromid/common.lua"
+require "missions/soromid/common.lua"
 
 
 title = {}

@@ -33,7 +33,7 @@
 
 require "numstring.lua"
 require "fleethelper.lua"
-require "dat/missions/flf/flf_common.lua"
+require "missions/flf/flf_common.lua"
 
 misn_title  = _("FLF: Rogue %s in %s")
 misn_reward = _("%s credits")

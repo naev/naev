@@ -1,6 +1,6 @@
-require("dat/ai/tpl/generic.lua")
-require("dat/ai/personality/advertiser.lua")
-require("dat/ai/distress_behaviour.lua")
+require("ai/tpl/generic.lua")
+require("ai/personality/advertiser.lua")
+require("ai/distress_behaviour.lua")
 
 
 function create ()

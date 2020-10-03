@@ -20,7 +20,7 @@
 --]]
 
 require "jumpdist.lua"
-require "dat/missions/neutral/common.lua"
+require "missions/neutral/common.lua"
 
 
 shipname = _("August") --The ship will have a unique name

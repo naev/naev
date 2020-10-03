@@ -32,7 +32,7 @@
 
 require "proximity.lua"
 require "numstring.lua"
-require "dat/missions/empire/common.lua"
+require "missions/empire/common.lua"
 
 bar_desc = _("You see an Empire Lt. Commander who seems to be motioning you over to the counter.")
 misn_title = _("Collective Scout")

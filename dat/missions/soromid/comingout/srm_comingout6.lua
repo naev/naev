@@ -39,7 +39,7 @@
 require "numstring.lua"
 require "jumpdist.lua"
 require "pilot/pirate.lua"
-require "dat/missions/soromid/common.lua"
+require "missions/soromid/common.lua"
 
 
 title = {}

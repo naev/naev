@@ -1,4 +1,4 @@
-require("dat/ai/empire.lua")
+require("ai/empire.lua")
 
 mem.armour_run = 0
 

@@ -51,7 +51,7 @@
 #include "start.h"
 
 
-#define NDATA_FILENAME  "ndata" /**< Generic ndata file name. */
+#define NDATA_FILENAME  "dat" /**< Generic ndata file name. */
 #ifndef NDATA_DEF
 #define NDATA_DEF       NDATA_FILENAME /**< Default ndata to use. */
 #endif /* NDATA_DEF */

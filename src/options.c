@@ -203,7 +203,7 @@ static char** lang_list( int *n )
    *n = 2;
 
    /* Try to open the available languages. */
-   buf = ndata_read( "dat/LANGUAGES", &fs );
+   buf = ndata_read( LANGUAGES_PATH, &fs );
    if (buf==NULL)
       return ls;
    j = 0;

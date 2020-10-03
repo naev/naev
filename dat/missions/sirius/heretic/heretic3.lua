@@ -24,7 +24,7 @@
    space. thanks to nloewen and viashimo for help!]]
 
 require "numstring.lua"
-require "dat/missions/sirius/common.lua"
+require "missions/sirius/common.lua"
 
 
 --beginning messages

@@ -23,9 +23,9 @@
 
 --]]
 
-require "dat/scripts/cargo_common.lua"
-require "dat/scripts/numstring.lua"
-require "dat/missions/zalek/common.lua"
+require "scripts/cargo_common.lua"
+require "scripts/numstring.lua"
+require "missions/zalek/common.lua"
 
 
 bar_desc = _("The student is already awaiting you.")

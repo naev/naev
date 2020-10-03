@@ -35,7 +35,7 @@ function create()
    col_slot_heat = colour.new( 108/255, 25/255, 13/255, 200/255 )
    
    --Load Images
-   local base = "dat/gfx/gui/slimv2/"
+   local base = "gfx/gui/slimv2/"
    player_pane = tex.open( base .. "main.png" )
    bar_sheen = tex.open( base .. "sheen.png" )
    bar_bg = tex.open( base .. "bar_bg.png" )
@@ -132,10 +132,10 @@ function create()
    bar_speed_y = bar_shield_y
 
    -- Cooldown pane.
-   cooldown_sheen = tex.open( "dat/gfx/gui/slim/cooldown-sheen.png" )
-   cooldown_bg = tex.open( "dat/gfx/gui/slim/cooldown-bg.png" )
-   cooldown_frame = tex.open( "dat/gfx/gui/slim/cooldown-frame.png" )
-   cooldown_panel = tex.open( "dat/gfx/gui/slim/cooldown-panel.png" )
+   cooldown_sheen = tex.open( "gfx/gui/slim/cooldown-sheen.png" )
+   cooldown_bg = tex.open( "gfx/gui/slim/cooldown-bg.png" )
+   cooldown_frame = tex.open( "gfx/gui/slim/cooldown-frame.png" )
+   cooldown_panel = tex.open( "gfx/gui/slim/cooldown-panel.png" )
    cooldown_frame_w, cooldown_frame_h = cooldown_frame:dim()
    cooldown_frame_x = (screen_w - cooldown_frame_w)/2.
    cooldown_frame_y = (screen_h - cooldown_frame_h)/2.

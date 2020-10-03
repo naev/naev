@@ -1,5 +1,5 @@
 --This script chooses the mercenaries that spawn
-require("dat/factions/spawn/common.lua")
+require("factions/spawn/common.lua")
 
 pbm = 0.05   --5% mercenaries
 

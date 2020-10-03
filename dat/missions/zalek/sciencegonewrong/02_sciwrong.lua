@@ -25,7 +25,7 @@
 --]]
 
 require "fleethelper.lua"
-require "dat/missions/zalek/common.lua"
+require "missions/zalek/common.lua"
 
 
 -- set text variables

@@ -36,8 +36,8 @@
 --]]
 
 require "numstring.lua"
-require "dat/missions/soromid/comingout/srm_comingout3.lua"
-require "dat/missions/soromid/common.lua"
+require "missions/soromid/comingout/srm_comingout3.lua"
+require "missions/soromid/common.lua"
 
 
 title = {}

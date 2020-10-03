@@ -30,7 +30,7 @@
 require "jumpdist.lua"
 require "numstring.lua"
 require "portrait.lua"
-require "dat/factions/equip/generic.lua"
+require "factions/equip/generic.lua"
 
 
 title = _("Stealing a %s")

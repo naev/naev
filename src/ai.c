@@ -606,7 +606,7 @@ static int ai_loadEquip (void)
 {
    char *buf;
    size_t bufsize;
-   const char *filename = "dat/factions/equip/generic.lua";
+   const char *filename = AI_EQUIP_PATH;
 
    /* Make sure doesn't already exist. */
    if (equip_env != LUA_NOREF)
