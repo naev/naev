@@ -26,6 +26,8 @@
 #include "ndata.h"
 
 #include "naev.h"
+#include <limits.h>
+#include <stdlib.h>
 
 #if HAS_POSIX
 #include <libgen.h>
@@ -42,12 +44,13 @@
 #include "SDL.h"
 #include "SDL_mutex.h"
 
-#include "log.h"
-#include "nxml.h"
-#include "nfile.h"
 #include "conf.h"
+#include "env.h"
+#include "log.h"
+#include "nfile.h"
 #include "npng.h"
 #include "nstring.h"
+#include "nxml.h"
 #include "start.h"
 
 
@@ -89,7 +92,7 @@ static int ndata_isndata( const char *path );
 /**
  * @brief Sets the current ndata path to use.
  *
- * Should be called before ndata_open.
+ * Should be called before any function that accesses or reads from ndata.
  *
  *    @param path Path to set.
  *    @return 0 on success.
@@ -97,7 +100,7 @@ static int ndata_isndata( const char *path );
 int ndata_setPath( const char *path )
 {
    int len;
-   char *buf;
+   char *buf = NULL;
 
    if ( ndata_dir != NULL ) {
       free( ndata_dir );
@@ -125,6 +128,16 @@ int ndata_setPath( const char *path )
       case NDATA_SRC_USER:
          // This already didn't work out when we checked the provided path.
       case NDATA_SRC_DEFAULT:
+         if ( env.isAppImage ) {
+            buf = malloc( sizeof( char ) * PATH_MAX );
+            len = nfile_concatPaths( buf, PATH_MAX, env.appdir, NDATA_DEF );
+            if ( len > 0 && ndata_isndata( buf ) ) {
+               ndata_dir    = realloc( buf, sizeof( char ) * len );
+               ndata_source = NDATA_SRC_DEFAULT;
+               break;
+            }
+            free( buf );
+         }
          if ( ndata_isndata( NDATA_DEF ) ) {
             ndata_dir    = strdup( NDATA_DEF );
             ndata_source = NDATA_SRC_DEFAULT;
@@ -173,7 +186,7 @@ static int ndata_isndata( const char *dir )
    if ( !nfile_dirExists( dir ) )
       return 0;
 
-   /* Verify that the zip contains dat/start.xml
+   /* Verify that the folder contains dat/start.xml
     * This is arbitrary, but it's one of the many hard-coded files that must
     * be present for Naev to run.
     */
@@ -185,7 +198,7 @@ static int ndata_isndata( const char *dir )
 
 
 /**
- * @brief Tries to find a valid ndata archive in the directory listed by path.
+ * @brief Tries to find a valid ndata directory in the directory listed by path.
  *
  *    @return Newly allocated ndata name or NULL if not found.
  */
@@ -272,7 +285,7 @@ static void ndata_testVersion (void)
 
 
 /**
- * @brief Opens the ndata file.
+ * @brief Opens the ndata folder.
  *
  *    @return 0 on success.
  */
@@ -290,7 +303,7 @@ int ndata_open (void)
 
 
 /**
- * @brief Closes and cleans up the ndata file.
+ * @brief Closes and cleans up the ndata folder.
  */
 void ndata_close (void)
 {
@@ -363,7 +376,7 @@ SDL_RWops *ndata_rwops( const char* filename )
    char       path[ PATH_MAX ];
    SDL_RWops *rw;
 
-   if ( nfile_concatPaths( path, PATH_MAX, ndata_dir, filename ) ) {
+   if ( nfile_concatPaths( path, PATH_MAX, ndata_dir, filename ) < 0 ) {
       WARN( _( "Unable to open file '%s': file path too long." ), filename );
       return NULL;
    }

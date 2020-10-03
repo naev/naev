@@ -15,48 +15,57 @@
 
 #include "nlua.h"
 
-#include "log.h"
-#include "utf8.h"
-#include "player.h"
+#include "env.h"
 #include "input.h"
-#include "opengl.h"
+#include "log.h"
 #include "music.h"
-#include "nebula.h"
 #include "ndata.h"
+#include "nebula.h"
 #include "nfile.h"
 #include "nstring.h"
+#include "opengl.h"
+#include "player.h"
+#include "utf8.h"
 
 
-#define  conf_loadInt(n,i)    \
-{nlua_getenv(env,n); \
-if (lua_isnumber(naevL, -1)) { \
-   i = (int)lua_tonumber(naevL, -1); \
-} \
-lua_pop(naevL,1);}
+#define conf_loadInt( env, n, i )            \
+   {                                         \
+      nlua_getenv( env, n );                 \
+      if ( lua_isnumber( naevL, -1 ) ) {     \
+         i = (int)lua_tonumber( naevL, -1 ); \
+      }                                      \
+      lua_pop( naevL, 1 );                   \
+   }
 
-#define  conf_loadFloat(n,f)    \
-{nlua_getenv(env,n); \
-if (lua_isnumber(naevL, -1)) { \
-   f = (double)lua_tonumber(naevL, -1); \
-} \
-lua_pop(naevL,1);}
+#define conf_loadFloat( env, n, f )             \
+   {                                            \
+      nlua_getenv( env, n );                    \
+      if ( lua_isnumber( naevL, -1 ) ) {        \
+         f = (double)lua_tonumber( naevL, -1 ); \
+      }                                         \
+      lua_pop( naevL, 1 );                      \
+   }
 
-#define  conf_loadBool(n,b)   \
-{nlua_getenv(env, n); \
-if (lua_isnumber(naevL,-1)) \
-   b = (lua_tonumber(naevL,-1) != 0.); \
-else if (!lua_isnil(naevL,-1)) \
-   b = lua_toboolean(naevL, -1); \
-lua_pop(naevL,1);}
+#define conf_loadBool( env, n, b )                \
+   {                                              \
+      nlua_getenv( env, n );                      \
+      if ( lua_isnumber( naevL, -1 ) )            \
+         b = ( lua_tonumber( naevL, -1 ) != 0. ); \
+      else if ( !lua_isnil( naevL, -1 ) )         \
+         b = lua_toboolean( naevL, -1 );          \
+      lua_pop( naevL, 1 );                        \
+   }
 
-#define  conf_loadString(n,s) \
-{nlua_getenv(env, n); \
-if (lua_isstring(naevL, -1)) { \
-   if (s != NULL) \
-      free(s); \
-   s = strdup(lua_tostring(naevL, -1)); \
-} \
-lua_pop(naevL,1);}
+#define conf_loadString( env, n, s )              \
+   {                                              \
+      nlua_getenv( env, n );                      \
+      if ( lua_isstring( naevL, -1 ) ) {          \
+         if ( s != NULL )                         \
+            free( s );                            \
+         s = strdup( lua_tostring( naevL, -1 ) ); \
+      }                                           \
+      lua_pop( naevL, 1 );                        \
+   }
 
 
 /* Global configuration. */
@@ -81,15 +90,15 @@ extern unsigned int input_afterburnSensitivity;
 /*
  * prototypes
  */
-static void print_usage( char **argv );
+static void print_usage( void );
 
 
 /*
  * prints usage
  */
-static void print_usage( char **argv )
+static void print_usage( void )
 {
-   LOG(_("Usage: %s [OPTIONS] [DATA]"), argv[0]);
+   LOG( _( "Usage: %s [OPTIONS] [DATA]" ), env.argv0 );
    LOG(_("Options are:"));
    LOG(_("   -f, --fullscreen      activate fullscreen"));
    LOG(_("   -F n, --fps n         limit frames per second to n"));
@@ -328,11 +337,11 @@ void conf_loadConfigPath( void )
    if (!nfile_fileExists(file))
       return;
 
-   nlua_env env = nlua_newEnv(0);
-   if (nlua_dofileenv(env, file) == 0)
-      conf_loadString("datapath",conf.datapath);
+   nlua_env lEnv = nlua_newEnv( 0 );
+   if ( nlua_dofileenv( lEnv, file ) == 0 )
+      conf_loadString( lEnv, "datapath", conf.datapath );
 
-   nlua_freeEnv(env);
+   nlua_freeEnv( lEnv );
 }
 
 
@@ -353,30 +362,30 @@ int conf_loadConfig ( const char* file )
       return nfile_touch(file);
 
    /* Load the configuration. */
-   nlua_env env = nlua_newEnv(0);
-   if (nlua_dofileenv(env, file) == 0) {
+   nlua_env lEnv = nlua_newEnv( 0 );
+   if ( nlua_dofileenv( lEnv, file ) == 0 ) {
 
       /* ndata. */
-      conf_loadString("data",conf.ndata);
+      conf_loadString( lEnv, "data", conf.ndata );
 
       /* Language. */
-      conf_loadString("language",conf.language);
+      conf_loadString( lEnv, "language", conf.language );
 
       /* OpenGL. */
-      conf_loadInt("fsaa",conf.fsaa);
-      conf_loadBool("vsync",conf.vsync);
-      conf_loadBool("mipmaps",conf.mipmaps);
-      conf_loadBool("compress",conf.compress);
-      conf_loadBool("interpolate",conf.interpolate);
-      conf_loadBool("npot",conf.npot);
+      conf_loadInt( lEnv, "fsaa", conf.fsaa );
+      conf_loadBool( lEnv, "vsync", conf.vsync );
+      conf_loadBool( lEnv, "mipmaps", conf.mipmaps );
+      conf_loadBool( lEnv, "compress", conf.compress );
+      conf_loadBool( lEnv, "interpolate", conf.interpolate );
+      conf_loadBool( lEnv, "npot", conf.npot );
 
       /* Memory. */
-      conf_loadBool("engineglow",conf.engineglow);
+      conf_loadBool( lEnv, "engineglow", conf.engineglow );
 
       /* Window. */
       w = h = 0;
-      conf_loadInt("width",w);
-      conf_loadInt("height",h);
+      conf_loadInt( lEnv, "width", w );
+      conf_loadInt( lEnv, "height", h );
       if (w != 0) {
          conf.explicit_dim = 1;
          conf.width = w;
@@ -385,31 +394,31 @@ int conf_loadConfig ( const char* file )
          conf.explicit_dim = 1;
          conf.height = h;
       }
-      conf_loadFloat("scalefactor",conf.scalefactor);
-      conf_loadBool("fullscreen",conf.fullscreen);
-      conf_loadBool("modesetting",conf.modesetting);
-      conf_loadBool("minimize",conf.minimize);
+      conf_loadFloat( lEnv, "scalefactor", conf.scalefactor );
+      conf_loadBool( lEnv, "fullscreen", conf.fullscreen );
+      conf_loadBool( lEnv, "modesetting", conf.modesetting );
+      conf_loadBool( lEnv, "minimize", conf.minimize );
 
       /* FPS */
-      conf_loadBool("showfps",conf.fps_show);
-      conf_loadInt("maxfps",conf.fps_max);
+      conf_loadBool( lEnv, "showfps", conf.fps_show );
+      conf_loadInt( lEnv, "maxfps", conf.fps_max );
 
       /*  Pause */
-      conf_loadBool("showpause",conf.pause_show);
+      conf_loadBool( lEnv, "showpause", conf.pause_show );
 
       /* Sound. */
-      conf_loadString("sound_backend",conf.sound_backend);
-      conf_loadInt("snd_voices",conf.snd_voices);
+      conf_loadString( lEnv, "sound_backend", conf.sound_backend );
+      conf_loadInt( lEnv, "snd_voices", conf.snd_voices );
       conf.snd_voices = MAX( 16, conf.snd_voices ); /* Must be at least 16. */
-      conf_loadBool("snd_pilotrel",conf.snd_pilotrel);
-      conf_loadBool("al_efx",conf.al_efx);
-      conf_loadInt("al_bufsize", conf.al_bufsize);
-      conf_loadBool("nosound",conf.nosound);
-      conf_loadFloat("sound",conf.sound);
-      conf_loadFloat("music",conf.music);
+      conf_loadBool( lEnv, "snd_pilotrel", conf.snd_pilotrel );
+      conf_loadBool( lEnv, "al_efx", conf.al_efx );
+      conf_loadInt( lEnv, "al_bufsize", conf.al_bufsize );
+      conf_loadBool( lEnv, "nosound", conf.nosound );
+      conf_loadFloat( lEnv, "sound", conf.sound );
+      conf_loadFloat( lEnv, "music", conf.music );
 
       /* Joystick. */
-      nlua_getenv(env, "joystick");
+      nlua_getenv( lEnv, "joystick" );
       if (lua_isnumber(naevL, -1))
          conf.joystick_ind = (int)lua_tonumber(naevL, -1);
       else if (lua_isstring(naevL, -1))
@@ -417,56 +426,56 @@ int conf_loadConfig ( const char* file )
       lua_pop(naevL,1);
 
       /* GUI. */
-      conf_loadInt("mesg_visible",conf.mesg_visible);
+      conf_loadInt( lEnv, "mesg_visible", conf.mesg_visible );
       if (conf.mesg_visible <= 0)
          conf.mesg_visible = 5;
 
       /* Key repeat. */
-      conf_loadInt("repeat_delay",conf.repeat_delay);
-      conf_loadInt("repeat_freq",conf.repeat_freq);
+      conf_loadInt( lEnv, "repeat_delay", conf.repeat_delay );
+      conf_loadInt( lEnv, "repeat_freq", conf.repeat_freq );
 
       /* Zoom. */
-      conf_loadBool("zoom_manual",conf.zoom_manual);
-      conf_loadFloat("zoom_far",conf.zoom_far);
-      conf_loadFloat("zoom_near",conf.zoom_near);
-      conf_loadFloat("zoom_speed",conf.zoom_speed);
-      conf_loadFloat("zoom_stars",conf.zoom_stars);
+      conf_loadBool( lEnv, "zoom_manual", conf.zoom_manual );
+      conf_loadFloat( lEnv, "zoom_far", conf.zoom_far );
+      conf_loadFloat( lEnv, "zoom_near", conf.zoom_near );
+      conf_loadFloat( lEnv, "zoom_speed", conf.zoom_speed );
+      conf_loadFloat( lEnv, "zoom_stars", conf.zoom_stars );
 
       /* Font size. */
-      conf_loadInt("font_size_console",conf.font_size_console);
-      conf_loadInt("font_size_intro",conf.font_size_intro);
-      conf_loadInt("font_size_def",conf.font_size_def);
-      conf_loadInt("font_size_small",conf.font_size_small);
-      conf_loadString("font_name_default",conf.font_name_default);
-      conf_loadString("font_name_monospace",conf.font_name_monospace);
+      conf_loadInt( lEnv, "font_size_console", conf.font_size_console );
+      conf_loadInt( lEnv, "font_size_intro", conf.font_size_intro );
+      conf_loadInt( lEnv, "font_size_def", conf.font_size_def );
+      conf_loadInt( lEnv, "font_size_small", conf.font_size_small );
+      conf_loadString( lEnv, "font_name_default", conf.font_name_default );
+      conf_loadString( lEnv, "font_name_monospace", conf.font_name_monospace );
 
       /* Misc. */
-      conf_loadFloat("compression_velocity",conf.compression_velocity);
-      conf_loadFloat("compression_mult",conf.compression_mult);
-      conf_loadBool("redirect_file",conf.redirect_file);
-      conf_loadBool("save_compress",conf.save_compress);
-      conf_loadInt("afterburn_sensitivity",conf.afterburn_sens);
-      conf_loadInt("mouse_thrust",conf.mouse_thrust);
-      conf_loadFloat("mouse_doubleclick",conf.mouse_doubleclick);
-      conf_loadFloat("autonav_abort",conf.autonav_reset_speed);
-      conf_loadBool("devmode",conf.devmode);
-      conf_loadBool("devautosave",conf.devautosave);
-      conf_loadBool("conf_nosave",conf.nosave);
-      conf_loadString("lastversion", conf.lastversion);
+      conf_loadFloat( lEnv, "compression_velocity", conf.compression_velocity );
+      conf_loadFloat( lEnv, "compression_mult", conf.compression_mult );
+      conf_loadBool( lEnv, "redirect_file", conf.redirect_file );
+      conf_loadBool( lEnv, "save_compress", conf.save_compress );
+      conf_loadInt( lEnv, "afterburn_sensitivity", conf.afterburn_sens );
+      conf_loadInt( lEnv, "mouse_thrust", conf.mouse_thrust );
+      conf_loadFloat( lEnv, "mouse_doubleclick", conf.mouse_doubleclick );
+      conf_loadFloat( lEnv, "autonav_abort", conf.autonav_reset_speed );
+      conf_loadBool( lEnv, "devmode", conf.devmode );
+      conf_loadBool( lEnv, "devautosave", conf.devautosave );
+      conf_loadBool( lEnv, "conf_nosave", conf.nosave );
+      conf_loadString( lEnv, "lastversion", conf.lastversion );
 
       /* Debugging. */
-      conf_loadBool("fpu_except",conf.fpu_except);
+      conf_loadBool( lEnv, "fpu_except", conf.fpu_except );
 
       /* Editor. */
-      conf_loadString("dev_save_sys",conf.dev_save_sys);
-      conf_loadString("dev_save_map",conf.dev_save_map);
-      conf_loadString("dev_save_asset",conf.dev_save_asset);
+      conf_loadString( lEnv, "dev_save_sys", conf.dev_save_sys );
+      conf_loadString( lEnv, "dev_save_map", conf.dev_save_map );
+      conf_loadString( lEnv, "dev_save_asset", conf.dev_save_asset );
 
       /*
        * Keybindings.
        */
       for (i=0; keybind_info[i][0] != NULL; i++) {
-         nlua_getenv(env, keybind_info[i][0]);
+         nlua_getenv( lEnv, keybind_info[ i ][ 0 ] );
          /* Handle "none". */
          if (lua_isstring(naevL,-1)) {
             str = lua_tostring(naevL,-1);
@@ -578,11 +587,11 @@ int conf_loadConfig ( const char* file )
    else { /* failed to load the config file */
       WARN(_("Config file '%s' has invalid syntax:"), file );
       WARN("   %s", lua_tostring(naevL,-1));
-      nlua_freeEnv(env);
+      nlua_freeEnv( lEnv );
       return 1;
    }
 
-   nlua_freeEnv(env);
+   nlua_freeEnv( lEnv );
    return 0;
 }
 
@@ -717,7 +726,7 @@ void conf_parseCLI( int argc, char** argv )
             /* by now it has already displayed the version */
             exit(EXIT_SUCCESS);
          case 'h':
-            print_usage(argv);
+            print_usage();
             exit(EXIT_SUCCESS);
       }
    }

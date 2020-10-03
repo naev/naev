@@ -18,22 +18,22 @@ __attribute__( ( sentinel ) ) int _nfile_concatPaths( char buf[static 1], int ma
  *    @param maxLength Length of the allocated buffer. No more than this many characters will be copied.
  *    @param path First component of the path.
  *    @param ... Rest of the path components to be contacenated.
- *    @return 0 on success. -1 if the constructed path was longer than maxLength.
+ *    @return The length of the concatenated path on success. -1 on error.
  */
 #define nfile_concatPaths( buf, maxLength, path, ... ) _nfile_concatPaths( buf, maxLength, path, ##__VA_ARGS__, NULL )
 
 #define _nfile_unwrap( ... ) __VA_ARGS__
 
 // clang-format off
-#define _nfile_path_macro( func, err_val, params, path, ... ) ({           \
-   #__VA_ARGS__[0] == '\0'                                                 \
-      ? func(_nfile_unwrap params(path))                                   \
-      : ({                                                                 \
-         char combined_path[ PATH_MAX ];                                   \
-         nfile_concatPaths(combined_path, PATH_MAX, (path), ##__VA_ARGS__) \
-            ? (err_val)                                                    \
-            : func(_nfile_unwrap params combined_path);                    \
-      });                                                                  \
+#define _nfile_path_macro( func, err_val, params, path, ... ) ({               \
+   #__VA_ARGS__[0] == '\0'                                                     \
+      ? func(_nfile_unwrap params(path))                                       \
+      : ({                                                                     \
+         char combined_path[ PATH_MAX ];                                       \
+         nfile_concatPaths(combined_path, PATH_MAX, (path), ##__VA_ARGS__) < 0 \
+            ? (err_val)                                                        \
+            : func(_nfile_unwrap params combined_path);                        \
+      });                                                                      \
    })
 // clang-format on
 
@@ -45,10 +45,22 @@ const char *nfile_cachePath( void );
 char *_nfile_dirname( char *path );
 #define nfile_dirname( ... ) _nfile_path_macro( _nfile_dirname, NULL, (), ##__VA_ARGS__ )
 
-int _nfile_dirMakeExist( const char *path ); /* Creates if doesn't exist, 0 success */
+int _nfile_dirMakeExist( const char *path );
+/**
+ * @brief Creates a directory if it doesn't exist.
+ *
+ *    @param path Path to create directory if it doesn't exist.
+ *    @return 0 on success.
+ */
 #define nfile_dirMakeExist( ... ) _nfile_path_macro( _nfile_dirMakeExist, -1, (), ##__VA_ARGS__ )
 
-int _nfile_dirExists( const char *path ); /* Returns 1 on exists. */
+int _nfile_dirExists( const char *path );
+/**
+ * @brief Checks to see if a directory exists.
+ *
+ * @param path Path to directory
+ * @return 1 on exists, 0 otherwise
+ */
 #define nfile_dirExists( ... ) _nfile_path_macro( _nfile_dirExists, 0, (), ##__VA_ARGS__ )
 
 int _nfile_fileExists( const char *path ); /* Returns 1 on exists */

@@ -45,6 +45,7 @@ CODE_SOURCE = \
 	dev_mapedit.c \
 	dialogue.c \
 	economy.c \
+	env.c \
 	equipment.c \
 	escort.c \
 	event.c \
@@ -190,6 +191,7 @@ CODE_SOURCE = \
 	dev_mapedit.h \
 	dialogue.h \
 	economy.h \
+	env.h \
 	equipment.h \
 	escort.h \
 	event.h \
