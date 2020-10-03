@@ -28,14 +28,13 @@ jobs:
           libopenal-dev \
           libvorbis-dev \
           binutils-dev \
-          libzip-dev \
           libiberty-dev \
           libluajit-5.1-dev \
           gettext \
           autopoint \
           intltool
 
-    - name: Checkout Naev Repository 
+    - name: Checkout Naev Repository
       uses: actions/checkout@v2
 
     - name: Test-Build Naev on Linux64
@@ -65,9 +64,9 @@ jobs:
       with:
         msystem: MINGW64
         update: true
-        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool
+        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool
 
-    - name: Checkout Naev Repository 
+    - name: Checkout Naev Repository
       uses: actions/checkout@v2
 
     - name: Test-Build Naev on Win64
@@ -77,7 +76,7 @@ jobs:
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
-    
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
@@ -105,33 +104,33 @@ jobs:
           sdl2_mixer \
           sdl2_image \
           openal-soft
-          
+
     - name: Remove Homebrew Perl
       run: |
         brew uninstall --ignore-dependencies perl
-        
-    - name: Checkout Naev Repository 
+
+    - name: Checkout Naev Repository
       uses: actions/checkout@v2
 
     - name: Test-Build Naev on MacOS
       run: |
         # PKGCONFIG configuration for OpenAL
         export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/opt/openal-soft/lib/pkgconfig"
-        
+
         ./autogen.sh
         ./configure
         make -j$(sysctl -n hw.logicalcpu)
       env:
         CFLAGS: "-O3 -mmacosx-version-min=10.7"
-    
+
     - name: Build MacOS Bundle
       run: ./extras/macos/bundle.sh
-    
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: naev-macos-${{ github.sha }}
-        path: ${{ github.workspace }}/Naev.app/ 
+        path: ${{ github.workspace }}/Naev.app/
 
   "Lua-Documentation":
     runs-on: ubuntu-latest
@@ -167,7 +166,6 @@ jobs:
           libopenal-dev \
           libvorbis-dev \
           binutils-dev \
-          libzip-dev \
           libiberty-dev \
           libluajit-5.1-dev \
           lua-ldoc \
@@ -176,7 +174,7 @@ jobs:
           intltool \
           itstool
 
-    - name: Checkout Naev Repository 
+    - name: Checkout Naev Repository
       uses: actions/checkout@v2
 
     - name: Build Naev Lua Documentation
@@ -184,7 +182,7 @@ jobs:
         ./autogen.sh
         ./configure
         make -C docs lua
-    
+
     - name: Upload Lua Documentation
       run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete docs/html/ travis@iandouglasscott.com:/srv/naevdoc
       if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}

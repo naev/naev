@@ -20,15 +20,15 @@ jobs:
       with:
         msystem: MINGW64
         update: true
-        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit mingw-w64-x86_64-nsis libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool zip unzip python3-pip
+        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit mingw-w64-x86_64-nsis libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool zip unzip python3-pip
 
-    - name: Checkout Naev Repository 
+    - name: Checkout Naev Repository
       uses: actions/checkout@v2
 
     - name: Build Naev on Win64
       run: |
         ./autogen.sh
-        ./configure --disable-debug --without-libzip
+        ./configure --disable-debug
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
@@ -76,13 +76,13 @@ jobs:
           autopoint \
           intltool
 
-    - name: Checkout Naev Repository 
+    - name: Checkout Naev Repository
       uses: actions/checkout@v2
 
     - name: Build Naev on Linux64
       run: |
         ./autogen.sh
-        ./configure --disable-debug --without-libzip --build=x86_64-linux-gnu --host=x86_64-linux-gnu
+        ./configure --disable-debug --build=x86_64-linux-gnu --host=x86_64-linux-gnu
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3"
@@ -100,7 +100,7 @@ jobs:
           BASEVER=$(echo "${VERSION}" | sed 's/\.-.*//')
           BETAVER=$(echo "${VERSION}" | sed 's/.*-//')
           VERSION="${BASEVER}.0-beta.${BETAVER}"
-        fi 
+        fi
 
         mkdir -p dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64
         mkdir -p dist/release/tar
@@ -129,9 +129,9 @@ jobs:
       image: dosowisko/steam-runtime-amd64
       volumes:
         - ${{ github.workspace }}:${{ github.workspace }}
-        
+
     steps:
-    - name: Clone Naev Repository 
+    - name: Clone Naev Repository
       run: |
         git clone https://github.com/naev/naev.git ${{ github.workspace }}
 
@@ -143,7 +143,7 @@ jobs:
       run: |
         cd ${{ github.workspace }}
         ./autogen.sh
-        ./configure --disable-debug --without-libzip --build=x86_64-linux-gnu
+        ./configure --disable-debug --build=x86_64-linux-gnu
         make -j$(nproc --all)
       env:
         CFLAGS: "-O3 -std=gnu11"
@@ -182,25 +182,25 @@ jobs:
           sdl2_mixer \
           sdl2_image \
           openal-soft
-          
+
     - name: Remove Homebrew Perl
       run: |
         brew uninstall --ignore-dependencies perl
-        
-    - name: Checkout Naev Repository 
+
+    - name: Checkout Naev Repository
       uses: actions/checkout@v2
 
     - name: Build Naev on MacOS
       run: |
         # PKGCONFIG configuration for OpenAL
         export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/opt/openal-soft/lib/pkgconfig"
-        
+
         ./autogen.sh
-        ./configure --disable-debug --without-libzip
+        ./configure --disable-debug
         make -j$(sysctl -n hw.logicalcpu)
       env:
         CFLAGS: "-O3 -mmacosx-version-min=10.7"
-    
+
     - name: Package MacOS Release
       run: |
         mkdir -p dist/release
@@ -242,13 +242,12 @@ jobs:
             libopenal-dev \
             libvorbis-dev \
             binutils-dev \
-            libzip-dev \
             libiberty-dev \
             gettext \
             autopoint \
             intltool
 
-      - name: Checkout Naev Repository 
+      - name: Checkout Naev Repository
         uses: actions/checkout@v2
 
       - name: Generate source archive
@@ -260,7 +259,7 @@ jobs:
       - name: Check if source archive is valid
         run: |
           # This currently doesn't work correctly.
-          # make distcheck 
+          # make distcheck
 
       - name: Prepare source artifact
         run: |
@@ -278,7 +277,7 @@ jobs:
   "Upload-Release":
       runs-on: ubuntu-latest
       needs: [Linux-x86_64, Windows-MinGW64, macOS, Generate-Source]
-      if: ${{ github.repository == 'naev/naev' }} 
+      if: ${{ github.repository == 'naev/naev' }}
 
       steps:
       - name: Update APT Cache
@@ -302,13 +301,12 @@ jobs:
             libopenal-dev \
             libvorbis-dev \
             binutils-dev \
-            libzip-dev \
             libiberty-dev \
             gettext \
             autopoint \
             intltool
 
-      - name: Checkout Naev Repository 
+      - name: Checkout Naev Repository
         uses: actions/checkout@v2
 
       - name: Get VERSION
@@ -325,7 +323,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           path: ${{ github.workspace }}/dist
-          
+
       - name: Collect files for distribution
         run: |
           BUILD_DATE="$(date +%m_%d_%Y)"
@@ -364,7 +362,7 @@ jobs:
           sudo add-apt-repository multiverse
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          
+
       - name: Install Build Dependencies
         run: |
           sudo apt-get install \
@@ -382,7 +380,6 @@ jobs:
             libopenal-dev \
             libvorbis-dev \
             binutils-dev \
-            libzip-dev \
             libiberty-dev \
             gettext \
             autopoint \
@@ -393,9 +390,9 @@ jobs:
           echo steamcmd steam/question select "I AGREE" | sudo debconf-set-selections
           sudo apt install lib32gcc1 steamcmd
 
-      - name: Checkout Naev Repository 
+      - name: Checkout Naev Repository
         uses: actions/checkout@v2
-        
+
       - name: Get VERSION
         run: |
           ./autogen.sh
@@ -419,7 +416,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           path: ${{ github.workspace }}/dist/steam
-          
+
       - name: Build and Upload Steam Release
         run: |
           ./extras/steam/SteamDeploy.sh --nightly
