@@ -24,7 +24,6 @@ an OpenGL-capable graphics card and driver, Naev requires the following:
 * libvorbis (>= 1.2.1 necessary for Replaygain)
 * binutils
 * intltool
-* libzip
 
 Note that several distributions ship outdated versions of libvorbis, and
 thus libvorbisfile is statically linked into the release binary.
@@ -39,17 +38,17 @@ Install compile-time dependencies on Ubuntu 16.04 (and hopefully later) with:
 ```bash
 apt-get install build-essential automake libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev \
 libgl1-mesa-dev libxml2-dev libfreetype6-dev libpng-dev libopenal-dev \
-libvorbis-dev binutils-dev libzip-dev libiberty-dev autopoint intltool libfontconfig-dev autoconf-archive
+libvorbis-dev binutils-dev libiberty-dev autopoint intltool libfontconfig-dev autoconf-archive
 ```
 
-### Other \*nix 
+### Other \*nix
 
 See https://github.com/naev/naev/wiki/Compiling-on-*nix for package lists for several
 distributions.
 
 ## COMPILING
 
-Run: 
+Run:
 
 ```
 bash

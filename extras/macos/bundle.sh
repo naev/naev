@@ -6,7 +6,7 @@
 # This script assumes the environment we set up in Travis, and copies the
 # dependencies to the bundle. These are:
 #
-# - From Homebrew: freetype, libpng, libvorbis, libzip, luajit, sdl2, sdl2_mixer, sdl2_image
+# - From Homebrew: freetype, libpng, libvorbis, luajit, sdl2, sdl2_mixer, sdl2_image
 
 set -e
 
