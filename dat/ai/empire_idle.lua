@@ -1,4 +1,4 @@
-require("dat/ai/empire.lua")
+require("ai/empire.lua")
 
 --[[
     This AI is for Empire ships that should initially just sit stationary in space. Good for guards.

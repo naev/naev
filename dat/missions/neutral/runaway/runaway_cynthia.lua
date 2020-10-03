@@ -21,7 +21,7 @@ There will be more missions to detail how you are percieved as the kidnapper of 
 --]]
 
 require "numstring.lua"
-require "dat/missions/neutral/common.lua"
+require "missions/neutral/common.lua"
 
 
 npc_name = _("Young Teenager")

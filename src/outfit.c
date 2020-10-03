@@ -687,8 +687,7 @@ double outfit_speed( const Outfit* o )
       else {     /*Gets the average speed*/
          t = o->u.amm.speed / o->u.amm.thrust; /*time to reach max speed*/
          if (t < o->u.amm.duration)
-            return (o->u.amm.thrust * t*t/2 + 
-                  o->u.amm.speed*(o->u.amm.duration-t))/o->u.amm.duration;
+            return ( o->u.amm.thrust * t * t / 2 + o->u.amm.speed * ( o->u.amm.duration - t ) ) / o->u.amm.duration;
          else return o->u.amm.thrust * o->u.amm.duration/2;
       }
    }
@@ -2112,6 +2111,11 @@ static int outfit_parse( Outfit* temp, const char* file )
    char *buf = ndata_read( file, &bufsize );
 
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+   if (doc == NULL) {
+      WARN(_("%s file is invalid xml!"),file);
+      free(buf);
+      return -1;
+   }
 
    parent = doc->xmlChildrenNode; /* first system node */
    if (parent == NULL) {
@@ -2319,15 +2323,19 @@ if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< 
  */
 static int outfit_loadDir( char *dir )
 {
-   size_t i, nfiles;
+   int i, n, ret;
    char **outfit_files;
 
-   outfit_files = ndata_listRecursive( dir, &nfiles );
-   for (i=0; i<nfiles; i++) {
-      outfit_parse( &array_grow(&outfit_stack), outfit_files[i] );
+   outfit_files = ndata_listRecursive( dir );
+   for ( i = 0; i < array_size( outfit_files ); i++ ) {
+      ret = outfit_parse( &array_grow(&outfit_stack), outfit_files[i] );
+      if (ret < 0) {
+         n = array_size(outfit_stack);
+         array_erase( &outfit_stack, &outfit_stack[n-1], &outfit_stack[n] );
+      }
       free( outfit_files[i] );
    }
-   free( outfit_files );
+   array_free( outfit_files );
 
    /* Reduce size. */
    array_shrink( &outfit_stack );
@@ -2437,6 +2445,12 @@ int outfit_mapParse (void)
 
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
+      if (doc == NULL) {
+         WARN(_("%s file is invalid xml!"), file);
+         free(file);
+         free(buf);
+         continue;
+      }
 
       node = doc->xmlChildrenNode; /* first system node */
       if (node == NULL) {
@@ -2444,7 +2458,7 @@ int outfit_mapParse (void)
          free(file);
          xmlFreeDoc(doc);
          free(buf);
-         return -1;
+         continue;
       }
 
       n = xml_nodeProp( node,"name" );

@@ -1532,6 +1532,11 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
    w->status   = WEAPON_STATUS_OK;
    w->strength = 1.;
 
+   /* Inform the target. */
+   pilot_target = pilot_get(target);
+   if (pilot_target != NULL)
+      pilot_target->projectiles++;
+
    switch (outfit->type) {
 
       /* Bolts treated together */
@@ -1846,12 +1851,14 @@ static void weapon_free( Weapon* w )
 {
    Pilot *pilot_target;
 
+   pilot_target = pilot_get( w->target );
+
    /* Decrement target lockons if needed */
-   if (outfit_isSeeker(w->outfit)) {
-      pilot_target = pilot_get( w->target );
-      if (pilot_target != NULL)
+   if (pilot_target != NULL) {
+      pilot_target->projectiles--;
+      if (outfit_isSeeker(w->outfit))
          pilot_target->lockons--;
-   }
+      }
 
    /* Stop playing sound if beam weapon. */
    if (outfit_isBeam(w->outfit)) {

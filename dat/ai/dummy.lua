@@ -1,4 +1,4 @@
-require("dat/ai/include/basic.lua")
+require("ai/include/basic.lua")
 --[[
 -- Dummy AI - does nothing except brake and then float around.
 --]]

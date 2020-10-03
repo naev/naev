@@ -1,5 +1,5 @@
-require("dat/factions/spawn/common.lua")
-require("dat/factions/spawn/mercenary_helper.lua")
+require("factions/spawn/common.lua")
+require("factions/spawn/mercenary_helper.lua")
 
 
 -- @brief Spawns a small patrol fleet.

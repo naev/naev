@@ -26,8 +26,8 @@
 -- localization stuff, translators would work here
 
 require "fleethelper.lua"
-require "dat/missions/flf/flf_common.lua"
-require "dat/missions/dvaered/common.lua"
+require "missions/flf/flf_common.lua"
+require "missions/dvaered/common.lua"
 
 
 title = {}

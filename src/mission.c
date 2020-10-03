@@ -867,7 +867,7 @@ static int missions_cmp( const void *a, const void *b )
  */
 int missions_load (void)
 {
-   size_t i, nfiles;
+   int    i;
    char **mission_files;
 
    /* Allocate player missions. */
@@ -875,13 +875,13 @@ int missions_load (void)
       player_missions[i] = calloc(1, sizeof(Mission));
 
    /* Run over missions. */
-   mission_files = ndata_listRecursive( MISSION_DATA_PATH, &nfiles );
-   mission_stack = array_create_size( MissionData, nfiles );
-   for (i=0; i<nfiles; i++) {
+   mission_files = ndata_listRecursive( MISSION_DATA_PATH );
+   mission_stack = array_create_size( MissionData, array_size( mission_files ) );
+   for ( i = 0; i < array_size( mission_files ); i++ ) {
       mission_parseFile( mission_files[i] );
       free( mission_files[i] );
    }
-   free( mission_files );
+   array_free( mission_files );
    array_shrink(&mission_stack);
 
    /* Sort based on priority so higher priority missions can establish claims first. */

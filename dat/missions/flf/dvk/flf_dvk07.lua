@@ -36,8 +36,8 @@
 
 --]]
 
-require "dat/missions/flf/flf_rogue.lua"
-require "dat/missions/flf/flf_common.lua"
+require "missions/flf/flf_rogue.lua"
+require "missions/flf/flf_common.lua"
 
 title = {}
 text = {}

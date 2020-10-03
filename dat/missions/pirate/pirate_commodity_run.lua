@@ -32,7 +32,7 @@
 
 --]]
 
-require "dat/missions/neutral/commodity_run.lua"
+require "missions/neutral/commodity_run.lua"
 
 misn_title = _("Exploit the Demand for %s")
 misn_desc = _("Pirates on %s have been demanding a lot of %s lately, and that's driving the price up. If you find some of it and bring it back, you can make some good money off of them.")

@@ -63,7 +63,7 @@ int player_guiAdd( char* name )
    /* Make sure the GUI is vaild. */
    SDL_RWops *rw;
    char buf[PATH_MAX];
-   nsnprintf( buf, sizeof(buf), "dat/gui/%s.lua", name );
+   nsnprintf( buf, sizeof(buf), GUI_PATH"%s.lua", name );
    rw = ndata_rwops( buf );
    if (rw == NULL) {
       WARN(_("GUI '%s' does not exist as a file: '%s' not found."), name, buf );

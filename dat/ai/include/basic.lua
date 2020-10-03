@@ -49,6 +49,34 @@ end
 
 
 --[[
+-- Move in zigzag around a direction
+--]]
+function __zigzag ( dir, angle )
+   if mem.pm == nil then
+      mem.pm = 1
+   end
+
+   if (mem.pm*dir < angle-20) or (mem.pm*dir > angle+25) then
+      -- Orientation is totally wrong: reset timer
+      ai.settimer(0, 2000)
+   end
+
+   if (mem.pm*dir < angle) then
+      ai.turn(-mem.pm)
+   else
+      ai.turn(mem.pm)
+      if (mem.pm*dir < angle+5) then -- Right orientation, wait for max vel
+         --if ai.ismaxvel() then -- TODO : doesn't work well
+         if ai.timeup(0) then
+            mem.pm = -mem.pm
+         end
+      end
+   end
+   ai.accel()
+end
+
+
+--[[
 -- Goes to a target position without braking
 --]]
 function __goto_nobrake ()
@@ -414,6 +442,7 @@ function runaway_nojump ()
 end
 function __run_target ()
    local target = ai.target()
+   local pilot  = ai.pilot()
 
    -- Target must exist
    if not target:exists() then
@@ -424,11 +453,20 @@ function __run_target ()
    -- Good to set the target for distress calls
    ai.settarget( target )
 
-   local dir   = ai.face(target, true)
-   ai.accel()
+   -- See whether we have a chance to outrun the attacker
+   local relspe = pilot:stats().speed_max/target:stats().speed_max
+   if pilot:stats().mass <= 400 and relspe <= 1.01 and ai.hasprojectile() and (not ai.hasafterburner()) then
+      -- Pilot is agile, but too slow to outrun the enemy: dodge
+      local dir = ai.dir(target) + 180      -- Reverse (run away)
+      if dir > 180 then dir = dir - 360 end -- Because of periodicity
+      __zigzag(dir, 70)
+   else
+      ai.face(target, true)
+      ai.accel()
+   end
 
    -- Afterburner handling.         
-   if ai.hasafterburner() and ai.pilot():energy() > 10 then
+   if ai.hasafterburner() and pilot:energy() > 10 then
       ai.weapset( 8, true )
    end
 
@@ -459,25 +497,44 @@ function __run_hyp ()
    local jdir
    local bdist    = ai.minbrakedist()
    local jdist    = ai.dist(jump)
+   local pilot    = ai.pilot()
 
-   if jdist > 3*bdist and ai.pilot():stats().mass < 600 then
-      jdir = ai.careful_face(jump)
-   else --Heavy ships should rush to jump point
-      jdir = ai.face(jump)
+   if jdist > bdist then
+
+      local dozigzag = false
+      if ai.target():exists() then
+         local relspe = pilot:stats().speed_max/ai.target():stats().speed_max
+         if pilot:stats().mass <= 400 and relspe <= 1.01 and ai.hasprojectile() and
+            (not ai.hasafterburner()) and jdist > 3*bdist then
+            dozigzag = true
+         end
+      end
+
+      if dozigzag then
+         -- Pilot is agile, but too slow to outrun the enemy: dodge
+         local dir = ai.dir(jump)
+         __zigzag(dir, 70)
+      else
+         if jdist > 3*bdist and pilot:stats().mass < 600 then
+            jdir = ai.careful_face(jump)
+         else --Heavy ships should rush to jump point
+            jdir = ai.face(jump)
+         end
+         if jdir < 10 then       
+            ai.accel()
+         end
+      end
+   else
+      ai.pushsubtask( "__run_hypbrake" )
    end
-   
+
    --Afterburner: activate while far away from jump
-   if ai.hasafterburner() and ai.pilot():energy() > 10 then
+   if ai.hasafterburner() and pilot:energy() > 10 then
       if jdist > 3 * bdist then
          ai.weapset( 8, true )
       else
          ai.weapset( 8, false )
       end
-   end
-   if jdist > bdist and jdir < 10 then       
-      ai.accel()
-   elseif jdist < bdist then
-      ai.pushsubtask( "__run_hypbrake" )
    end
 end
 function __run_hypbrake ()
@@ -498,31 +555,47 @@ function __run_landgo ()
    local target   = mem.land
    local dist     = ai.dist( target )
    local bdist    = ai.minbrakedist()
+   local pilot    = ai.pilot()
 
-   -- 2 methods depending on mem.careful
-   local dir
-   if not mem.careful or dist < 3*bdist then
-      dir = ai.face( target )
+   if dist < bdist then -- Need to start braking
+      ai.pushsubtask( "__landstop" )
    else
-      dir = ai.careful_face( target )
+
+      local dozigzag = false
+      if ai.target():exists() then
+         local relspe = pilot:stats().speed_max/ai.target():stats().speed_max
+         if pilot:stats().mass <= 400 and relspe <= 1.01 and ai.hasprojectile() and
+            (not ai.hasafterburner()) and dist > 3*bdist then
+            dozigzag = true
+         end
+      end
+
+      if dozigzag then
+         -- Pilot is agile, but too slow to outrun the enemy: dodge
+         local dir = ai.dir(target)
+         __zigzag(dir, 70)
+      else
+
+         -- 2 methods depending on mem.careful
+         local dir
+         if not mem.careful or dist < 3*bdist then
+            dir = ai.face( target )
+         else
+            dir = ai.careful_face( target )
+         end
+         if dir < 10 then
+            ai.accel()
+         end
+      end
    end
 
    --Afterburner
-   if ai.hasafterburner() and ai.pilot():energy() > 10 then
+   if ai.hasafterburner() and pilot:energy() > 10 then
       if dist > 3 * bdist then
          ai.weapset( 8, true )
       else
          ai.weapset( 8, false )
       end
-   end
-
-   -- Need to get closer
-   if dir < 10 and dist > bdist then
-      ai.accel()
-
-   -- Need to start braking
-   elseif dist < bdist then
-      ai.pushsubtask( "__landstop" )
    end
 
 end

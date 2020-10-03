@@ -1384,7 +1384,7 @@ static void land_stranded (void)
 {
    char *buf;
    size_t bufsize;
-   const char *file = "dat/rescue.lua";
+   const char *file = RESCUE_PATH;
 
    /* Nothing to do if there's no rescue script. */
    if (!ndata_exists(file))

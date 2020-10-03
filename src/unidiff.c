@@ -170,7 +170,7 @@ int diff_load( xmlNodePtr parent ); /**< Used in save.c */
  */
 int diff_loadAvailable (void)
 {
-   size_t i, nfiles;
+   int i;
    char **diff_files;
    size_t bufsize;
    char *filebuf;
@@ -178,9 +178,9 @@ int diff_loadAvailable (void)
    xmlNodePtr node;
    UniDiffData_t *diff;
 
-   diff_files = ndata_listRecursive( UNIDIFF_DATA_PATH, &nfiles );
-   diff_available = array_create_size(UniDiffData_t, nfiles);
-   for (i=0; i<nfiles; i++) {
+   diff_files     = ndata_listRecursive( UNIDIFF_DATA_PATH );
+   diff_available = array_create_size( UniDiffData_t, array_size( diff_files ) );
+   for ( i = 0; i < array_size( diff_files ); i++ ) {
       /* Load string. */
       filebuf = ndata_read( diff_files[i], &bufsize );
       if (filebuf == NULL) {
@@ -205,7 +205,7 @@ int diff_loadAvailable (void)
       diff->filename = strdup( diff_files[i] );
       xmlr_attr(node, "name", diff->name);
    }
-   free( diff_files );
+   array_free( diff_files );
    array_shrink(&diff_available);
 
    DEBUG( ngettext("Loaded %d UniDiff", "Loaded %d UniDiffs", array_size(diff_available) ), array_size(diff_available) );

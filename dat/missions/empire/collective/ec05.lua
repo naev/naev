@@ -48,7 +48,7 @@
 ]]--
 
 require "numstring.lua"
-require "dat/missions/empire/common.lua"
+require "missions/empire/common.lua"
 
 bar_desc = _("Dimitri should be around here, but you can't see him. You should probably look for him.")
 misn_title = _("Operation Black Trinity")

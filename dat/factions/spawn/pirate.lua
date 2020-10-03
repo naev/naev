@@ -1,4 +1,4 @@
-require("dat/factions/spawn/common.lua")
+require("factions/spawn/common.lua")
 
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()

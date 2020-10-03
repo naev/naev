@@ -31,7 +31,7 @@
 
 require "fleethelper.lua"
 require "misnhelper.lua"
-require "dat/missions/flf/flf_common.lua"
+require "missions/flf/flf_common.lua"
 
 
 title = {}

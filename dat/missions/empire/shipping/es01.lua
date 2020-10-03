@@ -27,7 +27,7 @@
 ]]--
 
 require "numstring.lua"
-require "dat/missions/empire/common.lua"
+require "missions/empire/common.lua"
 
 -- Mission details
 bar_desc = _("You see Commander Soldner who is expecting you.")

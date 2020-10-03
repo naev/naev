@@ -1,4 +1,4 @@
-require("dat/factions/equip/generic.lua")
+require("factions/equip/generic.lua")
 
 
 equip_typeOutfits_coreSystems["Fidelity"] = {

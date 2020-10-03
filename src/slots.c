@@ -23,7 +23,7 @@
 #define SP_XML_ID     "Slots" /**< XML Document tag. */
 #define SP_XML_TAG    "slot" /**< SP XML node tag. */
 
-#define SP_DATA_PATH  "dat/slots.xml" /**< Location of the sp datafile. */
+#define SP_DATA_PATH  "slots.xml" /**< Location of the sp datafile. */
 
 
 /**

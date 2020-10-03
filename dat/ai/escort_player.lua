@@ -1,5 +1,5 @@
-require("dat/ai/tpl/escort.lua")
-require("dat/ai/personality/patrol.lua")
+require("ai/tpl/escort.lua")
+require("ai/personality/patrol.lua")
 
 -- Settings
 mem.aggressive = true

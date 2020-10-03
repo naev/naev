@@ -2014,7 +2014,7 @@ int gui_load( const char* name )
    gui_cleanup();
 
    /* Open file. */
-   nsnprintf( path, sizeof(path), "dat/gui/%s.lua", name );
+   nsnprintf( path, sizeof(path), GUI_PATH"%s.lua", name );
    buf = ndata_read( path, &bufsize );
    if (buf == NULL) {
       WARN(_("Unable to find GUI '%s'."), path );

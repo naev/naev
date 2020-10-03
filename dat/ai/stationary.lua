@@ -5,7 +5,7 @@
 --]]
 
 
-require("dat/ai/include/basic.lua")
+require("ai/include/basic.lua")
 
 
 control_rate = 2

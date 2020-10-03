@@ -521,8 +521,8 @@ static int nebu_generate (void)
 
    /* Try to make the dir first if it fails. */
    cache = nfile_cachePath();
-   nfile_dirMakeExist( "%s", cache );
-   nfile_dirMakeExist( "%s"NEBULA_PATH, cache );
+   nfile_dirMakeExist( cache );
+   nfile_dirMakeExist( cache, NEBULA_PATH );
 
    /* Generate all the nebula backgrounds */
    nebu = noise_genNebulaMap( w, h, NEBULA_Z, 5. );
@@ -581,7 +581,7 @@ static void nebu_generatePuffs (void)
 static int nebu_checkCompat( const char* file )
 {
    /* first check to see if file exists */
-   if (nfile_fileExists("%s"NEBULA_PATH"%s", nfile_cachePath(), file) == 0)
+   if ( nfile_fileExists( nfile_cachePath(), NEBULA_PATH, file ) == 0 )
       return -1;
    return 0;
 }

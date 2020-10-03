@@ -115,6 +115,11 @@ function _atk_g_ranged( target, dist )
       -- Check if in range to shoot missiles
       if dist < ai.getweaprange( 4 ) and dir < 30 then
          ai.weapset( 4 )
+      else
+         -- Test if we should zz
+         if ai.pilot():stats().mass < 400 and _atk_decide_zz() then
+            ai.pushsubtask("_atk_zigzag")
+         end
       end
 
       -- Approach for melee

@@ -21,7 +21,7 @@
    I'm joking about the last line a little. If you want to name him, feel free.
 --]]
 
-require "dat/missions/neutral/common.lua"
+require "missions/neutral/common.lua"
 
 
 npc_name = _("Old Man")

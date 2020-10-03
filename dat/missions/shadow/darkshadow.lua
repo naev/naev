@@ -20,7 +20,7 @@
 --]]
 
 require "proximity.lua"
-require "dat/missions/shadow/common.lua"
+require "missions/shadow/common.lua"
 
 
 title = {}

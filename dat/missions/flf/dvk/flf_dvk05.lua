@@ -33,7 +33,7 @@
 
 require "fleethelper.lua"
 require "numstring.lua"
-require "dat/missions/flf/flf_pirates.lua"
+require "missions/flf/flf_pirates.lua"
 
 title = {}
 text = {}

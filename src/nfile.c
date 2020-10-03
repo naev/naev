@@ -35,6 +35,7 @@
 #include <windows.h>
 #endif /* HAS_WIN32 */
 
+#include "array.h"
 #include "log.h"
 
 
@@ -272,7 +273,7 @@ static char dirname_buf[PATH_MAX];
 /**
  * @brief Portable version of dirname.
  */
-char* nfile_dirname( char *path )
+char *_nfile_dirname( char *path )
 {
 #if HAS_POSIX
    return dirname( path );
@@ -367,31 +368,23 @@ static int mkpath( const char *path )
  *    @param path Path to create directory if it doesn't exist.
  *    @return 0 on success.
  */
-int nfile_dirMakeExist( const char* path, ... )
+int _nfile_dirMakeExist( const char *path )
 {
-   char file[PATH_MAX];
-   va_list ap;
-
-   if (path == NULL)
+   if ( path == NULL )
       return -1;
-   else { /* get the message */
-      va_start(ap, path);
-      vsnprintf(file, PATH_MAX, path, ap);
-      va_end(ap);
-   }
 
    /* Check if it exists. */
-   if (nfile_dirExists(file))
+   if ( nfile_dirExists( path ) )
       return 0;
 
 #if HAS_POSIX
-   if (mkpath(file, S_IRWXU | S_IRWXG | S_IRWXO) < 0) {
+   if ( mkpath( path, S_IRWXU | S_IRWXG | S_IRWXO ) < 0 ) {
 #elif HAS_WIN32
-   if (mkpath(file) < 0) {
+   if ( mkpath( path ) < 0 ) {
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
-      WARN(_("Dir '%s' does not exist and unable to create: %s"), file, strerror(errno));
+      WARN( _( "Dir '%s' does not exist and unable to create: %s" ), path, strerror( errno ) );
       return -1;
    }
 
@@ -402,22 +395,15 @@ int nfile_dirMakeExist( const char* path, ... )
 /**
  * @brief Checks to see if a directory exists.
  */
-int nfile_dirExists( const char* path, ... )
+int _nfile_dirExists( const char *path )
 {
-   char file[PATH_MAX];
-   va_list ap;
    DIR *d;
 
    if (path == NULL)
       return -1;
-   else { /* get the message */
-      va_start(ap, path);
-      vsnprintf(file, PATH_MAX, path, ap);
-      va_end(ap);
-   }
 
-   d = opendir(file);
-   if (d==NULL)
+   d = opendir( path );
+   if ( d == NULL )
       return 0;
    closedir(d);
    return 1;
@@ -427,22 +413,17 @@ int nfile_dirExists( const char* path, ... )
 /**
  * @brief Checks to see if a file exists.
  *
- *    @param path printf formatted string pointing to the file to check for existence.
+ *    @param path string pointing to the file to check for existence.
  *    @return 1 if file exists, 0 if it doesn't or -1 on error.
  */
-int nfile_fileExists( const char* path, ... )
+int _nfile_fileExists( const char *path )
 {
-   char file[PATH_MAX];
-   va_list ap;
    struct stat buf;
 
-   if (path == NULL)
+   if ( path == NULL )
       return -1;
-   va_start(ap, path);
-   vsnprintf(file, PATH_MAX, path, ap);
-   va_end(ap);
 
-   if (stat(file,&buf)==0) /* stat worked, file must exist */
+   if ( stat( path, &buf ) == 0 ) /* stat worked, file must exist */
       return 1;
 
    /* ANSI C89 compliant method here for reference. Not as precise as stat.
@@ -463,20 +444,15 @@ int nfile_fileExists( const char* path, ... )
  *    @param path printf formatted string pointing to the file to backup.
  *    @return 0 on success, or if file does not exist, -1 on error.
  */
-int nfile_backupIfExists( const char* path, ... )
+int _nfile_backupIfExists( const char *path )
 {
-   char file[PATH_MAX];
-   char backup[PATH_MAX];
-   va_list ap;
+   char file[ PATH_MAX ];
+   char backup[ PATH_MAX ];
 
-   if (path == NULL)
+   if ( path == NULL )
       return -1;
 
-   va_start(ap, path);
-   vsnprintf(file, PATH_MAX, path, ap);
-   va_end(ap);
-
-   if (!nfile_fileExists(file))
+   if ( !nfile_fileExists( file ) )
       return 0;
 
    nsnprintf(backup, PATH_MAX, "%s.backup", file);
@@ -555,21 +531,15 @@ err:
  *    @param[out] nfiles Returns how many files there are.
  *    @param path Directory to read.
  */
-char** nfile_readDir( size_t* nfiles, const char* path, ... )
+char **_nfile_readDir( size_t *nfiles, const char *path )
 {
-   char file[PATH_MAX], base[PATH_MAX];
+   char file[ PATH_MAX ];
    char **files;
    filedata_t *filedata;
-   va_list ap;
 
-   (*nfiles) = 0;
-   if (path == NULL)
+   ( *nfiles ) = 0;
+   if ( path == NULL )
       return NULL;
-   else { /* get the message */
-      va_start(ap, path);
-      vsnprintf(base, PATH_MAX, path, ap);
-      va_end(ap);
-   }
 
    size_t i;
    DIR *d;
@@ -578,8 +548,8 @@ char** nfile_readDir( size_t* nfiles, const char* path, ... )
    size_t mfiles;
    struct stat sb;
 
-   d = opendir(base);
-   if (d == NULL)
+   d = opendir( path );
+   if ( d == NULL )
       return NULL;
 
    mfiles      = 128;
@@ -594,8 +564,8 @@ char** nfile_readDir( size_t* nfiles, const char* path, ... )
          continue;
 
       /* Stat the file */
-      nsnprintf( file, PATH_MAX, "%s/%s", base, name );
-      if (stat(file, &sb) == -1)
+      nsnprintf( file, PATH_MAX, "%s/%s", path, name );
+      if ( stat( file, &sb ) == -1 )
          continue; /* Unable to stat */
 
       /* Enough memory? */
@@ -641,59 +611,50 @@ char** nfile_readDir( size_t* nfiles, const char* path, ... )
  *    @param[out] nfiles Returns how many files there are.
  *    @param path Directory to read.
  */
-char** nfile_readDirRecursive( size_t* nfiles, const char* path, ... )
+char **_nfile_readDirRecursive( char ***_files, const char *base_dir, const char *sub_dir )
 {
-   char **tfiles, **out, **cfiles, *buf, base[PATH_MAX];
-   size_t i, j, ls, mfiles, tmp, cn;
-   va_list ap;
+   char child_path_buf[ PATH_MAX ];
+   char *child_path;
+   char **files;
+   char **cur_path_contents;
+   size_t n_cur_path_contents;
 
-   va_start(ap, path);
-   vsnprintf( base, PATH_MAX, path, ap );
-   va_end(ap);
+   if ( _files == NULL )
+      files = array_create( char * );
+   else
+      files = *_files;
 
-   mfiles  = 128;
-   out     = malloc(sizeof(char*)*mfiles);
-   tfiles  = nfile_readDir( &tmp, base );
-   *nfiles = 0;
+   cur_path_contents = nfile_readDir( &n_cur_path_contents, base_dir, sub_dir );
 
-   for (i=0; i<tmp; i++) {
-      ls  = strlen(base) + strlen(tfiles[i]) + 1;
-      buf = malloc(ls);
-      nsnprintf( buf, ls, "%s%s", path, tfiles[i] );
-      if (nfile_dirExists(buf)) {
-         /* Append slash if necessary. */
-         if (strcmp(&buf[ls-1],"/")!=0) {
-            buf = realloc( buf, (ls+1) );
-            nsnprintf( buf, ls+1, "%s%s/", path, tfiles[i] );
-         }
-
-         /* Iterate over children. */
-         cfiles = nfile_readDirRecursive( &cn, buf );
-         for (j=0; j<cn; j++) {
-            if ((*nfiles+1) > mfiles) {
-               mfiles *= 2;
-               out = realloc( out, sizeof(char*)*mfiles );
-            }
-            out[(*nfiles)++] = cfiles[j];
-         }
-         free(cfiles);
+   for ( size_t i = 0; i < n_cur_path_contents; i += 1 ) {
+      if ( sub_dir == NULL )
+         child_path = cur_path_contents[ i ];
+      else if ( nfile_concatPaths( child_path_buf, PATH_MAX, sub_dir, cur_path_contents[ i ] ) ) {
+         WARN( _( "Error while opening %s/%s: Path is too long" ), sub_dir, cur_path_contents[ i ] );
+         free( cur_path_contents );
+         return NULL;
       }
       else {
-         if ((*nfiles+1) > mfiles) {
-            mfiles *= 2;
-            out = realloc( out, sizeof(char*)*mfiles );
-         }
-         out[(*nfiles)++] = strdup( buf );
+         child_path = child_path_buf;
       }
-
-      /* Clean up. */
-      free(tfiles[i]);
-      free(buf);
+      if ( nfile_dirExists( base_dir, child_path ) ) {
+         /* Iterate over children. */
+         _nfile_readDirRecursive( &files, base_dir, child_path );
+      }
+      else {
+         array_push_back( &files, strdup( child_path ) );
+      }
    }
 
-   free(tfiles);
-   return out;
+   /* Clean up. */
+   free( cur_path_contents );
+
+   if ( _files != NULL )
+      *_files = files;
+
+   return files;
 }
+
 
 /**
  * @brief Tries to read a file.
@@ -702,45 +663,51 @@ char** nfile_readDirRecursive( size_t* nfiles, const char* path, ... )
  *    @param path Path of the file.
  *    @return The file data.
  */
-char* nfile_readFile( size_t* filesize, const char* path, ... )
+char *_nfile_readFile( size_t *filesize, const char *path )
 {
    int n;
-   char base[PATH_MAX];
    char *buf;
    FILE *file;
    int len;
    size_t pos;
-   va_list ap;
+   struct stat path_stat;
 
-   if (path == NULL) {
+   if ( path == NULL ) {
       *filesize = 0;
       return NULL;
    }
-   else { /* get the message */
-      va_start(ap, path);
-      vsnprintf(base, PATH_MAX, path, ap);
-      va_end(ap);
+
+   if ( stat( path, &path_stat ) ) {
+      WARN( _( "Error occurred while opening '%s': %s" ), path, strerror( errno ) );
+      *filesize = 0;
+      return NULL;
+   }
+
+   if ( !S_ISREG( path_stat.st_mode ) ) {
+      WARN( _( "Error occurred while opening '%s': It is not a regular file" ), path );
+      *filesize = 0;
+      return NULL;
    }
 
    /* Open file. */
-   file = fopen( base, "rb" );
-   if (file == NULL) {
-      WARN(_("Error occurred while opening '%s': %s"), base, strerror(errno));
+   file = fopen( path, "rb" );
+   if ( file == NULL ) {
+      WARN( _( "Error occurred while opening '%s': %s" ), path, strerror( errno ) );
       *filesize = 0;
       return NULL;
    }
 
    /* Get file size. */
-   if (fseek( file, 0L, SEEK_END ) == -1) {
-      WARN(_("Error occurred while seeking '%s': %s"), base, strerror(errno));
-      fclose(file);
+   if ( fseek( file, 0L, SEEK_END ) == -1 ) {
+      WARN( _( "Error occurred while seeking '%s': %s" ), path, strerror( errno ) );
+      fclose( file );
       *filesize = 0;
       return NULL;
    }
-   len = ftell(file);
-   if (fseek( file, 0L, SEEK_SET ) == -1) {
-      WARN(_("Error occurred while seeking '%s': %s"), base, strerror(errno));
-      fclose(file);
+   len = ftell( file );
+   if ( fseek( file, 0L, SEEK_SET ) == -1 ) {
+      WARN( _( "Error occurred while seeking '%s': %s" ), path, strerror( errno ) );
+      fclose( file );
       *filesize = 0;
       return NULL;
    }
@@ -757,11 +724,11 @@ char* nfile_readFile( size_t* filesize, const char* path, ... )
 
    /* Read the file. */
    n = 0;
-   while (n < len) {
-      pos = fread( &buf[n], 1, len-n, file );
-      if (pos <= 0) {
-         WARN(_("Error occurred while reading '%s': %s"), base, strerror(errno));
-         fclose(file);
+   while ( n < len ) {
+      pos = fread( &buf[ n ], 1, len - n, file );
+      if ( pos <= 0 ) {
+         WARN( _( "Error occurred while reading '%s': %s" ), path, strerror( errno ) );
+         fclose( file );
          *filesize = 0;
          free(buf);
          return NULL;
@@ -782,24 +749,17 @@ char* nfile_readFile( size_t* filesize, const char* path, ... )
  *
  *    @param path Path of the file to create.
  */
-int nfile_touch( const char* path, ... )
+int _nfile_touch( const char *path )
 {
-   char file[PATH_MAX];
-   va_list ap;
    FILE *f;
 
    if (path == NULL)
       return -1;
-   else { /* get the message */
-      va_start(ap, path);
-      vsnprintf(file, PATH_MAX, path, ap);
-      va_end(ap);
-   }
 
    /* Try to open the file, C89 compliant, but not as precise as stat. */
-   f = fopen(file, "a+b");
-   if (f == NULL) {
-      WARN(_("Unable to touch file '%s': %s"), file, strerror(errno));
+   f = fopen( path, "a+b" );
+   if ( f == NULL ) {
+      WARN( _( "Unable to touch file '%s': %s" ), path, strerror( errno ) );
       return -1;
    }
 
@@ -816,44 +776,37 @@ int nfile_touch( const char* path, ... )
  *    @param path Path of the file.
  *    @return 0 on success, -1 on error.
  */
-int nfile_writeFile( const char* data, size_t len, const char* path, ... )
+int _nfile_writeFile( const char *data, size_t len, const char *path )
 {
    size_t n;
-   char base[PATH_MAX];
    FILE *file;
    size_t pos;
-   va_list ap;
 
-   if (path == NULL)
+   if ( path == NULL )
       return -1;
-   else { /* get the message */
-      va_start(ap, path);
-      vsnprintf(base, PATH_MAX, path, ap);
-      va_end(ap);
-   }
 
    /* Open file. */
-   file = fopen( base, "wb" );
-   if (file == NULL) {
-      WARN(_("Error occurred while opening '%s': %s"), base, strerror(errno));
+   file = fopen( path, "wb" );
+   if ( file == NULL ) {
+      WARN( _( "Error occurred while opening '%s': %s" ), path, strerror( errno ) );
       return -1;
    }
 
    /* Write the file. */
    n = 0;
-   while (n < len) {
-      pos = fwrite( &data[n], 1, len-n, file );
-      if (pos <= 0) {
-         WARN(_("Error occurred while writing '%s': %s"), base, strerror(errno));
-         fclose(file);  /* don't care about further errors */
+   while ( n < len ) {
+      pos = fwrite( &data[ n ], 1, len - n, file );
+      if ( pos <= 0 ) {
+         WARN( _( "Error occurred while writing '%s': %s" ), path, strerror( errno ) );
+         fclose( file ); /* don't care about further errors */
          return -1;
       }
       n += pos;
    }
 
    /* Close the file. */
-   if (fclose(file) == EOF) {
-      WARN(_("Error occurred while closing '%s': %s"), base, strerror(errno));
+   if ( fclose( file ) == EOF ) {
+      WARN( _( "Error occurred while closing '%s': %s" ), path, strerror( errno ) );
       return -1;
    }
 
@@ -867,7 +820,7 @@ int nfile_writeFile( const char* data, size_t len, const char* path, ... )
  *    @param file File to delete.
  *    @return 0 on success.
  */
-int nfile_delete( const char* file )
+int _nfile_delete( const char *file )
 {
    if (unlink(file)) {
       WARN( _("Error deleting file %s"),file );
@@ -939,4 +892,52 @@ int nfile_isSeparator( uint32_t c )
 }
 
 
+int _nfile_concatPaths( char buf[static 1], int maxLength, const char path[static 1], ... )
+{
+   char *bufPos;
+   char *bufEnd;
+   const char *section;
+   va_list ap;
 
+   bufPos = buf;
+   bufEnd = buf + maxLength;
+   va_start( ap, path );
+   section = path;
+
+#if DEBUGGING
+   if ( section == NULL )
+      WARN( _( "First argument to nfile_concatPaths was NULL. This is probably an error." ) );
+#endif
+
+   do {
+      // End of arg list?
+      if ( section == NULL )
+         break;
+
+      if ( bufPos > buf ) {
+         // Make sure there's a path seperator.
+         if ( bufPos[ -1 ] != '/' ) {
+            bufPos[ 0 ] = '/';
+            bufPos += 1;
+         }
+         // But not too many path seperators.
+         if ( *section == '/' )
+            section += 1;
+      }
+
+      // Copy this section
+      bufPos = memccpy( bufPos, section, '\0', bufEnd - bufPos );
+      if ( bufPos == NULL )
+         break;
+
+      // Next path section
+      section = va_arg( ap, char * );
+   } while ( bufPos-- < bufEnd ); // Rewind after compare so we're pointing at the NULL character.
+   va_end( ap );
+
+   // Did we run out of space?
+   if ( section != NULL )
+      return -1;
+
+   return 0;
+}

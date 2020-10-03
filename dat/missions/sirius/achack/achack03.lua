@@ -22,7 +22,7 @@
 
 require "fleethelper.lua"
 require "proximity.lua"
-require "dat/missions/sirius/common.lua"
+require "missions/sirius/common.lua"
 
 
 title1 = _("Talking to Joanne")

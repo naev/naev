@@ -538,18 +538,18 @@ static int event_cmp( const void* a, const void* b )
  */
 int events_load (void)
 {
-   size_t i, nfiles;
+   int    i;
    char **event_files;
 
    /* Run over events. */
-   event_data = array_create(EventData);
-   event_files = ndata_listRecursive( EVENT_DATA_PATH, &nfiles );
-   for (i=0; i<nfiles; i++) {
-      event_parseFile( event_files[i] );
-      free( event_files[i] );
+   event_files = ndata_listRecursive( EVENT_DATA_PATH );
+   event_data  = array_create_size( EventData, array_size( event_files ) );
+   for ( i = 0; i < array_size( event_files ); i++ ) {
+      event_parseFile( event_files[ i ] );
+      free( event_files[ i ] );
    }
-   free( event_files );
-   array_shrink(&event_data);
+   array_free( event_files );
+   array_shrink( &event_data );
 
    /* Sort based on priority so higher priority missions can establish claims first. */
    qsort( event_data, array_size(event_data), sizeof(EventData), event_cmp );

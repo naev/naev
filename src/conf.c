@@ -103,7 +103,6 @@ static void print_usage( char **argv )
    LOG(_("   -m f, --mvol f        sets the music volume to f"));
    LOG(_("   -s f, --svol f        sets the sound volume to f"));
    LOG(_("   -G, --generate        regenerates the nebula (slow)"));
-   LOG(_("   -N, --nondata         do not use ndata and try to use laid out files"));
    LOG(_("   -d, --datapath        specifies a custom path for all user data (saves, screenshots, etc.)"));
    LOG(_("   -X, --scale           defines the scale factor"));
 #ifdef DEBUGGING
@@ -633,7 +632,6 @@ void conf_parseCLI( int argc, char** argv )
       { "mvol", required_argument, 0, 'm' },
       { "svol", required_argument, 0, 's' },
       { "generate", no_argument, 0, 'G' },
-      { "nondata", no_argument, 0, 'N' },
       { "scale", required_argument, 0, 'X' },
 #ifdef DEBUGGING
       { "devmode", no_argument, 0, 'D' },

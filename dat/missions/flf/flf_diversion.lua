@@ -32,7 +32,7 @@
 --]]
 
 require "numstring.lua"
-require "dat/missions/flf/flf_common.lua"
+require "missions/flf/flf_common.lua"
 
 -- localization stuff
 misn_title  = _("FLF: Diversion in %s")

@@ -27,7 +27,7 @@
 ]]--
 
 require "numstring.lua"
-require "dat/missions/zalek/common.lua"
+require "missions/zalek/common.lua"
 
 
 -- Mission Text

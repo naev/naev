@@ -215,7 +215,7 @@ void menu_main (void)
          &cWhite, naev_version(1) );
 
    /* create menu window */
-   wid = window_create( "Main Menu", -1, offset_wdw, MAIN_WIDTH, h );
+   wid = window_create( N_("Main Menu"), -1, offset_wdw, MAIN_WIDTH, h );
    window_setCancel( wid, main_menu_promptClose );
 
    /* Buttons. */
@@ -421,7 +421,7 @@ void menu_small (void)
             menu_isOpen(MENU_DEATH) ))
       return;
 
-   wid = window_create( "Menu", -1, -1, MENU_WIDTH, MENU_HEIGHT );
+   wid = window_create( N_("Menu"), -1, -1, MENU_WIDTH, MENU_HEIGHT );
 
    window_setCancel( wid, menu_small_close );
 
@@ -555,7 +555,7 @@ void menu_death (void)
    unsigned int wid;
    char path[PATH_MAX];
 
-   wid = window_create( "Death", -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
+   wid = window_create( N_("Death"), -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
    window_onClose( wid, menu_death_close );
 
    /* Allow the player to continue if the savegame exists, if not, propose to restart */
@@ -656,18 +656,18 @@ static void menu_editors_open( unsigned int wid, char *unused )
    y  = 20 + (BUTTON_HEIGHT+20)*2;
    h  = y + 80;
 
-   wid = window_create( "Editors", -1, -1, MENU_WIDTH + EDITORS_EXTRA_WIDTH, h );
+   wid = window_create( N_("Editors"), -1, -1, MENU_WIDTH + EDITORS_EXTRA_WIDTH, h );
    window_setCancel( wid, menu_editors_close );
 
    /* Set buttons for the editors */
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH + EDITORS_EXTRA_WIDTH, BUTTON_HEIGHT,
-      "btnUniverse", "Universe Map", uniedit_open, SDLK_u );
+      "btnUniverse", _("Universe Map"), uniedit_open, SDLK_u );
    y -= BUTTON_HEIGHT+20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH + EDITORS_EXTRA_WIDTH, BUTTON_HEIGHT,
-      "btnMapEdit", "Map Outfits", mapedit_open, SDLK_m );
+      "btnMapEdit", _("Map Outfits"), mapedit_open, SDLK_m );
    y -= BUTTON_HEIGHT+20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH + EDITORS_EXTRA_WIDTH, BUTTON_HEIGHT,
-      "btnMain", "Exit to Main Menu", menu_editors_close, SDLK_x );
+      "btnMain", _("Exit to Main Menu"), menu_editors_close, SDLK_x );
 
     /* Editors menu is open. */
    menu_Open( MENU_EDITORS );

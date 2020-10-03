@@ -23,7 +23,7 @@ require "proximity.lua"
 require "nextjump.lua"
 require "chatter.lua"
 require "selectiveclear.lua"
-require "dat/missions/shadow/common.lua"
+require "missions/shadow/common.lua"
 
 
 title = {}

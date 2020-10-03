@@ -20,8 +20,8 @@
 --]]
 
 require "portrait.lua"
-require "dat/missions/baron/common.lua"
-require "dat/missions/neutral/common.lua"
+require "missions/baron/common.lua"
+require "missions/neutral/common.lua"
 
 
 sysname1 = "Darkstone"

@@ -22,11 +22,11 @@
 -- This is the second mission in the Academy Hack minor campaign.
 --]]
 
-require "dat/scripts/nextjump.lua"
+require "scripts/nextjump.lua"
 require "fleethelper.lua"
 require "selectiveclear.lua"
 require "proximity.lua"
-require "dat/missions/sirius/common.lua"
+require "missions/sirius/common.lua"
 
 
 title1 = _("An unexpected reunion")

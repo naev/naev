@@ -23,7 +23,7 @@ Plot: Talk to man on Zeo, bargain, load some cargo, deliver it to Zhiru in Godda
 --]]
 
 require "numstring.lua"
-require "dat/missions/neutral/common.lua"
+require "missions/neutral/common.lua"
 
 
 misn_title = _([[Deliver Love]])

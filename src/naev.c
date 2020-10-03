@@ -155,6 +155,7 @@ static void fps_control (void);
 static void update_all (void);
 static void render_all (void);
 /* Misc. */
+int nsetenv( const char *name, const char *value, int overwrite );
 void loadscreen_render( double done, const char *msg ); /* nebula.c */
 void main_loop( int update ); /* dialogue.c */
 
@@ -177,7 +178,7 @@ void naev_quit (void)
  */
 int main( int argc, char** argv )
 {
-   char buf[PATH_MAX];
+   char buf[PATH_MAX], langbuf[PATH_MAX], *lang;
 
    if (!log_isTerminal())
       log_copy(1);
@@ -198,7 +199,9 @@ int main( int argc, char** argv )
     * numeric type of the locale. */
    setlocale( LC_ALL, "" );
    setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
-   bindtextdomain( PACKAGE_NAME, LOCALEDIR );
+   /* We haven't loaded the ndata yet, so just try a path quickly. */
+   nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, naev_binary() );
+   bindtextdomain( PACKAGE_NAME, langbuf );
    //bindtextdomain("naev", "po/");
    textdomain( PACKAGE_NAME );
 #endif /* defined ENABLE_NLS && ENABLE_NLS */
@@ -223,7 +226,7 @@ int main( int argc, char** argv )
 
 #if HAS_UNIX
    /* Set window class and name. */
-   setenv("SDL_VIDEO_X11_WMCLASS", APPNAME, 0);
+   nsetenv("SDL_VIDEO_X11_WMCLASS", APPNAME, 0);
 #endif /* HAS_UNIX */
 
    /* Must be initialized before input_init is called. */
@@ -260,24 +263,11 @@ int main( int argc, char** argv )
    conf_parseCLIPath( argc, argv );
 
    /* Create the home directory if needed. */
-   if (nfile_dirMakeExist("%s", nfile_configPath()))
+   if ( nfile_dirMakeExist( nfile_configPath() ) )
       WARN( _("Unable to create config directory '%s'"), nfile_configPath());
 
    /* Set the configuration. */
    nsnprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
-
-#if HAS_MACOS
-   /* TODO get rid of this cruft ASAP. */
-   char oldconfig[PATH_MAX] = "";
-   if (!nfile_fileExists( buf )) {
-      char *home = SDL_getenv( "HOME" );
-      if (home != NULL) {
-         nsnprintf( oldconfig, PATH_MAX, "%s/.config/naev/"CONF_FILE, home );
-         if (!nfile_fileExists( oldconfig ))
-            oldconfig[0] = '\0';
-      }
-   }
-#endif /* HAS_MACOS */
 
    conf_loadConfig(buf); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
@@ -289,19 +279,6 @@ int main( int argc, char** argv )
    else
       log_purge();
 
-#if defined ENABLE_NLS && ENABLE_NLS
-   /* Try to set the language again if Naev is attempting to override the locale stuff.
-    * This is done late because this is the first stage at which we have the conf file
-    * fully loaded. */
-   if (conf.language != NULL) {
-      setlocale( LC_ALL, (strcmp(conf.language,"en")==0) ? "C" : conf.language );
-      setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
-      bindtextdomain( PACKAGE_NAME, LOCALEDIR );
-      textdomain( PACKAGE_NAME );
-      DEBUG(_("Reset language to \"%s\""), conf.language);
-   }
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
-
    /* Enable FPU exceptions. */
 #if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING)
    if (conf.fpu_except)
@@ -311,6 +288,29 @@ int main( int argc, char** argv )
    /* Open data. */
    if (ndata_open() != 0)
       ERR( _("Failed to open ndata.") );
+
+#if defined ENABLE_NLS && ENABLE_NLS
+   /* Try to set the language again if Naev is attempting to override the locale stuff.
+    * This is done late because this is the first stage at which we have the conf file
+    * fully loaded. */
+   if (conf.language == NULL)
+      lang = "";
+   else if (strcmp(conf.language,"en")==0)
+      lang = "C";
+   else
+      lang = conf.language;
+   nsetenv( "LANGUAGE", lang, 1 );
+   /*
+   if (setlocale( LC_ALL, lang )==NULL)
+      WARN(_("Unable to set the locale to '%s'!"), lang );
+   */
+   if (setlocale( LC_NUMERIC, "C" )==NULL) /* Disable numeric locale part. */
+      WARN(_("Unable to set LC_NUMERIC to 'C'!"));
+   nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, ndata_getPath() );
+   bindtextdomain( PACKAGE_NAME, langbuf );
+   textdomain( PACKAGE_NAME );
+   DEBUG(_("Reset language to \"%s\""), lang);
+#endif /* defined ENABLE_NLS && ENABLE_NLS */
 
    /* Load the start info. */
    if (start_load())
@@ -419,69 +419,6 @@ int main( int argc, char** argv )
       SDL_Delay( NAEV_INIT_DELAY - (SDL_GetTicks() - time_ms) );
    fps_init(); /* initializes the time_ms */
 
-#if HAS_MACOS
-   /* Tell the player to migrate their configuration files */
-   /* TODO get rid of this cruft ASAP. */
-   if ((oldconfig[0] != '\0') && (!conf.datapath)) {
-      char path[PATH_MAX], *script, *home;
-      size_t scriptsize;
-      int ret;
-
-      nsnprintf( path, PATH_MAX, "%s/naev-confupdate.sh", ndata_getDirname() );
-      home = SDL_getenv("HOME");
-      ret = dialogue_YesNo( _("Warning"), _("Your configuration files are in a deprecated location and must be migrated:\n"
-            "   \ar%s\a0\n\n"
-            "The update script can likely be found in your Naev data directory:\n"
-            "   \ar%s\a0\n\n"
-            "Would you like to run it automatically?"), oldconfig, path );
-
-      /* Try to run the script. */
-      if (ret) {
-         ret = -1;
-         /* Running from ndata. */
-         if (ndata_getPath() != NULL) {
-            script = ndata_read( "naev-confupdate.sh", &scriptsize );
-            if (script != NULL)
-               ret = system(script);
-         }
-
-         /* Running from laid-out files or ndata_read failed. */
-         if ((nfile_fileExists(path)) && (ret == -1)) {
-            script = nfile_readFile( &scriptsize, path );
-            if (script != NULL)
-               ret = system(script);
-         }
-
-         /* We couldn't find the script. */
-         if (ret == -1) {
-            dialogue_alert( _("The update script was not found at:\n\ar%s\a0\n\n"
-                  "Please locate and run it manually."), path );
-         }
-         /* Restart, as the script succeeded. */
-         else if (!ret) {
-            dialogue_msg( _("Update Completed"),
-                  _("Configuration files were successfully migrated. Naev will now restart.") );
-            execv(argv[0], argv);
-         }
-         else { /* I sincerely hope this else is never hit. */
-            dialogue_alert( _("The update script encountered an error. Please exit Naev and move your config and save files manually:\n\n"
-                  "\ar%s/%s\a0 =>\n   \ag%s\a0\n\n"
-                  "\ar%s/%s\a0 =>\n   \ag%s\a0\n\n"
-                  "\ar%s/%s\a0 =>\n   \ag%snebula/\a0\n\n"),
-                  home, ".naev/conf.lua", nfile_configPath(),
-                  home, ".naev/{saves,screenshots}/", nfile_dataPath(),
-                  home, ".naev/gen/*.png", nfile_cachePath() );
-         }
-      }
-      else {
-         dialogue_alert(
-               _("To manually migrate your configuration files "
-               "please exit Naev and run the update script, "
-               "likely found in your Naev data directory:\n"
-               "   \ar%s/naev-confupdate.sh\a0"), home, path );
-      }
-   }
-#endif /* HAS_MACOS */
 
    /*
     * main loop
@@ -1327,6 +1264,29 @@ int naev_versionCompare( int version[3] )
 char *naev_binary (void)
 {
    return binary_path;
+}
+
+
+/**
+ * @brief Sets an environment variable.
+ */
+int nsetenv( const char *name, const char *value, int overwrite )
+{
+#if HAVE_DECL_SETENV
+   return setenv( name, value, overwrite );
+#elif HAVE_DECL__PUTENV_S
+   int errcode = 0;
+   if (!overwrite) {
+      size_t envsize = 0;
+      errcode = getenv_s(&envsize, NULL, 0, name);
+      if(errcode || envsize) return errcode;
+   }
+   return _putenv_s(name, value);
+#else
+   char buf[PATH_MAX];
+   nsprintf( buf, sizeof(buf), "%s=%s", name, value );
+   return putenv( buf );
+#endif
 }
 
 

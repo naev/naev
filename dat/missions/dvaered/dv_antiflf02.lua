@@ -31,7 +31,7 @@
 
 require "fleethelper.lua"
 require "portrait.lua"
-require "dat/missions/dvaered/common.lua"
+require "missions/dvaered/common.lua"
 
 
 title = {}

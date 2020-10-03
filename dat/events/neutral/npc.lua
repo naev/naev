@@ -11,7 +11,7 @@
 -- The random NPCs will tell the player things about the Naev universe in general, about their faction, or about the game itself.
 --]]
 
-require "dat/events/tutorial/tutorial_common.lua"
+require "events/tutorial/tutorial_common.lua"
 require "portrait.lua"
 
 -- Factions which will NOT get generic texts if possible.  Factions

@@ -22,7 +22,7 @@ Plot: on Zhiru you meet the same girl who received the love letters,her name is 
 --]]
 
 require "numstring.lua"
-require "dat/missions/neutral/common.lua"
+require "missions/neutral/common.lua"
 
 
 -- Dialogue

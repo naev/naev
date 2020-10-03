@@ -2488,7 +2488,6 @@ src/nlua_tk.c
 src/nlua_var.c
 src/nlua_vec2.c
 src/nmath.c
-src/nondata.c
 src/nopenal.c
 src/npc.c
 src/npng.c
@@ -2496,7 +2495,6 @@ src/nstring.c
 src/ntime.c
 src/nxml.c
 src/nxml_lua.c
-src/nzip.c
 src/opengl.c
 src/opengl_matrix.c
 src/opengl_render.c

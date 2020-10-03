@@ -1262,7 +1262,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node, "spawn")) {
          if (temp->sched_env != LUA_NOREF)
             WARN(_("Faction '%s' has duplicate 'spawn' tag."), temp->name);
-         nsnprintf( buf, sizeof(buf), "dat/factions/spawn/%s.lua", xml_raw(node) );
+         nsnprintf( buf, sizeof(buf), FACTIONS_PATH"spawn/%s.lua", xml_raw(node) );
          temp->sched_env = nlua_newEnv(1);
          nlua_loadStandard( temp->sched_env);
          dat = ndata_read( buf, &ndat );
@@ -1281,7 +1281,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node, "standing")) {
          if (temp->env != LUA_NOREF)
             WARN(_("Faction '%s' has duplicate 'standing' tag."), temp->name);
-         nsnprintf( buf, sizeof(buf), "dat/factions/standing/%s.lua", xml_raw(node) );
+         nsnprintf( buf, sizeof(buf), FACTIONS_PATH"standing/%s.lua", xml_raw(node) );
          temp->env = nlua_newEnv(1);
          nlua_loadStandard( temp->env );
          dat = ndata_read( buf, &ndat );
@@ -1305,7 +1305,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node, "equip")) {
          if (temp->equip_env != LUA_NOREF)
             WARN(_("Faction '%s' has duplicate 'equip' tag."), temp->name);
-         nsnprintf( buf, sizeof(buf), "dat/factions/equip/%s.lua", xml_raw(node) );
+         nsnprintf( buf, sizeof(buf), FACTIONS_PATH"equip/%s.lua", xml_raw(node) );
          temp->equip_env = nlua_newEnv(1);
          nlua_loadStandard( temp->equip_env );
          dat = ndata_read( buf, &ndat );

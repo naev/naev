@@ -23,8 +23,8 @@
              1 : the player has forgotten the engine
 ]]
 
-require "dat/scripts/cargo_common.lua"
-require "dat/scripts/numstring.lua"
+require "scripts/cargo_common.lua"
+require "scripts/numstring.lua"
 
 misn_title = _("ZT test of %s")
 misn_desc = _("A Za'lek research team needs you to travel to %s in %s using an engine in order to test it.")

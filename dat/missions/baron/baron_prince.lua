@@ -26,7 +26,7 @@
 require "fleethelper.lua"
 require "numstring.lua"
 require "portrait.lua"
-require "dat/missions/baron/common.lua"
+require "missions/baron/common.lua"
 
 
 title = {}
