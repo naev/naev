@@ -25,15 +25,15 @@ __attribute__( ( sentinel ) ) int _nfile_concatPaths( char buf[static 1], int ma
 #define _nfile_unwrap( ... ) __VA_ARGS__
 
 // clang-format off
-#define _nfile_path_macro( func, err_val, params, path, ... ) ({               \
-   #__VA_ARGS__[0] == '\0'                                                     \
-      ? func(_nfile_unwrap params(path))                                       \
-      : ({                                                                     \
-         char combined_path[ PATH_MAX ];                                       \
-         nfile_concatPaths(combined_path, PATH_MAX, (path), ##__VA_ARGS__) < 0 \
-            ? (err_val)                                                        \
-            : func(_nfile_unwrap params combined_path);                        \
-      });                                                                      \
+#define _nfile_path_macro( func, err_val, params, path, ... ) ({                    \
+   #__VA_ARGS__[0] == '\0'                  /* If there's no vaargs... */           \
+      ? func(_nfile_unwrap params(path))    /* Call the function directly */        \
+      : ({                                  /* Otherwise, concat the paths first */ \
+         char combined_path[ PATH_MAX ];                                            \
+         nfile_concatPaths(combined_path, PATH_MAX, (path), ##__VA_ARGS__) < 0      \
+            ? (err_val)                                                             \
+            : func(_nfile_unwrap params combined_path);                             \
+      });                                                                           \
    })
 // clang-format on
 
