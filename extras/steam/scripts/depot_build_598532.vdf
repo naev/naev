@@ -10,7 +10,7 @@
     "LocalPath" "./ndata/*"
     
     // This is a path relative to the install folder of your game
-    "DepotPath" "."
+    "DepotPath" "./ndata"
     
     // If LocalPath contains wildcards, setting this means that all
     // matching files within subdirectories of LocalPath will also
