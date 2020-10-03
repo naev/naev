@@ -33,11 +33,7 @@ VERSIONDATAFILE = dat/VERSION
 LANGUAGEFILE = $(top_srcdir)/dat/LANGUAGES
 
 EXTRA_DIST = build/config.rpath LICENSE extras naev.desktop naev.appdata.xml
-<<<<<<< HEAD
-CLEANFILES = $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE)
-=======
 CLEANFILES = $(NAEV) $(VERSIONFILE) $(VERSIONDATAFILE) $(LANGUAGEFILE)
->>>>>>> master
 
 .PHONY: pot docs utils help install-ndata soundtrack
 
