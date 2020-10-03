@@ -1292,7 +1292,7 @@ int nsetenv( const char *name, const char *value, int overwrite )
    return _putenv_s(name, value);
 #else
    char buf[PATH_MAX];
-   nsprintf( buf, sizeof(buf), "%s=%s", name, value );
+   snprintf( buf, sizeof(buf), "%s=%s", name, value );
    return putenv( buf );
 #endif
 }
