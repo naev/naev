@@ -131,8 +131,9 @@ int ndata_setPath( const char *path )
             ndata_source = NDATA_SRC_DEFAULT;
             break;
          }
-         if ( ndata_isndata( NDATA_DEF ) ) {
-            ndata_dir    = strdup( NDATA_DEF );
+         nfile_concatPaths( buf, PATH_MAX, PKGDATADIR, NDATA_PATHNAME );
+         if ( ndata_isndata( buf ) ) {
+            ndata_dir    = strdup( buf );
             ndata_source = NDATA_SRC_DEFAULT;
             break;
          }

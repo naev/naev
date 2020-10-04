@@ -21,7 +21,6 @@ dist_pkgdata_DATA = naev-confupdate.sh
 
 dist_man6_MANS = naev.6
 dist_doc_DATA = AUTHORS README TODO LICENSE
-nobase_dist_pkgdata_DATA = dat/* po/*
 
 if HAVE_UTILS
 MKSPR      = $(top_srcdir)/utils/mkspr/mkspr$(EXEEXT)
@@ -97,6 +96,9 @@ $(MKSPR):
 else # HAVE_UTILS
 utils:
 endif # HAVE_UTILS
+
+install-data-local:
+	(cd $(top_srcdir)/dat; find . -type f -exec install -Dm 644 "{}" "$(pkgdatadir)/dat/{}" \;)
 
 uninstall-hook:
 	echo " rm -rf '$(DESTDIR)$(pkgdatadir)'"; \
