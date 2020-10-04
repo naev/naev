@@ -76,7 +76,7 @@ text[15] = _([["The things I do for science! Now let me go back to my lab and an
 fail_text = _([["NOOOOOO! What have you done!? My prototype! It's going to take me weeks to rebuild it! You incompetent nincompoop!"]])
 -- osd_msg
 osd_msg[1] = _("Go to the %s system and hail the prototype")
-osd_msg[2] = _("Disable to prototype")
+osd_msg[2] = _("Disable the prototype")
 osd_msg[3] = _("Return the prototype to %s in the %s system")
 -- refuestext 
 refusetitle = _("No Science Today")
