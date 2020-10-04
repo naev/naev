@@ -114,7 +114,7 @@ thank_comm[4] = _("Haha, good luck!")
 
 not_scared_comm    = {}
 not_scared_comm[1] = _("Mommy, I'm so scared! Har har har!")
-not_scared_comm[2] = _("Haw haw haw! you're ridiculous!")
+not_scared_comm[2] = _("Haw haw haw! You're ridiculous!")
 not_scared_comm[3] = _("Just come at me if you dare!")
 not_scared_comm[4] = _("You're so pitiful!")
 

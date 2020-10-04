@@ -49,7 +49,7 @@ title[2] = _("Time to go")
 text[2] = _([["Fantastic! I am known as Donald Ulnish to the Council member. Good luck."]])
 
 title[3] = _("Good job")
-text[3] = _([[Smith seems to relax as you tell him that everything went according to plan. "Fantastic! I have another mission for you; meet me in the bar when you are ready to bring me to %s in the %s system.]])
+text[3] = _([[Smith seems to relax as you tell him that everything went according to plan. "Fantastic! I have another mission for you; meet me in the bar when you are ready to bring me to %s in the %s system."]])
 
 title[4] = _("Time to go back to %s")
 text[4] = _([[The captain of the Hawking answers you. When you say that you have a message from Donald Ulnish, he redirects you to one of his officers who takes the message. Now, back to %s.]])
@@ -58,7 +58,7 @@ text[4] = _([[The captain of the Hawking answers you. When you say that you have
 -- Mission details
 misn_title = _("Invitation")
 misn_reward = _("%s credits")
-misn_desc = _("Nexus Shipyard asks you to help initiate a secret meeting")
+misn_desc = _("Nexus Shipyards asks you to help initiate a secret meeting")
 
 -- NPC
 npc_desc[1] = _("Arnold Smith")

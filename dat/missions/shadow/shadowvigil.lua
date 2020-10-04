@@ -103,7 +103,6 @@ commmsg[13] = _("This is your leader, you're all clear. Execute, execute, execut
 
 -- Refuel hint
 refueltitle = _("Preparing for the job")
-refueltext = _("While you handle the post-land and refuel operations, you get a comm from the flight leader, audio only. He tells you that this will be the last place where you can refuel, and that you need to make sure to have at least %d jumps worth of fuel on board for the next leg of the journey. You will be left behind if you can't keep up.")
 
 -- Mission info stuff
 osd_title = {}
@@ -204,7 +203,11 @@ function land()
     if landfail then
         tk.msg(landfailtitle, landfailtext)
     elseif planet.cur() == planet.get("Nova Shakar") and stage == 2 then
-        tk.msg(refueltitle, refueltext:format(system.cur():jumpDist(misssys[4])))
+        local dist = system.cur():jumpDist(misssys[4])
+        local refueltext = gettext.ngettext(
+           "While you handle the post-land and refuel operations, you get a comm from the flight leader, audio only. He tells you that this will be the last place where you can refuel, and that you need to make sure to have at least %d jump worth of fuel on board for the next leg of the journey. You will be left behind if you can't keep up.",
+           "While you handle the post-land and refuel operations, you get a comm from the flight leader, audio only. He tells you that this will be the last place where you can refuel, and that you need to make sure to have at least %d jumps worth of fuel on board for the next leg of the journey. You will be left behind if you can't keep up.", dist )
+        tk.msg(refueltitle, refueltext:format(dist))
         stage = 3 -- Fly to the diplomat rendezvous point.
         misn.osdActive(3)
         landfail = true
