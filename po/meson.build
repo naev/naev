@@ -12,8 +12,10 @@ potfiles = custom_target(
 i18n.gettext(meson.project_name(),
     data_dirs: meson.source_root() / 'po',
     args: [
+        '--files-from=' + (meson.source_root() / 'po/POTFILES_COMBINED.in'),
         '--directory=' + meson.source_root(),
         '--from-code=UTF-8',
+        '--add-comments',
 
         '--keyword=_',
         '--keyword=N_',
