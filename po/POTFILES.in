@@ -1,9 +1,11 @@
+dat/ai/advertiser.lua
 dat/ai/baddie.lua
 dat/ai/baddie_norun.lua
 dat/ai/base.lua
 dat/ai/civilian.lua
 dat/ai/collective.lua
 dat/ai/collective_norun.lua
+dat/ai/distress_behaviour.lua
 dat/ai/dummy.lua
 dat/ai/dvaered.lua
 dat/ai/dvaered_norun.lua
@@ -36,6 +38,7 @@ dat/ai/independent.lua
 dat/ai/mercenary.lua
 dat/ai/miner.lua
 dat/ai/noidle.lua
+dat/ai/personality/advertiser.lua
 dat/ai/personality/civilian.lua
 dat/ai/personality/miner.lua
 dat/ai/personality/patrol.lua
@@ -268,6 +271,8 @@ dat/missions/tutorial/tutorial.lua
 dat/missions/zalek/common.lua
 dat/missions/zalek/neburesearch/neburesearch_00.lua
 dat/missions/zalek/neburesearch/neburesearch_01.lua
+dat/missions/zalek/neburesearch/neburesearch_02.lua
+dat/missions/zalek/neburesearch/neburesearch_03.lua
 dat/missions/zalek/sciencegonewrong/00_sciwrong.lua
 dat/missions/zalek/sciencegonewrong/01_sciwrong.lua
 dat/missions/zalek/sciencegonewrong/02_sciwrong.lua
