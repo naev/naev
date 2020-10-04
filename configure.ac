@@ -242,20 +242,6 @@ AC_ARG_ENABLE([lua],
   ])
 AC_MSG_RESULT([$used_lua])
 
-# --with-ndata
-ndata_path="$datadir/$PACKAGE_NAME/ndata"
-expand_variable ndata_path
-
-AC_MSG_CHECKING([for path to ndata])
-AC_ARG_WITH([ndata-path],
-  AC_HELP_STRING([--with-ndata-path=PATH], [path to the ndata file]),
-  [ndata_path="$withval"], [])
-AC_MSG_RESULT([$ndata_path])
-AS_IF([test -z "$ndata_path" || test "x$ndata_path" = "xyes"], [
-  AC_ERROR([The data path must be explicitly specified])
-])
-AC_SUBST([ndata_path])
-
 #
 # Checks for libraries.
 #
@@ -600,10 +586,6 @@ case "$host" in
     ;;
 esac
 
-# NDATA_DEF
-AC_DEFINE_UNQUOTED([NDATA_DEF], ["$ndata_path"],
-      [Define to the path to the data file])
-
 # GIT_COMMIT
 AS_IF([test -n "$GIT_COMMIT"], [
   AC_DEFINE_UNQUOTED([GIT_COMMIT], ["$GIT_COMMIT"],
@@ -661,7 +643,6 @@ AC_OUTPUT
 
 echo
 AC_MSG_NOTICE([prefix:       $prefix])
-AC_MSG_NOTICE([ndata:        $ndata_path])
 echo
 AC_MSG_NOTICE([sound backends:])
 AC_MSG_NOTICE([  OpenAL:     $have_openal])
