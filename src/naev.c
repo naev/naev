@@ -155,7 +155,6 @@ static void fps_control (void);
 static void update_all (void);
 static void render_all (void);
 /* Misc. */
-int nsetenv( const char *name, const char *value, int overwrite );
 void loadscreen_render( double done, const char *msg ); /* nebula.c */
 void main_loop( int update ); /* dialogue.c */
 
@@ -1271,29 +1270,6 @@ int naev_versionCompare( int version[3] )
 char *naev_binary (void)
 {
    return binary_path;
-}
-
-
-/**
- * @brief Sets an environment variable.
- */
-int nsetenv( const char *name, const char *value, int overwrite )
-{
-#if HAVE_DECL_SETENV
-   return setenv( name, value, overwrite );
-#elif HAVE_DECL__PUTENV_S
-   int errcode = 0;
-   if (!overwrite) {
-      size_t envsize = 0;
-      errcode = getenv_s(&envsize, NULL, 0, name);
-      if(errcode || envsize) return errcode;
-   }
-   return _putenv_s(name, value);
-#else
-   char buf[PATH_MAX];
-   nsnprintf( buf, sizeof(buf), "%s=%s", name, value );
-   return putenv( buf );
-#endif
 }
 
 
