@@ -1,4 +1,0 @@
-<?xml version="1.0"?>
-<locatingRules>
-  <locatingRule name="dat" pattern="*.xml" target="translation.its"/>
-</locatingRules>
