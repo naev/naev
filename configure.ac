@@ -12,12 +12,12 @@ AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build])
 
-AM_PO_SUBDIRS
-
 AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION([0.19.8])
 GETTEXT_PACKAGE=${PACKAGE_NAME}
 AC_SUBST(GETTEXT_PACKAGE)
+GETTEXTDATADIRS="$srcdir/po"
+AC_SUBST([GETTEXTDATADIRS])
 
 IT_PROG_INTLTOOL
 
@@ -685,4 +685,3 @@ AS_IF([test "x$enable_debug" != "xno"], [
        ;;
    esac
 ])
-
