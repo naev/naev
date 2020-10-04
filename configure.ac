@@ -209,21 +209,6 @@ AC_ARG_WITH([sdlmixer],
   ])
 AC_MSG_RESULT([$with_sdlmixer])
 
-# --with-libzip
-AC_MSG_CHECKING([whether to use libzip])
-AC_ARG_WITH([libzip],
-  AC_HELP_STRING([--with-libzip],
-     [use libzip for ndata (default: yes)]), [
-    AS_IF([test "x$withval" = "xyes"], [
-      with_libzip=yes
-    ], [
-      with_libzip=no
-    ])
-  ], [
-    with_libzip=yes
-  ])
-AC_MSG_RESULT([$with_libzip])
-
 # --with-fontconfig
 AC_MSG_CHECKING([whether to use fontconfig])
 AC_ARG_WITH([fontconfig],
@@ -307,11 +292,6 @@ PKG_CHECK_MODULES([VORBISFILE], [vorbisfile])
 
 # libpng
 PKG_CHECK_MODULES([PNG], [libpng])
-
-# libzip
-AS_IF([test "x$with_libzip" = "xyes"], [
-  PKG_CHECK_MODULES([ZIP], [libzip])
-])
 
 # lua
 case "$used_lua" in
@@ -461,11 +441,11 @@ AS_IF([test "x$enable_debug" = "xparanoid"], [
 
 NAEV_CFLAGS="$NAEV_CFLAGS $CSPARSE_CFLAGS $SDL_CFLAGS $XML_CFLAGS \
     $FREETYPE_CFLAGS $FONTCONFIG_CFLAGS $LUA_CFLAGS $VORBIS_CFLAGS $VORBISFILE_CFLAGS \
-    $PNG_CFLAGS $ZIP_CFLAGS $OPENGL_CFLAGS"
+    $PNG_CFLAGS $OPENGL_CFLAGS"
 
 NAEV_LIBS="$NAEV_LIBS $CSPARSE_LIBS $SDL_LIBS $XML_LIBS \
     $FREETYPE_LIBS $FONTCONFIG_LIBS $LUA_LIBS $VORBIS_LIBS $VORBISFILE_LIBS \
-    $PNG_LIBS $ZIP_LIBS $OPENGL_LIBS"
+    $PNG_LIBS $OPENGL_LIBS"
 
 AS_IF([test "x$have_openal" = "xyes"], [
   NAEV_CFLAGS="$NAEV_CFLAGS $OPENAL_CFLAGS"
@@ -605,11 +585,6 @@ AS_IF([test "x$with_fontconfig" = "xyes"], [
   AC_DEFINE([USE_FONTCONFIG], 1, [Define to 1 if using fontconfig])
 ])
 
-# USE_LIBZIP
-AS_IF([test "x$with_libzip" = "xyes"], [
-  AC_DEFINE([USE_LIBZIP], 1, [Define to 1 if using libzip])
-])
-
 # Operating system
 case "$host" in
   *-linux*)
@@ -699,7 +674,6 @@ AC_MSG_NOTICE([lib:])
 AC_MSG_NOTICE([  csparse:    $used_csparse])
 AC_MSG_NOTICE([  fontconfig: $with_fontconfig])
 AC_MSG_NOTICE([  lua:        $used_lua])
-AC_MSG_NOTICE([  libzip:     $with_libzip])
 echo
 AC_MSG_NOTICE([utils:        $have_utils])
 AC_MSG_NOTICE([  mkspr:      $have_mkspr])

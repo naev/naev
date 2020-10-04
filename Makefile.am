@@ -97,7 +97,6 @@ naev-$(VERSION)-soundtrack.zip: utils/soundtrack.py dat/snd/soundtrack.yaml
 help:
 	@echo "Possible targets are:"
 	@echo "        all - builds everything"
-	@echo "  ndata.zip - creates the ndata file"
 	@echo "       docs - creates the doxygen documentation"
 	@echo " soundtrack - creates the soundtrack zip file"
 	@echo "      clean - removes binaries and object files"
