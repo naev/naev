@@ -51,8 +51,8 @@ all-local: $(NAEV) pot $(VERSIONFILE) $(VERSIONDATAFILE)
 
 if HAVE_NLS
 $(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
-	$(XGETTEXT) --from-code=UTF-8 --its=$(TRANSLATIONITS) $(XMLFILES) -o $@
 	@echo "XGETTEXT $@"
+	$(XGETTEXT) --from-code=UTF-8 --its=$(TRANSLATIONITS) $(XMLFILES) -o $@
 
 if HAVE_DATA
 pot: $(XMLPOT) $(LANGUAGEFILE) $(NAEV)
