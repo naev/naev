@@ -7,6 +7,7 @@ credits_00 = 100000
 credits_01 = 50000
 credits_02 = 200000
 credits_03 = 50000
+credits_04 = 150000
 
 pirate_price = 10000000
 
@@ -17,6 +18,22 @@ instr_text = _("What do you want the escort to do?")
 in_free = _("Attack nearby enemies")
 in_follow = _("Follow me")
 in_nevermind = _("Nevermind")
+
+lords = [ _("Lord Jim"),
+          _("Lady Bitterfly"),
+          _("Lady Pointblank"),
+          _("Lord Chainsaw"),
+          _("Lord Painbishop"),
+          _("Lord Kriegsreich Hundertfeuer"),
+          _("Lady Blackswan"),
+          _("Lady Killington"),
+          _("Lord Richthofen"),
+          _("Lady Dewinter"),
+          _("Lord Easytrigger"),
+          _("Lady Sainte-Beuverie"),
+          _("Lord Louverture"),
+          _("Lord Abdelkiller"),
+          _("Lady Proserpina") ]
 
 -- Decides wether the player is stronger than a corvette
 function playerMoreThanCorvette()

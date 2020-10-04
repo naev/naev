@@ -601,8 +601,8 @@ function fighterDuel()
    klank2:setNoDeath() -- Actually it should not be necessary, but...
    klank2:setNoDisable()
 
-   klank2:memory().atk = atk_drone  -- Set the AI so that they don't get stuck
-   battleaddict2:memory().atk = atk_drone
+   klank2:memory().atk = atk_generic --atk_drone  -- Set the AI so that they don't get stuck
+   battleaddict2:memory().atk = atk_generic --atk_drone
 
    battleaddict2:control()
    battleaddict2:goto( mypos + vec2.new(step,step/4), false, false ) -- Prevent them from staying on the top of their ships

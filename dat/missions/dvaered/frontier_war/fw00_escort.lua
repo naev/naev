@@ -72,7 +72,7 @@ discuss_title2 = _("Major Tam is talkative today")
 discuss_text2 = _([["Hello, citizen. Did you already recover from Lord Battleaddict's last joke? It recalled me of my youth, when I used to belong to a fighter's squadron in Amaroq..." Do you want to encourage Tam to talk about his past?]])
 
 discuss_title3 = _("Major Tam before he was at the Headquarters")
-discuss_text3 = _([["You know I've not always worked at the Headquarters. I started as a Lieutenant-pilot at the DHC base on Rhaana. Oh, sorry, DHC stays for Dvaered High Command. You know, there are two kinds of Dvaered soldiers: there are those who directly obey to DHC, like myself, and there are the freaks, as we call them, (or the warriors, as they call themselves) the soldiers who obey to local Warlords. 
+discuss_text3 = _([["You know I've not always worked at the Headquarters. I started as a pilot at the DHC base on Rhaana. Oh, sorry, DHC stays for Dvaered High Command. You know, there are two kinds of Dvaered soldiers: there are those who directly obey to DHC, like myself, and there are the freaks, as we call them, (or the warriors, as they call themselves) the soldiers who obey to local Warlords. 
    "Warlord's forces can be requisitioned by DHC, but only to fight a menace to the integrity of the Dvaered Nation, so in practice, they are most of the time left to themselves, and make wars one against each other. You know, foreigners sometimes think that the inner wars between warlords are pointless (I've even heard the word "stupid" once), but actually, it's the key to Dvaered philosophy. Without those wars, the Dvaered Nation would no longer exist as we know it, and we would have had to rely on totalitarism, like the Empire, nostalgia of an idealized past, like the Frontier, oppressive technocracy like the Za'lek, or such...
    "Hey, but am I deviating from our original subject? What was it already? Oh I don't remember. Anyway, citizen, if you want to take off, I'm ready."]])
 
@@ -173,7 +173,7 @@ function enter()
 
    if stage == 0 then   -- Go to first rendezvous
       if system.cur() == destsys1 then -- Spawn the Warlord
-         encounterWarlord( "Lady Bitterfight", destpla1 )
+         encounterWarlord( "Lady Bitterfly", destpla1 )
          hook.timer( 2000, "meeting_msg1" )
       else
          nextsys = getNextSystem(system.cur(), destsys1)
@@ -234,7 +234,7 @@ end
 
 -- Messages when encountering warlords
 function meeting_msg1()
-   majorTam:comm( meeting_broadcast:format("Lady Bitterfight", destpla1:name()) )
+   majorTam:comm( meeting_broadcast:format("Lady Bitterfly", destpla1:name()) )
 end
 function meeting_msg2()
    majorTam:comm( meeting_broadcast:format("Lord Battleaddict", destpla2:name()) )
