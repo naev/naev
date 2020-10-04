@@ -36,10 +36,7 @@ EXTRA_DIST = build/config.rpath LICENSE extras naev.desktop naev.appdata.xml
 CLEANFILES = $(NAEV) $(VERSIONFILE) $(VERSIONDATAFILE) $(LANGUAGEFILE)
 
 if HAVE_NLS
-XMLBASE     = $(wildcard dat/*.xml)
-XMLOUTFITS  = $(wildcard dat/outfits/*/*.xml)
-XMLSHIPS    = $(wildcard dat/ships/*.xml)
-XMLFILES    = $(XMLBASE) $(XMLSHIPS) $(XMLOUTFITS)
+XMLFILES    = $(top_srcdir)/po/POTFILES_XML
 TRANSLATIONITS = $(top_srcdir)/po/translation.its
 XMLPOT      = $(top_srcdir)/po/xml.pot
 CLEANFILES += $(XMLPOT)
@@ -52,7 +49,7 @@ all-local: $(NAEV) pot $(VERSIONFILE) $(VERSIONDATAFILE)
 if HAVE_NLS
 $(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
 	@echo "XGETTEXT $@"
-	$(XGETTEXT) --from-code=UTF-8 --its=$(TRANSLATIONITS) $(XMLFILES) -o $@
+	$(XGETTEXT) --from-code=UTF-8 --its=$(TRANSLATIONITS) -f $(XMLFILES) -o $@
 
 if HAVE_DATA
 pot: $(XMLPOT) $(LANGUAGEFILE) $(NAEV)
