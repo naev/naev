@@ -32,8 +32,7 @@ jobs:
           libluajit-5.1-dev \
           gettext \
           autopoint \
-          intltool \
-          itstool
+          intltool
 
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
@@ -65,7 +64,7 @@ jobs:
       with:
         msystem: MINGW64
         update: true
-        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool
+        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool
 
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
@@ -101,7 +100,6 @@ jobs:
           fontconfig \
           luajit \
           intltool \
-          itstool \
           sdl2 \
           sdl2_mixer \
           sdl2_image \
@@ -173,8 +171,7 @@ jobs:
           lua-ldoc \
           gettext \
           autopoint \
-          intltool \
-          itstool
+          intltool
 
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
