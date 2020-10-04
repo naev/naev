@@ -7,8 +7,7 @@
  *
  * @brief Wrapper to handle reading/writing the ndata file.
  *
- * Optimizes to minimize the opens and frees, plus tries to read from the
- *  filesystem instead always looking for a ndata archive.
+ * Optimizes to minimize the opens and frees.
  *
  * Detection in a nutshell:
  *
@@ -16,11 +15,9 @@
  *  1) CLI option
  *  2) conf.lua option
  * -- DONE AS NEEDED --
- *  3) Current dir laid out (does not work well when iterating through directories)
- *  4) ndata-$VERSION
- *  5) Makefile version
- *  6) ./ndata*
- *  7) dirname(argv[0])/ndata* (binary path)
+ *  3) Current dir laid out (debug only)
+ *  4) Compile time defined path
+ *  5) dirname(argv[0])/ndata* (binary path)
  */
 
 #include "ndata.h"
@@ -54,9 +51,9 @@
 #include "start.h"
 
 
-#define NDATA_FILENAME  "dat" /**< Generic ndata file name. */
+#define NDATA_PATHNAME  "dat" /**< Generic ndata file name. */
 #ifndef NDATA_DEF
-#define NDATA_DEF       NDATA_FILENAME /**< Default ndata to use. */
+#define NDATA_DEF       NDATA_PATHNAME /**< Default ndata to use. */
 #endif /* NDATA_DEF */
 
 
@@ -73,9 +70,9 @@
 
 
 /*
- * ndata archive.
+ * ndata directory.
  */
-static char      *ndata_dir        = NULL; /**< ndata archive name. */
+static char      *ndata_dir        = NULL; /**< ndata directory name. */
 static SDL_mutex *ndata_lock       = NULL; /**< Lock for ndata creation. */
 static int        ndata_loadedfile = 0;    /**< Already loaded a file? */
 static int        ndata_source     = NDATA_SRC_SEARCH_START;
@@ -85,7 +82,6 @@ static int        ndata_source     = NDATA_SRC_SEARCH_START;
  * Prototypes.
  */
 static void ndata_testVersion (void);
-static char *ndata_findInDir( const char *path );
 static int ndata_isndata( const char *path );
 
 
@@ -100,7 +96,9 @@ static int ndata_isndata( const char *path );
 int ndata_setPath( const char *path )
 {
    int len;
-   char *buf = NULL;
+   char  buf[ PATH_MAX ];
+   char *pathBuf;
+   char *dirnameBuf;
 
    if ( ndata_dir != NULL ) {
       free( ndata_dir );
@@ -128,27 +126,26 @@ int ndata_setPath( const char *path )
       case NDATA_SRC_USER:
          // This already didn't work out when we checked the provided path.
       case NDATA_SRC_DEFAULT:
-         if ( env.isAppImage ) {
-            buf = malloc( sizeof( char ) * PATH_MAX );
-            len = nfile_concatPaths( buf, PATH_MAX, env.appdir, NDATA_DEF );
-            if ( len > 0 && ndata_isndata( buf ) ) {
-               ndata_dir    = realloc( buf, sizeof( char ) * len );
-               ndata_source = NDATA_SRC_DEFAULT;
-               break;
-            }
-            free( buf );
+         if ( env.isAppImage && nfile_concatPaths( buf, PATH_MAX, env.appdir, NDATA_DEF ) >= 0 && ndata_isndata( buf ) ) {
+            ndata_dir    = strdup( buf );
+            ndata_source = NDATA_SRC_DEFAULT;
+            break;
          }
-         if ( ndata_isndata( NDATA_DEF ) ) {
-            ndata_dir    = strdup( NDATA_DEF );
+         nfile_concatPaths( buf, PATH_MAX, PKGDATADIR, NDATA_PATHNAME );
+         if ( ndata_isndata( buf ) ) {
+            ndata_dir    = strdup( buf );
             ndata_source = NDATA_SRC_DEFAULT;
             break;
          }
          __attribute__( ( fallthrough ) );
       case NDATA_SRC_BINARY:
-         buf            = strdup( naev_binary() );
-         ndata_dir      = ndata_findInDir( nfile_dirname( buf ) );
-         free( buf );
-         if ( ndata_dir != NULL ) {
+         pathBuf    = strdup( naev_binary() );
+         dirnameBuf = nfile_dirname( pathBuf );
+         nfile_concatPaths( buf, PATH_MAX, dirnameBuf, NDATA_PATHNAME );
+         free( pathBuf );
+         dirnameBuf = NULL;
+         if ( ndata_isndata( buf ) ) {
+            ndata_dir    = strdup( buf );
             ndata_source = NDATA_SRC_BINARY;
             break;
          }
@@ -186,7 +183,7 @@ static int ndata_isndata( const char *dir )
    if ( !nfile_dirExists( dir ) )
       return 0;
 
-   /* Verify that the folder contains dat/start.xml
+   /* Verify that the directory contains dat/start.xml
     * This is arbitrary, but it's one of the many hard-coded files that must
     * be present for Naev to run.
     */
@@ -194,58 +191,6 @@ static int ndata_isndata( const char *dir )
       return 0;
 
    return 1;
-}
-
-
-/**
- * @brief Tries to find a valid ndata directory in the directory listed by path.
- *
- *    @return Newly allocated ndata name or NULL if not found.
- */
-static char *ndata_findInDir( const char *path )
-{
-   size_t i;
-   int l;
-   char **files;
-   size_t nfiles;
-   size_t len;
-   char *ndata_file;
-
-   /* Defaults. */
-   ndata_file = NULL;
-
-   /* Iterate over files. */
-   files = nfile_readDir( &nfiles, path );
-   if (files != NULL) {
-      len   = strlen(NDATA_FILENAME);
-      for (i=0; i<nfiles; i++) {
-
-         /* Didn't match. */
-         if (strncmp(files[i], NDATA_FILENAME, len)!=0)
-            continue;
-
-         /* Formatting. */
-         l           = strlen(files[i]) + strlen(path) + 2;
-         ndata_file  = malloc( l );
-         nsnprintf( ndata_file, l, "%s/%s", path, files[i] );
-
-         if ( !ndata_isndata( ndata_file ) ) {
-            free(ndata_file);
-            ndata_file = NULL;
-            continue;
-         }
-
-         /* Found it. */
-         break;
-      }
-
-      /* Clean up. */
-      for (i=0; i<nfiles; i++)
-         free(files[i]);
-      free(files);
-   }
-
-   return ndata_file;
 }
 
 
@@ -285,7 +230,7 @@ static void ndata_testVersion (void)
 
 
 /**
- * @brief Opens the ndata folder.
+ * @brief Opens the ndata directory.
  *
  *    @return 0 on success.
  */
@@ -303,7 +248,7 @@ int ndata_open (void)
 
 
 /**
- * @brief Closes and cleans up the ndata folder.
+ * @brief Closes and cleans up the ndata directory.
  */
 void ndata_close (void)
 {

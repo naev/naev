@@ -63,7 +63,7 @@ text[5] = _([[Suddenly, a Za'lek drone starts attacking you! As you wonder what 
 -- Mission details
 misn_title = _("The Meeting")
 misn_reward = _("%s credits")
-misn_desc = _("Nexus Shipyard asks you to take part in a secret meeting")
+misn_desc = _("Nexus Shipyards asks you to take part in a secret meeting")
 
 -- NPC
 npc_desc[1] = _("Arnold Smith")

@@ -61,12 +61,12 @@ text[4] = _("You have killed the four pirates. Now to return to %s and collect y
 
 title[5] = _("That was impressive")
 text[5] = _([[Smith awaits your arrival at the spaceport. When you exit your ship, he smiles and walks up to you. "Good job," he says. "Our deal is secure, thanks to you. Here is your pay and something extra for your hard work. Thank you for all your help!"
-    He hands you a credit chip and what appears to be a Nexus Shipyard commemorative sandwich holder.]])
+    He hands you a credit chip and what appears to be a Nexus Shipyards commemorative sandwich holder.]])
 
 -- Mission details
 misn_title = _("The Last Detail")
 misn_reward = _("%s credits")
-misn_desc = _("Nexus Shipyard has tasked you with killing four pirates.")
+misn_desc = _("Nexus Shipyards has tasked you with killing four pirates.")
 
 -- NPC
 npc_desc[1] = _("Arnold Smith")

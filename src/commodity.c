@@ -92,7 +92,7 @@ void credits2str( char *str, credits_t credits, int decimals )
    else if (credits >= 1000000)
       nsnprintf( str, ECON_CRED_STRLEN, "%.*fM", decimals, (double)credits / 1000000. );
    else if (credits >= 1000)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*fK", decimals, (double)credits / 1000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fk", decimals, (double)credits / 1000. );
    else
       nsnprintf (str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
 }

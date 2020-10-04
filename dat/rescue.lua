@@ -55,11 +55,7 @@ tasks = {
 
 msg_title = _("Stranded")
 
-msg_missing = _([[Your ship is missing %d core outfit%s. How do you want to resolve this?]])
-
 msg_prompt = _([[The following actions are available to make your ship spaceworthy:]])
-
-msg_success = _([[After adding the missing outfit%s, your ship is now spaceworthy, though it may have somewhat lower performance than usual. You should get to a planet with a proper shipyard and outfitter.]])
 
 msg_failure = _([[Unfortunately, your ship still isn't spaceworthy. However, there are still other options for getting your ship airborne.]])
 
@@ -91,11 +87,6 @@ function rescue()
    if #mtasks > 0 and #missing > 0 then
       local defaults, weapons, utility, structure = assessOutfits()
 
-      local suffix = "s"
-      if #missing == 1 then
-         suffix = ""
-      end
-
       -- Build list of suitable tasks.
       local opts = {}
       for k,v in ipairs(mtasks) do
@@ -111,8 +102,12 @@ function rescue()
          strings[k] = v[1]
       end
 
+
+      local msg_missing = gettext.ngettext(
+         [[Your ship is missing %d core outfit. How do you want to resolve this?]],
+         [[Your ship is missing %d core outfits. How do you want to resolve this?]], #missing)
       local ind, str = tk.choice( msg_title,
-            string.format(msg_missing, #missing, suffix), unpack(strings) )
+            string.format(msg_missing, #missing), unpack(strings) )
 
       opts[ind][2]() -- Run callback.
       if str == _("Cancel") then
@@ -121,7 +116,10 @@ function rescue()
 
       -- If ship is now spaceworthy, bail out.
       if player.pilot():spaceworthy() then
-         tk.msg(msg_title, string.format(msg_success, suffix))
+         local msg_success = gettext.ngettext(
+            [[After adding the missing outfit, your ship is now spaceworthy, though it may have somewhat lower performance than usual. You should get to a planet with a proper shipyard and outfitter.]],
+            [[After adding the missing outfits, your ship is now spaceworthy, though it may have somewhat lower performance than usual. You should get to a planet with a proper shipyard and outfitter.]], #missing)
+         tk.msg(msg_title, msg_success)
          return
       end
 

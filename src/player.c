@@ -242,7 +242,7 @@ static void player_newSetup()
 void player_new (void)
 {
    int r;
-   char *title, *caption, *ret;
+   char *title, *caption, *ret, buf[PATH_MAX];
 
    const char *speed_opts[] = {
       _("Normal Speed"),
@@ -262,7 +262,8 @@ void player_new (void)
       return;
    }
 
-   if (nfile_fileExists("%ssaves/%s.ns", nfile_dataPath(), player.name)) {
+   nsnprintf( buf, sizeof(buf), "%ssaves/%s.ns", nfile_dataPath(), player.name);
+   if (nfile_fileExists(buf)) {
       r = dialogue_YesNo(_("Overwrite"),
             _("You already have a pilot named %s. Overwrite?"),player.name);
       if (r==0) { /* no */
@@ -2098,7 +2099,7 @@ void player_screenshot (void)
 {
    char filename[PATH_MAX];
 
-   if (nfile_dirMakeExist("%s", nfile_dataPath()) < 0 || nfile_dirMakeExist("%sscreenshots", nfile_dataPath()) < 0) {
+   if (nfile_dirMakeExist(nfile_dataPath()) < 0 || nfile_dirMakeExist(nfile_dataPath(), "screenshots") < 0) {
       WARN(_("Aborting screenshot"));
       return;
    }

@@ -61,7 +61,7 @@ title[2] = _("The job")
 text[2] = _([["I'm glad to hear it. Go meet our agent on %s in the %s system. Oh, yes, and I suppose I should mention that I'm known as 'James Neptune' to the agent. Good luck!"]])
 
 title[3] = _("Good job")
-text[3] = _([[The Nexus employee greets you as you reach the ground. "Excellent! I will just need to spend a few hectoseconds analyzing these recordings. See if you can find me in the bar soon; I might have another job for you.]])
+text[3] = _([[The Nexus employee greets you as you reach the ground. "Excellent! I will just need to spend a few hectoseconds analyzing these recordings. See if you can find me in the bar soon; I might have another job for you."]])
 
 title[4] = _("Time to go back to Alteris")
 text[4] = _([[You approach the agent and obtain the package without issue. Before you leave, he suggests that you stay vigilant. "They might come after you," he says.]])
@@ -70,7 +70,7 @@ text[4] = _([[You approach the agent and obtain the package without issue. Befor
 -- Mission details
 misn_title = _("Unfair Competition")
 misn_reward = _("%s credits")
-misn_desc = _("Nexus Shipyard is in competition with House Sirius.")
+misn_desc = _("Nexus Shipyards is in competition with House Sirius.")
 
 -- NPC
 npc_desc[1] = _("Arnold Smith")

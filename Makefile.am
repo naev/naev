@@ -21,32 +21,49 @@ dist_pkgdata_DATA = naev-confupdate.sh
 
 dist_man6_MANS = naev.6
 dist_doc_DATA = AUTHORS README TODO LICENSE
-nobase_dist_pkgdata_DATA = dat/* po/*
 
 if HAVE_UTILS
-MKSPR      = utils/mkspr/mkspr$(EXEEXT)
+MKSPR      = $(top_srcdir)/utils/mkspr/mkspr$(EXEEXT)
 endif
-NAEV	     = $(PACKAGE)$(EXEEXT)
+NAEV	     = $(top_srcdir)/$(PACKAGE)$(EXEEXT)
 
-VERSIONFILE = VERSION
-VERSIONDATAFILE = dat/VERSION
+VERSIONFILE = $(top_srcdir)/VERSION
+VERSIONDATAFILE = $(top_srcdir)/dat/VERSION
+AUTHORSFILE = $(top_srcdir)/dat/AUTHORS
+LICENSEFILE = $(top_srcdir)/dat/LICENSE
 LANGUAGEFILE = $(top_srcdir)/dat/LANGUAGES
 
 EXTRA_DIST = build/config.rpath LICENSE extras naev.desktop naev.appdata.xml
-CLEANFILES = $(NAEV) $(VERSIONFILE) $(VERSIONDATAFILE) $(LANGUAGEFILE)
+CLEANFILES = $(NAEV) $(VERSIONFILE) $(VERSIONDATAFILE) $(LANGUAGEFILE) $(LICENSEFILE) $(AUTHORSFILE)
+
+if HAVE_NLS
+XMLFILES    = $(top_srcdir)/po/POTFILES_XML
+TRANSLATIONITS = $(top_srcdir)/po/translation.its
+XMLPOT      = $(top_srcdir)/po/xml.pot
+CLEANFILES += $(XMLPOT)
+endif # HAVE_NLS
 
 .PHONY: pot docs utils help install-ndata soundtrack
 
-all-local: $(NAEV) pot $(VERSIONFILE) $(VERSIONDATAFILE)
+all-local: $(NAEV) pot $(VERSIONFILE) $(VERSIONDATAFILE) $(LICENSEFILE) $(AUTHORSFILE)
+
+$(AUTHORSFILE): AUTHORS
+	@echo "  CP    $<"
+	cp $< $@
+
+$(LICENSEFILE): LICENSE
+	@echo "  CP    $<"
+	cp $< $@
 
 if HAVE_NLS
+$(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
+	@echo "XGETTEXT $@"
+	$(XGETTEXT) --from-code=UTF-8 --its=$(TRANSLATIONITS) -f $(XMLFILES) -o $@
 
 if HAVE_DATA
-pot: $(LANGUAGEFILE) $(XMLPOT) $(NAEV)
+pot: $(XMLPOT) $(LANGUAGEFILE) $(NAEV)
 	$(MAKE) -C po $(PACKAGE).pot
-	$(MAKE) -C po
 	./utils/gettext.sh
-
 
 $(LANGUAGEFILE): po/LINGUAS
 	tail -n +2 $< > $@
@@ -55,7 +72,7 @@ pot:
 endif # HAVE_DATA
 
 else # HAVE_NLS
-pot: $(XMLPOT) $(NAEV)
+pot: $(NAEV)
 	@echo "***"
 	@echo "*** You must have NLS enabled to compile translation files"
 	@echo "***"
@@ -66,10 +83,10 @@ $(NAEV):
 	$(LN_S) "src/$(NAEV)" "$(NAEV)"
 
 $(VERSIONFILE): src/config.h
-	echo $(VERSION) > $@
+	@echo $(VERSION) > $@
 
 $(VERSIONDATAFILE): src/config.h
-	echo $(VERSION) > $@
+	@echo $(VERSION) > $@
 
 if HAVE_UTILS
 utils: $(MKSPR)
@@ -79,6 +96,9 @@ $(MKSPR):
 else # HAVE_UTILS
 utils:
 endif # HAVE_UTILS
+
+install-data-local:
+	(cd $(top_srcdir)/dat; find . -type f -exec install -Dm 644 "{}" "$(pkgdatadir)/dat/{}" \;)
 
 uninstall-hook:
 	echo " rm -rf '$(DESTDIR)$(pkgdatadir)'"; \
@@ -97,7 +117,6 @@ naev-$(VERSION)-soundtrack.zip: utils/soundtrack.py dat/snd/soundtrack.yaml
 help:
 	@echo "Possible targets are:"
 	@echo "        all - builds everything"
-	@echo "  ndata.zip - creates the ndata file"
 	@echo "       docs - creates the doxygen documentation"
 	@echo " soundtrack - creates the soundtrack zip file"
 	@echo "      clean - removes binaries and object files"
