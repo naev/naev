@@ -37,8 +37,8 @@ EXTRA_DIST = build/config.rpath LICENSE extras naev.desktop naev.appdata.xml
 CLEANFILES = $(NAEV) $(VERSIONFILE) $(VERSIONDATAFILE) $(LANGUAGEFILE) $(LICENSEFILE) $(AUTHORSFILE)
 
 if HAVE_NLS
-XMLFILES    = $(top_srcdir)/po/POTFILES_XML
-TRANSLATIONITS = $(top_srcdir)/po/translation.its
+XMLFILES    = $(top_srcdir)/po/POTFILES_XML.in
+TRANSLATIONITS = $(top_srcdir)/po/its/translation.its
 XMLPOT      = $(top_srcdir)/po/xml.pot
 CLEANFILES += $(XMLPOT)
 endif # HAVE_NLS

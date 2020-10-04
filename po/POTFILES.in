@@ -300,7 +300,6 @@ dat/scripts/prng.lua
 dat/scripts/proximity.lua
 dat/scripts/selectiveclear.lua
 dat/snd/music.lua
-po/xml.pot
 src/ai.c
 src/array.c
 src/background.c
@@ -457,3 +456,4 @@ src/toolkit.c
 src/unidiff.c
 src/utf8.c
 src/weapon.c
+po/xml.pot
