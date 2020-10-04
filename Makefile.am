@@ -42,11 +42,9 @@ all-local: $(NAEV) pot $(VERSIONFILE) $(VERSIONDATAFILE)
 if HAVE_NLS
 
 if HAVE_DATA
-pot: $(LANGUAGEFILE) $(XMLPOT) $(NAEV)
-	$(MAKE) -C po $(PACKAGE).pot
-	$(MAKE) -C po
+pot: $(LANGUAGEFILE) $(NAEV)
+	$(MAKE) -C po $(PACKAGE).pot GETTEXTDATADIRS=@GETTEXTDATADIRS@
 	./utils/gettext.sh
-
 
 $(LANGUAGEFILE): po/LINGUAS
 	tail -n +2 $< > $@
@@ -55,7 +53,7 @@ pot:
 endif # HAVE_DATA
 
 else # HAVE_NLS
-pot: $(XMLPOT) $(NAEV)
+pot: $(NAEV)
 	@echo "***"
 	@echo "*** You must have NLS enabled to compile translation files"
 	@echo "***"
