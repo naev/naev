@@ -7,7 +7,7 @@
   <its:translateRule selector="///name" translate="yes"/>
 
   <!-- Start -->
-  <its:translateRule selector="/Start/player/ship@name" translate="yes"/>
+  <its:translateRule selector="/Start/player/ship/@name" translate="yes"/>
   <its:translateRule selector="/Start/player/system/name" translate="no"/>
 
   <!-- Factions -->
