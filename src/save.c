@@ -134,8 +134,8 @@ int save_all (void)
    xmlw_done(writer);
 
    /* Write to file. */
-   if ((nfile_dirMakeExist("%s", nfile_dataPath()) < 0) ||
-         (nfile_dirMakeExist("%ssaves", nfile_dataPath()) < 0)) {
+   if ((nfile_dirMakeExist(nfile_dataPath()) < 0) ||
+         (nfile_dirMakeExist(nfile_dataPath(), "saves") < 0)) {
       WARN(_("Failed to create save directory '%ssaves'."), nfile_dataPath());
       goto err_writer;
    }
