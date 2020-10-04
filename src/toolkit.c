@@ -1300,7 +1300,7 @@ void window_render( Window *w )
     * widgets
     */
    for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next)
-      if (wgt->render != NULL)
+      if ((wgt->render != NULL) && !wgt_isFlag(wgt, WGT_FLAG_KILL))
          wgt->render( wgt, x, y );
 
    /*
@@ -1308,7 +1308,7 @@ void window_render( Window *w )
     */
    if (w->focus != -1) {
       wgt = toolkit_getFocus( w );
-      if (wgt == NULL)
+      if ((wgt == NULL) || wgt_isFlag(wgt, WGT_FLAG_KILL))
          return;
       x  += wgt->x;
       y  += wgt->y;
@@ -1341,7 +1341,7 @@ void window_renderOverlay( Window *w )
     * overlays
     */
    for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next)
-      if (wgt->renderOverlay != NULL)
+      if ((wgt->renderOverlay != NULL) && !wgt_isFlag(wgt, WGT_FLAG_KILL))
          wgt->renderOverlay( wgt, x, y );
 }
 
