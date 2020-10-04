@@ -24,12 +24,14 @@ dist_doc_DATA = AUTHORS README TODO LICENSE
 nobase_dist_pkgdata_DATA = dat/* po/*
 
 if HAVE_UTILS
-MKSPR      = utils/mkspr/mkspr$(EXEEXT)
+MKSPR      = $(top_srcdir)/utils/mkspr/mkspr$(EXEEXT)
 endif
-NAEV	     = $(PACKAGE)$(EXEEXT)
+NAEV	     = $(top_srcdir)/$(PACKAGE)$(EXEEXT)
 
-VERSIONFILE = VERSION
-VERSIONDATAFILE = dat/VERSION
+VERSIONFILE = $(top_srcdir)/VERSION
+VERSIONDATAFILE = $(top_srcdir)/dat/VERSION
+AUTHORSFILE = $(top_srcdir)/dat/AUTHORS
+LICENSEFILE = $(top_srcdir)/dat/LICENSE
 LANGUAGEFILE = $(top_srcdir)/dat/LANGUAGES
 
 EXTRA_DIST = build/config.rpath LICENSE extras naev.desktop naev.appdata.xml
@@ -44,7 +46,15 @@ endif # HAVE_NLS
 
 .PHONY: pot docs utils help install-ndata soundtrack
 
-all-local: $(NAEV) pot $(VERSIONFILE) $(VERSIONDATAFILE)
+all-local: $(NAEV) pot $(VERSIONFILE) $(VERSIONDATAFILE) $(LICENSEFILE) $(AUTHORSFILE)
+
+$(AUTHORSFILE): AUTHORS
+	@echo "  CP    $<"
+	@cp $< $@
+
+$(LICENSEFILE): LICENSE
+	@echo "  CP    $<"
+	@cp $< $@
 
 if HAVE_NLS
 $(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
@@ -74,10 +84,10 @@ $(NAEV):
 	$(LN_S) "src/$(NAEV)" "$(NAEV)"
 
 $(VERSIONFILE): src/config.h
-	echo $(VERSION) > $@
+	@echo $(VERSION) > $@
 
 $(VERSIONDATAFILE): src/config.h
-	echo $(VERSION) > $@
+	@echo $(VERSION) > $@
 
 if HAVE_UTILS
 utils: $(MKSPR)
