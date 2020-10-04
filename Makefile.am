@@ -50,11 +50,11 @@ all-local: $(NAEV) pot $(VERSIONFILE) $(VERSIONDATAFILE) $(LICENSEFILE) $(AUTHOR
 
 $(AUTHORSFILE): AUTHORS
 	@echo "  CP    $<"
-	@cp $< $@
+	cp $< $@
 
 $(LICENSEFILE): LICENSE
 	@echo "  CP    $<"
-	@cp $< $@
+	cp $< $@
 
 if HAVE_NLS
 $(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
