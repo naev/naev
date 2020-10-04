@@ -195,6 +195,7 @@ headers = files(
    'economy.h',
    'equipment.h',
    'escort.h',
+   'env.h',
    'event.h',
    'explosion.h',
    'faction.h',

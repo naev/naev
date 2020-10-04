@@ -22,7 +22,7 @@ if get_option('configure_doc') == true
 
         cdoc = custom_target(
             'cdoc',
-            input      : [source, lua_source, mac_source],
+            input      : [source, lua_source, mac_source, headers],
             output     : doxy_output,
             command    : [doxygen, doxyfile],
             install    : true,
