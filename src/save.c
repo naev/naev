@@ -191,7 +191,7 @@ int save_hasSave (void)
    int has_save;
 
    /* Look for saved games. */
-   files = nfile_readDir( &nfiles, "%ssaves", nfile_dataPath() );
+   files = nfile_readDir( &nfiles, nfile_dataPath(), "saves" );
    has_save = 0;
    for (i=0; i<nfiles; i++) {
       len = strlen(files[i]);
