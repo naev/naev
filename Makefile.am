@@ -11,12 +11,12 @@ SUBDIRS += po
 DIST_SUBDIRS += po
 endif # HAVE_NLS
 
-appicondir = $(datadir)/pixmaps
+appicondir = $(datadir)/icons/hicolor/256x256/apps
 appicon_DATA = extras/logos/naev.png
 Graphicsdir = $(datadir)/applications
-Graphics_DATA = naev.desktop
-appdatadir = $(datadir)/appdata
-appdata_DATA = naev.appdata.xml
+Graphics_DATA = org.naev.Naev.desktop
+appdatadir = $(datadir)/metainfo
+appdata_DATA = org.naev.Naev.appdata.xml
 dist_pkgdata_DATA = naev-confupdate.sh
 
 dist_man6_MANS = naev.6
@@ -33,7 +33,7 @@ AUTHORSFILE = $(top_srcdir)/dat/AUTHORS
 LICENSEFILE = $(top_srcdir)/dat/LICENSE
 LANGUAGEFILE = $(top_srcdir)/dat/LANGUAGES
 
-EXTRA_DIST = build/config.rpath LICENSE extras naev.desktop naev.appdata.xml
+EXTRA_DIST = build/config.rpath LICENSE extras org.naev.Naev.desktop org.naev.Naev.appdata.xml
 CLEANFILES = $(NAEV) $(VERSIONFILE) $(VERSIONDATAFILE) $(LANGUAGEFILE) $(LICENSEFILE) $(AUTHORSFILE)
 
 if HAVE_NLS
