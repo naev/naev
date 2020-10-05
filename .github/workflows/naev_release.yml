@@ -469,10 +469,8 @@ jobs:
         run: |
           ./autogen.sh
           ./configure
-          make pot
+          make data
           cp -r dat/ dist/steam/ndata
-          cp AUTHORS dist/steam/ndata
-          cp VERSION dist/steam/ndata
 
       - name: Download Build Artifacts
         uses: actions/download-artifact@v2

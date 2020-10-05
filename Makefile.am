@@ -43,9 +43,11 @@ XMLPOT      = $(top_srcdir)/po/xml.pot
 CLEANFILES += $(XMLPOT)
 endif # HAVE_NLS
 
-.PHONY: pot docs utils help install-ndata soundtrack
+.PHONY: data pot docs utils help install-ndata soundtrack
 
-all-local: $(NAEV) pot $(VERSIONFILE) $(VERSIONDATAFILE) $(LICENSEFILE) $(AUTHORSFILE)
+all-local: $(NAEV) data
+
+data: pot $(VERSIONFILE) $(VERSIONDATAFILE) $(LICENSEFILE) $(AUTHORSFILE)
 
 $(AUTHORSFILE): AUTHORS
 	@echo "  CP    $<"
@@ -70,7 +72,8 @@ $(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
 endif # HAVE_ITSTOOL
 
 if HAVE_DATA
-pot: $(XMLPOT) $(LANGUAGEFILE) $(NAEV)
+pot: $(XMLPOT) $(LANGUAGEFILE)
+	$(MAKE) -C po
 	$(MAKE) -C po $(PACKAGE).pot
 	./utils/gettext.sh
 
@@ -81,7 +84,7 @@ pot:
 endif # HAVE_DATA
 
 else # HAVE_NLS
-pot: $(NAEV)
+pot:
 	@echo "***"
 	@echo "*** You must have NLS enabled to compile translation files"
 	@echo "***"
