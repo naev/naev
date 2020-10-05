@@ -11,11 +11,11 @@ SUBDIRS += po
 DIST_SUBDIRS += po
 endif # HAVE_NLS
 
-appicondir = $(datadir)/pixmaps
+appicondir = $(datadir)/icons/hicolor/256x256/apps
 appicon_DATA = extras/logos/naev.png
 Graphicsdir = $(datadir)/applications
 Graphics_DATA = org.naev.Naev.desktop
-appdatadir = $(datadir)/appdata
+appdatadir = $(datadir)/metainfo
 appdata_DATA = org.naev.Naev.appdata.xml
 dist_pkgdata_DATA = naev-confupdate.sh
 
