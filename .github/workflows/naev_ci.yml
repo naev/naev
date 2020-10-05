@@ -76,14 +76,29 @@ jobs:
         mkdir source
         tar -xf naev-*.tar.xz -C source --strip 1
 
-    - name: Meson Build
+    - name: Meson Setup
       run: |
         meson setup build source \
             --buildtype release \
             --prefix="${{ github.workspace }}/dist/" \
             -Dconfigure_doc=false
-        meson test -C build --print-errorlogs
-        meson install -C build
+
+    - name: Meson Compile
+      run: meson compile -C build
+
+    - name: Meson Test
+      run: meson test -C build --print-errorlogs
+
+    - name: Upload test log
+      uses: actions/upload-artifact@v2
+      if: ${{ always() }}
+      with:
+        name: naev-lin64-${{ github.sha }}-testlog
+        path: ${{ github.workspace }}/build/meson-logs/testlog.txt
+        if-no-files-found: ignore
+
+    - name: Package
+      run: meson install -C build
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -117,14 +132,29 @@ jobs:
         mkdir source
         /usr/bin/tar -xf naev-*.tar.xz -C source --strip 1
 
-    - name: Meson Build
+    - name: Meson Setup
       run: |
         meson setup build source \
             --buildtype release \
             --prefix="${{ github.workspace }}/dist/" \
             -Dconfigure_doc=false
-        meson test -C build --print-errorlogs
-        meson install -C build
+
+    - name: Meson Compile
+      run: meson compile -C build
+
+    - name: Meson Test
+      run: meson test -C build --print-errorlogs
+
+    - name: Upload test log
+      uses: actions/upload-artifact@v2
+      if: ${{ always() }}
+      with:
+        name: naev-lin64-${{ github.sha }}-testlog
+        path: ${{ github.workspace }}/build/meson-logs/testlog.txt
+        if-no-files-found: ignore
+
+    - name: Package
+      run: meson install -C build
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -180,7 +210,7 @@ jobs:
         mkdir source
         tar -xf naev-*.tar.xz -C source --strip 1
 
-    - name: Meson Build
+    - name: Meson Setup
       run: |
         meson setup build source \
             --buildtype release \
@@ -188,8 +218,23 @@ jobs:
             --bindir=Contents/MacOS \
             --datadir=Contents/Resources \
             -Dconfigure_doc=false
-        meson test -C build --print-errorlogs
-        meson install -C build
+
+    - name: Meson Compile
+      run: meson compile -C build
+
+    - name: Meson Test
+      run: meson test -C build --print-errorlogs
+
+    - name: Upload test log
+      uses: actions/upload-artifact@v2
+      if: ${{ always() }}
+      with:
+        name: naev-lin64-${{ github.sha }}-testlog
+        path: ${{ github.workspace }}/build/meson-logs/testlog.txt
+        if-no-files-found: ignore
+
+    - name: Package
+      run: meson install -C build
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
