@@ -7,8 +7,10 @@
 
 #include <stdlib.h>
 #include <assert.h>
+#include <limits.h>
 
 #include "config.h"
+#include "nstring.h"
 
 
 env_t env;
