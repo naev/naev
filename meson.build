@@ -165,7 +165,7 @@ if get_option('configure_build') == true
 
    naev_source += shader_source
 
-   executable(
+   naev_bin = executable(
       'naev',
       naev_source,
       include_directories: include_dirs,
@@ -205,6 +205,8 @@ if get_option('configure_build') == true
       install_data('naev.desktop', install_dir: get_option('datadir') / 'applications/naev')
       install_man('naev.6')
    endif
+
+   subdir('test')
 
 endif
 

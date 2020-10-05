@@ -184,15 +184,6 @@ int main( int argc, char** argv )
 
    if (!log_isTerminal())
       log_copy(1);
-#if HAS_WIN32
-   else {
-      /* Windows has no line-buffering, so use unbuffered output
-       * when running from a terminal.
-       */
-      setvbuf( stdout, NULL, _IONBF, 0 );
-      setvbuf( stderr, NULL, _IONBF, 0 );
-   }
-#endif /* HAS_WIN32 */
 
 #if defined ENABLE_NLS && ENABLE_NLS
    /* Set up locales. */
@@ -420,6 +411,8 @@ int main( int argc, char** argv )
 
    /* Start menu. */
    menu_main();
+
+   LOG( _( "Reached main menu" ) );
 
    /* Force a minimum delay with loading screen */
    if ((SDL_GetTicks() - time_ms) < NAEV_INIT_DELAY)

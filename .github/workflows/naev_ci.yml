@@ -17,7 +17,7 @@ jobs:
       run: |
         pip install meson ninja
 
-    - name: Checkout Naev Repository 
+    - name: Checkout Naev Repository
       uses: actions/checkout@v2
 
     - name: Meson Build
@@ -82,6 +82,7 @@ jobs:
             --buildtype release \
             --prefix="${{ github.workspace }}/dist/" \
             -Dconfigure_doc=false
+        meson test -C build
         meson install -C build
 
     - name: Upload Artifact
@@ -122,6 +123,7 @@ jobs:
             --buildtype release \
             --prefix="${{ github.workspace }}/dist/" \
             -Dconfigure_doc=false
+        meson test -C build
         meson install -C build
 
     - name: Upload Artifact
@@ -155,7 +157,7 @@ jobs:
     - name: Remove Homebrew Perl
       run: |
         brew uninstall --ignore-dependencies perl
-      
+
     - name: PKGCONFIG
       run: |
         # PKGCONFIG configuration for OpenAL
@@ -167,7 +169,7 @@ jobs:
     - name: Install Meson
       run: |
         pip install meson ninja
-        
+
     - name: Get Source
       uses: actions/download-artifact@v2
       with:
@@ -186,8 +188,9 @@ jobs:
             --bindir=Contents/MacOS \
             --datadir=Contents/Resources \
             -Dconfigure_doc=false
+        meson test -C build
         meson install -C build
-    
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
@@ -234,7 +237,7 @@ jobs:
             --prefix="${{ github.workspace }}/dist/" \
             -Dconfigure_build=false
         meson install -C build
-    
+
     - name: Install SSH Key
       uses: shimataro/ssh-key-action@v2.0.3
       with:

@@ -14,11 +14,12 @@
 #include "nfile.h"
 #include "nstring.h"
 
-#include <stdio.h>
+#include <errno.h>
 #include <stdarg.h>
-#include <time.h> /* strftime */
+#include <stdio.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <time.h> /* strftime */
 
 #if HAS_POSIX
 #include <unistd.h> /* isatty */
@@ -45,6 +46,10 @@ static char *errfiledouble = NULL;
 
 /* Whether to copy stdout and stderr to temporary buffers. */
 int copying = 0;
+
+/* File descriptors */
+FILE *logout_file = NULL;
+FILE *logerr_file = NULL;
 
 
 /*
@@ -95,8 +100,23 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
    if (copying)
       log_append(stream, &buf[2]);
 
+   if ( stream == stdout && logout_file != NULL ) {
+      fprintf( logout_file, "%s", &buf[ 2 ] );
+      if ( newline )
+         fflush( logout_file );
+   }
+
+   if ( stream == stderr && logerr_file != NULL ) {
+      fprintf( logerr_file, "%s", &buf[ 2 ] );
+      if ( newline )
+         fflush( logerr_file );
+   }
+
    /* Also print to the stream. */
-   return fprintf( stream, "%s", &buf[2] );
+   n = fprintf( stream, "%s", &buf[ 2 ] );
+   if ( newline )
+      fflush( stream );
+   return n;
 }
 
 
@@ -128,12 +148,14 @@ void log_redirect (void)
    errfiledouble = malloc(PATH_MAX);
 
    nsnprintf( outfile, PATH_MAX, "%slogs/stdout.txt", nfile_dataPath() );
-   if (freopen( outfile, "w", stdout )==NULL) {
+   logout_file = fopen( outfile, "w" );
+   if ( logout_file == NULL ) {
       WARN(_("Unable to redirect stdout to file"));
    }
 
    nsnprintf( errfile, PATH_MAX, "%slogs/stderr.txt", nfile_dataPath() );
-   if (freopen( errfile, "w", stderr )==NULL) {
+   logerr_file = fopen( errfile, "w" );
+   if ( logerr_file == NULL ) {
       WARN(_("Unable to redirect stderr to file"));
    }
 
@@ -141,7 +163,7 @@ void log_redirect (void)
    nsnprintf( errfiledouble, PATH_MAX, "%slogs/%s_stderr.txt", nfile_dataPath(), timestr );
 
    /* stderr should be unbuffered */
-   setvbuf( stderr, NULL, _IONBF, 0 );
+   setvbuf( logerr_file, NULL, _IONBF, 0 );
 }
 
 
@@ -211,11 +233,15 @@ void log_copy( int enable )
       return;
    }
 
-   if (noutcopy)
-      fprintf( stdout, "%s", outcopy );
+   if ( noutcopy && logout_file != NULL ) {
+      fprintf( logout_file, "%s", outcopy );
+      fflush( logout_file );
+   }
 
-   if (nerrcopy)
-      fprintf( stderr, "%s", errcopy );
+   if ( nerrcopy && logerr_file != NULL ) {
+      fprintf( logerr_file, "%s", errcopy );
+      fflush( logerr_file );
+   }
 
    log_purge();
 }
@@ -261,8 +287,10 @@ void log_clean (void)
    if ((outfile == NULL) || (errfile == NULL))
       return;
 
-   fclose(stdout);
-   fclose(stderr);
+   fclose( logout_file );
+   logout_file = NULL;
+   fclose( logerr_file );
+   logerr_file = NULL;
 
    if (stat(errfile, &err) != 0)
       return;

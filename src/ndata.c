@@ -117,8 +117,8 @@ int ndata_setPath( const char *path )
 
       switch ( ndata_source ) {
       case NDATA_SRC_CWD:
-         if (ndata_isndata( "." )) {
-            ndata_dir    = strdup( "." );
+         if ( ndata_isndata( NDATA_PATHNAME ) ) {
+            ndata_dir    = strdup( NDATA_PATHNAME );
             ndata_source = NDATA_SRC_CWD;
             break;
          }
@@ -131,7 +131,7 @@ int ndata_setPath( const char *path )
             ndata_source = NDATA_SRC_DEFAULT;
             break;
          }
-         nfile_concatPaths( buf, PATH_MAX, PKGDATADIR, NDATA_PATHNAME );
+         nfile_concatPaths( buf, PATH_MAX, NDATA_DEF, NDATA_PATHNAME );
          if ( ndata_isndata( buf ) ) {
             ndata_dir    = strdup( buf );
             ndata_source = NDATA_SRC_DEFAULT;
