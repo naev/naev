@@ -57,9 +57,12 @@ $(LICENSEFILE): LICENSE
 
 if HAVE_NLS
 if HAVE_ITSTOOL
+# On windows it seems like '\r' are leaking into filenames and breaking the
+# following command, so we use lots of ugly tr instead ¯\_(ツ)_/¯
+# xargs -a $(XMLFILES) $(ITSTOOL) -i $(TRANSLATIONITS) > $@
 $(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
 	@echo "ITSTOOL $@"
-	xargs -a $(XMLFILES) $(ITSTOOL) -i $(TRANSLATIONITS) > $@
+	cat $(XMLFILES) | tr '\n' '\0' | tr -d '\r' | xargs -0 $(ITSTOOL) -i $(TRANSLATIONITS) > $@
 else # HAVE_ITSTOOL
 $(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
 	@echo "XGETTEXT $@"
