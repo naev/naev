@@ -88,10 +88,10 @@ jobs:
 
     - name: Meson Test
       run: meson test -C build --print-errorlogs
+      continue-on-error: true
 
     - name: Upload test log
       uses: actions/upload-artifact@v2
-      if: ${{ always() }}
       with:
         name: naev-lin64-${{ github.sha }}-testlog
         path: ${{ github.workspace }}/build/meson-logs/testlog.txt
@@ -143,10 +143,10 @@ jobs:
 
     - name: Meson Test
       run: meson test -C build --print-errorlogs
+      continue-on-error: true
 
     - name: Upload test log
       uses: actions/upload-artifact@v2
-      if: ${{ always() }}
       with:
         name: naev-win64-${{ github.sha }}-testlog
         path: ${{ github.workspace }}/build/meson-logs/testlog.txt
@@ -222,10 +222,10 @@ jobs:
 
     - name: Meson Test
       run: meson test -C build --print-errorlogs
+      continue-on-error: true
 
     - name: Upload test log
       uses: actions/upload-artifact@v2
-      if: ${{ always() }}
       with:
         name: naev-macos-${{ github.sha }}-testlog
         path: ${{ github.workspace }}/build/meson-logs/testlog.txt
