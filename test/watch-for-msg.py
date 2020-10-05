@@ -7,9 +7,6 @@ import subprocess
 command = sys.argv[1]
 pattern = sys.argv[2]
 
-print(f'Running {command}')
-print(f'Waiting for {pattern}')
-
 result = 1
 
 proc = subprocess.Popen([command],
