@@ -13,6 +13,7 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build])
 
 AM_GNU_GETTEXT([external])
+# Currently steam packages 0.19.7 which is the limiting factor here
 AM_GNU_GETTEXT_VERSION([0.19.7])
 GETTEXT_PACKAGE=${PACKAGE_NAME}
 AC_SUBST(GETTEXT_PACKAGE)
