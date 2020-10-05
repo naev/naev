@@ -4,7 +4,7 @@ name: CI
 
 env:
   CC: clang
-  DESTDIR: "dist/"
+  DESTDIR: "${{ github.workspace }}/dist/"
 
 jobs:
   dist:
@@ -104,7 +104,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: naev-lin64-${{ github.sha }}
-        path: ${{ github.workspace }}/${{ env.DESTDIR }}/*
+        path: ${{ env.DESTDIR }}/*
         if-no-files-found: error
 
   "Windows-MinGW64":
@@ -159,7 +159,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: naev-win64-${{ github.sha }}
-        path: ${{ github.workspace }}/${{ env.DESTDIR }}/*
+        path: ${{ env.DESTDIR }}/*
         if-no-files-found: error
 
   "macOS":
@@ -238,7 +238,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: naev-macos-${{ github.sha }}
-        path: ${{ github.workspace }}/${{ env.DESTDIR }}/*
+        path: ${{ env.DESTDIR }}/*
         if-no-files-found: error
 
   "Documentation":
@@ -296,5 +296,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: naev-docs-${{ github.sha }}
-        path: ${{ github.workspace }}/${{ env.DESTDIR }}/*
+        path: ${{ env.DESTDIR }}/*
         if-no-files-found: error
