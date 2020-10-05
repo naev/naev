@@ -4,6 +4,7 @@ name: CI
 
 env:
   CC: clang
+  DESTDIR: "dist/"
 
 jobs:
   dist:
@@ -80,7 +81,6 @@ jobs:
       run: |
         meson setup build source \
             --buildtype release \
-            --prefix="${{ github.workspace }}/dist/" \
             -Dconfigure_doc=false
 
     - name: Meson Compile
@@ -104,7 +104,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: naev-lin64-${{ github.sha }}
-        path: ${{ github.workspace }}/dist/*
+        path: ${{ github.workspace }}/${{ env.DESTDIR }}/*
         if-no-files-found: error
 
   "Windows-MinGW64":
@@ -136,7 +136,6 @@ jobs:
       run: |
         meson setup build source \
             --buildtype release \
-            --prefix="${{ github.workspace }}/dist/" \
             -Dconfigure_doc=false
 
     - name: Meson Compile
@@ -160,7 +159,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: naev-win64-${{ github.sha }}
-        path: ${{ github.workspace }}/dist/*
+        path: ${{ github.workspace }}/${{ env.DESTDIR }}/*
         if-no-files-found: error
 
   "macOS":
@@ -214,7 +213,6 @@ jobs:
       run: |
         meson setup build source \
             --buildtype release \
-            --prefix="${{ github.workspace }}/dist/naev.app" \
             --bindir=Contents/MacOS \
             --datadir=Contents/Resources \
             -Dconfigure_doc=false
@@ -240,7 +238,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: naev-macos-${{ github.sha }}
-        path: ${{ github.workspace }}/dist/*
+        path: ${{ github.workspace }}/${{ env.DESTDIR }}/*
         if-no-files-found: error
 
   "Documentation":
@@ -279,7 +277,6 @@ jobs:
     - name: Meson Build
       run: |
         meson setup build source \
-            --prefix="${{ github.workspace }}/dist/" \
             -Dconfigure_build=false
         meson install -C build
 
@@ -292,12 +289,12 @@ jobs:
       if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
 
     - name: Upload Lua Documentation
-      run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete dist/docs/lua/ travis@iandouglasscott.com:/srv/naevdoc
+      run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete ${{ env.DESTDIR }}/docs/lua/ travis@iandouglasscott.com:/srv/naevdoc
       if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: naev-docs-${{ github.sha }}
-        path: ${{ github.workspace }}/dist/*
+        path: ${{ github.workspace }}/${{ env.DESTDIR }}/*
         if-no-files-found: error
