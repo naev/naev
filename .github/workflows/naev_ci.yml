@@ -82,7 +82,7 @@ jobs:
             --buildtype release \
             --prefix="${{ github.workspace }}/dist/" \
             -Dconfigure_doc=false
-        meson test -C build
+        meson test -C build --print-errorlogs
         meson install -C build
 
     - name: Upload Artifact
@@ -123,7 +123,7 @@ jobs:
             --buildtype release \
             --prefix="${{ github.workspace }}/dist/" \
             -Dconfigure_doc=false
-        meson test -C build
+        meson test -C build --print-errorlogs
         meson install -C build
 
     - name: Upload Artifact
@@ -188,7 +188,7 @@ jobs:
             --bindir=Contents/MacOS \
             --datadir=Contents/Resources \
             -Dconfigure_doc=false
-        meson test -C build
+        meson test -C build --print-errorlogs
         meson install -C build
 
     - name: Upload Artifact
