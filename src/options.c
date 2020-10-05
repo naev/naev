@@ -325,9 +325,6 @@ static void opt_gameplay( unsigned int wid )
 #ifdef HAVE_LUAJIT
          "Using LuaJIT\n"
 #endif
-#ifdef NDATA_DEF
-         "ndata: "NDATA_DEF"\n"
-#endif /* NDATA_DEF */
          );
 
 
