@@ -174,7 +174,6 @@ if get_option('configure_build') == true
       install: true)
 
    install_data(
-      'AUTHORS',
       'LICENSE',
       'README',
       install_dir: get_option('datadir') / 'doc/naev'
@@ -201,8 +200,8 @@ if get_option('configure_build') == true
    )
 
    if host_machine.system() not in ['windows', 'cygwin', 'emscripten', 'android']
-      install_data('naev.appdata.xml', install_dir: get_option('datadir') / 'appdata/naev')
-      install_data('naev.desktop', install_dir: get_option('datadir') / 'applications/naev')
+      install_data('org.naev.Naev.appdata.xml', install_dir: get_option('datadir') / 'appdata/naev')
+      install_data('org.naev.Naev.desktop', install_dir: get_option('datadir') / 'applications/naev')
       install_man('naev.6')
    endif
 
