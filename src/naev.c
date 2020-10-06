@@ -239,7 +239,10 @@ int main( int argc, char** argv )
 
    /* Get desktop dimensions. */
    SDL_DisplayMode current;
-   SDL_GetCurrentDisplayMode( 0, &current );
+   if ( SDL_GetCurrentDisplayMode( 0, &current ) ) {
+      ERR( _( "Unable to get display mode: %s" ), SDL_GetError() );
+      return -1;
+   }
    gl_screen.desktop_w = current.w;
    gl_screen.desktop_h = current.h;
 
