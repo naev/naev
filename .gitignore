@@ -5,7 +5,6 @@
 m4/*.m4
 m4/*.m4~
 .hgignore
-VERSION
 ndata
 mkspr
 mkspr.exe
@@ -53,8 +52,8 @@ extras/steam/output
 extras/windows/installer/bin
 dist/*
 dat/LANGUAGES
-dat/AUTHORS
 dat/LICENSE
+dat/VERSION
 dat/gettext
 release.log
 Naev.app

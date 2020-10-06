@@ -3738,7 +3738,7 @@ static void space_renderAsteroid( Asteroid *a )
    for (i=0; i<at->nmaterial; i++) {
       com = at->material[i];
       gl_blitSprite( com->gfx_space, a->pos.x, a->pos.y-10.*i, 0, 0, NULL );
-      sprintf(c, "x%i", at->quantity[i]);
+      nsnprintf(c, sizeof(c), "x%i", at->quantity[i]);
       gl_printRaw( &gl_smallFont, nx+10, ny-5-10.*i, &cFontWhite, c );
    }
 }

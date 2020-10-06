@@ -11,30 +11,28 @@ SUBDIRS += po
 DIST_SUBDIRS += po
 endif # HAVE_NLS
 
-appicondir = $(datadir)/pixmaps
+appicondir = $(datadir)/icons/hicolor/256x256/apps
 appicon_DATA = extras/logos/naev.png
 Graphicsdir = $(datadir)/applications
-Graphics_DATA = naev.desktop
-appdatadir = $(datadir)/appdata
-appdata_DATA = naev.appdata.xml
+Graphics_DATA = org.naev.Naev.desktop
+appdatadir = $(datadir)/metainfo
+appdata_DATA = org.naev.Naev.appdata.xml
 dist_pkgdata_DATA = naev-confupdate.sh
 
 dist_man6_MANS = naev.6
-dist_doc_DATA = AUTHORS README TODO LICENSE
+dist_doc_DATA = README TODO LICENSE
 
 if HAVE_UTILS
 MKSPR      = $(top_srcdir)/utils/mkspr/mkspr$(EXEEXT)
 endif
 NAEV	     = $(top_srcdir)/$(PACKAGE)$(EXEEXT)
 
-VERSIONFILE = $(top_srcdir)/VERSION
-VERSIONDATAFILE = $(top_srcdir)/dat/VERSION
-AUTHORSFILE = $(top_srcdir)/dat/AUTHORS
+VERSIONFILE = $(top_srcdir)/dat/VERSION
 LICENSEFILE = $(top_srcdir)/dat/LICENSE
 LANGUAGEFILE = $(top_srcdir)/dat/LANGUAGES
 
-EXTRA_DIST = build/config.rpath LICENSE extras naev.desktop naev.appdata.xml
-CLEANFILES = $(NAEV) $(VERSIONFILE) $(VERSIONDATAFILE) $(LANGUAGEFILE) $(LICENSEFILE) $(AUTHORSFILE)
+EXTRA_DIST = build/config.rpath LICENSE extras org.naev.Naev.desktop org.naev.Naev.appdata.xml
+CLEANFILES = $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE) $(LICENSEFILE)
 
 if HAVE_NLS
 XMLFILES    = $(top_srcdir)/po/POTFILES_XML.in
@@ -43,25 +41,33 @@ XMLPOT      = $(top_srcdir)/po/xml.pot
 CLEANFILES += $(XMLPOT)
 endif # HAVE_NLS
 
-.PHONY: pot docs utils help install-ndata soundtrack
+.PHONY: data pot docs utils help install-ndata soundtrack
 
-all-local: $(NAEV) pot $(VERSIONFILE) $(VERSIONDATAFILE) $(LICENSEFILE) $(AUTHORSFILE)
+all-local: $(NAEV) data
 
-$(AUTHORSFILE): AUTHORS
-	@echo "  CP    $<"
-	cp $< $@
+data: pot $(VERSIONFILE) $(LICENSEFILE)
 
 $(LICENSEFILE): LICENSE
 	@echo "  CP    $<"
 	cp $< $@
 
 if HAVE_NLS
+if HAVE_ITSTOOL
+# On windows it seems like '\r' are leaking into filenames and breaking the
+# following command, so we use lots of ugly tr instead ¯\_(ツ)_/¯
+# xargs -a $(XMLFILES) $(ITSTOOL) -i $(TRANSLATIONITS) > $@
+$(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
+	@echo "ITSTOOL $@"
+	cat $(XMLFILES) | tr '\n' '\0' | tr -d '\r' | xargs -0 $(ITSTOOL) -i $(TRANSLATIONITS) > $@
+else # HAVE_ITSTOOL
 $(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
 	@echo "XGETTEXT $@"
 	$(XGETTEXT) --from-code=UTF-8 --its=$(TRANSLATIONITS) -f $(XMLFILES) -o $@
+endif # HAVE_ITSTOOL
 
 if HAVE_DATA
-pot: $(XMLPOT) $(LANGUAGEFILE) $(NAEV)
+pot: $(XMLPOT) $(LANGUAGEFILE)
+	$(MAKE) -C po
 	$(MAKE) -C po $(PACKAGE).pot
 	./utils/gettext.sh
 
@@ -72,7 +78,7 @@ pot:
 endif # HAVE_DATA
 
 else # HAVE_NLS
-pot: $(NAEV)
+pot:
 	@echo "***"
 	@echo "*** You must have NLS enabled to compile translation files"
 	@echo "***"
@@ -83,9 +89,6 @@ $(NAEV):
 	$(LN_S) "src/$(NAEV)" "$(NAEV)"
 
 $(VERSIONFILE): src/config.h
-	@echo $(VERSION) > $@
-
-$(VERSIONDATAFILE): src/config.h
 	@echo $(VERSION) > $@
 
 if HAVE_UTILS

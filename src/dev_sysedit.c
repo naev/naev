@@ -1236,7 +1236,7 @@ static void sysedit_editPnt( void )
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
    /* Create the window. */
-   sprintf(title, _("Planet Property Editor - %s"), p->name);
+   nsnprintf(title, sizeof(title), _("Planet Property Editor - %s"), p->name);
    wid = window_create( title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    sysedit_widEdit = wid;
 
@@ -1485,7 +1485,7 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
    /* Create the window. */
-   sprintf(title, _("Planet Information - %s"), p->name);
+   nsnprintf(title, sizeof(title), _("Planet Information - %s"), p->name);
    wid = window_create( title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 

@@ -498,15 +498,16 @@ static void news_render( double bx, double by, double w, double h, void *data )
  */
 static char* make_clean( char* unclean )
 {
-   int i, j;
+   int i, j, l;
    char *new;
 
-   new = malloc( 4*strlen(unclean)+1 );
+   l = 4*strlen(unclean)+1;
+   new = malloc( l );
 
    for (i=0, j=0; unclean[i] != 0; i++, j++) {
       if (unclean[i] == 27) {
          new[j++] = '\\';
-         j += sprintf( &new[j], "%.3d", unclean[i] )-1;
+         j += nsnprintf( &new[j], l, "%.3d", unclean[i] )-1;
       }
       else
          new[j] = unclean[i];

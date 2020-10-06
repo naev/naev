@@ -52,9 +52,6 @@
 
 
 #define NDATA_PATHNAME  "dat" /**< Generic ndata file name. */
-#ifndef NDATA_DEF
-#define NDATA_DEF       NDATA_PATHNAME /**< Default ndata to use. */
-#endif /* NDATA_DEF */
 
 
 #define NDATA_SRC_CWD     0 /**< Current working directory. (debug builds only) */
@@ -126,7 +123,7 @@ int ndata_setPath( const char *path )
       case NDATA_SRC_USER:
          // This already didn't work out when we checked the provided path.
       case NDATA_SRC_DEFAULT:
-         if ( env.isAppImage && nfile_concatPaths( buf, PATH_MAX, env.appdir, NDATA_DEF ) >= 0 && ndata_isndata( buf ) ) {
+         if ( env.isAppImage && nfile_concatPaths( buf, PATH_MAX, env.appdir, NDATA_PATHNAME ) >= 0 && ndata_isndata( buf ) ) {
             ndata_dir    = strdup( buf );
             ndata_source = NDATA_SRC_DEFAULT;
             break;
