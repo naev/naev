@@ -32,6 +32,7 @@
 
 #include "opengl.h"
 
+#include "SDL_error.h"
 #include "naev.h"
 
 #include <stdlib.h>
@@ -392,7 +393,7 @@ static int gl_createWindow( unsigned int flags )
          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
          SCREEN_W, SCREEN_H, flags | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
    if (gl_screen.window == NULL)
-      ERR(_("Unable to create window!"));
+      ERR(_("Unable to create window! %s"), SDL_GetError());
 
    /* Reinitialize resolution parameters. */
    if (flags & SDL_WINDOW_FULLSCREEN_DESKTOP)
@@ -405,7 +406,7 @@ static int gl_createWindow( unsigned int flags )
    /* Create the OpenGL context, note we don't need an actual renderer. */
    gl_screen.context = SDL_GL_CreateContext( gl_screen.window );
    if (!gl_screen.context)
-      ERR(_("Unable to create OpenGL context!"));
+      ERR(_("Unable to create OpenGL context! %s"), SDL_GetError());
 
    /* Set Vsync. */
    if (conf.vsync) {
