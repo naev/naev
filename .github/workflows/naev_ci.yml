@@ -7,7 +7,7 @@ env:
   DESTDIR: "${{ github.workspace }}/dist/"
 
 jobs:
-  dist:
+  "Package Source":
     runs-on: ubuntu-latest
 
     steps:
@@ -34,7 +34,7 @@ jobs:
         if-no-files-found: error
 
   "Linux-x86_64":
-    needs: dist
+    needs: "Package Source"
     runs-on: ubuntu-latest
 
     steps:
@@ -87,11 +87,12 @@ jobs:
       run: meson compile -C build
 
     - name: Meson Test
+      id: tests
       run: meson test -C build --print-errorlogs
-      continue-on-error: true
 
     - name: Upload test log
       uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
         name: naev-lin64-${{ github.sha }}-testlog
         path: ${{ github.workspace }}/build/meson-logs/testlog.txt
@@ -99,16 +100,18 @@ jobs:
 
     - name: Package
       run: meson install -C build
+      if: ${{ success() || steps.tests.outcome == 'failure' }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
         name: naev-lin64-${{ github.sha }}
         path: ${{ env.DESTDIR }}/*
         if-no-files-found: error
 
   "Windows-MinGW64":
-    needs: dist
+    needs: "Package Source"
     runs-on: windows-latest
     defaults:
       run:
@@ -142,28 +145,31 @@ jobs:
       run: meson compile -C build
 
     - name: Meson Test
+      id: tests
       run: meson test -C build --print-errorlogs
-      continue-on-error: true
 
     - name: Upload test log
       uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
         name: naev-win64-${{ github.sha }}-testlog
         path: ${{ github.workspace }}/build/meson-logs/testlog.txt
         if-no-files-found: ignore
 
     - name: Package
+      if: ${{ success() || steps.tests.outcome == 'failure' }}
       run: meson install -C build
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
         name: naev-win64-${{ github.sha }}
         path: ${{ env.DESTDIR }}/*
         if-no-files-found: error
 
   "macOS":
-    needs: dist
+    needs: "Package Source"
     runs-on: macos-latest
 
     steps:
@@ -222,10 +228,10 @@ jobs:
 
     - name: Meson Test
       run: meson test -C build --print-errorlogs
-      continue-on-error: true
 
     - name: Upload test log
       uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
         name: naev-macos-${{ github.sha }}-testlog
         path: ${{ github.workspace }}/build/meson-logs/testlog.txt
@@ -233,9 +239,11 @@ jobs:
 
     - name: Package
       run: meson install -C build
+      if: ${{ success() || steps.tests.outcome == 'failure' }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
         name: naev-macos-${{ github.sha }}
         path: ${{ env.DESTDIR }}/*
@@ -243,7 +251,7 @@ jobs:
 
   "Documentation":
     runs-on: ubuntu-latest
-    needs: dist
+    needs: "Package Source"
 
     steps:
     - name: Update APT Cache
