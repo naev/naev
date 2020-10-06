@@ -20,21 +20,19 @@ appdata_DATA = org.naev.Naev.appdata.xml
 dist_pkgdata_DATA = naev-confupdate.sh
 
 dist_man6_MANS = naev.6
-dist_doc_DATA = AUTHORS README TODO LICENSE
+dist_doc_DATA = README TODO LICENSE
 
 if HAVE_UTILS
 MKSPR      = $(top_srcdir)/utils/mkspr/mkspr$(EXEEXT)
 endif
 NAEV	     = $(top_srcdir)/$(PACKAGE)$(EXEEXT)
 
-VERSIONFILE = $(top_srcdir)/VERSION
-VERSIONDATAFILE = $(top_srcdir)/dat/VERSION
-AUTHORSFILE = $(top_srcdir)/dat/AUTHORS
+VERSIONFILE = $(top_srcdir)/dat/VERSION
 LICENSEFILE = $(top_srcdir)/dat/LICENSE
 LANGUAGEFILE = $(top_srcdir)/dat/LANGUAGES
 
 EXTRA_DIST = build/config.rpath LICENSE extras org.naev.Naev.desktop org.naev.Naev.appdata.xml
-CLEANFILES = $(NAEV) $(VERSIONFILE) $(VERSIONDATAFILE) $(LANGUAGEFILE) $(LICENSEFILE) $(AUTHORSFILE)
+CLEANFILES = $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE) $(LICENSEFILE)
 
 if HAVE_NLS
 XMLFILES    = $(top_srcdir)/po/POTFILES_XML.in
@@ -47,11 +45,7 @@ endif # HAVE_NLS
 
 all-local: $(NAEV) data
 
-data: pot $(VERSIONFILE) $(VERSIONDATAFILE) $(LICENSEFILE) $(AUTHORSFILE)
-
-$(AUTHORSFILE): AUTHORS
-	@echo "  CP    $<"
-	cp $< $@
+data: pot $(VERSIONFILE) $(LICENSEFILE)
 
 $(LICENSEFILE): LICENSE
 	@echo "  CP    $<"
@@ -95,9 +89,6 @@ $(NAEV):
 	$(LN_S) "src/$(NAEV)" "$(NAEV)"
 
 $(VERSIONFILE): src/config.h
-	@echo $(VERSION) > $@
-
-$(VERSIONDATAFILE): src/config.h
 	@echo $(VERSION) > $@
 
 if HAVE_UTILS
