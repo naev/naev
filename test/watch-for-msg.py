@@ -4,12 +4,12 @@ import os
 import sys
 import subprocess
 
-command = sys.argv[1]
-pattern = sys.argv[2]
+command = sys.argv[1:-1]
+pattern = sys.argv[-1]
 
 result = 1
 
-proc = subprocess.Popen([command],
+proc = subprocess.Popen(command,
             bufsize=1,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
