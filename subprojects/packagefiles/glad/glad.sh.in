@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd '@path@'
+python -m glad $@

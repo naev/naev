@@ -34,7 +34,6 @@ source = files(
    'faction.c',
    'fleet.c',
    'font.c',
-   'glad.c',
    'gui.c',
    'gui_omsg.c',
    'gui_osd.c',
@@ -163,6 +162,11 @@ lua_source = files(
 
 mac_source = files('glue_macos.m')
 
+naev_source = [
+   source,
+   lua_source
+]
+
 # Headers aren't needed for running the builds,
 # as they can all be found in the defined include derectories.
 # These are only used to let Meson know that Doxygen needs to be
@@ -202,7 +206,6 @@ headers = files(
    'fleet.h',
    'font.h',
    'gettext.h',
-   'glad.h',
    'glue_macos.h',
    'gui.h',
    'gui_omsg.h',
@@ -212,7 +215,6 @@ headers = files(
    'input.h',
    'intro.h',
    'joystick.h',
-   'khrplatform.h',
    'land.h',
    'land_outfits.h',
    'land_shipyard.h',

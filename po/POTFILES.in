@@ -333,7 +333,6 @@ src/explosion.c
 src/faction.c
 src/fleet.c
 src/font.c
-src/glad.c
 src/gui.c
 src/gui_omsg.c
 src/gui_osd.c

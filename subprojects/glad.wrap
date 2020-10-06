@@ -1,0 +1,8 @@
+[wrap-git]
+url = https://github.com/Dav1dde/glad.git
+revision = v0.1.33
+
+patch_directory = glad
+
+[provide]
+program_names = glad
