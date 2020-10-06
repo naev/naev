@@ -12,7 +12,7 @@ result = 1
 proc = subprocess.Popen([command],
             bufsize=1,
             stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
             encoding='utf-8')
 
 for line in proc.stdout:
