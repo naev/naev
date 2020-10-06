@@ -7,7 +7,7 @@ env:
   DESTDIR: "${{ github.workspace }}/dist/"
 
 jobs:
-  "Package Source":
+  "Package_Source":
     runs-on: ubuntu-latest
 
     steps:
@@ -34,7 +34,7 @@ jobs:
         if-no-files-found: error
 
   "Linux-x86_64":
-    needs: "Package Source"
+    needs: "Package_Source"
     runs-on: ubuntu-latest
 
     steps:
@@ -111,7 +111,7 @@ jobs:
         if-no-files-found: error
 
   "Windows-MinGW64":
-    needs: "Package Source"
+    needs: "Package_Source"
     runs-on: windows-latest
     defaults:
       run:
@@ -169,7 +169,7 @@ jobs:
         if-no-files-found: error
 
   "macOS":
-    needs: "Package Source"
+    needs: "Package_Source"
     runs-on: macos-latest
 
     steps:
@@ -251,7 +251,7 @@ jobs:
 
   "Documentation":
     runs-on: ubuntu-latest
-    needs: "Package Source"
+    needs: "Package_Source"
 
     steps:
     - name: Update APT Cache
