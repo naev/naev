@@ -88,7 +88,7 @@ jobs:
 
     - name: Meson Test
       id: tests
-      run: meson test -C build --print-errorlogs
+      run: xvfb-run -a meson test -C build --print-errorlogs
 
     - name: Upload test log
       uses: actions/upload-artifact@v2
