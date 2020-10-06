@@ -19,8 +19,9 @@
 /* localised global */
 #include "SDL.h"
 
-#include "naev.h"
+#include "SDL_error.h"
 #include "log.h" /* for DEBUGGING */
+#include "naev.h"
 
 
 /* global */
@@ -214,7 +215,10 @@ int main( int argc, char** argv )
       DEBUG( "AppImage not detected." );
 
    /* Initializes SDL for possible warnings. */
-   SDL_Init(0);
+   if ( SDL_Init( 0 ) ) {
+      ERR( _( "Unable to initialize SDL: %s" ), SDL_GetError() );
+      return -1;
+   }
 
    /* Initialize the threadpool */
    threadpool_init();
