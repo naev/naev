@@ -591,6 +591,9 @@ int gl_init (void)
    if (!gladLoadGLLoader(SDL_GL_GetProcAddress))
       ERR("Unable to load OpenGL using GLAD");
 
+   if ( !GLAD_GL_VERSION_3_1 )
+      WARN( "Naev requires OpenGL 3.1, but got OpenGL %d.%d!", GLVersion.major, GLVersion.minor );
+
    /* Some OpenGL options. */
    glClearColor( 0., 0., 0., 1. );
 
