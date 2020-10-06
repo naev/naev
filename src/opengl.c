@@ -218,23 +218,9 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
  *    @param minor Minor version to check.
  *    @return True if major and minor version are met.
  */
-static double gl_contextVersion = -1.;
 GLboolean gl_hasVersion( int major, int minor )
 {
-   const char *p;
-   double f;
-
-   if (gl_contextVersion < 0.) {
-      p = (const char*) glGetString(GL_VERSION);
-
-      /* Get version and compare version. */
-      gl_contextVersion = atof(p);
-   }
-
-   f  = (double) major;
-   f += 0.1 * (double) minor;
-
-   if (f <= gl_contextVersion)
+   if (GLVersion.major >= major && GLVersion.minor >= minor)
       return GL_TRUE;
    return GL_FALSE;
 }
