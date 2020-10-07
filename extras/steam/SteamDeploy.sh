@@ -34,7 +34,7 @@ if [[ ! -f "naev.6" ]]; then
     exit -1
 fi
 
-VERSION="$(cat $(pwd)/VERSION)"
+VERSION="$(cat $(pwd)/dat/VERSION)"
 BETA=false
 # Get version, negative minors mean betas
 if [[ -n $(echo "$VERSION" | grep "-") ]]; then
