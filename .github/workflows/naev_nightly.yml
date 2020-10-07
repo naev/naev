@@ -109,8 +109,6 @@ jobs:
         chmod +x dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64/naev-$VERSION-$BUILD_DATE-linux-x86-64
 
         cp -r dat/ dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64
-        cp AUTHORS dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64
-        cp VERSION dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64
 
         cd dist/release
         tar -czvf linux-x86-64.tar.gz naev-$VERSION-$BUILD_DATE-linux-x86-64
