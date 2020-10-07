@@ -36,6 +36,8 @@ jobs:
   "Linux-x86_64":
     needs: "Package_Source"
     runs-on: ubuntu-latest
+    env:
+      LIBGL_ALWAYS_SOFTWARE: true
 
     steps:
     - name: Update APT Build Dependencies
@@ -48,6 +50,7 @@ jobs:
           libsdl2-image-dev \
           libgl1-mesa-dev \
           libgl1-mesa-dri \
+          xvfb \
           libxml2-dev \
           libfontconfig1-dev \
           libfreetype6-dev \
