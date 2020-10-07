@@ -8,7 +8,7 @@ env:
 
 jobs:
   "Package_Source":
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Setup Python
@@ -35,9 +35,7 @@ jobs:
 
   "Linux-x86_64":
     needs: "Package_Source"
-    runs-on: ubuntu-latest
-    env:
-      LIBGL_ALWAYS_SOFTWARE: true
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Update APT Build Dependencies
