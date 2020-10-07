@@ -47,6 +47,7 @@ jobs:
           libsdl2-mixer-dev \
           libsdl2-image-dev \
           libgl1-mesa-dev \
+          libgl1-mesa-dri \
           libxml2-dev \
           libfontconfig1-dev \
           libfreetype6-dev \
