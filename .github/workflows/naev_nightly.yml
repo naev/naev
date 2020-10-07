@@ -93,7 +93,7 @@ jobs:
 
         BUILD_DATE="$(date +%m_%d_%Y)"
 
-        VERSION="$(cat VERSION)"
+        VERSION="$(cat dat/VERSION)"
 
         # Get version, negative minors mean betas
         if [[ -n $(echo "${VERSION}" | grep "-") ]]; then
@@ -206,8 +206,6 @@ jobs:
         mkdir -p dist/release
 
         ./extras/macos/bundle.sh
-        cp AUTHORS Naev.app/Contents/Resources/
-        cp VERSION Naev.app/Contents/Resources/
         cp -r dat/ Naev.app/Contents/Resources/dat/
         zip -r dist/release/naev-macos.zip Naev.app/*
 
@@ -263,8 +261,8 @@ jobs:
 
       - name: Prepare source artifact
         run: |
-          make VERSION
-          VERSION="$(cat VERSION)"
+          make dat/VERSION
+          VERSION="$(cat dat/VERSION)"
           mkdir -p dist/release
           mv naev-$VERSION.tar.gz dist/release/source.tar.gz
 
@@ -313,7 +311,7 @@ jobs:
         run: |
           ./autogen.sh
           ./configure
-          make VERSION
+          make dat/VERSION
 
       - name: Create Release Staging Area
         run: |
@@ -328,7 +326,7 @@ jobs:
         run: |
           BUILD_DATE="$(date +%m_%d_%Y)"
 
-          VERSION="$(cat VERSION)"
+          VERSION="$(cat dat/VERSION)"
            # Get version, negative minors mean betas
           if [[ -n $(echo "${VERSION}" | grep "-") ]]; then
               BASEVER=$(echo "${VERSION}" | sed 's/\.-.*//')
@@ -397,7 +395,7 @@ jobs:
         run: |
           ./autogen.sh
           ./configure
-          make VERSION
+          make dat/VERSION
 
       - name: Create Release Staging Area
         run: |
