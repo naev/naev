@@ -69,9 +69,10 @@ if get_option('configure_build') == true
       csparse
    ]
 
+   sdl = dependency('sdl2', required: true)
    deps = [
       dependency('freetype2', required: true),
-      dependency('sdl2', required: true),
+      sdl,
       declare_dependency(
          dependencies: dependency('libpng', required: true),
          compile_args: '-DNOLOGPRINTFCONSOLE',

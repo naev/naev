@@ -1,3 +1,5 @@
+subdir('glcheck')
+
 test('Reaches main menu',
     find_program('watch-for-msg.py'),
     args: [
