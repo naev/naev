@@ -1220,6 +1220,8 @@ int naev_versionParse( int version[3], char *buf, int nbuf )
    j = 0;
    for (i=0; i < MIN(nbuf,(int)sizeof(cbuf)); i++) {
       cbuf[j++] = buf[i];
+      if (buf[i] == '-')
+         break;
       if (buf[i] == '.') {
          cbuf[j] = '\0';
          version[s++] = atoi(cbuf);

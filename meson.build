@@ -1,5 +1,5 @@
 project('naev', 'c',
-   version : '0.8.0',
+   version : '0.8.0-beta.3',
    default_options : [
       'warning_level=1',
       'optimization=g',
@@ -25,20 +25,16 @@ if get_option('configure_build') == true
       ndata_path = get_option('datadir') / 'naev/ndata'
    endif
 
+   debug = get_option('debug')
    config_data = configuration_data({
-      'VMAJOR'         : meson.project_version().split('.')[0],
-      'VMINOR'         : meson.project_version().split('.')[1],
-      'VREV'           : meson.project_version().split('.')[2],
       'HOST'           : '"' + host_machine.system() + '-' + host_machine.cpu_family() + '"',
-      'DEBUG'          : get_option('debug')    ? 1 : false,
-      'DEBUGGING'      : get_option('debug')    ? 1 : false,
+      'DEBUG'          : debug ? 1 : false,
+      'DEBUGGING'      : debug ? 1 : false,
       'DEBUG_PARANOID' : get_option('paranoid') ? 1 : false,
       'PACKAGE'        : meson.project_name(),
       'PACKAGE_VERSION': meson.project_version(),
       'NDATA_DEF'      : '"' + (get_option('prefix') / ndata_path) + '"'
    })
-
-   add_project_arguments('-include', 'config.h', language: 'c')
 
    cc = meson.get_compiler('c')
 
@@ -131,11 +127,39 @@ if get_option('configure_build') == true
 
    ### Generated sources
 
+   # VERSION
+   version = run_command('utils/gen_version.sh', check: true).stdout().strip()
+   temp    = version.split('+')
+   vmeta   = temp.length() > 1 ? temp[1] : ''
+   temp    = temp[0].split('-')
+   vcore   = temp[0]
+   temp    = temp.length() > 1 ? temp[1].split('.') : ''
+   vpre    = temp.length() > 0 ? temp[0] : ''
+   vpren   = temp.length() > 1 ? temp[1] : ''
+   temp    = vcore.split('.')
+   vmajor  = temp[0]
+   vminor  = temp[1]
+   vrev    = temp[2]
+   vhuman  = vcore + (vpre != '' ? ' ' + vpre : '') + (vpren != '' ? ' ' + vpren : '') + (debug ? ' debug' : '')
+
+   config_data.set_quoted('VERSION', version)
+   config_data.set_quoted('VMETA'  , vmeta  )
+   config_data.set_quoted('VCORE'  , vcore  )
+   config_data.set_quoted('VPRE'   , vpre   )
+   config_data.set       ('VPREN'  , vpren  )
+   config_data.set       ('VMAJOR' , vmajor )
+   config_data.set       ('VMINOR' , vminor )
+   config_data.set       ('VREV'   , vrev   )
+   config_data.set_quoted('VHUMAN' , vhuman )
+
+   meson.add_dist_script('utils/add_to_package.sh', 'dat/VERSION')
+
    # config.h
    configure_file(
       output: 'config.h',
       configuration: config_data
    )
+   add_project_arguments('-include', 'config.h', language: 'c')
 
    # GLAD
    glad = find_program('glad')
@@ -204,15 +228,6 @@ if get_option('configure_build') == true
    install_subdir(
       'dat',
       install_dir: ndata_path,
-   )
-
-   custom_target(
-      'version',
-      output: 'VERSION',
-      command: ['echo', meson.project_version()],
-      capture: true,
-      install: true,
-      install_dir: ndata_path
    )
 
    if host_machine.system() not in ['windows', 'cygwin', 'emscripten', 'android']

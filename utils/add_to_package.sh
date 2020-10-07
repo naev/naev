@@ -1,0 +1,2 @@
+#!/bin/sh
+cp "$MESON_SOURCE_ROOT/$1" "$MESON_DIST_ROOT/$1"
