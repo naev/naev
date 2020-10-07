@@ -46,7 +46,7 @@ else
     exit -1
 fi
 
-VERSION="$(cat $(pwd)/VERSION)"
+VERSION="$(cat $(pwd)/dat/VERSION)"
 BETA=false
 # Get version, negative minors mean betas
 if [[ -n $(echo "$VERSION" | grep "-") ]]; then
@@ -75,8 +75,6 @@ mkdir -p extras/windows/installer/bin
 # Move data to staging folder
 echo "moving data to staging area"
 cp -r dat/ extras/windows/installer/bin
-cp AUTHORS extras/windows/installer/bin
-cp VERSION extras/windows/installer/bin
 
 # Collect DLLs
  
