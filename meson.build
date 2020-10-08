@@ -11,6 +11,8 @@ project('naev', 'c',
 issue_address = 'https://github.com/naev/naev/issues'
 copyright_holder = 'Naev Dev Team'
 
+version = run_command('utils/gen_version.sh', check: true).stdout().strip()
+
 subdir('src')
 subdir('docs')
 subdir('po')
@@ -128,7 +130,6 @@ if get_option('configure_build') == true
    ### Generated sources
 
    # VERSION
-   version = run_command('utils/gen_version.sh', check: true).stdout().strip()
    temp    = version.split('+')
    vmeta   = temp.length() > 1 ? temp[1] : ''
    temp    = temp[0].split('-')
