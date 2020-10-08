@@ -11,7 +11,16 @@ project('naev', 'c',
 issue_address = 'https://github.com/naev/naev/issues'
 copyright_holder = 'Naev Dev Team'
 
-version = run_command('utils/gen_version.sh', check: true).stdout().strip()
+subdir('utils')
+
+version_result = run_command(gen_version, meson.project_version())
+if version_result.returncode() != 0
+   error(version_result.stderr())
+else
+   version = version_result.stdout().strip()
+   meson.add_dist_script(add_to_package, 'dat/VERSION')
+   summary('tag', version)
+endif
 
 subdir('src')
 subdir('docs')
@@ -152,8 +161,6 @@ if get_option('configure_build') == true
    config_data.set       ('VMINOR' , vminor )
    config_data.set       ('VREV'   , vrev   )
    config_data.set_quoted('VHUMAN' , vhuman )
-
-   meson.add_dist_script('utils/add_to_package.sh', 'dat/VERSION')
 
    # config.h
    configure_file(

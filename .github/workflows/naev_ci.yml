@@ -33,7 +33,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: naev-${{ github.sha }}
-        path: ${{ github.workspace }}/builddir/meson-dist/*
+        path: ${{ github.workspace }}/build/meson-dist/*
         if-no-files-found: error
 
   "Linux-x86_64":
