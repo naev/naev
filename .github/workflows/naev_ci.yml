@@ -20,11 +20,13 @@ jobs:
 
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
+      with:
+        path: source
 
     - name: Meson Build
       run: |
-        meson setup builddir -Dconfigure_build=false -Dconfigure_doc=false
-        meson dist -C builddir --no-tests
+        meson setup build source -Dconfigure_build=false -Dconfigure_doc=false
+        meson dist -C build --no-tests
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
