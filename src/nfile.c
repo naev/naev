@@ -277,7 +277,7 @@ static char dirname_buf[PATH_MAX];
  * it returns a modified buffer. The contents of the returned pointer can change
  * in subsequent calls.
  */
-char *_nfile_dirname( const char *path )
+const char *_nfile_dirname( const char *path )
 {
 #if HAS_POSIX
    strncpy( dirname_buf, path, sizeof(dirname_buf) );
