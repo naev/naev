@@ -179,7 +179,7 @@ int main( int argc, char** argv )
 {
    char buf[PATH_MAX], langbuf[PATH_MAX], *lang;
 
-   env_detect( argv );
+   env_detect( argc, argv );
 
    if (!log_isTerminal())
       log_copy(1);

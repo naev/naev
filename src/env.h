@@ -13,11 +13,11 @@ typedef struct _env_t {
    short isAppImage;
    char *appimage;
    char *appdir;
-   char *argv0;
+   const char *argv0;
 } env_t;
 extern env_t env;
 
-void env_detect( char **argv );
+void env_detect( int argc, const char **argv );
 
 int nsetenv( const char *name, const char *value, int overwrite );
 
