@@ -3518,7 +3518,7 @@ msgstr "Genetisch angepasst für Sie."
 #. --
 #: dat/events/neutral/news.lua:78
 msgid "Techs Probe for Sol"
-msgstr "Techniker suchen nach Sol"
+msgstr "Techniker machen Sol-Forschungen"
 
 #: dat/events/neutral/news.lua:79
 msgid ""
@@ -5486,7 +5486,7 @@ msgid ""
 "anyway? Just hail the planet with %s, and click the bribe button! Careful though, it doesn't always work.\""
 msgstr ""
 "„Wusstest du, dass, wenn ein Planet dich nicht mag, du du oft die Leiter des Weltraumhafens bestechen und "
-"trotzdem landen kannst? Grüß einfach den Planeten mit %s und klick auf den Bestechungsknopf. Aber vorsicht, "
+"trotzdem landen kannst? Funk einfach den Planeten mit %s an und klick auf den Bestechungsknopf. Aber vorsicht, "
 "das wird nicht immer funktionieren.“"
 
 #: dat/events/neutral/npc.lua:190
@@ -5681,7 +5681,7 @@ msgid ""
 "automatically and usually do a very good job!\""
 msgstr ""
 "„Ausnahmen bestätigen die Regel, aber ich würde nicht empfehlen, vorwärtsgerichtete Waffen auf größeren "
-"Schiffen zu benutzen. Die langsamere Drehgeschwindigkeit von großen Schiffen kann mit dem Ansturm und "
+"Schiffen zu benutzen. Die langsamere Drehung von großen Schiffen kann mit dem Ansturm und "
 "Ausweichmanövern von kleineren Schiffen nicht mithalten und das Zielen fällt ohnehin schwieriger, wenn man "
 "bedenkt, wie komplex diese Schiffe sind. Geschütztürme sind viel besser; sie zielen automatisch und machen "
 "eine ausgezeichnete Arbeit!“"
@@ -5986,7 +5986,7 @@ msgid ""
 "there's someone out there who wants to see you, and there's only one way to find out what about. Perhaps you "
 "should make a note of the place you're supposed to meet her: the %s system."
 msgstr ""
-"„Sei gegrüßt, %s.“, sagt der Pilot der Vendetta, als du seine Grußnachricht beantwortest. „Ich habe nach dir "
+"„Sei gegrüßt, %s.“, sagt der Pilot der Vendetta, als du seine Funknachricht beantwortest. „Ich habe nach dir "
 "im Auftrag von eine deiner Bekannten gesucht. Sie wünscht, dich an einem Ort ihrer Wahl zu einem Zeitpunkt "
 "deiner Wahl zu treffen. Es geht um ein Angebot, das dir gefallen könnte – wenn du kein Problem damit hast, "
 "deinen Kopf zu riskieren.“\n"
@@ -6739,7 +6739,7 @@ msgstr "%ss „feine“ Waren"
 #, lua-format
 msgid "%s's the name and selling fine shit is my game! Come get your outfits here!"
 msgstr ""
-"%s lautet der Name und der Verkauf von gutem Shit ist mein Spiel! Kommt und holt euch eure Ausstattungen hier "
+"%s lautet der Name und der Verkauf von gutem Shit ist mein Ding! Kommt und holt euch eure Ausstattungen hier "
 "ab!"
 
 #: dat/events/travelling_merchant.lua:21
@@ -7920,7 +7920,7 @@ msgstr "Keine"
 #. Render planet image.
 #: dat/gui/brushed.lua:930 dat/gui/slim.lua:865 dat/gui/slim.lua:998
 msgid "TARGETED"
-msgstr "IST ZIEL"
+msgstr "ZIEL"
 
 #: dat/gui/brushed.lua:931 dat/gui/slim.lua:999
 msgid "DISTANCE:"
@@ -8559,7 +8559,7 @@ msgid ""
 msgstr ""
 "Du fragst den Botschafter des Barons, wohin dieses Hologemälde geliefert werden muss. „Seine Lordschaft will "
 "deine Lieferung im „%s“-System entgegen nehmen, auf seinem Schiff: die ‚Pinnacle‘.”, antwortet er. „Sobald du "
-"mit dem Hologemälde an Bord ankommst, sende eine Grußnachricht an die Pinnacle und bitte um Andockerlaubnis. "
+"mit dem Hologemälde an Bord ankommst, sende eine Funknachricht an die Pinnacle und bitte um Andockerlaubnis. "
 "Sie werden wissen, wer du bist, also solltest du die Andockerlaubnis erhalten. Du wirst bei erfolgter "
 "Lieferung bezahlt. Noch Fragen?“ Du deutest an, dass du weißt, was zu tun ist, dann beendest du die "
 "Verbindung. Nächster Halt: Planet %s."
@@ -13748,7 +13748,7 @@ msgstr ""
 "bei dir, bevor er sich auf den Weg macht. Du stattest Kommandant Soldner einen Besuch ab. Er scheint "
 "glücklich zu sein, ausnahmsweise.\n"
 "    „Es scheint, als hätten Sie es geschafft. Ich hatte zuerst meine Zweifel, aber Sie haben sich als sehr "
-"geschickter Pilot erwiesen. Oh, und ich habe Ihnen die Freigabe für die Schwerkampfschifflizenz erteilt; "
+"geschickter Pilot erwiesen. Oh, und ich habe Ihnen die Freigabe für die Schwerkampfschiffslizenz erteilt; "
 "herzlichen Glückwunsch! Wir haben jetzt nichts mehr für Sie, aber melden Sie sich regelmäßig, falls es neue "
 "Missionen für Sie gibt.“"
 
@@ -14282,11 +14282,11 @@ msgstr "Es scheint, als wollte Benito erneut etwas von dir. Etwas an ihr scheint
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:107
 msgid "Find pirates and try to talk to (hail) them"
-msgstr "Finde Piraten und versuch, mit ihnen zu reden (grüßen)"
+msgstr "Finde Piraten und versuch, mit ihnen zu reden (anfunken)"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:111
 msgid "Destroy some of the weaker pirate ships, then try to hail the Kestrel again"
-msgstr "Zerstöre einige der schwächeren Piratenschiffe, dann versuche, die Kestrel erneut zu grüßen"
+msgstr "Zerstöre einige der schwächeren Piratenschiffe, dann versuche, die Kestrel erneut anzufunken"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:112
 #, lua-format
@@ -14389,7 +14389,7 @@ msgstr ""
 "Du nimmst einen Platz in der Gruppe ein. „Fantastisch!“, sagt Benito. „Dann will ich dich mal involvieren. "
 "Erinnerst du dich an die Mission in Raelid, bei der du vor einer Weile geholfen hast?“ Du nickst. Du fragst "
 "dich, wovon du eigentlich eine Ablenkung geschaffen hast. „Also, ich bin nie dazu gekommen, dir zu erzählen, "
-"was wir dort tatsächlich gemacht haben. Wir wollten Raelid Outpost schon seit einiger Zeit zerstören, "
+"was wir dort tatsächlich gemacht haben. Wir wollten den Raelid-Außenposten schon seit einiger Zeit zerstören, "
 "hauptsächlich, weil er oft als eine Front benutzt wird, um zu versuchen, uns auszuspionieren. Während ihr "
 "also die Aufmerksamkeit dieser Dvaered-Unterdrücker auf euch gezogen habt, haben wir eine spezielle Bombe "
 "angefertigt und heimlich auf dem Außenposten installiert!“"
@@ -14414,9 +14414,9 @@ msgstr ""
 "sie eine massive Störung weit weg von unserem Ziel zu verursachen. Ihr sollt warten, bis die Luft rein ist, "
 "dann schwärmt ihr aus und greift den Außenposten mit allem an, was ihr habt. Du, %s, wirst den Angriff "
 "anführen. Ihr müsst den optimalen Zeitpunkt bestimmen, wenn die Dvaered weit weg genug sind, damit ihr den "
-"Angriff starten könnt, aber bevor die Piraten unweigerlich überwältigt werden. Grüße einfach einen der "
-"anderen, wenn es Zeit zum Angriff ist, dann begebt euch zu Raelid Outpost und schießt mit all eurer Macht auf "
-"sie ein!“"
+"Angriff starten könnt, aber bevor die Piraten unweigerlich überwältigt werden. Funke einfach einen der "
+"anderen an, wenn die Zeit zum Angriff gekommen ist, dann begebt euch zum Raelid-Außenposten und schießt mit all "
+"eurer Macht auf sie ein!“"
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:60
 msgid ""
@@ -14440,8 +14440,8 @@ msgid ""
 "    \"So, you actually showed your face. I half expected you to run away and hide. But no matter.\" You try "
 "not to show any reaction to his icy stare. He continues."
 msgstr ""
-"Als Raelid Outpost vor euren Augen in einer fantastischen Explosion ausbricht, jubeln deine Kameraden. Aber "
-"dann siehst du etwas Seltsames. Jemand grüßt dich … ein Imperiumsschiff? Das kann nicht sein. Vorsichtig "
+"Als der Raelid-Außenposten vor euren Augen in einer fantastischen Explosion ausbricht, jubeln deine Kameraden. Aber "
+"dann siehst du etwas Seltsames. Jemand funkt dich an … ein Imperiumsschiff? Das kann nicht sein. Vorsichtig "
 "antwortest du. Der Mann, dessen Gesicht auf deinem Bildschirm erscheint, verschwendet keine Zeit.\n"
 "    „Soso, jetzt haben Sie also tatsächlich ihr wahres Gesicht gezeigt. Ich hätte fast erwartet dass sie "
 "weglaufen und sich verstecken würden. Aber das spielt keine Rolle.\" Du versuchst, keine Reaktion auf sein "
@@ -14498,7 +14498,7 @@ msgstr "Ansturm auf Raelid"
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:74
 msgid "Join with the other FLF pilots for the assault on Raelid Outpost."
-msgstr "Begleite die anderen FLF-Piloten für den Ansturm auf Raelid Outpost."
+msgstr "Begleite die anderen FLF-Piloten für den Ansturm auf den Raelid-Außenposten."
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:75
 msgid "A great victory against the Dvaereds"
@@ -14515,11 +14515,11 @@ msgstr "Flieg zum „%s“-System und triff dich mit der Gruppe von FLF-Schiffen
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:83 dat/missions/flf/dvk/flf_dvk06.lua:72
 msgid "Wait until the coast is clear, then hail one of your wingmates"
-msgstr "Warte, bis die Luft rein ist, dann grüße einen deiner Flugkameraden"
+msgstr "Warte, bis die Luft rein ist, dann funke einen deiner Flugkameraden an"
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:84
 msgid "Attack Raelid Outpost until it is destroyed"
-msgstr "Greife Raelid Outpost an, bis er zerstört ist"
+msgstr "Greife den Raelid-Außenposten an, bis er zerstört ist"
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:89 dat/missions/flf/dvk/flf_dvk06.lua:78
 #, lua-format
@@ -14539,7 +14539,7 @@ msgid ""
 "You led the effort to destroy the hated Dvaered base, Raelid Outpost, a major victory for the FLF. This act "
 "led to the Empire listing you and the FLF as an enemy of the Empire."
 msgstr ""
-"Du hast die Bemühungen angeführt, den verhassten Stützpunkt der Dvaered, Raelid Outpost, zu zerstören, ein "
+"Du hast die Bemühungen angeführt, den verhassten Stützpunkt der Dvaered, den Raelid-Außenposten, zu zerstören, ein "
 "großer Sieg für die FLF. Diese Tat führte dazu, dass das Imperium dich und die FLF als Feinde des Imperiums "
 "aufgelistet hat."
 
@@ -14611,7 +14611,7 @@ msgid ""
 "Benito excuses herself. Time to cause some mayhem again!"
 msgstr ""
 "Benito grinst. „Ich wusste, du würdest es tun wollen. Wie immer wird das Team auf eine Chance warten, ihre "
-"Arbeit zu erledigen und wird dich dann grüßen, wenn sie fertig sind. Viel Glück, falls ein Pilot wie du sowas "
+"Arbeit zu erledigen und wird dich dann anfunken, wenn sie fertig sind. Viel Glück, falls ein Pilot wie du sowas "
 "überhaupt braucht!“ Du grinst, und Benito verabschiedet sich. Zeit, wieder etwas Chaos zu anzurichten!"
 
 #: dat/missions/flf/dvk/flf_dvk04.lua:55
@@ -14815,12 +14815,12 @@ msgid ""
 "Time to get your ship ready for battle, then."
 msgstr ""
 "„Ausgezeichnet!“ Du nimmst Platz. „Also, noch einmal, unsere Mission heute ist die Zerstörung einer "
-"verhassten Dvaered-Basis: Raglan Outpost! Der Plan ist so ziemlich der gleiche wie zuvor: Wir haben eine "
+"verhassten Dvaered-Basis: Raglan-Außenposten! Der Plan ist so ziemlich der gleiche wie zuvor: Wir haben eine "
 "Gruppe Piraten damit beauftragt, etwas Stress in der Nähe zu verursachen, und wir haben eine Bombe in den "
 "Außenposten platziert, um bei seiner Zerstörung zu helfen. Du musst nur entscheiden, wann du zuschlagen "
 "willst, und deinen Teamkollegen Bescheid geben.\n"
 "    Die eine Sache, die jedoch anders sein wird, ist, dass ihr wahrscheinlich mehr Dvaered-Schiffe finden "
-"werdet, die Raglan Outpost bewachen, im Vergleich zu Raelid Outpost, und es könnte etwas schwieriger sein, "
+"werdet, die den Raglan-Außenposten bewachen, im Vergleich zum Raelid-Außenposten, und es könnte etwas schwieriger sein, "
 "ihn zu zerstören. Sei also besonders vorsichtig!“. Zeit, dein Schiff kampfbereit zu machen."
 
 #: dat/missions/flf/dvk/flf_dvk06.lua:57
@@ -14855,7 +14855,7 @@ msgstr "Ansturm auf Haleb"
 
 #: dat/missions/flf/dvk/flf_dvk06.lua:63
 msgid "Join with the other FLF pilots for the assault on Raglan Outpost."
-msgstr "Begleite die anderen FLF-Piloten für den Ansturm auf Raglan Outpost."
+msgstr "Begleite die anderen FLF-Piloten für den Ansturm auf den Raglan-Außenposten."
 
 #: dat/missions/flf/dvk/flf_dvk06.lua:64
 msgid "Another great victory against the Dvaereds"
@@ -14863,7 +14863,7 @@ msgstr "Ein weiterer großartiger Sieg gegen die Dvaered"
 
 #: dat/missions/flf/dvk/flf_dvk06.lua:73
 msgid "Attack Raglan Outpost until it is destroyed"
-msgstr "Greife Raglan Outpost an, bis er zerstört ist"
+msgstr "Greife den Raglan-Außenposten an, bis er zerstört ist"
 
 #: dat/missions/flf/dvk/flf_dvk06.lua:83
 msgid ""
@@ -14871,7 +14871,7 @@ msgid ""
 "Frontier. As a result, Dvaered forces have started to be pushed out of Frontier space, the first time the FLF "
 "has ever done so and a major victory for the Frontier."
 msgstr ""
-"Du hast den Angriff angeführt, um Raglan Outpost zu zerstören, einer Quelle der Dvaered, die tief im "
+"Du hast den Angriff angeführt, um den Raglan-Außenposten zu zerstören, einer Quelle der Dvaered, die tief im "
 "Herrschaftsgebiet der Front eingedrungen ist. Infolgedessen wurden die Dvaered-Streitkräfte aus dem Raum der "
 "Front verdrängt, das erste Mal, dass die FLF so etwas geschafft hat, und ein großer Sieg für die Front."
 
@@ -16039,8 +16039,8 @@ msgid ""
 "then this one bothered to hail you in the heat of battle, so perhaps there is more here than meets the eye."
 msgstr ""
 "Dein Bildschirm zeigt einen Dvaered-Oberst. Er sieht angespannt aus. Normalerweise wäre ein angespannter "
-"Dvaered eine schlechte Nachricht, aber dann hat sich dieser in der Hitze des Gefechts die Mühe gemacht, dich "
-"zu begrüßen, also gibt es hier vielleicht mehr, als man auf den ersten Blick sieht."
+"Dvaered eine schlechte Nachricht, aber andererseits hat sich dieser Dvaered in der Hitze des Gefechts die Mühe gemacht, dich "
+"anzufunken, also gibt es hier vielleicht mehr, als man auf den ersten Blick sieht."
 
 #: dat/missions/flf/flf_pre02.lua:86
 msgid ""
@@ -23266,7 +23266,7 @@ msgstr "%s von %s werden auf dein Schiff geladen."
 #: dat/missions/pirate/pir_cargo.lua:152
 #, lua-format
 msgid "The containers of %s are unloaded at the docks."
-msgstr "Die Container mit %s wird zu den Docks entladen."
+msgstr "Die Container mit %s werden zu den Docks entladen."
 
 #. increase faction
 #. Date hook
@@ -23406,7 +23406,7 @@ msgstr "%s, brandneu"
 #: dat/missions/pirate/pir_ship_stealing.lua:38
 #, lua-format
 msgid "Land on %s in the %s system and escape with your new %s"
-msgstr "Lande auf %s im „%s“-System und fliehe mit deiner neuen %s"
+msgstr "Lande auf %s im „%s“-System und fliehe mit deinem Schiff vom Typ „%s“"
 
 #. localization stuff, translators would work here
 #: dat/missions/pirate/pir_ship_stealing.lua:42
@@ -24246,7 +24246,7 @@ msgstr "Dunkler Schatten"
 #: dat/missions/shadow/darkshadow.lua:107
 #, lua-format
 msgid "Look for Jorek on %s in the %s system"
-msgstr "Halte nach Jorek auf %s im „%s“-System ausschau"
+msgstr "Halte nach Jorek auf %s im „%s“-System Ausschau"
 
 #. Note: indexing at 0 because it's a template. Shouldn't actually appear ingame.
 #: dat/missions/shadow/darkshadow.lua:108
@@ -26201,7 +26201,7 @@ msgid ""
 "    A few periods later, he comes back and explains that he wasn't able to improve Nexus sales in the "
 "Frontier, but he was able to stop House Sirius from entering the picture, at least."
 msgstr ""
-"Als du landest, siehst du eine Gruppe von Leuten, die auf dein Schiff gewartet haben. Smith grüßt sie und "
+"Als du landest, siehst du eine Gruppe von Leuten, die auf dein Schiff gewartet haben. Smith ruft sie und "
 "sagt dir, du sollst im Schiff warten, während er in einen privaten Teil der Kneipe geht.\n"
 "    Einige Zeit später kommt er zurück und erklärt, dass er die Verkäufe von Nexus in der Front nicht "
 "verbessern konnte, aber er konnte zumindest verhindern, dass das Haus Sirius mitmischt."
@@ -32763,7 +32763,7 @@ msgstr ""
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:78
 #, lua-format
 msgid "Go to the %s system and hail the prototype"
-msgstr "Gehe zum „%s“-System und grüße den Prototypen"
+msgstr "Gehe zum „%s“-System und funke den Prototypen an"
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:79
 msgid "Disable the prototype"
@@ -36902,7 +36902,7 @@ msgstr "Beschreibung"
 
 #: src/dev_sysedit.c:1330
 msgid "Land GFX"
-msgstr "Landgrafik"
+msgstr "Landegrafik"
 
 #: src/dev_sysedit.c:1332
 msgid "Space GFX"
@@ -36985,7 +36985,7 @@ msgstr "Alle speichern"
 
 #: src/dev_uniedit.c:190
 msgid "Jump"
-msgstr "Springen"
+msgstr "Sprung"
 
 #: src/dev_uniedit.c:205
 msgid "New Sys"
@@ -37257,10 +37257,10 @@ msgstr ""
 "Sprungdauer:\n"
 "Schub:\n"
 "Geschwindigkeit:\n"
-"Drehgeschwindigkeit:\n"
+"Drehung:\n"
 "Zeitdilatation:\n"
 "\n"
-"Absorption\n"
+"Absorption:\n"
 "Schild:\n"
 "Panzerung:\n"
 "Energie:\n"
@@ -37295,7 +37295,7 @@ msgstr "CPU frei"
 
 #: src/equipment.c:575
 msgid "Mass Limit Left"
-msgstr "Verbleibendes Massenlimit"
+msgstr "Verbl. Massenlimit"
 
 #: src/equipment.c:592
 #, c-format
@@ -37363,7 +37363,7 @@ msgstr "Alle"
 
 #: src/equipment.c:1422 src/land_outfits.c:287
 msgid "\aRCore"
-msgstr "\aRKern"
+msgstr "\aRHaupt"
 
 #: src/equipment.c:1563
 #, c-format
@@ -38156,7 +38156,7 @@ msgstr ""
 "Sprungdauer:\n"
 "Schub:\n"
 "Geschwindigkeit:\n"
-"Drehgeschwindigkeit:\n"
+"Drehung:\n"
 "Zeitdilatation:\n"
 "\n"
 "Absorption:\n"
@@ -38675,7 +38675,7 @@ msgstr "Scrollt im Protokoll runter."
 
 #: src/input.c:112
 msgid "Hail Target"
-msgstr "Ziel grüßen"
+msgstr "Ziel anfunken"
 
 #: src/input.c:112
 msgid "Attempts to initialize communication with the targeted ship."
@@ -38683,11 +38683,11 @@ msgstr "Versucht, Kommunikation mit dem Zielschiff einzuleiten."
 
 #: src/input.c:113
 msgid "Autohail"
-msgstr "Autogruß"
+msgstr "Autofunk"
 
 #: src/input.c:113
 msgid "Automatically initialize communication with a ship that is hailing you."
-msgstr "Automatisch Kommunikation mit einem Schiff, dass dich grüßt, einleiten."
+msgstr "Automatisch Kommunikation mit einem Schiff, dass dich anfunkt, einleiten."
 
 #. Misc.
 #: src/input.c:115
@@ -39121,7 +39121,7 @@ msgstr "Kaufen"
 
 #: src/land_outfits.c:172
 msgid "Find Outfits"
-msgstr "Ausstattungen finden"
+msgstr "Ausst. finden"
 
 #: src/land_outfits.c:189 src/map_find.c:668
 msgid ""
@@ -39273,7 +39273,7 @@ msgstr "Du kannst etwas, das dir nicht gehört, nicht verkaufen!"
 
 #: src/land_shipyard.c:94
 msgid "Trade-In"
-msgstr "Inzahlungnahme"
+msgstr "Eintauschen"
 
 #: src/land_shipyard.c:100
 msgid "Find Ships"
@@ -39314,7 +39314,7 @@ msgstr ""
 "Masse:\n"
 "Schub:\n"
 "Geschwindigkeit:\n"
-"Drehgeschwindigkeit:\n"
+"Drehung:\n"
 "Zeitdilatation:\n"
 "\n"
 "Absorption:\n"
@@ -39323,7 +39323,7 @@ msgstr ""
 "Energie:\n"
 "Frachtraum:\n"
 "Treibstoff:\n"
-"Treibstoffverbrauch:\n"
+"Treibstoffbed.:\n"
 "Preis:\n"
 "Geld:\n"
 "Lizenz:\n"
@@ -39469,7 +39469,7 @@ msgid ""
 "Your %s is worth %s credits, more than the new ship. For your ship, you will get the new %s and %s credits. "
 "Are you sure you want to trade your ship in?"
 msgstr ""
-"Dein %s ist %s wert, mehr als das neue Schiff. Für dein Schiff wirst du das neue %s und %s Credis erhalten. "
+"Dein %s ist %s wert, mehr als das neue Schiff. Für dein Schiff wirst du das neue Schiff „%s“ und %s Credis erhalten. "
 "Bist du dir sicher, dass du dein Schiff in Zahlung geben willst?"
 
 #. confirm
@@ -39499,8 +39499,8 @@ msgstr ""
 "Marktpreis:\n"
 "Freier Platz:\n"
 "Geld:\n"
-"⌀-Preis hier:\n"
-"⌀-Preis alle:"
+"Mittl. Preis hier:\n"
+"Mittl. Preis alle:"
 
 #: src/land_trade.c:144
 #, c-format
@@ -39867,7 +39867,7 @@ msgid ""
 "%d star system\n"
 msgstr ""
 "System: %s\n"
-"%d Sternensystem\n"
+"%d-Sternensystem\n"
 
 #: src/map_system.c:398
 msgid "Nebula: Volatile, "
@@ -39929,8 +39929,8 @@ msgid ""
 "Faction: %s\n"
 "Standing: %s\n"
 msgstr ""
-"Fraktion %s\n"
-"Ruf: %s\n"
+"Fraktion: %s\n"
+"Ansehen: %s\n"
 
 #: src/map_system.c:474
 msgid "Presence: N/A\n"
@@ -39956,7 +39956,7 @@ msgstr ""
 
 #: src/map_system.c:508
 msgid "No space port here\n"
-msgstr "Hier kein Weltraumhafen\n"
+msgstr "Hier ist kein Weltraumhafen\n"
 
 #: src/map_system.c:510
 msgid "You can land here\n"
@@ -41237,7 +41237,7 @@ msgstr "Planet „%s“ nicht im System „%s“ gefunden"
 #: src/nlua_pilot.c:4053
 #, c-format
 msgid "\a%c%s\a0 is hailing you."
-msgstr "\a%c%s\a0 grüßt dich."
+msgstr "\a%c%s\a0 funkt dich an."
 
 #: src/nlua_planet.c:170
 msgid "Planet is invalid"
@@ -41678,7 +41678,7 @@ msgstr "Kompilierungs-Flags"
 
 #: src/options.c:338
 msgid "Stop Speedup At:"
-msgstr "Beschleunigung stoppen bei:"
+msgstr "Zeitkompr. stoppen bei:"
 
 #: src/options.c:350
 msgid "Settings"
@@ -41843,7 +41843,7 @@ msgstr "EFX (Mehr CPU)"
 
 #: src/options.c:919
 msgid "Volume Levels"
-msgstr "Lautstärkepegel"
+msgstr "Lautstärke"
 
 #: src/options.c:1135
 #, c-format
@@ -41973,7 +41973,7 @@ msgstr "Ausstattung „%s“ nicht im Stack gefunden."
 
 #: src/outfit.c:268
 msgid "Small"
-msgstr "Kleine"
+msgstr "Klein"
 
 #: src/outfit.c:270
 msgid "Medium"
@@ -41981,7 +41981,7 @@ msgstr "Mittel"
 
 #: src/outfit.c:272
 msgid "Large"
-msgstr "Große"
+msgstr "Groß"
 
 #: src/outfit.c:330
 #, c-format
@@ -42353,7 +42353,7 @@ msgid ""
 "%.0f%% Penetration\n"
 "%.2f DPS [%.0f Damage]\n"
 msgstr ""
-"Hält %d %s:\n"
+"Hält %d × %s:\n"
 "%.0f%% Penetration\n"
 "%.2f SPS [%.0f Schaden]\n"
 
@@ -42494,7 +42494,7 @@ msgstr "Unzureichende Geschwindigkeit"
 
 #: src/pilot_outfit.c:525
 msgid "Insufficient Turn"
-msgstr "Unzureichende Drehgeschwindigkeit"
+msgstr "Unzureichende Drehung"
 
 #: src/pilot_outfit.c:529
 msgid "Insufficient Armour"
@@ -42557,7 +42557,7 @@ msgstr "!! Unzureichende Geschwindigkeit\n"
 
 #: src/pilot_outfit.c:580
 msgid "!! Insufficient Turn\n"
-msgstr "!! Unzureichende Drehgeschwindigkeit\n"
+msgstr "!! Unzureichende Drehung\n"
 
 #. Health.
 #: src/pilot_outfit.c:583
@@ -42931,7 +42931,7 @@ msgstr "Versuchte, das Hyperraumziel des Spielers zur ungültigen ID „%d“ zu
 #: src/player.c:1724
 #, c-format
 msgid "\arReceiving hail! Press %s to respond."
-msgstr "\arGruß wird empfangen! Drücke %s zum Antworten."
+msgstr "\arFunknachricht wird empfangen! Drücke %s zum Antworten."
 
 #: src/player.c:1779
 msgid "\arAborting hyperspace sequence."
@@ -42983,11 +42983,11 @@ msgstr "\ar%s ist außerhalb des Kommunikationsradius, Kontakt nicht möglich."
 
 #: src/player.c:2179 src/player.c:2202
 msgid "\arNo target selected to hail."
-msgstr "\arKein aktives Ziel zum Grüßen."
+msgstr "\arKein aktives Ziel zum Anfunken."
 
 #: src/player.c:2230
 msgid "\arYou haven't been hailed by any pilots."
-msgstr "\arDu wurdest von keinem Piloten gegrüßt."
+msgstr "\arDu wurdest von keinem Piloten angefunkt."
 
 #: src/player.c:2251
 msgid "\apMouse flying enabled."
@@ -43420,7 +43420,7 @@ msgstr "Geschwindigkeit"
 
 #: src/shipstats.c:84
 msgid "Turn"
-msgstr "Drehgeschwindigkeit"
+msgstr "Drehung"
 
 #: src/shipstats.c:85
 msgid "Thrust"
@@ -43980,7 +43980,7 @@ msgstr "\apSystem %s bei %s betreten."
 #: src/space.c:1476
 #, c-format
 msgid "\arWARNING - Volatile nebula detected in %s! Taking damage!"
-msgstr "\arACHTUNG – Flüchtigen Nebel erfasst in %s! Schaden erhalten!"
+msgstr "\arACHTUNG – Volatilen Nebel erfasst in %s! Schaden erhalten!"
 
 #: src/space.c:1717
 #, c-format
@@ -55143,7 +55143,7 @@ msgstr "Raelid II"
 #. (itstool) path: dat/ships/raelid_outpost.xml/ship@name
 #: dat/assets/raelid_outpost.xml:2 dat/ships/raelid_outpost.xml:2
 msgid "Raelid Outpost"
-msgstr "Raelid Outpost"
+msgstr "Raelid-Außenposten"
 
 #. (itstool) path: general/description
 #: dat/assets/raelid_outpost.xml:28
@@ -55183,7 +55183,7 @@ msgstr "Rage"
 #. (itstool) path: dat/ships/raglan_outpost.xml/ship@name
 #: dat/assets/raglan_outpost.xml:2 dat/ships/raglan_outpost.xml:2
 msgid "Raglan Outpost"
-msgstr "Raglan Outpost"
+msgstr "Raglan-Außenposten"
 
 #. (itstool) path: general/description
 #: dat/assets/raglan_outpost.xml:27
@@ -61111,7 +61111,7 @@ msgstr "Touristen"
 #. (itstool) path: commodity/name
 #: dat/commodity.xml:283
 msgid "Unmarked Boxes"
-msgstr "Unmarkierte Kisten"
+msgstr "Nicht markierte Kisten"
 
 #. (itstool) path: commodity/name
 #: dat/commodity.xml:289
@@ -63899,7 +63899,7 @@ msgid ""
 "This fighter bay allows your ship to carry a pair of Empire Lancelot class fighters. It comes with all the "
 "devices required for the maintenance and flight of the fighters."
 msgstr ""
-"Diese Jägerbucht ermöglicht es deinem Schiff, ein Paar Jäger der Imperium-Lancelot-Klasse zu transportieren. "
+"Diese Kämpferbucht ermöglicht es deinem Schiff, ein Paar Kämpfer der Imperium-Lancelot-Klasse zu transportieren. "
 "Sie wird mit allen Geräten geliefert, die für die Wartung und den Flug der Jäger erforderlich sind."
 
 #. (itstool) path: dat/outfits/launchers/energy_torpedo_mk1.xml/outfit@name
@@ -64030,7 +64030,7 @@ msgid ""
 "This fighter bay allows your ship to carry a pair of Lancelot class fighters. It comes with all the devices "
 "required for the maintenance and flight of the fighters."
 msgstr ""
-"Diese Jägerbucht ermöglicht es deinem Schiff, ein Paar Jäger der Lancelot-Klasse zu transportieren. Sie wird "
+"Diese Kämpferbucht ermöglicht es deinem Schiff, ein Paar Kämpfer der Lancelot-Klasse zu transportieren. Sie wird "
 "mit allen Geräten geliefert, die für die Wartung und den Flug der Jäger erforderlich sind."
 
 #. (itstool) path: dat/outfits/launchers/teracom_banshee_launcher.xml/outfit@name
@@ -64679,7 +64679,7 @@ msgstr "Ausstattung, die mit der „Slim“-GUI assoziiert ist."
 #. (itstool) path: dat/outfits/misc/heavy_combat_vessel_license.xml/outfit@name
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:2
 msgid "Heavy Combat Vessel License"
-msgstr "Schwerkampfschifflizenz"
+msgstr "Schwerkampfschiffslizenz"
 
 #. (itstool) path: general/description
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:9
@@ -64699,7 +64699,7 @@ msgstr "Diese Lizenz berechtigt dich zum Kauf und Einsatz schwerer Waffen wie de
 #. (itstool) path: dat/outfits/misc/large_civilian_vessel_license.xml/outfit@name
 #: dat/outfits/misc/large_civilian_vessel_license.xml:2
 msgid "Large Civilian Vessel License"
-msgstr "Großzivilischifflizenz"
+msgstr "Großzivilschiffslizenz"
 
 #. (itstool) path: general/description
 #: dat/outfits/misc/large_civilian_vessel_license.xml:7
@@ -64709,7 +64709,7 @@ msgstr "Diese Lizenz berechtigt dich zum Kauf von Schiffen der Frachterklasse."
 #. (itstool) path: dat/outfits/misc/light_combat_vessel_license.xml/outfit@name
 #: dat/outfits/misc/light_combat_vessel_license.xml:2
 msgid "Light Combat Vessel License"
-msgstr "Leichtkampfschifflizenz"
+msgstr "Leichtkampfschiffslizenz"
 
 #. (itstool) path: general/description
 #: dat/outfits/misc/light_combat_vessel_license.xml:7
@@ -64719,7 +64719,7 @@ msgstr "Diese Lizenz berechtigt dich zum Kauf von Schiffen der Kämpfer- und Bom
 #. (itstool) path: dat/outfits/misc/medium_combat_vessel_license.xml/outfit@name
 #: dat/outfits/misc/medium_combat_vessel_license.xml:2
 msgid "Medium Combat Vessel License"
-msgstr "Mittelkampfschifflizenz"
+msgstr "Mittelkampfschiffslizenz"
 
 #. (itstool) path: general/description
 #: dat/outfits/misc/medium_combat_vessel_license.xml:8
@@ -66814,7 +66814,7 @@ msgid ""
 "reputable pilots, it's suspected that they sell to anyone willing to pay, as it seems there are countless "
 "Hyenas among the pirate ranks."
 msgstr ""
-"Die Hyena, dem Hauptprodukt von Aerosys, ist schnell zu einem Favoriten der Piraten weit und breit geworden. "
+"Die Hyena, das Hauptprodukt von Aerosys, ist schnell zu einem Favoriten der Piraten weit und breit geworden. "
 "Sie ist nicht gerade ein Kampfflugzeug und hat auch keine allzu großen Schlagkräfte, aber in Gruppen können "
 "sie fast mit jedem Schiff fertig werden, und es ist so einfach zu steuern, dass die Reaktionszeit erheblich "
 "verbessert wird. Obgleich Aerosys behauptet, dass ihre Schiffe nur an seriöse Piloten verkauft werden, wird "
@@ -69594,15 +69594,6 @@ msgstr "El Ego de Deiz"
 #~ msgid "Event '%s' Lua script not found."
 #~ msgstr "Ereignis-Lua-Skript „%s“ nicht gefunden."
 
-#~ msgid "W"
-#~ msgstr "W"
-
-#~ msgid "U"
-#~ msgstr "U"
-
-#~ msgid "S"
-#~ msgstr "G"
-
 #~ msgid "Del"
 #~ msgstr "Entf"
 
@@ -69761,7 +69752,7 @@ msgstr "El Ego de Deiz"
 #~ msgstr "Unzureichende Geschwindigkeit\n"
 
 #~ msgid "Insufficient Turn\n"
-#~ msgstr "Unzureichende Drehgeschwindigkeit\n"
+#~ msgstr "Unzureichende Drehung\n"
 
 #~ msgid "Insufficient Armour\n"
 #~ msgstr "Unzureichende Panzerung\n"
