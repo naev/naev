@@ -14,7 +14,7 @@
 env_t env;
 
 
-void env_detect( int argc, const char **argv )
+void env_detect( int argc, char **argv )
 {
    (void) argc;
    static short once = 0;
