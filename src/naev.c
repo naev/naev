@@ -29,6 +29,7 @@
 #if HAS_POSIX
 #include <time.h>
 #include <unistd.h>
+#include <libgen.h> /* dirname() */
 #endif /* HAS_POSIX */
 
 #if defined(HAVE_FENV_H) && defined(DEBUGGING) && defined(_GNU_SOURCE)
@@ -193,6 +194,9 @@ int main( int argc, char** argv )
    }
 #endif /* HAS_WIN32 */
 
+   /* Save the binary path. */
+   binary_path = strdup( env.argv0 );
+
 #if defined ENABLE_NLS && ENABLE_NLS
    /* Set up locales. */
    /* When using locales with difference in '.' and ',' for splitting numbers it
@@ -201,14 +205,15 @@ int main( int argc, char** argv )
    setlocale( LC_ALL, "" );
    setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
    /* We haven't loaded the ndata yet, so just try a path quickly. */
-   nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, naev_binary() );
+#if HAVE_DECL_DIRNAME
+   nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, dirname(naev_binary()) );
+#else /* HAVE_DECL_DIRNAME */
+   nsnprintf( langbuf, sizeof(langbuf), "./"GETTEXT_PATH );
+#endif /* HAVE_DECL_DIRNAME */
    bindtextdomain( PACKAGE_NAME, langbuf );
    //bindtextdomain("naev", "po/");
    textdomain( PACKAGE_NAME );
 #endif /* defined ENABLE_NLS && ENABLE_NLS */
-
-   /* Save the binary path. */
-   binary_path = strdup( env.argv0 );
 
    /* Print the version */
    LOG( " %s v%s (%s)", APPNAME, naev_version(0), HOST );
