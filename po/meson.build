@@ -1,10 +1,22 @@
 useNLS = get_option('nls')
-if useNLS.disabled() == false
-    i18n = import('i18n')
-    gettext = find_program('gettext', required: useNLS)
 
-    add_project_arguments('-DGETTEXT_PACKAGE="' + meson.project_name() + '"', language:'c')
-    config_data.set10('ENABLE_NLS', true)
+hasNGetText = false
+if useNLS.disabled() == false
+    # Naev Deps
+    if cc.has_function('ngettext')
+        hasNGetText = true
+    else
+        libintl = cc.find_library('intl', required: useNLS)
+        hasNGetText = libintl.found()
+        naev_deps += libintl
+    endif
+
+    if hasNGetText
+        add_project_arguments('-DGETTEXT_PACKAGE="' + meson.project_name() + '"', language:'c')
+    endif
+
+    # Building translations
+    i18n = import('i18n')
 
     potfiles = custom_target(
         'potfiles',
@@ -32,4 +44,6 @@ if useNLS.disabled() == false
             ]
     )
 endif
-summary('Translations', gettext.found(), section: 'Features', bool_yn: true)
+
+config_data.set10('ENABLE_NLS', hasNGetText)
+summary('Translations', hasNGetText, section: 'Features', bool_yn: true)

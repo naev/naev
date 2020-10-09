@@ -11,8 +11,11 @@ project('naev', 'c',
 issue_address = 'https://github.com/naev/naev/issues'
 copyright_holder = 'Naev Dev Team'
 
+# Tools
+cc = meson.get_compiler('c')
 subdir('utils')
 
+# Version Generation
 version_result = run_command(gen_version, meson.project_version())
 if version_result.returncode() != 0
    error(version_result.stderr())
@@ -22,8 +25,11 @@ else
    summary('tag', version)
 endif
 
+# Initializeation
 config_data = configuration_data()
+naev_deps = []
 
+# Subdirs
 subdir('src')
 subdir('docs')
 subdir('po')
@@ -53,8 +59,6 @@ if buildExec.disabled() == false
    summary('Enabled' , debug   , section: 'Debug', bool_yn: true)
    summary('Paranoid', paranoid, section: 'Debug', bool_yn: true)
 
-   cc = meson.get_compiler('c')
-
    ### Hard deps (required: true)
 
    if 'SuiteSparse' not in get_option('force_fallback_for')
@@ -76,14 +80,14 @@ if buildExec.disabled() == false
 
    libdl = cc.find_library('dl', required : host_machine.system() not in ['windows', 'cygwin'])
 
-   system_deps = [
+   naev_deps += [
       cc.find_library('m', required : true),
       libdl,
       csparse
    ]
 
    sdl = dependency('sdl2', required: true)
-   deps = [
+   naev_deps += [
       dependency('freetype2', required: true),
       sdl,
       declare_dependency(
@@ -105,7 +109,7 @@ if buildExec.disabled() == false
       lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
    endif
 
-   deps += lua
+   naev_deps += lua
 
    ### Soft deps (required: false
 
@@ -117,31 +121,34 @@ if buildExec.disabled() == false
    endif
    summary('BFD', bfd.found(), section: 'Debug', bool_yn: true)
 
-   system_deps += bfd
+   naev_deps += bfd
    config_data.set10('HAS_BFD', bfd.found())
 
    # OpenAL
+   hasOpenAL = false
    useOpenAL = get_option('openal')
-   openal = dependency('openal', required: useOpenAL)
-   vorbis = dependency('vorbis', required: useOpenAL)
-   vorbisfile = dependency('vorbisfile', required: useOpenAL)
-   hasOpenAL = openal.found() and vorbis.found() and vorbisfile.found()
-   config_data.set10('USE_OPENAL', hasOpenAL)
+   openal    = dependency('openal', required: useOpenAL)
    if openal.found()
+      vorbis = dependency('vorbis', required: useOpenAL)
       if not vorbis.found()
          message('Found OpenAL, but not using it because libvorbis is missing.')
-      elif not vorbisfile.found()
-         message('Found OpenAL, but not using it because libvorbisfile is missing.')
       else
-         deps += [openal, vorbis, vorbisfile]
+         vorbisfile = dependency('vorbisfile', required: useOpenAL)
+         if not vorbisfile.found()
+            message('Found OpenAL, but not using it because libvorbisfile is missing.')
+         else
+            hasOpenAL  = true
+            naev_deps += [openal, vorbis, vorbisfile]
+         endif
       endif
    endif
+   config_data.set10('USE_OPENAL', hasOpenAL)
    summary('OpenAL', hasOpenAL, section: 'Features', bool_yn: true)
 
    # SDL Mixer
    useSDLMixer = get_option('sdl_mixer')
    sdl_mixer = dependency('SDL2_mixer', required: useSDLMixer)
-   deps += sdl_mixer
+   naev_deps += sdl_mixer
    config_data.set10('USE_SDLMIX', sdl_mixer.found())
    summary('SDL Mixer', sdl_mixer.found(), section: 'Features', bool_yn: true)
 
@@ -204,7 +211,7 @@ if buildExec.disabled() == false
    if host_machine.system() == 'darwin'
       add_languages('objc')
       naev_source += mac_source
-      deps += dependency('Foundation', required: true )
+      naev_deps += dependency('Foundation', required: true )
    endif
 
    shaders_c_gen = executable(
@@ -226,7 +233,7 @@ if buildExec.disabled() == false
       'naev',
       naev_source,
       include_directories: include_dirs,
-      dependencies: [system_deps, deps],
+      dependencies: naev_deps,
       export_dynamic: bfd.found(),
       install: true)
 
