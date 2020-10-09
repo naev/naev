@@ -3,7 +3,6 @@ on: [push, pull_request]
 name: CI
 
 env:
-  CC: clang
   DESTDIR: "${{ github.workspace }}/dist/"
 
 jobs:
@@ -36,177 +35,82 @@ jobs:
         path: ${{ github.workspace }}/build/meson-dist/*
         if-no-files-found: error
 
-  "Linux-x86_64":
+  "Compile_Naev":
     needs: "Package_Source"
-    runs-on: ubuntu-20.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            shell: bash
+            config: linux.ini
+          - os: windows-latest
+            shell: msys2 {0}
+            config: windows.ini
+          - os: macos-latest
+            shell: bash
+            config: macos.ini
+
+    defaults:
+      run:
+        shell: ${{ matrix.shell }}
+
+    runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Update APT Build Dependencies
+    - name: Install APT Packages
+      if: ${{ runner.os == 'Linux'}}
       run: |
         sudo apt-get update
         sudo apt-get install \
+          autopoint \
+          binutils-dev \
           build-essential \
-          libsdl2-dev \
-          libsdl2-mixer-dev \
-          libsdl2-image-dev \
-          libgl1-mesa-dev \
-          libgl1-mesa-dri \
-          xvfb \
-          libxml2-dev \
+          gettext \
+          intltool \
           libfontconfig1-dev \
           libfreetype6-dev \
-          libpng-dev \
-          libopenal-dev \
-          libvorbis-dev \
-          binutils-dev \
+          libgl1-mesa-dev \
+          libgl1-mesa-dri \
           libiberty-dev \
           libluajit-5.1-dev \
-          gettext \
-          autopoint \
-          intltool
+          libopenal-dev \
+          libpng-dev \
+          libsdl2-dev \
+          libsdl2-image-dev \
+          libsdl2-mixer-dev \
+          libvorbis-dev \
+          libxml2-dev \
+          xvfb
 
-    - name: Setup Python
-      uses: actions/setup-python@v2
-
-    - name: Install Meson
-      run: |
-        pip install meson ninja
-
-    - name: Get Source
-      uses: actions/download-artifact@v2
-      with:
-        name: naev-${{ github.sha }}
-
-    - name: Extract Source
-      run: |
-        mkdir source
-        tar -xf naev-*.tar.xz -C source --strip 1
-
-    - name: Meson Setup
-      run: |
-        meson setup build source \
-            --buildtype release \
-            -Dconfigure_doc=false
-
-    - name: Meson Compile
-      run: meson compile -C build
-
-    - name: Meson Test
-      id: tests
-      run: xvfb-run -a meson test -C build --print-errorlogs
-
-    - name: Upload test log
-      uses: actions/upload-artifact@v2
-      if: ${{ success() || steps.tests.outcome == 'failure' }}
-      with:
-        name: naev-lin64-${{ github.sha }}-testlog
-        path: ${{ github.workspace }}/build/meson-logs/testlog.txt
-        if-no-files-found: ignore
-
-    - name: Package
-      run: meson install -C build
-      if: ${{ success() || steps.tests.outcome == 'failure' }}
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      if: ${{ success() || steps.tests.outcome == 'failure' }}
-      with:
-        name: naev-lin64-${{ github.sha }}
-        path: ${{ env.DESTDIR }}/*
-        if-no-files-found: error
-
-  "Windows-MinGW64":
-    needs: "Package_Source"
-    runs-on: windows-latest
-    defaults:
-      run:
-        shell: msys2 {0}
-
-    steps:
-    - name: Setup MINGW64 Environment
+    - name: Install MinGW Packages
+      if: ${{ runner.os == 'Windows'}}
       uses: msys2/setup-msys2@v2
       with:
         msystem: MINGW64
         update: true
-        install: mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-clang mingw-w64-x86_64-pkg-config mingw-w64-x86_64-freetype mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-libxml2 mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-fontconfig mingw-w64-x86_64-mesa git tar
+        install: git tar mingw-w64-x86_64-clang mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer
 
-    - name: Get Source
-      uses: actions/download-artifact@v2
-      with:
-        name: naev-${{ github.sha }}
-
-    - name: Extract Source
-      run: |
-        mkdir source
-        /usr/bin/tar -xf naev-*.tar.xz -C source --strip 1
-
-    - name: Meson Setup
-      run: |
-        meson setup build source \
-            --buildtype release \
-            -Dconfigure_doc=false
-
-    - name: Meson Compile
-      run: meson compile -C build
-
-    - name: Meson Test
-      id: tests
-      run: meson test -C build --print-errorlogs
-
-    - name: Upload test log
-      uses: actions/upload-artifact@v2
-      if: ${{ success() || steps.tests.outcome == 'failure' }}
-      with:
-        name: naev-win64-${{ github.sha }}-testlog
-        path: ${{ github.workspace }}/build/meson-logs/testlog.txt
-        if-no-files-found: ignore
-
-    - name: Package
-      if: ${{ success() || steps.tests.outcome == 'failure' }}
-      run: meson install -C build
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      if: ${{ success() || steps.tests.outcome == 'failure' }}
-      with:
-        name: naev-win64-${{ github.sha }}
-        path: ${{ env.DESTDIR }}/*
-        if-no-files-found: error
-
-  "macOS":
-    needs: "Package_Source"
-    runs-on: macos-latest
-
-    steps:
-    - name: Update Homebrew Cache
+    - name: Install Homebrew Packages
+      if: ${{ runner.os == 'macOS'}}
       run: |
         brew update
-
-    - name: Install Additional Build Dependencies
-      run: |
         brew install \
-          pkg-config \
           fontconfig \
-          luajit \
           intltool \
+          luajit \
+          openal-soft \
+          pkg-config \
           sdl2 \
-          sdl2_mixer \
           sdl2_image \
-          openal-soft
-
-    - name: Remove Homebrew Perl
-      run: |
-        brew uninstall --ignore-dependencies perl
-
-    - name: PKGCONFIG
-      run: |
-        # PKGCONFIG configuration for OpenAL
-        export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/opt/openal-soft/lib/pkgconfig"
+          sdl2_mixer
 
     - name: Setup Python
       uses: actions/setup-python@v2
 
     - name: Install Meson
+      if: ${{ runner.os != 'Windows'}}
       run: |
         pip install meson ninja
 
@@ -221,24 +125,42 @@ jobs:
         tar -xf naev-*.tar.xz -C source --strip 1
 
     - name: Meson Setup
+      id: setup
       run: |
         meson setup build source \
+            --native-file '${{ github.workspace }}/source/utils/build/${{ matrix.config }}' \
             --buildtype release \
-            --bindir=Contents/MacOS \
-            --datadir=Contents/Resources \
             -Dconfigure_doc=false
 
+    - name: Upload Setup Log
+      uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.setup.outcome == 'failure' }}
+      with:
+        name: ${{ runner.os }}-${{ github.sha }}-setup-log
+        path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+        if-no-files-found: ignore
+
     - name: Meson Compile
+      id: compile
       run: meson compile -C build
 
+    - name: Upload Compile Log
+      uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.compile.outcome == 'failure' }}
+      with:
+        name: ${{ runner.os }}-${{ github.sha }}-compile-log
+        path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+        if-no-files-found: ignore
+
     - name: Meson Test
-      run: meson test -C build --print-errorlogs
+      id: tests
+      run: ${{ matrix.test-env }} meson test -C build --print-errorlogs
 
     - name: Upload test log
       uses: actions/upload-artifact@v2
       if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
-        name: naev-macos-${{ github.sha }}-testlog
+        name: ${{ runner.os }}-${{ github.sha }}-test-log
         path: ${{ github.workspace }}/build/meson-logs/testlog.txt
         if-no-files-found: ignore
 
@@ -250,7 +172,7 @@ jobs:
       uses: actions/upload-artifact@v2
       if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
-        name: naev-macos-${{ github.sha }}
+        name: naev-${{ runner.os }}-${{ github.sha }}
         path: ${{ env.DESTDIR }}/*
         if-no-files-found: error
 
