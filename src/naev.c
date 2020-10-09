@@ -29,7 +29,6 @@
 #if HAS_POSIX
 #include <time.h>
 #include <unistd.h>
-#include <libgen.h> /* dirname() */
 #endif /* HAS_POSIX */
 
 #if defined(HAVE_FENV_H) && defined(DEBUGGING) && defined(_GNU_SOURCE)
@@ -205,11 +204,7 @@ int main( int argc, char** argv )
    setlocale( LC_ALL, "" );
    setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
    /* We haven't loaded the ndata yet, so just try a path quickly. */
-#if HAVE_DIRNAME
-   nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, dirname(naev_binary()) );
-#else /* HAVE_DIRNAME */
-   nsnprintf( langbuf, sizeof(langbuf), "./"GETTEXT_PATH );
-#endif /* HAVE_DIRNAME */
+   nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, nfile_dirname(naev_binary()) );
    bindtextdomain( PACKAGE_NAME, langbuf );
    //bindtextdomain("naev", "po/");
    textdomain( PACKAGE_NAME );

@@ -505,7 +505,6 @@ AC_TYPE_UINT8_T
 # Checks for functions
 #
 AC_CHECK_FUNCS([setlocale])
-AC_CHECK_FUNCS([dirname])
 
 VAR_SAVE([LIBS], ["-lm"])
 AC_CHECK_FUNCS([feenableexcept])
