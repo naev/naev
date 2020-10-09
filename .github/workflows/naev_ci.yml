@@ -22,7 +22,6 @@ jobs:
           libsdl2-image-dev \
           libgl1-mesa-dev \
           libxml2-dev \
-          libfontconfig1-dev \
           libfreetype6-dev \
           libpng-dev \
           libopenal-dev \
@@ -64,7 +63,7 @@ jobs:
       with:
         msystem: MINGW64
         update: true
-        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool
+        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool
 
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
@@ -97,7 +96,6 @@ jobs:
           automake \
           autoconf-archive \
           pkg-config \
-          fontconfig \
           luajit \
           intltool \
           sdl2 \
@@ -160,7 +158,6 @@ jobs:
           libsdl2-image-dev \
           libgl1-mesa-dev \
           libxml2-dev \
-          libfontconfig1-dev \
           libfreetype6-dev \
           libpng-dev \
           libopenal-dev \

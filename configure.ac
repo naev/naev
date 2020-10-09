@@ -208,21 +208,6 @@ AC_ARG_WITH([sdlmixer],
   ])
 AC_MSG_RESULT([$with_sdlmixer])
 
-# --with-fontconfig
-AC_MSG_CHECKING([whether to use fontconfig])
-AC_ARG_WITH([fontconfig],
-  AC_HELP_STRING([--with-fontconfig],
-     [use fontconfig for ndata (default: yes)]), [
-    AS_IF([test "x$withval" = "xyes"], [
-      with_fontconfig=yes
-    ], [
-      with_fontconfig=no
-    ])
-  ], [
-    with_fontconfig=yes
-  ])
-AC_MSG_RESULT([$with_fontconfig])
-
 # --enable-lua
 AC_MSG_CHECKING([which lua to use])
 AC_ARG_ENABLE([lua],
@@ -263,11 +248,6 @@ PKG_CHECK_MODULES([XML], [libxml-2.0])
 
 # FreeType
 PKG_CHECK_MODULES([FREETYPE], [freetype2])
-
-# FontConfig
-AS_IF([test "x$with_fontconfig" = "xyes"], [
-  PKG_CHECK_MODULES([FONTCONFIG], [fontconfig])
-])
 
 # vorbis
 PKG_CHECK_MODULES([VORBIS], [vorbis])
@@ -424,11 +404,11 @@ AS_IF([test "x$enable_debug" = "xparanoid"], [
 ])
 
 NAEV_CFLAGS="$NAEV_CFLAGS $CSPARSE_CFLAGS $SDL_CFLAGS $XML_CFLAGS \
-    $FREETYPE_CFLAGS $FONTCONFIG_CFLAGS $LUA_CFLAGS $VORBIS_CFLAGS $VORBISFILE_CFLAGS \
+    $FREETYPE_CFLAGS $LUA_CFLAGS $VORBIS_CFLAGS $VORBISFILE_CFLAGS \
     $PNG_CFLAGS $OPENGL_CFLAGS"
 
 NAEV_LIBS="$NAEV_LIBS $CSPARSE_LIBS $SDL_LIBS $XML_LIBS \
-    $FREETYPE_LIBS $FONTCONFIG_LIBS $LUA_LIBS $VORBIS_LIBS $VORBISFILE_LIBS \
+    $FREETYPE_LIBS $LUA_LIBS $VORBIS_LIBS $VORBISFILE_LIBS \
     $PNG_LIBS $OPENGL_LIBS"
 
 AS_IF([test "x$have_openal" = "xyes"], [
@@ -564,11 +544,6 @@ AS_IF([test "x$have_sdlmixer" = "xyes"], [
   AC_DEFINE([USE_SDLMIX], 1, [Define to 1 if using SDL_mixer])
 ])
 
-# USE_FONTCONFIG
-AS_IF([test "x$with_fontconfig" = "xyes"], [
-  AC_DEFINE([USE_FONTCONFIG], 1, [Define to 1 if using fontconfig])
-])
-
 # Operating system
 case "$host" in
   *-linux*)
@@ -652,7 +627,6 @@ AC_MSG_NOTICE([  SDL_mixer:  $have_sdlmixer])
 echo
 AC_MSG_NOTICE([lib:])
 AC_MSG_NOTICE([  csparse:    $used_csparse])
-AC_MSG_NOTICE([  fontconfig: $with_fontconfig])
 AC_MSG_NOTICE([  lua:        $used_lua])
 echo
 AC_MSG_NOTICE([utils:        $have_utils])
