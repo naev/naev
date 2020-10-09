@@ -128,7 +128,7 @@ jobs:
       id: setup
       run: |
         meson setup build source \
-            --native-file '${{ github.workspace }}/source/utils/build/${{ matrix.config }}' \
+            --native-file 'source/utils/build/${{ matrix.config }}' \
             --buildtype release \
             -Dconfigure_doc=false
 
