@@ -272,8 +272,12 @@ const char* nfile_cachePath (void)
 static char dirname_buf[PATH_MAX];
 /**
  * @brief Portable version of dirname.
+ *
+ * Unlike most implementations of dirname, this does not modify path, instead
+ * it returns a modified buffer. The contents of the returned pointer can change
+ * in subsequent calls.
  */
-char *_nfile_dirname( char *path )
+char *_nfile_dirname( const char *path )
 {
 #if HAS_POSIX
    strncpy( dirname_buf, path, sizeof(dirname_buf) );
