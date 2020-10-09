@@ -22,6 +22,8 @@ else
    summary('tag', version)
 endif
 
+config_data = configuration_data()
+
 subdir('src')
 subdir('docs')
 subdir('po')
@@ -29,23 +31,27 @@ subdir('po')
 ####
 # Naev
 ####
-if get_option('configure_build') == true
+buildExec = get_option('executable')
+if buildExec.disabled() == false
 
    ndata_path = get_option('ndata_path')
    if ndata_path == ''
       ndata_path = get_option('datadir') / 'naev/ndata'
    endif
+   summary('NData Path', ndata_path, section: 'Features')
 
-   debug = get_option('debug')
-   config_data = configuration_data({
-      'HOST'           : '"' + host_machine.system() + '-' + host_machine.cpu_family() + '"',
-      'DEBUG'          : debug ? 1 : false,
-      'DEBUGGING'      : debug ? 1 : false,
-      'DEBUG_PARANOID' : get_option('paranoid') ? 1 : false,
-      'PACKAGE'        : meson.project_name(),
-      'PACKAGE_VERSION': meson.project_version(),
-      'NDATA_DEF'      : '"' + (get_option('prefix') / ndata_path) + '"'
-   })
+   debug    = get_option('debug')
+   paranoid = get_option('paranoid')
+   config_data.set_quoted('PACKAGE', meson.project_name())
+   config_data.set_quoted('PACKAGE_NAME', meson.project_name())
+   config_data.set_quoted('PACKAGE_VERSION', meson.project_version())
+   config_data.set_quoted('NDATA_DEF', get_option('prefix') / ndata_path)
+   config_data.set_quoted('HOST', host_machine.system() + '-' + host_machine.cpu_family())
+   config_data.set('DEBUG', debug ? 1 : false)
+   config_data.set('DEBUGGING', debug ? 1 : false)
+   config_data.set('DEBUG_PARANOID', paranoid ? 1 : false)
+   summary('Enabled' , debug   , section: 'Debug', bool_yn: true)
+   summary('Paranoid', paranoid, section: 'Debug', bool_yn: true)
 
    cc = meson.get_compiler('c')
 
@@ -88,10 +94,12 @@ if get_option('configure_build') == true
    ]
 
    # Lua
+   useLuaJIT = get_option('luajit')
    lua = dependency('', required: false)
-   if get_option('use_luajit')
-      lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: false)
+   if useLuaJIT.disabled() == false
+      lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT)
    endif
+   summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
 
    if not lua.found()
       lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
@@ -107,15 +115,18 @@ if get_option('configure_build') == true
    else
       bfd = dependency('', required: false)
    endif
+   summary('BFD', bfd.found(), section: 'Debug', bool_yn: true)
 
    system_deps += bfd
    config_data.set10('HAS_BFD', bfd.found())
 
    # OpenAL
-   openal = dependency('openal', required: false)
-   vorbis = dependency('vorbis', required: false)
-   vorbisfile = dependency('vorbisfile', required: false)
-   config_data.set10('USE_OPENAL', openal.found() and vorbis.found() and vorbisfile.found())
+   useOpenAL = get_option('openal')
+   openal = dependency('openal', required: useOpenAL)
+   vorbis = dependency('vorbis', required: useOpenAL)
+   vorbisfile = dependency('vorbisfile', required: useOpenAL)
+   hasOpenAL = openal.found() and vorbis.found() and vorbisfile.found()
+   config_data.set10('USE_OPENAL', hasOpenAL)
    if openal.found()
       if not vorbis.found()
          message('Found OpenAL, but not using it because libvorbis is missing.')
@@ -125,16 +136,14 @@ if get_option('configure_build') == true
          deps += [openal, vorbis, vorbisfile]
       endif
    endif
+   summary('OpenAL', hasOpenAL, section: 'Features', bool_yn: true)
 
    # SDL Mixer
-   sdl_mixer = dependency('SDL2_mixer', required: false)
+   useSDLMixer = get_option('sdl_mixer')
+   sdl_mixer = dependency('SDL2_mixer', required: useSDLMixer)
    deps += sdl_mixer
    config_data.set10('USE_SDLMIX', sdl_mixer.found())
-
-   # FontConfig
-   fontconfig = dependency('fontconfig', required: false)
-   deps += fontconfig
-   config_data.set10('USE_FONTCONFIG', fontconfig.found())
+   summary('SDL Mixer', sdl_mixer.found(), section: 'Features', bool_yn: true)
 
    ### Generated sources
 

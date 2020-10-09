@@ -25,7 +25,7 @@ jobs:
 
     - name: Meson Build
       run: |
-        meson setup build source -Dconfigure_build=false -Dconfigure_doc=false
+        meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
         meson dist -C build --no-tests
 
     - name: Upload Artifact
@@ -130,7 +130,9 @@ jobs:
         meson setup build source \
             --native-file 'source/utils/build/${{ matrix.config }}' \
             --buildtype release \
-            -Dconfigure_doc=false
+            -Dauto_features=enabled \
+            -Ddocs_c=disabled \
+            -Ddocs_lua=disabled
 
     - name: Upload Setup Log
       uses: actions/upload-artifact@v2

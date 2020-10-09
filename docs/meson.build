@@ -1,6 +1,7 @@
-if get_option('configure_doc') == true
+genCDoc = get_option('docs_c')
+if genCDoc.disabled() == false
     # C documentation
-    doxygen = find_program('doxygen', required : false)
+    doxygen = find_program('doxygen', required : genCDoc)
     dot     = find_program('dot', required : false)
     if doxygen.found()
         doxy_output = 'c'
@@ -28,9 +29,13 @@ if get_option('configure_doc') == true
             install    : true,
             install_dir: 'doc/naev')
     endif
+endif
+summary('C', is_variable('cdoc'), section: 'Documentation', bool_yn: true)
 
+genLDoc = get_option('docs_lua')
+if genLDoc.disabled() == false
     # Lua documentation
-    ldoc = find_program('ldoc', required: false)
+    ldoc = find_program('ldoc', required: genLDoc)
     if ldoc.found()
         c2luadoc = generator(
             find_program('lua/c2luadoc.sh', required: true),
@@ -38,9 +43,7 @@ if get_option('configure_doc') == true
             output   : '@BASENAME@.luadoc'
         )
 
-        ldoc_source = c2luadoc.process(
-            lua_source
-        )
+        ldoc_source = c2luadoc.process(lua_source)
 
         lconfig = files('lua/config.ld')
 
@@ -58,5 +61,5 @@ if get_option('configure_doc') == true
             install: true,
             install_dir: 'doc/naev')
     endif
-
 endif
+summary('Lua', is_variable('ldoc'), section: 'Documentation', bool_yn: true)
