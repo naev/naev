@@ -73,18 +73,13 @@ if buildExec.disabled() == false
 
    if not is_variable('csparse') or not csparse.found()
       csparse = dependency(
-         '',
+         'SuiteSparse',
          fallback: ['SuiteSparse', 'CSparse_dep'],
          required: true)
    endif
+   naev_deps += csparse
 
-   libdl = cc.find_library('dl', required : host_machine.system() not in ['windows', 'cygwin'])
-
-   naev_deps += [
-      cc.find_library('m', required : true),
-      libdl,
-      csparse
-   ]
+   naev_deps += cc.find_library('m', required : false)
 
    sdl = dependency('sdl2', required: true)
    naev_deps += [
@@ -114,7 +109,7 @@ if buildExec.disabled() == false
    ### Soft deps (required: false
 
    # BFD
-   if libdl.found() and get_option('debug')
+   if get_option('debug')
       bfd = cc.find_library('bfd', required: false)
    else
       bfd = dependency('', required: false)

@@ -58,7 +58,7 @@ include = include_directories([
 
 cc = meson.get_compiler('c')
 system_deps = [
-   cc.find_library('m', required : true)
+   cc.find_library('m', required : false)
 ]
 
 library(
