@@ -214,7 +214,7 @@ jobs:
     - name: Meson Build
       run: |
         meson setup build source \
-            -Dexecutable=false
+            -Dexecutable=disabled
         meson install -C build
 
     - name: Install SSH Key
