@@ -252,7 +252,6 @@ AC_MSG_RESULT([$used_lua])
 AC_CHECK_HEADERS([stdalign.h])
 AC_CHECK_DECLS([setenv])
 AC_CHECK_DECLS([_putenv_s]) # Windows only alternative to setenv
-AC_CHECK_DECLS([dirname])
 
 # SDL
 AM_PATH_SDL2(2.0.0, [], [
@@ -506,6 +505,7 @@ AC_TYPE_UINT8_T
 # Checks for functions
 #
 AC_CHECK_FUNCS([setlocale])
+AC_CHECK_FUNCS([dirname])
 
 VAR_SAVE([LIBS], ["-lm"])
 AC_CHECK_FUNCS([feenableexcept])

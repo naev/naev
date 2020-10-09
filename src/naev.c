@@ -205,11 +205,11 @@ int main( int argc, char** argv )
    setlocale( LC_ALL, "" );
    setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
    /* We haven't loaded the ndata yet, so just try a path quickly. */
-#if HAVE_DECL_DIRNAME
+#if HAVE_DIRNAME
    nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, dirname(naev_binary()) );
-#else /* HAVE_DECL_DIRNAME */
+#else /* HAVE_DIRNAME */
    nsnprintf( langbuf, sizeof(langbuf), "./"GETTEXT_PATH );
-#endif /* HAVE_DECL_DIRNAME */
+#endif /* HAVE_DIRNAME */
    bindtextdomain( PACKAGE_NAME, langbuf );
    //bindtextdomain("naev", "po/");
    textdomain( PACKAGE_NAME );
