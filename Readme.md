@@ -36,9 +36,11 @@ being disabled.
 Install compile-time dependencies on Ubuntu 16.04 (and hopefully later) with:
 
 ```bash
-apt-get install build-essential automake libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev \
+apt-get install build-essential libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev \
 libgl1-mesa-dev libxml2-dev libfreetype6-dev libpng-dev libopenal-dev \
-libvorbis-dev binutils-dev libiberty-dev autopoint intltool libfontconfig-dev autoconf-archive
+libvorbis-dev binutils-dev libiberty-dev autopoint intltool libfontconfig-dev \
+python3-pip
+pip3 install meson ninja
 ```
 
 ### Other \*nix
@@ -52,16 +54,17 @@ Run:
 
 ```
 bash
-./autogen.sh && ./configure
-make
+meson setup /path/to/build/dir /path/to/source/dir
+cd /path/to/build/dir
+meson compile
 ```
 
-If you need special settings you should pass flags to configure, using -h
-will tell you what it supports.
+If you need special settings you can run `meson configure` in your build
+directory to see a list of all available options.
 
 ## INSTALLATION
 
-Naev currently supports make install which will install everything that
+Naev currently supports `meson install` which will install everything that
 is needed.
 
 If you wish to create a .desktop for your desktop environment, logos
@@ -78,9 +81,9 @@ text is modified. You can update all translation files with the
 following commands:
 
 ```
-./utils/update-po.sh # only necessary if files have been added or removed
-make
-make -C po update-po
+meson compile potfiles # only necessary if files have been added or removed
+meson compile naev-pot
+meson compile naev-update-po
 ```
 
 Again, you will only ever need to do this if you are a developer.
