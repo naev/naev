@@ -196,6 +196,10 @@ if buildExec.disabled() == false
       output: ['glad.c','glad.h', 'khrplatform.h']
    )
    naev_source += glad_c
+   # GLAD requires libdl
+   if not cc.has_function('dlopen')
+      naev_deps += cc.find_library('dl', required: true)
+   endif
 
    include_dirs = include_directories(
       'src',
