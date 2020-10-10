@@ -1,4 +1,4 @@
-#include "sdl.h"
+#include "SDL.h"
 #include <stdio.h>
 
 #define GL_VERSION 0x1F02
