@@ -131,6 +131,7 @@ jobs:
         meson setup build source \
             --native-file 'source/utils/build/${{ matrix.config }}' \
             --buildtype release \
+            -Db_lto=true \
             -Dauto_features=enabled \
             -Ddocs_c=disabled \
             -Ddocs_lua=disabled
