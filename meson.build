@@ -197,7 +197,7 @@ if buildExec.disabled() == false
    )
    naev_source += glad_c
    # GLAD requires libdl
-   if not cc.has_function('dlopen')
+   if not cc.has_header('windows.h')
       naev_deps += cc.find_library('dl', required: true)
    endif
 
