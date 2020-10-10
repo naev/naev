@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 SOURCE_ROOT=$(realpath -m "$MESON_SOURCE_ROOT")
 
