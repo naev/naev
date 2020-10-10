@@ -107,6 +107,7 @@ jobs:
           sdl2_mixer
 
     - name: Setup Python
+      if: ${{ runner.os != 'Windows'}}
       uses: actions/setup-python@v2
 
     - name: Install Meson
