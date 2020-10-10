@@ -18,7 +18,6 @@ an OpenGL-capable graphics card and driver, Naev requires the following:
 * SDL 2
 * libxml2
 * freetype2
-* fontconfig
 * libpng
 * OpenAL
 * libvorbis (>= 1.2.1 necessary for Replaygain)

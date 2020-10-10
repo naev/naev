@@ -269,16 +269,20 @@ const char* nfile_cachePath (void)
 }
 
 
-#if HAS_WIN32
 static char dirname_buf[PATH_MAX];
-#endif /* HAS_WIN32 */
 /**
  * @brief Portable version of dirname.
+ *
+ * Unlike most implementations of dirname, this does not modify path, instead
+ * it returns a modified buffer. The contents of the returned pointer can change
+ * in subsequent calls.
  */
-char *_nfile_dirname( char *path )
+const char *_nfile_dirname( const char *path )
 {
 #if HAS_POSIX
-   return dirname( path );
+   strncpy( dirname_buf, path, sizeof(dirname_buf) );
+   dirname_buf[PATH_MAX-1]='\0';
+   return dirname( dirname_buf );
 #elif HAS_WIN32
    int i;
    for (i=strlen(path)-1; i>=0; i--)

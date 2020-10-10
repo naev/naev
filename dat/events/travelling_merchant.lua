@@ -14,7 +14,7 @@ Spawns a travelling merchant that can sell the player if interested.
 
 --]]
 
-trader_name = _("Mad Maroni")
+trader_name = _("Machiavellian Misi")
 store_name = string.format(_("%s's \"Fine\" Wares"), trader_name)
 broadcastmsg = {
    string.format(_("%s's the name and selling fine shit is my game! Come get your outfits here!"), trader_name),

@@ -71,7 +71,7 @@
 #define AI_EQUIP_PATH            "factions/equip/generic.lua"
 #define GUI_PATH                 "gui/"
 #define FACTIONS_PATH            "factions/"
-#define GETTEXT_PATH             "dat/gettext/" /* Doesn't use ndata functions. */
+#define GETTEXT_PATH             "gettext/" /* Doesn't use ndata functions. */
 #define BACKGROUND_PATH          "bkg/"
 #define LANGUAGES_PATH           "LANGUAGES"
 #define INTRO_PATH               "intro"

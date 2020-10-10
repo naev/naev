@@ -11,13 +11,15 @@
 
 #include "config.h"
 #include "nstring.h"
+#include "log.h"
 
 
 env_t env;
 
 
-void env_detect( char **argv )
+void env_detect( int argc, char **argv )
 {
+   (void) argc;
    static short once = 0;
    assert( once == 0 );
    once = 1;
@@ -30,7 +32,7 @@ void env_detect( char **argv )
    }
    else {
       env.isAppImage = 0;
-      env.argv0      = argv[ 0 ];
+      env.argv0      = argv[0];
    }
 }
 

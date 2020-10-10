@@ -94,8 +94,6 @@ int ndata_setPath( const char *path )
 {
    int len;
    char  buf[ PATH_MAX ];
-   char *pathBuf;
-   char *dirnameBuf;
 
    if ( ndata_dir != NULL ) {
       free( ndata_dir );
@@ -136,11 +134,7 @@ int ndata_setPath( const char *path )
          }
          __attribute__( ( fallthrough ) );
       case NDATA_SRC_BINARY:
-         pathBuf    = strdup( naev_binary() );
-         dirnameBuf = nfile_dirname( pathBuf );
-         nfile_concatPaths( buf, PATH_MAX, dirnameBuf, NDATA_PATHNAME );
-         free( pathBuf );
-         dirnameBuf = NULL;
+         nfile_concatPaths( buf, PATH_MAX, nfile_dirname(naev_binary()), NDATA_PATHNAME );
          if ( ndata_isndata( buf ) ) {
             ndata_dir    = strdup( buf );
             ndata_source = NDATA_SRC_BINARY;

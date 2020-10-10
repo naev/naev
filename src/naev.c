@@ -181,10 +181,13 @@ int main( int argc, char** argv )
 {
    char buf[PATH_MAX], langbuf[PATH_MAX], *lang;
 
-   env_detect( argv );
+   env_detect( argc, argv );
 
    if (!log_isTerminal())
       log_copy(1);
+
+   /* Save the binary path. */
+   binary_path = strdup( env.argv0 );
 
 #if defined ENABLE_NLS && ENABLE_NLS
    /* Set up locales. */
@@ -194,14 +197,11 @@ int main( int argc, char** argv )
    setlocale( LC_ALL, "" );
    setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
    /* We haven't loaded the ndata yet, so just try a path quickly. */
-   nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, naev_binary() );
+   nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, nfile_dirname(naev_binary()) );
    bindtextdomain( PACKAGE_NAME, langbuf );
    //bindtextdomain("naev", "po/");
    textdomain( PACKAGE_NAME );
 #endif /* defined ENABLE_NLS && ENABLE_NLS */
-
-   /* Save the binary path. */
-   binary_path = strdup( env.argv0 );
 
    /* Print the version */
    LOG( " %s v%s (%s)", APPNAME, naev_version(0), HOST );

@@ -17,7 +17,7 @@ typedef struct _env_t {
 } env_t;
 extern env_t env;
 
-void env_detect( char **argv );
+void env_detect( int argc, char **argv );
 
 int nsetenv( const char *name, const char *value, int overwrite );
 
