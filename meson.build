@@ -181,22 +181,6 @@ if buildExec.disabled() == false
    add_project_arguments('-include', 'config.h', language: 'c')
 
    # GLAD
-   glad = find_program('glad')
-   glad_c = custom_target(
-      'glad',
-      command: [
-         glad,
-         '--out-path', meson.current_build_dir() / '@OUTDIR@',
-         '--local-files',
-         '--profile=core',
-         '--api=gl=3.1',
-         '--generator=c',
-         '--spec=gl',
-         '--extensions=GL_ARB_texture_filter_anisotropic'],
-      output: ['glad.c','glad.h', 'khrplatform.h']
-   )
-   naev_source += glad_c
-   # GLAD requires libdl
    if not cc.has_header('windows.h')
       naev_deps += cc.find_library('dl', required: true)
    endif
