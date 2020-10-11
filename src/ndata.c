@@ -53,7 +53,6 @@
 
 #define NDATA_PATHNAME  "dat" /**< Generic ndata file name. */
 
-
 #define NDATA_SRC_CWD     0 /**< Current working directory. (debug builds only) */
 #define NDATA_SRC_USER    1 /**< User defined directory. */
 #define NDATA_SRC_DEFAULT 2 /**< Default derectory. (Set at compile time) */
@@ -126,7 +125,7 @@ int ndata_setPath( const char *path )
             ndata_source = NDATA_SRC_DEFAULT;
             break;
          }
-         nfile_concatPaths( buf, PATH_MAX, NDATA_DEF, NDATA_PATHNAME );
+         nfile_concatPaths( buf, PATH_MAX, PKGDATADIR, NDATA_PATHNAME );
          if ( ndata_isndata( buf ) ) {
             ndata_dir    = strdup( buf );
             ndata_source = NDATA_SRC_DEFAULT;

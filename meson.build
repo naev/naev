@@ -51,7 +51,7 @@ if buildExec.disabled() == false
    config_data.set_quoted('PACKAGE', meson.project_name())
    config_data.set_quoted('PACKAGE_NAME', meson.project_name())
    config_data.set_quoted('PACKAGE_VERSION', meson.project_version())
-   config_data.set_quoted('NDATA_DEF', get_option('prefix') / ndata_path)
+   config_data.set_quoted('PKGDATADIR', get_option('prefix') / ndata_path)
    config_data.set_quoted('HOST', host_machine.system() + '-' + host_machine.cpu_family())
    config_data.set('DEBUG', debug ? 1 : false)
    config_data.set('DEBUGGING', debug ? 1 : false)
