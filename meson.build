@@ -42,7 +42,7 @@ if buildExec.disabled() == false
 
    ndata_path = get_option('ndata_path')
    if ndata_path == ''
-      ndata_path = get_option('datadir') / 'naev/ndata'
+      ndata_path = get_option('datadir') / 'naev'
    endif
    summary('NData Path', ndata_path, section: 'Features')
 
