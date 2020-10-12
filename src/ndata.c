@@ -120,7 +120,7 @@ int ndata_setPath( const char *path )
       case NDATA_SRC_USER:
          // This already didn't work out when we checked the provided path.
       case NDATA_SRC_DEFAULT:
-         if ( env.isAppImage && nfile_concatPaths( buf, PATH_MAX, env.appdir, NDATA_PATHNAME ) >= 0 && ndata_isndata( buf ) ) {
+         if ( env.isAppImage && nfile_concatPaths( buf, PATH_MAX, env.appdir, PKGDATADIR, NDATA_PATHNAME ) >= 0 && ndata_isndata( buf ) ) {
             ndata_dir    = strdup( buf );
             ndata_source = NDATA_SRC_DEFAULT;
             break;
