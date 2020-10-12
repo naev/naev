@@ -268,6 +268,10 @@ static int pilot_validEnemy( const Pilot* p, const Pilot* target )
    if (pilot_isDisabled(target))
       return 0;
 
+   /* Shouldn't be invincible. */
+   if (pilot_isFlag( target, PILOT_INVINCIBLE ))
+      return 0;
+
    /* Must be a valid target. */
    if (!pilot_validTarget( p, target ))
       return 0;
