@@ -1,4 +1,4 @@
-option('paranoid'    , type: 'boolean', value: false    , description: 'Add file and line number to WARNING messages.')
+option('paranoid'    , type: 'boolean', value: false    , description: 'Promote run-time warnings to errors.')
 option('executable'  , type: 'feature', value: 'enabled', description: 'Enable compilation of Naev\'s executable.')
 option('docs_c'      , type: 'feature', value: 'auto'   , description: 'Enable compilation of Naev\'s C documentation.')
 option('docs_lua'    , type: 'feature', value: 'auto'   , description: 'Enable compilation of Naev\'s Lua documentation.')
