@@ -10,8 +10,8 @@
 
 #include "ncompat.h"
 
-#include "AL/al.h"
-#include "AL/alc.h"
+#include "alc.h"
+#include "al.h"
 
 /*
  * EFX stuff.
