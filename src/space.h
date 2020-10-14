@@ -322,7 +322,7 @@ struct StarSystem_ {
    /* Economy. */
    CommodityPrice *averagePrice;
    int ncommodities;
-  
+
    /* Misc. */
    unsigned int flags; /**< flags for system properties */
 };

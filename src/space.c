@@ -554,7 +554,7 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
    *ast = -1;
    *fie = -1;
    d    = INFINITY;
-   
+
    /* Planets. */
    for (i=0; i<sys->nplanets; i++) {
       p  = sys->planets[i];
@@ -833,6 +833,9 @@ char **system_searchFuzzyCase( const char* sysname, int *n )
 StarSystem* system_get( const char* sysname )
 {
    int i;
+
+   if ( sysname == NULL )
+      return NULL;
 
    for (i=0; i<systems_nstack; i++)
       if (strcmp(sysname, systems_stack[i].name)==0)
@@ -1345,7 +1348,7 @@ void space_update( const double dt )
 
    /* Update the gatherable objects. */
    gatherable_update(dt);
-   
+
    /* Asteroids/Debris update */
    for (i=0; i<cur_system->nasteroids; i++) {
       ast = &cur_system->asteroids[i];
@@ -2307,7 +2310,7 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    economy_addQueuedUpdate();
    /* This is required to clear the player statistics for this planet */
    economy_clearSinglePlanet(planet);
-   
+
    /* Add the presence. */
    if (!systems_loading) {
       system_addPresence( sys, planet->faction, planet->presenceAmount, planet->presenceRange );
@@ -3059,6 +3062,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    memset( a, 0, sizeof(AsteroidAnchor) );
 
    /* Initialize stuff. */
+   pos         = 1;
    a->density  = .2;
    a->area     = 0.;
    a->ntype    = 0;
@@ -3165,6 +3169,7 @@ static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys
    memset( a, 0, sizeof(*a) );
 
    /* Initialize stuff. */
+   pos         = 0;
    a->radius   = 0.;
    vect_cset( &a->pos, 0., 0. );
 
@@ -3857,7 +3862,7 @@ void space_exit (void)
 
       /* Free the asteroids. */
       sys = &systems_stack[i];
-      
+
       for (j=0; j < sys->nasteroids; j++) {
          ast = &sys->asteroids[j];
          free(ast->asteroids);

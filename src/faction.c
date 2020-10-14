@@ -13,8 +13,9 @@
 
 #include "naev.h"
 
-#include <stdlib.h>
 #include "nstring.h"
+#include <assert.h>
+#include <stdlib.h>
 
 #include "nxml.h"
 
@@ -844,7 +845,7 @@ double faction_getPlayerDef( int f )
 
 /**
  * @brief Gets whether or not the player is a friend of the faction.
- * 
+ *
  *    @param f Faction to check friendliness of.
  *    @return 1 if the player is a friend, 0 otherwise.
  */
@@ -891,7 +892,7 @@ int faction_isPlayerFriend( int f )
 
 /**
  * @brief Gets whether or not the player is an enemy of the faction.
- * 
+ *
  *    @param f Faction to check hostility of.
  *    @return 1 if the player is an enemy, 0 otherwise.
  */
@@ -1381,6 +1382,8 @@ static void faction_parseSocial( xmlNodePtr parent )
          break;
       }
    } while (xml_nextNode(node));
+
+   assert( base != NULL );
 
    /* Parse social stuff. */
    node = parent->xmlChildrenNode;

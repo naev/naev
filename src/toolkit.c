@@ -1790,10 +1790,10 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    }
 
    /* Handle button hotkeys. */
-   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
-      if ((wgt->type == WIDGET_BUTTON) && (wgt->dat.btn.key != 0) &&
-            (wgt->dat.btn.key == input_key))
-         return (wgt->keyevent( wgt, SDLK_RETURN, input_mod ));
+   for ( wgt = wdw->widgets; wgt != NULL; wgt = wgt->next )
+      if ( ( wgt->type == WIDGET_BUTTON ) && ( wgt->dat.btn.key != 0 ) && ( wgt->dat.btn.key == input_key )
+           && wgt->keyevent != NULL )
+         return ( wgt->keyevent( wgt, SDLK_RETURN, input_mod ) );
 
    /* Handle other cases where event might be used by the window. */
    switch (key) {

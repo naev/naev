@@ -902,6 +902,8 @@ char* pilot_getOutfits( const Pilot* pilot )
    if (p==0)
       p += nsnprintf( &buf[p], len-p, _("None") );
 
+   (void)p;
+
    return buf;
 }
 

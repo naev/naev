@@ -1,0 +1,9 @@
+---
+Checks:          '-*,clang-analyzer-core.*'
+WarningsAsErrors: ''
+HeaderFilterRegex: ''
+FormatStyle:     file
+CheckOptions:
+
+...
+

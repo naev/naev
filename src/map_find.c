@@ -7,6 +7,8 @@
 
 #include "naev.h"
 
+#include <assert.h>
+
 #include "log.h"
 #include "toolkit.h"
 #include "map.h"
@@ -380,6 +382,10 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
       }
 
       ve = &pnt->pos;
+
+      assert( vs != NULL );
+      assert( ve != NULL );
+
       d += vect_dist( vs, ve );
    }
 

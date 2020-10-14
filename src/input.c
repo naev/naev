@@ -510,6 +510,7 @@ void input_getKeybindDisplay( const char *keybind, char *buf, int len )
             p += nsnprintf( &buf[p], len-p, "%c", nstd_toupper(key) );
          else
             p += nsnprintf( &buf[p], len-p, "%s", SDL_GetKeyName(key) );
+         (void)p;
          break;
 
       case KEYBIND_JBUTTON:

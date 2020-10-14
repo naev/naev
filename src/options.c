@@ -614,6 +614,7 @@ static void menuKeybinds_genList( unsigned int wid )
                   p += nsnprintf( &mod_text[p], sizeof(mod_text)-p, "alt+" );
                if (mod & NMOD_META)
                   p += nsnprintf( &mod_text[p], sizeof(mod_text)-p, "meta+" );
+               (void)p;
             }
 
             /* SDL_GetKeyName returns lowercase which is ugly. */
@@ -1115,7 +1116,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
             case SDL_HAT_LEFT:
                type = KEYBIND_JHAT_LEFT;
                break;
-            case SDL_HAT_RIGHT: 
+            case SDL_HAT_RIGHT:
                type = KEYBIND_JHAT_RIGHT;
                break;
             default:

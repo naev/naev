@@ -3005,7 +3005,7 @@ static int pilotL_setSpeedLimit(lua_State* L)
  * @usage armour, shield, stress, dis = p:health()
  *
  *    @luatparam Pilot p Pilot to get health of.
- *    @luatreturn number The armour in % [0:100]. 
+ *    @luatreturn number The armour in % [0:100].
  *    @luatreturn number The shield in % [0:100].
  *    @luatreturn number The stress in % [0:100].
  *    @luatreturn boolean Indicates if pilot is disabled.

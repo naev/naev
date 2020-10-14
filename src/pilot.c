@@ -630,7 +630,7 @@ int pilot_isHostile( const Pilot *p )
          && (pilot_isFlag( p, PILOT_HOSTILE ) ||
             areEnemies( FACTION_PLAYER, p->faction ) ) )
       return 1;
-   
+
    return 0;
 }
 
@@ -2524,9 +2524,9 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
        * -2,147,483,648, which ABS will try to convert to 2,147,483,648.
        * Problem is, that value would be represented like this in
        * binary:
-       * 
+       *
        * 10000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
-       * 
+       *
        * Which is actually -2,147,483,648, causing the condition
        * ABS(amount) >= p->credits to return false (since -2,147,483,648
        * is less than any amount of credits the player could have). */
@@ -2608,6 +2608,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    p = 0;
    for (i=0; i<pilot->outfit_nstructure; i++) {
       pilot->outfits[p] = &pilot->outfit_structure[i];
+      pilot->outfits[ p ]->id    = p;
       pilot->outfits[p]->sslot = &ship->outfit_structure[i];
       pilot->outfits[p]->weapset = -1;
       if (ship->outfit_structure[i].data != NULL)
@@ -2616,6 +2617,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    }
    for (i=0; i<pilot->outfit_nutility; i++) {
       pilot->outfits[p] = &pilot->outfit_utility[i];
+      pilot->outfits[ p ]->id    = p;
       pilot->outfits[p]->sslot = &ship->outfit_utility[i];
       pilot->outfits[p]->weapset = -1;
       if (ship->outfit_utility[i].data != NULL)
@@ -2624,14 +2626,12 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    }
    for (i=0; i<pilot->outfit_nweapon; i++) {
       pilot->outfits[p] = &pilot->outfit_weapon[i];
+      pilot->outfits[ p ]->id  = p;
       pilot->outfits[p]->sslot = &ship->outfit_weapon[i];
       if (ship->outfit_weapon[i].data != NULL)
          pilot_addOutfitRaw( pilot, ship->outfit_weapon[i].data, pilot->outfits[p] );
       p++;
    }
-   /* Second pass set ID. */
-   for (i=0; i<pilot->noutfits; i++)
-      pilot->outfits[i]->id = i;
 
    /* cargo - must be set before calcStats */
    pilot->cargo_free = pilot->ship->cap_cargo; /* should get redone with calcCargo */
@@ -2882,7 +2882,7 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
    if (cur_system->njumps > 0) {
       for (i=0; i<cur_system->njumps; i++) {
          /* The jump into the system must not be exit-only, and unless
-          * ignore_rules is set, must also be non-hidden 
+          * ignore_rules is set, must also be non-hidden
           * (excepted if the pilot is guerilla) and have faction
           * presence matching the pilot's on the remote side.
           */

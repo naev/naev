@@ -7,6 +7,7 @@
 #define NFILE_H
 
 
+#include "array.h"
 #include <stddef.h>
 #include <stdint.h>
 
