@@ -45,12 +45,15 @@ jobs:
           - os: ubuntu-20.04
             shell: bash
             config: linux.ini
+            pkg-config-path: "[]"
           - os: windows-latest
             shell: msys2 {0}
             config: windows.ini
+            pkg-config-path: "[]"
           - os: macos-latest
             shell: bash
             config: macos.ini
+            pkg-config-path: '/usr/local/opt/openal-soft/lib/pkgconfig'
 
     defaults:
       run:
@@ -129,8 +132,9 @@ jobs:
       id: setup
       run: |
         meson setup build source \
-            --native-file 'source/utils/build/${{ matrix.config }}' \
-            --buildtype release \
+            --native-file='source/utils/build/${{ matrix.config }}' \
+            --buildtype=release \
+            --pkg-config-path=${{ matrix.pkg-config-path }} \
             -Db_lto=true \
             -Dauto_features=enabled \
             -Ddocs_c=disabled \
