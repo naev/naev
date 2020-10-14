@@ -677,6 +677,7 @@ void shiplog_listLog( int logid, char *type,int *nentries, char ***logentries, i
 
       e = e -> next;
    }
+   (void)pos;
    if ( ( n == 0 ) && ( incempty != 0 ) ) {
       /*empty list, so add "Empty" */
       n = 1;

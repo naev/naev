@@ -1265,6 +1265,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          _("\n%.1f degree swivel"),
          temp->u.blt.swivel*180./M_PI );
    }
+   (void)l;
 
 
 #define MELEMENT(o,s) \
@@ -1400,6 +1401,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          temp->u.bem.duration, temp->u.bem.delay,
          temp->u.bem.range,
          temp->u.bem.heatup);
+   (void)l;
 
 #define MELEMENT(o,s) \
 if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
@@ -2550,6 +2552,7 @@ static void outfit_launcherDesc( Outfit* o )
          outfit_range(a), a->u.amm.duration,
          a->u.amm.speed,
          (a->u.amm.resist <= 0 ? 0. : (1. - 0.5 / a->u.amm.resist) * 100.) );
+   (void)l;
 }
 
 

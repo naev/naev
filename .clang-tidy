@@ -1,7 +1,7 @@
 ---
-Checks:          '-*,clang-analyzer-core.*'
+Checks:          '-*,clang-diagnostic-*,clang-analyzer-core.*,clang-analyzer-deadcode.*'
 WarningsAsErrors: ''
-HeaderFilterRegex: ''
+HeaderFilterRegex: '.*'
 FormatStyle:     file
 CheckOptions:
 
