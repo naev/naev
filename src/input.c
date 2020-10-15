@@ -55,9 +55,6 @@ typedef struct Keybind_ {
 } Keybind;
 
 
-static Keybind* input_keybinds; /**< contains the players keybindings */
-static int input_numbinds; /**< Number of keybindings. */
-
 /* name of each keybinding */
 const char *keybind_info[][3] = {
    /* Movement */
@@ -134,6 +131,9 @@ const char *keybind_info[][3] = {
    /* Must terminate in NULL. */
    { NULL, NULL, NULL }
 }; /**< Names of possible keybindings. */
+
+static Keybind *input_keybinds; /**< contains the players keybindings */
+const int input_numbinds = ( sizeof( keybind_info ) / sizeof( keybind_info[ 0 ] ) ) - 1; /**< Number of keybindings. */
 
 
 /*
@@ -322,9 +322,6 @@ void input_init (void)
    /* Mouse. */
    SDL_EventState( SDL_MOUSEWHEEL,      SDL_ENABLE );
 
-   /* Get the number of keybindings. */
-   for (i=0; keybind_info[i][0] != NULL; i++);
-   input_numbinds = i;
    input_keybinds = malloc( input_numbinds * sizeof(Keybind) );
 
    /* Create safe null keybinding for each. */

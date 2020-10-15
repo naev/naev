@@ -3546,7 +3546,7 @@ static int player_parseLicenses( xmlNodePtr parent )
             WARN( _( "License node is missing name attribute." ) );
             continue;
          }
-         player_addLicense( xml_get(node) );
+         player_addLicense( name );
       }
    } while (xml_nextNode(node));
 

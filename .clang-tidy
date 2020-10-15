@@ -1,5 +1,5 @@
 ---
-Checks:          '-*,clang-diagnostic-*,clang-analyzer-core.*,clang-analyzer-deadcode.*,clang-analyzer-unix.*'
+Checks:          '-clang-analyzer-security.*'
 WarningsAsErrors: ''
 HeaderFilterRegex: '.*'
 FormatStyle:     file

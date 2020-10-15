@@ -54,9 +54,6 @@ static int opt_restart = 0;
 /*
  * External stuff.
  */
-extern const char *keybind_info[][3]; /**< from input.c */
-
-
 static const char *opt_selectedKeybind; /**< Selected keybinding. */
 static int opt_lastKeyPress = 0; /**< Last keypress. */
 
@@ -579,7 +576,7 @@ static void opt_keybinds( unsigned int wid )
  */
 static void menuKeybinds_genList( unsigned int wid )
 {
-   int i, j, l, p;
+   int         j, l, p;
    char **str, mod_text[64];
    SDL_Keycode key;
    KeybindType type;
@@ -592,9 +589,8 @@ static void menuKeybinds_genList( unsigned int wid )
    menuKeybinds_getDim( wid, &w, &h, &lw, &lh, NULL, NULL );
 
    /* Create the list. */
-   for (i=0; keybind_info[i][0] != NULL; i++);
-   str = malloc(sizeof(char*) * i);
-   for (j=0; j < i; j++) {
+   str = malloc( sizeof( char * ) * input_numbinds );
+   for ( j = 0; j < input_numbinds; j++ ) {
       l = 64;
       str[j] = malloc(l);
       key = input_getKeybind( keybind_info[j][0], &type, &mod );
@@ -657,8 +653,7 @@ static void menuKeybinds_genList( unsigned int wid )
       window_destroyWidget( wid, "lstKeybinds" );
    }
 
-   window_addList( wid, 20, -40, lw, lh, "lstKeybinds",
-         str, i, 0, menuKeybinds_update );
+   window_addList( wid, 20, -40, lw, lh, "lstKeybinds", str, input_numbinds, 0, menuKeybinds_update );
 
    if (regen) {
       toolkit_setListPos( wid, "lstKeybinds", pos );

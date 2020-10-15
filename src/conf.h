@@ -40,6 +40,7 @@
 #define MINIMIZE_DEFAULT                     1     /**< Whether to minimize on focus loss. */
 /* Audio options */
 #define VOICES_DEFAULT                       128   /**< Amount of voices to use. */
+#define VOICES_MIN                           16    /**< Minimum amount of voices to use. */
 #define PILOT_RELATIVE_DEFAULT               1     /**< Whether the sound is relative to the pilot (as opposed to the camera). */
 #define USE_EFX_DEFAULT                      1     /**< Whether or not to use EFX (if using OpenAL). */
 #define BUFFER_SIZE_DEFAULT                  128   /**< Default buffer size (if using OpenAL). */

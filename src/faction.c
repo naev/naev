@@ -372,9 +372,16 @@ int* faction_getEnemies( int f, int *n )
          if (faction_isPlayerEnemy(i))
             enemies[nenemies++] = i;
 
-      enemies = realloc(enemies, sizeof(int)*nenemies);
+      if ( nenemies == 0 ) {
+         free( enemies );
+         enemies = NULL;
+      }
+      else {
+         enemies = realloc( enemies, sizeof( int ) * nenemies );
+      }
 
-      free(faction_stack[f].enemies);
+      if ( faction_stack[ f ].enemies != NULL )
+         free( faction_stack[ f ].enemies );
       faction_stack[f].enemies = enemies;
       faction_stack[f].nenemies = nenemies;
    }
@@ -410,9 +417,16 @@ int* faction_getAllies( int f, int *n )
          if (faction_isPlayerFriend(i))
             allies[nallies++] = i;
 
-      allies = realloc(allies, sizeof(int)*nallies);
+      if ( nallies == 0 ) {
+         free( allies );
+         allies = NULL;
+      }
+      else {
+         allies = realloc( allies, sizeof( int ) * nallies );
+      }
 
-      free(faction_stack[f].allies);
+      if ( faction_stack[ f ].allies != NULL )
+         free( faction_stack[ f ].allies );
       faction_stack[f].allies = allies;
       faction_stack[f].nallies = nallies;
    }
@@ -1212,7 +1226,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
    temp->sched_env = LUA_NOREF;
 
    player = 0;
-   node = parent->xmlChildrenNode; 
+   node   = parent->xmlChildrenNode;
    do {
       /* Only care about nodes. */
       xml_onlyNodes(node);
