@@ -550,16 +550,19 @@ unsigned int window_createFlags( const char* name,
             toolkit_expose( wcur, 0 ); /* wcur is hidden */
       }
 
-      wlast = NULL;
-      for (wcur = windows; wcur != NULL; wcur = wcur->next) {
-         if ((strcmp(wcur->name,name)==0) && !window_isFlag(wcur, WINDOW_KILL) &&
-               !window_isFlag(wcur, WINDOW_NOFOCUS))
-            WARN(_("Window with name '%s' already exists!"),wcur->name);
-         wlast = wcur;
+      wlast = windows;
+      while ( 1 ) {
+         if ( ( strcmp( wlast->name, name ) == 0 ) && !window_isFlag( wlast, WINDOW_KILL )
+              && !window_isFlag( wlast, WINDOW_NOFOCUS ) )
+            WARN( _( "Window with name '%s' already exists!" ), wlast->name );
+
+         if ( wlast->next == NULL )
+            break;
+
+         wlast = wlast->next;
       }
 
-      if (wlast != NULL)
-         wlast->next = wdw;
+      wlast->next = wdw;
    }
 
    return wid;

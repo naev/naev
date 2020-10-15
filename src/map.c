@@ -2295,6 +2295,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    /* Build path backwards if not broken from loop. */
    if ( cur != NULL && esys == cur->sys ) {
       (*njumps) = A_g(cur);
+      assert( *njumps > 0 );
       if (old_data == NULL)
          res      = malloc( sizeof(StarSystem*) * (*njumps) );
       else {

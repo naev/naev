@@ -2172,7 +2172,7 @@ static int outfit_parse( Outfit* temp, const char* file )
                      temp->gfx_noverlays += 1;
                      if (temp->gfx_noverlays > m) {
                         m *= 2;
-                        temp->gfx_overlays = realloc( temp->gfx_overlays, m*sizeof(glTexture) );
+                        temp->gfx_overlays = realloc( temp->gfx_overlays, m * sizeof( glTexture * ) );
                      }
                      temp->gfx_overlays[ temp->gfx_noverlays-1 ] = xml_parseTexture( ccur,
                            OVERLAY_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );

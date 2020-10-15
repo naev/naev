@@ -775,6 +775,7 @@ static int pilotL_getPilots( lua_State *L )
             }
             lua_pop(L,1);
          }
+         assert( i == nfactions );
       }
 
       /* Now put all the matching pilots in a table. */

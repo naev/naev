@@ -914,7 +914,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
                temp->gfx_noverlays += 1;
                if (temp->gfx_noverlays > m) {
                   m *= 2;
-                  temp->gfx_overlays = realloc( temp->gfx_overlays, m*sizeof(glTexture) );
+                  temp->gfx_overlays = realloc( temp->gfx_overlays, m * sizeof( glTexture * ) );
                }
                temp->gfx_overlays[ temp->gfx_noverlays-1 ] = xml_parseTexture( cur,
                      OVERLAY_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
