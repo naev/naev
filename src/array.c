@@ -12,7 +12,7 @@ void *_array_create_helper(size_t e_size, int capacity)
 
    _private_container *c = malloc(sizeof(_private_container) + e_size * capacity);
 #ifdef DEBUGGING
-   c->_sentinel = _ARRAY_SENTINEL;
+   c->_sentinel = ARRAY_SENTINEL;
 #endif
    c->_reserved = capacity;
    c->_size = 0;
