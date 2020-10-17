@@ -551,19 +551,10 @@ int conf_loadConfig ( const char* file )
 
                /* Set modifier, probably should be able to handle two at a time. */
                if (mod != NULL) {
-                  /* The "rctrl/lctrl" friends are for compat with 0.4.0 and older, remove around 0.5.0 or so. */
                   if      (strcmp(mod,"ctrl")==0)    m = NMOD_CTRL;
-                  else if (strcmp(mod,"lctrl")==0)   m = NMOD_CTRL; /* compat. */
-                  else if (strcmp(mod,"rctrl")==0)   m = NMOD_CTRL; /* compat. */
                   else if (strcmp(mod,"shift")==0)   m = NMOD_SHIFT;
-                  else if (strcmp(mod,"lshift")==0)  m = NMOD_SHIFT; /* compat. */
-                  else if (strcmp(mod,"rshift")==0)  m = NMOD_SHIFT; /* compat. */
                   else if (strcmp(mod,"alt")==0)     m = NMOD_ALT;
-                  else if (strcmp(mod,"lalt")==0)    m = NMOD_ALT; /* compat. */
-                  else if (strcmp(mod,"ralt")==0)    m = NMOD_ALT; /* compat. */
                   else if (strcmp(mod,"meta")==0)    m = NMOD_META;
-                  else if (strcmp(mod,"lmeta")==0)   m = NMOD_META; /* compat. */
-                  else if (strcmp(mod,"rmeta")==0)   m = NMOD_META; /* compat. */
                   else if (strcmp(mod,"any")==0)     m = NMOD_ALL;
                   else if (strcmp(mod,"none")==0)    m = NMOD_NONE;
                   else {
