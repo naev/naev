@@ -15,21 +15,22 @@
 
 #include "SDL.h"
 
-#include "space.h"
-#include "toolkit.h"
-#include "opengl.h"
-#include "map.h"
+#include "conf.h"
 #include "dev_planet.h"
 #include "dev_system.h"
-#include "unidiff.h"
 #include "dialogue.h"
 #include "economy.h"
-#include "tk/toolkit_priv.h"
+#include "map.h"
 #include "ndata.h"
 #include "nfile.h"
-#include "nstring.h"
 #include "npng.h"
-#include "conf.h"
+#include "nstring.h"
+#include "opengl.h"
+#include "opengl_render.h"
+#include "space.h"
+#include "tk/toolkit_priv.h"
+#include "toolkit.h"
+#include "unidiff.h"
 
 
 #define BUTTON_WIDTH    90 /**< Map button width. */
@@ -269,7 +270,7 @@ static void sysedit_close( unsigned int wid, char *wgt )
 {
    /* Unload graphics. */
    space_gfxLoad( sysedit_sys );
-   
+
    /* Unload VBO */
    if (sysedit_vbo != NULL) {
       gl_vboDestroy(sysedit_vbo);
@@ -731,8 +732,14 @@ static void sysedit_renderAsteroidExclusion( double bx, double by, AsteroidExclu
  */
 static void sysedit_renderBG( double bx, double by, double w, double h, double x, double y )
 {
-   double z, s;
-   double sx, sy, sz;
+   /* Comfort. */
+   const double z = sysedit_zoom;
+   const double s = 1000.;
+
+   /* Vars */
+   double startx, starty, spacing, d;
+   int    nx, ny;
+   int    i;
 
    /* Render blackness. */
    gl_renderRect( bx, by, w, h, &cBlack );
@@ -741,26 +748,30 @@ static void sysedit_renderBG( double bx, double by, double w, double h, double x
    if (!sysedit_grid)
       return;
 
-   /* Comfort. */
-   z  = sysedit_zoom;
-   s  = 1000.;
-
    /* Draw lines that go through 0,0 */
-   gl_renderRect( x-1., by, 3., h, &cLightBlue );
-   gl_renderRect( bx, y-1., w, 3., &cLightBlue );
+   gl_renderRect( x - 1., by, 3., h, &cLightBlue );
+   gl_renderRect( bx, y - 1., w, 3., &cLightBlue );
 
    /* Render lines. */
-   sz    = s*z;
-   sx    = w/2. - fmod( sysedit_xpos, sz ) - sz*round( w/2. / sz );
-   sy    = h/2. - fmod( sysedit_ypos, sz ) - sz*round( h/2. / sz );
-   /* Vertical. */
-   for (   ; sx<w; sx += sz)
-      gl_renderRect( bx+sx, by, 1., h, &cBlue );
-   /* Horizontal. */
-   for (   ; sy<w; sy += sz)
-      gl_renderRect( bx, by+sy, w, 1., &cBlue );
+   spacing = s * z;
+   startx  = bx + fmod( x - bx, spacing );
+   starty  = by + fmod( y - by, spacing );
 
-   gl_drawCircle( x, y, sysedit_sys->radius * sysedit_zoom, &cLightBlue, 0 );
+   nx = lround( w / spacing );
+   ny = lround( h / spacing );
+
+   /* Vertical. */
+   for ( i = 0; i < nx; i += 1 ) {
+      d = startx + ( i * spacing );
+      gl_drawLine( d, by, d, by + h, &cBlue );
+   }
+   /* Horizontal. */
+   for ( i = 0; i < ny; i += 1 ) {
+      d = starty + ( i * spacing );
+      gl_drawLine( bx, d, bx + w, d, &cBlue );
+   }
+
+   gl_drawCircle( x, y, sysedit_sys->radius * z, &cLightBlue, 0 );
 }
 
 
@@ -1288,6 +1299,8 @@ static void sysedit_editPnt( void )
    window_addInput( wid, x += l + 5, y, 150, 20, "inpLand", 20, 1, NULL );
    y -= gl_defFont.h + 15;
 
+   (void)x;
+
    /* Second row. */
    x = 20;
    s = _("Presence");
@@ -1316,6 +1329,8 @@ static void sysedit_editPnt( void )
    window_setInputFilter( wid, "inpHide",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
    x += 50 + 10;
+
+   (void)x;
 
    /* Bottom buttons. */
    window_addButton( wid, -20 - bw*3 - 15*3, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
@@ -1436,6 +1451,8 @@ static void sysedit_editJump( void )
    window_setInputFilter( wid, "inpHide",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
    x += 50 + 10;
+
+   (void)x;
 
    /* Bottom buttons. */
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,

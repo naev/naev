@@ -44,7 +44,7 @@ static void btn_updateHotkey( Widget *btn );
 void window_addButtonKey( const unsigned int wid,
                        const int x, const int y,
                        const int w, const int h,
-                       char* name, char* display,
+                       const char* name, const char* display,
                        void (*call) (unsigned int wgt, char* wdwname),
                        SDL_Keycode key )
 {
@@ -104,7 +104,7 @@ void window_addButtonKey( const unsigned int wid,
 void window_addButton( const unsigned int wid,
                        const int x, const int y,
                        const int w, const int h,
-                       char* name, char* display,
+                       const char* name, const char* display,
                        void (*call) (unsigned int wgt, char* wdwname) )
 {
    window_addButtonKey( wid, x, y, w, h, name, display, call, 0 );
@@ -139,7 +139,7 @@ static Widget* btn_get( const unsigned int wid, const char* name )
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the button to disable.
  */
-void window_disableButton( const unsigned int wid, char* name )
+void window_disableButton( const unsigned int wid, const char* name )
 {
    Widget *wgt;
    Window *wdw;
@@ -164,7 +164,7 @@ void window_disableButton( const unsigned int wid, char* name )
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the button to disable.
  */
-void window_disableButtonSoft( const unsigned int wid, char *name )
+void window_disableButtonSoft( const unsigned int wid, const char *name )
 {
    Widget *wgt;
 
@@ -184,7 +184,7 @@ void window_disableButtonSoft( const unsigned int wid, char *name )
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the button to enable.
  */
-void window_enableButton( const unsigned int wid, char *name )
+void window_enableButton( const unsigned int wid, const char *name )
 {
    Widget *wgt;
 
@@ -206,7 +206,7 @@ void window_enableButton( const unsigned int wid, char *name )
  *    @param name Name of the button to change caption.
  *    @param display New caption to display.
  */
-void window_buttonCaption( const unsigned int wid, char *name, char *display )
+void window_buttonCaption( const unsigned int wid, const char *name, const char *display )
 {
 
    Widget *wgt;

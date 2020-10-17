@@ -234,7 +234,7 @@ void menu_main (void)
          "btnOptions", _("Options"), menu_options_button, SDLK_o );
    y -= BUTTON_HEIGHT+20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnCredits", _("Credits"), menu_main_credits, SDLK_c );
+         "btnCredits", pgettext("Menu|", "Credits"), menu_main_credits, SDLK_c );
    y -= BUTTON_HEIGHT+20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", _("Exit"), menu_exit, SDLK_x );

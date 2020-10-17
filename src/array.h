@@ -46,7 +46,7 @@
 #endif /* HAVE_STDALIGN_H */
 
 #ifdef DEBUGGING
-#define SENTINEL ((int)0xbabecafe) /**< Badass sentinel. */
+#define ARRAY_SENTINEL ((int)0xbabecafe) /**< Badass sentinel. */
 #endif
 
 /**
@@ -90,7 +90,7 @@ __inline__ static _private_container *_array_private_container(void *a)
    _private_container *c = (_private_container *)a - 1;
 
 #ifdef DEBUGGING
-   assert("Sentinel not found. Use array_create() to create the array." && (c->_sentinel == SENTINEL));
+   assert("Sentinel not found. Use array_create() to create the array." && (c->_sentinel == ARRAY_SENTINEL));
 #endif
 
    return c;
