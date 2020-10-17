@@ -141,7 +141,6 @@ CODE_SOURCE = \
 	pilot_hook.c \
 	pilot_outfit.c \
 	pilot_weapon.c \
-	plasmaf.c \
 	player.c \
 	player_autonav.c \
 	player_gui.c \
@@ -293,7 +292,6 @@ CODE_SOURCE = \
 	pilot_hook.h \
 	pilot_outfit.h \
 	pilot_weapon.h \
-	plasmaf.h \
 	player.h \
 	player_autonav.h \
 	player_gui.h \
