@@ -421,7 +421,6 @@ src/pilot_heat.c
 src/pilot_hook.c
 src/pilot_outfit.c
 src/pilot_weapon.c
-src/plasmaf.c
 src/player.c
 src/player_autonav.c
 src/player_gui.c
