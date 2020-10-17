@@ -10,7 +10,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
-__attribute__( ( sentinel ) ) int _nfile_concatPaths( char buf[static 1], int maxLength, const char path[static 1], ... );
+#include "attributes.h"
+
+
+SENTINEL( 0 ) int _nfile_concatPaths( char buf[ static 1 ], int maxLength, const char path[ static 1 ], ... );
 /**
  * @brief Concatenates paths. The result is always NULL terminated.
  *
