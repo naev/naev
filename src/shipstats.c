@@ -304,7 +304,8 @@ int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipSta
          break;
 
       case SS_DATA_TYPE_INTEGER:
-         memcpy(&i, &ptr[ sl->offset ], sizeof(int*));
+         fieldptr = &ptr[ sl->offset ];
+         memcpy(&i, &fieldptr, sizeof(int*));
          *i   += list->d.i;
          if (amount != NULL) {
             if ((sl->inverted && (list->d.i < 0)) ||
