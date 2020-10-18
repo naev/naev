@@ -50,12 +50,12 @@ BreakConstructorInitializersBeforeComma: false
 BreakConstructorInitializers: BeforeColon
 BreakAfterJavaFieldAnnotations: false
 BreakStringLiterals: true
-ColumnLimit:     140
+ColumnLimit:     120
 CommentPragmas:  '^ IWYU pragma:'
 CompactNamespaces: false
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
-ConstructorInitializerIndentWidth: 4
-ContinuationIndentWidth: 4
+ConstructorInitializerIndentWidth: 3
+ContinuationIndentWidth: 3
 Cpp11BracedListStyle: true
 DeriveLineEnding: true
 DerivePointerAlignment: false
@@ -81,7 +81,7 @@ IncludeIsMainRegex: '(Test)?$'
 IncludeIsMainSourceRegex: ''
 IndentCaseLabels: false
 IndentGotoLabels: true
-IndentPPDirectives: None
+IndentPPDirectives: BeforeHash
 IndentWidth:     3
 IndentWrappedFunctionNames: false
 JavaScriptQuotes: Leave
@@ -130,7 +130,7 @@ Standard:        Latest
 StatementMacros:
   - Q_UNUSED
   - QT_REQUIRE_VERSION
-TabWidth:        8
+TabWidth:        3
 UseCRLF:         false
 UseTab:          Never
 ...
