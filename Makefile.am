@@ -101,7 +101,7 @@ utils:
 endif # HAVE_UTILS
 
 install-data-local:
-	(cd $(top_srcdir)/dat; find . -type f -exec install -Dm 644 "{}" "$(pkgdatadir)/dat/{}" \;)
+	(cd $(top_srcdir)/dat; find . -type f -exec install -Dm 644 "{}" "$(DESTDIR)$(pkgdatadir)/dat/{}" \;)
 
 uninstall-hook:
 	echo " rm -rf '$(DESTDIR)$(pkgdatadir)'"; \
