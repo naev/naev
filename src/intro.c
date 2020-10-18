@@ -33,14 +33,6 @@
 
 
 /**
- * @brief Scroll Buffer: For a linked list of render text.
- */
-typedef struct scroll_buf_t_ {
-   const char *text;            /* Text to render. */
-   struct scroll_buf_t_ *next;  /* Next line in the linked list. */
-} scroll_buf_t;
-
-/**
  * @brief Intro Image: to be displayed to the side of the scrolling.
  */
 typedef struct intro_img_t_ {
@@ -65,13 +57,11 @@ static int has_side_gfx = 0;       /* Determines how wide to make the text. */
  */
 static int intro_load( const char *text );
 static void intro_cleanup (void);
-static scroll_buf_t *arrange_scroll_buf( scroll_buf_t *arr, int n );
 static void intro_event_handler( int *stop, double *offset, double *vel );
 static void initialize_image( intro_img_t *img );
 static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
                                  const char *img_file );
-static int intro_draw_text( scroll_buf_t *sb_list, double offset,
-                            double line_height );
+static int  intro_draw_text( char **const sb_list, int sb_size, int sb_index, double offset, double line_height );
 
 
 /**
@@ -168,27 +158,6 @@ static void intro_cleanup (void)
    /* Set defaults. */
    intro_lines = NULL;
    intro_nlines = 0;
-}
-
-/**
- * @brief Convert an array of scroll_buf_t into a circularly linked list.
- *
- *    @brief arr Input array.
- *    @brief n Number of elements.
- *    @return A pointer into the circular list.
- */
-static scroll_buf_t *arrange_scroll_buf( scroll_buf_t *arr, int n )
-{
-   scroll_buf_t *sb_list = &arr[n - 1];
-   int i;
-
-   for (i = 0; i < n; ++i) {
-      arr[i].text = NULL;
-      arr[i].next = sb_list;
-      sb_list = &arr[i];
-   }
-
-   return sb_list;
 }
 
 /**
@@ -318,11 +287,10 @@ static void intro_event_handler( int *stop, double *offset, double *vel )
  *    @brief line_height V-space of the font (plus leading).
  *    @return Whether to stop.  1 if no text was rendered, 0 otherwise.
  */
-static int intro_draw_text( scroll_buf_t *sb_list, double offset,
-                            double line_height)
+static int intro_draw_text( char **const sb_list, int sb_size, int sb_index, double offset, double line_height )
 {
-   double x, y;               /* render position. */
-   scroll_buf_t *list_iter;   /* iterator through sb_list. */
+   double       x, y; /* render position. */
+   int          i;
    register int stop = 1;
 
    if (has_side_gfx)
@@ -330,17 +298,17 @@ static int intro_draw_text( scroll_buf_t *sb_list, double offset,
    else
       x = 100.0;
 
-   list_iter = sb_list;
+   i = sb_index;
    y = SCREEN_H + offset - line_height;
    do {
-      if (NULL != list_iter->text) {
+      if ( sb_list[ i ] != NULL ) {
          stop = 0;
-         gl_print( &intro_font, x, y, &cFontGreen, list_iter->text );
+         gl_print( &intro_font, x, y, &cFontGreen, sb_list[ i ] );
       }
 
       y -= line_height;
-      list_iter = list_iter->next;
-   } while (list_iter != sb_list);
+      i = ( i + 1 ) % sb_size;
+   } while ( i != sb_index );
 
    return stop;
 }
@@ -354,18 +322,18 @@ static int intro_draw_text( scroll_buf_t *sb_list, double offset,
  */
 int intro_display( const char *text, const char *mus )
 {
-   double offset;             /* distance from bottom of the top line. */
-   double line_height;        /* # pixels per line. */
-   int lines_per_screen;      /* max appearing lines on the screen. */
-   scroll_buf_t *sb_arr;      /* array of lines to render. */
-   scroll_buf_t *sb_list;     /* list   "   "    "    "    */
-   double vel = 16.;          /* velocity: speed of text. */
-   int stop = 0;              /* stop the intro. */
-   unsigned int tcur, tlast;  /* timers. */
-   double delta;              /* time diff from last render to this one. */
-   int line_index = 0;        /* index into the big list of intro lines. */
-   intro_img_t side_image;    /* image to go along with the text. */
-   intro_img_t transition;    /* image for transitioning. */
+   double       offset;           /* distance from bottom of the top line. */
+   double       line_height;      /* # pixels per line. */
+   int          lines_per_screen; /* max appearing lines on the screen. */
+   char **      sb_arr;           /* array of lines to render. */
+   int          sb_index;         /* Position in the line array. */
+   double       vel  = 16.;       /* velocity: speed of text. */
+   int          stop = 0;         /* stop the intro. */
+   unsigned int tcur, tlast;      /* timers. */
+   double       delta;            /* time diff from last render to this one. */
+   int          line_index = 0;   /* index into the big list of intro lines. */
+   intro_img_t  side_image;       /* image to go along with the text. */
+   intro_img_t  transition;       /* image for transitioning. */
 
    /* Load the introduction. */
    if (intro_load(text) < 0)
@@ -382,13 +350,12 @@ int intro_display( const char *text, const char *mus )
       screen at any given time. */
    line_height = (double)intro_font.h * 1.3;
    lines_per_screen = (int)(SCREEN_H / line_height + 1.5); /* round up + 1 */
-   sb_arr = (scroll_buf_t*)malloc( sizeof(scroll_buf_t) * lines_per_screen );
+
+   sb_arr   = calloc( lines_per_screen, sizeof( char * ) );
+   sb_index = 0;
 
    /* Force the first line to be loaded immediately. */
    offset = line_height;
-
-   /* Create a cycle of lines. */
-   sb_list = arrange_scroll_buf( sb_arr, lines_per_screen );
 
    /* Unset the side image. */
    initialize_image( &side_image );
@@ -408,9 +375,9 @@ int intro_display( const char *text, const char *mus )
          if (line_index < intro_nlines) {
             switch (intro_lines[line_index][0]) {
             case 't': /* plain ol' text. */
-               sb_list->text = &intro_lines[line_index][1];
+               sb_arr[ sb_index ] = &intro_lines[ line_index ][ 1 ];
                offset -= line_height;
-               sb_list = sb_list->next;
+               sb_index = ( sb_index + 1 ) % lines_per_screen;
                break;
             case 'i': /* fade in image. */
                intro_fade_image_in( &side_image, &transition,
@@ -429,9 +396,9 @@ int intro_display( const char *text, const char *mus )
             }
             ++line_index;
          } else {
-            sb_list->text = NULL;
+            sb_arr[ sb_index ] = NULL;
             offset -= line_height;
-            sb_list = sb_list->next;
+            sb_index = ( sb_index + 1 ) % lines_per_screen;
          }
       } /* while (offset > line_height) */
 
@@ -473,7 +440,7 @@ int intro_display( const char *text, const char *mus )
       music_update( 0. );
 
       /* Draw text. */
-      stop = intro_draw_text( sb_list, offset, line_height );
+      stop = intro_draw_text( sb_arr, lines_per_screen, sb_index, offset, line_height );
 
       if (NULL != side_image.tex)
          /* Draw the image next to the text. */
