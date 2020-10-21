@@ -446,16 +446,15 @@ int _nfile_fileExists( const char *path )
  */
 int _nfile_backupIfExists( const char *path )
 {
-   char file[ PATH_MAX ];
    char backup[ PATH_MAX ];
 
    if ( path == NULL )
       return -1;
 
-   if ( !nfile_fileExists( file ) )
+   if ( !nfile_fileExists( path ) )
       return 0;
 
-   nsnprintf(backup, PATH_MAX, "%s.backup", file);
+   nsnprintf(backup, PATH_MAX, "%s.backup", path);
 
    return nfile_copyIfExists( path, backup );
 }
