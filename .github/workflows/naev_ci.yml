@@ -95,22 +95,22 @@ jobs:
         update: true
         install: git tar mingw-w64-x86_64-clang mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-luajit mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer
 
-    - name: Install Homebrew Packages
+    - name: Install Macport Ports
       if: ${{ runner.os == 'macOS'}}
       run: |
-        brew update-reset
-        brew update
-        brew install \
+        wget https://github.com/macports/macports-base/releases/download/v2.6.3/MacPorts-2.6.3-10.15-Catalina.pkg
+        sudo installer -pkg MacPorts-2.6.3-10.15-Catalina.pkg -target
+        sudo port install \
           fontconfig \
           intltool \
           luajit \
           meson \
           ninja \
           openal-soft \
-          pkg-config \
-          sdl2 \
-          sdl2_image \
-          sdl2_mixer
+          pkgconfig \
+          libsdl2 \
+          libsdl2_image \
+          libsdl2_mixer
 
     - name: Setup Python
       if: ${{ runner.os == 'Linux'}}
