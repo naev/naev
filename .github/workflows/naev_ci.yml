@@ -104,6 +104,8 @@ jobs:
           fontconfig \
           intltool \
           luajit \
+          meson \
+          ninja \
           openal-soft \
           pkg-config \
           sdl2 \
@@ -111,11 +113,11 @@ jobs:
           sdl2_mixer
 
     - name: Setup Python
-      if: ${{ runner.os != 'Windows'}}
+      if: ${{ runner.os == 'Linux'}}
       uses: actions/setup-python@v2
 
     - name: Install Meson
-      if: ${{ runner.os != 'Windows'}}
+      if: ${{ runner.os == 'Linux'}}
       run: |
         pip install meson ninja
 
@@ -233,12 +235,12 @@ jobs:
       if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
 
     - name: Upload Lua Documentation
-      run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete ${{ env.DESTDIR }}/docs/lua/ travis@iandouglasscott.com:/srv/naevdoc
+      run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete ${{ env.DESTDIR }}/doc/naev/lua travis@iandouglasscott.com:/srv/naevdoc
       if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: naev-docs-${{ github.sha }}
-        path: ${{ env.DESTDIR }}/*
+        path: ${{ env.DESTDIR }}/doc/naev/*
         if-no-files-found: error
