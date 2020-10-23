@@ -50,10 +50,6 @@ jobs:
             shell: msys2 {0}
             config: windows.ini
             pkg-config-path: "[]"
-          - os: macos-latest
-            shell: bash
-            config: macos.ini
-            pkg-config-path: '/usr/local/opt/openal-soft/lib/pkgconfig'
 
     defaults:
       run:
@@ -95,25 +91,6 @@ jobs:
         update: true
         install: git tar mingw-w64-x86_64-clang mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-luajit mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer
 
-    - name: Install Macport Ports
-      if: ${{ runner.os == 'macOS'}}
-      run: |
-        wget https://github.com/macports/macports-base/releases/download/v2.6.3/MacPorts-2.6.3-10.15-Catalina.pkg
-        sudo installer -pkg MacPorts-2.6.3-10.15-Catalina.pkg -target /
-        export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-        sudo port install \
-          fontconfig \
-          intltool \
-          luajit \
-          meson \
-          ninja \
-          openal-soft \
-          pkgconfig \
-          libsdl2 \
-          libsdl2_image \
-          libsdl2_mixer \
-          libxml2
-
     - name: Setup Python
       if: ${{ runner.os == 'Linux'}}
       uses: actions/setup-python@v2
@@ -136,7 +113,6 @@ jobs:
     - name: Meson Setup
       id: setup
       run: |
-        export PATH=/opt/local/bin:/opt/local/sbin:$PATH
         meson setup build source \
             --native-file='source/utils/build/${{ matrix.config }}' \
             --buildtype=release \
@@ -157,7 +133,6 @@ jobs:
     - name: Meson Compile
       id: compile
       run: |
-        export PATH=/opt/local/bin:/opt/local/sbin:$PATH
         meson compile -C build
 
     - name: Upload Compile Log
@@ -171,7 +146,6 @@ jobs:
     - name: Meson Test
       id: tests
       run: |
-        export PATH=/opt/local/bin:/opt/local/sbin:$PATH
         ${{ matrix.test-env }} meson test -C build --print-errorlogs
 
     - name: Upload test log
@@ -184,7 +158,6 @@ jobs:
 
     - name: Package
       run: |
-        export PATH=/opt/local/bin:/opt/local/sbin:$PATH
         meson install -C build
       if: ${{ success() || steps.tests.outcome == 'failure' }}
 
