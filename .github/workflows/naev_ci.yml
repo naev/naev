@@ -111,7 +111,8 @@ jobs:
           pkgconfig \
           libsdl2 \
           libsdl2_image \
-          libsdl2_mixer
+          libsdl2_mixer \
+          libxml2
 
     - name: Setup Python
       if: ${{ runner.os == 'Linux'}}
@@ -237,12 +238,12 @@ jobs:
       if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
 
     - name: Upload Lua Documentation
-      run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete ${{ env.DESTDIR }}/doc/naev/lua travis@iandouglasscott.com:/srv/naevdoc
+      run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete ${{ env.DESTDIR }}/usr/local/doc/naev/lua/* travis@iandouglasscott.com:/srv/naevdoc
       if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: naev-docs-${{ github.sha }}
-        path: ${{ env.DESTDIR }}/doc/naev/*
+        path: ${{ env.DESTDIR }}/usr/local/doc/naev/*
         if-no-files-found: error
