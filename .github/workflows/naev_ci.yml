@@ -54,8 +54,6 @@ jobs:
             shell: bash
             config: macos.ini
             pkg-config-path: '/usr/local/opt/openal-soft/lib/pkgconfig'
-            env:
-              PATH: "/opt/local/bin:/opt/local/sbin:$PATH"
 
     defaults:
       run:
@@ -102,6 +100,7 @@ jobs:
       run: |
         wget https://github.com/macports/macports-base/releases/download/v2.6.3/MacPorts-2.6.3-10.15-Catalina.pkg
         sudo installer -pkg MacPorts-2.6.3-10.15-Catalina.pkg -target /
+        export PATH=/opt/local/bin:/opt/local/sbin:$PATH
         sudo port install \
           fontconfig \
           intltool \
@@ -136,6 +135,7 @@ jobs:
     - name: Meson Setup
       id: setup
       run: |
+        export PATH=/opt/local/bin:/opt/local/sbin:$PATH
         meson setup build source \
             --native-file='source/utils/build/${{ matrix.config }}' \
             --buildtype=release \
