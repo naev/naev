@@ -179,7 +179,9 @@ jobs:
         if-no-files-found: ignore
 
     - name: Package
-      run: meson install -C build
+      run: |
+        meson install -C build
+        tar -cf - ${{ env.DESTDIR }}/ | xz -9 -c - > ${{ env.DESTDIR }}/naev-${{ runner.os }}-${{ github.sha }}.tar.xz
       if: ${{ success() || steps.tests.outcome == 'failure' }}
 
     - name: Upload Artifact
@@ -187,7 +189,7 @@ jobs:
       if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
         name: naev-${{ runner.os }}-${{ github.sha }}
-        path: ${{ env.DESTDIR }}/*
+        path: ${{ env.DESTDIR }}/*.tar.xz
         if-no-files-found: error
 
   "Documentation":
