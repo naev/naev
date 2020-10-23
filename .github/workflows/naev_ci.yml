@@ -156,7 +156,9 @@ jobs:
 
     - name: Meson Compile
       id: compile
-      run: meson compile -C build
+      run: |
+        export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+        meson compile -C build
 
     - name: Upload Compile Log
       uses: actions/upload-artifact@v2
@@ -168,7 +170,9 @@ jobs:
 
     - name: Meson Test
       id: tests
-      run: ${{ matrix.test-env }} meson test -C build --print-errorlogs
+      run: |
+        export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+        ${{ matrix.test-env }} meson test -C build --print-errorlogs
 
     - name: Upload test log
       uses: actions/upload-artifact@v2
@@ -180,8 +184,8 @@ jobs:
 
     - name: Package
       run: |
+        export PATH=/opt/local/bin:/opt/local/sbin:$PATH
         meson install -C build
-        tar -cf - ${{ env.DESTDIR }}/ | xz -9 -c - > ${{ env.DESTDIR }}/naev-${{ runner.os }}-${{ github.sha }}.tar.xz
       if: ${{ success() || steps.tests.outcome == 'failure' }}
 
     - name: Upload Artifact
@@ -189,7 +193,7 @@ jobs:
       if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
         name: naev-${{ runner.os }}-${{ github.sha }}
-        path: ${{ env.DESTDIR }}/*.tar.xz
+        path: ${{ env.DESTDIR }}/*
         if-no-files-found: error
 
   "Documentation":
