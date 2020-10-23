@@ -3,7 +3,7 @@
  */
 
 /**
- * @file glue_macos
+ * @file glue_macos.m
  *
  * @brief Support code for macOS
  *

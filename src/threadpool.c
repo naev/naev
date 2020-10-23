@@ -29,6 +29,7 @@
 #include "threadpool.h"
 
 #include "SDL.h"
+#include "SDL_error.h"
 #include "SDL_thread.h"
 
 #include <stdlib.h>
@@ -482,9 +483,10 @@ int threadpool_init (void)
    global_queue = tq_create();
 
    /* Initialize the threadpool handler. */
-   SDL_CreateThread( threadpool_handler,
-               "threadpool_handler",
-               NULL );
+   if ( SDL_CreateThread( threadpool_handler, "threadpool_handler", NULL ) == NULL ) {
+      ERR( _( "Threadpool init failed: %s" ), SDL_GetError() );
+      return -1;
+   }
 
    return 0;
 }

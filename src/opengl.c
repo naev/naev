@@ -32,6 +32,7 @@
 
 #include "opengl.h"
 
+#include "SDL_error.h"
 #include "naev.h"
 
 #include <stdlib.h>
@@ -217,23 +218,9 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
  *    @param minor Minor version to check.
  *    @return True if major and minor version are met.
  */
-static double gl_contextVersion = -1.;
 GLboolean gl_hasVersion( int major, int minor )
 {
-   const char *p;
-   double f;
-
-   if (gl_contextVersion < 0.) {
-      p = (const char*) glGetString(GL_VERSION);
-
-      /* Get version and compare version. */
-      gl_contextVersion = atof(p);
-   }
-
-   f  = (double) major;
-   f += 0.1 * (double) minor;
-
-   if (f <= gl_contextVersion)
+   if (GLVersion.major >= major && GLVersion.minor >= minor)
       return GL_TRUE;
    return GL_FALSE;
 }
@@ -392,7 +379,7 @@ static int gl_createWindow( unsigned int flags )
          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
          SCREEN_W, SCREEN_H, flags | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
    if (gl_screen.window == NULL)
-      ERR(_("Unable to create window!"));
+      ERR(_("Unable to create window! %s"), SDL_GetError());
 
    /* Reinitialize resolution parameters. */
    if (flags & SDL_WINDOW_FULLSCREEN_DESKTOP)
@@ -405,7 +392,7 @@ static int gl_createWindow( unsigned int flags )
    /* Create the OpenGL context, note we don't need an actual renderer. */
    gl_screen.context = SDL_GL_CreateContext( gl_screen.window );
    if (!gl_screen.context)
-      ERR(_("Unable to create OpenGL context!"));
+      ERR(_("Unable to create OpenGL context! %s"), SDL_GetError());
 
    /* Set Vsync. */
    if (conf.vsync) {
@@ -603,6 +590,9 @@ int gl_init (void)
    /* Load extensions. */
    if (!gladLoadGLLoader(SDL_GL_GetProcAddress))
       ERR("Unable to load OpenGL using GLAD");
+
+   if ( !GLAD_GL_VERSION_3_1 )
+      WARN( "Naev requires OpenGL 3.1, but got OpenGL %d.%d!", GLVersion.major, GLVersion.minor );
 
    /* Some OpenGL options. */
    glClearColor( 0., 0., 0., 1. );

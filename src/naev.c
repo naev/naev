@@ -19,8 +19,9 @@
 /* localised global */
 #include "SDL.h"
 
-#include "naev.h"
+#include "SDL_error.h"
 #include "log.h" /* for DEBUGGING */
+#include "naev.h"
 
 
 /* global */
@@ -41,6 +42,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <bfd.h>
+#include <assert.h>
 #endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 
 /* local */
@@ -213,7 +215,10 @@ int main( int argc, char** argv )
       DEBUG( "AppImage not detected." );
 
    /* Initializes SDL for possible warnings. */
-   SDL_Init(0);
+   if ( SDL_Init( 0 ) ) {
+      ERR( _( "Unable to initialize SDL: %s" ), SDL_GetError() );
+      return -1;
+   }
 
    /* Initialize the threadpool */
    threadpool_init();
@@ -234,7 +239,10 @@ int main( int argc, char** argv )
 
    /* Get desktop dimensions. */
    SDL_DisplayMode current;
-   SDL_GetCurrentDisplayMode( 0, &current );
+   if ( SDL_GetCurrentDisplayMode( 0, &current ) ) {
+      ERR( _( "Unable to get display mode: %s" ), SDL_GetError() );
+      return -1;
+   }
    gl_screen.desktop_w = current.w;
    gl_screen.desktop_h = current.h;
 
@@ -410,6 +418,8 @@ int main( int argc, char** argv )
 
    /* Start menu. */
    menu_main();
+
+   LOG( _( "Reached main menu" ) );
 
    /* Force a minimum delay with loading screen */
    if ((SDL_GetTicks() - time_ms) < NAEV_INIT_DELAY)
@@ -1210,6 +1220,8 @@ int naev_versionParse( int version[3], char *buf, int nbuf )
    j = 0;
    for (i=0; i < MIN(nbuf,(int)sizeof(cbuf)); i++) {
       cbuf[j++] = buf[i];
+      if (buf[i] == '-')
+         break;
       if (buf[i] == '.') {
          cbuf[j] = '\0';
          version[s++] = atoi(cbuf);
