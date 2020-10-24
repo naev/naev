@@ -202,7 +202,7 @@ int diff_loadAvailable (void)
       }
 
       diff = &array_grow(&diff_available);
-      diff->filename = strdup( diff_files[i] );
+      diff->filename = diff_files[i];
       xmlr_attr(node, "name", diff->name);
       xmlFreeDoc(doc);
       free(filebuf);
