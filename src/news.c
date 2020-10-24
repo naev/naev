@@ -261,6 +261,7 @@ int *generate_news( char* faction )
 {
    news_t *temp, *article_ptr;
    int p;
+   char *article_time;
 
    p = 0;
    article_ptr = news_list;
@@ -285,10 +286,12 @@ int *generate_news( char* faction )
                && (strcmp(article_ptr->faction, faction) == 0) ) ) {
          /* XXX: magic number */
          if (article_ptr->date && (article_ptr->date < 40000000000000)) {
+            article_time = ntime_pretty(article_ptr->date, 1);
             p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
                "%s: %s\a0\n\n"
-               , article_ptr->title, ntime_pretty(article_ptr->date, 1), article_ptr->desc );
+               , article_ptr->title, article_time, article_ptr->desc );
+            free( article_time );
          }
          else {
             p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
