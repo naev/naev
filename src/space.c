@@ -3397,7 +3397,8 @@ static int asteroidTypes_load (void)
 
                at->gfxs[i] = gl_loadImagePadTrans( file, surface, rw,
                              OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS,
-                             w, h, 1, 1, 0 );
+                             w, h, 1, 1, 1 );
+               SDL_RWclose( rw );
                i++;
             }
 
