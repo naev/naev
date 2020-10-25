@@ -82,7 +82,7 @@ jobs:
           libvorbis-dev \
           libxml2-dev \
           meson \
-          ninja \
+          ninja-build \
           xvfb
 
     - name: Install MinGW Packages
