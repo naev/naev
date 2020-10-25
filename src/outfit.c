@@ -1101,6 +1101,7 @@ that can be found in naev's artwork repo."), file);
       } while (xml_nextNode(node));
    }
 
+   xmlFreeDoc(doc);
    return 0;
 }
 
