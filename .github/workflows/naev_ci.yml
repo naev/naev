@@ -139,7 +139,7 @@ jobs:
       uses: actions/upload-artifact@v2
       if: ${{ success() || steps.setup.outcome == 'failure' }}
       with:
-        name: ${{ runner.os }}-${{ github.sha }}-setup-log
+        name: ${{ matrix.os }}-${{ github.sha }}-setup-log
         path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
         if-no-files-found: ignore
 
@@ -152,7 +152,7 @@ jobs:
       uses: actions/upload-artifact@v2
       if: ${{ success() || steps.compile.outcome == 'failure' }}
       with:
-        name: ${{ runner.os }}-${{ github.sha }}-compile-log
+        name: ${{ matrix.os }}-${{ github.sha }}-compile-log
         path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
         if-no-files-found: ignore
 
@@ -165,7 +165,7 @@ jobs:
       uses: actions/upload-artifact@v2
       if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
-        name: ${{ runner.os }}-${{ github.sha }}-test-log
+        name: ${{ matrix.os }}-${{ github.sha }}-test-log
         path: ${{ github.workspace }}/build/meson-logs/testlog.txt
         if-no-files-found: ignore
 
@@ -178,7 +178,7 @@ jobs:
       uses: actions/upload-artifact@v2
       if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
-        name: naev-${{ runner.os }}-${{ github.sha }}
+        name: naev-${{ matrix.os }}-${{ github.sha }}
         path: ${{ env.DESTDIR }}/*
         if-no-files-found: error
 
