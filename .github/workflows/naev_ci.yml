@@ -10,13 +10,12 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - name: Install APT Packages
-      if: ${{ runner.os == 'Linux'}}
+    - name: Setup Python
+      uses: actions/setup-python@v2
+
+    - name: Install Meson
       run: |
-        sudo apt-get update
-        sudo apt-get install \
-        meson \
-        ninja-build
+        pip install meson ninja
 
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
@@ -27,7 +26,7 @@ jobs:
     - name: Meson Build
       run: |
         meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
-        meson dist -C build --include-subprojects
+        meson dist -C build --no-tests
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -82,8 +81,6 @@ jobs:
           libsdl2-mixer-dev \
           libvorbis-dev \
           libxml2-dev \
-          meson \
-          ninja-build \
           xvfb
 
     - name: Install MinGW Packages
@@ -92,8 +89,16 @@ jobs:
       with:
         msystem: MINGW64
         update: true
-        path-type: strict
         install: git tar mingw-w64-x86_64-clang mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-luajit mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer
+
+    - name: Setup Python
+      if: ${{ runner.os == 'Linux'}}
+      uses: actions/setup-python@v2
+
+    - name: Install Meson
+      if: ${{ runner.os == 'Linux'}}
+      run: |
+        pip install meson ninja
 
     - name: Get Source
       uses: actions/download-artifact@v2
@@ -125,17 +130,17 @@ jobs:
         path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
         if-no-files-found: ignore
 
-    - name: Ninja Build
+    - name: Meson Compile
       id: compile
       run: |
-        ninja -vC build
+        meson compile -C build
 
     - name: Upload Compile Log
       uses: actions/upload-artifact@v2
       if: ${{ success() || steps.compile.outcome == 'failure' }}
       with:
         name: ${{ runner.os }}-${{ github.sha }}-compile-log
-        path: ${{ github.workspace }}/build/.ninja_log
+        path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
         if-no-files-found: ignore
 
     - name: Meson Test
