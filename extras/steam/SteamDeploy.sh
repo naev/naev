@@ -58,7 +58,8 @@ mv dist/steam/steam-x86-64/naev.x64 extras/steam/content/lin64/naev.x64
 chmod +x extras/steam/content/lin64/naev.x64
           
 # Move macOS bundle to deployment location
-unzip dist/steam/macos/naev-macos.zip -d extras/steam/content/macos/
+# Uncomment when we figure out how to properly release Darwin builds / can test them.
+# unzip dist/steam/macos/naev-macos.zip -d extras/steam/content/macos/
 
 # Unzip Windows binary and DLLs and move to deployment location
 unzip dist/steam/win64/naev-win64.zip -d extras/steam/content/win64/
