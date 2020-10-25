@@ -21,7 +21,7 @@ if version_result.returncode() != 0
    error(version_result.stderr())
 else
    version = version_result.stdout().strip()
-   meson.add_dist_script(add_to_package, 'dat/VERSION')
+   meson.add_dist_script(add_to_package, meson.source_root(), 'dat/VERSION')
    summary('tag', version)
 endif
 
