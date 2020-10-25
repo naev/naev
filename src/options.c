@@ -215,6 +215,7 @@ static char** lang_list( int *n )
          ls[(*n)++] = strdup( &buf[j] );
       j=i+1;
    }
+   free(buf);
 
    return ls;
 }
