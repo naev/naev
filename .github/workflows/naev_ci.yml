@@ -53,7 +53,7 @@ jobs:
           - os: macos-latest
             shell: bash
             config: macos.ini
-            pkg-config-path: '/usr/local/opt/openal-soft/lib/pkgconfig'
+            pkg-config-path: "[]"
 
     defaults:
       run:
