@@ -61,21 +61,21 @@ if buildExec.disabled() == false
 
    ### Hard deps (required: true)
    # CXSparse (or CSparse as they are interchangable)
-   cxsparse_names = ['csparse', 'cxsparse']
-   foreach n : cxsparse_names
-      cxsparse = cc.find_library(n, required: false)
-      if cxsparse.found()
-         config_data.set10('HAVE_SUITESPARSE_CS_H', cxsparse.found())
+   csparse_names = ['csparse', 'cxsparse']
+   foreach n : csparse_names
+      csparse = cc.find_library(n, required: false)
+      if csparse.found()
+         config_data.set10('HAVE_SUITESPARSE_CS_H', csparse.found())
          break
       endif
    endforeach
-   if not is_variable('cxsparse') or not cxsparse.found()
-      cxsparse = dependency(
+   if not is_variable('csparse') or not csparse.found()
+      csparse = dependency(
          'SuiteSparse',
          fallback: ['SuiteSparse', 'CSparse_dep'],
          required: true)
    endif
-   naev_deps += cxsparse
+   naev_deps += csparse
    
    naev_deps += cc.find_library('m', required : false)
 
