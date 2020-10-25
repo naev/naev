@@ -62,7 +62,7 @@ if buildExec.disabled() == false
    ### Hard deps (required: true)
 
    if 'SuiteSparse' not in get_option('force_fallback_for')
-      csparse_names = ['csparse', 'cxsparse']
+      csparse_names = ['csparse']
       foreach n : csparse_names
          csparse = cc.find_library(n, required: false)
          if csparse.found()
@@ -78,7 +78,7 @@ if buildExec.disabled() == false
          required: true)
    endif
    naev_deps += csparse
-
+   
    naev_deps += cc.find_library('m', required : false)
 
    sdl = dependency('sdl2', required: true)
