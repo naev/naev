@@ -609,6 +609,7 @@ static int ship_loadPLG( Ship *temp, char *buf )
       }
    } while (xml_nextNode(node));
 
+   xmlFreeDoc(doc);
    return 0;
 }
 

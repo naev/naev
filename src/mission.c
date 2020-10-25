@@ -966,6 +966,7 @@ static int mission_parseFile( const char* file )
 
    /* Clean up. */
    xmlFreeDoc(doc);
+   free(filebuf);
 
    return 0;
 }
