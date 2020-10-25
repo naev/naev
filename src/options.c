@@ -1277,8 +1277,10 @@ static void opt_video( unsigned int wid )
       for (k=0; k<nres; k++)
          if (strcmp( res[k], res[nres] )==0)
             break;
-      if (k<nres)
+      if (k<nres) {
+         free( res[nres] );
          continue;
+      }
 
       /* Add as default if necessary and increment. */
       if ((mode.w == conf.width) && (mode.h == conf.height))
