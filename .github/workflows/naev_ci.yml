@@ -27,7 +27,7 @@ jobs:
     - name: Meson Build
       run: |
         meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
-        meson dist -C build --no-tests
+        meson dist -C build --include-subprojects
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
