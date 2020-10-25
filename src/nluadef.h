@@ -10,6 +10,8 @@
 #include <lua.h>
 #include <lauxlib.h>
 #include <lualib.h>
+
+#include "attributes.h"
 #include "log.h"
 
 

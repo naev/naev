@@ -14,6 +14,7 @@
 
 #include <png.h>
 
+#include "attributes.h"
 #include "log.h"
 #include "opengl_tex.h"
 

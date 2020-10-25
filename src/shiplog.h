@@ -1,11 +1,21 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
+
 #ifndef SHIPLOG_H
 #  define SHIPLOG_H
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "nxml.h"
-#include "ntime.h"
+
+#include "attributes.h"
 #include "nstring.h"
+#include "ntime.h"
+#include "nxml.h"
+
 
 /* returns a log ID, for log with specified title.  If overwrite set, and
    title already exists, the log will be cleared and previous log ID

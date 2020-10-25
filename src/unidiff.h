@@ -7,6 +7,9 @@
 #  define UNIDIFF_H
 
 
+#include "attributes.h"
+
+
 int diff_loadAvailable (void);
 NONNULL( 1 ) int diff_apply( const char *name );
 NONNULL( 1 ) void diff_remove( const char *name );
