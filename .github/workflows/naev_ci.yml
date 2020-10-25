@@ -46,6 +46,18 @@ jobs:
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
+          - os: ubuntu-20.04
+            shell: bash
+            config: linux.ini
+            pkg-config-path: "[]"
+          - os: ubuntu-latest
+            shell: bash
+            config: linux.ini
+            pkg-config-path: "[]"
+          - os: windows-2016
+            shell: msys2 {0}
+            config: windows.ini
+            pkg-config-path: "[]"
           - os: windows-latest
             shell: msys2 {0}
             config: windows.ini
