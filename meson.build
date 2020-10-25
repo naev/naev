@@ -262,7 +262,6 @@ if buildExec.disabled() == false
          endif
 
          install_data(metainfo_file, install_dir: get_option('datadir') / 'metainfo')
-      endif
 
       install_data(['extras/logos/logo16.png', 'extras/logos/logo32.png', 'extras/logos/logo64.png', 'extras/logos/logo128.png', 'extras/logos/naev.png'],
              rename : ['16x16/apps/naev.png', '32x32/apps/naev.png', '64x64/apps/naev.png', '128x128/apps/naev.png', '256x256/apps/naev.png'],
