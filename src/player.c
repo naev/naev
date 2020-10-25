@@ -286,9 +286,11 @@ void player_new (void)
    dialogue_addChoice( title, caption, speed_opts[1] );
    ret = dialogue_runChoice();
    player.dt_mod = 1.;
-   if ( (ret != NULL) && (strcmp(ret, speed_opts[1]) == 0) )
-      player.dt_mod = 0.5;
-   free( ret );
+   if (ret != NULL) {
+      if (strcmp(ret, speed_opts[1]) == 0)
+         player.dt_mod = 0.5;
+      free( ret );
+   }
 
    if (player_newMake())
       return;
