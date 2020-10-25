@@ -288,6 +288,7 @@ void player_new (void)
    player.dt_mod = 1.;
    if ( (ret != NULL) && (strcmp(ret, speed_opts[1]) == 0) )
       player.dt_mod = 0.5;
+   free( ret );
 
    if (player_newMake())
       return;
