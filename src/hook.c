@@ -1340,7 +1340,6 @@ static int hook_parse( xmlNodePtr base )
                new_id = hook_addEvent( parent, func, stack );
                break;
             default:
-               new_id = -1;
                WARN(_("Save has unsupported hook type."));
                continue;
          }
