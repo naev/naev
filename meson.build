@@ -6,7 +6,7 @@ project('naev', 'c',
       'c_std=gnu11',
       'werror=false'
    ],
-   meson_version: '>=0.55.0')
+   meson_version: '>=0.53.0')
 
 issue_address = 'https://github.com/naev/naev/issues'
 copyright_holder = 'Naev Dev Team'
@@ -60,24 +60,22 @@ if buildExec.disabled() == false
    summary('Paranoid', paranoid, section: 'Debug', bool_yn: true)
 
    ### Hard deps (required: true)
-
-   if 'SuiteSparse' not in get_option('force_fallback_for')
-      csparse_names = ['csparse']
-      foreach n : csparse_names
-         csparse = cc.find_library(n, required: false)
-         if csparse.found()
-            break
-         endif
-      endforeach
-   endif
-
-   if not is_variable('csparse') or not csparse.found()
-      csparse = dependency(
+   # CXSparse (or CSparse as they are interchangable)
+   cxsparse_names = ['csparse', 'cxsparse']
+   foreach n : cxsparse_names
+      cxsparse = cc.find_library(n, required: false)
+      if cxsparse.found()
+         config_data.set10('HAVE_SUITESPARSE_CS_H', cxsparse.found())
+         break
+      endif
+   endforeach
+   if not is_variable('cxsparse') or not cxsparse.found()
+      cxsparse = dependency(
          'SuiteSparse',
          fallback: ['SuiteSparse', 'CSparse_dep'],
          required: true)
    endif
-   naev_deps += csparse
+   naev_deps += cxsparse
    
    naev_deps += cc.find_library('m', required : false)
 
