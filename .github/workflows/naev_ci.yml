@@ -81,6 +81,8 @@ jobs:
           libsdl2-mixer-dev \
           libvorbis-dev \
           libxml2-dev \
+          meson \
+          ninja \
           xvfb
 
     - name: Install MinGW Packages
@@ -91,15 +93,6 @@ jobs:
         update: true
         path-type: strict
         install: git tar mingw-w64-x86_64-clang mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-luajit mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer
-
-    - name: Setup Python
-      if: ${{ runner.os == 'Linux'}}
-      uses: actions/setup-python@v2
-
-    - name: Install Meson
-      if: ${{ runner.os == 'Linux'}}
-      run: |
-        pip install meson ninja
 
     - name: Get Source
       uses: actions/download-artifact@v2
@@ -131,17 +124,17 @@ jobs:
         path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
         if-no-files-found: ignore
 
-    - name: Meson Compile
+    - name: Ninja Build
       id: compile
       run: |
-        meson compile -C build
+        ninja -vC build
 
     - name: Upload Compile Log
       uses: actions/upload-artifact@v2
       if: ${{ success() || steps.compile.outcome == 'failure' }}
       with:
         name: ${{ runner.os }}-${{ github.sha }}-compile-log
-        path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+        path: ${{ github.workspace }}/build/.ninja_log
         if-no-files-found: ignore
 
     - name: Meson Test
