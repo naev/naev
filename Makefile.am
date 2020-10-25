@@ -14,9 +14,9 @@ endif # HAVE_NLS
 appicondir = $(datadir)/icons/hicolor/256x256/apps
 appicon_DATA = extras/logos/naev.png
 Graphicsdir = $(datadir)/applications
-Graphics_DATA = org.naev.Naev.desktop
+Graphics_DATA = org.naev.naev.desktop
 appdatadir = $(datadir)/metainfo
-appdata_DATA = org.naev.Naev.appdata.xml
+appdata_DATA = org.naev.Naev.metainfo.xml
 dist_pkgdata_DATA = naev-confupdate.sh
 
 dist_man6_MANS = naev.6
@@ -31,7 +31,7 @@ VERSIONFILE = $(top_srcdir)/dat/VERSION
 LICENSEFILE = $(top_srcdir)/dat/LICENSE
 LANGUAGEFILE = $(top_srcdir)/dat/LANGUAGES
 
-EXTRA_DIST = build/config.rpath LICENSE extras org.naev.Naev.desktop org.naev.Naev.appdata.xml
+EXTRA_DIST = build/config.rpath LICENSE extras org.naev.naev.desktop org.naev.naev.metainfo.xml
 CLEANFILES = $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE) $(LICENSEFILE)
 
 if HAVE_NLS
