@@ -10,12 +10,13 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - name: Setup Python
-      uses: actions/setup-python@v2
-
-    - name: Install Meson
+    - name: Install APT Packages
+      if: ${{ runner.os == 'Linux'}}
       run: |
-        pip install meson ninja
+        sudo apt-get update
+        sudo apt-get install \
+        meson \
+        ninja-build
 
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
