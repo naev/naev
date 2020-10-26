@@ -58,7 +58,7 @@ fi
 
 function get_version {
    VERSION="$(cat $SOURCEROOT/dat/VERSION)"
-   # Get version, negative minors mean betas
+   # Get version
    if [[ -n $(echo "$VERSION") ]]; then
       VERSION=$VERSION
    else
@@ -69,11 +69,19 @@ function get_version {
 }
 
 function make_appimage {
-   sh "$SOURCEROOT/utils/buildAppImage.sh" -n -s "$SOURCEROOT" -b "$BUILDPATH/appimage" -o "$BUILDOUTPUT"
+   if [[ $NIGHTLY = "true" ]]; then
+      sh "$SOURCEROOT/utils/buildAppImage.sh" -n -s "$SOURCEROOT" -b "$BUILDPATH/appimage" -o "$BUILDOUTPUT"
+   else
+      sh "$SOURCEROOT/utils/buildAppImage.sh" -s "$SOURCEROOT" -b "$BUILDPATH/appimage" -o "$BUILDOUTPUT"
+   fi
 }
 
 function make_windows {
-   sh "$SOURCEROOT/extras/windows/packageWindows.sh" -n -s "$SOURCEROOT" -b "$BUILDPATH/windows" -o "$BUILDOUTPUT"
+   if [[ $NIGHTLY = "true" ]]; then
+      sh "$SOURCEROOT/extras/windows/packageWindows.sh" -n -s "$SOURCEROOT" -b "$BUILDPATH" -o "$BUILDOUTPUT"
+   else
+      sh "$SOURCEROOT/extras/windows/packageWindows.sh" -s "$SOURCEROOT" -b "$BUILDPATH" -o "$BUILDOUTPUT"
+   fi
 }
 
 function make_macos {
