@@ -18,6 +18,15 @@ jobs:
         path: source
         fetch-depth: 0
 
+    - name: Update APT Cache
+      run: |
+        sudo apt-get update
+
+    - name: Install Additional Build Dependencies
+      run: |
+        sudo apt-get install \ 
+          ninja
+
     - name: Meson Build
       run: |
         sh $MESON setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
@@ -57,10 +66,14 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Install APT Packages
+    - name: Update APT Cache
       if: ${{ runner.os == 'Linux'}}
       run: |
         sudo apt-get update
+
+    - name: Install Additional Build Dependencies
+      if: ${{ runner.os == 'Linux'}}
+      run: |
         sudo apt-get install \
           autopoint \
           binutils-dev \
