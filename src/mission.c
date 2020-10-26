@@ -70,7 +70,7 @@ static int mission_compare( const void* arg1, const void* arg2 );
 static int mission_meetReq( int mission, int faction,
       const char* planet, const char* sysname );
 static int mission_matchFaction( MissionData* misn, int faction );
-static int mission_location( const char* loc );
+static int mission_location( const char *loc );
 /* Loading. */
 static int missions_cmp( const void *a, const void *b );
 static int mission_parseFile( const char* file );
@@ -749,16 +749,26 @@ Mission* missions_genList( int *n, int faction,
  *    @param loc String to get the location of.
  *    @return Location matching loc.
  */
-static int mission_location( const char* loc )
+static int mission_location( const char *loc )
 {
-   if (strcmp(loc,"None")==0) return MIS_AVAIL_NONE;
-   else if (strcmp(loc,"Computer")==0) return MIS_AVAIL_COMPUTER;
-   else if (strcmp(loc,"Bar")==0) return MIS_AVAIL_BAR;
-   else if (strcmp(loc,"Outfit")==0) return MIS_AVAIL_OUTFIT;
-   else if (strcmp(loc,"Shipyard")==0) return MIS_AVAIL_SHIPYARD;
-   else if (strcmp(loc,"Land")==0) return MIS_AVAIL_LAND;
-   else if (strcmp(loc,"Commodity")==0) return MIS_AVAIL_COMMODITY;
-   else if (strcmp(loc,"Space")==0) return MIS_AVAIL_SPACE;
+   if ( loc != NULL ) {
+      if ( strcmp( loc, "None" ) == 0 )
+         return MIS_AVAIL_NONE;
+      else if ( strcmp( loc, "Computer" ) == 0 )
+         return MIS_AVAIL_COMPUTER;
+      else if ( strcmp( loc, "Bar" ) == 0 )
+         return MIS_AVAIL_BAR;
+      else if ( strcmp( loc, "Outfit" ) == 0 )
+         return MIS_AVAIL_OUTFIT;
+      else if ( strcmp( loc, "Shipyard" ) == 0 )
+         return MIS_AVAIL_SHIPYARD;
+      else if ( strcmp( loc, "Land" ) == 0 )
+         return MIS_AVAIL_LAND;
+      else if ( strcmp( loc, "Commodity" ) == 0 )
+         return MIS_AVAIL_COMMODITY;
+      else if ( strcmp( loc, "Space" ) == 0 )
+         return MIS_AVAIL_SPACE;
+   }
    return -1;
 }
 
@@ -966,6 +976,7 @@ static int mission_parseFile( const char* file )
 
    /* Clean up. */
    xmlFreeDoc(doc);
+   free(filebuf);
 
    return 0;
 }

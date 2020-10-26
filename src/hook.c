@@ -26,8 +26,9 @@
 
 #include "naev.h"
 
-#include <stdlib.h>
 #include "nstring.h"
+#include <assert.h>
+#include <stdlib.h>
 
 #include "log.h"
 #include "nxml.h"
@@ -957,8 +958,11 @@ int hooks_runParam( const char* stack, HookParam *param )
    if (hook_atomic) {
       hq = calloc( 1, sizeof(HookQueue_t) );
       hq->stack = strdup(stack);
-      for (i=0; param[i].type != HOOK_PARAM_SENTINEL; i++)
-         hq->hparam[i] = param[i];
+      i         = 0;
+      if ( param != NULL ) {
+         for ( ; param[ i ].type != HOOK_PARAM_SENTINEL; i++ )
+            hq->hparam[ i ] = param[ i ];
+      }
 #ifdef DEBUGGING
       if (i >= HOOK_MAX_PARAM)
          WARN( _("HOOK_MAX_PARAM is set too low (%d), need at least %d!"), HOOK_MAX_PARAM, i );
@@ -1336,7 +1340,6 @@ static int hook_parse( xmlNodePtr base )
                new_id = hook_addEvent( parent, func, stack );
                break;
             default:
-               new_id = -1;
                WARN(_("Save has unsupported hook type."));
                continue;
          }

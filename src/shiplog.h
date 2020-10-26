@@ -1,12 +1,27 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
+
 #ifndef SHIPLOG_H
 #  define SHIPLOG_H
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "nxml.h"
-#include "ntime.h"
+
+#include "attributes.h"
 #include "nstring.h"
-int shiplog_create( const char *idstr, const char *logname, const char *type, int overwrite, const int maxLen ); /* returns a log ID, for log with specified title.  If overwrite set, and title already exists, the log will be cleared and previous log ID returned, otherwise a new log ID will be created. */
+#include "ntime.h"
+#include "nxml.h"
+
+
+/* returns a log ID, for log with specified title.  If overwrite set, and
+   title already exists, the log will be cleared and previous log ID
+   returned, otherwise a new log ID will be created. */
+NONNULL( 2, 3 )
+int  shiplog_create( const char *idstr, const char *logname, const char *type, int overwrite, const int maxLen );
 int shiplog_append( const char *idstr, const char *msg );/* Add a message to the log */
 int shiplog_appendByID( const int logid, const char *msg );/* Add a message to the log */
 void shiplog_delete( const int logid ); /* Delete a log.  Use with care (removes all entries with this ID */
@@ -31,7 +46,7 @@ typedef struct {
   char *msg;
   void *next;
   void *prev;
-  
+
 } ShipLogEntry;
 
 /* Holding global information about the log. */

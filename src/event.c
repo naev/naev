@@ -634,6 +634,7 @@ static int event_parseFile( const char* file )
 
    /* Clean up. */
    xmlFreeDoc(doc);
+   free(filebuf);
 
    return 0;
 }

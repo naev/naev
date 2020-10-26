@@ -7,6 +7,7 @@
 #  define PLAYER_H
 
 
+#include "attributes.h"
 #include "pilot.h"
 
 /** Player flag enum. */
@@ -176,11 +177,11 @@ int player_ships( char** sships, glTexture** tships );
 void player_shipsSort (void);
 const PlayerShip_t* player_getShipStack( int *n );
 int player_nships (void);
-int player_hasShip( char* shipname );
-Pilot* player_getShip( char* shipname );
-void player_swapShip( char* shipname );
-credits_t player_shipPrice( char* shipname );
-void player_rmShip( char* shipname );
+int                 player_hasShip( const char *shipname );
+Pilot *             player_getShip( const char *shipname );
+void                player_swapShip( const char *shipname );
+credits_t           player_shipPrice( const char *shipname );
+void                player_rmShip( const char *shipname );
 
 
 /*
@@ -213,7 +214,7 @@ int player_eventAlreadyDone( int id );
 /*
  * licenses
  */
-void player_addLicense( char *license );
+NONNULL( 1 ) void player_addLicense( char *license );
 int player_hasLicense( char *license );
 char **player_getLicenses( int *nlicenses );
 

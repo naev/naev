@@ -46,7 +46,7 @@ void commodity_exchange_open( unsigned int wid )
    int w, h;
    int iw, ih;
 
-  
+
    /* Mark as generated. */
    land_tabGenerate(LAND_WINDOW_COMMODITY);
 
@@ -170,21 +170,16 @@ void commodity_update( unsigned int wid, char* str )
       nsnprintf( buf2, 80, _("%"PRIu64" credits"),com->lastPurchasePrice);
    credits2str( buf3, player.p->credits, 2 );
    nsnprintf( buf, PATH_MAX,
-         _("%d tonnes\n"
-         "%s\n"
-         "%"PRIu64" credits\n"
-         "%d tonnes\n"
-         "%s credits\n"
-         "%"PRIu64" ± %.1f\n"
-         "%"PRIu64" ± %.1f\n"),
-         owned,
-         buf2,     
-         planet_commodityPrice( land_planet, com ),
-         pilot_cargoFree(player.p),
-         buf3,
-         mean, std,
-         globalmean,globalstd );
-   
+              _( "%d tonnes\n"
+                 "%s\n"
+                 "%" PRIu64 " credits\n"
+                 "%d tonnes\n"
+                 "%s credits\n"
+                 "%" PRIu64 " ± %.1f\n"
+                 "%" PRIu64 " ± %.1f\n" ),
+              owned, buf2, planet_commodityPrice( land_planet, com ), pilot_cargoFree( player.p ), buf3, mean, std,
+              globalmean, globalstd );
+
    window_modifyText( wid, "txtDInfo", buf );
    nsnprintf( buf, PATH_MAX,
          "%s\n"
@@ -207,7 +202,7 @@ void commodity_update( unsigned int wid, char* str )
 }
 
 
-int commodity_canBuy( char *name )
+int commodity_canBuy( const char *name )
 {
    int failure;
    unsigned int q, price;
@@ -233,7 +228,7 @@ int commodity_canBuy( char *name )
 }
 
 
-int commodity_canSell( char *name )
+int commodity_canSell( const char *name )
 {
    int failure;
 
@@ -261,7 +256,7 @@ void commodity_buy( unsigned int wid, char* str )
    unsigned int q;
    credits_t price;
    HookParam hparam[3];
-   
+
    /* Get selected. */
    q     = commodity_getMod();
    comname = toolkit_getImageArray( wid, "iarTrade" );
@@ -302,7 +297,7 @@ void commodity_sell( unsigned int wid, char* str )
    unsigned int q;
    credits_t price;
    HookParam hparam[3];
-   
+
    /* Get parameters. */
    q     = commodity_getMod();
    comname = toolkit_getImageArray( wid, "iarTrade" );

@@ -220,47 +220,49 @@ char* ship_class( Ship* s )
  */
 ShipClass ship_classFromString( char* str )
 {
-   /* Civilian */
-   if (strcmp(str,"Yacht")==0)
-      return SHIP_CLASS_YACHT;
-   else if (strcmp(str,"Luxury Yacht")==0)
-      return SHIP_CLASS_LUXURY_YACHT;
-   else if (strcmp(str,"Cruise Ship")==0)
-      return SHIP_CLASS_CRUISE_SHIP;
+   if ( str != NULL ) {
+      /* Civilian */
+      if ( strcmp( str, "Yacht" ) == 0 )
+         return SHIP_CLASS_YACHT;
+      else if ( strcmp( str, "Luxury Yacht" ) == 0 )
+         return SHIP_CLASS_LUXURY_YACHT;
+      else if ( strcmp( str, "Cruise Ship" ) == 0 )
+         return SHIP_CLASS_CRUISE_SHIP;
 
-   /* Merchant. */
-   else if (strcmp(str,"Courier")==0)
-      return SHIP_CLASS_COURIER;
-   else if (strcmp(str,"Freighter")==0)
-      return SHIP_CLASS_FREIGHTER;
-   else if (strcmp(str,"Armoured Transport")==0)
-      return SHIP_CLASS_ARMOURED_TRANSPORT;
-   else if (strcmp(str,"Bulk Carrier")==0)
-      return SHIP_CLASS_BULK_CARRIER;
+      /* Merchant. */
+      else if ( strcmp( str, "Courier" ) == 0 )
+         return SHIP_CLASS_COURIER;
+      else if ( strcmp( str, "Freighter" ) == 0 )
+         return SHIP_CLASS_FREIGHTER;
+      else if ( strcmp( str, "Armoured Transport" ) == 0 )
+         return SHIP_CLASS_ARMOURED_TRANSPORT;
+      else if ( strcmp( str, "Bulk Carrier" ) == 0 )
+         return SHIP_CLASS_BULK_CARRIER;
 
-   /* Military */
-   else if (strcmp(str,"Scout")==0)
-      return SHIP_CLASS_SCOUT;
-   else if (strcmp(str,"Fighter")==0)
-      return SHIP_CLASS_FIGHTER;
-   else if (strcmp(str,"Bomber")==0)
-      return SHIP_CLASS_BOMBER;
-   else if (strcmp(str,"Corvette")==0)
-      return SHIP_CLASS_CORVETTE;
-   else if (strcmp(str,"Destroyer")==0)
-      return SHIP_CLASS_DESTROYER;
-   else if (strcmp(str,"Cruiser")==0)
-      return SHIP_CLASS_CRUISER;
-   else if (strcmp(str,"Carrier")==0)
-      return SHIP_CLASS_CARRIER;
+      /* Military */
+      else if ( strcmp( str, "Scout" ) == 0 )
+         return SHIP_CLASS_SCOUT;
+      else if ( strcmp( str, "Fighter" ) == 0 )
+         return SHIP_CLASS_FIGHTER;
+      else if ( strcmp( str, "Bomber" ) == 0 )
+         return SHIP_CLASS_BOMBER;
+      else if ( strcmp( str, "Corvette" ) == 0 )
+         return SHIP_CLASS_CORVETTE;
+      else if ( strcmp( str, "Destroyer" ) == 0 )
+         return SHIP_CLASS_DESTROYER;
+      else if ( strcmp( str, "Cruiser" ) == 0 )
+         return SHIP_CLASS_CRUISER;
+      else if ( strcmp( str, "Carrier" ) == 0 )
+         return SHIP_CLASS_CARRIER;
 
-   /* Robotic */
-   else if (strcmp(str,"Drone")==0)
-      return SHIP_CLASS_DRONE;
-   else if (strcmp(str,"Heavy Drone")==0)
-      return SHIP_CLASS_HEAVY_DRONE;
-   else if (strcmp(str,"Mothership")==0)
-      return SHIP_CLASS_MOTHERSHIP;
+      /* Robotic */
+      else if ( strcmp( str, "Drone" ) == 0 )
+         return SHIP_CLASS_DRONE;
+      else if ( strcmp( str, "Heavy Drone" ) == 0 )
+         return SHIP_CLASS_HEAVY_DRONE;
+      else if ( strcmp( str, "Mothership" ) == 0 )
+         return SHIP_CLASS_MOTHERSHIP;
+   }
 
   /* Unknown */
   return SHIP_CLASS_NULL;
@@ -609,6 +611,7 @@ static int ship_loadPLG( Ship *temp, char *buf )
       }
    } while (xml_nextNode(node));
 
+   xmlFreeDoc(doc);
    return 0;
 }
 
@@ -911,7 +914,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
                temp->gfx_noverlays += 1;
                if (temp->gfx_noverlays > m) {
                   m *= 2;
-                  temp->gfx_overlays = realloc( temp->gfx_overlays, m*sizeof(glTexture) );
+                  temp->gfx_overlays = realloc( temp->gfx_overlays, m * sizeof( glTexture * ) );
                }
                temp->gfx_overlays[ temp->gfx_noverlays-1 ] = xml_parseTexture( cur,
                      OVERLAY_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );

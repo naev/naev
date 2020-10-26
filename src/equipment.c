@@ -1068,10 +1068,8 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
 
       /* Remove ammo first. */
       ammo = outfit_ammo(o);
-      if (ammo != NULL) {
-         ammo = slot->u.ammo.outfit;
+      if ( ammo != NULL )
          pilot_rmAmmo( eq_wgt.selected, slot, slot->u.ammo.quantity );
-      }
 
       /* Remove outfit. */
       ret = pilot_rmOutfit( eq_wgt.selected, slot );

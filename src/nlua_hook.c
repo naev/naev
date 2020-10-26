@@ -268,7 +268,6 @@ static unsigned int hook_generic( lua_State *L, const char* stack, double ms, in
    running_event = event_getFromLua(L);
    running_mission = misn_getFromLua(L);
 
-   h = 0;
    if (running_mission != NULL) {
       /* make sure mission is a player mission */
       for (i=0; i<MISSION_MAX; i++)

@@ -775,6 +775,7 @@ static int pilotL_getPilots( lua_State *L )
             }
             lua_pop(L,1);
          }
+         assert( i == nfactions );
       }
 
       /* Now put all the matching pilots in a table. */
@@ -3005,7 +3006,7 @@ static int pilotL_setSpeedLimit(lua_State* L)
  * @usage armour, shield, stress, dis = p:health()
  *
  *    @luatparam Pilot p Pilot to get health of.
- *    @luatreturn number The armour in % [0:100]. 
+ *    @luatreturn number The armour in % [0:100].
  *    @luatreturn number The shield in % [0:100].
  *    @luatreturn number The stress in % [0:100].
  *    @luatreturn boolean Indicates if pilot is disabled.

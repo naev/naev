@@ -81,8 +81,6 @@ extern int show_fps;
 extern int max_fps;
 extern int indjoystick;
 extern char* namjoystick;
-/* from player.c */
-extern const char *keybind_info[][3]; /* keybindings */
 /* from input.c */
 extern unsigned int input_afterburnSensitivity;
 
@@ -409,7 +407,7 @@ int conf_loadConfig ( const char* file )
       /* Sound. */
       conf_loadString( lEnv, "sound_backend", conf.sound_backend );
       conf_loadInt( lEnv, "snd_voices", conf.snd_voices );
-      conf.snd_voices = MAX( 16, conf.snd_voices ); /* Must be at least 16. */
+      conf.snd_voices = MAX( VOICES_MIN, conf.snd_voices ); /* Must be at least 16. */
       conf_loadBool( lEnv, "snd_pilotrel", conf.snd_pilotrel );
       conf_loadBool( lEnv, "al_efx", conf.al_efx );
       conf_loadInt( lEnv, "al_bufsize", conf.al_bufsize );

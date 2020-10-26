@@ -1455,7 +1455,7 @@ static void debug_sigInit (void)
 
          /* static */
          symcount = bfd_read_minisymbols (abfd, FALSE, (void **)&syms, &size);
-         if (symcount == 0) /* dynamic */
+         if ( symcount == 0 && abfd != NULL ) /* dynamic */
             symcount = bfd_read_minisymbols (abfd, TRUE, (void **)&syms, &size);
          assert(symcount >= 0);
       }

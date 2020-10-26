@@ -507,6 +507,7 @@ static void board_update( unsigned int wdw )
       if (j < PATH_MAX)
         j += snprintf( &str[j], PATH_MAX-j, _("%d missiles\n"), nmissiles );
    }
+   (void)j;
 
    window_modifyText( wdw, "txtData", str );
 }

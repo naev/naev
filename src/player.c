@@ -286,8 +286,11 @@ void player_new (void)
    dialogue_addChoice( title, caption, speed_opts[1] );
    ret = dialogue_runChoice();
    player.dt_mod = 1.;
-   if ( (ret != NULL) && (strcmp(ret, speed_opts[1]) == 0) )
-      player.dt_mod = 0.5;
+   if (ret != NULL) {
+      if (strcmp(ret, speed_opts[1]) == 0)
+         player.dt_mod = 0.5;
+      free( ret );
+   }
 
    if (player_newMake())
       return;
@@ -425,6 +428,7 @@ Pilot* player_newShip( Ship* ship, const char *def_name,
    if (player_hasShip(ship_name)) {
       dialogue_msg( _("Name collision"),
             _("Please do not give the ship the same name as another of your ships."));
+      free( ship_name );
       return NULL;
    }
 
@@ -520,7 +524,7 @@ static Pilot* player_newShipMake( const char* name )
  *
  *    @param shipname Ship to change to.
  */
-void player_swapShip( char* shipname )
+void player_swapShip( const char *shipname )
 {
    int i, j;
    Pilot* ship;
@@ -589,7 +593,7 @@ void player_swapShip( char* shipname )
  *    @param shipname Name of the ship.
  *    @return The price of the ship in credits.
  */
-credits_t player_shipPrice( char* shipname )
+credits_t player_shipPrice( const char *shipname )
 {
    int i;
    Pilot *ship = NULL;
@@ -621,7 +625,7 @@ credits_t player_shipPrice( char* shipname )
  *
  *    @param shipname Name of the ship to remove.
  */
-void player_rmShip( char* shipname )
+void player_rmShip( const char *shipname )
 {
    int i, w;
 
@@ -2458,7 +2462,7 @@ int player_nships (void)
  *    @param shipname Nome of the ship to get.
  *    @return 1 if ship exists.
  */
-int player_hasShip( char* shipname )
+int player_hasShip( const char *shipname )
 {
    int i;
 
@@ -2480,7 +2484,7 @@ int player_hasShip( char* shipname )
  *    @param shipname Nome of the ship to get.
  *    @return The ship matching name.
  */
-Pilot* player_getShip( char* shipname )
+Pilot *player_getShip( const char *shipname )
 {
    int i;
 
@@ -3531,12 +3535,19 @@ static int player_parseDoneEvents( xmlNodePtr parent )
 static int player_parseLicenses( xmlNodePtr parent )
 {
    xmlNodePtr node;
+   char *     name;
 
    node = parent->xmlChildrenNode;
 
    do {
-      if (xml_isNode(node,"license"))
-         player_addLicense( xml_get(node) );
+      if ( xml_isNode( node, "license" ) ) {
+         name = xml_get( node );
+         if ( name == NULL ) {
+            WARN( _( "License node is missing name attribute." ) );
+            continue;
+         }
+         player_addLicense( name );
+      }
    } while (xml_nextNode(node));
 
    return 0;

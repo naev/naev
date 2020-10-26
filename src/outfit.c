@@ -1101,6 +1101,7 @@ that can be found in naev's artwork repo."), file);
       } while (xml_nextNode(node));
    }
 
+   xmlFreeDoc(doc);
    return 0;
 }
 
@@ -1264,6 +1265,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          _("\n%.1f degree swivel"),
          temp->u.blt.swivel*180./M_PI );
    }
+   (void)l;
 
 
 #define MELEMENT(o,s) \
@@ -1399,6 +1401,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          temp->u.bem.duration, temp->u.bem.delay,
          temp->u.bem.range,
          temp->u.bem.heatup);
+   (void)l;
 
 #define MELEMENT(o,s) \
 if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
@@ -2169,7 +2172,7 @@ static int outfit_parse( Outfit* temp, const char* file )
                      temp->gfx_noverlays += 1;
                      if (temp->gfx_noverlays > m) {
                         m *= 2;
-                        temp->gfx_overlays = realloc( temp->gfx_overlays, m*sizeof(glTexture) );
+                        temp->gfx_overlays = realloc( temp->gfx_overlays, m * sizeof( glTexture * ) );
                      }
                      temp->gfx_overlays[ temp->gfx_noverlays-1 ] = xml_parseTexture( ccur,
                            OVERLAY_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
@@ -2549,6 +2552,7 @@ static void outfit_launcherDesc( Outfit* o )
          outfit_range(a), a->u.amm.duration,
          a->u.amm.speed,
          (a->u.amm.resist <= 0 ? 0. : (1. - 0.5 / a->u.amm.resist) * 100.) );
+   (void)l;
 }
 
 

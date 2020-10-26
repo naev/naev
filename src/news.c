@@ -333,7 +333,6 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
 
 
    /* Now load up the text. */
-   i = 0;
    p = 0;
    news_nlines = 0;
 
