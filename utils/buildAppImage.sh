@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # AppImage BUILD SCRIPT FOR NAEV
 #
@@ -31,29 +31,34 @@ while getopts dns:b:o: OPTION "$@"; do
     esac
 done
 
-if [[ -z "$SOURCEROOT" ]]; then
+if [ -z "$SOURCEROOT" ]; then
     SOURCEROOT=$(pwd)
 fi
-if [[ -z "$BUILDPATH" ]]; then
+if [ -z "$BUILDPATH" ]; then
     BUILDPATH=$(pwd)/build/appimageBuild
 fi
-if [[ $NIGHTLY = "true" ]]; then
+if [ $NIGHTLY = "true" ]; then
     NIGHTLY="true"
 else
     NIGHTLY="false"
 fi
-if [[ -z "$BUILDOUTPUT" ]]; then
+if [ -z "$BUILDOUTPUT" ]; then
     OLDDISTDIR=$DISTDIR
     BUILDOUTPUT="$(pwd)/dist"
 fi
 
-MESON="$SOURCEROOT/meson.sh"
+# Honours the MESON variable set by the environment before setting it manually.
+
+if [ -z "$MESON" ]; then
+    MESON="$SOURCEROOT/meson.sh"
+fi
+
 
 # Output configured variables
 
 echo "SOURCE ROOT:        $SOURCEROOT"
 echo "BUILD ROOT:         $BUILDPATH"
-if [[ $NIGHTLY = "true" ]]; then
+if [ $NIGHTLY = "true" ]; then
     echo "NIGHTLY:            YES"
 else
     echo "NIGHTLY:            NO"
@@ -69,7 +74,7 @@ export DESTDIR="$BUILDOUTPUT/Naev.AppDir"
 
 # Setup AppImage Build Directory
 
-sh meson.sh setup $BUILDPATH $SOURCEROOT \
+sh $MESON setup $BUILDPATH $SOURCEROOT \
     --native-file $SOURCEROOT/utils/build/linux_appimage.ini \
     --buildtype release \
     -Db_lto=true \
@@ -79,7 +84,7 @@ sh meson.sh setup $BUILDPATH $SOURCEROOT \
 
 # Compile and Install Naev to DISTDIR
 
-sh meson.sh install -C $BUILDPATH
+sh $MESON install -C $BUILDPATH
 
 # Prep dist directory for appimage
 # (I hate this but otherwise linuxdeploy fails on systems that generate the desktop file)
@@ -104,8 +109,7 @@ export OUTPUT="$BUILDOUTPUT/naev-$VERSION.AppImage"
 
 # Get linuxdeploy's AppImage
 linuxdeploy="$BUILDPATH/linuxdeploy-x86_64.AppImage"
-if [ ! -f "$linuxdeploy" ]
-then
+if [ ! -f "$linuxdeploy" ]; then
     wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage \
         -O "$linuxdeploy"
     chmod +x "$linuxdeploy"
