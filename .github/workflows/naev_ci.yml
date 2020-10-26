@@ -46,11 +46,11 @@ jobs:
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
-          - os: ubuntu-20.04
+          - os: ubuntu-18.04
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
@@ -58,7 +58,7 @@ jobs:
             shell: msys2 {0}
             config: windows.ini
             pkg-config-path: "[]"
-          - os: windows-latest
+          - os: windows-2019
             shell: msys2 {0}
             config: windows.ini
             pkg-config-path: "[]"
