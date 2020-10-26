@@ -47,16 +47,19 @@ if [[ -z "$BUILDOUTPUT" ]]; then
     BUILDOUTPUT="$(pwd)/dist"
 fi
 
+MESON="$SOURCEROOT/meson.sh"
+
 # Output configured variables
 
-echo "SOURCE ROOT:  $SOURCEROOT"
-echo "BUILD ROOT:   $BUILDPATH"
+echo "SOURCE ROOT:        $SOURCEROOT"
+echo "BUILD ROOT:         $BUILDPATH"
 if [[ $NIGHTLY = "true" ]]; then
-    echo "NIGHTLY:      YES"
+    echo "NIGHTLY:            YES"
 else
-    echo "NIGHTLY:      NO"
+    echo "NIGHTLY:            NO"
 fi
-echo "BUILD OUTPUT: $BUILDOUTPUT"
+echo "BUILD OUTPUT:       $BUILDOUTPUT"
+echo "MESON WRAPPER PATH: $MESON"
 
 # Set DESTDIR
 
@@ -66,7 +69,7 @@ export DESTDIR="$BUILDOUTPUT/Naev.AppDir"
 
 # Setup AppImage Build Directory
 
-meson setup $BUILDPATH $SOURCEROOT \
+sh meson.sh setup $BUILDPATH $SOURCEROOT \
     --native-file $SOURCEROOT/utils/build/linux_appimage.ini \
     --buildtype release \
     -Db_lto=true \
@@ -76,7 +79,7 @@ meson setup $BUILDPATH $SOURCEROOT \
 
 # Compile and Install Naev to DISTDIR
 
-meson install -C $BUILDPATH
+sh meson.sh install -C $BUILDPATH
 
 # Prep dist directory for appimage
 # (I hate this but otherwise linuxdeploy fails on systems that generate the desktop file)
@@ -97,7 +100,7 @@ fi
 # Make output dir (if it does not exist)
 mkdir -p $BUILDOUTPUT/out
 
-export OUTPUT="$BUILDOUTPUT/out/naev-$VERSION.AppImage"
+export OUTPUT="$BUILDOUTPUT/release/naev-$VERSION.AppImage"
 
 # Get linuxdeploy's AppImage
 linuxdeploy="$BUILDPATH/linuxdeploy-x86_64.AppImage"
