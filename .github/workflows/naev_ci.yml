@@ -4,12 +4,11 @@ name: CI
 
 env:
   DESTDIR: "${{ github.workspace }}/dist/"
+  MESON: "${{ github.workspace }}/source/meson.sh"
 
 jobs:
   "Package_Source":
     runs-on: ubuntu-latest
-    env:
-      MESON: "${{ github.workspace }}/source/meson.sh"
 
     steps:
     - name: Checkout Naev Repository
@@ -50,14 +49,11 @@ jobs:
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
-            env:
-              MESON: "${{ github.workspace }}/source/meson.sh"
+
           - os: windows-latest
             shell: msys2 {0}
             config: windows.ini
             pkg-config-path: "[]"
-            env:
-              MESON: "meson"
 
     defaults:
       run:
@@ -177,8 +173,6 @@ jobs:
   "Documentation":
     runs-on: ubuntu-latest
     needs: "Package_Source"
-    env:
-      MESON: "${{ github.workspace }}/source/meson.sh"
 
     steps:
     - name: Update APT Cache
