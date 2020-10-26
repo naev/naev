@@ -88,7 +88,7 @@ fi
 # Download and Install mingw-ldd
 
 echo "Install mingw-ldd script"
-pip install mingw-ldd
+pip3 install mingw-ldd
 
 # Move compiled binary to staging folder.
 
