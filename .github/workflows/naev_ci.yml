@@ -45,7 +45,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
