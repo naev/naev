@@ -43,9 +43,9 @@ if useNLS.disabled() == false
             '--copyright-holder=' + copyright_holder
             ]
     )
-    
+
     # LANGUAGES file generation
-    generate_languages = run_command(tail -n +2 meson.source_root()/po/LINGUAS > meson.source_root()/dat/LANGUAGES)
+    generate_languages = run_command(gen_languages)
     if generate_languages.returncode() != 0
     error(generate_languages.stderr())
     else
