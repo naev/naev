@@ -153,6 +153,7 @@ jobs:
 
     - name: Install Ninja-Build
       if: ${{ runner.os == 'Linux'}}
+      run: |
         sudo apt-get -t xenial-backports install \
           ninja-build
 
