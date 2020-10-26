@@ -25,7 +25,7 @@ jobs:
     - name: Install Additional Build Dependencies
       run: |
         sudo apt-get install \ 
-          ninja
+          ninja-build
 
     - name: Meson Build
       run: |
@@ -93,7 +93,7 @@ jobs:
           libsdl2-mixer-dev \
           libvorbis-dev \
           libxml2-dev \
-          ninja \
+          ninja-build \
           xvfb
 
     - name: Install MinGW Packages
@@ -191,7 +191,7 @@ jobs:
           lua-ldoc \
           graphviz \
           doxygen \
-          ninja
+          ninja-build
 
     - name: Get Source
       uses: actions/download-artifact@v2
