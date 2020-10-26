@@ -1,4 +1,12 @@
 #!/bin/sh
+#
+#
+# This script will download and wrap meson if the current installed version
+# is not at least version 0.55.0 (which meson.build currently requires)
+# if you have a newer version of meson in PATH, this wrapper isn't needed, 
+# but it will pass commands through all the same. 
+#
+#
 
 MESONDIR="meson-bin"
 
