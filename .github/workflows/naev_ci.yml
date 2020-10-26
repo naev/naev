@@ -24,7 +24,7 @@ jobs:
 
     - name: Install Additional Build Dependencies
       run: |
-        sudo apt-get install \ 
+        sudo apt-get install \
           ninja-build
 
     - name: Meson Build
