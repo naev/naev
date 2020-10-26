@@ -102,7 +102,7 @@ cp -r $SOURCEROOT/dat $SOURCEROOT/extras/windows/installer/bin
 # Collect DLLs
  
 if [[ $ARCH == "32" ]]; then
-for fn in `mingw-ldd "$BUILDDIR/naev.exe" --dll-lookup-dirs /mingw32/bin | grep -i "mingw32" | cut -f1 -d"/" --complement | cut -f1 -d"/" --complement`; do
+for fn in `mingw-ldd "$BUILDDIR/naev.exe" --dll-lookup-dirs /mingw32/bin | grep -i "mingw32" | cut -f2 -d"/" --complement | cut -f1 -d"/" --complement`; do
     fp="/"$fn
     echo "copying $fp to staging area"
     cp $fp $SOURCEROOT/extras/windows/installer/bin
@@ -136,7 +136,7 @@ fi
 # Create distribution folder
 
 echo "creating distribution folder if it doesn't exist"
-mkdir -p $OUTPUTPATH
+mkdir -p $OUTPUTPATH/out
 
 # Build installer
 
@@ -150,7 +150,7 @@ elif [[ $NIGHTLY == false ]]; then
     makensis -DVERSION=$VERSION -DARCH=$ARCH $SOURCEROOT/extras/windows/installer/naev.nsi
 
     # Move installer to distribution directory
-    mv $SOURCEROOT/extras/windows/installer/naev-$VERSION-win$ARCH.exe $OUTPUTPATH
+    mv $SOURCEROOT/extras/windows/installer/naev-$VERSION-win$ARCH.exe $OUTPUTPATH/out
 else
     echo "Cannot think of another movie quote.. again."
     echo "Something went wrong.."
@@ -163,7 +163,7 @@ echo "Successfully built Windows Installer for win$ARCH"
 OLDDIR=$(pwd)
 
 cd $SOURCEROOT/extras/windows/installer/bin
-zip $OUTPUTPATH/release/naev-win$ARCH.zip *.dll *.exe
+zip $OUTPUTPATH/out/naev-win$ARCH.zip *.dll *.exe
 cd $OLDDIR
 
 echo "Successfully packaged zipped folder for win$ARCH"
