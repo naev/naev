@@ -42,23 +42,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-16.04
+          - os: ubuntu-latest
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
-          - os: ubuntu-18.04
-            shell: bash
-            config: linux.ini
-            pkg-config-path: "[]"
-          - os: ubuntu-20.04
-            shell: bash
-            config: linux.ini
-            pkg-config-path: "[]"
-          - os: windows-2016
-            shell: msys2 {0}
-            config: windows.ini
-            pkg-config-path: "[]"
-          - os: windows-2019
+          - os: windows-latest
             shell: msys2 {0}
             config: windows.ini
             pkg-config-path: "[]"
@@ -79,7 +67,6 @@ jobs:
           binutils-dev \
           build-essential \
           gettext \
-          freeglut3-dev \
           intltool \
           libfontconfig1-dev \
           libfreetype6-dev \
