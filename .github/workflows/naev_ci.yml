@@ -79,6 +79,7 @@ jobs:
           binutils-dev \
           build-essential \
           gettext \
+          freeglut3-dev \
           intltool \
           libfontconfig1-dev \
           libfreetype6-dev \
