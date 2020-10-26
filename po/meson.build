@@ -49,7 +49,7 @@ if useNLS.disabled() == false
     if generate_languages.returncode() != 0
     error(generate_languages.stderr())
     else
-    meson.add_dist_script(add_to_package, 'dat/LANGUAGES')
+    meson.add_dist_script('../'+add_to_package, 'dat/LANGUAGES')
     endif
 endif
 
