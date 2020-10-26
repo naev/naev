@@ -18,7 +18,7 @@ grab_meson () {
     fi
 }
 
-if [ ! "meson" ]; then
+if ! [ -x "$(command -v meson)" ]; then
     echo "You don't have Meson in PATH, grabbing from online"
     MESON="$MESONDIR/meson.py"
     grab_meson
