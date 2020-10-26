@@ -86,6 +86,7 @@ jobs:
           libsdl2-dev \
           libsdl2-image-dev \
           libsdl2-mixer-dev \
+          libsuitesparse-dev \
           libvorbis-dev \
           libxml2-dev \
           ninja-build \
