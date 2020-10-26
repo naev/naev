@@ -8,15 +8,10 @@ env:
 jobs:
   "Package_Source":
     runs-on: ubuntu-latest
-
+    env:
+      MESON: ".${{ github.workspace }}/source/meson.sh"
+      
     steps:
-    - name: Setup Python
-      uses: actions/setup-python@v2
-
-    - name: Install Meson
-      run: |
-        pip install meson ninja
-
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
       with:
@@ -25,8 +20,8 @@ jobs:
 
     - name: Meson Build
       run: |
-        meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
-        meson dist -C build --no-tests
+        $MESON setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
+        $MESON dist -C build --no-tests
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -46,10 +41,14 @@ jobs:
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
+            env:
+              MESON: ".${{ github.workspace }}/source/meson.sh"
           - os: windows-latest
             shell: msys2 {0}
             config: windows.ini
             pkg-config-path: "[]"
+            env:
+              DESTDIR: "${{ github.workspace }}/dist/"
 
     defaults:
       run:
@@ -81,6 +80,7 @@ jobs:
           libsdl2-mixer-dev \
           libvorbis-dev \
           libxml2-dev \
+          ninja \
           xvfb
 
     - name: Install MinGW Packages
@@ -91,15 +91,6 @@ jobs:
         update: true
         path-type: strict
         install: git tar mingw-w64-x86_64-clang mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-luajit mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer
-
-    - name: Setup Python
-      if: ${{ runner.os == 'Linux'}}
-      uses: actions/setup-python@v2
-
-    - name: Install Meson
-      if: ${{ runner.os == 'Linux'}}
-      run: |
-        pip install meson ninja
 
     - name: Get Source
       uses: actions/download-artifact@v2
