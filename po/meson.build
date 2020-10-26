@@ -43,6 +43,14 @@ if useNLS.disabled() == false
             '--copyright-holder=' + copyright_holder
             ]
     )
+    
+    # LANGUAGES file generation
+    generate_languages = run_command(tail -n +2 meson.source_root()/po/LINGUAS > meson.source_root()/dat/LANGUAGES)
+    if generate_languages.returncode() != 0
+    error(generate_languages.stderr())
+    else
+    meson.add_dist_script(add_to_package, 'dat/LANGUAGES')
+    endif
 endif
 
 config_data.set10('ENABLE_NLS', hasNGetText)
