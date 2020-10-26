@@ -88,18 +88,18 @@ typedef struct Planet_ {
 
    /* Asset details. */
    double presenceAmount; /**< The amount of presence this asset exerts. */
+   double hide;           /**< The ewarfare hide value for an asset. */
    int presenceRange; /**< The range of presence exertion of this asset. */
    int real; /**< If the asset is tangible or not. */
-   double hide; /**< The ewarfare hide value for an asset. */
 
    /* Landing details. */
+   int can_land;      /**< Whether or not the player can land. */
    int land_override; /**< Forcibly allows the player to either be able to land or not (+1 is land, -1 is not, 0 otherwise). */
    char *land_func; /**< Landing function to execute. */
-   int can_land; /**< Whether or not the player can land. */
    char *land_msg; /**< Message on landing. */
-   credits_t bribe_price; /**< Cost of bribing. */
    char *bribe_msg; /**< Bribe message. */
    char *bribe_ack_msg; /**< Bribe ACK message. */
+   credits_t bribe_price;   /**< Cost of bribing. */
    int bribed; /**< If planet has been bribed. */
 
    /* Landed details. */
@@ -322,7 +322,7 @@ struct StarSystem_ {
    /* Economy. */
    CommodityPrice *averagePrice;
    int ncommodities;
-  
+
    /* Misc. */
    unsigned int flags; /**< flags for system properties */
 };

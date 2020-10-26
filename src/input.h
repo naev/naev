@@ -33,6 +33,10 @@ typedef enum {
 } KeybindType; /**< Keybind types. */
 
 
+extern const char *keybind_info[][ 3 ];
+extern const int   input_numbinds;
+
+
 /*
  * set input
  */

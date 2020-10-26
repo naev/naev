@@ -47,7 +47,7 @@ int commodity_nstack       = 0; /**< Number of commodities in the stack. */
 
 
 /* standard commodities (ie. sellable and buyable anywhere) */
-static int* commodity_standard = NULL; /**< Contains all the standard commoditie's indices. */
+static int* commodity_standard = NULL; /**< Contains all the standard commodity's indices. */
 static int commodity_nstandard = 0; /**< Number of standard commodities. */
 
 
@@ -660,6 +660,7 @@ void commodity_free (void)
    free( commodity_stack );
    commodity_stack = NULL;
    commodity_nstack = 0;
+   free( commodity_standard );
    commodity_standard = NULL;
    commodity_nstandard = 0;
 

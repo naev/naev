@@ -124,10 +124,10 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
 
    /* Set up window data. */
    if (outfits!=NULL) {
-      data = calloc( 1, sizeof(LandOutfitData) );
-      data->outfits = calloc( noutfits, sizeof(Outfit*) );
-      memcpy( data->outfits, outfits, sizeof(Outfit*)*noutfits );
+      data           = malloc( sizeof( LandOutfitData ) );
       data->noutfits = noutfits;
+      data->outfits  = malloc( data->noutfits * sizeof( Outfit ) );
+      memcpy( data->outfits, outfits, data->noutfits * sizeof( Outfit ) );
       window_setData( wid, data );
       window_onClose( wid, outfits_onClose );
    }
@@ -170,6 +170,7 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
    window_addButtonKey( wid, off -= 20+bw, 20,
          bw, bh, "btnFindOutfits",
          _("Find Outfits"), outfits_find, SDLK_f );
+   (void)off;
 
    /* fancy 128x128 image */
    window_addRect( wid, 19 + iw + 20, -50, 128, 129, "rctImage", &cBlack, 0 );
@@ -674,7 +675,7 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
  * @brief Checks to see if the player can buy the outfit.
  *    @param outfit Outfit to buy.
  */
-int outfit_canBuy( char *name, Planet *planet )
+int outfit_canBuy( const char *name, Planet *planet )
 {
    int failure;
    credits_t price;
@@ -744,12 +745,12 @@ static void outfits_rmouse( unsigned int wid, char* widget_name )
 static void outfits_buy( unsigned int wid, char* str )
 {
    (void) str;
-   char *outfitname;
+   const char *outfitname;
    Outfit* outfit;
    int q;
    HookParam hparam[3];
 
-   outfitname = strdup(toolkit_getImageArray( wid, OUTFITS_IAR ));
+   outfitname = toolkit_getImageArray( wid, OUTFITS_IAR );
    if (strcmp(outfitname, _("None")) == 0)
       return;
 
@@ -776,7 +777,6 @@ static void outfits_buy( unsigned int wid, char* str )
    hooks_runParam( "outfit_buy", hparam );
    if (land_takeoff)
       takeoff(1);
-   free(outfitname);
 
    /* Regenerate list. */
    outfits_regenList( wid, NULL );
@@ -785,7 +785,7 @@ static void outfits_buy( unsigned int wid, char* str )
  * @brief Checks to see if the player can sell the selected outfit.
  *    @param outfit Outfit to try to sell.
  */
-int outfit_canSell( char *name )
+int outfit_canSell( const char *name )
 {
    int failure;
    Outfit *outfit;
@@ -833,12 +833,12 @@ int outfit_canSell( char *name )
 static void outfits_sell( unsigned int wid, char* str )
 {
    (void)str;
-   char *outfitname;
+   const char *outfitname;
    Outfit* outfit;
    int q;
    HookParam hparam[3];
 
-   outfitname = strdup(toolkit_getImageArray( wid, OUTFITS_IAR ));
+   outfitname = toolkit_getImageArray( wid, OUTFITS_IAR );
    if (strcmp(outfitname, _("None")) == 0)
       return;
 
@@ -860,7 +860,6 @@ static void outfits_sell( unsigned int wid, char* str )
    hooks_runParam( "outfit_sell", hparam );
    if (land_takeoff)
       takeoff(1);
-   free(outfitname);
 
    /* Regenerate list. */
    outfits_regenList( wid, NULL );

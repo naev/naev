@@ -1385,6 +1385,8 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    glFontStash *stsh;
    char *used_font;
 
+   buf = NULL;
+
    /* See if we should override fonts. */
    used_font = NULL;
    if ((strcmp(fname, FONT_DEFAULT_PATH) == 0) &&

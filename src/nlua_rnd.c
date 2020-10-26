@@ -220,6 +220,8 @@ static int rnd_permutation( lua_State *L )
       lua_settable(   L, -3 );
    }
 
+   free( values );
+
    return 1;
 }
 

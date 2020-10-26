@@ -3,11 +3,11 @@
  */
 
 
-
 #ifndef MAP_H
 #  define MAP_H
 
 
+#include "attributes.h"
 #include "space.h"
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -37,9 +37,8 @@ void map_clear (void);
 void map_jump (void);
 
 /* manipulate universe stuff */
-StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
-     const char* sysend, int ignore_known, int show_hidden,
-     StarSystem** old_data );
+StarSystem **map_getJumpPath( int *njumps, const char *sysstart, const char *sysend, int ignore_known, int show_hidden,
+                              StarSystem **old_data ) WARN_IF( *njumps < 0, "njumps must be >= 0" );
 int map_map( const Outfit *map );
 int map_isMapped( const Outfit* map );
 

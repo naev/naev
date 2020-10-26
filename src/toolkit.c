@@ -550,16 +550,19 @@ unsigned int window_createFlags( const char* name,
             toolkit_expose( wcur, 0 ); /* wcur is hidden */
       }
 
-      wlast = NULL;
-      for (wcur = windows; wcur != NULL; wcur = wcur->next) {
-         if ((strcmp(wcur->name,name)==0) && !window_isFlag(wcur, WINDOW_KILL) &&
-               !window_isFlag(wcur, WINDOW_NOFOCUS))
-            WARN(_("Window with name '%s' already exists!"),wcur->name);
-         wlast = wcur;
+      wlast = windows;
+      while ( 1 ) {
+         if ( ( strcmp( wlast->name, name ) == 0 ) && !window_isFlag( wlast, WINDOW_KILL )
+              && !window_isFlag( wlast, WINDOW_NOFOCUS ) )
+            WARN( _( "Window with name '%s' already exists!" ), wlast->name );
+
+         if ( wlast->next == NULL )
+            break;
+
+         wlast = wlast->next;
       }
 
-      if (wlast != NULL)
-         wlast->next = wdw;
+      wlast->next = wdw;
    }
 
    return wid;
@@ -1790,10 +1793,10 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    }
 
    /* Handle button hotkeys. */
-   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
-      if ((wgt->type == WIDGET_BUTTON) && (wgt->dat.btn.key != 0) &&
-            (wgt->dat.btn.key == input_key))
-         return (wgt->keyevent( wgt, SDLK_RETURN, input_mod ));
+   for ( wgt = wdw->widgets; wgt != NULL; wgt = wgt->next )
+      if ( ( wgt->type == WIDGET_BUTTON ) && ( wgt->dat.btn.key != 0 ) && ( wgt->dat.btn.key == input_key )
+           && wgt->keyevent != NULL )
+         return ( wgt->keyevent( wgt, SDLK_RETURN, input_mod ) );
 
    /* Handle other cases where event might be used by the window. */
    switch (key) {

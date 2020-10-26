@@ -5,9 +5,9 @@
 
 #include "env.h"
 
-#include <stdlib.h>
 #include <assert.h>
 #include <limits.h>
+#include <stdlib.h>
 
 #include "config.h"
 #include "nstring.h"

@@ -402,7 +402,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Nebula: Unstable, ") );
          else
             cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Nebula: Stable, ") );
-	
+
          /* Density */
          if (sys->nebu_density > 700.)
             cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Dense\n") );
@@ -476,6 +476,8 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
             bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, &cFontWhite, buf );
 
+      (void)cnt;
+
       /* Jumps. */
       for (  i=0; i<sys->njumps; i++ ) {
          if ( jp_isUsable ( &sys->jumps[i] ) ) {
@@ -486,6 +488,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             } else {
                infopos+=nsnprintf( &infobuf[infopos], PATH_MAX-infopos, _("     Unkown system\n") );
             }
+            (void)infopos;
          }
       }
    } else {
@@ -515,6 +518,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
      }
      /* Add a description */
      cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, "%s", (p->description==NULL?_("No description available"):p->description) );
+     (void)cnt;
 
      txtHeight=gl_printHeightRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, buf );
 
@@ -534,6 +538,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
         if ( p->bar_description && planet_hasService( p, PLANET_SERVICE_BAR ) ) {
            infocnt+=nsnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", p->bar_description );
         }
+        (void)infocnt;
      }
      gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
          bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, &cFontWhite, buf );
@@ -1001,7 +1006,6 @@ void map_system_buyCommodPrice( unsigned int wid, char *str )
                                1, 0, NULL);
       if ( syslist == NULL ) {
          /* no route */
-         cost = 0;
          dialogue_msg( _("Not available here"), _("Sorry, we don't have the commodity prices for %s available here at the moment."), cur_planetObj_sel->name );
          return;
       } else {

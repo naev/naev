@@ -147,7 +147,7 @@ static UniDiff_t *diff_stack = NULL; /**< Currently applied universe diffs. */
 /*
  * Prototypes.
  */
-static UniDiff_t* diff_get( const char *name );
+NONNULL( 1 ) static UniDiff_t *diff_get( const char *name );
 static UniDiff_t *diff_newDiff (void);
 static int diff_removeDiff( UniDiff_t *diff );
 static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node );
@@ -204,6 +204,8 @@ int diff_loadAvailable (void)
       diff = &array_grow(&diff_available);
       diff->filename = strdup( diff_files[i] );
       xmlr_attr(node, "name", diff->name);
+      xmlFreeDoc(doc);
+      free(filebuf);
    }
    array_free( diff_files );
    array_shrink(&diff_available);
@@ -327,6 +329,12 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
    do {
       xml_onlyNodes(cur);
       if (xml_isNode(cur,"asset")) {
+         buf = xml_get( cur );
+         if ( buf == NULL ) {
+            WARN( _( "Unidiff '%s': Null hunk type." ), diff->name );
+            continue;
+         }
+
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
 
@@ -334,11 +342,6 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          xmlr_attr(cur,"name",hunk.u.name);
 
          /* Get the type. */
-         buf = xml_get(cur);
-         if (buf==NULL) {
-            WARN(_("Unidiff '%s': Null hunk type."), diff->name);
-            continue;
-         }
          if (strcmp(buf,"add")==0)
             hunk.type = HUNK_TYPE_ASSET_ADD;
          else if (strcmp(buf,"remove")==0)
@@ -358,6 +361,12 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          continue;
       }
       else if (xml_isNode(cur,"jump")) {
+         buf = xml_get( cur );
+         if ( buf == NULL ) {
+            WARN( _( "Unidiff '%s': Null hunk type." ), diff->name );
+            continue;
+         }
+
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
 
@@ -365,12 +374,6 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          xmlr_attr(cur,"target",hunk.u.name);
 
          /* Get the type. */
-         buf = xml_get(cur);
-         if (buf==NULL) {
-            WARN(_("Unidiff '%s': Null hunk type."), diff->name);
-            continue;
-         }
-
          if (strcmp(buf,"add")==0)
             hunk.type = HUNK_TYPE_JUMP_ADD;
          else if (strcmp(buf,"remove")==0)
@@ -582,6 +585,12 @@ static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
          continue;
       }
       else if (xml_isNode(cur,"faction")) {
+         buf = xml_get( cur );
+         if ( buf == NULL ) {
+            WARN( _( "Unidiff '%s': Null hunk type." ), diff->name );
+            continue;
+         }
+
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
 
@@ -589,11 +598,6 @@ static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
          xmlr_attr(cur,"name",hunk.u.name);
 
          /* Get the type. */
-         buf = xml_get(cur);
-         if (buf==NULL) {
-            WARN(_("Unidiff '%s': Null hunk type."), diff->name);
-            continue;
-         }
          if (strcmp(buf,"ally")==0)
             hunk.type = HUNK_TYPE_FACTION_ALLY;
          else if (strcmp(buf,"enemy")==0)
@@ -1143,6 +1147,7 @@ int diff_save( xmlTextWriterPtr writer )
 int diff_load( xmlNodePtr parent )
 {
    xmlNodePtr node, cur;
+   char *     diffName;
 
    diff_clear();
 
@@ -1151,8 +1156,14 @@ int diff_load( xmlNodePtr parent )
       if (xml_isNode(node,"diffs")) {
          cur = node->xmlChildrenNode;
          do {
-            if (xml_isNode(cur,"diff"))
-               diff_apply( xml_get(cur) );
+            if ( xml_isNode( cur, "diff" ) ) {
+               diffName = xml_get( cur );
+               if ( diffName == NULL ) {
+                  WARN( _( "Expected node \"diff\" to contain the name of a unidiff. Was empty." ) );
+                  continue;
+               }
+               diff_apply( diffName );
+            }
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));

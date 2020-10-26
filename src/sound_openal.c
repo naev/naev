@@ -273,17 +273,11 @@ int sound_al_init (void)
    /* Check for errors. */
    al_checkErr();
 
-   /* Start allocating the sources - music has already taken his */
+   /* Start allocating the sources - music has already taken theirs */
    source_nstack  = 0;
-   source_mstack  = 0;
+   source_mstack  = conf.snd_voices;
+   source_stack   = malloc( sizeof( ALuint ) * source_mstack );
    while (source_nstack < conf.snd_voices) {
-      if (source_mstack < source_nstack+1) { /* allocate more memory */
-         if (source_mstack == 0)
-            source_mstack = conf.snd_voices;
-         else
-            source_mstack *= 2;
-         source_stack = realloc( source_stack, sizeof(ALuint) * source_mstack );
-      }
       alGenSources( 1, &s );
       source_stack[source_nstack] = s;
 
@@ -331,17 +325,26 @@ int sound_al_init (void)
       else
          break;
    }
-   /* Reduce ram usage. */
-   source_mstack = source_nstack;
-   source_stack  = realloc( source_stack, sizeof(ALuint) * source_mstack );
-   /* Copy allocated sources to total stack. */
-   source_ntotal = source_mstack;
-   source_total  = malloc( sizeof(ALuint) * source_mstack );
-   memcpy( source_total, source_stack, sizeof(ALuint) * source_mstack );
-   /* Copy allocated sources to all stack. */
-   source_nall   = source_mstack;
-   source_all    = malloc( sizeof(ALuint) * source_mstack );
-   memcpy( source_all, source_stack, sizeof(ALuint) * source_mstack );
+
+   if ( source_nstack == 0 ) {
+      WARN( _( "OpenAL failed to initialize sources" ) );
+      source_mstack = 0;
+      free( source_stack );
+      source_stack = NULL;
+   }
+   else {
+      /* Reduce ram usage. */
+      source_mstack = source_nstack;
+      source_stack  = realloc( source_stack, sizeof( ALuint ) * source_mstack );
+      /* Copy allocated sources to total stack. */
+      source_ntotal = source_mstack;
+      source_total  = malloc( sizeof( ALuint ) * source_mstack );
+      memcpy( source_total, source_stack, sizeof( ALuint ) * source_mstack );
+      /* Copy allocated sources to all stack. */
+      source_nall = source_mstack;
+      source_all  = malloc( sizeof( ALuint ) * source_mstack );
+      memcpy( source_all, source_stack, sizeof( ALuint ) * source_mstack );
+   }
 
    /* Set up how sound works. */
    alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED ); /* Clamping is fundamental so it doesn't sound like crap. */

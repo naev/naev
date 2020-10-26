@@ -426,10 +426,11 @@ static void map_update( unsigned int wid )
    if ( cur_commod >= 0 ) {
       c = commod_known[cur_commod];
       if ( cur_commod_mode == 0 ) {
-         if (sys!=NULL) {
-            snprintf(buf,PATH_MAX,"%s prices trading from %s shown: Positive/blue values mean a profit\nwhile negative/orange values mean a loss when sold at the corresponding system.",c->name,sys->name);
-            window_modifyText( wid, "txtSystemStatus", buf );
-         }
+         snprintf( buf, PATH_MAX,
+                   "%s prices trading from %s shown: Positive/blue values mean a profit\n"
+                   "while negative/orange values mean a loss when sold at the corresponding system.",
+                   c->name, sys->name );
+         window_modifyText( wid, "txtSystemStatus", buf );
       } else {
          snprintf(buf,PATH_MAX,"Known %s prices shown. Galaxy-wide average: %.2f",c->name,commod_av_gal_price);
          window_modifyText( wid, "txtSystemStatus", buf );
@@ -574,8 +575,11 @@ static void map_update( unsigned int wid )
    if (unknownPresence != 0)
       l += nsnprintf( &buf[l], PATH_MAX-l, "%s\a0%s: \a%c%.0f",
                      (l==0)?"":"\n", _("Unknown"), 'N', unknownPresence);
+   (void)l;
+
    if (hasPresence == 0)
       nsnprintf(buf, PATH_MAX, "N/A");
+
    window_moveWidget( wid, "txtSPresence", x, y );
    window_moveWidget( wid, "txtPresence", x + 50, y-gl_smallFont.h-5 );
    window_modifyText( wid, "txtPresence", buf );
@@ -635,6 +639,8 @@ static void map_update( unsigned int wid )
          p += nsnprintf( &buf[p], PATH_MAX-p, "%s\n", planet_getServiceName(i) );
    if (buf[0] == '\0')
       p += nsnprintf( &buf[p], PATH_MAX-p, _("None"));
+   (void)p;
+
    window_modifyText( wid, "txtServices", buf );
 
 
@@ -696,6 +702,7 @@ static void map_update( unsigned int wid )
             p += nsnprintf(&buf[p], PATH_MAX-p, _("Asteroid Field"));
       }
       window_modifyText( wid, "txtSystemStatus", buf );
+      (void)p;
    }
 }
 
@@ -2286,8 +2293,9 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    }
 
    /* Build path backwards if not broken from loop. */
-   if (esys == cur->sys) {
+   if ( cur != NULL && esys == cur->sys ) {
       (*njumps) = A_g(cur);
+      assert( *njumps > 0 );
       if (old_data == NULL)
          res      = malloc( sizeof(StarSystem*) * (*njumps) );
       else {

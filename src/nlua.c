@@ -67,7 +67,7 @@ static const luaL_Reg gettext_methods[] = {
 
 /**
  * @brief gettext support.
- * 
+ *
  * @usage _( str )
  *    @luatparam str String to gettext on.
  *    @luatreturn The string converted to gettext.
@@ -83,7 +83,7 @@ static int nlua_gettext( lua_State *L )
 
 /**
  * @brief gettext support for singular and plurals.
- * 
+ *
  * @usage ngettext( str )
  *    @luatparam msgid1 Singular form.
  *    @luatparam msgid2 Plural form.
@@ -104,7 +104,7 @@ static int nlua_ngettext( lua_State *L )
 
 /**
  * @brief gettext support (noop). Does not actually do anything, but gets detected by gettext.
- * 
+ *
  * @usage _( str )
  *    @luatparam str String to gettext on.
  *    @luatreturn The string converted to gettext.
@@ -226,7 +226,7 @@ void nlua_freeEnv(nlua_env env) {
 
 /*
  * @brief Push environment table to stack
- * 
+ *
  *    @param env Environment.
  */
 void nlua_pushenv(nlua_env env) {
@@ -236,7 +236,7 @@ void nlua_pushenv(nlua_env env) {
 
 /*
  * @brief Gets variable from enviornment and pushes it to stack
- * 
+ *
  * This is meant to replace lua_getglobal()
  *
  *    @param env Environment.
@@ -251,7 +251,7 @@ void nlua_getenv(nlua_env env, const char *name) {
 
 /*
  * @brief Pops a value from the stack and sets it in the environment.
- * 
+ *
  * This is meant to replace lua_setglobal()
  *
  *    @param env Environment.
@@ -268,7 +268,7 @@ void nlua_setenv(nlua_env env, const char *name) {
 
 /*
  * @brief Registers C functions as lua library in environment
- * 
+ *
  * This is meant to replace luaL_register()
  *
  *    @param env Environment.
@@ -546,7 +546,7 @@ static int nlua_errTrace( lua_State *L )
 
 /*
  * @brief Wrapper around lua_pcall() that handles errors and enviornments
- * 
+ *
  *    @param env Environment.
  *    @param nargs Number of arguments to pass.
  *    @param nresults Number of return values to take.
