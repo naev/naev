@@ -87,9 +87,6 @@ fi
 
 # Download and Install mingw-ldd
 
-echo "Update pip"
-pip3 install --upgrade pip
-
 echo "Install mingw-ldd script"
 pip3 install mingw-ldd
 
