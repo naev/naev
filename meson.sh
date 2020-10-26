@@ -1,6 +1,5 @@
 #!/bin/sh
 
-BUILDDIR="builddir"
 MESONDIR="meson-bin"
 
 grab_meson () {
@@ -38,4 +37,12 @@ else
     fi
 fi
 
-./$MESON $@
+run_meson () {
+    if [ "$MESON" = *"$MESONDIR"* ]; then
+        ./$MESON $@
+    else
+        $MESON $@
+    fi
+}
+
+run_meson $@
