@@ -76,20 +76,14 @@ fi
 
 echo "ARCH:      $ARCH"
 
-VERSION="$(cat $SOURCEROOT/dat/VERSION)"
-BETA="false"
-# Get version, negative minors mean betas
-if [[ -n $(echo "$VERSION") ]]; then
-    VERSION=$VERSION
-    if [[ -n $(echo "$VERSION" | grep "beta") ]]; then
-    BETA="true"
-    fi
+# Check version exists and set VERSION variable.
+
+if test -f "$SOURCEROOT/dat/VERSION"; then
+    VERSION="$(cat $SOURCEROOT/dat/VERSION)"
 else
-    echo "could not find VERSION file"
+    echo "The VERSION file is missing from $SOURCEROOT."
     exit -1
 fi
-
-echo "BETA:      $BETA"
 
 # Download and Install mingw-ldd
 
@@ -133,7 +127,7 @@ cp $SOURCEROOT/extras/logos/logo.ico $SOURCEROOT/extras/windows/installer
 
 echo "copying naev binary to staging area"
 if [[ $NIGHTLY == true ]]; then
-cp $BUILDDIR/naev.exe $SOURCEROOT/extras/windows/installer/bin/naev-$VERSION-$BUILD_DATE-win$ARCH.exe
+cp $BUILDDIR/naev.exe $SOURCEROOT/extras/windows/installer/bin/naev-$VERSION.$BUILD_DATE-win$ARCH.exe
 elif [[ $NIGHTLY == false ]]; then
 cp $BUILDDIR/naev.exe $SOURCEROOT/extras/windows/installer/bin/naev-$VERSION-win$ARCH.exe
 else
@@ -144,35 +138,22 @@ fi
 
 # Create distribution folder
 
-echo "creating distribution folder"
-mkdir -p $OUTPUTPATH/release
+echo "creating distribution folder if it doesn't exist"
+mkdir -p $OUTPUTPATH
 
 # Build installer
 
 if [[ $NIGHTLY = true ]]; then
-    if [[ $BETA = true ]]; then 
-        makensis -DVERSION=$VERSION.$BUILD_DATE -DARCH=$ARCH $SOURCEROOT/extras/windows/installer/naev.nsi
-    elif [[ $BETA = false ]]; then 
-        makensis -DVERSION=$VERSION.$BUILD_DATE -DARCH=$ARCH $SOURCEROOT/extras/windows/installer/naev.nsi
-    else
-        echo "Something went wrong determining if this is a beta or not."
-    fi
-    
+    makensis -DVERSION=$VERSION.$BUILD_DATE -DARCH=$ARCH $SOURCEROOT/extras/windows/installer/naev.nsi
 
     # Move installer to distribution directory
-    mv $SOURCEROOT/extras/windows/installer/naev-$VERSION.$BUILD_DATE-win$ARCH.exe $OUTPUTPATH/release
+    mv $SOURCEROOT/extras/windows/installer/naev-$VERSION.$BUILD_DATE-win$ARCH.exe $OUTPUTPATH
 
 elif [[ $NIGHTLY == false ]]; then
-    if [[ $BETA = true ]]; then 
-        makensis -DVERSION=$VERSION -DARCH=$ARCH $SOURCEROOT/extras/windows/installer/naev.nsi
-    elif [[ $BETA = false ]]; then 
-        makensis -DVERSION=$VERSION -DARCH=$ARCH $SOURCEROOT/extras/windows/installer/naev.nsi
-    else
-        echo "Something went wrong determining if this is a beta or not."
-    fi
+    makensis -DVERSION=$VERSION -DARCH=$ARCH $SOURCEROOT/extras/windows/installer/naev.nsi
 
     # Move installer to distribution directory
-    mv $SOURCEROOT/extras/windows/installer/naev-$VERSION-win$ARCH.exe $OUTPUTPATH/release
+    mv $SOURCEROOT/extras/windows/installer/naev-$VERSION-win$ARCH.exe $OUTPUTPATH
 else
     echo "Cannot think of another movie quote.. again."
     echo "Something went wrong.."
