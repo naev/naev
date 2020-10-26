@@ -149,7 +149,11 @@ jobs:
           libsdl2-image-dev \
           libsdl2-mixer-dev \
           libvorbis-dev \
-          libxml2-dev \
+          libxml2-dev
+
+    - name: Install Ninja-Build
+      if: ${{ runner.os == 'Linux'}}
+        sudo apt-get -t xenial-backports install \
           ninja-build
 
     - name: Install MinGW Packages
