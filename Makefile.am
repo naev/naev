@@ -16,7 +16,7 @@ appicon_DATA = extras/logos/naev.png
 Graphicsdir = $(datadir)/applications
 Graphics_DATA = org.naev.naev.desktop
 appdatadir = $(datadir)/metainfo
-appdata_DATA = org.naev.Naev.metainfo.xml
+appdata_DATA = org.naev.naev.metainfo.xml
 dist_pkgdata_DATA = naev-confupdate.sh
 
 dist_man6_MANS = naev.6
