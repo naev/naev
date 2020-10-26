@@ -130,7 +130,7 @@ if buildExec.disabled() == false
    # OpenAL
    hasOpenAL = false
    useOpenAL = get_option('openal')
-   openal    = dependency('openal', method: 'auto', required: useOpenAL)
+   openal    = dependency('openal', required: useOpenAL)
    if openal.found()
       vorbis = dependency('vorbis', required: useOpenAL)
       if not vorbis.found()
