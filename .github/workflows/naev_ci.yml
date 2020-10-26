@@ -9,8 +9,8 @@ jobs:
   "Package_Source":
     runs-on: ubuntu-latest
     env:
-      MESON: ".${{ github.workspace }}/source/meson.sh"
-      
+      MESON: "${{ github.workspace }}/source/meson.sh"
+
     steps:
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
@@ -20,8 +20,8 @@ jobs:
 
     - name: Meson Build
       run: |
-        $MESON setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
-        $MESON dist -C build --no-tests
+        sh $MESON setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
+        sh $MESON dist -C build --no-tests
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -42,13 +42,13 @@ jobs:
             config: linux.ini
             pkg-config-path: "[]"
             env:
-              MESON: ".${{ github.workspace }}/source/meson.sh"
+              MESON: "${{ github.workspace }}/source/meson.sh"
           - os: windows-latest
             shell: msys2 {0}
             config: windows.ini
             pkg-config-path: "[]"
             env:
-              DESTDIR: "${{ github.workspace }}/dist/"
+              MESON: "meson"
 
     defaults:
       run:
@@ -105,7 +105,7 @@ jobs:
     - name: Meson Setup
       id: setup
       run: |
-        meson setup build source \
+        sh $MESON setup build source \
             --native-file='source/utils/build/${{ matrix.config }}' \
             --buildtype=release \
             --pkg-config-path=${{ matrix.pkg-config-path }} \
@@ -125,7 +125,7 @@ jobs:
     - name: Meson Compile
       id: compile
       run: |
-        meson compile -C build
+        sh $MESON compile -C build
 
     - name: Upload Compile Log
       uses: actions/upload-artifact@v2
@@ -138,7 +138,7 @@ jobs:
     - name: Meson Test
       id: tests
       run: |
-        ${{ matrix.test-env }} meson test -C build --print-errorlogs
+        ${{ matrix.test-env }} sh $MESON test -C build --print-errorlogs
 
     - name: Upload test log
       uses: actions/upload-artifact@v2
@@ -150,7 +150,7 @@ jobs:
 
     - name: Package
       run: |
-        meson install -C build
+        sh $MESON install -C build
       if: ${{ success() || steps.tests.outcome == 'failure' }}
 
     - name: Upload Artifact
@@ -164,6 +164,8 @@ jobs:
   "Documentation":
     runs-on: ubuntu-latest
     needs: "Package_Source"
+    env:
+      MESON: "${{ github.workspace }}/source/meson.sh"
 
     steps:
     - name: Update APT Cache
@@ -175,14 +177,8 @@ jobs:
         sudo apt-get install \
           lua-ldoc \
           graphviz \
-          doxygen
-
-    - name: Setup Python
-      uses: actions/setup-python@v2
-
-    - name: Install Meson
-      run: |
-        pip install meson ninja
+          doxygen \
+          ninja
 
     - name: Get Source
       uses: actions/download-artifact@v2
@@ -196,9 +192,9 @@ jobs:
 
     - name: Meson Build
       run: |
-        meson setup build source \
+        sh $MESON setup build source \
             -Dexecutable=disabled
-        meson install -C build
+        sh $MESON install -C build
 
     - name: Install SSH Key
       uses: shimataro/ssh-key-action@v2.0.3
