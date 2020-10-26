@@ -42,73 +42,7 @@ jobs:
         path: ${{ github.workspace }}/build/meson-dist/*
         if-no-files-found: error
 
-  "Build_Windows":
-    needs: "Package_Source"
-
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: windows-latest
-            shell: msys2 {0}
-            config: windows.ini
-            pkg-config-path: "[]"
-
-    defaults:
-      run:
-        shell: ${{ matrix.shell }}
-
-    runs-on: ${{ matrix.os }}
-
-    steps:
-    - name: Install MinGW Packages
-      if: ${{ runner.os == 'Windows'}}
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: MINGW64
-        update: true
-        path-type: strict
-        install: git tar zip mingw-w64-x86_64-clang mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-luajit mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-python-pip mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-nsis
-    
-    - name: Get Source
-      uses: actions/download-artifact@v2
-      with:
-        name: naev-${{ github.sha }}
-
-    - name: Extract Source
-      run: |
-        mkdir source
-        tar -xf naev-*.tar.xz -C source --strip 1
-
-    - name: Meson Setup
-      if: ${{ runner.os == 'Windows'}}
-      run: |
-        sh $MESON setup build source \
-            --native-file='source/utils/build/${{ matrix.config }}' \
-            --buildtype=release \
-            --pkg-config-path=${{ matrix.pkg-config-path }} \
-            -Db_lto=true \
-            -Dauto_features=enabled \
-            -Ddocs_c=disabled \
-            -Ddocs_lua=disabled
-
-    - name: Meson Compile
-      if: ${{ runner.os == 'Windows'}}
-      run: |
-        sh $MESON compile -C build
-
-    - name: Package
-      run: |
-        ./source/utils/release.sh -n -s source -b build -o "${{ env.DESTDIR }}/release" -r ${{ runner.os }}
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: naev-${{ matrix.os }}-${{ github.sha }}
-        path: ${{ env.DESTDIR }}/release/*
-        if-no-files-found: error
-
-  "Build_AppImage":
+  "Build_Release":
     needs: "Package_Source"
 
     strategy:
@@ -117,6 +51,10 @@ jobs:
         include:
           - os: ubuntu-16.04
             shell: bash
+
+          - os: windows-latest
+            shell: msys2 {0}
+            config: windows.ini
 
     defaults:
       run:
@@ -148,6 +86,7 @@ jobs:
           libsdl2-dev \
           libsdl2-image-dev \
           libsdl2-mixer-dev \
+          libsuitesparse-dev \
           libvorbis-dev \
           libxml2-dev
 
@@ -201,7 +140,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: naev-${{ matrix.os }}-${{ github.sha }}
-        path: ${{ env.DESTDIR }}/release/*
+        path: ${{ env.DESTDIR }}/release/out/*
         if-no-files-found: error
 
   "Upload-Release":
