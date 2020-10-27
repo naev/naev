@@ -2943,8 +2943,6 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
  */
 void pilot_free( Pilot* p )
 {
-   int i;
-
    /* Clear up pilot hooks. */
    pilot_clearHooks(p);
 
@@ -2985,11 +2983,7 @@ void pilot_free( Pilot* p )
    if (p->mounted != NULL)
       free(p->mounted);
 
-   /* Free escorts. */
-   for (i=0; i<p->nescorts; i++)
-      free(p->escorts[i].ship);
-   if (p->escorts)
-      free(p->escorts);
+   escort_freeList(p);
 
    /* Free comm message. */
    if (p->comm_msg != NULL)

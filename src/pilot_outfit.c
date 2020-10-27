@@ -16,6 +16,7 @@
 
 #include "nxml.h"
 
+#include "escort.h"
 #include "log.h"
 #include "player.h"
 #include "space.h"
@@ -241,16 +242,10 @@ int pilot_dock( Pilot *p, Pilot *target )
    if (i >= target->nescorts)
       return -1;
    /* Free if last pilot. */
-   if (target->nescorts == 1) {
-      free(target->escorts);
-      target->escorts   = NULL;
-      target->nescorts  = 0;
-   }
-   else {
-      memmove( &target->escorts[i], &target->escorts[i+1],
-            sizeof(Escort_t) * (target->nescorts-i-1) );
-      target->nescorts--;
-   }
+   if (target->nescorts == 1)
+      escort_freeList(target);
+   else
+      escort_rmListIndex(target, i);
 
    /* Destroy the pilot. */
    pilot_delete(p);
