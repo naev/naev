@@ -202,12 +202,7 @@ void pilots_rmHook( unsigned int hook )
    for (i=0; i<n; i++) {
       p = plist[i];
 
-      /* Must have hooks. */
-      if (p->nhooks <= 0)
-         continue;
-
       for (j=0; j<p->nhooks; j++) {
-
          /* Hook not found. */
          if (p->hooks[j].id != hook)
             continue;
@@ -229,10 +224,6 @@ void pilot_clearHooks( Pilot *p )
 {
    int i;
 
-   /* No hooks to remove. */
-   if (p->nhooks <= 0)
-      return;
-
    /* Remove the hooks. */
    pilot_hookCleanup = 1;
    for (i=0; i<p->nhooks; i++)
@@ -240,7 +231,8 @@ void pilot_clearHooks( Pilot *p )
    pilot_hookCleanup = 0;
 
    /* Clear the hooks. */
-   free(p->hooks);
+   if (p->hooks != NULL)
+      free(p->hooks);
    p->hooks  = NULL;
    p->nhooks = 0;
 }
