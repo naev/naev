@@ -164,6 +164,7 @@ static void info_close( unsigned int wid, char* str )
    if (info_wid > 0) {
       window_close( info_wid, str );
       info_wid = 0;
+      logs = NULL;
       menu_Close(MENU_INFO);
    }
 }
@@ -1144,6 +1145,7 @@ static void shiplog_menu_update( unsigned int wid, char* str )
          /* new log type selected */
          selectedLogType = logType;
          window_destroyWidget( wid, "lstLogs" );
+         logs = NULL;
          shiplog_listLogsOfType(logTypes[selectedLogType], &nlogs, &logs, &logIDs, 1);
          if ( selectedLog >= nlogs )
             selectedLog = 0;
@@ -1188,6 +1190,7 @@ static void shiplog_menu_genList( unsigned int wid, int first )
    if (!first) {
       window_destroyWidget( wid, "lstLogType" );
       window_destroyWidget( wid, "lstLogs" );
+      logs = NULL;
       window_destroyWidget( wid, "lstLogEntries" );
    }
    /* Get the dimensions. */
