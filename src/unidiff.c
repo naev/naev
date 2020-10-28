@@ -945,7 +945,7 @@ void diff_remove( const char *name )
 
 
 /**
- * @brief Removes all active diffs.
+ * @brief Removes all active diffs. (Call before economy_destroy().)
  */
 void diff_clear (void)
 {
@@ -956,6 +956,21 @@ void diff_clear (void)
       diff_removeDiff(&diff_stack[array_size(diff_stack)-1]);
 
    economy_execQueued();
+}
+
+
+/**
+ * @brief Clean up after diff_loadAvailable().
+ */
+void diff_free (void)
+{
+   diff_clear();
+   for (int i = 0; i < array_size(diff_available); i++) {
+      free(diff_available[i].name);
+      free(diff_available[i].filename);
+   }
+   array_free(diff_available);
+   diff_available = NULL;
 }
 
 
