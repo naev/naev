@@ -693,7 +693,7 @@ void events_exit (void)
    if (event_data != NULL) {
       for (i=0; i<array_size(event_data); i++)
          event_freeData( &event_data[i] );
-      free(event_data);
+      array_free(event_data);
    }
    event_data  = NULL;
 }
