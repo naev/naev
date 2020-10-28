@@ -590,6 +590,7 @@ static int event_parseFile( const char* file )
       pos = nstrnstr( filebuf, "function create", bufsize );
       if ((pos != NULL) && !strncmp(pos,"--common",bufsize))
          WARN(_("Event '%s' has create function but no XML header!"), file);
+      free(filebuf);
       return 0;
    }
 
