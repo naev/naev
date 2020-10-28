@@ -465,6 +465,10 @@ void cli_exit (void)
       cli_env = LUA_NOREF;
    }
 
+   gl_freeFont( cli_font );
+   free( cli_font );
+   cli_font = NULL;
+
    /* Free the buffer. */
    for (i=0; i<array_size(cli_buffer); i++)
       free(cli_buffer[i]);
