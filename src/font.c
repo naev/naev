@@ -564,13 +564,13 @@ static void gl_printHalo( const glFont *ft_font,
   if ((c == NULL) || (c->a >= 1.)) {
     if ((c==NULL) || (c->r+c->b+c->g > 2.8)) {
       bg = &cBlack;
-      radius = 1;
+      radius = 1.2;
     } else if ((c->r+c->b+c->g > 1.5)){
-      bg = &cGrey20;
-      radius = 0.5;
+      bg = &cGrey10;
+      radius = 1.2;
     } else {
       bg = &cWhite;
-      radius = 1;
+      radius = 1.2;
     }
 
     halfRadius = radius / 2;      

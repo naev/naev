@@ -191,7 +191,10 @@ void ovr_render( double dt )
    int n;
    double w, h, res;
    double x,y;
-   glColour c = { .r=0., .g=0., .b=0., .a=0.5 };
+
+   // Map overlay color and opacity/alpha
+   glColour c = { .r=0., .g=0., .b=0., .a=0.2 };
+
    glColour textCol = { cRadar_hilight.r, cRadar_hilight.g, cRadar_hilight.b, 0.99 };
    /* XXX: textCol is a hack to prevent the text from overly obscuring
     * overlay display of other things. Effectively disables outlines for
