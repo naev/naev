@@ -83,8 +83,6 @@ typedef struct Player_s {
    int speed;
 } Player_t;
 
-#define player_setSpeed(f) (player.speed = f)
-#define player_getSpeed() (player.speed)
 
 /**
  * @brief Wrapper for outfits.

@@ -362,7 +362,7 @@ static int player_newMake (void)
    player_autonavResetSpeed();
 
    /* Set player speed to default 1 */
-   player_setSpeed(1);
+   player.speed = 1;
 
    /* Monies. */
    player.p->credits = start_credits();
@@ -3392,7 +3392,7 @@ static Planet* player_parse( xmlNodePtr parent )
       return NULL;
    }
 
-   player_setSpeed(1);
+   player.speed = 1;
 
    /* set global thingies */
    player.p->credits = player_creds;

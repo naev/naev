@@ -992,13 +992,12 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("speed") && !repeat) {
      double newSpeed;
       if ((value==KEY_PRESS) && (!player_isFlag( PLAYER_CINEMATICS_2X ))) {
-         printf("Changing player speed %u", player_getSpeed());
-         if (player_getSpeed() < 4) {
-            player_setSpeed(player_getSpeed() + 1);
+         if (player.speed < 4) {
+            player.speed++;
          } else {
-            player_setSpeed(1);
+            player.speed = 1;
          }
-         newSpeed = (double)player_getSpeed();
+         newSpeed = (double)player.speed;
          pause_setSpeed(player_dt_default() * newSpeed);
          sound_setSpeed( newSpeed );
       }
