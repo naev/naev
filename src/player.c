@@ -358,11 +358,11 @@ static int player_newMake (void)
    player.p->solid->dir = RNGF() * 2.*M_PI;
    space_init( start_system() );
 
-   /* Reset speed (to make sure player.dt_mod is accounted for). */
-   player_autonavResetSpeed();
-
    /* Set player speed to default 1 */
    player.speed = 1;
+
+   /* Reset speed (to make sure player.dt_mod is accounted for). */
+   player_autonavResetSpeed();
 
    /* Monies. */
    player.p->credits = start_credits();
