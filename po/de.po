@@ -38731,11 +38731,11 @@ msgid "Pauses the game."
 msgstr "Pausiert das Spiel."
 
 #: src/input.c:120
-msgid "Toggle 2x Speed"
+msgid "Toggle Speed"
 msgstr "Doppelte Geschwindigkeit umschalten"
 
 #: src/input.c:120
-msgid "Toggles 2x speed modifier."
+msgid "Toggles speed modifier."
 msgstr "Schaltet die doppelte Geschwindigkeit um."
 
 #: src/input.c:121
