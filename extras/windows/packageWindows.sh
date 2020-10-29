@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 # WINDOWS PACKAGING SCRIPT FOR NAEV
-# Requires NSIS, and python3-pip to be installed
+# Requires NSIS to be installed
 #
 # This script should be run after compiling Naev
 # It detects the current environment, and builds the appropriate NSIS installer
@@ -63,14 +63,11 @@ echo "BUILD OUTPUT: $OUTPUTPATH"
 # Rudementary way of detecting which environment we are packaging.. 
 # It works (tm), and it should remain working until msys changes their naming scheme
 
-if [[ $PATH == *"mingw32"* ]]; then
-    echo "Detected MinGW32 environment"
-    ARCH="32"
-elif [[ $PATH == *"mingw64"* ]]; then
+if [[ $PATH == *"mingw64"* ]]; then
     echo "Detected MinGW64 environment"
     ARCH="64"
 else
-    echo "Welp, I don't know what environment this is... Make sure you are running this in an MSYS2 MinGW environment"
+    echo "Make sure you are running this in an MSYS2 64bit MinGW environment"
     exit -1
 fi
 
@@ -85,11 +82,6 @@ else
     exit -1
 fi
 
-# Download and Install mingw-ldd
-
-echo "Install mingw-ldd script"
-pip3 install mingw-ldd
-
 # Move compiled binary to staging folder.
 
 echo "creating staging area"
@@ -101,17 +93,10 @@ cp -r $SOURCEROOT/dat $SOURCEROOT/extras/windows/installer/bin
 
 # Collect DLLs
  
-if [[ $ARCH == "32" ]]; then
-for fn in `mingw-ldd "$BUILDDIR/naev.exe" --dll-lookup-dirs /mingw32/bin | grep -i "mingw32" | cut -f2 -d"/" --complement | cut -f1 -d"/" --complement | cut -f1 -d"/" --complement`; do
-    fp="/"$fn
-    echo "copying $fp to staging area"
-    cp $fp $SOURCEROOT/extras/windows/installer/bin
-done
-elif [[ $ARCH == "64" ]]; then
-for fn in `mingw-ldd "$BUILDDIR/naev.exe" --dll-lookup-dirs /mingw64/bin | grep -i "mingw64" | cut -f2 -d"/" --complement | cut -f1 -d"/" --complement | cut -f1 -d"/" --complement`; do
-    fp="/"$fn
-    echo "copying $fp to staging area"
-    cp $fp $SOURCEROOT/extras/windows/installer/bin
+if [[ $ARCH == "64" ]]; then
+for fn in `cygcheck "$BUILDDIR/naev.exe" | grep "mingw64"`; do
+    echo "copying $fn to staging area"
+    cp $fn $SOURCEROOT/extras/windows/installer/bin
 done
 else
     echo "Aw, man, I shot Marvin in the face..."
