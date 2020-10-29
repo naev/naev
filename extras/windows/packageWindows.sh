@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # WINDOWS PACKAGING SCRIPT FOR NAEV
 # Requires NSIS to be installed
 #
@@ -144,14 +144,14 @@ fi
 
 echo "Successfully built Windows Installer for win$ARCH"
 
-# Package zip
+# Package steam windows tarball
 OLDDIR=$(pwd)
 
-cd $SOURCEROOT/extras/windows/installer/bin
-zip $OUTPUTPATH/out/naev-win$ARCH.zip *.dll *.exe
+cd $SOURCEROOT/extras/windows/installer/bin &&
+tar -cJvf $OUTPUTPATH/out/naev-win$ARCH.tar.xz *.dll *.exe
 cd $OLDDIR
 
-echo "Successfully packaged zipped folder for win$ARCH"
+echo "Successfully packaged Steam Tarball for win$ARCH"
 
 echo "Cleaning up staging area"
 rm -rf $SOURCEROOT/extras/windows/installer/bin
