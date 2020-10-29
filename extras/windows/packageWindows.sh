@@ -129,7 +129,7 @@ if [[ $NIGHTLY = true ]]; then
     makensis -DVERSION=$VERSION.$BUILD_DATE -DARCH=$ARCH $SOURCEROOT/extras/windows/installer/naev.nsi
 
     # Move installer to distribution directory
-    mv $SOURCEROOT/extras/windows/installer/naev-$VERSION.$BUILD_DATE-win$ARCH.exe $OUTPUTPATH
+    mv $SOURCEROOT/extras/windows/installer/naev-$VERSION.$BUILD_DATE-win$ARCH.exe $OUTPUTPATH/out
 
 elif [[ $NIGHTLY == false ]]; then
     makensis -DVERSION=$VERSION -DARCH=$ARCH $SOURCEROOT/extras/windows/installer/naev.nsi
@@ -148,7 +148,8 @@ echo "Successfully built Windows Installer for win$ARCH"
 OLDDIR=$(pwd)
 
 cd $SOURCEROOT/extras/windows/installer/bin &&
-tar -cJvf $OUTPUTPATH/out/naev-win$ARCH.tar.xz *.dll *.exe
+tar -cJvf ../naev-win$ARCH.tar.xz *.dll *.exe
+mv ../*.xz $OUTPUTPATH/out
 cd $OLDDIR
 
 echo "Successfully packaged Steam Tarball for win$ARCH"
