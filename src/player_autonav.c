@@ -49,19 +49,13 @@ static int player_autonavBrake (void);
  */
 void player_autonavResetSpeed (void)
 {
-   if (player.speed == 4) {
+   if (player.speed >= 1) {
       tc_mod = player.speed * player_dt_default();
       pause_setSpeed( tc_mod );
-      sound_setSpeed( 4 );
-   } else if (player.speed == 3) {
-      tc_mod = 3. * player_dt_default();
-      pause_setSpeed( tc_mod );
-      sound_setSpeed( 3 );
-   } else if (player.speed == 2) {
-      tc_mod = 2. * player_dt_default();
-      pause_setSpeed( tc_mod );
-      sound_setSpeed( 2 );
+      sound_setSpeed( player.speed );
    } else {
+      WARN( _("player.speed was not set to a valid value; resetting to 1") );
+      player.speed = 1;
       tc_mod = player_dt_default();
       pause_setSpeed( tc_mod );
       sound_setSpeed( 1 );
