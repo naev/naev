@@ -558,9 +558,9 @@ static void gl_printHalo( const glFont *ft_font,
    double halfRadius;
 
    /* TODO: This method works, but is inefficient. Should probably be
-   * ultimately replaced with use of signed distance fields or some
-   * other more efficient method (signed distance fields seem to be
-   * the "right" solution). */
+    * ultimately replaced with use of signed distance fields or some
+    * other more efficient method (signed distance fields seem to be
+    * the "right" solution). */
    if ((c == NULL) || (c->a >= 1.)) {
       if ((c==NULL) || (c->r+c->b+c->g > 2.8)) {
          bg = &cBlack;
