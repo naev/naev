@@ -571,7 +571,7 @@ static glTexture* gl_texExists( const char* path )
  */
 static int gl_texAdd( glTexture *tex )
 {
-   glTexList *new, *cur, *last;
+   glTexList *new, *last = texture_list;
 
    /* Create the new node */
    new = malloc( sizeof(glTexList) );
@@ -582,8 +582,8 @@ static int gl_texAdd( glTexture *tex )
    if (texture_list == NULL) /* special condition - creating new list */
       texture_list = new;
    else {
-      for (cur=texture_list; cur!=NULL; cur=cur->next)
-         last = cur;
+      while (last->next != NULL)
+         last = last->next;
 
       last->next = new;
    }
