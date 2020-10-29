@@ -259,7 +259,7 @@ static void btn_updateHotkey( Widget *btn )
    display[match] = '\0'; /* Cuts the string into two. */
 
    /* Copy both parts and insert the character in the middle. */
-   nsnprintf( buf, sizeof(buf), "%s\an%c\a0%s", display, target, &display[match+1] );
+   nsnprintf( buf, sizeof(buf), "%s\aw%c\a0%s", display, target, &display[match+1] );
 
    /* Should never be NULL. */
    free(btn->dat.btn.display);
@@ -309,21 +309,21 @@ static void btn_render( Widget* btn, double bx, double by )
 
    /* set the colours */
    if (btn->dat.btn.disabled) {
-      c  = toolkit_colDark;
+      c  = &cGrey30;
       fc = &cGrey80;
    }
    else {
-      fc = &cFontWhite;
+      fc = &cGrey80;
       switch (btn->status) {
          case WIDGET_STATUS_MOUSEOVER:
-            c  = toolkit_colLight;
+            c  = &cGrey20;
             break;
          case WIDGET_STATUS_MOUSEDOWN:
-            c  = &cGrey30;
+            c  = &cGrey10;
             break;
          case WIDGET_STATUS_NORMAL:
          default:
-            c  = &cGrey50;
+            c  = &cGrey25;
       }
    }
 
@@ -331,9 +331,9 @@ static void btn_render( Widget* btn, double bx, double by )
    toolkit_drawRect( x, y, btn->w, btn->h, c, NULL );
 
    /* inner outline */
-   toolkit_drawOutline( x, y, btn->w, btn->h, 0., toolkit_colLight, NULL );
+   toolkit_drawOutline( x, y, btn->w, btn->h, 0., &cGrey60, NULL );
    /* outer outline */
-   toolkit_drawOutline( x, y, btn->w, btn->h, 1., &cBlack, NULL );
+   toolkit_drawOutline( x, y, btn->w, btn->h, 1., &cGrey60, NULL );
 
    gl_printMidRaw( &gl_smallFont, (int)btn->w,
          bx + btn->x,

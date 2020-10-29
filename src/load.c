@@ -336,7 +336,7 @@ void load_loadGameMenu (void)
 
    /* Player text. */
    window_addText( wid, -20, -40, 200, LOAD_HEIGHT-40-20-2*(BUTTON_HEIGHT+20),
-         0, "txtPilot", NULL, NULL, NULL );
+         0, "txtPilot", &gl_smallFont, NULL, NULL );
 
    window_addList( wid, 20, -50,
          LOAD_WIDTH-200-60, LOAD_HEIGHT-110,
@@ -389,20 +389,20 @@ static void load_menu_update( unsigned int wid, char *str )
    ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
    naev_versionString( version, sizeof(version), ns->version[0], ns->version[1], ns->version[2] );
    nsnprintf( buf, sizeof(buf),
-         _("Name:\n"
-         "   %s\n"
-         "Version:\n"
-         "   %s\n"
-         "Date:\n"
-         "   %s\n"
-         "Planet:\n"
-         "   %s\n"
-         "Credits:\n"
-         "   %s\n"
-         "Ship Name:\n"
-         "   %s\n"
-         "Ship Model:\n"
-         "   %s"),
+         _("\anName:\n"
+         "\a0   %s\n\n"
+         "\anVersion:\n"
+         "\a0   %s\n\n"
+         "\anDate:\n"
+         "\a0   %s\n\n"
+         "\anPlanet:\n"
+         "\a0   %s\n\n"
+         "\anCredits:\n"
+         "\a0   %s\n\n"
+         "\anShip Name:\n"
+         "\a0   %s\n\n"
+         "\anShip Model:\n"
+         "\a0   %s"),
          ns->name, version, date, ns->planet,
          credits, ns->shipname, ns->shipmodel );
    window_modifyText( wid, "txtPilot", buf );
