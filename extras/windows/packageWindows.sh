@@ -102,13 +102,13 @@ cp -r $SOURCEROOT/dat $SOURCEROOT/extras/windows/installer/bin
 # Collect DLLs
  
 if [[ $ARCH == "32" ]]; then
-for fn in `mingw-ldd "$BUILDDIR/naev.exe" --dll-lookup-dirs /mingw32/bin | grep -i "mingw32" | cut -f2 -d"/" --complement | cut -f1 -d"/" --complement`; do
+for fn in `mingw-ldd "$BUILDDIR/naev.exe" --dll-lookup-dirs /mingw32/bin | grep -i "mingw32" | cut -f2 -d"/" --complement | cut -f1 -d"/" --complement | cut -f1 -d"/" --complement`; do
     fp="/"$fn
     echo "copying $fp to staging area"
     cp $fp $SOURCEROOT/extras/windows/installer/bin
 done
 elif [[ $ARCH == "64" ]]; then
-for fn in `mingw-ldd "$BUILDDIR/naev.exe" --dll-lookup-dirs /mingw64/bin | grep -i "mingw64" | cut -f2 -d"/" --complement | cut -f1 -d"/" --complement`; do
+for fn in `mingw-ldd "$BUILDDIR/naev.exe" --dll-lookup-dirs /mingw64/bin | grep -i "mingw64" | cut -f2 -d"/" --complement | cut -f1 -d"/" --complement | cut -f1 -d"/" --complement`; do
     fp="/"$fn
     echo "copying $fp to staging area"
     cp $fp $SOURCEROOT/extras/windows/installer/bin
