@@ -114,7 +114,7 @@ const char *keybind_info[][3] = {
    { "screenshot", gettext_noop("Screenshot"), gettext_noop("Takes a screenshot.") },
    { "togglefullscreen", gettext_noop("Toggle Fullscreen"), gettext_noop("Toggles between windowed and fullscreen mode.") },
    { "pause", gettext_noop("Pause"), gettext_noop("Pauses the game.") },
-   { "speed", gettext_noop("Toggle 2x Speed"), gettext_noop("Toggles 2x speed modifier.") },
+   { "speed", gettext_noop("Toggle Speed"), gettext_noop("Toggles speed modifier.") },
    { "menu", gettext_noop("Small Menu"), gettext_noop("Opens the small in-game menu.") },
    { "info", gettext_noop("Information Menu"), gettext_noop("Opens the information menu.") },
    { "console", gettext_noop("Lua Console"), gettext_noop("Opens the Lua console.") },
@@ -990,20 +990,17 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       }
    /* toggle speed mode */
    } else if (KEY("speed") && !repeat) {
+     double newSpeed;
       if ((value==KEY_PRESS) && (!player_isFlag( PLAYER_CINEMATICS_2X ))) {
-         if (player_isFlag(PLAYER_DOUBLESPEED)) {
-            if (!player_isFlag(PLAYER_AUTONAV)) {
-               pause_setSpeed( player_dt_default() );
-               sound_setSpeed( 1. );
-            }
-            player_rmFlag(PLAYER_DOUBLESPEED);
-         } else {
-            if (!player_isFlag(PLAYER_AUTONAV)) {
-               pause_setSpeed( 2. * player_dt_default() );
-               sound_setSpeed( 2. );
-            }
-            player_setFlag(PLAYER_DOUBLESPEED);
-         }
+        printf("Changing player speed %u", player_getSpeed());
+        if(player_getSpeed() < 4){
+          player_setSpeed(player_getSpeed() + 1);
+        } else {
+          player_setSpeed(1);
+        }
+        newSpeed = (double)player_getSpeed();
+        pause_setSpeed( player_dt_default() * newSpeed);
+        sound_setSpeed( newSpeed );
       }
    /* opens a small menu */
    } else if (KEY("menu") && NODEAD() && !repeat) {

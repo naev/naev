@@ -361,6 +361,9 @@ static int player_newMake (void)
    /* Reset speed (to make sure player.dt_mod is accounted for). */
    player_autonavResetSpeed();
 
+   /* Set player speed to default 1 */
+   player_setSpeed(1);
+
    /* Monies. */
    player.p->credits = start_credits();
 
@@ -3388,6 +3391,8 @@ static Planet* player_parse( xmlNodePtr parent )
       ERR(_("Something went horribly wrong, player does not exist after load..."));
       return NULL;
    }
+
+   player_setSpeed(1);
 
    /* set global thingies */
    player.p->credits = player_creds;

@@ -39,6 +39,7 @@ enum {
 
 typedef char PlayerFlags[ PLAYER_FLAGS_MAX ];
 
+
 /* flag functions */
 #define player_isFlag(f)   (player.flags[f])
 #define player_setFlag(f)  (player.flags[f] = 1)
@@ -80,8 +81,11 @@ typedef struct Player_s {
    double autonav_timer; /**< Timer that prevents time accel after a reset. */
    double mousex; /**< Mouse X position (for mouse flying). */
    double mousey; /**< Mouse Y position (for mouse flying). */
+   int speed;
 } Player_t;
 
+#define player_setSpeed(f) (player.speed = f)
+#define player_getSpeed() (player.speed)
 
 /**
  * @brief Wrapper for outfits.
