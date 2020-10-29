@@ -3922,22 +3922,17 @@ static int pilotL_hyperspace( lua_State *L )
       t = pilotL_newtask( L, p, "__hyperspace_shoot" );
    else
       t = pilotL_newtask( L, p, "__hyperspace" );
-   if (ss != NULL) {
-      /* Find the jump. */
-      for (i=0; i < cur_system->njumps; i++) {
-         jp = &cur_system->jumps[i];
-         if (jp->target != ss)
-            continue;
-         /* Found target. */
+   if (ss == NULL)
+      return 0;
+   /* Find the jump. */
+   for (i=0; i < cur_system->njumps; i++) {
+      jp = &cur_system->jumps[i];
+      if (jp->target != ss)
+         continue;
+      /* Found target. */
 
-         if (jp_isFlag( jp, JP_EXITONLY )) {
-            NLUA_ERROR( L, _("Pilot '%s' can't jump out exit only jump '%s'"), p->name, ss->name );
-            return 0;
-         }
-         break;
-      }
-      if (i >= cur_system->njumps) {
-         NLUA_ERROR( L, _("System '%s' is not adjacent to current system '%s'"), ss->name, cur_system->name );
+      if (jp_isFlag( jp, JP_EXITONLY )) {
+         NLUA_ERROR( L, _("Pilot '%s' can't jump out exit only jump '%s'"), p->name, ss->name );
          return 0;
       }
 
@@ -3946,8 +3941,10 @@ static int pilotL_hyperspace( lua_State *L )
       lj.destid = jp->targetid;
       lua_pushjump(L, lj);
       t->dat = luaL_ref(L, LUA_REGISTRYINDEX);;
+      return 0;
    }
-
+   /* Not found. */
+   NLUA_ERROR( L, _("System '%s' is not adjacent to current system '%s'"), ss->name, cur_system->name );
    return 0;
 }
 
