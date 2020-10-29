@@ -49,7 +49,15 @@ static int player_autonavBrake (void);
  */
 void player_autonavResetSpeed (void)
 {
-   if (player_isFlag(PLAYER_DOUBLESPEED)) {
+   if (player_getSpeed() ==4){
+      tc_mod         = 4. * player_dt_default();
+      pause_setSpeed( tc_mod );
+      sound_setSpeed( 4 );
+   } else if (player_getSpeed() ==3){
+      tc_mod         = 3. * player_dt_default();
+      pause_setSpeed( tc_mod );
+      sound_setSpeed( 3 );
+   } else if (player_getSpeed() ==2){
       tc_mod         = 2. * player_dt_default();
       pause_setSpeed( tc_mod );
       sound_setSpeed( 2 );
@@ -114,7 +122,7 @@ static int player_autonavSetup (void)
    player_message(_("\apAutonav initialized."));
    if (!player_isFlag(PLAYER_AUTONAV)) {
 
-      tc_base   = player_dt_default() * (player_isFlag(PLAYER_DOUBLESPEED) ? 2. : 1.);
+      tc_base   = player_dt_default() * (double)player_getSpeed();
       tc_mod    = tc_base;
       if (conf.compression_mult >= 1.)
          player.tc_max = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
