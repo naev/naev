@@ -553,41 +553,41 @@ static void gl_printHalo( const glFont *ft_font,
          const int, const int, const double, const double,
          const glColour*, const char*, const int ))
 {
-  const glColour *bg;
-  double radius;
-  double halfRadius;
+   const glColour *bg;
+   double radius;
+   double halfRadius;
 
-  /* TODO: This method works, but is inefficient. Should probably be
-  * ultimately replaced with use of signed distance fields or some
-  * other more efficient method (signed distance fields seem to be
-  * the "right" solution). */
-  if ((c == NULL) || (c->a >= 1.)) {
-    if ((c==NULL) || (c->r+c->b+c->g > 2.8)) {
-      bg = &cBlack;
-      radius = 1;
-    } else if ((c->r+c->b+c->g > 1.5)){
-      bg = &cGrey20;
-      radius = 0.5;
-    } else {
-      bg = &cWhite;
-      radius = 1;
-    }
+   /* TODO: This method works, but is inefficient. Should probably be
+   * ultimately replaced with use of signed distance fields or some
+   * other more efficient method (signed distance fields seem to be
+   * the "right" solution). */
+   if ((c == NULL) || (c->a >= 1.)) {
+      if ((c==NULL) || (c->r+c->b+c->g > 2.8)) {
+         bg = &cBlack;
+         radius = 1;
+      } else if ((c->r+c->b+c->g > 1.5)) {
+         bg = &cGrey20;
+         radius = 0.5;
+      } else {
+         bg = &cWhite;
+         radius = 1;
+      }
 
-    halfRadius = radius / 2;      
+      halfRadius = radius / 2;      
 
-    func( ft_font, width, height, bx - halfRadius, by, bg, text, 1 );
-    func( ft_font, width, height, bx + halfRadius, by, bg, text, 1 );
-    func( ft_font, width, height, bx, by - halfRadius, bg, text, 1 );
-    func( ft_font, width, height, bx, by + halfRadius, bg, text, 1 );
-    func( ft_font, width, height, bx - radius, by, bg, text, 1 );
-    func( ft_font, width, height, bx + radius, by, bg, text, 1 );
-    func( ft_font, width, height, bx, by - radius, bg, text, 1 );
-    func( ft_font, width, height, bx, by + radius, bg, text, 1 );
-    func( ft_font, width, height, bx - halfRadius, by - halfRadius, bg, text, 1 );
-    func( ft_font, width, height, bx - halfRadius, by + halfRadius, bg, text, 1 );
-    func( ft_font, width, height, bx + halfRadius, by - halfRadius, bg, text, 1 );
-    func( ft_font, width, height, bx + halfRadius, by + halfRadius, bg, text, 1 );
-  }
+      func( ft_font, width, height, bx - halfRadius, by, bg, text, 1 );
+      func( ft_font, width, height, bx + halfRadius, by, bg, text, 1 );
+      func( ft_font, width, height, bx, by - halfRadius, bg, text, 1 );
+      func( ft_font, width, height, bx, by + halfRadius, bg, text, 1 );
+      func( ft_font, width, height, bx - radius, by, bg, text, 1 );
+      func( ft_font, width, height, bx + radius, by, bg, text, 1 );
+      func( ft_font, width, height, bx, by - radius, bg, text, 1 );
+      func( ft_font, width, height, bx, by + radius, bg, text, 1 );
+      func( ft_font, width, height, bx - halfRadius, by - halfRadius, bg, text, 1 );
+      func( ft_font, width, height, bx - halfRadius, by + halfRadius, bg, text, 1 );
+      func( ft_font, width, height, bx + halfRadius, by - halfRadius, bg, text, 1 );
+      func( ft_font, width, height, bx + halfRadius, by + halfRadius, bg, text, 1 );
+   }
 }
 
 
