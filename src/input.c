@@ -992,15 +992,15 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("speed") && !repeat) {
      double newSpeed;
       if ((value==KEY_PRESS) && (!player_isFlag( PLAYER_CINEMATICS_2X ))) {
-        printf("Changing player speed %u", player_getSpeed());
-        if(player_getSpeed() < 4){
-          player_setSpeed(player_getSpeed() + 1);
-        } else {
-          player_setSpeed(1);
-        }
-        newSpeed = (double)player_getSpeed();
-        pause_setSpeed( player_dt_default() * newSpeed);
-        sound_setSpeed( newSpeed );
+         printf("Changing player speed %u", player_getSpeed());
+         if (player_getSpeed() < 4) {
+            player_setSpeed(player_getSpeed() + 1);
+         } else {
+            player_setSpeed(1);
+         }
+         newSpeed = (double)player_getSpeed();
+         pause_setSpeed(player_dt_default() * newSpeed);
+         sound_setSpeed( newSpeed );
       }
    /* opens a small menu */
    } else if (KEY("menu") && NODEAD() && !repeat) {
