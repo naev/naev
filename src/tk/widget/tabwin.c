@@ -81,7 +81,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    wgt->cleanup            = tab_cleanup;
    wgt->dat.tab.ntabs      = ntabs;
    wgt->dat.tab.tabpos     = tabpos;
-   wgt->dat.tab.font       = &gl_defFont;
+   wgt->dat.tab.font       = &gl_smallFont;
 
    /* position/size */
    wgt->x = (double) (x<0) ? 0 : x;
