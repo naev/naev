@@ -59,9 +59,9 @@ static char input_text              = 0; /**< Current character. */
 /*
  * default outline colours
  */
-const glColour* toolkit_colLight = &cGrey60; /**< Light outline colour. */
-const glColour* toolkit_col      = &cGrey40; /**< Normal outline colour. */
-const glColour* toolkit_colDark  = &cGrey20; /**< Dark outline colour. */
+const glColour* toolkit_colLight = &cGrey25; /**< Light outline colour. */
+const glColour* toolkit_col      = &cGrey20; /**< Normal outline colour. */
+const glColour* toolkit_colDark  = &cGrey10; /**< Dark outline colour. */
 
 
 /*

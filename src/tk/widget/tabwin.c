@@ -240,13 +240,13 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
       return 0;
 
    /* Handle event. */
-   p = 20;
+   p = 0;
    for (i=0; i<tab->dat.tab.ntabs; i++) {
       /* Too far left, won't match any tabs. */
       if (x < p)
          break;
 
-      p += 10 + tab->dat.tab.namelen[i];
+      p += 30 + tab->dat.tab.namelen[i];
 
       /* Too far right, try next tab. */
       if (x >= p)
@@ -378,16 +378,18 @@ static void tab_render( Widget* tab, double bx, double by )
    window_render( wdw );
 
    /* Render tabs ontop. */
-   x = bx+tab->x+20;
+   x = bx+tab->x+0;
    y = by+tab->y+2;
    if (tab->dat.tab.tabpos == 1)
       y += tab->h-TAB_HEIGHT;
+
+   /* Iterate through tabs */
    for (i=0; i<tab->dat.tab.ntabs; i++) {
       if (i!=tab->dat.tab.active) {
          /* Draw border. */
          toolkit_drawOutline( x+1, y+1, tab->dat.tab.namelen[i] + 8,
                TAB_HEIGHT-2, 1., toolkit_col, NULL );
-         toolkit_drawRect( x, y, tab->dat.tab.namelen[i] + 10,
+         toolkit_drawRect( x, y, tab->dat.tab.namelen[i] + 30,
                TAB_HEIGHT, toolkit_colDark, NULL );
       }
       else {
@@ -395,16 +397,16 @@ static void tab_render( Widget* tab, double bx, double by )
             toolkit_drawRect( x-1, y+0,
                   1, TAB_HEIGHT+1, toolkit_col, NULL );
          else if (i==tab->dat.tab.ntabs-1)
-            toolkit_drawRect( x+tab->dat.tab.namelen[i]+9, y+0,
+            toolkit_drawRect( x+tab->dat.tab.namelen[i]+29, y+0,
                   1, TAB_HEIGHT+1, toolkit_col, NULL );
       }
       /* Draw text. */
-      gl_printRaw( tab->dat.tab.font, x + 5,
+      gl_printRaw( tab->dat.tab.font, x + 15,
             y + (TAB_HEIGHT-tab->dat.tab.font->h)/2, &cFontWhite,
             tab->dat.tab.tabnames[i] );
 
       /* Go to next line. */
-      x += 10 + tab->dat.tab.namelen[i];
+      x += 30 + tab->dat.tab.namelen[i];
    }
 }
 
