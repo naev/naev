@@ -326,11 +326,12 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
          if (inp->dat.inp.oneline)
             return 0;
 
-         str      = inp->dat.inp.input;
-         curpos   = 0;
-         prevpos  = 0;
-         curchars = 0;
-         lines    = 0;
+         str       = inp->dat.inp.input;
+         curpos    = 0;
+         prevpos   = 0;
+         curchars  = 0;
+         prevchars = 0;
+         lines     = 0;
 
          if (inp->dat.inp.pos == 0) /* We can't move beyond the current line, as it is the first one. */
             return 1;

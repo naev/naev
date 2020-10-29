@@ -1642,6 +1642,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
 
       default:
          WARN(_("Unknown weapon layer!"));
+         return;
    }
 
    if (*mLayer > *nLayer) /* more memory alloced than needed */
