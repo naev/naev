@@ -1055,7 +1055,7 @@ void gui_clearMessages (void)
  */
 static void gui_renderMessages( double dt )
 {
-   double x, y, h, hs, vx, vy;
+   double x, y, h, hs, vx, vy, dy;
    int v, i, m, o;
    glColour c;
 
@@ -1074,8 +1074,7 @@ static void gui_renderMessages( double dt )
    c.b = 1.;
 
    /* Render background. */
-   h  = conf.mesg_visible*gl_defFont.h*1.2;
-   gl_renderRect( x-2., y-2., gui_mesg_w-13., h+4., &cBlackHilight );
+   h = 0;
 
    /* Set up position. */
    vx = x;
@@ -1109,15 +1108,18 @@ static void gui_renderMessages( double dt )
          if (mesg_stack[m].str[0] != '\0') {
             if (mesg_stack[m].str[0] == '\t') {
                gl_printRestore( &mesg_stack[m].restore );
-               gl_printMaxRaw( NULL, gui_mesg_w - 45., x + 30, y, &cFontWhite, &mesg_stack[m].str[1] );
+               dy = gl_printHeightRaw( NULL, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
+               gl_printMaxRaw( NULL, gui_mesg_w - 45., x + 30, y + 3, &cFontWhite, &mesg_stack[m].str[1] );
+            } else {
+               dy = gl_printHeightRaw( NULL, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
+               gl_printMaxRaw( NULL, gui_mesg_w - 15., x, y + 3, &cFontWhite, mesg_stack[m].str );
             }
-            else
-               gl_printMaxRaw( NULL, gui_mesg_w - 15., x, y, &cFontWhite, mesg_stack[m].str );
+            h += dy;
          }
       }
 
       /* Increase position. */
-      y += (double)gl_defFont.h*1.2;
+      y += dy;
    }
 
    /* Render position. */
@@ -1129,6 +1131,9 @@ static void gui_renderMessages( double dt )
       /* Inside. */
       c.a = 0.5;
       gl_renderRect( vx + gui_mesg_w-10., vy + hs/2. + (h-hs)*((double)o/(double)(mesg_max-conf.mesg_visible)), 10, hs, &c );
+   }
+   if(h > 0){
+     gl_renderRect( x-6., vy-6., gui_mesg_w-13., h+9., &cBlackHilight );
    }
 }
 
