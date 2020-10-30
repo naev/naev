@@ -280,27 +280,27 @@ void equipment_open( unsigned int wid )
          _("Unequip"), equipment_unequipShip, SDLK_u );
 
    /* text */
-   buf = _("Name:\n"
-      "Model:\n"
-      "Class:\n"
-      "Crew:\n"
-      "Value:\n"
+   buf = _("\awName:\n\a0"
+      "\awModel:\n\a0"
+      "\awClass:\n\a0"
+      "\awCrew:\n\a0"
+      "\awValue:\n\a0"
       "\n"
-      "Mass:\n"
-      "Jump Time:\n"
-      "Thrust:\n"
-      "Speed:\n"
-      "Turn:\n"
-      "Time Dilation:\n"
+      "\awMass:\n\a0"
+      "\awJump Time:\n\a0"
+      "\awThrust:\n\a0"
+      "\awSpeed:\n\a0"
+      "\awTurn:\n\a0"
+      "\awTime Dilation:\n\a0"
       "\n"
-      "Absorption:\n"
-      "Shield:\n"
-      "Armour:\n"
-      "Energy:\n"
-      "Cargo Space:\n"
-      "Fuel:\n"
+      "\awAbsorption:\n\a0"
+      "\awShield:\n\a0"
+      "\awArmour:\n\a0"
+      "\awEnergy:\n\a0"
+      "\awCargo Space:\n\a0"
+      "\awFuel:\n\a0"
       "\n"
-      "Ship Status:");
+      "\awShip Status:\a0");
    x = 20 + sw + 20 + 180 + 20 + 30;
    y = -190;
    window_addText( wid, x, y,
@@ -375,7 +375,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    else
       c = &cFontWhite;
    gl_printMidRaw( &gl_smallFont, 60.,
-         x-15., y+h+10., c, txt );
+         x-15., y+h+10., c, -1., txt );
 
    /* Iterate for all the slots. */
    for (i=0; i<n; i++) {
@@ -433,7 +433,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
       /* Draw outline. */
       toolkit_drawOutlineThick( x, y, w, h, 1, 3, rc, NULL );
-      toolkit_drawOutline( x-1, y-1, w+3, h+3, 0, &cBlack, NULL );
+      // toolkit_drawOutline( x-1, y-1, w+3, h+3, 0, &cBlack, NULL );
       /* Go to next one. */
       y -= h+20;
    }
@@ -559,7 +559,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    y = by + bh - 30 - h;
 
    gl_printMidRaw( &gl_smallFont, w,
-      x, y + h + 10., &cFontWhite, _("CPU Free") );
+      x, y + h + 10., &cFontWhite, -1, _("CPU Free") );
 
    percent = (p->cpu_max > 0) ? CLAMP(0., 1., (float)p->cpu / (float)p->cpu_max) : 0.;
    toolkit_drawRect( x, y, w * percent, h, &cFriend, NULL );
@@ -573,7 +573,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    y -= h;
 
    gl_printMidRaw( &gl_smallFont, w,
-      x, y, &cFontWhite, _("Mass Limit Left") );
+      x, y, &cFontWhite, -1., _("Mass Limit Left") );
 
    y -= gl_smallFont.h + h;
 
@@ -671,16 +671,16 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                yoff = h + 2;
             else
                yoff = -gl_smallFont.h - 3;
-            tc.r = 1.;
-            tc.g = 1.;
-            tc.b = 1.;
-            tc.a = 0.5;
-            toolkit_drawRect( x+xoff-5, y -3. + yoff,
-                  text_width+10, gl_smallFont.h+5,
+            tc.r = 0.;
+            tc.g = 0.;
+            tc.b = 0.;
+            tc.a = 0.9;
+            toolkit_drawRect( x, y -5. + yoff,
+                  text_width+60, gl_smallFont.h+10,
                   &tc, NULL );
             gl_printMaxRaw( &gl_smallFont, text_width,
-                  x+xoff, y + yoff,
-                  c, display );
+                  x+5, y + yoff,
+                  c, -1., display );
          }
       }
       /* Go to next one. */

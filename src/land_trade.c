@@ -55,44 +55,44 @@ void commodity_exchange_open( unsigned int wid )
 
    /* Calculate image array dimensions. */
    /* Window size minus right column size minus space on left and right */
-   iw = w-LAND_BUTTON_WIDTH-3*20;
+   iw = w-LAND_BUTTON_WIDTH-3*20-80;
    ih = h - 60;
 
    /* buttons */
-   window_addButtonKey( wid, -20, 20,
-         LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnCommodityClose",
-         _("Take Off"), land_buttonTakeoff, SDLK_t );
-   window_addButtonKey( wid, -40-((LAND_BUTTON_WIDTH-20)/2), 20*2 + LAND_BUTTON_HEIGHT,
-         (LAND_BUTTON_WIDTH-20)/2, LAND_BUTTON_HEIGHT, "btnCommodityBuy",
+   window_addButtonKey( wid, -40-((LAND_BUTTON_WIDTH-20)/2)-40, 20*2 + LAND_BUTTON_HEIGHT,
+         (LAND_BUTTON_WIDTH-20)/2+40, LAND_BUTTON_HEIGHT, "btnCommodityBuy",
          _("Buy"), commodity_buy, SDLK_b );
    window_addButtonKey( wid, -20, 20*2 + LAND_BUTTON_HEIGHT,
-         (LAND_BUTTON_WIDTH-20)/2, LAND_BUTTON_HEIGHT, "btnCommoditySell",
+         (LAND_BUTTON_WIDTH-20)/2+40, LAND_BUTTON_HEIGHT, "btnCommoditySell",
          _("Sell"), commodity_sell, SDLK_s );
+   window_addButtonKey( wid, -20, 20,
+         LAND_BUTTON_WIDTH+80, LAND_BUTTON_HEIGHT, "btnCommodityClose",
+         _("Take Off"), land_buttonTakeoff, SDLK_t );
 
       /* cust draws the modifier : # of tons one click buys or sells */
-   window_addCust( wid, -20, 46 + 2*LAND_BUTTON_HEIGHT,
+   window_addCust( wid, -20-40, 46 + 2*LAND_BUTTON_HEIGHT,
          (LAND_BUTTON_WIDTH-20)/2, gl_smallFont.h + 6, "cstMod",
          0, commodity_renderMod, NULL, NULL );
 
    /* store gfx */
-   window_addRect( wid, 20+iw+20+(LAND_BUTTON_WIDTH-128)/2, -40,
+   window_addRect( wid, 20+iw+20+(LAND_BUTTON_WIDTH-128)/2+40, -40,
          128, 128, "rctStore", &cBlack, 0 );
-   window_addImage( wid, 20+iw+20+(LAND_BUTTON_WIDTH-128)/2, -40,
+   window_addImage( wid, 20+iw+20+(LAND_BUTTON_WIDTH-128)/2+40, -40,
          128, 128, "imgStore", NULL, 1 );
 
    /* text */
-   window_addText( wid, -20, -190, LAND_BUTTON_WIDTH, 100, 0,
+   window_addText( wid, -20, -190, LAND_BUTTON_WIDTH+80, 100, 0,
          "txtSInfo", &gl_smallFont, NULL,
-         _("You have:\n"
-           "Purchased at:\n"
-           "Market Price:\n"
-           "Free Space:\n"
-           "Money:\n"
-           "Av price here:\n"
-           "Av price all:") );
-   window_addText( wid, -20, -190, LAND_BUTTON_WIDTH/2, 100, 0,
+         _("\awYou have\a0\n"
+           "\awPurchased at\a0\n"
+           "\awMarket Price\a0\n"
+           "\awFree Space\a0\n"
+           "\awMoney\a0\n"
+           "\awAv price here\a0\n"
+           "\awAv price all\a0") );
+   window_addText( wid, -20, -190, LAND_BUTTON_WIDTH/2 + 40, 100, 0,
          "txtDInfo", &gl_smallFont, NULL, NULL );
-   window_addText( wid, -40, -300, LAND_BUTTON_WIDTH-20,
+   window_addText( wid, -40, -300, LAND_BUTTON_WIDTH-20 + 80,
          h-140-LAND_BUTTON_HEIGHT, 0,
          "txtDesc", &gl_smallFont, NULL, NULL );
 
@@ -114,7 +114,7 @@ void commodity_exchange_open( unsigned int wid )
 
    /* set up the goods to buy/sell */
    window_addImageArray( wid, 20, 20,
-         iw, ih, "iarTrade", 64, 64,
+         iw, ih, "iarTrade", 128, 128,
          cgoods, ngoods, commodity_update, commodity_update );
 
    /* Set default keyboard focuse to the list */

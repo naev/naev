@@ -468,7 +468,7 @@ void osd_render (void)
       else
          strncpy( title, ll->title, sizeof(title) );
       title[sizeof(title)-1] = '\0';
-      gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, title );
+      gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, -1., title);
       p -= gl_smallFont.h + 5.;
       l++;
       if (l >= osd_lines) {
@@ -483,7 +483,7 @@ void osd_render (void)
          c = (ll->active == i) ? &cFontWhite : &cFontGrey;
          for (j=0; j<ll->items[i].nchunks; j++) {
             gl_printMaxRaw( &gl_smallFont, w, x, p,
-                  c, ll->items[i].chunks[j] );
+                  c, -1., ll->items[i].chunks[j] );
             if (j==0) {
                w = osd_w - osd_hyphenLen;
                x = osd_x + osd_hyphenLen;
