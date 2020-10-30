@@ -351,7 +351,7 @@ static void outfits_genList( unsigned int wid )
    free(outfits);
 
    window_addImageArray( wid, 20, 20,
-         iw, ih - 31, OUTFITS_IAR, 64, 64,
+         iw, ih - 31, OUTFITS_IAR, 128, 128,
          coutfits, noutfits, outfits_update, outfits_rmouse );
 
    /* write the outfits stuff */
@@ -621,7 +621,7 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
          c = outfit_slotSizeColour( &o->slot );
          if (c == NULL)
             c = &cBlack;
-         col_blend( &coutfits[i].bg, c, &cGrey70, 0.4 );
+         col_blend( &coutfits[i].bg, c, &cGrey70, 1 );
 
          /* Short description. */
          if (o->desc_short == NULL)

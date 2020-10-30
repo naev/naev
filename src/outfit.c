@@ -298,11 +298,11 @@ const char *outfit_slotSize( const Outfit* o )
 const glColour *outfit_slotSizeColour( const OutfitSlot* os )
 {
    if (os->size == OUTFIT_SLOT_SIZE_HEAVY)
-      return &cFontBlue;
+      return &cDarkRed;
    else if (os->size == OUTFIT_SLOT_SIZE_MEDIUM)
-      return &cFontGreen;
+      return &cDarkBlue;
    else if (os->size == OUTFIT_SLOT_SIZE_LIGHT)
-      return &cFontYellow;
+      return &cMidnightBlue;
    return NULL;
 }
 
