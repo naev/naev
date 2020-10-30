@@ -199,7 +199,7 @@ static void iar_render( Widget* iar, double bx, double by )
             if (is_selected) {
                toolkit_drawRect( xcurs + 2.,
                      ycurs + 2.,
-                     w - 5., h - 5., &cDarkBlue, NULL );
+                     w - 5., h - 5., &cDarkGreen, NULL );
             } else {
                toolkit_drawRect( xcurs + 2.,
                      ycurs + 2.,
@@ -208,7 +208,7 @@ static void iar_render( Widget* iar, double bx, double by )
          } else if (is_selected) {
             toolkit_drawRect( xcurs + 2.,
                   ycurs + 2.,
-                  w - 5., h - 5., &cGreen, NULL );
+                  w - 5., h - 5., &cDarkGreen, NULL );
          }
 
          /* image */

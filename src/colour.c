@@ -40,6 +40,7 @@ const glColour cGrey10     = { .r=0.10, .g=0.10, .b=0.10, .a=1. }; /**< Grey 10%
 const glColour cBlack      = { .r=0.00, .g=0.00, .b=0.00, .a=1. }; /**< Black */
 
 /* Greens. */
+const glColour cDarkGreen      = { .r=0.10, .g=0.50, .b=0.10, .a=1. }; /**< Dark Green */
 const glColour cGreen      = { .r=0.20, .g=0.80, .b=0.20, .a=1. }; /**< Green */
 const glColour cPrimeGreen = { .r=0.00, .g=1.00, .b=0.00, .a=1. }; /**< Primary Green */
 /* Reds. */
