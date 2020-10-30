@@ -561,7 +561,6 @@ static void gl_printOutline( const glFont *ft_font,
 {
    const glColour *bg;
    double radius;
-   double halfRadius;
 
    /* TODO: This method works, but is inefficient. Should probably be
    * ultimately replaced with use of signed distance fields or some
@@ -573,13 +572,7 @@ static void gl_printOutline( const glFont *ft_font,
       } else {
          radius = 1.;
       }
-      if ((c==NULL) || (c->r+c->b+c->g > 2.8)) {
-         bg = &cBlack;
-      } else if ((c->r+c->b+c->g > 1.5)){
-         bg = &cGrey10;
-      } else {
-         bg = &cWhite;
-      }
+      bg = &cGrey10;
 
       func( ft_font, width, height, bx - radius, by, bg, text, 1 );
       func( ft_font, width, height, bx + radius, by, bg, text, 1 );
