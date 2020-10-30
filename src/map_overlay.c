@@ -93,7 +93,7 @@ int ovr_input( SDL_Event *event )
 
    /* Translate to space coords. */
    x  = ((double)mx - SCREEN_W/2.) * ovr_res;
-   y  = ((double)my - SCREEN_H/2.) * ovr_res;
+   y  = ((double)my - (SCREEN_H - 280)/2.) * ovr_res;
 
    return input_clickPos( event, x, y, 1., 10. * ovr_res, 15. * ovr_res );
 }
@@ -126,7 +126,7 @@ void ovr_refresh (void)
    }
 
    /* We need to calculate the radius of the rendering. */
-   ovr_res = 2. * 1.2 * MAX( max_x / SCREEN_W, max_y / SCREEN_H );
+   ovr_res = 2. * 1.2 * MAX( max_x / SCREEN_W, max_y / (SCREEN_H  - 280));
 }
 
 
@@ -211,12 +211,12 @@ void ovr_render( double dt )
       return;
 
    /* Default values. */
-   w     = SCREEN_W;
-   h     = SCREEN_H;
+   w     = SCREEN_W ;
+   h     = SCREEN_H - 280;
    res   = ovr_res;
 
    /* First render the background overlay. */
-   gl_renderRect( 0., 0., w, h, &c );
+   gl_renderRect( 0., 0., SCREEN_W, SCREEN_H, &c );
 
    /* Render planets. */
    for (i=0; i<cur_system->nplanets; i++)
@@ -294,7 +294,7 @@ static void ovr_mrkRenderAll( double res )
       mrk = &ovr_markers[i];
 
       x = mrk->u.pt.x / res + SCREEN_W / 2.;
-      y = mrk->u.pt.y / res + SCREEN_H / 2.;
+      y = mrk->u.pt.y / res + (SCREEN_H - 280) / 2.;
       gl_renderCross( x, y, 5., &cRadar_hilight );
 
       if (mrk->text != NULL)
