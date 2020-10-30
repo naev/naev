@@ -173,20 +173,21 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
          _("Find Outfits"), outfits_find, SDLK_f );
    (void)off;
 
-   /* fancy 128x128 image */
-   window_addRect( wid, 19 + iw + 20, -50, 128, 129, "rctImage", &cBlack, 0 );
-   window_addImage( wid, 20 + iw + 20, -50-128, 0, 0, "imgOutfit", NULL, 1 );
+   /* fancy 192x192 image */
+   window_addRect( wid, -17, -46, 200, 199, "rctImage", &cBlack, 0 );
+   window_addImage( wid, -20, -50, 192, 192, "imgOutfit", NULL, 1 );
 
    /* cust draws the modifier */
    window_addCust( wid, -40-bw, 60+2*bh,
          bw, bh, "cstMod", 0, outfits_renderMod, NULL, NULL );
 
    /* the descriptive text */
-   window_addText( wid, 20 + iw + 20 + 128 + 20, -60,
+   window_addText( wid, 20 + iw + 20, -60,
          280, 160, 0, "txtOutfitName", &gl_defFont, NULL, NULL );
-   window_addText( wid, 20 + iw + 20 + 128 + 20, -60 - gl_defFont.h - 20,
+   window_addText( wid, 20 + iw + 20, -60 - gl_defFont.h - 20,
          280, 320, 0, "txtDescShort", &gl_smallFont, NULL, NULL );
-   window_addText( wid, 20 + iw + 20, -60-128-10,
+
+   window_addText( wid, 20 + iw + 20, -60-128-10-32,
          60, 160, 0, "txtSDesc", &gl_smallFont, NULL,
          _("\anOwned:\a0\n"
          "\n"
@@ -197,9 +198,9 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
          "\anPrice:\a0\n"
          "\anMoney:\a0\n"
          "\anLicense:\a0\n") );
-   window_addText( wid, 20 + iw + 20 + 60, -60-128-10,
+   window_addText( wid, 20 + iw + 20 + 60, -60-128-10-32,
          250, 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
-   window_addText( wid, 20 + iw + 20, -60-128-10-160,
+   window_addText( wid, 20 + iw + 20, -60-128-10-160-32,
          w-(iw+80), 180, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
@@ -382,7 +383,7 @@ void outfits_update( unsigned int wid, char* str )
    /* Get and set parameters. */
    outfitname = toolkit_getImageArray( wid, OUTFITS_IAR );
    if (strcmp(outfitname,_("None"))==0) { /* No outfits */
-      window_modifyImage( wid, "imgOutfit", NULL, 0, 0 );
+      window_modifyImage( wid, "imgOutfit", NULL, 192, 192 );
       window_disableButton( wid, "btnBuyOutfit" );
       window_disableButton( wid, "btnSellOutfit" );
       nsnprintf( buf, PATH_MAX,
@@ -401,16 +402,16 @@ void outfits_update( unsigned int wid, char* str )
       window_modifyText( wid, "txtDescription", NULL );
       /* Reposition. */
       th = 128;
-      window_moveWidget( wid, "txtSDesc", 40+iw+20, -60-th-20 );
-      window_moveWidget( wid, "txtDDesc", 40+iw+20+60, -60-th-20 );
-      window_moveWidget( wid, "txtDescription", 20+iw+40, -240 );
+      window_moveWidget( wid, "txtSDesc", 20+iw+20, -60-th-20-32 );
+      window_moveWidget( wid, "txtDDesc", 20+iw+20+60, -60-th-20-32 );
+      window_moveWidget( wid, "txtDescription", 20+iw+20, -240-32);
       return;
    }
 
    outfit = outfit_get( outfitname );
 
    /* new image */
-   window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 0, 0 );
+   window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 192, 192 );
 
    if (outfit_canBuy(outfitname, land_planet) > 0)
       window_enableButton( wid, "btnBuyOutfit" );
@@ -463,10 +464,10 @@ void outfits_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtOutfitName", _(outfit->name) );
    window_modifyText( wid, "txtDescShort", _(outfit->desc_short) );
    th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, _(outfit->desc_short) ) );
-   window_moveWidget( wid, "txtSDesc", 40+iw+20, -60-th-20 );
-   window_moveWidget( wid, "txtDDesc", 40+iw+20+60, -60-th-20 );
+   window_moveWidget( wid, "txtSDesc", 20+iw+20, -60-th-20-32 );
+   window_moveWidget( wid, "txtDDesc", 20+iw+20+60, -60-th-20-32 );
    th += gl_printHeightRaw( &gl_smallFont, 250, buf );
-   window_moveWidget( wid, "txtDescription", 20+iw+40, -60-th-20 );
+   window_moveWidget( wid, "txtDescription", 20+iw+20, -60-th-20-32 );
 }
 
 
