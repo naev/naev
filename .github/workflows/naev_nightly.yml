@@ -159,6 +159,7 @@ jobs:
     - name: Install Additional Build Dependencies
       run: |
         sudo apt-get install -y \
+          git \
           autoconf-archive
 
     - name: Setup Python
