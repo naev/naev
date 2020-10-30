@@ -486,7 +486,7 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
 /**
  * @brief Writes the ship statistics description.
  *
- *    @param s Ship stats to use.
+ *    @param ll Ship stats to use.
  *    @param buf Buffer to write to.
  *    @param len Space left in the buffer.
  *    @param newline Add a newline at start.
@@ -535,7 +535,6 @@ int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline )
  *    @param buf Buffer to write to.
  *    @param len Space left in the buffer.
  *    @param newline Add a newline at start.
- *    @param pilot Stats come from a pilot.
  *    @return Number of characters written.
  */
 int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )

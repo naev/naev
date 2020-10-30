@@ -316,7 +316,7 @@ int pilot_weapSetTypeCheck( Pilot* p, int id )
  *
  *    @param p Pilot to manipulate.
  *    @param id ID of the weapon set.
- *    @param fire Whether or not to enable fire mode.
+ *    @param type The mode (a WEAPSET_TYPE constant).
  */
 void pilot_weapSetType( Pilot* p, int id, int type )
 {
@@ -638,7 +638,7 @@ static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
  *
  *    @param p Pilot to get the range of.
  *    @param id ID of weapon set to get the range of.
- *    @param Level of the weapons to get the range of (-1 for all).
+ *    @param level Level of the weapons to get the range of (-1 for all).
  */
 double pilot_weapSetRange( Pilot* p, int id, int level )
 {
@@ -664,7 +664,7 @@ double pilot_weapSetRange( Pilot* p, int id, int level )
  *
  *    @param p Pilot to get the speed of.
  *    @param id ID of weapon set to get the speed of.
- *    @param Level of the weapons to get the speed of (-1 for all).
+ *    @param level Level of the weapons to get the speed of (-1 for all).
  */
 double pilot_weapSetSpeed( Pilot* p, int id, int level )
 {
@@ -872,9 +872,10 @@ void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
 /**
  * @brief Computes an estimation of ammo flying time
  *
- *    @param w the weapon that shoot
- *    @param parent Parent of the weapon
- *    @param target Target of the weapon
+ *    @param o the weapon to shoot.
+ *    @param parent Parent of the weapon.
+ *    @param pos Target of the weapon.
+ *    @param vel Target's velocity.
  */
 double pilot_weapFlyTime( Outfit *o, Pilot *parent, Vector2d *pos, Vector2d *vel)
 {
@@ -1183,7 +1184,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
  *    @param[out] rate_mod Fire rate multiplier.
  *    @param[out] energy_mod Energy use multiplier.
  *    @param p Pilot who owns the outfit.
- *    @param w Pilot's outfit.
+ *    @param o Pilot's outfit.
  */
 void pilot_getRateMod( double *rate_mod, double* energy_mod,
       Pilot* p, Outfit *o )
@@ -1399,6 +1400,7 @@ void pilot_weaponSafe( Pilot *p )
  * @brief Disables a given active outfit.
  *
  * @param p Pilot whose outfit we are disabling.
+ * @param o Outfit to disable.
  * @return Whether the outfit was actually disabled.
  */
 int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )

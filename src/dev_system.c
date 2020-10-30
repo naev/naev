@@ -69,7 +69,6 @@ static int dsys_compJump( const void *jmp1, const void *jmp2 )
 /**
  * @brief Saves a star system.
  *
- *    @param writer Write to use for saving the star system.
  *    @param sys Star system to save.
  *    @return 0 on success.
  */

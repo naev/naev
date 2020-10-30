@@ -1067,7 +1067,7 @@ void land_genWindows( int load, int changetab )
 /**
  * @brief Sets the land window tab.
  *
- *    @param Tab to set like LAND_WINDOW_COMMODITY.
+ *    @param window Tab to set like LAND_WINDOW_COMMODITY.
  *    @return 0 on success.
  */
 int land_setWindow( int window )

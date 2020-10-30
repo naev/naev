@@ -322,6 +322,8 @@ png_bytep npng_readImage( npng_t *npng, png_bytep **rows, int *channels, int *pi
  * @brief Reads a PNG image into a surface.
  *
  *    @param npng PNG image to load.
+ *    @param pad_pot Whether to pad the dimensions to a power of two.
+ *    @param vflip Whether to flip vertically.
  *    @return Surface with data from the PNG image.
  */
 SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
@@ -388,10 +390,11 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
 
 
 /**
- * @brief Gets metadat by name.
+ * @brief Gets metadata by name.
  *
+ *    @param npng PNG image to query.
  *    @param txt Text name of the metadata to get.
- *    @param[out] Data gotten.
+ *    @param[out] data gotten.
  *    @return The length of the metadata or -1 if not found.
  */
 int npng_metadata( npng_t *npng, char *txt, char **data )

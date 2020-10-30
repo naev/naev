@@ -707,7 +707,7 @@ void gl_defViewport (void)
 
 
 /**
- * @Brief Translates the window position to screen position.
+ * @brief Translates the window position to screen position.
  */
 void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy )
 {
@@ -717,7 +717,7 @@ void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy )
 
 
 /**
- * @Brief Translates the screen position to windos position.
+ * @brief Translates the screen position to windos position.
  */
 void gl_screenToWindowPos( int *wx, int *wy, int sx, int sy )
 {

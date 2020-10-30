@@ -254,13 +254,14 @@ news_t* news_get(int id)
 /**
  * @brief Generates news from newslist from specific faction AND Generic news
  *
- *    @param the faction of wanted news
+ *    @param faction the faction of wanted news
  * @return 0 on success
  */
 int *generate_news( char* faction )
 {
    news_t *temp, *article_ptr;
    int p;
+   char *article_time;
 
    p = 0;
    article_ptr = news_list;
@@ -285,10 +286,12 @@ int *generate_news( char* faction )
                && (strcmp(article_ptr->faction, faction) == 0) ) ) {
          /* XXX: magic number */
          if (article_ptr->date && (article_ptr->date < 40000000000000)) {
+            article_time = ntime_pretty(article_ptr->date, 1);
             p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
                "%s: %s\a0\n\n"
-               , article_ptr->title, ntime_pretty(article_ptr->date, 1), article_ptr->desc );
+               , article_ptr->title, article_time, article_ptr->desc );
+            free( article_time );
          }
          else {
             p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
@@ -383,13 +386,15 @@ void clear_newslines (void)
 
 
 /**
- * @brief wid Window receiving the mouse events.
+ * @brief News widget mouse event handler.
  *
+ *    @param wid Window receiving the mouse events.
  *    @param event Mouse event being received.
  *    @param mx X position of the mouse.
  *    @param my Y position of the mouse.
  *    @param w Width of the widget.
  *    @param h Height of the widget.
+ *    @param data Unused.
  */
 static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
       double w, double h, void *data )
@@ -440,6 +445,7 @@ static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
  *    @param by Base Y position to render at.
  *    @param w Width of the widget.
  *    @param h Height of the widget.
+ *    @param data Unused.
  */
 static void news_render( double bx, double by, double w, double h, void *data )
 {

@@ -362,7 +362,7 @@ static void load_menu_close( unsigned int wdw, char *str )
 }
 /**
  * @brief Updates the load menu.
- *    @param wdw Window triggering function.
+ *    @param wid Widget triggering function.
  *    @param str Unused.
  */
 static void load_menu_update( unsigned int wid, char *str )
@@ -579,6 +579,7 @@ err:
  * @brief Actually loads a new game based on file.
  *
  *    @param file File that contains the new game.
+ *    @param version_diff \sa naev_versionCompare.
  *    @return 0 on success.
  */
 int load_game( const char* file, int version_diff )

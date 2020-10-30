@@ -351,6 +351,7 @@ int commodity_getMod (void)
  *    @param by Base Y position to render at.
  *    @param w Width to render at.
  *    @param h Height to render at.
+ *    @param data Unused.
  */
 void commodity_renderMod( double bx, double by, double w, double h, void *data )
 {

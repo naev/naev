@@ -561,7 +561,7 @@ int tech_rmItemTech( tech_group_t *tech, const char *value )
 
 
 /**
- * @Brief Removes a tech item.
+ * @brief Removes a tech item.
  */
 int tech_rmItem( const char *name, const char *value )
 {

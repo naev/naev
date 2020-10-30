@@ -118,7 +118,7 @@ static const luaL_Reg misn_methods[] = {
 /**
  * @brief Registers all the mission libraries.
  *
- *    @param L Lua state.
+ *    @param env Lua environment.
  *    @return 0 on success.
  */
 int misn_loadLibs( nlua_env env )
@@ -139,7 +139,7 @@ int misn_loadLibs( nlua_env env )
  */
 /**
  * @brief Loads the mission Lua library.
- *    @param L Lua state.
+ *    @param env Lua environment.
  */
 int nlua_loadMisn( nlua_env env )
 {
@@ -228,6 +228,7 @@ void misn_runStart( Mission *misn, const char *func )
  *
  *    @param misn Mission that owns the function.
  *    @param func Name of the function to call.
+ *    @param nargs Number of arguments to pass.
  *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
  *            and 0 normally.
  */
@@ -756,7 +757,7 @@ static int misn_cargoJet( lua_State *L )
 /**
  * @brief Creates a mission OSD.
  *
- * @note You can index elements by using '\t' as first character of an element.
+ * @note You can index elements by using '\\t' as first character of an element.
  *
  * @usage misn.osdCreate( "My OSD", {"Element 1", "Element 2"})
  *

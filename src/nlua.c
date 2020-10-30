@@ -380,7 +380,7 @@ static char* nlua_packfileLoaderTryFile( size_t *bufsize, const char *filename )
  *
  * Loads a module into the current Lua state from inside the data file.
  *
- *    @param module Name of the module to load.
+ *    @param L Lua Environment to load modules into.
  *    @return The return value of the chunk, or true.
  */
 static int nlua_packfileLoader( lua_State* L )
@@ -486,7 +486,7 @@ static int nlua_packfileLoader( lua_State* L )
  *  - music
  *  - ai
  *
- *    @param L Lua Environment to load modules into.
+ *    @param env Environment.
  *    @return 0 on success.
  */
 int nlua_loadStandard( nlua_env env )

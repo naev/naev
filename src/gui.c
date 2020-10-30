@@ -217,6 +217,7 @@ void gui_setDefaults (void)
 /**
  * @brief Initializes the message system.
  *
+ *    @param width Message width.
  *    @param x X position to set at.
  *    @param y Y position to set at.
  */
@@ -486,7 +487,7 @@ void gui_renderTargetReticles( int x, int y, int w, int h, const glColour* c )
 /**
  * @brief Renders the players pilot target.
  *
- *    @double dt Current delta tick.
+ *    @param dt Current delta tick.
  */
 static void gui_renderPilotTarget( double dt )
 {
@@ -904,6 +905,8 @@ void gui_render( double dt )
  * @brief Initializes the radar.
  *
  *    @param circle Whether or not the radar is circular.
+ *    @param w Radar width.
+ *    @param h Radar height.
  */
 int gui_radarInit( int circle, int w, int h )
 {
@@ -1193,6 +1196,11 @@ static const glColour* gui_getPilotColour( const Pilot* p )
  * @brief Renders a pilot in the GUI radar.
  *
  *    @param p Pilot to render.
+ *    @param shape Shape of the radar (RADAR_RECT or RADAR_CIRCLE).
+ *    @param w Width.
+ *    @param h Height.
+ *    @param res Radar resolution.
+ *    @param overlay Whether to render onto the overlay.
  */
 void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res, int overlay )
 {
@@ -1274,6 +1282,10 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
  * @brief Renders an asteroid in the GUI radar.
  *
  *    @param a Asteroid to render.
+ *    @param w Width.
+ *    @param h Height.
+ *    @param res Radar resolution.
+ *    @param overlay Whether to render onto the overlay.
  */
 void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int overlay )
 {
@@ -1566,7 +1578,12 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
 /**
  * @brief Renders a jump point on the minimap.
  *
- *    @param i Jump point to render.
+ *    @param ind Jump point to render.
+ *    @param shape Shape of the radar (RADAR_RECT or RADAR_CIRCLE).
+ *    @param w Width.
+ *    @param h Height.
+ *    @param res Radar resolution.
+ *    @param overlay Whether to render onto the overlay.
  */
 void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
@@ -1967,7 +1984,7 @@ void gui_updateFaction (void)
 /**
  * @brief Calls trigger functions depending on who the pilot is.
  *
- *    @param The pilot to act based upon.
+ *    @param pilot The pilot to act based upon.
  */
 void gui_setGeneric( Pilot* pilot )
 {

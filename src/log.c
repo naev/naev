@@ -211,7 +211,7 @@ int log_isTerminal (void)
  * through logprintf will also be put into a buffer in memory, to be flushed
  * when copying is disabled.
  *
- *    @param Whether to enable or disable copying. Disabling flushes logs.
+ *    @param enable Whether to enable or disable copying. Disabling flushes logs.
  */
 void log_copy( int enable )
 {

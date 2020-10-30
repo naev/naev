@@ -721,8 +721,11 @@ void conf_parseCLI( int argc, char** argv )
    }
 
    /** @todo handle multiple ndata. */
-   if (optind < argc)
+   if (optind < argc) {
+      if (conf.ndata != NULL)
+         free(conf.ndata);
       conf.ndata = strdup( argv[ optind ] );
+   }
 }
 
 

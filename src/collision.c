@@ -28,7 +28,7 @@ static int LineOnPolygon( const CollPoly* at, const Vector2d* ap,
 /**
  * @brief Loads a polygon from an xml node.
  *
- *    @param[out] poly Polygon.
+ *    @param[out] polygon Polygon.
  *    @param[in] node xml node.
  */
 void LoadPolygon( CollPoly* polygon, xmlNodePtr node )

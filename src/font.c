@@ -129,7 +129,7 @@ glFont gl_defFontMono; /**< Default mono font. */
 
 
 /* Last used colour. */
-static const glColour *font_lastCol    = NULL; /**< Stores last colour used (activated by '\a'). */
+static const glColour *font_lastCol    = NULL; /**< Stores last colour used (activated by '\\a'). */
 static int font_restoreLast      = 0; /**< Restore last colour. */
 
 
@@ -583,6 +583,8 @@ static void gl_printHalo( const glFont *ft_font,
  * @brief Wrapped by gl_printRaw.
  *
  *    @param ft_font Font to use
+ *    @param unused1 Unused.
+ *    @param unused2 Unused.
  *    @param x X position to put text at.
  *    @param y Y position to put text at.
  *    @param c Colour to use (uses white if NULL)
@@ -624,7 +626,7 @@ static int gl_printRawBase( const glFont *ft_font,
  *    @param x X position to put text at.
  *    @param y Y position to put text at.
  *    @param c Colour to use (uses white if NULL)
- *    @param str String to display.
+ *    @param text String to display.
  */
 void gl_printRaw( const glFont *ft_font,
       const double x, const double y,
@@ -670,6 +672,7 @@ void gl_print( const glFont *ft_font,
  *
  *    @param ft_font Font to use.
  *    @param max Maximum length to reach.
+ *    @param unused Unused.
  *    @param x X position to display text at.
  *    @param y Y position to display text at.
  *    @param c Colour to use (NULL defaults to white).
@@ -761,6 +764,7 @@ int gl_printMax( const glFont *ft_font, const int max,
  *
  *    @param ft_font Font to use.
  *    @param width Width of area to center in.
+ *    @param unused Unused.
  *    @param x X position to display text at.
  *    @param y Y position to display text at.
  *    @param c Colour to use for text (NULL defaults to white).
@@ -984,7 +988,7 @@ int gl_printText( const glFont *ft_font,
  * Does not display text on screen.
  *
  *    @param ft_font Font to use (NULL defaults to gl_defFont).
- *    @param fmt Text to calculate the length of.
+ *    @param text Text to calculate the length of.
  *    @return The length of the text in pixels.
  */
 int gl_printWidthRaw( const glFont *ft_font, const char *text )
@@ -1049,7 +1053,7 @@ int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
  *
  *    @param ft_font Font to use (NULL defaults to gl_defFont).
  *    @param width Width to jump to next line once reached.
- *    @param fmt Text to get the height of in printf format.
+ *    @param text Text to get the height of.
  *    @return The height of the text.
  */
 int gl_printHeightRaw( const glFont *ft_font,
@@ -1533,6 +1537,12 @@ void gl_freeFont( glFont* font )
    if (stsh->vbo_vert != NULL)
       gl_vboDestroy(stsh->vbo_vert);
    stsh->vbo_vert = NULL;
+   if (stsh->vbo_tex_data != NULL)
+      free(stsh->vbo_tex_data);
+   stsh->vbo_tex_data = NULL;
+   if (stsh->vbo_vert_data != NULL)
+      free(stsh->vbo_vert_data);
+   stsh->vbo_vert_data = NULL;
 }
 
 

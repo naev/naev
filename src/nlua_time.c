@@ -343,7 +343,7 @@ static int time_get( lua_State *L )
  * @brief Converts the time to a pretty human readable format.
  *
  * @usage strt = time.str() -- Gets current time
- * @uasge strt = time.str( nil, 5 ) -- Gets current time with full decimals
+ * @usage strt = time.str( nil, 5 ) -- Gets current time with full decimals
  * @usage strt = time.str( time.get() + time.create(0,5,0) ) -- Gets time in 5 periods
  * @usage strt = t:str() -- Gets the string of t
  *

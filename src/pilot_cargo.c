@@ -29,6 +29,7 @@ static unsigned int mission_cargo_id = 0; /**< ID generator for special mission 
 /**
  * @brief Gets how many of the commodity the player.p has.
  *
+ * @param pilot Pilot to check.
  * @param commodityname Commodity to check how many the player.p owns.
  * @return The number of commodities owned matching commodityname.
  */

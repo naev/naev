@@ -229,8 +229,8 @@ const char* start_system (void)
 
 /**
  * @brief Gets the starting position of the player.
- *    @param[out] Starting X position.
- *    @param[out] Starting Y position.
+ *    @param[out] x Starting X position.
+ *    @param[out] y Starting Y position.
  */
 void start_position( double *x, double *y )
 {

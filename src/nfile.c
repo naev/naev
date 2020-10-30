@@ -607,8 +607,10 @@ char **_nfile_readDir( size_t *nfiles, const char *path )
  * Should also sort by last modified but that's up to the OS in question.
  * Paths are relative to base directory.
  *
- *    @param[out] nfiles Returns how many files there are.
- *    @param path Directory to read.
+ *    @param _files If not NULL, pointer to an Array to accumulate results into.
+ *    @param base_dir Root of the search (not part of returned file paths).
+ *    @param sub_dir Subdirectory being searched (included in returend file paths).
+ *    @return Array of (allocated) file paths relative to base_dir.
  */
 char **_nfile_readDirRecursive( char ***_files, const char *base_dir, const char *sub_dir )
 {
@@ -630,6 +632,8 @@ char **_nfile_readDirRecursive( char ***_files, const char *base_dir, const char
          child_path = cur_path_contents[ i ];
       else if ( nfile_concatPaths( child_path_buf, PATH_MAX, sub_dir, cur_path_contents[ i ] ) < 0 ) {
          WARN( _( "Error while opening %s/%s: Path is too long" ), sub_dir, cur_path_contents[ i ] );
+         for ( ; i < n_cur_path_contents; i += 1 )
+            free( cur_path_contents[ i ] );
          free( cur_path_contents );
          return NULL;
       }
@@ -643,6 +647,7 @@ char **_nfile_readDirRecursive( char ***_files, const char *base_dir, const char
       else {
          array_push_back( &files, strdup( child_path ) );
       }
+      free( cur_path_contents[ i ] );
    }
 
    /* Clean up. */

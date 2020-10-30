@@ -114,8 +114,9 @@ static void outfits_onClose( unsigned int wid, char *str )
 /**
  * @brief Opens the outfit exchange center window.
  *
- *    @params wid Window ID to open at.
- *    @params Outfits Outfit list to sell. Set to NULL if this is the landed player store.
+ *    @param wid Window ID to open at.
+ *    @param outfits Outfit list to sell. Set to NULL if this is the landed player store.
+ *    @param noutfits Length of \p outfits.
  */
 void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
 {
@@ -495,6 +496,7 @@ void outfits_updateEquipmentOutfits( void )
  *
  *    @param wid Unused.
  *    @param wgt Unused.
+ *    @param old Tab changed from.
  *    @param tab Tab changed to.
  */
 static void outfits_changeTab( unsigned int wid, char *wgt, int old, int tab )
@@ -531,7 +533,6 @@ static void outfits_changeTab( unsigned int wid, char *wgt, int old, int tab )
  * @brief Applies a filter function and string to a list of outfits.
  *
  *    @param outfits Array of outfits to filter.
- *    @param[out] toutfits Optional array of outfit textures to generate.
  *    @param n Number of outfits in the array.
  *    @param filter Filter function to run on each outfit.
  *    @param name Name fragment that each outfit name must contain.
@@ -673,7 +674,8 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
 
 /**
  * @brief Checks to see if the player can buy the outfit.
- *    @param outfit Outfit to buy.
+ *    @param name Outfit to buy.
+ *    @param planet Where the player is shopping.
  */
 int outfit_canBuy( const char *name, Planet *planet )
 {
@@ -730,7 +732,6 @@ int outfit_canBuy( const char *name, Planet *planet )
  * @brief Player right-clicks on an outfit.
  *    @param wid Window player is buying ship from.
  *    @param widget_name Name of the window. (unused)
- *    @param shipname Name of the ship the player wants to buy. (unused)
  */
 static void outfits_rmouse( unsigned int wid, char* widget_name )
 {
@@ -783,7 +784,7 @@ static void outfits_buy( unsigned int wid, char* str )
 }
 /**
  * @brief Checks to see if the player can sell the selected outfit.
- *    @param outfit Outfit to try to sell.
+ *    @param name Outfit to try to sell.
  */
 int outfit_canSell( const char *name )
 {
@@ -888,6 +889,7 @@ static int outfits_getMod (void)
  *    @param by Base Y position to render at.
  *    @param w Width to render at.
  *    @param h Height to render at.
+ *    @param data Unused.
  */
 static void outfits_renderMod( double bx, double by, double w, double h, void *data )
 {
@@ -911,7 +913,7 @@ static void outfits_renderMod( double bx, double by, double w, double h, void *d
 /**
  * @brief Cleans up outfit globals.
  */
-void outfits_cleanup( void )
+void outfits_cleanup(void)
 {
    /* Free stored positions. */
    if (iar_data != NULL) {

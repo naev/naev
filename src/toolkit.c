@@ -139,6 +139,7 @@ void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
 /**
  * @brief Moves a window to the specified coordinates.
  *
+ *    @param wdw Window to move.
  *    @param x X position.
  *    @param y Y position.
  */
@@ -172,6 +173,7 @@ void toolkit_setWindowPos( Window *wdw, int x, int y )
 /**
  * @brief Moves a window to the specified coordinates.
  *
+ *    @param wid ID of the window to move.
  *    @param x X position.
  *    @param y Y position.
  */
@@ -192,6 +194,7 @@ void window_move( unsigned int wid, int x, int y )
  * @brief Allocates room for a new widget.
  *
  *    @param w Window to create widget in.
+ *    @param name Name of the widget to create.
  *    @return Newly allocated widget.
  */
 Widget* window_newWidget( Window* w, const char *name )
@@ -432,7 +435,7 @@ int window_exists( const char* wdwname )
 /**
  * @brief Checks to see if a window with a certain ID exists.
  *
- *    @param wdwname Name of the window to check.
+ *    @param wid ID of the window to check.
  *    @return 1 if it exists, 0 if it doesn't.
  */
 int window_existsID( const unsigned int wid )
@@ -617,7 +620,7 @@ unsigned int window_getParent( unsigned int wid )
  * This function is called when the window is closed.
  *
  *    @param wid Window to set close function of.
- *    @param Function to trigger when window is closed, parameter is window id
+ *    @param fptr Function to trigger when window is closed, parameter is window id
  *           and name.
  */
 void window_onClose( unsigned int wid, void (*fptr)(unsigned int,char*) )
@@ -869,7 +872,7 @@ void window_destroy( const unsigned int wid )
 /**
  * @brief Kills the window.
  *
- *    @param wid ID of window to destroy.
+ *    @param wdw Window to destroy.
  */
 static void window_kill( Window *wdw )
 {
@@ -1521,7 +1524,7 @@ Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
 /**
  * @brief Handles the mouse events.
  *
- *    @param wdw Window receiving the mouse event.
+ *    @param w Window receiving the mouse event.
  *    @param event Mouse event to handle.
  */
 static int toolkit_mouseEvent( Window *w, SDL_Event* event )
@@ -1556,6 +1559,10 @@ static int toolkit_mouseEvent( Window *w, SDL_Event* event )
  *    @param w Window to which widget belongs.
  *    @param wgt Widget receiving event.
  *    @param event Event received by the window.
+ *    @param x X coordinate in window space.
+ *    @param y Y coordinate in window space.
+ *    @param rx Relative X movement (only valid for motion).
+ *    @param ry Relative Y movement (only valid for motion).
  */
 static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
       SDL_Event *event, int x, int y, int rx, int ry )
@@ -1701,7 +1708,7 @@ static SDL_Keymod toolkit_mapMod( SDL_Keycode key )
  *
  *    @param key Key to register as down.
  */
-static void toolkit_regKey( SDL_Keycode key, SDL_Keycode c )
+static void toolkit_regKey( SDL_Keycode key )
 {
    SDL_Keymod mod;
 
@@ -1716,7 +1723,7 @@ static void toolkit_regKey( SDL_Keycode key, SDL_Keycode c )
       input_key         = key;
       input_keyTime     = SDL_GetTicks();
       input_keyCounter  = 0;
-      input_text        = nstd_checkascii(c) ? c : 0;
+      input_text        = nstd_checkascii(key) ? key : 0;
    }
 }
 
@@ -1769,7 +1776,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 
    /* Hack to simulate key repetition */
    if (event->type == SDL_KEYDOWN)
-      toolkit_regKey(key, key);
+      toolkit_regKey(key);
    else if (event->type == SDL_KEYUP)
       toolkit_unregKey(key);
 
@@ -1952,7 +1959,7 @@ void toolkit_update (void)
 /**
  * @brief Exposes or hides a window and notifies its widgets.
  *
- *    @param wgt Widget to change exposure of.
+ *    @param wdw Window to change exposure of.
  *    @param expose Whether exposing or hiding.
  */
 static void toolkit_expose( Window *wdw, int expose )
@@ -2196,7 +2203,7 @@ static Widget* toolkit_getFocus( Window *wdw )
  * @brief Sets the focused widget in a window.
  *
  *    @param wid ID of the window to get widget from.
- *    @param name Name of the widget to set focus to.
+ *    @param wgtname Name of the widget to set focus to.
  */
 void window_setFocus( const unsigned int wid, const char* wgtname )
 {
