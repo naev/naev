@@ -163,7 +163,7 @@ jobs:
           ninja-build
 
     - name: Get Source
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v1
       with:
         name: naev-dist
 
