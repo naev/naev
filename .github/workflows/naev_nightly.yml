@@ -166,6 +166,7 @@ jobs:
       uses: actions/download-artifact@v1
       with:
         name: naev-dist
+        path: ${{ github.workspace }}
 
     - name: Extract Source
       run: |
