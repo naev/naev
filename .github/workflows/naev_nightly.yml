@@ -299,5 +299,5 @@ jobs:
 
       - name: Build and Upload Steam Release
         run: |
-          ./extras/steam/SteamDeploy.sh --nightly
+          ./extras/steam/SteamDeploy.sh -n
 
