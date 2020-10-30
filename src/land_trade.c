@@ -83,13 +83,13 @@ void commodity_exchange_open( unsigned int wid )
    /* text */
    window_addText( wid, -20, -190, LAND_BUTTON_WIDTH+80, 100, 0,
          "txtSInfo", &gl_smallFont, NULL,
-         _("\awYou have\a0\n"
-           "\awPurchased at\a0\n"
-           "\awMarket Price\a0\n"
-           "\awFree Space\a0\n"
-           "\awMoney\a0\n"
-           "\awAv price here\a0\n"
-           "\awAv price all\a0") );
+         _("\anYou have\a0\n"
+           "\anPurchased at\a0\n"
+           "\anMarket Price\a0\n"
+           "\anFree Space\a0\n"
+           "\anMoney\a0\n"
+           "\anAv price here\a0\n"
+           "\anAv price all\a0") );
    window_addText( wid, -20, -190, LAND_BUTTON_WIDTH/2 + 40, 100, 0,
          "txtDInfo", &gl_smallFont, NULL, NULL );
    window_addText( wid, -40, -300, LAND_BUTTON_WIDTH-20 + 80,

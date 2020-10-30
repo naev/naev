@@ -63,6 +63,15 @@ const glColour* toolkit_colLight = &cGrey25; /**< Light outline colour. */
 const glColour* toolkit_col      = &cGrey20; /**< Normal outline colour. */
 const glColour* toolkit_colDark  = &cGrey10; /**< Dark outline colour. */
 
+/*
+ * Tab colors
+ */
+const glColour* tab_active = &cGrey20; /**< Light outline colour. */
+const glColour* tab_activeB = &cGrey10; /**< Light outline colour. */
+const glColour* tab_inactive      = &cGrey15; /**< Normal outline colour. */
+const glColour* tab_inactiveB      = &cGrey10; /**< Normal outline colour. */
+const glColour* tab_background  = &cBlack; /**< Dark outline colour. */
+
 
 /*
  * VBO

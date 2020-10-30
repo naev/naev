@@ -1118,11 +1118,11 @@ static void gui_renderMessages( double dt )
                gl_printMaxRaw( NULL, gui_mesg_w - 15., x, y + 3, &cFontWhite, -1., mesg_stack[m].str );
             }
             h += dy;
+            y += dy;
          }
       }
 
       /* Increase position. */
-      y += dy;
    }
 
    /* Render position. */

@@ -671,15 +671,15 @@ static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int
          280, 160, 0, "txtDescShort", &gl_smallFont, NULL, NULL );
    window_addText( wid, iw+20, -60-128-10,
          60, 160, 0, "txtSDesc", &gl_smallFont, NULL,
-         _("Owned:\n"
+         _("\anOwned:\a0\n"
          "\n"
-         "Slot:\n"
-         "Size:\n"
-         "Mass:\n"
+         "\anSlot:\a0\n"
+         "\anSize:\a0\n"
+         "\anMass:\a0\n"
          "\n"
-         "Price:\n"
-         "Money:\n"
-         "License:\n") );
+         "\anPrice:\a0\n"
+         "\anMoney:\a0\n"
+         "\anLicense:\a0\n") );
    window_addText( wid, iw+20, -60-128-10,
          280, 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
    window_addText( wid, iw+20, -60-128-10-160,

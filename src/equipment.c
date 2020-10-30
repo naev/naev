@@ -280,27 +280,27 @@ void equipment_open( unsigned int wid )
          _("Unequip"), equipment_unequipShip, SDLK_u );
 
    /* text */
-   buf = _("\awName:\n\a0"
-      "\awModel:\n\a0"
-      "\awClass:\n\a0"
-      "\awCrew:\n\a0"
-      "\awValue:\n\a0"
+   buf = _("\anName:\n\a0"
+      "\anModel:\n\a0"
+      "\anClass:\n\a0"
+      "\anCrew:\n\a0"
+      "\anValue:\n\a0"
       "\n"
-      "\awMass:\n\a0"
-      "\awJump Time:\n\a0"
-      "\awThrust:\n\a0"
-      "\awSpeed:\n\a0"
-      "\awTurn:\n\a0"
-      "\awTime Dilation:\n\a0"
+      "\anMass:\n\a0"
+      "\anJump Time:\n\a0"
+      "\anThrust:\n\a0"
+      "\anSpeed:\n\a0"
+      "\anTurn:\n\a0"
+      "\anTime Dilation:\n\a0"
       "\n"
-      "\awAbsorption:\n\a0"
-      "\awShield:\n\a0"
-      "\awArmour:\n\a0"
-      "\awEnergy:\n\a0"
-      "\awCargo Space:\n\a0"
-      "\awFuel:\n\a0"
+      "\anAbsorption:\n\a0"
+      "\anShield:\n\a0"
+      "\anArmour:\n\a0"
+      "\anEnergy:\n\a0"
+      "\anCargo Space:\n\a0"
+      "\anFuel:\n\a0"
       "\n"
-      "\awShip Status:\a0");
+      "\anShip Status:\a0");
    x = 20 + sw + 20 + 180 + 20 + 30;
    y = -190;
    window_addText( wid, x, y,

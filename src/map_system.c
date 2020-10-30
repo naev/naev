@@ -621,9 +621,9 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       }
       nsnprintf( infobuf, PATH_MAX,
                  _("%s\n\n%s\n\n%s\n\n"
-                   "Owned: %d    Slot: %s    Size: %s\n"
-                   "Mass:    %.0f tonnes     Price: %s credits\n"
-                   "License: %s"),
+                   "\anOwned:\a0 %d    \anSlot: \a0%s    \anSize: \a0%s\n"
+                   "\anMass:\a0    %.0f tonnes     \anPrice:\a0 %s \ancredits\a0\n"
+                   "\anLicense:\a0 %s"),
                  (outfit->name),
                  (outfit->description),
                  (outfit->desc_short),
@@ -653,26 +653,26 @@ static void map_system_array_update( unsigned int wid, char* str ) {
          }
       }
       nsnprintf( infobuf, PATH_MAX,
-                 _("Model: %s    "
-                   "Class: %s\n"
+                 _("\anModel:\a0 %s    "
+                   "\anClass:\a0 %s\n"
                    "\n%s\n\n"
-                   "Fabricator: %s    "
-                   "Crew: %d\n"
-                   "CPU: %.0f teraflops    "
-                   "Mass: %.0f tonnes\n"
-                   "Thrust: %.0f kN/tonne    "
-                   "Speed: %.0f m/s\n"
-                   "Turn: %.0f deg/s    "
-                   "Time Dilation: %.0f%%\n"
-                   "Absorption: %.0f%% damage\n"
-                   "Shield: %.0f MJ (%.1f MW)    "
-                   "Armour: %.0f MJ (%.1f MW)\n"
-                   "Energy: %.0f MJ (%.1f MW)\n"
-                   "Cargo Space: %.0f tonnes\n"
-                   "Fuel: %d units  "
-                   "Fuel Use: %d units\n"
-                   "Price: %s credits  "
-                   "License: %s\n"
+                   "\anFabricator:\a0 %s    "
+                   "\anCrew:\a0 %d\n"
+                   "\anCPU:\a0 %.0f teraflops    "
+                   "\anMass:\a0 %.0f tonnes\n"
+                   "\anThrust:\a0 %.0f kN/tonne    "
+                   "\anSpeed:\a0 %.0f m/s\n"
+                   "\anTurn:\a0 %.0f deg/s    "
+                   "\anTime Dilation:\a0 %.0f%%\n"
+                   "\anAbsorption:\a0 %.0f%% damage\n"
+                   "\anShield:\a0 %.0f MJ (%.1f MW)    "
+                   "\anArmour:\a0 %.0f MJ (%.1f MW)\n"
+                   "\anEnergy:\a0 %.0f MJ (%.1f MW)\n"
+                   "\anCargo Space:\a0 %.0f tonnes\n"
+                   "\anFuel:\a0 %d units  "
+                   "\anFuel Use:\a0 %d units\n"
+                   "\anPrice:\a0 %s credits  "
+                   "\anLicense:\a0 %s\n"
                    "%s"),
                  _(ship->name),
                  _(ship_class(ship)),
@@ -718,9 +718,9 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       nsnprintf( infobuf, PATH_MAX,
                  _("%s\n\n"
                    "%s\n\n"
-                   "You have: %d tonnes%s\n"
-                   "Average price seen here: %"PRIu64" ± %.1f Cr./Ton\n"
-                   "Averave price seen everywhere: %"PRIu64" ± %.1f Cr./Ton\n"),
+                   "\anYou have:\a0 %d tonnes%s\n"
+                   "\anAverage price seen here:\a0 %"PRIu64" ± %.1f Cr./Ton\n"
+                   "\anAverave price seen everywhere:\a0 %"PRIu64" ± %.1f Cr./Ton\n"),
                  name,
                  com->description,
                  owned,

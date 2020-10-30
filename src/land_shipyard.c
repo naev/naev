@@ -115,28 +115,28 @@ void shipyard_open( unsigned int wid )
          &gl_smallFont, NULL, NULL );
 
    /* text */
-   buf = _("Model:\n"
-         "Class:\n"
-         "Fabricator:\n"
-         "Crew:\n"
+   buf = _("\anModel:\n\a0"
+         "\anClass:\n\a0"
+         "\anFabricator:\n\a0"
+         "\anCrew:\n\a0"
          "\n"
-         "CPU:\n"
-         "Mass:\n"
-         "Thrust:\n"
-         "Speed:\n"
-         "Turn:\n"
-         "Time Dilation:\n"
+         "\anCPU:\n\a0"
+         "\anMass:\n\a0"
+         "\anThrust:\n\a0"
+         "\anSpeed:\n\a0"
+         "\anTurn:\n\a0"
+         "\anTime Dilation:\n\a0"
          "\n"
-         "Absorption:\n"
-         "Shield:\n"
-         "Armour:\n"
-         "Energy:\n"
-         "Cargo Space:\n"
-         "Fuel:\n"
-         "Fuel Use:\n"
-         "Price:\n"
-         "Money:\n"
-         "License:\n");
+         "\anAbsorption:\n\a0"
+         "\anShield:\n\a0"
+         "\anArmour:\n\a0"
+         "\anEnergy:\n\a0"
+         "\anCargo Space:\n\a0"
+         "\anFuel:\n\a0"
+         "\anFuel Use:\n\a0"
+         "\anPrice:\n\a0"
+         "\anMoney:\n\a0"
+         "\anLicense:\n\a0");
    th = gl_printHeightRaw( &gl_smallFont, 100, buf );
    y  = -55;
    window_addText( wid, 40+iw+20, y,
