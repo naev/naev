@@ -159,23 +159,7 @@ jobs:
     - name: Install Additional Build Dependencies
       run: |
         sudo apt-get install \
-          autopoint \
-          binutils-dev \
-          build-essential \
-          gettext \
-          intltool \
-          libfreetype6-dev \
-          libgl1-mesa-dev \
-          libiberty-dev \
-          libluajit-5.1-dev \
-          libopenal-dev \
-          libpng-dev \
-          libsdl2-dev \
-          libsdl2-image-dev \
-          libsdl2-mixer-dev \
-          libsuitesparse-dev \
-          libvorbis-dev \
-          libxml2-dev \
+          autoconf-archive \
           ninja-build
 
     - name: Get Source
@@ -271,7 +255,6 @@ jobs:
             gettext \
             intltool \
             libfreetype6-dev \
-            libiberty-dev \
             libluajit-5.1-dev \
             libopenal-dev \
             libpng-dev \
