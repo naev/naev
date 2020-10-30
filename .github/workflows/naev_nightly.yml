@@ -188,7 +188,7 @@ jobs:
             -Ddocs_lua=disabled
 
     - name: Upload Setup Log
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v1
       if: ${{ success() || steps.setup.outcome == 'failure' }}
       with:
         name: steam-setup-log
