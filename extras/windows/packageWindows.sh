@@ -148,7 +148,7 @@ echo "Successfully built Windows Installer for win$ARCH"
 OLDDIR=$(pwd)
 
 cd $SOURCEROOT/extras/windows/installer/bin &&
-tar -cJvf ../naev-win$ARCH.tar.xz *.dll *.exe
+tar -cJvf ../steam-win$ARCH.tar.xz *.dll *.exe
 mv ../*.xz $OUTPUTPATH/out
 cd $OLDDIR
 
