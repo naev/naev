@@ -38,7 +38,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-${{ github.sha }}
+        name: naev-dist
         path: ${{ github.workspace }}/build/meson-dist/*
         if-no-files-found: error
 
@@ -139,7 +139,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-${{ matrix.os }}-${{ github.sha }}
+        name: naev-${{ matrix.os }}
         path: ${{ env.DESTDIR }}/release/out/*
         if-no-files-found: error
 
@@ -158,9 +158,9 @@ jobs:
 
       - name: Collect files for distribution
         run: |
-          cp naev-*.tar.xz ${{ github.workspace }}/dist/release
-          cp *.AppImage ${{ github.workspace }}/dist/release
-          cp *.exe ${{ github.workspace }}/dist/release
+          cp naev-dist/naev-*.tar.xz ${{ github.workspace }}/dist/release
+          cp naev-ubuntu-16.04/*.AppImage ${{ github.workspace }}/dist/release
+          cp naev-windows-latest/*.exe ${{ github.workspace }}/dist/release
 
       - name: Upload Release Assets
         uses: "marvinpinto/action-automatic-releases@latest"
