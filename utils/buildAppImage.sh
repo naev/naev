@@ -105,7 +105,7 @@ fi
 # Make output dir (if it does not exist)
 mkdir -p $BUILDOUTPUT/out
 
-export OUTPUT="$BUILDOUTPUT/out/naev-$VERSION.AppImage"
+export OUTPUT="$BUILDOUTPUT/out/naev-$VERSION-lin64.AppImage"
 
 # Get linuxdeploy's AppImage
 linuxdeploy="$BUILDPATH/linuxdeploy-x86_64.AppImage"
