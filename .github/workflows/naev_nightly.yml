@@ -108,8 +108,8 @@ jobs:
     - name: Get Source
       uses: actions/download-artifact@v2
       with:
-        name: naev-${{ github.sha }}
-
+        name: naev-dist
+        
     - name: Extract Source
       run: |
         mkdir source
