@@ -581,23 +581,6 @@ static void gl_printOutline( const glFont *ft_font,
          bg = &cWhite;
       }
 
-      halfRadius = radius / 2;      
-
-      /* 
-      func( ft_font, width, height, bx - halfRadius, by, bg, text, 1 );
-      func( ft_font, width, height, bx + halfRadius, by, bg, text, 1 );
-      func( ft_font, width, height, bx, by - halfRadius, bg, text, 1 );
-      func( ft_font, width, height, bx, by + halfRadius, bg, text, 1 );
-      func( ft_font, width, height, bx - radius, by, bg, text, 1 );
-      func( ft_font, width, height, bx + radius, by, bg, text, 1 );
-      func( ft_font, width, height, bx, by - radius, bg, text, 1 );
-      func( ft_font, width, height, bx, by + radius, bg, text, 1 );
-      func( ft_font, width, height, bx - halfRadius, by - halfRadius, bg, text, 1 );
-      func( ft_font, width, height, bx - halfRadius, by + halfRadius, bg, text, 1 );
-      func( ft_font, width, height, bx + halfRadius, by - halfRadius, bg, text, 1 );
-      func( ft_font, width, height, bx + halfRadius, by + halfRadius, bg, text, 1 );
-      */
-
       func( ft_font, width, height, bx - radius, by, bg, text, 1 );
       func( ft_font, width, height, bx + radius, by, bg, text, 1 );
       func( ft_font, width, height, bx, by - radius, bg, text, 1 );
