@@ -33,8 +33,7 @@ static int exp_l = -1; /**< Large explosion spfx. */
  *    @param vx X velocity of explosion center.
  *    @param vy Y velocity of explosion center.
  *    @param radius Radius of the explosion.
- *    @param dtype Damage type.
- *    @param damage Damage amount.
+ *    @param dmg Damage characteristics.
  *    @param parent Parent of the explosion, NULL is none.
  *    @param mode Defines the explosion behaviour.
  */
@@ -90,9 +89,7 @@ void expl_explode( double x, double y, double vx, double vy,
  *    @param x X position of explosion center.
  *    @param y Y position of explosion center.
  *    @param radius Radius of the explosion.
- *    @param dtype Damage type.
- *    @param damage Damage amount.
- *    @param penetration Damage penetration [0:1].
+ *    @param dmg Damage characteristics.
  *    @param parent Parent of the explosion, 0 is none.
  *    @param mode Defines the explosion behaviour.
  */

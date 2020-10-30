@@ -572,7 +572,6 @@ static void opt_keybinds( unsigned int wid )
  * @brief Generates the keybindings list.
  *
  *    @param wid Window to update.
- *    @param regen Whether to destroy and recreate the widget.
  */
 static void menuKeybinds_genList( unsigned int wid )
 {
@@ -794,7 +793,6 @@ static void opt_keyDefaults( unsigned int wid, char *str )
  *
  *    @param wid Window calling the callback.
  *    @param str Name of the widget calling the callback.
- *    @param type 0 for sound, 1 for audio.
  */
 static void opt_setAudioLevel( unsigned int wid, char *str )
 {
@@ -1605,7 +1603,6 @@ static void opt_videoDefaults( unsigned int wid, char *str )
  *
  *    @param wid Window calling the callback.
  *    @param str Name of the widget calling the callback.
- *    @param type 0 for sound, 1 for audio.
  */
 static void opt_setScalefactor( unsigned int wid, char *str )
 {

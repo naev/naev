@@ -114,7 +114,7 @@ static void inp_render( Widget* inp, double bx, double by )
 
    /* Draw text. */
    gl_printTextRaw( inp->dat.inp.font, inp->w-10., inp->h,
-         x+5., ty, &cBlack, &inp->dat.inp.input[ inp->dat.inp.view ] );
+         x+5., ty, &cBlack, -1., &inp->dat.inp.input[ inp->dat.inp.view ] );
 
    /* Draw cursor. */
    if (wgt_isFlag( inp, WGT_FLAG_FOCUSED )) {
@@ -326,11 +326,12 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
          if (inp->dat.inp.oneline)
             return 0;
 
-         str      = inp->dat.inp.input;
-         curpos   = 0;
-         prevpos  = 0;
-         curchars = 0;
-         lines    = 0;
+         str       = inp->dat.inp.input;
+         curpos    = 0;
+         prevpos   = 0;
+         curchars  = 0;
+         prevchars = 0;
+         lines     = 0;
 
          if (inp->dat.inp.pos == 0) /* We can't move beyond the current line, as it is the first one. */
             return 1;

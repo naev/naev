@@ -49,20 +49,14 @@ static int player_autonavBrake (void);
  */
 void player_autonavResetSpeed (void)
 {
-   if (player_getSpeed() ==4){
-      tc_mod         = 4. * player_dt_default();
+   if (player.speed >= 1) {
+      tc_mod = player.speed * player_dt_default();
       pause_setSpeed( tc_mod );
-      sound_setSpeed( 4 );
-   } else if (player_getSpeed() ==3){
-      tc_mod         = 3. * player_dt_default();
-      pause_setSpeed( tc_mod );
-      sound_setSpeed( 3 );
-   } else if (player_getSpeed() ==2){
-      tc_mod         = 2. * player_dt_default();
-      pause_setSpeed( tc_mod );
-      sound_setSpeed( 2 );
+      sound_setSpeed( player.speed );
    } else {
-      tc_mod         = player_dt_default();
+      WARN( _("player.speed was not set to a valid value; resetting to 1") );
+      player.speed = 1;
+      tc_mod = player_dt_default();
       pause_setSpeed( tc_mod );
       sound_setSpeed( 1 );
    }
@@ -122,7 +116,7 @@ static int player_autonavSetup (void)
    player_message(_("\apAutonav initialized."));
    if (!player_isFlag(PLAYER_AUTONAV)) {
 
-      tc_base   = player_dt_default() * (double)player_getSpeed();
+      tc_base   = player_dt_default() * (double)player.speed;
       tc_mod    = tc_base;
       if (conf.compression_mult >= 1.)
          player.tc_max = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
@@ -583,6 +577,7 @@ int player_autonavShouldResetSpeed (void)
  * @brief Handles autonav thinking.
  *
  *    @param pplayer Player doing the thinking.
+ *    @param dt Current delta tick.
  */
 void player_thinkAutonav( Pilot *pplayer, double dt )
 {

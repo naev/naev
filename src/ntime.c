@@ -11,7 +11,7 @@
  * 1 period = 10e3 seconds
  *
  * Generally displayed as:
- *  UST <cycles>:<periods>.<seconds>
+ *  UST \<cycles\>:\<periods\>.\<seconds\>
  * The number of seconds digits can be variable, for example:
  *
  *  UST 630:3726.1

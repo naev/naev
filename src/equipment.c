@@ -113,7 +113,6 @@ static int equipment_playerRmOutfit( const Outfit *o, int quantity );
  * @brief Handles right-click on unequipped outfit.
  *    @param wid Window to update.
  *    @param str Widget name. Must be EQUIPMENT_OUTFITS.
- *    @param clicked_outfit Name of the outfit the user right-clicked on.
  */
 void equipment_rightClickOutfits( unsigned int wid, char* str )
 {
@@ -123,6 +122,7 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
    int outfit_n;
    PilotOutfitSlot* slots;
    Pilot *p;
+   /* Name of the outfit the user right-clicked on. */
    const char* clicked_outfit = toolkit_getImageArray( wid, EQUIPMENT_OUTFITS );
 
    /* Did the user click on background? */
@@ -280,27 +280,27 @@ void equipment_open( unsigned int wid )
          _("Unequip"), equipment_unequipShip, SDLK_u );
 
    /* text */
-   buf = _("Name:\n"
-      "Model:\n"
-      "Class:\n"
-      "Crew:\n"
-      "Value:\n"
+   buf = _("\awName:\n\a0"
+      "\awModel:\n\a0"
+      "\awClass:\n\a0"
+      "\awCrew:\n\a0"
+      "\awValue:\n\a0"
       "\n"
-      "Mass:\n"
-      "Jump Time:\n"
-      "Thrust:\n"
-      "Speed:\n"
-      "Turn:\n"
-      "Time Dilation:\n"
+      "\awMass:\n\a0"
+      "\awJump Time:\n\a0"
+      "\awThrust:\n\a0"
+      "\awSpeed:\n\a0"
+      "\awTurn:\n\a0"
+      "\awTime Dilation:\n\a0"
       "\n"
-      "Absorption:\n"
-      "Shield:\n"
-      "Armour:\n"
-      "Energy:\n"
-      "Cargo Space:\n"
-      "Fuel:\n"
+      "\awAbsorption:\n\a0"
+      "\awShield:\n\a0"
+      "\awArmour:\n\a0"
+      "\awEnergy:\n\a0"
+      "\awCargo Space:\n\a0"
+      "\awFuel:\n\a0"
       "\n"
-      "Ship Status:");
+      "\awShip Status:\a0");
    x = 20 + sw + 20 + 180 + 20 + 30;
    y = -190;
    window_addText( wid, x, y,
@@ -335,6 +335,7 @@ void equipment_open( unsigned int wid )
 /**
  * @brief Creates the slot widget and initializes it.
  *
+ *    @param wid Parent window id.
  *    @param x X position to put it at.
  *    @param y Y position to put it at.
  *    @param w Width.
@@ -374,7 +375,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    else
       c = &cFontWhite;
    gl_printMidRaw( &gl_smallFont, 60.,
-         x-15., y+h+10., c, txt );
+         x-15., y+h+10., c, -1., txt );
 
    /* Iterate for all the slots. */
    for (i=0; i<n; i++) {
@@ -432,7 +433,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
       /* Draw outline. */
       toolkit_drawOutlineThick( x, y, w, h, 1, 3, rc, NULL );
-      toolkit_drawOutline( x-1, y-1, w+3, h+3, 0, &cBlack, NULL );
+      // toolkit_drawOutline( x-1, y-1, w+3, h+3, 0, &cBlack, NULL );
       /* Go to next one. */
       y -= h+20;
    }
@@ -558,7 +559,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    y = by + bh - 30 - h;
 
    gl_printMidRaw( &gl_smallFont, w,
-      x, y + h + 10., &cFontWhite, _("CPU Free") );
+      x, y + h + 10., &cFontWhite, -1, _("CPU Free") );
 
    percent = (p->cpu_max > 0) ? CLAMP(0., 1., (float)p->cpu / (float)p->cpu_max) : 0.;
    toolkit_drawRect( x, y, w * percent, h, &cFriend, NULL );
@@ -572,7 +573,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    y -= h;
 
    gl_printMidRaw( &gl_smallFont, w,
-      x, y, &cFontWhite, _("Mass Limit Left") );
+      x, y, &cFontWhite, -1., _("Mass Limit Left") );
 
    y -= gl_smallFont.h + h;
 
@@ -670,16 +671,16 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                yoff = h + 2;
             else
                yoff = -gl_smallFont.h - 3;
-            tc.r = 1.;
-            tc.g = 1.;
-            tc.b = 1.;
-            tc.a = 0.5;
-            toolkit_drawRect( x+xoff-5, y -3. + yoff,
-                  text_width+10, gl_smallFont.h+5,
+            tc.r = 0.;
+            tc.g = 0.;
+            tc.b = 0.;
+            tc.a = 0.9;
+            toolkit_drawRect( x, y -5. + yoff,
+                  text_width+60, gl_smallFont.h+10,
                   &tc, NULL );
             gl_printMaxRaw( &gl_smallFont, text_width,
-                  x+xoff, y + yoff,
-                  c, display );
+                  x+5, y + yoff,
+                  c, -1., display );
          }
       }
       /* Go to next one. */
@@ -1659,6 +1660,7 @@ static void equipment_filterOutfits( unsigned int wid, char *str )
  *
  *    @param wid Unused.
  *    @param wgt Unused.
+ *    @param old Tab changed from.
  *    @param tab Tab changed to.
  */
 static void equipment_changeTab( unsigned int wid, char *wgt, int old, int tab )
@@ -1757,7 +1759,7 @@ static void equipment_changeShip( unsigned int wid )
  * @brief Unequips the player's ship.
  *
  *    @param wid Window id.
- *    @param name of widget.
+ *    @param str of widget.
  */
 static void equipment_unequipShip( unsigned int wid, char* str )
 {
@@ -1898,7 +1900,8 @@ static void equipment_sellShip( unsigned int wid, char* str )
 /**
  * @brief Renames the selected ship.
  *
- *    @param The ship to rename.
+ *    @param wid Parent window id.
+ *    @param str Unused.
  */
 static void equipment_renameShip( unsigned int wid, char *str )
 {
@@ -1919,13 +1922,14 @@ static void equipment_renameShip( unsigned int wid, char *str )
    if (player_hasShip(newname)) {
       dialogue_msg( _("Name Collision"),
             _("Please do not give the ship the same name as another of your ships."));
+      free(newname);
       return;
    }
 
    if (ship->name != NULL)
       free (ship->name);
 
-   ship->name = strdup( newname );
+   ship->name = newname;
 
    /* Destroy widget - must be before widget. */
    equipment_regenLists( wid, 0, 1 );

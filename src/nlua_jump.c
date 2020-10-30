@@ -92,7 +92,7 @@ LuaJump* lua_tojump( lua_State *L, int ind )
  * @brief Gets jump at index raising an error if isn't a jump.
  *
  *    @param L Lua state to get jump from.
- *    @param a Index to check.
+ *    @param ind Index to check.
  *    @return Jump found at the index in the state.
  */
 LuaJump* luaL_checkjump( lua_State *L, int ind )
@@ -110,7 +110,6 @@ LuaJump* luaL_checkjump( lua_State *L, int ind )
  *    @param L Lua state to get jump from.
  *    @param ind Index to check.
  *    @param[out] offset How many Lua arguments were passed.
- *    @param[out] sys System the jump exists in.
  *    @return Jump found at the index in the state.
  *
  * @sa luaL_validjump

@@ -49,7 +49,7 @@ static const luaL_Reg naev_methods[] = {
 /**
  * @brief Loads the Naev Lua library.
  *
- *    @param L Lua environment.
+ *    @param env Lua environment.
  *    @return 0 on success.
  */
 int nlua_loadNaev( nlua_env env )

@@ -38,6 +38,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent );
  *    @param type Type of the data to save.
  *    @param name Name of the data to save.
  *    @param value Value of the data to save.
+ *    @param keynum Whether the key is a number (not a string) and should be read back as such.
  *    @return 0 on success.
  */
 static int nxml_saveData( xmlTextWriterPtr writer,
@@ -88,7 +89,7 @@ static int nxml_saveJump( xmlTextWriterPtr writer,
  *
  *    @param L Lua state with node to persist on top of the stack.
  *    @param writer XML Writer to use.
- *    @param Are we parsing a node in a table?  Avoids checking for extra __save.
+ *    @param intable Are we parsing a node in a table?  Avoids checking for extra __save.
  *    @return 0 on success.
  */
 static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int intable )

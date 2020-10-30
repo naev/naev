@@ -290,6 +290,7 @@ int gl_texHasCompress (void)
  *    @param flags Flags to use.
  *    @param[out] rw Real width of the texture.
  *    @param[out] rh Real height of the texture.
+ *    @param freesur Whether or not to free the surface.
  *    @return The opengl texture id.
  */
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags, int freesur )
@@ -571,7 +572,7 @@ static glTexture* gl_texExists( const char* path )
  */
 static int gl_texAdd( glTexture *tex )
 {
-   glTexList *new, *cur, *last;
+   glTexList *new, *last = texture_list;
 
    /* Create the new node */
    new = malloc( sizeof(glTexList) );
@@ -582,8 +583,8 @@ static int gl_texAdd( glTexture *tex )
    if (texture_list == NULL) /* special condition - creating new list */
       texture_list = new;
    else {
-      for (cur=texture_list; cur!=NULL; cur=cur->next)
-         last = cur;
+      while (last->next != NULL)
+         last = last->next;
 
       last->next = new;
    }

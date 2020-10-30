@@ -696,9 +696,10 @@ void input_update( double dt )
 /**
  * @brief Runs the input command.
  *
- *    @param keynum The index of the  keybind.
+ *    @param keynum The index of the keybind.
  *    @param value The value of the keypress (defined above).
  *    @param kabs The absolute value.
+ *    @param repeat Whether the key is still held down, rather than newly pressed.
  */
 static void input_key( int keynum, double value, double kabs, int repeat )
 {
@@ -992,13 +993,12 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("speed") && !repeat) {
      double newSpeed;
       if ((value==KEY_PRESS) && (!player_isFlag( PLAYER_CINEMATICS_2X ))) {
-         printf("Changing player speed %u", player_getSpeed());
-         if (player_getSpeed() < 4) {
-            player_setSpeed(player_getSpeed() + 1);
+         if (player.speed < 4) {
+            player.speed++;
          } else {
-            player_setSpeed(1);
+            player.speed = 1;
          }
-         newSpeed = (double)player_getSpeed();
+         newSpeed = (double)player.speed;
          pause_setSpeed(player_dt_default() * newSpeed);
          sound_setSpeed( newSpeed );
       }
@@ -1130,6 +1130,7 @@ static void input_joyhatevent( const Uint8 value, const Uint8 hat )
  *    @param event Event type (down/up).
  *    @param key Key generating the event.
  *    @param mod Modifiers active when event was generated.
+ *    @param repeat Whether the key is still held down, rather than newly pressed.
  */
 static void input_keyevent( const int event, SDL_Keycode key, const SDL_Keymod mod, const int repeat )
 {
@@ -1382,7 +1383,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
 /**
  * @brief Performs an appropriate action when a jump point is clicked.
  *
- *    @param jp Index of the jump point.
+ *    @param jump Index of the jump point.
  *    @param autonav Whether to autonav to the target.
  *    @return Whether the click was used.
  */
@@ -1476,6 +1477,7 @@ int input_clickedAsteroid( int field, int asteroid )
  * @brief Performs an appropriate action when a pilot is clicked.
  *
  *    @param pilot Index of the pilot.
+ *    @param autonav Whether this is an autonav action.
  *    @return Whether the click was used.
  */
 int input_clickedPilot( unsigned int pilot, int autonav )

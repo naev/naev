@@ -521,7 +521,7 @@ float noise_simplex1( perlin_data_t* pdata, float f[1] )
 /**
  * @brief Frees some noise data.
  *
- *    @param noise Noise data to free.
+ *    @param pdata Noise data to free.
  */
 void noise_delete( perlin_data_t* pdata )
 {

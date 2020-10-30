@@ -62,7 +62,7 @@ static const luaL_Reg shiplog_methods[] = {
  */
 /**
  * @brief Loads the mission Lua library.
- *    @param L Lua state.
+ *    @param env Lua environment.
  */
 int nlua_loadShiplog( nlua_env env )
 {

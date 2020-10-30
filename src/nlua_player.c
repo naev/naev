@@ -549,8 +549,8 @@ static int playerL_cinematics( lua_State *L )
    }
 
    /* Remove doublespeed. */
-   if (player_getSpeed() != 1 || b){
-      player_setSpeed(1);
+   if (player.speed != 1 || b) {
+      player.speed = 1;
       pause_setSpeed( player_dt_default() );
       sound_setSpeed( 1. );
    }

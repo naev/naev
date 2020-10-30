@@ -232,6 +232,8 @@ void gl_blitTexture(  const glTexture* texture,
  *    @param inter Amount of interpolation to do.
  *    @param x X position of the texture on the screen.
  *    @param y Y position of the texture on the screen.
+ *    @param w Width on the screen. (units pixels)
+ *    @param h Height on the screen. (units pixels)
  *    @param tx X position within the texture.
  *    @param ty Y position within the texture.
  *    @param tw Texture width.
@@ -433,6 +435,8 @@ void gl_blitSpriteInterpolate( const glTexture* sa, const glTexture *sb,
  *    @param inter Amount to interpolate.
  *    @param bx X position of the texture relative to the player.
  *    @param by Y position of the texture relative to the player.
+ *    @param scalew X scale factor.
+ *    @param scaleh Y scale factor.
  *    @param sx X position of the sprite to use.
  *    @param sy Y position of the sprite to use.
  *    @param c Colour to use (modifies texture colour).
@@ -670,10 +674,10 @@ void gl_drawCircle( const double cx, const double cy,
 /**
  * @brief Draws a line.
  *
- *    @param cx x1 position of the first point in screen coordinates.
- *    @param cy y1 position of the first point in screen coordinates.
- *    @param cx x1 position of the second point in screen coordinates.
- *    @param cy y1 position of the second point in screen coordinates.
+ *    @param x1 X position of the first point in screen coordinates.
+ *    @param y1 Y position of the first point in screen coordinates.
+ *    @param x2 X position of the second point in screen coordinates.
+ *    @param y2 Y position of the second point in screen coordinates.
  *    @param c Colour to use.
  */
 void gl_drawLine( const double x1, const double y1,

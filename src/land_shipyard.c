@@ -329,7 +329,6 @@ static void shipyard_find( unsigned int wid, char* str )
  * @brief Player right-clicks on a ship.
  *    @param wid Window player is buying ship from.
  *    @param widget_name Name of the window. (unused)
- *    @param shipname Name of the ship the player wants to buy. (unused)
  */
 static void shipyard_rmouse( unsigned int wid, char* widget_name )
 {
@@ -387,6 +386,7 @@ static void shipyard_buy( unsigned int wid, char* str )
 /**
  * @brief Makes sure it's valid to buy a ship.
  *    @param shipname Ship being bought.
+ *    @param planet Where the player is shopping.
  */
 int shipyard_canBuy( const char *shipname, Planet *planet )
 {

@@ -217,6 +217,7 @@ void gui_setDefaults (void)
 /**
  * @brief Initializes the message system.
  *
+ *    @param width Message width.
  *    @param x X position to set at.
  *    @param y Y position to set at.
  */
@@ -486,7 +487,7 @@ void gui_renderTargetReticles( int x, int y, int w, int h, const glColour* c )
 /**
  * @brief Renders the players pilot target.
  *
- *    @double dt Current delta tick.
+ *    @param dt Current delta tick.
  */
 static void gui_renderPilotTarget( double dt )
 {
@@ -904,6 +905,8 @@ void gui_render( double dt )
  * @brief Initializes the radar.
  *
  *    @param circle Whether or not the radar is circular.
+ *    @param w Radar width.
+ *    @param h Radar height.
  */
 int gui_radarInit( int circle, int w, int h )
 {
@@ -1055,7 +1058,7 @@ void gui_clearMessages (void)
  */
 static void gui_renderMessages( double dt )
 {
-   double x, y, h, hs, vx, vy;
+   double x, y, h, hs, vx, vy, dy;
    int v, i, m, o;
    glColour c;
 
@@ -1074,8 +1077,7 @@ static void gui_renderMessages( double dt )
    c.b = 1.;
 
    /* Render background. */
-   h  = conf.mesg_visible*gl_defFont.h*1.2;
-   gl_renderRect( x-2., y-2., gui_mesg_w-13., h+4., &cBlackHilight );
+   h = 0;
 
    /* Set up position. */
    vx = x;
@@ -1109,15 +1111,18 @@ static void gui_renderMessages( double dt )
          if (mesg_stack[m].str[0] != '\0') {
             if (mesg_stack[m].str[0] == '\t') {
                gl_printRestore( &mesg_stack[m].restore );
-               gl_printMaxRaw( NULL, gui_mesg_w - 45., x + 30, y, &cFontWhite, &mesg_stack[m].str[1] );
+               dy = gl_printHeightRaw( NULL, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
+               gl_printMaxRaw( NULL, gui_mesg_w - 45., x + 30, y + 3, &cFontWhite, -1., &mesg_stack[m].str[1] );
+            } else {
+               dy = gl_printHeightRaw( NULL, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
+               gl_printMaxRaw( NULL, gui_mesg_w - 15., x, y + 3, &cFontWhite, -1., mesg_stack[m].str );
             }
-            else
-               gl_printMaxRaw( NULL, gui_mesg_w - 15., x, y, &cFontWhite, mesg_stack[m].str );
+            h += dy;
          }
       }
 
       /* Increase position. */
-      y += (double)gl_defFont.h*1.2;
+      y += dy;
    }
 
    /* Render position. */
@@ -1129,6 +1134,9 @@ static void gui_renderMessages( double dt )
       /* Inside. */
       c.a = 0.5;
       gl_renderRect( vx + gui_mesg_w-10., vy + hs/2. + (h-hs)*((double)o/(double)(mesg_max-conf.mesg_visible)), 10, hs, &c );
+   }
+   if(h > 0){
+     gl_renderRect( x-6., vy-6., gui_mesg_w-13., h+9., &cBlackHilight );
    }
 }
 
@@ -1193,6 +1201,11 @@ static const glColour* gui_getPilotColour( const Pilot* p )
  * @brief Renders a pilot in the GUI radar.
  *
  *    @param p Pilot to render.
+ *    @param shape Shape of the radar (RADAR_RECT or RADAR_CIRCLE).
+ *    @param w Width.
+ *    @param h Height.
+ *    @param res Radar resolution.
+ *    @param overlay Whether to render onto the overlay.
  */
 void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res, int overlay )
 {
@@ -1266,7 +1279,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
    /* Draw name. */
    if (overlay && pilot_isFlag(p, PILOT_HILIGHT))
-      gl_printRaw( &gl_smallFont, x+2*sx+5., y-gl_smallFont.h/2., &col, p->name );
+      gl_printRaw( &gl_smallFont, x+2*sx+5., y-gl_smallFont.h/2., &col, -1., p->name );
 }
 
 
@@ -1274,6 +1287,10 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
  * @brief Renders an asteroid in the GUI radar.
  *
  *    @param a Asteroid to render.
+ *    @param w Width.
+ *    @param h Height.
+ *    @param res Radar resolution.
+ *    @param overlay Whether to render onto the overlay.
  */
 void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int overlay )
 {
@@ -1370,7 +1387,7 @@ void gui_renderPlayer( double res, int overlay )
    gl_renderCross( x, y, r, &cRadar_player );
 
    if (overlay)
-      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &textCol, _("You") );
+      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &textCol, -1., _("You") );
 }
 
 
@@ -1559,14 +1576,19 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
     * as a font change, but using this fix for now. */
    col.a = MIN( col.a, 0.99 );
    if (overlay)
-      gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, planet->name );
+      gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, -1., planet->name );
 }
 
 
 /**
  * @brief Renders a jump point on the minimap.
  *
- *    @param i Jump point to render.
+ *    @param ind Jump point to render.
+ *    @param shape Shape of the radar (RADAR_RECT or RADAR_CIRCLE).
+ *    @param w Width.
+ *    @param h Height.
+ *    @param res Radar resolution.
+ *    @param overlay Whether to render onto the overlay.
  */
 void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
@@ -1653,7 +1675,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
     * as a font change, but using this fix for now. */
    col.a = MIN( col.a, 0.99 );
    if (overlay)
-      gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, sys_isKnown(jp->target) ? jp->target->name : _("Unknown") );
+      gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, -1., sys_isKnown(jp->target) ? jp->target->name : _("Unknown") );
 }
 
 
@@ -1967,7 +1989,7 @@ void gui_updateFaction (void)
 /**
  * @brief Calls trigger functions depending on who the pilot is.
  *
- *    @param The pilot to act based upon.
+ *    @param pilot The pilot to act based upon.
  */
 void gui_setGeneric( Pilot* pilot )
 {

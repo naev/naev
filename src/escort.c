@@ -39,6 +39,7 @@ static int escort_command( Pilot *parent, const char *cmd, unsigned int index );
  *    @param ship Ship of the escort.
  *    @param type Type of the escort.
  *    @param id ID of the pilot representing the escort.
+ *    @param persist True if escort should respawn on takeoff/landing.
  *    @return 0 on success.
  */
 int escort_addList( Pilot *p, char *ship, EscortType_t type,
@@ -56,27 +57,54 @@ int escort_addList( Pilot *p, char *ship, EscortType_t type,
 
 
 /**
+ * @brief Remove all escorts from a pilot.
+ *
+ *    @param p Pilot to remove escorts from.
+
+ */
+void escort_freeList( Pilot *p ) {
+   int i;
+
+   for (i=0; i<p->nescorts; i++)
+      free(p->escorts[i].ship);
+   if (p->escorts)
+      free(p->escorts);
+   p->escorts = NULL;
+   p->nescorts = 0;
+}
+
+
+/**
+ * @brief Remove from escorts list.
+ *
+ *    @param p Pilot to remove escort from.
+ *    @param i index of the pilot representing the escort.
+
+ */
+void escort_rmListIndex( Pilot *p, int i ) {
+   p->nescorts--;
+   free(p->escorts[i].ship);
+   memmove( &p->escorts[i], &p->escorts[i+1],
+         sizeof(Escort_t)*(p->nescorts-i) );
+}
+
+
+/**
  * @brief Remove from escorts list.
  *
  *    @param p Pilot to remove escort from.
  *    @param id ID of the pilot representing the escort.
- *    @return 0 on success.
 
  */
-int escort_rmList( Pilot *p, unsigned int id ) {
+void escort_rmList( Pilot *p, unsigned int id ) {
    int i;
 
    for (i=0; i<p->nescorts; i++) {
       if (p->escorts[i].id == id) {
-         p->nescorts--;
-         memmove( &p->escorts[i], &p->escorts[i+1],
-               sizeof(Escort_t)*(p->nescorts-i) );
-
+         escort_rmListIndex( p, i );
          break;
       }
    }
-
-   return 0;
 }
 
 
@@ -280,6 +308,7 @@ int escort_playerCommand( Pilot *e )
  * @brief Have a pilot order its escorts to jump.
  *
  *    @param parent Pilot giving the order.
+ *    @param jp Where to jump.
  */
 int escorts_jump( Pilot *parent, JumpPoint *jp )
 {
