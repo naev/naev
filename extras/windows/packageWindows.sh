@@ -41,7 +41,7 @@ if [[ -z "$BUILDDIR" ]]; then
 fi
 if [[ $NIGHTLY = "true" ]]; then
     NIGHTLY="true"
-    BUILD_DATE="$(date +%m%d%Y)"
+    BUILD_DATE="$(date +%Y%m%d)"
 else
     NIGHTLY="false"
 fi
