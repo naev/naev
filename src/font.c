@@ -563,9 +563,9 @@ static void gl_printOutline( const glFont *ft_font,
    double radius;
 
    /* TODO: This method works, but is inefficient. Should probably be
-   * ultimately replaced with use of signed distance fields or some
-   * other more efficient method (signed distance fields seem to be
-   * the "right" solution). */
+    * ultimately replaced with use of signed distance fields or some
+    * other more efficient method (signed distance fields seem to be
+    * the "right" solution). */
    if ((c == NULL) || (c->a >= 1.)) {
       if(outlineR != -1){
          radius = outlineR;
