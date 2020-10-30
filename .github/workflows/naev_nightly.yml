@@ -159,7 +159,6 @@ jobs:
     - name: Install Additional Build Dependencies
       run: |
         sudo apt-get install -y \
-          git \
           autoconf-archive
 
     - name: Setup Python
@@ -178,6 +177,7 @@ jobs:
         tar -xf naev-*.tar.xz -C source --strip 1
 
     - name: Meson Setup
+      id: setup
       run: |
         sh $MESON setup build source \
             --native-file='source/utils/build/linux.ini' \
@@ -187,8 +187,15 @@ jobs:
             -Ddocs_c=disabled \
             -Ddocs_lua=disabled
 
+    - name: Upload Setup Log
+      uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.setup.outcome == 'failure' }}
+      with:
+        name: steam-setup-log
+        path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+        if-no-files-found: ignore
+
     - name: Meson Compile
-      if: ${{ runner.os == 'Windows'}}
       run: |
         sh $MESON compile -C build
 
