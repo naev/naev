@@ -390,26 +390,26 @@ static void info_openShip( unsigned int wid )
    /* Text. */
    window_addText( wid, 40, -60, 100, h-60, 0, "txtSDesc", &gl_smallFont,
          NULL,
-         _("Name:\n"
-         "Model:\n"
-         "Class:\n"
-         "Crew:\n"
+         _("\awName:\a0\n"
+         "\awModel:\a0\n"
+         "\awClass:\a0\n"
+         "\awCrew:\a0\n"
          "\n"
-         "Mass:\n"
-         "Jump Time:\n"
-         "Thrust:\n"
-         "Speed:\n"
-         "Turn:\n"
-         "Time Dilation:\n"
+         "\awMass:\a0\n"
+         "\awJump Time:\a0\n"
+         "\awThrust:\a0\n"
+         "\awSpeed:\a0\n"
+         "\awTurn:\a0\n"
+         "\awTime Dilation:\a0\n"
          "\n"
-         "Absorption:\n"
-         "Shield:\n"
-         "Armour:\n"
-         "Energy:\n"
-         "Cargo Space:\n"
-         "Fuel:\n"
+         "\awAbsorption:\a0\n"
+         "\awShield:\a0\n"
+         "\awArmour:\a0\n"
+         "\awEnergy:\a0\n"
+         "\awCargo Space:\a0\n"
+         "\awFuel:\a0\n"
          "\n"
-         "Stats:\n")
+         "\awStats:\a0\n")
          );
    window_addText( wid, 180, -60, w-300., h-60, 0, "txtDDesc", &gl_smallFont,
          NULL, NULL );

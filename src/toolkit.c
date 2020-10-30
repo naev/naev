@@ -1210,7 +1210,7 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    glColour c2;
 
    /* Get dimensions. */
-   w = 200;
+   w = 250;
    h = gl_printHeightRaw( &gl_smallFont, w, alt );
 
    /* Choose position. */
@@ -1222,17 +1222,17 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    }
 
    /* Set colours. */
-   c.r = cGrey80.r;
-   c.g = cGrey80.g;
-   c.b = cGrey80.b;
-   c.a = 0.8;
-   c2.r = cGrey30.r;
-   c2.g = cGrey30.g;
-   c2.b = cGrey30.b;
+   c.r = cGrey20.r;
+   c.g = cGrey20.g;
+   c.b = cGrey20.b;
+   c.a = 0.9;
+   c2.r = cGrey10.r;
+   c2.g = cGrey10.g;
+   c2.b = cGrey10.b;
    c2.a = 0.7;
    toolkit_drawRect( x-1, y-5, w+6, h+6, &c2, NULL );
    toolkit_drawRect( x-3, y-3, w+6, h+6, &c, NULL );
-   gl_printTextRaw( &gl_smallFont, w, h, x, y, &cFontWhite, alt );
+   gl_printTextRaw( &gl_smallFont, w - 10 , h - 10, x + 5, y + 5, &cFontWhite, alt );
 }
 
 
