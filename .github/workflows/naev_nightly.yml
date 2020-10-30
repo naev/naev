@@ -159,9 +159,12 @@ jobs:
     - name: Install Additional Build Dependencies
       run: |
         sudo apt-get install -y \
-          autoconf-archive \
-          meson \
-          ninja-build
+          python3.5 \
+          autoconf-archive
+
+    - name: Setup Python
+      run: |
+        update-alternatives --install /usr/bin/python python /usr/bin/python3.5
 
     - name: Get Source
       uses: actions/download-artifact@v1
