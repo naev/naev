@@ -32,6 +32,7 @@ jobs:
 
     - name: Meson Build
       run: |
+        sh $MESON subprojects download
         sh $MESON setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
         sh $MESON dist -C build --no-tests --include-subprojects
 
