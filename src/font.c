@@ -571,16 +571,14 @@ static void gl_printOutline( const glFont *ft_font,
       if(outlineR != -1){
          radius = outlineR;
       } else {
-         radius = 1.2;
+         radius = 1.;
       }
       if ((c==NULL) || (c->r+c->b+c->g > 2.8)) {
          bg = &cBlack;
       } else if ((c->r+c->b+c->g > 1.5)){
          bg = &cGrey10;
-         radius = 1.2;
       } else {
          bg = &cWhite;
-         radius = 1.2;
       }
 
       halfRadius = radius / 2;      
