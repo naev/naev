@@ -296,4 +296,9 @@ jobs:
       - name: Build and Upload Steam Release
         run: |
           ./extras/steam/SteamDeploy.sh -n
-
+#        env:
+#          STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
+#          STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}
+#          TFA_IMAP: ${{ secrets.TFA_IMAP }}
+#          TFA_PASS: ${{ secrets.TFA_PASS }}
+#          TFA_USER: ${{ secrets.TFA_USER }}

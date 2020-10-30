@@ -69,3 +69,40 @@ mv $STEAMPATH/content/win64/naev*.exe $STEAMPATH/content/win64/naev.exe
 cp -r $SOURCEROOT/dat $STEAMPATH/content/ndata
 
 tree $STEAMPATH
+#
+#
+## Runs STEAMCMD, and builds the app as well as all needed depots.
+#
+## Trigger 2FA request and get 2FA code
+#steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
+#
+## Wait a bit for the email to arrive
+#sleep 60s
+#python3 $SOURCEROOT/utils/ci/steam/2fa/get_2fa.py
+#STEAMCMD_TFA="$(cat $SOURCEROOT/extras/steam/2fa/2fa.txt)"
+#
+#if [[ $NIGHTLY == true ]]; then
+#    # Run steam upload with 2fa key
+#    steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http $STEAMPATH/scripts/app_build_598530_nightly.vdf +quit
+#
+#elif [[ $NIGHTLY == false ]]; then
+#    if [[ $BETA == true ]]; then 
+#        # Run steam upload with 2fa key
+#        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http $STEAMPATH/scripts/app_build_598530_prerelease.vdf +quit
+#
+#    elif [[ $BETA == false ]]; then 
+#        # Move soundtrack stuff to deployment area
+#        mv naev-soundtrack/soundtrack/*.mp3 $STEAMPATH/content/soundtrack
+#        mv naev-soundtrack/soundtrack/*.png $STEAMPATH/content/soundtrack
+#
+#        # Run steam upload with 2fa key
+#        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http $STEAMPATH/scripts/app_build_598530_release.vdf +quit
+#        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +run_app_build_http $STEAMPATH/scripts/app_build_1411430_soundtrack.vdf +quit
+#
+#    else
+#        echo "Something went wrong determining if this is a beta or not."
+#    fi
+#else
+#    echo "Something went wrong.."
+#    exit -1
+#fi
