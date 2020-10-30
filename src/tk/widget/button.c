@@ -301,7 +301,7 @@ static int btn_key( Widget* btn, SDL_Keycode key, SDL_Keymod mod )
  */
 static void btn_render( Widget* btn, double bx, double by )
 {
-   const glColour *c, *fc;
+   const glColour *c, *fc, *outline;
    double x, y;
 
    x = bx + btn->x;
@@ -309,11 +309,13 @@ static void btn_render( Widget* btn, double bx, double by )
 
    /* set the colours */
    if (btn->dat.btn.disabled) {
-      c  = &cGrey30;
+      c  = &cGrey25;
       fc = &cGrey80;
+      outline = &cGrey25;
    }
    else {
       fc = &cGrey80;
+      outline = &cGrey60;
       switch (btn->status) {
          case WIDGET_STATUS_MOUSEOVER:
             c  = &cGrey20;
@@ -331,9 +333,9 @@ static void btn_render( Widget* btn, double bx, double by )
    toolkit_drawRect( x, y, btn->w, btn->h, c, NULL );
 
    /* inner outline */
-   toolkit_drawOutline( x, y, btn->w, btn->h, 0., &cGrey60, NULL );
+   toolkit_drawOutline( x, y, btn->w, btn->h, 0., outline, NULL );
    /* outer outline */
-   toolkit_drawOutline( x, y, btn->w, btn->h, 1., &cGrey60, NULL );
+   toolkit_drawOutline( x, y, btn->w, btn->h, 1., outline, NULL );
 
    gl_printMidRaw( &gl_smallFont, (int)btn->w,
          bx + btn->x,
