@@ -967,7 +967,6 @@ static OutfitType outfit_strToOutfitType( char *buf )
  * <damage type="kinetic">10</damage>
  * @endcode
  *
- *    @param[out] dtype Stores the damage type here.
  *    @param[out] dmg Stores the damage here.
  *    @param[in] node Node to parse damage from.
  *    @return 0 on success.
@@ -2100,7 +2099,7 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
  * @brief Parses and returns Outfit from parent node.
 
  *    @param temp Outfit to load into.
- *    @param parent Parent node to parse outfit from.
+ *    @param file Path to the XML file (relative to base directory).
  *    @return 0 on success.
  */
 static int outfit_parse( Outfit* temp, const char* file )

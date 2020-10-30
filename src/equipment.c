@@ -113,7 +113,6 @@ static int equipment_playerRmOutfit( const Outfit *o, int quantity );
  * @brief Handles right-click on unequipped outfit.
  *    @param wid Window to update.
  *    @param str Widget name. Must be EQUIPMENT_OUTFITS.
- *    @param clicked_outfit Name of the outfit the user right-clicked on.
  */
 void equipment_rightClickOutfits( unsigned int wid, char* str )
 {
@@ -123,6 +122,7 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
    int outfit_n;
    PilotOutfitSlot* slots;
    Pilot *p;
+   /* Name of the outfit the user right-clicked on. */
    const char* clicked_outfit = toolkit_getImageArray( wid, EQUIPMENT_OUTFITS );
 
    /* Did the user click on background? */
@@ -335,6 +335,7 @@ void equipment_open( unsigned int wid )
 /**
  * @brief Creates the slot widget and initializes it.
  *
+ *    @param wid Parent window id.
  *    @param x X position to put it at.
  *    @param y Y position to put it at.
  *    @param w Width.
@@ -1659,6 +1660,7 @@ static void equipment_filterOutfits( unsigned int wid, char *str )
  *
  *    @param wid Unused.
  *    @param wgt Unused.
+ *    @param old Tab changed from.
  *    @param tab Tab changed to.
  */
 static void equipment_changeTab( unsigned int wid, char *wgt, int old, int tab )
@@ -1757,7 +1759,7 @@ static void equipment_changeShip( unsigned int wid )
  * @brief Unequips the player's ship.
  *
  *    @param wid Window id.
- *    @param name of widget.
+ *    @param str of widget.
  */
 static void equipment_unequipShip( unsigned int wid, char* str )
 {
@@ -1898,7 +1900,8 @@ static void equipment_sellShip( unsigned int wid, char* str )
 /**
  * @brief Renames the selected ship.
  *
- *    @param The ship to rename.
+ *    @param wid Parent window id.
+ *    @param str Unused.
  */
 static void equipment_renameShip( unsigned int wid, char *str )
 {

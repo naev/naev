@@ -25,7 +25,6 @@
 /**
  * @brief Saves a planet.
  *
- *    @param writer Write to use for saving the star planet.
  *    @param p Planet to save.
  *    @return 0 on success.
  */

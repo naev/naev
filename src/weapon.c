@@ -1275,6 +1275,7 @@ static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
  *    @param vel Velocity of the turret.
  *    @param dir Direction facing parent ship and turret.
  *    @param time Expected flight time.
+ *    @param swivel Maximum angle between weapon and straight ahead.
  */
 static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir,

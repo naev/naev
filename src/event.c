@@ -193,7 +193,7 @@ int event_run( unsigned int eventid, const char *func )
 /**
  * @brief Gets the name of the event data.
  *
- *    @param ev Event to get name of data from.
+ *    @param eventid Event to get name of data from.
  *    @return Name of data ev has.
  */
 const char *event_getData( unsigned int eventid )
@@ -242,7 +242,7 @@ static unsigned int event_genID (void)
 /**
  * @brief Creates an event.
  *
- *    @param data Data to base event off of.
+ *    @param dataid Data to base event off of.
  *    @param id ID to use (0 to generate).
  *    @return 0 on success.
  */

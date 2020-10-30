@@ -407,7 +407,6 @@ void nebu_renderOverlay( const double dt )
 /**
  * @brief Renders the puffs.
  *
- *    @param dt Current delta tick.
  *    @param below_player Render the puffs below player or above player?
  */
 static void nebu_renderPuffs( int below_player )

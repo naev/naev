@@ -607,6 +607,7 @@ char **_nfile_readDir( size_t *nfiles, const char *path )
  * Should also sort by last modified but that's up to the OS in question.
  * Paths are relative to base directory.
  *
+ *    @param _files If not NULL, pointer to an Array to accumulate results into.
  *    @param base_dir Root of the search (not part of returned file paths).
  *    @param sub_dir Subdirectory being searched (included in returend file paths).
  *    @return Array of (allocated) file paths relative to base_dir.

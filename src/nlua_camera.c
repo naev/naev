@@ -38,7 +38,7 @@ static const luaL_Reg cameraL_methods[] = {
 /**
  * @brief Loads the camera library.
  *
- *    @param L State to load camera library into.
+ *    @param env Lua environment.
  *    @return 0 on success.
  */
 int nlua_loadCamera( nlua_env env )

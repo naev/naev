@@ -173,6 +173,7 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
  * @brief Gets the previous pilot based on ID.
  *
  *    @param id ID of the current pilot.
+ *    @param mode Method to use when cycling.  0 is normal, 1 is hostiles.
  *    @return ID of previous pilot or PLAYER_ID if no previous pilot.
  */
 unsigned int pilot_getPrevID( const unsigned int id, int mode )
@@ -351,7 +352,7 @@ unsigned int pilot_getNearestEnemy_size( const Pilot* p, double target_mass_LB, 
  *    @param p Pilot to get the nearest enemy of.
  *    @param mass_factor parameter for target mass (0-1, 0.5 = current mass)
  *    @param health_factor parameter for target shields/armour (0-1, 0.5 = current health)
- *    @param dps_factor parameter for target dps (0-1, 0.5 = current dps)
+ *    @param damage_factor parameter for target dps (0-1, 0.5 = current dps)
  *    @param range_factor weighting for range (typically >> 1)
  *    @return ID of their nearest enemy.
  */
@@ -711,7 +712,7 @@ double pilot_face( Pilot* p, const double dir )
 /**
  * @brief Causes the pilot to turn around and brake.
  *
- *    @param Pilot to brake.
+ *    @param p Pilot to brake.
  *    @return 1 when braking has finished.
  */
 int pilot_brake( Pilot *p )
@@ -862,7 +863,7 @@ int pilot_interceptPos( Pilot *p, double x, double y )
 /**
  * @brief Begins active cooldown, reducing hull and outfit temperatures.
  *
- *    @param Pilot that should cool down.
+ *    @param p Pilot that should cool down.
  */
 void pilot_cooldown( Pilot *p )
 {
@@ -924,8 +925,8 @@ void pilot_cooldown( Pilot *p )
 /**
  * @brief Terminates active cooldown.
  *
- *    @param Pilot to stop cooling.
- *    @param Reason for the termination.
+ *    @param p Pilot to stop cooling.
+ *    @param reason Reason for the termination.
  */
 void pilot_cooldownEnd( Pilot *p, const char *reason )
 {
@@ -3262,6 +3263,7 @@ void pilot_clearTimers( Pilot *pilot )
 /**
  * @brief Gets the relative size(shipmass) between the current pilot and the specified target
  *
+ *    @param cur_pilot the current pilot
  *    @param p the pilot whose mass we will compare
  *    @return A number from 0 to 1 mapping the relative masses
  */
@@ -3367,6 +3369,7 @@ credits_t pilot_worth( const Pilot *p )
  *
  * @param p Pilot to send message
  * @param reciever Pilot to recieve it
+ * @param type Type of message.
  * @param idx Index of data on lua stack or 0
  */
 void pilot_msg(Pilot *p, Pilot *reciever, const char *type, unsigned int idx)

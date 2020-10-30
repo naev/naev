@@ -69,7 +69,7 @@ static const luaL_Reg evt_methods[] = {
  */
 /**
  * @brief Loads the event Lua library.
- *    @param L Lua state.
+ *    @param env Lua environment.
  */
 int nlua_loadEvt( nlua_env env )
 {

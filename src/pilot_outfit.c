@@ -143,7 +143,7 @@ void pilot_lockClear( Pilot *p )
  * Position is relative to the pilot.
  *
  *    @param p Pilot to get mount position of.
- *    @param id ID of the mount.
+ *    @param w Slot of the mount.
  *    @param[out] v Position of the mount.
  *    @return 0 on success.
  */
@@ -556,11 +556,11 @@ const char* pilot_checkSpaceworthy( Pilot *p )
  *    @param bufSize Size of the buffer.
  *    @return Number of issues encountered.
  */
-#define SPACEWORTHY_CHECK(cond,msg) \
-if (cond) { ret++; \
-   if (pos < bufSize) pos += snprintf( &buf[pos], bufSize-pos, (msg) ); }
 int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
 {
+   #define SPACEWORTHY_CHECK(cond,msg) \
+   if (cond) { ret++; \
+      if (pos < bufSize) pos += snprintf( &buf[pos], bufSize-pos, (msg) ); }
    int pos = 0;
    int ret = 0;
 
@@ -612,7 +612,7 @@ int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
  * @brief Checks to see if a pilot has an outfit with a specific outfit type.
  *
  *    @param p Pilot to check.
- *    @param t Outfit type to check.
+ *    @param limit Outfit (limiting) type to check.
  *    @return the amount of outfits of this type the pilot has.
  */
 static int pilot_hasOutfitLimit( Pilot *p, const char *limit )

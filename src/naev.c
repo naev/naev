@@ -994,6 +994,7 @@ static void update_all (void)
  * @brief Actually runs the updates
  *
  *    @param[in] dt Current delta tick.
+ *    @param[in] enter_sys Whether this is the initial update upon entering the system.
  */
 void update_routine( double dt, int enter_sys )
 {
@@ -1148,7 +1149,7 @@ static void window_caption (void)
 }
 
 /**
- * @Brief Gets a short human readable string of the version.
+ * @brief Gets a short human readable string of the version.
  *
  *    @param[out] str String to output.
  *    @param slen Maximum length of the string.

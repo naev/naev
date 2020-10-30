@@ -254,7 +254,7 @@ news_t* news_get(int id)
 /**
  * @brief Generates news from newslist from specific faction AND Generic news
  *
- *    @param the faction of wanted news
+ *    @param faction the faction of wanted news
  * @return 0 on success
  */
 int *generate_news( char* faction )
@@ -386,13 +386,15 @@ void clear_newslines (void)
 
 
 /**
- * @brief wid Window receiving the mouse events.
+ * @brief News widget mouse event handler.
  *
+ *    @param wid Window receiving the mouse events.
  *    @param event Mouse event being received.
  *    @param mx X position of the mouse.
  *    @param my Y position of the mouse.
  *    @param w Width of the widget.
  *    @param h Height of the widget.
+ *    @param data Unused.
  */
 static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
       double w, double h, void *data )
@@ -443,6 +445,7 @@ static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
  *    @param by Base Y position to render at.
  *    @param w Width of the widget.
  *    @param h Height of the widget.
+ *    @param data Unused.
  */
 static void news_render( double bx, double by, double w, double h, void *data )
 {

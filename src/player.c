@@ -1051,6 +1051,7 @@ void player_render( double dt )
  * @brief Basically uses keyboard input instead of AI input. Used in pilot.c.
  *
  *    @param pplayer Player to think.
+ *    @param dt Current delta tick.
  */
 void player_think( Pilot* pplayer, const double dt )
 {
@@ -1205,7 +1206,7 @@ void player_think( Pilot* pplayer, const double dt )
  * @brief Player update function.
  *
  *    @param pplayer Player to update.
- *    @param dt Current deltatick.
+ *    @param dt Current delta tick.
  */
 void player_update( Pilot *pplayer, const double dt )
 {
@@ -1222,7 +1223,7 @@ void player_update( Pilot *pplayer, const double dt )
  * @brief Does a player specific update.
  *
  *    @param pplayer Player to update.
- *    @param dt Current deltatick.
+ *    @param dt Current delta tick.
  */
 void player_updateSpecific( Pilot *pplayer, const double dt )
 {
@@ -1354,6 +1355,7 @@ void player_targetPlanetSet( int id )
 /**
  * @brief Sets the player's target asteroid.
  *
+ *    @param field Index of the parent field of the asteoid.
  *    @param id Target planet or -1 if none should be selected.
  */
 void player_targetAsteroidSet( int field, int id )
@@ -2438,7 +2440,7 @@ int player_ships( char** sships, glTexture** tships )
 /**
  * @brief Gets all of the player's ships.
  *
- *    @param[out] Number of star systems gotten.
+ *    @param[out] n Number of star systems gotten.
  *    @return The player's ships.
  */
 const PlayerShip_t* player_getShipStack( int *n )
@@ -2506,7 +2508,7 @@ Pilot *player_getShip( const char *shipname )
 /**
  * @brief Gets how many of the outfit the player owns.
  *
- *    @param outfitname Outfit to check how many the player owns.
+ *    @param o Outfit to check how many the player owns.
  *    @return The number of outfits matching outfitname owned.
  */
 int player_outfitOwned( const Outfit* o )

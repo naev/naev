@@ -753,7 +753,6 @@ static int diff_patch( xmlNodePtr parent )
 /**
  * @brief Applies a hunk and adds it to the diff.
  *
- *    @param diff Diff to which the hunk belongs.
  *    @param hunk Hunk to apply.
  *    @return 0 on success.
  */

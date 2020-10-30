@@ -577,6 +577,7 @@ int player_autonavShouldResetSpeed (void)
  * @brief Handles autonav thinking.
  *
  *    @param pplayer Player doing the thinking.
+ *    @param dt Current delta tick.
  */
 void player_thinkAutonav( Pilot *pplayer, double dt )
 {

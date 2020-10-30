@@ -106,7 +106,7 @@ credits_t economy_getPrice( const Commodity *com,
  *    @param com Commodity to get price of.
  *    @param sys System to get price of commodity.
  *    @param p Planet to get price of commodity.
- *    @param t Time to get price at, eg as retunred by ntime_get()
+ *    @param tme Time to get price at, eg as retunred by ntime_get()
  *    @return The price of the commodity.
  */
 credits_t economy_getPriceAtTime( const Commodity *com,
@@ -159,13 +159,15 @@ credits_t economy_getPriceAtTime( const Commodity *com,
 }
 
 /**
- * @brief Gets the average price of a good on a planet in a system, using a rolling average over the times the player has landed here..
+ * @brief Gets the average price of a good on a planet in a system, using a rolling average over the times the player has landed here.
  *
  *    @param com Commodity to get price of.
  *    @param p Planet to get price of commodity.
+ *    @param[out] mean Sample mean, rounded to nearest credit.
+ *    @param[out] std Sample standard deviation (via uncorrected population formula).
  *    @return The average price of the commodity.
  */
-int economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credits_t *mean, double *std)
+int economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credits_t *mean, double *std )
 {
    int i,k;
    CommodityPrice *commPrice;
@@ -214,6 +216,8 @@ int economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credit
  * @brief Gets the average price of a good as seen by the player (anywhere).
  *
  *    @param com Commodity to get price of.
+ *    @param[out] mean Sample mean, rounded to nearest credit.
+ *    @param[out] std Sample standard deviation (via uncorrected population formula).
  *    @return The average price of the commodity.
  */
 

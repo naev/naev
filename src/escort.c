@@ -39,6 +39,7 @@ static int escort_command( Pilot *parent, const char *cmd, unsigned int index );
  *    @param ship Ship of the escort.
  *    @param type Type of the escort.
  *    @param id ID of the pilot representing the escort.
+ *    @param persist True if escort should respawn on takeoff/landing.
  *    @return 0 on success.
  */
 int escort_addList( Pilot *p, char *ship, EscortType_t type,
@@ -307,6 +308,7 @@ int escort_playerCommand( Pilot *e )
  * @brief Have a pilot order its escorts to jump.
  *
  *    @param parent Pilot giving the order.
+ *    @param jp Where to jump.
  */
 int escorts_jump( Pilot *parent, JumpPoint *jp )
 {

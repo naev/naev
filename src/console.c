@@ -229,6 +229,7 @@ void cli_addMessage( const char *msg )
  * @brief Adds a message to the buffer.
  *
  *    @param msg Message to add.
+ *    @param l Max message length.
  */
 void cli_addMessageMax( const char *msg, const int l )
 {

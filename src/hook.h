@@ -19,7 +19,7 @@
 
 
 /**
- * @Brief The hook parameter types.
+ * @brief The hook parameter types.
  */
 typedef enum HookParamType_e {
    HOOK_PARAM_NIL, /**< No hook parameter. */

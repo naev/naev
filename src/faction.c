@@ -350,7 +350,7 @@ const glColour* faction_colour( int f )
  * @brief Gets the list of enemies of a faction.
  *
  *    @param f Faction to get enemies of.
- *    @param[out] Number of enemies.
+ *    @param[out] n Number of allies.
  *    @return The enemies of the faction.
  */
 int* faction_getEnemies( int f, int *n )
@@ -395,7 +395,7 @@ int* faction_getEnemies( int f, int *n )
  * @brief Gets the list of allies of a faction.
  *
  *    @param f Faction to get allies of.
- *    @param[out] Number of allies.
+ *    @param[out] n Number of allies.
  *    @return The allies of the faction.
  */
 int* faction_getAllies( int f, int *n )
@@ -702,6 +702,13 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
  *
  *    @param f Faction to modify player's standing.
  *    @param mod Modifier to modify by.
+ *    @param source Source of the faction modifier.
+ *
+ *   Possible sources:
+ *    - "kill" : Pilot death.
+ *    - "distress" : Pilot distress signal.
+ *    - "script" : Either a mission or an event.
+ *
  */
 void faction_modPlayer( int f, double mod, const char *source )
 {
@@ -735,6 +742,12 @@ void faction_modPlayer( int f, double mod, const char *source )
  *
  *    @param f Faction whose standing to modify.
  *    @param mod Amount to modify standing by.
+ *    @param source Source of the faction modifier.
+ *
+ *   Possible sources:
+ *    - "kill" : Pilot death.
+ *    - "distress" : Pilot distress signal.
+ *    - "script" : Either a mission or an event.
  *
  * @sa faction_modPlayer
  */

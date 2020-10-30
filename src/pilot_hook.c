@@ -34,6 +34,8 @@ static int pilot_hookCleanup = 0; /**< Are hooks being removed from a pilot? */
  *
  *    @param p Pilot to run the hook.
  *    @param hook_type Type of hook to run.
+ *    @param param Parameters to pass.
+ *    @param nparam Number of parameters to pass.
  *    @return The number of hooks run.
  */
 int pilot_runHookParam( Pilot* p, int hook_type, HookParam* param, int nparam )

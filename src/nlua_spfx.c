@@ -34,7 +34,7 @@ static const luaL_Reg spfxL_methods[] = {
 /**
  * @brief Loads the spfx library.
  *
- *    @param L State to load camera library into.
+ *    @param env Lua environment.
  *    @return 0 on success.
  */
 int nlua_loadSpfx( nlua_env env )

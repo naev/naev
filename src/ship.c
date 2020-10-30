@@ -449,6 +449,8 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
  *
  *    @param temp Ship to load into.
  *    @param str Path of the image to use.
+ *    @param sx Number of X sprites in image.
+ *    @param sy Number of Y sprites in image.
  */
 static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
 {
@@ -491,6 +493,8 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
  *
  *    @param temp Ship to load into.
  *    @param str Path of the image to use.
+ *    @param sx Number of X sprites in image.
+ *    @param sy Number of Y sprites in image.
  */
 static int ship_loadEngineImage( Ship *temp, char *str, int sx, int sy )
 {
@@ -504,6 +508,9 @@ static int ship_loadEngineImage( Ship *temp, char *str, int sx, int sy )
  *
  *    @param temp Ship to load into.
  *    @param buf Name of the texture to work with.
+ *    @param sx Number of X sprites in image.
+ *    @param sy Number of Y sprites in image.
+ *    @param engine Whether there is also an engine image to load.
  */
 static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
 {

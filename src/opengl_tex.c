@@ -290,6 +290,7 @@ int gl_texHasCompress (void)
  *    @param flags Flags to use.
  *    @param[out] rw Real width of the texture.
  *    @param[out] rh Real height of the texture.
+ *    @param freesur Whether or not to free the surface.
  *    @return The opengl texture id.
  */
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags, int freesur )
