@@ -340,7 +340,7 @@ static void btn_render( Widget* btn, double bx, double by )
    gl_printMidRaw( &gl_smallFont, (int)btn->w,
          bx + btn->x,
          by + btn->y + (btn->h - gl_smallFont.h)/2.,
-         fc, btn->dat.btn.display );
+         fc, -1., btn->dat.btn.display );
 }
 
 

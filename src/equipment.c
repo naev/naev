@@ -374,7 +374,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    else
       c = &cFontWhite;
    gl_printMidRaw( &gl_smallFont, 60.,
-         x-15., y+h+10., c, txt );
+         x-15., y+h+10., c, -1., txt );
 
    /* Iterate for all the slots. */
    for (i=0; i<n; i++) {
@@ -558,7 +558,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    y = by + bh - 30 - h;
 
    gl_printMidRaw( &gl_smallFont, w,
-      x, y + h + 10., &cFontWhite, _("CPU Free") );
+      x, y + h + 10., &cFontWhite, -1, _("CPU Free") );
 
    percent = (p->cpu_max > 0) ? CLAMP(0., 1., (float)p->cpu / (float)p->cpu_max) : 0.;
    toolkit_drawRect( x, y, w * percent, h, &cFriend, NULL );
@@ -572,7 +572,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    y -= h;
 
    gl_printMidRaw( &gl_smallFont, w,
-      x, y, &cFontWhite, _("Mass Limit Left") );
+      x, y, &cFontWhite, -1., _("Mass Limit Left") );
 
    y -= gl_smallFont.h + h;
 
@@ -679,7 +679,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                   &tc, NULL );
             gl_printMaxRaw( &gl_smallFont, text_width,
                   x+5, y + yoff,
-                  c, display );
+                  c, -1., display );
          }
       }
       /* Go to next one. */

@@ -1786,7 +1786,7 @@ void pilot_renderOverlay( Pilot* p, const double dt )
          gl_renderRect( dx-2., dy-2., p->comm_msgWidth+4., gl_defFont.h+4., &cBlackHilight );
 
          /* Display text. */
-         gl_printRaw( NULL, dx, dy, &c, p->comm_msg );
+         gl_printRaw( NULL, dx, dy, &c, -1., p->comm_msg );
       }
    }
 }

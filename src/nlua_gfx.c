@@ -365,11 +365,11 @@ static int gfxL_print( lua_State *L )
 
    /* Render. */
    if (mid)
-      gl_printMidRaw( font, max, x, y, col, str );
+      gl_printMidRaw( font, max, x, y, col, -1., str );
    else if (max > 0)
-      gl_printMaxRaw( font, max, x, y, col, str );
+      gl_printMaxRaw( font, max, x, y, col, -1., str );
    else
-      gl_printRaw( font, x, y, col, str );
+      gl_printRaw( font, x, y, col, -1., str );
    return 0;
 }
 
@@ -408,7 +408,7 @@ static int gfxL_printText( lua_State *L )
    col   = luaL_checkcolour(L,7);
 
    /* Render. */
-   gl_printTextRaw( font, w, h, x, y, col, str );
+   gl_printTextRaw( font, w, h, x, y, col, -1., str );
 
    return 0;
 }

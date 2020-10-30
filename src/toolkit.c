@@ -1232,7 +1232,7 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    c2.a = 0.7;
    toolkit_drawRect( x+1, y+1, w+18, h+18, &c2, NULL );
    toolkit_drawRect( x, y, w+18, h+18, &c, NULL );
-   gl_printTextRaw( &gl_smallFont, w , h, x + 9, y + 9, &cFontWhite, alt );
+   gl_printTextRaw( &gl_smallFont, w , h, x + 9, y + 9, &cFontWhite, -1., alt );
 }
 
 
@@ -1259,7 +1259,7 @@ static void window_renderBorder( Window* w )
       gl_printMidRaw( &gl_defFont, w->w,
             x,
             y + w->h - 20.,
-            &cFontWhite, w->displayname );
+            &cFontWhite, -1., w->displayname );
       return;
    }
 
@@ -1273,7 +1273,7 @@ static void window_renderBorder( Window* w )
    gl_printMidRaw( &gl_defFont, w->w,
          x,
          y + w->h - 20.,
-         &cFontWhite, w->displayname );
+         &cFontWhite, -1., w->displayname );
 }
 
 

@@ -632,7 +632,7 @@ void loadscreen_render( double done, const char *msg )
    gl_renderRect( x, y, done*w, h, &col );
 
    /* Draw text. */
-   gl_printRaw( &gl_defFont, x, y + h + 3., &cFontGreen, msg );
+   gl_printRaw( &gl_defFont, x, y + h + 3., &cFontGreen, -1., msg );
 
    /* Flip buffers. */
    SDL_GL_SwapWindow( gl_screen.window );
@@ -1102,7 +1102,7 @@ static void display_fps( const double dt )
 
    y = SCREEN_H / 3. - gl_defFontMono.h / 2.;
    gl_printMidRaw( &gl_defFontMono, SCREEN_W, 0., y,
-         NULL, _("PAUSED") );
+         NULL, -1., _("PAUSED") );
 }
 
 

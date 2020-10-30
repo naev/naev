@@ -226,7 +226,7 @@ static void iar_render( Widget* iar, double bx, double by )
          /* caption */
          if (iar->dat.iar.images[pos].caption != NULL)
             gl_printMidRaw( &gl_smallFont, iar->dat.iar.iw, xcurs + 5., ycurs + 5.,
-                     &fontcolour, iar->dat.iar.images[pos].caption );
+                     &fontcolour, -1., iar->dat.iar.images[pos].caption );
 
          /* quantity. */
          if (iar->dat.iar.images[pos].quantity > 0) {
@@ -241,7 +241,7 @@ static void iar_render( Widget* iar, double bx, double by )
             /* Slot size letter. */
             gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
                   xcurs + iar->dat.iar.iw - 4., ycurs + iar->dat.iar.ih + 7.,
-                  &fontcolour, iar->dat.iar.images[pos].slottype );
+                  &fontcolour, -1., iar->dat.iar.images[pos].slottype );
          }
 
          /* outline */

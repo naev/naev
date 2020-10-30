@@ -1109,10 +1109,10 @@ static void gui_renderMessages( double dt )
             if (mesg_stack[m].str[0] == '\t') {
                gl_printRestore( &mesg_stack[m].restore );
                dy = gl_printHeightRaw( NULL, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
-               gl_printMaxRaw( NULL, gui_mesg_w - 45., x + 30, y + 3, &cFontWhite, &mesg_stack[m].str[1] );
+               gl_printMaxRaw( NULL, gui_mesg_w - 45., x + 30, y + 3, &cFontWhite, -1., &mesg_stack[m].str[1] );
             } else {
                dy = gl_printHeightRaw( NULL, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
-               gl_printMaxRaw( NULL, gui_mesg_w - 15., x, y + 3, &cFontWhite, mesg_stack[m].str );
+               gl_printMaxRaw( NULL, gui_mesg_w - 15., x, y + 3, &cFontWhite, -1., mesg_stack[m].str );
             }
             h += dy;
          }
@@ -1271,7 +1271,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
    /* Draw name. */
    if (overlay && pilot_isFlag(p, PILOT_HILIGHT))
-      gl_printRaw( &gl_smallFont, x+2*sx+5., y-gl_smallFont.h/2., &col, p->name );
+      gl_printRaw( &gl_smallFont, x+2*sx+5., y-gl_smallFont.h/2., &col, -1., p->name );
 }
 
 
@@ -1375,7 +1375,7 @@ void gui_renderPlayer( double res, int overlay )
    gl_renderCross( x, y, r, &cRadar_player );
 
    if (overlay)
-      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &textCol, _("You") );
+      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &textCol, -1., _("You") );
 }
 
 
@@ -1564,7 +1564,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
     * as a font change, but using this fix for now. */
    col.a = MIN( col.a, 0.99 );
    if (overlay)
-      gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, planet->name );
+      gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, -1., planet->name );
 }
 
 
@@ -1658,7 +1658,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
     * as a font change, but using this fix for now. */
    col.a = MIN( col.a, 0.99 );
    if (overlay)
-      gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, sys_isKnown(jp->target) ? jp->target->name : _("Unknown") );
+      gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, -1., sys_isKnown(jp->target) ? jp->target->name : _("Unknown") );
 }
 
 

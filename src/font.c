@@ -153,13 +153,16 @@ static void gl_fontRenderEnd (void);
 /*
  * Raw printing functions.
  */
-static void gl_printHalo( const glFont *ft_font,
+static void gl_printOutline( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
-      const glColour* c, const char *text,
+      const glColour* c, 
+      const double outlineR,
+      const char *text,
       int (*func)(const glFont*,
          const int, const int, const double, const double,
-         const glColour*, const char*, const int ));
+         const glColour*, const char*, const int )
+      );
 static int gl_printRawBase( const glFont *ft_font,
       const int unused1, const int unused2,
       const double x, const double y,
@@ -545,13 +548,16 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
 /**
  * @brief Shows a halo for increased contrast around the text.
  */
-static void gl_printHalo( const glFont *ft_font,
+static void gl_printOutline( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
-      const glColour* c, const char *text,
+      const glColour* c, 
+      const double outlineR,
+      const char *text,
       int (*func)(const glFont*,
          const int, const int, const double, const double,
-         const glColour*, const char*, const int ))
+         const glColour*, const char*, const int )
+      )
 {
    const glColour *bg;
    double radius;
@@ -562,15 +568,19 @@ static void gl_printHalo( const glFont *ft_font,
    * other more efficient method (signed distance fields seem to be
    * the "right" solution). */
    if ((c == NULL) || (c->a >= 1.)) {
-      if ((c==NULL) || (c->r+c->b+c->g > 2.8)) {
-        bg = &cBlack;
-        radius = 1.2;
-      } else if ((c->r+c->b+c->g > 1.5)){
-        bg = &cGrey10;
-        radius = 1.2;
+      if(outlineR != -1){
+         radius = outlineR;
       } else {
-        bg = &cWhite;
-        radius = 1.2;
+         radius = 1.2;
+      }
+      if ((c==NULL) || (c->r+c->b+c->g > 2.8)) {
+         bg = &cBlack;
+      } else if ((c->r+c->b+c->g > 1.5)){
+         bg = &cGrey10;
+         radius = 1.2;
+      } else {
+         bg = &cWhite;
+         radius = 1.2;
       }
 
       halfRadius = radius / 2;      
@@ -640,9 +650,9 @@ static int gl_printRawBase( const glFont *ft_font,
  */
 void gl_printRaw( const glFont *ft_font,
       const double x, const double y,
-      const glColour* c, const char *text )
+      const glColour* c, const double outlineR, const char *text)
 {
-   gl_printHalo( ft_font, 0, 0, x, y, c, text, gl_printRawBase );
+   gl_printOutline( ft_font, 0, 0, x, y, c, outlineR, text, gl_printRawBase);
    gl_printRawBase( ft_font, 0, 0, x, y, c, text, 0 );
 }
 
@@ -673,7 +683,7 @@ void gl_print( const glFont *ft_font,
       va_end(ap);
    }
 
-   gl_printRaw( ft_font, x, y, c, text );
+   gl_printRaw( ft_font, x, y, c, -1., text );
 }
 
 
@@ -726,14 +736,15 @@ static int gl_printMaxRawBase( const glFont *ft_font,
  *    @param x X position to display text at.
  *    @param y Y position to display text at.
  *    @param c Colour to use (NULL defaults to white).
+ *    @param outlineR Radius in px of outline (-1 for default, 0 for none)
  *    @param text String to display.
  *    @return The number of characters it had to suppress.
  */
 int gl_printMaxRaw( const glFont *ft_font, const int max,
       const double x, const double y,
-      const glColour* c, const char *text )
+      const glColour* c, const double outlineR, const char *text)
 {
-   gl_printHalo( ft_font, max, 0, x, y, c, text, gl_printMaxRawBase );
+   gl_printOutline( ft_font, max, 0, x, y, c, outlineR, text, gl_printMaxRawBase );
    return gl_printMaxRawBase( ft_font, max, 0, x, y, c, text, 0 );
 }
 
@@ -764,7 +775,7 @@ int gl_printMax( const glFont *ft_font, const int max,
       va_end(ap);
    }
 
-   return gl_printMaxRaw( ft_font, max, x, y, c, text );
+   return gl_printMaxRaw( ft_font, max, x, y, c, -1., text );
 }
 
 
@@ -822,14 +833,21 @@ static int gl_printMidRawBase( const glFont *ft_font,
  *    @param x X position to display text at.
  *    @param y Y position to display text at.
  *    @param c Colour to use for text (NULL defaults to white).
+ *    @param outlineR Radius in px of outline (-1 for default, 0 for none)
  *    @param text String to display.
  *    @return The number of characters it had to truncate.
  */
-int gl_printMidRaw( const glFont *ft_font, const int width,
-      double x, const double y,
-      const glColour* c, const char *text )
+int gl_printMidRaw( 
+      const glFont *ft_font, 
+      const int width,
+      double x, 
+      const double y,
+      const glColour* c, 
+      const double outlineR,
+      const char *text
+      )
 {
-   gl_printHalo( ft_font, width, 0, x, y, c, text, gl_printMidRawBase );
+   gl_printOutline( ft_font, width, 0, x, y, c, outlineR, text, gl_printMidRawBase);
    return gl_printMidRawBase( ft_font, width, 0, x, y, c, text, 0 );
 }
 
@@ -862,7 +880,7 @@ int gl_printMid( const glFont *ft_font, const int width,
       va_end(ap);
    }
 
-   return gl_printMidRaw( ft_font, width, x, y, c, text );
+   return gl_printMidRaw( ft_font, width, x, y, c, -1., text );
 }
 
 
@@ -948,9 +966,12 @@ static int gl_printTextRawBase( const glFont *ft_font,
 int gl_printTextRaw( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
-      const glColour* c, const char *text )
+      const glColour* c, 
+      const double outlineR,
+      const char *text
+    )
 {
-   gl_printHalo( ft_font, width, height, bx, by, c, text, gl_printTextRawBase );
+   gl_printOutline( ft_font, width, height, bx, by, c, outlineR, text, gl_printTextRawBase );
    return gl_printTextRawBase( ft_font, width, height, bx, by, c, text, 0 );
 }
 
@@ -986,7 +1007,7 @@ int gl_printText( const glFont *ft_font,
       va_end(ap);
    }
 
-   return gl_printTextRaw( ft_font, width, height, bx, by, c, text );
+   return gl_printTextRaw( ft_font, width, height, bx, by, c, -1., text );
 }
 
 
