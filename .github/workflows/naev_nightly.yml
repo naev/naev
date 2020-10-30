@@ -158,7 +158,7 @@ jobs:
 
     - name: Install Additional Build Dependencies
       run: |
-        sudo apt-get install \
+        sudo apt-get install -y \
           autoconf-archive \
           ninja-build
 
