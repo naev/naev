@@ -684,7 +684,7 @@ static int planetL_position( lua_State *L )
 /**
  * @brief Gets the texture of the planet in space.
  *
- * @uasge gfx = p:gfxSpace()
+ * @usage gfx = p:gfxSpace()
  *    @luatparam Planet p Planet to get texture of.
  *    @luatreturn Tex The space texture of the planet.
  * @luafunc gfxSpace( p )
@@ -710,7 +710,7 @@ static int planetL_gfxSpace( lua_State *L )
 /**
  * @brief Gets the texture of the planet in exterior.
  *
- * @uasge gfx = p:gfxExterior()
+ * @usage gfx = p:gfxExterior()
  *    @luatparam Planet p Planet Planet to get texture of.
  *    @luatreturn Tex The exterior texture of the planet.
  * @luafunc gfxExterior( p )

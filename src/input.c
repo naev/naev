@@ -55,9 +55,6 @@ typedef struct Keybind_ {
 } Keybind;
 
 
-static Keybind* input_keybinds; /**< contains the players keybindings */
-static int input_numbinds; /**< Number of keybindings. */
-
 /* name of each keybinding */
 const char *keybind_info[][3] = {
    /* Movement */
@@ -117,7 +114,7 @@ const char *keybind_info[][3] = {
    { "screenshot", gettext_noop("Screenshot"), gettext_noop("Takes a screenshot.") },
    { "togglefullscreen", gettext_noop("Toggle Fullscreen"), gettext_noop("Toggles between windowed and fullscreen mode.") },
    { "pause", gettext_noop("Pause"), gettext_noop("Pauses the game.") },
-   { "speed", gettext_noop("Toggle 2x Speed"), gettext_noop("Toggles 2x speed modifier.") },
+   { "speed", gettext_noop("Toggle Speed"), gettext_noop("Toggles speed modifier.") },
    { "menu", gettext_noop("Small Menu"), gettext_noop("Opens the small in-game menu.") },
    { "info", gettext_noop("Information Menu"), gettext_noop("Opens the information menu.") },
    { "console", gettext_noop("Lua Console"), gettext_noop("Opens the Lua console.") },
@@ -134,6 +131,9 @@ const char *keybind_info[][3] = {
    /* Must terminate in NULL. */
    { NULL, NULL, NULL }
 }; /**< Names of possible keybindings. */
+
+static Keybind *input_keybinds; /**< contains the players keybindings */
+const int input_numbinds = ( sizeof( keybind_info ) / sizeof( keybind_info[ 0 ] ) ) - 1; /**< Number of keybindings. */
 
 
 /*
@@ -322,9 +322,6 @@ void input_init (void)
    /* Mouse. */
    SDL_EventState( SDL_MOUSEWHEEL,      SDL_ENABLE );
 
-   /* Get the number of keybindings. */
-   for (i=0; keybind_info[i][0] != NULL; i++);
-   input_numbinds = i;
    input_keybinds = malloc( input_numbinds * sizeof(Keybind) );
 
    /* Create safe null keybinding for each. */
@@ -510,6 +507,7 @@ void input_getKeybindDisplay( const char *keybind, char *buf, int len )
             p += nsnprintf( &buf[p], len-p, "%c", nstd_toupper(key) );
          else
             p += nsnprintf( &buf[p], len-p, "%s", SDL_GetKeyName(key) );
+         (void)p;
          break;
 
       case KEYBIND_JBUTTON:
@@ -698,9 +696,10 @@ void input_update( double dt )
 /**
  * @brief Runs the input command.
  *
- *    @param keynum The index of the  keybind.
+ *    @param keynum The index of the keybind.
  *    @param value The value of the keypress (defined above).
  *    @param kabs The absolute value.
+ *    @param repeat Whether the key is still held down, rather than newly pressed.
  */
 static void input_key( int keynum, double value, double kabs, int repeat )
 {
@@ -992,20 +991,16 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       }
    /* toggle speed mode */
    } else if (KEY("speed") && !repeat) {
+     double newSpeed;
       if ((value==KEY_PRESS) && (!player_isFlag( PLAYER_CINEMATICS_2X ))) {
-         if (player_isFlag(PLAYER_DOUBLESPEED)) {
-            if (!player_isFlag(PLAYER_AUTONAV)) {
-               pause_setSpeed( player_dt_default() );
-               sound_setSpeed( 1. );
-            }
-            player_rmFlag(PLAYER_DOUBLESPEED);
+         if (player.speed < 4) {
+            player.speed++;
          } else {
-            if (!player_isFlag(PLAYER_AUTONAV)) {
-               pause_setSpeed( 2. * player_dt_default() );
-               sound_setSpeed( 2. );
-            }
-            player_setFlag(PLAYER_DOUBLESPEED);
+            player.speed = 1;
          }
+         newSpeed = (double)player.speed;
+         pause_setSpeed(player_dt_default() * newSpeed);
+         sound_setSpeed( newSpeed );
       }
    /* opens a small menu */
    } else if (KEY("menu") && NODEAD() && !repeat) {
@@ -1135,6 +1130,7 @@ static void input_joyhatevent( const Uint8 value, const Uint8 hat )
  *    @param event Event type (down/up).
  *    @param key Key generating the event.
  *    @param mod Modifiers active when event was generated.
+ *    @param repeat Whether the key is still held down, rather than newly pressed.
  */
 static void input_keyevent( const int event, SDL_Keycode key, const SDL_Keymod mod, const int repeat )
 {
@@ -1387,7 +1383,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
 /**
  * @brief Performs an appropriate action when a jump point is clicked.
  *
- *    @param jp Index of the jump point.
+ *    @param jump Index of the jump point.
  *    @param autonav Whether to autonav to the target.
  *    @return Whether the click was used.
  */
@@ -1481,6 +1477,7 @@ int input_clickedAsteroid( int field, int asteroid )
  * @brief Performs an appropriate action when a pilot is clicked.
  *
  *    @param pilot Index of the pilot.
+ *    @param autonav Whether this is an autonav action.
  *    @return Whether the click was used.
  */
 int input_clickedPilot( unsigned int pilot, int autonav )

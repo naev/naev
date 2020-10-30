@@ -26,8 +26,9 @@
 
 #include "naev.h"
 
-#include <stdlib.h>
 #include "nstring.h"
+#include <assert.h>
+#include <stdlib.h>
 
 #include "log.h"
 #include "nxml.h"
@@ -295,6 +296,8 @@ static int hook_parseParam( lua_State *L, HookParam *param )
  * @brief Runs a mission hook.
  *
  *    @param hook Hook to run.
+ *    @param param Parameters to pass.
+ *    @param claims Whether the hook is contingent on the mission/event claiming the current system.
  *    @return 0 on success.
  */
 static int hook_runMisn( Hook *hook, HookParam *param, int claims )
@@ -352,6 +355,8 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
  * @brief Runs a Event function hook.
  *
  *    @param hook Hook to run.
+ *    @param param Parameters to pass.
+ *    @param claims Whether the hook is contingent on the mission/event claiming the current system.
  *    @return 0 on success.
  */
 static int hook_runEvent( Hook *hook, HookParam *param, int claims )
@@ -400,6 +405,8 @@ static int hook_runEvent( Hook *hook, HookParam *param, int claims )
  * @brief Runs a hook.
  *
  *    @param hook Hook to run.
+ *    @param param Parameters to pass.
+ *    @param claims Whether the hook is contingent on the mission/event claiming the current system.
  *    @return 0 on success.
  */
 static int hook_run( Hook *hook, HookParam *param, int claims )
@@ -460,6 +467,7 @@ static unsigned int hook_genID (void)
 /**
  * @brief Generates and allocates a new hook.
  *
+ *    @param type Type of hook to create.
  *    @param stack Stack to which the new hook belongs.
  *    @return The newly allocated hook.
  */
@@ -942,6 +950,7 @@ static int hooks_executeParam( const char* stack, HookParam *param )
  * @brief Runs all the hooks of stack.
  *
  *    @param stack Stack to run.
+ *    @param param Parameters to pass.
  *    @return 0 on success.
  */
 int hooks_runParam( const char* stack, HookParam *param )
@@ -957,8 +966,11 @@ int hooks_runParam( const char* stack, HookParam *param )
    if (hook_atomic) {
       hq = calloc( 1, sizeof(HookQueue_t) );
       hq->stack = strdup(stack);
-      for (i=0; param[i].type != HOOK_PARAM_SENTINEL; i++)
-         hq->hparam[i] = param[i];
+      i         = 0;
+      if ( param != NULL ) {
+         for ( ; param[ i ].type != HOOK_PARAM_SENTINEL; i++ )
+            hq->hparam[ i ] = param[ i ];
+      }
 #ifdef DEBUGGING
       if (i >= HOOK_MAX_PARAM)
          WARN( _("HOOK_MAX_PARAM is set too low (%d), need at least %d!"), HOOK_MAX_PARAM, i );
@@ -1034,6 +1046,7 @@ nlua_env hook_env( unsigned int hook )
  * @brief Runs a single hook by id.
  *
  *    @param id Identifier of the hook to run.
+ *    @param param Parameters to process.
  *    @return The ID of the hook or 0 if it got deleted.
  */
 int hook_runIDparam( unsigned int id, HookParam *param )
@@ -1336,7 +1349,6 @@ static int hook_parse( xmlNodePtr base )
                new_id = hook_addEvent( parent, func, stack );
                break;
             default:
-               new_id = -1;
                WARN(_("Save has unsupported hook type."));
                continue;
          }

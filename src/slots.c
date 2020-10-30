@@ -150,7 +150,7 @@ void sp_cleanup (void)
 /**
  * @brief Gets the id of a slot property.
  *
- *    @pram name Name to match.
+ *    @param name Name to match.
  *    @return ID of the slot property.
  */
 unsigned int sp_get( const char *name )

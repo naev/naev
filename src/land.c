@@ -166,7 +166,7 @@ int land_doneLoading (void)
  * @brief Makes sure it's valid to change ships in the equipment view.
  *    @param shipname Ship being changed to.
  */
-int can_swapEquipment( char* shipname )
+int can_swapEquipment( const char *shipname )
 {
    int failure = 0;
    Pilot *newship;
@@ -199,7 +199,7 @@ int can_swapEquipment( char* shipname )
  *    @param name Name of the ship, outfit or commodity being acted upon.
  *    @param type Type of action.
  */
-int land_errDialogue( char* name, char* type )
+int land_errDialogue( const char *name, char *type )
 {
    errorlist_ptr = NULL;
    if (strcmp(type,"tradeShip")==0)
@@ -1003,7 +1003,7 @@ void land_genWindows( int load, int changetab )
          npc_generate(); /* Generate bar npc. */
    }
 
-   
+
    /* 4) Create other tabs. */
 #define should_open(s, w) \
    (planet_hasService(land_planet, s) && (!land_tabGenerated(w)))
@@ -1067,7 +1067,7 @@ void land_genWindows( int load, int changetab )
 /**
  * @brief Sets the land window tab.
  *
- *    @param Tab to set like LAND_WINDOW_COMMODITY.
+ *    @param window Tab to set like LAND_WINDOW_COMMODITY.
  *    @return 0 on success.
  */
 int land_setWindow( int window )
@@ -1109,7 +1109,7 @@ void land( Planet* p, int load )
 
    /* Average economy prices that player has seen */
    economy_averageSeenPrices( p );
-   
+
    /* Clear the NPC. */
    npc_clear();
 

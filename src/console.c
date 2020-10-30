@@ -229,6 +229,7 @@ void cli_addMessage( const char *msg )
  * @brief Adds a message to the buffer.
  *
  *    @param msg Message to add.
+ *    @param l Max message length.
  */
 void cli_addMessageMax( const char *msg, const int l )
 {
@@ -464,6 +465,10 @@ void cli_exit (void)
       nlua_freeEnv( cli_env );
       cli_env = LUA_NOREF;
    }
+
+   gl_freeFont( cli_font );
+   free( cli_font );
+   cli_font = NULL;
 
    /* Free the buffer. */
    for (i=0; i<array_size(cli_buffer); i++)

@@ -20,7 +20,7 @@ jobs:
       with:
         msystem: MINGW64
         update: true
-        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit mingw-w64-x86_64-nsis libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool zip unzip python3-pip itstool
+        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit mingw-w64-x86_64-nsis mingw-w64-x86_64-pkg-config libtool autoconf autoconf-archive automake automake-wrapper git gettext pkg-config make intltool zip unzip python3-pip itstool
 
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
@@ -157,59 +157,6 @@ jobs:
         name: steam-x86-64
         path: ${{ github.workspace }}/dist/release/naev.x64
 
-  "macOS":
-    runs-on: macos-latest
-
-    steps:
-    - name: Update Homebrew Cache
-      run: |
-        brew update
-
-    - name: Install Additional Build Dependencies
-      run: |
-        brew install \
-          automake \
-          autoconf-archive \
-          pkg-config \
-          luajit \
-          intltool \
-          sdl2 \
-          sdl2_mixer \
-          sdl2_image \
-          openal-soft
-
-    - name: Remove Homebrew Perl
-      run: |
-        brew uninstall --ignore-dependencies perl
-
-    - name: Checkout Naev Repository
-      uses: actions/checkout@v2
-
-    - name: Build Naev on MacOS
-      run: |
-        # PKGCONFIG configuration for OpenAL
-        export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/opt/openal-soft/lib/pkgconfig"
-
-        ./autogen.sh
-        ./configure --disable-debug
-        make -j$(sysctl -n hw.logicalcpu)
-      env:
-        CFLAGS: "-O3 -mmacosx-version-min=10.7"
-
-    - name: Package MacOS Release
-      run: |
-        mkdir -p dist/release
-
-        ./extras/macos/bundle.sh
-        cp -r dat/ Naev.app/Contents/Resources/dat/
-        zip -r dist/release/naev-macos.zip Naev.app/*
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: macos
-        path: ${{ github.workspace }}/dist/release/naev-macos.zip
-
   "Generate-Source":
       runs-on: ubuntu-latest
 
@@ -334,7 +281,7 @@ jobs:
 
   "Upload-Release":
       runs-on: ubuntu-latest
-      needs: [Linux-x86_64, Windows-MinGW64, macOS, Generate-Source, Generate-Soundtrack]
+      needs: [Linux-x86_64, Windows-MinGW64, Generate-Source, Generate-Soundtrack]
       if: ${{ github.repository == 'naev/naev' }}
 
       steps:
@@ -392,7 +339,6 @@ jobs:
           fi
 
           mv dist/linux-x86-64/linux-x86-64.tar.gz dist/release/naev-$VERSION-linux-x86-64.tar.gz
-          mv dist/macos/naev-macos.zip dist/release/naev-$VERSION-macos.zip
           mv dist/win64/naev-win64.exe dist/release/naev-$VERSION-win64.exe
           mv dist/source/source.tar.gz dist/release/naev-$VERSION-source.tar.gz
           mv dist/soundtrack/release/soundtrack.zip dist/release/naev-$VERSION-soundtrack.zip
@@ -407,7 +353,7 @@ jobs:
 
   "Upload-Steam":
       runs-on: ubuntu-latest
-      needs: [Linux-x86_64-SteamRuntime, Windows-MinGW64, macOS, Generate-Soundtrack]
+      needs: [Linux-x86_64-SteamRuntime, Windows-MinGW64, Generate-Soundtrack]
       if: ${{ github.repository == 'naev/naev' }}
 
       steps:

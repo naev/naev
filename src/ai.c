@@ -430,7 +430,7 @@ void ai_setPilot( Pilot *p )
 /**
  * @brief Attempts to run a function.
  *
- *    @param[in] L Lua state to run function on.
+ *    @param[in] env Lua env to run function in.
  *    @param[in] funcname Function to run.
  */
 static void ai_run( nlua_env env, const char *funcname )
@@ -740,6 +740,7 @@ void ai_exit (void)
  * @brief Heart of the AI, brains of the pilot.
  *
  *    @param pilot Pilot that needs to think.
+ *    @param dt Current delta tick.
  */
 void ai_think( Pilot* pilot, const double dt )
 {
@@ -833,7 +834,7 @@ void ai_think( Pilot* pilot, const double dt )
  *
  *    @param attacked Pilot that is attacked.
  *    @param[in] attacker ID of the attacker.
- *    @param[i] dmg Damage done by the attacker.
+ *    @param[in] dmg Damage done by the attacker.
  */
 void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
 {
@@ -895,6 +896,7 @@ void ai_refuel( Pilot* refueler, unsigned int target )
  *
  *    @param p Pilot receiving the distress signal.
  *    @param distressed Pilot sending the distress signal.
+ *    @param attacker Pilot attacking \p distressed.
  */
 void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
 {
@@ -1118,7 +1120,6 @@ static int ai_tasktarget( lua_State *L, Task *t )
  *    @luatparam string func Name of function to call for task.
  *    @luaparam[opt] data Data to pass to the function.  Supports any lua type.
  * @luafunc pushtask( func, data )
- *    @param L Lua state.
  *    @return Number of Lua parameters.
  */
 static int aiL_pushtask( lua_State *L )
@@ -1130,7 +1131,6 @@ static int aiL_pushtask( lua_State *L )
 /**
  * @brief Pops the current running task.
  * @luafunc poptask()
- *    @param L Lua state.
  *    @return Number of Lua parameters.
  */
 static int aiL_poptask( lua_State *L )
@@ -1151,7 +1151,6 @@ static int aiL_poptask( lua_State *L )
  * @brief Gets the current task's name.
  *    @luatreturn string The current task name or nil if there are no tasks.
  * @luafunc taskname()
- *    @param L Lua state.
  *    @return Number of Lua parameters.
  */
 static int aiL_taskname( lua_State *L )
@@ -1169,7 +1168,6 @@ static int aiL_taskname( lua_State *L )
  *    @luareturn The pilot's target ship identifier or nil if no target.
  *    @luasee pushtask
  * @luafunc target()
- *    @param L Lua state.
  *    @return Number of Lua parameters.
  */
 static int aiL_gettarget( lua_State *L )
@@ -1188,7 +1186,6 @@ static int aiL_gettarget( lua_State *L )
  *    @luatparam string func Name of function to call for task.
  *    @luaparam[opt] data Data to pass to the function.  Supports any lua type.
  * @luafunc pushsubtask( func, data )
- *    @param L Lua state.
  *    @return Number of Lua parameters.
  */
 static int aiL_pushsubtask( lua_State *L )
@@ -1200,7 +1197,6 @@ static int aiL_pushsubtask( lua_State *L )
 /**
  * @brief Pops the current running task.
  * @luafunc popsubtask()
- *    @param L Lua state.
  *    @return Number of Lua parameters.
  */
 static int aiL_popsubtask( lua_State *L )
@@ -1230,7 +1226,6 @@ static int aiL_popsubtask( lua_State *L )
  * @brief Gets the current subtask's name.
  *    @luatreturn string The current subtask name or nil if there are no subtasks.
  * @luafunc subtaskname()
- *    @param L Lua state.
  *    @return Number of Lua parameters.
  */
 static int aiL_subtaskname( lua_State *L )
@@ -1248,7 +1243,6 @@ static int aiL_subtaskname( lua_State *L )
  *    @luareturn The pilot's target ship identifier or nil if no target.
  *    @luasee pushsubtask
  * @luafunc subtarget()
- *    @param L Lua state.
  *    @return Number of Lua parameters.
  */
 static int aiL_getsubtarget( lua_State *L )
@@ -1266,7 +1260,6 @@ static int aiL_getsubtarget( lua_State *L )
  * @brief Gets the AI's pilot.
  *    @luatreturn Pilot The AI's pilot.
  * @luafunc pilot()
- *    @param L Lua state.
  *    @return Number of Lua parameters.
  */
 static int aiL_pilot( lua_State *L )
@@ -1280,7 +1273,6 @@ static int aiL_pilot( lua_State *L )
  * @brief Gets a random pilot in the system.
  *    @luatreturn Pilot|nil
  * @luafunc rndpilot()
- *    @param L Lua state.
  *    @return Number of Lua parameters.
  */
 static int aiL_getrndpilot( lua_State *L )

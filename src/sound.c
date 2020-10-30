@@ -361,7 +361,7 @@ int sound_get( char* name )
 /**
  * @brief Gets the length of the sound buffer.
  *
- *    @param id ID of the buffer to get the length of..
+ *    @param sound ID of the buffer to get the length of..
  *    @return The length of the buffer.
  */
 double sound_length( int sound )
@@ -472,8 +472,10 @@ int sound_playPos( int sound, double px, double py, double vx, double vy )
  * @brief Updates the position of a voice.
  *
  *    @param voice Identifier of the voice to update.
- *    @param x New x position to update to.
- *    @param y New y position to update to.
+ *    @param px New x position to update to.
+ *    @param py New y position to update to.
+ *    @param vx New x velocity of the sound.
+ *    @param vy New y velocity of the sound.
  */
 int sound_updatePos( int voice, double px, double py, double vx, double vy )
 {
@@ -846,7 +848,6 @@ static void sound_free( alSound *snd )
 /**
  * @brief Creates a sound group.
  *
- *    @param start Where to start creating the group.
  *    @param size Size of the group.
  *    @return ID of the group created on success, 0 on error.
  */
@@ -896,7 +897,7 @@ void sound_stopGroup( int group )
 /**
  * @brief Pauses all the sounds in a group.
  *
- *    @param Group to pause sounds.
+ *    @param group Group to pause sounds.
  */
 void sound_pauseGroup( int group )
 {
@@ -910,7 +911,7 @@ void sound_pauseGroup( int group )
 /**
  * @brief Resumes all the sounds in a group.
  *
- *    @param Group to resume sounds.
+ *    @param group Group to resume sounds.
  */
 void sound_resumeGroup( int group )
 {

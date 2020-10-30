@@ -77,10 +77,10 @@ void bar_regen (void);
 /*
  * Error dialogue generation and associated checks.
  */
-int can_swap( char* shipname );
-int can_swapEquipment( char* shipname );
-int can_sell( char* shipname );
-int land_errDialogue( char* name, char* type );
+int  can_swap( const char *shipname );
+int  can_swapEquipment( const char *shipname );
+int  can_sell( const char *shipname );
+int  land_errDialogue( const char *name, char *type );
 void land_errDialogueBuild( const char *fmt, ... );
 
 

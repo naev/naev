@@ -353,7 +353,7 @@ case "$host" in
 esac
 
 # global
-GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\" -I\"\$(top_srcdir)/src\" -DPKGDATADIR=\\\"\$(pkgdatadir)\\\""
+GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\" -include \"\$(top_builddir)/src/attributes.h\" -I\"\$(top_srcdir)/src\" -DPKGDATADIR=\\\"\$(pkgdatadir)\\\""
 GLOBAL_LIBS=
 
 AS_IF([test "x$enable_debug" != "xno"], [

@@ -14,6 +14,7 @@
 
 #include <png.h>
 
+#include "attributes.h"
 #include "log.h"
 #include "opengl_tex.h"
 
@@ -39,6 +40,7 @@ struct npng_s {
 static void npng_read( png_structp png_ptr, png_bytep data, png_size_t len );
 static void npng_warn( png_structp png_ptr, png_const_charp warning_message );
 static int npng_info( npng_t *npng );
+NONNULL( 1 ) static int npng_set_error_jmp( npng_t *npng );
 
 
 /**
@@ -100,19 +102,22 @@ npng_t *npng_open( SDL_RWops *rw )
    npng->png_ptr  = png_create_read_struct( PNG_LIBPNG_VER_STRING, NULL, NULL, NULL );
    if (npng->png_ptr == NULL) {
       WARN(_("png_create_read_struct failed"));
-      goto ERR_FAIL;
+      npng_close( npng );
+      return NULL;
    }
    npng->info_ptr = png_create_info_struct( npng->png_ptr );
    if (npng->info_ptr == NULL) {
       WARN(_("png_create_info_struct failed"));
-      goto ERR_FAIL;
+      npng_close( npng );
+      return NULL;
    }
 
    /* Check header. */
    SDL_RWread( rw, header, 8, 1 );
    if (png_sig_cmp(header, 0, 8)) {
       WARN(_("RWops not recognized as a PNG file."));
-      goto ERR_FAIL;
+      npng_close( npng );
+      return NULL;
    }
 
    /* Set up for reading. */
@@ -122,9 +127,10 @@ npng_t *npng_open( SDL_RWops *rw )
    png_set_error_fn( npng->png_ptr, NULL, NULL, npng_warn );
 
    /* Set up long jump for IO. */
-   if (setjmp( png_jmpbuf( npng->png_ptr )) ) {
-      WARN(_("Error during setjmp"));
-      goto ERR_FAIL;
+   if ( npng_set_error_jmp( npng ) ) {
+      WARN( _( "libpng encountered an error" ) );
+      npng_close( npng );
+      return NULL;
    }
 
    /* We've already checked sig. */
@@ -140,14 +146,15 @@ npng_t *npng_open( SDL_RWops *rw )
    png_get_text( npng->png_ptr, npng->info_ptr, &npng->text_ptr, &npng->num_text );
 
    return npng;
+}
 
-ERR_FAIL:
-   if (npng != NULL) {
-      if (npng->png_ptr != NULL)
-         png_destroy_read_struct( &npng->png_ptr, (npng->info_ptr != NULL) ? &npng->info_ptr : NULL, NULL );
-      free(npng);
+
+int npng_set_error_jmp( npng_t *npng )
+{
+   if ( setjmp( png_jmpbuf( npng->png_ptr ) ) ) {
+      return 1;
    }
-   return NULL;
+   return 0;
 }
 
 
@@ -158,7 +165,9 @@ ERR_FAIL:
  */
 void npng_close( npng_t *npng )
 {
-   png_destroy_read_struct( &npng->png_ptr, &npng->info_ptr, NULL );
+   png_structpp png_ptr  = npng->png_ptr != NULL ? &npng->png_ptr : NULL;
+   png_infopp   info_ptr = npng->info_ptr != NULL ? &npng->info_ptr : NULL;
+   png_destroy_read_struct( png_ptr, info_ptr, NULL );
    free( npng );
 }
 
@@ -313,6 +322,8 @@ png_bytep npng_readImage( npng_t *npng, png_bytep **rows, int *channels, int *pi
  * @brief Reads a PNG image into a surface.
  *
  *    @param npng PNG image to load.
+ *    @param pad_pot Whether to pad the dimensions to a power of two.
+ *    @param vflip Whether to flip vertically.
  *    @return Surface with data from the PNG image.
  */
 SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
@@ -379,10 +390,11 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
 
 
 /**
- * @brief Gets metadat by name.
+ * @brief Gets metadata by name.
  *
+ *    @param npng PNG image to query.
  *    @param txt Text name of the metadata to get.
- *    @param[out] Data gotten.
+ *    @param[out] data gotten.
  *    @return The length of the metadata or -1 if not found.
  */
 int npng_metadata( npng_t *npng, char *txt, char **data )

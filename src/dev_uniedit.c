@@ -1289,6 +1289,8 @@ static void uniedit_editSys (void)
    window_setInputFilter( wid, "inpInterference",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
 
+   (void)x;
+
    /* New row. */
    x = 20;
    y -= gl_defFont.h + 15;
@@ -1310,6 +1312,8 @@ static void uniedit_editSys (void)
    window_setInputFilter( wid, "inpVolatility",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
    x += 50 + 12;
+
+   (void)x;
 
    /* Load values */
    nsnprintf( buf, sizeof(buf), "%g", sys->radius );

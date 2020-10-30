@@ -102,7 +102,7 @@ double pilot_ewMass( double mass )
 /**
  * @brief Gets the electronic warfare asteroid modifier.
  *
- *    @param pilot.
+ *    @param p Pilot.
  *    @return The electronic warfare asteroid modifier.
  */
 double pilot_ewAsteroid( Pilot *p )
@@ -273,7 +273,7 @@ int pilot_inRangeAsteroid( const Pilot *p, int ast, int fie )
  * @brief Check to see if a jump point is in sensor range of the pilot.
  *
  *    @param p Pilot who is trying to check to see if the jump point is in sensor range.
- *    @param target Jump point to see if is in sensor range.
+ *    @param i target Jump point to see if is in sensor range.
  *    @return 1 if they are in range, 0 if they aren't.
  */
 int pilot_inRangeJump( const Pilot *p, int i )

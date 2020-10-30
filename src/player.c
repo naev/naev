@@ -286,8 +286,11 @@ void player_new (void)
    dialogue_addChoice( title, caption, speed_opts[1] );
    ret = dialogue_runChoice();
    player.dt_mod = 1.;
-   if ( (ret != NULL) && (strcmp(ret, speed_opts[1]) == 0) )
-      player.dt_mod = 0.5;
+   if (ret != NULL) {
+      if (strcmp(ret, speed_opts[1]) == 0)
+         player.dt_mod = 0.5;
+      free( ret );
+   }
 
    if (player_newMake())
       return;
@@ -354,6 +357,9 @@ static int player_newMake (void)
    vectnull( &player.p->solid->vel );
    player.p->solid->dir = RNGF() * 2.*M_PI;
    space_init( start_system() );
+
+   /* Set player speed to default 1 */
+   player.speed = 1;
 
    /* Reset speed (to make sure player.dt_mod is accounted for). */
    player_autonavResetSpeed();
@@ -425,6 +431,7 @@ Pilot* player_newShip( Ship* ship, const char *def_name,
    if (player_hasShip(ship_name)) {
       dialogue_msg( _("Name collision"),
             _("Please do not give the ship the same name as another of your ships."));
+      free( ship_name );
       return NULL;
    }
 
@@ -520,7 +527,7 @@ static Pilot* player_newShipMake( const char* name )
  *
  *    @param shipname Ship to change to.
  */
-void player_swapShip( char* shipname )
+void player_swapShip( const char *shipname )
 {
    int i, j;
    Pilot* ship;
@@ -589,7 +596,7 @@ void player_swapShip( char* shipname )
  *    @param shipname Name of the ship.
  *    @return The price of the ship in credits.
  */
-credits_t player_shipPrice( char* shipname )
+credits_t player_shipPrice( const char *shipname )
 {
    int i;
    Pilot *ship = NULL;
@@ -621,7 +628,7 @@ credits_t player_shipPrice( char* shipname )
  *
  *    @param shipname Name of the ship to remove.
  */
-void player_rmShip( char* shipname )
+void player_rmShip( const char *shipname )
 {
    int i, w;
 
@@ -1044,6 +1051,7 @@ void player_render( double dt )
  * @brief Basically uses keyboard input instead of AI input. Used in pilot.c.
  *
  *    @param pplayer Player to think.
+ *    @param dt Current delta tick.
  */
 void player_think( Pilot* pplayer, const double dt )
 {
@@ -1198,7 +1206,7 @@ void player_think( Pilot* pplayer, const double dt )
  * @brief Player update function.
  *
  *    @param pplayer Player to update.
- *    @param dt Current deltatick.
+ *    @param dt Current delta tick.
  */
 void player_update( Pilot *pplayer, const double dt )
 {
@@ -1215,7 +1223,7 @@ void player_update( Pilot *pplayer, const double dt )
  * @brief Does a player specific update.
  *
  *    @param pplayer Player to update.
- *    @param dt Current deltatick.
+ *    @param dt Current delta tick.
  */
 void player_updateSpecific( Pilot *pplayer, const double dt )
 {
@@ -1347,6 +1355,7 @@ void player_targetPlanetSet( int id )
 /**
  * @brief Sets the player's target asteroid.
  *
+ *    @param field Index of the parent field of the asteoid.
  *    @param id Target planet or -1 if none should be selected.
  */
 void player_targetAsteroidSet( int field, int id )
@@ -2431,7 +2440,7 @@ int player_ships( char** sships, glTexture** tships )
 /**
  * @brief Gets all of the player's ships.
  *
- *    @param[out] Number of star systems gotten.
+ *    @param[out] n Number of star systems gotten.
  *    @return The player's ships.
  */
 const PlayerShip_t* player_getShipStack( int *n )
@@ -2458,7 +2467,7 @@ int player_nships (void)
  *    @param shipname Nome of the ship to get.
  *    @return 1 if ship exists.
  */
-int player_hasShip( char* shipname )
+int player_hasShip( const char *shipname )
 {
    int i;
 
@@ -2480,7 +2489,7 @@ int player_hasShip( char* shipname )
  *    @param shipname Nome of the ship to get.
  *    @return The ship matching name.
  */
-Pilot* player_getShip( char* shipname )
+Pilot *player_getShip( const char *shipname )
 {
    int i;
 
@@ -2499,7 +2508,7 @@ Pilot* player_getShip( char* shipname )
 /**
  * @brief Gets how many of the outfit the player owns.
  *
- *    @param outfitname Outfit to check how many the player owns.
+ *    @param o Outfit to check how many the player owns.
  *    @return The number of outfits matching outfitname owned.
  */
 int player_outfitOwned( const Outfit* o )
@@ -2895,7 +2904,7 @@ int player_addEscorts (void)
 
    for (i=0; i<player.p->nescorts; i++) {
       if (!player.p->escorts[i].persist) {
-         escort_rmList(player.p, player.p->escorts[i].id);
+         escort_rmListIndex(player.p, i);
          i--;
          continue;
       }
@@ -3385,6 +3394,8 @@ static Planet* player_parse( xmlNodePtr parent )
       return NULL;
    }
 
+   player.speed = 1;
+
    /* set global thingies */
    player.p->credits = player_creds;
    if (!time_set) {
@@ -3531,12 +3542,19 @@ static int player_parseDoneEvents( xmlNodePtr parent )
 static int player_parseLicenses( xmlNodePtr parent )
 {
    xmlNodePtr node;
+   char *     name;
 
    node = parent->xmlChildrenNode;
 
    do {
-      if (xml_isNode(node,"license"))
-         player_addLicense( xml_get(node) );
+      if ( xml_isNode( node, "license" ) ) {
+         name = xml_get( node );
+         if ( name == NULL ) {
+            WARN( _( "License node is missing name attribute." ) );
+            continue;
+         }
+         player_addLicense( name );
+      }
    } while (xml_nextNode(node));
 
    return 0;

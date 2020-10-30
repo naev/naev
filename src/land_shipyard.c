@@ -98,6 +98,7 @@ void shipyard_open( unsigned int wid )
    window_addButtonKey( wid, off -= 20+bw, 20,
          bw, bh, "btnFindShips",
          _("Find Ships"), shipyard_find, SDLK_f );
+   (void)off;
 
    /* target gfx */
    window_addRect( wid, -41, -50,
@@ -328,7 +329,6 @@ static void shipyard_find( unsigned int wid, char* str )
  * @brief Player right-clicks on a ship.
  *    @param wid Window player is buying ship from.
  *    @param widget_name Name of the window. (unused)
- *    @param shipname Name of the ship the player wants to buy. (unused)
  */
 static void shipyard_rmouse( unsigned int wid, char* widget_name )
 {
@@ -386,8 +386,9 @@ static void shipyard_buy( unsigned int wid, char* str )
 /**
  * @brief Makes sure it's valid to buy a ship.
  *    @param shipname Ship being bought.
+ *    @param planet Where the player is shopping.
  */
-int shipyard_canBuy ( char *shipname, Planet *planet )
+int shipyard_canBuy( const char *shipname, Planet *planet )
 {
    Ship* ship;
    ship = ship_get( shipname );
@@ -415,7 +416,7 @@ int shipyard_canBuy ( char *shipname, Planet *planet )
  * @brief Makes sure it's valid to sell a ship.
  *    @param shipname Ship being sold.
  */
-int can_sell( char* shipname )
+int can_sell( const char *shipname )
 {
    int failure = 0;
    if (strcmp( shipname, player.p->name )==0) { /* Already on-board. */
@@ -430,7 +431,7 @@ int can_sell( char* shipname )
  * @brief Makes sure it's valid to change ships.
  *    @param shipname Ship being changed to.
  */
-int can_swap( char* shipname )
+int can_swap( const char *shipname )
 {
    int failure = 0;
    Ship* ship;
@@ -458,7 +459,7 @@ int can_swap( char* shipname )
  * @brief Makes sure it's valid to buy a ship, trading the old one in simultaneously.
  *    @param shipname Ship being bought.
  */
-int shipyard_canTrade( char* shipname )
+int shipyard_canTrade( const char *shipname )
 {
    int failure = 0;
    Ship* ship;

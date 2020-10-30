@@ -94,6 +94,7 @@ utils/starmap/*.png
 utils/starmap/*.jpg
 utils/starmap/*.log
 /compile_commands.json
+/.clangd/
 *.ninja_deps
 *.ninja_log
 builddir/

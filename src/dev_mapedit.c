@@ -257,6 +257,8 @@ void mapedit_open( unsigned int wid_unused, char *unused )
    textPos++;
    linesPos+=curLines+1;
 
+   (void)linesPos;
+
    /* Zoom buttons */
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", mapedit_buttonZoom );
    window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", mapedit_buttonZoom );
@@ -833,6 +835,8 @@ void mapedit_saveMapMenu_open (void)
    textPos++;
    linesPos+=curLines+1;
 
+   (void)linesPos;
+
    /* Debug log */
    //WARN("Creating list.");
 
@@ -1113,7 +1117,6 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
    node = node->xmlChildrenNode;
    /*WARN("\t\tBeginning loop on <sys> nodes");*/
    do {
-      systemName = "";
       xml_onlyNodes(node);
 
       if (!xml_isNode(node,"sys")) {
@@ -1229,8 +1232,6 @@ static void mapedit_saveMapMenu_update( unsigned int wdw, char *str )
 static void mapedit_saveMapMenu_save( unsigned int wdw, char *str )
 {
    (void)str;
-   int pos, n;
-   mapOutfitsList_t *ns;
    char *save;
    char *sFileName, *sMapName, *sDescription;
 
@@ -1244,13 +1245,6 @@ static void mapedit_saveMapMenu_save( unsigned int wdw, char *str )
       //WARN("No list.");
       return;
    }
-
-   /* Get position. */
-   /*WARN("Getting current position in list.");*/
-   pos = toolkit_getListPos( wdw, "lstMapOutfits" );
-   ns  = mapedit_mapsList_getList( &n );
-   ns  = &ns[pos];
-   /*WARN("\tPosition is : %i.", pos);*/
 
    /* Getting file name without extension from input box */
    sFileName = window_getInput( wdw, "inpFileName" );
@@ -1331,6 +1325,7 @@ static int mapedit_mapsList_refresh (void)
 
    map_files = ndata_list( MAP_DATA_PATH, &nfiles );
    newMapItem = NULL;
+   description = NULL;
    for (i=0; i<(int)nfiles; i++) {
 
       len  = strlen(MAP_DATA_PATH)+strlen(map_files[i])+2;
@@ -1343,6 +1338,8 @@ static int mapedit_mapsList_refresh (void)
       /* Get first node, normally "outfit" */
       node = doc->xmlChildrenNode;
       if (node == NULL) {
+         if ( description != NULL )
+            free( description );
          free(file);
          xmlFreeDoc(doc);
          free(buf);
@@ -1350,6 +1347,8 @@ static int mapedit_mapsList_refresh (void)
       }
 
       if (!xml_isNode(node,"outfit")) {
+         if ( description != NULL )
+            free( description );
          free(file);
          xmlFreeDoc(doc);
          free(buf);
@@ -1363,7 +1362,6 @@ static int mapedit_mapsList_refresh (void)
       node = node->xmlChildrenNode;
       do {
          outfitType = "";
-         description = NULL;
          xml_onlyNodes(node);
 
          if (!xml_isNode(node,"specific")) {
@@ -1373,8 +1371,7 @@ static int mapedit_mapsList_refresh (void)
                   xml_onlyNodes(cur);
                   xmlr_strd(cur,"description",description);
                } while (xml_nextNode(cur));
-            } else {
-         }
+            }
             continue;
          }
 
@@ -1411,13 +1408,13 @@ static int mapedit_mapsList_refresh (void)
       } while (xml_nextNode(node));
 
       /* If the map is a regular one, then load it into the list */
-     if (nSystems > 0) {
-         newMapItem = &array_grow( &mapList );
-         newMapItem->iNumSystems   = nSystems;
-         newMapItem->sFileName     = strdup(map_files[i]);
-         newMapItem->sMapName      = strdup(name);
-         newMapItem->sDescription  = strdup( description );
-     }
+      if ( nSystems > 0 ) {
+         newMapItem               = &array_grow( &mapList );
+         newMapItem->iNumSystems  = nSystems;
+         newMapItem->sFileName    = strdup( map_files[ i ] );
+         newMapItem->sMapName     = strdup( name );
+         newMapItem->sDescription = strdup( description != NULL ? description : "" );
+      }
 
       /* Clean up. */
       free(name);
@@ -1429,6 +1426,9 @@ static int mapedit_mapsList_refresh (void)
    for (i=0; i<(int)nfiles; i++)
       free( map_files[i] );
    free( map_files );
+
+   if ( description != NULL )
+      free( description );
 
    return 0;
 }

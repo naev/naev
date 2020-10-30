@@ -93,7 +93,6 @@ int comm_openPilot( unsigned int pilot )
    const char *msg;
    char c;
    unsigned int wid;
-   int run;
    Pilot *p;
    HookParam hparam[2];
 
@@ -159,9 +158,8 @@ int comm_openPilot( unsigned int pilot )
    hparam[0].type       = HOOK_PARAM_PILOT;
    hparam[0].u.lp       = p->id;
    hparam[1].type       = HOOK_PARAM_SENTINEL;
-   run = 0;
-   run += hooks_runParam( "hail", hparam );
-   run += pilot_runHook( comm_pilot, PILOT_HOOK_HAIL );
+   hooks_runParam( "hail", hparam );
+   pilot_runHook( comm_pilot, PILOT_HOOK_HAIL );
 
    /* Close window if necessary. */
    if (comm_commClose) {
@@ -363,8 +361,6 @@ static unsigned int comm_open( glTexture *gfx, int faction,
             -30 - (GRAPHIC_HEIGHT-gh)/2,
             gw, gh, "imgGFX", comm_graphic, 0 );
    }
-   else
-      gh = gw = 0;
 
    /* Faction logo. */
    if (logo != NULL) {

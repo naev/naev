@@ -263,6 +263,8 @@ void planet_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate )
  *
  * @param p Planet to get average price at.
  * @param c Commodity to get average price of.
+ * @param[out] mean Sample mean, rounded to nearest credit.
+ * @param[out] std Sample standard deviation (via uncorrected population formula).
  */
 int planet_averagePlanetPrice( const Planet *p, const Commodity *c, credits_t *mean, double *std)
 {
@@ -346,6 +348,7 @@ int space_hyperspace( Pilot* p )
  *    @param out Star system exiting.
  *    @param[out] pos Position calculated.
  *    @param[out] vel Velocity calculated.
+ *    @param[out] dir Angle calculated.
  */
 int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir )
 {
@@ -403,6 +406,7 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
  *    @param[out] nplanets Number of planets found.
  *    @param factions Factions to check against.
  *    @param nfactions Number of factions in factions.
+ *    @param landable Whether the search is limited to landable planets.
  *    @return An array of faction names.  Individual names are not allocated.
  */
 char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int landable )
@@ -536,6 +540,8 @@ char* space_getRndPlanet( int landable, unsigned int services,
  *    @param sys System to get closest feature from a position.
  *    @param[out] pnt ID of closest planet or -1 if a jump point is closer (or none is close).
  *    @param[out] jp ID of closest jump point or -1 if a planet is closer (or none is close).
+ *    @param[out] ast ID of closest asteroid or -1 if something else is closer (or none is close).
+ *    @param[out] fie ID of the asteroid anchor the asteroid belongs to.
  *    @param x X position to get closest from.
  *    @param y Y position to get closest from.
  */
@@ -554,7 +560,7 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
    *ast = -1;
    *fie = -1;
    d    = INFINITY;
-   
+
    /* Planets. */
    for (i=0; i<sys->nplanets; i++) {
       p  = sys->planets[i];
@@ -612,7 +618,7 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
 
 
 /**
- * @brief Gets the closest feature to a position in the system.
+ * @brief Gets the feature nearest to directly ahead of a position in the system.
  *
  *    @param sys System to get closest feature from a position.
  *    @param[out] pnt ID of closest planet or -1 if something else is closer (or none is close).
@@ -621,6 +627,8 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
  *    @param[out] fie ID of the asteroid anchor the asteroid belongs to.
  *    @param x X position to get closest from.
  *    @param y Y position to get closest from.
+ *    @param ang Reference angle.
+ *    @return The nearest angle to \p ang which is the direction from (\p x, \p y) to a feature.
  */
 double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y, double ang )
 {
@@ -749,7 +757,7 @@ int space_sysReachableFromSys( StarSystem *target, StarSystem *sys )
 /**
  * @brief Gets all the star systems.
  *
- *    @param[out] Number of star systems gotten.
+ *    @param[out] nsys Number of star systems gotten.
  *    @return The star systems gotten.
  */
 StarSystem* system_getAll( int *nsys )
@@ -833,6 +841,9 @@ char **system_searchFuzzyCase( const char* sysname, int *n )
 StarSystem* system_get( const char* sysname )
 {
    int i;
+
+   if ( sysname == NULL )
+      return NULL;
 
    for (i=0; i<systems_nstack; i++)
       if (strcmp(sysname, systems_stack[i].name)==0)
@@ -1345,7 +1356,7 @@ void space_update( const double dt )
 
    /* Update the gatherable objects. */
    gatherable_update(dt);
-   
+
    /* Asteroids/Debris update */
    for (i=0; i<cur_system->nasteroids; i++) {
       ast = &cur_system->asteroids[i];
@@ -1638,7 +1649,6 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
 /**
  * @brief Initializes a debris.
  *    @param deb Debris to initialize.
- *    @param field Asteroid field the asteroid belongs to.
  */
 void debris_init( Debris *deb )
 {
@@ -1960,6 +1970,8 @@ void space_gfxUnload( StarSystem *sys )
  *
  *    @param planet Planet to fill up.
  *    @param parent Node that contains planet data.
+ *    @param[in] stdList The list of standard commodities.
+ *    @param stdNb The number of standard commodities.
  *    @return 0 on success.
  */
 static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList, int stdNb )
@@ -2307,7 +2319,7 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    economy_addQueuedUpdate();
    /* This is required to clear the player statistics for this planet */
    economy_clearSinglePlanet(planet);
-   
+
    /* Add the presence. */
    if (!systems_loading) {
       system_addPresence( sys, planet->faction, planet->presenceAmount, planet->presenceRange );
@@ -2388,7 +2400,7 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
  * Note that economy_execQueued should always be run after this.
  *
  *    @param sys Star System to add jump point to.
- *    @param jumpname Name of the jump point to add.
+ *    @param node Parent node containing jump point information.
  *    @return 0 on success.
  */
 int system_addJumpDiff( StarSystem *sys, xmlNodePtr node )
@@ -2408,7 +2420,7 @@ int system_addJumpDiff( StarSystem *sys, xmlNodePtr node )
  * Note that economy_execQueued should always be run after this.
  *
  *    @param sys Star System to add jump point to.
- *    @param jumpname Name of the jump point to add.
+ *    @param node Parent node containing jump point information.
  *    @return 0 on success.
  */
 int system_addJump( StarSystem *sys, xmlNodePtr node )
@@ -2644,6 +2656,7 @@ void systems_reconstructPlanets (void)
 /**
  * @brief Creates a system from an XML node.
  *
+ *    @param sys System to set up.
  *    @param parent XML node to get system from.
  *    @return System matching parent data.
  */
@@ -3059,6 +3072,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    memset( a, 0, sizeof(AsteroidAnchor) );
 
    /* Initialize stuff. */
+   pos         = 1;
    a->density  = .2;
    a->area     = 0.;
    a->ntype    = 0;
@@ -3165,6 +3179,7 @@ static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys
    memset( a, 0, sizeof(*a) );
 
    /* Initialize stuff. */
+   pos         = 0;
    a->radius   = 0.;
    vect_cset( &a->pos, 0., 0. );
 
@@ -3397,7 +3412,8 @@ static int asteroidTypes_load (void)
 
                at->gfxs[i] = gl_loadImagePadTrans( file, surface, rw,
                              OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS,
-                             w, h, 1, 1, 0 );
+                             w, h, 1, 1, 1 );
+               SDL_RWclose( rw );
                i++;
             }
 
@@ -3856,7 +3872,7 @@ void space_exit (void)
 
       /* Free the asteroids. */
       sys = &systems_stack[i];
-      
+
       for (j=0; j < sys->nasteroids; j++) {
          ast = &sys->asteroids[j];
          free(ast->asteroids);
@@ -4119,6 +4135,7 @@ int space_sysLoad( xmlNodePtr parent )
  * @brief Parses assets in a system.
  *
  *    @param parent Node of the system.
+ *    @param sys System to populate.
  *    @return 0 on success.
  */
 static int space_parseAssets( xmlNodePtr parent, StarSystem* sys )
@@ -4439,6 +4456,8 @@ void asteroid_hit( Asteroid *a, const Damage *dmg )
  * @brief Makes an asteroid explode.
  *
  *    @param a asteroid to make explode
+ *    @param field Asteroid field the asteroid belongs to.
+ *    @param give_reward Whether a pilot blew the asteroid up and should be rewarded.
  */
 static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_reward )
 {

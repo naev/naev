@@ -1,4 +1,6 @@
 {
     "C_Cpp.default.compileCommands": "${workspaceFolder}/compile_commands.json",
-    "C_Cpp.default.cStandard": "gnu99"
+    "C_Cpp.default.cStandard": "gnu99",
+    "C_Cpp.default.intelliSenseMode": "clang-x64",
+    "C_Cpp.intelliSenseEngine": "Disabled"
 }

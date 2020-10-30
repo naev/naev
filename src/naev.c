@@ -300,8 +300,6 @@ int main( int argc, char** argv )
     * fully loaded. */
    if (conf.language == NULL)
       lang = "";
-   else if (strcmp(conf.language,"en")==0)
-      lang = "C";
    else
       lang = conf.language;
    nsetenv( "LANGUAGE", lang, 1 );
@@ -713,6 +711,7 @@ void unload_all (void)
    npc_clear(); /* In case exiting while landed. */
    background_free(); /* Destroy backgrounds. */
    load_free(); /* Clean up loading game stuff stuff. */
+   diff_free();
    economy_destroy(); /* must be called before space_exit */
    space_exit(); /* cleans up the universe itself */
    tech_free(); /* Frees tech stuff. */
@@ -722,7 +721,7 @@ void unload_all (void)
    spfx_free(); /* gets rid of the special effect */
    dtype_free(); /* gets rid of the damage types */
    missions_free();
-   events_cleanup(); /* Clean up events. */
+   events_exit(); /* Clean up events. */
    factions_free();
    commodity_free();
    var_cleanup(); /* cleans up mission variables */
@@ -993,6 +992,7 @@ static void update_all (void)
  * @brief Actually runs the updates
  *
  *    @param[in] dt Current delta tick.
+ *    @param[in] enter_sys Whether this is the initial update upon entering the system.
  */
 void update_routine( double dt, int enter_sys )
 {
@@ -1147,7 +1147,7 @@ static void window_caption (void)
 }
 
 /**
- * @Brief Gets a short human readable string of the version.
+ * @brief Gets a short human readable string of the version.
  *
  *    @param[out] str String to output.
  *    @param slen Maximum length of the string.
@@ -1455,7 +1455,7 @@ static void debug_sigInit (void)
 
          /* static */
          symcount = bfd_read_minisymbols (abfd, FALSE, (void **)&syms, &size);
-         if (symcount == 0) /* dynamic */
+         if ( symcount == 0 && abfd != NULL ) /* dynamic */
             symcount = bfd_read_minisymbols (abfd, TRUE, (void **)&syms, &size);
          assert(symcount >= 0);
       }

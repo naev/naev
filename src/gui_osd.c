@@ -418,10 +418,7 @@ void osd_render (void)
       return;
 
    nignore = array_size(osd_list);
-   ignore = malloc( sizeof(ignore) * nignore );
-   for (m=0; m<nignore; m++) {
-      ignore[m] = 0;
-   }
+   ignore  = calloc( nignore, sizeof( int ) );
 
    /* Background. */
    gl_renderRect( osd_x-5., osd_y-(osd_rh+5.), osd_w+10., osd_rh+10, &cBlackHilight );
@@ -522,10 +519,7 @@ static void osd_calcDimensions (void)
       return;
 
    nignore = array_size(osd_list);
-   ignore = malloc( sizeof(ignore) * nignore );
-   for (m=0; m<nignore; m++) {
-      ignore[m] = 0;
-   }
+   ignore  = calloc( nignore, sizeof( int ) );
 
    /* Render each thingy. */
    len = 0;

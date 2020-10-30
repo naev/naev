@@ -326,11 +326,12 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
          if (inp->dat.inp.oneline)
             return 0;
 
-         str      = inp->dat.inp.input;
-         curpos   = 0;
-         prevpos  = 0;
-         curchars = 0;
-         lines    = 0;
+         str       = inp->dat.inp.input;
+         curpos    = 0;
+         prevpos   = 0;
+         curchars  = 0;
+         prevchars = 0;
+         lines     = 0;
 
          if (inp->dat.inp.pos == 0) /* We can't move beyond the current line, as it is the first one. */
             return 1;
@@ -370,7 +371,6 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
          str      = inp->dat.inp.input;
          curpos   = 0;
          prevpos  = 0;
-         curchars = 0;
          lines    = 0;
 
          /* We can't move beyond the current line, as it is the last one. */
@@ -381,7 +381,6 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
           * At this point, we've arrived at the line the cursor is on. */
          while (inp->dat.inp.pos >= curpos) {
             prevpos   = curpos;
-            prevchars = curchars;
 
             curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
             curpos   += curchars;
@@ -401,7 +400,6 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
 
          /* Now not-print one more line. This is the line we want to move the cursor to. */
          prevpos   = curpos;
-         prevchars = curchars;
          curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
          curpos   += curchars;
 

@@ -583,8 +583,8 @@ void spfx_shake( double mod )
 /**
  * @brief Gets the current shake position.
  *
- *    @param[out] X X shake position.
- *    @param[out] Y Y shake position.
+ *    @param[out] x X shake position.
+ *    @param[out] y Y shake position.
  */
 void spfx_getShake( double *x, double *y )
 {

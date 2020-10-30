@@ -50,10 +50,6 @@ jobs:
             shell: msys2 {0}
             config: windows.ini
             pkg-config-path: "[]"
-          - os: macos-latest
-            shell: bash
-            config: macos.ini
-            pkg-config-path: '/usr/local/opt/openal-soft/lib/pkgconfig'
 
     defaults:
       run:
@@ -95,26 +91,12 @@ jobs:
         update: true
         install: git tar mingw-w64-x86_64-clang mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-luajit mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer
 
-    - name: Install Homebrew Packages
-      if: ${{ runner.os == 'macOS'}}
-      run: |
-        brew update
-        brew install \
-          fontconfig \
-          intltool \
-          luajit \
-          openal-soft \
-          pkg-config \
-          sdl2 \
-          sdl2_image \
-          sdl2_mixer
-
     - name: Setup Python
-      if: ${{ runner.os != 'Windows'}}
+      if: ${{ runner.os == 'Linux'}}
       uses: actions/setup-python@v2
 
     - name: Install Meson
-      if: ${{ runner.os != 'Windows'}}
+      if: ${{ runner.os == 'Linux'}}
       run: |
         pip install meson ninja
 
@@ -150,7 +132,8 @@ jobs:
 
     - name: Meson Compile
       id: compile
-      run: meson compile -C build
+      run: |
+        meson compile -C build
 
     - name: Upload Compile Log
       uses: actions/upload-artifact@v2
@@ -162,7 +145,8 @@ jobs:
 
     - name: Meson Test
       id: tests
-      run: ${{ matrix.test-env }} meson test -C build --print-errorlogs
+      run: |
+        ${{ matrix.test-env }} meson test -C build --print-errorlogs
 
     - name: Upload test log
       uses: actions/upload-artifact@v2
@@ -173,7 +157,8 @@ jobs:
         if-no-files-found: ignore
 
     - name: Package
-      run: meson install -C build
+      run: |
+        meson install -C build
       if: ${{ success() || steps.tests.outcome == 'failure' }}
 
     - name: Upload Artifact
@@ -232,12 +217,12 @@ jobs:
       if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
 
     - name: Upload Lua Documentation
-      run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete ${{ env.DESTDIR }}/docs/lua/ travis@iandouglasscott.com:/srv/naevdoc
+      run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete ${{ env.DESTDIR }}/usr/local/doc/naev/lua/* travis@iandouglasscott.com:/srv/naevdoc
       if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: naev-docs-${{ github.sha }}
-        path: ${{ env.DESTDIR }}/*
+        path: ${{ env.DESTDIR }}/usr/local/doc/naev/*
         if-no-files-found: error

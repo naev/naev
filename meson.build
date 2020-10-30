@@ -61,6 +61,7 @@ if buildExec.disabled() == false
 
    ### Hard deps (required: true)
 
+   csparse = dependency('', required: false)
    if 'SuiteSparse' not in get_option('force_fallback_for')
       csparse_names = ['csparse', 'cxsparse']
       foreach n : csparse_names
@@ -71,7 +72,11 @@ if buildExec.disabled() == false
       endforeach
    endif
 
-   if not is_variable('csparse') or not csparse.found()
+   if csparse.found()
+      if cc.has_header('suitesparse/cs.h')
+         config_data.set10('HAVE_SUITESPARSE_CS_H', true)
+      endif
+   else
       csparse = dependency(
          'SuiteSparse',
          fallback: ['SuiteSparse', 'CSparse_dep'],
