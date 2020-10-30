@@ -164,7 +164,7 @@ jobs:
 
     - name: Setup Python
       run: |
-        update-alternatives --install /usr/bin/python python /usr/bin/python3.5
+        sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.5 1
 
     - name: Get Source
       uses: actions/download-artifact@v1
