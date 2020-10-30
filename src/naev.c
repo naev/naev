@@ -300,8 +300,6 @@ int main( int argc, char** argv )
     * fully loaded. */
    if (conf.language == NULL)
       lang = "";
-   else if (strcmp(conf.language,"en")==0)
-      lang = "C";
    else
       lang = conf.language;
    nsetenv( "LANGUAGE", lang, 1 );
