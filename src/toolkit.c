@@ -1230,9 +1230,9 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    c2.g = cGrey10.g;
    c2.b = cGrey10.b;
    c2.a = 0.7;
-   toolkit_drawRect( x-1, y-5, w+6, h+6, &c2, NULL );
-   toolkit_drawRect( x-3, y-3, w+6, h+6, &c, NULL );
-   gl_printTextRaw( &gl_smallFont, w - 10 , h - 10, x + 5, y + 5, &cFontWhite, alt );
+   toolkit_drawRect( x+1, y+1, w+18, h+18, &c2, NULL );
+   toolkit_drawRect( x, y, w+18, h+18, &c, NULL );
+   gl_printTextRaw( &gl_smallFont, w , h, x + 9, y + 9, &cFontWhite, alt );
 }
 
 
