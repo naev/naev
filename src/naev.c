@@ -713,6 +713,7 @@ void unload_all (void)
    npc_clear(); /* In case exiting while landed. */
    background_free(); /* Destroy backgrounds. */
    load_free(); /* Clean up loading game stuff stuff. */
+   diff_free();
    economy_destroy(); /* must be called before space_exit */
    space_exit(); /* cleans up the universe itself */
    tech_free(); /* Frees tech stuff. */
@@ -722,7 +723,7 @@ void unload_all (void)
    spfx_free(); /* gets rid of the special effect */
    dtype_free(); /* gets rid of the damage types */
    missions_free();
-   events_cleanup(); /* Clean up events. */
+   events_exit(); /* Clean up events. */
    factions_free();
    commodity_free();
    var_cleanup(); /* cleans up mission variables */

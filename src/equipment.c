@@ -1919,13 +1919,14 @@ static void equipment_renameShip( unsigned int wid, char *str )
    if (player_hasShip(newname)) {
       dialogue_msg( _("Name Collision"),
             _("Please do not give the ship the same name as another of your ships."));
+      free(newname);
       return;
    }
 
    if (ship->name != NULL)
       free (ship->name);
 
-   ship->name = strdup( newname );
+   ship->name = newname;
 
    /* Destroy widget - must be before widget. */
    equipment_regenLists( wid, 0, 1 );

@@ -1533,6 +1533,12 @@ void gl_freeFont( glFont* font )
    if (stsh->vbo_vert != NULL)
       gl_vboDestroy(stsh->vbo_vert);
    stsh->vbo_vert = NULL;
+   if (stsh->vbo_tex_data != NULL)
+      free(stsh->vbo_tex_data);
+   stsh->vbo_tex_data = NULL;
+   if (stsh->vbo_vert_data != NULL)
+      free(stsh->vbo_vert_data);
+   stsh->vbo_vert_data = NULL;
 }
 
 

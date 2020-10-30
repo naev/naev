@@ -2902,7 +2902,7 @@ int player_addEscorts (void)
 
    for (i=0; i<player.p->nescorts; i++) {
       if (!player.p->escorts[i].persist) {
-         escort_rmList(player.p, player.p->escorts[i].id);
+         escort_rmListIndex(player.p, i);
          i--;
          continue;
       }
