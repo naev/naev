@@ -300,7 +300,7 @@ const glColour *outfit_slotSizeColour( const OutfitSlot* os )
    if (os->size == OUTFIT_SLOT_SIZE_HEAVY)
       return &cDarkBlue;
    else if (os->size == OUTFIT_SLOT_SIZE_MEDIUM)
-      return &cPrimeBlue;
+      return &cBlue;
    else if (os->size == OUTFIT_SLOT_SIZE_LIGHT)
       return &cLightBlue;
    return NULL;
