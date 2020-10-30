@@ -1701,7 +1701,7 @@ static SDL_Keymod toolkit_mapMod( SDL_Keycode key )
  *
  *    @param key Key to register as down.
  */
-static void toolkit_regKey( SDL_Keycode key, SDL_Keycode c )
+static void toolkit_regKey( SDL_Keycode key )
 {
    SDL_Keymod mod;
 
@@ -1716,7 +1716,7 @@ static void toolkit_regKey( SDL_Keycode key, SDL_Keycode c )
       input_key         = key;
       input_keyTime     = SDL_GetTicks();
       input_keyCounter  = 0;
-      input_text        = nstd_checkascii(c) ? c : 0;
+      input_text        = nstd_checkascii(key) ? key : 0;
    }
 }
 
@@ -1769,7 +1769,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 
    /* Hack to simulate key repetition */
    if (event->type == SDL_KEYDOWN)
-      toolkit_regKey(key, key);
+      toolkit_regKey(key);
    else if (event->type == SDL_KEYUP)
       toolkit_unregKey(key);
 
