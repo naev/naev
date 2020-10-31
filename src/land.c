@@ -568,7 +568,7 @@ static void misn_open( unsigned int wid )
          _("Date:\n"
          "Free Space:"));
    window_addText( wid, w/2 + 110, y,
-         w/2 - 90, 40, 0,
+         w/2 - 130, 40, 0,
          "txtDate", NULL, NULL, NULL );
    y -= 2 * gl_defFont.h + 50;
    window_addText( wid, w/2 + 10, y,
@@ -576,7 +576,7 @@ static void misn_open( unsigned int wid )
          "txtReward", &gl_smallFont, NULL, _("\anReward:\a0 None") );
    y -= 20;
    window_addText( wid, w/2 + 10, y,
-         w/2 - 30, h/2-90, 0,
+         w/2 - 30, y - 40 + h - 2*LAND_BUTTON_HEIGHT, 0,
          "txtDesc", &gl_smallFont, NULL, NULL );
 
    /* map */

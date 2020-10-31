@@ -560,7 +560,7 @@ static void opt_keybinds( unsigned int wid )
    /* Text stuff. */
    window_addText( wid, 20+lw+20, -40, w-(20+lw+20), 30, 1, "txtName",
          NULL, NULL, NULL );
-   window_addText( wid, 20+lw+20, -90, w-(20+lw+20), h-70-60-bh,
+   window_addText( wid, 20+lw+20, -90, w-(20+lw+20), h-170-3*bh,
          0, "txtDesc", &gl_smallFont, NULL, NULL );
 
    /* Generate the list. */

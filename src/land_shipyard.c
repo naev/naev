@@ -111,7 +111,7 @@ void shipyard_open( unsigned int wid )
          shipyard_renderSlots, NULL, NULL );
 
    /* stat text */
-   window_addText( wid, -40, -SHIP_TARGET_H-60-70-20, 128, 400, 0, "txtStats",
+   window_addText( wid, -40, -SHIP_TARGET_H-60-70-20, 128, -SHIP_TARGET_H-60-70-20-20+h-bh, 0, "txtStats",
          &gl_smallFont, NULL, NULL );
 
    /* text */
@@ -142,10 +142,10 @@ void shipyard_open( unsigned int wid )
    window_addText( wid, 40+iw+20, y,
          100, th, 0, "txtSDesc", &gl_smallFont, NULL, buf );
    window_addText( wid, 40+iw+20+100, y,
-         w-(40+iw+20+100)-20, th, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
+         w-SHIP_TARGET_W-40-(40+iw+20+100), th, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
    y -= th;
    window_addText( wid, 20+iw+40, y,
-         w-(20+iw+40) - 180, 185, 0, "txtDescription",
+         w-(20+iw+40) - 180, y-20+h-bh, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
    /* set up the ships to buy/sell */
