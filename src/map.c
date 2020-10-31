@@ -1540,7 +1540,8 @@ void map_renderCommod( double bx, double by, double x, double y,
  */
 void map_updateFactionPresence( const unsigned int wid, const char *name, const StarSystem *sys, int omniscient )
 {
-   int    i, l;
+   int    i;
+   size_t l;
    char   buf[ 1024 ];
    int    hasPresence;
    double unknownPresence;
