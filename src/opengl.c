@@ -83,7 +83,6 @@ static int intel_vendor = 0;
  */
 /* gl */
 static int gl_setupAttributes (void);
-static int gl_setupFullscreen (void);
 static int gl_createWindow( unsigned int flags );
 static int gl_getGLInfo (void);
 static int gl_defState (void);
@@ -302,63 +301,38 @@ static int gl_setupAttributes (void)
 
 
 /**
- * @brief Tries to set up fullscreen environment.
+ * @brief Tries to apply the configured display mode to the window.
  *
  *    @return 0 on success.
  */
-static int gl_setupFullscreen (void)
+int gl_setupFullscreen (void)
 {
-   int i, j, off, toff, supported;
+   int display_index;
+   int mode;
+   SDL_DisplayMode target, closest;
 
-   /* Unsupported by default. */
-   supported = 0;
+   mode = conf.modesetting ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_FULLSCREEN_DESKTOP;
+   display_index = SDL_GetWindowDisplayIndex( gl_screen.window );
+
+   if (!conf.fullscreen)
+      return SDL_SetWindowFullscreen( gl_screen.window, 0 );
+   else if (!conf.modesetting)
+      return SDL_SetWindowFullscreen( gl_screen.window, mode );
 
    /* Try to use desktop resolution if nothing is specifically set. */
-   if ((gl_screen.desktop_w > 0) && (gl_screen.desktop_h > 0) && !conf.explicit_dim) {
-      gl_screen.w = gl_screen.desktop_w;
-      gl_screen.h = gl_screen.desktop_h;
+   if (conf.explicit_dim) {
+      SDL_GetWindowDisplayMode( gl_screen.window, &target );
+      target.w = conf.width;
+      target.h = conf.height;
    }
+   else
+      SDL_GetDesktopDisplayMode( display_index, &target );
 
-   SDL_DisplayMode mode;
-   int n = SDL_GetNumDisplayModes( 0 );
+   if (SDL_GetClosestDisplayMode( display_index, &target, &closest ) == NULL)
+      SDL_GetDisplayMode( display_index, 0, &closest ); /* fall back to the best one */
 
-   /* Try to get closest approximation to mode asked for */
-   off = -1;
-   j   = -1;
-   for (i=0; i<n; i++) {
-      SDL_GetDisplayMode( 0, i, &mode  );
-
-      /* Found supported mode. */
-      if ((mode.w == SCREEN_W) && (mode.h == SCREEN_H)) {
-         supported = 1;
-         break;
-      }
-
-      /* Get Manhattan distance. */
-      toff = ABS(SCREEN_W-mode.w) + ABS(SCREEN_H-mode.h);
-      if ((off == -1) || (toff < off)) {
-         j   = i;
-         off = toff;
-      }
-   }
-
-   /* Failed to find. */
-   if (!supported) {
-      if (j<0) {
-         ERR(_("Fullscreen mode %dx%d is not supported by your setup, however no other modes are supported, bailing!"),
-               SCREEN_W, SCREEN_H);
-      }
-
-      SDL_GetDisplayMode( 0, j, &mode );
-      WARN(_("Fullscreen mode %dx%d is not supported by your setup\n"
-            "   switching to %dx%d"),
-            SCREEN_W, SCREEN_H,
-            mode.w, mode.h );
-      gl_screen.w = mode.w;
-      gl_screen.h = mode.h;
-   }
-
-   return 0;
+   SDL_SetWindowDisplayMode( gl_screen.window, &closest );
+   return SDL_SetWindowFullscreen( gl_screen.window, mode );
 }
 
 
@@ -374,7 +348,7 @@ static int gl_createWindow( unsigned int flags )
    /* Create the window. */
    gl_screen.window = SDL_CreateWindow( APPNAME,
          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-         800, 600, flags | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
+         conf.width, conf.height, flags | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
                                    | SDL_WINDOW_ALLOW_HIGHDPI );
    if (gl_screen.window == NULL)
       ERR(_("Unable to create window! %s"), SDL_GetError());
@@ -566,8 +540,6 @@ int gl_init (void)
 
    /* Load configuration. */
 
-   gl_screen.w = conf.width;
-   gl_screen.h = conf.height;
    if (conf.fullscreen) {
       gl_screen.flags |= OPENGL_FULLSCREEN;
       if (conf.modesetting)
@@ -585,12 +557,11 @@ int gl_init (void)
    /* Set opengl flags. */
    gl_setupAttributes();
 
-   /* See if should set up fullscreen. */
-   if (conf.fullscreen)
-      gl_setupFullscreen();
-
    /* Create the window. */
    gl_createWindow( flags );
+
+   /* Apply the configured fullscreen display mode, if any. */
+   gl_setupFullscreen();
 
    /* Load extensions. */
    if (!gladLoadGLLoader(SDL_GL_GetProcAddress))

@@ -127,6 +127,7 @@ void gl_screenToWindowPos( int *wx, int *wy, int sx, int sy );
 void gl_viewport( int x, int y, int w, int h );
 void gl_defViewport (void);
 void gl_setDefViewport( int x, int y, int w, int h );
+int gl_setupFullscreen (void);
 
 
 /*

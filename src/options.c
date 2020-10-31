@@ -77,6 +77,7 @@ static void opt_video( unsigned int wid );
 static void opt_videoRes( unsigned int wid, char *str );
 static int opt_videoSave( unsigned int wid, char *str );
 static void opt_videoDefaults( unsigned int wid, char *str );
+static void opt_getVideoMode( int *w, int *h, int *fullscreen );
 static void opt_setScalefactor( unsigned int wid, char *str );
 /* Audio. */
 static void opt_audio( unsigned int wid );
@@ -170,6 +171,7 @@ static void opt_close( unsigned int wid, char *name )
  */
 void opt_resize (void)
 {
+   int w, h, fullscreen;
    char buf[16];
 
    /* Nothing to do if not open. */
@@ -177,7 +179,8 @@ void opt_resize (void)
       return;
 
    /* Update the resolution input widget. */
-   nsnprintf( buf, sizeof(buf), "%dx%d", gl_screen.rw, gl_screen.rh );
+   opt_getVideoMode( &w, &h, &fullscreen );
+   nsnprintf( buf, sizeof(buf), "%dx%d", w, h );
    window_setInput( opt_windows[OPT_WIN_VIDEO], "inpRes", buf );
 }
 
@@ -1384,7 +1387,7 @@ static void opt_videoRes( unsigned int wid, char *str )
 static int opt_videoSave( unsigned int wid, char *str )
 {
    (void) str;
-   char *inp, buf[16];
+   char *inp;
    int ret, w, h, f, fullscreen;
 
    /* Handle resolution. */
@@ -1398,115 +1401,10 @@ static int opt_videoSave( unsigned int wid, char *str )
    /* Fullscreen. */
    fullscreen = window_checkboxState( wid, "chkFullscreen" );
 
-   int origw, origh, origf, mode, changed;
-   int rw, rh, nw, nh; /* Real width and height. */
-   SDL_DisplayMode current;
-
-   changed = 0;
-   SDL_GL_GetDrawableSize( gl_screen.window, &rw, &rh );
-   SDL_GetWindowDisplayMode( gl_screen.window, &current );
-   mode = (conf.modesetting) ?
-         SDL_WINDOW_FULLSCREEN : SDL_WINDOW_FULLSCREEN_DESKTOP;
-
-   origw = conf.width;
-   origh = conf.height;
-   origf = conf.fullscreen;
-
-   if ((w != conf.width) || (h != conf.height)) {
-      conf.explicit_dim = 1;
-      conf.width  = w;
-      conf.height = h;
-   }
-
-   /* Enable or disable fullscreen. */
-   if (fullscreen != conf.fullscreen) {
-      conf.fullscreen = fullscreen;
-      changed = 1;
-
-      if (fullscreen) {
-         if (conf.modesetting) {
-            current.w = w;
-            current.h = h;
-
-            SDL_SetWindowDisplayMode( gl_screen.window, &current );
-         }
-         SDL_SetWindowFullscreen( gl_screen.window, mode );
-      }
-      else /* Restore windowed mode. */
-         SDL_SetWindowFullscreen( gl_screen.window, 0 );
-   }
-
-   if ((w != rw) || (h != rh)) {
-      /* Attempt to detect maximized state (doesn't work on X11) */
-      if (SDL_GetWindowFlags(gl_screen.window) & SDL_WINDOW_MAXIMIZED)
-         dialogue_alert(_("Resolution can't be changed while maximized."));
-      /* Set size. Done second, because it can't be set while fullscreen. */
-      else {
-         /* Can't change window size while fullscreen. */
-         if (fullscreen && origf)
-            opt_needRestart();
-         else if (!fullscreen) {
-            SDL_SetWindowSize( gl_screen.window, w, h );
-            naev_resize();
-            SDL_SetWindowPosition( gl_screen.window,
-                  SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
-
-            changed = 1;
-         }
-      }
-   }
-
-   /* Desktop fullscreen size must be determined dynamically. */
-   if (fullscreen && !conf.modesetting)
-      SDL_GetWindowSize( gl_screen.window, &nw, &nh );
-   else {
-      nw = conf.width;
-      nh = conf.height;
-   }
-
-   /* Settings have changed, switch and offer to reset. */
-   if (changed && !dialogue_YesNo(_("Keep Video Settings"),
-         _("Do you want to keep running at %dx%d %s?"),
-         nw, nh, fullscreen ? _("fullscreen") : _("windowed"))) {
-      conf.width      = origw;
-      conf.height     = origh;
-      conf.fullscreen = origf;
-      window_checkboxSet( wid, "chkFullscreen", conf.fullscreen );
-
-      /* Restore previous resolution. */
-      if ((w != rw) || (h != rw)) {
-         SDL_SetWindowSize( gl_screen.window, rw, rh );
-         naev_resize();
-         SDL_SetWindowPosition( gl_screen.window,
-               SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
-      }
-
-      /* Restore windowed mode. */
-      if (fullscreen && (fullscreen != conf.fullscreen))
-         SDL_SetWindowFullscreen( gl_screen.window, 0 );
-      else if (!fullscreen && (fullscreen != conf.fullscreen)) {
-         if  (conf.modesetting) {
-            current.w = origw;
-            current.h = origh;
-
-            SDL_SetWindowDisplayMode( gl_screen.window, &current );
-         }
-         SDL_SetWindowFullscreen( gl_screen.window, mode );
-      }
-
-      nsnprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
-      window_setInput( wid, "inpRes", buf );
-
-      dialogue_msg( _("Video Settings Restored"),
-            _("Resolution reset to %dx%d %s."),
-            rw, rh, conf.fullscreen ? _("fullscreen") : _("windowed") );
-
-      return 1;
-   }
-   else if (changed) {
-      nsnprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
-      window_setInput( wid, "inpRes", buf );
-   }
+   ret = opt_setVideoMode( w, h, fullscreen, 1 );
+   window_checkboxSet( wid, "chkFullscreen", conf.fullscreen );
+   if (ret != 0)
+      return ret;
 
    /* FPS. */
    conf.fps_show = window_checkboxState( wid, "chkFPS" );
@@ -1550,6 +1448,89 @@ static int opt_videoSave( unsigned int wid, char *str )
 
    return 0;
 }
+
+
+/**
+ * @brief Applies new video-mode options.
+ *
+ *    @param w Width of the video mode (if fullscreen) or window in screen coordinates (otherwise).
+ *    @param h Height of the video mode (if fullscreen) or window in screen coordinates (otherwise).
+ *    @param fullscreen Whether it's a fullscreen mode.
+ *    @param confirm Whether to confirm the new settings.
+ *    @return 0 on success.
+ */
+int opt_setVideoMode( int w, int h, int fullscreen, int confirm )
+{
+   int old_conf_w, old_conf_h, old_conf_f, status;
+   int old_w, old_h, old_f, new_w, new_h, new_f;
+   int changed_size, maximized;
+
+   opt_getVideoMode( &old_w, &old_h, &old_f );
+   old_conf_w = conf.width;
+   old_conf_h = conf.height;
+   old_conf_f = conf.fullscreen;
+   conf.width = w;
+   conf.height = h;
+   conf.fullscreen = fullscreen;
+
+   status = gl_setupFullscreen();
+   if (status == 0 && !new_f && (w != old_w || h != old_h)) {
+      SDL_SetWindowSize( gl_screen.window, w, h );
+      SDL_SetWindowPosition( gl_screen.window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
+   }
+   naev_resize();
+
+   opt_getVideoMode( &new_w, &new_h, &new_f );
+   changed_size = new_w != old_w || new_h != old_h;
+   maximized = !new_f && (SDL_GetWindowFlags(gl_screen.window) & SDL_WINDOW_MAXIMIZED);
+
+   if (confirm && !changed_size && maximized)
+      dialogue_alert(_("Resolution can't be changed while maximized."));
+   if (confirm && (status != 0 || new_f != fullscreen))
+      opt_needRestart();
+
+   if (confirm && (status != 0 || changed_size || new_f != old_f) && !dialogue_YesNo(_("Keep Video Settings"),
+         _("Do you want to keep running at %dx%d %s?"),
+         new_w, new_h, new_f ? _("fullscreen") : _("windowed"))) {
+
+      opt_setVideoMode( old_conf_w, old_conf_h, old_conf_f, 0 );
+
+      dialogue_msg( _("Video Settings Restored"),
+            _("Resolution reset to %dx%d %s."),
+            old_w, old_h, conf.fullscreen ? _("fullscreen") : _("windowed") );
+
+      return 1;
+   }
+
+   conf.explicit_dim = conf.explicit_dim || w != old_conf_w || h != old_conf_h;
+   return 0;
+}
+
+
+/**
+ * @brief Detects the video-mode options corresponding to the gl_screen we have set up.
+ *
+ *    @param[out] w Width of the video mode (if fullscreen) or window in screen coordinates (otherwise).
+ *    @param[out] h Height of the video mode (if fullscreen) or window in screen coordinates (otherwise).
+ *    @param[out] fullscreen Whether it's a fullscreen mode.
+ */
+static void opt_getVideoMode( int *w, int *h, int *fullscreen )
+{
+   SDL_DisplayMode mode;
+   /* Warning: this test may be inadequate depending on our setup.
+    * Example (Wayland): if I called SDL_SetWindowDisplayMode with an impossibly large size, then SDL_SetWindowFullscreen,
+    * I see a window on my desktop whereas SDL2 window flags report a fullscreen mode.
+    * Mitigation: be strict about how the setup is done in opt_setVideoMode / gl_setupFullscreen, and never bypass them. */
+   *fullscreen = (SDL_GetWindowFlags(gl_screen.window) & SDL_WINDOW_FULLSCREEN) != 0;
+   if (*fullscreen && conf.modesetting) {
+      SDL_GetWindowDisplayMode( gl_screen.window, &mode );
+      *w = mode.w;
+      *h = mode.h;
+   }
+   else
+      SDL_GetWindowSize( gl_screen.window, w, h );
+}
+
 
 /**
  * @brief Sets video defaults.

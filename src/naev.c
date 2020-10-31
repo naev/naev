@@ -793,6 +793,9 @@ void naev_resize (void)
    int w, h;
    SDL_GL_GetDrawableSize( gl_screen.window, &w, &h );
 
+   /* Update options menu, if open. (Never skip, in case the fullscreen mode alone changed.) */
+   opt_resize();
+
    /* Nothing to do. */
    if ((w == gl_screen.rw) && (h == gl_screen.rh))
       return;
@@ -823,9 +826,6 @@ void naev_resize (void)
 
    /* Reposition main menu, if open. */
    menu_main_resize();
-
-   /* Update options menu, if open. */
-   opt_resize();
 }
 
 /*
@@ -833,43 +833,7 @@ void naev_resize (void)
  */
 void naev_toggleFullscreen (void)
 {
-   int w, h, mode;
-   SDL_DisplayMode current;
-
-   /* @todo Remove code duplication between this and opt_videoSave */
-   if (conf.fullscreen) {
-      conf.fullscreen = 0;
-      /* Restore windowed mode. */
-      SDL_SetWindowFullscreen( gl_screen.window, 0 );
-
-      SDL_SetWindowSize( gl_screen.window, conf.width, conf.height );
-      naev_resize();
-      SDL_SetWindowPosition( gl_screen.window,
-            SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
-
-      return;
-   }
-
-   conf.fullscreen = 1;
-
-   if (conf.modesetting) {
-      mode = SDL_WINDOW_FULLSCREEN;
-
-      SDL_GetWindowDisplayMode( gl_screen.window, &current );
-
-      current.w = conf.width;
-      current.h = conf.height;
-
-      SDL_SetWindowDisplayMode( gl_screen.window, &current );
-   }
-   else
-      mode = SDL_WINDOW_FULLSCREEN_DESKTOP;
-
-   SDL_SetWindowFullscreen( gl_screen.window, mode );
-
-   SDL_GetWindowSize( gl_screen.window, &w, &h );
-   if ((w != conf.width) || (h != conf.height))
-      naev_resize();
+   opt_setVideoMode( conf.width, conf.height, !conf.fullscreen, 0 );
 }
 
 
