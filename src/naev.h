@@ -97,10 +97,8 @@ void fps_setPos( double x, double y );
 void naev_resize( int w, int h );
 void naev_toggleFullscreen (void);
 void update_routine( double dt, int enter_sys );
-int naev_versionString( char *str, size_t slen, int major, int minor, int rev );
 char *naev_version( int long_version );
-int naev_versionParse( int version[3], char *buf, int nbuf );
-int naev_versionCompare( int version[3] );
+int naev_versionCompare( char *version );
 char *naev_binary (void);
 void naev_quit (void);
 

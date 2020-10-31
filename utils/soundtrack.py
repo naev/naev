@@ -10,8 +10,6 @@ import zipfile
 import mutagen
 
 
-
-
 def generate_soundtrack( source_dir, output, generate_csv=False ):
 
     # Load licensing information
@@ -99,7 +97,7 @@ if __name__=="__main__":
             output = output[0:-4]
     else:
         # Get version information
-        with open(os.path.join(args.source_dir, 'VERSION'), 'r') as f:
+        with open(os.path.join(args.source_dir, 'dat/VERSION'), 'r') as f:
             version = f.read().strip()
         output = f"naev-{version}-soundtrack"
 
