@@ -1293,7 +1293,7 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
    if (dps > 0.)
       l += nsnprintf( &buf[l], (max_len-l),
             _("%s%.2f DPS [%.2f EPS]"), (l!=0)?"\n":"", dps, eps );
-   l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), 1 );
+   l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), l );
    return l;
 }
 
