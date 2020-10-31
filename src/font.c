@@ -634,6 +634,7 @@ static int gl_printRawBase( const glFont *ft_font,
  *    @param x X position to put text at.
  *    @param y Y position to put text at.
  *    @param c Colour to use (uses white if NULL)
+ *    @param outlineR Radius in px of outline (-1 for default, 0 for none)
  *    @param text String to display.
  */
 void gl_printRaw( const glFont *ft_font,
@@ -949,6 +950,7 @@ static int gl_printTextRawBase( const glFont *ft_font,
  *    @param bx X position to display text at.
  *    @param by Y position to display text at.
  *    @param c Colour to use (NULL defaults to white).
+ *    @param outlineR Radius in px of outline (-1 for default, 0 for none)
  *    @param text String to display.
  *    @return 0 on success.
  * prints text with line breaks included to a maximum width and height preset

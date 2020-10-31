@@ -266,6 +266,7 @@ ALIASES                = "luamod=<em>Lua module:</em>" \
                          "luareturn=<em>Lua return parameter:</em> " \
                          "luatreturn=<em>Lua return parameter:</em> " \
                          "luasee=<em>See also:</em> " \
+                         "TODO=@todo " \
                          "usage=<em>Lua usage parameter:</em>"
 
 # Set the OPTIMIZE_OUTPUT_FOR_C tag to YES if your project consists of C sources
