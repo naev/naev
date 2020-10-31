@@ -60,6 +60,7 @@ void map_renderSystems( double bx, double by, double x, double y,
       double w, double h, double r, int editor );
 void map_renderNames( double bx, double by, double x, double y,
       double w, double h, int editor );
+void map_updateFactionPresence( const unsigned int wid, const char *name, const StarSystem *sys, int omniscient );
 int map_load (void);
 
 #endif /* MAP_H */

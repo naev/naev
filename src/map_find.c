@@ -1084,7 +1084,7 @@ void map_inputFind( unsigned int parent, char* str )
 
    /* Text. */
    y = -40;
-   window_addText( wid, 20, y, w, gl_defFont.h+4, 0,
+   window_addText( wid, 20, y, w - 50, gl_defFont.h+4, 0,
          "txtDescription", &gl_defFont, NULL,
          _("Enter keyword to search for:") );
    y -= 30;

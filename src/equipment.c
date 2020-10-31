@@ -85,7 +85,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt );
 static void equipment_renderSlots( double bx, double by, double bw, double bh, void *data );
 static void equipment_renderMisc( double bx, double by, double bw, double bh, void *data );
-static void equipment_renderOverlayColumn( double x, double y, double w, double h,
+static void equipment_renderOverlayColumn( double x, double y, double h,
       int n, PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt );
 static void equipment_renderOverlaySlots( double bx, double by, double bw, double bh,
       void *data );
@@ -304,16 +304,16 @@ void equipment_open( unsigned int wid )
    x = 20 + sw + 20 + 180 + 20 + 30;
    y = -190;
    window_addText( wid, x, y,
-         100, h+y, 0, "txtSDesc", &gl_smallFont, NULL, buf );
+         100, y-20+h-bh, 0, "txtSDesc", &gl_smallFont, NULL, buf );
    x += 150;
    window_addText( wid, x, y,
-         w - x - 20, h+y, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
+         w - x - 20, y-20+h-bh, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
 
    /* Generate lists. */
    window_addText( wid, 30, -20,
-         130, 500, 0, "txtShipTitle", &gl_defFont, NULL, _("Available Ships") );
+         ow, gl_defFont.h, 0, "txtShipTitle", &gl_defFont, NULL, _("Available Ships") );
    window_addText( wid, 30, -40-sh-20,
-         130, 500, 0, "txtOutfitTitle", &gl_defFont, NULL, _("Available Outfits") );
+         ow, gl_defFont.h, 0, "txtOutfitTitle", &gl_defFont, NULL, _("Available Outfits") );
    equipment_genLists( wid );
 
    /* Separator. */
@@ -613,7 +613,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
  *    @param mover Slot for which mouseover is active
  *    @param wgt Widget rendering.
  */
-static void equipment_renderOverlayColumn( double x, double y, double w, double h,
+static void equipment_renderOverlayColumn( double x, double y, double h,
       int n, PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt )
 {
    int i;
@@ -730,17 +730,17 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    /* Render weapon outfits. */
    x  = bx + (tw-w)/2;
    y  = by + bh - (h+20) + (h+20-h)/2;
-   equipment_renderOverlayColumn( x, y, w, h,
+   equipment_renderOverlayColumn( x, y, h,
          p->outfit_nweapon, p->outfit_weapon, mover, wgt );
    mover    -= p->outfit_nweapon;
    x += tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
-   equipment_renderOverlayColumn( x, y, w, h,
+   equipment_renderOverlayColumn( x, y, h,
          p->outfit_nutility, p->outfit_utility, mover, wgt );
    mover    -= p->outfit_nutility;
    x += tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
-   equipment_renderOverlayColumn( x, y, w, h,
+   equipment_renderOverlayColumn( x, y, h,
          p->outfit_nstructure, p->outfit_structure, mover, wgt );
 
    /* Mouse must be over something. */

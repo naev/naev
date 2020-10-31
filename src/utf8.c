@@ -12,6 +12,7 @@
   valid.
   A UTF-8 validation routine is included.
 */
+#define _XOPEN_SOURCE
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -22,6 +23,8 @@
 
 #if HAS_WIN32
 #include <malloc.h>
+#else /* HAS_WIN32 */
+#include <alloca.h> /* Not available in windows, necessary for linux. */
 #endif /* HAS_WIN32 */
 #include <assert.h>
 
@@ -450,8 +453,6 @@ size_t u8_strlen(const char *s)
     }
     return count;
 }
-
-int wcwidth(wchar_t c);
 
 size_t u8_strwidth(const char *s)
 {

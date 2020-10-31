@@ -222,7 +222,7 @@ static void info_openMain( unsigned int wid )
          player.p->name,
          player.p->fuel, pilot_getJumps(player.p) );
    window_addText( wid, 180, 20,
-         200, h-80,
+         w-80-200-40+20-180, h-80,
          0, "txtPilot", &gl_smallFont, NULL, str );
    free(nt);
 
@@ -412,7 +412,7 @@ static void info_openShip( unsigned int wid )
          "\n"
          "\anStats:\a0\n")
          );
-   window_addText( wid, 180, -60, w-300., h-60, 0, "txtDDesc", &gl_smallFont,
+   window_addText( wid, 180, -60, w-20-180-180., h-60, 0, "txtDDesc", &gl_smallFont,
          NULL, NULL );
 
    /* Custom widget. */
