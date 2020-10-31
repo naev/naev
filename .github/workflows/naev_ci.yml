@@ -65,7 +65,7 @@ jobs:
             config: windows.ini
             pkg-config-path: "[]"
 
-            - os: windows-2019
+          - os: windows-2019
             shell: msys2 {0}
             config: windows.ini
             pkg-config-path: "[]"
