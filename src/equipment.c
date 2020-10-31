@@ -542,7 +542,6 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    double percent;
    double x, y;
    double w, h;
-   const glColour *lc, *dc;
 
    /* Must have selected ship. */
    if (eq_wgt.selected == NULL)

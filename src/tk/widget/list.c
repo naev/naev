@@ -129,20 +129,19 @@ static void lst_render( Widget* lst, double bx, double by )
       toolkit_drawScrollbar( x + lst->w - 12. + 1, y -1, 12., lst->h + 2, scroll_pos );
    }
 
-   /* draw selected */
-   toolkit_drawRect( x, y - 3. + lst->h -
-         (1 + lst->dat.lst.selected - lst->dat.lst.pos)*(gl_smallFont.h+6.),
-         w-1, gl_smallFont.h + 6., &cHilight, NULL );
-
    /* draw content */
    tx = x + 2.;
-   ty = y + lst->h - 6. - gl_smallFont.h;
-   miny = ty - lst->h + 6 + gl_smallFont.h;
+   ty = y + lst->h - 4. - gl_smallFont.h;
+   miny = ty - lst->h + 4 + gl_smallFont.h;
    w -= 4;
    for (i=lst->dat.lst.pos; i<lst->dat.lst.noptions; i++) {
+      /* (green) selected item background */
+      if(i == lst->dat.lst.selected){
+         toolkit_drawRect( x, ty - 6, w+2, gl_smallFont.h + 10., &cHilight, NULL );
+      }
       gl_printMaxRaw( &gl_smallFont, (int)w,
-            tx, ty, &cFontWhite, -1., lst->dat.lst.options[i] );
-      ty -= 6 + gl_smallFont.h;
+            tx + 4, ty - 2, &cFontWhite, -1., lst->dat.lst.options[i] );
+      ty -= 12 + gl_smallFont.h;
 
       /* Check if out of bounds. */
       if (ty < miny)

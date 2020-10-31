@@ -608,9 +608,9 @@ int window_tabWinGetBarWidth( const unsigned int wid, const char* tab )
    if (wgt == NULL)
       return 0;
 
-   w = 18;
+   w = (TAB_HMARGIN + TAB_HPADDING);
    for (i=0; i<wgt->dat.tab.ntabs; i++)
-      w += 18 + wgt->dat.tab.namelen[i];
+      w += (TAB_HMARGIN + TAB_HPADDING) + wgt->dat.tab.namelen[i] + (TAB_HPADDING);
 
    return w;
 }
