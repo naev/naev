@@ -1279,7 +1279,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
    /* Draw name. */
    if (overlay && pilot_isFlag(p, PILOT_HILIGHT))
-      gl_printRaw( &gl_smallFont, x+2*sx+5., y-gl_smallFont.h/2., &col, -1., p->name );
+      gl_printMarkerRaw( &gl_defFont, x+2*sx+5., y-gl_smallFont.h/2., &col, p->name );
 }
 
 
@@ -1387,7 +1387,7 @@ void gui_renderPlayer( double res, int overlay )
    gl_renderCross( x, y, r, &cRadar_player );
 
    if (overlay)
-      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &textCol, -1., _("You") );
+      gl_printMarkerRaw( &gl_defFont, x+r+5., y-gl_smallFont.h/2., &textCol, _("You") );
 }
 
 
@@ -1574,9 +1574,9 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
     * text. Should ultimately be replaced with some other method of
     * rendering the text, since the problem could be caused by as little
     * as a font change, but using this fix for now. */
-   col.a = MIN( col.a, 0.99 );
+   // col.a = MIN( col.a, 0.99 );
    if (overlay)
-      gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, -1., planet->name );
+      gl_printMarkerRaw( &gl_defFont, cx+vr+5., cy, &col, planet->name );
 }
 
 
@@ -1673,9 +1673,9 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
     * text. Should ultimately be replaced with some other method of
     * rendering the text, since the problem could be caused by as little
     * as a font change, but using this fix for now. */
-   col.a = MIN( col.a, 0.99 );
+   // col.a = MIN( col.a, 0.99 );
    if (overlay)
-      gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, -1., sys_isKnown(jp->target) ? jp->target->name : _("Unknown") );
+      gl_printMarkerRaw( &gl_defFont, cx+vr+5., cy, &col, sys_isKnown(jp->target) ? jp->target->name : _("Unknown") );
 }
 
 
