@@ -20,10 +20,11 @@
 #include <stdint.h>
 #include <wchar.h>
 #include <wctype.h>
-#include <alloca.h>
 
 #if HAS_WIN32
 #include <malloc.h>
+#else /* HAS_WIN32 */
+#include <alloca.h> /* Not available in windows, necessary for linux. */
 #endif /* HAS_WIN32 */
 #include <assert.h>
 
