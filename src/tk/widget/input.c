@@ -161,8 +161,8 @@ static void inp_render( Widget* inp, double bx, double by )
    toolkit_drawOutline( x, y, inp->w, inp->h, 0.,
          toolkit_colLight, NULL );
    /* outer outline */
-   toolkit_drawOutline( x, y, inp->w, inp->h, 1.,
-         toolkit_colDark, NULL );
+   toolkit_drawOutline( x-2, y-2, inp->w + 4, inp->h + 4, 1.,
+         &cGrey20, NULL );
 }
 
 

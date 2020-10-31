@@ -20,6 +20,9 @@
 
 
 #define TAB_HEIGHT   30
+#define TAB_HMARGIN 3
+#define TAB_HPADDING 15
+
 
 
 /*
@@ -246,7 +249,7 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
       if (x < p)
          break;
 
-      p += 30 + tab->dat.tab.namelen[i];
+      p += (TAB_HPADDING * 2) + tab->dat.tab.namelen[i];
 
       /* Too far right, try next tab. */
       if (x >= p)
@@ -384,40 +387,36 @@ static void tab_render( Widget* tab, double bx, double by )
    if (tab->dat.tab.tabpos == 1)
       y += tab->h-TAB_HEIGHT;
 
+   /* Draw tab bar backgrund */
+   toolkit_drawRect( x, y, wdw->w, TAB_HEIGHT+2, &cGrey10, NULL);
+
    /* Iterate through tabs */
    for (i=0; i<tab->dat.tab.ntabs; i++) {
-      if (i!=tab->dat.tab.active) {
-         /* Draw border rect */
-         toolkit_drawOutline( x+1, y+1, tab->dat.tab.namelen[i] + 30,
-               TAB_HEIGHT-2, 1., tab_inactiveB, NULL );
-         /* Draw contents rect */
-         toolkit_drawRect( x, y, tab->dat.tab.namelen[i] + 30,
-               TAB_HEIGHT, tab_inactive, NULL );
-      }
-      else {
-         if (i==0)
-            toolkit_drawRect( x-1, y+0,
-                  1, TAB_HEIGHT+1, tab_active, NULL );
-         else if (i==tab->dat.tab.ntabs-1)
-            toolkit_drawRect( x+tab->dat.tab.namelen[i]+29, y+0,
-                  1, TAB_HEIGHT+1, tab_active, NULL ); 
-         toolkit_drawRect( x, y, tab->dat.tab.namelen[i] + 30,
-               TAB_HEIGHT, tab_active, NULL );
-      }
+
+      /* Draw border rect - first tab doesn't have left border */
+      /* toolkit_drawRect( 
+          (i == 0 ? x : x-2), 
+          y, 
+          (i == 0 ? 2 : 4 ) + tab->dat.tab.namelen[i] + (TAB_HPADDING * 2),
+          TAB_HEIGHT + 2, &cGrey10, NULL ); */
+
+      /* Draw contents rect */
+      toolkit_drawRect( 
+          x, y, tab->dat.tab.namelen[i] + (TAB_HPADDING * 2),
+          ( i == tab->dat.tab.active ? TAB_HEIGHT  + 2: TAB_HEIGHT ), 
+          ( i == tab->dat.tab.active ? tab_active : tab_inactive), 
+          NULL );
+      
       /* Draw text. */
-      gl_printRaw( tab->dat.tab.font, x + 15,
+      gl_printRaw( tab->dat.tab.font, x + TAB_HPADDING,
             y + (TAB_HEIGHT-tab->dat.tab.font->h)/2, &cFontWhite, -1.,
             tab->dat.tab.tabnames[i] );
 
       /* Go to next line. */
-      x += 30 + tab->dat.tab.namelen[i];
-      dx += 30 + tab->dat.tab.namelen[i];
+      x += (TAB_HPADDING * 2) + TAB_HMARGIN + tab->dat.tab.namelen[i];
+      dx += (TAB_HPADDING * 2) + TAB_HMARGIN + tab->dat.tab.namelen[i];
    }
 
-   if(dx < wdw->w){
-      /* Draw tab bar backgrund */
-      toolkit_drawRect( x, by+tab->y + 1, tab->w - dx, TAB_HEIGHT+2, &cGrey10, NULL);
-   }
 
 }
 
@@ -609,9 +608,9 @@ int window_tabWinGetBarWidth( const unsigned int wid, const char* tab )
    if (wgt == NULL)
       return 0;
 
-   w = 20;
+   w = 18;
    for (i=0; i<wgt->dat.tab.ntabs; i++)
-      w += 10 + wgt->dat.tab.namelen[i];
+      w += 18 + wgt->dat.tab.namelen[i];
 
    return w;
 }
