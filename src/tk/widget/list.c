@@ -14,6 +14,9 @@
 #include <stdlib.h>
 #include "nstring.h"
 
+#define CELLPADV 12
+#define CELLPADV_D 12.
+
 
 static void lst_render( Widget* lst, double bx, double by );
 static int lst_key( Widget* lst, SDL_Keycode key, SDL_Keymod mod );
@@ -75,12 +78,12 @@ void window_addList( const unsigned int wid,
 
    /* position/size */
    wgt->w = (double) w;
-   wgt->h = (double) h - ((h % (gl_smallFont.h+12)) - 12);
+   wgt->h = (double) h - ((h % (gl_smallFont.h + CELLPADV)) - CELLPADV);
    toolkit_setPos( wdw, wgt, x, y );
 
    /* check if needs scrollbar. */
-   if (2 + (nitems * (gl_smallFont.h + 12)) > (int)wgt->h)
-      wgt->dat.lst.height = (12 + gl_smallFont.h) * nitems + 6;
+   if (2 + (nitems * (gl_smallFont.h + CELLPADV)) > (int)wgt->h)
+      wgt->dat.lst.height = (CELLPADV + gl_smallFont.h) * nitems + 6;
    else
       wgt->dat.lst.height = 0;
 
@@ -131,8 +134,8 @@ static void lst_render( Widget* lst, double bx, double by )
 
    /* draw (green) selected item background */
    toolkit_drawRect( x, y - 1. + lst->h -
-         (1 + lst->dat.lst.selected - lst->dat.lst.pos)*(gl_smallFont.h+12.),
-         w-1, gl_smallFont.h + 12., &cHilight, NULL );
+         (1 + lst->dat.lst.selected - lst->dat.lst.pos)*(gl_smallFont.h + CELLPADV_D),
+         w-1, gl_smallFont.h + CELLPADV_D, &cHilight, NULL );
 
    /* draw content */
    tx = x + 2.;
@@ -142,7 +145,7 @@ static void lst_render( Widget* lst, double bx, double by )
    for (i=lst->dat.lst.pos; i<lst->dat.lst.noptions; i++) {
       gl_printMaxRaw( &gl_smallFont, (int)w,
             tx + 4, ty - 2, &cFontWhite, -1., lst->dat.lst.options[i] );
-      ty -= 12 + gl_smallFont.h;
+      ty -= CELLPADV + gl_smallFont.h;
 
       /* Check if out of bounds. */
       if (ty < miny)
@@ -169,6 +172,18 @@ static int lst_key( Widget* lst, SDL_Keycode key, SDL_Keymod mod )
          return 1;
       case SDLK_DOWN:
          lst_scroll( lst, -1 );
+         return 1;
+      case SDLK_HOME:
+         lst_scroll( lst, +(lst->dat.lst.noptions) );
+         return 1;
+      case SDLK_END:
+         lst_scroll( lst, -(lst->dat.lst.noptions) );
+         return 1;
+      case SDLK_PAGEUP:
+         lst_scroll( lst, +8);
+         return 1;
+      case SDLK_PAGEDOWN:
+         lst_scroll( lst, -8);
          return 1;
 
       default:
@@ -210,9 +225,9 @@ static int lst_mclick( Widget* lst, int button, int x, int y )
 static int lst_mwheel( Widget* lst, SDL_MouseWheelEvent event )
 {
    if (event.y > 0)
-      lst_scroll( lst, +5 );
+      lst_scroll( lst, +1 );
    else
-      lst_scroll( lst, -5 );
+      lst_scroll( lst, -1 );
 
    return 1;
 }
@@ -238,7 +253,7 @@ static int lst_focus( Widget* lst, double bx, double by )
       w -= 10.;
 
    if (bx < w) {
-      i = lst->dat.lst.pos + (lst->h - by - 4) / (gl_smallFont.h + 12.);
+      i = lst->dat.lst.pos + (lst->h - by - 4) / (gl_smallFont.h + CELLPADV_D);
       if (i < lst->dat.lst.noptions) { /* shouldn't be out of boundaries */
          lst->dat.lst.selected = i;
          lst_scroll( lst, 0 ); /* checks boundaries and triggers callback */
@@ -246,7 +261,7 @@ static int lst_focus( Widget* lst, double bx, double by )
    }
    else {
       /* Get bar position (center). */
-      scroll_pos  = (double)(lst->dat.lst.pos * (12 + gl_smallFont.h));
+      scroll_pos  = (double)(lst->dat.lst.pos * (CELLPADV + gl_smallFont.h));
       scroll_pos /= (double)lst->dat.lst.height - lst->h;
       y = (lst->h - 30.) * (1.-scroll_pos) + 15.;
 
@@ -286,14 +301,14 @@ static int lst_mmove( Widget* lst, int x, int y, int rx, int ry )
       /* Make sure Y inbounds. */
       y = CLAMP( 15., lst->h-15., lst->h - y );
 
-      h = lst->h / (12 + gl_smallFont.h) - 1;
+      h = lst->h / (CELLPADV + gl_smallFont.h) - 1;
 
       /* Save previous position. */
       psel = lst->dat.lst.pos;
 
       /* Find absolute position. */
       p  = (y - 15. ) / (lst->h - 30.) * (lst->dat.lst.height - lst->h);
-      p /= (12 + gl_smallFont.h);
+      p /= (CELLPADV + gl_smallFont.h);
       lst->dat.lst.pos = CLAMP( 0, lst->dat.lst.noptions, (int)ceil(p) );
 
       /* Does boundary checks. */
@@ -356,8 +371,8 @@ static void lst_scroll( Widget* lst, int direction )
       if (lst->dat.lst.pos < 0)
          lst->dat.lst.pos = 0;
    }
-   else if (12 + (pos+1) * (gl_smallFont.h + 12) > lst->h)
-      lst->dat.lst.pos += (12 + (pos+1) * (gl_smallFont.h + 12) - lst->h) / (gl_smallFont.h + 12);
+   else if (CELLPADV + (pos+1) * (gl_smallFont.h + CELLPADV) > lst->h)
+      lst->dat.lst.pos += (CELLPADV + (pos+1) * (gl_smallFont.h + CELLPADV) - lst->h) / (gl_smallFont.h + CELLPADV);
 
    if (lst->dat.lst.fptr)
       lst->dat.lst.fptr( lst->wdw, lst->name );
