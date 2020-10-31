@@ -85,7 +85,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt );
 static void equipment_renderSlots( double bx, double by, double bw, double bh, void *data );
 static void equipment_renderMisc( double bx, double by, double bw, double bh, void *data );
-static void equipment_renderOverlayColumn( double x, double y, double w, double h,
+static void equipment_renderOverlayColumn( double x, double y, double h,
       int n, PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt );
 static void equipment_renderOverlaySlots( double bx, double by, double bw, double bh,
       void *data );
@@ -613,13 +613,13 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
  *    @param mover Slot for which mouseover is active
  *    @param wgt Widget rendering.
  */
-static void equipment_renderOverlayColumn( double x, double y, double w, double h,
+static void equipment_renderOverlayColumn( double x, double y, double h,
       int n, PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt )
 {
    int i;
    const glColour *c;
    glColour tc;
-   int text_width, xoff, yoff, top;
+   int text_width, yoff, top;
    const char *display;
    int subtitle;
 
@@ -666,7 +666,6 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
 
          if (display != NULL) {
             text_width = gl_printWidthRaw( &gl_smallFont, display );
-            xoff = -(text_width - w)/2;
             if (top)
                yoff = h + 2;
             else
@@ -731,17 +730,17 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    /* Render weapon outfits. */
    x  = bx + (tw-w)/2;
    y  = by + bh - (h+20) + (h+20-h)/2;
-   equipment_renderOverlayColumn( x, y, w, h,
+   equipment_renderOverlayColumn( x, y, h,
          p->outfit_nweapon, p->outfit_weapon, mover, wgt );
    mover    -= p->outfit_nweapon;
    x += tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
-   equipment_renderOverlayColumn( x, y, w, h,
+   equipment_renderOverlayColumn( x, y, h,
          p->outfit_nutility, p->outfit_utility, mover, wgt );
    mover    -= p->outfit_nutility;
    x += tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
-   equipment_renderOverlayColumn( x, y, w, h,
+   equipment_renderOverlayColumn( x, y, h,
          p->outfit_nstructure, p->outfit_structure, mover, wgt );
 
    /* Mouse must be over something. */
