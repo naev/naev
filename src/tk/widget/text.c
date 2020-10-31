@@ -82,11 +82,11 @@ static void txt_render( Widget* txt, double bx, double by )
       gl_printMidRaw( txt->dat.txt.font, txt->w,
             bx + txt->x,
             by + txt->y + (txt->h - txt->dat.txt.font->h)/2.,
-            &txt->dat.txt.colour, txt->dat.txt.text );
+            &txt->dat.txt.colour, -1., txt->dat.txt.text );
    else
       gl_printTextRaw( txt->dat.txt.font, txt->w, txt->h,
             bx + txt->x, by + txt->y,
-            &txt->dat.txt.colour, txt->dat.txt.text );
+            &txt->dat.txt.colour, -1., txt->dat.txt.text );
 }
 
 

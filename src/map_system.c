@@ -314,7 +314,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
 	 gl_blitScale( p->gfx_space, bx+2, by+(nshow-j-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &cWhite );
        }
        gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-j-0.5)*pitch + offset,
-            (cur_planet_sel == j ? &cFontGreen : &cFontWhite), p->name );
+            (cur_planet_sel == j ? &cFontGreen : &cFontWhite), -1., p->name );
      }
    }
    /* draw the star */
@@ -351,10 +351,10 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       /* no nebula or star images - probably due to nebula */
       txtHeight=gl_printHeightRaw( &gl_smallFont,pitch,_("Obscured by the nebula") );
       gl_printTextRaw( &gl_smallFont, pitch, txtHeight, (bx+2),
-            (by + (nshow-0.5)*pitch + offset), &cFontRed, _("Obscured by the nebula") );
+            (by + (nshow-0.5)*pitch + offset), &cFontRed, -1., _("Obscured by the nebula") );
    }
    gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-0.5)*pitch + offset,
-         (cur_planet_sel == 0 ? &cFontGreen : &cFontWhite), sys->name );
+         (cur_planet_sel == 0 ? &cFontGreen : &cFontWhite), -1., sys->name );
    if ( cur_planet_sel == 0 && nBgImgs > 0 ) {
       /* make use of space to draw a nice nebula */
       double imgw,imgh;
@@ -474,7 +474,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Presence: N/A\n"));
       txtHeight=gl_printHeightRaw(&gl_smallFont,(w - nameWidth-pitch-60)/2,buf);
       gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
-            bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, &cFontWhite, buf );
+            bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, &cFontWhite, -1., buf );
 
       (void)cnt;
 
@@ -502,7 +502,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          }
         nsnprintf( factionBuf, 64, "%s", faction_shortname( p->faction ) );
         gl_printTextRaw( &gl_smallFont, (w - nameWidth-pitch - 60) / 2, 20,
-            bx+pitch+nameWidth + 230, by + h - 31, &cFontWhite, factionBuf );
+            bx+pitch+nameWidth + 230, by + h - 31, &cFontWhite, -1., factionBuf );
 
      }
 
@@ -541,14 +541,14 @@ static void map_system_render( double bx, double by, double w, double h, void *d
         (void)infocnt;
      }
      gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
-         bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, &cFontWhite, buf );
+         bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, &cFontWhite, -1., buf );
    }
 
    /* show the trade/outfit/ship info */
    if ( infobuf[0]!='\0' ) {
       txtHeight=gl_printHeightRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, infobuf );
       gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
-            bx + 10 + pitch + nameWidth, by + 10, &cFontGrey, infobuf );
+            bx + 10 + pitch + nameWidth, by + 10, &cFontGrey, -1., infobuf );
    }
 }
 
@@ -621,9 +621,9 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       }
       nsnprintf( infobuf, PATH_MAX,
                  _("%s\n\n%s\n\n%s\n\n"
-                   "Owned: %d    Slot: %s    Size: %s\n"
-                   "Mass:    %.0f tonnes     Price: %s credits\n"
-                   "License: %s"),
+                   "\anOwned:\a0 %d    \anSlot: \a0%s    \anSize: \a0%s\n"
+                   "\anMass:\a0    %.0f tonnes     \anPrice:\a0 %s \ancredits\a0\n"
+                   "\anLicense:\a0 %s"),
                  (outfit->name),
                  (outfit->description),
                  (outfit->desc_short),
@@ -653,26 +653,26 @@ static void map_system_array_update( unsigned int wid, char* str ) {
          }
       }
       nsnprintf( infobuf, PATH_MAX,
-                 _("Model: %s    "
-                   "Class: %s\n"
+                 _("\anModel:\a0 %s    "
+                   "\anClass:\a0 %s\n"
                    "\n%s\n\n"
-                   "Fabricator: %s    "
-                   "Crew: %d\n"
-                   "CPU: %.0f teraflops    "
-                   "Mass: %.0f tonnes\n"
-                   "Thrust: %.0f kN/tonne    "
-                   "Speed: %.0f m/s\n"
-                   "Turn: %.0f deg/s    "
-                   "Time Dilation: %.0f%%\n"
-                   "Absorption: %.0f%% damage\n"
-                   "Shield: %.0f MJ (%.1f MW)    "
-                   "Armour: %.0f MJ (%.1f MW)\n"
-                   "Energy: %.0f MJ (%.1f MW)\n"
-                   "Cargo Space: %.0f tonnes\n"
-                   "Fuel: %d units  "
-                   "Fuel Use: %d units\n"
-                   "Price: %s credits  "
-                   "License: %s\n"
+                   "\anFabricator:\a0 %s    "
+                   "\anCrew:\a0 %d\n"
+                   "\anCPU:\a0 %.0f teraflops    "
+                   "\anMass:\a0 %.0f tonnes\n"
+                   "\anThrust:\a0 %.0f kN/tonne    "
+                   "\anSpeed:\a0 %.0f m/s\n"
+                   "\anTurn:\a0 %.0f deg/s    "
+                   "\anTime Dilation:\a0 %.0f%%\n"
+                   "\anAbsorption:\a0 %.0f%% damage\n"
+                   "\anShield:\a0 %.0f MJ (%.1f MW)    "
+                   "\anArmour:\a0 %.0f MJ (%.1f MW)\n"
+                   "\anEnergy:\a0 %.0f MJ (%.1f MW)\n"
+                   "\anCargo Space:\a0 %.0f tonnes\n"
+                   "\anFuel:\a0 %d units  "
+                   "\anFuel Use:\a0 %d units\n"
+                   "\anPrice:\a0 %s credits  "
+                   "\anLicense:\a0 %s\n"
                    "%s"),
                  _(ship->name),
                  _(ship_class(ship)),
@@ -718,9 +718,9 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       nsnprintf( infobuf, PATH_MAX,
                  _("%s\n\n"
                    "%s\n\n"
-                   "You have: %d tonnes%s\n"
-                   "Average price seen here: %"PRIu64" ± %.1f Cr./Ton\n"
-                   "Averave price seen everywhere: %"PRIu64" ± %.1f Cr./Ton\n"),
+                   "\anYou have:\a0 %d tonnes%s\n"
+                   "\anAverage price seen here:\a0 %"PRIu64" ± %.1f Cr./Ton\n"
+                   "\anAverave price seen everywhere:\a0 %"PRIu64" ± %.1f Cr./Ton\n"),
                  name,
                  com->description,
                  owned,
