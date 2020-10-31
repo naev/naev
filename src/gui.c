@@ -1112,9 +1112,11 @@ static void gui_renderMessages( double dt )
             if (mesg_stack[m].str[0] == '\t') {
                gl_printRestore( &mesg_stack[m].restore );
                dy = gl_printHeightRaw( NULL, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
+               gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &cBlackHilight );
                gl_printMaxRaw( NULL, gui_mesg_w - 45., x + 30, y + 3, &cFontWhite, -1., &mesg_stack[m].str[1] );
             } else {
                dy = gl_printHeightRaw( NULL, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
+               gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &cBlackHilight );
                gl_printMaxRaw( NULL, gui_mesg_w - 15., x, y + 3, &cFontWhite, -1., mesg_stack[m].str );
             }
             h += dy;
@@ -1134,9 +1136,6 @@ static void gui_renderMessages( double dt )
       /* Inside. */
       c.a = 0.5;
       gl_renderRect( vx + gui_mesg_w-10., vy + hs/2. + (h-hs)*((double)o/(double)(mesg_max-conf.mesg_visible)), 10, hs, &c );
-   }
-   if(h > 0){
-     gl_renderRect( x-6., vy-6., gui_mesg_w-13., h+9., &cBlackHilight );
    }
 }
 
