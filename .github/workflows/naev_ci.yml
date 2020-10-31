@@ -4,29 +4,32 @@ name: CI
 
 env:
   DESTDIR: "${{ github.workspace }}/dist/"
+  MESON: "${{ github.workspace }}/source/meson.sh"
 
 jobs:
   "Package_Source":
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Setup Python
-      uses: actions/setup-python@v2
-
-    - name: Install Meson
-      run: |
-        pip install meson ninja
-
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
       with:
         path: source
         fetch-depth: 0
 
+    - name: Update APT Cache
+      run: |
+        sudo apt-get update
+
+    - name: Install Additional Build Dependencies
+      run: |
+        sudo apt-get install \
+          ninja-build
+
     - name: Meson Build
       run: |
-        meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
-        meson dist -C build --no-tests
+        sh $MESON setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
+        sh $MESON dist -C build --no-tests --include-subprojects
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -42,11 +45,27 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - os: ubuntu-16.04
+            shell: bash
+            config: linux.ini
+            pkg-config-path: "[]"
+
+          - os: ubuntu-18.04
+            shell: bash
+            config: linux.ini
+            pkg-config-path: "[]"
+
           - os: ubuntu-20.04
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
-          - os: windows-latest
+
+          - os: windows-2016
+            shell: msys2 {0}
+            config: windows.ini
+            pkg-config-path: "[]"
+
+            - os: windows-2019
             shell: msys2 {0}
             config: windows.ini
             pkg-config-path: "[]"
@@ -58,20 +77,22 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Install APT Packages
+    - name: Update APT Cache
       if: ${{ runner.os == 'Linux'}}
       run: |
         sudo apt-get update
+
+    - name: Install Additional Build Dependencies
+      if: ${{ runner.os == 'Linux'}}
+      run: |
         sudo apt-get install \
           autopoint \
           binutils-dev \
           build-essential \
           gettext \
           intltool \
-          libfontconfig1-dev \
           libfreetype6-dev \
           libgl1-mesa-dev \
-          libgl1-mesa-dri \
           libiberty-dev \
           libluajit-5.1-dev \
           libopenal-dev \
@@ -79,9 +100,21 @@ jobs:
           libsdl2-dev \
           libsdl2-image-dev \
           libsdl2-mixer-dev \
+          libsuitesparse-dev \
           libvorbis-dev \
-          libxml2-dev \
-          xvfb
+          libxml2-dev
+
+    - name: Install Ninja-Build (xenial-backports)
+      if: ${{ matrix.os == 'ubuntu-16.04' && runner.os == 'Linux'}}
+      run: |
+        sudo apt-get -t xenial-backports install \
+          ninja-build
+
+    - name: Install Ninja-Build
+      if: ${{ matrix.os != 'ubuntu-16.04' && runner.os == 'Linux'}}
+      run: |
+        sudo apt-get install \
+          ninja-build
 
     - name: Install MinGW Packages
       if: ${{ runner.os == 'Windows'}}
@@ -89,16 +122,8 @@ jobs:
       with:
         msystem: MINGW64
         update: true
-        install: git tar mingw-w64-x86_64-clang mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-luajit mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer
-
-    - name: Setup Python
-      if: ${{ runner.os == 'Linux'}}
-      uses: actions/setup-python@v2
-
-    - name: Install Meson
-      if: ${{ runner.os == 'Linux'}}
-      run: |
-        pip install meson ninja
+        path-type: strict
+        install: git tar mingw-w64-x86_64-clang mingw-w64-x8_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-luajit mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-suitesparse
 
     - name: Get Source
       uses: actions/download-artifact@v2
@@ -113,7 +138,7 @@ jobs:
     - name: Meson Setup
       id: setup
       run: |
-        meson setup build source \
+        sh $MESON setup build source \
             --native-file='source/utils/build/${{ matrix.config }}' \
             --buildtype=release \
             --pkg-config-path=${{ matrix.pkg-config-path }} \
@@ -126,46 +151,46 @@ jobs:
       uses: actions/upload-artifact@v2
       if: ${{ success() || steps.setup.outcome == 'failure' }}
       with:
-        name: ${{ runner.os }}-${{ github.sha }}-setup-log
+        name: ${{ matrix.os }}-${{ github.sha }}-setup-log
         path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
         if-no-files-found: ignore
 
     - name: Meson Compile
       id: compile
       run: |
-        meson compile -C build
+        sh $MESON compile -C build
 
     - name: Upload Compile Log
       uses: actions/upload-artifact@v2
       if: ${{ success() || steps.compile.outcome == 'failure' }}
       with:
-        name: ${{ runner.os }}-${{ github.sha }}-compile-log
+        name: ${{ matrix.os }}-${{ github.sha }}-compile-log
         path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
         if-no-files-found: ignore
 
-    - name: Meson Test
-      id: tests
-      run: |
-        ${{ matrix.test-env }} meson test -C build --print-errorlogs
-
-    - name: Upload test log
-      uses: actions/upload-artifact@v2
-      if: ${{ success() || steps.tests.outcome == 'failure' }}
-      with:
-        name: ${{ runner.os }}-${{ github.sha }}-test-log
-        path: ${{ github.workspace }}/build/meson-logs/testlog.txt
-        if-no-files-found: ignore
+#    - name: Meson Test
+#      id: tests
+#      run: |
+#        ${{ matrix.test-env }} sh $MESON test -C build --print-errorlogs
+#
+#    - name: Upload test log
+#      uses: actions/upload-artifact@v2
+#      if: ${{ success() || steps.tests.outcome == 'failure' }}
+#      with:
+#        name: ${{ matrix.os }}-${{ github.sha }}-test-log
+#        path: ${{ github.workspace }}/build/meson-logs/testlog.txt
+#        if-no-files-found: ignore
 
     - name: Package
       run: |
-        meson install -C build
-      if: ${{ success() || steps.tests.outcome == 'failure' }}
+        sh $MESON install -C build
+#      if: ${{ success() || steps.tests.outcome == 'failure' }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
-      if: ${{ success() || steps.tests.outcome == 'failure' }}
+#      if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
-        name: naev-${{ runner.os }}-${{ github.sha }}
+        name: naev-${{ matrix.os }}-${{ github.sha }}
         path: ${{ env.DESTDIR }}/*
         if-no-files-found: error
 
@@ -183,14 +208,8 @@ jobs:
         sudo apt-get install \
           lua-ldoc \
           graphviz \
-          doxygen
-
-    - name: Setup Python
-      uses: actions/setup-python@v2
-
-    - name: Install Meson
-      run: |
-        pip install meson ninja
+          doxygen \
+          ninja-build
 
     - name: Get Source
       uses: actions/download-artifact@v2
@@ -204,9 +223,9 @@ jobs:
 
     - name: Meson Build
       run: |
-        meson setup build source \
+        sh $MESON setup build source \
             -Dexecutable=disabled
-        meson install -C build
+        sh $MESON install -C build
 
     - name: Install SSH Key
       uses: shimataro/ssh-key-action@v2.0.3
