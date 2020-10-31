@@ -907,7 +907,7 @@ static int gl_printTextRawBase( const glFont *ft_font,
    /* Clears restoration. */
    gl_printRestoreClear();
 
-   ch = '\0';
+   ch = text[0]; /* In case of a 0-width first line (ret==p) below, we just care if text is empty or not. */
    i = 0;
    s = 0;
    p = 0; /* where we last drew up to */
