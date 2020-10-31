@@ -304,8 +304,8 @@ void map_open (void)
     * [+] [-]  Nebula, Interference
     */
    /* Zoom buttons */
-   window_addButton( wid, -60, 40 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomIn", "+", map_buttonZoom );
-   window_addButton( wid, -20, 40 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomOut", "-", map_buttonZoom );
+   window_addButtonKey( wid, -60, 40 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomIn", "+", map_buttonZoom, SDLK_EQUALS );
+   window_addButtonKey( wid, -20, 40 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomOut", "-", map_buttonZoom, SDLK_MINUS );
    /* Situation text */
    window_addText( wid, 20, 10, w - 120 - 4*BUTTON_WIDTH, 30, 0,
                    "txtSystemStatus", &gl_smallFont, NULL, NULL );
