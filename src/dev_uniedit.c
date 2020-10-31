@@ -938,7 +938,6 @@ void uniedit_selectText (void)
    int i, l;
    char buf[1024];
    StarSystem *sys;
-   int hasPresence;
 
    l = 0;
    for (i=0; i<uniedit_nsys; i++) {
@@ -953,26 +952,7 @@ void uniedit_selectText (void)
       /* Presence text. */
       if (uniedit_nsys == 1) {
          sys         = uniedit_sys[0];
-         buf[0]      = '\0';
-         hasPresence = 0;
-         l           = 0;
-
-         for (i=0; i < sys->npresence ; i++) {
-
-            /* Must have presence. */
-            if (sys->presence[i].value <= 0)
-               continue;
-
-            hasPresence = 1;
-            /* Use map grey instead of default neutral colour */
-            l += nsnprintf( &buf[l], sizeof(buf)-l, "%s\a0%s: %.0f",
-                  (l==0)?"":"\n", faction_name(sys->presence[i].faction),
-                  sys->presence[i].value);
-         }
-         if (hasPresence == 0)
-            nsnprintf( buf, sizeof(buf), _("None") );
-
-         window_modifyText( uniedit_wid, "txtPresence", buf );
+         map_updateFactionPresence( uniedit_wid, "txtPresence", sys, 1 );
       }
       else
          window_modifyText( uniedit_wid, "txtPresence", _("Multiple selected") );

@@ -656,7 +656,6 @@ void mapedit_selectText (void)
    int i, l;
    char buf[1024];
    StarSystem *sys;
-   int hasPresence;
 
    /* Built list of all selected systems names */
    l = 0;
@@ -680,27 +679,7 @@ void mapedit_selectText (void)
       /* Compute and display presence text. */
       if (mapedit_iLastClickedSystem != 0) {
          sys = system_getIndex( mapedit_iLastClickedSystem );
-         buf[0]      = '\0';
-         hasPresence = 0;
-         l           = 0;
-
-         for (i=sys->npresence-1; i >= 0 ; i--) {
-
-            /* Must have presence. */
-            if (sys->presence[i].value <= 0)
-               continue;
-
-            hasPresence = 1;
-            /* Use map grey instead of default neutral colour */
-            l += nsnprintf( &buf[l], sizeof(buf)-l, "%s\e0%s: %.0f",
-                  (l==0)?"":"\n", faction_name(sys->presence[i].faction),
-                  sys->presence[i].value);
-         }
-         if (hasPresence == 0) {
-            nsnprintf( buf, sizeof(buf), "None" );
-         }
-
-         window_modifyText( mapedit_wid, "txtPresence", buf );
+         map_updateFactionPresence( mapedit_wid, "txtPresence", sys, 1 );
          buf[0]      = '\0';
          nsnprintf( &buf[0], sizeof(buf), "Presence (%s)", sys->name );
          window_modifyText( mapedit_wid, "txtSPresence", buf );
