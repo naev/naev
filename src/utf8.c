@@ -12,6 +12,11 @@
   valid.
   A UTF-8 validation routine is included.
 */
+#include "utf8.h"
+
+#include "ncompat.h"
+#include "nstring.h"
+
 #define _XOPEN_SOURCE
 #include <stdlib.h>
 #include <stdio.h>
@@ -27,11 +32,6 @@
 #include <alloca.h> /* Not available in windows, necessary for linux. */
 #endif /* HAS_WIN32 */
 #include <assert.h>
-
-#include "utf8.h"
-
-#include "ncompat.h"
-#include "nstring.h"
 
 #if HAS_WIN32
 /*
