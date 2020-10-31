@@ -93,7 +93,7 @@ void commodity_exchange_open( unsigned int wid )
    window_addText( wid, -20, -190, LAND_BUTTON_WIDTH/2 + 40, 100, 0,
          "txtDInfo", &gl_smallFont, NULL, NULL );
    window_addText( wid, -40, -300, LAND_BUTTON_WIDTH-20 + 80,
-         h-140-LAND_BUTTON_HEIGHT, 0,
+         -300 - (46 + 2*LAND_BUTTON_HEIGHT) + h - (gl_smallFont.h + 6), 0,
          "txtDesc", &gl_smallFont, NULL, NULL );
 
    /* goods list */

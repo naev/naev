@@ -183,9 +183,9 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
 
    /* the descriptive text */
    window_addText( wid, 20 + iw + 20, -60,
-         280, 160, 0, "txtOutfitName", &gl_defFont, NULL, NULL );
+         w - (20 + iw + 20) - 200 - 20, 160, 0, "txtOutfitName", &gl_defFont, NULL, NULL );
    window_addText( wid, 20 + iw + 20, -60 - gl_defFont.h - 20,
-         280, 320, 0, "txtDescShort", &gl_smallFont, NULL, NULL );
+         w - (20 + iw + 20) - 200 - 20, 320, 0, "txtDescShort", &gl_smallFont, NULL, NULL );
 
    window_addText( wid, 20 + iw + 20, -60-128-10-32,
          60, 160, 0, "txtSDesc", &gl_smallFont, NULL,
@@ -199,10 +199,10 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
          "\anMoney:\a0\n"
          "\anLicense:\a0\n") );
    window_addText( wid, 20 + iw + 20 + 60, -60-128-10-32,
-         250, 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
+         w - (20 + iw + 20 + 60), 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
    window_addText( wid, 20 + iw + 20, -60-128-10-160-32,
-         w-(iw+80), 180, 0, "txtDescription",
-         &gl_smallFont, NULL, NULL );
+         w-(iw+80), MAX(180, h - 500), /* TODO: Size exactly and resize instead of moving? */
+	 0, "txtDescription", &gl_smallFont, NULL, NULL );
 
    /* Create the image array. */
    outfits_genList( wid );
