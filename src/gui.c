@@ -1364,7 +1364,7 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
 void gui_renderPlayer( double res, int overlay )
 {
    double x, y, r;
-   glColour textCol = { cRadar_player.r, cRadar_player.g, cRadar_player.b, 0.99 };
+   // glColour textCol = { cRadar_player.r, cRadar_player.g, cRadar_player.b, 0.99 };
    /* XXX: textCol is a hack to prevent the text from overly obscuring
     * overlay display of other things. Effectively disables outlines for
     * the text. Should ultimately be replaced with some other method of
@@ -1386,7 +1386,7 @@ void gui_renderPlayer( double res, int overlay )
    gl_renderCross( x, y, r, &cRadar_player );
 
    if (overlay)
-      gl_printMarkerRaw( &gl_defFont, x+r+5., y-gl_smallFont.h/2., &textCol, _("You") );
+      gl_printMarkerRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &cRadar_player, _("You") );
 }
 
 

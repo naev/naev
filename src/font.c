@@ -633,7 +633,7 @@ void gl_printMarkerRaw( const glFont *ft_font,
       const double x, const double y,
       const glColour* c, const char *text)
 {
-   gl_printOutline( ft_font, 0, 0, x, y, c, 2, text, gl_printRawBase);
+   gl_printOutline( ft_font, 0, 0, x, y, c, 1, text, gl_printRawBase);
    gl_printRawBase( ft_font, 0, 0, x, y, c, text, 0 );
 }
 
