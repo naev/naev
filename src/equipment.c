@@ -606,7 +606,6 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
  *
  *    @param x X position to render at.
  *    @param y Y position to render at.
- *    @param w Width.
  *    @param h Height.
  *    @param n Number of elements.
  *    @param lst List of elements.
@@ -1293,7 +1292,7 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
    if (dps > 0.)
       l += nsnprintf( &buf[l], (max_len-l),
             _("%s%.2f DPS [%.2f EPS]"), (l!=0)?"\n":"", dps, eps );
-   l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), 1 );
+   l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), l );
    return l;
 }
 

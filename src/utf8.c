@@ -12,12 +12,20 @@
   valid.
   A UTF-8 validation routine is included.
 */
-#define _XOPEN_SOURCE
-#include <stdlib.h>
+
+/* TODO get rid of this. It seems like meson build system needs _XOPEN_SOURCE,
+ * while it is implicitly defined with autotools. */
+#ifndef _XOPEN_SOURCE
+#  define _XOPEN_SOURCE       700
+#endif /* _XOPEN_SOURCE */
+
+#include "utf8.h"
+
+#include "ncompat.h"
+#include "nstring.h"
+
 #include <stdio.h>
 #include <string.h>
-#include <stdarg.h>
-#include <stdint.h>
 #include <wchar.h>
 #include <wctype.h>
 
@@ -27,11 +35,6 @@
 #include <alloca.h> /* Not available in windows, necessary for linux. */
 #endif /* HAS_WIN32 */
 #include <assert.h>
-
-#include "utf8.h"
-
-#include "ncompat.h"
-#include "nstring.h"
 
 #if HAS_WIN32
 /*

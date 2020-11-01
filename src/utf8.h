@@ -1,6 +1,10 @@
 #ifndef UTF8_H
 #define UTF8_H
 
+#include <stdlib.h>
+#include <stdint.h>
+#include <stdarg.h>
+
 extern int locale_is_utf8;
 
 /* is c the start of a utf8 sequence? */
