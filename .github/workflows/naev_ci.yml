@@ -195,6 +195,104 @@ jobs:
         path: ${{ github.workspace }}/*.tar
         if-no-files-found: error
 
+  "Compile_AppImage":
+    needs: "Package_Source"
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-16.04
+            shell: bash
+            config: linux.ini
+            pkg-config-path: "[]"
+
+          - os: ubuntu-18.04
+            shell: bash
+            config: linux.ini
+            pkg-config-path: "[]"
+
+          - os: ubuntu-20.04
+            shell: bash
+            config: linux.ini
+            pkg-config-path: "[]"
+
+    defaults:
+      run:
+        shell: ${{ matrix.shell }}
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Update APT Cache
+      if: ${{ runner.os == 'Linux'}}
+      run: |
+        sudo apt-get update
+
+    - name: Install Additional Build Dependencies
+      if: ${{ runner.os == 'Linux'}}
+      run: |
+        sudo apt-get install \
+          autopoint \
+          binutils-dev \
+          build-essential \
+          gettext \
+          intltool \
+          libfreetype6-dev \
+          libgl1-mesa-dev \
+          libiberty-dev \
+          libluajit-5.1-dev \
+          libopenal-dev \
+          libpng-dev \
+          libsdl2-dev \
+          libsdl2-image-dev \
+          libsdl2-mixer-dev \
+          libsuitesparse-dev \
+          libvorbis-dev \
+          libxml2-dev
+
+    - name: Install Ninja-Build (xenial-backports)
+      if: ${{ matrix.os == 'ubuntu-16.04' && runner.os == 'Linux'}}
+      run: |
+        sudo apt-get -t xenial-backports install \
+          ninja-build
+
+    - name: Install Ninja-Build
+      if: ${{ matrix.os != 'ubuntu-16.04' && runner.os == 'Linux'}}
+      run: |
+        sudo apt-get install \
+          ninja-build
+
+    - name: Get Source
+      uses: actions/download-artifact@v2
+      with:
+        name: naev-${{ github.sha }}
+
+    - name: Extract Source
+      run: |
+        mkdir source
+        tar -xf naev-*.tar.xz -C source --strip 1
+
+    - name: Compile AppImage
+      id: compile
+      run: |
+        sh source/utils/buildAppImage.sh -s "source" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
+
+    - name: Upload Compile Log
+      uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.compile.outcome == 'failure' }}
+      with:
+        name: ${{ matrix.os }}-${{ github.sha }}-appimageBuild-log
+        path: ${{ github.workspace }}/appImageBuildLog.txt
+        if-no-files-found: ignore
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-${{ matrix.os }}-${{ github.sha }}
+        path: ${{ env.DESTDIR }}/out/*.AppImage
+        if-no-files-found: error
+
   "Documentation":
     runs-on: ubuntu-latest
     needs: "Package_Source"
