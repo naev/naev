@@ -289,7 +289,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-${{ matrix.os }}-${{ github.sha }}
+        name: naev-${{ matrix.os }}-AppImage-${{ github.sha }}
         path: ${{ env.DESTDIR }}/out/*.AppImage
         if-no-files-found: error
 
