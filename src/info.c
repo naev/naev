@@ -234,15 +234,20 @@ static void info_openMain( unsigned int wid )
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSetGUI", _("Set GUI"), info_setGui );
 
-   /* List. */
    buf = player_getLicenses( &nlicenses );
-   licenses = malloc(sizeof(char*)*nlicenses);
-   for (i=0; i<nlicenses; i++)
-      licenses[i] = strdup(buf[i]);
+   /* List. */
+   if(nlicenses == 0){
+     licenses = malloc(sizeof(char*));
+     licenses[0] = strdup("None");
+   } else {
+     licenses = malloc(sizeof(char*) * nlicenses);
+     for (i=0; i<nlicenses; i++)
+        licenses[i] = strdup(buf[i]);
+   }
    window_addText( wid, -20, -40, w-80-200-40-40, 20, 1, "txtList",
          NULL, NULL, _("Licenses") );
    window_addList( wid, -20, -70, w-80-200-40-40, h-110-BUTTON_HEIGHT,
-         "lstLicenses", licenses, nlicenses, 0, NULL );
+         "lstLicenses", licenses, (nlicenses || 1), 0, NULL );
 }
 
 

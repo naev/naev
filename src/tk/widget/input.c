@@ -153,16 +153,13 @@ static void inp_render( Widget* inp, double bx, double by )
 
          /* Get the actual width now. */
          toolkit_drawRect( x + 5. + w, y + inp->h - lines * (inp->dat.inp.font->h + 5) - 3.,
-               1., inp->dat.inp.font->h + 4., &cBlack, &cBlack );
+               1., inp->dat.inp.font->h + 4., &cGreen, &cGreen );
       }
    }
 
-   /* inner outline */
-   /* toolkit_drawOutline( x, y, inp->w, inp->h, 0.,
-         toolkit_colLight, NULL ); */
    /* outer outline */
-   toolkit_drawOutline( x, y, inp->w, inp->h, 1.,
-         toolkit_colDark, NULL );
+   toolkit_drawOutline( x-2, y-2, inp->w + 4, inp->h + 4, 1.,
+         &cGrey20, NULL );
 }
 
 
