@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>org.naev.naev</id>
+  
+  <name>Naev</name>
+  <summary>2D action/rpg space trading combat game</summary>
+  
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  
+  <recommends>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>gamepad</control>
+  </recommends>
+  
+  <description>
+    <p>
+      Naev is a 2D space trading and combat game, taking inspiration from the Escape Velocity series, among others.
+    </p>
+  </description>
+  
+  <launchable type="desktop-id">org.naev.naev.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://naev.org/imgs/screenshots/fight2.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://naev.org/imgs/screenshots/menu.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://naev.org/imgs/screenshots/map.png</image>
+    </screenshot>
+    <screenshot>
+        <image>https://naev.org/imgs/screenshots/equip.png</image>
+    </screenshot>
+    <screenshot>
+        <image>https://naev.org/imgs/screenshots/jump.png</image>
+    </screenshot>
+    <screenshot>
+        <image>https://naev.org/imgs/screenshots/planet.png</image>
+    </screenshot>
+  </screenshots>
+  
+  <icon type="stock">naev</icon>
+  
+  <categories>
+    <category>Game</category>
+    <category>AdventureGame</category>
+  </categories>
+  
+  <provides>
+    <binary>naev</binary>
+  </provides>
+</component>
