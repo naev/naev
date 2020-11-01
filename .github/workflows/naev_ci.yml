@@ -226,7 +226,11 @@ jobs:
       run: |
         sh $MESON setup build source \
             -Dexecutable=disabled
+
+    - name: Package
+      run: |
         sh $MESON install -C build
+        tar -cvf ${{ github.workspace }}/naev-docs-${{ github.sha }}.tar ${{ env.DESTDIR }}/usr/local/doc/naev
 
     - name: Install SSH Key
       uses: shimataro/ssh-key-action@v2.0.3
@@ -244,5 +248,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: naev-docs-${{ github.sha }}
-        path: ${{ env.DESTDIR }}/usr/local/doc/naev/*
+        path: ${{ github.workspace }}/*.tar
         if-no-files-found: error
