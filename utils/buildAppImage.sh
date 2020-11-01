@@ -37,7 +37,7 @@ fi
 if [ -z "$BUILDPATH" ]; then
     BUILDPATH=$(pwd)/build/appimageBuild
 fi
-if [ -z $NIGHTLY ]; then
+if [ -z "$NIGHTLY" ]; then
     NIGHTLY="false"
 fi
 if [ -z "$BUILDOUTPUT" ]; then
