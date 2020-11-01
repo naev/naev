@@ -191,7 +191,10 @@ void ovr_render( double dt )
    int n;
    double w, h, res;
    double x,y;
-   glColour c = { .r=0., .g=0., .b=0., .a=0.5 };
+
+   // Map overlay color and opacity/alpha
+   glColour c = { .r=0., .g=0., .b=0., .a=0.2 };
+
    glColour textCol = { cRadar_hilight.r, cRadar_hilight.g, cRadar_hilight.b, 0.99 };
    /* XXX: textCol is a hack to prevent the text from overly obscuring
     * overlay display of other things. Effectively disables outlines for
@@ -249,7 +252,7 @@ void ovr_render( double dt )
       x = player.autonav_pos.x / res + w / 2.;
       y = player.autonav_pos.y / res + h / 2.;
       gl_renderCross( x, y, 5., &cRadar_hilight );
-      gl_printRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &textCol, _("GOTO") );
+      gl_printRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &textCol, -1., _("GOTO") );
    }
 
    /* render the asteroids */
@@ -295,7 +298,7 @@ static void ovr_mrkRenderAll( double res )
       gl_renderCross( x, y, 5., &cRadar_hilight );
 
       if (mrk->text != NULL)
-         gl_printRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &textCol, mrk->text );
+         gl_printRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &textCol, -1., mrk->text );
    }
 }
 

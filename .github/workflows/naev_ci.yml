@@ -45,12 +45,27 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - os: ubuntu-16.04
+            shell: bash
+            config: linux.ini
+            pkg-config-path: "[]"
+
+          - os: ubuntu-18.04
+            shell: bash
+            config: linux.ini
+            pkg-config-path: "[]"
+
           - os: ubuntu-20.04
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
 
-          - os: windows-latest
+          - os: windows-2016
+            shell: msys2 {0}
+            config: windows.ini
+            pkg-config-path: "[]"
+
+          - os: windows-2019
             shell: msys2 {0}
             config: windows.ini
             pkg-config-path: "[]"
@@ -78,7 +93,6 @@ jobs:
           intltool \
           libfreetype6-dev \
           libgl1-mesa-dev \
-          libgl1-mesa-dri \
           libiberty-dev \
           libluajit-5.1-dev \
           libopenal-dev \
@@ -88,9 +102,19 @@ jobs:
           libsdl2-mixer-dev \
           libsuitesparse-dev \
           libvorbis-dev \
-          libxml2-dev \
-          ninja-build \
-          xvfb
+          libxml2-dev
+
+    - name: Install Ninja-Build (xenial-backports)
+      if: ${{ matrix.os == 'ubuntu-16.04' && runner.os == 'Linux'}}
+      run: |
+        sudo apt-get -t xenial-backports install \
+          ninja-build
+
+    - name: Install Ninja-Build
+      if: ${{ matrix.os != 'ubuntu-16.04' && runner.os == 'Linux'}}
+      run: |
+        sudo apt-get install \
+          ninja-build
 
     - name: Install MinGW Packages
       if: ${{ runner.os == 'Windows'}}
@@ -144,27 +168,27 @@ jobs:
         path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
         if-no-files-found: ignore
 
-    - name: Meson Test
-      id: tests
-      run: |
-        ${{ matrix.test-env }} sh $MESON test -C build --print-errorlogs
-
-    - name: Upload test log
-      uses: actions/upload-artifact@v2
-      if: ${{ success() || steps.tests.outcome == 'failure' }}
-      with:
-        name: ${{ matrix.os }}-${{ github.sha }}-test-log
-        path: ${{ github.workspace }}/build/meson-logs/testlog.txt
-        if-no-files-found: ignore
+#    - name: Meson Test
+#      id: tests
+#      run: |
+#        ${{ matrix.test-env }} sh $MESON test -C build --print-errorlogs
+#
+#    - name: Upload test log
+#      uses: actions/upload-artifact@v2
+#      if: ${{ success() || steps.tests.outcome == 'failure' }}
+#      with:
+#        name: ${{ matrix.os }}-${{ github.sha }}-test-log
+#        path: ${{ github.workspace }}/build/meson-logs/testlog.txt
+#        if-no-files-found: ignore
 
     - name: Package
       run: |
         sh $MESON install -C build
-      if: ${{ success() || steps.tests.outcome == 'failure' }}
+#      if: ${{ success() || steps.tests.outcome == 'failure' }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
-      if: ${{ success() || steps.tests.outcome == 'failure' }}
+#      if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
         name: naev-${{ matrix.os }}-${{ github.sha }}
         path: ${{ env.DESTDIR }}/*

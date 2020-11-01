@@ -371,11 +371,11 @@ static unsigned int comm_open( glTexture *gfx, int faction,
 
    /* Name. */
    window_addText( wid, 19 + namex, -30 - GRAPHIC_HEIGHT - y + font->h*2 + 10,
-         GRAPHIC_WIDTH - logow, 20, 0, "txtName", font, &cWhite, name );
+         GRAPHIC_WIDTH - namex - logow, 20, 0, "txtName", font, &cWhite, name );
 
    /* Standing. */
    window_addText( wid, 19 + standx, -30 - GRAPHIC_HEIGHT - y + font->h + 5,
-         GRAPHIC_WIDTH - logow, 20, 0, "txtStanding", font, c, stand );
+         GRAPHIC_WIDTH - standx - logow, 20, 0, "txtStanding", font, c, stand );
 
    /* Buttons. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,

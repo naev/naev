@@ -85,7 +85,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt );
 static void equipment_renderSlots( double bx, double by, double bw, double bh, void *data );
 static void equipment_renderMisc( double bx, double by, double bw, double bh, void *data );
-static void equipment_renderOverlayColumn( double x, double y, double w, double h,
+static void equipment_renderOverlayColumn( double x, double y, double h,
       int n, PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt );
 static void equipment_renderOverlaySlots( double bx, double by, double bw, double bh,
       void *data );
@@ -280,40 +280,40 @@ void equipment_open( unsigned int wid )
          _("Unequip"), equipment_unequipShip, SDLK_u );
 
    /* text */
-   buf = _("Name:\n"
-      "Model:\n"
-      "Class:\n"
-      "Crew:\n"
-      "Value:\n"
+   buf = _("\anName:\n\a0"
+      "\anModel:\n\a0"
+      "\anClass:\n\a0"
+      "\anCrew:\n\a0"
+      "\anValue:\n\a0"
       "\n"
-      "Mass:\n"
-      "Jump Time:\n"
-      "Thrust:\n"
-      "Speed:\n"
-      "Turn:\n"
-      "Time Dilation:\n"
+      "\anMass:\n\a0"
+      "\anJump Time:\n\a0"
+      "\anThrust:\n\a0"
+      "\anSpeed:\n\a0"
+      "\anTurn:\n\a0"
+      "\anTime Dilation:\n\a0"
       "\n"
-      "Absorption:\n"
-      "Shield:\n"
-      "Armour:\n"
-      "Energy:\n"
-      "Cargo Space:\n"
-      "Fuel:\n"
+      "\anAbsorption:\n\a0"
+      "\anShield:\n\a0"
+      "\anArmour:\n\a0"
+      "\anEnergy:\n\a0"
+      "\anCargo Space:\n\a0"
+      "\anFuel:\n\a0"
       "\n"
-      "Ship Status:");
+      "\anShip Status:\a0");
    x = 20 + sw + 20 + 180 + 20 + 30;
    y = -190;
    window_addText( wid, x, y,
-         100, h+y, 0, "txtSDesc", &gl_smallFont, NULL, buf );
+         100, y-20+h-bh, 0, "txtSDesc", &gl_smallFont, NULL, buf );
    x += 150;
    window_addText( wid, x, y,
-         w - x - 20, h+y, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
+         w - x - 20, y-20+h-bh, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
 
    /* Generate lists. */
    window_addText( wid, 30, -20,
-         130, 500, 0, "txtShipTitle", &gl_defFont, NULL, _("Available Ships") );
+         ow, gl_defFont.h, 0, "txtShipTitle", &gl_defFont, NULL, _("Available Ships") );
    window_addText( wid, 30, -40-sh-20,
-         130, 500, 0, "txtOutfitTitle", &gl_defFont, NULL, _("Available Outfits") );
+         ow, gl_defFont.h, 0, "txtOutfitTitle", &gl_defFont, NULL, _("Available Outfits") );
    equipment_genLists( wid );
 
    /* Separator. */
@@ -375,7 +375,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    else
       c = &cFontWhite;
    gl_printMidRaw( &gl_smallFont, 60.,
-         x-15., y+h+10., c, txt );
+         x-15., y+h+10., c, -1., txt );
 
    /* Iterate for all the slots. */
    for (i=0; i<n; i++) {
@@ -433,7 +433,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
       /* Draw outline. */
       toolkit_drawOutlineThick( x, y, w, h, 1, 3, rc, NULL );
-      toolkit_drawOutline( x-1, y-1, w+3, h+3, 0, &cBlack, NULL );
+      // toolkit_drawOutline( x-1, y-1, w+3, h+3, 0, &cBlack, NULL );
       /* Go to next one. */
       y -= h+20;
    }
@@ -559,7 +559,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    y = by + bh - 30 - h;
 
    gl_printMidRaw( &gl_smallFont, w,
-      x, y + h + 10., &cFontWhite, _("CPU Free") );
+      x, y + h + 10., &cFontWhite, -1, _("CPU Free") );
 
    percent = (p->cpu_max > 0) ? CLAMP(0., 1., (float)p->cpu / (float)p->cpu_max) : 0.;
    toolkit_drawRect( x, y, w * percent, h, &cFriend, NULL );
@@ -573,7 +573,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    y -= h;
 
    gl_printMidRaw( &gl_smallFont, w,
-      x, y, &cFontWhite, _("Mass Limit Left") );
+      x, y, &cFontWhite, -1., _("Mass Limit Left") );
 
    y -= gl_smallFont.h + h;
 
@@ -606,20 +606,19 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
  *
  *    @param x X position to render at.
  *    @param y Y position to render at.
- *    @param w Width.
  *    @param h Height.
  *    @param n Number of elements.
  *    @param lst List of elements.
  *    @param mover Slot for which mouseover is active
  *    @param wgt Widget rendering.
  */
-static void equipment_renderOverlayColumn( double x, double y, double w, double h,
+static void equipment_renderOverlayColumn( double x, double y, double h,
       int n, PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt )
 {
    int i;
    const glColour *c;
    glColour tc;
-   int text_width, xoff, yoff, top;
+   int text_width, yoff, top;
    const char *display;
    int subtitle;
 
@@ -666,21 +665,20 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
 
          if (display != NULL) {
             text_width = gl_printWidthRaw( &gl_smallFont, display );
-            xoff = -(text_width - w)/2;
             if (top)
                yoff = h + 2;
             else
                yoff = -gl_smallFont.h - 3;
-            tc.r = 1.;
-            tc.g = 1.;
-            tc.b = 1.;
-            tc.a = 0.5;
-            toolkit_drawRect( x+xoff-5, y -3. + yoff,
-                  text_width+10, gl_smallFont.h+5,
+            tc.r = 0.;
+            tc.g = 0.;
+            tc.b = 0.;
+            tc.a = 0.9;
+            toolkit_drawRect( x, y -5. + yoff,
+                  text_width+60, gl_smallFont.h+10,
                   &tc, NULL );
             gl_printMaxRaw( &gl_smallFont, text_width,
-                  x+xoff, y + yoff,
-                  c, display );
+                  x+5, y + yoff,
+                  c, -1., display );
          }
       }
       /* Go to next one. */
@@ -731,17 +729,17 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    /* Render weapon outfits. */
    x  = bx + (tw-w)/2;
    y  = by + bh - (h+20) + (h+20-h)/2;
-   equipment_renderOverlayColumn( x, y, w, h,
+   equipment_renderOverlayColumn( x, y, h,
          p->outfit_nweapon, p->outfit_weapon, mover, wgt );
    mover    -= p->outfit_nweapon;
    x += tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
-   equipment_renderOverlayColumn( x, y, w, h,
+   equipment_renderOverlayColumn( x, y, h,
          p->outfit_nutility, p->outfit_utility, mover, wgt );
    mover    -= p->outfit_nutility;
    x += tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
-   equipment_renderOverlayColumn( x, y, w, h,
+   equipment_renderOverlayColumn( x, y, h,
          p->outfit_nstructure, p->outfit_structure, mover, wgt );
 
    /* Mouse must be over something. */
@@ -1294,7 +1292,7 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
    if (dps > 0.)
       l += nsnprintf( &buf[l], (max_len-l),
             _("%s%.2f DPS [%.2f EPS]"), (l!=0)?"\n":"", dps, eps );
-   l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), 1 );
+   l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), l );
    return l;
 }
 

@@ -21,6 +21,12 @@ extern const glColour* toolkit_colLight;
 extern const glColour* toolkit_col;
 extern const glColour* toolkit_colDark;
 
+extern const glColour* tab_active;
+extern const glColour* tab_activeB;
+extern const glColour* tab_inactive;
+extern const glColour* tab_inactiveB;
+extern const glColour* tab_background;
+
 
 /**
  * @typedef WidgetType

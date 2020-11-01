@@ -101,6 +101,7 @@
 #include "toolkit.h"
 #include "unidiff.h"
 #include "weapon.h"
+#include "semver.h"
 
 #if defined ENABLE_NLS && ENABLE_NLS
 #include <locale.h>
@@ -114,12 +115,14 @@
 
 static int quit               = 0; /**< For primary loop */
 static unsigned int time_ms   = 0; /**< used to calculate FPS and movement. */
-static char short_version[64]; /**< Contains version. */
-static char human_version[256]; /**< Human readable version. */
 static glTexture *loading     = NULL; /**< Loading screen. */
 static char *binary_path      = NULL; /**< argv[0] */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
 static int fps_skipped        = 0; /**< Skipped last frame? */
+/* Version stuff. */
+static semver_t version_binary; /**< Naev binary version. */
+//static semver_t version_data; /**< Naev data version. */
+static char version_human[256]; /**< Human readable version. */
 
 
 /*
@@ -202,6 +205,10 @@ int main( int argc, char** argv )
    //bindtextdomain("naev", "po/");
    textdomain( PACKAGE_NAME );
 #endif /* defined ENABLE_NLS && ENABLE_NLS */
+
+   /* Parse version. */
+   if (semver_parse( VERSION, &version_binary ))
+      WARN( _("Failed to parse version string '%s'!"), VERSION );
 
    /* Print the version */
    LOG( " %s v%s (%s)", APPNAME, naev_version(0), HOST );
@@ -630,7 +637,7 @@ void loadscreen_render( double done, const char *msg )
    gl_renderRect( x, y, done*w, h, &col );
 
    /* Draw text. */
-   gl_printRaw( &gl_defFont, x, y + h + 3., &cFontGreen, msg );
+   gl_printRaw( &gl_defFont, x, y + h + 3., &cFontGreen, -1., msg );
 
    /* Flip buffers. */
    SDL_GL_SwapWindow( gl_screen.window );
@@ -1102,7 +1109,7 @@ static void display_fps( const double dt )
 
    y = SCREEN_H / 3. - gl_defFontMono.h / 2.;
    gl_printMidRaw( &gl_defFontMono, SCREEN_W, 0., y,
-         NULL, _("PAUSED") );
+         NULL, -1., _("PAUSED") );
 }
 
 
@@ -1146,26 +1153,6 @@ static void window_caption (void)
    SDL_SetWindowIcon(  gl_screen.window, naev_icon );
 }
 
-/**
- * @brief Gets a short human readable string of the version.
- *
- *    @param[out] str String to output.
- *    @param slen Maximum length of the string.
- *    @param major Major version.
- *    @param minor Minor version.
- *    @param rev Revision.
- *    @return Number of characters written.
- */
-int naev_versionString( char *str, size_t slen, int major, int minor, int rev )
-{
-   int n;
-   if (rev<0)
-      n = nsnprintf( str, slen, "%d.%d.0-beta.%d", major, minor, ABS(rev) );
-   else
-      n = nsnprintf( str, slen, "%d.%d.%d", major, minor, rev );
-   return n;
-}
-
 
 /**
  * @brief Returns the version in a human readable string.
@@ -1175,69 +1162,21 @@ int naev_versionString( char *str, size_t slen, int major, int minor, int rev )
  */
 char *naev_version( int long_version )
 {
-   /* Set short version if needed. */
-   if (short_version[0] == '\0')
-      naev_versionString( short_version, sizeof(short_version), VMAJOR, VMINOR, VREV );
-
    /* Set up the long version. */
    if (long_version) {
-      if (human_version[0] == '\0')
-         nsnprintf( human_version, sizeof(human_version),
-               " "APPNAME" v%s%s - %s", short_version,
+      if (version_human[0] == '\0')
+         nsnprintf( version_human, sizeof(version_human),
+               " "APPNAME" v%s%s - %s", VERSION,
 #ifdef DEBUGGING
                _(" debug"),
 #else /* DEBUGGING */
                "",
 #endif /* DEBUGGING */
                ndata_name() );
-      return human_version;
+      return version_human;
    }
 
-   return short_version;
-}
-
-
-/**
- * @brief Parses the naev version.
- *
- *    @param[out] version Version parsed.
- *    @param buf Buffer to parse.
- *    @param nbuf Length of the buffer to parse.
- *    @return 0 on success.
- */
-int naev_versionParse( int version[3], char *buf, int nbuf )
-{
-   int i, j, s;
-   char cbuf[64];
-
-   /* Check length. */
-   if (nbuf > (int)sizeof(cbuf)) {
-      WARN( _("Version format is too long!") );
-      return -1;
-   }
-
-   s = 0;
-   j = 0;
-   for (i=0; i < MIN(nbuf,(int)sizeof(cbuf)); i++) {
-      cbuf[j++] = buf[i];
-      if (buf[i] == '-')
-         break;
-      if (buf[i] == '.') {
-         cbuf[j] = '\0';
-         version[s++] = atoi(cbuf);
-         if (s >= 3) {
-            WARN( _("Version has too many '.'.") );
-            return -1;
-         }
-         j = 0;
-      }
-   }
-   if (s<3) {
-      cbuf[j++] = '\0';
-      version[s++] = atoi(cbuf);
-   }
-
-   return 0;
+   return VERSION;
 }
 
 
@@ -1246,24 +1185,12 @@ int naev_versionParse( int version[3], char *buf, int nbuf )
  *
  *    @return positive if version is newer or negative if version is older.
  */
-int naev_versionCompare( int version[3] )
+int naev_versionCompare( char *version )
 {
-   if (VMAJOR > version[0])
-      return -3;
-   else if (VMAJOR < version[0])
-      return +3;
-
-   if (VMINOR > version[1])
-      return -2;
-   else if (VMINOR < version[1])
-      return +2;
-
-   if (VREV > version[2])
-      return -1;
-   else if (VREV < version[2])
-      return +1;
-
-   return 0;
+   semver_t sv;
+   if (semver_parse( version, &sv ))
+      WARN( _("Failed to parse version string '%s'!"), version );
+   return semver_compare( version_binary, sv );
 }
 
 

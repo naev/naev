@@ -158,28 +158,7 @@ if buildExec.disabled() == false
    ### Generated sources
 
    # VERSION
-   temp    = version.split('+')
-   vmeta   = temp.length() > 1 ? temp[1] : ''
-   temp    = temp[0].split('-')
-   vcore   = temp[0]
-   temp    = temp.length() > 1 ? temp[1].split('.') : ''
-   vpre    = temp.length() > 0 ? temp[0] : ''
-   vpren   = temp.length() > 1 ? temp[1] : ''
-   temp    = vcore.split('.')
-   vmajor  = temp[0]
-   vminor  = temp[1]
-   vrev    = temp[2]
-   vhuman  = vcore + (vpre != '' ? ' ' + vpre : '') + (vpren != '' ? ' ' + vpren : '') + (debug ? ' debug' : '')
-
    config_data.set_quoted('VERSION', version)
-   config_data.set_quoted('VMETA'  , vmeta  )
-   config_data.set_quoted('VCORE'  , vcore  )
-   config_data.set_quoted('VPRE'   , vpre   )
-   config_data.set       ('VPREN'  , vpren  )
-   config_data.set       ('VMAJOR' , vmajor )
-   config_data.set       ('VMINOR' , vminor )
-   config_data.set       ('VREV'   , vrev   )
-   config_data.set_quoted('VHUMAN' , vhuman )
 
    # config.h
    configure_file(

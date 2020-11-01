@@ -811,7 +811,7 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
       else
          col = c;
       gl_printMidRaw( &gl_smallFont, gfx->sw*z+100,
-            tx - 50, ty - gl_smallFont.h - 5, col, caption );
+            tx - 50, ty - gl_smallFont.h - 5, col, -1., caption );
    }
 }
 
