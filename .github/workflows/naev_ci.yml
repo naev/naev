@@ -184,6 +184,7 @@ jobs:
     - name: Package
       run: |
         sh $MESON install -C build
+        tar -cvf ${{ github.workspace }}/naev-${{ matrix.os }}-${{ github.sha }}.tar ${{ env.DESTDIR }}
 #      if: ${{ success() || steps.tests.outcome == 'failure' }}
 
     - name: Upload Artifact
@@ -191,7 +192,7 @@ jobs:
 #      if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
         name: naev-${{ matrix.os }}-${{ github.sha }}
-        path: ${{ env.DESTDIR }}/*
+        path: ${{ github.workspace }}/*.tar
         if-no-files-found: error
 
   "Documentation":
