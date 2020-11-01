@@ -3394,6 +3394,7 @@ static Planet* player_parse( xmlNodePtr parent )
       return NULL;
    }
 
+   /* Reset player speed */
    player.speed = 1;
 
    /* set global thingies */

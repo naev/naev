@@ -18,6 +18,7 @@
 #include "space.h"
 #include "input.h"
 #include "array.h"
+#include "gui.h"
 
 
 /**
@@ -201,12 +202,13 @@ void ovr_render( double dt )
       return;
 
    /* Default values. */
-   w     = SCREEN_W ;
-   h     = SCREEN_H - 280;
+   w     = SCREEN_W - gui_getMapOverlayBoundLeft() - gui_getMapOverlayBoundRight();
+   h     = SCREEN_H - gui_getMapOverlayBoundTop() - gui_getMapOverlayBoundBottom();
    res   = ovr_res;
 
    /* First render the background overlay. */
-   // gl_renderRect( 0., 0., SCREEN_W, SCREEN_H, &c );
+   // glColour c = { .r=0., .g=0., .b=0., .a=0.2 };
+   // gl_renderRect( (double)gui_getMapOverlayBoundLeft(), (double)gui_getMapOverlayBoundBottom(), w, h, &c );
 
    /* Render planets. */
    for (i=0; i<cur_system->nplanets; i++)

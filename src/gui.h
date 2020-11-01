@@ -61,6 +61,15 @@ void gui_messageScrollDown( int lines );
 
 
 /*
+ * Map overlay
+ */
+void gui_setMapOverlayBounds(int top, int right, int bottom, int left);
+int gui_getMapOverlayBoundTop(void);
+int gui_getMapOverlayBoundRight(void);
+int gui_getMapOverlayBoundBottom(void);
+int gui_getMapOverlayBoundLeft(void);
+
+/*
  * Radar.
  */
 int gui_radarInit( int circle, int w, int h );

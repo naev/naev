@@ -113,6 +113,25 @@ static double gui_viewport_y = 0.; /**< GUI Viewport Y offset. */
 static double gui_viewport_w = 0.; /**< GUI Viewport width. */
 static double gui_viewport_h = 0.; /**< GUI Viewport height. */
 
+/**
+ * @struct MapOverlay
+ *
+ * @brief Represents map overlay config values
+ */
+typedef struct MapOverlay_ {
+   /* GUI parameters */
+   int boundTop;
+   int boundRight;
+   int boundBottom;
+   int boundLeft;
+} MapOverlay;
+
+static MapOverlay map_overlay = {
+  boundTop: 0,
+  boundRight: 0,
+  boundBottom: 0,
+  boundLeft: 0,
+};
 
 /**
  * @struct Radar
@@ -898,6 +917,65 @@ void gui_render( double dt )
 
    /* Render messages. */
    omsg_render( dt );
+}
+
+
+/**
+ * @brief Sets map overlay bounds.
+ *
+ *    @param top Top boundary in pixels
+ *    @param right Right boundary in pixels
+ *    @param bottom Bottom boundary in pixels
+ *    @param left Left boundary in pixels
+ *
+ *    @return 0 on success 
+ */
+void gui_setMapOverlayBounds( int top, int right, int bottom, int left )
+{
+   map_overlay.boundTop = top;
+   map_overlay.boundRight = right;
+   map_overlay.boundBottom = bottom;
+   map_overlay.boundLeft = left;
+}
+
+/**
+ * @brief Gets map overlay bound (top)
+ *
+ *    @return Map overlay bound (top) in px
+ */
+int gui_getMapOverlayBoundTop(void)
+{
+  return map_overlay.boundTop;
+}
+
+/**
+ * @brief Gets map overlay bound (right)
+ *
+ *    @return Map overlay bound (right) in px
+ */
+int gui_getMapOverlayBoundRight(void)
+{
+  return map_overlay.boundRight;
+}
+
+/**
+ * @brief Gets map overlay bound (bottom)
+ *
+ *    @return Map overlay bound (bottom) in px
+ */
+int gui_getMapOverlayBoundBottom(void)
+{
+  return map_overlay.boundBottom;
+}
+
+/**
+ * @brief Gets map overlay bound (left)
+ *
+ *    @return Map overlay bound (left) in px
+ */
+int gui_getMapOverlayBoundLeft(void)
+{
+  return map_overlay.boundLeft;
 }
 
 
