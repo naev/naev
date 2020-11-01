@@ -606,7 +606,6 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
  *
  *    @param x X position to render at.
  *    @param y Y position to render at.
- *    @param w Width.
  *    @param h Height.
  *    @param n Number of elements.
  *    @param lst List of elements.
