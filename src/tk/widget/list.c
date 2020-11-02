@@ -417,6 +417,10 @@ char* toolkit_getList( const unsigned int wid, const char* name )
    if (wgt->dat.lst.selected == -1)
       return NULL;
 
+   /* Nothing that can be selected. */
+   if (wgt->dat.lst.noptions<=0)
+      return NULL;
+
    return wgt->dat.lst.options[ wgt->dat.lst.selected ];
 }
 
