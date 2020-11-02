@@ -1180,6 +1180,12 @@ char *naev_version( int long_version )
 }
 
 
+static int
+binary_comparison (int x, int y) {
+  if (x == y) return 0;
+  if (x > y) return 1;
+  return -1;
+}
 /**
  * @brief Compares the version against the current naev version.
  *
@@ -1187,10 +1193,19 @@ char *naev_version( int long_version )
  */
 int naev_versionCompare( char *version )
 {
+   int res;
    semver_t sv;
+
    if (semver_parse( version, &sv ))
       WARN( _("Failed to parse version string '%s'!"), version );
-   return semver_compare( version_binary, sv );
+
+   if ((res = 3*binary_comparison(version_binary.major, sv.major)) == 0) {
+      if ((res = 2*binary_comparison(version_binary.minor, sv.minor)) == 0) {
+         res = semver_compare( version_binary, sv );
+      }
+   }
+   semver_free( &sv );
+   return res;
 }
 
 
