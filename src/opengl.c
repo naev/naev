@@ -83,7 +83,7 @@ static int intel_vendor = 0;
  */
 /* gl */
 static int gl_setupAttributes (void);
-static int gl_setupFullscreen( unsigned int *flags );
+static int gl_setupFullscreen (void);
 static int gl_createWindow( unsigned int flags );
 static int gl_getGLInfo (void);
 static int gl_defState (void);
@@ -304,10 +304,9 @@ static int gl_setupAttributes (void)
 /**
  * @brief Tries to set up fullscreen environment.
  *
- *    @param flags Flags to modify.
  *    @return 0 on success.
  */
-static int gl_setupFullscreen( unsigned int *flags )
+static int gl_setupFullscreen (void)
 {
    int i, j, off, toff, supported;
 
@@ -320,7 +319,6 @@ static int gl_setupFullscreen( unsigned int *flags )
       gl_screen.h = gl_screen.desktop_h;
    }
 
-   (void) flags;
    SDL_DisplayMode mode;
    int n = SDL_GetNumDisplayModes( 0 );
 
@@ -577,7 +575,7 @@ int gl_init (void)
 
    /* See if should set up fullscreen. */
    if (conf.fullscreen)
-      gl_setupFullscreen( &flags );
+      gl_setupFullscreen();
 
    /* Create the window. */
    gl_createWindow( flags );
