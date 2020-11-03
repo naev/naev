@@ -372,7 +372,6 @@ static int gl_setupFullscreen( unsigned int *flags )
 static int gl_createWindow( unsigned int flags )
 {
    int ret;
-   int w, h;
 
    /* Create the window. */
    gl_screen.window = SDL_CreateWindow( APPNAME,
@@ -380,10 +379,6 @@ static int gl_createWindow( unsigned int flags )
          SCREEN_W, SCREEN_H, flags | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
    if (gl_screen.window == NULL)
       ERR(_("Unable to create window! %s"), SDL_GetError());
-
-   /* Reinitialize resolution parameters. */
-   if (flags & SDL_WINDOW_FULLSCREEN_DESKTOP)
-      SDL_GetWindowSize( gl_screen.window, &w, &h );
 
    /* Set focus loss behaviour. */
    SDL_SetHint( SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS,
