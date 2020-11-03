@@ -303,6 +303,7 @@ static int gl_setupAttributes (void)
 /**
  * @brief Tries to apply the configured display mode to the window.
  *
+ *    @note Caller is responsible for calling gl_resize/naev_resize afterward.
  *    @return 0 on success.
  */
 int gl_setupFullscreen (void)
@@ -577,7 +578,7 @@ int gl_init (void)
    gl_defState();
 
    /* Handles resetting the viewport and scaling, rw/rh are set in createWindow. */
-   gl_resize( gl_screen.rw, gl_screen.rh );
+   gl_resize();
 
    /* Finishing touches. */
    glClear( GL_COLOR_BUFFER_BIT ); /* must clear the buffer first */
@@ -609,16 +610,13 @@ int gl_init (void)
 
 /**
  * @brief Handles a window resize and resets gl_screen parameters.
- *
- *    @param w New real/drawable width.
- *    @param h New real/drawable height.
  */
-void gl_resize( int w, int h )
+void gl_resize (void)
 {
-   glViewport( 0, 0, w, h );
+   SDL_GetWindowSize(gl_screen.window, &gl_screen.w, &gl_screen.h);
+   SDL_GL_GetDrawableSize(gl_screen.window, &gl_screen.rw, &gl_screen.rh);
 
-   gl_screen.rw = w;
-   gl_screen.rh = h;
+   glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
 
    /* Reset scaling. */
    gl_screen.scale = 1./conf.scalefactor;

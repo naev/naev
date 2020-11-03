@@ -109,7 +109,7 @@ extern gl_Matrix4 gl_view_matrix;
  */
 int gl_init (void);
 void gl_exit (void);
-void gl_resize( int w, int h );
+void gl_resize (void);
 
 
 /*

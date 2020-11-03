@@ -801,7 +801,7 @@ void naev_resize (void)
       return;
 
    /* Resize the GL context, etc. */
-   gl_resize( w, h );
+   gl_resize();
 
    /* Regenerate the background stars. */
    if (cur_system != NULL)
