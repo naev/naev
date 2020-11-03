@@ -442,7 +442,7 @@ int main( int argc, char** argv )
 
    /* Incomplete game note (shows every time version number changes). */
    if ( (conf.lastversion == NULL)
-         || (strcmp(conf.lastversion, naev_version(0)) != 0) ) {
+         || (naev_versionCompare(conf.lastversion) != 0) ) {
       conf.lastversion = strdup( naev_version(0) );
       dialogue_msg(
          _("Welcome to Naev"),
