@@ -172,57 +172,12 @@ jobs:
   "Documentation":
     runs-on: ubuntu-latest
     needs: "Package_Source"
+    if: ${{ github.event_name == 'push' }}
 
     steps:
-    - name: Update APT Cache
+    - name: Trigger Publish
       run: |
-        sudo apt-get update
-
-    - name: Install Additional Build Dependencies
-      run: |
-        sudo apt-get install \
-          lua-ldoc \
-          graphviz \
-          doxygen
-
-    - name: Setup Python
-      uses: actions/setup-python@v2
-
-    - name: Install Meson
-      run: |
-        pip install meson ninja
-
-    - name: Get Source
-      uses: actions/download-artifact@v2
-      with:
-        name: naev-${{ github.sha }}
-
-    - name: Extract Source
-      run: |
-        mkdir source
-        tar -xf naev-*.tar.xz -C source --strip 1
-
-    - name: Meson Build
-      run: |
-        meson setup build source \
-            -Dexecutable=disabled
-        meson install -C build
-
-    - name: Install SSH Key
-      uses: shimataro/ssh-key-action@v2.0.3
-      with:
-        key: ${{ secrets.SSH_KEY }}
-        name: id_rsa # optional
-        known_hosts: ${{ secrets.KNOWN_HOSTS }}
-      if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
-
-    - name: Upload Lua Documentation
-      run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete ${{ env.DESTDIR }}/usr/local/doc/naev/lua/* travis@iandouglasscott.com:/srv/naevdoc
-      if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: naev-docs-${{ github.sha }}
-        path: ${{ env.DESTDIR }}/usr/local/doc/naev/*
-        if-no-files-found: error
+        curl -X POST https://api.github.com/repos/projectsynchro/naev.github.io/dispatches \
+        -H 'Accept: application/vnd.github.everest-preview+json' \
+        -u ${{ secrets.WEBSITE_ACCESS_TOKEN }} \
+        --data '{"event_type": "api", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
