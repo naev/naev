@@ -1384,31 +1384,13 @@ static void opt_videoRes( unsigned int wid, char *str )
 static int opt_videoSave( unsigned int wid, char *str )
 {
    (void) str;
-   int i, j, s;
-   char *inp, buf[16], width[16], height[16];
-   int w, h, f, fullscreen;
+   char *inp, buf[16];
+   int ret, w, h, f, fullscreen;
 
    /* Handle resolution. */
    inp = window_getInput( wid, "inpRes" );
-   memset( width, '\0', sizeof(width) );
-   memset( height, '\0', sizeof(height) );
-   j = 0;
-   s = 0;
-   for (i=0; i<16; i++) {
-      if (isdigit(inp[i])) {
-         if (j==0)
-            width[s++] = inp[i];
-         else
-            height[s++] = inp[i];
-      }
-      else {
-         j++;
-         s = 0;
-      }
-   }
-   w = atoi(width);
-   h = atoi(height);
-   if ((w==0) || (h==0)) {
+   ret = sscanf( inp, " %d %*[^0-9] %d", &w, &h );
+   if (ret != 2 || w <= 0 || h <= 0) {
       dialogue_alert( _("Height/Width invalid. Should be formatted like 1024x768.") );
       return 1;
    }
