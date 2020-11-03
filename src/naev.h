@@ -94,7 +94,7 @@
  */
 extern const double fps_min;
 void fps_setPos( double x, double y );
-void naev_resize( int w, int h );
+void naev_resize (void);
 void naev_toggleFullscreen (void);
 void update_routine( double dt, int enter_sys );
 char *naev_version( int long_version );
