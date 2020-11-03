@@ -53,8 +53,8 @@ Run:
 
 ```
 bash
-meson setup /path/to/build/dir /path/to/source/dir
-cd /path/to/build/dir
+meson setup build .
+cd build
 meson compile
 ```
 
