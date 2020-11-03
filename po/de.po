@@ -36494,12 +36494,12 @@ msgid "Run Naev in full-screen mode"
 msgstr "Naev im Vollbildmodus ausführen"
 
 #: src/conf.c:978
-msgid "Use video modesetting when fullscreen is enabled (SDL2-only)"
-msgstr "Video-Moduseinstellung benutzen, falls Vollbild aktiviert ist (nur für SDL2)"
+msgid "Use video modesetting when fullscreen is enabled"
+msgstr "Video-Moduseinstellung benutzen, falls Vollbild aktiviert ist"
 
 #: src/conf.c:982
-msgid "Minimize on focus loss (SDL2-only)"
-msgstr "Bei Fokusverlust minimieren (nur für SDL2)"
+msgid "Minimize on focus loss"
+msgstr "Bei Fokusverlust minimieren"
 
 #. FPS
 #: src/conf.c:987
