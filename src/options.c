@@ -1465,7 +1465,7 @@ static int opt_videoSave( unsigned int wid, char *str )
             opt_needRestart();
          else if (!fullscreen) {
             SDL_SetWindowSize( gl_screen.window, w, h );
-            naev_resize( w, h );
+            naev_resize();
             SDL_SetWindowPosition( gl_screen.window,
                   SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
 
@@ -1494,7 +1494,7 @@ static int opt_videoSave( unsigned int wid, char *str )
       /* Restore previous resolution. */
       if ((w != rw) || (h != rw)) {
          SDL_SetWindowSize( gl_screen.window, rw, rh );
-         naev_resize( rw, rh );
+         naev_resize();
          SDL_SetWindowPosition( gl_screen.window,
                SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
       }

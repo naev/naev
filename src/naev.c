@@ -353,7 +353,7 @@ int main( int argc, char** argv )
    gl_fontInit( &gl_defFontMono, FONT_MONOSPACE_PATH, conf.font_size_def );
 
    /* Detect size changes that occurred after window creation. */
-   naev_resize( -1., -1. );
+   naev_resize();
 
    /* Display the load screen. */
    loadscreen_load();
@@ -412,7 +412,7 @@ int main( int argc, char** argv )
    load_all();
 
    /* Detect size changes that occurred during load. */
-   naev_resize( -1., -1. );
+   naev_resize();
 
    /* Generate the CSV. */
    if (conf.devcsv)
@@ -474,7 +474,7 @@ int main( int argc, char** argv )
          }
          else if (event.type == SDL_WINDOWEVENT &&
                event.window.event == SDL_WINDOWEVENT_RESIZED) {
-            naev_resize( event.window.data1, event.window.data2 );
+            naev_resize();
             continue;
          }
          input_handle(&event); /* handles all the events and player keybinds */
@@ -777,11 +777,11 @@ void main_loop( int update )
 /**
  * @brief Wrapper for gl_resize that handles non-GL reinitialization.
  */
-void naev_resize( int w, int h )
+void naev_resize (void)
 {
    /* Auto-detect window size. */
-   if ((w < 0.) && (h < 0.))
-      SDL_GetWindowSize( gl_screen.window, &w, &h );
+   int w, h;
+   SDL_GetWindowSize( gl_screen.window, &w, &h );
 
    /* Nothing to do. */
    if ((w == gl_screen.rw) && (h == gl_screen.rh))
@@ -833,7 +833,7 @@ void naev_toggleFullscreen (void)
       SDL_SetWindowFullscreen( gl_screen.window, 0 );
 
       SDL_SetWindowSize( gl_screen.window, conf.width, conf.height );
-      naev_resize( conf.width, conf.height );
+      naev_resize();
       SDL_SetWindowPosition( gl_screen.window,
             SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
 
@@ -859,7 +859,7 @@ void naev_toggleFullscreen (void)
 
    SDL_GetWindowSize( gl_screen.window, &w, &h );
    if ((w != conf.width) || (h != conf.height))
-      naev_resize( w, h );
+      naev_resize();
 }
 
 
