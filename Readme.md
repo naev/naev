@@ -53,7 +53,7 @@ Run:
 
 ```
 meson setup builddir .
-cd build
+cd builddir
 meson compile
 ```
 
