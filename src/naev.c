@@ -310,10 +310,20 @@ int main( int argc, char** argv )
    else
       lang = conf.language;
    nsetenv( "LANGUAGE", lang, 1 );
+   /* Horrible hack taken from https://www.gnu.org/software/gettext/manual/html_node/gettext-grok.html .
+    * Not entirely sure it is necessary, but just in case... */
+   {
+      extern int  _nl_msg_cat_cntr;
+      ++_nl_msg_cat_cntr;
+   }
+   /* This function below fails to actually change the locale, which is why we end up
+    * relying on LANGUAGE variable. */
    /*
    if (setlocale( LC_ALL, lang )==NULL)
       WARN(_("Unable to set the locale to '%s'!"), lang );
    */
+   /* If we don't disable LC_NUMERIC, lots of stuff blows up because 1,000 can be interpreted as
+    * 1.0 in certain languages. */
    if (setlocale( LC_NUMERIC, "C" )==NULL) /* Disable numeric locale part. */
       WARN(_("Unable to set LC_NUMERIC to 'C'!"));
    nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, ndata_getPath() );
