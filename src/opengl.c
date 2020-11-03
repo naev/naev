@@ -627,10 +627,10 @@ int gl_init (void)
 }
 
 /**
- * @brief Handles a window resize and resets gl_screen parametes.
+ * @brief Handles a window resize and resets gl_screen parameters.
  *
- *    @param w New width.
- *    @param h New height.
+ *    @param w New real/drawable width.
+ *    @param h New real/drawable height.
  */
 void gl_resize( int w, int h )
 {
