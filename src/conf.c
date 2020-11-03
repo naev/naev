@@ -248,18 +248,19 @@ void conf_setAudioDefaults (void)
 void conf_setVideoDefaults (void)
 {
    int w, h, f;
+   SDL_DisplayMode resolution;
 
    /* More complex resolution handling. */
    f = 0;
-   if ((gl_screen.desktop_w > 0) && (gl_screen.desktop_h > 0)) {
+   if (SDL_GetCurrentDisplayMode( 0, &resolution ) == 0) {
       /* Try higher resolution. */
       w = RESOLUTION_W_DEFAULT;
       h = RESOLUTION_H_DEFAULT;
 
       /* Fullscreen and fit everything onscreen. */
-      if ((gl_screen.desktop_w <= w) || (gl_screen.desktop_h <= h)) {
-         w = gl_screen.desktop_w;
-         h = gl_screen.desktop_h;
+      if ((resolution.w <= w) || (resolution.h <= h)) {
+         w = resolution.w;
+         h = resolution.h;
          f = FULLSCREEN_DEFAULT;
       }
    }

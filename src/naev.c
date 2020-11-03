@@ -244,15 +244,6 @@ int main( int argc, char** argv )
       return -1;
    }
 
-   /* Get desktop dimensions. */
-   SDL_DisplayMode current;
-   if ( SDL_GetCurrentDisplayMode( 0, &current ) ) {
-      ERR( _( "Unable to get display mode: %s" ), SDL_GetError() );
-      return -1;
-   }
-   gl_screen.desktop_w = current.w;
-   gl_screen.desktop_h = current.h;
-
    /* We'll be parsing XML. */
    LIBXML_TEST_VERSION
    xmlInitParser();

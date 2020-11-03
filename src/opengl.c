@@ -525,17 +525,11 @@ static int gl_hint (void)
 int gl_init (void)
 {
    unsigned int flags;
-   int dw, dh;
    GLuint VaoId;
 
    /* Defaults. */
-   /* desktop_w and desktop_h get set in naev.c when initializing. */
-   dw = gl_screen.desktop_w;
-   dh = gl_screen.desktop_h;
    memset( &gl_screen, 0, sizeof(gl_screen) );
    flags  = SDL_WINDOW_OPENGL;
-   gl_screen.desktop_w = dw;
-   gl_screen.desktop_h = dh;
 
    /* Load configuration. */
 
