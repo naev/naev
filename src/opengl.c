@@ -374,8 +374,6 @@ static int gl_createWindow( unsigned int flags )
 
    /* Finish getting attributes. */
    SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE, &gl_screen.depth );
-   gl_screen.rw = SCREEN_W;
-   gl_screen.rh = SCREEN_H;
    gl_activated = 1; /* Opengl is now activated. */
 
    return 0;
@@ -457,23 +455,23 @@ static int gl_defState (void)
 
 
 /**
- * @brief Checks to see if window needs to handle scaling.
+ * @brief Sets up dimensions in gl_screen, including scaling as needed.
  *
  *    @return 0 on success.
  */
 static int gl_setupScaling (void)
 {
    double scalew, scaleh;
-   int drawable_w, drawable_h, window_w, window_h;
 
+   /* Get the basic dimensions from SDL2. */
+   SDL_GetWindowSize(gl_screen.window, &gl_screen.w, &gl_screen.h);
+   SDL_GL_GetDrawableSize(gl_screen.window, &gl_screen.rw, &gl_screen.rh);
    /* Calculate scale factor, if OS has native HiDPI scaling. */
-   SDL_GL_GetDrawableSize(gl_screen.window, &drawable_w, &drawable_h);
-   SDL_GetWindowSize(gl_screen.window, &window_w, &window_h);
-   gl_screen.dwscale = (double)window_w / (double)drawable_w;
-   gl_screen.dhscale = (double)window_h / (double)drawable_h;
+   gl_screen.dwscale = (double)gl_screen.w / (double)gl_screen.rw;
+   gl_screen.dhscale = (double)gl_screen.h / (double)gl_screen.rh;
 
    /* Combine scale factor from OS with the one in Naev's config */
-   gl_screen.scale *= fmax(gl_screen.dwscale, gl_screen.dhscale);
+   gl_screen.scale = fmax(gl_screen.dwscale, gl_screen.dhscale) / conf.scalefactor;
 
    /* New window is real window scaled. */
    gl_screen.nw = (double)gl_screen.rw * gl_screen.scale;
@@ -613,15 +611,8 @@ int gl_init (void)
  */
 void gl_resize (void)
 {
-   SDL_GetWindowSize(gl_screen.window, &gl_screen.w, &gl_screen.h);
-   SDL_GL_GetDrawableSize(gl_screen.window, &gl_screen.rw, &gl_screen.rh);
-
-   glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
-
-   /* Reset scaling. */
-   gl_screen.scale = 1./conf.scalefactor;
-
    gl_setupScaling();
+   glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
    gl_setDefViewport( 0, 0, gl_screen.nw, gl_screen.nh );
    gl_defViewport();
 
