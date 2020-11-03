@@ -36497,10 +36497,6 @@ msgstr "Naev im Vollbildmodus ausführen"
 msgid "Use video modesetting when fullscreen is enabled"
 msgstr "Video-Moduseinstellung benutzen, falls Vollbild aktiviert ist"
 
-#: src/conf.c:982
-msgid "Minimize on focus loss"
-msgstr "Bei Fokusverlust minimieren"
-
 #. FPS
 #: src/conf.c:987
 msgid "Display a framerate counter"

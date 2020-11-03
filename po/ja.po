@@ -37989,10 +37989,6 @@ msgstr ""
 msgid "Use video modesetting when fullscreen is enabled"
 msgstr ""
 
-#: src/conf.c:975
-msgid "Minimize on focus loss"
-msgstr ""
-
 #: src/conf.c:980
 msgid "Display a framerate counter"
 msgstr ""
