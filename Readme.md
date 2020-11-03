@@ -52,8 +52,7 @@ distributions.
 Run:
 
 ```
-bash
-meson setup build .
+meson setup builddir .
 cd build
 meson compile
 ```
