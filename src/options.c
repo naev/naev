@@ -1250,10 +1250,11 @@ static void opt_video( unsigned int wid )
    y -= 30;
    SDL_DisplayMode mode;
    int k;
-   int n = SDL_GetNumDisplayModes( 0 );
+   int display_index = SDL_GetWindowDisplayIndex( gl_screen.window );
+   int n = SDL_GetNumDisplayModes( display_index );
    j = 1;
    for (i=0; i<n; i++) {
-      SDL_GetDisplayMode( 0, i, &mode  );
+      SDL_GetDisplayMode( display_index, i, &mode  );
       if ((mode.w == conf.width) && (mode.h == conf.height))
          j = 0;
    }
@@ -1266,7 +1267,7 @@ static void opt_video( unsigned int wid )
       nres     = 1;
    }
    for (i=0; i<n; i++) {
-      SDL_GetDisplayMode( 0, i, &mode  );
+      SDL_GetDisplayMode( display_index, i, &mode  );
       res[ nres ] = malloc(16);
       nsnprintf( res[ nres ], 16, "%dx%d", mode.w, mode.h );
 
