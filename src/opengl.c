@@ -84,6 +84,7 @@ static int intel_vendor = 0;
 /* gl */
 static int gl_setupAttributes (void);
 static int gl_createWindow( unsigned int flags );
+static int gl_getFullscreenMode (void);
 static int gl_getGLInfo (void);
 static int gl_defState (void);
 static int gl_setupScaling (void);
@@ -309,33 +310,46 @@ static int gl_setupAttributes (void)
 int gl_setupFullscreen (void)
 {
    int display_index;
-   int mode;
+   int ok;
    SDL_DisplayMode target, closest;
 
-   mode = conf.modesetting ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_FULLSCREEN_DESKTOP;
    display_index = SDL_GetWindowDisplayIndex( gl_screen.window );
 
-   if (!conf.fullscreen)
-      return SDL_SetWindowFullscreen( gl_screen.window, 0 );
-   else if (!conf.modesetting)
-      return SDL_SetWindowFullscreen( gl_screen.window, mode );
+   if (conf.fullscreen && conf.modesetting) {
+      /* Try to use desktop resolution if nothing is specifically set. */
+      if (conf.explicit_dim) {
+         SDL_GetWindowDisplayMode( gl_screen.window, &target );
+         target.w = conf.width;
+         target.h = conf.height;
+      }
+      else
+         SDL_GetDesktopDisplayMode( display_index, &target );
 
-   /* Try to use desktop resolution if nothing is specifically set. */
-   if (conf.explicit_dim) {
-      SDL_GetWindowDisplayMode( gl_screen.window, &target );
-      target.w = conf.width;
-      target.h = conf.height;
+      if (SDL_GetClosestDisplayMode( display_index, &target, &closest ) == NULL)
+         SDL_GetDisplayMode( display_index, 0, &closest ); /* fall back to the best one */
+
+      SDL_SetWindowDisplayMode( gl_screen.window, &closest );
    }
-   else
-      SDL_GetDesktopDisplayMode( display_index, &target );
-
-   if (SDL_GetClosestDisplayMode( display_index, &target, &closest ) == NULL)
-      SDL_GetDisplayMode( display_index, 0, &closest ); /* fall back to the best one */
-
-   SDL_SetWindowDisplayMode( gl_screen.window, &closest );
-   return SDL_SetWindowFullscreen( gl_screen.window, mode );
+   ok = SDL_SetWindowFullscreen( gl_screen.window, gl_getFullscreenMode() );
+   /* HACK: Force pending resize events to be processed, particularly on Wayland. */
+   SDL_PumpEvents();
+   SDL_GL_SwapWindow(gl_screen.window);
+   SDL_GL_SwapWindow(gl_screen.window);
+   return ok;
 }
 
+
+/**
+ * @brief Returns the fullscreen configuration as SDL2 flags.
+ *
+ * @return Appropriate combination of SDL_WINDOW_FULLSCREEN* flags.
+ */
+static int gl_getFullscreenMode (void)
+{
+   if (conf.fullscreen)
+      return conf.modesetting ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_FULLSCREEN_DESKTOP;
+   return 0;
+}
 
 /**
  * @brief Creates the OpenGL window.
@@ -529,17 +543,10 @@ int gl_init (void)
 
    /* Defaults. */
    memset( &gl_screen, 0, sizeof(gl_screen) );
-   flags  = SDL_WINDOW_OPENGL;
 
-   /* Load configuration. */
-
-   if (conf.fullscreen) {
+   flags = SDL_WINDOW_OPENGL | gl_getFullscreenMode();
+   if (conf.fullscreen)
       gl_screen.flags |= OPENGL_FULLSCREEN;
-      if (conf.modesetting)
-         flags |= SDL_WINDOW_FULLSCREEN;
-      else
-         flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
-   }
 
    /* Initializes Video */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
