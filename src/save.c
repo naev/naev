@@ -119,7 +119,7 @@ int save_all (void)
 
    /* Save the version and such. */
    xmlw_startElem(writer,"version");
-   xmlw_elem( writer, "naev", "%d.%d.%d", VMAJOR, VMINOR, VREV );
+   xmlw_elem( writer, "naev", "%s", VERSION );
    xmlw_elem( writer, "data", "%s", ndata_name() );
    xmlw_endElem(writer); /* "version" */
 

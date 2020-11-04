@@ -1,0 +1,2 @@
+#!/bin/sh
+tail -n +2 "$MESON_SOURCE_ROOT/po/LINGUAS" > "$MESON_SOURCE_ROOT/dat/LANGUAGES"

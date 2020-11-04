@@ -88,6 +88,8 @@ src/shaders_c_gen
 /.cproject
 /.project
 
+meson-bin/
+
 bin/
 utils/starmap/*.svg
 utils/starmap/*.png

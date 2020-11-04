@@ -20,7 +20,7 @@ typedef struct nsave_s {
    char *path; /**< File path. */
 
    /* Naev info. */
-   int version[3]; /**< Naev version in MAJOR/MINOR/PATCH format. */
+   char *version; /**< Naev version. */
    char *data; /**< Data name. */
 
    /* Player info. */

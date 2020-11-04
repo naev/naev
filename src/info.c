@@ -198,13 +198,13 @@ static void info_openMain( unsigned int wid )
    nt = ntime_pretty( ntime_get(), 2 );
    window_addText( wid, 40, 20, 120, h-80,
          0, "txtDPilot", &gl_smallFont, NULL,
-         _("Pilot:\n"
-         "Date:\n"
-         "Combat Rating:\n"
+         _("\anPilot:\a0\n"
+         "\anDate:\a0\n"
+         "\anCombat Rating:\a0\n"
          "\n"
-         "Money:\n"
-         "Ship:\n"
-         "Fuel:")
+         "\anMoney:\a0\n"
+         "\anShip:\a0\n"
+         "\anFuel:\a0")
          );
    credits2str( creds, player.p->credits, 2 );
    nsnprintf( str, 128,
@@ -222,7 +222,7 @@ static void info_openMain( unsigned int wid )
          player.p->name,
          player.p->fuel, pilot_getJumps(player.p) );
    window_addText( wid, 180, 20,
-         200, h-80,
+         w-80-200-40+20-180, h-80,
          0, "txtPilot", &gl_smallFont, NULL, str );
    free(nt);
 
@@ -234,15 +234,20 @@ static void info_openMain( unsigned int wid )
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSetGUI", _("Set GUI"), info_setGui );
 
-   /* List. */
    buf = player_getLicenses( &nlicenses );
-   licenses = malloc(sizeof(char*)*nlicenses);
-   for (i=0; i<nlicenses; i++)
-      licenses[i] = strdup(buf[i]);
+   /* List. */
+   if(nlicenses == 0){
+     licenses = malloc(sizeof(char*));
+     licenses[0] = strdup("None");
+   } else {
+     licenses = malloc(sizeof(char*) * nlicenses);
+     for (i=0; i<nlicenses; i++)
+        licenses[i] = strdup(buf[i]);
+   }
    window_addText( wid, -20, -40, w-80-200-40-40, 20, 1, "txtList",
          NULL, NULL, _("Licenses") );
    window_addList( wid, -20, -70, w-80-200-40-40, h-110-BUTTON_HEIGHT,
-         "lstLicenses", licenses, nlicenses, 0, NULL );
+         "lstLicenses", licenses, (nlicenses || 1), 0, NULL );
 }
 
 
@@ -391,28 +396,28 @@ static void info_openShip( unsigned int wid )
    /* Text. */
    window_addText( wid, 40, -60, 100, h-60, 0, "txtSDesc", &gl_smallFont,
          NULL,
-         _("Name:\n"
-         "Model:\n"
-         "Class:\n"
-         "Crew:\n"
+         _("\anName:\a0\n"
+         "\anModel:\a0\n"
+         "\anClass:\a0\n"
+         "\anCrew:\a0\n"
          "\n"
-         "Mass:\n"
-         "Jump Time:\n"
-         "Thrust:\n"
-         "Speed:\n"
-         "Turn:\n"
-         "Time Dilation:\n"
+         "\anMass:\a0\n"
+         "\anJump Time:\a0\n"
+         "\anThrust:\a0\n"
+         "\anSpeed:\a0\n"
+         "\anTurn:\a0\n"
+         "\anTime Dilation:\a0\n"
          "\n"
-         "Absorption:\n"
-         "Shield:\n"
-         "Armour:\n"
-         "Energy:\n"
-         "Cargo Space:\n"
-         "Fuel:\n"
+         "\anAbsorption:\a0\n"
+         "\anShield:\a0\n"
+         "\anArmour:\a0\n"
+         "\anEnergy:\a0\n"
+         "\anCargo Space:\a0\n"
+         "\anFuel:\a0\n"
          "\n"
-         "Stats:\n")
+         "\anStats:\a0\n")
          );
-   window_addText( wid, 180, -60, w-300., h-60, 0, "txtDDesc", &gl_smallFont,
+   window_addText( wid, 180, -60, w-20-180-180., h-60, 0, "txtDDesc", &gl_smallFont,
          NULL, NULL );
 
    /* Custom widget. */
@@ -1000,7 +1005,7 @@ static void info_openMissions( unsigned int wid )
    /* text */
    window_addText( wid, 300+40, -60,
          200, 40, 0, "txtSReward",
-         &gl_smallFont, NULL, _("Reward:") );
+         &gl_smallFont, NULL, _("\anReward:\a0") );
    window_addText( wid, 300+40, -80,
          200, 40, 0, "txtReward", &gl_smallFont, NULL, NULL );
    window_addText( wid, 300+40, -120,

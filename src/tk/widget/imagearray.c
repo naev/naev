@@ -199,7 +199,7 @@ static void iar_render( Widget* iar, double bx, double by )
             if (is_selected) {
                toolkit_drawRect( xcurs + 2.,
                      ycurs + 2.,
-                     w - 5., h - 5., &cDarkBlue, NULL );
+                     w - 5., h - 5., &cDarkGreen, NULL );
             } else {
                toolkit_drawRect( xcurs + 2.,
                      ycurs + 2.,
@@ -208,7 +208,7 @@ static void iar_render( Widget* iar, double bx, double by )
          } else if (is_selected) {
             toolkit_drawRect( xcurs + 2.,
                   ycurs + 2.,
-                  w - 5., h - 5., &cGreen, NULL );
+                  w - 5., h - 5., &cDarkGreen, NULL );
          }
 
          /* image */
@@ -226,7 +226,7 @@ static void iar_render( Widget* iar, double bx, double by )
          /* caption */
          if (iar->dat.iar.images[pos].caption != NULL)
             gl_printMidRaw( &gl_smallFont, iar->dat.iar.iw, xcurs + 5., ycurs + 5.,
-                     &fontcolour, iar->dat.iar.images[pos].caption );
+                     &fontcolour, -1., iar->dat.iar.images[pos].caption );
 
          /* quantity. */
          if (iar->dat.iar.images[pos].quantity > 0) {
@@ -241,7 +241,7 @@ static void iar_render( Widget* iar, double bx, double by )
             /* Slot size letter. */
             gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
                   xcurs + iar->dat.iar.iw - 4., ycurs + iar->dat.iar.ih + 7.,
-                  &fontcolour, iar->dat.iar.images[pos].slottype );
+                  &fontcolour, -1., iar->dat.iar.images[pos].slottype );
          }
 
          /* outline */
@@ -268,8 +268,8 @@ static void iar_render( Widget* iar, double bx, double by )
    /*
     * Final outline.
     */
-   toolkit_drawOutline( x+1, y+1, iar->w-2, iar->h-2, 1., toolkit_colLight, NULL );
-   toolkit_drawOutline( x+1, y+1, iar->w-2, iar->h-2, 2., toolkit_colDark, NULL );
+   // toolkit_drawOutline( x+1, y+1, iar->w-2, iar->h-2, 1., toolkit_colLight, NULL );
+   // toolkit_drawOutline( x+1, y+1, iar->w-2, iar->h-2, 2., toolkit_colDark, NULL );
 }
 
 

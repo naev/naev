@@ -97,6 +97,7 @@ source = files(
    'queue.c',
    'rng.c',
    'save.c',
+   'semver.c',
    'ship.c',
    'shiplog.c',
    'shipstats.c',

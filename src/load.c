@@ -89,7 +89,6 @@ static int load_load( nsave_t *save, const char *path )
    xmlDocPtr doc;
    xmlNodePtr root, parent, node, cur;
    int cycles, periods, seconds;
-   char *version = NULL;
 
    memset( save, 0, sizeof(nsave_t) );
 
@@ -118,7 +117,7 @@ static int load_load( nsave_t *save, const char *path )
       if (xml_isNode(parent, "version")) {
          node = parent->xmlChildrenNode;
          do {
-            xmlr_strd(node, "naev", version);
+            xmlr_strd(node, "naev", save->version);
             xmlr_strd(node, "data", save->data);
          } while (xml_nextNode(node));
          continue;
@@ -159,12 +158,6 @@ static int load_load( nsave_t *save, const char *path )
          continue;
       }
    } while (xml_nextNode(parent));
-
-   /* Handle version. */
-   if (version != NULL) {
-      naev_versionParse( save->version, version, strlen(version) );
-      free(version);
-   }
 
    /* Clean up. */
    xmlFreeDoc(doc);
@@ -263,6 +256,9 @@ void load_free (void)
          if (ns->name != NULL)
             free(ns->name);
 
+         if (ns->version != NULL)
+            free(ns->version);
+
          if (ns->data != NULL)
             free(ns->data);
 
@@ -336,7 +332,7 @@ void load_loadGameMenu (void)
 
    /* Player text. */
    window_addText( wid, -20, -40, 200, LOAD_HEIGHT-40-20-2*(BUTTON_HEIGHT+20),
-         0, "txtPilot", NULL, NULL, NULL );
+         0, "txtPilot", &gl_smallFont, NULL, NULL );
 
    window_addList( wid, 20, -50,
          LOAD_WIDTH-200-60, LOAD_HEIGHT-110,
@@ -372,7 +368,7 @@ static void load_menu_update( unsigned int wid, char *str )
    nsave_t *ns;
    int n;
    char *save;
-   char buf[256], credits[ECON_CRED_STRLEN], date[64], version[256];
+   char buf[256], credits[ECON_CRED_STRLEN], date[64];
 
    /* Make sure list is ok. */
    save = toolkit_getList( wid, "lstSaves" );
@@ -387,23 +383,22 @@ static void load_menu_update( unsigned int wid, char *str )
    /* Display text. */
    credits2str( credits, ns->credits, 2 );
    ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
-   naev_versionString( version, sizeof(version), ns->version[0], ns->version[1], ns->version[2] );
    nsnprintf( buf, sizeof(buf),
-         _("Name:\n"
-         "   %s\n"
-         "Version:\n"
-         "   %s\n"
-         "Date:\n"
-         "   %s\n"
-         "Planet:\n"
-         "   %s\n"
-         "Credits:\n"
-         "   %s\n"
-         "Ship Name:\n"
-         "   %s\n"
-         "Ship Model:\n"
-         "   %s"),
-         ns->name, version, date, ns->planet,
+         _("\anName:\n"
+         "\a0   %s\n\n"
+         "\anVersion:\n"
+         "\a0   %s\n\n"
+         "\anDate:\n"
+         "\a0   %s\n\n"
+         "\anPlanet:\n"
+         "\a0   %s\n\n"
+         "\anCredits:\n"
+         "\a0   %s\n\n"
+         "\anShip Name:\n"
+         "\a0   %s\n\n"
+         "\anShip Model:\n"
+         "\a0   %s"),
+         ns->name, ns->version, date, ns->planet,
          credits, ns->shipname, ns->shipmodel );
    window_modifyText( wid, "txtPilot", buf );
 }
@@ -419,7 +414,6 @@ static void load_menu_load( unsigned int wdw, char *str )
    int wid, pos;
    nsave_t *ns;
    int n;
-   char version[64];
    int diff;
 
    wid = window_get( "Load Game" );
@@ -434,14 +428,12 @@ static void load_menu_load( unsigned int wdw, char *str )
    /* Check version. */
    diff = naev_versionCompare( ns[pos].version );
    if (ABS(diff) >= 2) {
-      naev_versionString( version, sizeof(version), ns[pos].version[0],
-            ns[pos].version[1], ns[pos].version[2] );
       if (!dialogue_YesNo( _("Save game version mismatch"),
             _("Save game '%s' version does not match Naev version:\n"
             "   Save version: \ar%s\a0\n"
             "   Naev version: %s\n"
             "Are you sure you want to load this game? It may lose data."),
-            save, version, naev_version(0) ))
+            save, ns->version, VERSION ))
          return;
    }
 

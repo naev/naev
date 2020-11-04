@@ -101,6 +101,7 @@
 #include "toolkit.h"
 #include "unidiff.h"
 #include "weapon.h"
+#include "semver.h"
 
 #if defined ENABLE_NLS && ENABLE_NLS
 #include <locale.h>
@@ -114,12 +115,14 @@
 
 static int quit               = 0; /**< For primary loop */
 static unsigned int time_ms   = 0; /**< used to calculate FPS and movement. */
-static char short_version[64]; /**< Contains version. */
-static char human_version[256]; /**< Human readable version. */
 static glTexture *loading     = NULL; /**< Loading screen. */
 static char *binary_path      = NULL; /**< argv[0] */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
 static int fps_skipped        = 0; /**< Skipped last frame? */
+/* Version stuff. */
+static semver_t version_binary; /**< Naev binary version. */
+//static semver_t version_data; /**< Naev data version. */
+static char version_human[256]; /**< Human readable version. */
 
 
 /*
@@ -202,6 +205,10 @@ int main( int argc, char** argv )
    //bindtextdomain("naev", "po/");
    textdomain( PACKAGE_NAME );
 #endif /* defined ENABLE_NLS && ENABLE_NLS */
+
+   /* Parse version. */
+   if (semver_parse( VERSION, &version_binary ))
+      WARN( _("Failed to parse version string '%s'!"), VERSION );
 
    /* Print the version */
    LOG( " %s v%s (%s)", APPNAME, naev_version(0), HOST );
@@ -303,10 +310,20 @@ int main( int argc, char** argv )
    else
       lang = conf.language;
    nsetenv( "LANGUAGE", lang, 1 );
+   /* Horrible hack taken from https://www.gnu.org/software/gettext/manual/html_node/gettext-grok.html .
+    * Not entirely sure it is necessary, but just in case... */
+   {
+      extern int  _nl_msg_cat_cntr;
+      ++_nl_msg_cat_cntr;
+   }
+   /* This function below fails to actually change the locale, which is why we end up
+    * relying on LANGUAGE variable. */
    /*
    if (setlocale( LC_ALL, lang )==NULL)
       WARN(_("Unable to set the locale to '%s'!"), lang );
    */
+   /* If we don't disable LC_NUMERIC, lots of stuff blows up because 1,000 can be interpreted as
+    * 1.0 in certain languages. */
    if (setlocale( LC_NUMERIC, "C" )==NULL) /* Disable numeric locale part. */
       WARN(_("Unable to set LC_NUMERIC to 'C'!"));
    nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, ndata_getPath() );
@@ -346,7 +363,7 @@ int main( int argc, char** argv )
    gl_fontInit( &gl_defFontMono, FONT_MONOSPACE_PATH, conf.font_size_def );
 
    /* Detect size changes that occurred after window creation. */
-   naev_resize( -1., -1. );
+   naev_resize();
 
    /* Display the load screen. */
    loadscreen_load();
@@ -405,7 +422,7 @@ int main( int argc, char** argv )
    load_all();
 
    /* Detect size changes that occurred during load. */
-   naev_resize( -1., -1. );
+   naev_resize();
 
    /* Generate the CSV. */
    if (conf.devcsv)
@@ -435,7 +452,7 @@ int main( int argc, char** argv )
 
    /* Incomplete game note (shows every time version number changes). */
    if ( (conf.lastversion == NULL)
-         || (strcmp(conf.lastversion, naev_version(0)) != 0) ) {
+         || (naev_versionCompare(conf.lastversion) != 0) ) {
       conf.lastversion = strdup( naev_version(0) );
       dialogue_msg(
          _("Welcome to Naev"),
@@ -467,7 +484,7 @@ int main( int argc, char** argv )
          }
          else if (event.type == SDL_WINDOWEVENT &&
                event.window.event == SDL_WINDOWEVENT_RESIZED) {
-            naev_resize( event.window.data1, event.window.data2 );
+            naev_resize();
             continue;
          }
          input_handle(&event); /* handles all the events and player keybinds */
@@ -630,7 +647,7 @@ void loadscreen_render( double done, const char *msg )
    gl_renderRect( x, y, done*w, h, &col );
 
    /* Draw text. */
-   gl_printRaw( &gl_defFont, x, y + h + 3., &cFontGreen, msg );
+   gl_printRaw( &gl_defFont, x, y + h + 3., &cFontGreen, -1., msg );
 
    /* Flip buffers. */
    SDL_GL_SwapWindow( gl_screen.window );
@@ -770,11 +787,11 @@ void main_loop( int update )
 /**
  * @brief Wrapper for gl_resize that handles non-GL reinitialization.
  */
-void naev_resize( int w, int h )
+void naev_resize (void)
 {
    /* Auto-detect window size. */
-   if ((w < 0.) && (h < 0.))
-      SDL_GetWindowSize( gl_screen.window, &w, &h );
+   int w, h;
+   SDL_GetWindowSize( gl_screen.window, &w, &h );
 
    /* Nothing to do. */
    if ((w == gl_screen.rw) && (h == gl_screen.rh))
@@ -826,7 +843,7 @@ void naev_toggleFullscreen (void)
       SDL_SetWindowFullscreen( gl_screen.window, 0 );
 
       SDL_SetWindowSize( gl_screen.window, conf.width, conf.height );
-      naev_resize( conf.width, conf.height );
+      naev_resize();
       SDL_SetWindowPosition( gl_screen.window,
             SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
 
@@ -852,7 +869,7 @@ void naev_toggleFullscreen (void)
 
    SDL_GetWindowSize( gl_screen.window, &w, &h );
    if ((w != conf.width) || (h != conf.height))
-      naev_resize( w, h );
+      naev_resize();
 }
 
 
@@ -1102,7 +1119,7 @@ static void display_fps( const double dt )
 
    y = SCREEN_H / 3. - gl_defFontMono.h / 2.;
    gl_printMidRaw( &gl_defFontMono, SCREEN_W, 0., y,
-         NULL, _("PAUSED") );
+         NULL, -1., _("PAUSED") );
 }
 
 
@@ -1146,26 +1163,6 @@ static void window_caption (void)
    SDL_SetWindowIcon(  gl_screen.window, naev_icon );
 }
 
-/**
- * @brief Gets a short human readable string of the version.
- *
- *    @param[out] str String to output.
- *    @param slen Maximum length of the string.
- *    @param major Major version.
- *    @param minor Minor version.
- *    @param rev Revision.
- *    @return Number of characters written.
- */
-int naev_versionString( char *str, size_t slen, int major, int minor, int rev )
-{
-   int n;
-   if (rev<0)
-      n = nsnprintf( str, slen, "%d.%d.0-beta.%d", major, minor, ABS(rev) );
-   else
-      n = nsnprintf( str, slen, "%d.%d.%d", major, minor, rev );
-   return n;
-}
-
 
 /**
  * @brief Returns the version in a human readable string.
@@ -1175,95 +1172,50 @@ int naev_versionString( char *str, size_t slen, int major, int minor, int rev )
  */
 char *naev_version( int long_version )
 {
-   /* Set short version if needed. */
-   if (short_version[0] == '\0')
-      naev_versionString( short_version, sizeof(short_version), VMAJOR, VMINOR, VREV );
-
    /* Set up the long version. */
    if (long_version) {
-      if (human_version[0] == '\0')
-         nsnprintf( human_version, sizeof(human_version),
-               " "APPNAME" v%s%s - %s", short_version,
+      if (version_human[0] == '\0')
+         nsnprintf( version_human, sizeof(version_human),
+               " "APPNAME" v%s%s - %s", VERSION,
 #ifdef DEBUGGING
                _(" debug"),
 #else /* DEBUGGING */
                "",
 #endif /* DEBUGGING */
                ndata_name() );
-      return human_version;
+      return version_human;
    }
 
-   return short_version;
+   return VERSION;
 }
 
 
-/**
- * @brief Parses the naev version.
- *
- *    @param[out] version Version parsed.
- *    @param buf Buffer to parse.
- *    @param nbuf Length of the buffer to parse.
- *    @return 0 on success.
- */
-int naev_versionParse( int version[3], char *buf, int nbuf )
-{
-   int i, j, s;
-   char cbuf[64];
-
-   /* Check length. */
-   if (nbuf > (int)sizeof(cbuf)) {
-      WARN( _("Version format is too long!") );
-      return -1;
-   }
-
-   s = 0;
-   j = 0;
-   for (i=0; i < MIN(nbuf,(int)sizeof(cbuf)); i++) {
-      cbuf[j++] = buf[i];
-      if (buf[i] == '-')
-         break;
-      if (buf[i] == '.') {
-         cbuf[j] = '\0';
-         version[s++] = atoi(cbuf);
-         if (s >= 3) {
-            WARN( _("Version has too many '.'.") );
-            return -1;
-         }
-         j = 0;
-      }
-   }
-   if (s<3) {
-      cbuf[j++] = '\0';
-      version[s++] = atoi(cbuf);
-   }
-
-   return 0;
+static int
+binary_comparison (int x, int y) {
+  if (x == y) return 0;
+  if (x > y) return 1;
+  return -1;
 }
-
-
 /**
  * @brief Compares the version against the current naev version.
  *
  *    @return positive if version is newer or negative if version is older.
  */
-int naev_versionCompare( int version[3] )
+int naev_versionCompare( char *version )
 {
-   if (VMAJOR > version[0])
-      return -3;
-   else if (VMAJOR < version[0])
-      return +3;
+   int res;
+   semver_t sv;
 
-   if (VMINOR > version[1])
-      return -2;
-   else if (VMINOR < version[1])
-      return +2;
+   if (semver_parse( version, &sv ))
+      WARN( _("Failed to parse version string '%s'!"), version );
 
-   if (VREV > version[2])
-      return -1;
-   else if (VREV < version[2])
-      return +1;
-
-   return 0;
+   if ((res = 3*binary_comparison(version_binary.major, sv.major)) == 0) {
+      if ((res = 2*binary_comparison(version_binary.minor, sv.minor)) == 0) {
+         res = semver_compare( version_binary, sv );
+      }
+   }
+   semver_free( &sv );
+   return res;
 }
 
 
