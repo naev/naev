@@ -1060,7 +1060,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          continue;
       }
 
-      /* Used by in-valid and NSH utils, no in-game meaning. */
+      /* Used by on-valid and NSH utils, no in-game meaning. */
       if (xml_isNode(node,"mission"))
          continue;
 
