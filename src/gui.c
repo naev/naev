@@ -1672,7 +1672,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
     * as a font change, but using this fix for now. */
    // col.a = MIN( col.a, 0.99 );
    if (overlay)
-      gl_printMarkerRaw( &gl_smallFont, cx+(vr/2.5), cy - (vr/4.0), &col, planet->name );
+      gl_printMarkerRaw( &gl_smallFont, cx+(vr/1.5), cy - 4, &col, planet->name );
 }
 
 
