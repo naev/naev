@@ -47,7 +47,6 @@
 /*
  * Contains info about the opengl screen
  */
-#define OPENGL_FULLSCREEN  (1<<0) /**< Fullscreen. */
 #define OPENGL_DOUBLEBUF   (1<<1) /**< Doublebuffer. */
 #define OPENGL_VSYNC       (1<<2) /**< Sync to monitor vertical refresh rate. */
 #define gl_has(f)    (gl_screen.flags & (f)) /**< Check for the flag */

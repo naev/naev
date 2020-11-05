@@ -424,8 +424,7 @@ static int gl_getGLInfo (void)
    intel_vendor = !!(nstrcasestr(vendor, "Intel") != NULL);
 
    /* Debug happiness */
-   DEBUG(_("OpenGL Window Created: %dx%d@%dbpp %s"), SCREEN_W, SCREEN_H, gl_screen.depth,
-         gl_has(OPENGL_FULLSCREEN)?_("fullscreen"):_("window"));
+   DEBUG(_("OpenGL Drawable Created: %dx%d@%dbpp"), gl_screen.rw, gl_screen.rh, gl_screen.depth);
    DEBUG(_("r: %d, g: %d, b: %d, a: %d, db: %s, fsaa: %d, tex: %d"),
          gl_screen.r, gl_screen.g, gl_screen.b, gl_screen.a,
          gl_has(OPENGL_DOUBLEBUF) ? _("yes") : _("no"),
@@ -545,8 +544,6 @@ int gl_init (void)
    memset( &gl_screen, 0, sizeof(gl_screen) );
 
    flags = SDL_WINDOW_OPENGL | gl_getFullscreenMode();
-   if (conf.fullscreen)
-      gl_screen.flags |= OPENGL_FULLSCREEN;
 
    /* Initializes Video */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
