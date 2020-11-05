@@ -107,7 +107,7 @@ ships = {
       bomber    = { "Soromid Marauder" },
       corvette  = { "Soromid Odium" },
       destroyer = { "Soromid Nyx" },
-      cruiser   = { "Soromid Ira" },
+      cruiser   = { "Soromid Ira", "Soromid Vox" },
       carrier   = { "Soromid Arx" },
    },
    ["Za'lek"] = {

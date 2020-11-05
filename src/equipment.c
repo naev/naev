@@ -317,7 +317,7 @@ void equipment_open( unsigned int wid )
    equipment_genLists( wid );
 
    /* Separator. */
-   window_addRect( wid, 20 + sw + 20, -40, 2, h-60, "rctDivider", &cGrey50, 0 );
+   // window_addRect( wid, 20 + sw + 20, -40, 2, h-60, "rctDivider", &cGrey50, 0 );
 
    /* Slot widget. */
    equipment_slotWidget( wid, 20 + sw + 40, -40, ew, eh, &eq_wgt );
@@ -542,7 +542,6 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    double percent;
    double x, y;
    double w, h;
-   const glColour *lc, *dc;
 
    /* Must have selected ship. */
    if (eq_wgt.selected == NULL)
@@ -551,8 +550,6 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    p = eq_wgt.selected;
 
    /* Render CPU and energy bars. */
-   lc = &cWhite;
-   dc = &cGrey60;
    w = 120;
    h = 20;
    x = bx + 50.;
@@ -562,10 +559,8 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
       x, y + h + 10., &cFontWhite, -1, _("CPU Free") );
 
    percent = (p->cpu_max > 0) ? CLAMP(0., 1., (float)p->cpu / (float)p->cpu_max) : 0.;
-   toolkit_drawRect( x, y, w * percent, h, &cFriend, NULL );
-   toolkit_drawRect( x + w * percent, y, w * (1.-percent), h, &cHostile, NULL );
-   toolkit_drawOutline( x, y, w, h, 1., lc, NULL  );
-   toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
+   toolkit_drawRect( x, y - 2, w * percent, h + 4, &cFriend, NULL );
+   toolkit_drawRect( x + w * percent, y - 2, w * (1.-percent), h + 4, &cHostile, NULL );
    gl_printMid( &gl_smallFont, w,
       x, y + h / 2. - gl_smallFont.h / 2.,
       &cFontWhite, "%d / %d", p->cpu, p->cpu_max );
@@ -579,10 +574,8 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
 
    percent = (p->stats.engine_limit > 0) ? CLAMP(0., 1.,
       (p->stats.engine_limit - p->solid->mass) / p->stats.engine_limit) : 0.;
-   toolkit_drawRect( x, y, w * percent, h, &cFriend, NULL );
-   toolkit_drawRect( x + w * percent, y, w * (1.-percent), h, &cRestricted, NULL );
-   toolkit_drawOutline( x, y, w, h, 1., lc, NULL  );
-   toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
+   toolkit_drawRect( x, y - 2, w * percent, h + 4, &cFriend, NULL );
+   toolkit_drawRect( x + w * percent, y - 2, w * (1.-percent), h + 4, &cRestricted, NULL );
    gl_printMid( &gl_smallFont, w,
       x, y + h / 2. - gl_smallFont.h / 2.,
       &cFontWhite, "%.0f / %.0f", p->stats.engine_limit - p->solid->mass, p->stats.engine_limit );
@@ -1449,7 +1442,7 @@ static void equipment_genOutfitList( unsigned int wid )
 
       /* Only create the filter widget if it will be a reasonable size. */
       if (iw >= 30) {
-         window_addInput( wid, ix, iy, iw, ih, EQUIPMENT_FILTER, 32, 1, &gl_smallFont );
+         window_addInput( wid, ix+15, iy+1, iw, ih, EQUIPMENT_FILTER, 32, 1, &gl_smallFont );
          window_setInputCallback( wid, EQUIPMENT_FILTER, equipment_filterOutfits );
       }
    }
@@ -1478,8 +1471,8 @@ static void equipment_genOutfitList( unsigned int wid )
    free(outfits);
 
    /* Create the actual image array. */
-   window_addImageArray( wid, x, y, ow, oh - 31,
-         EQUIPMENT_OUTFITS, 50., 50.,
+   window_addImageArray( wid, x + 4, y + 3, ow - 6, oh - 37,
+         EQUIPMENT_OUTFITS, 96., 96.,
          coutfits, noutfits,
          equipment_updateOutfits,
          equipment_rightClickOutfits );

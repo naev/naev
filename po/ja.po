@@ -37986,11 +37986,7 @@ msgid "Run Naev in full-screen mode"
 msgstr ""
 
 #: src/conf.c:971
-msgid "Use video modesetting when fullscreen is enabled (SDL2-only)"
-msgstr ""
-
-#: src/conf.c:975
-msgid "Minimize on focus loss (SDL2-only)"
+msgid "Use video modesetting when fullscreen is enabled"
 msgstr ""
 
 #: src/conf.c:980

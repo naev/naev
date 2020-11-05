@@ -83,7 +83,7 @@ static int intel_vendor = 0;
  */
 /* gl */
 static int gl_setupAttributes (void);
-static int gl_setupFullscreen( unsigned int *flags );
+static int gl_setupFullscreen (void);
 static int gl_createWindow( unsigned int flags );
 static int gl_getGLInfo (void);
 static int gl_defState (void);
@@ -304,10 +304,9 @@ static int gl_setupAttributes (void)
 /**
  * @brief Tries to set up fullscreen environment.
  *
- *    @param flags Flags to modify.
  *    @return 0 on success.
  */
-static int gl_setupFullscreen( unsigned int *flags )
+static int gl_setupFullscreen (void)
 {
    int i, j, off, toff, supported;
 
@@ -320,7 +319,6 @@ static int gl_setupFullscreen( unsigned int *flags )
       gl_screen.h = gl_screen.desktop_h;
    }
 
-   (void) flags;
    SDL_DisplayMode mode;
    int n = SDL_GetNumDisplayModes( 0 );
 
@@ -372,7 +370,6 @@ static int gl_setupFullscreen( unsigned int *flags )
 static int gl_createWindow( unsigned int flags )
 {
    int ret;
-   int w, h;
 
    /* Create the window. */
    gl_screen.window = SDL_CreateWindow( APPNAME,
@@ -380,10 +377,6 @@ static int gl_createWindow( unsigned int flags )
          SCREEN_W, SCREEN_H, flags | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
    if (gl_screen.window == NULL)
       ERR(_("Unable to create window! %s"), SDL_GetError());
-
-   /* Reinitialize resolution parameters. */
-   if (flags & SDL_WINDOW_FULLSCREEN_DESKTOP)
-      SDL_GetWindowSize( gl_screen.window, &w, &h );
 
    /* Set focus loss behaviour. */
    SDL_SetHint( SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS,
@@ -582,7 +575,7 @@ int gl_init (void)
 
    /* See if should set up fullscreen. */
    if (conf.fullscreen)
-      gl_setupFullscreen( &flags );
+      gl_setupFullscreen();
 
    /* Create the window. */
    gl_createWindow( flags );
@@ -632,10 +625,10 @@ int gl_init (void)
 }
 
 /**
- * @brief Handles a window resize and resets gl_screen parametes.
+ * @brief Handles a window resize and resets gl_screen parameters.
  *
- *    @param w New width.
- *    @param h New height.
+ *    @param w New real/drawable width.
+ *    @param h New real/drawable height.
  */
 void gl_resize( int w, int h )
 {

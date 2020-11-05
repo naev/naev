@@ -310,10 +310,20 @@ int main( int argc, char** argv )
    else
       lang = conf.language;
    nsetenv( "LANGUAGE", lang, 1 );
+   /* Horrible hack taken from https://www.gnu.org/software/gettext/manual/html_node/gettext-grok.html .
+    * Not entirely sure it is necessary, but just in case... */
+   {
+      extern int  _nl_msg_cat_cntr;
+      ++_nl_msg_cat_cntr;
+   }
+   /* This function below fails to actually change the locale, which is why we end up
+    * relying on LANGUAGE variable. */
    /*
    if (setlocale( LC_ALL, lang )==NULL)
       WARN(_("Unable to set the locale to '%s'!"), lang );
    */
+   /* If we don't disable LC_NUMERIC, lots of stuff blows up because 1,000 can be interpreted as
+    * 1.0 in certain languages. */
    if (setlocale( LC_NUMERIC, "C" )==NULL) /* Disable numeric locale part. */
       WARN(_("Unable to set LC_NUMERIC to 'C'!"));
    nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, ndata_getPath() );
@@ -353,7 +363,7 @@ int main( int argc, char** argv )
    gl_fontInit( &gl_defFontMono, FONT_MONOSPACE_PATH, conf.font_size_def );
 
    /* Detect size changes that occurred after window creation. */
-   naev_resize( -1., -1. );
+   naev_resize();
 
    /* Display the load screen. */
    loadscreen_load();
@@ -412,7 +422,7 @@ int main( int argc, char** argv )
    load_all();
 
    /* Detect size changes that occurred during load. */
-   naev_resize( -1., -1. );
+   naev_resize();
 
    /* Generate the CSV. */
    if (conf.devcsv)
@@ -442,7 +452,7 @@ int main( int argc, char** argv )
 
    /* Incomplete game note (shows every time version number changes). */
    if ( (conf.lastversion == NULL)
-         || (strcmp(conf.lastversion, naev_version(0)) != 0) ) {
+         || (naev_versionCompare(conf.lastversion) != 0) ) {
       conf.lastversion = strdup( naev_version(0) );
       dialogue_msg(
          _("Welcome to Naev"),
@@ -474,7 +484,7 @@ int main( int argc, char** argv )
          }
          else if (event.type == SDL_WINDOWEVENT &&
                event.window.event == SDL_WINDOWEVENT_RESIZED) {
-            naev_resize( event.window.data1, event.window.data2 );
+            naev_resize();
             continue;
          }
          input_handle(&event); /* handles all the events and player keybinds */
@@ -777,11 +787,11 @@ void main_loop( int update )
 /**
  * @brief Wrapper for gl_resize that handles non-GL reinitialization.
  */
-void naev_resize( int w, int h )
+void naev_resize (void)
 {
    /* Auto-detect window size. */
-   if ((w < 0.) && (h < 0.))
-      SDL_GetWindowSize( gl_screen.window, &w, &h );
+   int w, h;
+   SDL_GetWindowSize( gl_screen.window, &w, &h );
 
    /* Nothing to do. */
    if ((w == gl_screen.rw) && (h == gl_screen.rh))
@@ -833,7 +843,7 @@ void naev_toggleFullscreen (void)
       SDL_SetWindowFullscreen( gl_screen.window, 0 );
 
       SDL_SetWindowSize( gl_screen.window, conf.width, conf.height );
-      naev_resize( conf.width, conf.height );
+      naev_resize();
       SDL_SetWindowPosition( gl_screen.window,
             SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
 
@@ -859,7 +869,7 @@ void naev_toggleFullscreen (void)
 
    SDL_GetWindowSize( gl_screen.window, &w, &h );
    if ((w != conf.width) || (h != conf.height))
-      naev_resize( w, h );
+      naev_resize();
 }
 
 
@@ -1180,6 +1190,12 @@ char *naev_version( int long_version )
 }
 
 
+static int
+binary_comparison (int x, int y) {
+  if (x == y) return 0;
+  if (x > y) return 1;
+  return -1;
+}
 /**
  * @brief Compares the version against the current naev version.
  *
@@ -1187,10 +1203,19 @@ char *naev_version( int long_version )
  */
 int naev_versionCompare( char *version )
 {
+   int res;
    semver_t sv;
+
    if (semver_parse( version, &sv ))
       WARN( _("Failed to parse version string '%s'!"), version );
-   return semver_compare( version_binary, sv );
+
+   if ((res = 3*binary_comparison(version_binary.major, sv.major)) == 0) {
+      if ((res = 2*binary_comparison(version_binary.minor, sv.minor)) == 0) {
+         res = semver_compare( version_binary, sv );
+      }
+   }
+   semver_free( &sv );
+   return res;
 }
 
 

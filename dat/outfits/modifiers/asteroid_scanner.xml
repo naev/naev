@@ -7,7 +7,7 @@
   <price>200000</price>
   <description>Any scanner can give the mass, position and velocity of an asteroid. But miners prefer to know the asteroid's value. For that purpose, Milspec designed a scanner array able to deduce the surface composition from spectroscopy, and, what is more impressive, to infer the internal composition via inverse electrical impedance. Of course, that comes at a price that not any miner can pay.</description>
   <gfx_store>misc04</gfx_store>
-  <limit>reverse_thruster</limit>
+  <limit>asteroid_scanner</limit>
   <cpu>-4</cpu>
  </general>
  <specific type="modification">

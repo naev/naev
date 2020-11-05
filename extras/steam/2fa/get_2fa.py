@@ -61,16 +61,16 @@ for i in range(messages, messages-N, -1):
                     try:
                         # get the email body
                         body = part.get_payload(decode=True).decode()
+                        if content_type == "text/plain" and "attachment" not in content_disposition:
+                            # print text/plain emails and skip attachments
+                            # print(body)
+                            if "Steam" in body:
+                                found = body.find(":")+5
+                                file.write(body[found:found+5]+"\n")
+                            else:
+                                pass
                     except:
                         pass
-                    if content_type == "text/plain" and "attachment" not in content_disposition:
-                        # print text/plain emails and skip attachments
-                        # print(body)
-                        if "Steam" in body:
-                            found = body.find(":")+5
-                            file.write(body[found:found+5]+"\n")
-                        else:
-                            pass
             else:
                 pass
 file.close() 

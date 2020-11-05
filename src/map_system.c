@@ -886,7 +886,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
       yh = (h - 100 - (i+1)*5 ) * outfitSpace;
       ypos = 65 + 5*(shipSpace!=0) + (h - 100 - (i+1)*5)*shipSpace;
       window_addImageArray( wid, xpos, ypos,
-                            xw, yh, MAPSYS_OUTFITS, 64, 64,
+                            xw, yh, MAPSYS_OUTFITS, 96, 96,
                             coutfits, noutfits, map_system_array_update, map_system_array_rmouse );
       toolkit_unsetSelection( wid, MAPSYS_OUTFITS );
    }
@@ -935,7 +935,7 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
       yh = (h - 100 - (i+1)*5 ) * shipSpace;
       ypos = 65;
       window_addImageArray( wid, xpos, ypos,
-         xw, yh, MAPSYS_SHIPS, 64., 64.,
+         xw, yh, MAPSYS_SHIPS, 96., 96.,
          cships, nships, map_system_array_update, map_system_array_rmouse );
       toolkit_unsetSelection( wid, MAPSYS_SHIPS );
    }
@@ -980,7 +980,7 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
       ypos = 60 + 5*i + (h-100 - (i+1)*5 )*(outfitSpace + shipSpace);
 
       window_addImageArray( wid, xpos, ypos,
-         xw, yh, MAPSYS_TRADE, 64, 64,
+         xw, yh, MAPSYS_TRADE, 96, 96,
          cgoods, ngoods, map_system_array_update, map_system_array_rmouse );
       toolkit_unsetSelection( wid, MAPSYS_TRADE );
    }

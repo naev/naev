@@ -967,11 +967,11 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("fullscreen",conf.fullscreen);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Use video modesetting when fullscreen is enabled (SDL2-only)"));
+   conf_saveComment(_("Use video modesetting when fullscreen is enabled"));
    conf_saveBool("modesetting",conf.modesetting);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Minimize on focus loss (SDL2-only)"));
+   conf_saveComment(_("Minimize on focus loss"));
    conf_saveBool("minimize",conf.minimize);
    conf_saveEmptyLine();
 
