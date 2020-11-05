@@ -100,6 +100,7 @@ extern const glColour cFontYellow;
 extern const glColour cFontWhite;
 extern const glColour cFontGrey;
 extern const glColour cFontPurple;
+extern const glColour cFontLightOrange;
 
 const glColour* col_fromName( const char* name );
 

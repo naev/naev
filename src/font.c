@@ -1255,6 +1255,7 @@ static const glColour* gl_fontGetColour( uint32_t ch )
       case 'N': col = &cFontYellow; break; /**< Neutral */
       case 'I': col = &cFontGrey; break; /**< Inert */
       case 'R': col = &cFontOrange; break; /**< Restricted */
+      case 'O': col = &cFontLightOrange; break; /**< System alerts */
       case 'C': col = &cFontGreen; break; /**< Console */
       case '0': col = NULL; break;
       default:
