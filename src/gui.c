@@ -1361,7 +1361,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
    /* Draw name. */
    if (overlay && pilot_isFlag(p, PILOT_HILIGHT))
-      gl_printMarkerRaw( &gl_defFont, x+2*sx+5., y-gl_smallFont.h/2., &col, p->name );
+      gl_printMarkerRaw( &gl_smallFont, x+2*sx+5., y-gl_smallFont.h/2., &col, p->name );
 }
 
 
@@ -1588,6 +1588,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
 {
    int x, y;
    int cx, cy, r, rc;
+   double renderRadius;
    GLfloat vr;
    glColour col;
    Planet *planet;
@@ -1656,7 +1657,9 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    glDrawArrays( GL_LINE_STRIP, 0, 5 );
    gl_endSolidProgram();
    */
-   gl_blitTexture( marker_planet_gfx, cx - 15, cy - 15, w * 0.008, w * 0.008, 0, 0, 1, 1, &col, 0. );
+   renderRadius = MAX(vr * 1.6, 15);
+
+   gl_blitTexture( marker_planet_gfx, cx - 5, cy - 5, renderRadius, renderRadius, 0, 0, 1, 1, &col, 0. );
 
 
    /* Render name. */
@@ -1667,7 +1670,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
     * as a font change, but using this fix for now. */
    // col.a = MIN( col.a, 0.99 );
    if (overlay)
-      gl_printMarkerRaw( &gl_defFont, cx+vr+5., cy, &col, planet->name );
+      gl_printMarkerRaw( &gl_smallFont, cx+vr+5., cy, &col, planet->name );
 }
 
 
@@ -1760,7 +1763,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    glDrawArrays( GL_LINE_STRIP, 0, 4 );
    gl_endSolidProgram();
    */
-   gl_blitTexture( marker_jumppoint_gfx, cx, cy, w * 0.008, w * 0.008, 0, 0, 1, 1, &col,  -M_PI/2-jp->angle );
+   gl_blitTexture( marker_jumppoint_gfx, cx, cy, w * 0.0065, w * 0.0065, 0, 0, 1, 1, &col,  -M_PI/2-jp->angle );
 
 
    /* Render name. */
@@ -1771,7 +1774,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
     * as a font change, but using this fix for now. */
    // col.a = MIN( col.a, 0.99 );
    if (overlay)
-      gl_printMarkerRaw( &gl_defFont, cx+vr+5., cy, &col, sys_isKnown(jp->target) ? jp->target->name : _("Unknown") );
+      gl_printMarkerRaw( &gl_smallFont, cx+vr+5., cy, &col, sys_isKnown(jp->target) ? jp->target->name : _("Unknown") );
 }
 
 

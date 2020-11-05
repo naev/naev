@@ -244,7 +244,7 @@ void ovr_render( double dt )
       x = player.autonav_pos.x / res + w / 2.;
       y = player.autonav_pos.y / res + h / 2.;
       gl_renderCross( x, y, 5., &cRadar_hilight );
-      gl_printMarkerRaw( &gl_defFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, _("GOTO") );
+      gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, _("GOTO") );
    }
 
    /* render the asteroids */
@@ -284,7 +284,7 @@ static void ovr_mrkRenderAll( double res )
       gl_renderCross( x, y, 5., &cRadar_hilight );
 
       if (mrk->text != NULL)
-         gl_printMarkerRaw( &gl_defFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, mrk->text );
+         gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, mrk->text );
    }
 }
 
