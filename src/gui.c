@@ -1352,8 +1352,12 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    else
       col = *gui_getPilotColour(p);
    col.a = 1.-interference_alpha;
+   /*
    gl_renderRect( px - 1, py - 1, MIN( 2*sx, w-px ) + 2, MIN( 2*sy, h-py ) + 2, &cBlack );
    gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &col );
+   */
+   gl_blitTexture( marker_pilot_gfx, px, py, w * 0.003, w * 0.003, 0, 0, 1, 1, &col, 0. );
+
 
    /* Draw name. */
    if (overlay && pilot_isFlag(p, PILOT_HILIGHT))
@@ -1442,7 +1446,7 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
  */
 void gui_renderPlayer( double res, int overlay )
 {
-   double x, y, r;
+   double x, y, r, w, h;
    // glColour textCol = { cRadar_player.r, cRadar_player.g, cRadar_player.b, 0.99 };
    /* XXX: textCol is a hack to prevent the text from overly obscuring
     * overlay display of other things. Effectively disables outlines for
@@ -1461,8 +1465,13 @@ void gui_renderPlayer( double res, int overlay )
       r = 3.;
    }
 
+   w = SCREEN_W * 0.012;
+   h = SCREEN_W * 0.012;
+
    /* Render the cross. */
-   gl_renderCross( x, y, r, &cRadar_player );
+   // gl_renderCross( x, y, r, &cRadar_player );
+   gl_blitTexture( marker_player_gfx, x, y, w, h, 0, 0, 1, 1, &cRadar_player,  -M_PI/2 + player.p->solid->dir );
+
 
    if (overlay)
       gl_printMarkerRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &cRadar_player, _("You") );
@@ -1647,7 +1656,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    glDrawArrays( GL_LINE_STRIP, 0, 5 );
    gl_endSolidProgram();
    */
-   gl_blitTexture( marker_planet_gfx, cx - 15, cy - 15, w * 0.012, w * 0.012, 0, 0, 1, 1, &col );
+   gl_blitTexture( marker_planet_gfx, cx - 15, cy - 15, w * 0.008, w * 0.008, 0, 0, 1, 1, &col, 0. );
 
 
    /* Render name. */
@@ -1751,7 +1760,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    glDrawArrays( GL_LINE_STRIP, 0, 4 );
    gl_endSolidProgram();
    */
-   gl_blitTexture( marker_jumppoint_gfx, cx, cy, w * 0.008, w * 0.008, 0, 0, 1, 1, &col );
+   gl_blitTexture( marker_jumppoint_gfx, cx, cy, w * 0.008, w * 0.008, 0, 0, 1, 1, &col,  -M_PI/2-jp->angle );
 
 
    /* Render name. */

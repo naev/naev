@@ -120,6 +120,8 @@ glTexture **asteroid_gfx = NULL;
 static size_t nasterogfx = 0; /**< Nb of asteroid gfx. */
 glTexture *marker_jumppoint_gfx = NULL;
 glTexture *marker_planet_gfx = NULL;
+glTexture *marker_player_gfx = NULL;
+glTexture *marker_pilot_gfx = NULL;
 
 /*
  * fleet spawn rate
@@ -3277,8 +3279,10 @@ int space_load (void)
 
    /* Load map marker graphics - must be before systems_load(). */
    // nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"marker/jumppoint.png" );
-   marker_jumppoint_gfx = gl_newSprite(PLANET_GFX_SPACE_PATH"marker/jumppoint.png", 4, 4, OPENGL_TEX_MIPMAPS );
-   marker_planet_gfx = gl_newSprite(PLANET_GFX_SPACE_PATH"marker/planet.png", 4, 4, OPENGL_TEX_MIPMAPS );
+   marker_jumppoint_gfx = gl_newImage(PLANET_GFX_SPACE_PATH"marker/jumppoint.png", 0);
+   marker_planet_gfx = gl_newImage(PLANET_GFX_SPACE_PATH"marker/planet.png", 0 );
+   marker_player_gfx = gl_newImage(PLANET_GFX_SPACE_PATH"marker/player.png", 0 );
+   marker_pilot_gfx = gl_newImage(PLANET_GFX_SPACE_PATH"marker/pilot.png", 0 );
 
    /* Load planets. */
    ret = planets_load();
@@ -3798,7 +3802,7 @@ void space_exit (void)
    StarSystem *sys;
    AsteroidType *at;
 
-   /* Free jump point graphic. */
+   /* Free standalone graphic textures */
    if (jumppoint_gfx != NULL)
       gl_freeTexture(jumppoint_gfx);
    jumppoint_gfx = NULL;
@@ -3811,6 +3815,12 @@ void space_exit (void)
    if (marker_planet_gfx != NULL)
       gl_freeTexture(marker_planet_gfx);
    marker_planet_gfx = NULL;
+   if (marker_player_gfx != NULL)
+      gl_freeTexture(marker_player_gfx);
+   marker_player_gfx = NULL;
+   if (marker_pilot_gfx != NULL)
+      gl_freeTexture(marker_pilot_gfx);
+   marker_pilot_gfx = NULL;
 
    /* Free asteroid graphics. */
    for (i=0; i<(int)nasterogfx; i++)

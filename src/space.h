@@ -194,6 +194,8 @@ struct JumpPoint_ {
 extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
 extern glTexture *marker_jumppoint_gfx; /**< Jump point graphics. */
 extern glTexture *marker_planet_gfx; /**< Jump point graphics. */
+extern glTexture *marker_player_gfx; /**< Jump point graphics. */
+extern glTexture *marker_pilot_gfx; /**< Jump point graphics. */
 
 
 /**
