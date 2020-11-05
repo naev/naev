@@ -106,7 +106,7 @@ const glColour cFontYellow    =  { .r = 1.0, .g = 1.0, .b = 0.5, .a = 1.  }; /**
 const glColour cFontWhite     =  { .r = 0.95, .g = 0.95, .b = 0.95, .a = 1.  }; /**< White font colour. */
 const glColour cFontGrey      =  { .r = 0.7, .g = 0.7, .b = 0.7, .a = 1.  }; /**< Grey font colour. */
 const glColour cFontPurple    =  { .r = 1.0, .g = 0.3, .b = 1.0, .a = 1.  }; /**< Purple font colour. */
-const glColour cFontLightOrange    =  { .r = 1.0, .g = 0.8, .b = 0.6, .a = 1.  }; /**< Light orange font colour. */
+const glColour cFontLightOrange    =  { .r = 1.0, .g = 0.7, .b = 0.3, .a = 1.  }; /**< Light orange font colour. */
 
 
 /**

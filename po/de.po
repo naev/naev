@@ -35917,8 +35917,8 @@ msgstr "\arDu bist zu schnell unterwegs, um das Schiff zu entern."
 
 #: src/board.c:125
 #, c-format
-msgid "\apBoarding ship \a%c%s\a0."
-msgstr "\apEntern von Schiff \a%c%s\a0."
+msgid "\aOBoarding ship \a%c%s\a0."
+msgstr "\aOEntern von Schiff \a%c%s\a0."
 
 #: src/board.c:153
 msgid ""
@@ -35954,39 +35954,39 @@ msgstr "Verlassen"
 
 #. you can't steal from the poor
 #: src/board.c:215
-msgid "\apThe ship has no credits."
-msgstr "\apDas Schiff hat keine Credits."
+msgid "\aOThe ship has no credits."
+msgstr "\aODas Schiff hat keine Credits."
 
 #. update the lack of credits
 #: src/board.c:224
-msgid "\apYou manage to steal the ship's credits."
-msgstr "\apDu hast die Credits des Schiffs gestohlen."
+msgid "\aOYou manage to steal the ship's credits."
+msgstr "\aODu hast die Credits des Schiffs gestohlen."
 
 #. no cargo
 #: src/board.c:243
-msgid "\apThe ship has no cargo."
-msgstr "\apDas Schiff hat keine Fracht."
+msgid "\aOThe ship has no cargo."
+msgstr "\aODas Schiff hat keine Fracht."
 
 #: src/board.c:247
 msgid "\arYou have no room for the ship's cargo."
 msgstr "\arDu hast keinen Laderaum für die Fracht des Schiffs."
 
 #: src/board.c:262
-msgid "\apYou manage to steal the ship's cargo."
-msgstr "\apDu hast die Fracht des Schiffs gestohlen."
+msgid "\aOYou manage to steal the ship's cargo."
+msgstr "\aODu hast die Fracht des Schiffs gestohlen."
 
 #. no fuel.
 #: src/board.c:280
-msgid "\apThe ship has no fuel."
-msgstr "\apDas Schiff hat keinen Treibstoff."
+msgid "\aOThe ship has no fuel."
+msgstr "\aODas Schiff hat keinen Treibstoff."
 
 #: src/board.c:284
 msgid "\arYour ship is at maximum fuel capacity."
-msgstr "\apDein Schiff ist hat die maximal mögliche Menge an Treibstoff."
+msgstr "\aODein Schiff ist hat die maximal mögliche Menge an Treibstoff."
 
 #: src/board.c:302
-msgid "\apYou manage to steal the ship's fuel."
-msgstr "\apDu hast den Treibstoff des Schiffs gestohlen."
+msgid "\aOYou manage to steal the ship's fuel."
+msgstr "\aODu hast den Treibstoff des Schiffs gestohlen."
 
 #: src/board.c:323
 msgid "\arThe ship has no ammo."
@@ -35998,8 +35998,8 @@ msgstr "\arDu hast bereits die maximal mögliche Munition."
 
 #: src/board.c:373
 #, c-format
-msgid "\apYou looted %d %s(s)"
-msgstr "\apDu erbeutest: %d × %s"
+msgid "\aOYou looted %d %s(s)"
+msgstr "\aODu erbeutest: %d × %s"
 
 #: src/board.c:383
 msgid "\arThere is no ammo compatible with your launchers on board."
@@ -36007,14 +36007,14 @@ msgstr "\arEs gibt keine Munition, die mit deinen Werfern an Bord kompatibel ist
 
 #. killed ship.
 #: src/board.c:445
-msgid "\apYou have tripped the ship's self-destruct mechanism!"
-msgstr "\apDu hast den Selbstzerstörungsmechanismus des Schiffs ausgelöst!"
+msgid "\aOYou have tripped the ship's self-destruct mechanism!"
+msgstr "\aODu hast den Selbstzerstörungsmechanismus des Schiffs ausgelöst!"
 
 #. you just got locked out
 #: src/board.c:447
 #, c-format
-msgid "\apThe ship's security system locks %s out."
-msgstr "\apDas Sicherheitssystem des Schiffs sperrt %s aus."
+msgid "\aOThe ship's security system locks %s out."
+msgstr "\aODas Sicherheitssystem des Schiffs sperrt %s aus."
 
 #: src/board.c:477 src/board.c:493 src/board.c:504
 #, c-format
@@ -37960,8 +37960,8 @@ msgstr "Radarform ist ungültig."
 
 #: src/gui.c:2252
 #, c-format
-msgid "\apRadar set to %dx."
-msgstr "\apRadar gesetzt zu %dx."
+msgid "\aORadar set to %dx."
+msgstr "\aORadar gesetzt zu %dx."
 
 #: src/gui_osd.c:245
 #, c-format
@@ -39098,8 +39098,8 @@ msgstr ""
 
 #: src/land.c:1352
 #, c-format
-msgid "\apTaking off from %s on %s."
-msgstr "\apAbheben von %s bei %s."
+msgid "\aOTaking off from %s on %s."
+msgstr "\aOAbheben von %s bei %s."
 
 #. error has occurred
 #: src/land.c:1413
@@ -39150,8 +39150,8 @@ msgid "\ag U "
 msgstr "\ag U "
 
 #: src/land_outfits.c:287
-msgid "\ap S "
-msgstr "\ap G "
+msgid "\aO S "
+msgstr "\aO G "
 
 #: src/land_outfits.c:287
 msgid "Other"
@@ -42389,12 +42389,12 @@ msgid "Solid initialization did not specify correct update function!"
 msgstr "Solid-Initialisierung hat keine gültige Updatefunktion angegeben!"
 
 #: src/pilot.c:881
-msgid "\apActive cooldown engaged."
-msgstr "\apAktive Abkühlung aktiviert."
+msgid "\aOActive cooldown engaged."
+msgstr "\aOAktive Abkühlung aktiviert."
 
 #: src/pilot.c:936
-msgid "\apActive cooldown completed."
-msgstr "\apAktive Abkühlung abgeschlossen."
+msgid "\aOActive cooldown completed."
+msgstr "\aOAktive Abkühlung abgeschlossen."
 
 #: src/pilot.c:939
 #, c-format
@@ -42698,8 +42698,8 @@ msgid "\arHyperspace drive is offline."
 msgstr "\arHyperraumantrieb ist inaktiv."
 
 #: src/player_autonav.c:114
-msgid "\apAutonav initialized."
-msgstr "\apAutonav gestartet."
+msgid "\aOAutonav initialized."
+msgstr "\aOAutonav gestartet."
 
 #: src/player_autonav.c:272
 #, c-format
@@ -42711,23 +42711,23 @@ msgid "\arAutonav aborted!"
 msgstr "\arAutonav abgebrochen!"
 
 #: src/player_autonav.c:283
-msgid "\apAborting hyperspace sequence."
-msgstr "\apHyperraumsequenz abgebrochen."
+msgid "\aOAborting hyperspace sequence."
+msgstr "\aOHyperraumsequenz abgebrochen."
 
 #: src/player_autonav.c:368
-msgid "\apAutonav arrived at position."
-msgstr "\apAutonav an Position angekommen."
+msgid "\aOAutonav arrived at position."
+msgstr "\aOAutonav an Position angekommen."
 
 #: src/player_autonav.c:378
 #, c-format
-msgid "\apAutonav arrived at \a%c%s\a"
-msgstr "\apAutonav kam an bei \a%c%s\a"
+msgid "\aOAutonav arrived at \a%c%s\a"
+msgstr "\aOAutonav kam an bei \a%c%s\a"
 
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
 #: src/player_autonav.c:393
 #, c-format
-msgid "\ap%s has been lost."
-msgstr "\ap%s ging verloren."
+msgid "\aO%s has been lost."
+msgstr "\aO%s ging verloren."
 
 #: src/player_autonav.c:589
 msgid "Target changed to current system"
@@ -42893,8 +42893,8 @@ msgstr "\arDu kannst hier nicht landen."
 #. No shoes, no shirt, no lifeforms, no service.
 #: src/player.c:1514
 #, c-format
-msgid "\apReady to land on %s."
-msgstr "\apBereit zum Landen auf %s."
+msgid "\aOReady to land on %s."
+msgstr "\aOBereit zum Landen auf %s."
 
 #: src/player.c:1524
 #, c-format
@@ -42942,20 +42942,20 @@ msgid "\arYou do not have enough fuel to hyperspace jump."
 msgstr "\arDu hast nicht genügend Treibstoff für einen Hyperraumsprung."
 
 #: src/player.c:1792
-msgid "\apPreparing for hyperspace."
-msgstr "\apVorbereitung für den Hyperraum."
+msgid "\aOPreparing for hyperspace."
+msgstr "\aOVorbereitung für den Hyperraum."
 
 #: src/player.c:1868
 #, c-format
-msgid "\apAutonav arrived at the %s system."
-msgstr "\apAutonav kam im System „%s“ an."
+msgid "\aOAutonav arrived at the %s system."
+msgstr "\aOAutonav kam im System „%s“ an."
 
 #: src/player.c:1873
 #, c-format
-msgid "\apAutonav continuing until destination (%d jump left)."
-msgid_plural "\apAutonav continuing until destination (%d jumps left)."
-msgstr[0] "\apAutonav wird bis zum Ziel fortfahren (%d Sprung verbleibend)."
-msgstr[1] "\apAutonav wird bis zum Ziel fortfahren (%d Sprünge verbleibend)."
+msgid "\aOAutonav continuing until destination (%d jump left)."
+msgid_plural "\aOAutonav continuing until destination (%d jumps left)."
+msgstr[0] "\aOAutonav wird bis zum Ziel fortfahren (%d Sprung verbleibend)."
+msgstr[1] "\aOAutonav wird bis zum Ziel fortfahren (%d Sprünge verbleibend)."
 
 #: src/player.c:2103
 msgid "Aborting screenshot"
@@ -42986,8 +42986,8 @@ msgid "\arYou haven't been hailed by any pilots."
 msgstr "\arDu wurdest von keinem Piloten angefunkt."
 
 #: src/player.c:2251
-msgid "\apMouse flying enabled."
-msgstr "\apMausflug aktiviert."
+msgid "\aOMouse flying enabled."
+msgstr "\aOMausflug aktiviert."
 
 #: src/player.c:2257
 msgid "\arMouse flying disabled."
@@ -43970,8 +43970,8 @@ msgstr "System %s nicht im Stack gefunden"
 
 #: src/space.c:1474
 #, c-format
-msgid "\apEntering System %s on %s."
-msgstr "\apSystem %s bei %s betreten."
+msgid "\aOEntering System %s on %s."
+msgstr "\aOSystem %s bei %s betreten."
 
 #: src/space.c:1476
 #, c-format
@@ -69797,8 +69797,8 @@ msgstr "El Ego de Deiz"
 #~ "benutzen, kann es sehr nützlich sein, einen an Bord zu haben.“"
 
 #, c-format
-#~ msgid "\apYou recover \ag%s\ap into your fighter bay."
-#~ msgstr "\apDu lädst \ag%s\ap in deine Kämpferbucht."
+#~ msgid "\aOYou recover \ag%s\aO into your fighter bay."
+#~ msgstr "\aODu lädst \ag%s\aO in deine Kämpferbucht."
 
 #~ msgid ""
 #~ "%s\n"

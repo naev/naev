@@ -1138,7 +1138,7 @@ static void gui_renderMessages( double dt )
 {
    double x, y, h, hs, vx, vy, dy;
    int v, i, m, o;
-   glColour c;
+   glColour c, msgc;
 
    /* Coordinate translation. */
    x = gui_mesg_x;
@@ -1153,6 +1153,10 @@ static void gui_renderMessages( double dt )
    c.r = 1.;
    c.g = 1.;
    c.b = 1.;
+   msgc.r = 0.;
+   msgc.g = 0.;
+   msgc.b = 0.;
+   msgc.a = 0.6;
 
    /* Render background. */
    h = 0;
@@ -1190,12 +1194,12 @@ static void gui_renderMessages( double dt )
             if (mesg_stack[m].str[0] == '\t') {
                gl_printRestore( &mesg_stack[m].restore );
                dy = gl_printHeightRaw( NULL, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
-               gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &cBlackHilight );
-               gl_printMaxRaw( NULL, gui_mesg_w - 45., x + 30, y + 3, &cFontWhite, -1., &mesg_stack[m].str[1] );
+               gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &msgc );
+               gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 45., x + 30, y + 3, &cFontWhite, -1., &mesg_stack[m].str[1] );
             } else {
                dy = gl_printHeightRaw( NULL, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
-               gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &cBlackHilight );
-               gl_printMaxRaw( NULL, gui_mesg_w - 15., x, y + 3, &cFontWhite, -1., mesg_stack[m].str );
+               gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &msgc );
+               gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 15., x, y + 3, &cFontWhite, -1., mesg_stack[m].str );
             }
             h += dy;
             y += dy;
@@ -1588,7 +1592,6 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
 {
    int x, y;
    int cx, cy, r, rc;
-   double renderRadius;
    GLfloat vr;
    glColour col;
    Planet *planet;
@@ -1600,7 +1603,8 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    /* Default values. */
    planet = cur_system->planets[ind];
    r     = (int)(planet->radius*2. / res);
-   vr    = MAX( r, 3. ); /* Make sure it's visible. */
+   vr    = MAX( r * 1.6, 15. ); /* Make sure it's visible. */
+
    if (overlay) {
       cx    = (int)(planet->pos.x / res);
       cy    = (int)(planet->pos.y / res);
@@ -1657,9 +1661,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    glDrawArrays( GL_LINE_STRIP, 0, 5 );
    gl_endSolidProgram();
    */
-   renderRadius = MAX(vr * 1.6, 15);
-
-   gl_blitTexture( marker_planet_gfx, cx - 5, cy - 5, renderRadius, renderRadius, 0, 0, 1, 1, &col, 0. );
+   gl_blitTexture( marker_planet_gfx, cx - vr/2.5, cy - vr/2.5, vr, vr, 0, 0, 1, 1, &col, 0. );
 
 
    /* Render name. */
@@ -1670,7 +1672,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
     * as a font change, but using this fix for now. */
    // col.a = MIN( col.a, 0.99 );
    if (overlay)
-      gl_printMarkerRaw( &gl_smallFont, cx+vr+5., cy, &col, planet->name );
+      gl_printMarkerRaw( &gl_smallFont, cx+(vr/2.5), cy - (vr/4.0), &col, planet->name );
 }
 
 
@@ -2370,7 +2372,7 @@ void gui_setRadarRel( int mod )
    gui_radar.res += mod * RADAR_RES_INTERVAL;
    gui_radar.res = CLAMP( RADAR_RES_MIN, RADAR_RES_MAX, gui_radar.res );
 
-   player_message( _("\apRadar set to %dx."), (int)gui_radar.res );
+   player_message( _("\aORadar set to %dx."), (int)gui_radar.res );
 }
 
 

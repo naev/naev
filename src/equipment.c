@@ -1409,7 +1409,7 @@ static void equipment_genOutfitList( unsigned int wid )
       equipment_outfitFilterCore
    };
    const char *tabnames[] = {
-      _("All"), "\ab W ", "\ag U ", "\ap S ", _("\aRCore")
+      _("All"), "\ab W ", "\ag U ", "\aO S ", _("\aRCore")
    };
 
    int noutfits, active;

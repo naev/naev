@@ -122,7 +122,7 @@ void player_board (void)
 
    /* pilot will be boarded */
    pilot_setFlag(p,PILOT_BOARDED);
-   player_message(_("\apBoarding ship \a%c%s\a0."), c, p->name);
+   player_message(_("\aOBoarding ship \a%c%s\a0."), c, p->name);
 
    /* Don't unboard. */
    board_stopboard = 0;
@@ -212,7 +212,7 @@ static void board_stealCreds( unsigned int wdw, char* str )
    p = pilot_get(player.p->target);
 
    if (p->credits==0) { /* you can't steal from the poor */
-      player_message(_("\apThe ship has no credits."));
+      player_message(_("\aOThe ship has no credits."));
       return;
    }
 
@@ -221,7 +221,7 @@ static void board_stealCreds( unsigned int wdw, char* str )
    player_modCredits( p->credits );
    p->credits = 0;
    board_update( wdw ); /* update the lack of credits */
-   player_message(_("\apYou manage to steal the ship's credits."));
+   player_message(_("\aOYou manage to steal the ship's credits."));
 }
 
 
@@ -240,7 +240,7 @@ static void board_stealCargo( unsigned int wdw, char* str )
    p = pilot_get(player.p->target);
 
    if (p->ncommodities==0) { /* no cargo */
-      player_message(_("\apThe ship has no cargo."));
+      player_message(_("\aOThe ship has no cargo."));
       return;
    }
    else if (pilot_cargoFree(player.p) <= 0) {
@@ -259,7 +259,7 @@ static void board_stealCargo( unsigned int wdw, char* str )
    }
 
    board_update( wdw );
-   player_message(_("\apYou manage to steal the ship's cargo."));
+   player_message(_("\aOYou manage to steal the ship's cargo."));
 }
 
 
@@ -277,7 +277,7 @@ static void board_stealFuel( unsigned int wdw, char* str )
    p = pilot_get(player.p->target);
 
    if (p->fuel <= 0) { /* no fuel. */
-      player_message(_("\apThe ship has no fuel."));
+      player_message(_("\aOThe ship has no fuel."));
       return;
    }
    else if (player.p->fuel == player.p->fuel_max) {
@@ -299,7 +299,7 @@ static void board_stealFuel( unsigned int wdw, char* str )
    }
 
    board_update( wdw );
-   player_message(_("\apYou manage to steal the ship's fuel."));
+   player_message(_("\aOYou manage to steal the ship's fuel."));
 }
 
 
@@ -370,7 +370,7 @@ static void board_stealAmmo( unsigned int wdw, char* str )
            pilot_rmAmmo(p, target_outfit_slot, nadded);
            nreloaded += nadded;
            if (nadded > 0)
-              player_message(_("\apYou looted %d %s(s)"), nadded, ammo->name);
+              player_message(_("\aOYou looted %d %s(s)"), nadded, ammo->name);
            if (nammo <= 0) {
               break;
            }
@@ -442,9 +442,9 @@ static int board_fail( unsigned int wdw )
    if (ret == 0)
       return 0;
    else if (ret < 0) /* killed ship. */
-      player_message(_("\apYou have tripped the ship's self-destruct mechanism!"));
+      player_message(_("\aOYou have tripped the ship's self-destruct mechanism!"));
    else /* you just got locked out */
-      player_message(_("\apThe ship's security system locks %s out."),
+      player_message(_("\aOThe ship's security system locks %s out."),
             (player.p->ship->crew > 0) ? "your crew" : "you" );
 
    board_exit( wdw, NULL);
