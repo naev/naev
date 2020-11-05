@@ -1075,8 +1075,8 @@ static void render_all (void)
    gui_renderReticles(dt);
    pilots_renderOverlay(dt);
    spfx_end();
-   ovr_render(dt);
    gui_render(dt);
+   ovr_render(dt);
    display_fps( real_dt ); /* Exception. */
 }
 
