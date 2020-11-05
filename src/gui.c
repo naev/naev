@@ -1641,10 +1641,14 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    if (!overlay)
       col.a = 1.-interference_alpha;
 
+   /* 
    gl_beginSolidProgram(gl_Matrix4_Scale(gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0), vr, vr, 1), &col);
    gl_vboActivateAttribOffset( gui_planet_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINE_STRIP, 0, 5 );
    gl_endSolidProgram();
+   */
+   gl_blitTexture( marker_planet_gfx, cx - 15, cy - 15, w * 0.012, w * 0.012, 0, 0, 1, 1, &col );
+
 
    /* Render name. */
    /* XXX: Hack to prevent the text from overly obscuring overlay
@@ -1674,7 +1678,8 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    GLfloat vr;
    glColour col;
    JumpPoint *jp;
-   gl_Matrix4 projection;
+   // gl_Matrix4 projection;
+
 
    /* Default values. */
    jp    = &cur_system->jumps[ind];
@@ -1738,12 +1743,16 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    if (!overlay)
       col.a = 1.-interference_alpha;
 
+   /* 
    projection = gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0);
    projection = gl_Matrix4_Rotate2d(projection, -M_PI/2-jp->angle);
    gl_beginSolidProgram(projection, &col);
    gl_vboActivateAttribOffset( gui_triangle_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINE_STRIP, 0, 4 );
    gl_endSolidProgram();
+   */
+   gl_blitTexture( marker_jumppoint_gfx, cx, cy, w * 0.008, w * 0.008, 0, 0, 1, 1, &col );
+
 
    /* Render name. */
    /* XXX: Hack to prevent the text from overly obscuring overlay
