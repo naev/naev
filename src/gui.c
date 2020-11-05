@@ -1352,6 +1352,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    else
       col = *gui_getPilotColour(p);
    col.a = 1.-interference_alpha;
+   gl_renderRect( px - 1, py - 1, MIN( 2*sx, w-px ) + 2, MIN( 2*sy, h-py ) + 2, &cBlack );
    gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &col );
 
    /* Draw name. */
@@ -1598,21 +1599,10 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
       cx    = (int)((planet->pos.x - player.p->solid->pos.x) / res);
       cy    = (int)((planet->pos.y - player.p->solid->pos.y) / res);
    }
-   if (shape==RADAR_CIRCLE)
-      rc = (int)(w*w);
-   else
-      rc = 0;
 
    /* Check if in range. */
-   if (shape == RADAR_RECT) {
-      /* Out of range. */
-      if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
-         if ((player.p->nav_planet == ind) && !overlay)
-            gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy, &cRadar_tPlanet );
-         return;
-      }
-   }
-   else if (shape == RADAR_CIRCLE) {
+   if (shape == RADAR_CIRCLE) {
+      rc = (int)(w*w);
       x = ABS(cx)-r;
       y = ABS(cy)-r;
       /* Out of range. */
@@ -1620,6 +1610,17 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
          if ((player.p->nav_planet == ind) && !overlay)
             gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy, &cRadar_tPlanet );
          return;
+      }
+   }
+   else {
+      rc = 0;
+      if (shape == RADAR_RECT) {
+         /* Out of range. */
+         if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
+            if ((player.p->nav_planet == ind) && !overlay)
+               gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy, &cRadar_tPlanet );
+            return;
+         }
       }
    }
 
