@@ -343,18 +343,6 @@ char **ndata_listRecursive( const char *path )
 
 
 /**
- * @brief Small qsort wrapper.
- */
-static int ndata_sortFunc( const void *name1, const void *name2 )
-{
-   const char **f1, **f2;
-   f1 = (const char**) name1;
-   f2 = (const char**) name2;
-   return strcmp( f1[0], f2[0] );
-}
-
-
-/**
  * @brief Sorts the files by name.
  *
  * Meant to be used directly by ndata_list.
@@ -364,7 +352,7 @@ static int ndata_sortFunc( const void *name1, const void *name2 )
  */
 void ndata_sortName( char **files, size_t nfiles )
 {
-   qsort( files, nfiles, sizeof(char*), ndata_sortFunc );
+   qsort( files, nfiles, sizeof(char*), strsort );
 }
 
 

@@ -59,7 +59,6 @@ static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
 static OutfitType outfit_strToOutfitType( char *buf );
 static int outfit_setDefaultSize( Outfit *o );
 static void outfit_launcherDesc( Outfit* o );
-static int outfit_compareNames( const void *name1, const void *name2 );
 /* parsing */
 static int outfit_loadDir( char *dir );
 static int outfit_parseDamage( Damage *dmg, xmlNodePtr node );
@@ -2389,7 +2388,7 @@ int outfit_load (void)
    for (i=0; i<noutfits; i++)
       outfit_names[i] = outfit_stack[i].name;
 
-   qsort( outfit_names, noutfits, sizeof(char*) , outfit_compareNames );
+   qsort( outfit_names, noutfits, sizeof(char*), strsort );
    for (i=0; i<(noutfits - 1); i++) {
       start = i;
       while (strcmp(outfit_names[i], outfit_names[i+1]) == 0)
@@ -2407,20 +2406,6 @@ int outfit_load (void)
    DEBUG( ngettext( "Loaded %d Outfit", "Loaded %d Outfits", noutfits ), noutfits );
 
    return 0;
-}
-
-
-/**
- * @brief qsort compare function for names.
- */
-static int outfit_compareNames( const void *name1, const void *name2 )
-{
-   const char *n1, *n2;
-
-   n1 = *(const char**) name1;
-   n2 = *(const char**) name2;
-
-   return strcmp(n1, n2);
 }
 
 
