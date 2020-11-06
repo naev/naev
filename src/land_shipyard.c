@@ -111,41 +111,41 @@ void shipyard_open( unsigned int wid )
          shipyard_renderSlots, NULL, NULL );
 
    /* stat text */
-   window_addText( wid, -40, -SHIP_TARGET_H-60-70-20, 128, 400, 0, "txtStats",
+   window_addText( wid, -40, -SHIP_TARGET_H-60-70-20, 128, -SHIP_TARGET_H-60-70-20-20+h-bh, 0, "txtStats",
          &gl_smallFont, NULL, NULL );
 
    /* text */
-   buf = _("Model:\n"
-         "Class:\n"
-         "Fabricator:\n"
-         "Crew:\n"
+   buf = _("\anModel:\n\a0"
+         "\anClass:\n\a0"
+         "\anFabricator:\n\a0"
+         "\anCrew:\n\a0"
          "\n"
-         "CPU:\n"
-         "Mass:\n"
-         "Thrust:\n"
-         "Speed:\n"
-         "Turn:\n"
-         "Time Dilation:\n"
+         "\anCPU:\n\a0"
+         "\anMass:\n\a0"
+         "\anThrust:\n\a0"
+         "\anSpeed:\n\a0"
+         "\anTurn:\n\a0"
+         "\anTime Dilation:\n\a0"
          "\n"
-         "Absorption:\n"
-         "Shield:\n"
-         "Armour:\n"
-         "Energy:\n"
-         "Cargo Space:\n"
-         "Fuel:\n"
-         "Fuel Use:\n"
-         "Price:\n"
-         "Money:\n"
-         "License:\n");
+         "\anAbsorption:\n\a0"
+         "\anShield:\n\a0"
+         "\anArmour:\n\a0"
+         "\anEnergy:\n\a0"
+         "\anCargo Space:\n\a0"
+         "\anFuel:\n\a0"
+         "\anFuel Use:\n\a0"
+         "\anPrice:\n\a0"
+         "\anMoney:\n\a0"
+         "\anLicense:\n\a0");
    th = gl_printHeightRaw( &gl_smallFont, 100, buf );
    y  = -55;
    window_addText( wid, 40+iw+20, y,
          100, th, 0, "txtSDesc", &gl_smallFont, NULL, buf );
    window_addText( wid, 40+iw+20+100, y,
-         w-(40+iw+20+100)-20, th, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
+         w-SHIP_TARGET_W-40-(40+iw+20+100), th, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
    y -= th;
    window_addText( wid, 20+iw+40, y,
-         w-(20+iw+40) - 180, 185, 0, "txtDescription",
+         w-(20+iw+40) - 180, y-20+h-bh, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
    /* set up the ships to buy/sell */
@@ -169,7 +169,7 @@ void shipyard_open( unsigned int wid )
       free(ships);
    }
    window_addImageArray( wid, 20, 20,
-         iw, ih, "iarShipyard", 96., 96.,
+         iw, ih, "iarShipyard", 128., 128.,
          cships, nships, shipyard_update, shipyard_rmouse );
 
    /* write the shipyard stuff */

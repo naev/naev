@@ -849,20 +849,12 @@ static int playerL_outfits( lua_State *L )
  */
 static int playerL_numOutfit( lua_State *L )
 {
-   const char *str;
    Outfit *o;
    int q, unequipped_only;
 
    /* Handle parameters. */
-   str = luaL_checkstring(L, 1);
+   o = luaL_validoutfit(L, 1);
    unequipped_only = lua_toboolean(L, 2);
-
-   /* Get outfit. */
-   o = outfit_get( str );
-   if (o==NULL) {
-      NLUA_ERROR(L, "Outfit '%s' not found.", str);
-      return 0;
-   }
 
    /* Count the outfit. */
    if (unequipped_only)
@@ -885,7 +877,6 @@ static int playerL_numOutfit( lua_State *L )
  */
 static int playerL_addOutfit( lua_State *L  )
 {
-   const char *str;
    Outfit *o;
    int q;
 
@@ -895,16 +886,9 @@ static int playerL_addOutfit( lua_State *L  )
    q = 1;
 
    /* Handle parameters. */
-   str = luaL_checkstring(L, 1);
+   o = luaL_validoutfit(L, 1);
    if (lua_gettop(L) > 1)
       q = luaL_checkint(L, 2);
-
-   /* Get outfit. */
-   o = outfit_get( str );
-   if (o==NULL) {
-      NLUA_ERROR(L, _("Outfit '%s' not found."), str);
-      return 0;
-   }
 
    /* Add the outfits. */
    player_addOutfit( o, q );
@@ -933,45 +917,45 @@ static int playerL_rmOutfit( lua_State *L )
    int i, q, noutfits;
 
    NLUA_CHECKRW(L);
+   NLUA_MIN_ARGS(1);
 
-   /* Defaults. */
-   q = 1;
-
-   /* Handle parameters. */
-   str = luaL_checkstring(L, 1);
+   /* Get quantity. */
+   q = 1; /* Default. */
    if (lua_gettop(L) > 1)
       q = luaL_checkint(L, 2);
 
-   if (strcmp(str,"all")==0) {
-      noutfits = player_numOutfits();
-      /* Removing nothing is a bad idea. */
-      if (noutfits == 0)
+   /* Handle special case it's "all". */
+   if (lua_isstring(L, 1)) {
+      str = luaL_checkstring(L, 1);
+
+      if (strcmp(str,"all")==0) {
+         noutfits = player_numOutfits();
+         /* Removing nothing is a bad idea. */
+         if (noutfits == 0)
+            return 0;
+
+         poutfits = player_getOutfits( &noutfits );
+         outfits = malloc( sizeof(Outfit*) * noutfits );
+         for (i=0; i<noutfits; i++)
+            outfits[i] = (Outfit*)poutfits[i].o;
+
+         for (i=0; i<noutfits; i++) {
+            o = outfits[i];
+            q = player_outfitOwned(o);
+            player_rmOutfit(o, q);
+         }
+         /* Clean up. */
+         free(outfits);
+
+         /* Update equipment list. */
+         outfits_updateEquipmentOutfits();
          return 0;
-
-      poutfits = player_getOutfits( &noutfits );
-      outfits = malloc( sizeof(Outfit*) * noutfits );
-      for (i=0; i<noutfits; i++)
-         outfits[i] = (Outfit*)poutfits[i].o;
-
-      for (i=0; i<noutfits; i++) {
-         o = outfits[i];
-         q = player_outfitOwned(o);
-         player_rmOutfit(o, q);
       }
-      /* Clean up. */
-      free(outfits);
    }
-   else {
-      /* Get outfit. */
-      o = outfit_get( str );
-      if (o==NULL) {
-         NLUA_ERROR(L, _("Outfit '%s' not found."), str);
-         return 0;
-      }
 
-      /* Remove the outfits. */
-      player_rmOutfit( o, q );
-   }
+   /* Usual case. */
+   o = luaL_validoutfit(L, 1);
+   player_rmOutfit( o, q );
 
    /* Update equipment list. */
    outfits_updateEquipmentOutfits();

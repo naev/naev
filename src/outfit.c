@@ -59,7 +59,6 @@ static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
 static OutfitType outfit_strToOutfitType( char *buf );
 static int outfit_setDefaultSize( Outfit *o );
 static void outfit_launcherDesc( Outfit* o );
-static int outfit_compareNames( const void *name1, const void *name2 );
 /* parsing */
 static int outfit_loadDir( char *dir );
 static int outfit_parseDamage( Damage *dmg, xmlNodePtr node );
@@ -298,11 +297,11 @@ const char *outfit_slotSize( const Outfit* o )
 const glColour *outfit_slotSizeColour( const OutfitSlot* os )
 {
    if (os->size == OUTFIT_SLOT_SIZE_HEAVY)
-      return &cFontBlue;
+      return &cDarkBlue;
    else if (os->size == OUTFIT_SLOT_SIZE_MEDIUM)
-      return &cFontGreen;
+      return &cBlue;
    else if (os->size == OUTFIT_SLOT_SIZE_LIGHT)
-      return &cFontYellow;
+      return &cLightBlue;
    return NULL;
 }
 
@@ -1680,9 +1679,9 @@ if ((x) != 0.) \
 if ((x) != 0) \
    i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, \
          "\n\a%c%+.d "s"\a0", ((x)>0)?'g':'r', x )
-#define DESC_ADD0(x, s)    DESC_ADD( x, s, "0", ((x)>0)?'D':'r' )
-#define DESC_ADD1(x, s)    DESC_ADD( x, s, "1", ((x)>0)?'D':'r' )
-#define DESC_ADDI(x, s)    DESC_ADD( x, s, "1", ((x)>0)?'D':'r' )
+#define DESC_ADD0(x, s)    DESC_ADD( x, s, "0", ((x)>0)?'g':'r' )
+#define DESC_ADD1(x, s)    DESC_ADD( x, s, "1", ((x)>0)?'g':'r' )
+#define DESC_ADDI(x, s)    DESC_ADD( x, s, "1", ((x)>0)?'g':'r' )
    DESC_ADD0( temp->cpu, "CPU" );
    DESC_ADD0( temp->u.mod.thrust, "Thrust" );
    DESC_ADD0( temp->u.mod.turn, "Turn Rate" );
@@ -2389,7 +2388,7 @@ int outfit_load (void)
    for (i=0; i<noutfits; i++)
       outfit_names[i] = outfit_stack[i].name;
 
-   qsort( outfit_names, noutfits, sizeof(char*) , outfit_compareNames );
+   qsort( outfit_names, noutfits, sizeof(char*), strsort );
    for (i=0; i<(noutfits - 1); i++) {
       start = i;
       while (strcmp(outfit_names[i], outfit_names[i+1]) == 0)
@@ -2407,20 +2406,6 @@ int outfit_load (void)
    DEBUG( ngettext( "Loaded %d Outfit", "Loaded %d Outfits", noutfits ), noutfits );
 
    return 0;
-}
-
-
-/**
- * @brief qsort compare function for names.
- */
-static int outfit_compareNames( const void *name1, const void *name2 )
-{
-   const char *n1, *n2;
-
-   n1 = *(const char**) name1;
-   n2 = *(const char**) name2;
-
-   return strcmp(n1, n2);
 }
 
 

@@ -45,17 +45,17 @@ void gl_freeFont( glFont* font );
  */
 void gl_printRaw( const glFont *ft_font,
       const double x, const double y,
-      const glColour* c, const char *text );
+      const glColour* c, const double outlineR , const char *text);
 int gl_printMaxRaw( const glFont *ft_font, const int max,
       const double x, const double y,
-      const glColour* c, const char *text );
+      const glColour* c, const double outlineR , const char *text);
 int gl_printMidRaw( const glFont *ft_font, const int width,
       double x, const double y,
-      const glColour* c, const char *text );
+      const glColour* c, const double outlineR , const char *text);
 int gl_printTextRaw( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
-      const glColour* c, const char *text );
+      const glColour* c, const double outlineR, const char *text);
 
 
 /*

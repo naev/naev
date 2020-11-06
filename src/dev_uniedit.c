@@ -122,7 +122,7 @@ static void uniedit_buttonZoom( unsigned int wid, char* str );
 static void uniedit_render( double bx, double by, double w, double h, void *data );
 static void uniedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data );
+      double w, double h, double rx, double ry, void *data );
 /* Button functions. */
 static void uniedit_close( unsigned int wid, char *wgt );
 static void uniedit_save( unsigned int wid_unused, char *unused );
@@ -448,7 +448,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
  * @brief System editor custom widget mouse handling.
  */
 static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data )
+      double w, double h, double rx, double ry, void *data )
 {
    (void) wid;
    (void) data;
@@ -601,22 +601,22 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          /* Handle dragging. */
          if (uniedit_drag) {
             /* axis is inverted */
-            uniedit_xpos -= event->motion.xrel;
-            uniedit_ypos += event->motion.yrel;
+            uniedit_xpos -= rx;
+            uniedit_ypos += ry;
 
             /* Update mouse movement. */
-            uniedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
+            uniedit_moved += ABS(rx) + ABS(ry);
          }
          else if (uniedit_dragSys && (uniedit_nsys > 0)) {
             if ((uniedit_moved > UNIEDIT_MOVE_THRESHOLD) || (SDL_GetTicks() - uniedit_dragTime > UNIEDIT_DRAG_THRESHOLD)) {
                for (i=0; i<uniedit_nsys; i++) {
-                  uniedit_sys[i]->pos.x += ((double)event->motion.xrel) / uniedit_zoom;
-                  uniedit_sys[i]->pos.y -= ((double)event->motion.yrel) / uniedit_zoom;
+                  uniedit_sys[i]->pos.x += rx / uniedit_zoom;
+                  uniedit_sys[i]->pos.y -= ry / uniedit_zoom;
                }
             }
 
             /* Update mouse movement. */
-            uniedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
+            uniedit_moved += ABS(rx) + ABS(ry);
          }
          break;
    }
@@ -938,7 +938,6 @@ void uniedit_selectText (void)
    int i, l;
    char buf[1024];
    StarSystem *sys;
-   int hasPresence;
 
    l = 0;
    for (i=0; i<uniedit_nsys; i++) {
@@ -953,26 +952,7 @@ void uniedit_selectText (void)
       /* Presence text. */
       if (uniedit_nsys == 1) {
          sys         = uniedit_sys[0];
-         buf[0]      = '\0';
-         hasPresence = 0;
-         l           = 0;
-
-         for (i=0; i < sys->npresence ; i++) {
-
-            /* Must have presence. */
-            if (sys->presence[i].value <= 0)
-               continue;
-
-            hasPresence = 1;
-            /* Use map grey instead of default neutral colour */
-            l += nsnprintf( &buf[l], sizeof(buf)-l, "%s\a0%s: %.0f",
-                  (l==0)?"":"\n", faction_name(sys->presence[i].faction),
-                  sys->presence[i].value);
-         }
-         if (hasPresence == 0)
-            nsnprintf( buf, sizeof(buf), _("None") );
-
-         window_modifyText( uniedit_wid, "txtPresence", buf );
+         map_updateFactionPresence( uniedit_wid, "txtPresence", sys, 1 );
       }
       else
          window_modifyText( uniedit_wid, "txtPresence", _("Multiple selected") );

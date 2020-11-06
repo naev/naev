@@ -82,11 +82,11 @@ static void txt_render( Widget* txt, double bx, double by )
       gl_printMidRaw( txt->dat.txt.font, txt->w,
             bx + txt->x,
             by + txt->y + (txt->h - txt->dat.txt.font->h)/2.,
-            &txt->dat.txt.colour, txt->dat.txt.text );
+            &txt->dat.txt.colour, -1., txt->dat.txt.text );
    else
       gl_printTextRaw( txt->dat.txt.font, txt->w, txt->h,
             bx + txt->x, by + txt->y,
-            &txt->dat.txt.colour, txt->dat.txt.text );
+            &txt->dat.txt.colour, -1., txt->dat.txt.text );
 }
 
 
@@ -131,3 +131,21 @@ void window_modifyText( const unsigned int wid,
    wgt->dat.txt.text = (newstring) ?  strdup(newstring) : NULL;
 }
 
+
+/**
+ * @brief Gets the content height of a text box, without drawing.
+ *
+ *    @param wid Window to which the text widget belongs.
+ *    @param name Name of the text widget.
+ */
+int window_getTextHeight( const unsigned int wid, const char *name )
+{
+   Widget *wgt;
+
+   /* Get the widget. */
+   wgt = window_getwgt( wid, name );
+   if ( wgt == NULL || wgt->type != WIDGET_TEXT )
+      return 0;
+
+   return gl_printHeightRaw( wgt->dat.txt.font, wgt->w, wgt->dat.txt.text );
+}

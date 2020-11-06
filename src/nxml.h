@@ -76,7 +76,7 @@
 #define xmlr_strd(n,s,str) \
    {if (xml_isNode(n,s)) { \
       if (str != NULL) { \
-         WARN("Node '%s' already loaded and being trying to replace '%s' with '%s'", \
+         WARN("Node '%s' already loaded and being replaced from '%s' to '%s'", \
                s, str, xml_raw(n) ); } \
       str = ((xml_get(n) == NULL) ? NULL : strdup(xml_raw(n))); continue; }}
 #define xmlr_attr(n,s,a) \
