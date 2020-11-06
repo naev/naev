@@ -247,7 +247,7 @@ static void info_openMain( unsigned int wid )
    window_addText( wid, -20, -40, w-80-200-40-40, 20, 1, "txtList",
          NULL, NULL, _("Licenses") );
    window_addList( wid, -20, -70, w-80-200-40-40, h-110-BUTTON_HEIGHT,
-         "lstLicenses", licenses, (nlicenses || 1), 0, NULL );
+         "lstLicenses", licenses, MAX(nlicenses, 1), 0, NULL );
 }
 
 
