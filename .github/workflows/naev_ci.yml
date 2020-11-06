@@ -4,12 +4,12 @@ name: CI
 
 env:
   DESTDIR: "${{ github.workspace }}/dist/"
-  MESON: "${{ github.workspace }}/source/meson.sh"
 
 jobs:
   "Package_Source":
     runs-on: ubuntu-latest
-
+    container:
+      image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
     steps:
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
@@ -17,19 +17,10 @@ jobs:
         path: source
         fetch-depth: 0
 
-    - name: Update APT Cache
-      run: |
-        sudo apt-get update
-
-    - name: Install Additional Build Dependencies
-      run: |
-        sudo apt-get install \
-          ninja-build
-
     - name: Meson Build
       run: |
-        sh $MESON setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
-        sh $MESON dist -C build --no-tests --include-subprojects
+        meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
+        meson dist -C build --no-tests --include-subprojects
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -45,17 +36,30 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-16.04
+          - os: ubuntu-latest
+            container:
+              image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
 
-          - os: ubuntu-18.04
+          - os: ubuntu-latest
+            container:
+              image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1804
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
 
-          - os: ubuntu-20.04
+          - os: ubuntu-latest
+            container:
+              image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2004
+            shell: bash
+            config: linux.ini
+            pkg-config-path: "[]"
+
+          - os: ubuntu-latest
+            container:
+              image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2010
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
@@ -77,45 +81,6 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Update APT Cache
-      if: ${{ runner.os == 'Linux'}}
-      run: |
-        sudo apt-get update
-
-    - name: Install Additional Build Dependencies
-      if: ${{ runner.os == 'Linux'}}
-      run: |
-        sudo apt-get install \
-          autopoint \
-          binutils-dev \
-          build-essential \
-          gettext \
-          intltool \
-          libfreetype6-dev \
-          libgl1-mesa-dev \
-          libiberty-dev \
-          libluajit-5.1-dev \
-          libopenal-dev \
-          libpng-dev \
-          libsdl2-dev \
-          libsdl2-image-dev \
-          libsdl2-mixer-dev \
-          libsuitesparse-dev \
-          libvorbis-dev \
-          libxml2-dev
-
-    - name: Install Ninja-Build (xenial-backports)
-      if: ${{ matrix.os == 'ubuntu-16.04' && runner.os == 'Linux'}}
-      run: |
-        sudo apt-get -t xenial-backports install \
-          ninja-build
-
-    - name: Install Ninja-Build
-      if: ${{ matrix.os != 'ubuntu-16.04' && runner.os == 'Linux'}}
-      run: |
-        sudo apt-get install \
-          ninja-build
-
     - name: Install MinGW Packages
       if: ${{ runner.os == 'Windows'}}
       uses: msys2/setup-msys2@v2
@@ -138,7 +103,7 @@ jobs:
     - name: Meson Setup
       id: setup
       run: |
-        sh $MESON setup build source \
+        meson setup build source \
             --native-file='source/utils/build/${{ matrix.config }}' \
             --buildtype=release \
             --pkg-config-path=${{ matrix.pkg-config-path }} \
@@ -158,7 +123,7 @@ jobs:
     - name: Meson Compile
       id: compile
       run: |
-        sh $MESON compile -C build
+        meson compile -C build
 
     - name: Upload Compile Log
       uses: actions/upload-artifact@v2
@@ -183,7 +148,7 @@ jobs:
 
     - name: Package
       run: |
-        sh $MESON install -C build
+        meson install -C build
         tar -cvf naev-${{ matrix.os }}-${{ github.sha }}.tar dist
 #      if: ${{ success() || steps.tests.outcome == 'failure' }}
 
@@ -202,17 +167,30 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-16.04
+          - os: ubuntu-latest
+            container:
+              image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
 
-          - os: ubuntu-18.04
+          - os: ubuntu-latest
+            container:
+              image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1804
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
 
-          - os: ubuntu-20.04
+          - os: ubuntu-latest
+            container:
+              image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2004
+            shell: bash
+            config: linux.ini
+            pkg-config-path: "[]"
+
+          - os: ubuntu-latest
+            container:
+              image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2010
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
@@ -224,45 +202,6 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Update APT Cache
-      if: ${{ runner.os == 'Linux'}}
-      run: |
-        sudo apt-get update
-
-    - name: Install Additional Build Dependencies
-      if: ${{ runner.os == 'Linux'}}
-      run: |
-        sudo apt-get install \
-          autopoint \
-          binutils-dev \
-          build-essential \
-          gettext \
-          intltool \
-          libfreetype6-dev \
-          libgl1-mesa-dev \
-          libiberty-dev \
-          libluajit-5.1-dev \
-          libopenal-dev \
-          libpng-dev \
-          libsdl2-dev \
-          libsdl2-image-dev \
-          libsdl2-mixer-dev \
-          libsuitesparse-dev \
-          libvorbis-dev \
-          libxml2-dev
-
-    - name: Install Ninja-Build (xenial-backports)
-      if: ${{ matrix.os == 'ubuntu-16.04' && runner.os == 'Linux'}}
-      run: |
-        sudo apt-get -t xenial-backports install \
-          ninja-build
-
-    - name: Install Ninja-Build
-      if: ${{ matrix.os != 'ubuntu-16.04' && runner.os == 'Linux'}}
-      run: |
-        sudo apt-get install \
-          ninja-build
-
     - name: Get Source
       uses: actions/download-artifact@v2
       with:
@@ -295,19 +234,11 @@ jobs:
 
   "Documentation":
     runs-on: ubuntu-latest
+    container:
+      image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2010
     needs: "Package_Source"
 
     steps:
-    - name: Update APT Cache
-      run: |
-        sudo apt-get update
-    - name: Install Additional Build Dependencies
-      run: |
-        sudo apt-get install \
-          lua-ldoc \
-          graphviz \
-          doxygen \
-          ninja-build
     - name: Get Source
       uses: actions/download-artifact@v2
       with:
@@ -320,12 +251,12 @@ jobs:
         
     - name: Meson Build
       run: |
-        sh $MESON setup build source \
+        meson setup build source \
             -Dexecutable=disabled
              
     - name: Package
       run: |
-        sh $MESON install -C build
+        meson install -C build
         tar -cvf ${{ github.workspace }}/naev-docs-${{ github.sha }}.tar ${{ env.DESTDIR }}/usr/local/doc/naev
         
     - name: Upload Lua Documentation
