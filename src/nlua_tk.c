@@ -304,7 +304,7 @@ static int tk_merchantOutfit( lua_State *L )
    }
 
    /* Create window. */
-   if ((gl_screen.rw < 1024) || (gl_screen.rh < 768)) {
+   if (SCREEN_W < 1024 || SCREEN_H < 768) {
       w = -1; /* Fullscreen. */
       h = -1;
    }
