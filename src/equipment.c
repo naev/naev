@@ -974,6 +974,8 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
  *    @param my Mouse Y event position.
  *    @param bw Base window width.
  *    @param bh Base window height.
+ *    @param rx Relative X movement (only valid for motion).
+ *    @param ry Relative Y movement (only valid for motion).
  *    @param data Custom widget data.
  */
 static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,

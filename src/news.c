@@ -394,6 +394,8 @@ void clear_newslines (void)
  *    @param my Y position of the mouse.
  *    @param w Width of the widget.
  *    @param h Height of the widget.
+ *    @param rx Relative X movement (only valid for motion).
+ *    @param ry Relative Y movement (only valid for motion).
  *    @param data Unused.
  */
 static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
