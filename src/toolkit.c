@@ -1551,7 +1551,7 @@ static int toolkit_mouseEvent( Window *w, SDL_Event* event )
       /* custom widgets take it from here */
       if (wgt->type==WIDGET_CUST) {
          if (wgt->dat.cst.mouse)
-            ret |= wgt->dat.cst.mouse( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h,
+            ret |= wgt->dat.cst.mouse( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h, rx, ry,
                   wgt->dat.cst.userdata );
       }
       else

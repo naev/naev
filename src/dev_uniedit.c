@@ -122,7 +122,7 @@ static void uniedit_buttonZoom( unsigned int wid, char* str );
 static void uniedit_render( double bx, double by, double w, double h, void *data );
 static void uniedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data );
+      double w, double h, double rx, double ry, void *data );
 /* Button functions. */
 static void uniedit_close( unsigned int wid, char *wgt );
 static void uniedit_save( unsigned int wid_unused, char *unused );
@@ -448,7 +448,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
  * @brief System editor custom widget mouse handling.
  */
 static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data )
+      double w, double h, double rx, double ry, void *data )
 {
    (void) wid;
    (void) data;
@@ -601,22 +601,22 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          /* Handle dragging. */
          if (uniedit_drag) {
             /* axis is inverted */
-            uniedit_xpos -= event->motion.xrel;
-            uniedit_ypos += event->motion.yrel;
+            uniedit_xpos -= rx;
+            uniedit_ypos += ry;
 
             /* Update mouse movement. */
-            uniedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
+            uniedit_moved += ABS(rx) + ABS(ry);
          }
          else if (uniedit_dragSys && (uniedit_nsys > 0)) {
             if ((uniedit_moved > UNIEDIT_MOVE_THRESHOLD) || (SDL_GetTicks() - uniedit_dragTime > UNIEDIT_DRAG_THRESHOLD)) {
                for (i=0; i<uniedit_nsys; i++) {
-                  uniedit_sys[i]->pos.x += ((double)event->motion.xrel) / uniedit_zoom;
-                  uniedit_sys[i]->pos.y -= ((double)event->motion.yrel) / uniedit_zoom;
+                  uniedit_sys[i]->pos.x += rx / uniedit_zoom;
+                  uniedit_sys[i]->pos.y -= ry / uniedit_zoom;
                }
             }
 
             /* Update mouse movement. */
-            uniedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
+            uniedit_moved += ABS(rx) + ABS(ry);
          }
          break;
    }
