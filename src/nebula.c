@@ -48,6 +48,7 @@ static int nebu_w    = 0; /**< BG Nebula width. */
 static int nebu_h    = 0; /**< BG Nebula height. */
 static int nebu_pw   = 0; /**< BG Padded Nebula width. */
 static int nebu_ph   = 0; /**< BG Padded Nebula height. */
+static int nebu_regen= 0; /**< Whether to force Nebula generation. */
 
 /* Information on rendering */
 static int cur_nebu[2]           = { 0, 1 }; /**< Nebulae currently rendering. */
@@ -144,8 +145,9 @@ static int nebu_init_recursive( int iter )
    }
 
    /* Special code to regenerate the nebula */
-   if ((nebu_w == -9) && (nebu_h == -9))
+   if (nebu_regen)
       nebu_generate();
+   nebu_regen = 0;
 
    /* Load each, checking for compatibility and padding */
    for (i=0; i<NEBULA_Z; i++) {
@@ -493,7 +495,7 @@ void nebu_prep( double density, double volatility )
  */
 void nebu_forceGenerate (void)
 {
-   nebu_w = nebu_h = -9; /* \o/ magic numbers */
+   nebu_regen = 1;
 }
 
 
