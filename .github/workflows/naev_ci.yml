@@ -57,6 +57,13 @@ jobs:
             config: linux.ini
             pkg-config-path: "[]"
 
+          - os: ubuntu-latest
+            container:
+              image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2010
+            shell: bash
+            config: linux.ini
+            pkg-config-path: "[]"
+
           - os: windows-2016
             shell: msys2 {0}
             config: windows.ini
@@ -177,6 +184,13 @@ jobs:
           - os: ubuntu-latest
             container:
               image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2004
+            shell: bash
+            config: linux.ini
+            pkg-config-path: "[]"
+
+          - os: ubuntu-latest
+            container:
+              image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2010
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
