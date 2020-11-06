@@ -296,12 +296,49 @@ jobs:
   "Documentation":
     runs-on: ubuntu-latest
     needs: "Package_Source"
-    if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
 
     steps:
-    - name: Trigger Publish
+    - name: Update APT Cache
+      run: |
+        sudo apt-get update
+    - name: Install Additional Build Dependencies
+      run: |
+        sudo apt-get install \
+          lua-ldoc \
+          graphviz \
+          doxygen \
+          ninja-build
+    - name: Get Source
+      uses: actions/download-artifact@v2
+      with:
+        name: naev-${{ github.sha }}
+
+    - name: Extract Source
+      run: |
+        mkdir source
+        tar -xf naev-*.tar.xz -C source --strip 1
+        
+    - name: Meson Build
+      run: |
+        sh $MESON setup build source \
+            -Dexecutable=disabled
+             
+    - name: Package
+      run: |
+        sh $MESON install -C build
+        tar -cvf ${{ github.workspace }}/naev-docs-${{ github.sha }}.tar ${{ env.DESTDIR }}/usr/local/doc/naev
+        
+    - name: Upload Lua Documentation
+      if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
       run: |
         curl -X POST https://api.github.com/repos/naev/naev.github.io/dispatches \
         -H 'Accept: application/vnd.github.everest-preview+json' \
         -u ${{ secrets.WEBSITE_ACCESS_TOKEN }} \
         --data '{"event_type": "api", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-docs-${{ github.sha }}
+        path: ${{ github.workspace }}/*.tar
+        if-no-files-found: error
