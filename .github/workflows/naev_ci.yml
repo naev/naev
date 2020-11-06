@@ -37,8 +37,7 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            container:
-              image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
+            image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
             config: linux.ini
             pkg-config-path: "[]"
 
@@ -49,18 +48,18 @@ jobs:
             pkg-config-path: "[]"
 
           - os: ubuntu-latest
-            container:
-              image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2004
+            image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2004
             config: linux.ini
             pkg-config-path: "[]"
 
           - os: ubuntu-latest
-            container:
-              image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2010
+            image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2010
             config: linux.ini
             pkg-config-path: "[]"
 
     runs-on: ${{ matrix.os }}
+    container:
+      image: ${{ matrix.image }}
 
     steps:
     - name: Get Source
@@ -141,30 +140,28 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            container:
-              image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
+            image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
             config: linux.ini
             pkg-config-path: "[]"
 
           - os: ubuntu-latest
-            container:
-              image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1804
+            image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1804
             config: linux.ini
             pkg-config-path: "[]"
 
           - os: ubuntu-latest
-            container:
-              image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2004
+            image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2004
             config: linux.ini
             pkg-config-path: "[]"
 
           - os: ubuntu-latest
-            container:
-              image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2010
+            image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2010
             config: linux.ini
             pkg-config-path: "[]"
 
     runs-on: ${{ matrix.os }}
+    container:
+      image: ${{ matrix.image }}
 
     steps:
     - name: Get Source
