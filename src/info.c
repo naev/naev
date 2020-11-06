@@ -243,6 +243,7 @@ static void info_openMain( unsigned int wid )
      licenses = malloc(sizeof(char*) * nlicenses);
      for (i=0; i<nlicenses; i++)
         licenses[i] = strdup(buf[i]);
+      qsort( licenses, nlicenses, sizeof(char*), strsort );
    }
    window_addText( wid, -20, -40, w-80-200-40-40, 20, 1, "txtList",
          NULL, NULL, _("Licenses") );
