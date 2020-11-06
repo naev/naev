@@ -147,6 +147,7 @@ CODE_SOURCE = \
 	queue.c \
 	rng.c \
 	save.c \
+	semver.c \
 	shaders.gen.c \
 	ship.c \
 	shiplog.c \
@@ -298,6 +299,7 @@ CODE_SOURCE = \
 	queue.h \
 	rng.h \
 	save.h \
+	semver.h \
 	shaders.gen.h \
 	ship.h \
 	shiplog.h \

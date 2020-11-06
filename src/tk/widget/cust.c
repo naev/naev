@@ -46,7 +46,8 @@ void window_addCust( const unsigned int wid,
                      char* name, const int border,
                      void (*render) (double x, double y, double w, double h, void *data),
                      int (*mouse) (unsigned int wid, SDL_Event* event,
-                                    double x, double y, double w, double h, void *data),
+                                    double x, double y, double w, double h,
+                                    double rx, double ry, void *data),
                      void *data )
 {
    Window *wdw = window_wget(wid);

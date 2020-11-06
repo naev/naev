@@ -124,10 +124,13 @@ if buildExec.disabled() == false
    naev_deps += bfd
    config_data.set10('HAS_BFD', bfd.found())
 
+   # Appstream (Used for generating desktop files and verifying metadata)
+   ascli_exe = find_program('appstreamcli', version: '>=0.12.9', required: false)
+
    # OpenAL
    hasOpenAL = false
    useOpenAL = get_option('openal')
-   openal    = dependency('openal', method: 'pkg-config', required: useOpenAL)
+   openal    = dependency('openal', required: useOpenAL)
    if openal.found()
       vorbis = dependency('vorbis', required: useOpenAL)
       if not vorbis.found()
@@ -155,28 +158,7 @@ if buildExec.disabled() == false
    ### Generated sources
 
    # VERSION
-   temp    = version.split('+')
-   vmeta   = temp.length() > 1 ? temp[1] : ''
-   temp    = temp[0].split('-')
-   vcore   = temp[0]
-   temp    = temp.length() > 1 ? temp[1].split('.') : ''
-   vpre    = temp.length() > 0 ? temp[0] : ''
-   vpren   = temp.length() > 1 ? temp[1] : ''
-   temp    = vcore.split('.')
-   vmajor  = temp[0]
-   vminor  = temp[1]
-   vrev    = temp[2]
-   vhuman  = vcore + (vpre != '' ? ' ' + vpre : '') + (vpren != '' ? ' ' + vpren : '') + (debug ? ' debug' : '')
-
    config_data.set_quoted('VERSION', version)
-   config_data.set_quoted('VMETA'  , vmeta  )
-   config_data.set_quoted('VCORE'  , vcore  )
-   config_data.set_quoted('VPRE'   , vpre   )
-   config_data.set       ('VPREN'  , vpren  )
-   config_data.set       ('VMAJOR' , vmajor )
-   config_data.set       ('VMINOR' , vminor )
-   config_data.set       ('VREV'   , vrev   )
-   config_data.set_quoted('VHUMAN' , vhuman )
 
    # config.h
    configure_file(
@@ -242,10 +224,29 @@ if buildExec.disabled() == false
       install_dir: ndata_path,
    )
 
-   if host_machine.system() not in ['windows', 'cygwin', 'emscripten', 'android']
-      install_data('org.naev.Naev.appdata.xml', install_dir: get_option('datadir') / 'appdata/naev')
-      install_data('org.naev.Naev.desktop', install_dir: get_option('datadir') / 'applications/naev')
+   if host_machine.system() not in ['windows', 'cygwin', 'emscripten', 'android', 'darwin']        
+         metainfo_file = 'org.naev.naev.metainfo.xml'
+
+         if (ascli_exe.found())
+         # Create desktop-entry file from metainfo
+         custom_target('gen-desktop-entry',
+            input : [metainfo_file],
+            output : ['org.naev.naev.desktop'],
+            command : [ascli_exe, 'make-desktop-file', '@INPUT@', '@OUTPUT@'],
+            install: true,
+            install_dir: join_paths (get_option ('datadir'), 'applications')
+         )
+         else
+            install_data('org.naev.naev.desktop', install_dir: join_paths (get_option ('datadir'), 'applications'))
+         endif
+
+         install_data(metainfo_file, install_dir: get_option('datadir') / 'metainfo')
+
+      install_data(['extras/logos/logo16.png', 'extras/logos/logo32.png', 'extras/logos/logo64.png', 'extras/logos/logo128.png', 'extras/logos/naev.png'],
+             rename : ['16x16/apps/naev.png', '32x32/apps/naev.png', '64x64/apps/naev.png', '128x128/apps/naev.png', '256x256/apps/naev.png'],
+             install_dir: get_option('datadir') / 'icons/hicolor')
       install_man('naev.6')
+      
    endif
 
    subdir('test')

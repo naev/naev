@@ -69,7 +69,7 @@ static int largestID;
  */
 static void news_render( double bx, double by, double w, double h, void *data );
 static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
-      double w, double h, void *data );
+      double w, double h, double rx, double ry, void *data );
 static int news_parseArticle( xmlNodePtr parent );
 int news_saveArticles( xmlTextWriterPtr writer ); /* externed in save.c */
 int news_loadArticles( xmlNodePtr parent ); /* externed in load.c */
@@ -397,10 +397,11 @@ void clear_newslines (void)
  *    @param data Unused.
  */
 static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
-      double w, double h, void *data )
+      double w, double h, double rx, double ry, void *data )
 {
    (void) wid;
    (void) data;
+   (void) rx;
 
    switch (event->type) {
       case SDL_MOUSEWHEEL:
@@ -430,7 +431,7 @@ static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
 
       case SDL_MOUSEMOTION:
          if (news_drag)
-            news_pos -= event->motion.yrel;
+            news_pos -= ry;
          break;
    }
 
@@ -490,7 +491,7 @@ static void news_render( double bx, double by, double w, double h, void *data )
 
       gl_printRestore( &news_restores[i] );
       gl_printMidRaw( news_font, w-40.,
-            bx+10, by+y, &cFontGreen, news_lines[i] );
+            bx+10, by+y, &cFontGreen, -1., news_lines[i] );
 
       /* Increment line and position. */
       y -= news_font->h + 5.;

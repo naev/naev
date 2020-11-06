@@ -59,9 +59,18 @@ static char input_text              = 0; /**< Current character. */
 /*
  * default outline colours
  */
-const glColour* toolkit_colLight = &cGrey60; /**< Light outline colour. */
-const glColour* toolkit_col      = &cGrey40; /**< Normal outline colour. */
-const glColour* toolkit_colDark  = &cGrey20; /**< Dark outline colour. */
+const glColour* toolkit_colLight = &cGrey25; /**< Light outline colour. */
+const glColour* toolkit_col      = &cGrey20; /**< Normal outline colour. */
+const glColour* toolkit_colDark  = &cGrey10; /**< Dark outline colour. */
+
+/*
+ * Tab colors
+ */
+const glColour* tab_active = &cGrey20; /**< Light outline colour. */
+const glColour* tab_activeB = &cGrey10; /**< Light outline colour. */
+const glColour* tab_inactive      = &cGrey15; /**< Normal outline colour. */
+const glColour* tab_inactiveB      = &cGrey10; /**< Normal outline colour. */
+const glColour* tab_background  = &cBlack; /**< Dark outline colour. */
 
 
 /*
@@ -1213,7 +1222,7 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    glColour c2;
 
    /* Get dimensions. */
-   w = 200;
+   w = 250;
    h = gl_printHeightRaw( &gl_smallFont, w, alt );
 
    /* Choose position. */
@@ -1225,17 +1234,17 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    }
 
    /* Set colours. */
-   c.r = cGrey80.r;
-   c.g = cGrey80.g;
-   c.b = cGrey80.b;
-   c.a = 0.8;
-   c2.r = cGrey30.r;
-   c2.g = cGrey30.g;
-   c2.b = cGrey30.b;
+   c.r = cGrey20.r;
+   c.g = cGrey20.g;
+   c.b = cGrey20.b;
+   c.a = 0.9;
+   c2.r = cGrey10.r;
+   c2.g = cGrey10.g;
+   c2.b = cGrey10.b;
    c2.a = 0.7;
-   toolkit_drawRect( x-1, y-5, w+6, h+6, &c2, NULL );
-   toolkit_drawRect( x-3, y-3, w+6, h+6, &c, NULL );
-   gl_printTextRaw( &gl_smallFont, w, h, x, y, &cFontWhite, alt );
+   toolkit_drawRect( x+1, y+1, w+18, h+18, &c2, NULL );
+   toolkit_drawRect( x, y, w+18, h+18, &c, NULL );
+   gl_printTextRaw( &gl_smallFont, w , h, x + 9, y + 9, &cFontWhite, -1., alt );
 }
 
 
@@ -1262,7 +1271,7 @@ static void window_renderBorder( Window* w )
       gl_printMidRaw( &gl_defFont, w->w,
             x,
             y + w->h - 20.,
-            &cFontWhite, w->displayname );
+            &cFontWhite, -1., w->displayname );
       return;
    }
 
@@ -1276,7 +1285,7 @@ static void window_renderBorder( Window* w )
    gl_printMidRaw( &gl_defFont, w->w,
          x,
          y + w->h - 20.,
-         &cFontWhite, w->displayname );
+         &cFontWhite, -1., w->displayname );
 }
 
 
@@ -1320,7 +1329,7 @@ void window_render( Window *w )
       y  += wgt->y;
       wid = wgt->w;
       hei = wgt->h;
-      toolkit_drawOutline( x, y, wid, hei, 3, &cBlack, NULL );
+      toolkit_drawOutline( x, y, wid, hei, 3, &cGrey30, NULL );
    }
 }
 
@@ -1542,7 +1551,7 @@ static int toolkit_mouseEvent( Window *w, SDL_Event* event )
       /* custom widgets take it from here */
       if (wgt->type==WIDGET_CUST) {
          if (wgt->dat.cst.mouse)
-            ret |= wgt->dat.cst.mouse( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h,
+            ret |= wgt->dat.cst.mouse( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h, rx, ry,
                   wgt->dat.cst.userdata );
       }
       else

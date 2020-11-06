@@ -123,3 +123,12 @@ char* nstrndup( const char *s, size_t n )
 }
 #endif /* !(HAS_POSIX && defined(_GNU_SOURCE)) */
 
+
+/**
+ * @brief Sort function for sorting strings with qsort().
+ */
+int strsort( const void *p1, const void *p2 )
+{
+   return strcmp(*(const char **) p1, *(const char **) p2);
+}
+

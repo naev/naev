@@ -552,10 +552,10 @@ static int nlua_errTrace( lua_State *L )
  *    @param nresults Number of return values to take.
  */
 int nlua_pcall( nlua_env env, int nargs, int nresults ) {
-   int errf, ret, top, prev_env;
+   int errf, ret, prev_env;
 
 #if DEBUGGING
-   top = lua_gettop(naevL);
+   int top = lua_gettop(naevL);
    lua_pushcfunction(naevL, nlua_errTrace);
    lua_insert(naevL, -2-nargs);
    errf = -2-nargs;

@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.61])
 AC_INIT([naev],
-        [0.8.-3],
+        [0.8.0-beta.3],
         [https://github.com/naev/naev/issues],
         [naev],
         [https://naev.org/])
@@ -518,19 +518,6 @@ AS_IF([test -n "$GIT" && test -d "$srcdir/.git"], [
 #
 # Defines in config.h
 #
-
-# Version variables
-VMAJOR=$(echo "$VERSION" | cut -d. -f1)
-VMINOR=$(echo "$VERSION" | cut -d. -f2)
-VREV=$(echo "$VERSION" | cut -d. -f3)
-
-AC_DEFINE_UNQUOTED([VMAJOR], [$VMAJOR], [Define to the major version component])
-AC_DEFINE_UNQUOTED([VMINOR], [$VMINOR], [Define to the minor version component])
-AC_DEFINE_UNQUOTED([VREV], [$VREV], [Define to the revision version component])
-
-AC_SUBST([VMAJOR])
-AC_SUBST([VMINOR])
-AC_SUBST([VREV])
 
 AC_DEFINE_UNQUOTED([HOST], ["$host"], [Host triple])
 

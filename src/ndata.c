@@ -190,30 +190,21 @@ static int ndata_isndata( const char *dir )
  */
 static void ndata_testVersion (void)
 {
-   int ret;
-   size_t size;
-   int version[3];
-   char *buf;
+   size_t i, size;
+   char *buf, cbuf[PATH_MAX];
    int diff;
 
    /* Parse version. */
    buf = ndata_read( "VERSION", &size );
-   ret = naev_versionParse( version, buf, (int)size );
-   free(buf);
-   if (ret != 0) {
-      WARN(_("Problem reading VERSION file from ndata!"));
-      return;
-   }
-
-   diff = naev_versionCompare( version );
+   for (i=0; i<MIN(size,PATH_MAX-1); i++)
+      cbuf[i] = buf[i];
+   cbuf[MIN(size-1,PATH_MAX-1)] = '\0';
+   diff = naev_versionCompare( cbuf );
    if (diff != 0) {
       WARN( _("ndata version inconsistancy with this version of Naev!") );
-      WARN( _("Expected ndata version %d.%d.%d got %d.%d.%d."),
-            VMAJOR, VMINOR, VREV, version[0], version[1], version[2] );
-
+      WARN( _("Expected ndata version %s got %s."), VERSION, cbuf );
       if (ABS(diff) > 2)
          ERR( _("Please get a compatible ndata version!") );
-
       if (ABS(diff) > 1)
          WARN( _("Naev will probably crash now as the versions are probably not compatible.") );
    }
@@ -352,18 +343,6 @@ char **ndata_listRecursive( const char *path )
 
 
 /**
- * @brief Small qsort wrapper.
- */
-static int ndata_sortFunc( const void *name1, const void *name2 )
-{
-   const char **f1, **f2;
-   f1 = (const char**) name1;
-   f2 = (const char**) name2;
-   return strcmp( f1[0], f2[0] );
-}
-
-
-/**
  * @brief Sorts the files by name.
  *
  * Meant to be used directly by ndata_list.
@@ -373,7 +352,7 @@ static int ndata_sortFunc( const void *name1, const void *name2 )
  */
 void ndata_sortName( char **files, size_t nfiles )
 {
-   qsort( files, nfiles, sizeof(char*), ndata_sortFunc );
+   qsort( files, nfiles, sizeof(char*), strsort );
 }
 
 

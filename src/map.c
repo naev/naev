@@ -90,7 +90,7 @@ static void map_drawMarker( double x, double y, double r, double a,
       int num, int cur, int type );
 /* Mouse. */
 static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data );
+      double w, double h, double rx, double ry, void *data );
 /* Misc. */
 static glTexture *gl_genFactionDisk( int radius );
 static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
@@ -395,15 +395,13 @@ static void map_update( unsigned int wid )
    StarSystem *sys;
    int f, h, x, y;
    unsigned int services;
-   int l;
-   int hasPresence, hasPlanets;
+   int hasPlanets;
    char t;
    const char *sym, *adj;
    char buf[PATH_MAX];
    int p;
    glTexture *logo;
    double w;
-   double unknownPresence;
    Commodity *c;
 
    /* Needs map to update. */
@@ -551,40 +549,11 @@ static void map_update( unsigned int wid )
    window_moveWidget( wid, "txtStanding", x + 50, y - gl_smallFont.h - 5 );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
-   /* Get presence. */
-   hasPresence = 0;
-   buf[0]      = '\0';
-   l           = 0;
-   unknownPresence = 0;
-   for (i=0; i < sys->npresence; i++) {
-      if (sys->presence[i].value <= 0)
-         continue;
-      hasPresence = 1;
-      if (faction_isKnown( sys->presence[i].faction )) {
-         t = faction_getColourChar(sys->presence[i].faction);
-         /* Use map grey instead of default neutral colour */
-         l += nsnprintf( &buf[l], PATH_MAX-l, "%s\a0%s: \a%c%.0f",
-                        (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
-                        t, sys->presence[i].value);
-      }
-      else
-         unknownPresence += sys->presence[i].value;
-      if (l > PATH_MAX)
-         break;
-   }
-   if (unknownPresence != 0)
-      l += nsnprintf( &buf[l], PATH_MAX-l, "%s\a0%s: \a%c%.0f",
-                     (l==0)?"":"\n", _("Unknown"), 'N', unknownPresence);
-   (void)l;
-
-   if (hasPresence == 0)
-      nsnprintf(buf, PATH_MAX, "N/A");
-
    window_moveWidget( wid, "txtSPresence", x, y );
    window_moveWidget( wid, "txtPresence", x + 50, y-gl_smallFont.h-5 );
-   window_modifyText( wid, "txtPresence", buf );
+   map_updateFactionPresence( wid, "txtPresence", sys, 0 );
    /* Scroll down. */
-   h  = gl_printHeightRaw( &gl_smallFont, w, buf );
+   h = window_getTextHeight( wid, "txtPresence" );
    y -= 40 + (h - gl_smallFont.h);
 
    /* Get planets */
@@ -1562,6 +1531,54 @@ void map_renderCommod( double bx, double by, double x, double y,
 #undef setcolour
 
 /**
+ * @brief Updates a text widget with a system's presence info.
+ *
+ *    @param wid Window to which the text widget belongs.
+ *    @param name Name of the text widget.
+ *    @param sys System whose faction presence we're reporting.
+ *    @param omniscient Whether to dispaly complete information (editor view)
+ */
+void map_updateFactionPresence( const unsigned int wid, const char *name, const StarSystem *sys, int omniscient )
+{
+   int    i;
+   size_t l;
+   char   buf[ 1024 ];
+   int    hasPresence;
+   double unknownPresence;
+
+   buf[ 0 ]        = '\0';
+   l               = 0;
+   hasPresence     = 0;
+   unknownPresence = 0;
+
+   for ( i = 0; i < sys->npresence; i++ ) {
+      if ( sys->presence[ i ].value <= 0 )
+         continue;
+
+      hasPresence = 1;
+      if ( !omniscient && !faction_isKnown( sys->presence[ i ].faction ) ) {
+         unknownPresence += sys->presence[ i ].value;
+         break;
+      }
+      /* Use map grey instead of default neutral colour */
+      l += nsnprintf( &buf[ l ], sizeof( buf ) - l, "%s\a0%s: \a%c%.0f", ( l == 0 ) ? "" : "\n",
+                      omniscient ? faction_name( sys->presence[ i ].faction )
+                                 : faction_shortname( sys->presence[ i ].faction ),
+                      faction_getColourChar( sys->presence[ i ].faction ), sys->presence[ i ].value );
+      if ( l > sizeof( buf ) )
+         break;
+   }
+   if ( unknownPresence != 0 && l <= sizeof( buf ) )
+      l += nsnprintf( &buf[ l ], sizeof( buf ) - l, "%s\a0%s: \a%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
+                      unknownPresence );
+
+   if ( hasPresence == 0 )
+      nsnprintf( buf, sizeof( buf ), _( "None" ) );
+
+   window_modifyText( wid, name, buf );
+}
+
+/**
  * @brief Map custom widget mouse handling.
  *
  *    @param wid Window sending events.
@@ -1572,10 +1589,12 @@ void map_renderCommod( double bx, double by, double x, double y,
  *    @param h Height of the widget.
  */
 static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data )
+      double w, double h, double rx, double ry, void *data )
 {
    (void) wid;
    (void) data;
+   (void) rx;
+   (void) ry;
    int i;
    double x,y, t;
    StarSystem *sys;
@@ -1640,8 +1659,8 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
    case SDL_MOUSEMOTION:
       if (map_drag) {
          /* axis is inverted */
-         map_xpos -= event->motion.xrel;
-         map_ypos += event->motion.yrel;
+         map_xpos -= rx;
+         map_ypos += ry;
       }
       break;
    }
