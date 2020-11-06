@@ -37432,7 +37432,7 @@ msgstr ""
 
 #: src/board.c:125
 #, c-format
-msgid "\aOBoarding ship \a%c%s\a0."
+msgid "\aRBoarding ship \a%c%s\a0."
 msgstr ""
 
 #: src/board.c:153
@@ -37464,15 +37464,15 @@ msgid "Leave"
 msgstr ""
 
 #: src/board.c:215
-msgid "\aOThe ship has no credits."
+msgid "\aRThe ship has no credits."
 msgstr ""
 
 #: src/board.c:224
-msgid "\aOYou manage to steal the ship's credits."
+msgid "\aRYou manage to steal the ship's credits."
 msgstr ""
 
 #: src/board.c:243
-msgid "\aOThe ship has no cargo."
+msgid "\aRThe ship has no cargo."
 msgstr ""
 
 #: src/board.c:247
@@ -37480,11 +37480,11 @@ msgid "\arYou have no room for the ship's cargo."
 msgstr ""
 
 #: src/board.c:262
-msgid "\aOYou manage to steal the ship's cargo."
+msgid "\aRYou manage to steal the ship's cargo."
 msgstr ""
 
 #: src/board.c:280
-msgid "\aOThe ship has no fuel."
+msgid "\aRThe ship has no fuel."
 msgstr ""
 
 #: src/board.c:284
@@ -37492,7 +37492,7 @@ msgid "\arYour ship is at maximum fuel capacity."
 msgstr ""
 
 #: src/board.c:302
-msgid "\aOYou manage to steal the ship's fuel."
+msgid "\aRYou manage to steal the ship's fuel."
 msgstr ""
 
 #: src/board.c:323
@@ -37505,7 +37505,7 @@ msgstr ""
 
 #: src/board.c:373
 #, c-format
-msgid "\aOYou looted %d %s(s)"
+msgid "\aRYou looted %d %s(s)"
 msgstr ""
 
 #: src/board.c:383
@@ -37513,12 +37513,12 @@ msgid "\arThere is no ammo compatible with your launchers on board."
 msgstr ""
 
 #: src/board.c:445
-msgid "\aOYou have tripped the ship's self-destruct mechanism!"
+msgid "\aRYou have tripped the ship's self-destruct mechanism!"
 msgstr ""
 
 #: src/board.c:447
 #, c-format
-msgid "\aOThe ship's security system locks %s out."
+msgid "\aRThe ship's security system locks %s out."
 msgstr ""
 
 #: src/board.c:477 src/board.c:493 src/board.c:504
@@ -39349,7 +39349,7 @@ msgstr ""
 
 #: src/gui.c:2252
 #, c-format
-msgid "\aORadar set to %dx."
+msgid "\aRRadar set to %dx."
 msgstr ""
 
 #: src/gui_osd.c:245
@@ -40395,7 +40395,7 @@ msgstr ""
 
 #: src/land.c:1352
 #, c-format
-msgid "\aOTaking off from %s on %s."
+msgid "\aRTaking off from %s on %s."
 msgstr ""
 
 #: src/land.c:1413
@@ -40437,7 +40437,7 @@ msgid "\ag U "
 msgstr ""
 
 #: src/land_outfits.c:287
-msgid "\aO S "
+msgid "\aR S "
 msgstr ""
 
 #: src/land_outfits.c:287
@@ -43467,11 +43467,11 @@ msgid "Solid initialization did not specify correct update function!"
 msgstr ""
 
 #: src/pilot.c:881
-msgid "\aOActive cooldown engaged."
+msgid "\aRActive cooldown engaged."
 msgstr ""
 
 #: src/pilot.c:936
-msgid "\aOActive cooldown completed."
+msgid "\aRActive cooldown completed."
 msgstr ""
 
 #: src/pilot.c:939
@@ -43910,7 +43910,7 @@ msgstr ""
 
 #: src/player.c:1513
 #, c-format
-msgid "\aOReady to land on %s."
+msgid "\aRReady to land on %s."
 msgstr ""
 
 #: src/player.c:1523
@@ -43963,18 +43963,18 @@ msgid "\arYou do not have enough fuel to hyperspace jump."
 msgstr ""
 
 #: src/player.c:1791
-msgid "\aOPreparing for hyperspace."
+msgid "\aRPreparing for hyperspace."
 msgstr ""
 
 #: src/player.c:1867
 #, c-format
-msgid "\aOAutonav arrived at the %s system."
+msgid "\aRAutonav arrived at the %s system."
 msgstr ""
 
 #: src/player.c:1872
 #, c-format
-msgid "\aOAutonav continuing until destination (%d jump left)."
-msgid_plural "\aOAutonav continuing until destination (%d jumps left)."
+msgid "\aRAutonav continuing until destination (%d jump left)."
+msgid_plural "\aRAutonav continuing until destination (%d jumps left)."
 msgstr[0] ""
 
 #: src/player.c:2102
@@ -44004,7 +44004,7 @@ msgid "\arYou haven't been hailed by any pilots."
 msgstr ""
 
 #: src/player.c:2250
-msgid "\aOMouse flying enabled."
+msgid "\aRMouse flying enabled."
 msgstr ""
 
 #: src/player.c:2256
@@ -44170,7 +44170,7 @@ msgid "\arNot enough fuel to jump for autonav."
 msgstr ""
 
 #: src/player_autonav.c:114
-msgid "\aOAutonav initialized."
+msgid "\aRAutonav initialized."
 msgstr ""
 
 #: src/player_autonav.c:272
@@ -44183,21 +44183,21 @@ msgid "\arAutonav aborted!"
 msgstr ""
 
 #: src/player_autonav.c:283
-msgid "\aOAborting hyperspace sequence."
+msgid "\aRAborting hyperspace sequence."
 msgstr ""
 
 #: src/player_autonav.c:368
-msgid "\aOAutonav arrived at position."
+msgid "\aRAutonav arrived at position."
 msgstr ""
 
 #: src/player_autonav.c:378
 #, c-format
-msgid "\aOAutonav arrived at \a%c%s\a"
+msgid "\aRAutonav arrived at \a%c%s\a"
 msgstr ""
 
 #: src/player_autonav.c:393
 #, c-format
-msgid "\aO%s has been lost."
+msgid "\aR%s has been lost."
 msgstr ""
 
 #: src/player_autonav.c:589
@@ -44997,7 +44997,7 @@ msgstr ""
 
 #: src/space.c:1474
 #, c-format
-msgid "\aOEntering System %s on %s."
+msgid "\aREntering System %s on %s."
 msgstr ""
 
 #: src/space.c:1476

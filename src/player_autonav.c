@@ -113,7 +113,7 @@ static int player_autonavSetup (void)
    /* Autonav is mutually-exclusive with other autopilot methods. */
    player_restoreControl( PINPUT_AUTONAV, NULL );
 
-   player_message(_("\aOAutonav initialized."));
+   player_message(_("\aRAutonav initialized."));
    if (!player_isFlag(PLAYER_AUTONAV)) {
 
       tc_base   = player_dt_default() * (double)player.speed;
@@ -282,7 +282,7 @@ void player_autonavAbort( const char *reason )
       /* Break possible hyperspacing. */
       if (pilot_isFlag(player.p, PILOT_HYP_PREP)) {
          pilot_hyperspaceAbort(player.p);
-         player_message(_("\aOAborting hyperspace sequence."));
+         player_message(_("\aRAborting hyperspace sequence."));
       }
 
       /* Reset time compression. */
@@ -367,7 +367,7 @@ static void player_autonav (void)
       case AUTONAV_POS_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
-            player_message( _("\aOAutonav arrived at position.") );
+            player_message( _("\aRAutonav arrived at position.") );
             player_autonavEnd();
          }
          else if (!tc_rampdown)
@@ -377,7 +377,7 @@ static void player_autonav (void)
       case AUTONAV_PNT_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
-            player_message( _("\aOAutonav arrived at \a%c%s\a\0."),
+            player_message( _("\aRAutonav arrived at \a%c%s\a\0."),
                   planet_getColourChar( planet_get(player.autonavmsg) ),
                   player.autonavmsg );
             player_autonavEnd();
@@ -392,7 +392,7 @@ static void player_autonav (void)
             p = pilot_get( PLAYER_ID );
          if ((p->id == PLAYER_ID) || (!pilot_inRangePilot( player.p, p, NULL ))) {
             /* TODO : handle the different reasons: pilot is too far, jumped, landed or died. */
-            player_message( _("\aO%s has been lost."),
+            player_message( _("\aR%s has been lost."),
                               player.autonavmsg );
             player_accel( 0. );
             player_autonavEnd();

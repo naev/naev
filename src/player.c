@@ -1520,7 +1520,7 @@ void player_land (void)
          }
       }
       else /* No shoes, no shirt, no lifeforms, no service. */
-         player_message( _("\aOReady to land on %s."), planet->name );
+         player_message( _("\aRReady to land on %s."), planet->name );
 
       player_setFlag(PLAYER_LANDACK);
       if (!silent)
@@ -1798,7 +1798,7 @@ int player_jump (void)
    else if (i == -3)
       player_message(_("\arYou do not have enough fuel to hyperspace jump."));
    else {
-      player_message(_("\aOPreparing for hyperspace."));
+      player_message(_("\aRPreparing for hyperspace."));
       /* Stop acceleration noise. */
       player_accelOver();
       /* Stop possible shooting. */
@@ -1874,13 +1874,13 @@ void player_brokeHyperspace (void)
    /* Disable autonavigation if arrived. */
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (player.p->nav_hyperspace == -1) {
-         player_message( _("\aOAutonav arrived at the %s system."), cur_system->name);
+         player_message( _("\aRAutonav arrived at the %s system."), cur_system->name);
          player_autonavEnd();
       }
       else {
          player_message( ngettext(
-                  "\aOAutonav continuing until destination (%d jump left).",
-                  "\aOAutonav continuing until destination (%d jumps left).",
+                  "\aRAutonav continuing until destination (%d jump left).",
+                  "\aRAutonav continuing until destination (%d jumps left).",
                   map_npath),
                map_npath );
       }
@@ -2257,7 +2257,7 @@ void player_toggleMouseFly(void)
 {
    if (!player_isFlag(PLAYER_MFLY)) {
       input_mouseShow();
-      player_message(_("\aOMouse flying enabled."));
+      player_message(_("\aRMouse flying enabled."));
       player_setFlag(PLAYER_MFLY);
    }
    else {
