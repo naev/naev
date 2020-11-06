@@ -39,57 +39,30 @@ jobs:
           - os: ubuntu-latest
             container:
               image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
-            shell: bash
             config: linux.ini
             pkg-config-path: "[]"
 
           - os: ubuntu-latest
             container:
               image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1804
-            shell: bash
             config: linux.ini
             pkg-config-path: "[]"
 
           - os: ubuntu-latest
             container:
               image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2004
-            shell: bash
             config: linux.ini
             pkg-config-path: "[]"
 
           - os: ubuntu-latest
             container:
               image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2010
-            shell: bash
             config: linux.ini
             pkg-config-path: "[]"
-
-          - os: windows-2016
-            shell: msys2 {0}
-            config: windows.ini
-            pkg-config-path: "[]"
-
-          - os: windows-2019
-            shell: msys2 {0}
-            config: windows.ini
-            pkg-config-path: "[]"
-
-    defaults:
-      run:
-        shell: ${{ matrix.shell }}
 
     runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Install MinGW Packages
-      if: ${{ runner.os == 'Windows'}}
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: MINGW64
-        update: true
-        path-type: strict
-        install: git tar mingw-w64-x86_64-clang mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-luajit mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-suitesparse
-
     - name: Get Source
       uses: actions/download-artifact@v2
       with:
@@ -170,34 +143,26 @@ jobs:
           - os: ubuntu-latest
             container:
               image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
-            shell: bash
             config: linux.ini
             pkg-config-path: "[]"
 
           - os: ubuntu-latest
             container:
               image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1804
-            shell: bash
             config: linux.ini
             pkg-config-path: "[]"
 
           - os: ubuntu-latest
             container:
               image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2004
-            shell: bash
             config: linux.ini
             pkg-config-path: "[]"
 
           - os: ubuntu-latest
             container:
               image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2010
-            shell: bash
             config: linux.ini
             pkg-config-path: "[]"
-
-    defaults:
-      run:
-        shell: ${{ matrix.shell }}
 
     runs-on: ${{ matrix.os }}
 
@@ -235,7 +200,7 @@ jobs:
   "Documentation":
     runs-on: ubuntu-latest
     container:
-      image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2010
+      image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
     needs: "Package_Source"
 
     steps:
