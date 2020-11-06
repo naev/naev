@@ -83,8 +83,8 @@ static int intel_vendor = 0;
  */
 /* gl */
 static int gl_setupAttributes (void);
-static int gl_setupFullscreen (void);
 static int gl_createWindow( unsigned int flags );
+static int gl_getFullscreenMode (void);
 static int gl_getGLInfo (void);
 static int gl_defState (void);
 static int gl_setupScaling (void);
@@ -302,65 +302,54 @@ static int gl_setupAttributes (void)
 
 
 /**
- * @brief Tries to set up fullscreen environment.
+ * @brief Tries to apply the configured display mode to the window.
  *
+ *    @note Caller is responsible for calling gl_resize/naev_resize afterward.
  *    @return 0 on success.
  */
-static int gl_setupFullscreen (void)
+int gl_setupFullscreen (void)
 {
-   int i, j, off, toff, supported;
+   int display_index;
+   int ok;
+   SDL_DisplayMode target, closest;
 
-   /* Unsupported by default. */
-   supported = 0;
+   display_index = SDL_GetWindowDisplayIndex( gl_screen.window );
 
-   /* Try to use desktop resolution if nothing is specifically set. */
-   if ((gl_screen.desktop_w > 0) && (gl_screen.desktop_h > 0) && !conf.explicit_dim) {
-      gl_screen.w = gl_screen.desktop_w;
-      gl_screen.h = gl_screen.desktop_h;
-   }
-
-   SDL_DisplayMode mode;
-   int n = SDL_GetNumDisplayModes( 0 );
-
-   /* Try to get closest approximation to mode asked for */
-   off = -1;
-   j   = -1;
-   for (i=0; i<n; i++) {
-      SDL_GetDisplayMode( 0, i, &mode  );
-
-      /* Found supported mode. */
-      if ((mode.w == SCREEN_W) && (mode.h == SCREEN_H)) {
-         supported = 1;
-         break;
+   if (conf.fullscreen && conf.modesetting) {
+      /* Try to use desktop resolution if nothing is specifically set. */
+      if (conf.explicit_dim) {
+         SDL_GetWindowDisplayMode( gl_screen.window, &target );
+         target.w = conf.width;
+         target.h = conf.height;
       }
+      else
+         SDL_GetDesktopDisplayMode( display_index, &target );
 
-      /* Get Manhattan distance. */
-      toff = ABS(SCREEN_W-mode.w) + ABS(SCREEN_H-mode.h);
-      if ((off == -1) || (toff < off)) {
-         j   = i;
-         off = toff;
-      }
+      if (SDL_GetClosestDisplayMode( display_index, &target, &closest ) == NULL)
+         SDL_GetDisplayMode( display_index, 0, &closest ); /* fall back to the best one */
+
+      SDL_SetWindowDisplayMode( gl_screen.window, &closest );
    }
-
-   /* Failed to find. */
-   if (!supported) {
-      if (j<0) {
-         ERR(_("Fullscreen mode %dx%d is not supported by your setup, however no other modes are supported, bailing!"),
-               SCREEN_W, SCREEN_H);
-      }
-
-      SDL_GetDisplayMode( 0, j, &mode );
-      WARN(_("Fullscreen mode %dx%d is not supported by your setup\n"
-            "   switching to %dx%d"),
-            SCREEN_W, SCREEN_H,
-            mode.w, mode.h );
-      gl_screen.w = mode.w;
-      gl_screen.h = mode.h;
-   }
-
-   return 0;
+   ok = SDL_SetWindowFullscreen( gl_screen.window, gl_getFullscreenMode() );
+   /* HACK: Force pending resize events to be processed, particularly on Wayland. */
+   SDL_PumpEvents();
+   SDL_GL_SwapWindow(gl_screen.window);
+   SDL_GL_SwapWindow(gl_screen.window);
+   return ok;
 }
 
+
+/**
+ * @brief Returns the fullscreen configuration as SDL2 flags.
+ *
+ * @return Appropriate combination of SDL_WINDOW_FULLSCREEN* flags.
+ */
+static int gl_getFullscreenMode (void)
+{
+   if (conf.fullscreen)
+      return conf.modesetting ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_FULLSCREEN_DESKTOP;
+   return 0;
+}
 
 /**
  * @brief Creates the OpenGL window.
@@ -374,7 +363,8 @@ static int gl_createWindow( unsigned int flags )
    /* Create the window. */
    gl_screen.window = SDL_CreateWindow( APPNAME,
          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-         SCREEN_W, SCREEN_H, flags | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
+         conf.width, conf.height, flags | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
+                                   | SDL_WINDOW_ALLOW_HIGHDPI );
    if (gl_screen.window == NULL)
       ERR(_("Unable to create window! %s"), SDL_GetError());
 
@@ -398,8 +388,6 @@ static int gl_createWindow( unsigned int flags )
 
    /* Finish getting attributes. */
    SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE, &gl_screen.depth );
-   gl_screen.rw = SCREEN_W;
-   gl_screen.rh = SCREEN_H;
    gl_activated = 1; /* Opengl is now activated. */
 
    return 0;
@@ -436,8 +424,7 @@ static int gl_getGLInfo (void)
    intel_vendor = !!(nstrcasestr(vendor, "Intel") != NULL);
 
    /* Debug happiness */
-   DEBUG(_("OpenGL Window Created: %dx%d@%dbpp %s"), SCREEN_W, SCREEN_H, gl_screen.depth,
-         gl_has(OPENGL_FULLSCREEN)?_("fullscreen"):_("window"));
+   DEBUG(_("OpenGL Drawable Created: %dx%d@%dbpp"), gl_screen.rw, gl_screen.rh, gl_screen.depth);
    DEBUG(_("r: %d, g: %d, b: %d, a: %d, db: %s, fsaa: %d, tex: %d"),
          gl_screen.r, gl_screen.g, gl_screen.b, gl_screen.a,
          gl_has(OPENGL_DOUBLEBUF) ? _("yes") : _("no"),
@@ -481,13 +468,24 @@ static int gl_defState (void)
 
 
 /**
- * @brief Checks to see if window needs to handle scaling.
+ * @brief Sets up dimensions in gl_screen, including scaling as needed.
  *
  *    @return 0 on success.
  */
 static int gl_setupScaling (void)
 {
    double scalew, scaleh;
+
+   /* Get the basic dimensions from SDL2. */
+   SDL_GetWindowSize(gl_screen.window, &gl_screen.w, &gl_screen.h);
+   SDL_GL_GetDrawableSize(gl_screen.window, &gl_screen.rw, &gl_screen.rh);
+   /* Calculate scale factor, if OS has native HiDPI scaling. */
+   gl_screen.dwscale = (double)gl_screen.w / (double)gl_screen.rw;
+   gl_screen.dhscale = (double)gl_screen.h / (double)gl_screen.rh;
+
+   /* Combine scale factor from OS with the one in Naev's config */
+   gl_screen.scale = fmax(gl_screen.dwscale, gl_screen.dhscale) / conf.scalefactor;
+
    /* New window is real window scaled. */
    gl_screen.nw = (double)gl_screen.rw * gl_screen.scale;
    gl_screen.nh = (double)gl_screen.rh * gl_screen.scale;
@@ -540,29 +538,12 @@ static int gl_hint (void)
 int gl_init (void)
 {
    unsigned int flags;
-   int dw, dh;
    GLuint VaoId;
 
    /* Defaults. */
-   /* desktop_w and desktop_h get set in naev.c when initializing. */
-   dw = gl_screen.desktop_w;
-   dh = gl_screen.desktop_h;
    memset( &gl_screen, 0, sizeof(gl_screen) );
-   flags  = SDL_WINDOW_OPENGL;
-   gl_screen.desktop_w = dw;
-   gl_screen.desktop_h = dh;
 
-   /* Load configuration. */
-
-   gl_screen.w = conf.width;
-   gl_screen.h = conf.height;
-   if (conf.fullscreen) {
-      gl_screen.flags |= OPENGL_FULLSCREEN;
-      if (conf.modesetting)
-         flags |= SDL_WINDOW_FULLSCREEN;
-      else
-         flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
-   }
+   flags = SDL_WINDOW_OPENGL | gl_getFullscreenMode();
 
    /* Initializes Video */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
@@ -573,12 +554,11 @@ int gl_init (void)
    /* Set opengl flags. */
    gl_setupAttributes();
 
-   /* See if should set up fullscreen. */
-   if (conf.fullscreen)
-      gl_setupFullscreen();
-
    /* Create the window. */
    gl_createWindow( flags );
+
+   /* Apply the configured fullscreen display mode, if any. */
+   gl_setupFullscreen();
 
    /* Load extensions. */
    if (!gladLoadGLLoader(SDL_GL_GetProcAddress))
@@ -594,7 +574,7 @@ int gl_init (void)
    gl_defState();
 
    /* Handles resetting the viewport and scaling, rw/rh are set in createWindow. */
-   gl_resize( gl_screen.rw, gl_screen.rh );
+   gl_resize();
 
    /* Finishing touches. */
    glClear( GL_COLOR_BUFFER_BIT ); /* must clear the buffer first */
@@ -626,21 +606,11 @@ int gl_init (void)
 
 /**
  * @brief Handles a window resize and resets gl_screen parameters.
- *
- *    @param w New real/drawable width.
- *    @param h New real/drawable height.
  */
-void gl_resize( int w, int h )
+void gl_resize (void)
 {
-   glViewport( 0, 0, w, h );
-
-   gl_screen.rw = w;
-   gl_screen.rh = h;
-
-   /* Reset scaling. */
-   gl_screen.scale = 1./conf.scalefactor;
-
    gl_setupScaling();
+   glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
    gl_setDefViewport( 0, 0, gl_screen.nw, gl_screen.nh );
    gl_defViewport();
 
@@ -704,6 +674,9 @@ void gl_defViewport (void)
  */
 void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy )
 {
+   wx /= gl_screen.dwscale;
+   wy /= gl_screen.dhscale;
+
    *sx = gl_screen.mxscale * (double)wx - (double)gl_screen.x;
    *sy = gl_screen.myscale * (double)(gl_screen.rh - wy) - (double)gl_screen.y;
 }
@@ -716,6 +689,9 @@ void gl_screenToWindowPos( int *wx, int *wy, int sx, int sy )
 {
    *wx = (sx + (double)gl_screen.x) / gl_screen.mxscale;
    *wy = (double)gl_screen.rh - (sy + (double)gl_screen.y) / gl_screen.myscale;
+
+   *wx *= gl_screen.dwscale;
+   *wy *= gl_screen.dhscale;
 }
 
 

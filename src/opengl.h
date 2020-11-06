@@ -47,7 +47,6 @@
 /*
  * Contains info about the opengl screen
  */
-#define OPENGL_FULLSCREEN  (1<<0) /**< Fullscreen. */
 #define OPENGL_DOUBLEBUF   (1<<1) /**< Doublebuffer. */
 #define OPENGL_VSYNC       (1<<2) /**< Sync to monitor vertical refresh rate. */
 #define gl_has(f)    (gl_screen.flags & (f)) /**< Check for the flag */
@@ -55,8 +54,6 @@
  * @brief Stores data about the current opengl environment.
  */
 typedef struct glInfo_ {
-   int desktop_w; /**< Desktop width. */
-   int desktop_h; /**< Desktop height. */
    int x; /**< X offset of window viewport. */
    int y; /**< Y offset of window viewport. */
    /* Viewport considers x/y offset. */
@@ -71,6 +68,8 @@ typedef struct glInfo_ {
    double scale; /**< Scale factor. */
    double wscale; /**< Width scale factor. */
    double hscale; /**< Height scale factor. */
+   double dwscale; /**< Drawable height scale factor. */
+   double dhscale; /**< Drawable width scale factor. */
    double mxscale; /**< Mouse X scale factor. */
    double myscale; /**< Mouse y scale factor. */
    int depth; /**< Depth in bpp */
@@ -107,7 +106,7 @@ extern gl_Matrix4 gl_view_matrix;
  */
 int gl_init (void);
 void gl_exit (void);
-void gl_resize( int w, int h );
+void gl_resize (void);
 
 
 /*
@@ -125,6 +124,7 @@ void gl_screenToWindowPos( int *wx, int *wy, int sx, int sy );
 void gl_viewport( int x, int y, int w, int h );
 void gl_defViewport (void);
 void gl_setDefViewport( int x, int y, int w, int h );
+int gl_setupFullscreen (void);
 
 
 /*
