@@ -1680,9 +1680,9 @@ if ((x) != 0.) \
 if ((x) != 0) \
    i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, \
          "\n\a%c%+.d "s"\a0", ((x)>0)?'g':'r', x )
-#define DESC_ADD0(x, s)    DESC_ADD( x, s, "0", ((x)>0)?'D':'r' )
-#define DESC_ADD1(x, s)    DESC_ADD( x, s, "1", ((x)>0)?'D':'r' )
-#define DESC_ADDI(x, s)    DESC_ADD( x, s, "1", ((x)>0)?'D':'r' )
+#define DESC_ADD0(x, s)    DESC_ADD( x, s, "0", ((x)>0)?'g':'r' )
+#define DESC_ADD1(x, s)    DESC_ADD( x, s, "1", ((x)>0)?'g':'r' )
+#define DESC_ADDI(x, s)    DESC_ADD( x, s, "1", ((x)>0)?'g':'r' )
    DESC_ADD0( temp->cpu, "CPU" );
    DESC_ADD0( temp->u.mod.thrust, "Thrust" );
    DESC_ADD0( temp->u.mod.turn, "Turn Rate" );
