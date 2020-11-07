@@ -78,12 +78,12 @@ void window_addList( const unsigned int wid,
 
    /* position/size */
    wgt->w = (double) w;
-   wgt->h = (double) h - ((h % DY) - CELLPADV);
+   wgt->h = (double) h - (h-2) % DY;
    toolkit_setPos( wdw, wgt, x, y );
 
    /* check if needs scrollbar. */
-   if (2 + (nitems * DY) > (int)wgt->h)
-      wgt->dat.lst.height = DY * nitems + 6;
+   if (2 + nitems*DY > (int)wgt->h)
+      wgt->dat.lst.height = nitems*DY;
    else
       wgt->dat.lst.height = 0;
 
@@ -125,21 +125,19 @@ static void lst_render( Widget* lst, double bx, double by )
       /* We need to make room for list. */
       w -= 11.;
 
-      scroll_pos  = (double)(lst->dat.lst.pos * (6 + gl_smallFont.h));
-      scroll_pos /= (double)lst->dat.lst.height - lst->h;
-      /* XXX lst->h is off by one */
-      toolkit_drawScrollbar( x + lst->w - 12. + 1, y -1, 12., lst->h + 2, scroll_pos );
+      scroll_pos = (double)(lst->dat.lst.pos * DY) / (lst->dat.lst.height - lst->h + 2);
+      toolkit_drawScrollbar( x + lst->w - 12. + 1, y, 12., lst->h, scroll_pos );
    }
 
    /* draw selected item background */
-   toolkit_drawRect( x, y - 1. + lst->h -
+   toolkit_drawRect( x + 1, y - 1 + lst->h -
          (1 + lst->dat.lst.selected - lst->dat.lst.pos)*DY,
          w-1, DY, &cHilight, NULL );
 
    /* draw content */
    tx = x + 6.;
    w -= 4;
-   ty = y + lst->h - 6. - gl_smallFont.h;
+   ty = y + lst->h - CELLPADV/2 - gl_smallFont.h;
    miny = y;
    for (i=lst->dat.lst.pos; i<lst->dat.lst.noptions; i++) {
       gl_printMaxRaw( &gl_smallFont, w,
@@ -252,7 +250,7 @@ static int lst_focus( Widget* lst, double bx, double by )
       w -= 10.;
 
    if (bx < w) {
-      i = lst->dat.lst.pos + (lst->h - by - 4) / DY;
+      i = lst->dat.lst.pos + (lst->h - by) / DY;
       if (i < lst->dat.lst.noptions) { /* shouldn't be out of boundaries */
          lst->dat.lst.selected = i;
          lst_scroll( lst, 0 ); /* checks boundaries and triggers callback */
@@ -260,8 +258,7 @@ static int lst_focus( Widget* lst, double bx, double by )
    }
    else {
       /* Get bar position (center). */
-      scroll_pos  = (double)(lst->dat.lst.pos * DY);
-      scroll_pos /= (double)lst->dat.lst.height - lst->h;
+      scroll_pos = (double)(lst->dat.lst.pos * DY) / (lst->dat.lst.height - lst->h + 2);
       y = (lst->h - 30.) * (1.-scroll_pos) + 15.;
 
       /* Click below the bar. */
