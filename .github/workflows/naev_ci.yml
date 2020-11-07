@@ -42,8 +42,7 @@ jobs:
             pkg-config-path: "[]"
 
           - os: ubuntu-latest
-            container:
-              image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1804
+            image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1804
             config: linux.ini
             pkg-config-path: "[]"
 
