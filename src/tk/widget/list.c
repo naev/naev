@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include "nstring.h"
 
-#define CELLPADV 12
+#define CELLPADV 8
 #define DY (gl_smallFont.h + CELLPADV)
 
 
