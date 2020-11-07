@@ -137,17 +137,17 @@ static void lst_render( Widget* lst, double bx, double by )
          w-1, DY, &cHilight, NULL );
 
    /* draw content */
-   tx = x + 2.;
-   ty = y + lst->h - 4. - gl_smallFont.h;
-   miny = ty - lst->h + 4 + gl_smallFont.h;
+   tx = x + 6.;
    w -= 4;
+   ty = y + lst->h - 6. - gl_smallFont.h;
+   miny = y;
    for (i=lst->dat.lst.pos; i<lst->dat.lst.noptions; i++) {
-      gl_printMaxRaw( &gl_smallFont, (int)w,
-            tx + 4, ty - 2, &cFontWhite, -1., lst->dat.lst.options[i] );
+      gl_printMaxRaw( &gl_smallFont, w,
+            tx, ty, &cFontWhite, -1., lst->dat.lst.options[i] );
       ty -= DY;
 
       /* Check if out of bounds. */
-      if (ty < miny)
+      if (ty + 2 < miny)
          break;
    }
 }
