@@ -105,28 +105,28 @@ jobs:
         path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
         if-no-files-found: ignore
 
-#    - name: Meson Test
-#      id: tests
-#      run: |
-#        ${{ matrix.test-env }} sh $MESON test -C build --print-errorlogs
-#
-#    - name: Upload test log
-#      uses: actions/upload-artifact@v2
-#      if: ${{ success() || steps.tests.outcome == 'failure' }}
-#      with:
-#        name: ${{ matrix.os }}-${{ github.sha }}-test-log
-#        path: ${{ github.workspace }}/build/meson-logs/testlog.txt
-#        if-no-files-found: ignore
+    - name: Meson Test
+      id: tests
+      run: |
+        ${{ matrix.test-env }} sh $MESON test -C build --print-errorlogs
+
+    - name: Upload test log
+      uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.tests.outcome == 'failure' }}
+      with:
+        name: ${{ matrix.os }}-${{ github.sha }}-test-log
+        path: ${{ github.workspace }}/build/meson-logs/testlog.txt
+        if-no-files-found: ignore
 
     - name: Package
       run: |
         meson install -C build
         tar -cvf naev-${{ matrix.os }}-${{ github.sha }}.tar dist
-#      if: ${{ success() || steps.tests.outcome == 'failure' }}
+      if: ${{ success() || steps.tests.outcome == 'failure' }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
-#      if: ${{ success() || steps.tests.outcome == 'failure' }}
+      if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
         name: naev-${{ matrix.os }}-${{ github.sha }}
         path: ${{ github.workspace }}/*.tar
