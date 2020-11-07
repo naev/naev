@@ -90,6 +90,7 @@ void window_addList( const unsigned int wid,
    if (wdw->focus == -1) /* initialize the focus */
       toolkit_nextFocus( wdw );
 
+   lst_scroll( wgt, 0 ); /* checks boundaries and triggers callback */
    if (defitem >= 0 && call)
       call(wid, name);
 }
