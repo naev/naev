@@ -81,11 +81,10 @@ tree $STEAMPATH
 #python3 $SOURCEROOT/utils/ci/steam/2fa/get_2fa.py
 #STEAMCMD_TFA="$(cat $SOURCEROOT/extras/steam/2fa/2fa.txt)"
 #
-#if [[ $NIGHTLY == true ]]; then
+#if [[ "$NIGHTLY" == "true" ]]; then
 #    # Run steam upload with 2fa key
 #    steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http $STEAMPATH/scripts/app_build_598530_nightly.vdf +quit
-#
-#elif [[ $NIGHTLY == false ]]; then
+#else
 #    if [[ $BETA == true ]]; then 
 #        # Run steam upload with 2fa key
 #        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http $STEAMPATH/scripts/app_build_598530_prerelease.vdf +quit
@@ -102,7 +101,4 @@ tree $STEAMPATH
 #    else
 #        echo "Something went wrong determining if this is a beta or not."
 #    fi
-#else
-#    echo "Something went wrong.."
-#    exit -1
 #fi

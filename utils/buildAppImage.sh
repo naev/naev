@@ -90,7 +90,7 @@ else
     echo "The VERSION file is missing from $SOURCEROOT."
     exit -1
 fi
-if [ "$NIGHTLY" = true ]; then
+if [[ "$NIGHTLY" == "true" ]]; then
     export VERSION="$VERSION.$BUILD_DATE"
 fi
 
