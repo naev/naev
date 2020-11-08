@@ -1,6 +1,6 @@
 #!/bin/bash
 # WINDOWS PACKAGING SCRIPT FOR NAEV
-# Requires NSIS to be installed
+# Requires NSIS and python3-pip to be installed
 #
 # This script should be run after compiling Naev
 # It detects the current environment, and builds the appropriate NSIS installer
@@ -72,6 +72,8 @@ echo "moving data to staging area"
 cp -r "$SOURCEROOT/dat" "$SOURCEROOT/extras/windows/installer/bin"
 
 # Collect DLLs
+echo "Locally install 'pefile' Python module"
+pip3 install pefile
 echo "Collecting DLLs in staging area"
 "$SOURCEROOT"/extras/windows/extract_dlls.py "$BUILDPATH/naev.exe" "$SOURCEROOT/extras/windows/installer/bin"
 
