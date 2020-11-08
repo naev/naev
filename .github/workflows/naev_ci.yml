@@ -197,7 +197,7 @@ jobs:
     - name: Package
       run: |
         meson install -C build
-        tar -cvf ${{ github.workspace }}/naev-docs-${{ github.sha }}.tar ${{ env.DESTDIR }}/usr/local/doc/naev
+        tar -cvf naev-docs-${{ github.sha }}.tar ${{ env.DESTDIR }}/usr/local/doc/naev
         
     - name: Upload Lua Documentation
       if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
