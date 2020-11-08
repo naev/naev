@@ -155,7 +155,7 @@ jobs:
     - name: Compile AppImage
       id: compile
       run: |
-        sh source/utils/buildAppImage.sh -s "source" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
+        sh "source/utils/buildAppImage.sh -s "source" -b "build" -o "${{ env.DESTDIR }}"" 2>&1 | tee appImageBuildLog.txt
 
     - name: Upload Compile Log
       uses: actions/upload-artifact@v2
