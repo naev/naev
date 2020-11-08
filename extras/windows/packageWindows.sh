@@ -114,12 +114,10 @@ mv "$SOURCEROOT/extras/windows/installer/naev-$VERSION-win$ARCH.exe $BUILDOUTPUT
 echo "Successfully built Windows Installer for win$ARCH"
 
 # Package steam windows tarball
-OLDDIR="$(pwd)"
-
-cd "$SOURCEROOT/extras/windows/installer/bin"
+pushd "$SOURCEROOT/extras/windows/installer/bin"
 tar -cJvf ../steam-win$ARCH.tar.xz *.dll *.exe
 mv ../*.xz "$BUILDOUTPUT/out"
-cd "$OLDDIR"
+popd
 
 echo "Successfully packaged Steam Tarball for win$ARCH"
 
