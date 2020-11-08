@@ -109,7 +109,7 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
       int sx, int sy, const glColour *c, int selected, const char *caption );
 static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data );
+      double w, double h, double xr, double yr, void *data );
 /* Button functions. */
 static void sysedit_close( unsigned int wid, char *wgt );
 static void sysedit_btnNew( unsigned int wid_unused, char *unused );
@@ -832,7 +832,7 @@ static void sysedit_renderOverlay( double bx, double by, double bw, double bh, v
  * @brief System editor custom widget mouse handling.
  */
 static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data )
+      double w, double h, double xr, double yr, void *data )
 {
    (void) wid;
    (void) data;
@@ -1054,11 +1054,11 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          /* Handle dragging. */
          if (sysedit_drag) {
             /* axis is inverted */
-            sysedit_xpos -= event->motion.xrel;
-            sysedit_ypos += event->motion.yrel;
+            sysedit_xpos -= xr;
+            sysedit_ypos += yr;
 
             /* Update mouse movement. */
-            sysedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
+            sysedit_moved += ABS(xr) + ABS(yr);
          }
          /* Dragging selection around. */
          else if (sysedit_dragSel && (sysedit_nselect > 0)) {
@@ -1068,21 +1068,21 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                   /* Planets. */
                   if (sysedit_select[i].type == SELECT_PLANET) {
                      p = sys->planets[ sysedit_select[i].u.planet ];
-                     p->pos.x += ((double)event->motion.xrel) / sysedit_zoom;
-                     p->pos.y -= ((double)event->motion.yrel) / sysedit_zoom;
+                     p->pos.x += xr / sysedit_zoom;
+                     p->pos.y -= yr / sysedit_zoom;
                   }
                   /* Jump point. */
                   else if (sysedit_select[i].type == SELECT_JUMPPOINT) {
                      jp         = &sys->jumps[ sysedit_select[i].u.jump ];
                      jp->flags &= ~(JP_AUTOPOS);
-                     jp->pos.x += ((double)event->motion.xrel) / sysedit_zoom;
-                     jp->pos.y -= ((double)event->motion.yrel) / sysedit_zoom;
+                     jp->pos.x += xr / sysedit_zoom;
+                     jp->pos.y -= yr / sysedit_zoom;
                   }
                }
             }
 
             /* Update mouse movement. */
-            sysedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
+            sysedit_moved += ABS(xr) + ABS(yr);
          }
          break;
    }

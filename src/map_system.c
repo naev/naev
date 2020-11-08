@@ -75,7 +75,7 @@ void map_system_updateSelected( unsigned int wid );
 static void map_system_render( double bx, double by, double w, double h, void *data );
 /* Mouse. */
 static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data );
+      double w, double h, double rx, double ry, void *data );
 /* Misc. */
 static int map_system_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 void map_system_show( int wid, int x, int y, int w, int h);
@@ -563,9 +563,11 @@ static void map_system_render( double bx, double by, double w, double h, void *d
  *    @param h Height of the widget.
  */
 static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data )
+      double w, double h, double rx, double ry, void *data )
 {
    (void) data;
+   (void) rx;
+   (void) ry;
    int offset;
    switch (event->type) {
    case SDL_MOUSEBUTTONDOWN:
@@ -886,7 +888,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
       yh = (h - 100 - (i+1)*5 ) * outfitSpace;
       ypos = 65 + 5*(shipSpace!=0) + (h - 100 - (i+1)*5)*shipSpace;
       window_addImageArray( wid, xpos, ypos,
-                            xw, yh, MAPSYS_OUTFITS, 64, 64,
+                            xw, yh, MAPSYS_OUTFITS, 96, 96,
                             coutfits, noutfits, map_system_array_update, map_system_array_rmouse );
       toolkit_unsetSelection( wid, MAPSYS_OUTFITS );
    }
@@ -935,7 +937,7 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
       yh = (h - 100 - (i+1)*5 ) * shipSpace;
       ypos = 65;
       window_addImageArray( wid, xpos, ypos,
-         xw, yh, MAPSYS_SHIPS, 64., 64.,
+         xw, yh, MAPSYS_SHIPS, 96., 96.,
          cships, nships, map_system_array_update, map_system_array_rmouse );
       toolkit_unsetSelection( wid, MAPSYS_SHIPS );
    }
@@ -980,7 +982,7 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
       ypos = 60 + 5*i + (h-100 - (i+1)*5 )*(outfitSpace + shipSpace);
 
       window_addImageArray( wid, xpos, ypos,
-         xw, yh, MAPSYS_TRADE, 64, 64,
+         xw, yh, MAPSYS_TRADE, 96, 96,
          cgoods, ngoods, map_system_array_update, map_system_array_rmouse );
       toolkit_unsetSelection( wid, MAPSYS_TRADE );
    }

@@ -227,7 +227,7 @@ articles["Goddard"] = {
    },
    {
       tag = N_("Melendez CEO on Strategy"),
-      desc = _("The Chief Executive Officer of ship maker Melendez Inc. thinks manufacturers should follow his company's lead in keeping costs down and producing for the mass market.")
+      desc = _("The Chief Executive Officer of ship maker Melendez Corp. thinks manufacturers should follow his company's lead in keeping costs down and producing for the mass market.")
    },
    {
       tag = N_("The Goddard Exception"),

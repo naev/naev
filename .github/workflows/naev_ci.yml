@@ -184,6 +184,7 @@ jobs:
     - name: Package
       run: |
         sh $MESON install -C build
+        tar -cvf naev-${{ matrix.os }}-${{ github.sha }}.tar dist
 #      if: ${{ success() || steps.tests.outcome == 'failure' }}
 
     - name: Upload Artifact
@@ -191,24 +192,75 @@ jobs:
 #      if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
         name: naev-${{ matrix.os }}-${{ github.sha }}
-        path: ${{ env.DESTDIR }}/*
+        path: ${{ github.workspace }}/*.tar
         if-no-files-found: error
 
-  "Documentation":
-    runs-on: ubuntu-latest
+  "Compile_AppImage":
     needs: "Package_Source"
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-16.04
+            shell: bash
+            config: linux.ini
+            pkg-config-path: "[]"
+
+          - os: ubuntu-18.04
+            shell: bash
+            config: linux.ini
+            pkg-config-path: "[]"
+
+          - os: ubuntu-20.04
+            shell: bash
+            config: linux.ini
+            pkg-config-path: "[]"
+
+    defaults:
+      run:
+        shell: ${{ matrix.shell }}
+
+    runs-on: ${{ matrix.os }}
 
     steps:
     - name: Update APT Cache
+      if: ${{ runner.os == 'Linux'}}
       run: |
         sudo apt-get update
 
     - name: Install Additional Build Dependencies
+      if: ${{ runner.os == 'Linux'}}
       run: |
         sudo apt-get install \
-          lua-ldoc \
-          graphviz \
-          doxygen \
+          autopoint \
+          binutils-dev \
+          build-essential \
+          gettext \
+          intltool \
+          libfreetype6-dev \
+          libgl1-mesa-dev \
+          libiberty-dev \
+          libluajit-5.1-dev \
+          libopenal-dev \
+          libpng-dev \
+          libsdl2-dev \
+          libsdl2-image-dev \
+          libsdl2-mixer-dev \
+          libsuitesparse-dev \
+          libvorbis-dev \
+          libxml2-dev
+
+    - name: Install Ninja-Build (xenial-backports)
+      if: ${{ matrix.os == 'ubuntu-16.04' && runner.os == 'Linux'}}
+      run: |
+        sudo apt-get -t xenial-backports install \
+          ninja-build
+
+    - name: Install Ninja-Build
+      if: ${{ matrix.os != 'ubuntu-16.04' && runner.os == 'Linux'}}
+      run: |
+        sudo apt-get install \
           ninja-build
 
     - name: Get Source
@@ -221,27 +273,72 @@ jobs:
         mkdir source
         tar -xf naev-*.tar.xz -C source --strip 1
 
+    - name: Compile AppImage
+      id: compile
+      run: |
+        sh source/utils/buildAppImage.sh -s "source" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
+
+    - name: Upload Compile Log
+      uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.compile.outcome == 'failure' }}
+      with:
+        name: ${{ matrix.os }}-${{ github.sha }}-appimageBuild-log
+        path: ${{ github.workspace }}/appImageBuildLog.txt
+        if-no-files-found: ignore
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-${{ matrix.os }}-AppImage-${{ github.sha }}
+        path: ${{ env.DESTDIR }}/out/*.AppImage
+        if-no-files-found: error
+
+  "Documentation":
+    runs-on: ubuntu-latest
+    needs: "Package_Source"
+
+    steps:
+    - name: Update APT Cache
+      run: |
+        sudo apt-get update
+    - name: Install Additional Build Dependencies
+      run: |
+        sudo apt-get install \
+          lua-ldoc \
+          graphviz \
+          doxygen \
+          ninja-build
+    - name: Get Source
+      uses: actions/download-artifact@v2
+      with:
+        name: naev-${{ github.sha }}
+
+    - name: Extract Source
+      run: |
+        mkdir source
+        tar -xf naev-*.tar.xz -C source --strip 1
+        
     - name: Meson Build
       run: |
         sh $MESON setup build source \
             -Dexecutable=disabled
+             
+    - name: Package
+      run: |
         sh $MESON install -C build
-
-    - name: Install SSH Key
-      uses: shimataro/ssh-key-action@v2.0.3
-      with:
-        key: ${{ secrets.SSH_KEY }}
-        name: id_rsa # optional
-        known_hosts: ${{ secrets.KNOWN_HOSTS }}
-      if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
-
+        tar -cvf ${{ github.workspace }}/naev-docs-${{ github.sha }}.tar ${{ env.DESTDIR }}/usr/local/doc/naev
+        
     - name: Upload Lua Documentation
-      run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete ${{ env.DESTDIR }}/usr/local/doc/naev/lua/* travis@iandouglasscott.com:/srv/naevdoc
       if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
+      run: |
+        curl -X POST https://api.github.com/repos/naev/naev.github.io/dispatches \
+        -H 'Accept: application/vnd.github.everest-preview+json' \
+        -u ${{ secrets.WEBSITE_ACCESS_TOKEN }} \
+        --data '{"event_type": "api", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: naev-docs-${{ github.sha }}
-        path: ${{ env.DESTDIR }}/usr/local/doc/naev/*
+        path: ${{ github.workspace }}/*.tar
         if-no-files-found: error

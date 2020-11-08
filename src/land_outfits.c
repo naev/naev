@@ -316,7 +316,7 @@ static void outfits_genList( unsigned int wid )
 
       /* Only create the filter widget if it will be a reasonable size. */
       if (iw >= 30) {
-         window_addInput( wid, fx, fy, fw, fh, OUTFITS_FILTER, 32, 1, &gl_smallFont );
+         window_addInput( wid, fx + 15, fy +1, fw, fh, OUTFITS_FILTER, 32, 1, &gl_smallFont );
          window_setInputCallback( wid, OUTFITS_FILTER, outfits_regenList );
       }
    }
@@ -353,7 +353,7 @@ static void outfits_genList( unsigned int wid )
    free(outfits);
 
    window_addImageArray( wid, 20, 20,
-         iw, ih - 31, OUTFITS_IAR, 128, 128,
+         iw, ih - 34, OUTFITS_IAR, 128, 128,
          coutfits, noutfits, outfits_update, outfits_rmouse );
 
    /* write the outfits stuff */

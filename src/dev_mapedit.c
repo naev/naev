@@ -105,7 +105,7 @@ static void mapedit_buttonZoom( unsigned int wid, char* str );
 static void mapedit_render( double bx, double by, double w, double h, void *data );
 /*static void mapedit_renderOverlay( double bx, double by, double bw, double bh, void* data );*/
 static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data );
+      double w, double h, double xr, double yr, void *data );
 /* Button functions. */
 static void mapedit_close( unsigned int wid, char *wgt );
 static void mapedit_btnOpen( unsigned int wid_unused, char *unused );
@@ -418,7 +418,7 @@ static void mapedit_render( double bx, double by, double w, double h, void *data
  * @brief System editor custom widget mouse handling.
  */
 static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data )
+      double w, double h, double xr, double yr, void *data )
 {
    (void) wid;
    (void) data;
@@ -527,11 +527,11 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          /* Handle dragging. */
          if (mapedit_drag) {
             /* axis is inverted */
-            mapedit_xpos -= event->motion.xrel;
-            mapedit_ypos += event->motion.yrel;
+            mapedit_xpos -= xr;
+            mapedit_ypos += yr;
 
             /* Update mouse movement. */
-            mapedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
+            mapedit_moved += ABS(xr) + ABS(yr);
          }
          break;
    }
@@ -1289,8 +1289,8 @@ void mapedit_setGlobalLoadedInfos( int nSys, char *sFileName, char *sMapName, ch
  */
 static int mapedit_mapsList_refresh (void)
 {
-   int i, len, compareLimit, nSystems;
-   size_t nfiles, bufsize;
+   int len, compareLimit, nSystems;
+   size_t i, nfiles, bufsize;
    char *buf;
    xmlNodePtr node, cur;
    xmlDocPtr doc;
@@ -1305,7 +1305,10 @@ static int mapedit_mapsList_refresh (void)
    map_files = ndata_list( MAP_DATA_PATH, &nfiles );
    newMapItem = NULL;
    description = NULL;
-   for (i=0; i<(int)nfiles; i++) {
+   for (i=0; i<nfiles; i++) {
+      if (description!=NULL)
+         free( description );
+      description = NULL;
 
       len  = strlen(MAP_DATA_PATH)+strlen(map_files[i])+2;
       file = malloc( len );
@@ -1313,6 +1316,12 @@ static int mapedit_mapsList_refresh (void)
 
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
+      if (doc == NULL) {
+         WARN(_("%s file is invalid xml!"), file);
+         free(file);
+         free(buf);
+         continue;
+      }
 
       /* Get first node, normally "outfit" */
       node = doc->xmlChildrenNode;
@@ -1326,8 +1335,8 @@ static int mapedit_mapsList_refresh (void)
       }
 
       if (!xml_isNode(node,"outfit")) {
-         if ( description != NULL )
-            free( description );
+         if (description != NULL)
+            free(description);
          free(file);
          xmlFreeDoc(doc);
          free(buf);
@@ -1374,20 +1383,16 @@ static int mapedit_mapsList_refresh (void)
       nSystems = 0;
       node = node->xmlChildrenNode;
       do {
-         /*systemName = "";*/
          xml_onlyNodes(node);
-
-         if (!xml_isNode(node,"sys")) {
+         if (!xml_isNode(node,"sys"))
             continue;
-         }
 
          /* Display "name" property from "sys" node and increment number of systems found */
          nSystems++;
-         /*systemName = xml_nodeProp( node,"name" );*/
       } while (xml_nextNode(node));
 
       /* If the map is a regular one, then load it into the list */
-      if ( nSystems > 0 ) {
+      if (nSystems > 0) {
          newMapItem               = &array_grow( &mapList );
          newMapItem->iNumSystems  = nSystems;
          newMapItem->sFileName    = strdup( map_files[ i ] );
@@ -1402,7 +1407,7 @@ static int mapedit_mapsList_refresh (void)
   }
 
    /* Clean up. */
-   for (i=0; i<(int)nfiles; i++)
+   for (i=0; i<nfiles; i++)
       free( map_files[i] );
    free( map_files );
 

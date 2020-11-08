@@ -103,7 +103,7 @@ static void inp_render( Widget* inp, double bx, double by )
    y = by + inp->y;
 
    /* main background */
-   toolkit_drawRect( x, y, inp->w, inp->h, &cWhite, NULL );
+   toolkit_drawRect( x, y, inp->w, inp->h, &cBlack, NULL );
 
    if (inp->dat.inp.oneline)
       /* center vertically */
@@ -114,7 +114,7 @@ static void inp_render( Widget* inp, double bx, double by )
 
    /* Draw text. */
    gl_printTextRaw( inp->dat.inp.font, inp->w-10., inp->h,
-         x+5., ty, &cBlack, -1., &inp->dat.inp.input[ inp->dat.inp.view ] );
+         x+5., ty, &cGreen, -1., &inp->dat.inp.input[ inp->dat.inp.view ] );
 
    /* Draw cursor. */
    if (wgt_isFlag( inp, WGT_FLAG_FOCUSED )) {
@@ -124,7 +124,7 @@ static void inp_render( Widget* inp, double bx, double by )
          buf[ m ] = '\0';
          w = gl_printWidthRaw( inp->dat.inp.font, buf );
          toolkit_drawRect( x + 5. + w, y + (inp->h - inp->dat.inp.font->h - 4.)/2.,
-               1., inp->dat.inp.font->h + 4., &cBlack, &cBlack );
+               1., inp->dat.inp.font->h + 4., &cGreen, &cGreen );
       }
       else {
          /* Wrap the cursor around if the text is longer than the width of the widget. */
@@ -153,16 +153,13 @@ static void inp_render( Widget* inp, double bx, double by )
 
          /* Get the actual width now. */
          toolkit_drawRect( x + 5. + w, y + inp->h - lines * (inp->dat.inp.font->h + 5) - 3.,
-               1., inp->dat.inp.font->h + 4., &cBlack, &cBlack );
+               1., inp->dat.inp.font->h + 4., &cGreen, &cGreen );
       }
    }
 
-   /* inner outline */
-   toolkit_drawOutline( x, y, inp->w, inp->h, 0.,
-         toolkit_colLight, NULL );
    /* outer outline */
-   toolkit_drawOutline( x, y, inp->w, inp->h, 1.,
-         toolkit_colDark, NULL );
+   toolkit_drawOutline( x-2, y-2, inp->w + 4, inp->h + 4, 1.,
+         &cGrey20, NULL );
 }
 
 
