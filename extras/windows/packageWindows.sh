@@ -102,7 +102,7 @@ cp "$BUILDPATH/naev.exe" "$SOURCEROOT/extras/windows/installer/bin/naev-$VERSION
 # Create distribution folder
 
 echo "creating distribution folder if it doesn't exist"
-mkdir -p $BUILDOUTPUT/out
+mkdir -p "$BUILDOUTPUT/out"
 
 # Build installer
 
