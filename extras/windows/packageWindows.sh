@@ -110,7 +110,7 @@ mkdir -p "$BUILDOUTPUT/out"
 makensis -DSUFFIX=$SUFFIX "$SOURCEROOT/extras/windows/installer/naev.nsi"
 
 # Move installer to distribution directory
-mv "$SOURCEROOT/extras/windows/installer/naev-$SUFFIX.exe $BUILDOUTPUT/out"
+mv "$SOURCEROOT/extras/windows/installer/naev-$SUFFIX.exe" "$BUILDOUTPUT/out"
 
 echo "Successfully built Windows Installer for $SUFFIX"
 
