@@ -48,7 +48,7 @@ jobs:
             image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2004
             config: linux_clang.ini
 
-            - os: ubuntu-latest
+          - os: ubuntu-latest
             image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2010
             config: linux_clang.ini
 
