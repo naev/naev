@@ -1,6 +1,6 @@
 #!/bin/bash
 # WINDOWS PACKAGING SCRIPT FOR NAEV
-# Requires NSIS to be installed
+# Requires NSIS and python3-pip to be installed
 #
 # This script should be run after compiling Naev
 # It detects the current environment, and builds the appropriate NSIS installer
@@ -49,16 +49,6 @@ echo "BUILD OUTPUT: $BUILDOUTPUT"
 # Rudementary way of detecting which environment we are packaging.. 
 # It works (tm), and it should remain working until msys changes their naming scheme
 
-if [[ $PATH == *"mingw64"* ]]; then
-    echo "Detected MinGW64 environment"
-    ARCH="64"
-else
-    echo "Make sure you are running this in an MSYS2 64bit MinGW environment"
-    exit -1
-fi
-
-echo "ARCH:      $ARCH"
-
 # Check version exists and set VERSION variable.
 
 if [ -f "$SOURCEROOT/dat/VERSION" ]; then
@@ -82,17 +72,10 @@ echo "moving data to staging area"
 cp -r "$SOURCEROOT/dat" "$SOURCEROOT/extras/windows/installer/bin"
 
 # Collect DLLs
- 
-if [[ $ARCH == "64" ]]; then
-for fn in `cygcheck "$BUILDPATH/naev.exe" | grep "mingw64"`; do
-    echo "copying $fn to staging area"
-    cp "$fn" "$SOURCEROOT/extras/windows/installer/bin"
-done
-else
-    echo "Aw, man, I shot Marvin in the face..."
-    echo "Something went wrong while looking for DLLs to stage."
-    exit -1
-fi
+echo "Locally install 'pefile' Python module"
+pip3 install pefile
+echo "Collecting DLLs in staging area"
+"$SOURCEROOT"/extras/windows/extract_dlls.py "$BUILDPATH/naev.exe" "$SOURCEROOT/extras/windows/installer/bin"
 
 echo "copying naev logo to staging area"
 cp "$SOURCEROOT/extras/logos/logo.ico" "$SOURCEROOT/extras/windows/installer"
@@ -110,7 +93,7 @@ mkdir -p "$BUILDOUTPUT/out"
 makensis -DSUFFIX=$SUFFIX "$SOURCEROOT/extras/windows/installer/naev.nsi"
 
 # Move installer to distribution directory
-mv "$SOURCEROOT/extras/windows/installer/naev-$SUFFIX.exe $BUILDOUTPUT/out"
+mv "$SOURCEROOT/extras/windows/installer/naev-$SUFFIX.exe" "$BUILDOUTPUT/out"
 
 echo "Successfully built Windows Installer for $SUFFIX"
 
