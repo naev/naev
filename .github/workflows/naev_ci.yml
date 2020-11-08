@@ -23,7 +23,7 @@ jobs:
         meson dist -C build --no-tests --include-subprojects
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v1
       with:
         name: naev-${{ github.sha }}
         path: ${{ github.workspace }}/build/meson-dist/*
@@ -79,7 +79,7 @@ jobs:
             -Ddocs_lua=disabled
 
     - name: Upload Setup Log
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v1
       if: ${{ success() || steps.setup.outcome == 'failure' }}
       with:
         name: ${{ matrix.os }}-${{ github.sha }}-setup-log
@@ -92,7 +92,7 @@ jobs:
         meson compile -C build
 
     - name: Upload Compile Log
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v1
       if: ${{ success() || steps.compile.outcome == 'failure' }}
       with:
         name: ${{ matrix.os }}-${{ github.sha }}-compile-log
@@ -105,7 +105,7 @@ jobs:
         ${{ matrix.test-env }} meson test -C build --print-errorlogs
 
     - name: Upload test log
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v1
       if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
         name: ${{ matrix.os }}-${{ github.sha }}-test-log
@@ -119,7 +119,7 @@ jobs:
       if: ${{ success() || steps.tests.outcome == 'failure' }}
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v1
       if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
         name: naev-${{ matrix.os }}-${{ github.sha }}
@@ -200,7 +200,7 @@ jobs:
         --data '{"event_type": "api", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v1
       with:
         name: naev-docs-${{ github.sha }}
         path: ${{ github.workspace }}/*.tar
