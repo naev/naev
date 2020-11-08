@@ -61,8 +61,8 @@ echo "ARCH:      $ARCH"
 
 # Check version exists and set VERSION variable.
 
-if test -f "$SOURCEROOT/dat/VERSION"; then
-    VERSION="$(cat $SOURCEROOT/dat/VERSION)"
+if [ -f "$SOURCEROOT/dat/VERSION" ]; then
+    VERSION="$(<"$SOURCEROOT/dat/VERSION")"
 else
     echo "The VERSION file is missing from $SOURCEROOT."
     exit -1

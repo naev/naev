@@ -43,14 +43,13 @@ fi
 
 
 function get_version {
-   VERSION="$(cat $SOURCEROOT/dat/VERSION)"
-   # Get version
-   if [[ -n $(echo "$VERSION") ]]; then
-      VERSION=$VERSION
+   if [ -f "$SOURCEROOT/dat/VERSION" ]; then
+       export VERSION="$(<"$SOURCEROOT/dat/VERSION")"
    else
-      echo "could not find VERSION file"
-      exit -1
+       echo "The VERSION file is missing from $SOURCEROOT."
+       exit -1
    fi
+
    return 0
 }
 

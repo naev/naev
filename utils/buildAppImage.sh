@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # AppImage BUILD SCRIPT FOR NAEV
 #
@@ -36,6 +36,8 @@ while getopts dns:b:o: OPTION "$@"; do
         ;;
     esac
 done
+
+BUILD_DATE="$(date +%Y%m%d)"
 
 # Honours the MESON variable set by the environment before setting it manually.
 
@@ -82,10 +84,14 @@ cp $SOURCEROOT/org.naev.naev.desktop $DESTDIR/usr/share/applications/
 export ARCH=$(arch)
 
 # Set VERSION and OUTPUT variables
-if [ "$NIGHTLY" = true ]; then
-    export VERSION="$(cat $SOURCEROOT/dat/VERSION).$(date +%Y%m%d)"
+if [ -f "$SOURCEROOT/dat/VERSION" ]; then
+    export VERSION="$(<"$SOURCEROOT/dat/VERSION")"
 else
-    export VERSION="$(cat $SOURCEROOT/dat/VERSION)"
+    echo "The VERSION file is missing from $SOURCEROOT."
+    exit -1
+fi
+if [ "$NIGHTLY" = true ]; then
+    export VERSION="$VERSION.$BUILD_DATE"
 fi
 
 # Make output dir (if it does not exist)
