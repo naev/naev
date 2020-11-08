@@ -6,15 +6,15 @@
 # It detects the current environment, and builds the appropriate NSIS installer
 # into the root naev directory.
 #
-# Pass in [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -o <OUTPUTPATH> (dist output directory)
+# Pass in [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -o <BUILDOUTPUT> (Dist output directory)
 
 set -e
 
 # Defaults
 SOURCEROOT="$(pwd)"
-BUILDDIR="$(pwd)/build"
+BUILDPATH="$(pwd)/build"
 NIGHTLY="false"
-OUTPUTPATH="$(pwd)/dist"
+BUILDOUTPUT="$(pwd)/dist"
 
 while getopts dns:b:o: OPTION "$@"; do
     case $OPTION in
@@ -28,10 +28,10 @@ while getopts dns:b:o: OPTION "$@"; do
         SOURCEROOT="${OPTARG}"
         ;;
     b)
-        BUILDDIR="${OPTARG}"
+        BUILDPATH="${OPTARG}"
         ;;
     o)
-        OUTPUTPATH="${OPTARG}"
+        BUILDOUTPUT="${OPTARG}"
         ;;
         
     esac
@@ -42,9 +42,9 @@ BUILD_DATE="$(date +%Y%m%d)"
 # Output configured variables
 
 echo "SOURCE ROOT:  $SOURCEROOT"
-echo "BUILD ROOT:   $BUILDDIR"
+echo "BUILD ROOT:   $BUILDPATH"
 echo "NIGHTLY:      $NIGHTLY"
-echo "BUILD OUTPUT: $OUTPUTPATH"
+echo "BUILD OUTPUT: $BUILDOUTPUT"
 
 # Rudementary way of detecting which environment we are packaging.. 
 # It works (tm), and it should remain working until msys changes their naming scheme
@@ -83,7 +83,7 @@ cp -r $SOURCEROOT/dat $SOURCEROOT/extras/windows/installer/bin
 # Collect DLLs
  
 if [[ $ARCH == "64" ]]; then
-for fn in `cygcheck "$BUILDDIR/naev.exe" | grep "mingw64"`; do
+for fn in `cygcheck "$BUILDPATH/naev.exe" | grep "mingw64"`; do
     echo "copying $fn to staging area"
     cp $fn $SOURCEROOT/extras/windows/installer/bin
 done
@@ -97,19 +97,19 @@ echo "copying naev logo to staging area"
 cp $SOURCEROOT/extras/logos/logo.ico $SOURCEROOT/extras/windows/installer
 
 echo "copying naev binary to staging area"
-cp $BUILDDIR/naev.exe $SOURCEROOT/extras/windows/installer/bin/naev-$VERSION-win$ARCH.exe
+cp $BUILDPATH/naev.exe $SOURCEROOT/extras/windows/installer/bin/naev-$VERSION-win$ARCH.exe
 
 # Create distribution folder
 
 echo "creating distribution folder if it doesn't exist"
-mkdir -p $OUTPUTPATH/out
+mkdir -p $BUILDOUTPUT/out
 
 # Build installer
 
 makensis -DVERSION=$VERSION -DARCH=$ARCH $SOURCEROOT/extras/windows/installer/naev.nsi
 
 # Move installer to distribution directory
-mv $SOURCEROOT/extras/windows/installer/naev-$VERSION-win$ARCH.exe $OUTPUTPATH/out
+mv $SOURCEROOT/extras/windows/installer/naev-$VERSION-win$ARCH.exe $BUILDOUTPUT/out
 
 echo "Successfully built Windows Installer for win$ARCH"
 
@@ -118,7 +118,7 @@ OLDDIR=$(pwd)
 
 cd $SOURCEROOT/extras/windows/installer/bin &&
 tar -cJvf ../steam-win$ARCH.tar.xz *.dll *.exe
-mv ../*.xz $OUTPUTPATH/out
+mv ../*.xz $BUILDOUTPUT/out
 cd $OLDDIR
 
 echo "Successfully packaged Steam Tarball for win$ARCH"
