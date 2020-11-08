@@ -65,7 +65,7 @@ jobs:
     - name: Extract Source
       run: |
         mkdir source
-        tar -xf naev-*.tar.xz -C source --strip 1
+        tar -xf naev-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
 
     - name: Meson Setup
       id: setup
@@ -102,7 +102,7 @@ jobs:
     - name: Meson Test
       id: tests
       run: |
-        ${{ matrix.test-env }} sh $MESON test -C build --print-errorlogs
+        ${{ matrix.test-env }} meson test -C build --print-errorlogs
 
     - name: Upload test log
       uses: actions/upload-artifact@v2
@@ -150,20 +150,12 @@ jobs:
     - name: Extract Source
       run: |
         mkdir source
-        tar -xf naev-*.tar.xz -C source --strip 1
+        tar -xf naev-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
 
     - name: Compile AppImage
       id: compile
       run: |
-        sh "source/utils/buildAppImage.sh -s "source" -b "build" -o "${{ env.DESTDIR }}"" 2>&1 | tee appImageBuildLog.txt
-
-    - name: Upload Compile Log
-      uses: actions/upload-artifact@v2
-      if: ${{ success() || steps.compile.outcome == 'failure' }}
-      with:
-        name: ${{ matrix.os }}-${{ github.sha }}-appimageBuild-log
-        path: ${{ github.workspace }}/appImageBuildLog.txt
-        if-no-files-found: ignore
+        sh source/utils/buildAppImage.sh -s "source" -b "build" -o "${{ env.DESTDIR }}"
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -187,7 +179,7 @@ jobs:
     - name: Extract Source
       run: |
         mkdir source
-        tar -xf naev-*.tar.xz -C source --strip 1
+        tar -xf naev-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
         
     - name: Meson Build
       run: |
@@ -197,7 +189,7 @@ jobs:
     - name: Package
       run: |
         meson install -C build
-        tar -cvf naev-docs-${{ github.sha }}.tar ${{ env.DESTDIR }}/usr/local/doc/naev
+        tar -cvf naev-docs-${{ github.sha }}.tar dist/usr/local/doc/naev
         
     - name: Upload Lua Documentation
       if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
