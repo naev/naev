@@ -38,19 +38,19 @@ jobs:
         include:
           - os: ubuntu-latest
             image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
-            config: linux.ini
+            config: linux_clang.ini
 
           - os: ubuntu-latest
             image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1804
-            config: linux.ini
+            config: linux_clang.ini
 
           - os: ubuntu-latest
             image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2004
-            config: linux.ini
+            config: linux_clang.ini
 
           - os: ubuntu-latest
             image: projectsynchro/synchros_sexy_docker_images:naev-steamruntime
-            config: linux.ini
+            config: linux_clang.ini
 
     runs-on: ${{ matrix.os }}
     container:
@@ -58,7 +58,7 @@ jobs:
 
     steps:
     - name: Get Source
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v1
       with:
         name: naev-${{ github.sha }}
 
