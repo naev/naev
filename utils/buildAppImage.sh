@@ -11,6 +11,12 @@
 
 set -e
 
+# Defaults
+SOURCEROOT="$(pwd)"
+BUILDPATH="$(pwd)/build/appimageBuild"
+NIGHTLY="false"
+BUILDOUTPUT="$(pwd)/dist"
+
 while getopts dns:b:o: OPTION "$@"; do
     case $OPTION in
     d)
@@ -31,22 +37,6 @@ while getopts dns:b:o: OPTION "$@"; do
     esac
 done
 
-if [ -z "$SOURCEROOT" ]; then
-    SOURCEROOT=$(pwd)
-fi
-if [ -z "$BUILDPATH" ]; then
-    BUILDPATH=$(pwd)/build/appimageBuild
-fi
-if [ $NIGHTLY = "true" ]; then
-    NIGHTLY="true"
-else
-    NIGHTLY="false"
-fi
-if [ -z "$BUILDOUTPUT" ]; then
-    OLDDISTDIR=$DISTDIR
-    BUILDOUTPUT="$(pwd)/dist"
-fi
-
 # Honours the MESON variable set by the environment before setting it manually.
 
 if [ -z "$MESON" ]; then
@@ -58,11 +48,7 @@ fi
 
 echo "SOURCE ROOT:        $SOURCEROOT"
 echo "BUILD ROOT:         $BUILDPATH"
-if [ $NIGHTLY = "true" ]; then
-    echo "NIGHTLY:            YES"
-else
-    echo "NIGHTLY:            NO"
-fi
+echo "NIGHTLY:            $NIGHTLY"
 echo "BUILD OUTPUT:       $BUILDOUTPUT"
 echo "MESON WRAPPER PATH: $MESON"
 

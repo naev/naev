@@ -10,6 +10,9 @@
 
 set -e
 
+# Defaults
+NIGHTLY="false"
+
 while getopts dns:b:o:r: OPTION "$@"; do
     case $OPTION in
     d)
@@ -33,24 +36,7 @@ while getopts dns:b:o:r: OPTION "$@"; do
     esac
 done
 
-if [[ -z "$SOURCEROOT" ]]; then
-    echo "usage: `basename $0` [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -o <BUILDOUTPUT> (Dist output directory) -r <RUNNER> (must be specified)"
-    exit 1
-fi
-if [[ -z "$BUILDPATH" ]]; then
-    echo "usage: `basename $0` [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -o <BUILDOUTPUT> (Dist output directory) -r <RUNNER> (must be specified)"
-    exit 1
-fi
-if [[ $NIGHTLY = "true" ]]; then
-    NIGHTLY="true"
-else
-    NIGHTLY="false"
-fi
-if [[ -z "$BUILDOUTPUT" ]]; then
-    echo "usage: `basename $0` [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -o <BUILDOUTPUT> (Dist output directory) -r <RUNNER> (must be specified)"
-    exit 1
-fi
-if [[ -z "$RUNNER" ]]; then
+if [[ -z "$SOURCEROOT" || -z "$BUILDPATH" || -z "$BUILDOUTPUT" || -z "$RUNNER" ]]; then
     echo "usage: `basename $0` [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -o <BUILDOUTPUT> (Dist output directory) -r <RUNNER> (must be specified)"
     exit 1
 fi

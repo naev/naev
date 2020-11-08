@@ -10,6 +10,12 @@
 
 set -e
 
+# Defaults
+SOURCEROOT="$(pwd)"
+BUILDDIR="$(pwd)/build"
+NIGHTLY="false"
+OUTPUTPATH="$(pwd)/dist"
+
 while getopts dns:b:o: OPTION "$@"; do
     case $OPTION in
     d)
@@ -31,33 +37,13 @@ while getopts dns:b:o: OPTION "$@"; do
     esac
 done
 
-# Checks if argument(s) are valid
-
-if [[ -z "$SOURCEROOT" ]]; then
-    SOURCEROOT=$(pwd)
-fi
-if [[ -z "$BUILDDIR" ]]; then
-    BUILDDIR=$(pwd)/build
-fi
-if [[ $NIGHTLY = "true" ]]; then
-    NIGHTLY="true"
-    BUILD_DATE="$(date +%Y%m%d)"
-else
-    NIGHTLY="false"
-fi
-if [[ -z "$OUTPUTPATH" ]]; then
-    OUTPUTPATH="$(pwd)/dist"
-fi
+BUILD_DATE="$(date +%Y%m%d)"
 
 # Output configured variables
 
 echo "SOURCE ROOT:  $SOURCEROOT"
 echo "BUILD ROOT:   $BUILDDIR"
-if [[ $NIGHTLY = "true" ]]; then
-    echo "NIGHTLY:      YES"
-else
-    echo "NIGHTLY:      NO"
-fi
+echo "NIGHTLY:      $NIGHTLY"
 echo "BUILD OUTPUT: $OUTPUTPATH"
 
 # Rudementary way of detecting which environment we are packaging.. 

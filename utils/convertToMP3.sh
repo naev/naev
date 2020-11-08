@@ -22,13 +22,7 @@ while getopts d:f:i:o: OPTION "$@"; do
     esac
 done
 
-if [[ -z "$FILEEXTENSION" ]]; then
-    echo "usage: `basename $0` [-d] -i <inputDir> (no trailing '/') -e <fileextension> -o <outputDir> (no trailing '/')"
-    exit 1
-elif [[ -z "$OUTPUTDIR" ]]; then
-    echo "usage: `basename $0` [-d] -i <inputDir> (no trailing '/') -e <fileextension> -o <outputDir> (no trailing '/')"
-    exit 1
-elif [[ -z "$INPUTDIR" ]]; then
+if [[ -z "$FILEEXTENSION" || -z "$OUTPUTDIR" || -z "$INPUTDIR" ]]; then
     echo "usage: `basename $0` [-d] -i <inputDir> (no trailing '/') -e <fileextension> -o <outputDir> (no trailing '/')"
     exit 1
 fi

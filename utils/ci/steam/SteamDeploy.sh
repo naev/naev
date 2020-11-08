@@ -13,6 +13,9 @@
 
 set -e
 
+# Defaults
+NIGHTLY="false"
+
 while getopts dns:o: OPTION "$@"; do
     case $OPTION in
     d)
@@ -29,14 +32,6 @@ while getopts dns:o: OPTION "$@"; do
         ;;
     esac
 done
-
-# Checks if argument(s) are valid
-
-if [[ $NIGHTLY = "true" ]]; then
-    NIGHTLY="true"
-else
-    NIGHTLY="false"
-fi
 
 VERSION="$(cat $SOURCEROOT/dat/VERSION)"
 BETA=false
