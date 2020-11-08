@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # AppImage BUILD SCRIPT FOR NAEV
 #
@@ -10,6 +10,12 @@
 # All outputs will be within pwd if nothing is passed in
 
 set -e
+
+# Defaults
+SOURCEROOT="$(pwd)"
+BUILDPATH="$(pwd)/build/appimageBuild"
+NIGHTLY="false"
+BUILDOUTPUT="$(pwd)/dist"
 
 while getopts dns:b:o: OPTION "$@"; do
     case $OPTION in
@@ -31,21 +37,7 @@ while getopts dns:b:o: OPTION "$@"; do
     esac
 done
 
-if [ -z "$SOURCEROOT" ]; then
-    SOURCEROOT=$(pwd)
-fi
-if [ -z "$BUILDPATH" ]; then
-    BUILDPATH=$(pwd)/build/appimageBuild
-fi
-if [ $NIGHTLY = "true" ]; then
-    NIGHTLY="true"
-else
-    NIGHTLY="false"
-fi
-if [ -z "$BUILDOUTPUT" ]; then
-    OLDDISTDIR=$DISTDIR
-    BUILDOUTPUT="$(pwd)/dist"
-fi
+BUILD_DATE="$(date +%Y%m%d)"
 
 # Honours the MESON variable set by the environment before setting it manually.
 
@@ -58,24 +50,20 @@ fi
 
 echo "SOURCE ROOT:        $SOURCEROOT"
 echo "BUILD ROOT:         $BUILDPATH"
-if [ $NIGHTLY = "true" ]; then
-    echo "NIGHTLY:            YES"
-else
-    echo "NIGHTLY:            NO"
-fi
+echo "NIGHTLY:            $NIGHTLY"
 echo "BUILD OUTPUT:       $BUILDOUTPUT"
 echo "MESON WRAPPER PATH: $MESON"
 
 # Set DESTDIR
 
-OLDDISTDIR=$DISTDIR
+OLDDISTDIR="$DISTDIR"
 unset DESTDIR
 export DESTDIR="$BUILDOUTPUT/Naev.AppDir"
 
 # Setup AppImage Build Directory
 
-sh $MESON setup $BUILDPATH $SOURCEROOT \
-    --native-file $SOURCEROOT/utils/build/linux_appimage.ini \
+sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
+    --native-file "$SOURCEROOT/utils/build/linux_appimage.ini" \
     --buildtype release \
     -Db_lto=true \
     -Dauto_features=enabled \
@@ -84,22 +72,26 @@ sh $MESON setup $BUILDPATH $SOURCEROOT \
 
 # Compile and Install Naev to DISTDIR
 
-sh $MESON install -C $BUILDPATH
+sh "$MESON" install -C "$BUILDPATH"
 
 # Prep dist directory for appimage
 # (I hate this but otherwise linuxdeploy fails on systems that generate the desktop file)
 
-rm $DESTDIR/usr/share/applications/*.desktop
-cp $SOURCEROOT/org.naev.naev.desktop $DESTDIR/usr/share/applications/
+rm "$DESTDIR"/usr/share/applications/*.desktop
+cp "$SOURCEROOT/org.naev.naev.desktop" "$DESTDIR/usr/share/applications/"
 
 # Set ARCH of AppImage
 export ARCH=$(arch)
 
 # Set VERSION and OUTPUT variables
-if [ "$NIGHTLY" = true ]; then
-    export VERSION="$(cat $SOURCEROOT/dat/VERSION).$(date +%Y%m%d)"
+if [ -f "$SOURCEROOT/dat/VERSION" ]; then
+    export VERSION="$(<"$SOURCEROOT/dat/VERSION")"
 else
-    export VERSION="$(cat $SOURCEROOT/dat/VERSION)"
+    echo "The VERSION file is missing from $SOURCEROOT."
+    exit -1
+fi
+if [[ "$NIGHTLY" == "true" ]]; then
+    export VERSION="$VERSION.$BUILD_DATE"
 fi
 
 # Make output dir (if it does not exist)
