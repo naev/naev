@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
+      volumes:
+        - ${{ github.workspace }}:${{ github.workspace }}
     steps:
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
@@ -54,6 +56,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     container:
       image: ${{ matrix.image }}
+      volumes:
+        - ${{ github.workspace }}:${{ github.workspace }}
 
     steps:
     - name: Get Source
@@ -135,6 +139,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     container:
       image: ${{ matrix.image }}
+      volumes:
+        - ${{ github.workspace }}:${{ github.workspace }}
 
     steps:
     - name: Get Source
@@ -162,6 +168,8 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
+      volumes:
+        - ${{ github.workspace }}:${{ github.workspace }}
     needs: "Package_Source"
 
     steps:
