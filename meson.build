@@ -187,7 +187,6 @@ if buildExec.disabled() == false
    shaders_c_gen = executable(
       'shaders_c_gen',
       'src/shaders_c_gen.c',
-      dependencies: dependency('sdl2', required: true),
       install: false,
       native: true)
 
