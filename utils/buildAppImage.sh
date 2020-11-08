@@ -56,14 +56,14 @@ echo "MESON WRAPPER PATH: $MESON"
 
 # Set DESTDIR
 
-OLDDISTDIR=$DISTDIR
+OLDDISTDIR="$DISTDIR"
 unset DESTDIR
 export DESTDIR="$BUILDOUTPUT/Naev.AppDir"
 
 # Setup AppImage Build Directory
 
-sh $MESON setup $BUILDPATH $SOURCEROOT \
-    --native-file $SOURCEROOT/utils/build/linux_appimage.ini \
+sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
+    --native-file "$SOURCEROOT/utils/build/linux_appimage.ini" \
     --buildtype release \
     -Db_lto=true \
     -Dauto_features=enabled \
@@ -72,13 +72,13 @@ sh $MESON setup $BUILDPATH $SOURCEROOT \
 
 # Compile and Install Naev to DISTDIR
 
-sh $MESON install -C $BUILDPATH
+sh "$MESON" install -C "$BUILDPATH"
 
 # Prep dist directory for appimage
 # (I hate this but otherwise linuxdeploy fails on systems that generate the desktop file)
 
-rm $DESTDIR/usr/share/applications/*.desktop
-cp $SOURCEROOT/org.naev.naev.desktop $DESTDIR/usr/share/applications/
+rm "$DESTDIR"/usr/share/applications/*.desktop
+cp "$SOURCEROOT/org.naev.naev.desktop" "$DESTDIR/usr/share/applications/"
 
 # Set ARCH of AppImage
 export ARCH=$(arch)

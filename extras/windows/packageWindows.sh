@@ -74,18 +74,18 @@ fi
 # Move compiled binary to staging folder.
 
 echo "creating staging area"
-mkdir -p $SOURCEROOT/extras/windows/installer/bin
+mkdir -p "$SOURCEROOT/extras/windows/installer/bin"
 
 # Move data to staging folder
 echo "moving data to staging area"
-cp -r $SOURCEROOT/dat $SOURCEROOT/extras/windows/installer/bin
+cp -r "$SOURCEROOT/dat" "$SOURCEROOT/extras/windows/installer/bin"
 
 # Collect DLLs
  
 if [[ $ARCH == "64" ]]; then
 for fn in `cygcheck "$BUILDPATH/naev.exe" | grep "mingw64"`; do
     echo "copying $fn to staging area"
-    cp $fn $SOURCEROOT/extras/windows/installer/bin
+    cp "$fn" "$SOURCEROOT/extras/windows/installer/bin"
 done
 else
     echo "Aw, man, I shot Marvin in the face..."
@@ -94,10 +94,10 @@ else
 fi
 
 echo "copying naev logo to staging area"
-cp $SOURCEROOT/extras/logos/logo.ico $SOURCEROOT/extras/windows/installer
+cp "$SOURCEROOT/extras/logos/logo.ico" "$SOURCEROOT/extras/windows/installer"
 
 echo "copying naev binary to staging area"
-cp $BUILDPATH/naev.exe $SOURCEROOT/extras/windows/installer/bin/naev-$VERSION-win$ARCH.exe
+cp "$BUILDPATH/naev.exe" "$SOURCEROOT/extras/windows/installer/bin/naev-$VERSION-win$ARCH.exe"
 
 # Create distribution folder
 
@@ -106,23 +106,23 @@ mkdir -p $BUILDOUTPUT/out
 
 # Build installer
 
-makensis -DVERSION=$VERSION -DARCH=$ARCH $SOURCEROOT/extras/windows/installer/naev.nsi
+makensis -DVERSION=$VERSION -DARCH=$ARCH "$SOURCEROOT/extras/windows/installer/naev.nsi"
 
 # Move installer to distribution directory
-mv $SOURCEROOT/extras/windows/installer/naev-$VERSION-win$ARCH.exe $BUILDOUTPUT/out
+mv "$SOURCEROOT/extras/windows/installer/naev-$VERSION-win$ARCH.exe $BUILDOUTPUT/out"
 
 echo "Successfully built Windows Installer for win$ARCH"
 
 # Package steam windows tarball
-OLDDIR=$(pwd)
+OLDDIR="$(pwd)"
 
-cd $SOURCEROOT/extras/windows/installer/bin &&
+cd "$SOURCEROOT/extras/windows/installer/bin"
 tar -cJvf ../steam-win$ARCH.tar.xz *.dll *.exe
-mv ../*.xz $BUILDOUTPUT/out
-cd $OLDDIR
+mv ../*.xz "$BUILDOUTPUT/out"
+cd "$OLDDIR"
 
 echo "Successfully packaged Steam Tarball for win$ARCH"
 
 echo "Cleaning up staging area"
-rm -rf $SOURCEROOT/extras/windows/installer/bin
-rm -rf $SOURCEROOT/extras/windows/installer/logo.ico
+rm -rf "$SOURCEROOT/extras/windows/installer/bin"
+rm -rf "$SOURCEROOT/extras/windows/installer/logo.ico"
