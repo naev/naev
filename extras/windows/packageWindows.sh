@@ -67,6 +67,9 @@ else
     echo "The VERSION file is missing from $SOURCEROOT."
     exit -1
 fi
+if [[ "$NIGHTLY" == "true" ]]; then
+    export VERSION="$VERSION.$BUILD_DATE"
+fi
 
 # Move compiled binary to staging folder.
 
@@ -94,15 +97,7 @@ echo "copying naev logo to staging area"
 cp $SOURCEROOT/extras/logos/logo.ico $SOURCEROOT/extras/windows/installer
 
 echo "copying naev binary to staging area"
-if [[ "$NIGHTLY" == "true" ]]; then
-cp $BUILDDIR/naev.exe $SOURCEROOT/extras/windows/installer/bin/naev-$VERSION.$BUILD_DATE-win$ARCH.exe
-elif [[ $NIGHTLY == false ]]; then
 cp $BUILDDIR/naev.exe $SOURCEROOT/extras/windows/installer/bin/naev-$VERSION-win$ARCH.exe
-else
-    echo "Cannot think of another movie quote."
-    echo "Something went wrong while copying binary to staging area."
-    exit -1
-fi
 
 # Create distribution folder
 
@@ -111,17 +106,10 @@ mkdir -p $OUTPUTPATH/out
 
 # Build installer
 
-if [[ "$NIGHTLY" == "true" ]]; then
-    makensis -DVERSION=$VERSION.$BUILD_DATE -DARCH=$ARCH $SOURCEROOT/extras/windows/installer/naev.nsi
+makensis -DVERSION=$VERSION -DARCH=$ARCH $SOURCEROOT/extras/windows/installer/naev.nsi
 
-    # Move installer to distribution directory
-    mv $SOURCEROOT/extras/windows/installer/naev-$VERSION.$BUILD_DATE-win$ARCH.exe $OUTPUTPATH/out
-else
-    makensis -DVERSION=$VERSION -DARCH=$ARCH $SOURCEROOT/extras/windows/installer/naev.nsi
-
-    # Move installer to distribution directory
-    mv $SOURCEROOT/extras/windows/installer/naev-$VERSION-win$ARCH.exe $OUTPUTPATH/out
-fi
+# Move installer to distribution directory
+mv $SOURCEROOT/extras/windows/installer/naev-$VERSION-win$ARCH.exe $OUTPUTPATH/out
 
 echo "Successfully built Windows Installer for win$ARCH"
 
