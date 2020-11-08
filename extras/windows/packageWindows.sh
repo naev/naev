@@ -73,7 +73,7 @@ cp -r "$SOURCEROOT/dat" "$SOURCEROOT/extras/windows/installer/bin"
 
 # Collect DLLs
 echo "Locally install 'pefile' Python module"
-pip3 install pefile
+python3 -m pip install pefile
 echo "Collecting DLLs in staging area"
 "$SOURCEROOT"/extras/windows/extract_dlls.py "$BUILDPATH/naev.exe" "$SOURCEROOT/extras/windows/installer/bin"
 
