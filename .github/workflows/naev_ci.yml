@@ -27,7 +27,6 @@ jobs:
       with:
         name: naev-${{ github.sha }}
         path: ${{ github.workspace }}/build/meson-dist/*
-        if-no-files-found: error
 
   "Compile_Naev":
     needs: "Package_Source"
@@ -84,7 +83,6 @@ jobs:
       with:
         name: ${{ matrix.os }}-${{ github.sha }}-setup-log
         path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-        if-no-files-found: ignore
 
     - name: Meson Compile
       id: compile
@@ -97,7 +95,6 @@ jobs:
       with:
         name: ${{ matrix.os }}-${{ github.sha }}-compile-log
         path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-        if-no-files-found: ignore
 
     - name: Meson Test
       id: tests
@@ -110,7 +107,6 @@ jobs:
       with:
         name: ${{ matrix.os }}-${{ github.sha }}-test-log
         path: ${{ github.workspace }}/build/meson-logs/testlog.txt
-        if-no-files-found: ignore
 
     - name: Package
       run: |
@@ -124,7 +120,6 @@ jobs:
       with:
         name: naev-${{ matrix.os }}-${{ github.sha }}
         path: ${{ github.workspace }}/*.tar
-        if-no-files-found: error
 
   "Compile_AppImage":
     needs: "Package_Source"
@@ -162,7 +157,6 @@ jobs:
       with:
         name: naev-${{ matrix.os }}-AppImage-${{ github.sha }}
         path: ${{ env.DESTDIR }}/out/*.AppImage
-        if-no-files-found: error
 
   "Documentation":
     runs-on: ubuntu-latest
@@ -204,4 +198,3 @@ jobs:
       with:
         name: naev-docs-${{ github.sha }}
         path: ${{ github.workspace }}/*.tar
-        if-no-files-found: error
