@@ -10,8 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
-      volumes:
-        - ${{ github.workspace }}:${{ github.workspace }}
+
     steps:
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
@@ -25,7 +24,7 @@ jobs:
         meson dist -C build --no-tests --include-subprojects
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       with:
         name: naev-${{ github.sha }}
         path: ${{ github.workspace }}/build/meson-dist/*
@@ -49,26 +48,24 @@ jobs:
             image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2004
             config: linux_clang.ini
 
-          - os: ubuntu-latest
-            image: projectsynchro/synchros_sexy_docker_images:naev-steamruntime
+            - os: ubuntu-latest
+            image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2010
             config: linux_clang.ini
 
     runs-on: ${{ matrix.os }}
     container:
       image: ${{ matrix.image }}
-      volumes:
-        - ${{ github.workspace }}:${{ github.workspace }}
 
     steps:
     - name: Get Source
-      uses: actions/download-artifact@v1
+      uses: actions/download-artifact@v2
       with:
         name: naev-${{ github.sha }}
 
     - name: Extract Source
       run: |
         mkdir source
-        tar -xf naev-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+        tar -xf naev-*.tar.xz -C source --strip 1
 
     - name: Meson Setup
       id: setup
@@ -82,7 +79,7 @@ jobs:
             -Ddocs_lua=disabled
 
     - name: Upload Setup Log
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       if: ${{ success() || steps.setup.outcome == 'failure' }}
       with:
         name: ${{ matrix.os }}-${{ github.sha }}-setup-log
@@ -94,7 +91,7 @@ jobs:
         meson compile -C build
 
     - name: Upload Compile Log
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       if: ${{ success() || steps.compile.outcome == 'failure' }}
       with:
         name: ${{ matrix.os }}-${{ github.sha }}-compile-log
@@ -106,7 +103,7 @@ jobs:
         ${{ matrix.test-env }} meson test -C build --print-errorlogs
 
     - name: Upload test log
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
         name: ${{ matrix.os }}-${{ github.sha }}-test-log
@@ -119,7 +116,7 @@ jobs:
       if: ${{ success() || steps.tests.outcome == 'failure' }}
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
         name: naev-${{ matrix.os }}-${{ github.sha }}
@@ -135,12 +132,9 @@ jobs:
           - os: ubuntu-latest
             image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
 
-
     runs-on: ${{ matrix.os }}
     container:
       image: ${{ matrix.image }}
-      volumes:
-        - ${{ github.workspace }}:${{ github.workspace }}
 
     steps:
     - name: Get Source
@@ -151,7 +145,7 @@ jobs:
     - name: Extract Source
       run: |
         mkdir source
-        tar -xf naev-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+        tar -xf naev-*.tar.xz -C source --strip 1
 
     - name: Compile AppImage
       id: compile
@@ -168,20 +162,18 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
-      volumes:
-        - ${{ github.workspace }}:${{ github.workspace }}
     needs: "Package_Source"
 
     steps:
     - name: Get Source
-      uses: actions/download-artifact@v1
+      uses: actions/download-artifact@v2
       with:
         name: naev-${{ github.sha }}
 
     - name: Extract Source
       run: |
         mkdir source
-        tar -xf naev-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+        tar -xf naev-*.tar.xz -C source --strip 1
         
     - name: Meson Build
       run: |
@@ -202,7 +194,7 @@ jobs:
         --data '{"event_type": "api", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       with:
         name: naev-docs-${{ github.sha }}
         path: ${{ github.workspace }}/*.tar
