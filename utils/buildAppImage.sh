@@ -37,7 +37,9 @@ fi
 if [ -z "$BUILDPATH" ]; then
     BUILDPATH=$(pwd)/build/appimageBuild
 fi
-if [ -z "$NIGHTLY" ]; then
+if [ $NIGHTLY = "true" ]; then
+    NIGHTLY="true"
+else
     NIGHTLY="false"
 fi
 if [ -z "$BUILDOUTPUT" ]; then
@@ -100,13 +102,10 @@ else
     export VERSION="$(cat $SOURCEROOT/dat/VERSION)"
 fi
 
-# Get GLIBC version on builder.
-GLIBC="$(ldd --version | grep -Po "(\d+\.)+\d+" | sed -n '1p')"
-
 # Make output dir (if it does not exist)
 mkdir -p $BUILDOUTPUT/out
 
-export OUTPUT="$BUILDOUTPUT/out/naev-$VERSION-lin64-glibc-$GLIBC.AppImage"
+export OUTPUT="$BUILDOUTPUT/out/naev-$VERSION-lin64.AppImage"
 
 # Get linuxdeploy's AppImage
 linuxdeploy="$BUILDPATH/linuxdeploy-x86_64.AppImage"

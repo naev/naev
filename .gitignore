@@ -100,6 +100,7 @@ utils/starmap/*.log
 *.ninja_deps
 *.ninja_log
 builddir/
+meson-bin/
 /subprojects/*
 !/subprojects/packagefiles
 !/subprojects/*.wrap
