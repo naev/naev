@@ -93,11 +93,12 @@ fi
 if [[ "$NIGHTLY" == "true" ]]; then
     export VERSION="$VERSION.$BUILD_DATE"
 fi
+SUFFIX="$VERSION-lin64"
 
 # Make output dir (if it does not exist)
-mkdir -p $BUILDOUTPUT/out
+mkdir -p "$BUILDOUTPUT/out"
 
-export OUTPUT="$BUILDOUTPUT/out/naev-$VERSION-lin64.AppImage"
+export OUTPUT="$BUILDOUTPUT/out/naev-$SUFFIX.AppImage"
 
 # Get linuxdeploy's AppImage
 linuxdeploy="$BUILDPATH/linuxdeploy-x86_64.AppImage"
@@ -115,7 +116,7 @@ fi
 
 # Move AppImage to dist/ and mark as executable
 
-chmod +x $OUTPUT
+chmod +x "$OUTPUT"
 
 #Reset DESTDIR to what it was before
 

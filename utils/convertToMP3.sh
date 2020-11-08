@@ -11,13 +11,13 @@ while getopts d:f:i:o: OPTION "$@"; do
         set -x
         ;;
     f)
-        FILEEXTENSION=${OPTARG}
+        FILEEXTENSION="${OPTARG}"
         ;;
     i)
-        INPUTDIR=${OPTARG}
+        INPUTDIR="${OPTARG}"
         ;;
     o)
-        OUTPUTDIR=${OPTARG}
+        OUTPUTDIR="${OPTARG}"
         ;;
     esac
 done
@@ -27,9 +27,9 @@ if [[ -z "$FILEEXTENSION" || -z "$OUTPUTDIR" || -z "$INPUTDIR" ]]; then
     exit 1
 fi
 
-mkdir -p $OUTPUTDIR
+mkdir -p "$OUTPUTDIR"
 for f in $INPUTDIR/*.$FILEEXTENSION; do
     OUTFILE=$(basename "$f" .$FILEEXTENSION)
     echo "Converting $f to $OUTFILE.mp3"
-    ffmpeg -n -i "$f" -c:a libmp3lame -q:a 1 -ar 44100 -map_metadata 0 -map_metadata 0:s:0 -id3v2_version 3 -vn $OUTPUTDIR/$OUTFILE.mp3 
+    ffmpeg -n -i "$f" -c:a libmp3lame -q:a 1 -ar 44100 -map_metadata 0 -map_metadata 0:s:0 -id3v2_version 3 -vn "$OUTPUTDIR/$OUTFILE.mp3"
 done

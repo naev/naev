@@ -11,7 +11,7 @@ while getopts d:t: OPTION "$@"; do
         set -x
         ;;
     t)
-        TOKEN=${OPTARG}
+        TOKEN="${OPTARG}"
         ;;
     esac
 done

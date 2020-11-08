@@ -70,6 +70,7 @@ fi
 if [[ "$NIGHTLY" == "true" ]]; then
     export VERSION="$VERSION.$BUILD_DATE"
 fi
+SUFFIX="$VERSION-win64"
 
 # Move compiled binary to staging folder.
 
@@ -97,29 +98,29 @@ echo "copying naev logo to staging area"
 cp "$SOURCEROOT/extras/logos/logo.ico" "$SOURCEROOT/extras/windows/installer"
 
 echo "copying naev binary to staging area"
-cp "$BUILDPATH/naev.exe" "$SOURCEROOT/extras/windows/installer/bin/naev-$VERSION-win$ARCH.exe"
+cp "$BUILDPATH/naev.exe" "$SOURCEROOT/extras/windows/installer/bin/naev-$SUFFIX.exe"
 
 # Create distribution folder
 
 echo "creating distribution folder if it doesn't exist"
-mkdir -p $BUILDOUTPUT/out
+mkdir -p "$BUILDOUTPUT/out"
 
 # Build installer
 
-makensis -DVERSION=$VERSION -DARCH=$ARCH "$SOURCEROOT/extras/windows/installer/naev.nsi"
+makensis -DSUFFIX=$SUFFIX "$SOURCEROOT/extras/windows/installer/naev.nsi"
 
 # Move installer to distribution directory
-mv "$SOURCEROOT/extras/windows/installer/naev-$VERSION-win$ARCH.exe $BUILDOUTPUT/out"
+mv "$SOURCEROOT/extras/windows/installer/naev-$SUFFIX.exe $BUILDOUTPUT/out"
 
-echo "Successfully built Windows Installer for win$ARCH"
+echo "Successfully built Windows Installer for $SUFFIX"
 
 # Package steam windows tarball
 pushd "$SOURCEROOT/extras/windows/installer/bin"
-tar -cJvf ../steam-win$ARCH.tar.xz *.dll *.exe
+tar -cJvf ../steam-win64.tar.xz *.dll *.exe
 mv ../*.xz "$BUILDOUTPUT/out"
 popd
 
-echo "Successfully packaged Steam Tarball for win$ARCH"
+echo "Successfully packaged Steam Tarball"
 
 echo "Cleaning up staging area"
 rm -rf "$SOURCEROOT/extras/windows/installer/bin"
