@@ -65,23 +65,26 @@ SUFFIX="$VERSION-win64"
 # Move compiled binary to staging folder.
 
 echo "creating staging area"
-mkdir -p "$SOURCEROOT/extras/windows/installer/bin"
+STAGING="$SOURCEROOT/extras/windows/installer/bin"
+mkdir -p "$STAGING"
 
 # Move data to staging folder
 echo "moving data to staging area"
-cp -r "$SOURCEROOT/dat" "$SOURCEROOT/extras/windows/installer/bin"
+cp -r "$SOURCEROOT/dat" "$STAGING"
 
 # Collect DLLs
+echo "Populating staging area with Meson subprojects' DLLs (if any)"
+find "${SOURCEROOT}/subprojects" -iname "*.dll" -exec cp -v "{}" "$STAGING" ";"
 echo "Locally install 'pefile' Python module"
 python3 -m pip install pefile
 echo "Collecting DLLs in staging area"
-"$SOURCEROOT"/extras/windows/extract_dlls.py "$BUILDPATH/naev.exe" "$SOURCEROOT/extras/windows/installer/bin"
+"$SOURCEROOT"/extras/windows/extract_dlls.py "$BUILDPATH/naev.exe" "$STAGING"
 
 echo "copying naev logo to staging area"
 cp "$SOURCEROOT/extras/logos/logo.ico" "$SOURCEROOT/extras/windows/installer"
 
 echo "copying naev binary to staging area"
-cp "$BUILDPATH/naev.exe" "$SOURCEROOT/extras/windows/installer/bin/naev-$SUFFIX.exe"
+cp "$BUILDPATH/naev.exe" "$STAGING/naev-$SUFFIX.exe"
 
 # Create distribution folder
 
@@ -98,13 +101,13 @@ mv "$SOURCEROOT/extras/windows/installer/naev-$SUFFIX.exe" "$BUILDOUTPUT/out"
 echo "Successfully built Windows Installer for $SUFFIX"
 
 # Package steam windows tarball
-pushd "$SOURCEROOT/extras/windows/installer/bin"
+pushd "$STAGING"
 tar -cJvf ../steam-win64.tar.xz *.dll *.exe
-mv ../*.xz "$BUILDOUTPUT/out"
 popd
+mv "$STAGING"/../*.xz "$BUILDOUTPUT/out"
 
 echo "Successfully packaged Steam Tarball"
 
 echo "Cleaning up staging area"
-rm -rf "$SOURCEROOT/extras/windows/installer/bin"
+rm -rf "$STAGING"
 rm -rf "$SOURCEROOT/extras/windows/installer/logo.ico"
