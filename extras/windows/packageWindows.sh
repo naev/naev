@@ -72,6 +72,8 @@ echo "moving data to staging area"
 cp -r "$SOURCEROOT/dat" "$SOURCEROOT/extras/windows/installer/bin"
 
 # Collect DLLs
+echo "Populating staging area with Meson subprojects' DLLs (if any)"
+find "${SOURCEROOT}/subprojects" -iname "*.dll" -exec cp -v "{}" "$SOURCEROOT/extras/windows/installer/bin" ";"
 echo "Locally install 'pefile' Python module"
 python3 -m pip install pefile
 echo "Collecting DLLs in staging area"
