@@ -169,8 +169,7 @@ class heatsim:
 
 
    def plot( self, filename=None ):
-      plt.hold(False)
-      plt.figure(1)
+      plt.figure()
 
       # Plot 1 Data
       plt.subplot(211)
@@ -186,7 +185,6 @@ class heatsim:
       # Plot 1 Data
       plt.subplot(212)
       plt.plot( self.time_data, self.weap_data[0], '-' )
-      plt.hold(True)
       plt_data = []
       for i in range(len(self.weap_data[0])):
          plt_data.append( self.ACCURACY_LIMIT )
@@ -195,7 +193,6 @@ class heatsim:
       for i in range(len(self.weap_data[0])):
          plt_data.append( self.FIRERATE_LIMIT )
       plt.plot( self.time_data, plt_data, '-.' )
-      plt.hold(False)
 
       # Plot 2 Info
       plt.axis( [0, self.sim_total, 0, 1100] )
