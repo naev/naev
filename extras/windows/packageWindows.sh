@@ -103,8 +103,8 @@ echo "Successfully built Windows Installer for $SUFFIX"
 # Package steam windows tarball
 pushd "$STAGING"
 tar -cJvf ../steam-win64.tar.xz *.dll *.exe
-mv ../*.xz "$BUILDOUTPUT/out"
 popd
+mv "$STAGING"/../*.xz "$BUILDOUTPUT/out"
 
 echo "Successfully packaged Steam Tarball"
 
