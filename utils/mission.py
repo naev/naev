@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import os
 import xml.etree.ElementTree as ET
 import tempfile
@@ -23,31 +25,31 @@ def indent(elem, level=0):
             elem.tail = i
 
 
-print "Mission XML generator, version "+str(version)
+print("Mission XML generator, version", version)
 
-name = raw_input("Mission name?: ")
-lua = raw_input("Lua file. e. g.  \"empire/collective/ec01\": ")
-unique = raw_input("unique? If yes, type anything, if no, leave empty: ")
-done = raw_input("done? If this mission requires the player to successfully finish another mission, then please write the name of that mission. If there are no requirements, then leave it empty.\n")
-chance = raw_input("The last two digits of the number in a <chance> tag determine the likelihood a mission will appear when a player lands on a planet. If the chance number is three digits long, the first digit determines how many times that probability is calculated on each landing. A number larger than 100 means the mission may appear more than once simultaneously.\n")
-location = raw_input("location? Can be either None, Computer, Bar, Outfit, Shipyard, Land or Commodity: ")
+name = input("Mission name?: ")
+lua = input("Lua file. e. g.  \"empire/collective/ec01\": ")
+unique = input("unique? If yes, type anything, if no, leave empty: ")
+done = input("done? If this mission requires the player to successfully finish another mission, then please write the name of that mission. If there are no requirements, then leave it empty.\n")
+chance = input("The last two digits of the number in a <chance> tag determine the likelihood a mission will appear when a player lands on a planet. If the chance number is three digits long, the first digit determines how many times that probability is calculated on each landing. A number larger than 100 means the mission may appear more than once simultaneously.\n")
+location = input("location? Can be either None, Computer, Bar, Outfit, Shipyard, Land or Commodity: ")
 planets = []
 while True:
-    planet = raw_input("planet? The name of a start planet. Leave empty if no more planets should be listed: ")
+    planet = input("planet? The name of a start planet. Leave empty if no more planets should be listed: ")
     if planet:
         planets.append(planet)
     else:
         break
 factions = []
 while True:
-    faction = raw_input("faction? The name of required faction of the planet. Leave empty if no more factions should be listed: ")
+    faction = input("faction? The name of required faction of the planet. Leave empty if no more factions should be listed: ")
     if faction:
         factions.append(faction)
     else:
         break
 
 cond=None
-if raw_input("Do you want to edit the <cond> in your $EDITOR? If yes, please type anything, if no then please leave empty: "):
+if input("Do you want to edit the <cond> in your $EDITOR? If yes, please type anything, if no then please leave empty: "):
     f = tempfile.NamedTemporaryFile()
     os.system("$EDITOR "+f.name)
     cond = f.read()
@@ -70,7 +72,7 @@ for planet in planets:
 if cond:
     ET.SubElement(avail, "cond").text=escape(cond)
 
-print """The mission xml. Insert it right before '<missions />'.
-===== THE XML ====="""
+print("""The mission xml. Insert it right before '<missions />'.
+===== THE XML =====""")
 indent(root)
-print ET.tostring(root)
+print(ET.tostring(root))
