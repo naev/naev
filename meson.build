@@ -211,6 +211,15 @@ if buildExec.disabled() == false
       export_dynamic: bfd.found(),
       install: true)
 
+   configure_file(
+      input: 'utils/build/naev.sh',
+      output: 'naev.sh',
+      configuration: {
+         'source_root': meson.source_root(),
+         'build_root' : meson.build_root()
+      }
+   )
+
    install_data(
       'LICENSE',
       'README',
@@ -228,7 +237,7 @@ if buildExec.disabled() == false
       install_dir: ndata_path,
    )
 
-   if host_machine.system() not in ['windows', 'cygwin', 'emscripten', 'android', 'darwin']        
+   if host_machine.system() not in ['windows', 'cygwin', 'emscripten', 'android', 'darwin']
          metainfo_file = 'org.naev.naev.metainfo.xml'
 
          if (ascli_exe.found())
@@ -250,7 +259,7 @@ if buildExec.disabled() == false
              rename : ['16x16/apps/naev.png', '32x32/apps/naev.png', '64x64/apps/naev.png', '128x128/apps/naev.png', '256x256/apps/naev.png'],
              install_dir: get_option('datadir') / 'icons/hicolor')
       install_man('naev.6')
-      
+
    endif
 
    subdir('test')
