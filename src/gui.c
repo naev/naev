@@ -2241,7 +2241,7 @@ void gui_free (void)
       gui_planet_blink_vbo = NULL;
    }
 
-   /* Clean up the osd. */
+   /* Clean up the OSD. */
    osd_exit();
 
    /* Free icons. */

@@ -25,7 +25,7 @@
 --
 --]]
 
--- Localization, choosing a language if naev is translated for non-english-speaking locales.
+-- Localization, choosing a language if Naev is translated for non-english-speaking locales.
 
 text = {}
 title = {}

@@ -12,7 +12,7 @@
       If that fails, then the player is presented with various options:
 
          a) Remove all non-cores
-         b) Remove weapons, utility, or sructure outfits separately
+         b) Remove weapons, utility, or structure outfits separately
          b) Replace cores with defaults
 
       There is no failure mode beyond this, as a ship that isn't spaceworthy

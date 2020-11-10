@@ -137,7 +137,7 @@ articles["Generic"] = {
    },
    {
       tag = N_("The Best Spaceport Bars"),
-      desc = _("Where can you get the best gargleblaster?  The famous exotic drinks list at the Doranthex Lava Room charmed our reviewer, but if you care for ambiance, don't miss the Goddard Bar.")
+      desc = _("Where can you get the best gargle blaster?  The famous exotic drinks list at the Doranthex Lava Room charmed our reviewer, but if you care for ambiance, don't miss the Goddard Bar.")
    },
    {
       tag = N_("RIP: The Floating Vagabond"),

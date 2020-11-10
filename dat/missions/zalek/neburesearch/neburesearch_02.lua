@@ -56,7 +56,7 @@ log_text = _([[You brought Dr. Mensing back from a Empire scientific conference.
 
 function create()
     -- mission variables
-    credits = 400000  -- 400k
+    credits = 400000  -- 400K
     homeworld, homeworld_sys = planet.get("Jorla")
     origin = planet.cur()
     origin_sys = system.cur()

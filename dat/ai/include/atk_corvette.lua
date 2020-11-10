@@ -11,7 +11,7 @@ function atk_corvette ()
    local target = _atk_com_think()
    if target == nil then return end
 
-   -- Targetting stuff
+   -- Targeting stuff
    ai.hostile(target) -- Mark as hostile
    ai.settarget(target)
 

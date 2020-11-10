@@ -34,7 +34,7 @@ title[2] = _("Mission Accomplished") --finished title
 title[3] = _("He told you so...") --failed title
 text = {}
 text[0] = _([[The private detective greets you and gets right down to business.
-   "I have tracked down and collected evidence against a local crimelord," he says. "The evidence is on this data disk. He would love nothing more than to get his hands on this.
+   "I have tracked down and collected evidence against a local crime lord," he says. "The evidence is on this data disk. He would love nothing more than to get his hands on this.
    I want you to bring this to my associates in the %s system. While the local authorities have proven corruptible, my associates will ensure that this man ends up in prison, where he belongs. I must warn you, however:
    He is a man of considerable influence. He has many friends, and no doubt will send some of his mercenaries to stop you. You'll need a fast ship to shake them off. My associates will compensate you generously when you reach %s.
    Regrettably, you are not the first pilot I've contacted regarding this matter. Your predecessor was intercepted when he landed en route to %s. The crime lord has many underlings lurking in nearby spaceports -- you must NOT land until you've delivered the data."
@@ -70,7 +70,7 @@ function accept ()
    misn.osdCreate(title[0], {misn_desc:format(targetsystem:name())})
    
    startsystem = system.cur() --needed to make thugs appear random in the first system
-   last_system = system.cur() --ignore this one, it's just the intitiation of the variable
+   last_system = system.cur() --ignore this one, it's just the initialization of the variable
    
    hook.enter("enter") --trigger when entering a system
    hook.jumpout("jumpout") --trigger when leaving a system

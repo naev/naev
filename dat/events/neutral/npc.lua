@@ -29,7 +29,7 @@ civ_name = "Civilian"
 civ_desc = {_("This person seems to be here to relax."),
             _("There is a civilian sitting on one of the tables."),
             _("There is a civilian sitting there, looking somewhere else."),
-            _("A worker sits at one of the tables, wearing a nametag saying \"Go away\"."),
+            _("A worker sits at one of the tables, wearing a name tag saying \"Go away\"."),
             _("A civilian sits at the bar, seemingly serious about the cocktails on offer."),
             _("A civilian wearing a shirt saying: \"Ask me about Jaegnhild\""),
             _("There is a civilian sitting in the corner."),

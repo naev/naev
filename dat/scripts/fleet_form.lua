@@ -287,7 +287,7 @@ function Forma:assignCoords()
       
    --buffer formation
    elseif self.formation == "buffer" then
-      -- Buffer logic. Consecutive arcs eminating from the fleader. Stored as polar coordinates.
+      -- Buffer logic. Consecutive arcs emanating from the fleader. Stored as polar coordinates.
       local radii = {Scout = 1200, Fighter = 900, Bomber = 850, Corvette = 700, Destroyer = 500, Cruiser = 350, Carrier = 250} -- Different radii for each class.
       local count = {Scout = 1, Fighter = 1, Bomber = 1, Corvette = 1, Destroyer = 1, Cruiser = 1, Carrier = 1} -- Need to keep track of positions already iterated through.
       for i, p in ipairs(self.fleet) do
@@ -425,7 +425,7 @@ function Forma:assignCoords()
 
    for i, position in ipairs(posit) do
       -- We want a fleet formed in positions relative to the direction the
-      -- captain is facing, not static offests.
+      -- captain is facing, not static offsets.
       offset = self.fleader:dir() / 180 * math.pi -- convert to radians
       x = position.radius * math.cos(position.angle + offset) --x coordinate assignment.
       y = position.radius * math.sin(position.angle + offset) --y coordinate assignment.
@@ -459,7 +459,7 @@ function Forma:control()
       end
    end
    
-   --We want to seperate out the for loop that finds enemies and the if functions that control combat, so that all of the enemy pilots are iterated over to see if one is in range before controlling the pilots.
+   --We want to separate out the for loop that finds enemies and the if functions that control combat, so that all of the enemy pilots are iterated over to see if one is in range before controlling the pilots.
    --It's also easier on my brain. </lazy>
    
    if inrange then

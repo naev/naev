@@ -53,7 +53,7 @@ misn_title = _("The one with the Shopping")
 misn_reward = _("The gratitude of science and a bit of compensation")
 misn_desc = _("You've been hired by Dr. Geller to collect some materials he urgently needs for his research.")
 bar_desc = _("You see a scientist talking to various pilots. Perhaps you should see what he's looking for.")
-trd1_desc = _("A scientist conspicuously sits in the corner. Perhaps he might be ther person you're supposed to get this stuff for ")
+trd1_desc = _("A scientist conspicuously sits in the corner. Perhaps he might be the person you're supposed to get this stuff for.")
 trd2_desc = _("You see a shifty-looking dealer of some kind. Maybe he has what you're looking for.")
 
 title[1] = _([[In the bar]])

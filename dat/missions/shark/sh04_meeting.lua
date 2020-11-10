@@ -42,10 +42,10 @@ npc_desc = {}
 bar_desc = {}
 
 title[1] = _("Travel")
-text[1] = _([["Ok, are you ready for the travel to %s in the %s system?"]])
+text[1] = _([["OK, are you ready for the travel to %s in the %s system?"]])
 
 refusetitle = _("Sorry, not interested")
-refusetext = _([["Ok, come back when you are ready."]])
+refusetext = _([["OK, come back when you are ready."]])
 
 title[2] = _("Time to go")
 text[2] = _([["Let's go, then."]])

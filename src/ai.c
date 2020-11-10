@@ -439,7 +439,7 @@ static void ai_run( nlua_env env, const char *funcname )
 
 #ifdef DEBUGGING
    if (lua_isnil(naevL, -1)) {
-      WARN( _("Pilot '%s' ai -> '%s': attempting to run non-existant function"),
+      WARN( _("Pilot '%s' ai -> '%s': attempting to run non-existent function"),
             cur_pilot->name, funcname );
       lua_pop(naevL,1);
       return;
@@ -1021,7 +1021,7 @@ Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
       /* Must have valid task. */
       curtask = ai_curTask( p );
       if (curtask == NULL) {
-         WARN( _("Trying to add subtask '%s' to non-existant task."), func);
+         WARN( _("Trying to add subtask '%s' to non-existent task."), func);
          ai_freetask( t );
          return NULL;
       }
@@ -1398,7 +1398,7 @@ static int aiL_getflybydistance( lua_State *L )
  * @brief Gets the minimum braking distance.
  *
  * braking vel ==> 0 = v - a*dt
- * add turn around time (to inital vel) ==> 180.*360./cur_pilot->turn
+ * add turn around time (to initial vel) ==> 180.*360./cur_pilot->turn
  * add it to general euler equation  x = v * t + 0.5 * a * t^2
  * and voila!
  *

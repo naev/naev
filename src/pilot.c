@@ -76,7 +76,7 @@ static void pilot_hyperspace( Pilot* pilot, double dt );
 static void pilot_refuel( Pilot *p, double dt );
 /* Clean up. */
 static void pilot_dead( Pilot* p, unsigned int killer );
-/* Targetting. */
+/* Targeting. */
 static int pilot_validEnemy( const Pilot* p, const Pilot* target );
 /* Misc. */
 static void pilot_setCommMsg( Pilot *p, const char *s );
@@ -3368,11 +3368,11 @@ credits_t pilot_worth( const Pilot *p )
  * @brief Sends a message
  *
  * @param p Pilot to send message
- * @param reciever Pilot to recieve it
+ * @param receiver Pilot to receive it
  * @param type Type of message.
  * @param idx Index of data on lua stack or 0
  */
-void pilot_msg(Pilot *p, Pilot *reciever, const char *type, unsigned int idx)
+void pilot_msg(Pilot *p, Pilot *receiver, const char *type, unsigned int idx)
 {
    if (idx != 0)
       lua_pushvalue(naevL, idx); /* data */
@@ -3390,7 +3390,7 @@ void pilot_msg(Pilot *p, Pilot *reciever, const char *type, unsigned int idx)
    lua_pushvalue(naevL, -2); /* data, msg, data */
    lua_rawseti(naevL, -2, 3); /* data, msg */
 
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, reciever->messages); /* data, msg, messages */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, receiver->messages); /* data, msg, messages */
    lua_pushvalue(naevL, -2); /* data, msg, messages, msg */
    lua_rawseti(naevL, -2, lua_objlen(naevL, -2)+1); /* data, msg, messages */
    lua_pop(naevL, 3); /*  */

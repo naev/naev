@@ -15,7 +15,7 @@
  --]]
 --[[
 
-    This is the first of many planned eyecandy cinematics.
+    This is the first of many planned eye candy cinematics.
     In this one, there will be a battle between the Dvaered and the FLF in the Doranthex system.
 
 ]]--
@@ -39,14 +39,14 @@ else --default english
     {
         "Dvaered",
         _("FLF terrorists blasted by joint Dvaered military forces"),
-        _("A Dvaered patrol in Tuoladis was ambushed by a large gang of FLF terrorists. The Dvaered patrol held  under the assault, until the mighty hammer that is the Dvaered forces came down and crushed the FLF terrorists in a mighty victory. This incident shows the willigness of the terrorists to attack us and kill whomever they please. The Dvaered military is always ready to protect its citizens and kill and conqeur those who would harm them."),
+        _("A Dvaered patrol in Tuoladis was ambushed by a large gang of FLF terrorists. The Dvaered patrol held  under the assault, until the mighty hammer that is the Dvaered forces came down and crushed the FLF terrorists in a mighty victory. This incident shows the willingness of the terrorists to attack us and kill whomever they please. The Dvaered military is always ready to protect its citizens and kill and conquer those who would harm them."),
         time.get()+time.create(0,30,0)
     },
 
     {
         "Frontier",
         _("Dvaered forces engage FLF freedom fighters in open combat"),
-        _("A small group of FLF freedom fighters was beset by a Dvaered patrol in Tuoladis, who immediately called backup. The situation escalated, and a large scale battle occured, where the Dvaered forces lost tens of millions of credits worth in ships. This marks the first time FLF freedom fighters have had the ships and weapons to stand toe to toe against the Dvaered, and shall server as an example for all who dare to stand for freedom, in life or death."),
+        _("A small group of FLF freedom fighters was beset by a Dvaered patrol in Tuoladis, who immediately called backup. The situation escalated, and a large scale battle occurred, where the Dvaered forces lost tens of millions of credits worth in ships. This marks the first time FLF freedom fighters have had the ships and weapons to stand toe to toe against the Dvaered, and shall server as an example for all who dare to stand for freedom, in life or death."),
         time.get()+time.create(0,30,0)
     },
 

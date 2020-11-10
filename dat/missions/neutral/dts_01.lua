@@ -84,7 +84,7 @@ comm[9] = _("Comm Trader>You're a coward, %s. You better hope I never see you ag
 comm[10] = _("Comm Trader>You're running away now, %s? The fight's finished, you know...")
 title[4] = _("Good job!")
 text[4] = _([[The debris from the battle disappears behind you in a blur of light. A moment after you emerge from hyperspace, a Imperial ship jumps in behind you and hails you.
-    "Please hold course and confirm your identity, %s."  You send your license code and wait for a moment. "Ok, that's fine. We're just making sure no pirates escaped. You were part of the battle, weren't you?  Surprised you didn't return for the bounty, pilot. Listen, I appreciate what you did back there. I have family on %s. When I'm not flying overhead, it's good to know there are good samaritans like you who will step up. Thanks."
+    "Please hold course and confirm your identity, %s."  You send your license code and wait for a moment. "OK, that's fine. We're just making sure no pirates escaped. You were part of the battle, weren't you?  Surprised you didn't return for the bounty, pilot. Listen, I appreciate what you did back there. I have family on %s. When I'm not flying overhead, it's good to know there are good Samaritans like you who will step up. Thanks."
 ]])
 title[5] = _("Left behind")
 text[5] = _([[The Commodore turns and walks off. Eight men and women follow her, but you stay put.
