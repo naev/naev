@@ -361,7 +361,7 @@ static void opt_gameplay( unsigned int wid )
          "chkMouseThrust", _("Enable mouse-flying thrust control"), NULL, conf.mouse_thrust );
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkCompress", _("Enable savegame compression"), NULL, conf.save_compress );
+         "chkCompress", _("Enable saved game compression"), NULL, conf.save_compress );
    y -= 30;
    s = _("Visible Messages");
    l = gl_printWidthRaw( NULL, s );

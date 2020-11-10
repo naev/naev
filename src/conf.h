@@ -139,7 +139,7 @@ typedef struct PlayerConf_s {
    double compression_velocity; /**< Velocity to compress to. */
    double compression_mult; /**< Maximum time multiplier. */
    int redirect_file; /**< Redirect output to files. */
-   int save_compress; /**< Compress savegame. */
+   int save_compress; /**< Compress saved game. */
    unsigned int afterburn_sens; /**< Afterburn sensibility. */
    int mouse_thrust; /**< Whether mouse flying controls thrust. */
    double mouse_doubleclick; /**< How long to consider double-clicks for. */

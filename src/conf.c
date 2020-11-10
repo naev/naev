@@ -1103,7 +1103,7 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("redirect_file",conf.redirect_file);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Enables compression on savegames"));
+   conf_saveComment(_("Enables compression on saved games"));
    conf_saveBool("save_compress",conf.save_compress);
    conf_saveEmptyLine();
 
