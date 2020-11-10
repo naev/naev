@@ -3,7 +3,7 @@ project('luajit', 'c', version : '2.0.5', license : 'mit')
 # TODO: This is not ideal. We should translate the enough of the makefile to have Meson handle the build.
 cc = meson.get_compiler('c')
 
-env = ['DESTDIR="' + (meson.current_source_dir() / 'out') + '"']
+env = environment()
 if meson.is_cross_build()
     # Construct the compiler prefix, e.g. 'x86_64-w64-mingw32-'.
     # FIXME: This is absolutely disgusting. I'm not sure whether to loathe myself or blame the Meson team.
@@ -14,13 +14,13 @@ if meson.is_cross_build()
         cc_name_hyphen += cc_name_part + '-'
     endforeach
 
-    env += ['CROSS=' + cc_name_prefix]
+    env.set('CROSS', cc_name_prefix)
     if host_machine.system() == 'darwin'
-        env += 'TARGET_SYS=Darwin'
+        env.set('TARGET_SYS', 'Darwin')
     elif host_machine.system() == 'linux'
-        env += 'TARGET_SYS=Linux'
+        env.set('TARGET_SYS', 'Linux')
     elif host_machine.system() == 'windows'
-        env += 'TARGET_SYS=Windows'
+        env.set('TARGET_SYS', 'Windows')
     endif
 endif
 
