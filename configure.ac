@@ -519,10 +519,10 @@ AS_IF([test -n "$GIT" && test -d "$srcdir/.git"], [
 # Defines in config.h
 #
 
-# Version variables
+# Cut out the numeric fields from our SemVer <major>.<minor>.<rev>[-pre_release][+build] for OS versioning.
 VMAJOR=$(echo "$VERSION" | cut -d. -f1)
 VMINOR=$(echo "$VERSION" | cut -d. -f2)
-VREV=$(echo "$VERSION" | cut -d. -f3)
+VREV=$(echo "$VERSION" | cut -d. -f3 | sed "s/[[+-]].*//")
 
 AC_DEFINE_UNQUOTED([VMAJOR], [$VMAJOR], [Define to the major version component])
 AC_DEFINE_UNQUOTED([VMINOR], [$VMINOR], [Define to the minor version component])
