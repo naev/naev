@@ -122,8 +122,8 @@ typedef struct PlayerConf_s {
 
    /* Zoom. */
    int zoom_manual; /**< Zoom is under manual control. */
-   double zoom_far; /**< Maximum ingame zoom to use should be less then zoom_near. */
-   double zoom_near; /**< Minimum ingame zoom to use. */
+   double zoom_far; /**< Maximum in-game zoom to use should be less then zoom_near. */
+   double zoom_near; /**< Minimum in-game zoom to use. */
    double zoom_speed; /**< Maximum zoom speed change. */
    double zoom_stars; /**< How much stars can zoom (modulates zoom_[mix|max]). */
 

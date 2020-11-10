@@ -19,7 +19,7 @@
    
    Mission: Advanced Nebula Research
    
-   Description: This time the post doc asks the player for help. Reference data of further nebula are needed to understand the Sol nebula. The player has to escort a refitted transport ship through pirate and dvaered space.
+   Description: This time the postdoc asks the player for help. Reference data of further nebula are needed to understand the Sol nebula. The player has to escort a refitted transport ship through Pirate and Dvaered space.
    
    Difficulty: Medium
 
@@ -41,16 +41,16 @@ title[3] = _("Trouble inbound")
 title[4] = _("Scans complete")
 title[5] = _("Mission accomplished")
 text = {}
-text[1] = _([["Captain %s if I'm not mistaken? Well met. I heared you recently helped one of our students. My name is Dr. Mensing and I am working for professor Voges as well.
-    Your timing is just perfect. You see, we planed an expedition but the captain we hired to escort our transport ship backed out in the last minute. It's quite bothersome being stranded right in Dvaered space. Would you be willing to assist us intead?"]])
-text[2] = _([["While the data recorded by Robert is of good quality he seems to have completely forgotten that we need reference data of similarly dense nebulae. We have already installed his sensors on a transport ship. The nearby PSO nebula should be a good candidate but there are the pirate systems inbetween. Also the target systems are controled by the Dvaered. Hard to say wheter the dvaered or the pirates are more dangerous. So this is why we need an escort.
-    We will travel through %s, %s, and %s. Just passing through the systems should be sufficient. Also, I want to visist the %s station before returning back to %s. You have to make sure no one shoots us down during our expedition."]])
+text[1] = _([["Captain %s if I'm not mistaken? Well met. I heard you recently helped one of our students. My name is Dr. Mensing and I am working for professor Voges as well.
+    Your timing is just perfect. You see, we planed an expedition but the captain we hired to escort our transport ship backed out in the last minute. It's quite bothersome being stranded right in Dvaered space. Would you be willing to assist us instead?"]])
+text[2] = _([["While the data recorded by Robert is of good quality he seems to have completely forgotten that we need reference data of similarly dense nebulae. We have already installed his sensors on a transport ship. The nearby PSO nebula should be a good candidate but there are the pirate systems in between. Also the target systems are controled by the Dvaered. Hard to say whether the Dvaered or the pirates are more dangerous. So this is why we need an escort.
+    We will travel through %s, %s, and %s. Just passing through the systems should be sufficient. Also, I want to visit the %s station before returning back to %s. You have to make sure no one shoots us down during our expedition."]])
 text[3] = _([["Please follow us, %s. Make sure to jump to the next system after we jumped out. We'll have to land on some planets on our way to refuel."]])
 text[4] = _([[Suddenly your comm system turns on, receiving a conversation between the ship you are escorting and a Dvaered patrol ship.
     "I assure you, we mean no harm. We are just a convoy of scientists passing through Dvaered space." says Dr. Mensing.
     The response sounds harsh. "Do you think we're naïve? You're obviously a spy scouting our systems' defences."
     "Please calm down. I'm sure there is a diplomatic solution for our misunderstanding."
-    The dvaered officer replies "We can see that your ship is stuffed with sensors. Your intentions are obvious. Prepare for your ship being boarded."]])
+    The Dvaered officer replies "We can see that your ship is stuffed with sensors. Your intentions are obvious. Prepare for your ship being boarded."]])
 text[5] = _([[Dr. Mensing  pauses, apparently choosing her words with care.
     "Fine, do whatever you want. Our reasoning is obviously beyond the imagination of your degenerate intellect." With this answer the comm shuts off. Your sensors show that a Dvaered patrol changed their course and is heading straight towards the transporter.]])
 text[6] = _([["The situation would have escalated anyway." argues Dr. Mensing, this time directly speaking towards you.
@@ -85,7 +85,7 @@ function create()
     homeworld = "Bastion Station"
     ambush = false
     stage = 0
-    credits = 800000  -- 800k
+    credits = 800000  -- 800K
     
     -- Spaceport bar stuff
     misn.setNPC(_("A scientist"), "zalek/unique/mensing")

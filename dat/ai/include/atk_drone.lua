@@ -150,7 +150,7 @@ function _atk_d_flyby( target, dist )
    else
 
       dir = ai.aim(target)
-      --not accellerating here is the only difference between the aggression levels. This can probably be an aggression AI parameter
+      --not accelerating here is the only difference between the aggression levels. This can probably be an aggression AI parameter
       if mem.aggressive == true then
          ai.accel()
       end

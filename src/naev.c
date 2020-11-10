@@ -244,15 +244,6 @@ int main( int argc, char** argv )
       return -1;
    }
 
-   /* Get desktop dimensions. */
-   SDL_DisplayMode current;
-   if ( SDL_GetCurrentDisplayMode( 0, &current ) ) {
-      ERR( _( "Unable to get display mode: %s" ), SDL_GetError() );
-      return -1;
-   }
-   gl_screen.desktop_w = current.w;
-   gl_screen.desktop_h = current.h;
-
    /* We'll be parsing XML. */
    LIBXML_TEST_VERSION
    xmlInitParser();
@@ -649,11 +640,12 @@ void loadscreen_render( double done, const char *msg )
    /* Draw text. */
    gl_printRaw( &gl_defFont, x, y + h + 3., &cFontGreen, -1., msg );
 
-   /* Flip buffers. */
-   SDL_GL_SwapWindow( gl_screen.window );
-
    /* Get rid of events again. */
    while (SDL_PollEvent(&event));
+
+   /* Flip buffers. HACK: Also try to catch a late-breaking resize from the WM (...or a crazy user?). */
+   SDL_GL_SwapWindow( gl_screen.window );
+   naev_resize();
 }
 
 
@@ -791,14 +783,17 @@ void naev_resize (void)
 {
    /* Auto-detect window size. */
    int w, h;
-   SDL_GetWindowSize( gl_screen.window, &w, &h );
+   SDL_GL_GetDrawableSize( gl_screen.window, &w, &h );
+
+   /* Update options menu, if open. (Never skip, in case the fullscreen mode alone changed.) */
+   opt_resize();
 
    /* Nothing to do. */
    if ((w == gl_screen.rw) && (h == gl_screen.rh))
       return;
 
    /* Resize the GL context, etc. */
-   gl_resize( w, h );
+   gl_resize();
 
    /* Regenerate the background stars. */
    if (cur_system != NULL)
@@ -823,9 +818,6 @@ void naev_resize (void)
 
    /* Reposition main menu, if open. */
    menu_main_resize();
-
-   /* Update options menu, if open. */
-   opt_resize();
 }
 
 /*
@@ -833,49 +825,13 @@ void naev_resize (void)
  */
 void naev_toggleFullscreen (void)
 {
-   int w, h, mode;
-   SDL_DisplayMode current;
-
-   /* @todo Remove code duplication between this and opt_videoSave */
-   if (conf.fullscreen) {
-      conf.fullscreen = 0;
-      /* Restore windowed mode. */
-      SDL_SetWindowFullscreen( gl_screen.window, 0 );
-
-      SDL_SetWindowSize( gl_screen.window, conf.width, conf.height );
-      naev_resize();
-      SDL_SetWindowPosition( gl_screen.window,
-            SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
-
-      return;
-   }
-
-   conf.fullscreen = 1;
-
-   if (conf.modesetting) {
-      mode = SDL_WINDOW_FULLSCREEN;
-
-      SDL_GetWindowDisplayMode( gl_screen.window, &current );
-
-      current.w = conf.width;
-      current.h = conf.height;
-
-      SDL_SetWindowDisplayMode( gl_screen.window, &current );
-   }
-   else
-      mode = SDL_WINDOW_FULLSCREEN_DESKTOP;
-
-   SDL_SetWindowFullscreen( gl_screen.window, mode );
-
-   SDL_GetWindowSize( gl_screen.window, &w, &h );
-   if ((w != conf.width) || (h != conf.height))
-      naev_resize();
+   opt_setVideoMode( conf.width, conf.height, !conf.fullscreen, 0 );
 }
 
 
 #if HAS_POSIX && defined(CLOCK_MONOTONIC)
 static struct timespec global_time; /**< Global timestamp for calculating delta ticks. */
-static int use_posix_time; /**< Whether or not to use posix time. */
+static int use_posix_time; /**< Whether or not to use POSIX time. */
 #endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
 /**
  * @brief Initializes the fps engine.
@@ -889,7 +845,7 @@ static void fps_init (void)
     * could skew up the dt calculations. */
    if (clock_gettime(CLOCK_MONOTONIC, &global_time)==0)
       return;
-   WARN( _("clock_gettime failed, disabling posix time.") );
+   WARN( _("clock_gettime failed, disabling POSIX time.") );
    use_posix_time = 0;
 #endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
    time_ms  = SDL_GetTicks();
@@ -985,7 +941,7 @@ static void update_all (void)
       accumdt = 0.;
       for (i=0; i<n; i++) {
          update_routine( microdt, 0 );
-         /* Ok, so we need a bit of hackish logic here in case we are chopping up a
+         /* OK, so we need a bit of hackish logic here in case we are chopping up a
           * very large dt and it turns out time compression changes so we're now
           * updating in "normal time compression" zone. This amounts to many updates
           * being run when time compression has changed and thus can cause, say, the

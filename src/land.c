@@ -915,7 +915,7 @@ void land_genWindows( int load, int changetab )
    regen = landed;
 
    /* Create window. */
-   if ((gl_screen.rw < 1024) || (gl_screen.rh < 768)) {
+   if (SCREEN_W < 1024 || SCREEN_H < 768) {
       w = -1; /* Fullscreen. */
       h = -1;
    }

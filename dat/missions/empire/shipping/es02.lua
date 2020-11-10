@@ -183,7 +183,7 @@ function enter ()
       p:attack( player.pilot() )
       
       -- Now Dvaered
-      -- They will jump together with you in the system at the jumppoint. (A.)
+      -- They will jump together with you in the system at the jump point. (A.)
       p = pilot.add( "Dvaered Med Force", nil, prevsys )
       for k,v in ipairs(p) do
          v:setFriendly()

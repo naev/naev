@@ -90,7 +90,7 @@ static void map_drawMarker( double x, double y, double r, double a,
       int num, int cur, int type );
 /* Mouse. */
 static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data );
+      double w, double h, double rx, double ry, void *data );
 /* Misc. */
 static glTexture *gl_genFactionDisk( int radius );
 static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
@@ -1589,10 +1589,12 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
  *    @param h Height of the widget.
  */
 static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data )
+      double w, double h, double rx, double ry, void *data )
 {
    (void) wid;
    (void) data;
+   (void) rx;
+   (void) ry;
    int i;
    double x,y, t;
    StarSystem *sys;
@@ -1657,8 +1659,8 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
    case SDL_MOUSEMOTION:
       if (map_drag) {
          /* axis is inverted */
-         map_xpos -= event->motion.xrel;
-         map_ypos += event->motion.yrel;
+         map_xpos -= rx;
+         map_ypos += ry;
       }
       break;
    }

@@ -33,7 +33,7 @@ function zlk_addMiscLog( text )
    shiplog.appendLog( "zlk_misc", text )
 end
 
--- Checks to see if the player has a za'lek ship.
+-- Checks to see if the player has a Za'lek ship.
 function zlk_hasZalekShip()
    local shipname = player.pilot():ship():name()
    return string.find( shipname, "Za'lek" ) ~= nil

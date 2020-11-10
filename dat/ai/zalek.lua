@@ -1,7 +1,7 @@
 require("ai/tpl/generic.lua")
 require("ai/personality/patrol.lua")
 
--- We’ll consider the Za’lek prefer to turn a bad (ie. battle) situation into
+-- We’ll consider the Za'lek prefer to turn a bad (i.e. battle) situation into
 -- a profitable one by getting money and selling fuel if possible if the player
 -- hasn’t been too hostile in the past.
 

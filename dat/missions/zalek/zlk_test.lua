@@ -117,7 +117,7 @@ function create()
    stupertakeoff = 15000
     
    -- Choose mission reward. This depends on the mission tier.
-   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
+   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
    jumpreward = 1000
    distreward = 0.15
    reward     = (1.5 ^ tier) * (numjumps * jumpreward + traveldist * distreward * avgrisk) * finished_mod * (1. + 0.05*rnd.twosigma())

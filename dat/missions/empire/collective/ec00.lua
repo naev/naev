@@ -109,6 +109,7 @@ function accept ()
    osd_msg[3] = osd_msg[3]:format(misn_base:name(), misn_base_sys:name())
    misn.osdCreate(misn_title, osd_msg)
    hook.enter("enter")
+   hook.jumpout("jumpout")
    hook.land("land")
 end
 
@@ -117,6 +118,10 @@ function enter()
    sys = system.cur()
 
    if sys == misn_target and misn_stage == 0 then
+      -- Force Collective music (note: must clear these later on).
+      var.push("music_ambient_force", "Collective")
+      var.push("music_combat_force", "Collective")
+
       pilot.clear()
       pilot.toggleSpawn(false)
       misn.osdActive(2)
@@ -125,6 +130,15 @@ function enter()
       misn.osdActive(1)
    end
 end
+
+
+function jumpout()
+   if system.cur() == misn_target then
+      var.pop("music_ambient_force")
+      var.pop("music_combat_force")
+   end
+end
+
 
 function spotdrone()
    p = pilot.add("Collective Drone", "scout", vec2.new(8000, -20000))[1]
@@ -175,5 +189,9 @@ function kill()
 end
 
 function abort()
+   if system.cur() == misn_target then
+      var.pop("music_ambient_force")
+      var.pop("music_combat_force")
+   end
    misn.finish(false)
 end

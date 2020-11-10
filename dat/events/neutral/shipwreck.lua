@@ -18,7 +18,7 @@
 -- Creates a wrecked ship that asks for help. If the player boards it, the event switches to the Space Family mission.
 -- See dat/missions/neutral/spacefamily.lua
 -- 
--- 12/02/2010 - Added visibility/highlight options for use in bigsystems (Anatolis)
+-- 12/02/2010 - Added visibility/highlight options for use in big systems (Anatolis)
 --]]
 
 -- Text
@@ -28,7 +28,7 @@ shipwreck = _("Shipwrecked %s")
 
 function create ()
 
-    -- The shipwrech will be a random trader vessel.
+    -- The shipwreck will be a random trader vessel.
     r = rnd.rnd()
     if r > 0.95 then
         ship = "Trader Gawain"

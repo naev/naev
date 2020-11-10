@@ -2248,7 +2248,7 @@ int planet_setRadiusFromGFX(Planet* planet)
 
    rw = ndata_rwops( path );
    if (rw == NULL) {
-      WARN(_("Planet '%s' has inexisting graphic '%s'!"), planet->name, planet->gfx_spacePath );
+      WARN(_("Planet '%s' has nonexistent graphic '%s'!"), planet->name, planet->gfx_spacePath );
       return -1;
    }
    else {
@@ -4457,7 +4457,7 @@ AsteroidType *space_getType ( int ID )
 /**
  * @brief Hits an asteroid.
  *
- *    @param a hitten asteroid
+ *    @param a hit asteroid
  *    @param dmg Damage being done
  */
 void asteroid_hit( Asteroid *a, const Damage *dmg )

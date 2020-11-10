@@ -43,7 +43,7 @@ require "numstring.lua"
 text = {}
 text[1] = _("The waste containers are loaded onto your ship and you are paid %s credits. You begin to wonder if accepting this job was really a good idea.")
 text[2] = _("Workers pack your cargo hold full of as much garbage as it can hold, then hastily hand you a credit chip containing %s credits. Smelling the garbage, you immediately regret taking the job.")
-text[3] = _("Your hold is crammed full with garbage and you are summarily paid %s credits. By the time the overpowering stench eminating from  your cargo hold is apparent to you, it's too late to back down; you're stuck with this garbage until you can find some place to get rid of it.")
+text[3] = _("Your hold is crammed full with garbage and you are summarily paid %s credits. By the time the overpowering stench emanating from your cargo hold is apparent to you, it's too late to back down; you're stuck with this garbage until you can find some place to get rid of it.")
 
 finish_text = {}
 finish_text[1] = _("You drop the garbage off, relieved to have it out of your ship.")

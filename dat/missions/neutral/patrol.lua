@@ -58,7 +58,7 @@ pay_text[4] = _("An officer goes through the necessary paperwork, looking bored 
 
 abandon_title = _("Mission Abandoned")
 abandon_text    = {}
-abandon_text[1] = _("You are sent a message informing you that landing in the middle of a patrol mission is considered to be abandonment. As such, your contract is void and you will not recieve payment.")
+abandon_text[1] = _("You are sent a message informing you that landing in the middle of a patrol mission is considered to be abandonment. As such, your contract is void and you will not receive payment.")
 
 
 -- Mission details

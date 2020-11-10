@@ -20,7 +20,7 @@
 --[[misn title - the return]]
 --[[after smuggling a small arms shipment to the an'ku system,
    the player is asked to deliver a message to a "shady character"
-   on the wringer in the suna system.]]
+   on the wringer in the Suna system.]]
    
 require "numstring.lua"
 require "missions/sirius/common.lua"
@@ -97,7 +97,7 @@ function landing()
       player.pay(reward)
       misn.cargoRm(message)
       misn_tracker = misn_tracker + 1
-      faction.modPlayer("Nasin",5) --once again, the nasin like the fact that we are helping the nasin.
+      faction.modPlayer("Nasin",5) --once again, the Nasin like the fact that we are helping the Nasin.
       var.push("heretic_misn_tracker",misn_tracker)
       srs_addHereticLog( log_text )
       misn.finish(true)

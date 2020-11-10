@@ -702,7 +702,7 @@ int music_al_load( const char* name, SDL_RWops *rw )
    music_vorbis.rw = rw;
    if (ov_open_callbacks( music_vorbis.rw, &music_vorbis.stream,
             NULL, 0, sound_al_ovcall ) < 0) {
-      WARN(_("Song '%s' does not appear to be a vorbis bitstream."), name);
+      WARN(_("Song '%s' does not appear to be a Vorbis bitstream."), name);
       musicUnlock();
       return -1;
    }
@@ -905,7 +905,7 @@ void music_al_setPos( double sec )
    musicVorbisUnlock();
 
    if (ret != 0)
-      WARN(_("Unable to seek vorbis file."));
+      WARN(_("Unable to seek Vorbis file."));
 }
 
 

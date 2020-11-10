@@ -248,18 +248,19 @@ void conf_setAudioDefaults (void)
 void conf_setVideoDefaults (void)
 {
    int w, h, f;
+   SDL_DisplayMode resolution;
 
    /* More complex resolution handling. */
    f = 0;
-   if ((gl_screen.desktop_w > 0) && (gl_screen.desktop_h > 0)) {
+   if (SDL_GetCurrentDisplayMode( 0, &resolution ) == 0) {
       /* Try higher resolution. */
       w = RESOLUTION_W_DEFAULT;
       h = RESOLUTION_H_DEFAULT;
 
       /* Fullscreen and fit everything onscreen. */
-      if ((gl_screen.desktop_w <= w) || (gl_screen.desktop_h <= h)) {
-         w = gl_screen.desktop_w;
-         h = gl_screen.desktop_h;
+      if ((resolution.w <= w) || (resolution.h <= h)) {
+         w = resolution.w;
+         h = resolution.h;
          f = FULLSCREEN_DEFAULT;
       }
    }
@@ -976,11 +977,11 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    /* FPS */
-   conf_saveComment(_("Display a framerate counter"));
+   conf_saveComment(_("Display a frame rate counter"));
    conf_saveBool("showfps",conf.fps_show);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Limit the rendering framerate"));
+   conf_saveComment(_("Limit the rendering frame rate"));
    conf_saveInt("maxfps",conf.fps_max);
    conf_saveEmptyLine();
 
@@ -994,7 +995,7 @@ int conf_saveConfig ( const char* file )
    conf_saveString("sound_backend",conf.sound_backend);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Maxmimum number of simultaneous sounds to play, must be at least 16."));
+   conf_saveComment(_("Maximum number of simultaneous sounds to play, must be at least 16."));
    conf_saveInt("snd_voices",conf.snd_voices);
    conf_saveEmptyLine();
 
@@ -1130,7 +1131,7 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("devautosave",conf.devautosave);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Save the config everytime game exits (rewriting this bit)"));
+   conf_saveComment(_("Save the config every time game exits (rewriting this bit)"));
    conf_saveInt("conf_nosave",conf.nosave);
    conf_saveEmptyLine();
 

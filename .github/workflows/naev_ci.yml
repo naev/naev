@@ -301,7 +301,6 @@ jobs:
     - name: Update APT Cache
       run: |
         sudo apt-get update
-
     - name: Install Additional Build Dependencies
       run: |
         sudo apt-get install \
@@ -309,7 +308,6 @@ jobs:
           graphviz \
           doxygen \
           ninja-build
-
     - name: Get Source
       uses: actions/download-artifact@v2
       with:
@@ -319,28 +317,24 @@ jobs:
       run: |
         mkdir source
         tar -xf naev-*.tar.xz -C source --strip 1
-
+        
     - name: Meson Build
       run: |
         sh $MESON setup build source \
             -Dexecutable=disabled
-
+             
     - name: Package
       run: |
         sh $MESON install -C build
         tar -cvf ${{ github.workspace }}/naev-docs-${{ github.sha }}.tar ${{ env.DESTDIR }}/usr/local/doc/naev
-
-    - name: Install SSH Key
-      uses: shimataro/ssh-key-action@v2.0.3
-      with:
-        key: ${{ secrets.SSH_KEY }}
-        name: id_rsa # optional
-        known_hosts: ${{ secrets.KNOWN_HOSTS }}
-      if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
-
+        
     - name: Upload Lua Documentation
-      run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete ${{ env.DESTDIR }}/usr/local/doc/naev/lua/* travis@iandouglasscott.com:/srv/naevdoc
       if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
+      run: |
+        curl -X POST https://api.github.com/repos/naev/naev.github.io/dispatches \
+        -H 'Accept: application/vnd.github.everest-preview+json' \
+        -u ${{ secrets.WEBSITE_ACCESS_TOKEN }} \
+        --data '{"event_type": "api", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2

@@ -184,10 +184,14 @@ if buildExec.disabled() == false
       naev_deps += dependency('Foundation', required: true )
    endif
 
+   if host_machine.system() == 'windows'
+      windows = import('windows')
+      naev_source += windows.compile_resources('extras/resource.rc')
+   endif
+
    shaders_c_gen = executable(
       'shaders_c_gen',
       'src/shaders_c_gen.c',
-      dependencies: dependency('sdl2', required: true),
       install: false,
       native: true)
 

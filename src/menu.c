@@ -401,11 +401,11 @@ static void menu_main_cleanBG( unsigned int wid, char* str )
 
 /*
  *
- * ingame menu
+ * in-game menu
  *
  */
 /**
- * @brief Opens the small ingame menu.
+ * @brief Opens the small in-game menu.
  */
 void menu_small (void)
 {
@@ -442,7 +442,7 @@ void menu_small (void)
 
 
 /**
- * @brief Closes the small ingame menu.
+ * @brief Closes the small in-game menu.
  *    @param str Unused.
  */
 static void menu_small_close( unsigned int wid, char* str )
@@ -467,7 +467,7 @@ static void menu_small_info( unsigned int wid, char *str )
 }
 
 /**
- * @brief Closes the small ingame menu and goes back to the main menu.
+ * @brief Closes the small in-game menu and goes back to the main menu.
  *    @param str Unused.
  */
 static void menu_small_exit( unsigned int wid, char* str )

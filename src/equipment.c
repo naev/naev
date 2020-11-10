@@ -93,7 +93,7 @@ static void equipment_renderShip( double bx, double by,
       double bw, double bh, double x, double y, Pilot *p );
 static int equipment_mouseInColumn( double y, double h, int n, double my );
 static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
-      double x, double y, double w, double h, void *data );
+      double x, double y, double w, double h, double rx, double ry, void *data );
 /* Misc. */
 static char eq_qCol( double cur, double base, int inv );
 static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot );
@@ -974,12 +974,17 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
  *    @param my Mouse Y event position.
  *    @param bw Base window width.
  *    @param bh Base window height.
+ *    @param rx Relative X movement (only valid for motion).
+ *    @param ry Relative Y movement (only valid for motion).
  *    @param data Custom widget data.
  */
 static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
-      double mx, double my, double bw, double bh, void *data )
+      double mx, double my, double bw, double bh,
+      double rx, double ry, void *data )
 {
    (void) bw;
+   (void) rx;
+   (void) ry;
    Pilot *p;
    int selected, ret;
    double x, y;

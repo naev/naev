@@ -11,7 +11,7 @@
   </notes>
  </event>
  --]]
---  A battle between two dvaered warlords. The player can join one of them and get a reward
+--  A battle between two Dvaered warlords. The player can join one of them and get a reward
 
 require "fleethelper.lua"
 require "fleet_form.lua"
@@ -58,7 +58,7 @@ function begin ()
    cand = {}
    k = 1
 
-   for i, j in ipairs(plan) do  --choose only dvaered planets (and no stations)
+   for i, j in ipairs(plan) do  --choose only Dvaered planets (and no stations)
       classofj = j:class()
       if j:faction() == faction.get("Dvaered") and classofj ~= "0" and classofj ~= "1" and classofj ~= "2" then
          cand[k] = j
@@ -82,7 +82,7 @@ function begin ()
 
 end
 
---Spawns a merchant ship that explains what happends
+--Spawns a merchant ship that explains what happens
 function merchant ()
    merShips = {"Trader Koala", "Trader Mule", "Trader Rhino", "Trader Llama"}
    mship = merShips[rnd.rnd(1,#merShips)]
@@ -195,7 +195,7 @@ function defense ()
 end
 
 function defenderAttacked(victim, attacker)
-   --The player choosed his side
+   --The player chose his side
    if attacker == player.pilot() then
       for i, j in ipairs(defenders) do
          hook.rm(defAttHook[i])
@@ -210,7 +210,7 @@ function defenderAttacked(victim, attacker)
 end
 
 function attackerAttacked(victim, attacker)
-   --The player choosed his side
+   --The player chose his side
    if attacker == player.pilot() then
       for i, j in ipairs(attackers) do
          hook.rm(attAttHook[i])
@@ -234,7 +234,7 @@ function attackerDeath(victim, attacker)
    if attdeath < attnum then
       deFleet:setTask("follow", chooseInList(attackers))
 
-   else  --all the enemes are dead
+   else  --all the enemies are dead
       deFleet:setTask("land", source_planet)
 
       --Time to get rewarded

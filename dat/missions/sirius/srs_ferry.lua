@@ -15,7 +15,7 @@
  --]]
 --[[
 -- This mission involves ferrying Sirian pilgrims to Mutris ... with complications
--- Higher-class citizens will pay more, but be more picky about their accomodations
+-- Higher-class citizens will pay more, but be more picky about their accommodations
 --   (they will want to arrive in style in a Sirian ship)
 -- Lower-class citizens will be more flexible, even willing to be dropped off nearby
 --   if the player doesn't have clearance to land on Mutris
@@ -194,8 +194,8 @@ function create()
     -- You have to be flying a Sirian ship to land on Mutris, and have standing > 75, but you get much more money
     --   faction.get('Sirius'):playerStanding() > 75
     --   player.pilot():ship():baseType() in (...)
-    -- Otherwise, you can drop the person off at Urail or Gayathi (if they're ok with that) and get less pay
-    --   Lower-class citizens are more likely to be ok with this
+    -- Otherwise, you can drop the person off at Urail or Gayathi (if they're OK with that) and get less pay
+    --   Lower-class citizens are more likely to be OK with this
 
     -- Dest planet will be Mutris, dest system is Aesir, unless things change in the game
     if not system.get(dest_sys_name):known() then
@@ -232,7 +232,7 @@ function create()
     timelimit2 = time.get() + time.create(0, 0, allowance * 1.3)
 
     -- Choose mission reward. This depends on the priority and the passenger rank.
-    finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
+    finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
     jumpreward = 10000
     distreward = 0.18
     reward     = 1.4^(speed + rank) * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma()) / (2-rank/2.0)
@@ -277,8 +277,8 @@ function accept()
     --if faction.get('Sirius'):playerStanding() <= 75 then
     local can_land, can_bribe = destplanet:canLand()  -- Player with rank < 75 will not be allowed to land on Mutris
     if not can_land then
-        -- Decide if the passenger will be ok with being dropped off at Urail or Gayathi, and if reward is reduced
-        -- Then ask player if they're ok with that
+        -- Decide if the passenger will be OK with being dropped off at Urail or Gayathi, and if reward is reduced
+        -- Then ask player if they're OK with that
 
         local counter = 0
         local altplanets = {}
@@ -309,7 +309,7 @@ function accept()
             reward = reward / 2
             ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(numstring(reward), altplanets[altdest]:name()) )
         elseif outcome == 1 then
-            -- Ok with alternate destination, with smaller fare cut
+            -- OK with alternate destination, with smaller fare cut
             reward = reward * 0.6666
             ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(altplanets[altdest]:name(), numstring(reward)) )
         else
@@ -349,7 +349,7 @@ function accept()
                 tk.msg(no_ship_t3a, no_ship_p3a)  -- discount is ok
             end
         elseif picky <= 0 then
-            tk.msg(no_ship_t, no_ship_p2[0]:format(no_ship_p1)) -- ok with the arrangments
+            tk.msg(no_ship_t, no_ship_p2[0]:format(no_ship_p1)) -- ok with the arrangements
         end
 
         wants_sirian = false  -- Will not expect to arrive in a Sirian ship

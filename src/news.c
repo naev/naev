@@ -69,7 +69,7 @@ static int largestID;
  */
 static void news_render( double bx, double by, double w, double h, void *data );
 static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
-      double w, double h, void *data );
+      double w, double h, double rx, double ry, void *data );
 static int news_parseArticle( xmlNodePtr parent );
 int news_saveArticles( xmlTextWriterPtr writer ); /* externed in save.c */
 int news_loadArticles( xmlNodePtr parent ); /* externed in load.c */
@@ -394,13 +394,16 @@ void clear_newslines (void)
  *    @param my Y position of the mouse.
  *    @param w Width of the widget.
  *    @param h Height of the widget.
+ *    @param rx Relative X movement (only valid for motion).
+ *    @param ry Relative Y movement (only valid for motion).
  *    @param data Unused.
  */
 static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
-      double w, double h, void *data )
+      double w, double h, double rx, double ry, void *data )
 {
    (void) wid;
    (void) data;
+   (void) rx;
 
    switch (event->type) {
       case SDL_MOUSEWHEEL:
@@ -430,7 +433,7 @@ static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
 
       case SDL_MOUSEMOTION:
          if (news_drag)
-            news_pos -= event->motion.yrel;
+            news_pos -= ry;
          break;
    }
 

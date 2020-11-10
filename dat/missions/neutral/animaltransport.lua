@@ -20,7 +20,7 @@
 --
 -- MISSION: Animal transport
 -- DESCRIPTION: A man asks you to transport a crate of specially bred creatures for
--- his in-law's exitic pet store on another planet. It's a standard fare A-to-B mission,
+-- his in-law's exotic pet store on another planet. It's a standard fare A-to-B mission,
 -- but doing this mission infests the player's current ship with the creatures.
 --
 --]]

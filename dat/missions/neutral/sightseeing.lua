@@ -86,7 +86,7 @@ ssmsg[2] = _("The wide-eyed passengers mutter with astonishment.")
 ssmsg[3] = _("The passengers faces are pressed up against the windows of your ship.")
 ssmsg[4] = _("Everyone seems like they're having a good time.")
 ssmsg[5] = _("A collective gasp of wonder travels through the cabin.")
-ssmsg[6] = _("A sense of terror and mystery engulfs the passengers as they contemplate their existance above the skies.")
+ssmsg[6] = _("A sense of terror and mystery engulfs the passengers as they contemplate their existence above the skies.")
 ssmsg[7] = _("Truly a sight to behold for the passengers.")
 
 osd_title  = _("Sightseeing")

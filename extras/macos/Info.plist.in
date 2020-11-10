@@ -14,5 +14,7 @@
 	<string></string>
 	<key>CFBundleVersion</key>
 	<string>@VMAJOR@.@VMINOR@.@VREV@</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
 </dict>
 </plist>

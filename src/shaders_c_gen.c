@@ -1,7 +1,5 @@
 #include <stdio.h>
 
-#include "SDL.h"
-
 typedef struct Shader_ {
    const char *name;
    const char *vs_path;

@@ -189,7 +189,7 @@ function board()
    marker2 = misn.markerAdd(paysys, "low")
 end
 
-function dead()  --Actually, I don't know how it could happend...
+function dead()  --Actually, I don't know how it could happened...
    misn.finish(false)
 end
 

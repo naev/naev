@@ -105,7 +105,7 @@ static void mapedit_buttonZoom( unsigned int wid, char* str );
 static void mapedit_render( double bx, double by, double w, double h, void *data );
 /*static void mapedit_renderOverlay( double bx, double by, double bw, double bh, void* data );*/
 static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data );
+      double w, double h, double xr, double yr, void *data );
 /* Button functions. */
 static void mapedit_close( unsigned int wid, char *wgt );
 static void mapedit_btnOpen( unsigned int wid_unused, char *unused );
@@ -418,7 +418,7 @@ static void mapedit_render( double bx, double by, double w, double h, void *data
  * @brief System editor custom widget mouse handling.
  */
 static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data )
+      double w, double h, double xr, double yr, void *data )
 {
    (void) wid;
    (void) data;
@@ -527,11 +527,11 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          /* Handle dragging. */
          if (mapedit_drag) {
             /* axis is inverted */
-            mapedit_xpos -= event->motion.xrel;
-            mapedit_ypos += event->motion.yrel;
+            mapedit_xpos -= xr;
+            mapedit_ypos += yr;
 
             /* Update mouse movement. */
-            mapedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
+            mapedit_moved += ABS(xr) + ABS(yr);
          }
          break;
    }

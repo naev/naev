@@ -42,7 +42,7 @@ function attack ()
       return
    end
 
-   -- Targetting stuff
+   -- Targeting stuff
    ai.hostile(target) -- Mark as hostile
    ai.settarget(target)
 

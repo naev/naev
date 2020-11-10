@@ -137,7 +137,7 @@ articles["Generic"] = {
    },
    {
       tag = N_("The Best Spaceport Bars"),
-      desc = _("Where can you get the best gargleblaster?  The famous exotic drinks list at the Doranthex Lava Room charmed our reviewer, but if you care for ambiance, don't miss the Goddard Bar.")
+      desc = _("Where can you get the best gargle blaster?  The famous exotic drinks list at the Doranthex Lava Room charmed our reviewer, but if you care for ambiance, don't miss the Goddard Bar.")
    },
    {
       tag = N_("RIP: The Floating Vagabond"),
@@ -227,7 +227,7 @@ articles["Goddard"] = {
    },
    {
       tag = N_("Melendez CEO on Strategy"),
-      desc = _("The Chief Executive Officer of ship maker Melendez Inc. thinks manufacturers should follow his company's lead in keeping costs down and producing for the mass market.")
+      desc = _("The Chief Executive Officer of ship maker Melendez Corp. thinks manufacturers should follow his company's lead in keeping costs down and producing for the mass market.")
    },
    {
       tag = N_("The Goddard Exception"),

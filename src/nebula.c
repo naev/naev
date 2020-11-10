@@ -48,6 +48,7 @@ static int nebu_w    = 0; /**< BG Nebula width. */
 static int nebu_h    = 0; /**< BG Nebula height. */
 static int nebu_pw   = 0; /**< BG Padded Nebula width. */
 static int nebu_ph   = 0; /**< BG Padded Nebula height. */
+static int nebu_regen= 0; /**< Whether to force Nebula generation. */
 
 /* Information on rendering */
 static int cur_nebu[2]           = { 0, 1 }; /**< Nebulae currently rendering. */
@@ -131,13 +132,9 @@ static int nebu_init_recursive( int iter )
       return -1;
    }
 
-   /* Special code to regenerate the nebula */
-   if ((nebu_w == -9) && (nebu_h == -9))
-      nebu_generate();
-
    /* Set expected sizes */
-   nebu_w  = SCREEN_W;
-   nebu_h  = SCREEN_H;
+   nebu_w  = gl_screen.rw;
+   nebu_h  = gl_screen.rh;
    if (gl_needPOT()) {
       nebu_pw = gl_pot(nebu_w);
       nebu_ph = gl_pot(nebu_h);
@@ -146,6 +143,11 @@ static int nebu_init_recursive( int iter )
       nebu_pw = nebu_w;
       nebu_ph = nebu_h;
    }
+
+   /* Special code to regenerate the nebula */
+   if (nebu_regen)
+      nebu_generate();
+   nebu_regen = 0;
 
    /* Load each, checking for compatibility and padding */
    for (i=0; i<NEBULA_Z; i++) {
@@ -172,7 +174,7 @@ static int nebu_init_recursive( int iter )
    /* Generate puffs after the recursivity stuff. */
    nebu_generatePuffs();
 
-   /* Display loaded nebulas. */
+   /* Display loaded nebulae. */
    DEBUG(_("Loaded %d Nebula Layers"), NEBULA_Z);
 
    nebu_vbo_init();
@@ -493,7 +495,7 @@ void nebu_prep( double density, double volatility )
  */
 void nebu_forceGenerate (void)
 {
-   nebu_w = nebu_h = -9; /* \o/ magic numbers */
+   nebu_regen = 1;
 }
 
 
@@ -508,15 +510,10 @@ static int nebu_generate (void)
    float *nebu;
    const char *cache;
    char nebu_file[PATH_MAX];
-   int w,h;
    int ret;
 
    /* Warn user of what is happening. */
    loadscreen_render( 0.05, _("Generating Nebula (slow, run once)...") );
-
-   /* Get resolution to create at. */
-   w = SCREEN_W;
-   h = SCREEN_H;
 
    /* Try to make the dir first if it fails. */
    cache = nfile_cachePath();
@@ -524,15 +521,15 @@ static int nebu_generate (void)
    nfile_dirMakeExist( cache, NEBULA_PATH );
 
    /* Generate all the nebula backgrounds */
-   nebu = noise_genNebulaMap( w, h, NEBULA_Z, 5. );
+   nebu = noise_genNebulaMap( nebu_w, nebu_h, NEBULA_Z, 5. );
 
    /* Start saving - compression can take a bit. */
    loadscreen_render( 0.05, _("Compressing Nebula layers...") );
 
    /* Save each nebula as an image */
    for (i=0; i<NEBULA_Z; i++) {
-      nsnprintf( nebu_file, PATH_MAX, NEBULA_PATH_BG, w, h, i );
-      ret = saveNebula( &nebu[ i*w*h ], w, h, nebu_file );
+      nsnprintf( nebu_file, PATH_MAX, NEBULA_PATH_BG, nebu_w, nebu_h, i );
+      ret = saveNebula( &nebu[ i*nebu_w*nebu_h ], nebu_w, nebu_h, nebu_file );
       if (ret != 0)
          break; /* An error has happened */
    }

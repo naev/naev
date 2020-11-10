@@ -61,7 +61,7 @@ slow[2] = _([[The destination is %s away, but you only have enough fuel for %s. 
 landsuccesstitle = _("Success!")
 landsuccesstext = _("You successfully escorted the trading convoy to the destination. There wasn't a single casualty and you are rewarded the full amount.")
 
-landcasualtytitle = _("Success with Casualities")
+landcasualtytitle = _("Success with Casualties")
 landcasualtytext = {}
 landcasualtytext[1] = _("You've arrived with the trading convoy more or less intact. Your pay is docked slightly due to the loss of part of the convoy.")
 landcasualtytext[2] = _("You arrive with what's left of the convoy. It's not much, but it's better than nothing. You are paid a steeply discounted amount.")

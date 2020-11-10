@@ -75,7 +75,7 @@ void map_system_updateSelected( unsigned int wid );
 static void map_system_render( double bx, double by, double w, double h, void *data );
 /* Mouse. */
 static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data );
+      double w, double h, double rx, double ry, void *data );
 /* Misc. */
 static int map_system_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 void map_system_show( int wid, int x, int y, int w, int h);
@@ -486,7 +486,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             if ( sys_isKnown( sys->jumps[i].target ) ) {
                infopos+=nsnprintf( &infobuf[infopos], PATH_MAX-infopos, "     %s\n", sys->jumps[i].target->name );
             } else {
-               infopos+=nsnprintf( &infobuf[infopos], PATH_MAX-infopos, _("     Unkown system\n") );
+               infopos+=nsnprintf( &infobuf[infopos], PATH_MAX-infopos, _("     Unknown system\n") );
             }
             (void)infopos;
          }
@@ -563,9 +563,11 @@ static void map_system_render( double bx, double by, double w, double h, void *d
  *    @param h Height of the widget.
  */
 static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data )
+      double w, double h, double rx, double ry, void *data )
 {
    (void) data;
+   (void) rx;
+   (void) ry;
    int offset;
    switch (event->type) {
    case SDL_MOUSEBUTTONDOWN:
