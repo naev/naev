@@ -4,6 +4,9 @@ bin_PROGRAMS = naev
 
 AM_CFLAGS = $(NAEV_CFLAGS)
 AM_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
+CLEANFILES =
+MACOS_SOURCE =
+WINDOWS_RESOURCE =
 naev_LDADD = $(NAEV_LIBS) $(LIBINTL)
 naev_DEPENDENCIES = $(NAEV_DEPENDENCIES)
 
@@ -14,7 +17,7 @@ shaders.gen.c shaders.gen.h: shaders_c_gen$(BUILD_EXEEXT)
 	./$<
 shaders_c_gen$(BUILD_EXEEXT): shaders_c_gen.c
 	$(CC_FOR_BUILD) $(CFLAGS_FOR_BUILD) $< -o $@
-CLEANFILES = shaders.gen.c shaders.gen.h shaders_c_gen$(BUILD_EXEEXT)
+CLEANFILES += shaders.gen.c shaders.gen.h shaders_c_gen$(BUILD_EXEEXT)
 BUILT_SOURCES = shaders.gen.c shaders.gen.h
 endif
 
@@ -320,17 +323,16 @@ CODE_SOURCE = \
 	weapon.h
 
 if HAVE_WINDRES
-WINDOWS_RESOURCE = ../extras/resource.rc
+WINDOWS_RESOURCE += ../extras/resource.rc
+../extras/resource.rc: ../extras/resource.rc.in
+	../config.status -q --file=$@
 .rc.o:
-	@WINDRES@ $< -O coff $@
-else
-WINDOWS_RESOURCE =
+	@WINDRES@ -I../extras/logos $< -O coff $@
 endif
 
 if HAVE_MACOS
-MACOS_SOURCE = glue_macos.m
-else
-MACOS_SOURCE =
+MACOS_SOURCE += glue_macos.m
 endif
 
 naev_SOURCES = $(CODE_SOURCE) $(WINDOWS_RESOURCE) $(MACOS_SOURCE)
+CLEANFILES += $(WINDOWS_RESOURCE)
