@@ -576,7 +576,7 @@ static int ship_loadPLG( Ship *temp, char *buf )
       WARN(_("%s xml collision polygon does not exist!\n \
                Please use the script 'polygon_from_sprite.py' if sprites are used,\n \
                And 'polygonSTL.py' if 3D model is used in game.\n \
-               These files can be found in naev's artwork repo."), file);
+               These files can be found in Naev's artwork repo."), file);
       free(file);
       return 0;
    }
@@ -742,7 +742,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
 }
 
 /**
- * @brief Extracts the ingame ship from an XML node.
+ * @brief Extracts the in-game ship from an XML node.
  *
  *    @param temp Ship to load data into.
  *    @param parent Node to get ship from.

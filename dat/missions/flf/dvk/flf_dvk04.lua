@@ -44,7 +44,7 @@ title = {}
 text = {}
 
 title[1] = _("This looks familiar...")
-text[1] = _([[Benito greets you as always. After a few pleasentries, she gets down to business. "I've been looking for you, %s!" she says. "I have another special diversion operation for you. This time, it's a diversion in the %s system, so we can get some important work done in the Haleb system. It's the same deal as the diversion from Raelid you did some time ago." Aha, preparation for destruction of another Dvaered base! "You'll be paid %s credits if you accept. Would you like to help with this one?"]])
+text[1] = _([[Benito greets you as always. After a few pleasantries, she gets down to business. "I've been looking for you, %s!" she says. "I have another special diversion operation for you. This time, it's a diversion in the %s system, so we can get some important work done in the Haleb system. It's the same deal as the diversion from Raelid you did some time ago." Aha, preparation for destruction of another Dvaered base! "You'll be paid %s credits if you accept. Would you like to help with this one?"]])
 
 text[2] = _([[Benito grins. "I knew you would want to do it. As always, the team will be waiting for a chance to do their work and hail you when they finish. Good luck, not like a pilot as great as you needs it!" You grin, and Benito excuses herself. Time to cause some mayhem again!]])
 
@@ -55,7 +55,7 @@ success_text = {}
 success_text[1] = _([[You receive a transmission from Benito. "Operation successful!" she says. "I've got your pay waiting for you back at home, so don't get yourself blown up on the way back!"]])
 
 pay_text = {}
-pay_text[1] = _([[When you return, Benito hands you the agreed-upon payment, after which you exchange some pleasentries before parting ways once again.]])
+pay_text[1] = _([[When you return, Benito hands you the agreed-upon payment, after which you exchange some pleasantries before parting ways once again.]])
 
 misn_title = _("Diversion from Haleb")
 misn_desc = _("A covert operation is being conducted in Haleb. You are to create a diversion from this operation by wreaking havoc in the nearby %s system.")

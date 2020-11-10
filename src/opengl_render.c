@@ -312,7 +312,7 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
 
 
 /**
- * @brief Converts ingame coordinates to screen coordinates.
+ * @brief Converts in-game coordinates to screen coordinates.
  *
  *    @param[out] nx New screen X coord.
  *    @param[out] ny New screen Y coord.
@@ -335,10 +335,10 @@ void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
 
 
 /**
- * @brief Converts screen coordinates to ingame coordinates.
+ * @brief Converts screen coordinates to in-game coordinates.
  *
- *    @param[out] nx New ingame X coord.
- *    @param[out] ny New ingame Y coord.
+ *    @param[out] nx New in-game X coord.
+ *    @param[out] ny New in-game Y coord.
  *    @param bx Screen X coord to translate.
  *    @param by Screen Y coord to translate.
  */

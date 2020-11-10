@@ -43,7 +43,7 @@ text[1] = _([["Hello there, nice to meet you again! According to the information
     "Can I count on you to do this for me?"]])
 
 refusetitle = _("Sorry, not interested")
-refusetext = _([["Ok, come back when you are interested."]])
+refusetext = _([["OK, come back when you are interested."]])
 
 title[2] = _("Time to go")
 text[2] = _([["Fantastic! I am known as Donald Ulnish to the Council member. Good luck."]])
@@ -75,7 +75,7 @@ log_text = _([[You helped Nexus Shipyards initiate a secret meeting with a membe
 function create ()
 
    --Change here to change the planets and the systems
-   mispla,missys = planet.getLandable(faction.get("Frontier"))  -- mispla will be usefull to locate the Hawking
+   mispla,missys = planet.getLandable(faction.get("Frontier"))  -- mispla will be useful to locate the Hawking
    pplname = "Darkshed"
    psyname = "Alteris"
    paysys = system.get(psyname)

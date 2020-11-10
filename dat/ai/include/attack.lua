@@ -5,7 +5,7 @@
 
    The global layout is:
     - atk_util.lua : Attack generic utilities.
-    - atk_target.lua : Targetting utilities.
+    - atk_target.lua : Targeting utilities.
 --]]
 
 -- Utilities

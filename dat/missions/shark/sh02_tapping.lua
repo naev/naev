@@ -55,7 +55,7 @@ text[1] = _([[You sit at Smith's table and ask him if he has a job for you. "Of 
     "It's not exactly legal. That being said, you're just doing the delivery, so you almost certainly won't be implicated. What do you say? Is this something you can do?"]])
 
 refusetitle = _("Sorry, not interested")
-refusetext = _([["Ok, sorry to bother you."]])
+refusetext = _([["OK, sorry to bother you."]])
 
 title[2] = _("The job")
 text[2] = _([["I'm glad to hear it. Go meet our agent on %s in the %s system. Oh, yes, and I suppose I should mention that I'm known as 'James Neptune' to the agent. Good luck!"]])
@@ -157,7 +157,7 @@ function enter()
       hook.timer( 2000, "ambush" )
       proba = proba - 0.2
    elseif stage == 1 then
-      --the probality of an ambush goes up when you cross a system without meeting any ennemy
+      --the probability of an ambush goes up when you cross a system without meeting any ennemy
       proba = proba + 0.1
    end
 end
@@ -310,7 +310,7 @@ function corvette()
 end
 
 function cruiser()
-   --spawning a Krestel with massive missile weaponry
+   --spawning a Kestrel with massive missile weaponry
    badguy = pilot.addRaw( "Kestrel","mercenary", nil, "Mercenary" )
    badguy:setHostile()
    badguy:rename(_("Mercenary"))
@@ -374,7 +374,7 @@ function add_llama()
 end
 
 function littleofall()
-   --spawning random ennemies
+   --spawning random enemies
    if rnd.rnd() < 0.5 then
       interceptors()
    else

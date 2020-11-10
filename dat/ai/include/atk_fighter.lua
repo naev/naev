@@ -51,7 +51,7 @@ function atk_fighter ()
    local target = _atk_com_think()
    if target == nil then return end
 
-   -- Targetting stuff
+   -- Targeting stuff
    ai.hostile(target) -- Mark as hostile
    ai.settarget(target)
 
@@ -121,7 +121,7 @@ function _atk_f_flyby( target, dist )
    else
 
       dir = ai.aim(target)
-      --not accellerating here is the only difference between the aggression levels. This can probably be an aggression AI parameter
+      --not accelerating here is the only difference between the aggression levels. This can probably be an aggression AI parameter
       if mem.aggressive == true then
          ai.accel()
       end

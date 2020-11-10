@@ -233,7 +233,7 @@ static int playerL_credits( lua_State *L )
    return 1 + has_dec;
 }
 /**
- * @brief Sends the player an ingame message.
+ * @brief Sends the player an in-game message.
  *
  *    @luatparam string message Message to send the player.
  * @luafunc msg( message )

@@ -486,7 +486,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             if ( sys_isKnown( sys->jumps[i].target ) ) {
                infopos+=nsnprintf( &infobuf[infopos], PATH_MAX-infopos, "     %s\n", sys->jumps[i].target->name );
             } else {
-               infopos+=nsnprintf( &infobuf[infopos], PATH_MAX-infopos, _("     Unkown system\n") );
+               infopos+=nsnprintf( &infobuf[infopos], PATH_MAX-infopos, _("     Unknown system\n") );
             }
             (void)infopos;
          }

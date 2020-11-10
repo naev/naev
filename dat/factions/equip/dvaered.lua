@@ -71,7 +71,7 @@ equip_typeOutfits_weapons["Goddard"] = {
 
 
 --[[
--- @brief Does dvaered pilot equipping
+-- @brief Does Dvaered pilot equipping
 --
 --    @param p Pilot to equip
 --]]

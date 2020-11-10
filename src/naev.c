@@ -831,7 +831,7 @@ void naev_toggleFullscreen (void)
 
 #if HAS_POSIX && defined(CLOCK_MONOTONIC)
 static struct timespec global_time; /**< Global timestamp for calculating delta ticks. */
-static int use_posix_time; /**< Whether or not to use posix time. */
+static int use_posix_time; /**< Whether or not to use POSIX time. */
 #endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
 /**
  * @brief Initializes the fps engine.
@@ -845,7 +845,7 @@ static void fps_init (void)
     * could skew up the dt calculations. */
    if (clock_gettime(CLOCK_MONOTONIC, &global_time)==0)
       return;
-   WARN( _("clock_gettime failed, disabling posix time.") );
+   WARN( _("clock_gettime failed, disabling POSIX time.") );
    use_posix_time = 0;
 #endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
    time_ms  = SDL_GetTicks();
@@ -941,7 +941,7 @@ static void update_all (void)
       accumdt = 0.;
       for (i=0; i<n; i++) {
          update_routine( microdt, 0 );
-         /* Ok, so we need a bit of hackish logic here in case we are chopping up a
+         /* OK, so we need a bit of hackish logic here in case we are chopping up a
           * very large dt and it turns out time compression changes so we're now
           * updating in "normal time compression" zone. This amounts to many updates
           * being run when time compression has changed and thus can cause, say, the

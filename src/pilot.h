@@ -507,6 +507,6 @@ char pilot_getFactionColourChar( const Pilot *p );
  * Misc details.
  */
 credits_t pilot_worth( const Pilot *p );
-void pilot_msg(Pilot *p, Pilot *reciever, const char *type, unsigned int index);
+void pilot_msg(Pilot *p, Pilot *receiver, const char *type, unsigned int index);
 
 #endif /* PILOT_H */

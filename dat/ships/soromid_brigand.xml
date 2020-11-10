@@ -10,7 +10,7 @@
  <time_mod>1</time_mod>
  <fabricator>Soromid</fabricator>
  <license>Light Combat Vessel License</license>
- <description>The Brigand is a fast, maneuverable bioship that the Soromid use for system patrols and police duties. The ship is lighly armoured and fairly fragile, but it makes up for this by being fast to grow and therefore relatively expendable.</description>
+ <description>The Brigand is a fast, maneuverable bioship that the Soromid use for system patrols and police duties. The ship is lightly armoured and fairly fragile, but it makes up for this by being fast to grow and therefore relatively expendable.</description>
  <health>
   <absorb>8</absorb>
   <armour>45</armour>

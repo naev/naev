@@ -1040,7 +1040,7 @@ static int outfit_loadPLG( Outfit *temp, char *buf, unsigned int bolt )
    if (!ndata_exists(file)) {
       WARN(_("%s xml collision polygon does not exist!\n \
                Please use the script 'polygon_from_sprite.py' \
-that can be found in naev's artwork repo."), file);
+that can be found in Naev's artwork repo."), file);
       free(file);
       return 0;
    }
@@ -2509,7 +2509,7 @@ static void outfit_launcherDesc( Outfit* o )
 
    if (outfit_isSeeker(o))
       l += nsnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
-            _("%.1f Second Lockon\n"),
+            _("%.1f Second Lock-on\n"),
             o->u.lau.lockon );
 
    l += nsnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,

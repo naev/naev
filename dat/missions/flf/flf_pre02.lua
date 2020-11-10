@@ -97,7 +97,7 @@ DVtitle[5] = _("End of negotiations")
 DVtext[5] = _([[Colonel Urnus is visibly annoyed by your response. "Very well then," he bites at you. "In that case you will be destroyed along with the rest of that terrorist scum. Helm, full speed ahead! All batteries, fire at will!"]])
 
 DVtitle[6] = _("A reward for a job well botched")
-DVtext[6] = _([[Soon after docking, you are picked up by a couple of soldiers, who escort you to Colonel Urnus' office. Urnus greets you warmly, and offers you a seat and a cigar. You take the former, not the latter.
+DVtext[6] = _([[Soon after docking, you are picked up by a couple of soldiers, who escort you to Colonel Urnus's office. Urnus greets you warmly, and offers you a seat and a cigar. You take the former, not the latter.
     "I am most pleased with the outcome of this situation, citizen," Urnus begins. "To be absolutely frank with you, I was beginning to get frustrated. My superiors have been breathing down my neck, demanding results on those blasted FLF, but they are as slippery as eels. Just when you think you've cornered them, poof! They're gone, lost in that nebula. Thick as soup, that thing. I don't know how they can even find their own way home!"]])
 
 DVtext[7] = _([[Urnus takes a puff of his cigar and blows out a ring of smoke. It doesn't take a genius to figure out you're the best thing that's happened to him in a long time.
@@ -126,7 +126,7 @@ npc_name = _("FLF petty officer")
 npc_desc = _("There is a low-ranking officer of the Frontier Liberation Front sitting at one of the tables. She seems somewhat more receptive than most people in the bar.")
 
 log_text_flf = _([[You earned the complete trust of the FLF by eliminating a Dvaered patrol and then refusing to change sides when the Dvaereds pressured you to. You can now consider yourself to be one of the FLF.]])
-log_text_dv = _([[As you were conducting a mission to earn the trust of the FLF, Dvaered Colonel Urnus offered you a deal: you could betray the FLF and provide information on the location of the hidden FLF base in exchange for a monetary reward and immunity against any punishment. You accepted the deal, leading to an enraged wing of FLF pilots attacking you in retaliation. The FLF terrorists were repelled, however, and Urnus told you to keep an eye out for one of the Dvaered liasons so you can join the Dvaered in the upcoming mission to destroy Sindbad.]])
+log_text_dv = _([[As you were conducting a mission to earn the trust of the FLF, Dvaered Colonel Urnus offered you a deal: you could betray the FLF and provide information on the location of the hidden FLF base in exchange for a monetary reward and immunity against any punishment. You accepted the deal, leading to an enraged wing of FLF pilots attacking you in retaliation. The FLF terrorists were repelled, however, and Urnus told you to keep an eye out for one of the Dvaered liaisons so you can join the Dvaered in the upcoming mission to destroy Sindbad.]])
 
 
 function create ()

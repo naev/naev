@@ -8,7 +8,7 @@
   <mass />
   <price>150000</price>
   <gfx_store>stealth_plating</gfx_store>
-  <description>This armour plating does not provide any protection, instead it makes the ship harder to detect. It has integrated sensors that measure the ambient radiation around the ship and is able to emit space-resolved the right ammount of radiation to appear invisible for passive sensors.</description>
+  <description>This armour plating does not provide any protection, instead it makes the ship harder to detect. It has integrated sensors that measure the ambient radiation around the ship and is able to emit space-resolved the right amount of radiation to appear invisible for passive sensors.</description>
   <cpu>-8</cpu>
  </general>
  <specific type="modification">
