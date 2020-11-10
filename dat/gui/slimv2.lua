@@ -115,7 +115,7 @@ function create()
    bar_armour_y = 103
    
    bar_shield_x = bar_armour_x-- Missile lock warning
-   missile_lock_text = "Warning - Missile Lockon Detected"
+   missile_lock_text = "Warning - Missile Lock-on Detected"
    missile_lock_length = gfx.printDim( false, missile_lock_text )
    bar_shield_y = 75
    
@@ -148,14 +148,14 @@ function create()
    cooldown_sheen_y = cooldown_bg_y + 12
    
    -- Missile lock warning
-   missile_lock_text = "Warning - Missile Lockon Detected"
+   missile_lock_text = "Warning - Missile Lock-on Detected"
    missile_lock_length = gfx.printDim( false, missile_lock_text )
    
-   --Lockon warning light
+   --Lock-on warning light
    warning_lockon_c_x = pl_pane_x + 125 + 9
    warning_lockon_c_y = 130 + 9
    
-   --Autnav warning light
+   --Autonav warning light
    warning_autonav_c_x = pl_pane_x + 145 + 9
    warning_autonav_c_y = warning_lockon_c_y
    
@@ -398,7 +398,7 @@ function render( dt, dt_mod )
             gfx.print( true, tostring( wset[i].left), slot_x + slot_txt_offs_x, slot_txt_offs_y, txtcol, slot_txt_w, true )
          end
          
-         --Lockon
+         --Lock-on
          if wset[i].lockon ~= nil and ptarget and wset[i].lockon > 0. then
             if wset[i].lockon < 1. then
                local iconcol = colour.new( 1, 1, 1, wset[i].lockon )

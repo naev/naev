@@ -51,7 +51,7 @@ text[1] = _([["I have another job for you. The Baron was unfortunately not as im
     "What do you say? Are you interested?"]])
 
 refusetitle = _("Sorry, not interested")
-refusetext = _([["Ok, that's alright."]])
+refusetext = _([["OK, that's alright."]])
 
 title[2] = _("Wonderful")
 text[2] = _([["Great! Go and meet our pilot in %s. After the job is done, meet me on %s in the %s system."]])

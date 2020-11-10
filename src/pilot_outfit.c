@@ -680,7 +680,7 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity 
 
    /* Failure cases. */
    if (s->outfit == NULL) {
-      WARN(_("Pilot '%s': Trying to add ammo to unequiped slot."), pilot->name );
+      WARN(_("Pilot '%s': Trying to add ammo to unequipped slot."), pilot->name );
       return 0;
    }
    else if (!outfit_isLauncher(s->outfit) && !outfit_isFighterBay(s->outfit)) {
@@ -741,7 +741,7 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
 
    /* Failure cases. */
    if (s->outfit == NULL) {
-      WARN(_("Pilot '%s': Trying to remove ammo from unequiped slot."), pilot->name );
+      WARN(_("Pilot '%s': Trying to remove ammo from unequipped slot."), pilot->name );
       return 0;
    }
    else if (!outfit_isLauncher(s->outfit) && !outfit_isFighterBay(s->outfit)) {

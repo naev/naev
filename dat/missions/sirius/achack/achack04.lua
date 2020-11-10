@@ -215,7 +215,7 @@ function jumpin()
    end
 end
 
--- Jumpout hook.
+-- Jump-out hook.
 function jumpout()
    enter_src = system.cur()
 end

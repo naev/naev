@@ -50,7 +50,7 @@ end
 
 --[[
 -- Returns a boolean indicating whether or not the player is using some kind
--- of monstruously powerfull or intimidating ship, like another’s faction
+-- of monstrously powerful or intimidating ship, like another’s faction
 -- cruiser or carrier.
 --]]
 local function using_impressive_ship()

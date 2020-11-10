@@ -34,7 +34,7 @@ const char* pilot_checkSpaceworthy( Pilot *p );
 int pilot_reportSpaceworthy( Pilot *p, char buf[], int buffSize );
 const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o );
 
-/* Lockons. */
+/* Lock-ons. */
 void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, double dt );
 void pilot_lockClear( Pilot *p );
 

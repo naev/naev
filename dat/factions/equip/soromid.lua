@@ -14,7 +14,7 @@ equip_typeOutfits_weapons["Brigand"] = {
 
 
 --[[
--- @brief Does soromid pilot equipping
+-- @brief Does Soromid pilot equipping
 --
 --    @param p Pilot to equip
 --]]

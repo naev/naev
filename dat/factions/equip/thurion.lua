@@ -174,7 +174,7 @@ equip_typeOutfits_structurals["Certitude"] = {
 
 
 --[[
--- @brief Does thurion pilot equipping
+-- @brief Does Thurion pilot equipping
 --
 --    @param p Pilot to equip
 --]]

@@ -86,7 +86,7 @@ nlua_env hook_env( unsigned int hook );
  *    - "standing" - Whenever faction changes.
  *    - "load" - Run on load.
  *    - "discover" - When something is discovered.
- *    - "pay" - When player recieves or loses money.
+ *    - "pay" - When player receives or loses money.
  *  - Landing
  *    - "land" - When landed
  *    - "outfits" - When visited outfitter

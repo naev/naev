@@ -25,7 +25,7 @@ function formations.cross(leader)
 end
 
 function formations.buffer(leader)
-   -- Buffer logic. Consecutive arcs eminating from the fleader. Stored as polar coordinates.
+   -- Buffer logic. Consecutive arcs emanating from the fleader. Stored as polar coordinates.
    local pilots = leader:followers()
    local class_count = count_classes(pilots)
    local angle, radius

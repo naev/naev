@@ -105,7 +105,7 @@ title[11] = _("The Baron has his prize")
 text[16] = _([[Baron Dovai Sauterfeldt turns the skate-board over in his hands, inspecting every nick, every scratch on the surface. His eyes are gleaming with delight.
    "Oh, this is marvelous, marvelous indeed, %s! A piece of pre-Growth history, right here in my hands! I can almost hear the echoes of that ancient civilization when I put my ear close to it! This is going to be the centerpiece in my collection of relics and artifacts. Yes indeed!
    "I was right to send you, %s, you've beautifully lived up to my expectations. And I'm a man of my word, I will reward you as promised. What was it we agreed on again? What, I never promised you anything? Well, that won't do. I'll have my assistant place a suitable amount of money in your account. You will not find me ungrateful! Ah, but you must excuse me. I need time to revel in this fantastic piece of art! Goodbye, %s, I will call on you when I have need of you again."
-   You are seen out of the Baron's quarters, so you head back through the airlock and back into your own ship. The first thing you do is check your balance, and to your relief, it has indeed been upgraded by a substantial amount. You also seem to have recieved a statue of dubious taste. As you undock, you wonder what kind of wild goose chase the man will send you on next time.]])
+   You are seen out of the Baron's quarters, so you head back through the airlock and back into your own ship. The first thing you do is check your balance, and to your relief, it has indeed been upgraded by a substantial amount. You also seem to have received a statue of dubious taste. As you undock, you wonder what kind of wild goose chase the man will send you on next time.]])
 
 -- Mission details
 misn_title = _("Prince")
@@ -385,7 +385,7 @@ function hail()
 end
 
 -- Function that tries to misspell whatever string is passed to it.
--- TODO support unicode to a certain point
+-- TODO support Unicode to a certain point
 function mangle(intext)
    local outtext = intext
    

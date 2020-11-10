@@ -82,7 +82,7 @@ _("You feel... Touched... by a magical power")
 startCombat={
 _("Die, heretics!"),
 _("Those who insult the Sirichana shall die!"),
-_("You've commited an unpardonable sin!"),
+_("You've committed an unpardonable sin!"),
 _("Hell awaits, fools!")
 }
 
@@ -302,7 +302,7 @@ function anotherdead(enemy, attacker)
       attacker=preacher
    end
 
-   if attacker:exists() then --in case the attacker was parallely killed
+   if attacker:exists() then --in case the attacker was parallelly killed
       attacker:broadcast(attackerPunished[rnd.rnd(1,#attackerPunished)],true)
    end
 
@@ -324,7 +324,7 @@ end
 function getPreacherTarget()
    local sirius=faction.get( "Sirius" )
 
-   --look for nearby landable sirian planet to land
+   --look for nearby landable Sirian planet to land
    for key, planet in ipairs( system.cur():planets() ) do
       if planet:faction()==sirius and planet:services()["land"]  then
          target = planet
@@ -332,7 +332,7 @@ function getPreacherTarget()
       end
    end
 
-   --if no landable sirian planets found, jump to random system
+   --if no landable Sirian planets found, jump to random system
    --TODO: prevent jump back through the entry point
    if target then
       preacher:land(target)

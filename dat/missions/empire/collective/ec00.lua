@@ -118,7 +118,7 @@ function enter()
    sys = system.cur()
 
    if sys == misn_target and misn_stage == 0 then
-      -- Force Collective musice (note: must clear these later on).
+      -- Force Collective music (note: must clear these later on).
       var.push("music_ambient_force", "Collective")
       var.push("music_combat_force", "Collective")
 

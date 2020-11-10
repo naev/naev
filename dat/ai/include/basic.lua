@@ -883,7 +883,7 @@ function __killasteroid ()
 end
 
 --[[
--- Attepts to seek and gather gatherables
+-- Attempts to seek and gather gatherables
 --]]
 function gather ()
    if ai.pilot():cargoFree() == 0 then --No more cargo

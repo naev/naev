@@ -161,7 +161,7 @@ equip_typeOutfits_structurals["Diablo"] = {
 
 
 --[[
--- @brief Does zalek pilot equipping
+-- @brief Does Za'lek pilot equipping
 --
 --    @param p Pilot to equip
 --]]
@@ -227,7 +227,7 @@ end
 
 
 --[[
--- @brief Equips a zalek military type ship.
+-- @brief Equips a Za'lek military type ship.
 --]]
 function equip_empireMilitary( p, shipsize )
    local medium, low

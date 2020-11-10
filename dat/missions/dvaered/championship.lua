@@ -17,7 +17,7 @@
  --]]
 --[[
    
-   The player takes part into a challemge between fighter pilots in Dvaered space, he has to defeat 5 opponents to win.
+   The player takes part into a challenge between fighter pilots in Dvaered space, he has to defeat 5 opponents to win.
    
    Stages :
    0) Way to positions
@@ -82,11 +82,11 @@ comptitle[4] = _("Dvaered Pilot")
 comptext[4] = _([["Nice to see you. I am a Vendetta pilot. I hope I win this time! For us, being the champion here means that you become member of the senior staff, which makes you closer to Dvaered High Command! Who knows? Maybe one day I will become a Warlord."]])
 
 comptitle[5] = _("Obvious Pirate")
-comptext[5] = _([["Hi, I'm... err... I'm an independant pilot. I'm here to take part in the challenge and see the best Dvaered Vendetta pilots in motion. It helps to know how they fly in my job."]])
+comptext[5] = _([["Hi, I'm... err... I'm an independent pilot. I'm here to take part in the challenge and see the best Dvaered Vendetta pilots in motion. It helps to know how they fly in my job."]])
 
 comptitle[6] = _("I am here to win the championship")
 comptext[6] = _([["I am here to claim my place as this cycle's champion! I've prepared myself since the first day I piloted a ship. Trust me, I'm nearly invincible and my Vendetta is indestructible.
-    "Do you know who I am? I am the famous independant pilot who helped Dvaered High Command destroy the FLF base in the nebula! I managed to defeat lots of FLF fighters with my ship! I will tell you my adventures some other time, but for now, I need to concentrate."]])
+    "Do you know who I am? I am the famous independent pilot who helped Dvaered High Command destroy the FLF base in the nebula! I managed to defeat lots of FLF fighters with my ship! I will tell you my adventures some other time, but for now, I need to concentrate."]])
    
 -- Mission details
 misn_title = _("The Dvaered Championship")

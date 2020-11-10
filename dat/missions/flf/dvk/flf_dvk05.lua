@@ -45,7 +45,7 @@ text[2] = _([["Thanks! As always, you're a life saver. Well, for us, that is." B
     Fighting pirates, huh? This sounds like it'll be almost like old times, before you joined the FLF. Interesting. Well, it's about time to get going, then.]])
 
 pay_text = {}
-pay_text[1] = _([[Benito seems pleased upon your return to hear that the mission was successful. "Excellent," she says. "It's kind of an annoying detour, I know, but I appreciate that your help very much. I'll try to have a better mission for you next time, eh?" You both grin and exchange some pleasentries before parting ways.]])
+pay_text[1] = _([[Benito seems pleased upon your return to hear that the mission was successful. "Excellent," she says. "It's kind of an annoying detour, I know, but I appreciate that your help very much. I'll try to have a better mission for you next time, eh?" You both grin and exchange some pleasantries before parting ways.]])
 
 misn_rwrd = _("%s credits")
     

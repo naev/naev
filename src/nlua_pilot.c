@@ -1047,8 +1047,8 @@ static int pilotL_activeWeapset( lua_State *L )
  *  <li> ammo: Name of the ammo or nil if not applicable. </li>
  *  <li> left: Absolute ammo left or nil if not applicable. </li>
  *  <li> left_p: Relative ammo left [0:1] or nil if not applicable </li>
- *  <li> lockon: Lockon [0:1] for seeker weapons or nil if not applicable. </li>
- *  <li> in_arc: Whether or not the target is in targetting arc or nil if not applicable. </li>
+ *  <li> lockon: Lock-on [0:1] for seeker weapons or nil if not applicable. </li>
+ *  <li> in_arc: Whether or not the target is in targeting arc or nil if not applicable. </li>
  *  <li> level: Level of the weapon (1 is primary, 2 is secondary). </li>
  *  <li> temp: Temperature of the weapon. </li>
  *  <li> type: Type of the weapon. </li>
@@ -4072,7 +4072,7 @@ static int pilotL_hailPlayer( lua_State *L )
  */
 static int pilotL_msg( lua_State *L )
 {
-   Pilot *p, *reciever=NULL;
+   Pilot *p, *receiver=NULL;
    const char *type;
    unsigned int data;
 
@@ -4083,13 +4083,13 @@ static int pilotL_msg( lua_State *L )
    data = lua_gettop(L) > 3 ? 4 : 0;
 
    if (!lua_istable(L,2)) {
-      reciever = luaL_validpilot(L,2);
-      pilot_msg(p, reciever, type, data);
+      receiver = luaL_validpilot(L,2);
+      pilot_msg(p, receiver, type, data);
    } else {
       lua_pushnil(L);
       while (lua_next(L, 2) != 0) {
-         reciever = luaL_validpilot(L,-1);
-         pilot_msg(p, reciever, type, data);
+         receiver = luaL_validpilot(L,-1);
+         pilot_msg(p, receiver, type, data);
          lua_pop(L, 1);
       }
       lua_pop(L, 1);

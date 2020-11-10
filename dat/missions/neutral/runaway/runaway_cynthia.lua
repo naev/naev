@@ -17,7 +17,7 @@
  --]]
 --[[
 This is the "The Runaway" mission as described on the wiki.
-There will be more missions to detail how you are percieved as the kidnapper of "Cynthia"
+There will be more missions to detail how you are perceived as the kidnapper of "Cynthia"
 --]]
 
 require "numstring.lua"

@@ -44,7 +44,7 @@ misn_release = _([["Please, please, please don't ever come looking for me again,
 misn_release_father = _([[You tell the father that you checked every place on the list, and then some, but his daughter was nowhere to be found. You buy the old man a drink, then go back to the spaceport. Before you leave, he hands you a few credits. "For your troubles."]])
 misn_father = _("As Cynthia sees her father, she begins her crying anew. You overhear the father talking about how her abusive mother died. Cynthia becomes visibly happier, so you pick up your payment and depart.")
 
--- Here are stored the fake texts for the osd
+-- Here are stored the fake texts for the OSD
 osd_text = {}
 osd_text[1] = _("Search for Cynthia on Niflheim in Dohriabi")
 osd_text[2] = _("Search for Cynthia on Nova Shakar in Shakar")
@@ -77,7 +77,7 @@ function accept ()
       misn.finish()
    end
 
-   --Set up the osd
+   --Set up the OSD
    if misn.accept() then
       misn.osdCreate(title,osd_text)
       misn.osdActive(1)
@@ -113,22 +113,22 @@ function land ()
       targetworld = planet.get("Torloth")
       tk.msg(title, misn_nova_shakar)
 
-      --Add in the *secret* osd text
+      --Add in the *secret* OSD text
       osd_text[3] = osd3
       osd_text[4] = osd4
 
-      --Update the osd
+      --Update the OSD
       misn.osdDestroy()
       misn.osdCreate(title,osd_text)
       misn.osdActive(3)
 
       misn.markerMove(runawayMarker, system.get("Cygnus"))
 
-   --If we land on Torloth, change osd, display message, reset target and carry on.
+   --If we land on Torloth, change OSD, display message, reset target and carry on.
    elseif planet.cur() == planet.get("Torloth") then
       targetworld = planet.get("Zhiru")
 
-      --If you decide to release her, speak appropiately, otherwise carry on
+      --If you decide to release her, speak appropriately, otherwise carry on
       if not tk.yesno(title, misn_torloth) then
          osd_text[4] = osdlie
          tk.msg(title, misn_release)
@@ -137,7 +137,7 @@ function land ()
          cargoID = misn.cargoAdd( cargoname, 0 )
       end
 
-      --Update the osd
+      --Update the OSD
       misn.osdDestroy()
       misn.osdCreate(title,osd_text)
       misn.osdActive(4)
