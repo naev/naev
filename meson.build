@@ -190,7 +190,7 @@ if buildExec.disabled() == false
 
    if host_machine.system() == 'windows'
       windows = import('windows')
-      icon = files('extras/logos/logo.ico')
+      icon = configure_file(input: 'extras/logos/logo.ico', output: 'logo.ico', copy: true)
       win_rc = configure_file(input: 'extras/resource.rc.in', output: 'resource.rc', configuration: config_data)
       naev_source += windows.compile_resources(win_rc, depend_files: icon)
    endif
