@@ -1219,7 +1219,7 @@ static void sysedit_selectRm( Select_t *sel )
          return;
       }
    }
-   WARN(_("Trying to unselect item that is not in selection!"));
+   WARN(_("Trying to deselect item that is not in selection!"));
 }
 
 

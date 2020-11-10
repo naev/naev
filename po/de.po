@@ -7283,7 +7283,7 @@ msgstr "%s konvertiert"
 #. new attacker
 #. another enemy is dead
 #. in case the pilot was blown up by an explosion
-#. in case the attacker was parallelly killed
+#. in case the attacker was killed in parallel
 #. find and remove the enemy
 #. last one was killed, restore idle mode
 #. finds and set a new target for the preacher, when he is outta battle mode
@@ -8991,7 +8991,7 @@ msgstr "Fracht: "
 #. end
 #.
 #. function noland( pnt )
-#. return false, "Nobody expects the Spanish inquisition!"
+#. return false, "Nobody expects the Spanish Inquisition!"
 #. end
 #.
 #. function noland_nobribe( pnt )
@@ -10562,7 +10562,7 @@ msgid ""
 "fly a Shark, so I don't hope to win lots of rounds... But I still enjoy the "
 "battle. Every cycle, a Dvaered pilot wins. Do you know why? It's because the "
 "rules of the championship advantage heavy armoured, well armed fighters, "
-"like the Vendetta. Imperial pilots are used to electronical war with guided "
+"like the Vendetta. Imperial pilots are used to electronic warfare with guided "
 "missiles and stealth ships. Dvaered pilots, on the other hand, only "
 "understand basic dogfighting.\""
 msgstr ""
@@ -41998,7 +41998,7 @@ msgid "Redirects log and error output to files"
 msgstr "Protokoll und Fehlerausgaben zu Dateien umleiten"
 
 #: src/conf.c:1106
-msgid "Enables compression on savegames"
+msgid "Enables compression on saved games"
 msgstr "Kompression für Spielstände aktivieren"
 
 #: src/conf.c:1110
@@ -42220,7 +42220,7 @@ msgid "Asteroid Field"
 msgstr "Asterioidenfeld"
 
 #: src/dev_sysedit.c:1222
-msgid "Trying to unselect item that is not in selection!"
+msgid "Trying to deselect item that is not in selection!"
 msgstr "Versuchte, etwas abzuwählen, was nicht ausgewählt wurde!"
 
 #. Create the window.
@@ -45105,12 +45105,12 @@ msgid "Are you sure you want to permanently delete '%s'?"
 msgstr "Bist du dir sicher, dass du „%s“ dauerhaft löschen möchtest?"
 
 #: src/load.c:542 src/load.c:585
-msgid "Savegame file seems to have been deleted."
+msgid "Saved game file seems to have been deleted."
 msgstr "Spielstandsdatei scheint gelöscht zu sein."
 
 #: src/load.c:565 src/load.c:663
 #, c-format
-msgid "Savegame '%s' invalid!"
+msgid "Saved game '%s' invalid!"
 msgstr "Spielstand „%s“ ungültig!"
 
 #. Welcome message - must be before space_init.
@@ -45832,13 +45832,13 @@ msgstr "Missions-Lua „%s“ Syntaxfehler: %s"
 
 #: src/mission.c:1156
 #, c-format
-msgid "Mission '%s' from savegame not found in game - ignoring."
+msgid "Mission '%s' from saved game not found in game - ignoring."
 msgstr ""
 "Mission „%s“ aus dem Spielstand nicht im Spiel gefunden – wird ignoriert."
 
 #: src/mission.c:1162
 #, c-format
-msgid "Mission '%s' from savegame failed to load properly - ignoring."
+msgid "Mission '%s' from saved game failed to load properly - ignoring."
 msgstr ""
 "Mission „%s“ aus dem Spielstand konnte nicht korrekt geladen werden – wird "
 "ignoriert."
@@ -47247,7 +47247,7 @@ msgid "Enable mouse-flying thrust control"
 msgstr "Mausflugschubsteuerung aktivieren"
 
 #: src/options.c:364
-msgid "Enable savegame compression"
+msgid "Enable saved game compression"
 msgstr "Spielstandskompression aktivieren"
 
 #: src/options.c:366
@@ -48781,8 +48781,8 @@ msgstr "Speichern abbrechen …"
 
 #: src/save.c:157
 msgid ""
-"Failed to write savegame!  You'll most likely have to restore it by copying "
-"your backup savegame over your current savegame."
+"Failed to write saved game!  You'll most likely have to restore it by copying "
+"your backup saved game over your current saved game."
 msgstr ""
 "Spielstand konnte nicht geschrieben werden! Du wirst ihn "
 "höchstwahrscheinlich wiederherstellen müssen, indem du mit der "
