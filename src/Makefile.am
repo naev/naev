@@ -9,12 +9,12 @@ naev_DEPENDENCIES = $(NAEV_DEPENDENCIES)
 
 
 if HAVE_SHADERS_C_GEN
-noinst_PROGRAMS = shaders_c_gen
-nodist_shaders_c_gen_SOURCES = shaders_c_gen.c
-shaders_c_gen_LDADD = $(SDL_LIBS)
-shaders.gen.c shaders.gen.h: shaders_c_gen$(EXEEXT)
+# Compile shaders_c_gen for the build environment.
+shaders.gen.c shaders.gen.h: shaders_c_gen$(BUILD_EXEEXT)
 	./$<
-CLEANFILES = shaders.gen.c shaders.gen.h
+shaders_c_gen$(BUILD_EXEEXT): shaders_c_gen.c
+	$(CC_FOR_BUILD) $(CFLAGS_FOR_BUILD) $< -o $@
+CLEANFILES = shaders.gen.c shaders.gen.h shaders_c_gen$(BUILD_EXEEXT)
 BUILT_SOURCES = shaders.gen.c shaders.gen.h
 endif
 
