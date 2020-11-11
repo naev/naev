@@ -1,0 +1,87 @@
+==== Building LuaJIT 2.0.5 ====
+make -C src
+make[1]: Entering directory '/c/dev/luajit/src'
+gcc  -O2 -fomit-frame-pointer -Wall   -I. -DLUAJIT_TARGET=LUAJIT_ARCH_x64 -DLJ_ARCH_HASFPU=1 -DLJ_ABI_SOFTFP=0  -c -o host/minilua.o host/minilua.c
+gcc     -o host/minilua.exe host/minilua.o -lm   
+host/minilua.exe ../dynasm/dynasm.lua   -D P64 -D JIT -D FFI -D FPU -D HFABI -D VER= -D WIN -o host/buildvm_arch.h vm_x86.dasc
+gcc  -O2 -fomit-frame-pointer -Wall   -I. -DLUAJIT_TARGET=LUAJIT_ARCH_x64 -DLJ_ARCH_HASFPU=1 -DLJ_ABI_SOFTFP=0  -c -o host/buildvm.o host/buildvm.c
+gcc  -O2 -fomit-frame-pointer -Wall   -I. -DLUAJIT_TARGET=LUAJIT_ARCH_x64 -DLJ_ARCH_HASFPU=1 -DLJ_ABI_SOFTFP=0  -c -o host/buildvm_asm.o host/buildvm_asm.c
+gcc  -O2 -fomit-frame-pointer -Wall   -I. -DLUAJIT_TARGET=LUAJIT_ARCH_x64 -DLJ_ARCH_HASFPU=1 -DLJ_ABI_SOFTFP=0  -c -o host/buildvm_peobj.o host/buildvm_peobj.c
+gcc  -O2 -fomit-frame-pointer -Wall   -I. -DLUAJIT_TARGET=LUAJIT_ARCH_x64 -DLJ_ARCH_HASFPU=1 -DLJ_ABI_SOFTFP=0  -c -o host/buildvm_lib.o host/buildvm_lib.c
+gcc  -O2 -fomit-frame-pointer -Wall   -I. -DLUAJIT_TARGET=LUAJIT_ARCH_x64 -DLJ_ARCH_HASFPU=1 -DLJ_ABI_SOFTFP=0  -c -o host/buildvm_fold.o host/buildvm_fold.c
+gcc     -o host/buildvm.exe host/buildvm.o host/buildvm_asm.o host/buildvm_peobj.o host/buildvm_lib.o host/buildvm_fold.o   
+host/buildvm.exe -m peobj -o lj_vm.o
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_gc.o lj_gc.c
+host/buildvm.exe -m ffdef -o lj_ffdef.h lib_base.c lib_math.c lib_bit.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_err.o lj_err.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_char.o lj_char.c
+host/buildvm.exe -m bcdef -o lj_bcdef.h lib_base.c lib_math.c lib_bit.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_bc.o lj_bc.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_obj.o lj_obj.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_str.o lj_str.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_tab.o lj_tab.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_func.o lj_func.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_udata.o lj_udata.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_meta.o lj_meta.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_debug.o lj_debug.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_state.o lj_state.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_dispatch.o lj_dispatch.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_vmevent.o lj_vmevent.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_vmmath.o lj_vmmath.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_strscan.o lj_strscan.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_api.o lj_api.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_lex.o lj_lex.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_parse.o lj_parse.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_bcread.o lj_bcread.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_bcwrite.o lj_bcwrite.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_load.o lj_load.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_ir.o lj_ir.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_opt_mem.o lj_opt_mem.c
+host/buildvm.exe -m folddef -o lj_folddef.h lj_opt_fold.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_opt_fold.o lj_opt_fold.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_opt_narrow.o lj_opt_narrow.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_opt_dce.o lj_opt_dce.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_opt_loop.o lj_opt_loop.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_opt_split.o lj_opt_split.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_opt_sink.o lj_opt_sink.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_mcode.o lj_mcode.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_snap.o lj_snap.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_record.o lj_record.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_crecord.o lj_crecord.c
+host/buildvm.exe -m recdef -o lj_recdef.h lib_base.c lib_math.c lib_bit.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_ffrecord.o lj_ffrecord.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_asm.o lj_asm.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_trace.o lj_trace.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_gdbjit.o lj_gdbjit.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_ctype.o lj_ctype.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_cdata.o lj_cdata.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_cconv.o lj_cconv.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_ccall.o lj_ccall.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_ccallback.o lj_ccallback.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_carith.o lj_carith.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_clib.o lj_clib.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_cparse.o lj_cparse.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_lib.o lj_lib.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lj_alloc.o lj_alloc.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lib_aux.o lib_aux.c
+host/buildvm.exe -m libdef -o lj_libdef.h lib_base.c lib_math.c lib_bit.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lib_base.o lib_base.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lib_math.o lib_math.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lib_bit.o lib_bit.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lib_string.o lib_string.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lib_table.o lib_table.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lib_io.o lib_io.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lib_os.o lib_os.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lib_package.o lib_package.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lib_debug.o lib_debug.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lib_jit.o lib_jit.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lib_ffi.o lib_ffi.c
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o lib_init.o lib_init.c
+gcc   -shared   -o lua51.dll lj_vm.o lj_gc.o lj_err.o lj_char.o lj_bc.o lj_obj.o lj_str.o lj_tab.o lj_func.o lj_udata.o lj_meta.o lj_debug.o lj_state.o lj_dispatch.o lj_vmevent.o lj_vmmath.o lj_strscan.o lj_api.o lj_lex.o lj_parse.o lj_bcread.o lj_bcwrite.o lj_load.o lj_ir.o lj_opt_mem.o lj_opt_fold.o lj_opt_narrow.o lj_opt_dce.o lj_opt_loop.o lj_opt_split.o lj_opt_sink.o lj_mcode.o lj_snap.o lj_record.o lj_crecord.o lj_ffrecord.o lj_asm.o lj_trace.o lj_gdbjit.o lj_ctype.o lj_cdata.o lj_cconv.o lj_ccall.o lj_ccallback.o lj_carith.o lj_clib.o lj_cparse.o lj_lib.o lj_alloc.o lib_aux.o lib_base.o lib_math.o lib_bit.o lib_string.o lib_table.o lib_io.o lib_os.o lib_package.o lib_debug.o lib_jit.o lib_ffi.o lib_init.o -lm  
+strip --strip-unneeded lua51.dll
+gcc  -O2 -fomit-frame-pointer -Wall   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -U_FORTIFY_SOURCE  -DLUA_MULTILIB=\"lib\" -DLUA_BUILD_AS_DLL   -c -o luajit.o luajit.c
+host/buildvm.exe -m vmdef -o jit/vmdef.lua lib_base.c lib_math.c lib_bit.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c
+gcc       -o luajit.exe luajit.o lua51.dll -lm  
+strip --strip-unneeded luajit.exe
+make[1]: Leaving directory '/c/dev/luajit/src'
+==== Successfully built LuaJIT 2.0.5 ====

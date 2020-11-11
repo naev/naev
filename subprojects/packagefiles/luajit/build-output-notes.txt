@@ -1,0 +1,160 @@
+==== Building LuaJIT 2.0.5 ====
+make -C src
+make[1]: Entering directory '/home/francesco/dev/luajit-2.0/src'
+gcc  $VMCFLAGS  -c -o host/minilua.o host/minilua.c
+gcc     -o host/minilua host/minilua.o -lm   
+host/minilua ../dynasm/dynasm.lua   -D P64 -D JIT -D FFI -D FPU -D HFABI -D VER= -o host/buildvm_arch.h vm_x86.dasc
+gcc  $VMCFLAGS  -c -o host/buildvm.o host/buildvm.c
+gcc  $VMCFLAGS  -c -o host/buildvm_asm.o host/buildvm_asm.c
+gcc  $VMCFLAGS  -c -o host/buildvm_peobj.o host/buildvm_peobj.c
+gcc  $VMCFLAGS  -c -o host/buildvm_lib.o host/buildvm_lib.c
+gcc  $VMCFLAGS  -c -o host/buildvm_fold.o host/buildvm_fold.c
+gcc     -o host/buildvm host/buildvm.o host/buildvm_asm.o host/buildvm_peobj.o host/buildvm_lib.o host/buildvm_fold.o   
+host/buildvm -m elfasm -o lj_vm.s
+gcc -fPIC  $CFLAGS -c -o lj_vm_dyn.o lj_vm.s
+gcc  $CFLAGS -c -o lj_vm.o lj_vm.s
+gcc -fPIC  $CFLAGS -c -o lj_gc_dyn.o lj_gc.c
+gcc  $CFLAGS -c -o lj_gc.o lj_gc.c
+host/buildvm -m ffdef -o lj_ffdef.h $LJLIBS
+gcc -fPIC  $CFLAGS -c -o lj_err_dyn.o lj_err.c
+gcc  $CFLAGS -c -o lj_err.o lj_err.c
+gcc -fPIC  $CFLAGS -c -o lj_char_dyn.o lj_char.c
+gcc  $CFLAGS -c -o lj_char.o lj_char.c
+host/buildvm -m bcdef -o lj_bcdef.h $LJLIBS
+gcc -fPIC  $CFLAGS -c -o lj_bc_dyn.o lj_bc.c
+gcc  $CFLAGS -c -o lj_bc.o lj_bc.c
+gcc -fPIC  $CFLAGS -c -o lj_obj_dyn.o lj_obj.c
+gcc  $CFLAGS -c -o lj_obj.o lj_obj.c
+gcc -fPIC  $CFLAGS -c -o lj_str_dyn.o lj_str.c
+gcc  $CFLAGS -c -o lj_str.o lj_str.c
+gcc -fPIC  $CFLAGS -c -o lj_tab_dyn.o lj_tab.c
+gcc  $CFLAGS -c -o lj_tab.o lj_tab.c
+gcc -fPIC  $CFLAGS -c -o lj_func_dyn.o lj_func.c
+gcc  $CFLAGS -c -o lj_func.o lj_func.c
+gcc -fPIC  $CFLAGS -c -o lj_udata_dyn.o lj_udata.c
+gcc  $CFLAGS -c -o lj_udata.o lj_udata.c
+gcc -fPIC  $CFLAGS -c -o lj_meta_dyn.o lj_meta.c
+gcc  $CFLAGS -c -o lj_meta.o lj_meta.c
+gcc -fPIC  $CFLAGS -c -o lj_debug_dyn.o lj_debug.c
+gcc  $CFLAGS -c -o lj_debug.o lj_debug.c
+gcc -fPIC  $CFLAGS -c -o lj_state_dyn.o lj_state.c
+gcc  $CFLAGS -c -o lj_state.o lj_state.c
+gcc -fPIC  $CFLAGS -c -o lj_dispatch_dyn.o lj_dispatch.c
+gcc  $CFLAGS -c -o lj_dispatch.o lj_dispatch.c
+gcc -fPIC  $CFLAGS -c -o lj_vmevent_dyn.o lj_vmevent.c
+gcc  $CFLAGS -c -o lj_vmevent.o lj_vmevent.c
+gcc -fPIC  $CFLAGS -c -o lj_vmmath_dyn.o lj_vmmath.c
+gcc  $CFLAGS -c -o lj_vmmath.o lj_vmmath.c
+gcc -fPIC  $CFLAGS -c -o lj_strscan_dyn.o lj_strscan.c
+gcc  $CFLAGS -c -o lj_strscan.o lj_strscan.c
+gcc -fPIC  $CFLAGS -c -o lj_api_dyn.o lj_api.c
+gcc  $CFLAGS -c -o lj_api.o lj_api.c
+gcc -fPIC  $CFLAGS -c -o lj_lex_dyn.o lj_lex.c
+gcc  $CFLAGS -c -o lj_lex.o lj_lex.c
+gcc -fPIC  $CFLAGS -c -o lj_parse_dyn.o lj_parse.c
+gcc  $CFLAGS -c -o lj_parse.o lj_parse.c
+gcc -fPIC  $CFLAGS -c -o lj_bcread_dyn.o lj_bcread.c
+gcc  $CFLAGS -c -o lj_bcread.o lj_bcread.c
+gcc -fPIC  $CFLAGS -c -o lj_bcwrite_dyn.o lj_bcwrite.c
+gcc  $CFLAGS -c -o lj_bcwrite.o lj_bcwrite.c
+gcc -fPIC  $CFLAGS -c -o lj_load_dyn.o lj_load.c
+gcc  $CFLAGS -c -o lj_load.o lj_load.c
+gcc -fPIC  $CFLAGS -c -o lj_ir_dyn.o lj_ir.c
+gcc  $CFLAGS -c -o lj_ir.o lj_ir.c
+gcc -fPIC  $CFLAGS -c -o lj_opt_mem_dyn.o lj_opt_mem.c
+gcc  $CFLAGS -c -o lj_opt_mem.o lj_opt_mem.c
+host/buildvm -m folddef -o lj_folddef.h lj_opt_fold.c
+gcc -fPIC  $CFLAGS -c -o lj_opt_fold_dyn.o lj_opt_fold.c
+gcc  $CFLAGS -c -o lj_opt_fold.o lj_opt_fold.c
+gcc -fPIC  $CFLAGS -c -o lj_opt_narrow_dyn.o lj_opt_narrow.c
+gcc  $CFLAGS -c -o lj_opt_narrow.o lj_opt_narrow.c
+gcc -fPIC  $CFLAGS -c -o lj_opt_dce_dyn.o lj_opt_dce.c
+gcc  $CFLAGS -c -o lj_opt_dce.o lj_opt_dce.c
+gcc -fPIC  $CFLAGS -c -o lj_opt_loop_dyn.o lj_opt_loop.c
+gcc  $CFLAGS -c -o lj_opt_loop.o lj_opt_loop.c
+gcc -fPIC  $CFLAGS -c -o lj_opt_split_dyn.o lj_opt_split.c
+gcc  $CFLAGS -c -o lj_opt_split.o lj_opt_split.c
+gcc -fPIC  $CFLAGS -c -o lj_opt_sink_dyn.o lj_opt_sink.c
+gcc  $CFLAGS -c -o lj_opt_sink.o lj_opt_sink.c
+gcc -fPIC  $CFLAGS -c -o lj_mcode_dyn.o lj_mcode.c
+gcc  $CFLAGS -c -o lj_mcode.o lj_mcode.c
+gcc -fPIC  $CFLAGS -c -o lj_snap_dyn.o lj_snap.c
+gcc  $CFLAGS -c -o lj_snap.o lj_snap.c
+gcc -fPIC  $CFLAGS -c -o lj_record_dyn.o lj_record.c
+gcc  $CFLAGS -c -o lj_record.o lj_record.c
+gcc -fPIC  $CFLAGS -c -o lj_crecord_dyn.o lj_crecord.c
+gcc  $CFLAGS -c -o lj_crecord.o lj_crecord.c
+host/buildvm -m recdef -o lj_recdef.h $LJLIBS
+gcc -fPIC  $CFLAGS -c -o lj_ffrecord_dyn.o lj_ffrecord.c
+gcc  $CFLAGS -c -o lj_ffrecord.o lj_ffrecord.c
+gcc -fPIC  $CFLAGS -c -o lj_asm_dyn.o lj_asm.c
+gcc  $CFLAGS -c -o lj_asm.o lj_asm.c
+gcc -fPIC  $CFLAGS -c -o lj_trace_dyn.o lj_trace.c
+gcc  $CFLAGS -c -o lj_trace.o lj_trace.c
+gcc -fPIC  $CFLAGS -c -o lj_gdbjit_dyn.o lj_gdbjit.c
+gcc  $CFLAGS -c -o lj_gdbjit.o lj_gdbjit.c
+gcc -fPIC  $CFLAGS -c -o lj_ctype_dyn.o lj_ctype.c
+gcc  $CFLAGS -c -o lj_ctype.o lj_ctype.c
+gcc -fPIC  $CFLAGS -c -o lj_cdata_dyn.o lj_cdata.c
+gcc  $CFLAGS -c -o lj_cdata.o lj_cdata.c
+gcc -fPIC  $CFLAGS -c -o lj_cconv_dyn.o lj_cconv.c
+gcc  $CFLAGS -c -o lj_cconv.o lj_cconv.c
+gcc -fPIC  $CFLAGS -c -o lj_ccall_dyn.o lj_ccall.c
+gcc  $CFLAGS -c -o lj_ccall.o lj_ccall.c
+gcc -fPIC  $CFLAGS -c -o lj_ccallback_dyn.o lj_ccallback.c
+gcc  $CFLAGS -c -o lj_ccallback.o lj_ccallback.c
+gcc -fPIC  $CFLAGS -c -o lj_carith_dyn.o lj_carith.c
+gcc  $CFLAGS -c -o lj_carith.o lj_carith.c
+gcc -fPIC  $CFLAGS -c -o lj_clib_dyn.o lj_clib.c
+gcc  $CFLAGS -c -o lj_clib.o lj_clib.c
+gcc -fPIC  $CFLAGS -c -o lj_cparse_dyn.o lj_cparse.c
+gcc  $CFLAGS -c -o lj_cparse.o lj_cparse.c
+gcc -fPIC  $CFLAGS -c -o lj_lib_dyn.o lj_lib.c
+gcc  $CFLAGS -c -o lj_lib.o lj_lib.c
+gcc -fPIC  $CFLAGS -c -o lj_alloc_dyn.o lj_alloc.c
+gcc  $CFLAGS -c -o lj_alloc.o lj_alloc.c
+gcc -fPIC  $CFLAGS -c -o lib_aux_dyn.o lib_aux.c
+gcc  $CFLAGS -c -o lib_aux.o lib_aux.c
+host/buildvm -m libdef -o lj_libdef.h $LJLIBS
+gcc -fPIC  $CFLAGS -c -o lib_base_dyn.o lib_base.c
+gcc  $CFLAGS -c -o lib_base.o lib_base.c
+gcc -fPIC  $CFLAGS -c -o lib_math_dyn.o lib_math.c
+gcc  $CFLAGS -c -o lib_math.o lib_math.c
+gcc -fPIC  $CFLAGS -c -o lib_bit_dyn.o lib_bit.c
+gcc  $CFLAGS -c -o lib_bit.o lib_bit.c
+gcc -fPIC  $CFLAGS -c -o lib_string_dyn.o lib_string.c
+gcc  $CFLAGS -c -o lib_string.o lib_string.c
+gcc -fPIC  $CFLAGS -c -o lib_table_dyn.o lib_table.c
+gcc  $CFLAGS -c -o lib_table.o lib_table.c
+gcc -fPIC  $CFLAGS -c -o lib_io_dyn.o lib_io.c
+gcc  $CFLAGS -c -o lib_io.o lib_io.c
+gcc -fPIC  $CFLAGS -c -o lib_os_dyn.o lib_os.c
+gcc  $CFLAGS -c -o lib_os.o lib_os.c
+gcc -fPIC  $CFLAGS -c -o lib_package_dyn.o lib_package.c
+gcc  $CFLAGS -c -o lib_package.o lib_package.c
+gcc -fPIC  $CFLAGS -c -o lib_debug_dyn.o lib_debug.c
+gcc  $CFLAGS -c -o lib_debug.o lib_debug.c
+gcc -fPIC  $CFLAGS -c -o lib_jit_dyn.o lib_jit.c
+gcc  $CFLAGS -c -o lib_jit.o lib_jit.c
+gcc -fPIC  $CFLAGS -c -o lib_ffi_dyn.o lib_ffi.c
+gcc  $CFLAGS -c -o lib_ffi.o lib_ffi.c
+gcc -fPIC  $CFLAGS -c -o lib_init_dyn.o lib_init.c
+gcc  $CFLAGS -c -o lib_init.o lib_init.c
+ar rcus 2>/dev/null libluajit.a lj_vm.o lj_gc.o lj_err.o lj_char.o lj_bc.o lj_obj.o lj_str.o lj_tab.o lj_func.o lj_udata.o lj_meta.o lj_debug.o lj_state.o lj_dispatch.o lj_vmevent.o lj_vmmath.o lj_strscan.o lj_api.o lj_lex.o lj_parse.o lj_bcread.o lj_bcwrite.o lj_load.o lj_ir.o lj_opt_mem.o lj_opt_fold.o lj_opt_narrow.o lj_opt_dce.o lj_opt_loop.o lj_opt_split.o lj_opt_sink.o lj_mcode.o lj_snap.o lj_record.o lj_crecord.o lj_ffrecord.o lj_asm.o lj_trace.o lj_gdbjit.o lj_ctype.o lj_cdata.o lj_cconv.o lj_ccall.o lj_ccallback.o lj_carith.o lj_clib.o lj_cparse.o lj_lib.o lj_alloc.o lib_aux.o lib_base.o lib_math.o lib_bit.o lib_string.o lib_table.o lib_io.o lib_os.o lib_package.o lib_debug.o lib_jit.o lib_ffi.o lib_init.o
+gcc  $CFLAGS -c -o luajit.o luajit.c
+host/buildvm -m vmdef -o jit/vmdef.lua $LJLIBS
+gcc   -shared -fPIC -Wl,-soname,libluajit-5.1.so.2   -o libluajit.so lj_vm_dyn.o lj_gc_dyn.o lj_err_dyn.o lj_char_dyn.o lj_bc_dyn.o lj_obj_dyn.o lj_str_dyn.o lj_tab_dyn.o lj_func_dyn.o lj_udata_dyn.o lj_meta_dyn.o lj_debug_dyn.o lj_state_dyn.o lj_dispatch_dyn.o lj_vmevent_dyn.o lj_vmmath_dyn.o lj_strscan_dyn.o lj_api_dyn.o lj_lex_dyn.o lj_parse_dyn.o lj_bcread_dyn.o lj_bcwrite_dyn.o lj_load_dyn.o lj_ir_dyn.o lj_opt_mem_dyn.o lj_opt_fold_dyn.o lj_opt_narrow_dyn.o lj_opt_dce_dyn.o lj_opt_loop_dyn.o lj_opt_split_dyn.o lj_opt_sink_dyn.o lj_mcode_dyn.o lj_snap_dyn.o lj_record_dyn.o lj_crecord_dyn.o lj_ffrecord_dyn.o lj_asm_dyn.o lj_trace_dyn.o lj_gdbjit_dyn.o lj_ctype_dyn.o lj_cdata_dyn.o lj_cconv_dyn.o lj_ccall_dyn.o lj_ccallback_dyn.o lj_carith_dyn.o lj_clib_dyn.o lj_cparse_dyn.o lj_lib_dyn.o lj_alloc_dyn.o lib_aux_dyn.o lib_base_dyn.o lib_math_dyn.o lib_bit_dyn.o lib_string_dyn.o lib_table_dyn.o lib_io_dyn.o lib_os_dyn.o lib_package_dyn.o lib_debug_dyn.o lib_jit_dyn.o lib_ffi_dyn.o lib_init_dyn.o -lm -ldl  
+strip libluajit.so
+gcc    -Wl,-E   -o luajit luajit.o libluajit.a -lm -ldl  
+strip luajit
+make[1]: Leaving directory '/home/francesco/dev/luajit-2.0/src'
+==== Successfully built LuaJIT 2.0.5 ====
+
+
+host/buildvm -m elfasm -o lj_vm.s
+host/buildvm -m ffdef -o lj_ffdef.h $LJLIBS
+host/buildvm -m bcdef -o lj_bcdef.h $LJLIBS
+host/buildvm -m folddef -o lj_folddef.h lj_opt_fold.c
+host/buildvm -m recdef -o lj_recdef.h $LJLIBS
+host/buildvm -m libdef -o lj_libdef.h $LJLIBS
+host/buildvm -m vmdef -o jit/vmdef.lua $LJLIBS

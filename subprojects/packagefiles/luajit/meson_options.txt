@@ -1,0 +1,1 @@
+option('portable', type : 'boolean', value : false, description: 'portable install in a single directory')
