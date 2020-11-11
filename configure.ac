@@ -75,6 +75,7 @@ AC_PROG_OBJC
 AC_PROG_LN_S
 AC_PROG_RANLIB
 AM_PROG_AR
+AX_PROG_CC_FOR_BUILD
 PKG_PROG_PKG_CONFIG
 
 AC_CHECK_PROG([CUT], [cut], [cut])
@@ -516,6 +517,19 @@ AS_IF([test -n "$GIT" && test -d "$srcdir/.git"], [
 #
 # Defines in config.h
 #
+
+# Cut out the numeric fields from our SemVer <major>.<minor>.<rev>[-pre_release][+build] for OS versioning.
+VMAJOR=$(echo "$VERSION" | cut -d. -f1)
+VMINOR=$(echo "$VERSION" | cut -d. -f2)
+VREV=$(echo "$VERSION" | cut -d. -f3 | sed "s/[[+-]].*//")
+
+AC_DEFINE_UNQUOTED([VMAJOR], [$VMAJOR], [Define to the major version component])
+AC_DEFINE_UNQUOTED([VMINOR], [$VMINOR], [Define to the minor version component])
+AC_DEFINE_UNQUOTED([VREV], [$VREV], [Define to the revision version component])
+
+AC_SUBST([VMAJOR])
+AC_SUBST([VMINOR])
+AC_SUBST([VREV])
 
 AC_DEFINE_UNQUOTED([HOST], ["$host"], [Host triple])
 

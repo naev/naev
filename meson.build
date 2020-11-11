@@ -53,6 +53,10 @@ if buildExec.disabled() == false
    config_data.set_quoted('PACKAGE_VERSION', meson.project_version())
    config_data.set_quoted('PKGDATADIR', get_option('prefix') / ndata_path)
    config_data.set_quoted('HOST', host_machine.system() + '-' + host_machine.cpu_family())
+   # Cut out the numeric fields from our SemVer <major>.<minor>.<rev>[-pre_release][+build] for OS versioning.
+   config_data.set('VMAJOR', meson.project_version().split('.')[0])
+   config_data.set('VMINOR', meson.project_version().split('.')[1])
+   config_data.set('VREV', meson.project_version().split('.')[2].split('-')[0].split('+')[0])
    config_data.set('DEBUG', debug ? 1 : false)
    config_data.set('DEBUGGING', debug ? 1 : false)
    config_data.set('DEBUG_PARANOID', paranoid ? 1 : false)
@@ -186,7 +190,10 @@ if buildExec.disabled() == false
 
    if host_machine.system() == 'windows'
       windows = import('windows')
-      naev_source += windows.compile_resources('extras/resource.rc')
+      icon = files('extras/logos/logo.ico')
+      res_include = include_directories('extras/logos')
+      win_rc = configure_file(input: 'extras/resource.rc.in', output: 'resource.rc', configuration: config_data)
+      naev_source += windows.compile_resources(win_rc, depend_files: icon, include_directories: res_include)
    endif
 
    shaders_c_gen = executable(
