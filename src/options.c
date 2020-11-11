@@ -290,7 +290,7 @@ static void opt_gameplay( unsigned int wid )
       if (i>=n)
          i = 0;
    }
-   window_addList( wid, x+l+20, y, cw-l-50, 70, "lstLanguage", ls, n, i, NULL );
+   window_addList( wid, x+l+20, y, cw-l-50, 70, "lstLanguage", ls, n, i, NULL, NULL );
    y -= 90;
 #endif /* defined ENABLE_NLS && ENABLE_NLS */
    window_addText( wid, x+20, y, cw, 20, 0, "txtCompile",
@@ -655,7 +655,7 @@ static void menuKeybinds_genList( unsigned int wid )
       window_destroyWidget( wid, "lstKeybinds" );
    }
 
-   window_addList( wid, 20, -40, lw, lh, "lstKeybinds", str, input_numbinds, 0, menuKeybinds_update );
+   window_addList( wid, 20, -40, lw, lh, "lstKeybinds", str, input_numbinds, 0, menuKeybinds_update, opt_setKey );
 
    if (regen) {
       toolkit_setListPos( wid, "lstKeybinds", pos );
@@ -899,7 +899,7 @@ static void opt_audio( unsigned int wid )
 #endif /* USE_SDLMIX */
    if (i==0)
       s[i++] = strdup(_("none"));
-   window_addList( wid, x+l, y, cw-(x+l), 40, "lstSound", s, i, j, NULL );
+   window_addList( wid, x+l, y, cw-(x+l), 40, "lstSound", s, i, j, NULL, NULL );
    y -= 50;
 
    /* OpenAL options. */
@@ -1285,7 +1285,7 @@ static void opt_video( unsigned int wid )
          res_def = i;
       nres++;
    }
-   window_addList( wid, x, y, 140, 100, "lstRes", res, nres, -1, opt_videoRes );
+   window_addList( wid, x, y, 140, 100, "lstRes", res, nres, -1, opt_videoRes, NULL );
    y -= 120;
    window_addText( wid, x, y-3, 110, 20, 0, "txtScale",
          NULL, NULL, NULL );

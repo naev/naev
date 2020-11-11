@@ -1139,7 +1139,7 @@ static void uniedit_findShowResults( unsigned int wid, map_find_t *found, int n 
    /* Add list. */
    h = UNIEDIT_FIND_HEIGHT + y - BUTTON_HEIGHT - 30;
    window_addList( wid, 20, y, UNIEDIT_FIND_WIDTH-40, h,
-         "lstResults", str, n, 0, uniedit_centerSystem );
+         "lstResults", str, n, 0, uniedit_centerSystem, NULL );
 }
 
 
@@ -1358,7 +1358,7 @@ static void uniedit_editGenList( unsigned int wid )
    /* Add list. */
    h = UNIEDIT_EDIT_HEIGHT+y-20 - 2*(BUTTON_HEIGHT+20);
    window_addList( wid, 20, y, UNIEDIT_EDIT_WIDTH-40, h,
-         "lstAssets", str, j, 0, NULL );
+         "lstAssets", str, j, 0, NULL, NULL );
    y -= h + 20;
 
    /* Add buttons if needed. */
@@ -1471,7 +1471,7 @@ static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
          str[j++] = strdup( p[i].name );
    h = UNIEDIT_EDIT_HEIGHT-60-(BUTTON_HEIGHT+20);
    window_addList( wid, 20, -40, UNIEDIT_EDIT_WIDTH-40, h,
-         "lstAssets", str, j, 0, NULL );
+         "lstAssets", str, j, 0, NULL, NULL );
 
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,

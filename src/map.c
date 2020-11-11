@@ -1832,8 +1832,8 @@ static void map_buttonCommodity( unsigned int wid, char* str )
          else
             defpos = cur_commod*2 + 2 - cur_commod_mode;
 
-         window_addList( wid, -10, 60, 200, 200,
-                         "lstMapMode", this_map_modes, nmap_modes, defpos, map_modeUpdate );
+         window_addList( wid, -10, 60, 200, 200, "lstMapMode",
+                         this_map_modes, nmap_modes, defpos, map_modeUpdate, NULL );
       }
    }
 }

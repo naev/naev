@@ -101,6 +101,7 @@ static void weapons_inrange( unsigned int wid, char *str );
 static void aim_lines( unsigned int wid, char *str );
 static void weapons_renderLegend( double bx, double by, double bw, double bh, void* data );
 static void info_openStandings( unsigned int wid );
+static void info_shiplogView( unsigned int wid, char *str );
 static void standings_update( unsigned int wid, char* str );
 static void cargo_genList( unsigned int wid );
 static void cargo_update( unsigned int wid, char* str );
@@ -248,7 +249,7 @@ static void info_openMain( unsigned int wid )
    window_addText( wid, -20, -40, w-80-200-40-40, 20, 1, "txtList",
          NULL, NULL, _("Licenses") );
    window_addList( wid, -20, -70, w-80-200-40-40, h-110-BUTTON_HEIGHT,
-         "lstLicenses", licenses, MAX(nlicenses, 1), 0, NULL );
+         "lstLicenses", licenses, MAX(nlicenses, 1), 0, NULL, NULL );
 }
 
 
@@ -301,7 +302,7 @@ static void info_setGui( unsigned int wid, char* str )
    /* List */
    window_addList( wid, 20, -50,
          SETGUI_WIDTH-BUTTON_WIDTH/2 - 60, SETGUI_HEIGHT-110,
-         "lstGUI", gui_copy, nguis, 0, NULL );
+         "lstGUI", gui_copy, nguis, 0, NULL, NULL );
    toolkit_setList( wid, "lstGUI", gui_pick() );
 
    /* buttons */
@@ -561,7 +562,7 @@ static void weapons_genList( unsigned int wid )
    window_addList( wid, 20+180+20, -40,
          w - (20+180+20+20), 180,
          "lstWeapSets", buf, PILOT_WEAPON_SETS,
-         0, weapons_update );
+         0, weapons_update, NULL );
 
    /* Restore position. */
    if (n >= 0)
@@ -777,7 +778,7 @@ static void cargo_genList( unsigned int wid )
    }
    window_addList( wid, 20, -40,
          w - 40, h - BUTTON_HEIGHT - 80,
-         "lstCargo", buf, nbuf, 0, cargo_update );
+         "lstCargo", buf, nbuf, 0, cargo_update, NULL );
 }
 /**
  * @brief Updates the player's cargo in the cargo menu.
@@ -935,7 +936,7 @@ static void info_openStandings( unsigned int wid )
 
    /* Display list. */
    window_addList( wid, 20, -40, lw, h-60,
-         "lstStandings", str, n, 0, standings_update );
+         "lstStandings", str, n, 0, standings_update, NULL );
 }
 
 
@@ -1049,7 +1050,7 @@ static void mission_menu_genList( unsigned int wid, int first )
    }
    window_addList( wid, 20, -40,
          300, h-340,
-         "lstMission", misn_names, j, 0, mission_menu_update );
+         "lstMission", misn_names, j, 0, mission_menu_update, NULL );
 }
 /**
  * @brief Updates the mission menu mission information based on what's selected.
@@ -1157,7 +1158,7 @@ static void shiplog_menu_update( unsigned int wid, char* str )
             selectedLog = 0;
          window_addList( wid, 20, 60 + BUTTON_HEIGHT  + LOGSPACING / 2,
                          w-40, LOGSPACING / 4,
-                         "lstLogs", logs, nlogs, 0, shiplog_menu_update );
+                         "lstLogs", logs, nlogs, 0, shiplog_menu_update, NULL );
          
          toolkit_setListPos( wid, "lstLogs", selectedLog );
          regenerateEntries=1;
@@ -1169,7 +1170,7 @@ static void shiplog_menu_update( unsigned int wid, char* str )
          shiplog_listLog(logIDs[selectedLog], logTypes[selectedLogType], &nentries, &logentries,1);
          window_addList( wid, 20, 40 + BUTTON_HEIGHT,
                          w-40, LOGSPACING / 2-20,
-                         "lstLogEntries", logentries, nentries, 0, shiplog_menu_update );
+                         "lstLogEntries", logentries, nentries, 0, shiplog_menu_update, info_shiplogView );
          toolkit_setListPos( wid, "lstLogEntries", 0 );
          
       }
@@ -1215,13 +1216,13 @@ static void shiplog_menu_genList( unsigned int wid, int first )
    logWidgetsReady=0;
    window_addList( wid, 20, 80 + BUTTON_HEIGHT + 3*LOGSPACING/4 ,
                    w-40, LOGSPACING / 4,
-         "lstLogType", logTypes, ntypes, 0, shiplog_menu_update );
+         "lstLogType", logTypes, ntypes, 0, shiplog_menu_update, NULL );
    window_addList( wid, 20, 60 + BUTTON_HEIGHT + LOGSPACING / 2,
                    w-40, LOGSPACING / 4,
-         "lstLogs", logs, nlogs, 0, shiplog_menu_update );
+         "lstLogs", logs, nlogs, 0, shiplog_menu_update, NULL );
    window_addList( wid, 20, 40 + BUTTON_HEIGHT,
                    w-40, LOGSPACING / 2-20,
-                   "lstLogEntries", logentries, nentries, 0, shiplog_menu_update );
+                   "lstLogEntries", logentries, nentries, 0, shiplog_menu_update, info_shiplogView );
    logWidgetsReady=1;
 }
 

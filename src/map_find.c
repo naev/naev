@@ -238,7 +238,7 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
    for (i=0; i<n; i++)
       ll[i] = strdup( found[i].display );
    window_addList( wid, 20, -40, 460, 300,
-         "lstResult", ll, n, 0, NULL );
+         "lstResult", ll, n, 0, NULL, map_findDisplayMark );
 
    /* Buttons. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,

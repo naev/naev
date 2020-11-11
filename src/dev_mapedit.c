@@ -822,7 +822,7 @@ void mapedit_saveMapMenu_open (void)
    /* Create list : must be created after inpFileName, inpMapName, inpDescription and txtLoadedNumSystems */
    window_addList( mapedit_widSave, 20, -50,
          MAPEDIT_SAVE_WIDTH-MAPEDIT_SAVE_TXT_WIDTH-60, MAPEDIT_SAVE_HEIGHT-40-40,
-         "lstMapOutfits", names, n, iCurrent, mapedit_saveMapMenu_update );
+         "lstMapOutfits", names, n, iCurrent, mapedit_saveMapMenu_update, mapedit_saveMapMenu_save );
 
    /* Debug log */
    //WARN("Creating buttons.");
@@ -895,7 +895,7 @@ void mapedit_loadMapMenu_open (void)
 
    window_addList( mapedit_widLoad, 20, -50,
          MAPEDIT_OPEN_WIDTH-MAPEDIT_OPEN_TXT_WIDTH-60, MAPEDIT_OPEN_HEIGHT-110,
-         "lstMapOutfits", names, n, 0, mapedit_loadMapMenu_update );
+         "lstMapOutfits", names, n, 0, mapedit_loadMapMenu_update, mapedit_loadMapMenu_load );
 
    /* Debug log */
    //WARN("Creating buttons.");

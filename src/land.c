@@ -689,7 +689,7 @@ static void misn_genList( unsigned int wid, int first )
    }
    window_addList( wid, 20, -40,
          w/2 - 30, h/2 - 35,
-         "lstMission", misn_names, j, 0, misn_update );
+         "lstMission", misn_names, j, 0, misn_update, misn_accept );
 
    /* Restore focus. */
    window_setFocus( wid, focused );

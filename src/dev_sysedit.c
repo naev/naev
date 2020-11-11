@@ -1627,7 +1627,7 @@ static void sysedit_genServicesList( unsigned int wid )
             have[j++] = strdup( planet_getServiceName( i ) );
 
    /* Add list. */
-   window_addList( wid, x, y, w, h, "lstServicesHave", have, j, 0, NULL );
+   window_addList( wid, x, y, w, h, "lstServicesHave", have, j, 0, NULL, sysedit_btnRmService );
    x += w + 15;
 
    /* Add list of services the planet lacks. */
@@ -1641,7 +1641,7 @@ static void sysedit_genServicesList( unsigned int wid )
             lack[j++] = strdup( planet_getServiceName(i) );
 
    /* Add list. */
-   window_addList( wid, x, y, w, h, "lstServicesLacked", lack, j, 0, NULL );
+   window_addList( wid, x, y, w, h, "lstServicesLacked", lack, j, 0, NULL, sysedit_btnAddService );
 
    /* Restore positions. */
    if (hpos != -1 && lpos != -1) {
@@ -1682,7 +1682,7 @@ static void sysedit_btnRmService( unsigned int wid, char *unused )
    char *selected;
    Planet *p;
 
-   selected = toolkit_getList( wid, "lstServicesHave" );
+   selected = toolkit_getList( wid, "nstServicesHave" );
    if ((selected==NULL) || (strcmp(selected,_("None"))==0))
       return;
 
@@ -1766,7 +1766,7 @@ static void sysedit_genTechList( unsigned int wid )
    }
 
    /* Add list. */
-   window_addList( wid, x, y, w, h, "lstTechsHave", have, n, 0, NULL );
+   window_addList( wid, x, y, w, h, "lstTechsHave", have, n, 0, NULL, sysedit_btnRmTech );
    x += w + 15;
 
    /* Omit the techs that the planet already has from the list.  */
@@ -1799,7 +1799,7 @@ static void sysedit_genTechList( unsigned int wid )
       lack = tech_getAllItemNames( &n );
 
    /* Add list. */
-   window_addList( wid, x, y, w, h, "lstTechsLacked", lack, n, 0, NULL );
+   window_addList( wid, x, y, w, h, "lstTechsLacked", lack, n, 0, NULL, sysedit_btnAddTech );
 
    /* Restore positions. */
    if (hpos != -1 && lpos != -1) {
@@ -1886,7 +1886,7 @@ static void sysedit_btnFaction( unsigned int wid_unused, char *unused )
    y = 20 + BUTTON_HEIGHT + 15;
    h = SYSEDIT_EDIT_HEIGHT - y - 30;
    window_addList( wid, 20, -40, SYSEDIT_EDIT_WIDTH-40, h,
-         "lstFactions", str, j, 0, NULL );
+         "lstFactions", str, j, 0, NULL, sysedit_btnFactionSet );
 
    /* Close button. */
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,

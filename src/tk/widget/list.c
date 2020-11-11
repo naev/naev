@@ -46,14 +46,17 @@ static void lst_scroll( Widget* lst, int direction );
  *    @param items Items in the list (will be freed automatically).
  *    @param nitems Number of items in items parameter.
  *    @param defitem Default item to select.
- *    @param call Function to call when new item is selected. Parameter passed
+ *    @param onSelect Function to call when new item is selected. Parameter passed
+ *                is the name of the list.
+ *    @param onActivate Function to call when selected item is double-clicked. Parameter passed
  *                is the name of the list.
  */
 void window_addList( const unsigned int wid,
                      const int x, const int y,
                      const int w, const int h,
                      char* name, char **items, int nitems, int defitem,
-                     void (*call) (unsigned int wdw, char* wgtname) )
+                     void (*onSelect) (unsigned int wdw, char* wgtname),
+                     void (*onActivate) (unsigned int wdw, char* wgtname) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
@@ -76,7 +79,8 @@ void window_addList( const unsigned int wid,
    wgt->dat.lst.noptions   = nitems;
    wgt->dat.lst.selected   = defitem; /* -1 would be none */
    wgt->dat.lst.pos        = 0;
-   wgt->dat.lst.fptr       = call;
+   wgt->dat.lst.onSelect   = onSelect;
+   wgt->dat.lst.onActivate = onActivate;
 
    /* position/size */
    wgt->w = (double) w;
@@ -93,8 +97,8 @@ void window_addList( const unsigned int wid,
       toolkit_nextFocus( wdw );
 
    lst_scroll( wgt, 0 ); /* checks boundaries and triggers callback */
-   if (defitem >= 0 && call)
-      call(wid, name);
+   if (defitem >= 0 && onSelect)
+      onSelect(wid, name);
 }
 
 
@@ -231,6 +235,8 @@ static int lst_mdoubleclick( Widget* lst, int button, int x, int y )
    if (lst->dat.lst.selected != prev_selected)
       return 1;
 
+   if (lst->dat.lst.onActivate != NULL)
+      lst->dat.lst.onActivate( lst->wdw, lst->name );
    return 1;
 }
 
@@ -336,8 +342,8 @@ static int lst_mmove( Widget* lst, int x, int y, int rx, int ry )
 
       /* Run change if position changed. */
       if (lst->dat.lst.selected != psel)
-         if (lst->dat.lst.fptr)
-            lst->dat.lst.fptr( lst->wdw, lst->name );
+         if (lst->dat.lst.onSelect)
+            lst->dat.lst.onSelect( lst->wdw, lst->name );
 
       return 1;
    }
@@ -393,8 +399,8 @@ static void lst_scroll( Widget* lst, int direction )
    else if (CELLPADV + (pos+1) * CELLHEIGHT > lst->h)
       lst->dat.lst.pos += (CELLPADV + (pos+1) * CELLHEIGHT - lst->h) / CELLHEIGHT;
 
-   if (lst->dat.lst.fptr)
-      lst->dat.lst.fptr( lst->wdw, lst->name );
+   if (lst->dat.lst.onSelect)
+      lst->dat.lst.onSelect( lst->wdw, lst->name );
 }
 
 

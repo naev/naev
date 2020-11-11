@@ -336,7 +336,7 @@ void load_loadGameMenu (void)
 
    window_addList( wid, 20, -50,
          LOAD_WIDTH-200-60, LOAD_HEIGHT-110,
-         "lstSaves", names, n, 0, load_menu_update );
+         "lstSaves", names, n, 0, load_menu_update, load_menu_load );
 
    /* Buttons */
    window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
