@@ -1374,7 +1374,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    gl_renderRect( px - 1, py - 1, MIN( 2*sx, w-px ) + 2, MIN( 2*sy, h-py ) + 2, &cBlack );
    gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &col );
    */
-   gl_blitTexture( marker_pilot_gfx, px, py, w * 0.003, w * 0.003, 0, 0, 1, 1, &col, 0. );
+   gl_blitTexture( marker_pilot_gfx, px - (sx/2.), py - (sx/2.), sx, sy, 0, 0, 1, 1, &col, 0. );
 
 
    /* Draw name. */
@@ -1617,7 +1617,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    /* Default values. */
    planet = cur_system->planets[ind];
    r     = (int)(planet->radius*2. / res);
-   vr    = MAX( r * 1.6, 15. ); /* Make sure it's visible. */
+   vr    = MAX( r * 1.5, 15. ); /* Make sure it's visible. */
 
    if (overlay) {
       cx    = (int)(planet->pos.x / res);
