@@ -522,7 +522,7 @@ static void exit_game (void)
 
 
 /**
- * @brief Reload the current savegame, when player want to continue after death
+ * @brief Reload the current saved game, when player want to continue after death
  */
 static void menu_death_continue( unsigned int wid, char* str )
 {
@@ -535,7 +535,7 @@ static void menu_death_continue( unsigned int wid, char* str )
 }
 
 /**
- * @brief Restart the game, when player want to continue after death but without a savegame
+ * @brief Restart the game, when player want to continue after death but without a saved game
  */
 static void menu_death_restart( unsigned int wid, char* str )
 {
@@ -558,7 +558,7 @@ void menu_death (void)
    wid = window_create( N_("Death"), -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
    window_onClose( wid, menu_death_close );
 
-   /* Allow the player to continue if the savegame exists, if not, propose to restart */
+   /* Allow the player to continue if the saved game exists, if not, propose to restart */
    nsnprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
    if (nfile_fileExists(path))
       window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,

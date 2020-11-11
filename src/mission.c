@@ -1153,13 +1153,13 @@ static int missions_parseActive( xmlNodePtr parent )
          xmlr_attr(node, "data", buf);
          data = mission_get(mission_getID(buf));
          if (data == NULL) {
-            WARN(_("Mission '%s' from savegame not found in game - ignoring."), buf);
+            WARN(_("Mission '%s' from saved game not found in game - ignoring."), buf);
             free(buf);
             continue;
          }
          else {
             if (mission_init( misn, data, 0, 0, NULL )) {
-               WARN(_("Mission '%s' from savegame failed to load properly - ignoring."), buf);
+               WARN(_("Mission '%s' from saved game failed to load properly - ignoring."), buf);
                free(buf);
                continue;
             }

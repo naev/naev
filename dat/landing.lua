@@ -15,7 +15,7 @@
    end
 
    function noland( pnt )
-      return false, "Nobody expects the Spanish inquisition!"
+      return false, "Nobody expects the Spanish Inquisition!"
    end
 
    function noland_nobribe( pnt )

@@ -539,7 +539,7 @@ int load_gameDiff( const char* file )
 
    /* Make sure it exists. */
    if (!nfile_fileExists(file)) {
-      dialogue_alert( _("Savegame file seems to have been deleted.") );
+      dialogue_alert( _("Saved game file seems to have been deleted.") );
       return -1;
    }
 
@@ -562,7 +562,7 @@ int load_gameDiff( const char* file )
 err_doc:
    xmlFreeDoc(doc);
 err:
-   WARN( _("Savegame '%s' invalid!"), file);
+   WARN( _("Saved game '%s' invalid!"), file);
    return -1;
 }
 
@@ -582,7 +582,7 @@ int load_game( const char* file, int version_diff )
 
    /* Make sure it exists. */
    if (!nfile_fileExists(file)) {
-      dialogue_alert( _("Savegame file seems to have been deleted.") );
+      dialogue_alert( _("Saved game file seems to have been deleted.") );
       return -1;
    }
 
@@ -660,7 +660,7 @@ int load_game( const char* file, int version_diff )
 err_doc:
    xmlFreeDoc(doc);
 err:
-   WARN( _("Savegame '%s' invalid!"), file);
+   WARN( _("Saved game '%s' invalid!"), file);
    return -1;
 }
 
