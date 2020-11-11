@@ -226,7 +226,7 @@ static void gui_renderBorder( double dt );
 static void gui_renderMessages( double dt );
 static const glColour *gui_getPlanetColour( int i );
 static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int cy, const glColour *col );
-static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape );
+static void gui_blink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape, const glColour *col, const double blinkInterval );
 static const glColour* gui_getPilotColour( const Pilot* p );
 static void gui_renderInterference (void);
 static void gui_calcBorders (void);
@@ -1351,15 +1351,9 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
    /* Draw selection if targeted. */
    if (p->id == player.p->target) {
-      if (blink_pilot < RADAR_BLINK_PILOT/2.) {
          col = cRadar_tPilot;
          col.a = 1.-interference_alpha;
-
-         gl_beginSolidProgram(gl_Matrix4_Translate(gl_view_matrix, x, y, 0), &cRadar_tPilot);
-         gl_vboActivateAttribOffset( gui_radar_select_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-         glDrawArrays( GL_LINES, 0, 8 );
-         gl_endSolidProgram();
-      }
+         gui_blink( w, h, 0, x, y, 12, RADAR_RECT, &col, RADAR_BLINK_PILOT);
    }
 
    /* Draw square. */
@@ -1374,7 +1368,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    gl_renderRect( px - 1, py - 1, MIN( 2*sx, w-px ) + 2, MIN( 2*sy, h-py ) + 2, &cBlack );
    gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &col );
    */
-   gl_blitTexture( marker_pilot_gfx, px - (sx/2.), py - (sx/2.), sx, sy, 0, 0, 1, 1, &col, 0. );
+   gl_blitTexture( marker_pilot_gfx, px, py, 6, 6, 0, 0, 1, 1, &col, 0. );
 
 
    /* Draw name. */
@@ -1450,11 +1444,8 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
    ccol.a = 1.-interference_alpha;
    gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &ccol );
 
-   if (targeted && (blink_pilot >= RADAR_BLINK_PILOT/2.)) {
-      gl_beginSolidProgram(gl_Matrix4_Translate(gl_view_matrix, x, y, 0), &ccol);
-      gl_vboActivateAttribOffset( gui_radar_select_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-      glDrawArrays( GL_LINES, 0, 8 );
-      gl_endSolidProgram();
+   if (targeted){
+      gui_blink( w, h, 0, x, y, 12, RADAR_RECT, &ccol, RADAR_BLINK_PILOT );
    }
 }
 
@@ -1531,22 +1522,18 @@ void gui_forceBlink (void)
 /**
  * @brief Renders the planet blink around a position on the minimap.
  */
-static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape )
+static void gui_blink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape, const glColour *col, const double blinkInterval  )
 {
    (void) w;
    (void) h;
    (void) rc;
    (void) shape;
-   glColour col;
    gl_Matrix4 projection;
 
-   if (blink_planet < RADAR_BLINK_PLANET/2.) {
-      col = cRadar_tPlanet;
-      col.a = 1.-interference_alpha;
-
+   if (blink_planet < blinkInterval/2.) {
       projection = gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0);
       projection = gl_Matrix4_Scale(projection, vr, vr, 1);
-      gl_beginSolidProgram(projection, &col);
+      gl_beginSolidProgram(projection, col);
       gl_vboActivateAttribOffset( gui_planet_blink_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
       glDrawArrays( GL_LINES, 0, 8 );
       gl_endSolidProgram();
@@ -1660,14 +1647,15 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
       h  *= 2.;
    }
 
-   /* Do the blink. */
-   if (ind == player.p->nav_planet)
-      gui_planetBlink( w, h, rc, cx, cy, vr, shape );
 
    /* Get the colour. */
    col = *gui_getPlanetColour(ind);
    if (!overlay)
       col.a = 1.-interference_alpha;
+
+   /* Do the blink. */
+   if (ind == player.p->nav_planet)
+      gui_blink( w, h, rc, cx, cy, vr, shape, &col, RADAR_BLINK_PLANET);
 
    /* 
    gl_beginSolidProgram(gl_Matrix4_Scale(gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0), vr, vr, 1), &col);
@@ -1760,7 +1748,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Do the blink. */
    if (ind == player.p->nav_hyperspace) {
-      gui_planetBlink( w, h, rc, cx+4, cy+5, vr, shape );
+      gui_blink( w, h, rc, cx+4, cy+5, vr, shape, &col, RADAR_BLINK_PLANET );
       col = cGreen;
    }
    else if (jp_isFlag(jp, JP_HIDDEN))
