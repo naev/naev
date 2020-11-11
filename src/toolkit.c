@@ -1644,8 +1644,11 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
          }
 
          /* Try to give the event to the widget. */
-         if (wgt->mclickevent != NULL)
+	 if (wgt->mdoubleclickevent != NULL && input_isDoubleClick( (void*)wgt ))
+            ret |= (*wgt->mdoubleclickevent)( wgt, button, x, y );
+	 else if (wgt->mclickevent != NULL)
             ret |= (*wgt->mclickevent)( wgt, button, x, y );
+         input_clicked( (void*)wgt );
          break;
 
       case SDL_MOUSEBUTTONUP:
