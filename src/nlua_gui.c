@@ -445,7 +445,7 @@ static int guiL_setMapOverlayBounds( lua_State *L )
    bottom = luaL_checkinteger(L,3);
    left = luaL_checkinteger(L,4);
 
-   gui_setMapOverlayBounds(top,right, bottom, left);
+   gui_setMapOverlayBounds(top, right, bottom, left);
    return 0;
 }
 

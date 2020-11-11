@@ -3254,7 +3254,7 @@ static Planet* player_parse( xmlNodePtr parent )
    xmlNodePtr node, cur;
    int q;
    Outfit *o;
-   int i, map_overlay;
+   int i, map_overlay_enabled;
    StarSystem *sys;
    double a, r;
    Pilot *old_ship;
@@ -3271,7 +3271,7 @@ static Planet* player_parse( xmlNodePtr parent )
    /* Safe defaults. */
    planet      = NULL;
    time_set    = 0;
-   map_overlay = 0;
+   map_overlay_enabled = 0;
 
    player.dt_mod = 1.; /* For old saves. */
 
@@ -3291,8 +3291,8 @@ static Planet* player_parse( xmlNodePtr parent )
       xmlr_ulong(node, "credits", player_creds);
       xmlr_strd(node, "gui", player.gui);
       xmlr_int(node, "guiOverride", player.guiOverride);
-      xmlr_int(node, "mapOverlay", map_overlay);
-      ovr_setOpen(map_overlay);
+      xmlr_int(node, "mapOverlay", map_overlay_enabled);
+      ovr_setOpen(map_overlay_enabled);
 
       /* Time. */
       if (xml_isNode(node,"time")) {

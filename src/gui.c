@@ -114,24 +114,38 @@ static double gui_viewport_w = 0.; /**< GUI Viewport width. */
 static double gui_viewport_h = 0.; /**< GUI Viewport height. */
 
 /**
- * @struct MapOverlay
- *
- * @brief Represents map overlay config values
+ * Map overlay
  */
-typedef struct MapOverlay_ {
-   /* GUI parameters */
-   int boundTop;
-   int boundRight;
-   int boundBottom;
-   int boundLeft;
-} MapOverlay;
-
-static MapOverlay map_overlay = {
-  boundTop: 0,
+MapOverlay map_overlay = {
+  boundTop: 150,
   boundRight: 0,
-  boundBottom: 0,
+  boundBottom: 150,
   boundLeft: 0,
 };
+int map_overlay_height(void)
+{
+   return SCREEN_H - map_overlay.boundTop - map_overlay.boundBottom;
+}
+int map_overlay_width(void)
+{
+   return SCREEN_W - map_overlay.boundLeft - map_overlay.boundRight;
+}
+int map_overlay_center_x(void)
+{
+   return map_overlay_width() / 2 + map_overlay.boundLeft;
+}
+int map_overlay_center_y(void)
+{
+   return map_overlay_height() / 2 + map_overlay.boundBottom;
+}
+double map_overlay_scale_x(void)
+{
+  return (double)map_overlay_width() / (double)SCREEN_W;
+}
+double map_overlay_scale_y(void)
+{
+  return (double)map_overlay_height() / (double)SCREEN_H;
+}
 
 /**
  * @struct Radar
@@ -1329,8 +1343,8 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
    /* Transform coordinates into the 0,0 -> SCREEN_W, SCREEN_H range. */
    if (overlay) {
-      x += SCREEN_W / 2;
-      y += SCREEN_H / 2;
+      x += map_overlay_center_x();
+      y += map_overlay_center_y();
       w *= 2.;
       h *= 2.;
    }
@@ -1412,8 +1426,8 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
 
    /* Transform coordinates into the 0,0 -> SCREEN_W, SCREEN_H range. */
    if (overlay) {
-      x += SCREEN_W / 2;
-      y += SCREEN_H / 2;
+      x += map_overlay_center_x();
+      y += map_overlay_center_y();
       w *= 2.;
       h *= 2.;
    }
@@ -1459,8 +1473,8 @@ void gui_renderPlayer( double res, int overlay )
     * as a font change, but using this fix for now. */
 
    if (overlay) {
-      x = player.p->solid->pos.x / res + SCREEN_W / 2;
-      y = player.p->solid->pos.y / res + SCREEN_H / 2;
+      x = player.p->solid->pos.x / res + map_overlay_center_x();
+      y = player.p->solid->pos.y / res + map_overlay_center_y();
       r = 5.;
    }
    else {
@@ -1640,8 +1654,8 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
 
    if (overlay) {
       /* Transform coordinates. */
-      cx += SCREEN_W / 2;
-      cy += SCREEN_H / 2;
+      cx += map_overlay_center_x();
+      cy += map_overlay_center_y();
       w  *= 2.;
       h  *= 2.;
    }
@@ -1738,8 +1752,8 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    if (overlay) {
       /* Transform coordinates. */
-      cx += SCREEN_W / 2;
-      cy += SCREEN_H / 2;
+      cx += map_overlay_center_x();
+      cy += map_overlay_center_y();
       w  *= 2.;
       h  *= 2.;
    }

@@ -18,7 +18,6 @@
 #include "space.h"
 #include "input.h"
 #include "array.h"
-#include "gui.h"
 
 
 /**
@@ -61,7 +60,6 @@ int ovr_isOpen (void)
    return !!ovr_open;
 }
 
-
 /**
  * @brief Handles input to the map overlay.
  */
@@ -93,8 +91,23 @@ int ovr_input( SDL_Event *event )
    gl_windowToScreenPos( &mx, &my, mx, my );
 
    /* Translate to space coords. */
-   x  = ((double)mx - SCREEN_W/2.) * ovr_res;
-   y  = ((double)my - (SCREEN_H - 280)/2.) * ovr_res;
+   x = ((double)mx - (double)map_overlay_center_x()) * ovr_res; 
+   y = ((double)my - (double)map_overlay_center_y()) * ovr_res; 
+
+   /*
+   WARN("mocx %i", map_overlay_center_x());
+   WARN("mocy %i", map_overlay_center_y());
+   WARN("mosx %f", map_overlay_scale_x());
+   WARN("mosy %f", map_overlay_scale_y());
+   WARN("mx %i", mx);
+   WARN("my %i", my);
+   WARN("x %f", x);
+   WARN("y %f", y);
+   WARN("Top %i", map_overlay.boundTop);
+   WARN("Right %i", map_overlay.boundRight);
+   WARN("Bottom %i", map_overlay.boundBottom);
+   WARN("Right %i", map_overlay.boundRight);
+   */
 
    return input_clickPos( event, x, y, 1., 10. * ovr_res, 15. * ovr_res );
 }
@@ -127,7 +140,7 @@ void ovr_refresh (void)
    }
 
    /* We need to calculate the radius of the rendering. */
-   ovr_res = 2. * 1.2 * MAX( max_x / SCREEN_W, max_y / (SCREEN_H  - 280));
+   ovr_res = 2. * 1.2 * MAX( max_x / map_overlay_width(), max_y / map_overlay_height() );
 }
 
 
@@ -202,13 +215,13 @@ void ovr_render( double dt )
       return;
 
    /* Default values. */
-   w     = SCREEN_W - gui_getMapOverlayBoundLeft() - gui_getMapOverlayBoundRight();
-   h     = SCREEN_H - gui_getMapOverlayBoundTop() - gui_getMapOverlayBoundBottom();
+   w     = map_overlay_width();
+   h     = map_overlay_height();
    res   = ovr_res;
 
    /* First render the background overlay. */
-   // glColour c = { .r=0., .g=0., .b=0., .a=0.2 };
-   // gl_renderRect( (double)gui_getMapOverlayBoundLeft(), (double)gui_getMapOverlayBoundBottom(), w, h, &c );
+   glColour c = { .r=0., .g=0., .b=0., .a=0.2 };
+   gl_renderRect( (double)map_overlay.boundLeft, (double)map_overlay.boundBottom, w, h, &c );
 
    /* Render planets. */
    for (i=0; i<cur_system->nplanets; i++)
@@ -279,8 +292,8 @@ static void ovr_mrkRenderAll( double res )
    for (i=0; i<array_size(ovr_markers); i++) {
       mrk = &ovr_markers[i];
 
-      x = mrk->u.pt.x / res + SCREEN_W / 2.;
-      y = mrk->u.pt.y / res + (SCREEN_H - 280) / 2.;
+      x = mrk->u.pt.x / res + map_overlay_width() / 2.;
+      y = mrk->u.pt.y / res + map_overlay_height() / 2.;
       gl_renderCross( x, y, 5., &cRadar_hilight );
 
       if (mrk->text != NULL)
