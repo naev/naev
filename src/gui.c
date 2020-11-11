@@ -117,9 +117,9 @@ static double gui_viewport_h = 0.; /**< GUI Viewport height. */
  * Map overlay
  */
 MapOverlay map_overlay = {
-  boundTop: 44,
+  boundTop: 46,
   boundRight: 0,
-  boundBottom: 44,
+  boundBottom: 46,
   boundLeft: 0,
 };
 int map_overlay_height(void)
