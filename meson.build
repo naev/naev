@@ -192,8 +192,9 @@ if buildExec.disabled() == false
       windows = import('windows')
       icon = files('extras/logos/logo.ico')
       res_include = include_directories('extras/logos')
-      win_rc = configure_file(input: 'extras/resource.rc.in', output: 'resource.rc', configuration: config_data)
-      naev_source += windows.compile_resources(win_rc, depend_files: icon, include_directories: res_include)
+      win_manifest = configure_file(input: 'extras/windows/naev.exe.manifest.in', output: 'naev.exe.manifest', configuration: config_data)
+      win_rc = configure_file(input: 'extras/windows/resource.rc.in', output: 'resource.rc', configuration: config_data)
+      naev_source += windows.compile_resources(win_rc, depend_files: [win_manifest, icon], include_directories: res_include)
    endif
 
    shaders_c_gen = executable(

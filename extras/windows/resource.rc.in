@@ -1,5 +1,7 @@
 #include <winresrc.h>
+#include <winuser.h>
 
+1 RT_MANIFEST "naev.exe.manifest"
 101 ICON DISCARDABLE "logo.ico"
 
 VS_VERSION_INFO VERSIONINFO
