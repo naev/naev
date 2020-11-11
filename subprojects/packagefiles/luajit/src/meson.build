@@ -1,7 +1,5 @@
 lj_arch_test_source = files('lj_arch_test.c')
 
-jitlib_install_dir = 'share' / ( 'luajit-' + meson.project_version() ) / 'jit'
-
 subdir('host')
 
 ljlib_sources = ['lib_base.c', 'lib_math.c', 'lib_bit.c', 'lib_string.c', 'lib_table.c', 'lib_io.c', 'lib_os.c', 'lib_package.c', 'lib_debug.c', 'lib_jit.c', 'lib_ffi.c']
@@ -59,8 +57,6 @@ vmdef = custom_target('vmdef.lua',
     input : ljlib_sources,
     output : 'vmdef.lua',
     build_by_default : true,
-    install: true,
-    install_dir: jitlib_install_dir,
     command : [buildvm, '-m', 'vmdef', '-o', '@OUTPUT@', '@INPUT@']
 )
 
@@ -69,24 +65,4 @@ libluajit = library(lj_libname, ljlib_sources + ljcore_sources + buildvm_headers
     c_args: lj_defines,
     name_prefix: lj_libprefix,
     dependencies: luajit_dependencies,
-    install: true
 )
-
-luajit = executable('luajit', ljmain_sources,
-    c_args: lj_defines,
-    link_with: libluajit,
-    include_directories: luajit_source_dir,
-    dependencies: luajit_dependencies,
-    install: true
-)
-
-pkg.generate(libluajit,
-    filebase : 'luajit',
-    name : 'LuaJIT',
-    description : 'Just-in-time compiler for Lua',
-    url : 'http://luajit.org',
-)
-
-install_headers('lua.h', 'lualib.h', 'lauxlib.h', 'luaconf.h', 'lua.hpp', 'luajit.h')
-
-subdir('jit')
