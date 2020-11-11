@@ -254,10 +254,10 @@ void ovr_render( double dt )
 
    /* Check if player has goto target. */
    if (player_isFlag(PLAYER_AUTONAV) && (player.autonav == AUTONAV_POS_APPROACH)) {
-      x = player.autonav_pos.x / res + w / 2.;
-      y = player.autonav_pos.y / res + h / 2.;
+      x = player.autonav_pos.x / res + map_overlay_center_x();
+      y = player.autonav_pos.y / res + map_overlay_center_y();
       gl_renderCross( x, y, 5., &cRadar_hilight );
-      gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, _("GOTO") );
+      gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, _("TARGET") );
    }
 
    /* render the asteroids */
