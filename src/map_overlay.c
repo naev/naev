@@ -220,7 +220,7 @@ void ovr_render( double dt )
    res   = ovr_res;
 
    /* First render the background overlay. */
-   glColour c = { .r=0., .g=0., .b=0., .a=0.2 };
+   glColour c = { .r=0., .g=0., .b=0., .a=0.1 };
    gl_renderRect( (double)map_overlay.boundLeft, (double)map_overlay.boundBottom, w, h, &c );
 
    /* Render planets. */

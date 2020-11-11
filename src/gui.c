@@ -117,9 +117,9 @@ static double gui_viewport_h = 0.; /**< GUI Viewport height. */
  * Map overlay
  */
 MapOverlay map_overlay = {
-  boundTop: 150,
+  boundTop: 44,
   boundRight: 0,
-  boundBottom: 150,
+  boundBottom: 44,
   boundLeft: 0,
 };
 int map_overlay_height(void)
@@ -1712,8 +1712,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    /* Default values. */
    jp    = &cur_system->jumps[ind];
    r     = (int)(jumppoint_gfx->sw / res);
-   vr    = MAX( r, 3. ); /* Make sure it's visible. */
-   WARN("vr values %f %f", vr, r);
+   vr    = MAX( r, 5. ); /* Make sure it's visible. */
    if (overlay) {
       cx    = (int)(jp->pos.x / res);
       cy    = (int)(jp->pos.y / res);
@@ -1761,7 +1760,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Do the blink. */
    if (ind == player.p->nav_hyperspace) {
-      gui_planetBlink( w, h, rc, cx+5, cy+5, vr, shape );
+      gui_planetBlink( w, h, rc, cx+4, cy+5, vr, shape );
       col = cGreen;
    }
    else if (jp_isFlag(jp, JP_HIDDEN))
@@ -1780,7 +1779,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    glDrawArrays( GL_LINE_STRIP, 0, 4 );
    gl_endSolidProgram();
    */
-   gl_blitTexture( marker_jumppoint_gfx, cx, cy, w * 0.008, w * 0.008, 0, 0, 1, 1, &col,  -M_PI/2-jp->angle );
+   gl_blitTexture( marker_jumppoint_gfx, cx, cy, 22, 22, 0, 0, 1, 1, &col,  -M_PI/2-jp->angle );
 
 
    /* Render name. */
