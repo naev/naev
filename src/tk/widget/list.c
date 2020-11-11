@@ -21,6 +21,7 @@
 static void lst_render( Widget* lst, double bx, double by );
 static int lst_key( Widget* lst, SDL_Keycode key, SDL_Keymod mod );
 static int lst_mclick( Widget* lst, int button, int x, int y );
+static int lst_mdoubleclick( Widget* lst, int button, int x, int y );
 static int lst_mwheel( Widget* lst, SDL_MouseWheelEvent event );
 static int lst_mmove( Widget* lst, int x, int y, int rx, int ry );
 static void lst_cleanup( Widget* lst );
@@ -68,6 +69,7 @@ void window_addList( const unsigned int wid,
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->keyevent           = lst_key;
    wgt->mclickevent        = lst_mclick;
+   wgt->mdoubleclickevent  = lst_mdoubleclick;
    wgt->mwheelevent        = lst_mwheel;
    wgt->mmoveevent         = lst_mmove;
    wgt->dat.lst.options    = items;
@@ -193,7 +195,7 @@ static int lst_key( Widget* lst, SDL_Keycode key, SDL_Keymod mod )
 
 
 /**
- * @brief Handler for mouse click events for the list widget.
+ * @brief Handler for mouse single-click events for the list widget.
  *
  *    @param lst The widget handling the mouse click event.
  *    @param mclick The event the widget should handle.
@@ -210,6 +212,26 @@ static int lst_mclick( Widget* lst, int button, int x, int y )
          break;
    }
    return 0;
+}
+
+
+/**
+ * @brief Handler for mouse double-click events for the list widget.
+ *
+ *    @param lst The widget handling the mouse click event.
+ *    @param mclick The event the widget should handle.
+ *    @return 1 if the widget uses the event.
+ */
+static int lst_mdoubleclick( Widget* lst, int button, int x, int y )
+{
+   int prev_selected;
+   prev_selected = lst->dat.lst.selected;
+   if (lst_mclick( lst, button, x, y ) == 0)
+      return 0;
+   if (lst->dat.lst.selected != prev_selected)
+      return 1;
+
+   return 1;
 }
 
 
