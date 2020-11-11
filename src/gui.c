@@ -66,7 +66,7 @@
 #define INTERFERENCE_LAYERS      16 /**< Number of interference layers. */
 #define INTERFERENCE_CHANGE_DT   0.1 /**< Speed to change at. */
 
-#define RADAR_BLINK_PILOT        1. /**< Blink rate of the pilot target on radar. */
+#define RADAR_BLINK_PILOT        0.5 /**< Blink rate of the pilot target on radar. */
 #define RADAR_BLINK_PLANET       1. /**< Blink rate of the planet target on radar. */
 
 
@@ -1350,24 +1350,25 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    }
 
    /* Draw selection if targeted. */
+   /*col = cRadar_tPilot;
+   col.a = 1.-interference_alpha; */
    if (p->id == player.p->target) {
-         col = cRadar_tPilot;
-         col.a = 1.-interference_alpha;
-         gui_blink( w, h, 0, x, y, 12, RADAR_RECT, &col, RADAR_BLINK_PILOT);
+      gui_blink( w, h, 0, x, y, 12, RADAR_RECT, &cRadar_hilight, RADAR_BLINK_PILOT);
    }
 
    /* Draw square. */
    px     = MAX(x-sx,-w);
    py     = MAX(y-sy, -h);
-   if (pilot_isFlag(p, PILOT_HILIGHT) && (blink_pilot < RADAR_BLINK_PILOT/2.))
+
+   if (p->id == player.p->target) 
       col = cRadar_hilight;
+   else if (pilot_isFlag(p, PILOT_HILIGHT))
+      col = cRadar_tPilot;
    else
       col = *gui_getPilotColour(p);
+      // col = cRadar_hilight;
    col.a = 1.-interference_alpha;
-   /*
-   gl_renderRect( px - 1, py - 1, MIN( 2*sx, w-px ) + 2, MIN( 2*sy, h-py ) + 2, &cBlack );
-   gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &col );
-   */
+
    gl_blitTexture( marker_pilot_gfx, px, py, 6, 6, 0, 0, 1, 1, &col, 0. );
 
 
@@ -1924,20 +1925,20 @@ int gui_init (void)
    if (gui_planet_blink_vbo == NULL) {
       vertex[0] = -1;
       vertex[1] = 1;
-      vertex[2] = -1.2;
-      vertex[3] = 1.2;
+      vertex[2] = -1.3;
+      vertex[3] = 1.3;
       vertex[4] = 1;
       vertex[5] = 1;
-      vertex[6] = 1.2;
-      vertex[7] = 1.2;
+      vertex[6] = 1.3;
+      vertex[7] = 1.3;
       vertex[8] = 1;
       vertex[9] = -1;
-      vertex[10] = 1.2;
-      vertex[11] = -1.2;
+      vertex[10] = 1.3;
+      vertex[11] = -1.3;
       vertex[12] = -1;
       vertex[13] = -1;
-      vertex[14] = -1.2;
-      vertex[15] = -1.2;
+      vertex[14] = -1.3;
+      vertex[15] = -1.3;
       gui_planet_blink_vbo = gl_vboCreateStatic( sizeof(GLfloat) * 16, vertex );
    }
 
