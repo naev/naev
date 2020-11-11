@@ -1,10 +1,6 @@
 lj_arch_test_source = files('lj_arch_test.c')
 
-if get_option('portable')
-    jitlib_install_dir = get_option('bindir') / 'lua' / 'jit'
-else
-    jitlib_install_dir = 'share' / ( 'luajit-' + meson.project_version() ) / 'jit'
-endif
+jitlib_install_dir = 'share' / ( 'luajit-' + meson.project_version() ) / 'jit'
 
 subdir('host')
 
@@ -27,10 +23,6 @@ lj_defines = [
     '-DLUA_MULTILIB="lib"',
     '-DLUA_ROOT="' + get_option('prefix') + '"'
 ]
-
-if get_option('portable')
-    lj_defines += '-DLUAJIT_PORTABLE_INSTALL'
-endif
 
 if host_machine.system() == 'windows'
     ljcore_sources += custom_target('lj_vm.obj',
