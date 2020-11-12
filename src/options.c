@@ -41,10 +41,10 @@
 static unsigned int opt_wid = 0;
 static unsigned int *opt_windows;
 static const char *opt_names[] = {
-   "Gameplay",
-   "Video",
-   "Audio",
-   "Input"
+   N_("Gameplay"),
+   N_("Video"),
+   N_("Audio"),
+   N_("Input")
 };
 
 
@@ -105,7 +105,9 @@ static void opt_unsetKey( unsigned int wid, char *str );
  */
 void opt_menu (void)
 {
+   size_t i;
    int w, h;
+   char **names;
 
    /* Dimensions. */
    w = 680;
@@ -116,8 +118,12 @@ void opt_menu (void)
    window_setCancel( opt_wid, opt_close );
 
    /* Create tabbed window. */
+   names = calloc( sizeof(char*), sizeof(opt_names)/sizeof(char*) );
+   for (i=0; i<sizeof(opt_names)/sizeof(char*); i++)
+      names[i] = gettext(opt_names[i]);
    opt_windows = window_addTabbedWindow( opt_wid, -1, -1, -1, -1, "tabOpt",
-         OPT_WINDOWS, opt_names, 0 );
+         OPT_WINDOWS, (const char**)names, 0 );
+   free(names);
 
    /* Load tabs. */
    opt_gameplay(  opt_windows[ OPT_WIN_GAMEPLAY ] );
