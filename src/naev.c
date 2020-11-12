@@ -235,7 +235,7 @@ int main( int argc, char** argv )
 
 #if HAS_UNIX
    /* Set window class and name. */
-   SDL_setenv("SDL_VIDEO_X11_WMCLASS", APPNAME, 0);
+   nsetenv("SDL_VIDEO_X11_WMCLASS", APPNAME, 0);
 #endif /* HAS_UNIX */
 
    /* Must be initialized before input_init is called. */
@@ -300,7 +300,7 @@ int main( int argc, char** argv )
       lang = "";
    else
       lang = conf.language;
-   SDL_setenv( "LANGUAGE", lang, 1 );
+   nsetenv( "LANGUAGE", lang, 1 );
    /* Horrible hack taken from https://www.gnu.org/software/gettext/manual/html_node/gettext-grok.html .
     * Not entirely sure it is necessary, but just in case... */
    {
