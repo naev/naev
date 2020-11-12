@@ -46,10 +46,11 @@ stdout.txt
 *.mode1v3
 extras/.dirstamp
 extras/macos/Info.plist
-extras/resource.rc
 extras/steam/2fa/2fa.txt
 extras/steam/content
 extras/steam/output
+extras/windows/naev.exe.manifest
+extras/windows/resource.rc
 extras/windows/installer/bin
 dist/*
 dat/LANGUAGES
