@@ -564,7 +564,6 @@ int ai_load (void)
    size_t nfiles, i;
    char path[PATH_MAX];
    int flen, suflen;
-   int n;
 
    /* get the file list */
    files = ndata_list( AI_PATH, &nfiles );
@@ -588,8 +587,7 @@ int ai_load (void)
       free(files[i]);
    }
 
-   n = array_size(profiles);
-   DEBUG( ngettext("Loaded %d AI Profile", "Loaded %d AI Profiles", n ), n );
+   DEBUG( ngettext("Loaded %d AI Profile", "Loaded %d AI Profiles", array_size(profiles) ), array_size(profiles) );
 
    /* More clean up. */
    free(files);
