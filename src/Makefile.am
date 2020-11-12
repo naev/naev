@@ -321,7 +321,7 @@ naev_SOURCES = \
 	weapon.h
 
 if HAVE_WINDRES
-naev_SOURCES += ../extras/windows/resource.rc
+nodist_naev_SOURCES = ../extras/windows/resource.rc
 CLEANFILES += ../extras/windows/naev.exe.manifest ../extras/windows/resource.rc
 ../extras/windows/naev.exe.manifest: ../extras/windows/resource.rc.in
 	../config.status -q --file=$@
