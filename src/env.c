@@ -9,7 +9,6 @@
 #include <limits.h>
 #include <stdlib.h>
 
-#include "config.h"
 #include "nstring.h"
 #include "log.h"
 
