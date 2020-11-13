@@ -1,5 +1,6 @@
 #include "array.h"
 
+#include <limits.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -21,7 +22,7 @@ void *_array_create_helper(size_t e_size, size_t capacity)
 
 static void _array_resize_container(_private_container **c_, size_t e_size, size_t new_size)
 {
-   assert( new_size >= 0 );
+   assert( new_size <= (size_t)INT_MAX );
    _private_container *c = *c_;
 
    if (new_size > c->_reserved) {
