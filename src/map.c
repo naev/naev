@@ -86,6 +86,7 @@ static void map_renderPath( double x, double y, double a );
 static void map_renderMarkers( double x, double y, double r, double a );
 static void map_renderCommod( double bx, double by, double x, double y,
                               double w, double h, double r, int editor);
+static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Commodity *c );
 static void map_drawMarker( double x, double y, double r, double a,
       int num, int cur, int type );
 /* Mouse. */
@@ -1338,8 +1339,6 @@ void map_renderCommod( double bx, double by, double x, double y,
    Commodity *c;
    glColour ccol;
    double best,worst,maxPrice,minPrice,curMaxPrice,curMinPrice,thisPrice;
-   char buf[80];
-   int textw;
    /* If not plotting commodities, return */
    if (cur_commod == -1 || map_selected == -1)
       return;
@@ -1361,11 +1360,7 @@ void map_renderCommod( double bx, double by, double x, double y,
             }
          }
          if ( k == land_planet->ncommodities ) { /* commodity of interest not found */
-            textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
-            gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
-            snprintf(buf,80,"%s here",c->name);
-            textw = gl_printWidthRaw( &gl_smallFont, buf);
-            gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
+            map_renderCommodIgnorance( x, y, sys, c );
             map_renderSysBlack(bx,by,x,y,w,h,r,editor);
             return;
          }
@@ -1389,23 +1384,14 @@ void map_renderCommod( double bx, double by, double x, double y,
 
             }
             if ( maxPrice == 0 ) {/* no prices are known here */
-               textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
-               gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
-               snprintf(buf,80,"%s here",c->name);
-               textw = gl_printWidthRaw( &gl_smallFont, buf);
-               gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
+               map_renderCommodIgnorance( x, y, sys, c );
                map_renderSysBlack(bx,by,x,y,w,h,r,editor);
                return;
-
             }
             curMaxPrice=maxPrice;
             curMinPrice=minPrice;
          } else {
-            textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
-            gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
-            snprintf(buf,80,"%s here",c->name);
-            textw = gl_printWidthRaw( &gl_smallFont, buf);
-            gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
+            map_renderCommodIgnorance( x, y, sys, c );
             map_renderSysBlack(bx,by,x,y,w,h,r,editor);
             return;
          }
@@ -1529,6 +1515,22 @@ void map_renderCommod( double bx, double by, double x, double y,
    }
 }
 #undef setcolour
+
+
+/*
+ * Renders the economy information
+ */
+
+static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Commodity *c ) {
+   int textw;
+   char buf[80];
+   textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
+   gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
+   snprintf(buf, 80,"%s here", c->name);
+   textw = gl_printWidthRaw( &gl_smallFont, buf);
+   gl_print( &gl_smallFont, x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
+}
+
 
 /**
  * @brief Updates a text widget with a system's presence info.
