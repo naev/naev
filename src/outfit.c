@@ -1671,35 +1671,28 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          outfit_getType(temp),
          (temp->u.mod.active) ? _("\n\arActivated Outfit\a0") : "" );
 
-#define DESC_ADD(x, s, n, c) \
-if ((x) != 0.) \
-   i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, \
-         "\n\a%c%+."n"f "s"\a0", c, x )
-#define DESC_ADD_INT(x, s) \
+#define DESC_ADD(x, s) \
 if ((x) != 0) \
-   i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, \
-         "\n\a%c%+.d "s"\a0", ((x)>0)?'g':'r', x )
-#define DESC_ADD0(x, s)    DESC_ADD( x, s, "0", ((x)>0)?'g':'r' )
-#define DESC_ADD1(x, s)    DESC_ADD( x, s, "1", ((x)>0)?'g':'r' )
-#define DESC_ADDI(x, s)    DESC_ADD( x, s, "1", ((x)>0)?'g':'r' )
-   DESC_ADD0( temp->cpu, "CPU" );
-   DESC_ADD0( temp->u.mod.thrust, "Thrust" );
-   DESC_ADD0( temp->u.mod.turn, "Turn Rate" );
-   DESC_ADD0( temp->u.mod.speed, "Maximum Speed" );
-   DESC_ADD0( temp->u.mod.armour, "Armour" );
-   DESC_ADD0( temp->u.mod.shield, "Shield" );
-   DESC_ADD0( temp->u.mod.energy, "Energy" );
-   DESC_ADD_INT( temp->u.mod.fuel, "Fuel" );
-   DESC_ADD1( temp->u.mod.armour_regen, "Armour Per Second" );
-   DESC_ADD1( temp->u.mod.shield_regen, "Shield Per Second" );
-   DESC_ADD1( temp->u.mod.energy_regen, "Energy Per Second" );
-   DESC_ADD0( temp->u.mod.absorb, "Absorption" );
-   DESC_ADD0( temp->u.mod.cargo, "Cargo" );
-   DESC_ADD0( temp->u.mod.crew_rel, "%% Crew" );
-   DESC_ADD0( temp->u.mod.mass_rel, "%% Mass" );
-#undef DESC_ADD1
-#undef DESC_ADD0
-#undef DESC_ADD_INT
+   do { \
+      i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "\n\a%c", ((x)>0)?'g':'r', x ); \
+      i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, s, x ); \
+      i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "\a0" ); \
+   } while(0)
+   DESC_ADD( temp->cpu,                _("%+.0f CPU") );
+   DESC_ADD( temp->u.mod.thrust,       _("%+.0f Thrust") );
+   DESC_ADD( temp->u.mod.turn,         _("%+.0f Turn Rate") );
+   DESC_ADD( temp->u.mod.speed,        _("%+.0f Maximum Speed") );
+   DESC_ADD( temp->u.mod.armour,       _("%+.0f Armour") );
+   DESC_ADD( temp->u.mod.shield,       _("%+.0f Shield") );
+   DESC_ADD( temp->u.mod.energy,       _("%+.0f Energy") );
+   DESC_ADD( temp->u.mod.fuel,         _("%+.d Fuel") );
+   DESC_ADD( temp->u.mod.armour_regen, _("%+.1f Armour Per Second") );
+   DESC_ADD( temp->u.mod.shield_regen, _("%+.1f Shield Per Second") );
+   DESC_ADD( temp->u.mod.energy_regen, _("%+.1f Energy Per Second") );
+   DESC_ADD( temp->u.mod.absorb,       _("%+.0f Absorption") );
+   DESC_ADD( temp->u.mod.cargo,        _("%+.0f Cargo") );
+   DESC_ADD( temp->u.mod.crew_rel,     _("%+.0f %% Crew") );
+   DESC_ADD( temp->u.mod.mass_rel,     _("%+.0f %% Mass") );
 #undef DESC_ADD
 
    /* More processing. */
