@@ -45230,10 +45230,9 @@ msgstr "Leichtes Asterioidenfeld"
 
 #. commodity of interest not found
 #. no prices are known here
-#: src/map.c:1364 src/map.c:1365 src/map.c:1392 src/map.c:1393 src/map.c:1404
-#: src/map.c:1405
-msgid "No price info for"
-msgstr "Keine Preisinformation für"
+#: src/map.c:1527
+msgid "No price info for\n%s here"
+msgstr "Keine Preisinformation\nfür %s"
 
 #. Create window.
 #: src/map_find.c:231

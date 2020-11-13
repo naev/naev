@@ -31,6 +31,7 @@
 #include "nxml.h"
 #include "ndata.h"
 #include "map_system.h"
+#include "utf8.h"
 
 #define BUTTON_WIDTH    100 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
@@ -1523,12 +1524,18 @@ void map_renderCommod( double bx, double by, double x, double y,
 
 static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Commodity *c ) {
    int textw;
-   char buf[80];
-   textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
-   gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
-   snprintf(buf, 80,"%s here", c->name);
-   textw = gl_printWidthRaw( &gl_smallFont, buf);
-   gl_print( &gl_smallFont, x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
+   char buf[80], *line2;
+   size_t charn;
+
+   nsnprintf( buf, 80, _("No price info for\n%s here"), _(c->name) );
+   line2 = u8_strchr( buf, '\n', &charn );
+   if ( line2 != NULL ) {
+      *line2++ = '\0';
+      textw = gl_printWidthRaw( &gl_smallFont, line2 );
+      gl_print( &gl_smallFont, x + (sys->pos.x)*map_zoom - textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, line2 );
+   }
+   textw = gl_printWidthRaw( &gl_smallFont, buf );
+   gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, buf );
 }
 
 
