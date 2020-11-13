@@ -188,6 +188,8 @@ static int npc_rm( NPC_t *npc )
 static NPC_t *npc_arrayGet( unsigned int id )
 {
    int i;
+   if (npc_array == NULL)
+      return NULL;
    for (i=0; i<array_size( npc_array ); i++)
       if (npc_array[i].id == id)
          return &npc_array[i];
@@ -433,22 +435,7 @@ void npc_clear (void)
    for (i=0; i<array_size( npc_array ); i++)
       npc_free( &npc_array[i] );
 
-   /* Resize down. */
-   array_resize( &npc_array, 0 );
-}
-
-
-/**
- * @brief Frees the NPC stuff.
- */
-void npc_freeAll (void)
-{
-   /* Clear the NPC. */
-   npc_clear();
-
-   /* Free the array. */
-   if (npc_array != NULL)
-      array_free( npc_array );
+   array_free( npc_array );
    npc_array = NULL;
 }
 
@@ -458,7 +445,7 @@ void npc_freeAll (void)
  */
 int npc_getArraySize (void)
 {
-   if (npc_array == 0)
+   if (npc_array == NULL)
       return 0;
 
    return array_size( npc_array );
@@ -475,7 +462,7 @@ int npc_getNameArray( char **names, int n )
 {
    int i;
 
-   if (npc_array == 0)
+   if (npc_array == NULL)
       return 0;
 
    /* Create the array. */
@@ -496,7 +483,7 @@ int npc_getTextureArray( glTexture **tex, int n )
 {
    int i;
 
-   if (npc_array == 0)
+   if (npc_array == NULL)
       return 0;
 
    /* Create the array. */
@@ -513,7 +500,7 @@ int npc_getTextureArray( glTexture **tex, int n )
 const char *npc_getName( int i )
 {
    /* Make sure in bounds. */
-   if ((i<0) || (i>=array_size(npc_array)))
+   if (i<0 || npc_array == NULL || i>=array_size(npc_array))
       return NULL;
 
    return npc_array[i].name;
@@ -526,7 +513,7 @@ const char *npc_getName( int i )
 glTexture *npc_getTexture( int i )
 {
    /* Make sure in bounds. */
-   if ((i<0) || (i>=array_size(npc_array)))
+   if (i<0 || npc_array == NULL || i>=array_size(npc_array))
       return NULL;
 
    return npc_array[i].portrait;
@@ -539,7 +526,7 @@ glTexture *npc_getTexture( int i )
 const char *npc_getDesc( int i )
 {
    /* Make sure in bounds. */
-   if ((i<0) || (i>=array_size(npc_array)))
+   if (i<0 || npc_array == NULL || i>=array_size(npc_array))
       return NULL;
 
    return npc_array[i].desc;
@@ -552,7 +539,7 @@ const char *npc_getDesc( int i )
 int npc_isImportant( int i )
 {
    /* Make sure in bounds. */
-   if ((i<0) || (i>=array_size(npc_array)))
+   if (i<0 || npc_array == NULL || i>=array_size(npc_array))
       return 0;
 
    if (npc_array[i].priority < 5)
@@ -587,8 +574,7 @@ static int npc_approach_giver( NPC_t *npc )
    if ((ret==0) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
       if (ret==-1)
          mission_cleanup( misn );
-      npc_free( npc );
-      array_erase( &npc_array, &npc[0], &npc[1] );
+      npc_rm( npc );
       ret = 1;
    }
    else
@@ -608,7 +594,7 @@ int npc_approach( int i )
    NPC_t *npc;
 
    /* Make sure in bounds. */
-   if ((i<0) || (i>=array_size(npc_array)))
+   if (i<0 || npc_array == NULL || i>=array_size(npc_array))
       return -1;
 
    /* Comfortability. */
