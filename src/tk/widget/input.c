@@ -103,7 +103,7 @@ static void inp_render( Widget* inp, double bx, double by )
    y = by + inp->y;
 
    /* main background */
-   toolkit_drawRect( x, y, inp->w, inp->h, &cBlack, NULL );
+   toolkit_drawRect( x - 4, y - 4, inp->w + 8, inp->h + 8, &cBlack, NULL );
 
    if (inp->dat.inp.oneline)
       /* center vertically */
@@ -157,6 +157,9 @@ static void inp_render( Widget* inp, double bx, double by )
       }
    }
 
+   /* inner outline */
+   /* toolkit_drawOutline( x, y, inp->w, inp->h, 0.,
+         toolkit_colLight, NULL ); */
    /* outer outline */
    toolkit_drawOutline( x-2, y-2, inp->w + 4, inp->h + 4, 1.,
          &cGrey20, NULL );

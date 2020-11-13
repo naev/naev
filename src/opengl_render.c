@@ -178,8 +178,10 @@ void gl_blitTexture(  const glTexture* texture,
       const double x, const double y,
       const double w, const double h,
       const double tx, const double ty,
-      const double tw, const double th, const glColour *c )
+      const double tw, const double th, const glColour *c, const double angle )
 {
+   // Half width and height
+   double hw, hh; 
    gl_Matrix4 projection, tex_mat;
 
    glUseProgram(shaders.texture.program);
@@ -191,10 +193,21 @@ void gl_blitTexture(  const glTexture* texture,
    if (c == NULL)
       c = &cWhite;
 
+   hw = w/4.0;
+   hh = h/4.0;
+
+
    /* Set the vertex. */
    projection = gl_view_matrix;
-   projection = gl_Matrix4_Translate(projection, x, y, 0);
-   projection = gl_Matrix4_Scale(projection, w, h, 1);
+   if(!angle){
+     projection = gl_Matrix4_Translate(projection, x, y, 0);
+     projection = gl_Matrix4_Scale(projection, w, h, 1);
+   } else {
+     projection = gl_Matrix4_Translate(projection, x+hw, y+hh, 0);
+     projection = gl_Matrix4_Rotate2d(projection, angle);
+     projection = gl_Matrix4_Translate(projection, -hw, -hh, 0);
+     projection = gl_Matrix4_Scale(projection, w, h, 1);
+   }
    glEnableVertexAttribArray( shaders.texture.vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
          0, 2, GL_FLOAT, 0 );
@@ -249,17 +262,17 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
 {
    /* No interpolation. */
    if (!conf.interpolate || (tb == NULL)) {
-      gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );
+      gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
       return;
    }
 
    /* Corner cases. */
    if (inter == 1.) {
-      gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );
+      gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
       return;
    }
    else if (inter == 0.) {
-      gl_blitTexture( tb, x, y, w, h, tx, ty, tw, th, c );
+      gl_blitTexture( tb, x, y, w, h, tx, ty, tw, th, c, 0. );
       return;
    }
 
@@ -393,7 +406,7 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
    ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
 
    gl_blitTexture( sprite, x, y, w, h,
-         tx, ty, sprite->srw, sprite->srh, c );
+         tx, ty, sprite->srw, sprite->srh, c, 0. );
 }
 
 
@@ -494,7 +507,7 @@ void gl_blitStaticSprite( const glTexture* sprite, const double bx, const double
 
    /* actual blitting */
    gl_blitTexture( sprite, x, y, sprite->sw, sprite->sh,
-         tx, ty, sprite->srw, sprite->srh, c );
+         tx, ty, sprite->srw, sprite->srh, c, 0. );
 }
 
 
@@ -526,7 +539,7 @@ void gl_blitScaleSprite( const glTexture* sprite,
 
    /* actual blitting */
    gl_blitTexture( sprite, x, y, bw, bh,
-         tx, ty, sprite->srw, sprite->srh, c );
+         tx, ty, sprite->srw, sprite->srh, c, 0. );
 }
 
 
@@ -556,7 +569,7 @@ void gl_blitScale( const glTexture* texture,
 
    /* Actual blitting. */
    gl_blitTexture( texture, x, y, bw, bh,
-         tx, ty, texture->srw, texture->srh, c );
+         tx, ty, texture->srw, texture->srh, c, 0. );
 }
 
 /**
@@ -578,7 +591,7 @@ void gl_blitStatic( const glTexture* texture,
 
    /* actual blitting */
    gl_blitTexture( texture, x, y, texture->sw, texture->sh,
-         0., 0., texture->srw, texture->srh, c );
+         0., 0., texture->srw, texture->srh, c, 0. );
 }
 
 

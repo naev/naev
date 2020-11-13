@@ -38,6 +38,7 @@ static int guiL_mouseClickEnable( lua_State *L );
 static int guiL_mouseMoveEnable( lua_State *L );
 static int guiL_menuInfo( lua_State *L );
 static int guiL_menuSmall( lua_State *L );
+static int guiL_setMapOverlayBounds( lua_State *L );
 static const luaL_Reg guiL_methods[] = {
    { "viewport", guiL_viewport },
    { "fpsPos", guiL_fpsPos },
@@ -52,6 +53,7 @@ static const luaL_Reg guiL_methods[] = {
    { "mouseMoveEnable", guiL_mouseMoveEnable },
    { "menuInfo", guiL_menuInfo },
    { "menuSmall", guiL_menuSmall },
+   { "mapOverlayBounds", guiL_setMapOverlayBounds },
    {0,0}
 }; /**< GUI methods. */
 
@@ -423,4 +425,27 @@ static int guiL_menuSmall( lua_State *L )
    return 0;
 }
 
+
+/**
+ * @brief Sets map boundaries
+ *
+ *    @param top Top boundary in pixels
+ *    @param right Right boundary in pixels
+ *    @param bottom Bottom boundary in pixels
+ *    @param left Left boundary in pixels
+ *    @return 0 on success.
+ */
+static int guiL_setMapOverlayBounds( lua_State *L )
+{
+   int top, right, bottom, left;
+   NLUA_CHECKRW(L);
+
+   top = luaL_checkinteger(L,1);
+   right = luaL_checkinteger(L,2);
+   bottom = luaL_checkinteger(L,3);
+   left = luaL_checkinteger(L,4);
+
+   gui_setMapOverlayBounds(top, right, bottom, left);
+   return 0;
+}
 

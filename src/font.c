@@ -624,6 +624,20 @@ static int gl_printRawBase( const glFont *ft_font,
    return 0;
 }
 
+/** 
+ * @brief Wrapper for gl_printRaw for map overlay markers
+ *
+ * See gl_printRaw params (minus outlineR)
+ */
+void gl_printMarkerRaw( const glFont *ft_font,
+      const double x, const double y,
+      const glColour* c, const char *text)
+{
+   gl_printOutline( ft_font, 0, 0, x, y, c, 1, text, gl_printRawBase);
+   gl_printRawBase( ft_font, 0, 0, x, y, c, text, 0 );
+}
+
+
 
 /**
  * @brief Prints text on screen.
