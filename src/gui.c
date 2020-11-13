@@ -1468,15 +1468,16 @@ void gui_renderPlayer( double res, int overlay )
       x = player.p->solid->pos.x / res + map_overlay_center_x();
       y = player.p->solid->pos.y / res + map_overlay_center_y();
       r = 5.;
-   }
-   else {
+      w = SCREEN_W * 0.012;
+      h = SCREEN_W * 0.012;
+   } else {
       x = 0.;
       y = 0.;
       r = 3.;
+      w = SCREEN_W * 0.008;
+      h = SCREEN_W * 0.008;
    }
 
-   w = SCREEN_W * 0.012;
-   h = SCREEN_W * 0.012;
 
    /* Render the cross. */
    // gl_renderCross( x, y, r, &cRadar_player );
