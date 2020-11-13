@@ -4,7 +4,7 @@
 # Requires Python3
 # TFA_USER, TFA_PASS, TFA_IMAP should be exported before running
 #
-# Written by Jack Greiner (ProjectSynchro on Github: https://github.com/ProjectSynchro/) 
+# Written by Jack Greiner (ProjectSynchro on Github: https://github.com/ProjectSynchro/)
 #
 # This script should be run after querying for a Steam Guard code (attempting to login)
 # The 2FA code will be saved to a file called "2fa.txt" in the "extras/steam/2fa/" directory
@@ -13,66 +13,61 @@
 
 import imaplib
 import email
-from email.header import decode_header
 import os
 
 # account credentials
-username = os.environ['TFA_USER']
+user = os.environ['TFA_USER']
 password = os.environ['TFA_PASS']
-imapServer = os.environ['TFA_IMAP']
+imap_url = os.environ['TFA_IMAP']
 
 # Create file to store the 2FA code in
-file = open("extras/steam/2fa/2fa.txt","w")
+file = open("2fa.txt", "w")
 
-# create an IMAP4 class with SSL
-imap = imaplib.IMAP4_SSL(imapServer)
+# try to create IMAP connection and login
+connection = imaplib.IMAP4_SSL(imap_url)
+try:
+    connection.login(user, password)
+except:
+    print("Could not connect to IMAP server, check credentials or server status")
+    exit(1)
 
-# authenticate
-imap.login(username, password)
-status, messages = imap.select("INBOX")
+# Select default mailbox and search for all messages
+try:
+    connection.select()
+    result, data = connection.uid('search', None, "ALL")
+except:
+    print("Could not search the mailbox.. something is definitely wrong")
+    exit(1)
 
-# number of top emails to fetch
-N = 1
+body = ""
 
-# total number of emails
-messages = int(messages[0])
+# if successful, fetch the top 1 mail message (newest)
+if result == 'OK':
+    for num in data[0].split()[-1:]:
+        result, data = connection.uid('fetch', num, '(RFC822)')
 
-for i in range(messages, messages-N, -1):
-    # fetch the email message by ID
-    res, msg = imap.fetch(str(i), "(RFC822)")
-    for response in msg:
-        if isinstance(response, tuple):
-            # parse a bytes email into a message object
-            msg = email.message_from_bytes(response[1])
-            # decode the email subject
-            subject = decode_header(msg["Subject"])[0][0]
-            if isinstance(subject, bytes):
-                # if it's a bytes, decode to str
-                subject = subject.decode()
-            # email sender
-            from_ = msg.get("From")
-            # if the email message is multipart
-            if msg.is_multipart():
-                # iterate over email parts
-                for part in msg.walk():
-                    # extract content type of email
-                    content_type = part.get_content_type()
-                    content_disposition = str(part.get("Content-Disposition"))
-                    try:
-                        # get the email body
-                        body = part.get_payload(decode=True).decode()
-                        if content_type == "text/plain" and "attachment" not in content_disposition:
-                            # print text/plain emails and skip attachments
-                            # print(body)
-                            if "Steam" in body:
-                                found = body.find(":")+5
-                                file.write(body[found:found+5]+"\n")
-                            else:
-                                pass
-                    except:
-                        pass
+        # If fetching the message succeeds, parse the message.
+        if result == 'OK':
+            email_message = email.message_from_bytes(data[0][1])
+            if email_message.is_multipart():
+                for payload in email_message.get_payload():
+
+                    # Assemble the body of the message if the message is a multipart one
+                    body += str((payload.get_payload()))
             else:
-                pass
-file.close() 
-imap.close()
-imap.logout()
+                # Assemble the body of the message
+                body = str(email_message.get_payload())
+
+            # Write parsed TFA code to file
+            file.write(str(body.split('\n')[5])+"\n")
+        else:
+            print("Could not parse the message for some reason..")
+            exit(1)
+else:
+    print("Could not find any messages.. something has gone wrong.")
+    exit(1)
+
+# Close file and IMAP connections
+file.close()
+connection.close()
+connection.logout()
