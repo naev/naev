@@ -1305,7 +1305,7 @@ static const glColour* gui_getPilotColour( const Pilot* p )
 void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res, int overlay )
 {
    int x, y, sx, sy;
-   double px, py;
+   double px, py, rw, rh;
    glColour col;
 
    /* Make sure is in range. */
@@ -1369,7 +1369,11 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       // col = cRadar_hilight;
    col.a = 1.-interference_alpha;
 
-   gl_blitTexture( marker_pilot_gfx, px, py, 6, 6, 0, 0, 1, 1, &col, 0. );
+   /* Get ship render width/height */
+   rw = MIN(2*sx, w-px) * 4;
+   rh = MIN(2*sy, w-py) * 4;
+
+   gl_blitTexture( marker_pilot_gfx, px, py, rw, rh, 0, 0, 1, 1, &col, 0. );
 
 
    /* Draw name. */
