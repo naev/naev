@@ -41,7 +41,8 @@ if useNLS.disabled() == false
             '--package-version=' + meson.project_version(),
             '--msgid-bugs-address=' + issue_address,
             '--copyright-holder=' + copyright_holder
-            ]
+            ],
+        install_dir: ndata_path / 'dat/gettext',
     )
 
     # LANGUAGES file generation
