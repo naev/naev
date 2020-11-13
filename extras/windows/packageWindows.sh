@@ -74,7 +74,8 @@ cp -r "$SOURCEROOT/dat" "$STAGING"
 
 # Collect DLLs
 echo "Populating staging area with Meson subprojects' DLLs (if any)"
-find "${SOURCEROOT}/subprojects" -iname "*.dll" -exec cp -v "{}" "$STAGING" ";"
+find "${BUILDPATH}/subprojects" -iname "*.dll" -exec cp -v "{}" "$STAGING" ";"   # Native Meson subprojects
+find "${SOURCEROOT}/subprojects" -iname "*.dll" -exec cp -v "{}" "$STAGING" ";"  # Frankenstein subprojects wrapping in-tree builds
 echo "Locally install 'pefile' Python module"
 python3 -m pip install pefile
 echo "Collecting DLLs in staging area"
