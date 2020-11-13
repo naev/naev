@@ -1375,7 +1375,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
 
 
-   gl_blitTexture( marker_pilot_gfx, px, py, 6, 6, 0, 0, 1, 1, &col, 0. );
+   gl_blitTexture( marker_pilot_gfx, px, py, rw, rh, 0, 0, 1, 1, &col, 0. );
 
 
    /* Draw name. */
