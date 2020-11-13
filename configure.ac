@@ -237,6 +237,8 @@ AC_MSG_RESULT([$used_lua])
 
 # "Newish" GCC
 AC_CHECK_HEADERS([stdalign.h])
+AC_CHECK_DECLS([setenv])
+AC_CHECK_DECLS([_putenv_s]) # Windows only alternative to setenv
 
 # SDL
 AM_PATH_SDL2(2.0.0, [], [
