@@ -427,14 +427,13 @@ static void map_update( unsigned int wid )
       c = commod_known[cur_commod];
       if ( cur_commod_mode == 0 ) {
          snprintf( buf, PATH_MAX,
-                   "%s prices trading from %s shown: Positive/blue values mean a profit\n"
-                   "while negative/orange values mean a loss when sold at the corresponding system.",
+                   _("%s prices trading from %s shown: Positive/blue values mean a profit\n"
+                     "while negative/orange values mean a loss when sold at the corresponding system."),
                    c->name, sys->name );
          window_modifyText( wid, "txtSystemStatus", buf );
       } else {
-         snprintf(buf,PATH_MAX,"Known %s prices shown. Galaxy-wide average: %.2f",c->name,commod_av_gal_price);
+         snprintf(buf, PATH_MAX, _("Known %s prices shown. Galaxy-wide average: %.2f"), c->name, commod_av_gal_price);
          window_modifyText( wid, "txtSystemStatus", buf );
-
       }
    } else {
       window_modifyText( wid, "txtSystemStatus", NULL );
@@ -1748,15 +1747,15 @@ static void map_genModeList(void)
    }
    nmap_modes = 2*totGot + 1;
    map_modes = calloc( sizeof(char*), nmap_modes );
-   map_modes[0] = strdup("Travel (Default)");
+   map_modes[0] = strdup(_("Travel (Default)"));
 
    for ( i=0; i<totGot; i++ ) {
       l = strlen(commod_known[i]->name) + 7;
       map_modes[ 2*i + 1 ] = malloc(l);
-      nsnprintf(map_modes[2*i+1],l, "%s: Cost", commod_known[i]->name );
+      nsnprintf(map_modes[2*i+1],l, _("%s: Cost"), _(commod_known[i]->name) );
       l+=6;
       map_modes[ 2*i + 2 ] = malloc(l);
-      nsnprintf(map_modes[2*i+2],l, "%s: Trade", commod_known[i]->name );
+      nsnprintf(map_modes[2*i+2],l, _("%s: Trade"), _(commod_known[i]->name) );
    }
 }
 
@@ -2547,19 +2546,19 @@ int map_load (void)
    /* Handle the XML. */
    doc = xmlParseMemory( buf, bufsize );
    if (doc == NULL) {
-      WARN("'%s' is not valid XML.", MAP_DECORATOR_DATA_PATH);
+      WARN(_("'%s' is not valid XML."), MAP_DECORATOR_DATA_PATH);
       return -1;
    }
 
    node = doc->xmlChildrenNode; /* map node */
    if (strcmp((char*)node->name,"map")) {
-      ERR("Malformed "MAP_DECORATOR_DATA_PATH" file: missing root element 'map'");
+      ERR(_("Malformed %s file: missing root element 'map'"), MAP_DECORATOR_DATA_PATH );
       return -1;
    }
 
    node = node->xmlChildrenNode;
    if (node == NULL) {
-      ERR("Malformed "MAP_DECORATOR_DATA_PATH" file: does not contain elements");
+      ERR(_("Malformed %s file: does not contain elements"), MAP_DECORATOR_DATA_PATH);
       return -1;
    }
 
@@ -2576,13 +2575,13 @@ int map_load (void)
 
       }
       else
-         WARN("'"MAP_DECORATOR_DATA_PATH"' has unknown node '%s'.", node->name);
+         WARN("'%s' has unknown node '%s'.", MAP_DECORATOR_DATA_PATH, node->name);
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
    free(buf);
 
-   DEBUG("Loaded %d map decorators.", decorator_nstack);
+   DEBUG(_("Loaded %d map decorators."), decorator_nstack);
 
    return 0;
 }
@@ -2609,12 +2608,12 @@ static int map_decorator_parse( MapDecorator *temp, xmlNodePtr parent ) {
                MAP_DECORATOR_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
 
          if (temp->image == NULL) {
-            WARN("Could not load map decorator texture '%s'.", xml_get(node));
+            WARN(_("Could not load map decorator texture '%s'."), xml_get(node));
          }
 
          continue;
       }
-      WARN("Map decorator has unknown node '%s'.", node->name);
+      WARN(_("Map decorator has unknown node '%s'."), node->name);
    } while (xml_nextNode(node));
 
    return 0;
