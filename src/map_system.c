@@ -527,7 +527,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
         /* show some additional information */
         infocnt=nsnprintf( infobuf, sizeof(infobuf), "%s\n"
                          "%s\n%s\n%s\n%s\n%s\n%s\n%s",
-                          planet_hasService( p, PLANET_SERVICE_LAND) ? ("This system is landable") : _("This system is not landable"),
+                          planet_hasService( p, PLANET_SERVICE_LAND) ? _("This system is landable") : _("This system is not landable"),
                           planet_hasService( p, PLANET_SERVICE_INHABITED) ? _("This system is inhabited") : _("This system is not inhabited"),
                           planet_hasService( p, PLANET_SERVICE_REFUEL) ? _("You can refuel here") : _("You cannot refuel here"),
                           planet_hasService( p, PLANET_SERVICE_BAR) ? _("This system has a bar") : _("This system does not have a bar"),

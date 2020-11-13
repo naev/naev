@@ -334,7 +334,7 @@ static void setgui_load( unsigned int wdw, char *str )
    char *gui;
    int wid;
 
-   wid = window_get( "Select GUI" );
+   wid = window_get( N_("Select GUI") );
    gui = toolkit_getList( wid, "lstGUI" );
    if (strcmp(gui,_("None")) == 0)
       return;
@@ -1289,7 +1289,7 @@ static void info_shiplogAdd( unsigned int wid, char *str )
 
    logname = toolkit_getList( wid, "lstLogs" );
    if ( ( logname == NULL ) || ( strcmp( "All", logname ) == 0 ) ) {
-      tmp = dialogue_inputRaw( "Add a log entry", 0, 4096, "Add an entry to your diary:" );
+      tmp = dialogue_inputRaw( _("Add a log entry"), 0, 4096, _("Add an entry to your diary:") );
       if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
          if ( shiplog_getID( "Diary" ) == -1 )
               shiplog_create( "Diary", "Your Diary", "Diary", 0, 0 );
@@ -1297,13 +1297,13 @@ static void info_shiplogAdd( unsigned int wid, char *str )
          free( tmp );
       }
    } else {
-      tmp = dialogue_input( "Add a log entry", 0, 4096, "Add an entry to the log titled '%s':", logname );
+      tmp = dialogue_input( _("Add a log entry"), 0, 4096, _("Add an entry to the log titled '%s':"), logname );
       if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
          logid = shiplog_getIdOfLogOfType( logTypes[selectedLogType], selectedLog-1 );
          if ( logid >= 0 )
             shiplog_appendByID( logid, tmp );
          else
-            dialogue_msgRaw( "Cannot add log", "Cannot find this log!  Something went wrong here!" );
+            dialogue_msgRaw( _("Cannot add log"), _("Cannot find this log!  Something went wrong here!") );
          free( tmp );
       }
    }
