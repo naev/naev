@@ -90,27 +90,20 @@ jobs:
       run: |
         chmod +x src/naev
 
-        BUILD_DATE="$(date +%m_%d_%Y)"
+        BUILD_DATE="$(date +%Y%m%d)"
 
         VERSION="$(cat dat/VERSION)"
 
-        # Get version, negative minors mean betas
-        if [[ -n $(echo "${VERSION}" | grep "-") ]]; then
-          BASEVER=$(echo "${VERSION}" | sed 's/\.-.*//')
-          BETAVER=$(echo "${VERSION}" | sed 's/.*-//')
-          VERSION="${BASEVER}.0-beta.${BETAVER}"
-        fi
-
-        mkdir -p dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64
+        mkdir -p dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64
         mkdir -p dist/release/tar
 
-        mv src/naev dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64/naev-$VERSION-$BUILD_DATE-linux-x86-64
-        chmod +x dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64/naev-$VERSION-$BUILD_DATE-linux-x86-64
+        mv src/naev dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64/naev-$VERSION.$BUILD_DATE-linux-x86-64
+        chmod +x dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64/naev-$VERSION.$BUILD_DATE-linux-x86-64
 
-        cp -r dat/ dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64
+        cp -r dat/ dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64
 
         cd dist/release
-        tar -czvf linux-x86-64.tar.gz naev-$VERSION-$BUILD_DATE-linux-x86-64
+        tar -czvf linux-x86-64.tar.gz naev-$VERSION.$BUILD_DATE-linux-x86-64
         mv linux-x86-64.tar.gz tar/
 
     - name: Upload Artifact
@@ -265,19 +258,11 @@ jobs:
 
       - name: Collect files for distribution
         run: |
-          BUILD_DATE="$(date +%m_%d_%Y)"
+          BUILD_DATE="$(date +%Y%m%d)"
 
-          VERSION="$(cat dat/VERSION)"
-           # Get version, negative minors mean betas
-          if [[ -n $(echo "${VERSION}" | grep "-") ]]; then
-              BASEVER=$(echo "${VERSION}" | sed 's/\.-.*//')
-              BETAVER=$(echo "${VERSION}" | sed 's/.*-//')
-              VERSION="${BASEVER}.0-beta.${BETAVER}"
-          fi
-
-          mv dist/linux-x86-64/linux-x86-64.tar.gz dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64.tar.gz
-          mv dist/win64/naev-win64.exe dist/release/naev-$VERSION-$BUILD_DATE-win64.exe
-          mv dist/source/source.tar.gz dist/release/naev-$VERSION-$BUILD_DATE-source.tar.gz
+          mv dist/linux-x86-64/linux-x86-64.tar.gz dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64.tar.gz
+          mv dist/win64/naev-win64.exe dist/release/naev-$VERSION.$BUILD_DATE-win64.exe
+          mv dist/source/source.tar.gz dist/release/naev-$VERSION.$BUILD_DATE-source.tar.gz
 
       - name: Upload Release Assets
         uses: "marvinpinto/action-automatic-releases@latest"
