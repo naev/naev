@@ -1449,7 +1449,7 @@ void land_cleanup (void)
    mission_ncomputer = 0;
 
    /* Clean up bar missions. */
-   npc_freeAll();
+   npc_clear();
 
    /* Clean up rescue Lua. */
    if (rescue_env != LUA_NOREF) {
