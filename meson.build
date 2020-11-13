@@ -29,6 +29,12 @@ endif
 config_data = configuration_data()
 naev_deps = []
 
+ndata_path = get_option('ndata_path')
+if ndata_path == ''
+   ndata_path = get_option('datadir') / 'naev'
+endif
+summary('NData Path', ndata_path, section: 'Features')
+
 # Subdirs
 subdir('src')
 subdir('docs')
@@ -39,12 +45,6 @@ subdir('po')
 ####
 buildExec = get_option('executable')
 if buildExec.disabled() == false
-
-   ndata_path = get_option('ndata_path')
-   if ndata_path == ''
-      ndata_path = get_option('datadir') / 'naev'
-   endif
-   summary('NData Path', ndata_path, section: 'Features')
 
    debug    = get_option('debug')
    paranoid = get_option('paranoid')
