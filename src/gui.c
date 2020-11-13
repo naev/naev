@@ -1370,10 +1370,12 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    col.a = 1.-interference_alpha;
 
    /* Get ship render width/height */
-   rw = MIN(2*sx, w-px) * 4;
-   rh = MIN(2*sy, w-py) * 4;
+   rw = MIN(3*sx, w-px) * 2;
+   rh = MIN(3*sy, w-py) * 2;
 
-   gl_blitTexture( marker_pilot_gfx, px, py, rw, rh, 0, 0, 1, 1, &col, 0. );
+
+
+   gl_blitTexture( marker_pilot_gfx, px, py, 6, 6, 0, 0, 1, 1, &col, 0. );
 
 
    /* Draw name. */
