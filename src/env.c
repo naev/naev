@@ -38,6 +38,9 @@ void env_detect( int argc, char **argv )
 
 /**
  * @brief Sets an environment variable.
+ *
+ * @note SDL_setenv sadly does not work well on windows as an alternative for the function below.
+ *       In particular, it breaks changing the default language in the game.
  */
 int nsetenv( const char *name, const char *value, int overwrite )
 {
