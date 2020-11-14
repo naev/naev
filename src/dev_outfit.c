@@ -230,7 +230,7 @@ void dout_csvAmmo( const char *path )
 
       /* Get AI name, in lower case. */
       ai = strdup( outfit_getAmmoAI(o) );
-      for (j=0; j<(int)strlen(ai); j++)
+      for (j=0; ai[j]!='\0'; j++)
          ai[j] = tolower(ai[j]);
 
       l = nsnprintf( buf, sizeof(buf),

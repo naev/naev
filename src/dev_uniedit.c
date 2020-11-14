@@ -652,7 +652,7 @@ char *uniedit_nameFilter( char *name )
 
    out = calloc( 1, (strlen(name)+1)  );
    pos = 0;
-   for (i=0; i<(int)strlen(name); i++) {
+   for (i=0; name[i]!='\0'; i++) {
       if (!ispunct(name[i])) {
          if (name[i] == ' ')
             out[pos] = '_';
