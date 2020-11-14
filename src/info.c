@@ -607,7 +607,7 @@ static void weapons_autoweap( unsigned int wid, char *str )
 
    /* Run autoweapons if needed. */
    if (state) {
-      sure = dialogue_YesNoRaw( ("Enable autoweapons?"),
+      sure = dialogue_YesNoRaw( _("Enable autoweapons?"),
             _("Are you sure you want to enable automatic weapon groups for the "
             "ship?\n\nThis will overwrite all manually-tweaked weapons groups.") );
       if (!sure) {
