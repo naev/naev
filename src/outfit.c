@@ -768,27 +768,27 @@ double outfit_cooldown( const Outfit* o )
  * @brief Gets the outfit's specific type.
  *
  *    @param o Outfit to get specific type from.
- *    @return The specific type in human readable form.
+ *    @return The specific type in human readable form (English).
  */
 const char* outfit_getType( const Outfit* o )
 {
    const char* outfit_typename[] = {
-         "NULL",
-         "Bolt Cannon",
-         "Beam Cannon",
-         "Bolt Turret",
-         "Beam Turret",
-         "Launcher",
-         "Ammunition",
-         "Turret Launcher",
-         "Ship Modification",
-         "Afterburner",
-         "Fighter Bay",
-         "Fighter",
-         "Star Map",
-         "Local Map",
-         "GUI",
-         "License"
+         N_("NULL"),
+         N_("Bolt Cannon"),
+         N_("Beam Cannon"),
+         N_("Bolt Turret"),
+         N_("Beam Turret"),
+         N_("Launcher"),
+         N_("Ammunition"),
+         N_("Turret Launcher"),
+         N_("Ship Modification"),
+         N_("Afterburner"),
+         N_("Fighter Bay"),
+         N_("Fighter"),
+         N_("Star Map"),
+         N_("Local Map"),
+         N_("GUI"),
+         N_("License"),
    };
 
    /* Name override. */
