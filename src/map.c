@@ -1716,6 +1716,8 @@ static void map_genModeList(void)
    Planet *p;
    StarSystem *sys;
    int totGot = 0;
+   const char *odd_template, *even_template, *commod_text;
+
    if ( commod_known == NULL )
       commod_known = malloc(sizeof(Commodity*) * commodity_getN());
    memset(commod_known,0,sizeof(Commodity*)*commodity_getN());
@@ -1749,13 +1751,16 @@ static void map_genModeList(void)
    map_modes = calloc( sizeof(char*), nmap_modes );
    map_modes[0] = strdup(_("Travel (Default)"));
 
+   odd_template = _("%s: Cost");
+   even_template = _("%s: Trade");
    for ( i=0; i<totGot; i++ ) {
-      l = strlen(commod_known[i]->name) + 7;
+      commod_text = _(commod_known[i]->name);
+      l = strlen(odd_template) + strlen(commod_text) - 2 /*"%s"*/ + 1 /* '\0' */;
       map_modes[ 2*i + 1 ] = malloc(l);
-      nsnprintf(map_modes[2*i+1],l, _("%s: Cost"), _(commod_known[i]->name) );
-      l+=6;
+      nsnprintf( map_modes[2*i+1], l, odd_template, commod_text );
+      l = strlen(even_template) + strlen(commod_text) - 2 /*"%s"*/ + 1 /* '\0' */;
       map_modes[ 2*i + 2 ] = malloc(l);
-      nsnprintf(map_modes[2*i+2],l, _("%s: Trade"), _(commod_known[i]->name) );
+      nsnprintf( map_modes[2*i+2], l, even_template, commod_text );
    }
 }
 
