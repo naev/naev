@@ -299,7 +299,7 @@ static int outfitL_cpu( lua_State *L )
  * @usage slot_name, slot_size, slot_prop = o:slot() -- Gets an outfit's slot info
  *
  *    @luatparam Outfit o Outfit to get information of.
- *    @luatreturn string Human readable name.
+ *    @luatreturn string Human readable name (in English).
  *    @luatreturn string Human readable size.
  *    @luatreturn string Human readable property.
  * @luafunc slot( o )

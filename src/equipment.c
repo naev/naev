@@ -757,13 +757,13 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          return;
 
       pos = snprintf( alt, sizeof(alt),
-            "\aR%s", sp_display( slot->sslot->slot.spid ) );
+            "\aR%s", _( sp_display( slot->sslot->slot.spid ) ) );
       if (slot->sslot->slot.exclusive && (pos < (int)sizeof(alt)))
          pos += snprintf( &alt[pos], sizeof(alt)-pos,
                _(" [exclusive]") );
       if (pos < (int)sizeof(alt))
          snprintf( &alt[pos], sizeof(alt)-pos,
-               "\n\n%s", sp_description( slot->sslot->slot.spid ) );
+               "\n\n%s", _( sp_description( slot->sslot->slot.spid ) ) );
       toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
       return;
    }
@@ -784,7 +784,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aRUnique\a0") );
    if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
       pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aRSlot %s\a0"),
-            sp_display( o->slot.spid ) );
+            _( sp_display( o->slot.spid ) ) );
    if (pos < (int)sizeof(alt))
       pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
    if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
