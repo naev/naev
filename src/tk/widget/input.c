@@ -243,15 +243,7 @@ static int inp_addKey( Widget* inp, uint32_t ch )
  */
 static int inp_isBreaker(char c)
 {
-   char* breakers = ";:.-_ \n";
-   int i;
-
-   for (i = 0; i < (int)strlen(breakers); i++) {
-      if (breakers[i] == c)
-         return 1;
-   }
-
-   return 0;
+   return strchr(";:.-_ \n", c) != NULL;
 }
 
 
