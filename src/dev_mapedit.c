@@ -161,7 +161,7 @@ void mapedit_open( unsigned int wid_unused, char *unused )
    mapedit_ypos   = 0.;
 
    /* Create the window. */
-   wid = window_create( "Map Outfit Editor", -1, -1, -1, -1 );
+   wid = window_create( "wdwMapOutfitEditor", _("Map Outfit Editor"), -1, -1, -1, -1 );
    window_handleKeys( wid, mapedit_keys );
    mapedit_wid = wid;
 
@@ -743,7 +743,7 @@ void mapedit_saveMapMenu_open (void)
    //WARN("Entering function.");
 
    /* window */
-   wid = window_create( "Save to Map Outfit", -1, -1, MAPEDIT_SAVE_WIDTH, MAPEDIT_SAVE_HEIGHT );
+   wid = window_create( "wdwSavetoMapOutfit", _("Save to Map Outfit"), -1, -1, MAPEDIT_SAVE_WIDTH, MAPEDIT_SAVE_HEIGHT );
    mapedit_widSave = wid;
 
    /* Default actions */
@@ -856,7 +856,7 @@ void mapedit_loadMapMenu_open (void)
    //WARN("Entering function.");
 
    /* window */
-   wid = window_create( "Open Map Outfit", -1, -1, MAPEDIT_OPEN_WIDTH, MAPEDIT_OPEN_HEIGHT );
+   wid = window_create( "wdwOpenMapOutfit", _("Open Map Outfit"), -1, -1, MAPEDIT_OPEN_WIDTH, MAPEDIT_OPEN_HEIGHT );
    mapedit_widLoad = wid;
 
    /* Default actions */

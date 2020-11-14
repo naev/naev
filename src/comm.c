@@ -26,8 +26,6 @@
 #include "hook.h"
 #include "escort.h"
 
-#define COMM_WDWNAME    "Communication Channel" /**< Map window name. */
-
 #define BUTTON_WIDTH    80 /**< Button width. */
 #define BUTTON_HEIGHT   30 /**< Button height. */
 
@@ -69,7 +67,7 @@ static const char* comm_getString( char *str );
  */
 int comm_isOpen (void)
 {
-   return window_exists( COMM_WDWNAME );
+   return window_exists( "wdwComm" );
 }
 
 
@@ -114,7 +112,7 @@ int comm_openPilot( unsigned int pilot )
    }
 
    /* Destroy the window if it's already present. */
-   wid = window_get(COMM_WDWNAME);
+   wid = window_get( "wdwComm" );
    if (wid > 0) {
       window_destroy( wid );
       return 0;
@@ -227,7 +225,7 @@ int comm_openPlanet( Planet *planet )
    unsigned int wid;
 
    /* Destroy the window if it's already present. */
-   wid = window_get(COMM_WDWNAME);
+   wid = window_get( "wdwComm" );
    if (wid > 0) {
       window_destroy( wid );
       return 0;
@@ -338,7 +336,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    }
 
    /* Create the window. */
-   wid = window_create( COMM_WDWNAME, -1, -1,
+   wid = window_create( "wdwComm", _("Communication Channel"), -1, -1,
          20 + GRAPHIC_WIDTH + 20 + BUTTON_WIDTH + 20,
          30 + GRAPHIC_HEIGHT + y + 5 + 20 );
    window_setCancel( wid, comm_close );

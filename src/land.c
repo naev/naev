@@ -923,7 +923,7 @@ void land_genWindows( int load, int changetab )
       w = 800 + 0.5 * (SCREEN_W - 800);
       h = 600 + 0.5 * (SCREEN_H - 600);
    }
-   land_wid = window_create( p->name, -1, -1, w, h );
+   land_wid = window_create( "wdwLand", _(p->name), -1, -1, w, h );
    window_onClose( land_wid, land_cleanupWindow );
 
    /* Set window map to invalid. */

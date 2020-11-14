@@ -119,7 +119,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
       /* Create windows with flags.
        * Parent window handles events for the children.
        */
-      wgt->dat.tab.windows[i] = window_createFlags( tabnames[i], wx, wy, ww, wh,
+      wgt->dat.tab.windows[i] = window_createFlags( tabnames[i], tabnames[i], wx, wy, ww, wh,
             WINDOW_NOFOCUS | WINDOW_NORENDER | WINDOW_NOINPUT | WINDOW_NOBORDER );
    }
 

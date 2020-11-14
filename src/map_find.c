@@ -226,7 +226,7 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
    map_found_ncur = n;
 
    /* Create window. */
-   wid = window_create( N_("Search Results"), -1, -1, 500, 452 );
+   wid = window_create( "wswFindResult", _("Search Results"), -1, -1, 500, 452 );
    window_setParent( wid, parent );
    window_setAccept( wid, map_findDisplayMark );
    window_setCancel( wid, window_close );
@@ -1075,7 +1075,7 @@ void map_inputFind( unsigned int parent, char* str )
    /* Create the window. */
    w = 400;
    h = 220;
-   wid = window_create( "Find...", -1, -1, w, h );
+   wid = window_create( "wdwFind", _("Find..."), -1, -1, w, h );
    window_setAccept( wid, map_findSearch );
    window_setCancel( wid, map_findClose );
    window_setParent( wid, parent );

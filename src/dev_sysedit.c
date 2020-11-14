@@ -179,7 +179,7 @@ void sysedit_open( StarSystem *sys )
 
    /* Create the window. */
    nsnprintf( buf, sizeof(buf), _("%s - Star System Editor"), sys->name );
-   wid = window_create( buf, -1, -1, -1, -1 );
+   wid = window_create( "wdwSysEdit", buf, -1, -1, -1, -1 );
    window_handleKeys( wid, sysedit_keys );
    sysedit_wid = wid;
 
@@ -1248,7 +1248,7 @@ static void sysedit_editPnt( void )
 
    /* Create the window. */
    nsnprintf(title, sizeof(title), _("Planet Property Editor - %s"), p->name);
-   wid = window_create( title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwSysEditPnt", title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    sysedit_widEdit = wid;
 
    window_setCancel( wid, sysedit_editPntClose );
@@ -1410,7 +1410,7 @@ static void sysedit_editJump( void )
    j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
 
    /* Create the window. */
-   wid = window_create( _("Jump Point Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwJumpPointEditor", _("Jump Point Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    sysedit_widEdit = wid;
 
    bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
@@ -1503,7 +1503,7 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
 
    /* Create the window. */
    nsnprintf(title, sizeof(title), _("Planet Information - %s"), p->name);
-   wid = window_create( title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwPlanetDesc", title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
    x = 20;
@@ -1707,7 +1707,7 @@ static void sysedit_btnTechEdit( unsigned int wid, char *unused )
    int y, w, bw;
 
    /* Create the window. */
-   wid = window_create( _("Planet Tech Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwPlanetTechEditor", _("Planet Tech Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
    w = (SYSEDIT_EDIT_WIDTH - 40 - 15) / 2.;
@@ -1871,7 +1871,7 @@ static void sysedit_btnFaction( unsigned int wid_unused, char *unused )
    char **str;
 
    /* Create the window. */
-   wid = window_create( _("Modify Faction"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwModifyFaction", _("Modify Faction"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
    /* Generate factions list. */
@@ -1964,7 +1964,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
    /* Create the window. */
    nsnprintf( buf, sizeof(buf), _("%s - Planet Properties"), p->name );
-   wid = window_create( buf, -1, -1, -1, -1 );
+   wid = window_create( "wdwPlanetGFX", buf, -1, -1, -1, -1 );
    window_dimWindow( wid, &w, &h );
 
    window_setCancel( wid, sysedit_btnGFXClose );

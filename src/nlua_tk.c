@@ -312,7 +312,7 @@ static int tk_merchantOutfit( lua_State *L )
       w = 800 + 0.5 * (SCREEN_W - 800);
       h = 600 + 0.5 * (SCREEN_H - 600);
    }
-   wid = window_create( name, -1, -1, w, h );
+   wid = window_create( "wdwMerchantOutfit", name, -1, -1, w, h );
    outfits_open( wid, outfits, noutfits );
 
    return 0;

@@ -114,7 +114,7 @@ void opt_menu (void)
    h = 525;
 
    /* Create window and tabs. */
-   opt_wid = window_create( N_("Options"), -1, -1, w, h );
+   opt_wid = window_create( "wdwOptions", _("Options"), -1, -1, w, h );
    window_setCancel( opt_wid, opt_close );
 
    /* Create tabbed window. */
@@ -1170,7 +1170,7 @@ static void opt_setKey( unsigned int wid, char *str )
    /* Create new window. */
    w = 20 + 2*(BUTTON_WIDTH + 20);
    h = 20 + BUTTON_HEIGHT + 20 + 20 + 80 + 40;
-   new_wid = window_create( N_("Set Keybinding"), -1, -1, w, h );
+   new_wid = window_create( "wdwSetKey", _("Set Keybinding"), -1, -1, w, h );
    window_handleEvents( new_wid, opt_setKeyEvent );
    window_setParent( new_wid, wid );
 

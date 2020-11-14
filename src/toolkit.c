@@ -480,24 +480,26 @@ unsigned int window_get( const char* wdwname )
 /**
  * @brief Creates a window.
  *
- *    @param name Name of the window to create.
+ *    @param name Window name to use internally - should be unique.
+ *    @param displayname Title displayed on the window.
  *    @param x X position of the window (-1 centers).
  *    @param y Y position of the window (-1 centers).
  *    @param w Width of the window (-1 fullscreen).
  *    @param h Height of the window (-1 fullscreen).
  *    @return Newly created window's ID.
  */
-unsigned int window_create( const char* name,
+unsigned int window_create( const char* name, const char *displayname,
       const int x, const int y, const int w, const int h )
 {
-   return window_createFlags( name, x, y, w, h, 0 );
+   return window_createFlags( name, displayname, x, y, w, h, 0 );
 }
 
 
 /**
  * @brief Creates a window.
  *
- *    @param name Name of the window to create.
+ *    @param name Window name to use internally - should be unique.
+ *    @param displayname Title displayed on the window.
  *    @param x X position of the window (-1 centers).
  *    @param y Y position of the window (-1 centers).
  *    @param w Width of the window (-1 fullscreen).
@@ -505,7 +507,7 @@ unsigned int window_create( const char* name,
  *    @param flags Initial flags to set.
  *    @return Newly created window's ID.
  */
-unsigned int window_createFlags( const char* name,
+unsigned int window_createFlags( const char* name, const char *displayname,
       const int x, const int y, const int w, const int h, unsigned int flags )
 {
    Window *wcur, *wlast, *wdw;
@@ -519,7 +521,7 @@ unsigned int window_createFlags( const char* name,
 
    wdw->id           = wid;
    wdw->name         = strdup(name);
-   wdw->displayname  = _(wdw->name);
+   wdw->displayname  = strdup(displayname);
 
    /* Safe defaults. */
    wdw->idgen        = -1;
@@ -895,6 +897,8 @@ static void window_kill( Window *wdw )
    /* Destroy the window. */
    if (wdw->name)
       free(wdw->name);
+   if (wdw->displayname)
+      free(wdw->displayname);
    wgt = wdw->widgets;
    while (wgt != NULL) {
       wgtkill = wgt;

@@ -301,7 +301,7 @@ void load_loadGameMenu (void)
    int i, n, len;
 
    /* window */
-   wid = window_create( "Load Game", -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
+   wid = window_create( "wdwLoadGameMenu", _("Load Game"), -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
    window_setAccept( wid, load_menu_load );
    window_setCancel( wid, load_menu_close );
 
@@ -416,7 +416,7 @@ static void load_menu_load( unsigned int wdw, char *str )
    int n;
    int diff;
 
-   wid = window_get( "Load Game" );
+   wid = window_get( "wdwLoadGameMenu" );
    save = toolkit_getList( wid, "lstSaves" );
 
    if (strcmp(save,_("None")) == 0)
@@ -463,7 +463,7 @@ static void load_menu_delete( unsigned int wdw, char *str )
    nsave_t *ns;
    int n;
 
-   wid = window_get( "Load Game" );
+   wid = window_get( "wdwLoadGameMenu" );
    save = toolkit_getList( wid, "lstSaves" );
 
    if (strcmp(save,"None") == 0)

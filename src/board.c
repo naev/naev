@@ -146,7 +146,7 @@ void player_board (void)
    /*
     * create the boarding window
     */
-   wdw = window_create( "Boarding", -1, -1, BOARDING_WIDTH, BOARDING_HEIGHT );
+   wdw = window_create( "wdwBoarding", _("Boarding"), -1, -1, BOARDING_WIDTH, BOARDING_HEIGHT );
 
    window_addText( wdw, 20, -30, 120, 60,
          0, "txtCargo", &gl_smallFont, NULL,
