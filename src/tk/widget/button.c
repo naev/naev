@@ -14,6 +14,7 @@
 
 #include <stdlib.h>
 #include "nstring.h"
+#include "utf8.h"
 
 
 static int btn_mclick( Widget* btn, int button, int x, int y );
@@ -230,10 +231,10 @@ void window_buttonCaption( const unsigned int wid, const char *name, const char 
  */
 static void btn_updateHotkey( Widget *btn )
 {
-   char buf[PATH_MAX], *display, target;
+   char buf[PATH_MAX], *display, target, cut_byte;
    const char *keyname;
-   size_t i;
-   int match;
+   size_t match;
+   uint32_t ch;
 
    keyname = SDL_GetKeyName(btn->dat.btn.key);
    if (strlen(keyname) != 1) /* Only interested in single chars. */
@@ -242,24 +243,24 @@ static void btn_updateHotkey( Widget *btn )
    target = keyname[0];
    if (!isalnum(target)) /* We filter to alpha numeric characters. */
       return;
-   target = tolower(target);
+   target = tolower(target); /* OK given restrictions, else maybe case-fold it. */
 
    /* Find first occurence in string. */
    display  = btn->dat.btn.display;
-   match    = -1;
-   for (i=0; i<strlen(display); i++) {
-      if (tolower(display[i])==target) {
-         match = i;
+   match    = 0;
+   while (1) {
+      ch = u8_nextchar( display, &match );
+      if (ch == 0)
+         return;
+      if (ch < 0x80 && tolower((int)ch) == target)
          break;
-      }
    }
-   if (match < 0)
-      return;
-   target         = display[match]; /* Store character, can be uppercase. */
-   display[match] = '\0'; /* Cuts the string into two. */
+   u8_dec( display, &match);
+   cut_byte       = display[match]; /* Cut string in two. */
+   display[match] = '\0';
 
-   /* Copy both parts and insert the character in the middle. */
-   nsnprintf( buf, sizeof(buf), "%s\aw%c\a0%s", display, target, &display[match+1] );
+   /* Copy both parts and insert the byte in the middle. */
+   nsnprintf( buf, sizeof(buf), "%s\aw%c\a0%s", display, cut_byte, &display[match+1] );
 
    /* Should never be NULL. */
    free(btn->dat.btn.display);
