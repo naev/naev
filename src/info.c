@@ -51,13 +51,13 @@
 #define INFO_WIN_STAND     5
 #define INFO_WIN_SHIPLOG   6
 static const char *info_names[INFO_WINDOWS] = {
-   "Main",
-   "Ship",
-   "Weapons",
-   "Cargo",
-   "Missions",
-   "Standings",
-   "Ship log"
+   N_("Main"),
+   N_("Ship"),
+   N_("Weapons"),
+   N_("Cargo"),
+   N_("Missions"),
+   N_("Standings"),
+   N_("Ship log"),
 }; /**< Name of the tab windows. */
 
 
@@ -118,6 +118,8 @@ static void info_openShipLog( unsigned int wid );
 void menu_info( int window )
 {
    int w, h;
+   size_t i;
+   char **names;
 
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
@@ -138,8 +140,11 @@ void menu_info( int window )
    window_setCancel( info_wid, info_close );
 
    /* Create tabbed window. */
+   names = calloc( sizeof(char*), sizeof(info_names)/sizeof(char*) );
+   for (i=0; i<sizeof(info_names)/sizeof(char*); i++)
+      names[i] = gettext(info_names[i]);
    info_windows = window_addTabbedWindow( info_wid, -1, -1, -1, -1, "tabInfo",
-         INFO_WINDOWS, info_names, 0 );
+         INFO_WINDOWS, (const char**)names, 0 );
 
    /* Open the subwindows. */
    info_openMain(       info_windows[ INFO_WIN_MAIN ] );
