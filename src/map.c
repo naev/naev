@@ -429,10 +429,10 @@ static void map_update( unsigned int wid )
          snprintf( buf, PATH_MAX,
                    _("%s prices trading from %s shown: Positive/blue values mean a profit\n"
                      "while negative/orange values mean a loss when sold at the corresponding system."),
-                   c->name, sys->name );
+                   _(c->name), _(sys->name) );
          window_modifyText( wid, "txtSystemStatus", buf );
       } else {
-         snprintf(buf, PATH_MAX, _("Known %s prices shown. Galaxy-wide average: %.2f"), c->name, commod_av_gal_price);
+         snprintf(buf, PATH_MAX, _("Known %s prices shown. Galaxy-wide average: %.2f"), _(c->name), commod_av_gal_price);
          window_modifyText( wid, "txtSystemStatus", buf );
       }
    } else {
