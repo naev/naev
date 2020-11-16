@@ -594,8 +594,6 @@ static void map_system_array_update( unsigned int wid, char* str ) {
    Outfit *outfit;
    Ship *ship;
    double mass;
-   char *license_text;
-   int len;
    char buf2[ECON_CRED_STRLEN], buf4[PATH_MAX];
 
    name = toolkit_getImageArray( wid, str );
@@ -642,18 +640,6 @@ static void map_system_array_update( unsigned int wid, char* str ) {
    /* update text */
       price2str( buf2, ship_buyPrice( ship ), player.p->credits, 2 );
 
-      /* Remove the word " License".  It's redundant and makes the text overflow
-         into another text box */
-      license_text = ship->license;
-      if (license_text ) {
-         len = strlen( ship->license );
-         if ( strcmp( " License", ship->license + len - 8 ) == 0 ) {
-            license_text = malloc( len - 7 );
-            assert( license_text );
-            memcpy( license_text, ship->license, len - 8 );
-            license_text[len - 8] = '\0';
-         }
-      }
       nsnprintf( infobuf, PATH_MAX,
                  _("\anModel:\a0 %s    "
                    "\anClass:\a0 %s\n"
@@ -697,12 +683,9 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                  ship->fuel,
                  ship->fuel_consumption,
                  buf2,
-                 (license_text != NULL) ? license_text : _("None"),
+                 (ship->license != NULL) ? _(ship->license) : _("None"),
                  ship->desc_stats
                  );
-      if ( license_text != ship->license )
-         free( license_text );
-
    } else if ( ( strcmp( str, MAPSYS_TRADE ) == 0 ) ) {
       Commodity *com;
       credits_t mean;
