@@ -1,5 +1,6 @@
 require("ai/tpl/generic.lua")
 require("ai/personality/patrol.lua")
+require "numstring.lua"
 
 -- Settings
 mem.armour_run = 40
@@ -27,7 +28,7 @@ function create ()
          mem.refuel = mem.refuel * 0.6
       end
       -- Most likely no chance to refuel
-      mem.refuel_msg = string.format( _("\"I suppose I could spare some fuel for %d credits.\""), mem.refuel )
+      mem.refuel_msg = string.format( _("\"I suppose I could spare some fuel for %s.\""), creditstring(mem.refuel) )
    end
 
    -- Handle bribing

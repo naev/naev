@@ -1,5 +1,6 @@
 require("ai/tpl/generic.lua")
 require("ai/personality/patrol.lua")
+require "numstring.lua"
 
 -- Settings
 mem.aggressive = true
@@ -33,7 +34,7 @@ function create ()
       if standing < 50 then
          mem.refuel_no = _("\"You are not worthy of my attention.\"")
       else
-         mem.refuel_msg = string.format(_("\"For you I could make an exception for %d credits.\""), mem.refuel)
+         mem.refuel_msg = string.format(_("\"For you I could make an exception for %s.\""), creditstring(mem.refuel))
       end
    end
 
