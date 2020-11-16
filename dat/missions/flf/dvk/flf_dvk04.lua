@@ -59,7 +59,6 @@ pay_text[1] = _([[When you return, Benito hands you the agreed-upon payment, aft
 
 misn_title = _("Diversion from Haleb")
 misn_desc = _("A covert operation is being conducted in Haleb. You are to create a diversion from this operation by wreaking havoc in the nearby %s system.")
-misn_reward = _("%s credits")
 
 npc_name = _("Benito")
 npc_desc = _("Benito looks in your direction and waves you over. It seems your services are needed again.")
@@ -92,7 +91,7 @@ function accept ()
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( missys:name() ) )
       marker = misn.markerAdd( missys, "plot" )
-      misn.setReward( misn_reward:format( numstring( credits ) ) )
+      misn.setReward( creditstring( credits ) )
 
       dv_attention = 0
       job_done = false

@@ -61,7 +61,6 @@ text[5] = _([[Chelsea pops up on your viewscreen and grins. "We did it!" they sa
 
 misn_title = _("Moving Up")
 misn_desc = _("Chelsea needs you help them kill a wanted pirate in %s.")
-misn_reward = _("%s credits")
 
 npc_name = _("Chelsea")
 npc_desc = _("Oh, it's Chelsea! You feel an urge to say hello.")
@@ -116,7 +115,7 @@ function accept ()
 
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( missys:name() ) )
-      misn.setReward( misn_reward:format( numstring( credits ) ) )
+      misn.setReward( creditstring( credits ) )
       marker = misn.markerAdd( missys, "high" )
 
       hook.enter( "enter" )

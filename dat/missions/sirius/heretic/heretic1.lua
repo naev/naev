@@ -48,7 +48,6 @@ misn_title = _("The Return")
 npc_name = _("A Tall Man")
 bar_desc = _("A tall man sitting at a table littered with papers.")
 misn_desc = _("Shaman of Nasin has hired you to deliver the message to %s in the %s system.")
-misn_reward = _("%s credits")
 osd = {}
 osd[1] = _("Fly to %s in the %s system and deliver the message")
 
@@ -64,7 +63,7 @@ function create()
    targetasset, targetsystem = planet.get("The Wringer")
    --set the mission stuff
    misn.setTitle(misn_title)
-   misn.setReward(misn_reward:format(numstring(reward)))
+   misn.setReward(creditstring(reward))
    misn.setNPC(npc_name, "sirius/unique/shaman")
    misn.setDesc(bar_desc)
 

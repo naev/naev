@@ -35,7 +35,6 @@ require "missions/neutral/common.lua"
 bar_desc = _("A bunch of scientists seem to be chattering nervously among themselves.")
 mtitle = {}
 mtitle[1] = _("Nebula Satellite")
-misn_reward = _("%s credits")
 mdesc = {}
 mdesc[1] = _("Go to the %s system to launch the probe.")
 mdesc[2] = _("Drop off the scientists at %s in the %s system.")
@@ -103,7 +102,7 @@ function accept ()
 
    -- Set up mission information
    misn.setTitle( mtitle[1] )
-   misn.setReward( string.format( misn_reward, numstring(credits) ) )
+   misn.setReward( creditstring(credits) )
    misn.setDesc( string.format( mdesc[1], satellite_sys:name() ) )
    misn_marker = misn.markerAdd( satellite_sys, "low" )
 

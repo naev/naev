@@ -48,7 +48,6 @@ bar_desc = _("This man leans against the bar while looking right at you.")
 chronic_failure = _([[Draga's face goes red with fury when he sees you. For a moment you start to worry he might beat you into a pulp for abandoning your mission, but he moves along, fuming. You breathe a sigh of release; you may have angered Nasin, but at least you're still alive.]])
 out_sys_failure_msg = _([[As you abandon your mission, you receive a message from Draga saying that Nasin has no need for deserters. You hope you made the right decision.]])
 misn_desc = _("You have been hired once again by Nasin, this time to destroy a Sirius patrol that has entered %s.")
-misn_reward = _("%s credits")
 
 log_text = _([[You eliminated a Sirian patrol for Draga, high commander of Nasin's operations. He said that Nasin will have another mission for you if you meet him in the bar on The Wringer again.]])
 
@@ -71,7 +70,7 @@ function create()
    deathcount = 0
    --set the mission stuff
    misn.setTitle(misn_title)
-   misn.setReward(misn_reward:format(numstring(reward)))
+   misn.setReward(creditstring(reward))
    misn.setNPC(npc_name, "sirius/unique/draga")
    misn.setDesc(bar_desc)
 

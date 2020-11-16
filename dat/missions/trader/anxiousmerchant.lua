@@ -42,7 +42,6 @@ bar_desc = _("You see a merchant at the bar in a clear state of anxiety.")
 
 --- Missions details
 misn_title = _("Anxious Merchant")
-misn_reward = _("%s credits")
 
 -- OSD
 osd_title = _("Help the Merchant")
@@ -131,7 +130,7 @@ function accept()
 
    -- mission details
    misn.setTitle(misn_title)
-   misn.setReward(misn_reward:format(numstring(payment)))
+   misn.setReward(creditstring(payment))
    misn.setDesc(misn_desc:format(dest_planet:name()))
    marker = misn.markerAdd(dest_sys, "low") -- destination
    cargo_ID = misn.cargoAdd(cargo, cargo_size) -- adds cargo

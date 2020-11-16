@@ -32,7 +32,6 @@ require "missions/empire/common.lua"
 
 bar_desc = _("You see an Empire Commander. He seems to have noticed you.")
 misn_title = _("Prisoner Exchange")
-misn_reward = _("%s credits")
 misn_desc = {}
 misn_desc[1] = _("Go to %s in the %s system to exchange prisoners with the FLF")
 misn_desc[2] = _("Return to %s in the %s system to report what happened")
@@ -87,7 +86,7 @@ function accept ()
    misn_stage = 0
    reward = 500000
    misn.setTitle(misn_title)
-   misn.setReward( string.format(misn_reward, numstring(reward)) )
+   misn.setReward( creditstring(reward) )
    misn.setDesc( string.format(misn_desc[1], dest:name(), destsys:name()))
 
    -- Flavour text and mini-briefing

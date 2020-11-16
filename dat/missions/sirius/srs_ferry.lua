@@ -42,7 +42,6 @@ require "numstring.lua"
 
 misn_title = _("SR: %s pilgrimage transport for %s-class citizen")
 misn_desc = _("%s in the %s system requests transport to %s.")
-misn_reward = _("%s credits")
 
 dest_planet_name = "Mutris"
 dest_sys_name = "Aesir"
@@ -244,7 +243,7 @@ function create()
     misn.markerAdd(destsys, "computer")
     misn.setTitle( string.format(misn_title, ferrytime[print_speed], prank[rank]) )
     misn.setDesc(title_p1:format( ferrytime[print_speed], destplanet:name(), prank[rank]) .. title_p2:format(numjumps, traveldist, (timelimit - time.get()):str()))
-    misn.setReward(misn_reward:format(numstring(reward)))
+    misn.setReward(creditstring(reward))
 
     -- Set up passenger details so player cannot keep trying to get a better outcome
     destpicky = rnd.rnd(1,4)

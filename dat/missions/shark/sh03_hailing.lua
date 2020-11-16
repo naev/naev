@@ -57,7 +57,6 @@ text[4] = _([[The captain of the Hawking answers you. When you say that you have
 
 -- Mission details
 misn_title = _("Invitation")
-misn_reward = _("%s credits")
 misn_desc = _("Nexus Shipyards asks you to help initiate a secret meeting")
 
 -- NPC
@@ -103,7 +102,7 @@ function accept()
       osd_msg[2] = osd_msg[2]:format(pplname, psyname)
 
       misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward)))
+      misn.setReward(creditstring(reward))
       misn.setDesc(misn_desc)
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)

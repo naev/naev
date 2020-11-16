@@ -48,7 +48,6 @@ npc_name = _("A Scrappy Man")
 bar_desc = _("You see a rougher looking man sitting at the bar and guzzling a brownish ale.")
 misn_desc = _("You are to deliver a shipment to %s in the %s system for a strange man you met at a bar, avoiding Sirius ships.")
 misn_title = _("The Gauntlet")
-misn_reward = _("%s credits")
 
 log_text = _([[You helped a rough-looking man deliver an illegal shipment. After you completed the delivery, another man told you that there may be another mission opportunity and that you should meet some commander in the bar on Margot if you're interested.]])
 
@@ -64,7 +63,7 @@ function create()
       misn.finish(false)
    end
    --set the mission stuff
-   misn.setReward(misn_reward:format(numstring(reward)))
+   misn.setReward(creditstring(reward))
    misn.setTitle(misn_title)
    misn.setNPC(npc_name, "sirius/unique/strangeman")
    misn.setDesc(bar_desc)

@@ -58,7 +58,6 @@ text[6] = _([[As you dock, you can't help but notice the foul smell of garbage a
 
 misn_title = _("Waste Collector")
 misn_desc = _("Chelsea needs an escort to %s so they can get rid of the garbage now filling their ship.")
-misn_reward = _("%s credits")
 
 npc_name = _("Chelsea")
 npc_desc = _("Chelsea seems like they're stressed. Maybe you should see how they're doing?")
@@ -96,7 +95,7 @@ function accept ()
 
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( misplanet:name() ) )
-      misn.setReward( misn_reward:format( numstring( credits ) ) )
+      misn.setReward( creditstring( credits ) )
       marker = misn.markerAdd( missys, "low" )
 
       osd_desc[1] = osd_desc[1]:format( misplanet:name(), missys:name() )

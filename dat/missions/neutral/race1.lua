@@ -58,7 +58,6 @@ NPCname = _("A laid back person")
 NPCdesc = _("You see a laid back person, who appears to be one of the locals, looking around the bar.")
 
 misndesc = _("You're participating in a race!")
-misnreward = _("%s credits")
 
 OSDtitle = _("Racing Skills 1")
 OSD = {}
@@ -100,7 +99,7 @@ function accept ()
       misn.accept()
       OSD[4] = string.format(OSD[4], curplanet:name())
       misn.setDesc(misndesc)
-      misn.setReward(misnreward:format(numstring(credits)))
+      misn.setReward(creditstring(credits))
       misn.osdCreate(OSDtitle, OSD)
       tk.msg(title[2], string.format(text[2], curplanet:name(), curplanet:name()))
       hook.takeoff("takeoff")

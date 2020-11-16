@@ -57,7 +57,6 @@ landtext = _([[As you dock you can barely stop Chelsea from jumping out of your 
 
 misn_title = _("Coming of Age")
 misn_desc = _("Chelsea needs you to take her to %s so she can buy her first ship and kick off her piloting career.")
-misn_reward = _("%s credits")
 
 npc_name = _("Chelsea")
 npc_desc = _("She seems to just be sitting by idly. It's been a while; maybe you should say hi?")
@@ -96,7 +95,7 @@ function accept ()
 
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( misplanet:name() ) )
-      misn.setReward( misn_reward:format( numstring( credits ) ) )
+      misn.setReward( creditstring( credits ) )
       marker = misn.markerAdd( missys, "low" )
 
       osd_desc[1] = osd_desc[1]:format( missys:name(), misplanet:name() )

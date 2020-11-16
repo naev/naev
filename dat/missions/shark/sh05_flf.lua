@@ -67,7 +67,6 @@ text[5] = _([[The FLF officers are clearly ready for battle, but after subduing 
 
 -- Mission details
 misn_title = _("The FLF Contact")
-misn_reward = _("%s credits")
 misn_desc = _("Nexus Shipyards is looking to strike a better deal with the FLF.")
 
 -- NPC
@@ -106,7 +105,7 @@ function accept()
       tk.msg(title[2], text[2]:format(nextsys:name()))
 
       misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward)))
+      misn.setReward(creditstring(reward))
       misn.setDesc(misn_desc)
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)
