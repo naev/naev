@@ -167,7 +167,7 @@ static glFont* dialogue_getSize( const char* title,
    int i, titlelen, msglen;
 
    /* Get title length. */
-   titlelen = gl_printWidthRaw( &gl_defFont, title );
+   titlelen = gl_printWidthRaw( &gl_defFont, _(title) );
    msglen = gl_printWidthRaw( &gl_smallFont, msg );
 
    /* Try widths from 300 to 800 in 50 px increments.

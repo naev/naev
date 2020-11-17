@@ -246,7 +246,7 @@ static int outfitL_name( lua_State *L )
  * @usage print( o:type() ) -- Prints the type of the outfit
  *
  *    @luatparam Outfit o Outfit to get information of.
- *    @luatreturn string The name of the outfit type.
+ *    @luatreturn string The name of the outfit type (in English).
  * @luafunc type( o )
  */
 static int outfitL_type( lua_State *L )
@@ -265,7 +265,7 @@ static int outfitL_type( lua_State *L )
  * @usage print( o:typeBroad() ) -- Prints the broad type of the outfit
  *
  *    @luatparam Outfit o Outfit to get information of.
- *    @luatreturn string The name of the outfit broad type.
+ *    @luatreturn string The name of the outfit broad type (in English).
  * @luafunc typeBroad( o )
  */
 static int outfitL_typeBroad( lua_State *L )
@@ -299,7 +299,7 @@ static int outfitL_cpu( lua_State *L )
  * @usage slot_name, slot_size, slot_prop = o:slot() -- Gets an outfit's slot info
  *
  *    @luatparam Outfit o Outfit to get information of.
- *    @luatreturn string Human readable name.
+ *    @luatreturn string Human readable name (in English).
  *    @luatreturn string Human readable size.
  *    @luatreturn string Human readable property.
  * @luafunc slot( o )

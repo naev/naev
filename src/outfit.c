@@ -768,27 +768,27 @@ double outfit_cooldown( const Outfit* o )
  * @brief Gets the outfit's specific type.
  *
  *    @param o Outfit to get specific type from.
- *    @return The specific type in human readable form.
+ *    @return The specific type in human readable form (English).
  */
 const char* outfit_getType( const Outfit* o )
 {
    const char* outfit_typename[] = {
-         "NULL",
-         "Bolt Cannon",
-         "Beam Cannon",
-         "Bolt Turret",
-         "Beam Turret",
-         "Launcher",
-         "Ammunition",
-         "Turret Launcher",
-         "Ship Modification",
-         "Afterburner",
-         "Fighter Bay",
-         "Fighter",
-         "Star Map",
-         "Local Map",
-         "GUI",
-         "License"
+         N_("NULL"),
+         N_("Bolt Cannon"),
+         N_("Beam Cannon"),
+         N_("Bolt Turret"),
+         N_("Beam Turret"),
+         N_("Launcher"),
+         N_("Ammunition"),
+         N_("Turret Launcher"),
+         N_("Ship Modification"),
+         N_("Afterburner"),
+         N_("Fighter Bay"),
+         N_("Fighter"),
+         N_("Star Map"),
+         N_("Local Map"),
+         N_("GUI"),
+         N_("License"),
    };
 
    /* Name override. */
@@ -1240,7 +1240,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          "%.0f CPU\n"
          "%.0f%% Penetration\n"
          "%.2f DPS [%.0f Damage]\n"),
-         outfit_getType(temp), dtype_damageTypeToStr(temp->u.blt.dmg.type),
+         _(outfit_getType(temp)), _(dtype_damageTypeToStr(temp->u.blt.dmg.type)),
          temp->cpu,
          temp->u.blt.dmg.penetration*100.,
          1./temp->u.blt.delay * temp->u.blt.dmg.damage, temp->u.blt.dmg.damage );
@@ -1381,10 +1381,10 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          "%.0f CPU\n"
          "%.0f%% Penetration\n"
          "%.2f DPS [%s]\n"),
-         outfit_getType(temp),
+         _(outfit_getType(temp)),
          temp->cpu,
          temp->u.bem.dmg.penetration*100.,
-         temp->u.bem.dmg.damage, dtype_damageTypeToStr(temp->u.bem.dmg.type) );
+         temp->u.bem.dmg.damage, _(dtype_damageTypeToStr(temp->u.bem.dmg.type) ) );
    if (temp->u.blt.dmg.disable > 0.) {
       l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          _("%.0f Disable/s\n"),
@@ -1668,7 +1668,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    i = nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s"
          "%s",
-         outfit_getType(temp),
+         _(outfit_getType(temp)),
          (temp->u.mod.active) ? _("\n\arActivated Outfit\a0") : "" );
 
 #define DESC_ADD(x, s) \
@@ -1766,7 +1766,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
          "%.0f%% Maximum Speed\n"
          "%.1f EPS\n"
          "%.1f Rumble"),
-         outfit_getType(temp),
+         _(outfit_getType(temp)),
          temp->cpu,
          temp->u.afb.mass_limit,
          temp->u.afb.thrust + 100.,
@@ -1829,7 +1829,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
          "%.0f CPU\n"
          "%.1f Launches Per Second\n"
          "Holds %d %s"),
-         outfit_getType(temp),
+         _(outfit_getType(temp)),
          temp->cpu,
          1./temp->u.bay.delay,
          temp->u.bay.amount, temp->u.bay.ammo_name );
@@ -1868,7 +1868,7 @@ static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent )
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s",
-         outfit_getType(temp) );
+         _(outfit_getType(temp)) );
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
@@ -1965,7 +1965,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
       /* Set short description based on type. */
       temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
       nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
-            "%s", outfit_getType(temp) );
+            "%s", _(outfit_getType(temp)) );
    }
 
 
@@ -2006,7 +2006,7 @@ static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent )
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s",
-         outfit_getType(temp) );
+         _(outfit_getType(temp)) );
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
@@ -2076,7 +2076,7 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s",
-         outfit_getType(temp) );
+         _(outfit_getType(temp)) );
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
@@ -2497,7 +2497,7 @@ static void outfit_launcherDesc( Outfit* o )
    l = nsnprintf( o->desc_short, OUTFIT_SHORTDESC_MAX,
          _("%s [%s]\n"
          "%.0f CPU\n"),
-         outfit_getType(o), dtype_damageTypeToStr(a->u.amm.dmg.type),
+         _(outfit_getType(o)), _(dtype_damageTypeToStr(a->u.amm.dmg.type)),
          o->cpu );
 
    if (outfit_isSeeker(o))

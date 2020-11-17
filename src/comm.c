@@ -433,7 +433,7 @@ static void comm_bribePilot( unsigned int wid, char *unused )
 
    /* Check to see if already bribed. */
    if (price == 0) {
-      dialogue_msg("Bribe Pilot", _("\"Money won't save your hide now!\""));
+      dialogue_msg(_("Bribe Pilot"), _("\"Money won't save your hide now!\""));
       return;
    }
 
