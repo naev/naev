@@ -32,7 +32,6 @@ require "missions/empire/common.lua"
 -- Mission details
 bar_desc = _("You see Commander Soldner who is expecting you.")
 misn_title = _("Empire Shipping Delivery")
-misn_reward = _("%s credits")
 misn_desc = {}
 misn_desc[1] = _("Pick up a package at %s in the %s system")
 misn_desc[2] = _("Deliver the package to %s in the %s system") 
@@ -94,7 +93,7 @@ function accept ()
    misn_stage = 0
    reward = 500000
    misn.setTitle(misn_title)
-   misn.setReward( string.format(misn_reward, numstring(reward)) )
+   misn.setReward( creditstring(reward) )
    misn.setDesc( string.format(misn_desc[1], pickup:name(), pickupsys:name()))
 
    -- Flavour text and mini-briefing

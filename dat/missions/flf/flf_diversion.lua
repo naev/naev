@@ -36,7 +36,6 @@ require "missions/flf/flf_common.lua"
 
 -- localization stuff
 misn_title  = _("FLF: Diversion in %s")
-misn_reward = _("%s credits")
 
 success_text = {}
 success_text[1] = _("You receive a transmission from an FLF officer saying that the operation has completed, and you can now return to the base.")
@@ -76,7 +75,7 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title:format( missys:name() ) )
    misn.setDesc( misn_desc:format( missys:name() ) )
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
 

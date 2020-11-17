@@ -31,10 +31,11 @@
 ]]--
 
 require "missions/empire/common.lua"
+require "numstring.lua"
 
 bar_desc = _("You notice Lt. Commander Dimitri at one of the booths.")
 misn_title = _("Collective Espionage")
-misn_reward = _("700,000 credits")
+misn_reward = creditstring(700000) -- 700K
 misn_desc = {}
 misn_desc[1] = _("Land on %s in the %s system to monitor Collective communications")
 misn_desc[2] = _("Travel back to %s in %s")

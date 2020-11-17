@@ -66,7 +66,6 @@ text[6] = _([[You successfully land and dock alongside Chelsea and she approache
 
 misn_title = _("A Friend's Aid")
 misn_desc = _("Chelsea needs you to escort her to %s.")
-misn_reward = _("%s credits")
 
 npc_name = _("Chelsea")
 npc_desc = _("You see Chelsea looking contemplative.")
@@ -113,7 +112,7 @@ function accept ()
 
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( misplanet:name() ) )
-      misn.setReward( misn_reward:format( numstring( credits ) ) )
+      misn.setReward( creditstring( credits ) )
       marker = misn.markerAdd( missys, "low" )
 
       osd_desc[1] = osd_desc[1]:format( misplanet:name(), missys:name() )

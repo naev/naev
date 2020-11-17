@@ -10459,11 +10459,6 @@ msgstr ""
 msgid "You notice Lt. Commander Dimitri at one of the booths."
 msgstr ""
 
-#: dat/missions/empire/collective/ec02.lua:37
-#, fuzzy
-msgid "700,000 credits"
-msgstr "%sクレジット"
-
 #: dat/missions/empire/collective/ec02.lua:39
 #, lua-format
 msgid "Land on %s in the %s system to monitor Collective communications"
@@ -11865,15 +11860,6 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:38
 msgid "Soromid Long Distance Recruitment"
 msgstr ""
-
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:34
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:34
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:34
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:34
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:34
-#, fuzzy
-msgid "500,000 credits"
-msgstr "%sクレジット"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:35
 msgid ""
@@ -15910,11 +15896,6 @@ msgstr ""
 #: dat/missions/neutral/diy-nerds.lua:32
 msgid "DIY Nerds"
 msgstr ""
-
-#: dat/missions/neutral/diy-nerds.lua:33
-#, fuzzy
-msgid "20,000 credits"
-msgstr "%sクレジット"
 
 #: dat/missions/neutral/diy-nerds.lua:34
 msgid "Cart some nerds to their contest, and back."
@@ -24412,11 +24393,6 @@ msgid ""
 "who supposedly committed some kind of crime against him."
 msgstr ""
 
-#: dat/missions/sirius/achack/achack01.lua:55
-#, fuzzy
-msgid "400,000 credits"
-msgstr "%sクレジット"
-
 #: dat/missions/sirius/achack/achack01.lua:57
 msgid ""
 "A Sirian man named Harja hired you to kill a Sirius military officer, "
@@ -24706,11 +24682,6 @@ msgid ""
 "her."
 msgstr ""
 
-#: dat/missions/sirius/achack/achack02.lua:99
-#, fuzzy
-msgid "750,000 credits"
-msgstr "%sクレジット"
-
 #: dat/missions/sirius/achack/achack02.lua:101
 msgid ""
 "Joanne, the Serra military officer who Harja tried to hire you to "
@@ -24987,11 +24958,6 @@ msgstr ""
 #: dat/missions/sirius/achack/achack03.lua:87
 msgid "Joanne wants you to find Harja and interrogate him about his motives."
 msgstr ""
-
-#: dat/missions/sirius/achack/achack03.lua:88
-#, fuzzy
-msgid "1,000,000 credits"
-msgstr "%sクレジット"
 
 #: dat/missions/sirius/achack/achack03.lua:90
 msgid ""
@@ -25334,11 +25300,6 @@ msgstr ""
 #: dat/missions/sirius/achack/achack04.lua:102
 msgid "Joanne wants you to find Harja and convince him to meet her in person."
 msgstr ""
-
-#: dat/missions/sirius/achack/achack04.lua:103
-#, fuzzy
-msgid "1,500,000 credits"
-msgstr "%sクレジット"
 
 #: dat/missions/sirius/achack/achack04.lua:105
 msgid ""

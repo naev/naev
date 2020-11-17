@@ -51,7 +51,6 @@ p_landing = _([[As you land, Draga sees you. He seems just about ready to kill y
 oos_failure = _([[You receive a scathing angry message from Draga chastising you for abandoning your mission. You put it behind you. There's no turning back now.]])
 misn_desc = _([[A Sirius assault fleet has just jumped into %s. You are to assist Nasin in destroying this fleet.]])
 time_to_come_home = _([[You receive a frantic message from Draga. "%s! This is worse than we ever thought. We need you back at the base! Stat!"]])
-misn_reward = _("%s credits")
 
 log_text = _([[You helped Draga in an attempt to protect Nasin from the Sirius military. Draga ordered you to get your ship ready for another battle and meet him at the bar.]])
 
@@ -69,7 +68,7 @@ function create()
    if not misn.claim(homesys) then
       misn.finish(false)
    end
-   misn.setReward( misn_reward:format( numstring( reward ) ) )
+   misn.setReward( creditstring( reward ) )
    misn.setTitle( misn_title )
    misn.setNPC(npc_name, "sirius/unique/draga")
    misn.setDesc(bar_desc)

@@ -60,7 +60,6 @@ text[6] = _([["Mm. It looks like the others have not arrived yet." Smith says. "
 
 -- Mission details
 misn_title = _("A Journey To %s")
-misn_reward = _("%s credits")
 misn_desc = _("You are to transport Arnold Smith to %s so that he can talk about a deal.")
 
 -- NPC
@@ -105,7 +104,7 @@ function accept()
       osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
 
       misn.setTitle(misn_title:format(missys:name()))
-      misn.setReward(misn_reward:format(numstring(reward)))
+      misn.setReward(creditstring(reward))
       misn.setDesc(misn_desc:format(missys:name()))
       osd = misn.osdCreate(osd_title:format(missys:name()), osd_msg)
       misn.osdActive(1)

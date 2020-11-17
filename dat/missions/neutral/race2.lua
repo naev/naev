@@ -70,7 +70,6 @@ NPCname = _("A laid back person")
 NPCdesc = _("You see a laid back person, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot.")
 
 misndesc = _("You're participating in another race!")
-misnreward = _("%s credits")
 
 OSDtitle = _("Racing Skills 2")
 OSD = {}
@@ -124,7 +123,7 @@ function accept ()
          credits = credits_hard
          tk.msg(title[6], text[6])
       end
-      misn.setReward(misnreward:format(numstring(credits)))
+      misn.setReward(creditstring(credits))
       hook.takeoff("takeoff")
       else
       tk.msg(refusetitle, refusetext)

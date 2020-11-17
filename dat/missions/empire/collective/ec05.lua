@@ -52,7 +52,6 @@ require "missions/empire/common.lua"
 
 bar_desc = _("Dimitri should be around here, but you can't see him. You should probably look for him.")
 misn_title = _("Operation Black Trinity")
-misn_reward = _("%s credits")
 misn_desc = {}
 misn_desc[1] = _("Arrest the ESS Trinity in %s")
 misn_desc[2] = _("Return to base at %s in %s")
@@ -138,7 +137,7 @@ function accept ()
 
    -- Mission details
    misn.setTitle(misn_title)
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setReward( creditstring( credits ) )
    misn.setDesc( string.format(misn_desc[1], misn_target_sys:name() ))
    osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
    osd_msg[3] = osd_msg[3]:format(misn_base:name())

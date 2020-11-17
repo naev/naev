@@ -155,7 +155,6 @@ bar_desc = _("This person might be an outlaw, a pirate, or even worse, a bounty 
 
 -- Mission details
 misn_title  = _("Seek And Destroy Mission, starting in %s")
-misn_reward = _("%s credits")
 misn_desc   = _("The %s pilot known as %s is wanted dead or alive by %s authorities. He was last seen in the %s system.")
 
 function create ()
@@ -226,7 +225,7 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title:format( mysys[1]:name() ) )
    misn.setDesc( misn_desc:format( target_faction:name(), name, paying_faction:name(), mysys[1]:name() ) )
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( mysys[1], "computer" )
 
    -- Store the table

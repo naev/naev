@@ -63,7 +63,6 @@ abandon_text[1] = _("You are sent a message informing you that landing in the mi
 
 -- Mission details
 misn_title  = _("Patrol of the %s System")
-misn_reward = _("%s credits")
 misn_desc   = _("Patrol specified points in the %s system, eliminating any hostiles you encounter.")
 
 -- Messages
@@ -159,7 +158,7 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title:format( missys:name() ) )
    misn.setDesc( misn_desc:format( missys:name() ) )
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
 

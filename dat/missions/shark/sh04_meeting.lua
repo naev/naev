@@ -62,7 +62,6 @@ text[5] = _([[Suddenly, a Za'lek drone starts attacking you! As you wonder what 
 
 -- Mission details
 misn_title = _("The Meeting")
-misn_reward = _("%s credits")
 misn_desc = _("Nexus Shipyards asks you to take part in a secret meeting")
 
 -- NPC
@@ -109,7 +108,7 @@ function accept()
       osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
 
       misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward)))
+      misn.setReward(creditstring(reward))
       misn.setDesc(misn_desc)
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)
