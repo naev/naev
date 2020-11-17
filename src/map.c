@@ -214,7 +214,7 @@ void map_open (void)
    h = MAX(540, SCREEN_H - 100);
 
    /* create the window. */
-   wid = window_create( MAP_WDWNAME, -1, -1, w, h );
+   wid = window_create( MAP_WDWNAME, _("Star Map"), -1, -1, w, h );
    window_setCancel( wid, map_window_close );
    window_handleKeys( wid, map_keyHandler );
 

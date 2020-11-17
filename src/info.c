@@ -134,7 +134,7 @@ void menu_info( int window )
    h = 600;
 
    /* Create the window. */
-   info_wid = window_create( N_("Info"), -1, -1, w, h );
+   info_wid = window_create( "wdwInfo", _("Info"), -1, -1, w, h );
    window_setCancel( info_wid, info_close );
 
    /* Create tabbed window. */
@@ -291,7 +291,7 @@ static void info_setGui( unsigned int wid, char* str )
    }
 
    /* window */
-   wid = window_create( N_("Select GUI"), -1, -1, SETGUI_WIDTH, SETGUI_HEIGHT );
+   wid = window_create( "wdwSetGUI", _("Select GUI"), -1, -1, SETGUI_WIDTH, SETGUI_HEIGHT );
    window_setCancel( wid, setgui_close );
 
    /* Copy GUI. */
@@ -334,7 +334,7 @@ static void setgui_load( unsigned int wdw, char *str )
    char *gui;
    int wid;
 
-   wid = window_get( N_("Select GUI") );
+   wid = window_get( "wdwSetGUI" );
    gui = toolkit_getList( wid, "lstGUI" );
    if (strcmp(gui,_("None")) == 0)
       return;

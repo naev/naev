@@ -10,7 +10,7 @@
 #include "attributes.h"
 #include "space.h"
 
-#define MAP_WDWNAME     "Star Map" /**< Map window name. */
+#define MAP_WDWNAME     "wdwStarMap" /**< Map window name. */
 
 typedef struct MapDecorator_ {
 	glTexture* image;

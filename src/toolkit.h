@@ -22,10 +22,10 @@ int toolkit_isOpen (void);
 /*
  * creation
  */
-unsigned int window_create( const char* name,
+unsigned int window_create( const char* name, const char *displayname,
       const int x, const int y, /* position */
       const int w, const int h ); /* dimensions */
-unsigned int window_createFlags( const char* name,
+unsigned int window_createFlags( const char* name, const char *displayname,
       const int x, const int y, /* position */
       const int w, const int h, unsigned int flags ); /* dimensions */
 

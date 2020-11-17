@@ -166,7 +166,7 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    uniedit_ypos   = 0.;
 
    /* Create the window. */
-   wid = window_create( "Universe Editor", -1, -1, -1, -1 );
+   wid = window_create( "wdwUniverseEditor", _("Universe Editor"), -1, -1, -1, -1 );
    window_handleKeys( wid, uniedit_keys );
    uniedit_wid = wid;
 
@@ -1004,7 +1004,7 @@ static void uniedit_findSys (void)
    x = 40;
 
    /* Create the window. */
-   wid = window_create( "Find Systems and Assets", x, -1, UNIEDIT_FIND_WIDTH, UNIEDIT_FIND_HEIGHT );
+   wid = window_create( "wdwFindSystemsandAssets", _("Find Systems and Assets"), x, -1, UNIEDIT_FIND_WIDTH, UNIEDIT_FIND_HEIGHT );
    uniedit_widFind = wid;
 
    x = 20;
@@ -1215,7 +1215,7 @@ static void uniedit_editSys (void)
    sys   = uniedit_sys[0];
 
    /* Create the window. */
-   wid = window_create( "Star System Property Editor", -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwStarSystemPropertyEditor", _("Star System Property Editor"), -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
    uniedit_widEdit = wid;
    window_setCancel( wid, uniedit_editSysClose );
 
@@ -1460,7 +1460,7 @@ static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
    }
 
    /* Create the window. */
-   wid = window_create( _("Add a Virtual Asset"), -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwAddaVirtualAsset", _("Add a Virtual Asset"), -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
    /* Add virtual asset list. */
