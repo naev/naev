@@ -50,12 +50,6 @@
 #include "nlua_tk.h"
 #include "shiplog.h"
 
-/* global/main window */
-#define LAND_WIDTH   RESOLUTION_W_MIN /**< Land window width. */
-#define LAND_HEIGHT  RESOLUTION_H_MIN /**< Land window height. */
-#define PORTRAIT_WIDTH 200
-#define PORTRAIT_HEIGHT 150
-
 
 /*
  * we use visited flags to not duplicate missions generated
