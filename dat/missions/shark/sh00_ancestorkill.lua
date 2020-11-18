@@ -188,7 +188,7 @@ function enter()
       pilot.toggleSpawn(false)
 
       -- spawns the bad guy
-      badboy = pilot.add( "Pirate Ancestor", nil, 0 )[1]
+      badboy = pilot.add( "Pirate Ancestor", nil, system.get("Raelid") )[1]
       badboy:rename(piratename)
       badboy:setHostile()
       badboy:setVisplayer()
