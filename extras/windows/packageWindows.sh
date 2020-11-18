@@ -1,6 +1,6 @@
 #!/bin/bash
 # WINDOWS PACKAGING SCRIPT FOR NAEV
-# Requires NSIS and python3-pip to be installed
+# Requires mingw-w64-x86_64-nsis and mingw-w64-x86_64-python-pip to be installed
 #
 # This script should be run after compiling Naev
 # It detects the current environment, and builds the appropriate NSIS installer
