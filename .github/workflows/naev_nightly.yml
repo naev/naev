@@ -94,36 +94,15 @@ jobs:
 
       - name: Build Naev on Linux64
         run: |
-          ./autogen.sh
-          ./configure --disable-debug --build=x86_64-linux-gnu --host=x86_64-linux-gnu
-          make -j$(nproc --all)
+          sh "utils/buildAppImage.sh" -s "." -b "." -o "${{ env.DESTDIR }}"
         env:
           CFLAGS: "-O3"
-
-      - name: Package Linux64 Release
-        run: |
-          chmod +x src/naev
-
-          BUILD_DATE="$(date +%Y%m%d)"
-          VERSION="$(cat dat/VERSION)"
-
-          mkdir -p dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64
-          mkdir -p dist/release/tar
-
-          mv src/naev dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64/naev-$VERSION.$BUILD_DATE-linux-x86-64
-          chmod +x dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64/naev-$VERSION.$BUILD_DATE-linux-x86-64
-
-          cp -r dat dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64
-
-          cd dist/release
-          tar -czvf linux-x86-64.tar.gz naev-$VERSION.$BUILD_DATE-linux-x86-64
-          mv linux-x86-64.tar.gz tar
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: naev-lin64
-          path: ${{ github.workspace }}/dist/release/tar/*
+          path: ${{ github.workspace }}/dist/out/*.AppImage
 
   "Linux-x86_64-SteamRuntime":
     runs-on: ubuntu-latest
@@ -261,9 +240,11 @@ jobs:
           BUILD_DATE="$(date +%Y%m%d)"
           VERSION="$(cat dat/VERSION)"
 
-          mv dist/naev-lin64/linux-x86-64.tar.gz dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64.tar.gz
+          mv dist/naev-lin64/*.AppImage dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64.AppImage
           mv dist/naev-win64/naev-win64.exe dist/release/naev-$VERSION.$BUILD_DATE-win64.exe
           mv dist/naev-dist/source.tar.gz dist/release/naev-$VERSION.$BUILD_DATE-source.tar.gz
+
+          chmod +x dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64.AppImage
 
       - name: Upload Release Assets
         uses: "marvinpinto/action-automatic-releases@latest"
