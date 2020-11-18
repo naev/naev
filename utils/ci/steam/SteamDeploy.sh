@@ -53,7 +53,7 @@ else
 fi
 
 # Make Steam dist path if it does not exist
-mkdir -p "$STEAMPATH"
+mkdir -p "$STEAMPATH/content/{lin64,win64,ndata}"
 
 # Move Depot Scripts to Steam staging area
 cp -r "$SOURCEROOT/utils/ci/steam/scripts" "$STEAMPATH"
