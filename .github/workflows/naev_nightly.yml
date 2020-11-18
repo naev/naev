@@ -148,7 +148,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: steam-x86-64
-        path: ${{ github.workspace }}/dist/release/*
+        path: ${{ github.workspace }}/dist/release/naev.x64
 
   "Generate-Source":
       runs-on: ubuntu-latest
