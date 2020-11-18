@@ -8,154 +8,10 @@ on:
 name: Nightly Release
 
 jobs:
-  "Windows-MinGW64":
-    runs-on: windows-latest
-
-    defaults:
-      run:
-        shell: msys2 {0}
-
-    steps:
-    - name: Setup MINGW64 Environment
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: MINGW64
-        update: true
-        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-python-pip mingw-w64-x86_64-luajit mingw-w64-x86_64-nsis mingw-w64-x86_64-pkg-config libtool autoconf autoconf-archive automake automake-wrapper git gettext pkg-config make intltool itstool
-
-    - name: Checkout Naev Repository
-      uses: actions/checkout@v2
-      with:
-        submodules: true
-
-    - name: Build Naev on Win64
-      run: |
-        ./autogen.sh
-        ./configure --disable-debug
-        make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3"
-
-    - name: Build Windows Installer
-      run: |
-        ./extras/windows/packageWindows.sh -n -s "$(pwd)" -b "$(pwd)" -o "$(pwd)/dist"
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: win64
-        path: |
-          ${{ github.workspace }}/dist/out/*
-
-  "Linux-x86_64":
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Update APT Cache
-      run: |
-        sudo apt-get update
-
-    - name: Install Build Dependencies
-      run: |
-        sudo apt-get install \
-          build-essential \
-          automake \
-          autoconf-archive \
-          binutils-dev \
-          libsdl2-dev \
-          libsdl2-mixer-dev \
-          libsdl2-image-dev \
-          libgl1-mesa-dev \
-          libglu1-mesa-dev \
-          libxml2-dev \
-          libfreetype6-dev \
-          libpng-dev \
-          libopenal-dev \
-          libvorbis-dev \
-          libiberty-dev \
-          gettext \
-          autopoint \
-          intltool
-
-    - name: Checkout Naev Repository
-      uses: actions/checkout@v2
-
-    - name: Build Naev on Linux64
-      run: |
-        ./autogen.sh
-        ./configure --disable-debug --build=x86_64-linux-gnu --host=x86_64-linux-gnu
-        make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3"
-
-    - name: Package Linux64 Release
-      run: |
-        chmod +x src/naev
-
-        BUILD_DATE="$(date +%Y%m%d)"
-        VERSION="$(cat dat/VERSION)"
-
-        mkdir -p dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64
-        mkdir -p dist/release/tar
-
-        mv src/naev dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64/naev-$VERSION.$BUILD_DATE-linux-x86-64
-        chmod +x dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64/naev-$VERSION.$BUILD_DATE-linux-x86-64
-
-        cp -r dat dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64
-
-        cd dist/release
-        tar -czvf linux-x86-64.tar.gz naev-$VERSION.$BUILD_DATE-linux-x86-64
-        mv linux-x86-64.tar.gz tar
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: linux-x86-64
-        path: ${{ github.workspace }}/dist/release/tar/*
-
-  "Linux-x86_64-SteamRuntime":
-    runs-on: ubuntu-latest
-
-    container:
-      image: dosowisko/steam-runtime-amd64
-      volumes:
-        - ${{ github.workspace }}:${{ github.workspace }}
-
-    steps:
-    - name: Clone Naev Repository
-      run: |
-        git clone https://github.com/naev/naev.git ${{ github.workspace }}
-
-    - name: Install Additional Build Dependencies
-      run: |
-        sudo apt-get -y install autoconf-archive intltool
-
-    - name: Build Naev for Steam on Linux64
-      run: |
-        cd ${{ github.workspace }}
-        ./autogen.sh
-        ./configure --disable-debug --build=x86_64-linux-gnu
-        make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3 -std=gnu11"
-
-    - name: Collect Steam Linux64 Release
-      run: |
-        mkdir -p ${{ github.workspace }}/dist/release/
-
-        mv ${{ github.workspace }}/src/naev ${{ github.workspace }}/dist/release/naev.x64
-        chmod +x ${{ github.workspace }}/dist/release/naev.x64
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: steam-x86-64
-        path: ${{ github.workspace }}/dist/release/naev.x64
-
   "Generate-Source":
-      runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-      steps:
+    steps:
       - name: Update APT Cache
         run: |
           sudo apt-get update
@@ -183,6 +39,8 @@ jobs:
 
       - name: Checkout Naev Repository
         uses: actions/checkout@v2
+        with:
+          submodules: true
 
       - name: Generate source archive
         run: |
@@ -198,15 +56,159 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: source
+          name: naev-dist
           path: ${{ github.workspace }}/dist/release/source.tar.gz
 
-  "Upload-GitHub-Release":
-      runs-on: ubuntu-latest
-      needs: [Linux-x86_64, Windows-MinGW64, Generate-Source]
-      if: ${{ github.repository == 'naev/naev' }}
+  "Linux-x86_64":
+    runs-on: ubuntu-latest
 
-      steps:
+    steps:
+      - name: Update APT Cache
+        run: |
+          sudo apt-get update
+
+      - name: Install Build Dependencies
+        run: |
+          sudo apt-get install \
+            build-essential \
+            automake \
+            autoconf-archive \
+            binutils-dev \
+            libsdl2-dev \
+            libsdl2-mixer-dev \
+            libsdl2-image-dev \
+            libgl1-mesa-dev \
+            libglu1-mesa-dev \
+            libxml2-dev \
+            libfreetype6-dev \
+            libpng-dev \
+            libopenal-dev \
+            libvorbis-dev \
+            libiberty-dev \
+            gettext \
+            autopoint \
+            intltool
+
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v2
+
+      - name: Build Naev on Linux64
+        run: |
+          ./autogen.sh
+          ./configure --disable-debug --build=x86_64-linux-gnu --host=x86_64-linux-gnu
+          make -j$(nproc --all)
+        env:
+          CFLAGS: "-O3"
+
+      - name: Package Linux64 Release
+        run: |
+          chmod +x src/naev
+
+          BUILD_DATE="$(date +%Y%m%d)"
+          VERSION="$(cat dat/VERSION)"
+
+          mkdir -p dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64
+          mkdir -p dist/release/tar
+
+          mv src/naev dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64/naev-$VERSION.$BUILD_DATE-linux-x86-64
+          chmod +x dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64/naev-$VERSION.$BUILD_DATE-linux-x86-64
+
+          cp -r dat dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64
+
+          cd dist/release
+          tar -czvf linux-x86-64.tar.gz naev-$VERSION.$BUILD_DATE-linux-x86-64
+          mv linux-x86-64.tar.gz tar
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-lin64
+          path: ${{ github.workspace }}/dist/release/tar/*
+
+  "Linux-x86_64-SteamRuntime":
+    runs-on: ubuntu-latest
+
+    container:
+      image: dosowisko/steam-runtime-amd64
+      volumes:
+        - ${{ github.workspace }}:${{ github.workspace }}
+
+    steps:
+      - name: Clone Naev Repository
+        run: |
+          git clone https://github.com/naev/naev.git ${{ github.workspace }}
+
+      - name: Install Additional Build Dependencies
+        run: |
+          sudo apt-get -y install autoconf-archive intltool
+
+      - name: Build Naev for Steam on Linux64
+        run: |
+          cd ${{ github.workspace }}
+          ./autogen.sh
+          ./configure --disable-debug --build=x86_64-linux-gnu
+          make -j$(nproc --all)
+        env:
+          CFLAGS: "-O3 -std=gnu11"
+
+      - name: Collect Steam Linux64 Release
+        run: |
+          mkdir -p ${{ github.workspace }}/dist/release/
+
+          mv ${{ github.workspace }}/src/naev ${{ github.workspace }}/dist/release/naev.x64
+          chmod +x ${{ github.workspace }}/dist/release/naev.x64
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: naev-steamruntime
+          path: ${{ github.workspace }}/dist/release/naev.x64
+
+  "Windows-MinGW64":
+    runs-on: windows-latest
+
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: Setup MINGW64 Environment
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-python-pip mingw-w64-x86_64-luajit mingw-w64-x86_64-nsis mingw-w64-x86_64-pkg-config libtool autoconf autoconf-archive automake automake-wrapper git gettext pkg-config make intltool itstool
+
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Build Naev on Win64
+        run: |
+          ./autogen.sh
+          ./configure --disable-debug
+          make -j$(nproc --all)
+        env:
+          CFLAGS: "-O3"
+
+      - name: Build Windows Installer
+        run: |
+          ./extras/windows/packageWindows.sh -n -s "$(pwd)" -b "$(pwd)" -o "$(pwd)/dist"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-win64
+          path: |
+            ${{ github.workspace }}/dist/out/*
+
+  "Upload-GitHub-Release":
+    runs-on: ubuntu-latest
+    needs: [Linux-x86_64, Windows-MinGW64, Generate-Source]
+    if: ${{ github.repository == 'naev/naev' }}
+
+    steps:
       - name: Update APT Cache
         run: |
           sudo apt-get update
@@ -249,15 +251,19 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           path: ${{ github.workspace }}/dist
+          name: |
+            naev-dist
+            naev-lin64
+            naev-win64
 
       - name: Collect files and rename for distribution
         run: |
           BUILD_DATE="$(date +%Y%m%d)"
           VERSION="$(cat dat/VERSION)"
 
-          mv dist/linux-x86-64/linux-x86-64.tar.gz dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64.tar.gz
-          mv dist/win64/naev-win64.exe dist/release/naev-$VERSION.$BUILD_DATE-win64.exe
-          mv dist/source/source.tar.gz dist/release/naev-$VERSION.$BUILD_DATE-source.tar.gz
+          mv dist/naev-lin64/linux-x86-64.tar.gz dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64.tar.gz
+          mv dist/naev-win64/naev-win64.exe dist/release/naev-$VERSION.$BUILD_DATE-win64.exe
+          mv dist/naev-dist/source.tar.gz dist/release/naev-$VERSION.$BUILD_DATE-source.tar.gz
 
       - name: Upload Release Assets
         uses: "marvinpinto/action-automatic-releases@latest"
@@ -270,11 +276,11 @@ jobs:
             ${{ github.workspace }}/dist/release/*
 
   "Upload-Steam":
-      runs-on: ubuntu-latest
-      needs: [Linux-x86_64-SteamRuntime, Windows-MinGW64]
-      #if: ${{ github.repository == 'naev/naev' }}
+    runs-on: ubuntu-latest
+    needs: [Linux-x86_64-SteamRuntime, Windows-MinGW64]
+    #if: ${{ github.repository == 'naev/naev' }}
 
-      steps:
+    steps:
       - name: Update APT Cache
         run: |
           sudo add-apt-repository multiverse
@@ -330,11 +336,15 @@ jobs:
       - name: Download Build Artifacts
         uses: actions/download-artifact@v2
         with:
-          path: ${{ github.workspace }}/dist/steam
+          path: ${{ github.workspace }}/dist/staging
+          name: |
+            naev-steamruntime
+            naev-win64
 
       - name: Build and Upload Steam Release
         run: |
-          ./utils/ci/steam/SteamDeploy.sh -n -s "." -o "/dist/steam"
+          ./utils/ci/steam/SteamDeploy.sh -n -s "." -t "${{ github.workspace }}/dist/staging" -o "${{ github.workspace }}/dist/steam"
+
 #        env:
 #          STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
 #          STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}
