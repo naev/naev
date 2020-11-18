@@ -60,16 +60,11 @@ jobs:
             config: linux.ini
             pkg-config-path: "[]"
 
-          - os: windows-2016
+          - os: windows-latest
             shell: msys2 {0}
             config: windows.ini
             pkg-config-path: "[]"
-
-          - os: windows-2019
-            shell: msys2 {0}
-            config: windows.ini
-            pkg-config-path: "[]"
-
+            
     defaults:
       run:
         shell: ${{ matrix.shell }}
@@ -202,12 +197,7 @@ jobs:
             config: linux.ini
             pkg-config-path: "[]"
 
-          - os: windows-2016
-            shell: msys2 {0}
-            config: windows.ini
-            pkg-config-path: "[]"
-
-          - os: windows-2019
+          - os: windows-latest
             shell: msys2 {0}
             config: windows.ini
             pkg-config-path: "[]"
