@@ -396,7 +396,7 @@ jobs:
     - name: Get Source
       uses: actions/download-artifact@v2
       with:
-        name: naev-${{ github.sha }}
+        name: naev-meson-dist-${{ github.sha }}
 
     - name: Extract Source
       run: |
