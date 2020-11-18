@@ -50,7 +50,7 @@ else
 fi
 
 # Move Depot Scripts to Steam staging area
-cp "$SOURCEROOT/utils/ci/steam/scripts" "$STEAMPATH"
+cp -r "$SOURCEROOT/utils/ci/steam/scripts" "$STEAMPATH"
 
 # Move all build artefacts to deployment locations
 
