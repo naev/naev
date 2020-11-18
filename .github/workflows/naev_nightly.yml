@@ -230,10 +230,6 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           path: ${{ github.workspace }}/dist
-          name: |
-            naev-dist
-            naev-lin64
-            naev-win64
 
       - name: Collect files and rename for distribution
         run: |
@@ -318,9 +314,6 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           path: ${{ github.workspace }}/dist/staging
-          name: |
-            naev-steamruntime
-            naev-win64
 
       - name: Build and Upload Steam Release
         run: |
