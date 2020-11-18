@@ -1481,7 +1481,7 @@ int opt_setVideoMode( int w, int h, int fullscreen, int confirm )
    conf.fullscreen = fullscreen;
 
    status = gl_setupFullscreen();
-   if (status == 0 && !new_f && (w != old_w || h != old_h)) {
+   if (status == 0 && !fullscreen && (w != old_w || h != old_h)) {
       SDL_SetWindowSize( gl_screen.window, w, h );
       SDL_SetWindowPosition( gl_screen.window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
    }
