@@ -171,7 +171,7 @@ jobs:
     - name: Package
       run: |
         sh $MESON install -C build
-        tar -cvf naev-meson-${{ matrix.os }}-${{ github.sha }}.tar ${{ env.DESTDIR }}
+        tar -cf naev-meson-${{ matrix.os }}-${{ github.sha }}.tar ${{ env.DESTDIR }}
 
     - name: Upload Meson Artifact
       uses: actions/upload-artifact@v2
@@ -280,7 +280,7 @@ jobs:
     - name: Autotools Package
       run: |
         make install
-        tar -cvf ${{ github.workspace }}/naev-${{ matrix.os }}-autotools-${{ github.sha }}.tar ${{ env.DESTDIR }}
+        tar -cf ${{ github.workspace }}/naev-${{ matrix.os }}-autotools-${{ github.sha }}.tar ${{ env.DESTDIR }}
       working-directory: "source"
 
     - name: Upload Autotools Artifact
@@ -411,7 +411,7 @@ jobs:
     - name: Package
       run: |
         sh $MESON install -C build
-        tar -cvf ${{ github.workspace }}/naev-docs-${{ github.sha }}.tar ${{ env.DESTDIR }}/usr/local/doc/naev
+        tar -cf ${{ github.workspace }}/naev-docs-${{ github.sha }}.tar ${{ env.DESTDIR }}/usr/local/doc/naev
         
     - name: Upload Lua Documentation
       if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
