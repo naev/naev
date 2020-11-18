@@ -22,8 +22,8 @@
 #define MANUAL_ZOOM_DEFAULT                  0     /**< Whether or not to enable manual zoom controls. */
 #define INPUT_MESSAGES_DEFAULT               5     /**< Amount of messages to display. */
 /* Video options */
-#define RESOLUTION_W_DEFAULT                 1024  /**< Default screen width. */
-#define RESOLUTION_H_DEFAULT                 768   /**< Default screen height. */
+#define RESOLUTION_W_DEFAULT                 1280  /**< Default screen width. */
+#define RESOLUTION_H_DEFAULT                 720   /**< Default screen height. */
 #define FULLSCREEN_DEFAULT                   0     /**< Whether to run in fullscreen mode. */
 #define FULLSCREEN_MODESETTING               0     /**< Whether fullscreen uses video modesetting. */
 #define FSAA_DEFAULT                         1     /**< Whether to use Full Screen Anti-Aliasing. */
