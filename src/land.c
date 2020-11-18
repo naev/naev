@@ -51,8 +51,8 @@
 #include "shiplog.h"
 
 /* global/main window */
-#define LAND_WIDTH   800 /**< Land window width. */
-#define LAND_HEIGHT  600 /**< Land window height. */
+#define LAND_WIDTH  1280 /**< Land window width. */
+#define LAND_HEIGHT  720 /**< Land window height. */
 #define PORTRAIT_WIDTH 200
 #define PORTRAIT_HEIGHT 150
 
@@ -915,13 +915,13 @@ void land_genWindows( int load, int changetab )
    regen = landed;
 
    /* Create window. */
-   if (SCREEN_W < 1024 || SCREEN_H < 768) {
+   if (SCREEN_W < LAND_WIDTH || SCREEN_H < LAND_HEIGHT) {
       w = -1; /* Fullscreen. */
       h = -1;
    }
    else {
-      w = 800 + 0.5 * (SCREEN_W - 800);
-      h = 600 + 0.5 * (SCREEN_H - 600);
+      w = LAND_WIDTH + 0.5 * (SCREEN_W - LAND_WIDTH);
+      h = LAND_HEIGHT + 0.5 * (SCREEN_H - LAND_HEIGHT);
    }
    land_wid = window_create( "wdwLand", _(p->name), -1, -1, w, h );
    window_onClose( land_wid, land_cleanupWindow );
