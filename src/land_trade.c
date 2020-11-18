@@ -141,13 +141,13 @@ void commodity_update( unsigned int wid, char* str )
    if ((comname==NULL) || (strcmp( comname, _("None") )==0)) {
       credits2str( buf3, player.p->credits, 2 );
       nsnprintf( buf, PATH_MAX,
-         _("N/A tonnes\n"
+         _("N/A t\n"
            "\n"
-           "N/A credits\n"
-           "%d tonnes\n"
-           "%s credits\n"
-           "N/A credits\n"
-           "N/A credits"),
+           "N/A ¢\n"
+           "%d t\n"
+           "%s\n"
+           "N/A ¢\n"
+           "N/A ¢"),
          pilot_cargoFree(player.p),
          buf3 );
       window_modifyText( wid, "txtDInfo", buf );
@@ -167,16 +167,16 @@ void commodity_update( unsigned int wid, char* str )
    buf2[0]='\0';
    owned=pilot_cargoOwned( player.p, comname );
    if ( owned > 0 )
-      nsnprintf( buf2, 80, _("%"PRIu64" credits"),com->lastPurchasePrice);
+      nsnprintf( buf2, 80, _("%"PRIu64" ¢"),com->lastPurchasePrice);
    credits2str( buf3, player.p->credits, 2 );
    nsnprintf( buf, PATH_MAX,
-              _( "%d tonnes\n"
+              _( "%d t\n"
                  "%s\n"
-                 "%" PRIu64 " credits\n"
-                 "%d tonnes\n"
-                 "%s credits\n"
-                 "%" PRIu64 " ± %.1f\n"
-                 "%" PRIu64 " ± %.1f\n" ),
+                 "%" PRIu64 " ¢/t\n"
+                 "%d t\n"
+                 "%s\n"
+                 "%" PRIu64 " ± %.1f ¢/t\n"
+                 "%" PRIu64 " ± %.1f ¢/t\n" ),
               owned, buf2, planet_commodityPrice( land_planet, com ), pilot_cargoFree( player.p ), buf3, mean, std,
               globalmean, globalstd );
 
@@ -216,7 +216,7 @@ int commodity_canBuy( const char *name )
 
    if (!player_hasCredits( price )) {
       credits2str( buf, price - player.p->credits, 2 );
-      land_errDialogueBuild(_("You need %s more credits."), buf );
+      land_errDialogueBuild(_("You need %s more."), buf );
       failure = 1;
    }
    if (pilot_cargoFree(player.p) <= 0) {

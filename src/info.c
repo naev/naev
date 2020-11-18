@@ -218,9 +218,9 @@ static void info_openMain( unsigned int wid )
          "%s\n"
          "%s\n"
          "\n"
-         "%s Credits\n"
          "%s\n"
-         "%d (%d Jumps)"),
+         "%s\n"
+         "%d (%d jumps)"),
          player.name,
          nt,
          player_rating(),

@@ -448,10 +448,10 @@ void outfits_update( unsigned int wid, char* str )
          "\n"
          "%s\n"
          "%s\n"
-         "%.0f tonnes\n"
+         "%.0f t\n"
          "\n"
-         "%s credits\n"
-         "%s credits\n"
+         "%s\n"
+         "%s\n"
          "%s\n"),
          player_outfitOwned(outfit),
          _(outfit_slotName(outfit)),
@@ -714,7 +714,7 @@ int outfit_canBuy( const char *name, Planet *planet )
    /* not enough $$ */
    if (!player_hasCredits(price)) {
       credits2str( buf, price - player.p->credits, 2 );
-      land_errDialogueBuild( _("You need %s more credits."), buf);
+      land_errDialogueBuild( _("You need %s more."), buf);
       failure = 1;
    }
    /* Needs license. */

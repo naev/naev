@@ -1559,11 +1559,11 @@ void equipment_updateShips( unsigned int wid, char* str )
          "%s\n"
          "%s\n"
          "\a%c%s%.0f\a0\n"
-         "%s credits\n"
+         "%s\n"
          "\n"
-         "%.0f\a0 tonnes\n"
+         "%.0f\a0 t\n"
          "%s average\n"
-         "\a%c%s%.0f\a0 kN/tonne\n"
+         "\a%c%s%.0f\a0 kN/t\n"
          "\a%c%s%.0f\a0 m/s (max \a%c%s%.0f\a0 m/s)\n"
          "\a%c%s%.0f\a0 deg/s\n"
          "%.0f%%\n"
@@ -1572,7 +1572,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          "\a%c%s%.0f\a0 MJ (\a%c%s%.1f\a0 MW)\n"
          "\a%c%s%.0f\a0 MJ (\a%c%s%.1f\a0 MW)\n"
          "\a%c%s%.0f\a0 MJ (\a%c%s%.1f\a0 MW)\n"
-         "%d / \a%c%s%d\a0 tonnes\n"
+         "%d / \a%c%s%d\a0 t\n"
          "%d units (%d jumps)\n"
          "\n"
          "\a%c%s\a0"),
@@ -1857,10 +1857,9 @@ static void equipment_sellShip( unsigned int wid, char* str )
    credits2str( buf, price, 2 );
 
    /* Check if player really wants to sell. */
-   if (!dialogue_YesNo( _("Sell Ship"), ngettext(
-            "Are you sure you want to sell your ship %s for %s credit?",
-            "Are you sure you want to sell your ship %s for %s credits?",
-            price), shipname, buf))
+   if (!dialogue_YesNo( _("Sell Ship"),
+            _("Are you sure you want to sell your ship %s for %s?"),
+            shipname, buf))
       return;
 
    /* Store ship type. */
@@ -1876,9 +1875,8 @@ static void equipment_sellShip( unsigned int wid, char* str )
    equipment_regenLists( wid, 0, 1 );
 
    /* Display widget. */
-   dialogue_msg( _("Ship Sold"), ngettext(
-         "You have sold your ship %s for %s credit.",
-         "You have sold your ship %s for %s credits.", price), name, buf );
+   dialogue_msg( _("Ship Sold"),
+         _("You have sold your ship %s for %s."), name, buf );
 
    /* Run hook. */
    hparam[0].type    = HOOK_PARAM_STRING;

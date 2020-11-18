@@ -13,9 +13,8 @@ end
 
 
 --[[
--- @brief Properly converts a number of credits to a string, utilizing ngettext.
+-- @brief Properly converts a number of credits to a string.
 --
--- This adds "credits" to the output of numstring in a translatable way.
 -- Should be used everywhere a number of credits is displayed.
 --
 -- @usage tk.msg( "", _("You have been paid %s."):format( creditstring(credits) ) )
@@ -24,8 +23,7 @@ end
 --    @return A string taking the form of "X credit" or "X credits".
 --]]
 function creditstring( credits )
-   return gettext.ngettext( "%s credit", "%s credits", credits ):format(
-         numstring(credits) )
+   return string.format( "%s ¢", numstring(credits) )
 end
 
 
