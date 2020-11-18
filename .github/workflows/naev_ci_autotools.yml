@@ -164,11 +164,11 @@ jobs:
     - name: Package
       run: |
         make install
-        tar -cvf naev-${{ matrix.os }}-${{ github.sha }}.tar dist
+        tar -cvf naev-${{ matrix.os }}-autotools-${{ github.sha }}.tar dist
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-autotools-${{ matrix.os }}-${{ github.sha }}
+        name: naev-${{ matrix.os }}-autotools-${{ github.sha }}
         path: ${{ github.workspace }}/*.tar
         if-no-files-found: error
