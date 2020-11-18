@@ -1,6 +1,6 @@
 #!/bin/bash
 # WINDOWS PACKAGING SCRIPT FOR NAEV
-# Requires mingw-w64-x86_64-nsis and mingw-w64-x86_64-python-pip to be installed
+# Requires mingw-w64-x86_64-nsis to be installed, and the submodule in extras/windows/mingw-bundledlls to be available
 #
 # This script should be run after compiling Naev
 # It detects the current environment, and builds the appropriate NSIS installer
@@ -15,6 +15,9 @@ SOURCEROOT="$(pwd)"
 BUILDPATH="$(pwd)/build"
 NIGHTLY="false"
 BUILDOUTPUT="$(pwd)/dist"
+
+# MinGW DLL search paths
+export MINGW_BUNDLEDLLS_SEARCH_PATH=("${SOURCEROOT}/subprojects:${BUILDPATH}/subprojects:/mingw64/bin:/usr/x86_64-w64-mingw32/bin")
 
 while getopts dns:b:o: OPTION "$@"; do
     case $OPTION in
@@ -80,9 +83,6 @@ cp "$BUILDPATH/naev.exe" "$STAGING/naev-$SUFFIX.exe"
 
 # Collect DLLs
 echo "Collecting DLLs in staging area"
-# Will need to look into how to get this script to search the subprojects..
-export MINGW_BUNDLEDLLS_SEARCH_PATH=("${SOURCEROOT}/subprojects:${BUILDPATH}/subprojects:/mingw64/bin:/usr/x86_64-w64-mingw32/bin")
-
 /usr/bin/python3 "$SOURCEROOT/extras/windows/mingw-bundledlls/mingw-bundledlls" --copy "$STAGING/naev-$SUFFIX.exe"
 
 # Create distribution folder
