@@ -93,7 +93,7 @@ jobs:
         BUILD_DATE="$(date +%Y%m%d)"
         VERSION="$(cat dat/VERSION)"
 
-        mkdir -p dist/release/naev-$VERSION-$BUILD_DATE-linux-x86-64
+        mkdir -p dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64
         mkdir -p dist/release/tar
 
         mv src/naev dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64/naev-$VERSION.$BUILD_DATE-linux-x86-64
