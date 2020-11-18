@@ -171,7 +171,7 @@ jobs:
     - name: Package
       run: |
         sh $MESON install -C build
-        tar -cf naev-meson-${{ matrix.os }}-${{ github.sha }}.tar ${{ env.DESTDIR }}
+        tar -cf naev-meson-${{ matrix.os }}-${{ github.sha }}.tar dist
 
     - name: Upload Meson Artifact
       uses: actions/upload-artifact@v2
@@ -279,9 +279,10 @@ jobs:
 
     - name: Autotools Package
       run: |
+        cd source
         make install
-        tar -cf ${{ github.workspace }}/naev-${{ matrix.os }}-autotools-${{ github.sha }}.tar ${{ env.DESTDIR }}
-      working-directory: "source"
+        cd ../
+        tar -cf naev-${{ matrix.os }}-autotools-${{ github.sha }}.tar dist
 
     - name: Upload Autotools Artifact
       uses: actions/upload-artifact@v2
