@@ -72,20 +72,16 @@ mkdir -p "$STAGING"
 echo "moving data to staging area"
 cp -r "$SOURCEROOT/dat" "$STAGING"
 
-# Collect DLLs
-echo "Populating staging area with Meson subprojects' DLLs (if any)"
-find "${BUILDPATH}/subprojects" -iname "*.dll" -exec cp -v "{}" "$STAGING" ";"   # Native Meson subprojects
-find "${SOURCEROOT}/subprojects" -iname "*.dll" -exec cp -v "{}" "$STAGING" ";"  # Frankenstein subprojects wrapping in-tree builds
-echo "Locally install 'pefile' Python module"
-python3 -m pip install pefile
-echo "Collecting DLLs in staging area"
-"$SOURCEROOT"/extras/windows/extract_dlls.py "$BUILDPATH/naev.exe" "$STAGING"
-
 echo "copying naev logo to staging area"
 cp "$SOURCEROOT/extras/logos/logo.ico" "$SOURCEROOT/extras/windows/installer"
 
 echo "copying naev binary to staging area"
 cp "$BUILDPATH/naev.exe" "$STAGING/naev-$SUFFIX.exe"
+
+# Collect DLLs
+echo "Collecting DLLs in staging area"
+export MINGW_BUNDLEDLLS_SEARCH_PATH="${SOURCEROOT}/subprojects, ${BUILDPATH}/subprojects"
+"$SOURCEROOT"/extras/windows/mingw-bundledlls/mingw-bundledlls --copy "$STAGING/naev-$SUFFIX.exe"
 
 # Create distribution folder
 
