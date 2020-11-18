@@ -305,7 +305,7 @@ jobs:
       - name: Install SteamCMD
         run: |
           echo steamcmd steam/question select "I AGREE" | sudo debconf-set-selections
-          sudo apt install lib32gcc1 steamcmd
+          sudo apt-get install lib32gcc1 steamcmd
 
       - name: Checkout Naev Repository
         uses: actions/checkout@v2
