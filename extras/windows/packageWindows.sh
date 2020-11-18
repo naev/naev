@@ -83,7 +83,7 @@ echo "Collecting DLLs in staging area"
 # Will need to look into how to get this script to search the subprojects..
 # export MINGW_BUNDLEDLLS_SEARCH_PATH=("${SOURCEROOT}/subprojects, ${BUILDPATH}/subprojects, /mingw64/bin, /usr/x86_64-w64-mingw32/bin")
 
-python3 "$SOURCEROOT/extras/windows/mingw-bundledlls/mingw-bundledlls" --copy "$STAGING/naev-$SUFFIX.exe"
+"$SOURCEROOT/extras/windows/mingw-bundledlls/mingw-bundledlls" --copy "$STAGING/naev-$SUFFIX.exe"
 
 # Create distribution folder
 
