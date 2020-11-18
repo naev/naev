@@ -25,6 +25,8 @@ jobs:
 
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
+      with:
+        submodules: true
 
     - name: Build Naev on Win64
       run: |
