@@ -191,7 +191,7 @@ void sysedit_open( StarSystem *sys )
    i = 1;
 
    /* Autosave toggle. */
-   window_addCheckbox( wid, -150, 25, 250, 20,
+   window_addCheckbox( wid, -150, 25, SCREEN_W/2 - 150, 20,
          "chkEditAutoSave", _("Automatically save changes"), uniedit_autosave, conf.devautosave );
 
    /* Scale. */
@@ -234,7 +234,7 @@ void sysedit_open( StarSystem *sys )
 
    /* Selected text. */
    nsnprintf( buf, sizeof(buf), _("Radius: %.0f"), sys->radius );
-   window_addText( wid, 140, 10, SCREEN_W - 80 - 30 - 30 - BUTTON_WIDTH - 20, 30, 0,
+   window_addText( wid, 140, 10, SCREEN_W/2-140, 30, 0,
          "txtSelected", &gl_smallFont, NULL, buf );
 
    /* Actual viewport. */

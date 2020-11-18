@@ -75,7 +75,7 @@ void shipyard_open( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* Calculate image array dimensions. */
-   iw = 310 + (w-800);
+   iw = 310 + (w-832);
    ih = h - 60;
 
    /* Left padding + per-button padding * nbuttons */
@@ -101,17 +101,17 @@ void shipyard_open( unsigned int wid )
    (void)off;
 
    /* target gfx */
-   window_addRect( wid, -41, -50,
+   window_addRect( wid, -41, -30,
          SHIP_TARGET_W, SHIP_TARGET_H, "rctTarget", &cBlack, 0 );
-   window_addImage( wid, -40, -50,
+   window_addImage( wid, -40, -30,
          SHIP_TARGET_W, SHIP_TARGET_H, "imgTarget", NULL, 1 );
 
    /* slot types */
-   window_addCust( wid, -20, -SHIP_TARGET_H-55, 148, 80, "cstSlots", 0.,
+   window_addCust( wid, -20, -SHIP_TARGET_H-35, 148, 80, "cstSlots", 0.,
          shipyard_renderSlots, NULL, NULL );
 
    /* stat text */
-   window_addText( wid, -40, -SHIP_TARGET_H-60-70-20, 128, -SHIP_TARGET_H-60-70-20-20+h-bh, 0, "txtStats",
+   window_addText( wid, -4, -SHIP_TARGET_H-40-70-20, 164, -SHIP_TARGET_H-60-70-20+h-bh, 0, "txtStats",
          &gl_smallFont, NULL, NULL );
 
    /* text */
@@ -137,15 +137,15 @@ void shipyard_open( unsigned int wid )
          "\anPrice:\n\a0"
          "\anMoney:\n\a0"
          "\anLicense:\n\a0");
-   th = gl_printHeightRaw( &gl_smallFont, 100, buf );
-   y  = -55;
-   window_addText( wid, 40+iw+20, y,
-         100, th, 0, "txtSDesc", &gl_smallFont, NULL, buf );
-   window_addText( wid, 40+iw+20+100, y,
-         w-SHIP_TARGET_W-40-(40+iw+20+100), th, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
+   th = gl_printHeightRaw( &gl_smallFont, 106, buf );
+   y  = -35;
+   window_addText( wid, 20+iw+20, y,
+         106, th, 0, "txtSDesc", &gl_smallFont, NULL, buf );
+   window_addText( wid, 20+iw+20+106, y,
+         w-SHIP_TARGET_W-40-(20+iw+20+106), th, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
    y -= th;
-   window_addText( wid, 20+iw+40, y,
-         w-(20+iw+40) - 180, y-20+h-bh, 0, "txtDescription",
+   window_addText( wid, 20+iw+20, y,
+         w-(20+iw+20) - (SHIP_TARGET_W+40), y-20+h-bh, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
    /* set up the ships to buy/sell */
@@ -185,10 +185,9 @@ void shipyard_open( unsigned int wid )
 void shipyard_update( unsigned int wid, char* str )
 {
    (void)str;
-   char *shipname, *license_text;
+   char *shipname;
    Ship* ship;
    char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
-   size_t len;
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
 
@@ -239,18 +238,6 @@ void shipyard_update( unsigned int wid, char* str )
    price2str( buf2, ship_buyPrice(ship), player.p->credits, 2 );
    credits2str( buf3, player.p->credits, 2 );
 
-   /* Remove the word " License".  It's redundant and makes the text overflow
-      into another text box */
-   license_text = ship->license;
-   if (license_text) {
-      len = strlen(ship->license);
-      if (strcmp(" License", ship->license + len - 8) == 0) {
-         license_text = malloc(len - 7);
-         assert(license_text);
-         memcpy(license_text, ship->license, len - 8);
-         license_text[len - 8] = '\0';
-      }
-   }
    nsnprintf( buf, PATH_MAX,
          _("%s\n"
          "%s\n"
@@ -295,11 +282,8 @@ void shipyard_update( unsigned int wid, char* str )
          ship->fuel_consumption,
          buf2,
          buf3,
-         (license_text != NULL) ? license_text : _("None") );
+         (ship->license != NULL) ? _(ship->license) : _("None") );
    window_modifyText( wid,  "txtDDesc", buf );
-
-   if (license_text != ship->license)
-      free(license_text);
 
    if (!shipyard_canBuy( shipname, land_planet ))
       window_disableButtonSoft( wid, "btnBuyShip");

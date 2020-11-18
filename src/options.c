@@ -341,7 +341,7 @@ static void opt_gameplay( unsigned int wid )
    cw += 80;
 
    /* Autonav abort. */
-   window_addText( wid, x+65, y, 150, 150, 0, "txtAAutonav",
+   window_addText( wid, x+65, y, cw-130, 20, 0, "txtAAutonav",
          NULL, NULL, _("Stop Speedup At:") );
    y -= 20;
 
@@ -919,7 +919,7 @@ static void opt_audio( unsigned int wid )
    /* Sound levels. */
    x = 20 + cw + 20;
    y = -60;
-   window_addText( wid, x+20, y, 100, 20, 0, "txtSVolume",
+   window_addText( wid, x+20, y, cw-40, 20, 0, "txtSVolume",
          NULL, NULL, _("Volume Levels") );
    y -= 30;
 
