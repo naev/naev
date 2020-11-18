@@ -56,7 +56,7 @@ echo "SOURCE ROOT:        $SOURCEROOT"
 echo "BUILD ROOT:         $BUILDPATH"
 echo "NIGHTLY:            $NIGHTLY"
 echo "BUILD OUTPUT:       $BUILDOUTPUT"
-if [ "$USEMESON" == "true" ]; then
+if [[ "$USEMESON" == "true" ]]; then
     echo "MESON WRAPPER PATH: $MESON"
 else
     echo "MESON BUILD:        $USEMESON"
@@ -71,7 +71,7 @@ export DESTDIR="$BUILDOUTPUT/Naev.AppDir"
 OLDPATH="$(pwd)"
 
 # Run build
-if [ "$USEMESON" == "true" ]; then
+if [[ "$USEMESON" == "true" ]]; then
     # Setup AppImage Build Directory
     sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
     --native-file "$SOURCEROOT/utils/build/linux_appimage.ini" \
