@@ -1,6 +1,6 @@
 on: [push, pull_request]
 
-name: Meson CI
+name: CI
 
 env:
   DESTDIR: "${{ github.workspace }}/dist/"
