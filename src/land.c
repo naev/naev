@@ -51,8 +51,8 @@
 #include "shiplog.h"
 
 /* global/main window */
-#define LAND_WIDTH  1280 /**< Land window width. */
-#define LAND_HEIGHT  720 /**< Land window height. */
+#define LAND_WIDTH   RESOLUTION_W_MIN /**< Land window width. */
+#define LAND_HEIGHT  RESOLUTION_H_MIN /**< Land window height. */
 #define PORTRAIT_WIDTH 200
 #define PORTRAIT_HEIGHT 150
 

@@ -22,6 +22,8 @@
 #define MANUAL_ZOOM_DEFAULT                  0     /**< Whether or not to enable manual zoom controls. */
 #define INPUT_MESSAGES_DEFAULT               5     /**< Amount of messages to display. */
 /* Video options */
+#define RESOLUTION_W_MIN                     1280  /**< Minimum screen width (below which graphics are downscaled). */
+#define RESOLUTION_H_MIN                     720   /**< Minimum screen height (below which graphics are downscaled). */
 #define RESOLUTION_W_DEFAULT                 1280  /**< Default screen width. */
 #define RESOLUTION_H_DEFAULT                 720   /**< Default screen height. */
 #define FULLSCREEN_DEFAULT                   0     /**< Whether to run in fullscreen mode. */

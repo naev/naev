@@ -17,11 +17,16 @@
 #include <lauxlib.h>
 
 #include "nluadef.h"
+#include "conf.h"
 #include "log.h"
 #include "dialogue.h"
 #include "nlua_outfit.h"
 #include "toolkit.h"
 #include "land_outfits.h"
+
+/* Merchant Outfit window */
+#define MERCH_OUTFIT_WIDTH   RESOLUTION_W_MIN /**< Merchant Outfit window width. */
+#define MERCH_OUTFIT_HEIGHT  RESOLUTION_H_MIN /**< Merchant Outfit window height. */
 
 
 /* Toolkit methods. */
@@ -304,13 +309,13 @@ static int tk_merchantOutfit( lua_State *L )
    }
 
    /* Create window. */
-   if (SCREEN_W < 1024 || SCREEN_H < 768) {
+   if (SCREEN_W < MERCH_OUTFIT_WIDTH || SCREEN_H < MERCH_OUTFIT_HEIGHT) {
       w = -1; /* Fullscreen. */
       h = -1;
    }
    else {
-      w = 800 + 0.5 * (SCREEN_W - 800);
-      h = 600 + 0.5 * (SCREEN_H - 600);
+      w = MERCH_OUTFIT_WIDTH + 0.5 * (SCREEN_W - MERCH_OUTFIT_WIDTH);
+      h = MERCH_OUTFIT_HEIGHT + 0.5 * (SCREEN_H - MERCH_OUTFIT_HEIGHT);
    }
    wid = window_create( "wdwMerchantOutfit", name, -1, -1, w, h );
    outfits_open( wid, outfits, noutfits );
