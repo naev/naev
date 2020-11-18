@@ -9,14 +9,14 @@
 # If -n is passed to the script, a nightly build will be generated
 # and uploaded to Steam
 #
-# Pass in [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -o <STEAMPATH> (Steam dist output directory)
+# Pass in [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -t <TEMPPATH> (Steam build artefact location) -o <STEAMPATH> (Steam dist output directory)
 
 set -e
 
 # Defaults
 NIGHTLY="false"
 
-while getopts dns:o: OPTION "$@"; do
+while getopts dns:t:o: OPTION "$@"; do
     case $OPTION in
     d)
         set -x
@@ -26,6 +26,9 @@ while getopts dns:o: OPTION "$@"; do
         ;;
     s)
         SOURCEROOT="${OPTARG}"
+        ;;
+    t)
+        TEMPPATH="${OPTARG}"
         ;;
     o)
         STEAMPATH="${OPTARG}"
@@ -49,20 +52,22 @@ else
     exit -1
 fi
 
+# Make Steam dist path if it does not exist
+mkdir -p "$STEAMPATH"
+
 # Move Depot Scripts to Steam staging area
 cp -r "$SOURCEROOT/utils/ci/steam/scripts" "$STEAMPATH"
 
 # Move all build artefacts to deployment locations
-
 # Move Linux binary and set as executable
-mv naev-steamruntime/naev.x64 "$STEAMPATH/content/lin64/naev.x64"
+mv "$TEMPPATH/naev-steamruntime/naev.x64" "$STEAMPATH/content/lin64/naev.x64"
 chmod +x "$STEAMPATH/content/lin64/naev.x64"
           
 # Move macOS bundle to deployment location (Bye Bye for now)
-# unzip naev-macOS/naev-macos.zip -d "$STEAMPATH/content/macos/"
+# unzip "$TEMPPATH/naev-macOS/naev-macos.zip" -d "$STEAMPATH/content/macos/"
 
 # Unzip Windows binary and DLLs and move to deployment location
-tar -Jxvf naev-windows-latest/steam-win64.tar.xz "$STEAMPATH/content/win64/"
+tar -Jxvf "$TEMPPATH/naev-win64/steam-win64.tar.xz" "$STEAMPATH/content/win64/"
 mv "$STEAMPATH"/content/win64/naev*.exe "$STEAMPATH/content/win64/naev.exe"
 
 # Move data to deployment location
