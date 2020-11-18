@@ -48,16 +48,9 @@ int nsetenv( const char *name, const char *value, int overwrite )
    return setenv( name, value, overwrite );
 #else /* HAVE_DECL_SETENV */
    if (!overwrite) {
-#if HAVE_DECL__PUTENV_S
-      size_t envsize = 0;
-      int errcode = getenv_s( &envsize, NULL, 0, name );
-      if (errcode || envsize)
-         return errcode;
-#else /* HAVE_DECL__PUTENV_S */
       const char *envval = getenv( name );
       if (envval != NULL)
          return 0;
-#endif /* HAVE_DECL__PUTENV_S */
    }
 #if HAVE_DECL__PUTENV_S
    return _putenv_s(name, value);
