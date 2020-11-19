@@ -9,7 +9,7 @@
 # If -n is passed to the script, a nightly build will be generated
 # and uploaded to Steam
 #
-# Pass in [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of script files.) -t <TEMPPATH> (Steam build artefact location) -o <STEAMPATH> (Steam dist output directory)
+# Pass in [-d] [-n] (set this for nightly builds) -v <VERSIONPATH> (Sets path of the VERSION file.) -t <TEMPPATH> (Steam build artefact location) -o <STEAMPATH> (Steam dist output directory)
 
 set -e
 
@@ -17,7 +17,7 @@ set -e
 NIGHTLY="false"
 BETA="false"
 
-while getopts dns:t:o: OPTION "$@"; do
+while getopts dnv:t:o: OPTION "$@"; do
     case $OPTION in
     d)
         set -x
@@ -37,8 +37,8 @@ while getopts dns:t:o: OPTION "$@"; do
     esac
 done
 
-if [ -f "$SOURCEROOT/dat/VERSION" ]; then
-    export VERSION="$(<"$SOURCEROOT/dat/VERSION")"
+if [ -f "$VERSIONPATH/VERSION" ]; then
+    export VERSION="$(<"$VERSIONPATH/VERSION")"
 else
     echo "The VERSION file is missing from $SOURCEROOT."
     exit 1
