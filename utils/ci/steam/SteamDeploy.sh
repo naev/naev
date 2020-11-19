@@ -25,8 +25,8 @@ while getopts dnv:t:o: OPTION "$@"; do
     n)
         NIGHTLY="true"
         ;;
-    s)
-        SCRIPTROOT="${OPTARG}"
+    v)
+        VERSIONPATH="${OPTARG}"
         ;;
     t)
         TEMPPATH="${OPTARG}"
@@ -40,7 +40,7 @@ done
 if [ -f "$VERSIONPATH/VERSION" ]; then
     export VERSION="$(<"$VERSIONPATH/VERSION")"
 else
-    echo "The VERSION file is missing from $SOURCEROOT."
+    echo "The VERSION file is missing from $VERSIONPATH."
     exit 1
 fi
 
