@@ -41,9 +41,9 @@
 require "numstring.lua"
 
 text = {}
-text[1] = _("The waste containers are loaded onto your ship and you are paid %s credits. You begin to wonder if accepting this job was really a good idea.")
-text[2] = _("Workers pack your cargo hold full of as much garbage as it can hold, then hastily hand you a credit chip containing %s credits. Smelling the garbage, you immediately regret taking the job.")
-text[3] = _("Your hold is crammed full with garbage and you are summarily paid %s credits. By the time the overpowering stench emanating from your cargo hold is apparent to you, it's too late to back down; you're stuck with this garbage until you can find some place to get rid of it.")
+text[1] = _("The waste containers are loaded onto your ship and you are paid %s. You begin to wonder if accepting this job was really a good idea.")
+text[2] = _("Workers pack your cargo hold full of as much garbage as it can hold, then hastily hand you a credit chip containing %s. Smelling the garbage, you immediately regret taking the job.")
+text[3] = _("Your hold is crammed full with garbage and you are summarily paid %s. By the time the overpowering stench emanating from your cargo hold is apparent to you, it's too late to back down; you're stuck with this garbage until you can find some place to get rid of it.")
 
 finish_text = {}
 finish_text[1] = _("You drop the garbage off, relieved to have it out of your ship.")
@@ -56,12 +56,12 @@ abort_text[1] = _("Sick and tired of smelling garbage, you illegally jettison th
 abort_text[2] = _("You decide that the nearest waste dump location is too far away for you to bother to go to and simply jettison the containers of waste. You hope you don't get caught.")
 abort_text[3] = _("You dump the waste containers into space illegally, noting that you should make sure not to get caught by authorities.")
 
-abort_landed_text = _("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation away as an accident, the officials let you off with a fine of %s credits.")
+abort_landed_text = _("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation away as an accident, the officials let you off with a fine of %s.")
 
 noland_msg = _("Get lost, waste dumping scum! We don't want you here!")
 
 misn_title = _("Waste Dump")
-misn_reward = _("%s credits per tonne")
+misn_reward = _("%s per tonne")
 misn_desc = _("Take as many waste containers off of here as your ship can hold and drop them off at any authorized garbage collection facility. You will be paid immediately, but any attempt to illegally jettison the waste into space will be severely punished if you are caught.")
 
 osd_title = _("Waste Dump")
@@ -98,7 +98,7 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title )
    misn.setDesc( misn_desc )
-   misn.setReward( misn_reward:format( numstring( credits_factor ) ) )
+   misn.setReward( misn_reward:format( creditstring( credits_factor ) ) )
 end
 
 
@@ -109,7 +109,7 @@ function accept ()
    credits = credits_factor * q + credits_mod
 
    local txt = text[ rnd.rnd( 1, #text ) ]
-   tk.msg( "", txt:format( numstring( credits ) ) )
+   tk.msg( "", txt:format( creditstring( credits ) ) )
 
    cid = misn.cargoAdd( "Waste Containers", q )
    player.pay( credits )
@@ -143,7 +143,7 @@ function abort ()
    if landed then
       misn.cargoRm( cid )
       local fine = 2 * credits
-      tk.msg( "", abort_landed_text:format( numstring( fine ) ) )
+      tk.msg( "", abort_landed_text:format( creditstring( fine ) ) )
       player.pay( -fine )
       misn.finish( false )
    else

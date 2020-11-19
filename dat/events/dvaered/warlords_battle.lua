@@ -29,7 +29,7 @@ if lang == "es" then
    text[1] = _([["Hey, you," the captain of the ship says. "You seem not to know what is going to happen here: a mighty warlord from %s is going to attack %s. You shouldn't stay there, unless you are a mercenary. Do you know how it works? If you attack a warlord's ship, and he loses the battle, the other warlord will reward you. But if he wins, you will be hunted down."]])
 
    title[2] = _("Here comes your reward")
-   text[2] = _([["Hello captain," a Dvaered officer says, "You helped us in this battle. I am authorized to give you %s credits as a reward."]])
+   text[2] = _([["Hello captain," a Dvaered officer says, "You helped us in this battle. I am authorized to give you %s as a reward."]])
 
 end
 
@@ -107,7 +107,7 @@ end
 
 function hailagain()
    hook.rm(hailhook)
-   tk.msg(title[2], text[2]:format(numstring(reward)))
+   tk.msg(title[2], text[2]:format(creditstring(reward)))
    player.pay(reward)
 end
 

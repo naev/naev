@@ -84,7 +84,7 @@ worktxt[3] = _([[You walk into the bar and know instantly that you are finally h
     Just as she's about to start making it, though, you stop her and say you'll have one here after all. As long as you've come all this way, you might as well try it. You're amazed at how quickly and gracefully her trained hands move, flipping bottles and shaking various containers. Before you know it, she's set a drink before you and closed another container to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]])
 
 finishedtitle = _("Delivery")
-finishedtxt = _([["Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your troubles. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose %s credits should be appropriate."
+finishedtxt = _([["Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your troubles. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose %s should be appropriate."
     Considering the amount of effort that you went through, you feel almost cheated. You don't feel like arguing with the snobby aristocrat though, so you just leave him to his drink without another word. It's probably the most that anyone's ever paid for a drink like that anyway.
     When you get back to your ship you realize you have a drink left over. It might look good like an ornament?]])
 
@@ -190,7 +190,7 @@ function land ()
          end
       end
    elseif hasDrink and planet.cur() == startplanet then
-      tk.msg( finishedtitle, finishedtxt:format( numstring(payment) ) )
+      tk.msg( finishedtitle, finishedtxt:format( creditstring(payment) ) )
       player.addOutfit( "Swamp Bombing" )
       player.pay( payment )
 
