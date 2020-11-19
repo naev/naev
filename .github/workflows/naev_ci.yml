@@ -349,20 +349,20 @@ jobs:
 
     - name: Compile AppImage Autotools
       if: ${{ matrix.buildtype == 'autotools' }}
-      id: compile
+      id: autotoolsCompile
       run: |
         sh source/utils/buildAppImage.sh -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
       working-directory: source
 
     - name: Compile AppImage Meson
       if: ${{ matrix.buildtype == 'meson' }}
-      id: compile
+      id: mesonCompile
       run: |
         sh source/utils/buildAppImage.sh -m -s "source" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
 
     - name: Upload Compile Log
       uses: actions/upload-artifact@v2
-      if: ${{ (success() || steps.compile.outcome == 'failure') }}
+      if: ${{ (success() || steps.mesonCompile.outcome == 'failure' || steps.autotoolsCompile.outcome == 'failure') }}
       with:
         name: ${{ matrix.os }}-${{ github.sha }}-${{ matrix.buildtype }}AppImageBuild-log
         path: ${{ github.workspace }}/appImageBuildLog.txt
