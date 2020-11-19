@@ -125,11 +125,11 @@ flint_bar2 = _("Flintley is here. He nervously sips from his drink, clearly unco
 
 sellerdesc = _("You spot a dodgy individual who matches one of the portraits in your ship's database. This must be one of the artifact sellers.")
 
-buy = _("Buy the artifact (%s credits)")
+buy = _("Buy the artifact (%s)")
 nobuy = _("Don't buy the artifact")
 
 nomoneytitle = _("Not enough money!")
-nomoneytext = _("You can't currently afford to buy this artifact. You need %s credits.")
+nomoneytext = _("You can't currently afford to buy this artifact. You need %s.")
 
 -- OSD stuff
 osd_msg[1] = _("Fly to the %s system and dock with (board) Kahan Pinnacle")
@@ -296,29 +296,29 @@ end
 
 function seller()
    if planet.cur() == artifactplanetA then
-      if tk.choice(title[8], text[9], buy:format(numstring(reward * 0.15)), nobuy) == 1 then
+      if tk.choice(title[8], text[9], buy:format(creditstring(reward * 0.15)), nobuy) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(sellnpc)
             player.pay(-15000)
             artifactA = misn.cargoAdd("Artifact? A", 0)
             misn.markerRm(markerA)
          else
-            tk.msg(nomoneytitle, nomoneytext:format(numstring(reward * 0.15)))
+            tk.msg(nomoneytitle, nomoneytext:format(creditstring(reward * 0.15)))
          end
       end
    elseif planet.cur() == artifactplanetB then
-      if tk.choice(title[8], text[10], buy:format(numstring(reward * 0.15)), nobuy) == 1 then
+      if tk.choice(title[8], text[10], buy:format(creditstring(reward * 0.15)), nobuy) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(sellnpc)
             player.pay(-15000)
             artifactB = misn.cargoAdd("Artifact? B", 0)
             misn.markerRm(markerB)
          else
-            tk.msg(nomoneytitle, nomoneytext:format(numstring(reward * 0.15)))
+            tk.msg(nomoneytitle, nomoneytext:format(creditstring(reward * 0.15)))
          end
       end
    elseif planet.cur() == artifactplanetC then
-      if tk.choice(title[8], text[11], buy:format(numstring(reward * 0.15)), nobuy) == 1 then
+      if tk.choice(title[8], text[11], buy:format(creditstring(reward * 0.15)), nobuy) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(sellnpc)
             player.pay(-15000)
