@@ -37,10 +37,10 @@ while getopts dns:t:o: OPTION "$@"; do
 done
 
 if [ -f "$SOURCEROOT/dat/VERSION" ]; then
-    export VERSION="$(<"$SOURCEROOT/dat/VERSION")"
+    export VERSION="$(cat "$SOURCEROOT/dat/VERSION")"
 else
     echo "The VERSION file is missing from $SOURCEROOT."
-    exit -1
+    exit 1
 fi
 BETA=false
 
@@ -49,7 +49,7 @@ if [ -n $(echo "$VERSION" | grep "beta") ]; then
     BETA=true
 else
     echo "could not find VERSION file"
-    exit -1
+    exit 1
 fi
 
 # Make Steam dist path if it does not exist
