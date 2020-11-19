@@ -162,6 +162,7 @@ if buildExec.disabled() == false
    # Standard library feature tests
    config_data.set10('HAVE_DECL_SETENV', cc.has_header_symbol('stdlib.h', 'setenv'))
    config_data.set10('HAVE_DECL__PUTENV_S', cc.has_header_symbol('stdlib.h', '_putenv_s'))
+   config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'gutenv_s'))
    config_data.set10('HAVE_STDALIGN_H', cc.has_header('stdalign.h'))
 
    ### Generated sources
