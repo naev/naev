@@ -101,7 +101,7 @@ function death(pilot,killer)
       if bounty_earned == max_payment then
          osd_msg[2] = osd_msg3:format(planet_start_name)
       else
-         osd_msg[2] = osd_msg2:format(pirates_killed, numstring( bounty_earned ), planet_start_name)
+         osd_msg[2] = osd_msg2:format(pirates_killed, creditstring( bounty_earned ), planet_start_name)
       end
       misn.osdCreate(misn_title, osd_msg)
       misn.osdActive(2)
