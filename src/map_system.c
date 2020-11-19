@@ -692,26 +692,35 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       double std;
       credits_t globalmean;
       double globalstd;
+      char buf_mean[ECON_CRED_STRLEN], buf_globalmean[ECON_CRED_STRLEN];
+      char buf_std[ECON_CRED_STRLEN], buf_globalstd[ECON_CRED_STRLEN];
+      char buf_buy_price[ECON_CRED_STRLEN];
       int owned;
       com = commodity_get( name );
       economy_getAveragePrice( com, &globalmean, &globalstd );
+      credits2str( buf_mean, mean, -1 );
+      nsnprintf( buf_std, sizeof(buf_std), "%.1f ¤", std ); /* TODO credit2str could learn to do this... */
       economy_getAveragePlanetPrice( com, cur_planetObj_sel, &mean, &std );
+      credits2str( buf_globalmean, globalmean, -1 );
+      nsnprintf( buf_globalstd, sizeof(buf_globalstd), "%.1f ¤", globalstd ); /* TODO credit2str could learn to do this... */
       buf4[0]='\0';
       owned=pilot_cargoOwned( player.p, name );
-      if ( owned > 0 )
-         nsnprintf( buf4, PATH_MAX, ", purchased at %"PRIu64" ¤/t", com->lastPurchasePrice );
+      if ( owned > 0 ) {
+         credits2str( buf_buy_price, com->lastPurchasePrice, -1 );
+         nsnprintf( buf4, PATH_MAX, ", purchased at %s/t", buf_buy_price ); /* FIXME See below. */
+      }
       nsnprintf( infobuf, PATH_MAX,
                  _("%s\n\n"
                    "%s\n\n"
                    "\anYou have:\a0 %d tonnes%s\n"
-                   "\anAverage price seen here:\a0 %"PRIu64" ± %.1f ¤/t\n"
-                   "\anAverave price seen everywhere:\a0 %"PRIu64" ± %.1f ¤/t\n"),
+                   "\anAverage price seen here:\a0 %s/t ± %s/t\n"
+                   "\anAverage price seen everywhere:\a0 %s/t ± %s/t\n"),
                  name,
                  com->description,
                  owned,
-                 buf4,
-                 mean, std,
-                 globalmean,globalstd );
+                 buf4, /* FIXME: do not paste in an untranslated sentence fragment... or even a translated one. */
+                 buf_mean, buf_std,
+                 buf_globalmean, buf_globalstd );
    } else {
       infobuf[0]='\0';
       WARN( _("Unexpected call to map_system_array_update\n") );
@@ -980,6 +989,7 @@ void map_system_buyCommodPrice( unsigned int wid, char *str )
    int njumps=0;
    StarSystem **syslist;
    int cost,ret;
+   char coststr[ECON_CRED_STRLEN];
    ntime_t t = ntime_get();
 
    /* find number of jumps */
@@ -1001,15 +1011,15 @@ void map_system_buyCommodPrice( unsigned int wid, char *str )
 
    /* get the time at which this purchase will be made (2 periods per jump ago)*/
    t-= ( njumps * 2 + 0.2 ) * NT_PERIOD_SECONDS * 1000;
-   /* FIXME: These should be using credits2str rather than %d. */
+   credits2str( coststr, cost, -1 );
    if ( !player_hasCredits( cost ) ) {
-      dialogue_msg( _("You can't afford that"), _("Sorry, but we are selling this information for %d ¤, which you don't have"), cost );
+      dialogue_msg( _("You can't afford that"), _("Sorry, but we are selling this information for %s, which you don't have."), coststr );
    } else if ( cur_planetObj_sel->ncommodities == 0 ) {
       dialogue_msgRaw( _("No commodities sold here"),_("There are no commodities sold here, as far as we are aware!"));
    } else if ( cur_planetObj_sel->commodityPrice[0].updateTime >= t ) {
       dialogue_msgRaw( _("You already have newer information"), _("I've checked your computer, and you already have newer information than we can sell.") );
    } else {
-      ret=dialogue_YesNo( _("Purchase commodity prices?"), _("For %s, that will cost %d ¤. The latest information we have is %g periods old."), cur_planetObj_sel->name,cost,njumps*2+0.2);
+      ret=dialogue_YesNo( _("Purchase commodity prices?"), _("For %s, that will cost %s. The latest information we have is %g periods old."), cur_planetObj_sel->name, coststr, njumps*2+0.2);
       if ( ret ) {
          player_modCredits( -cost );
          economy_averageSeenPricesAtTime( cur_planetObj_sel, t );

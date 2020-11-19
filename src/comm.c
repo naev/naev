@@ -14,17 +14,18 @@
 
 #include "naev.h"
 
-#include "log.h"
-#include "toolkit.h"
-#include "dialogue.h"
-#include "pilot.h"
-#include "rng.h"
-#include "nlua.h"
-#include "player.h"
-#include "opengl.h"
 #include "ai.h"
-#include "hook.h"
+#include "commodity.h"
+#include "dialogue.h"
 #include "escort.h"
+#include "hook.h"
+#include "log.h"
+#include "nlua.h"
+#include "opengl.h"
+#include "pilot.h"
+#include "player.h"
+#include "rng.h"
+#include "toolkit.h"
 
 #define BUTTON_WIDTH    80 /**< Button width. */
 #define BUTTON_HEIGHT   30 /**< Button height. */
@@ -415,6 +416,7 @@ static void comm_bribePilot( unsigned int wid, char *unused )
    int answer;
    double d;
    credits_t price;
+   char pricestr[ECON_CRED_STRLEN];
    const char *str;
 
    /* Unbribable. */
@@ -438,11 +440,12 @@ static void comm_bribePilot( unsigned int wid, char *unused )
    }
 
    /* Bribe message. */
+   price2str( pricestr, price, player.p->credits, -1 );
    str = comm_getString( "bribe_prompt" );
    if (str == NULL)
-      answer = dialogue_YesNo( _("Bribe Pilot"), _("\"I'm gonna need at least %"PRIu64" ¤ to not leave you as a hunk of floating debris.\"\n\nPay %"PRIu64" ¤?"), price, price );
+      answer = dialogue_YesNo( _("Bribe Pilot"), _("\"I'm gonna need at least %s to not leave you as a hunk of floating debris.\"\n\nPay %s?"), pricestr, pricestr );
    else
-      answer = dialogue_YesNo( _("Bribe Pilot"), _("%s\n\nPay %"PRIu64" ¤?"), str, price );
+      answer = dialogue_YesNo( _("Bribe Pilot"), _("%s\n\nPay %s?"), str, pricestr );
 
    /* Said no. */
    if (answer == 0) {
@@ -549,6 +552,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    const char *msg;
    int ret;
    credits_t price;
+   char creditstr[ECON_CRED_STRLEN];
 
    /* Check to see if ship has a no refuel message. */
    msg = comm_getString( "refuel_no" );
@@ -588,7 +592,8 @@ static void comm_requestFuel( unsigned int wid, char *unused )
 
    /* See if player really wants to pay. */
    if (price > 0) {
-      ret = dialogue_YesNo( _("Request Fuel"), _("%s\n\nPay %"PRIu64" ¤?"), msg, price );
+      price2str( creditstr, price, player.p->credits, -1 );
+      ret = dialogue_YesNo( _("Request Fuel"), _("%s\n\nPay %s?"), msg, creditstr );
       if (ret == 0) {
          dialogue_msg( _("Request Fuel"), _("You decide not to pay.") );
          return;
@@ -599,8 +604,8 @@ static void comm_requestFuel( unsigned int wid, char *unused )
 
    /* Check if he has the money. */
    if (!player_hasCredits( price )) {
-      dialogue_msg( _("Request Fuel"), _("You need %"PRIu64" ¤ more!"),
-            price - player.p->credits);
+      credits2str( creditstr, price - player.p->credits, -1 );
+      dialogue_msg( _("Request Fuel"), _("You need %s more!"), creditstr );
       return;
    }
 
