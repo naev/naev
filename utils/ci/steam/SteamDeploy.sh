@@ -9,15 +9,16 @@
 # If -n is passed to the script, a nightly build will be generated
 # and uploaded to Steam
 #
-# Pass in [-d] [-n] (set this for nightly builds) -v <VERSIONPATH> (Sets path of the VERSION file.) -t <TEMPPATH> (Steam build artefact location) -o <STEAMPATH> (Steam dist output directory)
+# Pass in [-d] [-n] (set this for nightly builds) -v <VERSIONPATH> (Sets path of the VERSION file.) -s <SCRIPTROOT> (Sets path to look for additional steam scripts.) -t <TEMPPATH> (Steam build artefact location) -o <STEAMPATH> (Steam dist output directory)
 
 set -e
 
 # Defaults
 NIGHTLY="false"
 BETA="false"
+SCRIPTROOT="$(pwd)"
 
-while getopts dnv:t:o: OPTION "$@"; do
+while getopts dnv:s:t:o: OPTION "$@"; do
     case $OPTION in
     d)
         set -x
@@ -27,6 +28,9 @@ while getopts dnv:t:o: OPTION "$@"; do
         ;;
     v)
         VERSIONPATH="${OPTARG}"
+        ;;
+    s)
+        SCRIPTROOT="${OPTARG}"
         ;;
     t)
         TEMPPATH="${OPTARG}"
@@ -58,7 +62,7 @@ mkdir -p "$STEAMPATH"/content/win64
 mkdir -p "$STEAMPATH"/content/ndata
 
 # Move Depot Scripts to Steam staging area
-cp -r "$SCRIPTROOT" "$STEAMPATH"
+cp -r "$SCRIPTROOT"/scripts "$STEAMPATH"
 
 # Move all build artefacts to deployment locations
 # Move Linux binary and set as executable
@@ -75,7 +79,8 @@ mv "$STEAMPATH"/content/win64/naev*.exe "$STEAMPATH/content/win64/naev.exe"
 # Move data to deployment location
 tar -Jxvf "$TEMPPATH/naev-ndata/steam-ndata.tar.xz" -C "$STEAMPATH/content/ndata"
 
-ls -l $SCRIPTROOT
+ls -l -R $SCRIPTROOT
+ls -l -R $STEAMPATH
 # Runs STEAMCMD, and builds the app as well as all needed depots.
 #
 ## Trigger 2FA request and get 2FA code
@@ -84,7 +89,7 @@ ls -l $SCRIPTROOT
 # Wait a bit for the email to arrive
 #sleep 60s
 #python3 "$SCRIPTROOT/2fa/get_2fa.py"
-#STEAMCMD_TFA="$(cat "$SCRIPTROOT/2fa/2fa.txt")"
+#STEAMCMD_TFA="$(<"$SCRIPTROOT/2fa/2fa.txt")"
 #
 #if [ "$NIGHTLY" == "true" ]; then
 #    # Run steam upload with 2fa key
