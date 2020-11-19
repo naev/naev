@@ -351,14 +351,13 @@ jobs:
       if: ${{ matrix.buildtype == 'autotools' }}
       id: autotoolsCompile
       run: |
-        sh source/utils/buildAppImage.sh -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
-      working-directory: source
+        sh "source/utils/buildAppImage.sh" -s "source" -b "source" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
 
     - name: Compile AppImage Meson
       if: ${{ matrix.buildtype == 'meson' }}
       id: mesonCompile
       run: |
-        sh source/utils/buildAppImage.sh -m -s "source" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
+        sh "source/utils/buildAppImage.sh" -m -s "source" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
 
     - name: Upload Compile Log
       uses: actions/upload-artifact@v2
