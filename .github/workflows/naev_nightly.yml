@@ -59,19 +59,22 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: naev-dist
-          path: ${{ github.workspace }}/dist/release/source.tar.gz
+          path: ${{ github.workspace }}/dist/out/source.tar.gz
+          if-no-files-found: error
 
       - name: Upload Version Artifact
         uses: actions/upload-artifact@v2
         with:
           name: naev-version
-          path: ${{ github.workspace }}/dist/release/VERSION
+          path: ${{ github.workspace }}/dist/out/VERSION
+          if-no-files-found: error
 
       - name: Upload Deployment Script Artifact
         uses: actions/upload-artifact@v2
         with:
           name: naev-steam-deployment
           path: ${{ github.workspace }}/utils/ci/steam/*
+          if-no-files-found: error
 
   "Build_Naev_Release":
     strategy:
@@ -159,6 +162,7 @@ jobs:
           name: ${{ matrix.buildoutput }}
           path: |
             ${{ github.workspace }}/dist/out/*
+          if-no-files-found: error
             
   "Build_Naev_Steam_Release":
     runs-on: ubuntu-latest
@@ -269,7 +273,7 @@ jobs:
 
       - name: Build and Upload Steam Release
         run: |
-          cp -r dist/staging/naev-steam-deployment ${{ github.workspace }}
+          cp -r dist/staging/naev-steam-deployment/* ${{ github.workspace }}
           sh "SteamDeploy.sh" -n -s "$(pwd)" -t "dist/staging" -o "dist/out"
 #        env:
 #          STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
