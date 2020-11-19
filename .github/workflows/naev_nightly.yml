@@ -317,8 +317,7 @@ jobs:
 
       - name: Build and Upload Steam Release
         run: |
-          ./utils/ci/steam/SteamDeploy.sh -n -s "." -t "${{ github.workspace }}/dist/staging" -o "${{ github.workspace }}/dist/steam"
-
+          sh "utils/ci/steam/SteamDeploy.sh" -n -s "$(pwd)" -t "${{ github.workspace }}/dist/staging" -o "${{ github.workspace }}/dist/steam"
 #        env:
 #          STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
 #          STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}
