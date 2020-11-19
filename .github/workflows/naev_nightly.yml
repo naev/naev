@@ -94,7 +94,7 @@ jobs:
 
       - name: Build Naev on Linux64
         run: |
-          sh "utils/buildAppImage.sh" -n -s "." -b "." -o "dist"
+          sh "utils/buildAppImage.sh" -n -s "$(pwd)" -b "$(pwd)" -o "$(pwd)/dist"
         env:
           CFLAGS: "-O3"
 
