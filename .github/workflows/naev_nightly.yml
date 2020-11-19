@@ -208,7 +208,7 @@ jobs:
 
   "Upload_GitHub_Release":
     runs-on: ubuntu-latest
-    needs: [Generate-Source, Build_Naev_Release]
+    needs: [Generate_Source, Build_Naev_Release]
     #if: ${{ github.repository == 'naev/naev' }}
 
     steps:
@@ -245,7 +245,7 @@ jobs:
 
   "Upload_Steam_Release":
     runs-on: ubuntu-latest
-    needs: [Generate-Source, Build_Naev_Release, Build_Naev_Steam_Release]
+    needs: [Generate_Source, Build_Naev_Release, Build_Naev_Steam_Release]
     #if: ${{ github.repository == 'naev/naev' }}
 
     steps:
