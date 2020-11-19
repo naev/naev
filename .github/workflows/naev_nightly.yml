@@ -293,12 +293,6 @@ jobs:
       - name: Checkout Naev Repository
         uses: actions/checkout@v2
 
-      - name: Get VERSION
-        run: |
-          ./autogen.sh
-          ./configure
-          make dat/VERSION
-
       - name: Make data
         run: |
           ./autogen.sh
