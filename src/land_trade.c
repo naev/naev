@@ -43,8 +43,8 @@ void commodity_exchange_open( unsigned int wid )
 {
    int i, ngoods;
    ImageArrayCell *cgoods;
-   int w, h;
-   int iw, ih;
+   int w, h, iw, ih, infoHeight;
+   const char *bufSInfo;
 
 
    /* Mark as generated. */
@@ -81,18 +81,20 @@ void commodity_exchange_open( unsigned int wid )
          128, 128, "imgStore", NULL, 1 );
 
    /* text */
-   window_addText( wid, -20, -190, LAND_BUTTON_WIDTH+80, 100, 0,
-         "txtSInfo", &gl_smallFont, NULL,
-         _("\anYou have\a0\n"
+   bufSInfo = _(
+           "\anYou have\a0\n"
            "\anPurchased at\a0\n"
            "\anMarket Price\a0\n"
            "\anFree Space\a0\n"
            "\anMoney\a0\n"
            "\anAv price here\a0\n"
-           "\anAv price all\a0") );
-   window_addText( wid, -20, -190, LAND_BUTTON_WIDTH/2 + 40, 100, 0,
+           "\anAv price all\a0");
+   infoHeight = gl_printHeightRaw(&gl_smallFont, LAND_BUTTON_WIDTH+80, bufSInfo);
+   window_addText( wid, -20, -190, LAND_BUTTON_WIDTH+80, infoHeight, 0,
+         "txtSInfo", &gl_smallFont, NULL, bufSInfo );
+   window_addText( wid, -20, -190, LAND_BUTTON_WIDTH/2 + 40, infoHeight, 0,
          "txtDInfo", &gl_smallFont, NULL, NULL );
-   window_addText( wid, -40, -300, LAND_BUTTON_WIDTH-20 + 80,
+   window_addText( wid, -40, -200-infoHeight, LAND_BUTTON_WIDTH-20 + 80,
          -300 - (46 + 2*LAND_BUTTON_HEIGHT) + h - (gl_smallFont.h + 6), 0,
          "txtDesc", &gl_smallFont, NULL, NULL );
 
@@ -185,8 +187,8 @@ void commodity_update( unsigned int wid, char* str )
          "%s\n"
          "\n"
          "%s",
-         comname,
-         com->description);
+         _(comname),
+         _(com->description));
    window_modifyText( wid, "txtDesc", buf );
 
    /* Button enabling/disabling */
