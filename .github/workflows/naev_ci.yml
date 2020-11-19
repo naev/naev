@@ -301,8 +301,8 @@ jobs:
       run: |
         pushd source
         make install
-        tar -cf naev-${{ matrix.os }}-autotools-${{ github.sha }}.tar dist
         popd
+        tar -cf naev-${{ matrix.os }}-autotools-${{ github.sha }}.tar dist
 
     - name: Upload Autotools Artifact
       uses: actions/upload-artifact@v2
