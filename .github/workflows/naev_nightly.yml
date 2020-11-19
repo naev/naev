@@ -183,7 +183,7 @@ jobs:
   "Upload-GitHub-Release":
     runs-on: ubuntu-latest
     needs: [Linux-x86_64, Windows-MinGW64, Generate-Source]
-    if: ${{ github.repository == 'naev/naev' }}
+    #if: ${{ github.repository == 'naev/naev' }}
 
     steps:
       - name: Update APT Cache
@@ -254,7 +254,7 @@ jobs:
   "Upload-Steam":
     runs-on: ubuntu-latest
     needs: [Linux-x86_64-SteamRuntime, Windows-MinGW64]
-    #if: ${{ github.repository == 'naev/naev' }}
+    if: ${{ github.repository == 'naev/naev' }}
 
     steps:
       - name: Update APT Cache
