@@ -1,22 +1,22 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="FLF Pirate Alliance">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <chance>30</chance>
-   <done>Diversion from Raelid</done>
-   <location>Bar</location>
-   <faction>FLF</faction>
-   <cond>faction.playerStanding("FLF") &gt;= 30</cond>
-  </avail>
-  <notes>
-   <campaign>Save the Frontier</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <chance>30</chance>
+  <done>Diversion from Raelid</done>
+  <location>Bar</location>
+  <faction>FLF</faction>
+  <cond>faction.playerStanding("FLF") &gt;= 30</cond>
+ </avail>
+ <notes>
+  <campaign>Save the Frontier</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 
    Pirate Alliance
@@ -73,7 +73,7 @@ title[8] = _("Not So Weak After All")
 text[8] = _([[The pirate comes on your view screen once again, but his expression has changed this time. He's hiding it, but you can tell that he's afraid of what you might do to him. You come to the realization that he is finally willing to talk and suppress a sigh of relief.
     "L-look, we got off on the wrong foot, eh? I've misjudged you lot. I guess FLF pilots can fight after all."]])
 
-text[9] = _([[You begin to talk to the pirate about what you and the FLF are after, and the look of fear on the pirate's face fades away. "Supplies? Yeah, we've got supplies, alright. But it'll cost you! Heh, heh, heh..." You inquire as to what the cost might be. "Simple, really. We want to build another base in the %s system. We can do it ourselves, of course, but if we can get you to pay for it, even better! Specifically, we need %s more tonnes of ore to build the base. So you bring it back to the Anger system, and we'll call it a deal!
+text[9] = _([[You begin to talk to the pirate about what you and the FLF are after, and the look of fear on the pirate's face fades away. "Supplies? Yeah, we've got supplies, alright. But it'll cost you! Heh, heh, heh..." You inquire as to what the cost might be. "Simple, really. We want to build another base in the %s system. We can do it ourselves, of course, but if we can get you to pay for it, even better! Specifically, we need another %s of ore to build the base. So you bring it back to the Anger system, and we'll call it a deal!
     "Oh yeah, I almost forgot; you don't know how to get to the Anger system, now, do you? Well, since you've proven yourself worthy, I suppose I'll let you in on our little secret." He transfers a file to your ship's computer. When you look at it, you see that it's a map showing a single hidden jump point. "Now, away with you! Meet me in the %s system when you have the loot."]])
 
 title[10] = _("I knew we could work something out")
@@ -109,7 +109,7 @@ osd_desc["__save"] = true
 
 osd_apnd    = {}
 osd_apnd[3] = _("Destroy some of the weaker pirate ships, then try to hail the Kestrel again")
-osd_apnd[4] = _("Bring %s tonnes of Ore to the Pirate Kestrel in the %s system")
+osd_apnd[4] = _("Bring %s of Ore to the Pirate Kestrel in the %s system")
 
 osd_final   = _("Return to FLF base")
 osd_desc[3] = osd_final
@@ -201,13 +201,13 @@ function pilot_hail_boss ()
 
          tk.msg( title[8], text[8] )
          tk.msg( title[8], text[9]:format(
-            missys2:name(), numstring( ore_needed ), missys2:name() ) )
+            missys2:name(), tonnestring( ore_needed ), missys2:name() ) )
 
          player.addOutfit( "Map: FLF-Pirate Route" )
          if marker ~= nil then misn.markerRm( marker ) end
          marker = misn.markerAdd( missys2, "plot" )
 
-         osd_desc[4] = osd_apnd[4]:format( numstring( ore_needed ), missys2:name() )
+         osd_desc[4] = osd_apnd[4]:format( tonnestring( ore_needed ), missys2:name() )
          osd_desc[5] = osd_final
          misn.osdCreate( osd_title, osd_desc )
          misn.osdActive( 4 )
