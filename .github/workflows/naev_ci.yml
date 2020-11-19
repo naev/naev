@@ -38,7 +38,7 @@ jobs:
         path: ${{ github.workspace }}/build/meson-dist/*
         if-no-files-found: error
 
-  "Compile_Naev":
+  "Meson_Compile_Naev":
     needs: "Package_Source"
 
     strategy:
@@ -306,6 +306,8 @@ jobs:
       run: |
         sudo apt-get install \
           autopoint \
+          automake \
+          autoconf-archive \
           binutils-dev \
           build-essential \
           gettext \
