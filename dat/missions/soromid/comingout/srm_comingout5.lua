@@ -45,7 +45,7 @@ text = {}
 
 title[1] = _("The Dirty Job")
 text[1] = _([[You walk over to Chelsea to greet them when you notice an unpleasant odor coming off of them. Chelsea notices you. "Ah! %s! Uh, sorry about the smell. I don't know why the hell I did this, but I took a job from some guy here and now I'm stuck with it." You ask what kind of job it is. "Erm, I kind of agreed to take their trash from them." You grimace. "Yeah," Chelsea says, "it's gross. And what's worse, I'm in over my head. I've already taken the garbage and my new ship is packed to the brim with the stuff, but there's thugs outside that seem to be waiting for me." A look of rage appears on their face as they turn to the side. "You can probably guess who's responsible for that." The thought had crossed your mind as well.
-    Chelsea turns back to you. "I know I ask a lot of you, but could you help me once again? I just need an escort to %s so I can drop off this garbage there. I'll give you %s credits for the trouble. What do you say?"]])
+    Chelsea turns back to you. "I know I ask a lot of you, but could you help me once again? I just need an escort to %s so I can drop off this garbage there. I'll give you %s for the trouble. What do you say?"]])
 
 text[2] = _([["I appreciate it very much. I'll wait at the hangar until you're ready to take off. Get ready for a fight when we get out of the atmosphere; it's going to be a bumpy ride."]])
 
@@ -84,7 +84,7 @@ function accept ()
    if started then
       txt = text[4]
    else
-      txt = text[1]:format( player.name(), misplanet:name(), numstring( credits ) )
+      txt = text[1]:format( player.name(), misplanet:name(), creditstring( credits ) )
    end
    started = true
 

@@ -29,7 +29,7 @@ require "missions/sirius/common.lua"
 --the intro messages
 bmsg = {}
 bmsg[1] = _([[You walk up to a scrappy little man leaning against the bar. You sit next to him, and he eyes you up and down. You return the stare coolly and he half-heartedly tries to strikes up a conversation. "Nice drinks they have here." You feign interest so as not to be impolite.
-    He continues impatiently. "You look like you're in need of a couple spare credits," he finally says. "I have, uh, a shipment that needs getting to %s. Are you interested? Just has to be kept under wraps if you know what I mean. Pay is good though. %s credits. That's all you need to know." He pauses for a moment. "How about it?"]])
+    He continues impatiently. "You look like you're in need of a couple spare credits," he finally says. "I have, uh, a shipment that needs getting to %s. Are you interested? Just has to be kept under wraps if you know what I mean. Pay is good though. %s. That's all you need to know." He pauses for a moment. "How about it?"]])
 bmsg[2] = _([[You feel a very large hand slap you on the back. "I knew you would do it! A great choice!" he says. "I'll have my boys load up the cargo. Remember, all you gotta do is fly to %s, and avoid the Sirius military. I'll let my contacts know to expect you. They'll pay you when you land."
     You shake his sticky hand and walk off, content that you've made an easy buck.]])
 
@@ -75,7 +75,7 @@ function accept()
    --the obligatory opening messages
    local aname = targetasset:name()
 
-   if not tk.yesno( misn_title, bmsg[1]:format( aname, numstring(reward) ) ) then
+   if not tk.yesno( misn_title, bmsg[1]:format( aname, creditstring(reward) ) ) then
       tk.msg(misn_title,rejected)
       misn.finish(false)
    end

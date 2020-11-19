@@ -48,7 +48,7 @@ text = {}
 title[1] = _("A Great Opportunity")
 text[1] = _([[You greet Chelsea as usual and have a friendly chat with them. You learn that they had a close call recently with another thug, but they managed to shake the thug off with their new ship.
     "It's a lot better than before. The work is tough though. I've been picking off small pirates with bounties on their heads, doing relatively safe system patrols, that sort of thing. I'm supposed to be getting a better ship soon, but it's going to be difficult." You ask them why that is. "Well, I came across someone who's offering me a bargain on a new ship! Well, not new exactly. It's used, but in much better condition than that rust bucket I got before. Supposedly this guy used to be a Dvaered warlord and is offering me his old Vigilance if I just take care of this one pirate known as %s. Trouble is they're piloting a ship that's stronger than my own...."
-    Chelsea pauses in contemplation for a moment. "Say, do you think you could help me out on this one? I just need you to help me kill the pirate in %s. I'll give you %s credits for the trouble. How about it?"]])
+    Chelsea pauses in contemplation for a moment. "Say, do you think you could help me out on this one? I just need you to help me kill the pirate in %s. I'll give you %s for the trouble. How about it?"]])
 
 text[2] = _([["Fantastic! Thank you for the help! I'll meet you in %s and we can take the pirate out. Let's do this!"]])
 
@@ -105,7 +105,7 @@ function accept ()
    if started then
       txt = text[4]:format( player.name() )
    else
-      txt = text[1]:format( pirname, missys:name(), numstring( credits ) )
+      txt = text[1]:format( pirname, missys:name(), creditstring( credits ) )
    end
    started = true
 

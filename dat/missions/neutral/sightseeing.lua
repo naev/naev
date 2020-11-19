@@ -48,7 +48,7 @@ require "numstring.lua"
 require "jumpdist.lua"
 
 nolux_title = _("Not Very Luxurious")
-nolux_text  = _("Since your ship is not a Luxury Yacht class ship, you will only be paid %s credits. Accept the mission anyway?")
+nolux_text  = _("Since your ship is not a Luxury Yacht class ship, you will only be paid %s. Accept the mission anyway?")
 
 pay_title = _("Mission Completed")
 pay_text    = {}
@@ -158,7 +158,7 @@ end
 
 function accept ()
    if player.pilot():ship():class() ~= "Luxury Yacht" then
-      if tk.yesno( nolux_title, nolux_text:format( numstring(credits_nolux) ) ) then
+      if tk.yesno( nolux_title, nolux_text:format( creditstring(credits_nolux) ) ) then
          nolux_known = true
          misn.setReward( creditstring( credits_nolux ) )
       else

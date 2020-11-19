@@ -36,12 +36,12 @@ bmsg[2] = _([["We Nasin were at one point all part of House Sirius and believed 
     Shaman seems to get caught up in the moment. "It was he! He who led us to join our hands! He who led us to work together! He who led us to fight back against the oppressors! It was he! The very, the only, the True Voice of Sirichana!"
     Shaman seems to realize just exactly where he is and what he is doing. All the patrons in the bar turn their heads to your table. A group of young fellows start clapping and then degrade into laughter.]])
 bmsg[3] = _([[Shaman coughs out an "excuse me" and looks at you, embarrassed. "It is wrong for me to get so caught up in such things. I suppose you'll want to know about the mission now.
-    "The mission is simple. Our main base operates on %s in the %s system. I need a message delivered there. Of course, we will pay you for this service. How does %s credits sound? Will you do it?"]])
+    "The mission is simple. Our main base operates on %s in the %s system. I need a message delivered there. Of course, we will pay you for this service. How does %s sound? Will you do it?"]])
 bmsg[4] = _([["Fantastic!" He hands you the message. "They will take care of your payment there. Thank you for aiding the true followers of Sirichana."]])
 
 --all the messages after the player lands on the target asset
 emsg = {}
-emsg[1] = _([[As you land, you are once again surprised to not be greeted by anyone. After searching for a bit, you return to your ship to find that the message has been taken and a small envelope has replaced it. Inside the envelope is a note. "Our sincere apologies for missing you," it says. "As you can see, we have obtained the message, and you will also notice that a payment of %s credits has been deposited into your account. You have done great work for us and we appreciate your services. Please feel free to meet us at the bar sometime."]])
+emsg[1] = _([[As you land, you are once again surprised to not be greeted by anyone. After searching for a bit, you return to your ship to find that the message has been taken and a small envelope has replaced it. Inside the envelope is a note. "Our sincere apologies for missing you," it says. "As you can see, we have obtained the message, and you will also notice that a payment of %s has been deposited into your account. You have done great work for us and we appreciate your services. Please feel free to meet us at the bar sometime."]])
 
 --random odds and ends
 misn_title = _("The Return")
@@ -75,7 +75,7 @@ function accept()
    tk.msg(misn_title,bmsg[1])
    tk.msg(misn_title,bmsg[2])
 
-   local msg = bmsg[3]:format( targetasset:name(),targetsystem:name(),numstring(reward) )
+   local msg = bmsg[3]:format( targetasset:name(), targetsystem:name(), creditstring(reward) )
    if not tk.yesno(misn_title, msg) then
       misn.finish()
    end
@@ -92,7 +92,7 @@ end
 
 function landing()
    if planet.cur() == targetasset then
-      tk.msg(misn_title, emsg[1]:format( numstring(reward) ))
+      tk.msg(misn_title, emsg[1]:format( creditstring(reward) ))
       player.pay(reward)
       misn.cargoRm(message)
       misn_tracker = misn_tracker + 1
