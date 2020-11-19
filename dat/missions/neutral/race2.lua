@@ -32,7 +32,7 @@ title[1] = _("Another race")
 text[1] = _([["Hey there, great to see you back! You want to have another race?"]])   
 
 title[5] = _("Choose difficulty")
-text[5] = _([["There are two races you can participate in: an easy one, which is like the first race we had, or a hard one, with smaller checkpoints and no afterburners allowed. The easy one has a prize of %s credits, and the hard one has a prize of %s credits. Which one do you want to do?"]])
+text[5] = _([["There are two races you can participate in: an easy one, which is like the first race we had, or a hard one, with smaller checkpoints and no afterburners allowed. The easy one has a prize of %s, and the hard one has a prize of %s credits. Which one do you want to do?"]])
 title[6] = _("Hard Mode")
 text[6] = _([["You want a challenge huh? Remember, no afterburners on your ship or you will not be allowed to race. Let's go have some fun!"]])
 
@@ -50,8 +50,8 @@ refusetitle = _("Refusal")
 refusetext = _([["I guess we'll need to find another pilot."]])
 
 wintitle = _("You Won!")
-wintext = _([[A man in a suit and tie takes you up onto a stage. A large name tag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your prize money of %s credits!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it.]])
-firstwintext = _([[A man in a suit and tie takes you up onto a stage. A large name tag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your trophy and prize money of %s credits!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]])
+wintext = _([[A man in a suit and tie takes you up onto a stage. A large name tag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your prize money of %s!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it.]])
+firstwintext = _([[A man in a suit and tie takes you up onto a stage. A large name tag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your trophy and prize money of %s!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]])
 
 ftitle[1] = _("Illegal ship!")
 ftext[1] = _([["You have switched to a ship that's not allowed in this race. Mission failed."]])
@@ -114,7 +114,7 @@ function accept ()
       OSD[4] = string.format(OSD[4], curplanet:name())
       misn.setDesc(misndesc)
       misn.osdCreate(OSDtitle, OSD)
-      local s = text[5]:format(numstring(credits_easy), numstring(credits_hard))
+      local s = text[5]:format(creditstring(credits_easy), numstring(credits_hard))
       choice, choicetext = tk.choice(title[5], s, choice1, choice2)
       if choice == 1 then
          credits = credits_easy
@@ -313,10 +313,10 @@ function land()
    if target[4] == 4 then
       if racers[1]:exists() and racers[2]:exists() and racers[3]:exists() then
          if player.numOutfit("Racing Trophy") > 0 then
-            tk.msg(wintitle, firstwintext:format(numstring(credits)))
+            tk.msg(wintitle, firstwintext:format(creditstring(credits)))
             player.addOutfit("Racing Trophy")
          else
-            tk.msg(wintitle, wintext:format(numstring(credits)))
+            tk.msg(wintitle, wintext:format(creditstring(credits)))
          end
          player.pay(credits)
          misn.finish(true)

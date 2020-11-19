@@ -325,7 +325,7 @@ function seller()
             artifactC = misn.cargoAdd("Artifact? C", 0)
             misn.markerRm(markerC)
          else
-            tk.msg(nomoneytitle, nomoneytext:format(reward * 0.15))
+            tk.msg(nomoneytitle, nomoneytext:format(creditstring(reward * 0.15)))
          end
       end
    end

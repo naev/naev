@@ -24,12 +24,12 @@ require "scripts/numstring.lua"
 
 misn_title = _("DV: Assault on Unicorn") 
 misn_reward = _("Variable")
-misn_desc = _("It is time to put a dent in the pirates' forces. We have detected a strong pirate presence in the system of Unicorn. We are offering a small sum for each pirate killed. The maximum we will pay you is %s credits.")
+misn_desc = _("It is time to put a dent in the pirates' forces. We have detected a strong pirate presence in the system of Unicorn. We are offering a small sum for each pirate killed. The maximum we will pay you is %s.")
 
 title = {}
 text = {}
 title[2] = _("Mission accomplished")
-text[2] = _("As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth %s credits.")
+text[2] = _("As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth %s.")
 
 osd_msg = {}
 osd_msg[1] = _("Fly to the Unicorn system.")
@@ -41,7 +41,7 @@ function create ()
    rep = faction.playerStanding("Dvaered")
    -- Round the payment to the nearest thousand.
    max_payment = rep * 50000
-   misn_desc = misn_desc:format( numstring(max_payment) )
+   misn_desc = misn_desc:format( creditstring(max_payment) )
    misn.setTitle(misn_title)
    misn.setReward(misn_reward)
    misn.setDesc(misn_desc)
@@ -114,7 +114,7 @@ function land()
          var.pop( "assault_on_unicorn_check" )
       end
 
-      tk.msg(title[2], text[2]:format( numstring( bounty_earned )))
+      tk.msg(title[2], text[2]:format( creditstring( bounty_earned )))
       player.pay(bounty_earned)
       faction.modPlayerSingle( "Dvaered", math.pow( bounty_earned, 0.5 ) / 100 )
       misn.finish(true)
