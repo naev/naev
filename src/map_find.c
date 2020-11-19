@@ -729,8 +729,8 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
          "%s\n"
          "%.0f tonnes\n"
          "\n"
-         "%s credits\n"
-         "%s credits\n"
+         "%s\n"
+         "%s\n"
          "%s\n"),
          player_outfitOwned(outfit),
          outfit_slotName(outfit),

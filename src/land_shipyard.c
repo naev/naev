@@ -258,8 +258,8 @@ void shipyard_update( unsigned int wid, char* str )
          "%.0f tonnes\n"
          "%d units\n"
          "%d units\n"
-         "%s credits\n"
-         "%s credits\n"
+         "%s\n"
+         "%s\n"
          "%s\n"),
          _(ship->name),
          _(ship_class(ship)),
@@ -390,7 +390,7 @@ int shipyard_canBuy( const char *shipname, Planet *planet )
    if (!player_hasCredits( price )) {
       char buf[ECON_CRED_STRLEN];
       credits2str( buf, price - player.p->credits, 2 );
-      land_errDialogueBuild( _("You need %s more credits."), buf);
+      land_errDialogueBuild( _("You need %s more."), buf);
       failure = 1;
    }
    return !failure;
@@ -461,7 +461,7 @@ int shipyard_canTrade( const char *shipname )
       credits_t creditdifference = price - (player_shipPrice(player.p->name) + player.p->credits);
       char buf[ECON_CRED_STRLEN];
       credits2str( buf, creditdifference, 2 );
-      land_errDialogueBuild( _("You need %s more credits."), buf);
+      land_errDialogueBuild( _("You need %s more."), buf);
       failure = 1;
    }
    if (!can_swap( shipname ))
@@ -508,13 +508,13 @@ static void shipyard_trade( unsigned int wid, char* str )
    }
    else if ( targetprice < playerprice ) {
       if (dialogue_YesNo(_("Are you sure?"), /* confirm */
-         _("Your %s is worth %s credits, more than the new ship. For your ship, you will get the new %s and %s credits. Are you sure you want to trade your ship in?"),
+         _("Your %s is worth %s, more than the new ship. For your ship, you will get the new %s and %s. Are you sure you want to trade your ship in?"),
                player.p->ship->name, buf2, ship->name, buf4)==0)
          return;
    }
    else if ( targetprice > playerprice ) {
       if (dialogue_YesNo(_("Are you sure?"), /* confirm */
-         _("Your %s is worth %s, so the new ship will cost %s credits. Are you sure you want to trade your ship in?"),
+         _("Your %s is worth %s, so the new ship will cost %s. Are you sure you want to trade your ship in?"),
                player.p->ship->name, buf2, buf3)==0)
          return;
    }

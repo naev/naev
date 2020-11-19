@@ -494,7 +494,7 @@ static void board_update( unsigned int wdw )
    }
    else {
       if (j < PATH_MAX)
-         j += snprintf( &str[j], PATH_MAX-j, _("%d Units\n"), p->fuel );
+         j += snprintf( &str[j], PATH_MAX-j, _("%d units\n"), p->fuel );
    }
 
    /* Missiles */
@@ -586,9 +586,8 @@ void pilot_boardComplete( Pilot *p )
       p->credits       += worth;
       target->credits  -= worth;
       credits2str( creds, worth, 2 );
-      player_message( ngettext(
-               "\a%c%s\a0 has plundered %s credit from your ship!",
-               "\a%c%s\a0 has plundered %s credits from your ship!", worth),
+      player_message(
+            _("\a%c%s\a0 has plundered %s from your ship!"),
             pilot_getFactionColourChar(p), p->name, creds );
    }
    else {
