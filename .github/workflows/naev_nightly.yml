@@ -1,9 +1,8 @@
 on:
-  push:
-  #repository_dispatch:
-  #  types: manual-nightly
-  #schedule:
-  #  - cron: '0 0 * * *'
+  repository_dispatch:
+    types: manual-nightly
+  schedule:
+    - cron: '0 0 * * *'
 
 name: Nightly Release
 
@@ -215,7 +214,7 @@ jobs:
   "Upload_GitHub_Release":
     runs-on: ubuntu-latest
     needs: [Generate_Source, Build_Naev_Release]
-    #if: ${{ github.repository == 'naev/naev' }}
+    if: ${{ github.repository == 'naev/naev' }}
 
     steps:
       - name: Create Release Staging and Output Areas
@@ -252,7 +251,7 @@ jobs:
   "Upload_Steam_Release":
     runs-on: ubuntu-latest
     needs: [Generate_Source, Build_Naev_Release, Build_Naev_Steam_Release]
-    #if: ${{ github.repository == 'naev/naev' }}
+    if: ${{ github.repository == 'naev/naev' }}
 
     steps:
       - name: Update APT Cache
