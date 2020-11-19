@@ -24,18 +24,49 @@ jobs:
     - name: Install Additional Build Dependencies
       run: |
         sudo apt-get install \
+          automake \
+          autopoint \
+          autoconf-archive \
+          build-essential \
+          binutils-dev \
+          gettext \
+          intltool \
+          libsdl2-dev \
+          libsdl2-mixer-dev \
+          libsdl2-image-dev \
+          libgl1-mesa-dev \
+          libxml2-dev \
+          libfreetype6-dev \
+          libpng-dev \
+          libopenal-dev \
+          libvorbis-dev \
+          libiberty-dev \
           ninja-build
 
-    - name: Meson Build
+    - name:  Package Meson Dist
       run: |
         sh $MESON setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
         sh $MESON dist -C build --no-tests --include-subprojects
 
-    - name: Upload Artifact
+    - name: Package Autotools Dist
+      run: |
+          ./autogen.sh
+          ./configure
+          make dist-gzip
+      working-directory: "source"
+
+    - name: Upload Meson Dist Artifact
       uses: actions/upload-artifact@v2
       with:
         name: naev-meson-dist-${{ github.sha }}
         path: ${{ github.workspace }}/build/meson-dist/*
+        if-no-files-found: error
+
+    - name: Upload Autotools Dist Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-autotools-dist-${{ github.sha }}
+        path: ${{ github.workspace }}/source/naev-*.tar.gz
         if-no-files-found: error
 
   "Meson_Compile_Naev":
@@ -249,29 +280,24 @@ jobs:
     - name: Get Source
       uses: actions/download-artifact@v2
       with:
-        name: naev-meson-dist-${{ github.sha }}
+        name: naev-autotools-dist-${{ github.sha }}
 
     - name: Extract Source
       run: |
-        mkdir source
-        tar -xf naev-*.tar.xz -C source --strip 1
+        tar -xf naev-*.tar.gz -C ${{ github.workspace }} --strip 1
 
     - name: Autotools Setup
       run: |
         ./autogen.sh
         ./configure
-      working-directory: "source"
 
     - name: Autotools Compile
       run: |
         make -j"$(nproc)"
-      working-directory: "source"
 
     - name: Autotools Package
       run: |
-        cd source
         make install
-        cd ../
         tar -cf naev-${{ matrix.os }}-autotools-${{ github.sha }}.tar dist
 
     - name: Upload Autotools Artifact
