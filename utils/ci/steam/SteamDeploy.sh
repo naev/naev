@@ -56,7 +56,6 @@ fi
 mkdir -p "$STEAMPATH"/content/lin64
 mkdir -p "$STEAMPATH"/content/win64
 mkdir -p "$STEAMPATH"/content/ndata
-tree "$STEAMPATH"
 
 # Move Depot Scripts to Steam staging area
 cp -r "$SOURCEROOT"/utils/ci/steam/scripts "$STEAMPATH"
@@ -75,8 +74,6 @@ mv "$STEAMPATH"/content/win64/naev*.exe "$STEAMPATH/content/win64/naev.exe"
 
 # Move data to deployment location
 cp -r "$SOURCEROOT/dat" "$STEAMPATH/content/ndata"
-
-tree "$STEAMPATH"
 
 ## Runs STEAMCMD, and builds the app as well as all needed depots.
 #

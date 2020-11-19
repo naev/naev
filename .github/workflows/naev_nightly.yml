@@ -282,8 +282,7 @@ jobs:
             libpng-dev \
             libopenal-dev \
             libvorbis-dev \
-            libiberty-dev \
-            tree
+            libiberty-dev
 
       - name: Install SteamCMD
         run: |
