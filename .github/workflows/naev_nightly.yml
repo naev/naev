@@ -147,7 +147,7 @@ jobs:
       - name: Build and Package Naev for Linux64
         if: ${{ runner.os == 'Linux'}}
         run: |
-          sh "utils/buildAppImage.sh" -n -s "$(pwd)" -b "$(pwd)" -o "$(pwd)/dist"
+          ./utils/buildAppImage.sh -n -s "$(pwd)" -b "$(pwd)" -o "$(pwd)/dist"
         env:
           CFLAGS: "-O3"
           
