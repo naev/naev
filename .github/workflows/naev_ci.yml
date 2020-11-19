@@ -120,13 +120,11 @@ jobs:
           libfreetype6-dev \
           libgl1-mesa-dev \
           libiberty-dev \
-          libluajit-5.1-dev \
           libopenal-dev \
           libpng-dev \
           libsdl2-dev \
           libsdl2-image-dev \
           libsdl2-mixer-dev \
-          libsuitesparse-dev \
           libvorbis-dev \
           libxml2-dev
 
@@ -266,8 +264,7 @@ jobs:
           libpng-dev \
           libopenal-dev \
           libvorbis-dev \
-          libiberty-dev \
-          libluajit-5.1-dev
+          libiberty-dev 
 
     - name: Install MinGW Packages
       if: ${{ runner.os == 'Windows'}}
