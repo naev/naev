@@ -1,25 +1,25 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Sightseeing">
-  <avail>
-   <priority>4</priority>
-   <cond>planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Civilian"] ~= nil and system.cur():presences()["Civilian"] &gt; 0</cond>
-   <chance>460</chance>
-   <location>Computer</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <tier>1</tier>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>4</priority>
+  <cond>planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Civilian"] ~= nil and system.cur():presences()["Civilian"] &gt; 0</cond>
+  <chance>460</chance>
+  <location>Computer</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <tier>1</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    Sightseeing
@@ -91,8 +91,7 @@ ssmsg[7] = _("Truly a sight to behold for the passengers.")
 osd_title  = _("Sightseeing")
 osd_msg    = {}
 osd_msg[1] = _("Fly to the %s system")
-osd_msg_2  = _("Go to indicated point (%d remaining)")
-osd_msg[2] = "(null)"
+osd_msg[2]  = _("Go to all indicated points")
 osd_msg[3] = _("Return to %s in the %s system and collect your pay")
 osd_msg["__save"] = true
 
@@ -169,7 +168,6 @@ function accept ()
    misn.accept()
 
    osd_msg[1] = osd_msg[1]:format( missys:name() )
-   osd_msg[2] = osd_msg_2:format( #points )
    osd_msg[3] = osd_msg[3]:format( startingplanet:name(),startingsystem:name() )
    misn.osdCreate( osd_title, osd_msg )
    civs = misn.cargoAdd( "Civilians", 0 )
@@ -186,6 +184,7 @@ function enter ()
       if player.pilot():ship():class() ~= "Luxury Yacht" then
          nolux = true
       end
+      set_marks()
       timer()
    end
 end
@@ -195,9 +194,13 @@ function jumpout ()
    if not job_done and system.cur() == missys then
       misn.osdActive( 1 )
       if timer_hook ~= nil then hook.rm( timer_hook ) end
-      if mark ~= nil then
-         system.mrkRm( mark )
-         mark = nil
+      if marks ~= nil then
+         for i, m in ipairs(marks) do
+            if m ~= nil then
+               system.mrkRm(m)
+            end
+         end
+         marks = nil
       end
    end
 end
@@ -240,41 +243,54 @@ function timer ()
    if #points > 0 then
       misn.osdActive( 2 )
 
-      local point_pos = points[1]:pos()
+      local updated = false
+      local new_points = {}
+      new_points["__save"] = true
 
-      if mark == nil then
-         mark = system.mrkAdd( mark_name, point_pos )
+      for i, p in ipairs(points) do
+         local point_pos = p:pos()
+
+         if player_pos:dist( point_pos ) < 500 then
+            local sstxt = ssmsg[ rnd.rnd( 1, #ssmsg ) ]
+            player.msg( sstxt )
+            updated = true
+         else
+            new_points[#new_points + 1] = p
+         end
       end
 
-      if player_pos:dist( point_pos ) < 500 then
-         local new_points = {}
-         for i = 2, #points do
-            new_points[ #new_points + 1 ] = points[i]
-         end
+      if updated then
          points = new_points
-         points["__save"] = true
-
-         local sstxt = ssmsg[ rnd.rnd( 1, #ssmsg ) ]
-         player.msg( sstxt )
-         osd_msg[2] = osd_msg_2:format( #points )
-         misn.osdCreate( osd_title, osd_msg )
-         misn.osdActive(2)
-         if mark ~= nil then
-            system.mrkRm( mark )
-            mark = nil
-         end
+         set_marks()
       end
-   else
+   end
+
+   -- Another check since the previous block could change the result
+   if #points <= 0 then
       job_done = true
       player.msg( msg[1]:format( startingplanet:name() ) )
       misn.osdActive( 3 )
-      if marker ~= nil then
-         misn.markerRm( marker )
-      end
-      misn.markerAdd (startingsystem, "computer")
    end
 
    if not job_done then
       timer_hook = hook.timer( 50, "timer" )
+   end
+end
+
+
+function set_marks ()
+   -- Remove existing marks
+   if marks ~= nil then
+      for i, m in ipairs(marks) do
+         if m ~= nil then
+            system.mrkRm(m)
+         end
+      end
+   end
+
+   -- Add new marks
+   marks = {}
+   for i, p in ipairs(points) do
+      marks[i] = system.mrkAdd(mark_name, p:pos())
    end
 end
