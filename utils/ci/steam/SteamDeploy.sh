@@ -54,14 +54,15 @@ fi
 
 # Make Steam dist path if it does not exist
 mkdir -p "$STEAMPATH"/content/{lin64,win64,ndata}
+tree "$STEAMPATH"
 
 # Move Depot Scripts to Steam staging area
-cp -r "$SOURCEROOT/utils/ci/steam/scripts" "$STEAMPATH"
+cp -r "$SOURCEROOT"/utils/ci/steam/scripts "$STEAMPATH"
 
 # Move all build artefacts to deployment locations
 # Move Linux binary and set as executable
-cp "$TEMPPATH/naev-steamruntime/naev.x64" "$STEAMPATH/content/lin64"
-chmod +x "$STEAMPATH/content/lin64/naev.x64"
+cp "$TEMPPATH"/naev-steamruntime/naev.x64 "$STEAMPATH"/content/lin64
+chmod +x "$STEAMPATH"/content/lin64/naev.x64
           
 # Move macOS bundle to deployment location (Bye Bye for now)
 # unzip "$TEMPPATH/naev-macOS/naev-macos.zip" -d "$STEAMPATH/content/macos/"
