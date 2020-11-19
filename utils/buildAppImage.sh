@@ -69,7 +69,7 @@ unset DESTDIR
 export DESTDIR="$BUILDOUTPUT/Naev.AppDir"
 
 # Run build
-if [ "$USEMESON" = "true" ]; then
+if [ "$USEMESON" == "true" ]; then
     # Setup AppImage Build Directory
     sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
     --native-file "$SOURCEROOT/utils/build/linux_appimage.ini" \
@@ -110,7 +110,7 @@ else
     echo "The VERSION file is missing from $SOURCEROOT."
     exit -1
 fi
-if [ "$NIGHTLY" = "true" ]; then
+if [ "$NIGHTLY" == "true" ]; then
     export VERSION="$VERSION.$BUILD_DATE"
 fi
 SUFFIX="$VERSION-linux-x86-64"

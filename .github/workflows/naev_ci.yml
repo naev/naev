@@ -284,6 +284,7 @@ jobs:
 
     - name: Extract Source
       run: |
+        mkdir source
         tar -xf naev-*.tar.gz -C source --strip 1
 
     - name: Autotools Setup
