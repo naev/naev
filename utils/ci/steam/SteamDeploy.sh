@@ -45,7 +45,7 @@ fi
 BETA=false
 
 # Get version, negative minors mean betas
-if [[ -n $(echo "$VERSION" | grep "beta") ]]; then
+if [ -n $(echo "$VERSION" | grep "beta") ]; then
     BETA=true
 else
     echo "could not find VERSION file"
