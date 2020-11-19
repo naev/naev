@@ -9158,10 +9158,6 @@ msgstr ""
 "„Für den geringfügigen Preis von %s lasse ich dich landen.“\n"
 "\n"
 "%s zahlen?"
-msgstr[1] ""
-"„Für den geringfügigen Preis von %s Credits lasse ich dich landen.“\n"
-"\n"
-"%s Credits zahlen?"
 
 #: dat/landing.lua:247
 msgid "Make it quick."
@@ -25422,11 +25418,6 @@ msgstr "Verschwinde, du Zumüller! Wir wollen dich hier nicht!"
 #: dat/missions/neutral/wastedump.lua:63 dat/missions/neutral/wastedump.lua:67
 msgid "Waste Dump"
 msgstr "Mülldeponie"
-
-#: dat/missions/neutral/wastedump.lua:64
-#, lua-format
-msgid "%s per tonne"
-msgstr "%s pro Tonne"
 
 #: dat/missions/neutral/wastedump.lua:65
 msgid ""

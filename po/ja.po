@@ -20608,11 +20608,6 @@ msgstr ""
 msgid "Waste Dump"
 msgstr ""
 
-#: dat/missions/neutral/wastedump.lua:64
-#, fuzzy, lua-format
-msgid "%s per tonne"
-msgstr "%sクレジット"
-
 #: dat/missions/neutral/wastedump.lua:65
 msgid ""
 "Take as many waste containers off of here as your ship can hold and drop "
