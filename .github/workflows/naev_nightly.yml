@@ -274,7 +274,7 @@ jobs:
       - name: Build and Upload Steam Release
         run: |
           cp -r dist/staging/naev-steam-deployment/* ${{ github.workspace }}
-          sh "SteamDeploy.sh" -n -s "$(pwd)" -t "dist/staging" -o "dist/out"
+          ./SteamDeploy.sh -n -s "$(pwd)" -t "dist/staging" -o "dist/out"
 #        env:
 #          STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
 #          STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}

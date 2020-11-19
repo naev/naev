@@ -38,7 +38,7 @@ while getopts dns:t:o: OPTION "$@"; do
 done
 
 if [ -f "$SOURCEROOT/dat/VERSION" ]; then
-    export VERSION="$(cat "$SOURCEROOT/dat/VERSION")"
+    export VERSION="$(<"$SOURCEROOT/dat/VERSION")"
 else
     echo "The VERSION file is missing from $SOURCEROOT."
     exit 1
