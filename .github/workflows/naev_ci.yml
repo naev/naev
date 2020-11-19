@@ -251,8 +251,11 @@ jobs:
         sudo apt-get install \
           build-essential \
           automake \
+          autopoint \
           autoconf-archive \
           binutils-dev \
+          gettext \
+          intltool \
           libsdl2-dev \
           libsdl2-mixer-dev \
           libsdl2-image-dev \
@@ -264,9 +267,7 @@ jobs:
           libopenal-dev \
           libvorbis-dev \
           libiberty-dev \
-          gettext \
-          autopoint \
-          intltool
+          libluajit-5.1-dev
 
     - name: Install MinGW Packages
       if: ${{ runner.os == 'Windows'}}
