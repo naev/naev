@@ -68,8 +68,6 @@ OLDDISTDIR="$DISTDIR"
 unset DESTDIR
 export DESTDIR="$BUILDOUTPUT/Naev.AppDir"
 
-OLDPATH="$(pwd)"
-
 # Run build
 if [ "$USEMESON" = "true" ]; then
     # Setup AppImage Build Directory
@@ -85,7 +83,7 @@ if [ "$USEMESON" = "true" ]; then
 
     sh "$MESON" install -C "$BUILDPATH"
 else
-    cd "$SOURCEROOT"
+    pushd "$SOURCEROOT"
     # Setup AppImage Build Directory
     ./autogen.sh
     ./configure --disable-debug --prefix=/usr
@@ -93,7 +91,7 @@ else
     # Compile and Install Naev to DISTDIR
     make -j"$(nproc --all)"
     make install
-    cd "$OLDPATH"
+    popd
 fi
 
 # Prep dist directory for appimage

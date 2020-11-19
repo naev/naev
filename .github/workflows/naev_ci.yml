@@ -284,21 +284,25 @@ jobs:
 
     - name: Extract Source
       run: |
-        tar -xf naev-*.tar.gz -C ${{ github.workspace }} --strip 1
+        tar -xf naev-*.tar.gz -C source --strip 1
 
     - name: Autotools Setup
       run: |
         ./autogen.sh
         ./configure
+      working-directory: source
 
     - name: Autotools Compile
       run: |
         make -j"$(nproc)"
+      working-directory: source
 
     - name: Autotools Package
       run: |
+        pushd source
         make install
         tar -cf naev-${{ matrix.os }}-autotools-${{ github.sha }}.tar dist
+        popd
 
     - name: Upload Autotools Artifact
       uses: actions/upload-artifact@v2
