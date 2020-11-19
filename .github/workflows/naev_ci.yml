@@ -349,36 +349,29 @@ jobs:
 
     - name: Compile AppImage Autotools
       if: ${{ matrix.buildtype == 'autotools' }}
-      id: autotoolscompile
+      id: compile
       run: |
-        sh source/utils/buildAppImage.sh -s "source" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
+        sh source/utils/buildAppImage.sh -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
+      working-directory: source
 
     - name: Compile AppImage Meson
       if: ${{ matrix.buildtype == 'meson' }}
-      id: mesoncompile
+      id: compile
       run: |
         sh source/utils/buildAppImage.sh -m -s "source" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
 
     - name: Upload Compile Log
       uses: actions/upload-artifact@v2
-      if: ${{ (success() || steps.compile.outcome == 'failure') && matrix.buildtype == 'autotools' }}
+      if: ${{ (success() || steps.compile.outcome == 'failure') }}
       with:
-        name: ${{ matrix.os }}-${{ github.sha }}-autotoolsAppImageBuild-log
-        path: ${{ github.workspace }}/appImageBuildLog.txt
-        if-no-files-found: ignore
-
-    - name: Upload Compile Log
-      uses: actions/upload-artifact@v2
-      if: ${{ (success() || steps.compile.outcome == 'failure') && matrix.buildtype == 'meson' }}
-      with:
-        name: ${{ matrix.os }}-${{ github.sha }}-mesonAppImageBuild-log
+        name: ${{ matrix.os }}-${{ github.sha }}-${{ matrix.buildtype }}AppImageBuild-log
         path: ${{ github.workspace }}/appImageBuildLog.txt
         if-no-files-found: ignore
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-${{ matrix.os }}-AppImage-${{ github.sha }}
+        name: naev-${{ matrix.os }}-${{ matrix.buildtype }}AppImage-${{ github.sha }}
         path: "${{ env.DESTDIR }}/out/*.AppImage"
         if-no-files-found: error
 
