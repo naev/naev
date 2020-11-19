@@ -9,7 +9,7 @@
 # If -n is passed to the script, a nightly build will be generated
 # and uploaded to Steam
 #
-# Pass in [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -t <TEMPPATH> (Steam build artefact location) -o <STEAMPATH> (Steam dist output directory)
+# Pass in [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of script files.) -t <TEMPPATH> (Steam build artefact location) -o <STEAMPATH> (Steam dist output directory)
 
 set -e
 
@@ -26,7 +26,7 @@ while getopts dns:t:o: OPTION "$@"; do
         NIGHTLY="true"
         ;;
     s)
-        SOURCEROOT="${OPTARG}"
+        SCRIPTROOT="${OPTARG}"
         ;;
     t)
         TEMPPATH="${OPTARG}"
@@ -58,7 +58,7 @@ mkdir -p "$STEAMPATH"/content/win64
 mkdir -p "$STEAMPATH"/content/ndata
 
 # Move Depot Scripts to Steam staging area
-cp -r "$SOURCEROOT"/utils/ci/steam/scripts "$STEAMPATH"
+cp -r "$SCRIPTROOT" "$STEAMPATH"
 
 # Move all build artefacts to deployment locations
 # Move Linux binary and set as executable
@@ -73,36 +73,37 @@ tar -Jxvf "$TEMPPATH/naev-win64/steam-win64.tar.xz" -C "$STEAMPATH/content/win64
 mv "$STEAMPATH"/content/win64/naev*.exe "$STEAMPATH/content/win64/naev.exe"
 
 # Move data to deployment location
-cp -r "$SOURCEROOT/dat" "$STEAMPATH/content/ndata"
+tar -Jxvf "$TEMPPATH/naev-ndata/steam-ndata.tar.xz" -C "$STEAMPATH/content/ndata"
 
+ls -l $SCRIPTROOT
 # Runs STEAMCMD, and builds the app as well as all needed depots.
-
-# Trigger 2FA request and get 2FA code
-steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
-
+#
+## Trigger 2FA request and get 2FA code
+#steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
+#
 # Wait a bit for the email to arrive
-sleep 60s
-python3 "$SOURCEROOT/utils/ci/steam/2fa/get_2fa.py"
-STEAMCMD_TFA="$(cat "$SOURCEROOT/extras/steam/2fa/2fa.txt")"
-
-if [ "$NIGHTLY" == "true" ]; then
-    # Run steam upload with 2fa key
-    steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http "$STEAMPATH/scripts/app_build_598530_nightly.vdf" +quit
-else
-    if [ "$BETA" == "true" ]; then 
-        # Run steam upload with 2fa key
-        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http "$STEAMPATH/scripts/app_build_598530_prerelease.vdf" +quit
-
-    elif [ "$BETA" == "false" ]; then 
-        # Move soundtrack stuff to deployment area
-        cp naev-soundtrack/soundtrack/*.mp3 "$STEAMPATH/content/soundtrack"
-        cp naev-soundtrack/soundtrack/*.png "$STEAMPATH/content/soundtrack"
-
-        # Run steam upload with 2fa key
-        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http "$STEAMPATH/scripts/app_build_598530_release.vdf" +quit
-        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +run_app_build_http "$STEAMPATH/scripts/app_build_1411430_soundtrack.vdf" +quit
-
-    else
-        echo "Something went wrong determining if this is a beta or not."
-    fi
-fi
+#sleep 60s
+#python3 "$SCRIPTROOT/2fa/get_2fa.py"
+#STEAMCMD_TFA="$(cat "$SCRIPTROOT/2fa/2fa.txt")"
+#
+#if [ "$NIGHTLY" == "true" ]; then
+#    # Run steam upload with 2fa key
+#    steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http "$STEAMPATH/scripts/app_build_598530_nightly.vdf" +quit
+#else
+#    if [ "$BETA" == "true" ]; then 
+#        # Run steam upload with 2fa key
+#        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http "$STEAMPATH/scripts/app_build_598530_prerelease.vdf" +quit
+#
+#    elif [ "$BETA" == "false" ]; then 
+#        # Move soundtrack stuff to deployment area
+#        cp "$TEMPPATH"/naev-soundtrack/soundtrack/*.mp3 "$STEAMPATH/content/soundtrack"
+#        cp "$TEMPPATH"/naev-soundtrack/soundtrack/*.png "$STEAMPATH/content/soundtrack"
+#
+#        # Run steam upload with 2fa key
+#        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http "$STEAMPATH/scripts/app_build_598530_release.vdf" +quit
+#        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +run_app_build_http "$STEAMPATH/scripts/app_build_1411430_soundtrack.vdf" +quit
+#
+#    else
+#        echo "Something went wrong determining if this is a beta or not."
+#    fi
+#fi
