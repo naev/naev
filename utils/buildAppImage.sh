@@ -115,7 +115,7 @@ fi
 if [ "$NIGHTLY" = "true" ]; then
     export VERSION="$VERSION.$BUILD_DATE"
 fi
-SUFFIX="$VERSION-lin64"
+SUFFIX="$VERSION-linux-x86-64"
 
 # Make output dir (if it does not exist)
 mkdir -p "$BUILDOUTPUT/out"
