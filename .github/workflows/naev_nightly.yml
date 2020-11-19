@@ -99,7 +99,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: naev-lin64
+          name: naev-linux-x86-64
           path: ${{ github.workspace }}/dist/out/*.AppImage
 
   "Linux-x86_64-SteamRuntime":
@@ -233,12 +233,13 @@ jobs:
         run: |
           BUILD_DATE="$(date +%Y%m%d)"
           VERSION="$(cat dat/VERSION)"
+          SUFFIX="$VERSION.$BUILD_DATE"
 
-          mv dist/naev-lin64/*.AppImage dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64.AppImage
-          mv dist/naev-win64/naev-win64.exe dist/release/naev-$VERSION.$BUILD_DATE-win64.exe
-          mv dist/naev-dist/source.tar.gz dist/release/naev-$VERSION.$BUILD_DATE-source.tar.gz
+          mv dist/naev-linux-x86-64/*.AppImage dist/release/naev-$SUFFIX-linux-x86-64.AppImage
+          mv dist/naev-win64/naev-win64.exe dist/release/naev-$SUFFIX-win64.exe
+          mv dist/naev-dist/source.tar.gz dist/release/naev-$SUFFIX-source.tar.gz
 
-          chmod +x dist/release/naev-$VERSION.$BUILD_DATE-linux-x86-64.AppImage
+          chmod +x dist/release/naev-$SUFFIX-linux-x86-64.AppImage
 
       - name: Upload Release Assets
         uses: "marvinpinto/action-automatic-releases@latest"
