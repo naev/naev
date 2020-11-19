@@ -55,7 +55,7 @@ text[1] = _([[You meet up once more with Commander Soldner at the bar.
     "Hello again, %s. Still interested in doing another mission? This one will be more dangerous."]])
 text[2] = _([[Commander Soldner nods and continues, "We've had reports that a transport vessel came under attack while transporting a VIP. They managed to escape, but the engine ended up giving out in the %s system. The ship is now disabled and we need someone to board the ship and rescue the VIP. There have been many FLF ships detected near the sector, but we've managed to organise a Dvaered escort for you.
     "You're going to have to fly to the %s system, find and board the transport ship to rescue the VIP, and then fly back. The sector is most likely going to be hot. That's where your Dvaered escorts will come in. Their mission will be to distract and neutralise all possible hostiles. You must not allow the transport ship to be destroyed before you rescue the VIP. His survival is vital."]])
-text[3] = _([["Be careful with the Dvaered; they can be a bit blunt, and might accidentally destroy the transport ship. If all goes well, you'll be paid %s credits when you return with the VIP. Good luck, pilot."]])
+text[3] = _([["Be careful with the Dvaered; they can be a bit blunt, and might accidentally destroy the transport ship. If all goes well, you'll be paid %s when you return with the VIP. Good luck, pilot."]])
 text[4] = _([[The ship's hatch opens and immediately an unconscious VIP is brought aboard by his bodyguard. Looks like there is no one else aboard.]])
 text[5] = _([[You land at the starport. It looks like the VIP has already recovered. He thanks you profusely before heading off. You proceed to pay Commander Soldner a visit. He seems to be happy, for once.
     "It seems like you managed to pull it off. I had my doubts at first, but you've proven to be a very skilled pilot. Oh, and I've cleared you for the Heavy Combat Vessel License; congratulations! We have nothing more for you now, but check in periodically in case something comes up for you."]])
@@ -107,7 +107,7 @@ function accept ()
 
    -- Flavour text and mini-briefing
    tk.msg( title[1], string.format( text[2], destsys:name(), destsys:name() ) )
-   tk.msg( title[1], string.format( text[3], numstring(reward) ) )
+   tk.msg( title[1], string.format( text[3], creditstring(reward) ) )
    misn.osdCreate(misn_title, {misn_desc[1]:format(destsys:name())})
    -- Set hooks
    hook.land("land")

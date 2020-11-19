@@ -108,9 +108,7 @@ function create ()
    misn.setTitle( misn_title:format( chosen_comm ) )
    misn.markerAdd( system.cur(), "computer" )
    misn.setDesc( misn_desc:format( misplanet:name(), chosen_comm ) )
-   misn.setReward( gettext.ngettext(
-         "%s credit per tonne", "%s credits per tonne",
-         price):format( numstring( price ) ) )
+   misn.setReward( _("%s per tonne"):format( creditstring( price ) ) )
     
 end
 

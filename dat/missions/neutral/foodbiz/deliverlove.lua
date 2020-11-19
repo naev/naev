@@ -36,7 +36,7 @@ firstcontact = _([[You can't help but wonder why the man in the corner is writin
 
 acceptornot = _([["It is a nice place I hear!" he exclaims visibly excited. "Say, I have written a ton of these letters at this point. You wouldn't be able to drop them off, would you?" You raise your eyebrow. "There would be a few credits in it for you... say, %s?" The man adds quickly with a hopeful expression. It seems like a low reward for a long journey...]])
 
-bargain = _([[The man grabs your arm as you begin to get up. "Alright, how about %s credits? Look, I wouldn't want The Empire reading these. The Emperor himself would blush." You sigh and give the man a long pause before answering.]])
+bargain = _([[The man grabs your arm as you begin to get up. "Alright, how about %s? Look, I wouldn't want The Empire reading these. The Emperor himself would blush." You sigh and give the man a long pause before answering.]])
 
 not_enough_cargospace = _([[You run a check of your cargo hold and notice it is packed to the brim. "Did I not mention I wrote a tonne of these letters? You don't have enough space for all of these," the man says. "I will be in the bar if you free some space up." You didn't expect him to have a LITERAL tonne of letters...]])
 
@@ -76,7 +76,7 @@ function accept ()
       started = true
       if not tk.yesno( title, acceptornot:format( creditstring( reward ) ) ) then
          reward = reward * 2 --look at you go, double the reward
-         if not tk.yesno(title, bargain:format( numstring( reward ) ) ) then
+         if not tk.yesno(title, bargain:format( creditstring( reward ) ) ) then
             misn.finish()
          end
       end

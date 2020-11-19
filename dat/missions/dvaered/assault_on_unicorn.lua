@@ -34,7 +34,7 @@ text[2] = _("As you land, you see a Dvaered military official approaching. Thank
 osd_msg = {}
 osd_msg[1] = _("Fly to the Unicorn system.")
 osd_msg[2] = ""
-osd_msg2 = _("Destroy some pirates! You have killed %d and have earned %s credits. If finished, return to %s.")
+osd_msg2 = _("Destroy some pirates! You have killed %d and have earned %s. If finished, return to %s.")
 osd_msg3 = _("You have reached your maximum payment. Return to %s.")
 
 function create ()
@@ -65,7 +65,7 @@ function accept ()
       misn_stage = 0
       misn_target_sys = system.get("Unicorn")
 
-      osd_msg[2] = osd_msg2:format(pirates_killed, numstring(bounty_earned), planet_start_name)
+      osd_msg[2] = osd_msg2:format(pirates_killed, creditstring(bounty_earned), planet_start_name)
       misn.osdCreate(misn_title,osd_msg)
       misn.osdActive(1)
 

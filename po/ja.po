@@ -7815,12 +7815,9 @@ msgstr ""
 #: dat/landing.lua:180
 #, lua-format
 msgid ""
-"\"Well, I think you're scum, but I'm willing to look the other way for %s "
-"credit. Deal?\""
-msgid_plural ""
-"\"Well, I think you're scum, but I'm willing to look the other way for %s "
-"credits. Deal?\""
-msgstr[0] ""
+"\"Well, I think you're scum, but I'm willing to look the other way for %s. "
+"Deal?\""
+msgstr ""
 
 #: dat/landing.lua:184
 msgid "Heh heh, thanks. Now get off the comm, I'm busy!"
@@ -7841,14 +7838,10 @@ msgstr ""
 #: dat/landing.lua:243
 #, lua-format
 msgid ""
-"\"I'll let you land for the modest price of %s credit.\"\n"
+"\"I'll let you land for the modest price of %s.\"\n"
 "\n"
-"Pay %s credit?"
-msgid_plural ""
-"\"I'll let you land for the modest price of %s credits.\"\n"
-"\n"
-"Pay %s credits?"
-msgstr[0] ""
+"Pay %s?"
+msgstr ""
 
 #: dat/landing.lua:247
 msgid "Make it quick."
@@ -8677,7 +8670,7 @@ msgstr ""
 #: dat/missions/dvaered/assault_on_unicorn.lua:37
 #, lua-format
 msgid ""
-"Destroy some pirates! You have killed %d and have earned %s credits. If "
+"Destroy some pirates! You have killed %d and have earned %s. If "
 "finished, return to %s."
 msgstr ""
 
@@ -12618,7 +12611,7 @@ msgstr ""
 msgid ""
 "\"Be careful with the Dvaered; they can be a bit blunt, and might "
 "accidentally destroy the transport ship. If all goes well, you'll be paid %s "
-"credits when you return with the VIP. Good luck, pilot.\""
+"when you return with the VIP. Good luck, pilot.\""
 msgstr ""
 
 #: dat/missions/empire/shipping/es02.lua:60
@@ -13374,7 +13367,7 @@ msgid ""
 "system, so we can get some important work done in the Haleb system. It's the "
 "same deal as the diversion from Raelid you did some time ago.\" Aha, "
 "preparation for destruction of another Dvaered base! \"You'll be paid %s "
-"credits if you accept. Would you like to help with this one?\""
+"if you accept. Would you like to help with this one?\""
 msgstr ""
 
 #: dat/missions/flf/dvk/flf_dvk04.lua:49
@@ -15641,9 +15634,8 @@ msgstr ""
 #. Set Mission Details
 #: dat/missions/neutral/commodity_run.lua:112
 #, fuzzy, lua-format
-msgid "%s credit per tonne"
-msgid_plural "%s credits per tonne"
-msgstr[0] "%sクレジット"
+msgid "%s per tonne"
+msgstr "%sクレジット"
 
 #.
 #.
@@ -15773,7 +15765,7 @@ msgstr ""
 msgid ""
 "\"Excellent work. This data will ensure an arrest and swift prosecution. "
 "You've certainly done your part towards cleaning up the region. As for your "
-"compensation, I've had %s credits transferred to you.\""
+"compensation, I've had %s transferred to you.\""
 msgstr ""
 
 #. finished
@@ -17700,7 +17692,7 @@ msgstr ""
 msgid ""
 "\"The plan is for you to take us to %s so we can launch the probe, and then "
 "return us to our home at %s in the %s system. The probe will automatically "
-"send us the data we need if all goes well. You'll be paid %s credits when we "
+"send us the data we need if all goes well. You'll be paid %s when we "
 "arrive.\""
 msgstr ""
 
@@ -18928,7 +18920,7 @@ msgid ""
 "\"There are two races you can participate in: an easy one, which is like the "
 "first race we had, or a hard one, with smaller checkpoints and no "
 "afterburners allowed. The easy one has a prize of %s, and the hard "
-"one has a prize of %s credits. Which one do you want to do?\""
+"one has a prize of %s. Which one do you want to do?\""
 msgstr ""
 
 #: dat/missions/neutral/race2.lua:36
@@ -19207,7 +19199,7 @@ msgid ""
 "She looks out of place in the bar. As you approach, she seems to stiffen.\n"
 "    \"H..H..Hi\", she stutters. \"My name is Cynthia. Could you give me a "
 "lift? I really need to get out of here.\n"
-"    I can't pay you much, just what I have on me, %s credits.\" You wonder "
+"    I can't pay you much, just what I have on me, %s.\" You wonder "
 "who she must be to have this many credits on her person. \"I need you to "
 "take me to Zhiru.\"\n"
 "    You wonder who she is, but you dare not ask. Do you accept?"
@@ -19225,7 +19217,7 @@ msgstr ""
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:37
 #: dat/missions/neutral/runaway/runaway_search.lua:33
 #, fuzzy, lua-format
-msgid "%s credits on delivery."
+msgid "%s on delivery."
 msgstr "%sクレジット"
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:40
@@ -19997,8 +19989,8 @@ msgstr ""
 #: dat/missions/neutral/sightseeing.lua:51
 #, lua-format
 msgid ""
-"Since your ship is not a Luxury Yacht class ship, you will only be paid %s "
-"credits. Accept the mission anyway?"
+"Since your ship is not a Luxury Yacht class ship, you will only be paid %s. "
+"Accept the mission anyway?"
 msgstr ""
 
 #: dat/missions/neutral/sightseeing.lua:55
@@ -25388,7 +25380,7 @@ msgid ""
 "    He continues impatiently. \"You look like you're in need of a couple "
 "spare credits,\" he finally says. \"I have, uh, a shipment that needs "
 "getting to %s. Are you interested? Just has to be kept under wraps if you "
-"know what I mean. Pay is good though. %s credits. That's all you need to "
+"know what I mean. Pay is good though. %s. That's all you need to "
 "know.\" He pauses for a moment. \"How about it?\""
 msgstr ""
 
@@ -25544,7 +25536,7 @@ msgid ""
 "know about the mission now.\n"
 "    \"The mission is simple. Our main base operates on %s in the %s system. "
 "I need a message delivered there. Of course, we will pay you for this "
-"service. How does %s credits sound? Will you do it?\""
+"service. How does %s sound? Will you do it?\""
 msgstr ""
 
 #: dat/missions/sirius/heretic/heretic1.lua:40
@@ -25562,7 +25554,7 @@ msgid ""
 "been taken and a small envelope has replaced it. Inside the envelope is a "
 "note. \"Our sincere apologies for missing you,\" it says. \"As you can see, "
 "we have obtained the message, and you will also notice that a payment of %s "
-"credits has been deposited into your account. You have done great work for "
+"has been deposited into your account. You have done great work for "
 "us and we appreciate your services. Please feel free to meet us at the bar "
 "sometime.\""
 msgstr ""
@@ -26604,7 +26596,7 @@ msgid ""
 "see you again!\"\n"
 "    Taking your cue, you say goodbye for now, excuse yourself from the "
 "table, and make your way back to your ship. As you enter your cockpit you "
-"find a credit chip worth %s credits! It's not much, but it's something."
+"find a credit chip worth %s! It's not much, but it's something."
 msgstr ""
 
 #. No pirates nearby
@@ -27197,7 +27189,7 @@ msgid ""
 "well.\n"
 "    Chelsea turns back to you. \"I know I ask a lot of you, but could you "
 "help me once again? I just need an escort to %s so I can drop off this "
-"garbage there. I'll give you %s credits for the trouble. What do you say?\""
+"garbage there. I'll give you %s for the trouble. What do you say?\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout5.lua:50
@@ -27316,7 +27308,7 @@ msgid ""
 "own....\"\n"
 "    Chelsea pauses in contemplation for a moment. \"Say, do you think you "
 "could help me out on this one? I just need you to help me kill the pirate in "
-"%s. I'll give you %s credits for the trouble. How about it?\""
+"%s. I'll give you %s for the trouble. How about it?\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:53
@@ -27506,7 +27498,7 @@ msgstr ""
 #, lua-format
 msgid ""
 "The merchant sighs in relief. \"Thank you so much for this. Just bring the "
-"cargo to the cargo guy at %s. They should pay you %s credits when you get "
+"cargo to the cargo guy at %s. They should pay you %s when you get "
 "there. Don't be late, OK?\""
 msgstr ""
 

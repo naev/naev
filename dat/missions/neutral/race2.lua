@@ -32,7 +32,7 @@ title[1] = _("Another race")
 text[1] = _([["Hey there, great to see you back! You want to have another race?"]])   
 
 title[5] = _("Choose difficulty")
-text[5] = _([["There are two races you can participate in: an easy one, which is like the first race we had, or a hard one, with smaller checkpoints and no afterburners allowed. The easy one has a prize of %s, and the hard one has a prize of %s credits. Which one do you want to do?"]])
+text[5] = _([["There are two races you can participate in: an easy one, which is like the first race we had, or a hard one, with smaller checkpoints and no afterburners allowed. The easy one has a prize of %s, and the hard one has a prize of %s. Which one do you want to do?"]])
 title[6] = _("Hard Mode")
 text[6] = _([["You want a challenge huh? Remember, no afterburners on your ship or you will not be allowed to race. Let's go have some fun!"]])
 
@@ -114,7 +114,7 @@ function accept ()
       OSD[4] = string.format(OSD[4], curplanet:name())
       misn.setDesc(misndesc)
       misn.osdCreate(OSDtitle, OSD)
-      local s = text[5]:format(creditstring(credits_easy), numstring(credits_hard))
+      local s = text[5]:format(creditstring(credits_easy), creditstring(credits_hard))
       choice, choicetext = tk.choice(title[5], s, choice1, choice2)
       if choice == 1 then
          credits = credits_easy
