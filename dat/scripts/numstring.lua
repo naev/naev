@@ -20,7 +20,7 @@ end
 -- @usage tk.msg( "", _("You have been paid %s."):format( creditstring(credits) ) )
 --
 --    @param credits Number of credits.
---    @return A string taking the form of "X ¢".
+--    @return A string taking the form of "X ¤".
 --]]
 function creditstring( credits )
    return gettext.ngettext( "%s ¤", "%s ¤", credits ):format(
