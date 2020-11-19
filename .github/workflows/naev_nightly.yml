@@ -93,10 +93,12 @@ jobs:
 
     steps:
       - name: Update APT Cache
+        if: ${{ runner.os == 'Linux'}}
         run: |
           sudo apt-get update
 
       - name: Install Build Dependencies
+        if: ${{ runner.os == 'Linux'}}
         run: |
           sudo apt-get install \
             automake \
