@@ -727,7 +727,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
          "\n"
          "%s\n"
          "%s\n"
-         "%.0f t\n"
+         "%.0f tonnes\n"
          "\n"
          "%s\n"
          "%s\n"

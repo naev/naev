@@ -647,8 +647,8 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                    "\anFabricator:\a0 %s    "
                    "\anCrew:\a0 %d\n"
                    "\anCPU:\a0 %.0f teraflops    "
-                   "\anMass:\a0 %.0f t\n"
-                   "\anThrust:\a0 %.0f kN/t    "
+                   "\anMass:\a0 %.0f tonnes\n"
+                   "\anThrust:\a0 %.0f kN/tonne    "
                    "\anSpeed:\a0 %.0f m/s\n"
                    "\anTurn:\a0 %.0f deg/s    "
                    "\anTime Dilation:\a0 %.0f%%\n"
@@ -656,7 +656,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                    "\anShield:\a0 %.0f MJ (%.1f MW)    "
                    "\anArmour:\a0 %.0f MJ (%.1f MW)\n"
                    "\anEnergy:\a0 %.0f MJ (%.1f MW)\n"
-                   "\anCargo Space:\a0 %.0f t\n"
+                   "\anCargo Space:\a0 %.0f tonnes\n"
                    "\anFuel:\a0 %d units  "
                    "\anFuel Use:\a0 %d units\n"
                    "\anPrice:\a0 %s  "
@@ -699,13 +699,13 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       buf4[0]='\0';
       owned=pilot_cargoOwned( player.p, name );
       if ( owned > 0 )
-         nsnprintf( buf4, PATH_MAX, ", purchased at %"PRIu64" ¢/t", com->lastPurchasePrice );
+         nsnprintf( buf4, PATH_MAX, ", purchased at %"PRIu64" ¤/t", com->lastPurchasePrice );
       nsnprintf( infobuf, PATH_MAX,
                  _("%s\n\n"
                    "%s\n\n"
-                   "\anYou have:\a0 %d t%s\n"
-                   "\anAverage price seen here:\a0 %"PRIu64" ± %.1f ¢/t\n"
-                   "\anAverave price seen everywhere:\a0 %"PRIu64" ± %.1f ¢/t\n"),
+                   "\anYou have:\a0 %d tonnes%s\n"
+                   "\anAverage price seen here:\a0 %"PRIu64" ± %.1f ¤/t\n"
+                   "\anAverave price seen everywhere:\a0 %"PRIu64" ± %.1f ¤/t\n"),
                  name,
                  com->description,
                  owned,
@@ -1003,13 +1003,13 @@ void map_system_buyCommodPrice( unsigned int wid, char *str )
    t-= ( njumps * 2 + 0.2 ) * NT_PERIOD_SECONDS * 1000;
    /* FIXME: These should be using credits2str rather than %d. */
    if ( !player_hasCredits( cost ) ) {
-      dialogue_msg( _("You can't afford that"), _("Sorry, but we are selling this information for %d ¢, which you don't have"), cost );
+      dialogue_msg( _("You can't afford that"), _("Sorry, but we are selling this information for %d ¤, which you don't have"), cost );
    } else if ( cur_planetObj_sel->ncommodities == 0 ) {
       dialogue_msgRaw( _("No commodities sold here"),_("There are no commodities sold here, as far as we are aware!"));
    } else if ( cur_planetObj_sel->commodityPrice[0].updateTime >= t ) {
       dialogue_msgRaw( _("You already have newer information"), _("I've checked your computer, and you already have newer information than we can sell.") );
    } else {
-      ret=dialogue_YesNo( _("Purchase commodity prices?"), _("For %s, that will cost %d ¢. The latest information we have is %g periods old."), cur_planetObj_sel->name,cost,njumps*2+0.2);
+      ret=dialogue_YesNo( _("Purchase commodity prices?"), _("For %s, that will cost %d ¤. The latest information we have is %g periods old."), cur_planetObj_sel->name,cost,njumps*2+0.2);
       if ( ret ) {
          player_modCredits( -cost );
          economy_averageSeenPricesAtTime( cur_planetObj_sel, t );

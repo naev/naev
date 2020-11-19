@@ -80,21 +80,21 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent );
 void credits2str( char *str, credits_t credits, int decimals )
 {
    if (decimals < 0)
-      nsnprintf( str, ECON_CRED_STRLEN, "%"CREDITS_PRI" ¢", credits );
+      nsnprintf( str, ECON_CRED_STRLEN, "%"CREDITS_PRI" ¤", credits );
    else if (credits >= 1000000000000000000LL)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*f E¢", decimals, (double)credits / 1000000000000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*f E¤", decimals, (double)credits / 1000000000000000000. );
    else if (credits >= 1000000000000000LL)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*f P¢", decimals, (double)credits / 1000000000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*f P¤", decimals, (double)credits / 1000000000000000. );
    else if (credits >= 1000000000000LL)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*f T¢", decimals, (double)credits / 1000000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*f T¤", decimals, (double)credits / 1000000000000. );
    else if (credits >= 1000000000L)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*f G¢", decimals, (double)credits / 1000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*f G¤", decimals, (double)credits / 1000000000. );
    else if (credits >= 1000000)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*f M¢", decimals, (double)credits / 1000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*f M¤", decimals, (double)credits / 1000000. );
    else if (credits >= 1000)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*f k¢", decimals, (double)credits / 1000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*f k¤", decimals, (double)credits / 1000. );
    else
-      nsnprintf (str, ECON_CRED_STRLEN, "%"CREDITS_PRI" ¢", credits );
+      nsnprintf (str, ECON_CRED_STRLEN, "%"CREDITS_PRI" ¤", credits );
 }
 
 /**

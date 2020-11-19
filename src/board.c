@@ -484,7 +484,7 @@ static void board_update( unsigned int wdw )
             continue;
          total_cargo += p->commodities[i].quantity;
       }
-      j += snprintf( &str[j], PATH_MAX-j, _("%d t\n"), total_cargo );
+      j += snprintf( &str[j], PATH_MAX-j, _("%d tonnes\n"), total_cargo );
    }
 
    /* Fuel. */

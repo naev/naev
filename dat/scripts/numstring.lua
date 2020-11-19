@@ -23,7 +23,7 @@ end
 --    @return A string taking the form of "X credit" or "X credits".
 --]]
 function creditstring( credits )
-   return string.format( "%s ¢", numstring(credits) )
+   return string.format( "%s ¤", numstring(credits) )
 end
 
 
