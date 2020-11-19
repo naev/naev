@@ -289,13 +289,9 @@ jobs:
       matrix:
         include:
           - os: ubuntu-16.04
-            shell: bash
-            config: linux.ini
-            pkg-config-path: "[]"
-
-    defaults:
-      run:
-        shell: ${{ matrix.shell }}
+            buildtype: meson
+          - os: ubuntu-16.04
+            buildtype: autotools
 
     runs-on: ${{ matrix.os }}
 
@@ -349,16 +345,31 @@ jobs:
         mkdir source
         tar -xf naev-*.tar.xz -C source --strip 1
 
-    - name: Compile AppImage
-      id: compile
+    - name: Compile AppImage Autotools
+      if: ${{ matrix.buildtype == 'autotools' }}
+      id: autotoolscompile
+      run: |
+        sh source/utils/buildAppImage.sh -s "source" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
+
+    - name: Compile AppImage Meson
+      if: ${{ matrix.buildtype == 'meson' }}
+      id: mesoncompile
       run: |
         sh source/utils/buildAppImage.sh -m -s "source" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
 
     - name: Upload Compile Log
       uses: actions/upload-artifact@v2
-      if: ${{ success() || steps.compile.outcome == 'failure' }}
+      if: ${{ (success() || steps.compile.outcome == 'failure') && matrix.buildtype == 'autotools' }}
       with:
-        name: ${{ matrix.os }}-${{ github.sha }}-appimageBuild-log
+        name: ${{ matrix.os }}-${{ github.sha }}-autotoolsAppImageBuild-log
+        path: ${{ github.workspace }}/appImageBuildLog.txt
+        if-no-files-found: ignore
+
+    - name: Upload Compile Log
+      uses: actions/upload-artifact@v2
+      if: ${{ (success() || steps.compile.outcome == 'failure') && matrix.buildtype == 'meson' }}
+      with:
+        name: ${{ matrix.os }}-${{ github.sha }}-mesonAppImageBuild-log
         path: ${{ github.workspace }}/appImageBuildLog.txt
         if-no-files-found: ignore
 
