@@ -299,16 +299,11 @@ jobs:
           ./configure
           make dat/VERSION
 
-      - name: Create Release Staging Area
-        run: |
-          mkdir -p ${{ github.workspace }}/dist/steam/ndata
-
       - name: Make data
         run: |
           ./autogen.sh
           ./configure
           make data
-          cp -r dat/ dist/steam/ndata
 
       - name: Download Build Artifacts
         uses: actions/download-artifact@v2
@@ -317,7 +312,7 @@ jobs:
 
       - name: Build and Upload Steam Release
         run: |
-          sh "utils/ci/steam/SteamDeploy.sh" -n -s "$(pwd)" -t "${{ github.workspace }}/dist/staging" -o "${{ github.workspace }}/dist/steam"
+          sh "utils/ci/steam/SteamDeploy.sh" -n -s "$(pwd)" -t "dist/staging" -o "dist/steam"
 #        env:
 #          STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
 #          STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}
