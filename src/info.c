@@ -51,13 +51,13 @@
 #define INFO_WIN_STAND     5
 #define INFO_WIN_SHIPLOG   6
 static const char *info_names[INFO_WINDOWS] = {
-   "Main",
-   "Ship",
-   "Weapons",
-   "Cargo",
-   "Missions",
-   "Standings",
-   "Ship log"
+   N_("Main"),
+   N_("Ship"),
+   N_("Weapons"),
+   N_("Cargo"),
+   N_("Missions"),
+   N_("Standings"),
+   N_("Ship log"),
 }; /**< Name of the tab windows. */
 
 
@@ -118,6 +118,8 @@ static void info_openShipLog( unsigned int wid );
 void menu_info( int window )
 {
    int w, h;
+   size_t i;
+   char **names;
 
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
@@ -134,12 +136,15 @@ void menu_info( int window )
    h = 600;
 
    /* Create the window. */
-   info_wid = window_create( N_("Info"), -1, -1, w, h );
+   info_wid = window_create( "wdwInfo", _("Info"), -1, -1, w, h );
    window_setCancel( info_wid, info_close );
 
    /* Create tabbed window. */
+   names = calloc( sizeof(char*), sizeof(info_names)/sizeof(char*) );
+   for (i=0; i<sizeof(info_names)/sizeof(char*); i++)
+      names[i] = gettext(info_names[i]);
    info_windows = window_addTabbedWindow( info_wid, -1, -1, -1, -1, "tabInfo",
-         INFO_WINDOWS, info_names, 0 );
+         INFO_WINDOWS, (const char**)names, 0 );
 
    /* Open the subwindows. */
    info_openMain(       info_windows[ INFO_WIN_MAIN ] );
@@ -213,9 +218,9 @@ static void info_openMain( unsigned int wid )
          "%s\n"
          "%s\n"
          "\n"
-         "%s Credits\n"
          "%s\n"
-         "%d (%d Jumps)"),
+         "%s\n"
+         "%d (%d jumps)"),
          player.name,
          nt,
          player_rating(),
@@ -291,7 +296,7 @@ static void info_setGui( unsigned int wid, char* str )
    }
 
    /* window */
-   wid = window_create( N_("Select GUI"), -1, -1, SETGUI_WIDTH, SETGUI_HEIGHT );
+   wid = window_create( "wdwSetGUI", _("Select GUI"), -1, -1, SETGUI_WIDTH, SETGUI_HEIGHT );
    window_setCancel( wid, setgui_close );
 
    /* Copy GUI. */
@@ -334,7 +339,7 @@ static void setgui_load( unsigned int wdw, char *str )
    char *gui;
    int wid;
 
-   wid = window_get( "Select GUI" );
+   wid = window_get( "wdwSetGUI" );
    gui = toolkit_getList( wid, "lstGUI" );
    if (strcmp(gui,_("None")) == 0)
       return;
@@ -607,7 +612,7 @@ static void weapons_autoweap( unsigned int wid, char *str )
 
    /* Run autoweapons if needed. */
    if (state) {
-      sure = dialogue_YesNoRaw( ("Enable autoweapons?"),
+      sure = dialogue_YesNoRaw( _("Enable autoweapons?"),
             _("Are you sure you want to enable automatic weapon groups for the "
             "ship?\n\nThis will overwrite all manually-tweaked weapons groups.") );
       if (!sure) {
@@ -1289,7 +1294,7 @@ static void info_shiplogAdd( unsigned int wid, char *str )
 
    logname = toolkit_getList( wid, "lstLogs" );
    if ( ( logname == NULL ) || ( strcmp( "All", logname ) == 0 ) ) {
-      tmp = dialogue_inputRaw( "Add a log entry", 0, 4096, "Add an entry to your diary:" );
+      tmp = dialogue_inputRaw( _("Add a log entry"), 0, 4096, _("Add an entry to your diary:") );
       if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
          if ( shiplog_getID( "Diary" ) == -1 )
               shiplog_create( "Diary", "Your Diary", "Diary", 0, 0 );
@@ -1297,13 +1302,13 @@ static void info_shiplogAdd( unsigned int wid, char *str )
          free( tmp );
       }
    } else {
-      tmp = dialogue_input( "Add a log entry", 0, 4096, "Add an entry to the log titled '%s':", logname );
+      tmp = dialogue_input( _("Add a log entry"), 0, 4096, _("Add an entry to the log titled '%s':"), logname );
       if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
          logid = shiplog_getIdOfLogOfType( logTypes[selectedLogType], selectedLog-1 );
          if ( logid >= 0 )
             shiplog_appendByID( logid, tmp );
          else
-            dialogue_msgRaw( "Cannot add log", "Cannot find this log!  Something went wrong here!" );
+            dialogue_msgRaw( _("Cannot add log"), _("Cannot find this log!  Something went wrong here!") );
          free( tmp );
       }
    }

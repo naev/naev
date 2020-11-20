@@ -68,10 +68,10 @@ title[6] = _("A Small Delay")
 text[6] = _([["Hello again. It's Dr. Logan. I am terribly sorry for the delay. As agreed, you will be paid your fee. I am pleased by your help, captain; I hope we meet again."]])
 
 title[7] = _("Bonus")
-text[7] = _([["For your trouble, I will add a bonus of %s credits to your fee. I am pleased by your help, captain; I hope we meet again."]])
+text[7] = _([["For your trouble, I will add a bonus of %s to your fee. I am pleased by your help, captain; I hope we meet again."]])
 
 title[8] = _("Check Account")
-text[8] = _([[You check your account balance as he closes the comm channel to find yourself %s credits richer. A good compensation indeed. You feel better already.]])
+text[8] = _([[You check your account balance as he closes the comm channel to find yourself %s richer. A good compensation indeed. You feel better already.]])
 
 title[9] = _("No Room")
 text[9] = _([[You don't have enough cargo space to accept this mission.]])
@@ -178,7 +178,7 @@ function hail()
    tk.msg( title[6], text[6] )
 
 --   eventually I'll implement a bonus
---   tk.msg( title[7], text[7]:format( numstring(bonus) ) )
+--   tk.msg( title[7], text[7]:format( creditstring(bonus) ) )
 
    hook.timer("1", "closehail")
 end
@@ -186,7 +186,7 @@ end
 function closehail()
    bonus = 0
    player.pay( payment )
-   tk.msg( title[8], text[8]:format( numstring(payment) ) )
+   tk.msg( title[8], text[8]:format( creditstring(payment) ) )
    logan:setVisplayer(false)
    logan:setHilight(false)
    logan:setInvincible(false) 

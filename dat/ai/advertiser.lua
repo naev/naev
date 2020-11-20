@@ -1,6 +1,7 @@
 require("ai/tpl/generic.lua")
 require("ai/personality/advertiser.lua")
 require("ai/distress_behaviour.lua")
+require "numstring.lua"
 
 
 function create ()
@@ -21,8 +22,8 @@ function create ()
    p = player.pilot()
    if p:exists() then
       standing = ai.getstanding( p ) or -1
-      mem.refuel_msg = string.format(_("\"I'll supply your ship with fuel for %d credits.\""),
-            mem.refuel);
+      mem.refuel_msg = string.format(_("\"I'll supply your ship with fuel for %s.\""),
+            creditstring(mem.refuel));
    end
 
    -- Selects an advertiser message

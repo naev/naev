@@ -66,7 +66,7 @@ text[6] = _([["Ah, yes indeed," he says as he inspects a sample in front of him.
 text[7] = _([["What are you still doing here? No phosphine, no trade."]])
 -- dialogue with 2nd trader
 -- %s for pho_mny
-text[8] = _([["You approach the dealer and explain what you are looking for. He raises his eyebrow. "It will be %s credits. But if you get caught by the authorities, you're on your own. Far as I'm concerned I never saw you. Deal?"]])
+text[8] = _([["You approach the dealer and explain what you are looking for. He raises his eyebrow. "It will be %s. But if you get caught by the authorities, you're on your own. Far as I'm concerned I never saw you. Deal?"]])
 mnytitle = _([[In the bar]])
 mnytext = _([["You don't have enough money. Stop wasting my time."]])
 text[9] = _([["Pleasure to do business with you."]])
@@ -77,7 +77,7 @@ text[11] = _([["We have reason to believe you are carrying controlled substances
 text[12] = _([["Stand down for inspection."]])
 title[3] = _([[On your ship]])
 text[13] = _([["You are accused of violating regulation on the transport of toxic materials. Your ship will be searched now. If there are no contraband substances, we will be out of your hair in just a moment."]])
-text[14] = _([[The inspectors search through your ship and cargo hold. It doesn't take long for them to find the phosphine; they confiscate it and fine you %s credits.]])
+text[14] = _([[The inspectors search through your ship and cargo hold. It doesn't take long for them to find the phosphine; they confiscate it and fine you %s.]])
 text[15] = _([[Dr. Geller looks up at you as you approach. "Do you have what I was looking for?" You present the ghost ship piece and his face begins to glow. "Yes, that's it! Now I can continue my research. I've been looking everywhere for a sample!" You ask him about the so-called ghost ships. He seems amused by the question. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]])
 text[16] = _([[As he turns away, you audibly clear your throat, prompting him to turn back to you. "Oh, yes, of course you want some payment for your service. My apologies for forgetting." He hands you a credit chip with your payment. "I might need your services again in the future, so do stay in touch!"]])
 trd_disc = _([[This guy seems to be the trader, surrounded by bodyguards he looks a bit shifty.]])
@@ -152,7 +152,7 @@ end
 -- 2nd trade: Get player the stuff and make them pay, let them be hunted by the police squad
 function second_trd()
   misn.npcRm(bar2pir1)
-  if not tk.yesno( title[1], text[8]:format(numstring(pho_mny)) ) then
+  if not tk.yesno( title[1], text[8]:format(creditstring(pho_mny)) ) then
      tk.msg(title[1], text[10])
      return
   end
@@ -265,7 +265,7 @@ end
 function fine_vanish ()
    fine = 100000
    tk.msg(title[3],text[13])
-   tk.msg(title[3],text[14]:format(numstring(fine)))
+   tk.msg(title[3],text[14]:format(creditstring(fine)))
    if player.credits() > fine then
       player.pay(-fine)
    else

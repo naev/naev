@@ -1,0 +1,3 @@
+[submodule "extras/windows/mingw-bundledlls"]
+	path = extras/windows/mingw-bundledlls
+	url = https://github.com/mpreisler/mingw-bundledlls.git

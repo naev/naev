@@ -76,7 +76,6 @@ share_text[5] = _([["Ha ha ha, looks like I beat you to it this time, eh? Well, 
 
 -- Mission details
 misn_title  = _("PD: Dead or Alive Bounty in %s")
-misn_reward = _("%s credits")
 misn_desc   = _("A political dissident was recently seen in the %s system. %s authorities want this dissident dead or alive.")
 
 -- Messages
@@ -126,7 +125,7 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title:format( missys:name() ) )
    misn.setDesc( misn_desc:format( missys:name(), paying_faction:name() ) )
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
 

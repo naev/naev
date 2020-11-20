@@ -47,7 +47,7 @@ title[1] = _("Getting My Feet Wet")
 text[1] = _([[Chelsea smiles and waves as she sees you approaching. "Hi, %s! It's been a while!" You sit down and start a friendly conversation with her. She mentions that her parents seem to be supportive of her decision to transition and her mother in particular apparently has been very helpful.
     Chelsea perks up a little. "So, remember I said I had ambitions of a pilot? Well, I have my piloting license already, but I'm kind of poor so I couldn't afford my first ship. So I've been asking around and I've managed to find a great deal for a used ship at %s in the %s system! I just need someone to take me there. Again, no rush. Would you be able to do that for me?"]])
 
-text[2] = _([["Thank you so much! I really appreciate it, %s. I can't pay you much, but I can give you %s credits when we get there. I can't wait to start!"]])
+text[2] = _([["Thank you so much! I really appreciate it, %s. I can't pay you much, but I can give you %s when we get there. I can't wait to start!"]])
 
 text[3] = _([["Oh, okay. Let me know later on if you're able to."]])
 
@@ -57,7 +57,6 @@ landtext = _([[As you dock you can barely stop Chelsea from jumping out of your 
 
 misn_title = _("Coming of Age")
 misn_desc = _("Chelsea needs you to take her to %s so she can buy her first ship and kick off her piloting career.")
-misn_reward = _("%s credits")
 
 npc_name = _("Chelsea")
 npc_desc = _("She seems to just be sitting by idly. It's been a while; maybe you should say hi?")
@@ -90,13 +89,13 @@ function accept ()
    started = true
 
    if tk.yesno( title[1], txt ) then
-      tk.msg( title[1], text[2]:format( player.name(), numstring( credits ) ) )
+      tk.msg( title[1], text[2]:format( player.name(), creditstring( credits ) ) )
 
       misn.accept()
 
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( misplanet:name() ) )
-      misn.setReward( misn_reward:format( numstring( credits ) ) )
+      misn.setReward( creditstring( credits ) )
       marker = misn.markerAdd( missys, "low" )
 
       osd_desc[1] = osd_desc[1]:format( missys:name(), misplanet:name() )

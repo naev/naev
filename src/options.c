@@ -114,7 +114,7 @@ void opt_menu (void)
    h = 525;
 
    /* Create window and tabs. */
-   opt_wid = window_create( N_("Options"), -1, -1, w, h );
+   opt_wid = window_create( "wdwOptions", _("Options"), -1, -1, w, h );
    window_setCancel( opt_wid, opt_close );
 
    /* Create tabbed window. */
@@ -341,7 +341,7 @@ static void opt_gameplay( unsigned int wid )
    cw += 80;
 
    /* Autonav abort. */
-   window_addText( wid, x+65, y, 150, 150, 0, "txtAAutonav",
+   window_addText( wid, x+65, y, cw-130, 20, 0, "txtAAutonav",
          NULL, NULL, _("Stop Speedup At:") );
    y -= 20;
 
@@ -919,7 +919,7 @@ static void opt_audio( unsigned int wid )
    /* Sound levels. */
    x = 20 + cw + 20;
    y = -60;
-   window_addText( wid, x+20, y, 100, 20, 0, "txtSVolume",
+   window_addText( wid, x+20, y, cw-40, 20, 0, "txtSVolume",
          NULL, NULL, _("Volume Levels") );
    y -= 30;
 
@@ -1170,7 +1170,7 @@ static void opt_setKey( unsigned int wid, char *str )
    /* Create new window. */
    w = 20 + 2*(BUTTON_WIDTH + 20);
    h = 20 + BUTTON_HEIGHT + 20 + 20 + 80 + 40;
-   new_wid = window_create( N_("Set Keybinding"), -1, -1, w, h );
+   new_wid = window_create( "wdwSetKey", _("Set Keybinding"), -1, -1, w, h );
    window_handleEvents( new_wid, opt_setKeyEvent );
    window_setParent( new_wid, wid );
 
@@ -1481,7 +1481,7 @@ int opt_setVideoMode( int w, int h, int fullscreen, int confirm )
    conf.fullscreen = fullscreen;
 
    status = gl_setupFullscreen();
-   if (status == 0 && !new_f && (w != old_w || h != old_h)) {
+   if (status == 0 && !fullscreen && (w != old_w || h != old_h)) {
       SDL_SetWindowSize( gl_screen.window, w, h );
       SDL_SetWindowPosition( gl_screen.window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
    }

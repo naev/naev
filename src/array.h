@@ -188,7 +188,7 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
  *    @param array Array being manipulated.
  *    @return The size of the array (number of elements).
  */
-#define array_size(array) (_array_private_container(array)->_size)
+#define array_size(array) (int)(_array_private_container(array)->_size)
 /**
  * @brief Returns number of elements reserved.
  *

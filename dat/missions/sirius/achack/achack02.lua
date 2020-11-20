@@ -27,6 +27,7 @@ require "fleethelper.lua"
 require "selectiveclear.lua"
 require "proximity.lua"
 require "missions/sirius/common.lua"
+require "numstring.lua"
 
 
 title1 = _("An unexpected reunion")
@@ -96,7 +97,7 @@ osd_final = {_("Land on Sroolu to get your reward")}
 osd_final["__save"] = true
 
 misn_desc = _("Joanne needs you to escort her ship and fight off mercenaries sent to kill her.")
-misn_reward = _("750,000 credits")
+misn_reward = creditstring(750000) -- 750K
 
 log_text = _([[Joanne, the Serra military officer who Harja tried to hire you to assassinate, enlisted you to aid her against would-be assassins. Along the way, she explained that Harja was a classmate of hers in the High Academy. According to her, Harja had hacked into the academy's main computer to change all of her grades to perfect scores in an attempt to sabotage her by making her look like a cheater.]])
 

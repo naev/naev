@@ -23,6 +23,7 @@
       AUTHOR: thilo <thilo@thiloernst.de>
    --]]
 
+require "numstring.lua"
 
 
 -- Bar information, describes how the NPC appears in the bar
@@ -30,7 +31,7 @@ bar_desc = _("You see a bunch of guys and gals, excitedly whispering over some p
 
 -- Mission details.
 misn_title = _("DIY Nerds") 
-misn_reward = _("20,000 credits")
+misn_reward = creditstring(20000) -- 20K
 misn_desc = _("Cart some nerds to their contest, and back.")
 
 title = {}

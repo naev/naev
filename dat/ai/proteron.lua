@@ -1,5 +1,6 @@
 require("ai/tpl/generic.lua")
 require("ai/personality/patrol.lua")
+require "numstring.lua"
 
 -- Settings
 mem.armour_run = 40
@@ -33,13 +34,13 @@ function create ()
          mem.refuel = mem.refuel * 0.6
       end
       -- Most likely no chance to refuel
-      mem.refuel_msg = string.format( _("\"I can transfer some fuel for %d credits.\""), mem.refuel )
+      mem.refuel_msg = string.format( _("\"I can transfer some fuel for %s.\""), creditstring(mem.refuel) )
    end
 
    -- See if can be bribed
    if rnd.rnd() > 0.6 then
       mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (500. * rnd.rnd() + 1750.)
-      mem.bribe_prompt = string.format(_("\"The Proteron can always use some income. %d credits and you were never here.\""), mem.bribe )
+      mem.bribe_prompt = string.format(_("\"The Proteron can always use some income. %s and you were never here.\""), creditstring(mem.bribe) )
       mem.bribe_paid = _("\"Get lost before I have to dispose of you.\"")
    else
      bribe_no = {

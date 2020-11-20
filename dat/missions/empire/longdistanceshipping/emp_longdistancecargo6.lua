@@ -31,7 +31,6 @@ require "missions/empire/common.lua"
 
 bar_desc = _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.")
 misn_title = _("Empire Long Distance Recruitment")
-misn_reward = _("50,000 credits")
 misn_desc = _("Deliver Lieutenant Czesc to Halir in the Gamma Polaris system")
 title = {}
 title[1] = _("Spaceport Bar")
@@ -77,9 +76,9 @@ function accept ()
    misn.accept()
   
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-   reward = 50000
+   reward = 50000 -- 500K
    misn.setTitle(misn_title)
-   misn.setReward(misn_reward)
+   misn.setReward(creditstring(reward))
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
    misn.osdCreate(title[2], {misn_desc})
    -- Set up the goal

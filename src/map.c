@@ -31,6 +31,7 @@
 #include "nxml.h"
 #include "ndata.h"
 #include "map_system.h"
+#include "utf8.h"
 
 #define BUTTON_WIDTH    100 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
@@ -86,6 +87,7 @@ static void map_renderPath( double x, double y, double a );
 static void map_renderMarkers( double x, double y, double r, double a );
 static void map_renderCommod( double bx, double by, double x, double y,
                               double w, double h, double r, int editor);
+static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Commodity *c );
 static void map_drawMarker( double x, double y, double r, double a,
       int num, int cur, int type );
 /* Mouse. */
@@ -212,7 +214,7 @@ void map_open (void)
    h = MAX(540, SCREEN_H - 100);
 
    /* create the window. */
-   wid = window_create( MAP_WDWNAME, -1, -1, w, h );
+   wid = window_create( MAP_WDWNAME, _("Star Map"), -1, -1, w, h );
    window_setCancel( wid, map_window_close );
    window_handleKeys( wid, map_keyHandler );
 
@@ -425,14 +427,13 @@ static void map_update( unsigned int wid )
       c = commod_known[cur_commod];
       if ( cur_commod_mode == 0 ) {
          snprintf( buf, PATH_MAX,
-                   "%s prices trading from %s shown: Positive/blue values mean a profit\n"
-                   "while negative/orange values mean a loss when sold at the corresponding system.",
-                   c->name, sys->name );
+                   _("%s prices trading from %s shown: Positive/blue values mean a profit\n"
+                     "while negative/orange values mean a loss when sold at the corresponding system."),
+                   _(c->name), _(sys->name) );
          window_modifyText( wid, "txtSystemStatus", buf );
       } else {
-         snprintf(buf,PATH_MAX,"Known %s prices shown. Galaxy-wide average: %.2f",c->name,commod_av_gal_price);
+         snprintf(buf, PATH_MAX, _("Known %s prices shown. Galaxy-wide average: %.2f"), _(c->name), commod_av_gal_price);
          window_modifyText( wid, "txtSystemStatus", buf );
-
       }
    } else {
       window_modifyText( wid, "txtSystemStatus", NULL );
@@ -1338,8 +1339,6 @@ void map_renderCommod( double bx, double by, double x, double y,
    Commodity *c;
    glColour ccol;
    double best,worst,maxPrice,minPrice,curMaxPrice,curMinPrice,thisPrice;
-   char buf[80];
-   int textw;
    /* If not plotting commodities, return */
    if (cur_commod == -1 || map_selected == -1)
       return;
@@ -1361,11 +1360,7 @@ void map_renderCommod( double bx, double by, double x, double y,
             }
          }
          if ( k == land_planet->ncommodities ) { /* commodity of interest not found */
-            textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
-            gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
-            snprintf(buf,80,"%s here",c->name);
-            textw = gl_printWidthRaw( &gl_smallFont, buf);
-            gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
+            map_renderCommodIgnorance( x, y, sys, c );
             map_renderSysBlack(bx,by,x,y,w,h,r,editor);
             return;
          }
@@ -1389,23 +1384,14 @@ void map_renderCommod( double bx, double by, double x, double y,
 
             }
             if ( maxPrice == 0 ) {/* no prices are known here */
-               textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
-               gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
-               snprintf(buf,80,"%s here",c->name);
-               textw = gl_printWidthRaw( &gl_smallFont, buf);
-               gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
+               map_renderCommodIgnorance( x, y, sys, c );
                map_renderSysBlack(bx,by,x,y,w,h,r,editor);
                return;
-
             }
             curMaxPrice=maxPrice;
             curMinPrice=minPrice;
          } else {
-            textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
-            gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
-            snprintf(buf,80,"%s here",c->name);
-            textw = gl_printWidthRaw( &gl_smallFont, buf);
-            gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
+            map_renderCommodIgnorance( x, y, sys, c );
             map_renderSysBlack(bx,by,x,y,w,h,r,editor);
             return;
          }
@@ -1529,6 +1515,28 @@ void map_renderCommod( double bx, double by, double x, double y,
    }
 }
 #undef setcolour
+
+
+/*
+ * Renders the economy information
+ */
+
+static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Commodity *c ) {
+   int textw;
+   char buf[80], *line2;
+   size_t charn;
+
+   nsnprintf( buf, 80, _("No price info for\n%s here"), _(c->name) );
+   line2 = u8_strchr( buf, '\n', &charn );
+   if ( line2 != NULL ) {
+      *line2++ = '\0';
+      textw = gl_printWidthRaw( &gl_smallFont, line2 );
+      gl_print( &gl_smallFont, x + (sys->pos.x)*map_zoom - textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, line2 );
+   }
+   textw = gl_printWidthRaw( &gl_smallFont, buf );
+   gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, buf );
+}
+
 
 /**
  * @brief Updates a text widget with a system's presence info.
@@ -1708,6 +1716,8 @@ static void map_genModeList(void)
    Planet *p;
    StarSystem *sys;
    int totGot = 0;
+   const char *odd_template, *even_template, *commod_text;
+
    if ( commod_known == NULL )
       commod_known = malloc(sizeof(Commodity*) * commodity_getN());
    memset(commod_known,0,sizeof(Commodity*)*commodity_getN());
@@ -1739,15 +1749,18 @@ static void map_genModeList(void)
    }
    nmap_modes = 2*totGot + 1;
    map_modes = calloc( sizeof(char*), nmap_modes );
-   map_modes[0] = strdup("Travel (Default)");
+   map_modes[0] = strdup(_("Travel (Default)"));
 
+   odd_template = _("%s: Cost");
+   even_template = _("%s: Trade");
    for ( i=0; i<totGot; i++ ) {
-      l = strlen(commod_known[i]->name) + 7;
+      commod_text = _(commod_known[i]->name);
+      l = strlen(odd_template) + strlen(commod_text) - 2 /*"%s"*/ + 1 /* '\0' */;
       map_modes[ 2*i + 1 ] = malloc(l);
-      nsnprintf(map_modes[2*i+1],l, "%s: Cost", commod_known[i]->name );
-      l+=6;
+      nsnprintf( map_modes[2*i+1], l, odd_template, commod_text );
+      l = strlen(even_template) + strlen(commod_text) - 2 /*"%s"*/ + 1 /* '\0' */;
       map_modes[ 2*i + 2 ] = malloc(l);
-      nsnprintf(map_modes[2*i+2],l, "%s: Trade", commod_known[i]->name );
+      nsnprintf( map_modes[2*i+2], l, even_template, commod_text );
    }
 }
 
@@ -2538,19 +2551,19 @@ int map_load (void)
    /* Handle the XML. */
    doc = xmlParseMemory( buf, bufsize );
    if (doc == NULL) {
-      WARN("'%s' is not valid XML.", MAP_DECORATOR_DATA_PATH);
+      WARN(_("'%s' is not valid XML."), MAP_DECORATOR_DATA_PATH);
       return -1;
    }
 
    node = doc->xmlChildrenNode; /* map node */
    if (strcmp((char*)node->name,"map")) {
-      ERR("Malformed "MAP_DECORATOR_DATA_PATH" file: missing root element 'map'");
+      ERR(_("Malformed %s file: missing root element 'map'"), MAP_DECORATOR_DATA_PATH );
       return -1;
    }
 
    node = node->xmlChildrenNode;
    if (node == NULL) {
-      ERR("Malformed "MAP_DECORATOR_DATA_PATH" file: does not contain elements");
+      ERR(_("Malformed %s file: does not contain elements"), MAP_DECORATOR_DATA_PATH);
       return -1;
    }
 
@@ -2567,13 +2580,13 @@ int map_load (void)
 
       }
       else
-         WARN("'"MAP_DECORATOR_DATA_PATH"' has unknown node '%s'.", node->name);
+         WARN("'%s' has unknown node '%s'.", MAP_DECORATOR_DATA_PATH, node->name);
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
    free(buf);
 
-   DEBUG("Loaded %d map decorators.", decorator_nstack);
+   DEBUG( ngettext( "Loaded %d map decorator.", "Loaded %d map decorators.", decorator_nstack ), decorator_nstack );
 
    return 0;
 }
@@ -2600,12 +2613,12 @@ static int map_decorator_parse( MapDecorator *temp, xmlNodePtr parent ) {
                MAP_DECORATOR_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
 
          if (temp->image == NULL) {
-            WARN("Could not load map decorator texture '%s'.", xml_get(node));
+            WARN(_("Could not load map decorator texture '%s'."), xml_get(node));
          }
 
          continue;
       }
-      WARN("Map decorator has unknown node '%s'.", node->name);
+      WARN(_("Map decorator has unknown node '%s'."), node->name);
    } while (xml_nextNode(node));
 
    return 0;

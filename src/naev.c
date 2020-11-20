@@ -300,7 +300,7 @@ int main( int argc, char** argv )
       lang = "";
    else
       lang = conf.language;
-   nsetenv( "LANGUAGE", lang, 1 );
+   nsetenv( "LANGUAGE", lang, 0 );
    /* Horrible hack taken from https://www.gnu.org/software/gettext/manual/html_node/gettext-grok.html .
     * Not entirely sure it is necessary, but just in case... */
    {
@@ -1157,7 +1157,7 @@ binary_comparison (int x, int y) {
  *
  *    @return positive if version is newer or negative if version is older.
  */
-int naev_versionCompare( char *version )
+int naev_versionCompare( const char *version )
 {
    int res;
    semver_t sv;

@@ -23,21 +23,22 @@ dist_man6_MANS = naev.6
 dist_doc_DATA = README TODO LICENSE
 
 if HAVE_UTILS
-MKSPR      = $(top_srcdir)/utils/mkspr/mkspr$(EXEEXT)
+MKSPR      = $(top_builddir)/utils/mkspr/mkspr$(EXEEXT)
 endif
-NAEV	     = $(top_srcdir)/$(PACKAGE)$(EXEEXT)
+NAEV	     = $(top_builddir)/$(PACKAGE)$(EXEEXT)
 
-VERSIONFILE = $(top_srcdir)/dat/VERSION
-LICENSEFILE = $(top_srcdir)/dat/LICENSE
-LANGUAGEFILE = $(top_srcdir)/dat/LANGUAGES
+VERSIONFILE = $(top_builddir)/dat/VERSION
+LICENSEFILE = $(top_builddir)/dat/LICENSE
+LANGUAGEFILE = $(top_builddir)/dat/LANGUAGES
 
-EXTRA_DIST = build/config.rpath LICENSE extras org.naev.naev.desktop org.naev.naev.metainfo.xml
+EXTRA_DIST = build/config.rpath LICENSE extras dat utils org.naev.naev.desktop org.naev.naev.metainfo.xml
 CLEANFILES = $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE) $(LICENSEFILE)
 
 if HAVE_NLS
 XMLFILES    = $(top_srcdir)/po/POTFILES_XML.in
 TRANSLATIONITS = $(top_srcdir)/po/its/translation.its
-XMLPOT      = $(top_srcdir)/po/xml.pot
+XMLPOT      = $(top_builddir)/po/xml.pot
+EXTRA_DIST += $(XMLFILES) $(TRANSLATIONITS)
 CLEANFILES += $(XMLPOT)
 endif # HAVE_NLS
 
@@ -47,7 +48,7 @@ all-local: $(NAEV) data
 
 data: pot $(VERSIONFILE) $(LICENSEFILE)
 
-$(LICENSEFILE): LICENSE
+$(LICENSEFILE): $(top_srcdir)/LICENSE
 	@echo "  CP    $<"
 	cp $< $@
 
@@ -71,7 +72,7 @@ pot: $(XMLPOT) $(LANGUAGEFILE)
 	$(MAKE) -C po $(PACKAGE).pot
 	$(top_srcdir)/utils/gettext.sh $(top_srcdir)
 
-$(LANGUAGEFILE): po/LINGUAS
+$(LANGUAGEFILE): $(top_srcdir)/po/LINGUAS
 	tail -n +2 $< > $@
 else # HAVE_DATA
 pot:
@@ -114,7 +115,7 @@ docs:
 
 soundtrack: naev-$(VERSION)-soundtrack.zip
 
-naev-$(VERSION)-soundtrack.zip: $(top_srcdir)/utils/soundtrack.py dat/snd/soundtrack.yaml
+naev-$(VERSION)-soundtrack.zip: $(top_srcdir)/utils/soundtrack.py dat/snd/soundtrack.yaml $(VERSIONFILE)
 	$(top_srcdir)/utils/soundtrack.py --source-dir=$(top_srcdir)
 
 help:

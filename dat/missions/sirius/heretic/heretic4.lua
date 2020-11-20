@@ -51,7 +51,6 @@ misn_title = _("The Egress")
 npc_name = _("Draga")
 bar_desc = _("Draga is running around, helping the few Nasin in the bar to get stuff together and get out.")
 misn_desc = _("Assist the Nasin refugees by flying to %s in %s, and unloading them there.")
-misn_reward = _("%s credits")
 
 log_text = _([[You helped rescue as many Nasin as your ship could hold to Ulios. Draga was killed by a Sirian soldier as he attempted to rescue his people. When you made it to Ulios, a man named Jimmy gave you a credit chip and said that he "will be forever in your debt".]])
 
@@ -86,7 +85,7 @@ function accept()
    free_cargo = player.pilot():cargoFree()
    people_carried =  (16 * free_cargo) + 7 --average weight per person is 62kg. one ton / 62 is 16. added the +7 for ships with 0 cargo.
    misn.setTitle(misn_title)
-   misn.setReward(misn_reward:format(numstring(reward)))
+   misn.setReward(creditstring(reward))
    misn.setDesc(misn_desc:format( targetasset:name(), targetsys:name()))
    misn.osdCreate(misn_title,osd)
    refugees = misn.cargoAdd("Refugees",free_cargo)

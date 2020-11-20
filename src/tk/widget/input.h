@@ -18,7 +18,8 @@ typedef struct WidgetInputData_ {
    char *filter; /**< Characters to filter. */
    char *input; /**< Input buffer. */
    int oneline; /**< Is it a one-liner? no '\n' and friends */
-   size_t max; /**< Maximum length. */
+   size_t char_max; /**< Maximum number of code points, including terminal null, in buffer. */
+   size_t byte_max; /**< Byte size of the buffer. */
    size_t view; /**< View position. */
    size_t pos; /**< Cursor position. */
    glFont *font; /**< Font to use. */

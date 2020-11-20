@@ -796,92 +796,92 @@ msgstr ""
 #. gatherable disappeared
 #. Credits.
 #. No bribe
-#: dat/ai/advertiser.lua:13 dat/ai/civilian.lua:13 dat/ai/independent.lua:16
-#: dat/ai/proteron_dissident.lua:19
-msgid "\"Just leave me alone!\""
-msgstr ""
-
 #: dat/ai/advertiser.lua:14 dat/ai/civilian.lua:14 dat/ai/independent.lua:17
 #: dat/ai/proteron_dissident.lua:20
-msgid "\"What do you want from me!?\""
+msgid "\"Just leave me alone!\""
 msgstr ""
 
 #: dat/ai/advertiser.lua:15 dat/ai/civilian.lua:15 dat/ai/independent.lua:18
 #: dat/ai/proteron_dissident.lua:21
+msgid "\"What do you want from me!?\""
+msgstr ""
+
+#: dat/ai/advertiser.lua:16 dat/ai/civilian.lua:16 dat/ai/independent.lua:19
+#: dat/ai/proteron_dissident.lua:22
 msgid "\"Get away from me!\""
 msgstr ""
 
 #. Refuel
-#: dat/ai/advertiser.lua:24 dat/ai/civilian.lua:24 dat/ai/independent.lua:27
-#: dat/ai/miner.lua:18 dat/ai/proteron_dissident.lua:30 dat/ai/thurion.lua:47
-#: dat/ai/trader.lua:20
+#: dat/ai/advertiser.lua:25 dat/ai/civilian.lua:25 dat/ai/independent.lua:28
+#: dat/ai/miner.lua:19 dat/ai/proteron_dissident.lua:31 dat/ai/thurion.lua:48
+#: dat/ai/trader.lua:21
 #, lua-format
-msgid "\"I'll supply your ship with fuel for %d credits.\""
+msgid "\"I'll supply your ship with fuel for %s.\""
 msgstr ""
 
 #. Selects an advertiser message
-#: dat/ai/advertiser.lua:30
+#: dat/ai/advertiser.lua:31
 msgid "Fly safe, fly Milspec."
 msgstr ""
 
-#: dat/ai/advertiser.lua:31
+#: dat/ai/advertiser.lua:32
 msgid "Reynir's Hot Dogs: enjoy the authentic taste of tradition."
 msgstr ""
 
-#: dat/ai/advertiser.lua:32
+#: dat/ai/advertiser.lua:33
 msgid ""
 "Everyone is faster than light, but only Tricon engines are faster than "
 "thought!"
 msgstr ""
 
-#: dat/ai/advertiser.lua:33
-msgid "Dare excellence! Dare Teracom rockets!"
-msgstr ""
-
 #: dat/ai/advertiser.lua:34
-msgid ""
-"Most people are ordinary. For the others, Nexus designed the Shark fighter."
+msgid "Dare excellence! Dare Teracom rockets!"
 msgstr ""
 
 #: dat/ai/advertiser.lua:35
 msgid ""
-"Never take off without your courage. Never take off without your Vendetta."
+"Most people are ordinary. For the others, Nexus designed the Shark fighter."
 msgstr ""
 
 #: dat/ai/advertiser.lua:36
+msgid ""
+"Never take off without your courage. Never take off without your Vendetta."
+msgstr ""
+
+#: dat/ai/advertiser.lua:37
 msgid "Unicorp: low price and high quality!"
 msgstr ""
 
 #. Faction specific messages
-#: dat/ai/advertiser.lua:41
+#: dat/ai/advertiser.lua:42
 msgid "Do you love your Emperor as much as he loves you?"
 msgstr ""
 
-#: dat/ai/advertiser.lua:42
+#: dat/ai/advertiser.lua:43
 msgid "You're quick and dependable? The Emperor needs you in the Armada!"
 msgstr ""
 
-#: dat/ai/advertiser.lua:43
+#: dat/ai/advertiser.lua:44
 msgid "Help the police help you: denounce the dissidents."
 msgstr ""
 
-#: dat/ai/advertiser.lua:47
+#: dat/ai/advertiser.lua:48
 msgid "Only your hard work will save the Dvaered economy!"
 msgstr ""
 
-#: dat/ai/advertiser.lua:48
+#: dat/ai/advertiser.lua:49
 msgid "Together, we will beat the economic crisis!"
 msgstr ""
 
-#: dat/ai/advertiser.lua:49
+#: dat/ai/advertiser.lua:50
 msgid "Bet on Totoran and win incredible sums thanks to the arena!"
 msgstr ""
 
-#: dat/ai/advertiser.lua:53
+#: dat/ai/advertiser.lua:54
 msgid "Special offer on Crow: buy one IR-eye, and the second comes for free!"
 msgstr ""
 
-#: dat/ai/advertiser.lua:57
+#: dat/ai/advertiser.lua:58
 #, lua-format
 msgid ""
 "Dear Pr. %s, your recent work has left a deep impression on us. Due to the "
@@ -890,13 +890,13 @@ msgid ""
 "Interstellar Pay-to-win Journal for Mathematics and Applications."
 msgstr ""
 
-#: dat/ai/advertiser.lua:58
+#: dat/ai/advertiser.lua:59
 msgid ""
 "Want to solve a large-dimensional stochastic PDE? the LMKSTD method is what "
 "you need!"
 msgstr ""
 
-#: dat/ai/advertiser.lua:59
+#: dat/ai/advertiser.lua:60
 msgid ""
 "You love non-convex minimization? Join Ruadan's Computation Science Lab!"
 msgstr ""
@@ -949,7 +949,7 @@ msgstr ""
 #. Long-range
 #. Missiles, it's a fire group
 #. Sends a distress signal which causes faction loss
-#: dat/ai/distress_behaviour.lua:13 dat/ai/thurion.lua:15
+#: dat/ai/distress_behaviour.lua:13 dat/ai/thurion.lua:16
 msgid "Local security: requesting assistance!"
 msgstr ""
 
@@ -957,7 +957,7 @@ msgstr ""
 msgid "Mayday! We are under attack!"
 msgstr ""
 
-#: dat/ai/distress_behaviour.lua:15 dat/ai/thurion.lua:16
+#: dat/ai/distress_behaviour.lua:15 dat/ai/thurion.lua:17
 msgid "Requesting assistance. We are under attack!"
 msgstr ""
 
@@ -966,19 +966,19 @@ msgstr ""
 msgid "%s vessel under attack! Requesting help!"
 msgstr ""
 
-#: dat/ai/distress_behaviour.lua:17 dat/ai/thurion.lua:18
+#: dat/ai/distress_behaviour.lua:17 dat/ai/thurion.lua:19
 msgid "Help! Ship under fire!"
 msgstr ""
 
-#: dat/ai/distress_behaviour.lua:18 dat/ai/thurion.lua:19
+#: dat/ai/distress_behaviour.lua:18 dat/ai/thurion.lua:20
 msgid "Taking hostile fire! Need assistance!"
 msgstr ""
 
-#: dat/ai/distress_behaviour.lua:19 dat/ai/thurion.lua:20
+#: dat/ai/distress_behaviour.lua:19 dat/ai/thurion.lua:21
 msgid "We are under attack, require support!"
 msgstr ""
 
-#: dat/ai/distress_behaviour.lua:20 dat/ai/thurion.lua:21
+#: dat/ai/distress_behaviour.lua:20 dat/ai/thurion.lua:22
 msgid "Mayday! Ship taking damage!"
 msgstr ""
 
@@ -1004,7 +1004,7 @@ msgstr ""
 #. Create function
 #. Credits.
 #. Handle bribing
-#: dat/ai/dvaered.lua:16 dat/ai/frontier_police.lua:16 dat/ai/soromid.lua:35
+#: dat/ai/dvaered.lua:17 dat/ai/frontier_police.lua:17 dat/ai/soromid.lua:36
 msgid "\"I shall especially enjoy your death.\""
 msgstr ""
 
@@ -1012,34 +1012,34 @@ msgstr ""
 #. Create function
 #. Credits
 #. Bribing
-#: dat/ai/dvaered.lua:19 dat/ai/frontier_police.lua:19 dat/ai/goddard.lua:16
+#: dat/ai/dvaered.lua:20 dat/ai/frontier_police.lua:20 dat/ai/goddard.lua:17
 msgid "\"You insult my honour.\""
 msgstr ""
 
-#: dat/ai/dvaered.lua:20 dat/ai/frontier_police.lua:20 dat/ai/goddard.lua:17
+#: dat/ai/dvaered.lua:21 dat/ai/frontier_police.lua:21 dat/ai/goddard.lua:18
 msgid "\"I find your lack of honour disturbing.\""
 msgstr ""
 
-#: dat/ai/dvaered.lua:21 dat/ai/frontier_police.lua:21 dat/ai/goddard.lua:18
+#: dat/ai/dvaered.lua:22 dat/ai/frontier_police.lua:22 dat/ai/goddard.lua:19
 msgid "\"You disgust me.\""
 msgstr ""
 
-#: dat/ai/dvaered.lua:22 dat/ai/frontier_police.lua:22 dat/ai/goddard.lua:19
+#: dat/ai/dvaered.lua:23 dat/ai/frontier_police.lua:23 dat/ai/goddard.lua:20
 msgid "\"Bribery carries a harsh penalty.\""
 msgstr ""
 
-#: dat/ai/dvaered.lua:23
+#: dat/ai/dvaered.lua:24
 msgid "\"House Dvaered does not lower itself to common scum.\""
 msgstr ""
 
 #. Handle refueling
-#: dat/ai/dvaered.lua:34
+#: dat/ai/dvaered.lua:35
 msgid "\"You are not worthy of my attention.\""
 msgstr ""
 
-#: dat/ai/dvaered.lua:36 dat/ai/frontier_police.lua:36
+#: dat/ai/dvaered.lua:37 dat/ai/frontier_police.lua:37
 #, lua-format
-msgid "\"For you I could make an exception for %d credits.\""
+msgid "\"For you I could make an exception for %s.\""
 msgstr ""
 
 #. Handle misc stuff
@@ -1051,79 +1051,79 @@ msgstr ""
 #. Finish up creation
 #. taunts
 #. Offense is not actually used
-#: dat/ai/dvaered.lua:56 dat/ai/goddard.lua:44
+#: dat/ai/dvaered.lua:57 dat/ai/goddard.lua:45
 msgid "Prepare to face annihilation!"
 msgstr ""
 
-#: dat/ai/dvaered.lua:57 dat/ai/goddard.lua:45
+#: dat/ai/dvaered.lua:58 dat/ai/goddard.lua:46
 msgid "I shall wash my hull in your blood!"
 msgstr ""
 
-#: dat/ai/dvaered.lua:58 dat/ai/frontier_police.lua:58 dat/ai/goddard.lua:46
+#: dat/ai/dvaered.lua:59 dat/ai/frontier_police.lua:59 dat/ai/goddard.lua:47
 msgid "Your head will make a great trophy!"
 msgstr ""
 
-#: dat/ai/dvaered.lua:59
+#: dat/ai/dvaered.lua:60
 msgid "You're no match for the Dvaered!"
 msgstr ""
 
-#: dat/ai/dvaered.lua:60 dat/ai/frontier_police.lua:60
+#: dat/ai/dvaered.lua:61 dat/ai/frontier_police.lua:61
 msgid "Death awaits you!"
 msgstr ""
 
 #. Settings
 #. Not too many credits.
 #. Lines to annoy the player. Shouldn't be too common or Gamma Polaris and such get inundated.
-#: dat/ai/empire.lua:18
+#: dat/ai/empire.lua:19
 msgid "The Empire is watching you."
 msgstr ""
 
-#: dat/ai/empire.lua:20
+#: dat/ai/empire.lua:21
 msgid "The Emperor sees all."
 msgstr ""
 
 #. Get refuel chance
-#: dat/ai/empire.lua:29 dat/ai/empire.lua:32
+#: dat/ai/empire.lua:30 dat/ai/empire.lua:33
 msgid "\"My fuel is property of the Empire.\""
 msgstr ""
 
 #. Most likely no chance to refuel
-#: dat/ai/empire.lua:38 dat/ai/soromid.lua:30
+#: dat/ai/empire.lua:39 dat/ai/soromid.lua:31
 #, lua-format
-msgid "\"I suppose I could spare some fuel for %d credits.\""
+msgid "\"I suppose I could spare some fuel for %s.\""
 msgstr ""
 
 #. See if can be bribed
-#: dat/ai/empire.lua:44
+#: dat/ai/empire.lua:45
 #, lua-format
-msgid "\"For some %d credits I could forget about seeing you.\""
+msgid "\"For some %s I could forget about seeing you.\""
 msgstr ""
 
-#: dat/ai/empire.lua:45
+#: dat/ai/empire.lua:46
 msgid "\"Now scram before I change my mind.\""
 msgstr ""
 
-#: dat/ai/empire.lua:48 dat/ai/mercenary.lua:20 dat/ai/proteron.lua:46
+#: dat/ai/empire.lua:49 dat/ai/mercenary.lua:21 dat/ai/proteron.lua:47
 msgid "\"You won't buy your way out of this one.\""
 msgstr ""
 
-#: dat/ai/empire.lua:49
+#: dat/ai/empire.lua:50
 msgid "\"The Empire likes to make examples out of scum like you.\""
 msgstr ""
 
-#: dat/ai/empire.lua:50 dat/ai/proteron.lua:48
+#: dat/ai/empire.lua:51 dat/ai/proteron.lua:49
 msgid "\"You've made a huge mistake.\""
 msgstr ""
 
-#: dat/ai/empire.lua:51 dat/ai/proteron.lua:49
+#: dat/ai/empire.lua:52 dat/ai/proteron.lua:50
 msgid "\"Bribery carries a harsh penalty, scum.\""
 msgstr ""
 
-#: dat/ai/empire.lua:52 dat/ai/proteron.lua:50
+#: dat/ai/empire.lua:53 dat/ai/proteron.lua:51
 msgid "\"I'm not interested in your blood money!\""
 msgstr ""
 
-#: dat/ai/empire.lua:53 dat/ai/proteron.lua:51
+#: dat/ai/empire.lua:54 dat/ai/proteron.lua:52
 msgid "\"All the money in the world won't save you now!\""
 msgstr ""
 
@@ -1132,44 +1132,44 @@ msgstr ""
 #. taunts
 #. Only 50% of actually taunting.
 #. some taunts
-#: dat/ai/empire.lua:76 dat/ai/soromid.lua:64
+#: dat/ai/empire.lua:77 dat/ai/soromid.lua:65
 msgid "There is no room in this universe for scum like you!"
 msgstr ""
 
-#: dat/ai/empire.lua:77
+#: dat/ai/empire.lua:78
 msgid "The Empire will enjoy your death!"
 msgstr ""
 
-#: dat/ai/empire.lua:78
+#: dat/ai/empire.lua:79
 msgid "Your head will make a fine gift for the Emperor!"
 msgstr ""
 
-#: dat/ai/empire.lua:79
+#: dat/ai/empire.lua:80
 msgid "None survive the wrath of the Emperor!"
 msgstr ""
 
-#: dat/ai/empire.lua:80
+#: dat/ai/empire.lua:81
 msgid "Enjoy your last moments, criminal!"
 msgstr ""
 
-#: dat/ai/empire.lua:84 dat/ai/pirate.lua:124
+#: dat/ai/empire.lua:85 dat/ai/pirate.lua:125
 msgid "You dare attack me?!"
 msgstr ""
 
-#: dat/ai/empire.lua:85
+#: dat/ai/empire.lua:86
 msgid "You are no match for the Empire!"
 msgstr ""
 
-#: dat/ai/empire.lua:86
+#: dat/ai/empire.lua:87
 msgid "The Empire will have your head!"
 msgstr ""
 
-#: dat/ai/empire.lua:87 dat/ai/flf.lua:68 dat/ai/proteron.lua:86
-#: dat/ai/soromid.lua:76
+#: dat/ai/empire.lua:88 dat/ai/flf.lua:69 dat/ai/proteron.lua:87
+#: dat/ai/soromid.lua:77
 msgid "You'll regret that!"
 msgstr ""
 
-#: dat/ai/empire.lua:88 dat/ai/soromid.lua:77
+#: dat/ai/empire.lua:89 dat/ai/soromid.lua:78
 msgid "That was a fatal mistake!"
 msgstr ""
 
@@ -1213,26 +1213,26 @@ msgstr ""
 #. Give monies.
 #. Get standing.
 #. Handle bribes.
-#: dat/ai/flf.lua:28
+#: dat/ai/flf.lua:29
 msgid "\"The only way to deal with scum like you is with cannons!\""
 msgstr ""
 
-#: dat/ai/flf.lua:31
+#: dat/ai/flf.lua:32
 #, lua-format
-msgid "\"It'll cost you %d credits for me to ignore your dirty presence.\""
+msgid "\"It'll cost you %s for me to ignore your dirty presence.\""
 msgstr ""
 
-#: dat/ai/flf.lua:32
+#: dat/ai/flf.lua:33
 msgid "\"Begone before I change my mind.\""
 msgstr ""
 
 #. Handle refueling.
-#: dat/ai/flf.lua:38
+#: dat/ai/flf.lua:39
 #, lua-format
-msgid "\"I should be able to spare some fuel for %d credits.\""
+msgid "\"I should be able to spare some fuel for %s.\""
 msgstr ""
 
-#: dat/ai/flf.lua:40
+#: dat/ai/flf.lua:41
 msgid "\"I can't spare fuel for you.\""
 msgstr ""
 
@@ -1240,36 +1240,36 @@ msgstr ""
 #. Finish up creation
 #. Only 50% of actually taunting.
 #. some taunts
-#: dat/ai/flf.lua:60
+#: dat/ai/flf.lua:61
 msgid "For the Frontier!"
 msgstr ""
 
-#: dat/ai/flf.lua:61
+#: dat/ai/flf.lua:62
 msgid "You'll make great target practice!"
 msgstr ""
 
-#: dat/ai/flf.lua:62
+#: dat/ai/flf.lua:63
 msgid "Purge the oppressors!"
 msgstr ""
 
-#: dat/ai/flf.lua:66
+#: dat/ai/flf.lua:67
 msgid "You are no match for the FLF."
 msgstr ""
 
-#: dat/ai/flf.lua:67
+#: dat/ai/flf.lua:68
 msgid "I've killed scum far more dangerous than you."
 msgstr ""
 
-#: dat/ai/flf.lua:69
+#: dat/ai/flf.lua:70
 msgid "Death to the enemies of the Frontier!"
 msgstr ""
 
-#: dat/ai/frontier_police.lua:23
+#: dat/ai/frontier_police.lua:24
 msgid "\"The Frontier does not lower itself to common scum.\""
 msgstr ""
 
 #. Handle refueling
-#: dat/ai/frontier_police.lua:34
+#: dat/ai/frontier_police.lua:35
 msgid ""
 "\"Mare magno turbantibus. That means that I don't care about your problems.\""
 msgstr ""
@@ -1279,48 +1279,48 @@ msgstr ""
 #. taunts
 #. Only 50% of actually taunting.
 #. Offense is not actually used
-#: dat/ai/frontier_police.lua:56
+#: dat/ai/frontier_police.lua:57
 msgid "Alea iacta est!"
 msgstr ""
 
-#: dat/ai/frontier_police.lua:57
+#: dat/ai/frontier_police.lua:58
 msgid "Morituri te salutant!"
 msgstr ""
 
-#: dat/ai/frontier_police.lua:59
+#: dat/ai/frontier_police.lua:60
 msgid "Cave canem!"
 msgstr ""
 
-#: dat/ai/goddard.lua:20
+#: dat/ai/goddard.lua:21
 msgid "\"House Goddard does not lower itself to common scum.\""
 msgstr ""
 
 #. Refueling
-#: dat/ai/goddard.lua:30
+#: dat/ai/goddard.lua:31
 #, lua-format
-msgid "\"I could do you the favour of refueling for the price of %d credits.\""
-msgstr ""
-
-#: dat/ai/goddard.lua:47
-msgid "These moments will be your last!"
+msgid "\"I could do you the favour of refueling for the price of %s.\""
 msgstr ""
 
 #: dat/ai/goddard.lua:48
+msgid "These moments will be your last!"
+msgstr ""
+
+#: dat/ai/goddard.lua:49
 msgid "You are a parasite!"
 msgstr ""
 
 #. This is the amount of waypoints the pilot will pass through before leaving the system
 #. Settings
-#: dat/ai/mercenary.lua:16
+#: dat/ai/mercenary.lua:17
 #, lua-format
-msgid "\"Your life is worth %d credits to me.\""
+msgid "\"Your life is worth %s to me.\""
 msgstr ""
 
-#: dat/ai/mercenary.lua:17
+#: dat/ai/mercenary.lua:18
 msgid "\"Beat it.\""
 msgstr ""
 
-#: dat/ai/mercenary.lua:22
+#: dat/ai/mercenary.lua:23
 msgid "\"I'm afraid you can't make it worth my while.\""
 msgstr ""
 
@@ -1329,32 +1329,32 @@ msgstr ""
 #. taunts
 #. Only 20% of actually taunting.
 #. some taunts
-#: dat/ai/mercenary.lua:43
+#: dat/ai/mercenary.lua:44
 msgid "Don't take this personally."
 msgstr ""
 
-#: dat/ai/mercenary.lua:44
+#: dat/ai/mercenary.lua:45
 msgid "It's just business."
 msgstr ""
 
-#: dat/ai/mercenary.lua:48
+#: dat/ai/mercenary.lua:49
 msgid "Your skull will make a great hood ornament."
 msgstr ""
 
-#: dat/ai/mercenary.lua:49
+#: dat/ai/mercenary.lua:50
 msgid "I've destroyed ships twice the size of yours!"
 msgstr ""
 
-#: dat/ai/mercenary.lua:50
+#: dat/ai/mercenary.lua:51
 msgid "I'll crush you like a grape!"
 msgstr ""
 
-#: dat/ai/mercenary.lua:51
+#: dat/ai/mercenary.lua:52
 msgid "This isn't what I signed up for!"
 msgstr ""
 
 #. Communication stuff
-#: dat/ai/miner.lua:11
+#: dat/ai/miner.lua:12
 msgid "\"I don't want any problem.\""
 msgstr ""
 
@@ -1392,365 +1392,362 @@ msgstr ""
 #. Some pirates do kill
 #. Not too much money
 #. Deal with bribeability
-#: dat/ai/pirate.lua:32
+#: dat/ai/pirate.lua:33
 msgid "\"You won't be able to slide out of this one!\""
-msgstr ""
-
-#: dat/ai/pirate.lua:36
-#, lua-format
-msgid "\"It'll cost you %d credits for me to ignore your pile of rubbish.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:37
 #, lua-format
-msgid "\"I'm in a good mood so I'll let you go for %d credits.\""
+msgid "\"It'll cost you %s for me to ignore your pile of rubbish.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:38
 #, lua-format
-msgid "\"Send me %d credits or you're dead.\""
+msgid "\"I'm in a good mood so I'll let you go for %s.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:39
 #, lua-format
-msgid "\"Pay up %d credits or it's the end of the line.\""
+msgid "\"Send me %s or you're dead.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:40
 #, lua-format
-msgid "\"Your money or your life. %d credits and make the choice quickly.\""
+msgid "\"Pay up %s or it's the end of the line.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:41
 #, lua-format
-msgid "\"Money talks bub. %d up front or get off my channel.\""
+msgid "\"Your money or your life. %s and make the choice quickly.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:42
 #, lua-format
-msgid "\"Shut up and give me your money! %d credits now.\""
+msgid "\"Money talks bub. %s up front or get off my channel.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:43
 #, lua-format
-msgid "\"You're either really desperate or really rich. %d or shut up.\""
+msgid "\"Shut up and give me your money! %s now.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:44
 #, lua-format
-msgid ""
-"\"If you're willing to negotiate I'll gladly take %d credits to not kill you."
-"\""
+msgid "\"You're either really desperate or really rich. %s or shut up.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:45
 #, lua-format
-msgid "\"You give me %d credits and I'll act like I never saw you.\""
+msgid "\"If you're willing to negotiate I'll gladly take %s to not kill you.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:46
 #, lua-format
-msgid ""
-"\"So this is the part where you pay up or get shot up. Your choice. What'll "
-"be, %d or...\""
+msgid "\"You give me %s and I'll act like I never saw you.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:47
 #, lua-format
 msgid ""
-"\"Pay up or don't. %d credits now just means I'll wait till later to collect "
-"the rest.\""
+"\"So this is the part where you pay up or get shot up. Your choice. What'll "
+"be, %s or...\""
 msgstr ""
 
 #: dat/ai/pirate.lua:48
 #, lua-format
-msgid "\"This is a toll road, pay up %d credits or die.\""
+msgid ""
+"\"Pay up or don't. %s now just means I'll wait till later to collect the "
+"rest.\""
 msgstr ""
 
-#: dat/ai/pirate.lua:52
-msgid "\"You're lucky I'm so kind.\""
+#: dat/ai/pirate.lua:49
+#, lua-format
+msgid "\"This is a toll road, pay up %s or die.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:53
-msgid "\"Life doesn't get easier than this.\""
+msgid "\"You're lucky I'm so kind.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:54
-msgid "\"Pleasure doing business.\""
+msgid "\"Life doesn't get easier than this.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:55
-msgid "\"See you again, real soon.\""
+msgid "\"Pleasure doing business.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:56
-msgid "\"I'll be around if you get generous again.\""
+msgid "\"See you again, real soon.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:57
-msgid "\"Lucky day, lucky day!\""
+msgid "\"I'll be around if you get generous again.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:58
-msgid "\"And I didn't even have to kill anyone!\""
+msgid "\"Lucky day, lucky day!\""
 msgstr ""
 
 #: dat/ai/pirate.lua:59
-msgid "\"See, this is how we become friends.\""
+msgid "\"And I didn't even have to kill anyone!\""
 msgstr ""
 
 #: dat/ai/pirate.lua:60
-msgid "\"Now if I kill you it'll be just for fun!\""
+msgid "\"See, this is how we become friends.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:61
-msgid "\"You just made a good financial decision today.\""
+msgid "\"Now if I kill you it'll be just for fun!\""
 msgstr ""
 
 #: dat/ai/pirate.lua:62
-msgid "\"Know what? I won't kill you.\""
+msgid "\"You just made a good financial decision today.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:63
+msgid "\"Know what? I won't kill you.\""
+msgstr ""
+
+#: dat/ai/pirate.lua:64
 msgid ""
 "\"Something feels strange. It's almost as if my urge to kill you has "
 "completely dissipated.\""
 msgstr ""
 
-#: dat/ai/pirate.lua:64
+#: dat/ai/pirate.lua:65
 msgid "\"Can I keep shooting you anyhow? No? You sure? Fine.\""
 msgstr ""
 
-#: dat/ai/pirate.lua:65
+#: dat/ai/pirate.lua:66
 msgid "\"And it only cost you an arm and a leg.\""
 msgstr ""
 
 #. Deal with refueling
-#: dat/ai/pirate.lua:78
+#: dat/ai/pirate.lua:79
 #, lua-format
-msgid "\"For you, only %d credits for a hundred units of fuel.\""
+msgid "\"For you, only %s for a hundred units of fuel.\""
 msgstr ""
 
 #. This is the amount of waypoints the pilot will pass through before leaving the system
 #. Finish up creation
 #. Only 50% of actually taunting.
 #. some taunts
-#: dat/ai/pirate.lua:99
+#: dat/ai/pirate.lua:100
 msgid "Prepare to be boarded!"
 msgstr ""
 
-#: dat/ai/pirate.lua:100
+#: dat/ai/pirate.lua:101
 msgid "Yohoho!"
 msgstr ""
 
-#: dat/ai/pirate.lua:101
+#: dat/ai/pirate.lua:102
 msgid "Arr!"
 msgstr ""
 
-#: dat/ai/pirate.lua:102
+#: dat/ai/pirate.lua:103
 msgid "What's a ship like you doing in a place like this?"
 msgstr ""
 
-#: dat/ai/pirate.lua:103
+#: dat/ai/pirate.lua:104
 msgid "Prepare to have your booty plundered!"
 msgstr ""
 
-#: dat/ai/pirate.lua:104
+#: dat/ai/pirate.lua:105
 msgid "Give me your credits or die!"
 msgstr ""
 
-#: dat/ai/pirate.lua:105
+#: dat/ai/pirate.lua:106
 msgid "Your ship's mine!"
 msgstr ""
 
-#: dat/ai/pirate.lua:106
+#: dat/ai/pirate.lua:107
 msgid "Oh ho ho, what do I see here?"
 msgstr ""
 
-#: dat/ai/pirate.lua:107
+#: dat/ai/pirate.lua:108
 msgid "You may want to send that distress signal now."
 msgstr ""
 
-#: dat/ai/pirate.lua:108
+#: dat/ai/pirate.lua:109
 msgid "It's time to die."
 msgstr ""
 
-#: dat/ai/pirate.lua:109
+#: dat/ai/pirate.lua:110
 msgid "Back so soon?"
 msgstr ""
 
-#: dat/ai/pirate.lua:110
+#: dat/ai/pirate.lua:111
 msgid "What? Were you expecting prince charming?"
 msgstr ""
 
-#: dat/ai/pirate.lua:111
+#: dat/ai/pirate.lua:112
 msgid "Long time no see."
 msgstr ""
 
-#: dat/ai/pirate.lua:112
+#: dat/ai/pirate.lua:113
 msgid "Nothing personal, just business."
 msgstr ""
 
-#: dat/ai/pirate.lua:113
+#: dat/ai/pirate.lua:114
 msgid "Nothing personal."
 msgstr ""
 
-#: dat/ai/pirate.lua:114
+#: dat/ai/pirate.lua:115
 msgid "Just business."
 msgstr ""
 
-#: dat/ai/pirate.lua:115
+#: dat/ai/pirate.lua:116
 msgid "I can already taste the rum."
 msgstr ""
 
-#: dat/ai/pirate.lua:116
+#: dat/ai/pirate.lua:117
 msgid "How else am I going to pay off my tab?"
 msgstr ""
 
-#: dat/ai/pirate.lua:117
+#: dat/ai/pirate.lua:118
 msgid "Seems you're being shot at."
 msgstr ""
 
-#: dat/ai/pirate.lua:118
+#: dat/ai/pirate.lua:119
 msgid "I'm trying to kill you. Is it working?"
 msgstr ""
 
-#: dat/ai/pirate.lua:119
+#: dat/ai/pirate.lua:120
 msgid "I'm sorry, I just don't like you."
 msgstr ""
 
-#: dat/ai/pirate.lua:120
+#: dat/ai/pirate.lua:121
 msgid "Sorry, but I'm a private tracker."
 msgstr ""
 
-#: dat/ai/pirate.lua:125
+#: dat/ai/pirate.lua:126
 msgid "You think that you can take me on?"
 msgstr ""
 
-#: dat/ai/pirate.lua:126
+#: dat/ai/pirate.lua:127
 msgid "Die!"
 msgstr ""
 
-#: dat/ai/pirate.lua:127
+#: dat/ai/pirate.lua:128
 msgid "You'll regret this!"
 msgstr ""
 
-#: dat/ai/pirate.lua:128
+#: dat/ai/pirate.lua:129
 msgid "You can either pray now or sit in hell later."
 msgstr ""
 
-#: dat/ai/pirate.lua:129
+#: dat/ai/pirate.lua:130
 msgid "Game over, you're dead!"
 msgstr ""
 
-#: dat/ai/pirate.lua:130
+#: dat/ai/pirate.lua:131
 msgid "I'm sorry things couldn't work out between us."
 msgstr ""
 
-#: dat/ai/pirate.lua:131
+#: dat/ai/pirate.lua:132
 msgid "Knock it off!"
 msgstr ""
 
-#: dat/ai/pirate.lua:132
+#: dat/ai/pirate.lua:133
 msgid "Shooting back isn't allowed!"
 msgstr ""
 
-#: dat/ai/pirate.lua:133
+#: dat/ai/pirate.lua:134
 msgid "You owe me 20 credits!"
 msgstr ""
 
-#: dat/ai/pirate.lua:134
+#: dat/ai/pirate.lua:135
 msgid "You owe me a new paint job!"
 msgstr ""
 
-#: dat/ai/pirate.lua:135
+#: dat/ai/pirate.lua:136
 msgid "Fred here said to shoot the red blip."
 msgstr ""
 
-#: dat/ai/pirate.lua:136
+#: dat/ai/pirate.lua:137
 msgid "Now you're in for it!"
 msgstr ""
 
-#: dat/ai/pirate.lua:137
+#: dat/ai/pirate.lua:138
 msgid "Did you really think you would get away with that?"
 msgstr ""
 
-#: dat/ai/pirate.lua:138
+#: dat/ai/pirate.lua:139
 msgid "I just painted this thing!"
 msgstr ""
 
-#: dat/ai/pirate.lua:139
+#: dat/ai/pirate.lua:140
 msgid "Rot."
 msgstr ""
 
-#: dat/ai/pirate.lua:140
+#: dat/ai/pirate.lua:141
 msgid "Burn."
 msgstr ""
 
-#: dat/ai/pirate.lua:141
+#: dat/ai/pirate.lua:142
 msgid "I can't wait to see you burn."
 msgstr ""
 
-#: dat/ai/pirate.lua:142
+#: dat/ai/pirate.lua:143
 msgid "Just. Stop. Moving."
 msgstr ""
 
-#: dat/ai/pirate.lua:143
+#: dat/ai/pirate.lua:144
 msgid "Die already!"
 msgstr ""
 
-#: dat/ai/pirate.lua:144
+#: dat/ai/pirate.lua:145
 msgid ""
 "Tell you what, if you can keep dodging for 20 hectoseconds I'll let you live."
 msgstr ""
 
-#: dat/ai/pirate.lua:145
+#: dat/ai/pirate.lua:146
 msgid "Stop dodging!"
 msgstr ""
 
-#: dat/ai/pirate.lua:146
+#: dat/ai/pirate.lua:147
 msgid "Okay, that's enough of that!"
 msgstr ""
 
-#: dat/ai/pirate.lua:147
+#: dat/ai/pirate.lua:148
 msgid "I'm gonna torrent you to bits!"
 msgstr ""
 
 #. Settings
 #. Not too many credits.
 #. Lines to annoy the player.
-#: dat/ai/proteron.lua:18
+#: dat/ai/proteron.lua:19
 msgid "The Proteron are watching you."
 msgstr ""
 
 #. Get refuel chance
-#: dat/ai/proteron.lua:27
+#: dat/ai/proteron.lua:28
 msgid "\"My fuel isn't for sale.\""
 msgstr ""
 
-#: dat/ai/proteron.lua:30
+#: dat/ai/proteron.lua:31
 msgid "\"Sorry, my fuel isn't for sale.\""
 msgstr ""
 
 #. Most likely no chance to refuel
-#: dat/ai/proteron.lua:36
+#: dat/ai/proteron.lua:37
 #, lua-format
-msgid "\"I can transfer some fuel for %d credits.\""
+msgid "\"I can transfer some fuel for %s.\""
 msgstr ""
 
 #. See if can be bribed
-#: dat/ai/proteron.lua:42
+#: dat/ai/proteron.lua:43
 #, lua-format
 msgid ""
-"\"The Proteron can always use some income. %d credits and you were never "
-"here.\""
+"\"The Proteron can always use some income. %s and you were never here.\""
 msgstr ""
 
-#: dat/ai/proteron.lua:43
+#: dat/ai/proteron.lua:44
 msgid "\"Get lost before I have to dispose of you.\""
 msgstr ""
 
-#: dat/ai/proteron.lua:47
+#: dat/ai/proteron.lua:48
 msgid "\"We like to make examples out of scum like you.\""
 msgstr ""
 
@@ -1759,51 +1756,51 @@ msgstr ""
 #. taunts
 #. Only 50% of actually taunting.
 #. some taunts
-#: dat/ai/proteron.lua:74
+#: dat/ai/proteron.lua:75
 msgid "Animals like you don't deserve to live!"
 msgstr ""
 
-#: dat/ai/proteron.lua:75
+#: dat/ai/proteron.lua:76
 msgid "Begone from this universe, inferior scum!"
 msgstr ""
 
-#: dat/ai/proteron.lua:76
+#: dat/ai/proteron.lua:77
 msgid "We will cleanse you and all other scum from this universe!"
 msgstr ""
 
-#: dat/ai/proteron.lua:77
+#: dat/ai/proteron.lua:78
 msgid "Enemies of the state will not be tolerated!"
 msgstr ""
 
-#: dat/ai/proteron.lua:78
+#: dat/ai/proteron.lua:79
 msgid "Long live the Proteron!"
 msgstr ""
 
-#: dat/ai/proteron.lua:79
+#: dat/ai/proteron.lua:80
 msgid "War is peace!"
 msgstr ""
 
-#: dat/ai/proteron.lua:80
+#: dat/ai/proteron.lua:81
 msgid "Freedom is slavery!"
 msgstr ""
 
-#: dat/ai/proteron.lua:84
+#: dat/ai/proteron.lua:85
 msgid "How dare you attack the Proteron?!"
 msgstr ""
 
-#: dat/ai/proteron.lua:85
+#: dat/ai/proteron.lua:86
 msgid "I will have your head!"
 msgstr ""
 
-#: dat/ai/proteron.lua:87
+#: dat/ai/proteron.lua:88
 msgid "Your fate has been sealed, dissident!"
 msgstr ""
 
-#: dat/ai/proteron.lua:88
+#: dat/ai/proteron.lua:89
 msgid "You will pay for your treason!"
 msgstr ""
 
-#: dat/ai/proteron.lua:89
+#: dat/ai/proteron.lua:90
 msgid "Die along with the old Empire!"
 msgstr ""
 
@@ -1820,18 +1817,18 @@ msgstr ""
 #. Za'lek armour is pretty crap. They know this, and will dip when their shields go down.
 #. Not too many credits.
 #. Get refuel chance
-#: dat/ai/sirius.lua:21 dat/ai/zalek.lua:22
+#: dat/ai/sirius.lua:22 dat/ai/zalek.lua:23
 msgid "\"I do not have fuel to spare.\""
 msgstr ""
 
 #. Most likely no chance to refuel
-#: dat/ai/sirius.lua:26
+#: dat/ai/sirius.lua:27
 #, lua-format
-msgid "\"I would be able to refuel your ship for %d credits.\""
+msgid "\"I would be able to refuel your ship for %s.\""
 msgstr ""
 
 #. Can't be bribed
-#: dat/ai/sirius.lua:31
+#: dat/ai/sirius.lua:32
 msgid "\"Your money is of no interest to me.\""
 msgstr ""
 
@@ -1840,101 +1837,101 @@ msgstr ""
 #. taunts
 #. Only 50% of actually taunting.
 #. some taunts
-#: dat/ai/sirius.lua:52
+#: dat/ai/sirius.lua:53
 msgid "The universe shall be cleansed of your presence!"
 msgstr ""
 
-#: dat/ai/sirius.lua:56
+#: dat/ai/sirius.lua:57
 msgid "Sirichana protect me!"
 msgstr ""
 
-#: dat/ai/sirius.lua:57
+#: dat/ai/sirius.lua:58
 msgid "You have made a grave error!"
 msgstr ""
 
-#: dat/ai/sirius.lua:58
+#: dat/ai/sirius.lua:59
 msgid "You do wrong in your provocations!"
 msgstr ""
 
 #. Settings
 #. Not too many credits.
 #. Get refuel chance
-#: dat/ai/soromid.lua:21 dat/ai/soromid.lua:24
+#: dat/ai/soromid.lua:22 dat/ai/soromid.lua:25
 msgid "\"The warriors of Sorom are not your personal refueller.\""
 msgstr ""
 
-#: dat/ai/soromid.lua:38
+#: dat/ai/soromid.lua:39
 msgid "\"Snivelling waste of carbon.\""
 msgstr ""
 
-#: dat/ai/soromid.lua:39
+#: dat/ai/soromid.lua:40
 msgid "\"Money won't save you from being purged from the gene pool.\""
 msgstr ""
 
-#: dat/ai/soromid.lua:40
+#: dat/ai/soromid.lua:41
 msgid "\"Culling you will be doing humanity a service.\""
 msgstr ""
 
-#: dat/ai/soromid.lua:41
+#: dat/ai/soromid.lua:42
 msgid "\"We do not consort with vermin.\""
 msgstr ""
 
-#: dat/ai/soromid.lua:42
+#: dat/ai/soromid.lua:43
 msgid "\"Who do you take us for, the Empire?\""
 msgstr ""
 
-#: dat/ai/soromid.lua:65
+#: dat/ai/soromid.lua:66
 msgid "Culling you will be doing humanity a service."
 msgstr ""
 
-#: dat/ai/soromid.lua:66
+#: dat/ai/soromid.lua:67
 msgid "Enjoy your last moments, worm!"
 msgstr ""
 
-#: dat/ai/soromid.lua:67
+#: dat/ai/soromid.lua:68
 msgid "Time for a little natural selection!"
 msgstr ""
 
-#: dat/ai/soromid.lua:68
+#: dat/ai/soromid.lua:69
 msgid "Might makes right!"
 msgstr ""
 
-#: dat/ai/soromid.lua:69
+#: dat/ai/soromid.lua:70
 msgid "Embrace your weakness!"
 msgstr ""
 
-#: dat/ai/soromid.lua:73
+#: dat/ai/soromid.lua:74
 msgid "Cunning, but foolish."
 msgstr ""
 
-#: dat/ai/soromid.lua:74
+#: dat/ai/soromid.lua:75
 msgid "Ambush! Defend yourselves!"
 msgstr ""
 
-#: dat/ai/soromid.lua:75
+#: dat/ai/soromid.lua:76
 msgid "You should have picked easier prey!"
 msgstr ""
 
-#: dat/ai/thurion.lua:17
+#: dat/ai/thurion.lua:18
 msgid "Vessel under attack! Requesting help!"
 msgstr ""
 
-#: dat/ai/thurion.lua:22
+#: dat/ai/thurion.lua:23
 msgid "01010101011011100110010001100101011100100010000001100001011101000111010001100001011000110110101100100001"
 msgstr ""
 
 #. "Under attack!" in binary
 #. Credits.
 #. No bribe
-#: dat/ai/thurion.lua:36
+#: dat/ai/thurion.lua:37
 msgid "\"The Thurion will not be bribed!\""
 msgstr ""
 
-#: dat/ai/thurion.lua:37
+#: dat/ai/thurion.lua:38
 msgid "\"I have no use for your money.\""
 msgstr ""
 
-#: dat/ai/thurion.lua:38
+#: dat/ai/thurion.lua:39
 msgid "\"Credits are no replacement for a good shield.\""
 msgstr ""
 
@@ -2123,46 +2120,46 @@ msgstr ""
 #. See if should accel or brake
 #. Probably the ones with the most money
 #. Communication stuff
-#: dat/ai/trader.lua:12
+#: dat/ai/trader.lua:13
 msgid "\"The Space Traders do not negotiate with criminals.\""
 msgstr ""
 
 #. Most likely no chance to refuel
-#: dat/ai/zalek.lua:27
+#: dat/ai/zalek.lua:28
 #, lua-format
-msgid "\"I will agree to refuel your ship for %d credits.\""
+msgid "\"I will agree to refuel your ship for %s.\""
 msgstr ""
 
 #. See if can be bribed
-#: dat/ai/zalek.lua:33
+#: dat/ai/zalek.lua:34
 #, lua-format
-msgid "\"We will agree to end the battle for %d credits.\""
+msgid "\"We will agree to end the battle for %s.\""
 msgstr ""
 
-#: dat/ai/zalek.lua:34
+#: dat/ai/zalek.lua:35
 msgid "\"Temporarily stopping fire.\""
 msgstr ""
 
 #. FIXME: Could be made more Za'lek-like.
 #. Will this work? ~Areze
-#: dat/ai/zalek.lua:39
+#: dat/ai/zalek.lua:40
 msgid "\"Keep your cash, you troglodyte.\""
 msgstr ""
 
-#: dat/ai/zalek.lua:40
+#: dat/ai/zalek.lua:41
 msgid "\"Don't make me laugh. Eat laser beam!\""
 msgstr ""
 
-#: dat/ai/zalek.lua:41
+#: dat/ai/zalek.lua:42
 msgid ""
 "\"My drones aren't interested in your ill-gotten gains and neither am I!\""
 msgstr ""
 
-#: dat/ai/zalek.lua:42
+#: dat/ai/zalek.lua:43
 msgid "\"Ahaha! Nice one! Oh, you're actually serious? Ahahahaha!\""
 msgstr ""
 
-#: dat/ai/zalek.lua:43
+#: dat/ai/zalek.lua:44
 msgid ""
 "\"While I admire the spirit of it, testing my patience will is suicide, NOT "
 "science.\""
@@ -2171,43 +2168,43 @@ msgstr ""
 #. This is the amount of waypoints the pilot will pass through before leaving the system
 #. Finish up creation
 #. Only 50% of actually taunting.
-#: dat/ai/zalek.lua:62
+#: dat/ai/zalek.lua:63
 msgid "Move drones in to engage. Cook this clown!"
 msgstr ""
 
-#: dat/ai/zalek.lua:63
+#: dat/ai/zalek.lua:64
 msgid "Say hello to my little friends!"
 msgstr ""
 
-#: dat/ai/zalek.lua:64
+#: dat/ai/zalek.lua:65
 msgid "Ooh, more victi- ah, volunteers for our experiments!"
 msgstr ""
 
-#: dat/ai/zalek.lua:65
+#: dat/ai/zalek.lua:66
 msgid "We need a test subject to test our attack on; you'll do nicely!"
 msgstr ""
 
-#: dat/ai/zalek.lua:66
+#: dat/ai/zalek.lua:67
 msgid "Ready for a physics lesson, punk?"
 msgstr ""
 
-#: dat/ai/zalek.lua:67
+#: dat/ai/zalek.lua:68
 msgid "After we wax you, we can return to our experiments!"
 msgstr ""
 
-#: dat/ai/zalek.lua:71
+#: dat/ai/zalek.lua:72
 msgid "We're being attacked! Prepare defence protocols!"
 msgstr ""
 
-#: dat/ai/zalek.lua:72
+#: dat/ai/zalek.lua:73
 msgid "You just made a big mistake!"
 msgstr ""
 
-#: dat/ai/zalek.lua:73
+#: dat/ai/zalek.lua:74
 msgid "Our technology will fix your attitude!"
 msgstr ""
 
-#: dat/ai/zalek.lua:74
+#: dat/ai/zalek.lua:75
 msgid "You wanna do this? Have it your way."
 msgstr ""
 
@@ -2398,7 +2395,7 @@ msgstr ""
 #, lua-format
 msgid ""
 "\"Hello captain,\" a Dvaered officer says, \"You helped us in this battle. I "
-"am authorized to give you %s credits as a reward.\""
+"am authorized to give you %s as a reward.\""
 msgstr ""
 
 #. thissystem and source_system must be adjacent (for those who use player.teleport)
@@ -7818,12 +7815,9 @@ msgstr ""
 #: dat/landing.lua:180
 #, lua-format
 msgid ""
-"\"Well, I think you're scum, but I'm willing to look the other way for %s "
-"credit. Deal?\""
-msgid_plural ""
-"\"Well, I think you're scum, but I'm willing to look the other way for %s "
-"credits. Deal?\""
-msgstr[0] ""
+"\"Well, I think you're scum, but I'm willing to look the other way for %s. "
+"Deal?\""
+msgstr ""
 
 #: dat/landing.lua:184
 msgid "Heh heh, thanks. Now get off the comm, I'm busy!"
@@ -7844,14 +7838,10 @@ msgstr ""
 #: dat/landing.lua:243
 #, lua-format
 msgid ""
-"\"I'll let you land for the modest price of %s credit.\"\n"
+"\"I'll let you land for the modest price of %s.\"\n"
 "\n"
-"Pay %s credit?"
-msgid_plural ""
-"\"I'll let you land for the modest price of %s credits.\"\n"
-"\n"
-"Pay %s credits?"
-msgstr[0] ""
+"Pay %s?"
+msgstr ""
 
 #: dat/landing.lua:247
 msgid "Make it quick."
@@ -8576,7 +8566,7 @@ msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:128
 #, lua-format
-msgid "Buy the artifact (%s credits)"
+msgid "Buy the artifact (%s)"
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:129
@@ -8589,7 +8579,7 @@ msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:132
 #, lua-format
-msgid "You can't currently afford to buy this artifact. You need %s credits."
+msgid "You can't currently afford to buy this artifact. You need %s."
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:136
@@ -8654,7 +8644,7 @@ msgstr ""
 msgid ""
 "It is time to put a dent in the pirates' forces. We have detected a strong "
 "pirate presence in the system of Unicorn. We are offering a small sum for "
-"each pirate killed. The maximum we will pay you is %s credits."
+"each pirate killed. The maximum we will pay you is %s."
 msgstr ""
 
 #: dat/missions/dvaered/assault_on_unicorn.lua:31
@@ -8670,7 +8660,7 @@ msgstr ""
 msgid ""
 "As you land, you see a Dvaered military official approaching. Thanking you "
 "for your hard and diligent work, he hands you the bounty you've earned, a "
-"number of chips worth %s credits."
+"number of chips worth %s."
 msgstr ""
 
 #: dat/missions/dvaered/assault_on_unicorn.lua:35
@@ -8680,7 +8670,7 @@ msgstr ""
 #: dat/missions/dvaered/assault_on_unicorn.lua:37
 #, lua-format
 msgid ""
-"Destroy some pirates! You have killed %d and have earned %s credits. If "
+"Destroy some pirates! You have killed %d and have earned %s. If "
 "finished, return to %s."
 msgstr ""
 
@@ -8832,7 +8822,7 @@ msgstr ""
 #: dat/missions/dvaered/championship.lua:63
 #: dat/missions/dvaered/championship.lua:66
 #, lua-format
-msgid "Congratulations! The staff pays you %s credits."
+msgid "Congratulations! The staff pays you %s."
 msgstr ""
 
 #: dat/missions/dvaered/championship.lua:65
@@ -8845,7 +8835,7 @@ msgstr ""
 
 #: dat/missions/dvaered/championship.lua:69
 #, lua-format
-msgid "The staff pays you %s credits."
+msgid "The staff pays you %s."
 msgstr ""
 
 #: dat/missions/dvaered/championship.lua:71
@@ -10149,8 +10139,6 @@ msgstr ""
 #: dat/missions/empire/shipping/es02.lua:45
 #: dat/missions/flf/dvk/flf_dvk04.lua:62 dat/missions/flf/dvk/flf_dvk05.lua:50
 #: dat/missions/flf/flf_diversion.lua:39 dat/missions/flf/flf_rogue.lua:39
-#: dat/missions/neutral/foodbiz/delivercake.lua:44
-#: dat/missions/neutral/foodbiz/deliverlove.lua:45
 #: dat/missions/neutral/nebu_satellite.lua:38
 #: dat/missions/neutral/patrol.lua:66
 #: dat/missions/neutral/pirbounty_dead.lua:98 dat/missions/neutral/race1.lua:61
@@ -10458,11 +10446,6 @@ msgstr ""
 #: dat/missions/empire/collective/ec02.lua:35
 msgid "You notice Lt. Commander Dimitri at one of the booths."
 msgstr ""
-
-#: dat/missions/empire/collective/ec02.lua:37
-#, fuzzy
-msgid "700,000 credits"
-msgstr "%sクレジット"
 
 #: dat/missions/empire/collective/ec02.lua:39
 #, lua-format
@@ -11866,15 +11849,6 @@ msgstr ""
 msgid "Soromid Long Distance Recruitment"
 msgstr ""
 
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:34
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:34
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:34
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:34
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:34
-#, fuzzy
-msgid "500,000 credits"
-msgstr "%sクレジット"
-
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:35
 msgid ""
 "Deliver a shipping diplomat for the Empire to Soromid Customs Central in the "
@@ -12454,7 +12428,7 @@ msgid ""
 "    \"The plan is to send an advance convoy with guards to make the run in "
 "an attempt to confuse possible enemies. You will then go in and do the "
 "actual delivery by yourself. This way we shouldn't arouse suspicion. You are "
-"to report here when you finish delivery and you'll be paid %s credits.\""
+"to report here when you finish delivery and you'll be paid %s.\""
 msgstr ""
 
 #: dat/missions/empire/shipping/es01.lua:51
@@ -12637,7 +12611,7 @@ msgstr ""
 msgid ""
 "\"Be careful with the Dvaered; they can be a bit blunt, and might "
 "accidentally destroy the transport ship. If all goes well, you'll be paid %s "
-"credits when you return with the VIP. Good luck, pilot.\""
+"when you return with the VIP. Good luck, pilot.\""
 msgstr ""
 
 #: dat/missions/empire/shipping/es02.lua:60
@@ -13393,7 +13367,7 @@ msgid ""
 "system, so we can get some important work done in the Haleb system. It's the "
 "same deal as the diversion from Raelid you did some time ago.\" Aha, "
 "preparation for destruction of another Dvaered base! \"You'll be paid %s "
-"credits if you accept. Would you like to help with this one?\""
+"if you accept. Would you like to help with this one?\""
 msgstr ""
 
 #: dat/missions/flf/dvk/flf_dvk04.lua:49
@@ -13484,7 +13458,7 @@ msgid ""
 "a problem she's dealing with. \"Well met, %s,\" she says. \"I've just been "
 "thinking of how to deal with a problem for a while now, and seeing you, that "
 "makes the solution so much simpler! Can you help me? It's nothing too huge, "
-"just destroying some more ships. We're prepared to give you %s credits in "
+"just destroying some more ships. We're prepared to give you %s in "
 "exchange.\""
 msgstr ""
 
@@ -15271,7 +15245,7 @@ msgid ""
 "for you to be this late though.\" He takes a sip from his drink. \"Ahh! That "
 "is good though. I suppose you'll be wanting to get paid for your troubles. "
 "You did go through a lot of trouble. Then again, you did take quite a long "
-"time. I suppose %s credits should be appropriate.\"\n"
+"time. I suppose %s should be appropriate.\"\n"
 "    Considering the amount of effort that you went through, you feel almost "
 "cheated. You don't feel like arguing with the snobby aristocrat though, so "
 "you just leave him to his drink without another word. It's probably the most "
@@ -15660,9 +15634,8 @@ msgstr ""
 #. Set Mission Details
 #: dat/missions/neutral/commodity_run.lua:112
 #, fuzzy, lua-format
-msgid "%s credit per tonne"
-msgid_plural "%s credits per tonne"
-msgstr[0] "%sクレジット"
+msgid "%s per tonne"
+msgstr "%sクレジット"
 
 #.
 #.
@@ -15792,7 +15765,7 @@ msgstr ""
 msgid ""
 "\"Excellent work. This data will ensure an arrest and swift prosecution. "
 "You've certainly done your part towards cleaning up the region. As for your "
-"compensation, I've had %s credits transferred to you.\""
+"compensation, I've had %s transferred to you.\""
 msgstr ""
 
 #. finished
@@ -15910,11 +15883,6 @@ msgstr ""
 #: dat/missions/neutral/diy-nerds.lua:32
 msgid "DIY Nerds"
 msgstr ""
-
-#: dat/missions/neutral/diy-nerds.lua:33
-#, fuzzy
-msgid "20,000 credits"
-msgstr "%sクレジット"
 
 #: dat/missions/neutral/diy-nerds.lua:34
 msgid "Cart some nerds to their contest, and back."
@@ -16260,7 +16228,7 @@ msgstr ""
 #: dat/missions/neutral/drunkard.lua:74
 #, lua-format
 msgid ""
-"\"Oh, and she put in a nice bonus for you of %s credits for such a speedy "
+"\"Oh, and she put in a nice bonus for you of %s for such a speedy "
 "delivery.\""
 msgstr ""
 
@@ -16272,7 +16240,7 @@ msgstr ""
 #, lua-format
 msgid ""
 "You check your account balance as he closes the comm channel to find "
-"yourself %s credits richer. Just being alive felt good, but this feels "
+"yourself %s richer. Just being alive felt good, but this feels "
 "better. You can't help but think that she might have given him more than "
 "just the 25 percent he was asking for, judging by his sunny disposition. At "
 "least you have your life though."
@@ -16496,7 +16464,7 @@ msgstr ""
 #: dat/missions/neutral/dts_00.lua:51 dat/missions/neutral/dts_01.lua:47
 #: dat/missions/neutral/dts_02.lua:50
 #, lua-format
-msgid "%s credits and the pleasure of serving the Empire."
+msgid "%s and the pleasure of serving the Empire."
 msgstr ""
 
 #: dat/missions/neutral/dts_00.lua:52 dat/missions/neutral/dts_01.lua:48
@@ -16968,7 +16936,7 @@ msgid ""
 "\"Great!\" Paddy says with a smile. She hands you what appear to be recipes. "
 "\"I just need you to deliver these recipes to him. Oh, and some of my "
 "homemade cake! I've packed that cake into your ship. Feel free to give it a "
-"taste! It's delicious! Anyway, Michal will pay you %s credits when you get "
+"taste! It's delicious! Anyway, Michal will pay you %s when you get "
 "there. Thank you so much!\"\n"
 "    When you arrive at your ship, you find your cargo hold packed to the "
 "brim with cake. You decide to try some, but the second it enters your mouth, "
@@ -16982,7 +16950,7 @@ msgid ""
 "\"Great!\" Paddy says with a smile. She hands you what appear to be recipes. "
 "\"I just need you to deliver these recipes to him. I was hoping to deliver "
 "some cake to him too, but it seems your ship doesn't have enough space for "
-"it, so that's unfortunate. In any case, Michal will pay you %s credits when "
+"it, so that's unfortunate. In any case, Michal will pay you %s when "
 "you arrive. Thank you so much!\""
 msgstr ""
 
@@ -17092,15 +17060,15 @@ msgid ""
 "\"It is a nice place I hear!\" he exclaims visibly excited. \"Say, I have "
 "written a ton of these letters at this point. You wouldn't be able to drop "
 "them off, would you?\" You raise your eyebrow. \"There would be a few "
-"credits in it for you... say, %s credits?\" The man adds quickly with a "
+"credits in it for you... say, %s?\" The man adds quickly with a "
 "hopeful expression. It seems like a low reward for a long journey..."
 msgstr ""
 
 #: dat/missions/neutral/foodbiz/deliverlove.lua:39
 #, lua-format
 msgid ""
-"The man grabs your arm as you begin to get up. \"Alright, how about %s "
-"credits? Look, I wouldn't want The Empire reading these. The Emperor himself "
+"The man grabs your arm as you begin to get up. \"Alright, how about %s? "
+"Look, I wouldn't want The Empire reading these. The Emperor himself "
 "would blush.\" You sigh and give the man a long pause before answering."
 msgstr ""
 
@@ -17126,7 +17094,7 @@ msgstr ""
 msgid ""
 "You deliver the letters to a young woman who excitedly takes them and thanks "
 "you profusely. It seems you really made her day. When you check your "
-"balance, you see that %s credits have been transferred into your account. It "
+"balance, you see that %s have been transferred into your account. It "
 "also seems like you forgot a letter in the ship, but there were enough that "
 "you don't think it will be missed."
 msgstr ""
@@ -17724,7 +17692,7 @@ msgstr ""
 msgid ""
 "\"The plan is for you to take us to %s so we can launch the probe, and then "
 "return us to our home at %s in the %s system. The probe will automatically "
-"send us the data we need if all goes well. You'll be paid %s credits when we "
+"send us the data we need if all goes well. You'll be paid %s when we "
 "arrive.\""
 msgstr ""
 
@@ -18225,7 +18193,7 @@ msgid ""
 "As you return to your ship, you are contacted by an officer. \"I see you "
 "were unable to capture %s,\" the officer says. \"Disappointing. However, we "
 "would rather this pirate be dead than roaming free, so you will be paid %s "
-"credits if you finish them off right now.\""
+"if you finish them off right now.\""
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:53
@@ -18234,8 +18202,7 @@ msgid ""
 "On your way back to your ship, you receive a message from an officer. It "
 "reads, \"Your failure to capture %s is disappointing. We really wanted to "
 "capture this pirate alive. However, we would rather he be dead than roaming "
-"free, so if you kill the pirate now, you will be paid the lesser sum of %s "
-"credits.\""
+"free, so if you kill the pirate now, you will be paid the lesser sum of %s.\""
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:54
@@ -18245,7 +18212,7 @@ msgid ""
 "\"Pathetic! If I were in charge, I'd say you get no bounty! Can't fight off "
 "a couple low-life pirates?!\" He sighs. \"But lucky for you, I'm not in "
 "charge, and my higher-ups would rather %s be dead than free. So if you "
-"finish that scum off, you'll get %s credits. Just be snappy about it!\" "
+"finish that scum off, you'll get %s. Just be snappy about it!\" "
 "Having finished delivering the message, the officer then ceases "
 "communication."
 msgstr ""
@@ -18254,7 +18221,7 @@ msgstr ""
 #, lua-format
 msgid ""
 "When you get back to the ship, you see a message giving you a new mission to "
-"kill %s; the reward is %s credits. Well, that's pitiful compared to what you "
+"kill %s; the reward is %s. Well, that's pitiful compared to what you "
 "were planning on collecting, but it's better than nothing."
 msgstr ""
 
@@ -18757,7 +18724,7 @@ msgstr ""
 msgid ""
 "\"Hiya there! We're having a race around this system system soon and need a "
 "4th person to participate. You have to bring a Yacht class ship, and there's "
-"a prize of %s credits if you win. Interested?\""
+"a prize of %s if you win. Interested?\""
 msgstr ""
 
 #: dat/missions/neutral/race1.lua:33
@@ -18952,8 +18919,8 @@ msgstr ""
 msgid ""
 "\"There are two races you can participate in: an easy one, which is like the "
 "first race we had, or a hard one, with smaller checkpoints and no "
-"afterburners allowed. The easy one has a prize of %s credits, and the hard "
-"one has a prize of %s credits. Which one do you want to do?\""
+"afterburners allowed. The easy one has a prize of %s, and the hard "
+"one has a prize of %s. Which one do you want to do?\""
 msgstr ""
 
 #: dat/missions/neutral/race2.lua:36
@@ -18993,7 +18960,7 @@ msgid ""
 "A man in a suit and tie takes you up onto a stage. A large name tag on his "
 "jacket says 'Melendez Corporation'. \"Congratulations on your win,\" he "
 "says, shaking your hand, \"that was a great race. On behalf of Melendez "
-"Corporation, I would like to present to you your prize money of %s credits!"
+"Corporation, I would like to present to you your prize money of %s!"
 "\" He hands you one of those fake oversized cheques for the audience, and "
 "then a credit chip with the actual prize money on it."
 msgstr ""
@@ -19005,7 +18972,7 @@ msgid ""
 "jacket says 'Melendez Corporation'. \"Congratulations on your win,\" he "
 "says, shaking your hand, \"that was a great race. On behalf of Melendez "
 "Corporation, I would like to present to you your trophy and prize money of "
-"%s credits!\" He hands you one of those fake oversized cheques for the "
+"%s!\" He hands you one of those fake oversized cheques for the "
 "audience, and then a credit chip with the actual prize money on it. At least "
 "the trophy looks cool."
 msgstr ""
@@ -19232,7 +19199,7 @@ msgid ""
 "She looks out of place in the bar. As you approach, she seems to stiffen.\n"
 "    \"H..H..Hi\", she stutters. \"My name is Cynthia. Could you give me a "
 "lift? I really need to get out of here.\n"
-"    I can't pay you much, just what I have on me, %s credits.\" You wonder "
+"    I can't pay you much, just what I have on me, %s.\" You wonder "
 "who she must be to have this many credits on her person. \"I need you to "
 "take me to Zhiru.\"\n"
 "    You wonder who she is, but you dare not ask. Do you accept?"
@@ -19250,7 +19217,7 @@ msgstr ""
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:37
 #: dat/missions/neutral/runaway/runaway_search.lua:33
 #, fuzzy, lua-format
-msgid "%s credits on delivery."
+msgid "%s on delivery."
 msgstr "%sクレジット"
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:40
@@ -19595,14 +19562,14 @@ msgstr ""
 #: dat/missions/neutral/seek_n_destroy.lua:66
 #, lua-format
 msgid ""
-"\"%s, you say? Well, I don't offer my services for free. Pay me %s credits "
+"\"%s, you say? Well, I don't offer my services for free. Pay me %s"
 "and I'll tell you where to look; how does that sound?\""
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:67
 #, lua-format
 msgid ""
-"\"Ah, yes, I know where probably %s is. I'll tell you for just %s credits. "
+"\"Ah, yes, I know where probably %s is. I'll tell you for just %s. "
 "What do you say?\""
 msgstr ""
 
@@ -19610,20 +19577,20 @@ msgstr ""
 #, lua-format
 msgid ""
 "\"%s? Of course, I know this pilot. I can tell you where they were last "
-"heading, but it'll cost you. %s credits. Deal?\""
+"heading, but it'll cost you. %s. Deal?\""
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:69
 #, lua-format
 msgid ""
 "\"Ha ha ha! Yes, I've seen %s around! Will I tell you where? Heck no! Not "
-"unless you pay me, of course... %s credits should be sufficient.\""
+"unless you pay me, of course... %s should be sufficient.\""
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:70
 #, lua-format
 msgid ""
-"\"You're looking for %s? I tell you what: give me %s credits and I'll tell "
+"\"You're looking for %s? I tell you what: give me %s and I'll tell "
 "you. Otherwise, get lost!\""
 msgstr ""
 
@@ -19828,7 +19795,7 @@ msgstr ""
 msgid ""
 "%s is a notorious %s pilot who is wanted by the authorities, dead or alive. "
 "Any citizen who can find and neutralize %s by any means necessary will be "
-"given %s credits as a reward. %s authorities have lost track of this pilot "
+"given %s as a reward. %s authorities have lost track of this pilot "
 "in the %s system. It is very likely that the target is no longer there, but "
 "this system may be a good place to start an investigation."
 msgstr ""
@@ -20022,8 +19989,8 @@ msgstr ""
 #: dat/missions/neutral/sightseeing.lua:51
 #, lua-format
 msgid ""
-"Since your ship is not a Luxury Yacht class ship, you will only be paid %s "
-"credits. Accept the mission anyway?"
+"Since your ship is not a Luxury Yacht class ship, you will only be paid %s. "
+"Accept the mission anyway?"
 msgstr ""
 
 #: dat/missions/neutral/sightseeing.lua:55
@@ -20445,7 +20412,7 @@ msgstr ""
 #, lua-format
 msgid ""
 "You have destroyed the Gawain! The family presses charges, and you are "
-"sentenced to a %d fine in absence of attendance."
+"sentenced to a %s fine in absence of attendance."
 msgstr ""
 
 #: dat/missions/neutral/teenager.lua:42
@@ -20563,7 +20530,7 @@ msgstr ""
 #: dat/missions/neutral/wastedump.lua:44
 #, lua-format
 msgid ""
-"The waste containers are loaded onto your ship and you are paid %s credits. "
+"The waste containers are loaded onto your ship and you are paid %s. "
 "You begin to wonder if accepting this job was really a good idea."
 msgstr ""
 
@@ -20571,15 +20538,15 @@ msgstr ""
 #, lua-format
 msgid ""
 "Workers pack your cargo hold full of as much garbage as it can hold, then "
-"hastily hand you a credit chip containing %s credits. Smelling the garbage, "
+"hastily hand you a credit chip containing %s. Smelling the garbage, "
 "you immediately regret taking the job."
 msgstr ""
 
 #: dat/missions/neutral/wastedump.lua:46
 #, lua-format
 msgid ""
-"Your hold is crammed full with garbage and you are summarily paid %s "
-"credits. By the time the overpowering stench emanating from your cargo hold "
+"Your hold is crammed full with garbage and you are summarily paid %s. "
+"By the time the overpowering stench emanating from your cargo hold "
 "is apparent to you, it's too late to back down; you're stuck with this "
 "garbage until you can find some place to get rid of it."
 msgstr ""
@@ -20630,7 +20597,7 @@ msgid ""
 "from your cargo pod while you are still landed. Garbage spills all over the "
 "hangar and local officials immediately take notice. After you apologize "
 "profusely and explain the situation away as an accident, the officials let "
-"you off with a fine of %s credits."
+"you off with a fine of %s."
 msgstr ""
 
 #: dat/missions/neutral/wastedump.lua:61
@@ -20640,11 +20607,6 @@ msgstr ""
 #: dat/missions/neutral/wastedump.lua:63 dat/missions/neutral/wastedump.lua:67
 msgid "Waste Dump"
 msgstr ""
-
-#: dat/missions/neutral/wastedump.lua:64
-#, fuzzy, lua-format
-msgid "%s credits per tonne"
-msgstr "%sクレジット"
 
 #: dat/missions/neutral/wastedump.lua:65
 msgid ""
@@ -21666,13 +21628,13 @@ msgid ""
 "regained their trust. ANY hostile action against this faction will "
 "immediately void this agreement.\n"
 "Faction: %s\n"
-"Cost: %s credits"
+"Cost: %s"
 msgstr ""
 
 #: dat/missions/rehab_common.lua:20
 #, lua-format
 msgid ""
-"You don't have enough money. You need at least %s credits to buy a cessation "
+"You don't have enough money. You need at least %s to buy a cessation "
 "of hostilities with this faction."
 msgstr ""
 
@@ -24412,11 +24374,6 @@ msgid ""
 "who supposedly committed some kind of crime against him."
 msgstr ""
 
-#: dat/missions/sirius/achack/achack01.lua:55
-#, fuzzy
-msgid "400,000 credits"
-msgstr "%sクレジット"
-
 #: dat/missions/sirius/achack/achack01.lua:57
 msgid ""
 "A Sirian man named Harja hired you to kill a Sirius military officer, "
@@ -24706,11 +24663,6 @@ msgid ""
 "her."
 msgstr ""
 
-#: dat/missions/sirius/achack/achack02.lua:99
-#, fuzzy
-msgid "750,000 credits"
-msgstr "%sクレジット"
-
 #: dat/missions/sirius/achack/achack02.lua:101
 msgid ""
 "Joanne, the Serra military officer who Harja tried to hire you to "
@@ -24987,11 +24939,6 @@ msgstr ""
 #: dat/missions/sirius/achack/achack03.lua:87
 msgid "Joanne wants you to find Harja and interrogate him about his motives."
 msgstr ""
-
-#: dat/missions/sirius/achack/achack03.lua:88
-#, fuzzy
-msgid "1,000,000 credits"
-msgstr "%sクレジット"
 
 #: dat/missions/sirius/achack/achack03.lua:90
 msgid ""
@@ -25335,11 +25282,6 @@ msgstr ""
 msgid "Joanne wants you to find Harja and convince him to meet her in person."
 msgstr ""
 
-#: dat/missions/sirius/achack/achack04.lua:103
-#, fuzzy
-msgid "1,500,000 credits"
-msgstr "%sクレジット"
-
 #: dat/missions/sirius/achack/achack04.lua:105
 msgid ""
 "You were hired by Joanne to deliver an invitation to Harja to talk with her. "
@@ -25433,7 +25375,7 @@ msgid ""
 "    He continues impatiently. \"You look like you're in need of a couple "
 "spare credits,\" he finally says. \"I have, uh, a shipment that needs "
 "getting to %s. Are you interested? Just has to be kept under wraps if you "
-"know what I mean. Pay is good though. %s credits. That's all you need to "
+"know what I mean. Pay is good though. %s. That's all you need to "
 "know.\" He pauses for a moment. \"How about it?\""
 msgstr ""
 
@@ -25589,7 +25531,7 @@ msgid ""
 "know about the mission now.\n"
 "    \"The mission is simple. Our main base operates on %s in the %s system. "
 "I need a message delivered there. Of course, we will pay you for this "
-"service. How does %s credits sound? Will you do it?\""
+"service. How does %s sound? Will you do it?\""
 msgstr ""
 
 #: dat/missions/sirius/heretic/heretic1.lua:40
@@ -25607,7 +25549,7 @@ msgid ""
 "been taken and a small envelope has replaced it. Inside the envelope is a "
 "note. \"Our sincere apologies for missing you,\" it says. \"As you can see, "
 "we have obtained the message, and you will also notice that a payment of %s "
-"credits has been deposited into your account. You have done great work for "
+"has been deposited into your account. You have done great work for "
 "us and we appreciate your services. Please feel free to meet us at the bar "
 "sometime.\""
 msgstr ""
@@ -26135,13 +26077,13 @@ msgstr ""
 msgid ""
 "However, I suppose if you can take me to %s, I can find another pilot for "
 "the remainder of the flight. But if that is the case, I wouldn't want to pay "
-"more than %s credits.\""
+"more than %s.\""
 msgstr ""
 
 #: dat/missions/sirius/srs_ferry.lua:82
 #, lua-format
 msgid ""
-"However, if you're on the way to Aesir, I could be willing to pay %s credits "
+"However, if you're on the way to Aesir, I could be willing to pay %s "
 "for transportation to %s.\""
 msgstr ""
 
@@ -26216,7 +26158,7 @@ msgstr ""
 msgid ""
 "On landing, the passenger gives you a brief glare. \"I had paid for "
 "transportation in a Sirian ship,\" they remark. \"This alternate arrangement "
-"is quite disappointing.\" They hand you %s credits, but it's definitely less "
+"is quite disappointing.\" They hand you %s, but it's definitely less "
 "than you were expecting."
 msgstr ""
 
@@ -26270,13 +26212,13 @@ msgstr ""
 #, lua-format
 msgid ""
 "%s, on seeing the time, looks at you with veiled hurt and disappointment, "
-"but carefully counts out their full fare of %s credits."
+"but carefully counts out their full fare of %s."
 msgstr ""
 
 #: dat/missions/sirius/srs_ferry.lua:135
 #, lua-format
 msgid ""
-"%s counts out %s credits with pursed lips, and walks off before you have "
+"%s counts out %s with pursed lips, and walks off before you have "
 "time to say anything."
 msgstr ""
 
@@ -26284,7 +26226,7 @@ msgstr ""
 #, lua-format
 msgid ""
 "%s tersely expresses their displeasure with the late arrival, and snaps %s "
-"credits down on the seat, with a look suggesting they hardly think you "
+"down on the seat, with a look suggesting they hardly think you "
 "deserve that much."
 msgstr ""
 
@@ -26649,7 +26591,7 @@ msgid ""
 "see you again!\"\n"
 "    Taking your cue, you say goodbye for now, excuse yourself from the "
 "table, and make your way back to your ship. As you enter your cockpit you "
-"find a credit chip worth %s credits! It's not much, but it's something."
+"find a credit chip worth %s! It's not much, but it's something."
 msgstr ""
 
 #. No pirates nearby
@@ -26779,7 +26721,7 @@ msgstr ""
 #, lua-format
 msgid ""
 "\"Thank you so much! I really appreciate it, %s. I can't pay you much, but I "
-"can give you %s credits when we get there. I can't wait to start!\""
+"can give you %s when we get there. I can't wait to start!\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:52
@@ -26891,7 +26833,7 @@ msgid ""
 "is well from the sound of it. \"Say,\" she says, \"someone offered me a "
 "really interesting mission recently, but I had to decline because my ship "
 "isn't really up to task. If you could just escort my ship through that "
-"mission I could share the pay with you! Your half would be %s credits. How "
+"mission I could share the pay with you! Your half would be %s. How "
 "about it?\""
 msgstr ""
 
@@ -26940,7 +26882,7 @@ msgid ""
 "worker for the cargo delivery. The worker gives her a weird look, but "
 "collects the cargo with the help of some robotic drones and hands her a "
 "credit chip. When you get back to your ships, Chelsea transfers the sum of "
-"%s credits to your account, and you idly chat with her for a while.\n"
+"%s to your account, and you idly chat with her for a while.\n"
 "    \"Anyway, I should probably get going now,\" she says. \"But I really "
 "appreciated the help there! Get in touch with me again sometime. We make a "
 "great team!\" You agree, and you both go your separate ways once again."
@@ -27242,7 +27184,7 @@ msgid ""
 "well.\n"
 "    Chelsea turns back to you. \"I know I ask a lot of you, but could you "
 "help me once again? I just need an escort to %s so I can drop off this "
-"garbage there. I'll give you %s credits for the trouble. What do you say?\""
+"garbage there. I'll give you %s for the trouble. What do you say?\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout5.lua:50
@@ -27361,7 +27303,7 @@ msgid ""
 "own....\"\n"
 "    Chelsea pauses in contemplation for a moment. \"Say, do you think you "
 "could help me out on this one? I just need you to help me kill the pirate in "
-"%s. I'll give you %s credits for the trouble. How about it?\""
+"%s. I'll give you %s for the trouble. How about it?\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:53
@@ -27551,7 +27493,7 @@ msgstr ""
 #, lua-format
 msgid ""
 "The merchant sighs in relief. \"Thank you so much for this. Just bring the "
-"cargo to the cargo guy at %s. They should pay you %s credits when you get "
+"cargo to the cargo guy at %s. They should pay you %s when you get "
 "there. Don't be late, OK?\""
 msgstr ""
 
@@ -29334,7 +29276,7 @@ msgstr ""
 #, lua-format
 msgid ""
 "\"You approach the dealer and explain what you are looking for. He raises "
-"his eyebrow. \"It will be %s credits. But if you get caught by the "
+"his eyebrow. \"It will be %s. But if you get caught by the "
 "authorities, you're on your own. Far as I'm concerned I never saw you. Deal?"
 "\""
 msgstr ""
@@ -29383,7 +29325,7 @@ msgstr ""
 #, lua-format
 msgid ""
 "The inspectors search through your ship and cargo hold. It doesn't take long "
-"for them to find the phosphine; they confiscate it and fine you %s credits."
+"for them to find the phosphine; they confiscate it and fine you %s."
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:81
@@ -29984,7 +29926,7 @@ msgstr ""
 #: dat/missions/zalek/zlk_cargorun.lua:71
 #, lua-format
 msgid ""
-"\"For your trouble, I will add a bonus of %s credits to your fee. I am "
+"\"For your trouble, I will add a bonus of %s to your fee. I am "
 "pleased by your help, captain; I hope we meet again.\""
 msgstr ""
 
@@ -29992,7 +29934,7 @@ msgstr ""
 #, lua-format
 msgid ""
 "You check your account balance as he closes the comm channel to find "
-"yourself %s credits richer. A good compensation indeed. You feel better "
+"yourself %s richer. A good compensation indeed. You feel better "
 "already."
 msgstr ""
 
@@ -33201,7 +33143,7 @@ msgstr ""
 
 #: src/board.c:497
 #, c-format
-msgid "%d Units\n"
+msgid "%d units\n"
 msgstr ""
 
 #: src/board.c:508
@@ -33211,9 +33153,8 @@ msgstr ""
 
 #: src/board.c:590
 #, c-format
-msgid "\a%c%s\a0 has plundered %s credit from your ship!"
-msgid_plural "\a%c%s\a0 has plundered %s credits from your ship!"
-msgstr[0] ""
+msgid "\a%c%s\a0 has plundered %s from your ship!"
+msgstr ""
 
 #: src/claim.c:295
 msgid "System Claim has inexistent system"
@@ -33292,10 +33233,10 @@ msgstr ""
 #: src/comm.c:445
 #, c-format
 msgid ""
-"\"I'm gonna need at least %<PRIu64> credits to not leave you as a hunk of "
+"\"I'm gonna need at least %s to not leave you as a hunk of "
 "floating debris.\"\n"
 "\n"
-"Pay %<PRIu64> credits?"
+"Pay %s?"
 msgstr ""
 
 #: src/comm.c:447 src/comm.c:593
@@ -33303,7 +33244,7 @@ msgstr ""
 msgid ""
 "%s\n"
 "\n"
-"Pay %<PRIu64> credits?"
+"Pay %s?"
 msgstr ""
 
 #: src/comm.c:451 src/comm.c:517 src/comm.c:595
@@ -33346,7 +33287,7 @@ msgstr ""
 
 #: src/comm.c:604
 #, c-format
-msgid "You need %<PRIu64> more credits!"
+msgid "You need %s more!"
 msgstr ""
 
 #: src/comm.c:622
@@ -34521,7 +34462,7 @@ msgid ""
 "%s\n"
 "%s\n"
 "\a%c%s%.0f\a0\n"
-"%s credits\n"
+"%s\n"
 "\n"
 "%.0f\a0 tonnes\n"
 "%s average\n"
@@ -34561,9 +34502,8 @@ msgstr ""
 
 #: src/equipment.c:1861
 #, fuzzy, c-format
-msgid "Are you sure you want to sell your ship %s for %s credit?"
-msgid_plural "Are you sure you want to sell your ship %s for %s credits?"
-msgstr[0] "Naevを終了しますか？"
+msgid "Are you sure you want to sell your ship %s for %s?"
+msgstr "Naevを終了しますか？"
 
 #. Display widget.
 #: src/equipment.c:1879
@@ -34572,9 +34512,8 @@ msgstr ""
 
 #: src/equipment.c:1880
 #, c-format
-msgid "You have sold your ship %s for %s credit."
-msgid_plural "You have sold your ship %s for %s credits."
-msgstr[0] ""
+msgid "You have sold your ship %s for %s."
+msgstr ""
 
 #: src/equipment.c:1910 src/player.c:408
 msgid "Ship Name"
@@ -35191,7 +35130,7 @@ msgid ""
 "%s\n"
 "%s\n"
 "\n"
-"%s Credits\n"
+"%s\n"
 "%s\n"
 "%d (%d Jumps)"
 msgstr ""
@@ -36236,8 +36175,8 @@ msgid ""
 "%s\n"
 "%.0f tonnes\n"
 "\n"
-"%s credits\n"
-"%s credits\n"
+"%s\n"
+"%s\n"
 "%s\n"
 msgstr ""
 
@@ -36277,7 +36216,7 @@ msgstr ""
 #: src/land_outfits.c:717 src/land_shipyard.c:409 src/land_shipyard.c:480
 #: src/land_trade.c:219
 #, c-format
-msgid "You need %s more credits."
+msgid "You need %s more."
 msgstr ""
 
 #: src/land_outfits.c:723
@@ -36389,8 +36328,8 @@ msgid ""
 "%.0f tonnes\n"
 "%d units\n"
 "%d units\n"
-"%s credits\n"
-"%s credits\n"
+"%s\n"
+"%s\n"
 "%s\n"
 msgstr ""
 
@@ -36433,15 +36372,15 @@ msgstr ""
 #: src/land_shipyard.c:527
 #, c-format
 msgid ""
-"Your %s is worth %s credits, more than the new ship. For your ship, you will "
-"get the new %s and %s credits. Are you sure you want to trade your ship in?"
+"Your %s is worth %s, more than the new ship. For your ship, you will "
+"get the new %s and %s. Are you sure you want to trade your ship in?"
 msgstr ""
 
 #. confirm
 #: src/land_shipyard.c:533
 #, c-format
 msgid ""
-"Your %s is worth %s, so the new ship will cost %s credits. Are you sure you "
+"Your %s is worth %s, so the new ship will cost %s. Are you sure you "
 "want to trade your ship in?"
 msgstr ""
 
@@ -36465,32 +36404,27 @@ msgstr ""
 msgid ""
 "N/A tonnes\n"
 "\n"
-"N/A credits\n"
+"N/A ¤\n"
 "%d tonnes\n"
-"%s credits\n"
-"N/A credits\n"
-"N/A credits"
+"%s\n"
+"N/A ¤\n"
+"N/A ¤"
 msgstr ""
 
 #: src/land_trade.c:154
 msgid "No commodities available."
 msgstr ""
 
-#: src/land_trade.c:170
-#, fuzzy, c-format
-msgid "%<PRIu64> credits"
-msgstr "%sクレジット"
-
 #: src/land_trade.c:173
 #, c-format
 msgid ""
 "%d tonnes\n"
 "%s\n"
-"%<PRIu64> credits\n"
+"%s/t\n"
 "%d tonnes\n"
-"%s credits\n"
-"%<PRIu64> ± %.1f\n"
-"%<PRIu64> ± %.1f\n"
+"%s\n"
+"%s/t ± %s/t\n"
+"%s/t ± %s/t\n"
 msgstr ""
 
 #: src/land_trade.c:223
@@ -36699,9 +36633,8 @@ msgstr ""
 
 #. commodity of interest not found
 #. no prices are known here
-#: src/map.c:1364 src/map.c:1365 src/map.c:1392 src/map.c:1393 src/map.c:1404
-#: src/map.c:1405
-msgid "No price info for"
+#: src/map.c:1527
+msgid "No price info for\n%s here"
 msgstr ""
 
 #. Create window.
@@ -36990,7 +36923,7 @@ msgid ""
 "%s\n"
 "\n"
 "\anOwned:\a0 %d    \anSlot: \a0%s    \anSize: \a0%s\n"
-"\anMass:\a0    %.0f tonnes     \anPrice:\a0 %s \ancredits\a0\n"
+"\anMass:\a0    %.0f tonnes     \anPrice:\a0 %s\n"
 "\anLicense:\a0 %s"
 msgstr ""
 
@@ -37010,7 +36943,7 @@ msgid ""
 "\anEnergy:\a0 %.0f MJ (%.1f MW)\n"
 "\anCargo Space:\a0 %.0f tonnes\n"
 "\anFuel:\a0 %d units  \anFuel Use:\a0 %d units\n"
-"\anPrice:\a0 %s credits  \anLicense:\a0 %s\n"
+"\anPrice:\a0 %s  \anLicense:\a0 %s\n"
 "%s"
 msgstr ""
 
@@ -37022,8 +36955,8 @@ msgid ""
 "%s\n"
 "\n"
 "\anYou have:\a0 %d tonnes%s\n"
-"\anAverage price seen here:\a0 %<PRIu64> ± %.1f Cr./Ton\n"
-"\anAverave price seen everywhere:\a0 %<PRIu64> ± %.1f Cr./Ton\n"
+"\anAverage price seen here:\a0 %s/t ± %s/t\n"
+"\anAverage price seen everywhere:\a0 %s/t ± %s/t\n"
 msgstr ""
 
 #: src/map_system.c:734
@@ -37049,8 +36982,7 @@ msgstr ""
 #: src/map_system.c:1022
 #, c-format
 msgid ""
-"Sorry, but we are selling this information for %d credits, which you don't "
-"have"
+"Sorry, but we are selling this information for %s, which you don't have."
 msgstr ""
 
 #: src/map_system.c:1024
@@ -37078,7 +37010,7 @@ msgstr ""
 #: src/map_system.c:1028
 #, c-format
 msgid ""
-"For %s, that will cost %d credits.  The latest information we have is %g "
+"For %s, that will cost %s. The latest information we have is %g "
 "periods old."
 msgstr ""
 

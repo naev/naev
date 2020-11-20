@@ -63,11 +63,11 @@ dono_text[13] = _([["I used to work with %s. We haven't seen each other since th
 
 money_title   = _("How much money do you have?")
 money_text    = {}
-money_text[1] = _([["%s, you say? Well, I don't offer my services for free. Pay me %s credits and I'll tell you where to look; how does that sound?"]])
-money_text[2] = _([["Ah, yes, I know where probably %s is. I'll tell you for just %s credits. What do you say?"]])
-money_text[3] = _([["%s? Of course, I know this pilot. I can tell you where they were last heading, but it'll cost you. %s credits. Deal?"]])
-money_text[4] = _([["Ha ha ha! Yes, I've seen %s around! Will I tell you where? Heck no! Not unless you pay me, of course... %s credits should be sufficient."]])
-money_text[5] = _([["You're looking for %s? I tell you what: give me %s credits and I'll tell you. Otherwise, get lost!"]])
+money_text[1] = _([["%s, you say? Well, I don't offer my services for free. Pay me %s and I'll tell you where to look; how does that sound?"]])
+money_text[2] = _([["Ah, yes, I know where probably %s is. I'll tell you for just %s. What do you say?"]])
+money_text[3] = _([["%s? Of course, I know this pilot. I can tell you where they were last heading, but it'll cost you. %s. Deal?"]])
+money_text[4] = _([["Ha ha ha! Yes, I've seen %s around! Will I tell you where? Heck no! Not unless you pay me, of course... %s should be sufficient."]])
+money_text[5] = _([["You're looking for %s? I tell you what: give me %s and I'll tell you. Otherwise, get lost!"]])
 
 IdoPay       = _("Pay the sum")
 IdonnoPay    = _("Give up")
@@ -129,7 +129,7 @@ ambush_comm[7] = _("You were not supposed to get on the trail of %s!")
 
 
 breef_title = _("Find and Kill a pilot")
-breef_text = _("%s is a notorious %s pilot who is wanted by the authorities, dead or alive. Any citizen who can find and neutralize %s by any means necessary will be given %s credits as a reward. %s authorities have lost track of this pilot in the %s system. It is very likely that the target is no longer there, but this system may be a good place to start an investigation.")
+breef_text = _("%s is a notorious %s pilot who is wanted by the authorities, dead or alive. Any citizen who can find and neutralize %s by any means necessary will be given %s as a reward. %s authorities have lost track of this pilot in the %s system. It is very likely that the target is no longer there, but this system may be a good place to start an investigation.")
 
 flee_title = _("You're not going to kill anybody like that")
 flee_text = _("You had a chance to neutralize %s, and you wasted it! Now you have to start all over. Maybe some other pilots in %s know where your target is going.")
@@ -155,7 +155,6 @@ bar_desc = _("This person might be an outlaw, a pirate, or even worse, a bounty 
 
 -- Mission details
 misn_title  = _("Seek And Destroy Mission, starting in %s")
-misn_reward = _("%s credits")
 misn_desc   = _("The %s pilot known as %s is wanted dead or alive by %s authorities. He was last seen in the %s system.")
 
 function create ()
@@ -226,7 +225,7 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title:format( mysys[1]:name() ) )
    misn.setDesc( misn_desc:format( target_faction:name(), name, paying_faction:name(), mysys[1]:name() ) )
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( mysys[1], "computer" )
 
    -- Store the table
@@ -249,7 +248,7 @@ function accept ()
    stage = 0
    increment = false
    last_sys = system.cur()
-   tk.msg( breef_title, breef_text:format( name, target_faction:name(), name, numstring(credits), paying_faction:name(), mysys[1]:name() ) )
+   tk.msg( breef_title, breef_text:format( name, target_faction:name(), name, creditstring(credits), paying_faction:name(), mysys[1]:name() ) )
    jumphook = hook.enter( "enter" )
    hailhook = hook.hail( "hail" )
    landhook = hook.land( "land" )
@@ -455,7 +454,7 @@ function space_clue ()
    else -- Pilot wants payment
 
       price = (5 + 5*rnd.rnd()) * 1000
-      choice = tk.choice(money_title, money_text[rnd.rnd(1,#money_text)]:format(name,numstring(price)), IdoPay, IdonnoPay, IkickYourAss)
+      choice = tk.choice(money_title, money_text[rnd.rnd(1,#money_text)]:format(name,creditstring(price)), IdoPay, IdonnoPay, IkickYourAss)
 
       if choice == 1 then
          if player.credits() >= price then
@@ -569,7 +568,7 @@ function clue_bar()
       if know == 0 then -- NPC does not know the target
          tk.msg( dono_title, dono_text[rnd.rnd(1,#dono_text)]:format( name ) )
       elseif know == 1 then -- NPC wants money
-         choice = tk.choice(money_title, money_text[rnd.rnd(1,#money_text)]:format(name,numstring(price)), IdoPay, IdonnoPay)
+         choice = tk.choice(money_title, money_text[rnd.rnd(1,#money_text)]:format(name,creditstring(price)), IdoPay, IdonnoPay)
 
          if choice == 1 then
             if player.credits() >= price then

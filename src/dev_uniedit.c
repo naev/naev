@@ -166,7 +166,7 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    uniedit_ypos   = 0.;
 
    /* Create the window. */
-   wid = window_create( "Universe Editor", -1, -1, -1, -1 );
+   wid = window_create( "wdwUniverseEditor", _("Universe Editor"), -1, -1, -1, -1 );
    window_handleKeys( wid, uniedit_keys );
    uniedit_wid = wid;
 
@@ -176,7 +176,7 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    buttonPos++;
 
    /* Autosave toggle. */
-   window_addCheckbox( wid, -150, 25, 250, 20,
+   window_addCheckbox( wid, -150, 25, SCREEN_W/2 - 150, 20,
          "chkEditAutoSave", _("Automatically save changes"), uniedit_autosave, conf.devautosave );
 
    /* Save button. */
@@ -226,7 +226,7 @@ void uniedit_open( unsigned int wid_unused, char *unused )
          &gl_smallFont, NULL, _("N/A") );
 
    /* Selected text. */
-   window_addText( wid, 140, 10, SCREEN_W - 80 - 30 - 30 - BUTTON_WIDTH - 20, 30, 0,
+   window_addText( wid, 140, 10, SCREEN_W/2 - 140, 30, 0,
          "txtSelected", &gl_smallFont, NULL, NULL );
 
    /* Actual viewport. */
@@ -1004,7 +1004,7 @@ static void uniedit_findSys (void)
    x = 40;
 
    /* Create the window. */
-   wid = window_create( "Find Systems and Assets", x, -1, UNIEDIT_FIND_WIDTH, UNIEDIT_FIND_HEIGHT );
+   wid = window_create( "wdwFindSystemsandAssets", _("Find Systems and Assets"), x, -1, UNIEDIT_FIND_WIDTH, UNIEDIT_FIND_HEIGHT );
    uniedit_widFind = wid;
 
    x = 20;
@@ -1215,7 +1215,7 @@ static void uniedit_editSys (void)
    sys   = uniedit_sys[0];
 
    /* Create the window. */
-   wid = window_create( "Star System Property Editor", -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwStarSystemPropertyEditor", _("Star System Property Editor"), -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
    uniedit_widEdit = wid;
    window_setCancel( wid, uniedit_editSysClose );
 
@@ -1460,7 +1460,7 @@ static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
    }
 
    /* Create the window. */
-   wid = window_create( _("Add a Virtual Asset"), -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwAddaVirtualAsset", _("Add a Virtual Asset"), -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
    /* Add virtual asset list. */

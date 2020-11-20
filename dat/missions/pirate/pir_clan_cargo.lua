@@ -30,7 +30,6 @@ require "portrait.lua"
 
 bar_desc = _("You see a pirate lord raving about something. A significant crowd has gathered around.")
 misn_title = _("Clans trade")
-misn_reward = _("%s credits")
 misn_desc = _("Deliver some boxes to the pirate clan of %s, in the %s system.")
 title = {}
 title[1] = _("Spaceport Bar")
@@ -80,7 +79,7 @@ function accept ()
    -- Mission details
    reward = rnd.rnd(10,20) * 100000 -- Hey, this mission is probably hell, after all.
    misn.setTitle(misn_title)
-   misn.setReward( string.format(misn_reward, numstring(reward)) )
+   misn.setReward( creditstring(reward) )
    misn.setDesc( string.format(misn_desc,dest:name(),sys:name()))
 
    -- Flavour text and mini-briefing

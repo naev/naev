@@ -60,13 +60,13 @@ title[3] = _("You won this round")
 text[3] = _([["Congratulations," the staff says to you. "Come back when you are ready for the next round!"]])
 
 title[4] = _("You are the new champion")
-text[4] = _([[Congratulations! The staff pays you %s credits.]])
+text[4] = _([[Congratulations! The staff pays you %s.]])
 
 title[5] = _("You are the vice-champion")
-text[5] = _([[Congratulations! The staff pays you %s credits.]])
+text[5] = _([[Congratulations! The staff pays you %s.]])
 
 title[6] = _("Thanks for playing")
-text[6] = _([[The staff pays you %s credits.]])
+text[6] = _([[The staff pays you %s.]])
 
 comptitle[1] = _("I am here to win the championship")
 comptext[1] = _([["Hello! I am here to claim my place as this cycle's champion! I've prepared myself since the first day I piloted a ship. Trust me, I'm nearly invincible and my Vendetta is indestructible.
@@ -444,11 +444,11 @@ function land()
       elseif stage == 3 and planet.cur() == mispla then  --player will be payed
 
       if level == 5 then  --you are the champion
-         tk.msg(title[4], text[4]:format(numstring(reward * 2^level)))
+         tk.msg(title[4], text[4]:format(creditstring(reward * 2^level)))
       elseif level == 4 then
-         tk.msg(title[5], text[5]:format(numstring(reward * 2^level)))
+         tk.msg(title[5], text[5]:format(creditstring(reward * 2^level)))
       else
-         tk.msg(title[6], text[6]:format(numstring(reward * 2^level)))
+         tk.msg(title[6], text[6]:format(creditstring(reward * 2^level)))
       end
 
       player.pay(reward * 2^level)

@@ -138,7 +138,7 @@ void dialogue_alert( const char *fmt, ... )
    h = gl_printHeightRaw( &gl_smallFont, 260, msg );
 
    /* create the window */
-   wdw = window_create( _("Warning"), -1, -1, 300, 90 + h );
+   wdw = window_create( "dlgAlert", _("Warning"), -1, -1, 300, 90 + h );
    window_setData( wdw, &done );
    window_addText( wdw, 20, -30, 260, h,  0, "txtAlert",
          &gl_smallFont, NULL, msg );
@@ -167,7 +167,7 @@ static glFont* dialogue_getSize( const char* title,
    int i, titlelen, msglen;
 
    /* Get title length. */
-   titlelen = gl_printWidthRaw( &gl_defFont, title );
+   titlelen = gl_printWidthRaw( &gl_defFont, _(title) );
    msglen = gl_printWidthRaw( &gl_smallFont, msg );
 
    /* Try widths from 300 to 800 in 50 px increments.
@@ -266,7 +266,7 @@ void dialogue_msgRaw( const char* caption, const char *msg )
    font = dialogue_getSize( caption, msg, &w, &h );
 
    /* create the window */
-   msg_wid = window_create( caption, -1, -1, w, 110 + h );
+   msg_wid = window_create( "dlgMsg", caption, -1, -1, w, 110 + h );
    window_setData( msg_wid, &done );
    window_addText( msg_wid, 20, -40, w-40, h,  0, "txtMsg",
          font, NULL, msg );
@@ -312,7 +312,7 @@ void dialogue_msgImgRaw( const char* caption, const char *msg, const char *img, 
    }
 
    /* Create the window */
-   msg_wid = window_create( caption, -1, -1, img_width + w, 110 + h );
+   msg_wid = window_create( "dlgMsgImg", caption, -1, -1, img_width + w, 110 + h );
    window_setData( msg_wid, &done );
 
    /* Add the text box */
@@ -376,7 +376,7 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
    font = dialogue_getSize( caption, msg, &w, &h );
 
    /* create window */
-   wid = window_create( caption, -1, -1, w, h+110 );
+   wid = window_create( "dlgYesNo", caption, -1, -1, w, h+110 );
    window_setData( wid, &done );
    /* text */
    window_addText( wid, 20, -40, w-40, h,  0, "txtYesNo",
@@ -473,7 +473,7 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
    h = gl_printHeightRaw( &gl_smallFont, 200, msg );
 
    /* create window */
-   input_dialogue.input_wid = window_create( title, -1, -1, 240, h+140 );
+   input_dialogue.input_wid = window_create( "dlgInput", title, -1, -1, 240, h+140 );
    window_setData( input_dialogue.input_wid, &done );
    window_setAccept( input_dialogue.input_wid, dialogue_inputClose );
    window_setCancel( input_dialogue.input_wid, dialogue_cancel );
@@ -695,7 +695,7 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
    h = winh;
 
    /* Create the window. */
-   wid = window_create( title, -1, -1, winw, winh );
+   wid = window_create( "dlgListPanel", title, -1, -1, winw, winh );
    window_setData( wid, &done );
    window_addText( wid, 20, -40, w-40, text_height,  0, "txtMsg",
          font, NULL, msg );
@@ -756,7 +756,7 @@ void dialogue_makeChoice( const char *caption, const char *msg, int opts )
    font           = dialogue_getSize( caption, msg, &w, &h );
 
    /* create window */
-   choice_wid     = window_create( caption, -1, -1, w, h+100+40*choice_nopts );
+   choice_wid     = window_create( "dlgChoice", caption, -1, -1, w, h+100+40*choice_nopts );
    /* text */
    window_addText( choice_wid, 20, -40, w-40, h,  0, "txtChoice",
          font, NULL, msg );

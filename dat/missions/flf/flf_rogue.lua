@@ -36,7 +36,6 @@ require "fleethelper.lua"
 require "missions/flf/flf_common.lua"
 
 misn_title  = _("FLF: Rogue %s in %s")
-misn_reward = _("%s credits")
 
 text = {}
 text[1] = _("You are thanked for eliminating the traitorous scum and handed a credit chip with the agreed-upon payment.")
@@ -103,7 +102,7 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title:format( misn_level[level], missys:name() ) )
    misn.setDesc( desc )
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
 
