@@ -598,7 +598,7 @@ static char map_getPlanetColourChar( Planet *p )
 
 
 /**
- * @brief Does fuzzy name matching for outfits.
+ * @brief Does fuzzy name matching for outfits. Searches translated names but returns internal names.
  */
 static char **map_fuzzyOutfits( Outfit **o, int n, const char *name, int *len )
 {
@@ -611,7 +611,7 @@ static char **map_fuzzyOutfits( Outfit **o, int n, const char *name, int *len )
    /* Do fuzzy search. */
    l = 0;
    for (i=0; i<n; i++) {
-      if (nstrcasestr( o[i]->name, name ) != NULL) {
+      if (nstrcasestr( _(o[i]->name), name ) != NULL) {
          names[l] = o[i]->name;
          l++;
       }
@@ -860,7 +860,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
 
 
 /**
- * @brief Does fuzzy name matching for ships;
+ * @brief Does fuzzy name matching for ships. Searches translated names but returns internal names.
  */
 static char **map_fuzzyShips( Ship **s, int n, const char *name, int *len )
 {
@@ -873,7 +873,7 @@ static char **map_fuzzyShips( Ship **s, int n, const char *name, int *len )
    /* Do fuzzy search. */
    l = 0;
    for (i=0; i<n; i++) {
-      if (nstrcasestr( s[i]->name, name ) != NULL) {
+      if (nstrcasestr( _(s[i]->name), name ) != NULL) {
          names[l] = s[i]->name;
          l++;
       }

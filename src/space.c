@@ -800,7 +800,7 @@ const char *system_existsCase( const char* sysname )
 
 
 /**
- * @brief Does a fuzzy case matching.
+ * @brief Does a fuzzy case matching. Searches translated names but returns internal names.
  */
 char **system_searchFuzzyCase( const char* sysname, int *n )
 {
@@ -813,7 +813,7 @@ char **system_searchFuzzyCase( const char* sysname, int *n )
    /* Do fuzzy search. */
    len = 0;
    for (i=0; i<systems_nstack; i++) {
-      if (nstrcasestr( systems_stack[i].name, sysname ) != NULL) {
+      if (nstrcasestr( _(systems_stack[i].name), sysname ) != NULL) {
          names[len] = systems_stack[i].name;
          len++;
       }
@@ -1025,7 +1025,7 @@ const char* planet_existsCase( const char* planetname )
 
 
 /**
- * @brief Does a fuzzy case matching.
+ * @brief Does a fuzzy case matching. Searches translated names but returns internal names.
  */
 char **planet_searchFuzzyCase( const char* planetname, int *n )
 {
@@ -1038,7 +1038,7 @@ char **planet_searchFuzzyCase( const char* planetname, int *n )
    /* Do fuzzy search. */
    len = 0;
    for (i=0; i<planet_nstack; i++) {
-      if (nstrcasestr( planet_stack[i].name, planetname ) != NULL) {
+      if (nstrcasestr( _(planet_stack[i].name), planetname ) != NULL) {
          names[len] = planet_stack[i].name;
          len++;
       }

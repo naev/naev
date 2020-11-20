@@ -137,7 +137,7 @@ const char *outfit_existsCase( const char* name )
 
 
 /**
- * @brief Does a fuzzy search of all the outfits.
+ * @brief Does a fuzzy search of all the outfits. Searches translated names but returns internal names.
  */
 char **outfit_searchFuzzyCase( const char* name, int *n )
 {
@@ -151,7 +151,7 @@ char **outfit_searchFuzzyCase( const char* name, int *n )
    /* Do fuzzy search. */
    len = 0;
    for (i=0; i<nstack; i++) {
-      if (nstrcasestr( outfit_stack[i].name, name ) != NULL) {
+      if (nstrcasestr( _(outfit_stack[i].name), name ) != NULL) {
          names[len] = outfit_stack[i].name;
          len++;
       }
