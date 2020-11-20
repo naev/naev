@@ -241,7 +241,7 @@ jobs:
             libpng-dev \
             libopenal-dev \
             libvorbis-dev \
-            libiberty-dev
+            libiberty-dev \
             unzip \
             zip
             
