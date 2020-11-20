@@ -384,7 +384,7 @@ int shipyard_canBuy( const char *shipname, Planet *planet )
    /* Must have enough credits and the necessary license. */
    if ((!player_hasLicense(ship->license)) &&
          ((planet == NULL) || (!planet_hasService(planet, PLANET_SERVICE_BLACKMARKET)))) {
-      land_errDialogueBuild( _("You lack the %s."), ship->license );
+      land_errDialogueBuild( _("You lack the %s."), _(ship->license) );
       failure = 1;
    }
    if (!player_hasCredits( price )) {
@@ -404,7 +404,7 @@ int can_sell( const char *shipname )
 {
    int failure = 0;
    if (strcmp( shipname, player.p->name )==0) { /* Already on-board. */
-      land_errDialogueBuild( _("You can't sell the ship you're piloting!"), shipname );
+      land_errDialogueBuild( _("You can't sell the ship you're piloting!") );
       failure = 1;
    }
 
@@ -428,11 +428,11 @@ int can_swap( const char *shipname )
                "You have %g tonne more cargo than the new ship can hold.",
                "You have %g tonnes more cargo than the new ship can hold.",
                diff ),
-            diff, ship->name );
+            diff );
       failure = 1;
    }
    if (pilot_hasDeployed(player.p)) { /* Escorts are in space. */
-      land_errDialogueBuild( _("You can't strand your fighters in space."));
+      land_errDialogueBuild( _("You can't strand your fighters in space.") );
       failure = 1;
    }
    return !failure;
@@ -454,7 +454,7 @@ int shipyard_canTrade( const char *shipname )
 
    /* Must have the necessary license, enough credits, and be able to swap ships. */
    if (!player_hasLicense(ship->license)) {
-      land_errDialogueBuild( _("You lack the %s."), ship->license );
+      land_errDialogueBuild( _("You lack the %s."), _(ship->license) );
       failure = 1;
    }
    if (!player_hasCredits( price - player_shipPrice(player.p->name))) {
@@ -503,19 +503,19 @@ static void shipyard_trade( unsigned int wid, char* str )
    if ( targetprice == playerprice ) {
       if (dialogue_YesNo(_("Are you sure?"), /* confirm */
          _("Your %s is worth %s, exactly as much as the new ship, so no credits need be exchanged. Are you sure you want to trade your ship in?"),
-               player.p->ship->name, buf2)==0)
+               _(player.p->ship->name), buf2)==0)
          return;
    }
    else if ( targetprice < playerprice ) {
       if (dialogue_YesNo(_("Are you sure?"), /* confirm */
          _("Your %s is worth %s, more than the new ship. For your ship, you will get the new %s and %s. Are you sure you want to trade your ship in?"),
-               player.p->ship->name, buf2, ship->name, buf4)==0)
+               _(player.p->ship->name), buf2, _(ship->name), buf4)==0)
          return;
    }
    else if ( targetprice > playerprice ) {
       if (dialogue_YesNo(_("Are you sure?"), /* confirm */
          _("Your %s is worth %s, so the new ship will cost %s. Are you sure you want to trade your ship in?"),
-               player.p->ship->name, buf2, buf3)==0)
+               _(player.p->ship->name), buf2, buf3)==0)
          return;
    }
 

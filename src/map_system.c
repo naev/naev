@@ -517,7 +517,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
         cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("You cannot land here\n") );
      }
      /* Add a description */
-     cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, "%s", (p->description==NULL?_("No description available"):p->description) );
+     cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, "%s", (p->description==NULL?_("No description available"):_(p->description)) );
      (void)cnt;
 
      txtHeight=gl_printHeightRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, buf );
@@ -536,7 +536,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
                           planet_hasService( p, PLANET_SERVICE_OUTFITS) ? _("This system sells ship equipment") : _("This system does not sell ship equipment"),
                           planet_hasService( p, PLANET_SERVICE_SHIPYARD) ? _("This system sells ships") : _("This system does not sell ships"));
         if ( p->bar_description && planet_hasService( p, PLANET_SERVICE_BAR ) ) {
-           infocnt+=nsnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", p->bar_description );
+           infocnt+=nsnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", _(p->bar_description) );
         }
         (void)infocnt;
      }
@@ -624,12 +624,12 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                    "\anOwned:\a0 %d    \anSlot: \a0%s    \anSize: \a0%s\n"
                    "\anMass:\a0    %.0f tonnes     \anPrice:\a0 %s\n"
                    "\anLicense:\a0 %s"),
-                 (outfit->name),
-                 (outfit->description),
-                 (outfit->desc_short),
+                 _(outfit->name),
+                 _(outfit->description),
+                 _(outfit->desc_short),
                  player_outfitOwned( outfit ),
-                 (outfit_slotName( outfit )),
-                 (outfit_slotSize( outfit )),
+                 _(outfit_slotName( outfit )),
+                 _(outfit_slotSize( outfit )),
                  mass,
                  buf2,
                  buf4 );
@@ -664,7 +664,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                    "%s"),
                  _(ship->name),
                  _(ship_class(ship)),
-                 ship->description,
+                 _(ship->description),
                  _(ship->fabricator),
                  ship->crew,
                  /* Weapons & Manoeuvrability */
@@ -715,8 +715,8 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                    "\anYou have:\a0 %d tonnes%s\n"
                    "\anAverage price seen here:\a0 %s/t ± %s/t\n"
                    "\anAverage price seen everywhere:\a0 %s/t ± %s/t\n"),
-                 name,
-                 com->description,
+                 _(name),
+                 _(com->description),
                  owned,
                  buf4, /* FIXME: do not paste in an untranslated sentence fragment... or even a translated one. */
                  buf_mean, buf_std,
