@@ -1,5 +1,5 @@
 #!/bin/bash
-# RELEASE SCRIPT FOR NAEV
+# RELEASE SCRIPT FOR NAEV Soon (tm)
 #
 # This script attempts to compile and build different parts of Naev
 # automatically in order to prepare for a new release. 
