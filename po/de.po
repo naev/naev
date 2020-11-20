@@ -41291,7 +41291,7 @@ msgstr "%d Tonnen\n"
 
 #: src/board.c:497
 #, c-format
-msgid "%d Units\n"
+msgid "%d units\n"
 msgstr "%d Einheiten\n"
 
 #: src/board.c:508
@@ -41301,10 +41301,8 @@ msgstr "%d Raketen\n"
 
 #: src/board.c:590
 #, c-format
-msgid "\a%c%s\a0 has plundered %s credit from your ship!"
-msgid_plural "\a%c%s\a0 has plundered %s credits from your ship!"
-msgstr[0] "\a%c%s\a0 hat %s Credit aus deinem Schiff geplündert!"
-msgstr[1] "\a%c%s\a0 hat %s Credits aus deinem Schiff geplündert!"
+msgid "\a%c%s\a0 has plundered %s from your ship!"
+msgstr "\a%c%s\a0 hat %s aus deinem Schiff geplündert!"
 
 #: src/claim.c:295
 msgid "System Claim has inexistent system"
@@ -41383,26 +41381,26 @@ msgstr "„Jetzt wird dein Geld deine Haut auch nicht mehr retten!“"
 #: src/comm.c:445
 #, c-format
 msgid ""
-"\"I'm gonna need at least %<PRIu64> credits to not leave you as a hunk of "
+"\"I'm gonna need at least %s to not leave you as a hunk of "
 "floating debris.\"\n"
 "\n"
-"Pay %<PRIu64> credits?"
+"Pay %s?"
 msgstr ""
-"„Ich brauche mindestens %<PRIu64> Credits, wenn du nicht in einen Haufen "
+"„Ich brauche mindestens %s, wenn du nicht in einen Haufen "
 "Weltraumschrott verwandelt werden willst.“\n"
 "\n"
-"%<PRIu64> Credits zahlen?"
+"%s zahlen?"
 
 #: src/comm.c:447 src/comm.c:593
 #, c-format
 msgid ""
 "%s\n"
 "\n"
-"Pay %<PRIu64> credits?"
+"Pay %s?"
 msgstr ""
 "%s\n"
 "\n"
-"%<PRIu64> Credits zahlen?"
+"%s zahlen?"
 
 #: src/comm.c:451 src/comm.c:517 src/comm.c:595
 msgid "You decide not to pay."
@@ -41446,8 +41444,8 @@ msgstr "Der Pilot tankt dich bereits auf."
 
 #: src/comm.c:604
 #, c-format
-msgid "You need %<PRIu64> more credits!"
-msgstr "Du brauchst noch %<PRIu64> Credits!"
+msgid "You need %s more!"
+msgstr "Du brauchst noch %s!"
 
 #: src/comm.c:622
 msgid "\"On my way.\""
@@ -42692,7 +42690,7 @@ msgid ""
 "%s\n"
 "%s\n"
 "\a%c%s%.0f\a0\n"
-"%s credits\n"
+"%s\n"
 "\n"
 "%.0f\a0 tonnes\n"
 "%s average\n"
@@ -42714,7 +42712,7 @@ msgstr ""
 "%s\n"
 "%s\n"
 "\a%c%s%.0f\a0\n"
-"%s Credits\n"
+"%s\n"
 "\n"
 "%.0f\a0 Tonnen\n"
 "%s Durchschnitt\n"
@@ -42759,11 +42757,7 @@ msgstr ""
 #: src/equipment.c:1861
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s credit?"
-msgid_plural "Are you sure you want to sell your ship %s for %s credits?"
-msgstr[0] ""
-"Bist du dir sicher, dass du das Schiff %s für %s Credit verkaufen möchtest?"
-msgstr[1] ""
-"Bist du dir sicher, dass du das Schiff %s für %s Credits verkaufen möchtest?"
+msgstr "Bist du dir sicher, dass du das Schiff %s für %s verkaufen möchtest?"
 
 #. Display widget.
 #: src/equipment.c:1879
@@ -42772,10 +42766,8 @@ msgstr "Schiff verkauft"
 
 #: src/equipment.c:1880
 #, c-format
-msgid "You have sold your ship %s for %s credit."
-msgid_plural "You have sold your ship %s for %s credits."
-msgstr[0] "Du hast dein Schiff %s für %s Credit verkauft."
-msgstr[1] "Du hast dein Schiff %s für %s Credits verkauft."
+msgid "You have sold your ship %s for %s."
+msgstr "Du hast dein Schiff %s für %s verkauft."
 
 #: src/equipment.c:1910 src/player.c:408
 msgid "Ship Name"
@@ -43440,7 +43432,7 @@ msgid ""
 "%s\n"
 "%s\n"
 "\n"
-"%s Credits\n"
+"%s\n"
 "%s\n"
 "%d (%d Jumps)"
 msgstr ""
@@ -43448,7 +43440,7 @@ msgstr ""
 "%s\n"
 "%s\n"
 "\n"
-"%s Credits\n"
+"%s\n"
 "%s\n"
 "%d (%d Sprünge)"
 
@@ -44583,8 +44575,8 @@ msgid ""
 "%s\n"
 "%.0f tonnes\n"
 "\n"
-"%s credits\n"
-"%s credits\n"
+"%s\n"
+"%s\n"
 "%s\n"
 msgstr ""
 "%d\n"
@@ -44593,8 +44585,8 @@ msgstr ""
 "%s\n"
 "%.0f Tonnen\n"
 "\n"
-"%s Credits\n"
-"%s Credits\n"
+"%s\n"
+"%s\n"
 "%s\n"
 
 #: src/land_outfits.c:642
@@ -44635,8 +44627,8 @@ msgstr "Du hast bereits diese Lizenz."
 #: src/land_outfits.c:717 src/land_shipyard.c:409 src/land_shipyard.c:480
 #: src/land_trade.c:219
 #, c-format
-msgid "You need %s more credits."
-msgstr "Du brauchst %s weitere Credits."
+msgid "You need %s more."
+msgstr "Du brauchst %s weitere."
 
 #: src/land_outfits.c:723
 #, c-format
@@ -44792,8 +44784,8 @@ msgid ""
 "%.0f tonnes\n"
 "%d units\n"
 "%d units\n"
-"%s credits\n"
-"%s credits\n"
+"%s\n"
+"%s\n"
 "%s\n"
 msgstr ""
 "%s\n"
@@ -44815,8 +44807,8 @@ msgstr ""
 "%.0f Tonnen\n"
 "%d Einheiten\n"
 "%d Einheiten\n"
-"%s Credits\n"
-"%s Credits\n"
+"%s\n"
+"%s\n"
 "%s\n"
 
 #: src/land_shipyard.c:363 src/land_shipyard.c:520 src/land_shipyard.c:526
@@ -44862,21 +44854,21 @@ msgstr ""
 #: src/land_shipyard.c:527
 #, c-format
 msgid ""
-"Your %s is worth %s credits, more than the new ship. For your ship, you will "
-"get the new %s and %s credits. Are you sure you want to trade your ship in?"
+"Your %s is worth %s, more than the new ship. For your ship, you will "
+"get the new %s and %s. Are you sure you want to trade your ship in?"
 msgstr ""
 "Dein %s ist %s wert, mehr als das neue Schiff. Für dein Schiff wirst du das "
-"neue Schiff „%s“ und %s Credis erhalten. Bist du dir sicher, dass du dein "
+"neue Schiff „%s“ und %s erhalten. Bist du dir sicher, dass du dein "
 "Schiff in Zahlung geben willst?"
 
 #. confirm
 #: src/land_shipyard.c:533
 #, c-format
 msgid ""
-"Your %s is worth %s, so the new ship will cost %s credits. Are you sure you "
+"Your %s is worth %s, so the new ship will cost %s. Are you sure you "
 "want to trade your ship in?"
 msgstr ""
-"Dein %s ist %s wert, also wird das neue Schiff %s Credits kosten. Bist du "
+"Dein %s ist %s wert, also wird das neue Schiff %s kosten. Bist du "
 "dir sicher, dass du dein Schiff in Zahlung geben willst?"
 
 #: src/land_shipyard.c:573
@@ -44906,47 +44898,42 @@ msgstr ""
 msgid ""
 "N/A tonnes\n"
 "\n"
-"N/A credits\n"
+"N/A ¤\n"
 "%d tonnes\n"
-"%s credits\n"
-"N/A credits\n"
-"N/A credits"
+"%s\n"
+"N/A ¤\n"
+"N/A ¤"
 msgstr ""
 "N/V Tonnen\n"
 "\n"
-"N/V Credits\n"
+"N/V ¤\n"
 "%d Tonnen\n"
-"%s Credits\n"
-"N/V Credits\n"
-"N/V Credits"
+"%s\n"
+"N/V ¤\n"
+"N/V ¤"
 
 #: src/land_trade.c:154
 msgid "No commodities available."
 msgstr "Keine Waren verfügbar."
-
-#: src/land_trade.c:170
-#, c-format
-msgid "%<PRIu64> credits"
-msgstr "%<PRIu64> Credits"
 
 #: src/land_trade.c:173
 #, c-format
 msgid ""
 "%d tonnes\n"
 "%s\n"
-"%<PRIu64> credits\n"
+"%s/t\n"
 "%d tonnes\n"
-"%s credits\n"
-"%<PRIu64> ± %.1f\n"
-"%<PRIu64> ± %.1f\n"
+"%s\n"
+"%s/t ± %s/t\n"
+"%s/t ± %s/t\n"
 msgstr ""
 "%d Tonnen\n"
 "%s\n"
-"%<PRIu64> Credits\n"
+"%s/t\n"
 "%d Tonnen\n"
-"%s Credits\n"
-"%<PRIu64> ± %.1f\n"
-"%<PRIu64> ± %.1f\n"
+"%s\n"
+"%s/t ± %s/t\n"
+"%s/t ± %s/t\n"
 
 #: src/land_trade.c:223
 msgid "No cargo space available!"
@@ -45457,7 +45444,7 @@ msgid ""
 "%s\n"
 "\n"
 "\anOwned:\a0 %d    \anSlot: \a0%s    \anSize: \a0%s\n"
-"\anMass:\a0    %.0f tonnes     \anPrice:\a0 %s \ancredits\a0\n"
+"\anMass:\a0    %.0f tonnes     \anPrice:\a0 %s\n"
 "\anLicense:\a0 %s"
 msgstr ""
 "%s\n"
@@ -45467,7 +45454,7 @@ msgstr ""
 "%s\n"
 "\n"
 "\anBesitz:\a0 %d   \anPlatz: \a0%s   \anGröße: \a0%s\n"
-"\anMasse:\a0   %.0f Tonnen     \a0Preis:\a0 %s \anCredits\a0\n"
+"\anMasse:\a0   %.0f Tonnen     \a0Preis:\a0 %s\n"
 "\anLizenz\a0: %s"
 
 #: src/map_system.c:658
@@ -45486,7 +45473,7 @@ msgid ""
 "\anEnergy:\a0 %.0f MJ (%.1f MW)\n"
 "\anCargo Space:\a0 %.0f tonnes\n"
 "\anFuel:\a0 %d units  \anFuel Use:\a0 %d units\n"
-"\anPrice:\a0 %s credits  \anLicense:\a0 %s\n"
+"\anPrice:\a0 %s  \anLicense:\a0 %s\n"
 "%s"
 msgstr ""
 "\anModell:\a0 %s    \anKlasse:\a0 %s\n"
@@ -45502,7 +45489,7 @@ msgstr ""
 "\anEnergie:\a0 %.0f MJ (%.1f MW)\n"
 "\anFrachtraum:\a0 %.0f Tonnen\n"
 "\anTreibstoff:\a0 %d Einheiten  \anTreibstoffbedarf:\a0 %d Einheiten\n"
-"\anPreis:\a0 %s Credits  \anLizenz:\a0 %s\n"
+"\anPreis:\a0 %s  \anLizenz:\a0 %s\n"
 "%s"
 
 #: src/map_system.c:721
@@ -45513,16 +45500,16 @@ msgid ""
 "%s\n"
 "\n"
 "\anYou have:\a0 %d tonnes%s\n"
-"\anAverage price seen here:\a0 %<PRIu64> ± %.1f Cr./Ton\n"
-"\anAverave price seen everywhere:\a0 %<PRIu64> ± %.1f Cr./Ton\n"
+"\anAverage price seen here:\a0 %s/t ± %s/t\n"
+"\anAverage price seen everywhere:\a0 %s/t ± %s/t\n"
 msgstr ""
 "%s\n"
 "\n"
 "%s\n"
 "\n"
 "\anDu hast:\a0 %d Tonnen%s\n"
-"\anDurchschnittspreis hier gesehen:\a0 %<PRIu64> ± %.1f Cr./Tonne\n"
-"\anDurchschnittspreis überall gesehen:\a0 %<PRIu64> ± %.1f Cr./Tonne\n"
+"\anDurchschnittspreis hier gesehen:\a0 %s/t ± %s/t\n"
+"\anDurchschnittspreis überall gesehen:\a0 %s/t ± %s/t\n"
 
 #: src/map_system.c:734
 msgid "Unexpected call to map_system_array_update\n"
@@ -45548,11 +45535,10 @@ msgstr "Das kannst du dir nicht leisten"
 #: src/map_system.c:1022
 #, c-format
 msgid ""
-"Sorry, but we are selling this information for %d credits, which you don't "
-"have"
+"Sorry, but we are selling this information for %s, which you don't have."
 msgstr ""
-"Es tut uns leid, aber wir verkaufen diese Informationen für %d Credits, die "
-"Sie nicht haben"
+"Es tut uns leid, aber wir verkaufen diese Informationen für %s, die "
+"Sie nicht haben."
 
 #: src/map_system.c:1024
 msgid "No commodities sold here"
@@ -45581,10 +45567,10 @@ msgstr "Warenpreise kaufen?"
 #: src/map_system.c:1028
 #, c-format
 msgid ""
-"For %s, that will cost %d credits.  The latest information we have is %g "
+"For %s, that will cost %s. The latest information we have is %g "
 "periods old."
 msgstr ""
-"Für %s wird das %d Credits kosten. Die letzte uns vorliegende Information "
+"Für %s wird das %s kosten. Die letzte uns vorliegende Information "
 "ist %g Perioden alt."
 
 #: src/menu.c:173

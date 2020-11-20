@@ -133,11 +133,14 @@ void commodity_update( unsigned int wid, char* str )
 {
    (void)str;
    char buf[PATH_MAX];
-   char buf2[80], buf3[ECON_CRED_STRLEN];
+   char buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
    char *comname;
    Commodity *com;
    credits_t mean,globalmean;
-   double std,globalstd;
+   double std, globalstd;
+   char buf_mean[ECON_CRED_STRLEN], buf_globalmean[ECON_CRED_STRLEN];
+   char buf_std[ECON_CRED_STRLEN], buf_globalstd[ECON_CRED_STRLEN];
+   char buf_local_price[ECON_CRED_STRLEN];
    int owned;
    comname = toolkit_getImageArray( wid, "iarTrade" );
    if ((comname==NULL) || (strcmp( comname, _("None") )==0)) {
@@ -164,23 +167,28 @@ void commodity_update( unsigned int wid, char* str )
    window_modifyImage( wid, "imgStore", com->gfx_store, 128, 128 );
 
    planet_averagePlanetPrice( land_planet, com, &mean, &std);
+   credits2str( buf_mean, mean, -1 );
+   nsnprintf( buf_std, sizeof(buf_std), "%.1f ¤", std ); /* TODO credit2str could learn to do this... */
    economy_getAveragePrice( com, &globalmean, &globalstd );
+   credits2str( buf_globalmean, globalmean, -1 );
+   nsnprintf( buf_globalstd, sizeof(buf_globalstd), "%.1f ¤", globalstd ); /* TODO credit2str could learn to do this... */
    /* modify text */
    buf2[0]='\0';
    owned=pilot_cargoOwned( player.p, comname );
    if ( owned > 0 )
-      nsnprintf( buf2, 80, _("%"PRIu64" ¤"),com->lastPurchasePrice);
+      credits2str( buf2, com->lastPurchasePrice, -1 );
    credits2str( buf3, player.p->credits, 2 );
+   credits2str( buf_local_price, planet_commodityPrice( land_planet, com ), -1 );
    nsnprintf( buf, PATH_MAX,
               _( "%d tonnes\n"
                  "%s\n"
-                 "%" PRIu64 " ¤/t\n"
+                 "%s/t\n"
                  "%d tonnes\n"
                  "%s\n"
-                 "%" PRIu64 " ± %.1f ¤/t\n"
-                 "%" PRIu64 " ± %.1f ¤/t\n" ),
-              owned, buf2, planet_commodityPrice( land_planet, com ), pilot_cargoFree( player.p ), buf3, mean, std,
-              globalmean, globalstd );
+                 "%s/t ± %s/t\n"
+                 "%s/t ± %s/t\n" ),
+              owned, buf2, buf_local_price, pilot_cargoFree( player.p ), buf3, buf_mean, buf_std,
+              buf_globalmean, buf_globalstd );
 
    window_modifyText( wid, "txtDInfo", buf );
    nsnprintf( buf, PATH_MAX,
