@@ -70,9 +70,9 @@ if HAVE_DATA
 pot: $(XMLPOT) $(LANGUAGEFILE)
 	$(MAKE) -C po
 	$(MAKE) -C po $(PACKAGE).pot
-	./utils/gettext.sh
+	$(top_srcdir)/utils/gettext.sh
 
-$(LANGUAGEFILE): po/LINGUAS
+$(LANGUAGEFILE): $(top_srcdir)/po/LINGUAS
 	tail -n +2 $< > $@
 else # HAVE_DATA
 pot:
@@ -115,8 +115,8 @@ docs:
 
 soundtrack: naev-$(VERSION)-soundtrack.zip
 
-naev-$(VERSION)-soundtrack.zip: utils/soundtrack.py dat/snd/soundtrack.yaml
-	./utils/soundtrack.py
+naev-$(VERSION)-soundtrack.zip: $(top_srcdir)/utils/soundtrack.py $(top_srcdir)/dat/snd/soundtrack.yaml $(VERSIONFILE)
+	$(top_srcdir)/utils/soundtrack.py
 
 help:
 	@echo "Possible targets are:"
