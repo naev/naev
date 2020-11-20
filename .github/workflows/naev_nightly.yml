@@ -312,10 +312,11 @@ jobs:
           SUFFIX="$VERSION.$BUILD_DATE"
 
           mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
-          chmod +x dist/out/naev-$SUFFIX-linux-x86-64.AppImage
+          chmod +x dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
 
           tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64/"
           tar -Jxf "dist/staging/naev-win64/steam-win64.tar.xz" -C "dist/out/win64/"
+          mv "dist/out/win64/naev*.exe "dist/out/win64/naev.exe"
 
       - name: Upload build to itch
         run: |
