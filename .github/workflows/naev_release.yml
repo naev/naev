@@ -270,7 +270,7 @@ jobs:
           unzip naev-$VERSION-soundtrack.zip -d dist/staging
           cp naev-$VERSION-soundtrack.zip dist/out
           cp extras/logos/naev_soundtrack_cover.png dist/out/steam
-          
+
       - name: Transcode Steam Soundtrack
         run: |
           ./utils/convertToMP3.sh -i dist/staging -f ogg -o dist/out/steam
@@ -279,7 +279,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: naev-soundtrack
-          path: ${{ github.workspace }}/dist/out/naev-$VERSION-soundtrack.zip
+          path: ${{ github.workspace }}/dist/out/naev-*-soundtrack.zip
           if-no-files-found: error
           
       - name: Upload Steam Soundtrack Artifact
