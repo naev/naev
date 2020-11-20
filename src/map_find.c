@@ -33,6 +33,7 @@ static int map_find_ships   = 0; /**< Ships checkbox value. */
 /* Current found stuff. */
 static map_find_t *map_found_cur    = NULL;  /**< Pointer to found stuff. */
 static int map_found_ncur           = 0;     /**< Number of found stuff. */
+static char **map_foundOutfitNames  = NULL; /**< Internal names of outfits in the search results. */
 /* Tech hack. */
 static tech_group_t **map_known_techs = NULL; /**< Known techs. */
 static Planet **map_known_planets   = NULL;  /**< Known planets with techs. */
@@ -709,7 +710,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
     * a 20 px gap, 280 px for the outfit's name and a final 20 px gap. */
    iw = w - 452;
 
-   outfit = outfit_get( toolkit_getList(wid, wgtname) );
+   outfit = outfit_get( map_foundOutfitNames[toolkit_getListPos(wid, wgtname)] );
    window_modifyText( wid, "txtOutfitName", _(outfit->name) );
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 0, 0 );
 
@@ -758,7 +759,6 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
 static int map_findSearchOutfits( unsigned int parent, const char *name )
 {
    int i, j;
-   char **names;
    int len, n, ret;
    map_find_t *found;
    Planet *pnt;
@@ -768,10 +768,15 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    Outfit *o, **olist;
    int nolist;
 
+   if (map_foundOutfitNames != NULL) {
+      ERR(_("BUG: Naev has attempted a reentrant call to map_findSearchOutfits. Bailing."));
+      return 1;
+   }
+
    /* Match planet first. */
    o     = NULL;
    oname = outfit_existsCase( name );
-   names = map_outfitsMatch( name, &len );
+   map_foundOutfitNames = map_outfitsMatch( name, &len );
    if (len <= 0)
       return -1;
    else if ((oname != NULL) && (len == 1))
@@ -781,18 +786,20 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       /* Ask which one player wants. */
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
-         list[i] = strdup( names[i] );
+         list[i] = strdup( _(map_foundOutfitNames[i]) );
       i = dialogue_listPanel( _("Search Results"), list, len, 452, 650,
             map_addOutfitDetailFields, map_showOutfitDetail,
             _("Search results for outfits matching '%s':"), name );
       if (i < 0) {
-         free(names);
+         free(map_foundOutfitNames);
+         map_foundOutfitNames = NULL;
          return 0;
       }
-      o = outfit_get( names[i] );
+      o = outfit_get( map_foundOutfitNames[i] );
    }
-   if (names != NULL)
-      free(names);
+   if (map_foundOutfitNames != NULL)
+      free(map_foundOutfitNames);
+   map_foundOutfitNames = NULL;
    if (o == NULL)
       return -1;
 
@@ -800,7 +807,6 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    found = NULL;
    n = 0;
    for (i=0; i<map_nknown; i++) {
-
       /* Try to find the outfit in the planet. */
       olist = tech_getOutfit( map_known_techs[i], &nolist );
       for (j=0; j<nolist; j++)
