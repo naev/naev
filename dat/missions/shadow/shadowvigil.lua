@@ -81,18 +81,18 @@ diplomatdistress = _("Diplomatic vessel under fire!")
 -- First meeting.
 commmsg[1] = _("There you are at last. Fancy boat you've got there. We're gonna head to Nova Shakar first, to grab some fuel. Just stick with us, okay?")
 
--- Enroute chatter.
+-- En-route chatter.
 commmsg[2] = _("So do you guys think we'll run into any trouble?")
 commmsg[3] = _("Not if we all follow the plan. I didn't hear of any trouble coming our way from any of the others.")
 commmsg[4] = _("I just hope Z. knows what he's doing.")
 commmsg[5] = _("Cut the chatter, two, three. This is a low-profile operation. Act the part, please.")
 
--- Diplomat jumpin.
+-- Diplomat jump-in.
 commmsg[6] = _("Alright folks, there he is. You know your orders. Stick to him, don't let anyone touch him on the way to the rendezvous.")
 commmsg[7] = _("Two, copy.")
 commmsg[8] = _("Three, copy.")
 
--- Enroute pirates.
+-- En-route pirates.
 commmsg[9] = _("Those rats are eyeballing us - take them out!")
 commmsg[10] = _("All hostiles eliminated, resume standing orders.")
 
@@ -123,7 +123,7 @@ log_text_fail = _([[You failed to escort a diplomat to safety for the Four Winds
 
 
 function create()
-    misssys = {system.get("Qex"), system.get("Shakar"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, refual stop, protegee meeting point, final destination.
+    misssys = {system.get("Qex"), system.get("Shakar"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, refuel stop, protegee meeting point, final destination.
     misssys["__save"] = true
     
     if not misn.claim(misssys) then
@@ -308,7 +308,7 @@ function jumpin()
             hook.timer(5000, "chatter", {pilot = escorts[1], text = commmsg[6]})
             hook.timer(12000, "chatter", {pilot = escorts[2], text = commmsg[7]})
             hook.timer(14000, "chatter", {pilot = escorts[3], text = commmsg[8]})
-        elseif system.cur() == misssys[4] then -- case rendezvous with dvaered diplomat
+        elseif system.cur() == misssys[4] then -- case rendezvous with Dvaered diplomat
             for i, j in ipairs(escorts) do
                 if j:exists() then
                     j:follow(diplomat) -- Follow the diplomat.
@@ -323,7 +323,7 @@ function jumpin()
             diplomat:setInvincible(true)
             diplomat:goto(vec2.new(1850, 4000), true)
             diplomatidle = hook.pilot(diplomat, "idle", "diplomatIdle")
-        else -- case enroute, handle escorts flying to the next system, possibly combat
+        else -- case en route, handle escorts flying to the next system, possibly combat
             for i, j in ipairs(escorts) do
                 if j:exists() then
                     if stage == 4 then

@@ -207,7 +207,7 @@ void menu_main (void)
    }
 
    /* create background image window */
-   bwid = window_create( "BG", -1, -1, -1, -1 );
+   bwid = window_create( "wdwBG", "", -1, -1, -1, -1 );
    window_onClose( bwid, menu_main_cleanBG );
    window_setBorder( bwid, 0 );
    window_addImage( bwid, (SCREEN_W-tex->sw)/2., offset_logo, 0, 0, "imgLogo", tex, 0 );
@@ -215,7 +215,7 @@ void menu_main (void)
          &cWhite, naev_version(1) );
 
    /* create menu window */
-   wid = window_create( N_("Main Menu"), -1, offset_wdw, MAIN_WIDTH, h );
+   wid = window_create( "wdwMainMenu", _("Main Menu"), -1, offset_wdw, MAIN_WIDTH, h );
    window_setCancel( wid, main_menu_promptClose );
 
    /* Buttons. */
@@ -267,8 +267,8 @@ void menu_main_resize (void)
    if (!menu_isOpen(MENU_MAIN))
       return;
 
-   menu_id = window_get("Main Menu");
-   bg_id   = window_get("BG");
+   menu_id = window_get("wdwMainMenu");
+   bg_id   = window_get("wdwBG");
 
    window_dimWindow( menu_id, &w, &h );
    window_dimWindow( bg_id, &bgw, &bgh );
@@ -318,8 +318,8 @@ static void main_menu_promptClose( unsigned int wid, char *unused )
  */
 void menu_main_close (void)
 {
-   if (window_exists("Main Menu"))
-      window_destroy( window_get("Main Menu") );
+   if (window_exists( "wdwMainMenu" ))
+      window_destroy( window_get( "wdwMainMenu" ) );
    else
       WARN( _("Main menu does not exist.") );
 
@@ -401,11 +401,11 @@ static void menu_main_cleanBG( unsigned int wid, char* str )
 
 /*
  *
- * ingame menu
+ * in-game menu
  *
  */
 /**
- * @brief Opens the small ingame menu.
+ * @brief Opens the small in-game menu.
  */
 void menu_small (void)
 {
@@ -421,7 +421,7 @@ void menu_small (void)
             menu_isOpen(MENU_DEATH) ))
       return;
 
-   wid = window_create( N_("Menu"), -1, -1, MENU_WIDTH, MENU_HEIGHT );
+   wid = window_create( "wdwMenuSmall", _("Menu"), -1, -1, MENU_WIDTH, MENU_HEIGHT );
 
    window_setCancel( wid, menu_small_close );
 
@@ -442,7 +442,7 @@ void menu_small (void)
 
 
 /**
- * @brief Closes the small ingame menu.
+ * @brief Closes the small in-game menu.
  *    @param str Unused.
  */
 static void menu_small_close( unsigned int wid, char* str )
@@ -467,7 +467,7 @@ static void menu_small_info( unsigned int wid, char *str )
 }
 
 /**
- * @brief Closes the small ingame menu and goes back to the main menu.
+ * @brief Closes the small in-game menu and goes back to the main menu.
  *    @param str Unused.
  */
 static void menu_small_exit( unsigned int wid, char* str )
@@ -483,14 +483,14 @@ static void menu_small_exit( unsigned int wid, char* str )
 
    /* Close info menu if open. */
    if (menu_isOpen(MENU_INFO)) {
-      info_wid = window_get("Info");
+      info_wid = window_get("wdwInfo");
       window_destroy( info_wid );
       menu_Close(MENU_INFO);
    }
 
    /* Force unboard. */
    if (player_isBoarded()) {
-      board_wid = window_get("Boarding");
+      board_wid = window_get("wdwBoarding");
       board_exit(board_wid, NULL);
    }
 
@@ -522,7 +522,7 @@ static void exit_game (void)
 
 
 /**
- * @brief Reload the current savegame, when player want to continue after death
+ * @brief Reload the current saved game, when player want to continue after death
  */
 static void menu_death_continue( unsigned int wid, char* str )
 {
@@ -535,7 +535,7 @@ static void menu_death_continue( unsigned int wid, char* str )
 }
 
 /**
- * @brief Restart the game, when player want to continue after death but without a savegame
+ * @brief Restart the game, when player want to continue after death but without a saved game
  */
 static void menu_death_restart( unsigned int wid, char* str )
 {
@@ -555,10 +555,10 @@ void menu_death (void)
    unsigned int wid;
    char path[PATH_MAX];
 
-   wid = window_create( N_("Death"), -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
+   wid = window_create( "wdwRIP", _("Death"), -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
    window_onClose( wid, menu_death_close );
 
-   /* Allow the player to continue if the savegame exists, if not, propose to restart */
+   /* Allow the player to continue if the saved game exists, if not, propose to restart */
    nsnprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
    if (nfile_fileExists(path))
       window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -656,7 +656,7 @@ static void menu_editors_open( unsigned int wid, char *unused )
    y  = 20 + (BUTTON_HEIGHT+20)*2;
    h  = y + 80;
 
-   wid = window_create( N_("Editors"), -1, -1, MENU_WIDTH + EDITORS_EXTRA_WIDTH, h );
+   wid = window_create( "wdwEditors", _("Editors"), -1, -1, MENU_WIDTH + EDITORS_EXTRA_WIDTH, h );
    window_setCancel( wid, menu_editors_close );
 
    /* Set buttons for the editors */

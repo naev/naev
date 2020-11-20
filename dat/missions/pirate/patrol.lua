@@ -46,12 +46,11 @@ pay_text[4] = _("You are handed your pay in what seems to be a million different
 
 abandon_title = _("Mission Abandoned")
 abandon_text    = {}
-abandon_text[1] = _("You are sent a message informing you that landing in the middle of the job is considered to be abandonment. As such, your contract is void and you will not recieve payment.")
+abandon_text[1] = _("You are sent a message informing you that landing in the middle of the job is considered to be abandonment. As such, your contract is void and you will not receive payment.")
 
 
 -- Mission details
 misn_title  = _("Patrol of the %s System")
-misn_reward = _("%s credits")
 misn_desc   = _("A local crime boss has offered a job to patrol the %s system in an effort to keep outsiders from discovering this Pirate stronghold. You will be tasked with checking various points and eliminating any outsiders along the way.")
 
 -- Messages

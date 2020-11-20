@@ -3,7 +3,7 @@
 --]]
 
 --[[
--- Mainly manages targetting nearest enemy.
+-- Mainly manages targeting nearest enemy.
 --]]
 function atk_g_think ()
    local enemy = ai.getenemy()
@@ -85,7 +85,7 @@ function atk_g ()
       return
    end
 
-   -- Targetting stuff
+   -- Targeting stuff
    ai.hostile(target) -- Mark as hostile
    ai.settarget(target)
 
@@ -401,7 +401,7 @@ function atk_fighter ()
       return
    end
 
-   -- Targetting stuff
+   -- Targeting stuff
    ai.hostile(target) -- Mark as hostile
    ai.settarget(target)
 
@@ -454,7 +454,7 @@ function atk_corvette ()
       return
    end
 
-   -- Targetting stuff
+   -- Targeting stuff
    ai.hostile(target) -- Mark as hostile
    ai.settarget(target)
 
@@ -514,7 +514,7 @@ function atk_capital ()
       return
    end
 
-   -- Targetting stuff
+   -- Targeting stuff
    ai.hostile(target) -- Mark as hostile
    ai.settarget(target)
 
@@ -681,7 +681,7 @@ function atk_g_flyby( target, dist )
 
     dir = ai.aim(target)
     
-    --not accellerating here is the only difference between the aggression levels. This can probably be an aggression AI parameter
+    --not accelerating here is the only difference between the aggression levels. This can probably be an aggression AI parameter
     --ai.accel()
     
     -- Shoot if should be shooting.

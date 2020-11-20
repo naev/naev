@@ -29,6 +29,12 @@ endif
 config_data = configuration_data()
 naev_deps = []
 
+ndata_path = get_option('ndata_path')
+if ndata_path == ''
+   ndata_path = get_option('datadir') / 'naev'
+endif
+summary('NData Path', ndata_path, section: 'Features')
+
 # Subdirs
 subdir('src')
 subdir('docs')
@@ -40,12 +46,6 @@ subdir('po')
 buildExec = get_option('executable')
 if buildExec.disabled() == false
 
-   ndata_path = get_option('ndata_path')
-   if ndata_path == ''
-      ndata_path = get_option('datadir') / 'naev'
-   endif
-   summary('NData Path', ndata_path, section: 'Features')
-
    debug    = get_option('debug')
    paranoid = get_option('paranoid')
    config_data.set_quoted('PACKAGE', meson.project_name())
@@ -53,6 +53,10 @@ if buildExec.disabled() == false
    config_data.set_quoted('PACKAGE_VERSION', meson.project_version())
    config_data.set_quoted('PKGDATADIR', get_option('prefix') / ndata_path)
    config_data.set_quoted('HOST', host_machine.system() + '-' + host_machine.cpu_family())
+   # Cut out the numeric fields from our SemVer <major>.<minor>.<rev>[-pre_release][+build] for OS versioning.
+   config_data.set('VMAJOR', meson.project_version().split('.')[0])
+   config_data.set('VMINOR', meson.project_version().split('.')[1])
+   config_data.set('VREV', meson.project_version().split('.')[2].split('-')[0].split('+')[0])
    config_data.set('DEBUG', debug ? 1 : false)
    config_data.set('DEBUGGING', debug ? 1 : false)
    config_data.set('DEBUG_PARANOID', paranoid ? 1 : false)
@@ -155,6 +159,12 @@ if buildExec.disabled() == false
    config_data.set10('USE_SDLMIX', sdl_mixer.found())
    summary('SDL Mixer', sdl_mixer.found(), section: 'Features', bool_yn: true)
 
+   # Standard library feature tests
+   config_data.set10('HAVE_DECL_SETENV', cc.has_header_symbol('stdlib.h', 'setenv'))
+   config_data.set10('HAVE_DECL__PUTENV_S', cc.has_header_symbol('stdlib.h', '_putenv_s'))
+   config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'gutenv_s'))
+   config_data.set10('HAVE_STDALIGN_H', cc.has_header('stdalign.h'))
+
    ### Generated sources
 
    # VERSION
@@ -184,6 +194,15 @@ if buildExec.disabled() == false
       naev_deps += dependency('Foundation', required: true )
    endif
 
+   if host_machine.system() == 'windows'
+      windows = import('windows')
+      icon = files('extras/logos/logo.ico')
+      res_include = include_directories('extras/logos')
+      win_manifest = configure_file(input: 'extras/windows/naev.exe.manifest.in', output: 'naev.exe.manifest', configuration: config_data)
+      win_rc = configure_file(input: 'extras/windows/resource.rc.in', output: 'resource.rc', configuration: config_data)
+      naev_source += windows.compile_resources(win_rc, depend_files: [win_manifest, icon], include_directories: res_include)
+   endif
+
    shaders_c_gen = executable(
       'shaders_c_gen',
       'src/shaders_c_gen.c',
@@ -206,6 +225,15 @@ if buildExec.disabled() == false
       export_dynamic: bfd.found(),
       install: true)
 
+   configure_file(
+      input: 'utils/build/naev.sh',
+      output: 'naev.sh',
+      configuration: {
+         'source_root': meson.source_root(),
+         'naev_bin' : naev_bin.full_path()
+      }
+   )
+
    install_data(
       'LICENSE',
       'README',
@@ -223,7 +251,7 @@ if buildExec.disabled() == false
       install_dir: ndata_path,
    )
 
-   if host_machine.system() not in ['windows', 'cygwin', 'emscripten', 'android', 'darwin']        
+   if host_machine.system() not in ['windows', 'cygwin', 'emscripten', 'android', 'darwin']
          metainfo_file = 'org.naev.naev.metainfo.xml'
 
          if (ascli_exe.found())
@@ -245,7 +273,7 @@ if buildExec.disabled() == false
              rename : ['16x16/apps/naev.png', '32x32/apps/naev.png', '64x64/apps/naev.png', '128x128/apps/naev.png', '256x256/apps/naev.png'],
              install_dir: get_option('datadir') / 'icons/hicolor')
       install_man('naev.6')
-      
+
    endif
 
    subdir('test')

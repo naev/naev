@@ -1,20 +1,20 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Baron">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>100</chance>
-   <location>None</location>
-  </avail>
-  <notes>
-   <done_evt name="Baroncomm_baron">Triggers</done_evt>
-   <campaign>Baron Sauterfeldt</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>100</chance>
+  <location>None</location>
+ </avail>
+ <notes>
+  <done_evt name="Baroncomm_baron">Triggers</done_evt>
+  <campaign>Baron Sauterfeldt</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 -- This is the first mission in the baron string.
 --]]

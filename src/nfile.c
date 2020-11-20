@@ -843,7 +843,7 @@ int _nfile_delete( const char *file )
 int nfile_rename( const char* oldname, const char* newname )
 {
    if (!nfile_fileExists(oldname)) {
-      WARN(_("Can not rename non existant file %s"),oldname);
+      WARN(_("Can not rename non existent file %s"),oldname);
       return -1;
    }
    if (newname == NULL) {

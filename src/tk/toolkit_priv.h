@@ -103,6 +103,7 @@ typedef struct Widget_ {
    int (*textevent) ( struct Widget_ *wgt, const char *text ); /**< Text event function handler for the widget. */
    int (*mmoveevent) ( struct Widget_ *wgt, int x, int y, int rx, int ry); /**< Mouse movement handler function for the widget. */
    int (*mclickevent) ( struct Widget_ *wgt, int button, int x, int y ); /**< Mouse click event handler function for the widget. */
+   int (*mdoubleclickevent) ( struct Widget_ *wgt, int button, int x, int y ); /**< Double-click handler, bypassing the click handler if provided. */
    int (*mwheelevent) ( struct Widget_ *wgt, SDL_MouseWheelEvent event ); /**< Mouse click event handler function for the widget. */
    void (*scrolldone) ( struct Widget_ *wgt ); /**< Scrolling is over. */
    int (*rawevent) ( struct Widget_ *wgt, SDL_Event *event ); /**< Raw event handler function for widget. */

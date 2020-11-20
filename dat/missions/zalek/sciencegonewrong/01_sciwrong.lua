@@ -16,9 +16,9 @@
 --[[
 --
 -- MISSION: The one with the Visit
--- DESCRIPTION: Dr. Geller asks you to disable a soromid ship to retrieve some technology
--- that he needs for his prototype. Za'lek science can obviously not fall behind soromid.
--- Obviously soromid will not like this and will try to attack the player.
+-- DESCRIPTION: Dr. Geller asks you to disable a Soromid ship to retrieve some technology
+-- that he needs for his prototype. Za'lek science can obviously not fall behind Soromid.
+-- Obviously Soromid will not like this and will try to attack the player.
 -- 
 -- Difficulty: Easy to Medium?
 --
@@ -49,8 +49,8 @@ bar_desc = _("You see Dr. Geller waving you over. Apparently he has another job 
 title[1] = _([[In the bar]])
 text[1]  = _([["Ah, there you are! I've got a job for you. Specifically, some... acquisition... of technology from the Soromid, who haven't been very cooperative. Are you up for it?" It sounds like he wants you to do something that would get you in trouble with Soromid authorities. Do you accept the job?]])
 text[2] = _([["Excellent. From what I have been told it looks like this." He gestures with his hands to no merit. "You will recognize it; it should be in a box that's kept separately from the remaining stuff and labeled "Top Secret". Oh, and you might need this." He hands you a handheld device. "The ship is called the %s."
-    So he wants you to steal something top secret from the Soromid. Quirky people those Za'leks. With the coordinates, the signature of the target ship and the handheld, which you hope helps you detect the box, you set off on your way.]])
--- msgs by soromid forces
+    So he wants you to steal something top secret from the Soromid. Quirky people, those Za'leks. With the coordinates, the signature of the target ship and the handheld, which you hope helps you detect the box, you set off on your way.]])
+-- msgs by Soromid forces
 title[3] = _([[In the ship]])
 text[4] = _([[You make your way through the living ship after taking care of its crew. You note the feeling that the ship is personally angry at you which, given the rumors that Soromid ships are alive, gives you the creeps. In any case, you begin to search through the ship and the handheld in your pocket starts beeping.
     You manage to locate a box on a table in the crew's chambers. Apparently nobody expected anyone to be foolish enough to try to do what you are doing. You grab the box and head back to your ship.]])

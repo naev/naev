@@ -30,7 +30,6 @@ require "missions/empire/common.lua"
 
 bar_desc = _("You see an Empire Lieutenant who seems to be looking at you.")
 misn_title = _("Empire Recruitment")
-misn_reward = _("%s credits")
 misn_desc = _("Deliver some parcels for the Empire to %s in %s.")
 title = {}
 title[1] = _("Spaceport Bar")
@@ -86,7 +85,7 @@ function accept ()
    -- Mission details
    reward = 30000
    misn.setTitle(misn_title)
-   misn.setReward( string.format(misn_reward, numstring(reward)) )
+   misn.setReward( creditstring(reward) )
    misn.setDesc( string.format(misn_desc,dest:name(),sys:name()))
 
    -- Flavour text and mini-briefing

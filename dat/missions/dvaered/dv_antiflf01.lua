@@ -53,7 +53,7 @@ osd_desc = {_("Take the Dvaered crew on board your ship to any Dvaered controlle
 misn_desc = _("Take the Dvaered crew on board your ship to any Dvaered controlled world or station.")
 misn_reward = _("A chance to aid in the effort against the FLF")
 
-log_text = _([[You rescued the crew of a Dvaered ship that was disabled by an FLF ship. The Dvaered officer mentioned that a campaign is being prepared against the FLF terrorists; if you are interested in joining in that operation, you can seek out a Dvaered liason.]])
+log_text = _([[You rescued the crew of a Dvaered ship that was disabled by an FLF ship. The Dvaered officer mentioned that a campaign is being prepared against the FLF terrorists; if you are interested in joining in that operation, you can seek out a Dvaered liaison.]])
 
 
 function create()

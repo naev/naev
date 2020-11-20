@@ -21,6 +21,7 @@
 #include "dialogue.h"
 #include "nlua_outfit.h"
 #include "toolkit.h"
+#include "land.h"
 #include "land_outfits.h"
 
 
@@ -304,15 +305,15 @@ static int tk_merchantOutfit( lua_State *L )
    }
 
    /* Create window. */
-   if (SCREEN_W < 1024 || SCREEN_H < 768) {
+   if (SCREEN_W < LAND_WIDTH || SCREEN_H < LAND_HEIGHT) {
       w = -1; /* Fullscreen. */
       h = -1;
    }
    else {
-      w = 800 + 0.5 * (SCREEN_W - 800);
-      h = 600 + 0.5 * (SCREEN_H - 600);
+      w = LAND_WIDTH + 0.5 * (SCREEN_W - LAND_WIDTH);
+      h = LAND_HEIGHT + 0.5 * (SCREEN_H - LAND_HEIGHT);
    }
-   wid = window_create( name, -1, -1, w, h );
+   wid = window_create( "wdwMerchantOutfit", name, -1, -1, w, h );
    outfits_open( wid, outfits, noutfits );
 
    return 0;

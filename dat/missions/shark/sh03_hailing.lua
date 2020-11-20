@@ -43,7 +43,7 @@ text[1] = _([["Hello there, nice to meet you again! According to the information
     "Can I count on you to do this for me?"]])
 
 refusetitle = _("Sorry, not interested")
-refusetext = _([["Ok, come back when you are interested."]])
+refusetext = _([["OK, come back when you are interested."]])
 
 title[2] = _("Time to go")
 text[2] = _([["Fantastic! I am known as Donald Ulnish to the Council member. Good luck."]])
@@ -57,7 +57,6 @@ text[4] = _([[The captain of the Hawking answers you. When you say that you have
 
 -- Mission details
 misn_title = _("Invitation")
-misn_reward = _("%s credits")
 misn_desc = _("Nexus Shipyards asks you to help initiate a secret meeting")
 
 -- NPC
@@ -75,7 +74,7 @@ log_text = _([[You helped Nexus Shipyards initiate a secret meeting with a membe
 function create ()
 
    --Change here to change the planets and the systems
-   mispla,missys = planet.getLandable(faction.get("Frontier"))  -- mispla will be usefull to locate the Hawking
+   mispla,missys = planet.getLandable(faction.get("Frontier"))  -- mispla will be useful to locate the Hawking
    pplname = "Darkshed"
    psyname = "Alteris"
    paysys = system.get(psyname)
@@ -103,7 +102,7 @@ function accept()
       osd_msg[2] = osd_msg[2]:format(pplname, psyname)
 
       misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward)))
+      misn.setReward(creditstring(reward))
       misn.setDesc(misn_desc)
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)

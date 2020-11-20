@@ -37,7 +37,6 @@ require "numstring.lua"
 require "missions/empire/common.lua"
 
 misn_title = _("Collective Extraction")
-misn_reward = _("%s credits")
 misn_desc = {}
 misn_desc[1] = _("Check for survivors on %s in %s")
 misn_desc[2] = _("Travel back to %s in %s")
@@ -90,7 +89,7 @@ function create ()
 
       -- Mission details
       misn.setTitle(misn_title)
-      misn.setReward( misn_reward:format( numstring( credits ) ) )
+      misn.setReward( creditstring( credits ) )
       misn.setDesc( string.format(misn_desc[1], misn_target:name(), misn_target_sys:name() ))
       tk.msg( title[1], string.format(text[2], misn_target_sys:name(), misn_target:name()) )
       osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())

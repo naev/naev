@@ -34,14 +34,14 @@ title[2] = _("Mission Accomplished") --finished title
 title[3] = _("He told you so...") --failed title
 text = {}
 text[0] = _([[The private detective greets you and gets right down to business.
-   "I have tracked down and collected evidence against a local crimelord," he says. "The evidence is on this data disk. He would love nothing more than to get his hands on this.
+   "I have tracked down and collected evidence against a local crime lord," he says. "The evidence is on this data disk. He would love nothing more than to get his hands on this.
    I want you to bring this to my associates in the %s system. While the local authorities have proven corruptible, my associates will ensure that this man ends up in prison, where he belongs. I must warn you, however:
    He is a man of considerable influence. He has many friends, and no doubt will send some of his mercenaries to stop you. You'll need a fast ship to shake them off. My associates will compensate you generously when you reach %s.
    Regrettably, you are not the first pilot I've contacted regarding this matter. Your predecessor was intercepted when he landed en route to %s. The crime lord has many underlings lurking in nearby spaceports -- you must NOT land until you've delivered the data."
    Given the dangers, you're not sure whether the reward will make this worth your while. Do you accept?]]) --dialogue 1
 text[1] = _([[After quickly glancing around to make sure nobody's taken a particular interest, the detective presses the data stick into your hand.
    "Be careful out there. I doubt you'll be able to get far without being noticed."]]) --dialogue 2
-text[2] = _("\"Excellent work. This data will ensure an arrest and swift prosecution. You've certainly done your part towards cleaning up the region. As for your compensation, I've had %s credits transferred to you.\"") --finished
+text[2] = _("\"Excellent work. This data will ensure an arrest and swift prosecution. You've certainly done your part towards cleaning up the region. As for your compensation, I've had %s transferred to you.\"") --finished
 text[3] = _("As you step out of your ship and seal the airlock, you spot a burly man purposefully heading towards you. You turn to flee, but there are others closing in on your position. Surrounded, and with several laser pistols trained on you, you see no option but to surrender the evidence.")
 misn_desc = _("Evade the thugs and deliver the evidence to %s") --OSD text
 reward_desc = _("A generous compensation") --reward description
@@ -70,7 +70,7 @@ function accept ()
    misn.osdCreate(title[0], {misn_desc:format(targetsystem:name())})
    
    startsystem = system.cur() --needed to make thugs appear random in the first system
-   last_system = system.cur() --ignore this one, it's just the intitiation of the variable
+   last_system = system.cur() --ignore this one, it's just the initialization of the variable
    
    hook.enter("enter") --trigger when entering a system
    hook.jumpout("jumpout") --trigger when leaving a system
@@ -156,7 +156,7 @@ function pilotKilled () --function for second trigger
 end
 
 function capHailed () --when hailing the capship back
-   tk.msg( title[2], string.format( text[2], numstring( reward ) ) ) --congratulates
+   tk.msg( title[2], string.format( text[2], creditstring( reward ) ) ) --congratulates
    player.pay( reward )
    misn.finish(true)
 end

@@ -19,7 +19,7 @@
    
    Mission: Novice Nebula Research
    
-   Description: A Za'lek student asks the player to help him with his reasearch. The player has to visit Doeston and Iris.
+   Description: A Za'lek student asks the player to help him with his research. The player has to visit Doeston and Iris.
    Some minor complications on the way have to be expected.
    
    Difficulty: Easy

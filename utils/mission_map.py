@@ -273,60 +273,36 @@ for node in meta_nodes:
         sub.add_node(name,shape='hexagon',color='red')
 
 
-# Missions
-for i in range(len(names)):
-    name = names[i]
-    subN = camp[i]
-    tier = tierL[i]
-
+def subgraph_add( name, subN, tier, unique, subN_check, shape ):
     #if True:
-    if subN == "cluster: Generic Missions" or ignore_camp:
-        if uniques[i]:
-            G.add_node(name,shape='ellipse')
+    if subN == subN_check or ignore_camp:
+        if unique:
+            G.add_node(name,shape=shape)
         else:
-            G.add_node(name,shape='ellipse',color='grey')
+            G.add_node(name,shape=shape,color='grey')
     else:
         sub = G.get_subgraph(subN)
         if sub is None:
             G.add_subgraph(name=subN,label=subN)
             sub = G.get_subgraph(subN)
 
-        if uniques[i]:
-            sub.add_node(name,shape='ellipse')
+        if unique:
+            sub.add_node(name,shape=shape)
         else:
-            sub.add_node(name,shape='ellipse',color='grey')
+            sub.add_node(name,shape=shape,color='grey')
 
     if tier != None and (not ignore_tier):
         sub = G.get_subgraph(str(tier))
         sub.add_node(name)
+
+
+# Missions
+for i in range(len(names)):
+    subgraph_add( names[i], camp[i], tierL[i], uniques[i], "cluster: Generic Missions", 'ellipse' )
 
 # Same thing for events
 for i in range(len(namesE)):
-    name = namesE[i]
-    subN = campE[i]
-    tier = tierLE[i]
-
-    #if True:
-    if subN == "cluster: Generic Events" or ignore_camp:
-        if uniquesE[i]:
-            G.add_node(name,shape='box')
-        else:
-            G.add_node(name,shape='box',color='grey')
-
-    else:
-        sub = G.get_subgraph(subN)
-        if sub is None:
-            G.add_subgraph(name=subN,label=subN)
-            sub = G.get_subgraph(subN)
-
-        if uniquesE[i]:
-            sub.add_node(name,shape='box')
-        else:
-            sub.add_node(name,shape='box',color='grey')
-
-    if tier != None and (not ignore_tier):
-        sub = G.get_subgraph(str(tier))
-        sub.add_node(name)
+    subgraph_add( namesE[i], campE[i], tierLE[i], uniquesE[i], "cluster: Generic Events", 'box' )
 
 
 for i in range(len(dones)):

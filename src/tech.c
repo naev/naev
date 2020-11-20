@@ -489,7 +489,7 @@ int tech_addItem( const char *name, const char *value )
    /* Get ID. */
    id = tech_getID( name );
    if (id < 0) {
-      WARN("Trying to add item '%s' to non-existant tech '%s'.", value, name );
+      WARN("Trying to add item '%s' to non-existent tech '%s'.", value, name );
       return -1;
    }
 
@@ -572,7 +572,7 @@ int tech_rmItem( const char *name, const char *value )
    /* Get ID. */
    id = tech_getID( name);
    if (id < 0) {
-      WARN("Trying to remove item '%s' to non-existant tech '%s'.", value, name );
+      WARN("Trying to remove item '%s' to non-existent tech '%s'.", value, name );
       return -1;
    }
 

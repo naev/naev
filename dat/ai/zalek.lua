@@ -1,7 +1,8 @@
 require("ai/tpl/generic.lua")
 require("ai/personality/patrol.lua")
+require "numstring.lua"
 
--- We’ll consider the Za’lek prefer to turn a bad (ie. battle) situation into
+-- We’ll consider the Za'lek prefer to turn a bad (i.e. battle) situation into
 -- a profitable one by getting money and selling fuel if possible if the player
 -- hasn’t been too hostile in the past.
 
@@ -24,13 +25,13 @@ function create()
          mem.refuel = mem.refuel * 0.6
       end
       -- Most likely no chance to refuel
-      mem.refuel_msg = string.format( _("\"I will agree to refuel your ship for %d credits.\""), mem.refuel )
+      mem.refuel_msg = string.format( _("\"I will agree to refuel your ship for %s.\""), creditstring(mem.refuel) )
    end
 
    -- See if can be bribed
    if rnd.rnd() > 0.7 then
       mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (500. * rnd.rnd() + 1750.)
-      mem.bribe_prompt = string.format(_("\"We will agree to end the battle for %d credits.\""), mem.bribe )
+      mem.bribe_prompt = string.format(_("\"We will agree to end the battle for %s.\""), creditstring(mem.bribe) )
       mem.bribe_paid = _("\"Temporarily stopping fire.\"")
    else
       -- FIXME: Could be made more Za'lek-like.

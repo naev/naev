@@ -1,6 +1,8 @@
 #include <winresrc.h>
+#include <winuser.h>
 
-101 ICON DISCARDABLE "../extras/logos/logo.ico"
+1 RT_MANIFEST "naev.exe.manifest"
+101 ICON DISCARDABLE "logo.ico"
 
 VS_VERSION_INFO VERSIONINFO
 FILEFLAGSMASK 0x17L
@@ -9,7 +11,7 @@ FILEFLAGSMASK 0x17L
 #else
 	FILEFLAGS 0x2L
 #endif
-FILEVERSION 0,8,0,0
+FILEVERSION @VMAJOR@,@VMINOR@,@VREV@,0
 FILEOS 0x4L
 FILETYPE 0x1L
 FILESUBTYPE 0x0L
@@ -25,7 +27,7 @@ BEGIN
 			VALUE "LegalCopyright", "Copyright (C) 2006-2020"
 			VALUE "OriginalFilename", "naev.exe"
 			VALUE "ProductName", "Naev: Sea of Darkness"
-			VALUE "ProductVersion", "0.8.0"
+			VALUE "ProductVersion", "@VMAJOR@.@VMINOR@.@VREV@"
 		END
 	END
 	BLOCK "VarFileInfo"

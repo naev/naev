@@ -9,7 +9,6 @@
 #include <limits.h>
 #include <stdlib.h>
 
-#include "config.h"
 #include "nstring.h"
 #include "log.h"
 
@@ -39,6 +38,9 @@ void env_detect( int argc, char **argv )
 
 /**
  * @brief Sets an environment variable.
+ *
+ * @note SDL_setenv sadly does not work well on windows as an alternative for the function below.
+ *       In particular, it breaks changing the default language in the game.
  */
 int nsetenv( const char *name, const char *value, int overwrite )
 {
@@ -46,7 +48,7 @@ int nsetenv( const char *name, const char *value, int overwrite )
    return setenv( name, value, overwrite );
 #else /* HAVE_DECL_SETENV */
    if (!overwrite) {
-#if HAVE_DECL__PUTENV_S
+#if HAVE_DECL_GETENV_S
       size_t envsize = 0;
       int errcode = getenv_s( &envsize, NULL, 0, name );
       if (errcode || envsize)
@@ -62,7 +64,12 @@ int nsetenv( const char *name, const char *value, int overwrite )
 #else /* HAVE_DECL__PUTENV_S */
    char buf[PATH_MAX];
    nsnprintf( buf, sizeof(buf), "%s=%s", name, value );
-   return putenv( buf );
+   /* Per the standard, the string pointed to by putenv's argument becomes part of the environment
+    * ("so altering the string alters the environment" and "it is an error to call putenv() with an
+    * automatic variable as the argument".)
+    * If we're stuck using this wildly dangerous function, just leak the memory.
+    * */
+   return putenv( strdup( buf ) );
 #endif /* HAVE_DECL__PUTENV_S */
 #endif /* HAVE_DECL_SETENV */
 }

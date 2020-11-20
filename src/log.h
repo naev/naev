@@ -33,9 +33,9 @@
 #ifdef DEBUG
 #  undef DEBUG
 #  define DEBUG(str, args...) LOG(str, ## args)
-#ifndef DEBUGGING
-#  define DEBUGGING 1
-#endif /* DEBUGGING */
+#  ifndef DEBUGGING
+#    define DEBUGGING 1
+#  endif /* DEBUGGING */
 #else /* DEBUG */
 #  define DEBUG(str, args...) do {;} while (0)
 #endif /* DEBUG */

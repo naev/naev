@@ -45,11 +45,11 @@ static char *outfiledouble = NULL;
 static char *errfiledouble = NULL;
 
 /* Whether to copy stdout and stderr to temporary buffers. */
-int copying = 0;
+static int copying = 0;
 
 /* File descriptors */
-FILE *logout_file = NULL;
-FILE *logerr_file = NULL;
+static FILE *logout_file = NULL;
+static FILE *logerr_file = NULL;
 
 
 /*

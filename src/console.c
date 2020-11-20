@@ -584,7 +584,7 @@ void cli_open (void)
       return;
 
    /* Must not be already open. */
-   if (window_exists( "Lua Console" ))
+   if (window_exists( "wdwLuaConsole" ))
       return;
 
    /* Put a friendly message at first. */
@@ -599,7 +599,7 @@ void cli_open (void)
    }
 
    /* Create the window. */
-   wid = window_create( "Lua Console", -1, -1, CLI_WIDTH, CLI_HEIGHT );
+   wid = window_create( "wdwLuaConsole", _("Lua Console"), -1, -1, CLI_WIDTH, CLI_HEIGHT );
 
    /* Window settings. */
    window_setAccept( wid, cli_input );

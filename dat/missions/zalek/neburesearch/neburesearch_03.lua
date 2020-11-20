@@ -93,8 +93,8 @@ function create()
     -- mission variables
     homeworld, homeworld_sys = planet.get("Jorla")
     dest_planet, dest_sys = planet.get("Neo Pomerania")
-    lab_coat_price = 25000 -- 25k
-    glasses_price = 40000 -- 40k
+    lab_coat_price = 25000 -- 25K
+    glasses_price = 40000 -- 40K
     local numjumps = homeworld_sys:jumpDist(dest_sys, false)
     local traveldist = cargo_calculateDistance(homeworld_sys, homeworld:pos(), dest_sys, dest_planet)
     local stuperpx   = 0.225
@@ -205,11 +205,11 @@ function enter_spaceport()
                 has_lab_coat = true
             end
         end
-    elseif (has_lab_coat and c == 3) or (not has_lab_coat and not has_glasses and c == 4) then
+    elseif (has_lab_coat and c == 3) or (not has_lab_coat and c == 4) then
         if player.credits() < glasses_price then
-            tk.msg("", glasses_text:format(creditstring(glasses_price), _("Apparently this is too expensive for you.")))
+            tk.msg("", electronics_text:format(creditstring(glasses_price), _("Apparently this is too expensive for you.")))
         else
-            if tk.choice("", glasses_text:format(creditstring(glasses_price), _("Will you buy the glasses?")), _("Yes"), _("No")) == 1 then
+            if tk.choice("", electronics_text:format(creditstring(glasses_price), _("Will you buy the glasses?")), _("Yes"), _("No")) == 1 then
                 player.pay(-lab_coat_price)
                 has_glasses = true
             end

@@ -81,6 +81,9 @@ typedef struct Player_s {
    double mousex; /**< Mouse X position (for mouse flying). */
    double mousey; /**< Mouse Y position (for mouse flying). */
    int speed;
+
+   /* Loaded game version. */
+   char *loaded_version; /**< Version of the loaded save game. */
 } Player_t;
 
 

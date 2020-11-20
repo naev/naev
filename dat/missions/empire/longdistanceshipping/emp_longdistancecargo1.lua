@@ -31,7 +31,6 @@ require "missions/empire/common.lua"
 
 bar_desc = _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.")
 misn_title = _("Soromid Long Distance Recruitment")
-misn_reward = _("500,000 credits")
 misn_desc = _("Deliver a shipping diplomat for the Empire to Soromid Customs Central in the Oberon system")
 title = {}
 title[1] = _("Spaceport Bar")
@@ -42,7 +41,7 @@ text[1] = _([[You approach Lieutenant Czesc. His demeanor brightens as he sees y
 text[2] = _([["I knew I could count on you," Lieutenant Czesc exclaims. "These missions will be long distance, meaning that you'll usually have to go at least 3 jumps to make the delivery. In addition, you'll often find yourself in the territory of other factions, where the Empire may not be able to protect you. In return, you will be nicely compensated." He hits a couple buttons on his wrist computer. "First, we need to set up operations with the other factions. We'll need a bureaucrat to handle the red tape and oversee the operations. We will begin with the Soromid. I know those genetically modified beings are kind of creepy, but business is business. Please accompany a bureaucrat to Soromid Customs Central in the Oberon system. He will report back to me when this mission is accomplished. I tend to travel within Empire space handling minor trade disputes, so keep an eye out for me in the bar on Empire controlled planets."]])
 text[3] = _([[You drop the bureaucrat off at Soromid Customs Central, and he hands you a credit chip. Lieutenant Czesc told you to keep an eye out for him in Empire space to continue the operation.]])
 
-log_text = _([[You delivered a shipping bureaucrat to Soromid Customs Central for the Empire. Liutenant Czesc told you to keep an eye out out for him in Empire space to continue the operation.]])
+log_text = _([[You delivered a shipping bureaucrat to Soromid Customs Central for the Empire. Lieutenant Czesc told you to keep an eye out out for him in Empire space to continue the operation.]])
 
 
 function create ()
@@ -74,9 +73,9 @@ function accept ()
    misn.accept()
   
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-   reward = 500000
+   reward = 500000 -- 500K
    misn.setTitle(misn_title)
-   misn.setReward(misn_reward)
+   misn.setReward(creditstring(reward))
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
    misn.osdCreate(title[2], {misn_desc})
    -- Set up the goal
