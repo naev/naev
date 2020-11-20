@@ -340,7 +340,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    
 
 #if 0 /* shouldn't be needed atm */
-#define MELEMENT(o,s)   if (o) WARN("Commodity '%s' missing '"s"' element", temp->name)
+#define MELEMENT(o,s)   if (o) WARN( _("Commodity '%s' missing '"s"' element"), temp->name)
    MELEMENT(temp->description==NULL,"description");
    MELEMENT(temp->high==0,"high");
    MELEMENT(temp->medium==0,"medium");
@@ -549,7 +549,7 @@ void gatherable_gather( int pilot )
 
          if (q>0) {
             if (pilot_isPlayer(p)) {
-               player_message( ngettext("%d ton of %s gathered", "%d tons of %s gathered", q), q, gat->type->name );
+               player_message( ngettext("%d ton of %s gathered", "%d tons of %s gathered", q), q, _(gat->type->name) );
 
                /* Run hooks. */
                hparam[0].type    = HOOK_PARAM_STRING;

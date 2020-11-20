@@ -247,7 +247,7 @@ void map_open (void)
 
    /* System Name */
    window_addText( wid, -90 + 80, y, 160, 20, 1, "txtSysname",
-         &gl_defFont, NULL, cur->name );
+         &gl_defFont, NULL, _(cur->name) );
    y -= 10;
 
    /* Faction image */
@@ -452,7 +452,7 @@ static void map_update( unsigned int wid )
        * Right Text
        */
       if (sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED))
-         window_modifyText( wid, "txtSysname", sys->name );
+         window_modifyText( wid, "txtSysname", _(sys->name) );
       else
          window_modifyText( wid, "txtSysname", _("Unknown") );;
 
@@ -494,7 +494,7 @@ static void map_update( unsigned int wid )
    }
 
    /* System is known */
-   window_modifyText( wid, "txtSysname", sys->name );
+   window_modifyText( wid, "txtSysname", _(sys->name) );
 
    f         = -1;
    for (i=0; i<sys->nplanets; i++) {
@@ -574,10 +574,10 @@ static void map_update( unsigned int wid )
 
       if (!hasPlanets)
          p += nsnprintf( &buf[p], PATH_MAX-p, "\a%c%s%s\an",
-               t, sym, sys->planets[i]->name );
+               t, sym, _(sys->planets[i]->name) );
       else
          p += nsnprintf( &buf[p], PATH_MAX-p, ",\n\a%c%s%s\an",
-               t, sym, sys->planets[i]->name );
+               t, sym, _(sys->planets[i]->name) );
       hasPlanets = 1;
       if (p > PATH_MAX)
          break;
@@ -1193,7 +1193,7 @@ void map_renderNames( double bx, double by, double x, double y,
       if ((!editor && !sys_isKnown(sys)) || (map_zoom <= 0.5 ))
          continue;
 
-      textw = gl_printWidthRaw( &gl_smallFont, sys->name );
+      textw = gl_printWidthRaw( &gl_smallFont, _(sys->name) );
       tx = x + (sys->pos.x+11.) * map_zoom;
       ty = y + (sys->pos.y-5.) * map_zoom;
 
@@ -1203,7 +1203,7 @@ void map_renderNames( double bx, double by, double x, double y,
 
       gl_print( &gl_smallFont,
             tx, ty,
-            &cWhite, sys->name );
+            &cWhite, _(sys->name) );
 
    }
 
@@ -2512,7 +2512,7 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
 /**
  * @brief Centers the map on a planet.
  *
- *    @param sys System to center the map on.
+ *    @param sys System to center the map on (internal name).
  *    @return 0 on success.
  */
 int map_center( const char *sys )
@@ -2580,7 +2580,7 @@ int map_load (void)
 
       }
       else
-         WARN("'%s' has unknown node '%s'.", MAP_DECORATOR_DATA_PATH, node->name);
+         WARN(_("'%s' has unknown node '%s'."), MAP_DECORATOR_DATA_PATH, node->name);
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);

@@ -1390,7 +1390,7 @@ void player_targetAsteroidSet( int field, int id )
             player_message( _("Asteroid targeted, composition: ") );
             for (i=0; i<at->nmaterial; i++) {
               com = at->material[i];
-              player_message( _("%s, quantity: %i"), com->name, at->quantity[i] );
+              player_message( _("%s, quantity: %i"), _(com->name), at->quantity[i] );
             }
             ast->scanned = 1;
          }
@@ -1514,18 +1514,18 @@ void player_land (void)
       if (planet_hasService(planet,PLANET_SERVICE_INHABITED)) { /* Basic services */
          if (planet->can_land || (planet->land_override > 0))
             player_message( "\a%c%s>\a0 %s", planet_getColourChar(planet),
-                  planet->name, planet->land_msg );
+                  _(planet->name), planet->land_msg );
          else if (planet->bribed && (planet->land_override >= 0))
             player_message( "\a%c%s>\a0 %s", planet_getColourChar(planet),
-                  planet->name, planet->bribe_ack_msg );
+                  _(planet->name), planet->bribe_ack_msg );
          else { /* Hostile */
             player_message( "\a%c%s>\a0 %s", planet_getColourChar(planet),
-                  planet->name, planet->land_msg );
+                  _(planet->name), planet->land_msg );
             return;
          }
       }
       else /* No shoes, no shirt, no lifeforms, no service. */
-         player_message( _("\apReady to land on %s."), planet->name );
+         player_message( _("\apReady to land on %s."), _(planet->name) );
 
       player_setFlag(PLAYER_LANDACK);
       if (!silent)
@@ -1535,12 +1535,12 @@ void player_land (void)
       return;
    }
    else if (vect_dist2(&player.p->solid->pos,&planet->pos) > pow2(planet->radius)) {
-      player_message(_("\arYou are too far away to land on %s."), planet->name);
+      player_message(_("\arYou are too far away to land on %s."), _(planet->name));
       return;
    }
    else if ((pow2(VX(player.p->solid->vel)) + pow2(VY(player.p->solid->vel))) >
          (double)pow2(MAX_HYPERSPACE_VEL)) {
-      player_message(_("\arYou are going too fast to land on %s."), planet->name);
+      player_message(_("\arYou are going too fast to land on %s."), _(planet->name));
       return;
    }
 
@@ -1591,7 +1591,7 @@ void player_checkLandAck( void )
 
    player_rmFlag(PLAYER_LANDACK);
    player_message( _("\a%c%s>\a0 Landing permission revoked."),
-         planet_getColourChar(p), p->name );
+         planet_getColourChar(p), _(p->name) );
 }
 
 
@@ -1879,7 +1879,7 @@ void player_brokeHyperspace (void)
    /* Disable autonavigation if arrived. */
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (player.p->nav_hyperspace == -1) {
-         player_message( _("\apAutonav arrived at the %s system."), cur_system->name);
+         player_message( _("\apAutonav arrived at the %s system."), _(cur_system->name) );
          player_autonavEnd();
       }
       else {
@@ -2167,7 +2167,7 @@ static void player_checkHail (void)
 static void player_planetOutOfRangeMsg (void)
 {
    player_message( _("\ar%s is out of comm range, unable to contact."),
-         cur_system->planets[player.p->nav_planet]->name );
+         _(cur_system->planets[player.p->nav_planet]->name) );
 }
 
 
