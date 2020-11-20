@@ -20412,7 +20412,7 @@ msgstr ""
 #, lua-format
 msgid ""
 "You have destroyed the Gawain! The family presses charges, and you are "
-"sentenced to a %d fine in absence of attendance."
+"sentenced to a %s fine in absence of attendance."
 msgstr ""
 
 #: dat/missions/neutral/teenager.lua:42

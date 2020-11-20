@@ -25171,10 +25171,10 @@ msgstr "Upps!"
 #, lua-format
 msgid ""
 "You have destroyed the Gawain! The family presses charges, and you are "
-"sentenced to a %d fine in absence of attendance."
+"sentenced to a %s fine in absence of attendance."
 msgstr ""
 "Du hast den Gawain zerstört! Die Familie erhebt Anklage, und du wirst bei "
-"Nichterscheinen zu einer Geldstrafe von %d verurteilt."
+"Nichterscheinen zu einer Geldstrafe von %s verurteilt."
 
 #: dat/missions/neutral/teenager.lua:42
 msgid "End of the line, boyo"

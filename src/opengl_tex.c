@@ -920,7 +920,7 @@ void gl_exitTextures (void)
    if (texture_list != NULL) {
       DEBUG(_("Texture leak detected!"));
       for (tex=texture_list; tex!=NULL; tex=tex->next)
-         DEBUG(_("   '%s' opened %d times"), tex->tex->name, tex->used );
+         DEBUG( ngettext( "   '%s' opened %d time", "   '%s' opened %d times", tex->used ), tex->tex->name, tex->used );
    }
 }
 
