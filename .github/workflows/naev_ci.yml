@@ -3,12 +3,13 @@ on: [push, pull_request]
 name: CI
 
 env:
-  DESTDIR: "${{ github.workspace }}/dist"
-  MESON: "${{ github.workspace }}/source/meson.sh"
+  DESTDIR: "${{ github.workspace }}/dist/"
 
 jobs:
   "Package_Source":
     runs-on: ubuntu-latest
+    container:
+      image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
 
     steps:
     - name: Checkout Naev Repository
@@ -17,36 +18,10 @@ jobs:
         path: source
         fetch-depth: 0
 
-    - name: Update APT Cache
-      run: |
-        sudo apt-get update
-
-    - name: Install Additional Build Dependencies
-      run: |
-        sudo apt-get install \
-          automake \
-          autopoint \
-          autoconf-archive \
-          build-essential \
-          binutils-dev \
-          gettext \
-          intltool \
-          libsdl2-dev \
-          libsdl2-mixer-dev \
-          libsdl2-image-dev \
-          libgl1-mesa-dev \
-          libxml2-dev \
-          libfreetype6-dev \
-          libpng-dev \
-          libopenal-dev \
-          libvorbis-dev \
-          libiberty-dev \
-          ninja-build
-
     - name:  Package Meson Dist
       run: |
-        sh $MESON setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
-        sh $MESON dist -C build --no-tests --include-subprojects
+        meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
+        meson dist -C build --no-tests --include-subprojects
 
     - name: Package Autotools Dist
       run: |
@@ -60,7 +35,6 @@ jobs:
       with:
         name: naev-meson-dist-${{ github.sha }}
         path: ${{ github.workspace }}/build/meson-dist/*
-        if-no-files-found: error
 
     - name: Upload Autotools Dist Artifact
       uses: actions/upload-artifact@v2
@@ -76,79 +50,27 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-16.04
-            shell: bash
-            config: linux.ini
-            pkg-config-path: "[]"
+          - os: ubuntu-latest
+            image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
+            config: linux_clang.ini
 
-          - os: ubuntu-18.04
-            shell: bash
-            config: linux.ini
-            pkg-config-path: "[]"
+          - os: ubuntu-latest
+            image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1804
+            config: linux_clang.ini
+           
+          - os: ubuntu-latest
+            image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2004
+            config: linux_clang.ini
 
-          - os: ubuntu-20.04
-            shell: bash
-            config: linux.ini
-            pkg-config-path: "[]"
-
-          - os: windows-latest
-            shell: msys2 {0}
-            config: windows.ini
-            pkg-config-path: "[]"
-            
-    defaults:
-      run:
-        shell: ${{ matrix.shell }}
+          - os: ubuntu-latest
+            image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2010
+            config: linux_clang.ini
 
     runs-on: ${{ matrix.os }}
+    container:
+      image: ${{ matrix.image }}
 
     steps:
-    - name: Update APT Cache
-      if: ${{ runner.os == 'Linux'}}
-      run: |
-        sudo apt-get update
-
-    - name: Install Additional Build Dependencies
-      if: ${{ runner.os == 'Linux'}}
-      run: |
-        sudo apt-get install \
-          autopoint \
-          binutils-dev \
-          build-essential \
-          gettext \
-          intltool \
-          libfreetype6-dev \
-          libgl1-mesa-dev \
-          libiberty-dev \
-          libopenal-dev \
-          libpng-dev \
-          libsdl2-dev \
-          libsdl2-image-dev \
-          libsdl2-mixer-dev \
-          libvorbis-dev \
-          libxml2-dev
-
-    - name: Install Ninja-Build (xenial-backports)
-      if: ${{ matrix.os == 'ubuntu-16.04' && runner.os == 'Linux'}}
-      run: |
-        sudo apt-get -t xenial-backports install \
-          ninja-build
-
-    - name: Install Ninja-Build
-      if: ${{ matrix.os != 'ubuntu-16.04' && runner.os == 'Linux'}}
-      run: |
-        sudo apt-get install \
-          ninja-build
-
-    - name: Install MinGW Packages
-      if: ${{ runner.os == 'Windows'}}
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: MINGW64
-        update: true
-        path-type: strict
-        install: git tar mingw-w64-x86_64-clang mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-luajit mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-suitesparse
-
     - name: Get Source
       uses: actions/download-artifact@v2
       with:
@@ -162,10 +84,9 @@ jobs:
     - name: Meson Setup
       id: setup
       run: |
-        sh $MESON setup build source \
+        meson setup build source \
             --native-file='source/utils/build/${{ matrix.config }}' \
             --buildtype=release \
-            --pkg-config-path=${{ matrix.pkg-config-path }} \
             -Db_lto=true \
             -Dauto_features=enabled \
             -Ddocs_c=disabled \
@@ -177,12 +98,11 @@ jobs:
       with:
         name: ${{ matrix.os }}-meson-${{ github.sha }}-setup-log
         path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
-        if-no-files-found: ignore
 
     - name: Meson Compile
       id: compile
       run: |
-        sh $MESON compile -C build
+        meson compile -C build
 
     - name: Upload Compile Log
       uses: actions/upload-artifact@v2
@@ -196,6 +116,24 @@ jobs:
       run: |
         sh $MESON install -C build
         tar -cf naev-meson-${{ matrix.os }}-${{ github.sha }}.tar dist
+
+    - name: Meson Test
+      id: tests
+      run: |
+        ${{ matrix.test-env }} meson test -C build --print-errorlogs
+
+    - name: Upload test log
+      uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.tests.outcome == 'failure' }}
+      with:
+        name: ${{ matrix.os }}-${{ github.sha }}-test-log
+        path: ${{ github.workspace }}/build/meson-logs/testlog.txt
+
+    - name: Package
+      run: |
+        meson install -C build
+        tar -cvf naev-${{ matrix.os }}-${{ github.sha }}.tar dist
+      if: ${{ success() || steps.tests.outcome == 'failure' }}
 
     - name: Upload Meson Artifact
       uses: actions/upload-artifact@v2
@@ -211,70 +149,27 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-16.04
-            shell: bash
-            config: linux.ini
-            pkg-config-path: "[]"
+          - os: ubuntu-latest
+            image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
+            config: linux_clang.ini
 
-          - os: ubuntu-18.04
-            shell: bash
-            config: linux.ini
-            pkg-config-path: "[]"
+          - os: ubuntu-latest
+            image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1804
+            config: linux_clang.ini
+           
+          - os: ubuntu-latest
+            image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2004
+            config: linux_clang.ini
 
-          - os: ubuntu-20.04
-            shell: bash
-            config: linux.ini
-            pkg-config-path: "[]"
-
-          - os: windows-latest
-            shell: msys2 {0}
-            config: windows.ini
-            pkg-config-path: "[]"
-
-    defaults:
-      run:
-        shell: ${{ matrix.shell }}
+          - os: ubuntu-latest
+            image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2010
+            config: linux_clang.ini
 
     runs-on: ${{ matrix.os }}
+    container:
+      image: ${{ matrix.image }}
 
     steps:
-    - name: Update APT Cache
-      if: ${{ runner.os == 'Linux'}}
-      run: |
-        sudo apt-get update
-
-    - name: Install Additional Build Dependencies
-      if: ${{ runner.os == 'Linux'}}
-      run: |
-        sudo apt-get install \
-          build-essential \
-          automake \
-          autopoint \
-          autoconf-archive \
-          binutils-dev \
-          gettext \
-          intltool \
-          libsdl2-dev \
-          libsdl2-mixer-dev \
-          libsdl2-image-dev \
-          libgl1-mesa-dev \
-          libglu1-mesa-dev \
-          libxml2-dev \
-          libfreetype6-dev \
-          libpng-dev \
-          libopenal-dev \
-          libvorbis-dev \
-          libiberty-dev 
-
-    - name: Install MinGW Packages
-      if: ${{ runner.os == 'Windows'}}
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: MINGW64
-        update: true
-        path-type: strict
-        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit mingw-w64-x86_64-pkg-config libtool autoconf autoconf-archive automake automake-wrapper git gettext pkg-config make intltool itstool
-
     - name: Get Source
       uses: actions/download-artifact@v2
       with:
@@ -316,55 +211,17 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-16.04
+          - os: ubuntu-latest
             buildtype: meson
-          - os: ubuntu-16.04
+            
+          - os: ubuntu-latest
             buildtype: autotools
 
     runs-on: ${{ matrix.os }}
-
+    container:
+      image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
+      
     steps:
-    - name: Update APT Cache
-      if: ${{ runner.os == 'Linux'}}
-      run: |
-        sudo apt-get update
-
-    - name: Install Additional Build Dependencies
-      if: ${{ runner.os == 'Linux'}}
-      run: |
-        sudo apt-get install \
-          autopoint \
-          automake \
-          autoconf-archive \
-          binutils-dev \
-          build-essential \
-          gettext \
-          intltool \
-          libfreetype6-dev \
-          libgl1-mesa-dev \
-          libiberty-dev \
-          libluajit-5.1-dev \
-          libopenal-dev \
-          libpng-dev \
-          libsdl2-dev \
-          libsdl2-image-dev \
-          libsdl2-mixer-dev \
-          libsuitesparse-dev \
-          libvorbis-dev \
-          libxml2-dev
-
-    - name: Install Ninja-Build (xenial-backports)
-      if: ${{ matrix.os == 'ubuntu-16.04' && runner.os == 'Linux'}}
-      run: |
-        sudo apt-get -t xenial-backports install \
-          ninja-build
-
-    - name: Install Ninja-Build
-      if: ${{ matrix.os != 'ubuntu-16.04' && runner.os == 'Linux'}}
-      run: |
-        sudo apt-get install \
-          ninja-build
-
     - name: Get Source
       uses: actions/download-artifact@v2
       with:
@@ -404,19 +261,11 @@ jobs:
 
   "Documentation":
     runs-on: ubuntu-latest
+    container:
+      image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
     needs: "Package_Source"
 
     steps:
-    - name: Update APT Cache
-      run: |
-        sudo apt-get update
-    - name: Install Additional Build Dependencies
-      run: |
-        sudo apt-get install \
-          lua-ldoc \
-          graphviz \
-          doxygen \
-          ninja-build
     - name: Get Source
       uses: actions/download-artifact@v2
       with:
@@ -429,7 +278,7 @@ jobs:
         
     - name: Meson Build
       run: |
-        sh $MESON setup build source \
+        meson setup build source \
             -Dexecutable=disabled
              
     - name: Package
@@ -450,4 +299,3 @@ jobs:
       with:
         name: naev-docs-${{ github.sha }}
         path: ${{ github.workspace }}/*.tar
-        if-no-files-found: error
