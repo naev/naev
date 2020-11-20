@@ -104,7 +104,7 @@ static int nlua_ngettext( lua_State *L )
 /**
  * @brief gettext support (noop). Does not actually do anything, but gets detected by gettext.
  *
- * @usage _( str )
+ * @usage N_( str )
  *    @luatparam str String to gettext on.
  *    @luatreturn The string converted to gettext.
  * @luafunc gettext_noop( str )
