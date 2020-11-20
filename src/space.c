@@ -1901,7 +1901,7 @@ void planet_updateLand( Planet *p )
       if (lua_isstring(naevL,-2))
          p->bribe_msg = strdup( lua_tostring(naevL,-2) );
       else {
-         WARN( "%s: %s (%s) -> return parameter 4 is not a string!", LANDING_DATA_PATH, str, p->name );
+         WARN( _("%s: %s (%s) -> return parameter 4 is not a string!"), LANDING_DATA_PATH, str, p->name );
          p->bribe_msg = strdup( _("Invalid bribe message") );
       }
       /* We also need the bribe ACK message. */
@@ -3444,7 +3444,7 @@ static int asteroidTypes_load (void)
                } while (xml_nextNode(child));
 
                if (namdef == 0 || qttdef == 0)
-                  WARN("Asteroid type's commodity lacks name or quantity.");
+                  WARN(_("Asteroid type's commodity lacks name or quantity."));
 
                j++;
             }
@@ -4262,7 +4262,7 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
    /* If it's empty, something's wrong. */
    if (q_isEmpty(q)) {
       /* Means system isn't connected. */
-      /*WARN("q is empty after getting adjacencies of %s.", sys->name);*/
+      /*WARN(_("q is empty after getting adjacencies of %s."), sys->name);*/
       q_destroy(q);
       q_destroy(qn);
       goto sys_cleanup;
