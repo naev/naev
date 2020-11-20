@@ -9,7 +9,7 @@
 # If -n is passed to the script, a nightly build will be generated
 # and uploaded to Steam
 #
-# Pass in [-d] [-n] (set this for nightly builds) -v <VERSIONPATH> (Sets path of the VERSION file.) -s <SCRIPTROOT> (Sets path to look for additional steam scripts.) -t <TEMPPATH> (Steam build artefact location) -o <STEAMPATH> (Steam dist output directory)
+# Pass in [-d] [-n] (set this for nightly builds) [-n] (set this for CI testing) -v <VERSIONPATH> (Sets path of the VERSION file.) -s <SCRIPTROOT> (Sets path to look for additional steam scripts.) -t <TEMPPATH> (Steam build artefact location) -o <STEAMPATH> (Steam dist output directory)
 
 set -e
 
@@ -17,6 +17,7 @@ set -e
 NIGHTLY="false"
 BETA="false"
 SCRIPTROOT="$(pwd)"
+DRYRUN="false"
 
 while getopts dnv:s:t:o: OPTION "$@"; do
     case $OPTION in
@@ -25,6 +26,9 @@ while getopts dnv:s:t:o: OPTION "$@"; do
         ;;
     n)
         NIGHTLY="true"
+        ;;
+    c)
+        DRYRUN="true"
         ;;
     v)
         VERSIONPATH="${OPTARG}"
@@ -81,32 +85,69 @@ tar -Jxvf "$TEMPPATH/naev-ndata/steam-ndata.tar.xz" -C "$STEAMPATH/content/ndata
 
 # Runs STEAMCMD, and builds the app as well as all needed depots.
 
-# Trigger 2FA request and get 2FA code
-steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
+if [ "$DRYRUN" == "false" ]; then
 
- Wait a bit for the email to arrive
-sleep 60s
-python3 "$SCRIPTROOT/2fa/get_2fa.py"
-STEAMCMD_TFA="$(<"$SCRIPTROOT/2fa/2fa.txt")"
+    # Trigger 2FA request and get 2FA code
+    steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
 
-if [ "$NIGHTLY" == "true" ]; then
-    # Run steam upload with 2fa key
-    steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http "$STEAMPATH/scripts/app_build_598530_nightly.vdf" +quit
-else
-    if [ "$BETA" == "true" ]; then 
+    Wait a bit for the email to arrive
+    sleep 60s
+    python3 "$SCRIPTROOT/2fa/get_2fa.py"
+    STEAMCMD_TFA="$(<"$SCRIPTROOT/2fa/2fa.txt")"
+
+    if [ "$NIGHTLY" == "true" ]; then
         # Run steam upload with 2fa key
-        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http "$STEAMPATH/scripts/app_build_598530_prerelease.vdf" +quit
-
-    elif [ "$BETA" == "false" ]; then 
-        # Move soundtrack stuff to deployment area
-        cp "$TEMPPATH"/naev-soundtrack/soundtrack/*.mp3 "$STEAMPATH/content/soundtrack"
-        cp "$TEMPPATH"/naev-soundtrack/soundtrack/*.png "$STEAMPATH/content/soundtrack"
-
-        # Run steam upload with 2fa key
-        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http "$STEAMPATH/scripts/app_build_598530_release.vdf" +quit
-        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +run_app_build_http "$STEAMPATH/scripts/app_build_1411430_soundtrack.vdf" +quit
-
+        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http "$STEAMPATH/scripts/app_build_598530_nightly.vdf" +quit
     else
-        echo "Something went wrong determining if this is a beta or not."
+        if [ "$BETA" == "true" ]; then 
+            # Run steam upload with 2fa key
+            steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http "$STEAMPATH/scripts/app_build_598530_prerelease.vdf" +quit
+
+        elif [ "$BETA" == "false" ]; then 
+            # Move soundtrack stuff to deployment area
+            cp "$TEMPPATH"/naev-steam-soundtrack/*.mp3 "$STEAMPATH/content/soundtrack"
+            cp "$TEMPPATH"/naev-steam-soundtrack/*.png "$STEAMPATH/content/soundtrack"
+
+            # Run steam upload with 2fa key
+            steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http "$STEAMPATH/scripts/app_build_598530_release.vdf" +quit
+            steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +run_app_build_http "$STEAMPATH/scripts/app_build_1411430_soundtrack.vdf" +quit
+
+        else
+            echo "Something went wrong determining if this is a beta or not."
+        fi
     fi
+elif [ "$DRYRUN" == "true" ]; then
+    # Trigger 2FA request and get 2FA code
+    echo "steamcmd login"
+
+    #Wait a bit for the email to arrive
+    echo "2fa script"
+
+    if [ "$NIGHTLY" == "true" ]; then
+        # Run steam upload with 2fa key
+        echo "steamcmd nightly build"
+        ls -l -R "$STEAMPATH"
+    else
+        if [ "$BETA" == "true" ]; then 
+            # Run steam upload with 2fa key
+            echo "steamcmd beta build"
+            ls -l -R "$STEAMPATH"
+        elif [ "$BETA" == "false" ]; then 
+            # Move soundtrack stuff to deployment area
+            cp "$TEMPPATH"/naev-steam-soundtrack/*.mp3 "$STEAMPATH/content/soundtrack"
+            cp "$TEMPPATH"/naev-steam-soundtrack/*.png "$STEAMPATH/content/soundtrack"
+
+            # Run steam upload with 2fa key
+            echo "steamcmd release build"
+            echo "steamcmd soundtrack build"
+            ls -l -R "$STEAMPATH"
+
+        else
+            echo "Something went wrong determining if this is a beta or not."
+        fi
+    fi
+
+else
+    echo "Something went wrong determining which mode to run this script in."
+    exit 1
 fi
