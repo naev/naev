@@ -404,7 +404,7 @@ int can_sell( const char *shipname )
 {
    int failure = 0;
    if (strcmp( shipname, player.p->name )==0) { /* Already on-board. */
-      land_errDialogueBuild( _("You can't sell the ship you're piloting!"), shipname );
+      land_errDialogueBuild( _("You can't sell the ship you're piloting!") );
       failure = 1;
    }
 
@@ -428,11 +428,11 @@ int can_swap( const char *shipname )
                "You have %g tonne more cargo than the new ship can hold.",
                "You have %g tonnes more cargo than the new ship can hold.",
                diff ),
-            diff, ship->name );
+            diff );
       failure = 1;
    }
    if (pilot_hasDeployed(player.p)) { /* Escorts are in space. */
-      land_errDialogueBuild( _("You can't strand your fighters in space."));
+      land_errDialogueBuild( _("You can't strand your fighters in space.") );
       failure = 1;
    }
    return !failure;
