@@ -478,7 +478,7 @@ int mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
          break;
 
    if (i>=misn->ncargo) { /* not found */
-      DEBUG(_("Mission '%s' attempting to unlink inexistant cargo %d."),
+      DEBUG(_("Mission '%s' attempting to unlink nonexistent cargo %d."),
             misn->title, cargo_id);
       return 1;
    }
@@ -1153,13 +1153,13 @@ static int missions_parseActive( xmlNodePtr parent )
          xmlr_attr(node, "data", buf);
          data = mission_get(mission_getID(buf));
          if (data == NULL) {
-            WARN(_("Mission '%s' from savegame not found in game - ignoring."), buf);
+            WARN(_("Mission '%s' from saved game not found in game - ignoring."), buf);
             free(buf);
             continue;
          }
          else {
             if (mission_init( misn, data, 0, 0, NULL )) {
-               WARN(_("Mission '%s' from savegame failed to load properly - ignoring."), buf);
+               WARN(_("Mission '%s' from saved game failed to load properly - ignoring."), buf);
                free(buf);
                continue;
             }
@@ -1231,7 +1231,7 @@ static int missions_parseActive( xmlNodePtr parent )
                do {
                   if (xml_isNode(nest,"msg")) {
                      if (i > nitems) {
-                        WARN(_("Inconsistency with 'nitems' in savefile."));
+                        WARN(_("Inconsistency with 'nitems' in save file."));
                         break;
                      }
                      items[i] = xml_get(nest);
@@ -1239,7 +1239,7 @@ static int missions_parseActive( xmlNodePtr parent )
                   }
                } while (xml_nextNode(nest));
 
-               /* Create the osd. */
+               /* Create the OSD. */
                misn->osd = osd_create( title, nitems, items, data->avail.priority );
                free(items);
                free(title);

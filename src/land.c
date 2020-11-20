@@ -50,12 +50,6 @@
 #include "nlua_tk.h"
 #include "shiplog.h"
 
-/* global/main window */
-#define LAND_WIDTH   800 /**< Land window width. */
-#define LAND_HEIGHT  600 /**< Land window height. */
-#define PORTRAIT_WIDTH 200
-#define PORTRAIT_HEIGHT 150
-
 
 /*
  * we use visited flags to not duplicate missions generated
@@ -283,7 +277,7 @@ static void bar_open( unsigned int wid )
 
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
-   dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, land_planet->bar_description );
+   dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, _(land_planet->bar_description) );
 
    /* Approach when pressing enter */
    window_setAccept( wid, bar_approach );
@@ -300,7 +294,7 @@ static void bar_open( unsigned int wid )
    window_addText( wid, iw + 40, -40,
          w - iw - 60, dh, 0,
          "txtDescription", &gl_smallFont, NULL,
-         land_planet->bar_description );
+         _(land_planet->bar_description) );
 
    /* Add portrait text. */
    th = -40 - dh - 40;
@@ -418,7 +412,7 @@ static void bar_update( unsigned int wid, char* str )
 
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
-   dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, land_planet->bar_description );
+   dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, _(land_planet->bar_description) );
 
    /* Get array. */
    pos = toolkit_getImageArrayPos( wid, "iarMissions" );
@@ -689,7 +683,7 @@ static void misn_genList( unsigned int wid, int first )
    }
    window_addList( wid, 20, -40,
          w/2 - 30, h/2 - 35,
-         "lstMission", misn_names, j, 0, misn_update );
+         "lstMission", misn_names, j, 0, misn_update, misn_accept );
 
    /* Restore focus. */
    window_setFocus( wid, focused );
@@ -915,15 +909,15 @@ void land_genWindows( int load, int changetab )
    regen = landed;
 
    /* Create window. */
-   if (SCREEN_W < 1024 || SCREEN_H < 768) {
+   if (SCREEN_W < LAND_WIDTH || SCREEN_H < LAND_HEIGHT) {
       w = -1; /* Fullscreen. */
       h = -1;
    }
    else {
-      w = 800 + 0.5 * (SCREEN_W - 800);
-      h = 600 + 0.5 * (SCREEN_H - 600);
+      w = LAND_WIDTH + 0.5 * (SCREEN_W - LAND_WIDTH);
+      h = LAND_HEIGHT + 0.5 * (SCREEN_H - LAND_HEIGHT);
    }
-   land_wid = window_create( p->name, -1, -1, w, h );
+   land_wid = window_create( "wdwLand", _(p->name), -1, -1, w, h );
    window_onClose( land_wid, land_cleanupWindow );
 
    /* Set window map to invalid. */
@@ -1159,7 +1153,7 @@ static void land_createMainTab( unsigned int wid )
    window_addImage( wid, 20, -40, 400, 400, "imgPlanet", gfx_exterior, 1 );
    window_addText( wid, 440, -20-offset,
          w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,
-         "txtPlanetDesc", &gl_smallFont, NULL, land_planet->description);
+         "txtPlanetDesc", &gl_smallFont, NULL, _(land_planet->description) );
 
    /*
     * buttons
@@ -1449,7 +1443,7 @@ void land_cleanup (void)
    mission_ncomputer = 0;
 
    /* Clean up bar missions. */
-   npc_freeAll();
+   npc_clear();
 
    /* Clean up rescue Lua. */
    if (rescue_env != LUA_NOREF) {

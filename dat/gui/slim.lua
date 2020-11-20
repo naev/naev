@@ -185,7 +185,7 @@ function create()
    y_ammo = pl_pane_y - 27
 
    -- Missile lock warning
-   missile_lock_text = _("Warning - Missile Lockon Detected")
+   missile_lock_text = _("Warning - Missile Lock-on Detected")
    missile_lock_length = gfx.printDim( false, missile_lock_text )
 
    -- Active cooldown display

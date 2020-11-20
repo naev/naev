@@ -36,7 +36,6 @@ require "missions/empire/common.lua"
 
 bar_desc = _("You see an Empire Lt. Commander who seems to be motioning you over to the counter.")
 misn_title = _("Collective Scout")
-misn_reward = _("%s credits")
 misn_desc = {}
 misn_desc[1] = _("Find a scout last seen in the %s system")
 misn_desc[2] = _("Travel back to %s in %s")
@@ -96,7 +95,7 @@ function accept ()
 
    -- Mission details
    misn.setTitle(misn_title)
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setReward( creditstring( credits ) )
    misn.setDesc( string.format(misn_desc[1],misn_nearby:name()))
 
    -- Flavour text and mini-briefing
@@ -118,7 +117,7 @@ function enter()
    sys = system.cur()
 
    if sys == misn_target and misn_stage == 0 then
-      -- Force Collective musice (note: must clear these later on).
+      -- Force Collective music (note: must clear these later on).
       var.push("music_ambient_force", "Collective")
       var.push("music_combat_force", "Collective")
 

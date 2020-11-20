@@ -89,7 +89,7 @@ misn_desc = _("You have taken onboard a member of the FLF. You must either take 
 misn_reward = _("A chance to learn more about the FLF")
 
 log_text_flf = _([[You helped escort FLF Lt. Gregar Fletcher to the secret FLF base, Sindbad. This has earned you a small level of trust from the FLF and enabled you to freely access the FLF base.]])
-log_text_dv = _([[You turned in FLF Lt. Gregar Fletcher to Dvaered authorities. The Dvaered captain who took him off your hands said that you could join in on a campaign against the FLF terrorists; you can direct questions to a Dvaered public liason. You may want to scout out this liason.]])
+log_text_dv = _([[You turned in FLF Lt. Gregar Fletcher to Dvaered authorities. The Dvaered captain who took him off your hands said that you could join in on a campaign against the FLF terrorists; you can direct questions to a Dvaered public liaison. You may want to scout out this liaison.]])
 
 
 function create()

@@ -51,7 +51,7 @@ cargo_land = {}
 cargo_land[1] = _("The containers of %s are carried out of your ship and tallied. After several different men double-check the register to confirm the amount, you are paid %s and summarily dismissed.")
 cargo_land[2] = _("The containers of %s are quickly and efficiently unloaded, labeled, and readied for distribution. The delivery manager thanks you with a credit chip worth %s.")
 cargo_land[3] = _("The containers of %s are unloaded from your vessel by a team of dockworkers who are in no rush to finish, eventually delivering %s after the number of tonnes is determined.")
-cargo_land[4] = _("The containers of %s are unloaded by robotic drones that scan and tally the contents. The human overseerer hands you %s when they finish.")
+cargo_land[4] = _("The containers of %s are unloaded by robotic drones that scan and tally the contents. The human overseer hands you %s when they finish.")
 
 osd_title = _("Commodity Delivery")
 osd_msg    = {}
@@ -108,9 +108,7 @@ function create ()
    misn.setTitle( misn_title:format( chosen_comm ) )
    misn.markerAdd( system.cur(), "computer" )
    misn.setDesc( misn_desc:format( misplanet:name(), chosen_comm ) )
-   misn.setReward( gettext.ngettext(
-         "%s credit per tonne", "%s credits per tonne",
-         price):format( numstring( price ) ) )
+   misn.setReward( _("%s per tonne"):format( creditstring( price ) ) )
     
 end
 

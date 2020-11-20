@@ -41,10 +41,10 @@
 static unsigned int opt_wid = 0;
 static unsigned int *opt_windows;
 static const char *opt_names[] = {
-   "Gameplay",
-   "Video",
-   "Audio",
-   "Input"
+   N_("Gameplay"),
+   N_("Video"),
+   N_("Audio"),
+   N_("Input")
 };
 
 
@@ -105,19 +105,25 @@ static void opt_unsetKey( unsigned int wid, char *str );
  */
 void opt_menu (void)
 {
+   size_t i;
    int w, h;
+   char **names;
 
    /* Dimensions. */
    w = 680;
    h = 525;
 
    /* Create window and tabs. */
-   opt_wid = window_create( N_("Options"), -1, -1, w, h );
+   opt_wid = window_create( "wdwOptions", _("Options"), -1, -1, w, h );
    window_setCancel( opt_wid, opt_close );
 
    /* Create tabbed window. */
+   names = calloc( sizeof(char*), sizeof(opt_names)/sizeof(char*) );
+   for (i=0; i<sizeof(opt_names)/sizeof(char*); i++)
+      names[i] = gettext(opt_names[i]);
    opt_windows = window_addTabbedWindow( opt_wid, -1, -1, -1, -1, "tabOpt",
-         OPT_WINDOWS, opt_names, 0 );
+         OPT_WINDOWS, (const char**)names, 0 );
+   free(names);
 
    /* Load tabs. */
    opt_gameplay(  opt_windows[ OPT_WIN_GAMEPLAY ] );
@@ -290,7 +296,7 @@ static void opt_gameplay( unsigned int wid )
       if (i>=n)
          i = 0;
    }
-   window_addList( wid, x+l+20, y, cw-l-50, 70, "lstLanguage", ls, n, i, NULL );
+   window_addList( wid, x+l+20, y, cw-l-50, 70, "lstLanguage", ls, n, i, NULL, NULL );
    y -= 90;
 #endif /* defined ENABLE_NLS && ENABLE_NLS */
    window_addText( wid, x+20, y, cw, 20, 0, "txtCompile",
@@ -335,7 +341,7 @@ static void opt_gameplay( unsigned int wid )
    cw += 80;
 
    /* Autonav abort. */
-   window_addText( wid, x+65, y, 150, 150, 0, "txtAAutonav",
+   window_addText( wid, x+65, y, cw-130, 20, 0, "txtAAutonav",
          NULL, NULL, _("Stop Speedup At:") );
    y -= 20;
 
@@ -361,7 +367,7 @@ static void opt_gameplay( unsigned int wid )
          "chkMouseThrust", _("Enable mouse-flying thrust control"), NULL, conf.mouse_thrust );
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkCompress", _("Enable savegame compression"), NULL, conf.save_compress );
+         "chkCompress", _("Enable saved game compression"), NULL, conf.save_compress );
    y -= 30;
    s = _("Visible Messages");
    l = gl_printWidthRaw( NULL, s );
@@ -655,7 +661,7 @@ static void menuKeybinds_genList( unsigned int wid )
       window_destroyWidget( wid, "lstKeybinds" );
    }
 
-   window_addList( wid, 20, -40, lw, lh, "lstKeybinds", str, input_numbinds, 0, menuKeybinds_update );
+   window_addList( wid, 20, -40, lw, lh, "lstKeybinds", str, input_numbinds, 0, menuKeybinds_update, opt_setKey );
 
    if (regen) {
       toolkit_setListPos( wid, "lstKeybinds", pos );
@@ -899,7 +905,7 @@ static void opt_audio( unsigned int wid )
 #endif /* USE_SDLMIX */
    if (i==0)
       s[i++] = strdup(_("none"));
-   window_addList( wid, x+l, y, cw-(x+l), 40, "lstSound", s, i, j, NULL );
+   window_addList( wid, x+l, y, cw-(x+l), 40, "lstSound", s, i, j, NULL, NULL );
    y -= 50;
 
    /* OpenAL options. */
@@ -913,7 +919,7 @@ static void opt_audio( unsigned int wid )
    /* Sound levels. */
    x = 20 + cw + 20;
    y = -60;
-   window_addText( wid, x+20, y, 100, 20, 0, "txtSVolume",
+   window_addText( wid, x+20, y, cw-40, 20, 0, "txtSVolume",
          NULL, NULL, _("Volume Levels") );
    y -= 30;
 
@@ -1164,7 +1170,7 @@ static void opt_setKey( unsigned int wid, char *str )
    /* Create new window. */
    w = 20 + 2*(BUTTON_WIDTH + 20);
    h = 20 + BUTTON_HEIGHT + 20 + 20 + 80 + 40;
-   new_wid = window_create( N_("Set Keybinding"), -1, -1, w, h );
+   new_wid = window_create( "wdwSetKey", _("Set Keybinding"), -1, -1, w, h );
    window_handleEvents( new_wid, opt_setKeyEvent );
    window_setParent( new_wid, wid );
 
@@ -1285,7 +1291,7 @@ static void opt_video( unsigned int wid )
          res_def = i;
       nres++;
    }
-   window_addList( wid, x, y, 140, 100, "lstRes", res, nres, -1, opt_videoRes );
+   window_addList( wid, x, y, 140, 100, "lstRes", res, nres, -1, opt_videoRes, NULL );
    y -= 120;
    window_addText( wid, x, y-3, 110, 20, 0, "txtScale",
          NULL, NULL, NULL );
@@ -1475,7 +1481,7 @@ int opt_setVideoMode( int w, int h, int fullscreen, int confirm )
    conf.fullscreen = fullscreen;
 
    status = gl_setupFullscreen();
-   if (status == 0 && !new_f && (w != old_w || h != old_h)) {
+   if (status == 0 && !fullscreen && (w != old_w || h != old_h)) {
       SDL_SetWindowSize( gl_screen.window, w, h );
       SDL_SetWindowPosition( gl_screen.window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
    }

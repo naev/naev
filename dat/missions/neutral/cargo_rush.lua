@@ -123,7 +123,7 @@ function create()
    
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
    -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
-   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
+   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
    amount     = rnd.rnd(10 + 5 * tier, 20 + 6 * tier) -- 45 max (quicksilver)
    jumpreward = commodity.price(cargo)*1.2
    distreward = math.log(300*commodity.price(cargo))/100

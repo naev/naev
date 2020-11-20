@@ -19,8 +19,6 @@
 #include "nstring.h"
 
 
-#define MAP_WDWNAME     "Star Map" /**< Map window name. */
-
 #define BUTTON_WIDTH    120 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
@@ -228,7 +226,7 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
    map_found_ncur = n;
 
    /* Create window. */
-   wid = window_create( N_("Search Results"), -1, -1, 500, 452 );
+   wid = window_create( "wswFindResult", _("Search Results"), -1, -1, 500, 452 );
    window_setParent( wid, parent );
    window_setAccept( wid, map_findDisplayMark );
    window_setCancel( wid, window_close );
@@ -238,7 +236,7 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
    for (i=0; i<n; i++)
       ll[i] = strdup( found[i].display );
    window_addList( wid, 20, -40, 460, 300,
-         "lstResult", ll, n, 0, NULL );
+         "lstResult", ll, n, 0, NULL, map_findDisplayMark );
 
    /* Buttons. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -731,8 +729,8 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
          "%s\n"
          "%.0f tonnes\n"
          "\n"
-         "%s credits\n"
-         "%s credits\n"
+         "%s\n"
+         "%s\n"
          "%s\n"),
          player_outfitOwned(outfit),
          outfit_slotName(outfit),
@@ -784,7 +782,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
          list[i] = strdup( names[i] );
-      i = dialogue_listPanel( "Search Results", list, len, 452, 650,
+      i = dialogue_listPanel( _("Search Results"), list, len, 452, 650,
             map_addOutfitDetailFields, map_showOutfitDetail,
             _("Search results for outfits matching '%s':"), name );
       if (i < 0) {
@@ -939,7 +937,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
          list[i] = strdup( names[i] );
-      i = dialogue_list( "Search Results", list, len,
+      i = dialogue_list( _("Search Results"), list, len,
             _("Search results for ships matching '%s':"), name );
       if (i < 0) {
          free(names);
@@ -1077,7 +1075,7 @@ void map_inputFind( unsigned int parent, char* str )
    /* Create the window. */
    w = 400;
    h = 220;
-   wid = window_create( "Find...", -1, -1, w, h );
+   wid = window_create( "wdwFind", _("Find..."), -1, -1, w, h );
    window_setAccept( wid, map_findSearch );
    window_setCancel( wid, map_findClose );
    window_setParent( wid, parent );

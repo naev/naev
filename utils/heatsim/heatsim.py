@@ -8,7 +8,6 @@
 #######################################################
 
 # Imports
-from frange import *
 import math
 import matplotlib.pyplot as plt
 
@@ -16,9 +15,15 @@ import matplotlib.pyplot as plt
 def clamp( a, b, x ):
    return min( b, max( a, x ) )
 
+def frange(start, end=None, inc=None):
+    if end is None:
+        start, end = 0., start + 0.
+    if inc is None:
+        inc = 1.
+    return [i*inc+start for i in range(1+int((end-start)//inc))]
+
 
 class heatsim:
-
    def __init__( self, shipname = "llama", weapname = "laser", simulation = [ 60., 120. ] ):
       # Sim parameters
       self.STEFAN_BOLZMANN = 5.67e-8
@@ -118,12 +123,10 @@ class heatsim:
       dt          = self.sim_dt
       sim_elapsed = 0.
       while sim_elapsed < self.sim_total:
-
          Q_cond = 0.
 
          # Check weapons
          for i in range(len(self.weap_list)):
-
             # Check if we should start/stop shooting
             if self.simulation[ sim_index ] < sim_elapsed:
                weap_on     = not weap_on
@@ -154,23 +157,21 @@ class heatsim:
 
    def save( self, filename ):
       "Saves the results to a file."
-      f = open( self.filename, 'w' )
-      for i in range(self.time_data):
-         f.write( str(self.time_data[i])+' '+str(self.ship_data[i]))
-         for j in range(self.weap_data):
-            f.write( ' '+str(self.weap_data[i][j]) )
-         f.write( '\n' )
-      f.close()
+      with open( self.filename, 'w' ) as f:
+         for time, ship, weap in zip(self.time_data, self.ship_data, self.weap_data):
+            f.write( f'{time} {ship_data}')
+            for wj in weap:
+               f.write( f' {wj}' )
+            f.write( '\n' )
 
    def display( self ):
-      print("Ship Temp: "+str(hs.ship_T)+" K")
-      for i in range(len(hs.weap_list)):
-         print("Outfit["+str(i)+"] Temp: "+str(hs.weap_T[i])+" K")
+      print("Ship Temp:", hs.ship_T, "K")
+      for i, T in enumerate(hs.weap_T):
+         print(f"Outfit[{i}] Temp: {T} K")
 
 
    def plot( self, filename=None ):
-      plt.hold(False)
-      plt.figure(1)
+      plt.figure()
 
       # Plot 1 Data
       plt.subplot(211)
@@ -186,16 +187,10 @@ class heatsim:
       # Plot 1 Data
       plt.subplot(212)
       plt.plot( self.time_data, self.weap_data[0], '-' )
-      plt.hold(True)
-      plt_data = []
-      for i in range(len(self.weap_data[0])):
-         plt_data.append( self.ACCURACY_LIMIT )
+      plt_data = [self.ACCURACY_LIMIT] * len(self.weap_data[0])
       plt.plot( self.time_data, plt_data, '--' )
-      plt_data = []
-      for i in range(len(self.weap_data[0])):
-         plt_data.append( self.FIRERATE_LIMIT )
+      plt_data = [self.FIRERATE_LIMIT] * len(self.weap_data[0])
       plt.plot( self.time_data, plt_data, '-.' )
-      plt.hold(False)
 
       # Plot 2 Info
       plt.axis( [0, self.sim_total, 0, 1100] )
@@ -203,7 +198,7 @@ class heatsim:
       plt.ylabel( 'Temperature [K]' )
       plt.xlabel( 'Time [s]' )
       plt.grid( True )
-      if filename == None:
+      if filename is None:
          plt.show()
       else:
          plt.savefig( filename )
@@ -221,15 +216,11 @@ if __name__ == "__main__":
       hs = heatsim( shp, wpn, (60., 120.) )
       #hs = heatsim( shp, wpn, frange( 30., 600., 30. ) )
       hs.simulate()
-      hs.plot( shp+'_'+wpn+'_60_60.png' )
+      hs.plot( f'{shp}_{wpn}_60_60.png' )
       hs.setSimulation( (30., 90.) )
       hs.simulate()
-      hs.plot( shp+'_'+wpn+'_30_60.png' )
+      hs.plot( f'{shp}_{wpn}_30_60.png' )
       hs.setSimulation( (30., 90., 120., 180.) )
       hs.simulate()
-      hs.plot( shp+'_'+wpn+'_30_60_30_60.png' )
-      print( '   '+shp+' with '+wpn+' done!' )
-
-
-
-
+      hs.plot( f'{shp}_{wpn}_30_60_30_60.png' )
+      print( '  ', shp, 'with', wpn, 'done!' )

@@ -33,7 +33,7 @@
 #include "load.h"
 #include "shiplog.h"
 
-int save_loaded   = 0; /**< Just loaded the savegame. */
+int save_loaded   = 0; /**< Just loaded the saved game. */
 
 
 /*
@@ -141,7 +141,7 @@ int save_all (void)
    }
    nsnprintf(file, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
 
-   /* Back up old savegame. */
+   /* Back up old saved game. */
    if (!save_loaded) {
       if (nfile_backupIfExists(file) < 0) {
          WARN(_("Aborting save..."));
@@ -154,7 +154,7 @@ int save_all (void)
     * Luckily we have a copy just in case... */
    xmlFreeTextWriter(writer);
    if (xmlSaveFileEnc(file, doc, "UTF-8") < 0) {
-      WARN(_("Failed to write savegame!  You'll most likely have to restore it by copying your backup savegame over your current savegame."));
+      WARN(_("Failed to write saved game!  You'll most likely have to restore it by copying your backup saved game over your current saved game."));
       goto err;
    }
    xmlFreeDoc(doc);
@@ -169,20 +169,20 @@ err:
 }
 
 /**
- * @brief Reload the current savegame.
+ * @brief Reload the current saved game.
  */
 void save_reload (void)
 {
    char path[PATH_MAX];
    nsnprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
-   load_game( path, 0 );
+   load_gameFile( path );
 }
 
 
 /**
- * @brief Checks to see if there's a savegame available.
+ * @brief Checks to see if there's a saved game available.
  *
- *    @return 1 if a savegame is available, 0 otherwise.
+ *    @return 1 if a saved game is available, 0 otherwise.
  */
 int save_hasSave (void)
 {

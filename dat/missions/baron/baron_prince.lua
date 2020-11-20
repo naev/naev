@@ -1,24 +1,24 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Prince">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <done>Baron</done>
-   <chance>2</chance>
-   <location>Bar</location>
-   <faction>Empire</faction>
-   <faction>Dvaered</faction>
-   <faction>Goddard</faction>
-   <faction>Sirius</faction>
-  </avail>
-  <notes>
-   <campaign>Baron Sauterfeldt</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <done>Baron</done>
+  <chance>2</chance>
+  <location>Bar</location>
+  <faction>Empire</faction>
+  <faction>Dvaered</faction>
+  <faction>Goddard</faction>
+  <faction>Sirius</faction>
+ </avail>
+ <notes>
+  <campaign>Baron Sauterfeldt</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 -- This is the second mission in the baron string.
 --]]
@@ -36,8 +36,8 @@ misn_desc = {}
    
 title[1] = _("His Baronship remembers you")
 text[1] = _([[As you approach the stranger, he extends his hand in greeting. He introduces himself as an associate of Baron Sauterfeldt, the man you helped to "acquire" a holopainting not too long ago.
-   "The Baron was quite pleased with your performance in that matter," he confides. "He has asked me to try to find you again for another job not unlike the last one. The Baron is a collector, you see, and his hunger for new possessions is a hard one to satiate." He makes a face. "Of course, his methods aren't always completely respectable, as you've experienced for yourself. But I assure you that the Baron is not a bad man, he is simply very enthusiastic."
-   You decide to keep your opinion of the aristocrat to yourself. Instead you inquire as to what the man wants from you this time. "To tell the truth, I don't actually know," the man says. "The Baron wants you to meet him so he can brief you in person. You will find his ship in the %s system. Shall I inform his lordship that you will be paying him a visit?"]])
+    "The Baron was quite pleased with your performance in that matter," he confides. "He has asked me to try to find you again for another job not unlike the last one. The Baron is a collector, you see, and his hunger for new possessions is a hard one to satiate." He makes a face. "Of course, his methods aren't always completely respectable, as you've experienced for yourself. But I assure you that the Baron is not a bad man, he is simply very enthusiastic."
+    You decide to keep your opinion of the aristocrat to yourself. Instead you inquire as to what the man wants from you this time. "To tell the truth, I don't actually know," the man says. "The Baron wants you to meet him so he can brief you in person. You will find his ship in the %s system. Shall I inform his lordship that you will be paying him a visit?"]])
 
 refusetitle = _("Sorry, not today")
 refusetext = _([["Okay, fair enough," the man says with a disappointed look on his face. "I'll try to find someone else. But maybe we'll run into each other again, so if you change your mind..."]])
@@ -50,11 +50,11 @@ text[3] = _([[Your comm is answered by a communications officer on the bridge of
    
 title[4] = _("An audience with the Baron")
 text[4] = _([[You find yourself once again aboard the Pinnacle, Baron Sauterfeldt's flag ship. After a short time, an attendant ushers you into the Baron's personal quarters, which are as extravagant as you remember them. You notice the holopainting is now firmly fixed on one of the walls.
-   Baron Dovai Sauterfeldt greets you with a pompous wave of his hand. "Ahh yes, there you are at last. %s, was it? Do have a seat." He then offers you a drink, but you decline on the basis that you still have to drive. "Now then, %s, I assume you're wondering why I've called you here. As you've no doubt heard, I have an interest in the unique, the exquisite." The Baron gestures around the room. "I have built up quite an impressive collection, as you can see, but it is still lacking something. Fortunately, news has reached me about a priceless artifact from Earth itself, dating back to before the Faction Wars. I must have it. It belongs in the hands of a connoisseur like myself."]])
+    Baron Dovai Sauterfeldt greets you with a pompous wave of his hand. "Ahh yes, there you are at last. %s, was it? Do have a seat." He then offers you a drink, but you decline on the basis that you still have to drive. "Now then, %s, I assume you're wondering why I've called you here. As you've no doubt heard, I have an interest in the unique, the exquisite." The Baron gestures around the room. "I have built up quite an impressive collection, as you can see, but it is still lacking something. Fortunately, news has reached me about a priceless artifact from Earth itself, dating back to before the Faction Wars. I must have it. It belongs in the hands of a connoisseur like myself."]])
    
 text[5] = _([["Unfortunately, news of this artifact has reached more ears than just mine. All over the galaxy there are people who will try to sell you 'ancient artifacts', which always turn out to be imitations at best and worthless scrap they picked up from the streets at worst." The Baron snorts derisively. "Even the contacts who usually fenc- ah, I mean, supply me with new items for my collection are in on the frenzy.
-   "I've narrowed down my search to three of these people. I'm confident that one of them is selling the genuine article, while the other two are shams. And this is where you come in, %s. I want you to visit these vendors, buy their wares off them and bring me the authentic artifact. You will have the help of a man named Flintley, who is a history buff or some such rot. You will find him on %s in the %s system. Simply tell him you're working for me and show him any artifacts in your possession. He will tell you which are authentic and which are fake.
-   "I should warn you, %s. Some of my, ah, colleagues have also set their sights on this item, and so you can expect their henchmen to try to take it off you. I trust you are equipped to defend yourself against their despicable sort."]])
+    "I've narrowed down my search to three of these people. I'm confident that one of them is selling the genuine article, while the other two are shams. And this is where you come in, %s. I want you to visit these vendors, buy their wares off them and bring me the authentic artifact. You will have the help of a man named Flintley, who is a history buff or some such rot. You will find him on %s in the %s system. Simply tell him you're working for me and show him any artifacts in your possession. He will tell you which are authentic and which are fake.
+    "I should warn you, %s. Some of my, ah, colleagues have also set their sights on this item, and so you can expect their henchmen to try to take it off you. I trust you are equipped to defend yourself against their despicable sort."]])
    
 title[5] = _("Off to the shops")
    
@@ -67,8 +67,8 @@ text[7] = _([[You have not yet collected and identified the genuine artifact. Bu
 title[7] = _("Flintley, at your service")
 
 text[8] = _([[You approach the nervous-looking man and inquire if he is Flintley, the historian in Baron Sauterfeldt's employ.
-   "Oh, yes. Yes! That is me! I'm Flintley," the man responds. "And you must be %s. I know what's going on, the people from the Pinnacle have informed me. Oh, but where are my manners. Let me properly introduce myself. My name is Flintley, and I'm an archaeologist and historian. The best in the galaxy, some might say, ha-ha!" He gives you a look. "Well, maybe not. But I'm quite knowledgeable about the history of the galaxy. Too bad not too many people seem interested in that these days. The only work I can really get is the occasional appraisal, like I'm doing now for his lordship. I wish I didn't have to take jobs like this, but there you have it."
-   Flintley sighs. "Well, that's that. Come to me with any artifacts you manage to procure, and I'll analyze them to the best of my ability."]])
+    "Oh, yes. Yes! That is me! I'm Flintley," the man responds. "And you must be %s. I know what's going on, the people from the Pinnacle have informed me. Oh, but where are my manners. Let me properly introduce myself. My name is Flintley, and I'm an archaeologist and historian. The best in the galaxy, some might say, ha-ha!" He gives you a look. "Well, maybe not. But I'm quite knowledgeable about the history of the galaxy. Too bad not too many people seem interested in that these days. The only work I can really get is the occasional appraisal, like I'm doing now for his lordship. I wish I didn't have to take jobs like this, but there you have it."
+    Flintley sighs. "Well, that's that. Come to me with any artifacts you manage to procure, and I'll analyze them to the best of my ability."]])
    
 title[8] = _("A suspicious salesman")
 
@@ -81,13 +81,13 @@ text[11] = _([[The woman beckons you over to the bar. "Listen, friend. I have he
 title[9] = _("This is not the artifact you're looking for")
 
 text[12] = _([["Let's see what we have here," Flintley says as you hand him the artifact you bought on %s. "Ah, I know what this is without even looking anything up. It's a piece of an old-fashioned airlock mechanism, as used on most ships during the Faction Wars. That makes it rather old, but that also makes it worthless, I'm afraid. This is just old scrap." He gives you an apologetic look. "Don't let it get you down. Not many people would know this on first sight. Those scammers can be pretty clever."
-   You feel disappointed and frustrated, but you have no choice but to deposit the "artifact" into the nearest disintegrator inlet.]])
+    You feel disappointed and frustrated, but you have no choice but to deposit the "artifact" into the nearest disintegrator inlet.]])
 
 text[13] = _([[You hand Flintley the artifact you procured on %s. He examines it for a few moments, then enters a few queries in the info terminal in his table. Once he has found what he was looking for, he heaves a sigh. "I'm sorry, %s. It seems you've been had. What you've got here is little more than a trinket. It's a piece of 'art' created by a third-rank sculptress named Biena Gharibri who lives on Lapra. She's not very talented, I'm afraid. Her creations have been called 'worse than Dvaered opera' by a leading art critic. I really don't think you want to present his lordship with this."
-   You promptly decide to dispose of the thing, unwilling to carry it around with you a moment longer than necessary.]])
+    You promptly decide to dispose of the thing, unwilling to carry it around with you a moment longer than necessary.]])
 
 text[14] = _([[Flintley studies the object on the table for a while, checking the online database a number of times in the process. Then, finally, he turns to you. "I hate to say this, but it seems you've bought a counterfeit. It's a good one, though! That seller on %s must have known his stuff. You see, this is very similar to a number plate used by hovercars on Mars at the time of the Second Growth. However, it's missing a number of vital characteristics, and some details betray its recent manufacture. Close, %s, close. But no cigar."
-   You dispose of the counterfeit artifact. Hopefully the next one will be what Sauterfeldt is looking for...]])
+    You dispose of the counterfeit artifact. Hopefully the next one will be what Sauterfeldt is looking for...]])
    
 flintdeftitle = _("Just passing through")
    
@@ -96,16 +96,16 @@ flintdeftext = _([[Flintley greets you. "Do you have any objects for me to look 
 title[10] = _("From days long gone")
    
 text[15] = _([[Flintley carefully studies the object in front of him, turning it around and consulting the online database via the bar table's terminal. After several hectoseconds he leans back and whistles. "Well I never. This has to be it, %s. I'd do a carbon dating if I could, but even without I'm positive. This object dates back to pre-Growth Earth. And it's in an amazingly good condition!"
-   You take another look at the thing. It resembles a small flat surface, apart from the crook at one end. On one side, there are cylindrical, solid protrusions that don't seem to serve any useful purpose at all. You are at a loss as to the artifact's purpose.
-   "It's called a skate-board," Flintley continues. "The records about it are a bit sketchy and a lot is nothing but conjecture, but it appears it was once used in primitive communal rituals. The exact nature of these rituals is unknown, but they may have been tribal initiations or even mating rituals. The patterns in the board itself are thought to have a spiritual or mystical meaning. Also, according to some theories, people used to stand on top of the skate-board, with the cylinder wheels facing the ground. This has led some historians to believe that the feet were once central to human psychology."
-   Flintley seems to have a lot more to say on the subject, but you're not that interested, so you thank him and return to your ship with the ancient artifact. You can only hope that the Baron is as enthusiastic about this skate-board as his historian!]])
+    You take another look at the thing. It resembles a small flat surface, apart from the crook at one end. On one side, there are cylindrical, solid protrusions that don't seem to serve any useful purpose at all. You are at a loss as to the artifact's purpose.
+    "It's called a skate-board," Flintley continues. "The records about it are a bit sketchy and a lot is nothing but conjecture, but it appears it was once used in primitive communal rituals. The exact nature of these rituals is unknown, but they may have been tribal initiations or even mating rituals. The patterns in the board itself are thought to have a spiritual or mystical meaning. Also, according to some theories, people used to stand on top of the skate-board, with the cylinder wheels facing the ground. This has led some historians to believe that the feet were once central to human psychology."
+    Flintley seems to have a lot more to say on the subject, but you're not that interested, so you thank him and return to your ship with the ancient artifact. You can only hope that the Baron is as enthusiastic about this skate-board as his historian!]])
    
 title[11] = _("The Baron has his prize")
    
 text[16] = _([[Baron Dovai Sauterfeldt turns the skate-board over in his hands, inspecting every nick, every scratch on the surface. His eyes are gleaming with delight.
-   "Oh, this is marvelous, marvelous indeed, %s! A piece of pre-Growth history, right here in my hands! I can almost hear the echoes of that ancient civilization when I put my ear close to it! This is going to be the centerpiece in my collection of relics and artifacts. Yes indeed!
-   "I was right to send you, %s, you've beautifully lived up to my expectations. And I'm a man of my word, I will reward you as promised. What was it we agreed on again? What, I never promised you anything? Well, that won't do. I'll have my assistant place a suitable amount of money in your account. You will not find me ungrateful! Ah, but you must excuse me. I need time to revel in this fantastic piece of art! Goodbye, %s, I will call on you when I have need of you again."
-   You are seen out of the Baron's quarters, so you head back through the airlock and back into your own ship. The first thing you do is check your balance, and to your relief, it has indeed been upgraded by a substantial amount. You also seem to have recieved a statue of dubious taste. As you undock, you wonder what kind of wild goose chase the man will send you on next time.]])
+    "Oh, this is marvelous, marvelous indeed, %s! A piece of pre-Growth history, right here in my hands! I can almost hear the echoes of that ancient civilization when I put my ear close to it! This is going to be the centerpiece in my collection of relics and artifacts. Yes indeed!
+    "I was right to send you, %s, you've beautifully lived up to my expectations. And I'm a man of my word, I will reward you as promised. What was it we agreed on again? What, I never promised you anything? Well, that won't do. I'll have my assistant place a suitable amount of money in your account. You will not find me ungrateful! Ah, but you must excuse me. I need time to revel in this fantastic piece of art! Goodbye, %s, I will call on you when I have need of you again."
+    You are seen out of the Baron's quarters, so you head back through the airlock and back into your own ship. The first thing you do is check your balance, and to your relief, it has indeed been upgraded by a substantial amount. You also seem to have received a statue of dubious taste. As you undock, you wonder what kind of wild goose chase the man will send you on next time.]])
 
 -- Mission details
 misn_title = _("Prince")
@@ -125,11 +125,11 @@ flint_bar2 = _("Flintley is here. He nervously sips from his drink, clearly unco
 
 sellerdesc = _("You spot a dodgy individual who matches one of the portraits in your ship's database. This must be one of the artifact sellers.")
 
-buy = _("Buy the artifact (%s credits)")
+buy = _("Buy the artifact (%s)")
 nobuy = _("Don't buy the artifact")
 
 nomoneytitle = _("Not enough money!")
-nomoneytext = _("You can't currently afford to buy this artifact. You need %s credits.")
+nomoneytext = _("You can't currently afford to buy this artifact. You need %s.")
 
 -- OSD stuff
 osd_msg[1] = _("Fly to the %s system and dock with (board) Kahan Pinnacle")
@@ -296,36 +296,36 @@ end
 
 function seller()
    if planet.cur() == artifactplanetA then
-      if tk.choice(title[8], text[9], buy:format(numstring(reward * 0.15)), nobuy) == 1 then
+      if tk.choice(title[8], text[9], buy:format(creditstring(reward * 0.15)), nobuy) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(sellnpc)
             player.pay(-15000)
             artifactA = misn.cargoAdd("Artifact? A", 0)
             misn.markerRm(markerA)
          else
-            tk.msg(nomoneytitle, nomoneytext:format(numstring(reward * 0.15)))
+            tk.msg(nomoneytitle, nomoneytext:format(creditstring(reward * 0.15)))
          end
       end
    elseif planet.cur() == artifactplanetB then
-      if tk.choice(title[8], text[10], buy:format(numstring(reward * 0.15)), nobuy) == 1 then
+      if tk.choice(title[8], text[10], buy:format(creditstring(reward * 0.15)), nobuy) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(sellnpc)
             player.pay(-15000)
             artifactB = misn.cargoAdd("Artifact? B", 0)
             misn.markerRm(markerB)
          else
-            tk.msg(nomoneytitle, nomoneytext:format(numstring(reward * 0.15)))
+            tk.msg(nomoneytitle, nomoneytext:format(creditstring(reward * 0.15)))
          end
       end
    elseif planet.cur() == artifactplanetC then
-      if tk.choice(title[8], text[11], buy:format(numstring(reward * 0.15)), nobuy) == 1 then
+      if tk.choice(title[8], text[11], buy:format(creditstring(reward * 0.15)), nobuy) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(sellnpc)
             player.pay(-15000)
             artifactC = misn.cargoAdd("Artifact? C", 0)
             misn.markerRm(markerC)
          else
-            tk.msg(nomoneytitle, nomoneytext:format(reward * 0.15))
+            tk.msg(nomoneytitle, nomoneytext:format(creditstring(reward * 0.15)))
          end
       end
    end
@@ -385,7 +385,7 @@ function hail()
 end
 
 -- Function that tries to misspell whatever string is passed to it.
--- TODO support unicode to a certain point
+-- TODO support Unicode to a certain point
 function mangle(intext)
    local outtext = intext
    

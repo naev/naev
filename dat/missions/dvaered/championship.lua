@@ -17,7 +17,7 @@
  --]]
 --[[
    
-   The player takes part into a challemge between fighter pilots in Dvaered space, he has to defeat 5 opponents to win.
+   The player takes part into a challenge between fighter pilots in Dvaered space, he has to defeat 5 opponents to win.
    
    Stages :
    0) Way to positions
@@ -60,20 +60,20 @@ title[3] = _("You won this round")
 text[3] = _([["Congratulations," the staff says to you. "Come back when you are ready for the next round!"]])
 
 title[4] = _("You are the new champion")
-text[4] = _([[Congratulations! The staff pays you %s credits.]])
+text[4] = _([[Congratulations! The staff pays you %s.]])
 
 title[5] = _("You are the vice-champion")
-text[5] = _([[Congratulations! The staff pays you %s credits.]])
+text[5] = _([[Congratulations! The staff pays you %s.]])
 
 title[6] = _("Thanks for playing")
-text[6] = _([[The staff pays you %s credits.]])
+text[6] = _([[The staff pays you %s.]])
 
 comptitle[1] = _("I am here to win the championship")
 comptext[1] = _([["Hello! I am here to claim my place as this cycle's champion! I've prepared myself since the first day I piloted a ship. Trust me, I'm nearly invincible and my Vendetta is indestructible.
     "Did you know that the Vendetta is the best fighter in this part of the galaxy? It's the reason why every pilot who's won this championship had one."]])
 
 comptitle[2] = _("Hello")
-comptext[2] = _([["Are you here for the Dvaered dogfight championship? I am a competitor. I fly a Shark, so I don't hope to win lots of rounds... But I still enjoy the battle. Every cycle, a Dvaered pilot wins. Do you know why? It's because the rules of the championship advantage heavy armoured, well armed fighters, like the Vendetta. Imperial pilots are used to electronical war with guided missiles and stealth ships. Dvaered pilots, on the other hand, only understand basic dogfighting."]])
+comptext[2] = _([["Are you here for the Dvaered dogfight championship? I am a competitor. I fly a Shark, so I don't hope to win lots of rounds... But I still enjoy the battle. Every cycle, a Dvaered pilot wins. Do you know why? It's because the rules of the championship advantage heavy armoured, well armed fighters, like the Vendetta. Imperial pilots are used to electronic warfare with guided missiles and stealth ships. Dvaered pilots, on the other hand, only understand basic dogfighting."]])
 
 comptitle[3] = _("Imperial Pilot")
 comptext[3] = _([["What a pity. I am the best in my squad. I trained cycles to be able to take down these pitiful Vendettas with my missiles before they even see my Lancelot on their radar. But in this championship, only armor and firepower are useful."]])
@@ -82,11 +82,11 @@ comptitle[4] = _("Dvaered Pilot")
 comptext[4] = _([["Nice to see you. I am a Vendetta pilot. I hope I win this time! For us, being the champion here means that you become member of the senior staff, which makes you closer to Dvaered High Command! Who knows? Maybe one day I will become a Warlord."]])
 
 comptitle[5] = _("Obvious Pirate")
-comptext[5] = _([["Hi, I'm... err... I'm an independant pilot. I'm here to take part in the challenge and see the best Dvaered Vendetta pilots in motion. It helps to know how they fly in my job."]])
+comptext[5] = _([["Hi, I'm... err... I'm an independent pilot. I'm here to take part in the challenge and see the best Dvaered Vendetta pilots in motion. It helps to know how they fly in my job."]])
 
 comptitle[6] = _("I am here to win the championship")
 comptext[6] = _([["I am here to claim my place as this cycle's champion! I've prepared myself since the first day I piloted a ship. Trust me, I'm nearly invincible and my Vendetta is indestructible.
-    "Do you know who I am? I am the famous independant pilot who helped Dvaered High Command destroy the FLF base in the nebula! I managed to defeat lots of FLF fighters with my ship! I will tell you my adventures some other time, but for now, I need to concentrate."]])
+    "Do you know who I am? I am the famous independent pilot who helped Dvaered High Command destroy the FLF base in the nebula! I managed to defeat lots of FLF fighters with my ship! I will tell you my adventures some other time, but for now, I need to concentrate."]])
    
 -- Mission details
 misn_title = _("The Dvaered Championship")
@@ -444,11 +444,11 @@ function land()
       elseif stage == 3 and planet.cur() == mispla then  --player will be payed
 
       if level == 5 then  --you are the champion
-         tk.msg(title[4], text[4]:format(numstring(reward * 2^level)))
+         tk.msg(title[4], text[4]:format(creditstring(reward * 2^level)))
       elseif level == 4 then
-         tk.msg(title[5], text[5]:format(numstring(reward * 2^level)))
+         tk.msg(title[5], text[5]:format(creditstring(reward * 2^level)))
       else
-         tk.msg(title[6], text[6]:format(numstring(reward * 2^level)))
+         tk.msg(title[6], text[6]:format(creditstring(reward * 2^level)))
       end
 
       player.pay(reward * 2^level)

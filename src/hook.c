@@ -311,7 +311,7 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
 
    /* Make sure it's valid. */
    if (hook->u.misn.parent == 0) {
-      WARN(_("Trying to run hook with inexistant parent: deleting"));
+      WARN(_("Trying to run hook with nonexistent parent: deleting"));
       hook->delete = 1; /* so we delete it */
       return -1;
    }

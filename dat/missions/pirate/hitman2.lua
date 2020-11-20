@@ -32,7 +32,7 @@ bar_desc = _("You see the shifty merchant who hired you previously. He looks som
 -- Mission details
 misn_title  = _("Assassin")
 misn_reward = _("Some easy money")
-misn_desc = _("A shifty businessman has tasked you with killing merchant competition in the %s systemm.")
+misn_desc = _("A shifty businessman has tasked you with killing merchant competition in the %s system.")
 osd_desc_1 = _("Kill Trader pilots in the %s system")
 osd_desc_2 = _("Return to %s in the %s system for payment")
 
@@ -135,7 +135,7 @@ end
 function landed()
    if planet.cur() == misn_base then
       tk.msg(title[3], text[3])
-      player.pay(500000) -- 500k
+      player.pay(500000) -- 500K
       pir_modDecayFloor(3)
       pir_modReputation(3)
       faction.modPlayerSingle("Pirate", 5)

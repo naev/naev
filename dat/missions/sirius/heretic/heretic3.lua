@@ -19,8 +19,8 @@
  --]]
 --[[misn title - the assault]]
 --[[in this mission, the wringer is assaulted by a full assault fleet
-   sent in by the threatened sirius. the player attempts to defend,
-   when is instead ordered back to the wringer to escape sirius controlled
+   sent in by the threatened Sirius. The player attempts to defend,
+   when is instead ordered back to The Wringer to escape Sirius controlled
    space. thanks to nloewen and viashimo for help!]]
 
 require "numstring.lua"
@@ -39,7 +39,7 @@ bmsg[3] = _([["Do you not understand the seriousness of this situation?! I thoug
 emsg = {}
 emsg[1] = _([[As you land, you see the Nasin forces desperately trying to regroup. "Hurry and get your ship ready for another battle," he says, "and meet me at the bar when you're ready! Payment has been transferred into your account. More importantly, we have a dire situation!"]])
 
---misn osd
+--mission OSD
 osd = {}
 osd[1] = _("Defend %s against the Sirius assault")
 osd[2] = _("Return to %s")
@@ -48,16 +48,15 @@ misn_title = _("The Assault")
 npc_name = _("Draga")
 bar_desc = _("The familiar form of Draga is at a table with some officers. They look busy.")
 p_landing = _([[As you land, Draga sees you. He seems just about ready to kill you on the spot. "You abandon us now? When we need you the most?! I should never have put my trust in you! Filth! Get out of my sight before I kill you where you stand!" You do as he says, beginning to question your decision to abandon your mission at the very place Draga was. Nonetheless, you bury your head and make a mental note to get out of here as soon as possible.]])
-oos_failure = _([[You recieve a scathing angry message from Draga chastising you for abandoning your mission. You put it behind you. There's no turning back now.]])
+oos_failure = _([[You receive a scathing angry message from Draga chastising you for abandoning your mission. You put it behind you. There's no turning back now.]])
 misn_desc = _([[A Sirius assault fleet has just jumped into %s. You are to assist Nasin in destroying this fleet.]])
 time_to_come_home = _([[You receive a frantic message from Draga. "%s! This is worse than we ever thought. We need you back at the base! Stat!"]])
-misn_reward = _("%s credits")
 
 log_text = _([[You helped Draga in an attempt to protect Nasin from the Sirius military. Draga ordered you to get your ship ready for another battle and meet him at the bar.]])
 
 
 function create()
-   --this mission makes one mission claim, in suna.
+   --this mission makes one mission claim, in Suna.
    --initialize your variables
    nasin_rep = faction.playerStanding("Nasin")
    misn_tracker = var.peek("heretic_misn_tracker")
@@ -69,7 +68,7 @@ function create()
    if not misn.claim(homesys) then
       misn.finish(false)
    end
-   misn.setReward( misn_reward:format( numstring( reward ) ) )
+   misn.setReward( creditstring( reward ) )
    misn.setTitle( misn_title )
    misn.setNPC(npc_name, "sirius/unique/draga")
    misn.setDesc(bar_desc)
@@ -102,7 +101,7 @@ end
 
 function takeoff() --for when the player takes off from the wringer.
    pilot.clear() --clearing out all the pilots, and
-   pilot.toggleSpawn("Sirius",false) --making the sirius not spawn. I want the assault fleet the only sirius in there.
+   pilot.toggleSpawn("Sirius",false) --making the Sirius not spawn. I want the assault fleet the only Sirius in there.
    deathcounter = 0 -- Counts destroyed Nasin ships.
    sirius_be_serious = pilot.add("Sirius Assault Force",sirius,system.get("Herakin"))
    

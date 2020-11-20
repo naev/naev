@@ -18,12 +18,6 @@
 
 require ("proximity.lua") 
 
--- localization stuff, translators would work here
-lang = naev.lang()
-if lang == "es" then
-else -- default english
-end
-
 function create ()
     hailie = hook.timer(20000, "hailme")
     

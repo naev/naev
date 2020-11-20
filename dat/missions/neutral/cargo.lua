@@ -90,7 +90,7 @@ function create()
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
    -- Reward depends on type of cargo hauled. Hauling expensive commodities gives a better deal.
    -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
-   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
+   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
    amount = rnd.rnd(5 + 25 * tier, 20 + 60 * tier)
    jumpreward = commodity.price(cargo)
    distreward = math.log(100*commodity.price(cargo))/100

@@ -28,7 +28,6 @@ require "scripts/numstring.lua"
 
 misn_title = _("ZT test of %s")
 misn_desc = _("A Za'lek research team needs you to travel to %s in %s using an engine in order to test it.")
-misn_reward = _("%s credits")
 
 title = _([[ZT: go to %s in the %s system
 Jumps: %d
@@ -117,7 +116,7 @@ function create()
    stupertakeoff = 15000
     
    -- Choose mission reward. This depends on the mission tier.
-   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
+   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
    jumpreward = 1000
    distreward = 0.15
    reward     = (1.5 ^ tier) * (numjumps * jumpreward + traveldist * distreward * avgrisk) * finished_mod * (1. + 0.05*rnd.twosigma())
@@ -127,7 +126,7 @@ function create()
    misn.setTitle( misn_title:format( typeOfEng ))
    misn.markerAdd(destsys, "computer")
    misn.setDesc(title:format(destplanet:name(), destsys:name(), numjumps, traveldist ))
-   misn.setReward(misn_reward:format(numstring(reward)))
+   misn.setReward(creditstring(reward))
 
 end
 

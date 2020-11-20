@@ -56,6 +56,7 @@ bash
 meson setup builddir .
 cd builddir
 meson compile
+./naev.sh
 ```
 
 If you need special settings you can run `meson configure` in your build

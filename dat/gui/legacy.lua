@@ -396,7 +396,7 @@ end
 --[[
    @brief Optional destroy function.
 
-   Run when exitting the game on changing GUI. Graphics and stuff are cleaned up automatically.
+   Run when exiting the game on changing GUI. Graphics and stuff are cleaned up automatically.
 --]]
 function destroy()
 end

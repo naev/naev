@@ -53,7 +53,6 @@ static char* nlua_packfileLoaderTryFile( size_t *bufsize, const char *filename )
 static int nlua_packfileLoader( lua_State* L );
 static lua_State *nlua_newState (void); /* creates a new state */
 static int nlua_loadBasic( lua_State* L );
-static int nlua_errTrace( lua_State *L );
 /* gettext */
 static int nlua_gettext( lua_State *L );
 static int nlua_ngettext( lua_State *L );
@@ -105,7 +104,7 @@ static int nlua_ngettext( lua_State *L )
 /**
  * @brief gettext support (noop). Does not actually do anything, but gets detected by gettext.
  *
- * @usage _( str )
+ * @usage N_( str )
  *    @luatparam str String to gettext on.
  *    @luatreturn The string converted to gettext.
  * @luafunc gettext_noop( str )
@@ -516,6 +515,7 @@ int nlua_loadStandard( nlua_env env )
 
 
 
+#if DEBUGGING
 /**
  * @brief Gets a trace from Lua.
  */
@@ -542,6 +542,7 @@ static int nlua_errTrace( lua_State *L )
    lua_call(L, 2, 1);
    return 1;
 }
+#endif /* DEBUGGING */
 
 
 /*

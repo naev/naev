@@ -1,6 +1,7 @@
 require("ai/tpl/generic.lua")
 require("ai/personality/civilian.lua")
 require("ai/distress_behaviour.lua")
+require "numstring.lua"
 
 
 mem.careful   = false
@@ -24,8 +25,8 @@ function create ()
    p = player.pilot()
    if p:exists() then
       standing = ai.getstanding( p ) or -1
-      mem.refuel_msg = string.format(_("\"I'll supply your ship with fuel for %d credits.\""),
-            mem.refuel);
+      mem.refuel_msg = string.format(_("\"I'll supply your ship with fuel for %s.\""),
+            creditstring(mem.refuel));
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system

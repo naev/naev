@@ -23,6 +23,7 @@
       AUTHOR: thilo <thilo@thiloernst.de>
    --]]
 
+require "numstring.lua"
 
 
 -- Bar information, describes how the NPC appears in the bar
@@ -30,7 +31,7 @@ bar_desc = _("You see a bunch of guys and gals, excitedly whispering over some p
 
 -- Mission details.
 misn_title = _("DIY Nerds") 
-misn_reward = _("20,000 credits")
+misn_reward = creditstring(20000) -- 20K
 misn_desc = _("Cart some nerds to their contest, and back.")
 
 title = {}
@@ -48,7 +49,7 @@ text[1] = [[As you approach the group, the babbling ceases and the papers are qu
 title[2] = _("We have a deal!")
 text[2] = [[Upon accepting the task, you see the entire group relax visibly, and you can almost feel Mia's boldness fade away - to some extent, at least. It seems that the group is quite keen on the competition, but until now had no idea how to get there.
     As the others scramble to get up from their cramped table and start to gather their belongings, it is again up to Mia to address you:
-    "Really? You'll do it? Um, great. Fantastic. I just knew that eventually, someone desperate would turn up. Ok, we're set to go. We better take off immediately and go directly to %s, or we'll be late for the contest!"]]
+    "Really? You'll do it? Um, great. Fantastic. I just knew that eventually, someone desperate would turn up. OK, we're set to go. We better take off immediately and go directly to %s, or we'll be late for the contest!"]]
   
 -- right planet, in time
 title[3] = _("Happy nerds")
@@ -99,7 +100,7 @@ text[12] = [[The nerds, finally exhausted from all the partying, still smile as 
 title[13] = _("Minor Complications")
 text[13] = [[With sagging shoulders, the nerds unload their box. Mia turns to address you, not bold at all this time. "Um, we got a bit of a problem here. You know, we intended to pay the trip from our prize money. Now we don't have no prize money."
     As you're trying to decide what to make of the situation, one of the other nerds creeps up behind Mia and cautiously gestures for her to join the group a few yards away, all the time avoiding your eyes. Strange guy, you think, as if he was not accustomed to be socializing with strangers. Mia joins the group, and some whispering ensues. Mia returns to you after a few hectoseconds.
-    "Ok, we have just solved our problem. See, that ass of a champion won the contest with a ship's processing unit. We can do it the other way round. We'll modify our box so that it can be used as a ship's core system, and you can have it as a compensation for your troubles. Interested?"]]
+    "OK, we have just solved our problem. See, that ass of a champion won the contest with a ship's processing unit. We can do it the other way round. We'll modify our box so that it can be used as a ship's core system, and you can have it as a compensation for your troubles. Interested?"]]
 
 title[14] = _("So what?")
 text[14] = [["Honestly, there is nothing you can do about it," Mia says impatiently, as if you were a small child complaining about the finiteness of an ice cream cone. "Just stand by while we rig the thing up."]]
@@ -239,7 +240,7 @@ function nerds_land1()
    end
 end
 
--- date hooked to update the time in the mission osd in stage 1 (carting the nerds to the contest)
+-- date hooked to update the time in the mission OSD in stage 1 (carting the nerds to the contest)
 function nerds_fly1()
    intime = expiryDate >= time.get()
    if intime then

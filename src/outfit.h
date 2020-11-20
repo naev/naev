@@ -186,7 +186,7 @@ typedef struct OutfitLauncherData_ {
    int amount;       /**< Amount of ammo it can store. */
    double reload_time; /**< Time it takes to reload 1 ammo. */
 
-   /* Lockon information. */
+   /* Lock-on information. */
    double lockon;    /**< Time it takes to lock on the target */
    double ew_target; /**< Target ewarfare at which it the lockon time is based off of. */
    double ew_target2; /**< Target ewarfare squared for quicker comparisons. */

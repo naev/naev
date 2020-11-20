@@ -42,10 +42,10 @@ npc_desc = {}
 bar_desc = {}
 
 title[1] = _("Travel")
-text[1] = _([["Ok, are you ready for the travel to %s in the %s system?"]])
+text[1] = _([["OK, are you ready for the travel to %s in the %s system?"]])
 
 refusetitle = _("Sorry, not interested")
-refusetext = _([["Ok, come back when you are ready."]])
+refusetext = _([["OK, come back when you are ready."]])
 
 title[2] = _("Time to go")
 text[2] = _([["Let's go, then."]])
@@ -62,7 +62,6 @@ text[5] = _([[Suddenly, a Za'lek drone starts attacking you! As you wonder what 
 
 -- Mission details
 misn_title = _("The Meeting")
-misn_reward = _("%s credits")
 misn_desc = _("Nexus Shipyards asks you to take part in a secret meeting")
 
 -- NPC
@@ -109,7 +108,7 @@ function accept()
       osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
 
       misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward)))
+      misn.setReward(creditstring(reward))
       misn.setDesc(misn_desc)
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)

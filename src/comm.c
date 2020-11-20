@@ -14,19 +14,18 @@
 
 #include "naev.h"
 
-#include "log.h"
-#include "toolkit.h"
-#include "dialogue.h"
-#include "pilot.h"
-#include "rng.h"
-#include "nlua.h"
-#include "player.h"
-#include "opengl.h"
 #include "ai.h"
-#include "hook.h"
+#include "commodity.h"
+#include "dialogue.h"
 #include "escort.h"
-
-#define COMM_WDWNAME    "Communication Channel" /**< Map window name. */
+#include "hook.h"
+#include "log.h"
+#include "nlua.h"
+#include "opengl.h"
+#include "pilot.h"
+#include "player.h"
+#include "rng.h"
+#include "toolkit.h"
 
 #define BUTTON_WIDTH    80 /**< Button width. */
 #define BUTTON_HEIGHT   30 /**< Button height. */
@@ -69,7 +68,7 @@ static const char* comm_getString( char *str );
  */
 int comm_isOpen (void)
 {
-   return window_exists( COMM_WDWNAME );
+   return window_exists( "wdwComm" );
 }
 
 
@@ -114,7 +113,7 @@ int comm_openPilot( unsigned int pilot )
    }
 
    /* Destroy the window if it's already present. */
-   wid = window_get(COMM_WDWNAME);
+   wid = window_get( "wdwComm" );
    if (wid > 0) {
       window_destroy( wid );
       return 0;
@@ -227,7 +226,7 @@ int comm_openPlanet( Planet *planet )
    unsigned int wid;
 
    /* Destroy the window if it's already present. */
-   wid = window_get(COMM_WDWNAME);
+   wid = window_get( "wdwComm" );
    if (wid > 0) {
       window_destroy( wid );
       return 0;
@@ -338,7 +337,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    }
 
    /* Create the window. */
-   wid = window_create( COMM_WDWNAME, -1, -1,
+   wid = window_create( "wdwComm", _("Communication Channel"), -1, -1,
          20 + GRAPHIC_WIDTH + 20 + BUTTON_WIDTH + 20,
          30 + GRAPHIC_HEIGHT + y + 5 + 20 );
    window_setCancel( wid, comm_close );
@@ -417,6 +416,7 @@ static void comm_bribePilot( unsigned int wid, char *unused )
    int answer;
    double d;
    credits_t price;
+   char pricestr[ECON_CRED_STRLEN];
    const char *str;
 
    /* Unbribable. */
@@ -435,16 +435,17 @@ static void comm_bribePilot( unsigned int wid, char *unused )
 
    /* Check to see if already bribed. */
    if (price == 0) {
-      dialogue_msg("Bribe Pilot", _("\"Money won't save your hide now!\""));
+      dialogue_msg(_("Bribe Pilot"), _("\"Money won't save your hide now!\""));
       return;
    }
 
    /* Bribe message. */
+   price2str( pricestr, price, player.p->credits, -1 );
    str = comm_getString( "bribe_prompt" );
    if (str == NULL)
-      answer = dialogue_YesNo( _("Bribe Pilot"), _("\"I'm gonna need at least %"PRIu64" credits to not leave you as a hunk of floating debris.\"\n\nPay %"PRIu64" credits?"), price, price );
+      answer = dialogue_YesNo( _("Bribe Pilot"), _("\"I'm gonna need at least %s to not leave you as a hunk of floating debris.\"\n\nPay %s?"), pricestr, pricestr );
    else
-      answer = dialogue_YesNo( _("Bribe Pilot"), _("%s\n\nPay %"PRIu64" credits?"), str, price );
+      answer = dialogue_YesNo( _("Bribe Pilot"), _("%s\n\nPay %s?"), str, pricestr );
 
    /* Said no. */
    if (answer == 0) {
@@ -551,6 +552,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    const char *msg;
    int ret;
    credits_t price;
+   char creditstr[ECON_CRED_STRLEN];
 
    /* Check to see if ship has a no refuel message. */
    msg = comm_getString( "refuel_no" );
@@ -590,7 +592,8 @@ static void comm_requestFuel( unsigned int wid, char *unused )
 
    /* See if player really wants to pay. */
    if (price > 0) {
-      ret = dialogue_YesNo( _("Request Fuel"), _("%s\n\nPay %"PRIu64" credits?"), msg, price );
+      price2str( creditstr, price, player.p->credits, -1 );
+      ret = dialogue_YesNo( _("Request Fuel"), _("%s\n\nPay %s?"), msg, creditstr );
       if (ret == 0) {
          dialogue_msg( _("Request Fuel"), _("You decide not to pay.") );
          return;
@@ -601,8 +604,8 @@ static void comm_requestFuel( unsigned int wid, char *unused )
 
    /* Check if he has the money. */
    if (!player_hasCredits( price )) {
-      dialogue_msg( _("Request Fuel"), _("You need %"PRIu64" more credits!"),
-            price - player.p->credits);
+      credits2str( creditstr, price - player.p->credits, -1 );
+      dialogue_msg( _("Request Fuel"), _("You need %s more!"), creditstr );
       return;
    }
 

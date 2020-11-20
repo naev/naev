@@ -174,8 +174,8 @@ static int nebu_init_recursive( int iter )
    /* Generate puffs after the recursivity stuff. */
    nebu_generatePuffs();
 
-   /* Display loaded nebulas. */
-   DEBUG(_("Loaded %d Nebula Layers"), NEBULA_Z);
+   /* Display loaded nebulae. */
+   DEBUG( ngettext( "Loaded %d Nebula Layer", "Loaded %d Nebula Layers", NEBULA_Z ), NEBULA_Z );
 
    nebu_vbo_init();
    nebu_loaded = 1;

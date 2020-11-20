@@ -757,13 +757,13 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          return;
 
       pos = snprintf( alt, sizeof(alt),
-            "\aR%s", sp_display( slot->sslot->slot.spid ) );
+            "\aR%s", _( sp_display( slot->sslot->slot.spid ) ) );
       if (slot->sslot->slot.exclusive && (pos < (int)sizeof(alt)))
          pos += snprintf( &alt[pos], sizeof(alt)-pos,
                _(" [exclusive]") );
       if (pos < (int)sizeof(alt))
          snprintf( &alt[pos], sizeof(alt)-pos,
-               "\n\n%s", sp_description( slot->sslot->slot.spid ) );
+               "\n\n%s", _( sp_description( slot->sslot->slot.spid ) ) );
       toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
       return;
    }
@@ -784,7 +784,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aRUnique\a0") );
    if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
       pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aRSlot %s\a0"),
-            sp_display( o->slot.spid ) );
+            _( sp_display( o->slot.spid ) ) );
    if (pos < (int)sizeof(alt))
       pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
    if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
@@ -1559,7 +1559,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          "%s\n"
          "%s\n"
          "\a%c%s%.0f\a0\n"
-         "%s credits\n"
+         "%s\n"
          "\n"
          "%.0f\a0 tonnes\n"
          "%s average\n"
@@ -1857,10 +1857,9 @@ static void equipment_sellShip( unsigned int wid, char* str )
    credits2str( buf, price, 2 );
 
    /* Check if player really wants to sell. */
-   if (!dialogue_YesNo( _("Sell Ship"), ngettext(
-            "Are you sure you want to sell your ship %s for %s credit?",
-            "Are you sure you want to sell your ship %s for %s credits?",
-            price), shipname, buf))
+   if (!dialogue_YesNo( _("Sell Ship"),
+            _("Are you sure you want to sell your ship %s for %s?"),
+            shipname, buf))
       return;
 
    /* Store ship type. */
@@ -1876,9 +1875,8 @@ static void equipment_sellShip( unsigned int wid, char* str )
    equipment_regenLists( wid, 0, 1 );
 
    /* Display widget. */
-   dialogue_msg( _("Ship Sold"), ngettext(
-         "You have sold your ship %s for %s credit.",
-         "You have sold your ship %s for %s credits.", price), name, buf );
+   dialogue_msg( _("Ship Sold"),
+         _("You have sold your ship %s for %s."), name, buf );
 
    /* Run hook. */
    hparam[0].type    = HOOK_PARAM_STRING;

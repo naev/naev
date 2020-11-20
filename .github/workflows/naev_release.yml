@@ -93,13 +93,6 @@ jobs:
 
         VERSION="$(cat dat/VERSION)"
 
-        # Get version, negative minors mean betas
-        if [[ -n $(echo "${VERSION}" | grep "-") ]]; then
-          BASEVER=$(echo "${VERSION}" | sed 's/\.-.*//')
-          BETAVER=$(echo "${VERSION}" | sed 's/.*-//')
-          VERSION="${BASEVER}.0-beta.${BETAVER}"
-        fi
-
         mkdir -p dist/release/naev-$VERSION-linux-x86-64
         mkdir -p dist/release/tar
 
@@ -331,12 +324,6 @@ jobs:
       - name: Collect files for distribution
         run: |
           VERSION="$(cat dat/VERSION)"
-           # Get version, negative minors mean betas
-          if [[ -n $(echo "${VERSION}" | grep "-") ]]; then
-              BASEVER=$(echo "${VERSION}" | sed 's/\.-.*//')
-              BETAVER=$(echo "${VERSION}" | sed 's/.*-//')
-              VERSION="${BASEVER}.0-beta.${BETAVER}"
-          fi
 
           mv dist/linux-x86-64/linux-x86-64.tar.gz dist/release/naev-$VERSION-linux-x86-64.tar.gz
           mv dist/win64/naev-win64.exe dist/release/naev-$VERSION-win64.exe

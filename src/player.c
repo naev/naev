@@ -774,6 +774,11 @@ void player_cleanup (void)
    pause_setSpeed( 1.0 );
    sound_setSpeed( 1.0 );
 
+   /* Free version string. */
+   if (player.loaded_version != NULL)
+      free( player.loaded_version );
+   player.loaded_version = NULL;
+
    /* Clean up. */
    memset( &player, 0, sizeof(Player_t) );
    player_setFlag(PLAYER_CREATING);

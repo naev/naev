@@ -58,18 +58,18 @@ if HAVE_ITSTOOL
 # xargs -a $(XMLFILES) $(ITSTOOL) -i $(TRANSLATIONITS) > $@
 $(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
 	@echo "ITSTOOL $@"
-	cat $(XMLFILES) | tr '\n' '\0' | tr -d '\r' | xargs -0 $(ITSTOOL) -i $(TRANSLATIONITS) > $@
+	cat $(XMLFILES) | sed 's@^@$(top_srcdir)/@' | tr '\n' '\0' | tr -d '\r' | xargs -0 $(ITSTOOL) -i $(TRANSLATIONITS) > $@
 else # HAVE_ITSTOOL
 $(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
 	@echo "XGETTEXT $@"
-	$(XGETTEXT) --from-code=UTF-8 --its=$(TRANSLATIONITS) -f $(XMLFILES) -o $@
+	$(XGETTEXT) --from-code=UTF-8 --its=$(TRANSLATIONITS) -f $(XMLFILES) -D $(top_srcdir) -o $@
 endif # HAVE_ITSTOOL
 
 if HAVE_DATA
 pot: $(XMLPOT) $(LANGUAGEFILE)
 	$(MAKE) -C po
 	$(MAKE) -C po $(PACKAGE).pot
-	./utils/gettext.sh
+	$(top_srcdir)/utils/gettext.sh $(top_srcdir)
 
 $(LANGUAGEFILE): po/LINGUAS
 	tail -n +2 $< > $@
@@ -114,8 +114,8 @@ docs:
 
 soundtrack: naev-$(VERSION)-soundtrack.zip
 
-naev-$(VERSION)-soundtrack.zip: utils/soundtrack.py dat/snd/soundtrack.yaml
-	./utils/soundtrack.py
+naev-$(VERSION)-soundtrack.zip: $(top_srcdir)/utils/soundtrack.py dat/snd/soundtrack.yaml
+	$(top_srcdir)/utils/soundtrack.py --source-dir=$(top_srcdir)
 
 help:
 	@echo "Possible targets are:"

@@ -43,8 +43,8 @@ void commodity_exchange_open( unsigned int wid )
 {
    int i, ngoods;
    ImageArrayCell *cgoods;
-   int w, h;
-   int iw, ih;
+   int w, h, iw, ih, infoHeight;
+   const char *bufSInfo;
 
 
    /* Mark as generated. */
@@ -81,18 +81,20 @@ void commodity_exchange_open( unsigned int wid )
          128, 128, "imgStore", NULL, 1 );
 
    /* text */
-   window_addText( wid, -20, -190, LAND_BUTTON_WIDTH+80, 100, 0,
-         "txtSInfo", &gl_smallFont, NULL,
-         _("\anYou have\a0\n"
+   bufSInfo = _(
+           "\anYou have\a0\n"
            "\anPurchased at\a0\n"
            "\anMarket Price\a0\n"
            "\anFree Space\a0\n"
            "\anMoney\a0\n"
            "\anAv price here\a0\n"
-           "\anAv price all\a0") );
-   window_addText( wid, -20, -190, LAND_BUTTON_WIDTH/2 + 40, 100, 0,
+           "\anAv price all\a0");
+   infoHeight = gl_printHeightRaw(&gl_smallFont, LAND_BUTTON_WIDTH+80, bufSInfo);
+   window_addText( wid, -20, -190, LAND_BUTTON_WIDTH+80, infoHeight, 0,
+         "txtSInfo", &gl_smallFont, NULL, bufSInfo );
+   window_addText( wid, -20, -190, LAND_BUTTON_WIDTH/2 + 40, infoHeight, 0,
          "txtDInfo", &gl_smallFont, NULL, NULL );
-   window_addText( wid, -40, -300, LAND_BUTTON_WIDTH-20 + 80,
+   window_addText( wid, -40, -200-infoHeight, LAND_BUTTON_WIDTH-20 + 80,
          -300 - (46 + 2*LAND_BUTTON_HEIGHT) + h - (gl_smallFont.h + 6), 0,
          "txtDesc", &gl_smallFont, NULL, NULL );
 
@@ -131,11 +133,14 @@ void commodity_update( unsigned int wid, char* str )
 {
    (void)str;
    char buf[PATH_MAX];
-   char buf2[80], buf3[ECON_CRED_STRLEN];
+   char buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
    char *comname;
    Commodity *com;
    credits_t mean,globalmean;
-   double std,globalstd;
+   double std, globalstd;
+   char buf_mean[ECON_CRED_STRLEN], buf_globalmean[ECON_CRED_STRLEN];
+   char buf_std[ECON_CRED_STRLEN], buf_globalstd[ECON_CRED_STRLEN];
+   char buf_local_price[ECON_CRED_STRLEN];
    int owned;
    comname = toolkit_getImageArray( wid, "iarTrade" );
    if ((comname==NULL) || (strcmp( comname, _("None") )==0)) {
@@ -143,11 +148,11 @@ void commodity_update( unsigned int wid, char* str )
       nsnprintf( buf, PATH_MAX,
          _("N/A tonnes\n"
            "\n"
-           "N/A credits\n"
+           "N/A ¤\n"
            "%d tonnes\n"
-           "%s credits\n"
-           "N/A credits\n"
-           "N/A credits"),
+           "%s\n"
+           "N/A ¤\n"
+           "N/A ¤"),
          pilot_cargoFree(player.p),
          buf3 );
       window_modifyText( wid, "txtDInfo", buf );
@@ -162,31 +167,36 @@ void commodity_update( unsigned int wid, char* str )
    window_modifyImage( wid, "imgStore", com->gfx_store, 128, 128 );
 
    planet_averagePlanetPrice( land_planet, com, &mean, &std);
+   credits2str( buf_mean, mean, -1 );
+   nsnprintf( buf_std, sizeof(buf_std), "%.1f ¤", std ); /* TODO credit2str could learn to do this... */
    economy_getAveragePrice( com, &globalmean, &globalstd );
+   credits2str( buf_globalmean, globalmean, -1 );
+   nsnprintf( buf_globalstd, sizeof(buf_globalstd), "%.1f ¤", globalstd ); /* TODO credit2str could learn to do this... */
    /* modify text */
    buf2[0]='\0';
    owned=pilot_cargoOwned( player.p, comname );
    if ( owned > 0 )
-      nsnprintf( buf2, 80, _("%"PRIu64" credits"),com->lastPurchasePrice);
+      credits2str( buf2, com->lastPurchasePrice, -1 );
    credits2str( buf3, player.p->credits, 2 );
+   credits2str( buf_local_price, planet_commodityPrice( land_planet, com ), -1 );
    nsnprintf( buf, PATH_MAX,
               _( "%d tonnes\n"
                  "%s\n"
-                 "%" PRIu64 " credits\n"
+                 "%s/t\n"
                  "%d tonnes\n"
-                 "%s credits\n"
-                 "%" PRIu64 " ± %.1f\n"
-                 "%" PRIu64 " ± %.1f\n" ),
-              owned, buf2, planet_commodityPrice( land_planet, com ), pilot_cargoFree( player.p ), buf3, mean, std,
-              globalmean, globalstd );
+                 "%s\n"
+                 "%s/t ± %s/t\n"
+                 "%s/t ± %s/t\n" ),
+              owned, buf2, buf_local_price, pilot_cargoFree( player.p ), buf3, buf_mean, buf_std,
+              buf_globalmean, buf_globalstd );
 
    window_modifyText( wid, "txtDInfo", buf );
    nsnprintf( buf, PATH_MAX,
          "%s\n"
          "\n"
          "%s",
-         comname,
-         com->description);
+         _(comname),
+         _(com->description));
    window_modifyText( wid, "txtDesc", buf );
 
    /* Button enabling/disabling */
@@ -216,7 +226,7 @@ int commodity_canBuy( const char *name )
 
    if (!player_hasCredits( price )) {
       credits2str( buf, price - player.p->credits, 2 );
-      land_errDialogueBuild(_("You need %s more credits."), buf );
+      land_errDialogueBuild(_("You need %s more."), buf );
       failure = 1;
    }
    if (pilot_cargoFree(player.p) <= 0) {

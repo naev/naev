@@ -669,7 +669,9 @@ static int diff_patch( xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    if (diff->nfailed > 0) {
-      WARN(_("Unidiff '%s' failed to apply %d hunks."), diff->name, diff->nfailed);
+      WARN(
+         ngettext( "Unidiff '%s' failed to apply %d hunk.", "Unidiff '%s' failed to apply %d hunks.", diff->nfailed ),
+         diff->name, diff->nfailed );
       for (i=0; i<diff->nfailed; i++) {
          fail   = &diff->failed[i];
          target = fail->target.u.name;

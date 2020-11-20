@@ -134,23 +134,13 @@ static void joystick_initHaptic (void)
 }
 
 
+#if DEBUGGING
 /**
- * @brief Initializes the joystick subsystem.
- *
- *    @return 0 on success.
+ * @brief Describes detected joysticks in the debug log.
  */
-int joystick_init (void)
+static void joystick_debug (void)
 {
    int numjoysticks, i;
-
-   /* initialize the sdl subsystem */
-   if (SDL_InitSubSystem(SDL_INIT_JOYSTICK)) {
-      WARN(_("Unable to initialize the joystick subsystem"));
-      return -1;
-   }
-
-   if (SDL_InitSubSystem(SDL_INIT_HAPTIC) == 0)
-      has_haptic = 1;
 
    /* figure out how many joysticks there are */
    numjoysticks = SDL_NumJoysticks();
@@ -160,6 +150,29 @@ int joystick_init (void)
       jname = SDL_JoystickNameForIndex(i);
       DEBUG("  %d. %s", i, jname);
    }
+}
+#endif
+
+
+/**
+ * @brief Initializes the joystick subsystem.
+ *
+ *    @return 0 on success.
+ */
+int joystick_init (void)
+{
+   /* initialize the sdl subsystem */
+   if (SDL_InitSubSystem(SDL_INIT_JOYSTICK)) {
+      WARN(_("Unable to initialize the joystick subsystem"));
+      return -1;
+   }
+
+   if (SDL_InitSubSystem(SDL_INIT_HAPTIC) == 0)
+      has_haptic = 1;
+
+#if DEBUGGING
+   joystick_debug();
+#endif
 
    /* enables joystick events */
    SDL_JoystickEventState(SDL_ENABLE);

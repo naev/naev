@@ -27,8 +27,8 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>This gas giant serves as a resource gathering and advanced atmospheric research node. With stations dotting its orbit as low as is safe (and perhaps a bit lower than that). The facilities here are frequently used in the construction of advanced beam weaponry, allowing a larger-than-usual presence of the Za'lek militiary.</description>
-  <bar>This bar is signifigantly neater than most Za'lek spaceport bars. That is not to say it's orderly. The patrons are overwhelmingly gas miners, manufacturers and a few militia. The drinks glow suspiciously and the bartender smirks as you side-eye them.</bar>
+  <description>This gas giant serves as a resource gathering and advanced atmospheric research node. With stations dotting its orbit as low as is safe (and perhaps a bit lower than that). The facilities here are frequently used in the construction of advanced beam weaponry, allowing a larger-than-usual presence of the Za'lek military.</description>
+  <bar>This bar is significantly neater than most Za'lek spaceport bars. That is not to say it's orderly. The patrons are overwhelmingly gas miners, manufacturers and a few militia. The drinks glow suspiciously and the bartender smirks as you side-eye them.</bar>
  </general>
  <tech>
   <item>Beam 1</item>
