@@ -22,6 +22,7 @@ endif
 CODE_SOURCE = \
 	ai.c \
 	array.c \
+	attributes.h \
 	background.c \
 	board.c \
 	camera.c \
