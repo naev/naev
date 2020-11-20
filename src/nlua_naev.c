@@ -25,7 +25,6 @@
 
 
 /* Naev methods. */
-static int naev_lang( lua_State *L );
 static int naev_ticks( lua_State *L );
 static int naev_keyGet( lua_State *L );
 static int naev_keyEnable( lua_State *L );
@@ -70,20 +69,6 @@ int nlua_loadNaev( nlua_env env )
  *
  * @luamod naev
  */
-/**
- * @brief Gets the language Naev is currently using.
- *
- * @usage if naev.lang() == "en" then -- Language is english
- *
- *    @luatreturn string Two character identifier of the language.
- * @luafunc lang()
- */
-static int naev_lang( lua_State *L )
-{
-   /** @todo multilanguage stuff */
-   lua_pushstring(L,"en");
-   return 1;
-}
 
 /**
  * @brief Gets the SDL ticks.
