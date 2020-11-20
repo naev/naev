@@ -2,6 +2,7 @@
    The new "slim" GUI
 --]]
 
+require "numstring.lua"
 playerform = require "scripts/playerform.lua"
 
 function create()
@@ -1038,7 +1039,7 @@ function render( dt, dt_mod )
    local fuel = player.fuel()
 
    if fuel > 0 then
-      fuelstring = string.format( gettext.ngettext("%d (%d jump)", "%d (%d jumps)", jumps), fuel, jumps)
+      fuelstring = string.format( "%d (%s)", fuel, jumpstring(jumps) )
    else
       fuelstring = _("none")
    end
