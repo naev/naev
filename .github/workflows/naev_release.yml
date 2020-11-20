@@ -247,7 +247,7 @@ jobs:
             
       - name: Install Python Modules
         run: |
-          python3 -m "pip install mutagen"
+          python3 -m pip install mutagen
           
       - name: Checkout Naev Repository
         uses: actions/checkout@v2
