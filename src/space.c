@@ -472,7 +472,7 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int 
  *    @param landable Whether the planet must let the player land normally.
  *    @param services Services the planet must have.
  *    @param filter Filter function for including planets.
- *    @return The name of a random planet.
+ *    @return The name (internal/English) of a random planet.
  */
 char* space_getRndPlanet( int landable, unsigned int services,
       int (*filter)(Planet *p))
@@ -1330,7 +1330,7 @@ void space_update( const double dt )
             planet_setKnown( cur_system->planets[i] );
             player_message( _("You discovered \a%c%s\a\0."),
                   planet_getColourChar( cur_system->planets[i] ),
-                  cur_system->planets[i]->name );
+                  _(cur_system->planets[i]->name) );
             hparam[0].type  = HOOK_PARAM_STRING;
             hparam[0].u.str = "asset";
             hparam[1].type  = HOOK_PARAM_ASSET;

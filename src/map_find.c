@@ -455,11 +455,11 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
       /* Set fancy name. */
       if (ret)
          nsnprintf( found[n].display, sizeof(found[n].display),
-               _("%s (unknown route)"), sys->name );
+               _("%s (unknown route)"), _(sys->name) );
       else
          nsnprintf( found[n].display, sizeof(found[n].display),
                _("%s (%d jumps, %.0fk distance)"),
-               sys->name, found[n].jumps, found[n].distance/1000. );
+               _(sys->name), found[n].jumps, found[n].distance/1000. );
       n++;
    }
    free(names);
@@ -561,11 +561,11 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
       if (ret)
          nsnprintf( found[n].display, sizeof(found[n].display),
                _("\a%c%s (%s, unknown route)"), map_getPlanetColourChar(pnt),
-               names[i], sys->name );
+               _(names[i]), _(sys->name) );
       else
          nsnprintf( found[n].display, sizeof(found[n].display),
                _("\a%c%s (%s, %d jumps, %.0fk distance)"), map_getPlanetColourChar(pnt),
-               names[i], sys->name, found[n].jumps, found[n].distance/1000. );
+               _(names[i]), _(sys->name), found[n].jumps, found[n].distance/1000. );
       n++;
    }
    free(names);
@@ -710,7 +710,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
    iw = w - 452;
 
    outfit = outfit_get( toolkit_getList(wid, wgtname) );
-   window_modifyText( wid, "txtOutfitName", outfit->name );
+   window_modifyText( wid, "txtOutfitName", _(outfit->name) );
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 0, 0 );
 
    mass = outfit->mass;
@@ -719,7 +719,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
       mass += outfit_amount(outfit) * outfit_ammo(outfit)->mass;
    }
 
-   window_modifyText( wid, "txtDescription", outfit->description );
+   window_modifyText( wid, "txtDescription", _(outfit->description) );
    credits2str( buf2, outfit->price, 2 );
    credits2str( buf3, player.p->credits, 2 );
    nsnprintf( buf, PATH_MAX,
@@ -733,16 +733,16 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
          "%s\n"
          "%s\n"),
          player_outfitOwned(outfit),
-         outfit_slotName(outfit),
-         outfit_slotSize(outfit),
+         _(outfit_slotName(outfit)),
+         _(outfit_slotSize(outfit)),
          mass,
          buf2,
          buf3,
          (outfit->license != NULL) ? outfit->license : _("None") );
    window_modifyText( wid, "txtDDesc", buf );
-   window_modifyText( wid, "txtOutfitName", outfit->name );
-   window_modifyText( wid, "txtDescShort", outfit->desc_short );
-   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, outfit->desc_short ) );
+   window_modifyText( wid, "txtOutfitName", _(outfit->name) );
+   window_modifyText( wid, "txtDescShort", _(outfit->desc_short) );
+   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, _(outfit->desc_short) ) );
    window_moveWidget( wid, "txtSDesc", iw+20, -60-th-20 );
    window_moveWidget( wid, "txtDDesc", iw+20+60, -60-th-20 );
    th += gl_printHeightRaw( &gl_smallFont, 280, buf );
@@ -838,11 +838,11 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       if (ret)
          nsnprintf( found[n].display, sizeof(found[n].display),
                _("\a%c%s (%s, unknown route)"), map_getPlanetColourChar(pnt),
-               pnt->name, sys->name );
+               _(pnt->name), _(sys->name) );
       else
          nsnprintf( found[n].display, sizeof(found[n].display),
                _("\a%c%s (%s, %d jumps, %.0fk distance)"), map_getPlanetColourChar(pnt),
-               pnt->name, sys->name, found[n].jumps, found[n].distance/1000. );
+               _(pnt->name), _(sys->name), found[n].jumps, found[n].distance/1000. );
       n++;
    }
 
@@ -936,7 +936,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       /* Ask which one player wants. */
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
-         list[i] = strdup( names[i] );
+         list[i] = strdup( _(names[i]) );
       i = dialogue_list( _("Search Results"), list, len,
             _("Search results for ships matching '%s':"), name );
       if (i < 0) {

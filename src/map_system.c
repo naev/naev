@@ -188,7 +188,7 @@ void map_system_open( int sys_selected )
    window_setCancel( wid, map_system_close );
    window_handleKeys( wid, map_system_keyHandler );
    window_addText( wid, 40, h-30, 160, 20, 1, "txtSysname",
-         &gl_defFont, &cFontGreen, cur_sys_sel->name );
+         &gl_defFont, &cFontGreen, _(cur_sys_sel->name) );
    window_addImage( wid, -90 + 32, h-30, 0, 0, "imgFaction", NULL, 0 );
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -314,7 +314,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
 	 gl_blitScale( p->gfx_space, bx+2, by+(nshow-j-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &cWhite );
        }
        gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-j-0.5)*pitch + offset,
-            (cur_planet_sel == j ? &cFontGreen : &cFontWhite), -1., p->name );
+            (cur_planet_sel == j ? &cFontGreen : &cFontWhite), -1., _(p->name) );
      }
    }
    /* draw the star */
@@ -354,7 +354,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             (by + (nshow-0.5)*pitch + offset), &cFontRed, -1., _("Obscured by the nebula") );
    }
    gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-0.5)*pitch + offset,
-         (cur_planet_sel == 0 ? &cFontGreen : &cFontWhite), -1., sys->name );
+         (cur_planet_sel == 0 ? &cFontGreen : &cFontWhite), -1., _(sys->name) );
    if ( cur_planet_sel == 0 && nBgImgs > 0 ) {
       /* make use of space to draw a nice nebula */
       double imgw,imgh;
@@ -390,7 +390,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       int infopos=0;
      /* display sun information */
      /* Nebula. */
-      cnt+=nsnprintf( buf, sizeof(buf), _("System: %s\n%d star system\n"), sys->name, nBgImgs>0 ? nBgImgs-1 : 0 );
+      cnt+=nsnprintf( buf, sizeof(buf), _("System: %s\n%d star system\n"), _(sys->name), nBgImgs>0 ? nBgImgs-1 : 0 );
 
       if (sys->nebu_density > 0. ) {
          /* Volatility */
@@ -484,7 +484,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             if ( infopos == 0) /* First jump */
                infopos = nsnprintf( infobuf, PATH_MAX, _("   Jump points to:\n") );
             if ( sys_isKnown( sys->jumps[i].target ) ) {
-               infopos+=nsnprintf( &infobuf[infopos], PATH_MAX-infopos, "     %s\n", sys->jumps[i].target->name );
+               infopos+=nsnprintf( &infobuf[infopos], PATH_MAX-infopos, "     %s\n", _(sys->jumps[i].target->name) );
             } else {
                infopos+=nsnprintf( &infobuf[infopos], PATH_MAX-infopos, _("     Unknown system\n") );
             }
@@ -506,7 +506,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
 
      }
 
-     cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Planet: %s\nPlanetary class: %s    Population: %ld\n"), p->name, p->class, p->population );
+     cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Planet: %s\nPlanetary class: %s    Population: %ld\n"), _(p->name), p->class, p->population );
      if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
         cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("No space port here\n") );
      else if (p->can_land || p->bribed ) {
@@ -752,7 +752,7 @@ void map_system_updateSelected( unsigned int wid )
    for ( i=0; i<sys->nplanets; i++) {
       p = sys->planets[i];
       if ( planet_isKnown( p ) && (p->real == ASSET_REAL) ) {
-         textw = gl_printWidthRaw( &gl_smallFont, p->name );
+         textw = gl_printWidthRaw( &gl_smallFont, _(p->name) );
          if ( textw > nameWidth )
             nameWidth = textw;
          last = p;
@@ -765,7 +765,7 @@ void map_system_updateSelected( unsigned int wid )
       }
    }
    /* get width of star name text */
-   textw = gl_printWidthRaw( &gl_smallFont, sys->name );
+   textw = gl_printWidthRaw( &gl_smallFont, _(sys->name) );
    if ( textw > nameWidth )
       nameWidth = textw;
 
@@ -1001,7 +1001,7 @@ void map_system_buyCommodPrice( unsigned int wid, char *str )
                                1, 0, NULL);
       if ( syslist == NULL ) {
          /* no route */
-         dialogue_msg( _("Not available here"), _("Sorry, we don't have the commodity prices for %s available here at the moment."), cur_planetObj_sel->name );
+         dialogue_msg( _("Not available here"), _("Sorry, we don't have the commodity prices for %s available here at the moment."), _(cur_planetObj_sel->name) );
          return;
       } else {
          free ( syslist );
@@ -1019,7 +1019,7 @@ void map_system_buyCommodPrice( unsigned int wid, char *str )
    } else if ( cur_planetObj_sel->commodityPrice[0].updateTime >= t ) {
       dialogue_msgRaw( _("You already have newer information"), _("I've checked your computer, and you already have newer information than we can sell.") );
    } else {
-      ret=dialogue_YesNo( _("Purchase commodity prices?"), _("For %s, that will cost %s. The latest information we have is %g periods old."), cur_planetObj_sel->name, coststr, njumps*2+0.2);
+      ret=dialogue_YesNo( _("Purchase commodity prices?"), _("For %s, that will cost %s. The latest information we have is %g periods old."), _(cur_planetObj_sel->name), coststr, njumps*2+0.2);
       if ( ret ) {
          player_modCredits( -cost );
          economy_averageSeenPricesAtTime( cur_planetObj_sel, t );
