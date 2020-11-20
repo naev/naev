@@ -2,9 +2,9 @@ on:
   repository_dispatch:
     types: manual-release
   push:
-    #tags:
-    #  - 'v*.*.*'
-    #  - '!v*.*.*-beta*'
+    tags:
+      - 'v*.*.*'
+      - '!v*.*.*-beta*'
 
 name: Release
 
@@ -351,10 +351,10 @@ jobs:
         run: |
           chmod -R +x dist/staging/naev-steam-deployment
           cp -r dist/staging/naev-steam-deployment/* ${{ github.workspace }}
-          ./SteamDeploy.sh -c -v "dist/staging/naev-version" -t "dist/staging" -o "dist/out"
-        #env:
-        #  STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
-        #  STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}
-        #  TFA_IMAP: ${{ secrets.TFA_IMAP }}
-        #  TFA_PASS: ${{ secrets.TFA_PASS }}
-        #  TFA_USER: ${{ secrets.TFA_USER }}
+          ./SteamDeploy.sh -v "dist/staging/naev-version" -t "dist/staging" -o "dist/out"
+        env:
+          STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
+          STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}
+          TFA_IMAP: ${{ secrets.TFA_IMAP }}
+          TFA_PASS: ${{ secrets.TFA_PASS }}
+          TFA_USER: ${{ secrets.TFA_USER }}
