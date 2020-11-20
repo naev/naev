@@ -79,6 +79,7 @@ static void load_menu_close( unsigned int wdw, char *str );
 static void load_menu_load( unsigned int wdw, char *str );
 static void load_menu_delete( unsigned int wdw, char *str );
 static int load_load( nsave_t *save, const char *path );
+static int load_gameInternal( const char* file, const char* version );
 
 
 /**
@@ -444,7 +445,7 @@ static void load_menu_load( unsigned int wdw, char *str )
    menu_main_close();
 
    /* Try to load the game. */
-   if (load_game( ns[pos].path, diff )) {
+   if (load_game( &ns[pos] )) {
       /* Failed so reopen both. */
       menu_main();
       load_loadGameMenu();
@@ -568,17 +569,42 @@ err:
 
 
 /**
- * @brief Actually loads a new game based on file.
+ * @brief Loads the game from a file.
  *
  *    @param file File that contains the new game.
- *    @param version_diff \sa naev_versionCompare.
+ *    @return 0 on success
+ */
+int load_gameFile( const char *file )
+{
+   return load_gameInternal( file, naev_version(0) );
+}
+
+
+/**
+ * @brief Actually loads a new game based on save structure.
+ *
+ *    @param ns Save game to load.
  *    @return 0 on success.
  */
-int load_game( const char* file, int version_diff )
+int load_game( nsave_t *ns )
+{
+   return load_gameInternal( ns->path, ns->version );
+}
+
+
+/**
+ * @brief Actually loads a new game.
+ *
+ *    @param file File that contains the new game.
+ *    @param version Version string of game to load.
+ *    @return 0 on success.
+ */
+static int load_gameInternal( const char* file, const char* version )
 {
    xmlNodePtr node;
    xmlDocPtr doc;
    Planet *pnt;
+   int version_diff = (version!=NULL) ? naev_versionCompare(version) : 0;
 
    /* Make sure it exists. */
    if (!nfile_fileExists(file)) {
@@ -605,6 +631,7 @@ int load_game( const char* file, int version_diff )
    diff_load(node); /* Must load first to work properly. */
    pfaction_load(node); /* Must be loaded before player so the messages show up properly. */
    pnt = player_load(node);
+   player.loaded_version = strdup( (version!=NULL) ? version : naev_version(0) );
 
    /* Sanitize for new version. */
    if (version_diff <= -2) {
