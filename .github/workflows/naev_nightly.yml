@@ -305,7 +305,7 @@ jobs:
         with:
           path: ${{ github.workspace }}/dist/staging
 
-      - name: Collect files and rename for distribution
+      - name: Collect files and upload build to itch.io
         run: |
           BUILD_DATE="$(date +%Y%m%d)"
           VERSION="$(<"dist/staging/naev-version/VERSION")"
@@ -315,14 +315,8 @@ jobs:
           chmod +x dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
 
           tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64/"
-          tar -Jxf "dist/staging/naev-win64/steam-win64.tar.xz" -C "dist/out/win64/"
+          tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64/"
           mv "dist/out/win64/naev*.exe "dist/out/win64/naev.exe"
-
-      - name: Upload build to itch
-        run: |
-          BUILD_DATE="$(date +%Y%m%d)"
-          VERSION="$(<"dist/staging/naev-version/VERSION")"
-          SUFFIX="$VERSION.$BUILD_DATE"
 
           ./butler push --userversion "$SUFFIX" dist/out/lin64 projectsynchro/test-project:linux-x86-64-nightly
           ./butler push --userversion "$SUFFIX" dist/out/win64 projectsynchro/test-project:windows-x86-64-nightly
