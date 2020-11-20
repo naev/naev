@@ -19,7 +19,7 @@ BETA="false"
 SCRIPTROOT="$(pwd)"
 DRYRUN="false"
 
-while getopts dnv:s:t:o: OPTION "$@"; do
+while getopts dncv:s:t:o: OPTION "$@"; do
     case $OPTION in
     d)
         set -x
