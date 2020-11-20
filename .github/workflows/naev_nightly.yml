@@ -314,11 +314,11 @@ jobs:
           mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
           chmod +x dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
 
-          tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64/"
-          tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64/"
+          tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64"
+          tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64"
           mv "dist/out/win64/naev*.exe "dist/out/win64/naev.exe"
 
-          ./butler push --userversion "$SUFFIX" dist/out/lin64 projectsynchro/test-project:linux-x86-64-nightly
-          ./butler push --userversion "$SUFFIX" dist/out/win64 projectsynchro/test-project:windows-x86-64-nightly
+          ./butler push --userversion="$SUFFIX" dist/out/lin64 projectsynchro/test-project:linux-x86-64-nightly
+          ./butler push --userversion="$SUFFIX" dist/out/win64 projectsynchro/test-project:windows-x86-64-nightly
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
