@@ -138,7 +138,7 @@ void dialogue_alert( const char *fmt, ... )
    h = gl_printHeightRaw( &gl_smallFont, 260, msg );
 
    /* create the window */
-   wdw = window_create( "dlgAlert", "Warning", -1, -1, 300, 90 + h );
+   wdw = window_create( "dlgAlert", _("Warning"), -1, -1, 300, 90 + h );
    window_setData( wdw, &done );
    window_addText( wdw, 20, -30, 260, h,  0, "txtAlert",
          &gl_smallFont, NULL, msg );
