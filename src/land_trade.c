@@ -168,10 +168,10 @@ void commodity_update( unsigned int wid, char* str )
 
    planet_averagePlanetPrice( land_planet, com, &mean, &std);
    credits2str( buf_mean, mean, -1 );
-   nsnprintf( buf_std, sizeof(buf_std), "%.1f ¤", std ); /* TODO credit2str could learn to do this... */
+   nsnprintf( buf_std, sizeof(buf_std), _("%.1f ¤"), std ); /* TODO credit2str could learn to do this... */
    economy_getAveragePrice( com, &globalmean, &globalstd );
    credits2str( buf_globalmean, globalmean, -1 );
-   nsnprintf( buf_globalstd, sizeof(buf_globalstd), "%.1f ¤", globalstd ); /* TODO credit2str could learn to do this... */
+   nsnprintf( buf_globalstd, sizeof(buf_globalstd), _("%.1f ¤"), globalstd ); /* TODO credit2str could learn to do this... */
    /* modify text */
    buf2[0]='\0';
    owned=pilot_cargoOwned( player.p, comname );
