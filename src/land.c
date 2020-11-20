@@ -277,7 +277,7 @@ static void bar_open( unsigned int wid )
 
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
-   dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, land_planet->bar_description );
+   dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, _(land_planet->bar_description) );
 
    /* Approach when pressing enter */
    window_setAccept( wid, bar_approach );
@@ -294,7 +294,7 @@ static void bar_open( unsigned int wid )
    window_addText( wid, iw + 40, -40,
          w - iw - 60, dh, 0,
          "txtDescription", &gl_smallFont, NULL,
-         land_planet->bar_description );
+         _(land_planet->bar_description) );
 
    /* Add portrait text. */
    th = -40 - dh - 40;
@@ -412,7 +412,7 @@ static void bar_update( unsigned int wid, char* str )
 
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
-   dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, land_planet->bar_description );
+   dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, _(land_planet->bar_description) );
 
    /* Get array. */
    pos = toolkit_getImageArrayPos( wid, "iarMissions" );
@@ -1153,7 +1153,7 @@ static void land_createMainTab( unsigned int wid )
    window_addImage( wid, 20, -40, 400, 400, "imgPlanet", gfx_exterior, 1 );
    window_addText( wid, 440, -20-offset,
          w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,
-         "txtPlanetDesc", &gl_smallFont, NULL, land_planet->description);
+         "txtPlanetDesc", &gl_smallFont, NULL, _(land_planet->description) );
 
    /*
     * buttons
