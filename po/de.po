@@ -39073,10 +39073,12 @@ msgstr ""
 #. --    @param credits Number of credits.
 #. --    @return A string taking the form of "X credit" or "X credits".
 #. --
-#: dat/scripts/numstring.lua:26
+#: dat/scripts/numstring.lua:27
 #, lua-format
-msgid "%s ¤"
-msgstr "%s ¤"
+msgid "%s credit"
+msgid_plural "%s credits"
+msgstr[0] "%s Credit"
+msgstr[1] "%s Credits"
 
 #.
 #. -- @brief Properly converts a number of tonnes to a string, utilizing ngettext.
