@@ -90,7 +90,7 @@ if [ "$DRYRUN" == "false" ]; then
     # Trigger 2FA request and get 2FA code
     steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +quit || true
 
-    Wait a bit for the email to arrive
+    # Wait a bit for the email to arrive
     sleep 60s
     python3 "$SCRIPTROOT/2fa/get_2fa.py"
     STEAMCMD_TFA="$(<"$SCRIPTROOT/2fa/2fa.txt")"
