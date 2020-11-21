@@ -779,14 +779,14 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       return;
    pos = nsnprintf( alt, sizeof(alt),
          "%s",
-         o->name );
+         _(o->name) );
    if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
       pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aRUnique\a0") );
    if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
       pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aRSlot %s\a0"),
             _( sp_display( o->slot.spid ) ) );
    if (pos < (int)sizeof(alt))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
+      pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", _(o->desc_short) );
    if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
       snprintf( &alt[pos], sizeof(alt)-pos,
             ngettext("\n%.0f Tonne", "\n%.0f Tonnes", mass),
@@ -1906,7 +1906,7 @@ static void equipment_renameShip( unsigned int wid, char *str )
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    ship = player_getShip(shipname);
    newname = dialogue_input( _("Ship Name"), 1, 60,
-         _("Please enter a new name for your %s:"), ship->ship->name );
+         _("Please enter a new name for your %s:"), _(ship->ship->name) );
 
    /* Player cancelled the dialogue. */
    if (newname == NULL)

@@ -76,6 +76,7 @@ typedef struct Player_s {
    int autonav; /**< Current autonav state. */
    Vector2d autonav_pos; /**< Target autonav position. */
    char *autonavmsg; /**< String to print on arrival. */
+   char autonavcol; /**< Colour for autonav target description (e.g., hostile). */
    double tc_max; /**< Maximum time compression value (bounded by ship speed or conf setting). */
    double autonav_timer; /**< Timer that prevents time accel after a reset. */
    double mousex; /**< Mouse X position (for mouse flying). */
