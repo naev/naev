@@ -34,6 +34,7 @@
 /*
  * Vars.
  */
+static Ship **shipyard_list = NULL; /**< List of available ships, valid when the shipyard image-array widget is. */
 static Ship* shipyard_selected = NULL; /**< Currently selected shipyard ship. */
 
 
@@ -54,7 +55,6 @@ static void shipyard_find( unsigned int wid, char* str );
 void shipyard_open( unsigned int wid )
 {
    int i;
-   Ship **ships;
    ImageArrayCell *cships;
    int nships;
    int w, h;
@@ -69,7 +69,7 @@ void shipyard_open( unsigned int wid )
    land_tabGenerate(LAND_WINDOW_SHIPYARD);
 
    /* Init vars. */
-   shipyard_selected = NULL;
+   shipyard_cleanup();
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -149,24 +149,24 @@ void shipyard_open( unsigned int wid )
          &gl_smallFont, NULL, NULL );
 
    /* set up the ships to buy/sell */
-   ships = tech_getShip( land_planet->tech, &nships );
+   shipyard_list = tech_getShip( land_planet->tech, &nships );
    cships = calloc( MAX(1,nships), sizeof(ImageArrayCell) );
    if (nships <= 0) {
+      assert(shipyard_list == NULL); /* That's how tech_getShip works, but for comfort's sake... */
       cships[0].image = NULL;
       cships[0].caption = strdup(_("None"));
       nships    = 1;
    }
    else {
       for (i=0; i<nships; i++) {
-         cships[i].caption = strdup(ships[i]->name);
-         cships[i].image = gl_dupTexture(ships[i]->gfx_store);
-         cships[i].layers = gl_copyTexArray( ships[i]->gfx_overlays, ships[i]->gfx_noverlays, &cships[i].nlayers );
-         if (ships[i]->rarity > 0) {
-            t = rarity_texture( ships[i]->rarity );
+         cships[i].caption = strdup( _(shipyard_list[i]->name) );
+         cships[i].image = gl_dupTexture(shipyard_list[i]->gfx_store);
+         cships[i].layers = gl_copyTexArray( shipyard_list[i]->gfx_overlays, shipyard_list[i]->gfx_noverlays, &cships[i].nlayers );
+         if (shipyard_list[i]->rarity > 0) {
+            t = rarity_texture( shipyard_list[i]->rarity );
             cships[i].layers = gl_addTexArray( cships[i].layers, &cships[i].nlayers, t );
          }
       }
-      free(ships);
    }
    window_addImageArray( wid, 20, 20,
          iw, ih, "iarShipyard", 128., 128.,
@@ -185,14 +185,14 @@ void shipyard_open( unsigned int wid )
 void shipyard_update( unsigned int wid, char* str )
 {
    (void)str;
-   char *shipname;
+   int i;
    Ship* ship;
    char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
 
-   shipname = toolkit_getImageArray( wid, "iarShipyard" );
+   i = toolkit_getImageArrayPos( wid, "iarShipyard" );
 
    /* No ships */
-   if (strcmp(shipname,_("None"))==0) {
+   if (i < 0 || shipyard_list == NULL) {
       window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
       window_disableButton( wid, "btnBuyShip");
       window_disableButton( wid, "btnTradeShip");
@@ -226,7 +226,7 @@ void shipyard_update( unsigned int wid, char* str )
       return;
    }
 
-   ship = ship_get( shipname );
+   ship = shipyard_list[i];
    shipyard_selected = ship;
 
    /* update image */
@@ -285,15 +285,28 @@ void shipyard_update( unsigned int wid, char* str )
          (ship->license != NULL) ? _(ship->license) : _("None") );
    window_modifyText( wid,  "txtDDesc", buf );
 
-   if (!shipyard_canBuy( shipname, land_planet ))
+   if (!shipyard_canBuy( ship->name, land_planet ))
       window_disableButtonSoft( wid, "btnBuyShip");
    else
       window_enableButton( wid, "btnBuyShip");
 
-   if (!shipyard_canTrade( shipname ))
+   if (!shipyard_canTrade( ship->name ))
       window_disableButtonSoft( wid, "btnTradeShip");
    else
       window_enableButton( wid, "btnTradeShip");
+}
+
+
+/**
+ * @brief Cleans up shipyard data.
+ */
+void shipyard_cleanup (void)
+{
+   if (shipyard_list != NULL) {
+      free( shipyard_list );
+      shipyard_list = NULL;
+   }
+   shipyard_selected = NULL;
 }
 
 
@@ -328,19 +341,20 @@ static void shipyard_rmouse( unsigned int wid, char* widget_name )
 static void shipyard_buy( unsigned int wid, char* str )
 {
    (void)str;
-   char *shipname, buf[ECON_CRED_STRLEN];
+   int i;
+   char buf[ECON_CRED_STRLEN];
    Ship* ship;
    HookParam hparam[2];
 
-   shipname = toolkit_getImageArray( wid, "iarShipyard" );
-   if (strcmp(shipname, _("None")) == 0)
+   i = toolkit_getImageArrayPos( wid, "iarShipyard" );
+   if (i < 0 || shipyard_list == NULL)
       return;
 
-   ship = ship_get( shipname );
+   ship = shipyard_list[i];
 
    credits_t targetprice = ship_buyPrice(ship);
 
-   if (land_errDialogue( shipname, "buyShip" ))
+   if (land_errDialogue( ship->name, "buyShip" ))
       return;
 
    credits2str( buf, targetprice, 2 );
@@ -360,7 +374,7 @@ static void shipyard_buy( unsigned int wid, char* str )
 
    /* Run hook. */
    hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = shipname;
+   hparam[0].u.str   = ship->name;
    hparam[1].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "ship_buy", hparam );
    if (land_takeoff)
@@ -478,20 +492,21 @@ int shipyard_canTrade( const char *shipname )
 static void shipyard_trade( unsigned int wid, char* str )
 {
    (void)str;
-   char *shipname, buf[ECON_CRED_STRLEN], buf2[ECON_CRED_STRLEN],
+   int i;
+   char buf[ECON_CRED_STRLEN], buf2[ECON_CRED_STRLEN],
          buf3[ECON_CRED_STRLEN], buf4[ECON_CRED_STRLEN];
    Ship* ship;
 
-   shipname = toolkit_getImageArray( wid, "iarShipyard" );
-   if (strcmp(shipname, _("None")) == 0)
+   i = toolkit_getImageArrayPos( wid, "iarShipyard" );
+   if (i < 0 || shipyard_list == NULL)
       return;
 
-   ship = ship_get( shipname );
+   ship = shipyard_list[i];
 
    credits_t targetprice = ship_buyPrice(ship);
    credits_t playerprice = player_shipPrice(player.p->name);
 
-   if (land_errDialogue( shipname, "tradeShip" ))
+   if (land_errDialogue( ship->name, "tradeShip" ))
       return;
 
    credits2str( buf, targetprice, 2 );

@@ -1445,6 +1445,9 @@ void land_cleanup (void)
    /* Clean up bar missions. */
    npc_clear();
 
+   /* Clean up shipyard. */
+   shipyard_cleanup();
+
    /* Clean up rescue Lua. */
    if (rescue_env != LUA_NOREF) {
       nlua_freeEnv(rescue_env);
