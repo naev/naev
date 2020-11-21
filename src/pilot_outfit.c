@@ -871,10 +871,10 @@ void pilot_fillAmmo( Pilot* pilot )
 
 
 /**
- * @brief Gets all the outfits in nice text form.
+ * @brief Gets all the outfits in nice (localized) text form.
  *
  *    @param pilot Pilot to get the outfits from.
- *    @@return A list of all the outfits in a nice form.
+ *    @return A list of all the outfits in a nice form (in the currently set language).
  */
 char* pilot_getOutfits( const Pilot* pilot )
 {
@@ -891,7 +891,7 @@ char* pilot_getOutfits( const Pilot* pilot )
       if (pilot->outfits[i]->outfit == NULL)
          continue;
       p += nsnprintf( &buf[p], len-p, (p==0) ? "%s" : ", %s",
-            pilot->outfits[i]->outfit->name );
+            _(pilot->outfits[i]->outfit->name) );
    }
 
    if (p==0)

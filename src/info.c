@@ -775,7 +775,7 @@ static void cargo_genList( unsigned int wid )
       for (i=0; i<player.p->ncommodities; i++) {
          buf[i] = malloc(128);
          nsnprintf(buf[i],128, "%s%s %d",
-               player.p->commodities[i].commodity->name,
+               _(player.p->commodities[i].commodity->name),
                (player.p->commodities[i].id != 0) ? "*" : "",
                player.p->commodities[i].quantity);
       }
