@@ -32,4 +32,7 @@
   <!-- Outfits -->
   <its:translateRule selector="/outfit/@name" translate="yes"/>
   <its:translateRule selector="/outfit/general/description" translate="yes"/>
+
+  <!-- Star Systems -->
+  <its:translateRule selector="/ssys/@name" translate="yes"/>
 </its:rules>
