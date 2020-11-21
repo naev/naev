@@ -1476,3 +1476,16 @@
    license: PD
    overlay:
      - portrait_exclamation.png
+- nenau (based on work from Vega Strike and Kinniken):
+   license: GPLv3+
+   map:
+     - dvaered.png
+     - frontier.png
+     - sirius.png
+     - soromid.png
+     - zalek.png
+- nenau:
+   license: GPLv3+
+   logo:
+     - miner_small.png
+     - miner_tiny.png
