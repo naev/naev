@@ -590,18 +590,19 @@ static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, doub
 
 
 static void map_system_array_update( unsigned int wid, char* str ) {
-   char *name;
+   int i;
    Outfit *outfit;
    Ship *ship;
    double mass;
    char buf2[ECON_CRED_STRLEN], buf4[PATH_MAX];
 
-   name = toolkit_getImageArray( wid, str );
-   if ( name == NULL ) {
+   i = toolkit_getImageArrayPos( wid, str );
+   if ( i < 0 ) {
       infobuf[0]='\0';
       return;
    }
    if ( ( strcmp( str, MAPSYS_OUTFITS ) == 0 ) ) {
+      char *name = toolkit_getImageArray( wid, str );
       outfit = outfit_get( name );
 
       /* new text */
@@ -635,6 +636,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                  buf4 );
 
    } else if ( ( strcmp( str, MAPSYS_SHIPS ) == 0 ) ) {
+      char *name = toolkit_getImageArray( wid, str );
       ship = ship_get( name );
 
    /* update text */
@@ -696,7 +698,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       char buf_std[ECON_CRED_STRLEN], buf_globalstd[ECON_CRED_STRLEN];
       char buf_buy_price[ECON_CRED_STRLEN];
       int owned;
-      com = commodity_get( name );
+      com = cur_planetObj_sel->commodities[i];
       economy_getAveragePrice( com, &globalmean, &globalstd );
       credits2str( buf_mean, mean, -1 );
       nsnprintf( buf_std, sizeof(buf_std), "%.1f ¤", std ); /* TODO credit2str could learn to do this... */
@@ -704,7 +706,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       credits2str( buf_globalmean, globalmean, -1 );
       nsnprintf( buf_globalstd, sizeof(buf_globalstd), "%.1f ¤", globalstd ); /* TODO credit2str could learn to do this... */
       buf4[0]='\0';
-      owned=pilot_cargoOwned( player.p, name );
+      owned=pilot_cargoOwned( player.p, com->name );
       if ( owned > 0 ) {
          credits2str( buf_buy_price, com->lastPurchasePrice, -1 );
          nsnprintf( buf4, PATH_MAX, ", purchased at %s/t", buf_buy_price ); /* FIXME See below. */
@@ -715,7 +717,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                    "\anYou have:\a0 %d tonnes%s\n"
                    "\anAverage price seen here:\a0 %s/t ± %s/t\n"
                    "\anAverage price seen everywhere:\a0 %s/t ± %s/t\n"),
-                 _(name),
+                 _(com->name),
                  _(com->description),
                  owned,
                  buf4, /* FIXME: do not paste in an untranslated sentence fragment... or even a translated one. */
@@ -964,7 +966,7 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
       cgoods = calloc( ngoods, sizeof(ImageArrayCell) );
       for ( i=0; i<ngoods; i++ ) {
          cgoods[i].image = gl_dupTexture( cur_planetObj_sel->commodities[i]->gfx_store );
-         cgoods[i].caption = strdup( cur_planetObj_sel->commodities[i]->name);
+         cgoods[i].caption = strdup( _(cur_planetObj_sel->commodities[i]->name) );
       }
       /* set up the goods to buy/sell */
       xw = (w - nameWidth - pitch - 60)/2;
