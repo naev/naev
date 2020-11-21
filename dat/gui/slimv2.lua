@@ -2,6 +2,8 @@
    The revamped version of the slim GUI
 ]]--
 
+require "numstring.lua"
+
 function create()
 
    --Get player
@@ -492,7 +494,7 @@ function render( dt, dt_mod )
 
    --Bars
    --Fuel
-   txt = tostring(round( fuel )) .. " (" .. tostring(jumps) .. " jumps)"
+   txt = string.format( "%.0f (%s)", fuel, jumpstring(jumps) )
    col = col_txt_std
    if jumps == 1 then
       col = col_txt_wrn
