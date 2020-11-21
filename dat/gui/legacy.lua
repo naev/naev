@@ -153,7 +153,7 @@ function update_cargo ()
       if v.q == 0 then
          misc_cargo = misc_cargo .. v.name
       else
-         misc_cargo = misc_cargo .. string.format( "%d"  .. "t %s", v.q, v.name )
+         misc_cargo = misc_cargo .. string.format( "%d"  .. "t %s", v.q, _(v.name) )
       end
       if v.m then
          misc_cargo = misc_cargo .. "*"
@@ -254,7 +254,7 @@ end
 function render_weapon ()
    col = col_console
    ws_name, ws = pp:weapset()
-   gfx.print( nil, ws_name, weapon_x, weapon_y-25, col, weapon_w, true )
+   gfx.print( nil, _(ws_name), weapon_x, weapon_y-25, col, weapon_w, true )
    --[[
    local sec, amm, rdy = pp:secondary()
    if sec ~= nil then
@@ -265,10 +265,10 @@ function render_weapon ()
          col = col_gray
       end
       if amm ~= nil then
-         gfx.print( nil, sec, weapon_x, weapon_y-17, col, weapon_w, true )
+         gfx.print( nil, _(sec), weapon_x, weapon_y-17, col, weapon_w, true )
          gfx.print( true, string.format("%d", amm), weapon_x, weapon_y-32, col_gray, weapon_w, true )
       else
-         gfx.print( nil, sec, weapon_x, weapon_y-25, col, weapon_w, true )
+         gfx.print( nil, _(sec), weapon_x, weapon_y-25, col, weapon_w, true )
       end
    else
       gfx.print( nil, _("Secondary"), weapon_x, weapon_y-17, col_console, weapon_w, true )
