@@ -41,6 +41,7 @@
 static StarSystem *cur_sys_sel = NULL; /**< Currently selected system */
 static int cur_planet_sel = 0; /**< Current planet selected by user (0 = star). */
 static Planet *cur_planetObj_sel = NULL;
+static Outfit **cur_planet_sel_outfits = NULL;
 static Ship **cur_planet_sel_ships = NULL;
 static int pitch = 0; /**< pitch of planet images. */
 static int nameWidth = 0; /**< text width of planet name */
@@ -137,6 +138,10 @@ void map_system_close( unsigned int wid, char *str ) {
    nBgImgs = 0;
    free( bgImages );
    bgImages=NULL;
+   if( cur_planet_sel_outfits != NULL ) {
+      free( cur_planet_sel_outfits );
+      cur_planet_sel_outfits = NULL;
+   }
    if( cur_planet_sel_ships != NULL ) {
       free( cur_planet_sel_ships );
       cur_planet_sel_ships = NULL;
@@ -607,8 +612,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       return;
    }
    if ( ( strcmp( str, MAPSYS_OUTFITS ) == 0 ) ) {
-      char *name = toolkit_getImageArray( wid, str );
-      outfit = outfit_get( name );
+      outfit = cur_planet_sel_outfits[i];
 
       /* new text */
       price2str( buf2, outfit->price, player.p->credits, 2 );
@@ -849,7 +853,6 @@ void map_system_updateSelected( unsigned int wid )
 static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float outfitSpace, float shipSpace )
 {
    int i;
-   Outfit **outfits;
    ImageArrayCell *coutfits;
    int noutfits;
    int w, h;
@@ -864,21 +867,22 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
    } else {
       if ( widget_exists( wid, MAPSYS_OUTFITS ) ) {
          window_destroyWidget( wid, MAPSYS_OUTFITS );
+         free( cur_planet_sel_outfits );
+         cur_planet_sel_outfits = NULL;
       }
+      assert(cur_planet_sel_outfits == NULL);
    }
    planetDone = cur_planetObj_sel;
 
    /* set up the outfits to buy/sell */
    if ( cur_planetObj_sel == NULL ) {
       noutfits = 0;
-      outfits = NULL;
    } else {
-      outfits = tech_getOutfit( cur_planetObj_sel->tech, &noutfits );
+      cur_planet_sel_outfits = tech_getOutfit( cur_planetObj_sel->tech, &noutfits );
    }
 
    if (noutfits > 0) {
-      coutfits = outfits_imageArrayCells( outfits, &noutfits );
-      free( outfits );
+      coutfits = outfits_imageArrayCells( cur_planet_sel_outfits, &noutfits );
 
       xw = ( w - nameWidth - pitch - 60 ) / 2;
       xpos = 35 + pitch + nameWidth + xw;
