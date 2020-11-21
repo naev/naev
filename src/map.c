@@ -606,7 +606,7 @@ static void map_update( unsigned int wid )
    /*nsnprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
    for (i=PLANET_SERVICE_MISSIONS; i<=PLANET_SERVICE_SHIPYARD; i<<=1)
       if (services & i)
-         p += nsnprintf( &buf[p], PATH_MAX-p, "%s\n", planet_getServiceName(i) );
+         p += nsnprintf( &buf[p], PATH_MAX-p, "%s\n", _(planet_getServiceName(i)) );
    if (buf[0] == '\0')
       p += nsnprintf( &buf[p], PATH_MAX-p, _("None"));
    (void)p;
@@ -1544,7 +1544,8 @@ static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Comm
  *    @param wid Window to which the text widget belongs.
  *    @param name Name of the text widget.
  *    @param sys System whose faction presence we're reporting.
- *    @param omniscient Whether to dispaly complete information (editor view)
+ *    @param omniscient Whether to dispaly complete information (editor view).
+ *                      (As currently interpreted, this also means un-translated, even if the user isn't using English.)
  */
 void map_updateFactionPresence( const unsigned int wid, const char *name, const StarSystem *sys, int omniscient )
 {

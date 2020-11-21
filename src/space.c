@@ -171,18 +171,25 @@ int space_sysSave( xmlTextWriterPtr writer );
 int space_sysLoad( xmlNodePtr parent );
 
 
+/**
+ * @brief Gets the (English) name for a service code.
+ *
+ * @param service One of the \p PLANET_SERVICE_* enum values.
+ * @return English name, reversible via \p planet_getService()
+ * and presentable via \p _().
+ */
 char* planet_getServiceName( int service )
 {
    switch (service) {
-      case PLANET_SERVICE_LAND:        return "Land";
-      case PLANET_SERVICE_INHABITED:   return "Inhabited";
-      case PLANET_SERVICE_REFUEL:      return "Refuel";
-      case PLANET_SERVICE_BAR:         return "Bar";
-      case PLANET_SERVICE_MISSIONS:    return "Missions";
-      case PLANET_SERVICE_COMMODITY:   return "Commodity";
-      case PLANET_SERVICE_OUTFITS:     return "Outfits";
-      case PLANET_SERVICE_SHIPYARD:    return "Shipyard";
-      case PLANET_SERVICE_BLACKMARKET: return "Blackmarket";
+      case PLANET_SERVICE_LAND:        return N_("Land");
+      case PLANET_SERVICE_INHABITED:   return N_("Inhabited");
+      case PLANET_SERVICE_REFUEL:      return N_("Refuel");
+      case PLANET_SERVICE_BAR:         return N_("Bar");
+      case PLANET_SERVICE_MISSIONS:    return N_("Missions");
+      case PLANET_SERVICE_COMMODITY:   return N_("Commodity");
+      case PLANET_SERVICE_OUTFITS:     return N_("Outfits");
+      case PLANET_SERVICE_SHIPYARD:    return N_("Shipyard");
+      case PLANET_SERVICE_BLACKMARKET: return N_("Blackmarket");
    }
    return NULL;
 }
