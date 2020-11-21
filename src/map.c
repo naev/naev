@@ -1544,7 +1544,8 @@ static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Comm
  *    @param wid Window to which the text widget belongs.
  *    @param name Name of the text widget.
  *    @param sys System whose faction presence we're reporting.
- *    @param omniscient Whether to dispaly complete information (editor view)
+ *    @param omniscient Whether to dispaly complete information (editor view).
+ *                      (As currently interpreted, this also means un-translated, even if the user isn't using English.)
  */
 void map_updateFactionPresence( const unsigned int wid, const char *name, const StarSystem *sys, int omniscient )
 {
