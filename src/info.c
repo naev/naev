@@ -1297,7 +1297,7 @@ static void info_shiplogAdd( unsigned int wid, char *str )
       tmp = dialogue_inputRaw( _("Add a log entry"), 0, 4096, _("Add an entry to your diary:") );
       if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
          if ( shiplog_getID( "Diary" ) == -1 )
-              shiplog_create( "Diary", "Your Diary", "Diary", 0, 0 );
+              shiplog_create( "Diary", _("Your Diary"), "Diary", 0, 0 );
          shiplog_append( "Diary", tmp );
          free( tmp );
       }
