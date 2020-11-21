@@ -7,7 +7,7 @@
 # Written by Jack Greiner (ProjectSynchro on Github: https://github.com/ProjectSynchro/)
 #
 # This script should be run after querying for a Steam Guard code (attempting to login)
-# The 2FA code will be saved to a file called "2fa.txt" in the same directory as this python script is run
+# The 2FA code will be saved to a file called "2fa.txt" in the same directory as this python script is located.
 #
 
 import imaplib
