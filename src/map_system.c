@@ -41,6 +41,7 @@
 static StarSystem *cur_sys_sel = NULL; /**< Currently selected system */
 static int cur_planet_sel = 0; /**< Current planet selected by user (0 = star). */
 static Planet *cur_planetObj_sel = NULL;
+static Ship **cur_planet_sel_ships = NULL;
 static int pitch = 0; /**< pitch of planet images. */
 static int nameWidth = 0; /**< text width of planet name */
 static int nshow = 0; /**< number of planets shown. */
@@ -136,6 +137,10 @@ void map_system_close( unsigned int wid, char *str ) {
    nBgImgs = 0;
    free( bgImages );
    bgImages=NULL;
+   if( cur_planet_sel_ships != NULL ) {
+      free( cur_planet_sel_ships );
+      cur_planet_sel_ships = NULL;
+   }
 
    window_close( wid, str );
 
@@ -636,8 +641,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                  buf4 );
 
    } else if ( ( strcmp( str, MAPSYS_SHIPS ) == 0 ) ) {
-      char *name = toolkit_getImageArray( wid, str );
-      ship = ship_get( name );
+      ship = cur_planet_sel_ships[i];
 
    /* update text */
       price2str( buf2, ship_buyPrice( ship ), player.p->credits, 2 );
@@ -891,7 +895,6 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
 
 static void map_system_genShipsList( unsigned int wid, float goodsSpace, float outfitSpace, float shipSpace )
 {
-   Ship **ships;
    ImageArrayCell *cships;
    int nships;
    int xpos, ypos, xw, yh;
@@ -907,24 +910,25 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
    } else {
       if ( widget_exists( wid, MAPSYS_SHIPS ) ) {
          window_destroyWidget( wid, MAPSYS_SHIPS );
+         free( cur_planet_sel_ships );
+         cur_planet_sel_ships = NULL;
       }
+      assert(cur_planet_sel_ships == NULL);
    }
    planetDone = cur_planetObj_sel;
 
    /* set up the outfits to buy/sell */
    if ( cur_planetObj_sel == NULL ) {
       nships = 0;
-      ships = NULL;
    } else {
-      ships = tech_getShip( cur_planetObj_sel->tech, &nships );
+      cur_planet_sel_ships = tech_getShip( cur_planetObj_sel->tech, &nships );
    }
    if (nships > 0) {
       cships = calloc( nships, sizeof(ImageArrayCell) );
       for ( i=0; i<nships; i++ ) {
-         cships[i].image = gl_dupTexture( ships[i]->gfx_store );
-         cships[i].caption = strdup( ships[i]->name );
+         cships[i].image = gl_dupTexture( cur_planet_sel_ships[i]->gfx_store );
+         cships[i].caption = strdup( _(cur_planet_sel_ships[i]->name) );
       }
-      free( ships );
       xw = (w - nameWidth - pitch - 60)/2;
       xpos = 35 + pitch + nameWidth + xw;
       i = (goodsSpace!=0) + (outfitSpace!=0) + (shipSpace!=0);
