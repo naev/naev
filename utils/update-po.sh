@@ -14,10 +14,10 @@ set -x
 # General file
 TMPFILE=$(mktemp)
 echo "src/log.h" > "$TMPFILE"
-find src/ -name "*.c" -and \( -not -name "shaders.gen.c" \) >> "$TMPFILE"
+find src/ -name "*.c" -not \( -name "shaders.gen.c" -or -name "shaders_c_gen.c" \) >> "$TMPFILE"
 find dat/ -name "*.lua" >> "$TMPFILE"
 
-cat "$TMPFILE" | sort | tee "$ROOT/po/POTFILES_COMBINED.in" > "$ROOT/po/POTFILES.in"
+cat "$TMPFILE" | LC_ALL=C sort | tee "$ROOT/po/POTFILES_COMBINED.in" > "$ROOT/po/POTFILES.in"
 
 rm "$TMPFILE" # clean-up
 
@@ -26,8 +26,9 @@ find dat/ -maxdepth 1 -name "*.xml" > "$TMPFILE"
 find dat/assets -name "*.xml" >> "$TMPFILE"
 find dat/outfits -name "*.xml" >> "$TMPFILE"
 find dat/ships -name "*.xml" >> "$TMPFILE"
+find dat/ssys -name "*.xml" >> "$TMPFILE"
 
-cat "$TMPFILE" | sort | tee -a "$ROOT/po/POTFILES_COMBINED.in" > "$ROOT/po/POTFILES_XML.in"
+cat "$TMPFILE" | LC_ALL=C sort | tee -a "$ROOT/po/POTFILES_COMBINED.in" > "$ROOT/po/POTFILES_XML.in"
 echo "po/xml.pot" >> "$ROOT/po/POTFILES.in"
 
 rm "$TMPFILE" # clean-up
