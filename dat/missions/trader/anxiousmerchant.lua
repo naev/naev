@@ -110,7 +110,7 @@ function create()
 end
 
 function accept()
-   if not tk.yesno(title[1], text[1]:format(tonnestring(cargo_size), cargo, _(dest_planet:name()), _(dest_planet:name()), _(dest_sys:name()))) then
+   if not tk.yesno(title[1], text[1]:format(tonnestring(cargo_size), _(cargo), _(dest_planet:name()), _(dest_planet:name()), _(dest_sys:name()))) then
       misn.finish()
    end
    if player.pilot():cargoFree() < cargo_size then

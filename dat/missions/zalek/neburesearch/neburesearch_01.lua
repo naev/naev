@@ -117,19 +117,19 @@ function accept()
     t_planet[7] = planet.get("Vilati Vilata")
     t_planet[8] = homeworld
     
-    tk.msg(title[1], string.format(text[2], _(t_sys[2]:name()), _(t_sys[3]:name()), _(t_sys[4]:name()), station, homeworld))
+    tk.msg(title[1], string.format(text[2], _(t_sys[2]:name()), _(t_sys[3]:name()), _(t_sys[4]:name()), _(station), _(homeworld)))
     
     -- Set up mission information
     destsys = t_sys[1]
     misn.setTitle(mtitle)
     misn.setReward(string.format(misn_reward, creditstring(credits)))
-    misn.setDesc(string.format(mdesc, station, _(t_sys[5]:name())))
+    misn.setDesc(string.format(mdesc, _(station), _(t_sys[5]:name())))
     nextsys = getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
     
     misn.accept()
     osd_msg[1] = string.format(osd_msg[1], t_planet[5]:name(), destsys:name())
-    osd_msg[2] = string.format(osd_msg[2], station, t_sys[5]:name())
-    osd_msg[3] = string.format(osd_msg[3], homeworld, t_sys[8]:name())
+    osd_msg[2] = string.format(osd_msg[2], _(station), t_sys[5]:name())
+    osd_msg[3] = string.format(osd_msg[3], _(homeworld), t_sys[8]:name())
     misn.osdCreate(osd_title, osd_msg)
     misn_marker = misn.markerAdd(destsys, "low")
     
@@ -194,7 +194,7 @@ function land()
         tk.msg(landfailtitle, landfailtext)
         misn.finish(false)
     elseif planet.cur() == planet.get(station) and not station_visited then
-        tk.msg(refueltitle, string.format(refueltext, homeworld))
+        tk.msg(refueltitle, string.format(refueltext, _(homeworld)))
         station_visited = true
         misn.osdActive(3)
     elseif planet.cur() == planet.get(homeworld) then
