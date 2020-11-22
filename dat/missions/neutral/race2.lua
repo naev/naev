@@ -324,7 +324,7 @@ function land()
          tk.msg(ftitle[3], ftext[3])
          misn.finish(false)
       end
-      else
+   else
       tk.msg(ftitle[2], ftext[2])
       misn.finish(false)
    end
