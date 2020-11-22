@@ -37,9 +37,11 @@ CLEANFILES = $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE) $(LICENSEFILE)
 if HAVE_NLS
 XMLFILES    = $(top_srcdir)/po/POTFILES_XML.in
 TRANSLATIONITS = $(top_srcdir)/po/its/translation.its
+CREDITSPOT  = $(top_builddir)/po/credits.pot
+CREDITSTEXT = $(top_builddir)/dat/AUTHORS $(top_builddir)/dat/intro
 XMLPOT      = $(top_builddir)/po/xml.pot
 EXTRA_DIST += $(XMLFILES) $(TRANSLATIONITS)
-CLEANFILES += $(XMLPOT)
+CLEANFILES += $(CREDITSPOT) $(XMLPOT)
 endif # HAVE_NLS
 
 .PHONY: data pot docs utils help install-ndata soundtrack
@@ -53,6 +55,9 @@ $(LICENSEFILE): $(top_srcdir)/LICENSE
 	cp $< $@
 
 if HAVE_NLS
+$(CREDITSPOT): $(CREDITSTEXT)
+	@echo "  AWK   $@"
+	awk -f $(top_srcdir)/utils/update-po-credits.awk $(CREDITSTEXT) > $@
 if HAVE_ITSTOOL
 # On windows it seems like '\r' are leaking into filenames and breaking the
 # following command, so we use lots of ugly tr instead ¯\_(ツ)_/¯
@@ -67,7 +72,7 @@ $(XMLPOT): $(XMLFILES) $(TRANSLATIONITS)
 endif # HAVE_ITSTOOL
 
 if HAVE_DATA
-pot: $(XMLPOT) $(LANGUAGEFILE)
+pot: $(CREDITSPOT) $(XMLPOT) $(LANGUAGEFILE)
 	$(MAKE) -C po
 	$(MAKE) -C po $(PACKAGE).pot
 	$(top_srcdir)/utils/gettext.sh $(top_srcdir)
