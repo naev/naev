@@ -609,9 +609,9 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       if (outfit->license == NULL)
          strncpy( buf4, _("None"), sizeof(buf4) );
       else if (player_hasLicense( outfit->license ))
-         strncpy( buf4, (outfit->license), sizeof(buf4) );
+         strncpy( buf4, _(outfit->license), sizeof(buf4) );
       else
-         nsnprintf( buf4, sizeof( buf4 ), "\ar%s\a0", (outfit->license) );
+         nsnprintf( buf4, sizeof( buf4 ), "\ar%s\a0", _(outfit->license) );
       buf4[ sizeof( buf4 )-1 ] = '\0';
 
       mass = outfit->mass;
