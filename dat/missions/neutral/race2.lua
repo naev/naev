@@ -312,7 +312,7 @@ end
 function land()
    if target[4] == 4 then
       if racers[1]:exists() and racers[2]:exists() and racers[3]:exists() then
-         if player.numOutfit("Racing Trophy") > 0 then
+         if choice==2 and player.numOutfit("Racing Trophy") <= 0 then
             tk.msg(wintitle, firstwintext:format(creditstring(credits)))
             player.addOutfit("Racing Trophy")
          else
