@@ -66,11 +66,11 @@ mkdir -p "$STEAMPATH"/content/win64
 mkdir -p "$STEAMPATH"/content/ndata
 
 # Move Depot Scripts to Steam staging area
-cp -r "$SCRIPTROOT"/scripts "$STEAMPATH"
+cp -v -r "$SCRIPTROOT"/scripts "$STEAMPATH"
 
 # Move all build artefacts to deployment locations
 # Move Linux binary and set as executable
-cp "$TEMPPATH"/naev-steamruntime/naev.x64 "$STEAMPATH"/content/lin64
+cp -v "$TEMPPATH"/naev-steamruntime/naev.x64 "$STEAMPATH"/content/lin64
 chmod +x "$STEAMPATH"/content/lin64/naev.x64
           
 # Move macOS bundle to deployment location (Bye Bye for now)
@@ -134,8 +134,8 @@ elif [ "$DRYRUN" == "true" ]; then
             ls -l -R "$STEAMPATH"
         elif [ "$BETA" == "false" ]; then 
             # Move soundtrack stuff to deployment area
-            cp "$TEMPPATH"/naev-steam-soundtrack/*.mp3 "$STEAMPATH/content/soundtrack"
-            cp "$TEMPPATH"/naev-steam-soundtrack/*.png "$STEAMPATH/content/soundtrack"
+            cp -v "$TEMPPATH"/naev-steam-soundtrack/*.mp3 "$STEAMPATH/content/soundtrack"
+            cp -v "$TEMPPATH"/naev-steam-soundtrack/*.png "$STEAMPATH/content/soundtrack"
 
             # Run steam upload with 2fa key
             echo "steamcmd release build"
