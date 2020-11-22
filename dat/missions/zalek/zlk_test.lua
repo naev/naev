@@ -1,18 +1,18 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Za'lek Test">
-  <avail>
-   <priority>3</priority>
-   <cond>faction.playerStanding("Za'lek") &gt; 5 and planet.cur():services()["outfits"] == "Outfits"</cond>
-   <chance>450</chance>
-   <location>Computer</location>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <tier>2</tier>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>3</priority>
+  <cond>faction.playerStanding("Za'lek") &gt; 5 and planet.cur():services()["outfits"] == "Outfits"</cond>
+  <chance>450</chance>
+  <location>Computer</location>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <tier>2</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    Handles the randomly generated Za'lek test missions.
@@ -336,7 +336,7 @@ end
 --Check if the player has an outfit mounted
 function isMounted(itemName)
    for i, j in ipairs(player.pilot():outfits()) do
-      if j:name() == itemName then
+      if j == outfit.get(itemName) then
          return true
       end
    end
@@ -346,7 +346,7 @@ end
 --Check if the player owns an outfit
 function isOwned(itemName)
    for i, j in ipairs(player.outfits()) do
-      if j:name() == itemName then
+      if j == outfit.get(itemName) then
          return true
       end
    end

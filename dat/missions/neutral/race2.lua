@@ -1,18 +1,18 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Racing Skills 2">
-  <avail>
-   <priority>3</priority>
-   <cond>(player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht") and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Civilian"] ~= nil and system.cur():presences()["Civilian"] &gt; 0</cond>
-   <done>Racing Skills 1</done>
-   <chance>20</chance>
-   <location>Bar</location>
-  </avail>
-  <notes>
-   <tier>2</tier>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>3</priority>
+  <cond>(player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht") and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Civilian"] ~= nil and system.cur():presences()["Civilian"] &gt; 0</cond>
+  <done>Racing Skills 1</done>
+  <chance>20</chance>
+  <location>Bar</location>
+ </avail>
+ <notes>
+  <tier>2</tier>
+ </notes>
+</mission>
+--]]
 --[[
    --
    -- MISSION: Racing Skills 2
@@ -137,7 +137,7 @@ function takeoff()
    end
    if choice ~= 1 then
       for k,v in ipairs(player.pilot():outfits()) do
-         if v:name() == "Generic Afterburner" or v:name() == "Hellburner" then
+         if v == outfit.get("Generic Afterburner") or v == outfit.get("Hellburner") then
             tk.msg(ftitle[4], ftext[4])
             misn.finish(false)
          end

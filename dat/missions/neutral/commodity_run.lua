@@ -1,28 +1,28 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Commodity Run">
-  <avail>
-   <priority>5</priority>
-   <cond>var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
-   <chance>90</chance>
-   <location>Computer</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Proteron</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Thurion</faction>
-   <faction>Traders Guild</faction>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <tier>1</tier>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>5</priority>
+  <cond>var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
+  <chance>90</chance>
+  <location>Computer</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Proteron</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Thurion</faction>
+  <faction>Traders Guild</faction>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <tier>1</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    This program is free software: you can redistribute it and/or modify
@@ -98,16 +98,16 @@ function create ()
 
    for i, j in ipairs( missys:planets() ) do
       for k, v in pairs( j:commoditiesSold() ) do
-         if v:name() == chosen_comm then
+         if v == commodity.get(chosen_comm) then
             misn.finish(false)
          end
       end
    end
 
    -- Set Mission Details
-   misn.setTitle( misn_title:format( chosen_comm ) )
+   misn.setTitle( misn_title:format( _(chosen_comm) ) )
    misn.markerAdd( system.cur(), "computer" )
-   misn.setDesc( misn_desc:format( misplanet:name(), chosen_comm ) )
+   misn.setDesc( misn_desc:format( misplanet:name(), _(chosen_comm) ) )
    misn.setReward( _("%s per tonne"):format( creditstring( price ) ) )
     
 end
@@ -117,8 +117,8 @@ function accept ()
    misn.accept()
    update_active_runs( 1 )
 
-   osd_msg[1] = osd_msg[1]:format( chosen_comm )
-   osd_msg[2] = osd_msg[2]:format( chosen_comm, misplanet:name(), missys:name() )
+   osd_msg[1] = osd_msg[1]:format( _(chosen_comm) )
+   osd_msg[2] = osd_msg[2]:format( _(chosen_comm), misplanet:name(), missys:name() )
    misn.osdCreate( osd_title, osd_msg )
 
    hook.enter( "enter" )
@@ -141,7 +141,7 @@ function land ()
 
    if planet.cur() == misplanet and amount > 0 then
       local txt = cargo_land[ rnd.rnd( 1, #cargo_land ) ]:format(
-            chosen_comm, creditstring(reward) )
+            _(chosen_comm), creditstring(reward) )
       tk.msg( cargo_land_title, txt )
       pilot.cargoRm( player.pilot(), chosen_comm, amount )
       player.pay( reward )

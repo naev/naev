@@ -1,22 +1,22 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Defend the System 3">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>3</chance>
-   <done>Defend the System 2</done>
-   <location>None</location>
-   <faction>Dvaered</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Soromid</faction>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>3</chance>
+  <done>Defend the System 2</done>
+  <location>None</location>
+  <faction>Dvaered</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Soromid</faction>
+ </avail>
+</mission>
+--]]
 --[[
 
    MISSION: Defend the System 3
@@ -107,12 +107,12 @@ noTitle = _("Observe the action.")
 function create()
 
       this_planet, this_system = planet.cur()
-      if ( this_system:presences()["Pirate"] or 
-           this_system:presences()["Collective"] or 
-           this_system:presences()["FLF"] or
-           this_system:name() == "Gamma Polaris" or
-           this_system:name() == "Doeston" or
-           this_system:name() == "NGC-7291") then
+      if ( this_system:presences()["Pirate"]
+            or this_system:presences()["Collective"] 
+            or this_system:presences()["FLF"]
+            or this_system == system.get("Gamma Polaris")
+            or this_system == system.get("Doeston")
+            or this_system == system.get("NGC-7291") ) then
          misn.finish(false) 
       end
 

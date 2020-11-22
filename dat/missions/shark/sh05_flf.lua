@@ -1,30 +1,30 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The FLF Contact">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>3</priority>
-   <done>The Meeting</done>
-   <chance>3</chance>
-   <location>Bar</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Traders Guild</faction>
-   <faction>Za'lek</faction>
-   <cond>not diff.isApplied( "flf_dead" )</cond>
-  </avail>
-  <notes>
-   <campaign>Nexus show their teeth</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>3</priority>
+  <done>The Meeting</done>
+  <chance>3</chance>
+  <location>Bar</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Traders Guild</faction>
+  <faction>Za'lek</faction>
+  <cond>not diff.isApplied( "flf_dead" )</cond>
+ </avail>
+ <notes>
+  <campaign>Nexus show their teeth</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 
    This is the sixth mission of the Shark's teeth campaign. The player has to take contact with the FLF.
@@ -130,7 +130,7 @@ function land()
 end
 
 function hail( p )
-   if stage == 0 and p:faction():name() == "FLF" and not p:hostile() then
+   if stage == 0 and p:faction() == faction.get("FLF") and not p:hostile() then
       player.commClose()
       tk.msg(title[4], text[4])
       stage = 1
@@ -140,7 +140,7 @@ function hail( p )
 end
 
 function board( p )
-   if stage == 0 and p:faction():name() == "FLF" then
+   if stage == 0 and p:faction() == faction.get("FLF") then
       player.unboard()
       tk.msg(title[5], text[5])
       stage = 1

@@ -1,24 +1,24 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Disrupt a Dvaered Patrol">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <chance>100</chance>
-   <location>Bar</location>
-   <cond>var.peek("flfbase_intro") == 2</cond>
-   <planet>Sindbad</planet>
-  </avail>
-  <notes>
-   <done_misn name="Deal with the FLF agent">If you return Gregar to Sindbad</done_misn>
-   <provides name="The Dvaered know where Sindbad is">If you betray the FLF</provides>
-   <campaign>Join the FLF</campaign>
-   <tier>3</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <chance>100</chance>
+  <location>Bar</location>
+  <cond>var.peek("flfbase_intro") == 2</cond>
+  <planet>Sindbad</planet>
+ </avail>
+ <notes>
+  <done_misn name="Deal with the FLF agent">If you return Gregar to Sindbad</done_misn>
+  <provides name="The Dvaered know where Sindbad is">If you betray the FLF</provides>
+  <campaign>Join the FLF</campaign>
+  <tier>3</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    This program is free software: you can redistribute it and/or modify
@@ -152,8 +152,7 @@ function accept ()
       marker = misn.markerAdd( missys, "low" )
       misn.setReward( misn_rwrd )
 
-      DVplanet = "Raelid Outpost"
-      DVsys = "Raelid"
+      DVplanet, DVsys = planet.get("Raelid Outpost")
 
       reinforcements_arrived = false
       dv_ships_left = 0
@@ -254,7 +253,7 @@ function hail ()
    choice = tk.choice( DVtitle[1], DVtext[3]:format( player.name() ),
       DVchoice1, DVchoice2 )
    if choice == 1 then
-      tk.msg( DVtitle[4], DVtext[4]:format( DVplanet, DVsys ) )
+      tk.msg( DVtitle[4], DVtext[4]:format( DVplanet:name(), DVsys:name() ) )
 
       faction.get("FLF"):setPlayerStanding( -100 )
       local standing = faction.get("Dvaered"):playerStanding()
@@ -270,12 +269,12 @@ function hail ()
       end
 
       job_done = true
-      osd_desc[1] = DVosd[1]:format( DVsys, DVplanet )
+      osd_desc[1] = DVosd[1]:format( DVsys:name(), DVplanet:name() )
       osd_desc[2] = nil
       misn.osdActive( 1 )
       misn.osdCreate( misn_title, osd_desc )
       misn.markerRm( marker )
-      marker = misn.markerAdd( system.get(DVsys), "high" )
+      marker = misn.markerAdd( DVsys, "high" )
 
       spawner = hook.timer( 3000, "timer_spawnHostileFLF" )
       hook.land( "land_dv" )
@@ -395,7 +394,7 @@ end
 
 function land_dv ()
    leave()
-   if planet.cur():name() == DVplanet then
+   if planet.cur() == DVplanet then
       tk.msg( DVtitle[6], DVtext[6] )
       tk.msg( DVtitle[6], DVtext[7] )
       tk.msg( DVtitle[6], DVtext[8] )

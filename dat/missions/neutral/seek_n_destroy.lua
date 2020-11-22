@@ -1,25 +1,25 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Seek And Destroy">
-  <avail>
-   <priority>4</priority>
-   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
-   <chance>875</chance>
-   <location>Computer</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <tier>3</tier>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>4</priority>
+  <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+  <chance>875</chance>
+  <location>Computer</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <tier>3</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    The player searches for an outlaw across several systems
@@ -208,7 +208,7 @@ function create ()
    end
 
    name = pirate_name()
-   if target_faction:name() == "Pirate" then
+   if target_faction == faction.get("Pirate") then
       ships = {"Pirate Shark", "Pirate Vendetta", "Pirate Admonisher"}
       aship = "Pirate Phalanx"
       bship = "Pirate Hyena"
@@ -471,7 +471,7 @@ function space_clue ()
       else -- Threaten the pilot
 
          -- Everybody except the pirates takes offence if you threaten them
-         if not target:faction():name() == "Pirate" then
+         if not target:faction() == faction.get("Pirate") then
             faction.modPlayerSingle( target:faction(), -1 )
          end
 
