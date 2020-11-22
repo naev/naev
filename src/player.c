@@ -1976,8 +1976,8 @@ void player_targetHostile (void)
 
       /* Must be hostile. */
       if (pilot_isHostile(pilot_stack[i])) {
-         inRange = pilot_inRangePilot(pilot_stack[i], player.p, &td);
-         if (tp == PLAYER_ID || (inRange == 1 && td < d)) {
+         inRange = pilot_inRangePilot(player.p, pilot_stack[i], &td);
+         if (tp == PLAYER_ID || ((inRange == 1) && (td < d))) {
             d  = td;
             tp = pilot_stack[i]->id;
          }
@@ -3311,7 +3311,7 @@ static Planet* player_parse( xmlNodePtr parent )
             xmlr_float(cur, "Remainder", rem);
          } while (xml_nextNode(cur));
          if ((cycles < 0) || (periods < 0) || (seconds < 0) || (rem<0.))
-            WARN("Malformed time in save game!");
+            WARN(_("Malformed time in save game!"));
          ntime_setR( cycles, periods, seconds, rem );
          if ((cycles >= 0) || (periods >= 0) || (seconds >= 0))
             time_set = 1;
@@ -3766,7 +3766,10 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                   free(q);
                }
                if ((n<0) || (n >= ship->outfit_nstructure)) {
-                  WARN(_("Outfit slot out of range, not adding."));
+                  name = xml_get(cur);
+                  o = outfit_get(name);
+                  player_addOutfit( o, 1 );
+                  WARN(_("Outfit slot out of range, not adding to ship."));
                   continue;
                }
                player_parseShipSlot( cur, ship, &ship->outfit_structure[n] );

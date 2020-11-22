@@ -294,8 +294,8 @@ static int gfxL_fontSize( lua_State *L )
 /**
  * @brief Gets the size of the text to print.
  *
- * @usage len = gfx.printDim( nil, "Hello World!" ) -- Length of string with normal font
- * @usage height = gfx.printDim( true, "Longer text", 20 ) -- Dimensions of text block
+ * @usage len = gfx.printDim( nil, _("Hello World!") ) -- Length of string with normal font
+ * @usage height = gfx.printDim( true, _([["Longer text"]]), 20 ) -- Dimensions of text block
  *
  *    @luatparam boolean small Whether or not to use the small font.
  *    @luatparam string str Text to calculate length of.
@@ -328,8 +328,8 @@ static int gfxL_printDim( lua_State *L )
 /**
  * @brief Prints text on the screen.
  *
- * @usage gfx.print( nil, "Hello World!", 50, 50, colour.new("Red") ) -- Displays text in red at 50,50.
- * @usage gfx.print( true, "Hello World!", 50, 50, col, 100 ) -- Displays text to a maximum of 100 pixels wide.
+ * @usage gfx.print( nil, _("Hello World!"), 50, 50, colour.new("Red") ) -- Displays text in red at 50,50.
+ * @usage gfx.print( true, _("Hello World!"), 50, 50, col, 100 ) -- Displays text to a maximum of 100 pixels wide.
  * @usage gfx.print( true, str, 50, 50, col, 100, true ) -- Displays centered text to a maximum of 100 pixels.
  *
  *    @luatparam bookean small Whether or not to use a small font.

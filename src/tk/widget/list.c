@@ -431,6 +431,14 @@ static Widget *lst_getWgt( const unsigned int wid, const char* name )
  * @brief Gets what is selected currently in a list.
  *
  * List includes Image Arrays.
+ *
+ *   \warning Oftentimes, UI code will translate or otherwise preprocess
+ *            text before populating this widget.
+ *            In general, reading back such processed text and trying to
+ *            interpret it is ill-advised; it's better to keep the original
+ *            list of objects being presented and deal with indices into it.
+ *            \see toolkit_getListPos
+ *
  */
 char* toolkit_getList( const unsigned int wid, const char* name )
 {
@@ -452,6 +460,11 @@ char* toolkit_getList( const unsigned int wid, const char* name )
 
 /**
  * @brief Sets the list value by name.
+ *
+ *   \warning If the captions have been translated or otherwise preprocessed,
+ *            this function can only find a name that has been transformed the
+ *            same way. There may be a more robust solution involving indices.
+ *            \see toolkit_setListPos
  */
 char* toolkit_setList( const unsigned int wid, const char* name, char* value )
 {

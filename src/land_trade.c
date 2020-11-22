@@ -104,7 +104,7 @@ void commodity_exchange_open( unsigned int wid )
       cgoods = calloc( ngoods, sizeof(ImageArrayCell) );
       for (i=0; i<ngoods; i++) {
          cgoods[i].image = gl_dupTexture(land_planet->commodities[i]->gfx_store);
-         cgoods[i].caption = strdup(land_planet->commodities[i]->name);
+         cgoods[i].caption = strdup( _(land_planet->commodities[i]->name) );
       }
    }
    else {
@@ -134,7 +134,7 @@ void commodity_update( unsigned int wid, char* str )
    (void)str;
    char buf[PATH_MAX];
    char buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
-   char *comname;
+   int i;
    Commodity *com;
    credits_t mean,globalmean;
    double std, globalstd;
@@ -142,8 +142,8 @@ void commodity_update( unsigned int wid, char* str )
    char buf_std[ECON_CRED_STRLEN], buf_globalstd[ECON_CRED_STRLEN];
    char buf_local_price[ECON_CRED_STRLEN];
    int owned;
-   comname = toolkit_getImageArray( wid, "iarTrade" );
-   if ((comname==NULL) || (strcmp( comname, _("None") )==0)) {
+   i = toolkit_getImageArrayPos( wid, "iarTrade" );
+   if (i < 0 || land_planet->ncommodities == 0) {
       credits2str( buf3, player.p->credits, 2 );
       nsnprintf( buf, PATH_MAX,
          _("N/A tonnes\n"
@@ -161,7 +161,7 @@ void commodity_update( unsigned int wid, char* str )
       window_disableButton( wid, "btnCommoditySell" );
       return;
    }
-   com = commodity_get( comname );
+   com = land_planet->commodities[i];
 
    /* modify image */
    window_modifyImage( wid, "imgStore", com->gfx_store, 128, 128 );
@@ -174,7 +174,7 @@ void commodity_update( unsigned int wid, char* str )
    nsnprintf( buf_globalstd, sizeof(buf_globalstd), _("%.1f ¤"), globalstd ); /* TODO credit2str could learn to do this... */
    /* modify text */
    buf2[0]='\0';
-   owned=pilot_cargoOwned( player.p, comname );
+   owned=pilot_cargoOwned( player.p, com->name );
    if ( owned > 0 )
       credits2str( buf2, com->lastPurchasePrice, -1 );
    credits2str( buf3, player.p->credits, 2 );
@@ -195,17 +195,17 @@ void commodity_update( unsigned int wid, char* str )
          "%s\n"
          "\n"
          "%s",
-         _(comname),
+         _(com->name),
          _(com->description));
    window_modifyText( wid, "txtDesc", buf );
 
    /* Button enabling/disabling */
-   if (commodity_canBuy( comname ))
+   if (commodity_canBuy( com->name ))
       window_enableButton( wid, "btnCommodityBuy" );
    else
       window_disableButtonSoft( wid, "btnCommodityBuy" );
 
-   if (commodity_canSell( comname ))
+   if (commodity_canSell( com->name ))
       window_enableButton( wid, "btnCommoditySell" );
    else
       window_disableButtonSoft( wid, "btnCommoditySell" );
@@ -261,7 +261,7 @@ int commodity_canSell( const char *name )
 void commodity_buy( unsigned int wid, char* str )
 {
    (void)str;
-   char *comname;
+   int i;
    Commodity *com;
    unsigned int q;
    credits_t price;
@@ -269,12 +269,12 @@ void commodity_buy( unsigned int wid, char* str )
 
    /* Get selected. */
    q     = commodity_getMod();
-   comname = toolkit_getImageArray( wid, "iarTrade" );
-   com   = commodity_get( comname );
+   i     = toolkit_getImageArrayPos( wid, "iarTrade" );
+   com   = land_planet->commodities[i];
    price = planet_commodityPrice( land_planet, com );
 
    /* Check stuff. */
-   if (land_errDialogue( comname, "buyCommodity" ))
+   if (land_errDialogue( com->name, "buyCommodity" ))
       return;
 
    /* Make the buy. */
@@ -286,7 +286,7 @@ void commodity_buy( unsigned int wid, char* str )
 
    /* Run hooks. */
    hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = comname;
+   hparam[0].u.str   = com->name;
    hparam[1].type    = HOOK_PARAM_NUMBER;
    hparam[1].u.num   = q;
    hparam[2].type    = HOOK_PARAM_SENTINEL;
@@ -302,7 +302,7 @@ void commodity_buy( unsigned int wid, char* str )
 void commodity_sell( unsigned int wid, char* str )
 {
    (void)str;
-   char *comname;
+   int i;
    Commodity *com;
    unsigned int q;
    credits_t price;
@@ -310,12 +310,12 @@ void commodity_sell( unsigned int wid, char* str )
 
    /* Get parameters. */
    q     = commodity_getMod();
-   comname = toolkit_getImageArray( wid, "iarTrade" );
-   com   = commodity_get( comname );
+   i     = toolkit_getImageArrayPos( wid, "iarTrade" );
+   com   = land_planet->commodities[i];;
    price = planet_commodityPrice( land_planet, com );
 
    /* Check stuff. */
-   if (land_errDialogue( comname, "sellCommodity" ))
+   if (land_errDialogue( com->name, "sellCommodity" ))
       return;
 
    /* Remove commodity. */
@@ -328,7 +328,7 @@ void commodity_sell( unsigned int wid, char* str )
 
    /* Run hooks. */
    hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = comname;
+   hparam[0].u.str   = com->name;
    hparam[1].type    = HOOK_PARAM_NUMBER;
    hparam[1].u.num   = q;
    hparam[2].type    = HOOK_PARAM_SENTINEL;

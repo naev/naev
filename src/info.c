@@ -936,7 +936,7 @@ static void info_openStandings( unsigned int wid )
       str[i] = malloc( 256 );
       m = round( faction_getPlayer( info_factions[i] ) );
       nsnprintf( str[i], 256, "%s   [ %+d%% ]",
-            faction_name( info_factions[i] ), m );
+            _(faction_name( info_factions[i] )), m );
    }
 
    /* Display list. */

@@ -254,7 +254,7 @@ function render_cooldown( percent, seconds )
    gfx.renderRect( cooldown_bg_x, cooldown_bg_y, percent * cooldown_bg_w, cooldown_bg_h, bar_heat_col )
    gfx.renderTex( cooldown_sheen, cooldown_sheen_x, cooldown_sheen_y )
    gfx.renderTex( cooldown_panel, cooldown_panel_x, cooldown_panel_y )
-   gfx.print(false, "Cooling down...", cooldown_frame_x,
+   gfx.print(false, _("Cooling down..."), cooldown_frame_x,
          cooldown_bg_y + cooldown_bg_h + 8, col_txt_std, cooldown_frame_w, true )
 end
 
