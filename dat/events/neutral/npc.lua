@@ -20,8 +20,6 @@ require "portrait.lua"
 -- of the main universe (Thurion, Proteron).
 nongeneric_factions = { "Pirate", "FLF", "Thurion", "Proteron" }
 
-civ_name = "Civilian"
-
 -- Civilian descriptions for the spaceport bar.
 -- These descriptions will be picked at random, and may be picked multiple times in one generation.
 -- Remember that any description can end up with any portrait, so don't make any assumptions
@@ -281,7 +279,7 @@ end
 -- Spawns an NPC.
 function spawnNPC()
    -- Select a faction for the NPC. NPCs may not have a specific faction.
-   local npcname = civ_name
+   local npcname = _("Civilian")
    local factions = {}
    local func = nil
    for i, _ in pairs(msg_lore) do
@@ -308,8 +306,8 @@ function spawnNPC()
    end
 
    -- Append the faction to the civilian name, unless there is no faction.
-   if fac ~= "general" then
-      npcname = fac .. " " .. civ_name
+   if nongeneric then
+      npcname = string.format( _("%s Civilian"), _(fac) )
    end
 
    -- Select a portrait

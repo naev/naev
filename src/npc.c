@@ -55,9 +55,9 @@ typedef struct NPC_s {
    unsigned int id; /**< ID of the NPC. */
    NPCtype type; /**< Type of the NPC. */
    int priority; /**< NPC priority, 5 is average, 0 is highest, 10 is lowest. */
-   char *name; /**< Name of the NPC. */
+   char *name; /**< Translated, human-readable name of the NPC. */
    glTexture *portrait; /**< Portrait of the NPC. */
-   char *desc; /**< NPC description. */
+   char *desc; /**< Translated, human-readable NPC description. */
    union {
       Mission g; /**< Mission information (for mission giver). */
       NPCmisnData m; /**< Mission information (for mission generated NPC). */

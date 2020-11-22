@@ -41260,7 +41260,7 @@ msgstr "\arDu hast bereits die maximal mögliche Munition."
 
 #: src/board.c:373
 #, c-format
-msgid "\apYou looted %d %s(s)"
+msgid "\apYou looted: %d × %s"
 msgstr "\apDu erbeutest: %d × %s"
 
 #: src/board.c:383

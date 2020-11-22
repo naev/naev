@@ -151,7 +151,7 @@ articles["Generic"] = {
       tag = N_("Former Pirate Writes Target Management Self-Help Book"),
       desc = string.format(
          _("A former pirate shares her story on how she steered herself away from piracy, which she wrote about in an award-winning self-help book. \"I used to spend my whole life pressing %s to target enemies, but my life changed when I had a dream about a cat munching on some grass. 'Are you using the %s key?' it asked. 'I find that it is very useful.' I have been doing as the strange cat in my dream said ever since, and I no longer have to lose money or alienate friends. If the universe followed this simple advice, I suspect we would live in a much safer society.\""),
-         _(naev.keyGet("target_nearest")), _(naev.keyGet("target_hostile")) )
+         naev.keyGet("target_nearest"), naev.keyGet("target_hostile") )
    },
 }
 
