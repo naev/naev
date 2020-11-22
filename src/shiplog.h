@@ -16,12 +16,14 @@
 #include "ntime.h"
 #include "nxml.h"
 
+#define LOG_ID_INVALID -2 /** Sentinel value never used as a log ID. */
+#define LOG_ID_ALL     -1 /** ID used for the virtual "All" log (which is a combined view). */
 
 /* returns a log ID, for log with specified title.  If overwrite set, and
    title already exists, the log will be cleared and previous log ID
    returned, otherwise a new log ID will be created. */
 NONNULL( 2, 3 )
-int  shiplog_create( const char *idstr, const char *logname, const char *type, int overwrite, const int maxLen );
+int shiplog_create( const char *idstr, const char *logname, const char *type, int overwrite, const int maxLen );
 int shiplog_append( const char *idstr, const char *msg );/* Add a message to the log */
 int shiplog_appendByID( const int logid, const char *msg );/* Add a message to the log */
 void shiplog_delete( const int logid ); /* Delete a log.  Use with care (removes all entries with this ID */

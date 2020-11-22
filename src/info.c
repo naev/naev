@@ -1237,7 +1237,7 @@ static void info_shiplogMenuDelete( unsigned int wid, char* str )
    int ret, logid;
    (void) str;
 
-   if ( strcmp("All", logs[selectedLog]) == 0 ) {
+   if ( logIDs[selectedLog] == LOG_ID_ALL ) {
       dialogue_msg( "", _("You are currently viewing all logs in the selected log type. Please select a log title to delete.") );
       return;
    }
@@ -1288,12 +1288,12 @@ static void info_shiplogView( unsigned int wid, char *str )
 static void info_shiplogAdd( unsigned int wid, char *str )
 {
    char *tmp;
-   char *logname;
+   int selectedLog;
    int logid;
    (void) str;
 
-   logname = toolkit_getList( wid, "lstLogs" );
-   if ( ( logname == NULL ) || ( strcmp( "All", logname ) == 0 ) ) {
+   selectedLog = toolkit_getListPos( wid, "lstLogs" );
+   if ( selectedLog < 0 || logIDs[selectedLog] == LOG_ID_ALL ) {
       tmp = dialogue_inputRaw( _("Add a log entry"), 0, 4096, _("Add an entry to your diary:") );
       if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
          if ( shiplog_getID( "Diary" ) == -1 )
@@ -1302,7 +1302,7 @@ static void info_shiplogAdd( unsigned int wid, char *str )
          free( tmp );
       }
    } else {
-      tmp = dialogue_input( _("Add a log entry"), 0, 4096, _("Add an entry to the log titled '%s':"), logname );
+      tmp = dialogue_input( _("Add a log entry"), 0, 4096, _("Add an entry to the log titled '%s':"), logs[selectedLog] );
       if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
          logid = shiplog_getIdOfLogOfType( logTypes[selectedLogType], selectedLog-1 );
          if ( logid >= 0 )
