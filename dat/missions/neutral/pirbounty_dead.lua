@@ -203,7 +203,7 @@ function jumpout ()
    jumps_permitted = jumps_permitted - 1
    last_sys = system.cur()
    if not job_done and last_sys == missys then
-      fail( msg[3]:format( last_sys:name() ) )
+      fail( msg[3]:format( _(last_sys:name()) ) )
    end
 end
 
