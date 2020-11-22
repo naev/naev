@@ -223,8 +223,8 @@ function create ()
    cursys = 1
 
    -- Set mission details
-   misn.setTitle( misn_title:format( mysys[1]:name() ) )
-   misn.setDesc( misn_desc:format( target_faction:name(), name, paying_faction:name(), mysys[1]:name() ) )
+   misn.setTitle( misn_title:format( _(mysys[1]:name()) ) )
+   misn.setDesc( misn_desc:format( _(target_faction:name()), name, _(paying_faction:name()), mysys[1]:name() ) )
    misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( mysys[1], "computer" )
 
@@ -248,7 +248,7 @@ function accept ()
    stage = 0
    increment = false
    last_sys = system.cur()
-   tk.msg( breef_title, breef_text:format( name, target_faction:name(), name, creditstring(credits), paying_faction:name(), mysys[1]:name() ) )
+   tk.msg( breef_title, breef_text:format( name, _(target_faction:name()), name, creditstring(credits), _(paying_faction:name()), _(mysys[1]:name()) ) )
    jumphook = hook.enter( "enter" )
    hailhook = hook.hail( "hail" )
    landhook = hook.land( "land" )
@@ -414,7 +414,7 @@ function hail ()
          if not know then -- NPC does not know the target
             tk.msg( dono_title, dono_text[rnd.rnd(1,#dono_text)]:format( name ) )
          elseif tells then
-            tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, _(mysys[cursys+1]:name()) ) )
             next_sys()
             target:setHostile( false )
          else
@@ -435,12 +435,12 @@ function space_clue ()
          -- End of function
       else -- Threaten the pilot
          if isScared (target) and rnd.rnd() < .5 then
-            tk.msg( scared_title, scared_text[rnd.rnd(1,#scared_text)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( scared_title, scared_text[rnd.rnd(1,#scared_text)]:format( name, _(mysys[cursys+1]:name()) ) )
             next_sys()
             target:control()
             target:runaway(player.pilot())
          else
-            tk.msg( not_scared_title, not_scared_text[rnd.rnd(1,#not_scared_text)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( not_scared_title, not_scared_text[rnd.rnd(1,#not_scared_text)]:format( name, _(mysys[cursys+1]:name()) ) )
             target:comm(not_scared_comm[rnd.rnd(1,#not_scared_comm)])
 
             -- Clean the previous hook if it exists
@@ -459,7 +459,7 @@ function space_clue ()
       if choice == 1 then
          if player.credits() >= price then
             player.pay(-price)
-            tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, _(mysys[cursys+1]:name()) ) )
             next_sys()
             target:setHostile( false )
             target:comm(thank_comm[rnd.rnd(1,#thank_comm)])
@@ -476,10 +476,10 @@ function space_clue ()
          end
 
          if isScared (target) then
-            tk.msg( scared_title, scared_text[rnd.rnd(1,#scared_text)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( scared_title, scared_text[rnd.rnd(1,#scared_text)]:format( name, _(mysys[cursys+1]:name()) ) )
             next_sys()
          else
-            tk.msg( not_scared_title, not_scared_text[rnd.rnd(1,#not_scared_text)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( not_scared_title, not_scared_text[rnd.rnd(1,#not_scared_text)]:format( name, _(mysys[cursys+1]:name()) ) )
             target:comm(not_scared_comm[rnd.rnd(1,#not_scared_comm)])
 
             -- Clean the previous hook if it exists
@@ -499,7 +499,7 @@ function clue_attacked( p, attacker )
    if attacker == player.pilot() and p:health() < 100 then
       p:control()
       p:runaway(player.pilot())
-      tk.msg( scared_title, scared_text[rnd.rnd(1,#scared_text)]:format( name, mysys[cursys+1]:name() ) )
+      tk.msg( scared_title, scared_text[rnd.rnd(1,#scared_text)]:format( name, _(mysys[cursys+1]:name()) ) )
       next_sys()
       hook.rm(attack)
    end
@@ -573,7 +573,7 @@ function clue_bar()
          if choice == 1 then
             if player.credits() >= price then
                player.pay(-price)
-               tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
+               tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, _(mysys[cursys+1]:name()) ) )
                next_sys()
             else
                tk.msg( poor_title, poor_text )
@@ -583,7 +583,7 @@ function clue_bar()
          end
 
       else -- NPC tells the clue
-         tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
+         tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, _(mysys[cursys+1]:name()) ) )
          next_sys()
       end
 
@@ -599,7 +599,7 @@ function next_sys ()
 end
 
 function player_flee ()
-   tk.msg( flee_title, flee_text:format( name, system.cur():name() ) )
+   tk.msg( flee_title, flee_text:format( name, _(system.cur():name()) ) )
    stage = 0
    misn.osdActive( 1 )
 

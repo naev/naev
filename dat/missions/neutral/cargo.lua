@@ -118,7 +118,7 @@ function accept()
    end
    misn.accept()
    misn.cargoAdd(cargo, amount) -- TODO: change to jettisonable cargo once custom commodities are in. For piracy purposes.
-   misn.osdCreate(osd_title, {osd_msg:format(destplanet:name(), destsys:name())})
+   misn.osdCreate(osd_title, {osd_msg:format(_(destplanet:name()), _(destsys:name()))})
    hook.land("land")
 end
 

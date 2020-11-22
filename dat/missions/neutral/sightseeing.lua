@@ -148,8 +148,8 @@ function create ()
    nolux_known = false
 
    -- Set mission details
-   misn.setTitle( misn_title:format( missys:name() ) )
-   misn.setDesc( misn_desc:format( missys:name() ) )
+   misn.setTitle( misn_title:format( _(missys:name()) ) )
+   misn.setDesc( misn_desc:format( _(missys:name()) ) )
    misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end

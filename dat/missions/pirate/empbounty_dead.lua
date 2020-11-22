@@ -140,14 +140,14 @@ function create ()
    bounty_setup()
 
    -- Set mission details
-   misn.setTitle( misn_title[level]:format( missys:name() ) )
+   misn.setTitle( misn_title[level]:format( _(missys:name()) ) )
 
    if planet.cur():faction() == faction.get("Pirate") then
-      misn.setDesc( misn_desc:format( target_faction, missys:name() ) )
+      misn.setDesc( misn_desc:format( target_faction, _(missys:name()) ) )
    else
       -- We're not on a pirate stronghold, so include a warning that the
       -- mission is in fact illegal (for new players).
-      misn.setDesc( misn_desc:format( target_faction, missys:name() ) .. "\n\n" .. desc_illegal_warning )
+      misn.setDesc( misn_desc:format( target_faction, _(missys:name()) ) .. "\n\n" .. desc_illegal_warning )
    end
 
    misn.setReward( creditstring( credits ) )

@@ -96,7 +96,7 @@ end
 
 function land ()
    if planet.cur() == targetasset then
-      tk.msg( misn_title, emsg[1]:format( targetasset:name() ) )
+      tk.msg( misn_title, emsg[1]:format( _(targetasset:name()) ) )
       player.pay(reward)
       misn.cargoRm(small_arms) --this mission was an act against Sirius, and we want Sirius to not like us a little bit.
       faction.modPlayer("Nasin",3) --Nasin reputation is used in mission rewards, and I am trying to avoid having the pay skyrocket.

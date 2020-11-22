@@ -124,7 +124,7 @@ function create()
    
    misn.setTitle( misn_title[convoysize]:format(
       destplanet:name(), destsys:name() ) )
-   misn.setDesc( misn_desc:format( destplanet:name(), destsys:name() )
+   misn.setDesc( misn_desc:format( _(destplanet:name()), _(destsys:name()) )
       .. "\n\n" .. misn_details:format(
          cargo, numjumps, traveldist, piracyrisk ) )
    misn.markerAdd(destsys, "computer")
@@ -161,7 +161,7 @@ function accept()
    unsafe = false
 
    misn.accept()
-   misn.osdCreate(osd_title, {osd_msg:format(destplanet:name(), destsys:name())})
+   misn.osdCreate(osd_title, {osd_msg:format(_(destplanet:name()), _(destsys:name()))})
 
    hook.takeoff("takeoff")
    hook.jumpin("jumpin")

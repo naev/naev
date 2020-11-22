@@ -111,7 +111,7 @@ function create ()
 end
 
 function accept ()
-   if not tk.yesno( title[1], text[1]:format( clueplanet:name(), cluesys:name() ) ) then
+   if not tk.yesno( title[1], text[1]:format( _(clueplanet:name()), _(cluesys:name()) ) ) then
       tk.msg( title[3], text[3] )
       misn.finish()
 

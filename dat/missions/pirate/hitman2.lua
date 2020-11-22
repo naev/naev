@@ -81,16 +81,16 @@ function accept ()
    misn_base, misn_base_sys = planet.cur()
 
    -- Set mission details
-   misn.setTitle( string.format( misn_title, targetsystem:name()) )
+   misn.setTitle( string.format( misn_title, _(targetsystem:name())) )
    misn.setReward( string.format( misn_reward, credits) )
-   misn.setDesc( string.format( misn_desc, targetsystem:name() ) )
+   misn.setDesc( string.format( misn_desc, _(targetsystem:name()) ) )
    misn_marker = misn.markerAdd( targetsystem, "low" )
    local osd_desc = {}
    osd_desc[1] = osd_desc_1:format( targetsystem:name() )
    osd_desc[2] = osd_desc_2:format( misn_base:name(), misn_base_sys:name() )
    misn.osdCreate( misn_title, osd_desc )
    -- Some flavour text
-   tk.msg( title[1], string.format( text[2], targetsystem:name()) )
+   tk.msg( title[1], string.format( text[2], _(targetsystem:name())) )
 
    -- Set hooks
    hook.enter("sys_enter")

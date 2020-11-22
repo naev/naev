@@ -242,7 +242,7 @@ function create()
 
     misn.markerAdd(destsys, "computer")
     misn.setTitle( string.format(misn_title, ferrytime[print_speed], prank[rank]) )
-    misn.setDesc(title_p1:format( ferrytime[print_speed], destplanet:name(), prank[rank]) .. title_p2:format(numjumps, traveldist, (timelimit - time.get()):str()))
+    misn.setDesc(title_p1:format( ferrytime[print_speed], _(destplanet:name()), prank[rank]) .. title_p2:format(numjumps, traveldist, (timelimit - time.get()):str()))
     misn.setReward(creditstring(reward))
 
     -- Set up passenger details so player cannot keep trying to get a better outcome
@@ -268,7 +268,7 @@ end
 function accept()
     local playerbest = cargoGetTransit( timelimit, numjumps, traveldist )
     if timelimit < playerbest then
-        if not tk.yesno( slow[1], slow[2]:format( (timelimit - time.get()):str(), (playerbest - time.get()):str(), destplanet:name()) ) then
+        if not tk.yesno( slow[1], slow[2]:format( (timelimit - time.get()):str(), (playerbest - time.get()):str(), _(destplanet:name())) ) then
             misn.finish()
         end
     end
@@ -306,14 +306,14 @@ function accept()
         elseif outcome == 2 then
             -- Rank 1 will accept an alternate destination, but cut your fare
             reward = reward / 2
-            ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(creditstring(reward), altplanets[altdest]:name()) )
+            ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(creditstring(reward), _(altplanets[altdest]:name())) )
         elseif outcome == 1 then
             -- OK with alternate destination, with smaller fare cut
             reward = reward * 0.6666
-            ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(altplanets[altdest]:name(), creditstring(reward)) )
+            ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(_(altplanets[altdest]:name()), creditstring(reward)) )
         else
             -- Rank 0 will take whatever they can get
-            ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(altplanets[altdest]:name()) )
+            ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(_(altplanets[altdest]:name())) )
         end
 
         if not ok then
@@ -321,7 +321,7 @@ function accept()
         end
 
         destplanet = altplanets[altdest]
-        misn.setDesc(title_p1:format( ferrytime[print_speed], destplanet:name(), prank[rank]) .. title_p2:format(numjumps, traveldist, (timelimit - time.get()):str()))
+        misn.setDesc(title_p1:format( ferrytime[print_speed], _(destplanet:name()), prank[rank]) .. title_p2:format(numjumps, traveldist, (timelimit - time.get()):str()))
         --wants_sirian = false    -- Don't care what kind of ship you're flying
     end
 
@@ -438,5 +438,5 @@ function tick()
 end
 
 function abort()
-    tk.msg(abort_t, abort_p:format(destplanet:name()))
+    tk.msg(abort_t, abort_p:format(_(destplanet:name())))
 end

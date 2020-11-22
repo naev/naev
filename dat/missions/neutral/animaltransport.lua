@@ -82,7 +82,7 @@ end
 
 
 function accept ()
-    if tk.yesno(title[1], text[1]:format(destplanet:name(), destsys:name(), destplanet:name())) then
+    if tk.yesno(title[1], text[1]:format(_(destplanet:name()), _(destsys:name()), _(destplanet:name()))) then
         misn.accept()
         misn.setDesc(misndesc)
         misn.setReward(misnreward)

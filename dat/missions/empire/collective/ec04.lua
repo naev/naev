@@ -78,7 +78,7 @@ function create ()
    end
 
    -- Intro text
-   if tk.yesno( title[1], string.format(text[1], misn_target:name()) ) then
+   if tk.yesno( title[1], string.format(text[1], _(misn_target:name())) ) then
       misn.accept()
 
       credits = 1000000
@@ -90,8 +90,8 @@ function create ()
       -- Mission details
       misn.setTitle(misn_title)
       misn.setReward( creditstring( credits ) )
-      misn.setDesc( string.format(misn_desc[1], misn_target:name(), misn_target_sys:name() ))
-      tk.msg( title[1], string.format(text[2], misn_target_sys:name(), misn_target:name()) )
+      misn.setDesc( string.format(misn_desc[1], _(misn_target:name()), _(misn_target_sys:name()) ))
+      tk.msg( title[1], string.format(text[2], _(misn_target_sys:name()), _(misn_target:name())) )
       osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
       osd_msg[2] = osd_msg[2]:format(misn_target:name())
       osd_msg[3] = osd_msg[3]:format(misn_base:name())

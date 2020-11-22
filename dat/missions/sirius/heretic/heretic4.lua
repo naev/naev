@@ -86,7 +86,7 @@ function accept()
    people_carried =  (16 * free_cargo) + 7 --average weight per person is 62kg. one ton / 62 is 16. added the +7 for ships with 0 cargo.
    misn.setTitle(misn_title)
    misn.setReward(creditstring(reward))
-   misn.setDesc(misn_desc:format( targetasset:name(), targetsys:name()))
+   misn.setDesc(misn_desc:format( _(targetasset:name()), _(targetsys:name())))
    misn.osdCreate(misn_title,osd)
    refugees = misn.cargoAdd("Refugees",free_cargo)
    player.takeoff()
@@ -143,7 +143,7 @@ end
 function misn_over() --aren't you glad thats over?
    if planet.cur() == planet.get("Ulios") then
       --introing one of the characters in the next chapter.
-      tk.msg(misn_title,emsg[1]:format( targetasset:name() ))
+      tk.msg(misn_title,emsg[1]:format( _(targetasset:name()) ))
       player.pay(reward)
       misn.cargoRm(refugees)
       misn_tracker = misn_tracker + 1

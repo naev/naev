@@ -103,10 +103,10 @@ function accept()
       osd_msg[1] = osd_msg[1]:format(missys:name())
       osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
 
-      misn.setTitle(misn_title:format(missys:name()))
+      misn.setTitle(misn_title:format(_(missys:name())))
       misn.setReward(creditstring(reward))
-      misn.setDesc(misn_desc:format(missys:name()))
-      osd = misn.osdCreate(osd_title:format(missys:name()), osd_msg)
+      misn.setDesc(misn_desc:format(_(missys:name())))
+      osd = misn.osdCreate(osd_title:format(_(missys:name())), osd_msg)
       misn.osdActive(1)
 
       marker = misn.markerAdd(missys, "low")
@@ -178,7 +178,7 @@ end
 
 function board()
    --boarding the pacifier
-   tk.msg(title[4], text[4]:format(paysys:name()))
+   tk.msg(title[4], text[4]:format(_(paysys:name())))
    player.unboard()
    pacifier:control(false)
    pacifier:setActiveBoard(false)

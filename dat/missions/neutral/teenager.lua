@@ -73,7 +73,7 @@ end
 function accept ()
     if tk.yesno(title[1], text[1]) then
         misn.accept()
-        misn.setDesc(misndesc:format(cursys:name()))
+        misn.setDesc(misndesc:format(_(cursys:name())))
         misn.setReward(misnreward)
         misn.osdCreate(OSDtitle, OSD)
         tk.msg(title[2], text[2])

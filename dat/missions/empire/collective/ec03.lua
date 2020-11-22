@@ -91,7 +91,7 @@ function accept ()
       -- Mission details
       misn.setTitle(misn_title)
       misn.setReward( creditstring( credits ) )
-      misn.setDesc( string.format(misn_desc[1], misn_target_sys:name() ))
+      misn.setDesc( string.format(misn_desc[1], _(misn_target_sys:name()) ))
 
       tk.msg( title[1], string.format(text[2], commando_planet, commando_planet ) )
       tk.msg( title[1], text[3] )

@@ -109,7 +109,7 @@ function create()
 end
 
 function accept()
-    tk.msg("", bar_text:format(dest_planet:name(), dest_sys:name(), player:name()))
+    tk.msg("", bar_text:format(_(dest_planet:name()), _(dest_sys:name()), player:name()))
     tk.msg("", leave_text)
     learned_text = false
     has_lab_coat = false
@@ -119,7 +119,7 @@ function accept()
     -- Set up mission information
     misn.setTitle(mtitle)
     misn.setReward(misn_reward)
-    misn.setDesc(mdesc:format(dest_planet:name(), dest_sys:name(), timelimit:str()))
+    misn.setDesc(mdesc:format(_(dest_planet:name()), _(dest_sys:name()), timelimit:str()))
     misn_marker = misn.markerAdd(dest_sys, "high")
     
     misn.accept()
@@ -134,7 +134,7 @@ end
 function land()
     landed = planet.cur()
     if landed == dest_planet then
-        tk.msg(landing_title:format(dest_planet:name()), arrival_text:format(dest_planet:name()))
+        tk.msg(landing_title:format(_(dest_planet:name())), arrival_text:format(_(dest_planet:name())))
         enter_ship()
     end
 end

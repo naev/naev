@@ -109,9 +109,9 @@ function accept()
    stage = 0
    reward = 750000
 
-   if tk.yesno(title[1], text[1]:format(battlesys:name(), numstring(reward/2))) then
+   if tk.yesno(title[1], text[1]:format(_(battlesys:name()), numstring(reward/2))) then
       misn.accept()
-      tk.msg(title[2], text[2]:format(battlesys:name(), paypla:name(), paysys:name()))
+      tk.msg(title[2], text[2]:format(_(battlesys:name()), _(paypla:name()), _(paysys:name())))
 
       osd_msg[1] = osd_msg[1]:format(battlesys:name())
       osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())

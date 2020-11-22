@@ -118,7 +118,7 @@ function accept()
    if tk.yesno(title[1], text[1]) then
       misn.accept()
       piratename = pirate_name()    --for now, we only need his name
-      tk.msg(title[2], text[2]:format(missys:name(),mispla:name()))
+      tk.msg(title[2], text[2]:format(_(missys:name()),_(mispla:name())))
 
       osd_msg[1] = osd_msg[1]:format(missys:name(), mispla:name())
       osd_msg[2] = osd_msg[2]:format(battlesys:name())
@@ -206,7 +206,7 @@ function beginbattle()
 
    misn.markerRm(markeri)
 
-   tk.msg(title[3], text[3]:format(battlesys:name()))
+   tk.msg(title[3], text[3]:format(_(battlesys:name())))
    misn.osdActive(2)
    stage = 1
 

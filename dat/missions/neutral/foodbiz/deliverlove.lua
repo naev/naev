@@ -70,7 +70,7 @@ end
 function accept ()
    -- Introductions and a bit of bargaining
    if not started then
-      if not tk.yesno( title, firstcontact:format( targetworld:name(), targetworld:name() ) ) then
+      if not tk.yesno( title, firstcontact:format( _(targetworld:name()), _(targetworld:name()) ) ) then
          misn.finish()
       end
       started = true
@@ -97,7 +97,7 @@ function accept ()
 
    misn.setTitle( misn_title )
    misn.setReward( creditstring( reward ) )
-   misn.setDesc( misn_desc:format( targetworld:name(), targetworld_sys:name() ) )
+   misn.setDesc( misn_desc:format( _(targetworld:name()), _(targetworld_sys:name()) ) )
 
    osd_desc[1] = osd_desc[1]:format( targetworld:name(), targetworld_sys:name() )
    misn.osdCreate( misn_title, osd_desc )

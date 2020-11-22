@@ -94,7 +94,7 @@ function accept ()
       misn.accept()
 
       misn.setTitle( misn_title )
-      misn.setDesc( misn_desc:format( misplanet:name() ) )
+      misn.setDesc( misn_desc:format( _(misplanet:name()) ) )
       misn.setReward( creditstring( credits ) )
       marker = misn.markerAdd( missys, "low" )
 

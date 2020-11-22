@@ -73,7 +73,7 @@ function accept()
         abort()
     end
     destplanet, destsys = planet.get("Racheka")
-    tk.msg(title1, text2:format(destplanet:name(), destsys:name()))
+    tk.msg(title1, text2:format(_(destplanet:name()), _(destsys:name())))
     osd_msg[1] = osd_msg[1]:format(destsys:name())
     osd_msg[2] = osd_msg[2]:format(destplanet:name())
     misn.accept()

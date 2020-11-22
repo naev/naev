@@ -125,7 +125,7 @@ function sys_enter ()
 end
 
 function game_of_drones ()
-   tk.msg(title[2], text[3]:format(t_pla[1]:name()))
+   tk.msg(title[2], text[3]:format(_(t_pla[1]:name())))
    -- spawn drones 
 
    t_drone = pilot.add("Za'lek Scout Drone", "trader",t_pla[1] )[1] -- prototype is a scout drone
@@ -157,7 +157,7 @@ function got_hailed()
    end
    hook.rm(idlehook)
    tk.msg(title[3], text[4])
-   tk.msg(title[3], text[5]:format(t_pla[1]:name()))
+   tk.msg(title[3], text[5]:format(_(t_pla[1]:name())))
    tk.msg(title[3], text[6])
    t_drone:setInvincible(false)
    t_drone:setHostile(true)

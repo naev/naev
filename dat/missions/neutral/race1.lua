@@ -101,7 +101,7 @@ function accept ()
       misn.setDesc(misndesc)
       misn.setReward(creditstring(credits))
       misn.osdCreate(OSDtitle, OSD)
-      tk.msg(title[2], string.format(text[2], curplanet:name(), curplanet:name()))
+      tk.msg(title[2], string.format(text[2], _(curplanet:name()), _(curplanet:name())))
       hook.takeoff("takeoff")
    else
       tk.msg(refusetitle, refusetext)
@@ -256,7 +256,7 @@ function board(ship)
          misn.osdActive(i+1)
          target[4] = target[4] + 1
          if target[4] == 4 then
-            tk.msg(string.format(title[3], i), string.format(text[4], curplanet:name()))
+            tk.msg(string.format(title[3], i), string.format(text[4], _(curplanet:name())))
          else
             tk.msg(string.format(title[3], i), string.format(text[3], i+1))
          end

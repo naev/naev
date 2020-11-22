@@ -111,12 +111,12 @@ function accept ()
    started = true
 
    if tk.yesno( title[1], txt ) then
-      tk.msg( title[1], text[2]:format( misplanet:name(), missys:name(), misplanet2:name(), missys2:name() ) )
+      tk.msg( title[1], text[2]:format( _(misplanet:name()), _(missys:name()), _(misplanet2:name()), _(missys2:name()) ) )
 
       misn.accept()
 
       misn.setTitle( misn_title )
-      misn.setDesc( misn_desc:format( misplanet:name() ) )
+      misn.setDesc( misn_desc:format( _(misplanet:name()) ) )
       misn.setReward( misn_reward )
       marker = misn.markerAdd( missys, "low" )
 
@@ -148,7 +148,7 @@ function land ()
    if stage == 1 and planet.cur() == misplanet then
       player.allowSave( false )
 
-      tk.msg( "", text[5]:format( misplanet:name() ) )
+      tk.msg( "", text[5]:format( _(misplanet:name()) ) )
       tk.msg( "", text[6] )
       tk.msg( "", text[7]:format( player.name() ) )
       tk.msg( "", text[8] )

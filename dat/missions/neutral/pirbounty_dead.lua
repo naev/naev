@@ -158,8 +158,8 @@ function create ()
    bounty_setup()
 
    -- Set mission details
-   misn.setTitle( misn_title[level]:format( missys:name() ) )
-   misn.setDesc( misn_desc:format( name, missys:name(), paying_faction:name() ) )
+   misn.setTitle( misn_title[level]:format( _(missys:name()) ) )
+   misn.setDesc( misn_desc:format( name, _(missys:name()), _(paying_faction:name()) ) )
    misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end

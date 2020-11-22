@@ -75,7 +75,7 @@ end
 
 function accept ()
    if tk.yesno( title[1], text[1]:format( player.name(), creditstring( credits ) ) ) then
-      tk.msg( title[1], text[2]:format( missys:name() ) )
+      tk.msg( title[1], text[2]:format( _(missys:name()) ) )
 
       misn.accept()
       osd_desc[1] = osd_desc[1]:format( missys:name() )
@@ -84,7 +84,7 @@ function accept ()
       local desc = setDescription()
       misn.setDesc( desc )
 
-      misn.setTitle( misn_title[level]:format( missys:name() ) )
+      misn.setTitle( misn_title[level]:format( _(missys:name()) ) )
       marker = misn.markerAdd( missys, "high" )
       misn.setReward( creditstring( credits ) )
 

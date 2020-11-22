@@ -130,7 +130,7 @@ function accept ()
 
       stage = 1
 
-      tk.msg( title[3], text[3]:format( tutGetKey("left"), tutGetKey("right"), tutGetKey("accel"), tutGetKey("reverse"), start_planet:name() ) )
+      tk.msg( title[3], text[3]:format( tutGetKey("left"), tutGetKey("right"), tutGetKey("accel"), tutGetKey("reverse"), _(start_planet:name()) ) )
    else
       tk.msg( title[2], text[2] )
       misn.finish( true )
@@ -148,13 +148,13 @@ function timer ()
          misn.osdActive( 2 )
 
          tk.msg( title[3], text[4]:format( tutGetKey("mousefly") ) )
-         tk.msg( title[3], text[5]:format( start_planet:name(), tutGetKey("autobrake"), tutGetKey("target_planet"), tutGetKey("land") ) )
+         tk.msg( title[3], text[5]:format( _(start_planet:name()), tutGetKey("autobrake"), tutGetKey("target_planet"), tutGetKey("land") ) )
       end
    elseif stage == 4 then
       if system.cur() == missys and player.pilot():pos():dist( dest_planet:pos() ) <= dest_planet_r then
          stage = 5
          misn.osdActive( 4 )
-         tk.msg( title[3], text[8]:format( dest_planet:name(), tutGetKey("target_hostile"), tutGetKey("primary"), tutGetKey("secondary") ) )
+         tk.msg( title[3], text[8]:format( _(dest_planet:name()), tutGetKey("target_hostile"), tutGetKey("primary"), tutGetKey("secondary") ) )
          spawn_drone()
       end
    end
@@ -181,7 +181,7 @@ function enter_timer ()
    if stage == 3 then
       stage = 4
       misn.osdActive( 3 )
-      tk.msg( title[3], text[7]:format( player.name(), tutGetKey("overlay"), tutGetKey("menu"), dest_planet:name() ) )
+      tk.msg( title[3], text[7]:format( player.name(), tutGetKey("overlay"), tutGetKey("menu"), _(dest_planet:name()) ) )
    elseif stage == 5 and system.cur() == missys then
       spawn_drone()
    elseif stage == 6 and system.cur() == destsys then
@@ -204,7 +204,7 @@ function pilot_death_timer ()
    misn.osdActive( 5 )
    misn.markerAdd( destsys, "high" )
    tk.msg( title[3], text[9]:format( tutGetKey("autobrake"), tutGetKey("info") ) )
-   tk.msg( title[3], text[10]:format( tutGetKey("starmap"), destsys:name() ) )
+   tk.msg( title[3], text[10]:format( tutGetKey("starmap"), _(destsys:name()) ) )
 end
 
 

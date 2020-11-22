@@ -102,7 +102,7 @@ function accept()
 
    if tk.yesno(title[1], text[1]:format(player.name())) then
       misn.accept()
-      tk.msg(title[2], text[2]:format(nextsys:name()))
+      tk.msg(title[2], text[2]:format(_(nextsys:name())))
 
       misn.setTitle(misn_title)
       misn.setReward(creditstring(reward))
@@ -122,7 +122,7 @@ end
 function land()
    --Job is done
    if stage == 1 and planet.cur() == paypla then
-      tk.msg(title[3], text[3]:format(nextsys:name()))
+      tk.msg(title[3], text[3]:format(_(nextsys:name())))
       player.pay(reward)
       shark_addLog( log_text )
       misn.finish(true)

@@ -89,13 +89,13 @@ function accept()
         tk.msg(decline_title, decline_text)
         misn.finish()
     end
-    tk.msg("", accept_text:format(dest_planet:name(), dest_sys:name()))
+    tk.msg("", accept_text:format(_(dest_planet:name()), _(dest_sys:name())))
     stage = 0
     
     -- Set up mission information
     misn.setTitle(mtitle)
     misn.setReward(misn_reward:format(creditstring(credits)))
-    misn.setDesc(mdesc:format(dest_planet:name(), dest_sys:name()))
+    misn.setDesc(mdesc:format(_(dest_planet:name()), _(dest_sys:name())))
     misn_marker = misn.markerAdd(dest_sys, "low")
     
     misn.accept()
@@ -115,7 +115,7 @@ function land()
             local planet_name = dest_planet:name()
             stage = 1
             dest_planet, dest_sys = planet.get("Neo Pomerania")
-            tk.msg(setback_title, first_planet_text:format(planet_name, dest_planet:name(), dest_sys:name()))
+            tk.msg(setback_title, first_planet_text:format(planet_name, _(dest_planet:name()), _(dest_sys:name())))
             misn.markerMove(misn_marker, dest_sys)
             osd_msg[1] = osd_fly_to:format(dest_planet:name(), dest_sys:name())
             osd_msg[2] = osd_return:format(homeworld:name(), homeworld_sys:name())
@@ -124,7 +124,7 @@ function land()
             local planet_name = dest_planet:name()
             stage = 3
             dest_planet, dest_sys = planet.get("Ruadan Prime")
-            tk.msg(setback_title, second_planet_text:format(planet_name, dest_planet:name(), dest_sys:name()))
+            tk.msg(setback_title, second_planet_text:format(planet_name, _(dest_planet:name()), _(dest_sys:name())))
             misn.markerMove(misn_marker, dest_sys)
             osd_msg[1] = osd_fly_to:format(dest_planet:name(), dest_sys:name())
             osd_msg[2] = osd_return:format(homeworld:name(), homeworld_sys:name())
@@ -143,7 +143,7 @@ function land()
             dest_sys = homeworld_sys
             tk.msg(party_title, party_arrival_text)
             tk.msg(party_title, party_professor_text)
-            tk.msg(party_title, party_end_text:format(dest_planet:name()))
+            tk.msg(party_title, party_end_text:format(_(dest_planet:name())))
             misn.markerMove(misn_marker, dest_sys)
             misn.osdActive(2)
         elseif stage == 7 then
@@ -183,11 +183,11 @@ function takeoff()
 end
 
 function warningMessage()
-    tk.msg(warning_title, warning_text:format(system.cur():name()))
+    tk.msg(warning_title, warning_text:format(_(system.cur():name())))
 end
 
 function secondWarningMessage()
-    tk.msg(warning_title, second_warning_text:format(system.cur():name()))
+    tk.msg(warning_title, second_warning_text:format(_(system.cur():name())))
 end
 
 function startAmbush()
@@ -211,7 +211,7 @@ function cannotLand()
     local planet_name = dest_planet:name()
     stage = 4
     dest_planet, dest_sys = planet.get("Ruadan Station")
-    tk.msg(ruadan_title, ruadan_text:format(planet_name, planet_name, dest_planet:name()))
+    tk.msg(ruadan_title, ruadan_text:format(planet_name, planet_name, _(dest_planet:name())))
     osd_msg[1] = osd_fly_to:format(dest_planet:name(), dest_sys:name())
     osd_msg[2] = osd_return:format(homeworld:name(), homeworld_sys:name())
     misn.osdCreate(osd_title, osd_msg)

@@ -55,7 +55,7 @@ end
 
 function accept ()
    -- Note: this mission does not make any system claims.
-   if not tk.yesno( title[0], string.format( text[0], targetsystem:name(),
+   if not tk.yesno( title[0], string.format( text[0], _(targetsystem:name()),
    targetsystem:name(), targetsystem:name() ) ) then --if accepted
       misn.finish()
    end
@@ -65,9 +65,9 @@ function accept ()
    tk.msg( title[1], text[1] ) --dialogue 2
    misn.setTitle( title[0] ) --OSD stuff
    misn.setReward( reward_desc )
-   misn.setDesc( string.format( misn_desc, targetsystem:name() ) )
+   misn.setDesc( string.format( misn_desc, _(targetsystem:name()) ) )
    misn.markerAdd( targetsystem, "low" )
-   misn.osdCreate(title[0], {misn_desc:format(targetsystem:name())})
+   misn.osdCreate(title[0], {misn_desc:format(_(targetsystem:name()))})
    
    startsystem = system.cur() --needed to make thugs appear random in the first system
    last_system = system.cur() --ignore this one, it's just the initialization of the variable

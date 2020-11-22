@@ -141,14 +141,14 @@ end
 function accept ()
    tk.msg( title[1], text[1]:format( player.name() ) )
    if tk.yesno( title[1], text[2] ) then
-      tk.msg( title[3], text[3]:format( missys:name() ) )
+      tk.msg( title[3], text[3]:format( _(missys:name()) ) )
 
       osd_desc[1] = osd_desc[1]:format( missys:name() )
 
       misn.accept()
       misn.osdCreate( osd_title, osd_desc )
       misn.setDesc( misn_desc )
-      misn.setTitle( misn_title:format( missys:name() ) )
+      misn.setTitle( misn_title:format( _(missys:name()) ) )
       marker = misn.markerAdd( missys, "low" )
       misn.setReward( misn_rwrd )
 

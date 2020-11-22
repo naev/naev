@@ -110,11 +110,11 @@ function accept ()
    started = true
 
    if tk.yesno( title[1], txt ) then
-      tk.msg( title[1], text[2]:format( missys:name() ) )
+      tk.msg( title[1], text[2]:format( _(missys:name()) ) )
       misn.accept()
 
       misn.setTitle( misn_title )
-      misn.setDesc( misn_desc:format( missys:name() ) )
+      misn.setDesc( misn_desc:format( _(missys:name()) ) )
       misn.setReward( creditstring( credits ) )
       marker = misn.markerAdd( missys, "high" )
 

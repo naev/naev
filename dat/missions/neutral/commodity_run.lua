@@ -107,7 +107,7 @@ function create ()
    -- Set Mission Details
    misn.setTitle( misn_title:format( _(chosen_comm) ) )
    misn.markerAdd( system.cur(), "computer" )
-   misn.setDesc( misn_desc:format( misplanet:name(), _(chosen_comm) ) )
+   misn.setDesc( misn_desc:format( _(misplanet:name()), _(chosen_comm) ) )
    misn.setReward( _("%s per tonne"):format( creditstring( price ) ) )
     
 end

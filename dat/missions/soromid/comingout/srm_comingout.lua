@@ -124,12 +124,12 @@ function accept ()
    started = true
 
    if tk.yesno( title[1], txt ) then
-      tk.msg( title[1], text[2]:format( misplanet:name(), missys:name() ) )
+      tk.msg( title[1], text[2]:format( _(misplanet:name()), _(missys:name()) ) )
 
       misn.accept()
 
       misn.setTitle( misn_title )
-      misn.setDesc( misn_desc:format( missys:name() ) )
+      misn.setDesc( misn_desc:format( _(missys:name()) ) )
       misn.setReward( misn_reward )
       marker = misn.markerAdd( missys, "low" )
 

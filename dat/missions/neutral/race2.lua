@@ -290,7 +290,7 @@ function board(ship)
          misn.osdActive(i+1)
          target[4] = target[4] + 1
          if target[4] == 4 then
-            tk.msg(string.format(title[3], i), string.format(text[4], curplanet:name()))
+            tk.msg(string.format(title[3], i), string.format(text[4], _(curplanet:name())))
             else
             tk.msg(string.format(title[3], i), string.format(text[3], i+1))
          end

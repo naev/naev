@@ -100,7 +100,7 @@ function create ()
    late_arrival_delay = rnd.rnd( 10000, 120000 )
 
    -- Set mission details
-   misn.setTitle( misn_title:format( misn_level[level], missys:name() ) )
+   misn.setTitle( misn_title:format( misn_level[level], _(missys:name()) ) )
    misn.setDesc( desc )
    misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
