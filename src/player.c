@@ -3766,7 +3766,10 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                   free(q);
                }
                if ((n<0) || (n >= ship->outfit_nstructure)) {
-                  WARN(_("Outfit slot out of range, not adding."));
+                  name = xml_get(cur);
+                  o = outfit_get(name);
+                  player_addOutfit( o, 1 );
+                  WARN(_("Outfit slot out of range, not adding to ship."));
                   continue;
                }
                player_parseShipSlot( cur, ship, &ship->outfit_structure[n] );
