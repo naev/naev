@@ -576,15 +576,15 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
 
    /* Weapon slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, "W", ship->outfit_weapon, ship->outfit_nweapon );
+   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_WEAPON), ship->outfit_weapon, ship->outfit_nweapon );
 
    /* Utility slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, "U", ship->outfit_utility, ship->outfit_nutility );
+   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_UTILITY), ship->outfit_utility, ship->outfit_nutility );
 
    /* Structure slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, "S", ship->outfit_structure, ship->outfit_nstructure );
+   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_STRUCTURE), ship->outfit_structure, ship->outfit_nstructure );
 }
 
 
@@ -601,7 +601,7 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str,
    x = bx;
 
    /* Print text. */
-   gl_print( &gl_smallFont, bx, by, &cFontWhite, str );
+   gl_printMid( &gl_smallFont, 30, bx-15, by, &cFontWhite, str );
 
    /* Draw squares. */
    for (i=0; i<n; i++) {

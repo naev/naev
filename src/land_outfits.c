@@ -277,7 +277,7 @@ static void outfits_genList( unsigned int wid )
       outfit_filterOther
    };
    const char *tabnames[] = {
-      _("All"), _("\ab W "), _("\ag U "), _("\ap S "), _("\aRCore"), _("Other")
+      _("All"), _(OUTFIT_LABEL_WEAPON), _(OUTFIT_LABEL_UTILITY), _(OUTFIT_LABEL_STRUCTURE), _(OUTFIT_LABEL_CORE), _("Other")
    };
 
    int active;
