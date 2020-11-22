@@ -13,9 +13,8 @@ set -x
 
 # General file
 TMPFILE=$(mktemp)
-echo "src/log.h" > "$TMPFILE"
 echo "po/credits.pot" >> "$TMPFILE"
-find src/ -name "*.c" -not \( -name "shaders.gen.c" -or -name "shaders_c_gen.c" \) >> "$TMPFILE"
+find src/ -name "*.[ch]" -not \( -name "glue_macos.h" -or -name "khrplatform.h" -or -name "shaders*gen*" \) >> "$TMPFILE"
 find dat/ -name "*.lua" >> "$TMPFILE"
 
 cat "$TMPFILE" | LC_ALL=C sort | tee "$ROOT/po/POTFILES_COMBINED.in" > "$ROOT/po/POTFILES.in"
