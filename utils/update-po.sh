@@ -32,3 +32,13 @@ cat "$TMPFILE" | LC_ALL=C sort | tee -a "$ROOT/po/POTFILES_COMBINED.in" > "$ROOT
 echo "po/xml.pot" >> "$ROOT/po/POTFILES.in"
 
 rm "$TMPFILE" # clean-up
+
+# Pull strings from the "intro" and "AUTHORS" files (inputs to credit rolls) into "credits.pot".
+echo "po/credits.pot" >> "$ROOT/po/POTFILES_COMBINED.in"
+awk '# Loop over lines, and when we get plain text (not a "[...]" line),
+   /^[^[[]/ {
+      # Escape any quotation marks...
+      gsub(/"/, "\\\"");
+      # And print a msgid/msgstr pair with the filename and line number.
+      print "#: " FILENAME ":" NR "\nmsgid \"" $0 "\"\nmsgstr \"\"\n";
+   }' dat/intro dat/AUTHORS > "$ROOT/po/credits.pot"
