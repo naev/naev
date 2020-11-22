@@ -3311,7 +3311,7 @@ static Planet* player_parse( xmlNodePtr parent )
             xmlr_float(cur, "Remainder", rem);
          } while (xml_nextNode(cur));
          if ((cycles < 0) || (periods < 0) || (seconds < 0) || (rem<0.))
-            WARN("Malformed time in save game!");
+            WARN(_("Malformed time in save game!"));
          ntime_setR( cycles, periods, seconds, rem );
          if ((cycles >= 0) || (periods >= 0) || (seconds >= 0))
             time_set = 1;
