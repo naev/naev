@@ -92,9 +92,9 @@ function create ()
       misn.setReward( creditstring( credits ) )
       misn.setDesc( string.format(misn_desc[1], _(misn_target:name()), _(misn_target_sys:name()) ))
       tk.msg( title[1], string.format(text[2], _(misn_target_sys:name()), _(misn_target:name())) )
-      osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
-      osd_msg[2] = osd_msg[2]:format(misn_target:name())
-      osd_msg[3] = osd_msg[3]:format(misn_base:name())
+      osd_msg[1] = osd_msg[1]:format(_(misn_target_sys:name()))
+      osd_msg[2] = osd_msg[2]:format(_(misn_target:name()))
+      osd_msg[3] = osd_msg[3]:format(_(misn_base:name()))
       misn.osdCreate(misn_title, osd_msg)
 
       hook.enter("enter")
@@ -235,7 +235,7 @@ function land ()
       player.takeoff()
 
       -- Some flavour text
-      title[2] = title[2]:format(misn_target:name())
+      title[2] = title[2]:format(_(misn_target:name()))
       tk.msg( title[2], text[3] )
 
       -- Add fuel if needed

@@ -95,7 +95,7 @@ function accept ()
         misn.accept()
         misn.setDesc(misndesc:format(_(destplanet:name()), _(destsys:name())))
         misn.setReward(misnreward)
-        OSD[1] = OSD[1]:format(destplanet:name(), destsys:name())
+        OSD[1] = OSD[1]:format(_(destplanet:name()), _(destsys:name()))
         misn.osdCreate(OSDtitle, OSD)
         misn.markerAdd(destsys, "high")
 

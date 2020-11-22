@@ -106,14 +106,14 @@ function accept ()
    misn.setTitle(misn_title)
    misn.setReward( misn_reward )
    misn.setDesc( string.format(misn_desc[1], _(misn_target_sys1:name()) ))
-   osd_msg[1] = osd_msg[1]:format(misn_final_sys:name(), misn_target_sys2:name())
+   osd_msg[1] = osd_msg[1]:format(_(misn_final_sys:name()), _(misn_target_sys2:name()))
     if var.peek("trinity") then
         osd_msg[2] = osd_msg2alt
     end
    misn.osdCreate(misn_title, osd_msg)
 
    tk.msg( title[2], string.format( text[2],
-         misn_target_sys1:name(), misn_final_sys:name() ) )
+         _(misn_target_sys1:name()), _(misn_final_sys:name()) ) )
 
    hook.jumpout("jumpout")
    hook.enter("jumpin")

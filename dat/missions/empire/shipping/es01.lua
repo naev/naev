@@ -98,7 +98,7 @@ function accept ()
 
    -- Flavour text and mini-briefing
    tk.msg( title[1], string.format( text[2], _(pickup:name()), _(pickupsys:name()),
-         dest:name(), destsys:name(), creditstring(reward) ) )
+         _(dest:name()), _(destsys:name()), creditstring(reward) ) )
    misn.osdCreate(misn_title, {misn_desc[1]:format(_(pickup:name()), _(pickupsys:name()))})
 
    -- Set up the goal

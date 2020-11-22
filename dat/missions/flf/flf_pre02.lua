@@ -143,7 +143,7 @@ function accept ()
    if tk.yesno( title[1], text[2] ) then
       tk.msg( title[3], text[3]:format( _(missys:name()) ) )
 
-      osd_desc[1] = osd_desc[1]:format( missys:name() )
+      osd_desc[1] = osd_desc[1]:format( _(missys:name()) )
 
       misn.accept()
       misn.osdCreate( osd_title, osd_desc )

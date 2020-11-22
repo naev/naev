@@ -168,9 +168,9 @@ end
 function accept ()
    misn.accept()
 
-   osd_msg[1] = osd_msg[1]:format( missys:name() )
+   osd_msg[1] = osd_msg[1]:format( _(missys:name()) )
    osd_msg[2] = osd_msg[2]:format( name )
-   osd_msg[3] = osd_msg[3]:format( paying_faction:name() )
+   osd_msg[3] = osd_msg[3]:format( _(paying_faction:name()) )
    misn.osdCreate( osd_title, osd_msg )
 
    last_sys = system.cur()

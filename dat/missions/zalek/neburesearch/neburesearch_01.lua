@@ -127,9 +127,9 @@ function accept()
     nextsys = getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
     
     misn.accept()
-    osd_msg[1] = string.format(osd_msg[1], t_planet[5]:name(), destsys:name())
-    osd_msg[2] = string.format(osd_msg[2], _(station), t_sys[5]:name())
-    osd_msg[3] = string.format(osd_msg[3], _(homeworld), t_sys[8]:name())
+    osd_msg[1] = string.format(osd_msg[1], t_planet[5]:name(), _(destsys:name()))
+    osd_msg[2] = string.format(osd_msg[2], _(station), _(t_sys[5]:name()))
+    osd_msg[3] = string.format(osd_msg[3], _(homeworld), _(t_sys[8]:name()))
     misn.osdCreate(osd_title, osd_msg)
     misn_marker = misn.markerAdd(destsys, "low")
     

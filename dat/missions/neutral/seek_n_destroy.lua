@@ -253,9 +253,9 @@ function accept ()
    hailhook = hook.hail( "hail" )
    landhook = hook.land( "land" )
 
-   osd_msg[1] = osd_msg1_r:format( mysys[1]:name() )
+   osd_msg[1] = osd_msg1_r:format( _(mysys[1]:name()) )
    osd_msg[2] = osd_msg[2]:format( name )
-   osd_msg[3] = osd_msg[3]:format( paying_faction:name() )
+   osd_msg[3] = osd_msg[3]:format( _(paying_faction:name()) )
    misn.osdCreate( osd_title, osd_msg )
 end
 
@@ -593,7 +593,7 @@ end
 
 function next_sys ()
    misn.markerMove (marker, mysys[cursys+1])
-   osd_msg[1] = osd_msg1_r:format( mysys[cursys+1]:name() )
+   osd_msg[1] = osd_msg1_r:format( _(mysys[cursys+1]:name()) )
    misn.osdCreate( osd_title, osd_msg )
    increment = true
 end

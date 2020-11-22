@@ -56,7 +56,7 @@ function setDescription ()
    desc = gettext.ngettext(
          "There is %d Empire ship patrolling the %s system. Eliminate this ship.",
          "There is an Empire patrol with %d ships in the %s system. Eliminate this patrol.",
-         ships ):format( ships, missys:name() )
+         ships ):format( ships, _(missys:name()) )
 
    if has_vigilance then
       desc = desc .. _(" There is a Pacifier among them, so you must proceed with caution.")

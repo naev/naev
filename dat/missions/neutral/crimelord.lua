@@ -56,7 +56,7 @@ end
 function accept ()
    -- Note: this mission does not make any system claims.
    if not tk.yesno( title[0], string.format( text[0], _(targetsystem:name()),
-   targetsystem:name(), targetsystem:name() ) ) then --if accepted
+   _(targetsystem:name()), _(targetsystem:name()) ) ) then --if accepted
       misn.finish()
    end
    

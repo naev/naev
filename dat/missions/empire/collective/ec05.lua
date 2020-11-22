@@ -139,8 +139,8 @@ function accept ()
    misn.setTitle(misn_title)
    misn.setReward( creditstring( credits ) )
    misn.setDesc( string.format(misn_desc[1], _(misn_target_sys:name()) ))
-   osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
-   osd_msg[3] = osd_msg[3]:format(misn_base:name())
+   osd_msg[1] = osd_msg[1]:format(_(misn_target_sys:name()))
+   osd_msg[3] = osd_msg[3]:format(_(misn_base:name()))
    misn.osdCreate(misn_title, osd_msg)
    
    tk.msg( title[2], string.format(text[3], _(misn_base:name()) ) )
@@ -214,7 +214,7 @@ function enter ( from_sys )
       misn_stage = 3
       player.msg( talk[6] )
       misn.setDesc( string.format(misn_desc[2],
-            misn_base:name(), misn_base_sys:name() ))
+            _(misn_base:name()), _(misn_base_sys:name()) ))
       misn.markerMove( misn_marker, misn_base_sys )
    end
 end

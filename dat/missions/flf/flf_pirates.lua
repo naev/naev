@@ -66,7 +66,7 @@ function setDescription ()
    desc = gettext.ngettext(
          "There is %d pirate ship disturbing FLF operations in the %s system. Eliminate this ship.",
          "There is a pirate group with %d ships disturbing FLF operations in the %s system. Eliminate this group.",
-         ships ):format( ships, missys:name() )
+         ships ):format( ships, _(missys:name()) )
 
    if has_phalanx then
       desc = desc .. _(" There is a Phalanx among them, so you must proceed with caution.")
@@ -142,7 +142,7 @@ end
 function accept ()
    misn.accept()
 
-   osd_desc[1] = osd_desc[1]:format( missys:name() )
+   osd_desc[1] = osd_desc[1]:format( _(missys:name()) )
    misn.osdCreate( osd_title, osd_desc )
 
    pirate_ships_left = 0

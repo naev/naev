@@ -158,7 +158,7 @@ end
 function accept ()
    misn.accept()
 
-   osd_msg[1] = osd_msg[1]:format( missys:name() )
+   osd_msg[1] = osd_msg[1]:format( _(missys:name()) )
    osd_msg[2] = osd_msg[2]:format( target_faction )
    misn.osdCreate( osd_title, osd_msg )
 
@@ -189,7 +189,7 @@ function jumpout ()
    jumps_permitted = jumps_permitted - 1
    last_sys = system.cur()
    if not job_done and last_sys == missys then
-      fail( msg[3]:format( last_sys:name() ) )
+      fail( msg[3]:format( _(last_sys:name()) ) )
    end
 end
 

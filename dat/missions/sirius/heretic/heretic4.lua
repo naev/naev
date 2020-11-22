@@ -67,13 +67,13 @@ function create()
    misn.setNPC(npc_name, "sirius/unique/draga")
    misn.setDesc(bar_desc)
 
-   osd[1] = osd[1]:format(targetasset:name(),targetsys:name())
+   osd[1] = osd[1]:format(_(targetasset:name()), _(targetsys:name()))
 end
 
 function accept()
    --initial convo. Kept it a yes/no to help with the urgent feeling of the situation.
 
-   local msg = bmsg[1]:format( targetasset:name(), targetsys:name() )
+   local msg = bmsg[1]:format( _(targetasset:name()), _(targetsys:name()) )
    if not tk.yesno(misn_title, msg) then
       misn.finish ()
    end

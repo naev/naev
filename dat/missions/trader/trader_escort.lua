@@ -123,7 +123,7 @@ function create()
    reward = 2.0 * (avgrisk * numjumps * jumpreward + traveldist * distreward) * (1. + 0.05*rnd.twosigma())
    
    misn.setTitle( misn_title[convoysize]:format(
-      destplanet:name(), destsys:name() ) )
+      _(destplanet:name()), _(destsys:name()) ) )
    misn.setDesc( misn_desc:format( _(destplanet:name()), _(destsys:name()) )
       .. "\n\n" .. misn_details:format(
          cargo, numjumps, traveldist, piracyrisk ) )

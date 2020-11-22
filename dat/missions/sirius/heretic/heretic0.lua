@@ -67,8 +67,8 @@ function create()
    misn.setTitle(misn_title)
    misn.setNPC(npc_name, "sirius/unique/strangeman")
    misn.setDesc(bar_desc)
-   osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())
-   misn_desc = misn_desc:format(targetasset:name(),targetsystem:name())
+   osd[1] = osd[1]:format(_(targetasset:name()),_(targetsystem:name()))
+   misn_desc = misn_desc:format(_(targetasset:name()),_(targetsystem:name()))
 end
 
 function accept()

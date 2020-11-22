@@ -121,11 +121,11 @@ function accept ()
       hook.land( "land" )
       hook.enter( "enter" )
       
-      osd_desc[1] = osd_desc[1]:format( start_planet:name(), missys:name() )
-      osd_desc[2] = osd_desc[2]:format( start_planet:name(), missys:name() )
-      osd_desc[3] = osd_desc[3]:format( dest_planet:name(), missys:name() )
-      osd_desc[4] = osd_desc[4]:format( dest_planet:name(), missys:name() )
-      osd_desc[5] = osd_desc[5]:format( destsys:name() )
+      osd_desc[1] = osd_desc[1]:format( _(start_planet:name()), _(missys:name()) )
+      osd_desc[2] = osd_desc[2]:format( _(start_planet:name()), _(missys:name()) )
+      osd_desc[3] = osd_desc[3]:format( _(dest_planet:name()), _(missys:name()) )
+      osd_desc[4] = osd_desc[4]:format( _(dest_planet:name()), _(missys:name()) )
+      osd_desc[5] = osd_desc[5]:format( _(destsys:name()) )
       misn.osdCreate( osd_title, osd_desc )
 
       stage = 1

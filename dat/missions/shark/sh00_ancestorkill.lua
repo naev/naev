@@ -120,9 +120,9 @@ function accept()
       piratename = pirate_name()    --for now, we only need his name
       tk.msg(title[2], text[2]:format(_(missys:name()),_(mispla:name())))
 
-      osd_msg[1] = osd_msg[1]:format(missys:name(), mispla:name())
-      osd_msg[2] = osd_msg[2]:format(battlesys:name())
-      osd_msg[3] = osd_msg[3]:format(mispla:name())
+      osd_msg[1] = osd_msg[1]:format(_(missys:name()), _(mispla:name()))
+      osd_msg[2] = osd_msg[2]:format(_(battlesys:name()))
+      osd_msg[3] = osd_msg[3]:format(_(mispla:name()))
 
       misn.setTitle(misn_title)
       misn.setReward(creditstring(reward))

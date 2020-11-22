@@ -78,7 +78,7 @@ function accept ()
       tk.msg( title[1], text[2]:format( _(missys:name()) ) )
 
       misn.accept()
-      osd_desc[1] = osd_desc[1]:format( missys:name() )
+      osd_desc[1] = osd_desc[1]:format( _(missys:name()) )
       misn.osdCreate( osd_title, osd_desc )
 
       local desc = setDescription()

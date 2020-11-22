@@ -113,8 +113,8 @@ function accept ()
       misn.setDesc( misn_desc:format(_(pickupWorld:name()), _(pickupSys:name()), _(delivWorld:name()), _(delivSys:name()) ) )
 
       -- OSD
-      OSDdesc[1] =  OSDdesc[1]:format(pickupWorld:name(), pickupSys:name())
-      OSDdesc[2] =  OSDdesc[2]:format(delivWorld:name(), delivSys:name())
+      OSDdesc[1] =  OSDdesc[1]:format(_(pickupWorld:name()), _(pickupSys:name()))
+      OSDdesc[2] =  OSDdesc[2]:format(_(delivWorld:name()), _(delivSys:name()))
 
       pickedup = false
       droppedoff = false

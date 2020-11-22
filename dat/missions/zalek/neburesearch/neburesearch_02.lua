@@ -87,7 +87,7 @@ function accept()
     misn_marker = misn.markerAdd(homeworld_sys, "low")
     
     misn.accept()
-    osd_msg[1] = osd_msg[1]:format(homeworld:name(), homeworld_sys:name())
+    osd_msg[1] = osd_msg[1]:format(_(homeworld:name()), _(homeworld_sys:name()))
     misn.osdCreate(osd_title, osd_msg)
     
     hook.land("land")

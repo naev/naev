@@ -158,7 +158,7 @@ end
 function accept2()
     tick = {false, false, false, false, false}
     tick["__save"] = true
-    osd_msg[1] = osd_msg[0]:format(jorekplanet1:name(), joreksys1:name())
+    osd_msg[1] = osd_msg[0]:format(_(jorekplanet1:name()), _(joreksys1:name()))
     misn.osdCreate(osd_title, osd_msg)
     misn.setDesc(misn_desc2)
     misn.setReward(misn_reward)
@@ -478,7 +478,7 @@ end
 -- NPC hook
 function barman()
     tk.msg(title[3], text[6]:format(player.name(), _(joreksys2:name()), _(jorekplanet2:name())))
-    osd_msg[1] = osd_msg[0]:format(jorekplanet2:name(), joreksys2:name())
+    osd_msg[1] = osd_msg[0]:format(_(jorekplanet2:name()), _(joreksys2:name()))
     misn.osdCreate(osd_title, osd_msg)
     misn.markerMove(marker, joreksys2)
     misn.npcRm(barmanNPC)
@@ -492,7 +492,7 @@ function jorek()
     misn.npcRm(joreknpc)
     misn.cargoAdd("Jorek", 0)
 
-    osd2_msg[2] = osd2_msg[2]:format(seirsys:name())
+    osd2_msg[2] = osd2_msg[2]:format(_(seirsys:name()))
     misn.osdCreate(osd_title, osd2_msg)
 
     stage = 4

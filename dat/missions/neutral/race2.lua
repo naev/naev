@@ -111,7 +111,7 @@ end
 function accept ()
    if tk.yesno(title[1], text[1]) then
       misn.accept()
-      OSD[4] = string.format(OSD[4], curplanet:name())
+      OSD[4] = string.format(OSD[4], _(curplanet:name()))
       misn.setDesc(misndesc)
       misn.osdCreate(OSDtitle, OSD)
       local s = text[5]:format(creditstring(credits_easy), creditstring(credits_hard))

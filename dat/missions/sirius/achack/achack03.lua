@@ -113,7 +113,7 @@ function accept()
    destplanet, destsys = planet.cur() -- Keeps track of where the mission was accepted.
    origin = planet.cur() -- Keeps track of where the player enters the system from.
 
-   osd_msg[3] = osd_msg[3]:format(destplanet:name(), destsys:name())
+   osd_msg[3] = osd_msg[3]:format(_(destplanet:name()), _(destsys:name()))
 
    misn.accept()
    misn.setDesc(misn_desc)

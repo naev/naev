@@ -111,7 +111,7 @@ function accept()
       misn.accept()
       tk.msg(title[2], text[2]:format(_(mispla:name()), _(missys:name())))
 
-      osd_msg[1] = osd_msg[1]:format(mispla:name(),missys:name())
+      osd_msg[1] = osd_msg[1]:format(_(mispla:name()), _(missys:name()))
       osd_msg[2] = osd_msg[2]:format(pplname, psyname)
 
       misn.setTitle(misn_title)

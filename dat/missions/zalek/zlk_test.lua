@@ -143,7 +143,7 @@ function accept()
       tk.msg( msg_title[1], znpcs[ rnd.rnd(1, #znpcs) ] )
       tk.msg( msg_title[1], string.format( msg_msg[1], _(destplanet:name()), _(destsys:name()) ))
 
-      osd_msg[1] = string.format( osd_msg[1], destplanet:name(), destsys:name() )
+      osd_msg[1] = string.format( osd_msg[1], _(destplanet:name()), _(destsys:name()) )
       misn.osdCreate(osd_title, osd_msg)
       takehook = hook.takeoff( "takeoff" )
       enterhook = hook.enter("enter")

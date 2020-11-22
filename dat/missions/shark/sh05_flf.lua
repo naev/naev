@@ -87,7 +87,7 @@ function create ()
    paypla, paysys = planet.get("Darkshed")
    nextsys = system.get("Arandon") -- This should be the same as the system used in sh06!
 
-   osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
+   osd_msg[2] = osd_msg[2]:format(_(paypla:name()), _(paysys:name()))
    paysys = system.get(paysys:name())
    paypla = planet.get(paypla:name())
 

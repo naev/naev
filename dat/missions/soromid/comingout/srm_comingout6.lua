@@ -105,7 +105,7 @@ function accept ()
    if started then
       txt = text[4]:format( player.name() )
    else
-      txt = text[1]:format( pirname, missys:name(), creditstring( credits ) )
+      txt = text[1]:format( pirname, _(missys:name()), creditstring( credits ) )
    end
    started = true
 

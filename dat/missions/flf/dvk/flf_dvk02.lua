@@ -136,7 +136,7 @@ function accept ()
 
       misn.accept()
 
-      osd_desc[1] = osd_desc[1]:format( missys:name() )
+      osd_desc[1] = osd_desc[1]:format( _(missys:name()) )
       misn.osdCreate( osd_title, osd_desc )
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( _(missys:name()) ) )
@@ -201,13 +201,13 @@ function pilot_hail_boss ()
 
          tk.msg( title[8], text[8] )
          tk.msg( title[8], text[9]:format(
-            missys2:name(), tonnestring( ore_needed ), missys2:name() ) )
+            _(missys2:name()), tonnestring( ore_needed ), _(missys2:name()) ) )
 
          player.addOutfit( "Map: FLF-Pirate Route" )
          if marker ~= nil then misn.markerRm( marker ) end
          marker = misn.markerAdd( missys2, "plot" )
 
-         osd_desc[4] = osd_apnd[4]:format( tonnestring( ore_needed ), missys2:name() )
+         osd_desc[4] = osd_apnd[4]:format( tonnestring( ore_needed ), _(missys2:name()) )
          osd_desc[5] = osd_final
          misn.osdCreate( osd_title, osd_desc )
          misn.osdActive( 4 )

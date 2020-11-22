@@ -64,7 +64,7 @@ OSD[2] = _("Bring the teenagers back to planet %s")
 function create ()
     cursys = system.cur()
     curplanet = planet.cur()
-    OSD[2] = OSD[2]:format(planet.cur():name())
+    OSD[2] = OSD[2]:format(_(planet.cur():name()))
     misn.setNPC(NPCname, "neutral/unique/middleaged")
     misn.setDesc(NPCdesc)
 end

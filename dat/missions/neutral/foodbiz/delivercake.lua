@@ -89,7 +89,7 @@ function accept()
    misn.setReward( creditstring( reward ) )
    misn.setDesc( misn_desc:format( _(targetworld:name()), _(targetworld_sys:name()) ) )
 
-   osd_desc[1] = osd_desc[1]:format( targetworld:name(), targetworld_sys:name() )
+   osd_desc[1] = osd_desc[1]:format( _(targetworld:name()), _(targetworld_sys:name()) )
    misn.osdCreate( title, osd_desc )
    misn.markerAdd( targetworld_sys, "low" )
 

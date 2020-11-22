@@ -130,10 +130,10 @@ function create()
    reward     = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
    
    misn.setTitle( misn_title[tier]:format(
-      destplanet:name(), destsys:name(), tonnestring(amount) ) )
+      _(destplanet:name()), _(destsys:name()), tonnestring(amount) ) )
    misn.markerAdd(destsys, "computer")
    misn.setDesc(
-      misn_desc[tier]:format( destplanet:name(), destsys:name() ) .. "\n\n"
+      misn_desc[tier]:format( _(destplanet:name()), _(destsys:name()) ) .. "\n\n"
       .. misn_details:format(
          cargo, tonnestring(amount), numjumps, traveldist, piracyrisk,
          (timelimit - time.get()):str() ) )
@@ -156,7 +156,7 @@ function accept()
       if not tk.yesno( _("Too slow"), string.format(
             _("This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline. Accept the mission anyway?"),
             (timelimit - time.get()):str(), (playerbest - time.get()):str(),
-            destplanet:name() ) ) then
+            _(destplanet:name()) ) ) then
          misn.finish()
       end
    end
@@ -165,7 +165,7 @@ function accept()
    misn.cargoAdd(cargo, amount) -- TODO: change to jettisonable cargo once custom commodities are in. For piracy purposes.
    local osd_msg = {}
    osd_msg[1] = osd_msg1:format(
-      destplanet:name(), destsys:name(), timelimit:str(),
+      _(destplanet:name()), _(destsys:name()), timelimit:str(),
       (timelimit - time.get()):str() )
    misn.osdCreate(osd_title, osd_msg)
    hook.land("land")
@@ -195,7 +195,7 @@ function tick()
    if timelimit >= time.get() then
       -- Case still in time
       osd_msg[1] = osd_msg1:format(
-         destplanet:name(), destsys:name(), timelimit:str(),
+         _(destplanet:name()), _(destsys:name()), timelimit:str(),
          (timelimit - time.get()):str() )
       misn.osdCreate(osd_title, osd_msg)
    elseif timelimit2 <= time.get() then
@@ -204,7 +204,7 @@ function tick()
       misn.finish(false)
    elseif intime then
       -- Case missed first deadline
-      osd_msg[1] = osd_timeup:format( destplanet:name(), destsys:name() )
+      osd_msg[1] = osd_timeup:format( _(destplanet:name()), _(destsys:name()) )
       misn.osdCreate(osd_title, osd_msg)
       intime = false
    end

@@ -83,7 +83,7 @@ end
 function accept ()
    misn.accept()
 
-   osd_desc[1] = osd_desc[1]:format( missys:name() )
+   osd_desc[1] = osd_desc[1]:format( _(missys:name()) )
    misn.osdCreate( osd_title, osd_desc )
 
    dv_attention = 0

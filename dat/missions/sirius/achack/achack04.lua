@@ -161,7 +161,7 @@ function talkJoanne()
       -- accepted
       stage = stage + 1
       tk.msg(title3, text4:format(player.name()))
-      osd_msg[3] = osd_msg[3]:format(startplanet:name(), startsys:name())
+      osd_msg[3] = osd_msg[3]:format(_(startplanet:name()), _(startsys:name()))
       misn.osdCreate(osd_title, osd_msg)
       misn.setDesc(misn_desc2)
       misn.npcRm(joanne_npc)
@@ -178,7 +178,7 @@ function talkHarja()
       destsys = system.get("Suna")
       marker = misn.markerAdd(destsys, "high")
       
-      osd_msg[2] = osd_msg2alt:format(destsys:name())
+      osd_msg[2] = osd_msg2alt:format(_(destsys:name()))
       misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(2)
       

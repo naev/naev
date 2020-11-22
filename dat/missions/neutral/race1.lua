@@ -97,7 +97,7 @@ end
 function accept ()
    if tk.yesno(title[1], text[1]:format(creditstring(credits))) then
       misn.accept()
-      OSD[4] = string.format(OSD[4], curplanet:name())
+      OSD[4] = string.format(OSD[4], _(curplanet:name()))
       misn.setDesc(misndesc)
       misn.setReward(creditstring(credits))
       misn.osdCreate(OSDtitle, OSD)

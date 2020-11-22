@@ -88,9 +88,9 @@ function create ()
 
    local desc
    if ships == 1 then
-      desc = misn_desc[2]:format( missys:name() )
+      desc = misn_desc[2]:format( _(missys:name()) )
    else
-      desc = misn_desc[1]:format( ships, missys:name() )
+      desc = misn_desc[1]:format( ships, _(missys:name()) )
    end
    if flfships > 0 then
       desc = desc .. misn_desc[3]:format( flfships )
@@ -110,7 +110,7 @@ end
 function accept ()
    misn.accept()
 
-   osd_desc[1] = osd_desc[1]:format( missys:name() )
+   osd_desc[1] = osd_desc[1]:format( _(missys:name()) )
    osd_desc[2] = osd_desc[2]:format( misn_level[level] )
    misn.osdCreate( osd_title, osd_desc )
 

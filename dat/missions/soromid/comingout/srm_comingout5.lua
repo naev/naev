@@ -84,7 +84,7 @@ function accept ()
    if started then
       txt = text[4]
    else
-      txt = text[1]:format( player.name(), misplanet:name(), creditstring( credits ) )
+      txt = text[1]:format( player.name(), _(misplanet:name()), creditstring( credits ) )
    end
    started = true
 
@@ -98,7 +98,7 @@ function accept ()
       misn.setReward( creditstring( credits ) )
       marker = misn.markerAdd( missys, "low" )
 
-      osd_desc[1] = osd_desc[1]:format( misplanet:name(), missys:name() )
+      osd_desc[1] = osd_desc[1]:format( _(misplanet:name()), _(missys:name()) )
       misn.osdCreate( misn_title, osd_desc )
 
       startplanet = planet.cur()

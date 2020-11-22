@@ -113,8 +113,8 @@ function accept()
       misn.accept()
       tk.msg(title[2], text[2]:format(_(battlesys:name()), _(paypla:name()), _(paysys:name())))
 
-      osd_msg[1] = osd_msg[1]:format(battlesys:name())
-      osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
+      osd_msg[1] = osd_msg[1]:format(_(battlesys:name()))
+      osd_msg[2] = osd_msg[2]:format(_(paypla:name()), _(paysys:name()))
 
       misn.setTitle(misn_title)
       misn.setReward(creditstring(reward/2))

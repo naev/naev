@@ -133,7 +133,7 @@ function accept ()
       misn.setReward( misn_reward )
       marker = misn.markerAdd( missys, "low" )
 
-      osd_desc[1] = osd_desc[1]:format( missys:name(), misplanet:name() )
+      osd_desc[1] = osd_desc[1]:format( _(missys:name()), _(misplanet:name()) )
       misn.osdCreate( misn_title, osd_desc )
 
       hook.land( "land" )

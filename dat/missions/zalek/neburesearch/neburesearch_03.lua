@@ -123,7 +123,7 @@ function accept()
     misn_marker = misn.markerAdd(dest_sys, "high")
     
     misn.accept()
-    osd_msg[1] = osd_msg1:format(dest_planet:name(), dest_sys:name(), timelimit:str(), (timelimit - time.get()):str())
+    osd_msg[1] = osd_msg1:format(_(dest_planet:name()), _(dest_sys:name()), timelimit:str(), (timelimit - time.get()):str())
     misn.osdCreate(osd_title, osd_msg)
     
     hook.land("land")
@@ -242,13 +242,13 @@ function start_talk()
     
     if c == 3 then
         tk.msg(cancel_title, run_text)
-        zlk_addNebuResearchLog(log_text:format(dest_planet:name()))
+        zlk_addNebuResearchLog(log_text:format(_(dest_planet:name())))
         misn.finish(true)
         return
     end
     
     tk.msg(talk_title, avoid_question_text)
-    zlk_addNebuResearchLog(log_text:format(dest_planet:name()))
+    zlk_addNebuResearchLog(log_text:format(_(dest_planet:name())))
     faction.modPlayerSingle("Za'lek", 1)
     misn.finish(true)
 end
@@ -261,7 +261,7 @@ function tick()
         player.msg(msg_timeup)
         misn.finish(false)
     else
-        osd_msg[1] = osd_msg1:format(dest_planet:name(), dest_sys:name(), timelimit:str(), (timelimit - time.get()):str())
+        osd_msg[1] = osd_msg1:format(_(dest_planet:name()), _(dest_sys:name()), timelimit:str(), (timelimit - time.get()):str())
         misn.osdCreate(osd_title, osd_msg)
     end
 end

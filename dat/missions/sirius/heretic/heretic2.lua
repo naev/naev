@@ -75,9 +75,9 @@ function create()
    misn.setDesc(bar_desc)
 
    -- Format OSD
-   osd[2] = osd[2]:format( homeasset:name() )
+   osd[2] = osd[2]:format( _(homeasset:name()) )
 
-   misn_desc = misn_desc:format(homesys:name())
+   misn_desc = misn_desc:format(_(homesys:name()))
 end
 
 function accept()

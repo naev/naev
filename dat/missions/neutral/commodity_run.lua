@@ -118,7 +118,7 @@ function accept ()
    update_active_runs( 1 )
 
    osd_msg[1] = osd_msg[1]:format( _(chosen_comm) )
-   osd_msg[2] = osd_msg[2]:format( _(chosen_comm), misplanet:name(), missys:name() )
+   osd_msg[2] = osd_msg[2]:format( _(chosen_comm), _(misplanet:name()), _(missys:name()) )
    misn.osdCreate( osd_title, osd_msg )
 
    hook.enter( "enter" )

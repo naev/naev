@@ -360,7 +360,7 @@ function accept()
     intime = true
     overtime = false
     misn.cargoAdd("Pilgrims", 0)  -- We'll assume you can hold as many pilgrims as you want?
-    osd_msg[1] = osd_msg1:format(destplanet:name(), destsys:name(), timelimit:str())
+    osd_msg[1] = osd_msg1:format(_(destplanet:name()), _(destsys:name()), timelimit:str())
     osd_msg[2] = osd_msg2:format((timelimit - time.get()):str())
     misn.osdCreate(osd_title, osd_msg)
     hook.land("land")
@@ -418,7 +418,7 @@ end
 function tick()
     if timelimit >= time.get() then
         -- Case still in time
-        osd_msg[1] = osd_msg1:format(destplanet:name(), destsys:name(), timelimit:str())
+        osd_msg[1] = osd_msg1:format(_(destplanet:name()), _(destsys:name()), timelimit:str())
         osd_msg[2] = osd_msg2:format((timelimit - time.get()):str())
         misn.osdCreate(osd_title, osd_msg)
     elseif timelimit2 <= time.get() and not overtime then
@@ -430,8 +430,8 @@ function tick()
     elseif intime then
         -- Case missed first deadline
         player.msg(timeup_1)
-        osd_msg[1] = osd_msg[1]:format(destplanet:name(), destsys:name(), timelimit:str())
-        osd_msg[2] = timeup_1--:format(destsys:name())
+        osd_msg[1] = osd_msg[1]:format(_(destplanet:name()), _(destsys:name()), timelimit:str())
+        osd_msg[2] = timeup_1--:format(_(destsys:name()))
         misn.osdCreate(osd_title, osd_msg)
         intime = false
     end

@@ -177,7 +177,7 @@ function accept()
     misn.setReward(misn_reward)
     marker = misn.markerAdd(misssys[1], "low")
     
-    osd_msg[1] = string.format(osd_msg[1], misssys[1]:name())
+    osd_msg[1] = string.format(osd_msg[1], _(misssys[1]:name()))
     misn.osdCreate(osd_title, osd_msg)
     
     hook.land("land")

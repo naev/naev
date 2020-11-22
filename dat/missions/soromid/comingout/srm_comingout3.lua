@@ -115,7 +115,7 @@ function accept ()
       misn.setReward( creditstring( credits ) )
       marker = misn.markerAdd( missys, "low" )
 
-      osd_desc[1] = osd_desc[1]:format( misplanet:name(), missys:name() )
+      osd_desc[1] = osd_desc[1]:format( _(misplanet:name()), _(missys:name()) )
       misn.osdCreate( misn_title, osd_desc )
 
       startplanet = planet.cur()
