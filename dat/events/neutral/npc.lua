@@ -306,7 +306,7 @@ function spawnNPC()
    end
 
    -- Append the faction to the civilian name, unless there is no faction.
-   if nongeneric then
+   if fac ~= "general" then
       npcname = string.format( _("%s Civilian"), _(fac) )
    end
 
