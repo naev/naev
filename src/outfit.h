@@ -399,6 +399,15 @@ const char *outfit_existsCase( const char* name );
 char **outfit_searchFuzzyCase( const char* name, int *n );
 
 /*
+ * Filter.
+ */
+int outfit_filterWeapon( const Outfit *o );
+int outfit_filterUtility( const Outfit *o );
+int outfit_filterStructure( const Outfit *o );
+int outfit_filterCore( const Outfit *o );
+int outfit_filterOther( const Outfit *o );
+
+/*
  * get data from outfit
  */
 const char *outfit_slotName( const Outfit* o );
