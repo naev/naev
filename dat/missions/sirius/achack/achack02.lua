@@ -289,12 +289,12 @@ end
 
 function joanneJump()
    joannejumped = true
-   player.msg(jumpmsg:format(nextsys:name()))
+   player.msg(jumpmsg:format(_(nextsys:name())))
 end
 
 function joanneLand()
    joannelanded = true
-   player.msg(landmsg:format(destplanet:name()))
+   player.msg(landmsg:format(_(destplanet:name())))
 end
 
 function joanneDead()

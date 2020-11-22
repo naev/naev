@@ -200,7 +200,7 @@ function tick()
       misn.osdCreate(osd_title, osd_msg)
    elseif timelimit2 <= time.get() then
       -- Case missed second deadline
-      player.msg( msg_timeup:format( destsys:name() ) )
+      player.msg( msg_timeup:format( _(destsys:name()) ) )
       misn.finish(false)
    elseif intime then
       -- Case missed first deadline

@@ -238,7 +238,7 @@ function transporterJump(p, j)
     exited = true
     if p:exists() then
         player.msg(string.format(
-            _("%s has jumped to %s."), p:name(), j:dest():name()))
+            _("%s has jumped to %s."), p:name(), _(j:dest():name())))
     end
 end
 
@@ -246,7 +246,7 @@ function transporterLand(p, j)
     exited = true
     if p:exists() then
         player.msg(string.format(
-            _("%s has landed on %s."), p:name(), destplanet:name()))
+            _("%s has landed on %s."), p:name(), _(destplanet:name())))
     end
 end
 

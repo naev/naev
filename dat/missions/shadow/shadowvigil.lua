@@ -474,7 +474,7 @@ function diplomatJump()
             j:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
         end
     end
-    player.msg(string.format("Mission update: The diplomat has jumped to %s.", getNextSystem(system.cur(), misssys[stage]):name()))
+    player.msg(string.format(_("Mission update: The diplomat has jumped to %s."), _(getNextSystem(system.cur(), misssys[stage]):name())))
 end
 
 -- Handle the diplomat getting attacked.

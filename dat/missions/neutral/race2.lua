@@ -306,7 +306,7 @@ function jumpin()
 end
 
 function racerland(p)
-   player.msg( string.format(landmsg, p:name(),curplanet:name()))
+   player.msg( string.format(landmsg, p:name(), _(curplanet:name())))
 end
 
 function land()

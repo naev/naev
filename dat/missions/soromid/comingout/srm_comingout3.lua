@@ -247,7 +247,7 @@ end
 
 function chelsea_jump( p, jump_point )
    if jump_point:dest() == getNextSystem( system.cur(), missys ) then
-      player.msg( cheljump_msg:format( jump_point:dest():name() ) )
+      player.msg( cheljump_msg:format( _(jump_point:dest():name()) ) )
       chelsea_jumped = true
    else
       fail( chelflee_msg )
@@ -257,7 +257,7 @@ end
 
 function chelsea_land( p, planet )
    if planet == misplanet then
-      player.msg( chelland_msg:format( planet:name() ) )
+      player.msg( chelland_msg:format( _(planet:name()) ) )
       chelsea_jumped = true
    else
       fail( chelflee_msg )

@@ -101,7 +101,7 @@ function create ()
    dest_planet_r = 200
 
    if not misn.claim( missys ) then
-      print( string.format( "Warning: 'Tutorial' mission was unable to claim system %s!", missys:name() ) )
+      print( string.format(_( "Warning: 'Tutorial' mission was unable to claim system %s!"), _(missys:name()) ) )
       misn.finish( false )
    end
 

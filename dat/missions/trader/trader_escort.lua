@@ -230,7 +230,7 @@ function traderJump( p, j )
       exited = exited + 1
       if p:exists() then
          player.msg( string.format(
-            "%s has jumped to %s.", p:name(), j:dest():name() ) )
+            _("%s has jumped to %s."), p:name(), _(j:dest():name()) ) )
       end
    else
       traderDeath()
