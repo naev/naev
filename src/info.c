@@ -110,6 +110,7 @@ static void mission_menu_abort( unsigned int wid, char* str );
 static void mission_menu_genList( unsigned int wid, int first );
 static void mission_menu_update( unsigned int wid, char* str );
 static void info_openShipLog( unsigned int wid );
+static const char* info_getLogTypeFilter( int lstPos );
 
 
 /**
@@ -1158,7 +1159,7 @@ static void shiplog_menu_update( unsigned int wid, char* str )
          selectedLogType = logType;
          window_destroyWidget( wid, "lstLogs" );
          logs = NULL;
-         shiplog_listLogsOfType(logTypes[selectedLogType], &nlogs, &logs, &logIDs, 1);
+         shiplog_listLogsOfType(info_getLogTypeFilter(selectedLogType), &nlogs, &logs, &logIDs, 1);
          if ( selectedLog >= nlogs )
             selectedLog = 0;
          window_addList( wid, 20, 60 + BUTTON_HEIGHT  + LOGSPACING / 2,
@@ -1172,7 +1173,7 @@ static void shiplog_menu_update( unsigned int wid, char* str )
          selectedLog = log;
          /* list log entries of selected log type */
          window_destroyWidget( wid, "lstLogEntries" );
-         shiplog_listLog(logIDs[selectedLog], logTypes[selectedLogType], &nentries, &logentries,1);
+         shiplog_listLog(logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &nentries, &logentries,1);
          window_addList( wid, 20, 40 + BUTTON_HEIGHT,
                          w-40, LOGSPACING / 2-20,
                          "lstLogEntries", logentries, nentries, 0, shiplog_menu_update, info_shiplogView );
@@ -1181,6 +1182,17 @@ static void shiplog_menu_update( unsigned int wid, char* str )
       }
       logWidgetsReady=1;
    }
+}
+
+
+/**
+ * @brief Translates a position in "lstLogType" to a shiplog "type" filter.
+ */
+static const char* info_getLogTypeFilter( int lstPos )
+{
+   if (lstPos < 1)
+      return NULL; /* "All" */
+   return logTypes[lstPos];
 }
 
 
@@ -1213,11 +1225,11 @@ static void shiplog_menu_genList( unsigned int wid, int first )
    if ( selectedLogType >= ntypes )
       selectedLogType = 0;
    /* list logs of selected type */
-   shiplog_listLogsOfType(logTypes[selectedLogType], &nlogs, &logs, &logIDs, 1);
+   shiplog_listLogsOfType(info_getLogTypeFilter(selectedLogType), &nlogs, &logs, &logIDs, 1);
    if ( selectedLog >= nlogs )
       selectedLog = 0;
    /* list log entries of selected log */
-   shiplog_listLog(logIDs[selectedLog], logTypes[selectedLogType], &nentries, &logentries, 1);
+   shiplog_listLog(logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &nentries, &logentries, 1);
    logWidgetsReady=0;
    window_addList( wid, 20, 80 + BUTTON_HEIGHT + 3*LOGSPACING/4 ,
                    w-40, LOGSPACING / 4,
@@ -1249,7 +1261,7 @@ static void info_shiplogMenuDelete( unsigned int wid, char* str )
    if ( ret ) {
       /* There could be several logs of the same name, so make sure we get the correct one. */
       /* selectedLog-1 since not including the "All" */
-      logid = shiplog_getIdOfLogOfType( logTypes[selectedLogType], selectedLog-1 );
+      logid = shiplog_getIdOfLogOfType( info_getLogTypeFilter(selectedLogType), selectedLog-1 );
       if ( logid >= 0 )
          shiplog_delete( logid );
       selectedLog = 0;
@@ -1268,7 +1280,7 @@ static void info_shiplogView( unsigned int wid, char *str )
 
    i = toolkit_getListPos( wid, "lstLogEntries" );
    shiplog_listLog(
-         logIDs[selectedLog], logTypes[selectedLogType], &nentries,
+         logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &nentries,
          &logentries, 1);
 
    tmp = NULL;
@@ -1304,7 +1316,7 @@ static void info_shiplogAdd( unsigned int wid, char *str )
    } else {
       tmp = dialogue_input( _("Add a log entry"), 0, 4096, _("Add an entry to the log titled '%s':"), logs[selectedLog] );
       if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
-         logid = shiplog_getIdOfLogOfType( logTypes[selectedLogType], selectedLog-1 );
+         logid = shiplog_getIdOfLogOfType( info_getLogTypeFilter(selectedLogType), selectedLog-1 );
          if ( logid >= 0 )
             shiplog_appendByID( logid, tmp );
          else

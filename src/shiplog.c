@@ -514,7 +514,7 @@ void shiplog_listTypes( int *ntypes, char ***logTypes, int includeAll )
    if ( includeAll ) {
       types    = malloc( sizeof( char * ) );
       n = 1;
-      types[0] = strdup("All");
+      types[0] = strdup( _("All") );
    }
    for ( i=0; i<shipLog->nlogs; i++ ) {
       if ( shipLog->removeAfter[i] > 0 && shipLog->removeAfter[i]<t ) {
@@ -541,21 +541,20 @@ void shiplog_listTypes( int *ntypes, char ***logTypes, int includeAll )
 /**
  * @brief Lists matching logs (which haven't expired via "removeAfter") into the provided arrays.
  *
- *    @param type The log-type to match (or "All" to match any type).
+ *    @param type The log-type to match (or NULL to match any type).
  *    @param[out] nlogs Number of logs emitted.
  *    @param[out] logsOut Matching log-names. Will be reallocated as needed. Emitted strings must be freed.
  *    @param[out] logIDs Matching log ID lists. Will be reallocated as needed. Emitted lists are owned by the shipLog.
  *    @param includeAll Whether to include the special "All" log.
  */
 
-void shiplog_listLogsOfType( char *type, int *nlogs, char ***logsOut, int **logIDs, int includeAll )
+void shiplog_listLogsOfType( const char *type, int *nlogs, char ***logsOut, int **logIDs, int includeAll )
 {
-   int i, n, match_all_types;
+   int i, n;
    char **logs;
    int *logid;
    ntime_t t = ntime_get();
 
-   match_all_types = ( strcmp(type, "All") == 0 );
    n = !!includeAll;
    logs = realloc(*logsOut, sizeof(char**) * n);
    logid = realloc(*logIDs, sizeof(int*) * n);
@@ -570,7 +569,7 @@ void shiplog_listLogsOfType( char *type, int *nlogs, char ***logsOut, int **logI
             shiplog_delete(shipLog->idList[i]);
          }
          if ( ( shipLog->idList[i] >= 0 )
-               && ( match_all_types || ( strcmp(type, shipLog->typeList[i]) == 0 ) ) ) {
+               && ( (type == NULL) || ( strcmp(type, shipLog->typeList[i]) == 0 ) ) ) {
             n++;
             logs       = realloc( logs, sizeof( char * ) * n );
             logs[n-1] = strdup(shipLog->nameList[i]);
@@ -586,13 +585,8 @@ void shiplog_listLogsOfType( char *type, int *nlogs, char ***logsOut, int **logI
 
 int shiplog_getIdOfLogOfType( const char *type, int selectedLog )
 {
-   int i, all = 0, n = 0;
+   int i, n = 0;
    ntime_t t = ntime_get();
-
-   if ( strcmp(type, "All") == 0 ) {
-      /*Match all types*/
-      all = 1;
-   }
 
    for ( i=shipLog->nlogs-1; i>=0; i-- ) {
       if ( (shipLog->removeAfter[i] > 0) && (shipLog->removeAfter[i] < t) ) {
@@ -600,7 +594,7 @@ int shiplog_getIdOfLogOfType( const char *type, int selectedLog )
          shiplog_delete(shipLog->idList[i]);
       }
       if ( ( shipLog->idList[i] >= 0 )
-            && (all || ( strcmp(type, shipLog->typeList[i]) == 0 ) ) ) {
+            && ((type == NULL) || ( strcmp(type, shipLog->typeList[i]) == 0 ) ) ) {
          if ( n == selectedLog )
             break;
          n++;
@@ -639,7 +633,7 @@ ShipLogEntry *shiplog_removeEntry( ShipLogEntry *e )
 /**
  * @brief Get all log entries matching logid, or if logid==LOG_ID_ALL, matching type, or if type==NULL, all.
  */
-void shiplog_listLog( int logid, char *type,int *nentries, char ***logentries, int incempty )
+void shiplog_listLog( int logid, const char *type,int *nentries, char ***logentries, int incempty )
 {
    int i,n = 0,all = 0;
    char **entries = NULL;

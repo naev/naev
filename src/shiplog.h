@@ -35,9 +35,9 @@ int shiplog_save( xmlTextWriterPtr writer );
 int shiplog_load( xmlNodePtr parent );
 
 void shiplog_listTypes( int *ntypes, char ***logTypes, int includeAll );
-void shiplog_listLogsOfType( char *type, int *nlogs, char ***logsOut, int **logIDs, int includeAll );
+void shiplog_listLogsOfType( const char *type, int *nlogs, char ***logsOut, int **logIDs, int includeAll );
 int shiplog_getIdOfLogOfType ( const char *type, int selectedLog );
-void shiplog_listLog( int logid, char *type,int *nentries, char ***logentries,int incempty );
+void shiplog_listLog( int logid, const char *type,int *nentries, char ***logentries,int incempty );
 int shiplog_getID( const char *idstr );
 
 
