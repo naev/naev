@@ -1028,7 +1028,7 @@ function render( dt, dt_mod )
       end
 
       gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, col_txt_std, 63, false )
-      gfx.print( true, planet.name, ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, planet.col )
+      gfx.print( true, _(planet.name), ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, planet.col )
    end
 
    --Bottom bar

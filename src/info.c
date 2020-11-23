@@ -249,7 +249,7 @@ static void info_openMain( unsigned int wid )
    } else {
      licenses = malloc(sizeof(char*) * nlicenses);
      for (i=0; i<nlicenses; i++)
-        licenses[i] = strdup(buf[i]);
+        licenses[i] = strdup( _(buf[i]) );
       qsort( licenses, nlicenses, sizeof(char*), strsort );
    }
    window_addText( wid, -20, -40, w-80-200-40-40, 20, 1, "txtList",
@@ -1300,12 +1300,13 @@ static void info_shiplogView( unsigned int wid, char *str )
 static void info_shiplogAdd( unsigned int wid, char *str )
 {
    char *tmp;
-   int logSelected;
+   int logType, log;
    int logid;
    (void) str;
 
-   logSelected = toolkit_getListPos( wid, "lstLogs" );
-   if ( logSelected < 0 || logIDs[logSelected] == LOG_ID_ALL ) {
+   logType = toolkit_getListPos( wid, "lstLogType" );
+   log = toolkit_getListPos( wid, "lstLogs" );
+   if ( log < 0 || logIDs[log] == LOG_ID_ALL ) {
       tmp = dialogue_inputRaw( _("Add a log entry"), 0, 4096, _("Add an entry to your diary:") );
       if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
          if ( shiplog_getID( "Diary" ) == -1 )
@@ -1314,9 +1315,9 @@ static void info_shiplogAdd( unsigned int wid, char *str )
          free( tmp );
       }
    } else {
-      tmp = dialogue_input( _("Add a log entry"), 0, 4096, _("Add an entry to the log titled '%s':"), logs[logSelected] );
+      tmp = dialogue_input( _("Add a log entry"), 0, 4096, _("Add an entry to the log titled '%s':"), logs[log] );
       if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
-         logid = shiplog_getIdOfLogOfType( info_getLogTypeFilter(selectedLogType), logSelected-1 );
+         logid = shiplog_getIdOfLogOfType( info_getLogTypeFilter(logType), log-1 );
          if ( logid >= 0 )
             shiplog_appendByID( logid, tmp );
          else

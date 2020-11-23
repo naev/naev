@@ -229,11 +229,12 @@ static int inp_addKey( Widget* inp, uint32_t ch )
       inp->dat.inp.input[ inp->dat.inp.pos++ ] = buf[i];
    assert(inp->dat.inp.input[ inp->dat.inp.byte_max - 1 ] == '\0');
 
-   if (inp->dat.inp.oneline) {
+   while (inp->dat.inp.oneline) {
       /* We can't wrap the text, so we need to scroll it out. */
       n = gl_printWidthRaw( inp->dat.inp.font, inp->dat.inp.input+inp->dat.inp.view );
-      if (n+10 > inp->w)
-         u8_inc( inp->dat.inp.input, &inp->dat.inp.view );
+      if (n+10 <= inp->w)
+         break;
+      u8_inc( inp->dat.inp.input, &inp->dat.inp.view );
    }
 
    return 1;
@@ -454,11 +455,12 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
             (inp->dat.inp.byte_max - curpos) );
       assert(inp->dat.inp.input[ inp->dat.inp.byte_max - curpos + inp->dat.inp.pos ] == '\0');
 
-      if (inp->dat.inp.oneline && inp->dat.inp.view > 0) {
+      while (inp->dat.inp.oneline && inp->dat.inp.view > 0) {
          n = gl_printWidthRaw( &gl_smallFont,
                inp->dat.inp.input + inp->dat.inp.view - 1 );
-         if (n+10 < inp->w)
-            inp->dat.inp.view += curpos - inp->dat.inp.pos;
+         if (n+10 >= inp->w)
+            break;
+	 inp->dat.inp.view -= (curpos - inp->dat.inp.pos);
       }
 
       if (inp->dat.inp.fptr != NULL)
