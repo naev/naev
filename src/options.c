@@ -341,15 +341,15 @@ static void opt_gameplay( unsigned int wid )
    /* Options. */
 
    /* MOpacity abort. */
-   window_addText( wid, x, y, cw-130, 20, 0, "txtAMOpacity",
-         NULL, NULL, _("Map Opacity:") );
+   window_addText( wid, x, y, cw, 20, 0, "txtAMOpacity",
+         NULL, NULL, _("Map Overlay Opacity:") );
    y -= 20;
 
    /* MOpacity abort fader. */
-   window_addText( wid, x, y, cw-130, 20, 1, "txtMOpacity",
+   window_addText( wid, x, y, cw, 20, 1, "txtMOpacity",
          &gl_smallFont, NULL, NULL );
    y -= 20;
-   window_addFader( wid, x, y, cw-130, 20, "fadMapOverlayOpacity", 0., 1.,
+   window_addFader( wid, x, y, cw, 20, "fadMapOverlayOpacity", 0., 1.,
          conf.map_overlay_opacity, opt_setMapOverlayOpacity );
    y -= 40;
 
