@@ -382,10 +382,6 @@ jobs:
       run: |
         sh $MESON setup build source \
             -Dexecutable=disabled
-             
-    - name: Meson Test Install
-      run: |
-        sh $MESON install -C build
         
     - name: Trigger API Site Update
       if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
