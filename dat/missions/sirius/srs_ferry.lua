@@ -60,16 +60,16 @@ ferrytime[2] = _("Express")
 title_p1 = _("%s space transport to %s for %s-class citizen")
 
 -- Note: please leave the trailing space on the line below! Needed to make the newline show up.
-title_p2 = [[ 
+title_p2 = _([[ 
 Jumps: %d
 Travel distance: %d
-Time limit: %s]]
+Time limit: %s]])
 
 slow = {}
 slow[1] = _("Too slow")
-slow[2] = [[The passenger requests arrival within %s, but it will take at least %s for your ship to reach %s, missing the deadline.
+slow[2] = _([[The passenger requests arrival within %s, but it will take at least %s for your ship to reach %s, missing the deadline.
 
-Accept the mission anyway?]]
+Accept the mission anyway?]])
 
 --=Politics=--
 no_clearace_t = _("Deficient clearance")
