@@ -78,12 +78,12 @@ if [ "$USEMESON" == "true" ]; then
         # Setup AppImage Build Directory
         sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
         --native-file "$SOURCEROOT/utils/build/linux_appimage.ini" \
-        --buildtype release \
+        --buildtype debug \
         -Db_lto=true \
         -Dauto_features=enabled \
         -Ddocs_c=disabled \
         -Ddocs_lua=disabled \
-        -Ddebug=enabled
+        
 
         # Compile and Install Naev to DISTDIR
 
