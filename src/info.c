@@ -1300,12 +1300,13 @@ static void info_shiplogView( unsigned int wid, char *str )
 static void info_shiplogAdd( unsigned int wid, char *str )
 {
    char *tmp;
-   int selectedLog;
+   int logType, log;
    int logid;
    (void) str;
 
-   selectedLog = toolkit_getListPos( wid, "lstLogs" );
-   if ( selectedLog < 0 || logIDs[selectedLog] == LOG_ID_ALL ) {
+   logType = toolkit_getListPos( wid, "lstLogType" );
+   log = toolkit_getListPos( wid, "lstLogs" );
+   if ( log < 0 || logIDs[log] == LOG_ID_ALL ) {
       tmp = dialogue_inputRaw( _("Add a log entry"), 0, 4096, _("Add an entry to your diary:") );
       if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
          if ( shiplog_getID( "Diary" ) == -1 )
@@ -1314,9 +1315,9 @@ static void info_shiplogAdd( unsigned int wid, char *str )
          free( tmp );
       }
    } else {
-      tmp = dialogue_input( _("Add a log entry"), 0, 4096, _("Add an entry to the log titled '%s':"), logs[selectedLog] );
+      tmp = dialogue_input( _("Add a log entry"), 0, 4096, _("Add an entry to the log titled '%s':"), logs[log] );
       if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
-         logid = shiplog_getIdOfLogOfType( info_getLogTypeFilter(selectedLogType), selectedLog-1 );
+         logid = shiplog_getIdOfLogOfType( info_getLogTypeFilter(logType), log-1 );
          if ( logid >= 0 )
             shiplog_appendByID( logid, tmp );
          else
