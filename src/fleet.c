@@ -79,7 +79,7 @@ unsigned int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
 {
    unsigned int p;
    p = pilot_create( plt->ship,
-         plt->name,
+         _(plt->name), /* Currently, FleetPilots come from static XML in English, but Pilots have translated names. */
          flt->faction,
          (ai != NULL) ? ai :
                (plt->ai != NULL) ? plt->ai :
