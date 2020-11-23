@@ -11,7 +11,7 @@ while getopts d:w: OPTION "$@"; do
         set -x
         ;;
     w)
-        WILD=${OPTARG}
+        WILD="${OPTARG}"
         ;;
     esac
 done

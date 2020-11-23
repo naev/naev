@@ -111,7 +111,7 @@ function create ()
 end
 
 function accept ()
-   if not tk.yesno( title[1], text[1]:format( clueplanet:name(), cluesys:name() ) ) then
+   if not tk.yesno( title[1], text[1]:format( _(clueplanet:name()), _(cluesys:name()) ) ) then
       tk.msg( title[3], text[3] )
       misn.finish()
 
@@ -152,7 +152,7 @@ function land ()
          prevPlanets[#prevPlanets+1] = clueplanet
 
          tk.msg( cluetitle, cluetxt:format(
-            clueplanet:name(), cluesys:name() ) )
+            _(clueplanet:name()), _(cluesys:name()) ) )
 
       else
          if not foundexwork then   -- find out that it's a bartender's specialty
@@ -166,7 +166,7 @@ function land ()
             prevPlanets[#prevPlanets+1] = clueplanet
 
             tk.msg( moreinfotitle, moreinfotxt[fintendergen]:format(
-               clueplanet:name(), cluesys:name() ) )
+               _(clueplanet:name()), _(cluesys:name()) ) )
 
          else   -- find another bar that the bartender used to work at
             if numexwork > 0 then
@@ -178,7 +178,7 @@ function land ()
                prevPlanets[#prevPlanets+1] = clueplanet
 
                tk.msg( exworktitle, exworktxt:format(
-                  clueplanet:name(), cluesys:name() ) )
+                  _(clueplanet:name()), _(cluesys:name()) ) )
 
             elseif not hasDrink then  -- get the drink
                hasDrink = true
@@ -221,7 +221,7 @@ end
 
 function isPrevPlanet ( passedPlanet )
    for i = 1, #prevPlanets, 1 do
-      if prevPlanets[i]:name() == passedPlanet:name() then
+      if prevPlanets[i] == passedPlanet then
          return true
       end
    end
@@ -230,10 +230,10 @@ end
 function takeoff ()
    if hasDrink then
       OSDdesc = _("Return the drink to the Aristocrat at %s in the %s system.")
-      OSDtable[1] = OSDdesc:format( startplanet:name(), startsys:name() )
+      OSDtable[1] = OSDdesc:format( _(startplanet:name()), _(startsys:name()) )
       misn.osdCreate( OSDtitle, OSDtable )
    else
-      OSDtable[1] = OSDdesc:format( clueplanet:name(), cluesys:name() )
+      OSDtable[1] = OSDdesc:format( _(clueplanet:name()), _(cluesys:name()) )
       misn.osdCreate( OSDtitle, OSDtable )
    end
 end

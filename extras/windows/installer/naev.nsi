@@ -3,13 +3,11 @@
 
 ;Enables Unicode installer to clear ANSI deprecation message 
 Unicode true
-;Version, Arch, Icon and URL
-;!define VERSION "0.8.0"
-;!define VERSION_SUFFIX "-beta.1" ; This string can be used for betas and release candidates.
-;!define ARCH "32"
+;Version, Icon and URL
+;!define SUFFIX "0.8.0-win64"
 !define URL "https://naev.org"
-!define MUI_ICON "..\..\logos\logo.ico"
-;!define MUI_UNICON "..\..\logos\logo.ico"
+!define MUI_ICON "logo.ico"
+;!define MUI_UNICON "logo.ico"
 
 ;Miscellaneous defines
 !define MULTIUSER_EXECUTIONLEVEL Highest
@@ -31,7 +29,7 @@ Unicode true
 
 ;Name and file
 Name "Naev"
-OutFile "naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe"
+OutFile "naev-${SUFFIX}.exe"
 
 ;--------------------------------
 ;Variables
@@ -71,7 +69,7 @@ Var StartMenuFolder
 
 !insertmacro MUI_PAGE_INSTFILES
 
-!define MUI_FINISHPAGE_RUN $INSTDIR\naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe
+!define MUI_FINISHPAGE_RUN $INSTDIR\naev-${SUFFIX}.exe
 !define MUI_FINISHPAGE_RUN_PARAMETERS
 !insertmacro MUI_PAGE_FINISH
 
@@ -94,7 +92,7 @@ Section "Naev Engine and Data" BinarySection
 
    SetOutPath "$INSTDIR"
    File /r bin\*
-   File ..\..\logos\logo.ico
+   File logo.ico
    
    IntOp $PortID $PortID & ${SF_SELECTED}
    
@@ -107,11 +105,11 @@ Section "Naev Engine and Data" BinarySection
 
    ;Add uninstall information
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "DisplayName" "Naev"
-   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "DisplayIcon" "$\"$INSTDIR\naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe$\""
+   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "DisplayIcon" "$\"$INSTDIR\naev-${SUFFIX}.exe$\""
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "QuietUninstallString" "$\"$INSTDIR\Uninstall.exe$\" /S"
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "URLInfoAbout" "${URL}"
-   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "DisplayVersion" "${VERSION}${VERSION_SUFFIX}"
+   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "DisplayVersion" "${SUFFIX}"
    WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "Publisher" "Naev Team"
    WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "NoModify" 1
    WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev" "NoRepair" 1
@@ -120,8 +118,8 @@ Section "Naev Engine and Data" BinarySection
 
       ;Create shortcuts
       CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
-      CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Naev.lnk" "$INSTDIR\naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe"
-      CreateShortCut "$DESKTOP\Naev.lnk" "$INSTDIR\naev-${VERSION}${VERSION_SUFFIX}-win${ARCH}.exe"
+      CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Naev.lnk" "$INSTDIR\naev-${SUFFIX}.exe"
+      CreateShortCut "$DESKTOP\Naev.lnk" "$INSTDIR\naev-${SUFFIX}.exe"
 
    !insertmacro MUI_STARTMENU_WRITE_END
    ${Else}

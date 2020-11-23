@@ -7,7 +7,7 @@
 # Written by Jack Greiner (ProjectSynchro on Github: https://github.com/ProjectSynchro/)
 #
 # This script should be run after querying for a Steam Guard code (attempting to login)
-# The 2FA code will be saved to a file called "2fa.txt" in the "extras/steam/2fa/" directory
+# The 2FA code will be saved to a file called "2fa.txt" in the same directory as this python script is located.
 #
 
 import imaplib
@@ -20,7 +20,7 @@ password = os.environ['TFA_PASS']
 imap_url = os.environ['TFA_IMAP']
 
 # Create file to store the 2FA code in
-file = open("extras/steam/2fa/2fa.txt", "w")
+file = open(os.path.join(os.path.dirname(__file__), "2fa.txt"), "w")
 
 # try to create IMAP connection and login
 connection = imaplib.IMAP4_SSL(imap_url)
@@ -69,4 +69,4 @@ else:
 # Close file and IMAP connections
 file.close()
 connection.close()
-connection.logout() 
+connection.logout()

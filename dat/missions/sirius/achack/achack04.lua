@@ -109,7 +109,7 @@ log_text = _([[You were hired by Joanne to deliver an invitation to Harja to tal
 function create()
    -- Note: this mission does not make any system claims.
    startplanet, startsys = planet.get("Eenerim")
-   tk.msg(title1, text1:format(player.name(), startplanet:name(), startsys:name(), startplanet:name()))
+   tk.msg(title1, text1:format(player.name(), _(startplanet:name()), _(startsys:name()), _(startplanet:name())))
 
    stages = enumerate({"start", "findHarja", "killAssociates", "fetchHarja", "finish"})
    stages["__save"] = true
@@ -118,7 +118,7 @@ function create()
    -- This mission auto-accepts, but a choice will be offered to the player later. No OSD yet.
    misn.accept()
    misn.setReward(misn_reward)
-   misn.setDesc(misn_desc:format(startplanet:name(), startsys:name()))
+   misn.setDesc(misn_desc:format(_(startplanet:name()), _(startsys:name())))
    hook.land("land")
    hook.load("land")
 end
@@ -161,7 +161,7 @@ function talkJoanne()
       -- accepted
       stage = stage + 1
       tk.msg(title3, text4:format(player.name()))
-      osd_msg[3] = osd_msg[3]:format(startplanet:name(), startsys:name())
+      osd_msg[3] = osd_msg[3]:format(_(startplanet:name()), _(startsys:name()))
       misn.osdCreate(osd_title, osd_msg)
       misn.setDesc(misn_desc2)
       misn.npcRm(joanne_npc)
@@ -178,14 +178,14 @@ function talkHarja()
       destsys = system.get("Suna")
       marker = misn.markerAdd(destsys, "high")
       
-      osd_msg[2] = osd_msg2alt:format(destsys:name())
+      osd_msg[2] = osd_msg2alt:format(_(destsys:name()))
       misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(2)
       
       stage = stage + 1
    elseif stage == stages.fetchHarja then
       harjaplanet = nil
-      tk.msg(title6, text7:format(player.name(), startplanet:name()))
+      tk.msg(title6, text7:format(player.name(), _(startplanet:name())))
       
       misn.osdActive(3)
       misn.npcRm(harja_npc)

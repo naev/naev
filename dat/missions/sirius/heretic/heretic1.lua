@@ -67,15 +67,15 @@ function create()
    misn.setNPC(npc_name, "sirius/unique/shaman")
    misn.setDesc(bar_desc)
 
-   osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())
-   misn_desc = misn_desc:format(targetasset:name(),targetsystem:name())
+   osd[1] = osd[1]:format(_(targetasset:name()),_(targetsystem:name()))
+   misn_desc = misn_desc:format(_(targetasset:name()),_(targetsystem:name()))
 end
 
 function accept()
    tk.msg(misn_title,bmsg[1])
    tk.msg(misn_title,bmsg[2])
 
-   local msg = bmsg[3]:format( targetasset:name(), targetsystem:name(), creditstring(reward) )
+   local msg = bmsg[3]:format( _(targetasset:name()), _(targetsystem:name()), creditstring(reward) )
    if not tk.yesno(misn_title, msg) then
       misn.finish()
    end

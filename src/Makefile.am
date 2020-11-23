@@ -24,6 +24,7 @@ endif
 naev_SOURCES = \
 	ai.c \
 	array.c \
+	attributes.h \
 	background.c \
 	board.c \
 	camera.c \

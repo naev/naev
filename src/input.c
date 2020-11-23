@@ -473,7 +473,7 @@ SDL_Keycode input_getKeybind( const char *keybind, KeybindType *type, SDL_Keymod
 
 
 /**
- * @brief Gets the display name of a keybind
+ * @brief Gets the display name (translated and human-readable) of a keybind
  *
  *    @param[in] keybind Name of the keybinding to get display name of.
  *    @param[out] buf Buffer to write the display name to.
@@ -494,7 +494,7 @@ void input_getKeybindDisplay( const char *keybind, char *buf, int len )
    /* Handle type. */
    switch (type) {
       case KEYBIND_NULL:
-         strncpy( buf, gettext_noop("Not bound"), len );
+         strncpy( buf, _("Not bound"), len );
          break;
 
       case KEYBIND_KEYBOARD:
@@ -502,40 +502,40 @@ void input_getKeybindDisplay( const char *keybind, char *buf, int len )
          /* Handle mod. */
          if ((mod != NMOD_NONE) && (mod != NMOD_ALL))
             p += nsnprintf( &buf[p], len-p, "%s + ", input_modToText(mod) );
-         /* Print key. */
+         /* Print key. @TODO: This is dodgy in terms of translation. Is it the best we can do? */
          if (nstd_isalpha(key))
             p += nsnprintf( &buf[p], len-p, "%c", nstd_toupper(key) );
          else
-            p += nsnprintf( &buf[p], len-p, "%s", SDL_GetKeyName(key) );
+            p += nsnprintf( &buf[p], len-p, "%s", gettext(SDL_GetKeyName(key)) );
          (void)p;
          break;
 
       case KEYBIND_JBUTTON:
-         nsnprintf( buf, len, gettext_noop("joy button %d"), key );
+         nsnprintf( buf, len, _("joy button %d"), key );
          break;
 
       case KEYBIND_JHAT_UP:
-         nsnprintf( buf, len, gettext_noop("joy hat %d up"), key );
+         nsnprintf( buf, len, _("joy hat %d up"), key );
          break;
 
       case KEYBIND_JHAT_DOWN:
-         nsnprintf( buf, len, gettext_noop("joy hat %d down"), key );
+         nsnprintf( buf, len, _("joy hat %d down"), key );
          break;
 
       case KEYBIND_JHAT_LEFT:
-         nsnprintf( buf, len, gettext_noop("joy hat %d left"), key );
+         nsnprintf( buf, len, _("joy hat %d left"), key );
          break;
 
       case KEYBIND_JHAT_RIGHT:
-         nsnprintf( buf, len, gettext_noop("joy hat %d right"), key );
+         nsnprintf( buf, len, _("joy hat %d right"), key );
          break;
 
       case KEYBIND_JAXISPOS:
-         nsnprintf( buf, len, gettext_noop("joy axis %d-"), key );
+         nsnprintf( buf, len, _("joy axis %d-"), key );
          break;
 
       case KEYBIND_JAXISNEG:
-         nsnprintf( buf, len, gettext_noop("joy axis %d+"), key );
+         nsnprintf( buf, len, _("joy axis %d+"), key );
          break;
    }
 }

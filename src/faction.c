@@ -234,10 +234,10 @@ int faction_setKnown( int id, int state )
 }
 
 /**
- * @brief Gets a factions "real" name.
+ * @brief Gets a factions "real" (internal) name.
  *
  *    @param f Faction to get the name of.
- *    @return Name of the faction.
+ *    @return Name of the faction (internal/English).
  */
 char* faction_name( int f )
 {
@@ -254,10 +254,10 @@ char* faction_name( int f )
 
 
 /**
- * @brief Gets a factions short name.
+ * @brief Gets a factions short name (human-readable).
  *
  *    @param f Faction to get the name of.
- *    @return Name of the faction.
+ *    @return Name of the faction (in player's native language).
  */
 char* faction_shortname( int f )
 {
@@ -267,21 +267,21 @@ char* faction_shortname( int f )
    }
    /* Don't want player to see their escorts as "Player" faction. */
    if (f == FACTION_PLAYER)
-      return "Escort";
+      return _("Escort");
 
    /* Possibly get display name. */
    if (faction_stack[f].displayname != NULL)
-      return faction_stack[f].displayname;
+      return _(faction_stack[f].displayname);
 
-   return faction_stack[f].name;
+   return _(faction_stack[f].name);
 }
 
 
 /**
- * @brief Gets the faction's long name (formal).
+ * @brief Gets the faction's long name (formal, human-readable).
  *
  *    @param f Faction to get the name of.
- *    @return The faction's long name.
+ *    @return The faction's long name (in player's native language).
  */
 char* faction_longname( int f )
 {
@@ -290,8 +290,8 @@ char* faction_longname( int f )
       return NULL;
    }
    if (faction_stack[f].longname != NULL)
-      return faction_stack[f].longname;
-   return faction_stack[f].name;
+      return _(faction_stack[f].longname);
+   return _(faction_stack[f].name);
 }
 
 
@@ -1003,7 +1003,7 @@ char faction_getColourChar( int f )
  * @brief Gets the player's standing in human readable form.
  *
  *    @param f Faction to get standing of.
- *    @return Human readable player's standing.
+ *    @return Human readable player's standing (in player's native language).
  */
 const char *faction_getStandingText( int f )
 {
@@ -1017,7 +1017,7 @@ const char *faction_getStandingText( int f )
    faction = &faction_stack[f];
 
    if ( faction->env == LUA_NOREF )
-      return "???";
+      return _("???");
    else
    {
 
@@ -1032,14 +1032,14 @@ const char *faction_getStandingText( int f )
          /* An error occurred. */
          WARN( _("Faction '%s': %s"), faction->name, lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );
-         return "???";
+         return _("???");
       }
 
       /* Parse return. */
       if ( !lua_isstring( naevL, -1 ) )
       {
          WARN( _("Lua script for faction '%s' did not return a string from 'faction_standing_text(...)'."), faction->name );
-         r = "???";
+         r = _("???");
       }
       else
          r = lua_tostring( naevL, -1 );

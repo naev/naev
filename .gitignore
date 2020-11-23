@@ -63,6 +63,7 @@ Naikari.app
 core
 ABOUT-NLS
 ABOUT-NLS~
+po/credits.pot
 po/xml.pot
 po/naev.pot
 po/naikari.pot
@@ -102,6 +103,7 @@ utils/starmap/*.log
 *.ninja_deps
 *.ninja_log
 builddir/
+meson-bin/
 /subprojects/*
 !/subprojects/packagefiles
 !/subprojects/*.wrap

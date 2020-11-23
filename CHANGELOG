@@ -1,8 +1,9 @@
 
 * 0.8.0 (unreleased)
    * Gameplay
-      * Improved and simplified the look of the interface
+      * Overhaul of the interface to be more sleek and functional
          * Interface is much more slick
+         * Dark theme to be more consistent with space
          * Font uses outlines to be more readable
       * Added rarity indicator to ships and outfits
       * Changed fonts
@@ -23,6 +24,8 @@
       * Made references to the player gender-neutral
       * Made combat music vary from faction to faction
       * Made it so AI ships spawn with cargo
+      * Improved AI behaviours
+      * Nerfed Quicksilver
       * Added the ability to buy "fake IDs" from pirate strongholds
       * Made jammers into activated outfits that increase cloaking
       * Added Soromid organic ships that level up organs
@@ -39,6 +42,7 @@
       * Added a dogfight aiming helper
       * More music
       * New and/or improved missions
+         * New Za'lek mini-campaign
          * Completed the FLF campaign
          * Fixed up the Collective campaign
          * Improved the Shark (Nexus Shipyards) campaign
@@ -48,6 +52,9 @@
          * New tutorial mission at the start of a new game
          * Various newly added and improved generic missions
    * Engine
+      * Support for compilation with Meson
+      * HiDPI-awareness
+      * Support for translations
       * Added shaders to speed up and improve graphics
       * Added support for non-ascii direct character input
       * Added support for map decorators

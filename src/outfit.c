@@ -137,7 +137,7 @@ const char *outfit_existsCase( const char* name )
 
 
 /**
- * @brief Does a fuzzy search of all the outfits.
+ * @brief Does a fuzzy search of all the outfits. Searches translated names but returns internal names.
  */
 char **outfit_searchFuzzyCase( const char* name, int *n )
 {
@@ -151,7 +151,7 @@ char **outfit_searchFuzzyCase( const char* name, int *n )
    /* Do fuzzy search. */
    len = 0;
    for (i=0; i<nstack; i++) {
-      if (nstrcasestr( outfit_stack[i].name, name ) != NULL) {
+      if (nstrcasestr( _(outfit_stack[i].name), name ) != NULL) {
          names[len] = outfit_stack[i].name;
          len++;
       }
@@ -227,6 +227,25 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
 
    /* It turns out they're the same. */
    return strcmp( o1->name, o2->name );
+}
+
+
+int outfit_filterWeapon( const Outfit *o )
+{ return ((o->slot.type == OUTFIT_SLOT_WEAPON) && !sp_required( o->slot.spid )); }
+
+int outfit_filterUtility( const Outfit *o )
+{ return ((o->slot.type == OUTFIT_SLOT_UTILITY) && !sp_required( o->slot.spid )); }
+
+int outfit_filterStructure( const Outfit *o )
+{ return ((o->slot.type == OUTFIT_SLOT_STRUCTURE) && !sp_required( o->slot.spid )); }
+
+int outfit_filterCore( const Outfit *o )
+{ return sp_required( o->slot.spid ); }
+
+int outfit_filterOther( const Outfit *o )
+{
+   return (!sp_required( o->slot.spid ) && ((o->slot.type == OUTFIT_SLOT_NULL)
+         || (o->slot.type == OUTFIT_SLOT_NA)));
 }
 
 

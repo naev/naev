@@ -60,16 +60,16 @@ ferrytime[2] = _("Express")
 title_p1 = _("%s space transport to %s for %s-class citizen")
 
 -- Note: please leave the trailing space on the line below! Needed to make the newline show up.
-title_p2 = [[ 
+title_p2 = _([[ 
 Jumps: %d
 Travel distance: %d
-Time limit: %s]]
+Time limit: %s]])
 
 slow = {}
 slow[1] = _("Too slow")
-slow[2] = [[The passenger requests arrival within %s, but it will take at least %s for your ship to reach %s, missing the deadline.
+slow[2] = _([[The passenger requests arrival within %s, but it will take at least %s for your ship to reach %s, missing the deadline.
 
-Accept the mission anyway?]]
+Accept the mission anyway?]])
 
 --=Politics=--
 no_clearace_t = _("Deficient clearance")
@@ -242,7 +242,7 @@ function create()
 
     misn.markerAdd(destsys, "computer")
     misn.setTitle( string.format(misn_title, ferrytime[print_speed], prank[rank]) )
-    misn.setDesc(title_p1:format( ferrytime[print_speed], destplanet:name(), prank[rank]) .. title_p2:format(numjumps, traveldist, (timelimit - time.get()):str()))
+    misn.setDesc(title_p1:format( ferrytime[print_speed], _(destplanet:name()), prank[rank]) .. title_p2:format(numjumps, traveldist, (timelimit - time.get()):str()))
     misn.setReward(creditstring(reward))
 
     -- Set up passenger details so player cannot keep trying to get a better outcome
@@ -268,7 +268,7 @@ end
 function accept()
     local playerbest = cargoGetTransit( timelimit, numjumps, traveldist )
     if timelimit < playerbest then
-        if not tk.yesno( slow[1], slow[2]:format( (timelimit - time.get()):str(), (playerbest - time.get()):str(), destplanet:name()) ) then
+        if not tk.yesno( slow[1], slow[2]:format( (timelimit - time.get()):str(), (playerbest - time.get()):str(), _(destplanet:name())) ) then
             misn.finish()
         end
     end
@@ -306,14 +306,14 @@ function accept()
         elseif outcome == 2 then
             -- Rank 1 will accept an alternate destination, but cut your fare
             reward = reward / 2
-            ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(creditstring(reward), altplanets[altdest]:name()) )
+            ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(creditstring(reward), _(altplanets[altdest]:name())) )
         elseif outcome == 1 then
             -- OK with alternate destination, with smaller fare cut
             reward = reward * 0.6666
-            ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(altplanets[altdest]:name(), creditstring(reward)) )
+            ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(_(altplanets[altdest]:name()), creditstring(reward)) )
         else
             -- Rank 0 will take whatever they can get
-            ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(altplanets[altdest]:name()) )
+            ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(_(altplanets[altdest]:name())) )
         end
 
         if not ok then
@@ -321,7 +321,7 @@ function accept()
         end
 
         destplanet = altplanets[altdest]
-        misn.setDesc(title_p1:format( ferrytime[print_speed], destplanet:name(), prank[rank]) .. title_p2:format(numjumps, traveldist, (timelimit - time.get()):str()))
+        misn.setDesc(title_p1:format( ferrytime[print_speed], _(destplanet:name()), prank[rank]) .. title_p2:format(numjumps, traveldist, (timelimit - time.get()):str()))
         --wants_sirian = false    -- Don't care what kind of ship you're flying
     end
 
@@ -360,7 +360,7 @@ function accept()
     intime = true
     overtime = false
     misn.cargoAdd("Pilgrims", 0)  -- We'll assume you can hold as many pilgrims as you want?
-    osd_msg[1] = osd_msg1:format(destplanet:name(), destsys:name(), timelimit:str())
+    osd_msg[1] = osd_msg1:format(_(destplanet:name()), _(destsys:name()), timelimit:str())
     osd_msg[2] = osd_msg2:format((timelimit - time.get()):str())
     misn.osdCreate(osd_title, osd_msg)
     hook.land("land")
@@ -418,7 +418,7 @@ end
 function tick()
     if timelimit >= time.get() then
         -- Case still in time
-        osd_msg[1] = osd_msg1:format(destplanet:name(), destsys:name(), timelimit:str())
+        osd_msg[1] = osd_msg1:format(_(destplanet:name()), _(destsys:name()), timelimit:str())
         osd_msg[2] = osd_msg2:format((timelimit - time.get()):str())
         misn.osdCreate(osd_title, osd_msg)
     elseif timelimit2 <= time.get() and not overtime then
@@ -430,13 +430,13 @@ function tick()
     elseif intime then
         -- Case missed first deadline
         player.msg(timeup_1)
-        osd_msg[1] = osd_msg[1]:format(destplanet:name(), destsys:name(), timelimit:str())
-        osd_msg[2] = timeup_1--:format(destsys:name())
+        osd_msg[1] = osd_msg[1]:format(_(destplanet:name()), _(destsys:name()), timelimit:str())
+        osd_msg[2] = timeup_1--:format(_(destsys:name()))
         misn.osdCreate(osd_title, osd_msg)
         intime = false
     end
 end
 
 function abort()
-    tk.msg(abort_t, abort_p:format(destplanet:name()))
+    tk.msg(abort_t, abort_p:format(_(destplanet:name())))
 end

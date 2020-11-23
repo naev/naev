@@ -365,7 +365,7 @@ function update_nav()
          services = { "bar", "missions", "outfits", "shipyard", "commodity" }
 
          -- "Spaceport" is nicer than "Land"
-         table.insert( planet.services, "Spaceport" )
+         table.insert( planet.services, N_("Spaceport") )
          for k,v in ipairs(services) do
             table.insert( planet.services, pntflags[v] )
          end

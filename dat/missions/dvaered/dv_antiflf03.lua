@@ -1,22 +1,22 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Destroy the FLF base!">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <chance>10</chance>
-   <location>Bar</location>
-   <cond>var.peek("flfbase_intro") == 3</cond>
-   <faction>Dvaered</faction>
-  </avail>
-  <notes>
-   <requires name="The Dvaered know where Sindbad is"/>
-   <campaign>Doom the FLF</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <chance>10</chance>
+  <location>Bar</location>
+  <cond>var.peek("flfbase_intro") == 3</cond>
+  <faction>Dvaered</faction>
+ </avail>
+ <notes>
+  <requires name="The Dvaered know where Sindbad is"/>
+  <campaign>Doom the FLF</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 -- This is the third mission in the anti-FLF Dvaered campaign. The player joins the battle to destroy the FLF base.
 -- stack variable flfbase_intro:
@@ -118,8 +118,7 @@ end
 
 function accept()
     destsysname = var.peek("flfbase_sysname")
-    DVplanet = "Stalwart Station"
-    DVsys = "Darkstone"
+    DVplanet, DVsys = planet.get("Stalwart Station")
     
     if first then
         txt = string.format(introfirst, player.name()) .. string.format(text[1], destsysname)
@@ -134,7 +133,7 @@ function accept()
 
         misn.accept()
         osd_desc[1] = string.format(osd_desc[1], destsysname)
-        osd_desc[4] = string.format(osd_desc[4], DVplanet, DVsys)
+        osd_desc[4] = string.format(osd_desc[4], DVplanet:name(), DVsys:name())
         misn.osdCreate(misn_title, osd_desc)
         misn.setDesc(misn_desc)
         misn.setReward(misn_reward)
@@ -153,7 +152,7 @@ function accept()
 end
 
 function enter()
-    if system.cur():name() == destsysname and not victorious then
+    if system.cur() == system.get(destsysname) and not victorious then
         pilot.clear()
         pilot.toggleSpawn(false)
 
@@ -181,8 +180,8 @@ function enter()
         -- Wait for the player to fly to the Obstinate before commencing the mission
 
         hook.timer(500, "proximity", {anchor = obstinate, radius = 1500, funcname = "operationStart"})
-    elseif system.cur():name() == DVsys and victorious then -- Make sure the player can finish the missions properly.
-        planet.get(DVplanet):landOverride(true)
+    elseif system.cur() == DVsys and victorious then -- Make sure the player can finish the missions properly.
+        DVplanet:landOverride(true)
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
         tk.msg(failtitle[1], failtext[1])
         faction.get("Dvaered"):modPlayerSingle(-10)
@@ -208,7 +207,7 @@ function operationStart()
 end
 
 function land()
-    if victorious and planet.cur() == planet.get(DVplanet) then
+    if victorious and planet.cur() == DVplanet then
         tk.msg(title[3], string.format(text[5], player.name()))
         tk.msg(title[3], text[6])
         dv_modReputation( 5 )
@@ -247,7 +246,7 @@ function deathBase()
     hook.timer( 8000, "timer_plcontrol" )
 
     misn.osdActive(4)
-    misn.markerMove( mission_marker, system.get(DVsys) )
+    misn.markerMove( mission_marker, DVsys )
 
     for i, j in ipairs(bombers) do
         if j:exists() then

@@ -68,7 +68,7 @@ function create () --No system shall be claimed by mission
 end
 
 function accept()
-   if not tk.yesno( title, firstcontact:format( targetworld:name() ) ) then
+   if not tk.yesno( title, firstcontact:format( _(targetworld:name()) ) ) then
       tk.msg( title, toobad )
       misn.finish()
    end
@@ -87,9 +87,9 @@ function accept()
    -- set up mission computer
    misn.setTitle( title )
    misn.setReward( creditstring( reward ) )
-   misn.setDesc( misn_desc:format( targetworld:name(), targetworld_sys:name() ) )
+   misn.setDesc( misn_desc:format( _(targetworld:name()), _(targetworld_sys:name()) ) )
 
-   osd_desc[1] = osd_desc[1]:format( targetworld:name(), targetworld_sys:name() )
+   osd_desc[1] = osd_desc[1]:format( _(targetworld:name()), _(targetworld_sys:name()) )
    misn.osdCreate( title, osd_desc )
    misn.markerAdd( targetworld_sys, "low" )
 
