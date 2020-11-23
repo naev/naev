@@ -184,7 +184,7 @@ jobs:
     - name: Meson Test
       id: tests
       run: |
-        ${{ matrix.test-env }} meson test -C build --print-errorlogs
+        sh $MESON test -C build --print-errorlogs
 
     - name: Upload Test Log
       uses: actions/upload-artifact@v2
@@ -326,13 +326,13 @@ jobs:
           libxml2-dev
 
     - name: Install Ninja-Build (xenial-backports)
-      if: ${{ matrix.os == 'ubuntu-16.04' && runner.os == 'Linux'}}
+      if: ${{ runner.os == 'ubuntu-16.04' && runner.os == 'Linux'}}
       run: |
         sudo apt-get -t xenial-backports install \
           ninja-build
 
     - name: Install Ninja-Build
-      if: ${{ matrix.os != 'ubuntu-16.04' && runner.os == 'Linux'}}
+      if: ${{ runner.os != 'ubuntu-16.04' && runner.os == 'Linux'}}
       run: |
         sudo apt-get install \
           ninja-build
