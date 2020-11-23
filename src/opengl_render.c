@@ -173,6 +173,7 @@ void gl_renderCross( double x, double y, double r, const glColour *c )
  *    @param tw Texture width. [0:1]
  *    @param th Texture height. [0:1]
  *    @param c Colour to use (modifies texture colour).
+ *    @param angle Rotation to apply (radians ccw around the center).
  */
 void gl_blitTexture(  const glTexture* texture,
       const double x, const double y,
