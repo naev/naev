@@ -207,7 +207,6 @@ jobs:
         if-no-files-found: ignore
 
   "Autotools_Compile_Naev":
-    needs: "Package_Source"
 
     strategy:
       fail-fast: false
@@ -289,7 +288,6 @@ jobs:
       working-directory: source
 
   "AppImage_Compile_Naev":
-    needs: "Package_Source"
 
     strategy:
       fail-fast: false
