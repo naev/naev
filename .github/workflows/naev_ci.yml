@@ -89,12 +89,10 @@ jobs:
           - os: ubuntu-20.04
             shell: bash
             config: linux.ini
-            pkg-config-path: "[]"
 
           - os: windows-latest
             shell: msys2 {0}
             config: windows.ini
-            pkg-config-path: "[]"
             
     defaults:
       run:
@@ -154,7 +152,6 @@ jobs:
         sh $MESON setup build source \
             --native-file='source/utils/build/${{ matrix.config }}' \
             --buildtype=debug \
-            --pkg-config-path=${{ matrix.pkg-config-path }} \
             -Db_lto=true \
             -Dauto_features=enabled \
             -Ddocs_c=disabled \
