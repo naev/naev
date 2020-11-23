@@ -358,6 +358,7 @@ jobs:
         if-no-files-found: error
 
   "Documentation":
+    needs: [AppImage_Compile_Naev, Test_Dist]
     runs-on: ubuntu-20.04
 
     steps:
