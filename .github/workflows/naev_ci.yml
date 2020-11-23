@@ -51,13 +51,13 @@ jobs:
           ninja-build
 
     - name:  Package Meson Dist
-    if: ${{ matrix.buildtype == 'meson' }}
+      if: ${{ matrix.buildtype == 'meson' }}
       run: |
         sh $MESON setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
         sh $MESON dist -C build --no-tests --include-subprojects
 
     - name: Package Autotools Dist
-    if: ${{ matrix.buildtype == 'autotools' }}
+      if: ${{ matrix.buildtype == 'autotools' }}
       run: |
           ./autogen.sh
           ./configure
@@ -65,7 +65,7 @@ jobs:
       working-directory: "source"
 
     - name: Upload Meson Dist Artifact
-    if: ${{ matrix.buildtype == 'meson' }}
+      if: ${{ matrix.buildtype == 'meson' }}
       uses: actions/upload-artifact@v2
       with:
         name: naev-meson-dist-${{ github.sha }}
@@ -73,7 +73,7 @@ jobs:
         if-no-files-found: error
 
     - name: Upload Autotools Dist Artifact
-    if: ${{ matrix.buildtype == 'autotools' }}
+      if: ${{ matrix.buildtype == 'autotools' }}
       uses: actions/upload-artifact@v2
       with:
         name: naev-autotools-dist-${{ github.sha }}
