@@ -56,8 +56,8 @@ typedef struct {
 #ifdef DEBUGGING
    int _sentinel;         /**< Sentinel for when debugging. */
 #endif
-   int _reserved;         /**< Number of elements reserved */
-   int _size;             /**< Number of elements in the array */
+   size_t _reserved;      /**< Number of elements reserved */
+   size_t _size;          /**< Number of elements in the array */
    /* The following check is fairly nasty and is here to handle cases
     * when being compiled with too old versions of gcc. Note that this
     * does lead to undefined behaviour, but at the current time it is
@@ -70,9 +70,9 @@ typedef struct {
 } _private_container;
 
 
-void *_array_create_helper(size_t e_size, int initial_size);
+void *_array_create_helper(size_t e_size, size_t initial_size);
 void *_array_grow_helper(void **a, size_t e_size);
-void _array_resize_helper(void **a, size_t e_size, int new_size);
+void _array_resize_helper(void **a, size_t e_size, size_t new_size);
 void _array_erase_helper(void **a, size_t e_size, void *first, void *last);
 void _array_shrink_helper(void **a, size_t e_size);
 void _array_free_helper(void *a);
@@ -188,7 +188,7 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
  *    @param array Array being manipulated.
  *    @return The size of the array (number of elements).
  */
-#define array_size(array) (_array_private_container(array)->_size)
+#define array_size(array) (int)(_array_private_container(array)->_size)
 /**
  * @brief Returns number of elements reserved.
  *

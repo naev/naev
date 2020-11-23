@@ -29,7 +29,7 @@ require "missions/sirius/common.lua"
 --the intro messages
 bmsg = {}
 bmsg[1] = _([[You walk up to a scrappy little man leaning against the bar. You sit next to him, and he eyes you up and down. You return the stare coolly and he half-heartedly tries to strikes up a conversation. "Nice drinks they have here." You feign interest so as not to be impolite.
-    He continues impatiently. "You look like you're in need of a couple spare credits," he finally says. "I have, uh, a shipment that needs getting to %s. Are you interested? Just has to be kept under wraps if you know what I mean. Pay is good though. %s credits. That's all you need to know." He pauses for a moment. "How about it?"]])
+    He continues impatiently. "You look like you're in need of a couple spare credits," he finally says. "I have, uh, a shipment that needs getting to %s. Are you interested? Just has to be kept under wraps if you know what I mean. Pay is good though. %s. That's all you need to know." He pauses for a moment. "How about it?"]])
 bmsg[2] = _([[You feel a very large hand slap you on the back. "I knew you would do it! A great choice!" he says. "I'll have my boys load up the cargo. Remember, all you gotta do is fly to %s, and avoid the Sirius military. I'll let my contacts know to expect you. They'll pay you when you land."
     You shake his sticky hand and walk off, content that you've made an easy buck.]])
 
@@ -48,7 +48,6 @@ npc_name = _("A Scrappy Man")
 bar_desc = _("You see a rougher looking man sitting at the bar and guzzling a brownish ale.")
 misn_desc = _("You are to deliver a shipment to %s in the %s system for a strange man you met at a bar, avoiding Sirius ships.")
 misn_title = _("The Gauntlet")
-misn_reward = _("%s credits")
 
 log_text = _([[You helped a rough-looking man deliver an illegal shipment. After you completed the delivery, another man told you that there may be another mission opportunity and that you should meet some commander in the bar on Margot if you're interested.]])
 
@@ -64,23 +63,23 @@ function create()
       misn.finish(false)
    end
    --set the mission stuff
-   misn.setReward(misn_reward:format(numstring(reward)))
+   misn.setReward(creditstring(reward))
    misn.setTitle(misn_title)
    misn.setNPC(npc_name, "sirius/unique/strangeman")
    misn.setDesc(bar_desc)
-   osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())
-   misn_desc = misn_desc:format(targetasset:name(),targetsystem:name())
+   osd[1] = osd[1]:format(_(targetasset:name()),_(targetsystem:name()))
+   misn_desc = misn_desc:format(_(targetasset:name()),_(targetsystem:name()))
 end
 
 function accept()
    --the obligatory opening messages
    local aname = targetasset:name()
 
-   if not tk.yesno( misn_title, bmsg[1]:format( aname, numstring(reward) ) ) then
+   if not tk.yesno( misn_title, bmsg[1]:format( _(aname), creditstring(reward) ) ) then
       tk.msg(misn_title,rejected)
       misn.finish(false)
    end
-   tk.msg(misn_title,bmsg[2]:format(aname))
+   tk.msg(misn_title, bmsg[2]:format(_(aname)))
    misn.setDesc(misn_desc)
    misn.accept()
    misn.markerAdd(targetsystem,"high")
@@ -97,7 +96,7 @@ end
 
 function land ()
    if planet.cur() == targetasset then
-      tk.msg( misn_title, emsg[1]:format( targetasset:name() ) )
+      tk.msg( misn_title, emsg[1]:format( _(targetasset:name()) ) )
       player.pay(reward)
       misn.cargoRm(small_arms) --this mission was an act against Sirius, and we want Sirius to not like us a little bit.
       faction.modPlayer("Nasin",3) --Nasin reputation is used in mission rewards, and I am trying to avoid having the pay skyrocket.

@@ -105,7 +105,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
       wh -= TAB_HEIGHT;
    }
    else
-      WARN( "Tab position '%d' parameter does not make sense", tabpos );
+      WARN( _("Tab position '%d' parameter does not make sense"), tabpos );
 
    /* Copy tab information. */
    wgt->dat.tab.tabnames   = malloc( sizeof(char*) * ntabs );
@@ -119,7 +119,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
       /* Create windows with flags.
        * Parent window handles events for the children.
        */
-      wgt->dat.tab.windows[i] = window_createFlags( tabnames[i], wx, wy, ww, wh,
+      wgt->dat.tab.windows[i] = window_createFlags( tabnames[i], tabnames[i], wx, wy, ww, wh,
             WINDOW_NOFOCUS | WINDOW_NORENDER | WINDOW_NOINPUT | WINDOW_NOBORDER );
    }
 
@@ -204,7 +204,7 @@ static int tab_raw( Widget* tab, SDL_Event *event )
    /* Give event to window. */
    wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
    if (wdw == NULL) {
-      WARN("Active window in window '%s' not found in stack.", tab->name);
+      WARN( _("Active window in window '%s' not found in stack."), tab->name);
       return 0;
    }
 
@@ -373,7 +373,7 @@ static void tab_render( Widget* tab, double bx, double by )
    /** Get window. */
    wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
    if (wdw == NULL) {
-      WARN("Active window in widget '%s' not found in stack.", tab->name);
+      WARN( _("Active window in widget '%s' not found in stack."), tab->name);
       return;
    }
 
@@ -437,7 +437,7 @@ static void tab_renderOverlay( Widget* tab, double bx, double by )
    /** Get window. */
    wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
    if (wdw == NULL) {
-      WARN("Active window in widget '%s' not found in stack.", tab->name);
+      WARN( _("Active window in widget '%s' not found in stack."), tab->name);
       return;
    }
 
@@ -473,13 +473,13 @@ static Widget *tab_getWgt( unsigned int wid, const char *tab )
 
    /* Must be found in stack. */
    if (wgt == NULL) {
-      WARN("Widget '%s' not found", tab);
+      WARN( _("Widget '%s' not found"), tab);
       return NULL;;
    }
 
    /* Must be an image array. */
    if (wgt->type != WIDGET_TABBEDWINDOW) {
-      WARN("Widget '%s' is not an image array.", tab);
+      WARN( _("Widget '%s' is not an image array."), tab);
       return NULL;
    }
 

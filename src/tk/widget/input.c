@@ -69,11 +69,12 @@ void window_addInput( const unsigned int wid,
    wgt->focusGain       = inp_focusGain;
    wgt->focusLose       = inp_focusLose;
    wgt->dat.inp.font    = (font != NULL) ? font : &gl_smallFont;
-   wgt->dat.inp.max     = max+1;
+   wgt->dat.inp.char_max= max+1;
+   wgt->dat.inp.byte_max= 4*max+1;
    wgt->dat.inp.oneline = oneline;
    wgt->dat.inp.pos     = 0;
    wgt->dat.inp.view    = 0;
-   wgt->dat.inp.input   = calloc( wgt->dat.inp.max, 4 ); /* Maximum length of a unicode character is 4 bytes. */
+   wgt->dat.inp.input   = calloc( wgt->dat.inp.byte_max, 1 ); /* Maximum length of a unicode character is 4 bytes. */
    wgt->dat.inp.fptr    = NULL;
 
    /* position/size */
@@ -214,7 +215,7 @@ static int inp_addKey( Widget* inp, uint32_t ch )
    }
 
    /* Make sure it's not full. */
-   if (u8_strlen(inp->dat.inp.input) >= (size_t)inp->dat.inp.max-1)
+   if (u8_strlen(inp->dat.inp.input) >= (size_t)inp->dat.inp.char_max-1)
       return 1;
 
    /* Render back to utf8. */
@@ -223,10 +224,10 @@ static int inp_addKey( Widget* inp, uint32_t ch )
    /* Add key. */
    memmove( &inp->dat.inp.input[ inp->dat.inp.pos+len ],
          &inp->dat.inp.input[ inp->dat.inp.pos ],
-         inp->dat.inp.max - inp->dat.inp.pos - 1 - len );
+         inp->dat.inp.byte_max - inp->dat.inp.pos - len );
    for (i=0; i<len; i++)
       inp->dat.inp.input[ inp->dat.inp.pos++ ] = buf[i];
-   inp->dat.inp.input[ inp->dat.inp.max-1 ] = '\0';
+   assert(inp->dat.inp.input[ inp->dat.inp.byte_max - 1 ] == '\0');
 
    if (inp->dat.inp.oneline) {
       /* We can't wrap the text, so we need to scroll it out. */
@@ -246,15 +247,7 @@ static int inp_addKey( Widget* inp, uint32_t ch )
  */
 static int inp_isBreaker(char c)
 {
-   char* breakers = ";:.-_ \n";
-   int i;
-
-   for (i = 0; i < (int)strlen(breakers); i++) {
-      if (breakers[i] == c)
-         return 1;
-   }
-
-   return 0;
+   return strchr(";:.-_ \n", c) != NULL;
 }
 
 
@@ -286,11 +279,11 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
             if (mod & KMOD_CTRL) {
                /* We want to position the cursor at the start of the previous or current word. */
                /* Begin by skipping all breakers. */
-               while (inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1]) && inp->dat.inp.pos > 0) {
+               while (inp->dat.inp.pos > 0 && inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1])) {
                   u8_dec( inp->dat.inp.input, &inp->dat.inp.pos );
                }
                /* Now skip until we encounter a breaker (or SOL). */
-               while (!inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1]) && inp->dat.inp.pos > 0) {
+               while (inp->dat.inp.pos > 0 && !inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1])) {
                   u8_dec( inp->dat.inp.input, &inp->dat.inp.pos );
                }
             }
@@ -443,11 +436,11 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
          if (mod & KMOD_CTRL) {
             /* We want to delete up to the start of the previous or current word. */
             /* Begin by skipping all breakers. */
-            while (inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1]) && inp->dat.inp.pos > 0) {
+            while (inp->dat.inp.pos > 0 && inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1])) {
                u8_dec( inp->dat.inp.input, &inp->dat.inp.pos );
             }
             /* Now skip until we encounter a breaker (or SOL). */
-            while (!inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1]) && inp->dat.inp.pos > 0) {
+            while (inp->dat.inp.pos > 0 && !inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1])) {
                u8_dec( inp->dat.inp.input, &inp->dat.inp.pos );
             }
          }
@@ -458,8 +451,8 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
       /* Actually delete the chars. */
       memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
             &inp->dat.inp.input[ curpos ],
-            (inp->dat.inp.max - curpos) );
-      inp->dat.inp.input[ inp->dat.inp.max - curpos + inp->dat.inp.pos ] = '\0';
+            (inp->dat.inp.byte_max - curpos) );
+      assert(inp->dat.inp.input[ inp->dat.inp.byte_max - curpos + inp->dat.inp.pos ] == '\0');
 
       if (inp->dat.inp.oneline && inp->dat.inp.view > 0) {
          n = gl_printWidthRaw( &gl_smallFont,
@@ -500,8 +493,8 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
       /* Actually delete the chars. */
       memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
             &inp->dat.inp.input[ curpos ],
-            (inp->dat.inp.max - curpos) );
-      inp->dat.inp.input[ inp->dat.inp.max - curpos + inp->dat.inp.pos ] = '\0';
+            (inp->dat.inp.byte_max - curpos) );
+      assert(inp->dat.inp.input[ inp->dat.inp.byte_max - curpos + inp->dat.inp.pos ] == '\0');
 
       if (inp->dat.inp.fptr != NULL)
          inp->dat.inp.fptr( inp->wdw, inp->name );
@@ -528,14 +521,14 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
       if (inp->dat.inp.oneline)
          return 0; /* Enter does not work in one-liners. */
       /* Empty. */
-      if ((inp->dat.inp.pos >= inp->dat.inp.max-1))
+      if (u8_strlen(inp->dat.inp.input) >= (size_t)inp->dat.inp.char_max-2)
          return 1;
 
       memmove( &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
             &inp->dat.inp.input[ inp->dat.inp.pos ],
-            inp->dat.inp.max - inp->dat.inp.pos - 2 );
+            inp->dat.inp.byte_max - inp->dat.inp.pos - 1 );
       inp->dat.inp.input[ inp->dat.inp.pos++ ] = '\n';
-      inp->dat.inp.input[ inp->dat.inp.max-1 ] = '\0'; /* Make sure it's NUL terminated. */
+      assert(inp->dat.inp.input[ inp->dat.inp.byte_max-1 ] == '\0');
 
       if (inp->dat.inp.fptr != NULL)
          inp->dat.inp.fptr( inp->wdw, inp->name );
@@ -644,13 +637,13 @@ char* window_setInput( const unsigned int wid, char* name, const char *msg )
 
    /* Set the message. */
    if (msg == NULL) {
-      memset( wgt->dat.inp.input, 0, wgt->dat.inp.max );
+      memset( wgt->dat.inp.input, 0, wgt->dat.inp.byte_max );
       wgt->dat.inp.pos     = 0;
       wgt->dat.inp.view    = 0;
    }
    else {
-      strncpy( wgt->dat.inp.input, msg, wgt->dat.inp.max );
-      wgt->dat.inp.input[ wgt->dat.inp.max-1 ] = '\0';
+      strncpy( wgt->dat.inp.input, msg, wgt->dat.inp.byte_max );
+      wgt->dat.inp.input[ wgt->dat.inp.byte_max-1 ] = '\0';
       wgt->dat.inp.pos = strlen( wgt->dat.inp.input );
    }
 

@@ -44,7 +44,7 @@ require "scripts/numstring.lua"
 
 -- Mission details
 misn_title = _("Defend the System")
-misn_reward = _("%s credits and the pleasure of serving the Empire.")
+misn_reward = _("%s and the pleasure of serving the Empire.")
 misn_desc = _("Defend the system against a pirate fleet.")
 
 -- Stage one: in the bar you hear a fleet of Pirates have invaded the system.
@@ -118,7 +118,7 @@ function create()
          var.push( "dts_firstSystem", "planet_name")
          tk.msg( title[11], text[11])
          reward = 40000
-         misn.setReward( string.format( misn_reward, numstring(reward)) )
+         misn.setReward( string.format( misn_reward, creditstring(reward)) )
          misn.setDesc( misn_desc)
          misn.setTitle( misn_title)
          misn.markerAdd( this_system, "low" )
@@ -265,7 +265,7 @@ function ship_enters()
       hook.timer(1000, "congratulations")
 end
 function congratulations()
-      tk.msg( title[4], string.format( text[4], player.ship(), planet_name))
+      tk.msg( title[4], string.format( text[4], player.ship(), _(planet_name)))
       misn.finish( true)
 
 end

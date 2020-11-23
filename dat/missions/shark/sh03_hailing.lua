@@ -57,7 +57,6 @@ text[4] = _([[The captain of the Hawking answers you. When you say that you have
 
 -- Mission details
 misn_title = _("Invitation")
-misn_reward = _("%s credits")
 misn_desc = _("Nexus Shipyards asks you to help initiate a secret meeting")
 
 -- NPC
@@ -95,15 +94,15 @@ function accept()
    stage = 0
    reward = 750000
 
-   if tk.yesno(title[1], text[1]:format(missys:name(), nextpla:name(), nextsys:name())) then
+   if tk.yesno(title[1], text[1]:format(_(missys:name()), _(nextpla:name()), _(nextsys:name()))) then
       misn.accept()
       tk.msg(title[2], text[2])
 
-      osd_msg[1] = osd_msg[1]:format(missys:name())
+      osd_msg[1] = osd_msg[1]:format(_(missys:name()))
       osd_msg[2] = osd_msg[2]:format(pplname, psyname)
 
       misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward)))
+      misn.setReward(creditstring(reward))
       misn.setDesc(misn_desc)
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)
@@ -122,7 +121,7 @@ function land()
 
    --Job is done
    if stage == 1 and planet.cur() == paypla then
-   tk.msg(title[3], text[3]:format(nextpla:name(), nextsys:name()))
+   tk.msg(title[3], text[3]:format(_(nextpla:name()), _(nextsys:name())))
       player.pay(reward)
       misn.osdDestroy(osd)
       hook.rm(enterhook)
@@ -145,7 +144,7 @@ end
 function hail()
    --The player takes contact with the Hawking
    if stage == 0 then
-      tk.msg(title[4]:format(paypla:name()), text[4]:format(paypla:name()))
+      tk.msg(title[4]:format(_(paypla:name())), text[4]:format(_(paypla:name())))
       stage = 1
       misn.osdActive(2)
       misn.markerRm(marker)

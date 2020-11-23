@@ -37,7 +37,6 @@ require "numstring.lua"
 require "missions/empire/common.lua"
 
 misn_title = _("Collective Extraction")
-misn_reward = _("%s credits")
 misn_desc = {}
 misn_desc[1] = _("Check for survivors on %s in %s")
 misn_desc[2] = _("Travel back to %s in %s")
@@ -79,7 +78,7 @@ function create ()
    end
 
    -- Intro text
-   if tk.yesno( title[1], string.format(text[1], misn_target:name()) ) then
+   if tk.yesno( title[1], string.format(text[1], _(misn_target:name())) ) then
       misn.accept()
 
       credits = 1000000
@@ -90,12 +89,12 @@ function create ()
 
       -- Mission details
       misn.setTitle(misn_title)
-      misn.setReward( misn_reward:format( numstring( credits ) ) )
-      misn.setDesc( string.format(misn_desc[1], misn_target:name(), misn_target_sys:name() ))
-      tk.msg( title[1], string.format(text[2], misn_target_sys:name(), misn_target:name()) )
-      osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
-      osd_msg[2] = osd_msg[2]:format(misn_target:name())
-      osd_msg[3] = osd_msg[3]:format(misn_base:name())
+      misn.setReward( creditstring( credits ) )
+      misn.setDesc( string.format(misn_desc[1], _(misn_target:name()), _(misn_target_sys:name()) ))
+      tk.msg( title[1], string.format(text[2], _(misn_target_sys:name()), _(misn_target:name())) )
+      osd_msg[1] = osd_msg[1]:format(_(misn_target_sys:name()))
+      osd_msg[2] = osd_msg[2]:format(_(misn_target:name()))
+      osd_msg[3] = osd_msg[3]:format(_(misn_base:name()))
       misn.osdCreate(misn_title, osd_msg)
 
       hook.enter("enter")
@@ -236,7 +235,7 @@ function land ()
       player.takeoff()
 
       -- Some flavour text
-      title[2] = title[2]:format(misn_target:name())
+      title[2] = title[2]:format(_(misn_target:name()))
       tk.msg( title[2], text[3] )
 
       -- Add fuel if needed

@@ -32,7 +32,6 @@ require "missions/empire/common.lua"
 
 bar_desc = _("You see an Empire Commander. He seems to have noticed you.")
 misn_title = _("Prisoner Exchange")
-misn_reward = _("%s credits")
 misn_desc = {}
 misn_desc[1] = _("Go to %s in the %s system to exchange prisoners with the FLF")
 misn_desc[2] = _("Return to %s in the %s system to report what happened")
@@ -87,13 +86,13 @@ function accept ()
    misn_stage = 0
    reward = 500000
    misn.setTitle(misn_title)
-   misn.setReward( string.format(misn_reward, numstring(reward)) )
-   misn.setDesc( string.format(misn_desc[1], dest:name(), destsys:name()))
+   misn.setReward( creditstring(reward) )
+   misn.setDesc( string.format(misn_desc[1], _(dest:name()), _(destsys:name())))
 
    -- Flavour text and mini-briefing
-   tk.msg( title[2], string.format( text[2], dest:name(), destsys:name(),
-         dest:name(), ret:name(), retsys:name() ))
-   misn.osdCreate(title[2], {misn_desc[1]:format(dest:name(),destsys:name())})
+   tk.msg( title[2], string.format( text[2], _(dest:name()), _(destsys:name()),
+         _(dest:name()), _(ret:name()), _(retsys:name()) ))
+   misn.osdCreate(title[2], {misn_desc[1]:format(_(dest:name()),_(destsys:name()))})
    -- Set up the goal
    prisoners = misn.cargoAdd("Prisoners", 0)
    tk.msg( title[2], text[3] )
@@ -116,8 +115,8 @@ function land ()
          tk.msg(title[2], text[4] )
          tk.msg(title[2], text[5] )
          misn.markerMove( misn_marker, retsys )
-         misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name()))
-         misn.osdCreate(title[2], {misn_desc[2]:format(ret:name(),retsys:name())})
+         misn.setDesc( string.format(misn_desc[2], _(ret:name()), _(retsys:name())))
+         misn.osdCreate(title[2], {misn_desc[2]:format(_(ret:name()),_(retsys:name()))})
 
          -- Prevent players from saving on the destination planet
          player.allowSave(false)

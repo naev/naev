@@ -44,11 +44,13 @@ stdout.txt
 .DS_Store
 *.pbxuser
 *.mode1v3
-extras/macos/Info.plist
 extras/.dirstamp
+extras/macos/Info.plist
 extras/steam/2fa/2fa.txt
 extras/steam/content
 extras/steam/output
+extras/windows/naev.exe.manifest
+extras/windows/resource.rc
 extras/windows/installer/bin
 dist/*
 dat/LANGUAGES
@@ -61,6 +63,7 @@ Naikari.app
 core
 ABOUT-NLS
 ABOUT-NLS~
+po/credits.pot
 po/xml.pot
 po/naev.pot
 po/naikari.pot
@@ -100,6 +103,7 @@ utils/starmap/*.log
 *.ninja_deps
 *.ninja_log
 builddir/
+meson-bin/
 /subprojects/*
 !/subprojects/packagefiles
 !/subprojects/*.wrap

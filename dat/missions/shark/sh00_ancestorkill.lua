@@ -70,7 +70,6 @@ text[4] = _([[As you step on the ground, Arnold Smith greets you. "That was a gr
 
 -- Mission details
 misn_title = _("A Shark Bites")
-misn_reward = _("%s credits")
 misn_desc = _("Nexus Shipyards needs you to demonstrate to Baron Sauterfeldt the capabilities of Nexus designs.")
 
 -- NPC
@@ -119,14 +118,14 @@ function accept()
    if tk.yesno(title[1], text[1]) then
       misn.accept()
       piratename = pirate_name()    --for now, we only need his name
-      tk.msg(title[2], text[2]:format(missys:name(),mispla:name()))
+      tk.msg(title[2], text[2]:format(_(missys:name()),_(mispla:name())))
 
-      osd_msg[1] = osd_msg[1]:format(missys:name(), mispla:name())
-      osd_msg[2] = osd_msg[2]:format(battlesys:name())
-      osd_msg[3] = osd_msg[3]:format(mispla:name())
+      osd_msg[1] = osd_msg[1]:format(_(missys:name()), _(mispla:name()))
+      osd_msg[2] = osd_msg[2]:format(_(battlesys:name()))
+      osd_msg[3] = osd_msg[3]:format(_(mispla:name()))
 
       misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward)))
+      misn.setReward(creditstring(reward))
       misn.setDesc(misn_desc)
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)
@@ -189,7 +188,7 @@ function enter()
       pilot.toggleSpawn(false)
 
       -- spawns the bad guy
-      badboy = pilot.add( "Pirate Ancestor", nil, 0 )[1]
+      badboy = pilot.add( "Pirate Ancestor", nil, system.get("Raelid") )[1]
       badboy:rename(piratename)
       badboy:setHostile()
       badboy:setVisplayer()
@@ -207,7 +206,7 @@ function beginbattle()
 
    misn.markerRm(markeri)
 
-   tk.msg(title[3], text[3]:format(battlesys:name()))
+   tk.msg(title[3], text[3]:format(_(battlesys:name())))
    misn.osdActive(2)
    stage = 1
 

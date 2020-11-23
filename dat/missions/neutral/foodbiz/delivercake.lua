@@ -34,14 +34,13 @@ firstcontact = _([[The woman smiles. "Aren't you the pilot that delivered those 
 
 toobad = _([["Oh, that's too bad. I thought it was such a good idea, too...."]])
 
-objectives = _([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. Oh, and some of my homemade cake! I've packed that cake into your ship. Feel free to give it a taste! It's delicious! Anyway, Michal will pay you %s credits when you get there. Thank you so much!"
+objectives = _([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. Oh, and some of my homemade cake! I've packed that cake into your ship. Feel free to give it a taste! It's delicious! Anyway, Michal will pay you %s when you get there. Thank you so much!"
     When you arrive at your ship, you find your cargo hold packed to the brim with cake. You decide to try some, but the second it enters your mouth, you can't help but to spit it out in disgust. This is easily the most disgusting cake you've ever tasted. Well, as long as you get paid....]])
 
-objectives_nocake = _([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. I was hoping to deliver some cake to him too, but it seems your ship doesn't have enough space for it, so that's unfortunate. In any case, Michal will pay you %s credits when you arrive. Thank you so much!"]])
+objectives_nocake = _([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. I was hoping to deliver some cake to him too, but it seems your ship doesn't have enough space for it, so that's unfortunate. In any case, Michal will pay you %s when you arrive. Thank you so much!"]])
 
 -- Mission Computer text
 misn_desc = _([[Deliver the recipes to Michal on %s in the %s system.]])
-reward_desc = _([[%s credits]])
 
 -- Mission Ending
 finish = _([[As Michal takes the recipes and cake off your hands, you can't help but wonder how quickly his business will fail with food as bad as the cake you tried. When he remarks how delicious he apparently thinks the cake is, that confirms in your mind that he doesn't have a clue what he's doing. You bite your tongue, however, wishing him good luck as you take your pay.]])
@@ -69,7 +68,7 @@ function create () --No system shall be claimed by mission
 end
 
 function accept()
-   if not tk.yesno( title, firstcontact:format( targetworld:name() ) ) then
+   if not tk.yesno( title, firstcontact:format( _(targetworld:name()) ) ) then
       tk.msg( title, toobad )
       misn.finish()
    end
@@ -80,17 +79,17 @@ function accept()
    if amount > 0 then
       misn.cargoAdd( cakes, amount )
       reward = reward + ( 1000 * amount )
-      tk.msg( title, objectives:format( numstring( reward ) ) )
+      tk.msg( title, objectives:format( creditstring( reward ) ) )
    else
-      tk.msg( title, objectives_nocake:format( numstring( reward ) ) )
+      tk.msg( title, objectives_nocake:format( creditstring( reward ) ) )
    end
 
    -- set up mission computer
    misn.setTitle( title )
-   misn.setReward( reward_desc:format( numstring( reward ) ) )
-   misn.setDesc( misn_desc:format( targetworld:name(), targetworld_sys:name() ) )
+   misn.setReward( creditstring( reward ) )
+   misn.setDesc( misn_desc:format( _(targetworld:name()), _(targetworld_sys:name()) ) )
 
-   osd_desc[1] = osd_desc[1]:format( targetworld:name(), targetworld_sys:name() )
+   osd_desc[1] = osd_desc[1]:format( _(targetworld:name()), _(targetworld_sys:name()) )
    misn.osdCreate( title, osd_desc )
    misn.markerAdd( targetworld_sys, "low" )
 

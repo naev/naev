@@ -69,7 +69,6 @@ text[4] = _([[You approach the agent and obtain the package without issue. Befor
 
 -- Mission details
 misn_title = _("Unfair Competition")
-misn_reward = _("%s credits")
 misn_desc = _("Nexus Shipyards is in competition with House Sirius.")
 
 -- NPC
@@ -110,13 +109,13 @@ function accept()
 
    if tk.yesno(title[1], text[1]:format(pplname, psyname)) then
       misn.accept()
-      tk.msg(title[2], text[2]:format(mispla:name(),missys:name()))
+      tk.msg(title[2], text[2]:format(_(mispla:name()), _(missys:name())))
 
-      osd_msg[1] = osd_msg[1]:format(mispla:name(),missys:name())
+      osd_msg[1] = osd_msg[1]:format(_(mispla:name()), _(missys:name()))
       osd_msg[2] = osd_msg[2]:format(pplname, psyname)
 
       misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward)))
+      misn.setReward(creditstring(reward))
       misn.setDesc(misn_desc)
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)

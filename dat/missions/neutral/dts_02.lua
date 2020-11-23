@@ -1,22 +1,22 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Defend the System 3">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>3</chance>
-   <done>Defend the System 2</done>
-   <location>None</location>
-   <faction>Dvaered</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Soromid</faction>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>3</chance>
+  <done>Defend the System 2</done>
+  <location>None</location>
+  <faction>Dvaered</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Soromid</faction>
+ </avail>
+</mission>
+--]]
 --[[
 
    MISSION: Defend the System 3
@@ -47,7 +47,7 @@ require "scripts/numstring.lua"
 
 -- Mission details
 misn_title = _("Defend the System")
-misn_reward = _("%s credits and the pleasure of serving the Empire.")
+misn_reward = _("%s and the pleasure of serving the Empire.")
 misn_desc = _("Defend the system against a pirate fleet.")
 
 -- Stage one: in the bar you hear a fleet of Pirates have invaded the system.
@@ -107,12 +107,12 @@ noTitle = _("Observe the action.")
 function create()
 
       this_planet, this_system = planet.cur()
-      if ( this_system:presences()["Pirate"] or 
-           this_system:presences()["Collective"] or 
-           this_system:presences()["FLF"] or
-           this_system:name() == "Gamma Polaris" or
-           this_system:name() == "Doeston" or
-           this_system:name() == "NGC-7291") then
+      if ( this_system:presences()["Pirate"]
+            or this_system:presences()["Collective"] 
+            or this_system:presences()["FLF"]
+            or this_system == system.get("Gamma Polaris")
+            or this_system == system.get("Doeston")
+            or this_system == system.get("NGC-7291") ) then
          misn.finish(false) 
       end
 
@@ -127,7 +127,7 @@ function create()
          misn.accept()
          tk.msg( title[11], text[11])
          reward = 40000
-         misn.setReward( string.format( misn_reward, numstring(reward)) )
+         misn.setReward( string.format( misn_reward, creditstring(reward)) )
          misn.setDesc( misn_desc)
          misn.setTitle( misn_title)
          misn.markerAdd( this_system, "low" )
@@ -282,7 +282,7 @@ function cadet_first_comm()
          cadet1:comm( comm[6])
       elseif cadet2_alive then
          cadet2:comm( comm[6])
-      else player.msg( string.format(comm[61], planet_name))
+      else player.msg( string.format(comm[61], _(planet_name)))
       end
 
 end
@@ -295,7 +295,7 @@ function victorious()
          cadet1:comm( comm[7])
       elseif cadet2_alive then
          cadet2:comm( comm[7])
-      else player.msg( string.format(comm[71], planet_name))
+      else player.msg( string.format(comm[71], _(planet_name)))
       end
 
 end
@@ -304,10 +304,10 @@ end
 function celebrate_victory()
 
       if victory == true then
-         tk.msg( title[2], string.format( text[2], planet_name) )
+         tk.msg( title[2], string.format( text[2], _(planet_name)) )
          player.pay( reward)
          faction.modPlayerSingle( "Empire", 3)
-         tk.msg( title[3], string.format( text[3], planet_name, planet_name) )
+         tk.msg( title[3], string.format( text[3], _(planet_name), _(planet_name)) )
          misn.finish( true)
       else
          tk.msg( bounce_title, bounce_text)   -- If any pirates still alive, send player back out.
@@ -323,7 +323,7 @@ function ship_enters()
       hook.timer(1000, "congratulations")
 end
 function congratulations()
-      tk.msg( title[4], string.format( text[4], player.ship(), system_name, planet_name))
+      tk.msg( title[4], string.format( text[4], player.ship(), _(system_name), _(planet_name)))
       misn.finish( true)
 
 end

@@ -20,6 +20,7 @@
 --]]
 
 require "missions/sirius/common.lua"
+require "numstring.lua"
 
 
 title1 = _("A Sirian with a grudge")
@@ -52,7 +53,7 @@ osd_msg[2] = _("Find your target on %s and kill her")
 osd_msg["__save"] = true
 
 misn_desc = _([[A Sirian man named Harja has hired you to dispatch a "dangerous criminal" who supposedly committed some kind of crime against him.]])
-misn_reward = _("400,000 credits")
+misn_reward = creditstring(400000) -- 400K
 
 log_text = _([[A Sirian man named Harja hired you to kill a Sirius military officer, claiming that she was a "dangerous criminal". Rather than carrying out the mission, you told her about the plot, and she rewarded you by paying half what Harja would have paid for her death.]])
 
@@ -72,9 +73,9 @@ function accept()
         abort()
     end
     destplanet, destsys = planet.get("Racheka")
-    tk.msg(title1, text2:format(destplanet:name(), destsys:name()))
-    osd_msg[1] = osd_msg[1]:format(destsys:name())
-    osd_msg[2] = osd_msg[2]:format(destplanet:name())
+    tk.msg(title1, text2:format(_(destplanet:name()), _(destsys:name())))
+    osd_msg[1] = osd_msg[1]:format(_(destsys:name()))
+    osd_msg[2] = osd_msg[2]:format(_(destplanet:name()))
     misn.accept()
     misn.osdCreate(osd_title, osd_msg)
     misn.setDesc(misn_desc)

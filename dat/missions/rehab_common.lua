@@ -14,10 +14,10 @@ require "scripts/numstring.lua"
 misn_title = _("%s Rehabilitation")
 misn_desc = _([[You may pay a fine for a chance to redeem yourself in the eyes of a faction you have offended. You may interact with this faction as if your reputation were neutral, but your reputation will not actually improve until you've regained their trust. ANY hostile action against this faction will immediately void this agreement.
 Faction: %s
-Cost: %s credits]])
+Cost: %s]])
 misn_reward = _("None")
 
-lowmoney = _("You don't have enough money. You need at least %s credits to buy a cessation of hostilities with this faction.")
+lowmoney = _("You don't have enough money. You need at least %s to buy a cessation of hostilities with this faction.")
 accepted = _([[Your application has been processed. The %s security forces will no longer attack you on sight. You may conduct your business in %s space again, but remember that you still have a criminal record! If you attack any traders, civilians or %s ships, or commit any other felony against this faction, you will immediately become their enemy again.
 While this agreement is active your reputation will not change, but if you continue to behave properly and perform beneficial services, your past offenses will eventually be stricken from the record.]])
 
@@ -51,25 +51,25 @@ function create()
 
     setFine(rep)
     
-    misn.setTitle(misn_title:format(fac:name()))
-    misn.setDesc(misn_desc:format(fac:name(), numstring(fine)))
+    misn.setTitle(misn_title:format(_(fac:name())))
+    misn.setDesc(misn_desc:format(_(fac:name()), creditstring(fine)))
     misn.setReward(misn_reward)
 end
 
 function accept()
     if player.credits() < fine then
-        tk.msg("", lowmoney:format(numstring(fine)))
+        tk.msg("", lowmoney:format(creditstring(fine)))
         misn.finish()
     end
     
     player.pay(-fine)
-    tk.msg(misn_title:format(fac:name()), accepted:format(fac:name(), fac:name(), fac:name()))
+    tk.msg(misn_title:format(_(fac:name())), accepted:format(_(fac:name()), _(fac:name()), _(fac:name())))
     
     fac:modPlayerRaw(-rep)
     
     misn.accept()
     osd_msg[1] = osd_msg1:format(-rep)
-    misn.osdCreate(misn_title:format(fac:name()), osd_msg)
+    misn.osdCreate(misn_title:format(_(fac:name())), osd_msg)
     
     standhook = hook.standing("standing")
     
@@ -90,14 +90,14 @@ function standing(hookfac, delta)
                 -- The player has successfully erased his criminal record.
                 excess = excess + delta
                 fac:modPlayerRaw(-delta + rep)
-                tk.msg(successtitle:format(fac:name()), successtext)
+                tk.msg(successtitle:format(_(fac:name())), successtext)
                 misn.finish(true)
             end
 
             excess = excess + delta
             fac:modPlayerRaw(-delta)
             osd_msg[1] = osd_msg1:format(-rep)
-            misn.osdCreate(misn_title:format(fac:name()), osd_msg)
+            misn.osdCreate(misn_title:format(_(fac:name())), osd_msg)
         else
             excess = excess + delta
             if excess < 0 or fac:playerStanding() < 0 then
@@ -115,6 +115,6 @@ function abort()
     -- Reapply the original negative reputation.
     fac:modPlayerRaw(rep)
 
-    tk.msg(failuretitle:format(fac:name()), failuretext)
+    tk.msg(failuretitle:format(_(fac:name())), failuretext)
     misn.finish(false)
 end

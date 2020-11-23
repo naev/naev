@@ -48,7 +48,7 @@ require "scripts/numstring.lua"
 
 -- Mission details
 misn_title = _("Defend the System")
-misn_reward = _("%s credits and the pleasure of serving the Empire.")
+misn_reward = _("%s and the pleasure of serving the Empire.")
 misn_desc = _("Defend the system against a pirate fleet.")
 
 -- Stage one: in the bar you hear a fleet of Pirates have invaded the system.
@@ -120,12 +120,12 @@ function create ()
  
        planet_name = planet.name( this_planet)
       system_name = this_system:name()
-      if tk.yesno( title[1], string.format( text[1], planet_name ) ) then
+      if tk.yesno( title[1], string.format( text[1], _(planet_name) ) ) then
          misn.accept()
          var.push( "dts_firstSystem", "planet_name")
          tk.msg( title[11], text[11])
          reward = 40000
-         misn.setReward( string.format( misn_reward, numstring(reward)) )
+         misn.setReward( string.format( misn_reward, creditstring(reward)) )
          misn.setDesc( misn_desc)
          misn.setTitle( misn_title)
          misn.markerAdd( this_system, "low" )
@@ -249,10 +249,10 @@ end
 function celebrate_victory()
 
       if victory == true then
-         tk.msg( title[2], string.format( text[2], planet_name ) )
+         tk.msg( title[2], string.format( text[2], _(planet_name) ) )
          player.pay( reward)
          faction.modPlayerSingle( "Empire", 3)
-         tk.msg( title[3], string.format( text[3], system_name) )
+         tk.msg( title[3], string.format( text[3], _(system_name) ) )
          misn.finish( true)
       else
          tk.msg( bounce_title, bounce_text)   -- If any pirates still alive, send player back out.
@@ -269,7 +269,7 @@ function ship_enters()
       hook.timer(1000, "congratulations")
 end
 function congratulations()
-      tk.msg( title[4], string.format( text[4], system_name))
+      tk.msg( title[4], string.format( text[4], _( system_name) ))
       misn.finish( true)
 
 end

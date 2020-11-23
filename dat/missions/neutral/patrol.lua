@@ -63,7 +63,6 @@ abandon_text[1] = _("You are sent a message informing you that landing in the mi
 
 -- Mission details
 misn_title  = _("Patrol of the %s System")
-misn_reward = _("%s credits")
 misn_desc   = _("Patrol specified points in the %s system, eliminating any hostiles you encounter.")
 
 -- Messages
@@ -157,9 +156,9 @@ function create ()
    reputation = math.floor( n_enemies / 75 )
 
    -- Set mission details
-   misn.setTitle( misn_title:format( missys:name() ) )
-   misn.setDesc( misn_desc:format( missys:name() ) )
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setTitle( misn_title:format( _(missys:name()) ) )
+   misn.setDesc( misn_desc:format( _(missys:name()) ) )
+   misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
 
@@ -167,9 +166,9 @@ end
 function accept ()
    misn.accept()
 
-   osd_msg[1] = osd_msg[1]:format( missys:name() )
+   osd_msg[1] = osd_msg[1]:format( _(missys:name()) )
    osd_msg[2] = osd_msg_2:format( #points )
-   osd_msg[4] = osd_msg[4]:format( paying_faction:name() )
+   osd_msg[4] = osd_msg[4]:format( _(paying_faction:name()) )
    misn.osdCreate( osd_title, osd_msg )
 
    job_done = false
@@ -197,7 +196,7 @@ function jumpout ()
    local last_sys = system.cur()
    if not job_done then
       if last_sys == missys then
-         fail( msg[6]:format( last_sys:name() ) )
+         fail( msg[6]:format( _(last_sys:name()) ) )
       elseif jumps_permitted < 0 then
          fail( msg[5] )
       end

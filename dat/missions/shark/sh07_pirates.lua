@@ -65,7 +65,6 @@ text[5] = _([[Smith awaits your arrival at the spaceport. When you exit your shi
 
 -- Mission details
 misn_title = _("The Last Detail")
-misn_reward = _("%s credits")
 misn_desc = _("Nexus Shipyards has tasked you with killing four pirates.")
 
 -- NPC
@@ -137,12 +136,12 @@ function accept()
 
    if tk.yesno(title[1], text[1]) then
       misn.accept()
-      tk.msg(title[2], text[2]:format(gawname,gawsys:name(),kername1,kersys1:name(),kername2,kersys2:name(),godname,godsys:name()))
+      tk.msg(title[2], text[2]:format(gawname, _(gawsys:name()), kername1, _(kersys1:name()), kername2, _(kersys2:name()), godname, _(godsys:name())))
 
       osd_msg[2] = osd_msg[2]:format(pplname,psyname)
 
       misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward)))
+      misn.setReward(creditstring(reward))
       misn.setDesc(misn_desc)
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)
@@ -302,7 +301,7 @@ end
 function generic_dead()
    --Are there still other pirates to kill ?
    if gawdead == true and kerdead1 == true and kerdead2 == true and goddead == true then
-      tk.msg(title[4], text[4]:format(paysys:name()))
+      tk.msg(title[4], text[4]:format(_(paysys:name())))
       stage = 1
       misn.osdActive(2)
       marker2 = misn.markerAdd(paysys, "low")

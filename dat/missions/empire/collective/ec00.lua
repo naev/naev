@@ -36,7 +36,6 @@ require "missions/empire/common.lua"
 
 bar_desc = _("You see an Empire Lt. Commander who seems to be motioning you over to the counter.")
 misn_title = _("Collective Scout")
-misn_reward = _("%s credits")
 misn_desc = {}
 misn_desc[1] = _("Find a scout last seen in the %s system")
 misn_desc[2] = _("Travel back to %s in %s")
@@ -96,14 +95,14 @@ function accept ()
 
    -- Mission details
    misn.setTitle(misn_title)
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
-   misn.setDesc( string.format(misn_desc[1],misn_nearby:name()))
+   misn.setReward( creditstring( credits ) )
+   misn.setDesc( string.format(misn_desc[1], _(misn_nearby:name())))
 
    -- Flavour text and mini-briefing
-   tk.msg( title[2], string.format( text[2], misn_base_sys:name() ) )
+   tk.msg( title[2], string.format( text[2], _(misn_base_sys:name()) ) )
    emp_addCollectiveLog( text[2]:format( misn_base_sys:name() ) )
-   tk.msg( title[2], string.format( text[3], misn_nearby:name(),
-         misn_target:name(), misn_base:name(), misn_base_sys:name() ))
+   tk.msg( title[2], string.format( text[3], _(misn_nearby:name()),
+         _(misn_target:name()), _(misn_base:name()), _(misn_base_sys:name()) ))
 
    osd_msg[1] = osd_msg[1]:format(misn_target:name())
    osd_msg[3] = osd_msg[3]:format(misn_base:name(), misn_base_sys:name())
@@ -152,7 +151,7 @@ function spotdrone()
    -- update mission
    misn.osdActive(3)
    player.msg(msg_spotdrone)
-   misn.setDesc( string.format(misn_desc[2],misn_base:name(),misn_base_sys:name()) )
+   misn.setDesc( string.format(misn_desc[2], _(misn_base:name()), _(misn_base_sys:name())) )
    misn_stage = 1
    misn.markerMove( misn_marker, misn_base_sys )
 end
@@ -161,7 +160,7 @@ function land()
    pnt = planet.cur()
 
    if misn_stage == 1 and  pnt == misn_base then
-      tk.msg( title[3], string.format(text[4],misn_target:name()) )
+      tk.msg( title[3], string.format(text[4], _(misn_target:name())) )
       faction.modPlayerSingle("Empire",5)
       player.pay(credits)
       emp_addCollectiveLog( log_text_success )

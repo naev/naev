@@ -146,7 +146,7 @@ void player_board (void)
    /*
     * create the boarding window
     */
-   wdw = window_create( "Boarding", -1, -1, BOARDING_WIDTH, BOARDING_HEIGHT );
+   wdw = window_create( "wdwBoarding", _("Boarding"), -1, -1, BOARDING_WIDTH, BOARDING_HEIGHT );
 
    window_addText( wdw, 20, -30, 120, 60,
          0, "txtCargo", &gl_smallFont, NULL,
@@ -370,7 +370,7 @@ static void board_stealAmmo( unsigned int wdw, char* str )
            pilot_rmAmmo(p, target_outfit_slot, nadded);
            nreloaded += nadded;
            if (nadded > 0)
-              player_message(_("\aRYou looted %d %s(s)"), nadded, ammo->name);
+              player_message(_("\aRYou looted: %d × %s"), nadded, _(ammo->name));
            if (nammo <= 0) {
               break;
            }
@@ -484,7 +484,7 @@ static void board_update( unsigned int wdw )
             continue;
          total_cargo += p->commodities[i].quantity;
       }
-      j += snprintf( &str[j], PATH_MAX-j, _("%d tonnes\n"), total_cargo );
+      j += snprintf( &str[ j ], PATH_MAX - j, ngettext( "%d tonne\n", "%d tonnes\n", total_cargo ), total_cargo );
    }
 
    /* Fuel. */
@@ -494,7 +494,7 @@ static void board_update( unsigned int wdw )
    }
    else {
       if (j < PATH_MAX)
-         j += snprintf( &str[j], PATH_MAX-j, _("%d Units\n"), p->fuel );
+         j += snprintf( &str[ j ], PATH_MAX - j, ngettext( "%d unit\n", "%d units\n", p->fuel ), p->fuel );
    }
 
    /* Missiles */
@@ -505,7 +505,7 @@ static void board_update( unsigned int wdw )
    }
    else {
       if (j < PATH_MAX)
-        j += snprintf( &str[j], PATH_MAX-j, _("%d missiles\n"), nmissiles );
+         j += snprintf( &str[ j ], PATH_MAX - j, ngettext( "%d missile\n", "%d missiles\n", nmissiles ), nmissiles );
    }
    (void)j;
 
@@ -586,9 +586,8 @@ void pilot_boardComplete( Pilot *p )
       p->credits       += worth;
       target->credits  -= worth;
       credits2str( creds, worth, 2 );
-      player_message( ngettext(
-               "\a%c%s\a0 has plundered %s credit from your ship!",
-               "\a%c%s\a0 has plundered %s credits from your ship!", worth),
+      player_message(
+            _("\a%c%s\a0 has plundered %s from your ship!"),
             pilot_getFactionColourChar(p), p->name, creds );
    }
    else {

@@ -302,7 +302,7 @@ function anotherdead(enemy, attacker)
       attacker=preacher
    end
 
-   if attacker:exists() then --in case the attacker was parallelly killed
+   if attacker:exists() then --in case the attacker was killed in parallel
       attacker:broadcast(attackerPunished[rnd.rnd(1,#attackerPunished)],true)
    end
 

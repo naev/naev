@@ -23,6 +23,7 @@ require "fleethelper.lua"
 require "proximity.lua"
 require "enum.lua"
 require "missions/sirius/common.lua"
+require "numstring.lua"
 
 
 title1 = _("You have mail")
@@ -100,7 +101,7 @@ osd_msg["__save"] = true
 
 misn_desc = _("Joanne has contacted you. She wants to meet you on %s (%s).")
 misn_desc2 = _("Joanne wants you to find Harja and convince him to meet her in person.")
-misn_reward = _("1,500,000 credits")
+misn_reward = creditstring(1500000) -- 1.5M
 
 log_text = _([[You were hired by Joanne to deliver an invitation to Harja to talk with her. He agreed on the condition that you first deal with associates of his that were coming after him. When Joanne and Harja met, they came to an agreement that neither of them were responsible for the hack of the High Academy main computer which was the source of their feud. Joanne said that she will probably call for you again when she's figured out how to proceed.]])
 
@@ -108,7 +109,7 @@ log_text = _([[You were hired by Joanne to deliver an invitation to Harja to tal
 function create()
    -- Note: this mission does not make any system claims.
    startplanet, startsys = planet.get("Eenerim")
-   tk.msg(title1, text1:format(player.name(), startplanet:name(), startsys:name(), startplanet:name()))
+   tk.msg(title1, text1:format(player.name(), _(startplanet:name()), _(startsys:name()), _(startplanet:name())))
 
    stages = enumerate({"start", "findHarja", "killAssociates", "fetchHarja", "finish"})
    stages["__save"] = true
@@ -117,7 +118,7 @@ function create()
    -- This mission auto-accepts, but a choice will be offered to the player later. No OSD yet.
    misn.accept()
    misn.setReward(misn_reward)
-   misn.setDesc(misn_desc:format(startplanet:name(), startsys:name()))
+   misn.setDesc(misn_desc:format(_(startplanet:name()), _(startsys:name())))
    hook.land("land")
    hook.load("land")
 end
@@ -160,7 +161,7 @@ function talkJoanne()
       -- accepted
       stage = stage + 1
       tk.msg(title3, text4:format(player.name()))
-      osd_msg[3] = osd_msg[3]:format(startplanet:name(), startsys:name())
+      osd_msg[3] = osd_msg[3]:format(_(startplanet:name()), _(startsys:name()))
       misn.osdCreate(osd_title, osd_msg)
       misn.setDesc(misn_desc2)
       misn.npcRm(joanne_npc)
@@ -177,14 +178,14 @@ function talkHarja()
       destsys = system.get("Suna")
       marker = misn.markerAdd(destsys, "high")
       
-      osd_msg[2] = osd_msg2alt:format(destsys:name())
+      osd_msg[2] = osd_msg2alt:format(_(destsys:name()))
       misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(2)
       
       stage = stage + 1
    elseif stage == stages.fetchHarja then
       harjaplanet = nil
-      tk.msg(title6, text7:format(player.name(), startplanet:name()))
+      tk.msg(title6, text7:format(player.name(), _(startplanet:name())))
       
       misn.osdActive(3)
       misn.npcRm(harja_npc)

@@ -65,7 +65,7 @@ function setDescription ()
    desc = gettext.ngettext(
          "There is %d Dvaered ship patrolling the %s system. Eliminate this ship.",
          "There is a Dvaered patrol with %d ships in the %s system. Eliminate this patrol.",
-         ships ):format( ships, missys:name() )
+         ships ):format( ships, _(missys:name()) )
 
    if has_vigilance then
       desc = desc .. _(" There is a Vigilance among them, so you must proceed with caution.")
@@ -137,7 +137,7 @@ function create ()
    late_arrival_delay = rnd.rnd( 10000, 120000 )
 
    -- Set mission details
-   misn.setTitle( misn_title[level]:format( missys:name() ) )
+   misn.setTitle( misn_title[level]:format( _(missys:name()) ) )
    misn.setDesc( desc )
    misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
@@ -147,7 +147,7 @@ end
 function accept ()
    misn.accept()
 
-   osd_desc[1] = osd_desc[1]:format( missys:name() )
+   osd_desc[1] = osd_desc[1]:format( _(missys:name()) )
    misn.osdCreate( osd_title, osd_desc )
 
    dv_ships_left = 0

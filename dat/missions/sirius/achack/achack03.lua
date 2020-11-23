@@ -23,6 +23,7 @@
 require "fleethelper.lua"
 require "proximity.lua"
 require "missions/sirius/common.lua"
+require "numstring.lua"
 
 
 title1 = _("Talking to Joanne")
@@ -85,7 +86,7 @@ osd_msg[3] = _("Return to Joanne on %s (%s)")
 osd_msg["__save"] = true
 
 misn_desc = _("Joanne wants you to find Harja and interrogate him about his motives.")
-misn_reward = _("1,000,000 credits")
+misn_reward = creditstring(1000000) -- 1M
 
 log_text = _([[Joanne hired you to interrogate Harja about his motives for trying to assassinate her. He was unwilling to talk to you, but when you backed him into a corner, Harja claimed that it was Joanne who hacked the High Acadamy's main computer to change her scores in an attempt to frame him. He swore "on Sirichana" that he wasn't responsible for the hack. Joanne took this oath seriously, saying that he wouldn't "abuse his Sirian beliefs". She said that she may need your help again soon.]])
 
@@ -107,12 +108,12 @@ function accept()
    if not tk.yesno(title1, text2:format(player.name())) then
       misn.finish()
    end
-   tk.msg(title2, text3:format(planet.cur():name()))
+   tk.msg(title2, text3:format(_(planet.cur():name())))
 
    destplanet, destsys = planet.cur() -- Keeps track of where the mission was accepted.
    origin = planet.cur() -- Keeps track of where the player enters the system from.
 
-   osd_msg[3] = osd_msg[3]:format(destplanet:name(), destsys:name())
+   osd_msg[3] = osd_msg[3]:format(_(destplanet:name()), _(destsys:name()))
 
    misn.accept()
    misn.setDesc(misn_desc)

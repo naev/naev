@@ -690,6 +690,13 @@ static char* toolkit_getNameById( Widget *wgt, int elem )
 /**
  * @brief Gets what is selected currently in an Image Array.
  *
+ *   \warning Oftentimes, UI code will translate or otherwise preprocess
+ *            text before populating this widget.
+ *            In general, reading back such processed text and trying to
+ *            interpret it is ill-advised; it's better to keep the original
+ *            list of objects being presented and deal with indices into it.
+ *            \see toolkit_getImageArrayPos
+ *
  *    @param wid Window where image array is.
  *    @param name Name of the image array.
  *    @return The name of the selected object.
@@ -706,6 +713,11 @@ char* toolkit_getImageArray( const unsigned int wid, const char* name )
 
 /**
  * @brief Sets an image array based on value.
+ *
+ *   \warning If the captions have been translated or otherwise preprocessed,
+ *            this function can only find a name that has been transformed the
+ *            same way. There may be a more robust solution involving indices.
+ *            \see toolkit_setImageArrayPos
  */
 int toolkit_setImageArray( const unsigned int wid, const char* name, char* elem )
 {

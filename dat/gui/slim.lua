@@ -2,6 +2,7 @@
    The new "slim" GUI
 --]]
 
+require "numstring.lua"
 playerform = require "scripts/playerform.lua"
 
 function create()
@@ -369,7 +370,7 @@ function update_nav()
          services = { "missions", "outfits", "shipyard", "commodity" }
 
          -- "Spaceport" is nicer than "Land"
-         table.insert( planet.services, "Spaceport" )
+         table.insert( planet.services, N_("Spaceport") )
          for k,v in ipairs(services) do
             table.insert( planet.services, pntflags[v] )
          end
@@ -423,7 +424,7 @@ end
 
 function update_system()
    sys = system.cur()
-   sysname = sys:name()
+   sysname = _(sys:name())
 end
 
 function update_wset()
@@ -690,7 +691,7 @@ function render( dt, dt_mod )
 
    --Weapon bars
    for num, weapon in ipairs(wset) do
-      txt = weapon.name
+      txt = _(weapon.name)
       if weapon.left then -- Truncate names for readability.
          if weapon.type == "Bolt Cannon" or weapon.type == "Beam Cannon" then
             txt = string.gsub(txt,"Cannon", "C.")
@@ -753,7 +754,7 @@ function render( dt, dt_mod )
 
       gfx.renderRect( x, y, width, height, col)
       gfx.renderTex( bg_bar_weapon, x, y )
-      gfx.print( true, "Set formation", x, y + 8, col_txt_bar, width, true )
+      gfx.print( true, _("Set formation"), x, y + 8, col_txt_bar, width, true )
    end
 
    --Warning Light
@@ -819,7 +820,7 @@ function render( dt, dt_mod )
          end
 
          if aset[i].weapset then
-            gfx.print( true, aset[i].weapset, slot_x + slot_img_offs_x + 5,
+            gfx.print( true, _(aset[i].weapset), slot_x + slot_img_offs_x + 5,
                   slot_y + slot_img_offs_y + 5, col_txt_bar, slot_w, false )
          end
 
@@ -1019,7 +1020,7 @@ function render( dt, dt_mod )
       if pntflags.land then
          local services_h = 60
          for k,v in ipairs(planet.services) do
-            gfx.print(true, v, ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, col_txt_top )
+            gfx.print(true, _(v), ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, col_txt_top )
             services_h = services_h + 14
          end
       else
@@ -1038,7 +1039,7 @@ function render( dt, dt_mod )
    local fuel = player.fuel()
 
    if fuel > 0 then
-      fuelstring = string.format( gettext.ngettext("%d (%d jump)", "%d (%d jumps)", jumps), fuel, jumps)
+      fuelstring = string.format( "%d (%s)", fuel, jumpstring(jumps) )
    else
       fuelstring = _("none")
    end

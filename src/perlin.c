@@ -664,9 +664,9 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
       return NULL;
    }
 
-   /* Some debug information and time setting */
+   /* This can take a while, so show what's happening. */
    s = SDL_GetTicks();
-   DEBUG(_("Generating Nebula of size %dx%dx%d"), w, h, n);
+   LOG(_("Generating Nebula of size %dx%dx%d"), w, h, n);
 
    /* Prepare for generation. */
    _max        = malloc( sizeof(float) * n );
@@ -712,7 +712,7 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
    free(_max);
 
    /* Results */
-   DEBUG(_("Nebula Generated in %d ms"), SDL_GetTicks() - s );
+   LOG(_("Nebula Generated in %d ms"), SDL_GetTicks() - s );
    return nebula;
 }
 

@@ -51,7 +51,6 @@ abandon_text[1] = _("You are sent a message informing you that landing in the mi
 
 -- Mission details
 misn_title  = _("Patrol of the %s System")
-misn_reward = _("%s credits")
 misn_desc   = _("A local crime boss has offered a job to patrol the %s system in an effort to keep outsiders from discovering this Pirate stronghold. You will be tasked with checking various points and eliminating any outsiders along the way.")
 
 -- Messages

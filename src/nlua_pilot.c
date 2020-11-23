@@ -1906,10 +1906,10 @@ static int pilotL_broadcast( lua_State *L )
 /**
  * @brief Sends a message to the target or player if no target is passed.
  *
- * @usage p:comm( "How are you doing?" ) -- Messages the player
- * @usage p:comm( "You got this?", true ) -- Messages the player ignoring interference
- * @usage p:comm( target, "Heya!" ) -- Messages target
- * @usage p:comm( target, "Got this?", true ) -- Messages target ignoring interference
+ * @usage p:comm( _("How are you doing?") ) -- Messages the player
+ * @usage p:comm( _("You got this?"), true ) -- Messages the player ignoring interference
+ * @usage p:comm( target, _("Heya!") ) -- Messages target
+ * @usage p:comm( target, _("Got this?"), true ) -- Messages target ignoring interference
  *
  *    @luatparam Pilot p Pilot to message the player.
  *    @luatparam Pilot target Target to send message to.

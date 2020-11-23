@@ -41,6 +41,8 @@
 static StarSystem *cur_sys_sel = NULL; /**< Currently selected system */
 static int cur_planet_sel = 0; /**< Current planet selected by user (0 = star). */
 static Planet *cur_planetObj_sel = NULL;
+static Outfit **cur_planet_sel_outfits = NULL;
+static Ship **cur_planet_sel_ships = NULL;
 static int pitch = 0; /**< pitch of planet images. */
 static int nameWidth = 0; /**< text width of planet name */
 static int nshow = 0; /**< number of planets shown. */
@@ -49,7 +51,7 @@ static unsigned int starCnt = 1;
 glTexture **bgImages; /**< nebula and star textures */
 unsigned int nBgImgs; /** number of images */
 
-#define MAP_SYSTEM_WDWNAME "System map"
+#define MAP_SYSTEM_WDWNAME "wdwSystemMap"
 #define MAPSYS_OUTFITS "mapSysOutfits"
 #define MAPSYS_SHIPS "mapSysShips"
 #define MAPSYS_TRADE "mapSysTrade"
@@ -136,6 +138,14 @@ void map_system_close( unsigned int wid, char *str ) {
    nBgImgs = 0;
    free( bgImages );
    bgImages=NULL;
+   if( cur_planet_sel_outfits != NULL ) {
+      free( cur_planet_sel_outfits );
+      cur_planet_sel_outfits = NULL;
+   }
+   if( cur_planet_sel_ships != NULL ) {
+      free( cur_planet_sel_ships );
+      cur_planet_sel_ships = NULL;
+   }
 
    window_close( wid, str );
 
@@ -184,11 +194,11 @@ void map_system_open( int sys_selected )
    h = MAX(540, SCREEN_H - 140);
 
    /* create the window. */
-   wid = window_create( MAP_SYSTEM_WDWNAME, -1, -1, w, h );
+   wid = window_create( MAP_SYSTEM_WDWNAME, _("System Map"), -1, -1, w, h );
    window_setCancel( wid, map_system_close );
    window_handleKeys( wid, map_system_keyHandler );
    window_addText( wid, 40, h-30, 160, 20, 1, "txtSysname",
-         &gl_defFont, &cFontGreen, cur_sys_sel->name );
+         &gl_defFont, &cFontGreen, _(cur_sys_sel->name) );
    window_addImage( wid, -90 + 32, h-30, 0, 0, "imgFaction", NULL, 0 );
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -314,7 +324,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
 	 gl_blitScale( p->gfx_space, bx+2, by+(nshow-j-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &cWhite );
        }
        gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-j-0.5)*pitch + offset,
-            (cur_planet_sel == j ? &cFontGreen : &cFontWhite), -1., p->name );
+            (cur_planet_sel == j ? &cFontGreen : &cFontWhite), -1., _(p->name) );
      }
    }
    /* draw the star */
@@ -354,7 +364,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             (by + (nshow-0.5)*pitch + offset), &cFontRed, -1., _("Obscured by the nebula") );
    }
    gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-0.5)*pitch + offset,
-         (cur_planet_sel == 0 ? &cFontGreen : &cFontWhite), -1., sys->name );
+         (cur_planet_sel == 0 ? &cFontGreen : &cFontWhite), -1., _(sys->name) );
    if ( cur_planet_sel == 0 && nBgImgs > 0 ) {
       /* make use of space to draw a nice nebula */
       double imgw,imgh;
@@ -390,7 +400,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       int infopos=0;
      /* display sun information */
      /* Nebula. */
-      cnt+=nsnprintf( buf, sizeof(buf), _("System: %s\n%d star system\n"), sys->name, nBgImgs>0 ? nBgImgs-1 : 0 );
+      cnt+=nsnprintf( buf, sizeof(buf), _("System: %s\n%d star system\n"), _(sys->name), nBgImgs>0 ? nBgImgs-1 : 0 );
 
       if (sys->nebu_density > 0. ) {
          /* Volatility */
@@ -484,7 +494,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             if ( infopos == 0) /* First jump */
                infopos = nsnprintf( infobuf, PATH_MAX, _("   Jump points to:\n") );
             if ( sys_isKnown( sys->jumps[i].target ) ) {
-               infopos+=nsnprintf( &infobuf[infopos], PATH_MAX-infopos, "     %s\n", sys->jumps[i].target->name );
+               infopos+=nsnprintf( &infobuf[infopos], PATH_MAX-infopos, "     %s\n", _(sys->jumps[i].target->name) );
             } else {
                infopos+=nsnprintf( &infobuf[infopos], PATH_MAX-infopos, _("     Unknown system\n") );
             }
@@ -506,7 +516,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
 
      }
 
-     cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Planet: %s\nPlanetary class: %s    Population: %ld\n"), p->name, p->class, p->population );
+     cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Planet: %s\nPlanetary class: %s    Population: %ld\n"), _(p->name), p->class, p->population );
      if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
         cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("No space port here\n") );
      else if (p->can_land || p->bribed ) {
@@ -517,7 +527,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
         cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("You cannot land here\n") );
      }
      /* Add a description */
-     cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, "%s", (p->description==NULL?_("No description available"):p->description) );
+     cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, "%s", (p->description==NULL?_("No description available"):_(p->description)) );
      (void)cnt;
 
      txtHeight=gl_printHeightRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, buf );
@@ -527,7 +537,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
         /* show some additional information */
         infocnt=nsnprintf( infobuf, sizeof(infobuf), "%s\n"
                          "%s\n%s\n%s\n%s\n%s\n%s\n%s",
-                          planet_hasService( p, PLANET_SERVICE_LAND) ? ("This system is landable") : _("This system is not landable"),
+                          planet_hasService( p, PLANET_SERVICE_LAND) ? _("This system is landable") : _("This system is not landable"),
                           planet_hasService( p, PLANET_SERVICE_INHABITED) ? _("This system is inhabited") : _("This system is not inhabited"),
                           planet_hasService( p, PLANET_SERVICE_REFUEL) ? _("You can refuel here") : _("You cannot refuel here"),
                           planet_hasService( p, PLANET_SERVICE_BAR) ? _("This system has a bar") : _("This system does not have a bar"),
@@ -536,7 +546,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
                           planet_hasService( p, PLANET_SERVICE_OUTFITS) ? _("This system sells ship equipment") : _("This system does not sell ship equipment"),
                           planet_hasService( p, PLANET_SERVICE_SHIPYARD) ? _("This system sells ships") : _("This system does not sell ships"));
         if ( p->bar_description && planet_hasService( p, PLANET_SERVICE_BAR ) ) {
-           infocnt+=nsnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", p->bar_description );
+           infocnt+=nsnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", _(p->bar_description) );
         }
         (void)infocnt;
      }
@@ -590,30 +600,28 @@ static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, doub
 
 
 static void map_system_array_update( unsigned int wid, char* str ) {
-   char *name;
+   int i;
    Outfit *outfit;
    Ship *ship;
    double mass;
-   char *license_text;
-   int len;
    char buf2[ECON_CRED_STRLEN], buf4[PATH_MAX];
 
-   name = toolkit_getImageArray( wid, str );
-   if ( name == NULL ) {
+   i = toolkit_getImageArrayPos( wid, str );
+   if ( i < 0 ) {
       infobuf[0]='\0';
       return;
    }
    if ( ( strcmp( str, MAPSYS_OUTFITS ) == 0 ) ) {
-      outfit = outfit_get( name );
+      outfit = cur_planet_sel_outfits[i];
 
       /* new text */
       price2str( buf2, outfit->price, player.p->credits, 2 );
       if (outfit->license == NULL)
          strncpy( buf4, _("None"), sizeof(buf4) );
       else if (player_hasLicense( outfit->license ))
-         strncpy( buf4, (outfit->license), sizeof(buf4) );
+         strncpy( buf4, _(outfit->license), sizeof(buf4) );
       else
-         nsnprintf( buf4, sizeof( buf4 ), "\ar%s\a0", (outfit->license) );
+         nsnprintf( buf4, sizeof( buf4 ), "\ar%s\a0", _(outfit->license) );
       buf4[ sizeof( buf4 )-1 ] = '\0';
 
       mass = outfit->mass;
@@ -624,36 +632,24 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       nsnprintf( infobuf, PATH_MAX,
                  _("%s\n\n%s\n\n%s\n\n"
                    "\anOwned:\a0 %d    \anSlot: \a0%s    \anSize: \a0%s\n"
-                   "\anMass:\a0    %.0f tonnes     \anPrice:\a0 %s \ancredits\a0\n"
+                   "\anMass:\a0    %.0f tonnes     \anPrice:\a0 %s\n"
                    "\anLicense:\a0 %s"),
-                 (outfit->name),
-                 (outfit->description),
-                 (outfit->desc_short),
+                 _(outfit->name),
+                 _(outfit->description),
+                 _(outfit->desc_short),
                  player_outfitOwned( outfit ),
-                 (outfit_slotName( outfit )),
-                 (outfit_slotSize( outfit )),
+                 _(outfit_slotName( outfit )),
+                 _(outfit_slotSize( outfit )),
                  mass,
                  buf2,
                  buf4 );
 
    } else if ( ( strcmp( str, MAPSYS_SHIPS ) == 0 ) ) {
-      ship = ship_get( name );
+      ship = cur_planet_sel_ships[i];
 
    /* update text */
       price2str( buf2, ship_buyPrice( ship ), player.p->credits, 2 );
 
-      /* Remove the word " License".  It's redundant and makes the text overflow
-         into another text box */
-      license_text = ship->license;
-      if (license_text ) {
-         len = strlen( ship->license );
-         if ( strcmp( " License", ship->license + len - 8 ) == 0 ) {
-            license_text = malloc( len - 7 );
-            assert( license_text );
-            memcpy( license_text, ship->license, len - 8 );
-            license_text[len - 8] = '\0';
-         }
-      }
       nsnprintf( infobuf, PATH_MAX,
                  _("\anModel:\a0 %s    "
                    "\anClass:\a0 %s\n"
@@ -673,12 +669,12 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                    "\anCargo Space:\a0 %.0f tonnes\n"
                    "\anFuel:\a0 %d units  "
                    "\anFuel Use:\a0 %d units\n"
-                   "\anPrice:\a0 %s credits  "
+                   "\anPrice:\a0 %s  "
                    "\anLicense:\a0 %s\n"
                    "%s"),
                  _(ship->name),
                  _(ship_class(ship)),
-                 ship->description,
+                 _(ship->description),
                  _(ship->fabricator),
                  ship->crew,
                  /* Weapons & Manoeuvrability */
@@ -697,38 +693,44 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                  ship->fuel,
                  ship->fuel_consumption,
                  buf2,
-                 (license_text != NULL) ? license_text : _("None"),
+                 (ship->license != NULL) ? _(ship->license) : _("None"),
                  ship->desc_stats
                  );
-      if ( license_text != ship->license )
-         free( license_text );
-
    } else if ( ( strcmp( str, MAPSYS_TRADE ) == 0 ) ) {
       Commodity *com;
       credits_t mean;
       double std;
       credits_t globalmean;
       double globalstd;
+      char buf_mean[ECON_CRED_STRLEN], buf_globalmean[ECON_CRED_STRLEN];
+      char buf_std[ECON_CRED_STRLEN], buf_globalstd[ECON_CRED_STRLEN];
+      char buf_buy_price[ECON_CRED_STRLEN];
       int owned;
-      com = commodity_get( name );
+      com = cur_planetObj_sel->commodities[i];
       economy_getAveragePrice( com, &globalmean, &globalstd );
+      credits2str( buf_mean, mean, -1 );
+      nsnprintf( buf_std, sizeof(buf_std), "%.1f ¤", std ); /* TODO credit2str could learn to do this... */
       economy_getAveragePlanetPrice( com, cur_planetObj_sel, &mean, &std );
+      credits2str( buf_globalmean, globalmean, -1 );
+      nsnprintf( buf_globalstd, sizeof(buf_globalstd), "%.1f ¤", globalstd ); /* TODO credit2str could learn to do this... */
       buf4[0]='\0';
-      owned=pilot_cargoOwned( player.p, name );
-      if ( owned > 0 )
-         nsnprintf( buf4, PATH_MAX, ", purchased at %"PRIu64" Cr./Ton", com->lastPurchasePrice );
+      owned=pilot_cargoOwned( player.p, com->name );
+      if ( owned > 0 ) {
+         credits2str( buf_buy_price, com->lastPurchasePrice, -1 );
+         nsnprintf( buf4, PATH_MAX, ", purchased at %s/t", buf_buy_price ); /* FIXME See below. */
+      }
       nsnprintf( infobuf, PATH_MAX,
                  _("%s\n\n"
                    "%s\n\n"
                    "\anYou have:\a0 %d tonnes%s\n"
-                   "\anAverage price seen here:\a0 %"PRIu64" ± %.1f Cr./Ton\n"
-                   "\anAverave price seen everywhere:\a0 %"PRIu64" ± %.1f Cr./Ton\n"),
-                 name,
-                 com->description,
+                   "\anAverage price seen here:\a0 %s/t ± %s/t\n"
+                   "\anAverage price seen everywhere:\a0 %s/t ± %s/t\n"),
+                 _(com->name),
+                 _(com->description),
                  owned,
-                 buf4,
-                 mean, std,
-                 globalmean,globalstd );
+                 buf4, /* FIXME: do not paste in an untranslated sentence fragment... or even a translated one. */
+                 buf_mean, buf_std,
+                 buf_globalmean, buf_globalstd );
    } else {
       infobuf[0]='\0';
       WARN( _("Unexpected call to map_system_array_update\n") );
@@ -760,7 +762,7 @@ void map_system_updateSelected( unsigned int wid )
    for ( i=0; i<sys->nplanets; i++) {
       p = sys->planets[i];
       if ( planet_isKnown( p ) && (p->real == ASSET_REAL) ) {
-         textw = gl_printWidthRaw( &gl_smallFont, p->name );
+         textw = gl_printWidthRaw( &gl_smallFont, _(p->name) );
          if ( textw > nameWidth )
             nameWidth = textw;
          last = p;
@@ -773,7 +775,7 @@ void map_system_updateSelected( unsigned int wid )
       }
    }
    /* get width of star name text */
-   textw = gl_printWidthRaw( &gl_smallFont, sys->name );
+   textw = gl_printWidthRaw( &gl_smallFont, _(sys->name) );
    if ( textw > nameWidth )
       nameWidth = textw;
 
@@ -851,7 +853,6 @@ void map_system_updateSelected( unsigned int wid )
 static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float outfitSpace, float shipSpace )
 {
    int i;
-   Outfit **outfits;
    ImageArrayCell *coutfits;
    int noutfits;
    int w, h;
@@ -866,21 +867,22 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
    } else {
       if ( widget_exists( wid, MAPSYS_OUTFITS ) ) {
          window_destroyWidget( wid, MAPSYS_OUTFITS );
+         free( cur_planet_sel_outfits );
+         cur_planet_sel_outfits = NULL;
       }
+      assert(cur_planet_sel_outfits == NULL);
    }
    planetDone = cur_planetObj_sel;
 
    /* set up the outfits to buy/sell */
    if ( cur_planetObj_sel == NULL ) {
       noutfits = 0;
-      outfits = NULL;
    } else {
-      outfits = tech_getOutfit( cur_planetObj_sel->tech, &noutfits );
+      cur_planet_sel_outfits = tech_getOutfit( cur_planetObj_sel->tech, &noutfits );
    }
 
    if (noutfits > 0) {
-      coutfits = outfits_imageArrayCells( outfits, &noutfits );
-      free( outfits );
+      coutfits = outfits_imageArrayCells( cur_planet_sel_outfits, &noutfits );
 
       xw = ( w - nameWidth - pitch - 60 ) / 2;
       xpos = 35 + pitch + nameWidth + xw;
@@ -897,7 +899,6 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
 
 static void map_system_genShipsList( unsigned int wid, float goodsSpace, float outfitSpace, float shipSpace )
 {
-   Ship **ships;
    ImageArrayCell *cships;
    int nships;
    int xpos, ypos, xw, yh;
@@ -913,24 +914,25 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
    } else {
       if ( widget_exists( wid, MAPSYS_SHIPS ) ) {
          window_destroyWidget( wid, MAPSYS_SHIPS );
+         free( cur_planet_sel_ships );
+         cur_planet_sel_ships = NULL;
       }
+      assert(cur_planet_sel_ships == NULL);
    }
    planetDone = cur_planetObj_sel;
 
    /* set up the outfits to buy/sell */
    if ( cur_planetObj_sel == NULL ) {
       nships = 0;
-      ships = NULL;
    } else {
-      ships = tech_getShip( cur_planetObj_sel->tech, &nships );
+      cur_planet_sel_ships = tech_getShip( cur_planetObj_sel->tech, &nships );
    }
    if (nships > 0) {
       cships = calloc( nships, sizeof(ImageArrayCell) );
       for ( i=0; i<nships; i++ ) {
-         cships[i].image = gl_dupTexture( ships[i]->gfx_store );
-         cships[i].caption = strdup( ships[i]->name );
+         cships[i].image = gl_dupTexture( cur_planet_sel_ships[i]->gfx_store );
+         cships[i].caption = strdup( _(cur_planet_sel_ships[i]->name) );
       }
-      free( ships );
       xw = (w - nameWidth - pitch - 60)/2;
       xpos = 35 + pitch + nameWidth + xw;
       i = (goodsSpace!=0) + (outfitSpace!=0) + (shipSpace!=0);
@@ -972,7 +974,7 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
       cgoods = calloc( ngoods, sizeof(ImageArrayCell) );
       for ( i=0; i<ngoods; i++ ) {
          cgoods[i].image = gl_dupTexture( cur_planetObj_sel->commodities[i]->gfx_store );
-         cgoods[i].caption = strdup( cur_planetObj_sel->commodities[i]->name);
+         cgoods[i].caption = strdup( _(cur_planetObj_sel->commodities[i]->name) );
       }
       /* set up the goods to buy/sell */
       xw = (w - nameWidth - pitch - 60)/2;
@@ -997,6 +999,7 @@ void map_system_buyCommodPrice( unsigned int wid, char *str )
    int njumps=0;
    StarSystem **syslist;
    int cost,ret;
+   char coststr[ECON_CRED_STRLEN];
    ntime_t t = ntime_get();
 
    /* find number of jumps */
@@ -1008,7 +1011,7 @@ void map_system_buyCommodPrice( unsigned int wid, char *str )
                                1, 0, NULL);
       if ( syslist == NULL ) {
          /* no route */
-         dialogue_msg( _("Not available here"), _("Sorry, we don't have the commodity prices for %s available here at the moment."), cur_planetObj_sel->name );
+         dialogue_msg( _("Not available here"), _("Sorry, we don't have the commodity prices for %s available here at the moment."), _(cur_planetObj_sel->name) );
          return;
       } else {
          free ( syslist );
@@ -1018,14 +1021,15 @@ void map_system_buyCommodPrice( unsigned int wid, char *str )
 
    /* get the time at which this purchase will be made (2 periods per jump ago)*/
    t-= ( njumps * 2 + 0.2 ) * NT_PERIOD_SECONDS * 1000;
+   credits2str( coststr, cost, -1 );
    if ( !player_hasCredits( cost ) ) {
-      dialogue_msg( _("You can't afford that"), _("Sorry, but we are selling this information for %d credits, which you don't have"), cost );
+      dialogue_msg( _("You can't afford that"), _("Sorry, but we are selling this information for %s, which you don't have."), coststr );
    } else if ( cur_planetObj_sel->ncommodities == 0 ) {
       dialogue_msgRaw( _("No commodities sold here"),_("There are no commodities sold here, as far as we are aware!"));
    } else if ( cur_planetObj_sel->commodityPrice[0].updateTime >= t ) {
       dialogue_msgRaw( _("You already have newer information"), _("I've checked your computer, and you already have newer information than we can sell.") );
    } else {
-      ret=dialogue_YesNo( _("Purchase commodity prices?"), _("For %s, that will cost %d credits.  The latest information we have is %g periods old."), cur_planetObj_sel->name,cost,njumps*2+0.2);
+      ret=dialogue_YesNo( _("Purchase commodity prices?"), _("For %s, that will cost %s. The latest information we have is %g periods old."), _(cur_planetObj_sel->name), coststr, njumps*2+0.2);
       if ( ret ) {
          player_modCredits( -cost );
          economy_averageSeenPricesAtTime( cur_planetObj_sel, t );

@@ -30,11 +30,11 @@ title = _("The Runaway")
 cargoname = _("Person")
 misn_desc_pre_accept = _([[She looks out of place in the bar. As you approach, she seems to stiffen.
     "H..H..Hi", she stutters. "My name is Cynthia. Could you give me a lift? I really need to get out of here.
-    I can't pay you much, just what I have on me, %s credits." You wonder who she must be to have this many credits on her person. "I need you to take me to Zhiru."
+    I can't pay you much, just what I have on me, %s." You wonder who she must be to have this many credits on her person. "I need you to take me to Zhiru."
     You wonder who she is, but you dare not ask. Do you accept?]])
 not_enough_cargospace = _("Your cargo hold doesn't have enough free space.")
 misn_desc = _("Deliver Cynthia safely to %s in the %s system.")
-reward_desc = _("%s credits on delivery.")
+reward_desc = _("%s on delivery.")
 
 post_accept = {}
 post_accept[1] = _([["Thank you. But we must leave now, before anyone sees me."]])
@@ -62,7 +62,7 @@ end
 
 function accept ()
    --This mission does not make any system claims
-   if not tk.yesno( title, string.format( misn_desc_pre_accept, numstring(reward), targetworld:name() ) ) then
+   if not tk.yesno( title, string.format( misn_desc_pre_accept, creditstring(reward), _(targetworld:name()) ) ) then
       misn.finish()
    end
 
@@ -82,9 +82,9 @@ function accept ()
 
    misn.setTitle( title )
 
-   misn.setReward( string.format( reward_desc, numstring(reward) ) )
+   misn.setReward( string.format( reward_desc, creditstring(reward) ) )
 
-   misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
+   misn.setDesc( string.format( misn_desc, _(targetworld:name()), _(targetworld_sys:name()) ) )
    misn.markerAdd( targetworld_sys, "high")
 
    tk.msg( title, post_accept[1] )

@@ -58,9 +58,14 @@ function _atk_zigzag()
    local target = ai.target()
    local range  = ai.getweaprange(3)
 
-   -- Is there something to dodge?
-   if (not target:exists()) or (not ai.hasprojectile()) then
+   if (not target:exists()) then
       ai.poptask()
+      return
+   end
+
+   -- Is there something to dodge?
+   if (not ai.hasprojectile()) then
+      ai.popsubtask()
       return
    end
 
@@ -68,7 +73,7 @@ function _atk_zigzag()
 
    -- Are we ready to shoot?
    if dist < (1.1*range) then
-      ai.poptask()
+      ai.popsubtask()
       return
    end
 

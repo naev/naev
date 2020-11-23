@@ -35,7 +35,6 @@ require "missions/empire/common.lua"
 
 bar_desc = _("You notice Lt. Commander Dimitri motioning for you to come over to him.")
 misn_title = _("Collective Espionage")
-misn_reward = _("%s credits")
 misn_desc = {}
 misn_desc[1] = _("Scan the Collective systems for wireless communications")
 misn_desc[2] = _("Travel back to %s in %s")
@@ -84,9 +83,9 @@ function accept ()
    targsys2 = system.get("C-59")
 
    -- Mission details
-   misn_desc[2] = misn_desc[2]:format(misn_base:name(), misn_base_sys:name())
+   misn_desc[2] = misn_desc[2]:format(_(misn_base:name()), _(misn_base_sys:name()))
    misn.setTitle(misn_title)
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setReward( creditstring( credits ) )
    misn.setDesc(misn_desc[1])
    misn_marker1 = misn.markerAdd(targsys1, "low")
    misn_marker2 = misn.markerAdd(targsys2, "low")

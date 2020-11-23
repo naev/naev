@@ -21,6 +21,7 @@
 static void lst_render( Widget* lst, double bx, double by );
 static int lst_key( Widget* lst, SDL_Keycode key, SDL_Keymod mod );
 static int lst_mclick( Widget* lst, int button, int x, int y );
+static int lst_mdoubleclick( Widget* lst, int button, int x, int y );
 static int lst_mwheel( Widget* lst, SDL_MouseWheelEvent event );
 static int lst_mmove( Widget* lst, int x, int y, int rx, int ry );
 static void lst_cleanup( Widget* lst );
@@ -45,14 +46,17 @@ static void lst_scroll( Widget* lst, int direction );
  *    @param items Items in the list (will be freed automatically).
  *    @param nitems Number of items in items parameter.
  *    @param defitem Default item to select.
- *    @param call Function to call when new item is selected. Parameter passed
+ *    @param onSelect Function to call when new item is selected. Parameter passed
+ *                is the name of the list.
+ *    @param onActivate Function to call when selected item is double-clicked. Parameter passed
  *                is the name of the list.
  */
 void window_addList( const unsigned int wid,
                      const int x, const int y,
                      const int w, const int h,
                      char* name, char **items, int nitems, int defitem,
-                     void (*call) (unsigned int wdw, char* wgtname) )
+                     void (*onSelect) (unsigned int wdw, char* wgtname),
+                     void (*onActivate) (unsigned int wdw, char* wgtname) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
@@ -68,13 +72,15 @@ void window_addList( const unsigned int wid,
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->keyevent           = lst_key;
    wgt->mclickevent        = lst_mclick;
+   wgt->mdoubleclickevent  = lst_mdoubleclick;
    wgt->mwheelevent        = lst_mwheel;
    wgt->mmoveevent         = lst_mmove;
    wgt->dat.lst.options    = items;
    wgt->dat.lst.noptions   = nitems;
    wgt->dat.lst.selected   = defitem; /* -1 would be none */
    wgt->dat.lst.pos        = 0;
-   wgt->dat.lst.fptr       = call;
+   wgt->dat.lst.onSelect   = onSelect;
+   wgt->dat.lst.onActivate = onActivate;
 
    /* position/size */
    wgt->w = (double) w;
@@ -91,8 +97,8 @@ void window_addList( const unsigned int wid,
       toolkit_nextFocus( wdw );
 
    lst_scroll( wgt, 0 ); /* checks boundaries and triggers callback */
-   if (defitem >= 0 && call)
-      call(wid, name);
+   if (defitem >= 0 && onSelect)
+      onSelect(wid, name);
 }
 
 
@@ -193,7 +199,7 @@ static int lst_key( Widget* lst, SDL_Keycode key, SDL_Keymod mod )
 
 
 /**
- * @brief Handler for mouse click events for the list widget.
+ * @brief Handler for mouse single-click events for the list widget.
  *
  *    @param lst The widget handling the mouse click event.
  *    @param mclick The event the widget should handle.
@@ -210,6 +216,28 @@ static int lst_mclick( Widget* lst, int button, int x, int y )
          break;
    }
    return 0;
+}
+
+
+/**
+ * @brief Handler for mouse double-click events for the list widget.
+ *
+ *    @param lst The widget handling the mouse click event.
+ *    @param mclick The event the widget should handle.
+ *    @return 1 if the widget uses the event.
+ */
+static int lst_mdoubleclick( Widget* lst, int button, int x, int y )
+{
+   int prev_selected;
+   prev_selected = lst->dat.lst.selected;
+   if (lst_mclick( lst, button, x, y ) == 0)
+      return 0;
+   if (lst->dat.lst.selected != prev_selected)
+      return 1;
+
+   if (lst->dat.lst.onActivate != NULL)
+      lst->dat.lst.onActivate( lst->wdw, lst->name );
+   return 1;
 }
 
 
@@ -314,8 +342,8 @@ static int lst_mmove( Widget* lst, int x, int y, int rx, int ry )
 
       /* Run change if position changed. */
       if (lst->dat.lst.selected != psel)
-         if (lst->dat.lst.fptr)
-            lst->dat.lst.fptr( lst->wdw, lst->name );
+         if (lst->dat.lst.onSelect)
+            lst->dat.lst.onSelect( lst->wdw, lst->name );
 
       return 1;
    }
@@ -371,8 +399,8 @@ static void lst_scroll( Widget* lst, int direction )
    else if (CELLPADV + (pos+1) * CELLHEIGHT > lst->h)
       lst->dat.lst.pos += (CELLPADV + (pos+1) * CELLHEIGHT - lst->h) / CELLHEIGHT;
 
-   if (lst->dat.lst.fptr)
-      lst->dat.lst.fptr( lst->wdw, lst->name );
+   if (lst->dat.lst.onSelect)
+      lst->dat.lst.onSelect( lst->wdw, lst->name );
 }
 
 
@@ -403,6 +431,14 @@ static Widget *lst_getWgt( const unsigned int wid, const char* name )
  * @brief Gets what is selected currently in a list.
  *
  * List includes Image Arrays.
+ *
+ *   \warning Oftentimes, UI code will translate or otherwise preprocess
+ *            text before populating this widget.
+ *            In general, reading back such processed text and trying to
+ *            interpret it is ill-advised; it's better to keep the original
+ *            list of objects being presented and deal with indices into it.
+ *            \see toolkit_getListPos
+ *
  */
 char* toolkit_getList( const unsigned int wid, const char* name )
 {
@@ -424,6 +460,11 @@ char* toolkit_getList( const unsigned int wid, const char* name )
 
 /**
  * @brief Sets the list value by name.
+ *
+ *   \warning If the captions have been translated or otherwise preprocessed,
+ *            this function can only find a name that has been transformed the
+ *            same way. There may be a more robust solution involving indices.
+ *            \see toolkit_setListPos
  */
 char* toolkit_setList( const unsigned int wid, const char* name, char* value )
 {

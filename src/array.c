@@ -1,11 +1,12 @@
 #include "array.h"
 
+#include <limits.h>
 #include <stdlib.h>
 #include <stdio.h>
 
 #include "nstring.h"
 
-void *_array_create_helper(size_t e_size, int capacity)
+void *_array_create_helper(size_t e_size, size_t capacity)
 {
    if ( capacity <= 0 )
       capacity = 1;
@@ -19,9 +20,9 @@ void *_array_create_helper(size_t e_size, int capacity)
    return c->_array;
 }
 
-static void _array_resize_container(_private_container **c_, size_t e_size, int new_size)
+static void _array_resize_container(_private_container **c_, size_t e_size, size_t new_size)
 {
-   assert( new_size >= 0 );
+   assert( new_size <= (size_t)INT_MAX );
    _private_container *c = *c_;
 
    if (new_size > c->_reserved) {
@@ -37,7 +38,7 @@ static void _array_resize_container(_private_container **c_, size_t e_size, int 
    *c_ = c;
 }
 
-void _array_resize_helper(void **a, size_t e_size, int new_size)
+void _array_resize_helper(void **a, size_t e_size, size_t new_size)
 {
    _private_container *c = _array_private_container(*a);
    _array_resize_container(&c, e_size, new_size);

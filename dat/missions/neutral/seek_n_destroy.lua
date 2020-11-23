@@ -1,25 +1,25 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Seek And Destroy">
-  <avail>
-   <priority>4</priority>
-   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
-   <chance>875</chance>
-   <location>Computer</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <tier>3</tier>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>4</priority>
+  <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+  <chance>875</chance>
+  <location>Computer</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <tier>3</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    The player searches for an outlaw across several systems
@@ -63,11 +63,11 @@ dono_text[13] = _([["I used to work with %s. We haven't seen each other since th
 
 money_title   = _("How much money do you have?")
 money_text    = {}
-money_text[1] = _([["%s, you say? Well, I don't offer my services for free. Pay me %s credits and I'll tell you where to look; how does that sound?"]])
-money_text[2] = _([["Ah, yes, I know where probably %s is. I'll tell you for just %s credits. What do you say?"]])
-money_text[3] = _([["%s? Of course, I know this pilot. I can tell you where they were last heading, but it'll cost you. %s credits. Deal?"]])
-money_text[4] = _([["Ha ha ha! Yes, I've seen %s around! Will I tell you where? Heck no! Not unless you pay me, of course... %s credits should be sufficient."]])
-money_text[5] = _([["You're looking for %s? I tell you what: give me %s credits and I'll tell you. Otherwise, get lost!"]])
+money_text[1] = _([["%s, you say? Well, I don't offer my services for free. Pay me %s and I'll tell you where to look; how does that sound?"]])
+money_text[2] = _([["Ah, yes, I know where probably %s is. I'll tell you for just %s. What do you say?"]])
+money_text[3] = _([["%s? Of course, I know this pilot. I can tell you where they were last heading, but it'll cost you. %s. Deal?"]])
+money_text[4] = _([["Ha ha ha! Yes, I've seen %s around! Will I tell you where? Heck no! Not unless you pay me, of course... %s should be sufficient."]])
+money_text[5] = _([["You're looking for %s? I tell you what: give me %s and I'll tell you. Otherwise, get lost!"]])
 
 IdoPay       = _("Pay the sum")
 IdonnoPay    = _("Give up")
@@ -129,7 +129,7 @@ ambush_comm[7] = _("You were not supposed to get on the trail of %s!")
 
 
 breef_title = _("Find and Kill a pilot")
-breef_text = _("%s is a notorious %s pilot who is wanted by the authorities, dead or alive. Any citizen who can find and neutralize %s by any means necessary will be given %s credits as a reward. %s authorities have lost track of this pilot in the %s system. It is very likely that the target is no longer there, but this system may be a good place to start an investigation.")
+breef_text = _("%s is a notorious %s pilot who is wanted by the authorities, dead or alive. Any citizen who can find and neutralize %s by any means necessary will be given %s as a reward. %s authorities have lost track of this pilot in the %s system. It is very likely that the target is no longer there, but this system may be a good place to start an investigation.")
 
 flee_title = _("You're not going to kill anybody like that")
 flee_text = _("You had a chance to neutralize %s, and you wasted it! Now you have to start all over. Maybe some other pilots in %s know where your target is going.")
@@ -155,7 +155,6 @@ bar_desc = _("This person might be an outlaw, a pirate, or even worse, a bounty 
 
 -- Mission details
 misn_title  = _("Seek And Destroy Mission, starting in %s")
-misn_reward = _("%s credits")
 misn_desc   = _("The %s pilot known as %s is wanted dead or alive by %s authorities. He was last seen in the %s system.")
 
 function create ()
@@ -209,7 +208,7 @@ function create ()
    end
 
    name = pirate_name()
-   if target_faction:name() == "Pirate" then
+   if target_faction == faction.get("Pirate") then
       ships = {"Pirate Shark", "Pirate Vendetta", "Pirate Admonisher"}
       aship = "Pirate Phalanx"
       bship = "Pirate Hyena"
@@ -224,9 +223,9 @@ function create ()
    cursys = 1
 
    -- Set mission details
-   misn.setTitle( misn_title:format( mysys[1]:name() ) )
-   misn.setDesc( misn_desc:format( target_faction:name(), name, paying_faction:name(), mysys[1]:name() ) )
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setTitle( misn_title:format( _(mysys[1]:name()) ) )
+   misn.setDesc( misn_desc:format( _(target_faction:name()), name, _(paying_faction:name()), mysys[1]:name() ) )
+   misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( mysys[1], "computer" )
 
    -- Store the table
@@ -249,14 +248,14 @@ function accept ()
    stage = 0
    increment = false
    last_sys = system.cur()
-   tk.msg( breef_title, breef_text:format( name, target_faction:name(), name, numstring(credits), paying_faction:name(), mysys[1]:name() ) )
+   tk.msg( breef_title, breef_text:format( name, _(target_faction:name()), name, creditstring(credits), _(paying_faction:name()), _(mysys[1]:name()) ) )
    jumphook = hook.enter( "enter" )
    hailhook = hook.hail( "hail" )
    landhook = hook.land( "land" )
 
-   osd_msg[1] = osd_msg1_r:format( mysys[1]:name() )
+   osd_msg[1] = osd_msg1_r:format( _(mysys[1]:name()) )
    osd_msg[2] = osd_msg[2]:format( name )
-   osd_msg[3] = osd_msg[3]:format( paying_faction:name() )
+   osd_msg[3] = osd_msg[3]:format( _(paying_faction:name()) )
    misn.osdCreate( osd_title, osd_msg )
 end
 
@@ -415,7 +414,7 @@ function hail ()
          if not know then -- NPC does not know the target
             tk.msg( dono_title, dono_text[rnd.rnd(1,#dono_text)]:format( name ) )
          elseif tells then
-            tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, _(mysys[cursys+1]:name()) ) )
             next_sys()
             target:setHostile( false )
          else
@@ -436,12 +435,12 @@ function space_clue ()
          -- End of function
       else -- Threaten the pilot
          if isScared (target) and rnd.rnd() < .5 then
-            tk.msg( scared_title, scared_text[rnd.rnd(1,#scared_text)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( scared_title, scared_text[rnd.rnd(1,#scared_text)]:format( name, _(mysys[cursys+1]:name()) ) )
             next_sys()
             target:control()
             target:runaway(player.pilot())
          else
-            tk.msg( not_scared_title, not_scared_text[rnd.rnd(1,#not_scared_text)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( not_scared_title, not_scared_text[rnd.rnd(1,#not_scared_text)]:format( name, _(mysys[cursys+1]:name()) ) )
             target:comm(not_scared_comm[rnd.rnd(1,#not_scared_comm)])
 
             -- Clean the previous hook if it exists
@@ -455,12 +454,12 @@ function space_clue ()
    else -- Pilot wants payment
 
       price = (5 + 5*rnd.rnd()) * 1000
-      choice = tk.choice(money_title, money_text[rnd.rnd(1,#money_text)]:format(name,numstring(price)), IdoPay, IdonnoPay, IkickYourAss)
+      choice = tk.choice(money_title, money_text[rnd.rnd(1,#money_text)]:format(name,creditstring(price)), IdoPay, IdonnoPay, IkickYourAss)
 
       if choice == 1 then
          if player.credits() >= price then
             player.pay(-price)
-            tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, _(mysys[cursys+1]:name()) ) )
             next_sys()
             target:setHostile( false )
             target:comm(thank_comm[rnd.rnd(1,#thank_comm)])
@@ -472,15 +471,15 @@ function space_clue ()
       else -- Threaten the pilot
 
          -- Everybody except the pirates takes offence if you threaten them
-         if not target:faction():name() == "Pirate" then
+         if not target:faction() == faction.get("Pirate") then
             faction.modPlayerSingle( target:faction(), -1 )
          end
 
          if isScared (target) then
-            tk.msg( scared_title, scared_text[rnd.rnd(1,#scared_text)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( scared_title, scared_text[rnd.rnd(1,#scared_text)]:format( name, _(mysys[cursys+1]:name()) ) )
             next_sys()
          else
-            tk.msg( not_scared_title, not_scared_text[rnd.rnd(1,#not_scared_text)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( not_scared_title, not_scared_text[rnd.rnd(1,#not_scared_text)]:format( name, _(mysys[cursys+1]:name()) ) )
             target:comm(not_scared_comm[rnd.rnd(1,#not_scared_comm)])
 
             -- Clean the previous hook if it exists
@@ -500,7 +499,7 @@ function clue_attacked( p, attacker )
    if attacker == player.pilot() and p:health() < 100 then
       p:control()
       p:runaway(player.pilot())
-      tk.msg( scared_title, scared_text[rnd.rnd(1,#scared_text)]:format( name, mysys[cursys+1]:name() ) )
+      tk.msg( scared_title, scared_text[rnd.rnd(1,#scared_text)]:format( name, _(mysys[cursys+1]:name()) ) )
       next_sys()
       hook.rm(attack)
    end
@@ -569,12 +568,12 @@ function clue_bar()
       if know == 0 then -- NPC does not know the target
          tk.msg( dono_title, dono_text[rnd.rnd(1,#dono_text)]:format( name ) )
       elseif know == 1 then -- NPC wants money
-         choice = tk.choice(money_title, money_text[rnd.rnd(1,#money_text)]:format(name,numstring(price)), IdoPay, IdonnoPay)
+         choice = tk.choice(money_title, money_text[rnd.rnd(1,#money_text)]:format(name,creditstring(price)), IdoPay, IdonnoPay)
 
          if choice == 1 then
             if player.credits() >= price then
                player.pay(-price)
-               tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
+               tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, _(mysys[cursys+1]:name()) ) )
                next_sys()
             else
                tk.msg( poor_title, poor_text )
@@ -584,7 +583,7 @@ function clue_bar()
          end
 
       else -- NPC tells the clue
-         tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
+         tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, _(mysys[cursys+1]:name()) ) )
          next_sys()
       end
 
@@ -594,13 +593,13 @@ end
 
 function next_sys ()
    misn.markerMove (marker, mysys[cursys+1])
-   osd_msg[1] = osd_msg1_r:format( mysys[cursys+1]:name() )
+   osd_msg[1] = osd_msg1_r:format( _(mysys[cursys+1]:name()) )
    misn.osdCreate( osd_title, osd_msg )
    increment = true
 end
 
 function player_flee ()
-   tk.msg( flee_title, flee_text:format( name, system.cur():name() ) )
+   tk.msg( flee_title, flee_text:format( name, _(system.cur():name()) ) )
    stage = 0
    misn.osdActive( 1 )
 

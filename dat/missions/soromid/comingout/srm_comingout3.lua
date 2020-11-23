@@ -47,7 +47,7 @@ title = {}
 text = {}
 
 title[1] = _("A Friend's Aid")
-text[1] = _([[Chelsea gleefully waves you over. "It's nice to see you again!" she says. The two of you chat a bit about her venture into the piloting business; all is well from the sound of it. "Say," she says, "someone offered me a really interesting mission recently, but I had to decline because my ship isn't really up to task. If you could just escort my ship through that mission I could share the pay with you! Your half would be %s credits. How about it?"]])
+text[1] = _([[Chelsea gleefully waves you over. "It's nice to see you again!" she says. The two of you chat a bit about her venture into the piloting business; all is well from the sound of it. "Say," she says, "someone offered me a really interesting mission recently, but I had to decline because my ship isn't really up to task. If you could just escort my ship through that mission I could share the pay with you! Your half would be %s. How about it?"]])
 
 text[2] = _([["Awesome! I really appreciate it!
     "So the mission is in theory a pretty simple one: I need to deliver some cargo to %s in the %s system. Trouble is apparently I'll be getting in the middle of some sort of trade dispute with a shady Soromid company that's bribed the local Soromid pilots. Needless to say we can expect to be attacked by some thugs and the Soromid military isn't likely to be of much help.
@@ -61,12 +61,11 @@ title[5] = _("Mission Failed")
 text[5] = _("You have lost contact with Chelsea and therefore failed the mission.")
 
 title[6] = _("Another Happy Landing")
-text[6] = _([[You successfully land and dock alongside Chelsea and she approaches the worker for the cargo delivery. The worker gives her a weird look, but collects the cargo with the help of some robotic drones and hands her a credit chip. When you get back to your ships, Chelsea transfers the sum of %s credits to your account, and you idly chat with her for a while.
+text[6] = _([[You successfully land and dock alongside Chelsea and she approaches the worker for the cargo delivery. The worker gives her a weird look, but collects the cargo with the help of some robotic drones and hands her a credit chip. When you get back to your ships, Chelsea transfers the sum of %s to your account, and you idly chat with her for a while.
     "Anyway, I should probably get going now," she says. "But I really appreciated the help there! Get in touch with me again sometime. We make a great team!" You agree, and you both go your separate ways once again.]])
 
 misn_title = _("A Friend's Aid")
 misn_desc = _("Chelsea needs you to escort her to %s.")
-misn_reward = _("%s credits")
 
 npc_name = _("Chelsea")
 npc_desc = _("You see Chelsea looking contemplative.")
@@ -102,21 +101,21 @@ function accept ()
    if started then
       txt = text[4]
    else
-      txt = text[1]:format( numstring( credits ) )
+      txt = text[1]:format( creditstring( credits ) )
    end
    started = true
 
    if tk.yesno( title[1], txt ) then
-      tk.msg( title[1], text[2]:format( misplanet:name(), missys:name() ) )
+      tk.msg( title[1], text[2]:format( _(misplanet:name()), _(missys:name()) ) )
 
       misn.accept()
 
       misn.setTitle( misn_title )
-      misn.setDesc( misn_desc:format( misplanet:name() ) )
-      misn.setReward( misn_reward:format( numstring( credits ) ) )
+      misn.setDesc( misn_desc:format( _(misplanet:name()) ) )
+      misn.setReward( creditstring( credits ) )
       marker = misn.markerAdd( missys, "low" )
 
-      osd_desc[1] = osd_desc[1]:format( misplanet:name(), missys:name() )
+      osd_desc[1] = osd_desc[1]:format( _(misplanet:name()), _(missys:name()) )
       misn.osdCreate( misn_title, osd_desc )
 
       startplanet = planet.cur()
@@ -222,7 +221,7 @@ end
 
 function land ()
    if planet.cur() == misplanet then
-      tk.msg( title[6], text[6]:format( numstring( credits ) ) )
+      tk.msg( title[6], text[6]:format( creditstring( credits ) ) )
       player.pay( credits )
       srm_addComingOutLog( log_text )
       misn.finish( true )
@@ -248,7 +247,7 @@ end
 
 function chelsea_jump( p, jump_point )
    if jump_point:dest() == getNextSystem( system.cur(), missys ) then
-      player.msg( cheljump_msg:format( jump_point:dest():name() ) )
+      player.msg( cheljump_msg:format( _(jump_point:dest():name()) ) )
       chelsea_jumped = true
    else
       fail( chelflee_msg )
@@ -258,7 +257,7 @@ end
 
 function chelsea_land( p, planet )
    if planet == misplanet then
-      player.msg( chelland_msg:format( planet:name() ) )
+      player.msg( chelland_msg:format( _(planet:name()) ) )
       chelsea_jumped = true
    else
       fail( chelflee_msg )

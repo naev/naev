@@ -19,8 +19,6 @@
 #include "nstring.h"
 
 
-#define MAP_WDWNAME     "Star Map" /**< Map window name. */
-
 #define BUTTON_WIDTH    120 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
@@ -35,6 +33,7 @@ static int map_find_ships   = 0; /**< Ships checkbox value. */
 /* Current found stuff. */
 static map_find_t *map_found_cur    = NULL;  /**< Pointer to found stuff. */
 static int map_found_ncur           = 0;     /**< Number of found stuff. */
+static char **map_foundOutfitNames  = NULL; /**< Internal names of outfits in the search results. */
 /* Tech hack. */
 static tech_group_t **map_known_techs = NULL; /**< Known techs. */
 static Planet **map_known_planets   = NULL;  /**< Known planets with techs. */
@@ -228,7 +227,7 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
    map_found_ncur = n;
 
    /* Create window. */
-   wid = window_create( N_("Search Results"), -1, -1, 500, 452 );
+   wid = window_create( "wswFindResult", _("Search Results"), -1, -1, 500, 452 );
    window_setParent( wid, parent );
    window_setAccept( wid, map_findDisplayMark );
    window_setCancel( wid, window_close );
@@ -238,7 +237,7 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
    for (i=0; i<n; i++)
       ll[i] = strdup( found[i].display );
    window_addList( wid, 20, -40, 460, 300,
-         "lstResult", ll, n, 0, NULL );
+         "lstResult", ll, n, 0, NULL, map_findDisplayMark );
 
    /* Buttons. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -457,11 +456,11 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
       /* Set fancy name. */
       if (ret)
          nsnprintf( found[n].display, sizeof(found[n].display),
-               _("%s (unknown route)"), sys->name );
+               _("%s (unknown route)"), _(sys->name) );
       else
          nsnprintf( found[n].display, sizeof(found[n].display),
                _("%s (%d jumps, %.0fk distance)"),
-               sys->name, found[n].jumps, found[n].distance/1000. );
+               _(sys->name), found[n].jumps, found[n].distance/1000. );
       n++;
    }
    free(names);
@@ -563,11 +562,11 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
       if (ret)
          nsnprintf( found[n].display, sizeof(found[n].display),
                _("\a%c%s (%s, unknown route)"), map_getPlanetColourChar(pnt),
-               names[i], sys->name );
+               _(names[i]), _(sys->name) );
       else
          nsnprintf( found[n].display, sizeof(found[n].display),
                _("\a%c%s (%s, %d jumps, %.0fk distance)"), map_getPlanetColourChar(pnt),
-               names[i], sys->name, found[n].jumps, found[n].distance/1000. );
+               _(names[i]), _(sys->name), found[n].jumps, found[n].distance/1000. );
       n++;
    }
    free(names);
@@ -600,7 +599,7 @@ static char map_getPlanetColourChar( Planet *p )
 
 
 /**
- * @brief Does fuzzy name matching for outfits.
+ * @brief Does fuzzy name matching for outfits. Searches translated names but returns internal names.
  */
 static char **map_fuzzyOutfits( Outfit **o, int n, const char *name, int *len )
 {
@@ -613,7 +612,7 @@ static char **map_fuzzyOutfits( Outfit **o, int n, const char *name, int *len )
    /* Do fuzzy search. */
    l = 0;
    for (i=0; i<n; i++) {
-      if (nstrcasestr( o[i]->name, name ) != NULL) {
+      if (nstrcasestr( _(o[i]->name), name ) != NULL) {
          names[l] = o[i]->name;
          l++;
       }
@@ -711,8 +710,8 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
     * a 20 px gap, 280 px for the outfit's name and a final 20 px gap. */
    iw = w - 452;
 
-   outfit = outfit_get( toolkit_getList(wid, wgtname) );
-   window_modifyText( wid, "txtOutfitName", outfit->name );
+   outfit = outfit_get( map_foundOutfitNames[toolkit_getListPos(wid, wgtname)] );
+   window_modifyText( wid, "txtOutfitName", _(outfit->name) );
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 0, 0 );
 
    mass = outfit->mass;
@@ -721,7 +720,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
       mass += outfit_amount(outfit) * outfit_ammo(outfit)->mass;
    }
 
-   window_modifyText( wid, "txtDescription", outfit->description );
+   window_modifyText( wid, "txtDescription", _(outfit->description) );
    credits2str( buf2, outfit->price, 2 );
    credits2str( buf3, player.p->credits, 2 );
    nsnprintf( buf, PATH_MAX,
@@ -731,20 +730,20 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
          "%s\n"
          "%.0f tonnes\n"
          "\n"
-         "%s credits\n"
-         "%s credits\n"
+         "%s\n"
+         "%s\n"
          "%s\n"),
          player_outfitOwned(outfit),
-         outfit_slotName(outfit),
-         outfit_slotSize(outfit),
+         _(outfit_slotName(outfit)),
+         _(outfit_slotSize(outfit)),
          mass,
          buf2,
          buf3,
          (outfit->license != NULL) ? outfit->license : _("None") );
    window_modifyText( wid, "txtDDesc", buf );
-   window_modifyText( wid, "txtOutfitName", outfit->name );
-   window_modifyText( wid, "txtDescShort", outfit->desc_short );
-   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, outfit->desc_short ) );
+   window_modifyText( wid, "txtOutfitName", _(outfit->name) );
+   window_modifyText( wid, "txtDescShort", _(outfit->desc_short) );
+   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, _(outfit->desc_short) ) );
    window_moveWidget( wid, "txtSDesc", iw+20, -60-th-20 );
    window_moveWidget( wid, "txtDDesc", iw+20+60, -60-th-20 );
    th += gl_printHeightRaw( &gl_smallFont, 280, buf );
@@ -760,7 +759,6 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
 static int map_findSearchOutfits( unsigned int parent, const char *name )
 {
    int i, j;
-   char **names;
    int len, n, ret;
    map_find_t *found;
    Planet *pnt;
@@ -770,10 +768,15 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    Outfit *o, **olist;
    int nolist;
 
+   if (map_foundOutfitNames != NULL) {
+      ERR(_("BUG: Naev has attempted a reentrant call to map_findSearchOutfits. Bailing."));
+      return 1;
+   }
+
    /* Match planet first. */
    o     = NULL;
    oname = outfit_existsCase( name );
-   names = map_outfitsMatch( name, &len );
+   map_foundOutfitNames = map_outfitsMatch( name, &len );
    if (len <= 0)
       return -1;
    else if ((oname != NULL) && (len == 1))
@@ -783,18 +786,20 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       /* Ask which one player wants. */
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
-         list[i] = strdup( names[i] );
-      i = dialogue_listPanel( "Search Results", list, len, 452, 650,
+         list[i] = strdup( _(map_foundOutfitNames[i]) );
+      i = dialogue_listPanel( _("Search Results"), list, len, 452, 650,
             map_addOutfitDetailFields, map_showOutfitDetail,
             _("Search results for outfits matching '%s':"), name );
       if (i < 0) {
-         free(names);
+         free(map_foundOutfitNames);
+         map_foundOutfitNames = NULL;
          return 0;
       }
-      o = outfit_get( names[i] );
+      o = outfit_get( map_foundOutfitNames[i] );
    }
-   if (names != NULL)
-      free(names);
+   if (map_foundOutfitNames != NULL)
+      free(map_foundOutfitNames);
+   map_foundOutfitNames = NULL;
    if (o == NULL)
       return -1;
 
@@ -802,7 +807,6 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    found = NULL;
    n = 0;
    for (i=0; i<map_nknown; i++) {
-
       /* Try to find the outfit in the planet. */
       olist = tech_getOutfit( map_known_techs[i], &nolist );
       for (j=0; j<nolist; j++)
@@ -840,11 +844,11 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       if (ret)
          nsnprintf( found[n].display, sizeof(found[n].display),
                _("\a%c%s (%s, unknown route)"), map_getPlanetColourChar(pnt),
-               pnt->name, sys->name );
+               _(pnt->name), _(sys->name) );
       else
          nsnprintf( found[n].display, sizeof(found[n].display),
                _("\a%c%s (%s, %d jumps, %.0fk distance)"), map_getPlanetColourChar(pnt),
-               pnt->name, sys->name, found[n].jumps, found[n].distance/1000. );
+               _(pnt->name), _(sys->name), found[n].jumps, found[n].distance/1000. );
       n++;
    }
 
@@ -862,7 +866,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
 
 
 /**
- * @brief Does fuzzy name matching for ships;
+ * @brief Does fuzzy name matching for ships. Searches translated names but returns internal names.
  */
 static char **map_fuzzyShips( Ship **s, int n, const char *name, int *len )
 {
@@ -875,7 +879,7 @@ static char **map_fuzzyShips( Ship **s, int n, const char *name, int *len )
    /* Do fuzzy search. */
    l = 0;
    for (i=0; i<n; i++) {
-      if (nstrcasestr( s[i]->name, name ) != NULL) {
+      if (nstrcasestr( _(s[i]->name), name ) != NULL) {
          names[l] = s[i]->name;
          l++;
       }
@@ -938,8 +942,8 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       /* Ask which one player wants. */
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
-         list[i] = strdup( names[i] );
-      i = dialogue_list( "Search Results", list, len,
+         list[i] = strdup( _(names[i]) );
+      i = dialogue_list( _("Search Results"), list, len,
             _("Search results for ships matching '%s':"), name );
       if (i < 0) {
          free(names);
@@ -1077,7 +1081,7 @@ void map_inputFind( unsigned int parent, char* str )
    /* Create the window. */
    w = 400;
    h = 220;
-   wid = window_create( "Find...", -1, -1, w, h );
+   wid = window_create( "wdwFind", _("Find..."), -1, -1, w, h );
    window_setAccept( wid, map_findSearch );
    window_setCancel( wid, map_findClose );
    window_setParent( wid, parent );

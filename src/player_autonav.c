@@ -176,7 +176,8 @@ void player_autonavPos( double x, double y )
       return;
 
    player.autonav    = AUTONAV_POS_APPROACH;
-   player.autonavmsg = "position";
+   player.autonavmsg = _("position");
+   player.autonavcol = '0';
    vect_cset( &player.autonav_pos, x, y );
 }
 
@@ -193,7 +194,8 @@ void player_autonavPnt( char *name )
       return;
 
    player.autonav    = AUTONAV_PNT_APPROACH;
-   player.autonavmsg = p->name;
+   player.autonavmsg = _(p->name);
+   player.autonavcol = planet_getColourChar( p );
    vect_cset( &player.autonav_pos, p->pos.x, p->pos.y );
 }
 
@@ -212,6 +214,7 @@ void player_autonavPil( unsigned int p )
 
    player.autonav    = AUTONAV_PLT_FOLLOW;
    player.autonavmsg = pilot->name;
+   player.autonavcol = '0';
 }
 
 
@@ -378,7 +381,7 @@ static void player_autonav (void)
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
             player_message( _("\aRAutonav arrived at \a%c%s\a\0."),
-                  planet_getColourChar( planet_get(player.autonavmsg) ),
+                  player.autonavcol,
                   player.autonavmsg );
             player_autonavEnd();
          }

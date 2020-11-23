@@ -60,7 +60,6 @@ text[6] = _([["Mm. It looks like the others have not arrived yet." Smith says. "
 
 -- Mission details
 misn_title = _("A Journey To %s")
-misn_reward = _("%s credits")
 misn_desc = _("You are to transport Arnold Smith to %s so that he can talk about a deal.")
 
 -- NPC
@@ -101,13 +100,13 @@ function accept()
       misn.accept()
       tk.msg(title[2], text[2])
 
-      osd_msg[1] = osd_msg[1]:format(missys:name())
-      osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
+      osd_msg[1] = osd_msg[1]:format(_(missys:name()))
+      osd_msg[2] = osd_msg[2]:format(_(paypla:name()), _(paysys:name()))
 
-      misn.setTitle(misn_title:format(missys:name()))
-      misn.setReward(misn_reward:format(numstring(reward)))
-      misn.setDesc(misn_desc:format(missys:name()))
-      osd = misn.osdCreate(osd_title:format(missys:name()), osd_msg)
+      misn.setTitle(misn_title:format(_(missys:name())))
+      misn.setReward(creditstring(reward))
+      misn.setDesc(misn_desc:format(_(missys:name())))
+      osd = misn.osdCreate(osd_title:format(_(missys:name())), osd_msg)
       misn.osdActive(1)
 
       marker = misn.markerAdd(missys, "low")
@@ -179,7 +178,7 @@ end
 
 function board()
    --boarding the pacifier
-   tk.msg(title[4], text[4]:format(paysys:name()))
+   tk.msg(title[4], text[4]:format(_(paysys:name())))
    player.unboard()
    pacifier:control(false)
    pacifier:setActiveBoard(false)

@@ -181,7 +181,7 @@ static int sp_check( unsigned int spid )
 
 
 /**
- * @brief Gets the display name of a slot property.
+ * @brief Gets the display name of a slot property (in English).
  */
 const char *sp_display( unsigned int spid )
 {
@@ -192,7 +192,7 @@ const char *sp_display( unsigned int spid )
 
 
 /**
- * @brief Gets the description of a slot property.
+ * @brief Gets the description of a slot property (in English).
  */
 const char *sp_description( unsigned int spid )
 {

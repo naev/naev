@@ -27,6 +27,9 @@
 
 -- Localization, choosing a language if Naev is translated for non-english-speaking locales.
 
+require "numstring.lua"
+
+
 text = {}
 title = {}
 
@@ -37,7 +40,7 @@ title[2] = _("It's a lousy job, but...")
 text[2] = _([["Thank you! The yacht doesn't have a working hyperdrive, so they won't have left the system. It's a Gawain named Credence. Just disable it and board it, then transport my disobedient son and his girlfriend back here. Don't worry about the yacht, I'll have it recovered later. Oh, and one more thing, though it should go without saying: whatever you do, don't destroy the yacht! I don't want to lose my son over this. Well then, I hope to see you again soon."]])
 
 title[3] = _("Whoops!")
-text[3] = _([[You have destroyed the Gawain! The family presses charges, and you are sentenced to a %d fine in absence of attendance.]])
+text[3] = _([[You have destroyed the Gawain! The family presses charges, and you are sentenced to a %s fine in absence of attendance.]])
 
 title[4] = _("End of the line, boyo")
 text[4] = _([[You board the Gawain and find an enraged teenage boy and a disillusioned teenage girl. The boy is furious that you attacked and disabled his ship, but when you mention that his father is quite upset and wants him to come home right now, he quickly pipes down. You march the young couple onto your ship and seal the airlock behind you.]])
@@ -61,7 +64,7 @@ OSD[2] = _("Bring the teenagers back to planet %s")
 function create ()
     cursys = system.cur()
     curplanet = planet.cur()
-    OSD[2] = OSD[2]:format(planet.cur():name())
+    OSD[2] = OSD[2]:format(_(planet.cur():name()))
     misn.setNPC(NPCname, "neutral/unique/middleaged")
     misn.setDesc(NPCdesc)
 end
@@ -70,7 +73,7 @@ end
 function accept ()
     if tk.yesno(title[1], text[1]) then
         misn.accept()
-        misn.setDesc(misndesc:format(cursys:name()))
+        misn.setDesc(misndesc:format(_(cursys:name())))
         misn.setReward(misnreward)
         misn.osdCreate(OSDtitle, OSD)
         tk.msg(title[2], text[2])
@@ -120,7 +123,7 @@ end
 
 function targetDeath()
     fine = math.max(-20000, -player.credits()) -- Fine 20K, or take the player for all he has
-    tk.msg(title[3], text[3]:format(-fine))
+    tk.msg(title[3], text[3]:format(creditstring(-fine)))
     player.pay(fine) -- I love this statement.
     misn.finish(true)
 end

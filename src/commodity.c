@@ -80,21 +80,21 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent );
 void credits2str( char *str, credits_t credits, int decimals )
 {
    if (decimals < 0)
-      nsnprintf( str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
+      nsnprintf( str, ECON_CRED_STRLEN, _("%"CREDITS_PRI" ¤"), credits );
    else if (credits >= 1000000000000000000LL)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*fE", decimals, (double)credits / 1000000000000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, _("%.*f E¤"), decimals, (double)credits / 1000000000000000000. );
    else if (credits >= 1000000000000000LL)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*fP", decimals, (double)credits / 1000000000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, _("%.*f P¤"), decimals, (double)credits / 1000000000000000. );
    else if (credits >= 1000000000000LL)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*fT", decimals, (double)credits / 1000000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, _("%.*f T¤"), decimals, (double)credits / 1000000000000. );
    else if (credits >= 1000000000L)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*fG", decimals, (double)credits / 1000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, _("%.*f G¤"), decimals, (double)credits / 1000000000. );
    else if (credits >= 1000000)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*fM", decimals, (double)credits / 1000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, _("%.*f M¤"), decimals, (double)credits / 1000000. );
    else if (credits >= 1000)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*fk", decimals, (double)credits / 1000. );
+      nsnprintf( str, ECON_CRED_STRLEN, _("%.*f k¤"), decimals, (double)credits / 1000. );
    else
-      nsnprintf (str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
+      nsnprintf (str, ECON_CRED_STRLEN, _("%"CREDITS_PRI" ¤"), credits );
 }
 
 /**
@@ -340,7 +340,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    
 
 #if 0 /* shouldn't be needed atm */
-#define MELEMENT(o,s)   if (o) WARN("Commodity '%s' missing '"s"' element", temp->name)
+#define MELEMENT(o,s)   if (o) WARN( _("Commodity '%s' missing '"s"' element"), temp->name)
    MELEMENT(temp->description==NULL,"description");
    MELEMENT(temp->high==0,"high");
    MELEMENT(temp->medium==0,"medium");
@@ -549,7 +549,7 @@ void gatherable_gather( int pilot )
 
          if (q>0) {
             if (pilot_isPlayer(p)) {
-               player_message( ngettext("%d ton of %s gathered", "%d tons of %s gathered", q), q, gat->type->name );
+               player_message( ngettext("%d ton of %s gathered", "%d tons of %s gathered", q), q, _(gat->type->name) );
 
                /* Run hooks. */
                hparam[0].type    = HOOK_PARAM_STRING;

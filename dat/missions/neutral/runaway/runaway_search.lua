@@ -30,7 +30,7 @@ title = _("The Search for Cynthia")
 misn_desc_pre_accept = _([[Approaching him, he hands you a paper. It offers a 100,000 credit reward for the finding of a "Cynthia" person.
     "That's my girl. She disappeared quite a few decaperiods ago. We managed to track her down to here, but where she went afterwards remains a mystery. We know she was kidnapped, but if you know anything..." The man begins to cry. "Have you seen any trace of her?"]])
 misn_desc = _("Search for Cynthia.")
-reward_desc = _("%s credits on delivery.")
+reward_desc = _("%s on delivery.")
 cargoname = _("Person")
 
 post_accept = {}
@@ -73,7 +73,7 @@ end
 
 function accept ()
    --This mission does not make any system claims
-   if not tk.yesno( title, string.format( misn_desc_pre_accept, reward, targetworld:name() ) ) then
+   if not tk.yesno( title, string.format( misn_desc_pre_accept, reward, _(targetworld:name()) ) ) then
       misn.finish()
    end
 
@@ -84,9 +84,9 @@ function accept ()
    end
 
    misn.setTitle( title )
-   misn.setReward( string.format( reward_desc, reward ) )
+   misn.setReward( string.format( reward_desc, creditstring(reward) ) )
 
-   misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
+   misn.setDesc( string.format( misn_desc, _(targetworld:name()), _(targetworld_sys:name()) ) )
    runawayMarker = misn.markerAdd(system.get("Dohriabi"), "low")
 
    tk.msg( title, post_accept[1] )

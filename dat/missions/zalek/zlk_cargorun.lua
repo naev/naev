@@ -68,10 +68,10 @@ title[6] = _("A Small Delay")
 text[6] = _([["Hello again. It's Dr. Logan. I am terribly sorry for the delay. As agreed, you will be paid your fee. I am pleased by your help, captain; I hope we meet again."]])
 
 title[7] = _("Bonus")
-text[7] = _([["For your trouble, I will add a bonus of %s credits to your fee. I am pleased by your help, captain; I hope we meet again."]])
+text[7] = _([["For your trouble, I will add a bonus of %s to your fee. I am pleased by your help, captain; I hope we meet again."]])
 
 title[8] = _("Check Account")
-text[8] = _([[You check your account balance as he closes the comm channel to find yourself %s credits richer. A good compensation indeed. You feel better already.]])
+text[8] = _([[You check your account balance as he closes the comm channel to find yourself %s richer. A good compensation indeed. You feel better already.]])
 
 title[9] = _("No Room")
 text[9] = _([[You don't have enough cargo space to accept this mission.]])
@@ -110,11 +110,11 @@ function accept ()
       -- mission details
       misn.setTitle( misn_title )
       misn.setReward( misn_reward )
-      misn.setDesc( misn_desc:format(pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )
+      misn.setDesc( misn_desc:format(_(pickupWorld:name()), _(pickupSys:name()), _(delivWorld:name()), _(delivSys:name()) ) )
 
       -- OSD
-      OSDdesc[1] =  OSDdesc[1]:format(pickupWorld:name(), pickupSys:name())
-      OSDdesc[2] =  OSDdesc[2]:format(delivWorld:name(), delivSys:name())
+      OSDdesc[1] =  OSDdesc[1]:format(_(pickupWorld:name()), _(pickupSys:name()))
+      OSDdesc[2] =  OSDdesc[2]:format(_(delivWorld:name()), _(delivSys:name()))
 
       pickedup = false
       droppedoff = false
@@ -122,7 +122,7 @@ function accept ()
       marker = misn.markerAdd( pickupSys, "low" )  -- pickup
       misn.osdCreate( OSDtitle, OSDdesc )  -- OSD
 
-      tk.msg( title[2], text[2]:format( pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )
+      tk.msg( title[2], text[2]:format( _(pickupWorld:name()), _(pickupSys:name()), _(delivWorld:name()), _(delivSys:name()) ) )
 
       landhook = hook.land ("land")
       flyhook = hook.takeoff ("takeoff")
@@ -178,7 +178,7 @@ function hail()
    tk.msg( title[6], text[6] )
 
 --   eventually I'll implement a bonus
---   tk.msg( title[7], text[7]:format( numstring(bonus) ) )
+--   tk.msg( title[7], text[7]:format( creditstring(bonus) ) )
 
    hook.timer("1", "closehail")
 end
@@ -186,7 +186,7 @@ end
 function closehail()
    bonus = 0
    player.pay( payment )
-   tk.msg( title[8], text[8]:format( numstring(payment) ) )
+   tk.msg( title[8], text[8]:format( creditstring(payment) ) )
    logan:setVisplayer(false)
    logan:setHilight(false)
    logan:setInvincible(false) 

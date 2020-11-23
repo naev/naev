@@ -137,7 +137,7 @@ function create()
         abort()
     end
 
-    tk.msg(title[1], text[1]:format(player.name(), seirplanet:name(), seirsys:name()))
+    tk.msg(title[1], text[1]:format(player.name(), _(seirplanet:name()), _(seirsys:name())))
     firstmarker = misn.markerAdd(seirsys, "low")
     accept() -- The player automatically accepts this mission.
 end
@@ -145,7 +145,7 @@ end
 -- This is the initial phase of the mission, when it still only shows up in the mission list. No OSD, reward or markers yet.
 function accept()
     misn.setReward(_("Unknown"))
-    misn.setDesc(misn_desc1:format(seirsys:name(), seirplanet:name()))
+    misn.setDesc(misn_desc1:format(_(seirsys:name()), _(seirplanet:name())))
     misn.accept()
     misn.osdDestroy() -- This is here because setDesc initializes the OSD.
 
@@ -158,7 +158,7 @@ end
 function accept2()
     tick = {false, false, false, false, false}
     tick["__save"] = true
-    osd_msg[1] = osd_msg[0]:format(jorekplanet1:name(), joreksys1:name())
+    osd_msg[1] = osd_msg[0]:format(_(jorekplanet1:name()), _(joreksys1:name()))
     misn.osdCreate(osd_title, osd_msg)
     misn.setDesc(misn_desc2)
     misn.setReward(misn_reward)
@@ -177,7 +177,7 @@ function seiryuuBoard()
         tk.msg(title[2], text[3]:format(player.name()))
         shadow_addLog( log_text_intro:format( player.name() ) )
         tk.msg(title[2], text[4])
-        tk.msg(title[2], text[5]:format(player.name(), jorekplanet1:name(), joreksys1:name(), jorekplanet1:name()))
+        tk.msg(title[2], text[5]:format(player.name(), _(jorekplanet1:name()), _(joreksys1:name()), _(jorekplanet1:name())))
         accept2()
         misn.markerRm(firstmarker)
         stage = 2
@@ -477,8 +477,8 @@ end
 
 -- NPC hook
 function barman()
-    tk.msg(title[3], text[6]:format(player.name(), joreksys2:name(), jorekplanet2:name()))
-    osd_msg[1] = osd_msg[0]:format(jorekplanet2:name(), joreksys2:name())
+    tk.msg(title[3], text[6]:format(player.name(), _(joreksys2:name()), _(jorekplanet2:name())))
+    osd_msg[1] = osd_msg[0]:format(_(jorekplanet2:name()), _(joreksys2:name()))
     misn.osdCreate(osd_title, osd_msg)
     misn.markerMove(marker, joreksys2)
     misn.npcRm(barmanNPC)
@@ -492,7 +492,7 @@ function jorek()
     misn.npcRm(joreknpc)
     misn.cargoAdd("Jorek", 0)
 
-    osd2_msg[2] = osd2_msg[2]:format(seirsys:name())
+    osd2_msg[2] = osd2_msg[2]:format(_(seirsys:name()))
     misn.osdCreate(osd_title, osd2_msg)
 
     stage = 4

@@ -30,7 +30,6 @@ require "missions/empire/common.lua"
 
 bar_desc = _("You see an Empire Lieutenant who seems to be looking at you.")
 misn_title = _("Empire Recruitment")
-misn_reward = _("%s credits")
 misn_desc = _("Deliver some parcels for the Empire to %s in %s.")
 title = {}
 title[1] = _("Spaceport Bar")
@@ -86,12 +85,12 @@ function accept ()
    -- Mission details
    reward = 30000
    misn.setTitle(misn_title)
-   misn.setReward( string.format(misn_reward, numstring(reward)) )
-   misn.setDesc( string.format(misn_desc,dest:name(),sys:name()))
+   misn.setReward( creditstring(reward) )
+   misn.setDesc( string.format(misn_desc, _(dest:name()), _(sys:name())))
 
    -- Flavour text and mini-briefing
-   tk.msg( title[2], string.format( text[2], dest:name() ))
-   misn.osdCreate(title[2], {misn_desc:format(dest:name(),sys:name())})
+   tk.msg( title[2], string.format( text[2], _(dest:name()) ))
+   misn.osdCreate(title[2], {misn_desc:format(_(dest:name()), _(sys:name()))})
 
    -- Set up the goal
    parcels = misn.cargoAdd("Parcels", 0)
@@ -106,7 +105,7 @@ function land()
       if misn.cargoRm(parcels) then
          player.pay(reward)
          -- More flavour text
-         tk.msg(title[3], string.format( text[3], dest:name() ))
+         tk.msg(title[3], string.format( text[3], _(dest:name()) ))
          var.push("es_cargo", true)
          faction.modPlayerSingle("Empire",3);
          emp_addShippingLog( log_text )

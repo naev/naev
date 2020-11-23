@@ -1,18 +1,18 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Racing Skills 2">
-  <avail>
-   <priority>3</priority>
-   <cond>(player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht") and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Civilian"] ~= nil and system.cur():presences()["Civilian"] &gt; 0</cond>
-   <done>Racing Skills 1</done>
-   <chance>20</chance>
-   <location>Bar</location>
-  </avail>
-  <notes>
-   <tier>2</tier>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>3</priority>
+  <cond>(player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht") and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Civilian"] ~= nil and system.cur():presences()["Civilian"] &gt; 0</cond>
+  <done>Racing Skills 1</done>
+  <chance>20</chance>
+  <location>Bar</location>
+ </avail>
+ <notes>
+  <tier>2</tier>
+ </notes>
+</mission>
+--]]
 --[[
    --
    -- MISSION: Racing Skills 2
@@ -32,7 +32,7 @@ title[1] = _("Another race")
 text[1] = _([["Hey there, great to see you back! You want to have another race?"]])   
 
 title[5] = _("Choose difficulty")
-text[5] = _([["There are two races you can participate in: an easy one, which is like the first race we had, or a hard one, with smaller checkpoints and no afterburners allowed. The easy one has a prize of %s credits, and the hard one has a prize of %s credits. Which one do you want to do?"]])
+text[5] = _([["There are two races you can participate in: an easy one, which is like the first race we had, or a hard one, with smaller checkpoints and no afterburners allowed. The easy one has a prize of %s, and the hard one has a prize of %s. Which one do you want to do?"]])
 title[6] = _("Hard Mode")
 text[6] = _([["You want a challenge huh? Remember, no afterburners on your ship or you will not be allowed to race. Let's go have some fun!"]])
 
@@ -50,8 +50,8 @@ refusetitle = _("Refusal")
 refusetext = _([["I guess we'll need to find another pilot."]])
 
 wintitle = _("You Won!")
-wintext = _([[A man in a suit and tie takes you up onto a stage. A large name tag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your prize money of %s credits!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it.]])
-firstwintext = _([[A man in a suit and tie takes you up onto a stage. A large name tag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your trophy and prize money of %s credits!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]])
+wintext = _([[A man in a suit and tie takes you up onto a stage. A large name tag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your prize money of %s!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it.]])
+firstwintext = _([[A man in a suit and tie takes you up onto a stage. A large name tag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your trophy and prize money of %s!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]])
 
 ftitle[1] = _("Illegal ship!")
 ftext[1] = _([["You have switched to a ship that's not allowed in this race. Mission failed."]])
@@ -70,7 +70,6 @@ NPCname = _("A laid back person")
 NPCdesc = _("You see a laid back person, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot.")
 
 misndesc = _("You're participating in another race!")
-misnreward = _("%s credits")
 
 OSDtitle = _("Racing Skills 2")
 OSD = {}
@@ -112,10 +111,10 @@ end
 function accept ()
    if tk.yesno(title[1], text[1]) then
       misn.accept()
-      OSD[4] = string.format(OSD[4], curplanet:name())
+      OSD[4] = string.format(OSD[4], _(curplanet:name()))
       misn.setDesc(misndesc)
       misn.osdCreate(OSDtitle, OSD)
-      local s = text[5]:format(numstring(credits_easy), numstring(credits_hard))
+      local s = text[5]:format(creditstring(credits_easy), creditstring(credits_hard))
       choice, choicetext = tk.choice(title[5], s, choice1, choice2)
       if choice == 1 then
          credits = credits_easy
@@ -124,7 +123,7 @@ function accept ()
          credits = credits_hard
          tk.msg(title[6], text[6])
       end
-      misn.setReward(misnreward:format(numstring(credits)))
+      misn.setReward(creditstring(credits))
       hook.takeoff("takeoff")
       else
       tk.msg(refusetitle, refusetext)
@@ -138,7 +137,7 @@ function takeoff()
    end
    if choice ~= 1 then
       for k,v in ipairs(player.pilot():outfits()) do
-         if v:name() == "Generic Afterburner" or v:name() == "Hellburner" then
+         if v == outfit.get("Generic Afterburner") or v == outfit.get("Hellburner") then
             tk.msg(ftitle[4], ftext[4])
             misn.finish(false)
          end
@@ -291,7 +290,7 @@ function board(ship)
          misn.osdActive(i+1)
          target[4] = target[4] + 1
          if target[4] == 4 then
-            tk.msg(string.format(title[3], i), string.format(text[4], curplanet:name()))
+            tk.msg(string.format(title[3], i), string.format(text[4], _(curplanet:name())))
             else
             tk.msg(string.format(title[3], i), string.format(text[3], i+1))
          end
@@ -307,17 +306,17 @@ function jumpin()
 end
 
 function racerland(p)
-   player.msg( string.format(landmsg, p:name(),curplanet:name()))
+   player.msg( string.format(landmsg, p:name(), _(curplanet:name())))
 end
 
 function land()
    if target[4] == 4 then
       if racers[1]:exists() and racers[2]:exists() and racers[3]:exists() then
-         if player.numOutfit("Racing Trophy") > 0 then
-            tk.msg(wintitle, firstwintext:format(numstring(credits)))
+         if choice==2 and player.numOutfit("Racing Trophy") <= 0 then
+            tk.msg(wintitle, firstwintext:format(creditstring(credits)))
             player.addOutfit("Racing Trophy")
          else
-            tk.msg(wintitle, wintext:format(numstring(credits)))
+            tk.msg(wintitle, wintext:format(creditstring(credits)))
          end
          player.pay(credits)
          misn.finish(true)
@@ -325,7 +324,7 @@ function land()
          tk.msg(ftitle[3], ftext[3])
          misn.finish(false)
       end
-      else
+   else
       tk.msg(ftitle[2], ftext[2])
       misn.finish(false)
    end

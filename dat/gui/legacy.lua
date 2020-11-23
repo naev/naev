@@ -149,11 +149,11 @@ end
 function update_cargo ()
    cargol = pp:cargoList()
    misc_cargo = ""
-   for _,v in ipairs(cargol) do
+   for k,v in ipairs(cargol) do
       if v.q == 0 then
          misc_cargo = misc_cargo .. v.name
       else
-         misc_cargo = misc_cargo .. string.format( "%d"  .. "t %s", v.q, v.name )
+         misc_cargo = misc_cargo .. string.format( "%d"  .. "t %s", v.q, _(v.name) )
       end
       if v.m then
          misc_cargo = misc_cargo .. "*"
@@ -200,36 +200,36 @@ function render_nav ()
    if nav_pnt ~= nil or nav_hyp ~= nil then
       local y = nav_y - 3 - deffont_h
       local str
-      gfx.print( nil, "Landing", nav_x, y, col_console, nav_w, true )
+      gfx.print( nil, _("Landing"), nav_x, y, col_console, nav_w, true )
       y = y - 5 - smallfont_h
       if nav_pnt ~= nil then
          str = nav_pnt:name()
          col = col_white
       else
-         str = "Off"
+         str = _("Off")
          col = col_gray
       end
       gfx.print( true, str, nav_x, y, col, nav_w, true )
       y = nav_y - 33 - deffont_h
-      gfx.print( nil, "Hyperspace", nav_x, y, col_console, nav_w, true )
+      gfx.print( nil, _("Hyperspace"), nav_x, y, col_console, nav_w, true )
       y = y - 5 - smallfont_h
       if nav_hyp ~= nil then
          if nav_hyp:known() then
             str = nav_hyp:name()
          else
-            str = "Unknown"
+            str = _("Unknown")
          end
          col = col_white
       else
-         str = "Off"
+         str = _("Off")
          col = col_gray
       end
       gfx.print( true, str, nav_x, y, col, nav_w, true )
    else
       local y = nav_y - 20 - deffont_h
-      gfx.print( nil, "Navigation", nav_x, y, col_console, nav_w, true )
+      gfx.print( nil, _("Navigation"), nav_x, y, col_console, nav_w, true )
       y = y - 5 - smallfont_h
-      gfx.print( true, "Off", nav_x, y, col_gray, nav_w, true )
+      gfx.print( true, _("Off"), nav_x, y, col_gray, nav_w, true )
    end
 end
 
@@ -254,7 +254,7 @@ end
 function render_weapon ()
    col = col_console
    ws_name, ws = pp:weapset()
-   gfx.print( nil, ws_name, weapon_x, weapon_y-25, col, weapon_w, true )
+   gfx.print( nil, _(ws_name), weapon_x, weapon_y-25, col, weapon_w, true )
    --[[
    local sec, amm, rdy = pp:secondary()
    if sec ~= nil then
@@ -265,14 +265,14 @@ function render_weapon ()
          col = col_gray
       end
       if amm ~= nil then
-         gfx.print( nil, sec, weapon_x, weapon_y-17, col, weapon_w, true )
+         gfx.print( nil, _(sec), weapon_x, weapon_y-17, col, weapon_w, true )
          gfx.print( true, string.format("%d", amm), weapon_x, weapon_y-32, col_gray, weapon_w, true )
       else
-         gfx.print( nil, sec, weapon_x, weapon_y-25, col, weapon_w, true )
+         gfx.print( nil, _(sec), weapon_x, weapon_y-25, col, weapon_w, true )
       end
    else
-      gfx.print( nil, "Secondary", weapon_x, weapon_y-17, col_console, weapon_w, true )
-      gfx.print( true, "None", weapon_x, weapon_y-32, col_gray, weapon_w, true )
+      gfx.print( nil, _("Secondary"), weapon_x, weapon_y-17, col_console, weapon_w, true )
+      gfx.print( true, _("None"), weapon_x, weapon_y-32, col_gray, weapon_w, true )
    end
    --]]
 end
@@ -307,7 +307,7 @@ function render_target ()
    -- Render target graphic
    local x, y
    if not scan then
-      str = "Unknown"
+      str = _("Unknown")
       w = gfx.printDim( true, str )
       x = target_x + (target_w - w)/2
       y = target_y - (target_h - smallfont_h)/2
@@ -321,7 +321,7 @@ function render_target ()
    -- Display name
    local name
    if not scan then
-      name = "Unknown"
+      name = _("Unknown")
    else
       name = ptarget:name()
    end
@@ -339,11 +339,11 @@ function render_target ()
    if scan then
       local str
       if dis then
-         str = "Disabled"
+         str = _("Disabled")
       elseif shi < 5 then
-         str = string.format( "Armour: %.0f%%", arm )
+         str = string.format( _("Armour: %.0f%%"), arm )
       else
-         str = string.format( "Shield: %.0f%%", shi )
+         str = string.format( _("Shield: %.0f%%"), shi )
       end
       gfx.print( true, str, target_x, target_y-105, col_white, target_w )
    end
@@ -354,20 +354,20 @@ function render_target ()
    end
 end
 function render_targetnone ()
-   gfx.print( false, "No Target", target_x, target_y-(target_h-deffont_h)/2-deffont_h, col_gray, target_w, true )
+   gfx.print( false, _("No Target"), target_x, target_y-(target_h-deffont_h)/2-deffont_h, col_gray, target_w, true )
 end
 
 
 -- Renders the miscellaneous stuff
 function render_misc ()
-   _, creds = player.credits(2)
+   creds_num, creds = player.credits(2)
    h = 5 + smallfont_h
    y = misc_y - h
-   gfx.print( true, "Creds:", misc_x, y, col_console, misc_w, false )
+   gfx.print( true, _("Creds:"), misc_x, y, col_console, misc_w, false )
    w = gfx.printDim( true, creds )
    gfx.print( true, creds, misc_x+misc_w-w-3, y, col_white, misc_w, false )
    y = y - h
-   gfx.print( true, "Cargo Free:", misc_x, y, col_console, misc_w, false )
+   gfx.print( true, _("Cargo Free:"), misc_x, y, col_console, misc_w, false )
    local free = string.format("%d" .. "t", pp:cargoFree())
    w = gfx.printDim( true, free )
    gfx.print( true, free, misc_x+misc_w-w-3, y, col_white, misc_w, false )
@@ -384,11 +384,11 @@ function render_warnings ()
    local nebu_dens, nebu_vol = sys:nebula()
    local y = screen_h - 50 - deffont_h
    if pp:lockon() > 0 then
-      gfx.print( nil, "LOCK-ON DETECTED", 0, y, col_warn, screen_w, true )
+      gfx.print( nil, _("LOCK-ON DETECTED"), 0, y, col_warn, screen_w, true )
       y = y - deffont_h - 10
    end
    if nebu_vol > 0 then
-      gfx.print( nil, "VOLATILE ENVIRONMENT DETECTED", 0, y, col_warn, screen_w, true )
+      gfx.print( nil, _("VOLATILE ENVIRONMENT DETECTED"), 0, y, col_warn, screen_w, true )
    end
 end
 

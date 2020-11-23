@@ -348,7 +348,7 @@ function __choose_land_target ()
 
       -- Bail out if no valid planet could be found.
       else
-         warn(string.format("Pilot '%s' tried to land with no landable assets!",
+         warn(string.format(_("Pilot '%s' tried to land with no landable assets!"),
                ai.pilot():name()))
          ai.poptask()
          return
@@ -779,7 +779,7 @@ function __refuelstop ()
 
    -- See if finished refueling
    if not ai.pilot():flags().refueling then
-      ai.pilot():comm(target, "Finished fuel transfer.")
+      ai.pilot():comm(target, _("Finished fuel transfer."))
       ai.poptask()
 
       -- Untarget

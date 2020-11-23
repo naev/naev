@@ -47,7 +47,6 @@ typedef struct intro_img_t_ {
  */
 static char **intro_lines = NULL;  /**< Introduction text lines. */
 static int intro_nlines = 0;       /**< Number of introduction text lines. */
-static int intro_length = 0;       /**< Length of the text. */
 static glFont intro_font;          /**< Introduction font. */
 
 static int has_side_gfx = 0;       /* Determines how wide to make the text. */
@@ -71,36 +70,57 @@ static int intro_load( const char *text )
 {
    size_t intro_size;
    char *intro_buf;
+   const char *cur_line;
+   char *rest_of_file;
    char img_src[128];     /* path to image to be displayed alongside text. */
    int length;
-   int i, p, n;
+   int i, n;
    int mem;
 
    has_side_gfx = 0;
 
    /* Load text. */
    intro_buf = ndata_read( text, &intro_size );
-   intro_length = intro_size; /* Length approximation. */
 
    /* Create intro font. */
    gl_fontInit( &intro_font, FONT_MONOSPACE_PATH, conf.font_size_intro );
 
-   /* Load lines. */
-   p = 0;
+   /* Accumulate text into intro_lines. At each step, keep track of:
+    * * cur_line: text to go from the current input line, after word-wrapping.
+    * * rest_of_file: pointer to just after the current input line (or NULL if we're on the last one).
+    * * n: output line #
+    * * i: current line length (strlen(cur_line), or less if we must word-wrap).
+    * We can start in a state with no word-wrap spill-over and "rest_of_file" pointing to the full input.
+    */
    n = 0;
    mem = 0;
-   while ((uint32_t)p < intro_size) {
+   cur_line = "";
+   rest_of_file = intro_buf;
+   while (1) {
+      i = strlen(cur_line);
+      /* Advance a line in the source file if necesary. */
+      if (i == 0) {
+         if (rest_of_file == NULL)
+            break;
+         cur_line = rest_of_file;
+         rest_of_file = strchr(cur_line, '\n');
+	 /* If there's a next line, split the string and point rest_of_file to it. */
+         if (rest_of_file != NULL)
+            *rest_of_file++ = '\0';
+	 /* Translate if plain text (not empty, not a directive). */
+	 if (cur_line[0] != '\0' && cur_line[0] != '[')
+            cur_line = _(cur_line);
+         i = strlen(cur_line);
+      }
       /* Copy the line. */
       if (n+1 > mem) {
          mem += 128;
          intro_lines = realloc( intro_lines, sizeof(char*) * mem );
       }
 
-      if ( intro_buf[p] == '[' /* Don't do sscanf for every line! */
-           && sscanf( &intro_buf[p], "[fadein %s", img_src ) == 1 ) {
+      if ( cur_line[0] == '[' /* Don't do sscanf for every line! */
+           && sscanf( &cur_line[0], "[fadein %s", img_src ) == 1 ) {
          /* an image to appear next to text. */
-         /* Get the length. */
-         for (i = 0; intro_buf[p + i] != '\n' && intro_buf[p + i] != '\0'; ++i);
 
          length = strlen( img_src );
          intro_lines[n] = malloc( length + 2 );
@@ -111,10 +131,9 @@ static int intro_load( const char *text )
          /* Mark that there are graphics. */
          has_side_gfx = 1;
 
-      } else if ( intro_buf[p] == '[' /* Don't do strncmp for every line! */
-           && strncmp( &intro_buf[p], "[fadeout]", 9 ) == 0 ) {
+      } else if ( cur_line[0] == '[' /* Don't do strncmp for every line! */
+           && strncmp( &cur_line[0], "[fadeout]", 9 ) == 0 ) {
          /* fade out the image next to the text. */
-         for (i = 0; intro_buf[p + i] != '\n' && intro_buf[p + i] != '\0'; ++i);
 
          intro_lines[n] = malloc( 2 );
          intro_lines[n][0] = 'o';
@@ -122,15 +141,15 @@ static int intro_load( const char *text )
 
       } else { /* plain old text. */
          /* Get the length. */
-         i = gl_printWidthForText( &intro_font, &intro_buf[p], SCREEN_W - 500. );
+         i = gl_printWidthForText( &intro_font, cur_line, SCREEN_W - 500. );
 
          intro_lines[n] = malloc( i + 2 );
          intro_lines[n][0] = 't';
-         strncpy( &intro_lines[n][1], &intro_buf[p], i );
+         strncpy( &intro_lines[n][1], cur_line, i );
          intro_lines[n][i+1] = '\0';
       }
 
-      p += i + 1; /* Move pointer. */
+      cur_line += i; /* Move pointer. */
       n++; /* New line. */
    }
 

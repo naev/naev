@@ -52,7 +52,6 @@ require "missions/empire/common.lua"
 
 bar_desc = _("Dimitri should be around here, but you can't see him. You should probably look for him.")
 misn_title = _("Operation Black Trinity")
-misn_reward = _("%s credits")
 misn_desc = {}
 misn_desc[1] = _("Arrest the ESS Trinity in %s")
 misn_desc[2] = _("Return to base at %s in %s")
@@ -138,16 +137,16 @@ function accept ()
 
    -- Mission details
    misn.setTitle(misn_title)
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
-   misn.setDesc( string.format(misn_desc[1], misn_target_sys:name() ))
-   osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
-   osd_msg[3] = osd_msg[3]:format(misn_base:name())
+   misn.setReward( creditstring( credits ) )
+   misn.setDesc( string.format(misn_desc[1], _(misn_target_sys:name()) ))
+   osd_msg[1] = osd_msg[1]:format(_(misn_target_sys:name()))
+   osd_msg[3] = osd_msg[3]:format(_(misn_base:name()))
    misn.osdCreate(misn_title, osd_msg)
    
-   tk.msg( title[2], string.format(text[3], misn_base:name() ) )
+   tk.msg( title[2], string.format(text[3], _(misn_base:name()) ) )
    tk.msg( title[3], string.format(text[4], "Eiroik"))
    emp_addCollectiveLog( log_text_intro )
-   tk.msg( title[4], string.format(text[5], misn_target_sys:name(), misn_target_sys:name() ) )
+   tk.msg( title[4], string.format(text[5], _(misn_target_sys:name()), _(misn_target_sys:name()) ) )
 
    -- Escorts
    escorts = {}
@@ -215,7 +214,7 @@ function enter ( from_sys )
       misn_stage = 3
       player.msg( talk[6] )
       misn.setDesc( string.format(misn_desc[2],
-            misn_base:name(), misn_base_sys:name() ))
+            _(misn_base:name()), _(misn_base_sys:name()) ))
       misn.markerMove( misn_marker, misn_base_sys )
    end
 end
@@ -394,7 +393,7 @@ function trinity_kill () -- Got killed
    misn_stage = 2
    misn.osdActive(3)
    trinity_alive = false
-   misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
+   misn.setDesc( string.format(misn_desc[2], _(misn_base:name()), _(misn_base_sys:name()) ))
    misn.markerMove( misn_marker, misn_base_sys )
 end
 
@@ -404,6 +403,6 @@ function trinity_jump () -- Got away
    misn_stage = 2
    misn.osdActive(3)
    trinity_alive = true
-   misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
+   misn.setDesc( string.format(misn_desc[2], _(misn_base:name()), _(misn_base_sys:name()) ))
    misn.markerMove( misn_marker, misn_base_sys )
 end

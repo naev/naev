@@ -21,11 +21,12 @@
 #include "nstd.h"
 #include "input.h"
 #include "land.h"
+#include "player.h"
 #include "nstring.h"
 
 
 /* Naev methods. */
-static int naev_lang( lua_State *L );
+static int naev_Lversion( lua_State *L );
 static int naev_ticks( lua_State *L );
 static int naev_keyGet( lua_State *L );
 static int naev_keyEnable( lua_State *L );
@@ -34,7 +35,7 @@ static int naev_keyDisableAll( lua_State *L );
 static int naev_eventStart( lua_State *L );
 static int naev_missionStart( lua_State *L );
 static const luaL_Reg naev_methods[] = {
-   { "lang", naev_lang },
+   { "version", naev_Lversion },
    { "ticks", naev_ticks },
    { "keyGet", naev_keyGet },
    { "keyEnable", naev_keyEnable },
@@ -70,19 +71,24 @@ int nlua_loadNaev( nlua_env env )
  *
  * @luamod naev
  */
+
 /**
- * @brief Gets the language Naev is currently using.
+ * @brief Gets the version of Naev and the save game.
  *
- * @usage if naev.lang() == "en" then -- Language is english
+ * @usage game_version, save_version = naev.version()
  *
- *    @luatreturn string Two character identifier of the language.
- * @luafunc lang()
+ *    @luatreturn game_version The version of the game.
+ *    @luatreturn save_version Version of current loaded save or nil if not loaded.
+ * @luafunc version()
  */
-static int naev_lang( lua_State *L )
+static int naev_Lversion( lua_State *L )
 {
-   /** @todo multilanguage stuff */
-   lua_pushstring(L,"en");
-   return 1;
+   lua_pushstring( L, naev_version(0) );
+   if (player.loaded_version==NULL)
+      lua_pushnil( L );
+   else
+      lua_pushstring( L, player.loaded_version );
+   return 2;
 }
 
 /**
@@ -101,11 +107,11 @@ static int naev_ticks( lua_State *L )
 
 
 /**
- * @brief Gets the keybinding value by name.
+ * @brief Gets a human-readable name for the key bound to a function.
  *
  * @usage bindname = naev.keyGet( "accel" )
  *
- *    @luatparam string keyname Name of the keybinding to get value of.
+ *    @luatparam string keyname Name of the keybinding to get value of. Valid values are listed in src/input.c: keybind_info.
  * @luafunc keyGet( keyname )
  */
 static int naev_keyGet( lua_State *L )

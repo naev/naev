@@ -1,25 +1,25 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Anxious Merchant">
-  <avail>
-   <priority>3</priority>
-   <chance>1</chance>
-   <location>Bar</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Traders Guild</faction>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <tier>2</tier>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>3</priority>
+  <chance>1</chance>
+  <location>Bar</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Traders Guild</faction>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <tier>2</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    Anxious Merchant
@@ -42,7 +42,6 @@ bar_desc = _("You see a merchant at the bar in a clear state of anxiety.")
 
 --- Missions details
 misn_title = _("Anxious Merchant")
-misn_reward = _("%s credits")
 
 -- OSD
 osd_title = _("Help the Merchant")
@@ -71,9 +70,9 @@ misn_desc = _("You decided to help a fraught merchant by delivering some goods t
 
 text[1] = _([[As you sit down the merchant looks up at you with a panicked expression, "Ahh! What do you want? Can't you see I've enough on my plate as it is?" You tell the merchant to calm down and offer a drink. "Jeez, that's nice of you... ha, maybe I can cut a break today!"
     You grab a couple of drinks and hand one to the slightly more relaxed looking merchant as they start to talk. "So, I work for the Traders Guild. I transport stuff for them, they pay me. Only problem is I kinda strained my engines running from pirates on the way to the pick-up and now I'm realising that my engines just don't have the speed to get me back to beat the deadline. And to top it all off, I'm late on my bills as is; I can't afford new engines now! it's like I'm in the Sol nebula without a shield generator."
-    You attempt to reassure the merchant by telling them that surely the company will cut some slack. "Like hell they will! I've already been scolded by management for this exact same thing before! If I don't get these %s tonnes of %s to %s... I really need this job, you know? I don't know what to do...." The merchant pauses. "Unless... say, you wouldn't be able to help me out here, would you? I'd just need you to take the cargo to %s in the %s system. Could you? I'll give you the payment for the mission if you do it; it means a lot!"]])
+    You attempt to reassure the merchant by telling them that surely the company will cut some slack. "Like hell they will! I've already been scolded by management for this exact same thing before! If I don't get this shipment of %s of %s to %s... I really need this job, you know? I don't know what to do...." The merchant pauses. "Unless... say, you wouldn't be able to help me out here, would you? I'd just need you to take the cargo to %s in the %s system. Could you? I'll give you the payment for the mission if you do it; it means a lot!"]])
 
-text[2] = _([[The merchant sighs in relief. "Thank you so much for this. Just bring the cargo to the cargo guy at %s. They should pay you %s credits when you get there. Don't be late, OK?"]])
+text[2] = _([[The merchant sighs in relief. "Thank you so much for this. Just bring the cargo to the cargo guy at %s. They should pay you %s when you get there. Don't be late, OK?"]])
 
 text[3] = _([[As you touch down at the spaceport you see the Traders Guild depot surrounded by a hustle and bustle. The cargo inspector looks at you with surprise and you explain to him what happened as the cargo is unloaded from your ship. "Wow, thanks for the help! You definitely saved us a ton of grief. Here's your payment. Maybe I can buy you a drink some time!" You laugh and part ways.]])
 
@@ -111,7 +110,7 @@ function create()
 end
 
 function accept()
-   if not tk.yesno(title[1], text[1]:format(numstring(cargo_size), cargo, dest_planet:name(), dest_planet:name(), dest_sys:name())) then
+   if not tk.yesno(title[1], text[1]:format(tonnestring(cargo_size), _(cargo), _(dest_planet:name()), _(dest_planet:name()), _(dest_sys:name()))) then
       misn.finish()
    end
    if player.pilot():cargoFree() < cargo_size then
@@ -122,7 +121,7 @@ function accept()
    local player_best = cargoGetTransit(time_limit, num_jumps, travel_dist)
    player.pilot():cargoRm(cargo, cargo_size)
    if time_limit < player_best then
-      if not tk.yesno(slow_title, slow_text:format((time_limit - time.get()):str(), (player_best - time.get()):str(), dest_planet:name())) then
+      if not tk.yesno(slow_title, slow_text:format((time_limit - time.get()):str(), (player_best - time.get()):str(), _(dest_planet:name()))) then
          misn.finish()
       end
    end
@@ -131,16 +130,16 @@ function accept()
 
    -- mission details
    misn.setTitle(misn_title)
-   misn.setReward(misn_reward:format(numstring(payment)))
-   misn.setDesc(misn_desc:format(dest_planet:name()))
+   misn.setReward(creditstring(payment))
+   misn.setDesc(misn_desc:format(_(dest_planet:name())))
    marker = misn.markerAdd(dest_sys, "low") -- destination
    cargo_ID = misn.cargoAdd(cargo, cargo_size) -- adds cargo
 
    -- OSD
-   osd_msg = {osd_desc[1]:format(dest_planet:name(), dest_sys:name(), (time_limit - time.get()):str())}
+   osd_msg = {osd_desc[1]:format(_(dest_planet:name()), _(dest_sys:name()), (time_limit - time.get()):str())}
    osd = misn.osdCreate(osd_title, osd_msg)
 
-   tk.msg(title[2], text[2]:format(dest_planet:name(), numstring(payment)))
+   tk.msg(title[2], text[2]:format(_(dest_planet:name()), creditstring(payment)))
 
    intime = true
    faction = faction.get("Traders Guild")
@@ -168,9 +167,9 @@ end
 
 function tick()
     if time_limit >= time.get() then -- still in time
-        osd_msg = {osd_desc[1]:format(dest_planet:name(), dest_sys:name(), (time_limit - time.get()):str())}
+        osd_msg = {osd_desc[1]:format(_(dest_planet:name()), _(dest_sys:name()), (time_limit - time.get()):str())}
     else -- missed deadline
-        osd_msg = {osd_desc[2]:format(dest_planet:name(), dest_sys:name())}
+        osd_msg = {osd_desc[2]:format(_(dest_planet:name()), _(dest_sys:name()))}
         intime = false
         hook.rm(date_hook)
     end

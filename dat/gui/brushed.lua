@@ -365,7 +365,7 @@ function update_nav()
          services = { "bar", "missions", "outfits", "shipyard", "commodity" }
 
          -- "Spaceport" is nicer than "Land"
-         table.insert( planet.services, "Spaceport" )
+         table.insert( planet.services, N_("Spaceport") )
          for k,v in ipairs(services) do
             table.insert( planet.services, pntflags[v] )
          end
@@ -868,12 +868,12 @@ function render( dt )
    if nav_pnt ~= nil then
       renderField( nav_pnt:name(), fields_x + 4, fields_y, fields_w, col_text, icon_pnt_target )
    else
-      renderField( "None", fields_x + 4, fields_y, fields_w, col_unkn, icon_pnt_target )
+      renderField( _("None"), fields_x + 4, fields_y, fields_w, col_unkn, icon_pnt_target )
    end
    if autonav_hyp ~= nil then
       local name = autonav_hyp:name()
       if not autonav_hyp:known() then
-         name = "Unknown"
+         name = _("Unknown")
       end
       renderField( name .. " (" .. tostring(system.cur():jumpDist(autonav_hyp, true, true)) .. ")", fields_x + fields_w + 12, fields_y, fields_w, col_text, icon_nav_target )
    else
@@ -946,7 +946,7 @@ function render( dt )
       if pntflags.land then
          local services_h = 70
          for k,v in ipairs(planet.services) do
-            gfx.print(true, v, ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, col_text )
+            gfx.print(true, _(v), ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, col_text )
             services_h = services_h + 16
          end
       else

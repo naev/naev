@@ -28,7 +28,7 @@ ftitle = {}
 ftext = {}
 
 title[1] = _("Looking for a 4th")
-text[1] = _([["Hiya there! We're having a race around this system system soon and need a 4th person to participate. You have to bring a Yacht class ship, and there's a prize of %s credits if you win. Interested?"]])
+text[1] = _([["Hiya there! We're having a race around this system system soon and need a 4th person to participate. You have to bring a Yacht class ship, and there's a prize of %s if you win. Interested?"]])
 
 title[2] = _("Awesome")
 text[2] = _([["That's great! Here's how it works: We will all be in a Yacht class ship. Once we take off from %s, there will be a countdown, and then we will proceed to the various checkpoints in order, boarding them before going to the next checkpoint. After the last checkpoint has been boarded, head back to %s and land. Let's have some fun!"]])
@@ -58,7 +58,6 @@ NPCname = _("A laid back person")
 NPCdesc = _("You see a laid back person, who appears to be one of the locals, looking around the bar.")
 
 misndesc = _("You're participating in a race!")
-misnreward = _("%s credits")
 
 OSDtitle = _("Racing Skills 1")
 OSD = {}
@@ -96,13 +95,13 @@ end
 
 
 function accept ()
-   if tk.yesno(title[1], text[1]:format(numstring(credits))) then
+   if tk.yesno(title[1], text[1]:format(creditstring(credits))) then
       misn.accept()
-      OSD[4] = string.format(OSD[4], curplanet:name())
+      OSD[4] = string.format(OSD[4], _(curplanet:name()))
       misn.setDesc(misndesc)
-      misn.setReward(misnreward:format(numstring(credits)))
+      misn.setReward(creditstring(credits))
       misn.osdCreate(OSDtitle, OSD)
-      tk.msg(title[2], string.format(text[2], curplanet:name(), curplanet:name()))
+      tk.msg(title[2], string.format(text[2], _(curplanet:name()), _(curplanet:name())))
       hook.takeoff("takeoff")
    else
       tk.msg(refusetitle, refusetext)
@@ -257,7 +256,7 @@ function board(ship)
          misn.osdActive(i+1)
          target[4] = target[4] + 1
          if target[4] == 4 then
-            tk.msg(string.format(title[3], i), string.format(text[4], curplanet:name()))
+            tk.msg(string.format(title[3], i), string.format(text[4], _(curplanet:name())))
          else
             tk.msg(string.format(title[3], i), string.format(text[3], i+1))
          end
@@ -275,7 +274,7 @@ end
 
 
 function racerland(p)
-   player.msg( string.format(landmsg, p:name(),curplanet:name()))
+   player.msg( string.format(landmsg, p:name(), _(curplanet:name())))
 end
 
 

@@ -1,15 +1,15 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="FLF Catastrophe">
-  <trigger>enter</trigger>
-  <chance>70</chance>
-  <cond>system.cur():name() == "Sigur" and faction.get("FLF"):playerStanding() &gt;= 98 and player.misnDone("The FLF Split")</cond>
-  <notes>
-   <done_misn name="The FLF Split"/>
-   <campaign>Save the Frontier</campaign>
-  </notes>
- </event>
- --]]
+ <trigger>enter</trigger>
+ <chance>70</chance>
+ <cond>system.cur() == system.get("Sigur") and faction.get("FLF"):playerStanding() &gt;= 98 and player.misnDone("The FLF Split")</cond>
+ <notes>
+  <done_misn name="The FLF Split"/>
+  <campaign>Save the Frontier</campaign>
+ </notes>
+</event>
+--]]
 --[[
 
    The FLF Catastrophe
@@ -118,7 +118,7 @@ function enter_bar ()
       var.push( "music_off", true )
       tk.msg( title[1], text[1] )
       tk.msg( title[1], text[2]:format( player.name() ) )
-      tk.msg( title[1], text[3]:format( emp_srcsys:name(), player.name() ) )
+      tk.msg( title[1], text[3]:format( _(emp_srcsys:name()), player.name() ) )
       tk.msg( title[1], text[4] )
       tk.msg( title[1], text[5] )
       var.pop( "music_off" )
