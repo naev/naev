@@ -117,8 +117,8 @@ function accept ()
       misn.setDesc( misn_desc )
       hook.land( "landed" )
 
-      tk.msg( title[4], string.format(text[3], misn_base:name()) )
-      misn.osdCreate(misn_title, {osd_msg[1]:format(misn_base:name())})
+      tk.msg( title[4], string.format(text[3], _(misn_base:name())) )
+      misn.osdCreate(misn_title, {osd_msg[1]:format(_(misn_base:name()))})
       cargoID = misn.cargoAdd( "Civilians", 0 )
    end
 
@@ -144,12 +144,12 @@ function landed()
       misn.finish(true)
    -- If we're in misn_base_sys but not on misn_base then...
    elseif system.cur() == misn_base_sys then
-      tk.msg( title[4], string.format(text[6], planet.cur():name(), misn_base:name()) )
-      misn.osdCreate(misn_title, {osd_msg[2]:format(misn_base:name())})
+      tk.msg( title[4], string.format(text[6], _(planet.cur():name()), _(misn_base:name())) )
+      misn.osdCreate(misn_title, {osd_msg[2]:format(_(misn_base:name()))})
    -- If we're in another system then make Reynir bleed out his ears ;)
    else
-      tk.msg( title[4], string.format(text[4], misn_base:name()) )
-      misn.osdCreate(misn_title, {osd_msg[2]:format(misn_base:name())})
+      tk.msg( title[4], string.format(text[4], _(misn_base:name())) )
+      misn.osdCreate(misn_title, {osd_msg[2]:format(_(misn_base:name()))})
       misn_bleeding = true
    end
 end

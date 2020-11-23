@@ -83,7 +83,7 @@ function accept ()
    targsys2 = system.get("C-59")
 
    -- Mission details
-   misn_desc[2] = misn_desc[2]:format(misn_base:name(), misn_base_sys:name())
+   misn_desc[2] = misn_desc[2]:format(_(misn_base:name()), _(misn_base_sys:name()))
    misn.setTitle(misn_title)
    misn.setReward( creditstring( credits ) )
    misn.setDesc(misn_desc[1])

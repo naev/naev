@@ -18,6 +18,7 @@
 #include "space.h"
 #include "input.h"
 #include "array.h"
+#include "conf.h"
 
 
 /**
@@ -220,7 +221,7 @@ void ovr_render( double dt )
    res   = ovr_res;
 
    /* First render the background overlay. */
-   glColour c = { .r=0., .g=0., .b=0., .a=0.1 };
+   glColour c = { .r=0., .g=0., .b=0., .a= conf.map_overlay_opacity };
    gl_renderRect( (double)map_overlay.boundLeft, (double)map_overlay.boundBottom, w, h, &c );
 
    /* Render planets. */

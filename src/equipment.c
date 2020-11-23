@@ -63,6 +63,7 @@ static double equipment_dir      = 0.; /**< Equipment dir. */
 static unsigned int equipment_lastick = 0; /**< Last tick. */
 static unsigned int equipment_wid   = 0; /**< Global wid. */
 static iar_data_t *iar_data = NULL; /**< Stored image array positions. */
+static Outfit ***iar_outfits = NULL; /**< Outfits associated with the image array cells. */
 
 /* Slot textures */
 static glTexture *equip_ico_yes = NULL; /* Green circle */
@@ -118,25 +119,19 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
 {
    (void)str;
    Outfit* o;
-   int i;
+   int i, active;
    int outfit_n;
    PilotOutfitSlot* slots;
    Pilot *p;
-   /* Name of the outfit the user right-clicked on. */
-   const char* clicked_outfit = toolkit_getImageArray( wid, EQUIPMENT_OUTFITS );
 
-   /* Did the user click on background? */
-   if (clicked_outfit == NULL)
+   active = window_tabWinGetActive( wid, EQUIPMENT_OUTFIT_TAB );
+   i = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
+
+   /* Did the user click on background or placeholder cell? */
+   if (i < 0 || iar_outfits[active] == NULL)
       return;
 
-   /* Can't do anything with None. */
-   if (strcmp(clicked_outfit,_("None"))==0)
-      return;
-
-   /* Try to get the outfit. */
-   o = outfit_get(clicked_outfit);
-   if (o == NULL)
-      return;
+   o = iar_outfits[active][i];
 
    /* Figure out which slot this stuff fits into */
    switch (o->slot.type) {
@@ -242,11 +237,19 @@ void equipment_open( unsigned int wid )
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
          &ew, &eh, &cw, &ch, &bw, &bh );
 
-   /* Initialize stored positions. */
+   /* Prepare the outfit array. */
    if (iar_data == NULL)
       iar_data = calloc( OUTFIT_TABS, sizeof(iar_data_t) );
    else
       memset( iar_data, 0, sizeof(iar_data_t) * OUTFIT_TABS );
+   if (iar_outfits == NULL)
+      iar_outfits = calloc( OUTFIT_TABS, sizeof(Outfit**) );
+   else {
+      for (int i=0; i<OUTFIT_TABS; i++)
+         if (iar_outfits[i] != NULL)
+            free( iar_outfits[i] );
+      memset( iar_outfits, 0, sizeof(Outfit**) * OUTFIT_TABS );
+   }
 
    /* Safe defaults. */
    equipment_lastick    = SDL_GetTicks();
@@ -779,14 +782,14 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       return;
    pos = nsnprintf( alt, sizeof(alt),
          "%s",
-         o->name );
+         _(o->name) );
    if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
       pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aRUnique\a0") );
    if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
       pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aRSlot %s\a0"),
             _( sp_display( o->slot.spid ) ) );
    if (pos < (int)sizeof(alt))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
+      pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", _(o->desc_short) );
    if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
       snprintf( &alt[pos], sizeof(alt)-pos,
             ngettext("\n%.0f Tonne", "\n%.0f Tonnes", mass),
@@ -1384,19 +1387,6 @@ static void equipment_genShipList( unsigned int wid )
 }
 
 
-static int equipment_outfitFilterWeapon( const Outfit *o )
-{ return ((o->slot.type == OUTFIT_SLOT_WEAPON) && !sp_required( o->slot.spid )); }
-
-static int equipment_outfitFilterUtility( const Outfit *o )
-{ return ((o->slot.type == OUTFIT_SLOT_UTILITY) && !sp_required( o->slot.spid )); }
-
-static int equipment_outfitFilterStructure( const Outfit *o )
-{ return ((o->slot.type == OUTFIT_SLOT_STRUCTURE) && !sp_required( o->slot.spid )); }
-
-static int equipment_outfitFilterCore( const Outfit *o )
-{ return sp_required( o->slot.spid ); }
-
-
 /**
  * @brief Generates the outfit list.
  *    @param wid Window to generate list on.
@@ -1408,18 +1398,17 @@ static void equipment_genOutfitList( unsigned int wid )
    char *filtertext;
    int (*tabfilters[])( const Outfit *o ) = {
       NULL,
-      equipment_outfitFilterWeapon,
-      equipment_outfitFilterUtility,
-      equipment_outfitFilterStructure,
-      equipment_outfitFilterCore
+      outfit_filterWeapon,
+      outfit_filterUtility,
+      outfit_filterStructure,
+      outfit_filterCore
    };
    const char *tabnames[] = {
-      _("All"), "\ab W ", "\ag U ", "\aR S ", _("\aRCore")
+      _("All"), _(OUTFIT_LABEL_WEAPON), _(OUTFIT_LABEL_UTILITY), _(OUTFIT_LABEL_STRUCTURE), _(OUTFIT_LABEL_CORE)
    };
 
    int noutfits, active;
    ImageArrayCell *coutfits;
-   Outfit **outfits;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, NULL, NULL, &ow, &oh,
@@ -1461,7 +1450,9 @@ static void equipment_genOutfitList( unsigned int wid )
 
    /* Allocate space. */
    noutfits = MAX( 1, player_numOutfits() ); /* This is the most we'll need, probably less due to filtering. */
-   outfits  = calloc( noutfits, sizeof(Outfit*) );
+   if (iar_outfits[active] != NULL)
+      free( iar_outfits[active] );
+   iar_outfits[active] = calloc( noutfits, sizeof(Outfit*) );
 
    filtertext = NULL;
    if (widget_exists(equipment_wid, EQUIPMENT_FILTER)) {
@@ -1471,9 +1462,8 @@ static void equipment_genOutfitList( unsigned int wid )
    }
 
    /* Get the outfits. */
-   noutfits = player_getOutfitsFiltered( outfits, tabfilters[active], filtertext );
-   coutfits = outfits_imageArrayCells( outfits, &noutfits );
-   free(outfits);
+   noutfits = player_getOutfitsFiltered( iar_outfits[active], tabfilters[active], filtertext );
+   coutfits = outfits_imageArrayCells( iar_outfits[active], &noutfits );
 
    /* Create the actual image array. */
    window_addImageArray( wid, x + 4, y + 3, ow - 6, oh - 37,
@@ -1628,16 +1618,17 @@ void equipment_updateOutfits( unsigned int wid, char* str )
 {
    (void) wid;
    (void) str;
-   const char *oname;
+   int i, active;
 
    /* Must have outfit. */
-   oname = toolkit_getImageArray( wid, EQUIPMENT_OUTFITS );
-   if (strcmp(oname,_("None"))==0) {
+   active = window_tabWinGetActive( wid, EQUIPMENT_OUTFIT_TAB );
+   i = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
+   if (i < 0 || iar_outfits[active] == NULL) {
       eq_wgt.outfit = NULL;
       return;
    }
 
-   eq_wgt.outfit = outfit_get( oname );
+   eq_wgt.outfit = iar_outfits[active][i];
 }
 
 /**
@@ -1906,7 +1897,7 @@ static void equipment_renameShip( unsigned int wid, char *str )
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    ship = player_getShip(shipname);
    newname = dialogue_input( _("Ship Name"), 1, 60,
-         _("Please enter a new name for your %s:"), ship->ship->name );
+         _("Please enter a new name for your %s:"), _(ship->ship->name) );
 
    /* Player cancelled the dialogue. */
    if (newname == NULL)
@@ -1961,6 +1952,13 @@ void equipment_cleanup (void)
    if (iar_data != NULL) {
       free(iar_data);
       iar_data = NULL;
+   }
+   if (iar_outfits != NULL) {
+      for (int i=0; i<OUTFIT_TABS; i++)
+         if (iar_outfits[i] != NULL)
+            free( iar_outfits[i] );
+      free(iar_outfits);
+      iar_outfits = NULL;
    }
 
    /* Free icons. */

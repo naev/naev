@@ -274,7 +274,7 @@ jobs:
         run: |
           chmod -R +x dist/staging/naev-steam-deployment
           cp -r dist/staging/naev-steam-deployment/* ${{ github.workspace }}
-          ./SteamDeploy.sh -n -v "dist/staging/naev-version" -t "dist/staging" -o "dist/out"
+          ./SteamDeploy.sh -n -v "${{ github.workspace }}/dist/staging/naev-version" -t "${{ github.workspace }}/dist/staging" -o "${{ github.workspace }}/dist/out"
         env:
           STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
           STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}

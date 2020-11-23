@@ -71,11 +71,11 @@ function create()
 
    -- We’re redefining the cargo
    local cargoes = {
-      "Unmarked Boxes",
-      "Weapons",
-      "Drugs",
-      "Exotic Animals",
-      "Radioactive Materials",
+      N_("Unmarked Boxes"),
+      N_("Weapons"),
+      N_("Drugs"),
+      N_("Exotic Animals"),
+      N_("Radioactive Materials"),
    }
    cargo = cargoes[rnd.rnd(1, #cargoes)]
 
@@ -100,12 +100,12 @@ function create()
    
    misn.setTitle( string.format(
       _("PIRACY: Illegal Cargo transport (%s of %s)"), tonnestring(amount),
-      cargo ) )
+      _(cargo) ) )
    misn.markerAdd(destsys, "computer")
    misn.setDesc(
-      misn_desc:format( destplanet:name(), destsys:name() ) .. "\n\n"
+      misn_desc:format( _(destplanet:name()), _(destsys:name()) ) .. "\n\n"
       .. misn_details:format(
-         cargo, tonnestring(amount), numjumps, traveldist,
+         _(cargo), tonnestring(amount), numjumps, traveldist,
          (timelimit - time.get()):str() ) )
    misn.setReward( creditstring(reward) )
 
@@ -118,7 +118,7 @@ function accept()
       if not tk.yesno( _("Too slow"), string.format(
             _("This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline. Accept the mission anyway?"),
             (timelimit - time.get()):str(), (playerbest - time.get()):str(),
-            destplanet:name() ) ) then
+            _(destplanet:name()) ) ) then
          misn.finish()
       end
    end
@@ -135,10 +135,10 @@ function accept()
    carg_id = misn.cargoAdd( cargo, amount )
    tk.msg( _("Mission Accepted"), string.format(
       _("%s of %s are loaded onto your ship."), tonnestring(amount),
-      cargo ) )
+      _(cargo) ) )
    local osd_msg = {}
    osd_msg[1] = osd_msg1:format(
-      destplanet:name(), destsys:name(), timelimit:str(),
+      _(destplanet:name()), _(destsys:name()), timelimit:str(),
       ( timelimit - time.get() ):str() )
    misn.osdCreate(osd_title, osd_msg)
    hook.land( "land" ) -- only hook after accepting
@@ -149,7 +149,7 @@ end
 function land()
    if planet.cur() == destplanet then
          tk.msg( _("Successful Delivery"), string.format(
-            _("The containers of %s are unloaded at the docks."), cargo ) )
+            _("The containers of %s are unloaded at the docks."), _(cargo) ) )
       player.pay(reward)
       n = var.peek("ps_misn")
       if n ~= nil then
@@ -170,7 +170,7 @@ function tick()
       -- Case still in time
       local osd_msg = {}
       osd_msg[1] = osd_msg1:format(
-         destplanet:name(), destsys:name(), timelimit:str(),
+         _(destplanet:name()), _(destsys:name()), timelimit:str(),
          ( timelimit - time.get() ):str() )
       misn.osdCreate(osd_title, osd_msg)
    elseif timelimit <= time.get() then

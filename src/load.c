@@ -317,7 +317,7 @@ void load_loadGameMenu (void)
          ns       = &nslist[i];
          len      = strlen(ns->path);
          if (strcmp(&ns->path[len-10],".ns.backup")==0) {
-            nsnprintf( buf, sizeof(buf), "%s \ar(Backup)\a0", ns->name );
+            nsnprintf( buf, sizeof(buf), _("%s \ar(Backup)\a0"), ns->name );
             names[i] = strdup(buf);
          }
          else

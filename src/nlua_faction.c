@@ -218,9 +218,10 @@ static int factionL_eq( lua_State *L )
 }
 
 /**
- * @brief Gets the faction's name.
+ * @brief Gets the faction's "real" (internal) name.
  *
  * @usage name = f:name()
+ *        human_name = _(f:name()) -- see also f:longname()
  *
  *    @luatparam Faction f The faction to get the name of.
  *    @luatreturn string The name of the faction.
@@ -235,11 +236,11 @@ static int factionL_name( lua_State *L )
 }
 
 /**
- * @brief Gets the faction's long name.
+ * @brief Gets the faction's long name (formal, human-readable).
  *
  * @usage longname = f:longname()
  *    @luatparam Faction f Faction to get long name of.
- *    @luatreturn string The long name of the faction.
+ *    @luatreturn string The long name of the faction (in player's native language).
  * @luafunc longname( f )
  */
 static int factionL_longname( lua_State *L )

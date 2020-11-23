@@ -1,24 +1,24 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Lure out the FLF">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <chance>10</chance>
-   <location>Bar</location>
-   <cond>var.peek("flfbase_intro") == 1</cond>
-   <faction>Dvaered</faction>
-  </avail>
-  <notes>
-   <done_misn name="Take the Dvaered crew home"/>
-   <done_misn name="Deal with the FLF agent">If you deliver Gregar to the Dvaered</done_misn>
-   <provides name="The Dvaered know where Sindbad is"/>
-   <campaign>Doom the FLF</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <chance>10</chance>
+  <location>Bar</location>
+  <cond>var.peek("flfbase_intro") == 1</cond>
+  <faction>Dvaered</faction>
+ </avail>
+ <notes>
+  <done_misn name="Take the Dvaered crew home"/>
+  <done_misn name="Deal with the FLF agent">If you deliver Gregar to the Dvaered</done_misn>
+  <provides name="The Dvaered know where Sindbad is"/>
+  <campaign>Doom the FLF</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 -- This is the second mission in the anti-FLF Dvaered campaign. The player is part of a Dvaered plot to smoke out the FLF base.
 -- stack variable flfbase_intro:
@@ -149,7 +149,7 @@ function jumpout()
 end
 
 function enter()
-    if system.cur():name() == destsysname and not logsfound then
+    if system.cur() == system.get(destsysname) and not logsfound then
         pilot.clear()
         pilot.toggleSpawn(false)
         misn.osdActive(2)

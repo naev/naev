@@ -102,11 +102,11 @@ static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
       xmlr_float(node, "armour", temp->adam);
       xmlr_float(node, "knockback", temp->knock);
 
-      WARN("Unknown node of type '%s' in damage node '%s'.", node->name, temp->name);
+      WARN(_("Unknown node of type '%s' in damage node '%s'."), node->name, temp->name);
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
-   if (o) WARN("DTYPE '%s' invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
+   if (o) WARN(_("DTYPE '%s' invalid '"s"' element"), temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->sdam<0.,"shield");
    MELEMENT(temp->adam<0.,"armour");
    MELEMENT(temp->knock<0.,"knockback");
@@ -142,7 +142,7 @@ int dtype_get( char* name )
    for (i=0; i<array_size(dtype_types); i++)
       if (strcmp(dtype_types[i].name, name)==0)
          return i;
-   WARN("Damage type '%s' not found in stack.", name);
+   WARN(_("Damage type '%s' not found in stack."), name);
    return -1;
 }
 
@@ -153,7 +153,7 @@ int dtype_get( char* name )
 static DTYPE* dtype_validType( int type )
 {
    if ((type < 0) || (type >= array_size(dtype_types))) {
-      WARN("Damage type '%d' is invalid.", type);
+      WARN(_("Damage type '%d' is invalid."), type);
       return NULL;
    }
    return &dtype_types[ type ];

@@ -174,18 +174,25 @@ int space_sysSave( xmlTextWriterPtr writer );
 int space_sysLoad( xmlNodePtr parent );
 
 
+/**
+ * @brief Gets the (English) name for a service code.
+ *
+ * @param service One of the \p PLANET_SERVICE_* enum values.
+ * @return English name, reversible via \p planet_getService()
+ * and presentable via \p _().
+ */
 char* planet_getServiceName( int service )
 {
    switch (service) {
-      case PLANET_SERVICE_LAND:        return "Land";
-      case PLANET_SERVICE_INHABITED:   return "Inhabited";
-      case PLANET_SERVICE_REFUEL:      return "Refuel";
-      case PLANET_SERVICE_BAR:         return "Bar";
-      case PLANET_SERVICE_MISSIONS:    return "Missions";
-      case PLANET_SERVICE_COMMODITY:   return "Commodity";
-      case PLANET_SERVICE_OUTFITS:     return "Outfits";
-      case PLANET_SERVICE_SHIPYARD:    return "Shipyard";
-      case PLANET_SERVICE_BLACKMARKET: return "Blackmarket";
+      case PLANET_SERVICE_LAND:        return N_("Land");
+      case PLANET_SERVICE_INHABITED:   return N_("Inhabited");
+      case PLANET_SERVICE_REFUEL:      return N_("Refuel");
+      case PLANET_SERVICE_BAR:         return N_("Bar");
+      case PLANET_SERVICE_MISSIONS:    return N_("Missions");
+      case PLANET_SERVICE_COMMODITY:   return N_("Commodity");
+      case PLANET_SERVICE_OUTFITS:     return N_("Outfits");
+      case PLANET_SERVICE_SHIPYARD:    return N_("Shipyard");
+      case PLANET_SERVICE_BLACKMARKET: return N_("Blackmarket");
    }
    return NULL;
 }
@@ -475,7 +482,7 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int 
  *    @param landable Whether the planet must let the player land normally.
  *    @param services Services the planet must have.
  *    @param filter Filter function for including planets.
- *    @return The name of a random planet.
+ *    @return The name (internal/English) of a random planet.
  */
 char* space_getRndPlanet( int landable, unsigned int services,
       int (*filter)(Planet *p))
@@ -803,7 +810,7 @@ const char *system_existsCase( const char* sysname )
 
 
 /**
- * @brief Does a fuzzy case matching.
+ * @brief Does a fuzzy case matching. Searches translated names but returns internal names.
  */
 char **system_searchFuzzyCase( const char* sysname, int *n )
 {
@@ -816,7 +823,7 @@ char **system_searchFuzzyCase( const char* sysname, int *n )
    /* Do fuzzy search. */
    len = 0;
    for (i=0; i<systems_nstack; i++) {
-      if (nstrcasestr( systems_stack[i].name, sysname ) != NULL) {
+      if (nstrcasestr( _(systems_stack[i].name), sysname ) != NULL) {
          names[len] = systems_stack[i].name;
          len++;
       }
@@ -1028,7 +1035,7 @@ const char* planet_existsCase( const char* planetname )
 
 
 /**
- * @brief Does a fuzzy case matching.
+ * @brief Does a fuzzy case matching. Searches translated names but returns internal names.
  */
 char **planet_searchFuzzyCase( const char* planetname, int *n )
 {
@@ -1041,7 +1048,7 @@ char **planet_searchFuzzyCase( const char* planetname, int *n )
    /* Do fuzzy search. */
    len = 0;
    for (i=0; i<planet_nstack; i++) {
-      if (nstrcasestr( planet_stack[i].name, planetname ) != NULL) {
+      if (nstrcasestr( _(planet_stack[i].name), planetname ) != NULL) {
          names[len] = planet_stack[i].name;
          len++;
       }
@@ -1333,7 +1340,7 @@ void space_update( const double dt )
             planet_setKnown( cur_system->planets[i] );
             player_message( _("You discovered \a%c%s\a\0."),
                   planet_getColourChar( cur_system->planets[i] ),
-                  cur_system->planets[i]->name );
+                  _(cur_system->planets[i]->name) );
             hparam[0].type  = HOOK_PARAM_STRING;
             hparam[0].u.str = "asset";
             hparam[1].type  = HOOK_PARAM_ASSET;
@@ -1485,9 +1492,9 @@ void space_init( const char* sysname )
       cur_system = &systems_stack[i];
 
       nt = ntime_pretty(0, 2);
-      player_message(_("\aREntering System %s on %s."), sysname, nt);
+      player_message(_("\aREntering System %s on %s."), _(sysname), nt);
       if (cur_system->nebu_volatility > 0.) {
-         player_message(_("\arWARNING - Volatile nebula detected in %s! Taking damage!"), sysname);
+         player_message(_("\arWARNING - Volatile nebula detected in %s! Taking damage!"), _(sysname));
       }
       free(nt);
 
@@ -1904,7 +1911,7 @@ void planet_updateLand( Planet *p )
       if (lua_isstring(naevL,-2))
          p->bribe_msg = strdup( lua_tostring(naevL,-2) );
       else {
-         WARN( "%s: %s (%s) -> return parameter 4 is not a string!", LANDING_DATA_PATH, str, p->name );
+         WARN( _("%s: %s (%s) -> return parameter 4 is not a string!"), LANDING_DATA_PATH, str, p->name );
          p->bribe_msg = strdup( _("Invalid bribe message") );
       }
       /* We also need the bribe ACK message. */
@@ -3454,7 +3461,7 @@ static int asteroidTypes_load (void)
                } while (xml_nextNode(child));
 
                if (namdef == 0 || qttdef == 0)
-                  WARN("Asteroid type's commodity lacks name or quantity.");
+                  WARN(_("Asteroid type's commodity lacks name or quantity."));
 
                j++;
             }
@@ -4284,7 +4291,7 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
    /* If it's empty, something's wrong. */
    if (q_isEmpty(q)) {
       /* Means system isn't connected. */
-      /*WARN("q is empty after getting adjacencies of %s.", sys->name);*/
+      /*WARN(_("q is empty after getting adjacencies of %s."), sys->name);*/
       q_destroy(q);
       q_destroy(qn);
       goto sys_cleanup;

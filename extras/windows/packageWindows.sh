@@ -16,9 +16,6 @@ BUILDPATH="$(pwd)/build"
 NIGHTLY="false"
 BUILDOUTPUT="$(pwd)/dist"
 
-# MinGW DLL search paths
-export MINGW_BUNDLEDLLS_SEARCH_PATH=("${SOURCEROOT}/subprojects:${BUILDPATH}/subprojects:/mingw64/bin:/usr/x86_64-w64-mingw32/bin")
-
 while getopts dns:b:o: OPTION "$@"; do
     case $OPTION in
     d)
@@ -48,6 +45,18 @@ echo "SOURCE ROOT:  $SOURCEROOT"
 echo "BUILD ROOT:   $BUILDPATH"
 echo "NIGHTLY:      $NIGHTLY"
 echo "BUILD OUTPUT: $BUILDOUTPUT"
+
+# MinGW DLL search paths
+MINGW_BUNDLEDLLS_SEARCH_PATH="/mingw64/bin:/usr/x86_64-w64-mingw32/bin"
+# Include all subdirs (mingw-bundledlls can't search recursively) of in-tree and out-of-tree subproject dirs.
+# Normally, Meson builds everything out-of-tree, but some subprojects have their own build systems which do as they please.
+for MESON_SUBPROJ_DIR in "${SOURCEROOT}/subprojects" "${BUILDPATH}/subprojects"; do
+    echo "Searching ${MESON_SUBPROJ_DIR}"
+    if [ -d "${MESON_SUBPROJ_DIR}" ]; then
+        MINGW_BUNDLEDLLS_SEARCH_PATH+=$(find "${MESON_SUBPROJ_DIR}" -type d -printf ":%p")
+    fi
+done
+export MINGW_BUNDLEDLLS_SEARCH_PATH
 
 # Rudementary way of detecting which environment we are packaging.. 
 # It works (tm), and it should remain working until msys changes their naming scheme

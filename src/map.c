@@ -247,7 +247,7 @@ void map_open (void)
 
    /* System Name */
    window_addText( wid, -90 + 80, y, 160, 20, 1, "txtSysname",
-         &gl_defFont, NULL, cur->name );
+         &gl_defFont, NULL, _(cur->name) );
    y -= 10;
 
    /* Faction image */
@@ -452,7 +452,7 @@ static void map_update( unsigned int wid )
        * Right Text
        */
       if (sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED))
-         window_modifyText( wid, "txtSysname", sys->name );
+         window_modifyText( wid, "txtSysname", _(sys->name) );
       else
          window_modifyText( wid, "txtSysname", _("Unknown") );;
 
@@ -494,7 +494,7 @@ static void map_update( unsigned int wid )
    }
 
    /* System is known */
-   window_modifyText( wid, "txtSysname", sys->name );
+   window_modifyText( wid, "txtSysname", _(sys->name) );
 
    f         = -1;
    for (i=0; i<sys->nplanets; i++) {
@@ -574,10 +574,10 @@ static void map_update( unsigned int wid )
 
       if (!hasPlanets)
          p += nsnprintf( &buf[p], PATH_MAX-p, "\a%c%s%s\an",
-               t, sym, sys->planets[i]->name );
+               t, sym, _(sys->planets[i]->name) );
       else
          p += nsnprintf( &buf[p], PATH_MAX-p, ",\n\a%c%s%s\an",
-               t, sym, sys->planets[i]->name );
+               t, sym, _(sys->planets[i]->name) );
       hasPlanets = 1;
       if (p > PATH_MAX)
          break;
@@ -606,7 +606,7 @@ static void map_update( unsigned int wid )
    /*nsnprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
    for (i=PLANET_SERVICE_MISSIONS; i<=PLANET_SERVICE_SHIPYARD; i<<=1)
       if (services & i)
-         p += nsnprintf( &buf[p], PATH_MAX-p, "%s\n", planet_getServiceName(i) );
+         p += nsnprintf( &buf[p], PATH_MAX-p, "%s\n", _(planet_getServiceName(i)) );
    if (buf[0] == '\0')
       p += nsnprintf( &buf[p], PATH_MAX-p, _("None"));
    (void)p;
@@ -1193,7 +1193,7 @@ void map_renderNames( double bx, double by, double x, double y,
       if ((!editor && !sys_isKnown(sys)) || (map_zoom <= 0.5 ))
          continue;
 
-      textw = gl_printWidthRaw( &gl_smallFont, sys->name );
+      textw = gl_printWidthRaw( &gl_smallFont, _(sys->name) );
       tx = x + (sys->pos.x+11.) * map_zoom;
       ty = y + (sys->pos.y-5.) * map_zoom;
 
@@ -1203,7 +1203,7 @@ void map_renderNames( double bx, double by, double x, double y,
 
       gl_print( &gl_smallFont,
             tx, ty,
-            &cWhite, sys->name );
+            &cWhite, _(sys->name) );
 
    }
 
@@ -1544,7 +1544,8 @@ static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Comm
  *    @param wid Window to which the text widget belongs.
  *    @param name Name of the text widget.
  *    @param sys System whose faction presence we're reporting.
- *    @param omniscient Whether to dispaly complete information (editor view)
+ *    @param omniscient Whether to dispaly complete information (editor view).
+ *                      (As currently interpreted, this also means un-translated, even if the user isn't using English.)
  */
 void map_updateFactionPresence( const unsigned int wid, const char *name, const StarSystem *sys, int omniscient )
 {
@@ -2512,7 +2513,7 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
 /**
  * @brief Centers the map on a planet.
  *
- *    @param sys System to center the map on.
+ *    @param sys System to center the map on (internal name).
  *    @return 0 on success.
  */
 int map_center( const char *sys )
@@ -2580,7 +2581,7 @@ int map_load (void)
 
       }
       else
-         WARN("'%s' has unknown node '%s'.", MAP_DECORATOR_DATA_PATH, node->name);
+         WARN(_("'%s' has unknown node '%s'."), MAP_DECORATOR_DATA_PATH, node->name);
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);

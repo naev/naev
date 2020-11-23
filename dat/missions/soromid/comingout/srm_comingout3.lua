@@ -106,16 +106,16 @@ function accept ()
    started = true
 
    if tk.yesno( title[1], txt ) then
-      tk.msg( title[1], text[2]:format( misplanet:name(), missys:name() ) )
+      tk.msg( title[1], text[2]:format( _(misplanet:name()), _(missys:name()) ) )
 
       misn.accept()
 
       misn.setTitle( misn_title )
-      misn.setDesc( misn_desc:format( misplanet:name() ) )
+      misn.setDesc( misn_desc:format( _(misplanet:name()) ) )
       misn.setReward( creditstring( credits ) )
       marker = misn.markerAdd( missys, "low" )
 
-      osd_desc[1] = osd_desc[1]:format( misplanet:name(), missys:name() )
+      osd_desc[1] = osd_desc[1]:format( _(misplanet:name()), _(missys:name()) )
       misn.osdCreate( misn_title, osd_desc )
 
       startplanet = planet.cur()
@@ -247,7 +247,7 @@ end
 
 function chelsea_jump( p, jump_point )
    if jump_point:dest() == getNextSystem( system.cur(), missys ) then
-      player.msg( cheljump_msg:format( jump_point:dest():name() ) )
+      player.msg( cheljump_msg:format( _(jump_point:dest():name()) ) )
       chelsea_jumped = true
    else
       fail( chelflee_msg )
@@ -257,7 +257,7 @@ end
 
 function chelsea_land( p, planet )
    if planet == misplanet then
-      player.msg( chelland_msg:format( planet:name() ) )
+      player.msg( chelland_msg:format( _(planet:name()) ) )
       chelsea_jumped = true
    else
       fail( chelflee_msg )

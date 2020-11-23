@@ -97,12 +97,12 @@ function create()
    reward = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
 
    misn.setTitle( _("Shipment to %s in %s (%s)"):format(
-         destplanet:name(), destsys:name(), tonnestring(amount) ) )
+         _(destplanet:name()), _(destsys:name()), tonnestring(amount) ) )
    misn.markerAdd(destsys, "computer")
    misn.setDesc(
-      misn_desc[tier]:format( destplanet:name(), destsys:name() ) .. "\n\n"
+      misn_desc[tier]:format( _(destplanet:name()), _(destsys:name()) ) .. "\n\n"
       .. misn_details:format(
-         cargo, tonnestring(amount), numjumps, traveldist, piracyrisk ) )
+         _(cargo), tonnestring(amount), numjumps, traveldist, piracyrisk ) )
    misn.setReward( creditstring(reward) )
 
 end
@@ -117,8 +117,8 @@ function accept()
       misn.finish()
    end
    misn.accept()
-   misn.cargoAdd(cargo, amount) -- TODO: change to jettisonable cargo once custom commodities are in. For piracy purposes.
-   misn.osdCreate(osd_title, {osd_msg:format(destplanet:name(), destsys:name())})
+   misn.cargoAdd(_(cargo), amount) -- TODO: change to jettisonable cargo once custom commodities are in. For piracy purposes.
+   misn.osdCreate(osd_title, {osd_msg:format(_(destplanet:name()), _(destsys:name()))})
    hook.land("land")
 end
 
@@ -126,7 +126,7 @@ end
 function land()
    if planet.cur() == destplanet then
       -- Semi-random message.
-      tk.msg( cargo_land_title, cargo_land[rnd.rnd(1, #cargo_land)]:format(cargo) )
+      tk.msg( cargo_land_title, cargo_land[rnd.rnd(1, #cargo_land)]:format(_(cargo)) )
       player.pay(reward)
       misn.finish(true)
    end

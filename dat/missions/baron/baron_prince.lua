@@ -160,14 +160,14 @@ function accept()
    
    reward = 200000 -- The price of each artifact will always be 15% of this, so at most the player will be paid 85% and at least 55%.
    
-   if tk.yesno(title[1], text[1]:format(baronsys:name())) then
+   if tk.yesno(title[1], text[1]:format(_(baronsys:name()))) then
       misn.accept()
-      tk.msg(title[2], text[2]:format(baronsys:name()))
+      tk.msg(title[2], text[2]:format(_(baronsys:name())))
 
       misn.setTitle(misn_title)
       misn.setReward(misn_reward)
-      misn.setDesc(misn_desc[1]:format(baronsys:name()))
-      misn.osdCreate(misn_title, { osd_msg[1]:format(baronsys:name()),
+      misn.setDesc(misn_desc[1]:format(_(baronsys:name())))
+      misn.osdCreate(misn_title, { osd_msg[1]:format(_(baronsys:name())),
                            })
       marker = misn.markerAdd(baronsys, "low")
       
@@ -181,9 +181,9 @@ end
 function board()
    if stage == 1 then
       tk.msg(title[4], text[4]:format(mangle(player.name()), mangle(player.name())))
-      tk.msg(title[4], text[5]:format(mangle(player.name()), flintplanet:name(), flintsys:name(), mangle(player.name())))
+      tk.msg(title[4], text[5]:format(mangle(player.name()), _(flintplanet:name()), _(flintsys:name()), mangle(player.name())))
       tk.msg(title[5], text[6])
-      misn.osdCreate(misn_title, { osd_msg[1]:format(baronsys:name()),
+      misn.osdCreate(misn_title, { osd_msg[1]:format(_(baronsys:name())),
                             osd_msg[2]
                            })
       misn.setDesc(misn_desc[2])
@@ -248,7 +248,7 @@ function flintley()
       if rnd.rnd(1, 3 - artifactsfound) == 1 then
          bingo = true
       else
-         tk.msg(title[9], text[12]:format(artifactplanetA:name()))
+         tk.msg(title[9], text[12]:format(_(artifactplanetA:name())))
          artifactsfound = artifactsfound + 1
       end
       misn.cargoRm(artifactA)
@@ -258,7 +258,7 @@ function flintley()
       if rnd.rnd(1, 3 - artifactsfound) == 1 then
          bingo = true
       else
-         tk.msg(title[9], text[13]:format(artifactplanetB:name(), player.name()))
+         tk.msg(title[9], text[13]:format(_(artifactplanetB:name()), player.name()))
          artifactsfound = artifactsfound + 1
       end
       misn.cargoRm(artifactB)
@@ -268,7 +268,7 @@ function flintley()
       if rnd.rnd(1, 3 - artifactsfound) == 1 then
          bingo = true
       else
-         tk.msg(title[9], text[14]:format(artifactplanetC:name(), player.name()))
+         tk.msg(title[9], text[14]:format(_(artifactplanetC:name()), player.name()))
          artifactsfound = artifactsfound + 1
       end
       misn.cargoRm(artifactC)
@@ -277,7 +277,7 @@ function flintley()
 
    if bingo then
       tk.msg(title[10], text[15]:format(player.name()))
-      misn.osdCreate(misn_title, { osd_msg[1]:format(baronsys:name()),
+      misn.osdCreate(misn_title, { osd_msg[1]:format(_(baronsys:name())),
                             osd_msg[2],
                             osd_msg[3]
                            })
