@@ -76,17 +76,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-16.04
-            shell: bash
-            config: linux.ini
-            pkg-config-path: "[]"
-
-          - os: ubuntu-18.04
-            shell: bash
-            config: linux.ini
-            pkg-config-path: "[]"
-
-          - os: ubuntu-20.04
+          - os: ubuntu-latest
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
@@ -126,18 +116,7 @@ jobs:
           libsdl2-image-dev \
           libsdl2-mixer-dev \
           libvorbis-dev \
-          libxml2-dev
-
-    - name: Install Ninja-Build (xenial-backports)
-      if: ${{ matrix.os == 'ubuntu-16.04' && runner.os == 'Linux'}}
-      run: |
-        sudo apt-get -t xenial-backports install \
-          ninja-build
-
-    - name: Install Ninja-Build
-      if: ${{ matrix.os != 'ubuntu-16.04' && runner.os == 'Linux'}}
-      run: |
-        sudo apt-get install \
+          libxml2-dev \
           ninja-build
 
     - name: Install MinGW Packages
@@ -192,17 +171,9 @@ jobs:
         path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
         if-no-files-found: ignore
 
-    - name: Package
+    - name: Test Meson Install
       run: |
         sh $MESON install -C build
-        tar -cf naev-meson-${{ matrix.os }}-${{ github.sha }}.tar dist
-
-    - name: Upload Meson Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: naev-${{ matrix.os }}-meson-${{ github.sha }}
-        path: "${{ github.workspace }}/*.tar"
-        if-no-files-found: error
 
   "Autotools_Compile_Naev":
     needs: "Package_Source"
@@ -211,17 +182,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-16.04
-            shell: bash
-            config: linux.ini
-            pkg-config-path: "[]"
-
-          - os: ubuntu-18.04
-            shell: bash
-            config: linux.ini
-            pkg-config-path: "[]"
-
-          - os: ubuntu-20.04
+          - os: ubuntu-latest
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
@@ -295,19 +256,10 @@ jobs:
         make -j"$(nproc)"
       working-directory: source
 
-    - name: Autotools Package
+    - name: Test Autotools Install
       run: |
-        pushd source
         make install
-        popd
-        tar -cf naev-${{ matrix.os }}-autotools-${{ github.sha }}.tar dist
-
-    - name: Upload Autotools Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: naev-${{ matrix.os }}-autotools-${{ github.sha }}
-        path: "${{ github.workspace }}/*.tar"
-        if-no-files-found: error
+      working-directory: source
 
   "AppImage_Compile_Naev":
     needs: "Package_Source"
@@ -316,12 +268,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-16.04
-            buildtype: meson
-          - os: ubuntu-16.04
-            buildtype: autotools
+          - buildtype: meson
+          - buildtype: autotools
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-16.04
 
     steps:
     - name: Update APT Cache
@@ -410,6 +360,7 @@ jobs:
     - name: Update APT Cache
       run: |
         sudo apt-get update
+        
     - name: Install Additional Build Dependencies
       run: |
         sudo apt-get install \
@@ -417,6 +368,7 @@ jobs:
           graphviz \
           doxygen \
           ninja-build
+          
     - name: Get Source
       uses: actions/download-artifact@v2
       with:
@@ -432,22 +384,14 @@ jobs:
         sh $MESON setup build source \
             -Dexecutable=disabled
              
-    - name: Package
+    - name: Meson Test Install
       run: |
         sh $MESON install -C build
-        tar -cf ${{ github.workspace }}/naev-docs-${{ github.sha }}.tar ${{ env.DESTDIR }}/usr/local/doc/naev
         
-    - name: Upload Lua Documentation
+    - name: Trigger API Site Update
       if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
       run: |
         curl -X POST https://api.github.com/repos/naev/naev.github.io/dispatches \
         -H 'Accept: application/vnd.github.everest-preview+json' \
         -u ${{ secrets.WEBSITE_ACCESS_TOKEN }} \
         --data '{"event_type": "api", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: naev-docs-${{ github.sha }}
-        path: ${{ github.workspace }}/*.tar
-        if-no-files-found: error
