@@ -270,6 +270,7 @@ jobs:
 
     - name: Autotools Setup
       run: |
+        ./autogen.sh
         ./configure
       working-directory: source
 
