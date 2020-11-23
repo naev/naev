@@ -151,7 +151,7 @@ jobs:
       run: |
         sh $MESON setup build source \
             --native-file='source/utils/build/${{ matrix.config }}' \
-            --buildtype=debug \
+            --buildtype=release \
             -Db_lto=true \
             -Dauto_features=enabled \
             -Ddocs_c=disabled \
@@ -337,7 +337,7 @@ jobs:
       if: ${{ matrix.buildtype == 'meson' }}
       id: mesonCompile
       run: |
-        ./source/utils/buildAppImage.sh -c -m -s "source" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
+        ./source/utils/buildAppImage.sh -m -s "source" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
 
     - name: Upload Compile Log
       uses: actions/upload-artifact@v2
