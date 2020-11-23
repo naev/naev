@@ -17,7 +17,7 @@ instr_title = _("Instructions to escort")
 instr_text = _("What do you want the escort to do?")
 in_free = _("Attack nearby enemies")
 in_follow = _("Follow me")
-in_nevermind = _("Nevermind")
+in_nevermind = _("Never mind")
 
 lords = [ _("Lord Jim"),
           _("Lady Bitterfly"),

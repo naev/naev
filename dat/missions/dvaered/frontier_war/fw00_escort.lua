@@ -60,10 +60,10 @@ slow_title = _("Your ship is too slow")
 slow_text = _("Did you really expect to catch up with Major Tam with your current ship?")
 
 meet_title1 = _("Everything is right")
-meet_text1 = _([[After Tam boards the Goddard, you wait for about half a period until his ship undocks from the warlord's cruiser. You then recieve a message from him "Everything is right, we will now land on %s in order to refuel and rest for some time."]])
+meet_text1 = _([[After Tam boards the Goddard, you wait for about half a period until his ship undocks from the warlord's cruiser. You then receive a message from him "Everything is right, we will now land on %s in order to refuel and rest for some time."]])
 
 meet_title2 = _("They're after me!")
-meet_text2 = _([[Tam boards the Goddard. A few seconds later, he undocks in a hurry, while nearby fighters start to shoot at him. You recieve a message "That old fool tried to kill me! quick, we must head to %s! Let me jump first!"]])
+meet_text2 = _([[Tam boards the Goddard. A few seconds later, he undocks in a hurry, while nearby fighters start to shoot at him. You receive a message "That old fool tried to kill me! quick, we must head to %s! Let me jump first!"]])
 
 discuss_title1 = _("Major Tam is ready")
 discuss_text1 = _([[How do you do, citizen? Did you enjoy the trip so far? I'm ready for next stop. I'll follow you when you take off.]])
@@ -73,7 +73,7 @@ discuss_text2 = _([["Hello, citizen. Did you already recover from Lord Battleadd
 
 discuss_title3 = _("Major Tam before he was at the Headquarters")
 discuss_text3 = _([["You know I've not always worked at the Headquarters. I started as a pilot at the DHC base on Rhaana. Oh, sorry, DHC stays for Dvaered High Command. You know, there are two kinds of Dvaered soldiers: there are those who directly obey to DHC, like myself, and there are the freaks, as we call them, (or the warriors, as they call themselves) the soldiers who obey to local Warlords. 
-   "Warlord's forces can be requisitioned by DHC, but only to fight a menace to the integrity of the Dvaered Nation, so in practice, they are most of the time left to themselves, and make wars one against each other. You know, foreigners sometimes think that the inner wars between warlords are pointless (I've even heard the word "stupid" once), but actually, it's the key to Dvaered philosophy. Without those wars, the Dvaered Nation would no longer exist as we know it, and we would have had to rely on totalitarism, like the Empire, nostalgia of an idealized past, like the Frontier, oppressive technocracy like the Za'lek, or such...
+   "Warlord's forces can be requisitioned by DHC, but only to fight a menace to the integrity of the Dvaered Nation, so in practice, they are most of the time left to themselves, and make wars one against each other. You know, foreigners sometimes think that the inner wars between warlords are pointless (I've even heard the word "stupid" once), but actually, it's the key to Dvaered philosophy. Without those wars, the Dvaered Nation would no longer exist as we know it, and we would have had to rely on totalitarianism, like the Empire, nostalgia of an idealized past, like the Frontier, oppressive technocracy like the Za'lek, or such...
    "Hey, but am I deviating from our original subject? What was it already? Oh I don't remember. Anyway, citizen, if you want to take off, I'm ready."]])
 
 ready_title = _("Major Tam is ready")
@@ -91,8 +91,8 @@ ambush_text = _([[As your ship starts to recover its normal speed after jumping 
 ambush_broadcast = _("You wanted to meet Lord Jim? What about you meet your doom instead?")
 
 saved_title1 = _("Hostiles eliminated")
-saved_text1 = _([[As the remaining attackers run away, you wonder why this Dvaered patrol helped you, contrary to what Tam had explained before. Then you recieve the messages exchanged between Major Tam and the leader of the Dvaered squadron: "This time, I really owe you one, Captain", Tam says. "No problem, sir. " the other answers "But the most dangerous one escaped. The shark, you know, it was Hamelsen, Battleaddict's second in command. After we heared of what the old monkey had done to you, we put him under surveillance and we spot Hamelsen pursuing you with her shark, so we followed her, pretending we're just a police squadron. You know the rest."
-   Tam responds: "By the way, %s, let me introduce you the Captain Leblanc, she belongs to the Special Operations Force (SOF), part of Dvaered High Command (DHC). I didn't tell you, but her pilots always keep an eye on me from a distance when I have to meet warlords. %s is the private pilot I spoke to you, Captain." Leblanc responds: "Hello, citizen. I'm glad there are civilians like you who make their duity and serve the Dvaered Nation."]])
+saved_text1 = _([[As the remaining attackers run away, you wonder why this Dvaered patrol helped you, contrary to what Tam had explained before. Then you receive the messages exchanged between Major Tam and the leader of the Dvaered squadron: "This time, I really owe you one, Captain", Tam says. "No problem, sir. " the other answers "But the most dangerous one escaped. The shark, you know, it was Hamelsen, Battleaddict's second in command. After we heard of what the old monkey had done to you, we put him under surveillance and we spot Hamelsen pursuing you with her shark, so we followed her, pretending we're just a police squadron. You know the rest."
+   Tam responds: "By the way, %s, let me introduce you the Captain Leblanc, she belongs to the Special Operations Force (SOF), part of Dvaered High Command (DHC). I didn't tell you, but her pilots always keep an eye on me from a distance when I have to meet warlords. %s is the private pilot I spoke to you, Captain." Leblanc responds: "Hello, citizen. I'm glad there are civilians like you who make their duty and serve the Dvaered Nation."]])
 
 saved_title2 = _("Two attacks are one too much")
 saved_text2 = _([["Anyway," says Tam, "I am afraid this ambush is not acceptable." Leblanc responds: "True, sir. Attacking someone in one's system is a standard way of expression for a warlord, but setting an ambush here denotes a true lack of respect."
@@ -102,7 +102,7 @@ meeting_broadcast = _("%s should be waiting for us in orbit around %s.")
 
 jumpmsg = _("Major Tam has jumped for the %s system.")
 
-log_text = _("The Major Tam, from the Space Forces Headquarters of Dvaered High Command (DHC) has employed you in the framework of the military coordination. One of the Warlords he was trying to pay a visit to, Lord Battleaddict, has tried to kill him twice, with help of his second in command, Colonel Hamelsen. It looks like trying to coordinate dvaered warlords is a really dangerous job.")
+log_text = _("The Major Tam, from the Space Forces Headquarters of Dvaered High Command (DHC) has employed you in the framework of the military coordination. One of the Warlords he was trying to pay a visit to, Lord Battleaddict, has tried to kill him twice, with help of his second in command, Colonel Hamelsen. It looks like trying to coordinate Dvaered warlords is a really dangerous job.")
 
 osd_title = _("Dvaered Escort")
 osd_msg1 = _("Escort Major Tam")
@@ -244,8 +244,8 @@ function meeting_msg3()
 end
 
 function spawnTam( origin )
---   if diyingTam ~= nil then
---      hook.rm(diyingTam)
+--   if dyingTam ~= nil then
+--      hook.rm(dyingTam)
 --   end
 
    majorTam = pilot.add("Dvaered Vendetta", nil, origin, "DHC")[1]
@@ -266,12 +266,12 @@ function spawnTam( origin )
    majorTam:setEnergy(100)
    majorTam:setFuel(true)
 
-   diyingTam = hook.pilot(majorTam, "death", "tamDied")
+   dyingTam = hook.pilot(majorTam, "death", "tamDied")
 end
 
 function encounterWarlord( name, origin )
 
-   pilot.toggleSpawn("Pirate", false) -- Make sure Pirates dont get on the way
+   pilot.toggleSpawn("Pirate", false) -- Make sure Pirates don't get on the way
    pilot.clearSelect("Pirate")
 
    warlord = pilot.add("Dvaered Goddard", nil, origin)[1]
