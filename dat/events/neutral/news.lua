@@ -472,7 +472,7 @@ function get_econ_article( commod_name, plnt_name, credits )
    local i = rnd.rnd( 1, #econ_articles )
    local title = econ_articles[i]["title"]
    local desc = econ_articles[i]["desc"]:format(
-      commod_name, plnt_name, numstring(credits) )
+      _(commod_name), _(plnt_name), numstring(credits) )
 
    return title, desc
 end
@@ -590,9 +590,9 @@ function add_econ_article ()
       for j, plnt in ipairs( sys:planets() ) do
          local commodities = plnt:commoditiesSold()
          if #commodities > 0 then
-            body = body .. econ_header:format( plnt:name(), sys:name() )
+            body = body .. econ_header:format( _(plnt:name()), _(sys:name()) )
             for k, comm in ipairs( commodities ) do
-               body = body .. econ_desc_part:format( comm:name(),
+               body = body .. econ_desc_part:format( _(comm:name()),
                      numstring( comm:priceAtTime( plnt, cur_t ) ) )
             end
             plnt:recordCommodityPriceAtTime( cur_t )
