@@ -5,7 +5,7 @@
 # Written by Jack Greiner (ProjectSynchro on Github: https://github.com/ProjectSynchro/)
 #
 # For more information, see http://appimage.org/
-# Pass in [-d] [-n] (set this for nightly builds) [-m] (set this if you want to use Meson) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -o <BUILDOUTPUT> (Dist output directory)
+# Pass in [-d] [-c] (set this for debug builds) [-n] (set this for nightly builds) [-m] (set this if you want to use Meson) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -o <BUILDOUTPUT> (Dist output directory)
 
 # All outputs will be within pwd if nothing is passed in
 
@@ -17,12 +17,16 @@ BUILDPATH="$(pwd)/build/appimageBuild"
 NIGHTLY="false"
 USEMESON="false"
 BUILDOUTPUT="$(pwd)/dist"
+BUILDDEBUG="false"
 
-while getopts dnms:b:o: OPTION "$@"; do
+while getopts dcnms:b:o: OPTION "$@"; do
     case $OPTION in
     d)
         set -x
         ;;
+    c)
+        BUILDDEBUG="true"
+        ;;        
     n)
         NIGHTLY="true"
         ;;
@@ -70,27 +74,53 @@ export DESTDIR="$BUILDOUTPUT/Naev.AppDir"
 
 # Run build
 if [ "$USEMESON" == "true" ]; then
-    # Setup AppImage Build Directory
-    sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
-    --native-file "$SOURCEROOT/utils/build/linux_appimage.ini" \
-    --buildtype release \
-    -Db_lto=true \
-    -Dauto_features=enabled \
-    -Ddocs_c=disabled \
-    -Ddocs_lua=disabled
+    if [ "$BUILDDEBUG" == "true" ]; then
+        # Setup AppImage Build Directory
+        sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
+        --native-file "$SOURCEROOT/utils/build/linux_appimage.ini" \
+        --buildtype debug \
+        -Db_lto=true \
+        -Dauto_features=enabled \
+        -Ddocs_c=disabled \
+        -Ddocs_lua=disabled \
+        
 
-    # Compile and Install Naev to DISTDIR
+        # Compile and Install Naev to DISTDIR
 
-    sh "$MESON" install -C "$BUILDPATH"
+        sh "$MESON" install -C "$BUILDPATH"
+    else
+        # Setup AppImage Build Directory
+        sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
+        --native-file "$SOURCEROOT/utils/build/linux_appimage.ini" \
+        --buildtype release \
+        -Db_lto=true \
+        -Dauto_features=enabled \
+        -Ddocs_c=disabled \
+        -Ddocs_lua=disabled
+
+        # Compile and Install Naev to DISTDIR
+
+        sh "$MESON" install -C "$BUILDPATH"
+    fi
 else
     pushd "$SOURCEROOT"
-    # Setup AppImage Build Directory
-    ./autogen.sh
-    ./configure --disable-debug --prefix=/usr
+    if [ "$BUILDDEBUG" == "true" ]; then
+        # Setup AppImage Build Directory
+        ./autogen.sh
+        ./configure --prefix=/usr
 
-    # Compile and Install Naev to DISTDIR
-    make -j"$(nproc --all)"
-    make install
+        # Compile and Install Naev to DISTDIR
+        make -j"$(nproc --all)"
+        make install
+    else
+        # Setup AppImage Build Directory
+        ./autogen.sh
+        ./configure --disable-debug --prefix=/usr
+
+        # Compile and Install Naev to DISTDIR
+        make -j"$(nproc --all)"
+        make install
+    fi
     popd
 fi
 
@@ -112,6 +142,9 @@ else
 fi
 if [ "$NIGHTLY" == "true" ]; then
     export VERSION="$VERSION.$BUILD_DATE"
+fi
+if [ "$BUILDDEBUG" == "true" ]; then
+    export VERSION="$VERSION+DEBUG.$BUILD_DATE"
 fi
 SUFFIX="$VERSION-linux-x86-64"
 
