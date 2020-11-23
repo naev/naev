@@ -310,11 +310,11 @@ static void btn_render( Widget* btn, double bx, double by )
    /* set the colours */
    if (btn->dat.btn.disabled) {
       c  = &cGrey25;
-      fc = &cGrey80;
+      fc = &cFontGrey;
       outline = &cGrey25;
    }
    else {
-      fc = &cGrey80;
+      fc = &cFontGrey;
       outline = &cGrey60;
       switch (btn->status) {
          case WIDGET_STATUS_MOUSEOVER:
