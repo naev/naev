@@ -7,8 +7,15 @@ env:
   MESON: "${{ github.workspace }}/source/meson.sh"
 
 jobs:
-  "Package_Source":
-    runs-on: ubuntu-latest
+  "Test_Dist":
+    runs-on: ubuntu-20.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - buildtype: meson
+          - buildtype: autotools
 
     steps:
     - name: Checkout Naev Repository
@@ -44,11 +51,13 @@ jobs:
           ninja-build
 
     - name:  Package Meson Dist
+    if: ${{ matrix.buildtype == 'meson' }}
       run: |
         sh $MESON setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
         sh $MESON dist -C build --no-tests --include-subprojects
 
     - name: Package Autotools Dist
+    if: ${{ matrix.buildtype == 'autotools' }}
       run: |
           ./autogen.sh
           ./configure
@@ -56,6 +65,7 @@ jobs:
       working-directory: "source"
 
     - name: Upload Meson Dist Artifact
+    if: ${{ matrix.buildtype == 'meson' }}
       uses: actions/upload-artifact@v2
       with:
         name: naev-meson-dist-${{ github.sha }}
@@ -63,6 +73,7 @@ jobs:
         if-no-files-found: error
 
     - name: Upload Autotools Dist Artifact
+    if: ${{ matrix.buildtype == 'autotools' }}
       uses: actions/upload-artifact@v2
       with:
         name: naev-autotools-dist-${{ github.sha }}
@@ -70,13 +81,12 @@ jobs:
         if-no-files-found: error
 
   "Meson_Compile_Naev":
-    needs: "Package_Source"
 
     strategy:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
@@ -102,22 +112,26 @@ jobs:
       if: ${{ runner.os == 'Linux'}}
       run: |
         sudo apt-get install \
+          automake \
           autopoint \
-          binutils-dev \
+          autoconf-archive \
           build-essential \
+          binutils-dev \
           gettext \
           intltool \
-          libfreetype6-dev \
-          libgl1-mesa-dev \
-          libiberty-dev \
-          libopenal-dev \
-          libpng-dev \
           libsdl2-dev \
-          libsdl2-image-dev \
           libsdl2-mixer-dev \
-          libvorbis-dev \
+          libsdl2-image-dev \
+          libgl1-mesa-dev \
+          libgl1-mesa-dri \
           libxml2-dev \
-          ninja-build
+          libfreetype6-dev \
+          libpng-dev \
+          libopenal-dev \
+          libvorbis-dev \
+          libiberty-dev \
+          ninja-build \
+          xvfb
 
     - name: Install MinGW Packages
       if: ${{ runner.os == 'Windows'}}
@@ -128,15 +142,11 @@ jobs:
         path-type: strict
         install: git tar mingw-w64-x86_64-clang mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-luajit mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-suitesparse
 
-    - name: Get Source
-      uses: actions/download-artifact@v2
+    - name: Checkout Naev Repository
+      uses: actions/checkout@v2
       with:
-        name: naev-meson-dist-${{ github.sha }}
-
-    - name: Extract Source
-      run: |
-        mkdir source
-        tar -xf naev-*.tar.xz -C source --strip 1
+        path: source
+        fetch-depth: 0
 
     - name: Meson Setup
       id: setup
@@ -171,9 +181,30 @@ jobs:
         path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
         if-no-files-found: ignore
 
+    - name: Meson Test
+      id: tests
+      run: |
+        ${{ matrix.test-env }} meson test -C build --print-errorlogs
+
+    - name: Upload Test Log
+      uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.tests.outcome == 'failure' }}
+      with:
+        name: ${{ matrix.os }}-meson-${{ github.sha }}-install-log
+        path: ${{ github.workspace }}/build/meson-logs/testlog.txt
+        if-no-files-found: ignore
+
     - name: Test Meson Install
       run: |
         sh $MESON install -C build
+
+    - name: Upload Install Log
+      uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.compile.outcome == 'failure' }}
+      with:
+        name: ${{ matrix.os }}-meson-${{ github.sha }}-install-log
+        path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+        if-no-files-found: ignore
 
   "Autotools_Compile_Naev":
     needs: "Package_Source"
@@ -182,7 +213,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             shell: bash
             config: linux.ini
             pkg-config-path: "[]"
@@ -236,15 +267,11 @@ jobs:
         path-type: strict
         install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit mingw-w64-x86_64-pkg-config libtool autoconf autoconf-archive automake automake-wrapper git gettext pkg-config make intltool itstool
 
-    - name: Get Source
-      uses: actions/download-artifact@v2
+    - name: Checkout Naev Repository
+      uses: actions/checkout@v2
       with:
-        name: naev-autotools-dist-${{ github.sha }}
-
-    - name: Extract Source
-      run: |
-        mkdir source
-        tar -xf naev-*.tar.gz -C source --strip 1
+        path: source
+        fetch-depth: 0
 
     - name: Autotools Setup
       run: |
@@ -315,15 +342,11 @@ jobs:
         sudo apt-get install \
           ninja-build
 
-    - name: Get Source
-      uses: actions/download-artifact@v2
+    - name: Checkout Naev Repository
+      uses: actions/checkout@v2
       with:
-        name: naev-meson-dist-${{ github.sha }}
-
-    - name: Extract Source
-      run: |
-        mkdir source
-        tar -xf naev-*.tar.xz -C source --strip 1
+        path: source
+        fetch-depth: 0
 
     - name: Compile AppImage Autotools
       if: ${{ matrix.buildtype == 'autotools' }}
@@ -353,8 +376,7 @@ jobs:
         if-no-files-found: error
 
   "Documentation":
-    runs-on: ubuntu-latest
-    needs: "Package_Source"
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Update APT Cache
@@ -369,15 +391,11 @@ jobs:
           doxygen \
           ninja-build
           
-    - name: Get Source
-      uses: actions/download-artifact@v2
+    - name: Checkout Naev Repository
+      uses: actions/checkout@v2
       with:
-        name: naev-meson-dist-${{ github.sha }}
-
-    - name: Extract Source
-      run: |
-        mkdir source
-        tar -xf naev-*.tar.xz -C source --strip 1
+        path: source
+        fetch-depth: 0
         
     - name: Meson Build
       run: |
