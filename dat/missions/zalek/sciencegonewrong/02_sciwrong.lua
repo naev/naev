@@ -211,7 +211,7 @@ end
 
 function drone_jumped ()
    --begin the chase: 
-   tk.msg(title[3],text[9]:format(t_sys[3]))
+   tk.msg(title[3], text[9]:format(_(t_sys[3])))
    misn.markerRm(mmarker)
    if (jumps==0) then
       mmarker = misn.markerAdd(system.get(t_sys[3]),"high")

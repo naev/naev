@@ -68,7 +68,7 @@ Mission entry point.
 function accept ()
    -- Mission details:
    if not tk.yesno( title[1], string.format( text[1],
-          targetsystem:name() ) ) then
+          _(targetsystem:name()) ) ) then
       misn.finish()
    end
    misn.accept()

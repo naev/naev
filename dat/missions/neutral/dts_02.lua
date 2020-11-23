@@ -282,7 +282,7 @@ function cadet_first_comm()
          cadet1:comm( comm[6])
       elseif cadet2_alive then
          cadet2:comm( comm[6])
-      else player.msg( string.format(comm[61], planet_name))
+      else player.msg( string.format(comm[61], _(planet_name)))
       end
 
 end
@@ -295,7 +295,7 @@ function victorious()
          cadet1:comm( comm[7])
       elseif cadet2_alive then
          cadet2:comm( comm[7])
-      else player.msg( string.format(comm[71], planet_name))
+      else player.msg( string.format(comm[71], _(planet_name)))
       end
 
 end
@@ -304,10 +304,10 @@ end
 function celebrate_victory()
 
       if victory == true then
-         tk.msg( title[2], string.format( text[2], planet_name) )
+         tk.msg( title[2], string.format( text[2], _(planet_name)) )
          player.pay( reward)
          faction.modPlayerSingle( "Empire", 3)
-         tk.msg( title[3], string.format( text[3], planet_name, planet_name) )
+         tk.msg( title[3], string.format( text[3], _(planet_name), _(planet_name)) )
          misn.finish( true)
       else
          tk.msg( bounce_title, bounce_text)   -- If any pirates still alive, send player back out.
@@ -323,7 +323,7 @@ function ship_enters()
       hook.timer(1000, "congratulations")
 end
 function congratulations()
-      tk.msg( title[4], string.format( text[4], player.ship(), system_name, planet_name))
+      tk.msg( title[4], string.format( text[4], player.ship(), _(system_name), _(planet_name)))
       misn.finish( true)
 
 end
