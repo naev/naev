@@ -106,8 +106,8 @@ function accept ()
    -- Set mission details
    misn.setTitle( misn_title )
    misn.setReward( string.format( misn_reward, reward) )
-   misn.setDesc( string.format( misn_desc[1], targetsys[1]:name(), targetsys[2]:name(), targetsys[3]:name() ) )
-   misn.osdCreate(misn_title, {misn_desc[3]:format(targetsys[1]:name(), targetsys[2]:name(), targetsys[3]:name()), misn_desc[4]})
+   misn.setDesc( string.format( misn_desc[1], _(targetsys[1]:name()), _(targetsys[2]:name()), _(targetsys[3]:name()) ) )
+   misn.osdCreate(misn_title, {misn_desc[3]:format(_(targetsys[1]:name()), _(targetsys[2]:name()), _(targetsys[3]:name())), misn_desc[4]})
    misn_marker = {[1]=misn.markerAdd( targetsys[1], "low" ), [2]=misn.markerAdd( targetsys[2], "low" ), [3]=misn.markerAdd( targetsys[3], "low" )}
 
    -- Some flavour text
@@ -141,11 +141,11 @@ function sys_enter ()
       if nmsys ~= #targetsys then
          misn.osdDestroy()
          if #targetsys == 2 then
-            misn.osdCreate(misn_title, {misn_desc[2]:format(targetsys[1]:name(),targetsys[2]:name()),misn_desc[4]})
-            misn.setDesc(misn_desc[2]:format(targetsys[1]:name(),targetsys[2]:name()))
+            misn.osdCreate(misn_title, {misn_desc[2]:format(_(targetsys[1]:name()), _(targetsys[2]:name())), misn_desc[4]})
+            misn.setDesc(misn_desc[2]:format(_(targetsys[1]:name()), _(targetsys[2]:name())))
          else
-            misn.osdCreate(misn_title, {misn_desc[1]:format(targetsys[1]:name()),misn_desc[4]})
-            misn.setDesc(misn_desc[1]:format(targetsys[1]:name()))
+            misn.osdCreate(misn_title, {misn_desc[1]:format(_(targetsys[1]:name())), misn_desc[4]})
+            misn.setDesc(misn_desc[1]:format(_(targetsys[1]:name())))
          end
          misn.osdActive(1)
          --update OSD

@@ -62,7 +62,7 @@ end
 
 function accept ()
    --This mission does not make any system claims
-   if not tk.yesno( title, string.format( misn_desc_pre_accept, creditstring(reward), targetworld:name() ) ) then
+   if not tk.yesno( title, string.format( misn_desc_pre_accept, creditstring(reward), _(targetworld:name()) ) ) then
       misn.finish()
    end
 
@@ -84,7 +84,7 @@ function accept ()
 
    misn.setReward( string.format( reward_desc, creditstring(reward) ) )
 
-   misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
+   misn.setDesc( string.format( misn_desc, _(targetworld:name()), _(targetworld_sys:name()) ) )
    misn.markerAdd( targetworld_sys, "high")
 
    tk.msg( title, post_accept[1] )

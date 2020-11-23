@@ -265,7 +265,7 @@ function ship_enters()
       hook.timer(1000, "congratulations")
 end
 function congratulations()
-      tk.msg( title[4], string.format( text[4], player.ship(), planet_name))
+      tk.msg( title[4], string.format( text[4], player.ship(), _(planet_name)))
       misn.finish( true)
 
 end

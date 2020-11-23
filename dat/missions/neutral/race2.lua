@@ -111,7 +111,7 @@ end
 function accept ()
    if tk.yesno(title[1], text[1]) then
       misn.accept()
-      OSD[4] = string.format(OSD[4], curplanet:name())
+      OSD[4] = string.format(OSD[4], _(curplanet:name()))
       misn.setDesc(misndesc)
       misn.osdCreate(OSDtitle, OSD)
       local s = text[5]:format(creditstring(credits_easy), creditstring(credits_hard))
@@ -290,7 +290,7 @@ function board(ship)
          misn.osdActive(i+1)
          target[4] = target[4] + 1
          if target[4] == 4 then
-            tk.msg(string.format(title[3], i), string.format(text[4], curplanet:name()))
+            tk.msg(string.format(title[3], i), string.format(text[4], _(curplanet:name())))
             else
             tk.msg(string.format(title[3], i), string.format(text[3], i+1))
          end
@@ -306,7 +306,7 @@ function jumpin()
 end
 
 function racerland(p)
-   player.msg( string.format(landmsg, p:name(),curplanet:name()))
+   player.msg( string.format(landmsg, p:name(), _(curplanet:name())))
 end
 
 function land()

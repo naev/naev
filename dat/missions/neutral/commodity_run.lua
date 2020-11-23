@@ -107,7 +107,7 @@ function create ()
    -- Set Mission Details
    misn.setTitle( misn_title:format( _(chosen_comm) ) )
    misn.markerAdd( system.cur(), "computer" )
-   misn.setDesc( misn_desc:format( misplanet:name(), _(chosen_comm) ) )
+   misn.setDesc( misn_desc:format( _(misplanet:name()), _(chosen_comm) ) )
    misn.setReward( _("%s per tonne"):format( creditstring( price ) ) )
     
 end
@@ -118,7 +118,7 @@ function accept ()
    update_active_runs( 1 )
 
    osd_msg[1] = osd_msg[1]:format( _(chosen_comm) )
-   osd_msg[2] = osd_msg[2]:format( _(chosen_comm), misplanet:name(), missys:name() )
+   osd_msg[2] = osd_msg[2]:format( _(chosen_comm), _(misplanet:name()), _(missys:name()) )
    misn.osdCreate( osd_title, osd_msg )
 
    hook.enter( "enter" )

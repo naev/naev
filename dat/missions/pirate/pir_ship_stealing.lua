@@ -276,19 +276,19 @@ end
 
 function accept()
    if tk.yesno( informer.title, informer.message:format(
-         theship.faction, theship.class, creditstring(theship.price) ) ) then
+         _(theship.faction), _(theship.class), creditstring(theship.price) ) ) then
       if player.credits() >= theship.price then
          tk.msg( approval.title, approval.message:format(
-            theship.planet:name(), theship.system:name() ) )
+            _(theship.planet:name()), _(theship.system:name()) ) )
 
          player.pay( -theship.price )
          misn.accept()
 
          -- Mission title, reward, description
-         misn.setTitle( title:format( theship.class ) )
-         misn.setReward( reward:format( theship.class ) )
+         misn.setTitle( title:format( _(theship.class) ) )
+         misn.setReward( reward:format( _(theship.class) ) )
          misn.setDesc( description:format(
-            theship.planet:name(),  theship.system:name(), theship.class ) )
+            _(theship.planet:name()), _(theship.system:name()), _(theship.class) ) )
 
          -- Mission marker
          misn.markerAdd( theship.system, "low" )
@@ -297,13 +297,13 @@ function accept()
          misn.osdCreate(
             string.format(
                title,
-               theship.class
+               _(theship.class)
             ), {
                string.format(
                   description,
-                  theship.planet:name(),
-                  theship.system:name(),
-                  theship.class
+                  _(theship.planet:name()),
+                  _(theship.system:name()),
+                  _(theship.class)
                )
             }
          )
