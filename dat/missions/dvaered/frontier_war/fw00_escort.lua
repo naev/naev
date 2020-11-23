@@ -136,10 +136,10 @@ function accept()
       tk.msg(refuse_title, refuse_text)
       misn.finish(false)
    end
-   tk.msg(accept_title, accept_text:format(destsys1:name(), destsys2:name(), destsys3:name()))
+   tk.msg(accept_title, accept_text:format(_(destsys1:name()), _(destsys2:name()), _(destsys3:name())))
 
    misn.accept()
-   misn.osdCreate( osd_title, {osd_msg1, osd_msg4:format(destpla1:name())} )
+   misn.osdCreate( osd_title, {osd_msg1, osd_msg4:format(_(destpla1:name()))} )
    misn.setDesc(misn_desc)
    misn.setReward(misn_reward)
    mark1 = misn.markerAdd(destsys1, "low")
@@ -200,7 +200,7 @@ function enter()
       majorTam:land(fleepla)
       stage = 4
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {osd_msg1, osd_msg4:format(fleepla:name())} )
+      misn.osdCreate( osd_title, {osd_msg1, osd_msg4:format(_(fleepla:name()))} )
       misn.osdActive(2)
 
    elseif stage == 5 then  -- Travel to third rendezvous
@@ -229,18 +229,18 @@ function testPlayerSpeed()
 end
 
 function explain_battle()
-   tk.msg(explain_title, explain_text:format(fleepla:name()))
+   tk.msg(explain_title, explain_text:format(_(fleepla:name())))
 end
 
 -- Messages when encountering warlords
 function meeting_msg1()
-   majorTam:comm( meeting_broadcast:format("Lady Bitterfly", destpla1:name()) )
+   majorTam:comm( meeting_broadcast:format("Lady Bitterfly", _(destpla1:name())) )
 end
 function meeting_msg2()
-   majorTam:comm( meeting_broadcast:format("Lord Battleaddict", destpla2:name()) )
+   majorTam:comm( meeting_broadcast:format("Lord Battleaddict", _(destpla2:name())) )
 end
 function meeting_msg3()
-   majorTam:comm( meeting_broadcast:format("Lord Jim", destpla3:name()) )
+   majorTam:comm( meeting_broadcast:format("Lord Jim", _(destpla3:name())) )
 end
 
 function spawnTam( origin )
@@ -297,7 +297,7 @@ end
 
 function tamJump()
    tamJumped = true
-   player.msg(jumpmsg:format(nextsys:name()))
+   player.msg(jumpmsg:format(_(nextsys:name())))
 end
 
 function tamDied()
@@ -312,13 +312,13 @@ function land() -- The player is only allowed to land on special occasions
    if stage == 1 then
       stage = 2
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {osd_msg1, osd_msg4:format(destpla2:name())} )
+      misn.osdCreate( osd_title, {osd_msg1, osd_msg4:format(_(destpla2:name()))} )
       misn.markerRm(mark1)
       mark2 = misn.markerAdd(destsys2, "low")
    elseif stage == 4 then
       stage = 5
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {osd_msg1, osd_msg4:format(destpla3:name())} )
+      misn.osdCreate( osd_title, {osd_msg1, osd_msg4:format(_(destpla3:name()))} )
       misn.markerRm(mark2)
       mark3 = misn.markerAdd(destsys3, "low")
    elseif stage == 8 then
@@ -359,7 +359,7 @@ function meeting()
    player.pilot():control(false) -- Free the player
 
    if stage == 0 then
-      tk.msg(meet_title1, meet_text1:format(destpla1:name()))
+      tk.msg(meet_title1, meet_text1:format(_(destpla1:name())))
       stage = 1
       majorTam:taskClear()
       majorTam:land(destpla1)
@@ -368,7 +368,7 @@ function meeting()
    elseif stage == 2 then
 
       nextsys = fleesys
-      tk.msg(meet_title2, meet_text2:format(nextsys:name()))
+      tk.msg(meet_title2, meet_text2:format(_(nextsys:name())))
       stage = 3
       quickie = pilot.add("Dvaered Vendetta", nil, destpla2)[1]
       quickie:setFaction("Warlords")
@@ -401,10 +401,10 @@ function meeting()
       end
 
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {osd_msg3:format(fleesys:name())} )
+      misn.osdCreate( osd_title, {osd_msg3:format(_(fleesys:name()))} )
 
    elseif stage == 5 then
-      tk.msg(meet_title1, meet_text1:format(destpla3:name()))
+      tk.msg(meet_title1, meet_text1:format(_(destpla3:name())))
       stage = 8
       majorTam:taskClear()
       majorTam:land(destpla3)
