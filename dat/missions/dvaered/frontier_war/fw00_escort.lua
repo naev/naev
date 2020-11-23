@@ -80,7 +80,7 @@ ready_title = _("Major Tam is ready")
 ready_text = _([["Anyway, citizen, if you want to take off, I'm ready."]])
 
 end_title = _("Thank you, citizen")
-end_text = _([[As you land, Major Tam greets you at the spaceport. "After the losses they got today, I doubt those mercenaries will come back at me before long. I need to report back at the Dvaer High Command station in Dvaer, and I don't need anymore escort. Oh, and, err... about the payment, I am afraid there is a little setback..." You start getting afraid he would try not to pay you, but he continues: "I don't know why, but the High Command has not credited the payment account yet... Well do you know what we are going to do? I will give you a set of %s credits worth Gauss Gun! One always needs Gauss Guns, no?"]])
+end_text = _([[As you land, Major Tam greets you at the spaceport. "After the losses they got today, I doubt those mercenaries will come back at me before long. I need to report back at the Dvaer High Command station in Dvaer, and I don't need anymore escort. Oh, and, err... about the payment, I am afraid there is a little setback..." You start getting afraid he would try not to pay you, but he continues: "I don't know why, but the High Command has not credited the payment account yet... Well do you know what we are going to do? I will give you a set of %s worth Gauss Gun! One always needs Gauss Guns, no?"]])
 
 explain_title = _("That was really close!")
 explain_text = _([[You send a message to Major Tam to ask if you are safe now. "I think so" he answers, "Lord Battleaddict's troops won't follow us if we head to %s at once as the planet belongs to his deadliest enemy, Lady Pointblank." As you ask to him what happened, he answers: "You know, don't let Lord Battleaddict's reaction mislead you. He is not a bad person, he is just... hem... a bit old school. He is not in par with the ideas of the new generation of generals at Dvaered High Command, and wanted to make his point clear."
@@ -324,7 +324,7 @@ function land() -- The player is only allowed to land on special occasions
    elseif stage == 8 then
       shiplog.createLog( "fw00", _("Dvaered Military Coordination"), _("Dvaered") )
       shiplog.appendLog( "fw00", log_text )
-      tk.msg(end_title, end_text:format(numstring(credits_00)))
+      tk.msg(end_title, end_text:format(creditstring(credits_00)))
 
       -- Major Tam gives Gauss Guns instead of credits, because Major Tam is a freak.
       GGprice = outfit.get("Gauss Gun"):price()

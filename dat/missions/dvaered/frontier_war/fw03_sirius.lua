@@ -101,16 +101,16 @@ execution_text1 = _([[You land and walk around the spacedock, in search of your 
    Suddenly, you realize someone is whispering behind you "Hey, %s, you're wrecking my firing line!" You turn around and see nothing but a deformed crate that continues to speak: "It's me, Sergeant Nikolov. In the box. Hide yourself better or you will ruin our mission." You then remember that she is a member of the space infantry commandos, and Hamfresser's second in command. Tam probably sent her to execute the enemy pilot.]])
 execution_text2 = _([[A few times later, you see a woman coming from the empty corridor, anxiously looking behind her and pulling a key out of her pocket. While still approaching the ship, she presses the key's button and the ship beeps. At this very moment, a sudden and loud din coming from all around you shake your stomach and the pilot falls without a word. Nikolov and two other soldiers emerge from the crates. The sergeant approaches the pilot, knees and touches her pulse. She thoughtfully looks at her face "Damn! she looked like a nice person..." And then addresses to the soldiers: "All right, folks we pack up!" and the commando enters the ship with the body and takes off.
    You stay alone, on the empty dock, with nothing but your thoughts. Even the broken crates have been picked up by the commando. You think about all the causes that pilot must have served in her life. The just causes, the evil ones... and all the others. "Meh," you think "killing people in space is definitely much better for the morale."]])
-execution_text3 = _([[When you finally go to the bar to think about something else, you get notified on your holowatch that %s credits have been transferred to your account. The leader of the ambushers has been identified: it's Colonel Hamelsen, who used to work for Battleaddict before his death. Unfortunately, the Colonel has escaped.]])
+execution_text3 = _([[When you finally go to the bar to think about something else, you get notified on your holowatch that %s have been transferred to your account. The leader of the ambushers has been identified: it's Colonel Hamelsen, who used to work for Battleaddict before his death. Unfortunately, the Colonel has escaped.]])
 
 execution_failed_text2 = _([[A few times later, you hear a message from Nikolov's radio: "Tam here. The target escaped and won't come back to the ship. Clear the spacedock." The spacemarines emerge from the crates and disappear in a blink, while you start heading to the bar. On the way, you meet Strafer who explains the situation: "We identified the hostile pilot: it was Colonel Hamelsen, Battleaddict's former second in command, but she went away by using one of her other ships and we lost her track.
-   "Poor woman. It's hard to get a new post when you're the second in command of a dead warlord, you know. So I guess someone has managed to hire her to assassinate the major. Anyway, I guess you should have received your payment of %s credits by now."]])
+   "Poor woman. It's hard to get a new post when you're the second in command of a dead warlord, you know. So I guess someone has managed to hire her to assassinate the major. Anyway, I guess you should have received your payment of %s by now."]])
 
 won_title = _("All target eliminated")
 won_text = _([[All three primary targets have been eliminated. The remaining ones are not dangerous anymore now. You can land to get your reward.]])
 
 pay_title = _("Mission accomplished")
-pay_text = _("Your mission is a success, excepted for the escape of the enemy leader, Colonel Hamelsen. you can now collect your %s credits reward.")
+pay_text = _("Your mission is a success, excepted for the escape of the enemy leader, Colonel Hamelsen. you can now collect your %s reward.")
 
 killMsg      = _("One of the targets was destroyed!")
 killAll      = _("The last target was destroyed! You can now land.")
@@ -296,7 +296,7 @@ function land()
    -- Land for reward
    elseif stage == 2 then
       compute_reward()
-      tk.msg( pay_title, pay_text:format(numstring(effective_credits)) )
+      tk.msg( pay_title, pay_text:format(creditstring(effective_credits)) )
       payNfinish()
 
    -- More illegitimate landings
@@ -313,11 +313,11 @@ function land()
          compute_reward()
          if shi:name() == "Kestrel" then -- it's Hamelsen and she escapes
             tk.msg( execution_title, execution_text1:format(shi:name(), player.name()) )
-            tk.msg( execution_title, execution_failed_text2:format(numstring(effective_credits)) )
+            tk.msg( execution_title, execution_failed_text2:format(creditstring(effective_credits)) )
          else -- No pity for non-Hamelsen henchmen
             tk.msg( execution_title, execution_text1:format(shi:name(), player.name()) )
             tk.msg( execution_title, execution_text2, "portraits/neutral/female1.png" )
-            tk.msg( execution_title, execution_text3:format(numstring(effective_credits)) )
+            tk.msg( execution_title, execution_text3:format(creditstring(effective_credits)) )
          end
          payNfinish()
       else

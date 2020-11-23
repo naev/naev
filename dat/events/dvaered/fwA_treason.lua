@@ -25,7 +25,7 @@ require "dat/missions/dvaered/frontier_war/fw_common.lua"
 yesno_title = _("You are needed for a special job")
 yesno_text = _([[The pilot of the fighter uses the encrypted canal: "I have finally found you, %s. Better late than never. My employers want to congratulate you about how effective you have been with Lord Battleaddict. I am afraid there won't be many people to regret him." You answer that you don't know what it is about, and that as far as you know, Lord Battleaddict has been killed in a loyal duel by the General Klank. The interlocutor laughs "You're playing your part, eh? I can understand you, after all, they pay you well... Wait, no, they don't pay well. Not at all! How much was it for risking your life twice with this EMP bomb trick? %s? Haw haw haw! You can make better money with a cargo mission!
    "I've even heard that once, they paid you with gauss guns! Those guys are so pitiful, aren't they?
-   "Now, let's talk seriously: you want money and I want a pilot. We're made to get along, you and me! I need you for a special task. I won't deny it implies going against the interests of General Klank and Major Tam and co, but if you do it well, they won't ever know that you are implied, and you'll receive %s credits in the process. Oh yes, that's different from what you're used for! What do you say?"]])
+   "Now, let's talk seriously: you want money and I want a pilot. We're made to get along, you and me! I need you for a special task. I won't deny it implies going against the interests of General Klank and Major Tam and co, but if you do it well, they won't ever know that you are implied, and you'll receive %s in the process. Oh yes, that's different from what you're used for! What do you say?"]])
 
 yes_answer = _("Accept the offer")
 no_answer =  _("Refuse and miss an unique opportunity")
@@ -101,7 +101,7 @@ end
 -- Player answers to hail
 function hail()
    player.commClose()
-   local c = tk.choice(yesno_title, yesno_text:format(player.name(),numstring(credits_01),numstring(credits)), yes_answer, no_answer)
+   local c = tk.choice(yesno_title, yesno_text:format(player.name(), creditstring(credits_01), creditsstring(credits)), yes_answer, no_answer)
    if c == 1 then
       tk.msg(accept_title, accept_text:format(targetsys:name()))
       stage = 1

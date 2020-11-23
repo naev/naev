@@ -155,8 +155,8 @@ imp_no_text = _([["Mwell." Says the agent. "I guess you want to check by yoursel
 pirate_title = _("Other help offer")
 pirate_text1 = _([[As you land, someone seems to be waiting for you on the spaceport. "Hello, colleague! Someone is in trouble with the authorities, out there. You seem to have had an argument with the Za'lek, and now the Imperials help them. I've seen blockades everywhere on the borders of Imperial space. Even the way to the secret jumps is impassable. It looks like the Empire wants to get you at all costs, but luckily enough, I have the solution. You probably already got a fake transponder, but they seem to have identified it, so what about receiving an other one? I can sell you an authentic fake transponder, coming straight outta Skulls and Bones factory."
    This person is for sure a pirate who wants to take the opportunity to get a few cash. The idea is not bad as the imperial ships would not look for a ship with a Skulls and Bones fake transponder. So you ask him how many credits he wants. "%s" is the answer. "That sounds a great many, doesn't it? But maybe it's a suitable amount of money for your life and the success of whatever unscrupulous mission you're trying to carry on. Of course, you may not have such an amount right here, so I'll accept if you give your word to pay me at some point. Your word and your DNA signature as well, so that I can find you if you try to trick me."
-   You know that if you agree, you will have to pay whatever happens, otherwise you will be harassed by hit men until the end of your life. But actually, paying %s credits could allow you to skirt the messy and compromising deal you will otherwise have to do with the Imperial secret services. Meet the fake transponder dealer at the bar if interested.]])
-pirate_text2 = _("Do you accept the deal with the pirates? It costs %s credits, and you'll be able to skirt any imperial blocus.")
+   You know that if you agree, you will have to pay whatever happens, otherwise you will be harassed by hit men until the end of your life. But actually, paying %s could allow you to skirt the messy and compromising deal you will otherwise have to do with the Imperial secret services. Meet the fake transponder dealer at the bar if interested.]])
+pirate_text2 = _("Do you accept the deal with the pirates? It costs %s, and you'll be able to skirt any imperial blocus.")
 
 pir_yes_answer = _("Accept, immediate payment")
 pir_yes_title = _("Immediate payment")
@@ -185,8 +185,8 @@ back_text = _([[Upon landing, Hamfresser, the VIP and you go to the spaceport's 
 
 back_debt_title = _("Everything is almost alright")
 back_debt_text = _([[You explain to the major what problems you encountered. You talk about the strange deal the Empire has tried to make with you. "Yes, the Imperial intelligence services are formidable. It is very hard for us to hide them our intentions. It was right from you not to accept their offer. So you bought a pirate fake transponder, right? I hope it was not too expensive!"
-  When you tell him the sum you had to promise to pay, Major Tam squeaks. "Whawhawhat? %s credits for a fake transponder! This is not trade, it is theft!" "Well, technically..." You answer "those folks are pirates, so it's their job to rob people." The major calms down "Alright. I'll take care of the payment, so that they don't kill you, but you'll have to refund us, don't forget that! Oh, and by the way, I made sure with the Za'lek that they don't blame you personally for what happened. They should accept you in their space now."
-   The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are %s credits."]])
+  When you tell him the sum you had to promise to pay, Major Tam squeaks. "Whawhawhat? %s for a fake transponder! This is not trade, it is theft!" "Well, technically..." You answer "those folks are pirates, so it's their job to rob people." The major calms down "Alright. I'll take care of the payment, so that they don't kill you, but you'll have to refund us, don't forget that! Oh, and by the way, I made sure with the Za'lek that they don't blame you personally for what happened. They should accept you in their space now."
+   The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are %s."]])
 
 back_pay_title = _("No major problem to report")
 back_pay_text = _([[You explain to the major what problems you encountered. You talk about the strange deal the Empire has tried to make with you. "Yes, the Imperial intelligence services are formidable. It is very hard for us to hide them our intentions. It was right from you not to accept their offer. So you bought a pirate fake transponder, right? I hope it was not too expensive!"
@@ -195,13 +195,15 @@ back_pay_text = _([[You explain to the major what problems you encountered. You 
    The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are %s credits."]])
 
 back_nodeal_title = _("No major problem to report")
+-- FIXME The "Here are _ credits" language might require a full ngettext() call.
 back_nodeal_text = _([[You explain to the major what problems you encountered. You talk about the strange deal the Empire has tried to make with you. "Yes, the Imperial intelligence services are formidable. It is very hard for us to hide them our intentions. It was right from you not to accept their offer. I guess it should have been very hard and risky to skirt the imperial blocus, congratulations! Oh, and by the way, I made sure with the Za'lek that they don't blame you personally for what happened. They should accept you in their space now."
-  The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are %s credits."]])
+  The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are %s."]])
 
 back_empire_title = _("A problem with the Empire")
+-- FIXME The "Here are _ credits" language might require a full ngettext() call.
 back_empire_text = _([[You explain to the major what problems you encountered. You talk about the strange deal the Empire has forced you to make with them and the major's face turns red: "You did WHAT? The imperial intelligence service is the strongest in the world, they can deduce things you would not even imagine just by looking at someone, and you let them discuss with a black ops commando leader!"
    As you argue that you had no other choice, he seems to calm down a little bit "I will interrogate Hamfresser to see if one can understand what they were looking for. Damn! I'm afraid something awful may happen to us somehow because of that. Oh, and by the way, I made sure with the Za'lek that they don't blame you personally for what happened. They should accept you in their space now."
-   The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are %s credits."]])
+   The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are %s."]])
 
 
 edie_title = _("Mission Failed: escort destroyed")
@@ -300,7 +302,7 @@ function land()
 
    -- Land at an Imperial planet and meet the agents
    elseif stage == 5 and planet.cur():faction() == faction.get("Empire") then
-      tk.msg(pirate_title, pirate_text1:format(numstring(pirate_price),numstring(pirate_price)))
+      tk.msg(pirate_title, pirate_text1:format(numstring(pirate_price), creditstring(pirate_price)))
       pirag = misn.npcAdd("pirateDealer", pir_name, getPortrait("Pirate"), pir_desc)
       impag = misn.npcAdd("imperialAgent", imp_name, getPortrait(), imp_desc)
       stage = 6
@@ -312,18 +314,18 @@ function land()
       var.push("dv_pirate_debt", false)
       shiplog.createLog( "fw02", _("Frontier War"), _("Dvaered") )
       if stage == 7 then -- Empire solution
-         tk.msg(back_empire_title, back_empire_text:format(numstring(credits_02)))
+         tk.msg(back_empire_title, back_empire_text:format(creditstring(credits_02)))
          var.push("dv_empire_deal", true)
          shiplog.appendLog( "fw02", log_text_emp )
       elseif stage == 8 then -- Pirate debt
-         tk.msg(back_debt_title, back_debt_text:format(numstring(pirate_price),numstring(credits_02)))
+         tk.msg(back_debt_title, back_debt_text:format(creditstring(pirate_price), creditstring(credits_02)))
          var.push("dv_pirate_debt", true)
          shiplog.appendLog( "fw02", log_text_debt )
       elseif stage == 9 then -- Pirate cash
          tk.msg(back_pay_title, back_pay_text:format(numstring(credits_02)))
          shiplog.appendLog( "fw02", log_text_pay )
       else -- Normally, the player should not achieve that (maybe with a trick I did not foresee, but it should be Xtremely hard)
-         tk.msg(back_nodeal_title, back_nodeal_text:format(numstring(credits_02)))
+         tk.msg(back_nodeal_title, back_nodeal_text:format(creditstring(credits_02)))
          shiplog.appendLog( "fw02", log_text_raw )
       end
       player.pay(credits_02)
@@ -782,7 +784,7 @@ end
 
 -- Discuss with the Pirate or Imperial agent
 function pirateDealer()
-   local c = tk.choice(pirate_title, pirate_text2:format(numstring(pirate_price)), pir_yes_answer, pir_debt_answer, pir_no_answer)
+   local c = tk.choice(pirate_title, pirate_text2:format(creditstring(pirate_price)), pir_yes_answer, pir_debt_answer, pir_no_answer)
    if c == 1 then
       if player.credits() >= pirate_price then
          player.pay(-pirate_price)
