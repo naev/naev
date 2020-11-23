@@ -192,7 +192,7 @@ void conf_setDefaults (void)
    conf.fpu_except   = 0; /* Causes many issues. */
 
    /* Map overlay opacity */
-   conf.map_overlay_opacity   = 0.1;
+   conf.map_overlay_opacity   = 0.3;
 
    /* Editor. */
    if (conf.dev_save_sys != NULL)
