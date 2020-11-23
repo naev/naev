@@ -151,6 +151,7 @@ typedef struct PlayerConf_s {
    int devautosave; /**< Developer mode autosave. */
    int devcsv; /**< Output CSV data. */
    char *lastversion; /**< The last version the game was ran in. */
+   double map_overlay_opacity; /**< Map overlay opacity. */
 
    /* Debugging. */
    int fpu_except; /**< Enable FPU exceptions? */
