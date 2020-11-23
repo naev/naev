@@ -5,6 +5,7 @@
          * Interface is much more slick
          * Dark theme to be more consistent with space
          * Font uses outlines to be more readable
+      * New map overlay with adjustable opacity
       * Added rarity indicator to ships and outfits
       * Changed fonts
       * Indicate non-common NPC with exclamation marks
