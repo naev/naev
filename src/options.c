@@ -342,7 +342,7 @@ static void opt_gameplay( unsigned int wid )
 
    /* MOpacity abort. */
    window_addText( wid, x, y, cw-130, 20, 0, "txtAMOpacity",
-         NULL, NULL, _("Map Overlay Opacity:") );
+         NULL, NULL, _("Map Opacity:") );
    y -= 20;
 
    /* MOpacity abort fader. */
