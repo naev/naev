@@ -62,6 +62,7 @@ jobs:
           ./autogen.sh
           ./configure
           make dist-gzip
+          #make distcheck (broken)
       working-directory: "source"
 
     - name: Upload Meson Dist Artifact
