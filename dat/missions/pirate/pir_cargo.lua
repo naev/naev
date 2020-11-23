@@ -71,11 +71,11 @@ function create()
 
    -- We’re redefining the cargo
    local cargoes = {
-      "Unmarked Boxes",
-      "Weapons",
-      "Drugs",
-      "Exotic Animals",
-      "Radioactive Materials",
+      N_("Unmarked Boxes"),
+      N_("Weapons"),
+      N_("Drugs"),
+      N_("Exotic Animals"),
+      N_("Radioactive Materials"),
    }
    cargo = cargoes[rnd.rnd(1, #cargoes)]
 
@@ -100,12 +100,12 @@ function create()
    
    misn.setTitle( string.format(
       _("PIRACY: Illegal Cargo transport (%s of %s)"), tonnestring(amount),
-      cargo ) )
+      _(cargo) ) )
    misn.markerAdd(destsys, "computer")
    misn.setDesc(
       misn_desc:format( _(destplanet:name()), _(destsys:name()) ) .. "\n\n"
       .. misn_details:format(
-         cargo, tonnestring(amount), numjumps, traveldist,
+         _(cargo), tonnestring(amount), numjumps, traveldist,
          (timelimit - time.get()):str() ) )
    misn.setReward( creditstring(reward) )
 
@@ -135,7 +135,7 @@ function accept()
    carg_id = misn.cargoAdd( cargo, amount )
    tk.msg( _("Mission Accepted"), string.format(
       _("%s of %s are loaded onto your ship."), tonnestring(amount),
-      cargo ) )
+      _(cargo) ) )
    local osd_msg = {}
    osd_msg[1] = osd_msg1:format(
       _(destplanet:name()), _(destsys:name()), timelimit:str(),
@@ -149,7 +149,7 @@ end
 function land()
    if planet.cur() == destplanet then
          tk.msg( _("Successful Delivery"), string.format(
-            _("The containers of %s are unloaded at the docks."), cargo ) )
+            _("The containers of %s are unloaded at the docks."), _(cargo) ) )
       player.pay(reward)
       n = var.peek("ps_misn")
       if n ~= nil then

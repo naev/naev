@@ -111,12 +111,12 @@ function create()
 
    misn.setTitle( string.format(
       _("ES: Long distance cargo transport (%s of %s)"), tonnestring(amount),
-      cargo ) )
+      _(cargo) ) )
    misn.markerAdd(destsys, "computer")
    misn.setDesc(
       misn_desc:format( _(destplanet:name()), _(destsys:name()) ) .. "\n\n"
       .. misn_details:format(
-         cargo, tonnestring(amount), numjumps, traveldist, piracyrisk,
+         _(cargo), tonnestring(amount), numjumps, traveldist, piracyrisk,
          (timelimit - time.get()):str() ) )
    misn.setReward( creditstring(reward) )
 
@@ -146,7 +146,7 @@ function accept()
    carg_id = misn.cargoAdd( cargo, amount )
    tk.msg( _("Mission Accepted"), string.format(
       _("The Empire workers load the %s of %s onto your ship."),
-      tonnestring(amount), cargo ) )
+      tonnestring(amount), _(cargo) ) )
    local osd_msg = {}
    osd_msg[1] = osd_msg1:format(
       _(destplanet:name()), _(destsys:name()), timelimit:str(),
@@ -160,7 +160,7 @@ end
 function land()
    if planet.cur() == destplanet then
       tk.msg( _("Successful Delivery"), string.format(
-         _("The Empire workers unload the %s at the docks."), cargo ) )
+         _("The Empire workers unload the %s at the docks."), _(cargo) ) )
       player.pay(reward)
       n = var.peek("es_misn")
       if n ~= nil then

@@ -126,7 +126,7 @@ function create()
       _(destplanet:name()), _(destsys:name()) ) )
    misn.setDesc( misn_desc:format( _(destplanet:name()), _(destsys:name()) )
       .. "\n\n" .. misn_details:format(
-         cargo, numjumps, traveldist, piracyrisk ) )
+         _(cargo), numjumps, traveldist, piracyrisk ) )
    misn.markerAdd(destsys, "computer")
    misn.setReward( creditstring(reward) )
 end

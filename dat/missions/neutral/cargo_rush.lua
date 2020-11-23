@@ -135,7 +135,7 @@ function create()
    misn.setDesc(
       misn_desc[tier]:format( _(destplanet:name()), _(destsys:name()) ) .. "\n\n"
       .. misn_details:format(
-         cargo, tonnestring(amount), numjumps, traveldist, piracyrisk,
+         _(cargo), tonnestring(amount), numjumps, traveldist, piracyrisk,
          (timelimit - time.get()):str() ) )
    misn.setReward( creditstring(reward) )
 end
@@ -177,11 +177,11 @@ function land()
    if planet.cur() == destplanet then
       if intime then
       -- Semi-random message.
-      tk.msg( cargo_land_title, cargo_land[rnd.rnd(1, #cargo_land)]:format(cargo) )
+      tk.msg( cargo_land_title, cargo_land[rnd.rnd(1, #cargo_land)]:format(_(cargo)) )
    else
       -- Semi-random message for being late.
       tk.msg( cargo_land_title, cargo_land_slow[rnd.rnd(1, #cargo_land_slow)]:format(
-         cargo, creditstring(reward / 2), creditstring(reward) ) )
+         _(cargo), creditstring(reward / 2), creditstring(reward) ) )
       reward = reward / 2
    end
    player.pay(reward)
