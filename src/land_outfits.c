@@ -261,25 +261,6 @@ void outfits_regenList( unsigned int wid, char *str )
    free(focused);
 }
 
-
-static int outfit_filterWeapon( const Outfit *o )
-{ return ((o->slot.type == OUTFIT_SLOT_WEAPON) && !sp_required( o->slot.spid )); }
-
-static int outfit_filterUtility( const Outfit *o )
-{ return ((o->slot.type == OUTFIT_SLOT_UTILITY) && !sp_required( o->slot.spid )); }
-
-static int outfit_filterStructure( const Outfit *o )
-{ return ((o->slot.type == OUTFIT_SLOT_STRUCTURE) && !sp_required( o->slot.spid )); }
-
-static int outfit_filterCore( const Outfit *o )
-{ return sp_required( o->slot.spid ); }
-
-static int outfit_filterOther( const Outfit *o )
-{
-   return (!sp_required( o->slot.spid ) && ((o->slot.type == OUTFIT_SLOT_NULL)
-         || (o->slot.type == OUTFIT_SLOT_NA)));
-}
-
 /**
  * @brief Generates the outfit list.
  *
@@ -296,7 +277,7 @@ static void outfits_genList( unsigned int wid )
       outfit_filterOther
    };
    const char *tabnames[] = {
-      _("All"), _("\ab W "), _("\ag U "), _("\ap S "), _("\aRCore"), _("Other")
+      _("All"), _(OUTFIT_LABEL_WEAPON), _(OUTFIT_LABEL_UTILITY), _(OUTFIT_LABEL_STRUCTURE), _(OUTFIT_LABEL_CORE), _("Other")
    };
 
    int active;

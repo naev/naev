@@ -63,6 +63,7 @@ Naikari.app
 core
 ABOUT-NLS
 ABOUT-NLS~
+po/credits.pot
 po/xml.pot
 po/naev.pot
 po/naikari.pot

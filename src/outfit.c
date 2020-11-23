@@ -230,6 +230,25 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
 }
 
 
+int outfit_filterWeapon( const Outfit *o )
+{ return ((o->slot.type == OUTFIT_SLOT_WEAPON) && !sp_required( o->slot.spid )); }
+
+int outfit_filterUtility( const Outfit *o )
+{ return ((o->slot.type == OUTFIT_SLOT_UTILITY) && !sp_required( o->slot.spid )); }
+
+int outfit_filterStructure( const Outfit *o )
+{ return ((o->slot.type == OUTFIT_SLOT_STRUCTURE) && !sp_required( o->slot.spid )); }
+
+int outfit_filterCore( const Outfit *o )
+{ return sp_required( o->slot.spid ); }
+
+int outfit_filterOther( const Outfit *o )
+{
+   return (!sp_required( o->slot.spid ) && ((o->slot.type == OUTFIT_SLOT_NULL)
+         || (o->slot.type == OUTFIT_SLOT_NA)));
+}
+
+
 /**
  * @brief Gets the name of the slot type of an outfit.
  *

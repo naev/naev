@@ -13,8 +13,8 @@ set -x
 
 # General file
 TMPFILE=$(mktemp)
-echo "src/log.h" > "$TMPFILE"
-find src/ -name "*.c" -not \( -name "shaders.gen.c" -or -name "shaders_c_gen.c" \) >> "$TMPFILE"
+echo "po/credits.pot" >> "$TMPFILE"
+find src/ -name "*.[ch]" -not \( -name "glue_macos.h" -or -name "khrplatform.h" -or -name "shaders*gen*" \) >> "$TMPFILE"
 find dat/ -name "*.lua" >> "$TMPFILE"
 
 cat "$TMPFILE" | LC_ALL=C sort | tee "$ROOT/po/POTFILES_COMBINED.in" > "$ROOT/po/POTFILES.in"
@@ -34,11 +34,4 @@ echo "po/xml.pot" >> "$ROOT/po/POTFILES.in"
 rm "$TMPFILE" # clean-up
 
 # Pull strings from the "intro" and "AUTHORS" files (inputs to credit rolls) into "credits.pot".
-echo "po/credits.pot" >> "$ROOT/po/POTFILES_COMBINED.in"
-awk '# Loop over lines, and when we get plain text (not a "[...]" line),
-   /^[^[[]/ {
-      # Escape any quotation marks...
-      gsub(/"/, "\\\"");
-      # And print a msgid/msgstr pair with the filename and line number.
-      print "#: " FILENAME ":" NR "\nmsgid \"" $0 "\"\nmsgstr \"\"\n";
-   }' dat/intro dat/AUTHORS > "$ROOT/po/credits.pot"
+awk -f "$ROOT/utils/update-po-credits.awk" dat/intro dat/AUTHORS > "$ROOT/po/credits.pot"

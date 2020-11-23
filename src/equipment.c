@@ -1387,19 +1387,6 @@ static void equipment_genShipList( unsigned int wid )
 }
 
 
-static int equipment_outfitFilterWeapon( const Outfit *o )
-{ return ((o->slot.type == OUTFIT_SLOT_WEAPON) && !sp_required( o->slot.spid )); }
-
-static int equipment_outfitFilterUtility( const Outfit *o )
-{ return ((o->slot.type == OUTFIT_SLOT_UTILITY) && !sp_required( o->slot.spid )); }
-
-static int equipment_outfitFilterStructure( const Outfit *o )
-{ return ((o->slot.type == OUTFIT_SLOT_STRUCTURE) && !sp_required( o->slot.spid )); }
-
-static int equipment_outfitFilterCore( const Outfit *o )
-{ return sp_required( o->slot.spid ); }
-
-
 /**
  * @brief Generates the outfit list.
  *    @param wid Window to generate list on.
@@ -1411,13 +1398,13 @@ static void equipment_genOutfitList( unsigned int wid )
    char *filtertext;
    int (*tabfilters[])( const Outfit *o ) = {
       NULL,
-      equipment_outfitFilterWeapon,
-      equipment_outfitFilterUtility,
-      equipment_outfitFilterStructure,
-      equipment_outfitFilterCore
+      outfit_filterWeapon,
+      outfit_filterUtility,
+      outfit_filterStructure,
+      outfit_filterCore
    };
    const char *tabnames[] = {
-      _("All"), "\ab W ", "\ag U ", "\ap S ", _("\aRCore")
+      _("All"), _(OUTFIT_LABEL_WEAPON), _(OUTFIT_LABEL_UTILITY), _(OUTFIT_LABEL_STRUCTURE), _(OUTFIT_LABEL_CORE)
    };
 
    int noutfits, active;
