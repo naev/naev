@@ -297,12 +297,10 @@ jobs:
 
     steps:
     - name: Update APT Cache
-      if: ${{ runner.os == 'Linux'}}
       run: |
         sudo apt-get update
 
     - name: Install Additional Build Dependencies
-      if: ${{ runner.os == 'Linux'}}
       run: |
         sudo apt-get install \
           autopoint \
@@ -323,19 +321,8 @@ jobs:
           libsdl2-mixer-dev \
           libsuitesparse-dev \
           libvorbis-dev \
-          libxml2-dev
-
-    - name: Install Ninja-Build (xenial-backports)
-      if: ${{ runner.os == 'ubuntu-16.04' && runner.os == 'Linux'}}
-      run: |
-        sudo apt-get -t xenial-backports install \
-          ninja-build
-
-    - name: Install Ninja-Build
-      if: ${{ runner.os != 'ubuntu-16.04' && runner.os == 'Linux'}}
-      run: |
-        sudo apt-get install \
-          ninja-build
+          libxml2-dev \
+          ninja-build=1.7.1-1~ubuntu16.04.1
 
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
