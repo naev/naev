@@ -256,7 +256,7 @@ function check_stranded( missing )
    end
 
    -- Generate a deduplicated list.
-   table.sort( inv, function(a, b) return a:name() < b:name() end )
+   table.sort( inv, function(a, b) return a:nameRaw() < b:nameRaw() end )
 
    local last  = nil
    local found = 0
@@ -336,7 +336,7 @@ function buildOutfitTable( size, property, outfits )
    for k,v in ipairs( outfits ) do
       local _, osize, oprop = v:slot()
       if size == osize and property == oprop then
-         table.insert(out, v:name())
+         table.insert(out, v:nameRaw())
       end
    end
 
@@ -352,8 +352,8 @@ function removeNonCores( slottype )
       local slot, _, prop = v:slot()
       if not prop and (not slottype or slot == slottype) then
          -- Store and remove old
-         player.addOutfit(v:name())
-         pp:rmOutfit(v:name())
+         player.addOutfit(v:nameRaw())
+         pp:rmOutfit(v:nameRaw())
       end
    end
 end
@@ -369,11 +369,11 @@ function equipDefaults( defaults )
       -- Remove if required but not default.
       if prop and v ~= defaults[prop].outfit then
          -- Store and remove old
-         player.addOutfit(v:name())
-         pp:rmOutfit(v:name())
+         player.addOutfit(v:nameRaw())
+         pp:rmOutfit(v:nameRaw())
 
          -- Add new
-         pp:addOutfit( defaults[k].outfit:name() )
+         pp:addOutfit( defaults[k].outfit:nameRaw() )
 
          -- Remove the outfit from the to-add list.
          defaults[k] = nil
@@ -388,7 +388,7 @@ end
 function fillMissing( missing )
    -- Fill empty core slots with defaults.
    for k,v in pairs(missing) do
-      player.pilot():addOutfit( v.outfit:name() )
+      player.pilot():addOutfit( v.outfit:nameRaw() )
    end
 end
 

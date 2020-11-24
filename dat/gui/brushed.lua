@@ -374,7 +374,7 @@ function update_nav()
    end
    if nav_hyp then
       if nav_hyp:known() then
-         navstring = _(nav_hyp:name())
+         navstring = nav_hyp:name()
       else
          navstring = _("Unknown")
       end
@@ -866,12 +866,12 @@ function render( dt )
    gfx.renderTex( popup_bottom, popup_left_x + mod_x, popup_left_y - 5 + mod_y )
 
    if nav_pnt ~= nil then
-      renderField( _(nav_pnt:name()), fields_x + 4, fields_y, fields_w, col_text, icon_pnt_target )
+      renderField( nav_pnt:name(), fields_x + 4, fields_y, fields_w, col_text, icon_pnt_target )
    else
       renderField( _("None"), fields_x + 4, fields_y, fields_w, col_unkn, icon_pnt_target )
    end
    if autonav_hyp ~= nil then
-      local name = _(autonav_hyp:name())
+      local name = autonav_hyp:name()
       if not autonav_hyp:known() then
          name = _("Unknown")
       end
@@ -892,7 +892,7 @@ function render( dt )
    gfx.renderTex( top_bar_center_sheen, screen_w/2 - 77, tbar_y + tbar_h - 56 )
 
    --System name
-   local sysname = _(system.cur():name())
+   local sysname = system.cur():name()
    local sysname_w = gfx.printDim(false, sysname)
    gfx.print( false, sysname, screen_w/2 - 67, tbar_y + tbar_h - tbar_center_h + 19, col_text, 132, true )
    gfx.renderTex( top_bar_center_sheen2, screen_w/2 - 66, tbar_y + tbar_h - 92 )
@@ -954,7 +954,7 @@ function render( dt )
       end
 
       gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, col_text, 63, false )
-      gfx.print( true, _(planet.name), ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, planet.col )
+      gfx.print( true, planet.name, ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, planet.col )
 
       gfx.renderTex( top_bar_center_sheen, ta_pnt_pane_x + 11, ta_pnt_pane_y + ta_pnt_pane_h - 15 )
    end

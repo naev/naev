@@ -94,7 +94,7 @@ function cargo_calculateRoute ()
    
    
    --Determine amount of piracy along the route
-   local jumps = system.jumpPath( system.cur(), destsys:name() )
+   local jumps = system.jumpPath( system.cur(), destsys )
    local risk = system.cur():presences()["Pirate"]
    if risk == nil then risk = 0 end
    if jumps then
@@ -118,7 +118,7 @@ function cargo_calculateRoute ()
          return
       end
    else
-      cargo = cargoes[rnd.rnd(1,#cargoes)]:name()
+      cargo = cargoes[rnd.rnd(1,#cargoes)]:nameRaw()
    end
    
 

@@ -109,7 +109,7 @@ end
 
 
 function standing( f, delta )
-   local fn = f:name()
+   local fn = f:nameRaw()
    if orig_standing[fn] ~= nil then
       if delta >= 0 then
          if var.peek( misnvars[fn] ) ~= temp_cap then
@@ -120,7 +120,7 @@ function standing( f, delta )
       end
    elseif fn == "Pirate" and delta >= 0 then
       local sf = system.cur():faction()
-      if sf ~= nil and orig_standing[sf:name()] ~= nil then
+      if sf ~= nil and orig_standing[sf:nameRaw()] ~= nil then
          -- We delay choice of when you are discovered to prevent players
          -- from subverting the system to eliminate the risk.
          if next_discovered then
@@ -162,7 +162,7 @@ function abort ()
    local msg = noticed_offplanet
    if landed then
       local f = planet.cur():faction()
-      if f ~= nil and orig_standing[f:name()] ~= nil then
+      if f ~= nil and orig_standing[f:nameRaw()] ~= nil then
          msg = noticed_onplanet
       end
    end

@@ -97,10 +97,10 @@ function create()
    reward = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
 
    misn.setTitle( _("Shipment to %s in %s (%s)"):format(
-         _(destplanet:name()), _(destsys:name()), tonnestring(amount) ) )
+         destplanet:name(), destsys:name(), tonnestring(amount) ) )
    misn.markerAdd(destsys, "computer")
    misn.setDesc(
-      misn_desc[tier]:format( _(destplanet:name()), _(destsys:name()) ) .. "\n\n"
+      misn_desc[tier]:format( destplanet:name(), destsys:name() ) .. "\n\n"
       .. misn_details:format(
          _(cargo), tonnestring(amount), numjumps, traveldist, piracyrisk ) )
    misn.setReward( creditstring(reward) )
@@ -118,7 +118,7 @@ function accept()
    end
    misn.accept()
    misn.cargoAdd(_(cargo), amount) -- TODO: change to jettisonable cargo once custom commodities are in. For piracy purposes.
-   misn.osdCreate(osd_title, {osd_msg:format(_(destplanet:name()), _(destsys:name()))})
+   misn.osdCreate(osd_title, {osd_msg:format(destplanet:name(), destsys:name())})
    hook.land("land")
 end
 

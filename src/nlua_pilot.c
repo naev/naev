@@ -840,7 +840,7 @@ static int pilotL_eq( lua_State *L )
 }
 
 /**
- * @brief Gets the pilot's current name.
+ * @brief Gets the pilot's current (translated) name.
  *
  * @usage name = p:name()
  *
@@ -3175,7 +3175,7 @@ static int pilotL_cargoFree( lua_State *L )
  * @brief Checks to see how many tonnes of a specific type of cargo the pilot has.
  *
  *    @luatparam Pilot p The pilot to get the cargo count of.
- *    @luatparam string type Type of cargo to count.
+ *    @luatparam string type Raw (untranslated) name of the cargo to count.
  *    @luatreturn number The amount of cargo the player has.
  * @luafunc cargoHas( p, type )
  */
@@ -3199,7 +3199,7 @@ static int pilotL_cargoHas( lua_State *L )
  * @usage n = pilot.cargoAdd( player.pilot(), "Food", 20 )
  *
  *    @luatparam Pilot p The pilot to add cargo to.
- *    @luatparam string type Name of the cargo to add.
+ *    @luatparam string type Raw (untranslated) name of the cargo to add.
  *    @luatparam number quantity Quantity of cargo to add.
  *    @luatreturn number The quantity of cargo added.
  * @luafunc cargoAdd( p, type, quantity )
@@ -3243,7 +3243,7 @@ static int pilotL_cargoAdd( lua_State *L )
  * @usage n = pilot.cargoRm( player.pilot(), "Food", 20 )
  *
  *    @luatparam Pilot p The pilot to remove cargo from.
- *    @luatparam string type Name of the cargo to remove.
+ *    @luatparam string type Raw (untranslated) name of the cargo to remove.
  *    @luatparam number quantity Quantity of the cargo to remove.
  *    @luatreturn number The number of cargo removed.
  * @luafunc cargoRm( p, type, quantity )
@@ -3286,7 +3286,8 @@ static int pilotL_cargoRm( lua_State *L )
  *
  * The list has the following members:<br />
  * <ul>
- * <li><b>name:</b> name of the cargo.</li>
+ * <li><b>name:</b> translated name of the cargo (equivalent to the output of commodity.name()).</li>
+ * <li><b>nameRaw:</b> raw (untranslated) name of the cargo (equivalent to the output of commodity.nameRaw()).</li>
  * <li><b>q:</b> quantity of the cargo.</li>
  * <li><b>m:</b> true if cargo is for a mission.</li>
  * </ul>
@@ -3310,6 +3311,10 @@ static int pilotL_cargoList( lua_State *L )
       /* Represents the cargo. */
       lua_newtable(L); /* t, i, t */
       lua_pushstring(L, "name"); /* t, i, t, i */
+      lua_pushstring(L, _(p->commodities[i].commodity->name)); /* t, i, t, i, s */
+      lua_rawset(L,-3); /* t, i, t */
+      lua_newtable(L); /* t, i, t */
+      lua_pushstring(L, "nameRaw"); /* t, i, t, i */
       lua_pushstring(L, p->commodities[i].commodity->name); /* t, i, t, i, s */
       lua_rawset(L,-3); /* t, i, t */
       lua_pushstring(L, "q"); /* t, i, t, i */

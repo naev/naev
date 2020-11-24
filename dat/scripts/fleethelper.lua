@@ -89,35 +89,6 @@ function addRawShips( ship, ai, location, faction, count )
 end
 
 
---[[
--- @brief Renames ships (or tables of ships) with full regex support.
---
--- @usage renameShips( pilots, "Trader", "" ) -- Removes "Trader" prefix, if present.
---
---    @luaparam ship Ship(s) to modify.
---    @luaparam match Pattern to match.
---    @luaparam replace Pattern to replace matches with.
---    @luaparam limit Maximum number of times to replace.
--- @luafunc renameShips( ship, match, replace, limit )
---]]
-function renameShips( ship, match, replace, limit )
-   if type(ship) ~= "table" and type(ship) ~= "userdata" then
-      print(_("renameShips: Error, ship list is not a pilot or table of pilots!"))
-      return
-   elseif type(ship) == "userdata" then -- Put lone pilot into table.
-      ship = { ship }
-   end
-
-   if match == nil or replace == nil then
-      print(_("renameShips: Error, need a pattern to match and one to replace!"))
-      return
-   end
-
-   for k,v in ipairs(ship) do
-      v:rename(string.gsub( tostring(v:name()), match, replace, limit ))
-   end
-end
-
 function _buildDupeTable( input, count )
    local tmp = {}
    if type(input) == "table" then

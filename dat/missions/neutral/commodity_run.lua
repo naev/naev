@@ -84,30 +84,30 @@ function create ()
    misplanet = planet.cur()
    missys = system.cur()
    
-   chosen_comm = commchoices[ rnd.rnd( 1, #commchoices ) ]
-   local mult = rnd.rnd( 1, 3 ) + math.abs( rnd.threesigma() * 2 )
-   price = commodity.price( chosen_comm ) * mult
+   chosen_comm = commodity.get(commchoices[rnd.rnd(1, #commchoices)])
+   local mult = rnd.rnd(1, 3) + math.abs(rnd.threesigma() * 2)
+   price = chosen_comm:price() * mult
 
    local last_run = var.peek( "last_commodity_run" )
    if last_run ~= nil then
-      local delay = time.create( 0, 7, 0 )
-      if time.get() < time.fromnumber( last_run ) + delay then
+      local delay = time.create(0, 7, 0)
+      if time.get() < time.fromnumber(last_run) + delay then
          misn.finish(false)
       end
    end
 
    for i, j in ipairs( missys:planets() ) do
       for k, v in pairs( j:commoditiesSold() ) do
-         if v == commodity.get(chosen_comm) then
+         if v == chosen_comm then
             misn.finish(false)
          end
       end
    end
 
    -- Set Mission Details
-   misn.setTitle( misn_title:format( _(chosen_comm) ) )
+   misn.setTitle( misn_title:format( chosen_comm:name() ) )
    misn.markerAdd( system.cur(), "computer" )
-   misn.setDesc( misn_desc:format( _(misplanet:name()), _(chosen_comm) ) )
+   misn.setDesc( misn_desc:format( misplanet:name(), chosen_comm:name() ) )
    misn.setReward( _("%s per tonne"):format( creditstring( price ) ) )
     
 end
@@ -117,41 +117,41 @@ function accept ()
    misn.accept()
    update_active_runs( 1 )
 
-   osd_msg[1] = osd_msg[1]:format( _(chosen_comm) )
-   osd_msg[2] = osd_msg[2]:format( _(chosen_comm), _(misplanet:name()), _(missys:name()) )
-   misn.osdCreate( osd_title, osd_msg )
+   osd_msg[1] = osd_msg[1]:format( chosen_comm:name() )
+   osd_msg[2] = osd_msg[2]:format( chosen_comm:name(), misplanet:name(), missys:name() )
+   misn.osdCreate(osd_title, osd_msg)
 
-   hook.enter( "enter" )
-   hook.land( "land" )
+   hook.enter("enter")
+   hook.land("land")
 end
 
 
 function enter ()
-   if pilot.cargoHas( player.pilot(), chosen_comm ) > 0 then
-      misn.osdActive( 2 )
+   if pilot.cargoHas( player.pilot(), chosen_comm:nameRaw() ) > 0 then
+      misn.osdActive(2)
    else
-      misn.osdActive( 1 )
+      misn.osdActive(1)
    end
 end
 
 
 function land ()
-   local amount = pilot.cargoHas( player.pilot(), chosen_comm )
+   local amount = pilot.cargoHas( player.pilot(), chosen_comm:nameRaw() )
    local reward = amount * price
 
    if planet.cur() == misplanet and amount > 0 then
-      local txt = cargo_land[ rnd.rnd( 1, #cargo_land ) ]:format(
-            _(chosen_comm), creditstring(reward) )
-      tk.msg( cargo_land_title, txt )
-      pilot.cargoRm( player.pilot(), chosen_comm, amount )
-      player.pay( reward )
-      update_active_runs( -1 )
-      misn.finish( true )
+      local txt = cargo_land[rnd.rnd(1, #cargo_land)]:format(
+            chosen_comm:name(), creditstring(reward) )
+      tk.msg(cargo_land_title, txt)
+      pilot.cargoRm(player.pilot(), chosen_comm:nameRaw(), amount)
+      player.pay(reward)
+      update_active_runs(-1)
+      misn.finish(true)
    end
 end
 
 
 function abort ()
-   update_active_runs( -1 )
+   update_active_runs(-1)
 end
 

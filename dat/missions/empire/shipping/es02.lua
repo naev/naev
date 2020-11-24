@@ -103,12 +103,12 @@ function accept ()
    reward = 750000
    misn.setTitle(misn_title)
    misn.setReward( creditstring(reward) )
-   misn.setDesc( string.format( misn_desc[1], _(destsys:name()) ) )
+   misn.setDesc( string.format( misn_desc[1], destsys:name() ) )
 
    -- Flavour text and mini-briefing
-   tk.msg( title[1], string.format( text[2], _(destsys:name()), _(destsys:name()) ) )
+   tk.msg( title[1], string.format( text[2], destsys:name(), destsys:name() ) )
    tk.msg( title[1], string.format( text[3], creditstring(reward) ) )
-   misn.osdCreate(misn_title, {misn_desc[1]:format(_(destsys:name()))})
+   misn.osdCreate(misn_title, {misn_desc[1]:format(destsys:name())})
    -- Set hooks
    hook.land("land")
    hook.enter("enter")
@@ -236,8 +236,8 @@ function board ()
    -- Update mission details
    misn_stage = 2
    misn.markerMove( misn_marker, retsys )
-   misn.setDesc( string.format(misn_desc[2], _(ret:name()), _(retsys:name()) ))
-   misn.osdCreate(misn_title, {misn_desc[2]:format(_(ret:name()),_(retsys:name()))})
+   misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name() ))
+   misn.osdCreate(misn_title, {misn_desc[2]:format(ret:name(),retsys:name())})
 
    -- Force unboard
    player.unboard()

@@ -165,7 +165,7 @@ function land()
       destplanet, destsys = planet.get(route[stage])
       origin = planet.cur()
       player.refuel(200)
-      tk.msg(stoptitle, stoptext:format(_(planet.cur():name())))
+      tk.msg(stoptitle, stoptext:format(planet.cur():name()))
       joannejumped = true -- She "jumped" into the current system by taking off.
       player.takeoff()
    elseif planet.cur() == destplanet and joannelanded and stage == 4 then
@@ -279,7 +279,7 @@ end
 -- Load hook. Makes sure the player can't start on military stations.
 function load()
    if stage > 1 and stage < 5 then
-      tk.msg(stoptitle, stoptext:format(_(planet.cur():name())))
+      tk.msg(stoptitle, stoptext:format(planet.cur():name()))
       player.takeoff()
    elseif stage == 5 then
       tk.msg(title3, text4:format(player.name()))
@@ -289,12 +289,12 @@ end
 
 function joanneJump()
    joannejumped = true
-   player.msg(jumpmsg:format(_(nextsys:name())))
+   player.msg(jumpmsg:format(nextsys:name()))
 end
 
 function joanneLand()
    joannelanded = true
-   player.msg(landmsg:format(_(destplanet:name())))
+   player.msg(landmsg:format(destplanet:name()))
 end
 
 function joanneDead()

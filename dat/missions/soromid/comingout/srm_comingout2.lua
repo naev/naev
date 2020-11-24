@@ -84,7 +84,7 @@ function accept ()
    if started then
       txt = text[4]:format( player.name() )
    else
-      txt = text[1]:format( player.name(), _(misplanet:name()), _(missys:name()) )
+      txt = text[1]:format( player.name(), misplanet:name(), missys:name() )
    end
    started = true
 
@@ -94,11 +94,11 @@ function accept ()
       misn.accept()
 
       misn.setTitle( misn_title )
-      misn.setDesc( misn_desc:format( _(misplanet:name()) ) )
+      misn.setDesc( misn_desc:format( misplanet:name() ) )
       misn.setReward( creditstring( credits ) )
       marker = misn.markerAdd( missys, "low" )
 
-      osd_desc[1] = osd_desc[1]:format( _(missys:name()), _(misplanet:name()) )
+      osd_desc[1] = osd_desc[1]:format( missys:name(), misplanet:name() )
       misn.osdCreate( misn_title, osd_desc )
 
       hook.land( "land" )

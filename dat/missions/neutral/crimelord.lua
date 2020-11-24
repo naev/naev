@@ -55,8 +55,8 @@ end
 
 function accept ()
    -- Note: this mission does not make any system claims.
-   if not tk.yesno( title[0], string.format( text[0], _(targetsystem:name()),
-   _(targetsystem:name()), _(targetsystem:name()) ) ) then --if accepted
+   if not tk.yesno( title[0], string.format( text[0], targetsystem:name(),
+         targetsystem:name(), targetsystem:name() ) ) then --if accepted
       misn.finish()
    end
    
@@ -65,9 +65,9 @@ function accept ()
    tk.msg( title[1], text[1] ) --dialogue 2
    misn.setTitle( title[0] ) --OSD stuff
    misn.setReward( reward_desc )
-   misn.setDesc( string.format( misn_desc, _(targetsystem:name()) ) )
+   misn.setDesc( string.format( misn_desc, targetsystem:name() ) )
    misn.markerAdd( targetsystem, "low" )
-   misn.osdCreate(title[0], {misn_desc:format(_(targetsystem:name()))})
+   misn.osdCreate(title[0], {misn_desc:format(targetsystem:name())})
    
    startsystem = system.cur() --needed to make thugs appear random in the first system
    last_system = system.cur() --ignore this one, it's just the initialization of the variable
@@ -86,8 +86,20 @@ function enter () --aforementioned triggered function
       "Hawking", "Kestrel" }
       defenders = addRawShips( defenderships, "dvaered", jump.pos(targetsystem, last_system),
       "Associates" ) --add a defending force to help you
-      renameShips( defenders, "^", _("Associate ") )
       for pilot_number, pilot_object in pairs(defenders) do
+         local rn = pilot_object:ship():nameRaw() 
+         if rn == "Lancelot" then
+            pilot_object:rename(_("Associate Lancelot"))
+         elseif rn == "Admonisher" then
+            pilot_object:rename(_("Associate Admonisher"))
+         elseif rn == "Pacifier" then
+            pilot_object:rename(_("Associate Pacifier"))
+         elseif rn == "Hawking" then
+            pilot_object:rename(_("Associate Hawking"))
+         elseif rn == "Kestrel" then
+            pilot_object:rename(_("Associate Kestrel"))
+         end
+
          pilot_object:setFriendly() --I think they like you
          pilot_object:setPos( pilot_object:pos() +
          vec2.new( rnd.rnd(400, 800) * (rnd.rnd(0,1) - 0.5) * 2,
@@ -117,7 +129,6 @@ function spawnBaddies ()
    end
 
    thugs = addRawShips( "Admonisher", ai, sp, "Thugs", 4 )
-   -- renameShips( thugs, "^.*", "Thug" )
    for pilot_number, pilot_object in ipairs(thugs) do
       pilot_object:rename(_("Thug"))
       pilot_object:setHostile(true) --they don't like you

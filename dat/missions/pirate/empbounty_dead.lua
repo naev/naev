@@ -140,14 +140,14 @@ function create ()
    bounty_setup()
 
    -- Set mission details
-   misn.setTitle( misn_title[level]:format( _(missys:name()) ) )
+   misn.setTitle( misn_title[level]:format( missys:name() ) )
 
    if planet.cur():faction() == faction.get("Pirate") then
-      misn.setDesc( misn_desc:format( target_faction, _(missys:name()) ) )
+      misn.setDesc( misn_desc:format( target_faction, missys:name() ) )
    else
       -- We're not on a pirate stronghold, so include a warning that the
       -- mission is in fact illegal (for new players).
-      misn.setDesc( misn_desc:format( target_faction, _(missys:name()) ) .. "\n\n" .. desc_illegal_warning )
+      misn.setDesc( misn_desc:format( target_faction, missys:name() ) .. "\n\n" .. desc_illegal_warning )
    end
 
    misn.setReward( creditstring( credits ) )
@@ -158,7 +158,7 @@ end
 function accept ()
    misn.accept()
 
-   osd_msg[1] = osd_msg[1]:format( _(missys:name()) )
+   osd_msg[1] = osd_msg[1]:format( missys:name() )
    osd_msg[2] = osd_msg[2]:format( target_faction )
    misn.osdCreate( osd_title, osd_msg )
 
@@ -189,7 +189,7 @@ function jumpout ()
    jumps_permitted = jumps_permitted - 1
    last_sys = system.cur()
    if not job_done and last_sys == missys then
-      fail( msg[3]:format( _(last_sys:name()) ) )
+      fail( msg[3]:format( last_sys:name() ) )
    end
 end
 

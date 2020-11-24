@@ -203,7 +203,7 @@ function render_nav ()
       gfx.print( nil, _("Landing"), nav_x, y, col_console, nav_w, true )
       y = y - 5 - smallfont_h
       if nav_pnt ~= nil then
-         str = _(nav_pnt:name())
+         str = nav_pnt:name()
          col = col_white
       else
          str = _("Off")
@@ -215,7 +215,7 @@ function render_nav ()
       y = y - 5 - smallfont_h
       if nav_hyp ~= nil then
          if nav_hyp:known() then
-            str = _(nav_hyp:name())
+            str = nav_hyp:name()
          else
             str = _("Unknown")
          end
@@ -323,14 +323,14 @@ function render_target ()
    if not scan then
       name = _("Unknown")
    else
-      name = _(ptarget:name())
+      name = ptarget:name()
    end
    local w = gfx.printDim( nil, name )
    gfx.print( w > target_w, name, target_x, target_y-13, col, target_w )
 
    -- Display faction
    if scan and target_fact ~= nil and target_fact:known() then
-      local faction = _(target_fact:name())
+      local faction = target_fact:name()
       local w = gfx.printDim( nil, faction )
       gfx.print( true, faction, target_x, target_y-26, col_white, target_w )
    end

@@ -123,8 +123,8 @@ function create()
    reward = 2.0 * (avgrisk * numjumps * jumpreward + traveldist * distreward) * (1. + 0.05*rnd.twosigma())
    
    misn.setTitle( misn_title[convoysize]:format(
-      _(destplanet:name()), _(destsys:name()) ) )
-   misn.setDesc( misn_desc:format( _(destplanet:name()), _(destsys:name()) )
+      destplanet:name(), destsys:name() ) )
+   misn.setDesc( misn_desc:format( destplanet:name(), destsys:name() )
       .. "\n\n" .. misn_details:format(
          _(cargo), numjumps, traveldist, piracyrisk ) )
    misn.markerAdd(destsys, "computer")
@@ -161,7 +161,7 @@ function accept()
    unsafe = false
 
    misn.accept()
-   misn.osdCreate(osd_title, {osd_msg:format(_(destplanet:name()), _(destsys:name()))})
+   misn.osdCreate(osd_title, {osd_msg:format(destplanet:name(), destsys:name())})
 
    hook.takeoff("takeoff")
    hook.jumpin("jumpin")
@@ -230,7 +230,7 @@ function traderJump( p, j )
       exited = exited + 1
       if p:exists() then
          player.msg( string.format(
-            _("%s has jumped to %s."), p:name(), _(j:dest():name()) ) )
+            _("%s has jumped to %s."), p:name(), j:dest():name() ) )
       end
    else
       traderDeath()

@@ -113,10 +113,10 @@ function accept ()
 
       misn.accept()
 
-      osd_desc[1] = osd_desc[1]:format( _(missys:name()) )
+      osd_desc[1] = osd_desc[1]:format( missys:name() )
       misn.osdCreate( osd_title, osd_desc )
       misn.setTitle( misn_title )
-      misn.setDesc( misn_desc:format( _(missys:name()) ) )
+      misn.setDesc( misn_desc:format( missys:name() ) )
       marker = misn.markerAdd( missys, "plot" )
       misn.setReward( misn_reward )
 

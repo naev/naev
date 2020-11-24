@@ -41,8 +41,8 @@ function getsysatdistance( sys, min, max, filter, data, hidden )
    end
 
    open  = { sys }
-   close = { [sys:name()]=sys }
-   dist  = { [sys:name()]=0 }
+   close = { [sys:nameRaw()]=sys }
+   dist  = { [sys:nameRaw()]=0 }
 
    -- Run max times
    for i=1,max do
@@ -52,10 +52,10 @@ function getsysatdistance( sys, min, max, filter, data, hidden )
          adjsys = s:adjacentSystems( hidden ) -- Get them all
          for _,a in ipairs(adjsys) do
             -- Must not have been explored previously
-            if close[ a:name() ] == nil then
+            if close[ a:nameRaw() ] == nil then
                nopen[ #nopen+1 ] = a
-               close[ a:name() ] = a
-               dist[  a:name() ] = i
+               close[ a:nameRaw() ] = a
+               dist[  a:nameRaw() ] = i
             end
          end
       end

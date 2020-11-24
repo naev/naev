@@ -73,8 +73,8 @@ function create ()
     destplanet = planets[index][1]
     destsys = planets[index][2]
 
-    misndesc = misndesc:format(_(destplanet:name()), _(destsys:name()))
-    OSD[1] = OSD[1]:format(_(destsys:name()), _(destplanet:name()))
+    misndesc = misndesc:format(destplanet:name(), destsys:name())
+    OSD[1] = OSD[1]:format(destsys:name(), destplanet:name())
 
     misn.setNPC(NPCname, "sirius/unique/rodentman")
     misn.setDesc(NPCdesc)
@@ -82,7 +82,7 @@ end
 
 
 function accept ()
-    if tk.yesno(title[1], text[1]:format(_(destplanet:name()), _(destsys:name()), _(destplanet:name()))) then
+    if tk.yesno(title[1], text[1]:format(destplanet:name(), destsys:name(), destplanet:name())) then
         misn.accept()
         misn.setDesc(misndesc)
         misn.setReward(misnreward)

@@ -51,8 +51,8 @@ function create()
 
     setFine(rep)
     
-    misn.setTitle(misn_title:format(_(fac:name())))
-    misn.setDesc(misn_desc:format(_(fac:name()), creditstring(fine)))
+    misn.setTitle(misn_title:format(fac:name()))
+    misn.setDesc(misn_desc:format(fac:name(), creditstring(fine)))
     misn.setReward(misn_reward)
 end
 
@@ -63,13 +63,13 @@ function accept()
     end
     
     player.pay(-fine)
-    tk.msg(misn_title:format(_(fac:name())), accepted:format(_(fac:name()), _(fac:name()), _(fac:name())))
+    tk.msg(misn_title:format(fac:name()), accepted:format(fac:name(), fac:name(), fac:name()))
     
     fac:modPlayerRaw(-rep)
     
     misn.accept()
     osd_msg[1] = osd_msg1:format(-rep)
-    misn.osdCreate(misn_title:format(_(fac:name())), osd_msg)
+    misn.osdCreate(misn_title:format(fac:name()), osd_msg)
     
     standhook = hook.standing("standing")
     
@@ -90,14 +90,14 @@ function standing(hookfac, delta)
                 -- The player has successfully erased his criminal record.
                 excess = excess + delta
                 fac:modPlayerRaw(-delta + rep)
-                tk.msg(successtitle:format(_(fac:name())), successtext)
+                tk.msg(successtitle:format(fac:name()), successtext)
                 misn.finish(true)
             end
 
             excess = excess + delta
             fac:modPlayerRaw(-delta)
             osd_msg[1] = osd_msg1:format(-rep)
-            misn.osdCreate(misn_title:format(_(fac:name())), osd_msg)
+            misn.osdCreate(misn_title:format(fac:name()), osd_msg)
         else
             excess = excess + delta
             if excess < 0 or fac:playerStanding() < 0 then
@@ -115,6 +115,6 @@ function abort()
     -- Reapply the original negative reputation.
     fac:modPlayerRaw(rep)
 
-    tk.msg(failuretitle:format(_(fac:name())), failuretext)
+    tk.msg(failuretitle:format(fac:name()), failuretext)
     misn.finish(false)
 end
