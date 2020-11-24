@@ -1376,7 +1376,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
 
 
-   gl_blitTexture( marker_pilot_gfx, px, py, rw, rh, 0, 0, 1, 1, &col, 0. );
+   gl_blitTexture( marker_pilot_gfx, px-rw/2, py-rh/2, rw, rh, 0, 0, 1, 1, &col, 0. );
 
 
    /* Draw name. */
@@ -1488,7 +1488,7 @@ void gui_renderPlayer( double res, int overlay )
 
    /* Render the cross. */
    // gl_renderCross( x, y, r, &cRadar_player );
-   gl_blitTexture( marker_player_gfx, x, y, w, h, 0, 0, 1, 1, &cRadar_player,  -M_PI/2 + player.p->solid->dir );
+   gl_blitTexture( marker_player_gfx, x-w/2, y-h/2, w, h, 0, 0, 1, 1, &cRadar_player,  -M_PI/2 + player.p->solid->dir );
 
 
    if (overlay)
@@ -1768,15 +1768,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    if (!overlay)
       col.a = 1.-interference_alpha;
 
-   /* 
-   projection = gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0);
-   projection = gl_Matrix4_Rotate2d(projection, -M_PI/2-jp->angle);
-   gl_beginSolidProgram(projection, &col);
-   gl_vboActivateAttribOffset( gui_triangle_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_LINE_STRIP, 0, 4 );
-   gl_endSolidProgram();
-   */
-   gl_blitTexture( marker_jumppoint_gfx, cx, cy, 22, 22, 0, 0, 1, 1, &col,  -M_PI/2-jp->angle );
+   gl_blitTexture( marker_jumppoint_gfx, cx-11, cy-11, 22, 22, 0, 0, 1, 1, &col,  -M_PI/2-jp->angle );
 
 
    /* Render name. */

@@ -194,8 +194,8 @@ void gl_blitTexture(  const glTexture* texture,
    if (c == NULL)
       c = &cWhite;
 
-   hw = w/4.0;
-   hh = h/4.0;
+   hw = w/2.0;
+   hh = h/2.0;
 
 
    /* Set the vertex. */

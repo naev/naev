@@ -293,8 +293,8 @@ static void ovr_mrkRenderAll( double res )
    for (i=0; i<array_size(ovr_markers); i++) {
       mrk = &ovr_markers[i];
 
-      x = mrk->u.pt.x / res + map_overlay_width() / 2.;
-      y = mrk->u.pt.y / res + map_overlay_height() / 2.;
+      x = mrk->u.pt.x / res + map_overlay_center_x();
+      y = mrk->u.pt.y / res + map_overlay_center_y();
       gl_renderCross( x, y, 5., &cRadar_hilight );
 
       if (mrk->text != NULL)

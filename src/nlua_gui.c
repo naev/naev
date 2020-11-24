@@ -433,7 +433,7 @@ static int guiL_menuSmall( lua_State *L )
  *    @luatparam number right Right boundary in pixels
  *    @luatparam number bottom Bottom boundary in pixels
  *    @luatparam number left Left boundary in pixels
- * @luafunc setMapOverlayBounds( top, right, bottom, left )
+ * @luafunc mapOverlayBounds( top, right, bottom, left )
  */
 static int guiL_setMapOverlayBounds( lua_State *L )
 {
