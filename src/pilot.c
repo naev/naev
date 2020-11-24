@@ -277,6 +277,10 @@ static int pilot_validEnemy( const Pilot* p, const Pilot* target )
    if (!pilot_validTarget( p, target ))
       return 0;
 
+   /* Must not be fuzzy. */
+   if (pilot_inRangePilot( p, target, NULL ) != 1)
+      return 0;
+
    /* He's ok. */
    return 1;
 }
