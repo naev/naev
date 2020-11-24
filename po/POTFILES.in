@@ -301,7 +301,6 @@ dat/scripts/prng.lua
 dat/scripts/proximity.lua
 dat/scripts/selectiveclear.lua
 dat/snd/music.lua
-po/credits.pot
 src/ai.c
 src/ai.h
 src/array.c
@@ -621,4 +620,3 @@ src/utf8.c
 src/utf8.h
 src/weapon.c
 src/weapon.h
-po/xml.pot

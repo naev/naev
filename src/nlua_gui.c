@@ -53,7 +53,7 @@ static const luaL_Reg guiL_methods[] = {
    { "mouseMoveEnable", guiL_mouseMoveEnable },
    { "menuInfo", guiL_menuInfo },
    { "menuSmall", guiL_menuSmall },
-   { "mapOverlayBounds", guiL_setMapOverlayBounds },
+   { "setMapOverlayBounds", guiL_setMapOverlayBounds },
    {0,0}
 }; /**< GUI methods. */
 
@@ -433,7 +433,7 @@ static int guiL_menuSmall( lua_State *L )
  *    @luatparam number right Right boundary in pixels
  *    @luatparam number bottom Bottom boundary in pixels
  *    @luatparam number left Left boundary in pixels
- * @luafunc mapOverlayBounds( top, right, bottom, left )
+ * @luafunc setMapOverlayBounds( top, right, bottom, left )
  */
 static int guiL_setMapOverlayBounds( lua_State *L )
 {

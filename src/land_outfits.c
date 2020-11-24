@@ -197,7 +197,7 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
          w - (20 + iw + 20) - 200 - 20, 320, 0, "txtDescShort", &gl_smallFont, NULL, NULL );
 
    window_addText( wid, 20 + iw + 20, -60-128-10-32,
-         60, 160, 0, "txtSDesc", &gl_smallFont, NULL,
+         90, 160, 0, "txtSDesc", &gl_smallFont, NULL,
          _("\anOwned:\a0\n"
          "\n"
          "\anSlot:\a0\n"
@@ -207,8 +207,8 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
          "\anPrice:\a0\n"
          "\anMoney:\a0\n"
          "\anLicense:\a0\n") );
-   window_addText( wid, 20 + iw + 20 + 60, -60-128-10-32,
-         w - (20 + iw + 20 + 60), 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
+   window_addText( wid, 20 + iw + 20 + 90, -60-128-10-32,
+         w - (20 + iw + 20 + 90), 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
    window_addText( wid, 20 + iw + 20, -60-128-10-160-32,
          w-(iw+80), MAX(180, h - 500), /* TODO: Size exactly and resize instead of moving? */
 	 0, "txtDescription", &gl_smallFont, NULL, NULL );
@@ -394,7 +394,7 @@ void outfits_update( unsigned int wid, char* str )
       /* Reposition. */
       th = 128;
       window_moveWidget( wid, "txtSDesc", 20+iw+20, -60-th-20-32 );
-      window_moveWidget( wid, "txtDDesc", 20+iw+20+60, -60-th-20-32 );
+      window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -60-th-20-32 );
       window_moveWidget( wid, "txtDescription", 20+iw+20, -240-32);
       return;
    }
@@ -456,7 +456,7 @@ void outfits_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtDescShort", _(outfit->desc_short) );
    th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, _(outfit->desc_short) ) );
    window_moveWidget( wid, "txtSDesc", 20+iw+20, -60-th-20-32 );
-   window_moveWidget( wid, "txtDDesc", 20+iw+20+60, -60-th-20-32 );
+   window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -60-th-20-32 );
    th += gl_printHeightRaw( &gl_smallFont, 250, buf );
    window_moveWidget( wid, "txtDescription", 20+iw+20, -60-th-20-32 );
 }
