@@ -38,10 +38,12 @@ if HAVE_NLS
 XMLFILES    = $(top_srcdir)/po/POTFILES_XML.in
 TRANSLATIONITS = $(top_srcdir)/po/its/translation.its
 CREDITSPOT  = $(top_builddir)/po/credits.pot
-CREDITSTEXT = $(top_builddir)/dat/AUTHORS $(top_builddir)/dat/intro
+CREDITSTEXT = $(top_srcdir)/dat/AUTHORS $(top_srcdir)/dat/intro
+NAEVSRCPOT  = $(top_builddir)/po/$(GETTEXT_PACKAGE).pot
+NAEVPOT     = $(top_builddir)/po/$(PACKAGE).pot
 XMLPOT      = $(top_builddir)/po/xml.pot
 EXTRA_DIST += $(XMLFILES) $(TRANSLATIONITS)
-CLEANFILES += $(CREDITSPOT) $(XMLPOT)
+CLEANFILES += $(CREDITSPOT) $(NAEVPOT) $(XMLPOT)
 endif # HAVE_NLS
 
 .PHONY: data pot docs utils help install-ndata soundtrack
@@ -52,6 +54,7 @@ data: pot $(VERSIONFILE) $(LICENSEFILE)
 
 $(LICENSEFILE): $(top_srcdir)/LICENSE
 	@echo "  CP    $<"
+	@mkdir -p $(top_builddir)/dat
 	cp $< $@
 
 if HAVE_NLS
@@ -74,10 +77,12 @@ endif # HAVE_ITSTOOL
 if HAVE_DATA
 pot: $(CREDITSPOT) $(XMLPOT) $(LANGUAGEFILE)
 	$(MAKE) -C po
-	$(MAKE) -C po $(PACKAGE).pot
-	$(top_srcdir)/utils/gettext.sh $(top_srcdir)
+	$(MAKE) -C po naev_src.pot
+	$(XGETTEXT) --from-code=UTF-8 -o $(NAEVPOT) $(NAEVSRCPOT) $(XMLPOT) $(CREDITSPOT)
+	$(top_srcdir)/utils/gettext.sh $(top_builddir)
 
 $(LANGUAGEFILE): $(top_srcdir)/po/LINGUAS
+	@mkdir -p $(top_builddir)/dat
 	tail -n +2 $< > $@
 else # HAVE_DATA
 pot:
@@ -95,6 +100,7 @@ $(NAEV):
 	$(LN_S) "src/$(NAEV)" "$(NAEV)"
 
 $(VERSIONFILE): src/config.h
+	@mkdir -p $(top_builddir)/dat
 	@echo $(VERSION) > $@
 
 if HAVE_UTILS

@@ -15,7 +15,8 @@ AC_CONFIG_AUX_DIR([build])
 AM_GNU_GETTEXT([external])
 # Currently steam packages 0.19.7 which is the limiting factor here
 AM_GNU_GETTEXT_VERSION([0.19.7])
-GETTEXT_PACKAGE=${PACKAGE_NAME}
+# The actual ${PACKAGE_NAME}.pot file is a combination of the below, a credits.pot file, an an xml.pot file.
+GETTEXT_PACKAGE=${PACKAGE_NAME}_src
 AC_SUBST(GETTEXT_PACKAGE)
 
 IT_PROG_INTLTOOL
