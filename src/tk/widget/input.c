@@ -106,16 +106,19 @@ static void inp_render( Widget* inp, double bx, double by )
    /* main background */
    toolkit_drawRect( x - 4, y - 4, inp->w + 8, inp->h + 8, &cBlack, NULL );
 
-   if (inp->dat.inp.oneline)
-      /* center vertically */
-      ty = y - (inp->h - gl_smallFont.h)/2.;
-   else
-      /* Align top-left. */
-      ty = y - gl_smallFont.h / 2.;
-
    /* Draw text. */
-   gl_printTextRaw( inp->dat.inp.font, inp->w-10., inp->h,
-         x+5., ty, &cGreen, -1., &inp->dat.inp.input[ inp->dat.inp.view ] );
+   if (inp->dat.inp.oneline) {
+      /* center vertically, print whatever text fits regardless of word boundaries. */
+      ty = y + (inp->h - inp->dat.inp.font->h)/2.;
+      gl_printMaxRaw( inp->dat.inp.font, inp->w-10.,
+            x+5., ty, &cGreen, -1., &inp->dat.inp.input[ inp->dat.inp.view ] );
+   }
+   else {
+      /* Align top-left, print with word wrapping. */
+      ty = y - inp->dat.inp.font->h / 2.;
+      gl_printTextRaw( inp->dat.inp.font, inp->w-10., inp->h,
+            x+5., ty, &cGreen, -1., &inp->dat.inp.input[ inp->dat.inp.view ] );
+   }
 
    /* Draw cursor. */
    if (wgt_isFlag( inp, WGT_FLAG_FOCUSED )) {
@@ -456,7 +459,7 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
       assert(inp->dat.inp.input[ inp->dat.inp.byte_max - curpos + inp->dat.inp.pos ] == '\0');
 
       while (inp->dat.inp.oneline && inp->dat.inp.view > 0) {
-         n = gl_printWidthRaw( &gl_smallFont,
+         n = gl_printWidthRaw( inp->dat.inp.font,
                inp->dat.inp.input + inp->dat.inp.view - 1 );
          if (n+10 >= inp->w)
             break;
