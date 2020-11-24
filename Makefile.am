@@ -1,11 +1,8 @@
 ACLOCAL_AMFLAGS = --install -I m4
 
 SUBDIRS = lib src
-DIST_SUBDIRS = lib src
+DIST_SUBDIRS = lib src utils
 
-if HAVE_UTILS
-SUBDIRS += utils
-endif # HAVE_NLS
 if HAVE_NLS
 SUBDIRS += po
 DIST_SUBDIRS += po
@@ -22,9 +19,7 @@ dist_pkgdata_DATA = naev-confupdate.sh
 dist_man6_MANS = naev.6
 dist_doc_DATA = README TODO LICENSE
 
-if HAVE_UTILS
 MKSPR      = $(top_builddir)/utils/mkspr/mkspr$(EXEEXT)
-endif
 NAEV	     = $(top_builddir)/$(PACKAGE)$(EXEEXT)
 
 VERSIONFILE = $(top_builddir)/dat/VERSION
@@ -103,14 +98,10 @@ $(VERSIONFILE): src/config.h
 	@mkdir -p $(top_builddir)/dat
 	@echo $(VERSION) > $@
 
-if HAVE_UTILS
 utils: $(MKSPR)
 
 $(MKSPR):
 	$(MAKE) -C utils/mkspr
-else # HAVE_UTILS
-utils:
-endif # HAVE_UTILS
 
 install-data-local:
 	(cd $(top_srcdir)/dat; find . -type f -exec install -Dm 644 "{}" "$(DESTDIR)$(pkgdatadir)/dat/{}" \;)

@@ -92,14 +92,6 @@ AC_CHECK_PROG([ITSTOOL], [itstool], [itstool])
 #
 # Checks for build environment
 #
-AC_MSG_CHECKING([whether we are building utils])
-AS_IF([test -d "$srcdir/utils"], [
-  have_utils=yes
-], [
-  have_utils=no
-])
-AC_MSG_RESULT([$have_utils])
-
 AC_MSG_CHECKING([whether we have data])
 AS_IF([test -d "$srcdir/dat"], [
   have_data=yes
@@ -580,7 +572,6 @@ AM_CONDITIONAL([HAVE_WINDRES], [test -n "$WINDRES"])
 AM_CONDITIONAL([HAVE_MACOS], [test "x$have_macos" = "xyes"])
 AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 AM_CONDITIONAL([HAVE_LDOC], [test -n "$LDOC"])
-AM_CONDITIONAL([HAVE_UTILS], [test "x$have_utils" = "xyes"])
 AM_CONDITIONAL([HAVE_DATA], [test "x$have_data" = "xyes"])
 AM_CONDITIONAL([HAVE_DOCS], [test "x$have_docs" = "xyes"])
 AM_CONDITIONAL([HAVE_MKSPR], [test "x$have_mkspr" = "xyes"])
@@ -604,11 +595,9 @@ AC_CONFIG_FILES([Makefile
       src/Makefile
       src/tk/Makefile
       src/tk/widget/Makefile
-      build/shave])
-AS_IF([test "x$have_utils" = "xyes"], [
-  AC_CONFIG_FILES([utils/Makefile
-     utils/mkspr/Makefile])
-])
+      build/shave
+      utils/Makefile
+      utils/mkspr/Makefile])
 AS_IF([test "x$have_docs" = "xyes"], [
   AC_CONFIG_FILES([docs/Makefile])
 ])
@@ -632,7 +621,6 @@ AC_MSG_NOTICE([lib:])
 AC_MSG_NOTICE([  csparse:    $used_csparse])
 AC_MSG_NOTICE([  lua:        $used_lua])
 echo
-AC_MSG_NOTICE([utils:        $have_utils])
 AC_MSG_NOTICE([  mkspr:      $have_mkspr])
 echo
 AC_MSG_NOTICE([debug mode:   $enable_debug])
