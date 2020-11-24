@@ -75,8 +75,7 @@ AC_PROG_OBJC
 AC_PROG_LN_S
 AC_PROG_RANLIB
 AM_PROG_AR
-# Should be AX_PROG_CC_FOR_BUILD -- except Steam builds occur in a paleozoic environment where that doesn't work.
-AX_CC_FOR_BUILD
+AX_PROG_CC_FOR_BUILD
 PKG_PROG_PKG_CONFIG
 
 AC_CHECK_PROG([CUT], [cut], [cut])
