@@ -26052,7 +26052,7 @@ msgstr ""
 
 #: dat/missions/sirius/srs_ferry.lua:61
 #, lua-format
-msgid "%s space transport to %s for %s-class citizen"
+msgid "%s space transport to %%s for %s-class citizen"
 msgstr ""
 
 #. =Politics=--

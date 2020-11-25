@@ -39,12 +39,6 @@ misn_desc[2] = _("Sizable cargo delivery to %s in the %s system.")
 misn_desc[3] = _("Large cargo delivery to %s in the %s system.")
 misn_desc[4] = _("Bulk freight delivery to %s in the %s system.")
 
-misn_details = _([[
-Cargo: %s (%s)
-Jumps: %d
-Travel distance: %d
-%s]])
-
 piracyrisk = {}
 piracyrisk[1] = _("Piracy Risk: None")
 piracyrisk[2] = _("Piracy Risk: Low")
@@ -99,12 +93,8 @@ function create()
    misn.setTitle( _("Shipment to %s in %s (%s)"):format(
          destplanet:name(), destsys:name(), tonnestring(amount) ) )
    misn.markerAdd(destsys, "computer")
-   misn.setDesc(
-      misn_desc[tier]:format( destplanet:name(), destsys:name() ) .. "\n\n"
-      .. misn_details:format(
-         _(cargo), tonnestring(amount), numjumps, traveldist, piracyrisk ) )
+   cargo_setDesc( misn_desc[tier], cargo, amount, destplanet, nil, piracyrisk );
    misn.setReward( creditstring(reward) )
-
 end
 
 -- Mission is accepted

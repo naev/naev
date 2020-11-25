@@ -27,12 +27,6 @@ require "numstring.lua"
 
 misn_desc = _("Pirate cargo transport of contraband goods to %s in the %s system.")
 
-misn_details = _([[
-Cargo: %s (%s)
-Jumps: %d
-Travel distance: %d
-Time limit: %s]])
-
 msg_timeup = _("MISSION FAILED: You have failed to deliver the goods on time!")
 
 osd_title = _("Pirate Shipping")
@@ -102,13 +96,8 @@ function create()
       _("PIRACY: Illegal Cargo transport (%s of %s)"), tonnestring(amount),
       _(cargo) ) )
    misn.markerAdd(destsys, "computer")
-   misn.setDesc(
-      misn_desc:format( destplanet:name(), destsys:name() ) .. "\n\n"
-      .. misn_details:format(
-         _(cargo), tonnestring(amount), numjumps, traveldist,
-         (timelimit - time.get()):str() ) )
+   cargo_setDesc( misn_desc, cargo, amount, destplanet, timelimit );
    misn.setReward( creditstring(reward) )
-
 end
 
 -- Mission is accepted
