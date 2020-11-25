@@ -5,7 +5,7 @@
 
 set -e
 
-REPO="naikari/naikari"
+REPO="naev/naev"
 
 while getopts d:t:r: OPTION "$@"; do
     case $OPTION in
