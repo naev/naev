@@ -1,13 +1,14 @@
 #!/bin/bash
 # Manually runs the nightly workflow when sent.
 
-# Pass in -t <personalAPItoken> -r <releasetype, (nightly, prerelease, release)>
+# Pass in -t <personalAPItoken> -r <releasetype, (nightly, prerelease, release)> -g <github repo name e.g. (naev/naev)>
 
 set -e
 
+# Defaults
 REPO="naev/naev"
 
-while getopts d:t:r: OPTION "$@"; do
+while getopts d:t:r:g: OPTION "$@"; do
     case $OPTION in
     d)
         set -x
@@ -17,6 +18,9 @@ while getopts d:t:r: OPTION "$@"; do
         ;;
     r)
         RELEASETYPE="${OPTARG}"
+        ;;
+    g)
+        REPO="${OPTARG}"
         ;;
     esac
 done
