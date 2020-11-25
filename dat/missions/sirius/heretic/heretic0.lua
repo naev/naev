@@ -73,13 +73,13 @@ end
 
 function accept()
    --the obligatory opening messages
-   local aname = targetasset:nameRaw()
+   local aname = targetasset:name()
 
-   if not tk.yesno( misn_title, bmsg[1]:format( _(aname), creditstring(reward) ) ) then
+   if not tk.yesno( misn_title, bmsg[1]:format( aname, creditstring(reward) ) ) then
       tk.msg(misn_title,rejected)
       misn.finish(false)
    end
-   tk.msg(misn_title, bmsg[2]:format(_(aname)))
+   tk.msg(misn_title, bmsg[2]:format(aname))
    misn.setDesc(misn_desc)
    misn.accept()
    misn.markerAdd(targetsystem,"high")
