@@ -3313,7 +3313,6 @@ static int pilotL_cargoList( lua_State *L )
       lua_pushstring(L, "name"); /* t, i, t, i */
       lua_pushstring(L, _(p->commodities[i].commodity->name)); /* t, i, t, i, s */
       lua_rawset(L,-3); /* t, i, t */
-      lua_newtable(L); /* t, i, t */
       lua_pushstring(L, "nameRaw"); /* t, i, t, i */
       lua_pushstring(L, p->commodities[i].commodity->name); /* t, i, t, i, s */
       lua_rawset(L,-3); /* t, i, t */
