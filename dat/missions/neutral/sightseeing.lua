@@ -270,6 +270,7 @@ function timer ()
       job_done = true
       player.msg( msg[1]:format( startingplanet:name() ) )
       misn.osdActive( 3 )
+      misn.markerMove( marker, startingsystem )
    end
 
    if not job_done then
