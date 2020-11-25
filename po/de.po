@@ -8812,8 +8812,8 @@ msgstr "Abkühlung …"
 #. Colour the planet name based on friendliness.
 #: dat/gui/slim.lua:404
 #, lua-format
-msgid " (%st free)"
-msgstr " (%st frei)"
+msgid " (%s free)"
+msgstr " (%s frei)"
 
 #: dat/gui/slim.lua:412
 #, lua-format

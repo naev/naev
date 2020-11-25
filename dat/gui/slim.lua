@@ -402,7 +402,7 @@ end
 
 function update_cargo()
    cargol = pp:cargoList()
-   cargofree = string.format( _(" (%st free)"), pp:cargoFree() )
+   cargofree = string.format( _(" (%s free)"), tonnestring_short( pp:cargoFree() ) )
    cargofreel = gfx.printDim( true, cargofree )
    cargoterml = gfx.printDim( true, ", [...]" )
    cargo = {}
@@ -410,7 +410,7 @@ function update_cargo()
       if v.q == 0 then
          cargo[k] = v.name
       else
-         cargo[k] = string.format( _("%dt %s"), v.q, _(v.name) )
+         cargo[k] = tonnestring_short(v.q) .. " " .. _(v.name)
       end
       if v.m then
          cargo[k] = cargo[k] .. "*"
