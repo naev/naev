@@ -34,7 +34,7 @@ end
 -- ship.
 --]]
 local function using_pirate_ship()
-   local s = player.pilot():ship():name()
+   local s = player.pilot():ship():nameRaw()
 
    return has(s, {
       "Hyena",
@@ -54,7 +54,7 @@ end
 -- cruiser or carrier.
 --]]
 local function using_impressive_ship()
-   local s = player.pilot():ship():name()
+   local s = player.pilot():ship():nameRaw()
 
    return has(s, {
       "Empire Peacemaker",

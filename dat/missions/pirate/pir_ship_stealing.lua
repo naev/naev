@@ -279,7 +279,7 @@ function accept()
          _(theship.faction), _(theship.class), creditstring(theship.price) ) ) then
       if player.credits() >= theship.price then
          tk.msg( approval.title, approval.message:format(
-            _(theship.planet:name()), _(theship.system:name()) ) )
+            theship.planet:name(), theship.system:name() ) )
 
          player.pay( -theship.price )
          misn.accept()

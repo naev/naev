@@ -67,13 +67,13 @@ function create()
    misn.setTitle(misn_title)
    misn.setNPC(npc_name, "sirius/unique/strangeman")
    misn.setDesc(bar_desc)
-   osd[1] = osd[1]:format(_(targetasset:name()),_(targetsystem:name()))
-   misn_desc = misn_desc:format(_(targetasset:name()),_(targetsystem:name()))
+   osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())
+   misn_desc = misn_desc:format(targetasset:name(),targetsystem:name())
 end
 
 function accept()
    --the obligatory opening messages
-   local aname = targetasset:name()
+   local aname = targetasset:nameRaw()
 
    if not tk.yesno( misn_title, bmsg[1]:format( _(aname), creditstring(reward) ) ) then
       tk.msg(misn_title,rejected)
@@ -96,7 +96,7 @@ end
 
 function land ()
    if planet.cur() == targetasset then
-      tk.msg( misn_title, emsg[1]:format( _(targetasset:name()) ) )
+      tk.msg( misn_title, emsg[1]:format( targetasset:name() ) )
       player.pay(reward)
       misn.cargoRm(small_arms) --this mission was an act against Sirius, and we want Sirius to not like us a little bit.
       faction.modPlayer("Nasin",3) --Nasin reputation is used in mission rewards, and I am trying to avoid having the pay skyrocket.

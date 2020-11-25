@@ -176,7 +176,7 @@ function enter()
 
       --Check if the player uses a Shark
       playership = player.pilot():ship()
-      playershipname = playership:name()
+      playershipname = playership:nameRaw()
 
       if playershipname ~= "Shark" and playershipname ~= "Empire Shark" then
          player.msg( "\ar" .. noshark_msg .. "\a0" )

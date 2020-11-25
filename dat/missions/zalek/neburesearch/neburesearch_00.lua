@@ -107,8 +107,8 @@ function accept()
     osd_msg[1] = string.format( _("Fly to the %s system"), t_sys[1] )
     osd_msg[2] = string.format( _("Fly to the %s system"), t_sys[2] )
     osd_msg[3] = string.format(
-        _("Return to %s in the %s system"), _(homeworld:name()),
-        _(homeworld_sys:name()) )
+        _("Return to %s in the %s system"), homeworld:name(),
+        homeworld_sys:name() )
     misn.osdCreate(osd_title, osd_msg)
     
     thook = hook.takeoff("takeoff")
@@ -120,7 +120,7 @@ function land()
     landed = planet.cur()
     if misn_stage == 3 and landed == homeworld then
         tk.msg( "", finish_text:format(
-            _(homeworld:name()), creditstring(credits) ) )
+            homeworld:name(), creditstring(credits) ) )
         misn.cargoRm(cargo)
         player.pay(credits)
         misn.markerRm(misn_marker)
@@ -199,7 +199,7 @@ end
 function endSecondScan()
     tk.msg( "", string.format(
         _([["OK, my measurements are complete! Let's go back to %s."]]),
-        _(homeworld:name()) ) )
+        homeworld:name() ) )
     misn_stage = 3
     misn.markerMove(misn_marker, homeworld_sys)
     misn.osdActive(3)
