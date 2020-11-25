@@ -111,7 +111,7 @@ end
 
 function has_bioship ()
    for i, o in ipairs( player.pilot():outfits() ) do
-      if is_bioship_part( o:name() ) then
+      if is_bioship_part( o:nameRaw() ) then
          return true
       end
    end
@@ -126,9 +126,9 @@ end
 function get_bioship_parts ()
    local parts = {}
    for i, o in ipairs( player.pilot():outfits() ) do
-      local index = undeveloped_bioship_part_index( o:name() )
+      local index = undeveloped_bioship_part_index( o:nameRaw() )
       if index ~= nil then
-         parts[ #parts + 1 ] = { o:name(), index }
+         parts[ #parts + 1 ] = { o:nameRaw(), index }
       end
    end
    return parts

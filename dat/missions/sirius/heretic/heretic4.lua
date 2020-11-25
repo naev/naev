@@ -67,13 +67,13 @@ function create()
    misn.setNPC(npc_name, "sirius/unique/draga")
    misn.setDesc(bar_desc)
 
-   osd[1] = osd[1]:format(_(targetasset:name()), _(targetsys:name()))
+   osd[1] = osd[1]:format(targetasset:name(), targetsys:name())
 end
 
 function accept()
    --initial convo. Kept it a yes/no to help with the urgent feeling of the situation.
 
-   local msg = bmsg[1]:format( _(targetasset:name()), _(targetsys:name()) )
+   local msg = bmsg[1]:format( targetasset:name(), targetsys:name() )
    if not tk.yesno(misn_title, msg) then
       misn.finish ()
    end
@@ -86,7 +86,7 @@ function accept()
    people_carried =  (16 * free_cargo) + 7 --average weight per person is 62kg. one ton / 62 is 16. added the +7 for ships with 0 cargo.
    misn.setTitle(misn_title)
    misn.setReward(creditstring(reward))
-   misn.setDesc(misn_desc:format( _(targetasset:name()), _(targetsys:name())))
+   misn.setDesc(misn_desc:format( targetasset:name(), targetsys:name()))
    misn.osdCreate(misn_title,osd)
    refugees = misn.cargoAdd("Refugees",free_cargo)
    player.takeoff()
@@ -143,7 +143,7 @@ end
 function misn_over() --aren't you glad thats over?
    if planet.cur() == planet.get("Ulios") then
       --introing one of the characters in the next chapter.
-      tk.msg(misn_title,emsg[1]:format( _(targetasset:name()) ))
+      tk.msg(misn_title,emsg[1]:format( targetasset:name() ))
       player.pay(reward)
       misn.cargoRm(refugees)
       misn_tracker = misn_tracker + 1

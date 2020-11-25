@@ -472,7 +472,7 @@ function get_econ_article( commod_name, plnt_name, credits )
    local i = rnd.rnd( 1, #econ_articles )
    local title = econ_articles[i]["title"]
    local desc = econ_articles[i]["desc"]:format(
-      _(commod_name), _(plnt_name), numstring(credits) )
+      commod_name, plnt_name, numstring(credits) )
 
    return title, desc
 end

@@ -245,7 +245,7 @@ function racer1idle(p)
 end
 function nexttarget1()
    if target[1] == 4 then
-      racers[1]:land(curplanet:name())
+      racers[1]:land(curplanet)
       hook.rm(hp1)
       else
       racers[1]:goto(checkpoint[target[1]]:pos())
@@ -260,7 +260,7 @@ function racer2idle(p)
 end
 function nexttarget2()
    if target[2] == 4 then
-      racers[2]:land(curplanet:name())
+      racers[2]:land(curplanet)
       hook.rm(hp2)
       else
       racers[2]:goto(checkpoint[target[2]]:pos())
@@ -274,7 +274,7 @@ function racer3idle(p)
 end
 function nexttarget3()
    if target[3] == 4 then
-      racers[3]:land(curplanet:name())
+      racers[3]:land(curplanet)
       hook.rm(hp3)
    else
       racers[3]:goto(checkpoint[target[3]]:pos())
