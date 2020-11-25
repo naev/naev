@@ -1851,7 +1851,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
          _(outfit_getType(temp)),
          temp->cpu,
          1./temp->u.bay.delay,
-         temp->u.bay.amount, temp->u.bay.ammo_name );
+         temp->u.bay.amount, _(temp->u.bay.ammo_name) );
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
@@ -2529,7 +2529,7 @@ static void outfit_launcherDesc( Outfit* o )
          _("Holds %d %s:\n"
          "%.0f%% Penetration\n"
          "%.2f DPS [%.0f Damage]\n"),
-         o->u.lau.amount, o->u.lau.ammo_name,
+         o->u.lau.amount, _(o->u.lau.ammo_name),
          a->u.amm.dmg.penetration * 100.,
          1. / o->u.lau.delay * a->u.amm.dmg.damage, a->u.amm.dmg.damage );
 
