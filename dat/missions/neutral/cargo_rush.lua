@@ -159,6 +159,27 @@ function accept()
             destplanet:name() ) ) then
          misn.finish()
       end
+   elseif player.jumps() < numjumps then
+      if not tk.yesno( _("Short on fuel"), string.format(
+            _("You will require at least %s to reach %s. Your ship can only make %s, so you will have to refuel at least %s, which will take additional time and may cause you to miss the deadline. Accept the mission anyway?"),
+            jumpstring(numjumps), destplanet:name(), jumpstring(player.jumps()),
+            -- Note: math.ceil() - 1 because for example 6/3=2, but that
+            -- only requires 1 refuel (i.e. 2 trips). math.floor() would
+            -- only catch this for non-integer results.
+            timestring(math.ceil(numjumps / player.jumps()) - 1) ) ) then
+         misn.finish()
+      end
+   else
+      for i, j in ipairs( system.cur():jumpPath(destsys) ) do
+         if not j:known() then
+            if not tk.yesno( _("Unknown route"), string.format(
+                  _("The fastest route to %s is not currently known to you. Landing to buy maps, spending time searching for unknown jumps, or taking a route longer than %s may cause you to miss the deadline. Accept the mission anyway?"),
+                  destplanet:name(), jumpstring(numjumps) ) ) then
+               misn.finish()
+            end
+            break
+         end
+      end
    end
    misn.accept()
    intime = true
