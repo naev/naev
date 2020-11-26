@@ -60,10 +60,9 @@ osd_msg[2] = _("Take the %s to %s in the %s system")
 osd_msg["__save"] = true
 
 
--- TODO: find a better way to index all available commodities
-commchoices = {
-   "Food", "Ore", "Industrial Goods", "Medicine", "Luxury Goods", "Gold",
-   "Diamond", "Water" }
+-- A script may require "missions/neutral/commodity_run.lua" and override this
+-- with a table of (raw) commodity names to choose from.
+commchoices = nil
 
 
 function update_active_runs( change )
@@ -84,7 +83,12 @@ function create ()
    misplanet = planet.cur()
    missys = system.cur()
    
-   chosen_comm = commodity.get(commchoices[rnd.rnd(1, #commchoices)])
+   if commchoices == nil then
+      local std = commodity.getStandard();
+      chosen_comm = std[rnd.rnd(1, #std)]
+   else
+      chosen_comm = commodity.get(commchoices[rnd.rnd(1, #commchoices)])
+   end
    local mult = rnd.rnd(1, 3) + math.abs(rnd.threesigma() * 2)
    price = chosen_comm:price() * mult
 
@@ -109,7 +113,6 @@ function create ()
    misn.markerAdd( system.cur(), "computer" )
    misn.setDesc( misn_desc:format( misplanet:name(), chosen_comm:name() ) )
    misn.setReward( _("%s per tonne"):format( creditstring( price ) ) )
-    
 end
 
 

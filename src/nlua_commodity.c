@@ -24,6 +24,7 @@
 /* Commodity metatable methods. */
 static int commodityL_eq( lua_State *L );
 static int commodityL_get( lua_State *L );
+static int commodityL_getStandard( lua_State *L );
 static int commodityL_name( lua_State *L );
 static int commodityL_nameRaw( lua_State *L );
 static int commodityL_price( lua_State *L );
@@ -33,6 +34,7 @@ static const luaL_Reg commodityL_methods[] = {
    { "__tostring", commodityL_name },
    { "__eq", commodityL_eq },
    { "get", commodityL_get },
+   { "getStandard", commodityL_getStandard },
    { "name", commodityL_name },
    { "nameRaw", commodityL_nameRaw },
    { "price", commodityL_price },
@@ -184,8 +186,6 @@ static int commodityL_eq( lua_State *L )
 }
 
 
-
-
 /**
  * @brief Gets a commodity.
  *
@@ -212,6 +212,33 @@ static int commodityL_get( lua_State *L )
 
    /* Push. */
    lua_pushcommodity(L, commodity);
+   return 1;
+}
+
+
+/**
+ * @brief Gets the list of standard commodities.
+ *
+ * @luatreturn table A table containing commodity objects, namely those which are standard (buyable/sellable anywhere).
+ * @luafunc getStandard()
+ */
+static int commodityL_getStandard( lua_State *L )
+{
+   unsigned int i, nb;
+   Commodity **standard;
+
+   /* Get commodity. */
+   standard = standard_commodities( &nb );
+
+   /* Push. */
+   lua_newtable( L );                       /* Stack: t */
+   for (i=0; i<nb; i++) {
+      lua_pushnumber( L, i+1 );            /* Stack: t, i (1-based index) */
+      lua_pushcommodity( L, standard[i] ); /* Stack: t, i, c */
+      lua_rawset( L, -3 );                 /* Stack: t */
+   }
+
+   free( standard );
    return 1;
 }
 
