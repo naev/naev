@@ -340,7 +340,7 @@ jobs:
       - name: Install SteamCMD
         run: |
           echo steamcmd steam/question select "I AGREE" | sudo debconf-set-selections
-          sudo apt-get install lib32gcc1 steamcmd
+          sudo apt-get install lib32gcc1 libsdl2-2.0-0:i386 steamcmd
 
       - name: Download Artifacts
         uses: actions/download-artifact@v2
