@@ -105,8 +105,8 @@ function create ()
    destsysname = system.name(destsys)
    destplanet = getlandable(destsys) -- pick a landable planet in the destination system
    destplanetname = destplanet:name()
-   tk.msg(title[2], string.format(directions[nextstop], destplanetname, destsysname)) -- NPC telling you where to go
-   misn.osdCreate(misn_title, {misn_desc[2]:format(destplanetname, destsysname)})
+   tk.msg(title[2], string.format(directions[nextstop], _(destplanetname), _(destsysname))) -- NPC telling you where to go
+   misn.osdCreate(misn_title, {misn_desc[2]:format(_(destplanetname), _(destsysname))})
    misn_marker = misn.markerAdd( destsys, "low" )
 
    -- Force unboard
@@ -139,7 +139,7 @@ end
 function land()
    if planet.cur() == destplanet then -- We've arrived!
       if nextstop >= 3 then -- This is the last stop
-         tk.msg(title[4], string.format(text[3], destsysname)) -- Final message
+         tk.msg(title[4], string.format(text[3], _(destsysname))) -- Final message
          player.pay(500000)
          misn.cargoJet(carg_id)
          addMiscLog( log_text )
@@ -153,8 +153,8 @@ function land()
          destsysname = system.name(destsys)
          destplanet = getlandable(destsys) -- pick a landable planet in the destination system
          destplanetname = destplanet:name()
-         tk.msg(title[2], string.format(directions[nextstop], destplanetname, destsysname)) -- NPC telling you where to go
-         misn.osdCreate(misn_title, {misn_desc[2]:format(destplanetname, destsysname)})
+         tk.msg(title[2], string.format(directions[nextstop], _(destplanetname), _(destsysname))) -- NPC telling you where to go
+         misn.osdCreate(misn_title, {misn_desc[2]:format(_(destplanetname), _(destsysname))})
          misn.markerMove( misn_marker, destsys )
       end
    end

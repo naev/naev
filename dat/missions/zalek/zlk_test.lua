@@ -1,18 +1,18 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Za'lek Test">
-  <avail>
-   <priority>3</priority>
-   <cond>faction.playerStanding("Za'lek") &gt; 5 and planet.cur():services()["outfits"] == "Outfits"</cond>
-   <chance>450</chance>
-   <location>Computer</location>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <tier>2</tier>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>3</priority>
+  <cond>faction.playerStanding("Za'lek") &gt; 5 and planet.cur():services()["outfits"] == "Outfits"</cond>
+  <chance>450</chance>
+  <location>Computer</location>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <tier>2</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    Handles the randomly generated Za'lek test missions.
@@ -125,7 +125,7 @@ function create()
 
    misn.setTitle( misn_title:format( typeOfEng ))
    misn.markerAdd(destsys, "computer")
-   misn.setDesc(title:format(destplanet:name(), destsys:name(), numjumps, traveldist ))
+   misn.setDesc(title:format(_(destplanet:name()), _(destsys:name()), numjumps, traveldist ))
    misn.setReward(creditstring(reward))
 
 end
@@ -141,9 +141,9 @@ function accept()
       stage = 0
       player.addOutfit("Za'lek Test Engine")
       tk.msg( msg_title[1], znpcs[ rnd.rnd(1, #znpcs) ] )
-      tk.msg( msg_title[1], string.format( msg_msg[1], destplanet:name(), destsys:name() ))
+      tk.msg( msg_title[1], string.format( msg_msg[1], _(destplanet:name()), _(destsys:name()) ))
 
-      osd_msg[1] = string.format( osd_msg[1], destplanet:name(), destsys:name() )
+      osd_msg[1] = string.format( osd_msg[1], _(destplanet:name()), _(destsys:name()) )
       misn.osdCreate(osd_title, osd_msg)
       takehook = hook.takeoff( "takeoff" )
       enterhook = hook.enter("enter")
@@ -230,7 +230,7 @@ function teleportation()
    local newsyslist = getsysatdistance(system.cur(), 1, 3)
    local newsys = newsyslist[rnd.rnd(1, #newsyslist)]
    player.teleport(newsys)
-   tk.msg(teleport_title, teleport_text:format(newsys:name()))
+   tk.msg(teleport_title, teleport_text:format(_(newsys:name())))
    player.pilot():setHealth(50, 0)
    player.pilot():setEnergy(0)
 end
@@ -336,7 +336,7 @@ end
 --Check if the player has an outfit mounted
 function isMounted(itemName)
    for i, j in ipairs(player.pilot():outfits()) do
-      if j:name() == itemName then
+      if j == outfit.get(itemName) then
          return true
       end
    end
@@ -346,7 +346,7 @@ end
 --Check if the player owns an outfit
 function isOwned(itemName)
    for i, j in ipairs(player.outfits()) do
-      if j:name() == itemName then
+      if j == outfit.get(itemName) then
          return true
       end
    end

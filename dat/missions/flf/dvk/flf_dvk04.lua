@@ -81,15 +81,15 @@ end
 
 function accept ()
    if tk.yesno( title[1], text[1]:format(
-         player.name(), missys:name(), creditstring( credits ) ) ) then
+         player.name(), _(missys:name()), creditstring( credits ) ) ) then
       tk.msg( title[1], text[2] )
 
       misn.accept()
 
-      osd_desc[1] = osd_desc[1]:format( missys:name() )
+      osd_desc[1] = osd_desc[1]:format( _(missys:name()) )
       misn.osdCreate( osd_title, osd_desc )
       misn.setTitle( misn_title )
-      misn.setDesc( misn_desc:format( missys:name() ) )
+      misn.setDesc( misn_desc:format( _(missys:name()) ) )
       marker = misn.markerAdd( missys, "plot" )
       misn.setReward( creditstring( credits ) )
 

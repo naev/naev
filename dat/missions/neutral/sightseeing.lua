@@ -148,8 +148,8 @@ function create ()
    nolux_known = false
 
    -- Set mission details
-   misn.setTitle( misn_title:format( missys:name() ) )
-   misn.setDesc( misn_desc:format( missys:name() ) )
+   misn.setTitle( misn_title:format( _(missys:name()) ) )
+   misn.setDesc( misn_desc:format( _(missys:name()) ) )
    misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
@@ -167,8 +167,8 @@ function accept ()
 
    misn.accept()
 
-   osd_msg[1] = osd_msg[1]:format( missys:name() )
-   osd_msg[3] = osd_msg[3]:format( startingplanet:name(),startingsystem:name() )
+   osd_msg[1] = osd_msg[1]:format( _(missys:name()) )
+   osd_msg[3] = osd_msg[3]:format( _(startingplanet:name()),_(startingsystem:name()) )
    misn.osdCreate( osd_title, osd_msg )
    civs = misn.cargoAdd( "Civilians", 0 )
    job_done = false
@@ -268,7 +268,7 @@ function timer ()
    -- Another check since the previous block could change the result
    if #points <= 0 then
       job_done = true
-      player.msg( msg[1]:format( startingplanet:name() ) )
+      player.msg( msg[1]:format( _(startingplanet:name()) ) )
       misn.osdActive( 3 )
    end
 

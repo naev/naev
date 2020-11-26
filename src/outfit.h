@@ -28,6 +28,16 @@
 #define OUTFIT_PROP_WEAP_BLOWUP_SHIELD (1<<13) /**< Weapon blows up (shield spfx)
                                                    when timer is up. */
 
+/* Outfit filter labels. [Doc comments are also translator notes and must precede the #define.] */
+/** Color-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title. */
+#define OUTFIT_LABEL_WEAPON            N_("\ab W ")
+/** Color-coded abbreviation for "Utility [outfit]", short enough to use as a tab/column title. */
+#define OUTFIT_LABEL_UTILITY           N_("\ag U ")
+/** Color-coded abbreviation for "Structure [outfit]", short enough to use as a tab/column title. */
+#define OUTFIT_LABEL_STRUCTURE         N_("\ap S ")
+/** Color-coded abbreviation for "Core [outfit]", short enough to use as a tab/column title. */
+#define OUTFIT_LABEL_CORE              N_("\aRCore")
+
 
 /*
  * Needed because some outfittypes call other outfits.
@@ -397,6 +407,15 @@ const char* outfit_getAmmoAI( const Outfit *o );
  */
 const char *outfit_existsCase( const char* name );
 char **outfit_searchFuzzyCase( const char* name, int *n );
+
+/*
+ * Filter.
+ */
+int outfit_filterWeapon( const Outfit *o );
+int outfit_filterUtility( const Outfit *o );
+int outfit_filterStructure( const Outfit *o );
+int outfit_filterCore( const Outfit *o );
+int outfit_filterOther( const Outfit *o );
 
 /*
  * get data from outfit

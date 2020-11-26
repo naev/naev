@@ -113,11 +113,11 @@ function accept ()
       -- mission details
       misn.setTitle( misn_title )
       misn.setReward( misn_reward )
-      misn.setDesc( misn_desc:format(pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )
+      misn.setDesc( misn_desc:format(_(pickupWorld:name()), _(pickupSys:name()), _(delivWorld:name()), _(delivSys:name()) ) )
 
       -- OSD
-      OSDdesc[1] =  OSDdesc[1]:format(pickupWorld:name(), pickupSys:name())
-      OSDdesc[2] =  OSDdesc[2]:format(delivWorld:name(), delivSys:name())
+      OSDdesc[1] =  OSDdesc[1]:format(_(pickupWorld:name()), _(pickupSys:name()))
+      OSDdesc[2] =  OSDdesc[2]:format(_(delivWorld:name()), _(delivSys:name()))
 
       pickedup = false
       droppedoff = false
@@ -125,7 +125,7 @@ function accept ()
       marker = misn.markerAdd( pickupSys, "low" )  -- pickup
       misn.osdCreate( OSDtitle, OSDdesc )  -- OSD
 
-      tk.msg( title[2], text[2]:format( pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )
+      tk.msg( title[2], text[2]:format( _(pickupWorld:name()), _(pickupSys:name()), _(delivWorld:name()), _(delivSys:name()) ) )
 
       landhook = hook.land ("land")
       flyhook = hook.takeoff ("takeoff")

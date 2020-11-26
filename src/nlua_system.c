@@ -738,6 +738,8 @@ static int systemL_addGatherable( lua_State *L )
 
 /**
  * @brief Returns the factions that have presence in a system and their respective presence values.
+ *        Faction names are internal -- can be passed to other functions as a faction identifier, but
+ *        should not be shown to the user without being translated by _().
  *
  *  @usage if sys:presences()["Empire"] then -- Checks to see if Empire has ships in the system
  *  @usage if sys:presences()[faction.get("Pirate")] then -- Checks to see if the Pirates have ships in the system

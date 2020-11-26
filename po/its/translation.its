@@ -8,6 +8,7 @@
   <its:translateRule selector="/Start/player/ship/@name" translate="yes"/>
 
   <!-- Factions -->
+  <its:translateRule selector="/Factions/faction/display" translate="yes"/>
   <its:translateRule selector="/Factions/faction/name" translate="yes"/>
   <its:translateRule selector="/Factions/faction/longname" translate="yes"/>
 
@@ -32,4 +33,7 @@
   <!-- Outfits -->
   <its:translateRule selector="/outfit/@name" translate="yes"/>
   <its:translateRule selector="/outfit/general/description" translate="yes"/>
+
+  <!-- Star Systems -->
+  <its:translateRule selector="/ssys/@name" translate="yes"/>
 </its:rules>

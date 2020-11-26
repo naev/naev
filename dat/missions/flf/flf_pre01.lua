@@ -1,20 +1,20 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Deal with the FLF agent">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <chance>100</chance>
-   <location>None</location>
-  </avail>
-  <notes>
-   <done_evt name="FLF/DV Derelicts">If you choose to help Gregar</done_evt>
-   <campaign>Join the FLF</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <chance>100</chance>
+  <location>None</location>
+ </avail>
+ <notes>
+  <done_evt name="FLF/DV Derelicts">If you choose to help Gregar</done_evt>
+  <campaign>Join the FLF</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 -- This is the first "prelude" mission leading to the FLF campaign. The player takes a FLF agent onboard, then either turns him in to the Dvaered or delivers him to a hidden FLF base.
 -- stack variable flfbase_intro:
@@ -161,7 +161,7 @@ end
 -- There are two cases we need to check here: landing on the FLF base and landing on a Dvaered world.
 function land()
     -- Case FLF base
-    if planet.cur():name() == "Sindbad" then
+    if planet.cur() == planet.get("Sindbad") then
         tk.msg(title[4], text[4]:format(player.name()))
         tk.msg(title[4], text[5])
         var.push("flfbase_intro", 2)

@@ -264,7 +264,7 @@ jobs:
       - name: Install SteamCMD
         run: |
           echo steamcmd steam/question select "I AGREE" | sudo debconf-set-selections
-          sudo apt-get install lib32gcc1 steamcmd
+          sudo apt-get install lib32gcc1 libsdl2-2.0-0:i386 steamcmd
 
       - name: Download Artifacts
         uses: actions/download-artifact@v2
@@ -275,7 +275,7 @@ jobs:
         run: |
           chmod -R +x dist/staging/naev-steam-deployment
           cp -r dist/staging/naev-steam-deployment/* ${{ github.workspace }}
-          ./SteamDeploy.sh -n -v "dist/staging/naev-version" -t "dist/staging" -o "dist/out"
+          ./SteamDeploy.sh -n -v "${{ github.workspace }}/dist/staging/naev-version" -t "${{ github.workspace }}/dist/staging" -o "${{ github.workspace }}/dist/out"
         env:
           STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
           STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}

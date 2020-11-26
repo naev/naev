@@ -33113,7 +33113,7 @@ msgstr ""
 
 #: src/board.c:373
 #, c-format
-msgid "\apYou looted %d %s(s)"
+msgid "\apYou looted: %d × %s"
 msgstr ""
 
 #: src/board.c:383

@@ -94,12 +94,12 @@ function accept ()
    reward = 500000
    misn.setTitle(misn_title)
    misn.setReward( creditstring(reward) )
-   misn.setDesc( string.format(misn_desc[1], pickup:name(), pickupsys:name()))
+   misn.setDesc( string.format(misn_desc[1], _(pickup:name()), _(pickupsys:name())))
 
    -- Flavour text and mini-briefing
-   tk.msg( title[1], string.format( text[2], pickup:name(), pickupsys:name(),
-         dest:name(), destsys:name(), creditstring(reward) ) )
-   misn.osdCreate(misn_title, {misn_desc[1]:format(pickup:name(),pickupsys:name())})
+   tk.msg( title[1], string.format( text[2], _(pickup:name()), _(pickupsys:name()),
+         _(dest:name()), _(destsys:name()), creditstring(reward) ) )
+   misn.osdCreate(misn_title, {misn_desc[1]:format(_(pickup:name()), _(pickupsys:name()))})
 
    -- Set up the goal
    tk.msg( title[1], text[3] )
@@ -125,24 +125,24 @@ function land ()
       package = misn.cargoAdd("Packages", 3)
       misn_stage = 1
       jumped = 0
-      misn.setDesc( string.format(misn_desc[2], dest:name(), destsys:name()))
+      misn.setDesc( string.format(misn_desc[2], _(dest:name()), _(destsys:name())))
       misn.markerMove( misn_marker, destsys )
-      misn.osdCreate(misn_title, {misn_desc[2]:format(dest:name(),destsys:name())})
+      misn.osdCreate(misn_title, {misn_desc[2]:format(_(dest:name()), _(destsys:name()))})
 
       -- Load message
-      tk.msg( title[2], string.format( text[4], dest:name(), destsys:name()) )
+      tk.msg( title[2], string.format( text[4], _(dest:name()), _(destsys:name())) )
 
    elseif landed == dest and misn_stage == 1 then
       if misn.cargoRm(package) then
 
          -- Update mission
          misn_stage = 2
-         misn.setDesc( string.format(misn_desc[3], ret:name(), retsys:name()))
+         misn.setDesc( string.format(misn_desc[3], _(ret:name()), _(retsys:name())))
          misn.markerMove( misn_marker, retsys )
-         misn.osdCreate(misn_title, {misn_desc[3]:format(ret:name(),retsys:name())})
+         misn.osdCreate(misn_title, {misn_desc[3]:format(_(ret:name()),_(retsys:name()))})
 
          -- Some text
-         tk.msg( title[3], string.format(text[5], ret:name(), retsys:name()) )
+         tk.msg( title[3], string.format(text[5], _(ret:name()), _(retsys:name())) )
 
       end
    elseif landed == ret and misn_stage == 2 then
@@ -152,7 +152,7 @@ function land ()
       faction.modPlayerSingle("Empire",5);
 
       -- Flavour text
-      tk.msg(title[4], string.format(text[6], ret:name()) )
+      tk.msg(title[4], string.format(text[6], _(ret:name())) )
 
       -- The goods
       diff.apply("heavy_weapons_license")

@@ -109,7 +109,7 @@ function create()
 end
 
 function accept()
-    tk.msg("", bar_text:format(dest_planet:name(), dest_sys:name(), player:name()))
+    tk.msg("", bar_text:format(_(dest_planet:name()), _(dest_sys:name()), player:name()))
     tk.msg("", leave_text)
     learned_text = false
     has_lab_coat = false
@@ -119,11 +119,11 @@ function accept()
     -- Set up mission information
     misn.setTitle(mtitle)
     misn.setReward(misn_reward)
-    misn.setDesc(mdesc:format(dest_planet:name(), dest_sys:name(), timelimit:str()))
+    misn.setDesc(mdesc:format(_(dest_planet:name()), _(dest_sys:name()), timelimit:str()))
     misn_marker = misn.markerAdd(dest_sys, "high")
     
     misn.accept()
-    osd_msg[1] = osd_msg1:format(dest_planet:name(), dest_sys:name(), timelimit:str(), (timelimit - time.get()):str())
+    osd_msg[1] = osd_msg1:format(_(dest_planet:name()), _(dest_sys:name()), timelimit:str(), (timelimit - time.get()):str())
     misn.osdCreate(osd_title, osd_msg)
     
     hook.land("land")
@@ -134,7 +134,7 @@ end
 function land()
     landed = planet.cur()
     if landed == dest_planet then
-        tk.msg(landing_title:format(dest_planet:name()), arrival_text:format(dest_planet:name()))
+        tk.msg(landing_title:format(_(dest_planet:name())), arrival_text:format(_(dest_planet:name())))
         enter_ship()
     end
 end
@@ -242,13 +242,13 @@ function start_talk()
     
     if c == 3 then
         tk.msg(cancel_title, run_text)
-        zlk_addNebuResearchLog(log_text:format(dest_planet:name()))
+        zlk_addNebuResearchLog(log_text:format(_(dest_planet:name())))
         misn.finish(true)
         return
     end
     
     tk.msg(talk_title, avoid_question_text)
-    zlk_addNebuResearchLog(log_text:format(dest_planet:name()))
+    zlk_addNebuResearchLog(log_text:format(_(dest_planet:name())))
     faction.modPlayerSingle("Za'lek", 1)
     misn.finish(true)
 end
@@ -261,7 +261,7 @@ function tick()
         player.msg(msg_timeup)
         misn.finish(false)
     else
-        osd_msg[1] = osd_msg1:format(dest_planet:name(), dest_sys:name(), timelimit:str(), (timelimit - time.get()):str())
+        osd_msg[1] = osd_msg1:format(_(dest_planet:name()), _(dest_sys:name()), timelimit:str(), (timelimit - time.get()):str())
         misn.osdCreate(osd_title, osd_msg)
     end
 end

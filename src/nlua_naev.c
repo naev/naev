@@ -107,11 +107,11 @@ static int naev_ticks( lua_State *L )
 
 
 /**
- * @brief Gets the keybinding value by name.
+ * @brief Gets a human-readable name for the key bound to a function.
  *
  * @usage bindname = naev.keyGet( "accel" )
  *
- *    @luatparam string keyname Name of the keybinding to get value of.
+ *    @luatparam string keyname Name of the keybinding to get value of. Valid values are listed in src/input.c: keybind_info.
  * @luafunc keyGet( keyname )
  */
 static int naev_keyGet( lua_State *L )

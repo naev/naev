@@ -1343,7 +1343,7 @@ void takeoff( int delay )
    if (delay)
       ntime_inc( ntime_create( 0, 1, 0 ) ); /* 1 period */
    nt = ntime_pretty( 0, 2 );
-   player_message( _("\apTaking off from %s on %s."), land_planet->name, nt);
+   player_message( _("\apTaking off from %s on %s."), _(land_planet->name), nt);
    free(nt);
 
    /* Hooks and stuff. */
@@ -1444,6 +1444,9 @@ void land_cleanup (void)
 
    /* Clean up bar missions. */
    npc_clear();
+
+   /* Clean up shipyard. */
+   shipyard_cleanup();
 
    /* Clean up rescue Lua. */
    if (rescue_env != LUA_NOREF) {

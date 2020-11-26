@@ -170,7 +170,7 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
       *id         = mission->id;
    mission->data  = misn;
    if (create) {
-      mission->title = strdup(misn->name);
+      mission->title = strdup(_(misn->name));
       mission->desc  = strdup(_("No description."));
    }
 

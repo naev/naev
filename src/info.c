@@ -110,6 +110,7 @@ static void mission_menu_abort( unsigned int wid, char* str );
 static void mission_menu_genList( unsigned int wid, int first );
 static void mission_menu_update( unsigned int wid, char* str );
 static void info_openShipLog( unsigned int wid );
+static const char* info_getLogTypeFilter( int lstPos );
 
 
 /**
@@ -775,7 +776,7 @@ static void cargo_genList( unsigned int wid )
       for (i=0; i<player.p->ncommodities; i++) {
          buf[i] = malloc(128);
          nsnprintf(buf[i],128, "%s%s %d",
-               player.p->commodities[i].commodity->name,
+               _(player.p->commodities[i].commodity->name),
                (player.p->commodities[i].id != 0) ? "*" : "",
                player.p->commodities[i].quantity);
       }
@@ -936,7 +937,7 @@ static void info_openStandings( unsigned int wid )
       str[i] = malloc( 256 );
       m = round( faction_getPlayer( info_factions[i] ) );
       nsnprintf( str[i], 256, "%s   [ %+d%% ]",
-            faction_name( info_factions[i] ), m );
+            _(faction_name( info_factions[i] )), m );
    }
 
    /* Display list. */
@@ -1158,7 +1159,7 @@ static void shiplog_menu_update( unsigned int wid, char* str )
          selectedLogType = logType;
          window_destroyWidget( wid, "lstLogs" );
          logs = NULL;
-         shiplog_listLogsOfType(logTypes[selectedLogType], &nlogs, &logs, &logIDs, 1);
+         shiplog_listLogsOfType(info_getLogTypeFilter(selectedLogType), &nlogs, &logs, &logIDs, 1);
          if ( selectedLog >= nlogs )
             selectedLog = 0;
          window_addList( wid, 20, 60 + BUTTON_HEIGHT  + LOGSPACING / 2,
@@ -1172,7 +1173,7 @@ static void shiplog_menu_update( unsigned int wid, char* str )
          selectedLog = log;
          /* list log entries of selected log type */
          window_destroyWidget( wid, "lstLogEntries" );
-         shiplog_listLog(logIDs[selectedLog], logTypes[selectedLogType], &nentries, &logentries,1);
+         shiplog_listLog(logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &nentries, &logentries,1);
          window_addList( wid, 20, 40 + BUTTON_HEIGHT,
                          w-40, LOGSPACING / 2-20,
                          "lstLogEntries", logentries, nentries, 0, shiplog_menu_update, info_shiplogView );
@@ -1181,6 +1182,17 @@ static void shiplog_menu_update( unsigned int wid, char* str )
       }
       logWidgetsReady=1;
    }
+}
+
+
+/**
+ * @brief Translates a position in "lstLogType" to a shiplog "type" filter.
+ */
+static const char* info_getLogTypeFilter( int lstPos )
+{
+   if (lstPos < 1)
+      return NULL; /* "All" */
+   return logTypes[lstPos];
 }
 
 
@@ -1213,11 +1225,11 @@ static void shiplog_menu_genList( unsigned int wid, int first )
    if ( selectedLogType >= ntypes )
       selectedLogType = 0;
    /* list logs of selected type */
-   shiplog_listLogsOfType(logTypes[selectedLogType], &nlogs, &logs, &logIDs, 1);
+   shiplog_listLogsOfType(info_getLogTypeFilter(selectedLogType), &nlogs, &logs, &logIDs, 1);
    if ( selectedLog >= nlogs )
       selectedLog = 0;
    /* list log entries of selected log */
-   shiplog_listLog(logIDs[selectedLog], logTypes[selectedLogType], &nentries, &logentries, 1);
+   shiplog_listLog(logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &nentries, &logentries, 1);
    logWidgetsReady=0;
    window_addList( wid, 20, 80 + BUTTON_HEIGHT + 3*LOGSPACING/4 ,
                    w-40, LOGSPACING / 4,
@@ -1237,7 +1249,7 @@ static void info_shiplogMenuDelete( unsigned int wid, char* str )
    int ret, logid;
    (void) str;
 
-   if ( strcmp("All", logs[selectedLog]) == 0 ) {
+   if ( logIDs[selectedLog] == LOG_ID_ALL ) {
       dialogue_msg( "", _("You are currently viewing all logs in the selected log type. Please select a log title to delete.") );
       return;
    }
@@ -1249,7 +1261,7 @@ static void info_shiplogMenuDelete( unsigned int wid, char* str )
    if ( ret ) {
       /* There could be several logs of the same name, so make sure we get the correct one. */
       /* selectedLog-1 since not including the "All" */
-      logid = shiplog_getIdOfLogOfType( logTypes[selectedLogType], selectedLog-1 );
+      logid = shiplog_getIdOfLogOfType( info_getLogTypeFilter(selectedLogType), selectedLog-1 );
       if ( logid >= 0 )
          shiplog_delete( logid );
       selectedLog = 0;
@@ -1268,7 +1280,7 @@ static void info_shiplogView( unsigned int wid, char *str )
 
    i = toolkit_getListPos( wid, "lstLogEntries" );
    shiplog_listLog(
-         logIDs[selectedLog], logTypes[selectedLogType], &nentries,
+         logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &nentries,
          &logentries, 1);
 
    tmp = NULL;
@@ -1288,23 +1300,23 @@ static void info_shiplogView( unsigned int wid, char *str )
 static void info_shiplogAdd( unsigned int wid, char *str )
 {
    char *tmp;
-   char *logname;
+   int selectedLog;
    int logid;
    (void) str;
 
-   logname = toolkit_getList( wid, "lstLogs" );
-   if ( ( logname == NULL ) || ( strcmp( "All", logname ) == 0 ) ) {
+   selectedLog = toolkit_getListPos( wid, "lstLogs" );
+   if ( selectedLog < 0 || logIDs[selectedLog] == LOG_ID_ALL ) {
       tmp = dialogue_inputRaw( _("Add a log entry"), 0, 4096, _("Add an entry to your diary:") );
       if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
          if ( shiplog_getID( "Diary" ) == -1 )
-              shiplog_create( "Diary", "Your Diary", "Diary", 0, 0 );
+              shiplog_create( "Diary", _("Your Diary"), "Diary", 0, 0 );
          shiplog_append( "Diary", tmp );
          free( tmp );
       }
    } else {
-      tmp = dialogue_input( _("Add a log entry"), 0, 4096, _("Add an entry to the log titled '%s':"), logname );
+      tmp = dialogue_input( _("Add a log entry"), 0, 4096, _("Add an entry to the log titled '%s':"), logs[selectedLog] );
       if ( ( tmp != NULL ) && ( strlen(tmp) > 0 ) ) {
-         logid = shiplog_getIdOfLogOfType( logTypes[selectedLogType], selectedLog-1 );
+         logid = shiplog_getIdOfLogOfType( info_getLogTypeFilter(selectedLogType), selectedLog-1 );
          if ( logid >= 0 )
             shiplog_appendByID( logid, tmp );
          else

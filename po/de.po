@@ -41244,7 +41244,7 @@ msgstr "\apDas Schiff hat keinen Treibstoff."
 
 #: src/board.c:284
 msgid "\arYour ship is at maximum fuel capacity."
-msgstr "\apDein Schiff ist hat die maximal mögliche Menge an Treibstoff."
+msgstr "\arDein Schiff ist hat die maximal mögliche Menge an Treibstoff."
 
 #: src/board.c:302
 msgid "\apYou manage to steal the ship's fuel."
@@ -41260,7 +41260,7 @@ msgstr "\arDu hast bereits die maximal mögliche Munition."
 
 #: src/board.c:373
 #, c-format
-msgid "\apYou looted %d %s(s)"
+msgid "\apYou looted: %d × %s"
 msgstr "\apDu erbeutest: %d × %s"
 
 #: src/board.c:383
@@ -42649,7 +42649,7 @@ msgid ""
 "\aRSlot %s\a0"
 msgstr ""
 "\n"
-"\aSPlatz %s\a0"
+"\aRPlatz %s\a0"
 
 #: src/equipment.c:792
 #, c-format
@@ -44597,7 +44597,7 @@ msgstr "\aREinzigartig\a0\n"
 #: src/land_outfits.c:644
 #, c-format
 msgid "\aRSlot %s\a0\n"
-msgstr "\aSPlatz %s\a0\n"
+msgstr "\aRPlatz %s\a0\n"
 
 #: src/land_outfits.c:650
 #, c-format
@@ -45454,7 +45454,7 @@ msgstr ""
 "%s\n"
 "\n"
 "\anBesitz:\a0 %d   \anPlatz: \a0%s   \anGröße: \a0%s\n"
-"\anMasse:\a0   %.0f Tonnen     \a0Preis:\a0 %s\n"
+"\anMasse:\a0   %.0f Tonnen     \anPreis:\a0 %s\n"
 "\anLizenz\a0: %s"
 
 #: src/map_system.c:658

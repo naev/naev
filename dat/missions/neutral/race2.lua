@@ -1,18 +1,18 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Racing Skills 2">
-  <avail>
-   <priority>3</priority>
-   <cond>(player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht") and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Civilian"] ~= nil and system.cur():presences()["Civilian"] &gt; 0</cond>
-   <done>Racing Skills 1</done>
-   <chance>20</chance>
-   <location>Bar</location>
-  </avail>
-  <notes>
-   <tier>2</tier>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>3</priority>
+  <cond>(player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht") and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Civilian"] ~= nil and system.cur():presences()["Civilian"] &gt; 0</cond>
+  <done>Racing Skills 1</done>
+  <chance>20</chance>
+  <location>Bar</location>
+ </avail>
+ <notes>
+  <tier>2</tier>
+ </notes>
+</mission>
+--]]
 --[[
    --
    -- MISSION: Racing Skills 2
@@ -111,7 +111,7 @@ end
 function accept ()
    if tk.yesno(title[1], text[1]) then
       misn.accept()
-      OSD[4] = string.format(OSD[4], curplanet:name())
+      OSD[4] = string.format(OSD[4], _(curplanet:name()))
       misn.setDesc(misndesc)
       misn.osdCreate(OSDtitle, OSD)
       local s = text[5]:format(creditstring(credits_easy), creditstring(credits_hard))
@@ -137,7 +137,7 @@ function takeoff()
    end
    if choice ~= 1 then
       for k,v in ipairs(player.pilot():outfits()) do
-         if v:name() == "Generic Afterburner" or v:name() == "Hellburner" then
+         if v == outfit.get("Generic Afterburner") or v == outfit.get("Hellburner") then
             tk.msg(ftitle[4], ftext[4])
             misn.finish(false)
          end
@@ -290,7 +290,7 @@ function board(ship)
          misn.osdActive(i+1)
          target[4] = target[4] + 1
          if target[4] == 4 then
-            tk.msg(string.format(title[3], i), string.format(text[4], curplanet:name()))
+            tk.msg(string.format(title[3], i), string.format(text[4], _(curplanet:name())))
             else
             tk.msg(string.format(title[3], i), string.format(text[3], i+1))
          end
@@ -306,13 +306,13 @@ function jumpin()
 end
 
 function racerland(p)
-   player.msg( string.format(landmsg, p:name(),curplanet:name()))
+   player.msg( string.format(landmsg, p:name(), _(curplanet:name())))
 end
 
 function land()
    if target[4] == 4 then
       if racers[1]:exists() and racers[2]:exists() and racers[3]:exists() then
-         if player.numOutfit("Racing Trophy") > 0 then
+         if choice==2 and player.numOutfit("Racing Trophy") <= 0 then
             tk.msg(wintitle, firstwintext:format(creditstring(credits)))
             player.addOutfit("Racing Trophy")
          else
@@ -324,7 +324,7 @@ function land()
          tk.msg(ftitle[3], ftext[3])
          misn.finish(false)
       end
-      else
+   else
       tk.msg(ftitle[2], ftext[2])
       misn.finish(false)
    end
