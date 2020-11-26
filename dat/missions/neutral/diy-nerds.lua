@@ -175,7 +175,7 @@ function accept ()
       misn.finish(false)
    end
 
-   if not tk.yesno( title[1], string.format(text[1], destplanet:name() )) then
+   if not tk.yesno( title[1], string.format(text[1], destPlanet:name() )) then
       misn.finish(false)
    else
          if player.pilot():cargoFree() < 4 then
@@ -189,14 +189,14 @@ function accept ()
       misn.setDesc( misn_desc)
       marker = misn.markerAdd( system.cur(), "low" )
 
-      tk.msg(title[2], string.format(text[2], destplanet:name()))
+      tk.msg(title[2], string.format(text[2], destPlanet:name()))
       local distance = vec2.dist( planet.pos(srcPlanet), planet.pos(destPlanet) )
       local stuperpx = 1 / player.pilot():stats().speed_max * 30 -- from cargo_common.lua
       expiryDate = time.get() + time.create(0, 0, 10010 + distance * stuperpx + 3300 ) -- takeoff + min travel time + leeway
 
       addNerdCargo()
       lhook = hook.land("nerds_land1", "land")
-      misn.osdCreate( misn_title, {string.format(textosd[1], destplanet:name(), time.str(expiryDate, 1)), string.format(textosd[2], time.str(expiryDate - time.get(), 1))})
+      misn.osdCreate( misn_title, {string.format(textosd[1], destPlanet:name(), time.str(expiryDate, 1)), string.format(textosd[2], time.str(expiryDate - time.get(), 1))})
       dhook = hook.date(time.create(0, 0, 100), "nerds_fly1")
    end
 end
@@ -244,9 +244,9 @@ end
 function nerds_fly1()
    intime = expiryDate >= time.get()
    if intime then
-      misn.osdCreate( misn_title, {string.format(textosd[1], destplanet:name(), time.str(expiryDate, 2)), string.format(textosd[2], time.str(expiryDate - time.get(), 1))})
+      misn.osdCreate( misn_title, {string.format(textosd[1], destPlanet:name(), time.str(expiryDate, 2)), string.format(textosd[2], time.str(expiryDate - time.get(), 1))})
    else
-      misn.osdCreate( misn_title, {string.format(textosd[1], destplanet:name(), time.str(expiryDate, 2)), textosd[3]})
+      misn.osdCreate( misn_title, {string.format(textosd[1], destPlanet:name(), time.str(expiryDate, 2)), textosd[3]})
       misn.osdActive(2)
    end
 end
@@ -302,7 +302,7 @@ end
 function nerds_fly2()
    if not hailed and time.get() > expiryDate then
       tk.msg(title[6], string.format(text[6], srcPlanet:name()) )
-        misn.osdCreate( misn_title, {string.format(textosd[5], destplanet:name(), srcPlanet:name())})
+        misn.osdCreate( misn_title, {string.format(textosd[5], destPlanet:name(), srcPlanet:name())})
       hailed = true
    end
 
@@ -310,7 +310,7 @@ function nerds_fly2()
 
    -- no pickup since hail+2STP+1STP: mission failed (however, you must still land somewhere)
    if not intime then
-        misn.osdCreate( misn_title, {string.format(textosd[5], destplanet:name(), srcPlanet:name()), textosd[7] })
+        misn.osdCreate( misn_title, {string.format(textosd[5], destPlanet:name(), srcPlanet:name()), textosd[7] })
         misn.osdActive(2)
    end
 
@@ -320,7 +320,7 @@ function nerds_fly2()
          tk.msg(title[7], string.format(text[7], srcPlanet:name()) )
          impatient = true
       end
-        misn.osdCreate( misn_title, {string.format(textosd[5], destplanet:name(), srcPlanet:name()), textosd[6], string.format(textosd[2], time.str(expiryDate + time.create(0,3,0) - time.get(), 2)) })
+        misn.osdCreate( misn_title, {string.format(textosd[5], destPlanet:name(), srcPlanet:name()), textosd[6], string.format(textosd[2], time.str(expiryDate + time.create(0,3,0) - time.get(), 2)) })
         misn.osdActive(2)
    end
 end
