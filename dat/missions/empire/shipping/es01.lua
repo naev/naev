@@ -55,8 +55,6 @@ text[6] = _([[You arrive at %s and report to Commander Soldner. He greets you an
 -- Errors
 errtitle = {}
 errtitle[1] = _("Need More Space")
-err = {}
-err[1] = _("You do not have enough space to load the packages. You need to make room for %d more tons.")
 
 log_text = _([[You successfully completed a package delivery for the Empire. As a result, you have been cleared for the Heavy Weapon License and can now buy it at an outfitter. Commander Soldner said that you can meet him in the bar at Halir if you're interested in more work.]])
 
@@ -117,7 +115,11 @@ function land ()
 
       -- Make sure player has room.
       if player.pilot():cargoFree() < 3 then
-         tk.msg( errtitle[1], string.format( err[1], 3 - player.pilot():cargoFree() ) )
+         local needed = 3 - player.pilot():cargoFree()
+         tk.msg( errtitle[1], string.format( gettext.ngettext(
+            "You do not have enough space to load the packages. You need to make room for %d more tonne.",
+            "You do not have enough space to load the packages. You need to make room for %d more tonnes.",
+            needed), needed ) )
          return
       end
 
