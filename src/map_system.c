@@ -397,11 +397,13 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    cnt=0;
    buf[0]='\0';
    if ( cur_planet_sel == 0 ) {
-      int infopos=0;
-     /* display sun information */
-     /* Nebula. */
-      cnt+=nsnprintf( buf, sizeof(buf), _("System: %s\n%d star system\n"), _(sys->name), nBgImgs>0 ? nBgImgs-1 : 0 );
+      int infopos = 0;
+      int stars   = nBgImgs>0 ? nBgImgs-1 : 0;
+      cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("System: %s\n"), _(sys->name) );
+      /* display sun information */
+      cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, ngettext("%d-star system\n", "%d-star system\n", stars), stars );
 
+      /* Nebula. */
       if (sys->nebu_density > 0. ) {
          /* Volatility */
          if (sys->nebu_volatility > 700.)
