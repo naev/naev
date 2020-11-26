@@ -164,3 +164,42 @@ function difference(a, b)
    return r
 end
 
+--Sets the description based on the particulars of the mission.
+--
+function cargo_setDesc( cargo, amount, target, notes, deadline )
+end
+
+--[[
+-- @brief Returns a block of mission-description text for the given cargo.
+-- @tparam string misn_desc Translated title-level description, e.g. _("Cargo transport to %s in the %s system."):format(...).
+-- @tparam string cargo Cargo type (raw name). May be nil.
+-- @tparam number amount Cargo amount in tonnes. May be nil.
+-- @param target Target planet for the delivery.
+-- @param deadline Target delivery time. May be nil.
+-- @param notes Any additional text the user should see on its own detail line, such as piracy risk. May be nil.
+-- ]]
+function cargo_setDesc( misn_desc, cargo, amount, target, deadline, notes )
+   local t = { misn_desc, "" };
+   if amount ~= nil then
+      table.insert( t, _("Cargo: %s (%s)"):format( _(cargo), tonnestring(amount) ) );
+   elseif cargo ~= nil then
+      table.insert( t, _("Cargo: %s"):format( _(cargo) ) );
+   end
+
+   local numjumps   = system.cur():jumpDist( target:system(), cargo_use_hidden )
+   local dist = cargo_calculateDistance( system.cur(), planet.cur():pos(), target:system(), target )
+   table.insert( t,
+      gettext.ngettext( "Jumps: %d", "Jumps: %d", numjumps ):format( numjumps )
+      .. "\n"
+      .. gettext.ngettext("Travel distance: %d", "Travel distance: %d", dist):format( dist ) )
+
+   if notes ~= nil then
+      table.insert( t, notes );
+   end
+
+   if deadline ~= nil then
+      table.insert(t, _("Time limit: %s"):format( deadline - time.get() ) );
+   end
+
+   misn.setDesc( table.concat(t, "\n" ) );
+end

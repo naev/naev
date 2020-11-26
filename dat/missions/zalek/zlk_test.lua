@@ -29,10 +29,6 @@ require "scripts/numstring.lua"
 misn_title = _("ZT test of %s")
 misn_desc = _("A Za'lek research team needs you to travel to %s in %s using an engine in order to test it.")
 
-title = _([[ZT: go to %s in the %s system
-Jumps: %d
-Travel distance: %d]])
-
 msg_title = {}
 msg_title[1] = _("Mission Accepted")
 msg_title[2] = _("Too many missions")
@@ -125,9 +121,8 @@ function create()
 
    misn.setTitle( misn_title:format( typeOfEng ))
    misn.markerAdd(destsys, "computer")
-   misn.setDesc(title:format(destplanet:name(), destsys:name(), numjumps, traveldist ))
+   cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), nil, nil, destplanet )
    misn.setReward(creditstring(reward))
-
 end
 
 function accept()

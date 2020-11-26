@@ -26,14 +26,6 @@ require "numstring.lua"
 
 misn_desc  = _("Official Empire long distance cargo transport to %s in the %s system.")
 
-misn_details = _([[
-Cargo: %s (%s)
-Jumps: %d
-Travel distance: %d
-%s
-Time limit: %s
-]])
-
 piracyrisk = {}
 piracyrisk[1] = _("Piracy Risk: None")
 piracyrisk[2] = _("Piracy Risk: Low")
@@ -113,13 +105,8 @@ function create()
       _("ES: Long distance cargo transport (%s of %s)"), tonnestring(amount),
       _(cargo) ) )
    misn.markerAdd(destsys, "computer")
-   misn.setDesc(
-      misn_desc:format( destplanet:name(), destsys:name() ) .. "\n\n"
-      .. misn_details:format(
-         _(cargo), tonnestring(amount), numjumps, traveldist, piracyrisk,
-         (timelimit - time.get()):str() ) )
+   cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit, piracyrisk );
    misn.setReward( creditstring(reward) )
-
 end
 
 -- Mission is accepted
