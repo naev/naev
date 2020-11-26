@@ -166,12 +166,13 @@ msg_lore["Pirate"] =       {_([["Hi mate. Money or your life! Heh heh, just mess
                               _([["I don't understand why some pirates talk like 16th-century Earth pirates even though that planet is literally dead."]]),
                               _([["I may be a pirate who blows up ships and steals for a living, but that inner nebula still kind of freaks me out."]]),
                               _([["Damn Empire stopped my heist a few decaperiods ago. Just wait'll they see me again..."]]),
-                              _([["I tried to get into a pirate clanworld, but they wouldn't let me in because I'm a 'small-time pirate'! Sometimes I think I'll never make it in this line of work..."]]),
-                              _([["Don't forget, true pirates fly pirate ships! You won't hold onto your reputation very long if you fly around in those pathetic normie vessels. I once met a pirate who kept flying his standard Lancelot. Let's just say, he didn't make it very long."]]),
+                              _([["There's a pirate clanworld I really wanted to get to, but they wouldn't let me in because I'm a 'small-time pirate'! Sometimes I think I'll never make it in this line of work..."]]),
+                              _([["Don't forget, true pirates fly pirate ships! You won't hold onto your reputation very long if you fly around in those pathetic normie vessels. I once met a pirate who kept flying his standard Lancelot. Let's just say, he didn't make it very far."]]),
                               _([["I was around before Haven was destroyed, you know! Funny times. All the pirates were panicking and the Empire was cheering thinking that we were done for. Ha! As if! It barely even made a difference. We just relocated to New Haven and resumed business as usual."]]),
                               _([["Y'know, I got into this business by accident to tell the truth. But what can you do? I could get a fake ID and pretend to be someone else but I'd get caught eventually and I'd lose my fame as a pirate."]]),
                               _([["One of my favorite things to do is buy a fake ID and then deliver as much contraband as I can before I get caught. It's great fun, and finding out that my identity's been discovered gives me a rush!"]]),
                               _([["Back when I started out in this business all you could do was go around delivering packages for other people. Becoming a pirate was real hard back then, but I got so bored I spent several decaperiods doing it. Nowadays things are way more exciting for normies, but I don't regret my choice one bit!"]]),
+                              _([["Flying a real big ship is impressive, but it's still no pirate ship. I mean, I respect ya more if you're flying a Goddard than if you're flying a civilian Lancelot, but the best pirates fly the good old Pirate Kestrel!"]]),
                            }
 
 msg_lore["Trader"] =       {_([["Just another link in the Great Chain, right?"]]),
@@ -209,7 +210,9 @@ msg_tip =                  {_([["I heard you can set your weapons to only fire w
                               _([["Don't forget to have your target selected. Even if you have forward-facing weapons, the weapons will swivel a bit to track your target. But it's absolutely essential for turreted weapons."]]),
                               _("\"Did you know that you can automatically follow pilot with Autonav? It's true! Just \ableft-click\a0 the pilot to target them and then \abright-click\a0 your target to follow! I like to use this feature for escort missions. It makes them a lot less tedious.\""),
                               _([["The new aiming helper feature is awesome! Simply turn it on in your ship's weapons configuration and you get little guides telling you where you should aim to hit your target! I use it a lot."]]),
-                              _([["Displays tend to shorten large number of credits by using SI prefixes: 'K' for thousands of credits, 'M' for millions of credits, 'G' for billions of credits, etc."]]),
+                              _([["The '¢' symbol is the official galactic symbol for credits. Supposedly it comes from the currency symbol of an ancient Earth civilization. It's sometimes expressed with SI prefixes: 'k¢' for thousands of credits, 'M¢' for millions of credits, and so on."]]),
+                              _([["If you're piloting a medium ship, I'd recommend you invest in at least one turreted missile launcher. I had a close call a few decaperiods ago where a bomber nearly blew me to bits outside the range of my Laser Turrets. Luckily I just barely managed to escape to a nearby planet so I could escape the pilot. I've not had that problem ever since I equipped a turreted missile launcher."]]),
+                              _([["I've heard that pirates have to keep their reputations up with other pirates by flying pirate ships. The Hyena is considered a pirate ship and is easy to get, but as for the others, I have no idea where they get them from."]]),
                            }
 
 -- Jump point messages.

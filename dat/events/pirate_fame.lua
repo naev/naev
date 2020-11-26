@@ -44,31 +44,19 @@ local function using_pirate_ship()
       "Pirate Ancestor",
       "Pirate Vendetta",
       "Pirate Shark",
-      "Pirate Rhino"
+      "Pirate Rhino",
    })
 end
 
 --[[
--- Returns a boolean indicating whether or not the player is using some kind
--- of monstrously powerful or intimidating ship, like another’s faction
+-- Returns a boolean indicating whether or not the player is using some
+-- kind of monstrously powerful or intimidating ship, like a
 -- cruiser or carrier.
 --]]
 local function using_impressive_ship()
-   local s = player.pilot():ship():nameRaw()
-
-   return has(s, {
-      "Empire Peacemaker",
-      "Empire Hawking",
-      "Sirius Divinity",
-      "Sirius Dogma",
-      "Soromid Arx",
-      "Soromid Ira",
-      "Dvaered Goddard",
-      -- Still impressive, but purely “civilian”
-      "Goddard",
-      "Hawking",
-      "Kestrel"
-   })
+   local t = player.pilot():ship():baseType()
+   local c = player.pilot():ship():class()
+   return ( c == "Cruiser" or c == "Carrier" or t == "Kahan" )
 end
 
 function create()
