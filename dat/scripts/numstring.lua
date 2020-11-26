@@ -49,11 +49,11 @@ end
 -- @brief Like tonnestring, but for abbreviations.
 --
 --    @param tonnes Number of tonnes.
---    @return A short string like "22t" describing the given mass.
+--    @return A short string like "22 t" describing the given mass.
 --]]
 function tonnestring_short( tonnes )
    -- Translator note: this form represents an abbreviation of "_ tonnes".
-   return gettext.ngettext( "%dt", "%dt", tonnes ):format( tonnes )
+   return gettext.ngettext( "%d t", "%d t", tonnes ):format( tonnes )
 end
 
 
