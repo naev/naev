@@ -93,7 +93,7 @@ function create()
    misn.setTitle( string.format(
       _("ES: Cargo transport to %s in %s (%s)"), destplanet:name(), destsys:name(), tonnestring(amount) ) )
    misn.markerAdd(destsys, "computer")
-   cargo_setDesc( misn_desc, cargo, amount, destplanet, timelimit, piracyrisk );
+   cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit, piracyrisk );
    misn.setReward( creditstring(reward) )
 end
 

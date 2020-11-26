@@ -121,7 +121,7 @@ function create()
 
    misn.setTitle( misn_title:format( typeOfEng ))
    misn.markerAdd(destsys, "computer")
-   cargo_setDesc( misn_desc, nil, nil, destplanet )
+   cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), nil, nil, destplanet )
    misn.setReward(creditstring(reward))
 end
 

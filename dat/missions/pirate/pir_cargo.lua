@@ -96,7 +96,7 @@ function create()
       _("PIRACY: Illegal Cargo transport (%s of %s)"), tonnestring(amount),
       _(cargo) ) )
    misn.markerAdd(destsys, "computer")
-   cargo_setDesc( misn_desc, cargo, amount, destplanet, timelimit );
+   cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit );
    misn.setReward( creditstring(reward) )
 end
 

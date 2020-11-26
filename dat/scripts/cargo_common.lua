@@ -171,7 +171,7 @@ end
 
 --[[
 -- @brief Returns a block of mission-description text for the given cargo.
--- @tparam string misn_desc Translated format string such as _("Cargo transport to %s in the %s system.").
+-- @tparam string misn_desc Translated title-level description, e.g. _("Cargo transport to %s in the %s system."):format(...).
 -- @tparam string cargo Cargo type (raw name). May be nil.
 -- @tparam number amount Cargo amount in tonnes. May be nil.
 -- @param target Target planet for the delivery.
@@ -179,7 +179,7 @@ end
 -- @param notes Any additional text the user should see on its own detail line, such as piracy risk. May be nil.
 -- ]]
 function cargo_setDesc( misn_desc, cargo, amount, target, deadline, notes )
-   local t = { misn_desc:format( target:name(), target:system():name() ), "" };
+   local t = { misn_desc, "" };
    if amount ~= nil then
       table.insert( t, _("Cargo: %s (%s)"):format( _(cargo), tonnestring(amount) ) );
    elseif cargo ~= nil then

@@ -105,7 +105,7 @@ function create()
       _("ES: Long distance cargo transport (%s of %s)"), tonnestring(amount),
       _(cargo) ) )
    misn.markerAdd(destsys, "computer")
-   cargo_setDesc( misn_desc, cargo, amount, destplanet, timelimit, piracyrisk );
+   cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit, piracyrisk );
    misn.setReward( creditstring(reward) )
 end
 

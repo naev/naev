@@ -124,7 +124,7 @@ function create()
    misn.setTitle( misn_title[tier]:format(
       destplanet:name(), destsys:name(), tonnestring(amount) ) )
    misn.markerAdd(destsys, "computer")
-   cargo_setDesc( misn_desc[tier], cargo, amount, destplanet, timelimit, piracyrisk );
+   cargo_setDesc( misn_desc[tier]:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit, piracyrisk );
    misn.setReward( creditstring(reward) )
 end
 

@@ -56,7 +56,7 @@ ferrytime[0] = _("Economy") -- Note: indexed from 0, to match mission tiers.
 ferrytime[1] = _("Priority")
 ferrytime[2] = _("Express")
 
-misn_desc = _("%s space transport to %%s for %s-class citizen")
+misn_desc = _("%s space transport to %s for %s-class citizen")
 
 -- Note: please leave the trailing space on the line below! Needed to make the newline show up.
 title_p2 = _([[ 
@@ -241,7 +241,7 @@ function create()
 
     misn.markerAdd(destsys, "computer")
     misn.setTitle( string.format(misn_title, ferrytime[print_speed], prank[rank]) )
-    cargo_setDesc( misn_desc:format( ferrytime[print_speed], prank[rank]), nil, nil, destplanet, timelimit );
+    cargo_setDesc( misn_desc:format( ferrytime[print_speed], destplanet:name(), prank[rank]), nil, nil, destplanet, timelimit );
     misn.setReward(creditstring(reward))
 
     -- Set up passenger details so player cannot keep trying to get a better outcome
@@ -320,7 +320,7 @@ function accept()
         end
 
         destplanet = altplanets[altdest]
-        cargo_setDesc( misn_desc:format( ferrytime[print_speed], prank[rank]), nil, nil, destplanet, timelimit );
+        cargo_setDesc( misn_desc:format( ferrytime[print_speed], destplanet:name(), prank[rank]), nil, nil, destplanet, timelimit );
         --wants_sirian = false    -- Don't care what kind of ship you're flying
     end
 
