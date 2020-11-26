@@ -911,7 +911,7 @@ static int mission_parseFile( const char* file )
    xmlDocPtr doc;
    xmlNodePtr node;
    size_t bufsize;
-   char *filebuf, *luabuf;
+   char *filebuf;
    const char *pos;
    MissionData *temp;
 
@@ -943,7 +943,6 @@ static int mission_parseFile( const char* file )
       WARN(_("Mission file '%s' has missing XML header!"), file);
       return -1;
    }
-   luabuf = &filebuf[ pos-filebuf+4 ];
 
    /* Parse the header. */
    doc = xmlParseMemory( &filebuf[5], pos-filebuf-5 );
@@ -960,9 +959,8 @@ static int mission_parseFile( const char* file )
 
    temp = &array_grow(&mission_stack);
    mission_parseXML( temp, node );
-   temp->lua = calloc( 1, bufsize-(luabuf-filebuf)+1 );
+   temp->lua = strdup(filebuf);
    temp->sourcefile = strdup(file);
-   strncpy( temp->lua, luabuf, bufsize-(luabuf-filebuf) );
 
 #ifdef DEBUGGING
    /* Check to see if syntax is valid. */
