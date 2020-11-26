@@ -93,7 +93,7 @@ use_hidden_jumps = false
 function get_enemies( sys )
    local enemies = 0
    for i, j in ipairs( paying_faction:enemies() ) do
-      local p = sys:presences()[j:name()]
+      local p = sys:presences()[j:nameRaw()]
       if p ~= nil then
          enemies = enemies + p
       end
@@ -107,7 +107,7 @@ function create ()
 
    local systems = getsysatdistance( system.cur(), 1, 2,
       function(s)
-         local this_faction = s:presences()[paying_faction:name()]
+         local this_faction = s:presences()[paying_faction:nameRaw()]
          return this_faction ~= nil and this_faction > 0 and get_enemies(s) > 0
       end, nil, use_hidden_jumps )
    if get_enemies( system.cur() ) then
@@ -156,8 +156,8 @@ function create ()
    reputation = math.floor( n_enemies / 75 )
 
    -- Set mission details
-   misn.setTitle( misn_title:format( _(missys:name()) ) )
-   misn.setDesc( misn_desc:format( _(missys:name()) ) )
+   misn.setTitle( misn_title:format( missys:name() ) )
+   misn.setDesc( misn_desc:format( missys:name() ) )
    misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
@@ -166,9 +166,9 @@ end
 function accept ()
    misn.accept()
 
-   osd_msg[1] = osd_msg[1]:format( _(missys:name()) )
+   osd_msg[1] = osd_msg[1]:format( missys:name() )
    osd_msg[2] = osd_msg_2:format( #points )
-   osd_msg[4] = osd_msg[4]:format( _(paying_faction:name()) )
+   osd_msg[4] = osd_msg[4]:format( paying_faction:name() )
    misn.osdCreate( osd_title, osd_msg )
 
    job_done = false
@@ -196,7 +196,7 @@ function jumpout ()
    local last_sys = system.cur()
    if not job_done then
       if last_sys == missys then
-         fail( msg[6]:format( _(last_sys:name()) ) )
+         fail( msg[6]:format( last_sys:name() ) )
       elseif jumps_permitted < 0 then
          fail( msg[5] )
       end

@@ -977,7 +977,7 @@ void map_renderFactionDisks( double x, double y, int editor)
       gl_blitTexture(
             gl_faction_disk,
             tx - sw/2, ty - sh/2, sw, sh,
-            0., 0., gl_faction_disk->srw, gl_faction_disk->srw, &c );
+            0., 0., gl_faction_disk->srw, gl_faction_disk->srw, &c, 0.);
    }
 }
 

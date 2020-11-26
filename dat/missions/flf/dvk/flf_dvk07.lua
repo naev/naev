@@ -92,7 +92,7 @@ function accept ()
       misn.setReward( misn_reward )
       marker = misn.markerAdd( missys, "high" )
 
-      osd_desc[1] = osd_desc[1]:format( _(missys:name()) )
+      osd_desc[1] = osd_desc[1]:format( missys:name() )
       osd_desc[2] = osd_desc[2]:format( misn_level[level] )
       misn.osdCreate( osd_title, osd_desc )
 

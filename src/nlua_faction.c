@@ -27,6 +27,7 @@
 static int factionL_get( lua_State *L );
 static int factionL_eq( lua_State *L );
 static int factionL_name( lua_State *L );
+static int factionL_nameRaw( lua_State *L );
 static int factionL_longname( lua_State *L );
 static int factionL_areenemies( lua_State *L );
 static int factionL_areallies( lua_State *L );
@@ -47,6 +48,7 @@ static const luaL_Reg faction_methods[] = {
    { "__eq", factionL_eq },
    { "__tostring", factionL_name },
    { "name", factionL_name },
+   { "nameRaw", factionL_nameRaw },
    { "longname", factionL_longname },
    { "areEnemies", factionL_areenemies },
    { "areAllies", factionL_areallies },
@@ -218,10 +220,14 @@ static int factionL_eq( lua_State *L )
 }
 
 /**
- * @brief Gets the faction's "real" (internal) name.
+ * @brief Gets the faction's translated short name.
  *
- * @usage name = f:name()
- *        human_name = _(f:name()) -- see also f:longname()
+ * This translated name should be used for display purposes (e.g.
+ * messages) where the shorter version of the faction's display name
+ * should be used. It cannot be used as an identifier for the faction;
+ * for that, use faction.nameRaw() instead.
+ *
+ * @usage shortname = f:name()
  *
  *    @luatparam Faction f The faction to get the name of.
  *    @luatreturn string The name of the faction.
@@ -231,16 +237,43 @@ static int factionL_name( lua_State *L )
 {
    int f;
    f = luaL_validfaction(L,1);
+   lua_pushstring(L, faction_shortname(f));
+   return 1;
+}
+
+/**
+ * @brief Gets the faction's raw / "real" (untranslated, internal) name.
+ *
+ * This untranslated name should be used for identification purposes
+ * (e.g. can be passed to faction.get()). It should not be used for
+ * display purposes; for that, use faction.name() or faction.longname()
+ * instead.
+ *
+ * @usage name = f:nameRaw()
+ *
+ *    @luatparam Faction f The faction to get the name of.
+ *    @luatreturn string The name of the faction.
+ * @luafunc nameRaw( f )
+ */
+static int factionL_nameRaw( lua_State *L )
+{
+   int f;
+   f = luaL_validfaction(L,1);
    lua_pushstring(L, faction_name(f));
    return 1;
 }
 
 /**
- * @brief Gets the faction's long name (formal, human-readable).
+ * @brief Gets the faction's translated long name.
+ *
+ * This translated name should be used for display purposes (e.g.
+ * messages) where the longer version of the faction's display name
+ * should be used. It cannot be used as an identifier for the faction;
+ * for that, use faction.nameRaw() instead.
  *
  * @usage longname = f:longname()
  *    @luatparam Faction f Faction to get long name of.
- *    @luatreturn string The long name of the faction (in player's native language).
+ *    @luatreturn string The long name of the faction (translated).
  * @luafunc longname( f )
  */
 static int factionL_longname( lua_State *L )

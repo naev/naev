@@ -124,16 +124,16 @@ function accept ()
    started = true
 
    if tk.yesno( title[1], txt ) then
-      tk.msg( title[1], text[2]:format( _(misplanet:name()), _(missys:name()) ) )
+      tk.msg( title[1], text[2]:format( misplanet:name(), missys:name() ) )
 
       misn.accept()
 
       misn.setTitle( misn_title )
-      misn.setDesc( misn_desc:format( _(missys:name()) ) )
+      misn.setDesc( misn_desc:format( missys:name() ) )
       misn.setReward( misn_reward )
       marker = misn.markerAdd( missys, "low" )
 
-      osd_desc[1] = osd_desc[1]:format( _(missys:name()), _(misplanet:name()) )
+      osd_desc[1] = osd_desc[1]:format( missys:name(), misplanet:name() )
       misn.osdCreate( misn_title, osd_desc )
 
       hook.land( "land" )

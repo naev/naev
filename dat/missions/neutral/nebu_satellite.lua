@@ -103,18 +103,18 @@ function accept ()
    -- Set up mission information
    misn.setTitle( mtitle[1] )
    misn.setReward( creditstring(credits) )
-   misn.setDesc( string.format( mdesc[1], _(satellite_sys:name()) ) )
+   misn.setDesc( string.format( mdesc[1], satellite_sys:name() ) )
    misn_marker = misn.markerAdd( satellite_sys, "low" )
 
    -- Add mission
    misn.accept()
 
    -- More flavour text
-   tk.msg( title[2], string.format(text[2], _(satellite_sys:name())) )
-   tk.msg( title[2], string.format(text[3], _(satellite_sys:name()),
-         _(homeworld:name()), _(homeworld_sys:name()), creditstring(credits) ) )
+   tk.msg( title[2], string.format(text[2], satellite_sys:name()) )
+   tk.msg( title[2], string.format(text[3], satellite_sys:name(),
+         homeworld:name(), homeworld_sys:name(), creditstring(credits) ) )
 
-   misn.osdCreate(mtitle[1], {mdesc[1]:format(_(satellite_sys:name()))})
+   misn.osdCreate(mtitle[1], {mdesc[1]:format(satellite_sys:name())})
    -- Set up hooks
    hook.land("land")
    hook.enter("jumpin")
@@ -173,7 +173,7 @@ function launchSatellite ()
    misn_stage = 1
    player.msg( launch[3] )
    misn.cargoJet( cargo )
-   misn.setDesc( string.format( mdesc[2], _(homeworld:name()), _(homeworld_sys:name()) ) )
-   misn.osdCreate(mtitle[1], {mdesc[2]:format(_(homeworld:name()), _(homeworld_sys:name()))})
+   misn.setDesc( string.format( mdesc[2], homeworld:name(), homeworld_sys:name() ) )
+   misn.osdCreate(mtitle[1], {mdesc[2]:format(homeworld:name(), homeworld_sys:name())})
    misn.markerMove( misn_marker, homeworld_sys )
 end

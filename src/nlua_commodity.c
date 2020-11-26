@@ -25,6 +25,7 @@
 static int commodityL_eq( lua_State *L );
 static int commodityL_get( lua_State *L );
 static int commodityL_name( lua_State *L );
+static int commodityL_nameRaw( lua_State *L );
 static int commodityL_price( lua_State *L );
 static int commodityL_priceAt( lua_State *L );
 static int commodityL_priceAtTime( lua_State *L );
@@ -33,6 +34,7 @@ static const luaL_Reg commodityL_methods[] = {
    { "__eq", commodityL_eq },
    { "get", commodityL_get },
    { "name", commodityL_name },
+   { "nameRaw", commodityL_nameRaw },
    { "price", commodityL_price },
    { "priceAt", commodityL_priceAt },
    { "priceAtTime", commodityL_priceAtTime },
@@ -189,7 +191,7 @@ static int commodityL_eq( lua_State *L )
  *
  * @usage s = commodity.get( "Food" ) -- Gets the food commodity
  *
- *    @luatparam string s Name of the commodity to get.
+ *    @luatparam string s Raw (untranslated) name of the commodity to get.
  *    @luatreturn Commodity|nil The commodity matching name or nil if error.
  * @luafunc get( s )
  */
@@ -212,16 +214,49 @@ static int commodityL_get( lua_State *L )
    lua_pushcommodity(L, commodity);
    return 1;
 }
+
+
 /**
- * @brief Gets the name of the commodity's commodity.
+ * @brief Gets the translated name of the commodity.
  *
- * @usage commodityname = s:name()
+ * This translated name should be used for display purposes (e.g.
+ * messages). It cannot be used as an identifier for the commodity; for
+ * that, use commodity.nameRaw() instead.
  *
- *    @luatparam Commodity s Commodity to get commodity name.
- *    @luatreturn string The name of the commodity's commodity.
+ * @usage commodityname = s:name() -- Equivalent to `_(s:nameRaw())`
+ *
+ *    @luatparam Commodity s Commodity to get the translated name of.
+ *    @luatreturn string The translated name of the commodity.
  * @luafunc name( s )
  */
 static int commodityL_name( lua_State *L )
+{
+   Commodity *c;
+
+   /* Get the commodity. */
+   c  = luaL_validcommodity(L,1);
+
+   /** Return the commodity name. */
+   lua_pushstring(L, _(c->name));
+   return 1;
+}
+
+
+/**
+ * @brief Gets the raw (untranslated) name of the commodity.
+ *
+ * This untranslated name should be used for identification purposes
+ * (e.g. can be passed to commodity.get()). It should not be used
+ * directly for display purposes without manually translating it with
+ * _().
+ *
+ * @usage commodityrawname = s:nameRaw()
+ *
+ *    @luatparam Commodity s Commodity to get the raw name of.
+ *    @luatreturn string The raw name of the commodity.
+ * @luafunc nameRaw( s )
+ */
+static int commodityL_nameRaw( lua_State *L )
 {
    Commodity *c;
 

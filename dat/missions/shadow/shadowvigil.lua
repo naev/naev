@@ -177,7 +177,7 @@ function accept()
     misn.setReward(misn_reward)
     marker = misn.markerAdd(misssys[1], "low")
     
-    osd_msg[1] = string.format(osd_msg[1], _(misssys[1]:name()))
+    osd_msg[1] = string.format(osd_msg[1], misssys[1]:name())
     misn.osdCreate(osd_title, osd_msg)
     
     hook.land("land")
@@ -474,7 +474,7 @@ function diplomatJump()
             j:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
         end
     end
-    player.msg(string.format(_("Mission update: The diplomat has jumped to %s."), _(getNextSystem(system.cur(), misssys[stage]):name())))
+    player.msg(string.format(_("Mission update: The diplomat has jumped to %s."), getNextSystem(system.cur(), misssys[stage]):name()))
 end
 
 -- Handle the diplomat getting attacked.

@@ -1,19 +1,19 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Space Family">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>100</chance>
-   <location>None</location>
-  </avail>
-  <notes>
-   <done_evt name="Shipwreck">If you make the mistake to help Harrus</done_evt>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>100</chance>
+  <location>None</location>
+ </avail>
+ <notes>
+  <done_evt name="Shipwreck">If you make the mistake to help Harrus</done_evt>
+ </notes>
+</mission>
+--]]
 --[[
 -- This is the mission part of the shipwrecked Space Family mission, started from a random event.
 -- See dat/events/neutral/shipwreck.lua
@@ -101,12 +101,10 @@ function create ()
    targsys = getsysatdistance(nil, 3) -- Populate the array
    targsys = getlandablesystems( targsys )
    if #targsys == 0 then targsys = {system.get("Apez")} end -- In case no systems were found.
-   destsys = targsys[rnd.rnd(1, #targsys)] 
-   destsysname = system.name(destsys)
+   destsys = targsys[rnd.rnd(1, #targsys)]
    destplanet = getlandable(destsys) -- pick a landable planet in the destination system
-   destplanetname = destplanet:name()
-   tk.msg(title[2], string.format(directions[nextstop], _(destplanetname), _(destsysname))) -- NPC telling you where to go
-   misn.osdCreate(misn_title, {misn_desc[2]:format(_(destplanetname), _(destsysname))})
+   tk.msg(title[2], string.format(directions[nextstop], destplanet:name(), destsys:name())) -- NPC telling you where to go
+   misn.osdCreate(misn_title, {misn_desc[2]:format(destplanet:name(), destsys:name())})
    misn_marker = misn.markerAdd( destsys, "low" )
 
    -- Force unboard
@@ -139,7 +137,7 @@ end
 function land()
    if planet.cur() == destplanet then -- We've arrived!
       if nextstop >= 3 then -- This is the last stop
-         tk.msg(title[4], string.format(text[3], _(destsysname))) -- Final message
+         tk.msg(title[4], string.format(text[3], destsys:name())) -- Final message
          player.pay(500000)
          misn.cargoJet(carg_id)
          addMiscLog( log_text )
@@ -149,12 +147,10 @@ function land()
          targsys = getsysatdistance(nil, nextstop+1) -- Populate the array
          targsys = getlandablesystems( targsys )
          if #targsys == 0 then targsys = {system.get("Apez")} end -- In case no systems were found.
-         destsys = targsys[rnd.rnd(1, #targsys)] 
-         destsysname = system.name(destsys)
+         destsys = targsys[rnd.rnd(1, #targsys)]
          destplanet = getlandable(destsys) -- pick a landable planet in the destination system
-         destplanetname = destplanet:name()
-         tk.msg(title[2], string.format(directions[nextstop], _(destplanetname), _(destsysname))) -- NPC telling you where to go
-         misn.osdCreate(misn_title, {misn_desc[2]:format(_(destplanetname), _(destsysname))})
+         tk.msg(title[2], string.format(directions[nextstop], destplanet:name(), destsys:name())) -- NPC telling you where to go
+         misn.osdCreate(misn_title, {misn_desc[2]:format(destplanet:name(), destsys:name())})
          misn.markerMove( misn_marker, destsys )
       end
    end

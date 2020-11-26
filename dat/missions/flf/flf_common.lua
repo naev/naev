@@ -23,11 +23,11 @@ function flf_getSystem ()
    local choices = {}
    for i, j in ipairs( system.getAll() ) do
       local p = j:presences()
-      if p[ "FLF" ] then
-         choices[ #choices + 1 ] = j:name()
+      if p["FLF"] then
+         choices[#choices + 1] = j:nameRaw()
       end
    end
-   return system.get( choices[ rnd.rnd( 1, #choices ) ] )
+   return system.get(choices[rnd.rnd(1, #choices)])
 end
 
 
@@ -37,11 +37,11 @@ function flf_getTargetSystem ()
    local choices = {}
    for i, j in ipairs( system.getAll() ) do
       local p = j:presences()
-      if p[ "FLF" ] and p[ "Dvaered" ] then
-         choices[ #choices + 1 ] = j:name()
+      if p["FLF"] and p["Dvaered"] then
+         choices[#choices + 1] = j:nameRaw()
       end
    end
-   return system.get( choices[ rnd.rnd( 1, #choices ) ] )
+   return system.get(choices[rnd.rnd(1, #choices)])
 end
 
 
@@ -50,11 +50,11 @@ function flf_getEmpireSystem ()
    local choices = {}
    for i, j in ipairs( system.getAll() ) do
       local p = j:presences()
-      if p[ "FLF" ] and p[ "Empire" ] then
-         choices[ #choices + 1 ] = j:name()
+      if p["FLF"] and p["Empire"] then
+         choices[#choices + 1] = j:nameRaw()
       end
    end
-   return system.get( choices[ rnd.rnd( 1, #choices ) ] )
+   return system.get(choices[rnd.rnd(1, #choices)])
 end
 
 
@@ -64,16 +64,16 @@ function flf_getPirateSystem ()
    for i, j in ipairs( system.getAll() ) do
       local p = j:presences()
       if p[ "FLF" ] and p[ "Pirate" ] then
-         choices[ #choices + 1 ] = j:name()
+         choices[#choices + 1] = j:nameRaw()
       end
    end
-   return system.get( choices[ rnd.rnd( 1, #choices ) ] )
+   return system.get(choices[rnd.rnd(1, #choices)])
 end
 
 
 -- Change the reputation cap for the FLF.
 function flf_setReputation( newcap )
-   var.push( "_fcap_flf", math.max( newcap, var.peek( "_fcap_flf" ) or 5 ) )
+   var.push( "_fcap_flf", math.max(newcap, var.peek("_fcap_flf") or 5) )
 end
 
 

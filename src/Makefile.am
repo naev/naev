@@ -11,12 +11,11 @@ naev_DEPENDENCIES = $(NAEV_DEPENDENCIES)
 
 if HAVE_SHADERS_C_GEN
 # Compile shaders_c_gen for the build environment.
-# XXX - Should use $(BUILD_EXEEXT) instead of "$(EXEEXT)", but (cf. configure.ac) we're not using the nice "CC_FOR_BUILD" macro.
-shaders.gen.c shaders.gen.h: shaders_c_gen$(EXEEXT)
+shaders.gen.c shaders.gen.h: shaders_c_gen$(BUILD_EXEEXT)
 	./$<
-shaders_c_gen$(EXEEXT): shaders_c_gen.c
+shaders_c_gen$(BUILD_EXEEXT): shaders_c_gen.c
 	$(CC_FOR_BUILD) $(CFLAGS_FOR_BUILD) $< -o $@
-CLEANFILES += shaders.gen.c shaders.gen.h shaders_c_gen$(EXEEXT)
+CLEANFILES += shaders.gen.c shaders.gen.h shaders_c_gen$(BUILD_EXEEXT)
 BUILT_SOURCES = shaders.gen.c shaders.gen.h
 endif
 

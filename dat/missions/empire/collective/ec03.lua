@@ -91,13 +91,13 @@ function accept ()
       -- Mission details
       misn.setTitle(misn_title)
       misn.setReward( creditstring( credits ) )
-      misn.setDesc( string.format(misn_desc[1], _(misn_target_sys:name()) ))
+      misn.setDesc( string.format(misn_desc[1], misn_target_sys:name() ))
 
       tk.msg( title[1], string.format(text[2], commando_planet, commando_planet ) )
       tk.msg( title[1], text[3] )
-      osd_msg[1] = osd_msg[1]:format(_(misn_target_sys:name()))
+      osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
       osd_msg[2] = osd_msg2:format(dronequota, droneleft)
-      osd_msg[3] = osd_msg[3]:format(_(misn_base:name()))
+      osd_msg[3] = osd_msg[3]:format(misn_base:name())
       misn.osdCreate(misn_title, osd_msg)
 
       hook.enter("jumpin")

@@ -47,14 +47,6 @@ misn_desc[2] = _("Pressing cargo delivery to %s in the %s system.")
 misn_desc[3] = _("Urgent cargo delivery to %s in the %s system.")
 misn_desc[4] = _("Emergency cargo delivery to %s in the %s system.")
 
-misn_details = _([[
-Cargo: %s (%s)
-Jumps: %d
-Travel distance: %d
-%s
-Time limit: %s
-]])
-
 piracyrisk = {}
 piracyrisk[1] = _("Piracy Risk: None")
 piracyrisk[2] = _("Piracy Risk: Low")
@@ -130,13 +122,9 @@ function create()
    reward     = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
    
    misn.setTitle( misn_title[tier]:format(
-      _(destplanet:name()), _(destsys:name()), tonnestring(amount) ) )
+      destplanet:name(), destsys:name(), tonnestring(amount) ) )
    misn.markerAdd(destsys, "computer")
-   misn.setDesc(
-      misn_desc[tier]:format( _(destplanet:name()), _(destsys:name()) ) .. "\n\n"
-      .. misn_details:format(
-         _(cargo), tonnestring(amount), numjumps, traveldist, piracyrisk,
-         (timelimit - time.get()):str() ) )
+   cargo_setDesc( misn_desc[tier]:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit, piracyrisk );
    misn.setReward( creditstring(reward) )
 end
 
@@ -156,7 +144,24 @@ function accept()
       if not tk.yesno( _("Too slow"), string.format(
             _("This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline. Accept the mission anyway?"),
             (timelimit - time.get()):str(), (playerbest - time.get()):str(),
-            _(destplanet:name()) ) ) then
+            destplanet:name() ) ) then
+         misn.finish()
+      end
+   elseif player.jumps() < numjumps then
+      if not tk.yesno( _("Short on fuel"), string.format(
+            _("You will require at least %s to reach %s. Your ship can only make %s, so you will have to refuel at least %s, which will take additional time and may cause you to miss the deadline. Accept the mission anyway?"),
+            jumpstring(numjumps), destplanet:name(), jumpstring(player.jumps()),
+            -- Note: math.ceil() - 1 because for example 6/3=2, but that
+            -- only requires 1 refuel (i.e. 2 trips). math.floor() would
+            -- only catch this for non-integer results.
+            timestring(math.ceil(numjumps / player.jumps()) - 1) ) ) then
+         misn.finish()
+      end
+   elseif system.cur():jumpDist(destsys, false, true) == nil
+         or system.cur():jumpDist(destsys, false, true) < numjumps then
+      if not tk.yesno( _("Unknown route"), string.format(
+            _("The fastest route to %s is not currently known to you. Landing to buy maps, spending time searching for unknown jumps, or taking a route longer than %s may cause you to miss the deadline. Accept the mission anyway?"),
+            destplanet:name(), jumpstring(numjumps) ) ) then
          misn.finish()
       end
    end
@@ -165,7 +170,7 @@ function accept()
    misn.cargoAdd(cargo, amount) -- TODO: change to jettisonable cargo once custom commodities are in. For piracy purposes.
    local osd_msg = {}
    osd_msg[1] = osd_msg1:format(
-      _(destplanet:name()), _(destsys:name()), timelimit:str(),
+      destplanet:name(), destsys:name(), timelimit:str(),
       (timelimit - time.get()):str() )
    misn.osdCreate(osd_title, osd_msg)
    hook.land("land")
@@ -195,16 +200,16 @@ function tick()
    if timelimit >= time.get() then
       -- Case still in time
       osd_msg[1] = osd_msg1:format(
-         _(destplanet:name()), _(destsys:name()), timelimit:str(),
+         destplanet:name(), destsys:name(), timelimit:str(),
          (timelimit - time.get()):str() )
       misn.osdCreate(osd_title, osd_msg)
    elseif timelimit2 <= time.get() then
       -- Case missed second deadline
-      player.msg( msg_timeup:format( _(destsys:name()) ) )
+      player.msg( msg_timeup:format( destsys:name() ) )
       misn.finish(false)
    elseif intime then
       -- Case missed first deadline
-      osd_msg[1] = osd_timeup:format( _(destplanet:name()), _(destsys:name()) )
+      osd_msg[1] = osd_timeup:format( destplanet:name(), destsys:name() )
       misn.osdCreate(osd_title, osd_msg)
       intime = false
    end

@@ -88,9 +88,9 @@ function create ()
 
    local desc
    if ships == 1 then
-      desc = misn_desc[2]:format( _(missys:name()) )
+      desc = misn_desc[2]:format( missys:name() )
    else
-      desc = misn_desc[1]:format( ships, _(missys:name()) )
+      desc = misn_desc[1]:format( ships, missys:name() )
    end
    if flfships > 0 then
       desc = desc .. misn_desc[3]:format( flfships )
@@ -100,7 +100,7 @@ function create ()
    late_arrival_delay = rnd.rnd( 10000, 120000 )
 
    -- Set mission details
-   misn.setTitle( misn_title:format( misn_level[level], _(missys:name()) ) )
+   misn.setTitle( misn_title:format( misn_level[level], missys:name() ) )
    misn.setDesc( desc )
    misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
@@ -110,7 +110,7 @@ end
 function accept ()
    misn.accept()
 
-   osd_desc[1] = osd_desc[1]:format( _(missys:name()) )
+   osd_desc[1] = osd_desc[1]:format( missys:name() )
    osd_desc[2] = osd_desc[2]:format( misn_level[level] )
    misn.osdCreate( osd_title, osd_desc )
 

@@ -56,6 +56,9 @@ int gl_printTextRaw( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
       const glColour* c, const double outlineR, const char *text);
+void gl_printMarkerRaw( const glFont *ft_font,
+      const double x, const double y,
+      const glColour* c, const char *text);
 
 
 /*

@@ -68,6 +68,7 @@ static void opt_needRestart (void);
 static char** lang_list( int *n );
 static void opt_gameplay( unsigned int wid );
 static void opt_setAutonavResetSpeed( unsigned int wid, char *str );
+static void opt_setMapOverlayOpacity( unsigned int wid, char *str );
 static void opt_OK( unsigned int wid, char *str );
 static int opt_gameplaySave( unsigned int wid, char *str );
 static void opt_gameplayDefaults( unsigned int wid, char *str );
@@ -173,7 +174,7 @@ static void opt_close( unsigned int wid, char *name )
 
 
 /**
- * @brief Handles resize events for the options menu.
+ * @brief Handles resize events nfor the options menu.
  */
 void opt_resize (void)
 {
@@ -257,14 +258,14 @@ static void opt_gameplay( unsigned int wid )
    /* Information. */
    cw = (w-40);
    x = 20;
-   y = -60;
+   y = -35;
    window_addText( wid, x, y, cw, 20, 1, "txtVersion",
-         NULL, NULL, naev_version(1) );
+         &gl_smallFont, NULL, naev_version(1) );
    y -= 20;
 #ifdef GIT_COMMIT
    nsnprintf( buf, sizeof(buf), _("Commit: %s"), GIT_COMMIT );
    window_addText( wid, x, y, cw, 20, 1, "txtCommit",
-         NULL, NULL, buf );
+         &gl_smallFont, NULL, buf );
 #endif /* GIT_COMMIT */
    y -= 20;
    path = ndata_getPath();
@@ -273,7 +274,7 @@ static void opt_gameplay( unsigned int wid )
    else
       nsnprintf( buf, sizeof(buf), _("ndata: %s"), path);
    window_addText( wid, x, y, cw, 20, 1, "txtNdata",
-         NULL, NULL, buf );
+         &gl_smallFont, NULL, buf );
    y -= 40;
    by = y;
 
@@ -283,7 +284,7 @@ static void opt_gameplay( unsigned int wid )
    y  = by;
    x  = 20;
 #if defined ENABLE_NLS && ENABLE_NLS
-   s = _("Language");
+   s = _("Language:");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 0, "txtLanguage",
          NULL, NULL, s );
@@ -299,11 +300,11 @@ static void opt_gameplay( unsigned int wid )
    window_addList( wid, x+l+20, y, cw-l-50, 70, "lstLanguage", ls, n, i, NULL, NULL );
    y -= 90;
 #endif /* defined ENABLE_NLS && ENABLE_NLS */
-   window_addText( wid, x+20, y, cw, 20, 0, "txtCompile",
-         NULL, NULL, _("Compilation Flags") );
+   window_addText( wid, x, y, cw, 20, 0, "txtCompile",
+         NULL, NULL, _("Compilation Flags:") );
    y -= 30;
    window_addText( wid, x, y, cw, h+y-20, 0, "txtFlags",
-         NULL, &cFontPurple,
+         &gl_smallFont, &cFontOrange,
          ""
 #ifdef DEBUGGING
 #ifdef DEBUG_PARANOID
@@ -335,26 +336,43 @@ static void opt_gameplay( unsigned int wid )
          );
 
 
+   y -= window_getTextHeight(wid, "txtFlags") + 10;
+
    /* Options. */
+
+   /* MOpacity abort. */
+   window_addText( wid, x, y, cw, 20, 0, "txtAMOpacity",
+         NULL, NULL, _("Map Overlay Opacity:") );
+   y -= 20;
+
+   /* MOpacity abort fader. */
+   window_addText( wid, x, y, cw, 20, 1, "txtMOpacity",
+         &gl_smallFont, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x, y, cw, 20, "fadMapOverlayOpacity", 0., 1.,
+         conf.map_overlay_opacity, opt_setMapOverlayOpacity );
+   y -= 40;
+
+
    x = 20 + cw + 20;
    y  = by;
    cw += 80;
 
    /* Autonav abort. */
-   window_addText( wid, x+65, y, cw-130, 20, 0, "txtAAutonav",
+   window_addText( wid, x, y, cw-130, 20, 0, "txtAAutonav",
          NULL, NULL, _("Stop Speedup At:") );
    y -= 20;
 
    /* Autonav abort fader. */
    window_addText( wid, x, y, cw, 20, 1, "txtAutonav",
-         NULL, NULL, NULL );
+         &gl_smallFont, NULL, NULL );
    y -= 20;
    window_addFader( wid, x, y, cw, 20, "fadAutonav", 0., 1.,
          conf.autonav_reset_speed, opt_setAutonavResetSpeed );
    y -= 40;
 
-   window_addText( wid, x+20, y, cw, 20, 0, "txtSettings",
-         NULL, NULL, _("Settings") );
+   window_addText( wid, x, y, cw, 20, 0, "txtSettings",
+         NULL, NULL, _("Settings:") );
    y -= 25;
 
    window_addCheckbox( wid, x, y, cw, 20,
@@ -368,16 +386,16 @@ static void opt_gameplay( unsigned int wid )
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkCompress", _("Enable saved game compression"), NULL, conf.save_compress );
-   y -= 30;
+   y -= 40;
    s = _("Visible Messages");
    l = gl_printWidthRaw( NULL, s );
-   window_addText( wid, -100, y, l, 20, 1, "txtSMSG",
+   window_addText( wid, x, y, l, 20, 1, "txtSMSG",
          NULL, NULL, s );
    window_addInput( wid, -50, y, 40, 20, "inpMSG", 4, 1, NULL );
    y -= 30;
    s = _("Max Time Compression Factor");
    l = gl_printWidthRaw( NULL, s );
-   window_addText( wid, -100, y, l, 20, 1, "txtTMax",
+   window_addText( wid, x, y, l, 20, 1, "txtTMax",
          NULL, NULL, s );
    window_addInput( wid, -50, y, 40, 20, "inpTMax", 4, 1, NULL );
 
@@ -435,6 +453,7 @@ static int opt_gameplaySave( unsigned int wid, char *str )
 
    /* Faders. */
    conf.autonav_reset_speed = window_getFaderValue(wid, "fadAutonav");
+   conf.map_overlay_opacity = window_getFaderValue(wid, "fadMapOverlayOpacity");
 
    /* Input boxes. */
    vmsg = window_getInput( wid, "inpMSG" );
@@ -488,6 +507,7 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
 
    /* Faders. */
    window_faderValue( wid, "fadAutonav", conf.autonav_reset_speed );
+   window_faderValue( wid, "fadMapOverlayOpacity", conf.map_overlay_opacity );
 
    /* Input boxes. */
    nsnprintf( vmsg, sizeof(vmsg), "%d", conf.mesg_visible );
@@ -1584,3 +1604,26 @@ static void opt_setScalefactor( unsigned int wid, char *str )
    nsnprintf( buf, sizeof(buf), _("Scaling: %.1fx"), conf.scalefactor );
    window_modifyText( wid, "txtScale", buf );
 }
+
+
+
+/**
+ * @brief Callback to set autonav abort threshold.
+ *
+ *    @param wid Window calling the callback.
+ *    @param str Name of the widget calling the callback.
+ */
+static void opt_setMapOverlayOpacity( unsigned int wid, char *str )
+{
+   char buf[PATH_MAX];
+   double map_overlay_opacity;
+
+   /* Set fader. */
+   map_overlay_opacity = window_getFaderValue(wid, str);
+
+   nsnprintf( buf, sizeof(buf), _("%.0f%%"), map_overlay_opacity * 100 );
+
+   window_modifyText( wid, "txtMOpacity", buf );
+}
+
+

@@ -100,12 +100,12 @@ function accept()
    proba = 0.3  --the probability of ambushes will change
    firstambush = true  --In the first ambush, there will be a little surprise text
 
-   if tk.yesno(title[1], text[1]:format(_(mispla:name()), _(missys:name()))) then
+   if tk.yesno(title[1], text[1]:format(mispla:name(), missys:name())) then
       misn.accept()
       tk.msg(title[2], text[2])
 
-      osd_msg[1] = osd_msg[1]:format(_(missys:name()), _(mispla:name()))
-      osd_msg[2] = osd_msg[2]:format(_(paypla:name()), _(paysys:name()))
+      osd_msg[1] = osd_msg[1]:format(missys:name(), mispla:name())
+      osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
 
       misn.setTitle(misn_title)
       misn.setReward(creditstring(reward))
@@ -128,7 +128,7 @@ end
 function land()
    --The player is landing on the mission planet
    if stage == 0 and planet.cur() == mispla then
-      tk.msg(title[4], text[4]:format(_(paysys:name())))
+      tk.msg(title[4], text[4]:format(paysys:name()))
       stage = 1
       misn.osdActive(2)
       misn.markerRm(marker)

@@ -104,18 +104,21 @@ static void inp_render( Widget* inp, double bx, double by )
    y = by + inp->y;
 
    /* main background */
-   toolkit_drawRect( x, y, inp->w, inp->h, &cBlack, NULL );
-
-   if (inp->dat.inp.oneline)
-      /* center vertically */
-      ty = y - (inp->h - gl_smallFont.h)/2.;
-   else
-      /* Align top-left. */
-      ty = y - gl_smallFont.h / 2.;
+   toolkit_drawRect( x - 4, y - 4, inp->w + 8, inp->h + 8, &cBlack, NULL );
 
    /* Draw text. */
-   gl_printTextRaw( inp->dat.inp.font, inp->w-10., inp->h,
-         x+5., ty, &cGreen, -1., &inp->dat.inp.input[ inp->dat.inp.view ] );
+   if (inp->dat.inp.oneline) {
+      /* center vertically, print whatever text fits regardless of word boundaries. */
+      ty = y + (inp->h - inp->dat.inp.font->h)/2.;
+      gl_printMaxRaw( inp->dat.inp.font, inp->w-10.,
+            x+5., ty, &cGreen, -1., &inp->dat.inp.input[ inp->dat.inp.view ] );
+   }
+   else {
+      /* Align top-left, print with word wrapping. */
+      ty = y - inp->dat.inp.font->h / 2.;
+      gl_printTextRaw( inp->dat.inp.font, inp->w-10., inp->h,
+            x+5., ty, &cGreen, -1., &inp->dat.inp.input[ inp->dat.inp.view ] );
+   }
 
    /* Draw cursor. */
    if (wgt_isFlag( inp, WGT_FLAG_FOCUSED )) {
@@ -158,6 +161,9 @@ static void inp_render( Widget* inp, double bx, double by )
       }
    }
 
+   /* inner outline */
+   /* toolkit_drawOutline( x, y, inp->w, inp->h, 0.,
+         toolkit_colLight, NULL ); */
    /* outer outline */
    toolkit_drawOutline( x-2, y-2, inp->w + 4, inp->h + 4, 1.,
          &cGrey20, NULL );
@@ -226,11 +232,12 @@ static int inp_addKey( Widget* inp, uint32_t ch )
       inp->dat.inp.input[ inp->dat.inp.pos++ ] = buf[i];
    assert(inp->dat.inp.input[ inp->dat.inp.byte_max - 1 ] == '\0');
 
-   if (inp->dat.inp.oneline) {
+   while (inp->dat.inp.oneline) {
       /* We can't wrap the text, so we need to scroll it out. */
       n = gl_printWidthRaw( inp->dat.inp.font, inp->dat.inp.input+inp->dat.inp.view );
-      if (n+10 > inp->w)
-         u8_inc( inp->dat.inp.input, &inp->dat.inp.view );
+      if (n+10 <= inp->w)
+         break;
+      u8_inc( inp->dat.inp.input, &inp->dat.inp.view );
    }
 
    return 1;
@@ -451,11 +458,12 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
             (inp->dat.inp.byte_max - curpos) );
       assert(inp->dat.inp.input[ inp->dat.inp.byte_max - curpos + inp->dat.inp.pos ] == '\0');
 
-      if (inp->dat.inp.oneline && inp->dat.inp.view > 0) {
-         n = gl_printWidthRaw( &gl_smallFont,
+      while (inp->dat.inp.oneline && inp->dat.inp.view > 0) {
+         n = gl_printWidthRaw( inp->dat.inp.font,
                inp->dat.inp.input + inp->dat.inp.view - 1 );
-         if (n+10 < inp->w)
-            inp->dat.inp.view += curpos - inp->dat.inp.pos;
+         if (n+10 >= inp->w)
+            break;
+	 inp->dat.inp.view -= (curpos - inp->dat.inp.pos);
       }
 
       if (inp->dat.inp.fptr != NULL)

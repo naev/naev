@@ -32,7 +32,7 @@ void gl_blitTexture(  const glTexture* texture,
       const double x, const double y,
       const double w, const double h,
       const double tx, const double ty,
-      const double tw, const double th, const glColour *c );
+      const double tw, const double th, const glColour *c, const double angle );
 void gl_blitTextureInterpolate(  const glTexture* ta,
       const glTexture* tb, const double inter,
       const double x, const double y,

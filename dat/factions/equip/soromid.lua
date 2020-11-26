@@ -1,4 +1,4 @@
-require("factions/equip/generic.lua")
+require "factions/equip/generic.lua"
 
 
 equip_typeOutfits_weapons["Brigand"] = {
@@ -11,6 +11,8 @@ equip_typeOutfits_weapons["Brigand"] = {
       "Plasma Blaster MK3"
    }
 }
+
+-- TODO: Design bio-weapons for larger ship types, then equip them here.
 
 
 --[[

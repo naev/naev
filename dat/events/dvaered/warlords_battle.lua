@@ -92,7 +92,7 @@ end
 
 function hail()
    hook.rm(hailhook)
-   tk.msg(title[1], text[1]:format(_(source_system:name()), _(source_planet:name())))
+   tk.msg(title[1], text[1]:format(source_system:name(), source_planet:name()))
 end
 
 function hailmeagain()

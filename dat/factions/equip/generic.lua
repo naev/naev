@@ -1094,7 +1094,7 @@ function equip_generic( p )
    p:rmOutfit( "all" )
    p:rmOutfit( "cores" )
 
-   local shipname = p:ship():name()
+   local shipname = p:ship():nameRaw()
    local basetype = p:ship():baseType()
    local class = p:ship():class()
    local success
@@ -1183,7 +1183,7 @@ function equip_generic( p )
    if #avail_cargo > 0 then
       for i=1,rnd.rnd(1,3) do
          local ncargo = rnd.rnd( 0, p:cargoFree() )
-         p:cargoAdd( avail_cargo[ rnd.rnd( 1, #avail_cargo ) ]:name(), ncargo )
+         p:cargoAdd( avail_cargo[ rnd.rnd( 1, #avail_cargo ) ]:nameRaw(), ncargo )
       end
    end
 end

@@ -55,8 +55,6 @@ text[6] = _([[You arrive at %s and report to Commander Soldner. He greets you an
 -- Errors
 errtitle = {}
 errtitle[1] = _("Need More Space")
-err = {}
-err[1] = _("You do not have enough space to load the packages. You need to make room for %d more tons.")
 
 log_text = _([[You successfully completed a package delivery for the Empire. As a result, you have been cleared for the Heavy Weapon License and can now buy it at an outfitter. Commander Soldner said that you can meet him in the bar at Halir if you're interested in more work.]])
 
@@ -94,12 +92,12 @@ function accept ()
    reward = 500000
    misn.setTitle(misn_title)
    misn.setReward( creditstring(reward) )
-   misn.setDesc( string.format(misn_desc[1], _(pickup:name()), _(pickupsys:name())))
+   misn.setDesc( string.format(misn_desc[1], pickup:name(), pickupsys:name()))
 
    -- Flavour text and mini-briefing
-   tk.msg( title[1], string.format( text[2], _(pickup:name()), _(pickupsys:name()),
-         _(dest:name()), _(destsys:name()), creditstring(reward) ) )
-   misn.osdCreate(misn_title, {misn_desc[1]:format(_(pickup:name()), _(pickupsys:name()))})
+   tk.msg( title[1], string.format( text[2], pickup:name(), pickupsys:name(),
+         dest:name(), destsys:name(), creditstring(reward) ) )
+   misn.osdCreate(misn_title, {misn_desc[1]:format(pickup:name(), pickupsys:name())})
 
    -- Set up the goal
    tk.msg( title[1], text[3] )
@@ -117,7 +115,11 @@ function land ()
 
       -- Make sure player has room.
       if player.pilot():cargoFree() < 3 then
-         tk.msg( errtitle[1], string.format( err[1], 3 - player.pilot():cargoFree() ) )
+         local needed = 3 - player.pilot():cargoFree()
+         tk.msg( errtitle[1], string.format( gettext.ngettext(
+            "You do not have enough space to load the packages. You need to make room for %d more tonne.",
+            "You do not have enough space to load the packages. You need to make room for %d more tonnes.",
+            needed), needed ) )
          return
       end
 
@@ -125,24 +127,24 @@ function land ()
       package = misn.cargoAdd("Packages", 3)
       misn_stage = 1
       jumped = 0
-      misn.setDesc( string.format(misn_desc[2], _(dest:name()), _(destsys:name())))
+      misn.setDesc( string.format(misn_desc[2], dest:name(), destsys:name()))
       misn.markerMove( misn_marker, destsys )
-      misn.osdCreate(misn_title, {misn_desc[2]:format(_(dest:name()), _(destsys:name()))})
+      misn.osdCreate(misn_title, {misn_desc[2]:format(dest:name(), destsys:name())})
 
       -- Load message
-      tk.msg( title[2], string.format( text[4], _(dest:name()), _(destsys:name())) )
+      tk.msg( title[2], string.format( text[4], dest:name(), destsys:name()) )
 
    elseif landed == dest and misn_stage == 1 then
       if misn.cargoRm(package) then
 
          -- Update mission
          misn_stage = 2
-         misn.setDesc( string.format(misn_desc[3], _(ret:name()), _(retsys:name())))
+         misn.setDesc( string.format(misn_desc[3], ret:name(), retsys:name()))
          misn.markerMove( misn_marker, retsys )
-         misn.osdCreate(misn_title, {misn_desc[3]:format(_(ret:name()),_(retsys:name()))})
+         misn.osdCreate(misn_title, {misn_desc[3]:format(ret:name(),retsys:name())})
 
          -- Some text
-         tk.msg( title[3], string.format(text[5], _(ret:name()), _(retsys:name())) )
+         tk.msg( title[3], string.format(text[5], ret:name(), retsys:name()) )
 
       end
    elseif landed == ret and misn_stage == 2 then
@@ -152,7 +154,7 @@ function land ()
       faction.modPlayerSingle("Empire",5);
 
       -- Flavour text
-      tk.msg(title[4], string.format(text[6], _(ret:name())) )
+      tk.msg(title[4], string.format(text[6], ret:name()) )
 
       -- The goods
       diff.apply("heavy_weapons_license")

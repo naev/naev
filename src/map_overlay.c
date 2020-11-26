@@ -18,6 +18,7 @@
 #include "space.h"
 #include "input.h"
 #include "array.h"
+#include "conf.h"
 
 
 /**
@@ -60,7 +61,6 @@ int ovr_isOpen (void)
    return !!ovr_open;
 }
 
-
 /**
  * @brief Handles input to the map overlay.
  */
@@ -92,8 +92,23 @@ int ovr_input( SDL_Event *event )
    gl_windowToScreenPos( &mx, &my, mx, my );
 
    /* Translate to space coords. */
-   x  = ((double)mx - SCREEN_W/2.) * ovr_res;
-   y  = ((double)my - SCREEN_H/2.) * ovr_res;
+   x = ((double)mx - (double)map_overlay_center_x()) * ovr_res; 
+   y = ((double)my - (double)map_overlay_center_y()) * ovr_res; 
+
+   /*
+   WARN("mocx %i", map_overlay_center_x());
+   WARN("mocy %i", map_overlay_center_y());
+   WARN("mosx %f", map_overlay_scale_x());
+   WARN("mosy %f", map_overlay_scale_y());
+   WARN("mx %i", mx);
+   WARN("my %i", my);
+   WARN("x %f", x);
+   WARN("y %f", y);
+   WARN("Top %i", map_overlay.boundTop);
+   WARN("Right %i", map_overlay.boundRight);
+   WARN("Bottom %i", map_overlay.boundBottom);
+   WARN("Right %i", map_overlay.boundRight);
+   */
 
    return input_clickPos( event, x, y, 1., 10. * ovr_res, 15. * ovr_res );
 }
@@ -126,7 +141,7 @@ void ovr_refresh (void)
    }
 
    /* We need to calculate the radius of the rendering. */
-   ovr_res = 2. * 1.2 * MAX( max_x / SCREEN_W, max_y / SCREEN_H );
+   ovr_res = 2. * 1.2 * MAX( max_x / map_overlay_width(), max_y / map_overlay_height() );
 }
 
 
@@ -192,16 +207,6 @@ void ovr_render( double dt )
    double w, h, res;
    double x,y;
 
-   // Map overlay color and opacity/alpha
-   glColour c = { .r=0., .g=0., .b=0., .a=0.2 };
-
-   glColour textCol = { cRadar_hilight.r, cRadar_hilight.g, cRadar_hilight.b, 0.99 };
-   /* XXX: textCol is a hack to prevent the text from overly obscuring
-    * overlay display of other things. Effectively disables outlines for
-    * the text. Should ultimately be replaced with some other method of
-    * rendering the text, since the problem could be caused by as little
-    * as a font change, but using this fix for now. */
-
    /* Must be open. */
    if (!ovr_open)
       return;
@@ -211,12 +216,13 @@ void ovr_render( double dt )
       return;
 
    /* Default values. */
-   w     = SCREEN_W;
-   h     = SCREEN_H;
+   w     = map_overlay_width();
+   h     = map_overlay_height();
    res   = ovr_res;
 
    /* First render the background overlay. */
-   gl_renderRect( 0., 0., w, h, &c );
+   glColour c = { .r=0., .g=0., .b=0., .a= conf.map_overlay_opacity };
+   gl_renderRect( (double)map_overlay.boundLeft, (double)map_overlay.boundBottom, w, h, &c );
 
    /* Render planets. */
    for (i=0; i<cur_system->nplanets; i++)
@@ -249,10 +255,10 @@ void ovr_render( double dt )
 
    /* Check if player has goto target. */
    if (player_isFlag(PLAYER_AUTONAV) && (player.autonav == AUTONAV_POS_APPROACH)) {
-      x = player.autonav_pos.x / res + w / 2.;
-      y = player.autonav_pos.y / res + h / 2.;
+      x = player.autonav_pos.x / res + map_overlay_center_x();
+      y = player.autonav_pos.y / res + map_overlay_center_y();
       gl_renderCross( x, y, 5., &cRadar_hilight );
-      gl_printRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &textCol, -1., _("GOTO") );
+      gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, _("TARGET") );
    }
 
    /* render the asteroids */
@@ -280,12 +286,6 @@ static void ovr_mrkRenderAll( double res )
    int i;
    ovr_marker_t *mrk;
    double x, y;
-   glColour textCol = { cRadar_hilight.r, cRadar_hilight.g, cRadar_hilight.b, 0.99 };
-   /* XXX: textCol is a hack to prevent the text from overly obscuring
-    * overlay display of other things. Effectively disables outlines for
-    * the text. Should ultimately be replaced with some other method of
-    * rendering the text, since the problem could be caused by as little
-    * as a font change, but using this fix for now. */
 
    if (ovr_markers == NULL)
       return;
@@ -293,12 +293,12 @@ static void ovr_mrkRenderAll( double res )
    for (i=0; i<array_size(ovr_markers); i++) {
       mrk = &ovr_markers[i];
 
-      x = mrk->u.pt.x / res + SCREEN_W / 2.;
-      y = mrk->u.pt.y / res + SCREEN_H / 2.;
+      x = mrk->u.pt.x / res + map_overlay_center_x();
+      y = mrk->u.pt.y / res + map_overlay_center_y();
       gl_renderCross( x, y, 5., &cRadar_hilight );
 
       if (mrk->text != NULL)
-         gl_printRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &textCol, -1., mrk->text );
+         gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, mrk->text );
    }
 }
 

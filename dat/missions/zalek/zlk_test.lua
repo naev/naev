@@ -29,10 +29,6 @@ require "scripts/numstring.lua"
 misn_title = _("ZT test of %s")
 misn_desc = _("A Za'lek research team needs you to travel to %s in %s using an engine in order to test it.")
 
-title = _([[ZT: go to %s in the %s system
-Jumps: %d
-Travel distance: %d]])
-
 msg_title = {}
 msg_title[1] = _("Mission Accepted")
 msg_title[2] = _("Too many missions")
@@ -125,9 +121,8 @@ function create()
 
    misn.setTitle( misn_title:format( typeOfEng ))
    misn.markerAdd(destsys, "computer")
-   misn.setDesc(title:format(_(destplanet:name()), _(destsys:name()), numjumps, traveldist ))
+   cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), nil, nil, destplanet )
    misn.setReward(creditstring(reward))
-
 end
 
 function accept()
@@ -141,9 +136,9 @@ function accept()
       stage = 0
       player.addOutfit("Za'lek Test Engine")
       tk.msg( msg_title[1], znpcs[ rnd.rnd(1, #znpcs) ] )
-      tk.msg( msg_title[1], string.format( msg_msg[1], _(destplanet:name()), _(destsys:name()) ))
+      tk.msg( msg_title[1], string.format( msg_msg[1], destplanet:name(), destsys:name() ))
 
-      osd_msg[1] = string.format( osd_msg[1], _(destplanet:name()), _(destsys:name()) )
+      osd_msg[1] = string.format( osd_msg[1], destplanet:name(), destsys:name() )
       misn.osdCreate(osd_title, osd_msg)
       takehook = hook.takeoff( "takeoff" )
       enterhook = hook.enter("enter")
@@ -230,7 +225,7 @@ function teleportation()
    local newsyslist = getsysatdistance(system.cur(), 1, 3)
    local newsys = newsyslist[rnd.rnd(1, #newsyslist)]
    player.teleport(newsys)
-   tk.msg(teleport_title, teleport_text:format(_(newsys:name())))
+   tk.msg(teleport_title, teleport_text:format(newsys:name()))
    player.pilot():setHealth(50, 0)
    player.pilot():setEnergy(0)
 end

@@ -26,14 +26,6 @@ require "numstring.lua"
 
 misn_desc  = _("Official Empire long distance cargo transport to %s in the %s system.")
 
-misn_details = _([[
-Cargo: %s (%s)
-Jumps: %d
-Travel distance: %d
-%s
-Time limit: %s
-]])
-
 piracyrisk = {}
 piracyrisk[1] = _("Piracy Risk: None")
 piracyrisk[2] = _("Piracy Risk: Low")
@@ -113,13 +105,8 @@ function create()
       _("ES: Long distance cargo transport (%s of %s)"), tonnestring(amount),
       _(cargo) ) )
    misn.markerAdd(destsys, "computer")
-   misn.setDesc(
-      misn_desc:format( _(destplanet:name()), _(destsys:name()) ) .. "\n\n"
-      .. misn_details:format(
-         _(cargo), tonnestring(amount), numjumps, traveldist, piracyrisk,
-         (timelimit - time.get()):str() ) )
+   cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit, piracyrisk );
    misn.setReward( creditstring(reward) )
-
 end
 
 -- Mission is accepted
@@ -129,7 +116,7 @@ function accept()
       if not tk.yesno( _("Too slow"), string.format(
             _("This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline. Accept the mission anyway?"),
             (timelimit - time.get()):str(), (playerbest - time.get()):str(),
-            _(destplanet:name()) ) ) then
+            destplanet:name() ) ) then
          misn.finish()
       end
    end
@@ -149,7 +136,7 @@ function accept()
       tonnestring(amount), _(cargo) ) )
    local osd_msg = {}
    osd_msg[1] = osd_msg1:format(
-      _(destplanet:name()), _(destsys:name()), timelimit:str(),
+      destplanet:name(), destsys:name(), timelimit:str(),
       ( timelimit - time.get() ):str() )
    misn.osdCreate(osd_title, osd_msg)
    hook.land( "land" ) -- only hook after accepting
@@ -181,7 +168,7 @@ function tick()
       -- Case still in time
       local osd_msg = {}
       osd_msg[1] = osd_msg1:format(
-         _(destplanet:name()), _(destsys:name()), timelimit:str(),
+         destplanet:name(), destsys:name(), timelimit:str(),
          ( timelimit - time.get() ):str() )
       misn.osdCreate(osd_title, osd_msg)
    elseif timelimit <= time.get() then

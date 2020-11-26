@@ -94,7 +94,7 @@ function death(pilot,killer)
          ["Pirate Kestrel"]    = 600000
       }
 
-      killed_ship = pilot:ship():name()
+      killed_ship = pilot:ship():nameRaw()
       reward_earned = reward_table[killed_ship]
       pirates_killed = pirates_killed + 1
       bounty_earned = math.min( max_payment, bounty_earned + reward_earned )
