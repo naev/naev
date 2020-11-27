@@ -1371,8 +1371,8 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    col.a = 1.-interference_alpha;
 
    /* Get ship render width/height */
-   rw = MIN(5*sx, w-px) * 2;
-   rh = MIN(5*sy, w-py) * 2;
+   rw = MIN(3*sx, w-px) * 2;
+   rh = MIN(3*sy, w-py) * 2;
 
 
 
