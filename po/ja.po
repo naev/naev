@@ -34418,14 +34418,14 @@ msgstr ""
 #, c-format
 msgid ""
 "\n"
-"\aRUnique\a0"
+"\aoUnique\a0"
 msgstr ""
 
 #: src/equipment.c:786
 #, c-format
 msgid ""
 "\n"
-"\aRSlot %s\a0"
+"\aoSlot %s\a0"
 msgstr ""
 
 #: src/equipment.c:792
@@ -36146,7 +36146,7 @@ msgid "\ag U "
 msgstr ""
 
 #: src/land_outfits.c:290
-msgid "\aR S "
+msgid "\ap S "
 msgstr ""
 
 #: src/land_outfits.c:290
@@ -36182,12 +36182,12 @@ msgstr ""
 
 #: src/land_outfits.c:642
 #, c-format
-msgid "\aRUnique\a0\n"
+msgid "\aoUnique\a0\n"
 msgstr ""
 
 #: src/land_outfits.c:644
 #, c-format
-msgid "\aRSlot %s\a0\n"
+msgid "\aoSlot %s\a0\n"
 msgstr ""
 
 #: src/land_outfits.c:650

@@ -42637,19 +42637,19 @@ msgstr " [exklusiv]"
 #, c-format
 msgid ""
 "\n"
-"\aRUnique\a0"
+"\aoUnique\a0"
 msgstr ""
 "\n"
-"\aREinzigartig\a0"
+"\aoEinzigartig\a0"
 
 #: src/equipment.c:786
 #, c-format
 msgid ""
 "\n"
-"\aRSlot %s\a0"
+"\aoSlot %s\a0"
 msgstr ""
 "\n"
-"\aRPlatz %s\a0"
+"\aoPlatz %s\a0"
 
 #: src/equipment.c:792
 #, c-format
@@ -44537,8 +44537,8 @@ msgid "\ag U "
 msgstr "\ag U "
 
 #: src/land_outfits.c:290
-msgid "\aR S "
-msgstr "\aR G "
+msgid "\ap S "
+msgstr "\ap G "
 
 #: src/land_outfits.c:290
 msgid "Other"
@@ -44591,13 +44591,13 @@ msgstr ""
 
 #: src/land_outfits.c:642
 #, c-format
-msgid "\aRUnique\a0\n"
-msgstr "\aREinzigartig\a0\n"
+msgid "\aoUnique\a0\n"
+msgstr "\aoEinzigartig\a0\n"
 
 #: src/land_outfits.c:644
 #, c-format
-msgid "\aRSlot %s\a0\n"
-msgstr "\aRPlatz %s\a0\n"
+msgid "\aoSlot %s\a0\n"
+msgstr "\aoPlatz %s\a0\n"
 
 #: src/land_outfits.c:650
 #, c-format
