@@ -154,7 +154,7 @@ static const signed char cd64[256] = { /* makes it much faster */
 /*
  * encodes src of sz length storing the new length in len
  */
-char* base64_encode( size_t *len, char *src, size_t sz )
+char* base64_encode( size_t *len, const char *src, size_t sz )
 {
    char *r;
    size_t i, c;
@@ -209,7 +209,7 @@ char* base64_encode( size_t *len, char *src, size_t sz )
  */
 #define dec_valid(inp)  (cd64[(int)inp] == -1) ? 0 : 1
 #define dec_ch(inp)     cd64[(int)inp]
-char* base64_decode( size_t *len, char *src, size_t sz )
+char* base64_decode( size_t *len, const char *src, size_t sz )
 {
    char *r, *dat, pad;
    size_t c,i,j;
