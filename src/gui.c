@@ -1375,8 +1375,8 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    rh = MIN(5*sy, w-py) * 2;
 
 
-
-   gl_blitTexture( marker_pilot_gfx, px-rw/2, py-rh/2, rw, rh, 0, 0, 1, 1, &col, 0. );
+   gl_blitTexture( marker_pilot_gfx, px - rw / 2, py - rh / 2, rw, rh, 0, 0, marker_pilot_gfx->srw,
+                   marker_pilot_gfx->srh, &col, 0. );
 
 
    /* Draw name. */
@@ -1488,7 +1488,8 @@ void gui_renderPlayer( double res, int overlay )
 
    /* Render the cross. */
    // gl_renderCross( x, y, r, &cRadar_player );
-   gl_blitTexture( marker_player_gfx, x-w/2, y-h/2, w, h, 0, 0, 1, 1, &cRadar_player,  -M_PI/2 + player.p->solid->dir );
+   gl_blitTexture( marker_player_gfx, x - w / 2, y - h / 2, w, h, 0, 0, marker_player_gfx->srw, marker_player_gfx->srh,
+                   &cRadar_player, -M_PI / 2 + player.p->solid->dir );
 
 
    if (overlay)
@@ -1672,7 +1673,8 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    glDrawArrays( GL_LINE_STRIP, 0, 5 );
    gl_endSolidProgram();
    */
-   gl_blitTexture( marker_planet_gfx, cx - vr/2.5, cy - vr/2.5, vr, vr, 0, 0, 1, 1, &col, 0. );
+   gl_blitTexture( marker_planet_gfx, cx - vr / 2.5, cy - vr / 2.5, vr, vr, 0, 0, marker_planet_gfx->srw,
+                   marker_planet_gfx->srh, &col, 0. );
 
 
    /* Render name. */
@@ -1768,7 +1770,8 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    if (!overlay)
       col.a = 1.-interference_alpha;
 
-   gl_blitTexture( marker_jumppoint_gfx, cx-11, cy-11, 22, 22, 0, 0, 1, 1, &col,  -M_PI/2-jp->angle );
+   gl_blitTexture( marker_jumppoint_gfx, cx - 11, cy - 11, 22, 22, 0, 0, marker_jumppoint_gfx->srw,
+                   marker_jumppoint_gfx->srh, &col, -M_PI / 2 - jp->angle );
 
 
    /* Render name. */
