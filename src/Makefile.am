@@ -25,6 +25,7 @@ naev_SOURCES = \
 	array.c \
 	attributes.h \
 	background.c \
+	base64.c \
 	board.c \
 	camera.c \
 	claim.c \
@@ -170,6 +171,7 @@ naev_SOURCES = \
 	ai.h \
 	array.h \
 	background.h \
+	base64.h \
 	board.h \
 	camera.h \
 	claim.h \
