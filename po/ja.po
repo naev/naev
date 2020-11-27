@@ -36740,14 +36740,17 @@ msgstr ""
 msgid "Obscured by the nebula"
 msgstr "\ag%sへようこそ！"
 
-#. display sun information
-#. Nebula.
-#: src/map_system.c:393
+#: src/map_system.c:402
 #, c-format
-msgid ""
-"System: %s\n"
-"%d star system\n"
+msgid "System: %s\n"
 msgstr ""
+
+#. display sun information
+#: src/map_system.c:404
+#, c-format
+msgid "%d-star system\n"
+msgid_plural "%d-star system\n"
+msgstr[0] ""
 
 #: src/map_system.c:398
 msgid "Nebula: Volatile, "
