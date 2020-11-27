@@ -2161,7 +2161,7 @@ msgstr ""
 
 #: dat/ai/zalek.lua:44
 msgid ""
-"\"While I admire the spirit of it, testing my patience will is suicide, NOT "
+"\"While I admire the spirit of it, testing my patience is suicide, NOT "
 "science.\""
 msgstr ""
 

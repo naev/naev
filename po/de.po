@@ -2199,7 +2199,7 @@ msgstr "„Ahaha! Guter Witz! Oh, das war ernst gemeint? Ahahahaha!“"
 
 #: dat/ai/zalek.lua:44
 msgid ""
-"\"While I admire the spirit of it, testing my patience will is suicide, NOT "
+"\"While I admire the spirit of it, testing my patience is suicide, NOT "
 "science.\""
 msgstr ""
 "„Obwohl ich die Idee zu schätzen weiß, ist es NICHT wissenschaftlich, meine "
