@@ -42979,8 +42979,8 @@ msgstr "addEnemy: %d ist eine ungültige Fraktion"
 
 #: src/faction.c:466 src/faction.c:470
 #, c-format
-msgid "addEnemy: %d is the player faction"
-msgstr "addEnemy: %d ist die Spielerfraktion"
+msgid "%d is the player faction"
+msgstr "%d ist die Spielerfraktion"
 
 #. f is invalid
 #: src/faction.c:501
@@ -42994,11 +42994,6 @@ msgstr "rmEnemy: %d ist eine ungültige Fraktion"
 #, c-format
 msgid "addAlly: %d is an invalid faction"
 msgstr "addAlly: %d ist eine ungültige Fraktion"
-
-#: src/faction.c:543 src/faction.c:547
-#, c-format
-msgid "addAlly: %d is the player faction"
-msgstr "addAlly: %d ist die Spielerfraktion"
 
 #. f is invalid
 #: src/faction.c:578
