@@ -254,4 +254,20 @@ char* base64_decode( size_t *len, const char *src, size_t sz )
 }
 
 
+/*
+ * encodes src of sz length storing the new length in len
+ */
+char* base64_encode_to_cstr( const char *src, size_t sz )
+{
+   size_t len;
+   return base64_encode( &len, src, sz );
+}
 
+
+/*
+ * encodes src of sz length storing the new length in len
+ */
+char* base64_decode_cstr( size_t *len, const char *src )
+{
+   return base64_decode( len, src, strlen( src ) );
+}
