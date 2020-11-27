@@ -1464,12 +1464,6 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
 void gui_renderPlayer( double res, int overlay )
 {
    double x, y, r, w, h;
-   // glColour textCol = { cRadar_player.r, cRadar_player.g, cRadar_player.b, 0.99 };
-   /* XXX: textCol is a hack to prevent the text from overly obscuring
-    * overlay display of other things. Effectively disables outlines for
-    * the text. Should ultimately be replaced with some other method of
-    * rendering the text, since the problem could be caused by as little
-    * as a font change, but using this fix for now. */
 
    if (overlay) {
       x = player.p->solid->pos.x / res + map_overlay_center_x();
@@ -1677,13 +1671,6 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
                    marker_planet_gfx->srh, &col, 0. );
 
 
-   /* Render name. */
-   /* XXX: Hack to prevent the text from overly obscuring overlay
-    * display of other things. Effectively disables outlines for this
-    * text. Should ultimately be replaced with some other method of
-    * rendering the text, since the problem could be caused by as little
-    * as a font change, but using this fix for now. */
-   // col.a = MIN( col.a, 0.99 );
    if (overlay)
       gl_printMarkerRaw( &gl_smallFont, cx+(vr/1.5), cy - 4, &col, _(planet->name) );
 }
