@@ -1492,7 +1492,7 @@ void space_init( const char* sysname )
       cur_system = &systems_stack[i];
 
       nt = ntime_pretty(0, 2);
-      player_message(_("\aREntering System %s on %s."), _(sysname), nt);
+      player_message(_("\aoEntering System %s on %s."), _(sysname), nt);
       if (cur_system->nebu_volatility > 0.) {
          player_message(_("\arWARNING - Volatile nebula detected in %s! Taking damage!"), _(sysname));
       }

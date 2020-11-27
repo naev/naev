@@ -36,7 +36,7 @@
 /** Color-coded abbreviation for "Structure [outfit]", short enough to use as a tab/column title. */
 #define OUTFIT_LABEL_STRUCTURE         N_("\ap S ")
 /** Color-coded abbreviation for "Core [outfit]", short enough to use as a tab/column title. */
-#define OUTFIT_LABEL_CORE              N_("\aRCore")
+#define OUTFIT_LABEL_CORE              N_("\aoCore")
 
 
 /*
