@@ -45491,20 +45491,15 @@ msgstr ""
 
 #: src/map_system.c:721
 #, c-format
+msgid "\anYou have:\a0 %d tonnes\n"
+msgstr "\anDu hast:\a0 %d Tonnen%s\n"
+
+#: src/map_system.c:721
+#, c-format
 msgid ""
-"%s\n"
-"\n"
-"%s\n"
-"\n"
-"\anYou have:\a0 %d tonnes%s\n"
 "\anAverage price seen here:\a0 %s/t ± %s/t\n"
 "\anAverage price seen everywhere:\a0 %s/t ± %s/t\n"
 msgstr ""
-"%s\n"
-"\n"
-"%s\n"
-"\n"
-"\anDu hast:\a0 %d Tonnen%s\n"
 "\anDurchschnittspreis hier gesehen:\a0 %s/t ± %s/t\n"
 "\anDurchschnittspreis überall gesehen:\a0 %s/t ± %s/t\n"
 
