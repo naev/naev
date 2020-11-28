@@ -105,8 +105,12 @@ static int intro_load( const char *text )
          cur_line = rest_of_file;
          rest_of_file = strchr(cur_line, '\n');
 	 /* If there's a next line, split the string and point rest_of_file to it. */
-         if (rest_of_file != NULL)
+         if (rest_of_file != NULL) {
+	    /* Check for CRLF endings -- if present, zero both parts. */
+            if (rest_of_file > cur_line && *(rest_of_file-1) == '\r')
+               *(rest_of_file-1) = '\0';
             *rest_of_file++ = '\0';
+	 }
 	 /* Translate if plain text (not empty, not a directive). */
 	 if (cur_line[0] != '\0' && cur_line[0] != '[')
             cur_line = _(cur_line);
