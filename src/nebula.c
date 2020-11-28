@@ -122,7 +122,7 @@ int nebu_init (void)
 static int nebu_init_recursive( int iter )
 {
    int i;
-   char nebu_file[PATH_MAX];
+   char nebu_file[NDATA_PATH_MAX];
    SDL_Surface* nebu_sur;
    int ret;
 
@@ -509,7 +509,7 @@ static int nebu_generate (void)
    int i;
    float *nebu;
    const char *cache;
-   char nebu_file[PATH_MAX];
+   char nebu_file[NDATA_PATH_MAX];
    int ret;
 
    /* Warn user of what is happening. */
