@@ -153,8 +153,7 @@ AC_ARG_ENABLE([debug],
 AC_MSG_RESULT([$enable_debug])
 
 AS_IF([test "x$enable_debug" != "xno"], [
-  AS_IF([test "x$ac_cv_prog_cc_g" = "xyes"], [CFLAGS="$CFLAGS -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -Wredundant-decls -Wno-long-long -Wcast-align -Wformat -Wformat-security"], [])
-  AX_CHECK_COMPILE_FLAG([-Wformat-truncation=0 -Werror],[CFLAGS="$CFLAGS -Wformat-truncation=0"],[])
+  AS_IF([test "x$ac_cv_prog_cc_g" = "xyes"], [CFLAGS="$CFLAGS -Og"], [])
   case "$host" in
     *-linux-gnu)
       AC_CHECK_LIB([bfd], [bfd_init], [
@@ -348,7 +347,7 @@ case "$host" in
 esac
 
 # global
-GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\" -include \"\$(top_builddir)/src/attributes.h\" -I\"\$(top_srcdir)/src\" -DPKGDATADIR=\\\"\$(pkgdatadir)\\\""
+GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\" -include \"\$(top_builddir)/src/attributes.h\" -I\"\$(top_srcdir)/src\" -DPKGDATADIR=\\\"\$(pkgdatadir)\\\" -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -Wredundant-decls -Wcast-align -Wformat -Wformat-security"
 GLOBAL_LIBS=
 
 AS_IF([test "x$enable_debug" != "xno"], [
