@@ -768,10 +768,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    Outfit *o, **olist;
    int nolist;
 
-   if (map_foundOutfitNames != NULL) {
-      ERR(_("BUG: Naev has attempted a reentrant call to map_findSearchOutfits. Bailing."));
-      return 1;
-   }
+   assert( map_foundOutfitNames == NULL /* else our reentrancy guard failed and we're about to crash. */ );
 
    /* Match planet first. */
    o     = NULL;
@@ -1033,6 +1030,12 @@ static void map_findSearch( unsigned int wid, char* str )
    if ( (name == NULL) || ( strcmp("", name) == 0 ) )
       return;
 
+   /* Prevent reentrancy, e.g. the toolkit spontaneously deciding a future mouseup event was the
+    * user releasing the clicked "Find" button and should reactivate it, never mind that they were
+    * actually clicking on the dialogue_listPanel we opened to present the results.
+    * FIXME: That behavior doesn't seem right, but I'm not sure if it's an actual bug or not. */
+   window_disableButton( wid, "btnSearch" );
+
    /* Clean up if necessary. */
    if (map_found_cur != NULL)
       free( map_found_cur );
@@ -1060,6 +1063,9 @@ static void map_findSearch( unsigned int wid, char* str )
 
    if (ret < 0)
       dialogue_alert( _("%s matching '%s' not found!"), searchname, name );
+
+   /* Safe at last. */
+   window_enableButton( wid, "btnSearch" );
 
    if (ret > 0)
       map_findClose( wid, str );
