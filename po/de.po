@@ -45167,25 +45167,27 @@ msgstr "Sprung zum ersten System nicht gefunden!"
 msgid "Matching jumps not found, something is up..."
 msgstr "Passende Sprünge nicht gefunden, irgendetwas ist faul …"
 
-#: src/map_find.c:460
+#: src/map_find.c:426
 #, c-format
-msgid "%s (unknown route)"
-msgstr "%s (unbekannte Route)"
+msgid "unknown route"
+msgstr "unbekannte Route"
 
-#: src/map_find.c:463
+#: src/map_find.c:430
 #, c-format
-msgid "%s (%d jumps, %.0fk distance)"
-msgstr "%s (%d Sprünge, %.0fk Entfernung)"
+msgid "%d jump, %.0fk distance"
+msgid_plural "%d jumps, %.0fk distance"
+msgstr[0] "%d Sprung, %.0fk Entfernung"
+msgstr[1] "%d Sprünge, %.0fk Entfernung"
 
-#: src/map_find.c:565 src/map_find.c:842 src/map_find.c:996
+#: src/map_find.c:436
 #, c-format
-msgid "\a%c%s (%s, unknown route)"
-msgstr "\a%c%s (%s, unbekannte Route)"
+msgid "%s (%s)"
+msgstr "%s (%s)"
 
 #: src/map_find.c:569 src/map_find.c:846 src/map_find.c:1000
 #, c-format
-msgid "\a%c%s (%s, %d jumps, %.0fk distance)"
-msgstr "\a%c%s (%s, %d Sprünge, %.0fk Entfernung)"
+msgid "\a%c%s (%s, %s)"
+msgstr "\a%c%s (%s, %s)"
 
 #: src/map_find.c:789
 #, c-format

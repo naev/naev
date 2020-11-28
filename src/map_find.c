@@ -55,6 +55,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name );
 static int map_findSearchShips( unsigned int parent, const char *name );
 static void map_findSearch( unsigned int wid, char* str );
 /* Misc. */
+static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys, Planet *pnt );
 static int map_sortCompare( const void *p1, const void *p2 );
 static void map_sortFound( map_find_t *found, int n );
 static char map_getPlanetColourChar( Planet *p );
@@ -225,6 +226,9 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
    /* Globals. */
    map_found_cur  = found;
    map_found_ncur = n;
+
+   /* Sort the found by distance. */
+   map_sortFound( found, n );
 
    /* Create window. */
    wid = window_create( "wswFindResult", _("Search Results"), -1, -1, 500, 452 );
@@ -397,6 +401,47 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
 
 
 /**
+ * @brief Loads a search result into a table.
+ *
+ *    @param found Results array to save into.
+ *    @param n Position to use.
+ *    @param sys Result's star system.
+ *    @param pnt Result's planet, or NULL to leave unspecified.
+ *
+ */
+static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys, Planet *pnt )
+{
+   int ret;
+   char route_info[256];
+
+   /* Set some values. */
+   found[n].pnt      = pnt;
+   found[n].sys      = sys;
+
+   /* Set more values. */
+   ret = map_findDistance( sys, pnt, &found[n].jumps, &found[n].distance );
+   if (ret) {
+      found[n].jumps    = 10000;
+      found[n].distance = 1e6;
+      nsnprintf( route_info, sizeof(route_info), "%s", _("unknown route") );
+   }
+   else
+      nsnprintf( route_info, sizeof(route_info),
+            ngettext( "%d jump, %.0fk distance", "%d jumps, %.0fk distance", found[n].jumps ),
+            found[n].jumps, found[n].distance/1000. );
+
+   /* Set fancy name. */
+   if (pnt == NULL)
+      nsnprintf( found[n].display, sizeof(found[n].display),
+            _("%s (%s)"), _(sys->name), route_info );
+   else
+      nsnprintf( found[n].display, sizeof(found[n].display),
+            _("\a%c%s (%s, %s)"), map_getPlanetColourChar(pnt),
+            _(pnt->name), _(sys->name), route_info );
+}
+
+
+/**
  * @brief Searches for a system.
  *
  *    @param name Name to match.
@@ -408,7 +453,7 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
    const char *sysname;
    StarSystem *sys;
    char **names;
-   int len, n, ret;
+   int len, n;
    map_find_t *found;
 
    /* Search for names. */
@@ -442,25 +487,7 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
       if (found == NULL) /* Allocate results array on first match. */
          found = malloc( sizeof(map_find_t) * len );
 
-      /* Set more values. */
-      ret = map_findDistance( sys, NULL, &found[n].jumps, &found[n].distance );
-      if (ret) {
-         found[n].jumps    = 10000;
-         found[n].distance = 1e6;
-      }
-
-      /* Set some values. */
-      found[n].pnt      = NULL;
-      found[n].sys      = sys;
-
-      /* Set fancy name. */
-      if (ret)
-         nsnprintf( found[n].display, sizeof(found[n].display),
-               _("%s (unknown route)"), _(sys->name) );
-      else
-         nsnprintf( found[n].display, sizeof(found[n].display),
-               _("%s (%d jumps, %.0fk distance)"),
-               _(sys->name), found[n].jumps, found[n].distance/1000. );
+      map_findAccumulateResult( found, n, sys, NULL );
       n++;
    }
    free(names);
@@ -468,9 +495,6 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
    /* No visible match. */
    if (n==0)
       return -1;
-
-   /* Sort the found by distance. */
-   map_sortFound( found, n );
 
    /* Display results. */
    map_findDisplayResult( parent, found, n );
@@ -488,7 +512,7 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
 {
    int i;
    char **names;
-   int len, n, ret;
+   int len, n;
    map_find_t *found;
    const char *sysname, *pntname;
    StarSystem *sys;
@@ -547,26 +571,7 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
       if (found == NULL) /* Allocate results array on first match. */
          found = malloc( sizeof(map_find_t) * len );
 
-      /* Set more values. */
-      ret = map_findDistance( sys, pnt, &found[n].jumps, &found[n].distance );
-      if (ret) {
-         found[n].jumps    = 10000;
-         found[n].distance = 1e6;
-      }
-
-      /* Set some values. */
-      found[n].pnt      = pnt;
-      found[n].sys      = sys;
-
-      /* Set fancy name. */
-      if (ret)
-         nsnprintf( found[n].display, sizeof(found[n].display),
-               _("\a%c%s (%s, unknown route)"), map_getPlanetColourChar(pnt),
-               _(names[i]), _(sys->name) );
-      else
-         nsnprintf( found[n].display, sizeof(found[n].display),
-               _("\a%c%s (%s, %d jumps, %.0fk distance)"), map_getPlanetColourChar(pnt),
-               _(names[i]), _(sys->name), found[n].jumps, found[n].distance/1000. );
+      map_findAccumulateResult( found, n, sys, pnt );
       n++;
    }
    free(names);
@@ -574,9 +579,6 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
    /* No visible match. */
    if (n==0)
       return -1;
-
-   /* Sort the found by distance. */
-   map_sortFound( found, n );
 
    /* Display results. */
    map_findDisplayResult( parent, found, n );
@@ -759,7 +761,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
 static int map_findSearchOutfits( unsigned int parent, const char *name )
 {
    int i, j;
-   int len, n, ret;
+   int len, n;
    map_find_t *found;
    Planet *pnt;
    StarSystem *sys;
@@ -829,35 +831,13 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       if (found == NULL) /* Allocate results array on first match. */
          found = malloc( sizeof(map_find_t) * map_nknown );
 
-      /* Set more values. */
-      ret = map_findDistance( sys, pnt, &found[n].jumps, &found[n].distance );
-      if (ret) {
-         found[n].jumps    = 10000;
-         found[n].distance = 1e6;
-      }
-
-      /* Set some values. */
-      found[n].pnt      = pnt;
-      found[n].sys      = sys;
-
-      /* Set fancy name. */
-      if (ret)
-         nsnprintf( found[n].display, sizeof(found[n].display),
-               _("\a%c%s (%s, unknown route)"), map_getPlanetColourChar(pnt),
-               _(pnt->name), _(sys->name) );
-      else
-         nsnprintf( found[n].display, sizeof(found[n].display),
-               _("\a%c%s (%s, %d jumps, %.0fk distance)"), map_getPlanetColourChar(pnt),
-               _(pnt->name), _(sys->name), found[n].jumps, found[n].distance/1000. );
+      map_findAccumulateResult( found, n, sys, pnt );
       n++;
    }
 
    /* No visible match. */
    if (n==0)
       return -1;
-
-   /* Sort the found by distance. */
-   map_sortFound( found, n );
 
    /* Display results. */
    map_findDisplayResult( parent, found, n );
@@ -920,7 +900,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
 {
    int i, j;
    char **names;
-   int len, n, ret;
+   int len, n;
    map_find_t *found;
    Planet *pnt;
    StarSystem *sys;
@@ -983,35 +963,13 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       if (found == NULL) /* Allocate results array on first match. */
          found = malloc( sizeof(map_find_t) * map_nknown );
 
-      /* Set more values. */
-      ret = map_findDistance( sys, pnt, &found[n].jumps, &found[n].distance );
-      if (ret) {
-         found[n].jumps    = 10000;
-         found[n].distance = 1e6;
-      }
-
-      /* Set some values. */
-      found[n].pnt      = pnt;
-      found[n].sys      = sys;
-
-      /* Set fancy name. */
-      if (ret)
-         nsnprintf( found[n].display, sizeof(found[n].display),
-               _("\a%c%s (%s, unknown route)"), map_getPlanetColourChar(pnt),
-               pnt->name, sys->name );
-      else
-         nsnprintf( found[n].display, sizeof(found[n].display),
-               _("\a%c%s (%s, %d jumps, %.0fk distance)"), map_getPlanetColourChar(pnt),
-               pnt->name, sys->name, found[n].jumps, found[n].distance/1000. );
+      map_findAccumulateResult( found, n, sys, pnt );
       n++;
    }
 
    /* No visible match. */
    if (n==0)
       return -1;
-
-   /* Sort the found by distance. */
-   map_sortFound( found, n );
 
    /* Display results. */
    map_findDisplayResult( parent, found, n );
