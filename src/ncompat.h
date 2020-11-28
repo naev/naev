@@ -92,5 +92,15 @@
 #endif
 
 
+/**
+ * @brief Whether the system has a safe snprintf().
+ */
+#if defined(__MINGW64_VERSION_MAJOR)
+#define HAS_SNPRINTF (__MINGW_VERSION_MAJOR > 5) || (__MINGW_VERSION_MAJOR == 5 && __MINGW64_VERSION_BUGFIX >= 4)
+#else
+#define HAS_SNPRINTF HAS_POSIX
+#endif
+
+
 #endif /* NCOMPAT_H */
 

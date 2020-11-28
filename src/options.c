@@ -619,7 +619,7 @@ static void menuKeybinds_genList( unsigned int wid )
    /* Create the list. */
    str = malloc( sizeof( char * ) * input_numbinds );
    for ( j = 0; j < input_numbinds; j++ ) {
-      l = 64;
+      l = 68;
       str[j] = malloc(l);
       key = input_getKeybind( keybind_info[j][0], &type, &mod );
       switch (type) {
