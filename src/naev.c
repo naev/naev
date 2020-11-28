@@ -182,7 +182,7 @@ void naev_quit (void)
  */
 int main( int argc, char** argv )
 {
-   char buf[PATH_MAX], langbuf[PATH_MAX], *lang;
+   char buf[PATH_MAX], langbuf[PATH_MAX];
 
    env_detect( argc, argv );
 
@@ -295,24 +295,25 @@ int main( int argc, char** argv )
 #if defined ENABLE_NLS && ENABLE_NLS
    /* Try to set the language again if Naev is attempting to override the locale stuff.
     * This is done late because this is the first stage at which we have the conf file
-    * fully loaded. */
+    * fully loaded.
+    * Note: We tried setlocale( LC_ALL, ... ), but it bails if no corresponding system
+    * locale exists. That's too restrictive when we only need our own language catalogs. */
    if (conf.language == NULL)
-      lang = "";
-   else
-      lang = conf.language;
-   nsetenv( "LANGUAGE", lang, 0 );
+      nsetenv( "LANGUAGE", "", 0 );
+   else {
+      nsetenv( "LANGUAGE", conf.language, 1 );
+      DEBUG(_("Reset language to \"%s\""), conf.language);
+   }
+   /* HACK: All of our code assumes it's working with UTF-8, so force gettext to return it.
+    * Testing under Wine shows it may default to Windows-1252, resulting in glitched translations
+    * like "Loading Ships..." -> "Schiffe laden \x85" which our font code will render improperly. */
+   nsetenv( "OUTPUT_CHARSET", "utf-8", 1 );
    /* Horrible hack taken from https://www.gnu.org/software/gettext/manual/html_node/gettext-grok.html .
     * Not entirely sure it is necessary, but just in case... */
    {
       extern int  _nl_msg_cat_cntr;
       ++_nl_msg_cat_cntr;
    }
-   /* This function below fails to actually change the locale, which is why we end up
-    * relying on LANGUAGE variable. */
-   /*
-   if (setlocale( LC_ALL, lang )==NULL)
-      WARN(_("Unable to set the locale to '%s'!"), lang );
-   */
    /* If we don't disable LC_NUMERIC, lots of stuff blows up because 1,000 can be interpreted as
     * 1.0 in certain languages. */
    if (setlocale( LC_NUMERIC, "C" )==NULL) /* Disable numeric locale part. */
@@ -320,7 +321,6 @@ int main( int argc, char** argv )
    nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, ndata_getPath() );
    bindtextdomain( PACKAGE_NAME, langbuf );
    textdomain( PACKAGE_NAME );
-   DEBUG(_("Reset language to \"%s\""), lang);
 #endif /* defined ENABLE_NLS && ENABLE_NLS */
 
    /* Load the start info. */
