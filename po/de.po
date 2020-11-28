@@ -2199,7 +2199,7 @@ msgstr "„Ahaha! Guter Witz! Oh, das war ernst gemeint? Ahahahaha!“"
 
 #: dat/ai/zalek.lua:44
 msgid ""
-"\"While I admire the spirit of it, testing my patience will is suicide, NOT "
+"\"While I admire the spirit of it, testing my patience is suicide, NOT "
 "science.\""
 msgstr ""
 "„Obwohl ich die Idee zu schätzen weiß, ist es NICHT wissenschaftlich, meine "
@@ -42979,8 +42979,8 @@ msgstr "addEnemy: %d ist eine ungültige Fraktion"
 
 #: src/faction.c:466 src/faction.c:470
 #, c-format
-msgid "addEnemy: %d is the player faction"
-msgstr "addEnemy: %d ist die Spielerfraktion"
+msgid "%d is the player faction"
+msgstr "%d ist die Spielerfraktion"
 
 #. f is invalid
 #: src/faction.c:501
@@ -42994,11 +42994,6 @@ msgstr "rmEnemy: %d ist eine ungültige Fraktion"
 #, c-format
 msgid "addAlly: %d is an invalid faction"
 msgstr "addAlly: %d ist eine ungültige Fraktion"
-
-#: src/faction.c:543 src/faction.c:547
-#, c-format
-msgid "addAlly: %d is the player faction"
-msgstr "addAlly: %d ist die Spielerfraktion"
 
 #. f is invalid
 #: src/faction.c:578
@@ -45496,20 +45491,15 @@ msgstr ""
 
 #: src/map_system.c:721
 #, c-format
+msgid "\anYou have:\a0 %d tonnes\n"
+msgstr "\anDu hast:\a0 %d Tonnen%s\n"
+
+#: src/map_system.c:721
+#, c-format
 msgid ""
-"%s\n"
-"\n"
-"%s\n"
-"\n"
-"\anYou have:\a0 %d tonnes%s\n"
 "\anAverage price seen here:\a0 %s/t ± %s/t\n"
 "\anAverage price seen everywhere:\a0 %s/t ± %s/t\n"
 msgstr ""
-"%s\n"
-"\n"
-"%s\n"
-"\n"
-"\anDu hast:\a0 %d Tonnen%s\n"
 "\anDurchschnittspreis hier gesehen:\a0 %s/t ± %s/t\n"
 "\anDurchschnittspreis überall gesehen:\a0 %s/t ± %s/t\n"
 

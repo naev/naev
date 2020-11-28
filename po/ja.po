@@ -2161,7 +2161,7 @@ msgstr ""
 
 #: dat/ai/zalek.lua:44
 msgid ""
-"\"While I admire the spirit of it, testing my patience will is suicide, NOT "
+"\"While I admire the spirit of it, testing my patience is suicide, NOT "
 "science.\""
 msgstr ""
 
@@ -34713,7 +34713,7 @@ msgstr ""
 
 #: src/faction.c:466 src/faction.c:470
 #, c-format
-msgid "addEnemy: %d is the player faction"
+msgid "%d is the player faction"
 msgstr ""
 
 #. f is invalid
@@ -34727,11 +34727,6 @@ msgstr ""
 #: src/faction.c:532 src/faction.c:537
 #, c-format
 msgid "addAlly: %d is an invalid faction"
-msgstr ""
-
-#: src/faction.c:543 src/faction.c:547
-#, c-format
-msgid "addAlly: %d is the player faction"
 msgstr ""
 
 #. f is invalid
@@ -36952,12 +36947,12 @@ msgstr ""
 
 #: src/map_system.c:721
 #, c-format
+msgid "\anYou have:\a0 %d tonnes\n"
+msgstr ""
+
+#: src/map_system.c:721
+#, c-format
 msgid ""
-"%s\n"
-"\n"
-"%s\n"
-"\n"
-"\anYou have:\a0 %d tonnes%s\n"
 "\anAverage price seen here:\a0 %s/t ± %s/t\n"
 "\anAverage price seen everywhere:\a0 %s/t ± %s/t\n"
 msgstr ""
