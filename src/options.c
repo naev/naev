@@ -12,11 +12,9 @@
 #include "options.h"
 
 #include "naev.h"
-
 #include "nstring.h"
-
+#include <ctype.h>
 #include "SDL.h"
-
 #include "log.h"
 #include "input.h"
 #include "toolkit.h"
@@ -200,8 +198,7 @@ static char** lang_list( int *n )
    size_t fs;
    char *buf;
    char **ls;
-   int j;
-   size_t i;
+   size_t i, j;
 
    /* Default English only. */
    ls = malloc( sizeof(char*)*128 );
@@ -215,10 +212,10 @@ static char** lang_list( int *n )
       return ls;
    j = 0;
    for (i=0; i<fs; i++) {
-      if ((buf[i] != '\n') && (buf[i] != '\0'))
+      if (!isspace(buf[i]) && (buf[i] != '\0'))
          continue;
       buf[i] = '\0';
-      if (*n < 128)
+      if (*n < 128 && i > j)
          ls[(*n)++] = strdup( &buf[j] );
       j=i+1;
    }
