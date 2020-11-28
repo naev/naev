@@ -26,9 +26,6 @@
 #include <limits.h>
 #include <stdlib.h>
 
-#if HAS_POSIX
-#include <libgen.h>
-#endif /* HAS_POSIX */
 #if HAS_WIN32
 #include <windows.h>
 #endif /* HAS_WIN32 */

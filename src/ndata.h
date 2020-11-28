@@ -15,6 +15,8 @@
 /*
  * Define various paths
  */
+#define NDATA_PATH_MAX           256        /**< Length limit of relative paths in the ndata directory (or else tar won't work). */
+
 #define PLANET_GFX_SPACE_PATH    "gfx/planet/space/" /**< Location of planet space graphics. */
 #define PLANET_GFX_EXTERIOR_PATH "gfx/planet/exterior/" /**< Location of planet exterior graphics (when landed). */
 #define GFX_PATH                 "gfx/" /**< Location of the graphics root. */

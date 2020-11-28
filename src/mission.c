@@ -912,7 +912,7 @@ static int mission_parseFile( const char* file )
    xmlNodePtr node;
    size_t bufsize;
    char *filebuf;
-   const char *pos;
+   const char *pos, *start_pos;
    MissionData *temp;
 
 #ifdef DEBUGGING
@@ -938,14 +938,15 @@ static int mission_parseFile( const char* file )
    }
 
    /* Separate XML header and Lua. */
+   start_pos = nstrnstr( filebuf, "<?xml ", bufsize );
    pos = nstrnstr( filebuf, "--]]", bufsize );
-   if (pos == NULL) {
+   if (pos == NULL || start_pos == NULL) {
       WARN(_("Mission file '%s' has missing XML header!"), file);
       return -1;
    }
 
    /* Parse the header. */
-   doc = xmlParseMemory( &filebuf[5], pos-filebuf-5 );
+   doc = xmlParseMemory( start_pos, pos-start_pos);
    if (doc == NULL) {
       WARN(_("Unable to parse document XML header for Mission '%s'"), file);
       return -1;

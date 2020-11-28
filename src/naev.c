@@ -283,10 +283,10 @@ int main( int argc, char** argv )
       log_purge();
 
    /* Enable FPU exceptions. */
-#if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING)
+#if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING) && defined(_GNU_SOURCE)
    if (conf.fpu_except)
       feenableexcept( FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW );
-#endif /* defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING) */
+#endif /* defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING) && defined(_GNU_SOURCE) */
 
    /* Open data. */
    if (ndata_open() != 0)

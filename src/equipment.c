@@ -760,7 +760,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          return;
 
       pos = snprintf( alt, sizeof(alt),
-            "\aR%s", _( sp_display( slot->sslot->slot.spid ) ) );
+            "\ao%s", _( sp_display( slot->sslot->slot.spid ) ) );
       if (slot->sslot->slot.exclusive && (pos < (int)sizeof(alt)))
          pos += snprintf( &alt[pos], sizeof(alt)-pos,
                _(" [exclusive]") );
@@ -784,9 +784,9 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          "%s",
          _(o->name) );
    if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aRUnique\a0") );
+      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aoUnique\a0") );
    if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aRSlot %s\a0"),
+      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aoSlot %s\a0"),
             _( sp_display( o->slot.spid ) ) );
    if (pos < (int)sizeof(alt))
       pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", _(o->desc_short) );
