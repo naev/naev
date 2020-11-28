@@ -92,16 +92,5 @@
 #endif
 
 
-/* Misc stuff - mainly for debugging. */
-/**
- * @brief Whether or not to use filedescriptors.
- */
-#if HAS_POSIX
-#define HAS_FD 1
-#else
-#define HAS_FD 0
-#endif
-
-
 #endif /* NCOMPAT_H */
 
