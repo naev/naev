@@ -619,7 +619,10 @@ static void menuKeybinds_genList( unsigned int wid )
    /* Create the list. */
    str = malloc( sizeof( char * ) * input_numbinds );
    for ( j = 0; j < input_numbinds; j++ ) {
-      l = 68;
+      l = 128; /* GCC deduces 68 because we have a format string "%s <%s%c>"
+                * where "char mod_text[64]" is one of the "%s" args.
+                * (that plus brackets plus %c + null gets to 68.
+                * Just set to 128 as it's a power of two. */
       str[j] = malloc(l);
       key = input_getKeybind( keybind_info[j][0], &type, &mod );
       switch (type) {
