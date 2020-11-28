@@ -463,7 +463,7 @@ void faction_addEnemy( int f, int o)
 
    /* player cannot be made an enemy this way */
    if (f==FACTION_PLAYER) {
-      WARN(_("Faction id '%d' is invalid."), f);
+      WARN(_("%d is the player faction"), f);
       return;
    }
    if (o==FACTION_PLAYER) {
