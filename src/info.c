@@ -245,7 +245,7 @@ static void info_openMain( unsigned int wid )
    /* List. */
    if(nlicenses == 0){
      licenses = malloc(sizeof(char*));
-     licenses[0] = strdup("None");
+     licenses[0] = strdup(_("None"));
    } else {
      licenses = malloc(sizeof(char*) * nlicenses);
      for (i=0; i<nlicenses; i++)
