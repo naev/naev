@@ -41453,6 +41453,13 @@ msgstr "Du brauchst noch %s!"
 msgid "\"On my way.\""
 msgstr "„Bin auf dem Weg.“"
 
+#: src/commodity.c:129
+#, c-format
+msgid "%d tonne"
+msgid_plural "%d tonnes"
+msgstr[0] "%d Tonne"
+msgstr[1] "%d Tonnen"
+
 #: src/commodity.c:135
 #, c-format
 msgid "Commodity '%s' not found in stack"

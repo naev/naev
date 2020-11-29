@@ -33296,6 +33296,12 @@ msgstr ""
 msgid "\"On my way.\""
 msgstr ""
 
+#: src/commodity.c:129
+#, c-format
+msgid "%d tonne"
+msgid_plural "%d tonnes"
+msgstr[0] ""
+
 #: src/commodity.c:135
 #, c-format
 msgid "Commodity '%s' not found in stack"
