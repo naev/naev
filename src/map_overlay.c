@@ -121,9 +121,10 @@ void ovr_refresh (void)
    float res;
 
    /* Parameters for the map overlay optimization. */
-   const float update_rate = 0.01;
+   const float update_rate = 0.5;
    const int max_iters = 100;
    const float pixbuf = 3.; /* Pixels to buffer around for text. */
+   const float epsilon = 1e-4;
 
    /* Must be open. */
    if (!ovr_isOpen())
@@ -140,7 +141,7 @@ void ovr_refresh (void)
       max_y = MAX( max_y, ABS(jp->pos.y) );
       jp->mo_radius_base = MAX( jumppoint_gfx->sw / res, 10. );
       jp->mo_radius = jp->mo_radius_base;
-      jp->mo_text_offx = jp->mo_radius / 2.+pixbuf+0.5;
+      jp->mo_text_offx = jp->mo_radius / 2.+pixbuf*1.5;
       jp->mo_text_offy = -gl_smallFont.h/2.;
       jp->mo_text_width = gl_printWidthRaw( &gl_smallFont, _(jp->target->name) );
    }
@@ -150,7 +151,7 @@ void ovr_refresh (void)
       max_y = MAX( max_y, ABS(pnt->pos.y) );
       pnt->mo_radius_base = MAX( pnt->radius*2. / res, 15. );
       pnt->mo_radius = pnt->mo_radius_base;
-      pnt->mo_text_offx = pnt->mo_radius / 2.+pixbuf+0.5;
+      pnt->mo_text_offx = pnt->mo_radius / 2.+pixbuf*1.5;
       pnt->mo_text_offy = -gl_smallFont.h/2.;
       pnt->mo_text_width = gl_printWidthRaw( &gl_smallFont, _(pnt->name) );
    }
@@ -174,8 +175,8 @@ void ovr_refresh (void)
             jp->mo_radius *= 1.01;
          /* Move text if overlap. */
          if (ovr_refresh_compute_overlap( &ox, &oy, res ,cx+jp->mo_text_offx, cy+jp->mo_text_offy, jp->mo_text_width, gl_smallFont.h, i, -1, 0, pixbuf )) {
-            jp->mo_text_offx += ox * update_rate;
-            jp->mo_text_offy += oy * update_rate;
+            jp->mo_text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
+            jp->mo_text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
          }
       }
       for (i=0; i<cur_system->nplanets; i++) {
@@ -192,8 +193,8 @@ void ovr_refresh (void)
             pnt->mo_radius *= 1.01;
          /* Move text if overlap. */
          if (ovr_refresh_compute_overlap( &ox, &oy, res, cx+pnt->mo_text_offx, cy+pnt->mo_text_offy, pnt->mo_text_width, gl_smallFont.h, -1, i, 0, pixbuf )) {
-            pnt->mo_text_offx += ox * update_rate;
-            pnt->mo_text_offy += oy * update_rate;
+            pnt->mo_text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
+            pnt->mo_text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
          }
       }
    }
