@@ -1758,7 +1758,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    /* Do the blink. */
    if (ind == player.p->nav_hyperspace) {
       col = cWhite;
-      gui_blink( w, h, rc, cx+4, cy+5, vr, shape, &col, RADAR_BLINK_PLANET, blink_planet );
+      gui_blink( w, h, rc, cx, cy, vr, shape, &col, RADAR_BLINK_PLANET, blink_planet );
    }
    else if (jp_isFlag(jp, JP_HIDDEN))
       col = cRed;
