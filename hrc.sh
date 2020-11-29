@@ -6,3 +6,4 @@ git clean -fdx
 meson setup builddir .
 cd builddir
 meson compile
+cd ..
