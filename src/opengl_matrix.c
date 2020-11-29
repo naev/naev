@@ -125,6 +125,10 @@ gl_Matrix4 gl_Matrix4_Translate( gl_Matrix4 m, double x, double y, double z ) {
 
 /**
  * @brief Rotates an angle, in radians, around the z axis.
+ *
+ *    @param m Matrix to multiply with.
+ *    @param angle Angle in radians.
+ *    @return New projection matrix.
  */
 gl_Matrix4 gl_Matrix4_Rotate2d( gl_Matrix4 m, double angle ) {
    gl_Matrix4 res;
