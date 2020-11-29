@@ -42,6 +42,9 @@
 #define MIN(x,y)           (((x)>(y))?(y):(x)) /**< Returns minimum. */
 #define CLAMP(a, b, x)     ((x)<(a)?(a):((x)>(b)?(b):(x))) /**< Clamps x between a and b: a <= x <= b. */
 
+#define SIGN(x)            (((x)>0)?1:-1) /**< Returns the sign of a value. */
+#define FSIGN(x)           (((x)>0.)?1.:-1.) /**< Returns the sign of a value. */
+
 #define pow2(x)            ((x)*(x)) /**< ^2 */
 
 /* maximum filename path */
