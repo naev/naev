@@ -312,23 +312,19 @@ void ovr_setOpen( int open )
  */
 void ovr_key( int type )
 {
-   Uint32 t;
-
-   t = SDL_GetTicks();
-
    if (type > 0) {
       if (ovr_open)
          ovr_setOpen(0);
       else {
          ovr_setOpen(1);
-         ovr_opened  = t;
 
          /* Refresh overlay size. */
          ovr_refresh();
+         ovr_opened = SDL_GetTicks();
       }
    }
    else if (type < 0) {
-      if (t - ovr_opened > 300)
+      if (SDL_GetTicks() - ovr_opened > 300)
          ovr_setOpen(0);
    }
 }
