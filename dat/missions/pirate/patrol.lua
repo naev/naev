@@ -65,7 +65,6 @@ msg[6] = _("MISSION FAILURE! You have left the %s system.")
 osd_title  = _("Patrol")
 osd_msg    = {}
 osd_msg[1] = _("Fly to the %s system")
-osd_msg_2  = _("Go to indicated point (%d remaining)")
 osd_msg[2] = "(null)"
 osd_msg[3] = _("Eliminate outsiders")
 osd_msg[4] = _("Land on the nearest %s planet and collect your pay")
