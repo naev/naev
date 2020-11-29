@@ -1484,10 +1484,6 @@ void gui_renderPlayer( double res, int overlay )
    // gl_renderCross( x, y, r, &cRadar_player );
    gl_blitTexture( marker_player_gfx, x - w / 2, y - h / 2, w, h, 0, 0, marker_player_gfx->srw, marker_player_gfx->srh,
                    &cRadar_player, -M_PI / 2 + player.p->solid->dir );
-
-
-   if (overlay)
-      gl_printMarkerRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &cRadar_player, _("You") );
 }
 
 
