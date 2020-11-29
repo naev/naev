@@ -116,7 +116,19 @@ static double gui_viewport_h = 0.; /**< GUI Viewport height. */
 /**
  * Map overlay
  */
-MapOverlay map_overlay = {
+/**
+ * @struct MapOverlay
+ *
+ * @brief Represents map overlay config values
+ */
+typedef struct MapOverlay_ {
+   /* GUI parameters */
+   int boundTop;
+   int boundRight;
+   int boundBottom;
+   int boundLeft;
+} MapOverlay;
+static MapOverlay map_overlay = {
   boundTop: 0,
   boundRight: 0,
   boundBottom: 0,
