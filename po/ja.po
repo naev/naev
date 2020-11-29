@@ -36950,8 +36950,9 @@ msgstr ""
 
 #: src/map_system.c:721
 #, c-format
-msgid "\anYou have:\a0 %d tonnes\n"
-msgstr ""
+msgid "\anYou have:\a0 %d tonne\n"
+msgid_plural "\anYou have:\a0 %d tonnes\n"
+msgstr[0] ""
 
 #: src/map_system.c:721
 #, c-format
