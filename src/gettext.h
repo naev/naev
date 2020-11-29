@@ -24,7 +24,7 @@
 
 /* Get declarations of GNU message catalog functions.  */
 # include <libintl.h>
-//# include <locale.h>
+# include <locale.h>
 
 /* You can set the DEFAULT_TEXT_DOMAIN macro to specify the domain used by
    the gettext() and ngettext() macros.  This is an alternative to calling
@@ -39,16 +39,6 @@
 # endif
 
 #else
-
-/* Solaris /usr/include/locale.h includes /usr/include/libintl.h, which
-   chokes if dcgettext is defined as a macro.  So include it now, to make
-   later inclusions of <locale.h> a NOP.  We don't include <libintl.h>
-   as well because people using "gettext.h" will not include <libintl.h>,
-   and also including <libintl.h> would fail on SunOS 4, whereas <locale.h>
-   is OK.  */
-#if defined(__sun)
-# include <locale.h>
-#endif
 
 /* Many header files from the libstdc++ coming with g++ 3.3 or newer include
    <libintl.h>, which chokes if dcgettext is defined as a macro.  So include
