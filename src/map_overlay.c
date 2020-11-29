@@ -120,6 +120,11 @@ void ovr_refresh (void)
    int iter, ires;
    float res;
 
+   /* Parameters for the map overlay optimization. */
+   const float update_rate = 0.01;
+   const int max_iters = 100;
+   const float pixbuf = 3.; /* Pixels to buffer around for text. */
+
    /* Must be open. */
    if (!ovr_isOpen())
       return;
@@ -135,7 +140,7 @@ void ovr_refresh (void)
       max_y = MAX( max_y, ABS(jp->pos.y) );
       jp->mo_radius_base = MAX( jumppoint_gfx->sw / res, 10. );
       jp->mo_radius = jp->mo_radius_base;
-      jp->mo_text_offx = jp->mo_radius / 1.5;
+      jp->mo_text_offx = jp->mo_radius / 2.+pixbuf+0.5;
       jp->mo_text_offy = -gl_smallFont.h/2.;
       jp->mo_text_width = gl_printWidthRaw( &gl_smallFont, _(jp->target->name) );
    }
@@ -145,7 +150,7 @@ void ovr_refresh (void)
       max_y = MAX( max_y, ABS(pnt->pos.y) );
       pnt->mo_radius_base = MAX( pnt->radius*2. / res, 15. );
       pnt->mo_radius = pnt->mo_radius_base;
-      pnt->mo_text_offx = pnt->mo_radius / 1.5;
+      pnt->mo_text_offx = pnt->mo_radius / 2.+pixbuf+0.5;
       pnt->mo_text_offy = -gl_smallFont.h/2.;
       pnt->mo_text_width = gl_printWidthRaw( &gl_smallFont, _(pnt->name) );
    }
@@ -154,9 +159,6 @@ void ovr_refresh (void)
    ovr_res = 2. * 1.2 * MAX( max_x / map_overlay_width(), max_y / map_overlay_height() );
 
    /* Compute text overlap and try to minimize it. */
-   const float update_rate = 0.01;
-   const int max_iters = 1000;
-   const float pixbuf = 3.; /* Pixels to buffer around for text. */
    for (iter=0; iter<max_iters; iter++) {
       for (i=0; i<cur_system->njumps; i++) {
          jp = &cur_system->jumps[i];
