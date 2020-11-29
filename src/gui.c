@@ -81,7 +81,6 @@ static double blink_pilot     = 0.; /**< Timer on target blinking on radar. */
 static double blink_planet    = 0.; /**< Timer on planet blinking on radar. */
 
 /* for VBO. */
-static gl_vbo *gui_triangle_vbo = NULL;
 static gl_vbo *gui_planet_vbo = NULL;
 static gl_vbo *gui_radar_select_vbo = NULL;
 static gl_vbo *gui_planet_blink_vbo = NULL;
@@ -710,10 +709,8 @@ static void gui_renderBorder( double dt )
          ccol.b = col->b;
          ccol.a = int_a;
 
-         gl_beginSolidProgram(gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0), &ccol);
-         gl_vboActivateAttribOffset( gui_triangle_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-         glDrawArrays( GL_LINE_STRIP, 0, 4 );
-         gl_endSolidProgram();
+         //gl_renderTriangleEmpty( cx, cy, jp->angle, 10., &ccol );
+         gl_renderTriangleEmpty( cx, cy, M_PI_2, 10., &ccol );
       }
    }
 
@@ -1374,10 +1371,8 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    rw = MIN(3*sx, w-px) * 2;
    rh = MIN(3*sy, w-py) * 2;
 
-
    gl_blitTexture( marker_pilot_gfx, px - rw / 2, py - rh / 2, rw, rh, 0, 0, marker_pilot_gfx->srw,
                    marker_pilot_gfx->srh, &col, 0. );
-
 
    /* Draw name. */
    if (overlay && pilot_isFlag(p, PILOT_HILIGHT))
@@ -1875,17 +1870,6 @@ int gui_init (void)
    /*
     * VBO.
     */
-   if (gui_triangle_vbo == NULL) {
-         vertex[0] = -5.;
-         vertex[1] = -5.;
-         vertex[2] = 5.;
-         vertex[3] = -5.;
-         vertex[4] = 0;
-         vertex[5] = 5.;
-         vertex[6] = -5.;
-         vertex[7] = -5.;
-      gui_triangle_vbo = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
-   }
 
    if (gui_planet_vbo == NULL) {
       vertex[0] = 0;
@@ -2328,10 +2312,6 @@ void gui_free (void)
    }
 
    /* Free VBOs. */
-   if (gui_triangle_vbo != NULL) {
-      gl_vboDestroy( gui_triangle_vbo );
-      gui_triangle_vbo = NULL;
-   }
    if (gui_planet_vbo != NULL) {
       gl_vboDestroy( gui_planet_vbo );
       gui_planet_vbo = NULL;
