@@ -18,8 +18,8 @@
   <asset>Sroolu</asset>
   <asset>Tankard Station</asset>
   <asset>Virtual Civilian Standard</asset>
-  <asset>Virtual Trader Area</asset>
   <asset>Virtual Independent Trader Area</asset>
+  <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
   <jump target="Humdrum">
