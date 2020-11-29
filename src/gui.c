@@ -709,8 +709,8 @@ static void gui_renderBorder( double dt )
          ccol.b = col->b;
          ccol.a = int_a;
 
-         //gl_renderTriangleEmpty( cx, cy, jp->angle, 10., 1., &ccol );
-         gl_renderTriangleEmpty( cx, cy, M_PI_2, 10., 1., &ccol );
+         gl_renderTriangleEmpty( cx, cy, jp->angle, 10., 10., &ccol );
+         //gl_renderTriangleEmpty( cx, cy, M_PI_2, 10., 1., &ccol );
       }
    }
 
@@ -1367,12 +1367,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       // col = cRadar_hilight;
    col.a = 1.-interference_alpha;
 
-   /* Get ship render width/height */
-   rw = MIN(3*sx, w-px) * 2;
-   rh = MIN(3*sy, w-py) * 2;
-
-   gl_blitTexture( marker_pilot_gfx, px - rw / 2, py - rh / 2, rw, rh, 0, 0, marker_pilot_gfx->srw,
-                   marker_pilot_gfx->srh, &col, 0. );
+   gl_renderTriangleEmpty( x, y, p->solid->dir, 3.*MAX(sx,sy), 1., &col );
 
    /* Draw name. */
    if (overlay && pilot_isFlag(p, PILOT_HILIGHT))
@@ -1458,7 +1453,7 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
  */
 void gui_renderPlayer( double res, int overlay )
 {
-   double x, y, r, w, h;
+   double x, y, r;
    // glColour textCol = { cRadar_player.r, cRadar_player.g, cRadar_player.b, 0.99 };
    /* XXX: textCol is a hack to prevent the text from overly obscuring
     * overlay display of other things. Effectively disables outlines for
@@ -1469,22 +1464,17 @@ void gui_renderPlayer( double res, int overlay )
    if (overlay) {
       x = player.p->solid->pos.x / res + map_overlay_center_x();
       y = player.p->solid->pos.y / res + map_overlay_center_y();
-      r = 5.;
-      w = SCREEN_W * 0.012;
-      h = SCREEN_W * 0.012;
+      r = MIN(SCREEN_W,SCREEN_H)*0.012;
    } else {
       x = 0.;
       y = 0.;
       r = 3.;
-      w = SCREEN_W * 0.008;
-      h = SCREEN_W * 0.008;
+      r = MIN(SCREEN_W,SCREEN_H)*0.008;
    }
-
 
    /* Render the cross. */
    // gl_renderCross( x, y, r, &cRadar_player );
-   gl_blitTexture( marker_player_gfx, x - w / 2, y - h / 2, w, h, 0, 0, marker_player_gfx->srw, marker_player_gfx->srh,
-                   &cRadar_player, -M_PI / 2 + player.p->solid->dir );
+   gl_renderTriangleEmpty( x, y, player.p->solid->dir, r, 2., &cRadar_player );
 }
 
 
@@ -1664,9 +1654,8 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    glDrawArrays( GL_LINE_STRIP, 0, 5 );
    gl_endSolidProgram();
    */
-   gl_blitTexture( marker_planet_gfx, cx - vr / 2.5, cy - vr / 2.5, vr, vr, 0, 0, marker_planet_gfx->srw,
-                   marker_planet_gfx->srh, &col, 0. );
-
+   gl_drawCircle( cx, cy, vr/2.5, &col, 0 );
+   gl_renderCross( cx, cy, vr/2.5, &col );
 
    /* Render name. */
    /* XXX: Hack to prevent the text from overly obscuring overlay
@@ -1761,9 +1750,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    if (!overlay)
       col.a = 1.-interference_alpha;
 
-   gl_blitTexture( marker_jumppoint_gfx, cx - 11, cy - 11, 22, 22, 0, 0, marker_jumppoint_gfx->srw,
-                   marker_jumppoint_gfx->srh, &col, -M_PI / 2 - jp->angle );
-
+   gl_renderTriangleEmpty( cx, cy, -jp->angle, 10., 2., &col );
 
    /* Render name. */
    /* XXX: Hack to prevent the text from overly obscuring overlay
