@@ -26,8 +26,8 @@
 
 --]]
 
-require "dat/scripts/numstring.lua"
-require "dat/missions/zalek/common.lua"
+require "numstring.lua"
+require "missions/zalek/common.lua"
 
 bar_desc = _("She probably has a new poorly paid job for you. Maybe she won't notice you if you leave now.")
 mtitle = _("Shielding Prototype Funding")
