@@ -1608,7 +1608,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    /* Default values. */
    planet = cur_system->planets[ind];
    r     = (int)(planet->radius*2. / res);
-   vr    = MAX( r * 1.5, 15. ); /* Make sure it's visible. */
+   vr    = planet->mo_radius;
 
    if (overlay) {
       cx    = (int)(planet->pos.x / res);
@@ -1683,7 +1683,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
     * as a font change, but using this fix for now. */
    // col.a = MIN( col.a, 0.99 );
    if (overlay)
-      gl_printMarkerRaw( &gl_smallFont, cx+(vr/1.5), cy - 4, &col, _(planet->name) );
+      gl_printMarkerRaw( &gl_smallFont, cx+planet->mo_text_offx, cy+planet->mo_text_offy, &col, _(planet->name) );
 }
 
 
@@ -1709,7 +1709,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    /* Default values. */
    jp    = &cur_system->jumps[ind];
    r     = (int)(jumppoint_gfx->sw / res);
-   vr    = MAX( r, 5. ); /* Make sure it's visible. */
+   vr    = jp->mo_radius;
    if (overlay) {
       cx    = (int)(jp->pos.x / res);
       cy    = (int)(jp->pos.y / res);
@@ -1769,9 +1769,9 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       col.a = 1.-interference_alpha;
 
    glLineWidth( 3.5 );
-   gl_renderTriangleEmpty( cx, cy, -jp->angle, 10., 2., &cBlack );
+   gl_renderTriangleEmpty( cx, cy, -jp->angle, vr, 2., &cBlack );
    glLineWidth( 2. );
-   gl_renderTriangleEmpty( cx, cy, -jp->angle, 10., 2., &col );
+   gl_renderTriangleEmpty( cx, cy, -jp->angle, vr, 2., &col );
    glLineWidth( 1. );
 
    /* Render name. */
@@ -1782,7 +1782,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
     * as a font change, but using this fix for now. */
    // col.a = MIN( col.a, 0.99 );
    if (overlay)
-      gl_printMarkerRaw( &gl_smallFont, cx+vr+7., cy, &col, sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
+      gl_printMarkerRaw( &gl_smallFont, cx+vr+jp->mo_text_offx, cy+jp->mo_text_offy, &col, sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
 }
 
 
