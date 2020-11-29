@@ -47,7 +47,7 @@ static double ovr_res = 10.; /**< Resolution. */
 /*
  * Prototypes
  */
-static void update_collision( float *ox, float *oy,
+static void update_collision( float *ox, float *oy, float weight,
       float x, float y, float w, float h,
       float mx, float my, float mw, float mh );
 static int ovr_refresh_compute_overlap_text( float *ox, float *oy, float res, float x, float y, float w, float h, int jpid, int pntid );
@@ -115,21 +115,23 @@ void ovr_refresh (void)
    Planet *pnt;
    JumpPoint *jp;
    float cx,cy, ox,oy;
-   int iter, res;
+   int iter, ires;
+   float res;
 
    /* Must be open. */
    if (!ovr_isOpen())
       return;
 
    /* Calculate max size. */
-   gui_radarGetRes( &res );
+   gui_radarGetRes( &ires );
+   res = (float)ires;
    max_x = 0.;
    max_y = 0.;
    for (i=0; i<cur_system->njumps; i++) {
       jp = &cur_system->jumps[i];
       max_x = MAX( max_x, ABS(jp->pos.x) );
       max_y = MAX( max_y, ABS(jp->pos.y) );
-      jp->mo_radius = MAX( jumppoint_gfx->sw / (float)res, 10. );
+      jp->mo_radius = MAX( jumppoint_gfx->sw / res, 10. );
       jp->mo_text_offx = jp->mo_radius / 1.5;
       jp->mo_text_offy = -gl_smallFont.h/2.;
       jp->mo_text_width = gl_printWidthRaw( &gl_smallFont, _(jp->target->name) );
@@ -138,7 +140,7 @@ void ovr_refresh (void)
       pnt = cur_system->planets[i];
       max_x = MAX( max_x, ABS(pnt->pos.x) );
       max_y = MAX( max_y, ABS(pnt->pos.y) );
-      pnt->mo_radius = MAX( pnt->radius*2. / (float)res, 15. );
+      pnt->mo_radius = MAX( pnt->radius*2. / res, 15. );
       pnt->mo_text_offx = pnt->mo_radius / 1.5;
       pnt->mo_text_offy = -gl_smallFont.h/2.;
       pnt->mo_text_width = gl_printWidthRaw( &gl_smallFont, _(pnt->name) );
@@ -148,16 +150,16 @@ void ovr_refresh (void)
    ovr_res = 2. * 1.2 * MAX( max_x / map_overlay_width(), max_y / map_overlay_height() );
 
    /* Compute text overlap and try to minimize it. */
-   const float update_rate = 0.1;
+   const float update_rate = 0.01;
    const int max_iters = 100;
    for (iter=0; iter<max_iters; iter++) {
       for (i=0; i<cur_system->njumps; i++) {
          jp = &cur_system->jumps[i];
          if (!jp_isUsable(jp) || !jp_isKnown(jp))
             continue;
-         cx = jp->pos.x / (float)res;
-         cy = jp->pos.y / (float)res;
-         if (ovr_refresh_compute_overlap_text( &ox, &oy, (float)res ,cx+jp->mo_text_offx, cy+jp->mo_text_offy, jp->mo_text_width, gl_smallFont.h, i, -1 )) {
+         cx = jp->pos.x / res;
+         cy = jp->pos.y / res;
+         if (ovr_refresh_compute_overlap_text( &ox, &oy, res ,cx+jp->mo_text_offx, cy+jp->mo_text_offy, jp->mo_text_width, gl_smallFont.h, i, -1 )) {
             jp->mo_text_offx += ox * update_rate;
             jp->mo_text_offy += oy * update_rate;
          }
@@ -166,9 +168,9 @@ void ovr_refresh (void)
          pnt = cur_system->planets[i];
          if ((pnt->real != ASSET_REAL) || !planet_isKnown(pnt))
             continue;
-         cx = pnt->pos.x / (float)res;
-         cy = pnt->pos.y / (float)res;
-         if (ovr_refresh_compute_overlap_text( &ox, &oy, (float)res, cx+pnt->mo_text_offx, cy+pnt->mo_text_offy, pnt->mo_text_width, gl_smallFont.h, -1, i )) {
+         cx = pnt->pos.x / res;
+         cy = pnt->pos.y / res;
+         if (ovr_refresh_compute_overlap_text( &ox, &oy, res, cx+pnt->mo_text_offx, cy+pnt->mo_text_offy, pnt->mo_text_width, gl_smallFont.h, -1, i )) {
             pnt->mo_text_offx += ox * update_rate;
             pnt->mo_text_offy += oy * update_rate;
          }
@@ -180,7 +182,7 @@ void ovr_refresh (void)
 /**
  * @brief Compute a collision between two rectangles and direction to move one away from another.
  */
-static void update_collision( float *ox, float *oy,
+static void update_collision( float *ox, float *oy, float weight,
       float x, float y, float w, float h,
       float mx, float my, float mw, float mh )
 {
@@ -192,17 +194,17 @@ static void update_collision( float *ox, float *oy,
 
    /* Case A is left of B. */
    if (x < mx)
-      *ox += mx-(x+w);
+      *ox += weight*(mx-(x+w));
    /* Case A is to the right of B. */
    else
-      *ox += (mx+mw)-x;
+      *ox += weight*((mx+mw)-x);
 
    /* Case A is below B. */
    if (y < my)
-      *oy += my-(y+h);
+      *oy += weight*(my-(y+h));
    /* Case A is above B. */
    else
-      *oy += (my+mh)-y;
+      *oy += weight*((my+mh)-y);
 }
 
 
@@ -215,32 +217,43 @@ static int ovr_refresh_compute_overlap_text( float *ox, float *oy, float res, fl
    Planet *pnt;
    JumpPoint *jp;
    float mx, my, mw, mh;
-   const float pxbuf = 5.; /* Pixels to buffer around. */
+   const float pxbuf = 3.; /* Pixels to buffer around. */
 
    *ox = *oy = 0.;
-   mh = gl_smallFont.h+2.*pxbuf;
 
    for (i=0; i<cur_system->njumps; i++) {
-      if (jpid == i)
-         continue;
       jp = &cur_system->jumps[i];
       if (!jp_isUsable(jp) || !jp_isKnown(jp))
          continue;
+      mw = jp->mo_radius+2.*pxbuf;
+      mh = mw;
+      mx = jp->pos.x/res - mw/2.;
+      my = jp->pos.y/res - mh/2.;
+      update_collision( ox, oy, 2., x, y, w, h, mx, my, mw, mh );
+      if (jpid == i)
+         continue;
+      mw = jp->mo_text_width+2.*pxbuf;
+      mh = gl_smallFont.h+2.*pxbuf;
       mx = jp->pos.x/res + jp->mo_text_offx-pxbuf;
       my = jp->pos.x/res + jp->mo_text_offy-pxbuf;
-      mw = jp->mo_text_width+2.*pxbuf;
-      update_collision( ox, oy, x, y, w, h, mx, my, mw, mh );
+      update_collision( ox, oy, 1., x, y, w, h, mx, my, mw, mh );
    }
    for (i=0; i<cur_system->nplanets; i++) {
-      if (pntid == i)
-         continue;
       pnt = cur_system->planets[i];
       if ((pnt->real != ASSET_REAL) || !planet_isKnown(pnt))
          continue;
+      mw = pnt->mo_radius+2.*pxbuf;
+      mh = mw;
+      mx = pnt->pos.x/res - mw/2.;
+      my = pnt->pos.y/res - mh/2.;
+      update_collision( ox, oy, 2., x, y, w, h, mx, my, mw, mh );
+      if (pntid == i)
+         continue;
+      mw = pnt->mo_text_width+2.*pxbuf;
+      mh = gl_smallFont.h+2.*pxbuf;
       mx = pnt->pos.x/res + pnt->mo_text_offx-pxbuf;
       my = pnt->pos.y/res + pnt->mo_text_offy-pxbuf;
-      mw = pnt->mo_text_width+2.*pxbuf;
-      update_collision( ox, oy, x, y, w, h, mx, my, mw, mh );
+      update_collision( ox, oy, 1., x, y, w, h, mx, my, mw, mh );
    }
 
    return (*ox > 0.) || (*oy > 0.);
