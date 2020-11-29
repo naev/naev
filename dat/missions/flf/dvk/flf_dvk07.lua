@@ -93,7 +93,6 @@ function accept ()
       marker = misn.markerAdd( missys, "high" )
 
       osd_desc[1] = osd_desc[1]:format( missys:name() )
-      osd_desc[2] = osd_desc[2]:format( misn_level[level] )
       misn.osdCreate( osd_title, osd_desc )
 
       rogue_ships_left = 0
