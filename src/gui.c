@@ -709,8 +709,7 @@ static void gui_renderBorder( double dt )
          ccol.b = col->b;
          ccol.a = int_a;
 
-         gl_renderTriangleEmpty( cx, cy, jp->angle, 10., 10., &ccol );
-         //gl_renderTriangleEmpty( cx, cy, M_PI_2, 10., 1., &ccol );
+         gl_renderTriangleEmpty( cx, cy, -jp->angle, 10., 10., &ccol );
       }
    }
 
@@ -1367,6 +1366,9 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       // col = cRadar_hilight;
    col.a = 1.-interference_alpha;
 
+   glLineWidth( 2. );
+   gl_renderTriangleEmpty( x, y, p->solid->dir, 3.*MAX(sx,sy), 1., &cBlack );
+   glLineWidth( 1. );
    gl_renderTriangleEmpty( x, y, p->solid->dir, 3.*MAX(sx,sy), 1., &col );
 
    /* Draw name. */
@@ -1474,7 +1476,11 @@ void gui_renderPlayer( double res, int overlay )
 
    /* Render the cross. */
    // gl_renderCross( x, y, r, &cRadar_player );
+   glLineWidth( 4.5 );
+   gl_renderTriangleEmpty( x, y, player.p->solid->dir, r, 2., &cBlack );
+   glLineWidth( 3. );
    gl_renderTriangleEmpty( x, y, player.p->solid->dir, r, 2., &cRadar_player );
+   glLineWidth( 1. );
 }
 
 
@@ -1654,8 +1660,13 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    glDrawArrays( GL_LINE_STRIP, 0, 5 );
    gl_endSolidProgram();
    */
+   glLineWidth(4.5);
+   gl_drawCircle( cx, cy, vr/2.5, &cBlack, 0 );
+   gl_renderCross( cx, cy, vr/2.5, &cBlack );
+   glLineWidth(3.);
    gl_drawCircle( cx, cy, vr/2.5, &col, 0 );
    gl_renderCross( cx, cy, vr/2.5, &col );
+   glLineWidth(1.);
 
    /* Render name. */
    /* XXX: Hack to prevent the text from overly obscuring overlay
@@ -1750,7 +1761,11 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    if (!overlay)
       col.a = 1.-interference_alpha;
 
+   glLineWidth( 3.5 );
+   gl_renderTriangleEmpty( cx, cy, -jp->angle, 10., 2., &cBlack );
+   glLineWidth( 2. );
    gl_renderTriangleEmpty( cx, cy, -jp->angle, 10., 2., &col );
+   glLineWidth( 1. );
 
    /* Render name. */
    /* XXX: Hack to prevent the text from overly obscuring overlay
