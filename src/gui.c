@@ -1302,7 +1302,6 @@ static const glColour* gui_getPilotColour( const Pilot* p )
 void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res, int overlay )
 {
    int x, y, sx, sy;
-   double px, py, rw, rh;
    glColour col;
 
    /* Make sure is in range. */
@@ -1352,10 +1351,6 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    if (p->id == player.p->target) {
       gui_blink( w, h, 0, x, y, 12, RADAR_RECT, &cRadar_hilight, RADAR_BLINK_PILOT, blink_pilot);
    }
-
-   /* Draw square. */
-   px     = MAX(x-sx,-w);
-   py     = MAX(y-sy, -h);
 
    if (p->id == player.p->target) 
       col = cRadar_hilight;
