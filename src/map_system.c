@@ -710,9 +710,9 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       int owned;
       com = cur_planetObj_sel->commodities[i];
       economy_getAveragePrice( com, &globalmean, &globalstd );
+      economy_getAveragePlanetPrice( com, cur_planetObj_sel, &mean, &std );
       credits2str( buf_mean, mean, -1 );
       nsnprintf( buf_std, sizeof(buf_std), "%.1f ¤", std ); /* TODO credit2str could learn to do this... */
-      economy_getAveragePlanetPrice( com, cur_planetObj_sel, &mean, &std );
       credits2str( buf_globalmean, globalmean, -1 );
       nsnprintf( buf_globalstd, sizeof(buf_globalstd), "%.1f ¤", globalstd ); /* TODO credit2str could learn to do this... */
       owned=pilot_cargoOwned( player.p, com->name );
