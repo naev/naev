@@ -721,7 +721,7 @@ static void gui_renderBorder( double dt )
          ccol.b = col->b;
          ccol.a = int_a;
 
-         gl_renderTriangleEmpty( cx, cy, -jp->angle, 10., 10., &ccol );
+         gl_renderTriangleEmpty( cx, cy, -jp->angle, 10., 1., &ccol );
       }
    }
 
