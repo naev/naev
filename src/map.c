@@ -426,13 +426,13 @@ static void map_update( unsigned int wid )
    if ( cur_commod >= 0 ) {
       c = commod_known[cur_commod];
       if ( cur_commod_mode == 0 ) {
-         snprintf( buf, PATH_MAX,
+         nsnprintf( buf, PATH_MAX,
                    _("%s prices trading from %s shown: Positive/blue values mean a profit\n"
                      "while negative/orange values mean a loss when sold at the corresponding system."),
                    _(c->name), _(sys->name) );
          window_modifyText( wid, "txtSystemStatus", buf );
       } else {
-         snprintf(buf, PATH_MAX, _("Known %s prices shown. Galaxy-wide average: %.2f"), _(c->name), commod_av_gal_price);
+         nsnprintf(buf, PATH_MAX, _("Known %s prices shown. Galaxy-wide average: %.2f"), _(c->name), commod_av_gal_price);
          window_modifyText( wid, "txtSystemStatus", buf );
       }
    } else {

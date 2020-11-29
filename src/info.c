@@ -560,9 +560,9 @@ static void weapons_genList( unsigned int wid )
    for (i=0; i<PILOT_WEAPON_SETS; i++) {
       str = pilot_weapSetName( info_eq_weaps.selected, i );
       if (str == NULL)
-         snprintf( tbuf, sizeof(tbuf), "%d - ??", (i+1)%10 );
+         nsnprintf( tbuf, sizeof(tbuf), "%d - ??", (i+1)%10 );
       else
-         snprintf( tbuf, sizeof(tbuf), "%d - %s", (i+1)%10, str );
+         nsnprintf( tbuf, sizeof(tbuf), "%d - %s", (i+1)%10, str );
       buf[i] = strdup( tbuf );
    }
    window_addList( wid, 20+180+20, -40,
