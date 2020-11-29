@@ -47,6 +47,7 @@ gl_vbo *gl_squareVBO = 0;
 static gl_vbo *gl_squareEmptyVBO = 0;
 static gl_vbo *gl_crossVBO = 0;
 static gl_vbo *gl_lineVBO = 0;
+static gl_vbo *gl_triangleVBO = 0;
 static int gl_renderVBOtexOffset = 0; /**< VBO texture offset. */
 static int gl_renderVBOcolOffset = 0; /**< VBO colour offset. */
 
@@ -161,6 +162,31 @@ void gl_renderCross( double x, double y, double r, const glColour *c )
 
 
 /**
+ * @brief Renders a triangle at a given position.
+ *
+ *    @param x X position to center at.
+ *    @param y Y position to center at.
+ *    @param a Angle the triangle should "face" (right is 0.)
+ *    @param s Scaling of the triangle.
+ *    @param c Colour to use.
+ */
+void gl_renderTriangleEmpty( double x, double y, double a, double s, const glColour *c )
+{
+   gl_Matrix4 projection;
+
+   projection = gl_Matrix4_Translate(gl_view_matrix, x, y, 0);
+   if (a != 0.)
+      projection = gl_Matrix4_Rotate2d(projection, a);
+   projection = gl_Matrix4_Scale(projection, s, s, 1);
+
+   gl_beginSolidProgram(projection, c);
+   gl_vboActivateAttribOffset( gl_triangleVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
+   glDrawArrays( GL_LINE_STRIP, 0, 4 );
+   gl_endSolidProgram();
+}
+
+
+/**
  * @brief Texture blitting backend.
  *
  *    @param texture Texture to blit.
@@ -200,7 +226,7 @@ void gl_blitTexture(  const glTexture* texture,
 
    /* Set the vertex. */
    projection = gl_view_matrix;
-   if(!angle){
+   if (angle==0.){
      projection = gl_Matrix4_Translate(projection, x, y, 0);
      projection = gl_Matrix4_Scale(projection, w, h, 1);
    } else {
@@ -761,43 +787,53 @@ int gl_initRender (void)
    gl_renderVBOtexOffset = sizeof(GLfloat) * OPENGL_RENDER_VBO_SIZE*2;
    gl_renderVBOcolOffset = sizeof(GLfloat) * OPENGL_RENDER_VBO_SIZE*(2+2);
 
-   vertex[0] = 0;
-   vertex[1] = 0;
-   vertex[2] = 1;
-   vertex[3] = 0;
-   vertex[4] = 0;
-   vertex[5] = 1;
-   vertex[6] = 1;
-   vertex[7] = 1;
+   vertex[0] = 0.;
+   vertex[1] = 0.;
+   vertex[2] = 1.;
+   vertex[3] = 0.;
+   vertex[4] = 0.;
+   vertex[5] = 1.;
+   vertex[6] = 1.;
+   vertex[7] = 1.;
    gl_squareVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
 
-   vertex[0] = 0;
-   vertex[1] = 0;
-   vertex[2] = 1;
-   vertex[3] = 0;
-   vertex[4] = 1;
-   vertex[5] = 1;
-   vertex[6] = 0;
-   vertex[7] = 1;
-   vertex[8] = 0;
-   vertex[9] = 0;
+   vertex[0] = 0.;
+   vertex[1] = 0.;
+   vertex[2] = 1.;
+   vertex[3] = 0.;
+   vertex[4] = 1.;
+   vertex[5] = 1.;
+   vertex[6] = 0.;
+   vertex[7] = 1.;
+   vertex[8] = 0.;
+   vertex[9] = 0.;
    gl_squareEmptyVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
 
    vertex[0] = 0.;
-   vertex[1] = -1;
+   vertex[1] = -1.;
    vertex[2] = 0.;
-   vertex[3] = 1;
-   vertex[4] = -1;
+   vertex[3] = 1.;
+   vertex[4] = -1.;
    vertex[5] = 0.;
-   vertex[6] = 1;
+   vertex[6] = 1.;
    vertex[7] = 0.;
    gl_crossVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
 
-   vertex[0] = 0;
-   vertex[1] = 0;
-   vertex[2] = 1;
-   vertex[3] = 0;
+   vertex[0] = 0.;
+   vertex[1] = 0.;
+   vertex[2] = 1.;
+   vertex[3] = 0.;
    gl_lineVBO = gl_vboCreateStatic( sizeof(GLfloat) * 4, vertex );
+
+   vertex[0] = 0.5*cos(4.*M_PI/3.);
+   vertex[1] = 0.5*sin(4.*M_PI/3.);
+   vertex[2] = 0.5*cos(0.);
+   vertex[3] = 0.5*sin(0.);
+   vertex[4] = 0.5*cos(2.*M_PI/3.);
+   vertex[5] = 0.5*sin(2.*M_PI/3.);
+   vertex[6] = vertex[0];
+   vertex[7] = vertex[1];
+   gl_triangleVBO = gl_vboCreateStream( sizeof(GLfloat) * 8, vertex );
 
    gl_checkErr();
 
@@ -816,5 +852,6 @@ void gl_exitRender (void)
    gl_vboDestroy( gl_squareEmptyVBO );
    gl_vboDestroy( gl_crossVBO );
    gl_vboDestroy( gl_lineVBO );
+   gl_vboDestroy( gl_triangleVBO );
    gl_renderVBO = NULL;
 }
