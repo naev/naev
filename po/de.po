@@ -22367,7 +22367,8 @@ msgstr "Patrouille"
 #: dat/missions/pirate/patrol.lua:69
 #, lua-format
 msgid "Go to indicated point (%d remaining)"
-msgstr "Gehe zum markierten Punkt (%d verbleibend)"
+msgid_plural "Go to indicated point (%d remaining)"
+msgstr[0] "Gehe zum markierten Punkt (%d verbleibend)"
 
 #: dat/missions/neutral/patrol.lua:83
 msgid "Eliminate hostiles"
@@ -26715,7 +26716,8 @@ msgstr ""
 #: dat/missions/rehab_common.lua:31 dat/missions/rehab_common.lua:32
 #, lua-format
 msgid "You need to gain %d more reputation"
-msgstr "Du musst noch %d Reputation erhalten"
+msgid_plural "You need to gain %d more reputation"
+msgstr[0] "Du musst noch %d Reputation erhalten"
 
 #. Note: this mission does not make any system claims.
 #. Only spawn this mission if the player needs it.
