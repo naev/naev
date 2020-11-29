@@ -1596,9 +1596,7 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
  */
 void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
-   int x, y;
-   int cx, cy, r, rc;
-   GLfloat vr;
+   GLfloat cx, cy, x, y, r, vr, rc;
    glColour col;
    Planet *planet;
 
@@ -1608,21 +1606,21 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
 
    /* Default values. */
    planet = cur_system->planets[ind];
-   r     = (int)(planet->radius*2. / res);
-   vr    = planet->mo_radius;
+   r     = planet->radius*2. / res;
+   vr    = overlay ? planet->mo_radius : MAX( r, 15.);
 
    if (overlay) {
-      cx    = (int)(planet->pos.x / res);
-      cy    = (int)(planet->pos.y / res);
+      cx    = planet->pos.x / res;
+      cy    = planet->pos.y / res;
    }
    else {
-      cx    = (int)((planet->pos.x - player.p->solid->pos.x) / res);
-      cy    = (int)((planet->pos.y - player.p->solid->pos.y) / res);
+      cx    = (planet->pos.x - player.p->solid->pos.x) / res;
+      cy    = (planet->pos.y - player.p->solid->pos.y) / res;
    }
 
    /* Check if in range. */
    if (shape == RADAR_CIRCLE) {
-      rc = (int)(w*w);
+      rc = w*w;
       x = ABS(cx)-r;
       y = ABS(cy)-r;
       /* Out of range. */
@@ -1705,8 +1703,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
  */
 void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
-   int cx, cy, x, y, r, rc;
-   GLfloat vr;
+   GLfloat cx, cy, x, y, r, vr, rc;
    glColour col;
    JumpPoint *jp;
    // gl_Matrix4 projection;
@@ -1714,18 +1711,18 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Default values. */
    jp    = &cur_system->jumps[ind];
-   r     = (int)(jumppoint_gfx->sw / res);
-   vr    = jp->mo_radius;
+   r     = jumppoint_gfx->sw / res;
+   vr    = overlay ? jp->mo_radius : MAX( r, 10. );
    if (overlay) {
-      cx    = (int)(jp->pos.x / res);
-      cy    = (int)(jp->pos.y / res);
+      cx    = jp->pos.x / res;
+      cy    = jp->pos.y / res;
    }
    else {
-      cx    = (int)((jp->pos.x - player.p->solid->pos.x) / res);
-      cy    = (int)((jp->pos.y - player.p->solid->pos.y) / res);
+      cx    = (jp->pos.x - player.p->solid->pos.x) / res;
+      cy    = (jp->pos.y - player.p->solid->pos.y) / res;
    }
    if (shape==RADAR_CIRCLE)
-      rc = (int)(w*w);
+      rc = w*w;
    else
       rc = 0;
 
