@@ -95,21 +95,6 @@ int ovr_input( SDL_Event *event )
    x = ((double)mx - (double)map_overlay_center_x()) * ovr_res; 
    y = ((double)my - (double)map_overlay_center_y()) * ovr_res; 
 
-   /*
-   WARN("mocx %i", map_overlay_center_x());
-   WARN("mocy %i", map_overlay_center_y());
-   WARN("mosx %f", map_overlay_scale_x());
-   WARN("mosy %f", map_overlay_scale_y());
-   WARN("mx %i", mx);
-   WARN("my %i", my);
-   WARN("x %f", x);
-   WARN("y %f", y);
-   WARN("Top %i", map_overlay.boundTop);
-   WARN("Right %i", map_overlay.boundRight);
-   WARN("Bottom %i", map_overlay.boundBottom);
-   WARN("Right %i", map_overlay.boundRight);
-   */
-
    return input_clickPos( event, x, y, 1., 10. * ovr_res, 15. * ovr_res );
 }
 
