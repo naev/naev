@@ -15,13 +15,15 @@
 
 #include "log.h"
 #include "nlua.h"
-#include "nluadef.h"
-#include "nlua_system.h"
-#include "nlua_planet.h"
-#include "nlua_jump.h"
+#include "nlua_commodity.h"
 #include "nlua_faction.h"
+#include "nlua_jump.h"
+#include "nlua_outfit.h"
+#include "nlua_planet.h"
 #include "nlua_ship.h"
+#include "nlua_system.h"
 #include "nlua_time.h"
+#include "nluadef.h"
 #include "nstring.h"
 
 
@@ -73,7 +75,7 @@ static int nxml_saveJump( xmlTextWriterPtr writer,
 {
    xmlw_startElem(writer,"data");
 
-   xmlw_attr(writer,"type","jump");
+   xmlw_attr(writer,"type",JUMP_METATABLE);
    xmlw_attr(writer,"name","%s",name);
    xmlw_attr(writer,"dest","%s",dest);
    xmlw_str(writer,"%s",start);
@@ -98,6 +100,8 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
    Ship *sh;
    ntime_t t;
    LuaJump *lj;
+   Commodity *com;
+   Outfit *o;
    Planet *pnt;
    StarSystem *ss, *dest;
    char buf[PATH_MAX];
@@ -192,7 +196,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
          if (lua_isplanet(L,-1)) {
             pnt = planet_getIndex( *lua_toplanet(L,-1) );
             if (pnt != NULL)
-               nxml_saveData( writer, "planet",
+               nxml_saveData( writer, PLANET_METATABLE,
                      name, pnt->name, keynum );
             else
                WARN(_("Failed to save invalid planet."));
@@ -202,7 +206,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
          else if (lua_issystem(L,-1)) {
             ss = system_getIndex( lua_tosystem(L,-1) );
             if (ss != NULL)
-               nxml_saveData( writer, "system",
+               nxml_saveData( writer, SYSTEM_METATABLE,
                      name, ss->name, keynum );
             else
                WARN(_("Failed to save invalid system."));
@@ -213,7 +217,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
             str = faction_name( lua_tofaction(L,-1) );
             if (str == NULL)
                break;
-            nxml_saveData( writer, "faction",
+            nxml_saveData( writer, FACTION_METATABLE,
                   name, str, keynum );
             /* key, value */
             break;
@@ -223,7 +227,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
             str = sh->name;
             if (str == NULL)
                break;
-            nxml_saveData( writer, "ship",
+            nxml_saveData( writer, SHIP_METATABLE,
                   name, str, keynum );
             /* key, value */
             break;
@@ -231,7 +235,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
          else if (lua_istime(L,-1)) {
             t = *lua_totime(L,-1);
             nsnprintf( buf, sizeof(buf), "%"PRId64, t );
-            nxml_saveData( writer, "time",
+            nxml_saveData( writer, TIME_METATABLE,
                   name, buf, keynum );
             /* key, value */
             break;
@@ -244,6 +248,26 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
                WARN(_("Failed to save invalid jump."));
             else
                nxml_saveJump( writer, name, ss->name, dest->name );
+         }
+         else if (lua_iscommodity(L,-1)) {
+            com = lua_tocommodity(L,-1);
+            str = com->name;
+            if (str == NULL)
+               break;
+            nxml_saveData( writer, COMMODITY_METATABLE,
+                  name, str, keynum );
+            /* key, value */
+            break;
+         }
+         else if (lua_isoutfit(L,-1)) {
+            o = lua_tooutfit(L,-1);
+            str = o->name;
+            if (str == NULL)
+               break;
+            nxml_saveData( writer, OUTFIT_METATABLE,
+                  name, str, keynum );
+            /* key, value */
+            break;
          }
          /* Purpose fallthrough. */
 
@@ -336,7 +360,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             lua_pushboolean(L,xml_getInt(node));
          else if (strcmp(type,"string")==0)
             lua_pushstring(L,xml_get(node));
-         else if (strcmp(type,"planet")==0) {
+         else if (strcmp(type,PLANET_METATABLE)==0) {
             pnt = planet_get(xml_get(node));
             if (pnt != NULL) {
                lua_pushplanet(L,planet_index(pnt));
@@ -344,22 +368,22 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             else
                WARN(_("Failed to load nonexistent planet '%s'"), xml_get(node));
          }
-         else if (strcmp(type,"system")==0) {
+         else if (strcmp(type,SYSTEM_METATABLE)==0) {
             ss = system_get(xml_get(node));
             if (ss != NULL)
                lua_pushsystem(L,system_index( ss ));
             else
                WARN(_("Failed to load nonexistent system '%s'"), xml_get(node));
          }
-         else if (strcmp(type,"faction")==0) {
+         else if (strcmp(type,FACTION_METATABLE)==0) {
             lua_pushfaction(L,faction_get(xml_get(node)));
          }
-         else if (strcmp(type,"ship")==0)
+         else if (strcmp(type,SHIP_METATABLE)==0)
             lua_pushship(L,ship_get(xml_get(node)));
-         else if (strcmp(type,"time")==0) {
+         else if (strcmp(type,TIME_METATABLE)==0) {
             lua_pushtime(L,xml_getLong(node));
          }
-         else if (strcmp(type,"jump")==0) {
+         else if (strcmp(type,JUMP_METATABLE)==0) {
             ss = system_get(xml_get(node));
             system_get(xmlr_attr(node,"dest",buf));
             dest = system_get( buf );
@@ -371,7 +395,16 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             else
                WARN(_("Failed to load nonexistent jump from '%s' to '%s'"), xml_get(node), buf);
          }
+         else if (strcmp(type,COMMODITY_METATABLE)==0)
+            lua_pushcommodity(L,commodity_get(xml_get(node)));
+         else if (strcmp(type,OUTFIT_METATABLE)==0)
+            lua_pushoutfit(L,outfit_get(xml_get(node)));
          else {
+            /* There are a few types knowingly left out above.
+	     * Meaningless (?): PILOT_METATABLE.
+	     * Seems doable, use case unclear: ARTICLE_METATABLE, VEC_METATABLE.
+	     * Seems doable, but probably GUI-only: COL_METATABLE, TEX_METATABLE.
+	     * */
             WARN(_("Unknown Lua data type!"));
             lua_pop(L,1);
             return -1;
