@@ -1507,7 +1507,7 @@ static const glColour *gui_getPlanetColour( int i )
    planet = cur_system->planets[i];
 
    if (i == player.p->nav_planet)
-      col = &cFontOrange;
+      col = &cWhite;
    else
       col = planet_getColour( planet );
 
@@ -1755,13 +1755,13 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Do the blink. */
    if (ind == player.p->nav_hyperspace) {
+      col = cWhite;
       gui_blink( w, h, rc, cx+4, cy+5, vr, shape, &col, RADAR_BLINK_PLANET, blink_planet );
-      col = cGreen;
    }
    else if (jp_isFlag(jp, JP_HIDDEN))
       col = cRed;
    else
-      col = cWhite;
+      col = cGreen;
 
    if (!overlay)
       col.a = 1.-interference_alpha;
