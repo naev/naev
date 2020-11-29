@@ -122,6 +122,7 @@ typedef struct Planet_ {
    unsigned int flags; /**< flags for planet properties */
 
    /* Used for map overlay. */
+   float mo_radius_base; /**< Radius for display on the map overlay. */
    float mo_radius; /**< Radius for display on the map overlay. */
    float mo_text_offx; /**< x offset of the caption text. */
    float mo_text_offy; /**< y offset of the caption text. */
@@ -198,6 +199,7 @@ struct JumpPoint_ {
    int sy; /**< Y sprite to use. */
 
    /* Used for map overlay. */
+   float mo_radius_base; /**< Radius for display on the map overlay. */
    float mo_radius; /**< Radius for display on the map overlay. */
    float mo_text_offx; /**< x offset of the caption text. */
    float mo_text_offy; /**< y offset of the caption text. */
