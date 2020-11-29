@@ -628,16 +628,16 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
 
             l = strlen(o->desc_short) + 128;
             coutfits[i].alt = malloc( l );
-            p  = snprintf( &coutfits[i].alt[0], l, "%s\n", _(o->name) );
+            p  = nsnprintf( &coutfits[i].alt[0], l, "%s\n", _(o->name) );
             if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
-               p += snprintf( &coutfits[i].alt[p], l-p, _("\aoUnique\a0\n") );
+               p += nsnprintf( &coutfits[i].alt[p], l-p, _("\aoUnique\a0\n") );
             if ((o->slot.spid!=0) && (p < l))
-               p += snprintf( &coutfits[i].alt[p], l-p, _("\aoSlot %s\a0\n"),
+               p += nsnprintf( &coutfits[i].alt[p], l-p, _("\aoSlot %s\a0\n"),
                      _( sp_display( o->slot.spid ) ) );
             if (p < l)
-               p += snprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );
+               p += nsnprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );
             if ((o->mass > 0.) && (p < l))
-               snprintf( &coutfits[i].alt[p], l-p,
+               nsnprintf( &coutfits[i].alt[p], l-p,
                      _("\n%.0f Tonnes"),
                      mass );
          }

@@ -759,13 +759,13 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       if (slot->sslot->slot.spid == 0)
          return;
 
-      pos = snprintf( alt, sizeof(alt),
+      pos = nsnprintf( alt, sizeof(alt),
             "\ao%s", _( sp_display( slot->sslot->slot.spid ) ) );
       if (slot->sslot->slot.exclusive && (pos < (int)sizeof(alt)))
-         pos += snprintf( &alt[pos], sizeof(alt)-pos,
+         pos += nsnprintf( &alt[pos], sizeof(alt)-pos,
                _(" [exclusive]") );
       if (pos < (int)sizeof(alt))
-         snprintf( &alt[pos], sizeof(alt)-pos,
+         nsnprintf( &alt[pos], sizeof(alt)-pos,
                "\n\n%s", _( sp_description( slot->sslot->slot.spid ) ) );
       toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
       return;
@@ -784,14 +784,14 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          "%s",
          _(o->name) );
    if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aoUnique\a0") );
+      pos += nsnprintf( &alt[pos], sizeof(alt)-pos, _("\n\aoUnique\a0") );
    if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aoSlot %s\a0"),
+      pos += nsnprintf( &alt[pos], sizeof(alt)-pos, _("\n\aoSlot %s\a0"),
             _( sp_display( o->slot.spid ) ) );
    if (pos < (int)sizeof(alt))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", _(o->desc_short) );
+      pos += nsnprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", _(o->desc_short) );
    if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
-      snprintf( &alt[pos], sizeof(alt)-pos,
+      nsnprintf( &alt[pos], sizeof(alt)-pos,
             ngettext("\n%.0f Tonne", "\n%.0f Tonnes", mass),
             mass );
 
