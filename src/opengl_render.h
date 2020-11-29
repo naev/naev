@@ -93,7 +93,7 @@ void gl_renderRectEmpty( double x, double y, double w, double h, const glColour 
 void gl_renderCross( double x, double y, double r, const glColour *c );
 
 /* Triangle. */
-void gl_renderTriangleEmpty( double x, double y, double a, double s, const glColour *c );
+void gl_renderTriangleEmpty( double x, double y, double a, double s, double length, const glColour *c );
 
 /* Clipping. */
 void gl_clipRect( int x, int y, int w, int h );

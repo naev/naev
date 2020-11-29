@@ -168,16 +168,17 @@ void gl_renderCross( double x, double y, double r, const glColour *c )
  *    @param y Y position to center at.
  *    @param a Angle the triangle should "face" (right is 0.)
  *    @param s Scaling of the triangle.
+ *    @param length Length deforming factor. Setting it to a value of other than 1. moves away from an equilateral triangle.
  *    @param c Colour to use.
  */
-void gl_renderTriangleEmpty( double x, double y, double a, double s, const glColour *c )
+void gl_renderTriangleEmpty( double x, double y, double a, double s, double length, const glColour *c )
 {
    gl_Matrix4 projection;
 
    projection = gl_Matrix4_Translate(gl_view_matrix, x, y, 0);
+   projection = gl_Matrix4_Scale(projection, s*length, s, 1);
    if (a != 0.)
       projection = gl_Matrix4_Rotate2d(projection, a);
-   projection = gl_Matrix4_Scale(projection, s, s, 1);
 
    gl_beginSolidProgram(projection, c);
    gl_vboActivateAttribOffset( gl_triangleVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
