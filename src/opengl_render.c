@@ -176,9 +176,9 @@ void gl_renderTriangleEmpty( double x, double y, double a, double s, double leng
    gl_Matrix4 projection;
 
    projection = gl_Matrix4_Translate(gl_view_matrix, x, y, 0);
-   projection = gl_Matrix4_Scale(projection, s*length, s, 1);
    if (a != 0.)
       projection = gl_Matrix4_Rotate2d(projection, a);
+   projection = gl_Matrix4_Scale(projection, s*length, s, 1.);
 
    gl_beginSolidProgram(projection, c);
    gl_vboActivateAttribOffset( gl_triangleVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
@@ -834,7 +834,7 @@ int gl_initRender (void)
    vertex[5] = 0.5*sin(2.*M_PI/3.);
    vertex[6] = vertex[0];
    vertex[7] = vertex[1];
-   gl_triangleVBO = gl_vboCreateStream( sizeof(GLfloat) * 8, vertex );
+   gl_triangleVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
 
    gl_checkErr();
 
