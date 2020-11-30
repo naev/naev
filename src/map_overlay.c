@@ -211,7 +211,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    const float pixbuf = 5.; /**< Pixels to buffer around for text (not used for optimizing radius). */
    const float pixbuf_initial = 50; /**< Initial pixel buffer to consider. */
    const float radius_shrink_ratio = 0.95; /**< How fast to shrink the radius. */
-   const float radius_grow_ratio = 1.05; /**< How fast to grow the radius. */
+   const float radius_grow_ratio = 1./radius_shrink_ratio; /**< How fast to grow the radius. */
    const float position_threshold_x = 20.; /**< How far to start penalizing x position. */
    const float position_threshold_y = 10.; /**< How far to start penalizing y position. */
    const float position_weight = 1.; /**< How much to penalize the position. */
@@ -273,25 +273,32 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
          off = moo[i].text_offx_base - mo[i]->text_offx;
          if (fabs(off) > position_threshold_x) {
             off = FSIGN(off) * pow2(fabs(off)-position_threshold_x);
-            moo[i].text_offx += position_weight*off;
+            moo[i].text_offx += position_weight * off;
             changed = 1;
          }
          off = moo[i].text_offy_base - mo[i]->text_offy;
          if (fabs(off) > position_threshold_y) {
             off = FSIGN(off) * pow2(fabs(off)-position_threshold_y);
-            moo[i].text_offy += position_weight*off;
+            moo[i].text_offy += position_weight * off;
             changed = 1;
          }
+
+         /* Propagate updates. */
+         mo[i]->radius = moo[i].radius;
+         mo[i]->text_offx = moo[i].text_offx;
+         mo[i]->text_offy = moo[i].text_offy;
       }
       /* Converged (or unnecessary). */
       if (!changed)
          break;
       /* Propagate updates. */
+      /*
       for (i=0; i<items; i++) {
          mo[i]->radius = moo[i].radius;
          mo[i]->text_offx = moo[i].text_offx;
          mo[i]->text_offy = moo[i].text_offy;
       }
+      */
    }
 }
 
