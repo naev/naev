@@ -63,7 +63,7 @@ static double ovr_res = 10.; /**< Resolution. */
 /*
  * Prototypes
  */
-static void update_collision( float *ox, float *oy, float weight,
+static int update_collision( float *ox, float *oy, float weight,
       float x, float y, float w, float h,
       float mx, float my, float mw, float mh );
 static void ovr_optimizeLayout( int items, const Vector2d** pos,
@@ -120,8 +120,8 @@ int ovr_input( SDL_Event *event )
    gl_windowToScreenPos( &mx, &my, mx, my );
 
    /* Translate to space coords. */
-   x = ((double)mx - (double)map_overlay_center_x()) * ovr_res; 
-   y = ((double)my - (double)map_overlay_center_y()) * ovr_res; 
+   x = ((double)mx - (double)map_overlay_center_x()) * ovr_res;
+   y = ((double)my - (double)map_overlay_center_y()) * ovr_res;
 
    return input_clickPos( event, x, y, 1., 10. * ovr_res, 15. * ovr_res );
 }
@@ -235,7 +235,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
       cy = pos[i]->y / res;
       ovr_init_position( &moo[i].text_offx_base, &moo[i].text_offy_base,
             res, cx, cy, moo[i].text_width, gl_smallFont.h, pixbuf, pos, mo, moo, items, i,
-            pixbuf_initial, object_weight, text_weight ); 
+            pixbuf_initial, object_weight, text_weight );
       moo[i].text_offx = moo[i].text_offx_base;
       moo[i].text_offy = moo[i].text_offy_base;
       /* Initialize mo. */
@@ -343,15 +343,15 @@ static void ovr_init_position( float *px, float *py, float res, float x, float y
 /**
  * @brief Compute a collision between two rectangles and direction to move one away from another.
  */
-static void update_collision( float *ox, float *oy, float weight,
+static int update_collision( float *ox, float *oy, float weight,
       float x, float y, float w, float h,
       float mx, float my, float mw, float mh )
 {
    /* No collision. */
    if (((x+w) < mx) || (x > (mx+mw)))
-      return;
+      return 0;
    if (((y+h) < my) || (y > (my+mh)))
-      return;
+      return 0;
 
    /* Case A is left of B. */
    if (x < mx)
@@ -366,6 +366,8 @@ static void update_collision( float *ox, float *oy, float weight,
    /* Case A is above B. */
    else
       *oy += weight*((my+mh)-y);
+
+   return 1;
 }
 
 
@@ -377,20 +379,21 @@ static int ovr_refresh_compute_overlap( float *ox, float *oy,
       MapOverlayPos** mo, MapOverlayPosOpt* moo, int items, int self, int radius, float pixbuf,
       float object_weight, float text_weight )
 {
-   int i;
+   int i, collided;
    float mx, my, mw, mh;
    const float pb2 = pixbuf*2.;
 
    *ox = *oy = 0.;
+   collided = 0;
 
    for (i=0; i<items; i++) {
-      if (i != self || !radius) { 
+      if (i != self || !radius) {
          /* convert center coordinates to bottom left*/
          mw = mo[i]->radius + pb2;
          mh = mw;
          mx = pos[i]->x/res - mw/2.;
          my = pos[i]->y/res - mh/2.;
-         update_collision( ox, oy, object_weight, x, y, w, h, mx, my, mw, mh );
+         collided |= update_collision( ox, oy, object_weight, x, y, w, h, mx, my, mw, mh );
       }
       if (i != self || radius) {
          /* no need to convert coordinates, just add pixbuf */
@@ -398,11 +401,11 @@ static int ovr_refresh_compute_overlap( float *ox, float *oy,
          mh = gl_smallFont.h + pb2;
          mx = pos[i]->x/res + mo[i]->text_offx-pixbuf;
          my = pos[i]->y/res + mo[i]->text_offy-pixbuf;
-         update_collision( ox, oy, text_weight, x, y, w, h, mx, my, mw, mh );
+         collided |= update_collision( ox, oy, text_weight, x, y, w, h, mx, my, mw, mh );
       }
    }
 
-   return (*ox > 0.) || (*oy > 0.);
+   return collided;
 }
 
 
