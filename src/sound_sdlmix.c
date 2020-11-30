@@ -112,7 +112,7 @@ static void print_MixerVersion (void)
    MIX_VERSION(&compiled);
    linked = Mix_Linked_Version();
    const char *drvname = SDL_GetCurrentAudioDriver();
-   strncpy( device, drvname, PATH_MAX );
+   strncpy( device, drvname, PATH_MAX-1 );
    device[PATH_MAX-1] = '\0';
 
    /* Version itself. */
