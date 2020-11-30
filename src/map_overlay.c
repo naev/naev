@@ -50,9 +50,11 @@ static double ovr_res = 10.; /**< Resolution. */
 static void update_collision( float *ox, float *oy, float weight,
       float x, float y, float w, float h,
       float mx, float my, float mw, float mh );
+static void ovr_optimizeLayout( int items, const Vector2d** pos,
+      MapOverlayPos** mo, float res );
 static int ovr_refresh_compute_overlap( float *ox, float *oy,
-      float res, float x, float y, float w, float h,
-      int jpid, int pntid, int radius, double pixbuf );
+      float res, float x, float y, float w, float h, const Vector2d** pos,
+      MapOverlayPos** mo, int items, int self, int radius, double pixbuf );
 /* Markers. */
 static void ovr_mrkRenderAll( double res );
 static void ovr_mrkCleanup(  ovr_marker_t *mrk );
@@ -113,20 +115,13 @@ int ovr_input( SDL_Event *event )
 void ovr_refresh (void)
 {
    double max_x, max_y;
-   int i;
+   int i, items;
    Planet *pnt;
    JumpPoint *jp;
-   float cx,cy, ox,oy, r;
-   int iter, ires, changed;
+   const Vector2d **pos;
+   MapOverlayPos **mo;
+   int ires;
    float res;
-
-   /* Parameters for the map overlay optimization. */
-   const float update_rate = 0.5; /**< how big of an update to do each step. */
-   const int max_iters = 50; /**< Maximum amount of iterations to do. */
-   const float pixbuf = 3.; /**< Pixels to buffer around for text (not used for radius). */
-   const float epsilon = 1e-4; /**< Avoids divides by zero. */
-   const float radius_shrink_ratio = 0.99; /**< How fast to shrink the radius. */
-   const float radius_grow_ratio = 1.01; /**< How fast to grow the radius. */
 
    /* Must be open. */
    if (!ovr_isOpen())
@@ -135,80 +130,88 @@ void ovr_refresh (void)
    /* Calculate max size. */
    gui_radarGetRes( &ires );
    res = (float)ires;
+   items = 0;
+   pos = calloc(cur_system->njumps + cur_system->nplanets, sizeof(Vector2d*));
+   mo = calloc(cur_system->njumps + cur_system->nplanets, sizeof(MapOverlayPos*));
    max_x = 0.;
    max_y = 0.;
    for (i=0; i<cur_system->njumps; i++) {
       jp = &cur_system->jumps[i];
       max_x = MAX( max_x, ABS(jp->pos.x) );
       max_y = MAX( max_y, ABS(jp->pos.y) );
+      if (!jp_isUsable(jp) || !jp_isKnown(jp))
+         continue;
       /* Initialize the map overlay stuff. */
-      jp->mo_radius_base = MAX( jumppoint_gfx->sw / res, 10. );
-      jp->mo_radius = jp->mo_radius_base;
-      jp->mo_text_offx = jp->mo_radius / 2.+pixbuf*1.5;
-      jp->mo_text_offy = -gl_smallFont.h/2.;
-      jp->mo_text_width = gl_printWidthRaw( &gl_smallFont, _(jp->target->name) );
+      jp->mo.radius_base = MAX( jumppoint_gfx->sw / res, 10. );
+      jp->mo.text_width = gl_printWidthRaw( &gl_smallFont, _(jp->target->name) );
+      pos[items] = &jp->pos;
+      mo[items] = &jp->mo;
+      items++;
    }
    for (i=0; i<cur_system->nplanets; i++) {
       pnt = cur_system->planets[i];
       max_x = MAX( max_x, ABS(pnt->pos.x) );
       max_y = MAX( max_y, ABS(pnt->pos.y) );
+      if ((pnt->real != ASSET_REAL) || !planet_isKnown(pnt))
+         continue;
       /* Initialize the map overlay stuff. */
-      pnt->mo_radius_base = MAX( pnt->radius*2. / res, 15. );
-      pnt->mo_radius = pnt->mo_radius_base;
-      pnt->mo_text_offx = pnt->mo_radius / 2.+pixbuf*1.5;
-      pnt->mo_text_offy = -gl_smallFont.h/2.;
-      pnt->mo_text_width = gl_printWidthRaw( &gl_smallFont, _(pnt->name) );
+      pnt->mo.radius_base = MAX( pnt->radius*2. / res, 15. );
+      pnt->mo.text_width = gl_printWidthRaw( &gl_smallFont, _(pnt->name) );
+      pos[items] = &pnt->pos;
+      mo[items] = &pnt->mo;
+      items++;
    }
 
    /* We need to calculate the radius of the rendering from the maximum radius of the system. */
    ovr_res = 2. * 1.2 * MAX( max_x / map_overlay_width(), max_y / map_overlay_height() );
 
    /* Compute text overlap and try to minimize it. */
+   ovr_optimizeLayout( items, pos, mo, res );
+   free( mo );
+   free( pos );
+}
+
+
+/**
+ * @brief Makes a best effort to fit the given assets' overlay indicators and labels fit without collisions.
+ */
+void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos** mo, float res )
+{
+   int i, iter, changed;
+   float cx,cy, ox,oy, r;
+   /* Parameters for the map overlay optimization. */
+   const float update_rate = 0.5; /**< how big of an update to do each step. */
+   const int max_iters = 50; /**< Maximum amount of iterations to do. */
+   const float pixbuf = 3.; /**< Pixels to buffer around for text (not used for radius). */
+   const float epsilon = 1e-4; /**< Avoids divides by zero. */
+   const float radius_shrink_ratio = 0.99; /**< How fast to shrink the radius. */
+   const float radius_grow_ratio = 1.01; /**< How fast to grow the radius. */
+
+   for (i=0; i<items; i++) {
+      mo[i]->radius = mo[i]->radius_base;
+      mo[i]->text_offx = mo[i]->radius / 2.+pixbuf*1.5;
+      mo[i]->text_offy = -gl_smallFont.h/2.;
+   }
+
    for (iter=0; iter<max_iters; iter++) {
       changed = 0;
-      for (i=0; i<cur_system->njumps; i++) {
-         jp = &cur_system->jumps[i];
-         if (!jp_isUsable(jp) || !jp_isKnown(jp))
-            continue;
-         cx = jp->pos.x / res;
-         cy = jp->pos.y / res;
-         r  = jp->mo_radius;
+      for (i=0; i<items; i++) {
+         cx = pos[i]->x / res;
+         cy = pos[i]->y / res;
+         r  = mo[i]->radius;
          /* Modify radius if overlap. */
-         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx-r/2., cy-r/2., r, r, i, -1, 1, 0. )) {
-            jp->mo_radius *= radius_shrink_ratio;
+         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx-r/2., cy-r/2., r, r, pos, mo, items, i, 1, 0. )) {
+            mo[i]->radius *= radius_shrink_ratio;
             changed = 1;
          }
-         else if (jp->mo_radius < jp->mo_radius_base) {
-            jp->mo_radius *= radius_grow_ratio;
+         else if (mo[i]->radius < mo[i]->radius_base) {
+            mo[i]->radius *= radius_grow_ratio;
             changed = 1;
          }
          /* Move text if overlap. */
-         if (ovr_refresh_compute_overlap( &ox, &oy, res ,cx+jp->mo_text_offx, cy+jp->mo_text_offy, jp->mo_text_width, gl_smallFont.h, i, -1, 0, pixbuf )) {
-            jp->mo_text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
-            jp->mo_text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
-            changed = 1;
-         }
-      }
-      for (i=0; i<cur_system->nplanets; i++) {
-         pnt = cur_system->planets[i];
-         if ((pnt->real != ASSET_REAL) || !planet_isKnown(pnt))
-            continue;
-         cx = pnt->pos.x / res;
-         cy = pnt->pos.y / res;
-         r  = pnt->mo_radius;
-         /* Modify radius if overlap. */
-         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx-r/2., cy-r/2., r, r, -1, i, 1, 0. )) {
-            pnt->mo_radius *= radius_shrink_ratio;
-            changed = 1;
-         }
-         else if (pnt->mo_radius < pnt->mo_radius_base) {
-            pnt->mo_radius *= radius_grow_ratio;
-            changed = 1;
-         }
-         /* Move text if overlap. */
-         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx+pnt->mo_text_offx, cy+pnt->mo_text_offy, pnt->mo_text_width, gl_smallFont.h, -1, i, 0, pixbuf )) {
-            pnt->mo_text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
-            pnt->mo_text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
+         if (ovr_refresh_compute_overlap( &ox, &oy, res ,cx+mo[i]->text_offx, cy+mo[i]->text_offy, mo[i]->text_width, gl_smallFont.h, pos, mo, items, i, 0, pixbuf )) {
+            mo[i]->text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
+            mo[i]->text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
             changed = 1;
          }
       }
@@ -252,51 +255,27 @@ static void update_collision( float *ox, float *oy, float weight,
  * @brief Compute how an element overlaps with text and direction to move away.
  */
 static int ovr_refresh_compute_overlap( float *ox, float *oy,
-      float res, float x, float y, float w, float h,
-      int jpid, int pntid, int radius, double pixbuf )
+      float res, float x, float y, float w, float h, const Vector2d** pos,
+      MapOverlayPos** mo, int items, int self, int radius, double pixbuf )
 {
    int i;
-   Planet *pnt;
-   JumpPoint *jp;
    float mx, my, mw, mh;
 
    *ox = *oy = 0.;
 
-   for (i=0; i<cur_system->njumps; i++) {
-      jp = &cur_system->jumps[i];
-      if (!jp_isUsable(jp) || !jp_isKnown(jp))
-         continue;
-      if ((jpid != i) || !radius) { 
-         mw = jp->mo_radius+2.*pixbuf;
+   for (i=0; i<items; i++) {
+      if (i != self || !radius) { 
+         mw = mo[i]->radius+2.*pixbuf;
          mh = mw;
-         mx = jp->pos.x/res - mw/2.;
-         my = jp->pos.y/res - mh/2.;
+         mx = pos[i]->x/res - mw/2.;
+         my = pos[i]->y/res - mh/2.;
          update_collision( ox, oy, 2., x, y, w, h, mx, my, mw, mh );
       }
-      if ((jpid != i) || radius) {
-         mw = jp->mo_text_width+2.*pixbuf;
+      if (i != self || radius) {
+         mw = mo[i]->text_width+2.*pixbuf;
          mh = gl_smallFont.h+2.*pixbuf;
-         mx = jp->pos.x/res + jp->mo_text_offx-pixbuf;
-         my = jp->pos.x/res + jp->mo_text_offy-pixbuf;
-         update_collision( ox, oy, 1., x, y, w, h, mx, my, mw, mh );
-      }
-   }
-   for (i=0; i<cur_system->nplanets; i++) {
-      pnt = cur_system->planets[i];
-      if ((pnt->real != ASSET_REAL) || !planet_isKnown(pnt))
-         continue;
-      if ((pntid != i) || !radius) {
-         mw = pnt->mo_radius+2.*pixbuf;
-         mh = mw;
-         mx = pnt->pos.x/res - mw/2.;
-         my = pnt->pos.y/res - mh/2.;
-         update_collision( ox, oy, 2., x, y, w, h, mx, my, mw, mh );
-      }
-      if ((pntid != i) || radius) {
-         mw = pnt->mo_text_width+2.*pixbuf;
-         mh = gl_smallFont.h+2.*pixbuf;
-         mx = pnt->pos.x/res + pnt->mo_text_offx-pixbuf;
-         my = pnt->pos.y/res + pnt->mo_text_offy-pixbuf;
+         mx = pos[i]->x/res + mo[i]->text_offx-pixbuf;
+         my = pos[i]->x/res + mo[i]->text_offy-pixbuf;
          update_collision( ox, oy, 1., x, y, w, h, mx, my, mw, mh );
       }
    }

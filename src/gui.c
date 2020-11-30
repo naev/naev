@@ -1607,7 +1607,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    /* Default values. */
    planet = cur_system->planets[ind];
    r     = planet->radius*2. / res;
-   vr    = overlay ? planet->mo_radius : MAX( r, 15.);
+   vr    = overlay ? planet->mo.radius : MAX( r, 15.);
 
    if (overlay) {
       cx    = planet->pos.x / res;
@@ -1687,7 +1687,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
     * as a font change, but using this fix for now. */
    // col.a = MIN( col.a, 0.99 );
    if (overlay)
-      gl_printMarkerRaw( &gl_smallFont, cx+planet->mo_text_offx, cy+planet->mo_text_offy, &col, _(planet->name) );
+      gl_printMarkerRaw( &gl_smallFont, cx+planet->mo.text_offx, cy+planet->mo.text_offy, &col, _(planet->name) );
 }
 
 
@@ -1712,7 +1712,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    /* Default values. */
    jp    = &cur_system->jumps[ind];
    r     = jumppoint_gfx->sw / res;
-   vr    = overlay ? jp->mo_radius : MAX( r, 10. );
+   vr    = overlay ? jp->mo.radius : MAX( r, 10. );
    if (overlay) {
       cx    = jp->pos.x / res;
       cy    = jp->pos.y / res;
@@ -1786,7 +1786,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
     * as a font change, but using this fix for now. */
    // col.a = MIN( col.a, 0.99 );
    if (overlay)
-      gl_printMarkerRaw( &gl_smallFont, cx+vr+jp->mo_text_offx, cy+jp->mo_text_offy, &col, sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
+      gl_printMarkerRaw( &gl_smallFont, cx+vr+jp->mo.text_offx, cy+jp->mo.text_offy, &col, sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
 }
 
 
