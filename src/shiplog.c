@@ -678,7 +678,7 @@ void shiplog_listLog( int logid, const char *type,int *nentries, char ***logentr
       /*empty list, so add "Empty" */
       n = 1;
       entries = realloc(entries,sizeof(char*));
-      entries[0] = strdup("Empty");
+      entries[0] = strdup(_("Empty"));
    }
    *logentries = entries;
    *nentries = n;
