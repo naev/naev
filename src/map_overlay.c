@@ -202,8 +202,8 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    float left, right;
 
    /* Parameters for the map overlay optimization. */
-   const float update_rate = 0.5; /**< how big of an update to do each step. */
-   const int max_iters = 1000; /**< Maximum amount of iterations to do. */
+   const float update_rate = 0.01; /**< how big of an update to do each step. */
+   const int max_iters = 100; /**< Maximum amount of iterations to do. */
    const float pixbuf = 5.; /**< Pixels to buffer around for text (not used for optimizing radius). */
    const float pixbuf_initial = 20; /**< Initial pixel buffer to consider. */
    const float epsilon = 1e-3; /**< Avoids divides by zero. */
@@ -211,9 +211,9 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    const float radius_grow_ratio = 1.05; /**< How fast to grow the radius. */
    const float position_threshold_x = 20.; /**< How far to start penalizing x position. */
    const float position_threshold_y = 10.; /**< How far to start penalizing y position. */
-   const float position_weight = 0.5; /**< How much to penalize the position. */
-   const float object_weight = 2.; /**< Weight for overlapping with objects. */
-   const float text_weight = 1.; /**< Weight for overlapping with text. */
+   const float position_weight = 10.; /**< How much to penalize the position. */
+   const float object_weight = 1.; /**< Weight for overlapping with objects. */
+   const float text_weight = 2.; /**< Weight for overlapping with text. */
 
    /* Initialize all items. */
    for (i=0; i<items; i++) {
@@ -259,20 +259,22 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
          }
          /* Move text if overlap. */
          if (ovr_refresh_compute_overlap( &ox, &oy, res ,cx+mo[i]->text_offx, cy+mo[i]->text_offy, moo[i].text_width, gl_smallFont.h, pos, mo, moo, items, i, 0, pixbuf, object_weight, text_weight )) {
-            moo[i].text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
-            moo[i].text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
+            //moo[i].text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
+            //moo[i].text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
+            moo[i].text_offx += ox * update_rate;
+            moo[i].text_offy += oy * update_rate;
             changed = 1;
          }
          off = moo[i].text_offx_base - mo[i]->text_offx;
          if (fabs(off) > position_threshold_x) {
             off = FSIGN(off) * pow2(fabs(off)-position_threshold_x);
-            moo[i].text_offx += position_weight*update_rate*off;
+            moo[i].text_offx += position_weight*off;
             changed = 1;
          }
          off = moo[i].text_offy_base - mo[i]->text_offy;
          if (fabs(off) > position_threshold_y) {
             off = FSIGN(off) * pow2(fabs(off)-position_threshold_y);
-            moo[i].text_offy += position_weight*update_rate*off;
+            moo[i].text_offy += position_weight*off;
             changed = 1;
          }
       }
