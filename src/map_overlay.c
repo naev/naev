@@ -209,7 +209,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    const float update_rate = 0.01; /**< how big of an update to do each step. */
    const int max_iters = 100; /**< Maximum amount of iterations to do. */
    const float pixbuf = 5.; /**< Pixels to buffer around for text (not used for optimizing radius). */
-   const float pixbuf_initial = 20; /**< Initial pixel buffer to consider. */
+   const float pixbuf_initial = 50; /**< Initial pixel buffer to consider. */
    const float radius_shrink_ratio = 0.95; /**< How fast to shrink the radius. */
    const float radius_grow_ratio = 1.05; /**< How fast to grow the radius. */
    const float position_threshold_x = 20.; /**< How far to start penalizing x position. */
@@ -296,6 +296,9 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
 }
 
 
+/**
+ * @brief Initializes the position of a map overlay object by checking a number of fixed positions.
+ */
 static void ovr_init_position( float *px, float *py, float res, float x, float y, float w, float h,
       float margin, const Vector2d** pos, MapOverlayPos** mo, MapOverlayPosOpt* moo, int items, int self,
       float pixbuf, float object_weight, float text_weight )
