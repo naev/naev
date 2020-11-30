@@ -372,12 +372,13 @@ static int ovr_refresh_compute_overlap( float *ox, float *oy,
 {
    int i;
    float mx, my, mw, mh;
-   float pb2 = pixbuf*2.;
+   const float pb2 = pixbuf*2.;
 
    *ox = *oy = 0.;
 
    for (i=0; i<items; i++) {
       if (i != self || !radius) { 
+         /* convert center coordinates to bottom left*/
          mw = mo[i]->radius + pb2;
          mh = mw;
          mx = pos[i]->x/res - mw/2.;
@@ -385,6 +386,7 @@ static int ovr_refresh_compute_overlap( float *ox, float *oy,
          update_collision( ox, oy, object_weight, x, y, w, h, mx, my, mw, mh );
       }
       if (i != self || radius) {
+         /* no need to convert coordinates, just add pixbuf */
          mw = moo[i].text_width + pb2;
          mh = gl_smallFont.h + pb2;
          mx = pos[i]->x/res + mo[i]->text_offx-pixbuf;
