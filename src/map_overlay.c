@@ -70,7 +70,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos,
       MapOverlayPos** mo, MapOverlayPosOpt* moo, float res );
 static int ovr_refresh_compute_overlap( float *ox, float *oy,
       float res, float x, float y, float w, float h, const Vector2d** pos,
-      MapOverlayPos** mo, MapOverlayPosOpt* moo, int items, int self, int radius, double pixbuf,
+      MapOverlayPos** mo, MapOverlayPosOpt* moo, int items, int self, int radius, float pixbuf,
       float object_weight, float text_weight );
 /* Markers. */
 static void ovr_mrkRenderAll( double res );
@@ -321,7 +321,7 @@ static void update_collision( float *ox, float *oy, float weight,
  */
 static int ovr_refresh_compute_overlap( float *ox, float *oy,
       float res, float x, float y, float w, float h, const Vector2d** pos,
-      MapOverlayPos** mo, MapOverlayPosOpt* moo, int items, int self, int radius, double pixbuf,
+      MapOverlayPos** mo, MapOverlayPosOpt* moo, int items, int self, int radius, float pixbuf,
       float object_weight, float text_weight )
 {
    int i;
