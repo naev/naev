@@ -97,8 +97,6 @@ static int systems_mstack = 0; /**< Number of memory allocated for star system s
  * TODO should be removed in favour of our array framework (array.h)
  */
 static Planet *planet_stack = NULL; /**< Planet stack. */
-static int planet_nstack = 0; /**< Planet stack size. */
-static int planet_mstack = 0; /**< Memory size of planet stack. */
 
 /*
  * Asteroid types stack.
@@ -936,7 +934,7 @@ Planet* planet_get( const char* planetname )
       return NULL;
    }
 
-   for (i=0; i<planet_nstack; i++)
+   for (i=0; i<array_size(planet_stack); i++)
       if (strcmp(planet_stack[i].name,planetname)==0)
          return &planet_stack[i];
 
@@ -954,8 +952,8 @@ Planet* planet_get( const char* planetname )
 Planet* planet_getIndex( int ind )
 {
    /* Validity check. */
-   if ((ind < 0) || (ind >= planet_nstack)) {
-      WARN(_("Planet index '%d' out of range (max %d)"), ind, planet_nstack);
+   if ((ind < 0) || (ind >= array_size(planet_stack))) {
+      WARN(_("Planet index '%d' out of range (max %d)"), ind, array_size(planet_stack));
       return NULL;
    }
 
@@ -983,7 +981,7 @@ int planet_index( const Planet *p )
  */
 Planet* planet_getAll( int *n )
 {
-   *n = planet_nstack;
+   *n = array_size(planet_stack);
    return planet_stack;
 }
 
@@ -1007,7 +1005,7 @@ void planet_setKnown( Planet *p )
 int planet_exists( const char* planetname )
 {
    int i;
-   for (i=0; i<planet_nstack; i++)
+   for (i=0; i<array_size(planet_stack); i++)
       if (strcmp(planet_stack[i].name,planetname)==0)
          return 1;
    return 0;
@@ -1023,7 +1021,7 @@ int planet_exists( const char* planetname )
 const char* planet_existsCase( const char* planetname )
 {
    int i;
-   for (i=0; i<planet_nstack; i++)
+   for (i=0; i<array_size(planet_stack); i++)
       if (strcasecmp(planet_stack[i].name,planetname)==0)
          return planet_stack[i].name;
    return NULL;
@@ -1039,11 +1037,11 @@ char **planet_searchFuzzyCase( const char* planetname, int *n )
    char **names;
 
    /* Overallocate to maximum. */
-   names = malloc( sizeof(char*) * planet_nstack );
+   names = malloc( sizeof(char*) * array_size(planet_stack) );
 
    /* Do fuzzy search. */
    len = 0;
-   for (i=0; i<planet_nstack; i++) {
+   for (i=0; i<array_size(planet_stack); i++) {
       if (nstrcasestr( _(planet_stack[i].name), planetname ) != NULL) {
          names[len] = planet_stack[i].name;
          len++;
@@ -1682,22 +1680,15 @@ void debris_init( Debris *deb )
  */
 Planet *planet_new (void)
 {
-   Planet *p;
+   Planet *p, *old_stack;
    int realloced;
 
-   /* See if stack must grow. */
-   planet_nstack++;
-   realloced = 0;
-   if (planet_nstack > planet_mstack) {
-      planet_mstack *= 2;
-      planet_stack   = realloc( planet_stack, sizeof(Planet) * planet_mstack );
-      realloced      = 1;
-   }
-
-   /* Clean up memory. */
-   p           = &planet_stack[ planet_nstack-1 ];
+   /* Grow and initialize memory. */
+   old_stack   = planet_stack;
+   p           = &array_grow( &planet_stack );
+   realloced   = (old_stack!=planet_stack);
    memset( p, 0, sizeof(Planet) );
-   p->id       = planet_nstack-1;
+   p->id       = array_size(planet_stack)-1;
    p->faction  = -1;
 
    /* Reconstruct the jumps. */
@@ -1738,11 +1729,8 @@ static int planets_load ( void )
    free(buf);
 
    /* Initialize stack if needed. */
-   if (planet_stack == NULL) {
-      planet_mstack = CHUNK_SIZE;
-      planet_stack = malloc( sizeof(Planet) * planet_mstack );
-      planet_nstack = 0;
-   }
+   if (planet_stack == NULL)
+      planet_stack = array_create_size(Planet, 256);
 
    /* Extract the list of standard commodities. */
    stdList = standard_commodities( &stdNb );
@@ -3268,7 +3256,8 @@ static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys )
  */
 int space_load (void)
 {
-   int i, j, len;
+   size_t i;
+   int j, len;
    int ret;
    StarSystem *sys;
    char **asteroid_files, file[PATH_MAX];
@@ -3302,7 +3291,7 @@ int space_load (void)
    asteroid_files = ndata_list( PLANET_GFX_SPACE_PATH"asteroid/", &nasterogfx );
    asteroid_gfx = malloc( sizeof(glTexture*) * systems_mstack );
 
-   for (i=0; i<(int)nasterogfx; i++) {
+   for (i=0; i<nasterogfx; i++) {
       len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(asteroid_files[i])+11);
       nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",asteroid_files[i] );
       asteroid_gfx[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
@@ -3312,11 +3301,11 @@ int space_load (void)
    systems_loading = 0;
 
    /* Apply all the presences. */
-   for (i=0; i<systems_nstack; i++)
+   for (i=0; (int)i<systems_nstack; i++)
       system_addAllPlanetsPresence(&systems_stack[i]);
 
    /* Determine dominant faction. */
-   for (i=0; i<systems_nstack; i++)
+   for (i=0; (int)i<systems_nstack; i++)
       system_setFaction( &systems_stack[i] );
 
    /* Reconstruction. */
@@ -3324,7 +3313,7 @@ int space_load (void)
    systems_reconstructPlanets();
 
    /* Fine tuning. */
-   for (i=0; i<systems_nstack; i++) {
+   for (i=0; (int)i<systems_nstack; i++) {
       sys = &systems_stack[i];
 
       /* Save jump indexes. */
@@ -3336,7 +3325,7 @@ int space_load (void)
    /* Calculate commodity prices (sinusoidal model). */
    economy_initialiseCommodityPrices();
 
-   for (i=0; i<(int)nasterogfx; i++)
+   for (i=0; i<nasterogfx; i++)
       free(asteroid_files[i]);
    free(asteroid_files);
 
@@ -3576,7 +3565,7 @@ static int systems_load (void)
    }
 
    DEBUG( ngettext( "Loaded %d Star System", "Loaded %d Star Systems", systems_nstack ), systems_nstack );
-   DEBUG( ngettext( "       with %d Planet", "       with %d Planets", planet_nstack ), planet_nstack );
+   DEBUG( ngettext( "       with %d Planet", "       with %d Planets", array_size(planet_stack) ), array_size(planet_stack) );
 
    /* Clean up. */
    for (i=0; i<nfiles; i++)
@@ -3822,7 +3811,7 @@ void space_exit (void)
    spacename_nstack = 0;
 
    /* Free the planets. */
-   for (i=0; i < planet_nstack; i++) {
+   for (i=0; i < array_size(planet_stack); i++) {
       pnt = &planet_stack[i];
 
       free(pnt->name);
@@ -3856,10 +3845,7 @@ void space_exit (void)
       free(pnt->commodities);
       free(pnt->commodityPrice);
    }
-   free(planet_stack);
-   planet_stack = NULL;
-   planet_nstack = 0;
-   planet_mstack = 0;
+   array_free(planet_stack);
 
    /* Free the systems. */
    for (i=0; i < systems_nstack; i++) {
@@ -3935,7 +3921,7 @@ void space_clearKnown (void)
       for (j=0; j<sys->njumps; j++)
          jp_rmFlag(&sys->jumps[j],JP_KNOWN);
    }
-   for (j=0; j<planet_nstack; j++)
+   for (j=0; j<array_size(planet_stack); j++)
       planet_rmFlag(&planet_stack[j],PLANET_KNOWN);
 }
 
