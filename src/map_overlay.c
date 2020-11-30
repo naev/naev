@@ -185,7 +185,8 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    /* Parameters for the map overlay optimization. */
    const float update_rate = 0.8; /**< how big of an update to do each step. */
    const int max_iters = 20; /**< Maximum amount of iterations to do. */
-   const float pixbuf = 3.; /**< Pixels to buffer around for text (not used for radius). */
+   const float pixbuf = 3.; /**< Pixels to buffer around for text (not used for optimizing radius). */
+   const float pixbuf_initial = 10; /**< Initial pixel buffer to consider. */
    const float epsilon = 1e-4; /**< Avoids divides by zero. */
    const float radius_shrink_ratio = 0.95; /**< How fast to shrink the radius. */
    const float radius_grow_ratio = 1.05; /**< How fast to grow the radius. */
@@ -204,9 +205,9 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
       cx = pos[i]->x / res;
       cy = pos[i]->y / res;
       off = mo[i]->radius / 2.+pixbuf*1.5;
-      ovr_refresh_compute_overlap( &ox, &oy, res, cx-off-mo[i]->text_width, cy+mo[i]->text_offy, mo[i]->text_width, gl_smallFont.h, pos, mo, items, i, 1, pixbuf, 1., 0. );
+      ovr_refresh_compute_overlap( &ox, &oy, res, cx-off-mo[i]->text_width, cy+mo[i]->text_offy, mo[i]->text_width, gl_smallFont.h, pos, mo, items, i, 1, pixbuf_initial, 1., 0. );
       left = pow2(ox)+pow2(oy);
-      ovr_refresh_compute_overlap( &ox, &oy, res, cx+off, cy+mo[i]->text_offy, mo[i]->text_width, gl_smallFont.h, pos, mo, items, i, 1, pixbuf, 1., 0. );
+      ovr_refresh_compute_overlap( &ox, &oy, res, cx+off, cy+mo[i]->text_offy, mo[i]->text_width, gl_smallFont.h, pos, mo, items, i, 1, pixbuf_initial, 1., 0. );
       right = pow2(ox)+pow2(oy);
       if (left < right)
          mo[i]->text_offx_base = -off-mo[i]->text_width;
