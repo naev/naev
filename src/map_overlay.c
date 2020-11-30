@@ -202,8 +202,8 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    float left, right;
 
    /* Parameters for the map overlay optimization. */
-   const float update_rate = 0.8; /**< how big of an update to do each step. */
-   const int max_iters = 100; /**< Maximum amount of iterations to do. */
+   const float update_rate = 0.5; /**< how big of an update to do each step. */
+   const int max_iters = 1000; /**< Maximum amount of iterations to do. */
    const float pixbuf = 5.; /**< Pixels to buffer around for text (not used for optimizing radius). */
    const float pixbuf_initial = 20; /**< Initial pixel buffer to consider. */
    const float epsilon = 1e-3; /**< Avoids divides by zero. */
@@ -211,7 +211,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    const float radius_grow_ratio = 1.05; /**< How fast to grow the radius. */
    const float position_threshold_x = 20.; /**< How far to start penalizing x position. */
    const float position_threshold_y = 10.; /**< How far to start penalizing y position. */
-   const float position_weight = 1.0; /**< How much to penalize the position. */
+   const float position_weight = 0.5; /**< How much to penalize the position. */
    const float object_weight = 2.; /**< Weight for overlapping with objects. */
    const float text_weight = 1.; /**< Weight for overlapping with text. */
 
@@ -246,8 +246,10 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
          cx = pos[i]->x / res;
          cy = pos[i]->y / res;
          r  = mo[i]->radius;
-         /* Modify radius if overlap. */
-         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx-r/2., cy-r/2., r, r, pos, mo, moo, items, i, 1, 0., object_weight, text_weight )) {
+         /* Modify radius if overlap.
+          * We ignore the text here, as the text should move away on it's own.
+          * Furthermore, no pixel buffer so that everything is tighter. */
+         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx-r/2., cy-r/2., r, r, pos, mo, moo, items, i, 1, 0., object_weight, 0. )) {
             moo[i].radius *= radius_shrink_ratio;
             changed = 1;
          }
