@@ -606,7 +606,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
    Outfit *outfit;
    Ship *ship;
    double mass;
-   char buf2[ECON_CRED_STRLEN], buf4[PATH_MAX];
+   char buf_price[ECON_CRED_STRLEN], buf_license[PATH_MAX];
 
    i = toolkit_getImageArrayPos( wid, str );
    if ( i < 0 ) {
@@ -617,14 +617,14 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       outfit = cur_planet_sel_outfits[i];
 
       /* new text */
-      price2str( buf2, outfit->price, player.p->credits, 2 );
+      price2str( buf_price, outfit->price, player.p->credits, 2 );
       if (outfit->license == NULL)
-         strncpy( buf4, _("None"), sizeof(buf4) );
+         strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
       else if (player_hasLicense( outfit->license ))
-         strncpy( buf4, _(outfit->license), sizeof(buf4) );
+         strncpy( buf_license, _(outfit->license), sizeof(buf_license)-1 );
       else
-         nsnprintf( buf4, sizeof( buf4 ), "\ar%s\a0", _(outfit->license) );
-      buf4[ sizeof( buf4 )-1 ] = '\0';
+         nsnprintf( buf_license, sizeof( buf_license ), "\ar%s\a0", _(outfit->license) );
+      buf_license[ sizeof( buf_license )-1 ] = '\0';
 
       mass = outfit->mass;
       if ( (outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
@@ -643,14 +643,14 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                  _(outfit_slotName( outfit )),
                  _(outfit_slotSize( outfit )),
                  mass,
-                 buf2,
-                 buf4 );
+                 buf_price,
+                 buf_license );
 
    } else if ( ( strcmp( str, MAPSYS_SHIPS ) == 0 ) ) {
       ship = cur_planet_sel_ships[i];
 
    /* update text */
-      price2str( buf2, ship_buyPrice( ship ), player.p->credits, 2 );
+      price2str( buf_price, ship_buyPrice( ship ), player.p->credits, 2 );
 
       nsnprintf( infobuf, PATH_MAX,
                  _("\anModel:\a0 %s    "
@@ -694,7 +694,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                  ship->cap_cargo,
                  ship->fuel,
                  ship->fuel_consumption,
-                 buf2,
+                 buf_price,
                  (ship->license != NULL) ? _(ship->license) : _("None"),
                  ship->desc_stats
                  );

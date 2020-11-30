@@ -466,7 +466,7 @@ void osd_render (void)
       if (duplicates > 0)
          nsnprintf( title, sizeof(title), "%s (%d)", ll->title, duplicates + 1 );
       else
-         strncpy( title, ll->title, sizeof(title) );
+         strncpy( title, ll->title, sizeof(title)-1 );
       title[sizeof(title)-1] = '\0';
       gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, -1., title);
       p -= gl_smallFont.h + 5.;

@@ -361,7 +361,7 @@ void outfits_update( unsigned int wid, char* str )
    (void)str;
    int i, active;
    Outfit* outfit;
-   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN], buf4[PATH_MAX];
+   char buf[PATH_MAX], buf_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN], buf_license[PATH_MAX];
    double th;
    int iw, ih;
    int w, h;
@@ -417,16 +417,16 @@ void outfits_update( unsigned int wid, char* str )
 
    /* new text */
    window_modifyText( wid, "txtDescription", _(outfit->description) );
-   price2str( buf2, outfit_getPrice(outfit), player.p->credits, 2 );
-   credits2str( buf3, player.p->credits, 2 );
+   price2str( buf_price, outfit_getPrice(outfit), player.p->credits, 2 );
+   credits2str( buf_credits, player.p->credits, 2 );
 
    if (outfit->license == NULL)
-      strncpy( buf4, _("None"), sizeof(buf4) );
+      strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
    else if (player_hasLicense( outfit->license ))
-      strncpy( buf4, _(outfit->license), sizeof(buf4) );
+      strncpy( buf_license, _(outfit->license), sizeof(buf_license)-1 );
    else
-      nsnprintf( buf4, sizeof(buf4), "\ar%s\a0", _(outfit->license) );
-   buf4[ sizeof(buf4)-1 ] = '\0';
+      nsnprintf( buf_license, sizeof(buf_license), "\ar%s\a0", _(outfit->license) );
+   buf_license[ sizeof(buf_license)-1 ] = '\0';
 
    mass = outfit->mass;
    if ((outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
@@ -448,9 +448,9 @@ void outfits_update( unsigned int wid, char* str )
          _(outfit_slotName(outfit)),
          _(outfit_slotSize(outfit)),
          mass,
-         buf2,
-         buf3,
-         buf4 );
+         buf_price,
+         buf_credits,
+         buf_license );
    window_modifyText( wid, "txtDDesc", buf );
    window_modifyText( wid, "txtOutfitName", _(outfit->name) );
    window_modifyText( wid, "txtDescShort", _(outfit->desc_short) );
