@@ -142,22 +142,22 @@ void ovr_refresh (void)
       max_x = MAX( max_x, ABS(jp->pos.x) );
       max_y = MAX( max_y, ABS(jp->pos.y) );
       /* Initialize the map overlay stuff. */
-      jp->mo_radius_base = MAX( jumppoint_gfx->sw / res, 10. );
-      jp->mo_radius = jp->mo_radius_base;
-      jp->mo_text_offx = jp->mo_radius / 2.+pixbuf*1.5;
-      jp->mo_text_offy = -gl_smallFont.h/2.;
-      jp->mo_text_width = gl_printWidthRaw( &gl_smallFont, _(jp->target->name) );
+      jp->mo.radius_base = MAX( jumppoint_gfx->sw / res, 10. );
+      jp->mo.radius = jp->mo.radius_base;
+      jp->mo.text_offx = jp->mo.radius / 2.+pixbuf*1.5;
+      jp->mo.text_offy = -gl_smallFont.h/2.;
+      jp->mo.text_width = gl_printWidthRaw( &gl_smallFont, _(jp->target->name) );
    }
    for (i=0; i<cur_system->nplanets; i++) {
       pnt = cur_system->planets[i];
       max_x = MAX( max_x, ABS(pnt->pos.x) );
       max_y = MAX( max_y, ABS(pnt->pos.y) );
       /* Initialize the map overlay stuff. */
-      pnt->mo_radius_base = MAX( pnt->radius*2. / res, 15. );
-      pnt->mo_radius = pnt->mo_radius_base;
-      pnt->mo_text_offx = pnt->mo_radius / 2.+pixbuf*1.5;
-      pnt->mo_text_offy = -gl_smallFont.h/2.;
-      pnt->mo_text_width = gl_printWidthRaw( &gl_smallFont, _(pnt->name) );
+      pnt->mo.radius_base = MAX( pnt->radius*2. / res, 15. );
+      pnt->mo.radius = pnt->mo.radius_base;
+      pnt->mo.text_offx = pnt->mo.radius / 2.+pixbuf*1.5;
+      pnt->mo.text_offy = -gl_smallFont.h/2.;
+      pnt->mo.text_width = gl_printWidthRaw( &gl_smallFont, _(pnt->name) );
    }
 
    /* We need to calculate the radius of the rendering from the maximum radius of the system. */
@@ -172,20 +172,20 @@ void ovr_refresh (void)
             continue;
          cx = jp->pos.x / res;
          cy = jp->pos.y / res;
-         r  = jp->mo_radius;
+         r  = jp->mo.radius;
          /* Modify radius if overlap. */
          if (ovr_refresh_compute_overlap( &ox, &oy, res, cx-r/2., cy-r/2., r, r, i, -1, 1, 0. )) {
-            jp->mo_radius *= radius_shrink_ratio;
+            jp->mo.radius *= radius_shrink_ratio;
             changed = 1;
          }
-         else if (jp->mo_radius < jp->mo_radius_base) {
-            jp->mo_radius *= radius_grow_ratio;
+         else if (jp->mo.radius < jp->mo.radius_base) {
+            jp->mo.radius *= radius_grow_ratio;
             changed = 1;
          }
          /* Move text if overlap. */
-         if (ovr_refresh_compute_overlap( &ox, &oy, res ,cx+jp->mo_text_offx, cy+jp->mo_text_offy, jp->mo_text_width, gl_smallFont.h, i, -1, 0, pixbuf )) {
-            jp->mo_text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
-            jp->mo_text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
+         if (ovr_refresh_compute_overlap( &ox, &oy, res ,cx+jp->mo.text_offx, cy+jp->mo.text_offy, jp->mo.text_width, gl_smallFont.h, i, -1, 0, pixbuf )) {
+            jp->mo.text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
+            jp->mo.text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
             changed = 1;
          }
       }
@@ -195,20 +195,20 @@ void ovr_refresh (void)
             continue;
          cx = pnt->pos.x / res;
          cy = pnt->pos.y / res;
-         r  = pnt->mo_radius;
+         r  = pnt->mo.radius;
          /* Modify radius if overlap. */
          if (ovr_refresh_compute_overlap( &ox, &oy, res, cx-r/2., cy-r/2., r, r, -1, i, 1, 0. )) {
-            pnt->mo_radius *= radius_shrink_ratio;
+            pnt->mo.radius *= radius_shrink_ratio;
             changed = 1;
          }
-         else if (pnt->mo_radius < pnt->mo_radius_base) {
-            pnt->mo_radius *= radius_grow_ratio;
+         else if (pnt->mo.radius < pnt->mo.radius_base) {
+            pnt->mo.radius *= radius_grow_ratio;
             changed = 1;
          }
          /* Move text if overlap. */
-         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx+pnt->mo_text_offx, cy+pnt->mo_text_offy, pnt->mo_text_width, gl_smallFont.h, -1, i, 0, pixbuf )) {
-            pnt->mo_text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
-            pnt->mo_text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
+         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx+pnt->mo.text_offx, cy+pnt->mo.text_offy, pnt->mo.text_width, gl_smallFont.h, -1, i, 0, pixbuf )) {
+            pnt->mo.text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
+            pnt->mo.text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
             changed = 1;
          }
       }
@@ -267,17 +267,17 @@ static int ovr_refresh_compute_overlap( float *ox, float *oy,
       if (!jp_isUsable(jp) || !jp_isKnown(jp))
          continue;
       if ((jpid != i) || !radius) { 
-         mw = jp->mo_radius+2.*pixbuf;
+         mw = jp->mo.radius+2.*pixbuf;
          mh = mw;
          mx = jp->pos.x/res - mw/2.;
          my = jp->pos.y/res - mh/2.;
          update_collision( ox, oy, 2., x, y, w, h, mx, my, mw, mh );
       }
       if ((jpid != i) || radius) {
-         mw = jp->mo_text_width+2.*pixbuf;
+         mw = jp->mo.text_width+2.*pixbuf;
          mh = gl_smallFont.h+2.*pixbuf;
-         mx = jp->pos.x/res + jp->mo_text_offx-pixbuf;
-         my = jp->pos.x/res + jp->mo_text_offy-pixbuf;
+         mx = jp->pos.x/res + jp->mo.text_offx-pixbuf;
+         my = jp->pos.x/res + jp->mo.text_offy-pixbuf;
          update_collision( ox, oy, 1., x, y, w, h, mx, my, mw, mh );
       }
    }
@@ -286,17 +286,17 @@ static int ovr_refresh_compute_overlap( float *ox, float *oy,
       if ((pnt->real != ASSET_REAL) || !planet_isKnown(pnt))
          continue;
       if ((pntid != i) || !radius) {
-         mw = pnt->mo_radius+2.*pixbuf;
+         mw = pnt->mo.radius+2.*pixbuf;
          mh = mw;
          mx = pnt->pos.x/res - mw/2.;
          my = pnt->pos.y/res - mh/2.;
          update_collision( ox, oy, 2., x, y, w, h, mx, my, mw, mh );
       }
       if ((pntid != i) || radius) {
-         mw = pnt->mo_text_width+2.*pixbuf;
+         mw = pnt->mo.text_width+2.*pixbuf;
          mh = gl_smallFont.h+2.*pixbuf;
-         mx = pnt->pos.x/res + pnt->mo_text_offx-pixbuf;
-         my = pnt->pos.y/res + pnt->mo_text_offy-pixbuf;
+         mx = pnt->pos.x/res + pnt->mo.text_offx-pixbuf;
+         my = pnt->pos.y/res + pnt->mo.text_offy-pixbuf;
          update_collision( ox, oy, 1., x, y, w, h, mx, my, mw, mh );
       }
    }
