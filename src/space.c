@@ -1246,6 +1246,7 @@ void space_update( const double dt )
    Debris *d;
    Pilot *pplayer;
    Solid *psolid;
+   int found_something;
 
    /* Needs a current system. */
    if (cur_system == NULL)
@@ -1328,8 +1329,9 @@ void space_update( const double dt )
    }
 
    if (!space_simulating) {
+      found_something = 0;
       /* Planet updates */
-      for (i=0; i<cur_system->nplanets; i++)
+      for (i=0; i<cur_system->nplanets; i++) {
          if (( !planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i ))) {
             planet_setKnown( cur_system->planets[i] );
             player_message( _("You discovered \a%c%s\a\0."),
@@ -1341,10 +1343,12 @@ void space_update( const double dt )
             hparam[1].u.la  = cur_system->planets[i]->id;
             hparam[2].type  = HOOK_PARAM_SENTINEL;
             hooks_runParam( "discover", hparam );
+            found_something = 1;
          }
+      }
 
       /* Jump point updates */
-      for (i=0; i<cur_system->njumps; i++)
+      for (i=0; i<cur_system->njumps; i++) {
          if (( !jp_isKnown( &cur_system->jumps[i] )) && ( pilot_inRangeJump( player.p, i ))) {
             jp_setFlag( &cur_system->jumps[i], JP_KNOWN );
             player_message( _("You discovered a Jump Point.") );
@@ -1355,7 +1359,12 @@ void space_update( const double dt )
             hparam[1].u.lj.destid = cur_system->jumps[i].target->id;
             hparam[2].type  = HOOK_PARAM_SENTINEL;
             hooks_runParam( "discover", hparam );
+            found_something = 1;
          }
+      }
+
+      if (found_something)
+         ovr_refresh();
    }
 
    /* Update the gatherable objects. */
