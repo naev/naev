@@ -191,9 +191,9 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
          bw, bh, "cstMod", 0, outfits_renderMod, NULL, NULL );
 
    /* the descriptive text */
-   window_addText( wid, 20 + iw + 20, -60,
+   window_addText( wid, 20 + iw + 20, -40,
          w - (20 + iw + 20) - 200 - 20, 160, 0, "txtOutfitName", &gl_defFont, NULL, NULL );
-   window_addText( wid, 20 + iw + 20, -60 - gl_defFont.h - 20,
+   window_addText( wid, 20 + iw + 20, -40 - gl_defFont.h - 40,
          w - (20 + iw + 20) - 200 - 20, 320, 0, "txtDescShort", &gl_smallFont, NULL, NULL );
 
    window_addText( wid, 20 + iw + 20, -60-128-10-32,
