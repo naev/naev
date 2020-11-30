@@ -151,7 +151,7 @@ static int nebu_init_recursive( int iter )
 
    /* Load each, checking for compatibility and padding */
    for (i=0; i<NEBULA_Z; i++) {
-      nsnprintf( nebu_file, PATH_MAX, NEBULA_PATH_BG, nebu_w, nebu_h, i );
+      nsnprintf( nebu_file, NDATA_PATH_MAX, NEBULA_PATH_BG, nebu_w, nebu_h, i );
 
       /* Check compatibility. */
       if (nebu_checkCompat( nebu_file ))
