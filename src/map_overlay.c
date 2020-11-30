@@ -206,7 +206,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    float cx,cy, ox,oy, r, off;
 
    /* Parameters for the map overlay optimization. */
-   const float update_rate = 0.01; /**< how big of an update to do each step. */
+   const float update_rate = 0.02; /**< how big of an update to do each step. */
    const int max_iters = 100; /**< Maximum amount of iterations to do. */
    const float pixbuf = 5.; /**< Pixels to buffer around for text (not used for optimizing radius). */
    const float pixbuf_initial = 50; /**< Initial pixel buffer to consider. */
@@ -214,7 +214,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    const float radius_grow_ratio = 1./radius_shrink_ratio; /**< How fast to grow the radius. */
    const float position_threshold_x = 20.; /**< How far to start penalizing x position. */
    const float position_threshold_y = 10.; /**< How far to start penalizing y position. */
-   const float position_weight = 1.; /**< How much to penalize the position. */
+   const float position_weight = .1; /**< How much to penalize the position. */
    const float object_weight = 1.; /**< Weight for overlapping with objects. */
    const float text_weight = 2.; /**< Weight for overlapping with text. */
 
@@ -267,9 +267,11 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
             //moo[i].text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
             //moo[i].text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
             moo[i].text_offx += ox * update_rate;
-            moo[i].text_offy += oy * update_rate;
+            moo[i].text_offy += 30 * oy * update_rate; /* Boost y offset as it's more likely to be the solution. */
             changed = 1;
          }
+
+         /* Penalize offsets changes */
          off = moo[i].text_offx_base - mo[i]->text_offx;
          if (fabs(off) > position_threshold_x) {
             off = FSIGN(off) * pow2(fabs(off)-position_threshold_x);
