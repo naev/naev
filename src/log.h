@@ -12,8 +12,9 @@
 #include <stdio.h>
 #include <signal.h>
 
-/* Get text stuff. */
+#include "attributes.h"
 #include "gettext.h"
+
 #if defined ENABLE_NLS && ENABLE_NLS
 #define _(String) gettext(String)
 #define gettext_noop(String) String
@@ -41,7 +42,7 @@
 #endif /* DEBUG */
 
 
-int logprintf( FILE *stream, int newline, const char *fmt, ... );
+FORMAT( printf, 3, 4 ) int logprintf( FILE *stream, int newline, const char *fmt, ... );
 void log_redirect (void);
 int log_isTerminal (void);
 void log_copy( int enable );
