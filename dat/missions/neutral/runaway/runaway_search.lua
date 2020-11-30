@@ -51,6 +51,7 @@ osd_text[1] = _("Search for Cynthia on Niflheim in Dohriabi")
 osd_text[2] = _("Search for Cynthia on Nova Shakar in Shakar")
 osd_text[3] = _("Search for Cynthia on Selphod in Eridani")
 osd_text[4] = _("Search for Cynthia on Emperor's Fist in Gamma Polaris")
+osd_text["__save"] = true
 
 -- Can't let them see what's coming up, can I?
 osd3 = _("Catch Cynthia on Torloth in Cygnus")
