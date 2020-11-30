@@ -236,7 +236,7 @@ int shiplog_appendByID(const int logid,const char *msg)
 /**
  * @brief Deletes a log (e.g. a cancelled mission may wish to do this, or the user might).
  *
- * @param logid of the log to remove
+ * @param logid of the log to remove, or LOG_ID_ALL
  */
 void shiplog_delete(const int logid)
 {
@@ -246,12 +246,12 @@ void shiplog_delete(const int logid)
    if (shipLog == NULL)
       return;
 
-   if ( logid < 0 )
+   if ( logid < 0 && logid != LOG_ID_ALL )
       return;
 
    e = shipLog->head;
    while ( e != NULL ) {
-      if ( e->id == logid ) {
+      if ( logid == LOG_ID_ALL || logid == e->id ) {
          if ( e->prev != NULL )
             ((ShipLogEntry*)e->prev)->next = e->next;
          if ( e->next != NULL )
@@ -270,7 +270,7 @@ void shiplog_delete(const int logid)
    }
 
    for ( i=0; i<shipLog->nlogs; i++) {
-      if ( shipLog->idList[i] == logid ) {
+      if ( logid == LOG_ID_ALL || logid == shipLog->idList[i] ) {
          shipLog->idList[i] = LOG_ID_INVALID;
          free(shipLog->nameList[i]);
          shipLog->nameList[i] = NULL;
@@ -281,6 +281,7 @@ void shiplog_delete(const int logid)
             shipLog->idstrList[i] = NULL;
          }
          shipLog->maxLen[i]=0;
+         shipLog->removeAfter[i] = 0;
       }
    }
 }
@@ -332,17 +333,10 @@ void shiplog_deleteType(const char *type)
  */
 void shiplog_clear(void)
 {
-   ShipLogEntry *e, *tmp;
    if ( shipLog == NULL ) {
       shipLog = calloc( sizeof(ShipLog), 1);
    }
-   e=shipLog->head;
-   while ( e != NULL ) {
-      free( e->msg );
-      tmp = e;
-      e = e->next;
-      free ( tmp );
-   }
+   shiplog_delete( LOG_ID_ALL );
    if ( shipLog->idList )
       free ( shipLog->idList );
    if ( shipLog->nameList )
@@ -353,6 +347,8 @@ void shiplog_clear(void)
       free ( shipLog->idstrList );
    if ( shipLog->maxLen )
       free ( shipLog->maxLen );
+   if ( shipLog->removeAfter )
+      free ( shipLog->removeAfter );
    memset(shipLog, 0, sizeof(ShipLog));
 }
 

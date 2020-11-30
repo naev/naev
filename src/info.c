@@ -120,7 +120,7 @@ void menu_info( int window )
 {
    int w, h;
    size_t i;
-   char **names;
+   const char *names[INFO_WINDOWS];
 
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
@@ -141,11 +141,10 @@ void menu_info( int window )
    window_setCancel( info_wid, info_close );
 
    /* Create tabbed window. */
-   names = calloc( sizeof(char*), sizeof(info_names)/sizeof(char*) );
-   for (i=0; i<sizeof(info_names)/sizeof(char*); i++)
+   for (i=0; i<INFO_WINDOWS; i++)
       names[i] = gettext(info_names[i]);
    info_windows = window_addTabbedWindow( info_wid, -1, -1, -1, -1, "tabInfo",
-         INFO_WINDOWS, (const char**)names, 0 );
+         INFO_WINDOWS, names, 0 );
 
    /* Open the subwindows. */
    info_openMain(       info_windows[ INFO_WIN_MAIN ] );
@@ -1275,20 +1274,21 @@ static void info_shiplogView( unsigned int wid, char *str )
    char **logentries;
    int nentries;
    int i;
-   char *tmp;
    (void) str;
 
    i = toolkit_getListPos( wid, "lstLogEntries" );
+   if ( i < 0 )
+      return;
    shiplog_listLog(
          logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &nentries,
          &logentries, 1);
 
-   tmp = NULL;
    if ( i < nentries )
-      tmp = logentries[i];
+      dialogue_msgRaw( _("Log message"), logentries[i]);
 
-   if ( tmp != NULL )
-      dialogue_msgRaw( _("Log message"), tmp);
+   for (i=0; i<nentries; i++)
+      free( logentries[i] );
+   free( logentries );
 }
 
 /**
