@@ -55,7 +55,7 @@
 -- the addMiscLog function, which is typically used for non-factional
 -- unique missions.
 require "numstring.lua"
-require "dat/missions/neutral/common.lua"
+require "missions/neutral/common.lua"
 
 --[[
 Multi-paragraph dialog strings should go here, each with an identifiable

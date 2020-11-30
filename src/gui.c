@@ -116,7 +116,19 @@ static double gui_viewport_h = 0.; /**< GUI Viewport height. */
 /**
  * Map overlay
  */
-MapOverlay map_overlay = {
+/**
+ * @struct MapOverlay
+ *
+ * @brief Represents map overlay config values
+ */
+typedef struct MapOverlay_ {
+   /* GUI parameters */
+   int boundTop;
+   int boundRight;
+   int boundBottom;
+   int boundLeft;
+} MapOverlay;
+static MapOverlay map_overlay = {
   boundTop: 0,
   boundRight: 0,
   boundBottom: 0,
@@ -709,7 +721,7 @@ static void gui_renderBorder( double dt )
          ccol.b = col->b;
          ccol.a = int_a;
 
-         gl_renderTriangleEmpty( cx, cy, -jp->angle, 10., 10., &ccol );
+         gl_renderTriangleEmpty( cx, cy, -jp->angle, 10., 1., &ccol );
       }
    }
 
@@ -1471,11 +1483,12 @@ void gui_renderPlayer( double res, int overlay )
 
    /* Render the cross. */
    // gl_renderCross( x, y, r, &cRadar_player );
-   glLineWidth( 4.5 );
-   gl_renderTriangleEmpty( x, y, player.p->solid->dir, r, 2., &cBlack );
-   glLineWidth( 3. );
+   gl_renderTriangleEmpty( x - 1, y, player.p->solid->dir, r, 2., &cBlack );
+   gl_renderTriangleEmpty( x + 1, y, player.p->solid->dir, r, 2., &cBlack );
+   gl_renderTriangleEmpty( x, y - 1, player.p->solid->dir, r, 2., &cBlack );
+   gl_renderTriangleEmpty( x, y + 1, player.p->solid->dir, r, 2., &cBlack );
+
    gl_renderTriangleEmpty( x, y, player.p->solid->dir, r, 2., &cRadar_player );
-   glLineWidth( 1. );
 }
 
 
@@ -1583,9 +1596,7 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
  */
 void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
-   int x, y;
-   int cx, cy, r, rc;
-   GLfloat vr;
+   GLfloat cx, cy, x, y, r, vr, rc;
    glColour col;
    Planet *planet;
 
@@ -1595,21 +1606,21 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
 
    /* Default values. */
    planet = cur_system->planets[ind];
-   r     = (int)(planet->radius*2. / res);
-   vr    = MAX( r * 1.5, 15. ); /* Make sure it's visible. */
+   r     = planet->radius*2. / res;
+   vr    = overlay ? planet->mo_radius : MAX( r, 15.);
 
    if (overlay) {
-      cx    = (int)(planet->pos.x / res);
-      cy    = (int)(planet->pos.y / res);
+      cx    = planet->pos.x / res;
+      cy    = planet->pos.y / res;
    }
    else {
-      cx    = (int)((planet->pos.x - player.p->solid->pos.x) / res);
-      cy    = (int)((planet->pos.y - player.p->solid->pos.y) / res);
+      cx    = (planet->pos.x - player.p->solid->pos.x) / res;
+      cy    = (planet->pos.y - player.p->solid->pos.y) / res;
    }
 
    /* Check if in range. */
    if (shape == RADAR_CIRCLE) {
-      rc = (int)(w*w);
+      rc = w*w;
       x = ABS(cx)-r;
       y = ABS(cy)-r;
       /* Out of range. */
@@ -1655,10 +1666,15 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    glDrawArrays( GL_LINE_STRIP, 0, 5 );
    gl_endSolidProgram();
    */
-   glLineWidth(4.5);
-   gl_drawCircle( cx, cy, vr/2.5, &cBlack, 0 );
-   gl_renderCross( cx, cy, vr/2.5, &cBlack );
-   glLineWidth(3.);
+   gl_drawCircle( cx - 1, cy, vr/2.5, &cBlack, 0 );
+   gl_renderCross( cx - 1, cy, vr/2.5, &cBlack );
+   gl_drawCircle( cx + 1, cy, vr/2.5, &cBlack, 0 );
+   gl_renderCross( cx + 1, cy, vr/2.5, &cBlack );
+   gl_drawCircle( cx, cy - 1, vr/2.5, &cBlack, 0 );
+   gl_renderCross( cx, cy - 1, vr/2.5, &cBlack );
+   gl_drawCircle( cx, cy + 1, vr/2.5, &cBlack, 0 );
+   gl_renderCross( cx, cy + 1, vr/2.5, &cBlack );
+
    gl_drawCircle( cx, cy, vr/2.5, &col, 0 );
    gl_renderCross( cx, cy, vr/2.5, &col );
    glLineWidth(1.);
@@ -1671,7 +1687,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
     * as a font change, but using this fix for now. */
    // col.a = MIN( col.a, 0.99 );
    if (overlay)
-      gl_printMarkerRaw( &gl_smallFont, cx+(vr/1.5), cy - 4, &col, _(planet->name) );
+      gl_printMarkerRaw( &gl_smallFont, cx+planet->mo_text_offx, cy+planet->mo_text_offy, &col, _(planet->name) );
 }
 
 
@@ -1687,8 +1703,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
  */
 void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
-   int cx, cy, x, y, r, rc;
-   GLfloat vr;
+   GLfloat cx, cy, x, y, r, vr, rc;
    glColour col;
    JumpPoint *jp;
    // gl_Matrix4 projection;
@@ -1696,18 +1711,18 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Default values. */
    jp    = &cur_system->jumps[ind];
-   r     = (int)(jumppoint_gfx->sw / res);
-   vr    = MAX( r, 5. ); /* Make sure it's visible. */
+   r     = jumppoint_gfx->sw / res;
+   vr    = overlay ? jp->mo_radius : MAX( r, 10. );
    if (overlay) {
-      cx    = (int)(jp->pos.x / res);
-      cy    = (int)(jp->pos.y / res);
+      cx    = jp->pos.x / res;
+      cy    = jp->pos.y / res;
    }
    else {
-      cx    = (int)((jp->pos.x - player.p->solid->pos.x) / res);
-      cy    = (int)((jp->pos.y - player.p->solid->pos.y) / res);
+      cx    = (jp->pos.x - player.p->solid->pos.x) / res;
+      cy    = (jp->pos.y - player.p->solid->pos.y) / res;
    }
    if (shape==RADAR_CIRCLE)
-      rc = (int)(w*w);
+      rc = w*w;
    else
       rc = 0;
 
@@ -1746,7 +1761,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    /* Do the blink. */
    if (ind == player.p->nav_hyperspace) {
       col = cWhite;
-      gui_blink( w, h, rc, cx+4, cy+5, vr, shape, &col, RADAR_BLINK_PLANET, blink_planet );
+      gui_blink( w, h, rc, cx, cy, vr, shape, &col, RADAR_BLINK_PLANET, blink_planet );
    }
    else if (jp_isFlag(jp, JP_HIDDEN))
       col = cRed;
@@ -1756,11 +1771,12 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    if (!overlay)
       col.a = 1.-interference_alpha;
 
-   glLineWidth( 3.5 );
-   gl_renderTriangleEmpty( cx, cy, -jp->angle, 10., 2., &cBlack );
-   glLineWidth( 2. );
-   gl_renderTriangleEmpty( cx, cy, -jp->angle, 10., 2., &col );
-   glLineWidth( 1. );
+   gl_renderTriangleEmpty( cx - 1, cy, -jp->angle, vr, 2., &cBlack );
+   gl_renderTriangleEmpty( cx + 1, cy, -jp->angle, vr, 2., &cBlack );
+   gl_renderTriangleEmpty( cx, cy - 1, -jp->angle, vr, 2., &cBlack );
+   gl_renderTriangleEmpty( cx, cy + 1, -jp->angle, vr, 2., &cBlack );
+
+   gl_renderTriangleEmpty( cx, cy, -jp->angle, vr, 2., &col );
 
    /* Render name. */
    /* XXX: Hack to prevent the text from overly obscuring overlay
@@ -1770,7 +1786,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
     * as a font change, but using this fix for now. */
    // col.a = MIN( col.a, 0.99 );
    if (overlay)
-      gl_printMarkerRaw( &gl_smallFont, cx+vr+7., cy, &col, sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
+      gl_printMarkerRaw( &gl_smallFont, cx+vr+jp->mo_text_offx, cy+jp->mo_text_offy, &col, sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
 }
 
 

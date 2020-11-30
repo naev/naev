@@ -13,6 +13,7 @@
 
 
 #define ECON_CRED_STRLEN      32 /**< Maximum length a credits2str string can reach. */
+#define ECON_MASS_STRLEN      32 /**< Maximum length a tonnes2str string can reach. */
 
 
 typedef int64_t credits_t;
@@ -113,6 +114,7 @@ void gatherable_gather( int pilot );
  */
 void credits2str( char *str, credits_t credits, int decimals );
 void price2str( char *str, credits_t price, credits_t credits, int decimals );
+void tonnes2str( char *str, int tonnes );
 void commodity_Jettison( int pilot, Commodity* com, int quantity );
 int commodity_compareTech( const void *commodity1, const void *commodity2 );
 Commodity ** standard_commodities( unsigned int *nb );

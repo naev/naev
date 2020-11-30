@@ -191,9 +191,9 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
          bw, bh, "cstMod", 0, outfits_renderMod, NULL, NULL );
 
    /* the descriptive text */
-   window_addText( wid, 20 + iw + 20, -60,
+   window_addText( wid, 20 + iw + 20, -40,
          w - (20 + iw + 20) - 200 - 20, 160, 0, "txtOutfitName", &gl_defFont, NULL, NULL );
-   window_addText( wid, 20 + iw + 20, -60 - gl_defFont.h - 20,
+   window_addText( wid, 20 + iw + 20, -40 - gl_defFont.h - 40,
          w - (20 + iw + 20) - 200 - 20, 320, 0, "txtDescShort", &gl_smallFont, NULL, NULL );
 
    window_addText( wid, 20 + iw + 20, -60-128-10-32,
@@ -628,16 +628,16 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
 
             l = strlen(o->desc_short) + 128;
             coutfits[i].alt = malloc( l );
-            p  = snprintf( &coutfits[i].alt[0], l, "%s\n", _(o->name) );
+            p  = nsnprintf( &coutfits[i].alt[0], l, "%s\n", _(o->name) );
             if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
-               p += snprintf( &coutfits[i].alt[p], l-p, _("\aoUnique\a0\n") );
+               p += nsnprintf( &coutfits[i].alt[p], l-p, _("\aoUnique\a0\n") );
             if ((o->slot.spid!=0) && (p < l))
-               p += snprintf( &coutfits[i].alt[p], l-p, _("\aoSlot %s\a0\n"),
+               p += nsnprintf( &coutfits[i].alt[p], l-p, _("\aoSlot %s\a0\n"),
                      _( sp_display( o->slot.spid ) ) );
             if (p < l)
-               p += snprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );
+               p += nsnprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );
             if ((o->mass > 0.) && (p < l))
-               snprintf( &coutfits[i].alt[p], l-p,
+               nsnprintf( &coutfits[i].alt[p], l-p,
                      _("\n%.0f Tonnes"),
                      mass );
          }

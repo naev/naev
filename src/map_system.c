@@ -710,9 +710,9 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       int owned;
       com = cur_planetObj_sel->commodities[i];
       economy_getAveragePrice( com, &globalmean, &globalstd );
+      economy_getAveragePlanetPrice( com, cur_planetObj_sel, &mean, &std );
       credits2str( buf_mean, mean, -1 );
       nsnprintf( buf_std, sizeof(buf_std), "%.1f ¤", std ); /* TODO credit2str could learn to do this... */
-      economy_getAveragePlanetPrice( com, cur_planetObj_sel, &mean, &std );
       credits2str( buf_globalmean, globalmean, -1 );
       nsnprintf( buf_globalstd, sizeof(buf_globalstd), "%.1f ¤", globalstd ); /* TODO credit2str could learn to do this... */
       owned=pilot_cargoOwned( player.p, com->name );
@@ -722,11 +722,16 @@ static void map_system_array_update( unsigned int wid, char* str ) {
 
       if ( owned > 0 ) {
          credits2str( buf_buy_price, com->lastPurchasePrice, -1 );
-         i += nsnprintf( &infobuf[i], sizeof(infobuf)-i, _("\anYou have:\a0 %d tonnes, purchased at %s/t\n"), owned,
-                         buf_buy_price );
+         i += nsnprintf( &infobuf[i], sizeof(infobuf)-i, ngettext(
+                         "\anYou have:\a0 %d tonne, purchased at %s/t\n",
+                         "\anYou have:\a0 %d tonnes, purchased at %s/t\n",
+                         owned), owned, buf_buy_price );
       }
       else
-         i += nsnprintf( &infobuf[i], sizeof(infobuf)-i, _("\anYou have:\a0 %d tonnes\n"), owned );
+         i += nsnprintf( &infobuf[i], sizeof(infobuf)-i, ngettext(
+                         "\anYou have:\a0 %d tonne\n",
+                         "\anYou have:\a0 %d tonnes\n",
+                         owned), owned );
 
       i += nsnprintf( &infobuf[i], sizeof(infobuf)-i,
                       _("\anAverage price seen here:\a0 %s/t ± %s/t\n"

@@ -192,7 +192,7 @@ void conf_setDefaults (void)
    conf.fpu_except   = 0; /* Causes many issues. */
 
    /* Map overlay opacity */
-   conf.map_overlay_opacity   = 0.3;
+   conf.map_overlay_opacity = MAP_OVERLAY_OPACITY_DEFAULT;
 
    /* Editor. */
    if (conf.dev_save_sys != NULL)
@@ -431,6 +431,8 @@ int conf_loadConfig ( const char* file )
       conf_loadInt( lEnv, "mesg_visible", conf.mesg_visible );
       if (conf.mesg_visible <= 0)
          conf.mesg_visible = 5;
+      conf_loadFloat( lEnv, "map_overlay_opacity", conf.map_overlay_opacity );
+      conf.map_overlay_opacity = CLAMP(0, 1, conf.map_overlay_opacity);
 
       /* Key repeat. */
       conf_loadInt( lEnv, "repeat_delay", conf.repeat_delay );
@@ -1040,6 +1042,8 @@ int conf_saveConfig ( const char* file )
    /* GUI. */
    conf_saveComment(_("Number of lines visible in the comm window."));
    conf_saveInt("mesg_visible",conf.mesg_visible);
+   conf_saveComment(_("Opacity fraction (0-1) for the overlay map."));
+   conf_saveFloat("map_overlay_opacity", conf.map_overlay_opacity);
    conf_saveEmptyLine();
 
    /* Key repeat. */

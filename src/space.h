@@ -120,6 +120,13 @@ typedef struct Planet_ {
 
    /* Misc. */
    unsigned int flags; /**< flags for planet properties */
+
+   /* Used for map overlay. */
+   float mo_radius_base; /**< Radius for display on the map overlay. */
+   float mo_radius; /**< Radius for display on the map overlay. */
+   float mo_text_offx; /**< x offset of the caption text. */
+   float mo_text_offy; /**< y offset of the caption text. */
+   float mo_text_width; /**< width of the caption text. */
 } Planet;
 
 
@@ -190,6 +197,13 @@ struct JumpPoint_ {
    double sina; /**< Sinus of the angle. */
    int sx; /**< X sprite to use. */
    int sy; /**< Y sprite to use. */
+
+   /* Used for map overlay. */
+   float mo_radius_base; /**< Radius for display on the map overlay. */
+   float mo_radius; /**< Radius for display on the map overlay. */
+   float mo_text_offx; /**< x offset of the caption text. */
+   float mo_text_offy; /**< y offset of the caption text. */
+   float mo_text_width; /**< width of the caption text. */
 };
 extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
 
