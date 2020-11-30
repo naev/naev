@@ -21,6 +21,7 @@
    I'm joking about the last line a little. If you want to name him, feel free.
 --]]
 
+require "numstring.lua"
 require "missions/neutral/common.lua"
 
 
