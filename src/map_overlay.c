@@ -117,14 +117,16 @@ void ovr_refresh (void)
    Planet *pnt;
    JumpPoint *jp;
    float cx,cy, ox,oy, r;
-   int iter, ires;
+   int iter, ires, changed;
    float res;
 
    /* Parameters for the map overlay optimization. */
-   const float update_rate = 0.5;
-   const int max_iters = 100;
-   const float pixbuf = 3.; /* Pixels to buffer around for text. */
-   const float epsilon = 1e-4;
+   const float update_rate = 0.5; /**< how big of an update to do each step. */
+   const int max_iters = 50; /**< Maximum amount of iterations to do. */
+   const float pixbuf = 3.; /**< Pixels to buffer around for text (not used for radius). */
+   const float epsilon = 1e-4; /**< Avoids divides by zero. */
+   const float radius_shrink_ratio = 0.99; /**< How fast to shrink the radius. */
+   const float radius_grow_ratio = 1.01; /**< How fast to grow the radius. */
 
    /* Must be open. */
    if (!ovr_isOpen())
@@ -139,6 +141,7 @@ void ovr_refresh (void)
       jp = &cur_system->jumps[i];
       max_x = MAX( max_x, ABS(jp->pos.x) );
       max_y = MAX( max_y, ABS(jp->pos.y) );
+      /* Initialize the map overlay stuff. */
       jp->mo_radius_base = MAX( jumppoint_gfx->sw / res, 10. );
       jp->mo_radius = jp->mo_radius_base;
       jp->mo_text_offx = jp->mo_radius / 2.+pixbuf*1.5;
@@ -149,6 +152,7 @@ void ovr_refresh (void)
       pnt = cur_system->planets[i];
       max_x = MAX( max_x, ABS(pnt->pos.x) );
       max_y = MAX( max_y, ABS(pnt->pos.y) );
+      /* Initialize the map overlay stuff. */
       pnt->mo_radius_base = MAX( pnt->radius*2. / res, 15. );
       pnt->mo_radius = pnt->mo_radius_base;
       pnt->mo_text_offx = pnt->mo_radius / 2.+pixbuf*1.5;
@@ -156,11 +160,12 @@ void ovr_refresh (void)
       pnt->mo_text_width = gl_printWidthRaw( &gl_smallFont, _(pnt->name) );
    }
 
-   /* We need to calculate the radius of the rendering. */
+   /* We need to calculate the radius of the rendering from the maximum radius of the system. */
    ovr_res = 2. * 1.2 * MAX( max_x / map_overlay_width(), max_y / map_overlay_height() );
 
    /* Compute text overlap and try to minimize it. */
    for (iter=0; iter<max_iters; iter++) {
+      changed = 0;
       for (i=0; i<cur_system->njumps; i++) {
          jp = &cur_system->jumps[i];
          if (!jp_isUsable(jp) || !jp_isKnown(jp))
@@ -169,14 +174,19 @@ void ovr_refresh (void)
          cy = jp->pos.y / res;
          r  = jp->mo_radius;
          /* Modify radius if overlap. */
-         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx-r/2., cy-r/2., r, r, i, -1, 1, 0. ))
-            jp->mo_radius *= 0.99;
-         else if (jp->mo_radius < jp->mo_radius_base)
-            jp->mo_radius *= 1.01;
+         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx-r/2., cy-r/2., r, r, i, -1, 1, 0. )) {
+            jp->mo_radius *= radius_shrink_ratio;
+            changed = 1;
+         }
+         else if (jp->mo_radius < jp->mo_radius_base) {
+            jp->mo_radius *= radius_grow_ratio;
+            changed = 1;
+         }
          /* Move text if overlap. */
          if (ovr_refresh_compute_overlap( &ox, &oy, res ,cx+jp->mo_text_offx, cy+jp->mo_text_offy, jp->mo_text_width, gl_smallFont.h, i, -1, 0, pixbuf )) {
             jp->mo_text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
             jp->mo_text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
+            changed = 1;
          }
       }
       for (i=0; i<cur_system->nplanets; i++) {
@@ -187,16 +197,24 @@ void ovr_refresh (void)
          cy = pnt->pos.y / res;
          r  = pnt->mo_radius;
          /* Modify radius if overlap. */
-         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx-r/2., cy-r/2., r, r, -1, i, 1, 0. ))
-            pnt->mo_radius *= 0.99;
-         else if (pnt->mo_radius < pnt->mo_radius_base)
-            pnt->mo_radius *= 1.01;
+         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx-r/2., cy-r/2., r, r, -1, i, 1, 0. )) {
+            pnt->mo_radius *= radius_shrink_ratio;
+            changed = 1;
+         }
+         else if (pnt->mo_radius < pnt->mo_radius_base) {
+            pnt->mo_radius *= radius_grow_ratio;
+            changed = 1;
+         }
          /* Move text if overlap. */
          if (ovr_refresh_compute_overlap( &ox, &oy, res, cx+pnt->mo_text_offx, cy+pnt->mo_text_offy, pnt->mo_text_width, gl_smallFont.h, -1, i, 0, pixbuf )) {
             pnt->mo_text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
             pnt->mo_text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
+            changed = 1;
          }
       }
+      /* Converged (or unnecessary). */
+      if (!changed)
+         break;
    }
 }
 
