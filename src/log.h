@@ -40,6 +40,7 @@
 #else /* DEBUG */
 #  define DEBUG(str, args...) do {;} while (0)
 #endif /* DEBUG */
+#define DEBUG_BLANK() DEBUG("%s", "")
 
 
 FORMAT( printf, 3, 4 ) int logprintf( FILE *stream, int newline, const char *fmt, ... );

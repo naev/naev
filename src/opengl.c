@@ -597,7 +597,7 @@ int gl_init (void)
    shaders_load();
 
    /* Cosmetic new line. */
-   DEBUG("");
+   DEBUG_BLANK();
 
    return 0;
 }

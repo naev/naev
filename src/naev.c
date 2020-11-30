@@ -329,11 +329,11 @@ int main( int argc, char** argv )
 
    /* Load the data basics. */
    LOG(" %s", ndata_name());
-   DEBUG("");
+   DEBUG_BLANK();
 
    /* Display the SDL Version. */
    print_SDLversion();
-   DEBUG("");
+   DEBUG_BLANK();
 
    /* random numbers */
    rng_init();

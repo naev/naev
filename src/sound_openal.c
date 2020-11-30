@@ -365,7 +365,7 @@ int sound_al_init (void)
             al_info.efx_major, al_info.efx_minor);
    else
       DEBUG(_("Version: %s without EFX"), alGetString(AL_VERSION));
-   DEBUG("");
+   DEBUG_BLANK();
 
    return ret;
 
