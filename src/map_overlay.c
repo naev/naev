@@ -179,6 +179,7 @@ void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos** mo, fl
 {
    int i, iter, changed;
    float cx,cy, ox,oy, r;
+
    /* Parameters for the map overlay optimization. */
    const float update_rate = 0.5; /**< how big of an update to do each step. */
    const int max_iters = 50; /**< Maximum amount of iterations to do. */
@@ -187,12 +188,14 @@ void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos** mo, fl
    const float radius_shrink_ratio = 0.99; /**< How fast to shrink the radius. */
    const float radius_grow_ratio = 1.01; /**< How fast to grow the radius. */
 
+   /* Initialize all items. */
    for (i=0; i<items; i++) {
       mo[i]->radius = mo[i]->radius_base;
       mo[i]->text_offx = mo[i]->radius / 2.+pixbuf*1.5;
       mo[i]->text_offy = -gl_smallFont.h/2.;
    }
 
+   /* Optimize over them. */
    for (iter=0; iter<max_iters; iter++) {
       changed = 0;
       for (i=0; i<items; i++) {
