@@ -14,21 +14,22 @@
 #include "naev.h"
 #include "ndata.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-#include <math.h>
-#include <assert.h>
-#include "log.h"
+#include "commodity.h"
+#include "dialogue.h"
+#include "economy.h"
 #include "hook.h"
+#include "land_shipyard.h"
+#include "log.h"
+#include "map_find.h"
+#include "nstring.h"
 #include "player.h"
 #include "space.h"
-#include "toolkit.h"
 #include "tk/toolkit_priv.h"
-#include "dialogue.h"
-#include "map_find.h"
-#include "land_shipyard.h"
-#include "economy.h"
+#include "toolkit.h"
+#include <assert.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 /*
  * Quantity to buy on one click
@@ -133,7 +134,7 @@ void commodity_update( unsigned int wid, char* str )
 {
    (void)str;
    char buf[PATH_MAX];
-   char buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
+   char buf_purchase_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN];
    int i;
    Commodity *com;
    credits_t mean,globalmean;
@@ -141,20 +142,22 @@ void commodity_update( unsigned int wid, char* str )
    char buf_mean[ECON_CRED_STRLEN], buf_globalmean[ECON_CRED_STRLEN];
    char buf_std[ECON_CRED_STRLEN], buf_globalstd[ECON_CRED_STRLEN];
    char buf_local_price[ECON_CRED_STRLEN];
+   char buf_tonnes_owned[ECON_MASS_STRLEN], buf_tonnes_free[ECON_MASS_STRLEN];
    int owned;
    i = toolkit_getImageArrayPos( wid, "iarTrade" );
    if (i < 0 || land_planet->ncommodities == 0) {
-      credits2str( buf3, player.p->credits, 2 );
+      credits2str( buf_credits, player.p->credits, 2 );
+      tonnes2str( buf_tonnes_free, pilot_cargoFree(player.p) );
       nsnprintf( buf, PATH_MAX,
          _("N/A tonnes\n"
            "\n"
            "N/A ¤\n"
-           "%d tonnes\n"
+           "%s\n"
            "%s\n"
            "N/A ¤\n"
            "N/A ¤"),
-         pilot_cargoFree(player.p),
-         buf3 );
+         buf_tonnes_free,
+         buf_credits );
       window_modifyText( wid, "txtDInfo", buf );
       window_modifyText( wid, "txtDesc", _("No commodities available.") );
       window_disableButton( wid, "btnCommodityBuy" );
@@ -173,21 +176,23 @@ void commodity_update( unsigned int wid, char* str )
    credits2str( buf_globalmean, globalmean, -1 );
    nsnprintf( buf_globalstd, sizeof(buf_globalstd), _("%.1f ¤"), globalstd ); /* TODO credit2str could learn to do this... */
    /* modify text */
-   buf2[0]='\0';
+   buf_purchase_price[0]='\0';
    owned=pilot_cargoOwned( player.p, com->name );
    if ( owned > 0 )
-      credits2str( buf2, com->lastPurchasePrice, -1 );
-   credits2str( buf3, player.p->credits, 2 );
+      credits2str( buf_purchase_price, com->lastPurchasePrice, -1 );
+   credits2str( buf_credits, player.p->credits, 2 );
    credits2str( buf_local_price, planet_commodityPrice( land_planet, com ), -1 );
+   tonnes2str( buf_tonnes_owned, owned );
+   tonnes2str( buf_tonnes_free, pilot_cargoFree(player.p) );
    nsnprintf( buf, PATH_MAX,
-              _( "%d tonnes\n"
+              _( "%s\n"
                  "%s\n"
                  "%s/t\n"
-                 "%d tonnes\n"
+                 "%s\n"
                  "%s\n"
                  "%s/t ± %s/t\n"
                  "%s/t ± %s/t\n" ),
-              owned, buf2, buf_local_price, pilot_cargoFree( player.p ), buf3, buf_mean, buf_std,
+              buf_tonnes_owned, buf_purchase_price, buf_local_price, buf_tonnes_free, buf_credits, buf_mean, buf_std,
               buf_globalmean, buf_globalstd );
 
    window_modifyText( wid, "txtDInfo", buf );

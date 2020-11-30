@@ -41453,6 +41453,13 @@ msgstr "Du brauchst noch %s!"
 msgid "\"On my way.\""
 msgstr "„Bin auf dem Weg.“"
 
+#: src/commodity.c:129
+#, c-format
+msgid "%d tonne"
+msgid_plural "%d tonnes"
+msgstr[0] "%d Tonne"
+msgstr[1] "%d Tonnen"
+
 #: src/commodity.c:135
 #, c-format
 msgid "Commodity '%s' not found in stack"
@@ -44896,7 +44903,7 @@ msgid ""
 "N/A tonnes\n"
 "\n"
 "N/A ¤\n"
-"%d tonnes\n"
+"%s\n"
 "%s\n"
 "N/A ¤\n"
 "N/A ¤"
@@ -44904,7 +44911,7 @@ msgstr ""
 "N/V Tonnen\n"
 "\n"
 "N/V ¤\n"
-"%d Tonnen\n"
+"%s\n"
 "%s\n"
 "N/V ¤\n"
 "N/V ¤"
@@ -44916,18 +44923,18 @@ msgstr "Keine Waren verfügbar."
 #: src/land_trade.c:173
 #, c-format
 msgid ""
-"%d tonnes\n"
+"%s\n"
 "%s\n"
 "%s/t\n"
-"%d tonnes\n"
+"%s\n"
 "%s\n"
 "%s/t ± %s/t\n"
 "%s/t ± %s/t\n"
 msgstr ""
-"%d Tonnen\n"
+"%s\n"
 "%s\n"
 "%s/t\n"
-"%d Tonnen\n"
+"%s\n"
 "%s\n"
 "%s/t ± %s/t\n"
 "%s/t ± %s/t\n"
@@ -45496,7 +45503,9 @@ msgstr ""
 #: src/map_system.c:721
 #, c-format
 msgid "\anYou have:\a0 %d tonnes\n"
-msgstr "\anDu hast:\a0 %d Tonnen%s\n"
+msgid_plural "\anYou have:\a0 %d tonnes\n"
+msgstr[0] "\anDu hast:\a0 %d Tonne\n"
+msgstr[1] "\anDu hast:\a0 %d Tonnen\n"
 
 #: src/map_system.c:721
 #, c-format
