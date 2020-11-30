@@ -54,7 +54,8 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos,
       MapOverlayPos** mo, float res );
 static int ovr_refresh_compute_overlap( float *ox, float *oy,
       float res, float x, float y, float w, float h, const Vector2d** pos,
-      MapOverlayPos** mo, int items, int self, int radius, double pixbuf );
+      MapOverlayPos** mo, int items, int self, int radius, double pixbuf,
+      float object_weight, float text_weight );
 /* Markers. */
 static void ovr_mrkRenderAll( double res );
 static void ovr_mrkCleanup(  ovr_marker_t *mrk );
@@ -179,6 +180,7 @@ void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos** mo, fl
 {
    int i, iter, changed;
    float cx,cy, ox,oy, r, off;
+   float left, right;
 
    /* Parameters for the map overlay optimization. */
    const float update_rate = 0.5; /**< how big of an update to do each step. */
@@ -190,14 +192,27 @@ void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos** mo, fl
    const float position_threshold_x = 20.; /**< How far to start penalizing x position. */
    const float position_threshold_y = 10.; /**< How far to start penalizing y position. */
    const float position_weight = 0.05; /**< How much to penalize the position. */
+   const float object_weight = 2.; /**< Weight for overlapping with objects. */
+   const float text_weight = 1.; /**< Weight for overlapping with text. */
 
    /* Initialize all items. */
    for (i=0; i<items; i++) {
       mo[i]->radius = mo[i]->radius_base;
-      mo[i]->text_offx_base = mo[i]->radius / 2.+pixbuf*1.5;
       mo[i]->text_offy_base = -gl_smallFont.h/2.;
-      mo[i]->text_offx = mo[i]->text_offx_base;
       mo[i]->text_offy = mo[i]->text_offy_base;
+      /* Test to see what side is best to put the text on. */
+      cx = pos[i]->x / res;
+      cy = pos[i]->y / res;
+      off = mo[i]->radius / 2.+pixbuf*1.5;
+      ovr_refresh_compute_overlap( &ox, &oy, res, cx-off-mo[i]->text_width, cy+mo[i]->text_offy, mo[i]->text_width, gl_smallFont.h, pos, mo, items, i, 1, 0., 1., 0. );
+      left = pow2(ox)+pow2(oy);
+      ovr_refresh_compute_overlap( &ox, &oy, res, cx+off, cy+mo[i]->text_offy, mo[i]->text_width, gl_smallFont.h, pos, mo, items, i, 1, 0., 1., 0. );
+      right = pow2(ox)+pow2(oy);
+      if (left < right)
+         mo[i]->text_offx_base = -off-mo[i]->text_width;
+      else
+         mo[i]->text_offx_base = off;
+      mo[i]->text_offx = mo[i]->text_offx_base;
    }
 
    /* Optimize over them. */
@@ -208,7 +223,7 @@ void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos** mo, fl
          cy = pos[i]->y / res;
          r  = mo[i]->radius;
          /* Modify radius if overlap. */
-         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx-r/2., cy-r/2., r, r, pos, mo, items, i, 1, 0. )) {
+         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx-r/2., cy-r/2., r, r, pos, mo, items, i, 1, 0., object_weight, text_weight )) {
             mo[i]->radius *= radius_shrink_ratio;
             changed = 1;
          }
@@ -217,7 +232,7 @@ void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos** mo, fl
             changed = 1;
          }
          /* Move text if overlap. */
-         if (ovr_refresh_compute_overlap( &ox, &oy, res ,cx+mo[i]->text_offx, cy+mo[i]->text_offy, mo[i]->text_width, gl_smallFont.h, pos, mo, items, i, 0, pixbuf )) {
+         if (ovr_refresh_compute_overlap( &ox, &oy, res ,cx+mo[i]->text_offx, cy+mo[i]->text_offy, mo[i]->text_width, gl_smallFont.h, pos, mo, items, i, 0, pixbuf, object_weight, text_weight )) {
             mo[i]->text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
             mo[i]->text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
             changed = 1;
@@ -276,13 +291,11 @@ static void update_collision( float *ox, float *oy, float weight,
  */
 static int ovr_refresh_compute_overlap( float *ox, float *oy,
       float res, float x, float y, float w, float h, const Vector2d** pos,
-      MapOverlayPos** mo, int items, int self, int radius, double pixbuf )
+      MapOverlayPos** mo, int items, int self, int radius, double pixbuf,
+      float object_weight, float text_weight )
 {
    int i;
    float mx, my, mw, mh;
-
-   const float object_weight = 2.; /**< Weight for overlapping with objects. */
-   const float text_weight = 1.; /**< Weight for overlapping with text. */
 
    *ox = *oy = 0.;
 
