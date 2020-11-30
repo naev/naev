@@ -807,6 +807,7 @@ dat/assets/rhu_ii.xml
 dat/assets/rhu_iii.xml
 dat/assets/rhu_iv.xml
 dat/assets/ridrack.xml
+dat/assets/rikaina.xml
 dat/assets/rin.xml
 dat/assets/rionna.xml
 dat/assets/riun.xml
@@ -1097,6 +1098,8 @@ dat/assets/virtual_flf_small.xml
 dat/assets/virtual_flf_unpresence.xml
 dat/assets/virtual_frontier_small.xml
 dat/assets/virtual_frontier_unpresence.xml
+dat/assets/virtual_independent_trader_area.xml
+dat/assets/virtual_independent_trader_local.xml
 dat/assets/virtual_miner_local.xml
 dat/assets/virtual_miner_small.xml
 dat/assets/virtual_pirate_medium.xml
@@ -1111,8 +1114,6 @@ dat/assets/virtual_sirius_unpresence.xml
 dat/assets/virtual_soromid_unpresence.xml
 dat/assets/virtual_thurion_local.xml
 dat/assets/virtual_trader_area.xml
-dat/assets/virtual_trader_ind_area.xml
-dat/assets/virtual_trader_ind_local.xml
 dat/assets/virtual_trader_local.xml
 dat/assets/virtual_zalek_medium.xml
 dat/assets/virtual_zalek_small.xml
