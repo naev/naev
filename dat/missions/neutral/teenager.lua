@@ -47,7 +47,7 @@ text[4] = _([[You board the Gawain and find an enraged teenage boy and a disillu
 
 title[5] = _("You're grounded, young man")
 text[5] = _([[The boy's father awaits you at the spaceport. He gives his son and the young lady a stern look and curtly commands them to wait for him in the spaceport hall. The couple droops off, and the father turns to face you.
-"You've done me a service, captain," he says. "As promised, I have a reward for a job well done. You'll find it in your bank account. I'm going to give my son a reprimand he'll not soon forget, so hopefully he won't repeat this little stunt anytime soon. Well then, I must be going. Thank you again, and good luck on your travels."]])
+    "You've done me a service, captain," he says. "As promised, I have a reward for a job well done. You'll find it in your bank account. I'm going to give my son a reprimand he'll not soon forget, so hopefully he won't repeat this little stunt anytime soon. Well then, I must be going. Thank you again, and good luck on your travels."]])
 
 NPCname = _("A middle-aged man")
 NPCdesc = _("You see a middle-aged man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot.")
