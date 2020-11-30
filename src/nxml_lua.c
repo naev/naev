@@ -13,6 +13,7 @@
 
 #include "naev.h"
 
+#include "base64.h"
 #include "log.h"
 #include "nlua.h"
 #include "nlua_commodity.h"
@@ -25,6 +26,7 @@
 #include "nlua_time.h"
 #include "nluadef.h"
 #include "nstring.h"
+#include "utf8.h"
 
 
 /*
@@ -32,6 +34,27 @@
  */
 static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int intable );
 static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent );
+static int   nxml_canWriteString( const char *buf, size_t len );
+
+/**
+ * @brief Persists the key of a key/value pair.
+ *
+ *    @param writer XML Writer to use to persist stuff.
+ *    @param name Name of the data to save.
+ *    @param name_len Data size of name (which is an arbitrary Lua string).
+ *    @return 0 on success.
+ */
+static int nxml_saveNameAttribute( xmlTextWriterPtr writer, const char *name, size_t name_len )
+{
+   if ( nxml_canWriteString( name, name_len ) )
+      xmlw_attr( writer, "name", "%s", name );
+   else {
+      char *encoded = base64_encode_to_cstr( name, name_len );
+      xmlw_attr( writer, "name_base64", "%s", encoded );
+      free( encoded );
+   }
+   return 0;
+}
 
 /**
  * @brief Persists Lua data.
@@ -39,18 +62,18 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent );
  *    @param writer XML Writer to use to persist stuff.
  *    @param type Type of the data to save.
  *    @param name Name of the data to save.
+ *    @param name_len Data size of name (which is an arbitrary Lua string).
  *    @param value Value of the data to save.
  *    @param keynum Whether the key is a number (not a string) and should be read back as such.
  *    @return 0 on success.
  */
-static int nxml_saveData( xmlTextWriterPtr writer,
-      const char *type, const char *name, const char *value,
-      int keynum )
+static int nxml_saveData( xmlTextWriterPtr writer, const char *type, const char *name, size_t name_len,
+                          const char *value, int keynum )
 {
    xmlw_startElem(writer,"data");
 
    xmlw_attr(writer,"type","%s",type);
-   xmlw_attr(writer,"name","%s",name);
+   nxml_saveNameAttribute( writer, name, name_len );
    if (keynum)
       xmlw_attr(writer,"keynum","1");
    xmlw_str(writer,"%s",value);
@@ -66,17 +89,18 @@ static int nxml_saveData( xmlTextWriterPtr writer,
  *
  *    @param writer XML Writer to use to persist stuff.
  *    @param name Name of the data to save.
+ *    @param name_len Data size of name (which is an arbitrary Lua string).
  *    @param start System in which the jump is.
  *    @param dest Jump's destination system.
  *    @return 0 on success.
  */
-static int nxml_saveJump( xmlTextWriterPtr writer,
-      const char *name, const char *start, const char *dest )
+static int nxml_saveJump( xmlTextWriterPtr writer, const char *name, size_t name_len, const char *start,
+                          const char *dest )
 {
    xmlw_startElem(writer,"data");
 
    xmlw_attr(writer,"type",JUMP_METATABLE);
-   xmlw_attr(writer,"name","%s",name);
+   nxml_saveNameAttribute( writer, name, name_len );
    xmlw_attr(writer,"dest","%s",dest);
    xmlw_str(writer,"%s",start);
 
@@ -104,9 +128,10 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
    Outfit *o;
    Planet *pnt;
    StarSystem *ss, *dest;
-   char buf[PATH_MAX];
-   const char *name, *str;
+   char buf[ PATH_MAX ];
+   const char *name, *str, *data;
    int keynum;
+   size_t len, name_len;
 
    /* Default values. */
    ret   = 0;
@@ -118,14 +143,14 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
    switch (lua_type(L, -2)) {
       case LUA_TSTRING:
          /* Can just tostring directly. */
-         name     = lua_tostring(L,-2);
+         name = lua_tolstring( L, -2, &name_len );
          /* Isn't a number key. */
          keynum   = 0;
          break;
       case LUA_TNUMBER:
          /* Can't tostring directly. */
          lua_pushvalue(L,-2);
-         name     = lua_tostring(L,-1);
+         name = lua_tolstring( L, -1, &name_len );
          lua_pop(L,1); /* Pop the new value. */
          /* Is a number key. */
          keynum   = 1;
@@ -153,7 +178,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
          /* Start the table. */
          xmlw_startElem(writer,"data");
          xmlw_attr(writer,"type","table");
-         xmlw_attr(writer,"name","%s",name);
+         nxml_saveNameAttribute( writer, name, name_len );
          if (keynum)
             xmlw_attr(writer,"keynum","1");
          lua_pushnil(L); /* key, value, nil */
@@ -168,8 +193,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
 
       /* Normal number. */
       case LUA_TNUMBER:
-         nxml_saveData( writer, "number",
-               name, lua_tostring(L,-1), keynum );
+         nxml_saveData( writer, "number", name, name_len, lua_tostring( L, -1 ), keynum );
          /* key, value */
          break;
 
@@ -179,15 +203,20 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
          if (lua_toboolean(L,-1)) buf[0] = '1';
          else buf[0] = '0';
          buf[1] = '\0';
-         nxml_saveData( writer, "bool",
-               name, buf, keynum );
+         nxml_saveData( writer, "bool", name, name_len, buf, keynum );
          /* key, value */
          break;
 
       /* String is saved normally. */
       case LUA_TSTRING:
-         nxml_saveData( writer, "string",
-               name, lua_tostring(L,-1), keynum );
+         data = lua_tolstring( L, -1, &len );
+         if ( nxml_canWriteString( data, len ) )
+            nxml_saveData( writer, "string", name, name_len, lua_tostring( L, -1 ), keynum );
+         else {
+            char *encoded = base64_encode_to_cstr( data, len );
+            nxml_saveData( writer, "string_base64", name, name_len, encoded, keynum );
+            free( encoded );
+         }
          /* key, value */
          break;
 
@@ -196,8 +225,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
          if (lua_isplanet(L,-1)) {
             pnt = planet_getIndex( *lua_toplanet(L,-1) );
             if (pnt != NULL)
-               nxml_saveData( writer, PLANET_METATABLE,
-                     name, pnt->name, keynum );
+               nxml_saveData( writer, PLANET_METATABLE, name, name_len, pnt->name, keynum );
             else
                WARN(_("Failed to save invalid planet."));
             /* key, value */
@@ -206,8 +234,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
          else if (lua_issystem(L,-1)) {
             ss = system_getIndex( lua_tosystem(L,-1) );
             if (ss != NULL)
-               nxml_saveData( writer, SYSTEM_METATABLE,
-                     name, ss->name, keynum );
+               nxml_saveData( writer, SYSTEM_METATABLE, name, name_len, ss->name, keynum );
             else
                WARN(_("Failed to save invalid system."));
             /* key, value */
@@ -217,8 +244,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
             str = faction_name( lua_tofaction(L,-1) );
             if (str == NULL)
                break;
-            nxml_saveData( writer, FACTION_METATABLE,
-                  name, str, keynum );
+            nxml_saveData( writer, FACTION_METATABLE, name, name_len, str, keynum );
             /* key, value */
             break;
          }
@@ -227,16 +253,14 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
             str = sh->name;
             if (str == NULL)
                break;
-            nxml_saveData( writer, SHIP_METATABLE,
-                  name, str, keynum );
+            nxml_saveData( writer, SHIP_METATABLE, name, name_len, str, keynum );
             /* key, value */
             break;
          }
          else if (lua_istime(L,-1)) {
             t = *lua_totime(L,-1);
             nsnprintf( buf, sizeof(buf), "%"PRId64, t );
-            nxml_saveData( writer, TIME_METATABLE,
-                  name, buf, keynum );
+            nxml_saveData( writer, TIME_METATABLE, name, name_len, buf, keynum );
             /* key, value */
             break;
          }
@@ -247,15 +271,14 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
             if ((ss == NULL) || (dest == NULL))
                WARN(_("Failed to save invalid jump."));
             else
-               nxml_saveJump( writer, name, ss->name, dest->name );
+               nxml_saveJump( writer, name, name_len, ss->name, dest->name );
          }
          else if (lua_iscommodity(L,-1)) {
             com = lua_tocommodity(L,-1);
             str = com->name;
             if (str == NULL)
                break;
-            nxml_saveData( writer, COMMODITY_METATABLE,
-                  name, str, keynum );
+            nxml_saveData( writer, COMMODITY_METATABLE, name, name_len, str, keynum );
             /* key, value */
             break;
          }
@@ -264,8 +287,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
             str = o->name;
             if (str == NULL)
                break;
-            nxml_saveData( writer, OUTFIT_METATABLE,
-                  name, str, keynum );
+            nxml_saveData( writer, OUTFIT_METATABLE, name, name_len, str, keynum );
             /* key, value */
             break;
          }
@@ -326,7 +348,8 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
    Planet *pnt;
    StarSystem *ss, *dest;
    xmlNodePtr node;
-   char *name, *type, *buf, *num;
+   char *name, *type, *buf, *num, *data;
+   size_t len;
 
    node = parent->xmlChildrenNode;
    do {
@@ -340,8 +363,14 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             lua_pushnumber(L, atof(name));
             free(num);
          }
-         else
+         else if ( name != NULL )
             lua_pushstring(L, name);
+         else {
+            xmlr_attr( node, "name_base64", name );
+            data = base64_decode_cstr( &len, name );
+            lua_pushlstring( L, data, len );
+            free( data );
+         }
 
          /* handle data types */
          /* Recursive tables. */
@@ -360,6 +389,11 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             lua_pushboolean(L,xml_getInt(node));
          else if (strcmp(type,"string")==0)
             lua_pushstring(L,xml_get(node));
+         else if ( strcmp( type, "string_base64" ) == 0 ) {
+            data = base64_decode_cstr( &len, xml_get( node ) );
+            lua_pushlstring( L, data, len );
+            free( data );
+         }
          else if (strcmp(type,PLANET_METATABLE)==0) {
             pnt = planet_get(xml_get(node));
             if (pnt != NULL) {
@@ -439,4 +473,23 @@ int nxml_unpersistLua( nlua_env env, xmlNodePtr parent )
    lua_pop(naevL,1);
 
    return ret;
+}
+
+
+/**
+ * @brief Checks whether saving the given string (from lua_tolstring)
+ *        can be saved into an XML document without blowing up.
+ *
+ *    @param buf Contents of a valid Lua string.
+ *    @param len Corresponding length.
+ *    @return 1 if OK, 0 if it won't work.
+ */
+static int nxml_canWriteString( const char *buf, size_t len )
+{
+   for ( size_t i = 0; i < len; i++ ) {
+      if ( buf[ i ] == '\0'
+           || ( buf[ i ] < 0x20 && buf[ i ] != '\t' && buf[ i ] != '\n' && buf[ i ] != '\r' ) )
+         return 0;
+   }
+   return u8_isvalid( buf, len );
 }
