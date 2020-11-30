@@ -1907,7 +1907,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 {
    int i, j;
    xmlNodePtr node, cur;
-   void *buf;
+   char *buf;
    StarSystem *sys, *system_stack;
    Planet *asset;
    JumpPoint *jump;

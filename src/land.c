@@ -177,7 +177,7 @@ int can_swapEquipment( const char *shipname )
                "You have %d tonne more cargo than the new ship can hold.",
                "You have %d tonnes more cargo than the new ship can hold.",
                diff),
-            diff, shipname );
+            diff );
       failure = 1;
    }
    if (pilot_hasDeployed(player.p)) { /* Escorts are in space. */

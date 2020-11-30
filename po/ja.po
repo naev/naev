@@ -39928,7 +39928,7 @@ msgstr ""
 
 #: src/player_autonav.c:380
 #, c-format
-msgid "\aoAutonav arrived at \a%c%s\a"
+msgid "\aoAutonav arrived at \a%c%s\a0."
 msgstr ""
 
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
@@ -40746,7 +40746,7 @@ msgstr ""
 
 #: src/space.c:1331
 #, c-format
-msgid "You discovered \a%c%s\a"
+msgid "You discovered \a%c%s\a0."
 msgstr ""
 
 #: src/space.c:1346

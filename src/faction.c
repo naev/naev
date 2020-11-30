@@ -1377,7 +1377,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    if (temp->name == NULL)
-      WARN(_("Faction id '%d' is invalid."), FACTION_DATA_PATH);
+      WARN(_("Unable to read data from '%s'"), FACTION_DATA_PATH);
    if (player==0)
       DEBUG(_("Faction '%s' missing player tag."), temp->name);
    if ((temp->env==LUA_NOREF) && !faction_isFlag( temp, FACTION_STATIC ))
