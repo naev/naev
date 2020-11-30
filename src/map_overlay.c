@@ -176,7 +176,7 @@ void ovr_refresh (void)
 /**
  * @brief Makes a best effort to fit the given assets' overlay indicators and labels fit without collisions.
  */
-void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos** mo, float res )
+static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos** mo, float res )
 {
    int i, iter, changed;
    float cx,cy, ox,oy, r, off;
