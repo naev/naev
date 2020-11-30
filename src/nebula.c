@@ -34,6 +34,7 @@
 #define NEBULA_Z             16 /**< Z plane */
 #define NEBULA_PUFFS         32 /**< Amount of puffs to generate */
 #define NEBULA_PATH_BG       "nebu_bg_%dx%d_%02d.png" /**< Nebula path format. */
+#define NEBULA_FILENAME_MAX   256 /**< Upper bound for nebula file names; it and NEBULA_PATH must fit into PATH_MAX. */
 
 #define NEBULA_PUFF_BUFFER   300 /**< Nebula buffer */
 
@@ -122,7 +123,7 @@ int nebu_init (void)
 static int nebu_init_recursive( int iter )
 {
    int i;
-   char nebu_file[NDATA_PATH_MAX];
+   char nebu_file[NEBULA_FILENAME_MAX];
    SDL_Surface* nebu_sur;
    int ret;
 
@@ -151,7 +152,7 @@ static int nebu_init_recursive( int iter )
 
    /* Load each, checking for compatibility and padding */
    for (i=0; i<NEBULA_Z; i++) {
-      nsnprintf( nebu_file, PATH_MAX, NEBULA_PATH_BG, nebu_w, nebu_h, i );
+      nsnprintf( nebu_file, NEBULA_FILENAME_MAX, NEBULA_PATH_BG, nebu_w, nebu_h, i );
 
       /* Check compatibility. */
       if (nebu_checkCompat( nebu_file ))
@@ -509,7 +510,7 @@ static int nebu_generate (void)
    int i;
    float *nebu;
    const char *cache;
-   char nebu_file[NDATA_PATH_MAX];
+   char nebu_file[NEBULA_FILENAME_MAX];
    int ret;
 
    /* Warn user of what is happening. */
@@ -528,7 +529,7 @@ static int nebu_generate (void)
 
    /* Save each nebula as an image */
    for (i=0; i<NEBULA_Z; i++) {
-      nsnprintf( nebu_file, PATH_MAX, NEBULA_PATH_BG, nebu_w, nebu_h, i );
+      nsnprintf( nebu_file, NEBULA_FILENAME_MAX, NEBULA_PATH_BG, nebu_w, nebu_h, i );
       ret = saveNebula( &nebu[ i*nebu_w*nebu_h ], nebu_w, nebu_h, nebu_file );
       if (ret != 0)
          break; /* An error has happened */

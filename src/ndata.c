@@ -205,6 +205,7 @@ static void ndata_testVersion (void)
       if (ABS(diff) > 1)
          WARN( _("Naev will probably crash now as the versions are probably not compatible.") );
    }
+   free( buf );
 }
 
 

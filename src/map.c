@@ -583,7 +583,7 @@ static void map_update( unsigned int wid )
          break;
    }
    if (hasPlanets == 0) {
-      strncpy( buf, _("None"), PATH_MAX );
+      strncpy( buf, _("None"), sizeof(buf)-1 );
       buf[sizeof(buf)-1] = '\0';
    }
    /* Update text. */

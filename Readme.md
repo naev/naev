@@ -20,15 +20,10 @@ an OpenGL-capable graphics card and driver, Naev requires the following:
 * freetype2
 * libpng
 * OpenAL
-* libvorbis (>= 1.2.1 necessary for Replaygain)
+* libvorbis
 * binutils
 * intltool
 
-Note that several distributions ship outdated versions of libvorbis, and
-thus libvorbisfile is statically linked into the release binary.
-
-Compiling your own binary on many distributions will result in Replaygain
-being disabled.
 
 ### Ubuntu
 

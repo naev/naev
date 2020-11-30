@@ -22,6 +22,22 @@
 
 
 /**
+ * Structure for map overlay optimization.
+ */
+typedef struct MapOverlayPosOpt_ {
+   /* Same as MapOverlayPos (double buffering). */
+   float radius; /**< Radius for display on the map overlay. */
+   float text_offx; /**< x offset of the caption text. */
+   float text_offy; /**< y offset of the caption text. */
+   /* Below are temporary values for optimization. */
+   float radius_base; /**< Radius for display on the map overlay. */
+   float text_offx_base; /**< Base x position of the caption text. */
+   float text_offy_base; /**< Base y position of the caption text. */
+   float text_width; /**< width of the caption text. */
+} MapOverlayPosOpt;
+
+
+/**
  * @brief An overlay map marker.
  */
 typedef struct ovr_marker_s {
@@ -47,12 +63,18 @@ static double ovr_res = 10.; /**< Resolution. */
 /*
  * Prototypes
  */
-static void update_collision( float *ox, float *oy, float weight,
+static int update_collision( float *ox, float *oy, float weight,
       float x, float y, float w, float h,
       float mx, float my, float mw, float mh );
+static void ovr_optimizeLayout( int items, const Vector2d** pos,
+      MapOverlayPos** mo, MapOverlayPosOpt* moo, float res );
+static void ovr_init_position( float *px, float *py, float res, float x, float y, float w, float h,
+      float margin, const Vector2d** pos, MapOverlayPos** mo, MapOverlayPosOpt* moo, int items, int self,
+      float pixbuf, float object_weight, float text_weight );
 static int ovr_refresh_compute_overlap( float *ox, float *oy,
-      float res, float x, float y, float w, float h,
-      int jpid, int pntid, int radius, double pixbuf );
+      float res, float x, float y, float w, float h, const Vector2d** pos,
+      MapOverlayPos** mo, MapOverlayPosOpt* moo, int items, int self, int radius, float pixbuf,
+      float object_weight, float text_weight );
 /* Markers. */
 static void ovr_mrkRenderAll( double res );
 static void ovr_mrkCleanup(  ovr_marker_t *mrk );
@@ -98,8 +120,8 @@ int ovr_input( SDL_Event *event )
    gl_windowToScreenPos( &mx, &my, mx, my );
 
    /* Translate to space coords. */
-   x = ((double)mx - (double)map_overlay_center_x()) * ovr_res; 
-   y = ((double)my - (double)map_overlay_center_y()) * ovr_res; 
+   x = ((double)mx - (double)map_overlay_center_x()) * ovr_res;
+   y = ((double)my - (double)map_overlay_center_y()) * ovr_res;
 
    return input_clickPos( event, x, y, 1., 10. * ovr_res, 15. * ovr_res );
 }
@@ -113,18 +135,14 @@ int ovr_input( SDL_Event *event )
 void ovr_refresh (void)
 {
    double max_x, max_y;
-   int i;
+   int i, items;
    Planet *pnt;
    JumpPoint *jp;
-   float cx,cy, ox,oy, r;
-   int iter, ires;
+   const Vector2d **pos;
+   MapOverlayPos **mo;
+   MapOverlayPosOpt *moo;
+   int ires;
    float res;
-
-   /* Parameters for the map overlay optimization. */
-   const float update_rate = 0.5;
-   const int max_iters = 100;
-   const float pixbuf = 3.; /* Pixels to buffer around for text. */
-   const float epsilon = 1e-4;
 
    /* Must be open. */
    if (!ovr_isOpen())
@@ -133,86 +151,209 @@ void ovr_refresh (void)
    /* Calculate max size. */
    gui_radarGetRes( &ires );
    res = (float)ires;
+   items = 0;
+   pos = calloc(cur_system->njumps + cur_system->nplanets, sizeof(Vector2d*));
+   mo  = calloc(cur_system->njumps + cur_system->nplanets, sizeof(MapOverlayPos*));
+   moo = calloc(cur_system->njumps + cur_system->nplanets, sizeof(MapOverlayPosOpt));
    max_x = 0.;
    max_y = 0.;
    for (i=0; i<cur_system->njumps; i++) {
       jp = &cur_system->jumps[i];
       max_x = MAX( max_x, ABS(jp->pos.x) );
       max_y = MAX( max_y, ABS(jp->pos.y) );
-      jp->mo_radius_base = MAX( jumppoint_gfx->sw / res, 10. );
-      jp->mo_radius = jp->mo_radius_base;
-      jp->mo_text_offx = jp->mo_radius / 2.+pixbuf*1.5;
-      jp->mo_text_offy = -gl_smallFont.h/2.;
-      jp->mo_text_width = gl_printWidthRaw( &gl_smallFont, _(jp->target->name) );
+      if (!jp_isUsable(jp) || !jp_isKnown(jp))
+         continue;
+      /* Initialize the map overlay stuff. */
+      moo[items].radius_base = MAX( jumppoint_gfx->sw / res, 10. );
+      moo[items].text_width = gl_printWidthRaw( &gl_smallFont, _(jp->target->name) );
+      pos[items] = &jp->pos;
+      mo[items]  = &jp->mo;
+      items++;
    }
    for (i=0; i<cur_system->nplanets; i++) {
       pnt = cur_system->planets[i];
       max_x = MAX( max_x, ABS(pnt->pos.x) );
       max_y = MAX( max_y, ABS(pnt->pos.y) );
-      pnt->mo_radius_base = MAX( pnt->radius*2. / res, 15. );
-      pnt->mo_radius = pnt->mo_radius_base;
-      pnt->mo_text_offx = pnt->mo_radius / 2.+pixbuf*1.5;
-      pnt->mo_text_offy = -gl_smallFont.h/2.;
-      pnt->mo_text_width = gl_printWidthRaw( &gl_smallFont, _(pnt->name) );
+      if ((pnt->real != ASSET_REAL) || !planet_isKnown(pnt))
+         continue;
+      /* Initialize the map overlay stuff. */
+      moo[items].radius_base = MAX( pnt->radius*2. / res, 15. );
+      moo[items].text_width = gl_printWidthRaw( &gl_smallFont, _(pnt->name) );
+      pos[items] = &pnt->pos;
+      mo[items]  = &pnt->mo;
+      items++;
    }
 
-   /* We need to calculate the radius of the rendering. */
+   /* We need to calculate the radius of the rendering from the maximum radius of the system. */
    ovr_res = 2. * 1.2 * MAX( max_x / map_overlay_width(), max_y / map_overlay_height() );
 
    /* Compute text overlap and try to minimize it. */
+   ovr_optimizeLayout( items, pos, mo, moo, res );
+
+   /* Free the moos. */
+   free( mo );
+   free( moo );
+   free( pos );
+}
+
+
+/**
+ * @brief Makes a best effort to fit the given assets' overlay indicators and labels fit without collisions.
+ */
+static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos** mo, MapOverlayPosOpt* moo, float res )
+{
+   int i, iter, changed;
+   float cx,cy, ox,oy, r, off;
+
+   /* Parameters for the map overlay optimization. */
+   const float update_rate = 0.02; /**< how big of an update to do each step. */
+   const int max_iters = 100; /**< Maximum amount of iterations to do. */
+   const float pixbuf = 5.; /**< Pixels to buffer around for text (not used for optimizing radius). */
+   const float pixbuf_initial = 50; /**< Initial pixel buffer to consider. */
+   const float radius_shrink_ratio = 0.95; /**< How fast to shrink the radius. */
+   const float radius_grow_ratio = 1./radius_shrink_ratio; /**< How fast to grow the radius. */
+   const float position_threshold_x = 20.; /**< How far to start penalizing x position. */
+   const float position_threshold_y = 10.; /**< How far to start penalizing y position. */
+   const float position_weight = .1; /**< How much to penalize the position. */
+   const float object_weight = 1.; /**< Weight for overlapping with objects. */
+   const float text_weight = 2.; /**< Weight for overlapping with text. */
+
+   /* Initialize radius. Other will be put at infinity. */
+   for (i=0; i<items; i++) {
+      mo[i]->radius = moo[i].radius_base;
+      mo[i]->text_offx = HUGE_VAL;
+      mo[i]->text_offy = HUGE_VAL;
+   }
+
+   /* Initialize all items. */
+   for (i=0; i<items; i++) {
+      moo[i].radius = moo[i].radius_base;
+      /* Test to see what side is best to put the text on.
+       * We actually compute the text overlap also so hopefully it will alternate
+       * sides when stuff is clustered together. */
+      cx = pos[i]->x / res;
+      cy = pos[i]->y / res;
+      ovr_init_position( &moo[i].text_offx_base, &moo[i].text_offy_base,
+            res, cx, cy, moo[i].text_width, gl_smallFont.h, pixbuf, pos, mo, moo, items, i,
+            pixbuf_initial, object_weight, text_weight );
+      moo[i].text_offx = moo[i].text_offx_base;
+      moo[i].text_offy = moo[i].text_offy_base;
+      /* Initialize mo. */
+      //mo[i]->radius = moo[i].radius;
+      mo[i]->text_offx = moo[i].text_offx;
+      mo[i]->text_offy = moo[i].text_offy;
+   }
+
+   /* Optimize over them. */
    for (iter=0; iter<max_iters; iter++) {
-      for (i=0; i<cur_system->njumps; i++) {
-         jp = &cur_system->jumps[i];
-         if (!jp_isUsable(jp) || !jp_isKnown(jp))
-            continue;
-         cx = jp->pos.x / res;
-         cy = jp->pos.y / res;
-         r  = jp->mo_radius;
-         /* Modify radius if overlap. */
-         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx-r/2., cy-r/2., r, r, i, -1, 1, 0. ))
-            jp->mo_radius *= 0.99;
-         else if (jp->mo_radius < jp->mo_radius_base)
-            jp->mo_radius *= 1.01;
-         /* Move text if overlap. */
-         if (ovr_refresh_compute_overlap( &ox, &oy, res ,cx+jp->mo_text_offx, cy+jp->mo_text_offy, jp->mo_text_width, gl_smallFont.h, i, -1, 0, pixbuf )) {
-            jp->mo_text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
-            jp->mo_text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
+      changed = 0;
+      for (i=0; i<items; i++) {
+         cx = pos[i]->x / res;
+         cy = pos[i]->y / res;
+         r  = mo[i]->radius;
+         /* Modify radius if overlap.
+          * We ignore the text here, as the text should move away on it's own.
+          * Furthermore, no pixel buffer so that everything is tighter. */
+         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx-r/2., cy-r/2., r, r, pos, mo, moo, items, i, 1, 0., object_weight, 0. )) {
+            moo[i].radius *= radius_shrink_ratio;
+            changed = 1;
          }
-      }
-      for (i=0; i<cur_system->nplanets; i++) {
-         pnt = cur_system->planets[i];
-         if ((pnt->real != ASSET_REAL) || !planet_isKnown(pnt))
-            continue;
-         cx = pnt->pos.x / res;
-         cy = pnt->pos.y / res;
-         r  = pnt->mo_radius;
-         /* Modify radius if overlap. */
-         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx-r/2., cy-r/2., r, r, -1, i, 1, 0. ))
-            pnt->mo_radius *= 0.99;
-         else if (pnt->mo_radius < pnt->mo_radius_base)
-            pnt->mo_radius *= 1.01;
-         /* Move text if overlap. */
-         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx+pnt->mo_text_offx, cy+pnt->mo_text_offy, pnt->mo_text_width, gl_smallFont.h, -1, i, 0, pixbuf )) {
-            pnt->mo_text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
-            pnt->mo_text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
+         else if (mo[i]->radius < moo[i].radius_base) {
+            moo[i].radius *= radius_grow_ratio;
+            changed = 1;
          }
+         /* Move text if overlap. */
+         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx+mo[i]->text_offx, cy+mo[i]->text_offy, moo[i].text_width, gl_smallFont.h, pos, mo, moo, items, i, 0, pixbuf, object_weight, text_weight )) {
+            //moo[i].text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
+            //moo[i].text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
+            moo[i].text_offx += ox * update_rate;
+            moo[i].text_offy += 30 * oy * update_rate; /* Boost y offset as it's more likely to be the solution. */
+            changed = 1;
+         }
+
+         /* Penalize offsets changes */
+         off = moo[i].text_offx_base - mo[i]->text_offx;
+         if (fabs(off) > position_threshold_x) {
+            off = FSIGN(off) * pow2(fabs(off)-position_threshold_x);
+            moo[i].text_offx += position_weight * off;
+            changed = 1;
+         }
+         off = moo[i].text_offy_base - mo[i]->text_offy;
+         if (fabs(off) > position_threshold_y) {
+            off = FSIGN(off) * pow2(fabs(off)-position_threshold_y);
+            moo[i].text_offy += position_weight * off;
+            changed = 1;
+         }
+
+         /* Propagate updates. */
+         mo[i]->radius = moo[i].radius;
+         mo[i]->text_offx = moo[i].text_offx;
+         mo[i]->text_offy = moo[i].text_offy;
       }
+      /* Converged (or unnecessary). */
+      if (!changed)
+         break;
+      /* Propagate updates. */
+      /*
+      for (i=0; i<items; i++) {
+         mo[i]->radius = moo[i].radius;
+         mo[i]->text_offx = moo[i].text_offx;
+         mo[i]->text_offy = moo[i].text_offy;
+      }
+      */
    }
 }
 
 
 /**
+ * @brief Initializes the position of a map overlay object by checking a number of fixed positions.
+ */
+static void ovr_init_position( float *px, float *py, float res, float x, float y, float w, float h,
+      float margin, const Vector2d** pos, MapOverlayPos** mo, MapOverlayPosOpt* moo, int items, int self,
+      float pixbuf, float object_weight, float text_weight )
+{
+   int i;
+   float ox,oy, cx,cy, bx,by;
+   float off, val, best;
+
+   off = moo[self].radius_base/2.+margin*1.5;
+   /* Order is left -> right -> top -> bottom */
+   //float tx[8] = {   off, -off-w, -w/2.,  -w/2., off, -off-w,    off, -off-w };
+   //float ty[8] = { -h/2.,  -h/2.,   off, -off-h, off,    off, -off-h, -off-h };
+   const float tx[4] = {   off, -off-w, -w/2. , -w/2. };
+   const float ty[4] = { -h/2.,  -h/2., off, -off-h };
+
+   /* Check all combinations. */
+   best = HUGE_VAL;
+   for (i=0; i<4; i++) {
+      cx = x + tx[i];
+      cy = y + ty[i];
+      ovr_refresh_compute_overlap( &ox, &oy, res, cx, cy, w, h, pos, mo, moo, items, self, 1, pixbuf, object_weight, text_weight );
+      val = pow2(ox)+pow2(oy);
+      /* Keep best. */
+      if (val < best) {
+         bx = tx[i];
+         by = ty[i];
+         best = val;
+      }
+   }
+
+   *px = bx;
+   *py = by;
+}
+
+/**
  * @brief Compute a collision between two rectangles and direction to move one away from another.
  */
-static void update_collision( float *ox, float *oy, float weight,
+static int update_collision( float *ox, float *oy, float weight,
       float x, float y, float w, float h,
       float mx, float my, float mw, float mh )
 {
    /* No collision. */
    if (((x+w) < mx) || (x > (mx+mw)))
-      return;
+      return 0;
    if (((y+h) < my) || (y > (my+mh)))
-      return;
+      return 0;
 
    /* Case A is left of B. */
    if (x < mx)
@@ -227,6 +368,8 @@ static void update_collision( float *ox, float *oy, float weight,
    /* Case A is above B. */
    else
       *oy += weight*((my+mh)-y);
+
+   return 1;
 }
 
 
@@ -234,56 +377,37 @@ static void update_collision( float *ox, float *oy, float weight,
  * @brief Compute how an element overlaps with text and direction to move away.
  */
 static int ovr_refresh_compute_overlap( float *ox, float *oy,
-      float res, float x, float y, float w, float h,
-      int jpid, int pntid, int radius, double pixbuf )
+      float res, float x, float y, float w, float h, const Vector2d** pos,
+      MapOverlayPos** mo, MapOverlayPosOpt* moo, int items, int self, int radius, float pixbuf,
+      float object_weight, float text_weight )
 {
-   int i;
-   Planet *pnt;
-   JumpPoint *jp;
+   int i, collided;
    float mx, my, mw, mh;
+   const float pb2 = pixbuf*2.;
 
    *ox = *oy = 0.;
+   collided = 0;
 
-   for (i=0; i<cur_system->njumps; i++) {
-      jp = &cur_system->jumps[i];
-      if (!jp_isUsable(jp) || !jp_isKnown(jp))
-         continue;
-      if ((jpid != i) || !radius) { 
-         mw = jp->mo_radius+2.*pixbuf;
+   for (i=0; i<items; i++) {
+      if (i != self || !radius) {
+         /* convert center coordinates to bottom left*/
+         mw = mo[i]->radius + pb2;
          mh = mw;
-         mx = jp->pos.x/res - mw/2.;
-         my = jp->pos.y/res - mh/2.;
-         update_collision( ox, oy, 2., x, y, w, h, mx, my, mw, mh );
+         mx = pos[i]->x/res - mw/2.;
+         my = pos[i]->y/res - mh/2.;
+         collided |= update_collision( ox, oy, object_weight, x, y, w, h, mx, my, mw, mh );
       }
-      if ((jpid != i) || radius) {
-         mw = jp->mo_text_width+2.*pixbuf;
-         mh = gl_smallFont.h+2.*pixbuf;
-         mx = jp->pos.x/res + jp->mo_text_offx-pixbuf;
-         my = jp->pos.x/res + jp->mo_text_offy-pixbuf;
-         update_collision( ox, oy, 1., x, y, w, h, mx, my, mw, mh );
-      }
-   }
-   for (i=0; i<cur_system->nplanets; i++) {
-      pnt = cur_system->planets[i];
-      if ((pnt->real != ASSET_REAL) || !planet_isKnown(pnt))
-         continue;
-      if ((pntid != i) || !radius) {
-         mw = pnt->mo_radius+2.*pixbuf;
-         mh = mw;
-         mx = pnt->pos.x/res - mw/2.;
-         my = pnt->pos.y/res - mh/2.;
-         update_collision( ox, oy, 2., x, y, w, h, mx, my, mw, mh );
-      }
-      if ((pntid != i) || radius) {
-         mw = pnt->mo_text_width+2.*pixbuf;
-         mh = gl_smallFont.h+2.*pixbuf;
-         mx = pnt->pos.x/res + pnt->mo_text_offx-pixbuf;
-         my = pnt->pos.y/res + pnt->mo_text_offy-pixbuf;
-         update_collision( ox, oy, 1., x, y, w, h, mx, my, mw, mh );
+      if (i != self || radius) {
+         /* no need to convert coordinates, just add pixbuf */
+         mw = moo[i].text_width + pb2;
+         mh = gl_smallFont.h + pb2;
+         mx = pos[i]->x/res + mo[i]->text_offx-pixbuf;
+         my = pos[i]->y/res + mo[i]->text_offy-pixbuf;
+         collided |= update_collision( ox, oy, text_weight, x, y, w, h, mx, my, mw, mh );
       }
    }
 
-   return (*ox > 0.) || (*oy > 0.);
+   return collided;
 }
 
 

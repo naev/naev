@@ -467,7 +467,7 @@ int ai_pinit( Pilot *p, const char *ai )
    AI_Profile *prof;
    char buf[PATH_MAX];
 
-   strncpy(buf, ai, sizeof(buf));
+   strncpy(buf, ai, sizeof(buf)-1);
    buf[sizeof(buf)-1] = '\0';
 
    /* Set up the profile. */

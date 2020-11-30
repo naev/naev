@@ -11,8 +11,8 @@
   <y>-691.480081</y>
  </pos>
  <assets>
-  <asset>Virtual Trader Area</asset>
   <asset>Virtual Independent Trader Area</asset>
+  <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
   <jump target="Ganth">
