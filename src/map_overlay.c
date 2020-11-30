@@ -309,10 +309,10 @@ static void ovr_init_position( float *px, float *py, float res, float x, float y
 
    off = moo[self].radius_base/2.+margin*1.5;
    /* Order is left -> right -> top -> bottom */
-   //float tx[8] = { -off-w,   off, -w/2. , -w/2., -off-w, off, -off-w,    off };
-   //float ty[8] = {  -h/2., -h/2.  , off, -off-h,    off, off, -off-h, -off-h };
-   const float tx[4] = { -off-w,   off, -w/2. , -w/2. };
-   const float ty[4] = {  -h/2., -h/2.  , off, -off-h };
+   //float tx[8] = {   off, -off-w, -w/2.,  -w/2., off, -off-w,    off, -off-w };
+   //float ty[8] = { -h/2.,  -h/2.,   off, -off-h, off,    off, -off-h, -off-h };
+   const float tx[4] = {   off, -off-w, -w/2. , -w/2. };
+   const float ty[4] = { -h/2.,  -h/2., off, -off-h };
 
    /* Check all combinations. */
    best = HUGE_VAL;
