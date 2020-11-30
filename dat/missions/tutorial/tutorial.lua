@@ -36,6 +36,9 @@ require "missions/neutral/common.lua"
 -- FIXME: Have to use a table for some of it due to \a bug.
 text = {}
 
+a_commodity = commodity.get( "Water" )
+an_outfit = outfit.get( "Heavy Laser" )
+
 intro_title = _("Passing The Sky")
 intro_text  = _([["Congratulations on your first space ship, %s!" Captain T. Practice, who sold the %s to you, says through the radio. "You have made an excellent decision to purchase from Melendez Corporation! Our ships are prized for their reliability and affordability. I promise, you won't be disappointed!" You are skeptical of the sales pitch, of course; you really only bought this ship because it was the only one you could afford. Still, you tactfully thank the salesperson.
     "Now that we have you out in space for the first time, how about I go over your new ship's controls with you real quick? No charge!"]])
