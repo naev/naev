@@ -263,7 +263,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
             changed = 1;
          }
          /* Move text if overlap. */
-         if (ovr_refresh_compute_overlap( &ox, &oy, res ,cx+mo[i]->text_offx, cy+mo[i]->text_offy, moo[i].text_width, gl_smallFont.h, pos, mo, moo, items, i, 0, pixbuf, object_weight, text_weight )) {
+         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx+mo[i]->text_offx, cy+mo[i]->text_offy, moo[i].text_width, gl_smallFont.h, pos, mo, moo, items, i, 0, pixbuf, object_weight, text_weight )) {
             //moo[i].text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
             //moo[i].text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
             moo[i].text_offx += ox * update_rate;
@@ -319,7 +319,7 @@ static void ovr_init_position( float *px, float *py, float res, float x, float y
    for (i=0; i<4; i++) {
       cx = x + tx[i];
       cy = y + ty[i];
-      ovr_refresh_compute_overlap( &ox, &oy, res, cx, cy, w, h, pos, mo, moo, items, self, 0, pixbuf, object_weight, text_weight );
+      ovr_refresh_compute_overlap( &ox, &oy, res, cx, cy, w, h, pos, mo, moo, items, self, 1, pixbuf, object_weight, text_weight );
       val = pow2(ox)+pow2(oy);
       /* Keep best. */
       if (val < best) {
