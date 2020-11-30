@@ -1284,7 +1284,7 @@ void takeoff( int delay )
    if (!player_canTakeoff()) {
       char message[512];
       pilot_reportSpaceworthy( player.p, message, sizeof(message) );
-      dialogue_msg( _("Ship not fit for flight"), message );
+      dialogue_msgRaw( _("Ship not fit for flight"), message );
 
       /* Check whether the player needs rescuing. */
       land_stranded();

@@ -601,7 +601,7 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str,
    x = bx;
 
    /* Print text. */
-   gl_printMid( &gl_smallFont, 30, bx-15, by, &cFontWhite, str );
+   gl_printMidRaw( &gl_smallFont, 30, bx-15, by, &cFontWhite, -1, str );
 
    /* Draw squares. */
    for (i=0; i<n; i++) {

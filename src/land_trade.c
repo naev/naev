@@ -381,5 +381,5 @@ void commodity_renderMod( double bx, double by, double w, double h, void *data )
       commodity_mod = q;
    }
    nsnprintf( buf, 8, "%dx", q );
-   gl_printMid( &gl_smallFont, w, bx, by, &cFontWhite, buf );
+   gl_printMidRaw( &gl_smallFont, w, bx, by, &cFontWhite, -1, buf );
 }

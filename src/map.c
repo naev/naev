@@ -1201,9 +1201,7 @@ void map_renderNames( double bx, double by, double x, double y,
       if (!rectOverlap(tx, ty, textw, gl_smallFont.h, bx, by, w, h))
          continue;
 
-      gl_print( &gl_smallFont,
-            tx, ty,
-            &cWhite, _(sys->name) );
+      gl_printRaw( &gl_smallFont, tx, ty, &cWhite, -1, _(sys->name) );
 
    }
 
@@ -1230,9 +1228,7 @@ void map_renderNames( double bx, double by, double x, double y,
             nsnprintf( buf, sizeof(buf), "\agH: %.2f", n );
          else
             nsnprintf( buf, sizeof(buf), "H: %.2f", n );
-         gl_print( &gl_smallFont,
-               tx, ty,
-               &cGrey70, buf );
+         gl_printRaw( &gl_smallFont, tx, ty, &cGrey70, -1, buf );
       }
    }
 }
@@ -1531,10 +1527,10 @@ static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Comm
    if ( line2 != NULL ) {
       *line2++ = '\0';
       textw = gl_printWidthRaw( &gl_smallFont, line2 );
-      gl_print( &gl_smallFont, x + (sys->pos.x)*map_zoom - textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, line2 );
+      gl_printRaw( &gl_smallFont, x + (sys->pos.x)*map_zoom - textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, -1, line2 );
    }
    textw = gl_printWidthRaw( &gl_smallFont, buf );
-   gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, buf );
+   gl_printRaw( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, -1, buf );
 }
 
 
