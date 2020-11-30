@@ -311,8 +311,8 @@ static void ovr_init_position( float *px, float *py, float res, float x, float y
    /* Order is left -> right -> top -> bottom */
    //float tx[8] = { -off-w,   off, -w/2. , -w/2., -off-w, off, -off-w,    off };
    //float ty[8] = {  -h/2., -h/2.  , off, -off-h,    off, off, -off-h, -off-h };
-   float tx[4] = { -off-w,   off, -w/2. , -w/2. };
-   float ty[4] = {  -h/2., -h/2.  , off, -off-h };
+   const float tx[4] = { -off-w,   off, -w/2. , -w/2. };
+   const float ty[4] = {  -h/2., -h/2.  , off, -off-h };
 
    /* Check all combinations. */
    best = HUGE_VAL;
