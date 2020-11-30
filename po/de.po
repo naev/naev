@@ -12863,10 +12863,18 @@ msgstr ""
 msgid "Return to %s"
 msgstr "Kehre nach %s zurück"
 
-#: dat/missions/empire/collective/ec03.lua:63
+#: dat/missions/empire/collective/ec03.lua:69
 #, lua-format
-msgid "Destroy at least %d drones (%d remaining)"
-msgstr "Zerstöre mindestens %d Drohnen (%d verbleibend)"
+msgid "Destroy at least %d drone"
+msgid_plural "Destroy at least %d drones"
+msgstr[0] "Zerstöre mindestens %d Drohne"
+msgstr[1] "Zerstöre mindestens %d Drohnen"
+
+#: dat/missions/empire/collective/ec03.lua:73
+#, lua-format
+msgid "%d remaining"
+msgid_plural "%d remaining"
+msgstr[0] "%d verbleibend"
 
 #: dat/missions/empire/collective/ec03.lua:65
 msgid ""
