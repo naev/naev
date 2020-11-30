@@ -78,6 +78,8 @@ enum {
 typedef struct MapOverlayPos_ {
    float radius_base; /**< Radius for display on the map overlay. */
    float radius; /**< Radius for display on the map overlay. */
+   float text_offx_base; /**< Base x position of the caption text. */
+   float text_offy_base; /**< Base y position of the caption text. */
    float text_offx; /**< x offset of the caption text. */
    float text_offy; /**< y offset of the caption text. */
    float text_width; /**< width of the caption text. */
