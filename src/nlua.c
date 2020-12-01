@@ -385,7 +385,7 @@ static char* nlua_packfileLoaderTryFile( size_t *bufsize, const char *filename )
 static int nlua_packfileLoader( lua_State* L )
 {
    const char *filename;
-   char filename_ext[PATH_MAX];
+   char filename_ext[NDATA_PATH_MAX];
    char *buf;
    size_t bufsize;
    int envtab;
