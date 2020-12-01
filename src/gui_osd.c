@@ -25,8 +25,7 @@ typedef struct OSD_s {
    char *title; /**< Title of the OSD. */
 
    char **msg; /**< Stored messages. */
-   char ***items; /**< List of array (array.h) of allocated strings. */
-   int nitems; /**< Number of items on the list. */
+   char ***items; /**< Array of array (array.h) of allocated strings. */
 
    int active; /**< Active item. */
 } OSD_t;
@@ -83,7 +82,7 @@ static int osd_sortCompare( const void *arg1, const void *arg2 )
       return ret;
 
    /* Compare items. */
-   m = MIN(osd1->nitems, osd2->nitems);
+   m = MIN(array_size(osd1->items), array_size(osd2->items));
    for (i=0; i<m; i++) {
       ret = strcmp( osd1->msg[i], osd2->msg[i] );
       if (ret != 0)
@@ -91,9 +90,9 @@ static int osd_sortCompare( const void *arg1, const void *arg2 )
    }
 
    /* Compare on length. */
-   if (osd1->nitems > osd2->nitems)
+   if (array_size(osd1->items) > array_size(osd2->items))
       return +1;
-   if (osd1->nitems < osd2->nitems)
+   if (array_size(osd1->items) < array_size(osd2->items))
       return -1;
 
    /* Compare ID. */
@@ -140,15 +139,14 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
    osd->title  = strdup(title);
    osd->priority = priority;
    osd->msg = malloc( sizeof(char*) * nitems );
-   osd->items = malloc( sizeof(char**) * nitems );
-   osd->nitems = nitems;
-   for (i=0; i<osd->nitems; i++) {
+   osd->items = array_create_size( char**, nitems );
+   for (i=0; i<nitems; i++) {
       osd->msg[i] = strdup( items[i] );
+      array_push_back( &osd->items, array_create(char*));
 
       l = strlen(osd->msg[i]); /* Message length. */
       n = 0; /* Text position. */
       t = 0; /* Tabbed? */
-      osd->items[i] = array_create(char*);
       w = osd_w-osd_hyphenLen;
       while (n < l) {
          /* Test if tabbed. */
@@ -237,14 +235,14 @@ static int osd_free( OSD_t *osd )
    if (osd->title != NULL)
       free(osd->title);
 
-   for (i=0; i<osd->nitems; i++) {
+   for (i=0; i<array_size(osd->items); i++) {
       free( osd->msg[i] );
       for (j=0; j<array_size(osd->items[i]); j++)
          free(osd->items[i][j]);
       array_free(osd->items[i]);
    }
    free(osd->msg);
-   free(osd->items);
+   array_free(osd->items);
 
    return 0;
 }
@@ -302,8 +300,8 @@ int osd_active( unsigned int osd, int msg )
    if (o == NULL)
       return -1;
 
-   if ((msg < 0) || (msg >= o->nitems)) {
-      WARN(_("OSD '%s' only has %d items (requested %d)"), o->title, o->nitems, msg );
+   if ((msg < 0) || (msg >= array_size(o->items))) {
+      WARN(_("OSD '%s' only has %d items (requested %d)"), o->title, array_size(o->items), msg );
       return -1;
    }
 
@@ -418,10 +416,10 @@ void osd_render (void)
       duplicates = 0;
       for (m=k+1; m<array_size(osd_list); m++) {
          if ((strcmp(osd_list[m].title, ll->title) == 0) &&
-               (osd_list[m].nitems == ll->nitems) &&
+               (array_size(osd_list[m].items) == array_size(ll->items)) &&
                (osd_list[m].active == ll->active)) {
             is_duplicate = 1;
-            for (i=osd_list[m].active; i<osd_list[m].nitems; i++) {
+            for (i=osd_list[m].active; i<array_size(osd_list[m].items); i++) {
                if (array_size(osd_list[m].items[i]) == array_size(ll->items[i])) {
                   for (j=0; j<array_size(osd_list[m].items[i]); j++) {
                      if (strcmp(osd_list[m].items[i][j], ll->items[i][j]) != 0 ) {
@@ -457,7 +455,7 @@ void osd_render (void)
       }
 
       /* Print items. */
-      for (i=ll->active; i<ll->nitems; i++) {
+      for (i=ll->active; i<array_size(ll->items); i++) {
          x = osd_x;
          w = osd_w;
          c = (ll->active == i) ? &cFontWhite : &cFontGrey;
@@ -513,10 +511,10 @@ static void osd_calcDimensions (void)
       duplicates = 0;
       for (m=k+1; m<array_size(osd_list); m++) {
          if ((strcmp(osd_list[m].title, ll->title) == 0) &&
-               (osd_list[m].nitems == ll->nitems) &&
+               (array_size(osd_list[m].items) == array_size(ll->items)) &&
                (osd_list[m].active == ll->active)) {
             is_duplicate = 1;
-            for (i=osd_list[m].active; i<osd_list[m].nitems; i++) {
+            for (i=osd_list[m].active; i<array_size(osd_list[m].items); i++) {
                if (array_size(osd_list[m].items[i]) == array_size(ll->items[i])) {
                   for (j=0; j<array_size(osd_list[m].items[i]); j++) {
                      if (strcmp(osd_list[m].items[i][j], ll->items[i][j]) != 0 ) {
@@ -541,7 +539,7 @@ static void osd_calcDimensions (void)
       len += gl_smallFont.h + 5.;
 
       /* Print items. */
-      for (i=ll->active; i<ll->nitems; i++)
+      for (i=ll->active; i<array_size(ll->items); i++)
          for (j=0; j<array_size(ll->items[i]); j++)
             len += gl_smallFont.h + 5.;
    }
@@ -584,7 +582,7 @@ char **osd_getItems( unsigned int osd, int *nitems )
       return NULL;
    }
 
-   *nitems = o->nitems;
+   *nitems = array_size(o->items);
    return o->msg;
 }
 
