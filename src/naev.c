@@ -442,8 +442,9 @@ int main( int argc, char** argv )
    while (SDL_PollEvent(&event));
 
    /* Incomplete game note (shows every time version number changes). */
-   if ( (conf.lastversion == NULL)
-         || (naev_versionCompare(conf.lastversion) != 0) ) {
+   if ( conf.lastversion == NULL || naev_versionCompare(conf.lastversion) != 0 ) {
+      if ( conf.lastversion != NULL )
+         free( conf.lastversion );
       conf.lastversion = strdup( naev_version(0) );
       dialogue_msg(
          _("Welcome to Naev"),
