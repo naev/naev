@@ -326,7 +326,7 @@ static int intro_draw_text( char **const sb_list, int sb_size, int sb_index, dou
    do {
       if ( sb_list[ i ] != NULL ) {
          stop = 0;
-         gl_print( &intro_font, x, y, &cFontGreen, sb_list[ i ] );
+         gl_printRaw( &intro_font, x, y, &cFontGreen, -1, sb_list[ i ] );
       }
 
       y -= line_height;

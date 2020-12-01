@@ -48676,8 +48676,8 @@ msgstr "\aoAutonav an Position angekommen."
 
 #: src/player_autonav.c:380
 #, c-format
-msgid "\aoAutonav arrived at \a%c%s\a"
-msgstr "\aoAutonav kam an bei \a%c%s\a"
+msgid "\aoAutonav arrived at \a%c%s\a0."
+msgstr "\aoAutonav kam an bei \a%c%s\a0."
 
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
 #: src/player_autonav.c:395
@@ -49523,8 +49523,8 @@ msgstr ""
 
 #: src/space.c:1331
 #, c-format
-msgid "You discovered \a%c%s\a"
-msgstr "Du hast entdeckt: \a%c%s\a"
+msgid "You discovered \a%c%s\a0."
+msgstr "Du hast entdeckt: \a%c%s\a0."
 
 #: src/space.c:1346
 msgid "You discovered a Jump Point."

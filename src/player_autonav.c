@@ -380,7 +380,7 @@ static void player_autonav (void)
       case AUTONAV_PNT_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
-            player_message( _("\aoAutonav arrived at \a%c%s\a\0."),
+            player_message( _("\aoAutonav arrived at \a%c%s\a0."),
                   player.autonavcol,
                   player.autonavmsg );
             player_autonavEnd();

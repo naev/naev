@@ -140,7 +140,7 @@ int comm_openPilot( unsigned int pilot )
    /* Check to see if pilot wants to communicate. */
    msg = comm_getString( "comm_no" );
    if (msg != NULL) {
-      player_message( msg );
+      player_messageRaw( msg );
       return 0;
    }
 
@@ -506,12 +506,12 @@ static void comm_bribePlanet( unsigned int wid, char *unused )
 
    /* No bribing. */
    if (comm_planet->bribe_price <= 0.) {
-      dialogue_msg( _("Bribe Starport"), comm_planet->bribe_msg );
+      dialogue_msgRaw( _("Bribe Starport"), comm_planet->bribe_msg );
       return;
    }
 
    /* Yes/No input. */
-   answer = dialogue_YesNo( _("Bribe Starport"), comm_planet->bribe_msg );
+   answer = dialogue_YesNoRaw( _("Bribe Starport"), comm_planet->bribe_msg );
 
    /* Said no. */
    if (answer == 0) {
@@ -557,7 +557,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    /* Check to see if ship has a no refuel message. */
    msg = comm_getString( "refuel_no" );
    if (msg != NULL) {
-      dialogue_msg( _("Request Fuel"), msg );
+      dialogue_msgRaw( _("Request Fuel"), msg );
       return;
    }
 

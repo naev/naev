@@ -234,7 +234,7 @@ static int nebu_loadTexture( SDL_Surface *sur, int w, int h, glTexture **tex )
 
    if ((w!=0) && (h!=0) &&
          (((*tex)->rw != w) || ((*tex)->rh != h))) {
-      WARN(_("Nebula size doesn't match expected! (%dx%d instead of %dx%d)"),
+      WARN(_("Nebula size doesn't match expected! (%fx%f instead of %dx%d)"),
             (*tex)->rw, (*tex)->rh, nebu_pw, nebu_ph );
       return -1;
    }

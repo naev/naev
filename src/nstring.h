@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "attributes.h"
 #include "ncompat.h"
 
 
@@ -25,7 +26,7 @@ char* nstrndup( const char *s, size_t n );
 #if HAS_SNPRINTF
 #define nsnprintf       snprintf
 #else /* HAS_SNPRINTF */
-int nsnprintf( char *text, size_t maxlen, const char *fmt, ... );
+FORMAT( printf, 3, 4 ) int nsnprintf( char *text, size_t maxlen, const char *fmt, ... );
 #endif /* HAS_SNPRINTF */
 
 int strsort( const void *p1, const void *p2 );

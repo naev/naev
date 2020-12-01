@@ -1334,7 +1334,7 @@ void space_update( const double dt )
       for (i=0; i<cur_system->nplanets; i++) {
          if (( !planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i ))) {
             planet_setKnown( cur_system->planets[i] );
-            player_message( _("You discovered \a%c%s\a\0."),
+            player_message( _("You discovered \a%c%s\a0."),
                   planet_getColourChar( cur_system->planets[i] ),
                   _(cur_system->planets[i]->name) );
             hparam[0].type  = HOOK_PARAM_STRING;
@@ -1911,7 +1911,7 @@ void planet_updateLand( Planet *p )
       if (lua_isstring(naevL,-1))
          p->bribe_ack_msg = strdup( lua_tostring(naevL,-1) );
       else {
-         WARN( _("%s: %s -> return parameter 5 is not a string!"), LANDING_DATA_PATH, str, p->name );
+         WARN( _("%s: %s (%s) -> return parameter 5 is not a string!"), LANDING_DATA_PATH, str, p->name );
          p->bribe_ack_msg = strdup( _("Invalid bribe ack message") );
       }
    }

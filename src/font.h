@@ -8,6 +8,7 @@
 #  define FONT_H
 
 
+#include "attributes.h"
 #include "opengl.h"
 
 
@@ -65,19 +66,19 @@ void gl_printMarkerRaw( const glFont *ft_font,
  * printf style printing.
  */
 /* prints text normally */
-void gl_print( const glFont *ft_font, const double x, const double y,
+FORMAT( printf, 5, 6 ) void gl_print( const glFont *ft_font, double x, double y,
       const glColour *c, const char *fmt, ... );
 /* prints text to a max length */
-int gl_printMax( const glFont *ft_font, const int max,
-      const double x, const double y,
+FORMAT( printf, 6, 7 ) int gl_printMax( const glFont *ft_font, const int max,
+      double x, double y,
       const glColour *c, const char *fmt, ... );
 /* prints text centered in width at x */
-int gl_printMid( const glFont *ft_font, const int width,
-      double x, const double y,
+FORMAT( printf, 6, 7 ) int gl_printMid( const glFont *ft_font, const int width,
+      double x, double y,
       const glColour* c, const char *fmt, ... );
 /* respects \n -> bx,by is TOP LEFT POSITION */
-int gl_printText( const glFont *ft_font,
-      const int width, const int height,
+FORMAT( printf, 7, 8 ) int gl_printText( const glFont *ft_font,
+      int width, int height,
       double bx, double by,
       const glColour* c, const char *fmt, ... );
 
@@ -85,9 +86,9 @@ int gl_printText( const glFont *ft_font,
 int gl_printWidthForText( const glFont *ft_font, const char *text,
       const int width );
 int gl_printWidthRaw( const glFont *ft_font, const char *text );
-int gl_printWidth( const glFont *ft_font, const char *fmt, ... );
+FORMAT( printf, 2, 3 )int gl_printWidth( const glFont *ft_font, const char *fmt, ... );
 int gl_printHeightRaw( const glFont *ft_font, const int width, const char *text );
-int gl_printHeight( const glFont *ft_font,
+FORMAT( printf, 3, 4 )int gl_printHeight( const glFont *ft_font,
       const int width, const char *fmt, ... );
 
 /* Restore hacks. */

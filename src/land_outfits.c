@@ -900,7 +900,7 @@ static void outfits_renderMod( double bx, double by, double w, double h, void *d
    if (q==1) return; /* Ignore no modifier. */
 
    nsnprintf( buf, 8, "%dx", q );
-   gl_printMid( &gl_smallFont, w, bx, by, &cFontWhite, buf );
+   gl_printMidRaw( &gl_smallFont, w, bx, by, &cFontWhite, -1, buf );
 }
 
 

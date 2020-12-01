@@ -78,7 +78,7 @@ int sound_mix_init (void)
    SDL_InitSubSystem(SDL_INIT_AUDIO);
    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT , 2, 1024) < 0) {
       WARN(_("Opening Audio: %s"), Mix_GetError());
-      DEBUG("");
+      DEBUG_BLANK();
       return -1;
    }
    Mix_AllocateChannels( conf.snd_voices );
@@ -128,7 +128,7 @@ static void print_MixerVersion (void)
    DEBUG(_("Version: %d.%d.%d [compiled: %d.%d.%d]"),
          compiled.major, compiled.minor, compiled.patch,
          linked->major, linked->minor, linked->patch);
-   DEBUG("");
+   DEBUG_BLANK();
 }
 
 
