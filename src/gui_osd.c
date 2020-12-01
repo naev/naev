@@ -42,10 +42,10 @@ typedef struct OSD_s {
 
 
 /*
- * OSD linked list.
+ * OSD array.
  */
 static unsigned int osd_idgen = 0; /**< ID generator for OSD. */
-static OSD_t *osd_list        = NULL; /**< Linked list for OSD. */
+static OSD_t *osd_list        = NULL; /**< Array (array.h) for OSD. */
 
 
 /*
