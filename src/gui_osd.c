@@ -60,6 +60,7 @@ static void osd_calcDimensions (void);
 /* Sort. */
 static int osd_sortCompare( const void * arg1, const void * arg2 );
 static void osd_sort (void);
+static void osd_wordwrap( OSD_t* osd );
 
 
 static int osd_sortCompare( const void *arg1, const void *arg2 )
@@ -123,16 +124,15 @@ static void osd_sort (void)
  */
 unsigned int osd_create( const char *title, int nitems, const char **items, int priority )
 {
-   int i, n, l, s, w, t, id;
-   char *chunk;
+   int i, id;
    OSD_t *osd;
 
    /* Create. */
    if (osd_list == NULL)
       osd_list = array_create( OSD_t );
-   osd         = &array_grow( &osd_list );
+   osd = &array_grow( &osd_list );
    memset( osd, 0, sizeof(OSD_t) );
-   osd->id     = ++osd_idgen;
+   osd->id = id = ++osd_idgen;
    osd->active = 0;
 
    /* Copy text. */
@@ -143,7 +143,25 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
    for (i=0; i<nitems; i++) {
       osd->msg[i] = strdup( items[i] );
       array_push_back( &osd->items, array_create(char*));
+   }
 
+   osd_wordwrap( osd );
+   osd_sort(); /* THIS INVALIDATES THE osd POINTER. */
+   osd_calcDimensions();
+
+   return id;
+}
+
+
+/**
+ * @brief Calculates the word-wrapped osd->items from osd->msg.
+ *        osd->items must be freshly initialized.
+ */
+void osd_wordwrap( OSD_t* osd )
+{
+   int i, n, l, s, w, t;
+   char *chunk;
+   for (i=0; i<array_size(osd->items); i++) {
       l = strlen(osd->msg[i]); /* Message length. */
       n = 0; /* Text position. */
       t = 0; /* Tabbed? */
@@ -192,15 +210,6 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
          n += s + 1;
       }
    }
-
-   /* Sort them buggers. */
-   id = osd->id; /* WE MUST SAVE THE ID BEFORE WE SORT. Or we get stuck with an invalid osd pointer. */
-   osd_sort();
-
-   /* Recalculate dimensions. */
-   osd_calcDimensions();
-
-   return id;
 }
 
 
