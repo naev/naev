@@ -198,10 +198,6 @@ function cargo_setDesc( misn_desc, cargo, amount, target, deadline, notes )
    end
 
    if deadline ~= nil then
-      print()
-      print( tostring( deadline   ) )
-      print( tostring( time.get() ) )
-      print( tostring( deadline - time.get() ) )
       table.insert( t, _("Time limit: %s"):format( tostring(deadline - time.get()) ) );
    end
 
