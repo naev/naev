@@ -331,7 +331,7 @@ static void ovr_init_position( float *px, float *py, float res, float x, float y
       ovr_refresh_compute_overlap( &ox, &oy, res, cx, cy, w, h, pos, mo, moo, items, self, 1, pixbuf, object_weight, text_weight );
       val = pow2(ox)+pow2(oy);
       /* Keep best. */
-      if (val < best) {
+      if (i == 0 || val < best) {
          bx = tx[i];
          by = ty[i];
          best = val;
