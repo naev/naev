@@ -151,7 +151,7 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
       while (n < l) {
          /* Test if tabbed. */
          if (n==0) {
-            if (items[i][n] == '\t') {
+            if (osd->msg[i][n] == '\t') {
                t = 1;
                w = osd_w - osd_tabLen;
             }
@@ -162,7 +162,7 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
          }
 
          /* Get text size. */
-         s = gl_printWidthForText( &gl_smallFont, &items[i][n], w );
+         s = gl_printWidthForText( &gl_smallFont, &osd->msg[i][n], w );
 
          if (n==0 && t==1)
             w -= osd_hyphenLen;
@@ -171,20 +171,20 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
          if (n==0) {
             if (t==1) {
                chunk = malloc(s+4);
-               nsnprintf( chunk, s+4, "   %s", &items[i][n+1] );
+               nsnprintf( chunk, s+4, "   %s", &osd->msg[i][n+1] );
             }
             else {
                chunk = malloc(s+3);
-               nsnprintf( chunk, s+3, "- %s", &items[i][n] );
+               nsnprintf( chunk, s+3, "- %s", &osd->msg[i][n] );
             }
          }
          else if (t==1) {
             chunk = malloc(s+4);
-            nsnprintf( chunk, s+4, "   %s", &items[i][n] );
+            nsnprintf( chunk, s+4, "   %s", &osd->msg[i][n] );
          }
          else {
             chunk = malloc(s+1);
-            nsnprintf( chunk, s+1, "%s", &items[i][n] );
+            nsnprintf( chunk, s+1, "%s", &osd->msg[i][n] );
          }
          array_push_back( &osd->items[i], chunk );
 
