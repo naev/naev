@@ -1477,7 +1477,6 @@ void gui_renderPlayer( double res, int overlay )
    } else {
       x = 0.;
       y = 0.;
-      r = 3.;
       r = MIN(SCREEN_W,SCREEN_H)*0.008;
    }
 
