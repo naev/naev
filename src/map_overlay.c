@@ -206,7 +206,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    float cx,cy, ox,oy, r, off;
 
    /* Parameters for the map overlay optimization. */
-   const float update_rate = 0.02; /**< how big of an update to do each step. */
+   const float update_rate = 0.015; /**< how big of an update to do each step. */
    const int max_iters = 100; /**< Maximum amount of iterations to do. */
    const float pixbuf = 5.; /**< Pixels to buffer around for text (not used for optimizing radius). */
    const float pixbuf_initial = 50; /**< Initial pixel buffer to consider. */
