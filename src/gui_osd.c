@@ -17,15 +17,6 @@
 
 
 /**
- * @brief On Screen Display message element.
- */
-typedef struct OSDmsg_s {
-   char **chunks; /**< Chunks of the message. */
-   int nchunks; /**< Number of chunks message is chopped into. */
-} OSDmsg_s;
-
-
-/**
  * @brief On Screen Display element.
  */
 typedef struct OSD_s {
@@ -34,7 +25,7 @@ typedef struct OSD_s {
    char *title; /**< Title of the OSD. */
 
    char **msg; /**< Stored messages. */
-   OSDmsg_s *items; /**< Items on the list. */
+   char ***items; /**< List of array (array.h) of allocated strings. */
    int nitems; /**< Number of items on the list. */
 
    int active; /**< Active item. */
@@ -133,7 +124,8 @@ static void osd_sort (void)
  */
 unsigned int osd_create( const char *title, int nitems, const char **items, int priority )
 {
-   int i, j, n, m, l, s, w, t, id;
+   int i, n, l, s, w, t, id;
+   char *chunk;
    OSD_t *osd;
 
    /* Create. */
@@ -147,25 +139,22 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
    /* Copy text. */
    osd->title  = strdup(title);
    osd->priority = priority;
-   osd->msg    = malloc( sizeof(char*) * nitems );
-   osd->items  = malloc( sizeof(OSDmsg_s) * nitems );
+   osd->msg = malloc( sizeof(char*) * nitems );
+   osd->items = malloc( sizeof(char**) * nitems );
    osd->nitems = nitems;
    for (i=0; i<osd->nitems; i++) {
       osd->msg[i] = strdup( items[i] );
 
       l = strlen(osd->msg[i]); /* Message length. */
       n = 0; /* Text position. */
-      j = 0; /* Lines. */
-      m = 0; /* Allocated Memory. */
       t = 0; /* Tabbed? */
-      osd->items[i].chunks = NULL;
+      osd->items[i] = array_create(char*);
       w = osd_w-osd_hyphenLen;
       while (n < l) {
-
          /* Test if tabbed. */
-         if (j==0) {
+         if (n==0) {
             if (items[i][n] == '\t') {
-               t  = 1;
+               t = 1;
                w = osd_w - osd_tabLen;
             }
             else {
@@ -177,42 +166,33 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
          /* Get text size. */
          s = gl_printWidthForText( &gl_smallFont, &items[i][n], w );
 
-         if ((j==0) && (t==1))
+         if (n==0 && t==1)
             w -= osd_hyphenLen;
 
-         if (j+1 > m) {
-            if (m==0)
-               m = 32;
-            else
-               m *= 2;
-            osd->items[i].chunks = realloc( osd->items[i].chunks, m * sizeof(char*));
-         }
-
          /* Copy text over. */
-         if (j==0) {
+         if (n==0) {
             if (t==1) {
-               osd->items[i].chunks[j] = malloc(s+4);
-               nsnprintf( osd->items[i].chunks[j], s+4, "   %s", &items[i][n+1] );
+               chunk = malloc(s+4);
+               nsnprintf( chunk, s+4, "   %s", &items[i][n+1] );
             }
             else {
-               osd->items[i].chunks[j] = malloc(s+3);
-               nsnprintf( osd->items[i].chunks[j], s+3, "- %s", &items[i][n] );
+               chunk = malloc(s+3);
+               nsnprintf( chunk, s+3, "- %s", &items[i][n] );
             }
          }
          else if (t==1) {
-            osd->items[i].chunks[j] = malloc(s+4);
-            nsnprintf( osd->items[i].chunks[j], s+4, "   %s", &items[i][n] );
+            chunk = malloc(s+4);
+            nsnprintf( chunk, s+4, "   %s", &items[i][n] );
          }
          else {
-            osd->items[i].chunks[j] = malloc(s+1);
-            nsnprintf( osd->items[i].chunks[j], s+1, "%s", &items[i][n] );
+            chunk = malloc(s+1);
+            nsnprintf( chunk, s+1, "%s", &items[i][n] );
          }
+         array_push_back( &osd->items[i], chunk );
 
          /* Go to next line. */
          n += s + 1;
-         j++;
       }
-      osd->items[i].nchunks = j;
    }
 
    /* Sort them buggers. */
@@ -259,9 +239,9 @@ static int osd_free( OSD_t *osd )
 
    for (i=0; i<osd->nitems; i++) {
       free( osd->msg[i] );
-      for (j=0; j<osd->items[i].nchunks; j++)
-         free(osd->items[i].chunks[j]);
-      free(osd->items[i].chunks);
+      for (j=0; j<array_size(osd->items[i]); j++)
+         free(osd->items[i][j]);
+      array_free(osd->items[i]);
    }
    free(osd->msg);
    free(osd->items);
@@ -442,9 +422,9 @@ void osd_render (void)
                (osd_list[m].active == ll->active)) {
             is_duplicate = 1;
             for (i=osd_list[m].active; i<osd_list[m].nitems; i++) {
-               if (osd_list[m].items[i].nchunks == ll->items[i].nchunks) {
-                  for (j=0; j<osd_list[m].items[i].nchunks; j++) {
-                     if (strcmp(osd_list[m].items[i].chunks[j], ll->items[i].chunks[j]) != 0 ) {
+               if (array_size(osd_list[m].items[i]) == array_size(ll->items[i])) {
+                  for (j=0; j<array_size(osd_list[m].items[i]); j++) {
+                     if (strcmp(osd_list[m].items[i][j], ll->items[i][j]) != 0 ) {
                         is_duplicate = 0;
                         break;
                      }
@@ -481,9 +461,9 @@ void osd_render (void)
          x = osd_x;
          w = osd_w;
          c = (ll->active == i) ? &cFontWhite : &cFontGrey;
-         for (j=0; j<ll->items[i].nchunks; j++) {
+         for (j=0; j<array_size(ll->items[i]); j++) {
             gl_printMaxRaw( &gl_smallFont, w, x, p,
-                  c, -1., ll->items[i].chunks[j] );
+                  c, -1., ll->items[i][j] );
             if (j==0) {
                w = osd_w - osd_hyphenLen;
                x = osd_x + osd_hyphenLen;
@@ -537,9 +517,9 @@ static void osd_calcDimensions (void)
                (osd_list[m].active == ll->active)) {
             is_duplicate = 1;
             for (i=osd_list[m].active; i<osd_list[m].nitems; i++) {
-               if (osd_list[m].items[i].nchunks == ll->items[i].nchunks) {
-                  for (j=0; j<osd_list[m].items[i].nchunks; j++) {
-                     if (strcmp(osd_list[m].items[i].chunks[j], ll->items[i].chunks[j]) != 0 ) {
+               if (array_size(osd_list[m].items[i]) == array_size(ll->items[i])) {
+                  for (j=0; j<array_size(osd_list[m].items[i]); j++) {
+                     if (strcmp(osd_list[m].items[i][j], ll->items[i][j]) != 0 ) {
                         is_duplicate = 0;
                         break;
                      }
@@ -562,7 +542,7 @@ static void osd_calcDimensions (void)
 
       /* Print items. */
       for (i=ll->active; i<ll->nitems; i++)
-         for (j=0; j<ll->items[i].nchunks; j++)
+         for (j=0; j<array_size(ll->items[i]); j++)
             len += gl_smallFont.h + 5.;
    }
    osd_rh = MIN( len, osd_h );
