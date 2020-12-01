@@ -1483,12 +1483,14 @@ void gui_renderPlayer( double res, int overlay )
 
    /* Render the cross. */
    // gl_renderCross( x, y, r, &cRadar_player );
+   glLineWidth( 2. );
    gl_renderTriangleEmpty( x - 1, y, player.p->solid->dir, r, 2., &cBlack );
    gl_renderTriangleEmpty( x + 1, y, player.p->solid->dir, r, 2., &cBlack );
    gl_renderTriangleEmpty( x, y - 1, player.p->solid->dir, r, 2., &cBlack );
    gl_renderTriangleEmpty( x, y + 1, player.p->solid->dir, r, 2., &cBlack );
 
    gl_renderTriangleEmpty( x, y, player.p->solid->dir, r, 2., &cRadar_player );
+   glLineWidth( 1. );
 }
 
 
@@ -1677,7 +1679,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
 
    gl_drawCircle( cx, cy, vr/2.5, &col, 0 );
    gl_renderCross( cx, cy, vr/2.5, &col );
-   glLineWidth(1.);
+   //glLineWidth(1.);
 
    /* Render name. */
    /* XXX: Hack to prevent the text from overly obscuring overlay
@@ -1771,12 +1773,14 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    if (!overlay)
       col.a = 1.-interference_alpha;
 
+   glLineWidth( 3. );
    gl_renderTriangleEmpty( cx - 1, cy, -jp->angle, vr, 2., &cBlack );
    gl_renderTriangleEmpty( cx + 1, cy, -jp->angle, vr, 2., &cBlack );
    gl_renderTriangleEmpty( cx, cy - 1, -jp->angle, vr, 2., &cBlack );
    gl_renderTriangleEmpty( cx, cy + 1, -jp->angle, vr, 2., &cBlack );
 
    gl_renderTriangleEmpty( cx, cy, -jp->angle, vr, 2., &col );
+   glLineWidth( 1. );
 
    /* Render name. */
    /* XXX: Hack to prevent the text from overly obscuring overlay
