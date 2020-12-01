@@ -155,13 +155,16 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
 
 /**
  * @brief Calculates the word-wrapped osd->items from osd->msg.
- *        osd->items must be freshly initialized.
  */
 void osd_wordwrap( OSD_t* osd )
 {
    int i, n, l, s, w, t;
    char *chunk;
    for (i=0; i<array_size(osd->items); i++) {
+      for (l=0; l<array_size(osd->items[i]); l++)
+         free(osd->items[i][l]);
+      array_resize( &osd->items[i], 0 );
+
       l = strlen(osd->msg[i]); /* Message length. */
       n = 0; /* Text position. */
       t = 0; /* Tabbed? */
@@ -348,7 +351,9 @@ int osd_getActive( unsigned int osd )
  */
 int osd_setup( int x, int y, int w, int h )
 {
+   int i, must_rewrap;
    /* Set offsets. */
+   must_rewrap = (osd_w != w) && (osd_list != NULL);
    osd_x = x;
    osd_y = y;
    osd_w = w;
@@ -358,6 +363,10 @@ int osd_setup( int x, int y, int w, int h )
    /* Calculate some font things. */
    osd_tabLen = gl_printWidthRaw( &gl_smallFont, "   " );
    osd_hyphenLen = gl_printWidthRaw( &gl_smallFont, "- " );
+
+   if (must_rewrap)
+      for (i=0; i<array_size(osd_list); i++)
+         osd_wordwrap( &osd_list[i] );
    osd_calcDimensions();
 
    return 0;
