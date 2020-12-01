@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.61])
 AC_INIT([naev],
-        [0.8.0-beta.3],
+        [0.8.0-beta.4],
         [https://github.com/naev/naev/issues],
         [naev],
         [https://naev.org/])
