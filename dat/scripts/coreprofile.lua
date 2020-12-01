@@ -9,8 +9,8 @@ function pilot.coreProfile(p, profile)
                   low = 
                         {
                            small = {hull = "Unicorp D-4 Light Plating", engine = "Unicorp Hawk 300 Engine", system = "Unicorp PT-200 Core System"},
-                           medium = {hull = "Unicorp D-8 Medium Plating",  engine = "Unicorp Falcon 1200 Engine", system = "Unicorp PT-600 Core System"},
-                           large = {hull = "Unicorp D-20 Heavy Plating",  engine = "Unicorp Eagle 6500 Engine", system = "Unicorp PT-1000 Core System"}
+                           medium = {hull = "Unicorp D-24 Medium Plating",  engine = "Unicorp Falcon 1200 Engine", system = "Unicorp PT-600 Core System"},
+                           large = {hull = "Unicorp D-72 Heavy Plating",  engine = "Unicorp Eagle 6500 Engine", system = "Unicorp PT-1000 Core System"}
                         },
                   medium = 
                         {

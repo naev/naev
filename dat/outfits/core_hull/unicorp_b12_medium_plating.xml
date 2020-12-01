@@ -4,16 +4,16 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>medium</size>
-  <priority>7</priority>
-  <mass>240</mass>
-  <price>200000</price>
-  <description>Unicorp's B-12 plating is based on their D-12 design, substituting denser materials to increase armour effectiveness.</description>
-  <gfx_store>refined_hull_h</gfx_store>
+  <mass>110</mass>
+  <price>110000</price>
+  <description>Unicorp's B-12 plating is a marked improvement over the more common D-12 offering, bringing significantly improved protection and additional cargo space.</description>
+  <gfx_store>refined_hull_m</gfx_store>
+  <priority>3</priority>
  </general>
  <specific type="modification">
-  <cargo>40</cargo>
-  <absorb>20</absorb>
-  <armour>550</armour>
+  <cargo>20</cargo>
+  <absorb>12</absorb>
+  <armour>250</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>0</ew_hide>
  </specific>

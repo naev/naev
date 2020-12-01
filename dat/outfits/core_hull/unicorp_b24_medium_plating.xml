@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Unicorp B-24 Medium Plating">
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <slot prop="hull">structure</slot>
+  <size>medium</size>
+  <priority>7</priority>
+  <mass>240</mass>
+  <price>200000</price>
+  <description>Unicorp's B-24 plating is based on their D-24 design, substituting denser materials to increase armour effectiveness.</description>
+  <gfx_store>refined_hull_h</gfx_store>
+ </general>
+ <specific type="modification">
+  <cargo>40</cargo>
+  <absorb>24</absorb>
+  <armour>550</armour>
+  <armour_regen>0</armour_regen>
+  <ew_hide>0</ew_hide>
+ </specific>
+</outfit>

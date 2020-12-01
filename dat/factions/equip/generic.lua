@@ -119,7 +119,7 @@ equip_classOutfits_hulls = {
       "Unicorp D-4 Light Plating", "S&K Small Cargo Hull"
    },
    ["Freighter"] = {
-      "Unicorp D-12 Medium Plating", "S&K Medium Cargo Hull"
+      "Unicorp D-24 Medium Plating", "S&K Medium Cargo Hull"
    },
    ["Armoured Transport"] = {
       "S&K Medium Cargo Hull"
@@ -133,19 +133,19 @@ equip_classOutfits_hulls = {
       "S&K Light Stealth Plating", "S&K Light Combat Plating"
    },
    ["Corvette"] = {
-      "Unicorp D-8 Medium Plating", "Unicorp B-8 Medium Plating",
+      "Unicorp D-12 Medium Plating", "Unicorp B-12 Medium Plating",
       "S&K Medium Stealth Plating", "S&K Medium Combat Plating"
    },
    ["Destroyer"] = {
-      "Unicorp D-12 Medium Plating", "Unicorp B-12 Medium Plating",
+      "Unicorp D-24 Medium Plating", "Unicorp B-24 Medium Plating",
       "S&K Medium-Heavy Stealth Plating", "S&K Medium-Heavy Combat Plating"
    },
    ["Cruiser"] = {
-      "Unicorp D-20 Heavy Plating", "Unicorp B-20 Heavy Plating",
+      "Unicorp D-72 Heavy Plating", "Unicorp B-72 Heavy Plating",
       "S&K Superheavy Combat Plating"
    },
    ["Carrier"] = {
-      "Unicorp B-20 Heavy Plating", "S&K Superheavy Combat Plating"
+      "Unicorp B-72 Heavy Plating", "S&K Superheavy Combat Plating"
    },
    ["Drone"] = {
       "S&K Ultralight Stealth Plating"
@@ -765,7 +765,7 @@ equip_typeOutfits_hulls = {
       "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating"
    },
    ["Kestrel"] = {
-      "Unicorp D-16 Heavy Plating", "Unicorp B-16 Heavy Plating",
+      "Unicorp D-48 Heavy Plating", "Unicorp B-48 Heavy Plating",
       "S&K Heavy Combat Plating"
    },
    ["Brigand"] = {

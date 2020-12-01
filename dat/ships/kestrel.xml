@@ -36,7 +36,7 @@
   <utility size="large" />
   <utility size="medium" />
   <structure size="large" prop="engines" exclusive="1" required="1">Krain Remige Engine</structure>
-  <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-16 Heavy Plating</structure>
+  <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-48 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

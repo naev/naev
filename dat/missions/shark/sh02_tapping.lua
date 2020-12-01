@@ -296,7 +296,7 @@ function corvette()
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
 
-      badguys[i]:addOutfit("Unicorp D-8 Medium Plating")
+      badguys[i]:addOutfit("Unicorp D-12 Medium Plating")
       badguys[i]:addOutfit("Unicorp PT-500 Core System")
       badguys[i]:addOutfit("Tricon Cyclone Engine")
 
@@ -317,7 +317,7 @@ function cruiser()
    badguy:rmOutfit("all")
    badguy:rmOutfit("cores")
 
-   badguy:addOutfit("Unicorp D-16 Heavy Plating")
+   badguy:addOutfit("Unicorp D-48 Heavy Plating")
    badguy:addOutfit("Unicorp PT-900 Core System")
    badguy:addOutfit("Krain Remige Engine")
 

@@ -11,7 +11,7 @@
  </general>
  <specific type="modification">
   <cargo>65</cargo>
-  <absorb>34</absorb>
+  <absorb>56</absorb>
   <armour>1650</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>0</ew_hide>

@@ -1,18 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Unicorp B-16 Heavy Plating">
+<outfit name="Unicorp B-48 Heavy Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>large</size>
   <mass>900</mass>
   <price>700000</price>
-  <description>B-16 plating improves on Unicorp's D-16 plating, offering increased protection and cargo capacity, for only slightly increased mass.</description>
+  <description>B-48 plating improves on Unicorp's D-48 plating, offering increased protection and cargo capacity, for only slightly increased mass.</description>
   <gfx_store>refined_hull_l</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
   <cargo>80</cargo>
-  <absorb>30</absorb>
+  <absorb>48</absorb>
   <armour>1400</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>0</ew_hide>

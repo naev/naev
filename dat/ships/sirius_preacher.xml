@@ -35,7 +35,7 @@
   <utility size="medium" />
   <utility size="small" />
   <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 550 Engine</structure>
-  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-8 Medium Plating</structure>
+  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
  </slots>

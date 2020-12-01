@@ -20,7 +20,7 @@
   <resist>100</resist>
   <damage>
    <type>impact</type>
-   <penetrate>50</penetrate>
+   <penetrate>70</penetrate>
    <physical>800</physical>
    <disable>5</disable>
   </damage>

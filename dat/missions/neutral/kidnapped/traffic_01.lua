@@ -272,7 +272,7 @@ function spawn_baddies(sp)
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
       
-      badguys[i]:addOutfit("Unicorp D-8 Medium Plating")
+      badguys[i]:addOutfit("Unicorp D-12 Medium Plating")
       badguys[i]:addOutfit("Unicorp PT-500 Core System")
       badguys[i]:addOutfit("Tricon Cyclone Engine")
       

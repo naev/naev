@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Unicorp B-20 Heavy Plating">
+<outfit name="Unicorp B-72 Heavy Plating">
  <general>
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
@@ -7,12 +7,12 @@
   <priority>7</priority>
   <mass>1500</mass>
   <price>900000</price>
-  <description>Derived from the venerable D-20 plating, the B-20 utilizes high-density composites to provide additional protection while also leaving more room for cargo, at the cost of slightly increased mass.</description>
+  <description>Derived from the venerable D-72 plating, the B-72 utilizes high-density composites to provide additional protection while also leaving more room for cargo, at the cost of slightly increased mass.</description>
   <gfx_store>refined_hull_x</gfx_store>
  </general>
  <specific type="modification">
   <cargo>100</cargo>
-  <absorb>35</absorb>
+  <absorb>72</absorb>
   <armour>2000</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>0</ew_hide>

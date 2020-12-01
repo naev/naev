@@ -4,16 +4,16 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>medium</size>
-  <priority>7</priority>
-  <mass>220</mass>
-  <price>80000</price>
-  <description>Unicorp's D-12 plating is similar to D-8 plating, but the armour plates are thicker and built atop an enlarged superstructure, increasing mass, armour, and cargo capacity.</description>
-  <gfx_store>base_hull_h</gfx_store>
+  <mass>100</mass>
+  <price>45000</price>
+  <description>D-12 plating provides a serviceable layer of armour to medium ships, and doesn't weigh too much.</description>
+  <gfx_store>base_hull_m</gfx_store>
+  <priority>3</priority>
  </general>
  <specific type="modification">
-  <cargo>36</cargo>
-  <absorb>18</absorb>
-  <armour>470</armour>
+  <cargo>18</cargo>
+  <absorb>12</absorb>
+  <armour>200</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>0</ew_hide>
  </specific>
