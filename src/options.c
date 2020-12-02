@@ -351,6 +351,7 @@ static void opt_gameplay( unsigned int wid )
    y -= 40;
 
 
+   (void) y;
    x = 20 + cw + 20;
    y  = by;
    cw += 80;

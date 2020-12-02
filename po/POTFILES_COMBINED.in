@@ -308,6 +308,8 @@ src/array.h
 src/attributes.h
 src/background.c
 src/background.h
+src/base64.c
+src/base64.h
 src/board.c
 src/board.h
 src/camera.c
@@ -326,6 +328,7 @@ src/cond.c
 src/cond.h
 src/conf.c
 src/conf.h
+src/config.h
 src/console.c
 src/console.h
 src/damagetype.c

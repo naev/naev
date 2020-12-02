@@ -552,8 +552,8 @@ void shiplog_listLogsOfType( const char *type, int *nlogs, char ***logsOut, int 
    ntime_t t = ntime_get();
 
    n = !!includeAll;
-   logs = realloc(*logsOut, sizeof(char**) * n);
-   logid = realloc(*logIDs, sizeof(int*) * n);
+   logs = realloc(*logsOut, sizeof(char*) * n);
+   logid = realloc(*logIDs, sizeof(int) * n);
    if ( includeAll ) {
       logs[0] = strdup( _("All") );
       logid[0] = LOG_ID_ALL;

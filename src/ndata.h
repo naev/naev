@@ -62,8 +62,8 @@
 
 #define START_DATA_PATH          "start.xml" /**< Path to module start file. */
 
-#define FONT_DEFAULT_PATH        "fonts/Cabin-SemiBold.otf" /**< Default font path. */
-#define FONT_MONOSPACE_PATH      "fonts/SourceCodePro-Semibold.ttf" /**< Default monospace font path. */
+#define FONT_DEFAULT_PATH        N_("fonts/Cabin-SemiBold.otf") /**< Default font path. */
+#define FONT_MONOSPACE_PATH      N_("fonts/SourceCodePro-Semibold.ttf") /**< Default monospace font path. */
 
 #define LUA_INCLUDE_PATH         "scripts/" /**< Path for Lua includes. */
 #define AI_PATH                  "ai/" /**< Location of the AI files. */

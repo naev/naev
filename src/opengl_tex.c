@@ -388,8 +388,11 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
 
    if (name != NULL) {
       texture = gl_texExists( name );
-      if (texture != NULL)
+      if (texture != NULL) {
+         if (freesur)
+            SDL_FreeSurface( surface );
          return texture;
+      }
    }
 
    if (flags & OPENGL_TEX_MAPTRANS)

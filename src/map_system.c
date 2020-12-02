@@ -740,6 +740,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
    }
    else
       WARN( _("Unexpected call to map_system_array_update\n") );
+   (void) i;
 }
 
 static void map_system_array_rmouse( unsigned int wid, char* widget_name )

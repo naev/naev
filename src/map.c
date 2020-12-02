@@ -1580,6 +1580,7 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
    if ( hasPresence == 0 )
       nsnprintf( buf, sizeof( buf ), _( "None" ) );
 
+   (void) l;
    window_modifyText( wid, name, buf );
 }
 
