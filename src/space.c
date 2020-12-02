@@ -1532,7 +1532,7 @@ void space_init( const char* sysname )
       ast->id = i;
 
       /* Add the asteroids to the anchor */
-      ast->asteroids = malloc( (ast->nb) * sizeof(Asteroid) );
+      ast->asteroids = realloc( ast->asteroids, (ast->nb) * sizeof(Asteroid) );
       for (j=0; j<ast->nb; j++) {
          a = &ast->asteroids[j];
          a->id = j;
@@ -1540,7 +1540,7 @@ void space_init( const char* sysname )
          asteroid_init(a, ast);
       }
       /* Add the debris to the anchor */
-      ast->debris = malloc( (ast->ndebris) * sizeof(Debris) );
+      ast->debris = realloc( ast->debris, (ast->ndebris) * sizeof(Debris) );
       for (j=0; j<ast->ndebris; j++) {
          d = &ast->debris[j];
          debris_init(d);
