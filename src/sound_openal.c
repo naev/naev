@@ -842,10 +842,6 @@ static ALuint sound_al_getSource (void)
 static int al_playVoice( alVoice *v, alSound *s,
       ALfloat px, ALfloat py, ALfloat vx, ALfloat vy, ALint relative )
 {
-   /* Must be below the limit. */
-   if (sound_speed > SOUND_SPEED_PLAY_LIMIT)
-      return 0;
-
    /* Set up the source and buffer. */
    v->u.al.source = sound_al_getSource();
    if (v->u.al.source == 0)
