@@ -8,7 +8,7 @@
 #  define SOUND_H
 
 
-#define SOUND_SPEED_PLAY_LIMIT      2.0 /**< Speed modifier at which sounds do not play. */
+#define SOUND_SPEED_PLAY_LIMIT      4.0 /**< Speed modifier at which sounds do not play. */
 
 
 extern int sound_disabled;
