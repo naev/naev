@@ -54,7 +54,9 @@ function create ()
       msg[#msg+1] = _("Special offer on Crow: buy one IR-eye, and the second comes for free!")
    end
 
-   if system.cur():presence(faction.get("Za'lek")) > 1 then
+   -- Note that when running in the main menu background, player.name() might not exist (==nil), so 
+   -- we need to add a check for that.
+   if system.cur():presence(faction.get("Za'lek")) > 1 and player.name() then
       msg[#msg+1] = string.format(_("Dear Pr. %s, your recent work has left a deep impression on us. Due to the advance, novelty, and possible wide application of your innovation, we invite you to contribute other unpublished papers of relevant fields to the Interstellar Pay-to-win Journal for Mathematics and Applications."),player.name())
       msg[#msg+1] = _("Want to solve a large-dimensional stochastic PDE? the LMKSTD method is what you need!")
       msg[#msg+1] = _("You love non-convex minimization? Join Ruadan's Computation Science Lab!")
