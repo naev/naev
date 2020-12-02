@@ -218,7 +218,7 @@ static int inp_addKey( Widget* inp, uint32_t ch )
    }
 
    /* Make sure it's not full. */
-   if (u8_strlen(inp->dat.inp.input) >= (size_t)inp->dat.inp.char_max-1)
+   if (u8_strlen(inp->dat.inp.input) >= inp->dat.inp.char_max-1)
       return 1;
 
    /* Render back to utf8. */
@@ -227,10 +227,10 @@ static int inp_addKey( Widget* inp, uint32_t ch )
    /* Add key. */
    memmove( &inp->dat.inp.input[ inp->dat.inp.pos+len ],
          &inp->dat.inp.input[ inp->dat.inp.pos ],
-         inp->dat.inp.byte_max - inp->dat.inp.pos - len );
+         inp->dat.inp.byte_max-1 - inp->dat.inp.pos - len );
    for (i=0; i<len; i++)
       inp->dat.inp.input[ inp->dat.inp.pos++ ] = buf[i];
-   assert(inp->dat.inp.input[ inp->dat.inp.byte_max - 1 ] == '\0');
+   assert(inp->dat.inp.input[ inp->dat.inp.byte_max-1 ] == '\0');
 
    while (inp->dat.inp.oneline) {
       /* We can't wrap the text, so we need to scroll it out. */
@@ -455,15 +455,15 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
       /* Actually delete the chars. */
       memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
             &inp->dat.inp.input[ curpos ],
-            (inp->dat.inp.byte_max - curpos) );
-      assert(inp->dat.inp.input[ inp->dat.inp.byte_max - curpos + inp->dat.inp.pos ] == '\0');
+            inp->dat.inp.byte_max - curpos );
+      assert(inp->dat.inp.input[ inp->dat.inp.byte_max-1 - curpos + inp->dat.inp.pos ] == '\0');
 
       while (inp->dat.inp.oneline && inp->dat.inp.view > 0) {
          n = gl_printWidthRaw( inp->dat.inp.font,
                inp->dat.inp.input + inp->dat.inp.view - 1 );
          if (n+10 >= inp->w)
             break;
-	 inp->dat.inp.view -= (curpos - inp->dat.inp.pos);
+	 inp->dat.inp.view -= MIN( curpos - inp->dat.inp.pos, inp->dat.inp.view );
       }
 
       if (inp->dat.inp.fptr != NULL)
@@ -498,8 +498,8 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
       /* Actually delete the chars. */
       memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
             &inp->dat.inp.input[ curpos ],
-            (inp->dat.inp.byte_max - curpos) );
-      assert(inp->dat.inp.input[ inp->dat.inp.byte_max - curpos + inp->dat.inp.pos ] == '\0');
+            inp->dat.inp.byte_max - curpos );
+      assert(inp->dat.inp.input[ inp->dat.inp.byte_max-1 - curpos + inp->dat.inp.pos ] == '\0');
 
       if (inp->dat.inp.fptr != NULL)
          inp->dat.inp.fptr( inp->wdw, inp->name );
@@ -531,7 +531,7 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
 
       memmove( &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
             &inp->dat.inp.input[ inp->dat.inp.pos ],
-            inp->dat.inp.byte_max - inp->dat.inp.pos - 1 );
+            inp->dat.inp.byte_max-1 - inp->dat.inp.pos - 1 );
       inp->dat.inp.input[ inp->dat.inp.pos++ ] = '\n';
       assert(inp->dat.inp.input[ inp->dat.inp.byte_max-1 ] == '\0');
 
