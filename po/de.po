@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.7.0\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues/\n"
-"POT-Creation-Date: 2020-12-03 16:59+0900\n"
+"POT-Creation-Date: 2020-12-03 21:03+0900\n"
 "PO-Revision-Date: 2020-11-08 14:40+0100\n"
 "Last-Translator: Wuzzy <Wuzzy2@mail.ru>\n"
 "Language-Team: \n"
@@ -41678,7 +41678,7 @@ msgid "Background -> 'background' : %s"
 msgstr "Hintergrund-> „background“: %s"
 
 #: src/background.c:435 src/gui.c:2011 src/nlua_evt.c:143 src/nlua_misn.c:255
-#: src/sound_openal.c:1523
+#: src/sound_openal.c:1519
 msgid "unknown error"
 msgstr "Unbekannter Fehler"
 
@@ -41904,7 +41904,7 @@ msgstr "%s antwortet nicht."
 msgid "Communication Channel"
 msgstr "Komm.-Kanal"
 
-#: src/comm.c:381 src/console.c:616 src/dev_sysedit.c:1349
+#: src/comm.c:381 src/console.c:633 src/dev_sysedit.c:1349
 #: src/dev_sysedit.c:1459 src/dev_sysedit.c:1521 src/dev_sysedit.c:1718
 #: src/dev_sysedit.c:1893 src/dev_sysedit.c:1975 src/dev_uniedit.c:1014
 #: src/dev_uniedit.c:1226 src/dev_uniedit.c:1478 src/info.c:238 src/info.c:315
@@ -42596,21 +42596,21 @@ msgstr ""
 "höchstwahrscheinlich wiederherstellen müssen, indem du aktuelle "
 "Konfiguration mit deiner Sicherheitskopie deiner Konfiguration überschreibst."
 
-#: src/console.c:155
+#: src/console.c:170
 #, c-format
 msgid "Warning: %s\n"
 msgstr "Warnung: %s\n"
 
-#: src/console.c:554
+#: src/console.c:571
 msgid "Error printing results."
 msgstr "Fehler beim Ausgeben der Ergebnisse."
 
-#: src/console.c:594
+#: src/console.c:611
 msgid "\agWelcome to the Lua console!"
 msgstr "\agWillkommen in der Lua-Konsole!"
 
 #. Create the window.
-#: src/console.c:602 src/input.c:120
+#: src/console.c:619 src/input.c:120
 msgid "Lua Console"
 msgstr "Lua-Konsole"
 
@@ -43851,36 +43851,46 @@ msgid_plural "Loaded %d Fleets"
 msgstr[0] "%d Flotte geladen"
 msgstr[1] "%d Flotten geladen"
 
-#: src/font.c:1166
+#: src/font.c:1170
+#, fuzzy
+msgid "Font has no freetype information!"
+msgstr "Lied „%s“ hat keine „replaygain“-Information."
+
+#: src/font.c:1185
+#, c-format
+msgid "Unicode character '%#x' not found in font! Using missing glyph."
+msgstr ""
+
+#: src/font.c:1192
 msgid "FT_Load_Glyph failed."
 msgstr "FT_Load_Glyph fehlgeschlagen."
 
-#: src/font.c:1172
+#: src/font.c:1199
 #, c-format
 msgid "Font '%s' not using FT_PIXEL_MODE_GRAY!"
 msgstr "Schrift „%s“ benutzt nicht FT_PIXEL_MODE_GRAY!"
 
-#: src/font.c:1378
+#: src/font.c:1220
+#, fuzzy, c-format
+msgid "Unable to load character '%#x'!"
+msgstr "Daten von „%s“ konnten nicht geladen werden"
+
+#: src/font.c:1408
 #, c-format
 msgid "Unable to find glyph '%d'!"
 msgstr "Konnte Schriftzeichen „%d“ nicht finden!"
 
-#: src/font.c:1454
+#: src/font.c:1490
 #, c-format
 msgid "Unable to read font: %s"
 msgstr "Konnte Schrift %s nicht laden"
 
-#: src/font.c:1463
-#, c-format
-msgid "Using default font '%s'"
-msgstr "Standardschrift „%s“ wird benutzt"
-
-#: src/font.c:1481
+#: src/font.c:1496
 #, c-format
 msgid "FT_Init_FreeType failed with font %s."
 msgstr "FT_Init_FreeType mit Schrift %s fehlgeschlagen."
 
-#: src/font.c:1488
+#: src/font.c:1502
 #, c-format
 msgid "FT_New_Face failed loading library from %s"
 msgstr "FT_New_Face scheiterte daran, Bibliothek von %s zu laden"
@@ -43889,15 +43899,15 @@ msgstr "FT_New_Face scheiterte daran, Bibliothek von %s zu laden"
 #. In 1/64th of a pixel.
 #. Create at 96 DPI
 #. Create at 96 DPI
-#: src/font.c:1500
+#: src/font.c:1513
 msgid "FT_Set_Char_Size failed."
 msgstr "FT_Set_Char_Size fehlgeschlagen."
 
-#: src/font.c:1503
+#: src/font.c:1516
 msgid "Font isn't resizable!"
 msgstr "Schrift ist nicht skalierbar!"
 
-#: src/font.c:1507
+#: src/font.c:1520
 msgid "FT_Select_Charmap failed to change character mapping."
 msgstr "FT_Select_Charmap scheiterte daran, das Zeichenmapping zu ändern."
 
@@ -46979,13 +46989,14 @@ msgstr "Datei „%s“ konnte nicht geöffnet werden: Dateipfad zu lang."
 #. *< Prefix of where to find musics.
 #. *< Lua music control file.
 #. *< Path to module start file.
-#: src/ndata.h:65
-msgid "fonts/Cabin-SemiBold.otf"
+#. Fonts should be defined in start.xml probably.
+#: src/ndata.h:66
+msgid "fonts/Cabin-SemiBold.otf,fonts/NanumBarunGothicBold.ttf"
 msgstr ""
 
 #. *< Default font path.
-#: src/ndata.h:66
-msgid "fonts/SourceCodePro-Semibold.ttf"
+#: src/ndata.h:67
+msgid "fonts/SourceCodePro-Semibold.ttf,fonts/D2CodingBold.ttf"
 msgstr ""
 
 #: src/nebula.c:132
@@ -50293,37 +50304,37 @@ msgstr "Fehler beim Laden von Tondatei „%s“."
 msgid "Something went wrong when loading sound file '%s'."
 msgstr "Etwas lief falsch beim Laden der Tondatei „%s“."
 
-#: src/sound_openal.c:1249 src/sound_openal.c:1318 src/sound_sdlmix.c:524
+#: src/sound_openal.c:1245 src/sound_openal.c:1314 src/sound_sdlmix.c:518
 #, c-format
 msgid "Group '%d' not found."
 msgstr "Gruppe „%d“ nicht gefunden."
 
-#: src/sound_openal.c:1311
+#: src/sound_openal.c:1307
 #, c-format
 msgid "Group '%d' has no free sounds."
 msgstr "Gruppe „%d“ hat keine freien Töne."
 
-#: src/sound_openal.c:1507
+#: src/sound_openal.c:1503
 msgid "a bad name (ID) was passed to an OpenAL function"
 msgstr "ein schlechter Name (ID) wurde zu einer OpenAL-Funktion übergeben"
 
-#: src/sound_openal.c:1510
+#: src/sound_openal.c:1506
 msgid "an invalid enum value was passed to an OpenAL function"
 msgstr "ein ungültiger Enum-Wert wurde zu einer OpenAL-Funktion übergeben"
 
-#: src/sound_openal.c:1513
+#: src/sound_openal.c:1509
 msgid "an invalid value was passed to an OpenAL function"
 msgstr "ein ungültiger Wert wurde zu einer OpenAL-Funktion übergeben"
 
-#: src/sound_openal.c:1516
+#: src/sound_openal.c:1512
 msgid "the requested operation is not valid"
 msgstr "die erbetene Aktion ist ungültig"
 
-#: src/sound_openal.c:1519
+#: src/sound_openal.c:1515
 msgid "the requested operation resulted in OpenAL running out of memory"
 msgstr "die erbetene Aktion sorgte dafür, dass OpenAL der Speicher ausging"
 
-#: src/sound_openal.c:1526
+#: src/sound_openal.c:1522
 #, c-format
 msgid "OpenAL error [%s]: %s"
 msgstr "OpenAL-Fehler [%s]: %s"
@@ -50360,37 +50371,37 @@ msgstr "SDL_Mixer ist älter als die kompilierte Version."
 msgid "Version: %d.%d.%d [compiled: %d.%d.%d]"
 msgstr "Version: %d.%d.%d [kompiliert: %d.%d.%d]"
 
-#: src/sound_sdlmix.c:213
+#: src/sound_sdlmix.c:210
 #, c-format
 msgid "Unable to set sound position: %s"
 msgstr "Tonposition konnte nicht gesetzt werden: %s"
 
-#: src/sound_sdlmix.c:431
+#: src/sound_sdlmix.c:425
 #, c-format
 msgid "Unable to load sound '%s': %s"
 msgstr "Ton „%s“ konnte nicht geladen werden: %s"
 
-#: src/sound_sdlmix.c:489
+#: src/sound_sdlmix.c:483
 #, c-format
 msgid "Unable to reserve sound channels: %s"
 msgstr "Tonkanäle konnten nicht reserviert werden: %s"
 
-#: src/sound_sdlmix.c:503
+#: src/sound_sdlmix.c:497
 #, c-format
 msgid "Unable to create sound group: %s"
 msgstr "Tongruppe konnte nicht erzeugt werden: %s"
 
-#: src/sound_sdlmix.c:549
+#: src/sound_sdlmix.c:543
 #, c-format
 msgid "Group '%d' has no free channels!"
 msgstr "Gruppe „%d“ hat keine freien Kanäle!"
 
-#: src/sound_sdlmix.c:557
+#: src/sound_sdlmix.c:551
 #, c-format
 msgid "Unable to play sound %s for group %d: %s"
 msgstr "Ton %s für Gruppe %d konnte nicht gespielt werden: %s"
 
-#: src/sound_sdlmix.c:564
+#: src/sound_sdlmix.c:558
 #, c-format
 msgid "Group '%d' does not exist!"
 msgstr "Gruppe „%d“ existiert nicht!"
@@ -51223,6 +51234,10 @@ msgstr "Ungültiger WEAPON_LAYER angegeben"
 #: src/weapon.c:1834
 msgid "Trying to destroy weapon not found in stack!"
 msgstr "Versuch, eine Waffe, die nicht im Stack ist, zu zerstören!"
+
+#, c-format
+#~ msgid "Using default font '%s'"
+#~ msgstr "Standardschrift „%s“ wird benutzt"
 
 #~ msgid ""
 #~ "\"Displays tend to shorten large number of credits by using SI prefixes: "

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.7.0\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues/\n"
-"POT-Creation-Date: 2020-12-03 16:59+0900\n"
+"POT-Creation-Date: 2020-12-03 21:03+0900\n"
 "PO-Revision-Date: 2017-07-13 08:52+0900\n"
 "Last-Translator:  <bobbens@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -33521,7 +33521,7 @@ msgid "Background -> 'background' : %s"
 msgstr ""
 
 #: src/background.c:435 src/gui.c:2011 src/nlua_evt.c:143 src/nlua_misn.c:255
-#: src/sound_openal.c:1523
+#: src/sound_openal.c:1519
 msgid "unknown error"
 msgstr ""
 
@@ -33736,7 +33736,7 @@ msgstr ""
 msgid "Communication Channel"
 msgstr ""
 
-#: src/comm.c:381 src/console.c:616 src/dev_sysedit.c:1349
+#: src/comm.c:381 src/console.c:633 src/dev_sysedit.c:1349
 #: src/dev_sysedit.c:1459 src/dev_sysedit.c:1521 src/dev_sysedit.c:1718
 #: src/dev_sysedit.c:1893 src/dev_sysedit.c:1975 src/dev_uniedit.c:1014
 #: src/dev_uniedit.c:1226 src/dev_uniedit.c:1478 src/info.c:238 src/info.c:315
@@ -34384,21 +34384,21 @@ msgid ""
 "copying your backup configuration over your current configuration."
 msgstr ""
 
-#: src/console.c:155
+#: src/console.c:170
 #, c-format
 msgid "Warning: %s\n"
 msgstr "注意：%s\n"
 
-#: src/console.c:554
+#: src/console.c:571
 msgid "Error printing results."
 msgstr ""
 
-#: src/console.c:594
+#: src/console.c:611
 msgid "\agWelcome to the Lua console!"
 msgstr "\ag%sへようこそ！"
 
 #. Create the window.
-#: src/console.c:602 src/input.c:120
+#: src/console.c:619 src/input.c:120
 msgid "Lua Console"
 msgstr ""
 
@@ -35541,36 +35541,45 @@ msgid "Loaded %d Fleet"
 msgid_plural "Loaded %d Fleets"
 msgstr[0] ""
 
-#: src/font.c:1166
+#: src/font.c:1170
+msgid "Font has no freetype information!"
+msgstr ""
+
+#: src/font.c:1185
+#, c-format
+msgid "Unicode character '%#x' not found in font! Using missing glyph."
+msgstr ""
+
+#: src/font.c:1192
 msgid "FT_Load_Glyph failed."
 msgstr ""
 
-#: src/font.c:1172
+#: src/font.c:1199
 #, c-format
 msgid "Font '%s' not using FT_PIXEL_MODE_GRAY!"
 msgstr ""
 
-#: src/font.c:1378
+#: src/font.c:1220
+#, c-format
+msgid "Unable to load character '%#x'!"
+msgstr ""
+
+#: src/font.c:1408
 #, c-format
 msgid "Unable to find glyph '%d'!"
 msgstr ""
 
-#: src/font.c:1454
+#: src/font.c:1490
 #, c-format
 msgid "Unable to read font: %s"
 msgstr ""
 
-#: src/font.c:1463
-#, c-format
-msgid "Using default font '%s'"
-msgstr ""
-
-#: src/font.c:1481
+#: src/font.c:1496
 #, c-format
 msgid "FT_Init_FreeType failed with font %s."
 msgstr ""
 
-#: src/font.c:1488
+#: src/font.c:1502
 #, c-format
 msgid "FT_New_Face failed loading library from %s"
 msgstr ""
@@ -35579,15 +35588,15 @@ msgstr ""
 #. In 1/64th of a pixel.
 #. Create at 96 DPI
 #. Create at 96 DPI
-#: src/font.c:1500
+#: src/font.c:1513
 msgid "FT_Set_Char_Size failed."
 msgstr ""
 
-#: src/font.c:1503
+#: src/font.c:1516
 msgid "Font isn't resizable!"
 msgstr ""
 
-#: src/font.c:1507
+#: src/font.c:1520
 msgid "FT_Select_Charmap failed to change character mapping."
 msgstr ""
 
@@ -38359,13 +38368,14 @@ msgstr ""
 #. *< Prefix of where to find musics.
 #. *< Lua music control file.
 #. *< Path to module start file.
-#: src/ndata.h:65
-msgid "fonts/Cabin-SemiBold.otf"
+#. Fonts should be defined in start.xml probably.
+#: src/ndata.h:66
+msgid "fonts/Cabin-SemiBold.otf,fonts/NanumBarunGothicBold.ttf"
 msgstr ""
 
 #. *< Default font path.
-#: src/ndata.h:66
-msgid "fonts/SourceCodePro-Semibold.ttf"
+#: src/ndata.h:67
+msgid "fonts/SourceCodePro-Semibold.ttf,fonts/D2CodingBold.ttf"
 msgstr ""
 
 #: src/nebula.c:132
@@ -41466,37 +41476,37 @@ msgstr ""
 msgid "Something went wrong when loading sound file '%s'."
 msgstr ""
 
-#: src/sound_openal.c:1249 src/sound_openal.c:1318 src/sound_sdlmix.c:524
+#: src/sound_openal.c:1245 src/sound_openal.c:1314 src/sound_sdlmix.c:518
 #, c-format
 msgid "Group '%d' not found."
 msgstr ""
 
-#: src/sound_openal.c:1311
+#: src/sound_openal.c:1307
 #, c-format
 msgid "Group '%d' has no free sounds."
 msgstr ""
 
-#: src/sound_openal.c:1507
+#: src/sound_openal.c:1503
 msgid "a bad name (ID) was passed to an OpenAL function"
 msgstr ""
 
-#: src/sound_openal.c:1510
+#: src/sound_openal.c:1506
 msgid "an invalid enum value was passed to an OpenAL function"
 msgstr ""
 
-#: src/sound_openal.c:1513
+#: src/sound_openal.c:1509
 msgid "an invalid value was passed to an OpenAL function"
 msgstr ""
 
-#: src/sound_openal.c:1516
+#: src/sound_openal.c:1512
 msgid "the requested operation is not valid"
 msgstr ""
 
-#: src/sound_openal.c:1519
+#: src/sound_openal.c:1515
 msgid "the requested operation resulted in OpenAL running out of memory"
 msgstr ""
 
-#: src/sound_openal.c:1526
+#: src/sound_openal.c:1522
 #, c-format
 msgid "OpenAL error [%s]: %s"
 msgstr ""
@@ -41533,37 +41543,37 @@ msgstr ""
 msgid "Version: %d.%d.%d [compiled: %d.%d.%d]"
 msgstr "バージョン：%d.%d.%d「コンパイル：%d.%d.%d」"
 
-#: src/sound_sdlmix.c:213
+#: src/sound_sdlmix.c:210
 #, c-format
 msgid "Unable to set sound position: %s"
 msgstr ""
 
-#: src/sound_sdlmix.c:431
+#: src/sound_sdlmix.c:425
 #, c-format
 msgid "Unable to load sound '%s': %s"
 msgstr ""
 
-#: src/sound_sdlmix.c:489
+#: src/sound_sdlmix.c:483
 #, c-format
 msgid "Unable to reserve sound channels: %s"
 msgstr ""
 
-#: src/sound_sdlmix.c:503
+#: src/sound_sdlmix.c:497
 #, c-format
 msgid "Unable to create sound group: %s"
 msgstr ""
 
-#: src/sound_sdlmix.c:549
+#: src/sound_sdlmix.c:543
 #, c-format
 msgid "Group '%d' has no free channels!"
 msgstr ""
 
-#: src/sound_sdlmix.c:557
+#: src/sound_sdlmix.c:551
 #, c-format
 msgid "Unable to play sound %s for group %d: %s"
 msgstr ""
 
-#: src/sound_sdlmix.c:564
+#: src/sound_sdlmix.c:558
 #, c-format
 msgid "Group '%d' does not exist!"
 msgstr ""
