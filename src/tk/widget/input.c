@@ -25,6 +25,7 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod );
 static int inp_text( Widget* inp, const char *buf );
 static int inp_addKey( Widget* inp, uint32_t ch );
 static int inp_rangeToWidth( Widget *inp, int start_pos, int end_pos );
+static int inp_rangeFromWidth( Widget *inp, int start_pos, int width );
 static void inp_clampView( Widget *inp );
 static void inp_cleanup( Widget* inp );
 static void inp_focusGain( Widget* inp );
@@ -139,7 +140,7 @@ static void inp_render( Widget* inp, double bx, double by )
             if ((s != 0) && ((str[p] == '\n') || (str[p] == ' ')))
                p++;
             s      = 1;
-            w      = gl_printWidthForText( inp->dat.inp.font, &str[p], inp->w-10 );
+            w      = inp_rangeFromWidth( inp, p, -1 );
             lines += 1;
             if (str[p+w] == '\0')
                break;
@@ -332,7 +333,7 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
             prevpos   = curpos;
             prevchars = curchars;
 
-            curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
+            curchars  = inp_rangeFromWidth( inp, curpos, -1 );
             curpos   += curchars;
             /* Handle newlines. */
             if (str[curpos] == '\n') {
@@ -372,7 +373,7 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
          while (inp->dat.inp.pos >= curpos) {
             prevpos   = curpos;
 
-            curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
+            curchars  = inp_rangeFromWidth( inp, curpos, -1 );
             curpos   += curchars;
             /* Handle newlines. */
             if (str[curpos] == '\n') {
@@ -390,7 +391,7 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
 
          /* Now not-print one more line. This is the line we want to move the cursor to. */
          prevpos   = curpos;
-         curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
+         curchars  = inp_rangeFromWidth( inp, curpos, -1 );
          curpos   += curchars;
 
          /* Set the pos to the same number of characters from the left hand
@@ -564,6 +565,21 @@ static int inp_rangeToWidth( Widget *inp, int start_pos, int end_pos )
 
 
 /*
+ * @brief Returns the byte-size of the text we can fit within \p width starting at \p start_pos.
+ *
+ *    @param inp Input widget to operate on.
+ *    @param start_pos Starting byte position.
+ *    @param width Amount of horizontal space, or -1 for the width of the widget's text area.
+ */
+static int inp_rangeFromWidth( Widget *inp, int start_pos, int width )
+{
+   if (width < 0)
+      width = inp->w - 10;
+   return gl_printWidthForText( inp->dat.inp.font, &inp->dat.inp.input[start_pos], width );
+}
+
+
+/*
  * @brief Keeps the input widget's view in sync with its cursor
  *
  *    @param inp Input widget to operate on.
@@ -582,13 +598,11 @@ static void inp_clampView( Widget *inp )
       return;
    }
 
-   visible = gl_printWidthForText( inp->dat.inp.font,
-         &inp->dat.inp.input[ inp->dat.inp.view ], inp->w - 10 );
+   visible = inp_rangeFromWidth( inp, inp->dat.inp.view, -1 );
 
    /* Shift the view right until the cursor is visible. */
    while (inp->dat.inp.view + visible < inp->dat.inp.pos) {
-      visible = gl_printWidthForText( inp->dat.inp.font,
-            &inp->dat.inp.input[ inp->dat.inp.view ], inp->w - 10 );
+      visible = inp_rangeFromWidth( inp, inp->dat.inp.view, -1 );
       u8_inc( inp->dat.inp.input, &inp->dat.inp.view );
    }
 }
