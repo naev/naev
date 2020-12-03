@@ -157,9 +157,6 @@ void sound_mix_exit (void)
  */
 int sound_mix_play( alVoice *v, alSound *s )
 {
-   if (sound_speed > SOUND_SPEED_PLAY_LIMIT)
-      return 0;
-
    v->u.mix.channel = Mix_PlayChannel( -1, s->u.mix.buf, 0 );
    if (v->u.mix.channel >= 0)
       Mix_Volume( v->u.mix.channel, sound_mixVolume );
@@ -242,9 +239,6 @@ int sound_mix_playPos( alVoice *v, alSound *s,
 {
    (void) vx;
    (void) vy;
-
-   if (sound_speed > SOUND_SPEED_PLAY_LIMIT)
-      return 0;
 
    /* Get the channel. */
    v->u.mix.channel = Mix_PlayChannel( -1, s->u.mix.buf, 0 );
