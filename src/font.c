@@ -497,6 +497,22 @@ static size_t font_limitSize( glFontStash *ft_font, int *width,
  *    @param width Width to match.
  *    @return Number of characters that fit.
  */
+int gl_printWidthForTextLine( const glFont *ft_font, const char *text, int width )
+{
+   glFontStash *stsh = gl_fontGetStash( ft_font );
+   return font_limitSize( stsh, NULL, text, width );
+}
+
+
+/**
+ * @brief Gets the number of characters in text that fit into width,
+ *        assuming your intent is to word-wrap at said width.
+ *
+ *    @param ft_font Font to use.
+ *    @param text Text to check.
+ *    @param width Width to match.
+ *    @return Number of characters that fit.
+ */
 int gl_printWidthForText( const glFont *ft_font, const char *text,
       const int width )
 {

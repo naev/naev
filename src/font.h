@@ -83,8 +83,8 @@ FORMAT( printf, 7, 8 ) int gl_printText( const glFont *ft_font,
       const glColour* c, const char *fmt, ... );
 
 /* Dimension stuff. */
-int gl_printWidthForText( const glFont *ft_font, const char *text,
-      const int width );
+int gl_printWidthForTextLine( const glFont *ft_font, const char *text, int width );
+int gl_printWidthForText( const glFont *ft_font, const char *text, int width );
 int gl_printWidthRaw( const glFont *ft_font, const char *text );
 FORMAT( printf, 2, 3 )int gl_printWidth( const glFont *ft_font, const char *fmt, ... );
 int gl_printHeightRaw( const glFont *ft_font, const int width, const char *text );
