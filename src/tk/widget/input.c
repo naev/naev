@@ -260,9 +260,8 @@ static int inp_isBreaker(char c)
 static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
-   int n, prevpos, curchars, prevchars, charsfromleft, lines;
-   size_t curpos, len;
-   char* str;
+   int n, w;
+   size_t curpos, len, prev_line_start, curr_line_start, line_end, next_line_start;
 
    /*
     * Handle arrow keys.
@@ -287,8 +286,6 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
             }
             else
                u8_dec( inp->dat.inp.input, &inp->dat.inp.pos );
-
-            inp_clampView( inp );
          }
       }
       else if (key == SDLK_RIGHT) {
@@ -309,100 +306,42 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
             }
             else
                u8_inc( inp->dat.inp.input, &inp->dat.inp.pos );
-
-            inp_clampView( inp );
          }
       }
-      else if (key == SDLK_UP) {
+      else if (key == SDLK_UP || key == SDLK_DOWN) {
          if (inp->dat.inp.oneline)
             return 0;
 
-         str       = inp->dat.inp.input;
-         curpos    = 0;
-         prevpos   = 0;
-         curchars  = 0;
-         prevchars = 0;
-         lines     = 0;
+         /* Keep a running list of the 3 most recent line-start positions found. SIZE_MAX is a sentinel. */
+         curr_line_start = SIZE_MAX;
+         next_line_start = 0;
+         do {
+            prev_line_start = curr_line_start;
+            curr_line_start = next_line_start;
+            line_end = curr_line_start + inp_rangeFromWidth( inp, curr_line_start, -1 );
+            if (inp->dat.inp.input[line_end] == '\0')
+               next_line_start = SIZE_MAX;
+            else if (isspace(inp->dat.inp.input[line_end]))
+               next_line_start = line_end + 1;
+            else
+               next_line_start = line_end;
+         } while (line_end < inp->dat.inp.pos);
 
-         if (inp->dat.inp.pos == 0) /* We can't move beyond the current line, as it is the first one. */
-            return 1;
+         w = inp_rangeToWidth( inp, curr_line_start, inp->dat.inp.pos );
 
-         /* Keep not-printing the lines until the current pos is smaller than the virtual pos.
-          * At this point, we've arrived at the line the cursor is on. */
-         while (inp->dat.inp.pos > curpos) {
-            prevpos   = curpos;
-            prevchars = curchars;
-
-            curchars  = inp_rangeFromWidth( inp, curpos, -1 );
-            curpos   += curchars;
-            /* Handle newlines. */
-            if (str[curpos] == '\n') {
-               curchars++;
-               curpos++;
-            }
-
-            lines++;
-         }
-
-         /* Set the pos to the same number of characters from the left hand
-          * edge, on the previous line (unless there aren't that many chars).
-          * This is more or less equal to going up a line. */
-         charsfromleft     = inp->dat.inp.pos - prevpos;
-         /* Hack for moving up to the first line. */
-         if (lines == 2)
-            charsfromleft--;
-
-         inp->dat.inp.pos  = prevpos - prevchars;
-         inp->dat.inp.pos += MIN(charsfromleft, prevchars);
-      }
-      else if (key == SDLK_DOWN) {
-         if (inp->dat.inp.oneline)
-            return 0;
-
-         str      = inp->dat.inp.input;
-         curpos   = 0;
-         prevpos  = 0;
-         lines    = 0;
-
-         /* We can't move beyond the current line, as it is the last one. */
-         if (inp->dat.inp.pos == strlen(inp->dat.inp.input))
-            return 1;
-
-         /* Keep not-printing the lines until the current pos is smaller than the virtual pos.
-          * At this point, we've arrived at the line the cursor is on. */
-         while (inp->dat.inp.pos >= curpos) {
-            prevpos   = curpos;
-
-            curchars  = inp_rangeFromWidth( inp, curpos, -1 );
-            curpos   += curchars;
-            /* Handle newlines. */
-            if (str[curpos] == '\n') {
-               curchars++;
-               curpos++;
-            }
-            lines++;
-         }
-
-         /* Take note how many chars from the left we have. */
-         charsfromleft = inp->dat.inp.pos - prevpos;
-         /* Hack for moving down from the first line. */
-         if (lines == 1)
-            charsfromleft++;
-
-         /* Now not-print one more line. This is the line we want to move the cursor to. */
-         prevpos   = curpos;
-         curchars  = inp_rangeFromWidth( inp, curpos, -1 );
-         curpos   += curchars;
-
-         /* Set the pos to the same number of characters from the left hand
-          * edge, on this line (unless there aren't that many chars).
-          * This is more or less equal to going down a line.
-          * But make sure never to go past the end of the string. */
-         inp->dat.inp.pos  = prevpos;
-         inp->dat.inp.pos += MIN(charsfromleft, curchars);
-         inp->dat.inp.pos  = MIN(inp->dat.inp.pos, strlen(inp->dat.inp.input));
+         /* Extreme cases: moving to start/end of the whole input. */
+         if (key == SDLK_UP && curr_line_start == 0)
+            inp->dat.inp.pos = 0;
+         else if (key == SDLK_DOWN && next_line_start == SIZE_MAX)
+            inp->dat.inp.pos = strlen(inp->dat.inp.input);
+         /* Main cases: aim for the same width into the target line. ISSUE: this logic skews left. */
+         else if (key == SDLK_UP)
+            inp->dat.inp.pos = prev_line_start + inp_rangeFromWidth( inp, prev_line_start, w );
+         else
+            inp->dat.inp.pos = next_line_start + inp_rangeFromWidth( inp, next_line_start, w );
       }
 
+      inp_clampView( inp );
       return 1;
    }
 
