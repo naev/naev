@@ -349,8 +349,8 @@ int main( int argc, char** argv )
    window_caption();
 
    /* Have to set up fonts before rendering anything. */
-   DEBUG("Using '%s' as main font and '%s' as monospace font.", _(FONT_DEFAULT_PATH), _(FONT_MONOSPACE_PATH));
-   gl_fontInit( NULL, _(FONT_DEFAULT_PATH), conf.font_size_def ); /* initializes default font to size */
+   //DEBUG("Using '%s' as main font and '%s' as monospace font.", _(FONT_DEFAULT_PATH), _(FONT_MONOSPACE_PATH));
+   gl_fontInit( &gl_defFont, _(FONT_DEFAULT_PATH), conf.font_size_def ); /* initializes default font to size */
    gl_fontInit( &gl_smallFont, _(FONT_DEFAULT_PATH), conf.font_size_small ); /* small font */
    gl_fontInit( &gl_defFontMono, _(FONT_MONOSPACE_PATH), conf.font_size_def );
 
