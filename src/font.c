@@ -1460,7 +1460,7 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    /* Get default font if not set. */
    if (font == NULL) {
       font = &gl_defFont;
-      DEBUG( _("Using default font '%s'"), used_font );
+      //DEBUG( _("Using default font '%s'"), used_font );
    }
 
    /* Get font stash. */
