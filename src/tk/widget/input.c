@@ -24,6 +24,7 @@ static int inp_isBreaker(char c);
 static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod );
 static int inp_text( Widget* inp, const char *buf );
 static int inp_addKey( Widget* inp, uint32_t ch );
+static int inp_rangeToWidth( Widget *inp, int start_pos, int end_pos );
 static void inp_clampView( Widget *inp );
 static void inp_cleanup( Widget* inp );
 static void inp_focusGain( Widget* inp );
@@ -94,11 +95,10 @@ void window_addInput( const unsigned int wid,
 static void inp_render( Widget* inp, double bx, double by )
 {
    double x, y, ty;
-   char buf[ 512 ], *str;
-   int m, s;
+   char *str;
+   int s;
    size_t p, w;
    int lines;
-   char c;
 
    x = bx + inp->x;
    y = by + inp->y;
@@ -123,10 +123,7 @@ static void inp_render( Widget* inp, double bx, double by )
    /* Draw cursor. */
    if (wgt_isFlag( inp, WGT_FLAG_FOCUSED )) {
       if (inp->dat.inp.oneline) {
-         m = MIN( inp->dat.inp.pos - inp->dat.inp.view, (int)sizeof(buf)-1 );
-         strncpy( buf, &inp->dat.inp.input[ inp->dat.inp.view ], m );
-         buf[ m ] = '\0';
-         w = gl_printWidthRaw( inp->dat.inp.font, buf );
+         w = inp_rangeToWidth( inp, inp->dat.inp.view, inp->dat.inp.pos );
          toolkit_drawRect( x + 5. + w, y + (inp->h - inp->dat.inp.font->h - 4.)/2.,
                1., inp->dat.inp.font->h + 4., &cGreen, &cGreen );
       }
@@ -148,12 +145,8 @@ static void inp_render( Widget* inp, double bx, double by )
                break;
          } while (p+w < inp->dat.inp.pos);
 
-         /* Hack because we have to avoid wraps when counting lines, so here we
-          * handle the last line partially. */
-         c = str[ inp->dat.inp.pos ];
-         str[ inp->dat.inp.pos ] = '\0';
-         w = gl_printWidthRaw( inp->dat.inp.font, &str[p] );
-         str[ inp->dat.inp.pos ] = c;
+         /* On the final line, no word-wrap is possible. */
+         w = inp_rangeToWidth( inp, p, inp->dat.inp.pos );
 
          /* Get the actual width now. */
          toolkit_drawRect( x + 5. + w, y + inp->h - lines * (inp->dat.inp.font->h + 5) - 3.,
@@ -234,7 +227,7 @@ static int inp_addKey( Widget* inp, uint32_t ch )
 
    while (inp->dat.inp.oneline) {
       /* We can't wrap the text, so we need to scroll it out. */
-      n = gl_printWidthRaw( inp->dat.inp.font, inp->dat.inp.input+inp->dat.inp.view );
+      n = inp_rangeToWidth( inp, inp->dat.inp.view, -1 );
       if (n+10 <= inp->w)
          break;
       u8_inc( inp->dat.inp.input, &inp->dat.inp.view );
@@ -459,8 +452,7 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
       assert(inp->dat.inp.input[ inp->dat.inp.byte_max-1 - curpos + inp->dat.inp.pos ] == '\0');
 
       while (inp->dat.inp.oneline && inp->dat.inp.view > 0) {
-         n = gl_printWidthRaw( inp->dat.inp.font,
-               inp->dat.inp.input + inp->dat.inp.view - 1 );
+         n = inp_rangeToWidth( inp, inp->dat.inp.view - 1, -1 );
          if (n+10 >= inp->w)
             break;
 	 inp->dat.inp.view -= MIN( curpos - inp->dat.inp.pos, inp->dat.inp.view );
@@ -543,6 +535,31 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
 
    /* Nothing caught anything so just return. */
    return 0;
+}
+
+
+/*
+ * @brief Returns the width required to fit the text from byte positions \p start_pos to \p end_pos.
+ *
+ *    @param inp Input widget to operate on.
+ *    @param start_pos Starting byte position (inclusive).
+ *    @param start_pos Ending byte position (exclusive), or -1 for the end of the string.
+ */
+static int inp_rangeToWidth( Widget *inp, int start_pos, int end_pos )
+{
+   char c;
+   int w;
+
+   if (end_pos >= 0) {
+      if (end_pos <= start_pos)
+         return 0;
+      c = inp->dat.inp.input[ inp->dat.inp.pos ];
+      inp->dat.inp.input[ end_pos ] = '\0';
+   }
+   w = gl_printWidthRaw( inp->dat.inp.font, &inp->dat.inp.input[start_pos] );
+   if (end_pos >= 0)
+      inp->dat.inp.input[ end_pos ] = c;
+   return w;
 }
 
 
