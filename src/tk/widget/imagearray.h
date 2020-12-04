@@ -42,6 +42,7 @@ typedef struct WidgetImageArrayData_ {
    int ih; /**< Image height to use. */
    void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
    void (*rmptr) (unsigned int,char*); /**< Right click callback. */
+   void (*dblptr) (unsigned int,char*); /**< Double click callback. */
 } WidgetImageArrayData;
 
 
@@ -61,7 +62,8 @@ void window_addImageArray( const unsigned int wid,
       char* name, const int iw, const int ih, /* name and image sizes */
       ImageArrayCell *img, int nelem, /* elements */
       void (*call) (unsigned int,char*), /* update callback */
-      void (*rmcall) (unsigned int,char*) ); /* right click callback */
+      void (*rmcall) (unsigned int,char*), /* right click callback */
+      void (*dblcall) (unsigned int,char*) ); /* double click callback */
 
 /* Misc functions. */
 char* toolkit_getImageArray( const unsigned int wid, const char* name );

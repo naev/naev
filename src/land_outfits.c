@@ -344,7 +344,7 @@ static void outfits_genList( unsigned int wid )
 
    window_addImageArray( wid, 20, 20,
          iw, ih - 34, OUTFITS_IAR, 128, 128,
-         coutfits, noutfits, outfits_update, outfits_rmouse );
+         coutfits, noutfits, outfits_update, outfits_rmouse, NULL );
 
    /* write the outfits stuff */
    outfits_update( wid, NULL );

@@ -1382,7 +1382,7 @@ static void equipment_genShipList( unsigned int wid )
 
       window_addImageArray( wid, 20, -40,
             sw, sh, EQUIPMENT_SHIPS, 96., 96.,
-            cships, nships, equipment_updateShips, NULL );
+            cships, nships, equipment_updateShips, NULL, NULL );
    }
 }
 
@@ -1470,6 +1470,7 @@ static void equipment_genOutfitList( unsigned int wid )
          EQUIPMENT_OUTFITS, 96., 96.,
          coutfits, noutfits,
          equipment_updateOutfits,
+         equipment_rightClickOutfits,
          equipment_rightClickOutfits );
 }
 

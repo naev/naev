@@ -2000,7 +2000,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
    free( files );
 
    /* Add image array. */
-   window_addImageArray( wid, 20, 20, w-60-BUTTON_WIDTH, h-60, "iarGFX", 128, 128, cells, j, NULL, NULL );
+   window_addImageArray( wid, 20, 20, w-60-BUTTON_WIDTH, h-60, "iarGFX", 128, 128, cells, j, NULL, NULL, NULL );
    toolkit_setImageArray( wid, "iarGFX", path );
 }
 
