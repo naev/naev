@@ -186,8 +186,7 @@ function random_planet()
             end
          end 
          return false
-      end
-   )
+      end, nil, true )
 
    if #planets > 0 then
       return planets[rnd.rnd(1,#planets)]
