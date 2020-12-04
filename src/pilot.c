@@ -2871,6 +2871,11 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
    JumpPoint **validJumpPoints;
    JumpPoint *target;
 
+   /* Initialize. */
+   *planet = NULL;
+   *jump   = NULL;
+   vectnull( vp );
+
    /* Build landable planet table. */
    ind   = NULL;
    nind  = 0;
