@@ -199,7 +199,6 @@ static int inp_text( Widget* inp, const char *buf )
 static int inp_addKey( Widget* inp, uint32_t ch )
 {
    size_t i, len;
-   int n;
    uint32_t c;
    char buf[8];
 
@@ -226,13 +225,7 @@ static int inp_addKey( Widget* inp, uint32_t ch )
       inp->dat.inp.input[ inp->dat.inp.pos++ ] = buf[i];
    assert(inp->dat.inp.input[ inp->dat.inp.byte_max-1 ] == '\0');
 
-   while (inp->dat.inp.oneline) {
-      /* We can't wrap the text, so we need to scroll it out. */
-      n = inp_rangeToWidth( inp, inp->dat.inp.view, -1 );
-      if (n+10 <= inp->w)
-         break;
-      u8_inc( inp->dat.inp.input, &inp->dat.inp.view );
-   }
+   inp_clampView( inp );
 
    return 1;
 }
@@ -260,7 +253,7 @@ static int inp_isBreaker(char c)
 static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
-   int n, w;
+   int w;
    size_t curpos, len, prev_line_start, curr_line_start, line_end, next_line_start;
 
    /*
@@ -391,17 +384,10 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
             inp->dat.inp.byte_max - curpos );
       assert(inp->dat.inp.input[ inp->dat.inp.byte_max-1 - curpos + inp->dat.inp.pos ] == '\0');
 
-      while (inp->dat.inp.oneline && inp->dat.inp.view > 0) {
-         n = inp_rangeToWidth( inp, inp->dat.inp.view - 1, -1 );
-         if (n+10 >= inp->w)
-            break;
-	 inp->dat.inp.view -= MIN( curpos - inp->dat.inp.pos, inp->dat.inp.view );
-      }
-
+      inp_clampView( inp );
       if (inp->dat.inp.fptr != NULL)
          inp->dat.inp.fptr( inp->wdw, inp->name );
 
-      inp_clampView( inp );
       return 1;
    }
    /* delete -> delete text */
@@ -433,6 +419,7 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
             inp->dat.inp.byte_max - curpos );
       assert(inp->dat.inp.input[ inp->dat.inp.byte_max-1 - curpos + inp->dat.inp.pos ] == '\0');
 
+      inp_clampView( inp );
       if (inp->dat.inp.fptr != NULL)
          inp->dat.inp.fptr( inp->wdw, inp->name );
 
@@ -536,24 +523,27 @@ static int inp_rangeFromWidth( Widget *inp, int start_pos, int width )
  */
 static void inp_clampView( Widget *inp )
 {
-   int visible;
+   size_t v;
 
    /* @todo Handle multiline input widgets. */
    if (!inp->dat.inp.oneline)
       return;
 
    /* If the cursor is behind the view, shift the view backwards. */
-   if (inp->dat.inp.view > inp->dat.inp.pos) {
+   if (inp->dat.inp.view > inp->dat.inp.pos)
       inp->dat.inp.view = inp->dat.inp.pos;
-      return;
-   }
-
-   visible = inp_rangeFromWidth( inp, inp->dat.inp.view, -1 );
 
    /* Shift the view right until the cursor is visible. */
-   while (inp->dat.inp.view + visible < inp->dat.inp.pos) {
-      visible = inp_rangeFromWidth( inp, inp->dat.inp.view, -1 );
+   while (inp_rangeToWidth( inp, inp->dat.inp.view, inp->dat.inp.pos ) > inp->w-10)
       u8_inc( inp->dat.inp.input, &inp->dat.inp.view );
+
+   /* If possible, shift the view left without hiding text on the right. */
+   while (inp->dat.inp.view > 0) {
+      v = inp->dat.inp.view;
+      u8_dec( inp->dat.inp.input, &v );
+      if (inp_rangeToWidth( inp, v, -1 ) > inp->w-10)
+         break;
+      inp->dat.inp.view = v;
    }
 }
 
