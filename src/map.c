@@ -62,6 +62,7 @@ static int listMapModeVisible = 0; /**< Whether the map mode list widget is visi
 static double commod_av_gal_price = 0; /**< Average price across the galaxy. */
 /* VBO. */
 static gl_vbo *map_vbo = NULL; /**< Map VBO. */
+static gl_vbo *map_vbo_2 = NULL; /**< Map VBO. */
 static gl_vbo *marker_vbo = NULL;
 
 /*
@@ -116,6 +117,7 @@ int map_init (void)
 
    /* Create the VBO. */
    map_vbo = gl_vboCreateStream( sizeof(GLfloat) * 3*(2+4), NULL );
+   map_vbo_2 = gl_vboCreateStream( sizeof(GLfloat) * 6*(2+4), NULL );
 
    vertex[0] = 1;
    vertex[1] = 0;
@@ -141,6 +143,10 @@ void map_exit (void)
    if (map_vbo != NULL) {
       gl_vboDestroy(map_vbo);
       map_vbo = NULL;
+   }
+   if (map_vbo_2 != NULL) {
+      gl_vboDestroy(map_vbo_2);
+      map_vbo_2 = NULL;
    }
 
    if (gl_faction_disk != NULL)
@@ -1115,7 +1121,8 @@ static void map_renderPath( double x, double y, double a )
 {
    int j;
    const glColour *col;
-   GLfloat vertex[8*(2+4)];
+   double w, dx, dy, x0, y0;
+   GLfloat vertex[(3*2)*(2+4)];
    StarSystem *jsys, *lsys;
    int jmax, jcur;
 
@@ -1123,9 +1130,6 @@ static void map_renderPath( double x, double y, double a )
       lsys = cur_system;
       jmax = pilot_getJumps(player.p); /* Maximum jumps. */
       jcur = jmax; /* Jump range remaining. */
-
-      /* Generate smooth lines. */
-      glLineWidth( CLAMP(1., 4., 2. * map_zoom)*gl_screen.scale );
 
       for (j=0; j<map_npath; j++) {
          jsys = map_path[j];
@@ -1135,41 +1139,61 @@ static void map_renderPath( double x, double y, double a )
             col = &cRed;
          else
             col = &cYellow;
+         x0 = x + lsys->pos.x * map_zoom;
+         y0 = y + lsys->pos.y * map_zoom;
+         dx = (jsys->pos.x - lsys->pos.x) * map_zoom;
+         dy = (jsys->pos.y - lsys->pos.y) * map_zoom;
+         w = (jcur > 0 ? 4 : 1) * map_zoom / hypot( dx, dy );
          jcur--;
 
          /* Draw the lines. */
-         vertex[0]  = x + lsys->pos.x * map_zoom;
-         vertex[1]  = y + lsys->pos.y * map_zoom;
-         vertex[2]  = vertex[0] + (jsys->pos.x - lsys->pos.x)/2. * map_zoom;
-         vertex[3]  = vertex[1] + (jsys->pos.y - lsys->pos.y)/2. * map_zoom;
-         vertex[4]  = x + jsys->pos.x * map_zoom;
-         vertex[5]  = y + jsys->pos.y * map_zoom;
-         vertex[6]  = col->r;
-         vertex[7]  = col->g;
-         vertex[8]  = col->b;
-         vertex[9]  = a / 4. + .25;
-         vertex[10] = col->r;
-         vertex[11] = col->g;
-         vertex[12] = col->b;
-         vertex[13] = a / 2. + .5;
-         vertex[14] = col->r;
-         vertex[15] = col->g;
-         vertex[16] = col->b;
-         vertex[17] = a / 4. + .25;
-         gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
+         vertex[0]  = x0 - dy*w;
+         vertex[1]  = y0 + dx*w;
+         vertex[2]  = x0 + dy*w;
+         vertex[3]  = y0 - dx*w;
+         vertex[4]  = x0 + .5*dx - dy*w;
+         vertex[5]  = y0 + .5*dy + dx*w;
+         vertex[6]  = x0 + .5*dx + dy*w;
+         vertex[7]  = y0 + .5*dy - dx*w;
+         vertex[8]  = x0 + dx - dy*w;
+         vertex[9]  = y0 + dy + dx*w;
+         vertex[10] = x0 + dx + dy*w;
+         vertex[11] = y0 + dy - dx*w;
+         vertex[12] = col->r;
+         vertex[13] = col->g;
+         vertex[14] = col->b;
+         vertex[15] = a / 4. + .25;
+         vertex[16] = col->r;
+         vertex[17] = col->g;
+         vertex[18] = col->b;
+         vertex[19] = a / 4. + .25;
+         vertex[20] = col->r;
+         vertex[21] = col->g;
+         vertex[22] = col->b;
+         vertex[23] = a / 2. + .5;
+         vertex[24] = col->r;
+         vertex[25] = col->g;
+         vertex[26] = col->b;
+         vertex[27] = a / 2. + .5;
+         vertex[28] = col->r;
+         vertex[29] = col->g;
+         vertex[30] = col->b;
+         vertex[31] = a / 4. + .25;
+         vertex[32] = col->r;
+         vertex[33] = col->g;
+         vertex[34] = col->b;
+         vertex[35] = a / 4. + .25;
+         gl_vboSubData( map_vbo_2, 0, sizeof(GLfloat) * 6*(2+4), vertex );
 
          gl_beginSmoothProgram(gl_view_matrix);
-         gl_vboActivateAttribOffset( map_vbo, shaders.smooth.vertex, 0, 2, GL_FLOAT, 0 );
-         gl_vboActivateAttribOffset( map_vbo, shaders.smooth.vertex_color,
-               sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
-         glDrawArrays( GL_LINE_STRIP, 0, 3 );
+         gl_vboActivateAttribOffset( map_vbo_2, shaders.smooth.vertex, 0, 2, GL_FLOAT, 0 );
+         gl_vboActivateAttribOffset( map_vbo_2, shaders.smooth.vertex_color,
+               sizeof(GLfloat) * 2*6, 4, GL_FLOAT, 0 );
+         glDrawArrays( GL_TRIANGLE_STRIP, 0, 6 );
          gl_endSmoothProgram();
 
          lsys = jsys;
       }
-
-      /* Reset render parameters. */
-      glLineWidth( 1. );
    }
 }
 
