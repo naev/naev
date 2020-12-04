@@ -4184,20 +4184,7 @@ static int getPresenceIndex( StarSystem *sys, int faction )
       return 0;
    }
 
-   /* If there is no array, create one and return 0 (the index). */
-   if (sys->presence == NULL) {
-      sys->npresence = 1;
-      sys->presence  = malloc( sizeof(SystemPresence) );
-
-      /* Set the defaults. */
-      sys->presence[0].faction   = faction;
-      sys->presence[0].value     = 0 ;
-      sys->presence[0].curUsed   = 0 ;
-      sys->presence[0].timer     = 0.;
-      return 0;
-   }
-
-   /* Go through the array, looking for the faction. */
+   /* Go through the array (if created), looking for the faction. */
    for (i = 0; i < sys->npresence; i++)
       if (sys->presence[i].faction == faction)
          return i;
@@ -4206,8 +4193,8 @@ static int getPresenceIndex( StarSystem *sys, int faction )
    i = sys->npresence;
    sys->npresence++;
    sys->presence = realloc(sys->presence, sizeof(SystemPresence) * sys->npresence);
+   memset(&sys->presence[i], 0, sizeof(SystemPresence));
    sys->presence[i].faction = faction;
-   sys->presence[i].value = 0;
 
    return i;
 }
