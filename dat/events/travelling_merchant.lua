@@ -114,7 +114,7 @@ function board ()
 
    -- Always available outfits
    -- TODO add more
-   outfits = {
+   local outfits = {
       'Air Freshener',
       'Valkyrie Beam',
       'Hades Torch',
