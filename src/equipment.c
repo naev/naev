@@ -789,7 +789,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       pos += nsnprintf( &alt[pos], sizeof(alt)-pos, _("\n\aoSlot %s\a0"),
             _( sp_display( o->slot.spid ) ) );
    if (pos < (int)sizeof(alt))
-      pos += nsnprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", _(o->desc_short) );
+      pos += nsnprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
    if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
       nsnprintf( &alt[pos], sizeof(alt)-pos,
             ngettext("\n%.0f Tonne", "\n%.0f Tonnes", mass),

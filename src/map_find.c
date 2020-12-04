@@ -744,8 +744,8 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
          (outfit->license != NULL) ? _(outfit->license) : _("None") );
    window_modifyText( wid, "txtDDesc", buf );
    window_modifyText( wid, "txtOutfitName", _(outfit->name) );
-   window_modifyText( wid, "txtDescShort", _(outfit->desc_short) );
-   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, _(outfit->desc_short) ) );
+   window_modifyText( wid, "txtDescShort", outfit->desc_short );
+   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, outfit->desc_short ) );
    window_moveWidget( wid, "txtSDesc", iw+20, -60-th-20 );
    window_moveWidget( wid, "txtDDesc", iw+20+90, -60-th-20 );
    th += gl_printHeightRaw( &gl_smallFont, 280, buf );

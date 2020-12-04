@@ -637,7 +637,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                    "\anLicense:\a0 %s"),
                  _(outfit->name),
                  _(outfit->description),
-                 _(outfit->desc_short),
+                 outfit->desc_short,
                  player_outfitOwned( outfit ),
                  _(outfit_slotName( outfit )),
                  _(outfit_slotSize( outfit )),

@@ -82,7 +82,7 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
 
    /* Calculate image array dimensions. */
    if (iw != NULL)
-      *iw = 310 + (*w-800);
+      *iw = 230 + (*w-800);
    if (ih != NULL)
       *ih = *h - 60;
 
@@ -193,10 +193,10 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
    /* the descriptive text */
    window_addText( wid, 20 + iw + 20, -40,
          w - (20 + iw + 20) - 200 - 20, 160, 0, "txtOutfitName", &gl_defFont, NULL, NULL );
-   window_addText( wid, 20 + iw + 20, -40 - gl_defFont.h - 40,
+   window_addText( wid, 20 + iw + 20, -40 - gl_defFont.h - 30,
          w - (20 + iw + 20) - 200 - 20, 320, 0, "txtDescShort", &gl_smallFont, NULL, NULL );
 
-   window_addText( wid, 20 + iw + 20, -60-128-10-32,
+   window_addText( wid, 20 + iw + 20, 0,
          90, 160, 0, "txtSDesc", &gl_smallFont, NULL,
          _("\anOwned:\a0\n"
          "\n"
@@ -207,10 +207,10 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
          "\anPrice:\a0\n"
          "\anMoney:\a0\n"
          "\anLicense:\a0\n") );
-   window_addText( wid, 20 + iw + 20 + 90, -60-128-10-32,
+   window_addText( wid, 20 + iw + 20 + 90, 0,
          w - (20 + iw + 20 + 90), 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
-   window_addText( wid, 20 + iw + 20, -60-128-10-160-32,
-         w-(iw+80), MAX(180, h - 500), /* TODO: Size exactly and resize instead of moving? */
+   window_addText( wid, 20 + iw + 20, 0,
+         w-(iw+80), h, /* TODO: Size exactly and resize instead of moving? */
 	 0, "txtDescription", &gl_smallFont, NULL, NULL );
 
    /* Create the image array. */
@@ -393,9 +393,9 @@ void outfits_update( unsigned int wid, char* str )
       window_modifyText( wid, "txtDescShort", NULL );
       window_modifyText( wid, "txtDescription", NULL );
       /* Reposition. */
-      th = 128;
-      window_moveWidget( wid, "txtSDesc", 20+iw+20, -60-th-20-32 );
-      window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -60-th-20-32 );
+      th = 64;
+      window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th-30-32 );
+      window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th-30-32 );
       window_moveWidget( wid, "txtDescription", 20+iw+20, -240-32);
       return;
    }
@@ -454,12 +454,13 @@ void outfits_update( unsigned int wid, char* str )
          buf_license );
    window_modifyText( wid, "txtDDesc", buf );
    window_modifyText( wid, "txtOutfitName", _(outfit->name) );
-   window_modifyText( wid, "txtDescShort", _(outfit->desc_short) );
-   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, _(outfit->desc_short) ) );
-   window_moveWidget( wid, "txtSDesc", 20+iw+20, -60-th-20-32 );
-   window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -60-th-20-32 );
-   th += gl_printHeightRaw( &gl_smallFont, 250, buf );
-   window_moveWidget( wid, "txtDescription", 20+iw+20, -60-th-20-32 );
+   window_modifyText( wid, "txtDescShort", outfit->desc_short );
+   th = gl_printHeightRaw( &gl_smallFont, w - (20 + iw + 20) - 200 - 20, outfit->desc_short );
+   window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th-30-32 );
+   window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th-30-32 );
+   th += gl_printHeightRaw( &gl_smallFont, w - (20 + iw + 20) - 200 - 20, buf );
+   th = MAX( th, 192 );
+   window_moveWidget( wid, "txtDescription", 20+iw+20, -40-th-30-32 );
 }
 
 
