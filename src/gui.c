@@ -1600,6 +1600,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    GLfloat cx, cy, x, y, r, vr, rc;
    glColour col;
    Planet *planet;
+   char buf[STRMAX_SHORT];
 
    /* Make sure is known. */
    if ( !planet_isKnown( cur_system->planets[ind] ))
@@ -1680,15 +1681,10 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    gl_renderCross( cx, cy, vr/2.5, &col );
    //glLineWidth(1.);
 
-   /* Render name. */
-   /* XXX: Hack to prevent the text from overly obscuring overlay
-    * display of other things. Effectively disables outlines for this
-    * text. Should ultimately be replaced with some other method of
-    * rendering the text, since the problem could be caused by as little
-    * as a font change, but using this fix for now. */
-   // col.a = MIN( col.a, 0.99 );
-   if (overlay)
-      gl_printMarkerRaw( &gl_smallFont, cx+planet->mo.text_offx, cy+planet->mo.text_offy, &col, _(planet->name) );
+   if (overlay) {
+      nsnprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(planet), _(planet->name) );
+      gl_printMarkerRaw( &gl_smallFont, cx+planet->mo.text_offx, cy+planet->mo.text_offy, &col, buf );
+   }
 }
 
 
@@ -1707,7 +1703,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    GLfloat cx, cy, x, y, r, vr, rc;
    glColour col;
    JumpPoint *jp;
-   // gl_Matrix4 projection;
+   char buf[STRMAX_SHORT];
 
 
    /* Default values. */
@@ -1782,14 +1778,12 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    glLineWidth( 1. );
 
    /* Render name. */
-   /* XXX: Hack to prevent the text from overly obscuring overlay
-    * display of other things. Effectively disables outlines for this
-    * text. Should ultimately be replaced with some other method of
-    * rendering the text, since the problem could be caused by as little
-    * as a font change, but using this fix for now. */
-   // col.a = MIN( col.a, 0.99 );
-   if (overlay)
-      gl_printMarkerRaw( &gl_smallFont, cx+vr+jp->mo.text_offx, cy+jp->mo.text_offy, &col, sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
+   if (overlay) {
+      nsnprintf(
+            buf, sizeof(buf), "%s%s", jump_getSymbol(jp),
+            sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
+      gl_printMarkerRaw( &gl_smallFont, cx+vr+jp->mo.text_offx, cy+jp->mo.text_offy, &col, buf );
+   }
 }
 
 

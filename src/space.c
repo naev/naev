@@ -1108,6 +1108,18 @@ JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys )
 
 
 /**
+ * @brief Gets the jump point symbol.
+ */
+const char *jump_getSymbol( JumpPoint *jp )
+{
+   if (jp_isFlag(jp, JP_HIDDEN))
+      return "* ";
+
+   return "";
+}
+
+
+/**
  * @brief Controls fleet spawning.
  *
  *    @param dt Current delta tick.

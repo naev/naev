@@ -52,6 +52,10 @@
 #  define PATH_MAX         256 /**< If not already defined. */
 #endif /* PATH_MAX */
 
+/* Default maximum string length */
+#define STRMAX 4096
+#define STRMAX_SHORT 1024
+
 
 
 /* For inferior OS. */

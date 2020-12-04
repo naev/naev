@@ -9,16 +9,17 @@
 
 #include "SDL.h"
 
-#include "log.h"
-#include "opengl.h"
+#include "array.h"
+#include "conf.h"
 #include "font.h"
 #include "gui.h"
+#include "input.h"
+#include "log.h"
+#include "nstring.h"
+#include "opengl.h"
 #include "pilot.h"
 #include "player.h"
 #include "space.h"
-#include "input.h"
-#include "array.h"
-#include "conf.h"
 
 
 /**
@@ -143,6 +144,7 @@ void ovr_refresh (void)
    MapOverlayPosOpt *moo;
    int ires;
    float res;
+   char buf[STRMAX_SHORT];
 
    /* Must be open. */
    if (!ovr_isOpen())
@@ -165,7 +167,12 @@ void ovr_refresh (void)
          continue;
       /* Initialize the map overlay stuff. */
       moo[items].radius_base = MAX( jumppoint_gfx->sw / res, 10. );
-      moo[items].text_width = gl_printWidthRaw( &gl_smallFont, _(jp->target->name) );
+      nsnprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), _(jp->target->name) );
+      moo[items].text_width = gl_printWidthRaw(&gl_smallFont, buf);
+      /* Second check in case "Unknown" is bigger than the system name. */
+      nsnprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), _("Unknown") );
+      moo[items].text_width = MAX(
+            moo[items].text_width, gl_printWidthRaw(&gl_smallFont, buf) );
       pos[items] = &jp->pos;
       mo[items]  = &jp->mo;
       items++;
@@ -177,8 +184,9 @@ void ovr_refresh (void)
       if ((pnt->real != ASSET_REAL) || !planet_isKnown(pnt))
          continue;
       /* Initialize the map overlay stuff. */
+      nsnprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(pnt), _(pnt->name) );
       moo[items].radius_base = MAX( pnt->radius*2. / res, 15. );
-      moo[items].text_width = gl_printWidthRaw( &gl_smallFont, _(pnt->name) );
+      moo[items].text_width = gl_printWidthRaw( &gl_smallFont, buf );
       pos[items] = &pnt->pos;
       mo[items]  = &pnt->mo;
       items++;
