@@ -52,7 +52,7 @@ function _atk_check_seeable()
 
    ai.settarget(self) -- Un-target
    ai.poptask()
-   ai.pushtask("__goto_nobrake_raw", target:pos() )
+   ai.pushtask("goto", target:pos() )
    return false
 end
 
