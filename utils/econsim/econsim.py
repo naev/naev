@@ -13,11 +13,7 @@ config = dict({
 
 def planet_filter( p ):
    details = assetsObj.getPlanetDetails( p )
-   if not details:
-      return False
-   if details['population'] <= 0:
-      return False
-   return True
+   return details and int(details['population']) > 0
 
 
 if __name__ == "__main__":
@@ -35,7 +31,7 @@ if __name__ == "__main__":
    ssys_added = []
    jumps_added = []
    i = 1
-   for (ssysName, planets) in ssysObj.assetsList.iteritems():
+   for ssysName, planets in ssysObj.assetsList.items():
 
       # Create jumps
       jumps = ssysObj.jumpgatesForSystem( ssysName )
@@ -60,7 +56,7 @@ if __name__ == "__main__":
          jump_nodes.append( name )
 
       # We don't want all the planets
-      planets_filtered = filter( planet_filter, planets )
+      planets_filtered = list(filter( planet_filter, planets ))
       planets_added = list()
       # Create cluster
       if len(planets_filtered) > 0:
@@ -98,7 +94,7 @@ if __name__ == "__main__":
    v     = len(nodes)
    e     = len(edges)
    sparse = float(e+v)/float(v**2)
-   print("   %d nodes and %d edges (%.3f%% sparse)" % (v, e, sparse*100))
+   print(("   %d nodes and %d edges (%.3f%% sparse)" % (v, e, sparse*100)))
    print("Outputting as naev_universe")
    graph.write_raw('naev_universe.dot')
    #graph.write_png('naev_universe.png', prog='neato', format='png')
