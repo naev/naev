@@ -514,12 +514,18 @@ static int inp_rangeToWidth( Widget *inp, int start_pos, int end_pos )
  */
 static int inp_rangeFromWidth( Widget *inp, int start_pos, int width )
 {
-   int tw, oneline;
+   int tw, oneline, out;
+   char *str, *eol;
+
+   str = &inp->dat.inp.input[start_pos];
    tw = width>=0 ? width : inp->w-10;
    oneline = width>=0 || inp->dat.inp.oneline;
    if (oneline)
-      return gl_printWidthForTextLine( inp->dat.inp.font, &inp->dat.inp.input[start_pos], tw );
-   return gl_printWidthForText( inp->dat.inp.font, &inp->dat.inp.input[start_pos], tw );
+      out = gl_printWidthForTextLine( inp->dat.inp.font, str, tw );
+   else
+      out = gl_printWidthForText( inp->dat.inp.font, str, tw );
+   eol = strchr( str, '\n' );
+   return eol ? MIN( out, eol-str ) : out;
 }
 
 
