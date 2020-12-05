@@ -1,5 +1,3 @@
-#version 140
-
 uniform mat4 projection;
 in vec4 vertex;
 

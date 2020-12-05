@@ -1305,7 +1305,7 @@ const glColour* pilot_getColour( const Pilot* p )
 {
    const glColour *col;
 
-   if (pilot_inRangePilot(player.p, p, NULL) == -1) col = &cMapNeutral;
+   if (pilot_inRangePilot(player.p, p, NULL) == -1) col = &cNeutral;
    else if (pilot_isDisabled(p) || pilot_isFlag(p,PILOT_DEAD)) col = &cInert;
    else if (pilot_isFriendly(p)) col = &cFriend;
    else if (pilot_isHostile(p)) col = &cHostile;

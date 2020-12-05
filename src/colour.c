@@ -53,7 +53,7 @@ const glColour cOrange     = { .r=0.90, .g=0.70, .b=0.10, .a=1. }; /**< Orange *
 const glColour cGold       = { .r=1.00, .g=0.84, .b=0.00, .a=1. }; /**< Gold */
 const glColour cYellow     = { .r=0.80, .g=0.80, .b=0.00, .a=1. }; /**< Yellow */
 /* Blues. */
-const glColour cMidnightBlue = { .r=0.40, .g=0.4, .b=0.60, .a=1. }; /**< Midnight Blue. */
+const glColour cMidnightBlue = { .r=0.10, .g=0.10, .b=0.4, .a=1. }; /**< Midnight Blue. */
 const glColour cDarkBlue   = { .r=0.10, .g=0.10, .b=0.60, .a=1. }; /**< Dark Blue */
 const glColour cBlue       = { .r=0.20, .g=0.20, .b=0.80, .a=1. }; /**< Blue */
 const glColour cLightBlue  = { .r=0.40, .g=0.40, .b=1.00, .a=1. }; /**< Light Blue */
@@ -76,20 +76,18 @@ const glColour cBlackHilight  =  { .r = 0.0, .g = 0.0, .b = 0.0, .a = 0.4 }; /**
 /* toolkit */
 const glColour cHilight       =  { .r = 0.1, .g = 0.9, .b = 0.1, .a = 0.6 }; /**< Hilight colour */
 /* objects */
-const glColour cInert         =  { .r = 0.6, .g = 0.6, .b = 0.6, .a = 1.  }; /**< Inert object colour */
-const glColour cMapInert      =  { .r = 0.4, .g = 0.4, .b = 0.4, .a = 1. }; /**< Inert object map screen text colour */
-const glColour cNeutral       =  { .r = 0.9, .g = 1.0, .b = 0.3, .a = 1.  }; /**< Neutral object colour */
-const glColour cMapNeutral    =  { .r = 0.2, .g = 0.2, .b = 0.2, .a = 1.  }; /**< Neutral object map screen text colour */
-const glColour cFriend        =  { .r = 0.0, .g = 0.8, .b = 0.0, .a = 1.  }; /**< Friend object colour */
-const glColour cHostile       =  { .r = 0.9, .g = 0.2, .b = 0.2, .a = 1.  }; /**< Hostile object colour */
-const glColour cRestricted    =  { .r = 1.0, .g = 0.6, .b = 0.0, .a = 1.  }; /**< Restricted object colour. */
+const glColour cInert         =  { .r=221./255., .g=221./255., .b=221./255., .a=1. }; /**< Inert object colour */
+const glColour cNeutral       =  { .r=221./255., .g=204./255., .b=119./255., .a=1. }; /**< Neutral object colour */
+const glColour cFriend        =  {  .r=68./255., .g=170./255., .b=153./255., .a=1. }; /**< Friend object colour */
+const glColour cHostile       =  { .r=170./255.,  .g=68./255., .b=153./255., .a=1. }; /**< Hostile object colour */
+const glColour cRestricted    =  { .r=153./255., .g=153./255.,  .b=51./255., .a=1. }; /**< Restricted object colour. */
 const glColour cDRestricted   =  { .r = 0.7, .g = 0.3, .b = 0.0, .a = 1.  }; /**< Restricted object colour. Darkened for use on white. */
 /* radar */
 const glColour cRadar_player  =  { .r = 0.4, .g = 0.8, .b = 0.4, .a = 1.  }; /**< Player colour on radar. */
-const glColour cRadar_tPilot  =  { .r = 0.8, .g = 0.5, .b = 0.0, .a = 1.  }; /**< Targeted object colour on radar. */
-const glColour cRadar_tPlanet =  { .r = 0.5, .g = 0.9, .b = 0.5, .a = 1.  }; /**< Targeted planet colour. */
+const glColour cRadar_tPilot  =  { .r = 1.0, .g = 1.0, .b = 1.0, .a = 1.  }; /**< Targeted object colour on radar. */
+const glColour cRadar_tPlanet =  { .r = 1.0, .g = 1.0, .b = 1.0, .a = 1.  }; /**< Targeted planet colour. */
 const glColour cRadar_weap    =  { .r = 0.8, .g = 0.2, .b = 0.2, .a = 1.  }; /**< Weapon colour on radar. */
-const glColour cRadar_hilight =  { .r = 0.0, .g = 0.8, .b = 0.8, .a = 1.  }; /**< Radar hilighted object. */
+const glColour cRadar_hilight =  { .r = 0.6, .g = 1.0, .b = 1.0, .a = 1.  }; /**< Radar hilighted object. */
 /* health */
 const glColour cShield        =  { .r = 0.2, .g = 0.2, .b = 0.8, .a = 1.  }; /**< Shield bar colour. */
 const glColour cArmour        =  { .r = 0.5, .g = 0.5, .b = 0.5, .a = 1.  }; /**< Armour bar colour. */
@@ -251,7 +249,7 @@ void col_blend( glColour *blend, const glColour *fg, const glColour *bg, double 
 
 
 #define CHECK_COLOUR(colour) \
-      if (STRCASECMP(name, #colour) == 0) return &c##colour /**< Checks the colour. */
+      if (strcasecmp(name, #colour) == 0) return &c##colour /**< Checks the colour. */
 /**
  * @brief Returns a colour from its name
  *

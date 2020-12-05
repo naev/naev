@@ -1,5 +1,3 @@
-#version 140
-
 uniform mat4 tex_mat;
 uniform mat4 projection;
 
