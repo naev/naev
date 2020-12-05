@@ -5,6 +5,8 @@
 #include <stdint.h>
 #include <stdarg.h>
 
+/* Note: these utilities are from cutetf8, which also provides u8_escape and u8_escape_wchar.
+ * Those are nice, but removed pending an audit of how they use Windows format strings. */
 #include "attributes.h"
 
 extern int locale_is_utf8;
@@ -57,31 +59,8 @@ char read_escape_control_char(char c);
    input characters processed */
 size_t u8_read_escape_sequence(const char *src, size_t ssz, uint32_t *dest);
 
-/* given a wide character, convert it to an ASCII escape sequence stored in
-   buf, where buf is "sz" bytes. returns the number of characters output.
-   sz must be at least 3. */
-int u8_escape_wchar(char *buf, size_t sz, uint32_t ch);
-
 /* convert a string "src" containing escape sequences to UTF-8 */
 size_t u8_unescape(char *buf, size_t sz, const char *src);
-
-/* convert UTF-8 "src" to escape sequences.
-
-   sz is buf size in bytes. must be at least 12.
-
-   if escape_quotes is nonzero, quote characters will be escaped.
-
-   if ascii is nonzero, the output is 7-bit ASCII, no UTF-8 survives.
-
-   starts at src[*pi], updates *pi to point to the first unprocessed
-   byte of the input.
-
-   end is one more than the last allowable value of *pi.
-
-   returns number of bytes placed in buf, including a NUL terminator.
-*/
-size_t u8_escape(char *buf, size_t sz, const char *src, size_t *pi, size_t end,
-                 int escape_quotes, int ascii);
 
 /* utility predicates used by the above */
 int octal_digit(char c);
