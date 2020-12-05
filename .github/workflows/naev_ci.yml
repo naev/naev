@@ -211,6 +211,7 @@ jobs:
         fetch-depth: 0
 
     - name: Autotools Setup
+      id: setup
       run: |
         ./autogen.sh
         ./configure
