@@ -212,22 +212,51 @@ jobs:
           name: naev-ndata
           path: ${{ github.workspace }}/dist/out/steam-ndata.tar.xz
 
-  "Upload_GitHub_Release":
+  "Upload_Naev_Release":
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+#          - releasetype: github
+#          - releasetype: steam
+          - releasetype: itch
+            
     runs-on: ubuntu-latest
-    needs: [Generate_Source, Build_Naev_Release]
-    if: ${{ github.repository == 'naev/naev' }}
+    needs: [Generate_Source, Build_Naev_Release, Build_Naev_Steam_Release]
 
     steps:
+      - name: Update APT Cache
+        if: ${{ matrix.releasetype == 'steam' }}
+        run: |
+          sudo add-apt-repository multiverse
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+
+      - name: Install SteamCMD
+        if: ${{ matrix.releasetype == 'steam' }}
+        run: |
+          echo steamcmd steam/question select "I AGREE" | sudo debconf-set-selections
+          sudo apt-get install lib32gcc1 libsdl2-2.0-0:i386 steamcmd
+          
+      - name: Install Butler
+        if: ${{ matrix.releasetype == 'itch' }}
+        run: |
+          wget -O temp/butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip temp/butler.zip
+          chmod +x butler
+          ./butler -V
+          
       - name: Create Release Staging and Output Areas
         run: |
-          mkdir -p dist/{staging,out}
+          mkdir -p {temp,dist/{staging,out/{lin64,win64}}}
 
-      - name: Download Build Artifacts
+      - name: Download Artifacts
         uses: actions/download-artifact@v2
         with:
           path: ${{ github.workspace }}/dist/staging
 
-      - name: Collect files and rename for distribution
+      - name: Collect files for GitHub
+        if: ${{ matrix.releasetype == 'github' }}
         run: |
           BUILD_DATE="$(date +%Y%m%d)"
           VERSION="$(<"dist/staging/naev-version/VERSION")"
@@ -239,73 +268,8 @@ jobs:
 
           chmod +x dist/out/naev-$SUFFIX-linux-x86-64.AppImage
 
-      - name: Upload Release Assets
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "nightly"
-          prerelease: true
-          title: "Nightly Build"
-          files: |
-            ${{ github.workspace }}/dist/out/*
-
-  "Upload_Steam_Release":
-    runs-on: ubuntu-latest
-    needs: [Generate_Source, Build_Naev_Release, Build_Naev_Steam_Release]
-    if: ${{ github.repository == 'naev/naev' }}
-
-    steps:
-      - name: Update APT Cache
-        run: |
-          sudo add-apt-repository multiverse
-          sudo dpkg --add-architecture i386
-          sudo apt-get update
-
-      - name: Install SteamCMD
-        run: |
-          echo steamcmd steam/question select "I AGREE" | sudo debconf-set-selections
-          sudo apt-get install lib32gcc1 libsdl2-2.0-0:i386 steamcmd
-
-      - name: Download Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          path: ${{ github.workspace }}/dist/staging
-
-      - name: Build and Upload Steam Release
-        run: |
-          chmod -R +x dist/staging/naev-steam-deployment
-          cp -r dist/staging/naev-steam-deployment/* ${{ github.workspace }}
-          ./SteamDeploy.sh -n -v "${{ github.workspace }}/dist/staging/naev-version" -t "${{ github.workspace }}/dist/staging" -o "${{ github.workspace }}/dist/out"
-        env:
-          STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
-          STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}
-          TFA_IMAP: ${{ secrets.TFA_IMAP }}
-          TFA_PASS: ${{ secrets.TFA_PASS }}
-          TFA_USER: ${{ secrets.TFA_USER }}
-
-  "Upload_Itch_Release":
-    runs-on: ubuntu-latest
-    needs: [Generate_Source, Build_Naev_Release, Build_Naev_Steam_Release]
-    #if: ${{ github.repository == 'naev/naev' }}
-
-    steps:
-      - name: Create Release Staging and Output Areas
-        run: |
-          mkdir -p {temp,dist/{staging,out/{lin64,win64}}}
-
-      - name: Download butler
-        run: |
-          wget -O temp/butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
-          unzip temp/butler.zip
-          chmod +x butler
-          ./butler -V
-
-      - name: Download Build Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          path: ${{ github.workspace }}/dist/staging
-
-      - name: Collect files and upload build to itch.io
+      - name: Collect files for itch.io
+        if: ${{ matrix.releasetype == 'itch' }}
         run: |
           BUILD_DATE="$(date +%Y%m%d)"
           VERSION="$(<"dist/staging/naev-version/VERSION")"
@@ -317,6 +281,33 @@ jobs:
           tar -Jxf "dist/staging/naev-win64/steam-win64.tar.xz" -C "dist/out/win64"
           tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64"
 
+      - name: Upload Github Release
+        if: ${{ matrix.releasetype == 'github' }}
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "nightly"
+          prerelease: true
+          title: "Nightly Build"
+          files: |
+            ${{ github.workspace }}/dist/out/*
+          
+      - name: Build and Upload Steam Release
+        if: ${{ matrix.releasetype == 'steam' }}
+        run: |
+          chmod -R +x dist/staging/naev-steam-deployment
+          cp -r dist/staging/naev-steam-deployment/* ${{ github.workspace }}
+          ./SteamDeploy.sh -n -v "${{ github.workspace }}/dist/staging/naev-version" -t "${{ github.workspace }}/dist/staging" -o "${{ github.workspace }}/dist/out"
+        env:
+          STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
+          STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}
+          TFA_IMAP: ${{ secrets.TFA_IMAP }}
+          TFA_PASS: ${{ secrets.TFA_PASS }}
+          TFA_USER: ${{ secrets.TFA_USER }}
+
+      - name: Build and Upload itch.io Release
+        if: ${{ matrix.releasetype == 'itch' }}
+        run: |
           ./butler push --userversion="$SUFFIX" dist/out/lin64 projectsynchro/test-project:linux-x86-64-nightly
           ./butler push --userversion="$SUFFIX" dist/out/win64 projectsynchro/test-project:windows-x86-64-nightly
         env:
