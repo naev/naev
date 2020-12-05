@@ -80,6 +80,7 @@ jobs:
         
     - name: Upload Meson Dist Artifact
       uses: actions/upload-artifact@v2
+      if: ${{ runner.os == 'Linux' }}
       with:
         name: naev-meson-dist-${{ github.sha }}
         path: ${{ github.workspace }}/dist/meson-dist/*
@@ -229,6 +230,7 @@ jobs:
 
     - name: Upload Autotools Dist Artifact
       uses: actions/upload-artifact@v2
+      if: ${{ runner.os == 'Linux' }}
       with:
         name: naev-autotools-dist-${{ github.sha }}
         path: ${{ github.workspace }}/repo/naev-*.tar.gz
