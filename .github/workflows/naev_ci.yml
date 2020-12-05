@@ -70,8 +70,25 @@ jobs:
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
       with:
-        path: source
+        path: repo
         fetch-depth: 0
+
+    - name:  Package Meson Dist
+      run: |
+        sh $MESON setup dist repo -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
+        sh $MESON dist -C dist --no-tests --include-subprojects
+        
+    - name: Upload Meson Dist Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-meson-dist-${{ github.sha }}
+        path: ${{ github.workspace }}/dist/meson-dist/*
+        if-no-files-found: error
+        
+    - name: Extract Source
+      run: |
+        mkdir source
+        tar -xf ${{ github.workspace }}/dist/meson-dist/naev-*.tar.xz -C source --strip 1
 
     - name: Meson Setup
       id: setup
@@ -130,18 +147,6 @@ jobs:
         path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
         if-no-files-found: ignore
 
-    - name:  Package Meson Dist
-      run: |
-        sh $MESON setup dist source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
-        sh $MESON dist -C dist --no-tests --include-subprojects
-        
-    - name: Upload Meson Dist Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: naev-meson-dist-${{ github.sha }}
-        path: ${{ github.workspace }}/dist/meson-dist/*
-        if-no-files-found: error
-        
   "Autotools_Compile_Naev":
 
     strategy:
@@ -210,11 +215,6 @@ jobs:
         ./configure
       working-directory: source
 
-    - name: Package Autotools Dist
-      run: |
-          make dist-gzip
-      working-directory: "source"
-      
     - name: Test Autotools Dist
       run: |
           make distcheck -j"$(nproc)"
