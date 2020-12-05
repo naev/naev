@@ -172,8 +172,8 @@
   <item>Heavy Combat Vessel License</item>
   <item>Mercenary License</item>
   <item>Previous Generation Small Systems</item>
-  <item>Unicorp PT-100 Core System</item>
-  <item>Unicorp PT-200 Core System</item>
+  <item>Unicorp PT-18 Core System</item>
+  <item>Unicorp PT-80 Core System</item>
   <item>Milspec Hermes 2202 Core System</item>
   <item>Milspec Aegis 2201 Core System</item>
   <item>Milspec Prometheus 2203 Core System</item>
@@ -183,8 +183,8 @@
   <item>Milspec Prometheus 3603 Core System</item>
   <item>Milspec Orion 3701 Core System</item>
   <item>Previous Generation Medium Systems</item>
-  <item>Unicorp PT-500 Core System</item>
-  <item>Unicorp PT-600 Core System</item>
+  <item>Unicorp PT-280 Core System</item>
+  <item>Unicorp PT-400 Core System</item>
   <item>Milspec Hermes 4702 Core System</item>
   <item>Milspec Aegis 4701 Core System</item>
   <item>Milspec Prometheus 4703 Core System</item>
@@ -194,8 +194,8 @@
   <item>Milspec Prometheus 5403 Core System</item>
   <item>Milspec Orion 5501 Core System</item>
   <item>Previous Generation Large Systems</item>
-  <item>Unicorp PT-900 Core System</item>
-  <item>Unicorp PT-1000 Core System</item>
+  <item>Unicorp PT-750 Core System</item>
+  <item>Unicorp PT-3400 Core System</item>
   <item>Milspec Hermes 8502 Core System</item>
   <item>Milspec Aegis 8501 Core System</item>
   <item>Milspec Prometheus 8503 Core System</item>
@@ -492,12 +492,12 @@
   <item>Previous Generation Small Systems</item>
   <item>Previous Generation Medium Systems</item>
   <item>Previous Generation Large Systems</item>
-  <item>Unicorp PT-100 Core System</item>
-  <item>Unicorp PT-200 Core System</item>
-  <item>Unicorp PT-500 Core System</item>
-  <item>Unicorp PT-600 Core System</item>
-  <item>Unicorp PT-900 Core System</item>
-  <item>Unicorp PT-1000 Core System</item>
+  <item>Unicorp PT-18 Core System</item>
+  <item>Unicorp PT-80 Core System</item>
+  <item>Unicorp PT-280 Core System</item>
+  <item>Unicorp PT-400 Core System</item>
+  <item>Unicorp PT-750 Core System</item>
+  <item>Unicorp PT-3400 Core System</item>
   <item>Beat Up Small Engine</item>
   <item>Beat Up Medium Engine</item>
   <item>Beat Up Large Engine</item>
@@ -540,12 +540,12 @@
   <item>Previous Generation Small Systems</item>
   <item>Previous Generation Medium Systems</item>
   <item>Previous Generation Large Systems</item>
-  <item>Unicorp PT-100 Core System</item>
-  <item>Unicorp PT-200 Core System</item>
-  <item>Unicorp PT-500 Core System</item>
-  <item>Unicorp PT-600 Core System</item>
-  <item>Unicorp PT-900 Core System</item>
-  <item>Unicorp PT-1000 Core System</item>
+  <item>Unicorp PT-18 Core System</item>
+  <item>Unicorp PT-80 Core System</item>
+  <item>Unicorp PT-280 Core System</item>
+  <item>Unicorp PT-400 Core System</item>
+  <item>Unicorp PT-750 Core System</item>
+  <item>Unicorp PT-3400 Core System</item>
   <item>Beat Up Small Engine</item>
   <item>Beat Up Medium Engine</item>
   <item>Beat Up Large Engine</item>
@@ -881,12 +881,12 @@
   <item>Previous Generation Small Systems</item>
   <item>Previous Generation Medium Systems</item>
   <item>Previous Generation Large Systems</item>
-  <item>Unicorp PT-100 Core System</item>
-  <item>Unicorp PT-200 Core System</item>
-  <item>Unicorp PT-500 Core System</item>
-  <item>Unicorp PT-600 Core System</item>
-  <item>Unicorp PT-900 Core System</item>
-  <item>Unicorp PT-1000 Core System</item>
+  <item>Unicorp PT-18 Core System</item>
+  <item>Unicorp PT-80 Core System</item>
+  <item>Unicorp PT-280 Core System</item>
+  <item>Unicorp PT-400 Core System</item>
+  <item>Unicorp PT-750 Core System</item>
+  <item>Unicorp PT-3400 Core System</item>
  </tech>
  <tech name="Systems Medium">
   <item>Milspec Hermes 2202 Core System</item>

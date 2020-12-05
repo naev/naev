@@ -27,7 +27,7 @@
   <weapon size="small" x="10" y="2" h="0" />
   <weapon size="small" x="0" y="-4" h="-3" />
   <weapon size="small" x="0" y="4" h="-3" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-18 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
   <utility size="small" />

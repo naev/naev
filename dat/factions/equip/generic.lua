@@ -4,37 +4,37 @@ require "jumpdist.lua"
 -- Table of available core systems by class.
 equip_classOutfits_coreSystems = {
    ["Yacht"] = {
-      "Unicorp PT-100 Core System"
+      "Unicorp PT-18 Core System"
    },
    ["Luxury Yacht"] = {
-      "Unicorp PT-100 Core System"
+      "Unicorp PT-18 Core System"
    },
    ["Scout"] = {
-      "Unicorp PT-100 Core System", "Milspec Aegis 2201 Core System"
+      "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System"
    },
    ["Courier"] = {
-      "Unicorp PT-200 Core System", "Milspec Aegis 3601 Core System"
+      "Unicorp PT-80 Core System", "Milspec Aegis 3601 Core System"
    },
    ["Freighter"] = {
-      "Unicorp PT-600 Core System", "Milspec Aegis 5401 Core System"
+      "Unicorp PT-400 Core System", "Milspec Aegis 5401 Core System"
    },
    ["Armoured Transport"] = {
       "Milspec Aegis 5401 Core System", "Milspec Orion 5501 Core System"
    },
    ["Fighter"] = {
-      "Unicorp PT-200 Core System", "Milspec Orion 3701 Core System"
+      "Unicorp PT-80 Core System", "Milspec Orion 3701 Core System"
    },
    ["Bomber"] = {
-      "Unicorp PT-200 Core System", "Milspec Orion 3701 Core System"
+      "Unicorp PT-80 Core System", "Milspec Orion 3701 Core System"
    },
    ["Corvette"] = {
-      "Unicorp PT-500 Core System", "Milspec Orion 4801 Core System"
+      "Unicorp PT-280 Core System", "Milspec Orion 4801 Core System"
    },
    ["Destroyer"] = {
-      "Unicorp PT-600 Core System", "Milspec Orion 5501 Core System"
+      "Unicorp PT-400 Core System", "Milspec Orion 5501 Core System"
    },
    ["Cruiser"] = {
-      "Unicorp PT-1000 Core System", "Milspec Orion 9901 Core System"
+      "Unicorp PT-3400 Core System", "Milspec Orion 9901 Core System"
    },
    ["Carrier"] = {
       "Milspec Orion 9901 Core System"
@@ -524,25 +524,25 @@ equip_classOutfits_structurals = {
 -- Table of available core systems by base type.
 equip_typeOutfits_coreSystems = {
    ["Hyena"] = {
-      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+      "Unicorp PT-18 Core System", "Milspec Orion 2301 Core System"
    },
    ["Shark"] = {
-      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+      "Unicorp PT-18 Core System", "Milspec Orion 2301 Core System"
    },
    ["Brigand"] = {
-      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+      "Unicorp PT-18 Core System", "Milspec Orion 2301 Core System"
    },
    ["Fidelity"] = {
-      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+      "Unicorp PT-18 Core System", "Milspec Orion 2301 Core System"
    },
    ["Perspicacity"] = {
-      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+      "Unicorp PT-18 Core System", "Milspec Orion 2301 Core System"
    },
    ["Derivative"] = {
-      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+      "Unicorp PT-18 Core System", "Milspec Orion 2301 Core System"
    },
    ["Kestrel"] = {
-      "Unicorp PT-900 Core System", "Milspec Orion 8601 Core System"
+      "Unicorp PT-750 Core System", "Milspec Orion 8601 Core System"
    },
    ["Brigand"] = {
       probability = {
@@ -1115,7 +1115,7 @@ function equip_generic( p )
       success = equip_warn( p, o[rnd.rnd(1, #o)] )
    end
    if not success then
-      equip_warn( p, "Unicorp PT-100 Core System" )
+      equip_warn( p, "Unicorp PT-18 Core System" )
    end
 
    -- Engines

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Unicorp PT-1000 Core System">
+<outfit name="Unicorp PT-3400 Core System">
  <general>
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>

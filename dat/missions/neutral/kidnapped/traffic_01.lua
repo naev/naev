@@ -232,7 +232,7 @@ function spawn_baddies(sp)
       badguys[i]:rmOutfit("cores")
       
       badguys[i]:addOutfit("Unicorp D-2 Light Plating")
-      badguys[i]:addOutfit("Unicorp PT-100 Core System")
+      badguys[i]:addOutfit("Unicorp PT-18 Core System")
       badguys[i]:addOutfit("Tricon Zephyr Engine")
       
       badguys[i]:addOutfit("Laser Cannon MK2",2)
@@ -252,7 +252,7 @@ function spawn_baddies(sp)
       badguys[i]:rmOutfit("cores")
       
       badguys[i]:addOutfit("Unicorp D-4 Light Plating")
-      badguys[i]:addOutfit("Unicorp PT-200 Core System")
+      badguys[i]:addOutfit("Unicorp PT-80 Core System")
       badguys[i]:addOutfit("Tricon Zephyr II Engine")
       
       badguys[i]:addOutfit("Mass Driver MK1")
@@ -273,7 +273,7 @@ function spawn_baddies(sp)
       badguys[i]:rmOutfit("cores")
       
       badguys[i]:addOutfit("Unicorp D-12 Medium Plating")
-      badguys[i]:addOutfit("Unicorp PT-500 Core System")
+      badguys[i]:addOutfit("Unicorp PT-280 Core System")
       badguys[i]:addOutfit("Tricon Cyclone Engine")
       
       badguys[i]:addOutfit("Razor Turret MK3",2)

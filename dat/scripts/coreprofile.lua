@@ -8,9 +8,9 @@ function pilot.coreProfile(p, profile)
    local profiles =  {
                   low = 
                         {
-                           small = {hull = "Unicorp D-4 Light Plating", engine = "Unicorp Hawk 300 Engine", system = "Unicorp PT-200 Core System"},
-                           medium = {hull = "Unicorp D-24 Medium Plating",  engine = "Unicorp Falcon 1200 Engine", system = "Unicorp PT-600 Core System"},
-                           large = {hull = "Unicorp D-72 Heavy Plating",  engine = "Unicorp Eagle 6500 Engine", system = "Unicorp PT-1000 Core System"}
+                           small = {hull = "Unicorp D-4 Light Plating", engine = "Unicorp Hawk 300 Engine", system = "Unicorp PT-80 Core System"},
+                           medium = {hull = "Unicorp D-24 Medium Plating",  engine = "Unicorp Falcon 1200 Engine", system = "Unicorp PT-400 Core System"},
+                           large = {hull = "Unicorp D-72 Heavy Plating",  engine = "Unicorp Eagle 6500 Engine", system = "Unicorp PT-3400 Core System"}
                         },
                   medium = 
                         {
@@ -26,9 +26,9 @@ function pilot.coreProfile(p, profile)
                         },
                   low_trader = 
                         {
-                           small = {hull = "S&K Small Cargo Hull",  engine = "Melendez Ox Engine", system = "Unicorp PT-200 Core System"},
-                           medium = {hull = "S&K Medium Cargo Hull",  engine = "Melendez Buffalo Engine", system = "Unicorp PT-600 Core System"},
-                           large = {hull = "S&K Large Cargo Hull",  engine = "Melendez Mammoth Engine", system = "Unicorp PT-1000 Core System"}
+                           small = {hull = "S&K Small Cargo Hull",  engine = "Melendez Ox Engine", system = "Unicorp PT-80 Core System"},
+                           medium = {hull = "S&K Medium Cargo Hull",  engine = "Melendez Buffalo Engine", system = "Unicorp PT-400 Core System"},
+                           large = {hull = "S&K Large Cargo Hull",  engine = "Melendez Mammoth Engine", system = "Unicorp PT-3400 Core System"}
                         },
                   high_trader = 
                         {

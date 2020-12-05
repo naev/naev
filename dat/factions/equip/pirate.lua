@@ -1,24 +1,24 @@
-require("factions/equip/generic.lua")
+require "factions/equip/generic.lua"
 
 
 equip_typeOutfits_coreSystems["Hyena"] = {
-   "Unicorp PT-100 Core System", "Milspec Prometheus 2203 Core System"
+   "Unicorp PT-18 Core System", "Milspec Prometheus 2203 Core System"
 }
 equip_typeOutfits_coreSystems["Shark"] = equip_typeOutfits_coreSystems["Hyena"]
 equip_typeOutfits_coreSystems["Vendetta"] = {
-   "Unicorp PT-200 Core System", "Milspec Prometheus 3603 Core System"
+   "Unicorp PT-80 Core System", "Milspec Prometheus 3603 Core System"
 }
 equip_typeOutfits_coreSystems["Lancelot"] = equip_typeOutfits_coreSystems["Vendetta"]
 equip_typeOutfits_coreSystems["Ancestor"] = equip_typeOutfits_coreSystems["Vendetta"]
 equip_typeOutfits_coreSystems["Phalanx"] = {
-   "Unicorp PT-500 Core System", "Milspec Prometheus 4703 Core System"
+   "Unicorp PT-280 Core System", "Milspec Prometheus 4703 Core System"
 }
 equip_typeOutfits_coreSystems["Admonisher"] = equip_typeOutfits_coreSystems["Phalanx"]
 equip_typeOutfits_coreSystems["Pacifier"] = {
-   "Unicorp PT-600 Core System", "Milspec Prometheus 5403 Core System"
+   "Unicorp PT-400 Core System", "Milspec Prometheus 5403 Core System"
 }
 equip_typeOutfits_coreSystems["Kestrel"] = {
-   "Unicorp PT-1000 Core System", "Milspec Prometheus 8503 Core System"
+   "Unicorp PT-3400 Core System", "Milspec Prometheus 8503 Core System"
 }
 
 equip_typeOutfits_engines["Rhino"] = {

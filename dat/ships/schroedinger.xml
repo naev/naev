@@ -23,7 +23,7 @@
  </characteristics>
  <slots>
   <weapon size="small" x="9" y="0" h="-2" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-18 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="medium" />
   <utility size="small" />

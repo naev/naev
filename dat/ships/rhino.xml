@@ -26,7 +26,7 @@
   <weapon size="large" x="25" y="3" h="4" />
   <weapon size="medium" x="-15" y="-3" h="4" />
   <weapon size="medium" x="-15" y="3" h="4" />
-  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-600 Core System</utility>
+  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-400 Core System</utility>
   <utility size="medium" prop="accessory" exclusive="1" />
   <utility size="medium" />
   <utility size="medium" />
