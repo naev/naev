@@ -108,8 +108,8 @@ int u8_is_locale_utf8(const char *locale);
 /* printf where the format string and arguments may be in UTF-8.
    you can avoid this function and just use ordinary printf() if the current
    locale is UTF-8. */
-FORMAT( printf, 1, 0 ) size_t u8_vprintf(const char *fmt, va_list ap);
-FORMAT( printf, 1, 2 ) size_t u8_printf(const char *fmt, ...);
+PRINTF_FORMAT( 1, 0 ) size_t u8_vprintf(const char *fmt, va_list ap);
+PRINTF_FORMAT( 1, 2 ) size_t u8_printf(const char *fmt, ...);
 
 /* determine whether a sequence of bytes is valid UTF-8. length is in bytes */
 int u8_isvalid(const char *str, size_t length);

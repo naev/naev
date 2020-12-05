@@ -26,7 +26,7 @@ char* nstrndup( const char *s, size_t n );
 #if HAS_SNPRINTF
 #define nsnprintf       snprintf
 #else /* HAS_SNPRINTF */
-FORMAT( printf, 3, 4 ) int nsnprintf( char *text, size_t maxlen, const char *fmt, ... );
+PRINTF_FORMAT( 3, 4 ) int nsnprintf( char *text, size_t maxlen, const char *fmt, ... );
 #endif /* HAS_SNPRINTF */
 
 int strsort( const void *p1, const void *p2 );

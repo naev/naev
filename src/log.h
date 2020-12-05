@@ -43,7 +43,7 @@
 #define DEBUG_BLANK() DEBUG("%s", "")
 
 
-FORMAT( printf, 3, 4 ) int logprintf( FILE *stream, int newline, const char *fmt, ... );
+PRINTF_FORMAT( 3, 4 ) int logprintf( FILE *stream, int newline, const char *fmt, ... );
 void log_redirect (void);
 int log_isTerminal (void);
 void log_copy( int enable );
