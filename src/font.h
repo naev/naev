@@ -8,7 +8,7 @@
 #  define FONT_H
 
 
-#include "attributes.h"
+#include "nstring.h"
 #include "opengl.h"
 
 

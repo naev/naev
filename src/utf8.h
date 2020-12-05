@@ -7,7 +7,7 @@
 
 /* Note: these utilities are from cutetf8, which also provides u8_escape and u8_escape_wchar.
  * Those are nice, but removed pending an audit of how they use Windows format strings. */
-#include "attributes.h"
+#include "nstring.h"
 
 extern int locale_is_utf8;
 

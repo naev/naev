@@ -12,8 +12,8 @@
 #include <stdio.h>
 #include <signal.h>
 
-#include "attributes.h"
 #include "gettext.h"
+#include "nstring.h"
 
 #if defined ENABLE_NLS && ENABLE_NLS
 #define _(String) gettext(String)
