@@ -76,11 +76,11 @@ const glColour cBlackHilight  =  { .r = 0.0, .g = 0.0, .b = 0.0, .a = 0.4 }; /**
 /* toolkit */
 const glColour cHilight       =  { .r = 0.1, .g = 0.9, .b = 0.1, .a = 0.6 }; /**< Hilight colour */
 /* objects */
-const glColour cInert         =  cQPaleGrey; /**< Inert object colour */
-const glColour cNeutral       =  cQSand; /**< Neutral object colour */
-const glColour cFriend        =  cQTeal; /**< Friend object colour */
-const glColour cHostile       =  cQPurple; /**< Hostile object colour */
-const glColour cRestricted    =  cQOlive; /**< Restricted object colour. */
+const glColour cInert         =  { .r=221./255., .g=221./255., .b=221./255., .a=1. }; /**< Inert object colour */
+const glColour cNeutral       =  { .r=221./255., .g=204./255., .b=119./255., .a=1. }; /**< Neutral object colour */
+const glColour cFriend        =  {  .r=68./255., .g=170./255., .b=153./255., .a=1. }; /**< Friend object colour */
+const glColour cHostile       =  { .r=170./255.,  .g=68./255., .b=153./255., .a=1. }; /**< Hostile object colour */
+const glColour cRestricted    =  { .r=153./255., .g=153./255.,  .b=51./255., .a=1. }; /**< Restricted object colour. */
 const glColour cDRestricted   =  { .r = 0.7, .g = 0.3, .b = 0.0, .a = 1.  }; /**< Restricted object colour. Darkened for use on white. */
 /* radar */
 const glColour cRadar_player  =  { .r = 0.4, .g = 0.8, .b = 0.4, .a = 1.  }; /**< Player colour on radar. */
