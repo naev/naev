@@ -85,9 +85,11 @@ jobs:
           - os: ubuntu-16.04
             buildoutput: naev-linux-x86-64
             shell: bash
+            make: make
           - os: windows-latest
             buildoutput: naev-win64
             shell: msys2 {0}
+            make: mingw32-make
     
     defaults:
       run:
@@ -121,7 +123,9 @@ jobs:
             libpng-dev \
             libopenal-dev \
             libvorbis-dev \
-            libiberty-dev
+            libiberty-dev \
+            libluajit-5.1-dev \
+            libsuitesparse-dev
             
       - name: Install MinGW Packages
         if: ${{ runner.os == 'Windows'}}
@@ -129,7 +133,7 @@ jobs:
         with:
           msystem: MINGW64
           update: true
-          install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-python-pip mingw-w64-x86_64-luajit mingw-w64-x86_64-nsis mingw-w64-x86_64-pkg-config libtool autoconf autoconf-archive automake automake-wrapper git gettext pkg-config make intltool itstool
+          install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-clang mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-itstool mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-python-pip mingw-w64-x86_64-luajit mingw-w64-x86_64-nsis mingw-w64-x86_64-make mingw-w64-x86_64-pkg-config mingw-w64-x86_64-suitesparse autoconf autoconf-archive automake-wrapper git intltool tar
 
       - name: Checkout Naev Repository
         uses: actions/checkout@v2
@@ -141,9 +145,10 @@ jobs:
         run: |
           ./autogen.sh
           ./configure --disable-debug
-          make -j$(nproc --all)
+          $MAKE -j$(nproc --all)
         env:
           CFLAGS: "-O3"
+          MAKE: "${{ matrix.make }}"
           
       - name: Build and Package Naev for Linux64
         if: ${{ runner.os == 'Linux'}}
@@ -288,23 +293,53 @@ jobs:
           name: naev-steam-soundtrack
           path: ${{ github.workspace }}/dist/out/steam/*
           if-no-files-found: error
-          
-  "Upload_GitHub_Release":
+
+  "Upload_Naev_Release":
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - releasetype: github
+          - releasetype: steam
+          - releasetype: itch
+            
     runs-on: ubuntu-latest
-    needs: [Generate_Source, Build_Naev_Release]
+    needs: [Generate_Source, Build_Naev_Release, Build_Naev_Steam_Release, Build_Naev_Steam_Soundtrack]
     if: ${{ github.repository == 'naev/naev' }}
 
     steps:
       - name: Create Release Staging and Output Areas
         run: |
-          mkdir -p dist/{staging,out}
+          mkdir -p {temp,dist/{staging,out/{lin64,win64,soundtrack}}}
+          
+      - name: Update APT Cache
+        if: ${{ matrix.releasetype == 'steam' }}
+        run: |
+          sudo add-apt-repository multiverse
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
 
-      - name: Download Build Artifacts
+      - name: Install SteamCMD
+        if: ${{ matrix.releasetype == 'steam' }}
+        run: |
+          echo steamcmd steam/question select "I AGREE" | sudo debconf-set-selections
+          sudo apt-get install lib32gcc1 libsdl2-2.0-0:i386 steamcmd
+          
+      - name: Install Butler
+        if: ${{ matrix.releasetype == 'itch' }}
+        run: |
+          wget -O temp/butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip temp/butler.zip
+          chmod +x butler
+          ./butler -V
+
+      - name: Download Artifacts
         uses: actions/download-artifact@v2
         with:
           path: ${{ github.workspace }}/dist/staging
 
-      - name: Collect files and rename for distribution
+      - name: Build Github Release
+        if: ${{ matrix.releasetype == 'github' }}
         run: |
           BUILD_DATE="$(date +%Y%m%d)"
           VERSION="$(<"dist/staging/naev-version/VERSION")"
@@ -314,40 +349,40 @@ jobs:
           mv dist/staging/naev-win64/naev*.exe dist/out/naev-$SUFFIX-win64.exe
           mv dist/staging/naev-dist/source.tar.gz dist/out/naev-$SUFFIX-source.tar.gz
           mv dist/staging/naev-soundtrack/naev-*-soundtrack.zip dist/out/naev-$SUFFIX-soundtrack.zip
-          
+
           chmod +x dist/out/naev-$SUFFIX-linux-x86-64.AppImage
 
-      - name: Upload Release Assets
+      - name: Upload Github Release
+        if: ${{ matrix.releasetype == 'github' }}
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           files: |
             ${{ github.workspace }}/dist/out/*
-
-  "Upload_Steam_Release":
-    runs-on: ubuntu-latest
-    needs: [Generate_Source, Build_Naev_Release, Build_Naev_Steam_Release]
-    #if: ${{ github.repository == 'naev/naev' }}
-
-    steps:
-      - name: Update APT Cache
+          
+      - name: Build and Upload itch.io Release
+        if: ${{ matrix.releasetype == 'itch' }}
         run: |
-          sudo add-apt-repository multiverse
-          sudo dpkg --add-architecture i386
-          sudo apt-get update
+          BUILD_DATE="$(date +%Y%m%d)"
+          VERSION="$(<"dist/staging/naev-version/VERSION")"
+          SUFFIX="$VERSION"
 
-      - name: Install SteamCMD
-        run: |
-          echo steamcmd steam/question select "I AGREE" | sudo debconf-set-selections
-          sudo apt-get install lib32gcc1 steamcmd
+          mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
+          mv dist/staging/naev-steam-soundtrack/* dist/out/soundtrack
+          chmod +x dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
 
-      - name: Download Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          path: ${{ github.workspace }}/dist/staging
+          tar -Jxf "dist/staging/naev-win64/steam-win64.tar.xz" -C "dist/out/win64"
+          tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64"
+          
+          ./butler push --userversion="$SUFFIX" dist/out/lin64 naev/naev:linux-x86-64
+          ./butler push --userversion="$SUFFIX" dist/out/win64 naev/naev:windows-x86-64
+          ./butler push --userversion="$SUFFIX" dist/out/soundtrack naev/naev:soundtrack
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
 
       - name: Build and Upload Steam Release
+        if: ${{ matrix.releasetype == 'steam' }}
         run: |
           chmod -R +x dist/staging/naev-steam-deployment
           cp -r dist/staging/naev-steam-deployment/* ${{ github.workspace }}

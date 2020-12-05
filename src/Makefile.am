@@ -324,14 +324,14 @@ naev_SOURCES = \
 	weapon.h
 
 if HAVE_WINDRES
-nodist_naev_SOURCES = ../extras/windows/resource.rc
-CLEANFILES += ../extras/windows/naev.exe.manifest ../extras/windows/resource.rc
-../extras/windows/naev.exe.manifest: ../extras/windows/resource.rc.in
-	../config.status -q --file=$@
-../extras/windows/resource.rc: ../extras/windows/naev.exe.manifest ../extras/windows/resource.rc.in
-	../config.status -q --file=$@
+nodist_naev_SOURCES = $(top_builddir)/extras/windows/resource.rc
+CLEANFILES += $(top_builddir)/extras/windows/naev.exe.manifest $(top_builddir)/extras/windows/resource.rc
+$(top_builddir)/extras/windows/naev.exe.manifest: $(top_srcdir)/extras/windows/naev.exe.manifest.in
+	../config.status -q --file=$@:$<
+$(top_builddir)/extras/windows/resource.rc: $(top_srcdir)/extras/windows/resource.rc.in $(top_builddir)/extras/windows/naev.exe.manifest
+	../config.status -q --file=$@:$<
 .rc.o:
-	@WINDRES@ -I../extras/logos $< -O coff $@
+	@WINDRES@ -I$(top_builddir)/extras/windows -I$(top_srcdir)/extras/logos $< -O coff $@
 endif
 
 if HAVE_MACOS
