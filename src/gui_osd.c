@@ -17,15 +17,6 @@
 
 
 /**
- * @brief On Screen Display message element.
- */
-typedef struct OSDmsg_s {
-   char **chunks; /**< Chunks of the message. */
-   int nchunks; /**< Number of chunks message is chopped into. */
-} OSDmsg_s;
-
-
-/**
  * @brief On Screen Display element.
  */
 typedef struct OSD_s {
@@ -34,18 +25,17 @@ typedef struct OSD_s {
    char *title; /**< Title of the OSD. */
 
    char **msg; /**< Stored messages. */
-   OSDmsg_s *items; /**< Items on the list. */
-   int nitems; /**< Number of items on the list. */
+   char ***items; /**< Array of array (array.h) of allocated strings. */
 
    int active; /**< Active item. */
 } OSD_t;
 
 
 /*
- * OSD linked list.
+ * OSD array.
  */
 static unsigned int osd_idgen = 0; /**< ID generator for OSD. */
-static OSD_t *osd_list        = NULL; /**< Linked list for OSD. */
+static OSD_t *osd_list        = NULL; /**< Array (array.h) for OSD. */
 
 
 /*
@@ -70,6 +60,7 @@ static void osd_calcDimensions (void);
 /* Sort. */
 static int osd_sortCompare( const void * arg1, const void * arg2 );
 static void osd_sort (void);
+static void osd_wordwrap( OSD_t* osd );
 
 
 static int osd_sortCompare( const void *arg1, const void *arg2 )
@@ -92,7 +83,7 @@ static int osd_sortCompare( const void *arg1, const void *arg2 )
       return ret;
 
    /* Compare items. */
-   m = MIN(osd1->nitems, osd2->nitems);
+   m = MIN(array_size(osd1->items), array_size(osd2->items));
    for (i=0; i<m; i++) {
       ret = strcmp( osd1->msg[i], osd2->msg[i] );
       if (ret != 0)
@@ -100,9 +91,9 @@ static int osd_sortCompare( const void *arg1, const void *arg2 )
    }
 
    /* Compare on length. */
-   if (osd1->nitems > osd2->nitems)
+   if (array_size(osd1->items) > array_size(osd2->items))
       return +1;
-   if (osd1->nitems < osd2->nitems)
+   if (array_size(osd1->items) < array_size(osd2->items))
       return -1;
 
    /* Compare ID. */
@@ -133,39 +124,56 @@ static void osd_sort (void)
  */
 unsigned int osd_create( const char *title, int nitems, const char **items, int priority )
 {
-   int i, j, n, m, l, s, w, t, id;
+   int i, id;
    OSD_t *osd;
 
    /* Create. */
    if (osd_list == NULL)
       osd_list = array_create( OSD_t );
-   osd         = &array_grow( &osd_list );
+   osd = &array_grow( &osd_list );
    memset( osd, 0, sizeof(OSD_t) );
-   osd->id     = ++osd_idgen;
+   osd->id = id = ++osd_idgen;
    osd->active = 0;
 
    /* Copy text. */
    osd->title  = strdup(title);
    osd->priority = priority;
-   osd->msg    = malloc( sizeof(char*) * nitems );
-   osd->items  = malloc( sizeof(OSDmsg_s) * nitems );
-   osd->nitems = nitems;
-   for (i=0; i<osd->nitems; i++) {
+   osd->msg = malloc( sizeof(char*) * nitems );
+   osd->items = array_create_size( char**, nitems );
+   for (i=0; i<nitems; i++) {
       osd->msg[i] = strdup( items[i] );
+      array_push_back( &osd->items, array_create(char*));
+   }
+
+   osd_wordwrap( osd );
+   osd_sort(); /* THIS INVALIDATES THE osd POINTER. */
+   osd_calcDimensions();
+
+   return id;
+}
+
+
+/**
+ * @brief Calculates the word-wrapped osd->items from osd->msg.
+ */
+void osd_wordwrap( OSD_t* osd )
+{
+   int i, n, l, s, w, t;
+   char *chunk;
+   for (i=0; i<array_size(osd->items); i++) {
+      for (l=0; l<array_size(osd->items[i]); l++)
+         free(osd->items[i][l]);
+      array_resize( &osd->items[i], 0 );
 
       l = strlen(osd->msg[i]); /* Message length. */
       n = 0; /* Text position. */
-      j = 0; /* Lines. */
-      m = 0; /* Allocated Memory. */
       t = 0; /* Tabbed? */
-      osd->items[i].chunks = NULL;
       w = osd_w-osd_hyphenLen;
       while (n < l) {
-
          /* Test if tabbed. */
-         if (j==0) {
-            if (items[i][n] == '\t') {
-               t  = 1;
+         if (n==0) {
+            if (osd->msg[i][n] == '\t') {
+               t = 1;
                w = osd_w - osd_tabLen;
             }
             else {
@@ -175,54 +183,36 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
          }
 
          /* Get text size. */
-         s = gl_printWidthForText( &gl_smallFont, &items[i][n], w );
+         s = gl_printWidthForText( &gl_smallFont, &osd->msg[i][n], w );
 
-         if ((j==0) && (t==1))
+         if (n==0 && t==1)
             w -= osd_hyphenLen;
 
-         if (j+1 > m) {
-            if (m==0)
-               m = 32;
-            else
-               m *= 2;
-            osd->items[i].chunks = realloc( osd->items[i].chunks, m * sizeof(char*));
-         }
-
          /* Copy text over. */
-         if (j==0) {
+         if (n==0) {
             if (t==1) {
-               osd->items[i].chunks[j] = malloc(s+4);
-               nsnprintf( osd->items[i].chunks[j], s+4, "   %s", &items[i][n+1] );
+               chunk = malloc(s+4);
+               nsnprintf( chunk, s+4, "   %s", &osd->msg[i][n+1] );
             }
             else {
-               osd->items[i].chunks[j] = malloc(s+3);
-               nsnprintf( osd->items[i].chunks[j], s+3, "- %s", &items[i][n] );
+               chunk = malloc(s+3);
+               nsnprintf( chunk, s+3, "- %s", &osd->msg[i][n] );
             }
          }
          else if (t==1) {
-            osd->items[i].chunks[j] = malloc(s+4);
-            nsnprintf( osd->items[i].chunks[j], s+4, "   %s", &items[i][n] );
+            chunk = malloc(s+4);
+            nsnprintf( chunk, s+4, "   %s", &osd->msg[i][n] );
          }
          else {
-            osd->items[i].chunks[j] = malloc(s+1);
-            nsnprintf( osd->items[i].chunks[j], s+1, "%s", &items[i][n] );
+            chunk = malloc(s+1);
+            nsnprintf( chunk, s+1, "%s", &osd->msg[i][n] );
          }
+         array_push_back( &osd->items[i], chunk );
 
          /* Go to next line. */
          n += s + 1;
-         j++;
       }
-      osd->items[i].nchunks = j;
    }
-
-   /* Sort them buggers. */
-   id = osd->id; /* WE MUST SAVE THE ID BEFORE WE SORT. Or we get stuck with an invalid osd pointer. */
-   osd_sort();
-
-   /* Recalculate dimensions. */
-   osd_calcDimensions();
-
-   return id;
 }
 
 
@@ -257,14 +247,14 @@ static int osd_free( OSD_t *osd )
    if (osd->title != NULL)
       free(osd->title);
 
-   for (i=0; i<osd->nitems; i++) {
+   for (i=0; i<array_size(osd->items); i++) {
       free( osd->msg[i] );
-      for (j=0; j<osd->items[i].nchunks; j++)
-         free(osd->items[i].chunks[j]);
-      free(osd->items[i].chunks);
+      for (j=0; j<array_size(osd->items[i]); j++)
+         free(osd->items[i][j]);
+      array_free(osd->items[i]);
    }
    free(osd->msg);
-   free(osd->items);
+   array_free(osd->items);
 
    return 0;
 }
@@ -322,8 +312,8 @@ int osd_active( unsigned int osd, int msg )
    if (o == NULL)
       return -1;
 
-   if ((msg < 0) || (msg >= o->nitems)) {
-      WARN(_("OSD '%s' only has %d items (requested %d)"), o->title, o->nitems, msg );
+   if ((msg < 0) || (msg >= array_size(o->items))) {
+      WARN(_("OSD '%s' only has %d items (requested %d)"), o->title, array_size(o->items), msg );
       return -1;
    }
 
@@ -361,7 +351,9 @@ int osd_getActive( unsigned int osd )
  */
 int osd_setup( int x, int y, int w, int h )
 {
+   int i, must_rewrap;
    /* Set offsets. */
+   must_rewrap = (osd_w != w) && (osd_list != NULL);
    osd_x = x;
    osd_y = y;
    osd_w = w;
@@ -371,6 +363,10 @@ int osd_setup( int x, int y, int w, int h )
    /* Calculate some font things. */
    osd_tabLen = gl_printWidthRaw( &gl_smallFont, "   " );
    osd_hyphenLen = gl_printWidthRaw( &gl_smallFont, "- " );
+
+   if (must_rewrap)
+      for (i=0; i<array_size(osd_list); i++)
+         osd_wordwrap( &osd_list[i] );
    osd_calcDimensions();
 
    return 0;
@@ -438,13 +434,13 @@ void osd_render (void)
       duplicates = 0;
       for (m=k+1; m<array_size(osd_list); m++) {
          if ((strcmp(osd_list[m].title, ll->title) == 0) &&
-               (osd_list[m].nitems == ll->nitems) &&
+               (array_size(osd_list[m].items) == array_size(ll->items)) &&
                (osd_list[m].active == ll->active)) {
             is_duplicate = 1;
-            for (i=osd_list[m].active; i<osd_list[m].nitems; i++) {
-               if (osd_list[m].items[i].nchunks == ll->items[i].nchunks) {
-                  for (j=0; j<osd_list[m].items[i].nchunks; j++) {
-                     if (strcmp(osd_list[m].items[i].chunks[j], ll->items[i].chunks[j]) != 0 ) {
+            for (i=osd_list[m].active; i<array_size(osd_list[m].items); i++) {
+               if (array_size(osd_list[m].items[i]) == array_size(ll->items[i])) {
+                  for (j=0; j<array_size(osd_list[m].items[i]); j++) {
+                     if (strcmp(osd_list[m].items[i][j], ll->items[i][j]) != 0 ) {
                         is_duplicate = 0;
                         break;
                      }
@@ -466,7 +462,7 @@ void osd_render (void)
       if (duplicates > 0)
          nsnprintf( title, sizeof(title), "%s (%d)", ll->title, duplicates + 1 );
       else
-         strncpy( title, ll->title, sizeof(title) );
+         strncpy( title, ll->title, sizeof(title)-1 );
       title[sizeof(title)-1] = '\0';
       gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, -1., title);
       p -= gl_smallFont.h + 5.;
@@ -477,13 +473,13 @@ void osd_render (void)
       }
 
       /* Print items. */
-      for (i=ll->active; i<ll->nitems; i++) {
+      for (i=ll->active; i<array_size(ll->items); i++) {
          x = osd_x;
          w = osd_w;
          c = (ll->active == i) ? &cFontWhite : &cFontGrey;
-         for (j=0; j<ll->items[i].nchunks; j++) {
+         for (j=0; j<array_size(ll->items[i]); j++) {
             gl_printMaxRaw( &gl_smallFont, w, x, p,
-                  c, -1., ll->items[i].chunks[j] );
+                  c, -1., ll->items[i][j] );
             if (j==0) {
                w = osd_w - osd_hyphenLen;
                x = osd_x + osd_hyphenLen;
@@ -533,13 +529,13 @@ static void osd_calcDimensions (void)
       duplicates = 0;
       for (m=k+1; m<array_size(osd_list); m++) {
          if ((strcmp(osd_list[m].title, ll->title) == 0) &&
-               (osd_list[m].nitems == ll->nitems) &&
+               (array_size(osd_list[m].items) == array_size(ll->items)) &&
                (osd_list[m].active == ll->active)) {
             is_duplicate = 1;
-            for (i=osd_list[m].active; i<osd_list[m].nitems; i++) {
-               if (osd_list[m].items[i].nchunks == ll->items[i].nchunks) {
-                  for (j=0; j<osd_list[m].items[i].nchunks; j++) {
-                     if (strcmp(osd_list[m].items[i].chunks[j], ll->items[i].chunks[j]) != 0 ) {
+            for (i=osd_list[m].active; i<array_size(osd_list[m].items); i++) {
+               if (array_size(osd_list[m].items[i]) == array_size(ll->items[i])) {
+                  for (j=0; j<array_size(osd_list[m].items[i]); j++) {
+                     if (strcmp(osd_list[m].items[i][j], ll->items[i][j]) != 0 ) {
                         is_duplicate = 0;
                         break;
                      }
@@ -561,8 +557,8 @@ static void osd_calcDimensions (void)
       len += gl_smallFont.h + 5.;
 
       /* Print items. */
-      for (i=ll->active; i<ll->nitems; i++)
-         for (j=0; j<ll->items[i].nchunks; j++)
+      for (i=ll->active; i<array_size(ll->items); i++)
+         for (j=0; j<array_size(ll->items[i]); j++)
             len += gl_smallFont.h + 5.;
    }
    osd_rh = MIN( len, osd_h );
@@ -604,7 +600,7 @@ char **osd_getItems( unsigned int osd, int *nitems )
       return NULL;
    }
 
-   *nitems = o->nitems;
+   *nitems = array_size(o->items);
    return o->msg;
 }
 

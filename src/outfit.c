@@ -536,7 +536,7 @@ int outfit_isGUI( const Outfit* o )
  */
 int outfit_isSecondary( const Outfit* o )
 {
-   return (o->properties & OUTFIT_PROP_WEAP_SECONDARY);
+   return (o->properties & OUTFIT_PROP_WEAP_SECONDARY) != 0;
 }
 
 
@@ -1907,7 +1907,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 {
    int i, j;
    xmlNodePtr node, cur;
-   void *buf;
+   char *buf;
    StarSystem *sys, *system_stack;
    Planet *asset;
    JumpPoint *jump;
@@ -2543,7 +2543,7 @@ static void outfit_launcherDesc( Outfit* o )
          "%.1f EPS [%.0f Energy]\n"
          "%.0f Range [%.1f duration]\n"
          "%.0f Maximum Speed\n"
-         "%.1f%% Jam Resistance\n"),
+         "%.1f%% Jam Resistance"),
          1. / o->u.lau.delay,
          o->u.lau.delay * a->u.amm.energy, a->u.amm.energy,
          outfit_range(a), a->u.amm.duration,

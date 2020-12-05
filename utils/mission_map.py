@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # This file reads missions data and maps it
 
 # Tier rules so far:

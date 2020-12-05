@@ -1,7 +1,7 @@
 project('naev', 'c',
-   version : '0.8.0-beta.3',
+   version : '0.8.0-beta.4',
    default_options : [
-      'warning_level=1',
+      'warning_level=2',
       'optimization=g',
       'c_std=gnu11',
       'werror=false'
@@ -107,6 +107,7 @@ if buildExec.disabled() == false
    if useLuaJIT.disabled() == false
       lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT)
    endif
+   config_data.set10('HAVE_LUAJIT', lua.found())
    summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
 
    if not lua.found()
@@ -163,6 +164,9 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_DECL_SETENV', cc.has_header_symbol('stdlib.h', 'setenv'))
    config_data.set10('HAVE_DECL__PUTENV_S', cc.has_header_symbol('stdlib.h', '_putenv_s'))
    config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'gutenv_s'))
+   config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept'))
+   config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
+   config_data.set10('HAVE_OV_READ_FILTER', cc.has_header_symbol('vorbis/vorbisfile.h', 'ov_read_filter'))
    config_data.set10('HAVE_STDALIGN_H', cc.has_header('stdalign.h'))
 
    ### Generated sources

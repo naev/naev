@@ -63,20 +63,6 @@ void gui_messageScrollDown( int lines );
 /*
  * Map overlay
  */
-
-/**
- * @struct MapOverlay
- *
- * @brief Represents map overlay config values
- */
-typedef struct MapOverlay_ {
-   /* GUI parameters */
-   int boundTop;
-   int boundRight;
-   int boundBottom;
-   int boundLeft;
-} MapOverlay;
-extern MapOverlay map_overlay;
 int map_overlay_width (void);
 int map_overlay_height (void);
 int map_overlay_center_x (void);

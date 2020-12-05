@@ -89,7 +89,7 @@ const char *nstrcasestr( const char *haystack, const char *needle )
 /**
  * @brief nsnprintf wrapper.
  */
-#if !(HAS_POSIX && defined(_GNU_SOURCE))
+#if !HAS_SNPRINTF
 int nsnprintf( char *text, size_t maxlen, const char *fmt, ... )
 {
    va_list ap;
@@ -104,7 +104,7 @@ int nsnprintf( char *text, size_t maxlen, const char *fmt, ... )
 
    return retval;
 }
-#endif /* !(HAS_POSIX && defined(_GNU_SOURCE)) */
+#endif /* !HAS_SNPRINTF */
 
 /**
  * @brief nstrndup wrapper.

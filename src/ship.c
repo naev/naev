@@ -514,18 +514,18 @@ static int ship_loadEngineImage( Ship *temp, char *str, int sx, int sy )
  */
 static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
 {
-   char base[PATH_MAX], str[PATH_MAX];
-   int i;
+   char base[NDATA_PATH_MAX], str[PATH_MAX];
+   size_t i;
 
    /* Get base path. */
-   for (i=0; i<PATH_MAX; i++) {
+   for (i=0; i<sizeof(base); i++) {
       if ((buf[i] == '\0') || (buf[i] == '_')) {
          base[i] = '\0';
          break;
       }
       base[i] = buf[i];
    }
-   if (i>=PATH_MAX) {
+   if (i>=sizeof(base)) {
       WARN(_("Failed to get base path of '%s'."), buf);
       return -1;
    }

@@ -77,7 +77,6 @@ msg[6] = _("MISSION FAILURE! You have left the %s system.")
 osd_title  = _("Patrol")
 osd_msg    = {}
 osd_msg[1] = _("Fly to the %s system")
-osd_msg_2  = _("Go to indicated point (%d remaining)")
 osd_msg[2] = "(null)"
 osd_msg[3] = _("Eliminate hostiles")
 osd_msg[4] = _("Land on the nearest %s planet and collect your pay")
@@ -167,7 +166,11 @@ function accept ()
    misn.accept()
 
    osd_msg[1] = osd_msg[1]:format( missys:name() )
-   osd_msg[2] = osd_msg_2:format( #points )
+   osd_msg[2] = gettext.ngettext(
+      "Go to indicated point (%d remaining)",
+      "Go to indicated point (%d remaining)",
+      #points
+   ):format( #points )
    osd_msg[4] = osd_msg[4]:format( paying_faction:name() )
    misn.osdCreate( osd_title, osd_msg )
 
@@ -293,7 +296,11 @@ function timer ()
          points["__save"] = true
 
          player.msg( msg[1] )
-         osd_msg[2] = osd_msg_2:format( #points )
+         osd_msg[2] = gettext.ngettext(
+            "Go to indicated point (%d remaining)",
+            "Go to indicated point (%d remaining)",
+            #points
+         ):format( #points )
          misn.osdCreate( osd_title, osd_msg )
          misn.osdActive(2)
          if mark ~= nil then

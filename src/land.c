@@ -177,7 +177,7 @@ int can_swapEquipment( const char *shipname )
                "You have %d tonne more cargo than the new ship can hold.",
                "You have %d tonnes more cargo than the new ship can hold.",
                diff),
-            diff, shipname );
+            diff );
       failure = 1;
    }
    if (pilot_hasDeployed(player.p)) { /* Escorts are in space. */
@@ -376,7 +376,7 @@ static int bar_genList( unsigned int wid )
    }
    window_addImageArray( wid, 20, -40,
          iw, ih, "iarMissions", 100, 75,
-         portraits, n, bar_update, bar_approach );
+         portraits, n, bar_update, bar_approach, bar_approach );
 
    /* Restore position. */
    toolkit_setImageArrayPos( wid, "iarMissions", pos );
@@ -1284,7 +1284,7 @@ void takeoff( int delay )
    if (!player_canTakeoff()) {
       char message[512];
       pilot_reportSpaceworthy( player.p, message, sizeof(message) );
-      dialogue_msg( _("Ship not fit for flight"), message );
+      dialogue_msgRaw( _("Ship not fit for flight"), message );
 
       /* Check whether the player needs rescuing. */
       land_stranded();
@@ -1343,7 +1343,7 @@ void takeoff( int delay )
    if (delay)
       ntime_inc( ntime_create( 0, 1, 0 ) ); /* 1 period */
    nt = ntime_pretty( 0, 2 );
-   player_message( _("\aRTaking off from %s on %s."), _(land_planet->name), nt);
+   player_message( _("\aoTaking off from %s on %s."), _(land_planet->name), nt);
    free(nt);
 
    /* Hooks and stuff. */

@@ -113,7 +113,7 @@ static int player_autonavSetup (void)
    /* Autonav is mutually-exclusive with other autopilot methods. */
    player_restoreControl( PINPUT_AUTONAV, NULL );
 
-   player_message(_("\aRAutonav initialized."));
+   player_message(_("\aoAutonav initialized."));
    if (!player_isFlag(PLAYER_AUTONAV)) {
 
       tc_base   = player_dt_default() * (double)player.speed;
@@ -285,7 +285,7 @@ void player_autonavAbort( const char *reason )
       /* Break possible hyperspacing. */
       if (pilot_isFlag(player.p, PILOT_HYP_PREP)) {
          pilot_hyperspaceAbort(player.p);
-         player_message(_("\aRAborting hyperspace sequence."));
+         player_message(_("\aoAborting hyperspace sequence."));
       }
 
       /* Reset time compression. */
@@ -370,7 +370,7 @@ static void player_autonav (void)
       case AUTONAV_POS_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
-            player_message( _("\aRAutonav arrived at position.") );
+            player_message( _("\aoAutonav arrived at position.") );
             player_autonavEnd();
          }
          else if (!tc_rampdown)
@@ -380,7 +380,7 @@ static void player_autonav (void)
       case AUTONAV_PNT_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
-            player_message( _("\aRAutonav arrived at \a%c%s\a\0."),
+            player_message( _("\aoAutonav arrived at \a%c%s\a0."),
                   player.autonavcol,
                   player.autonavmsg );
             player_autonavEnd();
@@ -395,7 +395,7 @@ static void player_autonav (void)
             p = pilot_get( PLAYER_ID );
          if ((p->id == PLAYER_ID) || (!pilot_inRangePilot( player.p, p, NULL ))) {
             /* TODO : handle the different reasons: pilot is too far, jumped, landed or died. */
-            player_message( _("\aR%s has been lost."),
+            player_message( _("\ao%s has been lost."),
                               player.autonavmsg );
             player_accel( 0. );
             player_autonavEnd();
@@ -546,9 +546,10 @@ int player_autonavShouldResetSpeed (void)
 
    pstk = pilot_getAll( &n );
    for (i=0; i<n; i++) {
-      if ( ( pstk[i]->id != PLAYER_ID ) && pilot_isHostile( pstk[i] )
-            && pilot_inRangePilot( player.p, pstk[i], NULL ) == 1
-            && !pilot_isDisabled( pstk[i] ) ) {
+      if ( (pstk[i]->id != PLAYER_ID) && pilot_isHostile(pstk[i])
+            && pilot_isFlag(pstk[i], PILOT_HOSTILE) /* Only count actively hostile pilots */
+            && pilot_inRangePilot(player.p, pstk[i], NULL) == 1
+            && !pilot_isDisabled(pstk[i]) ) {
          hostiles = 1;
          break;
       }

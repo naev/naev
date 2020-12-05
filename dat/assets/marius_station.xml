@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="Marius Station">
  <pos>
-  <x>-6537.980310</x>
-  <y>8415.469108</y>
+  <x>-6450.889110</x>
+  <y>8554.815028</y>
  </pos>
  <GFX>
   <space>station-battlestation.png</space>

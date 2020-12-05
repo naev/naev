@@ -94,6 +94,17 @@ typedef struct font_char_s {
 
 
 /**
+ * @brief Freetype Font structure.
+ */
+typedef struct glFontStashFreetype_s {
+   char *fontname; /**< Font name. */
+   FT_Face face; /**< Face structure. */
+   FT_Library library; /**< Library. */
+   FT_Byte *fontdata; /**< Font data buffer. */
+} glFontStashFreetype;
+
+
+/**
  * @brief Font structure.
  */
 typedef struct glFontStash_s {
@@ -111,10 +122,7 @@ typedef struct glFontStash_s {
    int lut[HASH_LUT_SIZE]; /**< Look up table. */
 
    /* Freetype stuff. */
-   char *fontname; /**< Font name. */
-   FT_Face face; /**< Face structure. */
-   FT_Library library; /**< Library. */
-   FT_Byte *fontdata; /**< Font data buffer. */
+   glFontStashFreetype *ft;
 } glFontStash;
 
 /**
@@ -483,6 +491,22 @@ static size_t font_limitSize( glFontStash *ft_font, int *width,
 
 /**
  * @brief Gets the number of characters in text that fit into width.
+ *
+ *    @param ft_font Font to use.
+ *    @param text Text to check.
+ *    @param width Width to match.
+ *    @return Number of characters that fit.
+ */
+int gl_printWidthForTextLine( const glFont *ft_font, const char *text, int width )
+{
+   glFontStash *stsh = gl_fontGetStash( ft_font );
+   return font_limitSize( stsh, NULL, text, width );
+}
+
+
+/**
+ * @brief Gets the number of characters in text that fit into width,
+ *        assuming your intent is to word-wrap at said width.
  *
  *    @param ft_font Font to use.
  *    @param text Text to check.
@@ -1154,41 +1178,63 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
    FT_Bitmap bitmap;
    FT_GlyphSlot slot;
    FT_UInt glyph_index;
-   int w,h;
+   int i, w,h, len;
+   glFontStashFreetype *ft;
 
-   slot = stsh->face->glyph; /* Small shortcut. */
-
-   /* Get glyph index. */
-   glyph_index = FT_Get_Char_Index( stsh->face, ch );
-
-   /* Load the glyph. */
-   if (FT_Load_Glyph( stsh->face, glyph_index, FT_LOAD_RENDER | FT_LOAD_NO_BITMAP | FT_LOAD_TARGET_NORMAL)) {
-      WARN(_("FT_Load_Glyph failed."));
+   /* Empty font. */
+   if (stsh->ft==0) {
+      WARN(_("Font has no freetype information!"));
       return -1;
    }
 
-   bitmap = slot->bitmap; /* to simplify */
-   if (bitmap.pixel_mode != FT_PIXEL_MODE_GRAY)
-      WARN(_("Font '%s' not using FT_PIXEL_MODE_GRAY!"), stsh->fontname);
+   len = array_size(stsh->ft);
+   for (i=0; i<len; i++) {
+      ft = &stsh->ft[i];
 
-   /* need the POT wrapping for opengl */
-   w = bitmap.width;
-   h = bitmap.rows;
+      /* Get glyph index. */
+      glyph_index = FT_Get_Char_Index( ft->face, ch );
+      /* Skip missing unless last font. */
+      if (glyph_index==0) {
+         if (i<len-1)
+            continue;
+         else {
+            WARN(_("Unicode character '%#x' not found in font! Using missing glyph."), ch);
+            ft = &stsh->ft[0]; /* Fallback to first font. */
+         }
+      }
 
-   /* Store data. */
-   c->data = malloc( sizeof(GLubyte) * w*h );
-   if (bitmap.buffer == NULL)
-      memset( c->data, 0, sizeof(GLubyte) * w*h );
-   else
-      memcpy( c->data, bitmap.buffer, sizeof(GLubyte) * w*h );
-   c->w     = w;
-   c->h     = h;
-   c->off_x = slot->bitmap_left;
-   c->off_y = slot->bitmap_top;
-   c->adv_x = (GLfloat)slot->advance.x / 64.;
-   c->adv_y = (GLfloat)slot->advance.y / 64.;
+      /* Load the glyph. */
+      if (FT_Load_Glyph( ft->face, glyph_index, FT_LOAD_RENDER | FT_LOAD_NO_BITMAP | FT_LOAD_TARGET_NORMAL)) {
+         WARN(_("FT_Load_Glyph failed."));
+         return -1;
+      }
 
-   return 0;
+      slot = ft->face->glyph; /* Small shortcut. */
+      bitmap = slot->bitmap; /* to simplify */
+      if (bitmap.pixel_mode != FT_PIXEL_MODE_GRAY)
+         WARN(_("Font '%s' not using FT_PIXEL_MODE_GRAY!"), ft->fontname);
+
+      /* need the POT wrapping for opengl */
+      w = bitmap.width;
+      h = bitmap.rows;
+
+      /* Store data. */
+      c->data = malloc( sizeof(GLubyte) * w*h );
+      if (bitmap.buffer == NULL)
+         memset( c->data, 0, sizeof(GLubyte) * w*h );
+      else
+         memcpy( c->data, bitmap.buffer, sizeof(GLubyte) * w*h );
+      c->w     = w;
+      c->h     = h;
+      c->off_x = slot->bitmap_left;
+      c->off_y = slot->bitmap_top;
+      c->adv_x = (GLfloat)slot->advance.x / 64.;
+      c->adv_y = (GLfloat)slot->advance.y / 64.;
+
+      return 0;
+   }
+   WARN(_("Unable to load character '%#x'!"), ch);
+   return -1;
 }
 
 
@@ -1423,45 +1469,10 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    FT_Face face;
    size_t bufsize;
    FT_Byte* buf;
-   int i;
+   size_t i;
    glFontStash *stsh;
-   char *used_font;
-
-   buf = NULL;
-
-   /* See if we should override fonts. */
-   used_font = NULL;
-   if ((strcmp(fname, FONT_DEFAULT_PATH) == 0) &&
-      (conf.font_name_default!=NULL)) {
-      used_font = strdup( conf.font_name_default );
-   }
-   else if ((strcmp(fname, FONT_MONOSPACE_PATH) == 0) &&
-      (conf.font_name_monospace!=NULL)) {
-      used_font = strdup( conf.font_name_monospace );
-   }
-   if (used_font) {
-      buf = (FT_Byte*)nfile_readFile( &bufsize, used_font );
-      if (buf==NULL) {
-         free(used_font);
-         used_font = NULL;
-      }
-   }
-
-   /* Use packaged font. */
-   if (used_font==NULL) {
-      buf = ndata_read( fname, &bufsize );
-      if (buf == NULL) {
-         WARN(_("Unable to read font: %s"), fname);
-         return -1;
-      }
-      used_font = strdup( fname );
-   }
-
-   /* Get default font if not set. */
-   if (font == NULL) {
-      font = &gl_defFont;
-      DEBUG( _("Using default font '%s'"), used_font );
-   }
+   glFontStashFreetype *ft;
+   int ch;
 
    /* Get font stash. */
    if (avail_fonts==NULL)
@@ -1476,47 +1487,69 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    stsh->th = DEFAULT_TEXTURE_SIZE;
    stsh->h = font->h;
 
-   /* Create a FreeType font library. */
-   if (FT_Init_FreeType(&library)) {
-      WARN(_("FT_Init_FreeType failed with font %s."),
-            (used_font!=NULL) ? used_font : FONT_DEFAULT_PATH );
-      return -1;
-   }
+   /* Set up font stuff for next glyphs. */
+   stsh->ft = array_create( glFontStashFreetype );
+   if (fname == NULL)
+      fname = FONT_DEFAULT_PATH;
+   ch = 0;
+   for (i=0; i<strlen(fname)+1; i++) {
+      if ((fname[i]=='\0') || (fname[i]==',')) {
+         /* Set up name. */
+         ft = &array_grow( &stsh->ft );
+         ft->fontname = malloc( i-ch+1 );
+         strncpy( ft->fontname, &fname[ch], i-ch );
+         ft->fontname[i-ch] = '\0';
 
-   /* Object which freetype uses to store font info. */
-   if (FT_New_Memory_Face( library, buf, bufsize, 0, &face )) {
-      WARN(_("FT_New_Face failed loading library from %s"),
-            (used_font!=NULL) ? used_font : FONT_DEFAULT_PATH );
-      return -1;
-   }
+         /* Read font file. */
+         buf = ndata_read( ft->fontname, &bufsize );
+         if (buf == NULL) {
+            WARN(_("Unable to read font: %s"), ft->fontname);
+            return -1;
+         }
 
-   /* Try to resize. */
-   if (FT_IS_SCALABLE(face)) {
-      if (FT_Set_Char_Size( face,
-               0, /* Same as width. */
-               h << 6, /* In 1/64th of a pixel. */
-               96, /* Create at 96 DPI */
-               96)) /* Create at 96 DPI */
-         WARN(_("FT_Set_Char_Size failed."));
-   }
-   else
-      WARN(_("Font isn't resizable!"));
+         /* Create a FreeType font library. */
+         if (FT_Init_FreeType(&library)) {
+            WARN(_("FT_Init_FreeType failed with font %s."), ft->fontname);
+            return -1;
+         }
 
-   /* Select the character map. */
-   if (FT_Select_Charmap( face, FT_ENCODING_UNICODE ))
-      WARN(_("FT_Select_Charmap failed to change character mapping."));
+         /* Object which freetype uses to store font info. */
+         if (FT_New_Memory_Face( library, buf, bufsize, 0, &face )) {
+            WARN(_("FT_New_Face failed loading library from %s"), ft->fontname);
+            return -1;
+         }
+
+         /* Try to resize. */
+         if (FT_IS_SCALABLE(face)) {
+            if (FT_Set_Char_Size( face,
+                     0, /* Same as width. */
+                     h << 6, /* In 1/64th of a pixel. */
+                     96, /* Create at 96 DPI */
+                     96)) /* Create at 96 DPI */
+               WARN(_("FT_Set_Char_Size failed."));
+         }
+         else
+            WARN(_("Font isn't resizable!"));
+
+         /* Select the character map. */
+         if (FT_Select_Charmap( face, FT_ENCODING_UNICODE ))
+            WARN(_("FT_Select_Charmap failed to change character mapping."));
+
+         /* Save stuff. */
+         ft->face     = face;
+         ft->library  = library;
+         ft->fontdata = buf;
+         ch = i;
+         if (fname[i]==',')
+            ch++;
+      }
+   }
 
    /* Initialize the unicode support. */
    for (i=0; i<HASH_LUT_SIZE; i++)
       stsh->lut[i] = -1;
    stsh->glyphs = array_create( glFontGlyph );
    stsh->tex    = array_create( glFontTex );
-
-   /* Set up font stuff for next glyphs. */
-   stsh->fontname = strdup( (used_font!=NULL) ? used_font : FONT_DEFAULT_PATH );
-   stsh->face     = face;
-   stsh->library  = library;
-   stsh->fontdata = buf;
 
    /* Set up VBOs. */
    stsh->mvbo = 256;
@@ -1527,7 +1560,8 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
 
    /* Initializes ASCII. */
    for (i=0; i<128; i++)
-      gl_fontGetGlyph( stsh, i );
+      if (isprint(i))
+         gl_fontGetGlyph( stsh, i );
 
 #if 0
    /* We can now free the face and library */
@@ -1537,8 +1571,6 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    /* Free read buffer. */
    free(buf);
 #endif
-
-   free(used_font);
 
    return 0;
 }
@@ -1551,15 +1583,20 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
 void gl_freeFont( glFont* font )
 {
    int i;
+   glFontStashFreetype *ft;
 
    if (font == NULL)
       font = &gl_defFont;
    glFontStash *stsh = gl_fontGetStash( font );
 
-   free(stsh->fontname);
-   FT_Done_Face(stsh->face);
-   //FT_Done_FreeType(stsh->library);
-   free(stsh->fontdata);
+   for (i=0; i<array_size(stsh->ft); i++) {
+      ft = &stsh->ft[i];
+      free(ft->fontname);
+      FT_Done_Face(ft->face);
+      //FT_Done_FreeType(ft->library);
+      free(ft->fontdata);
+   }
+   array_free( stsh->ft );
 
    for (i=0; i<array_size(stsh->tex); i++)
       glDeleteTextures( 1, &stsh->tex->id );

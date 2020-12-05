@@ -151,7 +151,7 @@ void player_render( double dt );
  * Message stuff, in gui.c
  */
 void player_messageToggle( int enable );
-void player_message( const char *fmt, ... );
+FORMAT( printf, 1, 2 )void player_message( const char *fmt, ... );
 void player_messageRaw ( const char *str );
 
 /*

@@ -97,8 +97,6 @@ static int systems_mstack = 0; /**< Number of memory allocated for star system s
  * TODO should be removed in favour of our array framework (array.h)
  */
 static Planet *planet_stack = NULL; /**< Planet stack. */
-static int planet_nstack = 0; /**< Planet stack size. */
-static int planet_mstack = 0; /**< Memory size of planet stack. */
 
 /*
  * Asteroid types stack.
@@ -118,10 +116,6 @@ static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary cal
 static int space_simulating = 0; /**< Are we simulating space? */
 glTexture **asteroid_gfx = NULL;
 static size_t nasterogfx = 0; /**< Nb of asteroid gfx. */
-glTexture *marker_jumppoint_gfx = NULL;
-glTexture *marker_planet_gfx = NULL;
-glTexture *marker_player_gfx = NULL;
-glTexture *marker_pilot_gfx = NULL;
 
 /*
  * fleet spawn rate
@@ -940,7 +934,7 @@ Planet* planet_get( const char* planetname )
       return NULL;
    }
 
-   for (i=0; i<planet_nstack; i++)
+   for (i=0; i<array_size(planet_stack); i++)
       if (strcmp(planet_stack[i].name,planetname)==0)
          return &planet_stack[i];
 
@@ -958,8 +952,8 @@ Planet* planet_get( const char* planetname )
 Planet* planet_getIndex( int ind )
 {
    /* Validity check. */
-   if ((ind < 0) || (ind >= planet_nstack)) {
-      WARN(_("Planet index '%d' out of range (max %d)"), ind, planet_nstack);
+   if ((ind < 0) || (ind >= array_size(planet_stack))) {
+      WARN(_("Planet index '%d' out of range (max %d)"), ind, array_size(planet_stack));
       return NULL;
    }
 
@@ -987,7 +981,7 @@ int planet_index( const Planet *p )
  */
 Planet* planet_getAll( int *n )
 {
-   *n = planet_nstack;
+   *n = array_size(planet_stack);
    return planet_stack;
 }
 
@@ -1011,7 +1005,7 @@ void planet_setKnown( Planet *p )
 int planet_exists( const char* planetname )
 {
    int i;
-   for (i=0; i<planet_nstack; i++)
+   for (i=0; i<array_size(planet_stack); i++)
       if (strcmp(planet_stack[i].name,planetname)==0)
          return 1;
    return 0;
@@ -1027,7 +1021,7 @@ int planet_exists( const char* planetname )
 const char* planet_existsCase( const char* planetname )
 {
    int i;
-   for (i=0; i<planet_nstack; i++)
+   for (i=0; i<array_size(planet_stack); i++)
       if (strcasecmp(planet_stack[i].name,planetname)==0)
          return planet_stack[i].name;
    return NULL;
@@ -1043,11 +1037,11 @@ char **planet_searchFuzzyCase( const char* planetname, int *n )
    char **names;
 
    /* Overallocate to maximum. */
-   names = malloc( sizeof(char*) * planet_nstack );
+   names = malloc( sizeof(char*) * array_size(planet_stack) );
 
    /* Do fuzzy search. */
    len = 0;
-   for (i=0; i<planet_nstack; i++) {
+   for (i=0; i<array_size(planet_stack); i++) {
       if (nstrcasestr( _(planet_stack[i].name), planetname ) != NULL) {
          names[len] = planet_stack[i].name;
          len++;
@@ -1110,6 +1104,18 @@ JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys )
    }
    WARN(_("Jump point to '%s' not found in %s"), target->name, sys->name);
    return NULL;
+}
+
+
+/**
+ * @brief Gets the jump point symbol.
+ */
+const char *jump_getSymbol( JumpPoint *jp )
+{
+   if (jp_isFlag(jp, JP_HIDDEN))
+      return "* ";
+
+   return "";
 }
 
 
@@ -1252,6 +1258,7 @@ void space_update( const double dt )
    Debris *d;
    Pilot *pplayer;
    Solid *psolid;
+   int found_something;
 
    /* Needs a current system. */
    if (cur_system == NULL)
@@ -1334,11 +1341,12 @@ void space_update( const double dt )
    }
 
    if (!space_simulating) {
+      found_something = 0;
       /* Planet updates */
-      for (i=0; i<cur_system->nplanets; i++)
+      for (i=0; i<cur_system->nplanets; i++) {
          if (( !planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i ))) {
             planet_setKnown( cur_system->planets[i] );
-            player_message( _("You discovered \a%c%s\a\0."),
+            player_message( _("You discovered \a%c%s\a0."),
                   planet_getColourChar( cur_system->planets[i] ),
                   _(cur_system->planets[i]->name) );
             hparam[0].type  = HOOK_PARAM_STRING;
@@ -1347,10 +1355,12 @@ void space_update( const double dt )
             hparam[1].u.la  = cur_system->planets[i]->id;
             hparam[2].type  = HOOK_PARAM_SENTINEL;
             hooks_runParam( "discover", hparam );
+            found_something = 1;
          }
+      }
 
       /* Jump point updates */
-      for (i=0; i<cur_system->njumps; i++)
+      for (i=0; i<cur_system->njumps; i++) {
          if (( !jp_isKnown( &cur_system->jumps[i] )) && ( pilot_inRangeJump( player.p, i ))) {
             jp_setFlag( &cur_system->jumps[i], JP_KNOWN );
             player_message( _("You discovered a Jump Point.") );
@@ -1361,7 +1371,12 @@ void space_update( const double dt )
             hparam[1].u.lj.destid = cur_system->jumps[i].target->id;
             hparam[2].type  = HOOK_PARAM_SENTINEL;
             hooks_runParam( "discover", hparam );
+            found_something = 1;
          }
+      }
+
+      if (found_something)
+         ovr_refresh();
    }
 
    /* Update the gatherable objects. */
@@ -1492,7 +1507,7 @@ void space_init( const char* sysname )
       cur_system = &systems_stack[i];
 
       nt = ntime_pretty(0, 2);
-      player_message(_("\aREntering System %s on %s."), _(sysname), nt);
+      player_message(_("\aoEntering System %s on %s."), _(sysname), nt);
       if (cur_system->nebu_volatility > 0.) {
          player_message(_("\arWARNING - Volatile nebula detected in %s! Taking damage!"), _(sysname));
       }
@@ -1529,7 +1544,7 @@ void space_init( const char* sysname )
       ast->id = i;
 
       /* Add the asteroids to the anchor */
-      ast->asteroids = malloc( (ast->nb) * sizeof(Asteroid) );
+      ast->asteroids = realloc( ast->asteroids, (ast->nb) * sizeof(Asteroid) );
       for (j=0; j<ast->nb; j++) {
          a = &ast->asteroids[j];
          a->id = j;
@@ -1537,7 +1552,7 @@ void space_init( const char* sysname )
          asteroid_init(a, ast);
       }
       /* Add the debris to the anchor */
-      ast->debris = malloc( (ast->ndebris) * sizeof(Debris) );
+      ast->debris = realloc( ast->debris, (ast->ndebris) * sizeof(Debris) );
       for (j=0; j<ast->ndebris; j++) {
          d = &ast->debris[j];
          debris_init(d);
@@ -1686,22 +1701,15 @@ void debris_init( Debris *deb )
  */
 Planet *planet_new (void)
 {
-   Planet *p;
+   Planet *p, *old_stack;
    int realloced;
 
-   /* See if stack must grow. */
-   planet_nstack++;
-   realloced = 0;
-   if (planet_nstack > planet_mstack) {
-      planet_mstack *= 2;
-      planet_stack   = realloc( planet_stack, sizeof(Planet) * planet_mstack );
-      realloced      = 1;
-   }
-
-   /* Clean up memory. */
-   p           = &planet_stack[ planet_nstack-1 ];
+   /* Grow and initialize memory. */
+   old_stack   = planet_stack;
+   p           = &array_grow( &planet_stack );
+   realloced   = (old_stack!=planet_stack);
    memset( p, 0, sizeof(Planet) );
-   p->id       = planet_nstack-1;
+   p->id       = array_size(planet_stack)-1;
    p->faction  = -1;
 
    /* Reconstruct the jumps. */
@@ -1742,11 +1750,8 @@ static int planets_load ( void )
    free(buf);
 
    /* Initialize stack if needed. */
-   if (planet_stack == NULL) {
-      planet_mstack = CHUNK_SIZE;
-      planet_stack = malloc( sizeof(Planet) * planet_mstack );
-      planet_nstack = 0;
-   }
+   if (planet_stack == NULL)
+      planet_stack = array_create_size(Planet, 256);
 
    /* Extract the list of standard commodities. */
    stdList = standard_commodities( &stdNb );
@@ -1918,7 +1923,7 @@ void planet_updateLand( Planet *p )
       if (lua_isstring(naevL,-1))
          p->bribe_ack_msg = strdup( lua_tostring(naevL,-1) );
       else {
-         WARN( _("%s: %s -> return parameter 5 is not a string!"), LANDING_DATA_PATH, str, p->name );
+         WARN( _("%s: %s (%s) -> return parameter 5 is not a string!"), LANDING_DATA_PATH, str, p->name );
          p->bribe_ack_msg = strdup( _("Invalid bribe ack message") );
       }
    }
@@ -2269,7 +2274,7 @@ int planet_setRadiusFromGFX(Planet* planet)
             planet->radius = atof( str );
          }
          else
-            planet->radius = 0.8 * (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
+            planet->radius = (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
 
          npng_close( npng );
       }
@@ -3272,7 +3277,8 @@ static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys )
  */
 int space_load (void)
 {
-   int i, j, len;
+   size_t i;
+   int j, len;
    int ret;
    StarSystem *sys;
    char **asteroid_files, file[PATH_MAX];
@@ -3286,10 +3292,6 @@ int space_load (void)
 
    /* Load map marker graphics - must be before systems_load(). */
    // nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"marker/jumppoint.png" );
-   marker_jumppoint_gfx = gl_newImage(PLANET_GFX_SPACE_PATH"marker/jumppoint.png", 0);
-   marker_planet_gfx = gl_newImage(PLANET_GFX_SPACE_PATH"marker/planet.png", 0 );
-   marker_player_gfx = gl_newImage(PLANET_GFX_SPACE_PATH"marker/player.png", 0 );
-   marker_pilot_gfx = gl_newImage(PLANET_GFX_SPACE_PATH"marker/pilot.png", 0 );
 
    /* Load planets. */
    ret = planets_load();
@@ -3310,7 +3312,7 @@ int space_load (void)
    asteroid_files = ndata_list( PLANET_GFX_SPACE_PATH"asteroid/", &nasterogfx );
    asteroid_gfx = malloc( sizeof(glTexture*) * systems_mstack );
 
-   for (i=0; i<(int)nasterogfx; i++) {
+   for (i=0; i<nasterogfx; i++) {
       len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(asteroid_files[i])+11);
       nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",asteroid_files[i] );
       asteroid_gfx[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
@@ -3320,11 +3322,11 @@ int space_load (void)
    systems_loading = 0;
 
    /* Apply all the presences. */
-   for (i=0; i<systems_nstack; i++)
+   for (i=0; (int)i<systems_nstack; i++)
       system_addAllPlanetsPresence(&systems_stack[i]);
 
    /* Determine dominant faction. */
-   for (i=0; i<systems_nstack; i++)
+   for (i=0; (int)i<systems_nstack; i++)
       system_setFaction( &systems_stack[i] );
 
    /* Reconstruction. */
@@ -3332,7 +3334,7 @@ int space_load (void)
    systems_reconstructPlanets();
 
    /* Fine tuning. */
-   for (i=0; i<systems_nstack; i++) {
+   for (i=0; (int)i<systems_nstack; i++) {
       sys = &systems_stack[i];
 
       /* Save jump indexes. */
@@ -3344,7 +3346,7 @@ int space_load (void)
    /* Calculate commodity prices (sinusoidal model). */
    economy_initialiseCommodityPrices();
 
-   for (i=0; i<(int)nasterogfx; i++)
+   for (i=0; i<nasterogfx; i++)
       free(asteroid_files[i]);
    free(asteroid_files);
 
@@ -3584,7 +3586,7 @@ static int systems_load (void)
    }
 
    DEBUG( ngettext( "Loaded %d Star System", "Loaded %d Star Systems", systems_nstack ), systems_nstack );
-   DEBUG( ngettext( "       with %d Planet", "       with %d Planets", planet_nstack ), planet_nstack );
+   DEBUG( ngettext( "       with %d Planet", "       with %d Planets", array_size(planet_stack) ), array_size(planet_stack) );
 
    /* Clean up. */
    for (i=0; i<nfiles; i++)
@@ -3816,18 +3818,6 @@ void space_exit (void)
    if (jumpbuoy_gfx != NULL)
       gl_freeTexture(jumpbuoy_gfx);
    jumpbuoy_gfx = NULL;
-   if (marker_jumppoint_gfx != NULL)
-      gl_freeTexture(marker_jumppoint_gfx);
-   marker_jumppoint_gfx = NULL;
-   if (marker_planet_gfx != NULL)
-      gl_freeTexture(marker_planet_gfx);
-   marker_planet_gfx = NULL;
-   if (marker_player_gfx != NULL)
-      gl_freeTexture(marker_player_gfx);
-   marker_player_gfx = NULL;
-   if (marker_pilot_gfx != NULL)
-      gl_freeTexture(marker_pilot_gfx);
-   marker_pilot_gfx = NULL;
 
    /* Free asteroid graphics. */
    for (i=0; i<(int)nasterogfx; i++)
@@ -3842,7 +3832,7 @@ void space_exit (void)
    spacename_nstack = 0;
 
    /* Free the planets. */
-   for (i=0; i < planet_nstack; i++) {
+   for (i=0; i < array_size(planet_stack); i++) {
       pnt = &planet_stack[i];
 
       free(pnt->name);
@@ -3876,10 +3866,7 @@ void space_exit (void)
       free(pnt->commodities);
       free(pnt->commodityPrice);
    }
-   free(planet_stack);
-   planet_stack = NULL;
-   planet_nstack = 0;
-   planet_mstack = 0;
+   array_free(planet_stack);
 
    /* Free the systems. */
    for (i=0; i < systems_nstack; i++) {
@@ -3955,7 +3942,7 @@ void space_clearKnown (void)
       for (j=0; j<sys->njumps; j++)
          jp_rmFlag(&sys->jumps[j],JP_KNOWN);
    }
-   for (j=0; j<planet_nstack; j++)
+   for (j=0; j<array_size(planet_stack); j++)
       planet_rmFlag(&planet_stack[j],PLANET_KNOWN);
 }
 
@@ -4209,20 +4196,7 @@ static int getPresenceIndex( StarSystem *sys, int faction )
       return 0;
    }
 
-   /* If there is no array, create one and return 0 (the index). */
-   if (sys->presence == NULL) {
-      sys->npresence = 1;
-      sys->presence  = malloc( sizeof(SystemPresence) );
-
-      /* Set the defaults. */
-      sys->presence[0].faction   = faction;
-      sys->presence[0].value     = 0 ;
-      sys->presence[0].curUsed   = 0 ;
-      sys->presence[0].timer     = 0.;
-      return 0;
-   }
-
-   /* Go through the array, looking for the faction. */
+   /* Go through the array (if created), looking for the faction. */
    for (i = 0; i < sys->npresence; i++)
       if (sys->presence[i].faction == faction)
          return i;
@@ -4231,8 +4205,8 @@ static int getPresenceIndex( StarSystem *sys, int faction )
    i = sys->npresence;
    sys->npresence++;
    sys->presence = realloc(sys->presence, sizeof(SystemPresence) * sys->npresence);
+   memset(&sys->presence[i], 0, sizeof(SystemPresence));
    sys->presence[i].faction = faction;
-   sys->presence[i].value = 0;
 
    return i;
 }

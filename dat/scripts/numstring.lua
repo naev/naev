@@ -83,8 +83,8 @@ end
 --
 -- @usage tk.msg("", _("Brush your teeth % per day."):format(timestring(times)))
 --
---    @param jumps Number of jumps.
---    @return A string taking the form of "X jump" or "X jumps".
+--    @param times Number of times.
+--    @return A string taking the form of "X time" or "X times".
 --]]
 function timestring( times )
    return gettext.ngettext("%s time", "%s times", times):format(

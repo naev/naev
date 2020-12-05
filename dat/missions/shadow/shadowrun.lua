@@ -53,6 +53,7 @@ text[4] = _([["Wonderful!" Rebina gives you a warm, sincere smile. "I don't mind
     Then Rebina's expression changes to that of a businesswoman about to ply her trade. "Now, listen up. Contrary to what you may have thought, this assignment isn't about me. It's about a man who goes by the name of Jorek McArthy. The current state of affairs is that Jorek is staying on %s in the %s system, and this is not where me and my associates want him to be. Unfortunately, Jorek has attracted some unwanted attention, and we don't want him to focus that attention to us."
     Rebina takes a moment to sip from her drink. "I think you can see where this is going. You are to rendezvous with Jorek, take him aboard your ship, lose whoever's tailing him, then bring him to the %s system. There you will dock with one of our ships, the %s, which will take Jorek to his final destination. You will receive your reward from her captain once Jorek is aboard."
     "It's a simple objective, but accomplishing it might require considerable skill." She leans back and smiles. "Still, I have utmost confidence that you can do it. I seldom misjudge those I choose to trust."]])
+-- Translator note: If the plural forms are a problem, assume the numbers here are 20 and 50.
 text[5] = _([["You know what to do," Rebina tells you. "You will find Jorek in the spaceport bar on %s. When you see him, tell him you've come to 'see to his special needs'. Oh, and please be discreet. Don't talk about things you don't need to; the walls have ears in that place. In particular, don't mention any names."
     "You will be on a time schedule. You must meet Jorek within %d periods, or he will assume you are not coming and go back into hiding. You must also be at the meeting point %d periods from now. If you fail to meet with Jorek within the time limit or if you are prevented from taking him offworld for any other reason, make your way to the %s and report what happened. We'll take it from there. If you fail to show up at the designated time, we will assume you have failed, and the %s will leave."
     Rebina empties her glass and places it on the bar before rising to her feet. "That will be all. Good luck, and keep your wits about you."
@@ -141,6 +142,7 @@ function create ()
     end
 
     credits = 400000 -- 400K
+    -- Developer note: changing these numbers may have consequences for translators (if we support more languages later on).
     timelimit1 = 20 -- In STP
     timelimit2 = 50 -- In STP
     

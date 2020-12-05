@@ -78,7 +78,7 @@ int sound_mix_init (void)
    SDL_InitSubSystem(SDL_INIT_AUDIO);
    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT , 2, 1024) < 0) {
       WARN(_("Opening Audio: %s"), Mix_GetError());
-      DEBUG("");
+      DEBUG_BLANK();
       return -1;
    }
    Mix_AllocateChannels( conf.snd_voices );
@@ -112,7 +112,7 @@ static void print_MixerVersion (void)
    MIX_VERSION(&compiled);
    linked = Mix_Linked_Version();
    const char *drvname = SDL_GetCurrentAudioDriver();
-   strncpy( device, drvname, PATH_MAX );
+   strncpy( device, drvname, PATH_MAX-1 );
    device[PATH_MAX-1] = '\0';
 
    /* Version itself. */
@@ -128,7 +128,7 @@ static void print_MixerVersion (void)
    DEBUG(_("Version: %d.%d.%d [compiled: %d.%d.%d]"),
          compiled.major, compiled.minor, compiled.patch,
          linked->major, linked->minor, linked->patch);
-   DEBUG("");
+   DEBUG_BLANK();
 }
 
 
@@ -157,9 +157,6 @@ void sound_mix_exit (void)
  */
 int sound_mix_play( alVoice *v, alSound *s )
 {
-   if (sound_speed > SOUND_SPEED_PLAY_LIMIT)
-      return 0;
-
    v->u.mix.channel = Mix_PlayChannel( -1, s->u.mix.buf, 0 );
    if (v->u.mix.channel >= 0)
       Mix_Volume( v->u.mix.channel, sound_mixVolume );
@@ -242,9 +239,6 @@ int sound_mix_playPos( alVoice *v, alSound *s,
 {
    (void) vx;
    (void) vy;
-
-   if (sound_speed > SOUND_SPEED_PLAY_LIMIT)
-      return 0;
 
    /* Get the channel. */
    v->u.mix.channel = Mix_PlayChannel( -1, s->u.mix.buf, 0 );

@@ -542,7 +542,7 @@ int npc_isImportant( int i )
    if (i<0 || npc_array == NULL || i>=array_size(npc_array))
       return 0;
 
-   if (npc_array[i].priority < 5)
+   if (npc_array[i].priority <= 5)
       return 1;
    return 0;
 }

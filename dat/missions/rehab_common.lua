@@ -28,8 +28,7 @@ successtitle = _("%s Rehabilitation Successful")
 successtext = _([[Congratulations, you have successfully worked your way back into good standing with this faction. Try not to relapse into your life of crime!]])
 
 osd_msg = {}
-osd_msg[1] = _("You need to gain %d more reputation")
-osd_msg1 = _("You need to gain %d more reputation")
+osd_msg[1] = "(null)"
 osd_msg["__save"] = true
 
 
@@ -68,7 +67,11 @@ function accept()
     fac:modPlayerRaw(-rep)
     
     misn.accept()
-    osd_msg[1] = osd_msg1:format(-rep)
+    osd_msg[1] = gettext.ngettext(
+       "You need to gain %d more reputation",
+       "You need to gain %d more reputation",
+       -rep
+    ):format(-rep)
     misn.osdCreate(misn_title:format(fac:name()), osd_msg)
     
     standhook = hook.standing("standing")
@@ -96,7 +99,11 @@ function standing(hookfac, delta)
 
             excess = excess + delta
             fac:modPlayerRaw(-delta)
-            osd_msg[1] = osd_msg1:format(-rep)
+            osd_msg[1] = gettext.ngettext(
+               "You need to gain %d more reputation",
+               "You need to gain %d more reputation",
+               -rep
+            ):format(-rep)
             misn.osdCreate(misn_title:format(fac:name()), osd_msg)
         else
             excess = excess + delta

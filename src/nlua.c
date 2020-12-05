@@ -385,7 +385,7 @@ static char* nlua_packfileLoaderTryFile( size_t *bufsize, const char *filename )
 static int nlua_packfileLoader( lua_State* L )
 {
    const char *filename;
-   char filename_ext[PATH_MAX];
+   char filename_ext[NDATA_PATH_MAX];
    char *buf;
    size_t bufsize;
    int envtab;
@@ -414,7 +414,7 @@ static int nlua_packfileLoader( lua_State* L )
    }
 
    /* Try to load with extension. */
-   snprintf( filename_ext, sizeof(filename_ext), "%s.lua", filename );
+   nsnprintf( filename_ext, sizeof(filename_ext), "%s.lua", filename );
    buf = nlua_packfileLoaderTryFile( &bufsize, filename_ext );
    /* Fallback to no extension. */
    if (buf == NULL)

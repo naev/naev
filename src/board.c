@@ -122,7 +122,7 @@ void player_board (void)
 
    /* pilot will be boarded */
    pilot_setFlag(p,PILOT_BOARDED);
-   player_message(_("\aRBoarding ship \a%c%s\a0."), c, p->name);
+   player_message(_("\aoBoarding ship \a%c%s\a0."), c, p->name);
 
    /* Don't unboard. */
    board_stopboard = 0;
@@ -212,7 +212,7 @@ static void board_stealCreds( unsigned int wdw, char* str )
    p = pilot_get(player.p->target);
 
    if (p->credits==0) { /* you can't steal from the poor */
-      player_message(_("\aRThe ship has no credits."));
+      player_message(_("\aoThe ship has no credits."));
       return;
    }
 
@@ -221,7 +221,7 @@ static void board_stealCreds( unsigned int wdw, char* str )
    player_modCredits( p->credits );
    p->credits = 0;
    board_update( wdw ); /* update the lack of credits */
-   player_message(_("\aRYou manage to steal the ship's credits."));
+   player_message(_("\aoYou manage to steal the ship's credits."));
 }
 
 
@@ -240,7 +240,7 @@ static void board_stealCargo( unsigned int wdw, char* str )
    p = pilot_get(player.p->target);
 
    if (p->ncommodities==0) { /* no cargo */
-      player_message(_("\aRThe ship has no cargo."));
+      player_message(_("\aoThe ship has no cargo."));
       return;
    }
    else if (pilot_cargoFree(player.p) <= 0) {
@@ -259,7 +259,7 @@ static void board_stealCargo( unsigned int wdw, char* str )
    }
 
    board_update( wdw );
-   player_message(_("\aRYou manage to steal the ship's cargo."));
+   player_message(_("\aoYou manage to steal the ship's cargo."));
 }
 
 
@@ -277,7 +277,7 @@ static void board_stealFuel( unsigned int wdw, char* str )
    p = pilot_get(player.p->target);
 
    if (p->fuel <= 0) { /* no fuel. */
-      player_message(_("\aRThe ship has no fuel."));
+      player_message(_("\aoThe ship has no fuel."));
       return;
    }
    else if (player.p->fuel == player.p->fuel_max) {
@@ -299,7 +299,7 @@ static void board_stealFuel( unsigned int wdw, char* str )
    }
 
    board_update( wdw );
-   player_message(_("\aRYou manage to steal the ship's fuel."));
+   player_message(_("\aoYou manage to steal the ship's fuel."));
 }
 
 
@@ -370,7 +370,7 @@ static void board_stealAmmo( unsigned int wdw, char* str )
            pilot_rmAmmo(p, target_outfit_slot, nadded);
            nreloaded += nadded;
            if (nadded > 0)
-              player_message(_("\aRYou looted: %d × %s"), nadded, _(ammo->name));
+              player_message(_("\aoYou looted: %d × %s"), nadded, _(ammo->name));
            if (nammo <= 0) {
               break;
            }
@@ -442,9 +442,9 @@ static int board_fail( unsigned int wdw )
    if (ret == 0)
       return 0;
    else if (ret < 0) /* killed ship. */
-      player_message(_("\aRYou have tripped the ship's self-destruct mechanism!"));
+      player_message(_("\aoYou have tripped the ship's self-destruct mechanism!"));
    else /* you just got locked out */
-      player_message(_("\aRThe ship's security system locks %s out."),
+      player_message(_("\aoThe ship's security system locks %s out."),
             (player.p->ship->crew > 0) ? "your crew" : "you" );
 
    board_exit( wdw, NULL);
@@ -474,7 +474,7 @@ static void board_update( unsigned int wdw )
 
    /* Commodities. */
    if ((p->ncommodities==0) && (j < PATH_MAX))
-      j += snprintf( &str[j], PATH_MAX-j, _("none\n") );
+      j += nsnprintf( &str[j], PATH_MAX-j, _("none\n") );
    else {
       total_cargo = 0;
       for (i=0; i<p->ncommodities; i++) {
@@ -484,28 +484,28 @@ static void board_update( unsigned int wdw )
             continue;
          total_cargo += p->commodities[i].quantity;
       }
-      j += snprintf( &str[ j ], PATH_MAX - j, ngettext( "%d tonne\n", "%d tonnes\n", total_cargo ), total_cargo );
+      j += nsnprintf( &str[ j ], PATH_MAX - j, ngettext( "%d tonne\n", "%d tonnes\n", total_cargo ), total_cargo );
    }
 
    /* Fuel. */
    if (p->fuel <= 0) {
       if (j < PATH_MAX)
-         j += snprintf( &str[j], PATH_MAX-j, _("none\n") );
+         j += nsnprintf( &str[j], PATH_MAX-j, _("none\n") );
    }
    else {
       if (j < PATH_MAX)
-         j += snprintf( &str[ j ], PATH_MAX - j, ngettext( "%d unit\n", "%d units\n", p->fuel ), p->fuel );
+         j += nsnprintf( &str[ j ], PATH_MAX - j, ngettext( "%d unit\n", "%d units\n", p->fuel ), p->fuel );
    }
 
    /* Missiles */
    int nmissiles = pilot_countAmmo(p);
    if (nmissiles <= 0) {
       if (j < PATH_MAX)
-        j += snprintf( &str[j], PATH_MAX-j, _("none\n") );
+        j += nsnprintf( &str[j], PATH_MAX-j, _("none\n") );
    }
    else {
       if (j < PATH_MAX)
-         j += snprintf( &str[ j ], PATH_MAX - j, ngettext( "%d missile\n", "%d missiles\n", nmissiles ), nmissiles );
+         j += nsnprintf( &str[ j ], PATH_MAX - j, ngettext( "%d missile\n", "%d missiles\n", nmissiles ), nmissiles );
    }
    (void)j;
 

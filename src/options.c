@@ -12,11 +12,9 @@
 #include "options.h"
 
 #include "naev.h"
-
 #include "nstring.h"
-
+#include <ctype.h>
 #include "SDL.h"
-
 #include "log.h"
 #include "input.h"
 #include "toolkit.h"
@@ -200,8 +198,7 @@ static char** lang_list( int *n )
    size_t fs;
    char *buf;
    char **ls;
-   int j;
-   size_t i;
+   size_t i, j;
 
    /* Default English only. */
    ls = malloc( sizeof(char*)*128 );
@@ -215,10 +212,10 @@ static char** lang_list( int *n )
       return ls;
    j = 0;
    for (i=0; i<fs; i++) {
-      if ((buf[i] != '\n') && (buf[i] != '\0'))
+      if (!isspace(buf[i]) && (buf[i] != '\0'))
          continue;
       buf[i] = '\0';
-      if (*n < 128)
+      if (*n < 128 && i > j)
          ls[(*n)++] = strdup( &buf[j] );
       j=i+1;
    }
@@ -354,6 +351,7 @@ static void opt_gameplay( unsigned int wid )
    y -= 40;
 
 
+   (void) y;
    x = 20 + cw + 20;
    y  = by;
    cw += 80;
@@ -619,7 +617,10 @@ static void menuKeybinds_genList( unsigned int wid )
    /* Create the list. */
    str = malloc( sizeof( char * ) * input_numbinds );
    for ( j = 0; j < input_numbinds; j++ ) {
-      l = 64;
+      l = 128; /* GCC deduces 68 because we have a format string "%s <%s%c>"
+                * where "char mod_text[64]" is one of the "%s" args.
+                * (that plus brackets plus %c + null gets to 68.
+                * Just set to 128 as it's a power of two. */
       str[j] = malloc(l);
       key = input_getKeybind( keybind_info[j][0], &type, &mod );
       switch (type) {

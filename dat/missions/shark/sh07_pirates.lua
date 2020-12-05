@@ -109,7 +109,7 @@ function create ()
    paysys = system.get(psyname)
    paypla = planet.get(pplname)
 
-   if not misn.claim(gawsys) and misn.claim(kersys1) and misn.claim(kersys2) and misn.claim(godsys) then
+   if not misn.claim({gawsys, kersys1, kersys2, godsys}) then
       misn.finish(false)
    end
 

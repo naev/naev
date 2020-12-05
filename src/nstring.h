@@ -10,19 +10,25 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "attributes.h"
 #include "ncompat.h"
 
 
 const char *nstrnstr( const char *haystack, const char *needle, size_t size );
 #if HAS_POSIX && defined(_GNU_SOURCE)
 #define nstrcasestr     strcasestr
-#define nsnprintf       snprintf
 #define nstrndup        strndup
-#else /* HAVE_POSIX && defined(_GNU_SOURCE) */
+#else /* HAS_POSIX && defined(_GNU_SOURCE) */
 const char *nstrcasestr( const char *haystack, const char *needle );
-int nsnprintf( char *text, size_t maxlen, const char *fmt, ... );
 char* nstrndup( const char *s, size_t n );
-#endif /* HAVE_POSIX */
+#endif /* HAS_POSIX && defined(_GNU_SOURCE) */
+
+#if HAS_SNPRINTF
+#define nsnprintf       snprintf
+#else /* HAS_SNPRINTF */
+FORMAT( printf, 3, 4 ) int nsnprintf( char *text, size_t maxlen, const char *fmt, ... );
+#endif /* HAS_SNPRINTF */
+
 int strsort( const void *p1, const void *p2 );
 
 

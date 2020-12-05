@@ -320,8 +320,8 @@ static int mkpath( const char *path )
    if (path == NULL)
       return 0;
 
-   strncpy( opath, path, sizeof(opath) );
-   opath[ PATH_MAX-1 ] = '\0';
+   strncpy( opath, path, sizeof(opath)-1 );
+   opath[ sizeof(opath)-1 ] = '\0';
    len = strlen(opath);
 
    p = &opath[len-1];

@@ -95,9 +95,9 @@ log_text = _([[You helped Nexus Shipyards demonstrate the capabilities of their 
 function create ()
 
    --Change here to change the planet and the system
-   sysname = "Ingot"
-   planame = "Ulios"
-   bsyname = "Toaxis"
+   local sysname = "Ingot"
+   local planame = "Ulios"
+   local bsyname = "Toaxis"
    missys = system.get(sysname)
    mispla = planet.get(planame)
    battlesys = system.get(bsyname)
