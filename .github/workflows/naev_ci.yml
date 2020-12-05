@@ -365,7 +365,7 @@ jobs:
         
     - name: Meson Build
       run: |
-        sh $MESON setup build source \
+        sh $MESON setup build repo \
             -Dexecutable=disabled
         
     - name: Trigger API Site Update
