@@ -1,17 +1,17 @@
-#!/bin/bash
+#!/bin/sh
 
 set -ex
 
-if [[ -z "$1" ]]; then
+if [ -z "$1" ]; then
    BASEPATH="."
 else
    BASEPATH="$1"
 fi
 
-if [[ -z "$2" ]]; then
-   linguas=$(<"$BASEPATH/dat/LANGUAGES")
+if [ -z "$2" ]; then
+   linguas=$(cat "$BASEPATH/dat/LANGUAGES")
 else
-   linguas=$(<"$2")
+   linguas=$(cat "$2")
 fi
 
 for lang in $linguas; do
