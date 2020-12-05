@@ -51,14 +51,4 @@
 #define nstd_toupper(k)    (nstd_checkascii(k) ? (SDL_Keycode)toupper(k) : k)
 
 
-/* Adds STRCASECMP. */
-#if HAS_WIN32
-#include <shlwapi.h>
-#define STRCASECMP      lstrcmpiA
-#else /* HAS_WIN32 */
-#include <strings.h>
-#define STRCASECMP      strcasecmp
-#endif /* HAS_WIN32 */
-
-
 #endif /* NSTD_H */

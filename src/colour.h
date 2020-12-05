@@ -65,17 +65,12 @@ extern const glColour cAqua;
 /*
  * game specific
  */
-/*
- * game specific
- */
 extern const glColour cBlackHilight;
 /* toolkit */
 extern const glColour cHilight;
 /* objects */
 extern const glColour cInert;
-extern const glColour cMapInert;
 extern const glColour cNeutral;
-extern const glColour cMapNeutral;
 extern const glColour cFriend;
 extern const glColour cHostile;
 extern const glColour cRestricted;
@@ -101,8 +96,11 @@ extern const glColour cFontWhite;
 extern const glColour cFontGrey;
 extern const glColour cFontPurple;
 
-const glColour* col_fromName( const char* name );
 
+/*
+ * Misc functions.
+ */
+const glColour* col_fromName( const char* name );
 
 /*
  * Colour space conversion routines.

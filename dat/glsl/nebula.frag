@@ -1,5 +1,3 @@
-#version 140
-
 uniform vec4 color;
 uniform vec2 center;
 uniform float radius;
