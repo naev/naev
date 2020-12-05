@@ -251,7 +251,7 @@ void col_blend( glColour *blend, const glColour *fg, const glColour *bg, double 
 
 
 #define CHECK_COLOUR(colour) \
-      if (STRCASECMP(name, #colour) == 0) return &c##colour /**< Checks the colour. */
+      if (strcasecmp(name, #colour) == 0) return &c##colour /**< Checks the colour. */
 /**
  * @brief Returns a colour from its name
  *
