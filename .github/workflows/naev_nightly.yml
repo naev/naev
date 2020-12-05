@@ -225,6 +225,10 @@ jobs:
     needs: [Generate_Source, Build_Naev_Release, Build_Naev_Steam_Release]
 
     steps:
+      - name: Create Release Staging and Output Areas
+        run: |
+          mkdir -p {temp,dist/{staging,out/{lin64,win64}}}
+          
       - name: Update APT Cache
         if: ${{ matrix.releasetype == 'steam' }}
         run: |
@@ -245,10 +249,6 @@ jobs:
           unzip temp/butler.zip
           chmod +x butler
           ./butler -V
-          
-      - name: Create Release Staging and Output Areas
-        run: |
-          mkdir -p {temp,dist/{staging,out/{lin64,win64}}}
 
       - name: Download Artifacts
         uses: actions/download-artifact@v2
