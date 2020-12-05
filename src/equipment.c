@@ -759,13 +759,13 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       if (slot->sslot->slot.spid == 0)
          return;
 
-      pos = snprintf( alt, sizeof(alt),
-            "\aR%s", _( sp_display( slot->sslot->slot.spid ) ) );
+      pos = nsnprintf( alt, sizeof(alt),
+            "\ao%s", _( sp_display( slot->sslot->slot.spid ) ) );
       if (slot->sslot->slot.exclusive && (pos < (int)sizeof(alt)))
-         pos += snprintf( &alt[pos], sizeof(alt)-pos,
+         pos += nsnprintf( &alt[pos], sizeof(alt)-pos,
                _(" [exclusive]") );
       if (pos < (int)sizeof(alt))
-         snprintf( &alt[pos], sizeof(alt)-pos,
+         nsnprintf( &alt[pos], sizeof(alt)-pos,
                "\n\n%s", _( sp_description( slot->sslot->slot.spid ) ) );
       toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
       return;
@@ -784,14 +784,14 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          "%s",
          _(o->name) );
    if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aRUnique\a0") );
+      pos += nsnprintf( &alt[pos], sizeof(alt)-pos, _("\n\aoUnique\a0") );
    if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n\aRSlot %s\a0"),
+      pos += nsnprintf( &alt[pos], sizeof(alt)-pos, _("\n\aoSlot %s\a0"),
             _( sp_display( o->slot.spid ) ) );
    if (pos < (int)sizeof(alt))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", _(o->desc_short) );
+      pos += nsnprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
    if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
-      snprintf( &alt[pos], sizeof(alt)-pos,
+      nsnprintf( &alt[pos], sizeof(alt)-pos,
             ngettext("\n%.0f Tonne", "\n%.0f Tonnes", mass),
             mass );
 
@@ -1164,7 +1164,7 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
       nship   = toolkit_getImageArrayPos(    wid, EQUIPMENT_SHIPS );
       offship = toolkit_getImageArrayOffset( wid, EQUIPMENT_SHIPS );
       s       = toolkit_getImageArray(       wid, EQUIPMENT_SHIPS );
-      strncpy( selship, s, sizeof(selship) );
+      strncpy( selship, s, sizeof(selship)-1 );
       selship[PATH_MAX-1] = '\0'; /* Just in case. */
       window_destroyWidget( wid, EQUIPMENT_SHIPS );
    }
@@ -1382,7 +1382,7 @@ static void equipment_genShipList( unsigned int wid )
 
       window_addImageArray( wid, 20, -40,
             sw, sh, EQUIPMENT_SHIPS, 96., 96.,
-            cships, nships, equipment_updateShips, NULL );
+            cships, nships, equipment_updateShips, NULL, NULL );
    }
 }
 
@@ -1470,6 +1470,7 @@ static void equipment_genOutfitList( unsigned int wid )
          EQUIPMENT_OUTFITS, 96., 96.,
          coutfits, noutfits,
          equipment_updateOutfits,
+         equipment_rightClickOutfits,
          equipment_rightClickOutfits );
 }
 

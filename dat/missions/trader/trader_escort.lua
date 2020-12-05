@@ -39,12 +39,6 @@ misn_title[5] = _("Escort a huge convoy to %s in %s.")
 
 misn_desc = _("A convoy of traders needs protection while they go to %s in %s. You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so.")
    
-misn_details = _([[
-Cargo: %s
-Jumps: %d
-Travel distance: %d
-%s]])
-
 piracyrisk = {}
 piracyrisk[1] = _("Piracy Risk: None")
 piracyrisk[2] = _("Piracy Risk: Low")
@@ -123,10 +117,8 @@ function create()
    reward = 2.0 * (avgrisk * numjumps * jumpreward + traveldist * distreward) * (1. + 0.05*rnd.twosigma())
    
    misn.setTitle( misn_title[convoysize]:format(
-      _(destplanet:name()), _(destsys:name()) ) )
-   misn.setDesc( misn_desc:format( _(destplanet:name()), _(destsys:name()) )
-      .. "\n\n" .. misn_details:format(
-         _(cargo), numjumps, traveldist, piracyrisk ) )
+      destplanet:name(), destsys:name() ) )
+   cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, nil, destplanet, nil, piracyrisk );
    misn.markerAdd(destsys, "computer")
    misn.setReward( creditstring(reward) )
 end
@@ -161,7 +153,7 @@ function accept()
    unsafe = false
 
    misn.accept()
-   misn.osdCreate(osd_title, {osd_msg:format(_(destplanet:name()), _(destsys:name()))})
+   misn.osdCreate(osd_title, {osd_msg:format(destplanet:name(), destsys:name())})
 
    hook.takeoff("takeoff")
    hook.jumpin("jumpin")
@@ -230,7 +222,7 @@ function traderJump( p, j )
       exited = exited + 1
       if p:exists() then
          player.msg( string.format(
-            _("%s has jumped to %s."), p:name(), _(j:dest():name()) ) )
+            _("%s has jumped to %s."), p:name(), j:dest():name() ) )
       end
    else
       traderDeath()

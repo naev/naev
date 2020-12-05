@@ -79,7 +79,7 @@ unsigned int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
 {
    unsigned int p;
    p = pilot_create( plt->ship,
-         plt->name,
+         _(plt->name), /* Currently, FleetPilots come from static XML in English, but Pilots have translated names. */
          flt->faction,
          (ai != NULL) ? ai :
                (plt->ai != NULL) ? plt->ai :
@@ -114,7 +114,7 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
    memset( temp, 0, sizeof(Fleet) );
    temp->faction = -1;
 
-   temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name"); /* already mallocs */
+   xmlr_attr(parent,"name",temp->name);
    if (temp->name == NULL)
       WARN( _("Fleet in %s has invalid or no name"), FLEET_DATA_PATH );
 

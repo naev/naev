@@ -994,7 +994,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
      double newSpeed;
       if ((value==KEY_PRESS) && (!player_isFlag( PLAYER_CINEMATICS_2X ))) {
          if (player.speed < 4) {
-            player.speed++;
+            player.speed *= 2;
          } else {
             player.speed = 1;
          }

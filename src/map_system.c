@@ -88,7 +88,6 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
 
 
 static void map_system_array_update( unsigned int wid, char* str );
-static void map_system_array_rmouse( unsigned int wid, char* widget_name );
 
 void map_system_buyCommodPrice( unsigned int wid, char *str );
 
@@ -397,11 +396,13 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    cnt=0;
    buf[0]='\0';
    if ( cur_planet_sel == 0 ) {
-      int infopos=0;
-     /* display sun information */
-     /* Nebula. */
-      cnt+=nsnprintf( buf, sizeof(buf), _("System: %s\n%d star system\n"), _(sys->name), nBgImgs>0 ? nBgImgs-1 : 0 );
+      int infopos = 0;
+      int stars   = nBgImgs>0 ? nBgImgs-1 : 0;
+      cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("System: %s\n"), _(sys->name) );
+      /* display sun information */
+      cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, ngettext("%d-star system\n", "%d-star system\n", stars), stars );
 
+      /* Nebula. */
       if (sys->nebu_density > 0. ) {
          /* Volatility */
          if (sys->nebu_volatility > 700.)
@@ -604,7 +605,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
    Outfit *outfit;
    Ship *ship;
    double mass;
-   char buf2[ECON_CRED_STRLEN], buf4[PATH_MAX];
+   char buf_price[ECON_CRED_STRLEN], buf_license[PATH_MAX];
 
    i = toolkit_getImageArrayPos( wid, str );
    if ( i < 0 ) {
@@ -615,14 +616,14 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       outfit = cur_planet_sel_outfits[i];
 
       /* new text */
-      price2str( buf2, outfit->price, player.p->credits, 2 );
+      price2str( buf_price, outfit->price, player.p->credits, 2 );
       if (outfit->license == NULL)
-         strncpy( buf4, _("None"), sizeof(buf4) );
+         strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
       else if (player_hasLicense( outfit->license ))
-         strncpy( buf4, _(outfit->license), sizeof(buf4) );
+         strncpy( buf_license, _(outfit->license), sizeof(buf_license)-1 );
       else
-         nsnprintf( buf4, sizeof( buf4 ), "\ar%s\a0", _(outfit->license) );
-      buf4[ sizeof( buf4 )-1 ] = '\0';
+         nsnprintf( buf_license, sizeof( buf_license ), "\ar%s\a0", _(outfit->license) );
+      buf_license[ sizeof( buf_license )-1 ] = '\0';
 
       mass = outfit->mass;
       if ( (outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
@@ -636,19 +637,19 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                    "\anLicense:\a0 %s"),
                  _(outfit->name),
                  _(outfit->description),
-                 _(outfit->desc_short),
+                 outfit->desc_short,
                  player_outfitOwned( outfit ),
                  _(outfit_slotName( outfit )),
                  _(outfit_slotSize( outfit )),
                  mass,
-                 buf2,
-                 buf4 );
+                 buf_price,
+                 buf_license );
 
    } else if ( ( strcmp( str, MAPSYS_SHIPS ) == 0 ) ) {
       ship = cur_planet_sel_ships[i];
 
    /* update text */
-      price2str( buf2, ship_buyPrice( ship ), player.p->credits, 2 );
+      price2str( buf_price, ship_buyPrice( ship ), player.p->credits, 2 );
 
       nsnprintf( infobuf, PATH_MAX,
                  _("\anModel:\a0 %s    "
@@ -692,7 +693,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                  ship->cap_cargo,
                  ship->fuel,
                  ship->fuel_consumption,
-                 buf2,
+                 buf_price,
                  (ship->license != NULL) ? _(ship->license) : _("None"),
                  ship->desc_stats
                  );
@@ -708,41 +709,38 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       int owned;
       com = cur_planetObj_sel->commodities[i];
       economy_getAveragePrice( com, &globalmean, &globalstd );
+      economy_getAveragePlanetPrice( com, cur_planetObj_sel, &mean, &std );
       credits2str( buf_mean, mean, -1 );
       nsnprintf( buf_std, sizeof(buf_std), "%.1f ¤", std ); /* TODO credit2str could learn to do this... */
-      economy_getAveragePlanetPrice( com, cur_planetObj_sel, &mean, &std );
       credits2str( buf_globalmean, globalmean, -1 );
       nsnprintf( buf_globalstd, sizeof(buf_globalstd), "%.1f ¤", globalstd ); /* TODO credit2str could learn to do this... */
-      buf4[0]='\0';
       owned=pilot_cargoOwned( player.p, com->name );
+
+      infobuf[0] = '\0';
+      i = nsnprintf( infobuf, sizeof(infobuf)-i, "%s\n\n%s\n\n", _(com->name), _(com->description) );
+
       if ( owned > 0 ) {
          credits2str( buf_buy_price, com->lastPurchasePrice, -1 );
-         nsnprintf( buf4, PATH_MAX, ", purchased at %s/t", buf_buy_price ); /* FIXME See below. */
+         i += nsnprintf( &infobuf[i], sizeof(infobuf)-i, ngettext(
+                         "\anYou have:\a0 %d tonne, purchased at %s/t\n",
+                         "\anYou have:\a0 %d tonnes, purchased at %s/t\n",
+                         owned), owned, buf_buy_price );
       }
-      nsnprintf( infobuf, PATH_MAX,
-                 _("%s\n\n"
-                   "%s\n\n"
-                   "\anYou have:\a0 %d tonnes%s\n"
-                   "\anAverage price seen here:\a0 %s/t ± %s/t\n"
-                   "\anAverage price seen everywhere:\a0 %s/t ± %s/t\n"),
-                 _(com->name),
-                 _(com->description),
-                 owned,
-                 buf4, /* FIXME: do not paste in an untranslated sentence fragment... or even a translated one. */
-                 buf_mean, buf_std,
-                 buf_globalmean, buf_globalstd );
-   } else {
-      infobuf[0]='\0';
-      WARN( _("Unexpected call to map_system_array_update\n") );
+      else
+         i += nsnprintf( &infobuf[i], sizeof(infobuf)-i, ngettext(
+                         "\anYou have:\a0 %d tonne\n",
+                         "\anYou have:\a0 %d tonnes\n",
+                         owned), owned );
+
+      i += nsnprintf( &infobuf[i], sizeof(infobuf)-i,
+                      _("\anAverage price seen here:\a0 %s/t ± %s/t\n"
+                         "\anAverage price seen everywhere:\a0 %s/t ± %s/t\n"),
+                      buf_mean, buf_std, buf_globalmean, buf_globalstd );
    }
-
+   else
+      WARN( _("Unexpected call to map_system_array_update\n") );
+   (void) i;
 }
-static void map_system_array_rmouse( unsigned int wid, char* widget_name )
-{
-   (void)wid;
-   (void)widget_name;
-}
-
 
 void map_system_updateSelected( unsigned int wid )
 {
@@ -891,7 +889,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
       ypos = 65 + 5*(shipSpace!=0) + (h - 100 - (i+1)*5)*shipSpace;
       window_addImageArray( wid, xpos, ypos,
                             xw, yh, MAPSYS_OUTFITS, 96, 96,
-                            coutfits, noutfits, map_system_array_update, map_system_array_rmouse );
+                            coutfits, noutfits, map_system_array_update, NULL, NULL );
       toolkit_unsetSelection( wid, MAPSYS_OUTFITS );
    }
 }
@@ -940,7 +938,7 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
       ypos = 65;
       window_addImageArray( wid, xpos, ypos,
          xw, yh, MAPSYS_SHIPS, 96., 96.,
-         cships, nships, map_system_array_update, map_system_array_rmouse );
+         cships, nships, map_system_array_update, NULL, NULL );
       toolkit_unsetSelection( wid, MAPSYS_SHIPS );
    }
 }
@@ -985,7 +983,7 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
 
       window_addImageArray( wid, xpos, ypos,
          xw, yh, MAPSYS_TRADE, 96, 96,
-         cgoods, ngoods, map_system_array_update, map_system_array_rmouse );
+         cgoods, ngoods, map_system_array_update, NULL, NULL );
       toolkit_unsetSelection( wid, MAPSYS_TRADE );
    }
 }

@@ -45,7 +45,7 @@ text[3]   = _("Your mission was a complete success! The clan you just gave the p
 
 function create ()
    -- Note: this mission does not make any system claims.
-   local landed = planet.cur():name()
+   local landed = planet.cur():nameRaw()
 
    -- target destination
    local planets = {}
@@ -80,11 +80,11 @@ function accept ()
    reward = rnd.rnd(10,20) * 100000 -- Hey, this mission is probably hell, after all.
    misn.setTitle(misn_title)
    misn.setReward( creditstring(reward) )
-   misn.setDesc( string.format(misn_desc,_(dest:name()), _(sys:name())))
+   misn.setDesc( string.format(misn_desc, dest:name(), sys:name()))
 
    -- Flavour text and mini-briefing
-   tk.msg( title[2], string.format( text[2], _(dest:name()) ))
-   misn.osdCreate(title[2], {misn_desc:format(_(dest:name()), _(sys:name()))})
+   tk.msg( title[2], string.format( text[2], dest:name() ))
+   misn.osdCreate(title[2], {misn_desc:format(dest:name(), sys:name())})
 
    -- Set up the goal
    packages = misn.cargoAdd("Packages", 5)

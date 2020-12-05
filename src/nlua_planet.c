@@ -41,6 +41,7 @@ static int planetL_getAll( lua_State *L );
 static int planetL_system( lua_State *L );
 static int planetL_eq( lua_State *L );
 static int planetL_name( lua_State *L );
+static int planetL_nameRaw( lua_State *L );
 static int planetL_radius( lua_State *L );
 static int planetL_faction( lua_State *L );
 static int planetL_colour( lua_State *L );
@@ -68,6 +69,7 @@ static const luaL_Reg planet_methods[] = {
    { "__eq", planetL_eq },
    { "__tostring", planetL_name },
    { "name", planetL_name },
+   { "nameRaw", planetL_nameRaw },
    { "radius", planetL_radius },
    { "faction", planetL_faction },
    { "colour", planetL_colour },
@@ -359,7 +361,7 @@ static int planetL_getBackend( lua_State *L, int landable )
  * Possible values of param: <br/>
  *    - bool : Gets a random planet. <br/>
  *    - faction : Gets random planet belonging to faction matching the number. <br/>
- *    - string : Gets the planet by name. <br/>
+ *    - string : Gets the planet by raw (untranslated) name. <br/>
  *    - table : Gets random planet belonging to any of the factions in the
  *               table. <br/>
  *
@@ -461,18 +463,42 @@ static int planetL_eq( lua_State *L )
 }
 
 /**
- * @brief Gets the planet's name.
+ * @brief Gets the planet's translated name.
  *
- * @usage name = p:name()
- *    @luatparam Planet p Planet to get the name of.
- *    @luatreturn string The name of the planet.
+ * This translated name should be used for display purposes (e.g.
+ * messages). It cannot be used as an identifier for the planet; for
+ * that, use planet.nameRaw() instead.
+ *
+ * @usage name = p:name() -- Equivalent to `_(p:nameRaw())`
+ *    @luatparam Planet p Planet to get the translated name of.
+ *    @luatreturn string The translated name of the planet.
  * @luafunc name( p )
  */
 static int planetL_name( lua_State *L )
 {
    Planet *p;
    p = luaL_validplanet(L,1);
-   lua_pushstring(L,p->name);
+   lua_pushstring(L, _(p->name));
+   return 1;
+}
+
+/**
+ * @brief Gets the planet's raw (untranslated) name.
+ *
+ * This untranslated name should be used for identification purposes
+ * (e.g. can be passed to planet.get()). It should not be used directly
+ * for display purposes without manually translating it with _().
+ *
+ * @usage name = p:nameRaw()
+ *    @luatparam Planet p Planet to get the raw name of.
+ *    @luatreturn string The raw name of the planet.
+ * @luafunc nameRaw( p )
+ */
+static int planetL_nameRaw( lua_State *L )
+{
+   Planet *p;
+   p = luaL_validplanet(L,1);
+   lua_pushstring(L, p->name);
    return 1;
 }
 

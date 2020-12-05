@@ -303,12 +303,12 @@ int *generate_news( char* faction )
 
       article_ptr = article_ptr->next;
 
-   } while (article_ptr != NULL);
+   } while (article_ptr != NULL && p < NEWS_MAX_LENGTH);
 
    if (p == 0)
-      nsnprintf(buf, NEWS_MAX_LENGTH, _("\n\nSorry, no news today\n\n\n"));
+      p = nsnprintf(buf, NEWS_MAX_LENGTH, _("\n\nSorry, no news today\n\n\n"));
 
-   len = p;
+   len = MIN( p, NEWS_MAX_LENGTH );
 
    return 0;
 }

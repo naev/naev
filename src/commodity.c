@@ -72,8 +72,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent );
 /**
  * @brief Converts credits to a usable string for displaying.
  *
- *    @param[out] str Output is stored here, must have at least a length of 32
- *                     char.
+ *    @param[out] str Output is stored here, must have at least a size of ECON_CRED_STRLEN.
  *    @param credits Credits to display.
  *    @param decimals Decimals to use.
  */
@@ -100,8 +99,7 @@ void credits2str( char *str, credits_t credits, int decimals )
 /**
  * @brief Given a price and on-hand credits, outputs a colourized string.
  *
- *    @param[out] str Output is stored here, must have at least a length of 32
- *                     char.
+ *    @param[out] str Output is stored here, must have at least a size of ECON_CRED_STRLEN.
  *    @param price Price to display.
  *    @param credits Credits available.
  *    @param decimals Decimals to use.
@@ -117,6 +115,18 @@ void price2str(char *str, credits_t price, credits_t credits, int decimals )
    buf = strdup(str);
    nsnprintf(str, ECON_CRED_STRLEN, "\ar%s\a0", buf);
    free(buf);
+}
+
+
+/**
+ * @brief Converts tonnes to a usable string for displaying.
+ *
+ *    @param[out] str Output is stored here, must have at least a size of ECON_MASS_STRLEN.
+ *    @param tonnes Number of tonnes to display.
+ */
+void tonnes2str( char *str, int tonnes )
+{
+   snprintf( str, ECON_MASS_STRLEN, ngettext( "%d tonne", "%d tonnes", tonnes ), tonnes );
 }
 
 /**

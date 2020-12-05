@@ -88,14 +88,14 @@ end
 
 
 function accept ()
-    if tk.yesno(title1, text1:format(_(destplanet:name()), _(destsys:name()), _(destplanet:name()))) then
+    if tk.yesno(title1, text1:format(destplanet:name(), destsys:name(), destplanet:name())) then
         tk.msg(title1, text2)
         oldwoman = misn.cargoAdd("Civilians", 0)
 
         misn.accept()
-        misn.setDesc(misndesc:format(_(destplanet:name()), _(destsys:name())))
+        misn.setDesc(misndesc:format(destplanet:name(), destsys:name()))
         misn.setReward(misnreward)
-        OSD[1] = OSD[1]:format(_(destplanet:name()), _(destsys:name()))
+        OSD[1] = OSD[1]:format(destplanet:name(), destsys:name())
         misn.osdCreate(OSDtitle, OSD)
         misn.markerAdd(destsys, "high")
 

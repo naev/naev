@@ -1,6 +1,8 @@
 ![Nightly Release](https://github.com/naev/naev/workflows/Nightly%20Release/badge.svg) ![CI](https://github.com/naev/naev/workflows/CI/badge.svg)
 # NAEV README
 
+![Naev Logo](https://naev.org/imgs/naev.png)
+
 Naev is a 2D space trading and combat game, taking inspiration from the Escape
 Velocity series, among others.
 
@@ -20,15 +22,10 @@ an OpenGL-capable graphics card and driver, Naev requires the following:
 * freetype2
 * libpng
 * OpenAL
-* libvorbis (>= 1.2.1 necessary for Replaygain)
+* libvorbis
 * binutils
 * intltool
 
-Note that several distributions ship outdated versions of libvorbis, and
-thus libvorbisfile is statically linked into the release binary.
-
-Compiling your own binary on many distributions will result in Replaygain
-being disabled.
 
 ### Ubuntu
 

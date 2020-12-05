@@ -108,12 +108,12 @@ function accept()
    if not tk.yesno(title1, text2:format(player.name())) then
       misn.finish()
    end
-   tk.msg(title2, text3:format(_(planet.cur():name())))
+   tk.msg(title2, text3:format(planet.cur():name()))
 
    destplanet, destsys = planet.cur() -- Keeps track of where the mission was accepted.
    origin = planet.cur() -- Keeps track of where the player enters the system from.
 
-   osd_msg[3] = osd_msg[3]:format(_(destplanet:name()), _(destsys:name()))
+   osd_msg[3] = osd_msg[3]:format(destplanet:name(), destsys:name())
 
    misn.accept()
    misn.setDesc(misn_desc)

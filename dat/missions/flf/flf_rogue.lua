@@ -35,37 +35,46 @@ require "numstring.lua"
 require "fleethelper.lua"
 require "missions/flf/flf_common.lua"
 
-misn_title  = _("FLF: Rogue %s in %s")
+misn_title  = {}
+misn_title[1] = _("FLF: Rogue Pilot in %s")
+misn_title[2] = _("FLF: Rogue Squadron in %s")
+misn_title[3] = _("FLF: Rogue Squadron in %s")
+misn_title[4] = _("FLF: Rogue Fleet in %s")
 
 text = {}
 text[1] = _("You are thanked for eliminating the traitorous scum and handed a credit chip with the agreed-upon payment.")
 text[2] = _("The official who hands you your pay mumbles something about traitors and then summarily dismisses you.")
 text[3] = _("While it takes an inordinate amount of time, you are eventually handed the agreed-upon payment for dispatching the traitor.")
 
-misn_desc = {}
-misn_desc[1] = _("There is a squadron of rogue FLF ships with %d ships in the %s system. Eliminate this squadron.")
-misn_desc[2] = _("There is a rogue FLF ship in the %s system. Eliminate this ship.")
-misn_desc[3] = _(" You will be accompanied by %d other FLF pilots for this mission.")
-
-misn_level = {}
-misn_level[1] = _("Pilot")
-misn_level[2] = _("Squadron")
-misn_level[3] = _("Squadron")
-misn_level[4] = _("Fleet")
-
 osd_title   = _("Rogue FLF")
 osd_desc    = {}
 osd_desc[1] = _("Fly to the %s system")
-osd_desc[2] = _("Eliminate the rogue FLF %s")
+osd_desc[2] = _("Eliminate the rogue FLF patrol")
 osd_desc[3] = _("Return to FLF base")
 osd_desc["__save"] = true
+
+
+function setDescription ()
+   local desc
+   desc = gettext.ngettext(
+         "There is %d rogue FLF ship in the %s system. Eliminate this ship.",
+         "There is a squadron of rogue FLF ships with %d ships in the %s system. Eliminate this squadron.",
+         ships ):format( ships, missys:name() )
+   if flfships > 0 then
+      desc = desc .. gettext.ngettext(
+            " You will be accompanied by %d other FLF pilot for this mission.",
+            " You will be accompanied by %d other FLF pilots for this mission.",
+            flfships ):format( flfships )
+   end
+   return desc
+end
 
 
 function create ()
    missys = flf_getSystem()
    if not misn.claim( missys ) then misn.finish( false ) end
 
-   level = rnd.rnd( 1, #misn_level )
+   level = rnd.rnd( 1, #misn_title )
    ships = 0
    flfships = 0
    if level == 1 then
@@ -86,21 +95,13 @@ function create ()
    credits = credits * system.cur():jumpDist( missys, true ) / 3
    credits = credits + rnd.sigma() * 8000
 
-   local desc
-   if ships == 1 then
-      desc = misn_desc[2]:format( _(missys:name()) )
-   else
-      desc = misn_desc[1]:format( ships, _(missys:name()) )
-   end
-   if flfships > 0 then
-      desc = desc .. misn_desc[3]:format( flfships )
-   end
+   local desc = setDescription()
 
    late_arrival = rnd.rnd() < 0.75
    late_arrival_delay = rnd.rnd( 10000, 120000 )
 
    -- Set mission details
-   misn.setTitle( misn_title:format( misn_level[level], _(missys:name()) ) )
+   misn.setTitle( misn_title[level]:format( missys:name() ) )
    misn.setDesc( desc )
    misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
@@ -110,8 +111,7 @@ end
 function accept ()
    misn.accept()
 
-   osd_desc[1] = osd_desc[1]:format( _(missys:name()) )
-   osd_desc[2] = osd_desc[2]:format( misn_level[level] )
+   osd_desc[1] = osd_desc[1]:format( missys:name() )
    misn.osdCreate( osd_title, osd_desc )
 
    rogue_ships_left = 0

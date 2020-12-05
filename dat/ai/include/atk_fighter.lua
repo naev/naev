@@ -55,6 +55,9 @@ function atk_fighter ()
    ai.hostile(target) -- Mark as hostile
    ai.settarget(target)
 
+   -- See if the enemy is still seeable
+   if not _atk_check_seeable() then return end
+
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
    local range = ai.getweaprange(3, 0)

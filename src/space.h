@@ -71,6 +71,18 @@ enum {
 
 
 /**
+ * @struct MapOverlayPos
+ *
+ * @brief Saves the layout decisions from positioning labeled objects on the overlay.
+ */
+typedef struct MapOverlayPos_ {
+   float radius; /**< Diameter for display on the map overlay. No, it's not the radius, why do you ask? */
+   float text_offx; /**< x offset of the caption text. */
+   float text_offy; /**< y offset of the caption text. */
+} MapOverlayPos;
+
+
+/**
  * @struct Planet
  *
  * @brief Represents a planet.
@@ -120,6 +132,7 @@ typedef struct Planet_ {
 
    /* Misc. */
    unsigned int flags; /**< flags for planet properties */
+   MapOverlayPos mo;   /**< Overlay layout data. */
 } Planet;
 
 
@@ -190,9 +203,9 @@ struct JumpPoint_ {
    double sina; /**< Sinus of the angle. */
    int sx; /**< X sprite to use. */
    int sy; /**< Y sprite to use. */
+   MapOverlayPos mo;   /**< Overlay layout data. */
 };
 extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
-
 
 /**
  * @brief Represents a type of asteroid.
@@ -374,6 +387,7 @@ int planet_setRadiusFromGFX(Planet* planet);
  */
 JumpPoint* jump_get( const char* jumpname, const StarSystem* sys );
 JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys );
+const char *jump_getSymbol( JumpPoint *jp );
 
 /*
  * system adding/removing stuff.

@@ -75,19 +75,19 @@ function create()
 end
 
 function accept()
-    if not tk.yesno(bar_title, bar_text:format(player:name(), _(homeworld:name()), _(homeworld_sys:name()), creditstring(credits))) then
+    if not tk.yesno(bar_title, bar_text:format(player:name(), homeworld:name(), homeworld_sys:name(), creditstring(credits))) then
         misn.finish()
     end
-    tk.msg(bar_title, accept_text:format(_(homeworld:name())))
+    tk.msg(bar_title, accept_text:format(homeworld:name()))
     
     -- Set up mission information
     misn.setTitle(mtitle)
     misn.setReward(misn_reward:format(creditstring(credits)))
-    misn.setDesc(mdesc:format(_(homeworld:name()), _(homeworld_sys:name())))
+    misn.setDesc(mdesc:format(homeworld:name(), homeworld_sys:name()))
     misn_marker = misn.markerAdd(homeworld_sys, "low")
     
     misn.accept()
-    osd_msg[1] = osd_msg[1]:format(_(homeworld:name()), _(homeworld_sys:name()))
+    osd_msg[1] = osd_msg[1]:format(homeworld:name(), homeworld_sys:name())
     misn.osdCreate(osd_title, osd_msg)
     
     hook.land("land")

@@ -67,7 +67,7 @@
 #define INTERFERENCE_LAYERS      16 /**< Number of interference layers. */
 #define INTERFERENCE_CHANGE_DT   0.1 /**< Speed to change at. */
 
-#define RADAR_BLINK_PILOT        1. /**< Blink rate of the pilot target on radar. */
+#define RADAR_BLINK_PILOT        0.5 /**< Blink rate of the pilot target on radar. */
 #define RADAR_BLINK_PLANET       1. /**< Blink rate of the planet target on radar. */
 
 
@@ -81,7 +81,6 @@ static double blink_pilot     = 0.; /**< Timer on target blinking on radar. */
 static double blink_planet    = 0.; /**< Timer on planet blinking on radar. */
 
 /* for VBO. */
-static gl_vbo *gui_triangle_vbo = NULL;
 static gl_vbo *gui_planet_vbo = NULL;
 static gl_vbo *gui_radar_select_vbo = NULL;
 static gl_vbo *gui_planet_blink_vbo = NULL;
@@ -114,6 +113,51 @@ static double gui_viewport_y = 0.; /**< GUI Viewport Y offset. */
 static double gui_viewport_w = 0.; /**< GUI Viewport width. */
 static double gui_viewport_h = 0.; /**< GUI Viewport height. */
 
+/**
+ * Map overlay
+ */
+/**
+ * @struct MapOverlay
+ *
+ * @brief Represents map overlay config values
+ */
+typedef struct MapOverlay_ {
+   /* GUI parameters */
+   int boundTop;
+   int boundRight;
+   int boundBottom;
+   int boundLeft;
+} MapOverlay;
+static MapOverlay map_overlay = {
+  .boundTop = 0,
+  .boundRight = 0,
+  .boundBottom = 0,
+  .boundLeft = 0,
+};
+int map_overlay_height(void)
+{
+   return SCREEN_H - map_overlay.boundTop - map_overlay.boundBottom;
+}
+int map_overlay_width(void)
+{
+   return SCREEN_W - map_overlay.boundLeft - map_overlay.boundRight;
+}
+int map_overlay_center_x(void)
+{
+   return map_overlay_width() / 2 + map_overlay.boundLeft;
+}
+int map_overlay_center_y(void)
+{
+   return map_overlay_height() / 2 + map_overlay.boundBottom;
+}
+double map_overlay_scale_x(void)
+{
+  return (double)map_overlay_width() / (double)SCREEN_W;
+}
+double map_overlay_scale_y(void)
+{
+  return (double)map_overlay_height() / (double)SCREEN_H;
+}
 
 /**
  * @struct Radar
@@ -194,7 +238,7 @@ static void gui_renderBorder( double dt );
 static void gui_renderMessages( double dt );
 static const glColour *gui_getPlanetColour( int i );
 static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int cy, const glColour *col );
-static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape );
+static void gui_blink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape, const glColour *col, const double blinkInterval, const double blinkVar );
 static const glColour* gui_getPilotColour( const Pilot* p );
 static void gui_renderInterference (void);
 static void gui_calcBorders (void);
@@ -677,10 +721,7 @@ static void gui_renderBorder( double dt )
          ccol.b = col->b;
          ccol.a = int_a;
 
-         gl_beginSolidProgram(gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0), &ccol);
-         gl_vboActivateAttribOffset( gui_triangle_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-         glDrawArrays( GL_LINE_STRIP, 0, 4 );
-         gl_endSolidProgram();
+         gl_renderTriangleEmpty( cx, cy, -jp->angle, 10., 1., &ccol );
       }
    }
 
@@ -903,6 +944,65 @@ void gui_render( double dt )
 
 
 /**
+ * @brief Sets map overlay bounds.
+ *
+ *    @param top Top boundary in pixels
+ *    @param right Right boundary in pixels
+ *    @param bottom Bottom boundary in pixels
+ *    @param left Left boundary in pixels
+ *
+ *    @return 0 on success 
+ */
+void gui_setMapOverlayBounds( int top, int right, int bottom, int left )
+{
+   map_overlay.boundTop = top;
+   map_overlay.boundRight = right;
+   map_overlay.boundBottom = bottom;
+   map_overlay.boundLeft = left;
+}
+
+/**
+ * @brief Gets map overlay bound (top)
+ *
+ *    @return Map overlay bound (top) in px
+ */
+int gui_getMapOverlayBoundTop(void)
+{
+  return map_overlay.boundTop;
+}
+
+/**
+ * @brief Gets map overlay bound (right)
+ *
+ *    @return Map overlay bound (right) in px
+ */
+int gui_getMapOverlayBoundRight(void)
+{
+  return map_overlay.boundRight;
+}
+
+/**
+ * @brief Gets map overlay bound (bottom)
+ *
+ *    @return Map overlay bound (bottom) in px
+ */
+int gui_getMapOverlayBoundBottom(void)
+{
+  return map_overlay.boundBottom;
+}
+
+/**
+ * @brief Gets map overlay bound (left)
+ *
+ *    @return Map overlay bound (left) in px
+ */
+int gui_getMapOverlayBoundLeft(void)
+{
+  return map_overlay.boundLeft;
+}
+
+
+/**
  * @brief Initializes the radar.
  *
  *    @param circle Whether or not the radar is circular.
@@ -1061,7 +1161,7 @@ static void gui_renderMessages( double dt )
 {
    double x, y, h, hs, vx, vy, dy;
    int v, i, m, o;
-   glColour c;
+   glColour c, msgc;
 
    /* Coordinate translation. */
    x = gui_mesg_x;
@@ -1076,6 +1176,10 @@ static void gui_renderMessages( double dt )
    c.r = 1.;
    c.g = 1.;
    c.b = 1.;
+   msgc.r = 0.;
+   msgc.g = 0.;
+   msgc.b = 0.;
+   msgc.a = 0.6;
 
    /* Render background. */
    h = 0;
@@ -1113,12 +1217,12 @@ static void gui_renderMessages( double dt )
             if (mesg_stack[m].str[0] == '\t') {
                gl_printRestore( &mesg_stack[m].restore );
                dy = gl_printHeightRaw( NULL, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
-               gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &cBlackHilight );
-               gl_printMaxRaw( NULL, gui_mesg_w - 45., x + 30, y + 3, &cFontWhite, -1., &mesg_stack[m].str[1] );
+               gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &msgc );
+               gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 45., x + 30, y + 3, &cFontWhite, -1., &mesg_stack[m].str[1] );
             } else {
                dy = gl_printHeightRaw( NULL, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
-               gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &cBlackHilight );
-               gl_printMaxRaw( NULL, gui_mesg_w - 15., x, y + 3, &cFontWhite, -1., mesg_stack[m].str );
+               gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &msgc );
+               gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 15., x, y + 3, &cFontWhite, -1., mesg_stack[m].str );
             }
             h += dy;
             y += dy;
@@ -1210,7 +1314,6 @@ static const glColour* gui_getPilotColour( const Pilot* p )
 void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res, int overlay )
 {
    int x, y, sx, sy;
-   double px, py;
    glColour col;
 
    /* Make sure is in range. */
@@ -1248,38 +1351,36 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
    /* Transform coordinates into the 0,0 -> SCREEN_W, SCREEN_H range. */
    if (overlay) {
-      x += SCREEN_W / 2;
-      y += SCREEN_H / 2;
+      x += map_overlay_center_x();
+      y += map_overlay_center_y();
       w *= 2.;
       h *= 2.;
    }
 
    /* Draw selection if targeted. */
+   /*col = cRadar_tPilot;
+   col.a = 1.-interference_alpha; */
    if (p->id == player.p->target) {
-      if (blink_pilot < RADAR_BLINK_PILOT/2.) {
-         col = cRadar_tPilot;
-         col.a = 1.-interference_alpha;
-
-         gl_beginSolidProgram(gl_Matrix4_Translate(gl_view_matrix, x, y, 0), &cRadar_tPilot);
-         gl_vboActivateAttribOffset( gui_radar_select_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-         glDrawArrays( GL_LINES, 0, 8 );
-         gl_endSolidProgram();
-      }
+      gui_blink( w, h, 0, x, y, 12, RADAR_RECT, &cRadar_hilight, RADAR_BLINK_PILOT, blink_pilot);
    }
 
-   /* Draw square. */
-   px     = MAX(x-sx,-w);
-   py     = MAX(y-sy, -h);
-   if (pilot_isFlag(p, PILOT_HILIGHT) && (blink_pilot < RADAR_BLINK_PILOT/2.))
+   if (p->id == player.p->target) 
       col = cRadar_hilight;
+   else if (pilot_isFlag(p, PILOT_HILIGHT))
+      col = cRadar_tPilot;
    else
       col = *gui_getPilotColour(p);
+      // col = cRadar_hilight;
    col.a = 1.-interference_alpha;
-   gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &col );
+
+   glLineWidth( 2. );
+   gl_renderTriangleEmpty( x, y, p->solid->dir, 3.*MAX(sx,sy), 1., &cBlack );
+   glLineWidth( 1. );
+   gl_renderTriangleEmpty( x, y, p->solid->dir, 3.*MAX(sx,sy), 1., &col );
 
    /* Draw name. */
    if (overlay && pilot_isFlag(p, PILOT_HILIGHT))
-      gl_printRaw( &gl_smallFont, x+2*sx+5., y-gl_smallFont.h/2., &col, -1., p->name );
+      gl_printMarkerRaw( &gl_smallFont, x+2*sx+5., y-gl_smallFont.h/2., &col, p->name );
 }
 
 
@@ -1326,8 +1427,8 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
 
    /* Transform coordinates into the 0,0 -> SCREEN_W, SCREEN_H range. */
    if (overlay) {
-      x += SCREEN_W / 2;
-      y += SCREEN_H / 2;
+      x += map_overlay_center_x();
+      y += map_overlay_center_y();
       w *= 2.;
       h *= 2.;
    }
@@ -1350,11 +1451,8 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
    ccol.a = 1.-interference_alpha;
    gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &ccol );
 
-   if (targeted && (blink_pilot >= RADAR_BLINK_PILOT/2.)) {
-      gl_beginSolidProgram(gl_Matrix4_Translate(gl_view_matrix, x, y, 0), &ccol);
-      gl_vboActivateAttribOffset( gui_radar_select_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-      glDrawArrays( GL_LINES, 0, 8 );
-      gl_endSolidProgram();
+   if (targeted){
+      gui_blink( w, h, 0, x, y, 12, RADAR_RECT, &ccol, RADAR_BLINK_PILOT, blink_pilot );
    }
 }
 
@@ -1365,7 +1463,7 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
 void gui_renderPlayer( double res, int overlay )
 {
    double x, y, r;
-   glColour textCol = { cRadar_player.r, cRadar_player.g, cRadar_player.b, 0.99 };
+   // glColour textCol = { cRadar_player.r, cRadar_player.g, cRadar_player.b, 0.99 };
    /* XXX: textCol is a hack to prevent the text from overly obscuring
     * overlay display of other things. Effectively disables outlines for
     * the text. Should ultimately be replaced with some other method of
@@ -1373,21 +1471,25 @@ void gui_renderPlayer( double res, int overlay )
     * as a font change, but using this fix for now. */
 
    if (overlay) {
-      x = player.p->solid->pos.x / res + SCREEN_W / 2;
-      y = player.p->solid->pos.y / res + SCREEN_H / 2;
-      r = 5.;
-   }
-   else {
+      x = player.p->solid->pos.x / res + map_overlay_center_x();
+      y = player.p->solid->pos.y / res + map_overlay_center_y();
+      r = MIN(SCREEN_W,SCREEN_H)*0.012;
+   } else {
       x = 0.;
       y = 0.;
-      r = 3.;
+      r = MIN(SCREEN_W,SCREEN_H)*0.008;
    }
 
    /* Render the cross. */
-   gl_renderCross( x, y, r, &cRadar_player );
+   // gl_renderCross( x, y, r, &cRadar_player );
+   glLineWidth( 2. );
+   gl_renderTriangleEmpty( x - 1, y, player.p->solid->dir, r, 2., &cBlack );
+   gl_renderTriangleEmpty( x + 1, y, player.p->solid->dir, r, 2., &cBlack );
+   gl_renderTriangleEmpty( x, y - 1, player.p->solid->dir, r, 2., &cBlack );
+   gl_renderTriangleEmpty( x, y + 1, player.p->solid->dir, r, 2., &cBlack );
 
-   if (overlay)
-      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &textCol, -1., _("You") );
+   gl_renderTriangleEmpty( x, y, player.p->solid->dir, r, 2., &cRadar_player );
+   glLineWidth( 1. );
 }
 
 
@@ -1405,7 +1507,7 @@ static const glColour *gui_getPlanetColour( int i )
    planet = cur_system->planets[i];
 
    if (i == player.p->nav_planet)
-      col = &cRadar_tPlanet;
+      col = &cWhite;
    else
       col = planet_getColour( planet );
 
@@ -1426,22 +1528,18 @@ void gui_forceBlink (void)
 /**
  * @brief Renders the planet blink around a position on the minimap.
  */
-static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape )
+static void gui_blink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape, const glColour *col, const double blinkInterval, const double blinkVar )
 {
    (void) w;
    (void) h;
    (void) rc;
    (void) shape;
-   glColour col;
    gl_Matrix4 projection;
 
-   if (blink_planet < RADAR_BLINK_PLANET/2.) {
-      col = cRadar_tPlanet;
-      col.a = 1.-interference_alpha;
-
+   if (blinkVar < blinkInterval/2.) {
       projection = gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0);
       projection = gl_Matrix4_Scale(projection, vr, vr, 1);
-      gl_beginSolidProgram(projection, &col);
+      gl_beginSolidProgram(projection, col);
       gl_vboActivateAttribOffset( gui_planet_blink_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
       glDrawArrays( GL_LINES, 0, 8 );
       gl_endSolidProgram();
@@ -1499,11 +1597,10 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
  */
 void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
-   int x, y;
-   int cx, cy, r, rc;
-   GLfloat vr;
+   GLfloat cx, cy, x, y, r, vr, rc;
    glColour col;
    Planet *planet;
+   char buf[STRMAX_SHORT];
 
    /* Make sure is known. */
    if ( !planet_isKnown( cur_system->planets[ind] ))
@@ -1511,31 +1608,21 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
 
    /* Default values. */
    planet = cur_system->planets[ind];
-   r     = (int)(planet->radius*2. / res);
-   vr    = MAX( r, 3. ); /* Make sure it's visible. */
+   r     = planet->radius*2. / res;
+   vr    = overlay ? planet->mo.radius : MAX( r, 15.);
+
    if (overlay) {
-      cx    = (int)(planet->pos.x / res);
-      cy    = (int)(planet->pos.y / res);
+      cx    = planet->pos.x / res;
+      cy    = planet->pos.y / res;
    }
    else {
-      cx    = (int)((planet->pos.x - player.p->solid->pos.x) / res);
-      cy    = (int)((planet->pos.y - player.p->solid->pos.y) / res);
+      cx    = (planet->pos.x - player.p->solid->pos.x) / res;
+      cy    = (planet->pos.y - player.p->solid->pos.y) / res;
    }
-   if (shape==RADAR_CIRCLE)
-      rc = (int)(w*w);
-   else
-      rc = 0;
 
    /* Check if in range. */
-   if (shape == RADAR_RECT) {
-      /* Out of range. */
-      if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
-         if ((player.p->nav_planet == ind) && !overlay)
-            gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy, &cRadar_tPlanet );
-         return;
-      }
-   }
-   else if (shape == RADAR_CIRCLE) {
+   if (shape == RADAR_CIRCLE) {
+      rc = w*w;
       x = ABS(cx)-r;
       y = ABS(cy)-r;
       /* Out of range. */
@@ -1545,38 +1632,59 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
          return;
       }
    }
+   else {
+      rc = 0;
+      if (shape == RADAR_RECT) {
+         /* Out of range. */
+         if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
+            if ((player.p->nav_planet == ind) && !overlay)
+               gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy, &cRadar_tPlanet );
+            return;
+         }
+      }
+   }
 
    if (overlay) {
       /* Transform coordinates. */
-      cx += SCREEN_W / 2;
-      cy += SCREEN_H / 2;
+      cx += map_overlay_center_x();
+      cy += map_overlay_center_y();
       w  *= 2.;
       h  *= 2.;
    }
 
-   /* Do the blink. */
-   if (ind == player.p->nav_planet)
-      gui_planetBlink( w, h, rc, cx, cy, vr, shape );
 
    /* Get the colour. */
    col = *gui_getPlanetColour(ind);
    if (!overlay)
       col.a = 1.-interference_alpha;
 
+   /* Do the blink. */
+   if (ind == player.p->nav_planet)
+      gui_blink( w, h, rc, cx, cy, vr, shape, &col, RADAR_BLINK_PLANET, blink_planet);
+
+   /* 
    gl_beginSolidProgram(gl_Matrix4_Scale(gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0), vr, vr, 1), &col);
    gl_vboActivateAttribOffset( gui_planet_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINE_STRIP, 0, 5 );
    gl_endSolidProgram();
+   */
+   gl_drawCircle( cx - 1, cy, vr/2.5, &cBlack, 0 );
+   gl_renderCross( cx - 1, cy, vr/2.5, &cBlack );
+   gl_drawCircle( cx + 1, cy, vr/2.5, &cBlack, 0 );
+   gl_renderCross( cx + 1, cy, vr/2.5, &cBlack );
+   gl_drawCircle( cx, cy - 1, vr/2.5, &cBlack, 0 );
+   gl_renderCross( cx, cy - 1, vr/2.5, &cBlack );
+   gl_drawCircle( cx, cy + 1, vr/2.5, &cBlack, 0 );
+   gl_renderCross( cx, cy + 1, vr/2.5, &cBlack );
 
-   /* Render name. */
-   /* XXX: Hack to prevent the text from overly obscuring overlay
-    * display of other things. Effectively disables outlines for this
-    * text. Should ultimately be replaced with some other method of
-    * rendering the text, since the problem could be caused by as little
-    * as a font change, but using this fix for now. */
-   col.a = MIN( col.a, 0.99 );
-   if (overlay)
-      gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, -1., _(planet->name) );
+   gl_drawCircle( cx, cy, vr/2.5, &col, 0 );
+   gl_renderCross( cx, cy, vr/2.5, &col );
+   //glLineWidth(1.);
+
+   if (overlay) {
+      nsnprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(planet), _(planet->name) );
+      gl_printMarkerRaw( &gl_smallFont, cx+planet->mo.text_offx, cy+planet->mo.text_offy, &col, buf );
+   }
 }
 
 
@@ -1592,26 +1700,26 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
  */
 void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
-   int cx, cy, x, y, r, rc;
-   GLfloat vr;
+   GLfloat cx, cy, x, y, r, vr, rc;
    glColour col;
    JumpPoint *jp;
-   gl_Matrix4 projection;
+   char buf[STRMAX_SHORT];
+
 
    /* Default values. */
    jp    = &cur_system->jumps[ind];
-   r     = (int)(jumppoint_gfx->sw / res);
-   vr    = MAX( r, 3. ); /* Make sure it's visible. */
+   r     = jumppoint_gfx->sw / res;
+   vr    = overlay ? jp->mo.radius : MAX( r, 10. );
    if (overlay) {
-      cx    = (int)(jp->pos.x / res);
-      cy    = (int)(jp->pos.y / res);
+      cx    = jp->pos.x / res;
+      cy    = jp->pos.y / res;
    }
    else {
-      cx    = (int)((jp->pos.x - player.p->solid->pos.x) / res);
-      cy    = (int)((jp->pos.y - player.p->solid->pos.y) / res);
+      cx    = (jp->pos.x - player.p->solid->pos.x) / res;
+      cy    = (jp->pos.y - player.p->solid->pos.y) / res;
    }
    if (shape==RADAR_CIRCLE)
-      rc = (int)(w*w);
+      rc = w*w;
    else
       rc = 0;
 
@@ -1641,41 +1749,41 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    if (overlay) {
       /* Transform coordinates. */
-      cx += SCREEN_W / 2;
-      cy += SCREEN_H / 2;
+      cx += map_overlay_center_x();
+      cy += map_overlay_center_y();
       w  *= 2.;
       h  *= 2.;
    }
 
    /* Do the blink. */
    if (ind == player.p->nav_hyperspace) {
-      gui_planetBlink( w, h, rc, cx, cy, vr, shape );
-      col = cGreen;
+      col = cWhite;
+      gui_blink( w, h, rc, cx, cy, vr, shape, &col, RADAR_BLINK_PLANET, blink_planet );
    }
    else if (jp_isFlag(jp, JP_HIDDEN))
       col = cRed;
    else
-      col = cWhite;
+      col = cGreen;
 
    if (!overlay)
       col.a = 1.-interference_alpha;
 
-   projection = gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0);
-   projection = gl_Matrix4_Rotate2d(projection, -M_PI/2-jp->angle);
-   gl_beginSolidProgram(projection, &col);
-   gl_vboActivateAttribOffset( gui_triangle_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_LINE_STRIP, 0, 4 );
-   gl_endSolidProgram();
+   glLineWidth( 3. );
+   gl_renderTriangleEmpty( cx - 1, cy, -jp->angle, vr, 2., &cBlack );
+   gl_renderTriangleEmpty( cx + 1, cy, -jp->angle, vr, 2., &cBlack );
+   gl_renderTriangleEmpty( cx, cy - 1, -jp->angle, vr, 2., &cBlack );
+   gl_renderTriangleEmpty( cx, cy + 1, -jp->angle, vr, 2., &cBlack );
+
+   gl_renderTriangleEmpty( cx, cy, -jp->angle, vr, 2., &col );
+   glLineWidth( 1. );
 
    /* Render name. */
-   /* XXX: Hack to prevent the text from overly obscuring overlay
-    * display of other things. Effectively disables outlines for this
-    * text. Should ultimately be replaced with some other method of
-    * rendering the text, since the problem could be caused by as little
-    * as a font change, but using this fix for now. */
-   col.a = MIN( col.a, 0.99 );
-   if (overlay)
-      gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, -1., sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
+   if (overlay) {
+      nsnprintf(
+            buf, sizeof(buf), "%s%s", jump_getSymbol(jp),
+            sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
+      gl_printMarkerRaw( &gl_smallFont, cx+vr+jp->mo.text_offx, cy+jp->mo.text_offy, &col, buf );
+   }
 }
 
 
@@ -1772,17 +1880,6 @@ int gui_init (void)
    /*
     * VBO.
     */
-   if (gui_triangle_vbo == NULL) {
-         vertex[0] = -5.;
-         vertex[1] = -5.;
-         vertex[2] = 5.;
-         vertex[3] = -5.;
-         vertex[4] = 0;
-         vertex[5] = 5.;
-         vertex[6] = -5.;
-         vertex[7] = -5.;
-      gui_triangle_vbo = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
-   }
 
    if (gui_planet_vbo == NULL) {
       vertex[0] = 0;
@@ -1821,20 +1918,20 @@ int gui_init (void)
    if (gui_planet_blink_vbo == NULL) {
       vertex[0] = -1;
       vertex[1] = 1;
-      vertex[2] = -1.2;
-      vertex[3] = 1.2;
+      vertex[2] = -1.3;
+      vertex[3] = 1.3;
       vertex[4] = 1;
       vertex[5] = 1;
-      vertex[6] = 1.2;
-      vertex[7] = 1.2;
+      vertex[6] = 1.3;
+      vertex[7] = 1.3;
       vertex[8] = 1;
       vertex[9] = -1;
-      vertex[10] = 1.2;
-      vertex[11] = -1.2;
+      vertex[10] = 1.3;
+      vertex[11] = -1.3;
       vertex[12] = -1;
       vertex[13] = -1;
-      vertex[14] = -1.2;
-      vertex[15] = -1.2;
+      vertex[14] = -1.3;
+      vertex[15] = -1.3;
       gui_planet_blink_vbo = gl_vboCreateStatic( sizeof(GLfloat) * 16, vertex );
    }
 
@@ -2225,10 +2322,6 @@ void gui_free (void)
    }
 
    /* Free VBOs. */
-   if (gui_triangle_vbo != NULL) {
-      gl_vboDestroy( gui_triangle_vbo );
-      gui_triangle_vbo = NULL;
-   }
    if (gui_planet_vbo != NULL) {
       gl_vboDestroy( gui_planet_vbo );
       gui_planet_vbo = NULL;
@@ -2271,7 +2364,7 @@ void gui_setRadarRel( int mod )
    gui_radar.res += mod * RADAR_RES_INTERVAL;
    gui_radar.res = CLAMP( RADAR_RES_MIN, RADAR_RES_MAX, gui_radar.res );
 
-   player_message( _("\apRadar set to %dx."), (int)gui_radar.res );
+   player_message( _("\aoRadar set to %dx."), (int)gui_radar.res );
 }
 
 

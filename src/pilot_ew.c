@@ -178,15 +178,21 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2)
 {
    double d, sense;
 
+   /* Get distance if needed. */
+   if (dist2 != NULL) {
+      d = vect_dist2( &p->solid->pos, &target->solid->pos );
+      *dist2 = d;
+   }
+
    /* Special case player or omni-visible. */
    if ((pilot_isPlayer(p) && pilot_isFlag(target, PILOT_VISPLAYER)) ||
          pilot_isFlag(target, PILOT_VISIBLE) ||
          target->parent == p->id)
       return 1;
 
-   /* Get distance. */
-   d = vect_dist2( &p->solid->pos, &target->solid->pos );
-   if (dist2 != NULL) *dist2 = d;
+   /* Get distance if still needed */
+   if (dist2 == NULL)
+      d = vect_dist2( &p->solid->pos, &target->solid->pos );
 
    sense = sensor_curRange * p->ew_detect;
    if (d * target->ew_evasion < sense)

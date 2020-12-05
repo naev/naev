@@ -82,7 +82,7 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
 
    /* Calculate image array dimensions. */
    if (iw != NULL)
-      *iw = 310 + (*w-800);
+      *iw = 224 + (*w-800);
    if (ih != NULL)
       *ih = *h - 60;
 
@@ -191,13 +191,13 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
          bw, bh, "cstMod", 0, outfits_renderMod, NULL, NULL );
 
    /* the descriptive text */
-   window_addText( wid, 20 + iw + 20, -60,
+   window_addText( wid, 20 + iw + 20, -40,
          w - (20 + iw + 20) - 200 - 20, 160, 0, "txtOutfitName", &gl_defFont, NULL, NULL );
-   window_addText( wid, 20 + iw + 20, -60 - gl_defFont.h - 20,
+   window_addText( wid, 20 + iw + 20, -40 - gl_defFont.h - 30,
          w - (20 + iw + 20) - 200 - 20, 320, 0, "txtDescShort", &gl_smallFont, NULL, NULL );
 
-   window_addText( wid, 20 + iw + 20, -60-128-10-32,
-         60, 160, 0, "txtSDesc", &gl_smallFont, NULL,
+   window_addText( wid, 20 + iw + 20, 0,
+         90, 160, 0, "txtSDesc", &gl_smallFont, NULL,
          _("\anOwned:\a0\n"
          "\n"
          "\anSlot:\a0\n"
@@ -207,10 +207,10 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
          "\anPrice:\a0\n"
          "\anMoney:\a0\n"
          "\anLicense:\a0\n") );
-   window_addText( wid, 20 + iw + 20 + 60, -60-128-10-32,
-         w - (20 + iw + 20 + 60), 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
-   window_addText( wid, 20 + iw + 20, -60-128-10-160-32,
-         w-(iw+80), MAX(180, h - 500), /* TODO: Size exactly and resize instead of moving? */
+   window_addText( wid, 20 + iw + 20 + 90, 0,
+         w - (20 + iw + 20 + 90), 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
+   window_addText( wid, 20 + iw + 20, 0,
+         w-(iw+80), h, /* TODO: Size exactly and resize instead of moving? */
 	 0, "txtDescription", &gl_smallFont, NULL, NULL );
 
    /* Create the image array. */
@@ -342,9 +342,10 @@ static void outfits_genList( unsigned int wid )
          tabfilters[active], filtertext );
    coutfits = outfits_imageArrayCells( iar_outfits[active], &noutfits );
 
+   /* TODO make the size of the outfits dependent on resolution? */
    window_addImageArray( wid, 20, 20,
-         iw, ih - 34, OUTFITS_IAR, 128, 128,
-         coutfits, noutfits, outfits_update, outfits_rmouse );
+         iw, ih - 34, OUTFITS_IAR, 96, 96,
+         coutfits, noutfits, outfits_update, outfits_rmouse, NULL );
 
    /* write the outfits stuff */
    outfits_update( wid, NULL );
@@ -361,7 +362,7 @@ void outfits_update( unsigned int wid, char* str )
    (void)str;
    int i, active;
    Outfit* outfit;
-   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN], buf4[PATH_MAX];
+   char buf[PATH_MAX], buf_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN], buf_license[PATH_MAX];
    double th;
    int iw, ih;
    int w, h;
@@ -392,9 +393,9 @@ void outfits_update( unsigned int wid, char* str )
       window_modifyText( wid, "txtDescShort", NULL );
       window_modifyText( wid, "txtDescription", NULL );
       /* Reposition. */
-      th = 128;
-      window_moveWidget( wid, "txtSDesc", 20+iw+20, -60-th-20-32 );
-      window_moveWidget( wid, "txtDDesc", 20+iw+20+60, -60-th-20-32 );
+      th = 64;
+      window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th-30-32 );
+      window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th-30-32 );
       window_moveWidget( wid, "txtDescription", 20+iw+20, -240-32);
       return;
    }
@@ -417,16 +418,16 @@ void outfits_update( unsigned int wid, char* str )
 
    /* new text */
    window_modifyText( wid, "txtDescription", _(outfit->description) );
-   price2str( buf2, outfit_getPrice(outfit), player.p->credits, 2 );
-   credits2str( buf3, player.p->credits, 2 );
+   price2str( buf_price, outfit_getPrice(outfit), player.p->credits, 2 );
+   credits2str( buf_credits, player.p->credits, 2 );
 
    if (outfit->license == NULL)
-      strncpy( buf4, _("None"), sizeof(buf4) );
+      strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
    else if (player_hasLicense( outfit->license ))
-      strncpy( buf4, _(outfit->license), sizeof(buf4) );
+      strncpy( buf_license, _(outfit->license), sizeof(buf_license)-1 );
    else
-      nsnprintf( buf4, sizeof(buf4), "\ar%s\a0", _(outfit->license) );
-   buf4[ sizeof(buf4)-1 ] = '\0';
+      nsnprintf( buf_license, sizeof(buf_license), "\ar%s\a0", _(outfit->license) );
+   buf_license[ sizeof(buf_license)-1 ] = '\0';
 
    mass = outfit->mass;
    if ((outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
@@ -448,17 +449,18 @@ void outfits_update( unsigned int wid, char* str )
          _(outfit_slotName(outfit)),
          _(outfit_slotSize(outfit)),
          mass,
-         buf2,
-         buf3,
-         buf4 );
+         buf_price,
+         buf_credits,
+         buf_license );
    window_modifyText( wid, "txtDDesc", buf );
    window_modifyText( wid, "txtOutfitName", _(outfit->name) );
-   window_modifyText( wid, "txtDescShort", _(outfit->desc_short) );
-   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, _(outfit->desc_short) ) );
-   window_moveWidget( wid, "txtSDesc", 20+iw+20, -60-th-20-32 );
-   window_moveWidget( wid, "txtDDesc", 20+iw+20+60, -60-th-20-32 );
-   th += gl_printHeightRaw( &gl_smallFont, 250, buf );
-   window_moveWidget( wid, "txtDescription", 20+iw+20, -60-th-20-32 );
+   window_modifyText( wid, "txtDescShort", outfit->desc_short );
+   th = gl_printHeightRaw( &gl_smallFont, w - (20 + iw + 20) - 200 - 20, outfit->desc_short );
+   window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th-30-32 );
+   window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th-30-32 );
+   th += gl_printHeightRaw( &gl_smallFont, w - (20 + iw + 20) - 200 - 20, buf );
+   th = MAX( th, 192 );
+   window_moveWidget( wid, "txtDescription", 20+iw+20, -40-th-30-32 );
 }
 
 
@@ -628,16 +630,16 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
 
             l = strlen(o->desc_short) + 128;
             coutfits[i].alt = malloc( l );
-            p  = snprintf( &coutfits[i].alt[0], l, "%s\n", _(o->name) );
+            p  = nsnprintf( &coutfits[i].alt[0], l, "%s\n", _(o->name) );
             if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
-               p += snprintf( &coutfits[i].alt[p], l-p, _("\aRUnique\a0\n") );
+               p += nsnprintf( &coutfits[i].alt[p], l-p, _("\aoUnique\a0\n") );
             if ((o->slot.spid!=0) && (p < l))
-               p += snprintf( &coutfits[i].alt[p], l-p, _("\aRSlot %s\a0\n"),
+               p += nsnprintf( &coutfits[i].alt[p], l-p, _("\aoSlot %s\a0\n"),
                      _( sp_display( o->slot.spid ) ) );
             if (p < l)
-               p += snprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );
+               p += nsnprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );
             if ((o->mass > 0.) && (p < l))
-               snprintf( &coutfits[i].alt[p], l-p,
+               nsnprintf( &coutfits[i].alt[p], l-p,
                      _("\n%.0f Tonnes"),
                      mass );
          }
@@ -900,7 +902,7 @@ static void outfits_renderMod( double bx, double by, double w, double h, void *d
    if (q==1) return; /* Ignore no modifier. */
 
    nsnprintf( buf, 8, "%dx", q );
-   gl_printMid( &gl_smallFont, w, bx, by, &cFontWhite, buf );
+   gl_printMidRaw( &gl_smallFont, w, bx, by, &cFontWhite, -1, buf );
 }
 
 

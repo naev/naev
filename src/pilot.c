@@ -277,6 +277,10 @@ static int pilot_validEnemy( const Pilot* p, const Pilot* target )
    if (!pilot_validTarget( p, target ))
       return 0;
 
+   /* Must not be fuzzy. */
+   if (pilot_inRangePilot( p, target, NULL ) != 1)
+      return 0;
+
    /* He's ok. */
    return 1;
 }
@@ -883,7 +887,7 @@ void pilot_cooldown( Pilot *p )
    }
 
    if (p->id == PLAYER_ID)
-      player_message(_("\apActive cooldown engaged."));
+      player_message(_("\aoActive cooldown engaged."));
 
    /* Disable active outfits. */
    if (pilot_outfitOffAll( p ) > 0)
@@ -938,7 +942,7 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
    /* Send message to player. */
    if (p->id == PLAYER_ID) {
       if (p->ctimer < 0.)
-         player_message(_("\apActive cooldown completed."));
+         player_message(_("\aoActive cooldown completed."));
       else {
          if (reason != NULL)
             player_message(_("\arActive cooldown aborted: %s!"), reason);
@@ -2866,6 +2870,11 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
    double chance, limit;
    JumpPoint **validJumpPoints;
    JumpPoint *target;
+
+   /* Initialize. */
+   *planet = NULL;
+   *jump   = NULL;
+   vectnull( vp );
 
    /* Build landable planet table. */
    ind   = NULL;

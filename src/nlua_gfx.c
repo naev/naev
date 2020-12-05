@@ -230,7 +230,7 @@ static int gfxL_renderTexRaw( lua_State *L )
       ty -= th;
 
    /* Render. */
-   gl_blitTexture( t, px, py, pw, ph, tx, ty, tw, th, col );
+   gl_blitTexture( t, px, py, pw, ph, tx, ty, tw, th, col, 0. );
    return 0;
 }
 

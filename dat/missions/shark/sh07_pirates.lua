@@ -109,7 +109,7 @@ function create ()
    paysys = system.get(psyname)
    paypla = planet.get(pplname)
 
-   if not misn.claim(gawsys) and misn.claim(kersys1) and misn.claim(kersys2) and misn.claim(godsys) then
+   if not misn.claim({gawsys, kersys1, kersys2, godsys}) then
       misn.finish(false)
    end
 
@@ -136,7 +136,7 @@ function accept()
 
    if tk.yesno(title[1], text[1]) then
       misn.accept()
-      tk.msg(title[2], text[2]:format(gawname, _(gawsys:name()), kername1, _(kersys1:name()), kername2, _(kersys2:name()), godname, _(godsys:name())))
+      tk.msg(title[2], text[2]:format(gawname, gawsys:name(), kername1, kersys1:name(), kername2, kersys2:name(), godname, godsys:name()))
 
       osd_msg[2] = osd_msg[2]:format(pplname,psyname)
 
@@ -301,7 +301,7 @@ end
 function generic_dead()
    --Are there still other pirates to kill ?
    if gawdead == true and kerdead1 == true and kerdead2 == true and goddead == true then
-      tk.msg(title[4], text[4]:format(_(paysys:name())))
+      tk.msg(title[4], text[4]:format(paysys:name()))
       stage = 1
       misn.osdActive(2)
       marker2 = misn.markerAdd(paysys, "low")

@@ -66,6 +66,7 @@ ABOUT-NLS~
 po/credits.pot
 po/xml.pot
 po/naev.pot
+po/naev_src.pot
 po/naikari.pot
 po/POTFILES
 po/Makefile.in.in

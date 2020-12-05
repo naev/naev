@@ -39,12 +39,6 @@ misn_desc[2] = _("Sizable cargo delivery to %s in the %s system.")
 misn_desc[3] = _("Large cargo delivery to %s in the %s system.")
 misn_desc[4] = _("Bulk freight delivery to %s in the %s system.")
 
-misn_details = _([[
-Cargo: %s (%s)
-Jumps: %d
-Travel distance: %d
-%s]])
-
 piracyrisk = {}
 piracyrisk[1] = _("Piracy Risk: None")
 piracyrisk[2] = _("Piracy Risk: Low")
@@ -97,14 +91,10 @@ function create()
    reward = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
 
    misn.setTitle( _("Shipment to %s in %s (%s)"):format(
-         _(destplanet:name()), _(destsys:name()), tonnestring(amount) ) )
+         destplanet:name(), destsys:name(), tonnestring(amount) ) )
    misn.markerAdd(destsys, "computer")
-   misn.setDesc(
-      misn_desc[tier]:format( _(destplanet:name()), _(destsys:name()) ) .. "\n\n"
-      .. misn_details:format(
-         _(cargo), tonnestring(amount), numjumps, traveldist, piracyrisk ) )
+   cargo_setDesc( misn_desc[tier]:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, nil, piracyrisk );
    misn.setReward( creditstring(reward) )
-
 end
 
 -- Mission is accepted
@@ -117,8 +107,8 @@ function accept()
       misn.finish()
    end
    misn.accept()
-   misn.cargoAdd(_(cargo), amount) -- TODO: change to jettisonable cargo once custom commodities are in. For piracy purposes.
-   misn.osdCreate(osd_title, {osd_msg:format(_(destplanet:name()), _(destsys:name()))})
+   misn.cargoAdd(cargo, amount) -- TODO: change to jettisonable cargo once custom commodities are in. For piracy purposes.
+   misn.osdCreate(osd_title, {osd_msg:format(destplanet:name(), destsys:name())})
    hook.land("land")
 end
 

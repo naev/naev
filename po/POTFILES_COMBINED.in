@@ -301,7 +301,6 @@ dat/scripts/prng.lua
 dat/scripts/proximity.lua
 dat/scripts/selectiveclear.lua
 dat/snd/music.lua
-po/credits.pot
 src/ai.c
 src/ai.h
 src/array.c
@@ -309,6 +308,8 @@ src/array.h
 src/attributes.h
 src/background.c
 src/background.h
+src/base64.c
+src/base64.h
 src/board.c
 src/board.h
 src/camera.c
@@ -327,6 +328,7 @@ src/cond.c
 src/cond.h
 src/conf.c
 src/conf.h
+src/config.h
 src/console.c
 src/console.h
 src/damagetype.c
@@ -1430,6 +1432,7 @@ dat/assets/rhu_ii.xml
 dat/assets/rhu_iii.xml
 dat/assets/rhu_iv.xml
 dat/assets/ridrack.xml
+dat/assets/rikaina.xml
 dat/assets/rin.xml
 dat/assets/rionna.xml
 dat/assets/riun.xml
@@ -1720,6 +1723,8 @@ dat/assets/virtual_flf_small.xml
 dat/assets/virtual_flf_unpresence.xml
 dat/assets/virtual_frontier_small.xml
 dat/assets/virtual_frontier_unpresence.xml
+dat/assets/virtual_independent_trader_area.xml
+dat/assets/virtual_independent_trader_local.xml
 dat/assets/virtual_miner_local.xml
 dat/assets/virtual_miner_small.xml
 dat/assets/virtual_pirate_medium.xml
@@ -1734,8 +1739,6 @@ dat/assets/virtual_sirius_unpresence.xml
 dat/assets/virtual_soromid_unpresence.xml
 dat/assets/virtual_thurion_local.xml
 dat/assets/virtual_trader_area.xml
-dat/assets/virtual_trader_ind_area.xml
-dat/assets/virtual_trader_ind_local.xml
 dat/assets/virtual_trader_local.xml
 dat/assets/virtual_zalek_medium.xml
 dat/assets/virtual_zalek_small.xml
@@ -2554,7 +2557,7 @@ dat/ssys/oberon.xml
 dat/ssys/octantis.xml
 dat/ssys/octavian.xml
 dat/ssys/ogat.xml
-dat/ssys/olypmus.xml
+dat/ssys/olympus.xml
 dat/ssys/opal.xml
 dat/ssys/oriantis.xml
 dat/ssys/orion.xml
@@ -2714,3 +2717,4 @@ dat/ssys/zintar.xml
 dat/ssys/zylex.xml
 dat/start.xml
 dat/tech.xml
+po/credits.pot

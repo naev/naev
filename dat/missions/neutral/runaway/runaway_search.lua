@@ -21,6 +21,7 @@
    I'm joking about the last line a little. If you want to name him, feel free.
 --]]
 
+require "numstring.lua"
 require "missions/neutral/common.lua"
 
 
@@ -50,6 +51,7 @@ osd_text[1] = _("Search for Cynthia on Niflheim in Dohriabi")
 osd_text[2] = _("Search for Cynthia on Nova Shakar in Shakar")
 osd_text[3] = _("Search for Cynthia on Selphod in Eridani")
 osd_text[4] = _("Search for Cynthia on Emperor's Fist in Gamma Polaris")
+osd_text["__save"] = true
 
 -- Can't let them see what's coming up, can I?
 osd3 = _("Catch Cynthia on Torloth in Cygnus")
@@ -73,7 +75,7 @@ end
 
 function accept ()
    --This mission does not make any system claims
-   if not tk.yesno( title, string.format( misn_desc_pre_accept, reward, _(targetworld:name()) ) ) then
+   if not tk.yesno( title, string.format( misn_desc_pre_accept, reward, targetworld:name() ) ) then
       misn.finish()
    end
 
@@ -86,7 +88,7 @@ function accept ()
    misn.setTitle( title )
    misn.setReward( string.format( reward_desc, creditstring(reward) ) )
 
-   misn.setDesc( string.format( misn_desc, _(targetworld:name()), _(targetworld_sys:name()) ) )
+   misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
    runawayMarker = misn.markerAdd(system.get("Dohriabi"), "low")
 
    tk.msg( title, post_accept[1] )

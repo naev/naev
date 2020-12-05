@@ -93,8 +93,35 @@ static const luaL_Reg cli_methods[] = {
  */
 static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void cli_render( double bx, double by, double w, double h, void *data );
+static void cli_printCoreString( const char *s );
 static int cli_printCore( lua_State *L, int cli_only );
 void cli_tabComplete( unsigned int wid );
+
+
+/**
+ * @brief Prints a string.
+ */
+static void cli_printCoreString( const char *s )
+{
+   int p, l, slen;
+   char *tmp;
+
+   tmp = strdup(s);
+   slen = strlen(s);
+   p = 0;
+   do {
+      if ((tmp[p] == ' ') || (tmp[p] == '\n'))
+         p++;
+      /* Don't handle tab for now. */
+      if (tmp[p]=='\t')
+         tmp[p] = ' ';
+      l = gl_printWidthForText(cli_font, &tmp[p], CLI_WIDTH-40 );
+      cli_addMessageMax( &tmp[p], l );
+      p += l;
+   } while (p < slen);
+
+   free(tmp);
+}
 
 
 /**
@@ -104,9 +131,7 @@ static int cli_printCore( lua_State *L, int cli_only )
 {
    int n; /* number of arguments */
    int i;
-   int p, l, slen;
    const char *s;
-   char *tmp;
 
    n = lua_gettop(L);
 
@@ -123,17 +148,7 @@ static int cli_printCore( lua_State *L, int cli_only )
          LOG( "%s", s );
 
       /* Add to console. */
-      tmp = strdup(s);
-      slen = strlen(s);
-      p = 0;
-      do {
-         if (tmp[p] == ' ')
-            p++;
-         l = gl_printWidthForText(cli_font, &tmp[p], CLI_WIDTH-40 );
-         cli_addMessageMax( &tmp[p], l );
-         p += l;
-      } while (p < slen);
-      free(tmp);
+      cli_printCoreString( s );
 
       lua_pop(L, 1);  /* pop result */
    }
@@ -501,7 +516,7 @@ static void cli_input( unsigned int wid, char *unused )
    /* Put the message in the console. */
    nsnprintf( buf, CLI_MAX_INPUT+7, "\aC%s %s\a0",
          cli_firstline ? "> " : ">>", str );
-   cli_addMessage( buf );
+   cli_printCoreString( buf );
 
    /* Set up for concat. */
    if (!cli_firstline)               /* o */
@@ -521,6 +536,7 @@ static void cli_input( unsigned int wid, char *unused )
       size_t lmsg;
       const char *msg = lua_tolstring(naevL, -1, &lmsg);
       const char *tp = msg + lmsg - (sizeof(LUA_QL("<eof>")) - 1);
+      const char *s;
       if (strstr(msg, LUA_QL("<eof>")) == tp) {
          /* Pop the loaded buffer. */
          lua_pop(naevL, 1);
@@ -528,8 +544,9 @@ static void cli_input( unsigned int wid, char *unused )
       }
       else {
          /* Real error, spew message and break. */
-         cli_addMessage( lua_tostring(naevL, -1) );
-         WARN( "%s", lua_tostring(naevL, -1) );
+         s = lua_tostring(naevL, -1);
+         cli_printCoreString( s );
+         WARN( "%s", s );
          lua_settop(naevL, 0);
          cli_firstline = 1;
       }
@@ -543,7 +560,7 @@ static void cli_input( unsigned int wid, char *unused )
       lua_setfenv(naevL, -2);
 
       if (nlua_pcall(cli_env, 0, LUA_MULTRET)) {
-         cli_addMessage( lua_tostring(naevL, -1) );
+         cli_printCoreString( lua_tostring(naevL, -1) );
          lua_pop(naevL, 1);
       }
 
@@ -593,7 +610,7 @@ void cli_open (void)
       cli_addMessage( "" );
       cli_addMessage( _("\agWelcome to the Lua console!") );
       nsnprintf( buf, sizeof(buf), "\ag "APPNAME" v%s", naev_version(0) );
-      cli_addMessage( buf );
+      cli_printCoreString( buf );
       cli_addMessage( "" );
       cli_firstOpen = 0;
    }

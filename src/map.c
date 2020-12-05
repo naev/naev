@@ -426,13 +426,13 @@ static void map_update( unsigned int wid )
    if ( cur_commod >= 0 ) {
       c = commod_known[cur_commod];
       if ( cur_commod_mode == 0 ) {
-         snprintf( buf, PATH_MAX,
+         nsnprintf( buf, PATH_MAX,
                    _("%s prices trading from %s shown: Positive/blue values mean a profit\n"
                      "while negative/orange values mean a loss when sold at the corresponding system."),
                    _(c->name), _(sys->name) );
          window_modifyText( wid, "txtSystemStatus", buf );
       } else {
-         snprintf(buf, PATH_MAX, _("Known %s prices shown. Galaxy-wide average: %.2f"), _(c->name), commod_av_gal_price);
+         nsnprintf(buf, PATH_MAX, _("Known %s prices shown. Galaxy-wide average: %.2f"), _(c->name), commod_av_gal_price);
          window_modifyText( wid, "txtSystemStatus", buf );
       }
    } else {
@@ -583,7 +583,7 @@ static void map_update( unsigned int wid )
          break;
    }
    if (hasPlanets == 0) {
-      strncpy( buf, _("None"), PATH_MAX );
+      strncpy( buf, _("None"), sizeof(buf)-1 );
       buf[sizeof(buf)-1] = '\0';
    }
    /* Update text. */
@@ -977,7 +977,7 @@ void map_renderFactionDisks( double x, double y, int editor)
       gl_blitTexture(
             gl_faction_disk,
             tx - sw/2, ty - sh/2, sw, sh,
-            0., 0., gl_faction_disk->srw, gl_faction_disk->srw, &c );
+            0., 0., gl_faction_disk->srw, gl_faction_disk->srw, &c, 0.);
    }
 }
 
@@ -1201,9 +1201,7 @@ void map_renderNames( double bx, double by, double x, double y,
       if (!rectOverlap(tx, ty, textw, gl_smallFont.h, bx, by, w, h))
          continue;
 
-      gl_print( &gl_smallFont,
-            tx, ty,
-            &cWhite, _(sys->name) );
+      gl_printRaw( &gl_smallFont, tx, ty, &cWhite, -1, _(sys->name) );
 
    }
 
@@ -1230,9 +1228,7 @@ void map_renderNames( double bx, double by, double x, double y,
             nsnprintf( buf, sizeof(buf), "\agH: %.2f", n );
          else
             nsnprintf( buf, sizeof(buf), "H: %.2f", n );
-         gl_print( &gl_smallFont,
-               tx, ty,
-               &cGrey70, buf );
+         gl_printRaw( &gl_smallFont, tx, ty, &cGrey70, -1, buf );
       }
    }
 }
@@ -1531,10 +1527,10 @@ static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Comm
    if ( line2 != NULL ) {
       *line2++ = '\0';
       textw = gl_printWidthRaw( &gl_smallFont, line2 );
-      gl_print( &gl_smallFont, x + (sys->pos.x)*map_zoom - textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, line2 );
+      gl_printRaw( &gl_smallFont, x + (sys->pos.x)*map_zoom - textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, -1, line2 );
    }
    textw = gl_printWidthRaw( &gl_smallFont, buf );
-   gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, buf );
+   gl_printRaw( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, -1, buf );
 }
 
 
@@ -1584,6 +1580,7 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
    if ( hasPresence == 0 )
       nsnprintf( buf, sizeof( buf ), _( "None" ) );
 
+   (void) l;
    window_modifyText( wid, name, buf );
 }
 

@@ -170,7 +170,7 @@ void shipyard_open( unsigned int wid )
    }
    window_addImageArray( wid, 20, 20,
          iw, ih, "iarShipyard", 128., 128.,
-         cships, nships, shipyard_update, shipyard_rmouse );
+         cships, nships, shipyard_update, shipyard_rmouse, NULL );
 
    /* write the shipyard stuff */
    shipyard_update(wid, NULL);
@@ -601,7 +601,7 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str,
    x = bx;
 
    /* Print text. */
-   gl_printMid( &gl_smallFont, 30, bx-15, by, &cFontWhite, str );
+   gl_printMidRaw( &gl_smallFont, 30, bx-15, by, &cFontWhite, -1, str );
 
    /* Draw squares. */
    for (i=0; i<n; i++) {

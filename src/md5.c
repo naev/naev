@@ -52,7 +52,10 @@
  */
 
 #include "md5.h"
+#include "ncompat.h"
 #include "nstring.h"
+#define ARCH_IS_BIG_ENDIAN HAS_BIGENDIAN
+
 
 #undef BYTE_ORDER /* 1 = big-endian, -1 = little-endian, 0 = unknown */
 #ifdef ARCH_IS_BIG_ENDIAN

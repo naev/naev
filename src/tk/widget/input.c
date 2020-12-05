@@ -24,6 +24,8 @@ static int inp_isBreaker(char c);
 static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod );
 static int inp_text( Widget* inp, const char *buf );
 static int inp_addKey( Widget* inp, uint32_t ch );
+static int inp_rangeToWidth( Widget *inp, int start_pos, int end_pos );
+static int inp_rangeFromWidth( Widget *inp, int start_pos, int width );
 static void inp_clampView( Widget *inp );
 static void inp_cleanup( Widget* inp );
 static void inp_focusGain( Widget* inp );
@@ -94,36 +96,35 @@ void window_addInput( const unsigned int wid,
 static void inp_render( Widget* inp, double bx, double by )
 {
    double x, y, ty;
-   char buf[ 512 ], *str;
-   int m, s;
+   char *str;
+   int s;
    size_t p, w;
    int lines;
-   char c;
 
    x = bx + inp->x;
    y = by + inp->y;
 
    /* main background */
-   toolkit_drawRect( x, y, inp->w, inp->h, &cBlack, NULL );
-
-   if (inp->dat.inp.oneline)
-      /* center vertically */
-      ty = y - (inp->h - gl_smallFont.h)/2.;
-   else
-      /* Align top-left. */
-      ty = y - gl_smallFont.h / 2.;
+   toolkit_drawRect( x - 4, y - 4, inp->w + 8, inp->h + 8, &cBlack, NULL );
 
    /* Draw text. */
-   gl_printTextRaw( inp->dat.inp.font, inp->w-10., inp->h,
-         x+5., ty, &cGreen, -1., &inp->dat.inp.input[ inp->dat.inp.view ] );
+   if (inp->dat.inp.oneline) {
+      /* center vertically, print whatever text fits regardless of word boundaries. */
+      ty = y + (inp->h - inp->dat.inp.font->h)/2.;
+      gl_printMaxRaw( inp->dat.inp.font, inp->w-10.,
+            x+5., ty, &cGreen, -1., &inp->dat.inp.input[ inp->dat.inp.view ] );
+   }
+   else {
+      /* Align top-left, print with word wrapping. */
+      ty = y - inp->dat.inp.font->h / 2.;
+      gl_printTextRaw( inp->dat.inp.font, inp->w-10., inp->h,
+            x+5., ty, &cGreen, -1., &inp->dat.inp.input[ inp->dat.inp.view ] );
+   }
 
    /* Draw cursor. */
    if (wgt_isFlag( inp, WGT_FLAG_FOCUSED )) {
       if (inp->dat.inp.oneline) {
-         m = MIN( inp->dat.inp.pos - inp->dat.inp.view, (int)sizeof(buf)-1 );
-         strncpy( buf, &inp->dat.inp.input[ inp->dat.inp.view ], m );
-         buf[ m ] = '\0';
-         w = gl_printWidthRaw( inp->dat.inp.font, buf );
+         w = inp_rangeToWidth( inp, inp->dat.inp.view, inp->dat.inp.pos );
          toolkit_drawRect( x + 5. + w, y + (inp->h - inp->dat.inp.font->h - 4.)/2.,
                1., inp->dat.inp.font->h + 4., &cGreen, &cGreen );
       }
@@ -139,18 +140,14 @@ static void inp_render( Widget* inp, double bx, double by )
             if ((s != 0) && ((str[p] == '\n') || (str[p] == ' ')))
                p++;
             s      = 1;
-            w      = gl_printWidthForText( inp->dat.inp.font, &str[p], inp->w-10 );
+            w      = inp_rangeFromWidth( inp, p, -1 );
             lines += 1;
             if (str[p+w] == '\0')
                break;
          } while (p+w < inp->dat.inp.pos);
 
-         /* Hack because we have to avoid wraps when counting lines, so here we
-          * handle the last line partially. */
-         c = str[ inp->dat.inp.pos ];
-         str[ inp->dat.inp.pos ] = '\0';
-         w = gl_printWidthRaw( inp->dat.inp.font, &str[p] );
-         str[ inp->dat.inp.pos ] = c;
+         /* On the final line, no word-wrap is possible. */
+         w = inp_rangeToWidth( inp, p, inp->dat.inp.pos );
 
          /* Get the actual width now. */
          toolkit_drawRect( x + 5. + w, y + inp->h - lines * (inp->dat.inp.font->h + 5) - 3.,
@@ -158,6 +155,9 @@ static void inp_render( Widget* inp, double bx, double by )
       }
    }
 
+   /* inner outline */
+   /* toolkit_drawOutline( x, y, inp->w, inp->h, 0.,
+         toolkit_colLight, NULL ); */
    /* outer outline */
    toolkit_drawOutline( x-2, y-2, inp->w + 4, inp->h + 4, 1.,
          &cGrey20, NULL );
@@ -199,7 +199,6 @@ static int inp_text( Widget* inp, const char *buf )
 static int inp_addKey( Widget* inp, uint32_t ch )
 {
    size_t i, len;
-   int n;
    uint32_t c;
    char buf[8];
 
@@ -212,7 +211,7 @@ static int inp_addKey( Widget* inp, uint32_t ch )
    }
 
    /* Make sure it's not full. */
-   if (u8_strlen(inp->dat.inp.input) >= (size_t)inp->dat.inp.char_max-1)
+   if (u8_strlen(inp->dat.inp.input) >= inp->dat.inp.char_max-1)
       return 1;
 
    /* Render back to utf8. */
@@ -221,17 +220,12 @@ static int inp_addKey( Widget* inp, uint32_t ch )
    /* Add key. */
    memmove( &inp->dat.inp.input[ inp->dat.inp.pos+len ],
          &inp->dat.inp.input[ inp->dat.inp.pos ],
-         inp->dat.inp.byte_max - inp->dat.inp.pos - len );
+         inp->dat.inp.byte_max-1 - inp->dat.inp.pos - len );
    for (i=0; i<len; i++)
       inp->dat.inp.input[ inp->dat.inp.pos++ ] = buf[i];
-   assert(inp->dat.inp.input[ inp->dat.inp.byte_max - 1 ] == '\0');
+   assert(inp->dat.inp.input[ inp->dat.inp.byte_max-1 ] == '\0');
 
-   if (inp->dat.inp.oneline) {
-      /* We can't wrap the text, so we need to scroll it out. */
-      n = gl_printWidthRaw( inp->dat.inp.font, inp->dat.inp.input+inp->dat.inp.view );
-      if (n+10 > inp->w)
-         u8_inc( inp->dat.inp.input, &inp->dat.inp.view );
-   }
+   inp_clampView( inp );
 
    return 1;
 }
@@ -259,9 +253,8 @@ static int inp_isBreaker(char c)
 static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
-   int n, prevpos, curchars, prevchars, charsfromleft, lines;
-   size_t curpos, len;
-   char* str;
+   int w;
+   size_t curpos, len, prev_line_start, curr_line_start, line_end, next_line_start;
 
    /*
     * Handle arrow keys.
@@ -286,8 +279,6 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
             }
             else
                u8_dec( inp->dat.inp.input, &inp->dat.inp.pos );
-
-            inp_clampView( inp );
          }
       }
       else if (key == SDLK_RIGHT) {
@@ -308,100 +299,42 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
             }
             else
                u8_inc( inp->dat.inp.input, &inp->dat.inp.pos );
-
-            inp_clampView( inp );
          }
       }
-      else if (key == SDLK_UP) {
+      else if (key == SDLK_UP || key == SDLK_DOWN) {
          if (inp->dat.inp.oneline)
             return 0;
 
-         str       = inp->dat.inp.input;
-         curpos    = 0;
-         prevpos   = 0;
-         curchars  = 0;
-         prevchars = 0;
-         lines     = 0;
+         /* Keep a running list of the 3 most recent line-start positions found. SIZE_MAX is a sentinel. */
+         curr_line_start = SIZE_MAX;
+         next_line_start = 0;
+         do {
+            prev_line_start = curr_line_start;
+            curr_line_start = next_line_start;
+            line_end = curr_line_start + inp_rangeFromWidth( inp, curr_line_start, -1 );
+            if (inp->dat.inp.input[line_end] == '\0')
+               next_line_start = SIZE_MAX;
+            else if (isspace(inp->dat.inp.input[line_end]))
+               next_line_start = line_end + 1;
+            else
+               next_line_start = line_end;
+         } while (line_end < inp->dat.inp.pos);
 
-         if (inp->dat.inp.pos == 0) /* We can't move beyond the current line, as it is the first one. */
-            return 1;
+         w = inp_rangeToWidth( inp, curr_line_start, inp->dat.inp.pos );
 
-         /* Keep not-printing the lines until the current pos is smaller than the virtual pos.
-          * At this point, we've arrived at the line the cursor is on. */
-         while (inp->dat.inp.pos > curpos) {
-            prevpos   = curpos;
-            prevchars = curchars;
-
-            curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
-            curpos   += curchars;
-            /* Handle newlines. */
-            if (str[curpos] == '\n') {
-               curchars++;
-               curpos++;
-            }
-
-            lines++;
-         }
-
-         /* Set the pos to the same number of characters from the left hand
-          * edge, on the previous line (unless there aren't that many chars).
-          * This is more or less equal to going up a line. */
-         charsfromleft     = inp->dat.inp.pos - prevpos;
-         /* Hack for moving up to the first line. */
-         if (lines == 2)
-            charsfromleft--;
-
-         inp->dat.inp.pos  = prevpos - prevchars;
-         inp->dat.inp.pos += MIN(charsfromleft, prevchars);
-      }
-      else if (key == SDLK_DOWN) {
-         if (inp->dat.inp.oneline)
-            return 0;
-
-         str      = inp->dat.inp.input;
-         curpos   = 0;
-         prevpos  = 0;
-         lines    = 0;
-
-         /* We can't move beyond the current line, as it is the last one. */
-         if (inp->dat.inp.pos == strlen(inp->dat.inp.input))
-            return 1;
-
-         /* Keep not-printing the lines until the current pos is smaller than the virtual pos.
-          * At this point, we've arrived at the line the cursor is on. */
-         while (inp->dat.inp.pos >= curpos) {
-            prevpos   = curpos;
-
-            curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
-            curpos   += curchars;
-            /* Handle newlines. */
-            if (str[curpos] == '\n') {
-               curchars++;
-               curpos++;
-            }
-            lines++;
-         }
-
-         /* Take note how many chars from the left we have. */
-         charsfromleft = inp->dat.inp.pos - prevpos;
-         /* Hack for moving down from the first line. */
-         if (lines == 1)
-            charsfromleft++;
-
-         /* Now not-print one more line. This is the line we want to move the cursor to. */
-         prevpos   = curpos;
-         curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
-         curpos   += curchars;
-
-         /* Set the pos to the same number of characters from the left hand
-          * edge, on this line (unless there aren't that many chars).
-          * This is more or less equal to going down a line.
-          * But make sure never to go past the end of the string. */
-         inp->dat.inp.pos  = prevpos;
-         inp->dat.inp.pos += MIN(charsfromleft, curchars);
-         inp->dat.inp.pos  = MIN(inp->dat.inp.pos, strlen(inp->dat.inp.input));
+         /* Extreme cases: moving to start/end of the whole input. */
+         if (key == SDLK_UP && curr_line_start == 0)
+            inp->dat.inp.pos = 0;
+         else if (key == SDLK_DOWN && next_line_start == SIZE_MAX)
+            inp->dat.inp.pos = strlen(inp->dat.inp.input);
+         /* Main cases: aim for the same width into the target line. ISSUE: this logic skews left. */
+         else if (key == SDLK_UP)
+            inp->dat.inp.pos = prev_line_start + inp_rangeFromWidth( inp, prev_line_start, w );
+         else
+            inp->dat.inp.pos = next_line_start + inp_rangeFromWidth( inp, next_line_start, w );
       }
 
+      inp_clampView( inp );
       return 1;
    }
 
@@ -448,20 +381,13 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
       /* Actually delete the chars. */
       memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
             &inp->dat.inp.input[ curpos ],
-            (inp->dat.inp.byte_max - curpos) );
-      assert(inp->dat.inp.input[ inp->dat.inp.byte_max - curpos + inp->dat.inp.pos ] == '\0');
+            inp->dat.inp.byte_max - curpos );
+      assert(inp->dat.inp.input[ inp->dat.inp.byte_max-1 - curpos + inp->dat.inp.pos ] == '\0');
 
-      if (inp->dat.inp.oneline && inp->dat.inp.view > 0) {
-         n = gl_printWidthRaw( &gl_smallFont,
-               inp->dat.inp.input + inp->dat.inp.view - 1 );
-         if (n+10 < inp->w)
-            inp->dat.inp.view += curpos - inp->dat.inp.pos;
-      }
-
+      inp_clampView( inp );
       if (inp->dat.inp.fptr != NULL)
          inp->dat.inp.fptr( inp->wdw, inp->name );
 
-      inp_clampView( inp );
       return 1;
    }
    /* delete -> delete text */
@@ -490,9 +416,10 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
       /* Actually delete the chars. */
       memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
             &inp->dat.inp.input[ curpos ],
-            (inp->dat.inp.byte_max - curpos) );
-      assert(inp->dat.inp.input[ inp->dat.inp.byte_max - curpos + inp->dat.inp.pos ] == '\0');
+            inp->dat.inp.byte_max - curpos );
+      assert(inp->dat.inp.input[ inp->dat.inp.byte_max-1 - curpos + inp->dat.inp.pos ] == '\0');
 
+      inp_clampView( inp );
       if (inp->dat.inp.fptr != NULL)
          inp->dat.inp.fptr( inp->wdw, inp->name );
 
@@ -523,7 +450,7 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
 
       memmove( &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
             &inp->dat.inp.input[ inp->dat.inp.pos ],
-            inp->dat.inp.byte_max - inp->dat.inp.pos - 1 );
+            inp->dat.inp.byte_max-1 - inp->dat.inp.pos - 1 );
       inp->dat.inp.input[ inp->dat.inp.pos++ ] = '\n';
       assert(inp->dat.inp.input[ inp->dat.inp.byte_max-1 ] == '\0');
 
@@ -539,32 +466,84 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
 
 
 /*
+ * @brief Returns the width required to fit the text from byte positions \p start_pos to \p end_pos.
+ *
+ *    @param inp Input widget to operate on.
+ *    @param start_pos Starting byte position (inclusive).
+ *    @param start_pos Ending byte position (exclusive), or -1 for the end of the string.
+ */
+static int inp_rangeToWidth( Widget *inp, int start_pos, int end_pos )
+{
+   char c;
+   int w;
+
+   if (end_pos >= 0) {
+      if (end_pos <= start_pos)
+         return 0;
+      c = inp->dat.inp.input[ inp->dat.inp.pos ];
+      inp->dat.inp.input[ end_pos ] = '\0';
+   }
+   w = gl_printWidthRaw( inp->dat.inp.font, &inp->dat.inp.input[start_pos] );
+   if (end_pos >= 0)
+      inp->dat.inp.input[ end_pos ] = c;
+   return w;
+}
+
+
+/*
+ * @brief Returns the byte-size of the text we can fit within \p width starting at \p start_pos.
+ *        Note: "for convenience" this function accounts for word-wrap if the widget is word-wrapping
+ *        and width==-1; otherwise, it assumes we're measuring the characters within a line.
+ *
+ *    @param inp Input widget to operate on.
+ *    @param start_pos Starting byte position.
+ *    @param width Amount of horizontal space, or -1 for the width of the widget's text area.
+ */
+static int inp_rangeFromWidth( Widget *inp, int start_pos, int width )
+{
+   int tw, oneline, out;
+   char *str, *eol;
+
+   str = &inp->dat.inp.input[start_pos];
+   tw = width>=0 ? width : inp->w-10;
+   oneline = width>=0 || inp->dat.inp.oneline;
+   if (oneline)
+      out = gl_printWidthForTextLine( inp->dat.inp.font, str, tw );
+   else
+      out = gl_printWidthForText( inp->dat.inp.font, str, tw );
+   eol = strchr( str, '\n' );
+   return eol ? MIN( out, eol-str ) : out;
+}
+
+
+/*
  * @brief Keeps the input widget's view in sync with its cursor
  *
  *    @param inp Input widget to operate on.
  */
 static void inp_clampView( Widget *inp )
 {
-   int visible;
+   size_t v;
 
    /* @todo Handle multiline input widgets. */
    if (!inp->dat.inp.oneline)
       return;
 
    /* If the cursor is behind the view, shift the view backwards. */
-   if (inp->dat.inp.view > inp->dat.inp.pos) {
+   if (inp->dat.inp.view > inp->dat.inp.pos)
       inp->dat.inp.view = inp->dat.inp.pos;
-      return;
-   }
-
-   visible = gl_printWidthForText( inp->dat.inp.font,
-         &inp->dat.inp.input[ inp->dat.inp.view ], inp->w - 10 );
 
    /* Shift the view right until the cursor is visible. */
-   while (inp->dat.inp.view + visible < inp->dat.inp.pos) {
-      visible = gl_printWidthForText( inp->dat.inp.font,
-            &inp->dat.inp.input[ inp->dat.inp.view ], inp->w - 10 );
+   while (inp_rangeToWidth( inp, inp->dat.inp.view, inp->dat.inp.pos ) > inp->w-10)
       u8_inc( inp->dat.inp.input, &inp->dat.inp.view );
+
+   /* If possible, shift the view left without hiding text on the right. */
+   while (inp->dat.inp.view > 0) {
+      v = inp->dat.inp.view;
+      u8_dec( inp->dat.inp.input, &v );
+      if (inp_rangeToWidth( inp, v, -1 ) > inp->w-10)
+         break;
+      inp->dat.inp.view = v;
    }
 }
 

@@ -8,6 +8,7 @@
 #  define LAND_H
 
 
+#include "attributes.h"
 #include "conf.h"
 #include "space.h"
 
@@ -89,7 +90,7 @@ int  can_swap( const char *shipname );
 int  can_swapEquipment( const char *shipname );
 int  can_sell( const char *shipname );
 int  land_errDialogue( const char *name, char *type );
-void land_errDialogueBuild( const char *fmt, ... );
+FORMAT( printf, 1, 2 ) void land_errDialogueBuild( const char *fmt, ... );
 
 
 #endif /* LAND_H */

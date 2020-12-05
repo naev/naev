@@ -61,9 +61,23 @@ function create ()
    hailed_player = false
    hailhook = hook.pilot( p, "hail", "hail" )
    boardhook = hook.pilot( p, "board", "board" )
+
+   hook.jumpout("leave")
+   hook.land("leave")
+end
+
+function leave () --event ends on player leaving the system or landing
+    evt.finish()
 end
 
 function broadcast ()
+   -- End the event if for any reason the trader stops existing
+   if not p:exists() then
+      evt.finish()
+      return
+   end
+
+   -- Cycle through broadcasts
    if broadcastid > #broadcastmsg then broadcastid = 1 end
    p:broadcast( broadcastmsg[broadcastid], true )
    broadcastid = broadcastid+1
@@ -100,7 +114,7 @@ function board ()
 
    -- Always available outfits
    -- TODO add more
-   outfits = {
+   local outfits = {
       'Air Freshener',
       'Valkyrie Beam',
       'Hades Torch',

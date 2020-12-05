@@ -568,8 +568,8 @@ static int event_parseFile( const char* file )
    size_t bufsize;
    xmlNodePtr node;
    xmlDocPtr doc;
-   char *filebuf, *luabuf;
-   const char *pos;
+   char *filebuf;
+   const char *pos, *start_pos;
    EventData *temp;
 
 #ifdef DEBUGGING
@@ -595,15 +595,15 @@ static int event_parseFile( const char* file )
    }
 
    /* Separate XML header and Lua. */
+   start_pos = nstrnstr( filebuf, "<?xml ", bufsize );
    pos = nstrnstr( filebuf, "--]]", bufsize );
-   if (pos == NULL) {
+   if (pos == NULL || start_pos == NULL) {
       WARN(_("Event file '%s' has missing XML header!"), file);
       return -1;
    }
-   luabuf = &filebuf[ pos-filebuf+4 ];
 
    /* Parse the header. */
-   doc = xmlParseMemory( &filebuf[5], pos-filebuf-5 );
+   doc = xmlParseMemory( start_pos, pos-start_pos );
    if (doc == NULL) {
       WARN(_("Unable to parse document XML header for Event '%s'"), file);
       return -1;
@@ -618,9 +618,8 @@ static int event_parseFile( const char* file )
 
    temp = &array_grow(&event_data);
    event_parseXML( temp, node );
-   temp->lua = calloc( 1, bufsize-(luabuf-filebuf)+1 );
+   temp->lua = strdup(filebuf);
    temp->sourcefile = strdup(file);
-   strncpy( temp->lua, luabuf, bufsize-(luabuf-filebuf) );
 
 #ifdef DEBUGGING
    /* Check to see if syntax is valid. */

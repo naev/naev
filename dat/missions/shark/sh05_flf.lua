@@ -87,9 +87,7 @@ function create ()
    paypla, paysys = planet.get("Darkshed")
    nextsys = system.get("Arandon") -- This should be the same as the system used in sh06!
 
-   osd_msg[2] = osd_msg[2]:format(_(paypla:name()), _(paysys:name()))
-   paysys = system.get(paysys:name())
-   paypla = planet.get(paypla:name())
+   osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
 
    misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith")
    misn.setDesc(bar_desc[1])
@@ -102,7 +100,7 @@ function accept()
 
    if tk.yesno(title[1], text[1]:format(player.name())) then
       misn.accept()
-      tk.msg(title[2], text[2]:format(_(nextsys:name())))
+      tk.msg(title[2], text[2]:format(nextsys:name()))
 
       misn.setTitle(misn_title)
       misn.setReward(creditstring(reward))
@@ -122,7 +120,7 @@ end
 function land()
    --Job is done
    if stage == 1 and planet.cur() == paypla then
-      tk.msg(title[3], text[3]:format(_(nextsys:name())))
+      tk.msg(title[3], text[3]:format(nextsys:name()))
       player.pay(reward)
       shark_addLog( log_text )
       misn.finish(true)

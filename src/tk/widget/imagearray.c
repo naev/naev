@@ -24,6 +24,7 @@ static void iar_renderOverlay( Widget* iar, double bx, double by );
 static int iar_key( Widget* iar, SDL_Keycode key, SDL_Keymod mod );
 /* Mouse. */
 static int iar_mclick( Widget* iar, int button, int x, int y );
+static int iar_mdoubleclick( Widget* iar, int button, int x, int y );
 static int iar_mwheel( Widget* lst, SDL_MouseWheelEvent event );
 static int iar_mmove( Widget* iar, int x, int y, int rx, int ry );
 /* Focus. */
@@ -64,7 +65,8 @@ void window_addImageArray( const unsigned int wid,
                            char* name, const int iw, const int ih,
                            ImageArrayCell *img, int nelem,
                            void (*call) (unsigned int wdw, char* wgtname),
-                           void (*rmcall) (unsigned int wdw, char* wgtname) )
+                           void (*rmcall) (unsigned int wdw, char* wgtname),
+                           void (*dblcall) (unsigned int wdw, char* wgtname) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
@@ -86,6 +88,7 @@ void window_addImageArray( const unsigned int wid,
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->keyevent           = iar_key;
    wgt->mclickevent        = iar_mclick;
+   wgt->mdoubleclickevent  = iar_mdoubleclick;
    wgt->mwheelevent        = iar_mwheel;
    wgt->mmoveevent         = iar_mmove;
    wgt_setFlag(wgt, WGT_FLAG_ALWAYSMMOVE);
@@ -100,6 +103,7 @@ void window_addImageArray( const unsigned int wid,
    wgt->dat.iar.ih         = ih;
    wgt->dat.iar.fptr       = call;
    wgt->dat.iar.rmptr      = rmcall;
+   wgt->dat.iar.dblptr     = dblcall;
    wgt->dat.iar.xelem      = floor((w - 10.) / (double)(wgt->dat.iar.iw+10));
    wgt->dat.iar.yelem      = (wgt->dat.iar.xelem == 0) ? 0 :
          (int)wgt->dat.iar.nelements / wgt->dat.iar.xelem + 1;
@@ -232,7 +236,7 @@ static void iar_render( Widget* iar, double bx, double by )
          if (iar->dat.iar.images[pos].quantity > 0) {
             /* Quantity number. */
             gl_printMax( &gl_smallFont, iar->dat.iar.iw,
-                  xcurs + 5., ycurs + iar->dat.iar.ih + 7.,
+                  xcurs + 5., ycurs + iar->dat.iar.ih + 4.,
                   &fontcolour, "%d", iar->dat.iar.images[pos].quantity );
          }
 
@@ -240,7 +244,7 @@ static void iar_render( Widget* iar, double bx, double by )
          if (iar->dat.iar.images[pos].slottype != NULL) {
             /* Slot size letter. */
             gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
-                  xcurs + iar->dat.iar.iw - 4., ycurs + iar->dat.iar.ih + 7.,
+                  xcurs + iar->dat.iar.iw - 10., ycurs + iar->dat.iar.ih + 4.,
                   &fontcolour, -1., iar->dat.iar.images[pos].slottype );
          }
 
@@ -381,7 +385,6 @@ static void iar_centerSelected( Widget *iar )
  * @brief Image array widget mouse click handler.
  *
  *    @param iar Widget receiving the event.
- *    @param mclick The mouse click event.
  *    @return 1 if event is used.
  */
 static int iar_mclick( Widget* iar, int button, int x, int y )
@@ -404,6 +407,30 @@ static int iar_mclick( Widget* iar, int button, int x, int y )
 
          iar_setAltTextPos( iar, x, y );
 
+         return 1;
+
+      default:
+         break;
+   }
+   return 0;
+}
+
+
+/**
+ * @brief Image array widget mouse double click handler.
+ *
+ *    @param iar Widget receiving the event.
+ *    @return 1 if event is used.
+ */
+static int iar_mdoubleclick( Widget* iar, int button, int x, int y )
+{
+   /* Handle different mouse clicks. */
+   switch (button) {
+      case SDL_BUTTON_LEFT:
+         iar_focus( iar, x, y );
+         if (iar->dat.iar.dblptr != NULL)
+            iar->dat.iar.dblptr( iar->wdw, iar->name );
+         iar_setAltTextPos( iar, x, y );
          return 1;
 
       default:

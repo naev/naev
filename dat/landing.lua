@@ -155,6 +155,15 @@ function ptn_mil_restricted( pnt )
          _("We Proteron don't take kindly to bribery."))
 end
 
+-- Thurion military assets.
+function thr_mil_restricted( pnt )
+   return land_military(pnt, 50,
+         _("Welcome, friend %s. You may dock when ready."):format(player.name()),
+         _("I'm sorry, we can't trust you to land here just yet."),
+         _("Landing request denied."),
+         _("We have no need for your credits."))
+end
+
 -- Pirate clanworld.
 function pir_clanworld( pnt )
    local fct = pnt:faction()

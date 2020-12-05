@@ -536,7 +536,7 @@ int outfit_isGUI( const Outfit* o )
  */
 int outfit_isSecondary( const Outfit* o )
 {
-   return (o->properties & OUTFIT_PROP_WEAP_SECONDARY);
+   return (o->properties & OUTFIT_PROP_WEAP_SECONDARY) != 0;
 }
 
 
@@ -1851,7 +1851,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
          _(outfit_getType(temp)),
          temp->cpu,
          1./temp->u.bay.delay,
-         temp->u.bay.amount, temp->u.bay.ammo_name );
+         temp->u.bay.amount, _(temp->u.bay.ammo_name) );
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
@@ -1907,7 +1907,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 {
    int i, j;
    xmlNodePtr node, cur;
-   void *buf;
+   char *buf;
    StarSystem *sys, *system_stack;
    Planet *asset;
    JumpPoint *jump;
@@ -2529,7 +2529,7 @@ static void outfit_launcherDesc( Outfit* o )
          _("Holds %d %s:\n"
          "%.0f%% Penetration\n"
          "%.2f DPS [%.0f Damage]\n"),
-         o->u.lau.amount, o->u.lau.ammo_name,
+         o->u.lau.amount, _(o->u.lau.ammo_name),
          a->u.amm.dmg.penetration * 100.,
          1. / o->u.lau.delay * a->u.amm.dmg.damage, a->u.amm.dmg.damage );
 
@@ -2543,7 +2543,7 @@ static void outfit_launcherDesc( Outfit* o )
          "%.1f EPS [%.0f Energy]\n"
          "%.0f Range [%.1f duration]\n"
          "%.0f Maximum Speed\n"
-         "%.1f%% Jam Resistance\n"),
+         "%.1f%% Jam Resistance"),
          1. / o->u.lau.delay,
          o->u.lau.delay * a->u.amm.energy, a->u.amm.energy,
          outfit_range(a), a->u.amm.duration,

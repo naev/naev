@@ -86,11 +86,11 @@ function accept ()
    reward = 30000
    misn.setTitle(misn_title)
    misn.setReward( creditstring(reward) )
-   misn.setDesc( string.format(misn_desc, _(dest:name()), _(sys:name())))
+   misn.setDesc( string.format(misn_desc, dest:name(), sys:name()))
 
    -- Flavour text and mini-briefing
-   tk.msg( title[2], string.format( text[2], _(dest:name()) ))
-   misn.osdCreate(title[2], {misn_desc:format(_(dest:name()), _(sys:name()))})
+   tk.msg( title[2], string.format( text[2], dest:name() ))
+   misn.osdCreate(title[2], {misn_desc:format(dest:name(), sys:name())})
 
    -- Set up the goal
    parcels = misn.cargoAdd("Parcels", 0)
@@ -105,7 +105,7 @@ function land()
       if misn.cargoRm(parcels) then
          player.pay(reward)
          -- More flavour text
-         tk.msg(title[3], string.format( text[3], _(dest:name()) ))
+         tk.msg(title[3], string.format( text[3], dest:name() ))
          var.push("es_cargo", true)
          faction.modPlayerSingle("Empire",3);
          emp_addShippingLog( log_text )

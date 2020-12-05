@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.61])
 AC_INIT([naev],
-        [0.8.0-beta.3],
+        [0.8.0-beta.4],
         [https://github.com/naev/naev/issues],
         [naev],
         [https://naev.org/])
@@ -15,7 +15,8 @@ AC_CONFIG_AUX_DIR([build])
 AM_GNU_GETTEXT([external])
 # Currently steam packages 0.19.7 which is the limiting factor here
 AM_GNU_GETTEXT_VERSION([0.19.7])
-GETTEXT_PACKAGE=${PACKAGE_NAME}
+# The actual ${PACKAGE_NAME}.pot file is a combination of the below, a credits.pot file, an an xml.pot file.
+GETTEXT_PACKAGE=${PACKAGE_NAME}_src
 AC_SUBST(GETTEXT_PACKAGE)
 
 IT_PROG_INTLTOOL
@@ -75,8 +76,7 @@ AC_PROG_OBJC
 AC_PROG_LN_S
 AC_PROG_RANLIB
 AM_PROG_AR
-# Should be AX_PROG_CC_FOR_BUILD -- except Steam builds occur in a paleozoic environment where that doesn't work.
-AX_CC_FOR_BUILD
+AX_PROG_CC_FOR_BUILD
 PKG_PROG_PKG_CONFIG
 
 AC_CHECK_PROG([CUT], [cut], [cut])
@@ -92,14 +92,6 @@ AC_CHECK_PROG([ITSTOOL], [itstool], [itstool])
 #
 # Checks for build environment
 #
-AC_MSG_CHECKING([whether we are building utils])
-AS_IF([test -d "$srcdir/utils"], [
-  have_utils=yes
-], [
-  have_utils=no
-])
-AC_MSG_RESULT([$have_utils])
-
 AC_MSG_CHECKING([whether we have data])
 AS_IF([test -d "$srcdir/dat"], [
   have_data=yes
@@ -161,8 +153,7 @@ AC_ARG_ENABLE([debug],
 AC_MSG_RESULT([$enable_debug])
 
 AS_IF([test "x$enable_debug" != "xno"], [
-  AS_IF([test "x$ac_cv_prog_cc_g" = "xyes"], [CFLAGS="$CFLAGS -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -Wredundant-decls -Wno-long-long -Wcast-align -Wformat -Wformat-security"], [])
-  AX_CHECK_COMPILE_FLAG([-Wformat-truncation=0 -Werror],[CFLAGS="$CFLAGS -Wformat-truncation=0"],[])
+  AS_IF([test "x$ac_cv_prog_cc_g" = "xyes"], [CFLAGS="$CFLAGS -Og"], [])
   case "$host" in
     *-linux-gnu)
       AC_CHECK_LIB([bfd], [bfd_init], [
@@ -356,7 +347,7 @@ case "$host" in
 esac
 
 # global
-GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\" -include \"\$(top_builddir)/src/attributes.h\" -I\"\$(top_srcdir)/src\" -DPKGDATADIR=\\\"\$(pkgdatadir)\\\""
+GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\" -include \"\$(top_builddir)/src/attributes.h\" -I\"\$(top_srcdir)/src\" -DPKGDATADIR=\\\"\$(pkgdatadir)\\\" -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -Wredundant-decls -Wcast-align -Wformat -Wformat-security"
 GLOBAL_LIBS=
 
 AS_IF([test "x$enable_debug" != "xno"], [
@@ -580,7 +571,6 @@ AM_CONDITIONAL([HAVE_WINDRES], [test -n "$WINDRES"])
 AM_CONDITIONAL([HAVE_MACOS], [test "x$have_macos" = "xyes"])
 AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 AM_CONDITIONAL([HAVE_LDOC], [test -n "$LDOC"])
-AM_CONDITIONAL([HAVE_UTILS], [test "x$have_utils" = "xyes"])
 AM_CONDITIONAL([HAVE_DATA], [test "x$have_data" = "xyes"])
 AM_CONDITIONAL([HAVE_DOCS], [test "x$have_docs" = "xyes"])
 AM_CONDITIONAL([HAVE_MKSPR], [test "x$have_mkspr" = "xyes"])
@@ -604,11 +594,9 @@ AC_CONFIG_FILES([Makefile
       src/Makefile
       src/tk/Makefile
       src/tk/widget/Makefile
-      build/shave])
-AS_IF([test "x$have_utils" = "xyes"], [
-  AC_CONFIG_FILES([utils/Makefile
-     utils/mkspr/Makefile])
-])
+      build/shave
+      utils/Makefile
+      utils/mkspr/Makefile])
 AS_IF([test "x$have_docs" = "xyes"], [
   AC_CONFIG_FILES([docs/Makefile])
 ])
@@ -632,7 +620,6 @@ AC_MSG_NOTICE([lib:])
 AC_MSG_NOTICE([  csparse:    $used_csparse])
 AC_MSG_NOTICE([  lua:        $used_lua])
 echo
-AC_MSG_NOTICE([utils:        $have_utils])
 AC_MSG_NOTICE([  mkspr:      $have_mkspr])
 echo
 AC_MSG_NOTICE([debug mode:   $enable_debug])

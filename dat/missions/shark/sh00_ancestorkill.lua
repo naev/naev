@@ -95,9 +95,9 @@ log_text = _([[You helped Nexus Shipyards demonstrate the capabilities of their 
 function create ()
 
    --Change here to change the planet and the system
-   sysname = "Ingot"
-   planame = "Ulios"
-   bsyname = "Toaxis"
+   local sysname = "Ingot"
+   local planame = "Ulios"
+   local bsyname = "Toaxis"
    missys = system.get(sysname)
    mispla = planet.get(planame)
    battlesys = system.get(bsyname)
@@ -118,11 +118,11 @@ function accept()
    if tk.yesno(title[1], text[1]) then
       misn.accept()
       piratename = pirate_name()    --for now, we only need his name
-      tk.msg(title[2], text[2]:format(_(missys:name()),_(mispla:name())))
+      tk.msg(title[2], text[2]:format(missys:name(),mispla:name()))
 
-      osd_msg[1] = osd_msg[1]:format(_(missys:name()), _(mispla:name()))
-      osd_msg[2] = osd_msg[2]:format(_(battlesys:name()))
-      osd_msg[3] = osd_msg[3]:format(_(mispla:name()))
+      osd_msg[1] = osd_msg[1]:format(missys:name(), mispla:name())
+      osd_msg[2] = osd_msg[2]:format(battlesys:name())
+      osd_msg[3] = osd_msg[3]:format(mispla:name())
 
       misn.setTitle(misn_title)
       misn.setReward(creditstring(reward))
@@ -176,7 +176,7 @@ function enter()
 
       --Check if the player uses a Shark
       playership = player.pilot():ship()
-      playershipname = playership:name()
+      playershipname = playership:nameRaw()
 
       if playershipname ~= "Shark" and playershipname ~= "Empire Shark" then
          player.msg( "\ar" .. noshark_msg .. "\a0" )
@@ -206,7 +206,7 @@ function beginbattle()
 
    misn.markerRm(markeri)
 
-   tk.msg(title[3], text[3]:format(_(battlesys:name())))
+   tk.msg(title[3], text[3]:format(battlesys:name()))
    misn.osdActive(2)
    stage = 1
 

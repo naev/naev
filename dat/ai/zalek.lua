@@ -41,7 +41,7 @@ function create()
          _("\"Don't make me laugh. Eat laser beam!\""),
          _("\"My drones aren't interested in your ill-gotten gains and neither am I!\""),
          _("\"Ahaha! Nice one! Oh, you're actually serious? Ahahahaha!\""),
-         _("\"While I admire the spirit of it, testing my patience will is suicide, NOT science.\"")
+         _("\"While I admire the spirit of it, testing my patience is suicide, NOT science.\"")
       }
       mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
    end

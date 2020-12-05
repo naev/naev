@@ -26,9 +26,6 @@
 #include <limits.h>
 #include <stdlib.h>
 
-#if HAS_POSIX
-#include <libgen.h>
-#endif /* HAS_POSIX */
 #if HAS_WIN32
 #include <windows.h>
 #endif /* HAS_WIN32 */
@@ -208,6 +205,7 @@ static void ndata_testVersion (void)
       if (ABS(diff) > 1)
          WARN( _("Naev will probably crash now as the versions are probably not compatible.") );
    }
+   free( buf );
 }
 
 

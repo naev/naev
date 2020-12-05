@@ -36,4 +36,7 @@
 
   <!-- Star Systems -->
   <its:translateRule selector="/ssys/@name" translate="yes"/>
+
+  <!-- Fleets -->
+  <its:translateRule selector="/Fleets/fleet/pilots/pilot/@name" translate="yes"/>
 </its:rules>

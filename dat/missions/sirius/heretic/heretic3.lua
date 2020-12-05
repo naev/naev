@@ -73,10 +73,10 @@ function create()
    misn.setNPC(npc_name, "sirius/unique/draga")
    misn.setDesc(bar_desc)
 
-   osd[1] = osd[1]:format(_(homeasset:name()))
-   osd[2] = osd[2]:format(_(homeasset:name()))
+   osd[1] = osd[1]:format(homeasset:name())
+   osd[2] = osd[2]:format(homeasset:name())
 
-   misn_desc = misn_desc:format(_(homesys:name()))
+   misn_desc = misn_desc:format(homesys:name())
 end
 
 function accept()

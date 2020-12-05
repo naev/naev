@@ -222,7 +222,7 @@ function update_faction()
 end
 
 function update_cargo()
-   cargo_free = tostring(pp:cargoFree()) .. "t"
+   cargo_free = tonnestring_short(pp:cargoFree())
 end
 
 function update_wset()

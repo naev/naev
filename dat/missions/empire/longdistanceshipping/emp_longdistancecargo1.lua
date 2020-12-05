@@ -76,7 +76,7 @@ function accept ()
    reward = 500000 -- 500K
    misn.setTitle(misn_title)
    misn.setReward(creditstring(reward))
-   misn.setDesc( string.format( misn_desc, _(targetworld:name()), _(targetworld_sys:name()) ) )
+   misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
    misn.osdCreate(title[2], {misn_desc})
    -- Set up the goal
    hook.land("land")

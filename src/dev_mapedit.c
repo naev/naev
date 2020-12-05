@@ -1267,9 +1267,9 @@ static void mapedit_saveMapMenu_save( unsigned int wdw, char *str )
 void mapedit_setGlobalLoadedInfos( int nSys, char *sFileName, char *sMapName, char *sDescription )
 {
    char buf[8];
-   (void) nSys;
 
    /* Displaying info strings */
+   nsnprintf( buf, sizeof(buf), "%i", nSys );
    window_modifyText( mapedit_wid, "txtFileName",    sFileName );
    window_modifyText( mapedit_wid, "txtMapName",     sMapName );
    window_modifyText( mapedit_wid, "txtDescription", sDescription );

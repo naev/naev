@@ -34,6 +34,12 @@
    #define NORETURN
 #endif
 
+#if __has_attribute( format )
+   #define FORMAT( ... ) __attribute__( ( format ( __VA_ARGS__ ) ) )
+#else
+   #define FORMAT( ... )
+#endif
+
 // User defined diagnosis
 #if __has_attribute( diagnose_if )
    #define WARN_IF( c, m ) __attribute__( ( diagnose_if( c, m, "warning" ) ) )

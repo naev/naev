@@ -97,11 +97,11 @@ end
 function accept ()
    if tk.yesno(title[1], text[1]:format(creditstring(credits))) then
       misn.accept()
-      OSD[4] = string.format(OSD[4], _(curplanet:name()))
+      OSD[4] = string.format(OSD[4], curplanet:name())
       misn.setDesc(misndesc)
       misn.setReward(creditstring(credits))
       misn.osdCreate(OSDtitle, OSD)
-      tk.msg(title[2], string.format(text[2], _(curplanet:name()), _(curplanet:name())))
+      tk.msg(title[2], string.format(text[2], curplanet:name(), curplanet:name()))
       hook.takeoff("takeoff")
    else
       tk.msg(refusetitle, refusetext)
@@ -200,7 +200,7 @@ end
 
 function nexttarget1()
    if target[1] == 4 then
-      racers[1]:land(curplanet:name())
+      racers[1]:land(curplanet)
       hook.rm(hp1)
    else
       racers[1]:goto(checkpoint[target[1]]:pos())
@@ -218,7 +218,7 @@ end
 
 function nexttarget2()
    if target[2] == 4 then
-      racers[2]:land(curplanet:name())
+      racers[2]:land(curplanet)
       hook.rm(hp2)
    else
       racers[2]:goto(checkpoint[target[2]]:pos())
@@ -236,7 +236,7 @@ end
 
 function nexttarget3()
    if target[3] == 4 then
-      racers[3]:land(curplanet:name())
+      racers[3]:land(curplanet)
       hook.rm(hp3)
    else
       racers[3]:goto(checkpoint[target[3]]:pos())
@@ -256,7 +256,7 @@ function board(ship)
          misn.osdActive(i+1)
          target[4] = target[4] + 1
          if target[4] == 4 then
-            tk.msg(string.format(title[3], i), string.format(text[4], _(curplanet:name())))
+            tk.msg(string.format(title[3], i), string.format(text[4], curplanet:name()))
          else
             tk.msg(string.format(title[3], i), string.format(text[3], i+1))
          end
@@ -274,7 +274,7 @@ end
 
 
 function racerland(p)
-   player.msg( string.format(landmsg, p:name(), _(curplanet:name())))
+   player.msg( string.format(landmsg, p:name(), curplanet:name()))
 end
 
 

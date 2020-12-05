@@ -181,13 +181,12 @@ function random_planet()
       function(s)
          for i, v in ipairs(s:planets()) do
             local f = v:faction()
-            if f and ships[f:name()] and v:services().shipyard then
+            if f and ships[f:nameRaw()] and v:services().shipyard then
                planets[#planets + 1] = v
             end
          end 
          return false
-      end
-   )
+      end, nil, true )
 
    if #planets > 0 then
       return planets[rnd.rnd(1,#planets)]
@@ -255,7 +254,7 @@ function create ()
       misn.finish(false)
    end
 
-   theship.faction = theship.planet:faction():name()
+   theship.faction = theship.planet:faction():nameRaw()
    theship.class   = random_class(theship.faction)
 
    if not theship.class then
@@ -279,7 +278,7 @@ function accept()
          _(theship.faction), _(theship.class), creditstring(theship.price) ) ) then
       if player.credits() >= theship.price then
          tk.msg( approval.title, approval.message:format(
-            _(theship.planet:name()), _(theship.system:name()) ) )
+            theship.planet:name(), theship.system:name() ) )
 
          player.pay( -theship.price )
          misn.accept()
@@ -288,7 +287,7 @@ function accept()
          misn.setTitle( title:format( _(theship.class) ) )
          misn.setReward( reward:format( _(theship.class) ) )
          misn.setDesc( description:format(
-            _(theship.planet:name()), _(theship.system:name()), _(theship.class) ) )
+            theship.planet:name(), theship.system:name(), _(theship.class) ) )
 
          -- Mission marker
          misn.markerAdd( theship.system, "low" )
@@ -301,8 +300,8 @@ function accept()
             ), {
                string.format(
                   description,
-                  _(theship.planet:name()),
-                  _(theship.system:name()),
+                  theship.planet:name(),
+                  theship.system:name(),
                   _(theship.class)
                )
             }

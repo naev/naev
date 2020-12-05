@@ -91,13 +91,13 @@ function accept ()
    -- Mission details
    misn.setTitle(misn_title)
    misn.setReward( misn_reward )
-   misn.setDesc( string.format(misn_desc[1], _(misn_target:name()), _(misn_target_sys:name()) ))
-   osd_msg[1] = osd_msg[1]:format(_(misn_target_sys:name()), _(misn_target:name()))
-   osd_msg[2] = osd_msg[2]:format(_(misn_base:name()))
+   misn.setDesc( string.format(misn_desc[1], misn_target:name(), misn_target_sys:name() ))
+   osd_msg[1] = osd_msg[1]:format(misn_target_sys:name(), misn_target:name())
+   osd_msg[2] = osd_msg[2]:format(misn_base:name())
    misn.osdCreate(misn_title, osd_msg)
 
-   tk.msg( title[1], string.format(text[2], _(misn_target:name())) )
-   tk.msg( title[1], string.format(text[3], _(misn_target:name()), _(misn_target_sys:name())) )
+   tk.msg( title[1], string.format(text[2], misn_target:name()) )
+   tk.msg( title[1], string.format(text[3], misn_target:name(), misn_target_sys:name()) )
 
    hook.land("land")
 end
@@ -128,8 +128,8 @@ function takeoff()
     music.play()
 
     -- Some text
-    tk.msg( title[1], string.format(text[4], _(misn_target:name())) )
-    misn.setDesc( string.format(misn_desc[2], _(misn_base:name()), _(misn_base_sys:name()) ))
+    tk.msg( title[1], string.format(text[4], misn_target:name()) )
+    misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
 
     -- Build the actual cutscene
     player.pilot():setInvisible(true)

@@ -114,7 +114,7 @@ int sp_load (void)
             continue;
          }
 
-         WARN(_("Slot Property '%s' has unknown node '%s'."), cur->name);
+         WARN(_("Slot Property '%s' has unknown node '%s'."), node->name, cur->name);
       } while (xml_nextNode(cur));
 
    } while (xml_nextNode(node));

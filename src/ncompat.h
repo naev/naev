@@ -92,14 +92,13 @@
 #endif
 
 
-/* Misc stuff - mainly for debugging. */
 /**
- * @brief Whether or not to use filedescriptors.
+ * @brief Whether the system has a safe snprintf().
  */
-#if HAS_POSIX
-#define HAS_FD 1
+#if defined(__MINGW64_VERSION_MAJOR)
+#define HAS_SNPRINTF (__MINGW_VERSION_MAJOR > 5) || (__MINGW_VERSION_MAJOR == 5 && __MINGW64_VERSION_BUGFIX >= 4)
 #else
-#define HAS_FD 0
+#define HAS_SNPRINTF HAS_POSIX
 #endif
 
 

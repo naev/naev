@@ -59,9 +59,23 @@ osd_msg[1] = _("Fly to the %s system")
 osd_msg[2] = ""
 osd_msg[3] = _("Return to %s")
 osd_msg["__save"] = true
-osd_msg2 = _("Destroy at least %d drones (%d remaining)")
+osd_msg2 = _("%s (%s)")
 
 log_text = _([[You delivered a commando team to Eiroik for the Empire to set up more sophisticated surveillance of the Collective. Lt. Commander Dimitri said that they should be back in about 10 periods and that the Empire will probably need your assistance on Omega Station again at that time.]])
+
+
+function setOSD (dronequota, droneleft)
+   local destroy_text, remaining_text
+   destroy_text = gettext.ngettext(
+         "Destroy at least %d drone",
+         "Destroy at least %d drones",
+         dronequota ):format( dronequota )
+   remaining_text = gettext.ngettext(
+         "%d remaining",
+         "%d remaining",
+         droneleft ):format( droneleft )
+   osd_msg[2] = osd_msg2:format(destroy_text, remaining_text)
+end
 
 
 function create ()
@@ -91,13 +105,13 @@ function accept ()
       -- Mission details
       misn.setTitle(misn_title)
       misn.setReward( creditstring( credits ) )
-      misn.setDesc( string.format(misn_desc[1], _(misn_target_sys:name()) ))
+      misn.setDesc( string.format(misn_desc[1], misn_target_sys:name() ))
 
       tk.msg( title[1], string.format(text[2], commando_planet, commando_planet ) )
       tk.msg( title[1], text[3] )
-      osd_msg[1] = osd_msg[1]:format(_(misn_target_sys:name()))
-      osd_msg[2] = osd_msg2:format(dronequota, droneleft)
-      osd_msg[3] = osd_msg[3]:format(_(misn_base:name()))
+      osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
+      setOSD(dronequota, droneleft)
+      osd_msg[3] = osd_msg[3]:format(misn_base:name())
       misn.osdCreate(misn_title, osd_msg)
 
       hook.enter("jumpin")
@@ -118,7 +132,7 @@ end
 function death(pilot)
     if pilot:faction() == faction.get("Collective") and (pilot:ship() == ship.get("Drone") or pilot:ship() == ship.get("Heavy Drone")) and droneleft > 0 then
         droneleft = droneleft - 1
-        osd_msg[2] = osd_msg2:format(dronequota, droneleft)
+        setOSD(dronequota, droneleft)
         misn.osdCreate(misn_title, osd_msg)
         misn.osdActive(2)
         if droneleft == 0 then
