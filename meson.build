@@ -169,6 +169,17 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_OV_READ_FILTER', cc.has_header_symbol('vorbis/vorbisfile.h', 'ov_read_filter'))
    config_data.set10('HAVE_STDALIGN_H', cc.has_header('stdalign.h'))
 
+   # OS declaration
+   if host_machine.system() == 'linux'
+      config_data.set10('LINUX', true)
+   elif host_machine.system() == 'freebsd'
+      config_data.set10('FREEBSD', true)
+   elif host_machine.system() == 'darwin'
+      config_data.set10('MACOS', true)
+   elif host_machine.system() == 'windows'
+      config_data.set10('WIN32', true)
+   endif
+
    ### Generated sources
 
    # VERSION
