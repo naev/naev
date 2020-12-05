@@ -268,19 +268,6 @@ jobs:
 
           chmod +x dist/out/naev-$SUFFIX-linux-x86-64.AppImage
 
-      - name: Collect files for itch.io
-        if: ${{ matrix.releasetype == 'itch' }}
-        run: |
-          BUILD_DATE="$(date +%Y%m%d)"
-          VERSION="$(<"dist/staging/naev-version/VERSION")"
-          SUFFIX="$VERSION.$BUILD_DATE"
-
-          mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
-          chmod +x dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
-
-          tar -Jxf "dist/staging/naev-win64/steam-win64.tar.xz" -C "dist/out/win64"
-          tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64"
-
       - name: Upload Github Release
         if: ${{ matrix.releasetype == 'github' }}
         uses: "marvinpinto/action-automatic-releases@latest"
@@ -292,6 +279,24 @@ jobs:
           files: |
             ${{ github.workspace }}/dist/out/*
           
+      - name: Build and Upload itch.io Release
+        if: ${{ matrix.releasetype == 'itch' }}
+        run: |
+          BUILD_DATE="$(date +%Y%m%d)"
+          VERSION="$(<"dist/staging/naev-version/VERSION")"
+          SUFFIX="$VERSION.$BUILD_DATE"
+
+          mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
+          chmod +x dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
+
+          tar -Jxf "dist/staging/naev-win64/steam-win64.tar.xz" -C "dist/out/win64"
+          tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64"
+          
+          ./butler push --userversion="$SUFFIX" dist/out/lin64 projectsynchro/test-project:linux-x86-64-nightly
+          ./butler push --userversion="$SUFFIX" dist/out/win64 projectsynchro/test-project:windows-x86-64-nightly
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+
       - name: Build and Upload Steam Release
         if: ${{ matrix.releasetype == 'steam' }}
         run: |
@@ -304,11 +309,3 @@ jobs:
           TFA_IMAP: ${{ secrets.TFA_IMAP }}
           TFA_PASS: ${{ secrets.TFA_PASS }}
           TFA_USER: ${{ secrets.TFA_USER }}
-
-      - name: Build and Upload itch.io Release
-        if: ${{ matrix.releasetype == 'itch' }}
-        run: |
-          ./butler push --userversion="$SUFFIX" dist/out/lin64 projectsynchro/test-project:linux-x86-64-nightly
-          ./butler push --userversion="$SUFFIX" dist/out/win64 projectsynchro/test-project:windows-x86-64-nightly
-        env:
-          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
