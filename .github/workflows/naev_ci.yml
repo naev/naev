@@ -222,8 +222,10 @@ jobs:
 
     - name: Package Autotools Dist
       run: |
-          make dist-gzip
+          $MAKE dist-gzip
       working-directory: "repo"
+      env:
+        MAKE: "${{ matrix.make }}"
 
     - name: Upload Autotools Dist Artifact
       uses: actions/upload-artifact@v2
