@@ -7,87 +7,13 @@ env:
   MESON: "${{ github.workspace }}/source/meson.sh"
 
 jobs:
-  "Test_Dist":
-    runs-on: ubuntu-20.04
-
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - buildtype: meson
-          - buildtype: autotools
-
-    steps:
-    - name: Checkout Naev Repository
-      uses: actions/checkout@v2
-      with:
-        path: source
-        fetch-depth: 0
-
-    - name: Update APT Cache
-      run: |
-        sudo apt-get update
-
-    - name: Install Additional Build Dependencies
-      run: |
-        sudo apt-get install \
-          automake \
-          autopoint \
-          autoconf-archive \
-          build-essential \
-          binutils-dev \
-          gettext \
-          intltool \
-          libsdl2-dev \
-          libsdl2-mixer-dev \
-          libsdl2-image-dev \
-          libgl1-mesa-dev \
-          libxml2-dev \
-          libfreetype6-dev \
-          libpng-dev \
-          libopenal-dev \
-          libvorbis-dev \
-          libiberty-dev \
-          ninja-build
-
-    - name:  Package Meson Dist
-      if: ${{ matrix.buildtype == 'meson' }}
-      run: |
-        sh $MESON setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
-        sh $MESON dist -C build --no-tests --include-subprojects
-
-    - name: Package Autotools Dist
-      if: ${{ matrix.buildtype == 'autotools' }}
-      run: |
-          ./autogen.sh
-          ./configure
-          make dist-gzip
-          #make distcheck (broken)
-      working-directory: "source"
-
-    - name: Upload Meson Dist Artifact
-      if: ${{ matrix.buildtype == 'meson' }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: naev-meson-dist-${{ github.sha }}
-        path: ${{ github.workspace }}/build/meson-dist/*
-        if-no-files-found: error
-
-    - name: Upload Autotools Dist Artifact
-      if: ${{ matrix.buildtype == 'autotools' }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: naev-autotools-dist-${{ github.sha }}
-        path: ${{ github.workspace }}/source/naev-*.tar.gz
-        if-no-files-found: error
-
   "Meson_Compile_Naev":
 
     strategy:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-20.04
+          - os: ubuntu-latest
             shell: bash
             config: linux.ini
 
@@ -147,6 +73,18 @@ jobs:
         path: source
         fetch-depth: 0
 
+    - name:  Package Meson Dist
+      run: |
+        sh $MESON setup dist source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
+        sh $MESON dist -C dist --no-tests --include-subprojects
+        
+    - name: Upload Meson Dist Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-meson-dist-${{ github.sha }}
+        path: ${{ github.workspace }}/dist/meson-dist/*
+        if-no-files-found: error
+
     - name: Meson Setup
       id: setup
       run: |
@@ -188,7 +126,7 @@ jobs:
       uses: actions/upload-artifact@v2
       if: ${{ success() || steps.tests.outcome == 'failure' }}
       with:
-        name: ${{ matrix.os }}-meson-${{ github.sha }}-install-log
+        name: ${{ matrix.os }}-meson-${{ github.sha }}-test-log
         path: ${{ github.workspace }}/build/meson-logs/testlog.txt
         if-no-files-found: ignore
 
@@ -210,7 +148,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-20.04
+          - os: ubuntu-latest
             shell: bash
 
           - os: windows-latest
@@ -272,15 +210,27 @@ jobs:
         ./configure
       working-directory: source
 
-    - name: Autotools Compile
+    - name: Package Autotools Dist
       run: |
-        make -j"$(nproc)"
-      working-directory: source
+          make dist-gzip
+      working-directory: "source"
+      
+    - name: Test Autotools Dist
+      run: |
+          make distcheck -j"$(nproc)"
+      working-directory: "source"
 
     - name: Test Autotools Install
       run: |
         make install
       working-directory: source
+
+    - name: Upload Autotools Dist Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-autotools-dist-${{ github.sha }}
+        path: ${{ github.workspace }}/source/naev-*.tar.gz
+        if-no-files-found: error
 
   "AppImage_Compile_Naev":
     needs: [Meson_Compile_Naev, Autotools_Compile_Naev]
@@ -356,8 +306,8 @@ jobs:
         if-no-files-found: error
 
   "Documentation":
-    needs: [AppImage_Compile_Naev, Test_Dist]
-    runs-on: ubuntu-20.04
+    needs: [AppImage_Compile_Naev, Autotools_Compile_Naev, Meson_Compile_Naev]
+    runs-on: ubuntu-latest
 
     steps:
     - name: Update APT Cache
