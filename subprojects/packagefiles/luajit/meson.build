@@ -3,6 +3,8 @@ project('luajit', 'c', version : '2.0.5', license : 'mit')
 # TODO: This is not ideal. We should translate the enough of the makefile to have Meson handle the build.
 cc = meson.get_compiler('c')
 
+make = find_program('make', 'mingw32-make', required : true)
+
 env = environment()
 if meson.is_cross_build()
     # Construct the compiler prefix, e.g. 'x86_64-w64-mingw32-'.
@@ -25,7 +27,7 @@ if meson.is_cross_build()
 endif
 
 run_command(
-    'make', '-C', meson.current_source_dir(), 'amalg',
+    make, '-C', meson.current_source_dir(), 'amalg',
     check: true,
     env: env)
 
