@@ -122,7 +122,9 @@ jobs:
             libpng-dev \
             libopenal-dev \
             libvorbis-dev \
-            libiberty-dev
+            libiberty-dev \
+            libluajit-5.1-dev \
+            libsuitesparse-dev
             
       - name: Install MinGW Packages
         if: ${{ runner.os == 'Windows'}}
