@@ -11,11 +11,11 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <cpu_max>53</cpu_max>
-  <shield>300</shield>
-  <shield_regen>7</shield_regen>
-  <energy>900</energy>
-  <energy_regen>50</energy_regen>
+  <cpu_max>280</cpu_max>
+  <shield>400</shield>
+  <shield_regen>9</shield_regen>
+  <energy>675</energy>
+  <energy_regen>45</energy_regen>
   <ew_hide>0</ew_hide>
  </specific>
 </outfit>

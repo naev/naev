@@ -5,17 +5,17 @@
   <slot prop="systems">utility</slot>
   <size>large</size>
   <priority>7</priority>
-  <mass>975</mass>
+  <mass>1300</mass>
   <price>2600000</price>
   <description>Milspec cares about your personal safety. Your protection is our concern. The Aegis 9801 grants your ship excellent shield strength while preserving a high level of subsystem control and energy capacity. Fly safe, fly Milspec.</description>
   <gfx_store>core_system_shield_l2</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>235</cpu_max>
+  <cpu_max>3400</cpu_max>
   <shield>1200</shield>
   <shield_regen>22</shield_regen>
-  <energy>3800</energy>
-  <energy_regen>175</energy_regen>
+  <energy>4500</energy>
+  <energy_regen>150</energy_regen>
   <ew_hide>0</ew_hide>
  </specific>
 </outfit>

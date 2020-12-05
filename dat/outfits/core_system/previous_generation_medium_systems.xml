@@ -4,16 +4,16 @@
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>medium</size>
-  <mass>110</mass>
+  <mass>70</mass>
   <price>0</price>
   <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
   <gfx_store>reactor01</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>40</cpu_max>
-  <shield>250</shield>
-  <shield_regen>6</shield_regen>
-  <energy>700</energy>
+  <cpu_max>220</cpu_max>
+  <shield>310</shield>
+  <shield_regen>8</shield_regen>
+  <energy>600</energy>
   <energy_regen>40</energy_regen>
   <ew_hide>0</ew_hide>
  </specific>

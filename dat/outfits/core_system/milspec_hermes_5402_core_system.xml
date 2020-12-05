@@ -11,11 +11,11 @@
   <gfx_store>core_system_cpu_m2</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>135</cpu_max>
+  <cpu_max>500</cpu_max>
   <shield>500</shield>
   <shield_regen>10</shield_regen>
-  <energy>1600</energy>
-  <energy_regen>85</energy_regen>
+  <energy>1500</energy>
+  <energy_regen>75</energy_regen>
   <ew_hide>0</ew_hide>
  </specific>
 </outfit>
