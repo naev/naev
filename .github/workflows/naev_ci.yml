@@ -317,7 +317,7 @@ jobs:
       if: ${{ matrix.buildtype == 'autotools' }}
       id: autotoolsCompile
       run: |
-        ./repo/utils/buildAppImage.sh -c -s "repo" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
+        ./repo/utils/buildAppImage.sh -c -s "repo" -b "repo" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
 
     - name: Compile AppImage Meson
       if: ${{ matrix.buildtype == 'meson' }}
