@@ -310,26 +310,26 @@ jobs:
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
       with:
-        path: source
+        path: repo
         fetch-depth: 0
 
     - name: Compile AppImage Autotools
       if: ${{ matrix.buildtype == 'autotools' }}
       id: autotoolsCompile
       run: |
-        ./source/utils/buildAppImage.sh -c -s "source" -b "source" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
+        ./repo/utils/buildAppImage.sh -c -s "repo" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
 
     - name: Compile AppImage Meson
       if: ${{ matrix.buildtype == 'meson' }}
       id: mesonCompile
       run: |
-        ./source/utils/buildAppImage.sh -c -m -s "source" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
+        ./repo/utils/buildAppImage.sh -c -m -s "repo" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
 
     - name: Upload Compile Log
       uses: actions/upload-artifact@v2
       if: ${{ (success() || steps.mesonCompile.outcome == 'failure' || steps.autotoolsCompile.outcome == 'failure') }}
       with:
-        name: ${{ matrix.os }}-${{ github.sha }}-${{ matrix.buildtype }}AppImageBuild-log
+        name: naev-${{ github.sha }}-${{ matrix.buildtype }}AppImageBuild-log
         path: ${{ github.workspace }}/appImageBuildLog.txt
         if-no-files-found: ignore
 
@@ -360,7 +360,7 @@ jobs:
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
       with:
-        path: source
+        path: repo
         fetch-depth: 0
         
     - name: Meson Build
