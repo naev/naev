@@ -2,8 +2,8 @@ on:
   repository_dispatch:
     types: manual-nightly
   push:
-#  schedule:
-#    - cron: '0 0 * * *'
+  schedule:
+    - cron: '0 0 * * *'
 
 name: Nightly Release
 
@@ -217,13 +217,13 @@ jobs:
       fail-fast: true
       matrix:
         include:
-#          - releasetype: github
-#          - releasetype: steam
+          - releasetype: github
+          - releasetype: steam
           - releasetype: itch
             
     runs-on: ubuntu-latest
     needs: [Generate_Source, Build_Naev_Release, Build_Naev_Steam_Release]
-#    if: ${{ github.repository == 'naev/naev' }}
+    if: ${{ github.repository == 'naev/naev' }}
 
     steps:
       - name: Create Release Staging and Output Areas
