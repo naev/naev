@@ -85,9 +85,11 @@ jobs:
           - os: ubuntu-16.04
             buildoutput: naev-linux-x86-64
             shell: bash
+            make: make
           - os: windows-latest
             buildoutput: naev-win64
             shell: msys2 {0}
+            make: mingw32-make
     
     defaults:
       run:
@@ -141,9 +143,10 @@ jobs:
         run: |
           ./autogen.sh
           ./configure --disable-debug
-          make -j$(nproc --all)
+          $MAKE -j$(nproc --all)
         env:
           CFLAGS: "-O3"
+          MAKE: "${{ matrix.make }}"
           
       - name: Build and Package Naev for Linux64
         if: ${{ runner.os == 'Linux'}}
