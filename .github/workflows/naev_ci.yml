@@ -96,7 +96,7 @@ jobs:
       run: |
         sh $MESON setup build source \
             --native-file='source/utils/build/${{ matrix.config }}' \
-            --buildtype=release \
+            --buildtype=debug \
             -Db_lto=true \
             -Dauto_features=enabled \
             -Ddocs_c=disabled \
@@ -271,13 +271,11 @@ jobs:
           libfreetype6-dev \
           libgl1-mesa-dev \
           libiberty-dev \
-          libluajit-5.1-dev \
           libopenal-dev \
           libpng-dev \
           libsdl2-dev \
           libsdl2-image-dev \
           libsdl2-mixer-dev \
-          libsuitesparse-dev \
           libvorbis-dev \
           libxml2-dev \
           ninja-build=1.7.1-1~ubuntu16.04.1
@@ -298,7 +296,7 @@ jobs:
       if: ${{ matrix.buildtype == 'meson' }}
       id: mesonCompile
       run: |
-        ./source/utils/buildAppImage.sh -m -s "source" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
+        ./source/utils/buildAppImage.sh -c -m -s "source" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
 
     - name: Upload Compile Log
       uses: actions/upload-artifact@v2
