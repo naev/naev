@@ -15,7 +15,7 @@ else
 fi
 
 for lang in $linguas; do
-   lang=${lang:0:2}
+   lang=$(echo "$lang" | cut -c0-2)
    path="$BASEPATH/dat/gettext/${lang}/LC_MESSAGES/"
    mkdir -p "${path}"
    cp "./po/${lang}.gmo" "${path}naev.mo"
