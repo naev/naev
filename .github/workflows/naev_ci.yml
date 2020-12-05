@@ -253,13 +253,13 @@ jobs:
         path: ${{ github.workspace }}/source/config.log
         if-no-files-found: ignore
 
-    - name: Test Autotools Install
+    - name: Autotools Compile
       run: $MAKE -j"$(nproc)"
       working-directory: "source"
       env:
         MAKE: "${{ matrix.make }}"
 
-    - name: Test Autotools Install
+    - name: Autotools Install
       run: $MAKE install
       working-directory: "source"
       env:
