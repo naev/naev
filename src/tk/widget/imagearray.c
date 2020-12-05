@@ -199,21 +199,9 @@ static void iar_render( Widget* iar, double bx, double by )
 
          fontcolour = cFontWhite;
          /* Draw background. */
-         if (iar->dat.iar.images[pos].bg.a > 0.) {
-            if (is_selected) {
-               toolkit_drawRect( xcurs + 2.,
-                     ycurs + 2.,
-                     w - 5., h - 5., &cDarkGreen, NULL );
-            } else {
-               toolkit_drawRect( xcurs + 2.,
-                     ycurs + 2.,
-                     w - 5., h - 5., &iar->dat.iar.images[pos].bg, NULL );
-            }
-         } else if (is_selected) {
-            toolkit_drawRect( xcurs + 2.,
-                  ycurs + 2.,
-                  w - 5., h - 5., &cDarkGreen, NULL );
-         }
+         toolkit_drawRect( xcurs + 2.,
+               ycurs + 2.,
+               w - 5., h - 5., &iar->dat.iar.images[pos].bg, NULL );
 
          /* image */
          if (iar->dat.iar.images[pos].image != NULL)
