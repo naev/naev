@@ -231,9 +231,10 @@ jobs:
 
     - name: Test Autotools Dist
       run: |
-        make distcheck -j"$(nproc)"
+        $MAKE distcheck -j"$(nproc)"
       working-directory: "source"
-
+      env:
+        MAKE: "${{ matrix.make }}"
     - name: Upload Autotools Dist Artifact
       uses: actions/upload-artifact@v2
       with:
