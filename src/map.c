@@ -62,7 +62,6 @@ static int listMapModeVisible = 0; /**< Whether the map mode list widget is visi
 static double commod_av_gal_price = 0; /**< Average price across the galaxy. */
 /* VBO. */
 static gl_vbo *map_vbo = NULL; /**< Map VBO. */
-static gl_vbo *map_vbo_2 = NULL; /**< Map VBO. */
 static gl_vbo *marker_vbo = NULL;
 
 /*
@@ -116,8 +115,7 @@ int map_init (void)
    GLfloat vertex[6];
 
    /* Create the VBO. */
-   map_vbo = gl_vboCreateStream( sizeof(GLfloat) * 3*(2+4), NULL );
-   map_vbo_2 = gl_vboCreateStream( sizeof(GLfloat) * 6*(2+4), NULL );
+   map_vbo = gl_vboCreateStream( sizeof(GLfloat) * 6*(2+4), NULL );
 
    vertex[0] = 1;
    vertex[1] = 0;
@@ -143,10 +141,6 @@ void map_exit (void)
    if (map_vbo != NULL) {
       gl_vboDestroy(map_vbo);
       map_vbo = NULL;
-   }
-   if (map_vbo_2 != NULL) {
-      gl_vboDestroy(map_vbo_2);
-      map_vbo_2 = NULL;
    }
 
    if (gl_faction_disk != NULL)
@@ -1160,11 +1154,11 @@ static void map_renderPath( double x, double y, double a )
             vertex[4*k+14] = col->b;
             vertex[4*k+15] = a/4. + .25 + h0*h1; /* More solid in the middle for some reason. */
          }
-         gl_vboSubData( map_vbo_2, 0, sizeof(GLfloat) * 6*(2+4), vertex );
+         gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 6*(2+4), vertex );
 
          gl_beginSmoothProgram(gl_view_matrix);
-         gl_vboActivateAttribOffset( map_vbo_2, shaders.smooth.vertex, 0, 2, GL_FLOAT, 0 );
-         gl_vboActivateAttribOffset( map_vbo_2, shaders.smooth.vertex_color,
+         gl_vboActivateAttribOffset( map_vbo, shaders.smooth.vertex, 0, 2, GL_FLOAT, 0 );
+         gl_vboActivateAttribOffset( map_vbo, shaders.smooth.vertex_color,
                sizeof(GLfloat) * 2*6, 4, GL_FLOAT, 0 );
          glDrawArrays( GL_TRIANGLE_STRIP, 0, 6 );
          gl_endSmoothProgram();
