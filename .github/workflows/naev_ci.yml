@@ -156,9 +156,11 @@ jobs:
         include:
           - os: ubuntu-20.04
             shell: bash
+            make: make
 
           - os: windows-latest
             shell: msys2 {0}
+            make: mingw32-make
 
     defaults:
       run:
@@ -216,6 +218,8 @@ jobs:
         ./autogen.sh
         ./configure
       working-directory: source
+      env:
+        MAKE: "${{ matrix.make }}"
 
     - name: Upload Configure Log
       uses: actions/upload-artifact@v2
