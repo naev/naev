@@ -1137,7 +1137,7 @@ static void map_renderPath( double x, double y, double a )
          y0 = y + sys0->pos.y * map_zoom;
          x1 = x + sys1->pos.x * map_zoom;
          y1 = y + sys1->pos.y * map_zoom;
-         w0 = w1 = map_zoom / hypot( x0-x1, y0-y1 );
+         w0 = w1 = MIN( map_zoom, 1.5 ) / hypot( x0-x1, y0-y1 );
          w0 *= jcur >= 1 ? 4 : 2;
          jcur--;
          w1 *= jcur >= 1 ? 4 : 2;
