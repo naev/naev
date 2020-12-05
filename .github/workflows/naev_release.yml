@@ -388,4 +388,3 @@ jobs:
           TFA_IMAP: ${{ secrets.TFA_IMAP }}
           TFA_PASS: ${{ secrets.TFA_PASS }}
           TFA_USER: ${{ secrets.TFA_USER }}
-
