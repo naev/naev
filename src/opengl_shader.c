@@ -8,24 +8,34 @@
 #include "log.h"
 #include "nstring.h"
 
+
+#define GLSL_VERSION    "#version 140\n"
+
 /**
  * @brief Open and compile GLSL shader from ndata.
  */
 GLuint gl_shader_read(GLuint type, const char *filename) {
-   size_t bufsize;
-   char *buf;
+   size_t bufsize, fbufsize;
+   char *buf, *fbuf;
    char path[PATH_MAX];
    GLuint shader;
    GLint length, compile_status, log_length;
    char *log;
 
+   /* Load the file. */
    nsnprintf(path, sizeof(path), GLSL_PATH "%s", filename);
-
-   buf = ndata_read(path, &bufsize);
-   if (buf == NULL) {
+   fbuf = ndata_read(path, &fbufsize);
+   if (fbuf == NULL) {
       WARN( _("Shader '%s' not found."), path);
       return 0;
    }
+
+   /* Prepend the GLSL version. */
+   bufsize = fbufsize+sizeof(GLSL_VERSION);
+   buf = malloc( bufsize );
+   snprintf( buf, bufsize, "%s%s", GLSL_VERSION, fbuf );
+   free( fbuf);
+
    length = bufsize;
    
    shader = glCreateShader(type);
