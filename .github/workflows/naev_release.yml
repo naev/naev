@@ -299,7 +299,7 @@ jobs:
           - releasetype: itch
             
     runs-on: ubuntu-latest
-    needs: [Generate_Source, Build_Naev_Release, Build_Naev_Steam_Release]
+    needs: [Generate_Source, Build_Naev_Release, Build_Naev_Steam_Release, Build_Naev_Steam_Soundtrack]
 #    if: ${{ github.repository == 'naev/naev' }}
 
     steps:
@@ -364,7 +364,7 @@ jobs:
           SUFFIX="$VERSION"
 
           mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
-          mv dist/staging/naev-soundtrack/naev-*-soundtrack.zip dist/out/soundtrack/naev-$SUFFIX-soundtrack.zip
+          mv dist/staging/naev-steam-soundtrack/* dist/out/soundtrack
           chmod +x dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
 
           tar -Jxf "dist/staging/naev-win64/steam-win64.tar.xz" -C "dist/out/win64"
