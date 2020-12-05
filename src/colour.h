@@ -70,9 +70,7 @@ extern const glColour cBlackHilight;
 extern const glColour cHilight;
 /* objects */
 extern const glColour cInert;
-extern const glColour cMapInert;
 extern const glColour cNeutral;
-extern const glColour cMapNeutral;
 extern const glColour cFriend;
 extern const glColour cHostile;
 extern const glColour cRestricted;
