@@ -305,7 +305,7 @@ jobs:
     steps:
       - name: Create Release Staging and Output Areas
         run: |
-          mkdir -p {temp,dist/{staging,out/{lin64,win64}}}
+          mkdir -p {temp,dist/{staging,out/{lin64,win64,soundtrack}}}
           
       - name: Update APT Cache
         if: ${{ matrix.releasetype == 'steam' }}
