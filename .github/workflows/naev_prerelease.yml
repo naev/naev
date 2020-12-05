@@ -224,6 +224,7 @@ jobs:
             
     runs-on: ubuntu-latest
     needs: [Generate_Source, Build_Naev_Release, Build_Naev_Steam_Release]
+#    if: ${{ github.repository == 'naev/naev' }}
 
     steps:
       - name: Create Release Staging and Output Areas
