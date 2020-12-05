@@ -328,7 +328,7 @@ nodist_naev_SOURCES = $(top_builddir)/extras/windows/resource.rc
 CLEANFILES += $(top_builddir)/extras/windows/naev.exe.manifest $(top_builddir)/extras/windows/resource.rc
 $(top_builddir)/extras/windows/naev.exe.manifest: $(top_srcdir)/extras/windows/naev.exe.manifest.in
 	../config.status -q --file=$@:$<
-$(top_builddir)/extras/windows/resource.rc: $(top_srcdir)/extras/windows/resource.rc.in
+$(top_builddir)/extras/windows/resource.rc: $(top_srcdir)/extras/windows/resource.rc.in $(top_builddir)/extras/windows/naev.exe.manifest
 	../config.status -q --file=$@:$<
 .rc.o:
 	@WINDRES@ -I$(top_builddir)/extras/windows -I$(top_srcdir)/extras/logos $< -O coff $@
