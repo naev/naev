@@ -209,15 +209,39 @@ jobs:
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
       with:
-        path: source
+        path: repo
         fetch-depth: 0
 
     - name: Autotools Setup
-      id: setup
       run: |
         ./autogen.sh
         ./configure
-      working-directory: source
+      working-directory: repo
+      env:
+        MAKE: "${{ matrix.make }}"
+
+    - name: Package Autotools Dist
+      run: |
+          make dist-gzip
+      working-directory: "repo"
+
+    - name: Upload Autotools Dist Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: naev-autotools-dist-${{ github.sha }}
+        path: ${{ github.workspace }}/repo/naev-*.tar.gz
+        if-no-files-found: error
+
+    - name: Extract Source
+      run: |
+        mkdir source
+        tar -xf repo/naev-*.tar.gz -C source --strip 1
+      working-directory: ${{ github.workspace }}
+
+    - name: Autotools Setup
+      id: setup
+      run: ./configure
+      working-directory: repo
       env:
         MAKE: "${{ matrix.make }}"
 
@@ -229,18 +253,17 @@ jobs:
         path: ${{ github.workspace }}/source/config.log
         if-no-files-found: ignore
 
-    - name: Test Autotools Dist
-      run: |
-        $MAKE distcheck -j"$(nproc)"
+    - name: Test Autotools Install
+      run: $MAKE -j"$(nproc)"
       working-directory: "source"
       env:
         MAKE: "${{ matrix.make }}"
-    - name: Upload Autotools Dist Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: naev-autotools-dist-${{ github.sha }}
-        path: ${{ github.workspace }}/source/naev-*.tar.gz
-        if-no-files-found: error
+
+    - name: Test Autotools Install
+      run: $MAKE install
+      working-directory: "source"
+      env:
+        MAKE: "${{ matrix.make }}"
 
   "AppImage_Compile_Naev":
     needs: [Meson_Compile_Naev, Autotools_Compile_Naev]
