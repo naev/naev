@@ -241,7 +241,7 @@ jobs:
     - name: Autotools Setup
       id: setup
       run: ./configure
-      working-directory: repo
+      working-directory: source
       env:
         MAKE: "${{ matrix.make }}"
 
