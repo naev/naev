@@ -316,6 +316,7 @@ jobs:
 
           tar -Jxf "dist/staging/naev-win64/steam-win64.tar.xz" -C "dist/out/win64"
           tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64"
+          ls -l "dist/out/win64"
           mv "dist/out/win64/naev*.exe" "dist/out/win64/naev.exe"
 
           ./butler push --userversion="$SUFFIX" dist/out/lin64 projectsynchro/test-project:linux-x86-64-nightly
