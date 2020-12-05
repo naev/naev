@@ -79,7 +79,7 @@ equip_classOutfits_engines = {
       "Tricon Zephyr II Engine"
    },
    ["Corvette"] = {
-      "Unicorp Falcon 550 Engine", "Nexus Arrow 550 Engine",
+      "Unicorp Falcon 700 Engine", "Nexus Arrow 700 Engine",
       "Tricon Cyclone Engine"
    },
    ["Destroyer"] = {

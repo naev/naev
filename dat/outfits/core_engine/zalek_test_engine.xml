@@ -5,18 +5,18 @@
   <slot prop="engines">structure</slot>
   <size>small</size>
   <rarity>1</rarity>
-  <mass>10</mass>
+  <mass>15</mass>
   <price>110000</price>
   <description>Built by Za'lek Fabricators, this engine doesn't aim to be an efficient engine. Its goal is to be easily moddable in order to allow Za'lek scinetists to test new refrigeration and propulsion systems. These engines are very often modded by students, which makes them unreliable.</description>
   <gfx_store>engine04</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <thrust>150</thrust>
-  <turn>130</turn>
-  <speed>275</speed>
+  <thrust>100</thrust>
+  <turn>85</turn>
+  <speed>175</speed>
   <fuel>200</fuel>
   <energy_usage>10</energy_usage>
-  <engine_limit>150</engine_limit>
+  <engine_limit>300</engine_limit>
  </specific>
 </outfit>
