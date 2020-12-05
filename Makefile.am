@@ -72,11 +72,11 @@ endif # HAVE_ITSTOOL
 if HAVE_DATA
 pot: $(NAEVPOT)
 
-$(NAEVPOT): $(CREDITSPOT) $(XMLPOT) $(LANGUAGEFILE)
+$(NAEVPOT): $(LANGUAGEFILE) $(CREDITSPOT) $(XMLPOT)
 	$(MAKE) -C po
 	$(MAKE) -C po naev_src.pot
 	$(XGETTEXT) --from-code=UTF-8 -o $(NAEVPOT) $(NAEVSRCPOT) $(XMLPOT) $(CREDITSPOT)
-	$(top_srcdir)/utils/gettext.sh $(top_builddir)
+	$(top_srcdir)/utils/gettext.sh $(top_builddir) $<
 
 $(LANGUAGEFILE): $(top_srcdir)/po/LINGUAS
 	@mkdir -p $(top_builddir)/dat
@@ -107,6 +107,9 @@ $(MKSPR):
 
 install-data-local:
 	(cd $(top_srcdir)/dat; find . -type f -exec install -Dm 644 "{}" "$(DESTDIR)$(pkgdatadir)/dat/{}" \;)
+
+clean-local:
+	(rm -rf $(top_builddir)/dat/gettext)
 
 uninstall-hook:
 	echo " rm -rf '$(DESTDIR)$(pkgdatadir)'"; \
