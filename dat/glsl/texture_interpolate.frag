@@ -1,5 +1,3 @@
-#version 140
-
 uniform vec4 color;
 uniform float inter;
 uniform sampler2D sampler1;

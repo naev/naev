@@ -1,5 +1,3 @@
-#version 140
-
 in float brightness_out;
 out vec4 color_out;
 

@@ -1,5 +1,3 @@
-#version 140
-
 uniform vec4 dc;
 uniform vec4 c;
 uniform vec4 lc;

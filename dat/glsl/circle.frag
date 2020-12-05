@@ -1,5 +1,3 @@
-#version 140
-
 uniform vec4 color;
 uniform float radius;
 out vec4 color_out;
