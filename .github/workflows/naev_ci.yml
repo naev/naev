@@ -4,7 +4,7 @@ name: CI
 
 env:
   DESTDIR: "${{ github.workspace }}/dist"
-  MESON: "${{ github.workspace }}/source/meson.sh"
+  MESON: "${{ github.workspace }}/repo/meson.sh"
 
 jobs:
   "Meson_Compile_Naev":
