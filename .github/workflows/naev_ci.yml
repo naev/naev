@@ -216,6 +216,14 @@ jobs:
         ./configure
       working-directory: source
 
+    - name: Upload Configure Log
+      uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.setup.outcome == 'failure' }}
+      with:
+        name: ${{ matrix.os }}-autotools-${{ github.sha }}-configure-log
+        path: ${{ github.workspace }}/source/config.log
+        if-no-files-found: ignore
+
     - name: Test Autotools Dist
       run: |
         make distcheck -j"$(nproc)"
