@@ -220,11 +220,6 @@ jobs:
           make distcheck -j"$(nproc)"
       working-directory: "source"
 
-    - name: Test Autotools Install
-      run: |
-        make install
-      working-directory: source
-
     - name: Upload Autotools Dist Artifact
       uses: actions/upload-artifact@v2
       with:
