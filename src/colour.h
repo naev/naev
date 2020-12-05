@@ -65,9 +65,6 @@ extern const glColour cAqua;
 /*
  * game specific
  */
-/*
- * game specific
- */
 extern const glColour cBlackHilight;
 /* toolkit */
 extern const glColour cHilight;
@@ -101,8 +98,11 @@ extern const glColour cFontWhite;
 extern const glColour cFontGrey;
 extern const glColour cFontPurple;
 
-const glColour* col_fromName( const char* name );
 
+/*
+ * Misc functions.
+ */
+const glColour* col_fromName( const char* name );
 
 /*
  * Colour space conversion routines.
