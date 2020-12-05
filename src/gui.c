@@ -1507,7 +1507,7 @@ static const glColour *gui_getPlanetColour( int i )
    planet = cur_system->planets[i];
 
    if (i == player.p->nav_planet)
-      col = &cWhite;
+      col = &cRadar_tPlanet;
    else
       col = planet_getColour( planet );
 
