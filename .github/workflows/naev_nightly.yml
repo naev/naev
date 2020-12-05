@@ -168,7 +168,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: registry.gitlab.steamos.cloud/steamrt/scout/sdk
+      image: dosowisko/steam-runtime-amd64
       volumes:
         - ${{ github.workspace }}:${{ github.workspace }}
 
