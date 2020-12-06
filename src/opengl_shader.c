@@ -9,7 +9,7 @@
 #include "nstring.h"
 
 
-#define GLSL_VERSION    "#version 140\n\n"
+#define GLSL_VERSION    "#version 140\n\n" /**< Version to use for all shaders. */
 
 
 /**
