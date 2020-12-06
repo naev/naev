@@ -1468,6 +1468,10 @@
      - rarity_3.png
      - rarity_4.png
      - rarity_5.png
+- Edgar Simo-Serra \"bobbens\" (based on work by GNOME PROJECT):
+   license: CC-by-sa 3.0
+   overlays:
+     - active.png
 - Écrivain <https://opengameart.org/users/%C3%A9crivain>:
    license: CC0
    overlay:
