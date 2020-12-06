@@ -1513,8 +1513,8 @@ eq_qCol( cur, base, inv ), eq_qSym( cur, base, inv ), cur
 void equipment_updateShips( unsigned int wid, char* str )
 {
    (void)str;
-   char buf[1024], buf2[ECON_CRED_STRLEN];
-   char errorReport[256];
+   char buf[STRMAX], buf2[ECON_CRED_STRLEN];
+   char errorReport[STRMAX_SHORT];
    char *shipname;
    Pilot *ship;
    char *nt;
