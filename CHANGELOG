@@ -68,4 +68,6 @@
       * Added workaround for ALSOFT buggy version that crashes
       * Added a polygon-based collision algorithm
       * Added some symbols for partial colorblind accessibility
+      * Support #include in shaders
+      * Multiple font support
       * Many bugfixes
