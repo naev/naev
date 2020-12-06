@@ -347,8 +347,14 @@ case "$host" in
 esac
 
 # global
-GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\" -include \"\$(top_builddir)/src/attributes.h\" -I\"\$(top_srcdir)/src\" -DPKGDATADIR=\\\"\$(pkgdatadir)\\\" -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -Wredundant-decls -Wcast-align -Wformat -Wformat-security -std=gnu11"
+GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\" -include \"\$(top_builddir)/src/attributes.h\" -I\"\$(top_srcdir)/src\" -DPKGDATADIR=\\\"\$(pkgdatadir)\\\" -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -Wredundant-decls -Wcast-align -Wformat -Wformat-security"
 GLOBAL_LIBS=
+
+# Checks for gnu11 flag support and applies it if found. (Needed for older GCC versions)
+AX_CHECK_COMPILE_FLAG([-std=gnu11],
+  [AX_APPEND_FLAG([-std=gnu11])],
+  [AC_MSG_WARN([-std=gnu11 not supported, you may have to set CFLAGS to enable C11 support.])
+])
 
 AS_IF([test "x$enable_debug" != "xno"], [
   GLOBAL_CFLAGS="$GLOBAL_CFLAGS -DLUA_USE_APICHECK"
