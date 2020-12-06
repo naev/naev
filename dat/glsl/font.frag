@@ -7,4 +7,6 @@ out vec4 color_out;
 void main(void) {
    color_out = color;
    color_out.a = texture(sampler, tex_coord_out).r;
+
+#include "colorblind.glsl"
 }

@@ -10,4 +10,6 @@ void main(void) {
       color_out.a *= pos / .1;
    else if (pos > .8)
       color_out.a *= 1. - ((pos - .8) / .2);
+
+#include "colorblind.glsl"
 }

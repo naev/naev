@@ -6,4 +6,6 @@ out vec4 color_out;
 
 void main(void) {
    color_out = color * texture(sampler, tex_coord);
+
+#include "colorblind.glsl"
 }
