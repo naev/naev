@@ -22,11 +22,11 @@
  */
 static char* gl_shader_loadfile( const char *filename, size_t *size, int main )
 {
-   size_t bufsize, ibufsize, fbufsize;
+   size_t i, bufsize, ibufsize, fbufsize;
    char *buf, *fbuf, *ibuf, *newbuf;
    char path[PATH_MAX], include[PATH_MAX-sizeof(GLSL_PATH)-1];
    const char *substart, *subs, *subss, *keyword;
-   int i, offset, len;
+   int offset, len;
 
    *size = 0;
 
