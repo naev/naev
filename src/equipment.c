@@ -1382,7 +1382,7 @@ static void equipment_genShipList( unsigned int wid )
 
       window_addImageArray( wid, 20, -40,
             sw, sh, EQUIPMENT_SHIPS, 96., 96.,
-            cships, nships, equipment_updateShips, NULL, NULL );
+            cships, nships, equipment_updateShips, NULL, equipment_transChangeShip );
    }
 }
 
