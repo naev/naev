@@ -113,7 +113,6 @@ GLuint gl_shader_read(GLuint type, const char *filename) {
    char *buf, *log;
    GLuint shader;
    GLint length, compile_status, log_length;
-   DEBUG("%s",filename);
 
    /* Load the main shader. */
    buf = gl_shader_loadfile( filename, &bufsize, 1 );
