@@ -1067,7 +1067,7 @@ int economy_sysLoad( xmlNodePtr parent )
                               }
                               xmlr_attr(nodeCommodity,"time",str);
                               if (str) {
-                                 cp->updateTime = atol(str);
+                                 cp->updateTime = atoll(str);
                                  free(str);
                               }
                            }
@@ -1079,7 +1079,7 @@ int economy_sysLoad( xmlNodePtr parent )
                xmlr_attr(cur, "name", str);
                if (str) {
                   c=commodity_get(str);
-                  c->lastPurchasePrice=atol(xml_raw(cur));
+                  c->lastPurchasePrice=xml_getLong(cur);
                   free(str);
                }
             }

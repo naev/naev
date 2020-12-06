@@ -455,7 +455,7 @@ int shiplog_load( xmlNodePtr parent )
                   }
                   xmlr_attr(cur, "r", str);
                   if (str) {
-                     shipLog->removeAfter[shipLog->nlogs-1] = atol(str);
+                     shipLog->removeAfter[shipLog->nlogs-1] = atoll(str);
                      free(str);
                   }
                   xmlr_attr(cur, "s", str);
