@@ -82,7 +82,7 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
 
    /* Calculate image array dimensions. */
    if (iw != NULL)
-      *iw = 504 + (*w - LAND_WIDTH);
+      *iw = 704 + (*w - LAND_WIDTH);
    if (ih != NULL)
       *ih = *h - 60;
 
