@@ -47,8 +47,8 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, int main )
       free( fbuf );
    }
    else {
-      buf = fbuf;
       bufsize = fbufsize;
+      buf = fbuf;
    }
 
    /* Preprocess for #include */
@@ -90,6 +90,9 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, int main )
       strncpy( &newbuf[offset], subs+1, bufsize-(subs-buf-1) );
       offset += len;
       newbuf[offset] = '\0';
+
+      /* Reset the pointers. */
+      subs = &newbuf[subs-buf];
 
       /* Swap buffers. */
       free(buf);
