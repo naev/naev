@@ -8,8 +8,8 @@
 #  define LAND_H
 
 
-#include "attributes.h"
 #include "conf.h"
+#include "nstring.h"
 #include "space.h"
 
 

@@ -8,7 +8,7 @@
 #  define DIALOGUE_H
 
 
-#include "attributes.h"
+#include "nstring.h"
 
 
 /*

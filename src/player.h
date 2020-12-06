@@ -7,7 +7,7 @@
 #  define PLAYER_H
 
 
-#include "attributes.h"
+#include "nstring.h"
 #include "pilot.h"
 
 /** Player flag enum. */
