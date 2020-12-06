@@ -427,6 +427,8 @@ int main( int argc, char** argv )
    menu_main();
 
    LOG( _( "Reached main menu" ) );
+   if (conf.devunittest)
+      exit( 0 );
 
    /* Force a minimum delay with loading screen */
    if ((SDL_GetTicks() - time_ms) < NAEV_INIT_DELAY)

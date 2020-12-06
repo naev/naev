@@ -115,6 +115,8 @@ static void print_usage( void )
 #ifdef DEBUGGING
    LOG(_("   --devmode             enables dev mode perks like the editors"));
    LOG(_("   --devcsv              generates csv output from the ndata for development purposes"));
+   /* Unit tests are always a good idea, but only advertise them in case of debug builds. */
+   LOG(_("   --devunittest         run the unit tests and exit."));
 #endif /* DEBUGGING */
    LOG(_("   -h, --help            display this message and exit"));
    LOG(_("   -v, --version         print the version and exit"));
@@ -172,6 +174,7 @@ void conf_setDefaults (void)
    conf.devmode      = 0;
    conf.devautosave  = 0;
    conf.devcsv       = 0;
+   conf.devunittest  = 0;
    if (conf.lastversion != NULL)
       free( conf.lastversion );
    conf.lastversion = strdup( "" );
@@ -641,6 +644,7 @@ void conf_parseCLI( int argc, char** argv )
       { "devmode", no_argument, 0, 'D' },
       { "devcsv", no_argument, 0, 'C' },
 #endif /* DEBUGGING */
+      { "devunittest", no_argument, 0, 'U' },
       { "help", no_argument, 0, 'h' },
       { "version", no_argument, 0, 'v' },
       { NULL, 0, 0, 0 } };
@@ -716,6 +720,11 @@ void conf_parseCLI( int argc, char** argv )
             LOG(_("Will generate CSV output."));
             break;
 #endif /* DEBUGGING */
+
+         case 'U':
+            conf.devunittest = 1;
+            LOG(_("Will self-test and exit."));
+            break;
 
          case 'v':
             /* by now it has already displayed the version */

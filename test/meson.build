@@ -1,11 +1,10 @@
 subdir('glcheck')
 
 test('Reaches main menu',
-    find_program('watch-for-msg.py'),
+    naev_bin,
     args: [
-        naev_bin,
-        meson.source_root() / 'dat',
-        'Reached main menu'],
+        '--devunittest',
+        meson.source_root() / 'dat'],
     workdir: meson.source_root(),
     protocol: 'exitcode')
 

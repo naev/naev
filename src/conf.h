@@ -152,6 +152,7 @@ typedef struct PlayerConf_s {
    int devmode; /**< Developer mode. */
    int devautosave; /**< Developer mode autosave. */
    int devcsv; /**< Output CSV data. */
+   int devunittest; /**< Run self-tests and exit. */
    char *lastversion; /**< The last version the game was ran in. */
 
    /* Debugging. */
