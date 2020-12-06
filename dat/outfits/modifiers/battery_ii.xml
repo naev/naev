@@ -4,12 +4,12 @@
   <typename>Power Modifier</typename>
   <slot>structure</slot>
   <size>medium</size>
-  <mass>30</mass>
+  <mass>36</mass>
   <price>120000</price>
-  <description>A large battery unit designed to hold 400 MJ of energy. Ideally mounted on medium-to-large vessels.</description>
+  <description>A large battery unit designed to hold 500 MJ of energy. Ideally mounted on medium-to-large vessels.</description>
   <gfx_store>capacitor2-g</gfx_store>
  </general>
  <specific type="modification">
-  <energy>400</energy>
+  <energy>500</energy>
  </specific>
 </outfit>

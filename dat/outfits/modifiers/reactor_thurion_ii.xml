@@ -9,10 +9,9 @@
   <price>970000</price>
   <gfx_store>reactor_ii</gfx_store>
   <description>Thurion-designed reactor that uses Positrons for a superior energy output.</description>
-  <cpu>-20</cpu>
+  <cpu>-10</cpu>
  </general>
  <specific type="modification">
-  <energy>120</energy>
   <energy_regen>20</energy_regen>
  </specific>
 </outfit>
