@@ -255,7 +255,7 @@ static void bar_getDim( int wid,
    window_dimWindow( wid, w, h );
 
    /* Calculate dimensions of portraits. */
-   *iw = 300 + (*w - 800);
+   *iw = 704 + (*w - LAND_WIDTH);
    *ih = *h - 60;
 
    /* Calculate button dimensions. */
@@ -375,7 +375,7 @@ static int bar_genList( unsigned int wid )
       }
    }
    window_addImageArray( wid, 20, -40,
-         iw, ih, "iarMissions", 100, 75,
+         iw, ih, "iarMissions", 128, 96,
          portraits, n, bar_update, bar_approach, bar_approach );
 
    /* Restore position. */
