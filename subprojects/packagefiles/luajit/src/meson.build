@@ -22,28 +22,6 @@ lj_defines = [
     '-DLUA_ROOT="' + get_option('prefix') + '"'
 ]
 
-if host_machine.system() == 'windows'
-    ljcore_sources += custom_target('lj_vm.obj',
-        input : [],
-        output : 'lj_vm.obj',
-        command : [buildvm, '-m', 'peobj', '-o', '@OUTPUT@']
-    )
-
-    if get_option('default_library') != 'static'
-        lj_defines += '-DLUA_BUILD_AS_DLL'
-    endif
-    lj_libname = 'lua' + luajit_abiver
-    lj_libprefix = ''
-else
-    ljcore_sources += custom_target('lj_vm.s',
-        input : [],
-        output : 'lj_vm.s',
-        command : [buildvm, '-m', 'elfasm', '-o', '@OUTPUT@']
-    )
-    lj_libname = 'luajit'
-    lj_libprefix = 'lib'
-endif
-
 buildvm_headers = []
 foreach target : buildvm_commands
     buildvm_headers += custom_target(target['output'],
@@ -60,9 +38,28 @@ vmdef = custom_target('vmdef.lua',
     command : [buildvm, '-m', 'vmdef', '-o', '@OUTPUT@', '@INPUT@']
 )
 
-libluajit = library(lj_libname, ljlib_sources + ljcore_sources + buildvm_headers,
-    include_directories: luajit_source_dir,
-    c_args: lj_defines,
-    name_prefix: lj_libprefix,
-    dependencies: luajit_dependencies,
-)
+if host_machine.system() == 'windows'
+    ljcore_sources += custom_target('lj_vm.obj',
+        input : [],
+        output : 'lj_vm.obj',
+        command : [buildvm, '-m', 'peobj', '-o', '@OUTPUT@']
+    )
+    lj_defines += '-DLUA_BUILD_AS_DLL'
+    libluajit = shared_library('lua'+luajit_abiver, ljlib_sources + ljcore_sources + buildvm_headers,
+        include_directories: luajit_source_dir,
+        c_args: lj_defines,
+        name_prefix: '',
+        dependencies: luajit_dependencies,
+    )
+else
+    ljcore_sources += custom_target('lj_vm.s',
+        input : [],
+        output : 'lj_vm.s',
+        command : [buildvm, '-m', 'elfasm', '-o', '@OUTPUT@']
+    )
+    libluajit = static_library('luajit', ljlib_sources + ljcore_sources + buildvm_headers,
+        include_directories: luajit_source_dir,
+        c_args: lj_defines,
+        dependencies: luajit_dependencies,
+    )
+endif
