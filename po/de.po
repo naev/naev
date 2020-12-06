@@ -46092,10 +46092,10 @@ msgstr "     Unbekanntest System\n"
 #, c-format
 msgid ""
 "Planet: %s\n"
-"Planetary class: %s    Population: %ld\n"
+"Planetary class: %s    Population: %<PRIu64>\n"
 msgstr ""
 "Planet: %s\n"
-"Planetenklasse: %s     Einwohnerzahl: %ld\n"
+"Planetenklasse: %s     Einwohnerzahl: %<PRIu64>\n"
 
 #: src/map_system.c:523
 msgid "No space port here\n"

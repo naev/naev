@@ -40,6 +40,13 @@
    #define FORMAT( ... )
 #endif
 
+/* @todo We should declare the fmt argument nonnull, but we have to rip out some null checks first. */
+#ifdef __MINGW_PRINTF_FORMAT
+   #define PRINTF_FORMAT( i, j ) FORMAT( __MINGW_PRINTF_FORMAT, i, j) /*NONNULL( i )*/
+#else
+   #define PRINTF_FORMAT( i, j ) FORMAT( printf, i, j) /*NONNULL( i )*/
+#endif
+
 // User defined diagnosis
 #if __has_attribute( diagnose_if )
    #define WARN_IF( c, m ) __attribute__( ( diagnose_if( c, m, "warning" ) ) )
