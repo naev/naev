@@ -90,8 +90,7 @@ void _array_free_helper(void *a)
    free(_array_private_container(a));
 }
 
-#if 0
-int main() {
+void unittest_array (void) {
    const int size = 100;
 
    int i;
@@ -162,7 +161,4 @@ int main() {
    array_shrink(&array);
    assert(array_size(array) == 0);
    assert(array_reserved(array) == 1);
-
-   return 0;
 }
-#endif

@@ -427,8 +427,11 @@ int main( int argc, char** argv )
    menu_main();
 
    LOG( _( "Reached main menu" ) );
-   if (conf.devunittest)
+   if (conf.devunittest) {
+      LOG( _("Running test: %s"), "unittest_array" );
+      unittest_array();
       exit( 0 );
+   }
 
    /* Force a minimum delay with loading screen */
    if ((SDL_GetTicks() - time_ms) < NAEV_INIT_DELAY)

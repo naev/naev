@@ -195,7 +195,7 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
  *    @param array Array being manipulated.
  *    @return The size of the array (memory usage).
  */
-#define array_reserved(array) (_array_private_container(array)->_reserved)
+#define array_reserved(array) (int)(_array_private_container(array)->_reserved)
 /**
  * @brief Returns a pointer to the beginning of the reserved memory space.
  *
@@ -224,6 +224,9 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
  *    @return The last element in the array.
  */
 #define array_back(ptr_array) (*(array_end(ptr_array) - 1))
+
+
+void unittest_array (void);
 
 
 #endif /* ARRAY_H */
