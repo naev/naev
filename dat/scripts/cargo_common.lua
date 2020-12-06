@@ -1,5 +1,6 @@
 require "jumpdist.lua"
 require "nextjump.lua"
+require "numstring.lua"
 
 -- Don't use hidden jumps by default; set this to true to use hidden jumps.
 cargo_use_hidden = false
@@ -191,7 +192,7 @@ function cargo_setDesc( misn_desc, cargo, amount, target, deadline, notes )
    table.insert( t,
       gettext.ngettext( "Jumps: %d", "Jumps: %d", numjumps ):format( numjumps )
       .. "\n"
-      .. gettext.ngettext("Travel distance: %d", "Travel distance: %d", dist):format( dist ) )
+      .. gettext.ngettext("Travel distance: %s", "Travel distance: %s", dist):format( numstring(dist) ) )
 
    if notes ~= nil then
       table.insert( t, notes );
