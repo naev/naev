@@ -51,7 +51,12 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, int main )
       buf = fbuf;
    }
 
-   /* Preprocess for #include */
+   /* Preprocess for #include.
+    * GLSL Compilers support most preprocessor things like #define and #ifdef,
+    * however, #include is not supported. For this purpose, we do a very simple
+    * preprocessing to handle #includes. */
+   /* TODO Actually handle this by processing line-by-line so that #include
+    * can't be anywhere in the code. Extra whitespace should also be handled. */
    keyword = "#include";
    subs = buf;
    while ((substart = nstrnstr( subs, keyword, bufsize-(subs-buf) ))!=NULL) {
