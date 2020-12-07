@@ -82,7 +82,6 @@ const glColour cNeutral       =  { .r=221./255., .g=204./255., .b=119./255., .a=
 const glColour cFriend        =  {  .r=68./255., .g=170./255., .b=153./255., .a=1. }; /**< Friend object colour */
 const glColour cHostile       =  { .r=170./255.,  .g=68./255., .b=153./255., .a=1. }; /**< Hostile object colour */
 const glColour cRestricted    =  { .r=153./255., .g=153./255.,  .b=51./255., .a=1. }; /**< Restricted object colour. */
-const glColour cDRestricted   =  { .r = 0.7, .g = 0.3, .b = 0.0, .a = 1.  }; /**< Restricted object colour. Darkened for use on white. */
 /* radar */
 const glColour cRadar_player  =  { .r = 0.4, .g = 0.8, .b = 0.4, .a = 1.  }; /**< Player colour on radar. */
 const glColour cRadar_tPilot  =  { .r = 1.0, .g = 1.0, .b = 1.0, .a = 1.  }; /**< Targeted object colour on radar. */

@@ -75,7 +75,6 @@ extern const glColour cNeutral;
 extern const glColour cFriend;
 extern const glColour cHostile;
 extern const glColour cRestricted;
-extern const glColour cDRestricted;
 /* radar */
 extern const glColour cRadar_player;
 extern const glColour cRadar_tPilot;
