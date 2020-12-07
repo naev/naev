@@ -9,6 +9,17 @@
 
 #include <errno.h>
 
+#ifdef __MINGW64_VERSION_MAJOR
+   /* HACK: libxml2 assumes in its function declarations that its format
+    * strings are handled by the native (legacy Microsoft) printf-family
+    * functions. Their source even #defines vsnprintf to _vsnprintf for maximum
+    * breakage. However, testing a shows, e.g., xmlw_attr with PRIu64 formats
+    * will still work on a MinGW64 build.
+    * Therefore, we vandalize their (unfixable) diagnostics Dvaered-style.
+    * */
+#  define LIBXML_ATTR_FORMAT( fmt, args )
+#endif
+
 #include "libxml/parser.h"
 #include "libxml/xmlwriter.h"
 
