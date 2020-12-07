@@ -46,7 +46,7 @@ void commodity_exchange_open( unsigned int wid )
    ImageArrayCell *cgoods;
    int w, h, iw, ih, dw, bw, titleHeight, infoHeight;
    const char *bufSInfo;
-
+   int iconsize;
 
    /* Mark as generated. */
    land_tabGenerate(LAND_WINDOW_COMMODITY);
@@ -118,8 +118,12 @@ void commodity_exchange_open( unsigned int wid )
    }
 
    /* set up the goods to buy/sell */
+   if (!conf.big_icons && (((iw*ih)/(128*128)) < ngoods))
+      iconsize = 96;
+   else
+      iconsize = 128;
    window_addImageArray( wid, 20, 20,
-         iw, ih, "iarTrade", 128, 128,
+         iw, ih, "iarTrade", iconsize, iconsize,
          cgoods, ngoods, commodity_update, commodity_update, commodity_update );
 
    /* Set default keyboard focuse to the list */

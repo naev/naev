@@ -64,6 +64,7 @@ void shipyard_open( unsigned int wid )
    int y;
    const char *buf;
    glTexture *t;
+   int iconsize;
 
    /* Mark as generated. */
    land_tabGenerate(LAND_WINDOW_SHIPYARD);
@@ -168,8 +169,14 @@ void shipyard_open( unsigned int wid )
          }
       }
    }
+
+
+   if (!conf.big_icons && (((iw*ih)/(128*128)) < nships))
+      iconsize = 96;
+   else
+      iconsize = 128;
    window_addImageArray( wid, 20, 20,
-         iw, ih, "iarShipyard", 128., 128.,
+         iw, ih, "iarShipyard", iconsize, iconsize,
          cships, nships, shipyard_update, shipyard_rmouse, NULL );
 
    /* write the shipyard stuff */
