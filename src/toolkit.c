@@ -1560,6 +1560,9 @@ static int toolkit_mouseEvent( Window *w, SDL_Event* event )
       }
       else
          ret |= toolkit_mouseEventWidget( w, wgt, event, x, y, rx, ry );
+
+      if (ret != 0)
+         return ret;
    }
 
    return ret;
