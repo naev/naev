@@ -47,6 +47,7 @@ extern const glColour cPrimeGreen;
 extern const glColour cDarkRed;
 extern const glColour cRed;
 extern const glColour cPrimeRed;
+extern const glColour cBrightRed;
 extern const glColour cOrange;
 extern const glColour cYellow;
 extern const glColour cMidnightBlue;

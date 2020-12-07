@@ -621,8 +621,8 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str,
 
       /* Add colour stripe depending on required/exclusiveness. */
       if (s[i].required)
-         toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cFontRed );
+         toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cBrightRed );
       else if (s[i].exclusive)
-         toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cDRestricted );
+         toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cWhite );
    }
 }

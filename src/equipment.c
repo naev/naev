@@ -428,9 +428,9 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
       /* Must rechoose colour based on slot properties. */
       if (lst[i].sslot->required)
-         rc = &cFontRed;
+         rc = &cBrightRed;
       else if (lst[i].sslot->slot.spid != 0)
-         rc = &cDRestricted;
+         rc = &cWhite;
       else
          rc = dc;
 
