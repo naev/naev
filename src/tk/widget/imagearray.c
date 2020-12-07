@@ -58,6 +58,8 @@ static void iar_cleanup( Widget* iar );
  *    @param caption Caption array to use (freed).
  *    @param nelem Elements in tex and caption.
  *    @param call Callback when modified.
+ *    @param rmcall Callback when right-clicked.
+ *    @param dblcall Callback when selection is double-clicked.
  */
 void window_addImageArray( const unsigned int wid,
                            const int x, const int y, /* position */
@@ -421,22 +423,27 @@ static int iar_mclick( Widget* iar, int button, int x, int y )
  *
  *    @param iar Widget receiving the event.
  *    @return 1 if event is used.
+ *    @TODO It would be more precise to record the iar_focus result for
+ *          every click, so rapidly clicking an icon, out of bounds, and
+ *          the same icon wouldn't register as a double-click.
  */
 static int iar_mdoubleclick( Widget* iar, int button, int x, int y )
 {
    /* Handle different mouse clicks. */
+   iar_setAltTextPos( iar, x, y );
    switch (button) {
       case SDL_BUTTON_LEFT:
-         iar_focus( iar, x, y );
-         if (iar->dat.iar.dblptr != NULL)
+         if (iar->dat.iar.dblptr != NULL
+             && iar->dat.iar.selected >= 0
+             && iar->dat.iar.selected == iar_focusImage( iar, x, y )) {
             iar->dat.iar.dblptr( iar->wdw, iar->name );
-         iar_setAltTextPos( iar, x, y );
-         return 1;
+            return 1;
+         }
 
       default:
          break;
    }
-   return 0;
+   return iar_mclick( iar, button, x, y );
 }
 
 
