@@ -585,8 +585,8 @@ AM_CONDITIONAL([CSPARSE_INTERNAL], [test "x$used_csparse" = "xinternal"])
 AM_CONDITIONAL([HAVE_NLS], [test "x$USE_NLS" = "xyes" && test -d "$srcdir/po"])
 AM_CONDITIONAL([HAVE_ITSTOOL], [test -n "$ITSTOOL"])
 # AC_CHECK_FILE breaks cross-compiling, so we check directly
-AM_CONDITIONAL([HAVE_SHADERS_C_GEN], [test -f "$srcdir/src/shaders_c_gen.c"])
-#AC_CHECK_FILE([$srcdir/src/shaders_c_gen.c],
+AM_CONDITIONAL([HAVE_SHADERS_C_GEN], [test -f "$srcdir/src/shaders_c_gen.py"])
+#AC_CHECK_FILE([$srcdir/src/shaders_c_gen.py],
 #   AM_CONDITIONAL([HAVE_SHADERS_C_GEN],true),
 #   AM_CONDITIONAL([HAVE_SHADERS_C_GEN],false))
 

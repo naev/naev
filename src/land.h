@@ -78,7 +78,7 @@ int land_setWindow( int window );
  * Internal usage.
  */
 void land_refuel (void);
-void land_checkAddMap (void);
+void land_updateMainTab (void);
 void land_buttonTakeoff( unsigned int wid, char *unused );
 unsigned int land_getWid( int window );
 void bar_regen (void);

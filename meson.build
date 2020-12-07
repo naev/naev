@@ -218,15 +218,10 @@ if buildExec.disabled() == false
       naev_source += windows.compile_resources(win_rc, depend_files: [win_manifest, icon], include_directories: res_include)
    endif
 
-   shaders_c_gen = executable(
-      'shaders_c_gen',
-      'src/shaders_c_gen.c',
-      install: false,
-      native: true)
-
    shader_source = custom_target(
       'generate_shaders',
-      command: shaders_c_gen,
+      command: ['python3', '@INPUT@'],
+      input: 'src/shaders_c_gen.py',
       output: ['shaders.gen.c', 'shaders.gen.h']
    )
 

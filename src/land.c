@@ -786,16 +786,30 @@ static void spaceport_buyMap( unsigned int wid, char *str )
    w = land_getWid( LAND_WINDOW_OUTFITS );
    if (w > 0)
       outfits_regenList( w, NULL );
+
+   /* Update main tab. */
+   land_updateMainTab();
 }
 
 
 /**
- * @brief Adds the "Buy Local Map" button if needed.
+ * @brief Adds the "Buy Local Map" button if needed and updates info.
  */
-void land_checkAddMap (void)
+void land_updateMainTab (void)
 {
-   char buf[ECON_CRED_STRLEN], cred[ECON_CRED_STRLEN];
+   char buf[STRMAX], cred[ECON_CRED_STRLEN], tons[STRMAX_SHORT];
    Outfit *o;
+
+   /* Update credits. */
+   tonnes2str( tons, player.p->cargo_free );
+   credits2str( cred, player.p->credits, 2 );
+   nsnprintf( buf, sizeof(buf),
+         _("%s\n"
+         "%s\n"
+         "%s\n"
+         "%s"),
+         _(land_planet->name), _(cur_system->name), tons, cred );
+   window_modifyText( land_windows[0], "txtDInfo", buf );
 
    /* Maps are only offered if the planet provides fuel. */
    if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL))
@@ -977,7 +991,7 @@ void land_genWindows( int load, int changetab )
    land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
 
    /* Add local system map button. */
-   land_checkAddMap();
+   land_updateMainTab();
 
    /* 2) Set as landed and run hooks. */
    if (!regen) {
@@ -1048,7 +1062,7 @@ void land_genWindows( int load, int changetab )
    /* Refresh the map button in case the player couldn't afford it prior to
     * mission payment.
     */
-   land_checkAddMap();
+   land_updateMainTab();
 
    /* Refuel if necessary. */
    land_refuel();
@@ -1129,7 +1143,8 @@ static void land_createMainTab( unsigned int wid )
 {
    glTexture *logo;
    int offset;
-   int w,h;
+   int w, h, th;
+   const char *bufSInfo;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -1154,6 +1169,18 @@ static void land_createMainTab( unsigned int wid )
    window_addText( wid, 440, -20-offset,
          w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,
          "txtPlanetDesc", &gl_smallFont, NULL, _(land_planet->description) );
+
+   /* Player stats. */
+   bufSInfo = _(
+         "Stationed at:\n"
+         "System:\n"
+         "Free Space:\n"
+         "Money:" );
+   th = gl_printHeightRaw( &gl_defFont, 200, bufSInfo );
+   window_addText( wid, 20, 20, 200, th,
+         0, "txtSInfo", &gl_defFont, NULL, bufSInfo );
+   window_addText( wid, 20+200, 20, w - 20 - (20+200) - LAND_BUTTON_WIDTH,
+         th, 0, "txtDInfo", &gl_defFont, NULL, NULL );
 
    /*
     * buttons
@@ -1204,7 +1231,7 @@ static void land_changeTab( unsigned int wid, char *wgt, int old, int tab )
          /* Must regenerate outfits. */
          switch (i) {
             case LAND_WINDOW_MAIN:
-               land_checkAddMap();
+               land_updateMainTab();
                break;
             case LAND_WINDOW_OUTFITS:
                outfits_update( w, NULL );
