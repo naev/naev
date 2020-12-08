@@ -976,7 +976,7 @@ static Pilot* playerL_newShip( lua_State *L )
    int noname;
 
    /* Handle parameters. */
-   s    = luaL_checkship(L, 1);
+   s    = luaL_validship(L, 1);
    if (lua_gettop(L) > 1)
       name = luaL_checkstring(L,2);
    else
