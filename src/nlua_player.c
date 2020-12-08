@@ -504,7 +504,7 @@ static int playerL_autonavDest( lua_State *L )
  * Possible options are:<br/>
  * <ul>
  *  <li>abort : (string) autonav abort message</li>
- *  <li>no2x : (boolean) whether to prevent the player from engaging double-speed, default false</li>
+ *  <li>no2x : (boolean) whether to prevent the player from increasing the speed, default false</li>
  *  <li>gui : (boolean) enables the player's gui, default disabled</li>
  * </ul>
  *
@@ -549,25 +549,27 @@ static int playerL_cinematics( lua_State *L )
       lua_pop( L, 1 );
    }
 
-   /* Remove doublespeed. */
-   if (player.speed != 1 || b) {
-      player.speed = 1;
-      pause_setSpeed( player_dt_default() );
-      sound_setSpeed( 1. );
-   }
-
    if (b) {
-      /* Do stuff. */
+      /* Reset speeds. This will override the player's ship base speed. */
+      player.speed = 1.;
+      sound_setSpeed( 1. );
+      pause_setSpeed( 1. );
+
+      /* Get rid of stuff that could be bothersome. */
       player_autonavAbort( abort_msg );
       ovr_setOpen(0);
 
+      /* Handle options. */
       if (!f_gui)
          player_setFlag( PLAYER_CINEMATICS_GUI );
-
       if (f_2x)
          player_setFlag( PLAYER_CINEMATICS_2X );
    }
    else {
+      /* Reset speed properly to player speed. */
+      player_resetSpeed();
+
+      /* Clean up flags. */
       player_rmFlag( PLAYER_CINEMATICS_GUI );
       player_rmFlag( PLAYER_CINEMATICS_2X );
    }

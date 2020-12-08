@@ -991,16 +991,13 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       }
    /* toggle speed mode */
    } else if (KEY("speed") && !repeat) {
-     double newSpeed;
       if ((value==KEY_PRESS) && (!player_isFlag( PLAYER_CINEMATICS_2X ))) {
-         if (player.speed < 4) {
-            player.speed *= 2;
+         if (player.speed < 4.) {
+            player.speed *= 2.;
          } else {
-            player.speed = 1;
+            player.speed = 1.;
          }
-         newSpeed = (double)player.speed;
-         pause_setSpeed(player_dt_default() * newSpeed);
-         sound_setSpeed( newSpeed );
+         player_resetSpeed();
       }
    /* opens a small menu */
    } else if (KEY("menu") && NODEAD() && !repeat) {

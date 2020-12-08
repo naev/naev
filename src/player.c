@@ -359,7 +359,7 @@ static int player_newMake (void)
    space_init( start_system() );
 
    /* Set player speed to default 1 */
-   player.speed = 1;
+   player.speed = 1.;
 
    /* Reset speed (to make sure player.dt_mod is accounted for). */
    player_autonavResetSpeed();
@@ -771,8 +771,8 @@ void player_cleanup (void)
    sound_stopAll();
 
    /* Reset time compression. */
-   pause_setSpeed( 1.0 );
-   sound_setSpeed( 1.0 );
+   pause_setSpeed( 1. );
+   sound_setSpeed( 1. );
 
    /* Free version string. */
    if (player.loaded_version != NULL)
@@ -1298,6 +1298,17 @@ void player_weapSetPress( int id, int type, int repeat )
       return;
 
    pilot_weapSetPress( player.p, id, type );
+}
+
+
+/**
+ * @brief Resets the player speed stuff.
+ */
+void player_resetSpeed (void)
+{
+   double spd = player.speed * player_dt_default();
+   pause_setSpeed( spd );
+   sound_setSpeed( spd );
 }
 
 
@@ -3400,7 +3411,7 @@ static Planet* player_parse( xmlNodePtr parent )
    }
 
    /* Reset player speed */
-   player.speed = 1;
+   player.speed = 1.;
 
    /* set global thingies */
    player.p->credits = player_creds;
