@@ -1473,6 +1473,7 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    glFontStash *stsh;
    glFontStashFreetype *ft;
    int ch;
+   char fullname[PATH_MAX];
 
    /* Get font stash. */
    if (avail_fonts==NULL)
@@ -1501,7 +1502,8 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
          ft->fontname[i-ch] = '\0';
 
          /* Read font file. */
-         buf = ndata_read( ft->fontname, &bufsize );
+         nsnprintf( fullname, PATH_MAX, FONT_PATH_PREFIX"%s", ft->fontname );
+         buf = ndata_read( fullname, &bufsize );
          if (buf == NULL) {
             WARN(_("Unable to read font: %s"), ft->fontname);
             return -1;
