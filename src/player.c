@@ -1287,12 +1287,9 @@ void player_weapSetPress( int id, double value, int repeat )
    if (repeat)
       return;
 
-   if (value==KEY_PRESS)
-      type = +1;
-   else if (value==KEY_RELEASE)
-      type = -1;
-   else
+   if (value!=KEY_PRESS && value!=KEY_RELEASE)
       WARN(_("Unknown value '%f'!"), value);
+   type = value>=0 ? +1 : -1;
 
    if ((type>0) && ((player.p == NULL) || toolkit_isOpen()))
       return;
