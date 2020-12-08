@@ -293,7 +293,7 @@ static int pilotL_setFlagWrapper( lua_State *L, int flag )
    else
       state = 1;
 
-   /* Set as hostile. */
+   /* Set or remove the flag. */
    if (state)
       pilot_setFlag( p, flag );
    else
