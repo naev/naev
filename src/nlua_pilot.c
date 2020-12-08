@@ -2534,7 +2534,6 @@ static int pilotL_addOutfit( lua_State *L )
 {
    int i;
    Pilot *p;
-   const char *outfit;
    Outfit *o;
    int ret;
    int q, added, bypass;
@@ -2543,7 +2542,7 @@ static int pilotL_addOutfit( lua_State *L )
 
    /* Get parameters. */
    p      = luaL_validpilot(L,1);
-   outfit = luaL_checkstring(L,2);
+   o      = luaL_validoutfit(L,2);
    q      = 1;
    if (lua_gettop(L) > 2 && !lua_isnil(L,2))
       q = luaL_checkint(L,3);
@@ -2551,13 +2550,6 @@ static int pilotL_addOutfit( lua_State *L )
       bypass = lua_toboolean(L, 4);
    else
       bypass = 0;
-
-   /* Get the outfit. */
-   o = outfit_get( outfit );
-   if (o == NULL) {
-      NLUA_ERROR(L, _("Outfit '%s' not found!"), outfit );
-      return 0;
-   }
 
    /* Add outfit. */
    added = 0;
