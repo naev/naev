@@ -33,6 +33,7 @@
 #include "nlua_system.h"
 #include "nlua_outfit.h"
 #include "nlua_planet.h"
+#include "nlua_ship.h"
 #include "map.h"
 #include "map_overlay.h"
 #include "hook.h"
@@ -969,7 +970,7 @@ static int playerL_rmOutfit( lua_State *L )
  */
 static Pilot* playerL_newShip( lua_State *L )
 {
-   const char *str, *name, *pntname;
+   const char *name, *pntname;
    Ship *s;
    Pilot *new_ship;
    Planet *pnt, *t;
@@ -979,11 +980,11 @@ static Pilot* playerL_newShip( lua_State *L )
    t = NULL;
 
    /* Handle parameters. */
-   str  = luaL_checkstring(L, 1);
+   s    = luaL_checkship(L, 1);
    if (lua_gettop(L) > 1)
       name = luaL_checkstring(L,2);
    else
-      name = str;
+      name = s->name;
    if (lua_isstring(L,3))
       pntname = luaL_checkstring (L,3);
    else {
@@ -1010,13 +1011,6 @@ static Pilot* playerL_newShip( lua_State *L )
    /* Must be landed if pnt is NULL. */
    if ((pnt == NULL) && (land_planet==NULL)) {
       NLUA_ERROR(L, _("Player must be landed to add a ship without location parameter."));
-      return 0;
-   }
-
-   /* Get ship. */
-   s = ship_get(str);
-   if (s==NULL) {
-      NLUA_ERROR(L, _("Ship '%s' not found."), str);
       return 0;
    }
 
@@ -1056,6 +1050,9 @@ static int playerL_addShip( lua_State *L )
 
 /**
  * @brief Swaps the player's current ship with a new ship given to him.
+ *
+ * @note You shouldn't use this directly unless you know what you are doing. If the player's cargo doesn't fit in the new ship, it won't be moved over and can lead to a whole slew of issues.
+ *
  *    @luatparam string ship Name of the ship to add.
  *    @luatparam[opt] string name Name to give the ship if player refuses to name it (defaults to shipname if omitted).
  *    @luatparam[opt] Planet loc Location to add to, if nil or omitted it adds it to local planet (must be landed).
