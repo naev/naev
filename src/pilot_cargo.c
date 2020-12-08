@@ -76,7 +76,7 @@ int pilot_cargoMove( Pilot* dest, Pilot* src )
 
    /* Check if it fits. */
    if (pilot_cargoUsed(src) > pilot_cargoFree(dest)) {
-      WARN(_("Unable to copy cargo over from pilot '%s' to '%s'"), src->name, dest->name );
+      WARN(_("Unable to copy cargo over from pilot '%s' to '%s'. Leaving cargo as is."), src->name, dest->name );
       return -1;
    }
 
@@ -103,7 +103,7 @@ int pilot_cargoMove( Pilot* dest, Pilot* src )
  *    @param quantity Quantity to add.
  *    @param id Mission ID to add (0 is none).
  */
-int pilot_cargoAddNeglectingStats( Pilot* pilot, Commodity* cargo,
+static int pilot_cargoAddNeglectingStats( Pilot* pilot, Commodity* cargo,
       int quantity, unsigned int id )
 {
    int i, q;
