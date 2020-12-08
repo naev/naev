@@ -2345,7 +2345,7 @@ static int pilotL_setNoLand( lua_State *L )
  * @usage added = p:addOutfit( "Laser Cannon", 5 ) -- Adds 5 laser cannons to p
  *
  *    @luatparam Pilot p Pilot to add outfit to.
- *    @luatparam string outfit Name of the outfit to add.
+ *    @luatparam string|outfit outfit Outfit or name of the outfit to add.
  *    @luatparam[opt=1] number q Quantity of the outfit to add.
  *    @luatparam[opt=false] boolean bypass Whether to skip CPU and slot size checks before adding an outfit.
  *              Will not overwrite existing non-default outfits.
@@ -2438,7 +2438,7 @@ static int pilotL_addOutfit( lua_State *L )
  * @usage p:rmOutfit( "Neutron Disruptor", 2 ) -- Removes two neutron disruptor.
  *
  *    @luatparam Pilot p Pilot to remove outfit from.
- *    @luatparam string outfit Name of the outfit to remove.
+ *    @luatparam string|outfit outfit Outfit or name of the outfit to remove.
  *    @luatparam number q Quantity of the outfit to remove.
  *    @luatreturn number The number of outfits removed.
  * @luafunc rmOutfit( p, outfit, q )
@@ -2456,38 +2456,36 @@ static int pilotL_rmOutfit( lua_State *L )
    /* Get parameters. */
    removed = 0;
    p      = luaL_validpilot(L,1);
-   outfit = luaL_checkstring(L,2);
    q      = 1;
    if (lua_gettop(L) > 2)
       q = luaL_checkint(L,3);
 
-   /* If outfit is "all", we remove everything except cores. */
-   if (strcmp(outfit,"all")==0) {
-      for (i=0; i<p->noutfits; i++) {
-         if (p->outfits[i]->sslot->required)
-            continue;
-         pilot_rmOutfitRaw( p, p->outfits[i] );
-         removed++;
+   if (lua_isstring(L,2)) {
+      outfit = luaL_checkstring(L,2);
+
+      /* If outfit is "all", we remove everything except cores. */
+      if (strcmp(outfit,"all")==0) {
+         for (i=0; i<p->noutfits; i++) {
+            if (p->outfits[i]->sslot->required)
+               continue;
+            pilot_rmOutfitRaw( p, p->outfits[i] );
+            removed++;
+         }
+         pilot_calcStats( p ); /* Recalculate stats. */
       }
-      pilot_calcStats( p ); /* Recalculate stats. */
-   }
-   /* If outfit is "cores", we remove cores only. */
-   else if (strcmp(outfit,"cores")==0) {
-      for (i=0; i<p->noutfits; i++) {
-         if (!p->outfits[i]->sslot->required)
-            continue;
-         pilot_rmOutfitRaw( p, p->outfits[i] );
-         removed++;
+      /* If outfit is "cores", we remove cores only. */
+      else if (strcmp(outfit,"cores")==0) {
+         for (i=0; i<p->noutfits; i++) {
+            if (!p->outfits[i]->sslot->required)
+               continue;
+            pilot_rmOutfitRaw( p, p->outfits[i] );
+            removed++;
+         }
+         pilot_calcStats( p ); /* Recalculate stats. */
       }
-      pilot_calcStats( p ); /* Recalculate stats. */
    }
    else {
-      /* Get the outfit. */
-      o = outfit_get( outfit );
-      if (o == NULL) {
-         NLUA_ERROR(L,_("Outfit isn't found in outfit stack."));
-         return 0;
-      }
+      o = luaL_validoutfit(L,2);
 
       /* Remove the outfit outfit. */
       for (i=0; i<p->noutfits; i++) {
