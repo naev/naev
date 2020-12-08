@@ -38,10 +38,6 @@
 #define MOUSE_HIDE   ( 3.) /**< Time in seconds to wait before hiding mouse again. */
 
 
-#define KEY_PRESS    ( 1.) /**< Key is pressed. */
-#define KEY_RELEASE  (-1.) /**< Key is released. */
-
-
 /* keybinding structure */
 /**
  * @brief Naev Keybinding.

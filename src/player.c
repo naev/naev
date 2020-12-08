@@ -1280,15 +1280,14 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
 /**
  * @brief Activates a player's weapon set.
  */
-void player_weapSetPress( int id, int type, int repeat )
+void player_weapSetPress( int id, double value, int repeat )
 {
+   int type;
+
    if (repeat)
       return;
 
-   if ((type > 0) && ((player.p == NULL) || toolkit_isOpen()))
-      return;
-
-   if (player.p == NULL)
+   if ((player.p == NULL) || toolkit_isOpen())
       return;
 
    if (pilot_isFlag(player.p, PILOT_HYP_PREP) ||
@@ -1296,6 +1295,13 @@ void player_weapSetPress( int id, int type, int repeat )
          pilot_isFlag(player.p, PILOT_LANDING) ||
          pilot_isFlag(player.p, PILOT_TAKEOFF))
       return;
+
+   if (value==KEY_PRESS)
+      type = 1;
+   else if (value==KEY_RELEASE)
+      type = -1;
+   else
+      WARN(_("Unknown value '%f'!"), value);
 
    pilot_weapSetPress( player.p, id, type );
 }
