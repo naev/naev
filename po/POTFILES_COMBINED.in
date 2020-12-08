@@ -300,6 +300,7 @@ dat/scripts/portrait.lua
 dat/scripts/prng.lua
 dat/scripts/proximity.lua
 dat/scripts/selectiveclear.lua
+dat/scripts/swapship.lua
 dat/snd/music.lua
 src/ai.c
 src/ai.h
