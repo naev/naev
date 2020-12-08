@@ -135,7 +135,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       }
 
       /* Only "inrange" outfits. */
-      if ( ws->inrange && outfit_duration(o) < time)
+      if (ws->inrange && outfit_duration(o) < time)
          continue;
 
       /* Shoot the weapon of the weaponset. */
