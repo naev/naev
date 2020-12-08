@@ -60,6 +60,7 @@ extern Pilot *cur_pilot;
 static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task );
 static int pilotL_addFleetFrom( lua_State *L, int from_ship );
 static int outfit_compareActive( const void *slot1, const void *slot2 );
+static int pilotL_setFlagWrapper( lua_State *L, int flag );
 
 
 /* Pilot metatable methods. */
@@ -268,6 +269,35 @@ int nlua_loadPilot( nlua_env env )
 
    /* Pilot always loads ship. */
    nlua_loadShip(env);
+
+   return 0;
+}
+
+
+/**
+ * @brief Wrapper to simplify flag setting stuff.
+ */
+static int pilotL_setFlagWrapper( lua_State *L, int flag )
+{
+   Pilot *p;
+   int state;
+
+   NLUA_CHECKRW(L);
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
+   /* Set as hostile. */
+   if (state)
+      pilot_setFlag( p, flag );
+   else
+      pilot_rmFlag( p, flag );
 
    return 0;
 }
@@ -1969,20 +1999,12 @@ static int pilotL_setFaction( lua_State *L )
 {
    Pilot *p;
    int fid;
-   const char *faction;
 
    NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    p = luaL_validpilot(L,1);
-   if (lua_isstring(L,2)) {
-      faction = lua_tostring(L,2);
-      fid = faction_get(faction);
-   }
-   else if (lua_isfaction(L,2)) {
-      fid = lua_tofaction(L,2);
-   }
-   else NLUA_INVALID_PARAMETER(L);
+   fid = luaL_validfaction(L,2);
 
    /* Set the new faction. */
    p->faction = fid;
@@ -2077,27 +2099,7 @@ static int pilotL_setFriendly( lua_State *L )
  */
 static int pilotL_setInvincible( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_INVINCIBLE);
-   else
-      pilot_rmFlag(p, PILOT_INVINCIBLE);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_INVINCIBLE );
 }
 
 
@@ -2114,27 +2116,7 @@ static int pilotL_setInvincible( lua_State *L )
  */
 static int pilotL_setInvincPlayer( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_INVINC_PLAYER);
-   else
-      pilot_rmFlag(p, PILOT_INVINC_PLAYER);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_INVINC_PLAYER );
 }
 
 
@@ -2154,27 +2136,7 @@ static int pilotL_setInvincPlayer( lua_State *L )
  */
 static int pilotL_setInvisible( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_INVISIBLE);
-   else
-      pilot_rmFlag(p, PILOT_INVISIBLE);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_INVISIBLE );
 }
 
 
@@ -2191,27 +2153,7 @@ static int pilotL_setInvisible( lua_State *L )
  */
 static int pilotL_setVisplayer( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_VISPLAYER);
-   else
-      pilot_rmFlag(p, PILOT_VISPLAYER);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_VISPLAYER );
 }
 
 
@@ -2228,27 +2170,7 @@ static int pilotL_setVisplayer( lua_State *L )
  */
 static int pilotL_setVisible( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_VISIBLE);
-   else
-      pilot_rmFlag(p, PILOT_VISIBLE);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_VISIBLE );
 }
 
 
@@ -2265,27 +2187,7 @@ static int pilotL_setVisible( lua_State *L )
  */
 static int pilotL_setHilight( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_HILIGHT);
-   else
-      pilot_rmFlag(p, PILOT_HILIGHT);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_HILIGHT );
 }
 
 
@@ -2300,27 +2202,7 @@ static int pilotL_setHilight( lua_State *L )
  */
 static int pilotL_setActiveBoard( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_BOARDABLE);
-   else
-      pilot_rmFlag(p, PILOT_BOARDABLE);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_BOARDABLE );
 }
 
 
@@ -2335,27 +2217,7 @@ static int pilotL_setActiveBoard( lua_State *L )
  */
 static int pilotL_setNoDeath( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_NODEATH);
-   else
-      pilot_rmFlag(p, PILOT_NODEATH);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_NODEATH );
 }
 
 
@@ -2456,27 +2318,7 @@ static int pilotL_setCooldown( lua_State *L )
  */
 static int pilotL_setNoJump( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_NOJUMP);
-   else
-      pilot_rmFlag(p, PILOT_NOJUMP);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_NOJUMP );
 }
 
 
@@ -2491,27 +2333,7 @@ static int pilotL_setNoJump( lua_State *L )
  */
 static int pilotL_setNoLand( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_NOLAND);
-   else
-      pilot_rmFlag(p, PILOT_NOLAND);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_NOLAND );
 }
 
 
