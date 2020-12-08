@@ -1333,7 +1333,7 @@ void window_render( Window *w )
       y  += wgt->y;
       wid = wgt->w;
       hei = wgt->h;
-      toolkit_drawOutline( x, y, wid, hei, 3, &cGrey30, NULL );
+      toolkit_drawOutlineThick( x, y, wid, hei, 3, 3, &cGrey10, NULL );
    }
 }
 
