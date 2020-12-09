@@ -2744,8 +2744,13 @@ static int aiL_weapSet( lua_State *L )
       if (!type && on)
          pilot_weapSetPress(p, id, -1 );
    }
-   else /* weapset type is weapon or change */
-      pilot_weapSetPress( cur_pilot, id, 1 );
+   else {
+      /* weapset type is weapon or change */
+      if (type)
+         pilot_weapSetPress( cur_pilot, id, +1 );
+      else
+         pilot_weapSetPress( cur_pilot, id, -1 );
+   }
    return 0;
 }
 
