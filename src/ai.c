@@ -2726,8 +2726,7 @@ static int aiL_weapSet( lua_State *L )
 
    ws = &p->weapon_sets[id];
 
-   if (ws->type == WEAPSET_TYPE_ACTIVE)
-   {
+   if (ws->type == WEAPSET_TYPE_ACTIVE) {
       /* Check if outfit is on */
       on = 1;
       l  = array_size(ws->slots);
@@ -2740,10 +2739,10 @@ static int aiL_weapSet( lua_State *L )
 
       /* activate */
       if (type && !on)
-         pilot_weapSetPress(p, id, 1 );
+         pilot_weapSetPress(p, id, +1 );
       /* deactivate */
       if (!type && on)
-         pilot_weapSetPress(p, id, 1 );
+         pilot_weapSetPress(p, id, -1 );
    }
    else /* weapset type is weapon or change */
       pilot_weapSetPress( cur_pilot, id, 1 );

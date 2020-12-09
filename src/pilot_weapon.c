@@ -122,6 +122,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       /* If inrange is set we only fire at targets in range. */
       time = INFINITY;  /* With no target we just set time to infinity. */
 
+      /* Calculate time to target if it is there. */
       if (p->target != p->id) {
          pt = pilot_get( p->target );
          if (pt != NULL)
