@@ -45,7 +45,8 @@ static int dialogue_open; /**< Number of dialogues open. */
  * Custom widget scary stuff.
  */
 typedef struct dialogue_update_s {
-   void (*update)(double, void*);
+   unsigned int wid;
+   int (*update)(double, void*);
    void *data;
 } dialogue_update_t;
 struct dialogue_custom_keyboard_s {
@@ -865,7 +866,7 @@ static int dialogue_custom_keyboard( unsigned int wid, SDL_Keycode key, SDL_Keym
  *    @param data Custom data;
  */
 void dialogue_custom( const char* caption, int width, int height,
-      void (*update) (double dt, void* data),
+      int (*update) (double dt, void* data),
       void (*render) (double x, double y, double w, double h, void* data),
       int (*keyboard) (unsigned int wid, SDL_Keycode key, SDL_Keymod mod, void* data),
       int (*mouse) (unsigned int wid, SDL_Event* event, double x, double y, double w, double h, double rx, double ry, void* data),
@@ -873,26 +874,27 @@ void dialogue_custom( const char* caption, int width, int height,
 {
    struct dialogue_custom_keyboard_s ck;
    dialogue_update_t du;
-   unsigned int msg_wid;
+   unsigned int wid;
    int done;
 
    /* create the window */
-   msg_wid = window_create( "dlgMsg", caption, -1, -1, width+40, height+40 );
-   window_setData( msg_wid, &done );
+   wid = window_create( "dlgMsg", caption, -1, -1, width+40, height+40 );
+   window_setData( wid, &done );
 
    /* custom widget for all! */
-   window_addCust( msg_wid, 20, 20, width, height, "cstCustom", 0, render, mouse, data );
-   window_custSetClipping( msg_wid, "cstCustom", 1 );
+   window_addCust( wid, 20, 20, width, height, "cstCustom", 0, render, mouse, data );
+   window_custSetClipping( wid, "cstCustom", 1 );
 
    /* set up keyboard. */
    ck.keyboard = keyboard;
    ck.data = data;
-   window_setData( msg_wid, &ck );
-   window_handleKeys( msg_wid, &dialogue_custom_keyboard );
+   window_setData( wid, &ck );
+   window_handleKeys( wid, &dialogue_custom_keyboard );
 
    /* dialogue stuff */
    du.update = update;
-   du.data  = data;
+   du.data   = data;
+   du.wid    = wid;
    dialogue_open++;
    toolkit_loop( &done, &du );
 }
@@ -960,7 +962,11 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
          }
 
          /* Run update. */
-         (*du->update)(dt+delay, du->data);
+         if ((*du->update)(dt+delay, du->data)) {
+            /* Hack to override data. */
+            window_setData( du->wid, loop_done );
+            dialogue_close( du->wid, NULL );
+         }
       }
    }
 

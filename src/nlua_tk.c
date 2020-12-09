@@ -27,14 +27,16 @@
 
 
 /* Stuff for the custom toolkit. */
+#define TK_CUSTOMDONE   "__customDone"
 typedef struct custom_functions_s {
-   lua_State *L;
+   lua_State *L; /**< Assosciated Lua state. */
+   /* Function references. */
    int update;
    int draw;
    int keyboard;
    int mouse;
 } custom_functions_t;
-static void cust_update( double dt, void* data );
+static int cust_update( double dt, void* data );
 static void cust_render( double x, double y, double w, double h, void* data );
 static int cust_key( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, void* data );
 static int  cust_mouse( unsigned int wid, SDL_Event* event, double x, double y, double w, double h, double rx, double ry, void* data );
@@ -48,6 +50,7 @@ static int tk_choice( lua_State *L );
 static int tk_list( lua_State *L );
 static int tk_merchantOutfit( lua_State *L );
 static int tk_custom( lua_State *L );
+static int tk_customDone( lua_State *L );
 static const luaL_Reg tk_methods[] = {
    { "msg", tk_msg },
    { "yesno", tk_yesno },
@@ -56,6 +59,7 @@ static const luaL_Reg tk_methods[] = {
    { "list", tk_list },
    { "merchantOutfit", tk_merchantOutfit },
    { "custom", tk_custom },
+   { "customDone", tk_customDone },
    {0,0}
 }; /**< Toolkit Lua methods. */
 
@@ -376,6 +380,10 @@ static int tk_custom( lua_State *L )
    lua_pushvalue(L, 7);
    cf.mouse    = luaL_ref(L, LUA_REGISTRYINDEX);
 
+   /* Set done condition. */
+   lua_pushboolean(L, 0);
+   lua_setglobal(L, TK_CUSTOMDONE );
+
    /* Create the dialogue. */
    dialogue_custom( caption, w, h, cust_update, cust_render, cust_key, cust_mouse, &cf );
 
@@ -389,13 +397,32 @@ static int tk_custom( lua_State *L )
 }
 
 
-static void cust_update( double dt, void* data )
+/**
+ * @brief Ends the execution of a custom widget.
+ * @luafunc customDone()
+ */
+static int tk_customDone( lua_State *L )
 {
+   lua_pushboolean(L, 1);
+   lua_setglobal(L, TK_CUSTOMDONE );
+   return 0;
+}
+
+
+static int cust_update( double dt, void* data )
+{
+   int ret;
    custom_functions_t *cf = (custom_functions_t*) data;
    lua_State *L = cf->L;
    lua_rawgeti(L, LUA_REGISTRYINDEX, cf->update);
    lua_pushnumber(L, dt);
-   lua_call(L, 1, 0);
+   /* TODO It seems like when it errors out it crashes because the dialogue gets unset. */
+   if (lua_pcall(L, 1, 0, 0))
+      lua_error(L); /* propagate error */
+   lua_getglobal(L, TK_CUSTOMDONE );
+   ret = lua_toboolean(L, -1);
+   lua_pop(L, 1);
+   return ret;
 }
 static void cust_render( double x, double y, double w, double h, void* data )
 {
@@ -406,7 +433,8 @@ static void cust_render( double x, double y, double w, double h, void* data )
    custom_functions_t *cf = (custom_functions_t*) data;
    lua_State *L = cf->L;
    lua_rawgeti(L, LUA_REGISTRYINDEX, cf->draw);
-   lua_call(L, 0, 0);
+   if (lua_pcall(L, 0, 0, 0))
+      lua_error(L); /* propagate error */
 }
 static int cust_key( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, void* data )
 {
@@ -419,7 +447,8 @@ static int cust_key( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, void* da
    lua_rawgeti(L, LUA_REGISTRYINDEX, cf->keyboard);
    lua_pushstring(L, SDL_GetKeyName(key));
    lua_pushstring(L, input_modToText(mod));
-   lua_call(L, 2, 1);
+   if (lua_pcall(L, 2, 1, 0))
+      lua_error(L); /* propagate error */
    b = lua_toboolean(L, -1);
    lua_pop(L,1);
    return b;
@@ -451,10 +480,12 @@ static int cust_mouse( unsigned int wid, SDL_Event* event, double x, double y, d
          default:               button=3; break;
       }
       lua_pushnumber(L, button);
-      lua_call(L, 4, 1);
+      if (lua_pcall(L, 4, 1, 0))
+         lua_error(L); /* propagate error */
    }
    else
-      lua_call(L, 3, 1);
+      if (lua_pcall(L, 3, 1, 0))
+         lua_error(L); /* propagate error */
    b = lua_toboolean(L, -1);
    lua_pop(L,1);
    return b;

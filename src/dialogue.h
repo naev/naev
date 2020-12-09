@@ -54,7 +54,7 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
  * Custom.
  */
 void dialogue_custom( const char* caption, int width, int height,
-      void (*update) (double dt, void* data),
+      int (*update) (double dt, void* data),
       void (*render) (double x, double y, double w, double h, void* data),
       int (*keyboard) (unsigned int wid, SDL_Keycode key, SDL_Keymod mod, void* data),
       int (*mouse) (unsigned int wid, SDL_Event* event, double x, double y, double w, double h, double rx, double ry, void* data),
