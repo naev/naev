@@ -55,6 +55,7 @@ jobs:
           libopenal-dev \
           libvorbis-dev \
           libiberty-dev \
+          llvm \
           ninja-build \
           xvfb
 
