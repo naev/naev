@@ -282,11 +282,14 @@ Widget* window_newWidget( Window* w, const char *name )
 Window* window_wget( const unsigned int wid )
 {
    Window *w;
-   if (windows == NULL)
+   if (windows == NULL) {
+      WARN(_("Window '%u' not found in list!"), wid );
       return NULL;
+   }
    for (w = windows; w != NULL; w = w->next)
       if (w->id == wid)
          return w;
+   WARN(_("Window '%u' not found in list!"), wid );
    return NULL;
 }
 
@@ -305,8 +308,10 @@ Widget* window_getwgt( const unsigned int wid, const char* name )
 
    /* Get the window. */
    wdw = window_wget(wid);
-   if (wdw == NULL)
+   if (wdw == NULL) {
+      WARN(_("Widget '%s' not found in window '%u'!"), name, wid );
       return NULL;
+   }
 
    /* Find the widget. */
    for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
