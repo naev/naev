@@ -1060,7 +1060,6 @@ void player_render( double dt )
  */
 void player_think( Pilot* pplayer, const double dt )
 {
-   (void) dt;
    Pilot *target;
    AsteroidAnchor *field;
    Asteroid *ast;
