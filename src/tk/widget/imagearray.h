@@ -42,7 +42,7 @@ typedef struct WidgetImageArrayData_ {
    int ih; /**< Image height to use. */
    void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
    void (*rmptr) (unsigned int,char*); /**< Right click callback. */
-   void (*dblptr) (unsigned int,char*); /**< Double click callback. */
+   void (*dblptr) (unsigned int,char*); /**< Double click callback (for one selection). */
 } WidgetImageArrayData;
 
 

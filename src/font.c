@@ -1182,7 +1182,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
    glFontStashFreetype *ft;
 
    /* Empty font. */
-   if (stsh->ft==0) {
+   if (stsh->ft==NULL) {
       WARN(_("Font has no freetype information!"));
       return -1;
    }
@@ -1473,6 +1473,7 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    glFontStash *stsh;
    glFontStashFreetype *ft;
    int ch;
+   char fullname[PATH_MAX];
 
    /* Get font stash. */
    if (avail_fonts==NULL)
@@ -1501,7 +1502,8 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
          ft->fontname[i-ch] = '\0';
 
          /* Read font file. */
-         buf = ndata_read( ft->fontname, &bufsize );
+         nsnprintf( fullname, PATH_MAX, FONT_PATH_PREFIX"%s", ft->fontname );
+         buf = ndata_read( fullname, &bufsize );
          if (buf == NULL) {
             WARN(_("Unable to read font: %s"), ft->fontname);
             return -1;
@@ -1560,17 +1562,8 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
 
    /* Initializes ASCII. */
    for (i=0; i<128; i++)
-      if (isprint(i))
+      if (isprint(i)) /* Only care about printables. */
          gl_fontGetGlyph( stsh, i );
-
-#if 0
-   /* We can now free the face and library */
-   FT_Done_Face(face);
-   FT_Done_FreeType(library);
-
-   /* Free read buffer. */
-   free(buf);
-#endif
 
    return 0;
 }

@@ -1374,6 +1374,14 @@ static void opt_video( unsigned int wid )
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkMinimize", _("Minimize on focus loss"), NULL, conf.minimize );
+   y -= 40;
+
+   /* GUI */
+   window_addText( wid, x+20, y, 100, 20, 0, "txtSGUI",
+         NULL, NULL, _("GUI") );
+   y -= 30;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkBigIcons", _("Bigger icons"), NULL, conf.big_icons );
 
    /* Restart text. */
    window_addText( wid, 20, 20 + BUTTON_HEIGHT,
@@ -1473,6 +1481,9 @@ static int opt_videoSave( unsigned int wid, char *str )
       SDL_SetHint( SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS,
             conf.minimize ? "1" : "0" );
    }
+
+   /* GUI. */
+   conf.big_icons = window_checkboxState( wid, "chkBigIcons" );
 
    return 0;
 }

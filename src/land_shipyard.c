@@ -64,6 +64,7 @@ void shipyard_open( unsigned int wid )
    int y;
    const char *buf;
    glTexture *t;
+   int iconsize;
 
    /* Mark as generated. */
    land_tabGenerate(LAND_WINDOW_SHIPYARD);
@@ -75,7 +76,7 @@ void shipyard_open( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* Calculate image array dimensions. */
-   iw = 310 + (w-832);
+   iw = 704 + (w - LAND_WIDTH);
    ih = h - 60;
 
    /* Left padding + per-button padding * nbuttons */
@@ -168,8 +169,14 @@ void shipyard_open( unsigned int wid )
          }
       }
    }
+
+
+   if (!conf.big_icons && (((iw*ih)/(128*128)) < nships))
+      iconsize = 96;
+   else
+      iconsize = 128;
    window_addImageArray( wid, 20, 20,
-         iw, ih, "iarShipyard", 128., 128.,
+         iw, ih, "iarShipyard", iconsize, iconsize,
          cships, nships, shipyard_update, shipyard_rmouse, NULL );
 
    /* write the shipyard stuff */
@@ -611,11 +618,12 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str,
 
       x += 15.;
       toolkit_drawRect( x, by, 10, 10, c, NULL );
+      gl_renderRectEmpty( x, by, 10, 10, &cBlack );
 
       /* Add colour stripe depending on required/exclusiveness. */
       if (s[i].required)
-         toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cFontRed );
+         toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cBrightRed );
       else if (s[i].exclusive)
-         toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cDRestricted );
+         toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cWhite );
    }
 }

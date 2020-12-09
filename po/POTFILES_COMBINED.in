@@ -300,6 +300,7 @@ dat/scripts/portrait.lua
 dat/scripts/prng.lua
 dat/scripts/proximity.lua
 dat/scripts/selectiveclear.lua
+dat/scripts/swapship.lua
 dat/snd/music.lua
 src/ai.c
 src/ai.h
@@ -328,7 +329,6 @@ src/cond.c
 src/cond.h
 src/conf.c
 src/conf.h
-src/config.h
 src/console.c
 src/console.h
 src/damagetype.c

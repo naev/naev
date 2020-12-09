@@ -119,6 +119,7 @@ typedef struct PlayerConf_s {
    /* GUI. */
    int mesg_visible; /**< Amount of visible messages. */
    double map_overlay_opacity; /**< Map overlay opacity. */
+   int big_icons; /**< Use big icons or not. */
 
    /* Keyrepeat. */
    unsigned int repeat_delay; /**< Time in ms before start repeating. */

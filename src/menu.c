@@ -240,8 +240,12 @@ void menu_main (void)
          "btnExit", _("Exit"), menu_exit, SDLK_x );
 
    /* Disable load button if there are no saves. */
-   if (!save_hasSave())
+   if (!save_hasSave()) {
       window_disableButton( wid, "btnLoad" );
+      window_setFocus( wid, "btnNew" );
+   }
+   else
+      window_setFocus( wid, "btnLoad" );
 
    /* Make the background window a child of the menu. */
    window_setParent( bwid, wid );

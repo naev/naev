@@ -294,7 +294,7 @@ const char *_nfile_dirname( const char *path )
       return path;
 
    /* New dirname. */
-   nsnprintf( dirname_buf, MIN(sizeof(dirname_buf), (size_t)(i+1)),  path );
+   strncpy( dirname_buf, path, MIN(sizeof(dirname_buf)-1, (size_t)i) );
    return dirname_buf;
 #else
 #error "Functionality not implemented for your OS."

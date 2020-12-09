@@ -47,6 +47,7 @@ extern const glColour cPrimeGreen;
 extern const glColour cDarkRed;
 extern const glColour cRed;
 extern const glColour cPrimeRed;
+extern const glColour cBrightRed;
 extern const glColour cOrange;
 extern const glColour cYellow;
 extern const glColour cMidnightBlue;
@@ -74,7 +75,6 @@ extern const glColour cNeutral;
 extern const glColour cFriend;
 extern const glColour cHostile;
 extern const glColour cRestricted;
-extern const glColour cDRestricted;
 /* radar */
 extern const glColour cRadar_player;
 extern const glColour cRadar_tPilot;

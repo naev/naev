@@ -12,8 +12,8 @@
 #include <stdio.h>
 #include <signal.h>
 
-#include "attributes.h"
 #include "gettext.h"
+#include "nstring.h"
 
 #if defined ENABLE_NLS && ENABLE_NLS
 #define _(String) gettext(String)
@@ -43,7 +43,7 @@
 #define DEBUG_BLANK() DEBUG("%s", "")
 
 
-FORMAT( printf, 3, 4 ) int logprintf( FILE *stream, int newline, const char *fmt, ... );
+PRINTF_FORMAT( 3, 4 ) int logprintf( FILE *stream, int newline, const char *fmt, ... );
 void log_redirect (void);
 int log_isTerminal (void);
 void log_copy( int enable );

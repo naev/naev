@@ -2,38 +2,35 @@
  * See Licensing and Copyright notice in naev.h
  */
 
-
-#include "map.h"
-
-#include "naev.h"
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 #include <float.h>
 
-#include "log.h"
-#include "toolkit.h"
-#include "space.h"
-#include "opengl.h"
-#include "mission.h"
-#include "colour.h"
-#include "player.h"
-#include "faction.h"
-#include "dialogue.h"
-#include "gui.h"
-#include "map_find.h"
+
+#include "map.h"
+
 #include "array.h"
-#include "mapData.h"
-#include "nstring.h"
-#include "nmath.h"
-#include "nmath.h"
-#include "nxml.h"
-#include "ndata.h"
-#include "economy.h"
 #include "background.h"
-#include "map_system.h"
+#include "colour.h"
+#include "dialogue.h"
+#include "economy.h"
+#include "faction.h"
+#include "gui.h"
 #include "land_outfits.h"
+#include "log.h"
+#include "mapData.h"
+#include "map_find.h"
+#include "map_system.h"
+#include "mission.h"
+#include "naev.h"
+#include "ndata.h"
+#include "nmath.h"
+#include "nstring.h"
+#include "opengl.h"
+#include "player.h"
+#include "space.h"
+#include "toolkit.h"
 
 #define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
@@ -517,7 +514,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
 
      }
 
-     cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Planet: %s\nPlanetary class: %s    Population: %ld\n"), _(p->name), p->class, p->population );
+     cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Planet: %s\nPlanetary class: %s    Population: %"PRIu64"\n"), _(p->name), p->class, p->population );
      if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
         cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("No space port here\n") );
      else if (p->can_land || p->bribed ) {

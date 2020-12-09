@@ -9,4 +9,6 @@ void main(void) {
    if (dist < radius) {
       color_out.a *= (dist / radius);
    }
+
+#include "colorblind.glsl"
 }

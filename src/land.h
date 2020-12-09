@@ -8,8 +8,8 @@
 #  define LAND_H
 
 
-#include "attributes.h"
 #include "conf.h"
+#include "nstring.h"
 #include "space.h"
 
 
@@ -78,7 +78,7 @@ int land_setWindow( int window );
  * Internal usage.
  */
 void land_refuel (void);
-void land_checkAddMap (void);
+void land_updateMainTab (void);
 void land_buttonTakeoff( unsigned int wid, char *unused );
 unsigned int land_getWid( int window );
 void bar_regen (void);
@@ -90,7 +90,7 @@ int  can_swap( const char *shipname );
 int  can_swapEquipment( const char *shipname );
 int  can_sell( const char *shipname );
 int  land_errDialogue( const char *name, char *type );
-FORMAT( printf, 1, 2 ) void land_errDialogueBuild( const char *fmt, ... );
+PRINTF_FORMAT( 1, 2 ) void land_errDialogueBuild( const char *fmt, ... );
 
 
 #endif /* LAND_H */

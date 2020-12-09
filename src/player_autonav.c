@@ -49,18 +49,9 @@ static int player_autonavBrake (void);
  */
 void player_autonavResetSpeed (void)
 {
-   if (player.speed >= 1) {
-      tc_mod = player.speed * player_dt_default();
-      pause_setSpeed( tc_mod );
-      sound_setSpeed( player.speed );
-   } else {
-      WARN( _("player.speed was not set to a valid value; resetting to 1") );
-      player.speed = 1;
-      tc_mod = player_dt_default();
-      pause_setSpeed( tc_mod );
-      sound_setSpeed( 1 );
-   }
+   tc_mod = 1.;
    tc_rampdown = 0;
+   player_resetSpeed();
 }
 
 
@@ -116,7 +107,7 @@ static int player_autonavSetup (void)
    player_message(_("\aoAutonav initialized."));
    if (!player_isFlag(PLAYER_AUTONAV)) {
 
-      tc_base   = player_dt_default() * (double)player.speed;
+      tc_base   = player_dt_default() * player.speed;
       tc_mod    = tc_base;
       if (conf.compression_mult >= 1.)
          player.tc_max = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
@@ -137,7 +128,7 @@ static int player_autonavSetup (void)
    /* Set flag and tc_mod just in case. */
    player_setFlag(PLAYER_AUTONAV);
    pause_setSpeed( tc_mod );
-   sound_setSpeed( tc_mod / player_dt_default() );
+   sound_setSpeed( tc_mod );
 
    /* Make sure time acceleration starts immediately. */
    player.autonav_timer = 0.;

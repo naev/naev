@@ -183,7 +183,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
    window_dimWindow( wid, w, h );
 
    /* Calculate image array dimensions. */
-   ssw = 120 + (*w-800);
+   ssw = 550 + (*w - LAND_WIDTH);
    ssh = (*h - 100);
    if (sw != NULL)
       *sw = ssw;
@@ -428,9 +428,9 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
       /* Must rechoose colour based on slot properties. */
       if (lst[i].sslot->required)
-         rc = &cFontRed;
+         rc = &cBrightRed;
       else if (lst[i].sslot->slot.spid != 0)
-         rc = &cDRestricted;
+         rc = &cWhite;
       else
          rc = dc;
 
@@ -562,8 +562,8 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
       x, y + h + 10., &cFontWhite, -1, _("CPU Free") );
 
    percent = (p->cpu_max > 0) ? CLAMP(0., 1., (float)p->cpu / (float)p->cpu_max) : 0.;
-   toolkit_drawRect( x, y - 2, w * percent, h + 4, &cFriend, NULL );
-   toolkit_drawRect( x + w * percent, y - 2, w * (1.-percent), h + 4, &cHostile, NULL );
+   toolkit_drawRect( x, y - 2, w * percent, h + 4, &cGreen, NULL );
+   toolkit_drawRect( x + w * percent, y - 2, w * (1.-percent), h + 4, &cRed, NULL );
    gl_printMid( &gl_smallFont, w,
       x, y + h / 2. - gl_smallFont.h / 2.,
       &cFontWhite, "%d / %d", p->cpu, p->cpu_max );
@@ -577,8 +577,8 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
 
    percent = (p->stats.engine_limit > 0) ? CLAMP(0., 1.,
       (p->stats.engine_limit - p->solid->mass) / p->stats.engine_limit) : 0.;
-   toolkit_drawRect( x, y - 2, w * percent, h + 4, &cFriend, NULL );
-   toolkit_drawRect( x + w * percent, y - 2, w * (1.-percent), h + 4, &cRestricted, NULL );
+   toolkit_drawRect( x, y - 2, w * percent, h + 4, &cGreen, NULL );
+   toolkit_drawRect( x + w * percent, y - 2, w * (1.-percent), h + 4, &cOrange, NULL );
    gl_printMid( &gl_smallFont, w,
       x, y + h / 2. - gl_smallFont.h / 2.,
       &cFontWhite, "%.0f / %.0f", p->stats.engine_limit - p->solid->mass, p->stats.engine_limit );
@@ -1349,6 +1349,8 @@ static void equipment_genShipList( unsigned int wid )
       cships[0].image = gl_dupTexture(player.p->ship->gfx_store);
       cships[0].caption = strdup(player.p->name);
       cships[0].layers = gl_copyTexArray( player.p->ship->gfx_overlays, player.p->ship->gfx_noverlays, &cships[0].nlayers );
+      t = gl_newImage( OVERLAY_GFX_PATH"active.png", OPENGL_TEX_MIPMAPS );
+      cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
       if (player.p->ship->rarity > 0) {
          nsnprintf( r, sizeof(r), OVERLAY_GFX_PATH"rarity_%d.png", player.p->ship->rarity );
          t = gl_newImage( r, OPENGL_TEX_MIPMAPS );
@@ -1382,7 +1384,7 @@ static void equipment_genShipList( unsigned int wid )
 
       window_addImageArray( wid, 20, -40,
             sw, sh, EQUIPMENT_SHIPS, 96., 96.,
-            cships, nships, equipment_updateShips, NULL, NULL );
+            cships, nships, equipment_updateShips, NULL, equipment_transChangeShip );
    }
 }
 
@@ -1511,8 +1513,8 @@ eq_qCol( cur, base, inv ), eq_qSym( cur, base, inv ), cur
 void equipment_updateShips( unsigned int wid, char* str )
 {
    (void)str;
-   char buf[1024], buf2[ECON_CRED_STRLEN];
-   char errorReport[256];
+   char buf[STRMAX], buf2[ECON_CRED_STRLEN];
+   char errorReport[STRMAX_SHORT];
    char *shipname;
    Pilot *ship;
    char *nt;

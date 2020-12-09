@@ -82,7 +82,7 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
 
    /* Calculate image array dimensions. */
    if (iw != NULL)
-      *iw = 224 + (*w-800);
+      *iw = 704 + (*w - LAND_WIDTH);
    if (ih != NULL)
       *ih = *h - 60;
 
@@ -287,6 +287,7 @@ static void outfits_genList( unsigned int wid )
    int w, h, iw, ih;
    char *filtertext;
    LandOutfitData *data;
+   int iconsize;
 
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, NULL, NULL );
@@ -342,9 +343,12 @@ static void outfits_genList( unsigned int wid )
          tabfilters[active], filtertext );
    coutfits = outfits_imageArrayCells( iar_outfits[active], &noutfits );
 
-   /* TODO make the size of the outfits dependent on resolution? */
+   if (!conf.big_icons && (((iw*ih)/(128*128)) < noutfits))
+      iconsize = 96;
+   else
+      iconsize = 128;
    window_addImageArray( wid, 20, 20,
-         iw, ih - 34, OUTFITS_IAR, 96, 96,
+         iw, ih - 34, OUTFITS_IAR, iconsize, iconsize,
          coutfits, noutfits, outfits_update, outfits_rmouse, NULL );
 
    /* write the outfits stuff */

@@ -11,11 +11,9 @@ naev_DEPENDENCIES = $(NAEV_DEPENDENCIES)
 
 if HAVE_SHADERS_C_GEN
 # Compile shaders_c_gen for the build environment.
-shaders.gen.c shaders.gen.h: shaders_c_gen$(BUILD_EXEEXT)
-	./$<
-shaders_c_gen$(BUILD_EXEEXT): shaders_c_gen.c
-	$(CC_FOR_BUILD) $(CFLAGS_FOR_BUILD) $< -o $@
-CLEANFILES += shaders.gen.c shaders.gen.h shaders_c_gen$(BUILD_EXEEXT)
+shaders.gen.c shaders.gen.h: shaders_c_gen.py
+	python3 $<
+CLEANFILES += shaders.gen.c shaders.gen.h
 BUILT_SOURCES = shaders.gen.c shaders.gen.h
 endif
 

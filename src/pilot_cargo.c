@@ -19,6 +19,10 @@
 #include "gui.h"
 
 
+/* Private common implementation */
+static int pilot_cargoAddNeglectingStats( Pilot* pilot, Commodity* cargo,
+      int quantity, unsigned int id );
+
 /* ID Generators. */
 static unsigned int mission_cargo_id = 0; /**< ID generator for special mission cargo.
                                                Not guaranteed to be absolutely unique,
@@ -68,24 +72,18 @@ int pilot_cargoFree( Pilot* p )
  */
 int pilot_cargoMove( Pilot* dest, Pilot* src )
 {
-   /* Nothing to copy, success! */
-   if (src->ncommodities == 0)
-      return 0;
+   int i;
 
    /* Check if it fits. */
    if (pilot_cargoUsed(src) > pilot_cargoFree(dest)) {
-      WARN(_("Unable to copy cargo over from pilot '%s' to '%s'"), src->name, dest->name );
+      WARN(_("Unable to copy cargo over from pilot '%s' to '%s'. Leaving cargo as is."), src->name, dest->name );
       return -1;
    }
 
-   /* Allocate new space. */
-   dest->ncommodities += src->ncommodities;
-   dest->commodities   = realloc( dest->commodities,
-         sizeof(PilotCommodity)*dest->ncommodities);
-
    /* Copy over. */
-   memmove( &dest->commodities[0], &src->commodities[0],
-         sizeof(PilotCommodity) * src->ncommodities);
+   for (i=0; i<src->ncommodities; i++)
+      pilot_cargoAddNeglectingStats( dest, src->commodities[i].commodity,
+            src->commodities[i].quantity, src->commodities[i].id );
 
    /* Clean src. */
    if (src->commodities != NULL)
@@ -94,6 +92,43 @@ int pilot_cargoMove( Pilot* dest, Pilot* src )
    src->commodities  = NULL;
 
    return 0;
+}
+
+
+/**
+ * @brief Adds cargo to the pilot's "commodities" array only.
+ *
+ *    @param pilot Pilot to add cargo to.
+ *    @param cargo Cargo to add.
+ *    @param quantity Quantity to add.
+ *    @param id Mission ID to add (0 is none).
+ */
+static int pilot_cargoAddNeglectingStats( Pilot* pilot, Commodity* cargo,
+      int quantity, unsigned int id )
+{
+   int i, q;
+
+   q = quantity;
+
+   /* If not mission cargo check to see if already exists. */
+   if (id == 0) {
+      for (i=0; i<pilot->ncommodities; i++)
+         if (!pilot->commodities[i].id &&
+               (pilot->commodities[i].commodity == cargo)) {
+            pilot->commodities[i].quantity += q;
+            return q;
+         }
+   }
+
+   /* Create the memory space. */
+   pilot->commodities = realloc( pilot->commodities,
+         sizeof(PilotCommodity) * (pilot->ncommodities+1));
+   pilot->commodities[ pilot->ncommodities ].commodity = cargo;
+   pilot->commodities[ pilot->ncommodities ].id       = id;
+   pilot->commodities[ pilot->ncommodities ].quantity = q;
+   pilot->ncommodities++;
+
+   return q;
 }
 
 
@@ -110,41 +145,12 @@ int pilot_cargoMove( Pilot* dest, Pilot* src )
 int pilot_cargoAddRaw( Pilot* pilot, Commodity* cargo,
       int quantity, unsigned int id )
 {
-   int i, q;
+   int q;
 
-   q = quantity;
-
-   /* If not mission cargo check to see if already exists. */
-   if (id == 0) {
-      for (i=0; i<pilot->ncommodities; i++)
-         if (!pilot->commodities[i].id &&
-               (pilot->commodities[i].commodity == cargo)) {
-
-            /* Tweak results. */
-            pilot->commodities[i].quantity += q;
-            pilot->cargo_free              -= q;
-            pilot->mass_cargo              += q;
-            pilot->solid->mass             += pilot->stats.cargo_inertia * q;
-            pilot_updateMass( pilot );
-            gui_setGeneric( pilot );
-            return q;
-         }
-   }
-
-   /* Create the memory space. */
-   pilot->commodities = realloc( pilot->commodities,
-         sizeof(PilotCommodity) * (pilot->ncommodities+1));
-   pilot->commodities[ pilot->ncommodities ].commodity = cargo;
-
-   /* Set parameters. */
-   pilot->commodities[ pilot->ncommodities ].id       = id;
-   pilot->commodities[ pilot->ncommodities ].quantity = q;
-
-   /* Tweak pilot. */
+   q = pilot_cargoAddNeglectingStats( pilot, cargo, quantity, id );
    pilot->cargo_free    -= q;
    pilot->mass_cargo    += q;
    pilot->solid->mass   += pilot->stats.cargo_inertia * q;
-   pilot->ncommodities++;
    pilot_updateMass( pilot );
    gui_setGeneric( pilot );
 

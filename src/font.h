@@ -8,7 +8,7 @@
 #  define FONT_H
 
 
-#include "attributes.h"
+#include "nstring.h"
 #include "opengl.h"
 
 
@@ -66,18 +66,18 @@ void gl_printMarkerRaw( const glFont *ft_font,
  * printf style printing.
  */
 /* prints text normally */
-FORMAT( printf, 5, 6 ) void gl_print( const glFont *ft_font, double x, double y,
+PRINTF_FORMAT( 5, 6 ) void gl_print( const glFont *ft_font, double x, double y,
       const glColour *c, const char *fmt, ... );
 /* prints text to a max length */
-FORMAT( printf, 6, 7 ) int gl_printMax( const glFont *ft_font, const int max,
+PRINTF_FORMAT( 6, 7 ) int gl_printMax( const glFont *ft_font, const int max,
       double x, double y,
       const glColour *c, const char *fmt, ... );
 /* prints text centered in width at x */
-FORMAT( printf, 6, 7 ) int gl_printMid( const glFont *ft_font, const int width,
+PRINTF_FORMAT( 6, 7 ) int gl_printMid( const glFont *ft_font, const int width,
       double x, double y,
       const glColour* c, const char *fmt, ... );
 /* respects \n -> bx,by is TOP LEFT POSITION */
-FORMAT( printf, 7, 8 ) int gl_printText( const glFont *ft_font,
+PRINTF_FORMAT( 7, 8 ) int gl_printText( const glFont *ft_font,
       int width, int height,
       double bx, double by,
       const glColour* c, const char *fmt, ... );
@@ -86,9 +86,9 @@ FORMAT( printf, 7, 8 ) int gl_printText( const glFont *ft_font,
 int gl_printWidthForTextLine( const glFont *ft_font, const char *text, int width );
 int gl_printWidthForText( const glFont *ft_font, const char *text, int width );
 int gl_printWidthRaw( const glFont *ft_font, const char *text );
-FORMAT( printf, 2, 3 )int gl_printWidth( const glFont *ft_font, const char *fmt, ... );
+PRINTF_FORMAT( 2, 3 )int gl_printWidth( const glFont *ft_font, const char *fmt, ... );
 int gl_printHeightRaw( const glFont *ft_font, const int width, const char *text );
-FORMAT( printf, 3, 4 )int gl_printHeight( const glFont *ft_font,
+PRINTF_FORMAT( 3, 4 )int gl_printHeight( const glFont *ft_font,
       const int width, const char *fmt, ... );
 
 /* Restore hacks. */
