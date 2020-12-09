@@ -758,8 +758,13 @@ void ai_think( Pilot* pilot, const double dt )
    pilot_acc         = 0;
    pilot_turn        = 0.;
    pilot_flags       = 0;
+   /* So the way this works is that, for other than the player, we reset all
+    * the weapon sets every frame, so that the AI has to redo them over and
+    * over. Now, this is a horrible hack so shit works and needs a proper fix.
+    * TODO fix. */
    /* pilot_setTarget( cur_pilot, cur_pilot->id ); */
-   pilot_weapSetAIClear( cur_pilot ); /* Hack so shit works. TODO fix. */
+   if (cur_pilot->id != PLAYER_ID)
+      pilot_weapSetAIClear( cur_pilot );
 
    /* Get current task. */
    t = ai_curTask( cur_pilot );
