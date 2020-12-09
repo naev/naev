@@ -42,6 +42,20 @@ static int dialogue_open; /**< Number of dialogues open. */
 
 
 /*
+ * Custom widget scary stuff.
+ */
+typedef struct dialogue_update_s {
+   void (*update)(double, void*);
+   void *data;
+} dialogue_update_t;
+struct dialogue_custom_keyboard_s {
+   int (*keyboard)(unsigned int, SDL_Keycode, SDL_Keymod, void*);
+   void *data;
+};
+static int dialogue_custom_keyboard( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
+
+
+/*
  * Prototypes.
  */
 /* extern */
@@ -58,7 +72,7 @@ static void dialogue_choiceClose( unsigned int wid, char* str );
 static void dialogue_listClose( unsigned int wid, char* str );
 static void dialogue_listCancel( unsigned int wid, char* str );
 /* secondary loop hack */
-static int toolkit_loop( int *loop_done );
+static int toolkit_loop( int *loop_done, dialogue_update_t *du );
 
 /**
  * @brief Used to store information for input dialogues
@@ -146,7 +160,7 @@ void dialogue_alert( const char *fmt, ... )
          dialogue_close );
 
    dialogue_open++;
-   toolkit_loop( &done );
+   toolkit_loop( &done, NULL );
 }
 
 
@@ -274,7 +288,7 @@ void dialogue_msgRaw( const char* caption, const char *msg )
          dialogue_close );
 
    dialogue_open++;
-   toolkit_loop( &done );
+   toolkit_loop( &done, NULL );
 }
 
 
@@ -332,7 +346,7 @@ void dialogue_msgImgRaw( const char* caption, const char *msg, const char *img, 
          dialogue_close );
 
    dialogue_open++;
-   toolkit_loop( &done );
+   toolkit_loop( &done, NULL );
 }
 
 
@@ -390,7 +404,7 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
    /* tricky secondary loop */
    dialogue_open++;
    done[1] = -1; /* Default to negative. */
-   toolkit_loop( done );
+   toolkit_loop( done, NULL );
 
    /* Close the dialogue. */
    dialogue_close( wid, NULL );
@@ -503,7 +517,7 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
          input = NULL;
       }
 
-      if (toolkit_loop( &done ) != 0) /* error in loop -> quit */
+      if (toolkit_loop( &done, NULL ) != 0) /* error in loop -> quit */
          return NULL;
 
       /* save the input */
@@ -726,7 +740,7 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
          "btnCancel", _("Cancel"), dialogue_listCancel );
 
    dialogue_open++;
-   toolkit_loop( &done );
+   toolkit_loop( &done, NULL );
    /* cleanup */
    input_dialogue.x = 0;
    input_dialogue.y = 0;
@@ -798,7 +812,7 @@ char *dialogue_runChoice (void)
    /* tricky secondary loop */
    window_setData( choice_wid, &done );
    dialogue_open++;
-   toolkit_loop( &done );
+   toolkit_loop( &done, NULL );
 
    /* Save value. */
    res = choice_result;
@@ -830,6 +844,60 @@ static void dialogue_choiceClose( unsigned int wid, char* str )
 }
 
 
+static int dialogue_custom_keyboard( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
+{
+   struct dialogue_custom_keyboard_s *ck;
+   void *data = window_getData( wid );
+   ck = (struct dialogue_custom_keyboard_s*) data;
+   return (*ck->keyboard)( wid, key, mod, ck->data );
+
+}
+/**
+ * @brief Opens a dialogue window with an ok button and a fixed message.
+ *
+ *    @param caption Window title.
+ *    @param width Width of the widget.
+ *    @param height Height of the widget.
+ *    @param update Custom render callback.
+ *    @param render Custom render callback.
+ *    @param keyboard Custom keyboard callback.
+ *    @param mouse Custom mouse callback;
+ *    @param data Custom data;
+ */
+void dialogue_custom( const char* caption, int width, int height,
+      void (*update) (double dt, void* data),
+      void (*render) (double x, double y, double w, double h, void* data),
+      int (*keyboard) (unsigned int wid, SDL_Keycode key, SDL_Keymod mod, void* data),
+      int (*mouse) (unsigned int wid, SDL_Event* event, double x, double y, double w, double h, double rx, double ry, void* data),
+      void* data )
+{
+   struct dialogue_custom_keyboard_s ck;
+   dialogue_update_t du;
+   unsigned int msg_wid;
+   int done;
+
+   /* create the window */
+   msg_wid = window_create( "dlgMsg", caption, -1, -1, width+40, height+40 );
+   window_setData( msg_wid, &done );
+
+   /* custom widget for all! */
+   window_addCust( msg_wid, 20, 20, width, height, "cstCustom", 0, render, mouse, data );
+   window_custSetClipping( msg_wid, "cstCustom", 1 );
+
+   /* set up keyboard. */
+   ck.keyboard = keyboard;
+   ck.data = data;
+   window_setData( msg_wid, &ck );
+   window_handleKeys( msg_wid, &dialogue_custom_keyboard );
+
+   /* dialogue stuff */
+   du.update = update;
+   du.data  = data;
+   dialogue_open++;
+   toolkit_loop( &done, &du );
+}
+
+
 /**
  * @brief Creates a secondary loop until loop_done is set to 1 or the toolkit closes.
  *
@@ -843,9 +911,10 @@ static void dialogue_choiceClose( unsigned int wid, char* str )
  *
  *    @return 0 on success.
  */
-static int toolkit_loop( int *loop_done )
+static int toolkit_loop( int *loop_done, dialogue_update_t *du )
 {
    SDL_Event event;
+   unsigned int time_ms = SDL_GetTicks();
 
    /* Delay a toolkit iteration. */
    toolkit_delay();
@@ -871,6 +940,27 @@ static int toolkit_loop( int *loop_done )
          }
 
          input_handle(&event); /* handles all the events and player keybinds */
+      }
+
+      /* Update stuff. */
+      if (du != NULL) {
+         unsigned int t;
+         double dt, delay;
+         const double fps_max = 1./30.;
+
+         /* Get elapsed. */
+         t  = SDL_GetTicks();
+         dt = (double)(t - time_ms) / 1000.;
+         time_ms = t;
+
+         /* Sleep if necessary. */
+         if (dt < fps_max) {
+            delay    = fps_max - dt;
+            SDL_Delay( (unsigned int)(delay * 1000) );
+         }
+
+         /* Run update. */
+         (*du->update)(dt+delay, du->data);
       }
    }
 

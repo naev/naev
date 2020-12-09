@@ -23,6 +23,21 @@
 #include "toolkit.h"
 #include "land.h"
 #include "land_outfits.h"
+#include "input.h"
+
+
+/* Stuff for the custom toolkit. */
+typedef struct custom_functions_s {
+   lua_State *L;
+   int update;
+   int draw;
+   int keyboard;
+   int mouse;
+} custom_functions_t;
+static void cust_update( double dt, void* data );
+static void cust_render( double x, double y, double w, double h, void* data );
+static int cust_key( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, void* data );
+static int  cust_mouse( unsigned int wid, SDL_Event* event, double x, double y, double w, double h, double rx, double ry, void* data );
 
 
 /* Toolkit methods. */
@@ -32,6 +47,7 @@ static int tk_input( lua_State *L );
 static int tk_choice( lua_State *L );
 static int tk_list( lua_State *L );
 static int tk_merchantOutfit( lua_State *L );
+static int tk_custom( lua_State *L );
 static const luaL_Reg tk_methods[] = {
    { "msg", tk_msg },
    { "yesno", tk_yesno },
@@ -39,6 +55,7 @@ static const luaL_Reg tk_methods[] = {
    { "choice", tk_choice },
    { "list", tk_list },
    { "merchantOutfit", tk_merchantOutfit },
+   { "custom", tk_custom },
    {0,0}
 }; /**< Toolkit Lua methods. */
 
@@ -318,5 +335,128 @@ static int tk_merchantOutfit( lua_State *L )
    outfits_open( wid, outfits, noutfits );
 
    return 0;
+}
+
+
+
+/**
+ * @brief Creates a custom widget window.
+ *
+ *    @luatparam String title Title of the window.
+ *    @luatparam Number width Width of the drawable area of the widget.
+ *    @luatparam Number height Height of the drawable area of the widget.
+ *    @luatparam Function update Function to call when updating. Should take a single parameter which is a number indicating how many seconds passed from previous update.
+ *    @luatparam Function draw Function to call when drawing.
+ *    @luatparam Function keyboard Function to call when keyboard events are received. 
+ *    @luatparam Function mouse Function to call when mouse events are received.
+ * @luafunc custom( title, width, height, update, draw, keyboard, mouse )
+ */
+static int tk_custom( lua_State *L )
+{
+   int w, h;
+   const char *caption;
+   custom_functions_t cf;
+
+   caption = luaL_checkstring(L, 1);
+   w = luaL_checkinteger(L, 2);
+   h = luaL_checkinteger(L, 3);
+
+   luaL_checktype(L, 4, LUA_TFUNCTION);
+   luaL_checktype(L, 5, LUA_TFUNCTION);
+   luaL_checktype(L, 6, LUA_TFUNCTION);
+   luaL_checktype(L, 7, LUA_TFUNCTION);
+   /* Set up custom function pointers. */
+   cf.L = L;
+   lua_pushvalue(L, 4);
+   cf.update   = luaL_ref(L, LUA_REGISTRYINDEX);
+   lua_pushvalue(L, 5);
+   cf.draw     = luaL_ref(L, LUA_REGISTRYINDEX);
+   lua_pushvalue(L, 6);
+   cf.keyboard = luaL_ref(L, LUA_REGISTRYINDEX);
+   lua_pushvalue(L, 7);
+   cf.mouse    = luaL_ref(L, LUA_REGISTRYINDEX);
+
+   /* Create the dialogue. */
+   dialogue_custom( caption, w, h, cust_update, cust_render, cust_key, cust_mouse, &cf );
+
+   /* Clean up. */
+   luaL_unref(L, LUA_REGISTRYINDEX, cf.update);
+   luaL_unref(L, LUA_REGISTRYINDEX, cf.draw);
+   luaL_unref(L, LUA_REGISTRYINDEX, cf.keyboard);
+   luaL_unref(L, LUA_REGISTRYINDEX, cf.mouse);
+
+   return 0;
+}
+
+
+static void cust_update( double dt, void* data )
+{
+   custom_functions_t *cf = (custom_functions_t*) data;
+   lua_State *L = cf->L;
+   lua_rawgeti(L, LUA_REGISTRYINDEX, cf->update);
+   lua_pushnumber(L, dt);
+   lua_call(L, 1, 0);
+}
+static void cust_render( double x, double y, double w, double h, void* data )
+{
+   (void) x;
+   (void) y;
+   (void) w;
+   (void) h;
+   custom_functions_t *cf = (custom_functions_t*) data;
+   lua_State *L = cf->L;
+   lua_rawgeti(L, LUA_REGISTRYINDEX, cf->draw);
+   lua_call(L, 0, 0);
+}
+static int cust_key( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, void* data )
+{
+   (void) wid;
+   (void) key;
+   (void) mod;
+   int b;
+   custom_functions_t *cf = (custom_functions_t*) data;
+   lua_State *L = cf->L;
+   lua_rawgeti(L, LUA_REGISTRYINDEX, cf->keyboard);
+   lua_pushstring(L, SDL_GetKeyName(key));
+   lua_pushstring(L, input_modToText(mod));
+   lua_call(L, 2, 1);
+   b = lua_toboolean(L, -1);
+   lua_pop(L,1);
+   return b;
+}
+static int cust_mouse( unsigned int wid, SDL_Event* event, double x, double y, double w, double h, double rx, double ry, void* data )
+{
+   (void) wid;
+   (void) w;
+   (void) h;
+   (void) rx;
+   (void) ry;
+   int b, button, type;
+   custom_functions_t *cf = (custom_functions_t*) data;
+   lua_State *L = cf->L;
+   switch (event->type) {
+      case SDL_MOUSEBUTTONDOWN: type=1; break;
+      case SDL_MOUSEBUTTONUP:   type=2; break;
+      case SDL_MOUSEMOTION:     type=3; break;
+      default: return 0;
+   }
+   lua_rawgeti(L, LUA_REGISTRYINDEX, cf->mouse);
+   lua_pushnumber(L, x);
+   lua_pushnumber(L, y);
+   lua_pushnumber(L, type);
+   if (type < 3) {
+      switch (event->button.button) {
+         case SDL_BUTTON_LEFT:  button=1; break;
+         case SDL_BUTTON_RIGHT: button=2; break;
+         default:               button=3; break;
+      }
+      lua_pushnumber(L, button);
+      lua_call(L, 4, 1);
+   }
+   else
+      lua_call(L, 3, 1);
+   b = lua_toboolean(L, -1);
+   lua_pop(L,1);
+   return b;
 }
 
