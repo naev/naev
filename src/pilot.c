@@ -57,14 +57,15 @@ static unsigned int pilot_id = PLAYER_ID; /**< Stack of pilot ids to assure uniq
 
 
 /* stack of pilot_nstack */
+/* TODO replace with array.h infrastructure and make non-public. */
 Pilot** pilot_stack = NULL; /**< Not static, used in player.c, weapon.c, pause.c, space.c and ai.c */
 int pilot_nstack = 0; /**< same */
 static int pilot_mstack = 0; /**< Memory allocated for pilot_stack. */
 
 
 /* misc */
-static double pilot_commTimeout  = 15.; /**< Time for text above pilot to time out. */
-static double pilot_commFade     = 5.; /**< Time for text above pilot to fade out. */
+static const double pilot_commTimeout  = 15.; /**< Time for text above pilot to time out. */
+static const double pilot_commFade     = 5.; /**< Time for text above pilot to fade out. */
 
 
 
@@ -2569,7 +2570,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* Clear memory. */
    memset(pilot, 0, sizeof(Pilot));
 
-   if (pilot_isFlagRaw(flags, PILOT_PLAYER)) /* Set player ID, should probably be fixed to something better someday. */
+   if (pilot_isFlagRaw(flags, PILOT_PLAYER)) /* Set player ID. TODO should probably be fixed to something better someday. */
       pilot->id = PLAYER_ID;
    else
       pilot->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
