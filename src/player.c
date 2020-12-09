@@ -1739,7 +1739,7 @@ double player_dt_default (void)
  */
 void player_hailStart (void)
 {
-   char msg[1024];
+   char msg[STRMAX_SHORT];
    char buf[128];
 
    player_hailCounter = 5;
