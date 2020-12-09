@@ -269,6 +269,7 @@ static int tk_list( lua_State *L )
    return 2;
 }
 
+
 /**
  * @brief Opens an outfit merchant window.
  *
