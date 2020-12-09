@@ -1287,21 +1287,21 @@ void player_weapSetPress( int id, double value, int repeat )
    if (repeat)
       return;
 
-   if ((player.p == NULL) || toolkit_isOpen())
-      return;
-
-   if (pilot_isFlag(player.p, PILOT_HYP_PREP) ||
-         pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
-         pilot_isFlag(player.p, PILOT_LANDING) ||
-         pilot_isFlag(player.p, PILOT_TAKEOFF))
-      return;
-
    if (value==KEY_PRESS)
-      type = 1;
+      type = +1;
    else if (value==KEY_RELEASE)
       type = -1;
    else
       WARN(_("Unknown value '%f'!"), value);
+
+   if ((type>0) && ((player.p == NULL) || toolkit_isOpen()))
+      return;
+
+   if ((type>0) && (pilot_isFlag(player.p, PILOT_HYP_PREP) ||
+         pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
+         pilot_isFlag(player.p, PILOT_LANDING) ||
+         pilot_isFlag(player.p, PILOT_TAKEOFF)))
+      return;
 
    pilot_weapSetPress( player.p, id, type );
 }
