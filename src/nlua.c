@@ -15,6 +15,7 @@
 #include "nluadef.h"
 #include "log.h"
 #include "ndata.h"
+#include "nfile.h"
 #include "nlua_rnd.h"
 #include "nlua_faction.h"
 #include "nlua_var.h"
@@ -44,7 +45,7 @@ nlua_env __NLUA_CURENV = LUA_NOREF;
 /*
  * Internal
  */
-static char* nlua_packfileLoaderTryFile( size_t *bufsize, const char *filename );
+static char* nlua_packfileLoaderTryFile( lua_State* L, size_t *bufsize, const char *filename );
 
 
 /*
@@ -353,7 +354,7 @@ static int nlua_loadBasic( lua_State* L )
 /*
  * Tries to load a file from the lua paths.
  */
-static char* nlua_packfileLoaderTryFile( size_t *bufsize, const char *filename )
+static char* nlua_packfileLoaderTryFile( lua_State *L, size_t *bufsize, const char *filename )
 {
    char *buf;
    char path_filename[PATH_MAX];
@@ -369,6 +370,19 @@ static char* nlua_packfileLoaderTryFile( size_t *bufsize, const char *filename )
       if (ndata_exists( path_filename ))
          buf = ndata_read( path_filename, bufsize );
    }
+   /* Try to load the file directly. */
+#ifdef DEBUGGING
+   if (buf == NULL) {
+      int isconsole;
+      nlua_getenv(__NLUA_CURENV, "__cli");
+      isconsole = lua_toboolean(L,-1);
+      lua_pop(L,1);
+      if (isconsole && nfile_fileExists( filename ))
+         buf = nfile_readFile( bufsize, filename );
+   }
+#else
+   (void) L;
+#endif /* DEBUGGING */
 
    return buf;
 }
@@ -415,10 +429,10 @@ static int nlua_packfileLoader( lua_State* L )
 
    /* Try to load with extension. */
    nsnprintf( filename_ext, sizeof(filename_ext), "%s.lua", filename );
-   buf = nlua_packfileLoaderTryFile( &bufsize, filename_ext );
+   buf = nlua_packfileLoaderTryFile( L, &bufsize, filename_ext );
    /* Fallback to no extension. */
    if (buf == NULL)
-      buf = nlua_packfileLoaderTryFile( &bufsize, filename );
+      buf = nlua_packfileLoaderTryFile( L, &bufsize, filename );
 
    /* Must have buf by now. */
    if (buf == NULL) {
