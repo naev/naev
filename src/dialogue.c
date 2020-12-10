@@ -916,7 +916,10 @@ void dialogue_custom( const char* caption, int width, int height,
 static int toolkit_loop( int *loop_done, dialogue_update_t *du )
 {
    SDL_Event event;
+   unsigned int t;
+   double dt, delay;
    unsigned int time_ms = SDL_GetTicks();
+   const double fps_max = 1./30.;
 
    /* Delay a toolkit iteration. */
    toolkit_delay();
@@ -944,23 +947,19 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
          input_handle(&event); /* handles all the events and player keybinds */
       }
 
+      /* FPS Control. */
+      /* Get elapsed. */
+      t  = SDL_GetTicks();
+      dt = (double)(t - time_ms) / 1000.;
+      time_ms = t;
+      /* Sleep if necessary. */
+      if (dt < fps_max) {
+         delay    = fps_max - dt;
+         SDL_Delay( (unsigned int)(delay * 1000) );
+      }
+
       /* Update stuff. */
       if (du != NULL) {
-         unsigned int t;
-         double dt, delay;
-         const double fps_max = 1./30.;
-
-         /* Get elapsed. */
-         t  = SDL_GetTicks();
-         dt = (double)(t - time_ms) / 1000.;
-         time_ms = t;
-
-         /* Sleep if necessary. */
-         if (dt < fps_max) {
-            delay    = fps_max - dt;
-            SDL_Delay( (unsigned int)(delay * 1000) );
-         }
-
          /* Run update. */
          if ((*du->update)(dt+delay, du->data)) {
             /* Hack to override data. */
