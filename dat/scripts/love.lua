@@ -73,13 +73,16 @@ local function _keyboard( pressed, key, mod )
    love.keyboard._keystate[ k ] = pressed
    if pressed then
       love.keypressed( k )
+   else
+      love.keyreleased( k )
    end
    if key == "Q" then
       tk.customDone()
    end
    return true
 end
-function love.keypressed(key) end -- dummy
+function love.keypressed( key ) end -- dummy
+function love.keyreleased( key ) end -- dummy
 function love.keyboard.isDown( key )
    return (love.keyboard._keystate[ key ] == true)
 end
