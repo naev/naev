@@ -16,8 +16,8 @@ love = {}
 -- defaults
 love.x = 0
 love.y = 0
-love.w = 256
-love.h = 256
+love.w = 800
+love.h = 600
 love.bgcol = colour.new( 0, 0, 0, 1 )
 love.fgcol = colour.new( 1, 1, 1, 1 )
 
