@@ -20,6 +20,8 @@
 #include "log.h"
 #include "dialogue.h"
 #include "nlua_outfit.h"
+#include "nlua_col.h"
+#include "nlua_gfx.h"
 #include "toolkit.h"
 #include "land.h"
 #include "land_outfits.h"
@@ -76,6 +78,8 @@ static const luaL_Reg tk_methods[] = {
 int nlua_loadTk( nlua_env env )
 {
    nlua_register(env, "tk", tk_methods, 0);
+   nlua_loadCol(env);
+   nlua_loadGFX(env);
    return 0;
 }
 
@@ -344,7 +348,6 @@ static int tk_merchantOutfit( lua_State *L )
 }
 
 
-
 /**
  * @brief Creates a custom widget window.
  *
@@ -467,16 +470,16 @@ static int cust_update( double dt, void* data )
 }
 static void cust_render( double x, double y, double w, double h, void* data )
 {
-   (void) x;
-   (void) y;
-   (void) w;
-   (void) h;
    custom_functions_t *cf = (custom_functions_t*) data;
    if (cf->done)
       return;
    lua_State *L = cf->L;
    lua_rawgeti(L, LUA_REGISTRYINDEX, cf->draw);
-   cust_pcall( L, 0, 0, cf );
+   lua_pushnumber(L, x);
+   lua_pushnumber(L, y);
+   lua_pushnumber(L, w);
+   lua_pushnumber(L, h);
+   cust_pcall( L, 4, 0, cf );
 }
 static int cust_event( unsigned int wid, SDL_Event *event, void* data )
 {
