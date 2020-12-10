@@ -39,8 +39,9 @@ typedef struct custom_functions_s {
 } custom_functions_t;
 static int cust_update( double dt, void* data );
 static void cust_render( double x, double y, double w, double h, void* data );
-static int cust_key( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, void* data );
-static int  cust_mouse( unsigned int wid, SDL_Event* event, double x, double y, double w, double h, double rx, double ry, void* data );
+static int cust_event( unsigned int wid, SDL_Event *event, void* data );
+static int cust_key( SDL_Keycode key, SDL_Keymod mod, int pressed, custom_functions_t *cf );
+static int cust_mouse( int type, int button, double x, double y, custom_functions_t *cf );
 
 
 /* Toolkit methods. */
@@ -387,7 +388,7 @@ static int tk_custom( lua_State *L )
    lua_setglobal(L, TK_CUSTOMDONE );
 
    /* Create the dialogue. */
-   dialogue_custom( caption, w, h, cust_update, cust_render, cust_key, cust_mouse, &cf );
+   dialogue_custom( caption, w, h, cust_update, cust_render, cust_event, &cf );
 
    /* Clean up. */
    cf.done = 1;
@@ -477,49 +478,57 @@ static void cust_render( double x, double y, double w, double h, void* data )
    lua_rawgeti(L, LUA_REGISTRYINDEX, cf->draw);
    cust_pcall( L, 0, 0, cf );
 }
-static int cust_key( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, void* data )
+static int cust_event( unsigned int wid, SDL_Event *event, void* data )
 {
    (void) wid;
-   (void) key;
-   (void) mod;
-   int b;
    custom_functions_t *cf = (custom_functions_t*) data;
    if (cf->done)
       return 0;
+
+   /* Handle all the events. */
+   switch (event->type) {
+      case SDL_MOUSEBUTTONDOWN:
+         return cust_mouse( 1, event->button.button, event->button.x, event->button.y, cf );
+      case SDL_MOUSEBUTTONUP:
+         return cust_mouse( 2, event->button.button, event->button.x, event->button.y, cf );
+      case SDL_MOUSEMOTION:
+         return cust_mouse( 3, -1, event->button.x, event->button.y, cf );
+
+      case SDL_KEYDOWN:
+         return cust_key( event->key.keysym.sym, event->key.keysym.mod, 1, cf );
+      case SDL_KEYUP:
+         return cust_key( event->key.keysym.sym, event->key.keysym.mod, 0, cf );
+
+      default:
+         return 0;
+   }
+
+   return 0;
+}
+static int cust_key( SDL_Keycode key, SDL_Keymod mod, int pressed, custom_functions_t *cf )
+{
+   int b;
    lua_State *L = cf->L;
    lua_rawgeti(L, LUA_REGISTRYINDEX, cf->keyboard);
+   lua_pushboolean(L, pressed );
    lua_pushstring(L, SDL_GetKeyName(key));
    lua_pushstring(L, input_modToText(mod));
-   if (cust_pcall( L, 2, 1, cf ))
+   if (cust_pcall( L, 3, 1, cf ))
       return 0;
    b = lua_toboolean(L, -1);
    lua_pop(L,1);
    return b;
 }
-static int cust_mouse( unsigned int wid, SDL_Event* event, double x, double y, double w, double h, double rx, double ry, void* data )
+static int cust_mouse( int type, int button, double x, double y, custom_functions_t *cf )
 {
-   (void) wid;
-   (void) w;
-   (void) h;
-   (void) rx;
-   (void) ry;
-   int b, button, type;
-   custom_functions_t *cf = (custom_functions_t*) data;
-   if (cf->done)
-      return 0;
+   int b;
    lua_State *L = cf->L;
-   switch (event->type) {
-      case SDL_MOUSEBUTTONDOWN: type=1; break;
-      case SDL_MOUSEBUTTONUP:   type=2; break;
-      case SDL_MOUSEMOTION:     type=3; break;
-      default: return 0;
-   }
    lua_rawgeti(L, LUA_REGISTRYINDEX, cf->mouse);
    lua_pushnumber(L, x);
    lua_pushnumber(L, y);
    lua_pushnumber(L, type);
    if (type < 3) {
-      switch (event->button.button) {
+      switch (button) {
          case SDL_BUTTON_LEFT:  button=1; break;
          case SDL_BUTTON_RIGHT: button=2; break;
          default:               button=3; break;

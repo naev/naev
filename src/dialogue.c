@@ -49,11 +49,11 @@ typedef struct dialogue_update_s {
    int (*update)(double, void*);
    void *data;
 } dialogue_update_t;
-struct dialogue_custom_keyboard_s {
-   int (*keyboard)(unsigned int, SDL_Keycode, SDL_Keymod, void*);
+struct dialogue_custom_data_s {
+   int (*event)(unsigned int, SDL_Event*, void*);
    void *data;
 };
-static int dialogue_custom_keyboard( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
+static int dialogue_custom_event( unsigned int wid, SDL_Event *event );
 
 
 /*
@@ -845,13 +845,12 @@ static void dialogue_choiceClose( unsigned int wid, char* str )
 }
 
 
-static int dialogue_custom_keyboard( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
+static int dialogue_custom_event( unsigned int wid, SDL_Event *event )
 {
-   struct dialogue_custom_keyboard_s *ck;
+   struct dialogue_custom_data_s *cd;
    void *data = window_getData( wid );
-   ck = (struct dialogue_custom_keyboard_s*) data;
-   return (*ck->keyboard)( wid, key, mod, ck->data );
-
+   cd = (struct dialogue_custom_data_s*) data;
+   return (*cd->event)( wid, event, cd->data );
 }
 /**
  * @brief Opens a dialogue window with an ok button and a fixed message.
@@ -861,18 +860,16 @@ static int dialogue_custom_keyboard( unsigned int wid, SDL_Keycode key, SDL_Keym
  *    @param height Height of the widget.
  *    @param update Custom render callback.
  *    @param render Custom render callback.
- *    @param keyboard Custom keyboard callback.
- *    @param mouse Custom mouse callback;
+ *    @param event Custom event callback.
  *    @param data Custom data;
  */
 void dialogue_custom( const char* caption, int width, int height,
       int (*update) (double dt, void* data),
       void (*render) (double x, double y, double w, double h, void* data),
-      int (*keyboard) (unsigned int wid, SDL_Keycode key, SDL_Keymod mod, void* data),
-      int (*mouse) (unsigned int wid, SDL_Event* event, double x, double y, double w, double h, double rx, double ry, void* data),
+      int (*event) (unsigned int wid, SDL_Event* event, void* data),
       void* data )
 {
-   struct dialogue_custom_keyboard_s ck;
+   struct dialogue_custom_data_s cd;
    dialogue_update_t du;
    unsigned int wid;
    int done;
@@ -882,14 +879,15 @@ void dialogue_custom( const char* caption, int width, int height,
    window_setData( wid, &done );
 
    /* custom widget for all! */
-   window_addCust( wid, 20, 20, width, height, "cstCustom", 0, render, mouse, data );
+   window_addCust( wid, 20, 20, width, height, "cstCustom", 0, render, NULL, data );
    window_custSetClipping( wid, "cstCustom", 1 );
 
    /* set up keyboard. */
-   ck.keyboard = keyboard;
-   ck.data = data;
-   window_setData( wid, &ck );
-   window_handleKeys( wid, &dialogue_custom_keyboard );
+   cd.event = event;
+   cd.data = data;
+   window_setData( wid, &cd );
+   if (event != NULL)
+      window_handleEvents( wid, &dialogue_custom_event );
 
    /* dialogue stuff */
    du.update = update;
