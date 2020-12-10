@@ -2403,16 +2403,23 @@ static void gui_eventToScreenPos( int* sx, int* sy, int ex, int ey )
  */
 int gui_radarClickEvent( SDL_Event* event )
 {
-   int mxr, myr;
-   double x, y, px, py;
+   int mxr, myr, in_bounds;
+   double x, y, cx, cy;
 
-   px = player.p->solid->pos.x;
-   py = player.p->solid->pos.y;
    gui_eventToScreenPos( &mxr, &myr, event->button.x, event->button.y );
-   if (mxr <= gui_radar.x || mxr > gui_radar.x + gui_radar.w || myr <= gui_radar.y || myr > gui_radar.y + gui_radar.h)
+   if (gui_radar.shape == RADAR_RECT) {
+      cx = gui_radar.x + gui_radar.w / 2.;
+      cy = gui_radar.y + gui_radar.h / 2.;
+      in_bounds = (2*ABS( mxr-cx ) <= gui_radar.w && 2*ABS( myr-cy ) <= gui_radar.h);
+   } else {
+      cx = gui_radar.x;
+      cy = gui_radar.y;
+      in_bounds = (pow2( mxr-cx ) + pow2( myr-cy ) <= pow2( gui_radar.w ));
+   }
+   if (!in_bounds)
       return 0;
-   x = (mxr - (gui_radar.x + gui_radar.w / 2.)) * gui_radar.res + px;
-   y = (myr - (gui_radar.y + gui_radar.h / 2.)) * gui_radar.res + py;
+   x = (mxr - cx) * gui_radar.res + player.p->solid->pos.x;
+   y = (myr - cy) * gui_radar.res + player.p->solid->pos.y;
    return input_clickPos( event, x, y, 1., 10. * gui_radar.res, 15. * gui_radar.res );
 }
 
