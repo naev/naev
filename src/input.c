@@ -1175,7 +1175,7 @@ static void input_mouseMove( SDL_Event* event )
 static void input_clickevent( SDL_Event* event )
 {
    unsigned int pid;
-   int mx, my, pntid, jpid, astid, fieid;
+   int mx, my, mxr, myr, pntid, jpid, astid, fieid;
    int rx, ry, rh, rw, res;
    int autonav;
    double x, y, zoom, px, py;
@@ -1250,11 +1250,12 @@ static void input_clickevent( SDL_Event* event )
 
    gui_radarGetPos( &rx, &ry );
    gui_radarGetDim( &rw, &rh );
-   if ((mx > rx) && (mx <= rx + rw) && (my > ry) && (my <= ry + rh)) { /* Radar */
+   gui_eventoScreenPos( &mxr, &myr, event->button.x, event->button.y );
+   if ((mxr > rx) && (mxr <= rx + rw) && (myr > ry) && (myr <= ry + rh)) { /* Radar */
       zoom = 1.;
       gui_radarGetRes( &res );
-      x = (mx - (rx + rw / 2.)) * res + px;
-      y = (my - (ry + rh / 2.)) * res + py;
+      x = (mxr - (rx + rw / 2.)) * res + px;
+      y = (myr - (ry + rh / 2.)) * res + py;
       if (input_clickPos( event, x, y, zoom, 10. * res, 15. * res ))
          return;
    }
