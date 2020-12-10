@@ -1,49 +1,22 @@
-project('luajit', 'c', version : '2.0.5', license : 'mit')
+# Files in this overlay derived from https://github.com/franko/luajit
+# as of commit d9791bf68eecfd3c41d669a0439577e59031a749 (2020-12-09).
 
-# TODO: This is not ideal. We should translate the enough of the makefile to have Meson handle the build.
+project('luajit', 'c', version : '2.0.5', default_options : ['c_winlibs='])
+
 cc = meson.get_compiler('c')
+libm = cc.find_library('m', required : false)
+libdl = cc.find_library('dl', required : false)
+luajit_dependencies = [libm, libdl]
 
-make = find_program('make', 'mingw32-make', required : true)
+luajit_source_dir = include_directories('src')
+luajit_abiver = '51'
 
-env = environment()
-if meson.is_cross_build()
-    # Construct the compiler prefix, e.g. 'x86_64-w64-mingw32-'.
-    # FIXME: This is absolutely disgusting. I'm not sure whether to loathe myself or blame the Meson team.
-    cc_name_parts = cc.cmd_array()[0].split('/')[-1].split('\\')[-1].split('-')
-    cc_name_hyphen = ''
-    foreach cc_name_part: cc_name_parts
-        cc_name_prefix = cc_name_hyphen
-        cc_name_hyphen += cc_name_part + '-'
-    endforeach
+dynasm = files('dynasm/dynasm.lua')
 
-    env.set('CROSS', cc_name_prefix)
-    if host_machine.system() == 'darwin'
-        env.set('TARGET_SYS', 'Darwin')
-    elif host_machine.system() == 'linux'
-        env.set('TARGET_SYS', 'Linux')
-    elif host_machine.system() == 'windows'
-        env.set('TARGET_SYS', 'Windows')
-    endif
-endif
-
-run_command(
-    make, '-C', meson.current_source_dir(), 'amalg',
-    check: true,
-    env: env)
-
-if host_machine.system() == 'windows'
-    libs = cc.find_library(
-        'lua51',
-        dirs: meson.current_source_dir() / 'src',
-	static: false)
-else
-    libs = cc.find_library(
-        'luajit',
-        dirs: meson.current_source_dir() / 'src',
-        static: true)
-endif
+subdir('src')
 
 luajit_dep = declare_dependency(
-    dependencies: libs,
-    include_directories: include_directories('src'),
+    link_with: libluajit,
+    include_directories: luajit_source_dir,
+    dependencies: luajit_dependencies,
     version: meson.project_version())
