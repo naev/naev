@@ -685,7 +685,8 @@ void gl_printRaw( const glFont *ft_font,
       const double x, const double y,
       const glColour* c, const double outlineR, const char *text)
 {
-   gl_printOutline( ft_font, 0, 0, x, y, c, outlineR, text, gl_printRawBase);
+   if (outlineR > 0.)
+      gl_printOutline( ft_font, 0, 0, x, y, c, outlineR, text, gl_printRawBase);
    gl_printRawBase( ft_font, 0, 0, x, y, c, text, 0 );
 }
 
@@ -778,7 +779,8 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
       const double x, const double y,
       const glColour* c, const double outlineR, const char *text)
 {
-   gl_printOutline( ft_font, max, 0, x, y, c, outlineR, text, gl_printMaxRawBase );
+   if (outlineR > 0.)
+      gl_printOutline( ft_font, max, 0, x, y, c, outlineR, text, gl_printMaxRawBase );
    return gl_printMaxRawBase( ft_font, max, 0, x, y, c, text, 0 );
 }
 
@@ -882,7 +884,8 @@ int gl_printMidRaw(
       const char *text
       )
 {
-   gl_printOutline( ft_font, width, 0, x, y, c, outlineR, text, gl_printMidRawBase);
+   if (outlineR > 0.)
+      gl_printOutline( ft_font, width, 0, x, y, c, outlineR, text, gl_printMidRawBase);
    return gl_printMidRawBase( ft_font, width, 0, x, y, c, text, 0 );
 }
 
@@ -1007,7 +1010,8 @@ int gl_printTextRaw( const glFont *ft_font,
       const char *text
     )
 {
-   gl_printOutline( ft_font, width, height, bx, by, c, outlineR, text, gl_printTextRawBase );
+   if (outlineR > 0.)
+      gl_printOutline( ft_font, width, height, bx, by, c, outlineR, text, gl_printTextRawBase );
    return gl_printTextRawBase( ft_font, width, height, bx, by, c, text, 0 );
 }
 
