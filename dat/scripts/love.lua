@@ -25,9 +25,12 @@ love.fgcol = colour.new( 1, 1, 1, 1 )
 local function _update( dt )
    love.update(dt)
 end
+function love.update( dt ) end -- dummy
 
 -- Internal function that connects to Naev
 local function _mouse( x, y, mtype, button )
+   x = x - love.x
+   y = y - love.y
    print( string.format( "mouse: %.1f x %.1f, %s, %s", x, y, mtype, button ) )
    return true
 end
@@ -39,13 +42,18 @@ love.keyboard = {}
 love.keyboard._keystate = {}
 -- Internal function that connects to Naev
 local function _keyboard( pressed, key, mod )
-   print( string.format( "key: %s, %s, %s", pressed, key, mod ) )
-   love.keyboard._keystate[ string.lower(key) ] = pressed
+   --print( string.format( "key: %s, %s, %s", pressed, key, mod ) )
+   local k = string.lower( key )
+   love.keyboard._keystate[ k ] = pressed
+   if pressed then
+      love.keypressed( k )
+   end
    if key == "Q" then
       tk.customDone()
    end
    return true
 end
+function love.keypressed(key) end -- dummy
 function love.keyboard.isDown( key )
    return (love.keyboard._keystate[ key ] == true)
 end
@@ -79,6 +87,32 @@ end
 function love.graphics.getHeight()
    return love.h
 end
+local function _gcol( c )
+   local r, g, b = c:rgb()
+   local a = c:alpha()
+   return r, g, b, a
+end
+local function _scol( r, g, b, a )
+   if type(r)=="table" then
+      a = r[4]
+      b = r[3]
+      g = r[2]
+      r = r[1]
+   end
+   return colour.new( r, g, b, a or 1 )
+end
+function love.graphics.getBackgroundColor()
+   return _gcol( self.bgcol )
+end
+function love.graphics.setBackgroundColor( red, green, blue, alpha )
+   love.bgcol = _scol( red, green, blue, alpha )
+end
+function love.graphics.getColor()
+   return _gcol( self.fgcol )
+end
+function love.graphics.setColor( red, green, blue, alpha )
+   love.fgcol = _scol( red, green, blue, alpha )
+end
 function love.graphics.rectangle( mode, x, y, width, height )
    x,y = _xy(x,y,width,height)
    gfx.renderRect( x, y, width, height, love.fgcol, _mode(mode) )
@@ -86,6 +120,10 @@ end
 function love.graphics.circle( mode, x, y, radius )
    x,y = _xy(x,y,0,0)
    gfx.renderCircle( x, y, radius, love.fgcol, _mode(mode) )   
+end
+function love.graphics.print( text, x, y  )
+   x,y = _xy(x,y,limit,12)
+   gfx.print( false, text, x, y, love.fgcol )
 end
 function love.graphics.printf( text, x, y, limit, align )
    x,y = _xy(x,y,limit,12)
