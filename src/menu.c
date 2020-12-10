@@ -387,6 +387,7 @@ static void menu_exit( unsigned int wid, char* str )
  */
 static void menu_main_cleanBG( unsigned int wid, char* str )
 {
+   (void) wid;
    (void) str;
 
    /*
@@ -399,7 +400,8 @@ static void menu_main_cleanBG( unsigned int wid, char* str )
    if (main_naevLogo != NULL)
       gl_freeTexture(main_naevLogo);
    main_naevLogo = NULL;
-   window_modifyImage( wid, "imgLogo", NULL, 0, 0 );
+   /* No need to clean up, should never be rendered. */
+   /* window_modifyImage( wid, "imgLogo", NULL, 0, 0 ); */
 }
 
 
