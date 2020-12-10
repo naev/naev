@@ -515,11 +515,10 @@ int nlua_loadStandard( nlua_env env )
 
 
 
-#if DEBUGGING
 /**
  * @brief Gets a trace from Lua.
  */
-static int nlua_errTrace( lua_State *L )
+int nlua_errTrace( lua_State *L )
 {
    /* Handle special done case. */
    const char *str = luaL_checkstring(L,1);
@@ -542,7 +541,6 @@ static int nlua_errTrace( lua_State *L )
    lua_call(L, 2, 1);
    return 1;
 }
-#endif /* DEBUGGING */
 
 
 /*
