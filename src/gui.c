@@ -1108,32 +1108,6 @@ void gui_radarRender( double x, double y )
 
 
 /**
- * @brief Gets the radar's position.
- *
- *    @param[out] x X position.
- *    @param[out] y Y position.
- */
-void gui_radarGetPos( int *x, int *y )
-{
-   *x = gui_radar.x;
-   *y = gui_radar.y;
-}
-
-
-/**
- * @brief Gets the radar's dimensions.
- *
- *    @param[out] w Width.
- *    @param[out] h Height.
- */
-void gui_radarGetDim( int *w, int *h )
-{
-   *w = gui_radar.w;
-   *h = gui_radar.h;
-}
-
-
-/**
  * @brief Outputs the radar's resolution.
  *
  *    @param[out] res Current zoom ratio.
@@ -2430,19 +2404,17 @@ static void gui_eventToScreenPos( int* sx, int* sy, int ex, int ey )
 int gui_radarClickEvent( SDL_Event* event )
 {
    int mxr, myr;
-   int rx, ry, rh, rw, res;
+   int res;
    double x, y, px, py;
 
    px = player.p->solid->pos.x;
    py = player.p->solid->pos.y;
-   gui_radarGetPos( &rx, &ry );
-   gui_radarGetDim( &rw, &rh );
    gui_eventToScreenPos( &mxr, &myr, event->button.x, event->button.y );
-   if (mxr <= rx || mxr > rx + rw || myr <= ry || myr > ry + rh)
+   if (mxr <= gui_radar.x || mxr > gui_radar.x + gui_radar.w || myr <= gui_radar.y || myr > gui_radar.y + gui_radar.h)
       return 0;
    gui_radarGetRes( &res );
-   x = (mxr - (rx + rw / 2.)) * res + px;
-   y = (myr - (ry + rh / 2.)) * res + py;
+   x = (mxr - (gui_radar.x + gui_radar.w / 2.)) * res + px;
+   y = (myr - (gui_radar.y + gui_radar.h / 2.)) * res + py;
    return input_clickPos( event, x, y, 1., 10. * res, 15. * res );
 }
 
