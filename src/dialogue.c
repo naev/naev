@@ -875,7 +875,7 @@ void dialogue_custom( const char* caption, int width, int height,
    int done;
 
    /* create the window */
-   wid = window_create( "dlgMsg", caption, -1, -1, width+40, height+40 );
+   wid = window_create( "dlgMsg", caption, -1, -1, width+40, height+60 );
    window_setData( wid, &done );
 
    /* custom widget for all! */
