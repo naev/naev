@@ -959,7 +959,7 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
       /* Update stuff. */
       if (du != NULL) {
          /* Run update. */
-         if ((*du->update)(dt+delay, du->data)) {
+         if ((*du->update)(dt, du->data)) {
             /* Hack to override data. */
             window_setData( du->wid, loop_done );
             dialogue_close( du->wid, NULL );
