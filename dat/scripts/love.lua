@@ -18,6 +18,7 @@ love.x = 0
 love.y = 0
 love.w = 800
 love.h = 600
+love.font = font.new( 12 )
 love.bgcol = colour.new( 0, 0, 0, 1 )
 love.fgcol = colour.new( 1, 1, 1, 1 )
 
@@ -122,20 +123,30 @@ function love.graphics.circle( mode, x, y, radius )
    gfx.renderCircle( x, y, radius, love.fgcol, _mode(mode) )   
 end
 function love.graphics.print( text, x, y  )
-   x,y = _xy(x,y,limit,12)
-   gfx.print( false, text, x, y, love.fgcol )
+   x,y = _xy(x,y,limit,love.font:height())
+   gfx.printf( love.font, text, x, y, love.fgcol )
 end
 function love.graphics.printf( text, x, y, limit, align )
-   x,y = _xy(x,y,limit,12)
+   x,y = _xy(x,y,limit,love.font:height())
    if align=="left" then
-      gfx.print( false, text, x, y, love.fgcol, limit, false )
+      gfx.printf( love.font, text, x, y, love.fgcol, limit, false )
    elseif align=="center" then
-      gfx.print( false, text, x, y, love.fgcol, limit, true )
+      gfx.printf( love.font, text, x, y, love.fgcol, limit, true )
    elseif align=="right" then
       local w = gfx.printDim( false, text, limit )
       local off = limit-w
-      gfx.print( false, text, x+off, y, love.fgcol, w, false )
+      gfx.printf( love.font, text, x+off, y, love.fgcol, w, false )
    end
+end
+function love.graphics.setNewFont( file, size )
+   if size==nil then
+      love.font = font.new( file )
+   elseif type(file)=="userdata" then
+      love.font = file
+   else
+      love.font = font.new( file, size )
+   end
+   return love.font
 end
 
 
