@@ -30,8 +30,7 @@ function love.update( dt ) end -- dummy
 
 -- Internal function that connects to Naev
 local function _mouse( x, y, mtype, button )
-   x = x - love.x
-   y = y - love.y
+   y = love.h-y
    print( string.format( "mouse: %.1f x %.1f, %s, %s", x, y, mtype, button ) )
    return true
 end

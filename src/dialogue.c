@@ -52,6 +52,10 @@ typedef struct dialogue_update_s {
 struct dialogue_custom_data_s {
    int (*event)(unsigned int, SDL_Event*, void*);
    void *data;
+   int mx;
+   int my;
+   int w;
+   int h;
 };
 static int dialogue_custom_event( unsigned int wid, SDL_Event *event );
 
@@ -847,9 +851,25 @@ static void dialogue_choiceClose( unsigned int wid, char* str )
 
 static int dialogue_custom_event( unsigned int wid, SDL_Event *event )
 {
+   int mx, my;
    struct dialogue_custom_data_s *cd;
    void *data = window_getData( wid );
    cd = (struct dialogue_custom_data_s*) data;
+
+   /* We translate mouse coords here. */
+   if ((event->type==SDL_MOUSEBUTTONDOWN) ||
+         (event->type==SDL_MOUSEBUTTONUP) ||
+         (event->type==SDL_MOUSEMOTION)) {
+      gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
+      mx += cd->mx;
+      my += cd->my;
+      /* Ignore out of bounds. We have to implement checking here. */
+      if ((mx < 0) || (mx >= cd->w) || (my < 0) || (my >= cd->h))
+         return 0;
+      event->button.x = mx;
+      event->button.y = my;
+   }
+
    return (*cd->event)( wid, event, cd->data );
 }
 /**
@@ -873,6 +893,7 @@ void dialogue_custom( const char* caption, int width, int height,
    dialogue_update_t du;
    unsigned int wid;
    int done;
+   int wx, wy, wgtx, wgty;
 
    /* create the window */
    wid = window_create( "dlgMsg", caption, -1, -1, width+40, height+60 );
@@ -882,9 +903,15 @@ void dialogue_custom( const char* caption, int width, int height,
    window_addCust( wid, 20, 20, width, height, "cstCustom", 0, render, NULL, data );
    window_custSetClipping( wid, "cstCustom", 1 );
 
-   /* set up keyboard. */
+   /* set up event stuff. */
+   window_posWindow( wid, &wx, &wy );
+   window_posWidget( wid, "cstCustom", &wgtx, &wgty );
    cd.event = event;
    cd.data = data;
+   cd.mx = -wx-wgtx;
+   cd.my = -wy-wgty;
+   cd.w = width;
+   cd.h = height;
    window_setData( wid, &cd );
    if (event != NULL)
       window_handleEvents( wid, &dialogue_custom_event );
