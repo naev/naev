@@ -332,7 +332,7 @@ static int gfxL_printDim( lua_State *L )
  * @usage gfx.print( true, _("Hello World!"), 50, 50, col, 100 ) -- Displays text to a maximum of 100 pixels wide.
  * @usage gfx.print( true, str, 50, 50, col, 100, true ) -- Displays centered text to a maximum of 100 pixels.
  *
- *    @luatparam bookean small Whether or not to use a small font.
+ *    @luatparam boolean small Whether or not to use a small font.
  *    @luatparam string str String to print.
  *    @luatparam number x X position to print at.
  *    @luatparam number y Y position to print at.
