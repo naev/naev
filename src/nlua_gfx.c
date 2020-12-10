@@ -28,6 +28,7 @@ static int gfxL_dim( lua_State *L );
 static int gfxL_renderTex( lua_State *L );
 static int gfxL_renderTexRaw( lua_State *L );
 static int gfxL_renderRect( lua_State *L );
+static int gfxL_renderCircle( lua_State *L );
 static int gfxL_fontSize( lua_State *L );
 static int gfxL_printDim( lua_State *L );
 static int gfxL_print( lua_State *L );
@@ -39,6 +40,7 @@ static const luaL_Reg gfxL_methods[] = {
    { "renderTex", gfxL_renderTex },
    { "renderTexRaw", gfxL_renderTexRaw },
    { "renderRect", gfxL_renderRect },
+   { "renderCircle", gfxL_renderCircle },
    /* Printing. */
    { "fontSize", gfxL_fontSize },
    { "printDim", gfxL_printDim },
@@ -270,6 +272,38 @@ static int gfxL_renderRect( lua_State *L )
       gl_renderRectEmpty( x, y, w, h, col );
    else
       gl_renderRect( x, y, w, h, col );
+
+   return 0;
+}
+
+
+/**
+ * @brief Renders a circle
+ *
+ *    @luatparam number x X position to render at.
+ *    @luatparam number y Y position to render at.
+ *    @luatparam number r Radius of the circle.
+ *    @luatparam Colour col Colour to use.
+ *    @luatparam[opt=false] boolean empty Whether or not it should be empty.
+ * @luafunc renderCircle( x, y, r, col, empty )
+ */
+static int gfxL_renderCircle( lua_State *L )
+{
+   glColour *col;
+   double x,y, r;
+   int empty;
+
+   NLUA_CHECKRW(L);
+
+   /* Parse parameters. */
+   x     = luaL_checknumber( L, 1 );
+   y     = luaL_checknumber( L, 2 );
+   r     = luaL_checknumber( L, 3 );
+   col   = luaL_checkcolour( L, 4 );
+   empty = lua_toboolean( L, 5 );
+
+   /* Render. */
+   gl_drawCircle( x, y, r, col, !empty );
 
    return 0;
 }
