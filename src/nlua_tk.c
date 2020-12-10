@@ -30,6 +30,7 @@
 #define TK_CUSTOMDONE   "__customDone"
 typedef struct custom_functions_s {
    lua_State *L; /**< Assosciated Lua state. */
+   int done; /**< Whether or not it is done. */
    /* Function references. */
    int update;
    int draw;
@@ -371,6 +372,7 @@ static int tk_custom( lua_State *L )
    luaL_checktype(L, 7, LUA_TFUNCTION);
    /* Set up custom function pointers. */
    cf.L = L;
+   cf.done = 0;
    lua_pushvalue(L, 4);
    cf.update   = luaL_ref(L, LUA_REGISTRYINDEX);
    lua_pushvalue(L, 5);
@@ -388,6 +390,7 @@ static int tk_custom( lua_State *L )
    dialogue_custom( caption, w, h, cust_update, cust_render, cust_key, cust_mouse, &cf );
 
    /* Clean up. */
+   cf.done = 1;
    luaL_unref(L, LUA_REGISTRYINDEX, cf.update);
    luaL_unref(L, LUA_REGISTRYINDEX, cf.draw);
    luaL_unref(L, LUA_REGISTRYINDEX, cf.keyboard);
@@ -413,12 +416,16 @@ static int cust_update( double dt, void* data )
 {
    int ret;
    custom_functions_t *cf = (custom_functions_t*) data;
+   if (cf->done)
+      return 1; /* Mark done. */
    lua_State *L = cf->L;
    lua_rawgeti(L, LUA_REGISTRYINDEX, cf->update);
    lua_pushnumber(L, dt);
-   /* TODO It seems like when it errors out it crashes because the dialogue gets unset. */
-   if (lua_pcall(L, 1, 0, 0))
+   if (lua_pcall(L, 1, 0, 0)) {
+      cf->done = 1;
       lua_error(L); /* propagate error */
+   }
+   /* Check if done. */
    lua_getglobal(L, TK_CUSTOMDONE );
    ret = lua_toboolean(L, -1);
    lua_pop(L, 1);
@@ -431,10 +438,14 @@ static void cust_render( double x, double y, double w, double h, void* data )
    (void) w;
    (void) h;
    custom_functions_t *cf = (custom_functions_t*) data;
+   if (cf->done)
+      return;
    lua_State *L = cf->L;
    lua_rawgeti(L, LUA_REGISTRYINDEX, cf->draw);
-   if (lua_pcall(L, 0, 0, 0))
+   if (lua_pcall(L, 0, 0, 0)) {
+      cf->done = 1;
       lua_error(L); /* propagate error */
+   }
 }
 static int cust_key( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, void* data )
 {
@@ -443,12 +454,16 @@ static int cust_key( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, void* da
    (void) mod;
    int b;
    custom_functions_t *cf = (custom_functions_t*) data;
+   if (cf->done)
+      return 0;
    lua_State *L = cf->L;
    lua_rawgeti(L, LUA_REGISTRYINDEX, cf->keyboard);
    lua_pushstring(L, SDL_GetKeyName(key));
    lua_pushstring(L, input_modToText(mod));
-   if (lua_pcall(L, 2, 1, 0))
+   if (lua_pcall(L, 2, 1, 0)) {
+      cf->done = 1;
       lua_error(L); /* propagate error */
+   }
    b = lua_toboolean(L, -1);
    lua_pop(L,1);
    return b;
@@ -462,6 +477,8 @@ static int cust_mouse( unsigned int wid, SDL_Event* event, double x, double y, d
    (void) ry;
    int b, button, type;
    custom_functions_t *cf = (custom_functions_t*) data;
+   if (cf->done)
+      return 0;
    lua_State *L = cf->L;
    switch (event->type) {
       case SDL_MOUSEBUTTONDOWN: type=1; break;
@@ -480,12 +497,16 @@ static int cust_mouse( unsigned int wid, SDL_Event* event, double x, double y, d
          default:               button=3; break;
       }
       lua_pushnumber(L, button);
-      if (lua_pcall(L, 4, 1, 0))
+      if (lua_pcall(L, 4, 1, 0)) {
+         cf->done = 1;
          lua_error(L); /* propagate error */
+      }
    }
    else
-      if (lua_pcall(L, 3, 1, 0))
+      if (lua_pcall(L, 3, 1, 0)) {
+         cf->done = 1;
          lua_error(L); /* propagate error */
+      }
    b = lua_toboolean(L, -1);
    lua_pop(L,1);
    return b;
