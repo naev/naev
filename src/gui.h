@@ -80,7 +80,7 @@ int gui_getMapOverlayBoundLeft(void);
  */
 int gui_radarInit( int circle, int w, int h );
 void gui_radarRender( double x, double y );
-void gui_radarGetRes( int *res );
+void gui_radarGetRes( double* res );
 int gui_radarClickEvent( SDL_Event* event );
 
 

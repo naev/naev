@@ -1112,7 +1112,7 @@ void gui_radarRender( double x, double y )
  *
  *    @param[out] res Current zoom ratio.
  */
-void gui_radarGetRes( int *res )
+void gui_radarGetRes( double* res )
 {
    *res = gui_radar.res;
 }
@@ -2404,7 +2404,6 @@ static void gui_eventToScreenPos( int* sx, int* sy, int ex, int ey )
 int gui_radarClickEvent( SDL_Event* event )
 {
    int mxr, myr;
-   int res;
    double x, y, px, py;
 
    px = player.p->solid->pos.x;
@@ -2412,10 +2411,9 @@ int gui_radarClickEvent( SDL_Event* event )
    gui_eventToScreenPos( &mxr, &myr, event->button.x, event->button.y );
    if (mxr <= gui_radar.x || mxr > gui_radar.x + gui_radar.w || myr <= gui_radar.y || myr > gui_radar.y + gui_radar.h)
       return 0;
-   gui_radarGetRes( &res );
-   x = (mxr - (gui_radar.x + gui_radar.w / 2.)) * res + px;
-   y = (myr - (gui_radar.y + gui_radar.h / 2.)) * res + py;
-   return input_clickPos( event, x, y, 1., 10. * res, 15. * res );
+   x = (mxr - (gui_radar.x + gui_radar.w / 2.)) * gui_radar.res + px;
+   y = (myr - (gui_radar.y + gui_radar.h / 2.)) * gui_radar.res + py;
+   return input_clickPos( event, x, y, 1., 10. * gui_radar.res, 15. * gui_radar.res );
 }
 
 /**
