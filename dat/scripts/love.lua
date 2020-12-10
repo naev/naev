@@ -22,6 +22,7 @@ love.font = font.new( 12 )
 love.bgcol = colour.new( 0, 0, 0, 1 )
 love.fgcol = colour.new( 1, 1, 1, 1 )
 
+
 -- Internal function that connects to Naev
 local function _update( dt )
    love.update(dt)
@@ -61,6 +62,7 @@ function love.mousemoved( x, y, dx, dy, istouch ) end -- dummy
 function love.mousepressed( x, y, button, istouch ) end -- dummy
 function love.mousereleased( x, y, button, istouch ) end -- dummy
 
+
 --[[
 -- Keyboard
 --]]
@@ -68,7 +70,6 @@ love.keyboard = {}
 love.keyboard._keystate = {}
 -- Internal function that connects to Naev
 local function _keyboard( pressed, key, mod )
-   --print( string.format( "key: %s, %s, %s", pressed, key, mod ) )
    local k = string.lower( key )
    love.keyboard._keystate[ k ] = pressed
    if pressed then
@@ -163,10 +164,16 @@ end
 function love.graphics.newImage( filename )
    return tex.open( filename )
 end
-function love.graphics.draw( drawable, x, y )
+function love.graphics.draw( drawable, x, y, r, sx, sy )
    local w,h = drawable:dim()
+   sx = sx or 1
+   sy = sy or sx
+   r = r or 0
    x,y = _xy(x,y,w,h)
-   gfx.renderTex( drawable, x, y )
+   w = w*sx
+   h = h*sy
+   y = y - (h*(1-sy)) -- correct scaling
+   gfx.renderTexRaw( drawable, x, y, w, h, 1, 1, 0, 0, 1, 1, love.fgcol, r )
 end
 function love.graphics.print( text, x, y  )
    x,y = _xy(x,y,limit,love.font:height())
