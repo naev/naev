@@ -352,7 +352,7 @@ static int tk_merchantOutfit( lua_State *L )
  *    @luatparam Number height Height of the drawable area of the widget.
  *    @luatparam Function update Function to call when updating. Should take a single parameter which is a number indicating how many seconds passed from previous update.
  *    @luatparam Function draw Function to call when drawing.
- *    @luatparam Function keyboard Function to call when keyboard events are received. 
+ *    @luatparam Function keyboard Function to call when keyboard events are received.
  *    @luatparam Function mouse Function to call when mouse events are received.
  * @luafunc custom( title, width, height, update, draw, keyboard, mouse )
  */
@@ -412,6 +412,41 @@ static int tk_customDone( lua_State *L )
 }
 
 
+static int cust_pcall( lua_State *L, int nargs, int nresults, custom_functions_t *cf )
+{
+#if 0
+   if (lua_pcall(L, nargs, nresults, 0)) {
+      DEBUG("ERROR");
+      cf->done = 1;
+      lua_error(L); /* propagate error */
+   }
+   return 0;
+#endif
+   int errf, ret;
+
+#if DEBUGGING
+   int top = lua_gettop(L);
+   lua_pushcfunction(L, nlua_errTrace);
+   lua_insert(L, -2-nargs);
+   errf = -2-nargs;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
+
+   ret = lua_pcall( L, nargs, nresults, errf );
+
+#if DEBUGGING
+   lua_remove(naevL, top-nargs);
+#endif /* DEBUGGING */
+
+   if (ret) {
+      cf->done = 1;
+      WARN(_("Custom dialogue internal error: %s"), lua_tostring(L,-1));
+      lua_pop(L,1);
+   }
+
+   return ret;
+}
 static int cust_update( double dt, void* data )
 {
    int ret;
@@ -421,10 +456,8 @@ static int cust_update( double dt, void* data )
    lua_State *L = cf->L;
    lua_rawgeti(L, LUA_REGISTRYINDEX, cf->update);
    lua_pushnumber(L, dt);
-   if (lua_pcall(L, 1, 0, 0)) {
-      cf->done = 1;
-      lua_error(L); /* propagate error */
-   }
+   if (cust_pcall( L, 1, 0, cf ))
+      return 1;
    /* Check if done. */
    lua_getglobal(L, TK_CUSTOMDONE );
    ret = lua_toboolean(L, -1);
@@ -442,10 +475,7 @@ static void cust_render( double x, double y, double w, double h, void* data )
       return;
    lua_State *L = cf->L;
    lua_rawgeti(L, LUA_REGISTRYINDEX, cf->draw);
-   if (lua_pcall(L, 0, 0, 0)) {
-      cf->done = 1;
-      lua_error(L); /* propagate error */
-   }
+   cust_pcall( L, 0, 0, cf );
 }
 static int cust_key( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, void* data )
 {
@@ -460,10 +490,8 @@ static int cust_key( unsigned int wid, SDL_Keycode key, SDL_Keymod mod, void* da
    lua_rawgeti(L, LUA_REGISTRYINDEX, cf->keyboard);
    lua_pushstring(L, SDL_GetKeyName(key));
    lua_pushstring(L, input_modToText(mod));
-   if (lua_pcall(L, 2, 1, 0)) {
-      cf->done = 1;
-      lua_error(L); /* propagate error */
-   }
+   if (cust_pcall( L, 2, 1, cf ))
+      return 0;
    b = lua_toboolean(L, -1);
    lua_pop(L,1);
    return b;
@@ -497,16 +525,12 @@ static int cust_mouse( unsigned int wid, SDL_Event* event, double x, double y, d
          default:               button=3; break;
       }
       lua_pushnumber(L, button);
-      if (lua_pcall(L, 4, 1, 0)) {
-         cf->done = 1;
-         lua_error(L); /* propagate error */
-      }
+      if (cust_pcall( L, 4, 1, cf ))
+         return 0;
    }
    else
-      if (lua_pcall(L, 3, 1, 0)) {
-         cf->done = 1;
-         lua_error(L); /* propagate error */
-      }
+      if (cust_pcall( L, 3, 1, cf ))
+         return 0;
    b = lua_toboolean(L, -1);
    lua_pop(L,1);
    return b;
