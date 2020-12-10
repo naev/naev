@@ -14,15 +14,23 @@ love.start()
 love = {}
 
 -- defaults
-love.font = font.new( 12 )
-love.bgcol = colour.new( 0, 0, 0, 1 )
-love.fgcol = colour.new( 1, 1, 1, 1 )
+love._font = font.new( 12 )
+love._bgcol = colour.new( 0, 0, 0, 1 )
+love._fgcol = colour.new( 1, 1, 1, 1 )
 
 function love.conf(t) end -- dummy
 function love.load() end --dummy
 
 -- Internal function that connects to Naev
 local function _update( dt )
+   if love.keyboard._repeat then
+      for k,v in pairs(love.keyboard._keystate) do
+         if v then
+            love.keypressed( k, k, true )
+         end
+      end
+   end
+
    love.update(dt)
 end
 function love.update( dt ) end -- dummy
@@ -59,7 +67,7 @@ local function _mouse( x, y, mtype, button )
 end
 function love.mouse.getX() return love.mouse.x end
 function love.mouse.getY() return love.mouse.y end
-function love.mouse.isDown( button ) return love.mouse.down[butto]==true end
+function love.mouse.isDown( button ) return love.mouse.down[button]==true end
 function love.mousemoved( x, y, dx, dy, istouch ) end -- dummy
 function love.mousepressed( x, y, button, istouch ) end -- dummy
 function love.mousereleased( x, y, button, istouch ) end -- dummy
@@ -70,24 +78,28 @@ function love.mousereleased( x, y, button, istouch ) end -- dummy
 --]]
 love.keyboard = {}
 love.keyboard._keystate = {}
+love.keyboard._repeat = false
 -- Internal function that connects to Naev
 local function _keyboard( pressed, key, mod )
    local k = string.lower( key )
    love.keyboard._keystate[ k ] = pressed
    if pressed then
-      love.keypressed( k )
+      love.keypressed( k, k, false )
    else
-      love.keyreleased( k )
+      love.keyreleased( k, k )
    end
    if key == "Q" then
       tk.customDone()
    end
    return true
 end
-function love.keypressed( key ) end -- dummy
-function love.keyreleased( key ) end -- dummy
+function love.keypressed( key, scancode, isrepeat ) end -- dummy
+function love.keyreleased( key, scancode ) end -- dummy
 function love.keyboard.isDown( key )
    return (love.keyboard._keystate[ key ] == true)
+end
+function love.keyboard.setKeyRepeat( enable )
+   love.keyboard._repeat = enable
 end
 
 
@@ -100,12 +112,12 @@ local function _draw( x, y, w, h )
    love.y = y
    love.w = w
    love.h = h
-   gfx.renderRect( x, y, w, h, love.bgcol )
+   gfx.renderRect( x, y, w, h, love._bgcol )
    love.draw()
 end
 love.graphics = {}
-love.graphics.dx = 0
-love.graphics.dy = 0
+love.graphics._dx = 0
+love.graphics._dy = 0
 local function _mode(m)
    if     m=="fill" then return false
    elseif m=="line" then return true
@@ -113,7 +125,7 @@ local function _mode(m)
    end
 end
 local function _xy( x, y, w, h )
-   return love.x+love.graphics.dx+x, love.y+(love.h-y-h-love.graphics.dy)
+   return love.x+love.graphics._dx+x, love.y+(love.h-y-h-love.graphics._dy)
 end
 function love.graphics.getWidth()
    return love.w
@@ -122,12 +134,12 @@ function love.graphics.getHeight()
    return love.h
 end
 function love.graphics.origin()
-   love.graphics.dx = 0
-   love.graphics.dy = 0
+   love.graphics._dx = 0
+   love.graphics._dy = 0
 end
 function love.graphics.translate( dx, dy )
-   love.graphics.dx = love.graphics.dx + dx
-   love.graphics.dy = love.graphics.dy + dy
+   love.graphics._dx = love.graphics._dx + dx
+   love.graphics._dy = love.graphics._dy + dy
 end
 local function _gcol( c )
    local r, g, b = c:rgb()
@@ -144,24 +156,24 @@ local function _scol( r, g, b, a )
    return colour.new( r, g, b, a or 1 )
 end
 function love.graphics.getBackgroundColor()
-   return _gcol( self.bgcol )
+   return _gcol( self._bgcol )
 end
 function love.graphics.setBackgroundColor( red, green, blue, alpha )
-   love.bgcol = _scol( red, green, blue, alpha )
+   love._bgcol = _scol( red, green, blue, alpha )
 end
 function love.graphics.getColor()
-   return _gcol( self.fgcol )
+   return _gcol( self._fgcol )
 end
 function love.graphics.setColor( red, green, blue, alpha )
-   love.fgcol = _scol( red, green, blue, alpha )
+   love._fgcol = _scol( red, green, blue, alpha )
 end
 function love.graphics.rectangle( mode, x, y, width, height )
    x,y = _xy(x,y,width,height)
-   gfx.renderRect( x, y, width, height, love.fgcol, _mode(mode) )
+   gfx.renderRect( x, y, width, height, love._fgcol, _mode(mode) )
 end
 function love.graphics.circle( mode, x, y, radius )
    x,y = _xy(x,y,0,0)
-   gfx.renderCircle( x, y, radius, love.fgcol, _mode(mode) )   
+   gfx.renderCircle( x, y, radius, love._fgcol, _mode(mode) )   
 end
 function love.graphics.newImage( filename )
    return tex.open( filename )
@@ -175,33 +187,33 @@ function love.graphics.draw( drawable, x, y, r, sx, sy )
    w = w*sx
    h = h*sy
    y = y - (h*(1-sy)) -- correct scaling
-   gfx.renderTexRaw( drawable, x, y, w, h, 1, 1, 0, 0, 1, 1, love.fgcol, r )
+   gfx.renderTexRaw( drawable, x, y, w, h, 1, 1, 0, 0, 1, 1, love._fgcol, r )
 end
 function love.graphics.print( text, x, y  )
-   x,y = _xy(x,y,limit,love.font:height())
-   gfx.printf( love.font, text, x, y, love.fgcol )
+   x,y = _xy(x,y,limit,love._font:height())
+   gfx.printf( love._font, text, x, y, love._fgcol )
 end
 function love.graphics.printf( text, x, y, limit, align )
-   x,y = _xy(x,y,limit,love.font:height())
+   x,y = _xy(x,y,limit,love._font:height())
    if align=="left" then
-      gfx.printf( love.font, text, x, y, love.fgcol, limit, false )
+      gfx.printf( love._font, text, x, y, love._fgcol, limit, false )
    elseif align=="center" then
-      gfx.printf( love.font, text, x, y, love.fgcol, limit, true )
+      gfx.printf( love._font, text, x, y, love._fgcol, limit, true )
    elseif align=="right" then
       local w = gfx.printDim( false, text, limit )
       local off = limit-w
-      gfx.printf( love.font, text, x+off, y, love.fgcol, w, false )
+      gfx.printf( love._font, text, x+off, y, love._fgcol, w, false )
    end
 end
 function love.graphics.setNewFont( file, size )
    if size==nil then
-      love.font = font.new( file )
+      love._font = font.new( file )
    elseif type(file)=="userdata" then
-      love.font = file
+      love._font = file
    else
-      love.font = font.new( file, size )
+      love._font = font.new( file, size )
    end
-   return love.font
+   return love._font
 end
 
 
