@@ -83,7 +83,7 @@ void gui_radarRender( double x, double y );
 void gui_radarGetPos( int *x, int *y );
 void gui_radarGetDim( int *w, int *h );
 void gui_radarGetRes( int *res );
-void gui_eventoScreenPos( int* sx, int* sy, int ex, int ey );
+int gui_radarClickEvent( SDL_Event* event );
 
 
 /*

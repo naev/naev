@@ -16,49 +16,50 @@
 
 #include <stdlib.h>
 
-#include "player.h"
-#include "nxml.h"
-#include "pilot.h"
-#include "log.h"
-#include "opengl.h"
-#include "font.h"
-#include "ndata.h"
-#include "space.h"
-#include "rng.h"
-#include "land.h"
-#include "sound.h"
-#include "economy.h"
-#include "pause.h"
-#include "menu.h"
-#include "toolkit.h"
-#include "dialogue.h"
-#include "mission.h"
-#include "nlua_misn.h"
-#include "ntime.h"
-#include "hook.h"
-#include "map.h"
-#include "nfile.h"
-#include "spfx.h"
-#include "unidiff.h"
-#include "comm.h"
-#include "intro.h"
-#include "perlin.h"
 #include "ai.h"
-#include "music.h"
-#include "nmath.h"
-#include "gui_osd.h"
-#include "conf.h"
-#include "nebula.h"
 #include "camera.h"
-#include "pilot.h"
+#include "comm.h"
+#include "conf.h"
+#include "dialogue.h"
+#include "economy.h"
+#include "font.h"
+#include "gui_omsg.h"
+#include "gui_osd.h"
+#include "hook.h"
+#include "input.h"
+#include "intro.h"
+#include "land.h"
+#include "log.h"
+#include "map.h"
+#include "menu.h"
+#include "mission.h"
+#include "music.h"
+#include "ndata.h"
+#include "nebula.h"
+#include "nfile.h"
 #include "nlua.h"
-#include "nluadef.h"
 #include "nlua_gfx.h"
 #include "nlua_gui.h"
+#include "nlua_misn.h"
 #include "nlua_tex.h"
 #include "nlua_tk.h"
-#include "gui_omsg.h"
+#include "nluadef.h"
+#include "nmath.h"
 #include "nstring.h"
+#include "ntime.h"
+#include "nxml.h"
+#include "opengl.h"
+#include "pause.h"
+#include "perlin.h"
+#include "pilot.h"
+#include "pilot.h"
+#include "player.h"
+#include "rng.h"
+#include "sound.h"
+#include "space.h"
+#include "spfx.h"
+#include "toolkit.h"
+#include "unidiff.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
@@ -2414,9 +2415,35 @@ void gui_targetPilotGFX( glTexture *gfx )
 /**
  * @brief Translates a mouse position from an SDL_Event to GUI coordinates.
  */
-void gui_eventoScreenPos( int* sx, int* sy, int ex, int ey )
+static void gui_eventToScreenPos( int* sx, int* sy, int ex, int ey )
 {
    gl_windowToScreenPos( sx, sy, ex - gui_viewport_x, ey - gui_viewport_y );
+}
+
+
+/**
+ * @brief Handles a click at a position in the current system
+ *
+ *    @brief event The click event.
+ *    @return Whether the click was used to trigger an action.
+ */
+int gui_radarClickEvent( SDL_Event* event )
+{
+   int mxr, myr;
+   int rx, ry, rh, rw, res;
+   double x, y, px, py;
+
+   px = player.p->solid->pos.x;
+   py = player.p->solid->pos.y;
+   gui_radarGetPos( &rx, &ry );
+   gui_radarGetDim( &rw, &rh );
+   gui_eventToScreenPos( &mxr, &myr, event->button.x, event->button.y );
+   if (mxr <= rx || mxr > rx + rw || myr <= ry || myr > ry + rh)
+      return 0;
+   gui_radarGetRes( &res );
+   x = (mxr - (rx + rw / 2.)) * res + px;
+   y = (myr - (ry + rh / 2.)) * res + py;
+   return input_clickPos( event, x, y, 1., 10. * res, 15. * res );
 }
 
 /**
@@ -2442,7 +2469,7 @@ int gui_handleEvent( SDL_Event *evt )
          if (!gui_L_mmove)
             break;
          gui_prepFunc( "mouse_move" );
-         gui_eventoScreenPos( &x, &y, evt->motion.x, evt->motion.y );
+         gui_eventToScreenPos( &x, &y, evt->motion.x, evt->motion.y );
          lua_pushnumber( naevL, x );
          lua_pushnumber( naevL, y );
          gui_runFunc( "mouse_move", 2, 0 );
@@ -2455,7 +2482,7 @@ int gui_handleEvent( SDL_Event *evt )
             break;
          gui_prepFunc( "mouse_click" );
          lua_pushnumber( naevL, evt->button.button+1 );
-         gui_eventoScreenPos( &x, &y, evt->button.x, evt->button.y );
+         gui_eventToScreenPos( &x, &y, evt->button.x, evt->button.y );
          lua_pushnumber( naevL, x );
          lua_pushnumber( naevL, y );
          lua_pushboolean( naevL, (evt->type==SDL_MOUSEBUTTONDOWN) );
