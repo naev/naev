@@ -73,6 +73,8 @@ local function _draw( x, y, w, h )
    love.draw()
 end
 love.graphics = {}
+love.graphics.dx = 0
+love.graphics.dy = 0
 local function _mode(m)
    if     m=="fill" then return false
    elseif m=="line" then return true
@@ -80,13 +82,21 @@ local function _mode(m)
    end
 end
 local function _xy( x, y, w, h )
-   return love.x+x, love.y+(love.h-y-h)
+   return love.x+love.graphics.dx+x, love.y+(love.h-y-h-love.graphics.dy)
 end
 function love.graphics.getWidth()
    return love.w
 end
 function love.graphics.getHeight()
    return love.h
+end
+function love.graphics.origin()
+   love.graphics.dx = 0
+   love.graphics.dy = 0
+end
+function love.graphics.translate( dx, dy )
+   love.graphics.dx = love.graphics.dx + dx
+   love.graphics.dy = love.graphics.dy + dy
 end
 local function _gcol( c )
    local r, g, b = c:rgb()
