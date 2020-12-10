@@ -191,19 +191,24 @@ static int gfxL_renderTex( lua_State *L )
  *    @luatparam number tex_w Sprite width to display as [-1.:1.]. Note if negative, it will flip the image horizontally.
  *    @luatparam number tex_h Sprite height to display as [-1.:1.] Note if negative, it will flip the image vertically.
  *    @luatparam[opt] Colour colour Colour to use when rendering.
- * @luafunc renderTexRaw( tex, pos_x, pos_y, pos_w, pos_h, sprite_x, sprite_y, tex_x, tex_y, tex_w, tex_h, colour )
+ *    @luatparam[opt] number angle Angle to rotate in radians.
+ * @luafunc renderTexRaw( tex, pos_x, pos_y, pos_w, pos_h, sprite_x, sprite_y, tex_x, tex_y, tex_w, tex_h, colour, angle )
  */
 static int gfxL_renderTexRaw( lua_State *L )
 {
    glTexture *t;
    glColour *col;
    double px,py, pw,ph, tx,ty, tw,th;
+   double angle;
    int sx, sy;
+   int top;
 
    NLUA_CHECKRW(L);
 
    /* Parameters. */
+   top = lua_gettop(L);
    col = NULL;
+   angle = 0.;
    t  = luaL_checktex( L, 1 );
    px = luaL_checknumber( L, 2 );
    py = luaL_checknumber( L, 3 );
@@ -215,8 +220,10 @@ static int gfxL_renderTexRaw( lua_State *L )
    ty = luaL_checknumber( L, 9 );
    tw = luaL_checknumber( L, 10 );
    th = luaL_checknumber( L, 11 );
-   if (lua_iscolour( L, 12 ))
-      col = lua_tocolour( L, 12 );
+   if (top > 11)
+      col = luaL_checkcolour(L, 12 );
+   if (top > 12)
+      angle = luaL_checknumber(L, 13);
 
    /* Some safety checking. */
 #if DEBUGGING
@@ -239,7 +246,7 @@ static int gfxL_renderTexRaw( lua_State *L )
       ty -= th;
 
    /* Render. */
-   gl_blitTexture( t, px, py, pw, ph, tx, ty, tw, th, col, 0. );
+   gl_blitTexture( t, px, py, pw, ph, tx, ty, tw, th, col, angle );
    return 0;
 }
 
