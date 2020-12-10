@@ -140,6 +140,21 @@ end
 
 
 --[[
+-- Math
+--]]
+love.math = {}
+function love.math.random( min, max )
+   if min == nil then
+      return rnd.rnd()
+   elseif max == nil then
+      return rnd.rnd( min-1 )+1
+   else
+      return rnd.rnd( min, max )
+   end
+end
+
+
+--[[
 -- Initialize
 --]]
 function love.start()
