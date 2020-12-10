@@ -20,6 +20,7 @@
 #include "font.h"
 #include "nlua_col.h"
 #include "nlua_tex.h"
+#include "nlua_font.h"
 #include "ndata.h"
 
 
@@ -30,6 +31,9 @@ static int gfxL_renderTexRaw( lua_State *L );
 static int gfxL_renderRect( lua_State *L );
 static int gfxL_renderCircle( lua_State *L );
 static int gfxL_fontSize( lua_State *L );
+/* TODO get rid of printDim and print in favour of printfDim and printf */
+static int gfxL_printfDim( lua_State *L );
+static int gfxL_printf( lua_State *L );
 static int gfxL_printDim( lua_State *L );
 static int gfxL_print( lua_State *L );
 static int gfxL_printText( lua_State *L );
@@ -43,6 +47,8 @@ static const luaL_Reg gfxL_methods[] = {
    { "renderCircle", gfxL_renderCircle },
    /* Printing. */
    { "fontSize", gfxL_fontSize },
+   { "printfDim", gfxL_printfDim },
+   { "printf", gfxL_printf },
    { "printDim", gfxL_printDim },
    { "print", gfxL_print },
    { "printText", gfxL_printText },
@@ -63,9 +69,10 @@ int nlua_loadGFX( nlua_env env )
    /* Register the values */
    nlua_register(env, "gfx", gfxL_methods, 0);
 
-   /* We also load the texture and colour modules as dependencies. */
+   /* We also load the texture, colour, and font modules as dependencies. */
    nlua_loadCol( env );
    nlua_loadTex( env );
+   nlua_loadFont( env );
 
    return 0;
 }
@@ -356,6 +363,84 @@ static int gfxL_printDim( lua_State *L )
    else
       lua_pushnumber( L, gl_printHeightRaw( font, width, str ) );
    return 1;
+}
+
+
+/**
+ * @brief Gets the size of the text to print.
+ *
+ *    @luatparam font font Font to use.
+ *    @luatparam string str Text to calculate length of.
+ *    @luatparam[opt] int width Optional parameter to indicate it is a block of text and to use this width.
+ * @luafunc printfDim( font, str, width )
+ */
+static int gfxL_printfDim( lua_State *L )
+{
+   const char *str;
+   int width;
+   glFont *font;
+
+   /* Parse parameters. */
+   font  = luaL_checkfont(L,1);
+   str   = luaL_checkstring(L,2);
+   if (lua_gettop(L) > 2)
+      width = luaL_checkinteger(L,3);
+   else
+      width = 0;
+
+   /* Print length. */
+   if (width == 0)
+      lua_pushnumber( L, gl_printWidthRaw( font, str ) );
+   else
+      lua_pushnumber( L, gl_printHeightRaw( font, width, str ) );
+   return 1;
+}
+
+
+/**
+ * @brief Prints text on the screen using a font.
+ *
+ * @usage gfx.printf( font, _("Hello World!"), 50, 50, colour.new("Red") ) -- Displays text in red at 50,50.
+ *
+ *    @luatparam font font Font to use.
+ *    @luatparam string str String to print.
+ *    @luatparam number x X position to print at.
+ *    @luatparam number y Y position to print at.
+ *    @luatparam Colour col Colour to print text.
+ *    @luatparam[opt] int max Maximum width to render up to.
+ *    @luatparam[opt] boolean center Whether or not to center it.
+ * @luafunc printf( small, str, x, y, col, max, center )
+ */
+static int gfxL_printf( lua_State *L )
+{
+   glFont *font;
+   const char *str;
+   double x, y;
+   glColour *col;
+   int max, mid;
+
+   NLUA_CHECKRW(L);
+
+   /* Parse parameters. */
+   font  = luaL_checkfont(L,1);
+   str   = luaL_checkstring(L,2);
+   x     = luaL_checknumber(L,3);
+   y     = luaL_checknumber(L,4);
+   col   = luaL_checkcolour(L,5);
+   if (lua_gettop(L) >= 6)
+      max = luaL_checkinteger(L,6);
+   else
+      max = 0;
+   mid   = lua_toboolean(L,7);
+
+   /* Render. */
+   if (mid)
+      gl_printMidRaw( font, max, x, y, col, -1., str );
+   else if (max > 0)
+      gl_printMaxRaw( font, max, x, y, col, -1., str );
+   else
+      gl_printRaw( font, x, y, col, -1., str );
+   return 0;
 }
 
 

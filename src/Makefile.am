@@ -94,6 +94,7 @@ naev_SOURCES = \
 	nlua_diff.c \
 	nlua_evt.c \
 	nlua_faction.c \
+	nlua_font.c \
 	nlua_gfx.c \
 	nlua_gui.c \
 	nlua_hook.c \
@@ -244,6 +245,7 @@ naev_SOURCES = \
 	nlua_diff.h \
 	nlua_evt.h \
 	nlua_faction.h \
+	nlua_font.h \
 	nlua_gfx.h \
 	nlua_gui.h \
 	nlua_hook.h \
