@@ -28,12 +28,38 @@ local function _update( dt )
 end
 function love.update( dt ) end -- dummy
 
+
+--[[
+-- Mouse
+--]]
 -- Internal function that connects to Naev
+love.mouse = {}
+love.mouse.x = 0
+love.mouse.y = 0
+love.mouse.lx = 0
+love.mouse.ly = 0
 local function _mouse( x, y, mtype, button )
    y = love.h-y-1
-   print( string.format( "mouse: %.1f x %.1f, %s, %s", x, y, mtype, button ) )
+   love.mouse.x = x
+   love.mouse.y = y
+   if mtype==1 then
+      love.mousepressed( x, y, button, false )
+   elseif mtype==2 then
+      love.mousereleased( x, y, button, false )
+   elseif mtype==3 then
+      local dx = x - love.mouse.lx
+      local dy = y - love.mouse.ly
+      love.mouse.lx = x
+      love.mouse.ly = y
+      love.mousemoved( x, y, dx, dy, false )
+   end
    return true
 end
+function love.mouse.getX() return love.mouse.x end
+function love.mouse.getY() return love.mouse.y end
+function love.mousemoved( x, y, dx, dy, istouch ) end -- dummy
+function love.mousepressed( x, y, button, istouch ) end -- dummy
+function love.mousereleased( x, y, button, istouch ) end -- dummy
 
 --[[
 -- Keyboard
@@ -130,6 +156,14 @@ end
 function love.graphics.circle( mode, x, y, radius )
    x,y = _xy(x,y,0,0)
    gfx.renderCircle( x, y, radius, love.fgcol, _mode(mode) )   
+end
+function love.graphics.newImage( filename )
+   return tex.open( filename )
+end
+function love.graphics.draw( drawable, x, y )
+   local w,h = drawable:dim()
+   x,y = _xy(x,y,w,h)
+   gfx.renderTex( drawable, x, y )
 end
 function love.graphics.print( text, x, y  )
    x,y = _xy(x,y,limit,love.font:height())
