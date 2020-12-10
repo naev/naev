@@ -435,11 +435,11 @@ static int gfxL_printf( lua_State *L )
 
    /* Render. */
    if (mid)
-      gl_printMidRaw( font, max, x, y, col, -1., str );
+      gl_printMidRaw( font, max, x, y, col, 0., str );
    else if (max > 0)
-      gl_printMaxRaw( font, max, x, y, col, -1., str );
+      gl_printMaxRaw( font, max, x, y, col, 0., str );
    else
-      gl_printRaw( font, x, y, col, -1., str );
+      gl_printRaw( font, x, y, col, 0., str );
    return 0;
 }
 
