@@ -205,14 +205,20 @@ function love.graphics.printf( text, x, y, limit, align )
       gfx.printf( love._font, text, x+off, y, love._fgcol, w, false )
    end
 end
-function love.graphics.setNewFont( file, size )
+function love.graphics.newFont( file, size )
    if size==nil then
-      love._font = font.new( file )
+      return font.new( file )
    elseif type(file)=="userdata" then
-      love._font = file
+      return file
    else
-      love._font = font.new( file, size )
+      return font.new( file, size )
    end
+end
+function love.graphics.setFont( fnt )
+   love._font = fnt
+end
+function love.graphics.setNewFont( file, size )
+   love._font = love.graphics.newFont( file, size )
    return love._font
 end
 
