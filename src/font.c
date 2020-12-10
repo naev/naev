@@ -108,7 +108,7 @@ typedef struct glFontStashFreetype_s {
  * @brief Font structure.
  */
 typedef struct glFontStash_s {
-   int h; /**< Font height. */
+   unsigned int h; /**< Font height. */
    int tw; /**< Width of textures. */
    int th; /**< Height of textures. */
    glFontTex *tex; /**< Textures. */
@@ -123,6 +123,8 @@ typedef struct glFontStash_s {
 
    /* Freetype stuff. */
    glFontStashFreetype *ft;
+
+   int refcount; /**< Reference counting. */
 } glFontStash;
 
 /**
@@ -1478,10 +1480,27 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    /* Get font stash. */
    if (avail_fonts==NULL)
       avail_fonts = array_create( glFontStash );
+
+   /* Check if available. */
+   for (i=0; i<(size_t)array_size(avail_fonts); i++) {
+      stsh = &avail_fonts[i];
+      if (stsh->h != h)
+         continue;
+      if (strcmp(stsh->ft->fontname,fname)!=0)
+         continue;
+      /* Found a match! */
+      stsh->refcount++;
+      font->id = stsh - avail_fonts;
+      font->h = h;
+      return 0;
+   }
+
+   /* Create new font. */
    stsh = &array_grow( &avail_fonts );
    memset( stsh, 0, sizeof(glFontStash) );
+   stsh->refcount = 1; /* Initialize refcount. */
    font->id = stsh - avail_fonts;
-   font->h = (int)floor((double)h);
+   font->h = h;
 
    /* Default sizes. */
    stsh->tw = DEFAULT_TEXTURE_SIZE;
@@ -1581,6 +1600,12 @@ void gl_freeFont( glFont* font )
    if (font == NULL)
       font = &gl_defFont;
    glFontStash *stsh = gl_fontGetStash( font );
+
+   /* Check references. */
+   stsh->refcount--;
+   if (stsh->refcount > 0)
+      return;
+   /* Not references and must eliminate. */
 
    for (i=0; i<array_size(stsh->ft); i++) {
       ft = &stsh->ft[i];
