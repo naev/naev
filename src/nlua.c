@@ -399,6 +399,7 @@ static int nlua_packfileLoader( lua_State* L )
    char *buf;
    size_t bufsize;
    int envtab;
+   int isconsole;
 
    /* Environment table to load module into */
    envtab = lua_upvalueindex(1);
@@ -409,13 +410,23 @@ static int nlua_packfileLoader( lua_State* L )
    /* Check to see if already included. */
    lua_getfield( L, envtab, NLUA_LOAD_TABLE ); /* t */
    if (!lua_isnil(L,-1)) {
-      lua_getfield(L,-1,filename); /* t, f */
-      /* Already included. */
-      if (!lua_isnil(L,-1)) {
-         lua_remove(L, -2); /* val */
-         return 1;
+      /* check if is console. */
+      nlua_getenv(__NLUA_CURENV, "__cli");
+      isconsole = lua_toboolean(L,-1);
+      lua_pop(L,1);
+      /* just ignore if it is the console and reload the file. */
+      if (isconsole)
+         lua_pop(L,1);
+      /* otherwise skip already loaded files to be a bit faster. */
+      else {
+         lua_getfield(L,-1,filename); /* t, f */
+         /* Already included. */
+         if (!lua_isnil(L,-1)) {
+            lua_remove(L, -2); /* val */
+            return 1;
+         }
+         lua_pop(L,2); /* */
       }
-      lua_pop(L,2); /* */
    }
    /* Must create new NLUA_LOAD_TABLE table. */
    else {
@@ -432,10 +443,11 @@ static int nlua_packfileLoader( lua_State* L )
 
    /* Must have buf by now. */
    if (buf == NULL) {
-      NLUA_ERROR(L, _("include(): %s not found in ndata."), filename);
+      NLUA_ERROR(L, _("require: %s not found in ndata."), filename);
       return 1;
    }
 
+   /* Try to process the Lua. */
    if (luaL_loadbuffer(L, buf, bufsize, filename) != 0) {
       lua_error(L);
       return 1;
