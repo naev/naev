@@ -371,7 +371,6 @@ static char* nlua_packfileLoaderTryFile( lua_State *L, size_t *bufsize, const ch
          buf = ndata_read( path_filename, bufsize );
    }
    /* Try to load the file directly. */
-#ifdef DEBUGGING
    if (buf == NULL) {
       int isconsole;
       nlua_getenv(__NLUA_CURENV, "__cli");
@@ -380,9 +379,6 @@ static char* nlua_packfileLoaderTryFile( lua_State *L, size_t *bufsize, const ch
       if (isconsole && nfile_fileExists( filename ))
          buf = nfile_readFile( bufsize, filename );
    }
-#else
-   (void) L;
-#endif /* DEBUGGING */
 
    return buf;
 }
