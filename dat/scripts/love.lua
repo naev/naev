@@ -14,14 +14,12 @@ love.start()
 love = {}
 
 -- defaults
-love.x = 0
-love.y = 0
-love.w = 800
-love.h = 600
 love.font = font.new( 12 )
 love.bgcol = colour.new( 0, 0, 0, 1 )
 love.fgcol = colour.new( 1, 1, 1, 1 )
 
+function love.conf(t) end -- dummy
+function love.load() end --dummy
 
 -- Internal function that connects to Naev
 local function _update( dt )
@@ -222,10 +220,27 @@ end
 -- Initialize
 --]]
 function love.start()
+   -- Only stuff we care about atm
+   local t = {}
+   t.audio = {}
+   t.window = {}
+   t.window.title = "LÖVE" -- The window title (string)
+   t.window.width = 800    -- The window width (number)
+   t.window.height = 600   -- The window height (number)
+   t.modules = {}
+
+   -- Configure
+   love.conf(conf)
+
+   -- Set properties
+   love.title = t.window.title
+   love.w = t.window.width
+   love.h = t.window.height
+
    -- Run set up function defined in Love2d spec
    love.load()
 
    -- Actually run in Naev
-   tk.custom( "Test", love.w, love.h, _update, _draw, _keyboard, _mouse )
+   tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
 end
 
