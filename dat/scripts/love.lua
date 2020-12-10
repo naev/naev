@@ -230,7 +230,7 @@ function love.start()
    t.modules = {}
 
    -- Configure
-   love.conf(conf)
+   love.conf(t)
 
    -- Set properties
    love.title = t.window.title
