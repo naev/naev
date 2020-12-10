@@ -37,13 +37,16 @@ love.mouse.x = 0
 love.mouse.y = 0
 love.mouse.lx = 0
 love.mouse.ly = 0
+love.mouse.down = {}
 local function _mouse( x, y, mtype, button )
    y = love.h-y-1
    love.mouse.x = x
    love.mouse.y = y
    if mtype==1 then
+      love.mouse.down[button] = true
       love.mousepressed( x, y, button, false )
    elseif mtype==2 then
+      love.mouse.down[button] = false
       love.mousereleased( x, y, button, false )
    elseif mtype==3 then
       local dx = x - love.mouse.lx
@@ -56,6 +59,7 @@ local function _mouse( x, y, mtype, button )
 end
 function love.mouse.getX() return love.mouse.x end
 function love.mouse.getY() return love.mouse.y end
+function love.mouse.isDown( button ) return love.mouse.down[butto]==true end
 function love.mousemoved( x, y, dx, dy, istouch ) end -- dummy
 function love.mousepressed( x, y, button, istouch ) end -- dummy
 function love.mousereleased( x, y, button, istouch ) end -- dummy
