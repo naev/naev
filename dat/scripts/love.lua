@@ -282,7 +282,7 @@ function love.exec( path )
          love.basepath = path -- Allows loading files relatively
          package.path = package.path..string.format(";%s/?.lua", path)
          -- Run conf if exists
-         if love.filesystem.getInfo( path.."/conf.lua" ) != nil then
+         if love.filesystem.getInfo( path.."/conf.lua" ) ~= nil then
             require( path.."/conf" )
          end
          require( path.."/main" )
