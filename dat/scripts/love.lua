@@ -41,6 +41,22 @@ function love.event.quit( exitstatus ) tk.customDone() end
 --[[
 -- Filesystem
 --]]
+love.filesystem = {}
+function love.filesystem.newFile( filename )
+   return file.new( filename )
+end
+function love.filesystem.read( name, size )
+   local f = file.new( name )
+   f:open('r')
+   local buf,len
+   if size then
+      buf,len = f:read( size )
+   else
+      buf,len = f.read()
+   end
+   f:close()
+   return buf, len
+end
 
 
 --[[
