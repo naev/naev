@@ -272,6 +272,15 @@ end
 
 
 --[[
+-- Audio
+--]]
+love.audio = {}
+function love.audio.newSource( filename, type )
+   return sound.load( filename, type )
+end
+
+
+--[[
 -- Initialize
 --]]
 package.path = package.path..string.format(";?.lua", path)
@@ -279,7 +288,7 @@ function love.exec( path )
    local info = love.filesystem.getInfo( path )
    if info then
       if info.type == "directory" then
-         love.basepath = path -- Allows loading files relatively
+         love.basepath = path.."/" -- Allows loading files relatively
          package.path = package.path..string.format(";%s/?.lua", path)
          -- Run conf if exists
          if love.filesystem.getInfo( path.."/conf.lua" ) ~= nil then
