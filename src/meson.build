@@ -130,6 +130,7 @@ source = files(
 
 lua_source = files(
    'ai.c',
+   'nlua_audio.c',
    'nlua_bkg.c',
    'nlua_camera.c',
    'nlua_cli.c',
@@ -155,7 +156,6 @@ lua_source = files(
    'nlua_rnd.c',
    'nlua_ship.c',
    'nlua_shiplog.c',
-   'nlua_spfx.c',
    'nlua_system.c',
    'nlua_tex.c',
    'nlua_time.c',
@@ -247,6 +247,7 @@ headers = files(
    'news.h',
    'nfile.h',
    'nlua.h',
+   'nlua_audio.h',
    'nlua_bkg.h',
    'nlua_camera.h',
    'nlua_cli.h',
@@ -272,7 +273,6 @@ headers = files(
    'nlua_rnd.h',
    'nlua_ship.h',
    'nlua_shiplog.h',
-   'nlua_spfx.h',
    'nlua_system.h',
    'nlua_tex.h',
    'nlua_time.h',

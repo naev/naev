@@ -14,7 +14,7 @@
 #include "nlua.h"
 
 
-#define FILE_METATABLE      "file" /**< Font metatable identifier. */
+#define FILE_METATABLE      "file" /**< File metatable identifier. */
 
 
 /**
@@ -33,10 +33,7 @@ typedef struct LuaFile_s {
  */
 int nlua_loadFile( nlua_env env );
 
-/*
- * Colour operations
- */
-
+/* Basic operations. */
 LuaFile_t* lua_tofile( lua_State *L, int ind );
 LuaFile_t* luaL_checkfile( lua_State *L, int ind );
 LuaFile_t* lua_pushfile( lua_State *L, LuaFile_t file );
