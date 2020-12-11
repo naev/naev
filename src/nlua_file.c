@@ -17,6 +17,7 @@
 #include "nluadef.h"
 #include "log.h"
 #include "ndata.h"
+#include "nfile.h"
 
 
 /* File metatable methods. */
@@ -31,6 +32,7 @@ static int fileL_name( lua_State *L );
 static int fileL_mode( lua_State *L );
 static int fileL_size( lua_State *L );
 static int fileL_isopen( lua_State *L );
+static int fileL_filetype( lua_State *L );
 static const luaL_Reg fileL_methods[] = {
    { "__gc", fileL_gc },
    { "__eq", fileL_eq },
@@ -43,6 +45,7 @@ static const luaL_Reg fileL_methods[] = {
    { "getMode", fileL_mode },
    { "getSize", fileL_size },
    { "isOpen", fileL_isopen },
+   { "filetype", fileL_filetype },
    {0,0}
 }; /**< File metatable methods. */
 
@@ -365,3 +368,26 @@ static int fileL_isopen( lua_State *L )
    lua_pushboolean(L, lf->rw!=NULL);
    return 1;
 }
+
+
+/**
+ * @brief Checks to see the filetype of a path.
+ *
+ *    @luatparam string path Path to check to see what type it is.
+ *    @luatreturn string What type of file it is or nil if doesn't exist.
+ * @luafunc filetype( path )
+ */
+static int fileL_filetype( lua_State *L )
+{
+   const char *path = luaL_checkstring(L,1);
+   if (_nfile_dirExists(path))
+      lua_pushstring(L, "directory");
+   else if (_nfile_fileExists(path))
+      lua_pushstring(L, "file");
+   else
+      lua_pushnil(L);
+   return 1;
+}
+
+
+
