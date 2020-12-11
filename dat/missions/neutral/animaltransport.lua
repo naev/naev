@@ -25,8 +25,8 @@
 --
 --]]
 
-require "jumpdist.lua"
-require "missions/neutral/common.lua"
+require "jumpdist"
+require "missions/neutral/common"
 
 
 text = {}

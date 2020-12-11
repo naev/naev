@@ -27,8 +27,8 @@
    to be very hard, and slightly combat oriented, but more supposed to
    involve smuggling elements.]]
 
-require "numstring.lua"
-require "missions/sirius/common.lua"
+require "numstring"
+require "missions/sirius/common"
 
 
 --beginning messages

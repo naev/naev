@@ -23,8 +23,8 @@
 --
 --]]
 
-require "cargo_common.lua"
-require "missions/neutral/common.lua"
+require "cargo_common"
+require "missions/neutral/common"
 
 
 -- Localization, choosing a language if Naev is translated for non-english-speaking locales.

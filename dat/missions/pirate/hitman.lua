@@ -25,7 +25,7 @@
 
 --]]
 
-require "missions/pirate/common.lua"
+require "missions/pirate/common"
 
 
 -- Bar information

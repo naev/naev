@@ -1,7 +1,7 @@
-require("ai/tpl/generic.lua")
-require("ai/personality/civilian.lua")
-require("ai/distress_behaviour.lua")
-require "numstring.lua"
+require("ai/tpl/generic")
+require("ai/personality/civilian")
+require("ai/distress_behaviour")
+require "numstring"
 
 
 mem.careful   = false

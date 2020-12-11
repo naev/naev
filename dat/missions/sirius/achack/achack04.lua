@@ -19,11 +19,11 @@
 -- This mission is started from a helper event.
 --]]
 
-require "fleethelper.lua"
-require "proximity.lua"
-require "enum.lua"
-require "missions/sirius/common.lua"
-require "numstring.lua"
+require "fleethelper"
+require "proximity"
+require "enum"
+require "missions/sirius/common"
+require "numstring"
 
 
 title1 = _("You have mail")

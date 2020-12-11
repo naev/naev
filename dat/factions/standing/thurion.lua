@@ -1,6 +1,6 @@
 
 
-require "factions/standing/skel.lua"
+require "factions/standing/skel"
 
 
 -- Faction caps.

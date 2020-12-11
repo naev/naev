@@ -16,11 +16,11 @@
 --]]
 --[[
 -- This is the mission part of the shipwrecked Space Family mission, started from a random event.
--- See dat/events/neutral/shipwreck.lua
+-- See dat/events/neutral/shipwreck
 --]]
 
-require "jumpdist.lua"
-require "missions/neutral/common.lua"
+require "jumpdist"
+require "missions/neutral/common"
 
 
 shipname = _("August") --The ship will have a unique name

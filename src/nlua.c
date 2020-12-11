@@ -185,6 +185,8 @@ int nlua_dofileenv(nlua_env env, const char *filename) {
  *    @param rw Load libraries in read/write mode.
  */
 nlua_env nlua_newEnv(int rw) {
+   char packagepath[STRMAX];
+   const char *ndata;
    nlua_env ref;
    lua_newtable(naevL);
    lua_pushvalue(naevL, -1);
@@ -200,6 +202,22 @@ nlua_env nlua_newEnv(int rw) {
    lua_pushvalue(naevL, -1);
    lua_pushcclosure(naevL, nlua_packfileLoader, 1);
    lua_setfield(naevL, -2, "require");
+   /*
+   */
+
+   /* Set up paths.
+    * "package.path" to look in the data.
+    * "package.cpath" unset */
+   lua_getglobal(naevL, "package");
+   ndata = ndata_getPath();
+   nsnprintf( packagepath, sizeof(packagepath),
+         "%s/?;%s/?.lua;%s/"LUA_INCLUDE_PATH"?;%s/"LUA_INCLUDE_PATH"?.lua",
+         ndata, ndata, ndata, ndata );
+   lua_pushstring(naevL, packagepath);
+   lua_setfield(naevL, -2, "path");
+   lua_pushstring(naevL, "");
+   lua_setfield(naevL, -2, "cpath");
+   lua_pop(naevL,1);
 
    /* Some code expect _G to be it's global state, so don't inherit it */
    lua_pushvalue(naevL, -1);
@@ -362,12 +380,13 @@ static char* nlua_packfileLoaderTryFile( lua_State *L, size_t *bufsize, const ch
 
    /* Try to locate the data directly */
    buf = NULL;
-   if (ndata_exists( filename ))
-      buf = ndata_read( filename, bufsize );
+   nsnprintf( path_filename, sizeof(path_filename), "%s.lua", filename );
+   if (ndata_exists( path_filename ))
+      buf = ndata_read( path_filename, bufsize );
    /* If failed to load or doesn't exist try again with INCLUDE_PATH prefix. */
    if (buf == NULL) {
       /* Try to locate the data in the data path */
-      nsnprintf( path_filename, sizeof(path_filename), "%s%s", LUA_INCLUDE_PATH, filename );
+      nsnprintf( path_filename, sizeof(path_filename), LUA_INCLUDE_PATH"%s", filename );
       if (ndata_exists( path_filename ))
          buf = ndata_read( path_filename, bufsize );
    }

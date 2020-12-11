@@ -1,4 +1,4 @@
-require("ai/include/basic.lua")
+require("ai/include/basic")
 
 -- Variables
 planet_dist = 1500 -- distance to keep from planets

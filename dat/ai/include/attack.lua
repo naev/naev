@@ -4,23 +4,23 @@
    Here we set up the wrappers and determine exactly how the pilot should behave.
 
    The global layout is:
-    - atk_util.lua : Attack generic utilities.
-    - atk_target.lua : Targeting utilities.
+    - atk_util : Attack generic utilities.
+    - atk_target : Targeting utilities.
 --]]
 
 -- Utilities
-require("ai/include/atk_util.lua")
-require("ai/include/atk_target.lua")
+require("ai/include/atk_util")
+require("ai/include/atk_target")
 
 -- Attack profiles
-require("ai/include/atk_generic.lua")
-require("ai/include/atk_fighter.lua")
-require("ai/include/atk_bomber.lua")
-require("ai/include/atk_corvette.lua")
-require("ai/include/atk_capital.lua")
---require("ai/include/atk_cruiser.lua")
---require("ai/include/atk_carrier.lua")
-require("ai/include/atk_drone.lua")
+require("ai/include/atk_generic")
+require("ai/include/atk_fighter")
+require("ai/include/atk_bomber")
+require("ai/include/atk_corvette")
+require("ai/include/atk_capital")
+--require("ai/include/atk_cruiser")
+--require("ai/include/atk_carrier")
+require("ai/include/atk_drone")
 
 -- Set attack variables
 mem.atk_changetarget  = 2 -- Distance at which target changes

@@ -25,7 +25,7 @@
 -- Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
 
-require "missions/zalek/common.lua"
+require "missions/zalek/common"
 
 
 -- mission variables

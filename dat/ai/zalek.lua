@@ -1,6 +1,6 @@
-require("ai/tpl/generic.lua")
-require("ai/personality/patrol.lua")
-require "numstring.lua"
+require("ai/tpl/generic")
+require("ai/personality/patrol")
+require "numstring"
 
 -- We’ll consider the Za'lek prefer to turn a bad (i.e. battle) situation into
 -- a profitable one by getting money and selling fuel if possible if the player

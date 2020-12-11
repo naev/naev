@@ -19,7 +19,7 @@
 --
 --]]
 
-require "numstring.lua"
+require "numstring"
 
 
 text = {}

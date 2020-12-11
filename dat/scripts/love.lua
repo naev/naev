@@ -5,8 +5,8 @@ Meant to be loaded as a library to run Love2d stuff out of the box.
 
 Example usage would be as follows:
 """
-require 'love.lua'
-require 'pong.lua'
+require 'love'
+require 'pong'
 love.start()
 """
 
@@ -42,8 +42,9 @@ function love.event.quit( exitstatus ) tk.customDone() end
 -- Filesystem
 --]]
 love.filesystem = {}
+love.filesystem._prefix = ""
 function love.filesystem.newFile( filename )
-   return file.new( filename )
+   return file.new( love.filesystem._prefix..filename )
 end
 function love.filesystem.read( name, size )
    local f = file.new( name )
@@ -194,7 +195,7 @@ function love.graphics.circle( mode, x, y, radius )
    gfx.renderCircle( x, y, radius, love.graphics._fgcol, _mode(mode) )
 end
 function love.graphics.newImage( filename )
-   return tex.open( filename )
+   return tex.open( love.filesystem.newFile( filename ) )
 end
 function love.graphics.draw( drawable, x, y, r, sx, sy )
    local w,h = drawable:dim()
@@ -259,6 +260,11 @@ end
 --[[
 -- Initialize
 --]]
+_require = require
+function require( filename )
+   return _require( filename )
+end
+_G.require = require
 function love.start()
    -- Only stuff we care about atm
    local t = {}
@@ -267,6 +273,7 @@ function love.start()
    t.window.title = "LÖVE" -- The window title (string)
    t.window.width = 800    -- The window width (number)
    t.window.height = 600   -- The window height (number)
+   t.basepath = "" -- Base path for all files/assets in the game
    t.modules = {}
 
    -- Configure
@@ -276,6 +283,7 @@ function love.start()
    love.title = t.window.title
    love.w = t.window.width
    love.h = t.window.height
+   love.filesystem._prefix = t.basepath
 
    -- Run set up function defined in Love2d spec
    love.load()

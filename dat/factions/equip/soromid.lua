@@ -1,4 +1,4 @@
-require "factions/equip/generic.lua"
+require "factions/equip/generic"
 
 
 equip_typeOutfits_weapons["Brigand"] = {

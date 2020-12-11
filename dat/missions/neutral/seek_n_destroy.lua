@@ -31,10 +31,10 @@
 
 --]]
 
-require "numstring.lua"
-require "jumpdist.lua"
-require "portrait.lua"
-require "pilot/pirate.lua"
+require "numstring"
+require "jumpdist"
+require "portrait"
+require "pilot/pirate"
 
 clue_title   = _("I know the pilot you're looking for")
 clue_text    = {}

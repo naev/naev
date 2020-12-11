@@ -25,10 +25,10 @@
 --      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 --]]
 
-require "fleethelper.lua" 
-require "proximity.lua"
-require "portrait.lua"
-require "missions/dvaered/common.lua"
+require "fleethelper" 
+require "proximity"
+require "portrait"
+require "missions/dvaered/common"
 
 
 title = {}

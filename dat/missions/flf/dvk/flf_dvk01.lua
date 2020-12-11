@@ -37,8 +37,8 @@
 
 --]]
 
-require "missions/flf/flf_diversion.lua"
-require "missions/flf/flf_common.lua"
+require "missions/flf/flf_diversion"
+require "missions/flf/flf_common"
 
 -- localization stuff
 title = {}
