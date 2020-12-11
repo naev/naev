@@ -43,11 +43,6 @@
 lua_State *naevL = NULL;
 nlua_env __NLUA_CURENV = LUA_NOREF;
 
-/*
- * Internal
- */
-static char* nlua_packfileLoaderTryFile( lua_State* L, size_t *bufsize, const char *filename );
-
 
 /*
  * prototypes
@@ -202,8 +197,6 @@ nlua_env nlua_newEnv(int rw) {
    lua_pushvalue(naevL, -1);
    lua_pushcclosure(naevL, nlua_packfileLoader, 1);
    lua_setfield(naevL, -2, "require");
-   /*
-   */
 
    /* Set up paths.
     * "package.path" to look in the data.
@@ -211,8 +204,7 @@ nlua_env nlua_newEnv(int rw) {
    lua_getglobal(naevL, "package");
    ndata = ndata_getPath();
    nsnprintf( packagepath, sizeof(packagepath),
-         "%s/?;%s/?.lua;%s/"LUA_INCLUDE_PATH"?;%s/"LUA_INCLUDE_PATH"?.lua",
-         ndata, ndata, ndata, ndata );
+         "%s/?.lua;%s/"LUA_INCLUDE_PATH"?.lua", ndata, ndata );
    lua_pushstring(naevL, packagepath);
    lua_setfield(naevL, -2, "path");
    lua_pushstring(naevL, "");
@@ -370,40 +362,6 @@ static int nlua_loadBasic( lua_State* L )
 }
 
 
-/*
- * Tries to load a file from the lua paths.
- */
-static char* nlua_packfileLoaderTryFile( lua_State *L, size_t *bufsize, const char *filename )
-{
-   char *buf;
-   char path_filename[PATH_MAX];
-
-   /* Try to locate the data directly */
-   buf = NULL;
-   nsnprintf( path_filename, sizeof(path_filename), "%s.lua", filename );
-   if (ndata_exists( path_filename ))
-      buf = ndata_read( path_filename, bufsize );
-   /* If failed to load or doesn't exist try again with INCLUDE_PATH prefix. */
-   if (buf == NULL) {
-      /* Try to locate the data in the data path */
-      nsnprintf( path_filename, sizeof(path_filename), LUA_INCLUDE_PATH"%s", filename );
-      if (ndata_exists( path_filename ))
-         buf = ndata_read( path_filename, bufsize );
-   }
-   /* Try to load the file directly. */
-   if (buf == NULL) {
-      int isconsole;
-      nlua_getenv(__NLUA_CURENV, "__cli");
-      isconsole = lua_toboolean(L,-1);
-      lua_pop(L,1);
-      if (isconsole && nfile_fileExists( filename ))
-         buf = nfile_readFile( bufsize, filename );
-   }
-
-   return buf;
-}
-
-
 /**
  * @brief include( string module )
  *
@@ -415,11 +373,13 @@ static char* nlua_packfileLoaderTryFile( lua_State *L, size_t *bufsize, const ch
 static int nlua_packfileLoader( lua_State* L )
 {
    const char *filename;
-   char filename_ext[NDATA_PATH_MAX];
-   char *buf;
    size_t bufsize;
    int envtab;
    int isconsole;
+   char *buf, *q;
+   char path_filename[PATH_MAX], tmpname[PATH_MAX];
+   const char *packagepath, *start, *end;
+   int done;
 
    /* Environment table to load module into */
    envtab = lua_upvalueindex(1);
@@ -454,12 +414,51 @@ static int nlua_packfileLoader( lua_State* L )
       lua_setfield(L, envtab, NLUA_LOAD_TABLE); /* */
    }
 
-   /* Try to load with extension. */
-   nsnprintf( filename_ext, sizeof(filename_ext), "%s.lua", filename );
-   buf = nlua_packfileLoaderTryFile( L, &bufsize, filename_ext );
-   /* Fallback to no extension. */
-   if (buf == NULL)
-      buf = nlua_packfileLoaderTryFile( L, &bufsize, filename );
+   /* Get paths to check. */
+   lua_getglobal(naevL, "package");
+   if (!lua_istable(L,-1)) {
+      lua_pop(L,2);
+      NLUA_ERROR(L, _("require: package.path not found."));
+   }
+   lua_getfield(naevL, -1, "path");
+   if (!lua_isstring(L,-1)) {
+      lua_pop(L,2);
+      NLUA_ERROR(L, _("require: package.path not found."));
+   }
+   packagepath = lua_tostring(L,-1);
+   lua_pop(L,2);
+
+   /* Parse path. */
+   buf = NULL;
+   done = 0;
+   start = packagepath;
+   while (!done) {
+      end = strchr( start, ';' );
+      if (end == NULL) {
+         done = 1;
+         end = &start[ strlen(start) ];
+      }
+      strncpy( tmpname, start, end-start );
+      tmpname[ end-start ] = '\0';
+      q = strchr( tmpname, '?' );
+      if (q==NULL) {
+         snprintf( path_filename, sizeof(path_filename), "%s%s", tmpname, filename );
+      }
+      else {
+         *q = '\0';
+         snprintf( path_filename, sizeof(path_filename), "%s%s%s", tmpname, filename, q+1 );
+      }
+      start = end+1;
+
+      /* Try to load the file. */
+      if (nfile_fileExists( path_filename )) {
+         buf = _nfile_readFile( &bufsize, path_filename );
+         if (buf != NULL) {
+            break;
+         }
+      }
+   }
+
 
    /* Must have buf by now. */
    if (buf == NULL) {
