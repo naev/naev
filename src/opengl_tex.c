@@ -680,7 +680,8 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
 /**
  * @brief Only loads the image, does not add to stack unlike gl_newImage.
  *
- *    @param path Image to load.
+ *    @param path Only used for debugging. Can be set to NULL.
+ *    @param rw SDL_Rwops structure to use to load.
  *    @param flags Flags to control image parameters.
  *    @return Texture loaded from image.
  */
