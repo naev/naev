@@ -37,6 +37,13 @@ function love.update( dt ) end -- dummy
 
 
 --[[
+-- Events
+--]]
+love.event = {}
+function love.event.quit( exitstatus ) tk.customDone() end
+
+
+--[[
 -- Mouse
 --]]
 -- Internal function that connects to Naev
