@@ -13,11 +13,6 @@ love.start()
 --]]
 love = {}
 
--- defaults
-love._font = font.new( 12 )
-love._bgcol = colour.new( 0, 0, 0, 1 )
-love._fgcol = colour.new( 1, 1, 1, 1 )
-
 function love.conf(t) end -- dummy
 function love.load() end --dummy
 
@@ -41,6 +36,11 @@ function love.update( dt ) end -- dummy
 --]]
 love.event = {}
 function love.event.quit( exitstatus ) tk.customDone() end
+
+
+--[[
+-- Filesystem
+--]]
 
 
 --[[
@@ -119,12 +119,15 @@ local function _draw( x, y, w, h )
    love.y = y
    love.w = w
    love.h = h
-   gfx.renderRect( x, y, w, h, love._bgcol )
+   gfx.renderRect( x, y, w, h, love.graphics._bgcol )
    love.draw()
 end
 love.graphics = {}
 love.graphics._dx = 0
 love.graphics._dy = 0
+love.graphics._font = font.new( 12 )
+love.graphics._bgcol = colour.new( 0, 0, 0, 1 )
+love.graphics._fgcol = colour.new( 1, 1, 1, 1 )
 local function _mode(m)
    if     m=="fill" then return false
    elseif m=="line" then return true
@@ -134,12 +137,8 @@ end
 local function _xy( x, y, w, h )
    return love.x+love.graphics._dx+x, love.y+(love.h-y-h-love.graphics._dy)
 end
-function love.graphics.getWidth()
-   return love.w
-end
-function love.graphics.getHeight()
-   return love.h
-end
+function love.graphics.getWidth()  return love.w end
+function love.graphics.getHeight() return love.h end
 function love.graphics.origin()
    love.graphics._dx = 0
    love.graphics._dy = 0
@@ -162,25 +161,21 @@ local function _scol( r, g, b, a )
    end
    return colour.new( r, g, b, a or 1 )
 end
-function love.graphics.getBackgroundColor()
-   return _gcol( self._bgcol )
-end
+function love.graphics.getBackgroundColor() return _gcol( self.graphics._bgcol ) end
 function love.graphics.setBackgroundColor( red, green, blue, alpha )
-   love._bgcol = _scol( red, green, blue, alpha )
+   love.graphics._bgcol = _scol( red, green, blue, alpha )
 end
-function love.graphics.getColor()
-   return _gcol( self._fgcol )
-end
+function love.graphics.getColor() return _gcol( self.graphics._fgcol ) end
 function love.graphics.setColor( red, green, blue, alpha )
-   love._fgcol = _scol( red, green, blue, alpha )
+   love.graphics._fgcol = _scol( red, green, blue, alpha )
 end
 function love.graphics.rectangle( mode, x, y, width, height )
    x,y = _xy(x,y,width,height)
-   gfx.renderRect( x, y, width, height, love._fgcol, _mode(mode) )
+   gfx.renderRect( x, y, width, height, love.graphics._fgcol, _mode(mode) )
 end
 function love.graphics.circle( mode, x, y, radius )
    x,y = _xy(x,y,0,0)
-   gfx.renderCircle( x, y, radius, love._fgcol, _mode(mode) )   
+   gfx.renderCircle( x, y, radius, love.graphics._fgcol, _mode(mode) )
 end
 function love.graphics.newImage( filename )
    return tex.open( filename )
@@ -194,22 +189,22 @@ function love.graphics.draw( drawable, x, y, r, sx, sy )
    w = w*sx
    h = h*sy
    y = y - (h*(1-sy)) -- correct scaling
-   gfx.renderTexRaw( drawable, x, y, w, h, 1, 1, 0, 0, 1, 1, love._fgcol, r )
+   gfx.renderTexRaw( drawable, x, y, w, h, 1, 1, 0, 0, 1, 1, love.graphics._fgcol, r )
 end
 function love.graphics.print( text, x, y  )
-   x,y = _xy(x,y,limit,love._font:height())
-   gfx.printf( love._font, text, x, y, love._fgcol )
+   x,y = _xy(x,y,limit,love.graphics._font:height())
+   gfx.printf( love.graphics._font, text, x, y, love.graphics._fgcol )
 end
 function love.graphics.printf( text, x, y, limit, align )
-   x,y = _xy(x,y,limit,love._font:height())
+   x,y = _xy(x,y,limit,love.graphics._font:height())
    if align=="left" then
-      gfx.printf( love._font, text, x, y, love._fgcol, limit, false )
+      gfx.printf( love.graphics._font, text, x, y, love.graphics._fgcol, limit, false )
    elseif align=="center" then
-      gfx.printf( love._font, text, x, y, love._fgcol, limit, true )
+      gfx.printf( love.graphics._font, text, x, y, love.graphics._fgcol, limit, true )
    elseif align=="right" then
       local w = gfx.printDim( false, text, limit )
       local off = limit-w
-      gfx.printf( love._font, text, x+off, y, love._fgcol, w, false )
+      gfx.printf( love.graphics._font, text, x+off, y, love.graphics._fgcol, w, false )
    end
 end
 function love.graphics.newFont( file, size )
@@ -222,11 +217,11 @@ function love.graphics.newFont( file, size )
    end
 end
 function love.graphics.setFont( fnt )
-   love._font = fnt
+   love.graphics._font = fnt
 end
 function love.graphics.setNewFont( file, size )
-   love._font = love.graphics.newFont( file, size )
-   return love._font
+   love.graphics._font = love.graphics.newFont( file, size )
+   return love.graphics._font
 end
 
 
