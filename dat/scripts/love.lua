@@ -12,6 +12,7 @@ love.start()
 
 --]]
 love = {}
+love.basepath = ""
 
 function love.conf(t) end -- dummy
 function love.load() end --dummy
@@ -42,9 +43,22 @@ function love.event.quit( exitstatus ) tk.customDone() end
 -- Filesystem
 --]]
 love.filesystem = {}
-love.filesystem._prefix = ""
+function love.filesystem.getInfo( path, filtertype )
+   local ftype = file.filetype( path )
+   if ftype == "directory" then
+      return { type = ftype }
+   elseif ftype == "file" then
+      local info = { type = ftype }
+      local f = file.new( path )
+      f:open('r')
+      info.size = f:getSize()
+      f:close()
+      return info
+   end
+   return nil
+end
 function love.filesystem.newFile( filename )
-   return file.new( love.filesystem._prefix..filename )
+   return file.new( love.basepath..filename )
 end
 function love.filesystem.read( name, size )
    local f = file.new( name )
@@ -260,12 +274,29 @@ end
 --[[
 -- Initialize
 --]]
-_require = require
-function require( filename )
-   return _require( filename )
-end
-_G.require = require
-function love.start()
+package.path = package.path..string.format(";?.lua", path)
+function love.exec( path )
+   local info = love.filesystem.getInfo( path )
+   if info then
+      if info.type == "directory" then
+         package.path = package.path..string.format(";%s/?.lua", path)
+         require( path.."/conf" )
+         require( path.."/main" )
+      elseif info.type == "file" then
+         require( path )
+      else
+         error( string.format( _("'%s' is an unknown filetype '%s'", path, info.type) ) )
+      end
+   else
+      local npath = path..".lua" 
+      info = love.filesystem.getInfo( npath )
+      if info.type == "file" then
+         require( path )
+      else
+         error( string.format( _("'%s' is not a valid love2d game!", path) ) )
+      end
+   end
+
    -- Only stuff we care about atm
    local t = {}
    t.audio = {}
@@ -273,7 +304,6 @@ function love.start()
    t.window.title = "LÖVE" -- The window title (string)
    t.window.width = 800    -- The window width (number)
    t.window.height = 600   -- The window height (number)
-   t.basepath = "" -- Base path for all files/assets in the game
    t.modules = {}
 
    -- Configure
@@ -283,7 +313,6 @@ function love.start()
    love.title = t.window.title
    love.w = t.window.width
    love.h = t.window.height
-   love.filesystem._prefix = t.basepath
 
    -- Run set up function defined in Love2d spec
    love.load()
