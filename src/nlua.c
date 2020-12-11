@@ -379,7 +379,7 @@ static int nlua_packfileLoader( lua_State* L )
    char *buf, *q;
    char path_filename[PATH_MAX], tmpname[PATH_MAX];
    const char *packagepath, *start, *end;
-   int done;
+   int i, done;
 
    /* Environment table to load module into */
    envtab = lua_upvalueindex(1);
@@ -449,6 +449,12 @@ static int nlua_packfileLoader( lua_State* L )
          snprintf( path_filename, sizeof(path_filename), "%s%s%s", tmpname, filename, q+1 );
       }
       start = end+1;
+
+      /* Replace all '.' before the last '/' with '/' as they are a security risk. */
+      q = strrchr( path_filename, '/' );
+      for (i=0; i < q-path_filename; i++)
+         if (path_filename[i]=='.')
+            path_filename[i] = '/';
 
       /* Try to load the file. */
       if (nfile_fileExists( path_filename )) {
