@@ -33,6 +33,7 @@
 #include "nlua_commodity.h"
 #include "nlua_shiplog.h"
 #include "nlua_cli.h"
+#include "nlua_file.h"
 #include "nstring.h"
 
 
@@ -531,6 +532,7 @@ int nlua_loadStandard( nlua_env env )
    r |= nlua_loadCommodity(env);
    r |= nlua_loadNews(env);
    r |= nlua_loadShiplog(env);
+   r |= nlua_loadFile(env);
 
    return r;
 }
