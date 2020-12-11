@@ -58,6 +58,7 @@ static size_t gl_transSize( const int w, const int h );
 /* glTexture */
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags, int freesur );
 static glTexture* gl_loadNewImage( const char* path, unsigned int flags );
+static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const unsigned int flags );
 /* List. */
 static glTexture* gl_texExists( const char* path );
 static int gl_texAdd( glTexture *tex );
@@ -620,6 +621,32 @@ glTexture* gl_newImage( const char* path, const unsigned int flags )
 
 
 /**
+ * @brief Loads an image as a texture.
+ *
+ * May not necessarily load the image but use one if it's already open.
+ *
+ * @note Does not close the SDL_RWops file.
+ *
+ *    @param path Path name used for checking cache and error reporting.
+ *    @param rw SDL_RWops structure to load from.
+ *    @param flags Flags to control image parameters.
+ *    @return Texture loaded from image.
+ */
+glTexture* gl_newImageRWops( const char* path, SDL_RWops *rw, const unsigned int flags )
+{
+   glTexture *t;
+
+   /* Check if it already exists. */
+   t = gl_texExists( path );
+   if (t != NULL)
+      return t;
+
+   /* Load the image */
+   return gl_loadNewImageRWops( path, rw, flags );
+}
+
+
+/**
  * @brief Only loads the image, does not add to stack unlike gl_newImage.
  *
  *    @param path Image to load.
@@ -629,13 +656,7 @@ glTexture* gl_newImage( const char* path, const unsigned int flags )
 static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
 {
    glTexture *texture;
-   SDL_Surface *surface;
    SDL_RWops *rw;
-   npng_t *npng;
-   png_uint_32 w, h;
-   int sx, sy;
-   char *str;
-   int len;
 
    if (path==NULL) {
       WARN(_("Trying to load image from NULL path."));
@@ -648,6 +669,35 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
       WARN(_("Failed to load surface '%s' from ndata."), path);
       return NULL;
    }
+
+   texture = gl_loadNewImageRWops( path, rw, flags );
+
+   SDL_RWclose( rw );
+   return texture;
+}
+
+
+/**
+ * @brief Only loads the image, does not add to stack unlike gl_newImage.
+ *
+ *    @param path Image to load.
+ *    @param flags Flags to control image parameters.
+ *    @return Texture loaded from image.
+ */
+static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const unsigned int flags )
+{
+   glTexture *texture;
+   SDL_Surface *surface;
+   npng_t *npng;
+   png_uint_32 w, h;
+   int sx, sy;
+   char *str;
+   int len;
+
+   /* Placeholder for warnings. */
+   if (path==NULL)
+      path = _("unknown");
+
    npng     = npng_open( rw );
    if (npng == NULL) {
       WARN(_("File '%s' is not a png."), path );
@@ -667,7 +717,6 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
 
    if (surface == NULL) {
       WARN(_("'%s' could not be opened"), path );
-      SDL_RWclose( rw );
       return NULL;
    }
 
@@ -676,7 +725,6 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    else
       texture = gl_loadImagePad( path, surface, flags, w, h, sx, sy, 1 );
 
-   SDL_RWclose( rw );
    return texture;
 }
 

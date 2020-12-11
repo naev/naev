@@ -17,6 +17,7 @@
 #include "nluadef.h"
 #include "log.h"
 #include "ndata.h"
+#include "nlua_file.h"
 
 
 /* Texture metatable methods. */
@@ -57,7 +58,7 @@ int nlua_loadTex( nlua_env env )
  *
  * An example would be:
  * @code
- * t  = tex.open( GFX_PATH"foo/bar.png" ) -- Loads the texture
+ * t  = tex.open( "foo/bar.png" ) -- Loads the texture
  * w,h, sw,sh = t:dim()
  * sprites, sx,sy = t:sprites()
  * @endcode
@@ -150,7 +151,7 @@ static int texL_close( lua_State *L )
  * @usage t = tex.open( "no_sprites.png" )
  * @usage t = tex.open( "spritesheet.png", 6, 6 )
  *
- *    @luatparam string path Path to open.
+ *    @luatparam string|File path Path or File to open.
  *    @luatparam[opt=1] number sx Optional number of x sprites.
  *    @luatparam[opt=1] number sy Optional number of y sprites.
  *    @luatreturn Tex The opened texture or nil on error.
@@ -160,16 +161,23 @@ static int texL_open( lua_State *L )
 {
    const char *path;
    glTexture *tex;
-   int sx, sy;
+   LuaFile_t *lf;
+   int sx, sy, isopen;
 
    NLUA_CHECKRW(L);
 
    /* Defaults. */
    sx = 0;
    sy = 0;
+   lf = NULL;
+   path = NULL;
 
    /* Get path. */
-   path = luaL_checkstring( L, 1 );
+   if (lua_isfile(L,1))
+      lf = luaL_checkfile(L,1);
+   else
+      path = luaL_checkstring(L, 1);
+
    if (lua_gettop(L)>1) {
       sx = luaL_checkinteger(L,2);
       sy = luaL_checkinteger(L,3);
@@ -178,8 +186,22 @@ static int texL_open( lua_State *L )
    }
 
    /* Push new texture. */
-   if ((sx <=0 ) || (sy <= 0))
-      tex = gl_newImage( path, 0 );
+   if ((sx <=0 ) || (sy <= 0)) {
+      if (path != NULL)
+         tex = gl_newImage( path, 0 );
+      else {
+         isopen = (lf->rw != NULL);
+         if (!isopen)
+            lf->rw =  SDL_RWFromFile( lf->path, "r" );
+         if (lf->rw==NULL)
+            NLUA_ERROR(L, _("Unable to open '%s' to load texture"), lf->path);
+         tex = gl_newImageRWops( lf->path, lf->rw, 0 );
+         if (!isopen) {
+            SDL_RWclose( lf->rw );
+            lf->rw = NULL;
+         }
+      }
+   }
    else
       tex = gl_newSprite( path, sx, sy, 0 );
    /* Failed to load. */
