@@ -1095,7 +1095,7 @@ static void uniedit_findSearch( unsigned int wid, char *str )
       found[n].pnt      = NULL;
       found[n].sys      = sys;
 
-      strncpy(found[n].display, sys->name, sizeof(found[n].display));
+      strncpy(found[n].display, sys->name, sizeof(found[n].display)-1);
       n++;
    }
    free(systems);
