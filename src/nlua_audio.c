@@ -24,12 +24,23 @@
 /* Camera methods. */
 static int audioL_gc( lua_State *L );
 static int audioL_eq( lua_State *L );
+static int audioL_new( lua_State *L );
+static int audioL_play( lua_State *L );
+static int audioL_pause( lua_State *L );
+static int audioL_stop( lua_State *L );
+static int audioL_setVolume( lua_State *L );
+static int audioL_getVolume( lua_State *L );
 static int audioL_soundPlay( lua_State *L );
 static const luaL_Reg audioL_methods[] = {
    { "__gc", audioL_gc },
    { "__eq", audioL_eq },
-   //{ "new", audioL_new },
-   { "soundPlay", audioL_soundPlay },
+   { "new", audioL_new },
+   { "play", audioL_play },
+   { "pause", audioL_pause },
+   { "stop", audioL_stop },
+   { "setVolume", audioL_setVolume },
+   { "getVolume", audioL_getVolume },
+   { "soundPlay", audioL_soundPlay }, /* Old API */
    {0,0}
 }; /**< AudioLua methods. */
 
@@ -83,8 +94,7 @@ LuaAudio_t* luaL_checkaudio( lua_State *L, int ind )
  */
 LuaAudio_t* lua_pushaudio( lua_State *L, LuaAudio_t audio )
 {
-   LuaAudio_t *a;
-   a = (LuaAudio_t*) lua_newuserdata(L, sizeof(LuaAudio_t));
+   LuaAudio_t *a = (LuaAudio_t*) lua_newuserdata(L, sizeof(LuaAudio_t));
    luaL_getmetatable(L, AUDIO_METATABLE);
    lua_setmetatable(L, -2);
    return a;
@@ -146,6 +156,62 @@ static int audioL_eq( lua_State *L )
    a1 = luaL_checkaudio(L,1);
    a2 = luaL_checkaudio(L,2);
    lua_pushboolean( L, (memcmp( a1, a2, sizeof(LuaAudio_t) )==0) );
+   return 1;
+}
+
+
+static int audioL_new( lua_State *L )
+{
+   LuaAudio_t la;
+   const char *str;
+   str = luaL_checkstring(L,1);
+   lua_pushaudio(L, la);
+   return 1;
+}
+
+
+static int audioL_play( lua_State *L )
+{
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   lua_pushboolean(L,1);
+   return 1;
+}
+
+
+static int audioL_pause( lua_State *L )
+{
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   return 0;
+}
+
+
+static int audioL_stop( lua_State *L )
+{
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   return 0;
+}
+
+
+static int audioL_setVolume( lua_State *L )
+{
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   double volume = luaL_checknumber(L,2);
+   return 0;
+}
+
+
+static int audioL_getVolume( lua_State *L )
+{
+   LuaAudio_t *la;
+   double volume;
+   if (lua_gettop(L)>0) {
+      la = luaL_checkaudio(L,1);
+      /* TODO */
+   }
+   else {
+      volume = sound_getVolume();
+   }
+   lua_pushnumber(L, volume);
    return 1;
 }
 

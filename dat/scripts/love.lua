@@ -278,6 +278,10 @@ love.audio = {}
 function love.audio.newSource( filename, type )
    return sound.load( filename, type )
 end
+function love.audio.setVolume( volume ) end -- Don't allow setting master volume
+function love.audio.getVolume( volume )
+   return audio.getVolume()
+end
 
 
 --[[
