@@ -543,27 +543,6 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 }
 
 
-char *mapedit_nameFilter( char *name )
-{
-   int i, pos;
-   char *out;
-
-   out = calloc( 1, (strlen(name)+1)  );
-   pos = 0;
-   for (i=0; i<(int)strlen(name); i++) {
-      if (!ispunct(name[i])) {
-         if (name[i] == ' ')
-            out[pos] = '_';
-         else
-            out[pos] = tolower(name[i]);
-         pos++;
-      }
-   }
-
-   return out;
-}
-
-
 /**
  * @brief Deselects selected targets.
  */
