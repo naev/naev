@@ -1682,7 +1682,7 @@ static void sysedit_btnRmService( unsigned int wid, char *unused )
    char *selected;
    Planet *p;
 
-   selected = toolkit_getList( wid, "nstServicesHave" );
+   selected = toolkit_getList( wid, "lstServicesHave" );
    if ((selected==NULL) || (strcmp(selected,_("None"))==0))
       return;
 
