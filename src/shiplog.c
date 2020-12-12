@@ -411,7 +411,6 @@ int shiplog_load( xmlNodePtr parent )
 {
    xmlNodePtr node, cur;
    ShipLogEntry *e;
-   char *str;
    int id,i;
    shiplog_clear();
 
@@ -421,14 +420,7 @@ int shiplog_load( xmlNodePtr parent )
          cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur, "entry")) {
-               xmlr_attr(cur, "id", str);
-               if (str) {
-                  id = atoi(str);
-                  free(str);
-               } else {
-                  id = 0;
-                  WARN(_("Warning - no ID in shipLog entry\n"));
-               }
+               xmlr_attr_int(cur, "id", id);
                /* check this ID isn't already present */
                for ( i=0; i<shipLog->nlogs; i++ ) {
                   if ( shipLog->idList[i] == id )
@@ -443,29 +435,13 @@ int shiplog_load( xmlNodePtr parent )
                   shipLog->idstrList = realloc( shipLog->idstrList, sizeof(char*) * shipLog->nlogs);
                   shipLog->maxLen = realloc( shipLog->maxLen, sizeof(int) * shipLog->nlogs);
                   shipLog->idList[shipLog->nlogs-1] = id;
-                  shipLog->removeAfter[shipLog->nlogs-1] = 0;
-                  shipLog->idstrList[shipLog->nlogs-1] = NULL;
-                  shipLog->maxLen[shipLog->nlogs-1] = 0;
-                  xmlr_attr(cur, "t", str);
-                  if (str) {
-                     shipLog->typeList[shipLog->nlogs-1] = str;
-                  } else {
+                  xmlr_attr_strd( cur, "t", shipLog->typeList[shipLog->nlogs-1] );
+                  xmlr_attr_long( cur, "r", shipLog->removeAfter[shipLog->nlogs-1] );
+                  xmlr_attr_strd( cur, "s", shipLog->idstrList[shipLog->nlogs-1] );
+                  xmlr_attr_int( cur, "m", shipLog->maxLen[shipLog->nlogs-1] );
+                  if (shipLog->typeList[shipLog->nlogs-1] == NULL) {
                      shipLog->typeList[shipLog->nlogs-1] = strdup("No type");
                      WARN(_("No ID in shipLog entry"));
-                  }
-                  xmlr_attr(cur, "r", str);
-                  if (str) {
-                     shipLog->removeAfter[shipLog->nlogs-1] = atoll(str);
-                     free(str);
-                  }
-                  xmlr_attr(cur, "s", str);
-                  if (str) {
-                     shipLog->idstrList[shipLog->nlogs-1] = str;
-                  }
-                  xmlr_attr(cur, "m", str);
-                  if (str) {
-                     shipLog->maxLen[shipLog->nlogs-1] = atoi(str);
-                     free(str);
                   }
                   shipLog->nameList[shipLog->nlogs-1] = strdup(xml_raw(cur));
                }
@@ -479,20 +455,8 @@ int shiplog_load( xmlNodePtr parent )
                   shipLog->tail->next = e;
                shipLog->tail = e;
 
-               xmlr_attr(cur, "id", str);
-               if (str) {
-                  e->id = atoi(str);
-                  free(str);
-               } else {
-                  WARN(_("Warning - no ID for shipLog entry"));
-               }
-               xmlr_attr(cur, "t", str);
-               if (str) {
-                  e->time = atol(str);
-                  free(str);
-               } else {
-                  WARN(_("Warning - no time for shipLog entry"));
-               }
+               xmlr_attr_int( cur, "id", e->id );
+               xmlr_attr_long( cur, "t", e->time );
                e->msg = strdup(xml_raw(cur));
             }
          } while (xml_nextNode(cur));

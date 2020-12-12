@@ -355,10 +355,10 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
    do {
       if (xml_isNode(node,"data")) {
          /* Get general info. */
-         xmlr_attr(node,"name",name);
-         xmlr_attr(node,"type",type);
+         xmlr_attr_strd(node,"name",name);
+         xmlr_attr_strd(node,"type",type);
          /* Check to see if key is a number. */
-         xmlr_attr(node,"keynum",num);
+         xmlr_attr_strd(node,"keynum",num);
          if (num != NULL) {
             lua_pushnumber(L, atof(name));
             free(num);
@@ -366,7 +366,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
          else if ( name != NULL )
             lua_pushstring(L, name);
          else {
-            xmlr_attr( node, "name_base64", name );
+            xmlr_attr_strd( node, "name_base64", name );
             data = base64_decode_cstr( &len, name );
             lua_pushlstring( L, data, len );
             free( data );
@@ -375,7 +375,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
          /* handle data types */
          /* Recursive tables. */
          if (strcmp(type,"table")==0) {
-            xmlr_attr(node,"name",buf);
+            xmlr_attr_strd(node,"name",buf);
             /* Create new table. */
             lua_newtable(L);
             /* Save data. */
@@ -419,7 +419,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
          }
          else if (strcmp(type,JUMP_METATABLE)==0) {
             ss = system_get(xml_get(node));
-            system_get(xmlr_attr(node,"dest",buf));
+            xmlr_attr_strd(node,"dest",buf);
             dest = system_get( buf );
             if ((ss != NULL) && (dest != NULL)) {
                lj.srcid = ss->id;
@@ -428,6 +428,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             }
             else
                WARN(_("Failed to load nonexistent jump from '%s' to '%s'"), xml_get(node), buf);
+            free(buf);
          }
          else if (strcmp(type,COMMODITY_METATABLE)==0)
             lua_pushcommodity(L,commodity_get(xml_get(node)));

@@ -1263,23 +1263,9 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
             /* Initialize in case a colour channel is absent. */
             col = calloc( 1, sizeof(glColour) );
 
-            xmlr_attr(node,"r",ctmp);
-            if (ctmp != NULL) {
-               col->r = atof(ctmp);
-               free(ctmp);
-            }
-
-            xmlr_attr(node,"g",ctmp);
-            if (ctmp != NULL) {
-               col->g = atof(ctmp);
-               free(ctmp);
-            }
-
-            xmlr_attr(node,"b",ctmp);
-            if (ctmp != NULL) {
-               col->b = atof(ctmp);
-               free(ctmp);
-            }
+            xmlr_attr_float(node,"r",col->r);
+            xmlr_attr_float(node,"g",col->g);
+            xmlr_attr_float(node,"b",col->b);
 
             col->a = 1.;
             temp->colour = col;
@@ -1682,11 +1668,10 @@ int pfaction_load( xmlNodePtr parent )
          cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur,"faction")) {
-               xmlr_attr(cur, "name", str);
+               xmlr_attr_strd(cur, "name", str);
                faction = faction_get(str);
 
                if (faction != -1) { /* Faction is valid. */
-
                   sub = cur->xmlChildrenNode;
                   do {
                      if (xml_isNode(sub,"standing")) {

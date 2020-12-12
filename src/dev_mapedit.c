@@ -795,12 +795,16 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
    }
 
    /* Get "name" property from the "outfit" node */
-   name = xml_nodeProp( node,"name" );
+   xmlr_attr_strd(node, "name", name);
    if (strcmp(ns->mapName, name)!=0) {
+      free(name);
       free(file);
       xmlFreeDoc(doc);
       free(buf);
       return;
+   } else {
+      free(name);
+      name = NULL;
    }
 
    /* Loop on the nodes to find <specific> node */
@@ -826,7 +830,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
          continue;
 
       /* Display "name" property from "sys" node and increment number of systems found */
-      systemName = xml_nodeProp( node,"name" );
+      xmlr_attr_strd(node, "name", systemName);
 
       /* Find system */
       found  = 0;
@@ -842,6 +846,8 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
      /* If system exists, select it */
      if (found)
         mapedit_selectAdd( sys );
+     free( systemName );
+     systemName = NULL;
    } while (xml_nextNode(node));
 
    mapedit_setGlobalLoadedInfos ( ns );
@@ -904,7 +910,7 @@ void mapedit_setGlobalLoadedInfos( mapOutfitsList_t* ns )
  */
 static int mapedit_mapsList_refresh (void)
 {
-   int len, compareLimit, nSystems, rarity;
+   int len, is_map, nSystems, rarity;
    size_t i, nfiles, bufsize;
    char *buf;
    xmlNodePtr node, cur;
@@ -919,13 +925,10 @@ static int mapedit_mapsList_refresh (void)
 
    map_files = ndata_list( MAP_DATA_PATH, &nfiles );
    newMapItem = NULL;
-   description = NULL;
-   price = 1000;
-   rarity = 0;
    for (i=0; i<nfiles; i++) {
-      if (description!=NULL)
-         free( description );
       description = NULL;
+      price = 1000;
+      rarity = 0;
 
       len  = strlen(MAP_DATA_PATH)+strlen(map_files[i])+2;
       file = malloc( len );
@@ -943,8 +946,6 @@ static int mapedit_mapsList_refresh (void)
       /* Get first node, normally "outfit" */
       node = doc->xmlChildrenNode;
       if (node == NULL) {
-         if ( description != NULL )
-            free( description );
          free(file);
          xmlFreeDoc(doc);
          free(buf);
@@ -952,8 +953,6 @@ static int mapedit_mapsList_refresh (void)
       }
 
       if (!xml_isNode(node,"outfit")) {
-         if (description != NULL)
-            free(description);
          free(file);
          xmlFreeDoc(doc);
          free(buf);
@@ -961,12 +960,12 @@ static int mapedit_mapsList_refresh (void)
       }
 
       /* Get "name" property from the "outfit" node */
-      name = xml_nodeProp( node,"name" );
+      xmlr_attr_strd( node, "name", name );
 
       /* Loop on the nodes to find <specific> node */
       node = node->xmlChildrenNode;
       do {
-         outfitType = "";
+         is_map = 0;
          xml_onlyNodes(node);
 
          if (!xml_isNode(node,"specific")) {
@@ -974,7 +973,7 @@ static int mapedit_mapsList_refresh (void)
                cur = node->children;
                do {
                   xml_onlyNodes(cur);
-                  xmlr_strd(cur,"description",description);
+                  xmlr_str(cur,"description",description);
                   xmlr_long(cur,"price",price);
                   xmlr_int(cur,"rarity",rarity);
                } while (xml_nextNode(cur));
@@ -983,15 +982,17 @@ static int mapedit_mapsList_refresh (void)
          }
 
          /* Get the "type" property from "specific" node */
-         outfitType = xml_nodeProp( node,"type" );
+         xmlr_attr_strd( node, "type", outfitType );
+         is_map = outfitType == NULL ? 0 : !strncmp(outfitType, "map", 3);
+         free(outfitType);
 
-         /* Break out of the loop, either with a correct outfitType or not */
+         /* Break out of the loop, either with a map or not */
          break;
       } while (xml_nextNode(node));
 
-      /* If its not a map, we don't care. */
-      compareLimit = 3;
-      if (strncmp(outfitType, "map", compareLimit)!=0) {
+      /* If it's not a map, we don't care. */
+      if (!is_map) {
+         free(name);
          free(file);
          xmlFreeDoc(doc);
          free(buf);
@@ -1031,9 +1032,6 @@ static int mapedit_mapsList_refresh (void)
    for (i=0; i<nfiles; i++)
       free( map_files[i] );
    free( map_files );
-
-   if ( description != NULL )
-      free( description );
 
    return 0;
 }

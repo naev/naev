@@ -446,7 +446,7 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
    memset( temp, 0, sizeof(EventData) );
 
    /* get the name */
-   temp->name = xml_nodeProp(parent, "name");
+   xmlr_attr_strd(parent, "name", temp->name);
    if (temp->name == NULL)
       WARN(_("Event in %s has invalid or no name"), EVENT_DATA_PATH);
 
@@ -863,7 +863,7 @@ static int events_parseActive( xmlNodePtr parent )
       if (!xml_isNode(node,"event"))
          continue;
 
-      xmlr_attr(node,"name",buf);
+      xmlr_attr_strd(node,"name",buf);
       if (buf==NULL) {
          WARN(_("Event has missing 'name' attribute, skipping."));
          continue;
@@ -875,13 +875,7 @@ static int events_parseActive( xmlNodePtr parent )
          continue;
       }
       free(buf);
-      xmlr_attr(node,"id",buf);
-      if (buf==NULL) {
-         WARN(_("Event with data '%s' has missing 'id' attribute, skipping."), event_dataName(data));
-         continue;
-      }
-      id = atoi(buf);
-      free(buf);
+      xmlr_attr_uint(node,"id",id);
       if (id==0) {
          WARN(_("Event with data '%s' has invalid 'id' attribute, skipping."), event_dataName(data));
          continue;

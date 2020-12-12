@@ -791,7 +791,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
    temp->avail.priority = 5;
 
    /* get the name */
-   temp->name = xml_nodeProp(parent,"name");
+   xmlr_attr_strd(parent,"name",temp->name);
    if (temp->name == NULL)
       WARN( _("Mission in %s has invalid or no name"), MISSION_DATA_PATH );
 
@@ -1136,7 +1136,7 @@ static int missions_parseActive( xmlNodePtr parent )
    char *buf;
    char *title;
    const char **items;
-   int nitems;
+   int nitems, active;
    int id, sys, type;
    StarSystem *ssys;
 
@@ -1149,7 +1149,7 @@ static int missions_parseActive( xmlNodePtr parent )
          misn = player_missions[m];
 
          /* process the attributes to create the mission */
-         xmlr_attr(node, "data", buf);
+         xmlr_attr_strd(node, "data", buf);
          data = mission_get(mission_getID(buf));
          if (data == NULL) {
             WARN(_("Mission '%s' from saved game not found in game - ignoring."), buf);
@@ -1167,13 +1167,10 @@ static int missions_parseActive( xmlNodePtr parent )
          free(buf);
 
          /* this will orphan an identifier */
-         xmlr_attr(node, "id", buf);
-         misn->id = atol(buf);
-         free(buf);
+         xmlr_attr_int(node, "id", misn->id);
 
          cur = node->xmlChildrenNode;
          do {
-
             xmlr_strd(cur,"title",misn->title);
             xmlr_strd(cur,"desc",misn->desc);
             xmlr_strd(cur,"reward",misn->reward);
@@ -1183,16 +1180,8 @@ static int missions_parseActive( xmlNodePtr parent )
                nest = cur->xmlChildrenNode;
                do {
                   if (xml_isNode(nest,"marker")) {
-                     /* Get ID. */
-                     xmlr_attr(nest,"id",buf);
-                     id = (buf != NULL) ? atoi(buf) : -1;
-                     if (buf != NULL)
-                        free(buf);
-                     /* Get type. */
-                     xmlr_attr(nest,"type",buf);
-                     type = (buf != NULL) ? atoi(buf) : -1;
-                     if (buf != NULL)
-                        free(buf);
+                     xmlr_attr_atoi_neg1(nest,"id",id);
+                     xmlr_attr_atoi_neg1(nest,"type",type);
                      /* Get system. */
                      ssys = system_get( xml_get( nest ));
                      if (ssys == NULL) {
@@ -1216,14 +1205,10 @@ static int missions_parseActive( xmlNodePtr parent )
 
             /* OSD. */
             if (xml_isNode(cur,"osd")) {
-               xmlr_attr(cur,"nitems",buf);
-               if (buf != NULL) {
-                  nitems = atoi(buf);
-                  free(buf);
-               }
-               else
+               xmlr_attr_atoi_neg1(cur,"nitems",nitems);
+               if (nitems == -1)
                   continue;
-               xmlr_attr(cur,"title",title);
+               xmlr_attr_strd(cur,"title",title);
                items = malloc( nitems * sizeof(char*) );
                i = 0;
                nest = cur->xmlChildrenNode;
@@ -1244,11 +1229,9 @@ static int missions_parseActive( xmlNodePtr parent )
                free(title);
 
                /* Set active. */
-               xmlr_attr(cur,"active",buf);
-               if (buf != NULL) {
-                  osd_active( misn->osd, atoi(buf) );
-                  free(buf);
-               }
+               xmlr_attr_atoi_neg1(cur,"active",active);
+               if (active != -1)
+                  osd_active( misn->osd, active );
             }
 
             /* Claims. */
