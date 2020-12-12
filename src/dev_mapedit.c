@@ -1107,17 +1107,17 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
       /* Display "name" property from "sys" node and increment number of systems found */
       systemName = xml_nodeProp( node,"name" );
       /*WARN("\t\t\t\tSystem name = \"%s\"", systemName);*/
-     
-     /* Find system */
-     found  = 0;
+
+      /* Find system */
+      found  = 0;
       for (i=0; i<systems_nstack; i++) {
          sys = system_getIndex( i );
          compareLimit = strlen(systemName);
          if (strncmp(systemName, sys->name, compareLimit)==0) {
             found = 1;
-         break;
-       }
-     }
+            break;
+         }
+      }
 
      /* If system exists, select it */
      if (found) {
