@@ -94,10 +94,11 @@ LuaAudio_t* luaL_checkaudio( lua_State *L, int ind )
  */
 LuaAudio_t* lua_pushaudio( lua_State *L, LuaAudio_t audio )
 {
-   LuaAudio_t *a = (LuaAudio_t*) lua_newuserdata(L, sizeof(LuaAudio_t));
+   LuaAudio_t *la = (LuaAudio_t*) lua_newuserdata(L, sizeof(LuaAudio_t));
+   *la = audio;
    luaL_getmetatable(L, AUDIO_METATABLE);
    lua_setmetatable(L, -2);
-   return a;
+   return la;
 }
 /**
  * @brief Checks to see if ind is a audio.
@@ -137,7 +138,8 @@ int lua_isaudio( lua_State *L, int ind )
  */
 static int audioL_gc( lua_State *L )
 {
-   LuaAudio_t *a = luaL_checkaudio(L,1);
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   (void) la; /* TODO */
    return 0;
 }
 
@@ -165,6 +167,7 @@ static int audioL_new( lua_State *L )
    LuaAudio_t la;
    const char *str;
    str = luaL_checkstring(L,1);
+   (void) str; /* TODO */
    lua_pushaudio(L, la);
    return 1;
 }
@@ -173,6 +176,7 @@ static int audioL_new( lua_State *L )
 static int audioL_play( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
+   (void) la; /* TODO */
    lua_pushboolean(L,1);
    return 1;
 }
@@ -181,6 +185,7 @@ static int audioL_play( lua_State *L )
 static int audioL_pause( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
+   (void) la; /* TODO */
    return 0;
 }
 
@@ -188,6 +193,7 @@ static int audioL_pause( lua_State *L )
 static int audioL_stop( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
+   (void) la; /* TODO */
    return 0;
 }
 
@@ -196,6 +202,8 @@ static int audioL_setVolume( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    double volume = luaL_checknumber(L,2);
+   (void) la; /* TODO */
+   (void) volume; /* TODO */
    return 0;
 }
 
@@ -206,7 +214,7 @@ static int audioL_getVolume( lua_State *L )
    double volume;
    if (lua_gettop(L)>0) {
       la = luaL_checkaudio(L,1);
-      /* TODO */
+      (void) la; /* TODO */
    }
    else {
       volume = sound_getVolume();
