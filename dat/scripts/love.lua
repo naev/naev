@@ -17,6 +17,23 @@ love.basepath = ""
 function love.conf(t) end -- dummy
 function love.load() end --dummy
 
+
+--[[
+-- System
+--]]
+love.system = {}
+function love.system.getOS()
+   return "Naev"
+end
+
+
+--[[
+-- Timer
+--]]
+love.timer = {}
+love.timer._dt = 0
+love.timer._adt = 0
+love.timer._edt = 0
 -- Internal function that connects to Naev
 local function _update( dt )
    if love.keyboard._repeat then
@@ -26,10 +43,17 @@ local function _update( dt )
          end
       end
    end
-
+   love.timer._edt += dt
+   love.timer._dt = dt
+   local alpha = 0.1
+   love.timer._adt = alpha*dt + (1-alpha)*love.timer._adt
    love.update(dt)
 end
 function love.update( dt ) end -- dummy
+function love.timer.getDelta() return love.timer._dt end
+function love.timer.getAverageDelta() return love.timer._adt end
+function love.timer.getFPS() return 1/love.timer._adt end
+function love.timer.getTime() return love.timer._edt end
 
 
 --[[
