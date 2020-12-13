@@ -16,8 +16,6 @@
 
 #include "opengl.h"
 
-#define IMAGEARRAYPAD 4
-
 
 /* Render. */
 static void iar_render( Widget* iar, double bx, double by );
