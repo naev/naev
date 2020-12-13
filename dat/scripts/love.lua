@@ -262,7 +262,6 @@ function love.graphics.newImage( filename )
 end
 function love.graphics.newQuad( x, y, width, height, sw, sh )
    local q = love.graphics.Drawable.new()
-   print( type(q) )
    q.x = x/sw
    q.y = y/sw
    q.w = width/sw
