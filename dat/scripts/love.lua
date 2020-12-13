@@ -57,6 +57,13 @@ function love.timer.getTime() return love.timer._edt end
 
 
 --[[
+-- Window
+--]]
+love.window = {}
+function love.window.setMode( width, height, flags ) return end
+
+
+--[[
 -- Events
 --]]
 love.event = {}
@@ -183,6 +190,13 @@ love.graphics._dy = 0
 love.graphics._font = font.new( 12 )
 love.graphics._bgcol = colour.new( 0, 0, 0, 1 )
 love.graphics._fgcol = colour.new( 1, 1, 1, 1 )
+-- Drawable class
+love.graphics.Drawable = {}
+local __Drawable = { __index=love.graphics.Drawable }
+function love.graphics.Drawable.new()
+   return setmetatable({}, __Drawable)
+end
+function love.graphics.Drawable.setFilter( self, min, mag ) end
 local function _mode(m)
    if     m=="fill" then return false
    elseif m=="line" then return true
@@ -233,18 +247,22 @@ function love.graphics.circle( mode, x, y, radius )
    gfx.renderCircle( x, y, radius, love.graphics._fgcol, _mode(mode) )
 end
 function love.graphics.newImage( filename )
-   return tex.open( love.filesystem.newFile( filename ) )
+   local t = love.graphics.Drawable.new()
+   t.tex = tex.open( love.filesystem.newFile( filename ) )
+   return t
 end
 function love.graphics.draw( drawable, x, y, r, sx, sy )
-   local w,h = drawable:dim()
-   sx = sx or 1
-   sy = sy or sx
-   r = r or 0
-   x,y = _xy(x,y,w,h)
-   w = w*sx
-   h = h*sy
-   y = y - (h*(1-sy)) -- correct scaling
-   gfx.renderTexRaw( drawable, x, y, w, h, 1, 1, 0, 0, 1, 1, love.graphics._fgcol, r )
+   if drawable.tex ~= nil then
+      local w,h = drawable:dim()
+      sx = sx or 1
+      sy = sy or sx
+      r = r or 0
+      x,y = _xy(x,y,w,h)
+      w = w*sx
+      h = h*sy
+      y = y - (h*(1-sy)) -- correct scaling
+      gfx.renderTexRaw( drawable.tex, x, y, w, h, 1, 1, 0, 0, 1, 1, love.graphics._fgcol, r )
+   end
 end
 function love.graphics.print( text, x, y  )
    x,y = _xy(x,y,limit,love.graphics._font:height())
@@ -278,6 +296,10 @@ function love.graphics.setNewFont( file, size )
    love.graphics._font = love.graphics.newFont( file, size )
    return love.graphics._font
 end
+-- unimplemented
+function love.graphics.setDefaultFilter( min, mag, anisotropy ) end
+function love.graphics.setLineStyle( style ) end
+
 
 
 --[[
