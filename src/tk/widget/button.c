@@ -309,9 +309,9 @@ static void btn_render( Widget* btn, double bx, double by )
 
    /* set the colours */
    if (btn->dat.btn.disabled) {
-      c  = &cGrey25;
+      c  = &cGrey20;
       fc = &cFontGrey;
-      outline = &cGrey25;
+      outline = &cGrey20;
    }
    else {
       fc = &cFontGrey;
@@ -321,7 +321,7 @@ static void btn_render( Widget* btn, double bx, double by )
             c  = &cGrey30;
             break;
          case WIDGET_STATUS_MOUSEDOWN:
-            c  = &cGrey20;
+            c  = &cGrey35;
             break;
          case WIDGET_STATUS_NORMAL:
          default:
