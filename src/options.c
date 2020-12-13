@@ -1270,8 +1270,7 @@ static void opt_video( unsigned int wid )
          NULL, NULL, _("Resolution") );
    y -= 40;
    window_addInput( wid, x, y, 100, 20, "inpRes", 16, 1, NULL );
-   window_setInputFilter( wid, "inpRes",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpRes", INPUT_FILTER_RESOLUTION );
    window_addCheckbox( wid, x+20+100, y, 100, 20,
          "chkFullscreen", _("Fullscreen"), NULL, conf.fullscreen );
    y -= 30;
@@ -1331,8 +1330,7 @@ static void opt_video( unsigned int wid )
          NULL, NULL, s );
    window_addInput( wid, x+l+20, y, 40, 20, "inpFPS", 4, 1, NULL );
    toolkit_setListPos( wid, "lstRes", res_def);
-   window_setInputFilter( wid, "inpFPS",
-         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpFPS", INPUT_FILTER_NUMBER );
    nsnprintf( buf, sizeof(buf), "%d", conf.fps_max );
    window_setInput( wid, "inpFPS", buf );
    y -= 30;
