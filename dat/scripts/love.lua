@@ -338,3 +338,5 @@ function love.exec( path )
    tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
 end
 
+-- Fancy API so you can do `love = require 'love'`
+return love
