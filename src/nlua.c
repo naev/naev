@@ -486,7 +486,8 @@ static int nlua_packfileLoader( lua_State* L )
    lua_setfenv(L, -2);
 
    /* run the buffer */
-   if (lua_pcall(L, 0, 1, 0) != 0) {
+   lua_pushstring(L, filename); /* pass name as first parameter */
+   if (lua_pcall(L, 1, 1, 0) != 0) {
       /* will push the current error from the dobuffer */
       lua_error(L);
       return 1;
