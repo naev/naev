@@ -322,12 +322,19 @@ end
 --]]
 love.audio = {}
 function love.audio.newSource( filename, type )
-   return sound.load( filename, type )
+   return audio.new( filename, type )
 end
 function love.audio.setVolume( volume ) end -- Don't allow setting master volume
 function love.audio.getVolume( volume )
    return audio.getVolume()
 end
+
+
+--[[
+-- Sound
+--]]
+love.sound = {}
+function love.sound.newSoundData( filename ) end
 
 
 --[[
