@@ -1288,7 +1288,8 @@ static const glColour* gui_getPilotColour( const Pilot* p )
  */
 void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res, int overlay )
 {
-   int x, y, sx, sy;
+   int x, y;
+   double scale;
    glColour col;
 
    /* Make sure is in range. */
@@ -1305,16 +1306,11 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       y = (int)((p->solid->pos.y - player.p->solid->pos.y) / res);
    }
    /* Get size. */
-   sx = (int)(PILOT_SIZE_APROX/2. * p->ship->gfx_space->sw / res);
-   sy = (int)(PILOT_SIZE_APROX/2. * p->ship->gfx_space->sh / res);
-   if (sx < 1.)
-      sx = 1.;
-   if (sy < 1.)
-      sy = 1.;
+   scale = (double)ship_size( p->ship ) * (1. + RADAR_RES_MAX / res );
 
    /* Check if pilot in range. */
    if ( ((shape==RADAR_RECT) &&
-            ((ABS(x) > w/2+sx) || (ABS(y) > h/2.+sy)) ) ||
+            ((ABS(x) > (w+scale)/2.) || (ABS(y) > (h+scale)/2.)) ) ||
          ((shape==RADAR_CIRCLE) &&
             ((x*x+y*y) > (int)(w*w))) ) {
 
@@ -1349,13 +1345,13 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    col.a = 1.-interference_alpha;
 
    glLineWidth( 2. );
-   gl_renderTriangleEmpty( x, y, p->solid->dir, 3.*MAX(sx,sy), 1., &cBlack );
+   gl_renderTriangleEmpty( x, y, p->solid->dir, scale, 1., &cBlack );
    glLineWidth( 1. );
-   gl_renderTriangleEmpty( x, y, p->solid->dir, 3.*MAX(sx,sy), 1., &col );
+   gl_renderTriangleEmpty( x, y, p->solid->dir, scale, 1., &col );
 
    /* Draw name. */
    if (overlay && pilot_isFlag(p, PILOT_HILIGHT))
-      gl_printMarkerRaw( &gl_smallFont, x+2*sx+5., y-gl_smallFont.h/2., &col, p->name );
+      gl_printMarkerRaw( &gl_smallFont, x+scale+5., y-gl_smallFont.h/2., &col, p->name );
 }
 
 

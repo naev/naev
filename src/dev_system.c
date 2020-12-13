@@ -254,11 +254,11 @@ int dsys_saveAll (void)
  */
 int dsys_saveMap (StarSystem **uniedit_sys, int uniedit_nsys, char *fileName, char *mapName, char *mapDescription)
 {
-   int i, j, k, len;
+   int i, j, k;
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    StarSystem *s;
-   char *file, *cleanName;
+   char file[PATH_MAX];
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);
@@ -326,23 +326,13 @@ int dsys_saveMap (StarSystem **uniedit_sys, int uniedit_nsys, char *fileName, ch
    /* No need for writer anymore. */
    xmlFreeTextWriter(writer);
 
-   /* Write data. */
-   cleanName = uniedit_nameFilter( fileName );
-
-   /* DEBUG */
-   WARN("\tcleanName       : \"%s\"", cleanName);
-
-   len       = (strlen(cleanName)+22);
-   file      = malloc( len );
-   nsnprintf( file, len, "dat/outfits/maps/%s.xml", cleanName );
+   nsnprintf( file, sizeof(file), "dat/outfits/maps/%s.xml", fileName );
 
    /* Actually write data */
    xmlSaveFileEnc( file, doc, "UTF-8" );
-   free( file );
 
    /* Clean up. */
    xmlFreeDoc(doc);
-   free(cleanName);
 
    return 0;
 }

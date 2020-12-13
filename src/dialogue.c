@@ -956,12 +956,11 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
 
       while (SDL_PollEvent(&event)) { /* event loop */
          if (event.type == SDL_QUIT) { /* pass quit event to main engine */
-            if (menu_askQuit()) {
-               naev_quit();
-               *loop_done = 1;
-               SDL_PushEvent(&event);
-               return -1;
-            }
+            /* Don't do menu_askQuit here, as it can mess up lots of stuff.
+             * Just propagate the event downwards and close the dialogue. */
+            *loop_done = 1;
+            SDL_PushEvent(&event);
+            return -1;
          }
          else if (event.type == SDL_WINDOWEVENT &&
                event.window.event == SDL_WINDOWEVENT_RESIZED) {

@@ -543,27 +543,6 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 }
 
 
-char *mapedit_nameFilter( char *name )
-{
-   int i, pos;
-   char *out;
-
-   out = calloc( 1, (strlen(name)+1)  );
-   pos = 0;
-   for (i=0; i<(int)strlen(name); i++) {
-      if (!ispunct(name[i])) {
-         if (name[i] == ' ')
-            out[pos] = '_';
-         else
-            out[pos] = tolower(name[i]);
-         pos++;
-      }
-   }
-
-   return out;
-}
-
-
 /**
  * @brief Deselects selected targets.
  */
@@ -1107,17 +1086,17 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
       /* Display "name" property from "sys" node and increment number of systems found */
       systemName = xml_nodeProp( node,"name" );
       /*WARN("\t\t\t\tSystem name = \"%s\"", systemName);*/
-     
-     /* Find system */
-     found  = 0;
+
+      /* Find system */
+      found  = 0;
       for (i=0; i<systems_nstack; i++) {
          sys = system_getIndex( i );
          compareLimit = strlen(systemName);
          if (strncmp(systemName, sys->name, compareLimit)==0) {
             found = 1;
-         break;
-       }
-     }
+            break;
+         }
+      }
 
      /* If system exists, select it */
      if (found) {
