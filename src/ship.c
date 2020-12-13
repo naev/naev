@@ -334,6 +334,44 @@ glTexture* ship_loadCommGFX( Ship* s )
 
 
 /**
+ * @brief Gets the size of the ship.
+ *
+ *    @brief s Ship to get the size of.
+ * @return Size of the ship.
+ */
+int ship_size( const Ship *s )
+{
+   switch (s->class) {
+      case SHIP_CLASS_YACHT:
+      case SHIP_CLASS_LUXURY_YACHT:
+      case SHIP_CLASS_COURIER:
+      case SHIP_CLASS_SCOUT:
+      case SHIP_CLASS_FIGHTER:
+      case SHIP_CLASS_BOMBER:
+      case SHIP_CLASS_DRONE:
+         return 1;
+
+      case SHIP_CLASS_CRUISE_SHIP:
+      case SHIP_CLASS_ARMOURED_TRANSPORT:
+      case SHIP_CLASS_FREIGHTER:
+      case SHIP_CLASS_CORVETTE:
+      case SHIP_CLASS_DESTROYER:
+      case SHIP_CLASS_HEAVY_DRONE:
+         return 2;
+
+      case SHIP_CLASS_BULK_CARRIER:
+      case SHIP_CLASS_CRUISER:
+      case SHIP_CLASS_CARRIER:
+      case SHIP_CLASS_MOTHERSHIP:
+         return 3;
+
+      default:
+         return -1;
+   }
+}
+
+
+/**
  * @brief Generates a target graphic for a ship.
  */
 static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
