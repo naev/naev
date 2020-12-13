@@ -377,7 +377,7 @@ static int nlua_packfileLoader( lua_State* L )
    int envtab;
    int isconsole;
    char *buf, *q;
-   char path_filename[PATH_MAX], tmpname[PATH_MAX];
+   char path_filename[PATH_MAX], tmpname[PATH_MAX], tried_paths[STRMAX];
    const char *packagepath, *start, *end;
    int i, done;
 
@@ -432,6 +432,7 @@ static int nlua_packfileLoader( lua_State* L )
    buf = NULL;
    done = 0;
    start = packagepath;
+   tried_paths[0] = '\0';
    while (!done) {
       end = strchr( start, ';' );
       if (end == NULL) {
@@ -450,8 +451,8 @@ static int nlua_packfileLoader( lua_State* L )
       }
       start = end+1;
 
-      /* Replace all '.' before the last '/' with '/' as they are a security risk. */
-      q = strrchr( path_filename, '/' );
+      /* Replace all '.' before the last '.' with '/' as they are a security risk. */
+      q = strrchr( path_filename, '.' );
       for (i=0; i < q-path_filename; i++)
          if (path_filename[i]=='.')
             path_filename[i] = '/';
@@ -459,16 +460,19 @@ static int nlua_packfileLoader( lua_State* L )
       /* Try to load the file. */
       if (nfile_fileExists( path_filename )) {
          buf = _nfile_readFile( &bufsize, path_filename );
-         if (buf != NULL) {
+         if (buf != NULL)
             break;
-         }
       }
+
+      /* Didn't get to load it. */
+      strncat( tried_paths, "\n   ", sizeof(tried_paths)-1 );
+      strncat( tried_paths, path_filename, sizeof(tried_paths)-1 );
    }
 
 
    /* Must have buf by now. */
    if (buf == NULL) {
-      NLUA_ERROR(L, _("require: %s not found in ndata."), filename);
+      NLUA_ERROR(L, _("require: %s not found in ndata.\nTried:%s"), filename, tried_paths);
       return 1;
    }
 
