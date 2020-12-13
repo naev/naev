@@ -1325,7 +1325,7 @@ void window_render( Window *w )
    /*
     * focused widget
     */
-   if (w->focus != -1) {
+   if (w->focus != -1){
       wgt = toolkit_getFocus( w );
       if ((wgt == NULL) || wgt_isFlag(wgt, WGT_FLAG_KILL))
          return;
@@ -1333,7 +1333,7 @@ void window_render( Window *w )
       y  += wgt->y;
       wid = wgt->w;
       hei = wgt->h;
-      toolkit_drawOutlineThick( x, y, wid, hei, 3, 4, &cGrey10, NULL );
+      toolkit_drawOutlineThick( x, y, wid, hei, 0, 2, (wgt->type == WIDGET_BUTTON ? &cGrey45 : &cGrey25), NULL );
    }
 }
 
