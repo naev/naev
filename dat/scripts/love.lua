@@ -43,7 +43,7 @@ local function _update( dt )
          end
       end
    end
-   love.timer._edt = love.timer._edit + dt
+   love.timer._edt = love.timer._edt + dt
    love.timer._dt = dt
    local alpha = 0.1
    love.timer._adt = alpha*dt + (1-alpha)*love.timer._adt
@@ -203,6 +203,15 @@ local function _mode(m)
    else   error( string.format(_("Unknown fill mode '%s'"), mode ) )
    end
 end
+function love.graphics.Drawable.getDimensions( self )
+   local w,h
+   if self.tex then
+      w,h = drawable:dim()
+   else
+      error('unimplemented')
+   end
+   return w,h
+end
 local function _xy( x, y, w, h )
    return love.x+love.graphics._dx+x, love.y+(love.h-y-h-love.graphics._dy)
 end
@@ -251,17 +260,50 @@ function love.graphics.newImage( filename )
    t.tex = tex.open( love.filesystem.newFile( filename ) )
    return t
 end
-function love.graphics.draw( drawable, x, y, r, sx, sy )
+function love.graphics.newQuad( x, y, width, height, sw, sh )
+   local q = love.graphics.Drawable.new()
+   print( type(q) )
+   q.x = x/sw
+   q.y = y/sw
+   q.w = width/sw
+   q.h = height/sh
+   q.quad = true
+   return q
+end
+--function love.graphics.draw( drawable, x, y, r, sx, sy )
+function love.graphics.draw( drawable, ... )
+   local arg = {...}
    if drawable.tex ~= nil then
-      local w,h = drawable:dim()
-      sx = sx or 1
-      sy = sy or sx
-      r = r or 0
-      x,y = _xy(x,y,w,h)
+      local w,h = drawable.tex:dim()
+      local x,y,r,sx,sy,tx,ty,tw,th
+      if type(arg[1])=='table' then
+         -- quad, x, y, r, sx, sy
+         local q = arg[1]
+         x = arg[2]
+         y = arg[3]
+         r = arg[4] or 0
+         x = arg[5] or 1
+         y = arg[6] or sx
+         tx = q.x
+         ty = q.y
+         tw = q.w
+         th = q.h
+         x,y = _xy(x,y,w,h)
+      else
+         -- x, y, r, sx, sy
+         x,y = _xy(arg[1],arg[2],w,h)
+         r = arg[3] or 0
+         sx = arg[4] or 1
+         sy = arg[5] or sx
+         tx = 0
+         ty = 0
+         tw = 1
+         th = 1
+      end
       w = w*sx
       h = h*sy
       y = y - (h*(1-sy)) -- correct scaling
-      gfx.renderTexRaw( drawable.tex, x, y, w, h, 1, 1, 0, 0, 1, 1, love.graphics._fgcol, r )
+      gfx.renderTexRaw( drawable.tex, x, y, w, h, 1, 1, tx, ty, tw, th, love.graphics._fgcol, r )
    end
 end
 function love.graphics.print( text, x, y  )
