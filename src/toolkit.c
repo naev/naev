@@ -1327,7 +1327,7 @@ void window_render( Window *w )
     */
    if (w->focus != -1){
       wgt = toolkit_getFocus( w );
-      if ((wgt == NULL) || wgt_isFlag(wgt, WGT_FLAG_KILL))
+      if ((wgt == NULL) || wgt_isFlag(wgt, WGT_FLAG_KILL) || wgt->type == WIDGET_IMAGEARRAY || wgt->type == WIDGET_LIST)
          return;
       x  += wgt->x;
       y  += wgt->y;
