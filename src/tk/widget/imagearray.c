@@ -16,6 +16,8 @@
 
 #include "opengl.h"
 
+#define IMAGEARRAYPAD 4
+
 
 /* Render. */
 static void iar_render( Widget* iar, double bx, double by );
@@ -178,9 +180,9 @@ static void iar_render( Widget* iar, double bx, double by )
     * Main drawing loop.
     */
    gl_clipRect( x, y, iar->w, iar->h );
-   ycurs = y + iar->h - h + iar->dat.iar.pos;
+   ycurs = y + iar->h - h + iar->dat.iar.pos - xspace;
    for (j=0; j<yelem; j++) {
-      xcurs = x + xspace;
+      xcurs = x + floor(xspace / 2);
 
       /*  Skip rows that are wholly outside of the viewport. */
       if ((ycurs > y + iar->h) || (ycurs + h < y)) {
@@ -267,7 +269,7 @@ static void iar_render( Widget* iar, double bx, double by )
                w - 4., h - 4., 2., dc, NULL );
          xcurs += w + xspace;
       }
-      ycurs -= h;
+      ycurs -= h + (xspace);
    }
    gl_unclipRect();
 
