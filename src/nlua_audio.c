@@ -30,6 +30,8 @@ static int audioL_pause( lua_State *L );
 static int audioL_stop( lua_State *L );
 static int audioL_setVolume( lua_State *L );
 static int audioL_getVolume( lua_State *L );
+static int audioL_setLooping( lua_State *L );
+static int audioL_setPitch( lua_State *L );
 static int audioL_soundPlay( lua_State *L );
 static const luaL_Reg audioL_methods[] = {
    { "__gc", audioL_gc },
@@ -40,6 +42,8 @@ static const luaL_Reg audioL_methods[] = {
    { "stop", audioL_stop },
    { "setVolume", audioL_setVolume },
    { "getVolume", audioL_getVolume },
+   { "setLooping", audioL_setLooping },
+   { "setPitch", audioL_setPitch },
    { "soundPlay", audioL_soundPlay }, /* Old API */
    {0,0}
 }; /**< AudioLua methods. */
@@ -221,6 +225,26 @@ static int audioL_getVolume( lua_State *L )
    }
    lua_pushnumber(L, volume);
    return 1;
+}
+
+
+static int audioL_setLooping( lua_State *L )
+{
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   int b = lua_toboolean(L,2);
+   (void) la; /* TODO */
+   (void) b; /* TODO */
+   return 0;
+}
+
+
+static int audioL_setPitch( lua_State *L )
+{
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   double pitch = luaL_checknumber(L,2);
+   (void) la; /* TODO */
+   (void) pitch; /* TODO */
+   return 0;
 }
 
 
