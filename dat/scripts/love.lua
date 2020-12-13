@@ -43,7 +43,7 @@ local function _update( dt )
          end
       end
    end
-   love.timer._edt += dt
+   love.timer._edt = love.timer._edit + dt
    love.timer._dt = dt
    local alpha = 0.1
    love.timer._adt = alpha*dt + (1-alpha)*love.timer._adt
