@@ -1333,7 +1333,7 @@ void window_render( Window *w )
       y  += wgt->y;
       wid = wgt->w;
       hei = wgt->h;
-      toolkit_drawOutlineThick( x, y, wid, hei, 0, 2, (wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey25), NULL );
+      toolkit_drawOutlineThick( x, y, wid, hei, 0, 2, (wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey20), NULL );
    }
 }
 
