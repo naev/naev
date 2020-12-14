@@ -206,12 +206,34 @@ function love.image.newImageData( ... )
    local data = love.image.ImageData.new()
    data.w = w
    data.h = h
+   data.data = data.new( w*h*4, "number" )
    return data
 end
-function love.image.ImageData:setPixel( x, y, r, g, b, a )
+function love.image.Imagedata:getSize()
+   return self.data:getSize()
 end
-
-
+function love.image.Imagedata:getString()
+   return self.data:getString()
+end
+local function _id_pos(self,x,y) return 4*(y*self.w+x) end
+function love.image.Imagedata:getDimensions() return data.w, data.h end
+function love.image.Imagedata:getWidth() return data.w end
+function love.image.Imagedata:getHeight() return data.h end
+function love.image.Imagedata:getPixel( x, y )
+   local pos = _id_pos(self,x,y)
+   local r = self.data:get( pos+0 )
+   local g = self.data:get( pos+1 )
+   local b = self.data:get( pos+2 )
+   local a = self.data:get( pos+3 )
+   return r, g, b, a
+end
+function love.image.ImageData:setPixel( x, y, r, g, b, a )
+   local pos = _id_pos(self,x,y)
+   self.data:set( pos+0, r )
+   self.data:set( pos+1, g )
+   self.data:set( pos+2, b )
+   self.data:set( pos+3, a )
+end
 
 
 --[[
