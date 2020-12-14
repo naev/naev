@@ -2,9 +2,6 @@
 -- Love2d Graphics for Naev!
 --]]
 love.graphics = {}
-love.graphics._dx = 0
-love.graphics._dy = 0
-love.graphics._font = font.new( 12 )
 love.graphics._bgcol = colour.new( 0, 0, 0, 1 )
 love.graphics._fgcol = colour.new( 1, 1, 1, 1 )
 
@@ -141,10 +138,17 @@ function love.graphics.getHeight() return love.h end
 function love.graphics.origin()
    love.graphics._dx = 0
    love.graphics._dy = 0
+   love.graphics._sx = 1
+   love.graphics._sy = 1
 end
 function love.graphics.translate( dx, dy )
    love.graphics._dx = love.graphics._dx + dx
    love.graphics._dy = love.graphics._dy + dy
+end
+function love.graphics.scale( sx, sy )
+   sy = sy or sx
+   love.graphics._sx = love.graphics._sx * sx
+   love.graphics._sy = love.graphics._sy * sy
 end
 function love.graphics.getBackgroundColor() return _gcol( self.graphics._bgcol ) end
 function love.graphics.setBackgroundColor( red, green, blue, alpha )
@@ -171,11 +175,11 @@ function love.graphics.circle( mode, x, y, radius )
    gfx.renderCircle( x, y, radius, love.graphics._fgcol, _mode(mode) )
 end
 function love.graphics.print( text, x, y  )
-   x,y = _xy(x,y,limit,love.graphics._font:height())
+   x,y = _xy(x,y,limit,love.graphics._font.font:height())
    gfx.printf( love.graphics._font, text, x, y, love.graphics._fgcol )
 end
 function love.graphics.printf( text, x, y, limit, align )
-   x,y = _xy(x,y,limit,love.graphics._font:height())
+   x,y = _xy(x,y,limit,love.graphics._font.font:height())
    if align=="left" then
       gfx.printf( love.graphics._font.font, text, x, y, love.graphics._fgcol, limit, false )
    elseif align=="center" then
@@ -236,5 +240,10 @@ end
 -- unimplemented
 function love.graphics.setDefaultFilter( min, mag, anisotropy ) end
 function love.graphics.setLineStyle( style ) end
+
+
+-- Reset coordinate system
+love.graphics.setNewFont( 12 )
+love.graphics.origin()
 
 return love.graphics
