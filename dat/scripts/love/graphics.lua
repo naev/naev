@@ -94,8 +94,8 @@ function love.graphics.Image:_draw( ... )
       th = q.h
       x,y = _xy(x,y,w,h)
    end
-   w = w*sx
-   h = h*sy
+   w = w*sx --* love.graphics._sx
+   h = h*sy --* love.graphics._sy
    y = y - (h*(1-sy)) -- correct scaling
    naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, love.graphics._fgcol, r )
 end
@@ -145,6 +145,8 @@ function love.graphics.getDimensions() return love.w, love.h end
 function love.graphics.getWidth()  return love.w end
 function love.graphics.getHeight() return love.h end
 function love.graphics.origin()
+   -- TODO this translation/scaling stuff has to be done properly using
+   -- homography matrices. Probably should employ src/opengl_matrix.c
    love.graphics._dx = 0
    love.graphics._dy = 0
    love.graphics._sx = 1

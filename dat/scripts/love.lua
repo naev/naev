@@ -352,6 +352,7 @@ local function _draw( x, y, w, h )
    love.y = y
    love.w = w
    love.h = h
+   love.graphics.origin()
    naev.gfx.renderRect( x, y, w, h, love.graphics._bgcol )
    love.draw()
 end
