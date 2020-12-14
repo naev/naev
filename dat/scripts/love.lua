@@ -24,6 +24,7 @@ love._default = {
    w = 800,
    h = 600
 }
+function love._unimplemented() error(_("unimplemented")) end
 
 -- Dummy user-defined functions
 function love.conf(t) end -- dummy
@@ -95,7 +96,7 @@ function love.window.setTitle( title )
 end
 function love.window.setMode( width, height, flags )
    if love._started then
-      -- TODO
+      love._unimplemented()
    else
       love.w = width
       love.h = height
@@ -189,7 +190,9 @@ end
 function love.mouse.getX() return love.mouse.x end
 function love.mouse.getY() return love.mouse.y end
 function love.mouse.isDown( button ) return love.mouse.down[button]==true end
-function love.mouse.setVisible( visible ) end -- unused
+function love.mouse.setVisible( visible )
+   love._unimplemented()
+end
 function love.mousemoved( x, y, dx, dy, istouch ) end -- dummy
 function love.mousepressed( x, y, button, istouch ) end -- dummy
 function love.mousereleased( x, y, button, istouch ) end -- dummy
@@ -243,7 +246,7 @@ function love.image.newImageData( ... )
       local f = love.filesystem.newFile(arg[1])
       d, w, h = naev.tex.readData( f )
    else
-      error( 'unimplemented' )
+      love._unimplemented()
    end
    local newd = love.image.ImageData.new()
    newd.w = w
@@ -317,6 +320,7 @@ love.audio = {}
 love.audio.Source = inheritsFrom( love.Object )
 love.audio.Source._type = "Source"
 function love.audio.newSource( filename, type )
+   love._unimplemented()
    local s = love.audio.Source.new()
    --s.a = audio.new( filename, type )
    return s

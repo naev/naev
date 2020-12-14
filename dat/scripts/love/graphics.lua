@@ -62,7 +62,9 @@ function love.graphics.newImage( filename )
    end
    error(_('wrong parameter type'))
 end
-function love.graphics.Image:setFilter( min, mag ) end
+function love.graphics.Image:setFilter( min, mag )
+   love._unimplemented()
+end
 function love.graphics.Image:getDimensions() return self.w, self.h end
 function love.graphics.Image:getWidth() return self.w end
 function love.graphics.Image:getHeight() return self.h end
@@ -100,6 +102,7 @@ function love.graphics.Image:_draw( ... )
    naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, love.graphics._fgcol, r )
 end
 function love.graphics.Image:setWrap( horiz, vert, depth )
+   love._unimplemented()
 end
 
 
@@ -128,14 +131,22 @@ function love.graphics.newSpriteBatch( image, maxsprites, usage  )
    local batch = love.graphics.SpriteBatch.new()
    batch.image = image
    batch:clear()
+   love._unimplemented()
    return batch
 end
-function love.graphics.SpriteBatch:clear() end
-function love.graphics.SpriteBatch:setColor() end
+function love.graphics.SpriteBatch:clear()
+   love._unimplemented()
+end
+function love.graphics.SpriteBatch:setColor()
+   love._unimplemented()
+end
 function love.graphics.SpriteBatch:add( ... )
    local arg = {...}
+   love._unimplemented()
 end
-function love.graphics.SpriteBatch:_draw() end
+function love.graphics.SpriteBatch:_draw()
+   love._unimplemented()
+end
 
 
 --[[
@@ -238,6 +249,7 @@ end
 love.graphics.Shader = inheritsFrom( love.Object )
 love.graphics.Shader._type = "Shader"
 function love.graphics.newShader( code )
+   love._unimplemented()
    return love.graphics.Shader.new()
 end
 
@@ -248,14 +260,21 @@ end
 love.graphics.Canvas = inheritsFrom( love.Object )
 love.graphics.Canvas._type = "Canvas"
 function love.graphics.newCanvas( width, height, settings )
+   love._unimplemented()
    return love.graphics.Canvas.new()
 end
 
 
 -- unimplemented
-function love.graphics.setDefaultFilter( min, mag, anisotropy ) end
-function love.graphics.setLineStyle( style ) end
-function love.graphics.setBlendMode( mode ) end
+function love.graphics.setDefaultFilter( min, mag, anisotropy )
+   love._unimplemented()
+end
+function love.graphics.setLineStyle( style )
+   love._unimplemented()
+end
+function love.graphics.setBlendMode( mode )
+   love._unimplemented()
+end
 
 
 -- Reset coordinate system
