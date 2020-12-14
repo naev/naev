@@ -12,18 +12,26 @@
 
 #include "naev.h"
 
+#include "SDL.h"
+
 #include <lauxlib.h>
 
 #include "nluadef.h"
 #include "log.h"
+#include "npng.h"
 #include "ndata.h"
 #include "nlua_file.h"
 #include "nlua_data.h"
 
 
+/* Helpers. */
+static inline uint32_t getpixel(SDL_Surface *surface, int x, int y);
+
+
 /* Texture metatable methods. */
 static int texL_close( lua_State *L );
 static int texL_new( lua_State *L );
+static int texL_readData( lua_State *L );
 static int texL_dim( lua_State *L );
 static int texL_sprites( lua_State *L );
 static int texL_spriteFromDir( lua_State *L );
@@ -31,6 +39,7 @@ static const luaL_Reg texL_methods[] = {
    { "__gc", texL_close },
    { "new", texL_new },
    { "open", texL_new },
+   { "readData", texL_readData },
    { "dim", texL_dim },
    { "sprites", texL_sprites },
    { "spriteFromDir", texL_spriteFromDir },
@@ -234,6 +243,114 @@ static int texL_new( lua_State *L )
    /* Properly loaded. */
    lua_pushtex( L, tex );
    return 1;
+}
+
+
+static inline uint32_t getpixel(SDL_Surface *surface, int x, int y)
+{
+   int bpp = surface->format->BytesPerPixel;
+   /* Here p is the address to the pixel we want to retrieve */
+   uint8_t *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
+
+   switch(bpp) {
+      case 1:
+         return *p;
+         break;
+
+      case 2:
+         return *(Uint16 *)p;
+         break;
+
+      case 3:
+         if(SDL_BYTEORDER == SDL_BIG_ENDIAN)
+            return p[0] << 16 | p[1] << 8 | p[2];
+         else
+            return p[0] | p[1] << 8 | p[2] << 16;
+         break;
+
+      case 4:
+         return *(Uint32 *)p;
+         break;
+
+      default:
+         return 0;       /* shouldn't happen, but avoids warnings */
+   }
+}
+
+
+/**
+ * @brief Reads image data from a file.
+ *
+ *
+ *    @luatparam file File|string File or filename of the file to read the data from.
+ *    @luatreturn Data Data containing the image data.
+ *    @luatreturn number Width of the loaded data.
+ *    @luatreturn number Height of the loaded data.
+ * @luafunc readData( file )
+ */
+static int texL_readData( lua_State *L )
+{
+   LuaFile_t *lf;
+   LuaData_t ld;
+   SDL_Surface *surface;
+   SDL_RWops *rw;
+   npng_t *npng;
+   const char *s;
+   size_t size;
+   uint8_t r, g, b, a;
+   uint32_t pix;
+   int i, j;
+
+   s = NULL;
+   if (lua_isfile(L,1)) {
+      lf = luaL_checkfile(L,1);
+      s = lf->path;
+   }
+   else
+      s = luaL_checkstring(L,1);
+   rw = SDL_RWFromFile( s, "rb" );
+   if (rw == NULL)
+      NLUA_ERROR(L, _("problem opening file '%s' for reading"), s );
+
+   /* Try to read the png. */
+   npng = npng_open( rw );
+   if (npng == NULL)
+      NLUA_ERROR(L, _("problem opening png for reading") );
+   surface = npng_readSurface( npng, 0, 0 );
+   if (surface == NULL)
+      NLUA_ERROR(L, _("problem reading png to surface") );
+   npng_close( npng );
+
+   /* Convert surface to LuaData_t */
+   SDL_LockSurface( surface );
+   size = surface->w * surface->h;
+   ld.elem = sizeof(float);
+   ld.size = ld.elem * size * 4;
+   ld.data = calloc( ld.elem*4, size );
+   ld.type = LUADATA_NUMBER;
+   for (i=0; i<surface->h; i++) {
+      for (j=0; j<surface->w; j++) {
+         pix = getpixel( surface, j, i );
+         SDL_GetRGBA( pix, surface->format, &r, &g, &b, &a );
+         size_t pos = 4*(i*surface->w+j);
+         ld.data[ pos+0 ] = (float)r;
+         ld.data[ pos+1 ] = (float)g;
+         ld.data[ pos+2 ] = (float)b;
+         ld.data[ pos+3 ] = (float)a;
+      }
+   }
+   SDL_UnlockSurface( surface );
+
+   /* Return parameters. */
+   lua_pushdata(L, ld);
+   lua_pushinteger(L, surface->w);
+   lua_pushinteger(L, surface->h);
+
+   /* Clean up. */
+   SDL_FreeSurface( surface );
+   SDL_RWclose( rw );
+
+   return 3;
 }
 
 
