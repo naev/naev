@@ -112,6 +112,7 @@ end
 function love.window.getMode()
    return love.w, love.h, { fullscreen=false, vsync=1, resizeable=false, borderless = false, centered=true, display=1, msaa=0 }
 end
+function love.window.setFullscreen( fullscreen ) end
 
 
 --[[
