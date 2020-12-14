@@ -179,7 +179,7 @@ static int dataL_new( lua_State *L )
    NLUA_CHECKRW(L);
    if (strcmp(type,"number")==0) {
       ld.type = LUADATA_NUMBER;
-      ld.elem = sizeof(double);
+      ld.elem = sizeof(float);
       ld.size = size*ld.elem;
       ld.data = calloc( ld.elem, size );
    }
@@ -216,7 +216,7 @@ static int dataL_get( lua_State *L )
    size_t mpos = dataL_checkpos( L, ld, pos );
    switch (ld->type) {
       case LUADATA_NUMBER:
-         lua_pushnumber(L, *((double*)&ld->data[mpos]));
+         lua_pushnumber(L, *((float*)&ld->data[mpos]));
          break;
    }
    return 1;
@@ -237,7 +237,7 @@ static int dataL_set( lua_State *L )
    switch (ld->type) {
       case LUADATA_NUMBER:
          value = luaL_checknumber(L,3);
-         *((double*)&ld->data[mpos]) = value;
+         *((float*)&ld->data[mpos]) = value;
          break;
    }
    return 0;
