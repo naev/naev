@@ -80,7 +80,9 @@ function love.timer.getTime() return love.timer._edt end
 -- Window
 --]]
 love.window = {}
-function love.window.setTitle( title ) end
+function love.window.setTitle( title )
+   naev.tk.customRename( title )
+end
 function love.window.setMode( width, height, flags ) end
 function love.window.getDesktopDimensions()
    return love.w, love.h
