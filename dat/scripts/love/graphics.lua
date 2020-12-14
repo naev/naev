@@ -110,6 +110,8 @@ function love.graphics.Image:_draw( ... )
    y = y - (h*(1-sy)) -- correct scaling
    gfx.renderTexRaw( self.tex, x, y, w, h, 1, 1, tx, ty, tw, th, love.graphics._fgcol, r )
 end
+function love.graphics.Image:setWrap( horiz, vert, depth )
+end
 
 
 --[[
@@ -183,13 +185,13 @@ end
 function love.graphics.printf( text, x, y, limit, align )
    x,y = _xy(x,y,limit,love.graphics._font:height())
    if align=="left" then
-      gfx.printf( love.graphics._font, text, x, y, love.graphics._fgcol, limit, false )
+      gfx.printf( love.graphics._font.font, text, x, y, love.graphics._fgcol, limit, false )
    elseif align=="center" then
-      gfx.printf( love.graphics._font, text, x, y, love.graphics._fgcol, limit, true )
+      gfx.printf( love.graphics._font.font, text, x, y, love.graphics._fgcol, limit, true )
    elseif align=="right" then
       local w = gfx.printDim( false, text, limit )
       local off = limit-w
-      gfx.printf( love.graphics._font, text, x+off, y, love.graphics._fgcol, w, false )
+      gfx.printf( love.graphics._font.font, text, x+off, y, love.graphics._fgcol, w, false )
    end
 end
 
@@ -197,14 +199,18 @@ end
 --[[
 -- Font stuff
 --]]
+love.graphics.Font = inheritsFrom( love.Object )
+love.graphics.Font._type = "Font"
 function love.graphics.newFont( file, size )
+   local f = love.graphics.Font.new()
    if size==nil then
-      return font.new( file )
+      f.font = font.new( file )
    elseif type(file)=="userdata" then
       return file
    else
-      return font.new( file, size )
+      f.font = font.new( file, size )
    end
+   return f
 end
 function love.graphics.setFont( fnt )
    love.graphics._font = fnt
@@ -212,6 +218,26 @@ end
 function love.graphics.setNewFont( file, size )
    love.graphics._font = love.graphics.newFont( file, size )
    return love.graphics._font
+end
+
+
+--[[
+-- Shader class
+--]]
+love.graphics.Shader = inheritsFrom( love.Object )
+love.graphics.Shader._type = "Shader"
+function love.graphics.newShader( code )
+   return love.graphics.Shader.new()
+end
+
+
+--[[
+-- Canvas class
+--]]
+love.graphics.Canvas = inheritsFrom( love.Object )
+love.graphics.Canvas._type = "Canvas"
+function love.graphics.newCanvas( width, height, settings )
+   return love.graphics.Canvas.new()
 end
 
 
