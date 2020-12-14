@@ -302,6 +302,7 @@ end
 function love.audio.Source:play() return true end
 function love.audio.Source:pause() end
 function love.audio.Source:stop() end
+function love.audio.Source:isPlaying() return false end 
 function love.audio.Source:setVolume( volume ) end
 function love.audio.Source:getVolume() return audio.getVolume() end
 function love.audio.Source:setLooping( looping ) end
