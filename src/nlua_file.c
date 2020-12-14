@@ -27,6 +27,7 @@ static int fileL_new( lua_State *L );
 static int fileL_open( lua_State *L );
 static int fileL_close( lua_State *L );
 static int fileL_read( lua_State *L );
+static int fileL_write( lua_State *L );
 static int fileL_seek( lua_State *L );
 static int fileL_name( lua_State *L );
 static int fileL_mode( lua_State *L );
@@ -40,6 +41,7 @@ static const luaL_Reg fileL_methods[] = {
    { "open", fileL_open },
    { "close", fileL_close },
    { "read", fileL_read },
+   { "write", fileL_write },
    { "seek", fileL_seek },
    { "getFilename", fileL_name },
    { "getMode", fileL_mode },
@@ -208,13 +210,6 @@ static int fileL_open( lua_State *L )
    lf = luaL_checkfile(L,1);
    mode = luaL_checkstring(L,2);
 
-   if ((strlen(mode)!=1) || (strlen(mode)>0 &&
-         mode[0]!='r' && mode[0]!='w' && mode[0]!='a')) {
-      lua_pushboolean(L,0);
-      lua_pushstring(L, _("Mode must be either 'r', 'w', or 'a'"));
-      return 2;
-   }
-  
    lf->rw = SDL_RWFromFile( lf->path, mode );
    if (lf->rw == NULL) {
       lua_pushboolean(L,0);
@@ -264,16 +259,11 @@ static int fileL_read( lua_State *L )
    size_t readlen, len;
    char *buf;
 
-   if (lf->rw == NULL) {
-      lua_pushstring(L, _("file not open for reading!"));
-      lua_error(L);
-   }
+   if (lf->rw == NULL)
+      NLUA_ERROR(L, _("file not open!"));
 
    /* Figure out how much to read. */
-   if (lua_gettop(L)>1)
-      readlen = lua_tointeger(L,2);
-   else
-      readlen = (size_t)lf->rw->size;
+   readlen = luaL_optlong(L,2,(long)lf->rw->size);
 
    /* Create buffer and read into it. */
    buf = malloc( readlen );
@@ -282,6 +272,38 @@ static int fileL_read( lua_State *L )
    lua_pushlstring(L,buf,len);
    lua_pushinteger(L,len);
    return 2;
+}
+
+
+/**
+ * @brief Reads from an open file.
+ *
+ *    @luatparam File file File to write to.
+ *    @luatparam string data Data to write.
+ *    @luatparam[opt] number bytes Number of bytes to write.
+ * @luafunc write( file, data, bytes )
+ */
+static int fileL_write( lua_State *L )
+{
+   LuaFile_t *lf = luaL_checkfile(L,1);
+   size_t write, wrote, len;
+   const char *buf;
+
+   if (lf->rw == NULL)
+      NLUA_ERROR(L, _("file not open!"));
+
+   buf   = luaL_checklstring(L,2,&len);
+   write = luaL_optlong(L,3,len);
+
+   wrote = SDL_RWwrite( lf->rw, buf, 1, write );
+   if (wrote != write) {
+      lua_pushboolean(L,0);
+      lua_pushstring(L, SDL_GetError());
+      return 2;
+   }
+
+   lua_pushboolean(L,1);
+   return 1;
 }
 
 
