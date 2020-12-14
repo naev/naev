@@ -490,6 +490,27 @@ int window_existsID( const unsigned int wid )
 
 
 /**
+ * @brief Sets the displayname of a window.
+ *
+ *    @param wid ID of the window.
+ *    @param displayname Display name to set to.
+ *    @return 0 on success.
+ */
+int window_setDisplayname( const unsigned int wid, const char *displayname )
+{
+   Window *wdw = window_wget(wid);
+   if (wdw == NULL)
+      return -1;
+   if (wdw->displayname!=NULL)
+      free(wdw->displayname);
+   wdw->displayname = NULL;
+   if (displayname != NULL)
+      wdw->displayname  = strdup(displayname);
+   return 0;
+}
+
+
+/**
  * @brief Gets the ID of a window.
  *
  *    @param wdwname Name of the window to get ID of.
