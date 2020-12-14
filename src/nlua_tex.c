@@ -213,24 +213,21 @@ static int texL_new( lua_State *L )
       NLUA_ERROR( L, _("Spritesheet dimensions must be positive") );
 
    /* Push new texture. */
-   if ((sx <=0 ) || (sy <= 0)) {
-      if (path != NULL)
-         tex = gl_newImage( path, 0 );
-      else {
-         isopen = (lf->rw != NULL);
-         if (!isopen)
-            lf->rw =  SDL_RWFromFile( lf->path, "r" );
-         if (lf->rw==NULL)
-            NLUA_ERROR(L, _("Unable to open '%s' to load texture"), lf->path);
-         tex = gl_newImageRWops( lf->path, lf->rw, 0 );
-         if (!isopen) {
-            SDL_RWclose( lf->rw );
-            lf->rw = NULL;
-         }
+   if (path != NULL)
+      tex = gl_newSprite( path, sx, sy, 0 );
+   else {
+      isopen = (lf->rw != NULL);
+      if (!isopen)
+         lf->rw =  SDL_RWFromFile( lf->path, "r" );
+      if (lf->rw==NULL)
+         NLUA_ERROR(L, _("Unable to open '%s' to load texture"), lf->path);
+      tex = gl_newSpriteRWops( lf->path, lf->rw, sx, sy, 0 );
+      if (!isopen) {
+         SDL_RWclose( lf->rw );
+         lf->rw = NULL;
       }
    }
-   else
-      tex = gl_newSprite( path, sx, sy, 0 );
+
    /* Failed to load. */
    if (tex == NULL)
       return 0;
