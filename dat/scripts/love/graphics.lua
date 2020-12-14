@@ -208,10 +208,14 @@ love.graphics.Font._type = "Font"
 function love.graphics.newFont( file, size )
    local f = love.graphics.Font.new()
    if size==nil then
+      if type(file)=="string" then
+         file = love.filesystem.newFile( file ):getFilename()
+      end
       f.font = naev.font.new( file )
    elseif type(file)=="userdata" then
       return file
    else
+      file = love.filesystem.newFile( file ):getFilename()
       f.font = naev.font.new( file, size )
    end
    return f
