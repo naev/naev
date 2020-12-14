@@ -203,17 +203,17 @@ function love.image.newImageData( ... )
    local arg = {...}
    local w = arg[1]
    local h = arg[2]
-   local data = love.image.ImageData.new()
-   data.w = w
-   data.h = h
-   data.d = data.new( w*h*4, "number" )
-   return data
+   local newd = love.image.ImageData.new()
+   newd.w = w
+   newd.h = h
+   newd.d = data.new( w*h*4, "number" )
+   return newd
 end
 function love.image.ImageData:getSize()
-   return self.data:getSize()
+   return self.d:getSize()
 end
 function love.image.ImageData:getString()
-   return self.data:getString()
+   return self.d:getString()
 end
 local function _id_pos(self,x,y) return 4*(y*self.w+x) end
 function love.image.ImageData:getDimensions() return data.w, data.h end

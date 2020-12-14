@@ -54,7 +54,7 @@ function love.graphics.newImage( filename )
    elseif type(filename)=='table' and filename.type then
       local ot = filename:type()
       if ot=='ImageData' then
-         ttex = tex.open( filename.data, filename.w, filename,h )
+         ttex = tex.open( filename.d, filename.w, filename.h )
       end
    end
    if ttex ~= nil then
