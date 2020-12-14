@@ -189,6 +189,7 @@ static void iar_render( Widget* iar, double bx, double by )
       }
 
       for (i=0; i<xelem; i++) {
+         xcurs += (xspace / 2);
 
          /* Get position. */
          pos = j*xelem + i;
@@ -265,7 +266,7 @@ static void iar_render( Widget* iar, double bx, double by )
          toolkit_drawOutline( xcurs + 2.,
                ycurs + 2.,
                w - 4., h - 4., 2., dc, NULL );
-         xcurs += w + xspace;
+         xcurs += w + (xspace / 2);
       }
       ycurs -= h + (xspace);
    }
