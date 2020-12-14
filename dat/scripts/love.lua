@@ -11,11 +11,24 @@ love.start()
 """
 
 --]]
+require 'class'
+
 love = {}
 love.basepath = ""
+love._version_major = 11
+love._version_minor = 1
+love._version_patch = 3
 
+-- Dummy user-defined functions
 function love.conf(t) end -- dummy
 function love.load() end --dummy
+
+--[[
+-- Base
+--]]
+function love.getVersion()
+   return love._version_major, love._version_minor, love._version_patch
+end
 
 
 --[[
@@ -137,6 +150,7 @@ end
 function love.mouse.getX() return love.mouse.x end
 function love.mouse.getY() return love.mouse.y end
 function love.mouse.isDown( button ) return love.mouse.down[button]==true end
+function love.mouse.setVisible( visible ) end -- unused
 function love.mousemoved( x, y, dx, dy, istouch ) end -- dummy
 function love.mousepressed( x, y, button, istouch ) end -- dummy
 function love.mousereleased( x, y, button, istouch ) end -- dummy
@@ -190,40 +204,15 @@ love.graphics._dy = 0
 love.graphics._font = font.new( 12 )
 love.graphics._bgcol = colour.new( 0, 0, 0, 1 )
 love.graphics._fgcol = colour.new( 1, 1, 1, 1 )
--- Drawable class
-love.graphics.Drawable = {}
-local __Drawable = { __index=love.graphics.Drawable }
-function love.graphics.Drawable.new()
-   return setmetatable({}, __Drawable)
-end
-function love.graphics.Drawable.setFilter( self, min, mag ) end
+-- Helper functions
 local function _mode(m)
    if     m=="fill" then return false
    elseif m=="line" then return true
    else   error( string.format(_("Unknown fill mode '%s'"), mode ) )
    end
 end
-function love.graphics.Drawable.getDimensions( self )
-   local w,h
-   if self.tex then
-      w,h = drawable:dim()
-   else
-      error('unimplemented')
-   end
-   return w,h
-end
 local function _xy( x, y, w, h )
    return love.x+love.graphics._dx+x, love.y+(love.h-y-h-love.graphics._dy)
-end
-function love.graphics.getWidth()  return love.w end
-function love.graphics.getHeight() return love.h end
-function love.graphics.origin()
-   love.graphics._dx = 0
-   love.graphics._dy = 0
-end
-function love.graphics.translate( dx, dy )
-   love.graphics._dx = love.graphics._dx + dx
-   love.graphics._dy = love.graphics._dy + dy
 end
 local function _gcol( c )
    local r, g, b = c:rgb()
@@ -238,6 +227,90 @@ local function _scol( r, g, b, a )
       r = r[1]
    end
    return colour.new( r, g, b, a or 1 )
+end
+-- Drawable class
+love.graphics.Drawable = inheritsFrom( nil )
+function love.graphics.Drawable:getDimensions() error('unimplemented') end
+-- Image class
+love.graphics.Image = inheritsFrom( love.graphics.Drawable )
+function love.graphics.newImage( filename )
+   local t = love.graphics.Image.new()
+   t.tex = tex.open( love.filesystem.newFile( filename ) )
+   return t
+end
+function love.graphics.Image:setFilter( min, mag ) end
+function love.graphics.Image:getDimensions()
+   local w,h = self.tex:dim()
+   return w,h
+end
+function love.graphics.Image:getWidth()
+   local w,h = self.tex:dim()
+   return w
+end
+function love.graphics.Image:getHeight()
+   local w,h = self.tex:dim()
+   return h
+end
+function love.graphics.Image:_draw( ... )
+   local arg = {...}
+   local w,h = self.tex:dim()
+   local x,y,r,sx,sy,tx,ty,tw,th
+   if type(arg[1])=='number' then
+      -- x, y, r, sx, sy
+      x,y = _xy(arg[1],arg[2],w,h)
+      r = arg[3] or 0
+      sx = arg[4] or 1
+      sy = arg[5] or sx
+      tx = 0
+      ty = 0
+      tw = 1
+      th = 1
+   else
+      -- quad, x, y, r, sx, sy
+      local q = arg[1]
+      x = arg[2]
+      y = arg[3]
+      r = arg[4] or 0
+      x = arg[5] or 1
+      y = arg[6] or sx
+      tx = q.x
+      ty = q.y
+      tw = q.w
+      th = q.h
+      x,y = _xy(x,y,w,h)
+   end
+   w = w*sx
+   h = h*sy
+   y = y - (h*(1-sy)) -- correct scaling
+   gfx.renderTexRaw( self.tex, x, y, w, h, 1, 1, tx, ty, tw, th, love.graphics._fgcol, r )
+end
+-- Quad class
+love.graphics.Quad = inheritsFrom( love.graphics.Drawable )
+function love.graphics.newQuad( x, y, width, height, sw, sh )
+   local q = love.graphics.Drawable.new()
+   q.x = x/sw
+   q.y = y/sw
+   q.w = width/sw
+   q.h = height/sh
+   q.quad = true
+   return q
+end
+-- SpriteBatch class
+love.graphics.SpriteBatch = inheritsFrom( love.graphics.Drawable )
+function love.graphics.newSpriteBatch( image, maxsprites, usage  )
+   local batch = love.graphics.Drawable.new()
+   return batch
+end
+-- Other classes
+function love.graphics.getWidth()  return love.w end
+function love.graphics.getHeight() return love.h end
+function love.graphics.origin()
+   love.graphics._dx = 0
+   love.graphics._dy = 0
+end
+function love.graphics.translate( dx, dy )
+   love.graphics._dx = love.graphics._dx + dx
+   love.graphics._dy = love.graphics._dy + dy
 end
 function love.graphics.getBackgroundColor() return _gcol( self.graphics._bgcol ) end
 function love.graphics.setBackgroundColor( red, green, blue, alpha )
@@ -255,55 +328,9 @@ function love.graphics.circle( mode, x, y, radius )
    x,y = _xy(x,y,0,0)
    gfx.renderCircle( x, y, radius, love.graphics._fgcol, _mode(mode) )
 end
-function love.graphics.newImage( filename )
-   local t = love.graphics.Drawable.new()
-   t.tex = tex.open( love.filesystem.newFile( filename ) )
-   return t
-end
-function love.graphics.newQuad( x, y, width, height, sw, sh )
-   local q = love.graphics.Drawable.new()
-   q.x = x/sw
-   q.y = y/sw
-   q.w = width/sw
-   q.h = height/sh
-   q.quad = true
-   return q
-end
 --function love.graphics.draw( drawable, x, y, r, sx, sy )
 function love.graphics.draw( drawable, ... )
-   local arg = {...}
-   if drawable.tex ~= nil then
-      local w,h = drawable.tex:dim()
-      local x,y,r,sx,sy,tx,ty,tw,th
-      if type(arg[1])=='table' then
-         -- quad, x, y, r, sx, sy
-         local q = arg[1]
-         x = arg[2]
-         y = arg[3]
-         r = arg[4] or 0
-         x = arg[5] or 1
-         y = arg[6] or sx
-         tx = q.x
-         ty = q.y
-         tw = q.w
-         th = q.h
-         x,y = _xy(x,y,w,h)
-      else
-         -- x, y, r, sx, sy
-         x,y = _xy(arg[1],arg[2],w,h)
-         r = arg[3] or 0
-         sx = arg[4] or 1
-         sy = arg[5] or sx
-         tx = 0
-         ty = 0
-         tw = 1
-         th = 1
-      end
-      w = w*sx
-      h = h*sy
-      y = y - (h*(1-sy)) -- correct scaling
-      gfx.renderTexRaw( drawable.tex, x, y, w, h, 1, 1, tx, ty, tw, th, love.graphics._fgcol, r )
-   end
+   drawable:_draw( ... )
 end
 function love.graphics.print( text, x, y  )
    x,y = _xy(x,y,limit,love.graphics._font:height())
@@ -340,7 +367,6 @@ end
 -- unimplemented
 function love.graphics.setDefaultFilter( min, mag, anisotropy ) end
 function love.graphics.setLineStyle( style ) end
-
 
 
 --[[
@@ -401,10 +427,10 @@ function love.exec( path )
    else
       local npath = path..".lua" 
       info = love.filesystem.getInfo( npath )
-      if info.type == "file" then
+      if info and info.type == "file" then
          require( path )
       else
-         error( string.format( _("'%s' is not a valid love2d game!", path) ) )
+         error( string.format( _("'%s' is not a valid love2d game!"), path) )
       end
    end
 
