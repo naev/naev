@@ -181,7 +181,8 @@ static void info_close( unsigned int wid, char* str )
  */
 void info_update (void)
 {
-   weapons_genList( info_windows[ INFO_WIN_WEAP ] );
+   if (info_windows != NULL)
+      weapons_genList( info_windows[ INFO_WIN_WEAP ] );
 }
 
 
@@ -505,6 +506,7 @@ static void info_openWeapons( unsigned int wid )
    /* Custom widget. */
    equipment_slotWidget( wid, 20, -40, 180, h-60, &info_eq_weaps );
    info_eq_weaps.selected  = player.p;
+   info_eq_weaps.weapons = 0;
    info_eq_weaps.canmodify = 0;
 
    /* Custom widget for legend. */
@@ -596,6 +598,8 @@ static void weapons_update( unsigned int wid, char *str )
 
    /* Update the position. */
    pos = toolkit_getListPos( wid, "lstWeapSets" );
+   if (pos < 0)
+      return;
    info_eq_weaps.weapons = pos;
 
    /* Update fire mode. */
