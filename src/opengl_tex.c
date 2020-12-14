@@ -838,6 +838,36 @@ glTexture* gl_newSprite( const char* path, const int sx, const int sy,
 
 
 /**
+ * @brief Loads the texture immediately, but also sets it as a sprite.
+ *
+ *    @param path Image name for deduplication.
+ *    @param rw SDL_RWops structure to load for.
+ *    @param sx Number of X sprites in image.
+ *    @param sy Number of Y sprites in image.
+ *    @param flags Flags to control image parameters.
+ *    @return Texture loaded.
+ */
+glTexture* gl_newSpriteRWops( const char* path, SDL_RWops *rw,
+   const int sx, const int sy, const unsigned int flags )
+{
+   glTexture* texture;
+   texture = gl_newImageRWops( path, rw, flags );
+   if (texture == NULL)
+      return NULL;
+
+   /* will possibly overwrite an existing textur properties
+    * so we have to load same texture always the same sprites */
+   texture->sx    = (double) sx;
+   texture->sy    = (double) sy;
+   texture->sw    = texture->w / texture->sx;
+   texture->sh    = texture->h / texture->sy;
+   texture->srw   = texture->sw / texture->rw;
+   texture->srh   = texture->sh / texture->rh;
+   return texture;
+}
+
+
+/**
  * @brief Frees a texture.
  *
  *    @param texture Texture to free.
