@@ -80,7 +80,17 @@ function love.timer.getTime() return love.timer._edt end
 -- Window
 --]]
 love.window = {}
-function love.window.setMode( width, height, flags ) return end
+function love.window.setTitle( title ) end
+function love.window.setMode( width, height, flags ) end
+function love.window.getDesktopDimensions()
+   return love.w, love.h
+end
+function love.window.getDPIScale()
+   return 1
+end
+function love.window.getMode()
+   return love.w, love.h, { fullscreen=false, vsync=1, resizeable=false, borderless = false, centered=true, display=1, msaa=0 }
+end
 
 
 --[[
@@ -334,17 +344,18 @@ function love.draw() end -- dummy
 package.path = package.path..string.format(";?.lua", path)
 function love.exec( path )
    local info = love.filesystem.getInfo( path )
+   local confpath, mainpath
    if info then
       if info.type == "directory" then
          love.basepath = path.."/" -- Allows loading files relatively
          package.path = package.path..string.format(";%s/?.lua", path)
          -- Run conf if exists
          if love.filesystem.getInfo( path.."/conf.lua" ) ~= nil then
-            require( path.."/conf" )
+            confpath = path.."/conf"
          end
-         require( path.."/main" )
+         mainpath = path.."/main"
       elseif info.type == "file" then
-         require( path )
+         mainpath = path
       else
          error( string.format( _("'%s' is an unknown filetype '%s'", path, info.type) ) )
       end
@@ -352,7 +363,7 @@ function love.exec( path )
       local npath = path..".lua"
       info = love.filesystem.getInfo( npath )
       if info and info.type == "file" then
-         require( path )
+         mainpath = path
       else
          error( string.format( _("'%s' is not a valid love2d game!"), path) )
       end
@@ -368,6 +379,9 @@ function love.exec( path )
    t.modules = {}
 
    -- Configure
+   if confpath ~= nil then
+      require( confpath )
+   end
    love.conf(t)
 
    -- Set properties
@@ -376,6 +390,7 @@ function love.exec( path )
    love.h = t.window.height
 
    -- Run set up function defined in Love2d spec
+   require( mainpath )
    love.load()
 
    -- Actually run in Naev
