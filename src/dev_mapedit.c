@@ -119,6 +119,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str );
 void mapedit_saveMapMenu_open (void);
 static void mapedit_saveMapMenu_save( unsigned int wdw, char *str );
 static void mapedit_saveMapMenu_update( unsigned int wdw, char *str );
+static int mapedit_saveMap( StarSystem **uniedit_sys, int uniedit_nsys, char *fileName, char *mapName, char *mapDescription );
 /* Management of last loaded/saved Map file. */
 void mapedit_setGlobalLoadedInfos (int nSys, char *sFileName, char *sMapName, char *sDescription);
 /* Management of Map files list. */
@@ -1016,7 +1017,7 @@ static void mapedit_saveMapMenu_save( unsigned int wdw, char *str )
    /* Getting description from input box */
    sDescription = window_getInput( wdw, "inpDescription" );
 
-   dsys_saveMap(mapedit_sys, mapedit_nsys, sFileName, sMapName, sDescription);
+   mapedit_saveMap(mapedit_sys, mapedit_nsys, sFileName, sMapName, sDescription);
 
    mapedit_setGlobalLoadedInfos ( mapedit_nsys, sFileName, sMapName, sDescription);
 
@@ -1214,4 +1215,95 @@ static void mapsList_free (void)
    if (mapedit_sLoadMapName != NULL)
       free( mapedit_sLoadMapName );
    mapedit_sLoadMapName = NULL;
+}
+
+
+/**
+ * @brief Saves selected systems as a map outfit file.
+ *
+ *    @return 0 on success.
+ */
+static int mapedit_saveMap( StarSystem **uniedit_sys, int uniedit_nsys, char *fileName, char *mapName, char *mapDescription )
+{
+   int i, j, k;
+   xmlDocPtr doc;
+   xmlTextWriterPtr writer;
+   StarSystem *s;
+   char file[PATH_MAX];
+
+   /* Create the writer. */
+   writer = xmlNewTextWriterDoc(&doc, 0);
+   if (writer == NULL) {
+      WARN(_("testXmlwriterDoc: Error creating the xml writer"));
+      return -1;
+   }
+
+   /* Set the writer parameters. */
+   xmlw_setParams( writer );
+
+   /* Start writer. */
+   xmlw_start(writer);
+   xmlw_startElem( writer, "outfit" );
+
+   /* Attributes. */
+   xmlw_attr( writer, "name", "%s", mapName );
+
+   /* General. */
+   xmlw_startElem( writer, "general" );
+   xmlw_elem( writer, "mass", "%d", 0 );
+   xmlw_elem( writer, "price", "%d", 1000 );
+   xmlw_elem( writer, "description", "%s", mapDescription );
+   xmlw_elem( writer, "gfx_store", "%s", "map" );
+   xmlw_endElem( writer ); /* "general" */
+
+   xmlw_startElem( writer, "specific" );
+   xmlw_attr( writer, "type", "map" );
+
+   /* Iterate over all selected systems. Save said systems and any NORMAL jumps they might share. */
+   for (i = 0; i < uniedit_nsys; i++) {
+      s = uniedit_sys[i];
+      xmlw_startElem( writer, "sys" );
+      xmlw_attr( writer, "name", "%s", s->name );
+
+      /* Iterate jumps and see if they lead to any other systems in our array. */
+      for (j = 0; j < s->njumps; j++) {
+         /* Ignore hidden and exit-only jumps. */
+         if (jp_isFlag(&s->jumps[j], JP_EXITONLY ))
+            continue;
+         if (jp_isFlag(&s->jumps[j], JP_HIDDEN))
+            continue;
+         /* This is a normal jump. */
+         for (k = 0; k < uniedit_nsys; k++) {
+            if (s->jumps[j].target == uniedit_sys[k]) {
+               xmlw_elem( writer, "jump", "%s", uniedit_sys[k]->name );
+               break;
+            }
+         }
+      }
+
+      /* Iterate assets and add them */
+      for (j = 0; j < s->nplanets; j++) {
+         if (s->planets[j]->real)
+            xmlw_elem( writer, "asset", "%s", s->planets[j]->name );
+      }
+
+      xmlw_endElem( writer ); /* "sys" */
+   }
+
+   xmlw_endElem( writer ); /* "specific" */
+   xmlw_endElem( writer ); /* "outfit" */
+   xmlw_done(writer);
+
+   /* No need for writer anymore. */
+   xmlFreeTextWriter(writer);
+
+   nsnprintf( file, sizeof(file), "dat/outfits/maps/%s.xml", fileName );
+
+   /* Actually write data */
+   xmlSaveFileEnc( file, doc, "UTF-8" );
+
+   /* Clean up. */
+   xmlFreeDoc(doc);
+
+   return 0;
 }
