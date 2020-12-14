@@ -56,6 +56,7 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y );
 static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h );
 static size_t gl_transSize( const int w, const int h );
 /* glTexture */
+static GLuint gl_texParameters( unsigned int flags );
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags, int freesur );
 static glTexture* gl_loadNewImage( const char* path, unsigned int flags );
 static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const unsigned int flags );
@@ -216,6 +217,39 @@ static size_t gl_transSize( const int w, const int h )
 
 
 /**
+ * @brief Sets default texture parameters.
+ */
+static GLuint gl_texParameters( unsigned int flags )
+{
+   GLuint texture;
+
+   /* opengl texture binding */
+   glGenTextures( 1, &texture ); /* Creates the texture */
+   glBindTexture( GL_TEXTURE_2D, texture ); /* Loads the texture */
+
+   /* Filtering, LINEAR is better for scaling, nearest looks nicer, LINEAR
+    * also seems to create a bit of artifacts around the edges */
+   if ((gl_screen.scale != 1.) || (flags & OPENGL_TEX_MIPMAPS)) {
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+   }
+   else {
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+   }
+
+   /* Always wrap just in case. */
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+   /* Check errors. */
+   gl_checkErr();
+
+   return texture;
+}
+
+
+/**
  * @brief Prepares the surface to be loaded as a texture.
  *
  *    @param surface to load that is freed in the process.
@@ -284,6 +318,65 @@ int gl_texHasCompress (void)
    return conf.compress;
 }
 
+
+glTexture* gl_loadImageData( float *data, int w, int h, int pitch, int sx, int sy )
+{
+   int potw,poth, rw,rh;
+   float *datapot;
+   int i, j;
+   glTexture *texture;
+
+   /* Check if pot. */
+   datapot = NULL;
+   potw = gl_pot(w);
+   poth = gl_pot(h);
+   rw = w;
+   rh = h;
+   if (gl_needPOT() && ((w!=potw) || h!=poth)) {
+      rw = potw;
+      rh = poth;
+      datapot = calloc( sizeof(float), potw*poth );
+      for (i=0; i<h; i++)
+         for (j=0; j<w; j++)
+            datapot[ i*potw+j ] = data[ i*pitch+j ];
+   }
+
+   /* Set up the texture defaults */
+   texture = calloc( 1, sizeof(glTexture) );
+
+   texture->w     = (double) w;
+   texture->h     = (double) h;
+   texture->sx    = (double) sx;
+   texture->sy    = (double) sy;
+
+   /* Set up texture. */
+   texture->texture = gl_texParameters( 0 );
+
+   /* Copy over. */
+   if (datapot!=NULL)
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, potw, poth, 0, GL_RGBA, GL_FLOAT, datapot );
+   else
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_FLOAT, data );
+
+   /* Check errors. */
+   gl_checkErr();
+
+   /* Set up values. */
+   texture->rw    = (double) rw;
+   texture->rh    = (double) rh;
+   texture->sw    = texture->w / texture->sx;
+   texture->sh    = texture->h / texture->sy;
+   texture->srw   = texture->sw / texture->rw;
+   texture->srh   = texture->sh / texture->rh;
+
+   /* Clean up. */
+   if (datapot!=NULL)
+      free(datapot);
+
+   return texture;
+}
+
+
 /**
  * @brief Loads a surface into an opengl texture.
  *
@@ -306,24 +399,8 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
    if (rh != NULL)
       (*rh) = surface->h;
 
-   /* opengl texture binding */
-   glGenTextures( 1, &texture ); /* Creates the texture */
-   glBindTexture( GL_TEXTURE_2D, texture ); /* Loads the texture */
-
-   /* Filtering, LINEAR is better for scaling, nearest looks nicer, LINEAR
-    * also seems to create a bit of artifacts around the edges */
-   if ((gl_screen.scale != 1.) || (flags & OPENGL_TEX_MIPMAPS)) {
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-   }
-   else {
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-   }
-
-   /* Always wrap just in case. */
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+   /* Get texture. */
+   texture = gl_texParameters( flags );
 
    /* now lead the texture data up */
    SDL_LockSurface( surface );
