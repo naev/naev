@@ -87,7 +87,7 @@ function love.window.setMode( width, height, flags ) return end
 -- Events
 --]]
 love.event = {}
-function love.event.quit( exitstatus ) tk.customDone() end
+function love.event.quit( exitstatus ) naev.tk.customDone() end
 
 
 --[[
@@ -95,12 +95,12 @@ function love.event.quit( exitstatus ) tk.customDone() end
 --]]
 love.filesystem = {}
 function love.filesystem.getInfo( path, filtertype )
-   local ftype = file.filetype( path )
+   local ftype = naev.file.filetype( path )
    if ftype == "directory" then
       return { type = ftype }
    elseif ftype == "file" then
       local info = { type = ftype }
-      local f = file.new( path )
+      local f = naev.file.new( path )
       f:open('r')
       info.size = f:getSize()
       f:close()
@@ -109,10 +109,10 @@ function love.filesystem.getInfo( path, filtertype )
    return nil
 end
 function love.filesystem.newFile( filename )
-   return file.new( love.basepath..filename )
+   return naev.file.new( love.basepath..filename )
 end
 function love.filesystem.read( name, size )
-   local f = file.new( name )
+   local f = naev.file.new( name )
    f:open('r')
    local buf,len
    if size then
@@ -179,7 +179,7 @@ local function _keyboard( pressed, key, mod )
       love.keyreleased( k, k )
    end
    if key == "Q" then
-      tk.customDone()
+      naev.tk.customDone()
    end
    return true
 end
@@ -209,7 +209,7 @@ function love.image.newImageData( ... )
       d = data.new( w*h*4, "number" )
    elseif t=="string" then
       local f = love.filesystem.newFile(arg[1])
-      d, w, h = tex.readData( f )
+      d, w, h = naev.tex.readData( f )
    else
       error( 'unimplemented' )
    end
@@ -269,11 +269,11 @@ function love.math.RandomGenerator:random( min, max )
 end
 function love.math.random( min, max )
    if min == nil then
-      return rnd.rnd()
+      return naev.rnd.rnd()
    elseif max == nil then
-      return rnd.rnd( min-1 )+1
+      return naev.rnd.rnd( min-1 )+1
    else
-      return rnd.rnd( min, max )
+      return naev.rnd.rnd( min, max )
    end
 end
 
@@ -321,7 +321,7 @@ local function _draw( x, y, w, h )
    love.y = y
    love.w = w
    love.h = h
-   gfx.renderRect( x, y, w, h, love.graphics._bgcol )
+   naev.gfx.renderRect( x, y, w, h, love.graphics._bgcol )
    love.draw()
 end
 love.graphics = require 'love/graphics'
@@ -379,7 +379,10 @@ function love.exec( path )
    love.load()
 
    -- Actually run in Naev
-   tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
+   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
+
+   -- Should probably reset libraries if they were crushed here. Probably better way of doing this.
+   font = naev.font
 end
 
 -- Fancy API so you can do `love = require 'love'`

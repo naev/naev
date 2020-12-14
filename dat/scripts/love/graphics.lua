@@ -47,11 +47,11 @@ love.graphics.Image._type = "Image"
 function love.graphics.newImage( filename )
    local ttex
    if type(filename)=='string' then
-      ttex = tex.open( love.filesystem.newFile( filename ) )
+      ttex = naev.tex.open( love.filesystem.newFile( filename ) )
    elseif type(filename)=='table' and filename.type then
       local ot = filename:type()
       if ot=='ImageData' then
-         ttex = tex.open( filename.d, filename.w, filename.h )
+         ttex = naev.tex.open( filename.d, filename.w, filename.h )
       end
    end
    if ttex ~= nil then
@@ -97,7 +97,7 @@ function love.graphics.Image:_draw( ... )
    w = w*sx
    h = h*sy
    y = y - (h*(1-sy)) -- correct scaling
-   gfx.renderTexRaw( self.tex, x, y, w, h, 1, 1, tx, ty, tw, th, love.graphics._fgcol, r )
+   naev.gfx.renderTexRaw( self.tex, x, y, w, h, 1, 1, tx, ty, tw, th, love.graphics._fgcol, r )
 end
 function love.graphics.Image:setWrap( horiz, vert, depth )
 end
@@ -168,26 +168,26 @@ function love.graphics.draw( drawable, ... )
 end
 function love.graphics.rectangle( mode, x, y, width, height )
    x,y = _xy(x,y,width,height)
-   gfx.renderRect( x, y, width, height, love.graphics._fgcol, _mode(mode) )
+   naev.gfx.renderRect( x, y, width, height, love.graphics._fgcol, _mode(mode) )
 end
 function love.graphics.circle( mode, x, y, radius )
    x,y = _xy(x,y,0,0)
-   gfx.renderCircle( x, y, radius, love.graphics._fgcol, _mode(mode) )
+   naev.gfx.renderCircle( x, y, radius, love.graphics._fgcol, _mode(mode) )
 end
 function love.graphics.print( text, x, y  )
    x,y = _xy(x,y,limit,love.graphics._font.font:height())
-   gfx.printf( love.graphics._font, text, x, y, love.graphics._fgcol )
+   naev.gfx.printf( love.graphics._font.font, text, x, y, love.graphics._fgcol )
 end
 function love.graphics.printf( text, x, y, limit, align )
    x,y = _xy(x,y,limit,love.graphics._font.font:height())
    if align=="left" then
-      gfx.printf( love.graphics._font.font, text, x, y, love.graphics._fgcol, limit, false )
+      naev.gfx.printf( love.graphics._font.font, text, x, y, love.graphics._fgcol, limit, false )
    elseif align=="center" then
-      gfx.printf( love.graphics._font.font, text, x, y, love.graphics._fgcol, limit, true )
+      naev.gfx.printf( love.graphics._font.font, text, x, y, love.graphics._fgcol, limit, true )
    elseif align=="right" then
-      local w = gfx.printDim( false, text, limit )
+      local w = naev.gfx.printDim( false, text, limit )
       local off = limit-w
-      gfx.printf( love.graphics._font.font, text, x+off, y, love.graphics._fgcol, w, false )
+      naev.gfx.printf( love.graphics._font.font, text, x+off, y, love.graphics._fgcol, w, false )
    end
 end
 
@@ -200,11 +200,11 @@ love.graphics.Font._type = "Font"
 function love.graphics.newFont( file, size )
    local f = love.graphics.Font.new()
    if size==nil then
-      f.font = font.new( file )
+      f.font = naev.font.new( file )
    elseif type(file)=="userdata" then
       return file
    else
-      f.font = font.new( file, size )
+      f.font = naev.font.new( file, size )
    end
    return f
 end
