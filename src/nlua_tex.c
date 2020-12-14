@@ -176,8 +176,6 @@ static int texL_new( lua_State *L )
    NLUA_CHECKRW(L);
 
    /* Defaults. */
-   sx = 0;
-   sy = 0;
    lf = NULL;
    ld = NULL;
    path = NULL;
@@ -190,15 +188,13 @@ static int texL_new( lua_State *L )
       h = luaL_checkinteger(L,3);
       if ((w < 0 ) || (h < 0))
          NLUA_ERROR( L, _("Texture dimensions must be positive") );
-      if (lua_gettop(L)>3) {
-         sx = luaL_checkinteger(L,2);
-         sy = luaL_checkinteger(L,3);
-         if ((sx < 0 ) || (sy < 0))
-            NLUA_ERROR( L, _("Spritesheet dimensions must be positive") );
-      }
+      sx = luaL_optinteger(L,4,1);
+      sy = luaL_optinteger(L,5,1);
+      if ((sx < 0 ) || (sy < 0))
+         NLUA_ERROR( L, _("Spritesheet dimensions must be positive") );
       if (ld->type != LUADATA_NUMBER)
          NLUA_ERROR( L, _("Data has invalid type for texture") );
-      if (w*h*ld->elem > ld->size)
+      if (w*h*ld->elem*4 > ld->size)
          NLUA_ERROR( L, _("Texture dimensions don't match data size!") );
       tex = gl_loadImageData( (void*)ld->data, w, h, w, sx, sy );
       if (tex==NULL)
@@ -211,12 +207,10 @@ static int texL_new( lua_State *L )
    else
       path = luaL_checkstring(L, 1);
 
-   if (lua_gettop(L)>1) {
-      sx = luaL_checkinteger(L,2);
-      sy = luaL_checkinteger(L,3);
-      if ((sx < 0 ) || (sy < 0))
-         NLUA_ERROR( L, _("Spritesheet dimensions must be positive") );
-   }
+   sx = luaL_optinteger(L,2,1);
+   sy = luaL_optinteger(L,3,1);
+   if ((sx < 0 ) || (sy < 0))
+      NLUA_ERROR( L, _("Spritesheet dimensions must be positive") );
 
    /* Push new texture. */
    if ((sx <=0 ) || (sy <= 0)) {
