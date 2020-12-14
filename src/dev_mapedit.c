@@ -261,8 +261,8 @@ void mapedit_open( unsigned int wid_unused, char *unused )
    (void)linesPos;
 
    /* Zoom buttons */
-   window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", mapedit_buttonZoom );
-   window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", mapedit_buttonZoom );
+   window_addButtonKey( wid, 40, 20, 30, 30, "btnZoomIn", "+", mapedit_buttonZoom, SDLK_EQUALS );
+   window_addButtonKey( wid, 80, 20, 30, 30, "btnZoomOut", "-", mapedit_buttonZoom, SDLK_MINUS );
 
    /* Selected text. */
    window_addText( wid, 140, 10, SCREEN_W - 350 - 30 - 30 - BUTTON_WIDTH - 20, 30, 0,
@@ -401,6 +401,15 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
    t = 15.*15.; /* threshold */
 
    switch (event->type) {
+   case SDL_MOUSEWHEEL:
+      /* Must be in bounds. */
+      if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
+         return 0;
+      if (event->wheel.y > 0)
+         mapedit_buttonZoom( 0, "btnZoomIn" );
+      else
+         mapedit_buttonZoom( 0, "btnZoomOut" );
+      return 1;
 
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
