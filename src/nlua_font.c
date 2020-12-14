@@ -163,7 +163,7 @@ static int fontL_new( lua_State *L )
    int h;
    const char *fname;
 
-   if (lua_gettop(L) > 1) {
+   if (lua_gettop(L)==1) {
       fname = FONT_DEFAULT_PATH;
       h = luaL_checkint(L,1);
    }
@@ -171,7 +171,7 @@ static int fontL_new( lua_State *L )
       fname = luaL_checkstring(L,1);
       h = luaL_checkint(L,2);
    }
-   if (gl_fontInit( &font, fname, h ))
+   if (gl_fontInit( &font, fname, h, "" ))
       NLUA_ERROR(L, _("failed to load font '%s'"), fname);
 
    lua_pushfont( L, font );

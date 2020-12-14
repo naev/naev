@@ -37,7 +37,7 @@ typedef struct glFontRestore_s {
  *
  * if font is NULL it uses the internal default font same with gl_print
  */
-int gl_fontInit( glFont* font, const char *fname, const unsigned int h );
+int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const char *prefix );
 void gl_freeFont( glFont* font );
 
 

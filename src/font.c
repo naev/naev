@@ -1471,9 +1471,10 @@ static void gl_fontRenderEnd (void)
  *    @param font Font to load (NULL defaults to gl_defFont).
  *    @param fname Name of the font (from inside packfile).
  *    @param h Height of the font to generate.
+ *    @param prefix Prefix to look for the font.
  *    @return 0 on success.
  */
-int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
+int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const char *prefix )
 {
    FT_Library library;
    FT_Face face;
@@ -1532,7 +1533,7 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
          ft->fontname[i-ch] = '\0';
 
          /* Read font file. */
-         nsnprintf( fullname, PATH_MAX, FONT_PATH_PREFIX"%s", ft->fontname );
+         nsnprintf( fullname, PATH_MAX, "%s%s", prefix, ft->fontname );
          buf = ndata_read( fullname, &bufsize );
          if (buf == NULL) {
             WARN(_("Unable to read font: %s"), ft->fontname);
