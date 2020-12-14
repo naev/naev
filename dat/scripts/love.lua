@@ -19,6 +19,11 @@ love._version_major = 11
 love._version_minor = 1
 love._version_patch = 3
 love._codename = "naev"
+love._default = {
+   title = "LÖVE",
+   w = 800,
+   h = 600
+}
 
 -- Dummy user-defined functions
 function love.conf(t) end -- dummy
@@ -81,9 +86,22 @@ function love.timer.getTime() return love.timer._edt end
 --]]
 love.window = {}
 function love.window.setTitle( title )
-   naev.tk.customRename( title )
+   if love._started then
+      naev.tk.customRename( title )
+   else
+      love.title = title
+   end
 end
-function love.window.setMode( width, height, flags ) end
+function love.window.setMode( width, height, flags )
+   if love._started then
+      -- TODO
+   else
+      love.w = width
+      love.h = height
+      if love.w <= 0 then love.w = love._default.w end
+      if love.h <= 0 then love.h = love._default.h end
+   end
+end
 function love.window.getDesktopDimensions()
    return love.w, love.h
 end
@@ -346,6 +364,8 @@ function love.draw() end -- dummy
 --]]
 package.path = package.path..string.format(";?.lua", path)
 function love.exec( path )
+   love._started = false
+
    local info = love.filesystem.getInfo( path )
    local confpath, mainpath
    if info then
@@ -376,9 +396,9 @@ function love.exec( path )
    local t = {}
    t.audio = {}
    t.window = {}
-   t.window.title = "LÖVE" -- The window title (string)
-   t.window.width = 800    -- The window width (number)
-   t.window.height = 600   -- The window height (number)
+   t.window.title = love._default.title -- The window title (string)
+   t.window.width = love._default.w -- The window width (number)
+   t.window.height = love._default.h -- The window height (number)
    t.modules = {}
 
    -- Configure
@@ -398,6 +418,7 @@ function love.exec( path )
 
    -- Actually run in Naev
    naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
+   love._started = true
 
    -- Reset libraries that were potentially crushed
    for k,v in pairs(naev) do _G[k] = v end
