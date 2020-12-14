@@ -29,6 +29,11 @@ function love.load() end --dummy
 function love.getVersion()
    return love._version_major, love._version_minor, love._version_patch
 end
+love.Object = inheritsFrom( nil )
+love.Object._type = "Object"
+function love.Object:type() return self._type end
+function love.Object:typeOf( name ) return self._type==name end
+
 
 
 --[[
@@ -187,6 +192,25 @@ end
 
 
 --[[
+-- Image
+--]]
+love.image = {}
+love.image.ImageData = inheritsFrom( love.Object )
+love.image.ImageData._type = "ImageData"
+function love.image.newImageData( ... )
+   local arg = {...}
+   local w = arg[1]
+   local h = arg[2]
+   local data = love.image.ImageData.new()
+   data.w = w
+   data.h = h
+   return data
+end
+function love.image.ImageData:setPixel( x, y, r, g, b, a )
+end
+
+
+--[[
 -- Graphics
 --]]
 -- Internal function that connects to Naev
@@ -229,14 +253,24 @@ local function _scol( r, g, b, a )
    return colour.new( r, g, b, a or 1 )
 end
 -- Drawable class
-love.graphics.Drawable = inheritsFrom( nil )
+love.graphics.Drawable = inheritsFrom( love.Object )
+love.graphics.Drawable._type = "Drawable"
 function love.graphics.Drawable:getDimensions() error('unimplemented') end
 -- Image class
 love.graphics.Image = inheritsFrom( love.graphics.Drawable )
+love.graphics.Image._type = "Image"
 function love.graphics.newImage( filename )
-   local t = love.graphics.Image.new()
-   t.tex = tex.open( love.filesystem.newFile( filename ) )
-   return t
+   if type(filename)=='string' then
+      local t = love.graphics.Image.new()
+      t.tex = tex.open( love.filesystem.newFile( filename ) )
+      return t
+   elseif type(filename)=='table' and filename.type then
+      local ot = filename:type()
+      if ot=='ImageData' then
+         print('TODO')
+      end
+   end
+   error(_('wrong parameter type'))
 end
 function love.graphics.Image:setFilter( min, mag ) end
 function love.graphics.Image:getDimensions()
@@ -286,6 +320,7 @@ function love.graphics.Image:_draw( ... )
 end
 -- Quad class
 love.graphics.Quad = inheritsFrom( love.graphics.Drawable )
+love.graphics.Quad._type = "Quad"
 function love.graphics.newQuad( x, y, width, height, sw, sh )
    local q = love.graphics.Drawable.new()
    q.x = x/sw
@@ -297,11 +332,12 @@ function love.graphics.newQuad( x, y, width, height, sw, sh )
 end
 -- SpriteBatch class
 love.graphics.SpriteBatch = inheritsFrom( love.graphics.Drawable )
+love.graphics.SpriteBatch._type = "SpriteBatch"
 function love.graphics.newSpriteBatch( image, maxsprites, usage  )
    local batch = love.graphics.Drawable.new()
    return batch
 end
--- Other classes
+-- Other functions
 function love.graphics.getWidth()  return love.w end
 function love.graphics.getHeight() return love.h end
 function love.graphics.origin()
@@ -373,7 +409,8 @@ function love.graphics.setLineStyle( style ) end
 -- Math
 --]]
 love.math = {}
-love.math.RandomGenerator = inheritsFrom( nil )
+love.math.RandomGenerator = inheritsFrom( love.Object )
+love.math.RandomGenerator._type = "RandomGenerator"
 function love.math.newRandomGenerator( low, high )
    -- TODO implement a real one?
    return love.math.RandomGenerator.new()
@@ -433,7 +470,7 @@ function love.exec( path )
          error( string.format( _("'%s' is an unknown filetype '%s'", path, info.type) ) )
       end
    else
-      local npath = path..".lua" 
+      local npath = path..".lua"
       info = love.filesystem.getInfo( npath )
       if info and info.type == "file" then
          require( path )
