@@ -220,6 +220,10 @@ nlua_env nlua_newEnv(int rw) {
    lua_pushboolean(naevL, rw);
    lua_setfield(naevL, -2, "__RW");
 
+   /* Set up naev namespace. */
+   lua_newtable(naevL);
+   lua_setfield(naevL, -2, "naev");
+
    lua_pop(naevL, 1);
    return ref;
 }
@@ -255,9 +259,9 @@ void nlua_pushenv(nlua_env env) {
  *    @param name Name of variable.
  */
 void nlua_getenv(nlua_env env, const char *name) {
-   nlua_pushenv(env); /* env */
-   lua_getfield(naevL, -1, name); /* env, value */
-   lua_remove(naevL, -2); /* value */
+   nlua_pushenv(env);               /* env */
+   lua_getfield(naevL, -1, name);   /* env, value */
+   lua_remove(naevL, -2);           /* value */
 }
 
 
@@ -270,11 +274,11 @@ void nlua_getenv(nlua_env env, const char *name) {
  *    @param name Name of variable.
  */
 void nlua_setenv(nlua_env env, const char *name) {
-   /* value */
-   nlua_pushenv(env); /* value, env */
-   lua_insert(naevL, -2); /* env, value */
-   lua_setfield(naevL, -2, name); /* env */
-   lua_pop(naevL, 1); /*  */
+                                    /* value */
+   nlua_pushenv(env);               /* value, env */
+   lua_insert(naevL, -2);           /* env, value */
+   lua_setfield(naevL, -2, name);   /* env */
+   lua_pop(naevL, 1);               /*  */
 }
 
 
@@ -296,8 +300,12 @@ void nlua_register(nlua_env env, const char *libname,
          lua_setfield(naevL,-2,"__index");
       }
       luaL_register(naevL, NULL, l);
-   }
-   nlua_setenv(env, libname);
+   }                                /* lib */
+   nlua_getenv(env, "naev");        /* lib, naev */
+   lua_pushvalue(naevL, -2);        /* lib, naev, lib */
+   lua_setfield(naevL, -2, libname);/* lib, naev */
+   lua_pop(naevL, 1);               /* lib  */
+   nlua_setenv(env, libname);       /* */
 }
 
 
