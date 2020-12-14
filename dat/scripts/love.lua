@@ -29,7 +29,7 @@ function love.load() end --dummy
 -- Base
 --]]
 function love.getVersion()
-   return love._version_major, love._version_minor, love._version_patch love._codename
+   return love._version_major, love._version_minor, love._version_patch, love._codename
 end
 love.Object = inheritsFrom( nil )
 love.Object._type = "Object"
@@ -206,33 +206,33 @@ function love.image.newImageData( ... )
    local data = love.image.ImageData.new()
    data.w = w
    data.h = h
-   data.data = data.new( w*h*4, "number" )
+   data.d = data.new( w*h*4, "number" )
    return data
 end
-function love.image.Imagedata:getSize()
+function love.image.ImageData:getSize()
    return self.data:getSize()
 end
-function love.image.Imagedata:getString()
+function love.image.ImageData:getString()
    return self.data:getString()
 end
 local function _id_pos(self,x,y) return 4*(y*self.w+x) end
-function love.image.Imagedata:getDimensions() return data.w, data.h end
-function love.image.Imagedata:getWidth() return data.w end
-function love.image.Imagedata:getHeight() return data.h end
-function love.image.Imagedata:getPixel( x, y )
+function love.image.ImageData:getDimensions() return data.w, data.h end
+function love.image.ImageData:getWidth() return data.w end
+function love.image.ImageData:getHeight() return data.h end
+function love.image.ImageData:getPixel( x, y )
    local pos = _id_pos(self,x,y)
-   local r = self.data:get( pos+0 )
-   local g = self.data:get( pos+1 )
-   local b = self.data:get( pos+2 )
-   local a = self.data:get( pos+3 )
+   local r = self.d:get( pos+0 )
+   local g = self.d:get( pos+1 )
+   local b = self.d:get( pos+2 )
+   local a = self.d:get( pos+3 )
    return r, g, b, a
 end
 function love.image.ImageData:setPixel( x, y, r, g, b, a )
    local pos = _id_pos(self,x,y)
-   self.data:set( pos+0, r )
-   self.data:set( pos+1, g )
-   self.data:set( pos+2, b )
-   self.data:set( pos+3, a )
+   self.d:set( pos+0, r )
+   self.d:set( pos+1, g )
+   self.d:set( pos+2, b )
+   self.d:set( pos+3, a )
 end
 
 

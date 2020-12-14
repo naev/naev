@@ -48,15 +48,19 @@ function love.graphics.Drawable:getDimensions() error('unimplemented') end
 love.graphics.Image = inheritsFrom( love.graphics.Drawable )
 love.graphics.Image._type = "Image"
 function love.graphics.newImage( filename )
+   local ttex
    if type(filename)=='string' then
-      local t = love.graphics.Image.new()
-      t.tex = tex.open( love.filesystem.newFile( filename ) )
-      return t
+      ttex = tex.open( love.filesystem.newFile( filename ) )
    elseif type(filename)=='table' and filename.type then
       local ot = filename:type()
       if ot=='ImageData' then
-         print('TODO')
+         ttex = tex.open( filename.data, filename.w, filename,h )
       end
+   end
+   if ttex ~= nil then
+      local t = love.graphics.Image.new()
+      t.tex = ttex
+      return t
    end
    error(_('wrong parameter type'))
 end
