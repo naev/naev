@@ -18,16 +18,18 @@ love.basepath = ""
 love._version_major = 11
 love._version_minor = 1
 love._version_patch = 3
+love._codename = "naev"
 
 -- Dummy user-defined functions
 function love.conf(t) end -- dummy
 function love.load() end --dummy
 
+
 --[[
 -- Base
 --]]
 function love.getVersion()
-   return love._version_major, love._version_minor, love._version_patch
+   return love._version_major, love._version_minor, love._version_patch love._codename
 end
 love.Object = inheritsFrom( nil )
 love.Object._type = "Object"
@@ -257,6 +259,22 @@ function love.sound.newSoundData( filename ) end
 
 
 --[[
+-- Graphics
+--]]
+-- Internal function that connects to Naev
+local function _draw( x, y, w, h )
+   love.x = x
+   love.y = y
+   love.w = w
+   love.h = h
+   gfx.renderRect( x, y, w, h, love.graphics._bgcol )
+   love.draw()
+end
+love.graphics = require 'love/graphics'
+function love.draw() end -- dummy
+
+
+--[[
 -- Initialize
 --]]
 package.path = package.path..string.format(";?.lua", path)
@@ -309,9 +327,6 @@ function love.exec( path )
    -- Actually run in Naev
    tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
 end
-
--- Load stuff
-love.graphics = require 'love/graphics'
 
 -- Fancy API so you can do `love = require 'love'`
 return love

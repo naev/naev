@@ -1,16 +1,6 @@
 --[[
 -- Love2d Graphics for Naev!
 --]]
-
--- Internal function that connects to Naev
-local function _draw( x, y, w, h )
-   love.x = x
-   love.y = y
-   love.w = w
-   love.h = h
-   gfx.renderRect( x, y, w, h, love.graphics._bgcol )
-   love.draw()
-end
 love.graphics = {}
 love.graphics._dx = 0
 love.graphics._dy = 0
