@@ -251,6 +251,13 @@ void mapedit_open( unsigned int wid_unused, char *unused )
    textPos++;
    linesPos+=curLines+1;
 
+   curLines = 4;
+   window_addText( wid, -20, -40-textPos*parHeight-linesPos*lineHeight, 300-20, curLines*lineHeight, 0, "txtSWarning",
+         &gl_smallFont, NULL,
+         "Warning: Editor can't (yet) manage which details are mapped within a system. Review its changes before committing." );
+   textPos++;
+   linesPos+=curLines+1;
+
    (void)linesPos;
 
    /* Zoom buttons */
