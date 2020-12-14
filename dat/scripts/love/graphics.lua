@@ -92,13 +92,12 @@ function love.graphics.Image:_draw( ... )
       ty = q.y
       tw = q.w
       th = q.h
-      --print( string.format( "x=%.1f, y=%.1f, r=%.1f, sx=%.1f, sy=%.1f", x, y, r, sx, sy ) )
       x,y = _xy(x,y,w,h)
    end
    w = w*sx
    h = h*sy
    y = y - (h*(1-sy)) -- correct scaling
-   naev.gfx.renderTexRaw( self.tex, x, y, w, h, 1, 1, tx, ty, tw, th, love.graphics._fgcol, r )
+   naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, love.graphics._fgcol, r )
 end
 function love.graphics.Image:setWrap( horiz, vert, depth )
 end
