@@ -86,12 +86,13 @@ function love.graphics.Image:_draw( ... )
       x = arg[2]
       y = arg[3]
       r = arg[4] or 0
-      x = arg[5] or 1
-      y = arg[6] or sx
+      sx = arg[5] or 1
+      sy = arg[6] or sx
       tx = q.x
       ty = q.y
       tw = q.w
       th = q.h
+      --print( string.format( "x=%.1f, y=%.1f, r=%.1f, sx=%.1f, sy=%.1f", x, y, r, sx, sy ) )
       x,y = _xy(x,y,w,h)
    end
    w = w*sx
@@ -111,7 +112,7 @@ love.graphics.Quad._type = "Quad"
 function love.graphics.newQuad( x, y, width, height, sw, sh )
    local q = love.graphics.Drawable.new()
    q.x = x/sw
-   q.y = y/sw
+   q.y = y/sh
    q.w = width/sw
    q.h = height/sh
    q.quad = true
@@ -141,6 +142,7 @@ function love.graphics.SpriteBatch:_draw() end
 --[[
 -- Global functions
 --]]
+function love.graphics.getDimensions() return love.w, love.h end
 function love.graphics.getWidth()  return love.w end
 function love.graphics.getHeight() return love.h end
 function love.graphics.origin()
