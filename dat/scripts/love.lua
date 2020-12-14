@@ -373,6 +373,14 @@ function love.graphics.setLineStyle( style ) end
 -- Math
 --]]
 love.math = {}
+love.math.RandomGenerator = inheritsFrom( nil )
+function love.math.newRandomGenerator( low, high )
+   -- TODO implement a real one?
+   return love.math.RandomGenerator.new()
+end
+function love.math.RandomGenerator:random( min, max )
+   return love.math.random( min, max )
+end
 function love.math.random( min, max )
    if min == nil then
       return rnd.rnd()
