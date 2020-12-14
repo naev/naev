@@ -18,17 +18,19 @@
 #include "log.h"
 #include "ndata.h"
 #include "nlua_file.h"
+#include "nlua_data.h"
 
 
 /* Texture metatable methods. */
 static int texL_close( lua_State *L );
-static int texL_open( lua_State *L );
+static int texL_new( lua_State *L );
 static int texL_dim( lua_State *L );
 static int texL_sprites( lua_State *L );
 static int texL_spriteFromDir( lua_State *L );
 static const luaL_Reg texL_methods[] = {
    { "__gc", texL_close },
-   { "open", texL_open },
+   { "new", texL_new },
+   { "open", texL_new },
    { "dim", texL_dim },
    { "sprites", texL_sprites },
    { "spriteFromDir", texL_spriteFromDir },
@@ -148,20 +150,27 @@ static int texL_close( lua_State *L )
 /**
  * @brief Opens a texture.
  *
+ * @note open( path, (sx=1), (sy=1) )
+ * @note open( file, (sx=1), (sy=1) )
+ * @note open( data, w, h, (sx=1), (sy=1) )
+ *
  * @usage t = tex.open( "no_sprites.png" )
  * @usage t = tex.open( "spritesheet.png", 6, 6 )
  *
- *    @luatparam string|File path Path or File to open.
- *    @luatparam[opt=1] number sx Optional number of x sprites.
- *    @luatparam[opt=1] number sy Optional number of y sprites.
+ *    @luatparam string|File|Data path Path, File, or Data to open.
+ *    @luatparam[opt=1] number w Width when Data or optional number of x sprites otherwise.
+ *    @luatparam[opt=1] number h Height when Data or optional number of y sprites otherwise.
+ *    @luatparam[opt=1] number sx Optional number of x sprites when path is Data.
+ *    @luatparam[opt=1] number sy Optional number of y sprites when path is Data.
  *    @luatreturn Tex The opened texture or nil on error.
- * @luafunc open( path, sx, sy )
+ * @luafunc open( path, w, h, sx, sy )
  */
-static int texL_open( lua_State *L )
+static int texL_new( lua_State *L )
 {
    const char *path;
    glTexture *tex;
    LuaFile_t *lf;
+   LuaData_t *ld;
    int sx, sy, isopen;
 
    NLUA_CHECKRW(L);
@@ -170,10 +179,34 @@ static int texL_open( lua_State *L )
    sx = 0;
    sy = 0;
    lf = NULL;
+   ld = NULL;
    path = NULL;
 
    /* Get path. */
-   if (lua_isfile(L,1))
+   if (lua_isdata(L,1)) {
+      int w, h;
+      ld = luaL_checkdata(L,1);
+      w = luaL_checkinteger(L,2);
+      h = luaL_checkinteger(L,3);
+      if ((w < 0 ) || (h < 0))
+         NLUA_ERROR( L, _("Texture dimensions must be positive") );
+      if (lua_gettop(L)>3) {
+         sx = luaL_checkinteger(L,2);
+         sy = luaL_checkinteger(L,3);
+         if ((sx < 0 ) || (sy < 0))
+            NLUA_ERROR( L, _("Spritesheet dimensions must be positive") );
+      }
+      if (ld->type != LUADATA_NUMBER)
+         NLUA_ERROR( L, _("Data has invalid type for texture") );
+      if (w*h*ld->elem > ld->size)
+         NLUA_ERROR( L, _("Texture dimensions don't match data size!") );
+      tex = gl_loadImageData( (void*)ld->data, w, h, w, sx, sy );
+      if (tex==NULL)
+         return 0;
+      lua_pushtex(L, tex);
+      return 1;
+   }
+   else if (lua_isfile(L,1))
       lf = luaL_checkfile(L,1);
    else
       path = luaL_checkstring(L, 1);
