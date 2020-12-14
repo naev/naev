@@ -1353,9 +1353,6 @@ static void opt_video( unsigned int wid )
          "chkMipmaps", _("Mipmaps*"), NULL, conf.mipmaps );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkInterpolate", _("Interpolation*"), NULL, conf.interpolate );
-   y -= 20;
-   window_addCheckbox( wid, x, y, cw, 20,
          "chkNPOT", _("NPOT Textures*"), NULL, conf.npot );
    y -= 30;
    window_addText( wid, x, y, cw, 20, 1,
@@ -1454,11 +1451,6 @@ static int opt_videoSave( unsigned int wid, char *str )
    f = window_checkboxState( wid, "chkMipmaps" );
    if (conf.mipmaps != f) {
       conf.mipmaps = f;
-      opt_needRestart();
-   }
-   f = window_checkboxState( wid, "chkInterpolate" );
-   if (conf.interpolate != f) {
-      conf.interpolate = f;
       opt_needRestart();
    }
    f = window_checkboxState( wid, "chkNPOT" );
@@ -1588,7 +1580,6 @@ static void opt_videoDefaults( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkFullscreen", FULLSCREEN_DEFAULT );
    window_checkboxSet( wid, "chkVSync", VSYNC_DEFAULT );
    window_checkboxSet( wid, "chkMipmaps", MIPMAP_DEFAULT );
-   window_checkboxSet( wid, "chkInterpolate", INTERPOLATION_DEFAULT );
    window_checkboxSet( wid, "chkNPOT", NPOT_TEXTURES_DEFAULT );
    window_checkboxSet( wid, "chkFPS", SHOW_FPS_DEFAULT );
    window_checkboxSet( wid, "chkEngineGlow", ENGINE_GLOWS_DEFAULT );
