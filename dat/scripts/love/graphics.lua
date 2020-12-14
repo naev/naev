@@ -36,7 +36,7 @@ end
 --]]
 love.graphics.Drawable = inheritsFrom( love.Object )
 love.graphics.Drawable._type = "Drawable"
-function love.graphics.Drawable:getDimensions() error('unimplemented') end
+function love.graphics.Drawable._draw() error(_("unimplemented")) end
 
 
 --[[
@@ -125,9 +125,17 @@ end
 love.graphics.SpriteBatch = inheritsFrom( love.graphics.Drawable )
 love.graphics.SpriteBatch._type = "SpriteBatch"
 function love.graphics.newSpriteBatch( image, maxsprites, usage  )
-   local batch = love.graphics.Drawable.new()
+   local batch = love.graphics.SpriteBatch.new()
+   batch.image = image
+   batch:clear()
    return batch
 end
+function love.graphics.SpriteBatch:clear() end
+function love.graphics.SpriteBatch:setColor() end
+function love.graphics.SpriteBatch:add( ... )
+   local arg = {...}
+end
+function love.graphics.SpriteBatch:_draw() end
 
 
 --[[
@@ -150,11 +158,11 @@ function love.graphics.scale( sx, sy )
    love.graphics._sx = love.graphics._sx * sx
    love.graphics._sy = love.graphics._sy * sy
 end
-function love.graphics.getBackgroundColor() return _gcol( self.graphics._bgcol ) end
+function love.graphics.getBackgroundColor() return _gcol( love.graphics._bgcol ) end
 function love.graphics.setBackgroundColor( red, green, blue, alpha )
    love.graphics._bgcol = _scol( red, green, blue, alpha )
 end
-function love.graphics.getColor() return _gcol( self.graphics._fgcol ) end
+function love.graphics.getColor() return _gcol( love.graphics._fgcol ) end
 function love.graphics.setColor( red, green, blue, alpha )
    love.graphics._fgcol = _scol( red, green, blue, alpha )
 end
@@ -240,6 +248,7 @@ end
 -- unimplemented
 function love.graphics.setDefaultFilter( min, mag, anisotropy ) end
 function love.graphics.setLineStyle( style ) end
+function love.graphics.setBlendMode( mode ) end
 
 
 -- Reset coordinate system
