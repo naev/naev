@@ -1327,13 +1327,13 @@ void window_render( Window *w )
     */
    if (w->focus != -1){
       wgt = toolkit_getFocus( w );
-      if ((wgt == NULL) || wgt_isFlag(wgt, WGT_FLAG_KILL) || wgt->type == WIDGET_IMAGEARRAY || wgt->type == WIDGET_LIST)
+      if ((wgt == NULL) || wgt_isFlag(wgt, WGT_FLAG_KILL))
          return;
       x  += wgt->x;
       y  += wgt->y;
       wid = wgt->w;
       hei = wgt->h;
-      toolkit_drawOutlineThick( x, y, wid, hei, 0, 2, (wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey20), NULL );
+      toolkit_drawOutlineThick( x, y, wid, hei, 0, 2, (wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey30), NULL );
    }
 }
 
