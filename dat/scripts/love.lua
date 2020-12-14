@@ -201,12 +201,22 @@ love.image.ImageData = inheritsFrom( love.Object )
 love.image.ImageData._type = "ImageData"
 function love.image.newImageData( ... )
    local arg = {...}
-   local w = arg[1]
-   local h = arg[2]
+   local w, h, d
+   local t = type(arg[1])
+   if t=="number" then
+      w = arg[1]
+      h = arg[2]
+      d = data.new( w*h*4, "number" )
+   elseif t=="string" then
+      local f = love.filesystem.newFile(arg[1])
+      d, w, h = tex.readData( f )
+   else
+      error( 'unimplemented' )
+   end
    local newd = love.image.ImageData.new()
    newd.w = w
    newd.h = h
-   newd.d = data.new( w*h*4, "number" )
+   newd.d = d
    return newd
 end
 function love.image.ImageData:getSize()
@@ -264,13 +274,27 @@ end
 -- Audio
 --]]
 love.audio = {}
+love.audio.Source = inheritsFrom( love.Object )
+love.audio.Source._type = "Source"
 function love.audio.newSource( filename, type )
-   return audio.new( filename, type )
+   local s = love.audio.Source.new()
+   --s.a = audio.new( filename, type )
+   return s
 end
+function love.audio.Source:play() return true end
+function love.audio.Source:pause() end
+function love.audio.Source:stop() end
+function love.audio.Source:setVolume( volume ) end
+function love.audio.Source:getVolume() return audio.getVolume() end
+function love.audio.Source:setLooping( looping ) end
+function love.audio.Source:setPitch( pitch ) end
+function love.audio.Source:setPosition( x, y, z ) end
+function love.audio.Source:setAttenuationDistances( ref, max ) end
 function love.audio.setVolume( volume ) end -- Don't allow setting master volume
 function love.audio.getVolume( volume )
    return audio.getVolume()
 end
+function love.audio.setPosition( x, y, z ) end
 
 
 --[[
