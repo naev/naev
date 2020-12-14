@@ -14,6 +14,7 @@
 
 #include <lauxlib.h>
 
+#include "ndata.h"
 #include "nluadef.h"
 #include "log.h"
 
@@ -162,17 +163,16 @@ static int fontL_new( lua_State *L )
    int h;
    const char *fname;
 
-   NLUA_CHECKRW(L);
-
-   if (lua_gettop(L)==1) {
+   if (lua_gettop(L) > 1) {
+      fname = FONT_DEFAULT_PATH;
       h = luaL_checkint(L,1);
-      gl_fontInit( &font, NULL, h );
    }
    else {
       fname = luaL_checkstring(L,1);
       h = luaL_checkint(L,2);
-      gl_fontInit( &font, fname, h );
    }
+   if (gl_fontInit( &font, fname, h ))
+      NLUA_ERROR(L, _("failed to load font '%s'"), fname);
 
    lua_pushfont( L, font );
    return 1;
