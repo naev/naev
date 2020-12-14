@@ -300,6 +300,7 @@ static int texL_readData( lua_State *L )
    uint8_t r, g, b, a;
    uint32_t pix;
    int i, j;
+   float *data;
 
    s = NULL;
    if (lua_isfile(L,1)) {
@@ -328,15 +329,16 @@ static int texL_readData( lua_State *L )
    ld.size = ld.elem * size * 4;
    ld.data = calloc( ld.elem*4, size );
    ld.type = LUADATA_NUMBER;
+   data = (float*)ld.data;
    for (i=0; i<surface->h; i++) {
       for (j=0; j<surface->w; j++) {
          pix = getpixel( surface, j, i );
          SDL_GetRGBA( pix, surface->format, &r, &g, &b, &a );
          size_t pos = 4*(i*surface->w+j);
-         ld.data[ pos+0 ] = (float)r;
-         ld.data[ pos+1 ] = (float)g;
-         ld.data[ pos+2 ] = (float)b;
-         ld.data[ pos+3 ] = (float)a;
+         data[ pos+0 ] = (float)r;
+         data[ pos+1 ] = (float)g;
+         data[ pos+2 ] = (float)b;
+         data[ pos+3 ] = (float)a;
       }
    }
    SDL_UnlockSurface( surface );
