@@ -79,6 +79,7 @@ function love.timer.getDelta() return love.timer._dt end
 function love.timer.getAverageDelta() return love.timer._adt end
 function love.timer.getFPS() return 1/love.timer._adt end
 function love.timer.getTime() return love.timer._edt end
+function love.timer.sleep( s ) end -- can't really support properly
 
 
 --[[
