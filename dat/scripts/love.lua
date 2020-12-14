@@ -396,8 +396,8 @@ function love.exec( path )
    -- Actually run in Naev
    naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
 
-   -- Should probably reset libraries if they were crushed here. Probably better way of doing this.
-   font = naev.font
+   -- Reset libraries that were potentially crushed
+   for k,v in pairs(naev) do _G[k] = v end
 end
 
 -- Fancy API so you can do `love = require 'love'`
