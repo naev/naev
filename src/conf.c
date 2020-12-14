@@ -276,7 +276,6 @@ void conf_setVideoDefaults (void)
    conf.vsync        = VSYNC_DEFAULT;
    conf.mipmaps      = MIPMAP_DEFAULT; /* Also cause for issues. */
    conf.compress     = TEXTURE_COMPRESSION_DEFAULT;
-   conf.interpolate  = INTERPOLATION_DEFAULT;
    conf.npot         = NPOT_TEXTURES_DEFAULT;
 
    /* Window. */
@@ -377,7 +376,6 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "vsync", conf.vsync );
       conf_loadBool( lEnv, "mipmaps", conf.mipmaps );
       conf_loadBool( lEnv, "compress", conf.compress );
-      conf_loadBool( lEnv, "interpolate", conf.interpolate );
       conf_loadBool( lEnv, "npot", conf.npot );
 
       /* Memory. */
@@ -939,7 +937,6 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    conf_saveComment(_("Use OpenGL Texture Interpolation"));
-   conf_saveBool("interpolate",conf.interpolate);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Use OpenGL Non-\"Power of Two\" textures if available"));
