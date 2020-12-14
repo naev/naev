@@ -244,6 +244,14 @@ function love.image.ImageData:setPixel( x, y, r, g, b, a )
    self.d:set( pos+2, b )
    self.d:set( pos+3, a )
 end
+function love.image.ImageData:paste( source, dx, dy, sx, sy, sw, sh )
+   -- probably very slow
+   for x = 0,sw-1 do
+      for y = 0,sh-1 do
+         self:setPixel( dx+x, dy+y, source:getPixel( sx+x, sy+y ) )
+      end
+   end
+end
 
 
 --[[
