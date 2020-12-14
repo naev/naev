@@ -478,7 +478,7 @@ static int nlua_packfileLoader( lua_State* L )
    }
 
    /* Try to process the Lua. */
-   if (luaL_loadbuffer(L, buf, bufsize, filename) != 0) {
+   if (luaL_loadbuffer(L, buf, bufsize, path_filename) != 0) {
       lua_error(L);
       return 1;
    }
@@ -488,11 +488,14 @@ static int nlua_packfileLoader( lua_State* L )
 
    /* run the buffer */
    lua_pushstring(L, filename); /* pass name as first parameter */
+#if 0
    if (lua_pcall(L, 1, 1, 0) != 0) {
       /* will push the current error from the dobuffer */
       lua_error(L);
       return 1;
    }
+#endif
+   lua_call(L, 1, 1);
 
    /* Mark as loaded. */
    /* val */
