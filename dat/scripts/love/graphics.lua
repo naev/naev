@@ -60,23 +60,15 @@ function love.graphics.newImage( filename )
    if ttex ~= nil then
       local t = love.graphics.Image.new()
       t.tex = ttex
+      t.w, t.h = ttex:dim()
       return t
    end
    error(_('wrong parameter type'))
 end
 function love.graphics.Image:setFilter( min, mag ) end
-function love.graphics.Image:getDimensions()
-   local w,h = self.tex:dim()
-   return w,h
-end
-function love.graphics.Image:getWidth()
-   local w,h = self.tex:dim()
-   return w
-end
-function love.graphics.Image:getHeight()
-   local w,h = self.tex:dim()
-   return h
-end
+function love.graphics.Image:getDimensions() return self.w. self.h end
+function love.graphics.Image:getWidth() return self.w end
+function love.graphics.Image:getHeight() return self.h end
 function love.graphics.Image:_draw( ... )
    local arg = {...}
    local w,h = self.tex:dim()

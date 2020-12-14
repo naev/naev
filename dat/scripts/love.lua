@@ -226,9 +226,9 @@ function love.image.ImageData:getString()
    return self.d:getString()
 end
 local function _id_pos(self,x,y) return 4*(y*self.w+x) end
-function love.image.ImageData:getDimensions() return data.w, data.h end
-function love.image.ImageData:getWidth() return data.w end
-function love.image.ImageData:getHeight() return data.h end
+function love.image.ImageData:getDimensions() return self.w, self.h end
+function love.image.ImageData:getWidth() return self.w end
+function love.image.ImageData:getHeight() return self.h end
 function love.image.ImageData:getPixel( x, y )
    local pos = _id_pos(self,x,y)
    local r = self.d:get( pos+0 )
