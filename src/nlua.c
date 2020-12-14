@@ -28,6 +28,7 @@
 #include "nlua_player.h"
 #include "nlua_pilot.h"
 #include "nlua_vec2.h"
+#include "nlua_data.h"
 #include "nlua_diff.h"
 #include "nlua_outfit.h"
 #include "nlua_commodity.h"
@@ -562,6 +563,7 @@ int nlua_loadStandard( nlua_env env )
    r |= nlua_loadNews(env);
    r |= nlua_loadShiplog(env);
    r |= nlua_loadFile(env);
+   r |= nlua_loadData(env);
 
    return r;
 }
