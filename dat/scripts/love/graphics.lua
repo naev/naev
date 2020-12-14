@@ -63,7 +63,7 @@ function love.graphics.newImage( filename )
    error(_('wrong parameter type'))
 end
 function love.graphics.Image:setFilter( min, mag ) end
-function love.graphics.Image:getDimensions() return self.w. self.h end
+function love.graphics.Image:getDimensions() return self.w, self.h end
 function love.graphics.Image:getWidth() return self.w end
 function love.graphics.Image:getHeight() return self.h end
 function love.graphics.Image:_draw( ... )
