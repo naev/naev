@@ -1534,7 +1534,8 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
 
          /* Read font file. */
          nsnprintf( fullname, PATH_MAX, "%s%s", prefix, ft->fontname );
-         buf = ndata_read( fullname, &bufsize );
+         //buf = ndata_read( fullname, &bufsize );
+         buf = (FT_Byte*)_nfile_readFile( &bufsize, fullname );
          if (buf == NULL) {
             WARN(_("Unable to read font: %s"), ft->fontname);
             return -1;
