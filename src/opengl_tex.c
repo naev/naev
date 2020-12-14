@@ -702,6 +702,7 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const u
    npng     = npng_open( rw );
    if (npng == NULL) {
       WARN(_("File '%s' is not a png."), path );
+      SDL_RWclose( rw );
       return NULL;
    }
    npng_dim( npng, &w, &h );

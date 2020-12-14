@@ -1890,6 +1890,8 @@ static void sysedit_btnFaction( unsigned int wid_unused, char *unused )
    /* Add button. */
    window_addButton( wid, -20-(bw+15), 20, bw, BUTTON_HEIGHT,
          "btnAdd", _("Set"), sysedit_btnFactionSet );
+
+   free( factions );
 }
 
 
@@ -2032,6 +2034,7 @@ static void sysedit_btnGFXApply( unsigned int wid, char *wgt )
 
    if (land) {
       free( p->gfx_exteriorPath );
+      free( p->gfx_exterior );
       nsnprintf( buf, sizeof(buf), PLANET_GFX_EXTERIOR_PATH"%s", str );
       p->gfx_exteriorPath = strdup( str );
       p->gfx_exterior = strdup( buf );
