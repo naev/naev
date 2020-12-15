@@ -58,13 +58,31 @@ function love.graphics.newImage( filename )
       local t = love.graphics.Image.new()
       t.tex = ttex
       t.w, t.h = ttex:dim()
+      -- Set defaults
+      t:setFilter( love.graphics._minfilter, love.graphics._magfilter )
+      t:setWrap( love.graphics._wraph, love.graphics._wrapv, love.graphics._wrapd )
       return t
    end
    error(_('wrong parameter type'))
 end
-function love.graphics.Image:setFilter( min, mag )
-   love._unimplemented()
+function love.graphics.Image:setFilter( min, mag, anisotropy )
+   mag = mag or min
+   anisotropy = anisotropy or 1
+   self.tex:setFilter( min, mag, anisotropy )
+   self.min = min
+   self.mag = mag
+   self.anisotropy = anisotropy
 end
+function love.graphics.Image:getFilter() return self.min, self.mag, self.anisotropy end
+function love.graphics.Image:setWrap( horiz, vert, depth )
+   vert = vert or horiz
+   depth = depth or horiz
+   self.tex:setWrap( horiz, vert, depth )
+   self.wraph = horiz
+   self.wrapv = vert
+   self.wrapd = depth
+end
+function love.graphics.Image:getWrap() return self.wraph, self.wrapv, self.wrapd end
 function love.graphics.Image:getDimensions() return self.w, self.h end
 function love.graphics.Image:getWidth() return self.w end
 function love.graphics.Image:getHeight() return self.h end
@@ -100,9 +118,6 @@ function love.graphics.Image:_draw( ... )
    h = h*sy --* love.graphics._sy
    y = y - (h*(1-sy)) -- correct scaling
    naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, love.graphics._fgcol, r )
-end
-function love.graphics.Image:setWrap( horiz, vert, depth )
-   love._unimplemented()
 end
 
 
@@ -267,7 +282,12 @@ end
 
 -- unimplemented
 function love.graphics.setDefaultFilter( min, mag, anisotropy )
-   love._unimplemented()
+   love.graphics._minfilter = min
+   love.graphics._magfilter = mag
+   love.graphics._anisotropy = 1
+end
+function love.graphics.getDefaultFilter()
+   return love.graphics._minfilter, love.graphics._magfilter, love.graphics._anisotropy
 end
 function love.graphics.setLineStyle( style )
    love._unimplemented()
@@ -280,5 +300,9 @@ end
 -- Reset coordinate system
 love.graphics.setNewFont( 12 )
 love.graphics.origin()
+love.graphics.setDefaultFilter( "linear", "linear", 1 )
+love.graphics._wraph = "clamp"
+love.graphics._wrapv = "clamp"
+love.graphics._wrapd = "clamp"
 
 return love.graphics
