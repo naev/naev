@@ -1,4 +1,4 @@
-require("scripts/prng")
+prng = require "prng"
 
 nebulae = {
    "nebula02.png",
