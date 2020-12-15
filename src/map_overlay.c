@@ -150,7 +150,6 @@ void ovr_refresh (void)
    const Vector2d **pos;
    MapOverlayPos **mo;
    MapOverlayPosOpt *moo;
-   double res;
    char buf[STRMAX_SHORT];
 
    /* Must be open. */
@@ -158,7 +157,6 @@ void ovr_refresh (void)
       return;
 
    /* Calculate max size. */
-   gui_radarGetRes( &res );
    items = 0;
    pos = calloc(cur_system->njumps + cur_system->nplanets, sizeof(Vector2d*));
    mo  = calloc(cur_system->njumps + cur_system->nplanets, sizeof(MapOverlayPos*));
@@ -295,8 +293,6 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
          r  = mo[i]->radius;
          /* Move text if overlap. */
          if (ovr_refresh_compute_overlap( &ox, &oy, res, cx+mo[i]->text_offx, cy+mo[i]->text_offy, moo[i].text_width, gl_smallFont.h, pos, mo, moo, items, i, 0, pixbuf, object_weight, text_weight )) {
-            //moo[i].text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
-            //moo[i].text_offy += oy / sqrt(fabs(oy)+epsilon) * update_rate;
             moo[i].text_offx += ox * update_rate;
             moo[i].text_offy += 30 * oy * update_rate; /* Boost y offset as it's more likely to be the solution. */
             changed = 1;

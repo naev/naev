@@ -1281,7 +1281,6 @@ static void map_renderMarkers( double x, double y, double r, double a )
    }
 }
 
-#define setcolour(R,G,B) ({ccol.r=(R);ccol.g=(G);ccol.b=(B);ccol.a=1;})
 /*
  * Makes all systems dark grey.
  */
@@ -1309,7 +1308,7 @@ static void map_renderSysBlack(double bx, double by, double x,double y, double w
 
       /* If system is known fill it. */
       if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
-         setcolour(0.1,0.1,0.1);
+         ccol = cGrey10;
          gl_drawCircle( tx, ty , r, &ccol, 1 );
       }
    }
@@ -1429,17 +1428,17 @@ void map_renderCommod( double bx, double by, double x, double y,
                if ( best >= 0 ) {/* draw circle above */
                   gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &cLightBlue, "%.1f",best);
                   best = tanh ( 2*best / curMinPrice );
-                  setcolour(1-best,1-best,best);/*yellow (0) to blue (1)*/
+                  col_blend( &ccol, &cFontBlue, &cFontYellow, best );
                   gl_drawCircle( tx, ty /*+ r*/ , /*(0.1 + best) **/ r, &ccol, 1 );
                } else {/* draw circle below */
                   gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &cOrange, "%.1f",worst);
-                  worst= tanh ( -2*worst/ curMaxPrice );
-                  setcolour(1,1-worst/2,0);/*yellow (0) to orange (1)*/
+                  worst = tanh ( -2*worst/ curMaxPrice );
+                  col_blend( &ccol, &cFontOrange, &cFontYellow, worst );
                   gl_drawCircle( tx, ty /*- r*/ , /*(0.1 - worst) **/ r, &ccol, 1 );
                }
             } else {
                /* Commodity not sold here */
-               setcolour(0.1,0.1,0.1);
+               ccol = cGrey10;
                gl_drawCircle( tx, ty , r, &ccol, 1 );
 
             }
@@ -1489,23 +1488,22 @@ void map_renderCommod( double bx, double by, double x, double y,
                sumPrice/=sumCnt;
                if ( sumPrice < commod_av_gal_price ) {
                   frac = tanh(5*(commod_av_gal_price / sumPrice - 1));
-                  setcolour(1,1-frac/2,0);/*orange(1) to yellow(0)*/
+                  col_blend( &ccol, &cFontOrange, &cFontYellow, frac );
                } else {
                   frac = tanh(5*(sumPrice / commod_av_gal_price - 1));
-                  setcolour(1-frac,1-frac,frac);/*yellow (0) to blue (1)*/
+                  col_blend( &ccol, &cFontBlue, &cFontYellow, frac );
                }
                gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &ccol, "%.1f",sumPrice);
                gl_drawCircle( tx, ty , r, &ccol, 1 );
             } else {
                /* Commodity not sold here */
-               setcolour(0.1,0.1,0.1);
+               ccol = cGrey10;
                gl_drawCircle( tx, ty , r, &ccol, 1 );
             }
          }
       }
    }
 }
-#undef setcolour
 
 
 /*

@@ -1734,7 +1734,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    else if (jp_isFlag(jp, JP_HIDDEN))
       col = cRed;
    else
-      col = cGreen;
+      col = cPurple;
 
    if (!overlay)
       col.a = 1.-interference_alpha;
