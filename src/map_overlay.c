@@ -3,11 +3,10 @@
  */
 
 
-#include "map_overlay.h"
-
-#include "naev.h"
-
+#include <float.h>
 #include "SDL.h"
+
+#include "map_overlay.h"
 
 #include "array.h"
 #include "conf.h"
@@ -15,6 +14,7 @@
 #include "gui.h"
 #include "input.h"
 #include "log.h"
+#include "naev.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "pilot.h"
