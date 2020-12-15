@@ -5,7 +5,7 @@ Meant to be loaded as a library to run Love2d stuff out of the box.
 
 Example usage would be as follows:
 """
-require 'love'
+love = require 'love'
 love.exec( 'pong' ) -- Will look for pong.lua or pong/main.lua
 """
 
