@@ -170,15 +170,11 @@ void ovr_refresh (void)
       if (!jp_isUsable(jp) || !jp_isKnown(jp))
          continue;
       /* Initialize the map overlay stuff. */
-      nsnprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), _(jp->target->name) );
+      nsnprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
       moo[items].text_width = gl_printWidthRaw(&gl_smallFont, buf);
-      /* Second check in case "Unknown" is bigger than the system name. */
-      nsnprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), _("Unknown") );
-      moo[items].text_width = MAX(
-            moo[items].text_width, gl_printWidthRaw(&gl_smallFont, buf) );
       pos[items] = &jp->pos;
       mo[items]  = &jp->mo;
-      mo[items]->radius = jumppoint_gfx->sw / 2.;
+      mo[items]->radius = jumppoint_gfx->sw;
       items++;
    }
    jumpitems = items;
@@ -355,6 +351,8 @@ static void ovr_init_position( float *px, float *py, float res, float x, float y
       cy = y + ty[i];
       ovr_refresh_compute_overlap( &ox, &oy, res, cx, cy, w, h, pos, mo, moo, items, self, 1, pixbuf, object_weight, text_weight );
       val = pow2(ox)+pow2(oy);
+      /* Bias slightly toward the center, to avoid text going off the edge of the overlay. */
+      val -= 1 / (pow2(cx)+pow2(cy)+pow2(100));
       /* Keep best. */
       if (i == 0 || val < best) {
          bx = tx[i];
