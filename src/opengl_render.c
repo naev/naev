@@ -289,7 +289,7 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
       const double tw, const double th, const glColour *c )
 {
    /* No interpolation. */
-   if (!conf.interpolate || (tb == NULL)) {
+   if (tb == NULL) {
       gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
       return;
    }
