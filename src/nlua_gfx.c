@@ -208,7 +208,6 @@ static int gfxL_renderTexRaw( lua_State *L )
    /* Parameters. */
    top = lua_gettop(L);
    col = NULL;
-   angle = 0.;
    t  = luaL_checktex( L, 1 );
    px = luaL_checknumber( L, 2 );
    py = luaL_checknumber( L, 3 );
@@ -222,8 +221,7 @@ static int gfxL_renderTexRaw( lua_State *L )
    th = luaL_checknumber( L, 11 );
    if (top > 11)
       col = luaL_checkcolour(L, 12 );
-   if (top > 12)
-      angle = luaL_checknumber(L, 13);
+   angle = luaL_optnumber(L,13,0.);
 
    /* Some safety checking. */
 #if DEBUGGING
@@ -359,10 +357,7 @@ static int gfxL_printDim( lua_State *L )
    /* Parse parameters. */
    font  = lua_toboolean(L,1) ? &gl_smallFont : &gl_defFont;
    str   = luaL_checkstring(L,2);
-   if (lua_gettop(L) > 2)
-      width = luaL_checkinteger(L,3);
-   else
-      width = 0;
+   width = luaL_optinteger(L,3,0);
 
    /* Print length. */
    if (width == 0)
@@ -390,10 +385,7 @@ static int gfxL_printfDim( lua_State *L )
    /* Parse parameters. */
    font  = luaL_checkfont(L,1);
    str   = luaL_checkstring(L,2);
-   if (lua_gettop(L) > 2)
-      width = luaL_checkinteger(L,3);
-   else
-      width = 0;
+   width = luaL_optinteger(L,3,0);
 
    /* Print length. */
    if (width == 0)
@@ -434,10 +426,7 @@ static int gfxL_printf( lua_State *L )
    x     = luaL_checknumber(L,3);
    y     = luaL_checknumber(L,4);
    col   = luaL_checkcolour(L,5);
-   if (lua_gettop(L) >= 6)
-      max = luaL_checkinteger(L,6);
-   else
-      max = 0;
+   max   = luaL_optinteger(L,6,0);
    mid   = lua_toboolean(L,7);
 
    /* Render. */
@@ -483,10 +472,7 @@ static int gfxL_print( lua_State *L )
    x     = luaL_checknumber(L,3);
    y     = luaL_checknumber(L,4);
    col   = luaL_checkcolour(L,5);
-   if (lua_gettop(L) >= 6)
-      max = luaL_checkinteger(L,6);
-   else
-      max = 0;
+   max   = luaL_optinteger(L,6,0);
    mid   = lua_toboolean(L,7);
 
    /* Render. */
