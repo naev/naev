@@ -6,8 +6,7 @@ Meant to be loaded as a library to run Love2d stuff out of the box.
 Example usage would be as follows:
 """
 require 'love'
-require 'pong'
-love.start()
+love.exec( 'pong' ) -- Will look for pong.lua or pong/main.lua
 """
 
 --]]
@@ -26,7 +25,7 @@ love._default = {
 }
 function love._unimplemented() error(_("unimplemented")) end
 
--- Dummy user-defined functions
+-- Dummy game-defined functions
 function love.conf(t) end -- dummy
 function love.load() end --dummy
 
@@ -75,12 +74,13 @@ local function _update( dt )
    love.timer._adt = alpha*dt + (1-alpha)*love.timer._adt
    love.update(dt)
 end
-function love.update( dt ) end -- dummy
 function love.timer.getDelta() return love.timer._dt end
 function love.timer.getAverageDelta() return love.timer._adt end
 function love.timer.getFPS() return 1/love.timer._adt end
 function love.timer.getTime() return love.timer._edt end
 function love.timer.sleep( s ) end -- can't really support properly
+-- Dummy game-defined functions
+function love.update( dt ) end -- dummy
 
 
 --[[
@@ -193,6 +193,7 @@ function love.mouse.isDown( button ) return love.mouse.down[button]==true end
 function love.mouse.setVisible( visible )
    love._unimplemented()
 end
+-- Dummy game-defined functions
 function love.mousemoved( x, y, dx, dy, istouch ) end -- dummy
 function love.mousepressed( x, y, button, istouch ) end -- dummy
 function love.mousereleased( x, y, button, istouch ) end -- dummy
@@ -218,14 +219,15 @@ local function _keyboard( pressed, key, mod )
    end
    return true
 end
-function love.keypressed( key, scancode, isrepeat ) end -- dummy
-function love.keyreleased( key, scancode ) end -- dummy
 function love.keyboard.isDown( key )
    return (love.keyboard._keystate[ key ] == true)
 end
 function love.keyboard.setKeyRepeat( enable )
    love.keyboard._repeat = enable
 end
+-- Dummy game-defined functions
+function love.keypressed( key, scancode, isrepeat ) end -- dummy
+function love.keyreleased( key, scancode ) end -- dummy
 
 
 --[[
@@ -387,6 +389,7 @@ local function _draw( x, y, w, h )
    love.draw()
 end
 love.graphics = require 'love/graphics'
+-- Dummy game-defined functions
 function love.draw() end -- dummy
 
 
