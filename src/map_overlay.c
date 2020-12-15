@@ -170,15 +170,11 @@ void ovr_refresh (void)
       if (!jp_isUsable(jp) || !jp_isKnown(jp))
          continue;
       /* Initialize the map overlay stuff. */
-      nsnprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), _(jp->target->name) );
+      nsnprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
       moo[items].text_width = gl_printWidthRaw(&gl_smallFont, buf);
-      /* Second check in case "Unknown" is bigger than the system name. */
-      nsnprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), _("Unknown") );
-      moo[items].text_width = MAX(
-            moo[items].text_width, gl_printWidthRaw(&gl_smallFont, buf) );
       pos[items] = &jp->pos;
       mo[items]  = &jp->mo;
-      mo[items]->radius = jumppoint_gfx->sw / 2.;
+      mo[items]->radius = jumppoint_gfx->sw;
       items++;
    }
    jumpitems = items;
