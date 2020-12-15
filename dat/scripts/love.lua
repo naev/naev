@@ -359,7 +359,7 @@ local function _draw( x, y, w, h )
    love.w = w
    love.h = h
    love.graphics.origin()
-   naev.gfx.renderRect( x, y, w, h, love.graphics._bgcol )
+   love.graphics.clear()
    love.draw()
 end
 love.graphics = require 'love/graphics'

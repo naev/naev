@@ -2,8 +2,8 @@
 -- Love2d Graphics for Naev!
 --]]
 love.graphics = {}
-love.graphics._bgcol = colour.new( 0, 0, 0, 1 )
-love.graphics._fgcol = colour.new( 1, 1, 1, 1 )
+love.graphics._bgcol = naev.colour.new( 0, 0, 0, 1 )
+love.graphics._fgcol = naev.colour.new( 1, 1, 1, 1 )
 
 -- Helper functions
 local function _mode(m)
@@ -27,7 +27,7 @@ local function _scol( r, g, b, a )
       g = r[2]
       r = r[1]
    end
-   return colour.new( r, g, b, a or 1 )
+   return naev.colour.new( r, g, b, a or 1 )
 end
 
 
@@ -195,11 +195,39 @@ function love.graphics.getColor() return _gcol( love.graphics._fgcol ) end
 function love.graphics.setColor( red, green, blue, alpha )
    love.graphics._fgcol = _scol( red, green, blue, alpha )
 end
+function love.graphics.setDefaultFilter( min, mag, anisotropy )
+   love.graphics._minfilter = min
+   love.graphics._magfilter = mag
+   love.graphics._anisotropy = 1
+end
+function love.graphics.getDefaultFilter()
+   return love.graphics._minfilter, love.graphics._magfilter, love.graphics._anisotropy
+end
 
 
 --[[
 -- Rendering primitives and drawing
 --]]
+function love.graphics.clear( ... )
+   local arg = {...}
+   local col
+   if #arg==0 then
+      col = love.graphics._bgcol
+   elseif type(arg[1])=="number" then
+      local r = arg[1]
+      local g = arg[2]
+      local b = arg[3]
+      local a = arg[4] or 1
+      col = _scol( r, g, b, a )
+   elseif type(arg[1])=="table" then
+      local r = arg[1][1]
+      local g = arg[1][1]
+      local b = arg[1][1]
+      local a = arg[1][1] or 1
+      col = _scol( r, g, b, a )
+   end
+   naev.gfx.renderRect( love.x, love.y, love.w, love.h, col )
+end
 function love.graphics.draw( drawable, ... )
    drawable:_draw( ... )
 end
@@ -281,14 +309,6 @@ end
 
 
 -- unimplemented
-function love.graphics.setDefaultFilter( min, mag, anisotropy )
-   love.graphics._minfilter = min
-   love.graphics._magfilter = mag
-   love.graphics._anisotropy = 1
-end
-function love.graphics.getDefaultFilter()
-   return love.graphics._minfilter, love.graphics._magfilter, love.graphics._anisotropy
-end
 function love.graphics.setLineStyle( style )
    love._unimplemented()
 end
