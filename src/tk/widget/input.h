@@ -42,6 +42,7 @@ void window_setInputCallback( const unsigned int wid, char* name, void (*fptr)(u
 
 /* Filter constants. */
 #define INPUT_FILTER_NUMBER     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`"
+/* For inputting resolution, we want numbers and 'x'. */
 #define INPUT_FILTER_RESOLUTION "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`"
 
 
