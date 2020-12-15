@@ -3,11 +3,10 @@
  */
 
 
-#include "map_overlay.h"
-
-#include "naev.h"
-
+#include <float.h>
 #include "SDL.h"
+
+#include "map_overlay.h"
 
 #include "array.h"
 #include "conf.h"
@@ -15,6 +14,7 @@
 #include "gui.h"
 #include "input.h"
 #include "log.h"
+#include "naev.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "pilot.h"
@@ -23,15 +23,23 @@
 
 
 /**
+ * Structure for map overlay size.
+ */
+typedef struct MapOverlayRadiusConstraint_ {
+   int i; /**< this radius... */
+   int j; /**< plus this radius... */
+   double dist; /**< ... is at most this big. */
+} MapOverlayRadiusConstraint;
+
+
+/**
  * Structure for map overlay optimization.
  */
 typedef struct MapOverlayPosOpt_ {
    /* Same as MapOverlayPos (double buffering). */
-   float radius; /**< Radius for display on the map overlay. */
    float text_offx; /**< x offset of the caption text. */
    float text_offy; /**< y offset of the caption text. */
    /* Below are temporary values for optimization. */
-   float radius_base; /**< Radius for display on the map overlay. */
    float text_offx_base; /**< Base x position of the caption text. */
    float text_offy_base; /**< Base y position of the caption text. */
    float text_width; /**< width of the caption text. */
@@ -136,7 +144,7 @@ int ovr_input( SDL_Event *event )
 void ovr_refresh (void)
 {
    double max_x, max_y;
-   int i, items;
+   int i, items, jumpitems;
    Planet *pnt;
    JumpPoint *jp;
    const Vector2d **pos;
@@ -164,7 +172,6 @@ void ovr_refresh (void)
       if (!jp_isUsable(jp) || !jp_isKnown(jp))
          continue;
       /* Initialize the map overlay stuff. */
-      moo[items].radius_base = MAX( jumppoint_gfx->sw / res, 10. );
       nsnprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), _(jp->target->name) );
       moo[items].text_width = gl_printWidthRaw(&gl_smallFont, buf);
       /* Second check in case "Unknown" is bigger than the system name. */
@@ -173,8 +180,10 @@ void ovr_refresh (void)
             moo[items].text_width, gl_printWidthRaw(&gl_smallFont, buf) );
       pos[items] = &jp->pos;
       mo[items]  = &jp->mo;
+      mo[items]->radius = jumppoint_gfx->sw / 2.;
       items++;
    }
+   jumpitems = items;
    for (i=0; i<cur_system->nplanets; i++) {
       pnt = cur_system->planets[i];
       max_x = MAX( max_x, ABS(pnt->pos.x) );
@@ -183,18 +192,20 @@ void ovr_refresh (void)
          continue;
       /* Initialize the map overlay stuff. */
       nsnprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(pnt), _(pnt->name) );
-      moo[items].radius_base = MAX( pnt->radius*2. / res, 15. );
       moo[items].text_width = gl_printWidthRaw( &gl_smallFont, buf );
       pos[items] = &pnt->pos;
       mo[items]  = &pnt->mo;
+      mo[items]->radius = pnt->radius;
       items++;
    }
 
    /* We need to calculate the radius of the rendering from the maximum radius of the system. */
    ovr_res = 2. * 1.2 * MAX( max_x / map_overlay_width(), max_y / map_overlay_height() );
+   for (i=0; i<items; i++)
+      mo[i]->radius = MAX( mo[i]->radius / ovr_res, i<jumpitems ? 10. : 15. );
 
    /* Compute text overlap and try to minimize it. */
-   ovr_optimizeLayout( items, pos, mo, moo, res );
+   ovr_optimizeLayout( items, pos, mo, moo, ovr_res );
 
    /* Free the moos. */
    free( mo );
@@ -216,24 +227,50 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    const int max_iters = 100; /**< Maximum amount of iterations to do. */
    const float pixbuf = 5.; /**< Pixels to buffer around for text (not used for optimizing radius). */
    const float pixbuf_initial = 50; /**< Initial pixel buffer to consider. */
-   const float radius_shrink_ratio = 0.95; /**< How fast to shrink the radius. */
-   const float radius_grow_ratio = 1./radius_shrink_ratio; /**< How fast to grow the radius. */
    const float position_threshold_x = 20.; /**< How far to start penalizing x position. */
    const float position_threshold_y = 10.; /**< How far to start penalizing y position. */
    const float position_weight = .1; /**< How much to penalize the position. */
    const float object_weight = 1.; /**< Weight for overlapping with objects. */
    const float text_weight = 2.; /**< Weight for overlapping with text. */
 
-   /* Initialize radius. Other will be put at infinity. */
+   /* Fix radii which fit together. */
+   MapOverlayRadiusConstraint cur, *fits = array_create(MapOverlayRadiusConstraint);
+   uint8_t *must_shrink = malloc( items );
+   for (cur.i=0; cur.i<items; cur.i++)
+      for (cur.j=cur.i+1; cur.j<items; cur.j++) {
+         cur.dist = hypot( pos[cur.i]->x - pos[cur.j]->x, pos[cur.i]->y - pos[cur.j]->y ) / res;
+         cur.dist *= 2; /* Oh, for the love of God, did someone make "radius" a diameter again? */
+         if (cur.dist < mo[cur.i]->radius + mo[cur.j]->radius)
+            array_push_back( &fits, cur );
+      }
+   while (array_size( fits ) > 0) {
+      float shrink_factor = 0;
+      memset( must_shrink, 0, items );
+      for (i = 0; i < array_size( fits ); i++)
+      {
+         r = fits[i].dist / (mo[fits[i].i]->radius + mo[fits[i].j]->radius);
+         if (r >= 1)
+            array_erase( &fits, &fits[i], &fits[i+1] );
+         else {
+            shrink_factor = MAX( shrink_factor, r - FLT_EPSILON );
+            must_shrink[fits[i].i] = must_shrink[fits[i].j] = 1;
+         }
+      }
+      for (i=0; i<items; i++)
+         if (must_shrink[i])
+            mo[i]->radius *= shrink_factor;
+   }
+   free( must_shrink );
+   array_free( fits );
+
+   /* Initialize text positions to infinity. */
    for (i=0; i<items; i++) {
-      mo[i]->radius = moo[i].radius_base;
-      mo[i]->text_offx = HUGE_VAL;
-      mo[i]->text_offy = HUGE_VAL;
+      mo[i]->text_offx = HUGE_VALF;
+      mo[i]->text_offy = HUGE_VALF;
    }
 
    /* Initialize all items. */
    for (i=0; i<items; i++) {
-      moo[i].radius = moo[i].radius_base;
       /* Test to see what side is best to put the text on.
        * We actually compute the text overlap also so hopefully it will alternate
        * sides when stuff is clustered together. */
@@ -245,7 +282,6 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
       moo[i].text_offx = moo[i].text_offx_base;
       moo[i].text_offy = moo[i].text_offy_base;
       /* Initialize mo. */
-      //mo[i]->radius = moo[i].radius;
       mo[i]->text_offx = moo[i].text_offx;
       mo[i]->text_offy = moo[i].text_offy;
    }
@@ -257,17 +293,6 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
          cx = pos[i]->x / res;
          cy = pos[i]->y / res;
          r  = mo[i]->radius;
-         /* Modify radius if overlap.
-          * We ignore the text here, as the text should move away on it's own.
-          * Furthermore, no pixel buffer so that everything is tighter. */
-         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx-r/2., cy-r/2., r, r, pos, mo, moo, items, i, 1, 0., object_weight, 0. )) {
-            moo[i].radius *= radius_shrink_ratio;
-            changed = 1;
-         }
-         else if (mo[i]->radius < moo[i].radius_base) {
-            moo[i].radius *= radius_grow_ratio;
-            changed = 1;
-         }
          /* Move text if overlap. */
          if (ovr_refresh_compute_overlap( &ox, &oy, res, cx+mo[i]->text_offx, cy+mo[i]->text_offy, moo[i].text_width, gl_smallFont.h, pos, mo, moo, items, i, 0, pixbuf, object_weight, text_weight )) {
             //moo[i].text_offx += ox / sqrt(fabs(ox)+epsilon) * update_rate;
@@ -280,33 +305,31 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
          /* Penalize offsets changes */
          off = moo[i].text_offx_base - mo[i]->text_offx;
          if (fabs(off) > position_threshold_x) {
-            off = FSIGN(off) * pow2(fabs(off)-position_threshold_x);
-            moo[i].text_offx += position_weight * off;
+            off -= FSIGN(off) * position_threshold_x;
+            /* Regularization, my ass. This can kick the point straight through to the opposite side.
+             * That's not necessarily bad. If our base point forces a bad fit, may as well switch to another one.
+             * But we cannot just let the adjustment overshoot and grow without bound; it's hard to read a label
+             * located at (nan, nan). */
+            moo[i].text_offx += off * MIN( position_weight * fabs(off), 2. );
+            /* Embrace the possibility of switching sides (accidental simulated annealing?) and reset the base point. */
+            moo[i].text_offx_base *= FSIGN(moo[i].text_offx_base * moo[i].text_offx);
             changed = 1;
          }
          off = moo[i].text_offy_base - mo[i]->text_offy;
          if (fabs(off) > position_threshold_y) {
-            off = FSIGN(off) * pow2(fabs(off)-position_threshold_y);
-            moo[i].text_offy += position_weight * off;
+            off -= FSIGN(off) * position_threshold_y;
+            moo[i].text_offy += off * MIN( position_weight * fabs(off), 2. );
+            moo[i].text_offy_base *= FSIGN(moo[i].text_offy_base * moo[i].text_offy);
             changed = 1;
          }
 
          /* Propagate updates. */
-         mo[i]->radius = moo[i].radius;
          mo[i]->text_offx = moo[i].text_offx;
          mo[i]->text_offy = moo[i].text_offy;
       }
       /* Converged (or unnecessary). */
       if (!changed)
          break;
-      /* Propagate updates. */
-      /*
-      for (i=0; i<items; i++) {
-         mo[i]->radius = moo[i].radius;
-         mo[i]->text_offx = moo[i].text_offx;
-         mo[i]->text_offy = moo[i].text_offy;
-      }
-      */
    }
 }
 
@@ -322,7 +345,7 @@ static void ovr_init_position( float *px, float *py, float res, float x, float y
    float ox,oy, cx,cy, bx,by;
    float off, val, best;
 
-   off = moo[self].radius_base/2.+margin*1.5;
+   off = mo[self]->radius/2.+margin*1.5;
    /* Order is left -> right -> top -> bottom */
    //float tx[8] = {   off, -off-w, -w/2.,  -w/2., off, -off-w,    off, -off-w };
    //float ty[8] = { -h/2.,  -h/2.,   off, -off-h, off,    off, -off-h, -off-h };
@@ -330,7 +353,7 @@ static void ovr_init_position( float *px, float *py, float res, float x, float y
    const float ty[4] = { -h/2.,  -h/2., off, -off-h };
 
    /* Check all combinations. */
-   best = HUGE_VAL;
+   best = HUGE_VALF;
    for (i=0; i<4; i++) {
       cx = x + tx[i];
       cy = y + ty[i];
