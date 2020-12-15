@@ -13,7 +13,7 @@ love.exec( 'pong' ) -- Will look for pong.lua or pong/main.lua
 require 'class'
 
 love = {}
-love.basepath = ""
+love._basepath = ""
 love._version_major = 11
 love._version_minor = 1
 love._version_patch = 3
@@ -142,7 +142,7 @@ function love.filesystem.getInfo( path, filtertype )
    return nil
 end
 function love.filesystem.newFile( filename )
-   return naev.file.new( love.basepath..filename )
+   return naev.file.new( love._basepath..filename )
 end
 function love.filesystem.read( name, size )
    local f = naev.file.new( name )
@@ -404,7 +404,7 @@ function love.exec( path )
    local confpath, mainpath
    if info then
       if info.type == "directory" then
-         love.basepath = path.."/" -- Allows loading files relatively
+         love._basepath = path.."/" -- Allows loading files relatively
          package.path = package.path..string.format(";%s/?.lua", path)
          -- Run conf if exists
          if love.filesystem.getInfo( path.."/conf.lua" ) ~= nil then
