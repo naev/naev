@@ -16,7 +16,7 @@
 -- Shipwreck Event
 -- 
 -- Creates a wrecked ship that asks for help. If the player boards it, the event switches to the Space Family mission.
--- See dat/missions/neutral/spacefamily.lua
+-- See dat/missions/neutral/spacefamily
 -- 
 -- 12/02/2010 - Added visibility/highlight options for use in big systems (Anatolis)
 --]]

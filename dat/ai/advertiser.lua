@@ -1,7 +1,7 @@
-require("ai/tpl/generic.lua")
-require("ai/personality/advertiser.lua")
-require("ai/distress_behaviour.lua")
-require "numstring.lua"
+require "ai/tpl/generic"
+require "ai/personality/advertiser"
+require "ai/distress_behaviour"
+require "numstring"
 
 
 function create ()

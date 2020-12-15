@@ -25,9 +25,9 @@
  --]]
 --Escort a convoy of traders to a destination--
 
-require "nextjump.lua"
-require "cargo_common.lua"
-require "numstring.lua"
+require "nextjump"
+require "cargo_common"
+require "numstring"
 
 
 misn_title = {}

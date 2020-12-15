@@ -31,9 +31,9 @@
 
 --]]
 
-require "fleethelper.lua"
-require "numstring.lua"
-require "missions/flf/flf_pirates.lua"
+require "fleethelper"
+require "numstring"
+require "missions/flf/flf_pirates"
 
 title = {}
 text = {}

@@ -29,10 +29,10 @@
 --]]
 
 --needed scripts
-require "proximity.lua"
-require "numstring.lua"
-require "fleethelper.lua"
-require "missions/shark/common.lua"
+require "proximity"
+require "numstring"
+require "fleethelper"
+require "missions/shark/common"
 
 
 title = {}

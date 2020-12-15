@@ -1,4 +1,4 @@
-require("scripts/prng.lua")
+require("scripts/prng")
 
 nebulae = {
    "nebula02.png",

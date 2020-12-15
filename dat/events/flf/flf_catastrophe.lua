@@ -29,9 +29,9 @@
 
 --]]
 
-require "fleethelper.lua"
-require "misnhelper.lua"
-require "missions/flf/flf_common.lua"
+require "fleethelper"
+require "misnhelper"
+require "missions/flf/flf_common"
 
 
 title = {}

@@ -2,7 +2,7 @@
    The revamped version of the slim GUI
 ]]--
 
-require "numstring.lua"
+require "numstring"
 
 function create()
 

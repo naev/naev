@@ -24,9 +24,9 @@
 
 ]]--
 
-require "numstring.lua"
-require "jumpdist.lua"
-require "portrait.lua"
+require "numstring"
+require "jumpdist"
+require "portrait"
 
 bar_desc = _("You see a pirate lord raving about something. A significant crowd has gathered around.")
 misn_title = _("Clans trade")

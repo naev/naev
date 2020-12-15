@@ -38,8 +38,8 @@
 
 --]]
 
-require "numstring.lua"
-require "missions/neutral/common.lua"
+require "numstring"
+require "missions/neutral/common"
 
 
 -- This section stores the strings (text) for the mission.

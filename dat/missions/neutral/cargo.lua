@@ -27,8 +27,8 @@
    -- Most of these missions require BULK ships. Not for small ships!
 --]]
 
-require "cargo_common.lua"
-require "numstring.lua"
+require "cargo_common"
+require "numstring"
 
 
 misn_desc = {}

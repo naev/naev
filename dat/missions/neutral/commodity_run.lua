@@ -39,7 +39,7 @@
    Commodity delivery missions.
 --]]
 
-require "numstring.lua"
+require "numstring"
 
 --Mission Details
 misn_title = _("%s Delivery")
@@ -60,7 +60,7 @@ osd_msg[2] = _("Take the %s to %s in the %s system")
 osd_msg["__save"] = true
 
 
--- A script may require "missions/neutral/commodity_run.lua" and override this
+-- A script may require "missions/neutral/commodity_run" and override this
 -- with a table of (raw) commodity names to choose from.
 commchoices = nil
 

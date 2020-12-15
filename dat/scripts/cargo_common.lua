@@ -1,6 +1,6 @@
-require "jumpdist.lua"
-require "nextjump.lua"
-require "numstring.lua"
+require "jumpdist"
+require "nextjump"
+require "numstring"
 
 -- Don't use hidden jumps by default; set this to true to use hidden jumps.
 cargo_use_hidden = false

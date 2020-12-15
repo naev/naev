@@ -29,8 +29,8 @@
 
 --]]
 
-require "events/tutorial/tutorial_common.lua"
-require "missions/neutral/common.lua"
+require "events/tutorial/tutorial_common"
+require "missions/neutral/common"
 
 
 -- FIXME: Have to use a table for some of it due to \a bug.

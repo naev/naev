@@ -340,6 +340,7 @@ int sound_al_init (void)
       source_ntotal = source_mstack;
       source_total  = malloc( sizeof( ALuint ) * source_mstack );
       memcpy( source_total, source_stack, sizeof( ALuint ) * source_mstack );
+
       /* Copy allocated sources to all stack. */
       source_nall = source_mstack;
       source_all  = malloc( sizeof( ALuint ) * source_mstack );

@@ -108,7 +108,11 @@ typedef struct glFontStashFreetype_s {
  * @brief Font structure.
  */
 typedef struct glFontStash_s {
-   int h; /**< Font height. */
+   /* Core values (determine font). */
+   char *fname; /**< Font list name. */
+   unsigned int h; /**< Font height. */
+
+   /* Generated values. */
    int tw; /**< Width of textures. */
    int th; /**< Height of textures. */
    glFontTex *tex; /**< Textures. */
@@ -123,6 +127,8 @@ typedef struct glFontStash_s {
 
    /* Freetype stuff. */
    glFontStashFreetype *ft;
+
+   int refcount; /**< Reference counting. */
 } glFontStash;
 
 /**
@@ -679,7 +685,8 @@ void gl_printRaw( const glFont *ft_font,
       const double x, const double y,
       const glColour* c, const double outlineR, const char *text)
 {
-   gl_printOutline( ft_font, 0, 0, x, y, c, outlineR, text, gl_printRawBase);
+   if (outlineR > 0.)
+      gl_printOutline( ft_font, 0, 0, x, y, c, outlineR, text, gl_printRawBase);
    gl_printRawBase( ft_font, 0, 0, x, y, c, text, 0 );
 }
 
@@ -772,7 +779,8 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
       const double x, const double y,
       const glColour* c, const double outlineR, const char *text)
 {
-   gl_printOutline( ft_font, max, 0, x, y, c, outlineR, text, gl_printMaxRawBase );
+   if (outlineR > 0.)
+      gl_printOutline( ft_font, max, 0, x, y, c, outlineR, text, gl_printMaxRawBase );
    return gl_printMaxRawBase( ft_font, max, 0, x, y, c, text, 0 );
 }
 
@@ -876,7 +884,8 @@ int gl_printMidRaw(
       const char *text
       )
 {
-   gl_printOutline( ft_font, width, 0, x, y, c, outlineR, text, gl_printMidRawBase);
+   if (outlineR > 0.)
+      gl_printOutline( ft_font, width, 0, x, y, c, outlineR, text, gl_printMidRawBase);
    return gl_printMidRawBase( ft_font, width, 0, x, y, c, text, 0 );
 }
 
@@ -1001,7 +1010,8 @@ int gl_printTextRaw( const glFont *ft_font,
       const char *text
     )
 {
-   gl_printOutline( ft_font, width, height, bx, by, c, outlineR, text, gl_printTextRawBase );
+   if (outlineR > 0.)
+      gl_printOutline( ft_font, width, height, bx, by, c, outlineR, text, gl_printTextRawBase );
    return gl_printTextRawBase( ft_font, width, height, bx, by, c, text, 0 );
 }
 
@@ -1461,9 +1471,10 @@ static void gl_fontRenderEnd (void)
  *    @param font Font to load (NULL defaults to gl_defFont).
  *    @param fname Name of the font (from inside packfile).
  *    @param h Height of the font to generate.
+ *    @param prefix Prefix to look for the font.
  *    @return 0 on success.
  */
-int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
+int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const char *prefix )
 {
    FT_Library library;
    FT_Face face;
@@ -1475,13 +1486,35 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    int ch;
    char fullname[PATH_MAX];
 
+   /* Replace name if NULL. */
+   if (fname == NULL)
+      fname = FONT_DEFAULT_PATH;
+
    /* Get font stash. */
    if (avail_fonts==NULL)
       avail_fonts = array_create( glFontStash );
+
+   /* Check if available. */
+   for (i=0; i<(size_t)array_size(avail_fonts); i++) {
+      stsh = &avail_fonts[i];
+      if (stsh->h != h)
+         continue;
+      if (strcmp(stsh->fname,fname)!=0)
+         continue;
+      /* Found a match! */
+      stsh->refcount++;
+      font->id = stsh - avail_fonts;
+      font->h = h;
+      return 0;
+   }
+
+   /* Create new font. */
    stsh = &array_grow( &avail_fonts );
    memset( stsh, 0, sizeof(glFontStash) );
+   stsh->refcount = 1; /* Initialize refcount. */
+   stsh->fname = strdup(fname);
    font->id = stsh - avail_fonts;
-   font->h = (int)floor((double)h);
+   font->h = h;
 
    /* Default sizes. */
    stsh->tw = DEFAULT_TEXTURE_SIZE;
@@ -1490,8 +1523,6 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
 
    /* Set up font stuff for next glyphs. */
    stsh->ft = array_create( glFontStashFreetype );
-   if (fname == NULL)
-      fname = FONT_DEFAULT_PATH;
    ch = 0;
    for (i=0; i<strlen(fname)+1; i++) {
       if ((fname[i]=='\0') || (fname[i]==',')) {
@@ -1502,8 +1533,9 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
          ft->fontname[i-ch] = '\0';
 
          /* Read font file. */
-         nsnprintf( fullname, PATH_MAX, FONT_PATH_PREFIX"%s", ft->fontname );
-         buf = ndata_read( fullname, &bufsize );
+         nsnprintf( fullname, PATH_MAX, "%s%s", prefix, ft->fontname );
+         //buf = ndata_read( fullname, &bufsize );
+         buf = (FT_Byte*)_nfile_readFile( &bufsize, fullname );
          if (buf == NULL) {
             WARN(_("Unable to read font: %s"), ft->fontname);
             return -1;
@@ -1582,6 +1614,12 @@ void gl_freeFont( glFont* font )
       font = &gl_defFont;
    glFontStash *stsh = gl_fontGetStash( font );
 
+   /* Check references. */
+   stsh->refcount--;
+   if (stsh->refcount > 0)
+      return;
+   /* Not references and must eliminate. */
+
    for (i=0; i<array_size(stsh->ft); i++) {
       ft = &stsh->ft[i];
       free(ft->fontname);
@@ -1591,6 +1629,7 @@ void gl_freeFont( glFont* font )
    }
    array_free( stsh->ft );
 
+   free( stsh->fname );
    for (i=0; i<array_size(stsh->tex); i++)
       glDeleteTextures( 1, &stsh->tex->id );
    array_free( stsh->tex );

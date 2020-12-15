@@ -572,7 +572,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
    ship_loadSpaceImage( temp, str, sx, sy );
 
    /* Load the engine sprite .*/
-   if (engine && conf.engineglow && conf.interpolate) {
+   if (engine && conf.engineglow) {
       nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
       ship_loadEngineImage( temp, str, sx, sy );
       if (temp->gfx_engine == NULL)

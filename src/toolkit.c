@@ -282,11 +282,14 @@ Widget* window_newWidget( Window* w, const char *name )
 Window* window_wget( const unsigned int wid )
 {
    Window *w;
-   if (windows == NULL)
+   if (windows == NULL) {
+      WARN(_("Window '%u' not found in list!"), wid );
       return NULL;
+   }
    for (w = windows; w != NULL; w = w->next)
       if (w->id == wid)
          return w;
+   WARN(_("Window '%u' not found in list!"), wid );
    return NULL;
 }
 
@@ -305,8 +308,10 @@ Widget* window_getwgt( const unsigned int wid, const char* name )
 
    /* Get the window. */
    wdw = window_wget(wid);
-   if (wdw == NULL)
+   if (wdw == NULL) {
+      WARN(_("Widget '%s' not found in window '%u'!"), name, wid );
       return NULL;
+   }
 
    /* Find the widget. */
    for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
@@ -340,6 +345,31 @@ void window_dimWindow( const unsigned int wid, int *w, int *h )
    /* Set dimensions. */
    *w = wdw->w;
    *h = wdw->h;
+}
+
+
+/**
+ * @brief Gets the dimensions of a window.
+ *
+ *    @param wid ID of the window to get dimension of.
+ *    @param[out] x X position of the window or -1 on error.
+ *    @param[out] y Y position of the window or -1 on error.
+ */
+void window_posWindow( const unsigned int wid, int *x, int *y )
+{
+   Window *wdw;
+
+   /* Get the window. */
+   wdw = window_wget(wid);
+   if (wdw == NULL) {
+      *x = -1;
+      *y = -1;
+      return;
+   }
+
+   /* Set dimensions. */
+   *x = wdw->x;
+   *y = wdw->y;
 }
 
 
@@ -456,6 +486,27 @@ int window_existsID( const unsigned int wid )
       if ((w->id==wid) && !window_isFlag(w, WINDOW_KILL))
          return 1;
    return 0; /* doesn't exist */
+}
+
+
+/**
+ * @brief Sets the displayname of a window.
+ *
+ *    @param wid ID of the window.
+ *    @param displayname Display name to set to.
+ *    @return 0 on success.
+ */
+int window_setDisplayname( const unsigned int wid, const char *displayname )
+{
+   Window *wdw = window_wget(wid);
+   if (wdw == NULL)
+      return -1;
+   if (wdw->displayname!=NULL)
+      free(wdw->displayname);
+   wdw->displayname = NULL;
+   if (displayname != NULL)
+      wdw->displayname  = strdup(displayname);
+   return 0;
 }
 
 
@@ -1325,7 +1376,7 @@ void window_render( Window *w )
    /*
     * focused widget
     */
-   if (w->focus != -1) {
+   if (w->focus != -1){
       wgt = toolkit_getFocus( w );
       if ((wgt == NULL) || wgt_isFlag(wgt, WGT_FLAG_KILL))
          return;
@@ -1333,7 +1384,7 @@ void window_render( Window *w )
       y  += wgt->y;
       wid = wgt->w;
       hei = wgt->h;
-      toolkit_drawOutlineThick( x, y, wid, hei, 3, 4, &cGrey10, NULL );
+      toolkit_drawOutlineThick( x, y, wid, hei, 0, 2, (wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey30), NULL );
    }
 }
 

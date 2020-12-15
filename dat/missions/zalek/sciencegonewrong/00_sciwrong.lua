@@ -26,10 +26,10 @@
    Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
 
-require "numstring.lua"
-require "proximity.lua"
-require "fleethelper.lua"
-require "missions/zalek/common.lua"
+require "numstring"
+require "proximity"
+require "fleethelper"
+require "missions/zalek/common"
 
 
 -- set mission variables

@@ -309,19 +309,19 @@ static void btn_render( Widget* btn, double bx, double by )
 
    /* set the colours */
    if (btn->dat.btn.disabled) {
-      c  = &cGrey25;
+      c  = &cGrey20;
       fc = &cFontGrey;
-      outline = &cGrey25;
+      outline = &cGrey20;
    }
    else {
       fc = &cFontGrey;
-      outline = &cGrey60;
+      outline = &cGrey15;
       switch (btn->status) {
          case WIDGET_STATUS_MOUSEOVER:
-            c  = &cGrey20;
+            c  = &cGrey30;
             break;
          case WIDGET_STATUS_MOUSEDOWN:
-            c  = &cGrey10;
+            c  = &cGrey35;
             break;
          case WIDGET_STATUS_NORMAL:
          default:
@@ -333,9 +333,9 @@ static void btn_render( Widget* btn, double bx, double by )
    toolkit_drawRect( x, y, btn->w, btn->h, c, NULL );
 
    /* inner outline */
-   toolkit_drawOutline( x, y, btn->w, btn->h, 0., outline, NULL );
+   // toolkit_drawOutline( x, y, btn->w, btn->h, 0., outline, NULL );
    /* outer outline */
-   toolkit_drawOutline( x, y, btn->w, btn->h, 1., outline, NULL );
+   toolkit_drawOutlineThick( x, y, btn->w, btn->h, 1., 2, outline, NULL );
 
    gl_printMidRaw( &gl_smallFont, (int)btn->w,
          bx + btn->x,

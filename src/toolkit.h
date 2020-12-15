@@ -52,9 +52,11 @@ void window_lower( unsigned int wid );
 /* generic */
 int window_exists( const char* wdwname );
 int window_existsID( const unsigned int wid );
+int window_setDisplayname( const unsigned int wid, const char *displayname );
 int widget_exists( const unsigned int wid, const char* wgtname );
 unsigned int window_get( const char* wdwname );
 void window_dimWindow( const unsigned int wid, int *w, int *h );
+void window_posWindow( const unsigned int wid, int *x, int *y );
 void window_dimWidget( const unsigned int wid, char *name, int *w, int *h );
 char* window_getFocus( const unsigned int wid );
 void window_posWidget( const unsigned int wid,

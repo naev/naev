@@ -22,8 +22,8 @@
     Credits to KAHR-Alpha for the work "lackadaisically",
     and to BTAxis for the word "discombobulate"]]
 
-require "numstring.lua"
-require "missions/sirius/common.lua"
+require "numstring"
+require "missions/sirius/common"
 
     
 --the intro messages
