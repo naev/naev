@@ -292,16 +292,40 @@ end
 --[[
 -- Math
 --]]
+local prng = require 'prng'
 love.math = {}
 love.math.RandomGenerator = inheritsFrom( love.Object )
 love.math.RandomGenerator._type = "RandomGenerator"
 function love.math.newRandomGenerator( low, high )
-   -- TODO implement a real one?
-   return love.math.RandomGenerator.new()
+   if low ~= nil then
+      low = 0xCBBF7A44
+      high = 0x0139408D
+   end
+   local seed = tostring(low)
+   if high ~= nil then
+      seed = seed .. tostring(high)
+   end
+   local rng = love.math.RandomGenerator.new()
+   rng:setSeed( seed )
+   return rng
+end
+function love.math.RandomGenerator:setSeed( seed )
+   prng.initHash( seed )
+   self.z = prng.z
 end
 function love.math.RandomGenerator:random( min, max )
-   return love.math.random( min, max )
+   -- TODO get rid of this horrible hack and make prng return objects
+   prng.z = self.z
+   if min == nil then
+      return prng.num()
+   elseif max == nil then
+      return prng.range(1,min)
+   else
+      return prng.range(min,max)
+   end
 end
+function love.math.RandomGenerator:getState() return self.z end
+function love.math.RandomGenerator:setState( state ) self.z = state end
 function love.math.random( min, max )
    if min == nil then
       return naev.rnd.rnd()
