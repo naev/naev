@@ -25,7 +25,9 @@
 
 
 /* Helpers. */
-static inline uint32_t getpixel(SDL_Surface *surface, int x, int y);
+static inline uint32_t get_pixel(SDL_Surface *surface, int x, int y);
+static GLint get_filter( const char *s );
+static GLint get_clamp( const char *s );
 
 
 /* Texture metatable methods. */
@@ -35,6 +37,8 @@ static int texL_readData( lua_State *L );
 static int texL_dim( lua_State *L );
 static int texL_sprites( lua_State *L );
 static int texL_spriteFromDir( lua_State *L );
+static int texL_setFilter( lua_State *L );
+static int texL_setWrap( lua_State *L );
 static const luaL_Reg texL_methods[] = {
    { "__gc", texL_close },
    { "new", texL_new },
@@ -43,6 +47,8 @@ static const luaL_Reg texL_methods[] = {
    { "dim", texL_dim },
    { "sprites", texL_sprites },
    { "spriteFromDir", texL_spriteFromDir },
+   { "setFilter", texL_setFilter },
+   { "setWrap", texL_setWrap },
    {0,0}
 }; /**< Texture metatable methods. */
 
@@ -246,7 +252,7 @@ static int texL_new( lua_State *L )
 }
 
 
-static inline uint32_t getpixel(SDL_Surface *surface, int x, int y)
+static inline uint32_t get_pixel(SDL_Surface *surface, int x, int y)
 {
    int bpp = surface->format->BytesPerPixel;
    /* Here p is the address to the pixel we want to retrieve */
@@ -332,7 +338,7 @@ static int texL_readData( lua_State *L )
    data = (float*)ld.data;
    for (i=0; i<surface->h; i++) {
       for (j=0; j<surface->w; j++) {
-         pix = getpixel( surface, j, i );
+         pix = get_pixel( surface, j, i );
          SDL_GetRGBA( pix, surface->format, &r, &g, &b, &a );
          size_t pos = 4*(i*surface->w+j);
          data[ pos+0 ] = (float)r;
@@ -451,5 +457,87 @@ static int texL_spriteFromDir( lua_State *L )
    lua_pushinteger( L, sx+1 );
    lua_pushinteger( L, sy+1 );
    return 2;
+}
+
+
+static GLint get_filter( const char *s )
+{
+   if (strcmp(s,"linear")==0)
+      return GL_LINEAR;
+   else if (strcmp(s,"nearest")==0)
+      return GL_NEAREST;
+   return 0;
+}
+/**
+ * @brief Sets the texture minification and magnification filters.
+ *
+ *    @luatparam Tex tex Texture to set filter.
+ *    @luatparam string min Minification filter ("nearest" or "linear")
+ *    @luatparam[opt] string mag Magnification filter ("nearest" or "linear"). Defaults to min.
+ * @luafunc setFilter( tex, min, mag )
+ */
+static int texL_setFilter( lua_State *L )
+{
+   glTexture *tex = luaL_checktex(L,1);
+   const char *smin = luaL_checkstring(L,2);
+   const char *smag = luaL_optstring(L,3,smin);
+   GLint min, mag;
+
+   min = get_filter( smin );
+   mag = get_filter( smag );
+
+   if (min==0 || mag==0)
+      NLUA_INVALID_PARAMETER(L);
+
+   glBindTexture( GL_TEXTURE_2D, tex->texture );
+   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mag );
+   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min );
+   gl_checkErr();
+
+   return 0;
+}
+
+
+static GLint get_clamp( const char *s )
+{
+   if (strcmp(s,"clamp")==0)
+      return GL_CLAMP_TO_EDGE;
+   else if (strcmp(s,"repeat")==0)
+      return GL_REPEAT;
+   else if (strcmp(s,"mirroredrepeat")==0)
+      return GL_MIRRORED_REPEAT;
+   return 0;
+}
+/**
+ * @brief Sets the texture wrapping.
+ *
+ *    @luatparam Tex tex Texture to set filter.
+ *    @luatparam string horiz Horizontal wrapping ("clamp", "repeat", or "mirroredrepeat" )
+ *    @luatparam[opt] string vert Vertical wrapping ("clamp", "repeat", or "mirroredrepeat" )
+ *    @luatparam[opt] string depth Depth wrapping ("clamp", "repeat", or "mirroredrepeat" )
+ * @luafunc setWrap( tex, horiz, vert, depth )
+ */
+static int texL_setWrap( lua_State *L )
+{
+   glTexture *tex = luaL_checktex(L,1);
+   const char *shoriz = luaL_checkstring(L,2);
+   const char *svert = luaL_optstring(L,3,shoriz);
+   const char *sdepth = luaL_optstring(L,4,shoriz);
+   GLint horiz, vert, depth;
+
+   horiz = get_clamp( shoriz );
+   vert = get_clamp( svert );
+   depth = get_clamp( sdepth );
+
+   if (horiz==0 || vert==0 || depth==0)
+      NLUA_INVALID_PARAMETER(L);
+
+   glBindTexture( GL_TEXTURE_2D, tex->texture );
+   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, horiz );
+   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, vert );
+   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, depth );
+   gl_checkErr();
+
+   return 0;
 }
 
