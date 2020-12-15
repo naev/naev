@@ -214,7 +214,7 @@ local function _keyboard( pressed, key, mod )
    else
       love.keyreleased( k, k )
    end
-   if key == "Q" then
+   if k == "escape" then
       naev.tk.customDone()
    end
    return true
