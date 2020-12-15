@@ -265,8 +265,8 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
 
    /* Initialize text positions to infinity. */
    for (i=0; i<items; i++) {
-      mo[i]->text_offx = HUGE_VAL;
-      mo[i]->text_offy = HUGE_VAL;
+      mo[i]->text_offx = HUGE_VALF;
+      mo[i]->text_offy = HUGE_VALF;
    }
 
    /* Initialize all items. */
@@ -305,14 +305,21 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
          /* Penalize offsets changes */
          off = moo[i].text_offx_base - mo[i]->text_offx;
          if (fabs(off) > position_threshold_x) {
-            off = FSIGN(off) * pow2(fabs(off)-position_threshold_x);
-            moo[i].text_offx += position_weight * off;
+            off -= FSIGN(off) * position_threshold_x;
+            /* Regularization, my ass. This can kick the point straight through to the opposite side.
+             * That's not necessarily bad. If our base point forces a bad fit, may as well switch to another one.
+             * But we cannot just let the adjustment overshoot and grow without bound; it's hard to read a label
+             * located at (nan, nan). */
+            moo[i].text_offx += off * MIN( position_weight * fabs(off), 2. );
+            /* Embrace the possibility of switching sides (accidental simulated annealing?) and reset the base point. */
+            moo[i].text_offx_base *= FSIGN(moo[i].text_offx_base * moo[i].text_offx);
             changed = 1;
          }
          off = moo[i].text_offy_base - mo[i]->text_offy;
          if (fabs(off) > position_threshold_y) {
-            off = FSIGN(off) * pow2(fabs(off)-position_threshold_y);
-            moo[i].text_offy += position_weight * off;
+            off -= FSIGN(off) * position_threshold_y;
+            moo[i].text_offy += off * MIN( position_weight * fabs(off), 2. );
+            moo[i].text_offy_base *= FSIGN(moo[i].text_offy_base * moo[i].text_offy);
             changed = 1;
          }
 
@@ -346,7 +353,7 @@ static void ovr_init_position( float *px, float *py, float res, float x, float y
    const float ty[4] = { -h/2.,  -h/2., off, -off-h };
 
    /* Check all combinations. */
-   best = HUGE_VAL;
+   best = HUGE_VALF;
    for (i=0; i<4; i++) {
       cx = x + tx[i];
       cy = y + ty[i];
