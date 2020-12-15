@@ -1095,7 +1095,7 @@ static void uniedit_findSearch( unsigned int wid, char *str )
       found[n].pnt      = NULL;
       found[n].sys      = sys;
 
-      strncpy(found[n].display, sys->name, sizeof(found[n].display));
+      strncpy(found[n].display, sys->name, sizeof(found[n].display)-1);
       n++;
    }
    free(systems);
@@ -1240,8 +1240,7 @@ static void uniedit_editSys (void)
    window_addText( wid, x, y, l, 20, 1, "txtRadius",
          NULL, NULL, s );
    window_addInput( wid, x += l + 7, y, 80, 20, "inpRadius", 10, 1, NULL );
-   window_setInputFilter( wid, "inpRadius",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpRadius", INPUT_FILTER_NUMBER );
    x += 80 + 12;
    s = _("(Scales asset positions)");
    l = gl_printWidthRaw( NULL, s );
@@ -1257,8 +1256,7 @@ static void uniedit_editSys (void)
    window_addText( wid, x, y, l, 20, 1, "txtStars",
          NULL, NULL, s );
    window_addInput( wid, x += l + 7, y, 50, 20, "inpStars", 4, 1, NULL );
-   window_setInputFilter( wid, "inpStars",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpStars", INPUT_FILTER_NUMBER );
    x += 50 + 12;
 
    s = _("Interference");
@@ -1266,8 +1264,7 @@ static void uniedit_editSys (void)
    window_addText( wid, x, y, l, 20, 1, "txtInterference",
          NULL, NULL, s );
    window_addInput( wid, x += l + 7, y, 55, 20, "inpInterference", 5, 1, NULL );
-   window_setInputFilter( wid, "inpInterference",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpInterference", INPUT_FILTER_NUMBER );
 
    (void)x;
 
@@ -1280,8 +1277,7 @@ static void uniedit_editSys (void)
    window_addText( wid, x, y, l, 20, 1, "txtNebula",
          NULL, NULL, s );
    window_addInput( wid, x += l + 7, y, 50, 20, "inpNebula", 4, 1, NULL );
-   window_setInputFilter( wid, "inpNebula",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpNebula", INPUT_FILTER_NUMBER );
    x += 50 + 12;
 
    s = _("Volatility");
@@ -1289,8 +1285,7 @@ static void uniedit_editSys (void)
    window_addText( wid, x, y, l, 20, 1, "txtVolatility",
          NULL, NULL, s );
    window_addInput( wid, x += l + 7, y, 50, 20, "inpVolatility", 4, 1, NULL );
-   window_setInputFilter( wid, "inpVolatility",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpVolatility", INPUT_FILTER_NUMBER );
    x += 50 + 12;
 
    (void)x;

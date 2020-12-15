@@ -55,6 +55,7 @@ jobs:
           libopenal-dev \
           libvorbis-dev \
           libiberty-dev \
+          llvm \
           ninja-build \
           xvfb
 
@@ -306,6 +307,7 @@ jobs:
           libvorbis-dev \
           libxml2-dev \
           ninja-build=1.7.1-1~ubuntu16.04.1
+        sudo update-alternatives --install /usr/bin/llvm-ar llvm-ar /usr/bin/llvm-ar-9 90
 
     - name: Checkout Naev Repository
       uses: actions/checkout@v2

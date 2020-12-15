@@ -126,7 +126,7 @@ static int load_load( nsave_t *save, const char *path )
 
       if (xml_isNode(parent, "player")) {
          /* Get name. */
-         xmlr_attr(parent, "name", save->name);
+         xmlr_attr_strd(parent, "name", save->name);
          /* Parse rest. */
          node = parent->xmlChildrenNode;
          do {
@@ -151,8 +151,8 @@ static int load_load( nsave_t *save, const char *path )
 
             /* Ship info. */
             if (xml_isNode(node, "ship")) {
-               xmlr_attr(node, "name", save->shipname);
-               xmlr_attr(node, "model", save->shipmodel);
+               xmlr_attr_strd(node, "name", save->shipname);
+               xmlr_attr_strd(node, "model", save->shipmodel);
                continue;
             }
          } while (xml_nextNode(node));

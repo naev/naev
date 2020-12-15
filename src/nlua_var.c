@@ -157,8 +157,8 @@ int var_load( xmlNodePtr parent )
 
          do {
             if (xml_isNode(cur,"var")) {
-               xmlr_attr(cur,"name",var.name);
-               xmlr_attr(cur,"type",str);
+               xmlr_attr_strd(cur,"name",var.name);
+               xmlr_attr_strd(cur,"type",str);
                if (strcmp(str,"nil")==0)
                   var.type = MISN_VAR_NIL;
                else if (strcmp(str,"num")==0) {

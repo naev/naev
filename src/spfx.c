@@ -136,8 +136,7 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
    /* Clear data. */
    memset( temp, 0, sizeof(SPFX_Base) );
 
-   /* Get the name (mallocs). */
-   temp->name = xml_nodeProp(parent,"name");
+   xmlr_attr_strd( parent, "name", temp->name );
 
    /* Extract the data. */
    node = parent->xmlChildrenNode;

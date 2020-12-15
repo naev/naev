@@ -1013,7 +1013,6 @@ void economy_clearSinglePlanet(Planet *p)
 int economy_sysLoad( xmlNodePtr parent )
 {
    xmlNodePtr node, cur, nodeAsset, nodeCommodity;
-   //StarSystem *sys;
    char *str;
    Planet *planet;
    int i;
@@ -1028,19 +1027,17 @@ int economy_sysLoad( xmlNodePtr parent )
          cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur, "system")) {
-               xmlr_attr(cur,"name",str);
-               //sys = system_get(str);
-               free(str);
+               /* Ignore "name" attribute. */
                nodeAsset = cur->xmlChildrenNode;
                do{
                   if (xml_isNode(nodeAsset, "planet")) {
-                     xmlr_attr(nodeAsset,"name",str);
+                     xmlr_attr_strd(nodeAsset,"name",str);
                      planet = planet_get(str);
                      free(str);
                      nodeCommodity = nodeAsset->xmlChildrenNode;
                      do{
                         if (xml_isNode(nodeCommodity, "commodity")) {
-                           xmlr_attr(nodeCommodity,"name",str);
+                           xmlr_attr_strd(nodeCommodity,"name",str);
                            cp = NULL;
                            for (i=0; i<planet->ncommodities; i++) {
                               if ( (strcmp(str,planet->commodities[i]->name) == 0) ) {
@@ -1050,33 +1047,17 @@ int economy_sysLoad( xmlNodePtr parent )
                            }
                            free(str);
                            if ( cp != NULL ) {
-                              xmlr_attr(nodeCommodity,"sum",str);
-                              if (str) {
-                                 cp->sum = atof(str);
-                                 free(str);
-                              }
-                              xmlr_attr(nodeCommodity,"sum2",str);
-                              if (str) {
-                                 cp->sum2 = atof(str);
-                                 free(str);
-                              }
-                              xmlr_attr(nodeCommodity,"cnt",str);
-                              if (str) {
-                                 cp->cnt = atoi(str);
-                                 free(str);
-                              }
-                              xmlr_attr(nodeCommodity,"time",str);
-                              if (str) {
-                                 cp->updateTime = atoll(str);
-                                 free(str);
-                              }
+                              xmlr_attr_float(nodeCommodity,"sum",cp->sum);
+                              xmlr_attr_float(nodeCommodity,"sum2",cp->sum2);
+                              xmlr_attr_int(nodeCommodity,"cnt",cp->cnt);
+                              xmlr_attr_long(nodeCommodity,"time",cp->updateTime);
                            }
                         }
                      } while (xml_nextNode(nodeCommodity));
                   }
                } while (xml_nextNode(nodeAsset));
             } else if (xml_isNode(cur, "lastPurchase")) {
-               xmlr_attr(cur, "name", str);
+               xmlr_attr_strd(cur, "name", str);
                if (str) {
                   c=commodity_get(str);
                   c->lastPurchasePrice=xml_getLong(cur);

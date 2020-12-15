@@ -142,8 +142,7 @@ void ovr_refresh (void)
    const Vector2d **pos;
    MapOverlayPos **mo;
    MapOverlayPosOpt *moo;
-   int ires;
-   float res;
+   double res;
    char buf[STRMAX_SHORT];
 
    /* Must be open. */
@@ -151,8 +150,7 @@ void ovr_refresh (void)
       return;
 
    /* Calculate max size. */
-   gui_radarGetRes( &ires );
-   res = (float)ires;
+   gui_radarGetRes( &res );
    items = 0;
    pos = calloc(cur_system->njumps + cur_system->nplanets, sizeof(Vector2d*));
    mo  = calloc(cur_system->njumps + cur_system->nplanets, sizeof(MapOverlayPos*));

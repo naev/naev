@@ -172,6 +172,7 @@ ShipClass ship_classFromString( char* str );
 credits_t ship_basePrice( const Ship* s );
 credits_t ship_buyPrice( const Ship* s );
 glTexture* ship_loadCommGFX( Ship* s );
+int ship_size( const Ship *s );
 
 
 /*

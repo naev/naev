@@ -16,49 +16,50 @@
 
 #include <stdlib.h>
 
-#include "player.h"
-#include "nxml.h"
-#include "pilot.h"
-#include "log.h"
-#include "opengl.h"
-#include "font.h"
-#include "ndata.h"
-#include "space.h"
-#include "rng.h"
-#include "land.h"
-#include "sound.h"
-#include "economy.h"
-#include "pause.h"
-#include "menu.h"
-#include "toolkit.h"
-#include "dialogue.h"
-#include "mission.h"
-#include "nlua_misn.h"
-#include "ntime.h"
-#include "hook.h"
-#include "map.h"
-#include "nfile.h"
-#include "spfx.h"
-#include "unidiff.h"
-#include "comm.h"
-#include "intro.h"
-#include "perlin.h"
 #include "ai.h"
-#include "music.h"
-#include "nmath.h"
-#include "gui_osd.h"
-#include "conf.h"
-#include "nebula.h"
 #include "camera.h"
-#include "pilot.h"
+#include "comm.h"
+#include "conf.h"
+#include "dialogue.h"
+#include "economy.h"
+#include "font.h"
+#include "gui_omsg.h"
+#include "gui_osd.h"
+#include "hook.h"
+#include "input.h"
+#include "intro.h"
+#include "land.h"
+#include "log.h"
+#include "map.h"
+#include "menu.h"
+#include "mission.h"
+#include "music.h"
+#include "ndata.h"
+#include "nebula.h"
+#include "nfile.h"
 #include "nlua.h"
-#include "nluadef.h"
 #include "nlua_gfx.h"
 #include "nlua_gui.h"
+#include "nlua_misn.h"
 #include "nlua_tex.h"
 #include "nlua_tk.h"
-#include "gui_omsg.h"
+#include "nluadef.h"
+#include "nmath.h"
 #include "nstring.h"
+#include "ntime.h"
+#include "nxml.h"
+#include "opengl.h"
+#include "pause.h"
+#include "perlin.h"
+#include "pilot.h"
+#include "pilot.h"
+#include "player.h"
+#include "rng.h"
+#include "sound.h"
+#include "space.h"
+#include "spfx.h"
+#include "toolkit.h"
+#include "unidiff.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
@@ -1107,37 +1108,11 @@ void gui_radarRender( double x, double y )
 
 
 /**
- * @brief Gets the radar's position.
- *
- *    @param[out] x X position.
- *    @param[out] y Y position.
- */
-void gui_radarGetPos( int *x, int *y )
-{
-   *x = gui_radar.x;
-   *y = gui_radar.y;
-}
-
-
-/**
- * @brief Gets the radar's dimensions.
- *
- *    @param[out] w Width.
- *    @param[out] h Height.
- */
-void gui_radarGetDim( int *w, int *h )
-{
-   *w = gui_radar.w;
-   *h = gui_radar.h;
-}
-
-
-/**
  * @brief Outputs the radar's resolution.
  *
  *    @param[out] res Current zoom ratio.
  */
-void gui_radarGetRes( int *res )
+void gui_radarGetRes( double* res )
 {
    *res = gui_radar.res;
 }
@@ -1313,7 +1288,8 @@ static const glColour* gui_getPilotColour( const Pilot* p )
  */
 void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res, int overlay )
 {
-   int x, y, sx, sy;
+   int x, y;
+   double scale;
    glColour col;
 
    /* Make sure is in range. */
@@ -1330,16 +1306,11 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       y = (int)((p->solid->pos.y - player.p->solid->pos.y) / res);
    }
    /* Get size. */
-   sx = (int)(PILOT_SIZE_APROX/2. * p->ship->gfx_space->sw / res);
-   sy = (int)(PILOT_SIZE_APROX/2. * p->ship->gfx_space->sh / res);
-   if (sx < 1.)
-      sx = 1.;
-   if (sy < 1.)
-      sy = 1.;
+   scale = (double)ship_size( p->ship ) * (1. + RADAR_RES_MAX / res );
 
    /* Check if pilot in range. */
    if ( ((shape==RADAR_RECT) &&
-            ((ABS(x) > w/2+sx) || (ABS(y) > h/2.+sy)) ) ||
+            ((ABS(x) > (w+scale)/2.) || (ABS(y) > (h+scale)/2.)) ) ||
          ((shape==RADAR_CIRCLE) &&
             ((x*x+y*y) > (int)(w*w))) ) {
 
@@ -1374,13 +1345,13 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    col.a = 1.-interference_alpha;
 
    glLineWidth( 2. );
-   gl_renderTriangleEmpty( x, y, p->solid->dir, 3.*MAX(sx,sy), 1., &cBlack );
+   gl_renderTriangleEmpty( x, y, p->solid->dir, scale, 1., &cBlack );
    glLineWidth( 1. );
-   gl_renderTriangleEmpty( x, y, p->solid->dir, 3.*MAX(sx,sy), 1., &col );
+   gl_renderTriangleEmpty( x, y, p->solid->dir, scale, 1., &col );
 
    /* Draw name. */
    if (overlay && pilot_isFlag(p, PILOT_HILIGHT))
-      gl_printMarkerRaw( &gl_smallFont, x+2*sx+5., y-gl_smallFont.h/2., &col, p->name );
+      gl_printMarkerRaw( &gl_smallFont, x+scale+5., y-gl_smallFont.h/2., &col, p->name );
 }
 
 
@@ -2411,6 +2382,42 @@ void gui_targetPilotGFX( glTexture *gfx )
    gui_target_pilot = gl_dupTexture( gfx );
 }
 
+/**
+ * @brief Translates a mouse position from an SDL_Event to GUI coordinates.
+ */
+static void gui_eventToScreenPos( int* sx, int* sy, int ex, int ey )
+{
+   gl_windowToScreenPos( sx, sy, ex - gui_viewport_x, ey - gui_viewport_y );
+}
+
+
+/**
+ * @brief Handles a click at a position in the current system
+ *
+ *    @brief event The click event.
+ *    @return Whether the click was used to trigger an action.
+ */
+int gui_radarClickEvent( SDL_Event* event )
+{
+   int mxr, myr, in_bounds;
+   double x, y, cx, cy;
+
+   gui_eventToScreenPos( &mxr, &myr, event->button.x, event->button.y );
+   if (gui_radar.shape == RADAR_RECT) {
+      cx = gui_radar.x + gui_radar.w / 2.;
+      cy = gui_radar.y + gui_radar.h / 2.;
+      in_bounds = (2*ABS( mxr-cx ) <= gui_radar.w && 2*ABS( myr-cy ) <= gui_radar.h);
+   } else {
+      cx = gui_radar.x;
+      cy = gui_radar.y;
+      in_bounds = (pow2( mxr-cx ) + pow2( myr-cy ) <= pow2( gui_radar.w ));
+   }
+   if (!in_bounds)
+      return 0;
+   x = (mxr - cx) * gui_radar.res + player.p->solid->pos.x;
+   y = (myr - cy) * gui_radar.res + player.p->solid->pos.y;
+   return input_clickPos( event, x, y, 1., 10. * gui_radar.res, 15. * gui_radar.res );
+}
 
 /**
  * @brief Handles GUI events.
@@ -2435,8 +2442,7 @@ int gui_handleEvent( SDL_Event *evt )
          if (!gui_L_mmove)
             break;
          gui_prepFunc( "mouse_move" );
-         gl_windowToScreenPos( &x, &y, evt->motion.x - gui_viewport_x,
-               evt->motion.y - gui_viewport_y );
+         gui_eventToScreenPos( &x, &y, evt->motion.x, evt->motion.y );
          lua_pushnumber( naevL, x );
          lua_pushnumber( naevL, y );
          gui_runFunc( "mouse_move", 2, 0 );
@@ -2449,8 +2455,7 @@ int gui_handleEvent( SDL_Event *evt )
             break;
          gui_prepFunc( "mouse_click" );
          lua_pushnumber( naevL, evt->button.button+1 );
-         gl_windowToScreenPos( &x, &y, evt->button.x - gui_viewport_x,
-            evt->button.y - gui_viewport_y );
+         gui_eventToScreenPos( &x, &y, evt->button.x, evt->button.y );
          lua_pushnumber( naevL, x );
          lua_pushnumber( naevL, y );
          lua_pushboolean( naevL, (evt->type==SDL_MOUSEBUTTONDOWN) );

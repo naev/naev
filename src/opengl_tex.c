@@ -651,6 +651,7 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    npng     = npng_open( rw );
    if (npng == NULL) {
       WARN(_("File '%s' is not a png."), path );
+      SDL_RWclose( rw );
       return NULL;
    }
    npng_dim( npng, &w, &h );

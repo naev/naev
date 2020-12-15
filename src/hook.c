@@ -1286,7 +1286,7 @@ static int hook_parse( xmlNodePtr base )
          is_date  = 0;
 
          /* Handle the type. */
-         xmlr_attr(node, "type", stype);
+         xmlr_attr_strd(node, "type", stype);
          /* Default to mission for old saves. */
          if (stype == NULL)
             type = HOOK_TYPE_MISN;
