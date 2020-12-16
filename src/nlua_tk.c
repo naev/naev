@@ -57,6 +57,7 @@ static int tk_custom( lua_State *L );
 static int tk_customRename( lua_State *L );
 static int tk_customFullscreen( lua_State *L );
 static int tk_customResize( lua_State *L );
+static int tk_customSize( lua_State *L );
 static int tk_customDone( lua_State *L );
 static const luaL_Reg tk_methods[] = {
    { "msg", tk_msg },
@@ -69,6 +70,7 @@ static const luaL_Reg tk_methods[] = {
    { "customRename", tk_customRename },
    { "customFullscreen", tk_customFullscreen },
    { "customResize", tk_customResize },
+   { "customSize", tk_customSize },
    { "customDone", tk_customDone },
    {0,0}
 }; /**< Toolkit Lua methods. */
@@ -436,6 +438,9 @@ static int tk_customRename( lua_State *L )
 static int tk_customFullscreen( lua_State *L )
 {
    int enable = lua_toboolean(L,1);
+   unsigned int wid = window_get( "dlgMsg" );
+   if (wid == 0)
+      NLUA_ERROR(L, _("custom dialogue not open"));
    dialogue_customFullscreen( enable );
    return 0;
 }
@@ -451,10 +456,33 @@ static int tk_customFullscreen( lua_State *L )
 static int tk_customResize( lua_State *L )
 {
    int w, h;
+   unsigned int wid = window_get( "dlgMsg" );
+   if (wid == 0)
+      NLUA_ERROR(L, _("custom dialogue not open"));
    w = luaL_checkinteger(L,1);
    h = luaL_checkinteger(L,2);
    dialogue_customResize( w, h );
    return 0;
+}
+
+
+/**
+ * @brief Gets the size of a custom widget.
+ *
+ *    @luatreturn number Width of the window.
+ *    @luatreturn number Height of the window.
+ * @luafunc customSize()
+ */
+static int tk_customSize( lua_State *L )
+{
+   int w, h;
+   unsigned int wid = window_get( "dlgMsg" );
+   if (wid == 0)
+      NLUA_ERROR(L, _("custom dialogue not open"));
+   window_dimWindow( wid, &w, &h );
+   lua_pushinteger(L,w);
+   lua_pushinteger(L,h);
+   return 2;
 }
 
 
@@ -464,6 +492,9 @@ static int tk_customResize( lua_State *L )
  */
 static int tk_customDone( lua_State *L )
 {
+   unsigned int wid = window_get( "dlgMsg" );
+   if (wid == 0)
+      NLUA_ERROR(L, _("custom dialogue not open"));
    lua_pushboolean(L, 1);
    lua_setglobal(L, TK_CUSTOMDONE );
    return 0;
