@@ -214,7 +214,6 @@ void window_move( unsigned int wid, int x, int y )
 void window_resize( const unsigned int wid, int w, int h )
 {
    Window *wdw;
-   int x, y;
 
    /* Get the window. */
    wdw = window_wget(wid);
@@ -489,6 +488,36 @@ void window_moveWidget( const unsigned int wid,
 
    /* Set position. */
    toolkit_setPos( wdw, wgt, x, y );
+}
+
+
+/**
+ * @brief Resizes a widget.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget to resize
+ *    @param w New width.
+ *    @param h New height.
+ */
+void window_resizeWidget( const unsigned int wid,
+      const char* name, int w, int h )
+{
+   Window *wdw;
+   Widget *wgt;
+
+   /* Get window. */
+   wdw = window_wget(wid);
+   if (wdw == NULL)
+      return;
+
+   /* Get widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+
+   /* Set position. */
+   wgt->w = w;
+   wgt->h = h;
 }
 
 

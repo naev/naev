@@ -64,6 +64,8 @@ void window_posWidget( const unsigned int wid,
       char* name, int *x, int *y );
 void window_moveWidget( const unsigned int wid,
       char* name, int x, int y );
+void window_resizeWidget( const unsigned int wid,
+      const char* name, int w, int h );
 
 /*
  * destruction
