@@ -900,8 +900,10 @@ void dialogue_custom( const char* caption, int width, int height,
    fullscreen = ((width < 0) && (height < 0));
 
    /* create the window */
-   if (fullscreen)
+   if (fullscreen) {
       wid = window_create( "dlgMsg", caption, -1, -1, -1, -1 );
+      window_setBorder( wid, 0 );
+   }
    else
       wid = window_create( "dlgMsg", caption, -1, -1, width+40, height+60 );
    window_setData( wid, &done );
@@ -962,6 +964,7 @@ int dialogue_customFullscreen( int enable )
       window_moveWidget( wid, "cstCustom", 0, 0 );
       window_resizeWidget( wid, "cstCustom", cd->last_w, cd->last_h );
       window_move( wid, -1, -1 );
+      window_setBorder( wid, 0 );
    }
    else {
       if (!fullscreen)
@@ -969,6 +972,7 @@ int dialogue_customFullscreen( int enable )
       window_resize( wid, cd->last_w, cd->last_h );
       window_moveWidget( wid, "cstCustom", 20, 20 );
       window_move( wid, -1, -1 );
+      window_setBorder( wid, 1 );
    }
 
    return 0;
