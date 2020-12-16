@@ -117,8 +117,13 @@ end
 --[[
 -- Initialize
 --]]
-package.path = package.path..string.format(";?.lua", path)
 function love.exec( path )
+   -- Save path to restore it later
+   love._path = package.path
+
+   package.path = package.path..";?.lua"
+
+   love._focus = false
    love._started = false
    love.filesystem = require 'love.filesystem'
 
@@ -212,6 +217,8 @@ function love.exec( path )
 
    -- Reset libraries that were potentially crushed
    for k,v in pairs(naev) do _G[k] = v end
+   -- Restore the package.path
+   package.path = love._path
 end
 
 -- Fancy API so you can do `love = require 'love'`
