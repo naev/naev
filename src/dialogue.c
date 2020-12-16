@@ -961,12 +961,14 @@ int dialogue_customFullscreen( int enable )
       window_resize( wid, -1, -1 );
       window_moveWidget( wid, "cstCustom", 0, 0 );
       window_resizeWidget( wid, "cstCustom", cd->last_w, cd->last_h );
+      window_move( wid, -1, -1 );
    }
    else {
       if (!fullscreen)
          return 0;
       window_resize( wid, cd->last_w, cd->last_h );
       window_moveWidget( wid, "cstCustom", 20, 20 );
+      window_move( wid, -1, -1 );
    }
 
    return 0;
