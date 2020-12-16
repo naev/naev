@@ -48,7 +48,7 @@ nlua_env __NLUA_CURENV = LUA_NOREF;
 /*
  * prototypes
  */
-static int nlua_packfileLoader( lua_State* L );
+static int nlua_require( lua_State* L );
 static lua_State *nlua_newState (void); /* creates a new state */
 static int nlua_loadBasic( lua_State* L );
 /* gettext */
@@ -196,7 +196,7 @@ nlua_env nlua_newEnv(int rw) {
 
    /* Replace require() function with one that considers fenv */
    lua_pushvalue(naevL, -1);
-   lua_pushcclosure(naevL, nlua_packfileLoader, 1);
+   lua_pushcclosure(naevL, nlua_require, 1);
    lua_setfield(naevL, -2, "require");
 
    /* Set up paths.
@@ -379,7 +379,7 @@ static int nlua_loadBasic( lua_State* L )
  *    @param L Lua Environment to load modules into.
  *    @return The return value of the chunk, or true.
  */
-static int nlua_packfileLoader( lua_State* L )
+static int nlua_require( lua_State* L )
 {
    const char *filename;
    size_t bufsize;
