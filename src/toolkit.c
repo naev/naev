@@ -157,10 +157,14 @@ void toolkit_setWindowPos( Window *wdw, int x, int y )
    wdw->xrel = -1.;
    wdw->yrel = -1.;
 
+   window_rmFlag( wdw, WINDOW_CENTERX );
+   window_rmFlag( wdw, WINDOW_CENTERY );
+
    /* x pos */
    if (x == -1) { /* Center */
       wdw->x = (SCREEN_W - wdw->w)/2.;
       wdw->xrel = .5;
+      window_setFlag( wdw, WINDOW_CENTERX );
    }
    else if (x < 0)
       wdw->x = SCREEN_W - wdw->w + (double) x;
@@ -171,6 +175,7 @@ void toolkit_setWindowPos( Window *wdw, int x, int y )
    if (y == -1) { /* Center */
       wdw->y = (SCREEN_H - wdw->h)/2.;
       wdw->yrel = .5;
+      window_setFlag( wdw, WINDOW_CENTERY );
    }
    else if (y < 0)
       wdw->y = SCREEN_H - wdw->h + (double) y;
@@ -196,6 +201,40 @@ void window_move( unsigned int wid, int x, int y )
       return;
 
    toolkit_setWindowPos( wdw, x, y );
+}
+
+
+/**
+ * @brief Resizes the window.
+ *
+ *    @param wid Window ID.
+ *    @param w Width to change to (or fullscreen if -1).
+ *    @param h Height to change to (or fullscreen if -1).
+ */
+void window_resize( const unsigned int wid, int w, int h )
+{
+   Window *wdw;
+   int x, y;
+
+   /* Get the window. */
+   wdw = window_wget(wid);
+   if (wdw == NULL)
+      return;
+
+   wdw->w = (w == -1) ? SCREEN_W : (double) w;
+   wdw->h = (h == -1) ? SCREEN_H : (double) h;
+   if ((w == -1) && (h == -1)) {
+      window_setFlag( wdw, WINDOW_FULLSCREEN );
+      wdw->x = 0.;
+      wdw->y = 0.;
+      window_setFlag( wdw, WINDOW_CENTERX );
+      window_setFlag( wdw, WINDOW_CENTERY );
+   }
+   else {
+      window_rmFlag( wdw, WINDOW_FULLSCREEN );
+      if (window_isFlag( wdw, WINDOW_CENTERX ) && window_isFlag( wdw, WINDOW_CENTERY ))
+         toolkit_setWindowPos( wdw, -1, -1 );
+   }
 }
 
 

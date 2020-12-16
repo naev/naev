@@ -56,6 +56,8 @@ struct dialogue_custom_data_s {
    int my;
    int w;
    int h;
+   int last_w;
+   int last_h;
 };
 static int dialogue_custom_event( unsigned int wid, SDL_Event *event );
 
@@ -922,6 +924,50 @@ void dialogue_custom( const char* caption, int width, int height,
    du.wid    = wid;
    dialogue_open++;
    toolkit_loop( &done, &du );
+}
+
+
+int dialogue_customFullscreen( int enable )
+{
+   struct dialogue_custom_data_s *cd;
+   unsigned int wid = window_get( "dlgMsg" );
+   int w, h, fullscreen;
+   if (wid == 0)
+      return -1;
+
+   cd = (struct dialogue_custom_data_s*) window_getData( wid );
+   window_dimWindow( wid, &w, &h );
+   fullscreen = (w==SCREEN_W && h==SCREEN_H);
+
+   if (enable) {
+      if (fullscreen)
+         return 0;
+
+      cd->last_w = cd->w;
+      cd->last_h = cd->h;
+      window_resize( wid, -1, -1 );
+   }
+   else {
+      if (!fullscreen)
+         return 0;
+      window_resize( wid, cd->last_w, cd->last_h );
+   }
+
+   return 0;
+}
+
+
+int dialogue_customResize( int width, int height )
+{
+   struct dialogue_custom_data_s *cd;
+   unsigned int wid = window_get( "dlgMsg" );
+   if (wid == 0)
+      return -1;
+   cd = (struct dialogue_custom_data_s*) window_getData( wid );
+   cd->last_w = width;
+   cd->last_h = height;
+   window_resize( wid, width, height );
+   return 0;
 }
 
 

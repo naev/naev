@@ -58,6 +58,8 @@ void dialogue_custom( const char* caption, int width, int height,
       void (*render) (double x, double y, double w, double h, void* data),
       int (*event) (unsigned int wid, SDL_Event* event, void* data),
       void *data );
+int dialogue_customFullscreen( int enable );
+int dialogue_customResize( int width, int height );
 
 
 /*

@@ -55,6 +55,8 @@ static int tk_list( lua_State *L );
 static int tk_merchantOutfit( lua_State *L );
 static int tk_custom( lua_State *L );
 static int tk_customRename( lua_State *L );
+static int tk_customFullscreen( lua_State *L );
+static int tk_customResize( lua_State *L );
 static int tk_customDone( lua_State *L );
 static const luaL_Reg tk_methods[] = {
    { "msg", tk_msg },
@@ -65,6 +67,8 @@ static const luaL_Reg tk_methods[] = {
    { "merchantOutfit", tk_merchantOutfit },
    { "custom", tk_custom },
    { "customRename", tk_customRename },
+   { "customFullscreen", tk_customFullscreen },
+   { "customResize", tk_customResize },
    { "customDone", tk_customDone },
    {0,0}
 }; /**< Toolkit Lua methods. */
@@ -419,6 +423,37 @@ static int tk_customRename( lua_State *L )
    if (wid == 0)
       NLUA_ERROR(L, _("custom dialogue not open"));
    window_setDisplayname( wid, s );
+   return 0;
+}
+
+
+/**
+ * @brief Sets the custom widget fullscreen.
+ *
+ *    @luatparam boolean enable Enable fullscreen or not.
+ * @luafunc customFullscreen( enable )
+ */
+static int tk_customFullscreen( lua_State *L )
+{
+   int enable = lua_toboolean(L,1);
+   dialogue_customFullscreen( enable );
+   return 0;
+}
+
+
+/**
+ * @brief Sets the custom widget fullscreen.
+ *
+ *    @luatparam number width Width of the widget to resize to.
+ *    @luatparam number height Height of the widget to resize to.
+ * @luafunc customResize( width, height )
+ */
+static int tk_customResize( lua_State *L )
+{
+   int w, h;
+   w = luaL_checkinteger(L,1);
+   h = luaL_checkinteger(L,2);
+   dialogue_customResize( w, h );
    return 0;
 }
 
