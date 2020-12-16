@@ -894,15 +894,28 @@ void dialogue_custom( const char* caption, int width, int height,
    struct dialogue_custom_data_s cd;
    dialogue_update_t du;
    unsigned int wid;
-   int done;
+   int done, fullscreen;
    int wx, wy, wgtx, wgty;
 
+   fullscreen = ((width < 0) && (height < 0));
+
    /* create the window */
-   wid = window_create( "dlgMsg", caption, -1, -1, width+40, height+60 );
+   if (fullscreen)
+      wid = window_create( "dlgMsg", caption, -1, -1, -1, -1 );
+   else
+      wid = window_create( "dlgMsg", caption, -1, -1, width+40, height+60 );
    window_setData( wid, &done );
 
    /* custom widget for all! */
-   window_addCust( wid, 20, 20, width, height, "cstCustom", 0, render, NULL, data );
+   if (fullscreen) {
+      width  = SCREEN_W;
+      height = SCREEN_H;
+      wgtx = wgty = 0;
+   }
+   else {
+      wgtx = wgty = 20;
+   }
+   window_addCust( wid, wgtx, wgty, width, height, "cstCustom", 0, render, NULL, data );
    window_custSetClipping( wid, "cstCustom", 1 );
 
    /* set up event stuff. */
@@ -943,14 +956,17 @@ int dialogue_customFullscreen( int enable )
       if (fullscreen)
          return 0;
 
-      cd->last_w = cd->w;
-      cd->last_h = cd->h;
+      cd->last_w = cd->w+40;
+      cd->last_h = cd->h+60;
       window_resize( wid, -1, -1 );
+      window_moveWidget( wid, "cstCustom", 0, 0 );
+      window_resizeWidget( wid, "cstCustom", cd->last_w, cd->last_h );
    }
    else {
       if (!fullscreen)
          return 0;
       window_resize( wid, cd->last_w, cd->last_h );
+      window_moveWidget( wid, "cstCustom", 20, 20 );
    }
 
    return 0;
@@ -966,7 +982,8 @@ int dialogue_customResize( int width, int height )
    cd = (struct dialogue_custom_data_s*) window_getData( wid );
    cd->last_w = width;
    cd->last_h = height;
-   window_resize( wid, width, height );
+   window_resize( wid, width+40, height+60 );
+   window_resizeWidget( wid, "cstCustom", width, height );
    return 0;
 }
 
