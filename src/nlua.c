@@ -384,7 +384,6 @@ static int nlua_require( lua_State* L )
    const char *filename;
    size_t bufsize;
    int envtab;
-   int isconsole;
    char *buf, *q;
    char path_filename[PATH_MAX], tmpname[PATH_MAX], tried_paths[STRMAX];
    const char *packagepath, *start, *end;
@@ -399,9 +398,10 @@ static int nlua_require( lua_State* L )
    /* Check to see if already included. */
    lua_getfield( L, envtab, NLUA_LOAD_TABLE ); /* t */
    if (!lua_isnil(L,-1)) {
+#if 0
       /* check if is console. */
       nlua_getenv(__NLUA_CURENV, "__cli");
-      isconsole = lua_toboolean(L,-1);
+      int isconsole = lua_toboolean(L,-1);
       lua_pop(L,1);
       /* just ignore if it is the console and reload the file. */
       if (isconsole)
@@ -416,6 +416,9 @@ static int nlua_require( lua_State* L )
          }
          lua_pop(L,2); /* */
       }
+#else
+      lua_pop(L,1);
+#endif
    }
    /* Must create new NLUA_LOAD_TABLE table. */
    else {
