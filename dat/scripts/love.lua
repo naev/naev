@@ -88,13 +88,18 @@ function love.update( dt ) end -- dummy
 -- Window
 --]]
 love.window = {}
+function love.window.setIcon( imagedata )
+   love.icon = imagedata
+   return true
+end
+function love.window.getIcon() return love.icon end
 function love.window.setTitle( title )
+   love.title = title
    if love._started then
-      naev.tk.customRename( title )
-   else
-      love.title = title
+      naev.tk.customRename( love.title )
    end
 end
+function love.window.getTitle() return love.title end
 function love.window.setMode( width, height, flags )
    local fullscreen
    if type(flags)=="table" then
@@ -128,6 +133,9 @@ function love.window.getDPIScale() return 1 end -- TODO return scaling factor?
 function love.window.getMode()
    return love.w, love.h, { fullscreen=love.fullscreen, vsync=1, resizeable=false, borderless = false, centered=true, display=1, msaa=0 }
 end
+function love.window.getDimensions() return love.w, love.h end
+function love.window.getWidth() return love.w end
+function love.window.getHeight() return love.h end
 function love.window.setFullscreen( fullscreen )
    -- Skip unnecessary changing
    if (fullscreen and love.fullscreen) or (not fullscreen and not love.fullscreen) then return true end
@@ -137,6 +145,21 @@ function love.window.setFullscreen( fullscreen )
    return true
 end
 function love.window.getFullscreen( fullscreen ) return love.fullscreen end
+function love.window.hasFocus() return love._focus end
+function love.window.hasMouseFocus() return love._focus end
+function love.window.showMessageBox( title, message, ... )
+   local arg = {...}
+   love._focus = false
+   if type(arg[1])=="string" then
+      tk.msg( title, message )
+   else
+      local choice = tk.choice( title, message, unpack(arg) )
+      love._focus = true
+      return choice
+   end
+   love._focus = true
+   return true
+end
 
 
 --[[
@@ -478,6 +501,7 @@ function love.exec( path )
    -- Actually run in Naev
    naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
    naev.tk.customFullscreen( love.fullscreen )
+   love._focus = true
    love._started = true
 
    -- Reset libraries that were potentially crushed
