@@ -419,7 +419,7 @@ void window_posWindow( const unsigned int wid, int *x, int *y )
  *    @param[out] w Width of the widget or -1 on error.
  *    @param[out] h Height of the widget or -1 on error.
  */
-void window_dimWidget( const unsigned int wid, char *name,  int *w, int *h )
+void window_dimWidget( const unsigned int wid, const char *name, int *w, int *h )
 {
    Widget *wgt;
 
@@ -445,7 +445,7 @@ void window_dimWidget( const unsigned int wid, char *name,  int *w, int *h )
  *    @param[out] y Y position of the widget.
  */
 void window_posWidget( const unsigned int wid,
-      char* name, int *x, int *y )
+      const char* name, int *x, int *y )
 {
    Widget *wgt;
 
@@ -471,7 +471,7 @@ void window_posWidget( const unsigned int wid,
  *    @param y New Y position to set widget to.
  */
 void window_moveWidget( const unsigned int wid,
-      char* name, int x, int y )
+      const char* name, int x, int y )
 {
    Window *wdw;
    Widget *wgt;
