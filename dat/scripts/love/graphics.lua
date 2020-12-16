@@ -2,6 +2,8 @@
 -- Love2d Graphics for Naev!
 --]]
 local class = require 'class'
+local object = require 'love.object'
+local filesystem = require 'love.filesystem'
 
 local graphics = {}
 graphics._bgcol = naev.colour.new( 0, 0, 0, 1 )
@@ -36,7 +38,7 @@ end
 --[[
 -- Drawable class
 --]]
-graphics.Drawable = class.inheritsFrom( love.Object )
+graphics.Drawable = class.inheritsFrom( object.Object )
 graphics.Drawable._type = "Drawable"
 function graphics.Drawable._draw() error(_("unimplemented")) end
 
@@ -49,7 +51,7 @@ graphics.Image._type = "Image"
 function graphics.newImage( filename )
    local ttex
    if type(filename)=='string' then
-      ttex = naev.tex.open( love.filesystem.newFile( filename ) )
+      ttex = naev.tex.open( filesystem.newFile( filename ) )
    elseif type(filename)=='table' and filename.type then
       local ot = filename:type()
       if ot=='ImageData' then
@@ -262,19 +264,19 @@ end
 --[[
 -- Font stuff
 --]]
-graphics.Font = class.inheritsFrom( love.Object )
+graphics.Font = class.inheritsFrom( object.Object )
 graphics.Font._type = "Font"
 function graphics.newFont( file, size )
    local f = graphics.Font.new()
    if size==nil then
       if type(file)=="string" then
-         file = love.filesystem.newFile( file ):getFilename()
+         file = filesystem.newFile( file ):getFilename()
       end
       f.font = naev.font.new( file )
    elseif type(file)=="userdata" then
       return file
    else
-      file = love.filesystem.newFile( file ):getFilename()
+      file = filesystem.newFile( file ):getFilename()
       f.font = naev.font.new( file, size )
    end
    return f
@@ -291,7 +293,7 @@ end
 --[[
 -- Shader class
 --]]
-graphics.Shader = class.inheritsFrom( love.Object )
+graphics.Shader = class.inheritsFrom( object.Object )
 graphics.Shader._type = "Shader"
 function graphics.newShader( code )
    love._unimplemented()
@@ -302,7 +304,7 @@ end
 --[[
 -- Canvas class
 --]]
-graphics.Canvas = class.inheritsFrom( love.Object )
+graphics.Canvas = class.inheritsFrom( object.Object )
 graphics.Canvas._type = "Canvas"
 function graphics.newCanvas( width, height, settings )
    love._unimplemented()

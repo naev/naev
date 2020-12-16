@@ -2,9 +2,10 @@
 -- Audio
 --]]
 local class = require 'class'
+local object = require 'love.object'
 
 local audio = {}
-audio.Source = class.inheritsFrom( love.Object )
+audio.Source = class.inheritsFrom( object.Object )
 audio.Source._type = "Source"
 function audio.newSource( filename, type )
    love._unimplemented()

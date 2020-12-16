@@ -3,10 +3,11 @@
 --]]
 local class = require 'class'
 local prng = require 'prng'
+local object = require 'love.object'
 
 local function clamp01(x) return math.min(math.max(x, 0), 1) end
 math = {}
-math.RandomGenerator = class.inheritsFrom( love.Object )
+math.RandomGenerator = class.inheritsFrom( object.Object )
 math.RandomGenerator._type = "RandomGenerator"
 function math.newRandomGenerator( low, high )
    if low ~= nil then

@@ -10,9 +10,7 @@ love.exec( 'pong' ) -- Will look for pong.lua or pong/main.lua
 """
 
 --]]
-local class = require 'class'
-
-love = {}
+local love = {}
 love._basepath = ""
 love._version_major = 11
 love._version_minor = 1
@@ -32,6 +30,7 @@ function love._unimplemented() error(_("unimplemented")) end
 function love.conf(t) end -- dummy
 function love.load() end --dummy
 function love.draw() end -- dummy
+function love.update( dt ) end -- dummy
 function love.keypressed( key, scancode, isrepeat ) end -- dummy
 function love.keyreleased( key, scancode ) end -- dummy
 function love.mousemoved( x, y, dx, dy, istouch ) end -- dummy
@@ -45,10 +44,6 @@ function love.mousereleased( x, y, button, istouch ) end -- dummy
 function love.getVersion()
    return love._version_major, love._version_minor, love._version_patch, love._codename
 end
-love.Object = class.inheritsFrom( nil )
-love.Object._type = "Object"
-function love.Object:type() return self._type end
-function love.Object:typeOf( name ) return self._type==name end
 
 
 --[[
