@@ -184,8 +184,7 @@ static int fileL_new( lua_State *L )
    LuaFile_t lf;
    const char *str;
    str = luaL_checkstring(L,1);
-   strncpy( lf.path, str, PATH_MAX );
-   //nsnprintf( lf.path, PATH_MAX, "%s/%s", ndata_getPath(), str );
+   strncpy( lf.path, str, PATH_MAX-1 );
 
    lf.mode = 'c';
    lf.rw = NULL;
