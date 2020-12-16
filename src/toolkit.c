@@ -2554,7 +2554,6 @@ void toolkit_exit (void)
       windows  = windows->next;
       window_kill(wdw);
    }
-   free(windows);
 
    /* Free the VBO. */
    gl_vboDestroy( toolkit_vbo );
