@@ -339,73 +339,6 @@ function love.image.ImageData:paste( source, dx, dy, sx, sy, sw, sh )
 end
 
 
---[[
--- Math
---]]
-local prng = require 'prng'
-local function clamp01(x) return math.min(math.max(x, 0), 1) end
-love.math = {}
-love.math.RandomGenerator = inheritsFrom( love.Object )
-love.math.RandomGenerator._type = "RandomGenerator"
-function love.math.newRandomGenerator( low, high )
-   if low ~= nil then
-      low = 0xCBBF7A44
-      high = 0x0139408D
-   end
-   local seed = tostring(low)
-   if high ~= nil then
-      seed = seed .. tostring(high)
-   end
-   local rng = love.math.RandomGenerator.new()
-   rng:setSeed( seed )
-   return rng
-end
-function love.math.RandomGenerator:setSeed( seed )
-   prng.initHash( seed )
-   self.z = prng.z
-end
-function love.math.RandomGenerator:random( min, max )
-   -- TODO get rid of this horrible hack and make prng return objects
-   prng.z = self.z
-   if min == nil then
-      return prng.num()
-   elseif max == nil then
-      return prng.range(1,min)
-   else
-      return prng.range(min,max)
-   end
-end
-function love.math.RandomGenerator:getState() return self.z end
-function love.math.RandomGenerator:setState( state ) self.z = state end
-function love.math.random( min, max )
-   if min == nil then
-      return naev.rnd.rnd()
-   elseif max == nil then
-      return naev.rnd.rnd( min-1 )+1
-   else
-      return naev.rnd.rnd( min, max )
-   end
-end
-function love.math.colorToBytes(r, g, b, a)
-	if type(r) == "table" then
-		r, g, b, a = r[1], r[2], r[3], r[4]
-	end
-	r = floor(clamp01(r) * 255 + 0.5)
-	g = floor(clamp01(g) * 255 + 0.5)
-	b = floor(clamp01(b) * 255 + 0.5)
-	a = a ~= nil and floor(clamp01(a) * 255 + 0.5) or nil
-	return r, g, b, a
-end
-function love.math.colorFromBytes(r, g, b, a)
-	if type(r) == "table" then
-		r, g, b, a = r[1], r[2], r[3], r[4]
-	end
-	r = clamp01(floor(r + 0.5) / 255)
-	g = clamp01(floor(g + 0.5) / 255)
-	b = clamp01(floor(b + 0.5) / 255)
-	a = a ~= nil and clamp01(floor(a + 0.5) / 255) or nil
-	return r, g, b, a
-end
 
 
 --[[
@@ -453,11 +386,12 @@ local function _draw( x, y, w, h )
    love.y = y
    love.w = w
    love.h = h
-   love.graphics.origin()
-   love.graphics.clear()
+   if love.graphics then
+      love.graphics.origin()
+      love.graphics.clear()
+   end
    love.draw()
 end
-love.graphics = require 'love/graphics'
 -- Dummy game-defined functions
 function love.draw() end -- dummy
 
@@ -511,6 +445,10 @@ function love.exec( path )
    end
    love.conf(t)
 
+   -- Load stuff
+   love.graphics = require 'love.graphics'
+   love.math = require 'love.math'
+
    -- Set properties
    love.title = t.window.title
    love.w = t.window.width
@@ -522,8 +460,11 @@ function love.exec( path )
    love.load()
 
    -- Actually run in Naev
+   if love.fullscreen then
+      love.w = -1
+      love.h = -1
+   end
    naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
-   naev.tk.customFullscreen( love.fullscreen )
    love._focus = true
    love._started = true
 
