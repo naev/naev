@@ -2,6 +2,10 @@
 -- Window
 --]]
 local window = {}
+
+window._lastw = love._default.w
+window._lasth = love._default.h
+
 function window.setIcon( imagedata )
    love.icon = imagedata
    return true
@@ -19,11 +23,14 @@ function window.setMode( width, height, flags )
    if type(flags)=="table" then
       fullscreen = flags.fullscreen or false
    end
+   if fullscreen and love.fullscreen then return true end
 
    love.fullscreen = fullscreen
    if love._started then
       love.tk.customFullscreen( love.fullscreen )
       if fullscreen then
+         window._lastw = love.w
+         window._lasth = love.h
          love.w, love.h = naev.tk.customSize()
       else
          love.w = width
@@ -32,6 +39,8 @@ function window.setMode( width, height, flags )
       end
    else
       if fullscreen then
+         window._lastw = love.w
+         window._lasth = love.h
          love.w, love.h = naev.gfx.dim()
       else
          love.w = width
@@ -56,8 +65,20 @@ function window.setFullscreen( fullscreen )
    -- Skip unnecessary changing
    if (fullscreen and love.fullscreen) or (not fullscreen and not love.fullscreen) then return true end
    love.fullscreen = fullscreen
-   naev.tk.customFullscreen( love.fullscreen )
-   love.w, love.h = naev.tk.customSize()
+   if love._started then
+      naev.tk.customFullscreen( love.fullscreen )
+      if not love.fullscreen then
+         naev.tk.customResize( window._lastw, window._lasth )
+      end
+      love.w, love.h = naev.tk.customSize()
+   else
+      if love.fullscreen then
+         love.w, love.h = naev.gfx.dim()
+      else
+         love.w = window._lastw
+         love.h = window._lasth
+      end
+   end
    return true
 end
 function window.getFullscreen( fullscreen ) return love.fullscreen end
@@ -77,3 +98,4 @@ function window.showMessageBox( title, message, ... )
    return true
 end
 
+return window
