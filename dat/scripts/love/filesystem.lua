@@ -2,6 +2,7 @@
 -- Filesystem
 --]]
 local filesystem = {}
+
 function filesystem.getInfo( path, filtertype )
    local ftype = naev.file.filetype( path )
    if ftype == "directory" then
@@ -31,6 +32,5 @@ function filesystem.read( name, size )
    f:close()
    return buf, len
 end
-
 
 return filesystem
