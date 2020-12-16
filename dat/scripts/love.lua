@@ -61,13 +61,16 @@ local function _draw( x, y, w, h )
    love.draw()
 end
 local function _update( dt )
-   if not love.timer then return end
    if love.keyboard and love.keyboard._repeat then
       for k,v in pairs(love.keyboard._keystate) do
          if v then
             love.keypressed( k, k, true )
          end
       end
+   end
+   if not love.timer then
+      love.update(0)
+      return
    end
    love.timer._edt = love.timer._edt + dt
    love.timer._dt = dt
@@ -153,7 +156,26 @@ function love.exec( path )
    t.window.width = love._default.w -- The window width (number)
    t.window.height = love._default.h -- The window height (number)
    t.window.fullscreen = love._default.fullscreen
-   t.modules = {}
+   t.modules = {
+         audio = true,
+         --data = true,
+         event = true,
+         --font = true,
+         graphics = true,
+         image = true,
+         --joystick = true,
+         keyboard = true,
+         math = true,
+         mouse = true,
+         --physics = true
+         sound = true,
+         system = true,
+         --thread = true,
+         timer = true,
+         --touch = true,
+         --video = true,
+         window = true
+      }
 
    -- Configure
    if confpath ~= nil then
@@ -162,17 +184,11 @@ function love.exec( path )
    love.conf(t)
 
    -- Load stuff
-   love.audio = require 'love.audio'
-   love.event = require 'love.event'
-   love.filesystem = require 'love.filesystem'
-   love.graphics = require 'love.graphics'
-   love.keyboard = require 'love.keyboard'
-   love.math = require 'love.math'
-   love.mouse = require 'love.mouse'
-   love.soud = require 'love.sound'
-   love.system = require 'love.system'
-   love.timer = require 'love.timer'
-   love.window = require 'love.window'
+   for m,v in pairs(t.modules) do
+      if v then
+         love[m] = require('love.'..m)
+      end
+   end
 
    -- Set properties
    love.title = t.window.title
