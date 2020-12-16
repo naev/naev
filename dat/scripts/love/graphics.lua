@@ -1,9 +1,9 @@
 --[[
 -- Love2d Graphics for Naev!
 --]]
-love.graphics = {}
-love.graphics._bgcol = naev.colour.new( 0, 0, 0, 1 )
-love.graphics._fgcol = naev.colour.new( 1, 1, 1, 1 )
+local graphics = {}
+graphics._bgcol = naev.colour.new( 0, 0, 0, 1 )
+graphics._fgcol = naev.colour.new( 1, 1, 1, 1 )
 
 -- Helper functions
 local function _mode(m)
@@ -13,7 +13,7 @@ local function _mode(m)
    end
 end
 local function _xy( x, y, w, h )
-   return love.x+love.graphics._dx+x, love.y+(love.h-y-h-love.graphics._dy)
+   return love.x+graphics._dx+x, love.y+(love.h-y-h-graphics._dy)
 end
 local function _gcol( c )
    local r, g, b = c:rgb()
@@ -34,17 +34,17 @@ end
 --[[
 -- Drawable class
 --]]
-love.graphics.Drawable = inheritsFrom( love.Object )
-love.graphics.Drawable._type = "Drawable"
-function love.graphics.Drawable._draw() error(_("unimplemented")) end
+graphics.Drawable = inheritsFrom( love.Object )
+graphics.Drawable._type = "Drawable"
+function graphics.Drawable._draw() error(_("unimplemented")) end
 
 
 --[[
 -- Image class
 --]]
-love.graphics.Image = inheritsFrom( love.graphics.Drawable )
-love.graphics.Image._type = "Image"
-function love.graphics.newImage( filename )
+graphics.Image = inheritsFrom( graphics.Drawable )
+graphics.Image._type = "Image"
+function graphics.newImage( filename )
    local ttex
    if type(filename)=='string' then
       ttex = naev.tex.open( love.filesystem.newFile( filename ) )
@@ -55,17 +55,17 @@ function love.graphics.newImage( filename )
       end
    end
    if ttex ~= nil then
-      local t = love.graphics.Image.new()
+      local t = graphics.Image.new()
       t.tex = ttex
       t.w, t.h = ttex:dim()
       -- Set defaults
-      t:setFilter( love.graphics._minfilter, love.graphics._magfilter )
-      t:setWrap( love.graphics._wraph, love.graphics._wrapv, love.graphics._wrapd )
+      t:setFilter( graphics._minfilter, graphics._magfilter )
+      t:setWrap( graphics._wraph, graphics._wrapv, graphics._wrapd )
       return t
    end
    error(_('wrong parameter type'))
 end
-function love.graphics.Image:setFilter( min, mag, anisotropy )
+function graphics.Image:setFilter( min, mag, anisotropy )
    mag = mag or min
    anisotropy = anisotropy or 1
    self.tex:setFilter( min, mag, anisotropy )
@@ -73,8 +73,8 @@ function love.graphics.Image:setFilter( min, mag, anisotropy )
    self.mag = mag
    self.anisotropy = anisotropy
 end
-function love.graphics.Image:getFilter() return self.min, self.mag, self.anisotropy end
-function love.graphics.Image:setWrap( horiz, vert, depth )
+function graphics.Image:getFilter() return self.min, self.mag, self.anisotropy end
+function graphics.Image:setWrap( horiz, vert, depth )
    vert = vert or horiz
    depth = depth or horiz
    self.tex:setWrap( horiz, vert, depth )
@@ -82,11 +82,11 @@ function love.graphics.Image:setWrap( horiz, vert, depth )
    self.wrapv = vert
    self.wrapd = depth
 end
-function love.graphics.Image:getWrap() return self.wraph, self.wrapv, self.wrapd end
-function love.graphics.Image:getDimensions() return self.w, self.h end
-function love.graphics.Image:getWidth() return self.w end
-function love.graphics.Image:getHeight() return self.h end
-function love.graphics.Image:_draw( ... )
+function graphics.Image:getWrap() return self.wraph, self.wrapv, self.wrapd end
+function graphics.Image:getDimensions() return self.w, self.h end
+function graphics.Image:getWidth() return self.w end
+function graphics.Image:getHeight() return self.h end
+function graphics.Image:_draw( ... )
    local arg = {...}
    local w,h = self.tex:dim()
    local x,y,r,sx,sy,tx,ty,tw,th
@@ -114,20 +114,20 @@ function love.graphics.Image:_draw( ... )
       th = q.h
       x,y = _xy(x,y,w,h)
    end
-   w = w*sx --* love.graphics._sx
-   h = h*sy --* love.graphics._sy
+   w = w*sx --* graphics._sx
+   h = h*sy --* graphics._sy
    y = y - (h*(1-sy)) -- correct scaling
-   naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, love.graphics._fgcol, r )
+   naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, graphics._fgcol, r )
 end
 
 
 --[[
 -- Quad class
 --]]
-love.graphics.Quad = inheritsFrom( love.graphics.Drawable )
-love.graphics.Quad._type = "Quad"
-function love.graphics.newQuad( x, y, width, height, sw, sh )
-   local q = love.graphics.Drawable.new()
+graphics.Quad = inheritsFrom( graphics.Drawable )
+graphics.Quad._type = "Quad"
+function graphics.newQuad( x, y, width, height, sw, sh )
+   local q = graphics.Drawable.new()
    q.x = x/sw
    q.y = y/sh
    q.w = width/sw
@@ -140,26 +140,26 @@ end
 --[[
 -- SpriteBatch class
 --]]
-love.graphics.SpriteBatch = inheritsFrom( love.graphics.Drawable )
-love.graphics.SpriteBatch._type = "SpriteBatch"
-function love.graphics.newSpriteBatch( image, maxsprites, usage  )
-   local batch = love.graphics.SpriteBatch.new()
+graphics.SpriteBatch = inheritsFrom( graphics.Drawable )
+graphics.SpriteBatch._type = "SpriteBatch"
+function graphics.newSpriteBatch( image, maxsprites, usage  )
+   local batch = graphics.SpriteBatch.new()
    batch.image = image
    batch:clear()
    love._unimplemented()
    return batch
 end
-function love.graphics.SpriteBatch:clear()
+function graphics.SpriteBatch:clear()
    love._unimplemented()
 end
-function love.graphics.SpriteBatch:setColor()
+function graphics.SpriteBatch:setColor()
    love._unimplemented()
 end
-function love.graphics.SpriteBatch:add( ... )
+function graphics.SpriteBatch:add( ... )
    local arg = {...}
    love._unimplemented()
 end
-function love.graphics.SpriteBatch:_draw()
+function graphics.SpriteBatch:_draw()
    love._unimplemented()
 end
 
@@ -167,52 +167,52 @@ end
 --[[
 -- Global functions
 --]]
-function love.graphics.getDimensions() return love.w, love.h end
-function love.graphics.getWidth()  return love.w end
-function love.graphics.getHeight() return love.h end
-function love.graphics.origin()
+function graphics.getDimensions() return love.w, love.h end
+function graphics.getWidth()  return love.w end
+function graphics.getHeight() return love.h end
+function graphics.origin()
    -- TODO this translation/scaling stuff has to be done properly using
    -- homography matrices. Probably should employ src/opengl_matrix.c
-   love.graphics._dx = 0
-   love.graphics._dy = 0
-   love.graphics._sx = 1
-   love.graphics._sy = 1
+   graphics._dx = 0
+   graphics._dy = 0
+   graphics._sx = 1
+   graphics._sy = 1
 end
-function love.graphics.translate( dx, dy )
-   love.graphics._dx = love.graphics._dx + dx
-   love.graphics._dy = love.graphics._dy + dy
+function graphics.translate( dx, dy )
+   graphics._dx = graphics._dx + dx
+   graphics._dy = graphics._dy + dy
 end
-function love.graphics.scale( sx, sy )
+function graphics.scale( sx, sy )
    sy = sy or sx
-   love.graphics._sx = love.graphics._sx * sx
-   love.graphics._sy = love.graphics._sy * sy
+   graphics._sx = graphics._sx * sx
+   graphics._sy = graphics._sy * sy
 end
-function love.graphics.getBackgroundColor() return _gcol( love.graphics._bgcol ) end
-function love.graphics.setBackgroundColor( red, green, blue, alpha )
-   love.graphics._bgcol = _scol( red, green, blue, alpha )
+function graphics.getBackgroundColor() return _gcol( graphics._bgcol ) end
+function graphics.setBackgroundColor( red, green, blue, alpha )
+   graphics._bgcol = _scol( red, green, blue, alpha )
 end
-function love.graphics.getColor() return _gcol( love.graphics._fgcol ) end
-function love.graphics.setColor( red, green, blue, alpha )
-   love.graphics._fgcol = _scol( red, green, blue, alpha )
+function graphics.getColor() return _gcol( graphics._fgcol ) end
+function graphics.setColor( red, green, blue, alpha )
+   graphics._fgcol = _scol( red, green, blue, alpha )
 end
-function love.graphics.setDefaultFilter( min, mag, anisotropy )
-   love.graphics._minfilter = min
-   love.graphics._magfilter = mag
-   love.graphics._anisotropy = 1
+function graphics.setDefaultFilter( min, mag, anisotropy )
+   graphics._minfilter = min
+   graphics._magfilter = mag
+   graphics._anisotropy = 1
 end
-function love.graphics.getDefaultFilter()
-   return love.graphics._minfilter, love.graphics._magfilter, love.graphics._anisotropy
+function graphics.getDefaultFilter()
+   return graphics._minfilter, graphics._magfilter, graphics._anisotropy
 end
 
 
 --[[
 -- Rendering primitives and drawing
 --]]
-function love.graphics.clear( ... )
+function graphics.clear( ... )
    local arg = {...}
    local col
    if #arg==0 then
-      col = love.graphics._bgcol
+      col = graphics._bgcol
    elseif type(arg[1])=="number" then
       local r = arg[1]
       local g = arg[2]
@@ -228,31 +228,31 @@ function love.graphics.clear( ... )
    end
    naev.gfx.renderRect( love.x, love.y, love.w, love.h, col )
 end
-function love.graphics.draw( drawable, ... )
+function graphics.draw( drawable, ... )
    drawable:_draw( ... )
 end
-function love.graphics.rectangle( mode, x, y, width, height )
+function graphics.rectangle( mode, x, y, width, height )
    x,y = _xy(x,y,width,height)
-   naev.gfx.renderRect( x, y, width, height, love.graphics._fgcol, _mode(mode) )
+   naev.gfx.renderRect( x, y, width, height, graphics._fgcol, _mode(mode) )
 end
-function love.graphics.circle( mode, x, y, radius )
+function graphics.circle( mode, x, y, radius )
    x,y = _xy(x,y,0,0)
-   naev.gfx.renderCircle( x, y, radius, love.graphics._fgcol, _mode(mode) )
+   naev.gfx.renderCircle( x, y, radius, graphics._fgcol, _mode(mode) )
 end
-function love.graphics.print( text, x, y  )
-   x,y = _xy(x,y,limit,love.graphics._font.font:height())
-   naev.gfx.printf( love.graphics._font.font, text, x, y, love.graphics._fgcol )
+function graphics.print( text, x, y  )
+   x,y = _xy(x,y,limit,graphics._font.font:height())
+   naev.gfx.printf( graphics._font.font, text, x, y, graphics._fgcol )
 end
-function love.graphics.printf( text, x, y, limit, align )
-   x,y = _xy(x,y,limit,love.graphics._font.font:height())
+function graphics.printf( text, x, y, limit, align )
+   x,y = _xy(x,y,limit,graphics._font.font:height())
    if align=="left" then
-      naev.gfx.printf( love.graphics._font.font, text, x, y, love.graphics._fgcol, limit, false )
+      naev.gfx.printf( graphics._font.font, text, x, y, graphics._fgcol, limit, false )
    elseif align=="center" then
-      naev.gfx.printf( love.graphics._font.font, text, x, y, love.graphics._fgcol, limit, true )
+      naev.gfx.printf( graphics._font.font, text, x, y, graphics._fgcol, limit, true )
    elseif align=="right" then
       local w = naev.gfx.printDim( false, text, limit )
       local off = limit-w
-      naev.gfx.printf( love.graphics._font.font, text, x+off, y, love.graphics._fgcol, w, false )
+      naev.gfx.printf( graphics._font.font, text, x+off, y, graphics._fgcol, w, false )
    end
 end
 
@@ -260,10 +260,10 @@ end
 --[[
 -- Font stuff
 --]]
-love.graphics.Font = inheritsFrom( love.Object )
-love.graphics.Font._type = "Font"
-function love.graphics.newFont( file, size )
-   local f = love.graphics.Font.new()
+graphics.Font = inheritsFrom( love.Object )
+graphics.Font._type = "Font"
+function graphics.newFont( file, size )
+   local f = graphics.Font.new()
    if size==nil then
       if type(file)=="string" then
          file = love.filesystem.newFile( file ):getFilename()
@@ -277,52 +277,52 @@ function love.graphics.newFont( file, size )
    end
    return f
 end
-function love.graphics.setFont( fnt )
-   love.graphics._font = fnt
+function graphics.setFont( fnt )
+   graphics._font = fnt
 end
-function love.graphics.setNewFont( file, size )
-   love.graphics._font = love.graphics.newFont( file, size )
-   return love.graphics._font
+function graphics.setNewFont( file, size )
+   graphics._font = graphics.newFont( file, size )
+   return graphics._font
 end
 
 
 --[[
 -- Shader class
 --]]
-love.graphics.Shader = inheritsFrom( love.Object )
-love.graphics.Shader._type = "Shader"
-function love.graphics.newShader( code )
+graphics.Shader = inheritsFrom( love.Object )
+graphics.Shader._type = "Shader"
+function graphics.newShader( code )
    love._unimplemented()
-   return love.graphics.Shader.new()
+   return graphics.Shader.new()
 end
 
 
 --[[
 -- Canvas class
 --]]
-love.graphics.Canvas = inheritsFrom( love.Object )
-love.graphics.Canvas._type = "Canvas"
-function love.graphics.newCanvas( width, height, settings )
+graphics.Canvas = inheritsFrom( love.Object )
+graphics.Canvas._type = "Canvas"
+function graphics.newCanvas( width, height, settings )
    love._unimplemented()
-   return love.graphics.Canvas.new()
+   return graphics.Canvas.new()
 end
 
 
 -- unimplemented
-function love.graphics.setLineStyle( style )
+function graphics.setLineStyle( style )
    love._unimplemented()
 end
-function love.graphics.setBlendMode( mode )
+function graphics.setBlendMode( mode )
    love._unimplemented()
 end
 
 
 -- Reset coordinate system
-love.graphics.setNewFont( 12 )
-love.graphics.origin()
-love.graphics.setDefaultFilter( "linear", "linear", 1 )
-love.graphics._wraph = "clamp"
-love.graphics._wrapv = "clamp"
-love.graphics._wrapd = "clamp"
+graphics.setNewFont( 12 )
+graphics.origin()
+graphics.setDefaultFilter( "linear", "linear", 1 )
+graphics._wraph = "clamp"
+graphics._wrapv = "clamp"
+graphics._wrapd = "clamp"
 
-return love.graphics
+return graphics
