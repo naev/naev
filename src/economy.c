@@ -396,8 +396,7 @@ static int econ_createGMatrix (void)
    }
 
    /* Compress M matrix and put into G. */
-   if (econ_G != NULL)
-      cs_spfree( econ_G );
+   cs_spfree( econ_G );
    econ_G = cs_compress( M );
    if (econ_G == NULL)
       ERR(_("Unable to create economy G Matrix."));
@@ -582,10 +581,8 @@ void economy_destroy (void)
    }
 
    /* Destroy the economy matrix. */
-   if (econ_G != NULL) {
-      cs_spfree( econ_G );
-      econ_G = NULL;
-   }
+   cs_spfree( econ_G );
+   econ_G = NULL;
 
    /* Economy is now deinitialized. */
    econ_initialized = 0;
