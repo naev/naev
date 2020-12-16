@@ -21,7 +21,8 @@ love._codename = "naev"
 love._default = {
    title = "LÖVE",
    w = 800,
-   h = 600
+   h = 600,
+   fullscreen = false
 }
 function love._unimplemented() error(_("unimplemented")) end
 
@@ -95,25 +96,47 @@ function love.window.setTitle( title )
    end
 end
 function love.window.setMode( width, height, flags )
-   if love._started then
-      love._unimplemented()
-   else
-      love.w = width
-      love.h = height
-      if love.w <= 0 then love.w = love._default.w end
-      if love.h <= 0 then love.h = love._default.h end
+   local fullscreen
+   if type(flags)=="table" then
+      fullscreen = flags.fullscreen or false
    end
+
+   love.fullscreen = fullscreen
+   if love._started then
+      love.tk.customFullscreen( love.fullscreen )
+      if fullscreen then
+         love.w, love.h = naev.tk.customSize()
+      else
+         love.w = width
+         love.h = height
+         love.tk.customResize( love.w, love.h )
+      end
+   else
+      if fullscreen then
+         love.w, love.h = naev.gfx.dim()
+      else
+         love.w = width
+         love.h = height
+         if love.w <= 0 then love.w = love._default.w end
+         if love.h <= 0 then love.h = love._default.h end
+      end
+   end
+   return true
 end
-function love.window.getDesktopDimensions()
-   return love.w, love.h
-end
-function love.window.getDPIScale()
-   return 1
-end
+function love.window.getDesktopDimensions() return naev.gfx.dim() end
+function love.window.getDPIScale() return 1 end -- TODO return scaling factor?
 function love.window.getMode()
-   return love.w, love.h, { fullscreen=false, vsync=1, resizeable=false, borderless = false, centered=true, display=1, msaa=0 }
+   return love.w, love.h, { fullscreen=love.fullscreen, vsync=1, resizeable=false, borderless = false, centered=true, display=1, msaa=0 }
 end
-function love.window.setFullscreen( fullscreen ) end
+function love.window.setFullscreen( fullscreen )
+   -- Skip unnecessary changing
+   if (fullscreen and love.fullscreen) or (not fullscreen and not love.fullscreen) then return true end
+   love.fullscreen = fullscreen
+   naev.tk.customFullscreen( love.fullscreen )
+   love.w, love.h = naev.tk.customSize()
+   return true
+end
+function love.window.getFullscreen( fullscreen ) return love.fullscreen end
 
 
 --[[
@@ -433,6 +456,7 @@ function love.exec( path )
    t.window.title = love._default.title -- The window title (string)
    t.window.width = love._default.w -- The window width (number)
    t.window.height = love._default.h -- The window height (number)
+   t.window.fullscreen = love._default.fullscreen
    t.modules = {}
 
    -- Configure
@@ -445,6 +469,7 @@ function love.exec( path )
    love.title = t.window.title
    love.w = t.window.width
    love.h = t.window.height
+   love.fullscreen = t.window.fullscreen
 
    -- Run set up function defined in Love2d spec
    require( mainpath )
@@ -452,6 +477,7 @@ function love.exec( path )
 
    -- Actually run in Naev
    naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
+   naev.tk.customFullscreen( love.fullscreen )
    love._started = true
 
    -- Reset libraries that were potentially crushed
