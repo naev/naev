@@ -205,9 +205,10 @@ function love.exec( path )
       love.w = -1
       love.h = -1
    end
-   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
    love._focus = true
    love._started = true
+   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
+   -- Doesn't actually get here until the dialogue is closed
 
    -- Reset libraries that were potentially crushed
    for k,v in pairs(naev) do _G[k] = v end
