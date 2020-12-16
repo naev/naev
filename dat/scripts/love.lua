@@ -10,7 +10,7 @@ love.exec( 'pong' ) -- Will look for pong.lua or pong/main.lua
 """
 
 --]]
-require 'class'
+local class = require 'class'
 
 love = {}
 love._basepath = ""
@@ -45,7 +45,7 @@ function love.mousereleased( x, y, button, istouch ) end -- dummy
 function love.getVersion()
    return love._version_major, love._version_minor, love._version_patch, love._codename
 end
-love.Object = inheritsFrom( nil )
+love.Object = class.inheritsFrom( nil )
 love.Object._type = "Object"
 function love.Object:type() return self._type end
 function love.Object:typeOf( name ) return self._type==name end

@@ -1,5 +1,7 @@
+local class = {}
+
 -- Taken from http://lua-users.org/wiki/InheritanceTutorial
-function inheritsFrom( baseClass )
+function class.inheritsFrom( baseClass )
 
     local new_class = {}
     local class_mt = { __index = new_class }
@@ -45,3 +47,6 @@ function inheritsFrom( baseClass )
 
     return new_class
 end
+
+
+return class

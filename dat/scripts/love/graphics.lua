@@ -1,6 +1,8 @@
 --[[
 -- Love2d Graphics for Naev!
 --]]
+local class = require 'class'
+
 local graphics = {}
 graphics._bgcol = naev.colour.new( 0, 0, 0, 1 )
 graphics._fgcol = naev.colour.new( 1, 1, 1, 1 )
@@ -34,7 +36,7 @@ end
 --[[
 -- Drawable class
 --]]
-graphics.Drawable = inheritsFrom( love.Object )
+graphics.Drawable = class.inheritsFrom( love.Object )
 graphics.Drawable._type = "Drawable"
 function graphics.Drawable._draw() error(_("unimplemented")) end
 
@@ -42,7 +44,7 @@ function graphics.Drawable._draw() error(_("unimplemented")) end
 --[[
 -- Image class
 --]]
-graphics.Image = inheritsFrom( graphics.Drawable )
+graphics.Image = class.inheritsFrom( graphics.Drawable )
 graphics.Image._type = "Image"
 function graphics.newImage( filename )
    local ttex
@@ -124,7 +126,7 @@ end
 --[[
 -- Quad class
 --]]
-graphics.Quad = inheritsFrom( graphics.Drawable )
+graphics.Quad = class.inheritsFrom( graphics.Drawable )
 graphics.Quad._type = "Quad"
 function graphics.newQuad( x, y, width, height, sw, sh )
    local q = graphics.Drawable.new()
@@ -140,7 +142,7 @@ end
 --[[
 -- SpriteBatch class
 --]]
-graphics.SpriteBatch = inheritsFrom( graphics.Drawable )
+graphics.SpriteBatch = class.inheritsFrom( graphics.Drawable )
 graphics.SpriteBatch._type = "SpriteBatch"
 function graphics.newSpriteBatch( image, maxsprites, usage  )
    local batch = graphics.SpriteBatch.new()
@@ -260,7 +262,7 @@ end
 --[[
 -- Font stuff
 --]]
-graphics.Font = inheritsFrom( love.Object )
+graphics.Font = class.inheritsFrom( love.Object )
 graphics.Font._type = "Font"
 function graphics.newFont( file, size )
    local f = graphics.Font.new()
@@ -289,7 +291,7 @@ end
 --[[
 -- Shader class
 --]]
-graphics.Shader = inheritsFrom( love.Object )
+graphics.Shader = class.inheritsFrom( love.Object )
 graphics.Shader._type = "Shader"
 function graphics.newShader( code )
    love._unimplemented()
@@ -300,7 +302,7 @@ end
 --[[
 -- Canvas class
 --]]
-graphics.Canvas = inheritsFrom( love.Object )
+graphics.Canvas = class.inheritsFrom( love.Object )
 graphics.Canvas._type = "Canvas"
 function graphics.newCanvas( width, height, settings )
    love._unimplemented()

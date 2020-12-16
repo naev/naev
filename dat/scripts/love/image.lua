@@ -1,8 +1,10 @@
 --[[
 -- Image
 --]]
+local class = require 'class'
+
 local image = {}
-image.ImageData = inheritsFrom( love.Object )
+image.ImageData = class.inheritsFrom( love.Object )
 image.ImageData._type = "ImageData"
 function image.newImageData( ... )
    local arg = {...}
