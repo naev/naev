@@ -519,12 +519,13 @@ int gl_printWidthForTextLine( const glFont *ft_font, const char *text, int width
  *    @param ft_font Font to use.
  *    @param text Text to check.
  *    @param width Width to match.
+ *    @param[out] outw True width of the text.
  *    @return Number of characters that fit.
  */
 int gl_printWidthForText( const glFont *ft_font, const char *text,
-      const int width )
+      const int width, int *outw )
 {
-   int lastspace;
+   int lastspace, lastwidth;
    size_t i;
    uint32_t ch;
    GLfloat n;
@@ -554,8 +555,10 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
       }
 
       /* Save last space. */
-      if (text[i] == ' ')
+      if (text[i] == ' ') {
          lastspace = i;
+         lastwidth = n;
+      }
 
       ch = u8_nextchar( text, &i );
       /* Unicode. */
@@ -565,15 +568,23 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
 
       /* Check if out of bounds. */
       if (n > (GLfloat)width) {
-         if (lastspace > 0)
+         if (lastspace > 0) {
+            if (outw != NULL)
+               *outw = lastwidth;
             return lastspace;
+         }
          else {
+            if (outw != NULL)
+               *outw = n - glyph->adv_x;
             u8_dec( text, &i );
             return i;
          }
       }
    }
 
+   /* Ran out of text so just return. */
+   if (outw != NULL)
+      *outw = n;
    return i;
 }
 
@@ -973,7 +984,7 @@ static int gl_printTextRawBase( const glFont *ft_font,
    s = 0;
    p = 0; /* where we last drew up to */
    while (y - by > -1e-5) {
-      ret = p + gl_printWidthForText( ft_font, &text[p], width );
+      ret = p + gl_printWidthForText( ft_font, &text[p], width, NULL );
 
       /* Must restore stuff. */
       gl_printRestoreLast();
@@ -1155,7 +1166,7 @@ int gl_printHeightRaw( const glFont *ft_font,
    y = 0.;
    p = 0;
    do {
-      i = gl_printWidthForText( ft_font, &text[p], width );
+      i = gl_printWidthForText( ft_font, &text[p], width, NULL );
       p += i + 1;
       y += 1.5*(double)ft_font->h; /* move position down */
    } while (text[p-1] != '\0');

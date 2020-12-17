@@ -367,7 +367,7 @@ void player_messageRaw( const char *str )
 
    /* Get length. */
    l = strlen(str);
-   i = gl_printWidthForText( NULL, str, gui_mesg_w - ((str[0] == '\t') ? 45. : 15.) );
+   i = gl_printWidthForText( NULL, str, gui_mesg_w - ((str[0] == '\t') ? 45. : 15.), NULL );
    p = 0;
    while (p < l) {
       /* Move pointer. */
@@ -395,7 +395,7 @@ void player_messageRaw( const char *str )
       p += i;
       if ((str[p] == '\n') || (str[p] == ' '))
          p++; /* Skip "empty char". */
-      i  = gl_printWidthForText( NULL, &str[p], gui_mesg_w - 45. ); /* They're tabbed so it's shorter. */
+      i  = gl_printWidthForText( NULL, &str[p], gui_mesg_w - 45., NULL ); /* They're tabbed so it's shorter. */
    }
 }
 

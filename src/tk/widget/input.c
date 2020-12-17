@@ -510,7 +510,7 @@ static int inp_rangeFromWidth( Widget *inp, int start_pos, int width )
    if (oneline)
       out = gl_printWidthForTextLine( inp->dat.inp.font, str, tw );
    else
-      out = gl_printWidthForText( inp->dat.inp.font, str, tw );
+      out = gl_printWidthForText( inp->dat.inp.font, str, tw, NULL );
    eol = strchr( str, '\n' );
    return eol ? MIN( out, eol-str ) : out;
 }

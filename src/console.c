@@ -115,7 +115,7 @@ static void cli_printCoreString( const char *s )
       /* Don't handle tab for now. */
       if (tmp[p]=='\t')
          tmp[p] = ' ';
-      l = gl_printWidthForText(cli_font, &tmp[p], CLI_WIDTH-40 );
+      l = gl_printWidthForText(cli_font, &tmp[p], CLI_WIDTH-40, NULL );
       cli_addMessageMax( &tmp[p], l );
       p += l;
    } while (p < slen);

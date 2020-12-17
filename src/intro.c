@@ -145,7 +145,7 @@ static int intro_load( const char *text )
 
       } else { /* plain old text. */
          /* Get the length. */
-         i = gl_printWidthForText( &intro_font, cur_line, SCREEN_W - 500. );
+         i = gl_printWidthForText( &intro_font, cur_line, SCREEN_W - 500., NULL );
 
          intro_lines[n] = malloc( i + 2 );
          intro_lines[n][0] = 't';
