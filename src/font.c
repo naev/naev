@@ -113,6 +113,8 @@ typedef struct glFontStash_s {
    unsigned int h; /**< Font height. */
 
    /* Generated values. */
+   GLint magfilter; /**< Magnification filter. */
+   GLint minfilter; /**< Minification filter. */
    int tw; /**< Width of textures. */
    int th; /**< Height of textures. */
    glFontTex *tex; /**< Textures. */
@@ -170,7 +172,7 @@ static void gl_fontRenderEnd (void);
 static void gl_printOutline( const glFont *ft_font,
       const int width, const int height,
       double bx, double by, int line_height,
-      const glColour* c, 
+      const glColour* c,
       const double outlineR,
       const char *text,
       int (*func)(const glFont*,
@@ -253,8 +255,8 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
       glBindTexture( GL_TEXTURE_2D, tex->id );
 
       /* Shouldn't ever scale - we'll generate appropriate size font. */
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, stsh->magfilter);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, stsh->minfilter);
 
       /* Clamp texture .*/
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -581,7 +583,7 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
 static void gl_printOutline( const glFont *ft_font,
       const int width, const int height,
       double bx, double by, int line_height,
-      const glColour* c, 
+      const glColour* c,
       const double outlineR,
       const char *text,
       int (*func)(const glFont*,
@@ -656,7 +658,7 @@ static int gl_printRawBase( const glFont *ft_font,
    return 0;
 }
 
-/** 
+/**
  * @brief Wrapper for gl_printRaw for map overlay markers
  *
  * See gl_printRaw params (minus outlineR)
@@ -880,12 +882,12 @@ static int gl_printMidRawBase( const glFont *ft_font,
  *    @param text String to display.
  *    @return The number of characters it had to truncate.
  */
-int gl_printMidRaw( 
-      const glFont *ft_font, 
+int gl_printMidRaw(
+      const glFont *ft_font,
       const int width,
-      double x, 
+      double x,
       const double y,
-      const glColour* c, 
+      const glColour* c,
       const double outlineR,
       const char *text
       )
@@ -1016,7 +1018,7 @@ static int gl_printTextRawBase( const glFont *ft_font,
 int gl_printTextRaw( const glFont *ft_font,
       const int width, const int height,
       double bx, double by, int line_height,
-      const glColour* c, 
+      const glColour* c,
       const double outlineR,
       const char *text
     )
@@ -1478,6 +1480,32 @@ static void gl_fontRenderEnd (void)
 
 
 /**
+ * @brief Sets the minification and magnification filters for a font.
+ *
+ *    @param ft_font Font to set filters of.
+ *    @param min Minification filter (GL_LINEAR on GL_NEAREST).
+ *    @param mag Magnification filter (GL_LINEAR on GL_NEAREST).
+ */
+void gl_fontSetFilter( const glFont *ft_font, GLint min, GLint mag )
+{
+   glFontStash *stsh;
+   int i;
+
+   stsh = gl_fontGetStash( ft_font );
+   stsh->minfilter = min;
+   stsh->magfilter = mag;
+
+   for (i=0; i<array_size(stsh->tex); i++) {
+      glBindTexture( GL_TEXTURE_2D, stsh->tex[i].id );
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, stsh->magfilter);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, stsh->minfilter);
+   }
+
+   gl_checkErr();
+}
+
+
+/**
  * @brief Initializes a font.
  *
  *    @param font Font to load (NULL defaults to gl_defFont).
@@ -1531,7 +1559,9 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
    font->id = stsh - avail_fonts;
    font->h = h;
 
-   /* Default sizes. */
+   /* Default stuff. */
+   stsh->magfilter = GL_NEAREST;
+   stsh->minfilter = GL_NEAREST;
    stsh->tw = DEFAULT_TEXTURE_SIZE;
    stsh->th = DEFAULT_TEXTURE_SIZE;
    stsh->h = font->h;

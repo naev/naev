@@ -102,6 +102,9 @@ void gl_printRestore( const glFontRestore *restore );
 void gl_printStoreMax( glFontRestore *restore, const char *text, int max );
 void gl_printStore( glFontRestore *restore, const char *text );
 
+/* Misc stuff. */
+void gl_fontSetFilter( const glFont *ft_font, GLint min, GLint mag );
+
 
 #endif /* FONT_H */
 

@@ -24,11 +24,13 @@ static int fontL_gc( lua_State *L );
 static int fontL_eq( lua_State *L );
 static int fontL_new( lua_State *L );
 static int fontL_height( lua_State *L );
+static int fontL_setFilter( lua_State *L );
 static const luaL_Reg fontL_methods[] = {
    { "__gc", fontL_gc },
    { "__eq", fontL_eq },
    { "new", fontL_new },
    { "height", fontL_height },
+   { "setFilter", fontL_setFilter },
    {0,0}
 }; /**< Font metatable methods. */
 
@@ -193,3 +195,29 @@ static int fontL_height( lua_State *L )
    return 1;
 }
 
+
+/**
+ * @brief Sets the font minification and magnification filters.
+ *
+ *    @luatparam Font font Font to set filter.
+ *    @luatparam string min Minification filter ("nearest" or "linear")
+ *    @luatparam[opt] string mag Magnification filter ("nearest" or "linear"). Defaults to min.
+ * @luafunc setFilter( font, min, mag )
+ */
+static int fontL_setFilter( lua_State *L )
+{
+   glFont *font = luaL_checkfont(L,1);
+   const char *smin = luaL_checkstring(L,2);
+   const char *smag = luaL_optstring(L,3,smin);
+   GLint min, mag;
+
+   min = gl_stringToFilter( smin );
+   mag = gl_stringToFilter( smag );
+
+   if (min==0 || mag==0)
+      NLUA_INVALID_PARAMETER(L);
+
+   gl_fontSetFilter( font, min, mag );
+
+   return 0;
+}
