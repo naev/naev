@@ -55,7 +55,7 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
       const glColour* c, const double outlineR , const char *text);
 int gl_printTextRaw( const glFont *ft_font,
       const int width, const int height,
-      double bx, double by,
+      double bx, double by, int line_height,
       const glColour* c, const double outlineR, const char *text);
 void gl_printMarkerRaw( const glFont *ft_font,
       const double x, const double y,
@@ -77,9 +77,9 @@ PRINTF_FORMAT( 6, 7 ) int gl_printMid( const glFont *ft_font, const int width,
       double x, double y,
       const glColour* c, const char *fmt, ... );
 /* respects \n -> bx,by is TOP LEFT POSITION */
-PRINTF_FORMAT( 7, 8 ) int gl_printText( const glFont *ft_font,
+PRINTF_FORMAT( 8, 9 ) int gl_printText( const glFont *ft_font,
       int width, int height,
-      double bx, double by,
+      double bx, double by, int line_height,
       const glColour* c, const char *fmt, ... );
 
 /* Dimension stuff. */

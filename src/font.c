@@ -169,29 +169,29 @@ static void gl_fontRenderEnd (void);
  */
 static void gl_printOutline( const glFont *ft_font,
       const int width, const int height,
-      double bx, double by,
+      double bx, double by, int line_height,
       const glColour* c, 
       const double outlineR,
       const char *text,
       int (*func)(const glFont*,
-         const int, const int, const double, const double,
+         const int, const int, const double, const double, int,
          const glColour*, const char*, const int )
       );
 static int gl_printRawBase( const glFont *ft_font,
       const int unused1, const int unused2,
-      const double x, const double y,
+      const double x, const double y, int unused3,
       const glColour* c, const char *text, const int forceColor );
 static int gl_printMaxRawBase( const glFont *ft_font,
       const int max, const int unused,
-      const double x, const double y,
+      const double x, const double y, int unused2,
       const glColour* c, const char *text, const int forceColor );
 static int gl_printMidRawBase( const glFont *ft_font,
       const int width, const int unused,
-      double x, const double y,
+      double x, const double y, int unused2,
       const glColour* c, const char *text, const int forceColor );
 static int gl_printTextRawBase( const glFont *ft_font,
       const int width, const int height,
-      double bx, double by,
+      double bx, double by, int line_height,
       const glColour* c, const char *text, const int forceColor );
 
 
@@ -580,12 +580,12 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
  */
 static void gl_printOutline( const glFont *ft_font,
       const int width, const int height,
-      double bx, double by,
+      double bx, double by, int line_height,
       const glColour* c, 
       const double outlineR,
       const char *text,
       int (*func)(const glFont*,
-         const int, const int, const double, const double,
+         const int, const int, const double, const double, int,
          const glColour*, const char*, const int )
       )
 {
@@ -604,14 +604,14 @@ static void gl_printOutline( const glFont *ft_font,
       }
       bg = &cGrey10;
 
-      func( ft_font, width, height, bx - radius, by, bg, text, 1 );
-      func( ft_font, width, height, bx + radius, by, bg, text, 1 );
-      func( ft_font, width, height, bx, by - radius, bg, text, 1 );
-      func( ft_font, width, height, bx, by + radius, bg, text, 1 );
-      func( ft_font, width, height, bx - radius, by - radius, bg, text, 1 );
-      func( ft_font, width, height, bx + radius, by + radius, bg, text, 1 );
-      func( ft_font, width, height, bx + radius, by - radius, bg, text, 1 );
-      func( ft_font, width, height, bx - radius, by + radius, bg, text, 1 );
+      func( ft_font, width, height, bx - radius, by, line_height, bg, text, 1 );
+      func( ft_font, width, height, bx + radius, by, line_height, bg, text, 1 );
+      func( ft_font, width, height, bx, by - radius, line_height, bg, text, 1 );
+      func( ft_font, width, height, bx, by + radius, line_height, bg, text, 1 );
+      func( ft_font, width, height, bx - radius, by - radius, line_height, bg, text, 1 );
+      func( ft_font, width, height, bx + radius, by + radius, line_height, bg, text, 1 );
+      func( ft_font, width, height, bx + radius, by - radius, line_height, bg, text, 1 );
+      func( ft_font, width, height, bx - radius, by + radius, line_height, bg, text, 1 );
 
    }
 }
@@ -625,17 +625,19 @@ static void gl_printOutline( const glFont *ft_font,
  *    @param unused2 Unused.
  *    @param x X position to put text at.
  *    @param y Y position to put text at.
+ *    @param unused3 Unused.
  *    @param c Colour to use (uses white if NULL)
  *    @param text String to display.
  *    @param forceColor Whether or not to force the color.
  */
 static int gl_printRawBase( const glFont *ft_font,
       const int unused1, const int unused2,
-      const double x, const double y,
+      const double x, const double y, int unused3,
       const glColour* c, const char *text, const int forceColor )
 {
    (void) unused1;
    (void) unused2;
+   (void) unused3;
    int s;
    size_t i;
    uint32_t ch;
@@ -663,8 +665,8 @@ void gl_printMarkerRaw( const glFont *ft_font,
       const double x, const double y,
       const glColour* c, const char *text)
 {
-   gl_printOutline( ft_font, 0, 0, x, y, c, 1, text, gl_printRawBase);
-   gl_printRawBase( ft_font, 0, 0, x, y, c, text, 0 );
+   gl_printOutline( ft_font, 0, 0, x, y, 0, c, 1, text, gl_printRawBase);
+   gl_printRawBase( ft_font, 0, 0, x, y, 0, c, text, 0 );
 }
 
 
@@ -686,8 +688,8 @@ void gl_printRaw( const glFont *ft_font,
       const glColour* c, const double outlineR, const char *text)
 {
    if (outlineR > 0.)
-      gl_printOutline( ft_font, 0, 0, x, y, c, outlineR, text, gl_printRawBase);
-   gl_printRawBase( ft_font, 0, 0, x, y, c, text, 0 );
+      gl_printOutline( ft_font, 0, 0, x, y, 0, c, outlineR, text, gl_printRawBase);
+   gl_printRawBase( ft_font, 0, 0, x, y, 0, c, text, 0 );
 }
 
 
@@ -729,6 +731,7 @@ void gl_print( const glFont *ft_font,
  *    @param unused Unused.
  *    @param x X position to display text at.
  *    @param y Y position to display text at.
+ *    @param unused2 Unused.
  *    @param c Colour to use (NULL defaults to white).
  *    @param text String to display.
  *    @param forceColor Whether or not to force the color.
@@ -736,10 +739,11 @@ void gl_print( const glFont *ft_font,
  */
 static int gl_printMaxRawBase( const glFont *ft_font,
       const int max, const int unused,
-      const double x, const double y,
+      const double x, const double y, int unused2,
       const glColour* c, const char *text, const int forceColor )
 {
    (void) unused;
+   (void) unused2;
    int s;
    size_t ret, i;
    uint32_t ch;
@@ -780,8 +784,8 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
       const glColour* c, const double outlineR, const char *text)
 {
    if (outlineR > 0.)
-      gl_printOutline( ft_font, max, 0, x, y, c, outlineR, text, gl_printMaxRawBase );
-   return gl_printMaxRawBase( ft_font, max, 0, x, y, c, text, 0 );
+      gl_printOutline( ft_font, max, 0, x, y, 0, c, outlineR, text, gl_printMaxRawBase );
+   return gl_printMaxRawBase( ft_font, max, 0, x, y, 0, c, text, 0 );
 }
 
 
@@ -823,6 +827,7 @@ int gl_printMax( const glFont *ft_font, const int max,
  *    @param unused Unused.
  *    @param x X position to display text at.
  *    @param y Y position to display text at.
+ *    @param unused2 Unused.
  *    @param c Colour to use for text (NULL defaults to white).
  *    @param text String to display.
  *    @param forceColor Whether or not to force the color.
@@ -830,10 +835,11 @@ int gl_printMax( const glFont *ft_font, const int max,
  */
 static int gl_printMidRawBase( const glFont *ft_font,
       const int width, const int unused,
-      double x, const double y,
+      double x, const double y, int unused2,
       const glColour* c, const char *text, const int forceColor )
 {
    (void) unused;
+   (void) unused2;
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
    int n, s;
    size_t ret, i;
@@ -885,8 +891,8 @@ int gl_printMidRaw(
       )
 {
    if (outlineR > 0.)
-      gl_printOutline( ft_font, width, 0, x, y, c, outlineR, text, gl_printMidRawBase);
-   return gl_printMidRawBase( ft_font, width, 0, x, y, c, text, 0 );
+      gl_printOutline( ft_font, width, 0, x, y, 0, c, outlineR, text, gl_printMidRawBase);
+   return gl_printMidRawBase( ft_font, width, 0, x, y, 0, c, text, 0 );
 }
 
 
@@ -930,6 +936,7 @@ int gl_printMid( const glFont *ft_font, const int width,
  *    @param height Maximum height to print to.
  *    @param bx X position to display text at.
  *    @param by Y position to display text at.
+ *    @param line_height Height to use for each line (or 0 for default)
  *    @param c Colour to use (NULL defaults to white).
  *    @param text String to display.
  *    @param forceColor Whether or not to force the color.
@@ -937,7 +944,7 @@ int gl_printMid( const glFont *ft_font, const int width,
  */
 static int gl_printTextRawBase( const glFont *ft_font,
       const int width, const int height,
-      double bx, double by,
+      double bx, double by, int line_height,
       const glColour* c, const char *text, const int forceColor )
 {
    int p, s;
@@ -951,6 +958,10 @@ static int gl_printTextRawBase( const glFont *ft_font,
 
    x = bx;
    y = by + height - (double)stsh->h; /* y is top left corner */
+
+   /* Defalut to 1.5 line height. */
+   if (line_height == 0)
+      line_height = 1.5*(double)stsh->h;
 
    /* Clears restoration. */
    gl_printRestoreClear();
@@ -978,9 +989,8 @@ static int gl_printTextRawBase( const glFont *ft_font,
       p = i;
       if ((text[p] == '\n') || (text[p] == ' '))
          p++; /* Skip "empty char". */
-      y -= 1.5*(double)stsh->h; /* move position down */
+      y -= line_height; /* move position down */
    }
-
 
    return 0;
 }
@@ -996,6 +1006,7 @@ static int gl_printTextRawBase( const glFont *ft_font,
  *    @param height Maximum height to print to.
  *    @param bx X position to display text at.
  *    @param by Y position to display text at.
+ *    @param line_height Height of each line to print.
  *    @param c Colour to use (NULL defaults to white).
  *    @param outlineR Radius in px of outline (-1 for default, 0 for none)
  *    @param text String to display.
@@ -1004,15 +1015,15 @@ static int gl_printTextRawBase( const glFont *ft_font,
  */
 int gl_printTextRaw( const glFont *ft_font,
       const int width, const int height,
-      double bx, double by,
+      double bx, double by, int line_height,
       const glColour* c, 
       const double outlineR,
       const char *text
     )
 {
    if (outlineR > 0.)
-      gl_printOutline( ft_font, width, height, bx, by, c, outlineR, text, gl_printTextRawBase );
-   return gl_printTextRawBase( ft_font, width, height, bx, by, c, text, 0 );
+      gl_printOutline( ft_font, width, height, bx, by, line_height, c, outlineR, text, gl_printTextRawBase );
+   return gl_printTextRawBase( ft_font, width, height, bx, by, line_height, c, text, 0 );
 }
 
 
@@ -1026,6 +1037,7 @@ int gl_printTextRaw( const glFont *ft_font,
  *    @param height Maximum height to print to.
  *    @param bx X position to display text at.
  *    @param by Y position to display text at.
+ *    @param line_height Height of each line to print.
  *    @param c Colour to use (NULL defaults to white).
  *    @param fmt Text to display formatted like printf.
  *    @return 0 on success.
@@ -1033,7 +1045,7 @@ int gl_printTextRaw( const glFont *ft_font,
  */
 int gl_printText( const glFont *ft_font,
       const int width, const int height,
-      double bx, double by,
+      double bx, double by, int line_height,
       const glColour* c, const char *fmt, ... )
 {
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
@@ -1047,7 +1059,7 @@ int gl_printText( const glFont *ft_font,
       va_end(ap);
    }
 
-   return gl_printTextRaw( ft_font, width, height, bx, by, c, -1., text );
+   return gl_printTextRaw( ft_font, width, height, bx, by, line_height, c, -1., text );
 }
 
 

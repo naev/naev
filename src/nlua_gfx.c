@@ -498,13 +498,14 @@ static int gfxL_print( lua_State *L )
  *    @luatparam number w Width of the block of text.
  *    @luatparam number h Height of the block of text.
  *    @luatparam Colour col Colour to print text.
- * @luafunc printText( small, str, x, y, w, h, col )
+ *    @luatparam line_height Height of each line to print.
+ * @luafunc printText( small, str, x, y, w, h, col, line_height )
  */
 static int gfxL_printText( lua_State *L )
 {
    glFont *font;
    const char *str;
-   int w, h;
+   int w, h, lh;
    double x, y;
    glColour *col;
 
@@ -518,9 +519,10 @@ static int gfxL_printText( lua_State *L )
    w     = luaL_checkinteger(L,5);
    h     = luaL_checkinteger(L,6);
    col   = luaL_checkcolour(L,7);
+   lh    = luaL_optinteger(L,8,0);
 
    /* Render. */
-   gl_printTextRaw( font, w, h, x, y, col, -1., str );
+   gl_printTextRaw( font, w, h, x, y, lh, col, -1., str );
 
    return 0;
 }

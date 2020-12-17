@@ -118,7 +118,7 @@ static void inp_render( Widget* inp, double bx, double by )
       /* Align top-left, print with word wrapping. */
       ty = y - inp->dat.inp.font->h / 2.;
       gl_printTextRaw( inp->dat.inp.font, inp->w-10., inp->h,
-            x+5., ty, &cGreen, -1., &inp->dat.inp.input[ inp->dat.inp.view ] );
+            x+5., ty, 0, &cGreen, -1., &inp->dat.inp.input[ inp->dat.inp.view ] );
    }
 
    /* Draw cursor. */
