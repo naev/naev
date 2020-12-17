@@ -16,13 +16,6 @@
 #include <vorbis/vorbisfile.h>
 
 
-/*
- * Flags.
- */
-#define VOICE_LOOPING      (1<<10) /* voice loops */
-#define VOICE_STATIC       (1<<11) /* voice isn't relative */
-
-
 /**
  * @struct alSound
  *
