@@ -12,6 +12,9 @@
 #include "opengl.h"
 
 
+#define FONT_FLAG_DONTREUSE   (1<<1) /**< Don't reuse the font if it's loaded somewhere else. */
+
+
 /**
  * @brief Represents a font in memory.
  */
@@ -37,7 +40,7 @@ typedef struct glFontRestore_s {
  *
  * if font is NULL it uses the internal default font same with gl_print
  */
-int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const char *prefix );
+int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const char *prefix, unsigned int flags );
 void gl_freeFont( glFont* font );
 
 

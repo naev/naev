@@ -350,9 +350,9 @@ int main( int argc, char** argv )
 
    /* Have to set up fonts before rendering anything. */
    //DEBUG("Using '%s' as main font and '%s' as monospace font.", _(FONT_DEFAULT_PATH), _(FONT_MONOSPACE_PATH));
-   gl_fontInit( &gl_defFont, _(FONT_DEFAULT_PATH), conf.font_size_def, FONT_PATH_PREFIX ); /* initializes default font to size */
-   gl_fontInit( &gl_smallFont, _(FONT_DEFAULT_PATH), conf.font_size_small, FONT_PATH_PREFIX ); /* small font */
-   gl_fontInit( &gl_defFontMono, _(FONT_MONOSPACE_PATH), conf.font_size_def, FONT_PATH_PREFIX );
+   gl_fontInit( &gl_defFont, _(FONT_DEFAULT_PATH), conf.font_size_def, FONT_PATH_PREFIX, 0 ); /* initializes default font to size */
+   gl_fontInit( &gl_smallFont, _(FONT_DEFAULT_PATH), conf.font_size_small, FONT_PATH_PREFIX, 0 ); /* small font */
+   gl_fontInit( &gl_defFontMono, _(FONT_MONOSPACE_PATH), conf.font_size_def, FONT_PATH_PREFIX, 0 );
 
    /* Detect size changes that occurred after window creation. */
    naev_resize();

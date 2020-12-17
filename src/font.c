@@ -1484,9 +1484,10 @@ static void gl_fontRenderEnd (void)
  *    @param fname Name of the font (from inside packfile).
  *    @param h Height of the font to generate.
  *    @param prefix Prefix to look for the font.
+ *    @param flags Flags to use when generating the font.
  *    @return 0 on success.
  */
-int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const char *prefix )
+int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const char *prefix, unsigned int flags )
 {
    FT_Library library;
    FT_Face face;
@@ -1507,17 +1508,19 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
       avail_fonts = array_create( glFontStash );
 
    /* Check if available. */
-   for (i=0; i<(size_t)array_size(avail_fonts); i++) {
-      stsh = &avail_fonts[i];
-      if (stsh->h != h)
-         continue;
-      if (strcmp(stsh->fname,fname)!=0)
-         continue;
-      /* Found a match! */
-      stsh->refcount++;
-      font->id = stsh - avail_fonts;
-      font->h = h;
-      return 0;
+   if (!(flags & FONT_FLAG_DONTREUSE)) {
+      for (i=0; i<(size_t)array_size(avail_fonts); i++) {
+         stsh = &avail_fonts[i];
+         if (stsh->h != h)
+            continue;
+         if (strcmp(stsh->fname,fname)!=0)
+            continue;
+         /* Found a match! */
+         stsh->refcount++;
+         font->id = stsh - avail_fonts;
+         font->h = h;
+         return 0;
+      }
    }
 
    /* Create new font. */
