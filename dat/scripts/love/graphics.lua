@@ -244,11 +244,11 @@ function graphics.circle( mode, x, y, radius )
    naev.gfx.renderCircle( x, y, radius, graphics._fgcol, _mode(mode) )
 end
 function graphics.print( text, x, y  )
-   x,y = _xy(x,y,limit,graphics._font.font:height())
+   x,y = _xy(x,y,limit,graphics._font.height)
    naev.gfx.printf( graphics._font.font, text, x, y, graphics._fgcol )
 end
 function graphics.printf( text, x, y, limit, align )
-   x,y = _xy(x,y,limit,graphics._font.font:height())
+   x,y = _xy(x,y,limit,graphics._font.height)
    if align=="left" then
       naev.gfx.printf( graphics._font.font, text, x, y, graphics._fgcol, limit, false )
    elseif align=="center" then
@@ -279,7 +279,21 @@ function graphics.newFont( file, size )
       file = filesystem.newFile( file ):getFilename()
       f.font = naev.font.new( file, size )
    end
+   f.height= f.font:height()
+   f.lineheight = f.height*1.5 -- Naev default
    return f
+end
+function graphics.Font:getHeight() return self.height end
+function graphics.Font:getLineHeight() return self.lineheight end
+function graphics.Font:setLineHeight( height ) self.lineheight = height end
+function graphics.Font:getFilter() return self.min, self.mag, self.anisotropy end
+function graphics.Font:setFilter( min, mag, anisotropy )
+   mag = mag or min
+   anisotropy = anisotropy or 1
+   --self.tex:setFilter( min, mag, anisotropy )
+   self.min = min
+   self.mag = mag
+   self.anisotropy = anisotropy
 end
 function graphics.setFont( fnt )
    graphics._font = fnt
