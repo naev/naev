@@ -443,7 +443,7 @@ static int gfxL_printfWrap( lua_State *L )
       lua_pushinteger(L, 1);           /* t, n, t, 1 */
       lua_pushlstring(L, &tmp[p], l);  /* t, n, t, 1, s */
       lua_rawset(L, -3);               /* t, n, t */
-      lua_pushinteger(L, 1);           /* t, n, t, 2 */
+      lua_pushinteger(L, 2);           /* t, n, t, 2 */
       lua_pushinteger(L, outw);        /* t, n, t, 2, n */
       lua_rawset(L, -3);               /* t, n, t */
       lua_rawset(L, -3);               /* t */
