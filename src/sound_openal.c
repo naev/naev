@@ -106,9 +106,6 @@ static ALuint efx_echo        = 0; /**< Echo effect. */
 static double sound_speed     = 1.; /**< Sound speed. */
 
 
-/**
- * @brief Group implementation similar to SDL_Mixer.
- */
 typedef struct alGroup_s {
    int id; /**< Group ID. */
 

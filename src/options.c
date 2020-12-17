@@ -324,9 +324,6 @@ static void opt_gameplay( unsigned int wid )
 #ifdef USE_OPENAL
          "With OpenAL\n"
 #endif /* USE_OPENAL */
-#ifdef USE_SDLMIX
-         "With SDL_mixer\n"
-#endif
 #ifdef HAVE_LUAJIT
          "Using LuaJIT\n"
 #endif
@@ -846,7 +843,7 @@ static void opt_setAudioLevel( unsigned int wid, char *str )
 
 
 /**
- * @brief Sets the sound or music volume string based on level and sound backend.
+ * @brief Sets the sound or music volume string based on level.
  *
  *    @param[out] buf Buffer to use.
  *    @param max Maximum length of the buffer.
@@ -876,11 +873,8 @@ static void opt_audioLevelStr( char *buf, int max, int type, double pos )
 static void opt_audio( unsigned int wid )
 {
    (void) wid;
-   int i, j;
    int cw;
-   int w, h, y, x, l;
-   char **s;
-   const char *str;
+   int w, h, y, x;
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
@@ -896,43 +890,13 @@ static void opt_audio( unsigned int wid )
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDefaults", _("Defaults"), opt_audioDefaults );
 
-   /* General options. */
    cw = (w-60)/2;
    x = 20;
    y = -60;
-   window_addText( wid, x+20, y, cw, 20, 0, "txtSGeneral",
-         NULL, NULL, _("General") );
-   y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkNosound", _("Disable all sound/music"), NULL, conf.nosound );
    y -= 30;
-   str = _("Backends");
-   l = gl_printWidthRaw( NULL, str );
-   window_addText( wid, x, y, l, 40, 0, "txtSBackends",
-         NULL, NULL, str );
-   l += 10;
-   i = 0;
-   j = 0;
-   s = malloc(sizeof(char*)*2);
-#if USE_OPENAL
-   if (strcmp(conf.sound_backend,"openal")==0)
-      j = i;
-   s[i++] = strdup(_("openal"));
-#endif /* USE_OPENAL */
-#if USE_SDLMIX
-   if (strcmp(conf.sound_backend,"sdlmix")==0)
-      j = i;
-   s[i++] = strdup(_("sdlmix"));
-#endif /* USE_SDLMIX */
-   if (i==0)
-      s[i++] = strdup(_("none"));
-   window_addList( wid, x+l, y, cw-(x+l), 40, "lstSound", s, i, j, NULL, NULL );
-   y -= 50;
 
-   /* OpenAL options. */
-   window_addText( wid, x+20, y, cw, 20, 0, "txtSOpenal",
-         NULL, NULL, _("OpenAL") );
-   y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkEFX", _("EFX (More CPU)"), NULL, conf.al_efx );
 
@@ -983,30 +947,13 @@ static int opt_audioSave( unsigned int wid, char *str )
 {
    (void) str;
    int f;
-   char *s;
 
-   /* General. */
    f = window_checkboxState( wid, "chkNosound" );
    if (conf.nosound != f) {
       conf.nosound = f;
       opt_needRestart();
    }
 
-   /* Backend. */
-   s = toolkit_getList( wid, "lstSound" );
-   if (conf.sound_backend != NULL) {
-      if (strcmp(s,conf.sound_backend)!=0) {
-         free(conf.sound_backend);
-         conf.sound_backend = strdup(s);
-         opt_needRestart();
-      }
-   }
-   else {
-      conf.sound_backend = strdup(s);
-      opt_needRestart();
-   }
-
-   /* OpenAL. */
    f = window_checkboxState( wid, "chkEFX" );
    if (conf.al_efx != f) {
       conf.al_efx = f;
@@ -1036,10 +983,6 @@ static void opt_audioDefaults( unsigned int wid, char *str )
    /* Checkboxes. */
    window_checkboxSet( wid, "chkNosound", MUTE_SOUND_DEFAULT );
    window_checkboxSet( wid, "chkEFX", USE_EFX_DEFAULT );
-
-   /* List. */
-   toolkit_setList( wid, "lstSound",
-         (conf.sound_backend==NULL) ? _("none") : BACKEND_DEFAULT );
 }
 
 
@@ -1055,9 +998,6 @@ static void opt_audioUpdate( unsigned int wid )
    /* Faders. */
    window_faderValue( wid, "fadSound", conf.sound );
    window_faderValue( wid, "fadMusic", conf.music );
-
-   /* Backend box */
-   /* TODO */
 }
 
 

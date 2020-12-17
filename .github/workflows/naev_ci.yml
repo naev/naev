@@ -37,15 +37,11 @@ jobs:
       if: ${{ runner.os == 'Linux'}}
       run: |
         sudo apt-get install \
-          automake \
-          autopoint \
-          autoconf-archive \
           build-essential \
           binutils-dev \
           gettext \
           intltool \
           libsdl2-dev \
-          libsdl2-mixer-dev \
           libsdl2-image-dev \
           libgl1-mesa-dev \
           libgl1-mesa-dri \
@@ -66,7 +62,7 @@ jobs:
         msystem: MINGW64
         update: true
         path-type: strict
-        install: git tar mingw-w64-x86_64-clang mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-make mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer
+        install: git tar mingw-w64-x86_64-clang mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-make mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2
 
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
@@ -168,9 +164,6 @@ jobs:
     - name: Install Additional Build Dependencies
       run: |
         sudo apt-get install \
-          autopoint \
-          automake \
-          autoconf-archive \
           binutils-dev \
           build-essential \
           gettext \
@@ -182,7 +175,6 @@ jobs:
           libpng-dev \
           libsdl2-dev \
           libsdl2-image-dev \
-          libsdl2-mixer-dev \
           libvorbis-dev \
           libxml2-dev \
           ninja-build=1.7.1-1~ubuntu16.04.1

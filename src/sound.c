@@ -21,7 +21,6 @@
 
 #include "sound_priv.h"
 #include "sound_openal.h"
-#include "sound_sdlmix.h"
 #include "log.h"
 #include "nstring.h"
 #include "ndata.h"
@@ -143,102 +142,47 @@ int sound_init (void)
    if (sound_disabled && music_disabled)
       return 0;
 
-   /* Choose sound system. */
-   if ((sound_sys_init == NULL) && (conf.sound_backend != NULL) &&
-         (strcmp(conf.sound_backend,"openal")==0)) {
 #if USE_OPENAL
-      /*
-       * OpenAL Sound.
-       */
-      /* Creation. */
-      sound_sys_init       = sound_al_init;
-      sound_sys_exit       = sound_al_exit;
-      /* Sound Creation. */
-      sound_sys_load       = sound_al_load;
-      sound_sys_free       = sound_al_free;
-      /* Sound settings. */
-      sound_sys_volume     = sound_al_volume;
-      sound_sys_getVolume  = sound_al_getVolume;
-      sound_sys_getVolumeLog = sound_al_getVolumeLog;
-      /* Sound playing. */
-      sound_sys_play       = sound_al_play;
-      sound_sys_playPos    = sound_al_playPos;
-      sound_sys_updatePos  = sound_al_updatePos;
-      sound_sys_updateVoice = sound_al_updateVoice;
-      /* Sound management. */
-      sound_sys_update     = sound_al_update;
-      sound_sys_stop       = sound_al_stop;
-      sound_sys_pause      = sound_al_pause;
-      sound_sys_resume     = sound_al_resume;
-      sound_sys_setSpeed   = sound_al_setSpeed;
-      sound_sys_setSpeedVolume = sound_al_setSpeedVolume;
-      /* Listener. */
-      sound_sys_updateListener = sound_al_updateListener;
-      /* Groups. */
-      sound_sys_createGroup = sound_al_createGroup;
-      sound_sys_playGroup  = sound_al_playGroup;
-      sound_sys_stopGroup  = sound_al_stopGroup;
-      sound_sys_pauseGroup = sound_al_pauseGroup;
-      sound_sys_resumeGroup = sound_al_resumeGroup;
-      sound_sys_speedGroup = sound_al_speedGroup;
-      sound_sys_volumeGroup = sound_al_volumeGroup;
-      /* Env. */
-      sound_sys_env        = sound_al_env;
+   /*
+    * OpenAL Sound.
+    */
+   /* Creation. */
+   sound_sys_init       = sound_al_init;
+   sound_sys_exit       = sound_al_exit;
+   /* Sound Creation. */
+   sound_sys_load       = sound_al_load;
+   sound_sys_free       = sound_al_free;
+   /* Sound settings. */
+   sound_sys_volume     = sound_al_volume;
+   sound_sys_getVolume  = sound_al_getVolume;
+   sound_sys_getVolumeLog = sound_al_getVolumeLog;
+   /* Sound playing. */
+   sound_sys_play       = sound_al_play;
+   sound_sys_playPos    = sound_al_playPos;
+   sound_sys_updatePos  = sound_al_updatePos;
+   sound_sys_updateVoice = sound_al_updateVoice;
+   /* Sound management. */
+   sound_sys_update     = sound_al_update;
+   sound_sys_stop       = sound_al_stop;
+   sound_sys_pause      = sound_al_pause;
+   sound_sys_resume     = sound_al_resume;
+   sound_sys_setSpeed   = sound_al_setSpeed;
+   sound_sys_setSpeedVolume = sound_al_setSpeedVolume;
+   /* Listener. */
+   sound_sys_updateListener = sound_al_updateListener;
+   /* Groups. */
+   sound_sys_createGroup = sound_al_createGroup;
+   sound_sys_playGroup  = sound_al_playGroup;
+   sound_sys_stopGroup  = sound_al_stopGroup;
+   sound_sys_pauseGroup = sound_al_pauseGroup;
+   sound_sys_resumeGroup = sound_al_resumeGroup;
+   sound_sys_speedGroup = sound_al_speedGroup;
+   sound_sys_volumeGroup = sound_al_volumeGroup;
+   /* Env. */
+   sound_sys_env        = sound_al_env;
 #else /* USE_OPENAL */
-      WARN(_("OpenAL support not compiled in!"));
+   WARN(_("OpenAL support not compiled in!"));
 #endif /* USE_OPENAL */
-   }
-   if ((sound_sys_init == NULL) && (conf.sound_backend != NULL) &&
-         (strcmp(conf.sound_backend,"sdlmix")==0)) {
-#if USE_SDLMIX
-      /*
-       * SDL_mixer Sound.
-       */
-      /* Creation. */
-      sound_sys_init       = sound_mix_init;
-      sound_sys_exit       = sound_mix_exit;
-      /* Sound Creation. */
-      sound_sys_load       = sound_mix_load;
-      sound_sys_free       = sound_mix_free;
-      /* Sound settings. */
-      sound_sys_volume     = sound_mix_volume;
-      sound_sys_getVolume  = sound_mix_getVolume;
-      sound_sys_getVolumeLog = sound_mix_getVolumeLog;
-      /* Sound playing. */
-      sound_sys_play       = sound_mix_play;
-      sound_sys_playPos    = sound_mix_playPos;
-      sound_sys_updatePos  = sound_mix_updatePos;
-      sound_sys_updateVoice = sound_mix_updateVoice;
-      /* Sound management. */
-      sound_sys_update     = sound_mix_update;
-      sound_sys_stop       = sound_mix_stop;
-      sound_sys_pause      = sound_mix_pause;
-      sound_sys_resume     = sound_mix_resume;
-      sound_sys_setSpeed   = sound_mix_setSpeed;
-      sound_sys_setSpeedVolume = sound_mix_setSpeedVolume;
-      /* Listener. */
-      sound_sys_updateListener = sound_mix_updateListener;
-      /* Groups. */
-      sound_sys_createGroup = sound_mix_createGroup;
-      sound_sys_playGroup  = sound_mix_playGroup;
-      sound_sys_stopGroup  = sound_mix_stopGroup;
-      sound_sys_pauseGroup = sound_mix_pauseGroup;
-      sound_sys_resumeGroup = sound_mix_resumeGroup;
-      sound_sys_speedGroup = sound_mix_speedGroup;
-      sound_sys_volumeGroup = sound_mix_volumeGroup;
-      /* Env. */
-      sound_sys_env        = sound_mix_env;
-#else /* USE_SDLMIX */
-      WARN(_("SDL_mixer support not compiled in!"));
-#endif /* USE_SDLMIX */
-   }
-   if (sound_sys_init == NULL) {
-      WARN(_("Unknown/Unavailable sound backend '%s'."), conf.sound_backend);
-      sound_disabled = 1;
-      WARN(_("Sound disabled."));
-      music_disabled = 1;
-      return 0;
-   }
 
    /* Initialize sound backend. */
    ret = sound_sys_init();

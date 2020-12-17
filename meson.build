@@ -153,13 +153,6 @@ if buildExec.disabled() == false
    config_data.set10('USE_OPENAL', hasOpenAL)
    summary('OpenAL', hasOpenAL, section: 'Features', bool_yn: true)
 
-   # SDL Mixer
-   useSDLMixer = get_option('sdl_mixer')
-   sdl_mixer = dependency('SDL2_mixer', required: useSDLMixer)
-   naev_deps += sdl_mixer
-   config_data.set10('USE_SDLMIX', sdl_mixer.found())
-   summary('SDL Mixer', sdl_mixer.found(), section: 'Features', bool_yn: true)
-
    # Standard library feature tests
    config_data.set10('HAVE_DECL_SETENV', cc.has_header_symbol('stdlib.h', 'setenv'))
    config_data.set10('HAVE_DECL__PUTENV_S', cc.has_header_symbol('stdlib.h', '_putenv_s'))
