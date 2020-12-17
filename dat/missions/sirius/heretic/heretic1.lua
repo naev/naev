@@ -22,8 +22,8 @@
    the player is asked to deliver a message to a "shady character"
    on the wringer in the Suna system.]]
    
-require "numstring.lua"
-require "missions/sirius/common.lua"
+require "numstring"
+require "missions/sirius/common"
 
 
 --all the messages before the mission starts

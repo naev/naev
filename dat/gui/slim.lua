@@ -2,8 +2,8 @@
    The new "slim" GUI
 --]]
 
-require "numstring.lua"
-playerform = require "scripts/playerform.lua"
+require "numstring"
+playerform = require "scripts/playerform"
 
 function create()
 

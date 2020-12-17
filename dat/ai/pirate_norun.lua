@@ -1,4 +1,4 @@
-require("ai/pirate.lua")
+require("ai/pirate")
 
 mem.armour_run = 0
 

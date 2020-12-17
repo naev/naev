@@ -42,6 +42,27 @@ static int dialogue_open; /**< Number of dialogues open. */
 
 
 /*
+ * Custom widget scary stuff.
+ */
+typedef struct dialogue_update_s {
+   unsigned int wid;
+   int (*update)(double, void*);
+   void *data;
+} dialogue_update_t;
+struct dialogue_custom_data_s {
+   int (*event)(unsigned int, SDL_Event*, void*);
+   void *data;
+   int mx;
+   int my;
+   int w;
+   int h;
+   int last_w;
+   int last_h;
+};
+static int dialogue_custom_event( unsigned int wid, SDL_Event *event );
+
+
+/*
  * Prototypes.
  */
 /* extern */
@@ -58,7 +79,7 @@ static void dialogue_choiceClose( unsigned int wid, char* str );
 static void dialogue_listClose( unsigned int wid, char* str );
 static void dialogue_listCancel( unsigned int wid, char* str );
 /* secondary loop hack */
-static int toolkit_loop( int *loop_done );
+static int toolkit_loop( int *loop_done, dialogue_update_t *du );
 
 /**
  * @brief Used to store information for input dialogues
@@ -146,7 +167,7 @@ void dialogue_alert( const char *fmt, ... )
          dialogue_close );
 
    dialogue_open++;
-   toolkit_loop( &done );
+   toolkit_loop( &done, NULL );
 }
 
 
@@ -274,7 +295,7 @@ void dialogue_msgRaw( const char* caption, const char *msg )
          dialogue_close );
 
    dialogue_open++;
-   toolkit_loop( &done );
+   toolkit_loop( &done, NULL );
 }
 
 
@@ -332,7 +353,7 @@ void dialogue_msgImgRaw( const char* caption, const char *msg, const char *img, 
          dialogue_close );
 
    dialogue_open++;
-   toolkit_loop( &done );
+   toolkit_loop( &done, NULL );
 }
 
 
@@ -390,7 +411,7 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
    /* tricky secondary loop */
    dialogue_open++;
    done[1] = -1; /* Default to negative. */
-   toolkit_loop( done );
+   toolkit_loop( done, NULL );
 
    /* Close the dialogue. */
    dialogue_close( wid, NULL );
@@ -503,7 +524,7 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
          input = NULL;
       }
 
-      if (toolkit_loop( &done ) != 0) /* error in loop -> quit */
+      if (toolkit_loop( &done, NULL ) != 0) /* error in loop -> quit */
          return NULL;
 
       /* save the input */
@@ -726,7 +747,7 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
          "btnCancel", _("Cancel"), dialogue_listCancel );
 
    dialogue_open++;
-   toolkit_loop( &done );
+   toolkit_loop( &done, NULL );
    /* cleanup */
    input_dialogue.x = 0;
    input_dialogue.y = 0;
@@ -798,7 +819,7 @@ char *dialogue_runChoice (void)
    /* tricky secondary loop */
    window_setData( choice_wid, &done );
    dialogue_open++;
-   toolkit_loop( &done );
+   toolkit_loop( &done, NULL );
 
    /* Save value. */
    res = choice_result;
@@ -830,6 +851,149 @@ static void dialogue_choiceClose( unsigned int wid, char* str )
 }
 
 
+static int dialogue_custom_event( unsigned int wid, SDL_Event *event )
+{
+   int mx, my;
+   struct dialogue_custom_data_s *cd;
+   void *data = window_getData( wid );
+   cd = (struct dialogue_custom_data_s*) data;
+
+   /* We translate mouse coords here. */
+   if ((event->type==SDL_MOUSEBUTTONDOWN) ||
+         (event->type==SDL_MOUSEBUTTONUP) ||
+         (event->type==SDL_MOUSEMOTION)) {
+      gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
+      mx += cd->mx;
+      my += cd->my;
+      /* Ignore out of bounds. We have to implement checking here. */
+      if ((mx < 0) || (mx >= cd->w) || (my < 0) || (my >= cd->h))
+         return 0;
+      event->button.x = mx;
+      event->button.y = my;
+   }
+
+   return (*cd->event)( wid, event, cd->data );
+}
+/**
+ * @brief Opens a dialogue window with an ok button and a fixed message.
+ *
+ *    @param caption Window title.
+ *    @param width Width of the widget.
+ *    @param height Height of the widget.
+ *    @param update Custom render callback.
+ *    @param render Custom render callback.
+ *    @param event Custom event callback.
+ *    @param data Custom data;
+ */
+void dialogue_custom( const char* caption, int width, int height,
+      int (*update) (double dt, void* data),
+      void (*render) (double x, double y, double w, double h, void* data),
+      int (*event) (unsigned int wid, SDL_Event* event, void* data),
+      void* data )
+{
+   struct dialogue_custom_data_s cd;
+   dialogue_update_t du;
+   unsigned int wid;
+   int done, fullscreen;
+   int wx, wy, wgtx, wgty;
+
+   fullscreen = ((width < 0) && (height < 0));
+
+   /* create the window */
+   if (fullscreen) {
+      wid = window_create( "dlgMsg", caption, -1, -1, -1, -1 );
+      window_setBorder( wid, 0 );
+   }
+   else
+      wid = window_create( "dlgMsg", caption, -1, -1, width+40, height+60 );
+   window_setData( wid, &done );
+
+   /* custom widget for all! */
+   if (fullscreen) {
+      width  = SCREEN_W;
+      height = SCREEN_H;
+      wgtx = wgty = 0;
+   }
+   else {
+      wgtx = wgty = 20;
+   }
+   window_addCust( wid, wgtx, wgty, width, height, "cstCustom", 0, render, NULL, data );
+   window_custSetClipping( wid, "cstCustom", 1 );
+
+   /* set up event stuff. */
+   window_posWindow( wid, &wx, &wy );
+   window_posWidget( wid, "cstCustom", &wgtx, &wgty );
+   cd.event = event;
+   cd.data = data;
+   cd.mx = -wx-wgtx;
+   cd.my = -wy-wgty;
+   cd.w = width;
+   cd.h = height;
+   window_setData( wid, &cd );
+   if (event != NULL)
+      window_handleEvents( wid, &dialogue_custom_event );
+
+   /* dialogue stuff */
+   du.update = update;
+   du.data   = data;
+   du.wid    = wid;
+   dialogue_open++;
+   toolkit_loop( &done, &du );
+}
+
+
+int dialogue_customFullscreen( int enable )
+{
+   struct dialogue_custom_data_s *cd;
+   unsigned int wid = window_get( "dlgMsg" );
+   int w, h, fullscreen;
+   if (wid == 0)
+      return -1;
+
+   cd = (struct dialogue_custom_data_s*) window_getData( wid );
+   window_dimWindow( wid, &w, &h );
+   fullscreen = (w==SCREEN_W && h==SCREEN_H);
+
+   if (enable) {
+      if (fullscreen)
+         return 0;
+
+      cd->last_w = cd->w+40;
+      cd->last_h = cd->h+60;
+      window_resize( wid, -1, -1 );
+      window_moveWidget( wid, "cstCustom", 0, 0 );
+      window_resizeWidget( wid, "cstCustom", cd->last_w, cd->last_h );
+      window_move( wid, -1, -1 );
+      window_setBorder( wid, 0 );
+   }
+   else {
+      if (!fullscreen)
+         return 0;
+      window_resize( wid, cd->last_w, cd->last_h );
+      window_moveWidget( wid, "cstCustom", 20, 20 );
+      window_move( wid, -1, -1 );
+      window_setBorder( wid, 1 );
+   }
+
+   return 0;
+}
+
+
+int dialogue_customResize( int width, int height )
+{
+   struct dialogue_custom_data_s *cd;
+   unsigned int wid = window_get( "dlgMsg" );
+   if (wid == 0)
+      return -1;
+   cd = (struct dialogue_custom_data_s*) window_getData( wid );
+   cd->last_w = width;
+   cd->last_h = height;
+   window_resize( wid, width+40, height+60 );
+   window_resizeWidget( wid, "cstCustom", width, height );
+   return 0;
+}
+
+
 /**
  * @brief Creates a secondary loop until loop_done is set to 1 or the toolkit closes.
  *
@@ -843,9 +1007,13 @@ static void dialogue_choiceClose( unsigned int wid, char* str )
  *
  *    @return 0 on success.
  */
-static int toolkit_loop( int *loop_done )
+static int toolkit_loop( int *loop_done, dialogue_update_t *du )
 {
    SDL_Event event;
+   unsigned int t;
+   double dt, delay;
+   unsigned int time_ms = SDL_GetTicks();
+   const double fps_max = 1./30.;
 
    /* Delay a toolkit iteration. */
    toolkit_delay();
@@ -870,6 +1038,27 @@ static int toolkit_loop( int *loop_done )
          }
 
          input_handle(&event); /* handles all the events and player keybinds */
+      }
+
+      /* FPS Control. */
+      /* Get elapsed. */
+      t  = SDL_GetTicks();
+      dt = (double)(t - time_ms) / 1000.;
+      time_ms = t;
+      /* Sleep if necessary. */
+      if (dt < fps_max) {
+         delay    = fps_max - dt;
+         SDL_Delay( (unsigned int)(delay * 1000) );
+      }
+
+      /* Update stuff. */
+      if (du != NULL) {
+         /* Run update. */
+         if ((*du->update)(dt, du->data)) {
+            /* Hack to override data. */
+            window_setData( du->wid, loop_done );
+            dialogue_close( du->wid, NULL );
+         }
       }
    }
 

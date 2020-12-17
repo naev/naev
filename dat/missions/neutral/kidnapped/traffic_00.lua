@@ -19,8 +19,8 @@
       The first mission in a series of missions surrounding human trafficking. This mission consists of overhearing pirate a couple pirate conversations, disabling a trader ship, and returning the children home to their parents. It essentially sets up everything for the following 4 missions. 
 --]]
 
-require "portrait.lua"
-require "missions/neutral/common.lua"
+require "portrait"
+require "missions/neutral/common"
 
 
 sysname1 = "Arcturus"

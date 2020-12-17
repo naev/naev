@@ -1155,7 +1155,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"track",temp->u.blt.track);
       xmlr_float(node,"swivel",temp->u.blt.swivel);
       if (xml_isNode(node,"range")) {
-         buf = xml_nodeProp(node,"blowup");
+         xmlr_attr_strd(node,"blowup",buf);
          if (buf != NULL) {
             if (strcmp(buf,"armour")==0)
                outfit_setProp(temp, OUTFIT_PROP_WEAP_BLOWUP_SHIELD);
@@ -1176,7 +1176,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          temp->u.blt.gfx_space = xml_parseTexture( node,
                OUTFIT_GFX_PATH"space/%s.png", 6, 6,
                OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
-         xmlr_attr(node, "spin", buf);
+         xmlr_attr_strd(node, "spin", buf);
          if (buf != NULL) {
             outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
             temp->u.blt.spin = atof( buf );
@@ -1314,7 +1314,6 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    int l;
    xmlNodePtr node;
    double C, area;
-   char *prop;
 
    /* Defaults. */
    temp->u.bem.spfx_armour = -1;
@@ -1334,11 +1333,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"heatup",temp->u.bem.heatup);
 
       if (xml_isNode(node, "duration")) {
-         prop = xml_nodeProp(node, "min");
-         if (prop != NULL) {
-            temp->u.bem.min_duration = atof(prop);
-            free(prop);
-         }
+         xmlr_attr_float(node, "min", temp->u.bem.min_duration);
          temp->u.bem.duration = xml_getFloat(node);
          continue;
       }
@@ -1508,7 +1503,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       xml_onlyNodes(node);
       /* Basic */
       if (xml_isNode(node,"duration")) {
-         buf = xml_nodeProp(node,"blowup");
+         xmlr_attr_strd(node,"blowup",buf);
          if (buf != NULL) {
             if (strcmp(buf,"armour")==0)
                outfit_setProp(temp, OUTFIT_PROP_WEAP_BLOWUP_SHIELD);
@@ -1532,12 +1527,9 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          temp->u.amm.gfx_space = xml_parseTexture( node,
                OUTFIT_GFX_PATH"space/%s.png", 6, 6,
                OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
-         xmlr_attr(node, "spin", buf);
-         if (buf != NULL) {
+         xmlr_attr_float(node, "spin", temp->u.amm.spin);
+         if (temp->u.amm.spin != 0)
             outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
-            temp->u.amm.spin = atof( buf );
-            free(buf);
-         }
          /* Load the collision polygon. */
          buf = xml_get(node);
          outfit_loadPLG( temp, buf, 0 );
@@ -1626,18 +1618,13 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 {
    int i;
    xmlNodePtr node;
-   char *buf;
    ShipStatList *ll;
    node = parent->children;
 
    do { /* load all the data */
       xml_onlyNodes(node);
       if (xml_isNode(node,"active")) {
-         xmlr_attr(node, "cooldown", buf);
-         if (buf != NULL) {
-            temp->u.mod.cooldown = atof( buf );
-            free(buf);
-         }
+         xmlr_attr_float(node, "cooldown", temp->u.mod.cooldown);
          temp->u.mod.active   = 1;
          temp->u.mod.duration = xml_getFloat(node);
 
@@ -1924,8 +1911,9 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
       xml_onlyNodes(node);
 
       if (xml_isNode(node,"sys")) {
-         buf = xml_nodeProp(node,"name");
-         if ((buf != NULL) && ((sys = system_get(buf)) != NULL)) {
+         xmlr_attr_strd(node,"name",buf);
+         sys = system_get(buf);
+         if (sys != NULL) {
             free(buf);
             array_grow( &temp->u.map->systems ) = sys;
 
@@ -1953,8 +1941,10 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
                   WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, cur->name);
             } while (xml_nextNode(cur));
          }
-         else
+         else {
             WARN(_("Map '%s' has invalid system '%s'"), temp->name, buf);
+            free(buf);
+         }
       }
       else if (xml_isNode(node,"short_desc")) {
          temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -2137,7 +2127,7 @@ static int outfit_parse( Outfit* temp, const char* file )
    /* Clear data. */
    memset( temp, 0, sizeof(Outfit) );
 
-   temp->name = xml_nodeProp(parent,"name"); /* already mallocs */
+   xmlr_attr_strd(parent,"name",temp->name);
    if (temp->name == NULL)
       WARN(_("Outfit in %s has invalid or no name"), OUTFIT_DATA_PATH);
 
@@ -2202,7 +2192,7 @@ static int outfit_parse( Outfit* temp, const char* file )
                   WARN(_("Outfit '%s' has unknown slot type '%s'."), temp->name, cprop);
 
                /* Property. */
-               xmlr_attr( cur, "prop", prop );
+               xmlr_attr_strd( cur, "prop", prop );
                if (prop != NULL)
                   temp->slot.spid = sp_get( prop );
                free( prop );
@@ -2236,14 +2226,14 @@ static int outfit_parse( Outfit* temp, const char* file )
       if (xml_isNode(node,"specific")) { /* has to be processed separately */
 
          /* get the type */
-         prop = xml_nodeProp(node,"type");
+         xmlr_attr_strd(node, "type", prop);
          if (prop == NULL)
             ERR(_("Outfit '%s' element 'specific' missing property 'type'"),temp->name);
          temp->type = outfit_strToOutfitType(prop);
          free(prop);
 
          /* is secondary weapon? */
-         prop = xml_nodeProp(node,"secondary");
+         xmlr_attr_strd(node, "secondary", prop);
          if (prop != NULL) {
             if ((int)atoi(prop))
                outfit_setProp(temp, OUTFIT_PROP_WEAP_SECONDARY);
@@ -2251,16 +2241,14 @@ static int outfit_parse( Outfit* temp, const char* file )
          }
 
          /* Check for manually-defined group. */
-         prop = xml_nodeProp(node, "group");
-         if (prop != NULL) {
-            group = atoi(prop);
+         xmlr_attr_atoi_neg1(node, "group", group);
+         if (group != -1) {
             if (group > PILOT_WEAPON_SETS || group < 1) {
                WARN(_("Outfit '%s' has group '%d', should be in the 1-%d range"),
                      temp->name, group, PILOT_WEAPON_SETS);
             }
 
             temp->group = CLAMP(0, 9, group - 1);
-            free(prop);
          }
 
          /*
@@ -2459,7 +2447,7 @@ int outfit_mapParse (void)
          continue;
       }
 
-      n = xml_nodeProp( node,"name" );
+      xmlr_attr_strd( node, "name", n );
       o = outfit_get( n );
       free(n);
       if (!outfit_isMap(o)) { /* If its not a map, we don't care. */

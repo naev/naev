@@ -1,5 +1,5 @@
-require("ai/tpl/generic.lua")
-require("ai/personality/patrol.lua")
+require("ai/tpl/generic")
+require("ai/personality/patrol")
 
 --[[
 

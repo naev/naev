@@ -39,9 +39,9 @@
 --]]
 
 --Needed scripts
-require "pilot/pirate.lua"
-require "numstring.lua"
-require "missions/shark/common.lua"
+require "pilot/pirate"
+require "numstring"
+require "missions/shark/common"
 
 
 title = {}

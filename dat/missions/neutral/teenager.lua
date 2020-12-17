@@ -27,7 +27,7 @@
 
 -- Localization, choosing a language if Naev is translated for non-english-speaking locales.
 
-require "numstring.lua"
+require "numstring"
 
 
 text = {}

@@ -23,8 +23,8 @@
    when is instead ordered back to The Wringer to escape Sirius controlled
    space. thanks to nloewen and viashimo for help!]]
 
-require "numstring.lua"
-require "missions/sirius/common.lua"
+require "numstring"
+require "missions/sirius/common"
 
 
 --beginning messages

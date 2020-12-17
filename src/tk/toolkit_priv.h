@@ -139,8 +139,10 @@ typedef struct Widget_ {
 #define WINDOW_NOFOCUS     (1<<0) /**< Window can not be active window. */
 #define WINDOW_NOINPUT     (1<<1) /**< Window receives no input. */
 #define WINDOW_NORENDER    (1<<2) /**< Window does not render even if it should. */
-#define WINDOW_NOBORDER    (1<<3) /**< Window does not need border. */
+#define WINDOW_NOBORDER    (1<<3) /**< Window does not need border (this is the window background and title, only renders widgets). */
 #define WINDOW_FULLSCREEN  (1<<4) /**< Window is fullscreen. */
+#define WINDOW_CENTERX     (1<<5) /**< Window is X-centered. */
+#define WINDOW_CENTERY     (1<<6) /**< Window is Y-centered. */
 #define WINDOW_KILL        (1<<9) /**< Window should die. */
 #define window_isFlag(w,f) ((w)->flags & (f)) /**< Checks a window flag. */
 #define window_setFlag(w,f) ((w)->flags |= (f)) /**< Sets a window flag. */

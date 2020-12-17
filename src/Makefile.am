@@ -86,14 +86,18 @@ naev_SOURCES = \
 	news.c \
 	nfile.c \
 	nlua.c \
+	nlua_audio.c \
 	nlua_bkg.c \
 	nlua_camera.c \
 	nlua_cli.c \
 	nlua_col.c \
 	nlua_commodity.c \
+	nlua_data.c \
 	nlua_diff.c \
 	nlua_evt.c \
 	nlua_faction.c \
+	nlua_file.c \
+	nlua_font.c \
 	nlua_gfx.c \
 	nlua_gui.c \
 	nlua_hook.c \
@@ -109,7 +113,6 @@ naev_SOURCES = \
 	nlua_rnd.c \
 	nlua_ship.c \
 	nlua_shiplog.c \
-	nlua_spfx.c \
 	nlua_system.c \
 	nlua_tex.c \
 	nlua_time.c \
@@ -236,14 +239,18 @@ naev_SOURCES = \
 	news.h \
 	nfile.h \
 	nlua.h \
+	nlua_audio.h \
 	nlua_bkg.h \
 	nlua_camera.h \
 	nlua_cli.h \
 	nlua_col.h \
 	nlua_commodity.h \
+	nlua_data.h \
 	nlua_diff.h \
 	nlua_evt.h \
 	nlua_faction.h \
+	nlua_file.h \
+	nlua_font.h \
 	nlua_gfx.h \
 	nlua_gui.h \
 	nlua_hook.h \
@@ -259,7 +266,6 @@ naev_SOURCES = \
 	nlua_rnd.h \
 	nlua_ship.h \
 	nlua_shiplog.h \
-	nlua_spfx.h \
 	nlua_system.h \
 	nlua_tex.h \
 	nlua_time.h \

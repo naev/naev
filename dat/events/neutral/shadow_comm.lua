@@ -17,8 +17,8 @@
 -- Comm Event for the Shadow missions
 --]]
 
-require "proximity.lua"
-require "missions/shadow/common.lua"
+require "proximity"
+require "missions/shadow/common"
 
 
 -- localization stuff, translators would work here

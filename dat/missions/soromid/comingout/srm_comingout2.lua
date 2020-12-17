@@ -36,8 +36,8 @@
 
 --]]
 
-require "numstring.lua"
-require "missions/soromid/common.lua"
+require "numstring"
+require "missions/soromid/common"
 
 
 title = {}

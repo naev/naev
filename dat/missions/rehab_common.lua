@@ -8,7 +8,7 @@
 --
 --]]
 
-require "scripts/numstring.lua"
+require "scripts/numstring"
 
 
 misn_title = _("%s Rehabilitation")

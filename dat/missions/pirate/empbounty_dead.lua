@@ -44,9 +44,9 @@
 
 --]]
 
-require "numstring.lua"
-require "jumpdist.lua"
-require "missions/pirate/common.lua"
+require "numstring"
+require "jumpdist"
+require "missions/pirate/common"
 
 
 -- Mission details

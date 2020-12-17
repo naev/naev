@@ -1,1 +1,1 @@
-require("ai/tpl/scout.lua")
+require("ai/tpl/scout")

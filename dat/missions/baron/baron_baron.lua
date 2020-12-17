@@ -19,9 +19,9 @@
 -- This is the first mission in the baron string.
 --]]
 
-require "portrait.lua"
-require "missions/baron/common.lua"
-require "missions/neutral/common.lua"
+require "portrait"
+require "missions/baron/common"
+require "missions/neutral/common"
 
 
 sysname1 = "Darkstone"

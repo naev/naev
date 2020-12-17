@@ -28,9 +28,9 @@
 --]]
 
 --Needed scripts
-require "numstring.lua"
-require "proximity.lua"
-require "portrait.lua"
+require "numstring"
+require "proximity"
+require "portrait"
 
 title = {}
 text = {}

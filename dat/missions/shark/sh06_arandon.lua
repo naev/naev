@@ -27,8 +27,8 @@
 
 --]]
 
-require "numstring.lua"
-require "missions/shark/common.lua"
+require "numstring"
+require "missions/shark/common"
 
 
 title = {}

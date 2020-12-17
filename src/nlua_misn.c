@@ -26,7 +26,7 @@
 #include "nlua_player.h"
 #include "nlua_tk.h"
 #include "nlua_faction.h"
-#include "nlua_spfx.h"
+#include "nlua_audio.h"
 #include "nlua_system.h"
 #include "nlua_tex.h"
 #include "nlua_camera.h"
@@ -130,7 +130,7 @@ int misn_loadLibs( nlua_env env )
    nlua_loadTex(env);
    nlua_loadBackground(env);
    nlua_loadMusic(env);
-   nlua_loadSpfx(env);
+   nlua_loadAudio(env);
    nlua_loadTk(env);
    return 0;
 }
