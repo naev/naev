@@ -172,7 +172,7 @@ function love.exec( path )
          keyboard = true,
          math = true,
          mouse = true,
-         physics = true
+         physics = true,
          sound = true,
          system = true,
          thread = true,
