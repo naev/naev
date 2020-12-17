@@ -155,25 +155,33 @@ static int fontL_eq( lua_State *L )
  * @brief Gets a font.
  *
  *    @luatparam String|Number fontname Name of the font.
- *    @luatparam[opt=1.] Number Font height.
+ *    @luatparam[opt=1.] size Number Font height.
  *    @luatreturn Font A newly created font.
- * @luafunc new( r, g, b, a )
+ * @luafunc new( fontname, size )
  */
 static int fontL_new( lua_State *L )
 {
    glFont font;
    int h;
-   const char *fname;
+   const char *fname, *prefix;
 
    if (lua_gettop(L)==1) {
-      fname = FONT_DEFAULT_PATH;
+      fname = NULL;
       h = luaL_checkint(L,1);
    }
    else {
-      fname = luaL_checkstring(L,1);
+      fname = luaL_optstring(L,1,NULL);
       h = luaL_checkint(L,2);
    }
-   if (gl_fontInit( &font, fname, h, "", FONT_FLAG_DONTREUSE ))
+
+   if (fname == NULL) {
+      fname = FONT_DEFAULT_PATH;
+      prefix = FONT_PATH_PREFIX;
+   }
+   else
+      prefix = "";
+
+   if (gl_fontInit( &font, fname, h, prefix, FONT_FLAG_DONTREUSE ))
       NLUA_ERROR(L, _("failed to load font '%s'"), fname);
 
    lua_pushfont( L, font );

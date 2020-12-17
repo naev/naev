@@ -266,19 +266,21 @@ end
 --]]
 graphics.Font = class.inheritsFrom( object.Object )
 graphics.Font._type = "Font"
-function graphics.newFont( file, size )
-   local f = graphics.Font.new()
-   if size==nil then
-      if type(file)=="string" then
-         file = filesystem.newFile( file ):getFilename()
-      end
-      f.font = naev.font.new( file )
-   elseif type(file)=="userdata" then
-      return file
+function graphics.newFont( ... )
+   local arg = {...}
+   local filename, size
+   if type(arg[1])=="string" then
+      -- newFont( filename, size )
+      filename = filesystem.newFile( arg[1] ):getFilename() -- Trick to set path
+      size = arg[2] or 12
    else
-      file = filesystem.newFile( file ):getFilename()
-      f.font = naev.font.new( file, size )
+      -- newFont( size )
+      filename = nil
+      size = arg[1] or 12
    end
+
+   local f = graphics.Font.new()
+   f.font = naev.font.new( filename, size )
    f.height= f.font:height()
    f.lineheight = f.height*1.5 -- Naev default
    f:setFilter( graphics._minfilter, graphics._magfilter )
@@ -337,9 +339,9 @@ end
 
 
 -- Reset coordinate system
+graphics.setDefaultFilter( "linear", "linear", 1 )
 graphics.setNewFont( 12 )
 graphics.origin()
-graphics.setDefaultFilter( "linear", "linear", 1 )
 graphics._wraph = "clamp"
 graphics._wrapv = "clamp"
 graphics._wrapd = "clamp"
