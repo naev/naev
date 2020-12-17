@@ -155,10 +155,7 @@ const char* nfile_dataPath (void)
         }
 
         nsnprintf( naev_dataPath, PATH_MAX, "%s/naev/", path );
-
-        if (path != NULL) {
-            free (path);
-        }
+        free (path);
 #elif HAS_WIN32
       char *path = SDL_getenv("APPDATA");
       if (path == NULL) {
@@ -202,10 +199,7 @@ const char* nfile_configPath (void)
         }
 
         nsnprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
-
-        if (path != NULL) {
-            free (path);
-        }
+        free (path);
 #elif HAS_WIN32
       char *path = SDL_getenv("APPDATA");
       if (path == NULL) {
@@ -249,10 +243,7 @@ const char* nfile_cachePath (void)
         }
 
         nsnprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
-
-        if (path != NULL) {
-            free (path);
-        }
+        free (path);
 #elif HAS_WIN32
       char *path = SDL_getenv("APPDATA");
       if (path == NULL) {

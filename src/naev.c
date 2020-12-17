@@ -444,8 +444,7 @@ int main( int argc, char** argv )
 
    /* Incomplete game note (shows every time version number changes). */
    if ( conf.lastversion == NULL || naev_versionCompare(conf.lastversion) != 0 ) {
-      if ( conf.lastversion != NULL )
-         free( conf.lastversion );
+      free( conf.lastversion );
       conf.lastversion = strdup( naev_version(0) );
       dialogue_msg(
          _("Welcome to Naev"),
@@ -656,9 +655,7 @@ void loadscreen_render( double done, const char *msg )
  */
 static void loadscreen_unload (void)
 {
-   /* Free the textures */
-   if (loading != NULL)
-      gl_freeTexture(loading);
+   gl_freeTexture(loading);
    loading = NULL;
 }
 

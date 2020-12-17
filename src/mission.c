@@ -529,16 +529,11 @@ void mission_cleanup( Mission* misn )
       nlua_freeEnv(misn->env);
 
    /* Data. */
-   if (misn->title != NULL)
-      free(misn->title);
-   if (misn->desc != NULL)
-      free(misn->desc);
-   if (misn->reward != NULL)
-      free(misn->reward);
-   if (misn->portrait != NULL)
-      gl_freeTexture(misn->portrait);
-   if (misn->npc != NULL)
-      free(misn->npc);
+   free(misn->title);
+   free(misn->desc);
+   free(misn->reward);
+   gl_freeTexture(misn->portrait);
+   free(misn->npc);
 
    /* Markers. */
    if (misn->markers != NULL)
@@ -584,22 +579,14 @@ void mission_shift( int pos )
  */
 static void mission_freeData( MissionData* mission )
 {
-   if (mission->name)
-      free(mission->name);
-   if (mission->lua)
-      free(mission->lua);
-   if (mission->sourcefile)
-      free(mission->sourcefile);
-   if (mission->avail.planet)
-      free(mission->avail.planet);
-   if (mission->avail.system)
-      free(mission->avail.system);
-   if (mission->avail.factions)
-      free(mission->avail.factions);
-   if (mission->avail.cond)
-      free(mission->avail.cond);
-   if (mission->avail.done)
-      free(mission->avail.done);
+   free(mission->name);
+   free(mission->lua);
+   free(mission->sourcefile);
+   free(mission->avail.planet);
+   free(mission->avail.system);
+   free(mission->avail.factions);
+   free(mission->avail.cond);
+   free(mission->avail.done);
 
    /* Clear the memory. */
 #ifdef DEBUGGING

@@ -501,25 +501,18 @@ static void iar_cleanup( Widget* iar )
 
    if (iar->dat.iar.nelements > 0) { /* Free each text individually */
       for (i=0; i<iar->dat.iar.nelements; i++) {
-         if (iar->dat.iar.images[i].image != NULL)
-            gl_freeTexture( iar->dat.iar.images[i].image );
-         if (iar->dat.iar.images[i].caption != NULL)
-            free( iar->dat.iar.images[i].caption );
-         if (iar->dat.iar.images[i].alt != NULL)
-            free( iar->dat.iar.images[i].alt );
-         if (iar->dat.iar.images[i].slottype != NULL)
-            free( iar->dat.iar.images[i].slottype );
+         gl_freeTexture( iar->dat.iar.images[i].image );
+         free( iar->dat.iar.images[i].caption );
+         free( iar->dat.iar.images[i].alt );
+         free( iar->dat.iar.images[i].slottype );
 
          for (j=0; j<iar->dat.iar.images[i].nlayers; j++)
             gl_freeTexture( iar->dat.iar.images[i].layers[j] );
-         if (iar->dat.iar.images[i].layers != NULL)
-            free( iar->dat.iar.images[i].layers );
+         free( iar->dat.iar.images[i].layers );
       }
    }
 
-   /* Free the arrays */
-   if (iar->dat.iar.images != NULL)
-      free( iar->dat.iar.images );
+   free( iar->dat.iar.images );
 }
 
 

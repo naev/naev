@@ -254,22 +254,12 @@ void load_free (void)
       for (i=0; i<array_size(load_saves); i++) {
          ns = &load_saves[i];
          free(ns->path);
-         if (ns->name != NULL)
-            free(ns->name);
-
-         if (ns->version != NULL)
-            free(ns->version);
-
-         if (ns->data != NULL)
-            free(ns->data);
-
-         if (ns->planet != NULL)
-            free(ns->planet);
-
-         if (ns->shipname != NULL)
-            free(ns->shipname);
-         if (ns->shipmodel != NULL)
-            free(ns->shipmodel);
+         free(ns->name);
+         free(ns->version);
+         free(ns->data);
+         free(ns->planet);
+         free(ns->shipname);
+         free(ns->shipmodel);
       }
       array_free( load_saves );
    }

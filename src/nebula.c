@@ -258,10 +258,8 @@ void nebu_exit (void)
    for (i=0; i<NEBULA_PUFFS; i++)
       gl_freeTexture( nebu_pufftexs[i] );
 
-   if (nebu_vboOverlay != NULL) {
-      gl_vboDestroy( nebu_vboOverlay );
-      nebu_vboOverlay= NULL;
-   }
+   gl_vboDestroy( nebu_vboOverlay );
+   nebu_vboOverlay= NULL;
 }
 
 

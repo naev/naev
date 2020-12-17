@@ -479,8 +479,7 @@ static void bar_close( unsigned int wid, char *name )
       return;
    }
 
-   if (mission_portrait != NULL)
-      gl_freeTexture(mission_portrait);
+   gl_freeTexture(mission_portrait);
    mission_portrait = NULL;
 }
 /**
@@ -1464,8 +1463,7 @@ void land_cleanup (void)
    /* Clean up mission computer. */
    for (i=0; i<mission_ncomputer; i++)
       mission_cleanup( &mission_computer[i] );
-   if (mission_computer != NULL)
-      free(mission_computer);
+   free(mission_computer);
    mission_computer  = NULL;
    mission_ncomputer = 0;
 

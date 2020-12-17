@@ -1184,30 +1184,21 @@ void ships_free (void)
          outfit_freeSlot( &s->outfit_utility[j].slot );
       for (j=0; j<s->outfit_nweapon; j++)
          outfit_freeSlot( &s->outfit_weapon[j].slot );
-      if (s->outfit_structure != NULL)
-         free(s->outfit_structure);
-      if (s->outfit_utility != NULL)
-         free(s->outfit_utility);
-      if (s->outfit_weapon != NULL)
-         free(s->outfit_weapon);
+      free(s->outfit_structure);
+      free(s->outfit_utility);
+      free(s->outfit_weapon);
 
-      /* Free stats. */
-      if (s->stats != NULL)
-         ss_free( s->stats );
+      ss_free( s->stats );
 
       /* Free graphics. */
       gl_freeTexture(s->gfx_space);
-      if (s->gfx_engine != NULL)
-         gl_freeTexture(s->gfx_engine);
-      if (s->gfx_target != NULL)
-         gl_freeTexture(s->gfx_target);
-      if (s->gfx_store != NULL)
-         gl_freeTexture(s->gfx_store);
+      gl_freeTexture(s->gfx_engine);
+      gl_freeTexture(s->gfx_target);
+      gl_freeTexture(s->gfx_store);
       free(s->gfx_comm);
       for (j=0; j<s->gfx_noverlays; j++)
          gl_freeTexture(s->gfx_overlays[j]);
-      if (s->gfx_overlays != NULL)
-         free(s->gfx_overlays);
+      free(s->gfx_overlays);
 
       /* Free collision polygons. */
       if (s->npolygon != 0) {

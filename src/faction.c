@@ -380,8 +380,7 @@ int* faction_getEnemies( int f, int *n )
          enemies = realloc( enemies, sizeof( int ) * nenemies );
       }
 
-      if ( faction_stack[ f ].enemies != NULL )
-         free( faction_stack[ f ].enemies );
+      free( faction_stack[ f ].enemies );
       faction_stack[f].enemies = enemies;
       faction_stack[f].nenemies = nenemies;
    }
@@ -425,8 +424,7 @@ int* faction_getAllies( int f, int *n )
          allies = realloc( allies, sizeof( int ) * nallies );
       }
 
-      if ( faction_stack[ f ].allies != NULL )
-         free( faction_stack[ f ].allies );
+      free( faction_stack[ f ].allies );
       faction_stack[f].allies = allies;
       faction_stack[f].nallies = nallies;
    }
@@ -1590,18 +1588,12 @@ void factions_free (void)
    /* free factions */
    for (i=0; i<faction_nstack; i++) {
       free(faction_stack[i].name);
-      if (faction_stack[i].longname != NULL)
-         free(faction_stack[i].longname);
-      if (faction_stack[i].displayname != NULL)
-         free(faction_stack[i].displayname);
-      if (faction_stack[i].logo_small != NULL)
-         gl_freeTexture(faction_stack[i].logo_small);
-      if (faction_stack[i].logo_tiny != NULL)
-         gl_freeTexture(faction_stack[i].logo_tiny);
-      if (faction_stack[i].nallies > 0)
-         free(faction_stack[i].allies);
-      if (faction_stack[i].nenemies > 0)
-         free(faction_stack[i].enemies);
+      free(faction_stack[i].longname);
+      free(faction_stack[i].displayname);
+      gl_freeTexture(faction_stack[i].logo_small);
+      gl_freeTexture(faction_stack[i].logo_tiny);
+      free(faction_stack[i].allies);
+      free(faction_stack[i].enemies);
       if (faction_stack[i].sched_env != LUA_NOREF)
          nlua_freeEnv( faction_stack[i].sched_env );
       if (faction_stack[i].env != LUA_NOREF)

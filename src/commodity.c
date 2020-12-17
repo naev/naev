@@ -196,14 +196,10 @@ Commodity* commodity_getByIndex( const int indx )
 static void commodity_freeOne( Commodity* com )
 {
    CommodityModifier *this,*next;
-   if (com->name)
-      free(com->name);
-   if (com->description)
-      free(com->description);
-   if (com->gfx_store)
-      gl_freeTexture(com->gfx_store);
-   if (com->gfx_space)
-      gl_freeTexture(com->gfx_space);
+   free(com->name);
+   free(com->description);
+   gl_freeTexture(com->gfx_store);
+   gl_freeTexture(com->gfx_space);
    next = com->planet_modifier;
    com->planet_modifier = NULL;
    while (next != NULL ) {

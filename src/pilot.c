@@ -1075,12 +1075,8 @@ char pilot_getFactionColourChar( const Pilot *p )
  */
 static void pilot_setCommMsg( Pilot *p, const char *s )
 {
-   /* Free previous message. */
-   if (p->comm_msg != NULL)
-      free(p->comm_msg);
-
-   /* Duplicate the message. */
-   p->comm_msg       = strdup(s);
+   free( p->comm_msg );
+   p->comm_msg       = strdup( s );
    p->comm_msgWidth  = gl_printWidthRaw( NULL, s );
    p->comm_msgTimer  = pilot_commTimeout;
 }
@@ -2960,20 +2956,13 @@ void pilot_free( Pilot* p )
    /* If hostile, must remove counter. */
    pilot_rmHostile(p);
 
-   /* Free weapon sets. */
    pilot_weapSetFree(p);
 
-   /* Free outfits. */
-   if (p->outfits != NULL)
-      free(p->outfits);
-   if (p->outfit_structure != NULL)
-      free(p->outfit_structure);
-   if (p->outfit_utility != NULL)
-      free(p->outfit_utility);
-   if (p->outfit_weapon != NULL)
-      free(p->outfit_weapon);
+   free(p->outfits);
+   free(p->outfit_structure);
+   free(p->outfit_utility);
+   free(p->outfit_weapon);
 
-   /* Remove commodities. */
    while (p->commodities != NULL)
       pilot_cargoRmRaw( p, p->commodities[0].commodity,
             p->commodities[0].quantity, 1 );
@@ -2982,23 +2971,17 @@ void pilot_free( Pilot* p )
    if (p->ai != NULL)
       ai_destroy(p); /* Must be destroyed first if applicable. */
 
-   /* Free name and title. */
-   if (p->name != NULL)
-      free(p->name);
-   if (p->title != NULL)
-      free(p->title);
+   free(p->name);
+   free(p->title);
    /* Case if pilot is the player. */
    if (player.p==p)
       player.p = NULL;
    solid_free(p->solid);
-   if (p->mounted != NULL)
-      free(p->mounted);
+   free(p->mounted);
 
    escort_freeList(p);
 
-   /* Free comm message. */
-   if (p->comm_msg != NULL)
-      free(p->comm_msg);
+   free(p->comm_msg);
 
    /* Free messages. */
    luaL_unref(naevL, p->messages, LUA_REGISTRYINDEX);

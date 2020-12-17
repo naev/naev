@@ -122,10 +122,8 @@ static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
  */
 static void DTYPE_free( DTYPE *damtype )
 {
-   if (damtype->name != NULL) {
-      free(damtype->name);
-      damtype->name = NULL;
-   }
+   free(damtype->name);
+   damtype->name = NULL;
 }
 
 

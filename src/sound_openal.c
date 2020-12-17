@@ -500,13 +500,11 @@ void sound_al_exit (void)
 
    /* Free groups. */
    for (i=0; i<al_ngroups; i++) {
-      if (al_groups[i].sources != NULL)
-         free(al_groups[i].sources);
+      free(al_groups[i].sources);
       al_groups[i].sources  = NULL;
       al_groups[i].nsources = 0;
    }
-   if (al_groups != NULL)
-      free(al_groups);
+   free(al_groups);
    al_groups  = NULL;
    al_ngroups = 0;
 
@@ -518,12 +516,10 @@ void sound_al_exit (void)
    }
    source_all        = NULL;
    source_nall       = 0;
-   if (source_total)
-      free(source_total);
+   free(source_total);
    source_total      = NULL;
    source_ntotal     = 0;
-   if (source_stack != NULL)
-      free(source_stack);
+   free(source_stack);
    source_stack      = NULL;
    source_nstack     = 0;
    source_mstack     = 0;

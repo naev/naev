@@ -60,8 +60,7 @@
    {                                              \
       nlua_getenv( env, n );                      \
       if ( lua_isstring( naevL, -1 ) ) {          \
-         if ( s != NULL )                         \
-            free( s );                            \
+         free( s );                            \
          s = strdup( lua_tostring( naevL, -1 ) ); \
       }                                           \
       lua_pop( naevL, 1 );                        \
@@ -129,19 +128,16 @@ void conf_setDefaults (void)
    conf_cleanup();
 
    /* ndata. */
-   if (conf.ndata != NULL)
-      free(conf.ndata);
+   free(conf.ndata);
    conf.ndata        = NULL;
 
    /* Language. */
-   if (conf.language != NULL)
-      free(conf.language);
+   free(conf.language);
    conf.language     = NULL;
 
    /* Joystick. */
    conf.joystick_ind = -1;
-   if (conf.joystick_nam != NULL)
-      free(conf.joystick_nam);
+   free(conf.joystick_nam);
    conf.joystick_nam = NULL;
 
    /* GUI. */
@@ -174,8 +170,7 @@ void conf_setDefaults (void)
    conf.devmode      = 0;
    conf.devautosave  = 0;
    conf.devcsv       = 0;
-   if (conf.lastversion != NULL)
-      free( conf.lastversion );
+   free( conf.lastversion );
    conf.lastversion = strdup( "" );
 
    /* Gameplay. */
@@ -194,14 +189,11 @@ void conf_setDefaults (void)
    conf.fpu_except   = 0; /* Causes many issues. */
 
    /* Editor. */
-   if (conf.dev_save_sys != NULL)
-      free( conf.dev_save_sys );
+   free( conf.dev_save_sys );
    conf.dev_save_sys = strdup( DEV_SAVE_SYSTEM_DEFAULT );
-   if (conf.dev_save_map != NULL)
-      free( conf.dev_save_map );
+   free( conf.dev_save_map );
    conf.dev_save_map = strdup( DEV_SAVE_MAP_DEFAULT );
-   if (conf.dev_save_asset != NULL)
-      free( conf.dev_save_asset );
+   free( conf.dev_save_asset );
    conf.dev_save_asset = strdup( DEV_SAVE_ASSET_DEFAULT );
 }
 
@@ -227,10 +219,8 @@ void conf_setGameplayDefaults (void)
  */
 void conf_setAudioDefaults (void)
 {
-   if (conf.sound_backend != NULL) {
-      free(conf.sound_backend);
-      conf.sound_backend = NULL;
-   }
+   free(conf.sound_backend);
+   conf.sound_backend = NULL;
 
    /* Sound. */
    conf.sound_backend = strdup(BACKEND_DEFAULT);
@@ -303,24 +293,16 @@ void conf_setVideoDefaults (void)
  */
 void conf_cleanup (void)
 {
-   if (conf.ndata != NULL)
-      free(conf.ndata);
-   if (conf.language != NULL)
-      free(conf.language);
-   if (conf.sound_backend != NULL)
-      free(conf.sound_backend);
-   if (conf.joystick_nam != NULL)
-      free(conf.joystick_nam);
+   free(conf.ndata);
+   free(conf.language);
+   free(conf.sound_backend);
+   free(conf.joystick_nam);
 
-   if (conf.lastversion != NULL)
-      free(conf.lastversion);
+   free(conf.lastversion);
 
-   if (conf.dev_save_sys != NULL)
-      free(conf.dev_save_sys);
-   if (conf.dev_save_map != NULL)
-      free(conf.dev_save_map);
-   if (conf.dev_save_asset != NULL)
-      free(conf.dev_save_asset);
+   free(conf.dev_save_sys);
+   free(conf.dev_save_map);
+   free(conf.dev_save_asset);
 
    /* Clear memory. */
    memset( &conf, 0, sizeof(conf) );
@@ -696,8 +678,7 @@ void conf_parseCLI( int argc, char** argv )
             nebu_forceGenerate();
             break;
          case 'N':
-            if (conf.ndata != NULL)
-               free(conf.ndata);
+            free(conf.ndata);
             conf.ndata = NULL;
             break;
          case 'X':
@@ -726,8 +707,7 @@ void conf_parseCLI( int argc, char** argv )
 
    /** @todo handle multiple ndata. */
    if (optind < argc) {
-      if (conf.ndata != NULL)
-         free(conf.ndata);
+      free(conf.ndata);
       conf.ndata = strdup( argv[ optind ] );
    }
 }

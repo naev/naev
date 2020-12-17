@@ -2562,8 +2562,7 @@ void outfit_free (void)
       o = &outfit_stack[i];
 
       /* Free graphics */
-      if (outfit_gfx(o))
-         gl_freeTexture(outfit_gfx(o));
+      gl_freeTexture(outfit_gfx(o));
 
       /* Free slot. */
       outfit_freeSlot( &outfit_stack[i].slot );
@@ -2583,8 +2582,7 @@ void outfit_free (void)
       }
       /* Type specific. */
       if (outfit_isBolt(o)) {
-         if (o->u.blt.gfx_end)
-            gl_freeTexture(o->u.blt.gfx_end);
+         gl_freeTexture(o->u.blt.gfx_end);
          /* Free collision polygons. */
          if (o->u.blt.npolygon != 0) {
             for (j=0; j<o->u.blt.npolygon; j++) {
@@ -2594,13 +2592,13 @@ void outfit_free (void)
             free(o->u.blt.polygon);
          }
       }
-      if (outfit_isLauncher(o) && o->u.lau.ammo_name)
+      if (outfit_isLauncher(o))
          free(o->u.lau.ammo_name);
-      if (outfit_isFighterBay(o) && o->u.bay.ammo_name)
+      if (outfit_isFighterBay(o))
          free(o->u.bay.ammo_name);
-      if (outfit_isFighter(o) && o->u.fig.ship)
+      if (outfit_isFighter(o))
          free(o->u.fig.ship);
-      if (outfit_isGUI(o) && o->u.gui.gui)
+      if (outfit_isGUI(o))
          free(o->u.gui.gui);
       if (outfit_isMap(o)) {
          array_free( o->u.map->systems );
@@ -2616,12 +2614,10 @@ void outfit_free (void)
       free(o->desc_short);
       free(o->license);
       free(o->name);
-      if (o->gfx_store)
-         gl_freeTexture(o->gfx_store);
+      gl_freeTexture(o->gfx_store);
       for (j=0; j<o->gfx_noverlays; j++)
          gl_freeTexture(o->gfx_overlays[j]);
-      if (o->gfx_overlays)
-         free(o->gfx_overlays);
+      free(o->gfx_overlays);
    }
 
    array_free(outfit_stack);

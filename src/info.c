@@ -357,8 +357,7 @@ static void setgui_load( unsigned int wdw, char *str )
    }
 
    /* Set the GUI. */
-   if (player.gui != NULL)
-      free( player.gui );
+   free( player.gui );
    player.gui = strdup( gui );
 
    /* Close menus before loading for proper rendering. */
@@ -907,8 +906,7 @@ static void standings_close( unsigned int wid, char *str )
 {
    (void) wid;
    (void) str;
-   if (info_factions != NULL)
-      free(info_factions);
+   free(info_factions);
    info_factions = NULL;
 }
 

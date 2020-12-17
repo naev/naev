@@ -569,8 +569,7 @@ int window_setDisplayname( const unsigned int wid, const char *displayname )
    Window *wdw = window_wget(wid);
    if (wdw == NULL)
       return -1;
-   if (wdw->displayname!=NULL)
-      free(wdw->displayname);
+   free(wdw->displayname);
    wdw->displayname = NULL;
    if (displayname != NULL)
       wdw->displayname  = strdup(displayname);
@@ -1014,10 +1013,8 @@ static void window_kill( Window *wdw )
    wdw->close_fptr = NULL;
 
    /* Destroy the window. */
-   if (wdw->name)
-      free(wdw->name);
-   if (wdw->displayname)
-      free(wdw->displayname);
+   free(wdw->name);
+   free(wdw->displayname);
    wgt = wdw->widgets;
    while (wgt != NULL) {
       wgtkill = wgt;

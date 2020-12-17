@@ -86,10 +86,8 @@ int shiplog_create(const char *idstr, const char *logname, const char *type, con
                shipLog->maxLen[i] = maxLen;
             } else { /* a previous entry of this type as been found, so just invalidate this logid. */
                shipLog->idList[i] = LOG_ID_INVALID;
-               if ( shipLog->idstrList[i] != NULL ) {
-                  free( shipLog->idstrList[i] );
-                  shipLog->idstrList[i] = NULL;
-               }
+               free( shipLog->idstrList[i] );
+               shipLog->idstrList[i] = NULL;
             }
          }
       }
@@ -276,10 +274,8 @@ void shiplog_delete(const int logid)
          shipLog->nameList[i] = NULL;
          free(shipLog->typeList[i]);
          shipLog->typeList[i] = NULL;
-         if ( shipLog->idstrList[i] != NULL ) {
-            free ( shipLog->idstrList[i] );
-            shipLog->idstrList[i] = NULL;
-         }
+         free ( shipLog->idstrList[i] );
+         shipLog->idstrList[i] = NULL;
          shipLog->maxLen[i]=0;
          shipLog->removeAfter[i] = 0;
       }
@@ -337,18 +333,12 @@ void shiplog_clear(void)
       shipLog = calloc( sizeof(ShipLog), 1);
    }
    shiplog_delete( LOG_ID_ALL );
-   if ( shipLog->idList )
-      free ( shipLog->idList );
-   if ( shipLog->nameList )
-      free ( shipLog->nameList );
-   if ( shipLog->typeList )
-      free ( shipLog->typeList );
-   if ( shipLog->idstrList )
-      free ( shipLog->idstrList );
-   if ( shipLog->maxLen )
-      free ( shipLog->maxLen );
-   if ( shipLog->removeAfter )
-      free ( shipLog->removeAfter );
+   free( shipLog->idList );
+   free( shipLog->nameList );
+   free( shipLog->typeList );
+   free( shipLog->idstrList );
+   free( shipLog->maxLen );
+   free( shipLog->removeAfter );
    memset(shipLog, 0, sizeof(ShipLog));
 }
 

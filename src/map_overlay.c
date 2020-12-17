@@ -624,8 +624,7 @@ void ovr_mrkClear (void)
  */
 static void ovr_mrkCleanup( ovr_marker_t *mrk )
 {
-   if (mrk->text != NULL)
-      free( mrk->text );
+   free( mrk->text );
    mrk->text = NULL;
 }
 

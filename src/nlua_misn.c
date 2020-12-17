@@ -296,8 +296,7 @@ static int misn_setTitle( lua_State *L )
    str = luaL_checkstring(L,1);
 
    cur_mission = misn_getFromLua(L);
-   if (cur_mission->title) /* cleanup old title */
-      free(cur_mission->title);
+   free(cur_mission->title);
    cur_mission->title = strdup(str);
 
    return 0;
@@ -319,8 +318,7 @@ static int misn_setDesc( lua_State *L )
    str = luaL_checkstring(L,1);
 
    cur_mission = misn_getFromLua(L);
-   if (cur_mission->desc) /* cleanup old description */
-      free(cur_mission->desc);
+   free(cur_mission->desc);
    cur_mission->desc = strdup(str);
 
    return 0;
@@ -339,8 +337,7 @@ static int misn_setReward( lua_State *L )
    str = luaL_checkstring(L,1);
 
    cur_mission = misn_getFromLua(L);
-   if (cur_mission->reward) /* cleanup old reward */
-      free(cur_mission->reward);
+   free(cur_mission->reward);
    cur_mission->reward = strdup(str);
    return 0;
 }
@@ -521,17 +518,11 @@ static int misn_setNPC( lua_State *L )
 
    cur_mission = misn_getFromLua(L);
 
-   /* Free if portrait is already set. */
-   if (cur_mission->portrait != NULL) {
-      gl_freeTexture(cur_mission->portrait);
-      cur_mission->portrait = NULL;
-   }
+   gl_freeTexture(cur_mission->portrait);
+   cur_mission->portrait = NULL;
 
-   /* Free NPC name. */
-   if (cur_mission->npc != NULL) {
-      free(cur_mission->npc);
-      cur_mission->npc = NULL;
-   }
+   free(cur_mission->npc);
+   cur_mission->npc = NULL;
 
    /* For no parameters just leave having freed NPC. */
    if (lua_gettop(L) == 0)

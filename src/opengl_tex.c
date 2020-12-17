@@ -370,8 +370,7 @@ glTexture* gl_loadImageData( float *data, int w, int h, int pitch, int sx, int s
    texture->srh   = texture->sh / texture->rh;
 
    /* Clean up. */
-   if (datapot!=NULL)
-      free(datapot);
+   free(datapot);
 
    return texture;
 }
@@ -887,10 +886,8 @@ void gl_freeTexture( glTexture* texture )
          if (cur->used <= 0) { /* not used anymore */
             /* free the texture */
             glDeleteTextures( 1, &texture->texture );
-            if (texture->trans != NULL)
-               free(texture->trans);
-            if (texture->name != NULL)
-               free(texture->name);
+            free(texture->trans);
+            free(texture->name);
             free(texture);
 
             /* free the list node */
@@ -915,10 +912,8 @@ void gl_freeTexture( glTexture* texture )
 
    /* Free anyways */
    glDeleteTextures( 1, &texture->texture );
-   if (texture->trans != NULL)
-      free(texture->trans);
-   if (texture->name != NULL)
-      free(texture->name);
+   free(texture->trans);
+   free(texture->name);
    free(texture);
 
    gl_checkErr();

@@ -2180,10 +2180,8 @@ static void gui_createInterference( Radar *radar )
    }
 
    for (k=0; k<INTERFERENCE_LAYERS; k++) {
-
       /* Free the old texture. */
-      if (radar->interference[k] != NULL)
-         gl_freeTexture(radar->interference[k]);
+      gl_freeTexture(radar->interference[k]);
 
       /* Create the temporary surface. */
       sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
@@ -2246,10 +2244,8 @@ void gui_cleanup (void)
 
    /* Interference. */
    for (i=0; i<INTERFERENCE_LAYERS; i++) {
-      if (gui_radar.interference[i] != NULL) {
-         gl_freeTexture(gui_radar.interference[i]);
-         gui_radar.interference[i] = NULL;
-      }
+      gl_freeTexture(gui_radar.interference[i]);
+      gui_radar.interference[i] = NULL;
    }
 
    /* Set the viewport. */
@@ -2283,44 +2279,27 @@ void gui_cleanup (void)
  */
 void gui_free (void)
 {
-   /* Clean up gui. */
    gui_cleanup();
 
-   /* Free messages. */
-   if (mesg_stack != NULL) {
-      free(mesg_stack);
-      mesg_stack = NULL;
-   }
+   free(mesg_stack);
+   mesg_stack = NULL;
 
-   /* Free VBOs. */
-   if (gui_planet_vbo != NULL) {
-      gl_vboDestroy( gui_planet_vbo );
-      gui_planet_vbo = NULL;
-   }
-   if (gui_radar_select_vbo != NULL) {
-      gl_vboDestroy( gui_radar_select_vbo );
-      gui_radar_select_vbo = NULL;
-   }
-   if (gui_planet_blink_vbo != NULL) {
-      gl_vboDestroy( gui_planet_blink_vbo );
-      gui_planet_blink_vbo = NULL;
-   }
+   gl_vboDestroy( gui_planet_vbo );
+   gui_planet_vbo = NULL;
+   gl_vboDestroy( gui_radar_select_vbo );
+   gui_radar_select_vbo = NULL;
+   gl_vboDestroy( gui_planet_blink_vbo );
+   gui_planet_blink_vbo = NULL;
 
-   /* Clean up the OSD. */
    osd_exit();
 
-   /* Free icons. */
-   if (gui_ico_hail != NULL)
-      gl_freeTexture( gui_ico_hail );
+   gl_freeTexture( gui_ico_hail );
    gui_ico_hail = NULL;
-   if (gui_target_planet != NULL)
-      gl_freeTexture( gui_target_planet );
+   gl_freeTexture( gui_target_planet );
    gui_target_planet = NULL;
-   if (gui_target_pilot != NULL)
-      gl_freeTexture( gui_target_pilot );
+   gl_freeTexture( gui_target_pilot );
    gui_target_pilot = NULL;
 
-   /* Free overlay messages. */
    omsg_cleanup();
 }
 
@@ -2366,8 +2345,7 @@ glTexture* gui_hailIcon (void)
  */
 void gui_targetPlanetGFX( glTexture *gfx )
 {
-   if (gui_target_planet != NULL)
-      gl_freeTexture( gui_target_planet );
+   gl_freeTexture( gui_target_planet );
    gui_target_planet = gl_dupTexture( gfx );
 }
 
@@ -2377,8 +2355,7 @@ void gui_targetPlanetGFX( glTexture *gfx )
  */
 void gui_targetPilotGFX( glTexture *gfx )
 {
-   if (gui_target_pilot != NULL)
-      gl_freeTexture( gui_target_pilot );
+   gl_freeTexture( gui_target_pilot );
    gui_target_pilot = gl_dupTexture( gfx );
 }
 

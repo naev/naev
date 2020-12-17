@@ -1909,26 +1909,20 @@ void weapon_exit (void)
    weapon_clear();
 
    /* Destroy front layer. */
-   if (wbackLayer != NULL) {
-      free(wbackLayer);
-      wbackLayer  = NULL;
-      mwbacklayer = 0;
-   }
+   free(wbackLayer);
+   wbackLayer  = NULL;
+   mwbacklayer = 0;
 
    /* Destroy back layer. */
-   if (wfrontLayer != NULL) {
-      free(wfrontLayer);
-      wfrontLayer  = NULL;
-      mwfrontLayer = 0;
-   }
+   free(wfrontLayer);
+   wfrontLayer  = NULL;
+   mwfrontLayer = 0;
 
    /* Destroy VBO. */
-   if (weapon_vbo != NULL) {
-      free( weapon_vboData );
-      weapon_vboData = NULL;
-      gl_vboDestroy( weapon_vbo );
-      weapon_vbo = NULL;
-   }
+   free( weapon_vboData );
+   weapon_vboData = NULL;
+   gl_vboDestroy( weapon_vbo );
+   weapon_vbo = NULL;
 }
 
 

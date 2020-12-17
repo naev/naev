@@ -897,8 +897,7 @@ void mapedit_setGlobalLoadedInfos( mapOutfitsList_t* ns )
    window_setInput( mapedit_wid, "inpRarity", buf );
 
    /* Local information. */
-   if (mapedit_sLoadMapName != NULL)
-      free( mapedit_sLoadMapName );
+   free( mapedit_sLoadMapName );
    mapedit_sLoadMapName = strdup( ns->mapName );
 }
 
@@ -1069,8 +1068,7 @@ static void mapsList_free (void)
    }
    mapList = NULL;
 
-   if (mapedit_sLoadMapName != NULL)
-      free( mapedit_sLoadMapName );
+   free( mapedit_sLoadMapName );
    mapedit_sLoadMapName = NULL;
 }
 

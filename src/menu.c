@@ -390,18 +390,8 @@ static void menu_main_cleanBG( unsigned int wid, char* str )
    (void) wid;
    (void) str;
 
-   /*
-    * Ugly hack to prevent player.c from segfaulting due to the fact
-    * that game will attempt to render while waiting for the quit event
-    * pushed by exit_game() to be handled without actually having a player
-    * nor anything of the likes (nor toolkit to stop rendering) while
-    * not leaking any texture.
-    */
-   if (main_naevLogo != NULL)
-      gl_freeTexture(main_naevLogo);
+   gl_freeTexture(main_naevLogo);
    main_naevLogo = NULL;
-   /* No need to clean up, should never be rendered. */
-   /* window_modifyImage( wid, "imgLogo", NULL, 0, 0 ); */
 }
 
 

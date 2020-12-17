@@ -425,8 +425,7 @@ int economy_init (void)
 
    /* Allocate price space. */
    for (i=0; i<systems_nstack; i++) {
-      if (systems_stack[i].prices != NULL)
-         free(systems_stack[i].prices);
+      free(systems_stack[i].prices);
       systems_stack[i].prices = calloc(econ_nprices, sizeof(double));
    }
 
@@ -578,10 +577,8 @@ void economy_destroy (void)
 
    /* Clean up the prices in the systems stack. */
    for (i=0; i<systems_nstack; i++) {
-      if (systems_stack[i].prices != NULL) {
-         free(systems_stack[i].prices);
-         systems_stack[i].prices = NULL;
-      }
+      free(systems_stack[i].prices);
+      systems_stack[i].prices = NULL;
    }
 
    /* Destroy the economy matrix. */

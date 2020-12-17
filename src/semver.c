@@ -484,14 +484,10 @@ semver_satisfies (semver_t x, semver_t y, const char *op) {
 
 void
 semver_free (semver_t *x) {
-  if (x->metadata) {
-    free(x->metadata);
-    x->metadata = NULL;
-  }
-  if (x->prerelease) {
-    free(x->prerelease);
-    x->prerelease = NULL;
-  }
+  free(x->metadata);
+  x->metadata = NULL;
+  free(x->prerelease);
+  x->prerelease = NULL;
 }
 
 /**

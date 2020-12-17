@@ -206,8 +206,7 @@ void tech_free (void)
  */
 static void tech_freeGroup( tech_group_t *grp )
 {
-   if (grp->name != NULL)
-      free(grp->name);
+   free(grp->name);
    if (grp->items != NULL)
       array_free( grp->items );
 }

@@ -488,11 +488,8 @@ int intro_display( const char *text, const char *mus )
 
    /* free malloc'd memory. */
    free( sb_arr );
-   if (NULL != side_image.tex)
-      gl_freeTexture( side_image.tex );
-
-   if (NULL != transition.tex)
-      gl_freeTexture( transition.tex );
+   gl_freeTexture( side_image.tex );
+   gl_freeTexture( transition.tex );
 
    /* Stop music, normal music will start shortly after. */
    music_stop();

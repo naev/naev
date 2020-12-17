@@ -97,8 +97,7 @@ static void txt_render( Widget* txt, double bx, double by )
  */
 static void txt_cleanup( Widget* txt )
 {
-   if (txt->dat.txt.text != NULL)
-      free(txt->dat.txt.text);
+   free(txt->dat.txt.text);
 }
 
 

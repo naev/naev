@@ -287,10 +287,8 @@ static void music_free (void)
    if (music_disabled)
       return;
 
-   if (music_name != NULL) {
-      free(music_name);
-      music_name = NULL;
-   }
+   free(music_name);
+   music_name = NULL;
    music_start = 0;
 
    music_sys_free();

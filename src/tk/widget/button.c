@@ -216,8 +216,7 @@ void window_buttonCaption( const unsigned int wid, const char *name, const char 
    if (wgt == NULL)
       return;
 
-   if (wgt->dat.btn.display != NULL)
-      free(wgt->dat.btn.display);
+   free(wgt->dat.btn.display);
    wgt->dat.btn.display = strdup(display);
 
    if (wgt->dat.btn.key != 0)
@@ -261,7 +260,6 @@ static void btn_updateHotkey( Widget *btn )
    /* Copy both parts and insert the character in the middle. */
    nsnprintf( buf, sizeof(buf), "%s\aw%c\a0%s", display, target, &display[match+1] );
 
-   /* Should never be NULL. */
    free(btn->dat.btn.display);
    btn->dat.btn.display = strdup(buf);
 }
@@ -351,8 +349,7 @@ static void btn_render( Widget* btn, double bx, double by )
  */
 static void btn_cleanup( Widget *btn )
 {
-   if (btn->dat.btn.display != NULL)
-      free(btn->dat.btn.display);
+   free(btn->dat.btn.display);
 }
 
 

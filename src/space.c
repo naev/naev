@@ -1972,10 +1972,8 @@ void space_gfxUnload( StarSystem *sys )
    Planet *planet;
    for (i=0; i<sys->nplanets; i++) {
       planet = sys->planets[i];
-      if (planet->gfx_space != NULL) {
-         gl_freeTexture( planet->gfx_space );
-         planet->gfx_space = NULL;
-      }
+      gl_freeTexture( planet->gfx_space );
+      planet->gfx_space = NULL;
    }
 }
 
@@ -2231,8 +2229,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
             planet->ncommodities * sizeof(CommodityPrice));
    }
    /* Free temporary comms list. */
-   if (comms != NULL)
-      free(comms);
+   free(comms);
 
    /* Square to allow for linear multiplication with squared distances. */
    planet->hide = pow2(planet->hide);
@@ -3756,11 +3753,9 @@ void space_exit (void)
    AsteroidType *at;
 
    /* Free standalone graphic textures */
-   if (jumppoint_gfx != NULL)
-      gl_freeTexture(jumppoint_gfx);
+   gl_freeTexture(jumppoint_gfx);
    jumppoint_gfx = NULL;
-   if (jumpbuoy_gfx != NULL)
-      gl_freeTexture(jumpbuoy_gfx);
+   gl_freeTexture(jumpbuoy_gfx);
    jumpbuoy_gfx = NULL;
 
    /* Free asteroid graphics. */
@@ -3769,10 +3764,8 @@ void space_exit (void)
    free(asteroid_gfx);
 
    /* Free the names. */
-   if (planetname_stack != NULL)
-      free(planetname_stack);
-   if (systemname_stack != NULL)
-      free(systemname_stack);
+   free(planetname_stack);
+   free(systemname_stack);
    spacename_nstack = 0;
 
    /* Free the planets. */
@@ -3786,8 +3779,7 @@ void space_exit (void)
 
       /* graphics */
       if (pnt->gfx_spaceName != NULL) {
-         if (pnt->gfx_space != NULL)
-            gl_freeTexture( pnt->gfx_space );
+         gl_freeTexture( pnt->gfx_space );
          free(pnt->gfx_spaceName);
          free(pnt->gfx_spacePath);
       }
@@ -3815,20 +3807,12 @@ void space_exit (void)
    /* Free the systems. */
    for (i=0; i < systems_nstack; i++) {
       free(systems_stack[i].name);
-      if (systems_stack[i].fleets)
-         free(systems_stack[i].fleets);
-      if (systems_stack[i].jumps)
-         free(systems_stack[i].jumps);
-      if (systems_stack[i].background)
-         free(systems_stack[i].background);
-
-      if (systems_stack[i].presence)
-         free(systems_stack[i].presence);
-
-      if (systems_stack[i].planets != NULL)
-         free(systems_stack[i].planets);
-      if (systems_stack[i].planetsid != NULL)
-         free(systems_stack[i].planetsid);
+      free(systems_stack[i].fleets);
+      free(systems_stack[i].jumps);
+      free(systems_stack[i].background);
+      free(systems_stack[i].presence);
+      free(systems_stack[i].planets);
+      free(systems_stack[i].planetsid);
 
       /* Free the asteroids. */
       sys = &systems_stack[i];
@@ -4318,8 +4302,7 @@ void space_reconstructPresences( void )
 
    /* Reset the presence in each system. */
    for (i=0; i<systems_nstack; i++) {
-      if (systems_stack[i].presence)
-         free(systems_stack[i].presence);
+      free(systems_stack[i].presence);
       systems_stack[i].presence  = NULL;
       systems_stack[i].npresence = 0;
       systems_stack[i].ownerpresence = 0.;
