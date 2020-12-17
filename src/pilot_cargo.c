@@ -86,8 +86,7 @@ int pilot_cargoMove( Pilot* dest, Pilot* src )
             src->commodities[i].quantity, src->commodities[i].id );
 
    /* Clean src. */
-   if (src->commodities != NULL)
-      free(src->commodities);
+   free(src->commodities);
    src->ncommodities = 0;
    src->commodities  = NULL;
 

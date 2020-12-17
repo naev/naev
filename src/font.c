@@ -1624,7 +1624,6 @@ void gl_freeFont( glFont* font )
       ft = &stsh->ft[i];
       free(ft->fontname);
       FT_Done_Face(ft->face);
-      //FT_Done_FreeType(ft->library);
       free(ft->fontdata);
    }
    array_free( stsh->ft );
@@ -1638,17 +1637,13 @@ void gl_freeFont( glFont* font )
    if (stsh->glyphs != NULL)
       array_free( stsh->glyphs );
    stsh->glyphs = NULL;
-   if (stsh->vbo_tex != NULL)
-      gl_vboDestroy(stsh->vbo_tex);
+   gl_vboDestroy(stsh->vbo_tex);
    stsh->vbo_tex = NULL;
-   if (stsh->vbo_vert != NULL)
-      gl_vboDestroy(stsh->vbo_vert);
+   gl_vboDestroy(stsh->vbo_vert);
    stsh->vbo_vert = NULL;
-   if (stsh->vbo_tex_data != NULL)
-      free(stsh->vbo_tex_data);
+   free(stsh->vbo_tex_data);
    stsh->vbo_tex_data = NULL;
-   if (stsh->vbo_vert_data != NULL)
-      free(stsh->vbo_vert_data);
+   free(stsh->vbo_vert_data);
    stsh->vbo_vert_data = NULL;
 }
 

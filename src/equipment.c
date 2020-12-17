@@ -246,8 +246,7 @@ void equipment_open( unsigned int wid )
       iar_outfits = calloc( OUTFIT_TABS, sizeof(Outfit**) );
    else {
       for (int i=0; i<OUTFIT_TABS; i++)
-         if (iar_outfits[i] != NULL)
-            free( iar_outfits[i] );
+         free( iar_outfits[i] );
       memset( iar_outfits, 0, sizeof(Outfit**) * OUTFIT_TABS );
    }
 
@@ -1452,8 +1451,7 @@ static void equipment_genOutfitList( unsigned int wid )
 
    /* Allocate space. */
    noutfits = MAX( 1, player_numOutfits() ); /* This is the most we'll need, probably less due to filtering. */
-   if (iar_outfits[active] != NULL)
-      free( iar_outfits[active] );
+   free( iar_outfits[active] );
    iar_outfits[active] = calloc( noutfits, sizeof(Outfit*) );
 
    filtertext = NULL;
@@ -1914,9 +1912,7 @@ static void equipment_renameShip( unsigned int wid, char *str )
       return;
    }
 
-   if (ship->name != NULL)
-      free (ship->name);
-
+   free (ship->name);
    ship->name = newname;
 
    /* Destroy widget - must be before widget. */
@@ -1952,24 +1948,19 @@ static int equipment_playerRmOutfit( const Outfit *o, int quantity )
 void equipment_cleanup (void)
 {
    /* Free stored positions. */
-   if (iar_data != NULL) {
-      free(iar_data);
-      iar_data = NULL;
-   }
+   free(iar_data);
+   iar_data = NULL;
    if (iar_outfits != NULL) {
       for (int i=0; i<OUTFIT_TABS; i++)
-         if (iar_outfits[i] != NULL)
-            free( iar_outfits[i] );
+         free( iar_outfits[i] );
       free(iar_outfits);
       iar_outfits = NULL;
    }
 
    /* Free icons. */
-   if (equip_ico_yes != NULL)
-      gl_freeTexture(equip_ico_yes);
+   gl_freeTexture(equip_ico_yes);
    equip_ico_yes = NULL;
-   if (equip_ico_no != NULL)
-      gl_freeTexture(equip_ico_no);
+   gl_freeTexture(equip_ico_no);
    equip_ico_no = NULL;
 }
 

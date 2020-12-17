@@ -272,10 +272,8 @@ static void sysedit_close( unsigned int wid, char *wgt )
    space_gfxLoad( sysedit_sys );
 
    /* Unload VBO */
-   if (sysedit_vbo != NULL) {
-      gl_vboDestroy(sysedit_vbo);
-      sysedit_vbo = NULL;
-   }
+   gl_vboDestroy(sysedit_vbo);
+   sysedit_vbo = NULL;
 
    /* Remove selection. */
    sysedit_deselect();
@@ -318,8 +316,7 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
    p->population = (uint64_t)strtoull( window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
 
    inp = window_getInput( sysedit_widEdit, "inpClass" );
-   if (p->class != NULL)
-      free( p->class );
+   free( p->class );
 
    if ((inp == NULL) || (strlen(inp) == 0))
       p->class = NULL;
@@ -327,8 +324,7 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
       p->class = strdup( inp );
 
    inp = window_getInput( sysedit_widEdit, "inpLand" );
-   if (p->land_func != NULL)
-      free( p->land_func );
+   free( p->land_func );
 
    if ((inp == NULL) || (strlen(inp) == 0))
       p->land_func = NULL;
@@ -1552,10 +1548,8 @@ static void sysedit_planetDescReturn( unsigned int wid, char *unused )
    mydesc    = window_getInput( wid, "txtDescription" );
    mybardesc = window_getInput( wid, "txtBarDescription" );
 
-   if (p->description)
-      free(p->description);
-   if (p->bar_description)
-      free(p->bar_description);
+   free(p->description);
+   free(p->bar_description);
    p->description     = NULL;
    p->bar_description = NULL;
 

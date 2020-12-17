@@ -116,8 +116,7 @@ static int shiplog_createLog( lua_State *L )
       idstr = strdup(nidstr);
    /* Create a new shiplog */
    shiplog_create( idstr, logname, logtype, overwrite, maxLen );
-   if ( idstr != NULL )
-      free( idstr );
+   free( idstr );
    lua_pushnumber(L, 0);
    return 1;
 }

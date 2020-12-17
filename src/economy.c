@@ -396,8 +396,7 @@ static int econ_createGMatrix (void)
    }
 
    /* Compress M matrix and put into G. */
-   if (econ_G != NULL)
-      cs_spfree( econ_G );
+   cs_spfree( econ_G );
    econ_G = cs_compress( M );
    if (econ_G == NULL)
       ERR(_("Unable to create economy G Matrix."));
@@ -425,8 +424,7 @@ int economy_init (void)
 
    /* Allocate price space. */
    for (i=0; i<systems_nstack; i++) {
-      if (systems_stack[i].prices != NULL)
-         free(systems_stack[i].prices);
+      free(systems_stack[i].prices);
       systems_stack[i].prices = calloc(econ_nprices, sizeof(double));
    }
 
@@ -578,17 +576,13 @@ void economy_destroy (void)
 
    /* Clean up the prices in the systems stack. */
    for (i=0; i<systems_nstack; i++) {
-      if (systems_stack[i].prices != NULL) {
-         free(systems_stack[i].prices);
-         systems_stack[i].prices = NULL;
-      }
+      free(systems_stack[i].prices);
+      systems_stack[i].prices = NULL;
    }
 
    /* Destroy the economy matrix. */
-   if (econ_G != NULL) {
-      cs_spfree( econ_G );
-      econ_G = NULL;
-   }
+   cs_spfree( econ_G );
+   econ_G = NULL;
 
    /* Economy is now deinitialized. */
    econ_initialized = 0;

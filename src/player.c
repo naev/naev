@@ -694,17 +694,11 @@ void player_cleanup (void)
    /* Reset factions. */
    factions_reset();
 
-   /* clean up name */
-   if (player.name != NULL) {
-      free(player.name);
-      player.name = NULL;
-   }
+   free(player.name);
+   player.name = NULL;
 
-   /* Clean up no-land message. */
-   if (player_message_noland != NULL) {
-      free(player_message_noland);
-      player_message_noland = NULL;
-   }
+   free(player_message_noland);
+   player_message_noland = NULL;
 
    /* Clean up gui. */
    gui_cleanup();
@@ -715,29 +709,22 @@ void player_cleanup (void)
    for (i=0; i<player_nstack; i++) {
       pilot_free(player_stack[i].p);
    }
-   if (player_stack != NULL)
-      free(player_stack);
+   free(player_stack);
    player_stack = NULL;
    /* nothing left */
    player_nstack = 0;
 
-   /* Free outfits. */
-   if (player_outfits != NULL)
-      free(player_outfits);
+   free(player_outfits);
    player_outfits  = NULL;
    player_noutfits = 0;
    player_moutfits = 0;
 
-   /* Clean up missions */
-   if (missions_done != NULL)
-      free(missions_done);
+   free(missions_done);
    missions_done = NULL;
    missions_ndone = 0;
    missions_mdone = 0;
 
-   /* Clean up events. */
-   if (events_done != NULL)
-      free(events_done);
+   free(events_done);
    events_done = NULL;
    events_ndone = 0;
    events_mdone = 0;
@@ -760,8 +747,7 @@ void player_cleanup (void)
    /* Reset some player stuff. */
    player_creds   = 0;
    player.crating = 0;
-   if (player.gui != NULL)
-      free( player.gui );
+   free( player.gui );
    player.gui = NULL;
 
    /* Clear omsg. */
@@ -774,9 +760,7 @@ void player_cleanup (void)
    pause_setSpeed( 1. );
    sound_setSpeed( 1. );
 
-   /* Free version string. */
-   if (player.loaded_version != NULL)
-      free( player.loaded_version );
+   free( player.loaded_version );
    player.loaded_version = NULL;
 
    /* Clean up. */
@@ -1621,8 +1605,7 @@ int player_canTakeoff(void)
  */
 void player_nolandMsg( const char *str )
 {
-   if (player_message_noland != NULL)
-      free(player_message_noland);
+   free(player_message_noland);
 
    /* Duplicate so that Lua memory which might be garbage-collected isn't relied on. */
    if (str != NULL)

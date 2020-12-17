@@ -134,14 +134,10 @@ void map_system_close( unsigned int wid, char *str ) {
    nBgImgs = 0;
    free( bgImages );
    bgImages=NULL;
-   if( cur_planet_sel_outfits != NULL ) {
-      free( cur_planet_sel_outfits );
-      cur_planet_sel_outfits = NULL;
-   }
-   if( cur_planet_sel_ships != NULL ) {
-      free( cur_planet_sel_ships );
-      cur_planet_sel_ships = NULL;
-   }
+   free( cur_planet_sel_outfits );
+   cur_planet_sel_outfits = NULL;
+   free( cur_planet_sel_ships );
+   cur_planet_sel_ships = NULL;
 
    window_close( wid, str );
 

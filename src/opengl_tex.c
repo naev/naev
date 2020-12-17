@@ -370,8 +370,7 @@ glTexture* gl_loadImageData( float *data, int w, int h, int pitch, int sx, int s
    texture->srh   = texture->sh / texture->rh;
 
    /* Clean up. */
-   if (datapot!=NULL)
-      free(datapot);
+   free(datapot);
 
    return texture;
 }
@@ -870,17 +869,14 @@ glTexture* gl_newSpriteRWops( const char* path, SDL_RWops *rw,
 /**
  * @brief Frees a texture.
  *
- *    @param texture Texture to free.
+ *    @param texture Texture to free. (If NULL, function does nothing.)
  */
 void gl_freeTexture( glTexture* texture )
 {
    glTexList *cur, *last;
 
-   /* Shouldn't be NULL (won't segfault though) */
-   if (texture == NULL) {
-      WARN(_("Attempting to free NULL texture!"));
+   if (texture == NULL)
       return;
-   }
 
    /* see if we can find it in stack */
    last = NULL;
@@ -890,10 +886,8 @@ void gl_freeTexture( glTexture* texture )
          if (cur->used <= 0) { /* not used anymore */
             /* free the texture */
             glDeleteTextures( 1, &texture->texture );
-            if (texture->trans != NULL)
-               free(texture->trans);
-            if (texture->name != NULL)
-               free(texture->name);
+            free(texture->trans);
+            free(texture->name);
             free(texture);
 
             /* free the list node */
@@ -918,10 +912,8 @@ void gl_freeTexture( glTexture* texture )
 
    /* Free anyways */
    glDeleteTextures( 1, &texture->texture );
-   if (texture->trans != NULL)
-      free(texture->trans);
-   if (texture->name != NULL)
-      free(texture->name);
+   free(texture->trans);
+   free(texture->name);
    free(texture);
 
    gl_checkErr();

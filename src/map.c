@@ -137,14 +137,10 @@ void map_exit (void)
 {
    int i;
 
-   /* Destroy the VBO. */
-   if (map_vbo != NULL) {
-      gl_vboDestroy(map_vbo);
-      map_vbo = NULL;
-   }
+   gl_vboDestroy(map_vbo);
+   map_vbo = NULL;
 
-   if (gl_faction_disk != NULL)
-      gl_freeTexture( gl_faction_disk );
+   gl_freeTexture( gl_faction_disk );
 
    if (decorator_stack != NULL) {
       for (i=0; i<decorator_nstack; i++)
@@ -1849,8 +1845,7 @@ static void map_buttonCommodity( unsigned int wid, char* str )
 static void map_window_close( unsigned int wid, char *str )
 {
    int i;
-   if ( commod_known != NULL )
-      free ( commod_known );
+   free ( commod_known );
    commod_known = NULL;
    if ( map_modes != NULL ) {
       for ( i=0; i<nmap_modes; i++ )
@@ -1897,11 +1892,9 @@ void map_clear (void)
       map_xpos = 0.;
       map_ypos = 0.;
    }
-   if (map_path != NULL) {
-      free(map_path);
-      map_path = NULL;
-      map_npath = 0;
-   }
+   free(map_path);
+   map_path = NULL;
+   map_npath = 0;
 
    /* default system is current system */
    map_selectCur();
@@ -2006,8 +1999,7 @@ void map_select( StarSystem *sys, char shifted )
 
       /* select the current system and make a path to it */
       if (!shifted) {
-          if (map_path)
-             free(map_path);
+         free( map_path );
           map_path  = NULL;
           map_npath = 0;
       }
@@ -2180,8 +2172,7 @@ static void A_freeList( SysNode *first )
    p = NULL;
    n = first;
    do {
-      if (p != NULL)
-         free(p);
+      free(p);
       p = n;
    } while ((n=n->gnext) != NULL);
    free(p);
@@ -2233,8 +2224,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    /* Check self. */
    if ((ssys == esys) || (ssys->njumps==0)) {
       (*njumps) = 0;
-      if (old_data != NULL)
-         free( old_data );
+      free( old_data );
       return NULL;
    }
 
@@ -2242,8 +2232,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    if (!ignore_known && !sys_isKnown(esys) && !space_sysReachable(esys)) {
       /* can't reach - don't make path */
       (*njumps) = 0;
-      if (old_data != NULL)
-         free( old_data );
+      free( old_data );
       return NULL;
    }
 
@@ -2334,8 +2323,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    else {
       (*njumps) = 0;
       res = NULL;
-      if (old_data != NULL)
-         free( old_data );
+      free( old_data );
    }
 
    /* free the linked lists */

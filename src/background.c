@@ -122,12 +122,8 @@ void background_initStars( int n )
       star_vertex[6*i+5] = star_vertex[6*i+2];
    }
 
-   /* Destroy old VBO. */
-   if (star_vertexVBO != NULL) {
-      gl_vboDestroy( star_vertexVBO );
-   }
-
-   /* Create now VBO. */
+   /* Recreate VBO. */
+   gl_vboDestroy( star_vertexVBO );
    star_vertexVBO = gl_vboCreateStatic(
          nstars * sizeof(GLfloat) * 6, star_vertex );
 
@@ -516,11 +512,8 @@ void background_free (void)
       nlua_freeEnv( bkg_cur_env );
    bkg_cur_env = LUA_NOREF;
 
-   /* Destroy VBOs. */
-   if (star_vertexVBO != NULL) {
-      gl_vboDestroy( star_vertexVBO );
-      star_vertexVBO = NULL;
-   }
+   gl_vboDestroy( star_vertexVBO );
+   star_vertexVBO = NULL;
 
    nstars = 0;
 }

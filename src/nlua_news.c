@@ -385,8 +385,7 @@ int newsL_get( lua_State *L )
 
    } while ((article_ptr = article_ptr->next) != NULL);
 
-   if (characteristic != NULL)
-      free(characteristic);
+   free(characteristic);
 
    return 1;
 }

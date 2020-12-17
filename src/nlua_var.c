@@ -372,10 +372,8 @@ static void var_free( misn_var* var )
 {
    switch (var->type) {
       case MISN_VAR_STR:
-         if (var->d.str!=NULL) {
-            free(var->d.str);
-            var->d.str = NULL;
-         }
+         free(var->d.str);
+         var->d.str = NULL;
          break;
       case MISN_VAR_NIL:
       case MISN_VAR_NUM:
@@ -383,10 +381,8 @@ static void var_free( misn_var* var )
          break;
    }
 
-   if (var->name!=NULL) {
-      free(var->name);
-      var->name = NULL;
-   }
+   free(var->name);
+   var->name = NULL;
 }
 /**
  * @brief Cleans up all the mission variables.
@@ -397,8 +393,7 @@ void var_cleanup (void)
    for (i=0; i<var_nstack; i++)
       var_free( &var_stack[i] );
 
-   if (var_stack!=NULL)
-      free( var_stack );
+   free( var_stack );
    var_stack   = NULL;
    var_nstack  = 0;
    var_mstack  = 0;

@@ -1052,8 +1052,8 @@ static void uniedit_findSearch( unsigned int wid, char *str )
    planets = planet_searchFuzzyCase( name, &nplanets );
    systems = system_searchFuzzyCase( name, &nsystems );
 
-   if (found_cur != NULL)
-      free(found_cur);
+   free(found_cur);
+   found_cur = NULL;
 
    /* Construct found table. */
    found = malloc( sizeof(map_find_t) * (nplanets + nsystems) );
@@ -1149,8 +1149,7 @@ static void uniedit_findShowResults( unsigned int wid, map_find_t *found, int n 
 static void uniedit_findSysClose( unsigned int wid, char *name )
 {
    /* Clean up if necessary. */
-   if (found_cur != NULL)
-      free( found_cur );
+   free( found_cur );
    found_cur = NULL;
 
    /* Close the window. */
