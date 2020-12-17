@@ -342,7 +342,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    while (p < len) {
 
       /* Get the length. */
-      i = gl_printWidthForText( NULL, &buf[p], w-40 );
+      i = gl_printWidthForText( NULL, &buf[p], w-40, NULL );
 
       /* Copy the line. */
       if (news_nlines+1 > news_mlines) {
@@ -646,7 +646,7 @@ int news_loadArticles( xmlNodePtr parent )
  */
 static int news_parseArticle( xmlNodePtr parent )
 {
-   char *ntitle, *ndesc, *title, *desc, *faction, *tag;
+   char *ntitle, *ndesc, *title, *desc, *faction;
    char *buff;
    ntime_t date, date_to_rm;
    xmlNodePtr node;
@@ -656,7 +656,7 @@ static int news_parseArticle( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
 
 #define NEWS_READ(elem, s) \
-xmlr_attr(node, s, elem); \
+xmlr_attr_strd(node, s, elem); \
 if (elem == NULL) { WARN(_("Event is missing '%s', skipping."), s); goto cleanup; }
 
    do {
@@ -670,7 +670,6 @@ if (elem == NULL) { WARN(_("Event is missing '%s', skipping."), s); goto cleanup
       title   = NULL;
       desc    = NULL;
       faction = NULL;
-      tag     = NULL;
 
       NEWS_READ(title, "title");
       NEWS_READ(desc, "desc");
@@ -693,13 +692,11 @@ if (elem == NULL) { WARN(_("Event is missing '%s', skipping."), s); goto cleanup
       ntitle = get_fromclean(title);
       ndesc  = get_fromclean(desc);
 
-      /* Optional. */
-      xmlr_attr(node, "tag", tag);
 
       /* make the article*/
       n_article = new_article(ntitle, ndesc, faction, date, date_to_rm);
-      if (tag != NULL)
-         n_article->tag = strdup(tag);
+      /* Read optional tag. */
+      xmlr_attr_strd(node, "tag", n_article->tag);
 
 cleanup:
       free(ntitle);
@@ -707,7 +704,6 @@ cleanup:
       free(title);
       free(desc);
       free(faction);
-      free(tag);
    } while (xml_nextNode(node));
 #undef NEWS_READ
 

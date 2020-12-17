@@ -3,9 +3,6 @@
  */
 
 
-#if USE_OPENAL
-
-
 #ifndef SOUND_OPENAL_H
 #  define SOUND_OPENAL_H
 
@@ -125,7 +122,3 @@ int sound_al_env( SoundEnv_t env, double param );
 
 
 #endif /* SOUND_OPENAL_H */
-
-#endif /* USE_OPENAL */
-
-

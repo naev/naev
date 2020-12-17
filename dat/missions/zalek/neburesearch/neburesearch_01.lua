@@ -26,9 +26,9 @@
 
 ]]--
 
-require "scripts/nextjump.lua"
-require "scripts/numstring.lua"
-require "missions/zalek/common.lua"
+require "scripts/nextjump"
+require "scripts/numstring"
+require "missions/zalek/common"
 
 
 bar_desc = _("You see a scientist who is apparently looking for someone.")

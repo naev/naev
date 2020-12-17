@@ -1663,8 +1663,7 @@ static int pilotL_rename( lua_State *L )
    name  = luaL_checkstring(L,2);
 
    /* Change name. */
-   if (p->name != NULL)
-      free(p->name);
+   free(p->name);
    p->name = strdup(name);
 
    return 0;

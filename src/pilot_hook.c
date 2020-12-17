@@ -92,8 +92,7 @@ int pilot_runHookParam( Pilot* p, int hook_type, HookParam* param, int nparam )
    }
 
    /* Clean up. */
-   if (hdynparam != NULL)
-      free( hdynparam );
+   free( hdynparam );
 
    if (run > 0)
       claim_activateAll(); /* Reset claims. */
@@ -232,9 +231,7 @@ void pilot_clearHooks( Pilot *p )
       hook_rm( p->hooks[i].id );
    pilot_hookCleanup = 0;
 
-   /* Clear the hooks. */
-   if (p->hooks != NULL)
-      free(p->hooks);
+   free(p->hooks);
    p->hooks  = NULL;
    p->nhooks = 0;
 }

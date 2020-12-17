@@ -22,8 +22,8 @@ Author: iwaschosen
 Plot: Talk to man on Zeo, bargain, load some cargo, deliver it to Zhiru in Goddard, get $
 --]]
 
-require "numstring.lua"
-require "missions/neutral/common.lua"
+require "numstring"
+require "missions/neutral/common"
 
 
 misn_title = _([[Deliver Love]])

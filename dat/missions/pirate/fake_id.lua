@@ -28,7 +28,7 @@
 
 --]] 
 
-require "numstring.lua"
+require "numstring"
 
 
 misn_title = _("Fake ID")

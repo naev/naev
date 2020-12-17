@@ -176,8 +176,7 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
                pilot->ship = ship_get(c);
                if (pilot->ship == NULL)
                   WARN(_("Pilot %s in Fleet %s has invalid ship"), pilot->name, temp->name);
-               if (c!=NULL)
-                  free(c);
+               free(c);
                continue;
             }
 
@@ -294,10 +293,8 @@ void fleet_free (void)
    if (fleet_stack != NULL) {
       for (i=0; i<nfleets; i++) {
          for (j=0; j<fleet_stack[i].npilots; j++) {
-            if (fleet_stack[i].pilots[j].name)
-               free(fleet_stack[i].pilots[j].name);
-            if (fleet_stack[i].pilots[j].ai)
-               free(fleet_stack[i].pilots[j].ai);
+            free(fleet_stack[i].pilots[j].name);
+            free(fleet_stack[i].pilots[j].ai);
          }
          free(fleet_stack[i].name);
          free(fleet_stack[i].pilots);

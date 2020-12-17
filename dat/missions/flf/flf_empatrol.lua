@@ -33,7 +33,7 @@
 
 --]]
 
-require "missions/flf/flf_patrol.lua"
+require "missions/flf/flf_patrol"
 
 misn_title = {}
 misn_title[1] = _("FLF: Single Empire patrol in %s")

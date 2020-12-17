@@ -15,7 +15,6 @@
 
 #include "SDL.h"
 
-#include "music_sdlmix.h"
 #include "music_openal.h"
 
 #include "nlua.h"
@@ -169,66 +168,26 @@ int music_init (void)
    if (music_disabled)
       return 0;
 
-   if ((conf.sound_backend != NULL) &&
-         (strcmp(conf.sound_backend,"sdlmix")==0)) {
-#if USE_SDLMIX
-      /*
-       * SDL_mixer backend.
-       */
-      /* Init/exit. */
-      music_sys_init = music_mix_init;
-      music_sys_exit = music_mix_exit;
-      /* Loading. */
-      music_sys_load = music_mix_load;
-      music_sys_free = music_mix_free;
-      /* Music control. */
-      music_sys_volume = music_mix_volume;
-      music_sys_getVolume = music_mix_getVolume;
-      music_sys_getVolumeLog = music_mix_getVolume;
-      music_sys_load = music_mix_load;
-      music_sys_play = music_mix_play;
-      music_sys_stop = music_mix_stop;
-      music_sys_pause = music_mix_pause;
-      music_sys_resume = music_mix_resume;
-      music_sys_setPos = music_mix_setPos;
-      music_sys_isPlaying = music_mix_isPlaying;
-#else /* USE_SDLMIX */
-      WARN(_("SDL_mixer support not compiled in!"));
-      return -1;
-#endif /* USE_SDLMIX */
-   }
-   else if ((conf.sound_backend != NULL) &&
-         (strcmp(conf.sound_backend,"openal")==0)) {
-#if USE_OPENAL
-      /*
-       * OpenAL backend.
-       */
-      /* Init/exit. */
-      music_sys_init = music_al_init;
-      music_sys_exit = music_al_exit;
-      /* Loading. */
-      music_sys_load = music_al_load;
-      music_sys_free = music_al_free;
-      /* Music control. */
-      music_sys_volume = music_al_volume;
-      music_sys_getVolume = music_al_getVolume;
-      music_sys_getVolumeLog = music_al_getVolumeLog;
-      music_sys_load = music_al_load;
-      music_sys_play = music_al_play;
-      music_sys_stop = music_al_stop;
-      music_sys_pause = music_al_pause;
-      music_sys_resume = music_al_resume;
-      music_sys_setPos = music_al_setPos;
-      music_sys_isPlaying = music_al_isPlaying;
-#else /* USE_OPENAL */
-      WARN(_("OpenAL support not compiled in!"));
-      return -1;
-#endif /* USE_OPENAL*/
-   }
-   else {
-      WARN(_("Unknown sound backend '%s'."), conf.sound_backend);
-      return -1;
-   }
+   /*
+    * OpenAL backend.
+    */
+   /* Init/exit. */
+   music_sys_init = music_al_init;
+   music_sys_exit = music_al_exit;
+   /* Loading. */
+   music_sys_load = music_al_load;
+   music_sys_free = music_al_free;
+   /* Music control. */
+   music_sys_volume = music_al_volume;
+   music_sys_getVolume = music_al_getVolume;
+   music_sys_getVolumeLog = music_al_getVolumeLog;
+   music_sys_load = music_al_load;
+   music_sys_play = music_al_play;
+   music_sys_stop = music_al_stop;
+   music_sys_pause = music_al_pause;
+   music_sys_resume = music_al_resume;
+   music_sys_setPos = music_al_setPos;
+   music_sys_isPlaying = music_al_isPlaying;
 
    /* Start the subsystem. */
    if (music_sys_init())
@@ -287,10 +246,8 @@ static void music_free (void)
    if (music_disabled)
       return;
 
-   if (music_name != NULL) {
-      free(music_name);
-      music_name = NULL;
-   }
+   free(music_name);
+   music_name = NULL;
    music_start = 0;
 
    music_sys_free();

@@ -20,7 +20,7 @@
 
 --]]
 
-require "scripts/numstring.lua"
+require "scripts/numstring"
 
 misn_title = _("DV: Assault on Unicorn") 
 misn_reward = _("Variable")

@@ -111,7 +111,7 @@ static void omsg_setMsg( omsg_t *omsg, const char *msg )
    n  = 0;
    m  = 0;
    while (n < l) {
-      s  = gl_printWidthForText( font, &msg[n], omsg_center_w );
+      s  = gl_printWidthForText( font, &msg[n], omsg_center_w, NULL );
       n += s+1;
       m++;
    }
@@ -126,7 +126,7 @@ static void omsg_setMsg( omsg_t *omsg, const char *msg )
    n  = 0;
    m  = 0;
    while (n < l) {
-      s  = gl_printWidthForText( font, &msg[n], omsg_center_w );
+      s  = gl_printWidthForText( font, &msg[n], omsg_center_w, NULL );
       omsg->msg[m] = malloc( s+1 );
       nsnprintf( omsg->msg[m], s+1, "%s", &msg[n] );
       m++;
@@ -154,7 +154,7 @@ static int omsg_getFontID( int size )
 
    /* Create font. */
    font = &array_grow( &omsg_font_array );
-   gl_fontInit( &font->font, FONT_MONOSPACE_PATH, size );
+   gl_fontInit( &font->font, FONT_MONOSPACE_PATH, size, FONT_PATH_PREFIX, 0 );
    font->size = size;
    return array_size(omsg_font_array) - 1;
 }

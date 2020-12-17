@@ -203,7 +203,7 @@ int diff_loadAvailable (void)
 
       diff = &array_grow(&diff_available);
       diff->filename = diff_files[i];
-      xmlr_attr(node, "name", diff->name);
+      xmlr_attr_strd(node, "name", diff->name);
       xmlFreeDoc(doc);
       free(filebuf);
    }
@@ -318,7 +318,7 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
    /* Set the target. */
    memset(&base, 0, sizeof(UniHunk_t));
    base.target.type = HUNK_TARGET_SYSTEM;
-   xmlr_attr(node,"name",base.target.u.name);
+   xmlr_attr_strd(node,"name",base.target.u.name);
    if (base.target.u.name==NULL) {
       WARN(_("Unidiff '%s' has a system node without a 'name' tag, not applying."), diff->name);
       return -1;
@@ -339,7 +339,7 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          hunk.target.u.name = strdup(base.target.u.name);
 
          /* Get the asset to modify. */
-         xmlr_attr(cur,"name",hunk.u.name);
+         xmlr_attr_strd(cur,"name",hunk.u.name);
 
          /* Get the type. */
          if (strcmp(buf,"add")==0)
@@ -371,7 +371,7 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          hunk.target.u.name = strdup(base.target.u.name);
 
          /* Get the jump point to modify. */
-         xmlr_attr(cur,"target",hunk.u.name);
+         xmlr_attr_strd(cur,"target",hunk.u.name);
 
          /* Get the type. */
          if (strcmp(buf,"add")==0)
@@ -416,7 +416,7 @@ static int diff_patchTech( UniDiff_t *diff, xmlNodePtr node )
    /* Set the target. */
    memset(&base, 0, sizeof(UniHunk_t));
    base.target.type = HUNK_TARGET_TECH;
-   xmlr_attr(node,"name",base.target.u.name);
+   xmlr_attr_strd(node,"name",base.target.u.name);
    if (base.target.u.name==NULL) {
       WARN(_("Unidiff '%s' has an target node without a 'name' tag"), diff->name);
       return -1;
@@ -486,7 +486,7 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
    /* Set the target. */
    memset(&base, 0, sizeof(UniHunk_t));
    base.target.type = HUNK_TARGET_ASSET;
-   xmlr_attr(node,"name",base.target.u.name);
+   xmlr_attr_strd(node,"name",base.target.u.name);
    if (base.target.u.name==NULL) {
       WARN(_("Unidiff '%s' has an target node without a 'name' tag"), diff->name);
       return -1;
@@ -540,7 +540,7 @@ static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
    /* Set the target. */
    memset(&base, 0, sizeof(UniHunk_t));
    base.target.type = HUNK_TARGET_FACTION;
-   xmlr_attr(node,"name",base.target.u.name);
+   xmlr_attr_strd(node,"name",base.target.u.name);
    if (base.target.u.name==NULL) {
       WARN(_("Unidiff '%s' has an target node without a 'name' tag"), diff->name);
       return -1;
@@ -595,7 +595,7 @@ static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
          hunk.target.u.name = strdup(base.target.u.name);
 
          /* Get the faction to set the association of. */
-         xmlr_attr(cur,"name",hunk.u.name);
+         xmlr_attr_strd(cur,"name",hunk.u.name);
 
          /* Get the type. */
          if (strcmp(buf,"ally")==0)
@@ -642,7 +642,7 @@ static int diff_patch( xmlNodePtr parent )
    /* Prepare it. */
    diff = diff_newDiff();
    memset(diff, 0, sizeof(UniDiff_t));
-   xmlr_attr(parent,"name",diff->name);
+   xmlr_attr_strd(parent,"name",diff->name);
 
    /* Whether or not we need to update the universe. */
    univ_update = 0;
@@ -1080,12 +1080,10 @@ static void diff_cleanup( UniDiff_t *diff )
    free(diff->name);
    for (i=0; i<diff->napplied; i++)
       diff_cleanupHunk(&diff->applied[i]);
-   if (diff->applied != NULL)
-      free(diff->applied);
+   free(diff->applied);
    for (i=0; i<diff->nfailed; i++)
       diff_cleanupHunk(&diff->failed[i]);
-   if (diff->failed != NULL)
-      free(diff->failed);
+   free(diff->failed);
    memset(diff, 0, sizeof(UniDiff_t));
 }
 
@@ -1097,10 +1095,10 @@ static void diff_cleanup( UniDiff_t *diff )
  */
 static void diff_cleanupHunk( UniHunk_t *hunk )
 {
-   if (hunk->target.u.name != NULL)
-      free(hunk->target.u.name);
+   free(hunk->target.u.name);
+   hunk->target.u.name = NULL;
 
-   switch (hunk->type) {
+   switch (hunk->type) { /* TODO: Does it really matter? */
       case HUNK_TYPE_ASSET_ADD:
       case HUNK_TYPE_ASSET_REMOVE:
       case HUNK_TYPE_ASSET_BLACKMARKET:
@@ -1117,8 +1115,7 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
       case HUNK_TYPE_FACTION_ENEMY:
       case HUNK_TYPE_FACTION_NEUTRAL:
       case HUNK_TYPE_FACTION_REALIGN:
-         if (hunk->u.name != NULL)
-            free(hunk->u.name);
+         free(hunk->u.name);
          hunk->u.name = NULL;
          break;
 

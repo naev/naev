@@ -321,12 +321,6 @@ static void opt_gameplay( unsigned int wid )
 #else
          "Unknown OS\n"
 #endif
-#ifdef USE_OPENAL
-         "With OpenAL\n"
-#endif /* USE_OPENAL */
-#ifdef USE_SDLMIX
-         "With SDL_mixer\n"
-#endif
 #ifdef HAVE_LUAJIT
          "Using LuaJIT\n"
 #endif
@@ -846,7 +840,7 @@ static void opt_setAudioLevel( unsigned int wid, char *str )
 
 
 /**
- * @brief Sets the sound or music volume string based on level and sound backend.
+ * @brief Sets the sound or music volume string based on level.
  *
  *    @param[out] buf Buffer to use.
  *    @param max Maximum length of the buffer.
@@ -876,11 +870,8 @@ static void opt_audioLevelStr( char *buf, int max, int type, double pos )
 static void opt_audio( unsigned int wid )
 {
    (void) wid;
-   int i, j;
    int cw;
-   int w, h, y, x, l;
-   char **s;
-   const char *str;
+   int w, h, y, x;
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
@@ -896,43 +887,13 @@ static void opt_audio( unsigned int wid )
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDefaults", _("Defaults"), opt_audioDefaults );
 
-   /* General options. */
    cw = (w-60)/2;
    x = 20;
    y = -60;
-   window_addText( wid, x+20, y, cw, 20, 0, "txtSGeneral",
-         NULL, NULL, _("General") );
-   y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkNosound", _("Disable all sound/music"), NULL, conf.nosound );
    y -= 30;
-   str = _("Backends");
-   l = gl_printWidthRaw( NULL, str );
-   window_addText( wid, x, y, l, 40, 0, "txtSBackends",
-         NULL, NULL, str );
-   l += 10;
-   i = 0;
-   j = 0;
-   s = malloc(sizeof(char*)*2);
-#if USE_OPENAL
-   if (strcmp(conf.sound_backend,"openal")==0)
-      j = i;
-   s[i++] = strdup(_("openal"));
-#endif /* USE_OPENAL */
-#if USE_SDLMIX
-   if (strcmp(conf.sound_backend,"sdlmix")==0)
-      j = i;
-   s[i++] = strdup(_("sdlmix"));
-#endif /* USE_SDLMIX */
-   if (i==0)
-      s[i++] = strdup(_("none"));
-   window_addList( wid, x+l, y, cw-(x+l), 40, "lstSound", s, i, j, NULL, NULL );
-   y -= 50;
 
-   /* OpenAL options. */
-   window_addText( wid, x+20, y, cw, 20, 0, "txtSOpenal",
-         NULL, NULL, _("OpenAL") );
-   y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkEFX", _("EFX (More CPU)"), NULL, conf.al_efx );
 
@@ -983,30 +944,13 @@ static int opt_audioSave( unsigned int wid, char *str )
 {
    (void) str;
    int f;
-   char *s;
 
-   /* General. */
    f = window_checkboxState( wid, "chkNosound" );
    if (conf.nosound != f) {
       conf.nosound = f;
       opt_needRestart();
    }
 
-   /* Backend. */
-   s = toolkit_getList( wid, "lstSound" );
-   if (conf.sound_backend != NULL) {
-      if (strcmp(s,conf.sound_backend)!=0) {
-         free(conf.sound_backend);
-         conf.sound_backend = strdup(s);
-         opt_needRestart();
-      }
-   }
-   else {
-      conf.sound_backend = strdup(s);
-      opt_needRestart();
-   }
-
-   /* OpenAL. */
    f = window_checkboxState( wid, "chkEFX" );
    if (conf.al_efx != f) {
       conf.al_efx = f;
@@ -1036,10 +980,6 @@ static void opt_audioDefaults( unsigned int wid, char *str )
    /* Checkboxes. */
    window_checkboxSet( wid, "chkNosound", MUTE_SOUND_DEFAULT );
    window_checkboxSet( wid, "chkEFX", USE_EFX_DEFAULT );
-
-   /* List. */
-   toolkit_setList( wid, "lstSound",
-         (conf.sound_backend==NULL) ? _("none") : BACKEND_DEFAULT );
 }
 
 
@@ -1055,9 +995,6 @@ static void opt_audioUpdate( unsigned int wid )
    /* Faders. */
    window_faderValue( wid, "fadSound", conf.sound );
    window_faderValue( wid, "fadMusic", conf.music );
-
-   /* Backend box */
-   /* TODO */
 }
 
 
@@ -1270,8 +1207,7 @@ static void opt_video( unsigned int wid )
          NULL, NULL, _("Resolution") );
    y -= 40;
    window_addInput( wid, x, y, 100, 20, "inpRes", 16, 1, NULL );
-   window_setInputFilter( wid, "inpRes",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpRes", INPUT_FILTER_RESOLUTION );
    window_addCheckbox( wid, x+20+100, y, 100, 20,
          "chkFullscreen", _("Fullscreen"), NULL, conf.fullscreen );
    y -= 30;
@@ -1331,8 +1267,7 @@ static void opt_video( unsigned int wid )
          NULL, NULL, s );
    window_addInput( wid, x+l+20, y, 40, 20, "inpFPS", 4, 1, NULL );
    toolkit_setListPos( wid, "lstRes", res_def);
-   window_setInputFilter( wid, "inpFPS",
-         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpFPS", INPUT_FILTER_NUMBER );
    nsnprintf( buf, sizeof(buf), "%d", conf.fps_max );
    window_setInput( wid, "inpFPS", buf );
    y -= 30;
@@ -1353,9 +1288,6 @@ static void opt_video( unsigned int wid )
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkMipmaps", _("Mipmaps*"), NULL, conf.mipmaps );
-   y -= 20;
-   window_addCheckbox( wid, x, y, cw, 20,
-         "chkInterpolate", _("Interpolation*"), NULL, conf.interpolate );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkNPOT", _("NPOT Textures*"), NULL, conf.npot );
@@ -1456,11 +1388,6 @@ static int opt_videoSave( unsigned int wid, char *str )
    f = window_checkboxState( wid, "chkMipmaps" );
    if (conf.mipmaps != f) {
       conf.mipmaps = f;
-      opt_needRestart();
-   }
-   f = window_checkboxState( wid, "chkInterpolate" );
-   if (conf.interpolate != f) {
-      conf.interpolate = f;
       opt_needRestart();
    }
    f = window_checkboxState( wid, "chkNPOT" );
@@ -1590,7 +1517,6 @@ static void opt_videoDefaults( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkFullscreen", FULLSCREEN_DEFAULT );
    window_checkboxSet( wid, "chkVSync", VSYNC_DEFAULT );
    window_checkboxSet( wid, "chkMipmaps", MIPMAP_DEFAULT );
-   window_checkboxSet( wid, "chkInterpolate", INTERPOLATION_DEFAULT );
    window_checkboxSet( wid, "chkNPOT", NPOT_TEXTURES_DEFAULT );
    window_checkboxSet( wid, "chkFPS", SHOW_FPS_DEFAULT );
    window_checkboxSet( wid, "chkEngineGlow", ENGINE_GLOWS_DEFAULT );

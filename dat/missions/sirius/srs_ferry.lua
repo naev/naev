@@ -37,8 +37,8 @@
 --
 --]]
 
-require "cargo_common.lua"
-require "numstring.lua"
+require "cargo_common"
+require "numstring"
 
 misn_title = _("SR: %s pilgrimage transport for %s-class citizen")
 

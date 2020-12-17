@@ -32,8 +32,8 @@
 
 ]]--
 
-require "numstring.lua"
-require "missions/empire/common.lua"
+require "numstring"
+require "missions/empire/common"
 
 bar_desc = _("You see Lt. Commander Dimitri at the bar as usual.")
 misn_title = _("Collective Distraction")

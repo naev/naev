@@ -33,7 +33,7 @@
 #include "nlua_bkg.h"
 #include "nlua_camera.h"
 #include "nlua_music.h"
-#include "nlua_spfx.h"
+#include "nlua_audio.h"
 #include "font.h"
 #include "toolkit.h"
 #include "nfile.h"
@@ -115,7 +115,7 @@ static void cli_printCoreString( const char *s )
       /* Don't handle tab for now. */
       if (tmp[p]=='\t')
          tmp[p] = ' ';
-      l = gl_printWidthForText(cli_font, &tmp[p], CLI_WIDTH-40 );
+      l = gl_printWidthForText(cli_font, &tmp[p], CLI_WIDTH-40, NULL );
       cli_addMessageMax( &tmp[p], l );
       p += l;
    } while (p < slen);
@@ -446,7 +446,7 @@ int cli_init (void)
    nlua_loadCLI( cli_env );
    nlua_loadCamera( cli_env );
    nlua_loadMusic( cli_env );
-   nlua_loadSpfx( cli_env );
+   nlua_loadAudio( cli_env );
    nlua_loadTk( cli_env );
 
    /* Mark as console. */
@@ -459,7 +459,7 @@ int cli_init (void)
 
    /* Set the font. */
    cli_font    = malloc( sizeof(glFont) );
-   gl_fontInit( cli_font, FONT_MONOSPACE_PATH, conf.font_size_console );
+   gl_fontInit( cli_font, FONT_MONOSPACE_PATH, conf.font_size_console, FONT_PATH_PREFIX, 0 );
 
    /* Allocate the buffer. */
    cli_buffer = array_create(char*);

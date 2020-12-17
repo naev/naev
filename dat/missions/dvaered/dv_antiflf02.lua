@@ -29,9 +29,9 @@
 
 -- localization stuff, translators would work here
 
-require "fleethelper.lua"
-require "portrait.lua"
-require "missions/dvaered/common.lua"
+require "fleethelper"
+require "portrait"
+require "missions/dvaered/common"
 
 
 title = {}

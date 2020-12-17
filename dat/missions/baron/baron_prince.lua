@@ -23,10 +23,10 @@
 -- This is the second mission in the baron string.
 --]]
 
-require "fleethelper.lua"
-require "numstring.lua"
-require "portrait.lua"
-require "missions/baron/common.lua"
+require "fleethelper"
+require "numstring"
+require "portrait"
+require "missions/baron/common"
 
 
 title = {}

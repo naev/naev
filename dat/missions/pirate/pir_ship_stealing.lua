@@ -27,11 +27,11 @@
    happen (at least, I hope…) he’ll be pursued by a few fighters.
 --]]
 
-require "swapship.lua"
-require "jumpdist.lua"
-require "numstring.lua"
-require "portrait.lua"
-require "factions/equip/generic.lua"
+require "swapship"
+require "jumpdist"
+require "numstring"
+require "portrait"
+require "factions/equip/generic"
 
 
 title = _("Stealing a %s")

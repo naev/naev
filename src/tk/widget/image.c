@@ -222,9 +222,7 @@ void window_modifyImageLayers( const unsigned int wid,
  */
 static void img_freeLayers( Widget* img )
 {
-   if (img->dat.img.layers  != NULL)
-      free( img->dat.img.layers );
-
+   free( img->dat.img.layers );
    img->dat.img.layers  = NULL;
    img->dat.img.nlayers = 0;
 }

@@ -1,4 +1,4 @@
-require 'numstring.lua'
+require 'numstring'
 --[[
 -- @brief Tests to see if it is possible to swap ships for the player.
 --]]

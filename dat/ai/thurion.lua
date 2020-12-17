@@ -1,6 +1,6 @@
-require("ai/tpl/generic.lua")
-require("ai/personality/civilian.lua")
-require "numstring.lua"
+require("ai/tpl/generic")
+require("ai/personality/civilian")
+require "numstring"
 
 
 mem.shield_run = 20

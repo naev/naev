@@ -15,7 +15,7 @@
 --Preliminary draft of a new event where the player meets one of the Touched, who tries to convert him
 --Sudarshan S <ssoxygen@users.sf.net>
 
-require("fleethelper.lua")
+require("fleethelper")
 
 commtitle=_("The preaching begins...")
 commtext=_([[A Sirian appears on your viewscreen. He seems different than most Sirii you've met. He regards you with a neutral yet intense gaze.

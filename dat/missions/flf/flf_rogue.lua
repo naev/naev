@@ -31,9 +31,9 @@
 
 --]]
 
-require "numstring.lua"
-require "fleethelper.lua"
-require "missions/flf/flf_common.lua"
+require "numstring"
+require "fleethelper"
+require "missions/flf/flf_common"
 
 misn_title  = {}
 misn_title[1] = _("FLF: Rogue Pilot in %s")

@@ -85,7 +85,7 @@ static void txt_render( Widget* txt, double bx, double by )
             &txt->dat.txt.colour, -1., txt->dat.txt.text );
    else
       gl_printTextRaw( txt->dat.txt.font, txt->w, txt->h,
-            bx + txt->x, by + txt->y,
+            bx + txt->x, by + txt->y, 0,
             &txt->dat.txt.colour, -1., txt->dat.txt.text );
 }
 
@@ -97,8 +97,7 @@ static void txt_render( Widget* txt, double bx, double by )
  */
 static void txt_cleanup( Widget* txt )
 {
-   if (txt->dat.txt.text != NULL)
-      free(txt->dat.txt.text);
+   free(txt->dat.txt.text);
 }
 
 

@@ -24,8 +24,8 @@
 
 -- localization stuff, translators would work here
 
-require "fleethelper.lua"
-require "portrait.lua"
+require "fleethelper"
+require "portrait"
 
 
 destsysname = "Torg"

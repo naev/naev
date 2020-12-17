@@ -134,14 +134,10 @@ void map_system_close( unsigned int wid, char *str ) {
    nBgImgs = 0;
    free( bgImages );
    bgImages=NULL;
-   if( cur_planet_sel_outfits != NULL ) {
-      free( cur_planet_sel_outfits );
-      cur_planet_sel_outfits = NULL;
-   }
-   if( cur_planet_sel_ships != NULL ) {
-      free( cur_planet_sel_ships );
-      cur_planet_sel_ships = NULL;
-   }
+   free( cur_planet_sel_outfits );
+   cur_planet_sel_outfits = NULL;
+   free( cur_planet_sel_ships );
+   cur_planet_sel_ships = NULL;
 
    window_close( wid, str );
 
@@ -357,7 +353,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       /* no nebula or star images - probably due to nebula */
       txtHeight=gl_printHeightRaw( &gl_smallFont,pitch,_("Obscured by the nebula") );
       gl_printTextRaw( &gl_smallFont, pitch, txtHeight, (bx+2),
-            (by + (nshow-0.5)*pitch + offset), &cFontRed, -1., _("Obscured by the nebula") );
+            (by + (nshow-0.5)*pitch + offset), 0, &cFontRed, -1., _("Obscured by the nebula") );
    }
    gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-0.5)*pitch + offset,
          (cur_planet_sel == 0 ? &cFontGreen : &cFontWhite), -1., _(sys->name) );
@@ -482,7 +478,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Presence: N/A\n"));
       txtHeight=gl_printHeightRaw(&gl_smallFont,(w - nameWidth-pitch-60)/2,buf);
       gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
-            bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, &cFontWhite, -1., buf );
+            bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, 0, &cFontWhite, -1., buf );
 
       (void)cnt;
 
@@ -510,7 +506,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          }
         nsnprintf( factionBuf, 64, "%s", faction_shortname( p->faction ) );
         gl_printTextRaw( &gl_smallFont, (w - nameWidth-pitch - 60) / 2, 20,
-            bx+pitch+nameWidth + 230, by + h - 31, &cFontWhite, -1., factionBuf );
+            bx+pitch+nameWidth + 230, by + h - 31, 0, &cFontWhite, -1., factionBuf );
 
      }
 
@@ -549,14 +545,14 @@ static void map_system_render( double bx, double by, double w, double h, void *d
         (void)infocnt;
      }
      gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
-         bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, &cFontWhite, -1., buf );
+         bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, 0, &cFontWhite, -1., buf );
    }
 
    /* show the trade/outfit/ship info */
    if ( infobuf[0]!='\0' ) {
       txtHeight=gl_printHeightRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, infobuf );
       gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
-            bx + 10 + pitch + nameWidth, by + 10, &cFontGrey, -1., infobuf );
+            bx + 10 + pitch + nameWidth, by + 10, 0, &cFontGrey, -1., infobuf );
    }
 }
 

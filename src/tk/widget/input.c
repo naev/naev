@@ -118,7 +118,7 @@ static void inp_render( Widget* inp, double bx, double by )
       /* Align top-left, print with word wrapping. */
       ty = y - inp->dat.inp.font->h / 2.;
       gl_printTextRaw( inp->dat.inp.font, inp->w-10., inp->h,
-            x+5., ty, &cGreen, -1., &inp->dat.inp.input[ inp->dat.inp.view ] );
+            x+5., ty, 0, &cGreen, -1., &inp->dat.inp.input[ inp->dat.inp.view ] );
    }
 
    /* Draw cursor. */
@@ -510,7 +510,7 @@ static int inp_rangeFromWidth( Widget *inp, int start_pos, int width )
    if (oneline)
       out = gl_printWidthForTextLine( inp->dat.inp.font, str, tw );
    else
-      out = gl_printWidthForText( inp->dat.inp.font, str, tw );
+      out = gl_printWidthForText( inp->dat.inp.font, str, tw, NULL );
    eol = strchr( str, '\n' );
    return eol ? MIN( out, eol-str ) : out;
 }
@@ -555,11 +555,8 @@ static void inp_clampView( Widget *inp )
  */
 static void inp_cleanup( Widget* inp )
 {
-   /* Free filter if needed. */
-   if (inp->dat.inp.filter != NULL)
-      free(inp->dat.inp.filter);
-
-   free(inp->dat.inp.input); /* frees the input buffer */
+   free(inp->dat.inp.filter);
+   free(inp->dat.inp.input);
 }
 
 
@@ -655,11 +652,7 @@ void window_setInputFilter( const unsigned int wid, char* name, const char *filt
       return;
    }
 
-   /* Free if already exists. */
-   if (wgt->dat.inp.filter != NULL)
-      free(wgt->dat.inp.filter);
-
-   /* Copy filter over. */
+   free(wgt->dat.inp.filter);
    wgt->dat.inp.filter = strdup( filter );
 }
 

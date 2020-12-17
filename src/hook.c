@@ -168,8 +168,7 @@ static int hq_add( HookQueue_t *hq )
  */
 static void hq_free( HookQueue_t *hq )
 {
-   if (hq->stack != NULL)
-      free(hq->stack);
+   free(hq->stack);
    free(hq);
 }
 
@@ -1092,19 +1091,16 @@ static void hook_free( Hook *h )
    pilots_rmHook( h->id );
 
    /* Generic freeing. */
-   if (h->stack != NULL)
-      free(h->stack);
+   free( h->stack );
 
    /* Free type specific. */
    switch (h->type) {
       case HOOK_TYPE_MISN:
-         if (h->u.misn.func != NULL)
-            free(h->u.misn.func);
+         free( h->u.misn.func );
          break;
 
       case HOOK_TYPE_EVENT:
-         if (h->u.event.func != NULL)
-            free(h->u.event.func);
+         free( h->u.event.func );
          break;
 
       default:
@@ -1286,7 +1282,7 @@ static int hook_parse( xmlNodePtr base )
          is_date  = 0;
 
          /* Handle the type. */
-         xmlr_attr(node, "type", stype);
+         xmlr_attr_strd(node, "type", stype);
          /* Default to mission for old saves. */
          if (stype == NULL)
             type = HOOK_TYPE_MISN;

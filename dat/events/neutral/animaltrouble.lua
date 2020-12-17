@@ -19,7 +19,7 @@
 -- This event occurs after the player has done the "Animal transport" mission.
 --]]
 
-require "missions/neutral/common.lua"
+require "missions/neutral/common"
 
 
 text = {}

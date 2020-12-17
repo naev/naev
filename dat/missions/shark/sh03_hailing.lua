@@ -27,8 +27,8 @@
 
 --]]
 
-require "numstring.lua"
-require "missions/shark/common.lua"
+require "numstring"
+require "missions/shark/common"
 
 
 title = {}
@@ -79,7 +79,7 @@ function create ()
    psyname = "Alteris"
    paysys = system.get(psyname)
    paypla = planet.get(pplname)
-   nextpla, nextsys = planet.get("Curie") -- This should be the same as the planet used in sh04_meeting.lua!
+   nextpla, nextsys = planet.get("Curie") -- This should be the same as the planet used in sh04_meeting!
 
    if not misn.claim(missys) then
       misn.finish(false)

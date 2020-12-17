@@ -123,11 +123,9 @@ static int map_knownInit (void)
  */
 static void map_knownClean (void)
 {
-   if (map_known_techs != NULL)
-      free( map_known_techs );
+   free( map_known_techs );
    map_known_techs = NULL;
-   if (map_known_planets != NULL)
-      free( map_known_planets );
+   free( map_known_planets );
    map_known_planets = NULL;
    map_nknown = 0;
 }
@@ -184,8 +182,7 @@ static void map_findClose( unsigned int wid, char* str )
    window_close( wid, str );
 
    /* Clean up if necessary. */
-   if (map_found_cur != NULL)
-      free( map_found_cur );
+   free( map_found_cur );
    map_found_cur = NULL;
 
    /* Clean up. */
@@ -796,8 +793,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       }
       o = outfit_get( map_foundOutfitNames[i] );
    }
-   if (map_foundOutfitNames != NULL)
-      free(map_foundOutfitNames);
+   free(map_foundOutfitNames);
    map_foundOutfitNames = NULL;
    if (o == NULL)
       return -1;
@@ -811,8 +807,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       for (j=0; j<nolist; j++)
          if (olist[j] == o)
             break;
-      if (olist != NULL)
-         free(olist);
+      free(olist);
       if (j >= nolist)
          continue;
       pnt = map_known_planets[i];
@@ -928,8 +923,8 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       }
       s = ship_get( names[i] );
    }
-   if (names != NULL)
-      free(names);
+   free(names);
+   names = NULL;
    if (s == NULL)
       return -1;
 
@@ -943,8 +938,8 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       for (j=0; j<nslist; j++)
          if (slist[j] == s)
             break;
-      if (slist != NULL)
-         free(slist);
+      free(slist);
+      slist = NULL;
       if (j >= nslist)
          continue;
       pnt = map_known_planets[i];
@@ -995,8 +990,7 @@ static void map_findSearch( unsigned int wid, char* str )
    window_disableButton( wid, "btnSearch" );
 
    /* Clean up if necessary. */
-   if (map_found_cur != NULL)
-      free( map_found_cur );
+   free( map_found_cur );
    map_found_cur = NULL;
 
    /* Handle different search cases. */

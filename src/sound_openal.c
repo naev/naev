@@ -2,8 +2,6 @@
  * See Licensing and Copyright notice in naev.h
  */
 
-#if USE_OPENAL
-
 
 #include "sound_openal.h"
 
@@ -106,9 +104,6 @@ static ALuint efx_echo        = 0; /**< Echo effect. */
 static double sound_speed     = 1.; /**< Sound speed. */
 
 
-/**
- * @brief Group implementation similar to SDL_Mixer.
- */
 typedef struct alGroup_s {
    int id; /**< Group ID. */
 
@@ -340,6 +335,7 @@ int sound_al_init (void)
       source_ntotal = source_mstack;
       source_total  = malloc( sizeof( ALuint ) * source_mstack );
       memcpy( source_total, source_stack, sizeof( ALuint ) * source_mstack );
+
       /* Copy allocated sources to all stack. */
       source_nall = source_mstack;
       source_all  = malloc( sizeof( ALuint ) * source_mstack );
@@ -499,13 +495,11 @@ void sound_al_exit (void)
 
    /* Free groups. */
    for (i=0; i<al_ngroups; i++) {
-      if (al_groups[i].sources != NULL)
-         free(al_groups[i].sources);
+      free(al_groups[i].sources);
       al_groups[i].sources  = NULL;
       al_groups[i].nsources = 0;
    }
-   if (al_groups != NULL)
-      free(al_groups);
+   free(al_groups);
    al_groups  = NULL;
    al_ngroups = 0;
 
@@ -517,12 +511,10 @@ void sound_al_exit (void)
    }
    source_all        = NULL;
    source_nall       = 0;
-   if (source_total)
-      free(source_total);
+   free(source_total);
    source_total      = NULL;
    source_ntotal     = 0;
-   if (source_stack != NULL)
-      free(source_stack);
+   free(source_stack);
    source_stack      = NULL;
    source_nstack     = 0;
    source_mstack     = 0;
@@ -1522,6 +1514,3 @@ void al_checkHandleError( const char *func )
    WARN(_("OpenAL error [%s]: %s"), func, errstr);
 }
 #endif /* DEBUGGING */
-
-
-#endif /* USE_OPENAL */

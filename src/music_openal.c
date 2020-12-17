@@ -2,8 +2,6 @@
  * See Licensing and Copyright notice in naev.h
  */
 
-#if USE_OPENAL
-
 #include "music_openal.h"
 
 #include <math.h>
@@ -670,9 +668,7 @@ void music_al_exit (void)
 
    soundUnlock();
 
-   /* Free the buffer. */
-   if (music_buf != NULL)
-      free(music_buf);
+   free(music_buf);
    music_buf = NULL;
 
    /* Destroy the mutex. */
@@ -960,5 +956,3 @@ static void music_kill (void)
 
    musicUnlock();
 }
-
-#endif /* USE_OPENAL */

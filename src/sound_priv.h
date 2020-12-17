@@ -11,13 +11,7 @@
  * Private sound header, do not use outside of the sound subsystem.
  */
 
-#if USE_OPENAL
 #include "al.h"
-#endif /* USE_OPENAL */
-
-#if USE_SDLMIX
-#include "SDL_mixer.h"
-#endif /* USE_SDLMIX */
 
 
 /*
@@ -44,16 +38,9 @@ typedef struct alSound_ {
     * Backend specific.
     */
    union {
-#if USE_OPENAL
       struct {
          ALuint buf; /**< Buffer data. */
       } al; /**< For OpenAL backend. */
-#endif /* USE_OPENAL */
-#if USE_SDLMIX
-      struct {
-         Mix_Chunk *buf;
-      } mix; /**< For SDL_mixer backend. */
-#endif /* USE_SDLMIX */
    } u; /**< For backend. */
 } alSound;
 
@@ -91,19 +78,12 @@ typedef struct alVoice_ {
     * Backend specific.
     */
    union {
-#if USE_OPENAL
       struct {
          ALfloat pos[3]; /**< Position of the voice. */
          ALfloat vel[3]; /**< Velocity of the voice. */
          ALuint source; /**< Source current in use. */
          ALuint buffer; /**< Buffer attached to the voice. */
       } al; /**< For OpenAL backend. */
-#endif /* USE_OPENAL */
-#if USE_SDLMIX
-      struct {
-         int channel; /**< Channel sound is playing on. */
-      } mix; /**< For SDL_mixer backend. */
-#endif /* USE_SDLMIX */
    } u; /**< For backend. */
 } alVoice;
 

@@ -24,9 +24,9 @@
 
 ]]--
 
-require "numstring.lua"
-require "jumpdist.lua"
-require "missions/empire/common.lua"
+require "numstring"
+require "jumpdist"
+require "missions/empire/common"
 
 bar_desc = _("You see an Empire Lieutenant who seems to be looking at you.")
 misn_title = _("Empire Recruitment")

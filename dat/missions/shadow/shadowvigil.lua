@@ -19,11 +19,11 @@
 -- This is the second mission in the "shadow" series.
 --]]
 
-require "proximity.lua"
-require "nextjump.lua"
-require "chatter.lua"
-require "selectiveclear.lua"
-require "missions/shadow/common.lua"
+require "proximity"
+require "nextjump"
+require "chatter"
+require "selectiveclear"
+require "missions/shadow/common"
 
 
 title = {}

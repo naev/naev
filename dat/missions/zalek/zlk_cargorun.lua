@@ -20,8 +20,8 @@
 Za'lek Cargo Run. adapted from Drunkard Mission
 ]]--
 
-require "numstring.lua"
-require "missions/zalek/common.lua"
+require "numstring"
+require "missions/zalek/common"
 
 
 -- Bar Description

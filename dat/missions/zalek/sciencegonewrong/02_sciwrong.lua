@@ -24,8 +24,8 @@
    Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
 
-require "fleethelper.lua"
-require "missions/zalek/common.lua"
+require "fleethelper"
+require "missions/zalek/common"
 
 
 -- set text variables
