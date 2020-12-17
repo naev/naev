@@ -471,7 +471,7 @@ static int gfxL_printfWrap( lua_State *L )
  *    @luatparam Colour col Colour to print text.
  *    @luatparam[opt] int max Maximum width to render up to.
  *    @luatparam[opt] boolean center Whether or not to center it.
- * @luafunc printf( small, str, x, y, col, max, center )
+ * @luafunc printf( font, str, x, y, col, max, center )
  */
 static int gfxL_printf( lua_State *L )
 {
