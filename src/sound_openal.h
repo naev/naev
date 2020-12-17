@@ -23,10 +23,6 @@
 #define VOICE_STATIC       (1<<11) /* voice isn't relative */
 
 
-#define MUSIC_FADEOUT_DELAY   1000 /**< Time it takes to fade out. */
-#define MUSIC_FADEIN_DELAY    2000 /**< Time it takes to fade in. */
-
-
 /**
  * @struct alSound
  *
@@ -96,17 +92,6 @@ alVoice* voice_get( int id );
  */
 extern ov_callbacks sound_al_ovcall;
 extern ov_callbacks sound_al_ovcall_noclose;
-
-
-/*
- * OpenAL stuff.
- */
-#ifdef DEBUGGING
-#define al_checkErr()      al_checkHandleError( __func__ )
-void al_checkHandleError( const char *func );
-#else /* DEBUG */
-#define al_checkErr() /**< Hack to ignore errors when debugging. */
-#endif /* DEBUG */
 
 
 /*

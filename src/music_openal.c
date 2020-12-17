@@ -25,10 +25,6 @@
 #define RG_PREAMP_DB       0.0
 
 
-/* Lock for OpenAL operations. */
-#define soundLock()        SDL_mutexP(sound_lock)
-#define soundUnlock()      SDL_mutexV(sound_lock)
-
 /* Lock for all state/cond operations. */
 #define musicLock()        SDL_mutexP(music_state_lock)
 #define musicUnlock()      SDL_mutexV(music_state_lock)
@@ -77,7 +73,6 @@ static char *music_buf              = NULL; /**< Music playing buffer. */
 /*
  * Locks.
  */
-extern SDL_mutex *sound_lock; /**< Global sound lock, used for all OpenAL calls. */
 static SDL_mutex *music_vorbis_lock = NULL; /**< Lock for vorbisfile operations. */
 static SDL_cond  *music_state_cond  = NULL; /**< Cond for thread to signal status updates. */
 static SDL_mutex *music_state_lock  = NULL; /**< Lock for music state. */
