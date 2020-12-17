@@ -142,7 +142,6 @@ int sound_init (void)
    if (sound_disabled && music_disabled)
       return 0;
 
-#if USE_OPENAL
    /*
     * OpenAL Sound.
     */
@@ -180,9 +179,6 @@ int sound_init (void)
    sound_sys_volumeGroup = sound_al_volumeGroup;
    /* Env. */
    sound_sys_env        = sound_al_env;
-#else /* USE_OPENAL */
-   WARN(_("OpenAL support not compiled in!"));
-#endif /* USE_OPENAL */
 
    /* Initialize sound backend. */
    ret = sound_sys_init();

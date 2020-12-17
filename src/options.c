@@ -321,9 +321,6 @@ static void opt_gameplay( unsigned int wid )
 #else
          "Unknown OS\n"
 #endif
-#ifdef USE_OPENAL
-         "With OpenAL\n"
-#endif /* USE_OPENAL */
 #ifdef HAVE_LUAJIT
          "Using LuaJIT\n"
 #endif

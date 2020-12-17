@@ -2,8 +2,6 @@
  * See Licensing and Copyright notice in naev.h
  */
 
-#if USE_OPENAL
-
 
 #include "sound_openal.h"
 
@@ -1516,6 +1514,3 @@ void al_checkHandleError( const char *func )
    WARN(_("OpenAL error [%s]: %s"), func, errstr);
 }
 #endif /* DEBUGGING */
-
-
-#endif /* USE_OPENAL */

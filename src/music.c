@@ -168,7 +168,6 @@ int music_init (void)
    if (music_disabled)
       return 0;
 
-#if USE_OPENAL
    /*
     * OpenAL backend.
     */
@@ -189,10 +188,6 @@ int music_init (void)
    music_sys_resume = music_al_resume;
    music_sys_setPos = music_al_setPos;
    music_sys_isPlaying = music_al_isPlaying;
-#else /* USE_OPENAL */
-   WARN(_("OpenAL support not compiled in!"));
-   return -1;
-#endif /* USE_OPENAL*/
 
    /* Start the subsystem. */
    if (music_sys_init())

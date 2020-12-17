@@ -11,9 +11,7 @@
  * Private sound header, do not use outside of the sound subsystem.
  */
 
-#if USE_OPENAL
 #include "al.h"
-#endif /* USE_OPENAL */
 
 
 /*
@@ -40,11 +38,9 @@ typedef struct alSound_ {
     * Backend specific.
     */
    union {
-#if USE_OPENAL
       struct {
          ALuint buf; /**< Buffer data. */
       } al; /**< For OpenAL backend. */
-#endif /* USE_OPENAL */
    } u; /**< For backend. */
 } alSound;
 
@@ -82,14 +78,12 @@ typedef struct alVoice_ {
     * Backend specific.
     */
    union {
-#if USE_OPENAL
       struct {
          ALfloat pos[3]; /**< Position of the voice. */
          ALfloat vel[3]; /**< Velocity of the voice. */
          ALuint source; /**< Source current in use. */
          ALuint buffer; /**< Buffer attached to the voice. */
       } al; /**< For OpenAL backend. */
-#endif /* USE_OPENAL */
    } u; /**< For backend. */
 } alVoice;
 

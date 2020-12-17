@@ -2,8 +2,6 @@
  * See Licensing and Copyright notice in naev.h
  */
 
-#if USE_OPENAL
-
 #include "music_openal.h"
 
 #include <math.h>
@@ -958,5 +956,3 @@ static void music_kill (void)
 
    musicUnlock();
 }
-
-#endif /* USE_OPENAL */
