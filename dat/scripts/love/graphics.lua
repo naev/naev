@@ -260,7 +260,7 @@ function graphics.printf( text, ... )
       align = arg[5] or "left"
    else
       -- love.graphics.printf( text, x, y, limit, align )
-      font = graphics._font.font
+      font = graphics._font
       x = arg[1]
       y = arg[2]
       limit = arg[3]
@@ -270,7 +270,7 @@ function graphics.printf( text, ... )
 
    x,y = _xy(x,y,limit,graphics._font.height)
 
-   local wrapped, maxw = naev.gfx.printfWrap( graphics._font.font, text, limit )
+   local wrapped, maxw = naev.gfx.printfWrap( font.font, text, limit )
 
    local atype
    if align=="left" then
@@ -289,7 +289,7 @@ function graphics.printf( text, ... )
       elseif atype==3 then
          tx = x + (limit-v[2])
       end
-      naev.gfx.printf( font, v[1], tx, y, col )
+      naev.gfx.printf( font.font, v[1], tx, y, col )
       y = y - font.lineheight
    end
 end
@@ -321,7 +321,7 @@ function graphics.newFont( ... )
    return f
 end
 function graphics.Font:getWrap( text, wraplimit )
-   local wrapped, maxw = naev.gfx.printfWrap( self.f, text, wraplimit )
+   local wrapped, maxw = naev.gfx.printfWrap( self.font, text, wraplimit )
    local wrappedtext = {}
    for k,v in ipairs(wrapped) do
       wrappedtext[k] = v[1]
@@ -340,12 +340,12 @@ function graphics.Font:setFilter( min, mag, anisotropy )
    self.mag = mag
    self.anisotropy = anisotropy
 end
-function graphics.setFont( fnt )
-   graphics._font = fnt
-end
+function graphics.setFont( fnt ) graphics._font = fnt end
+function graphics.getFont() return graphics._font end
 function graphics.setNewFont( file, size )
-   graphics._font = graphics.newFont( file, size )
-   return graphics._font
+   local font = graphics.newFont( file, size )
+   graphics.setFont( font )
+   return font
 end
 
 

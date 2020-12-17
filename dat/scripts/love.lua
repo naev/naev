@@ -200,6 +200,9 @@ function love.exec( path )
    love.w = t.window.width
    love.h = t.window.height
    love.fullscreen = t.window.fullscreen
+   if love.fullscreen then
+      love.w, love.h = love.window.getDesktopDimensions()
+   end
 
    -- Run set up function defined in Love2d spec
    require( mainpath )
