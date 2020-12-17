@@ -156,8 +156,7 @@ int tech_load (void)
       if (!xml_isNode(node, XML_TECH_TAG))
          continue;
 
-      /* Must avoid warning by checking explicit NULL. */
-      xmlr_attr( node, "name", buf );
+      xmlr_attr_strd( node, "name", buf );
       if (buf == NULL)
          continue;
 
@@ -207,8 +206,7 @@ void tech_free (void)
  */
 static void tech_freeGroup( tech_group_t *grp )
 {
-   if (grp->name != NULL)
-      free(grp->name);
+   free(grp->name);
    if (grp->items != NULL)
       array_free( grp->items );
 }
@@ -316,7 +314,7 @@ static int tech_parseNode( tech_group_t *tech, xmlNodePtr parent )
    memset( tech, 0, sizeof(tech_group_t) );
 
    /* Get name. */
-   xmlr_attr( parent, "name", tech->name);
+   xmlr_attr_strd( parent, "name", tech->name );
    if (tech->name == NULL) {
       WARN(_("tech node does not have 'name' attribute"));
       return 1;
@@ -349,7 +347,7 @@ static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent )
          }
 
          /* Try to find hard-coded type. */
-         buf = xml_nodeProp( node, "type" );
+         xmlr_attr_strd( node, "type", buf );
          if (buf == NULL) {
             ret = 1;
             if (ret)
@@ -360,40 +358,31 @@ static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent )
                ret = tech_addItemShip( tech, name );
             if (ret)
                ret = tech_addItemCommodity( tech, name );
-            if (ret) {
+            if (ret)
                WARN(_("Generic item '%s' not found in tech group '%s'"),
                      name, tech->name );
-               continue;
-            }
          }
          else if (strcmp(buf,"group")==0) {
-            if (!tech_addItemGroup( tech, name )) {
+            if (!tech_addItemGroup( tech, name ))
                WARN(_("Group item '%s' not found in tech group '%s'."),
                      name, tech->name );
-               continue;
-            }
          }
          else if (strcmp(buf,"outfit")==0) {
-            if (!tech_addItemGroup( tech, name )) {
+            if (!tech_addItemGroup( tech, name ))
                WARN(_("Outfit item '%s' not found in tech group '%s'."),
                      name, tech->name );
-               continue;
-            }
          }
          else if (strcmp(buf,"ship")==0) {
-            if (!tech_addItemGroup( tech, name )) {
+            if (!tech_addItemGroup( tech, name ))
                WARN(_("Ship item '%s' not found in tech group '%s'."),
                      name, tech->name );
-               continue;
-            }
          }
          else if (strcmp(buf,"commodity")==0) {
-            if (!tech_addItemGroup( tech, name )) {
+            if (!tech_addItemGroup( tech, name ))
                WARN(_("Commodity item '%s' not found in tech group '%s'."),
                      name, tech->name );
-               continue;
-            }
          }
+         free( buf );
          continue;
       }
       WARN(_("Tech group '%s' has unknown node '%s'."), tech->name, node->name);

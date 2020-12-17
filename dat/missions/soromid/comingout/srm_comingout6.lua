@@ -36,10 +36,10 @@
 
 --]]
 
-require "numstring.lua"
-require "jumpdist.lua"
-require "pilot/pirate.lua"
-require "missions/soromid/common.lua"
+require "numstring"
+require "jumpdist"
+require "pilot/pirate"
+require "missions/soromid/common"
 
 
 title = {}

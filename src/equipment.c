@@ -246,8 +246,7 @@ void equipment_open( unsigned int wid )
       iar_outfits = calloc( OUTFIT_TABS, sizeof(Outfit**) );
    else {
       for (int i=0; i<OUTFIT_TABS; i++)
-         if (iar_outfits[i] != NULL)
-            free( iar_outfits[i] );
+         free( iar_outfits[i] );
       memset( iar_outfits, 0, sizeof(Outfit**) * OUTFIT_TABS );
    }
 
@@ -428,9 +427,9 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
       /* Must rechoose colour based on slot properties. */
       if (lst[i].sslot->required)
-         rc = &cFontRed;
+         rc = &cBrightRed;
       else if (lst[i].sslot->slot.spid != 0)
-         rc = &cDRestricted;
+         rc = &cWhite;
       else
          rc = dc;
 
@@ -562,8 +561,8 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
       x, y + h + 10., &cFontWhite, -1, _("CPU Free") );
 
    percent = (p->cpu_max > 0) ? CLAMP(0., 1., (float)p->cpu / (float)p->cpu_max) : 0.;
-   toolkit_drawRect( x, y - 2, w * percent, h + 4, &cFriend, NULL );
-   toolkit_drawRect( x + w * percent, y - 2, w * (1.-percent), h + 4, &cHostile, NULL );
+   toolkit_drawRect( x, y - 2, w * percent, h + 4, &cGreen, NULL );
+   toolkit_drawRect( x + w * percent, y - 2, w * (1.-percent), h + 4, &cRed, NULL );
    gl_printMid( &gl_smallFont, w,
       x, y + h / 2. - gl_smallFont.h / 2.,
       &cFontWhite, "%d / %d", p->cpu, p->cpu_max );
@@ -577,8 +576,8 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
 
    percent = (p->stats.engine_limit > 0) ? CLAMP(0., 1.,
       (p->stats.engine_limit - p->solid->mass) / p->stats.engine_limit) : 0.;
-   toolkit_drawRect( x, y - 2, w * percent, h + 4, &cFriend, NULL );
-   toolkit_drawRect( x + w * percent, y - 2, w * (1.-percent), h + 4, &cRestricted, NULL );
+   toolkit_drawRect( x, y - 2, w * percent, h + 4, &cGreen, NULL );
+   toolkit_drawRect( x + w * percent, y - 2, w * (1.-percent), h + 4, &cOrange, NULL );
    gl_printMid( &gl_smallFont, w,
       x, y + h / 2. - gl_smallFont.h / 2.,
       &cFontWhite, "%.0f / %.0f", p->stats.engine_limit - p->solid->mass, p->stats.engine_limit );
@@ -1452,8 +1451,7 @@ static void equipment_genOutfitList( unsigned int wid )
 
    /* Allocate space. */
    noutfits = MAX( 1, player_numOutfits() ); /* This is the most we'll need, probably less due to filtering. */
-   if (iar_outfits[active] != NULL)
-      free( iar_outfits[active] );
+   free( iar_outfits[active] );
    iar_outfits[active] = calloc( noutfits, sizeof(Outfit*) );
 
    filtertext = NULL;
@@ -1914,9 +1912,7 @@ static void equipment_renameShip( unsigned int wid, char *str )
       return;
    }
 
-   if (ship->name != NULL)
-      free (ship->name);
-
+   free (ship->name);
    ship->name = newname;
 
    /* Destroy widget - must be before widget. */
@@ -1952,24 +1948,19 @@ static int equipment_playerRmOutfit( const Outfit *o, int quantity )
 void equipment_cleanup (void)
 {
    /* Free stored positions. */
-   if (iar_data != NULL) {
-      free(iar_data);
-      iar_data = NULL;
-   }
+   free(iar_data);
+   iar_data = NULL;
    if (iar_outfits != NULL) {
       for (int i=0; i<OUTFIT_TABS; i++)
-         if (iar_outfits[i] != NULL)
-            free( iar_outfits[i] );
+         free( iar_outfits[i] );
       free(iar_outfits);
       iar_outfits = NULL;
    }
 
    /* Free icons. */
-   if (equip_ico_yes != NULL)
-      gl_freeTexture(equip_ico_yes);
+   gl_freeTexture(equip_ico_yes);
    equip_ico_yes = NULL;
-   if (equip_ico_no != NULL)
-      gl_freeTexture(equip_ico_no);
+   gl_freeTexture(equip_ico_no);
    equip_ico_no = NULL;
 }
 

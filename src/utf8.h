@@ -3,13 +3,15 @@
 
 #include <stdlib.h>
 #include <stdint.h>
-#include <stdarg.h>
 
-/* Note: these utilities are from cutetf8, which also provides u8_escape and u8_escape_wchar.
- * Those are nice, but removed pending an audit of how they use Windows format strings. */
+/** 
+ * @file utf8.h
+ * Utilities from cutef8: https://github.com/JeffBezanson/cutef8
+ * @note Its current README says, "I now use and recommend utf8proc instead of this library."
+ * @note Some unused functions (and supporting polyfills, macro tweaks) have been removed.
+ * In the unlikely event more cutef8 features are required, check earlier revisions in git. */
+
 #include "nstring.h"
-
-extern int locale_is_utf8;
 
 /* is c the start of a utf8 sequence? */
 #define isutf(c) (((c)&0xC0)!=0x80)
@@ -78,17 +80,6 @@ char *u8_memrchr(const char *s, uint32_t ch, size_t sz);
 
 /* count the number of characters in a UTF-8 string */
 size_t u8_strlen(const char *s);
-
-/* number of columns occupied by a string */
-size_t u8_strwidth(const char *s);
-
-int u8_is_locale_utf8(const char *locale);
-
-/* printf where the format string and arguments may be in UTF-8.
-   you can avoid this function and just use ordinary printf() if the current
-   locale is UTF-8. */
-PRINTF_FORMAT( 1, 0 ) size_t u8_vprintf(const char *fmt, va_list ap);
-PRINTF_FORMAT( 1, 2 ) size_t u8_printf(const char *fmt, ...);
 
 /* determine whether a sequence of bytes is valid UTF-8. length is in bytes */
 int u8_isvalid(const char *str, size_t length);

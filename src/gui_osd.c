@@ -244,8 +244,7 @@ static int osd_free( OSD_t *osd )
 {
    int i, j;
 
-   if (osd->title != NULL)
-      free(osd->title);
+   free(osd->title);
 
    for (i=0; i<array_size(osd->items); i++) {
       free( osd->msg[i] );

@@ -81,7 +81,7 @@ typedef struct Player_s {
    double autonav_timer; /**< Timer that prevents time accel after a reset. */
    double mousex; /**< Mouse X position (for mouse flying). */
    double mousey; /**< Mouse Y position (for mouse flying). */
-   int speed;
+   double speed; /**< Gameplay speed modifier, multiplies the ship base speed. */
 
    /* Loaded game version. */
    char *loaded_version; /**< Version of the loaded save game. */
@@ -157,6 +157,7 @@ void player_messageRaw ( const char *str );
 /*
  * misc
  */
+void player_resetSpeed (void);
 void player_restoreControl( int reason, char *str );
 void player_checkLandAck (void);
 void player_nolandMsg( const char *str );
@@ -267,7 +268,7 @@ void player_targetEscort( int prev );
 /*
  * keybind actions
  */
-void player_weapSetPress( int id, int type, int repeat );
+void player_weapSetPress( int id, double value, int repeat );
 void player_land (void);
 int player_jump (void);
 void player_screenshot (void);

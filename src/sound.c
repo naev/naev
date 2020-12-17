@@ -835,10 +835,8 @@ static int sound_load( alSound *snd, const char *filename )
 static void sound_free( alSound *snd )
 {
    /* Free general stuff. */
-   if (snd->name) {
-      free(snd->name);
-      snd->name = NULL;
-   }
+   free(snd->name);
+   snd->name = NULL;
 
    /* Free internals. */
    sound_sys_free(snd);

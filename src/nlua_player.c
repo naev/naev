@@ -33,6 +33,7 @@
 #include "nlua_system.h"
 #include "nlua_outfit.h"
 #include "nlua_planet.h"
+#include "nlua_ship.h"
 #include "map.h"
 #include "map_overlay.h"
 #include "hook.h"
@@ -503,7 +504,7 @@ static int playerL_autonavDest( lua_State *L )
  * Possible options are:<br/>
  * <ul>
  *  <li>abort : (string) autonav abort message</li>
- *  <li>no2x : (boolean) whether to prevent the player from engaging double-speed, default false</li>
+ *  <li>no2x : (boolean) whether to prevent the player from increasing the speed, default false</li>
  *  <li>gui : (boolean) enables the player's gui, default disabled</li>
  * </ul>
  *
@@ -548,25 +549,27 @@ static int playerL_cinematics( lua_State *L )
       lua_pop( L, 1 );
    }
 
-   /* Remove doublespeed. */
-   if (player.speed != 1 || b) {
-      player.speed = 1;
-      pause_setSpeed( player_dt_default() );
-      sound_setSpeed( 1. );
-   }
-
    if (b) {
-      /* Do stuff. */
+      /* Reset speeds. This will override the player's ship base speed. */
+      player.speed = 1.;
+      sound_setSpeed( 1. );
+      pause_setSpeed( 1. );
+
+      /* Get rid of stuff that could be bothersome. */
       player_autonavAbort( abort_msg );
       ovr_setOpen(0);
 
+      /* Handle options. */
       if (!f_gui)
          player_setFlag( PLAYER_CINEMATICS_GUI );
-
       if (f_2x)
          player_setFlag( PLAYER_CINEMATICS_2X );
    }
    else {
+      /* Reset speed properly to player speed. */
+      player_resetSpeed();
+
+      /* Clean up flags. */
       player_rmFlag( PLAYER_CINEMATICS_GUI );
       player_rmFlag( PLAYER_CINEMATICS_2X );
    }
@@ -969,65 +972,24 @@ static int playerL_rmOutfit( lua_State *L )
  */
 static Pilot* playerL_newShip( lua_State *L )
 {
-   const char *str, *name, *pntname;
+   const char *name;
    Ship *s;
    Pilot *new_ship;
-   Planet *pnt, *t;
    int noname;
 
-   /* Defaults. */
-   t = NULL;
-
    /* Handle parameters. */
-   str  = luaL_checkstring(L, 1);
+   s    = luaL_validship(L, 1);
    if (lua_gettop(L) > 1)
       name = luaL_checkstring(L,2);
    else
-      name = str;
-   if (lua_isstring(L,3))
-      pntname = luaL_checkstring (L,3);
-   else {
-      if (!landed)
-         NLUA_ERROR(L,_("Must be landed to add a new ship to the player without specifying planet to add to!"));
-      pntname = NULL;
-   }
-   noname = lua_toboolean(L,4);
-
-   /* Get planet. */
-   if (pntname != NULL) {
-      pnt = planet_get( pntname );
-      if (pnt == NULL) {
-         NLUA_ERROR(L, _("Planet '%s' not found!"), pntname);
-         return 0;
-      }
-      /* Horrible hack to swap variables. */
-      t = land_planet;
-      land_planet = pnt;
-   }
-   else
-      pnt = NULL;
-
-   /* Must be landed if pnt is NULL. */
-   if ((pnt == NULL) && (land_planet==NULL)) {
-      NLUA_ERROR(L, _("Player must be landed to add a ship without location parameter."));
-      return 0;
-   }
-
-   /* Get ship. */
-   s = ship_get(str);
-   if (s==NULL) {
-      NLUA_ERROR(L, _("Ship '%s' not found."), str);
-      return 0;
-   }
+      name = s->name;
+   noname = lua_toboolean(L,3);
 
    /* Add the ship, look in case it's cancelled. */
    do {
       new_ship = player_newShip( s, name, 0, noname );
    } while (new_ship == NULL);
 
-   /* Undo the horrible hack. */
-   if (t != NULL)
-      land_planet = t;
 
    return new_ship;
 }
@@ -1042,9 +1004,8 @@ static Pilot* playerL_newShip( lua_State *L )
  *
  *    @luatparam string ship Name of the ship to add.
  *    @luatparam[opt] string name Name to give the ship if player refuses to name it (defaults to shipname if omitted).
- *    @luatparam[opt] Planet loc Location to add to, if nil or omitted it adds it to local planet (must be landed).
  *    @luatparam[opt=false] boolean noname If true does not let the player name the ship.
- * @luafunc addShip( ship, name, loc, noname )
+ * @luafunc addShip( ship, name, noname )
  */
 static int playerL_addShip( lua_State *L )
 {
@@ -1056,12 +1017,14 @@ static int playerL_addShip( lua_State *L )
 
 /**
  * @brief Swaps the player's current ship with a new ship given to him.
+ *
+ * @note You shouldn't use this directly unless you know what you are doing. If the player's cargo doesn't fit in the new ship, it won't be moved over and can lead to a whole slew of issues.
+ *
  *    @luatparam string ship Name of the ship to add.
  *    @luatparam[opt] string name Name to give the ship if player refuses to name it (defaults to shipname if omitted).
- *    @luatparam[opt] Planet loc Location to add to, if nil or omitted it adds it to local planet (must be landed).
  *    @luatparam[opt=false] boolean noname If true does not let the player name the ship.
  *    @luatparam[opt=false] boolean remove If true removes the player's current ship (so it replaces and doesn't swap).
- * @luafunc swapShip( ship, name, loc, noname, remove )
+ * @luafunc swapShip( ship, name, noname, remove )
  */
 static int playerL_swapShip( lua_State *L )
 {
@@ -1071,7 +1034,7 @@ static int playerL_swapShip( lua_State *L )
 
    NLUA_CHECKRW(L);
 
-   remship = lua_toboolean(L,5);
+   remship = lua_toboolean(L,4);
    p       = playerL_newShip( L );
    cur     = player.p->name;
    player_swapShip( p->name );

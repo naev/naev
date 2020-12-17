@@ -33,9 +33,9 @@
 
 ]]--
 
-require "cargo_common.lua"
-require "numstring.lua"
-require "portrait.lua"
+require "cargo_common"
+require "numstring"
+require "portrait"
 
 
 bar_desc = _("You see a merchant at the bar in a clear state of anxiety.")

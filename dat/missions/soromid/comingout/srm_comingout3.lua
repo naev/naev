@@ -37,10 +37,10 @@
 
 --]]
 
-require "numstring.lua"
-require "cargo_common.lua"
-require "nextjump.lua"
-require "missions/soromid/common.lua"
+require "numstring"
+require "cargo_common"
+require "nextjump"
+require "missions/soromid/common"
 
 
 title = {}

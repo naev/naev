@@ -32,7 +32,7 @@
 
 --]]
 
-require "missions/neutral/pirbounty_dead.lua"
+require "missions/neutral/pirbounty_dead"
 
 subdue_title   = _("Captured Alive")
 subdue_text    = {}

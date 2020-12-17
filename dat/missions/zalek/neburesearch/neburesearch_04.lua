@@ -26,8 +26,8 @@
 
 --]]
 
-require "numstring.lua"
-require "missions/zalek/common.lua"
+require "numstring"
+require "missions/zalek/common"
 
 bar_desc = _("She probably has a new poorly paid job for you. Maybe she won't notice you if you leave now.")
 mtitle = _("Shielding Prototype Funding")
@@ -56,7 +56,7 @@ party_professor_text = _([[You wonder if anything of that was meant serious. Bef
     You expect a Za'lek party to be much different from a regular party. In fact the first two things you notice are the classical music and the absence of any alcoholic drinks. There is however a buffet, in particular there is a small fridge with ice cream. You can spot a fair amount of people eating ice cream. Is this the Za'lek equivalent of beer?
     Before you know it you've engaged in a conversation with one of the scientists; He saw you enter with Dr. Mensing which motivates him to ask the question of the hour.. whether you and her are dating. In an attempt to clear his misgivings about the situation you tell him that she hired you. Hopefully he believes you..
     You continue your tour, as you come close to one of the windows from the corner of your eye you see something fall outside, followed by a dull thump. Looking out of the window you see a figure dressed in a lab coat trying to stand up slowly. You're about to open the window and ask if he needs help, but he notices you and gestures to be silent as he hobbles off. Those Za'lek are indeed trying to escape the party.]])
-party_end_text = _([["At least the ice cream is great!" you think as you take another bite. Suddenly someone grabs your arm. "We're done here. Bring me back to %s!" Dr. Mensing quietly tells you. For a moment you what she is doing as she drags you towards the bathroom; finally you remember what she said about her 'escape strategy'. She mentioned that you are supposed to leave the building through the window of the bathroom.]])
+party_end_text = _([["At least the ice cream is great!" you think as you take another bite. Suddenly someone grabs your arm. "We're done here. Bring me back to %s!" Dr. Mensing quietly tells you. For a moment you wonder what she is doing as she drags you towards the bathroom; finally you remember what she said about her 'escape strategy'. She mentioned that you are supposed to leave the building through the window of the bathroom.]])
 home_title = _("Finally back home")
 return_text = _([["That took long enough! I'm glad Professor Voges promised to take care of the funding. The problem was that my recent research is related to a secret project on Ruadan Prime and my funding was shut down - like some kind of conspiracy; can you believe it! Actually I'm not supposed to tell you anything as you could possibly get into a lot of trouble.. forget I said anything! I have much work to do!"
     She gives you a credit chip worth %s and leaves.]])

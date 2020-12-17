@@ -350,9 +350,9 @@ int main( int argc, char** argv )
 
    /* Have to set up fonts before rendering anything. */
    //DEBUG("Using '%s' as main font and '%s' as monospace font.", _(FONT_DEFAULT_PATH), _(FONT_MONOSPACE_PATH));
-   gl_fontInit( &gl_defFont, _(FONT_DEFAULT_PATH), conf.font_size_def ); /* initializes default font to size */
-   gl_fontInit( &gl_smallFont, _(FONT_DEFAULT_PATH), conf.font_size_small ); /* small font */
-   gl_fontInit( &gl_defFontMono, _(FONT_MONOSPACE_PATH), conf.font_size_def );
+   gl_fontInit( &gl_defFont, _(FONT_DEFAULT_PATH), conf.font_size_def, FONT_PATH_PREFIX ); /* initializes default font to size */
+   gl_fontInit( &gl_smallFont, _(FONT_DEFAULT_PATH), conf.font_size_small, FONT_PATH_PREFIX ); /* small font */
+   gl_fontInit( &gl_defFontMono, _(FONT_MONOSPACE_PATH), conf.font_size_def, FONT_PATH_PREFIX );
 
    /* Detect size changes that occurred after window creation. */
    naev_resize();
@@ -444,8 +444,7 @@ int main( int argc, char** argv )
 
    /* Incomplete game note (shows every time version number changes). */
    if ( conf.lastversion == NULL || naev_versionCompare(conf.lastversion) != 0 ) {
-      if ( conf.lastversion != NULL )
-         free( conf.lastversion );
+      free( conf.lastversion );
       conf.lastversion = strdup( naev_version(0) );
       dialogue_msg(
          _("Welcome to Naev"),
@@ -656,9 +655,7 @@ void loadscreen_render( double done, const char *msg )
  */
 static void loadscreen_unload (void)
 {
-   /* Free the textures */
-   if (loading != NULL)
-      gl_freeTexture(loading);
+   gl_freeTexture(loading);
    loading = NULL;
 }
 

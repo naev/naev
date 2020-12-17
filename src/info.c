@@ -181,7 +181,8 @@ static void info_close( unsigned int wid, char* str )
  */
 void info_update (void)
 {
-   weapons_genList( info_windows[ INFO_WIN_WEAP ] );
+   if (info_windows != NULL)
+      weapons_genList( info_windows[ INFO_WIN_WEAP ] );
 }
 
 
@@ -356,8 +357,7 @@ static void setgui_load( unsigned int wdw, char *str )
    }
 
    /* Set the GUI. */
-   if (player.gui != NULL)
-      free( player.gui );
+   free( player.gui );
    player.gui = strdup( gui );
 
    /* Close menus before loading for proper rendering. */
@@ -497,39 +497,51 @@ static void ship_update( unsigned int wid )
  */
 static void info_openWeapons( unsigned int wid )
 {
-   int w, h, wlen;
+   int w, h, y, wlen;
 
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
 
-   /* Buttons */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "closeCargo", _("Close"), info_close );
-
-   /* Checkboxes. */
-   wlen = w - 220 - 20;
-   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-20, wlen, BUTTON_HEIGHT,
-         "chkAutoweap", _("Automatically handle weapons"), weapons_autoweap, player.p->autoweap );
-   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)+10, wlen, BUTTON_HEIGHT,
-         "chkFire", _("Enable instant mode (only for weapons)"), weapons_fire,
-         (pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons )==WEAPSET_TYPE_WEAPON) );
-   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)+40, wlen, BUTTON_HEIGHT,
-         "chkInrange", _("Only shoot weapons that are in range"), weapons_inrange,
-         pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
-   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-50, wlen, BUTTON_HEIGHT,
-         "chkHelper", _("Dogfight aiming helper"), aim_lines, player.p->aimLines );
-
    /* Custom widget. */
    equipment_slotWidget( wid, 20, -40, 180, h-60, &info_eq_weaps );
    info_eq_weaps.selected  = player.p;
+   info_eq_weaps.weapons = 0;
    info_eq_weaps.canmodify = 0;
 
    /* Custom widget for legend. */
-   window_addCust( wid, 220, -240, w-200-60, 100, "cstLegend", 0,
+   y = -220;
+   window_addCust( wid, 220, y, w-200-60, 100, "cstLegend", 0,
          weapons_renderLegend, NULL, NULL );
 
-   /* List. */
+   /* Checkboxes. */
+   wlen = w - 220 - 20;
+   y -=100;
+   window_addText( wid, 220, y, wlen, 20, 0, "txtLocal", NULL, NULL,
+         _("Current Set Settings"));
+   y -= 20;
+   window_addCheckbox( wid, 240, y, wlen, BUTTON_HEIGHT,
+         "chkFire", _("Enable instant mode (only for weapons)"), weapons_fire,
+         (pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons )==WEAPSET_TYPE_WEAPON) );
+   y -= 30;
+   window_addCheckbox( wid, 240, y, wlen, BUTTON_HEIGHT,
+         "chkInrange", _("Only shoot weapons that are in range"), weapons_inrange,
+         pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
+   y -= 40;
+   window_addText( wid, 220, y, wlen, 20, 0, "txtGlobal", NULL, NULL,
+         _("Global Settings"));
+   y -= 20;
+   window_addCheckbox( wid, 240, y, wlen, BUTTON_HEIGHT,
+         "chkAutoweap", _("Automatically handle weapons"), weapons_autoweap, player.p->autoweap );
+   y -= 30;
+   window_addCheckbox( wid, 240, y, wlen, BUTTON_HEIGHT,
+         "chkHelper", _("Dogfight aiming helper"), aim_lines, player.p->aimLines );
+
+   /* List. Has to be generated after checkboxes. */
    weapons_genList( wid );
+
+   /* Buttons */
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "closeCargo", _("Close"), info_close );
 }
 
 
@@ -585,6 +597,8 @@ static void weapons_update( unsigned int wid, char *str )
 
    /* Update the position. */
    pos = toolkit_getListPos( wid, "lstWeapSets" );
+   if (pos < 0)
+      return;
    info_eq_weaps.weapons = pos;
 
    /* Update fire mode. */
@@ -892,8 +906,7 @@ static void standings_close( unsigned int wid, char *str )
 {
    (void) wid;
    (void) str;
-   if (info_factions != NULL)
-      free(info_factions);
+   free(info_factions);
    info_factions = NULL;
 }
 

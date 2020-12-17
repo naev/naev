@@ -17,8 +17,8 @@
 
 ]]--
 
-require "cargo_common.lua"
-require "numstring.lua"
+require "cargo_common"
+require "numstring"
 
 
 misn_desc  = _("Official Empire cargo transport to %s in the %s system.")

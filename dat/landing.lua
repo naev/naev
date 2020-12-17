@@ -28,7 +28,7 @@
 
 --]]
 
-require "scripts/numstring.lua"
+require "scripts/numstring"
 
 -- Default function. Any asset that has no landing script explicitly defined will use this.
 function land( pnt )

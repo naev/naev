@@ -670,9 +670,7 @@ void music_al_exit (void)
 
    soundUnlock();
 
-   /* Free the buffer. */
-   if (music_buf != NULL)
-      free(music_buf);
+   free(music_buf);
    music_buf = NULL;
 
    /* Destroy the mutex. */

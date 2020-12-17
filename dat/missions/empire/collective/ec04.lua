@@ -31,10 +31,10 @@
 
 ]]--
 
-require "nextjump.lua"
-require "proximity.lua"
-require "numstring.lua"
-require "missions/empire/common.lua"
+require "nextjump"
+require "proximity"
+require "numstring"
+require "missions/empire/common"
 
 misn_title = _("Collective Extraction")
 misn_desc = {}

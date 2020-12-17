@@ -20,10 +20,10 @@
 -- This is the third mission in the Academy Hack minor campaign.
 --]]
 
-require "fleethelper.lua"
-require "proximity.lua"
-require "missions/sirius/common.lua"
-require "numstring.lua"
+require "fleethelper"
+require "proximity"
+require "missions/sirius/common"
+require "numstring"
 
 
 title1 = _("Talking to Joanne")
@@ -142,7 +142,7 @@ end
 function date()
    if (harja == nil or not harja:exists()) and system.cur():presences()["Sirius"] then
       -- Determine spawn point. The reason why we don't use the normal random is that we don't want Harja spawning from the same place as the player.
-      local spawnpoints = _mergeTables(system.cur():adjacentSystems(), system.cur():planets()) -- _mergeTables() is defined in fleethelper.lua.
+      local spawnpoints = _mergeTables(system.cur():adjacentSystems(), system.cur():planets()) -- _mergeTables() is defined in fleethelper.
       for i, j in ipairs(spawnpoints) do
          if j == origin then
             table.remove(spawnpoints, i) -- The place the player entered from is not a valid spawn point.

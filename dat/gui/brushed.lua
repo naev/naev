@@ -2,8 +2,8 @@
    The new "brushed" UI.
 --]]
 
-require "numstring.lua"
-playerform = require "scripts/playerform.lua"
+require "numstring"
+playerform = require "scripts/playerform"
 
 function create()
 

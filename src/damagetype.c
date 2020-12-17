@@ -69,8 +69,7 @@ static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
    /* Clear data. */
    memset( temp, 0, sizeof(DTYPE) );
 
-   /* Get the name (mallocs). */
-   temp->name = xml_nodeProp(parent,"name");
+   xmlr_attr_strd( parent, "name", temp->name );
 
    /* Extract the data. */
    node = parent->xmlChildrenNode;
@@ -80,7 +79,7 @@ static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
       if (xml_isNode(node, "shield")) {
          temp->sdam = xml_getFloat(node);
 
-         xmlr_attr(node, "stat", stat);
+         xmlr_attr_strd( node, "stat", stat );
          if (stat != NULL) {
             temp->soffset = ss_offsetFromType( ss_typeFromName(stat) );
             free(stat);
@@ -91,7 +90,7 @@ static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
       else if (xml_isNode(node, "armour")) {
          temp->adam = xml_getFloat(node);
 
-         xmlr_attr(node, "stat", stat);
+         xmlr_attr_strd( node, "stat", stat );
          if (stat != NULL) {
             temp->aoffset = ss_offsetFromType( ss_typeFromName(stat) );
             free(stat);
@@ -123,10 +122,8 @@ static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
  */
 static void DTYPE_free( DTYPE *damtype )
 {
-   if (damtype->name != NULL) {
-      free(damtype->name);
-      damtype->name = NULL;
-   }
+   free(damtype->name);
+   damtype->name = NULL;
 }
 
 

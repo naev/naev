@@ -10,8 +10,8 @@
 --
 --]]
 
-require "numstring.lua"
-require "jumpdist.lua"
+require "numstring"
+require "jumpdist"
 
 
 header_table = {}

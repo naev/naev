@@ -11,8 +11,8 @@
 -- The random NPCs will tell the player things about the Naev universe in general, about their faction, or about the game itself.
 --]]
 
-require "events/tutorial/tutorial_common.lua"
-require "portrait.lua"
+require "events/tutorial/tutorial_common"
+require "portrait"
 
 -- Factions which will NOT get generic texts if possible.  Factions
 -- listed here not spawn generic civilian NPCs or get aftercare texts.
@@ -213,6 +213,7 @@ msg_tip =                  {_([["I heard you can set your weapons to only fire w
                               _([["The '¤' symbol is the official galactic symbol for credits. Supposedly it comes from the currency symbol of an ancient Earth civilization. It's sometimes expressed with SI prefixes: 'k¤' for thousands of credits, 'M¤' for millions of credits, and so on."]]),
                               _([["If you're piloting a medium ship, I'd recommend you invest in at least one turreted missile launcher. I had a close call a few decaperiods ago where a bomber nearly blew me to bits outside the range of my Laser Turrets. Luckily I just barely managed to escape to a nearby planet so I could escape the pilot. I've not had that problem ever since I equipped a turreted missile launcher."]]),
                               _([["I've heard that pirates have to keep their reputations up with other pirates by flying pirate ships. The Hyena is considered a pirate ship and is easy to get, but as for the others, I have no idea where they get them from."]]),
+                              string.format( _([["These computer symbols can be confusing sometimes! I've figured it out, though: '%s' means friendly, '%s' means neutral, '%s' means hostile, '%s' means restricted, and '%s' means uninhabited but landable. I wish someone had told me that!"]]), "\aF+\a0", "\aN~\a0", "\aH!!\a0", "\aR*\a0", "\aI=\a0" ),
                            }
 
 -- Jump point messages.

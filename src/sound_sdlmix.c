@@ -137,13 +137,9 @@ static void print_MixerVersion (void)
  */
 void sound_mix_exit (void)
 {
-   /* Free groups. */
-   if (groups != NULL)
-      free(groups);
+   free(groups);
    groups  = NULL;
    ngroups = 0;
-
-   /* Close the audio. */
    Mix_CloseAudio();
 }
 

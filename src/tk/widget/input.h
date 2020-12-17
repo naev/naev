@@ -40,6 +40,11 @@ char* window_setInput( const unsigned int wid, char* name, const char *msg );
 void window_setInputFilter( const unsigned int wid, char* name, const char *filter );
 void window_setInputCallback( const unsigned int wid, char* name, void (*fptr)(unsigned int, char*) );
 
+/* Filter constants. */
+#define INPUT_FILTER_NUMBER     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`"
+/* For inputting resolution, we want numbers and 'x'. */
+#define INPUT_FILTER_RESOLUTION "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`"
+
 
 #endif /* WGT_INPUT_H */
 

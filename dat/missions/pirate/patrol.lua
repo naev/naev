@@ -35,7 +35,7 @@
 
 --]]
 
-require "missions/neutral/patrol.lua"
+require "missions/neutral/patrol"
 
 pay_title = _("Mission Completed")
 pay_text    = {}

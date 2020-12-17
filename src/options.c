@@ -1270,8 +1270,7 @@ static void opt_video( unsigned int wid )
          NULL, NULL, _("Resolution") );
    y -= 40;
    window_addInput( wid, x, y, 100, 20, "inpRes", 16, 1, NULL );
-   window_setInputFilter( wid, "inpRes",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpRes", INPUT_FILTER_RESOLUTION );
    window_addCheckbox( wid, x+20+100, y, 100, 20,
          "chkFullscreen", _("Fullscreen"), NULL, conf.fullscreen );
    y -= 30;
@@ -1331,8 +1330,7 @@ static void opt_video( unsigned int wid )
          NULL, NULL, s );
    window_addInput( wid, x+l+20, y, 40, 20, "inpFPS", 4, 1, NULL );
    toolkit_setListPos( wid, "lstRes", res_def);
-   window_setInputFilter( wid, "inpFPS",
-         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpFPS", INPUT_FILTER_NUMBER );
    nsnprintf( buf, sizeof(buf), "%d", conf.fps_max );
    window_setInput( wid, "inpFPS", buf );
    y -= 30;
@@ -1355,9 +1353,6 @@ static void opt_video( unsigned int wid )
          "chkMipmaps", _("Mipmaps*"), NULL, conf.mipmaps );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkInterpolate", _("Interpolation*"), NULL, conf.interpolate );
-   y -= 20;
-   window_addCheckbox( wid, x, y, cw, 20,
          "chkNPOT", _("NPOT Textures*"), NULL, conf.npot );
    y -= 30;
    window_addText( wid, x, y, cw, 20, 1,
@@ -1374,6 +1369,14 @@ static void opt_video( unsigned int wid )
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkMinimize", _("Minimize on focus loss"), NULL, conf.minimize );
+   y -= 40;
+
+   /* GUI */
+   window_addText( wid, x+20, y, 100, 20, 0, "txtSGUI",
+         NULL, NULL, _("GUI") );
+   y -= 30;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkBigIcons", _("Bigger icons"), NULL, conf.big_icons );
 
    /* Restart text. */
    window_addText( wid, 20, 20 + BUTTON_HEIGHT,
@@ -1450,11 +1453,6 @@ static int opt_videoSave( unsigned int wid, char *str )
       conf.mipmaps = f;
       opt_needRestart();
    }
-   f = window_checkboxState( wid, "chkInterpolate" );
-   if (conf.interpolate != f) {
-      conf.interpolate = f;
-      opt_needRestart();
-   }
    f = window_checkboxState( wid, "chkNPOT" );
    if (conf.npot != f) {
       conf.npot = f;
@@ -1473,6 +1471,9 @@ static int opt_videoSave( unsigned int wid, char *str )
       SDL_SetHint( SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS,
             conf.minimize ? "1" : "0" );
    }
+
+   /* GUI. */
+   conf.big_icons = window_checkboxState( wid, "chkBigIcons" );
 
    return 0;
 }
@@ -1579,7 +1580,6 @@ static void opt_videoDefaults( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkFullscreen", FULLSCREEN_DEFAULT );
    window_checkboxSet( wid, "chkVSync", VSYNC_DEFAULT );
    window_checkboxSet( wid, "chkMipmaps", MIPMAP_DEFAULT );
-   window_checkboxSet( wid, "chkInterpolate", INTERPOLATION_DEFAULT );
    window_checkboxSet( wid, "chkNPOT", NPOT_TEXTURES_DEFAULT );
    window_checkboxSet( wid, "chkFPS", SHOW_FPS_DEFAULT );
    window_checkboxSet( wid, "chkEngineGlow", ENGINE_GLOWS_DEFAULT );

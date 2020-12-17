@@ -20,8 +20,8 @@ This is the "The Runaway" mission as described on the wiki.
 There will be more missions to detail how you are perceived as the kidnapper of "Cynthia"
 --]]
 
-require "numstring.lua"
-require "missions/neutral/common.lua"
+require "numstring"
+require "missions/neutral/common"
 
 
 npc_name = _("Young Teenager")

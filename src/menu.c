@@ -240,8 +240,12 @@ void menu_main (void)
          "btnExit", _("Exit"), menu_exit, SDLK_x );
 
    /* Disable load button if there are no saves. */
-   if (!save_hasSave())
+   if (!save_hasSave()) {
       window_disableButton( wid, "btnLoad" );
+      window_setFocus( wid, "btnNew" );
+   }
+   else
+      window_setFocus( wid, "btnLoad" );
 
    /* Make the background window a child of the menu. */
    window_setParent( bwid, wid );
@@ -383,19 +387,11 @@ static void menu_exit( unsigned int wid, char* str )
  */
 static void menu_main_cleanBG( unsigned int wid, char* str )
 {
+   (void) wid;
    (void) str;
 
-   /*
-    * Ugly hack to prevent player.c from segfaulting due to the fact
-    * that game will attempt to render while waiting for the quit event
-    * pushed by exit_game() to be handled without actually having a player
-    * nor anything of the likes (nor toolkit to stop rendering) while
-    * not leaking any texture.
-    */
-   if (main_naevLogo != NULL)
-      gl_freeTexture(main_naevLogo);
+   gl_freeTexture(main_naevLogo);
    main_naevLogo = NULL;
-   window_modifyImage( wid, "imgLogo", NULL, 0, 0 );
 }
 
 

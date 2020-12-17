@@ -92,10 +92,8 @@ int ndata_setPath( const char *path )
    int len;
    char  buf[ PATH_MAX ];
 
-   if ( ndata_dir != NULL ) {
-      free( ndata_dir );
-      ndata_dir = NULL;
-   }
+   free( ndata_dir );
+   ndata_dir = NULL;
 
    if ( path != NULL && ndata_isndata( path ) ) {
       len            = strlen( path );
@@ -232,10 +230,8 @@ int ndata_open (void)
  */
 void ndata_close (void)
 {
-   if ( ndata_dir != NULL ) {
-      free( ndata_dir );
-      ndata_dir = NULL;
-   }
+   free( ndata_dir );
+   ndata_dir = NULL;
 
    /* Destroy the lock. */
    if (ndata_lock != NULL) {

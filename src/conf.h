@@ -33,7 +33,6 @@
 #define VSYNC_DEFAULT                        0     /**< Whether to wait for vertical sync. */
 #define MIPMAP_DEFAULT                       0     /**< Whether to use Mip Mapping. */
 #define TEXTURE_COMPRESSION_DEFAULT          0     /**< Whether to use texture compression. */
-#define INTERPOLATION_DEFAULT                1     /**< Whether to use interpolation. */
 #define NPOT_TEXTURES_DEFAULT                0     /**< Whether to allow non-power-of-two textures. */
 #define SCALE_FACTOR_DEFAULT                 1.    /**< Default scale factor. */
 #define SHOW_FPS_DEFAULT                     0     /**< Whether to display FPS on screen. */
@@ -80,7 +79,6 @@ typedef struct PlayerConf_s {
    int vsync; /**< Whether or not to use vsync. */
    int mipmaps; /**< Use mipmaps. */
    int compress; /**< Use texture compression. */
-   int interpolate; /**< Use texture interpolation. */
    int npot; /**< Use NPOT textures if available. */
 
    /* Memory usage. */
@@ -119,6 +117,7 @@ typedef struct PlayerConf_s {
    /* GUI. */
    int mesg_visible; /**< Amount of visible messages. */
    double map_overlay_opacity; /**< Map overlay opacity. */
+   int big_icons; /**< Use big icons or not. */
 
    /* Keyrepeat. */
    unsigned int repeat_delay; /**< Time in ms before start repeating. */

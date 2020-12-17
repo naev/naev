@@ -60,6 +60,7 @@ extern Pilot *cur_pilot;
 static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task );
 static int pilotL_addFleetFrom( lua_State *L, int from_ship );
 static int outfit_compareActive( const void *slot1, const void *slot2 );
+static int pilotL_setFlagWrapper( lua_State *L, int flag );
 
 
 /* Pilot metatable methods. */
@@ -268,6 +269,35 @@ int nlua_loadPilot( nlua_env env )
 
    /* Pilot always loads ship. */
    nlua_loadShip(env);
+
+   return 0;
+}
+
+
+/**
+ * @brief Wrapper to simplify flag setting stuff.
+ */
+static int pilotL_setFlagWrapper( lua_State *L, int flag )
+{
+   Pilot *p;
+   int state;
+
+   NLUA_CHECKRW(L);
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
+   /* Set or remove the flag. */
+   if (state)
+      pilot_setFlag( p, flag );
+   else
+      pilot_rmFlag( p, flag );
 
    return 0;
 }
@@ -1633,8 +1663,7 @@ static int pilotL_rename( lua_State *L )
    name  = luaL_checkstring(L,2);
 
    /* Change name. */
-   if (p->name != NULL)
-      free(p->name);
+   free(p->name);
    p->name = strdup(name);
 
    return 0;
@@ -1969,20 +1998,12 @@ static int pilotL_setFaction( lua_State *L )
 {
    Pilot *p;
    int fid;
-   const char *faction;
 
    NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    p = luaL_validpilot(L,1);
-   if (lua_isstring(L,2)) {
-      faction = lua_tostring(L,2);
-      fid = faction_get(faction);
-   }
-   else if (lua_isfaction(L,2)) {
-      fid = lua_tofaction(L,2);
-   }
-   else NLUA_INVALID_PARAMETER(L);
+   fid = luaL_validfaction(L,2);
 
    /* Set the new faction. */
    p->faction = fid;
@@ -2077,27 +2098,7 @@ static int pilotL_setFriendly( lua_State *L )
  */
 static int pilotL_setInvincible( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_INVINCIBLE);
-   else
-      pilot_rmFlag(p, PILOT_INVINCIBLE);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_INVINCIBLE );
 }
 
 
@@ -2114,27 +2115,7 @@ static int pilotL_setInvincible( lua_State *L )
  */
 static int pilotL_setInvincPlayer( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_INVINC_PLAYER);
-   else
-      pilot_rmFlag(p, PILOT_INVINC_PLAYER);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_INVINC_PLAYER );
 }
 
 
@@ -2154,27 +2135,7 @@ static int pilotL_setInvincPlayer( lua_State *L )
  */
 static int pilotL_setInvisible( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_INVISIBLE);
-   else
-      pilot_rmFlag(p, PILOT_INVISIBLE);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_INVISIBLE );
 }
 
 
@@ -2191,27 +2152,7 @@ static int pilotL_setInvisible( lua_State *L )
  */
 static int pilotL_setVisplayer( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_VISPLAYER);
-   else
-      pilot_rmFlag(p, PILOT_VISPLAYER);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_VISPLAYER );
 }
 
 
@@ -2228,27 +2169,7 @@ static int pilotL_setVisplayer( lua_State *L )
  */
 static int pilotL_setVisible( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_VISIBLE);
-   else
-      pilot_rmFlag(p, PILOT_VISIBLE);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_VISIBLE );
 }
 
 
@@ -2265,27 +2186,7 @@ static int pilotL_setVisible( lua_State *L )
  */
 static int pilotL_setHilight( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_HILIGHT);
-   else
-      pilot_rmFlag(p, PILOT_HILIGHT);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_HILIGHT );
 }
 
 
@@ -2300,27 +2201,7 @@ static int pilotL_setHilight( lua_State *L )
  */
 static int pilotL_setActiveBoard( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_BOARDABLE);
-   else
-      pilot_rmFlag(p, PILOT_BOARDABLE);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_BOARDABLE );
 }
 
 
@@ -2335,27 +2216,7 @@ static int pilotL_setActiveBoard( lua_State *L )
  */
 static int pilotL_setNoDeath( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_NODEATH);
-   else
-      pilot_rmFlag(p, PILOT_NODEATH);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_NODEATH );
 }
 
 
@@ -2456,27 +2317,7 @@ static int pilotL_setCooldown( lua_State *L )
  */
 static int pilotL_setNoJump( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_NOJUMP);
-   else
-      pilot_rmFlag(p, PILOT_NOJUMP);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_NOJUMP );
 }
 
 
@@ -2491,27 +2332,7 @@ static int pilotL_setNoJump( lua_State *L )
  */
 static int pilotL_setNoLand( lua_State *L )
 {
-   Pilot *p;
-   int state;
-
-   NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
-      state = 1;
-
-   /* Set status. */
-   if (state)
-      pilot_setFlag(p, PILOT_NOLAND);
-   else
-      pilot_rmFlag(p, PILOT_NOLAND);
-
-   return 0;
+   return pilotL_setFlagWrapper( L, PILOT_NOLAND );
 }
 
 
@@ -2523,7 +2344,7 @@ static int pilotL_setNoLand( lua_State *L )
  * @usage added = p:addOutfit( "Laser Cannon", 5 ) -- Adds 5 laser cannons to p
  *
  *    @luatparam Pilot p Pilot to add outfit to.
- *    @luatparam string outfit Name of the outfit to add.
+ *    @luatparam string|outfit outfit Outfit or name of the outfit to add.
  *    @luatparam[opt=1] number q Quantity of the outfit to add.
  *    @luatparam[opt=false] boolean bypass Whether to skip CPU and slot size checks before adding an outfit.
  *              Will not overwrite existing non-default outfits.
@@ -2534,7 +2355,6 @@ static int pilotL_addOutfit( lua_State *L )
 {
    int i;
    Pilot *p;
-   const char *outfit;
    Outfit *o;
    int ret;
    int q, added, bypass;
@@ -2543,7 +2363,7 @@ static int pilotL_addOutfit( lua_State *L )
 
    /* Get parameters. */
    p      = luaL_validpilot(L,1);
-   outfit = luaL_checkstring(L,2);
+   o      = luaL_validoutfit(L,2);
    q      = 1;
    if (lua_gettop(L) > 2 && !lua_isnil(L,2))
       q = luaL_checkint(L,3);
@@ -2551,13 +2371,6 @@ static int pilotL_addOutfit( lua_State *L )
       bypass = lua_toboolean(L, 4);
    else
       bypass = 0;
-
-   /* Get the outfit. */
-   o = outfit_get( outfit );
-   if (o == NULL) {
-      NLUA_ERROR(L, _("Outfit '%s' not found!"), outfit );
-      return 0;
-   }
 
    /* Add outfit. */
    added = 0;
@@ -2624,7 +2437,7 @@ static int pilotL_addOutfit( lua_State *L )
  * @usage p:rmOutfit( "Neutron Disruptor", 2 ) -- Removes two neutron disruptor.
  *
  *    @luatparam Pilot p Pilot to remove outfit from.
- *    @luatparam string outfit Name of the outfit to remove.
+ *    @luatparam string|outfit outfit Outfit or name of the outfit to remove.
  *    @luatparam number q Quantity of the outfit to remove.
  *    @luatreturn number The number of outfits removed.
  * @luafunc rmOutfit( p, outfit, q )
@@ -2642,38 +2455,36 @@ static int pilotL_rmOutfit( lua_State *L )
    /* Get parameters. */
    removed = 0;
    p      = luaL_validpilot(L,1);
-   outfit = luaL_checkstring(L,2);
    q      = 1;
    if (lua_gettop(L) > 2)
       q = luaL_checkint(L,3);
 
-   /* If outfit is "all", we remove everything except cores. */
-   if (strcmp(outfit,"all")==0) {
-      for (i=0; i<p->noutfits; i++) {
-         if (p->outfits[i]->sslot->required)
-            continue;
-         pilot_rmOutfitRaw( p, p->outfits[i] );
-         removed++;
+   if (lua_isstring(L,2)) {
+      outfit = luaL_checkstring(L,2);
+
+      /* If outfit is "all", we remove everything except cores. */
+      if (strcmp(outfit,"all")==0) {
+         for (i=0; i<p->noutfits; i++) {
+            if (p->outfits[i]->sslot->required)
+               continue;
+            pilot_rmOutfitRaw( p, p->outfits[i] );
+            removed++;
+         }
+         pilot_calcStats( p ); /* Recalculate stats. */
       }
-      pilot_calcStats( p ); /* Recalculate stats. */
-   }
-   /* If outfit is "cores", we remove cores only. */
-   else if (strcmp(outfit,"cores")==0) {
-      for (i=0; i<p->noutfits; i++) {
-         if (!p->outfits[i]->sslot->required)
-            continue;
-         pilot_rmOutfitRaw( p, p->outfits[i] );
-         removed++;
+      /* If outfit is "cores", we remove cores only. */
+      else if (strcmp(outfit,"cores")==0) {
+         for (i=0; i<p->noutfits; i++) {
+            if (!p->outfits[i]->sslot->required)
+               continue;
+            pilot_rmOutfitRaw( p, p->outfits[i] );
+            removed++;
+         }
+         pilot_calcStats( p ); /* Recalculate stats. */
       }
-      pilot_calcStats( p ); /* Recalculate stats. */
    }
    else {
-      /* Get the outfit. */
-      o = outfit_get( outfit );
-      if (o == NULL) {
-         NLUA_ERROR(L,_("Outfit isn't found in outfit stack."));
-         return 0;
-      }
+      o = luaL_validoutfit(L,2);
 
       /* Remove the outfit outfit. */
       for (i=0; i<p->noutfits; i++) {

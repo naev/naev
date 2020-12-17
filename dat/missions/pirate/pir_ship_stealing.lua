@@ -27,10 +27,11 @@
    happen (at least, I hope…) he’ll be pursued by a few fighters.
 --]]
 
-require "jumpdist.lua"
-require "numstring.lua"
-require "portrait.lua"
-require "factions/equip/generic.lua"
+require "swapship"
+require "jumpdist"
+require "numstring"
+require "portrait"
+require "factions/equip/generic"
 
 
 title = _("Stealing a %s")
@@ -59,6 +60,11 @@ success = {
    title = _("Ship successfully stolen!"),
    message = _([[It took you a while, but you finally make it into the ship and take control of it with the access codes you were given. Hopefully, you will be able to sell this %s, or maybe even to use it.
     Enemy ships will probably be after you as soon as you leave the atmosphere, so you should get ready and use the time you have on this planet wisely.]])
+}
+
+unableto = {
+   title = _("Ship left alone!"),
+   message = _("Before you make it into the ship and take control of it, you realize you are not ready to deal with the logistics of moving your cargo over. You decide to leave the ship stealing business for later.")
 }
 
 base_price = 100000
@@ -322,6 +328,16 @@ end
 function land()
    local landed = planet.cur()
    if landed == theship.planet then
+      -- Try to swap ships
+      local tmp = pilot.addRaw( theship.exact_class, nil, nil, 'Independent' )
+      equip_generic( tmp )
+      if not swapship( tmp ) then
+         -- Failed to swap ship!
+         tk.msg( unableto.title, unableto.message )
+         tmp:rm() -- Get rid of the temporary pilot
+         return
+      end
+
       -- Oh yeah, we stole the ship. \o/
       tk.msg(
          success.title,

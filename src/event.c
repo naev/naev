@@ -32,7 +32,7 @@
 #include "nlua_bkg.h"
 #include "nlua_tex.h"
 #include "nlua_music.h"
-#include "nlua_spfx.h"
+#include "nlua_audio.h"
 #include "rng.h"
 #include "ndata.h"
 #include "nxml.h"
@@ -277,7 +277,7 @@ static int event_create( int dataid, unsigned int *id )
    nlua_loadTex(ev->env);
    nlua_loadBackground(ev->env);
    nlua_loadMusic(ev->env);
-   nlua_loadSpfx(ev->env);
+   nlua_loadAudio(ev->env);
    nlua_loadTk(ev->env);
 
    /* Load file. */
@@ -446,7 +446,7 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
    memset( temp, 0, sizeof(EventData) );
 
    /* get the name */
-   temp->name = xml_nodeProp(parent, "name");
+   xmlr_attr_strd(parent, "name", temp->name);
    if (temp->name == NULL)
       WARN(_("Event in %s has invalid or no name"), EVENT_DATA_PATH);
 
@@ -647,14 +647,10 @@ static int event_parseFile( const char* file )
  */
 static void event_freeData( EventData *event )
 {
-   if (event->name)
-      free( event->name );
-   if (event->lua)
-      free( event->lua );
-   if (event->sourcefile)
-      free( event->sourcefile );
-   if (event->cond)
-      free( event->cond );
+   free( event->name );
+   free( event->lua );
+   free( event->sourcefile );
+   free( event->cond );
 #if DEBUGGING
    memset( event, 0, sizeof(EventData) );
 #endif /* DEBUGGING */
@@ -671,9 +667,7 @@ void events_cleanup (void)
    /* Free active events. */
    for (i=0; i<event_nactive; i++)
       event_cleanup( &event_active[i] );
-   if (event_active != NULL)
-      free(event_active);
-
+   free(event_active);
    event_active = NULL;
    event_nactive = 0;
    event_mactive = 0;
@@ -863,7 +857,7 @@ static int events_parseActive( xmlNodePtr parent )
       if (!xml_isNode(node,"event"))
          continue;
 
-      xmlr_attr(node,"name",buf);
+      xmlr_attr_strd(node,"name",buf);
       if (buf==NULL) {
          WARN(_("Event has missing 'name' attribute, skipping."));
          continue;
@@ -875,13 +869,7 @@ static int events_parseActive( xmlNodePtr parent )
          continue;
       }
       free(buf);
-      xmlr_attr(node,"id",buf);
-      if (buf==NULL) {
-         WARN(_("Event with data '%s' has missing 'id' attribute, skipping."), event_dataName(data));
-         continue;
-      }
-      id = atoi(buf);
-      free(buf);
+      xmlr_attr_uint(node,"id",id);
       if (id==0) {
          WARN(_("Event with data '%s' has invalid 'id' attribute, skipping."), event_dataName(data));
          continue;

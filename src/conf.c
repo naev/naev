@@ -60,8 +60,7 @@
    {                                              \
       nlua_getenv( env, n );                      \
       if ( lua_isstring( naevL, -1 ) ) {          \
-         if ( s != NULL )                         \
-            free( s );                            \
+         free( s );                            \
          s = strdup( lua_tostring( naevL, -1 ) ); \
       }                                           \
       lua_pop( naevL, 1 );                        \
@@ -129,23 +128,22 @@ void conf_setDefaults (void)
    conf_cleanup();
 
    /* ndata. */
-   if (conf.ndata != NULL)
-      free(conf.ndata);
+   free(conf.ndata);
    conf.ndata        = NULL;
 
    /* Language. */
-   if (conf.language != NULL)
-      free(conf.language);
+   free(conf.language);
    conf.language     = NULL;
 
    /* Joystick. */
    conf.joystick_ind = -1;
-   if (conf.joystick_nam != NULL)
-      free(conf.joystick_nam);
+   free(conf.joystick_nam);
    conf.joystick_nam = NULL;
 
    /* GUI. */
    conf.mesg_visible = 5;
+   conf.map_overlay_opacity = MAP_OVERLAY_OPACITY_DEFAULT;
+   conf.big_icons = 1;
 
    /* Repeat. */
    conf.repeat_delay = 500;
@@ -172,8 +170,7 @@ void conf_setDefaults (void)
    conf.devmode      = 0;
    conf.devautosave  = 0;
    conf.devcsv       = 0;
-   if (conf.lastversion != NULL)
-      free( conf.lastversion );
+   free( conf.lastversion );
    conf.lastversion = strdup( "" );
 
    /* Gameplay. */
@@ -191,18 +188,12 @@ void conf_setDefaults (void)
    /* Debugging. */
    conf.fpu_except   = 0; /* Causes many issues. */
 
-   /* Map overlay opacity */
-   conf.map_overlay_opacity = MAP_OVERLAY_OPACITY_DEFAULT;
-
    /* Editor. */
-   if (conf.dev_save_sys != NULL)
-      free( conf.dev_save_sys );
+   free( conf.dev_save_sys );
    conf.dev_save_sys = strdup( DEV_SAVE_SYSTEM_DEFAULT );
-   if (conf.dev_save_map != NULL)
-      free( conf.dev_save_map );
+   free( conf.dev_save_map );
    conf.dev_save_map = strdup( DEV_SAVE_MAP_DEFAULT );
-   if (conf.dev_save_asset != NULL)
-      free( conf.dev_save_asset );
+   free( conf.dev_save_asset );
    conf.dev_save_asset = strdup( DEV_SAVE_ASSET_DEFAULT );
 }
 
@@ -228,10 +219,8 @@ void conf_setGameplayDefaults (void)
  */
 void conf_setAudioDefaults (void)
 {
-   if (conf.sound_backend != NULL) {
-      free(conf.sound_backend);
-      conf.sound_backend = NULL;
-   }
+   free(conf.sound_backend);
+   conf.sound_backend = NULL;
 
    /* Sound. */
    conf.sound_backend = strdup(BACKEND_DEFAULT);
@@ -277,7 +266,6 @@ void conf_setVideoDefaults (void)
    conf.vsync        = VSYNC_DEFAULT;
    conf.mipmaps      = MIPMAP_DEFAULT; /* Also cause for issues. */
    conf.compress     = TEXTURE_COMPRESSION_DEFAULT;
-   conf.interpolate  = INTERPOLATION_DEFAULT;
    conf.npot         = NPOT_TEXTURES_DEFAULT;
 
    /* Window. */
@@ -305,24 +293,16 @@ void conf_setVideoDefaults (void)
  */
 void conf_cleanup (void)
 {
-   if (conf.ndata != NULL)
-      free(conf.ndata);
-   if (conf.language != NULL)
-      free(conf.language);
-   if (conf.sound_backend != NULL)
-      free(conf.sound_backend);
-   if (conf.joystick_nam != NULL)
-      free(conf.joystick_nam);
+   free(conf.ndata);
+   free(conf.language);
+   free(conf.sound_backend);
+   free(conf.joystick_nam);
 
-   if (conf.lastversion != NULL)
-      free(conf.lastversion);
+   free(conf.lastversion);
 
-   if (conf.dev_save_sys != NULL)
-      free(conf.dev_save_sys);
-   if (conf.dev_save_map != NULL)
-      free(conf.dev_save_map);
-   if (conf.dev_save_asset != NULL)
-      free(conf.dev_save_asset);
+   free(conf.dev_save_sys);
+   free(conf.dev_save_map);
+   free(conf.dev_save_asset);
 
    /* Clear memory. */
    memset( &conf, 0, sizeof(conf) );
@@ -378,7 +358,6 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "vsync", conf.vsync );
       conf_loadBool( lEnv, "mipmaps", conf.mipmaps );
       conf_loadBool( lEnv, "compress", conf.compress );
-      conf_loadBool( lEnv, "interpolate", conf.interpolate );
       conf_loadBool( lEnv, "npot", conf.npot );
 
       /* Memory. */
@@ -433,6 +412,7 @@ int conf_loadConfig ( const char* file )
          conf.mesg_visible = 5;
       conf_loadFloat( lEnv, "map_overlay_opacity", conf.map_overlay_opacity );
       conf.map_overlay_opacity = CLAMP(0, 1, conf.map_overlay_opacity);
+      conf_loadBool( lEnv, "big_icons", conf.big_icons );
 
       /* Key repeat. */
       conf_loadInt( lEnv, "repeat_delay", conf.repeat_delay );
@@ -698,8 +678,7 @@ void conf_parseCLI( int argc, char** argv )
             nebu_forceGenerate();
             break;
          case 'N':
-            if (conf.ndata != NULL)
-               free(conf.ndata);
+            free(conf.ndata);
             conf.ndata = NULL;
             break;
          case 'X':
@@ -728,8 +707,7 @@ void conf_parseCLI( int argc, char** argv )
 
    /** @todo handle multiple ndata. */
    if (optind < argc) {
-      if (conf.ndata != NULL)
-         free(conf.ndata);
+      free(conf.ndata);
       conf.ndata = strdup( argv[ optind ] );
    }
 }
@@ -939,7 +917,6 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    conf_saveComment(_("Use OpenGL Texture Interpolation"));
-   conf_saveBool("interpolate",conf.interpolate);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Use OpenGL Non-\"Power of Two\" textures if available"));
@@ -1044,6 +1021,7 @@ int conf_saveConfig ( const char* file )
    conf_saveInt("mesg_visible",conf.mesg_visible);
    conf_saveComment(_("Opacity fraction (0-1) for the overlay map."));
    conf_saveFloat("map_overlay_opacity", conf.map_overlay_opacity);
+   conf_saveBool("big_icons", conf.big_icons);
    conf_saveEmptyLine();
 
    /* Key repeat. */

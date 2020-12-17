@@ -266,16 +266,14 @@ void gl_vboActivateAttribOffset( gl_vbo *vbo, GLuint index, GLuint offset,
 /**
  * @brief Destroys a VBO.
  *
- *    @param vbo VBO to destroy.
+ *    @param vbo VBO to destroy. (If NULL, function does nothing.)
  */
 void gl_vboDestroy( gl_vbo *vbo )
 {
-   /* Destroy VBO. */
+   if (vbo == NULL)
+      return;
+
    glDeleteBuffers( 1, &vbo->id );
-
-   /* Check for errors. */
    gl_checkErr();
-
-   /* Free memory. */
    free(vbo);
 }

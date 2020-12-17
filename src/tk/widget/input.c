@@ -555,11 +555,8 @@ static void inp_clampView( Widget *inp )
  */
 static void inp_cleanup( Widget* inp )
 {
-   /* Free filter if needed. */
-   if (inp->dat.inp.filter != NULL)
-      free(inp->dat.inp.filter);
-
-   free(inp->dat.inp.input); /* frees the input buffer */
+   free(inp->dat.inp.filter);
+   free(inp->dat.inp.input);
 }
 
 
@@ -655,11 +652,7 @@ void window_setInputFilter( const unsigned int wid, char* name, const char *filt
       return;
    }
 
-   /* Free if already exists. */
-   if (wgt->dat.inp.filter != NULL)
-      free(wgt->dat.inp.filter);
-
-   /* Copy filter over. */
+   free(wgt->dat.inp.filter);
    wgt->dat.inp.filter = strdup( filter );
 }
 

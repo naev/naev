@@ -758,8 +758,12 @@ void ai_think( Pilot* pilot, const double dt )
    pilot_acc         = 0;
    pilot_turn        = 0.;
    pilot_flags       = 0;
+   /* So the way this works is that, for other than the player, we reset all
+    * the weapon sets every frame, so that the AI has to redo them over and
+    * over. Now, this is a horrible hack so shit works and needs a proper fix.
+    * TODO fix. */
    /* pilot_setTarget( cur_pilot, cur_pilot->id ); */
-   pilot_weapSetAIClear( cur_pilot ); /* Hack so shit works. TODO fix. */
+   pilot_weapSetAIClear( cur_pilot );
 
    /* Get current task. */
    t = ai_curTask( cur_pilot );
@@ -783,10 +787,6 @@ void ai_think( Pilot* pilot, const double dt )
       /* Task may have changed due to control tick. */
       t = ai_curTask( cur_pilot );
    }
-
-   if (pilot_isFlag(pilot,PILOT_PLAYER) &&
-       !pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL))
-      return;
 
    /* pilot has a currently running task */
    if (t != NULL) {
@@ -1060,8 +1060,7 @@ void ai_freetask( Task* t )
       t->next = NULL;
    }
 
-   if (t->name)
-      free(t->name);
+   free(t->name);
    free(t);
 }
 
@@ -2726,8 +2725,7 @@ static int aiL_weapSet( lua_State *L )
 
    ws = &p->weapon_sets[id];
 
-   if (ws->type == WEAPSET_TYPE_ACTIVE)
-   {
+   if (ws->type == WEAPSET_TYPE_ACTIVE) {
       /* Check if outfit is on */
       on = 1;
       l  = array_size(ws->slots);
@@ -2740,13 +2738,18 @@ static int aiL_weapSet( lua_State *L )
 
       /* activate */
       if (type && !on)
-         pilot_weapSetPress(p, id, 1 );
+         pilot_weapSetPress(p, id, +1 );
       /* deactivate */
       if (!type && on)
-         pilot_weapSetPress(p, id, 1 );
+         pilot_weapSetPress(p, id, -1 );
    }
-   else /* weapset type is weapon or change */
-      pilot_weapSetPress( cur_pilot, id, 1 );
+   else {
+      /* weapset type is weapon or change */
+      if (type)
+         pilot_weapSetPress( cur_pilot, id, +1 );
+      else
+         pilot_weapSetPress( cur_pilot, id, -1 );
+   }
    return 0;
 }
 

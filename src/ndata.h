@@ -63,8 +63,12 @@
 #define START_DATA_PATH          "start.xml" /**< Path to module start file. */
 
 /* Fonts should be defined in start.xml probably. */
-#define FONT_DEFAULT_PATH        N_("fonts/Cabin-SemiBold.otf,fonts/NanumBarunGothicBold.ttf") /**< Default font path. */
-#define FONT_MONOSPACE_PATH      N_("fonts/SourceCodePro-Semibold.ttf,fonts/D2CodingBold.ttf") /**< Default monospace font path. */
+/* Currently our fonts/Cabin-SemiBold.otf lacks many fairly standard glyphs, so we are falling back to
+ * the monospace font which has better coverage.
+ * TODO solve this issue in a sane way. */
+#define FONT_PATH_PREFIX         "dat/fonts/"
+#define FONT_DEFAULT_PATH        N_("Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf") /**< Default font path. */
+#define FONT_MONOSPACE_PATH      N_("SourceCodePro-Semibold.ttf,D2CodingBold.ttf") /**< Default monospace font path. */
 
 #define LUA_INCLUDE_PATH         "scripts/" /**< Path for Lua includes. */
 #define AI_PATH                  "ai/" /**< Location of the AI files. */

@@ -331,6 +331,7 @@ function pirate_name ()
       _("Katana"),
       _("Kaze"),
       _("Keel"),
+      _("Ketchup"),
       _("Killer"),
       _("Kirin"),
       _("Kitchen Knife"),

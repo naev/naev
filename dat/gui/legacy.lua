@@ -1,4 +1,4 @@
-require "numstring.lua"
+require "numstring"
 
 --[[
    @brief Obligatory create function.

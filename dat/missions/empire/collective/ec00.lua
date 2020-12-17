@@ -30,9 +30,9 @@
 
 ]]--
 
-require "proximity.lua"
-require "numstring.lua"
-require "missions/empire/common.lua"
+require "proximity"
+require "numstring"
+require "missions/empire/common"
 
 bar_desc = _("You see an Empire Lt. Commander who seems to be motioning you over to the counter.")
 misn_title = _("Collective Scout")

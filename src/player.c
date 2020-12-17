@@ -359,7 +359,7 @@ static int player_newMake (void)
    space_init( start_system() );
 
    /* Set player speed to default 1 */
-   player.speed = 1;
+   player.speed = 1.;
 
    /* Reset speed (to make sure player.dt_mod is accounted for). */
    player_autonavResetSpeed();
@@ -694,17 +694,11 @@ void player_cleanup (void)
    /* Reset factions. */
    factions_reset();
 
-   /* clean up name */
-   if (player.name != NULL) {
-      free(player.name);
-      player.name = NULL;
-   }
+   free(player.name);
+   player.name = NULL;
 
-   /* Clean up no-land message. */
-   if (player_message_noland != NULL) {
-      free(player_message_noland);
-      player_message_noland = NULL;
-   }
+   free(player_message_noland);
+   player_message_noland = NULL;
 
    /* Clean up gui. */
    gui_cleanup();
@@ -715,29 +709,22 @@ void player_cleanup (void)
    for (i=0; i<player_nstack; i++) {
       pilot_free(player_stack[i].p);
    }
-   if (player_stack != NULL)
-      free(player_stack);
+   free(player_stack);
    player_stack = NULL;
    /* nothing left */
    player_nstack = 0;
 
-   /* Free outfits. */
-   if (player_outfits != NULL)
-      free(player_outfits);
+   free(player_outfits);
    player_outfits  = NULL;
    player_noutfits = 0;
    player_moutfits = 0;
 
-   /* Clean up missions */
-   if (missions_done != NULL)
-      free(missions_done);
+   free(missions_done);
    missions_done = NULL;
    missions_ndone = 0;
    missions_mdone = 0;
 
-   /* Clean up events. */
-   if (events_done != NULL)
-      free(events_done);
+   free(events_done);
    events_done = NULL;
    events_ndone = 0;
    events_mdone = 0;
@@ -760,8 +747,7 @@ void player_cleanup (void)
    /* Reset some player stuff. */
    player_creds   = 0;
    player.crating = 0;
-   if (player.gui != NULL)
-      free( player.gui );
+   free( player.gui );
    player.gui = NULL;
 
    /* Clear omsg. */
@@ -771,12 +757,10 @@ void player_cleanup (void)
    sound_stopAll();
 
    /* Reset time compression. */
-   pause_setSpeed( 1.0 );
-   sound_setSpeed( 1.0 );
+   pause_setSpeed( 1. );
+   sound_setSpeed( 1. );
 
-   /* Free version string. */
-   if (player.loaded_version != NULL)
-      free( player.loaded_version );
+   free( player.loaded_version );
    player.loaded_version = NULL;
 
    /* Clean up. */
@@ -1060,7 +1044,6 @@ void player_render( double dt )
  */
 void player_think( Pilot* pplayer, const double dt )
 {
-   (void) dt;
    Pilot *target;
    AsteroidAnchor *field;
    Asteroid *ast;
@@ -1075,10 +1058,9 @@ void player_think( Pilot* pplayer, const double dt )
       return;
    }
 
-   ai_think( pplayer, dt );
-
    /* Under manual control is special. */
    if (pilot_isFlag( pplayer, PILOT_MANUAL_CONTROL )) {
+      ai_think( pplayer, dt );
       return;
    }
 
@@ -1280,24 +1262,36 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
 /**
  * @brief Activates a player's weapon set.
  */
-void player_weapSetPress( int id, int type, int repeat )
+void player_weapSetPress( int id, double value, int repeat )
 {
+   int type;
+
    if (repeat)
       return;
 
-   if ((type > 0) && ((player.p == NULL) || toolkit_isOpen()))
+   type = (value>=0) ? +1 : -1;
+
+   if ((type>0) && ((player.p == NULL) || toolkit_isOpen()))
       return;
 
-   if (player.p == NULL)
-      return;
-
-   if (pilot_isFlag(player.p, PILOT_HYP_PREP) ||
+   if ((type>0) && (pilot_isFlag(player.p, PILOT_HYP_PREP) ||
          pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
          pilot_isFlag(player.p, PILOT_LANDING) ||
-         pilot_isFlag(player.p, PILOT_TAKEOFF))
+         pilot_isFlag(player.p, PILOT_TAKEOFF)))
       return;
 
    pilot_weapSetPress( player.p, id, type );
+}
+
+
+/**
+ * @brief Resets the player speed stuff.
+ */
+void player_resetSpeed (void)
+{
+   double spd = player.speed * player_dt_default();
+   pause_setSpeed( spd );
+   sound_setSpeed( spd );
 }
 
 
@@ -1611,8 +1605,7 @@ int player_canTakeoff(void)
  */
 void player_nolandMsg( const char *str )
 {
-   if (player_message_noland != NULL)
-      free(player_message_noland);
+   free(player_message_noland);
 
    /* Duplicate so that Lua memory which might be garbage-collected isn't relied on. */
    if (str != NULL)
@@ -1729,7 +1722,7 @@ double player_dt_default (void)
  */
 void player_hailStart (void)
 {
-   char msg[1024];
+   char msg[STRMAX_SHORT];
    char buf[128];
 
    player_hailCounter = 5;
@@ -3253,7 +3246,7 @@ Planet* player_load( xmlNodePtr parent )
  */
 static Planet* player_parse( xmlNodePtr parent )
 {
-   char *planet, *found, *str;
+   char *planet, *found;
    unsigned int services;
    Planet *pnt;
    xmlNodePtr node, cur;
@@ -3267,7 +3260,7 @@ static Planet* player_parse( xmlNodePtr parent )
    int cycles, periods, seconds, time_set;
    double rem;
 
-   xmlr_attr(parent,"name",player.name);
+   xmlr_attr_strd(parent, "name", player.name);
 
    /* Make sure player.p is NULL. */
    player.p = NULL;
@@ -3349,12 +3342,8 @@ static Planet* player_parse( xmlNodePtr parent )
                   continue;
                }
 
-               xmlr_attr( cur, "quantity", str );
-               if (str != NULL) {
-                  q = atof(str);
-                  free(str);
-               }
-               else {
+               xmlr_attr_float( cur, "quantity", q );
+               if (q == 0) {
                   WARN(_("Outfit '%s' was saved without quantity!"), o->name);
                   continue;
                }
@@ -3400,7 +3389,7 @@ static Planet* player_parse( xmlNodePtr parent )
    }
 
    /* Reset player speed */
-   player.speed = 1;
+   player.speed = 1.;
 
    /* set global thingies */
    player.p->credits = player_creds;
@@ -3583,7 +3572,7 @@ static int player_parseEscorts( xmlNodePtr parent )
 
    do {
       if (xml_isNode(node,"escort")) {
-         xmlr_attr( node, "type", buf );
+         xmlr_attr_strd( node, "type", buf );
          if (strcmp(buf,"bay")==0)
             type = ESCORT_TYPE_BAY;
          else {
@@ -3656,7 +3645,7 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
       return;
 
    /* See if has ammo. */
-   xmlr_attr(node,"ammo",buf);
+   xmlr_attr_strd(node,"ammo",buf);
    if (buf == NULL)
       return;
 
@@ -3667,16 +3656,9 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
       return;
 
    /* See if has quantity. */
-   xmlr_attr(node,"quantity",buf);
-   if (buf == NULL)
-      return;
-
-   /* Get quantity. */
-   q = atoi(buf);
-   free(buf);
-
-   /* Add ammo. */
-   pilot_addAmmo( ship, slot, ammo, q );
+   xmlr_attr_int(node,"quantity",q);
+   if (q > 0)
+      pilot_addAmmo( ship, slot, ammo, q );
 }
 
 
@@ -3689,7 +3671,7 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
  */
 static int player_parseShip( xmlNodePtr parent, int is_player )
 {
-   char *name, *model, *q, *id;
+   char *name, *model;
    int i, n;
    int fuel;
    Ship *ship_parsed;
@@ -3702,10 +3684,10 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    Commodity *com;
    PilotFlags flags;
    unsigned int pid;
-   int autoweap, level, weapid, active_set, aim_lines;
+   int autoweap, level, weapid, active_set, aim_lines, in_range, weap_type;
 
-   xmlr_attr(parent,"name",name);
-   xmlr_attr(parent,"model",model);
+   xmlr_attr_strd( parent, "name", name );
+   xmlr_attr_strd( parent, "model", model );
 
    /* Safe defaults. */
    pilot_clearFlagsRaw( flags );
@@ -3760,12 +3742,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
-               xmlr_attr(cur,"slot",q);
-               n = -1;
-               if (q != NULL) {
-                  n = atoi(q);
-                  free(q);
-               }
+               xmlr_attr_atoi_neg1( cur, "slot", n );
                if ((n<0) || (n >= ship->outfit_nstructure)) {
                   name = xml_get(cur);
                   o = outfit_get(name);
@@ -3781,12 +3758,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
-               xmlr_attr(cur,"slot",q);
-               n = -1;
-               if (q != NULL) {
-                  n = atoi(q);
-                  free(q);
-               }
+               xmlr_attr_atoi_neg1( cur, "slot", n );
                if ((n<0) || (n >= ship->outfit_nutility)) {
                   WARN(_("Outfit slot out of range, not adding."));
                   continue;
@@ -3799,12 +3771,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
-               xmlr_attr(cur,"slot",q);
-               n = -1;
-               if (q != NULL) {
-                  n = atoi(q);
-                  free(q);
-               }
+               xmlr_attr_atoi_neg1( cur, "slot", n );
                if ((n<0) || (n >= ship->outfit_nweapon)) {
                   WARN(_("Outfit slot out of range, not adding."));
                   continue;
@@ -3817,13 +3784,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur, "commodity")) {
-               xmlr_attr(cur, "quantity", q);
-               xmlr_attr(cur, "id", id);
-               quantity = atoi(q);
-               i = (id == NULL) ? 0 : atoi(id);
-               free(q);
-               if (id != NULL)
-                  free(id);
+               xmlr_attr_int( cur, "quantity", quantity );
+               xmlr_attr_int( cur, "id", i );
 
                /* Get the commodity. */
                com = commodity_get(xml_get(cur));
@@ -3883,29 +3845,13 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          continue;
 
       /* Check for autoweap. */
-      xmlr_attr(node,"autoweap",id);
-      if (id != NULL) {
-         autoweap = atoi(id);
-         free(id);
-      }
+      xmlr_attr_int( node, "autoweap", autoweap );
 
       /* Load the last weaponset the player used on this ship. */
-      xmlr_attr(node,"active_set",id);
-      if (id != NULL) {
-         active_set = atoi(id);
-         free(id);
-      }
-      else {
-         /* set active_set to invalid. will be dealt with later */
-         active_set = -1;
-      }
+      xmlr_attr_atoi_neg1( node, "active_set", active_set );
 
       /* Check for aim_lines. */
-      xmlr_attr(node, "aim_lines", id);
-      if (id != NULL) {
-         aim_lines = atoi(id);
-         free(id);
-      }
+      xmlr_attr_int( node, "aim_lines", aim_lines );
 
       /* Parse weapon sets. */
       cur = node->xmlChildrenNode;
@@ -3918,13 +3864,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          }
 
          /* Get id. */
-         xmlr_attr(cur,"id",id);
-         if (id == NULL) {
+         xmlr_attr_atoi_neg1(cur,"id",i);
+         if (i == -1) {
             WARN(_("Player ship '%s' missing 'id' tag for weapon set."),ship->name);
             continue;
          }
-         i = atoi(id);
-         free(id);
          if ((i < 0) || (i >= PILOT_WEAPON_SETS)) {
             WARN(_("Player ship '%s' has invalid weapon set id '%d' [max %d]."),
                   ship->name, i, PILOT_WEAPON_SETS-1 );
@@ -3932,25 +3876,20 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          }
 
          /* Set inrange mode. */
-         xmlr_attr(cur,"inrange",id);
-         if (id == NULL)
-            pilot_weapSetInrange( ship, i, WEAPSET_INRANGE_PLAYER_DEF );
-         else {
-            pilot_weapSetInrange( ship, i, atoi(id) );
-            free(id);
-         }
+         xmlr_attr_int( cur, "inrange", in_range );
+         if (in_range > 0)
+            pilot_weapSetInrange( ship, i, in_range );
 
          if (autoweap) /* Autoweap handles everything except inrange. */
             continue;
 
          /* Set type mode. */
-         xmlr_attr(cur,"type",id);
-         if (id == NULL) {
+         xmlr_attr_atoi_neg1( cur, "type", weap_type );
+         if (weap_type == -1) {
             WARN(_("Player ship '%s' missing 'type' tag for weapon set."),ship->name);
             continue;
          }
-         pilot_weapSetType( ship, i, atoi(id) );
-         free(id);
+         pilot_weapSetType( ship, i, weap_type );
 
          /* Parse individual weapons. */
          ccur = cur->xmlChildrenNode;
@@ -3966,13 +3905,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
             }
 
             /* Get level. */
-            xmlr_attr(ccur,"level",id);
-            if (id == NULL) {
+            xmlr_attr_atoi_neg1( ccur, "level", level);
+            if (level == -1) {
                WARN(_("Player ship '%s' missing 'level' tag for weapon set weapon."), ship->name);
                continue;
             }
-            level = atoi(id);
-            free(id);
             weapid = xml_getInt(ccur);
             if ((weapid < 0) || (weapid >= ship->noutfits)) {
                WARN(_("Player ship '%s' has invalid weapon id %d [max %d]."),

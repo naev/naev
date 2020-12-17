@@ -19,6 +19,10 @@
 #define NMOD_ALL     0xFFFF /**< Comfort thing SDL is lacking. */
 
 
+#define KEY_PRESS    ( 1.) /**< Key is pressed. */
+#define KEY_RELEASE  (-1.) /**< Key is released. */
+
+
 /* input types */
 typedef enum {
    KEYBIND_NULL, /**< Null keybinding. */

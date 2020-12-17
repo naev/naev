@@ -33,8 +33,8 @@
 
 --]]
 
-require "portrait.lua"
-require "missions/neutral/common.lua"
+require "portrait"
+require "missions/neutral/common"
 
 
 -- Bar information

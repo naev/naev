@@ -83,7 +83,7 @@ static int intro_load( const char *text )
    intro_buf = ndata_read( text, &intro_size );
 
    /* Create intro font. */
-   gl_fontInit( &intro_font, FONT_MONOSPACE_PATH, conf.font_size_intro );
+   gl_fontInit( &intro_font, FONT_MONOSPACE_PATH, conf.font_size_intro, FONT_PATH_PREFIX );
 
    /* Accumulate text into intro_lines. At each step, keep track of:
     * * cur_line: text to go from the current input line, after word-wrapping.
@@ -488,11 +488,8 @@ int intro_display( const char *text, const char *mus )
 
    /* free malloc'd memory. */
    free( sb_arr );
-   if (NULL != side_image.tex)
-      gl_freeTexture( side_image.tex );
-
-   if (NULL != transition.tex)
-      gl_freeTexture( transition.tex );
+   gl_freeTexture( side_image.tex );
+   gl_freeTexture( transition.tex );
 
    /* Stop music, normal music will start shortly after. */
    music_stop();
