@@ -290,7 +290,6 @@ dat/scripts/enum.lua
 dat/scripts/fleet_form.lua
 dat/scripts/fleethelper.lua
 dat/scripts/formation.lua
-dat/scripts/functional.lua
 dat/scripts/jumpdist.lua
 dat/scripts/love.lua
 dat/scripts/love/audio.lua
