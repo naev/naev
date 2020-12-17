@@ -32,7 +32,7 @@ an OpenGL-capable graphics card and driver, Naev requires the following:
 Install compile-time dependencies on Ubuntu 16.04 (and hopefully later) with:
 
 ```
-apt-get install build-essential libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev \
+apt-get install build-essential libsdl2-dev libsdl2-image-dev \
 libgl1-mesa-dev libxml2-dev libfreetype6-dev libpng-dev libopenal-dev \
 libvorbis-dev binutils-dev libiberty-dev autopoint intltool libfontconfig-dev \
 python3-pip

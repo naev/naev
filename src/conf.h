@@ -49,11 +49,6 @@
 #define MUTE_SOUND_DEFAULT                   0     /**< Whether sound should be disabled. */
 #define SOUND_VOLUME_DEFAULT                 0.6   /**< Default sound volume. */
 #define MUSIC_VOLUME_DEFAULT                 0.8   /**< Default music volume. */
-#if USE_OPENAL
-#define BACKEND_DEFAULT                      "openal"
-#else /* USE_OPENAL */
-#define BACKEND_DEFAULT                      "sdlmix"
-#endif /* USE_OPENAL */
 /* Editor Options */
 #define DEV_SAVE_SYSTEM_DEFAULT           "ssys/"
 #define DEV_SAVE_ASSET_DEFAULT            "assets/"
@@ -94,7 +89,6 @@ typedef struct PlayerConf_s {
    int minimize; /**< Whether to minimize on focus loss. */
 
    /* Sound. */
-   char *sound_backend; /**< Sound backend to use. */
    int snd_voices; /**< Number of sound voices to use. */
    int snd_pilotrel; /**< Sound is relative to pilot when following. */
    int al_efx; /**< Should EFX extension be used? (only applicable for OpenAL) */

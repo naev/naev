@@ -71,7 +71,6 @@
 PlayerConf_t conf = {
    .ndata = NULL,
    .language=NULL,
-   .sound_backend = NULL,
    .joystick_nam = NULL
 };
 
@@ -219,11 +218,7 @@ void conf_setGameplayDefaults (void)
  */
 void conf_setAudioDefaults (void)
 {
-   free(conf.sound_backend);
-   conf.sound_backend = NULL;
-
    /* Sound. */
-   conf.sound_backend = strdup(BACKEND_DEFAULT);
    conf.snd_voices   = VOICES_DEFAULT;
    conf.snd_pilotrel = PILOT_RELATIVE_DEFAULT;
    conf.al_efx       = USE_EFX_DEFAULT;
@@ -295,7 +290,6 @@ void conf_cleanup (void)
 {
    free(conf.ndata);
    free(conf.language);
-   free(conf.sound_backend);
    free(conf.joystick_nam);
 
    free(conf.lastversion);
@@ -388,7 +382,6 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "showpause", conf.pause_show );
 
       /* Sound. */
-      conf_loadString( lEnv, "sound_backend", conf.sound_backend );
       conf_loadInt( lEnv, "snd_voices", conf.snd_voices );
       conf.snd_voices = MAX( VOICES_MIN, conf.snd_voices ); /* Must be at least 16. */
       conf_loadBool( lEnv, "snd_pilotrel", conf.snd_pilotrel );
@@ -973,10 +966,6 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    /* Sound. */
-   conf_saveComment(_("Sound backend (can be \"openal\" or \"sdlmix\")"));
-   conf_saveString("sound_backend",conf.sound_backend);
-   conf_saveEmptyLine();
-
    conf_saveComment(_("Maximum number of simultaneous sounds to play, must be at least 16."));
    conf_saveInt("snd_voices",conf.snd_voices);
    conf_saveEmptyLine();

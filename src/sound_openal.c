@@ -2,8 +2,6 @@
  * See Licensing and Copyright notice in naev.h
  */
 
-#if USE_OPENAL
-
 
 #include "sound_openal.h"
 
@@ -106,9 +104,6 @@ static ALuint efx_echo        = 0; /**< Echo effect. */
 static double sound_speed     = 1.; /**< Sound speed. */
 
 
-/**
- * @brief Group implementation similar to SDL_Mixer.
- */
 typedef struct alGroup_s {
    int id; /**< Group ID. */
 
@@ -1519,6 +1514,3 @@ void al_checkHandleError( const char *func )
    WARN(_("OpenAL error [%s]: %s"), func, errstr);
 }
 #endif /* DEBUGGING */
-
-
-#endif /* USE_OPENAL */

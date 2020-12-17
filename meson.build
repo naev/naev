@@ -133,32 +133,10 @@ if buildExec.disabled() == false
    ascli_exe = find_program('appstreamcli', version: '>=0.12.9', required: false)
 
    # OpenAL
-   hasOpenAL = false
-   useOpenAL = get_option('openal')
-   openal    = dependency('openal', required: useOpenAL)
-   if openal.found()
-      vorbis = dependency('vorbis', required: useOpenAL)
-      if not vorbis.found()
-         message('Found OpenAL, but not using it because libvorbis is missing.')
-      else
-         vorbisfile = dependency('vorbisfile', required: useOpenAL)
-         if not vorbisfile.found()
-            message('Found OpenAL, but not using it because libvorbisfile is missing.')
-         else
-            hasOpenAL  = true
-            naev_deps += [openal, vorbis, vorbisfile]
-         endif
-      endif
-   endif
-   config_data.set10('USE_OPENAL', hasOpenAL)
-   summary('OpenAL', hasOpenAL, section: 'Features', bool_yn: true)
-
-   # SDL Mixer
-   useSDLMixer = get_option('sdl_mixer')
-   sdl_mixer = dependency('SDL2_mixer', required: useSDLMixer)
-   naev_deps += sdl_mixer
-   config_data.set10('USE_SDLMIX', sdl_mixer.found())
-   summary('SDL Mixer', sdl_mixer.found(), section: 'Features', bool_yn: true)
+   openal    = dependency('openal', required: true)
+   vorbis = dependency('vorbis', required: true)
+   vorbisfile = dependency('vorbisfile', required: true)
+   naev_deps += [openal, vorbis, vorbisfile]
 
    # Standard library feature tests
    config_data.set10('HAVE_DECL_SETENV', cc.has_header_symbol('stdlib.h', 'setenv'))
