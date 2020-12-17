@@ -543,7 +543,7 @@ static int stream_loadBuffer( ALuint buffer )
             &music_vorbis.stream,   /* stream */
             &music_buf[size],       /* data */
             music_bufSize - size,   /* amount to read */
-            VORBIS_ENDIAN,          /* big endian? */
+            HAS_BIGENDIAN,          /* big endian? */
             2,                      /* 16 bit */
             1,                      /* signed */
             &section,               /* current bitstream */
@@ -554,7 +554,7 @@ static int stream_loadBuffer( ALuint buffer )
             &music_vorbis.stream,   /* stream */
             &music_buf[size],       /* data */
             music_bufSize - size,   /* amount to read */
-            VORBIS_ENDIAN,          /* big endian? */
+            HAS_BIGENDIAN,          /* big endian? */
             2,                      /* 16 bit */
             1,                      /* signed */
             &section );             /* current bitstream */

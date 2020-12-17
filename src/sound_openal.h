@@ -107,11 +107,6 @@ void al_checkHandleError( const char *func );
 #else /* DEBUG */
 #define al_checkErr() /**< Hack to ignore errors when debugging. */
 #endif /* DEBUG */
-#if HAS_BIGENDIAN
-#  define VORBIS_ENDIAN    1
-#else /* HAS_BIGENDIAN */
-#  define VORBIS_ENDIAN    0
-#endif /* HAS_BIGENDIAN */
 
 
 /*
