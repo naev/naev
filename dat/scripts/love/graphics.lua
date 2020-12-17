@@ -281,6 +281,7 @@ function graphics.newFont( file, size )
    end
    f.height= f.font:height()
    f.lineheight = f.height*1.5 -- Naev default
+   f:setFilter( graphics._minfilter, graphics._magfilter )
    return f
 end
 function graphics.Font:getHeight() return self.height end
