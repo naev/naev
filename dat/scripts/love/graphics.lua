@@ -243,20 +243,54 @@ function graphics.circle( mode, x, y, radius )
    x,y = _xy(x,y,0,0)
    naev.gfx.renderCircle( x, y, radius, graphics._fgcol, _mode(mode) )
 end
-function graphics.print( text, x, y  )
+function graphics.print( text, x, y )
    x,y = _xy(x,y,limit,graphics._font.height)
    naev.gfx.printf( graphics._font.font, text, x, y, graphics._fgcol )
 end
-function graphics.printf( text, x, y, limit, align )
+function graphics.printf( text, ... )
+   local arg = {...}
+   local x, y, limit, align, font, col
+
+   if type(arg[1])=="table" then
+      -- love.graphics.printf( text, font, x, y, limit, align )
+      font = arg[1]
+      x = arg[2]
+      y = arg[3]
+      limit = arg[4]
+      align = arg[5] or "left"
+   else
+      -- love.graphics.printf( text, x, y, limit, align )
+      font = graphics._font.font
+      x = arg[1]
+      y = arg[2]
+      limit = arg[3]
+      align = arg[4] or "left"
+   end
+   col = graphics._fgcol
+
    x,y = _xy(x,y,limit,graphics._font.height)
+
+   local wrapped, maxw = naev.gfx.printfWrap( graphics._font.font, text, limit )
+
+   local atype
    if align=="left" then
-      naev.gfx.printf( graphics._font.font, text, x, y, graphics._fgcol, limit, false )
+      atype = 1
    elseif align=="center" then
-      naev.gfx.printf( graphics._font.font, text, x, y, graphics._fgcol, limit, true )
+      atype = 2
    elseif align=="right" then
-      local w = naev.gfx.printDim( false, text, limit )
-      local off = limit-w
-      naev.gfx.printf( graphics._font.font, text, x+off, y, graphics._fgcol, w, false )
+      atype = 3
+   end
+   for k,v in ipairs(wrapped) do
+      local tx
+      if atype==1 then
+         tx = x
+      elseif atype==2 then
+         tx = x + (limit-v[2])/2
+      elseif atype==3 then
+         tx = x + (limit-v[2])
+      end
+      naev.gfx.printf( font, v[1], tx, y, col )
+      y = y - font.lineheight
    end
 end
 
