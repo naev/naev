@@ -290,7 +290,7 @@ function graphics.Font:getFilter() return self.min, self.mag, self.anisotropy en
 function graphics.Font:setFilter( min, mag, anisotropy )
    mag = mag or min
    anisotropy = anisotropy or 1
-   --self.tex:setFilter( min, mag, anisotropy )
+   self.font:setFilter( min, mag, anisotropy )
    self.min = min
    self.mag = mag
    self.anisotropy = anisotropy
