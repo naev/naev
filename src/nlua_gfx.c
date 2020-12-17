@@ -33,6 +33,7 @@ static int gfxL_renderCircle( lua_State *L );
 static int gfxL_fontSize( lua_State *L );
 /* TODO get rid of printDim and print in favour of printfDim and printf */
 static int gfxL_printfDim( lua_State *L );
+static int gfxL_printfWrap( lua_State *L );
 static int gfxL_printf( lua_State *L );
 static int gfxL_printDim( lua_State *L );
 static int gfxL_print( lua_State *L );
@@ -48,14 +49,13 @@ static const luaL_Reg gfxL_methods[] = {
    /* Printing. */
    { "fontSize", gfxL_fontSize },
    { "printfDim", gfxL_printfDim },
+   { "printfWrap", gfxL_printfWrap },
    { "printf", gfxL_printf },
    { "printDim", gfxL_printDim },
    { "print", gfxL_print },
    { "printText", gfxL_printText },
    {0,0}
 }; /**< GFX methods. */
-
-
 
 
 /**
@@ -393,6 +393,69 @@ static int gfxL_printfDim( lua_State *L )
    else
       lua_pushnumber( L, gl_printHeightRaw( font, width, str ) );
    return 1;
+}
+
+
+/**
+ * @brief Gets the wrap for text.
+ *
+ *    @luatparam font font Font to use.
+ *    @luatparam string str Text to calculate length of.
+ *    @luatparam int width Width to wrap at.
+ *    @luatreturn table A table containing pairs of text and their width.
+ *    @luatreturn number Maximum width of all the lines.
+ * @luafunc printfWrap( font, str, width )
+ */
+static int gfxL_printfWrap( lua_State *L )
+{
+   const char *s;
+   int width, outw, maxw;
+   glFont *font;
+   int p, l, slen;
+   int linenum;
+   char *tmp;
+
+   /* Parse parameters. */
+   font  = luaL_checkfont(L,1);
+   s     = luaL_checkstring(L,2);
+   width = luaL_checkinteger(L,3);
+
+   /* Process output into table. */
+   lua_newtable(L);
+   tmp = strdup(s);
+   slen = strlen(s);
+   p = 0;
+   linenum = 1;
+   maxw = 0;
+   do {
+      if ((tmp[p] == ' ') || (tmp[p] == '\n'))
+         p++;
+      /* Don't handle tab for now. */
+      if (tmp[p]=='\t')
+         tmp[p] = ' ';
+      l = gl_printWidthForText(font, &tmp[p], width, &outw );
+      if (outw > maxw)
+         maxw = outw;
+
+      /* Create entry of form { string, width } in the table. */
+      lua_pushnumber(L, linenum++);    /* t, n */
+      lua_newtable(L);                 /* t, n, t */
+      lua_pushinteger(L, 1);           /* t, n, t, 1 */
+      lua_pushlstring(L, &tmp[p], l);  /* t, n, t, 1, s */
+      lua_rawset(L, -3);               /* t, n, t */
+      lua_pushinteger(L, 1);           /* t, n, t, 2 */
+      lua_pushinteger(L, outw);        /* t, n, t, 2, n */
+      lua_rawset(L, -3);               /* t, n, t */
+      lua_rawset(L, -3);               /* t */
+
+      p += l;
+
+   } while (p < slen);
+
+   /* Push max width. */
+   lua_pushinteger(L, maxw);
+
+   return 2;
 }
 
 
