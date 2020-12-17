@@ -19,7 +19,6 @@
 #include "SDL_thread.h"
 #include "SDL_mutex.h"
 
-#include "sound_priv.h"
 #include "sound_openal.h"
 #include "log.h"
 #include "nstring.h"

@@ -8,12 +8,102 @@
 
 
 #include "sound.h"
-#include "sound_priv.h"
+#include "al.h"
 
 #include "ncompat.h"
 #include "nopenal.h"
 
 #include <vorbis/vorbisfile.h>
+
+
+/*
+ * Flags.
+ */
+#define VOICE_LOOPING      (1<<10) /* voice loops */
+#define VOICE_STATIC       (1<<11) /* voice isn't relative */
+
+
+#define MUSIC_FADEOUT_DELAY   1000 /**< Time it takes to fade out. */
+#define MUSIC_FADEIN_DELAY    2000 /**< Time it takes to fade in. */
+
+
+/**
+ * @struct alSound
+ *
+ * @brief Contains a sound buffer.
+ */
+typedef struct alSound_ {
+   char *name; /**< Buffer's name. */
+   double length; /**< Length of the buffer. */
+
+   /*
+    * Backend specific.
+    */
+   union {
+      struct {
+         ALuint buf; /**< Buffer data. */
+      } al; /**< For OpenAL backend. */
+   } u; /**< For backend. */
+} alSound;
+
+
+/**
+ * @typedef voice_state_t
+ * @brief The state of a voice.
+ * @sa alVoice
+ */
+typedef enum voice_state_ {
+   VOICE_STOPPED, /**< Voice is stopped. */
+   VOICE_PLAYING, /**< Voice is playing. */
+   VOICE_FADEOUT, /**< Voice is fading out. */
+   VOICE_DESTROY  /**< Voice should get destroyed asap. */
+} voice_state_t;
+
+
+/**
+ * @struct alVoice
+ *
+ * @brief Represents a voice in the game.
+ *
+ * A voice would be any object that is creating sound.
+ */
+typedef struct alVoice_ {
+   struct alVoice_ *prev; /**< Linked list previous member. */
+   struct alVoice_ *next; /**< Linked list next member. */
+
+   int id; /**< Identifier of the voice. */
+
+   voice_state_t state; /**< Current state of the sound. */
+   unsigned int flags; /**< Voice flags. */
+
+   /*
+    * Backend specific.
+    */
+   union {
+      struct {
+         ALfloat pos[3]; /**< Position of the voice. */
+         ALfloat vel[3]; /**< Velocity of the voice. */
+         ALuint source; /**< Source current in use. */
+         ALuint buffer; /**< Buffer attached to the voice. */
+      } al; /**< For OpenAL backend. */
+   } u; /**< For backend. */
+} alVoice;
+
+
+/*
+ * Sound list.
+ */
+extern alVoice *voice_active; /**< Active voices. */
+
+
+/*
+ * Voice management.
+ */
+void voice_lock (void);
+void voice_unlock (void);
+alVoice* voice_new (void);
+int voice_add( alVoice* v );
+alVoice* voice_get( int id );
 
 
 /*

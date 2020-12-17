@@ -318,7 +318,6 @@ headers = files(
    'slots.h',
    'sound.h',
    'sound_openal.h',
-   'sound_priv.h',
    'space.h',
    'spfx.h',
    'start.h',
