@@ -286,6 +286,14 @@ function graphics.newFont( ... )
    f:setFilter( graphics._minfilter, graphics._magfilter )
    return f
 end
+function graphics.Font:getWrap( text, wraplimit )
+   local wrapped, maxw = naev.gfx.printfWrap( self.f, text, wraplimit )
+   local wrappedtext = {}
+   for k,v in ipairs(wrapped) do
+      wrappedtext[k] = v[1]
+   end
+   return maxw, wrappedtext
+end
 function graphics.Font:getHeight() return self.height end
 function graphics.Font:getLineHeight() return self.lineheight end
 function graphics.Font:setLineHeight( height ) self.lineheight = height end
