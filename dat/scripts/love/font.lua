@@ -6,7 +6,7 @@ local data = require 'love.data'
 
 local font = {}
 
-font.Font = class.inheritsFrom( data.Data )
-font.Font._type = "Font"
+font.FontData = class.inheritsFrom( data.Data )
+font.FontData._type = "FontData"
 
 return font
