@@ -460,14 +460,6 @@ static int texL_spriteFromDir( lua_State *L )
 }
 
 
-static GLint get_filter( const char *s )
-{
-   if (strcmp(s,"linear")==0)
-      return GL_LINEAR;
-   else if (strcmp(s,"nearest")==0)
-      return GL_NEAREST;
-   return 0;
-}
 /**
  * @brief Sets the texture minification and magnification filters.
  *
@@ -483,8 +475,8 @@ static int texL_setFilter( lua_State *L )
    const char *smag = luaL_optstring(L,3,smin);
    GLint min, mag;
 
-   min = get_filter( smin );
-   mag = get_filter( smag );
+   min = gl_stringToFilter( smin );
+   mag = gl_stringToFilter( smag );
 
    if (min==0 || mag==0)
       NLUA_INVALID_PARAMETER(L);
