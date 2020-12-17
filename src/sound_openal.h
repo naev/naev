@@ -35,15 +35,7 @@
 typedef struct alSound_ {
    char *name; /**< Buffer's name. */
    double length; /**< Length of the buffer. */
-
-   /*
-    * Backend specific.
-    */
-   union {
-      struct {
-         ALuint buf; /**< Buffer data. */
-      } al; /**< For OpenAL backend. */
-   } u; /**< For backend. */
+   ALuint buf; /**< Buffer data. */
 } alSound;
 
 
@@ -76,17 +68,10 @@ typedef struct alVoice_ {
    voice_state_t state; /**< Current state of the sound. */
    unsigned int flags; /**< Voice flags. */
 
-   /*
-    * Backend specific.
-    */
-   union {
-      struct {
-         ALfloat pos[3]; /**< Position of the voice. */
-         ALfloat vel[3]; /**< Velocity of the voice. */
-         ALuint source; /**< Source current in use. */
-         ALuint buffer; /**< Buffer attached to the voice. */
-      } al; /**< For OpenAL backend. */
-   } u; /**< For backend. */
+   ALfloat pos[3]; /**< Position of the voice. */
+   ALfloat vel[3]; /**< Velocity of the voice. */
+   ALuint source; /**< Source current in use. */
+   ALuint buffer; /**< Buffer attached to the voice. */
 } alVoice;
 
 
