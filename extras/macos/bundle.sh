@@ -2,6 +2,7 @@
 
 # After building Naev, run this script from the toplevel source directory to
 # create Naev.app.
+# FIXME: The real instructions are more like: cd to Meson build directory, fix bugs in script, use script.
 
 # This script assumes the environment we set up in Travis, and copies the
 # dependencies to the bundle. These are:
@@ -12,9 +13,6 @@ set -e
 
 # Clean previous build.
 rm -fr Naev.app
-
-# Generate Info.plist.
-./config.status -q --file=extras/macos/Info.plist
 
 # Build basic structure.
 mkdir -p Naev.app/Contents/{MacOS,Resources,Frameworks}/
