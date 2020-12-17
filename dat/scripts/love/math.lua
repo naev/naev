@@ -6,10 +6,10 @@ local prng = require 'prng'
 local object = require 'love.object'
 
 local function clamp01(x) return math.min(math.max(x, 0), 1) end
-math = {}
-math.RandomGenerator = class.inheritsFrom( object.Object )
-math.RandomGenerator._type = "RandomGenerator"
-function math.newRandomGenerator( low, high )
+nmath = {}
+nmath.RandomGenerator = class.inheritsFrom( object.Object )
+nmath.RandomGenerator._type = "RandomGenerator"
+function nmath.newRandomGenerator( low, high )
    if low ~= nil then
       low = 0xCBBF7A44
       high = 0x0139408D
@@ -18,15 +18,15 @@ function math.newRandomGenerator( low, high )
    if high ~= nil then
       seed = seed .. tostring(high)
    end
-   local rng = math.RandomGenerator.new()
+   local rng = nmath.RandomGenerator.new()
    rng:setSeed( seed )
    return rng
 end
-function math.RandomGenerator:setSeed( seed )
+function nmath.RandomGenerator:setSeed( seed )
    prng.initHash( seed )
    self.z = prng.z
 end
-function math.RandomGenerator:random( min, max )
+function nmath.RandomGenerator:random( min, max )
    -- TODO get rid of this horrible hack and make prng return objects
    prng.z = self.z
    if min == nil then
@@ -37,9 +37,9 @@ function math.RandomGenerator:random( min, max )
       return prng.range(min,max)
    end
 end
-function math.RandomGenerator:getState() return self.z end
-function math.RandomGenerator:setState( state ) self.z = state end
-function math.random( min, max )
+function nmath.RandomGenerator:getState() return self.z end
+function nmath.RandomGenerator:setState( state ) self.z = state end
+function nmath.random( min, max )
    if min == nil then
       return naev.rnd.rnd()
    elseif max == nil then
@@ -48,7 +48,7 @@ function math.random( min, max )
       return naev.rnd.rnd( min, max )
    end
 end
-function math.colorToBytes(r, g, b, a)
+function nmath.colorToBytes(r, g, b, a)
 	if type(r) == "table" then
 		r, g, b, a = r[1], r[2], r[3], r[4]
 	end
@@ -58,7 +58,7 @@ function math.colorToBytes(r, g, b, a)
 	a = a ~= nil and floor(clamp01(a) * 255 + 0.5) or nil
 	return r, g, b, a
 end
-function math.colorFromBytes(r, g, b, a)
+function nmath.colorFromBytes(r, g, b, a)
 	if type(r) == "table" then
 		r, g, b, a = r[1], r[2], r[3], r[4]
 	end
@@ -69,4 +69,4 @@ function math.colorFromBytes(r, g, b, a)
 	return r, g, b, a
 end
 
-return math
+return nmath
