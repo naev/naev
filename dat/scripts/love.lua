@@ -163,22 +163,22 @@ function love.exec( path )
    t.window.fullscreen = love._default.fullscreen
    t.modules = {
          audio = true,
-         --data = true,
+         data = true,
          event = true,
-         --font = true,
+         font = true,
          graphics = true,
          image = true,
-         --joystick = true,
+         joystick = true,
          keyboard = true,
          math = true,
          mouse = true,
-         --physics = true
+         physics = true
          sound = true,
          system = true,
-         --thread = true,
+         thread = true,
          timer = true,
-         --touch = true,
-         --video = true,
+         touch = true,
+         video = true,
          window = true
       }
 
