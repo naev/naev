@@ -216,7 +216,7 @@ static int fileL_open( lua_State *L )
       return 2;
    }
    lf->mode = mode[0];
-   lf->size = (size_t)lf->rw->size;
+   lf->size = (size_t)SDL_RWsize(lf->rw);
 
    lua_pushboolean(L,1);
    return 1;
