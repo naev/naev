@@ -1077,7 +1077,7 @@ int conf_saveConfig ( const char* file )
    conf_saveInt("font_size_intro",conf.font_size_intro);
    conf_saveComment(_("Default size: 12"));
    conf_saveInt("font_size_def",conf.font_size_def);
-   conf_saveComment(_("Small size: 10"));
+   conf_saveComment(_("Small size: 11"));
    conf_saveInt("font_size_small",conf.font_size_small);
    conf_saveComment(_("Default font to use: unset"));
    if (conf.font_name_default) {
