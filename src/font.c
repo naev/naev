@@ -33,6 +33,7 @@
 #include "ndata.h"
 #include "nfile.h"
 #include "utf8.h"
+#include "distance_field.h"
 
 #define HASH_LUT_SIZE 512 /**< Size of glyph look up table. */
 #define MAX_ROWS 128 /**< Max number of rows per texture cache. */
@@ -272,6 +273,8 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
       gr = &tex->rows[0];
       gr->h = ch->h;
    }
+
+   /* Convert to signed distance transform. */
 
    /* Upload data. */
    glBindTexture( GL_TEXTURE_2D, tex->id );
@@ -1254,11 +1257,14 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
       h = bitmap.rows;
 
       /* Store data. */
-      c->data = malloc( sizeof(GLubyte) * w*h );
-      if (bitmap.buffer == NULL)
+      if (bitmap.buffer == NULL) {
+         c->data = malloc( sizeof(GLubyte) * w*h );
          memset( c->data, 0, sizeof(GLubyte) * w*h );
-      else
-         memcpy( c->data, bitmap.buffer, sizeof(GLubyte) * w*h );
+      }
+      else {
+         //memcpy( c->data, bitmap.buffer, sizeof(GLubyte) * w*h ); // regular rendering
+         c->data = make_distance_mapb( bitmap.buffer, w, h ); // signed distance field
+      }
       c->w     = w;
       c->h     = h;
       c->off_x = slot->bitmap_left;
