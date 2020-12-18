@@ -96,7 +96,8 @@ function graphics.Image:_draw( ... )
    local x,y,r,sx,sy,tx,ty,tw,th
    if type(arg[1])=='number' then
       -- x, y, r, sx, sy
-      x,y = _xy(arg[1],arg[2],w,h)
+      x = arg[1]
+      y = arg[2]
       r = arg[3] or 0
       sx = arg[4] or 1
       sy = arg[5] or sx
@@ -116,11 +117,11 @@ function graphics.Image:_draw( ... )
       ty = q.y
       tw = q.w
       th = q.h
-      x,y = _xy(x,y,w,h)
    end
    w = w*sx --* graphics._sx
    h = h*sy --* graphics._sy
-   y = y - (h*(1-sy)) -- correct scaling
+   --y = y - (h*(1-sy)) -- correct scaling
+   x,y = _xy(x,y,w,h)
    naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, graphics._fgcol, r )
 end
 
