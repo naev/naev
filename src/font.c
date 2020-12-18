@@ -615,8 +615,8 @@ static void gl_printOutline( const glFont *ft_font,
     * ultimately replaced with use of signed distance fields or some
     * other more efficient method (signed distance fields seem to be
     * the "right" solution). */
-   if ((c == NULL) || (c->a >= 1.)) {
-      if(outlineR != -1){
+   if (outlineR != 0. && ((c == NULL) || (c->a >= 1.))) {
+      if (outlineR != -1) {
          radius = outlineR;
       } else {
          radius = 1.;
@@ -706,8 +706,7 @@ void gl_printRaw( const glFont *ft_font,
       const double x, const double y,
       const glColour* c, const double outlineR, const char *text)
 {
-   if (outlineR > 0.)
-      gl_printOutline( ft_font, 0, 0, x, y, 0, c, outlineR, text, gl_printRawBase);
+   gl_printOutline( ft_font, 0, 0, x, y, 0, c, outlineR, text, gl_printRawBase);
    gl_printRawBase( ft_font, 0, 0, x, y, 0, c, text, 0 );
 }
 
@@ -802,8 +801,7 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
       const double x, const double y,
       const glColour* c, const double outlineR, const char *text)
 {
-   if (outlineR > 0.)
-      gl_printOutline( ft_font, max, 0, x, y, 0, c, outlineR, text, gl_printMaxRawBase );
+   gl_printOutline( ft_font, max, 0, x, y, 0, c, outlineR, text, gl_printMaxRawBase );
    return gl_printMaxRawBase( ft_font, max, 0, x, y, 0, c, text, 0 );
 }
 
@@ -909,8 +907,7 @@ int gl_printMidRaw(
       const char *text
       )
 {
-   if (outlineR > 0.)
-      gl_printOutline( ft_font, width, 0, x, y, 0, c, outlineR, text, gl_printMidRawBase);
+   gl_printOutline( ft_font, width, 0, x, y, 0, c, outlineR, text, gl_printMidRawBase);
    return gl_printMidRawBase( ft_font, width, 0, x, y, 0, c, text, 0 );
 }
 
@@ -1040,8 +1037,7 @@ int gl_printTextRaw( const glFont *ft_font,
       const char *text
     )
 {
-   if (outlineR > 0.)
-      gl_printOutline( ft_font, width, height, bx, by, line_height, c, outlineR, text, gl_printTextRawBase );
+   gl_printOutline( ft_font, width, height, bx, by, line_height, c, outlineR, text, gl_printTextRawBase );
    return gl_printTextRawBase( ft_font, width, height, bx, by, line_height, c, text, 0 );
 }
 
