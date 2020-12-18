@@ -1974,7 +1974,7 @@ static int gui_runFunc( const char* func, int nargs, int nret )
       err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       WARN(_("GUI Lua -> '%s': %s"),
             func, (err) ? err : _("unknown error"));
-      lua_pop(naevL,2);
+      lua_pop(naevL,1);
       return ret;
    }
 
