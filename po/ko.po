@@ -16651,7 +16651,7 @@ msgid ""
 "ship's processing unit, on which he banged his hammer until it looked "
 "acceptable. And the corrupt assholes in the jury pretended not to notice!\"\n"
 "    \"So no, we didn't win\" she adds after taking a few breaths to calm "
-"down. \"Take us back to %s."
+"down. \"Take us back to %s.\""
 msgstr ""
 
 #. you do not pickup the nerds in time
