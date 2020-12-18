@@ -3,8 +3,8 @@
 
 ![Naev Logo](https://naev.org/imgs/naev.png)
 
-Naev is a 2D space trading and combat game, taking inspiration from the Escape
-Velocity series, among others.
+Naev is a 2D space trading and combat game, taking inspiration from the [Escape
+Velocity series](https://en.wikipedia.org/wiki/Escape_Velocity_(video_game)), among others.
 
 You pilot a space ship from a top-down perspective, and are more or less free
 to do what you want. As the genre name implies, you’re able to trade and engage
