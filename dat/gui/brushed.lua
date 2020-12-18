@@ -1071,11 +1071,18 @@ function render_cooldown( percent, seconds )
    local msg = _("Cooling down...\n%.1f seconds remaining"):format( seconds )
    local fail = true
    if cooldown_omsg ~= nil then
-      if player.omsgChange( cooldown_omsg, msg, 1 ) then
+      if player.omsgChange( cooldown_omsg, msg, seconds ) then
          fail = false
       end
    end
    if fail then
-      cooldown_omsg = player.omsgAdd( msg, 1 )
+      cooldown_omsg = player.omsgAdd( msg, seconds )
+   end
+end
+
+function end_cooldown()
+   if cooldown_omsg ~= nil then
+      player.omsgRm( cooldown_omsg )
+      cooldown_omsg = nil
    end
 end
