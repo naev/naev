@@ -945,6 +945,16 @@ void gui_render( double dt )
 
 
 /**
+ * @brief Notifies GUI scripts that the player broke out of cooldown.
+ */
+void gui_cooldownEnd (void)
+{
+   if (gui_env != LUA_NOREF)
+      gui_doFunc( "end_cooldown" );
+}
+
+
+/**
  * @brief Sets map overlay bounds.
  *
  *    @param top Top boundary in pixels
