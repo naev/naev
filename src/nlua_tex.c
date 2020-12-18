@@ -26,7 +26,6 @@
 
 /* Helpers. */
 static inline uint32_t get_pixel(SDL_Surface *surface, int x, int y);
-static GLint get_filter( const char *s );
 static GLint get_clamp( const char *s );
 
 
