@@ -262,7 +262,7 @@ static int fileL_read( lua_State *L )
       NLUA_ERROR(L, _("file not open!"));
 
    /* Figure out how much to read. */
-   readlen = luaL_optlong(L,2,(long)lf->rw->size);
+   readlen = luaL_optinteger(L,2,SDL_RWsize(lf->rw));
 
    /* Create buffer and read into it. */
    buf = malloc( readlen );
