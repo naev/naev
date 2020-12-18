@@ -219,6 +219,7 @@ static int audioL_getVolume( lua_State *L )
    if (lua_gettop(L)>0) {
       la = luaL_checkaudio(L,1);
       (void) la; /* TODO */
+      volume = 0.;
    }
    else {
       volume = sound_getVolume();
