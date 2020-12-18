@@ -55215,17 +55215,17 @@ msgstr "EvanR"
 #~ "Achtung, andere Werte als der Standardwert können sichtbare Fehler "
 #~ "verursachen!"
 
-#~ msgid "Console default: 10"
-#~ msgstr "Konsolenstandard: 10"
+#~ msgid "-- Console default: %d\n"
+#~ msgstr "-- Konsolenstandard: %d\n"
 
-#~ msgid "Intro default: 18"
-#~ msgstr "Introstandard: 18"
+#~ msgid "-- Intro default: %d\n"
+#~ msgstr "-- Introstandard: %d\n"
 
-#~ msgid "Default size: 12"
-#~ msgstr "Standardgröße: 12"
+#~ msgid "-- Default size: %d\n"
+#~ msgstr "-- Standardgröße: %d\n"
 
-#~ msgid "Small size: 10"
-#~ msgstr "Kleine Größe: 10"
+#~ msgid "-- Small size: %d\n"
+#~ msgstr "-- Kleine Größe: %d\n"
 
 #~ msgid "Default font to use: unset"
 #~ msgstr "Zu benutzende Standardschrift: nicht gesetzt"
