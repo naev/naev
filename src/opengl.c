@@ -710,6 +710,24 @@ GLint gl_stringToFilter( const char *s )
 
 
 /**
+ * @brief Gets the associated min/mag filter from a string.
+ *
+ *    @param s String to get filter from.
+ *    @return Filter.
+ */
+GLint gl_stringToClamp( const char *s )
+{
+   if (strcmp(s,"clamp")==0)
+      return GL_CLAMP_TO_EDGE;
+   else if (strcmp(s,"repeat")==0)
+      return GL_REPEAT;
+   else if (strcmp(s,"mirroredrepeat")==0)
+      return GL_MIRRORED_REPEAT;
+   return 0;
+}
+
+
+/**
  * @brief Cleans up OpenGL, the works.
  */
 void gl_exit (void)
