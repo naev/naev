@@ -398,27 +398,13 @@ static int nlua_require( lua_State* L )
    /* Check to see if already included. */
    lua_getfield( L, envtab, NLUA_LOAD_TABLE ); /* t */
    if (!lua_isnil(L,-1)) {
-#if 0
-      /* check if is console. */
-      nlua_getenv(__NLUA_CURENV, "__cli");
-      int isconsole = lua_toboolean(L,-1);
-      lua_pop(L,1);
-      /* just ignore if it is the console and reload the file. */
-      if (isconsole)
-         lua_pop(L,1);
-      /* otherwise skip already loaded files to be a bit faster. */
-      else {
-         lua_getfield(L,-1,filename); /* t, f */
-         /* Already included. */
-         if (!lua_isnil(L,-1)) {
-            lua_remove(L, -2); /* val */
-            return 1;
-         }
-         lua_pop(L,2); /* */
+      lua_getfield(L,-1,filename); /* t, f */
+      /* Already included. */
+      if (!lua_isnil(L,-1)) {
+         lua_remove(L, -2); /* val */
+         return 1;
       }
-#else
-      lua_pop(L,1);
-#endif
+      lua_pop(L,2); /* */
    }
    /* Must create new NLUA_LOAD_TABLE table. */
    else {
