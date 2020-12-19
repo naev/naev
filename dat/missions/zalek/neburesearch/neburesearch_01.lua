@@ -300,7 +300,7 @@ function startAmbush()
     ships = pilot.add("Dvaered Small Patrol", "dvaered_norun", vec2.new(-1000,0))
     for i, j in ipairs(ships) do
         j:control(true)
-        j:goto(vec2.new(-8000,0))
+        j:moveto(vec2.new(-8000,0))
     end
     ambush = true
     hook.timer(15000, "ambushHail")

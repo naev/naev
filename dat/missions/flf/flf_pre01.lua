@@ -219,10 +219,10 @@ function annai()
     for i, j in ipairs(fleetFLF) do
         if j:exists() then
             j:control()
-            j:goto(player.pos()) -- NOT the player pilot, or the task may not pop properly.
-            j:goto(waypoint2, false)
-            j:goto(waypoint1, false)
-            j:goto(waypoint0 + poss[i])
+            j:moveto(player.pos()) -- NOT the player pilot, or the task may not pop properly.
+            j:moveto(waypoint2, false)
+            j:moveto(waypoint1, false)
+            j:moveto(waypoint0 + poss[i])
         end
     end
     spawner = hook.timer(1000, "spawnbase")

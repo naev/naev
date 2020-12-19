@@ -155,7 +155,7 @@ function enter()
          j:setHilight(true)
          j:setVisible(true)
          j:control()
-         j:goto(v)
+         j:moveto(v)
          table.insert(fleethooks, hook.pilot(j, "attacked", "fleetdv_attacked"))
       end
       

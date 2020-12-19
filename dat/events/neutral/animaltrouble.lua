@@ -58,7 +58,7 @@ function continueProblems()
     newlocation = vec2.newP(dist, angle)
 
     ps:taskClear()
-    ps:goto(ps:pos() + newlocation, false, false)
+    ps:moveto(ps:pos() + newlocation, false, false)
 end
 
 function buck()

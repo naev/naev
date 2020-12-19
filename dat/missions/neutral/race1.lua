@@ -177,7 +177,7 @@ function counter()
       hook.rm(counterhook)
       for i, j in ipairs(racers) do
          j:control()
-         j:goto(checkpoint[target[i]]:pos())
+         j:moveto(checkpoint[target[i]]:pos())
          hook.pilot(j, "land", "racerland")
       end
       hp1 = hook.pilot(racers[1], "idle", "racer1idle")
@@ -203,7 +203,7 @@ function nexttarget1()
       racers[1]:land(curplanet)
       hook.rm(hp1)
    else
-      racers[1]:goto(checkpoint[target[1]]:pos())
+      racers[1]:moveto(checkpoint[target[1]]:pos())
    end
 end
 
@@ -221,7 +221,7 @@ function nexttarget2()
       racers[2]:land(curplanet)
       hook.rm(hp2)
    else
-      racers[2]:goto(checkpoint[target[2]]:pos())
+      racers[2]:moveto(checkpoint[target[2]]:pos())
    end
 end
 
@@ -239,7 +239,7 @@ function nexttarget3()
       racers[3]:land(curplanet)
       hook.rm(hp3)
    else
-      racers[3]:goto(checkpoint[target[3]]:pos())
+      racers[3]:moveto(checkpoint[target[3]]:pos())
    end
 end
 

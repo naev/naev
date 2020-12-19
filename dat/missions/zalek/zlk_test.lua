@@ -269,7 +269,7 @@ function outOfControl()
    player.pilot():control()
    for i = 1, 4, 1 do
       local deltax, deltay = rnd.rnd()*1000, rnd.rnd()*1000
-      player.pilot():goto ( player.pilot():pos() + vec2.new( deltax ,deltay ), false, false )
+      player.pilot():moveto ( player.pilot():pos() + vec2.new( deltax ,deltay ), false, false )
    end
    hook.timer(20000, "backToControl")
    hook.timer(1000, "outOftext")

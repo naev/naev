@@ -205,10 +205,10 @@ function enter()
 end
 
 function idle()
-  kidnappers:goto(planet.get("Zhiru"):pos() + vec2.new( 800,  800), false)
-  kidnappers:goto(planet.get("Zhiru"):pos() + vec2.new(-800,  800), false)
-  kidnappers:goto(planet.get("Zhiru"):pos() + vec2.new(-800, -800), false)
-  kidnappers:goto(planet.get("Zhiru"):pos() + vec2.new( 800, -800), false)
+  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new( 800,  800), false)
+  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new(-800,  800), false)
+  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new(-800, -800), false)
+  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new( 800, -800), false)
 end
 
 function attackedkidnappers()

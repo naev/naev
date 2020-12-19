@@ -171,7 +171,7 @@ function takeoff()
       willie:setHilight(true)
       willie:hailPlayer()
       willie:control()
-      willie:goto(player.pilot():pos() + vec2.new( 150, 75), true)
+      willie:moveto(player.pilot():pos() + vec2.new( 150, 75), true)
       tk.msg( title[5], text[5] )
       hailhook = hook.pilot(willie, "hail", "hail")
    end
