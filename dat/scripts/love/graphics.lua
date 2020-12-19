@@ -330,6 +330,7 @@ function graphics.Font:getWrap( text, wraplimit )
    return maxw, wrappedtext
 end
 function graphics.Font:getHeight() return self.height end
+function graphics.Font:getWidth( text ) return self.font:width( text ) end
 function graphics.Font:getLineHeight() return self.lineheight end
 function graphics.Font:setLineHeight( height ) self.lineheight = height end
 function graphics.Font:getFilter() return self.min, self.mag, self.anisotropy end
