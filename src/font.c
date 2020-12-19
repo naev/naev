@@ -171,6 +171,7 @@ static void gl_fontRenderEnd (void);
 /*
  * Raw printing functions.
  */
+/* TODO remove this printOutline to make use of the font_outline shader instead. */
 static void gl_printOutline( const glFont *ft_font,
       const int width, const int height,
       double bx, double by, int line_height,
@@ -1265,6 +1266,8 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
          memset( c->data, 0, sizeof(GLubyte) * w*h );
       }
       else {
+         /* TODO pad the image a bit (and correct offset and such) so that we
+          * don't get stuff cut off as seen in the "I" character. */
          //memcpy( c->data, bitmap.buffer, sizeof(GLubyte) * w*h ); // regular rendering
          c->data = make_distance_mapb( bitmap.buffer, w, h ); // signed distance field
       }
