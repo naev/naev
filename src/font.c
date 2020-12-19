@@ -1137,8 +1137,6 @@ static void gl_fontRenderStart( const glFontStash* stsh, double h, double x, dou
    else {
       glUseProgram(shaders.font_outline.program);
       gl_uniformColor(shaders.font_outline.outline_color, &cGrey10);
-      glUniform1f(shaders.font_outline.outline_center, 0.55 );
-
       font_shader_color = shaders.font_outline.color;
       font_shader_vertex = shaders.font_outline.vertex;
       font_shader_tex_coord = shaders.font_outline.tex_coord;

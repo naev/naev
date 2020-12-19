@@ -1,14 +1,14 @@
 uniform vec4 color;
 uniform vec4 outline_color;
-uniform float outline_center;
 uniform vec4 glow_color;
-uniform float glow_center;
 uniform sampler2D sampler;
 
 in vec2 tex_coord_out;
 out vec4 color_out;
 
 const float glyph_center   = 0.5;
+const float outline_center = 0.55;
+const float glow_center    = 1.25;
 
 void main(void) {
    float dist = texture(sampler, tex_coord_out).r;
