@@ -35,6 +35,7 @@
 #include "utf8.h"
 #include "distance_field.h"
 
+#define FONT_DISTANCE_FIELD_SIZE   32 /**< Size to render the fonts at. */
 #define HASH_LUT_SIZE 512 /**< Size of glyph look up table. */
 #define MAX_ROWS 128 /**< Max number of rows per texture cache. */
 #define DEFAULT_TEXTURE_SIZE 1024 /**< Default size of texture caches for glyphs. */
@@ -153,8 +154,8 @@ static int font_restoreLast      = 0; /**< Restore last colour. */
 /*
  * prototypes
  */
-static size_t font_limitSize( glFontStash *ft_font, int *width,
-      const char *text, const int max );
+static size_t font_limitSize( glFontStash *stsh, double h,
+      int *width, const char *text, const int max );
 static const glColour* gl_fontGetColour( uint32_t ch );
 /* Get unicode glyphs from cache. */
 static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch );
@@ -163,7 +164,7 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch );
  * In particular, instead of writing char by char, they should be batched up by textures and rendered
  * when gl_fontRenderEnd() is called, saving lots of opengl calls.
  */
-static void gl_fontRenderStart( const glFontStash *stsh, double x, double y, const glColour *c );
+static void gl_fontRenderStart( const glFontStash *stsh, double h, double x, double y, const glColour *c );
 static int gl_fontRenderGlyph( glFontStash *stsh, uint32_t ch, const glColour *c, int state, int forceColor );
 static void gl_fontRenderEnd (void);
 
@@ -273,8 +274,6 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
       gr = &tex->rows[0];
       gr->h = ch->h;
    }
-
-   /* Convert to signed distance transform. */
 
    /* Upload data. */
    glBindTexture( GL_TEXTURE_2D, tex->id );
@@ -452,16 +451,17 @@ void gl_printStore( glFontRestore *restore, const char *text )
 /**
  * @brief Limits the text to max.
  *
- *    @param ft_font Font to calculate width with.
+ *    @param stsh Font stash to calculate width with.
+ *    @param h Height to render font at.
  *    @param width Actual width it takes up.
  *    @param text Text to parse.
  *    @param max Max to look for.
  *    @return Number of characters that fit.
  */
-static size_t font_limitSize( glFontStash *ft_font, int *width,
-      const char *text, const int max )
+static size_t font_limitSize( glFontStash *stsh, double h,
+      int *width, const char *text, const int max )
 {
-   int n;
+   GLfloat n, scale;
    size_t i;
    uint32_t ch;
    int adv_x;
@@ -472,7 +472,8 @@ static size_t font_limitSize( glFontStash *ft_font, int *width,
 
    /* limit size */
    i = 0;
-   n = 0;
+   n = 0.;
+   scale = (GLfloat)h / (GLfloat)stsh->h;
    while ((ch = u8_nextchar( text, &i ))) {
       /* Ignore escape sequence. */
       if (ch == '\a') {
@@ -482,20 +483,20 @@ static size_t font_limitSize( glFontStash *ft_font, int *width,
       }
 
       /* Count length. */
-      glFontGlyph *glyph = gl_fontGetGlyph( ft_font, ch );
+      glFontGlyph *glyph = gl_fontGetGlyph( stsh, ch );
       adv_x = glyph->adv_x;
 
       /* See if enough room. */
-      n += adv_x;
-      if (n > max) {
+      n += adv_x * scale;
+      if ((int)round(n) > max) {
          u8_dec( text, &i );
-         n -= adv_x; /* actual size */
+         n -= adv_x * scale; /* actual size */
          break;
       }
    }
 
    if (width != NULL)
-      (*width) = n;
+      (*width) = (int)round(n);
    return i;
 }
 
@@ -511,7 +512,7 @@ static size_t font_limitSize( glFontStash *ft_font, int *width,
 int gl_printWidthForTextLine( const glFont *ft_font, const char *text, int width )
 {
    glFontStash *stsh = gl_fontGetStash( ft_font );
-   return font_limitSize( stsh, NULL, text, width );
+   return font_limitSize( stsh, ft_font->h, NULL, text, width );
 }
 
 
@@ -531,7 +532,7 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
    int lastspace, lastwidth;
    size_t i;
    uint32_t ch;
-   GLfloat n;
+   GLfloat n, scale;
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -539,6 +540,7 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
 
    /* limit size per line */
    lastspace = 0; /* last ' ' or '\n' in the text */
+   scale = (GLfloat)ft_font->h / (GLfloat)stsh->h;
    n = 0.; /* current width */
    i = 0; /* current position */
    while ((text[i] != '\n') && (text[i] != '\0')) {
@@ -567,7 +569,7 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
       /* Unicode. */
       glFontGlyph *glyph = gl_fontGetGlyph( stsh, ch );
       if (glyph!=NULL)
-         n += glyph->adv_x;
+         n += glyph->adv_x * scale;
 
       /* Check if out of bounds. */
       if (n > (GLfloat)width) {
@@ -578,7 +580,7 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
          }
          else {
             if (outw != NULL)
-               *outw = n - glyph->adv_x;
+               *outw = (int)round(n - glyph->adv_x * scale);
             u8_dec( text, &i );
             return i;
          }
@@ -587,7 +589,7 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
 
    /* Ran out of text so just return. */
    if (outw != NULL)
-      *outw = n;
+      *outw = (int)round(n);
    return i;
 }
 
@@ -665,7 +667,7 @@ static int gl_printRawBase( const glFont *ft_font,
    /* Render it. */
    s = 0;
    i = 0;
-   gl_fontRenderStart(stsh, x, y, c);
+   gl_fontRenderStart(stsh, ft_font->h, x, y, c);
    while ((ch = u8_nextchar( text, &i )))
       s = gl_fontRenderGlyph( stsh, ch, c, s, forceColor );
    gl_fontRenderEnd();
@@ -769,11 +771,11 @@ static int gl_printMaxRawBase( const glFont *ft_font,
    glFontStash *stsh = gl_fontGetStash( ft_font );
 
    /* Limit size. */
-   ret = font_limitSize( stsh, NULL, text, max );
+   ret = font_limitSize( stsh, ft_font->h, NULL, text, max );
 
    /* Render it. */
    s = 0;
-   gl_fontRenderStart(stsh, x, y, c);
+   gl_fontRenderStart(stsh, ft_font->h, x, y, c);
    i = 0;
    while ((ch = u8_nextchar( text, &i )) && (i <= ret))
       s = gl_fontRenderGlyph( stsh, ch, c, s, forceColor );
@@ -867,12 +869,12 @@ static int gl_printMidRawBase( const glFont *ft_font,
 
    /* limit size */
    n = 0;
-   ret = font_limitSize( stsh, &n, text, width );
+   ret = font_limitSize( stsh, ft_font->h, &n, text, width );
    x += (double)(width - n)/2.;
 
    /* Render it. */
    s = 0;
-   gl_fontRenderStart(stsh, x, y, c);
+   gl_fontRenderStart(stsh, ft_font->h, x, y, c);
    i = 0;
    while ((ch = u8_nextchar( text, &i )) && (i <= ret))
       s = gl_fontRenderGlyph( stsh, ch, c, s, forceColor );
@@ -973,11 +975,11 @@ static int gl_printTextRawBase( const glFont *ft_font,
    glFontStash *stsh = gl_fontGetStash( ft_font );
 
    x = bx;
-   y = by + height - (double)stsh->h; /* y is top left corner */
+   y = by + height - (double)ft_font->h; /* y is top left corner */
 
    /* Defalut to 1.5 line height. */
    if (line_height == 0)
-      line_height = 1.5*(double)stsh->h;
+      line_height = 1.5*(double)ft_font->h;
 
    /* Clears restoration. */
    gl_printRestoreClear();
@@ -993,7 +995,7 @@ static int gl_printTextRawBase( const glFont *ft_font,
       gl_printRestoreLast();
 
       /* Render it. */
-      gl_fontRenderStart(stsh, x, y, c);
+      gl_fontRenderStart(stsh, ft_font->h, x, y, c);
       for (i=p; i<ret; ) {
          ch = u8_nextchar( text, &i);
          s = gl_fontRenderGlyph( stsh, ch, c, s, forceColor );
@@ -1090,7 +1092,7 @@ int gl_printText( const glFont *ft_font,
  */
 int gl_printWidthRaw( const glFont *ft_font, const char *text )
 {
-   GLfloat n;
+   GLfloat n, scale;
    size_t i;
    uint32_t ch;
 
@@ -1098,6 +1100,7 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
       ft_font = &gl_defFont;
    glFontStash *stsh = gl_fontGetStash( ft_font );
 
+   scale = (GLfloat)ft_font->h / (GLfloat)stsh->h;
    n = 0.;
    i = 0;
    while ((ch = u8_nextchar( text, &i ))) {
@@ -1111,10 +1114,10 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
 
       /* Increment width. */
       glFontGlyph *glyph = gl_fontGetGlyph( stsh, ch );
-      n += glyph->adv_x;
+      n += glyph->adv_x * scale;
    }
 
-   return (int)n;
+   return (int)round(n);
 }
 
 
@@ -1282,13 +1285,15 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
 /**
  * @brief Starts the rendering engine.
  */
-static void gl_fontRenderStart( const glFontStash* font, double x, double y, const glColour *c )
+static void gl_fontRenderStart( const glFontStash* font, double h, double x, double y, const glColour *c )
 {
-   double a;
+   double a, s;
 
    glUseProgram(shaders.font.program);
 
    font_projection_mat = gl_Matrix4_Translate(gl_view_matrix, round(x), round(y), 0);
+   s = h / font->h;
+   font_projection_mat = gl_Matrix4_Scale(font_projection_mat, s, s, 1 );
 
    /* Handle colour. */
    if (font_restoreLast) {
@@ -1556,8 +1561,8 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
    if (!(flags & FONT_FLAG_DONTREUSE)) {
       for (i=0; i<(size_t)array_size(avail_fonts); i++) {
          stsh = &avail_fonts[i];
-         if (stsh->h != h)
-            continue;
+         //if (stsh->h != h)
+         //   continue;
          if (strcmp(stsh->fname,fname)!=0)
             continue;
          /* Found a match! */
@@ -1581,7 +1586,7 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
    stsh->minfilter = GL_NEAREST;
    stsh->tw = DEFAULT_TEXTURE_SIZE;
    stsh->th = DEFAULT_TEXTURE_SIZE;
-   stsh->h = font->h;
+   stsh->h = FONT_DISTANCE_FIELD_SIZE;
 
    /* Set up font stuff for next glyphs. */
    stsh->ft = array_create( glFontStashFreetype );
@@ -1619,7 +1624,7 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
          if (FT_IS_SCALABLE(face)) {
             if (FT_Set_Char_Size( face,
                      0, /* Same as width. */
-                     h << 6, /* In 1/64th of a pixel. */
+                     stsh->h << 6, /* In 1/64th of a pixel. */
                      96, /* Create at 96 DPI */
                      96)) /* Create at 96 DPI */
                WARN(_("FT_Set_Char_Size failed."));
