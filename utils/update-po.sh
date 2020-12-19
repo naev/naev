@@ -28,7 +28,7 @@ find dat/outfits -name "*.xml" >> "$TMPFILE"
 find dat/ships -name "*.xml" >> "$TMPFILE"
 find dat/ssys -name "*.xml" >> "$TMPFILE"
 
-LC_ALL=C sort "$TMPFILE" > "$ROOT/po/POTFILES.in"
+LC_ALL=C sort "$TMPFILE" >> "$ROOT/po/POTFILES.in"
 
 rm "$TMPFILE" # clean-up
 
