@@ -64,8 +64,8 @@ function create()
    lockonB = tex.open( base .. "padlockB.png" )
    active =  tex.open( base .. "active.png" )
    
-   gui.targetPlanetGFX( tex.open( base .. "radar_planet.png" ) )
-   gui.targetPilotGFX(  tex.open( base .. "radar_ship.png" ) )
+   gui.targetPlanetGFX( tex.open( base .. "radar_planet.png", 2, 2 ) )
+   gui.targetPilotGFX(  tex.open( base .. "radar_ship.png", 2, 2 ) )
    
    --Get positions
    --Radar

@@ -767,9 +767,6 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const u
    SDL_Surface *surface;
    npng_t *npng;
    png_uint_32 w, h;
-   int sx, sy;
-   char *str;
-   int len;
 
    /* Placeholder for warnings. */
    if (path==NULL)
@@ -783,12 +780,6 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const u
    }
    npng_dim( npng, &w, &h );
 
-   /* Process metadata. */
-   len = npng_metadata( npng, "sx", &str );
-   sx  = (len > 0) ? atoi(str) : 1;
-   len = npng_metadata( npng, "sy", &str );
-   sy  = (len > 0) ? atoi(str) : 1;
-
    /* Load surface. */
    surface  = npng_readSurface( npng, gl_needPOT(), 1 );
    npng_close( npng );
@@ -799,9 +790,9 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const u
    }
 
    if (flags & OPENGL_TEX_MAPTRANS)
-      texture = gl_loadImagePadTrans( path, surface, rw, flags, w, h, sx, sy, 1 );
+      texture = gl_loadImagePadTrans( path, surface, rw, flags, w, h, 1, 1, 1 );
    else
-      texture = gl_loadImagePad( path, surface, flags, w, h, sx, sy, 1 );
+      texture = gl_loadImagePad( path, surface, flags, w, h, 1, 1, 1 );
 
    return texture;
 }

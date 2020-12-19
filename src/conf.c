@@ -156,10 +156,10 @@ void conf_setDefaults (void)
    conf.zoom_stars   = 1.;
 
    /* Font sizes. */
-   conf.font_size_console = 10;
-   conf.font_size_intro   = 18;
-   conf.font_size_def     = 12;
-   conf.font_size_small   = 11;
+   conf.font_size_console = FONT_SIZE_CONSOLE_DEFAULT;
+   conf.font_size_intro   = FONT_SIZE_INTRO_DEFAULT;
+   conf.font_size_def     = FONT_SIZE_DEF_DEFAULT;
+   conf.font_size_small   = FONT_SIZE_SMALL_DEFAULT;
    conf.font_name_default = NULL;
    conf.font_name_monospace = NULL;
 
@@ -1040,13 +1040,13 @@ int conf_saveConfig ( const char* file )
    /* Fonts. */
    conf_saveComment(_("Font sizes (in pixels) for Naev"));
    conf_saveComment(_("Warning, setting to other than the default can cause visual glitches!"));
-   conf_saveComment(_("Console default: 10"));
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Console default: %d\n"), FONT_SIZE_CONSOLE_DEFAULT);
    conf_saveInt("font_size_console",conf.font_size_console);
-   conf_saveComment(_("Intro default: 18"));
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Intro default: %d\n"), FONT_SIZE_INTRO_DEFAULT);
    conf_saveInt("font_size_intro",conf.font_size_intro);
-   conf_saveComment(_("Default size: 12"));
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Default size: %d\n"), FONT_SIZE_DEF_DEFAULT);
    conf_saveInt("font_size_def",conf.font_size_def);
-   conf_saveComment(_("Small size: 10"));
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Small size: %d\n"), FONT_SIZE_SMALL_DEFAULT);
    conf_saveInt("font_size_small",conf.font_size_small);
    conf_saveComment(_("Default font to use: unset"));
    if (conf.font_name_default) {

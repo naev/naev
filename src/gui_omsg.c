@@ -80,6 +80,8 @@ static void omsg_free( omsg_t *omsg )
       for (i=0; i<omsg->nlines; i++)
          free( omsg->msg[i] );
       free( omsg->msg );
+      omsg->msg = NULL;
+      omsg->nlines = 0;
    }
 }
 
@@ -89,18 +91,11 @@ static void omsg_free( omsg_t *omsg )
  */
 static void omsg_setMsg( omsg_t *omsg, const char *msg )
 {
-   int i, l, n, s, m;
+   int l, n, s, m;
    glFont *font;
 
    /* Clean up after old stuff. */
-   if (omsg->msg != NULL) {
-      for (i=0; i<omsg->nlines; i++)
-         free( omsg->msg[i] );
-      free( omsg->msg );
-
-      omsg->msg    = 0;
-      omsg->nlines = 0;
-   }
+   omsg_free( omsg );
 
    /* Create data. */
    l  = strlen( msg );
@@ -231,19 +226,6 @@ void omsg_render( double dt )
    for (i=0; i<array_size(omsg_array); i++) {
       omsg  = &omsg_array[i];
 
-      /* Check if time to erase. */
-      omsg->duration -= dt;
-      if (omsg->duration < 0.) {
-         omsg_free( omsg );
-         array_erase( &omsg_array, &omsg[0], &omsg[1] );
-         i--;
-         continue;
-      }
-
-      /* Must have a message. */
-      if (omsg->msg == NULL)
-         continue;
-
       /* Render. */
       font = omsg_getFont( omsg->font );
       col = *omsg->col;
@@ -254,6 +236,15 @@ void omsg_render( double dt )
          y -= font->h * 1.5;
          gl_printRestoreLast();
          gl_printMidRaw( font, omsg_center_w, x, y, &col, -1., omsg->msg[j] );
+      }
+
+      /* Check if time to erase. */
+      omsg->duration -= dt;
+      if (omsg->duration < 0.) {
+         omsg_free( omsg );
+         array_erase( &omsg_array, &omsg[0], &omsg[1] );
+         i--;
+         continue;
       }
    }
 }

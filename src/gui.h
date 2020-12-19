@@ -56,6 +56,7 @@ void gui_forceBlink (void);
  */
 void gui_messageInit( int width, int x, int y );
 void gui_clearMessages (void);
+void gui_cooldownEnd (void);
 void gui_messageScrollUp( int lines );
 void gui_messageScrollDown( int lines );
 

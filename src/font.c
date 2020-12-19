@@ -865,8 +865,6 @@ int gl_printTextRaw( const glFont *ft_font,
 }
 
 
-
-
 /**
  * @brief Prints a block of text that fits in the dimensions given.
  *
