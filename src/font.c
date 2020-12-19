@@ -43,6 +43,7 @@
 static gl_Matrix4 font_projection_mat; /**< Projection matrix. */
 static GLuint font_shader_vertex; /**< Shader vertex info. */
 static GLuint font_shader_tex_coord; /**< Shader texture info. */
+static GLuint font_shader_color; /**< Main color for the shader. */
 
 
 /**
@@ -1076,7 +1077,6 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
       if (bitmap.pixel_mode != FT_PIXEL_MODE_GRAY)
          WARN(_("Font '%s' not using FT_PIXEL_MODE_GRAY!"), ft->fontname);
 
-      /* need the POT wrapping for opengl */
       w = bitmap.width;
       h = bitmap.rows;
 
@@ -1086,8 +1086,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
          memset( c->data, 0, sizeof(GLubyte) * w*h );
       }
       else {
-         /* TODO pad the image a bit (and correct offset and such) so that we
-          * don't get stuff cut off as seen in the "I" character. */
+         /* TODO is padding necessary? */
          //memcpy( c->data, bitmap.buffer, sizeof(GLubyte) * w*h ); // regular rendering
          c->data = make_distance_mapb( bitmap.buffer, w, h ); // signed distance field
       }
@@ -1133,18 +1132,20 @@ static void gl_fontRenderStart( const glFontStash* stsh, double h, double x, dou
 
    if (outlineR == 0.) {
       glUseProgram(shaders.font.program);
-      gl_uniformAColor(shaders.font.color, col, a);
+      font_shader_color = shaders.font.color;
       font_shader_vertex = shaders.font.vertex;
       font_shader_tex_coord = shaders.font.tex_coord;
    }
    else {
       glUseProgram(shaders.font_outline.program);
-      gl_uniformAColor(shaders.font_outline.color, col, a);
       gl_uniformColor(shaders.font_outline.outline_color, &cGrey10);
       glUniform1f(shaders.font_outline.outline_center, 0.55 );
-      font_shader_vertex = shaders.font.vertex;
-      font_shader_tex_coord = shaders.font.tex_coord;
+
+      font_shader_color = shaders.font_outline.color;
+      font_shader_vertex = shaders.font_outline.vertex;
+      font_shader_tex_coord = shaders.font_outline.tex_coord;
    }
+   gl_uniformAColor(font_shader_color, col, a);
 
    font_projection_mat = gl_Matrix4_Translate(gl_view_matrix, round(x), round(y), 0);
    s = h / FONT_DISTANCE_FIELD_SIZE;
@@ -1292,12 +1293,12 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
       a   = (c==NULL) ? 1. : c->a;
       if (col == NULL) {
          if (c==NULL)
-            gl_uniformColor(shaders.font.color, &cWhite);
+            gl_uniformColor(font_shader_color, &cWhite);
          else
-            gl_uniformColor(shaders.font.color, c);
+            gl_uniformColor(font_shader_color, c);
       }
       else
-         gl_uniformAColor(shaders.font.color, col, a);
+         gl_uniformAColor(font_shader_color, col, a );
       font_lastCol = col;
       return 0;
    }
