@@ -30,7 +30,7 @@
 #include "utf8.h"
 #include "distance_field.h"
 
-#define FONT_DISTANCE_FIELD_SIZE   32 /**< Size to render the fonts at. */
+#define FONT_DISTANCE_FIELD_SIZE   64 /**< Size to render the fonts at. */
 #define HASH_LUT_SIZE 512 /**< Size of glyph look up table. */
 #define DEFAULT_TEXTURE_SIZE 1024 /**< Default size of texture caches for glyphs. */
 #define MAX_ROWS 64 /**< Max number of rows per texture cache. */
@@ -1498,9 +1498,11 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
    stsh->vbo_vert = gl_vboCreateStatic( sizeof(GLshort)*8*stsh->mvbo, stsh->vbo_vert_data );
 
    /* Initializes ASCII. */
+#if 0
    for (i=0; i<128; i++)
       if (isprint(i)) /* Only care about printables. */
          gl_fontGetGlyph( stsh, i );
+#endif
 
    return 0;
 }
