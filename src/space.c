@@ -2249,8 +2249,7 @@ int planet_setRadiusFromGFX(Planet* planet)
    SDL_RWops *rw;
    npng_t *npng;
    png_uint_32 w, h;
-   int nbuf;
-   char *buf, path[PATH_MAX], str[PATH_MAX];
+   char path[PATH_MAX];
 
    /* New path. */
    nsnprintf( path, sizeof(path), "%s%s", PLANET_GFX_SPACE_PATH, planet->gfx_spacePath );
@@ -2264,15 +2263,7 @@ int planet_setRadiusFromGFX(Planet* planet)
       npng = npng_open( rw );
       if (npng != NULL) {
          npng_dim( npng, &w, &h );
-         nbuf = npng_metadata( npng, "radius", &buf );
-         if (nbuf > 0) {
-            strncpy( str, buf, MIN( (unsigned int)nbuf, sizeof(str) ) );
-            str[ nbuf ] = '\0';
-            planet->radius = atof( str );
-         }
-         else
-            planet->radius = (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
-
+         planet->radius = (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
          npng_close( npng );
       }
       SDL_RWclose( rw );

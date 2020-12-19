@@ -115,8 +115,8 @@ function create()
    button_mouseover = tex.open( base .. "buttonHil.png" )
    button_pressed = tex.open( base .. "buttonPre.png" )
    button_disabled = tex.open( base .. "buttonDis.png" )
-   gui.targetPlanetGFX( tex.open( base .. "radar_planet.png" ) )
-   gui.targetPilotGFX(  tex.open( base .. "radar_ship.png" ) )
+   gui.targetPlanetGFX( tex.open( base .. "radar_planet.png", 2, 2 ) )
+   gui.targetPilotGFX(  tex.open( base .. "radar_ship.png", 2, 2 ) )
 
 
    --Positions
