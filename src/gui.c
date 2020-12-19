@@ -945,6 +945,16 @@ void gui_render( double dt )
 
 
 /**
+ * @brief Notifies GUI scripts that the player broke out of cooldown.
+ */
+void gui_cooldownEnd (void)
+{
+   if (gui_env != LUA_NOREF)
+      gui_doFunc( "end_cooldown" );
+}
+
+
+/**
  * @brief Sets map overlay bounds.
  *
  *    @param top Top boundary in pixels
@@ -1974,7 +1984,7 @@ static int gui_runFunc( const char* func, int nargs, int nret )
       err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       WARN(_("GUI Lua -> '%s': %s"),
             func, (err) ? err : _("unknown error"));
-      lua_pop(naevL,2);
+      lua_pop(naevL,1);
       return ret;
    }
 
