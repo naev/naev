@@ -32,8 +32,8 @@
 
 #define FONT_DISTANCE_FIELD_SIZE   32 /**< Size to render the fonts at. */
 #define HASH_LUT_SIZE 512 /**< Size of glyph look up table. */
-#define MAX_ROWS 128 /**< Max number of rows per texture cache. */
 #define DEFAULT_TEXTURE_SIZE 1024 /**< Default size of texture caches for glyphs. */
+#define MAX_ROWS 64 /**< Max number of rows per texture cache. */
 
 
 /**
@@ -184,7 +184,7 @@ static glFontStash *gl_fontGetStash( const glFont *font )
 static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *glyph )
 {
    int i, j, n;
-   glFontRow *r, *gr;
+   glFontRow *r, *gr, *lr;
    glFontTex *tex;
    GLfloat *vbo_tex;
    GLshort *vbo_vert;
@@ -198,7 +198,7 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
       for (j=0; j<MAX_ROWS; j++) {
          r = &stsh->tex->rows[j];
          /* Fits in current row, so use that. */
-         if ((r->h == ch->h) && (r->x+ch->w < stsh->tw)) {
+         if ((r->h == ch->h) && (r->x + ch->w <= stsh->tw)) {
             tex = &stsh->tex[i];
             gr = r;
             break;
@@ -206,11 +206,12 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
          /* If not empty row, skip. */
          if (r->h != 0)
             continue;
-         /* See if height fits. */
-         if ((j==0) || (stsh->tex->rows[j-1].y+stsh->tex->rows[j-1].h+ch->h < stsh->th)) {
+         /* See if height fits to create a new row. */
+         lr = &stsh->tex->rows[j-1];
+         if ((j==0) || (lr->y + lr->h + ch->h <= stsh->th)) {
             r->h = ch->h;
             if (j>0)
-               r->y = stsh->tex->rows[j-1].y + stsh->tex->rows[j-1].h;
+               r->y = lr->y + lr->h;
             tex = &stsh->tex[i];
             gr = r;
             break;
@@ -218,15 +219,16 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
       }
    }
 
-   /* Allocate new texture. */
+   /* Didn't fit so allocate new texture. */
    if (gr == NULL) {
       tex = &array_grow( &stsh->tex );
       memset( stsh->tex, 0, sizeof(glFontTex) );
 
+      /* Create new texture. */
       glGenTextures( 1, &tex->id );
       glBindTexture( GL_TEXTURE_2D, tex->id );
 
-      /* Shouldn't ever scale - we'll generate appropriate size font. */
+      /* Set a sane default minification and magnification filter. */
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, stsh->magfilter);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, stsh->minfilter);
 
@@ -241,6 +243,7 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
       /* Check for errors. */
       gl_checkErr();
 
+      /* Create a new entry at the beginning of the first row with our target height. */
       gr = &tex->rows[0];
       gr->h = ch->h;
    }
@@ -1417,8 +1420,8 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
    font->h = h;
 
    /* Default stuff. */
-   stsh->magfilter = GL_NEAREST;
-   stsh->minfilter = GL_NEAREST;
+   stsh->magfilter = GL_LINEAR;
+   stsh->minfilter = GL_LINEAR;
    stsh->tw = DEFAULT_TEXTURE_SIZE;
    stsh->th = DEFAULT_TEXTURE_SIZE;
 
