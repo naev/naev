@@ -55224,8 +55224,8 @@ msgstr "EvanR"
 #~ msgid "Default size: 12"
 #~ msgstr "Standardgröße: 12"
 
-#~ msgid "Small size: 10"
-#~ msgstr "Kleine Größe: 10"
+#~ msgid "Small size: 11"
+#~ msgstr "Kleine Größe: 11"
 
 #~ msgid "Default font to use: unset"
 #~ msgstr "Zu benutzende Standardschrift: nicht gesetzt"

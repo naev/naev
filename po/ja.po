@@ -34302,7 +34302,7 @@ msgid "Default size: 12"
 msgstr ""
 
 #: src/conf.c:1082
-msgid "Small size: 10"
+msgid "Small size: 11"
 msgstr ""
 
 #: src/conf.c:1084
