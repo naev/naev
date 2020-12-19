@@ -7,15 +7,10 @@
  *
  * @brief OpenGL font rendering routines.
  *
- * Use a displaylist to store ASCII chars rendered with freefont
- * There are several drawing methods depending on whether you want
- * print it all, print to a max width, print centered or print a
- * block of text.
+ * We use distance fields [1] to render high quality fonts with the help of
+ * some shaders. Characters are generated on demand using a texture atlas.
  *
- * There are hard-coded size limits.  256 characters for all routines
- * except gl_printText which has a 1024 limit.
- *
- * @todo check if length is too long
+ * [1]: https://steamcdn-a.akamaihd.net/apps/valve/2007/SIGGRAPH2007_AlphaTestedMagnification.pdf
  */
 
 
@@ -41,7 +36,13 @@
 #define DEFAULT_TEXTURE_SIZE 1024 /**< Default size of texture caches for glyphs. */
 
 
-static gl_Matrix4 font_projection_mat;
+/**
+ * OpenGL rendering stuff. Since we can't actually render with multiple threads
+ * we can be lazy and use global variables.
+ */
+static gl_Matrix4 font_projection_mat; /**< Projection matrix. */
+static GLuint font_shader_vertex; /**< Shader vertex info. */
+static GLuint font_shader_tex_coord; /**< Shader texture info. */
 
 
 /**
@@ -327,9 +328,9 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
    glyph->tex = tex;
 
    /* Since the VBOs have possibly changed, we have to reset the data. */
-   gl_vboActivateAttribOffset( stsh->vbo_vert, shaders.font.vertex,
+   gl_vboActivateAttribOffset( stsh->vbo_vert, font_shader_vertex,
          0, 2, GL_SHORT, 0 );
-   gl_vboActivateAttribOffset( stsh->vbo_tex, shaders.font.tex_coord,
+   gl_vboActivateAttribOffset( stsh->vbo_tex, font_shader_tex_coord,
          0, 2, GL_FLOAT, 0 );
 
    return 0;
@@ -1107,38 +1108,52 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
 static void gl_fontRenderStart( const glFontStash* stsh, double h, double x, double y, const glColour *c, double outlineR )
 {
    double a, s;
+   const glColour *col;
 
    outlineR = outlineR==-1 ? 1 : MAX( outlineR, 0 );
-   (void) outlineR; /* TODO: At this point, we ideally stuff the radius directly into the shader. */
-   /* TODO: If we keep the separate shaders for outlined and non-outlined, we need to set up state so
-    * that gl_fontRenderGlyph and gl_fontRenderEnd work with the right one (or pass outlineR to them too). */
-   glUseProgram(shaders.font.program);
+
+   /* Handle colour. */
+   if (font_restoreLast) {
+      a   = (c==NULL) ? 1. : c->a;
+      col = font_lastCol;
+   }
+   else {
+      if (c==NULL) {
+         col = &cWhite;
+         a = 1.;
+      }
+      else {
+         col = c;
+         a = c->a;
+      }
+   }
+
+   if (outlineR == 0.) {
+      glUseProgram(shaders.font.program);
+      gl_uniformAColor(shaders.font.color, col, a);
+      font_shader_vertex = shaders.font.vertex;
+      font_shader_tex_coord = shaders.font.tex_coord;
+   }
+   else {
+      glUseProgram(shaders.font_outline.program);
+      gl_uniformAColor(shaders.font_outline.color, col, a);
+      gl_uniformColor(shaders.font_outline.outline_color, &cGrey10);
+      glUniform1f(shaders.font_outline.outline_center, 0.55 );
+      font_shader_vertex = shaders.font.vertex;
+      font_shader_tex_coord = shaders.font.tex_coord;
+   }
 
    font_projection_mat = gl_Matrix4_Translate(gl_view_matrix, round(x), round(y), 0);
    s = h / FONT_DISTANCE_FIELD_SIZE;
    font_projection_mat = gl_Matrix4_Scale(font_projection_mat, s, s, 1 );
 
-   /* Handle colour. */
-   gl_uniformColor(shaders.font_outline.color, &cGrey10);
-   if (font_restoreLast) {
-      a   = (c==NULL) ? 1. : c->a;
-      gl_uniformAColor(shaders.font.color, font_lastCol, a);
-   }
-   else {
-      if (c==NULL)
-         gl_uniformColor(shaders.font.color, &cWhite);
-      else
-         gl_uniformColor(shaders.font.color, c);
-   }
    font_restoreLast = 0;
 
    /* Activate the appropriate VBOs. */
-   glEnableVertexAttribArray( shaders.font.vertex );
-   gl_vboActivateAttribOffset( stsh->vbo_vert, shaders.font.vertex,
-         0, 2, GL_SHORT, 0 );
-   glEnableVertexAttribArray( shaders.font.tex_coord );
-   gl_vboActivateAttribOffset( stsh->vbo_tex, shaders.font.tex_coord,
-         0, 2, GL_FLOAT, 0 );
+   glEnableVertexAttribArray( font_shader_vertex );
+   gl_vboActivateAttribOffset( stsh->vbo_vert, font_shader_vertex, 0, 2, GL_SHORT, 0 );
+   glEnableVertexAttribArray( font_shader_tex_coord );
+   gl_vboActivateAttribOffset( stsh->vbo_tex, font_shader_tex_coord, 0, 2, GL_FLOAT, 0 );
 }
 
 
@@ -1314,8 +1329,8 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
  */
 static void gl_fontRenderEnd (void)
 {
-   glDisableVertexAttribArray( shaders.font.vertex );
-   glDisableVertexAttribArray( shaders.font.tex_coord );
+   glDisableVertexAttribArray( font_shader_vertex );
+   glDisableVertexAttribArray( font_shader_tex_coord );
    glUseProgram(0);
 
    /* Check for errors. */
