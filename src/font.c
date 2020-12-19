@@ -194,36 +194,52 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
    GLshort vx, vy, vw, vh;
 
    /* Find free row. */
+   tex = NULL;
    gr = NULL;
    for (i=0; i<array_size( stsh->tex ); i++) {
       for (j=0; j<MAX_ROWS; j++) {
          r = &stsh->tex->rows[j];
-         /* Fits in current row, so use that. */
-         if ((r->h == ch->h) && (r->x + ch->w <= stsh->tw)) {
-            tex = &stsh->tex[i];
-            gr = r;
-            break;
+         /* Not empty row and doesn't fit. */
+         if ((r->h != 0) && (r->h != ch->h))
+            continue;
+         if (r->h == ch->h) {
+            /* Fits in current row, so use that. */
+            if (r->x + ch->w <= stsh->tw) {
+               tex = &stsh->tex[i];
+               gr = r;
+               break;
+            }
+            else
+               continue; /* Didn't fit so continue looking. */
          }
-         /* If not empty row, skip. */
          if (r->h != 0)
             continue;
-         /* See if height fits to create a new row. */
-         lr = &stsh->tex->rows[j-1];
-         if ((j==0) || (lr->y + lr->h + ch->h <= stsh->th)) {
+         /* First row. */
+         if (j==0) {
+            assert( ch->h <= stsh->th ); /* Would be ridiculously large character... */
             r->h = ch->h;
-            if (j>0)
-               r->y = lr->y + lr->h;
             tex = &stsh->tex[i];
             gr = r;
             break;
          }
+         /* See if height fits to create a new row. */
+         lr = &stsh->tex->rows[j-1];
+         if (lr->y + lr->h + ch->h <= stsh->th) {
+            r->h = ch->h;
+            r->y = lr->y + lr->h;
+            tex = &stsh->tex[i];
+            gr = r;
+         }
+         break; /* Have to break here because either we added a new row or texture is full. */
       }
+      if (gr != NULL)
+         break;
    }
 
    /* Didn't fit so allocate new texture. */
    if (gr == NULL) {
       tex = &array_grow( &stsh->tex );
-      memset( stsh->tex, 0, sizeof(glFontTex) );
+      memset( tex, 0, sizeof(glFontTex) );
 
       /* Create new texture. */
       glGenTextures( 1, &tex->id );
