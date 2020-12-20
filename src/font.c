@@ -155,6 +155,7 @@ static int font_restoreLast      = 0; /**< Restore last colour. */
 /*
  * prototypes
  */
+static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname );
 static size_t font_limitSize( glFontStash *stsh, double h,
       int *width, const char *text, const int max );
 static const glColour* gl_fontGetColour( uint32_t ch );
@@ -1394,13 +1395,8 @@ void gl_fontSetFilter( const glFont *ft_font, GLint min, GLint mag )
  */
 int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const char *prefix, unsigned int flags )
 {
-   FT_Library library;
-   FT_Face face;
-   size_t bufsize;
-   FT_Byte* buf;
    size_t i;
    glFontStash *stsh;
-   glFontStashFreetype *ft;
    int ch;
    char fullname[PATH_MAX];
 
@@ -1445,53 +1441,10 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
    ch = 0;
    for (i=0; i<strlen(fname)+1; i++) {
       if ((fname[i]=='\0') || (fname[i]==',')) {
-         /* Set up name. */
-         ft = &array_grow( &stsh->ft );
-         ft->fontname = malloc( i-ch+1 );
-         strncpy( ft->fontname, &fname[ch], i-ch );
-         ft->fontname[i-ch] = '\0';
-
-         /* Read font file. */
-         nsnprintf( fullname, PATH_MAX, "%s%s", prefix, ft->fontname );
-         //buf = ndata_read( fullname, &bufsize );
-         buf = (FT_Byte*)_nfile_readFile( &bufsize, fullname );
-         if (buf == NULL) {
-            WARN(_("Unable to read font: %s"), ft->fontname);
-            return -1;
-         }
-
-         /* Create a FreeType font library. */
-         if (FT_Init_FreeType(&library)) {
-            WARN(_("FT_Init_FreeType failed with font %s."), ft->fontname);
-            return -1;
-         }
-
-         /* Object which freetype uses to store font info. */
-         if (FT_New_Memory_Face( library, buf, bufsize, 0, &face )) {
-            WARN(_("FT_New_Face failed loading library from %s"), ft->fontname);
-            return -1;
-         }
-
-         /* Try to resize. */
-         if (FT_IS_SCALABLE(face)) {
-            if (FT_Set_Char_Size( face,
-                     0, /* Same as width. */
-                     FONT_DISTANCE_FIELD_SIZE * 64,
-                     96, /* Create at 96 DPI */
-                     96)) /* Create at 96 DPI */
-               WARN(_("FT_Set_Char_Size failed."));
-         }
-         else
-            WARN(_("Font isn't resizable!"));
-
-         /* Select the character map. */
-         if (FT_Select_Charmap( face, FT_ENCODING_UNICODE ))
-            WARN(_("FT_Select_Charmap failed to change character mapping."));
-
-         /* Save stuff. */
-         ft->face     = face;
-         ft->library  = library;
-         ft->fontdata = buf;
+         strncpy( fullname, prefix, PATH_MAX );
+         strncat( fullname, &fname[ch], i-ch );
+         //fullname[i-ch] = '\0';
+         gl_fontstashAddFallback( stsh, fullname );
          ch = i;
          if (fname[i]==',')
             ch++;
@@ -1518,6 +1471,84 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
          gl_fontGetGlyph( stsh, i );
 #endif
 
+   return 0;
+}
+
+
+/**
+ * @brief Adds a fallback font to a font.
+ *
+ *    @param font Font to add fallback to.
+ *    @param fname Name of the fallback to add.
+ *    @return 0 on success.
+ */
+int gl_fontAddFallback( glFont* font, const char *fname )
+{
+   glFontStash *stsh = gl_fontGetStash( font );
+   return gl_fontstashAddFallback( stsh, fname );
+}
+
+
+/**
+ * @brief Adds a fallback font to a stash.
+ *
+ *    @param stsh Stash to add fallback to.
+ *    @param fname Name of the fallback to add.
+ *    @return 0 on success.
+ */
+static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname )
+{
+   glFontStashFreetype *ft;
+   FT_Byte* buf;
+   FT_Library library;
+   FT_Face face;
+   size_t bufsize;
+
+   /* Read font file. */
+   buf = (FT_Byte*)_nfile_readFile( &bufsize, fname );
+   if (buf == NULL) {
+      WARN(_("Unable to read font: %s"), fname );
+      return -1;
+   }
+
+   /* Create a FreeType font library. */
+   if (FT_Init_FreeType(&library)) {
+      WARN(_("FT_Init_FreeType failed with font %s."), fname);
+      return -1;
+   }
+
+   /* Object which freetype uses to store font info. */
+   if (FT_New_Memory_Face( library, buf, bufsize, 0, &face )) {
+      WARN(_("FT_New_Face failed loading library from %s"), fname);
+      return -1;
+   }
+
+   /* Set up name. */
+   ft = &array_grow( &stsh->ft );
+   ft->fontname = strdup( fname );
+
+   /* Try to resize. */
+   if (FT_IS_SCALABLE(face)) {
+      if (FT_Set_Char_Size( face,
+               0, /* Same as width. */
+               FONT_DISTANCE_FIELD_SIZE * 64,
+               96, /* Create at 96 DPI */
+               96)) /* Create at 96 DPI */
+         WARN(_("FT_Set_Char_Size failed."));
+   }
+   else
+      WARN(_("Font isn't resizable!"));
+
+   /* Select the character map. */
+   if (FT_Select_Charmap( face, FT_ENCODING_UNICODE ))
+      WARN(_("FT_Select_Charmap failed to change character mapping."));
+
+   /* Save stuff. */
+   ft->face     = face;
+   ft->library  = library;
+   ft->fontdata = buf;
+
+   /* Success. */
    return 0;
 }
 
