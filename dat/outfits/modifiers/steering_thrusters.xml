@@ -10,8 +10,8 @@
   <gfx_store>thruster</gfx_store>
  </general>
  <specific type="modification">
-  <turn>5</turn>
-  <turn_mod>10</turn_mod>
-  <energy_usage>1.5</energy_usage>
+  <turn>10</turn>
+  <turn_mod>20</turn_mod>
+  <energy_usage>1</energy_usage>
  </specific>
 </outfit>

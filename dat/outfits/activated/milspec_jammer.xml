@@ -8,7 +8,7 @@
   <description>Does your work require you to venture into dangerous territory? Are you facing opposition your shields can't handle? The Milspec U-9 "Magus" jammer is what you need! Throw the bloodhounds off your scent with a press of a button. While your enemies are still trying to make sense out of the garble they're getting on their sensors, you will already have made your escape! Fly safe, fly Milspec.</description>
   <gfx_store>jammer1</gfx_store>
   <limit>jammer</limit>
-  <cpu>-8</cpu>
+  <cpu>-4</cpu>
  </general>
  <specific type="modification" group="7">
   <active />

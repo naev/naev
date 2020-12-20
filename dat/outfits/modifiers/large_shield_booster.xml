@@ -11,8 +11,7 @@
   <cpu>-4</cpu>
  </general>
  <specific type="modification">
-  <shield>60</shield>
-  <shield_regen>2.0</shield_regen>
-  <energy_usage>12</energy_usage>
+  <shield_regen>2</shield_regen>
+  <energy_usage>7</energy_usage>
  </specific>
 </outfit>

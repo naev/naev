@@ -8,7 +8,7 @@
   <description>The Hellburner is one of the best afterburners on the market. Through proprietary pressurization ducts, the Hellburner is able to generate far more thrust than generic alternatives. Unfortunately, its energy conversion efficiency is significantly lower than common models, so it consumes energy more rapidly and overheats much more quickly.</description>
   <gfx_store>afterburner2</gfx_store>
   <limit>afterburner</limit>
-  <cpu>-6</cpu>
+  <cpu>-2</cpu>
  </general>
  <specific type="afterburner" group="9">
   <rumble>0.9</rumble>

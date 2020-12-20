@@ -8,11 +8,11 @@
   <description>Unlike general purpose scrambler systems, jammers are heavy-duty pieces of hardware used for serious electronic warfare in space. A jammer works by actively interfering with nearby ships' sensor systems, rather than modulating the signature of the ship it's installed in. This is much more effective, but it also uses a lot more power. For this reason, jammer systems are inactive until needed, and must be activated manually.</description>
   <gfx_store>jammer0</gfx_store>
   <limit>jammer</limit>
-  <cpu>-4</cpu>
+  <cpu>-2</cpu>
  </general>
  <specific type="modification" group="7">
   <active />
   <ew_hide>70</ew_hide>
-  <energy_loss>35</energy_loss>
+  <energy_loss>25</energy_loss>
  </specific>
 </outfit>
