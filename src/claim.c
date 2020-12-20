@@ -23,6 +23,7 @@
  * @brief The claim structure.
  */
 struct Claim_s {
+   int active; /**< Have we, in fact, claimed these contents?. */
    int *ids; /**< System ids. */
    char **strs; /**< Strings. */
 };
@@ -39,9 +40,10 @@ Claim_t *claim_create (void)
 {
    Claim_t *claim;
 
-   claim       = malloc( sizeof(Claim_t) );
-   claim->ids  = NULL;
-   claim->strs = NULL;
+   claim         = malloc( sizeof(Claim_t) );
+   claim->active = 0;
+   claim->ids    = NULL;
+   claim->strs   = NULL;
 
    return claim;
 }
@@ -57,6 +59,7 @@ int claim_addStr( Claim_t *claim, const char *str )
 {
    char **s;
 
+   assert( !claim->active );
    /* Allocate if necessary. */
    if (claim->strs == NULL)
       claim->strs = array_create( char* );
@@ -78,6 +81,7 @@ int claim_addSys( Claim_t *claim, int ss_id )
 {
    int *id;
 
+   assert( !claim->active );
    /* Allocate if necessary. */
    if (claim->ids == NULL)
       claim->ids = array_create( int );
@@ -193,14 +197,16 @@ void claim_destroy( Claim_t *claim )
    int i;
 
    if (claim->ids != NULL) {
-      for (i=0; i<array_size(claim->ids); i++)
-         sys_rmFlag( system_getIndex(claim->ids[i]), SYSTEM_CLAIMED );
+      if (claim->active)
+         for (i=0; i<array_size(claim->ids); i++)
+            sys_rmFlag( system_getIndex(claim->ids[i]), SYSTEM_CLAIMED );
       array_free( claim->ids );
    }
 
    if (claim->strs != NULL) {
-      for (i=0; i<array_size(claim->strs); i++)
-         free( claim->strs[i] );
+      if (claim->active)
+         for (i=0; i<array_size(claim->strs); i++)
+            free( claim->strs[i] );
       array_free( claim->strs );
    }
    free(claim);
@@ -266,6 +272,7 @@ void claim_activate( Claim_t *claim )
          *s = strdup( claim->strs[i] );
       }
    }
+   claim->active = 1;
 }
 
 
