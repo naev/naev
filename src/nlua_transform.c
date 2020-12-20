@@ -146,7 +146,13 @@ static int transformL_eq( lua_State *L )
  */
 static int transformL_new( lua_State *L )
 {
-   lua_pushtransform( L, gl_Matrix4_Identity() );
+   gl_Matrix4 *M;
+   if (lua_istransform(L,1)) {
+      M = lua_totransform(L,1);
+      lua_pushtransform( L, *M );
+   }
+   else
+      lua_pushtransform( L, gl_Matrix4_Identity() );
    return 1;
 }
 
