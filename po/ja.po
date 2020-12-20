@@ -47298,13 +47298,13 @@ msgid ""
 "is mostly pre-packaged stuff. Not bad, but not amazing either."
 msgstr ""
 
-#: dat/assets/jaqeline.xml:2
-msgid "Jaqeline"
+#: dat/assets/jacqueline.xml:2
+msgid "Jacqueline"
 msgstr ""
 
-#: dat/assets/jaqeline.xml:28
+#: dat/assets/jacqueline.xml:28
 msgid ""
-"Though technically an oceanic world, Jaqueline's oceans are filled with "
+"Though technically an oceanic world, Jacqueline's oceans are filled with "
 "algae that absorb light and release toxic fumes into the planet's "
 "atmosphere. The organic soup is so thick that the planet appears purple when "
 "seen from space. The Soromid, true to form, have taken a great interest in "
@@ -47312,9 +47312,9 @@ msgid ""
 "here, treating the whole planet as a laboratory."
 msgstr ""
 
-#: dat/assets/jaqeline.xml:29
+#: dat/assets/jacqueline.xml:29
 msgid ""
-"Though Jaqueline is a fascinating world (according to the Soromid anyway), "
+"Though Jacqueline is a fascinating world (according to the Soromid anyway), "
 "little can be seen of it for an ordinary ship captain visiting here. The "
 "spaceport and its neighboring habitation complex are completely shielded "
 "from the outside environment, and any windows would soon be rendered opaque, "

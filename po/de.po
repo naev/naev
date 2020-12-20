@@ -51880,31 +51880,31 @@ msgstr ""
 "In der Kneipe werden ein paar Spiele veranstaltet, und die Getränke sind kalt. Es gibt Essen, aber es sind "
 "meist vorverpackte Sachen. Nicht schlecht, aber auch nichts besonderes."
 
-#: dat/assets/jaqeline.xml:2
-msgid "Jaqeline"
-msgstr "Jaqeline"
+#: dat/assets/jacqueline.xml:2
+msgid "Jacqueline"
+msgstr "Jacqueline"
 
-#: dat/assets/jaqeline.xml:28
+#: dat/assets/jacqueline.xml:28
 msgid ""
-"Though technically an oceanic world, Jaqueline's oceans are filled with algae that absorb light and release "
+"Though technically an oceanic world, Jacqueline's oceans are filled with algae that absorb light and release "
 "toxic fumes into the planet's atmosphere. The organic soup is so thick that the planet appears purple when "
 "seen from space. The Soromid, true to form, have taken a great interest in the local ecosystem. Some people "
 "believe they are conducting bio-experiments here, treating the whole planet as a laboratory."
 msgstr ""
-"Obwohl es sich technisch gesehen um eine ozeanische Welt handelt, sind die Ozeane von Jaqueline mit Algen "
+"Obwohl es sich technisch gesehen um eine ozeanische Welt handelt, sind die Ozeane von Jacqueline mit Algen "
 "gefüllt, die Licht absorbieren und giftige Dämpfe in die Atmosphäre des Planeten abgeben. Die organische "
 "Suppe ist so dick, dass der Planet vom Weltraum aus gesehen violett erscheint. Die Soromiden, die sich selbst "
 "treu geblieben sind, haben sich sehr für das lokale Ökosystem interessiert. Einige Leute glauben, dass sie "
 "hier Bioexperimente durchführen und den ganzen Planeten wie ein Laboratorium behandeln."
 
-#: dat/assets/jaqeline.xml:29
+#: dat/assets/jacqueline.xml:29
 msgid ""
-"Though Jaqueline is a fascinating world (according to the Soromid anyway), little can be seen of it for an "
+"Though Jacqueline is a fascinating world (according to the Soromid anyway), little can be seen of it for an "
 "ordinary ship captain visiting here. The spaceport and its neighboring habitation complex are completely "
 "shielded from the outside environment, and any windows would soon be rendered opaque, crusted over with "
 "residue from the toxic gases outside."
 msgstr ""
-"Obwohl die Jaqueline eine faszinierende Welt ist (jedenfalls laut der Soromiden), ist davon für einen "
+"Obwohl die Jacqueline eine faszinierende Welt ist (jedenfalls laut der Soromiden), ist davon für einen "
 "gewöhnlichen Schiffskapitän, der hier zu Besuch ist, wenig zu sehen. Der Weltraumhafen und sein angrenzender "
 "Wohnkomplex sind vollständig von der Außenwelt abgeschirmt, und alle Fenster würden bald undurchsichtig "
 "werden und mit Rückständen der giftigen Gase von draußen verkrusten."
