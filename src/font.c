@@ -44,6 +44,7 @@ static gl_Matrix4 font_projection_mat; /**< Projection matrix. */
 static GLuint font_shader_vertex; /**< Shader vertex info. */
 static GLuint font_shader_tex_coord; /**< Shader texture info. */
 static GLuint font_shader_color; /**< Main color for the shader. */
+static GLuint font_shader_projection; /**< Projection uniform for the shader. */
 
 
 /**
@@ -1148,6 +1149,7 @@ static void gl_fontRenderStart( const glFontStash* stsh, double h, double x, dou
       font_shader_color = shaders.font.color;
       font_shader_vertex = shaders.font.vertex;
       font_shader_tex_coord = shaders.font.tex_coord;
+      font_shader_projection = shaders.font.projection;
    }
    else {
       glUseProgram(shaders.font_outline.program);
@@ -1155,6 +1157,7 @@ static void gl_fontRenderStart( const glFontStash* stsh, double h, double x, dou
       font_shader_color = shaders.font_outline.color;
       font_shader_vertex = shaders.font_outline.vertex;
       font_shader_tex_coord = shaders.font_outline.tex_coord;
+      font_shader_projection = shaders.font_outline.projection;
    }
    gl_uniformAColor(font_shader_color, col, a);
 
@@ -1325,7 +1328,7 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    /* Activate texture. */
    glBindTexture(GL_TEXTURE_2D, stsh->tex[glyph->tex_index].id);
 
-   gl_Matrix4_Uniform(shaders.font.projection, font_projection_mat);
+   gl_Matrix4_Uniform(font_shader_projection, font_projection_mat);
 
    /* Draw the element. */
    glDrawArrays( GL_TRIANGLE_STRIP, glyph->vbo_id, 4 );
