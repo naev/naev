@@ -170,9 +170,9 @@ static int shaderL_new( lua_State *L )
 
    /* Set up defaults. */
 #define ATTRIB(name) \
-   shader.name = glGetAttribLocation( shader.program, #name );
+   shader.name = glGetAttribLocation( shader.program, #name )
 #define UNIFORM(name) \
-   shader.name = glGetUniformLocation( shader.program, #name );
+   shader.name = glGetUniformLocation( shader.program, #name )
    UNIFORM( ViewSpaceFromLocal );
    UNIFORM( ClipSpaceFromView );
    UNIFORM( ClipSpaceFromLocal );
