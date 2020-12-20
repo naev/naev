@@ -122,10 +122,7 @@ function graphics.Image:_draw( ... )
       tw = q.w
       th = q.h
    end
-   w = w*sx --* graphics._sx
-   h = h*sy --* graphics._sy
-   --y = y - (h*(1-sy)) -- correct scaling
-   x,y,w,h = _xy(x,y,w,h)
+   x,y,w,h = _xy(x,y,w*sx,h*sy)
    naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, graphics._fgcol, r )
 end
 
