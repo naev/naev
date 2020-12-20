@@ -26,6 +26,8 @@ static int transformL_mul( lua_State *L );
 static int transformL_scale( lua_State *L );
 static int transformL_translate( lua_State *L );
 static int transformL_rotate2d( lua_State *L );
+static int transformL_applyPoint( lua_State *L );
+static int transformL_applyDim( lua_State *L );
 static const luaL_Reg transformL_methods[] = {
    { "__eq", transformL_eq },
    { "__mul", transformL_mul },
@@ -33,6 +35,8 @@ static const luaL_Reg transformL_methods[] = {
    { "scale", transformL_scale },
    { "translate", transformL_translate },
    { "rotate2d", transformL_rotate2d },
+   { "applyPoint", transformL_applyPoint },
+   { "applyDim", transformL_applyDim },
    {0,0}
 }; /**< Transform metatable methods. */
 
@@ -232,3 +236,68 @@ static int transformL_rotate2d( lua_State *L )
    return 1;
 }
 
+
+/**
+ * @brief Applies a trasnformation to a point.
+ *
+ *    @luatparam Transform T Transform to apply.
+ *    @luatparam number x Point X-coordinate.
+ *    @luatparam number y Point Y-coordinate.
+ *    @luatparam number z Point Z-coordinate.
+ *    @luatreturn number New X coordinate.
+ *    @luatreturn number New Y coordinate.
+ *    @luatreturn number New Z coordinate.
+ * @luafunc applyPoint( T, x, y, z )
+ */
+static int transformL_applyPoint( lua_State *L )
+{
+   gl_Matrix4 *M;
+   double gp[3], p[3];
+   int i;
+   M = luaL_checktransform(L, 1);
+   gp[0] = luaL_checknumber(L,2);
+   gp[1] = luaL_checknumber(L,3);
+   gp[2] = luaL_checknumber(L,4);
+
+   for (i=0; i<3; i++)
+      p[i] = M->m[i][0]*gp[0] + M->m[i][1]*gp[1] + M->m[i][2]*gp[2] + M->m[i][3];
+
+   lua_pushnumber(L, p[0]);
+   lua_pushnumber(L, p[1]);
+   lua_pushnumber(L, p[2]);
+   return 3;
+}
+
+
+/**
+ * @brief Applies a trasnformation to a dimension.
+ *
+ * @note This is similar to Transform.applyPoint, except the translation is not applied.
+ *
+ *    @luatparam Transform T Transform to apply.
+ *    @luatparam number x Dimension X-coordinate.
+ *    @luatparam number y Dimension Y-coordinate.
+ *    @luatparam number z Dimension Z-coordinate.
+ *    @luatreturn number New X coordinate.
+ *    @luatreturn number New Y coordinate.
+ *    @luatreturn number New Z coordinate.
+ * @luafunc applyDim( T, x, y, z )
+ */
+static int transformL_applyDim( lua_State *L )
+{
+   gl_Matrix4 *M;
+   double gp[3], p[3];
+   int i;
+   M = luaL_checktransform(L, 1);
+   gp[0] = luaL_checknumber(L,2);
+   gp[1] = luaL_checknumber(L,3);
+   gp[2] = luaL_checknumber(L,4);
+
+   for (i=0; i<3; i++)
+      p[i] = M->m[i][0]*gp[0] + M->m[i][1]*gp[1] + M->m[i][2]*gp[2];
+
+   lua_pushnumber(L, p[0]);
+   lua_pushnumber(L, p[1]);
+   lua_pushnumber(L, p[2]);
+   return 3;
+}

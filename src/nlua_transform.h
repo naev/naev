@@ -14,7 +14,7 @@
 #include "opengl_matrix.h"
 
 
-#define TRANSFORM_METATABLE      "Transform" /**< Transform metatable identifier. */
+#define TRANSFORM_METATABLE      "transform" /**< Transform metatable identifier. */
 
 
 /*
