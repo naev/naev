@@ -203,7 +203,7 @@ static int cli_script( lua_State *L )
 
    /* Reset loaded buffer. */
    if (cli_env != LUA_NOREF) {
-      nlua_getenv( cli_env, "_LOADED" ); 
+      nlua_getenv( cli_env, "_LOADED" );
       if (lua_istable(L,-1)) {
          lua_pushnil(L);                     /* t, nil */
          while (lua_next(L, -2) != 0) {      /* t, key, val */
@@ -213,7 +213,7 @@ static int cli_script( lua_State *L )
             lua_rawset(L,-4);                /* t, key */
          }                                   /* t */
       }
-      lua_pop(L,1);
+      lua_pop(L,1);                          /* */
    }
 
    /* Handle parameters. */
