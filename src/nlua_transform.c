@@ -22,9 +22,17 @@
 /* Transform metatable methods. */
 static int transformL_eq( lua_State *L );
 static int transformL_new( lua_State *L );
+static int transformL_mul( lua_State *L );
+static int transformL_scale( lua_State *L );
+static int transformL_translate( lua_State *L );
+static int transformL_rotate2d( lua_State *L );
 static const luaL_Reg transformL_methods[] = {
    { "__eq", transformL_eq },
+   { "__mul", transformL_mul },
    { "new", transformL_new },
+   { "scale", transformL_scale },
+   { "translate", transformL_translate },
+   { "rotate2d", transformL_rotate2d },
    {0,0}
 }; /**< Transform metatable methods. */
 
@@ -139,6 +147,82 @@ static int transformL_eq( lua_State *L )
 static int transformL_new( lua_State *L )
 {
    lua_pushtransform( L, gl_Matrix4_Identity() );
+   return 1;
+}
+
+
+/**
+ * @brief Multiplies two transforms (A*B).
+ *
+ *    @luatparam Transform A First element to multiply.
+ *    @luatparam Transform B Second element to multiply.
+ *    @luatreturn Transform Result of multiplication.
+ * @luafunc __mul( A, B )
+ */
+static int transformL_mul( lua_State *L )
+{
+   gl_Matrix4 *A = luaL_checktransform(L, 1);
+   gl_Matrix4 *B = luaL_checktransform(L, 2);
+   gl_Matrix4 C = gl_Matrix4_Mult( *A, *B );
+   lua_pushtransform(L, C);
+   return 1;
+}
+
+
+/**
+ * @brief Applies scaling to a transform.
+ *
+ *    @luatparam Transform T Transform to apply scaling to.
+ *    @luatparam number x X-axis scaling.
+ *    @luatparam number y Y-axis scaling.
+ *    @luatparam number z Z-axis scaling.
+ *    @luatreturn Transform A new transformation.
+ * @luafunc scale( T, x, y, z )
+ */
+static int transformL_scale( lua_State *L )
+{
+   gl_Matrix4 *M = luaL_checktransform(L, 1);
+   double x = luaL_checknumber(L,2);
+   double y = luaL_checknumber(L,3);
+   double z = luaL_checknumber(L,4);
+   lua_pushtransform(L, gl_Matrix4_Scale( *M, x, y, z ) );
+   return 1;
+}
+
+
+/**
+ * @brief Applies translation to a transform.
+ *
+ *    @luatparam Transform T Transform to apply translation to.
+ *    @luatparam number x X-axis translation.
+ *    @luatparam number y Y-axis translation.
+ *    @luatparam number z Z-axis translation.
+ *    @luatreturn Transform A new transformation.
+ * @luafunc translate( T, x, y, z )
+ */
+static int transformL_translate( lua_State *L )
+{
+   gl_Matrix4 *M = luaL_checktransform(L, 1);
+   double x = luaL_checknumber(L,2);
+   double y = luaL_checknumber(L,3);
+   double z = luaL_checknumber(L,4);
+   lua_pushtransform(L, gl_Matrix4_Translate( *M, x, y, z ) );
+   return 1;
+}
+
+
+/**
+ * @brief Applies a 2D rotation (along Z-axis) to a transform.
+ *
+ *    @luatparam Transform T Transform to apply rotation to.
+ *    @luatparam number angle Angle to rotate (radians).
+ * @luafunc rotate2d( T, angle )
+ */
+static int transformL_rotate2d( lua_State *L )
+{
+   gl_Matrix4 *M = luaL_checktransform(L, 1);
+   double a = luaL_checknumber(L,2);
+   lua_pushtransform(L, gl_Matrix4_Rotate2d( *M, a ) );
    return 1;
 }
 
