@@ -38,9 +38,6 @@
 #include "nstring.h"
 
 
-#define NLUA_LOAD_TABLE "_LOADED" /**< Table to use to store the status of required libraries. */
-
-
 lua_State *naevL = NULL;
 nlua_env __NLUA_CURENV = LUA_NOREF;
 
