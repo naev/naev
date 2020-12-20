@@ -28,7 +28,7 @@ equip_typeOutfits_hulls["Kahan"] = {
    "S&K Medium-Heavy Combat Plating",
 }
 equip_typeOutfits_hulls["Archimedes"] = {
-   "Unicorp B-20 Heavy Plating", "S&K Superheavy Combat Plating",
+   "Unicorp B-72 Heavy Plating", "S&K Superheavy Combat Plating",
 }
 
 equip_typeOutfits_weapons["Derivative"] = {
