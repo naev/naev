@@ -52,6 +52,7 @@ source = files(
    'land_trade.c',
    'load.c',
    'log.c',
+   'lutf8lib.c',
    'map.c',
    'map_find.c',
    'map_overlay.c',
@@ -232,6 +233,7 @@ headers = files(
    'land_trade.h',
    'load.h',
    'log.h',
+   'lutf8lib.h',
    'map.h',
    'mapData.h',
    'map_find.h',
@@ -341,6 +343,7 @@ headers = files(
    'tk/widget/tabwin.h',
    'tk/widget/text.h',
    'toolkit.h',
+   'unidata.h',
    'unidiff.h',
    'utf8.h',
    'weapon.h'
