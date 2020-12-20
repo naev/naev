@@ -239,7 +239,7 @@ function graphics.clear( ... )
       col = _scol( r, g, b, a )
    end
    -- Minor optimization: just render when there is non-transparent color
-   if col[4]>0 then
+   if col:alpha()>0 then
       naev.gfx.renderRect( love.x, love.y, love.w, love.h, col )
    end
 end
