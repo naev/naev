@@ -26,6 +26,7 @@ static int fontL_new( lua_State *L );
 static int fontL_height( lua_State *L );
 static int fontL_width( lua_State *L );
 static int fontL_setFilter( lua_State *L );
+static int fontL_addFallback( lua_State *L );
 static const luaL_Reg fontL_methods[] = {
    { "__gc", fontL_gc },
    { "__eq", fontL_eq },
@@ -33,6 +34,7 @@ static const luaL_Reg fontL_methods[] = {
    { "height", fontL_height },
    { "width", fontL_width },
    { "setFilter", fontL_setFilter },
+   { "addFallback", fontL_addFallback },
    {0,0}
 }; /**< Font metatable methods. */
 
@@ -248,4 +250,21 @@ static int fontL_setFilter( lua_State *L )
    gl_fontSetFilter( font, min, mag );
 
    return 0;
+}
+
+
+/**
+ * @brief Adds a fallback to a font.
+ *
+ *    @luatparam Font font Font to set fallback to.
+ *    @luatparam string filename Name of the font to add.
+ * @luafunc addFallback( font, filename )
+ */
+static int fontL_addFallback( lua_State *L )
+{
+   glFont *font = luaL_checkfont(L,1);
+   const char *s = luaL_checkstring(L,2);
+   int ret = gl_fontAddFallback( font, s );
+   lua_pushboolean(L, ret);
+   return 1;
 }
