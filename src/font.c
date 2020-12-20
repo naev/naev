@@ -30,6 +30,8 @@
 #include "utf8.h"
 #include "distance_field.h"
 
+
+#define FONT_DISTANCE_FIELD_BORDER  2 /**< Border of the distance field. */
 #define FONT_DISTANCE_FIELD_SIZE   64 /**< Size to render the fonts at. */
 #define HASH_LUT_SIZE 512 /**< Size of glyph look up table. */
 #define DEFAULT_TEXTURE_SIZE 1024 /**< Default size of texture caches for glyphs. */
@@ -1057,8 +1059,9 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
    FT_Bitmap bitmap;
    FT_GlyphSlot slot;
    FT_UInt glyph_index;
-   int i, w,h, len;
+   int i, u,v, w,h, rw,rh, len, b;
    glFontStashFreetype *ft;
+   GLubyte *buffer;
 
    /* Empty font. */
    if (stsh->ft==NULL) {
@@ -1077,7 +1080,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
          if (i<len-1)
             continue;
          else {
-            WARN(_("Unicode character '%#x' not found in font! Using missing glyph."), ch);
+            WARN(_("Font '%s' unicode character '%#x' not found in font! Using missing glyph."), ft->fontname, ch);
             ft = &stsh->ft[0]; /* Fallback to first font. */
          }
       }
@@ -1098,18 +1101,30 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
 
       /* Store data. */
       if (bitmap.buffer == NULL) {
+         /* Space characters tend to have no buffer. */
+         b = 0;
+         rw = w;
+         rh = h;
          c->data = malloc( sizeof(GLubyte) * w*h );
          memset( c->data, 0, sizeof(GLubyte) * w*h );
       }
       else {
-         /* TODO is padding necessary? */
-         //memcpy( c->data, bitmap.buffer, sizeof(GLubyte) * w*h ); // regular rendering
-         c->data = make_distance_mapb( bitmap.buffer, w, h ); // signed distance field
+         /* Create a larger image using an extra border and center glyph. */
+         b = FONT_DISTANCE_FIELD_BORDER;
+         rw = w+b*2;
+         rh = h+b*2;
+         buffer = calloc( rw*rh, sizeof(GLubyte) );
+         for (v=0; v<h; v++)
+            for (u=0; u<w; u++)
+               buffer[ (b+v)*rw+(b+u) ] = bitmap.buffer[ v*w+u ];
+         /* Compute signed fdistance field with buffered glyph. */
+         c->data = make_distance_mapb( buffer, rw, rh );
+         free( buffer );
       }
-      c->w     = w;
-      c->h     = h;
-      c->off_x = slot->bitmap_left;
-      c->off_y = slot->bitmap_top;
+      c->w     = rw;
+      c->h     = rh;
+      c->off_x = slot->bitmap_left-b;
+      c->off_y = slot->bitmap_top -b;
       c->adv_x = (GLfloat)slot->advance.x / 64.;
       c->adv_y = (GLfloat)slot->advance.y / 64.;
 
@@ -1531,7 +1546,7 @@ static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname )
    if (FT_IS_SCALABLE(face)) {
       if (FT_Set_Char_Size( face,
                0, /* Same as width. */
-               FONT_DISTANCE_FIELD_SIZE * 64,
+               (FONT_DISTANCE_FIELD_SIZE-FONT_DISTANCE_FIELD_BORDER*2) * 64,
                96, /* Create at 96 DPI */
                96)) /* Create at 96 DPI */
          WARN(_("FT_Set_Char_Size failed."));
