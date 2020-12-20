@@ -21,6 +21,8 @@ end
 local function _xy( gx, gy, gw, gh )
    local x, y = graphics._T[1]:transformPoint( gx, gy )
    local w, h = graphics._T[1]:transformDim( gw, gh )
+   -- Issue here is that our coordinate system y-axis is upside-down so
+   -- we have to compensate.
    return  love.x+x, love.y+(love.h-y-h), w, h
 end
 local function _gcol( c )
@@ -236,7 +238,10 @@ function graphics.clear( ... )
       local a = arg[1][1] or 1
       col = _scol( r, g, b, a )
    end
-   naev.gfx.renderRect( love.x, love.y, love.w, love.h, col )
+   -- Minor optimization: just render when there is non-transparent color
+   if col[4]>0 then
+      naev.gfx.renderRect( love.x, love.y, love.w, love.h, col )
+   end
 end
 function graphics.draw( drawable, ... )
    drawable:_draw( ... )
