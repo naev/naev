@@ -382,6 +382,7 @@ end
 graphics.Shader = class.inheritsFrom( object.Object )
 graphics.Shader._type = "Shader"
 function graphics.newShader( pixelcode, vertexcode )
+   love._unimplemented() -- Not finished yet
    local prepend = [[
 #version 140
 // Syntax sugar
@@ -484,7 +485,7 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 graphics.setDefaultFilter( "linear", "linear", 1 )
 graphics.setNewFont( 12 )
 graphics.origin()
-graphics._shader_default = graphics.newShader( _pixelcode, _vertexcode )
-graphics.setShader( graphics._shader_default )
+--graphics._shader_default = graphics.newShader( _pixelcode, _vertexcode )
+--graphics.setShader( graphics._shader_default )
 
 return graphics
