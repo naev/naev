@@ -2,6 +2,7 @@
 -- Love2d Graphics for Naev!
 --]]
 local class = require 'class'
+local love = require 'love'
 local object = require 'love.object'
 local filesystem = require 'love.filesystem'
 

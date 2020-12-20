@@ -1,6 +1,8 @@
 --[[
 -- Window
 --]]
+local love = require 'love'
+
 local window = {}
 
 window._lastw = love._default.w

@@ -2,6 +2,7 @@
 -- Image
 --]]
 local class = require 'class'
+local love = require 'love'
 local data = require 'love.data'
 local filesystem = require 'love.filesystem'
 
