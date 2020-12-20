@@ -246,8 +246,8 @@ function graphics.circle( mode, x, y, radius )
    naev.gfx.renderCircle( x, y, radius, graphics._fgcol, _mode(mode) )
 end
 function graphics.print( text, x, y )
-   x,y = _xy(x,y,limit,graphics._font.height)
-   naev.gfx.printf( graphics._font.font, text, x, y, graphics._fgcol )
+   -- We have to specify limit so we just put a ridiculously large value
+   graphics.printf( text, x, y, 1e6, "left" )
 end
 function graphics.printf( text, ... )
    local arg = {...}
