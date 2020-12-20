@@ -5,6 +5,7 @@ local class = require 'class'
 local love = require 'love'
 local object = require 'love.object'
 local filesystem = require 'love.filesystem'
+local love_math = require 'love.math'
 
 local graphics = {}
 graphics._bgcol = naev.colour.new( 0, 0, 0, 1 )
@@ -17,8 +18,10 @@ local function _mode(m)
    else   error( string.format(_("Unknown fill mode '%s'"), mode ) )
    end
 end
-local function _xy( x, y, w, h )
-   return love.x+graphics._dx+x, love.y+(love.h-y-h-graphics._dy)
+local function _xy( gx, gy, gw, gh )
+   local x, y = graphics._T[1]:transformPoint( gx, gy )
+   local w, h = graphics._T[1]:transformDim( gw, gh )
+   return  love.x+x, love.y+(love.h-y-gh)
 end
 local function _gcol( c )
    local r, g, b = c:rgb()
@@ -144,6 +147,24 @@ end
 
 
 --[[
+-- Transformation class
+--]]
+function graphics.origin()
+   graphics._T = { love_math.newTransform() }
+end
+function graphics.push()
+   local t = graphics._T[1]
+   table.insert( graphics._T, 1, t:clone() )
+end
+function graphics.pop()
+   table.remove( graphics._T, 1 )
+end
+function graphics.translate( dx, dy ) graphics._T[1]:translate( dx, dy ) end
+function graphics.scale( sx, sy ) graphics._T[1]:scale( sx, sy ) end
+function graphics.rotate( angle ) graphics._T[1]:rotate( angle ) end
+
+
+--[[
 -- SpriteBatch class
 --]]
 graphics.SpriteBatch = class.inheritsFrom( graphics.Drawable )
@@ -176,23 +197,6 @@ end
 function graphics.getDimensions() return love.w, love.h end
 function graphics.getWidth()  return love.w end
 function graphics.getHeight() return love.h end
-function graphics.origin()
-   -- TODO this translation/scaling stuff has to be done properly using
-   -- homography matrices. Probably should employ src/opengl_matrix.c
-   graphics._dx = 0
-   graphics._dy = 0
-   graphics._sx = 1
-   graphics._sy = 1
-end
-function graphics.translate( dx, dy )
-   graphics._dx = graphics._dx + dx
-   graphics._dy = graphics._dy + dy
-end
-function graphics.scale( sx, sy )
-   sy = sy or sx
-   graphics._sx = graphics._sx * sx
-   graphics._sy = graphics._sy * sy
-end
 function graphics.getBackgroundColor() return _gcol( graphics._bgcol ) end
 function graphics.setBackgroundColor( red, green, blue, alpha )
    graphics._bgcol = _scol( red, green, blue, alpha )
