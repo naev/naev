@@ -382,8 +382,65 @@ end
 graphics.Shader = class.inheritsFrom( object.Object )
 graphics.Shader._type = "Shader"
 function graphics.newShader( pixelcode, vertexcode )
-   love._unimplemented()
-   return graphics.Shader.new( pixelcode, vertexcode )
+   local prepend = [[
+#version 140
+// Syntax sugar
+#define Image           sampler2D
+#define ArrayImage      sampler2DArray
+#define VolumeImage     sampler3D
+#define Texel           texture
+#define love_PixelColor gl_FragColor
+#define love_Position   gl_Position
+#define love_PixelCoord (vec2(gl_FragCoord.x, (gl_FragCoord.y * love_ScreenSize.z) + love_ScreenSize.w))
+
+// Uniforms shared by pixel and vertex shaders
+uniform mat4 ViewSpaceFromLocal;
+uniform mat4 ClipSpaceFromView;
+uniform mat4 ClipSpaceFromLocal;
+uniform mat3 ViewNormalFromLocal;
+uniform vec4 love_ScreenSize;
+
+// Compatibility
+#define TransformMatrix             ViewSpaceFromLocal
+#define ProjectionMatrix            ClipSpaceFromView
+#define TransformProjectionMatrix   ClipSpaceFromLocal
+#define NormalMatrix                ViewNormalFromLocal
+]]
+   local frag = [[
+#define PIXEL
+uniform sampler2D MainTex;
+
+in vec4 VaryingTexCoord;
+in vec4 VaryingColor;
+
+vec4 effect( vec4 vcolor, Image tex, vec2 texcoord, vec2 pixcoord );
+
+void main(void) {
+   love_PixelColor = effect(VaryingColor, MainTex, VaryingTexCoord.st, love_PixelCoord);
+}
+]]
+   local vert = [[
+#define VERTEX
+in vec4 VertexPosition;
+in vec4 VertexTexCoord;
+in vec4 VertexColor;
+in vec4 ConstantColor;
+
+out vec4 VaryingTexCoord;
+out vec4 VaryingColor;
+
+vec4 position( mat4 clipSpaceFromLocal, vec4 localPosition );
+
+void main(void) {
+    VaryingTexCoord  = VertexTexCoord;
+    VaryingColor     = ConstantColor;
+    love_Position    = position( ClipSpaceFromLocal, VertexPosition );
+}
+]]
+   local s = graphics.Shader.new()
+   s.shader = naev.shader.new(
+         prepend..frag..pixelcode,
+         prepend..vert..vertexcode )
 end
 function graphics.setShader( shader )
    graphics._shader = shader or graphics._shader_default
@@ -411,23 +468,23 @@ end
 
 
 -- Set some sane defaults.
-local pixelcode = [[
-    vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
-    {
-        vec4 texcolor = Texel(tex, texture_coords);
-        return texcolor * color;
-    }
+local _pixelcode = [[
+vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+{
+   vec4 texcolor = Texel(tex, texture_coords);
+   return texcolor * color;
+}
 ]]
-local vertexcode = [[
-    vec4 position( mat4 transform_projection, vec4 vertex_position )
-    {
-        return transform_projection * vertex_position;
-    }
+local _vertexcode = [[
+vec4 position( mat4 transform_projection, vec4 vertex_position )
+{
+   return transform_projection * vertex_position;
+}
 ]]
 graphics.setDefaultFilter( "linear", "linear", 1 )
 graphics.setNewFont( 12 )
 graphics.origin()
-graphics._shader_default = graphics.newShader( pixkelcode, vertexcode )
+graphics._shader_default = graphics.newShader( _pixelcode, _vertexcode )
 graphics.setShader( graphics._shader_default )
 
 return graphics
