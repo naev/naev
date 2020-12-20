@@ -317,10 +317,21 @@ function graphics.newFont( ... )
 
    local f = graphics.Font.new()
    f.font = naev.font.new( filename, size )
+   f.filename = filename
    f.height= f.font:height()
    f.lineheight = f.height*1.5 -- Naev default
    f:setFilter( graphics._minfilter, graphics._magfilter )
    return f
+end
+function graphics.Font:setFallbacks( ... )
+   local arg = {...}
+   for k,v in ipairs(arg) do
+      local filename = v.filename
+      print( filename )
+      if not self.font:addFallback( filename ) then
+         error(_("failed to set fallback font"))
+      end
+   end
 end
 function graphics.Font:getWrap( text, wraplimit )
    local wrapped, maxw = naev.gfx.printfWrap( self.font, text, wraplimit )
