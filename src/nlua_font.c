@@ -265,6 +265,6 @@ static int fontL_addFallback( lua_State *L )
    glFont *font = luaL_checkfont(L,1);
    const char *s = luaL_checkstring(L,2);
    int ret = gl_fontAddFallback( font, s );
-   lua_pushboolean(L, ret);
+   lua_pushboolean(L, !ret);
    return 1;
 }
