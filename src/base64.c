@@ -178,9 +178,9 @@ char* base64_encode( size_t *len, const char *src, size_t sz )
          r[i++] = '\n';
 
       /* n is 24 bits */
-      n =  (src[c] << 16);
-      n += (c+1<sz) ? (src[c+1] << 8) : 0; /* may be out of range */
-      n += (c+2<sz) ? (src[c+2] << 0) : 0; /* may be out of range */
+      n =  ((uint8_t)src[c] << 16);
+      n += (c+1<sz) ? ((uint8_t)src[c+1] << 8) : 0; /* may be out of range */
+      n += (c+2<sz) ? ((uint8_t)src[c+2] << 0) : 0; /* may be out of range */
 
       /* ch[0-3] are 6 bits each */
       ch[0] = (n >> 18) & 63;
