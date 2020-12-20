@@ -162,8 +162,8 @@ char* base64_encode( size_t *len, const char *src, size_t sz )
    uint8_t ch[4], pad;
 
    /* create r */
-   c = sz * 4 / 3 + sz % 3 + 2;
-   c += c / 76;
+   c = (sz+2) / 3 * 4;
+   c += (c-1) / 76 + 1; /* newlines, null byte */
    r = malloc( c );
 
    /* setup padding */
