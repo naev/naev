@@ -21,7 +21,7 @@ end
 local function _xy( gx, gy, gw, gh )
    local x, y = graphics._T[1]:transformPoint( gx, gy )
    local w, h = graphics._T[1]:transformDim( gw, gh )
-   return  love.x+x, love.y+(love.h-y-gh)
+   return  love.x+x, love.y+(love.h-y-h), w, h
 end
 local function _gcol( c )
    local r, g, b = c:rgb()
@@ -125,7 +125,7 @@ function graphics.Image:_draw( ... )
    w = w*sx --* graphics._sx
    h = h*sy --* graphics._sy
    --y = y - (h*(1-sy)) -- correct scaling
-   x,y = _xy(x,y,w,h)
+   x,y,w,h = _xy(x,y,w,h)
    naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, graphics._fgcol, r )
 end
 
@@ -242,8 +242,8 @@ function graphics.draw( drawable, ... )
    drawable:_draw( ... )
 end
 function graphics.rectangle( mode, x, y, width, height )
-   x,y = _xy(x,y,width,height)
-   naev.gfx.renderRect( x, y, width, height, graphics._fgcol, _mode(mode) )
+   x,y,w,h = _xy(x,y,width,height)
+   naev.gfx.renderRect( x, y, w, h, graphics._fgcol, _mode(mode) )
 end
 function graphics.circle( mode, x, y, radius )
    x,y = _xy(x,y,0,0)
