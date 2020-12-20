@@ -158,6 +158,9 @@ function graphics.push()
 end
 function graphics.pop()
    table.remove( graphics._T, 1 )
+   if graphics._T[1] == nil then
+      graphics._T[1] = love.math.newTransform()
+   end
 end
 function graphics.translate( dx, dy ) graphics._T[1]:translate( dx, dy ) end
 function graphics.scale( sx, sy ) graphics._T[1]:scale( sx, sy ) end
