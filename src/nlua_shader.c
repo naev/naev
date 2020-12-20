@@ -147,7 +147,7 @@ static int shaderL_eq( lua_State *L )
 
 
 /**
- * @brief Gets a shader.
+ * @brief Creates a new shader.
  *
  *    @luatparam string vertex Script containing the vertex shader.
  *    @luatparam string fragment String containing the fragment shader.
@@ -159,11 +159,29 @@ static int shaderL_new( lua_State *L )
    LuaShader_t shader;
    const char *pixelcode, *vertexcode;
 
+   /* Get arguments. */
    pixelcode  = luaL_checkstring(L,1);
    vertexcode = luaL_checkstring(L,2);
 
    /* Do from string. */
-   shader.program =  gl_program_vert_frag_string( vertexcode, strlen(vertexcode),  pixelcode, strlen(pixelcode) );
+   shader.program = gl_program_vert_frag_string( vertexcode, strlen(vertexcode),  pixelcode, strlen(pixelcode) );
+   if (shader.program == 0)
+      NLUA_ERROR(L,_("shader failed to compile!"));
+
+   /* Set up defaults. */
+#define ATTRIB(name) shader.name = glGetAttribLocation( shader.program, #name );
+#define UNIFORM(name) shader.name = glGetUniformLocation( shader.program, #name );
+   ATTRIB( ViewSpaceFromLocal );
+   ATTRIB( ClipSpaceFromView );
+   ATTRIB( ClipSpaceFromLocal );
+   ATTRIB( ViewNormalFromLocal );
+   UNIFORM( MainTex );
+   UNIFORM( VertexPosition );
+   UNIFORM( VertexTexCoord );
+   UNIFORM( VertexColor );
+   UNIFORM( ConstantColor );
+
+   gl_checkErr();
 
    lua_pushshader( L, shader );
    return 1;

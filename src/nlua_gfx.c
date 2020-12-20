@@ -22,6 +22,7 @@
 #include "nlua_tex.h"
 #include "nlua_font.h"
 #include "nlua_transform.h"
+#include "nlua_shader.h"
 #include "ndata.h"
 
 
@@ -75,6 +76,7 @@ int nlua_loadGFX( nlua_env env )
    nlua_loadTex( env );
    nlua_loadFont( env );
    nlua_loadTransform( env );
+   nlua_loadShader( env );
 
    return 0;
 }

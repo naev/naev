@@ -18,6 +18,18 @@
 
 typedef struct LuaShader_s {
    GLuint program;
+   /* Shared Uniforms. */
+   GLuint ViewSpaceFromLocal;
+   GLuint ClipSpaceFromView;
+   GLuint ClipSpaceFromLocal;
+   GLuint ViewNormalFromLocal;
+   /* Fragment Shader. */
+   GLuint MainTex;
+   /* Vertex Shader. */
+   GLuint VertexPosition;
+   GLuint VertexTexCoord;
+   GLuint VertexColor;
+   GLuint ConstantColor;
 } LuaShader_t;
 
 
