@@ -90,7 +90,7 @@ msgstr "Exzellenz wagen! Teracom-Raketen wagen!"
 
 #: dat/ai/advertiser.lua:35
 msgid "Most people are ordinary. For the others, Nexus designed the Shark fighter."
-msgstr "Die meisten Menschen sind ganz normal. Für die anderen hat Nexus den Shark-Kämpfer geschaffen."
+msgstr "Die meisten Menschen sind ganz normal. Für die anderen hat Nexus den Hai-Kämpfer geschaffen."
 
 #: dat/ai/advertiser.lua:36
 msgid "Never take off without your courage. Never take off without your Vendetta."
@@ -2559,7 +2559,7 @@ msgid ""
 "helping to man the station; our defenses are weak, but better than nothing.\""
 msgstr ""
 "„Hör zu, wir haben nicht mehr viel Zeit. Eine gemeinsame Flotte des Imperiums und der Dvaered ist im Begriff, "
-"von %s einzutreffen. Sie haben Peacemakers, Hawkings, Goddards, Pacifiers, und so weiter. Sie sind willens "
+"von %s einzutreffen. Sie haben Friedenserzwinger, Hawkings, Goddards, Befrieder, und so weiter. Sie sind willens "
 "und fähig, uns von der Karte zu vertilgen. %s, ich weiß nicht, wie ich das sagen soll, aber …“ Benito wühlt "
 "etwas in ihren Taschen, bevor sie einen kleinen Datenchip herausnimmt. „Hier, nimm das.“, sagt sie, als sie "
 "ihn in deine Hand drückt. „Das ist Plan B. Ich hoffe, dass es nicht dazu kommen muss, aber, pass auf ihn auf, "
@@ -3698,7 +3698,7 @@ msgid ""
 "of Anecu. All the season's debutantes attended."
 msgstr ""
 "Die glamouröse Saison hat sich dem Ende zugeneigt, mit einem Ball mit Unterwassermotto, der in Luftblasen "
-"tief unter den Ozeanen von Anecu veranstaltet wurde. All die Debütantinnen der Saison kamen zu Besuch."
+"tief unter den Ozeanen von Aneku veranstaltet wurde. All die Debütantinnen der Saison kamen zu Besuch."
 
 #: dat/events/neutral/news.lua:135
 msgid "Amazing Survival Story"
@@ -3925,7 +3925,7 @@ msgid ""
 "The spaceways may swarm with Hyena-model craft, but today Aerosys recorded another quarterly loss. The "
 "company is investigating the discrepancy between the popularity of the craft and its sales figures."
 msgstr ""
-"Die Weltraumstraßen mögen voll mit dem Raumschiff des Typs Hyena sein, aber heute vermeldete Aerosys einen "
+"Die Weltraumstraßen mögen voll mit dem Raumschiff des Typs Hyäne sein, aber heute vermeldete Aerosys einen "
 "weiteren Quartalsverlust. Das Unternehmen untersucht die Diskrepanz zwischen der Beliebtheit des Raumschiffs "
 "und ihren Umsatzzahlen."
 
@@ -3938,7 +3938,7 @@ msgid ""
 "The ship manufacturer has released a study indicating its signature Hyena model is being produced by a hidden "
 "system of unlicensed manufacturers."
 msgstr ""
-"Der Schiffshersteller hat eine Studie veröffentlicht, die zeigt, dass sein Schlüsselmodell „Hyena“ von einem "
+"Der Schiffshersteller hat eine Studie veröffentlicht, die zeigt, dass sein Schlüsselmodell „Hyäne“ von einem "
 "verborgenem System unlizensierter Hersteller gebaut wird."
 
 #: dat/events/neutral/news.lua:229
@@ -3997,7 +3997,7 @@ msgid ""
 "Lorelei, in the Churchill system, is the latest world to host major trade negotiations between the Fyrra and "
 "the Space Traders Guild. The Fyrra Arch-Canter has indicated that opening up trade routes is a major goal."
 msgstr ""
-"Lorelei, im Churchill-System, ist die letzte Welt, welche Gastgeber größerer Handelsverhandlungen zwischen "
+"Lorelei, im Kirchell-System, ist die letzte Welt, welche Gastgeber größerer Handelsverhandlungen zwischen "
 "den Fyrra und der Gilde der Weltraumhändler ist. Der Fyrra-Erzcanter wies darauf hin, dass die Öffnung der "
 "Handelsrouten ein Hauptziel sei."
 
@@ -4056,14 +4056,14 @@ msgstr ""
 #. --
 #: dat/events/neutral/news.lua:287
 msgid "Draconis Favorite Plundering Space"
-msgstr "Draconis beliebtester Ort zum Plündern"
+msgstr "Drakonis beliebtester Ort zum Plündern"
 
 #: dat/events/neutral/news.lua:288
 msgid ""
 "Draconis has recently passed Delta Pavonis in the pirate polls as the most favored plundering space. The "
 "abundance of traders and high interference make it an excellent place to get some fast credits."
 msgstr ""
-"Draconis hat neulich Delta Pavonis in den Piratenumfragen als der beliebteste Ort zum Plündern überholt. Die "
+"Drakonis hat neulich Delta-Pavonis in den Piratenumfragen als der beliebteste Ort zum Plündern überholt. Die "
 "hohe Anzahl an Händlern und die hohe Interferenz machen ihn zu einem ausgezeichnetem Ort, um ein paar "
 "schnelle Credits zu machen."
 
@@ -4076,7 +4076,7 @@ msgid ""
 "The Skull and Bones was able to extract a few dozen high quality vessels from Caladan warehouses under the "
 "nose of the Empire. These ships will help keep production high and booming."
 msgstr ""
-"Totenkopf war in der Lage, ein paar Dutzend hochqualitative Raumschiffe aus Caladan-Warenhäusern unter der "
+"Totenkopf war in der Lage, ein paar Dutzend hochqualitative Raumschiffe aus Kaladan-Warenhäusern unter der "
 "Nase des Imperiums wegzuschnappen. Diese Schiffe werden dabei helfen, die Produktion hoch zu halten."
 
 #.
@@ -4116,19 +4116,19 @@ msgstr ""
 #. --
 #: dat/events/neutral/news.lua:315
 msgid "Terraforming Emperor's Fist"
-msgstr "Terraforming auf Emperor's Fist"
+msgstr "Terraforming auf Imperators Faust"
 
 #: dat/events/neutral/news.lua:316
 msgid ""
 "New bleeding-edge terraforming techniques to be tried on Emperor's Fist. Studies show that these techniques "
 "could speed up the terraforming process by as much as 40%."
 msgstr ""
-"Brandneue Terraforming-Techniken werden auf Emperor's Fist ausprobiert. Studien zeigen, dass diese Techniken "
+"Brandneue Terraforming-Techniken werden auf Imperators Faust ausprobiert. Studien zeigen, dass diese Techniken "
 "den Terraforming-Prozess um ganze 40% beschleunigen könnten."
 
 #: dat/events/neutral/news.lua:319
 msgid "Bees Introduced to Emperor's Fist"
-msgstr "Bienen auf Emperor's Fist eingeführt"
+msgstr "Bienen auf Imperators Faust eingeführt"
 
 #: dat/events/neutral/news.lua:320
 msgid ""
@@ -4190,7 +4190,7 @@ msgid ""
 "Imperial Auditors arrested governor Rex Helmer of Anecu on charges of corruption. He has been removed from "
 "office and transported to a holding facility awaiting trial."
 msgstr ""
-"Imperiale Auditoren verhafteten Gouverneur Rex Helmer von Anecu aufgrund von Korruptionsvorwürfen. Er wurde "
+"Imperiale Auditoren verhafteten Gouverneur Rex Helmer von Aneku aufgrund von Korruptionsvorwürfen. Er wurde "
 "vom Amt entfernt und zu einer Einscheidungseinrichtung transportiert, in der ein Prozess bevorsteht."
 
 #: dat/events/neutral/news.lua:345
@@ -4229,7 +4229,7 @@ msgid ""
 "Emperor's Fist. His Eminence the Bishop of Bao performed the ceremony."
 msgstr ""
 "Am Samstag hat der imperiale Sekretär Karil Lorenze den seit Langem Verlobten Rachid Baouda in den "
-"zukünftigen Gärten auf Emperor's Fist geheiratet. Seine Eminenz der Bischof von Bao veranstaltete die "
+"zukünftigen Gärten auf Imperators Faust geheiratet. Seine Eminenz der Bischof von Bao veranstaltete die "
 "Zeremonie."
 
 #: dat/events/neutral/news.lua:360
@@ -4241,7 +4241,7 @@ msgid ""
 "The Emperor has scheduled a new monument to be constructed on Emperor's Fist in honour of all those dead in "
 "the Incident."
 msgstr ""
-"Der Imperator hat ein neues Denkmal für den Bau auf Emperor's Fist geplant, um all den Toten des "
+"Der Imperator hat ein neues Denkmal für den Bau auf Imperators Faust geplant, um all den Toten des "
 "Geschehnisses zu gedenken."
 
 #.
@@ -4255,7 +4255,7 @@ msgstr ""
 #. --
 #: dat/events/neutral/news.lua:376
 msgid "Election on Caladan Marred by Fraud"
-msgstr "Wahl auf Caladan von Betrug beeinträchtigt"
+msgstr "Wahl auf Kaladan von Betrug beeinträchtigt"
 
 #: dat/events/neutral/news.lua:377
 msgid ""
@@ -4612,7 +4612,7 @@ msgstr "Ein Zivilist sitzt an der Bar, er sieht aus, als möchte er einen der an
 
 #: dat/events/neutral/npc.lua:32
 msgid "A civilian wearing a shirt saying: \"Ask me about Jaegnhild\""
-msgstr "Ein Zivilist trägt ein Hemd mit der Aufschrift: „Frag mich über Jaegnhild“"
+msgstr "Ein Zivilist trägt ein Hemd mit der Aufschrift: „Frag mich über Jägnhild“"
 
 #: dat/events/neutral/npc.lua:33
 msgid "There is a civilian sitting in the corner."
@@ -4784,7 +4784,7 @@ msgid ""
 "\"The Emperor lives on a giant supercruiser in Gamma Polaris. It's said to be the biggest ship in the galaxy! "
 "I totally want one.\""
 msgstr ""
-"„Der Imperator lebt auf einem gigantischen Superkreuzer in Gamma Polaris. Es heißt, dass es das größte Schiff "
+"„Der Imperator lebt auf einem gigantischen Superkreuzer in Gamma-Polaris. Es heißt, dass es das größte Schiff "
 "der Galaxis sei! Ich möchte auch so eins.“"
 
 #: dat/events/neutral/npc.lua:72
@@ -4808,7 +4808,7 @@ msgid ""
 "\"Don't pay attention to the naysayers. The Empire is still strong. Have you ever seen a Peacemaker up close? "
 "I doubt any ship fielded by any other power could stand up to one.\""
 msgstr ""
-"„Hör nicht auf die Pessimisten. Das Imperium ist immer noch stark. Hast du einen Peacemaker aus der Nähe "
+"„Hör nicht auf die Pessimisten. Das Imperium ist immer noch stark. Hast du einen Friedenserzwinger aus der Nähe "
 "gesehen? Ich glaub nicht, dass irgendein Schiff einer anderen Macht es mit ihm aufnehmen könnte.“"
 
 #: dat/events/neutral/npc.lua:77
@@ -5789,7 +5789,7 @@ msgid ""
 "them from.\""
 msgstr ""
 "„Ich habe gehört, dass Piraten ihren Ruf bei anderen Piraten aufrechterhalten müssen, indem sie "
-"Piratenschiffe fliegen. Die Hyena gilt als Piratenschiff und ist leicht zu bekommen, aber was die anderen "
+"Piratenschiffe fliegen. Die Hyäne gilt als Piratenschiff und ist leicht zu bekommen, aber was die anderen "
 "angeht, habe ich keine Ahnung, woher sie die bekommen.“"
 
 #: dat/events/neutral/npc.lua:216
@@ -6600,7 +6600,7 @@ msgstr "Sirichana, ich habe mein Bestes gegeben!"
 
 #: dat/events/sirius/preach.lua:109
 msgid "The Reverence is dead!"
-msgstr "Reverence ist tot!"
+msgstr "Hochwürden ist tot!"
 
 #: dat/events/sirius/preach.lua:110
 msgid "Someone killed the preacher!"
@@ -9521,7 +9521,7 @@ msgstr "Artefaktjäger"
 #. --
 #: dat/missions/dvaered/assault_on_unicorn.lua:25
 msgid "DV: Assault on Unicorn"
-msgstr "DV: Angriff auf Unicorn"
+msgstr "DV: Angriff auf Einhorn"
 
 #: dat/missions/dvaered/assault_on_unicorn.lua:26
 msgid "Variable"
@@ -9534,7 +9534,7 @@ msgid ""
 "Unicorn. We are offering a small sum for each pirate killed. The maximum we will pay you is %s."
 msgstr ""
 "Es ist an der Zeit, die kämpferischen Piraten in ihre Schranken zu weisen. Wir haben eine starke "
-"Piratenpräsenz im Unicorn-System erfasst. Wir bieten eine kleine Summe für jeden getöteten Piraten. Wir "
+"Piratenpräsenz im Einhorn-System erfasst. Wir bieten eine kleine Summe für jeden getöteten Piraten. Wir "
 "zahlen maximal %s."
 
 #: dat/missions/dvaered/assault_on_unicorn.lua:31 dat/missions/shark/sh07_pirates.lua:59
@@ -9554,7 +9554,7 @@ msgstr ""
 
 #: dat/missions/dvaered/assault_on_unicorn.lua:35
 msgid "Fly to the Unicorn system."
-msgstr "Flieg in das Unicorn-System."
+msgstr "Flieg in das Einhorn-System."
 
 #: dat/missions/dvaered/assault_on_unicorn.lua:37
 #, lua-format
@@ -9754,7 +9754,7 @@ msgid ""
 "Imperial pilots are used to electronic warfare with guided missiles and stealth ships. Dvaered pilots, on the "
 "other hand, only understand basic dogfighting.\""
 msgstr ""
-"„Bist du hier für die Dvaered-Weltraumkampfmeisterschaft? Ich bin ein Mitbewerber. Ich fliege eine Shark, "
+"„Bist du hier für die Dvaered-Weltraumkampfmeisterschaft? Ich bin ein Mitbewerber. Ich fliege einen Hai, "
 "also glaub ich nicht, dass ich viele Runden gewinnen werde … Aber ich mag immer noch den Kampf. Jeden Zyklus "
 "gewinnt ein Dvaeredpilot. Weißt du warum? Weil die Regeln der Meisterschaft die schwer gepanzerten und "
 "gewaffneten Kämpfer wie die Vendetta einen Vorteil verschaffen. Imperiumspiloten sind den elektronischen "
@@ -11688,7 +11688,7 @@ msgstr ""
 "entkommen. Wir werden von den Kommandosoldaten vor dem Ablauf von 10 Perioden nichts hören, aber ich glaube, "
 "dass alles gut gelaufen ist.\n"
 "    Bleiben Sie wachsam. Wir werden möglicherweise Ihre Unterstützung brauchen, wenn sie zurückkehren. Nehmen "
-"Sie die freie Zeit für einen Urlaub. Ich hörte, dass das Wetter auf Caladan zu dieser Jahreszeit ganz nett "
+"Sie die freie Zeit für einen Urlaub. Ich hörte, dass das Wetter auf Kaladan zu dieser Jahreszeit ganz nett "
 "sein soll. Vielleicht sollten Sie ihnen einen Besuch abstatten. Wir bleiben in Verbindung.“"
 
 #: dat/missions/empire/collective/ec03.lua:60 dat/missions/empire/collective/ec04.lua:66
@@ -11963,12 +11963,12 @@ msgstr "Dimitri sollte hier sein, aber du kannst ihn nicht sehen. Du solltest di
 
 #: dat/missions/empire/collective/ec05.lua:54 dat/missions/empire/collective/ec05.lua:61
 msgid "Operation Black Trinity"
-msgstr "Operation Schwarze Dreifaltigkeit"
+msgstr "Operation Schwarze Dreiheit"
 
 #: dat/missions/empire/collective/ec05.lua:56
 #, lua-format
 msgid "Arrest the ESS Trinity in %s"
-msgstr "Verhafte die ESS Trinity in %s"
+msgstr "Verhafte die IRS Dreiheit in %s"
 
 #: dat/missions/empire/collective/ec05.lua:57
 #, lua-format
@@ -12071,12 +12071,12 @@ msgid ""
 "Trinity down. Zakred is currently on manoeuvre exercises in %s. You will have to find him there. The other "
 "ships will follow your lead to %s. Good luck.\""
 msgstr ""
-"Jetzt räuspert sie. „Diese Operation wurde ‚Operation Schwarze Dreifaltigkeit‘ genannt. Wir haben Grund, zu "
-"glauben, dass die ESS Trinity mit dem Verräter Welsh in Verbindung stand. Die ESS Trinity wird von Kapitän "
+"Jetzt räuspert sie. „Diese Operation wurde ‚Operation Schwarze Dreiheit‘ genannt. Wir haben Grund, zu "
+"glauben, dass die IRS Dreiheit mit dem Verräter Welsh in Verbindung stand. Die IRS Dreiheit wird von Kapitän "
 "Zakred befehligt. Sie werden ein Teil einer Sturmgruppe sein, mit dem Hauptziel, Zakred zu verhaften. Wenn "
 "sich die Dinge schlechtern, lautet der Befehl, Zakred zu töten. Er darf nicht entkommen.\n"
 "    Wir werden Sie mit einer kleinen Streittruppe entsenden. Sie bleiben einfach in der Nähe, und wenn es "
-"hässlich wird, schlagen Sie die ESS Trinity nieder. Zakred nimmt im Moment Manöverübungen in %s vor. Sie "
+"hässlich wird, schlagen Sie die IRS Dreiheit nieder. Zakred nimmt im Moment Manöverübungen in %s vor. Sie "
 "werden ihn wahrscheinlich dort finden. Die anderen Schiffe werden Ihrer Führung nach %s folgen. Viel Glück.“"
 
 #: dat/missions/empire/collective/ec05.lua:76
@@ -12100,14 +12100,14 @@ msgid ""
 "you can do for us, but for now we just wait.\""
 msgstr ""
 "Du siehst Flotillenadmiral Keer mit einem Dutzend Soldaten, die außerhalb des Landefeldes auf dich warten.\n"
-"    „Sie hätten die Trinity nicht entkommen lassen dürfen! Jetzt haben wir keine weiteren Asse im Ärmel. Wir "
+"    „Sie hätten die Dreiheit nicht entkommen lassen dürfen! Jetzt haben wir keine weiteren Asse im Ärmel. Wir "
 "müssen auf die Reaktion des Kollektivs oder auf neue Informationen warten, bevor wir fortfahren können. Wir "
 "werden Sie benachrichtgen, wenn Sie das für uns tun können, aber jetzt müssen wir einfach warten.“"
 
 #. Conversation between pilots
 #: dat/missions/empire/collective/ec05.lua:83
 msgid "ESS Trinity: Please turn off your engines and prepare to be boarded."
-msgstr "ESS Trinity: Bitte stoppen Sie Ihre Motoren und machen Sie sich bereit zum Entern."
+msgstr "IRS Dreiheit: Bitte stoppen Sie Ihre Motoren und machen Sie sich bereit zum Entern."
 
 #: dat/missions/empire/collective/ec05.lua:84
 msgid "You will never take me alive!"
@@ -12115,7 +12115,7 @@ msgstr "Lebend werdet ihr mich nie kriegen!"
 
 #: dat/missions/empire/collective/ec05.lua:85
 msgid "Very well then. All units engage ESS Trinity."
-msgstr "Nun gut. Alle Einheiten: Bereitmachen zum Angriff auf ESS Trinity."
+msgstr "Nun gut. Alle Einheiten: Bereitmachen zum Angriff auf IRS Dreiheit."
 
 #: dat/missions/empire/collective/ec05.lua:86
 msgid "Mission Success: Return to base."
@@ -12172,7 +12172,7 @@ msgid ""
 "You successfully killed Zakred (a Collective spy) and destroyed the ESS Trinity. Commodore Keer told you to "
 "meet her again at the bar on Omega Station for an all-out attack on Collective territory."
 msgstr ""
-"Du hast erfolgreich Zakred (einem Spion des Kollektivs) getötet und die ESS Trinity zerstört. "
+"Du hast erfolgreich Zakred (einem Spion des Kollektivs) getötet und die IRS Dreiheit zerstört. "
 "Flotillenadmiral Keer hat dir gesagt, du sollst sie in der Kneipe auf Omega Station für einen Großangriff auf "
 "das Territorium des Kollektivs wiedersehen."
 
@@ -12182,7 +12182,7 @@ msgid ""
 "Commodore Keer at the bar on Omega Station; she said that they would notify you if they have something more "
 "that you can do."
 msgstr ""
-"Du hast es nicht geschafft, die ESS Trinity zu zerstören und damit einen Keil in die Pläne des Imperiums "
+"Du hast es nicht geschafft, die IRS Dreiheit zu zerstören und damit einen Keil in die Pläne des Imperiums "
 "getrieben. Du solltest dich wieder mit Flotillenadmiral Keer in der Kneipe auf Omega Station treffen; sie "
 "sagte, dass sie dich benachrichtigen würden, wenn sie etwas neues haben, was du tun kannst."
 
@@ -12281,7 +12281,7 @@ msgstr "Neutralisiere feindliche Streitkräfte in %s"
 #: dat/missions/empire/collective/ec06.lua:41
 #, lua-format
 msgid "Destroy the Starfire and hostiles in %s"
-msgstr "Zerstöre die Starfire und Feinde in %s"
+msgstr "Zerstöre Sternfeuer und Feinde in %s"
 
 #: dat/missions/empire/collective/ec06.lua:46 dat/missions/empire/shipping/es01.lua:44
 #: dat/missions/empire/shipping/es02.lua:52 dat/missions/neutral/nebu_satellite.lua:44
@@ -12314,7 +12314,7 @@ msgid ""
 msgstr ""
 "„Die Operation wurde ‚Kaltes Metall‘ getauft. Wir werden einen Großangriff in C-00 starten. Die Systeme bis "
 "zu %s sind bereits gesichert und in unserer Gewalt, alles, was wir jetzt tun müssen, ist es, die letzte "
-"Festung zu erobern. Sollten wir die Starfire vorfinden, wird unser Ziel sein, sie zu zerstören und "
+"Festung zu erobern. Sollten wir Sternfeuer vorfinden, wird unser Ziel sein, es zu zerstören und "
 "umzukehren. Die Flotte des Imperiums wird Sie begleiten, wenn Sie ankommen. Wir sehen uns in der Schlacht, "
 "Pilot.“"
 
@@ -12374,11 +12374,11 @@ msgstr "Fliege nach %s über %s und triff dich mit der Flotte des Imperiums"
 
 #: dat/missions/empire/collective/ec06.lua:65
 msgid "Defeat the Starfire"
-msgstr "Besiege die Starfire"
+msgstr "Besiege Sternfeuer"
 
 #: dat/missions/empire/collective/ec06.lua:66
 msgid "Defeat the Starfire and the Trinity"
-msgstr "Besiege die Starfire und die Trinity"
+msgstr "Besiege Sternfeuer und die Dreiheit"
 
 #: dat/missions/empire/collective/ec06.lua:67
 msgid "Report back"
@@ -13099,7 +13099,7 @@ msgstr "Za'leklangstreckenrekrutierung"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:34
 msgid "Deliver a shipping diplomat for the Empire to Gerhart Station in the Ganth system"
-msgstr "Befördere einen Logistikdiplomaten für das Imperium nach Gerhart Station im Ganth-System"
+msgstr "Befördere einen Logistikdiplomaten für das Imperium zur Gerhart-Station im Ganth-System"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:40
 msgid ""
@@ -13121,7 +13121,7 @@ msgid ""
 msgstr ""
 "„Das habe ich geahnt!“, sagt Leutnant Czesc. „Ich habe einen anderen Bürokraten, der bereit ist, "
 "Handelsbeziehungen aufzunehmen. Die Za'lek sind ziemlich geheimnisvoll, also verlieren Sie nicht den Kopf. "
-"Der Diplomat muss lediglich zur Gerhart Station im Ganth-System gelangen. Er wird mir Bescheid geben, wenn "
+"Der Diplomat muss lediglich zur Gerhart-Station im Gant-System gelangen. Er wird mir Bescheid geben, wenn "
 "die Handelsbeziehungen hergestellt sind. Es gibt noch viel zu tun, deshalb erwarte ich, Sie bald wieder zu "
 "sehen.“"
 
@@ -13267,7 +13267,7 @@ msgstr ""
 "Leutnant Czesc gibt dir einen Klaps auf den Rücken, als du neben ihm an der Bar Platz nimmst. „Wir haben’s "
 "geschafft! Wir haben Außenposten der Imperialen Armadalogistik in ziemlich vielen Teilen der Galaxis "
 "eingerichtet. Ich möchte Sie nur noch um einen weiteren Gefallen bitten. Ich brauche einen Transport zurück "
-"zu Halir im „Gamma Polaris“-System. Von dort aus kann ich Sie ermächtigen, bei den Langstreckenmissionen zu "
+"zu Halir im Gamma-Polaris-System. Von dort aus kann ich Sie ermächtigen, bei den Langstreckenmissionen zu "
 "helfen. Kann ich auf Sie zählen?“"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:41
@@ -14272,8 +14272,8 @@ msgstr ""
 "kosten! He-he-he …“. Du erkundigst dich, was es kosten könnte. „Das ist einfach: Wir wollen eine weitere "
 "Basis im ‚%s‘-System bauen. Wir können es natürlich selbst machen, aber wenn wir euch dazu bringen können, "
 "dafür zu bezahlen, umso besser! Genauer gesagt, wir brauchen %s mehr Tonnen Erz, um die Basis zu bauen. Also "
-"bringt Erz ins Anger-System, und wir haben einen Deal!\n"
-"    Oh, fast hätte ich’s vergessen; du weißt ja nicht, wie man zum Anger-System kommt, oder? Nun, da du dich "
+"bringt Erz ins Zorn-System, und wir haben einen Deal!\n"
+"    Oh, fast hätte ich’s vergessen; du weißt ja nicht, wie man zum Zorn-System kommt, oder? Nun, da du dich "
 "als würdig erwiesen hast, nehme ich an, dass ich dich in unser kleines Geheimnis einweihen werde.“. Er "
 "überträgt eine Datei auf deinen Schiffscomputer. Du siehst, dass es eine Karte ist, die einen einzigen "
 "Geheimsprungpunkt zeigt. „Jetzt weg mit dir! Triff mich im ‚%s‘-System, wenn du die Beute hast.“"
@@ -14302,7 +14302,7 @@ msgstr ""
 "oder so einsatzbereit sein. Und in der Zwischenzeit kannst du dich als einer von uns betrachten! Bwa-ha-ha-"
 "ha!“\n"
 "    Du tauschst das, was man in Ermangelung eines besseren Wortes Höflichkeiten nennen muss, mit dem Piraten "
-"aus, wobei er eine Geschichte über einen jämmerlich bewaffneten Mule erzählt, den er kürzlich geplündert hat, "
+"aus, wobei er eine Geschichte über einen jämmerlich bewaffneten Muli erzählt, den er kürzlich geplündert hat, "
 "und ihr tauscht Geschichten über eure Siege gegen den Dvaered-Abschaum aus. Ihr scheint euch gut zu "
 "verstehen. Dann trennen sich eure Wege. Du solltest jetzt Benito Bericht erstatten …"
 
@@ -14420,7 +14420,7 @@ msgid ""
 "Dvaered ships in areas where pirates are to keep your reputation with the pirates up. She also suggested you "
 "may want to upgrade your ship now that you have access to the black market."
 msgstr ""
-"Du hast den Piraten geholfen, eine neue Basis im Anger-System zu errichten und eine Handelsallianz zwischen "
+"Du hast den Piraten geholfen, eine neue Basis im Zorn-System zu errichten und eine Handelsallianz zwischen "
 "der FLF und den Piraten gegründet. Benito schlug vor, dass du ein Totenkopf-Schiff von den Piraten kaufen und "
 "Dvaered-Schiffe in Gebieten zerstören solltest, in denen die Piraten deinen Ruf bei den Piraten "
 "aufrechterhalten sollen. Sie schlug auch vor, dass du dein Schiff aufrüsten solltest, jetzt wo du Zugang zum "
@@ -15385,7 +15385,7 @@ msgstr[1] "Es gibt eine Imperiumspatrouille mit %d Schiffen im „%s“-System. 
 
 #: dat/missions/flf/flf_empatrol.lua:62
 msgid " There is a Pacifier among them, so you must proceed with caution."
-msgstr " Ein Pacifier ist unter ihnen, also musst du vorsichtig vorgehen."
+msgstr " Ein Befrieder ist unter ihnen, also musst du vorsichtig vorgehen."
 
 #: dat/missions/flf/flf_empatrol.lua:65
 msgid " There is a Hawking among them, so you must be very careful."
@@ -15499,7 +15499,7 @@ msgstr[1] "Es gibt eine Dvaered-Patrouille mit %d Schiffen im „%s“-System. E
 
 #: dat/missions/flf/flf_patrol.lua:71
 msgid " There is a Vigilance among them, so you must proceed with caution."
-msgstr " Eine Vigilance ist unter ihnen, also musst du vorsichtig vorgehen."
+msgstr " Eine Vigilanz ist unter ihnen, also musst du vorsichtig vorgehen."
 
 #: dat/missions/flf/flf_patrol.lua:74
 msgid " There is a Goddard among them, so you must be very careful."
@@ -16086,7 +16086,7 @@ msgid ""
 "you're still in one piece, so maybe I shouldn't worry so much, eh?\""
 msgstr ""
 "„Willkommen zurück, %s, und herzlichen Glückwunsch. Ich hatte nicht erwartet, dass die Dvaered Verstärkung "
-"schicken würden, geschweige denn eine Vigilance. Sonst hätte ich dich sicher nicht allein geschickt, und ich "
+"schicken würden, geschweige denn eine Vigilanz. Sonst hätte ich dich sicher nicht allein geschickt, und ich "
 "hätte dich vielleicht gar nicht geschickt. Aber du bist ja immer noch in einem Stück, also sollte ich mir "
 "vielleicht nicht so viele Sorgen machen, nicht wahr?“"
 
@@ -17449,11 +17449,11 @@ msgstr "Mitarbeiter-Lancelot"
 
 #: dat/missions/neutral/crimelord.lua:94
 msgid "Associate Admonisher"
-msgstr "Mitarbeiter-Admonisher"
+msgstr "Mitarbeiter-Admonierer"
 
 #: dat/missions/neutral/crimelord.lua:96
 msgid "Associate Pacifier"
-msgstr "Mitarbeiter-Pacifier"
+msgstr "Mitarbeiter-Befrieder"
 
 #: dat/missions/neutral/crimelord.lua:98
 msgid "Associate Hawking"
@@ -19221,7 +19221,7 @@ msgstr ""
 "    Der Mann ergreift schnell wieder das Wort. „Die Piraten machten unser Schiff kampfunfähig und wir "
 "dachten, wir wären hinüber, aber als sie uns geentert hatten, nahmen sie unsere drei Kinder und verließen "
 "uns! Ich habe versucht, gegen sie zu kämpfen, aber sie hatten meine Kinder mit Messern an ihren Hälsen … was "
-"sollte ich tun? Also haben wir einen Abschleppdienst zurück nach Brooks bekommen, aber jetzt müssen wir "
+"sollte ich tun? Also haben wir einen Abschleppdienst zurück nach Brucks bekommen, aber jetzt müssen wir "
 "jemanden finden, der unsere Kinder retten wird. Wir haben von deinen Fähigkeiten gehört; würdest du uns bitte "
 "helfen?“"
 
@@ -19316,7 +19316,7 @@ msgstr ""
 "Du machst dir nicht einmal die Mühe, dich zu nahe an diese beiden Piraten zu setzen, wenn man bedenkt, wie "
 "laut sie reden. Du musst noch nicht mal lange zuhören, um genau das zu bekommen, was du willst, denn einer "
 "der Piraten erzählt dem anderen seine neuesten Geschichten.\n"
-"    „Also dachte dieser Dummkopf, er könnte mich mit seinem dummen Llama einholen! Also schaltete ich ihn in "
+"    „Also dachte dieser Dummkopf, er könnte mich mit seinem dummen Lama einholen! Also schaltete ich ihn in "
 "etwa 2 Sekunden aus, stieg in das Schiff und nahm die Kinder mit. Der Kerl versuchte sich zu wehren, aber ich "
 "stoppte ihn schnell genug. Dann sagt die Frau, sie waren im Urlaub, als ob mich das interessiert! Ha! "
 "Schwachköpfe denken, sie können sich sogar mit mir anlegen, wenn ich zu arbeiten habe.\n"
@@ -19507,7 +19507,7 @@ msgstr ""
 "Du hast erfolgreich ein paar Dutzend Kinder gerettet, die von einem Kinderhändlerring entführt wurden, "
 "nachdem zwei Eltern um deine Hilfe gebeten hatten, um ihre eigenen Kinder zu retten. Die Eltern sagten, dass "
 "sie sich bemühen möchten, das Problem des Menschenhandels direkt zu bekämpfen und luden dich ein, sie in "
-"Zukunft auf Brooks wieder zu treffen, wenn du bereit bist, ihnen bei diesem Vorhaben zu helfen."
+"Zukunft auf Brucks wieder zu treffen, wenn du bereit bist, ihnen bei diesem Vorhaben zu helfen."
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:143 dat/missions/neutral/kidnapped/traffic_00.lua:144
 #: dat/missions/neutral/kidnapped/traffic_00.lua:150 dat/missions/neutral/kidnapped/traffic_00.lua:151
@@ -21550,7 +21550,7 @@ msgid ""
 "Torloth. You begin to wonder if she'll want to be found."
 msgstr ""
 "Endlich! Du findest sie, aber sie duckt sich in einen Tourbus, als sie dich sieht. Auf dem Fahrplan steht, "
-"dass er für Torloth bestimmt ist. Du fängst an, dich zu fragen, ob sie gefunden werden will."
+"dass er für Torloff bestimmt ist. Du fängst an, dich zu fragen, ob sie gefunden werden will."
 
 #: dat/missions/neutral/runaway/runaway_search.lua:42
 msgid ""
@@ -21592,20 +21592,20 @@ msgstr "Suche nach Cynthia auf Niflheim in Dohriabi"
 
 #: dat/missions/neutral/runaway/runaway_search.lua:51
 msgid "Search for Cynthia on Nova Shakar in Shakar"
-msgstr "Suche nach Cynthia auf Nova Shakr in Shakar"
+msgstr "Suche nach Cynthia auf Nova-Schakar in Schakar"
 
 #: dat/missions/neutral/runaway/runaway_search.lua:52
 msgid "Search for Cynthia on Selphod in Eridani"
-msgstr "Suche nach Cynthia auf Selphod in Eridani"
+msgstr "Suche nach Cynthia auf Selpfod in Eridani"
 
 #: dat/missions/neutral/runaway/runaway_search.lua:53
 msgid "Search for Cynthia on Emperor's Fist in Gamma Polaris"
-msgstr "Suche nach Cynthia auf Emperor's Fist in Gamma Polaris"
+msgstr "Suche nach Cynthia auf Imperators Faust in Gamma-Polaris"
 
 #. Can't let them see what's coming up, can I?
 #: dat/missions/neutral/runaway/runaway_search.lua:57
 msgid "Catch Cynthia on Torloth in Cygnus"
-msgstr "Fang Cynthia auf Torloth in Cygnus"
+msgstr "Fang Cynthia auf Torloff in Schwan"
 
 #: dat/missions/neutral/runaway/runaway_search.lua:58
 msgid "Return Cynthia to her father on Zhiru in the Goddard system"
@@ -25693,7 +25693,7 @@ msgid ""
 "There you are at last. Fancy boat you've got there. We're gonna head to Nova Shakar first, to grab some fuel. "
 "Just stick with us, okay?"
 msgstr ""
-"Endlich bist du hier. Ein schönes Schiff hast du hier. Wir gehen zuerst nach Nova Shakar zum Tanken. Bleib "
+"Endlich bist du hier. Ein schönes Schiff hast du hier. Wir gehen zuerst nach Nova-Schakar zum Tanken. Bleib "
 "einfach bei uns, okay?"
 
 #. En-route chatter.
@@ -25764,7 +25764,7 @@ msgstr "Fliege zum „%s“-System und begleite die anderen Geleite"
 
 #: dat/missions/shadow/shadowvigil.lua:112
 msgid "Follow the group to Nova Shakar and land"
-msgstr "Folge der Gruppe nach Nova Shakar und lande"
+msgstr "Folge der Gruppe nach Nova-Schakar und lande"
 
 #: dat/missions/shadow/shadowvigil.lua:113
 msgid "Follow the flight leader to the rendezvous location"
@@ -26040,8 +26040,8 @@ msgstr ""
 "Nexus-Schiffswerften. Ich bin auf der Suche nach einem talentierten Piloten, der einem unserer potentiellen "
 "Kunden eine Vorführung machen kann.\n"
 "    Eigentlich ganz einfach: Wir wollen jemanden, der zeigt, wie großartig die Nexus-Schiffsdesigns sind, "
-"indem er einen Piraten-Ancestor mit unserem niedrigstwertigen Schiff, dem Shark, zerstört. Natürlich ist auf "
-"dem Piloten der Ancestor ein Kopfgeld ausgesetzt, es wird also nicht illegal sein. Die Summe des Kopfgeldes "
+"indem er einen Piraten-Ahnen mit unserem niedrigstwertigen Schiff, dem Hai, zerstört. Natürlich ist auf "
+"dem Piloten des Ahnen ein Kopfgeld ausgesetzt, es wird also nicht illegal sein. Die Summe des Kopfgeldes "
 "wird an Ihnen ausgezahlt und Nexus wird einen kleinen Bonus hinzufügen. Wären Sie interessiert?“"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:58
@@ -26083,7 +26083,7 @@ msgstr ""
 "Schiffswerften. Oh, und auch dem Baron.“\n"
 "    Arnold Smith führt dich in eine Art Kontrollraum, wo dich einige wichtig aussehende Leute sehen. Nachdem "
 "er dir einige von ihnen vorgestellt hat, geht er die Mission durch, wobei er mit der Bedrohung übertreibt, es "
-"handelt sich schließlich nur um einen Piraten-Ancestor. Nichtsdestotrotz ist der Baron fasziniert.\n"
+"handelt sich schließlich nur um einen Piraten-Ahnen. Nichtsdestotrotz ist der Baron fasziniert.\n"
 "    Arnold Smith bekommt einen Anruf. Nachdem er geantwortet hat, wendet er sich an dich. „Perfektes Timing! "
 "Der Pirat ist gerade bei %s angekommen. Jetzt zeigen Sie, was Ihr Schiff alles kann!“ Zeit, zum Schiff "
 "zurückzukehren."
@@ -26134,17 +26134,17 @@ msgstr "Arnold Smith"
 #: dat/missions/shark/sh00_ancestorkill.lua:80
 msgid "The Nexus employee who recruited you for a very special demo of the \"Shark\" fighter."
 msgstr ""
-"Der Nexus-Mitarbeiter, der dich für eine ganz besondere Demonstration des „Shark“-Kämpfers rekrutiert hat."
+"Der Nexus-Mitarbeiter, der dich für eine ganz besondere Demonstration des „Hai“-Kämpfers rekrutiert hat."
 
 #: dat/missions/shark/sh00_ancestorkill.lua:84
 #, lua-format
 msgid "Buy a Shark (but not a Pirate Shark), then fly to the %s system and land on %s"
-msgstr "Kaufe eine Shark (aber keine Piraten-Shark), dann fliege ins „%s“-System und lande auf %s"
+msgstr "Kaufe einen Hai (aber keinen Piraten-Hai), dann fliege ins „%s“-System und lande auf %s"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:85
 #, lua-format
 msgid "Go to %s and kill the pirate with your Shark"
-msgstr "Gehe zu %s und töte den Piraten mit deiner Shark"
+msgstr "Gehe zu %s und töte den Piraten mit deinem Hai"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:86
 #, lua-format
@@ -26161,13 +26161,13 @@ msgstr "MISSION FEHLGESCHLAGEN: Der Pirat ist geflohen."
 
 #: dat/missions/shark/sh00_ancestorkill.lua:90
 msgid "MISSION FAILED: You were supposed to use a Shark."
-msgstr "MISSION FEHLGESCHLAGEN: Du hättest eine Shark benutzen sollen."
+msgstr "MISSION FEHLGESCHLAGEN: Du hättest einen Hai benutzen sollen."
 
 #: dat/missions/shark/sh00_ancestorkill.lua:92
 msgid "You helped Nexus Shipyards demonstrate the capabilities of their ships by destroying a Pirate Ancestor."
 msgstr ""
 "Du hast Nexus-Schiffswerften geholfen, die Fähigkeiten ihrer Schiffe zu demonstrieren, indem du einen Piraten-"
-"Ancestor vernichtet hast."
+"Ahnen vernichtet hast."
 
 #: dat/missions/shark/sh01_corvette.lua:49
 msgid ""
@@ -26357,7 +26357,7 @@ msgstr ""
 "    Aber für uns ist die Lage noch etwas schlimmer geworden: Es scheint, dass das Haus Sirius auch in den "
 "Schiffsbau einsteigen will, und die Front ist das Hauptziel. Wenn sie Erfolg haben, könnte der Lancelot-"
 "Entwurf vollständig aus dem Front-Raum verdrängt werden, und wir würden auf diesem Markt zwischen dem Haus "
-"Dvaered und dem Haus Sirius zerquetscht werden. Sicher, die FLF würde immer noch ein paar Pacifiers "
+"Dvaered und dem Haus Sirius zerquetscht werden. Sicher, die FLF würde immer noch ein paar Befrieder "
 "einsetzen, aber es wäre bestenfalls ein symbolisches Geschäft, und ganz zu schweigen davon, dass die Behörden "
 "anfangen würden, uns mit dem Terrorismus in Verbindung zu bringen.\n"
 "    Wir haben also ein bisschen Spionage betrieben. Wir haben einen Agenten, der einige hoffentlich "
@@ -26571,7 +26571,7 @@ msgid ""
 msgstr ""
 "Du hast Nexus-Schiffswerften geholfen, ein geheimes Treffen mit einem Mitglied des Rates der Front zu "
 "initiieren. Arnold Smith sagte, dass er eine weitere Mission für dich hat und dass du ihn in der Kneipe in "
-"Darkshed treffen sollst, wenn du bereit bist, ihn nach Curie zu transportieren."
+"Dunkelstall treffen sollst, wenn du bereit bist, ihn nach Curie zu transportieren."
 
 #. Change here to change the planets and the systems
 #. mispla will be useful to locate the Hawking
@@ -26894,7 +26894,7 @@ msgstr "Anfunken"
 #: dat/missions/shark/sh06_arandon.lua:56
 msgid "The Pacifier commander answers you and stops his ship, waiting to be boarded."
 msgstr ""
-"Der Kommandant der Pacifier antwortet dir und hält sein Schiff an und wartet darauf, geentert zu werden."
+"Der Kommandant des Befrieders antwortet dir und hält sein Schiff an und wartet darauf, geentert zu werden."
 
 #: dat/missions/shark/sh06_arandon.lua:58
 msgid "Let's wait"
@@ -27400,10 +27400,10 @@ msgid ""
 msgstr ""
 "Du durchläufst nun die vertraute Wartezeit für Joanne. Sie ruft dich bald über das Kommunikationssystem an.\n"
 "    „Das war’s, %s! Das war die letzte Station. Sie waren eine große Hilfe. Dies ist allerdings kein guter "
-"Ort, um die Dinge abzuschließen. Ich sag Ihnen etwas, lassen Sie uns nach Sroolu gehen und uns dort in der "
+"Ort, um die Dinge abzuschließen. Ich sag Ihnen etwas, lassen Sie uns nach Srohlu gehen und uns dort in der "
 "Weltraumkneipe treffen. Ich muss Ihnen natürlich Ihre Bezahlung geben, aber ich will auch ein bisschen mit "
 "Ihnen reden. Wir sehen uns am Planeten!“\n"
-"    Die Kommunikation schaltet sich aus. Du bereitest dich auf den Start vor und nimmst Kurs auf Sroolu."
+"    Die Kommunikation schaltet sich aus. Du bereitest dich auf den Start vor und nimmst Kurs auf Srohlu."
 
 #: dat/missions/sirius/achack/achack02.lua:52
 msgid "One damsel, safe and sound"
@@ -27624,7 +27624,7 @@ msgstr "Besiege Joannes Angreifer"
 
 #: dat/missions/sirius/achack/achack02.lua:96
 msgid "Land on Sroolu to get your reward"
-msgstr "Lande auf Sroolu, um deine Belohnung zu erhalten"
+msgstr "Lande auf Srohlu, um deine Belohnung zu erhalten"
 
 #: dat/missions/sirius/achack/achack02.lua:99
 msgid "Joanne needs you to escort her ship and fight off mercenaries sent to kill her."
@@ -28020,7 +28020,7 @@ msgstr ""
 #. Remember, Harja will be with you. Always. Well, until the mission ends.
 #: dat/missions/sirius/achack/achack03.lua:154 dat/missions/sirius/achack/achack04.lua:229
 msgid "Harja's Shark"
-msgstr "Harjas Shark"
+msgstr "Harjas Hai"
 
 #. Triggers when the player's sensors pick up Harja's ship.
 #. Triggers when Harja leaves the system.
@@ -29325,7 +29325,7 @@ msgstr ""
 #, lua-format
 msgid "However, if you're on the way to Aesir, I could be willing to pay %s for transportation to %s.\""
 msgstr ""
-"Wenn Sie jedoch auf dem Weg nach Aesir sind, könnte ich bereit sein, %s für den Transport nach %s zu zahlen.“"
+"Wenn Sie jedoch auf dem Weg nach Äsir sind, könnte ich bereit sein, %s für den Transport nach %s zu zahlen.“"
 
 #: dat/missions/sirius/srs_ferry.lua:81
 msgid ""
@@ -29558,7 +29558,7 @@ msgstr ""
 #. Something has changed with the system map, and this mission is no longer valid
 #: dat/missions/sirius/srs_ferry.lua:292
 msgid "Error: no landable planets in the Aesir system. This mission is broken.\n"
-msgstr "Fehler: Keine landbaren Planeten im Aesir-System. Diese Mission ist defekt.\n"
+msgstr "Fehler: Keine landbaren Planeten im Äsir-System. Diese Mission ist defekt.\n"
 
 #. local picky = rnd.rnd(1,4)  -- initialized in the create function
 #. Rank 2 will demand to be delivered to Sirius
@@ -30053,7 +30053,7 @@ msgid ""
 msgstr ""
 "Als du andockst, kannst du Chelsea kaum davon abhalten, aus deinem Schiff zu springen und sich zu verletzen. "
 "Sie scheint genau zu wissen, wohin sie gehen soll, und bevor du überhaupt weißt, was los ist, hat sie ein "
-"altes Llama gekauft, möglicherweise das rostigste und abgetragenste Llama, das du je gesehen hast, aber "
+"altes Lama gekauft, möglicherweise das rostigste und abgetragenste Lama, das du je gesehen hast, aber "
 "trotzdem in funktionstüchtigem Zustand. Du machst dir Sorgen über den Zustand des Schiffes, aber sie "
 "versichert dir, dass sie es reparieren wird, sobald sie genug Geld dafür bekommt. Sie umarmt dich in einer "
 "freundlichen Umarmung, bedankt sich bei dir und überreicht dir einen Credit-Jeton. „Triff mich irgendwann "
@@ -30088,8 +30088,8 @@ msgid ""
 "condition, but working. As she went on to start her career as a freelance pilot, she asked you to catch up "
 "with her again sometime. She expects that she'll be sticking to Soromid space for the time being."
 msgstr ""
-"Du hast geholfen, Chelsea nach Crow zu transportieren, wo sie sich ihr erstes Schiff kaufen konnte, einen "
-"Llama, der in sehr schlechtem Zustand ist, aber er funktioniert. Als sie dann ihre Karriere als "
+"Du hast geholfen, Chelsea nach Crow zu transportieren, wo sie sich ihr erstes Schiff kaufen konnte, ein "
+"Lama, das in einem sehr schlechtem Zustand ist, aber es funktioniert. Als sie dann ihre Karriere als "
 "freiberufliche Pilotin begann, bat sie dich, sie irgendwann wieder einzuholen. Sie denkt, dass sie sich "
 "vorerst im Raum der Soromiden aufhalten wird."
 
@@ -30689,7 +30689,7 @@ msgstr ""
 "Schiff bekommen, aber es wird schwierig werden.“ Du fragst ser, warum das so ist. „Nun, ich bin auf jemanden "
 "gestoßen, der mir ein Schnäppchen für ein neues Schiff anbietet! Na ja, nicht wirklich neu. Es ist gebraucht, "
 "aber in viel besserem Zustand als die Rostlaube, die ich vorher bekommen habe. Angeblich war dieser Typ "
-"früher ein Dvaered-Kriegsherr und bietet mir seine alte Vigilance an, wenn ich mich nur um diesen einen "
+"früher ein Dvaered-Kriegsherr und bietet mir seine alte Vigilanz an, wenn ich mich nur um diesen einen "
 "Piraten namens %s kümmere. Das Problem ist, dass er ein Schiff steuert, welches stärker ist als mein eigenes "
 "…“\n"
 "    Chelsea hält für einen Moment inne. „Sag mal, denkst du, du könntest mir hierbei helfen? Du musst mir nur "
@@ -30753,7 +30753,7 @@ msgid ""
 "acquire a retired Dvaered warlord's old Vigilance."
 msgstr ""
 "Du hast Chelsea geholfen, einen gesuchten Piraten zur Strecke zu bringen, ein Kopfgeld für euch beide "
-"verdient und Chelsea ermöglicht, die alte Vigilance eines Kriegsherren der Dvaered im Ruhestand zu erhalten."
+"verdient und Chelsea ermöglicht, die alte Vigilanz eines Kriegsherren der Dvaered im Ruhestand zu erhalten."
 
 #: dat/missions/soromid/common.lua:22 dat/faction.xml:195 dat/ships/soromid_arx.xml:11
 #: dat/ships/soromid_brigand.xml:11 dat/ships/soromid_ira.xml:11 dat/ships/soromid_marauder.xml:11
@@ -31375,7 +31375,7 @@ msgstr ""
 "leistungsfähigeren Hauptsystemen und mehr ausstatten! Regionale Karten, die Ihnen helfen, die Galaxie "
 "leichter zu erkunden, können hier ebenso erworben werden wie Lizenzen, die für höherwertige Waffen und "
 "Raumschiffe benötigt werden (zum Beispiel benötigen Sie eine Großzivilschiffslizenz, um unser Spitzenmodell "
-"Melendez-Mule-Massenfrachtschiff zu kaufen, das wegen seiner unübertroffenen Frachtkapazität sehr begehrt "
+"Melendez-Muli-Massenfrachtschiff zu kaufen, das wegen seiner unübertroffenen Frachtkapazität sehr begehrt "
 "ist).\n"
 "    Wie Sie sehen, können Sie über eine Reihe von Reitern am oberen Rand Ihres Bildschirms die Ausstattung "
 "nach Typ filtern: ‚W‘ für Waffen, ‚U‘ für Utensilien, ‚G‘ für Gerüstteile, ‚Haupt‘ für Hauptsysteme und "
@@ -31411,7 +31411,7 @@ msgstr ""
 "    Im Moment brauchen Sie diesen Bildschirm nicht, aber später, wenn Sie genug gespart haben, werden Sie Ihr "
 "Schiff wahrscheinlich zu einem noch besseren aufrüsten wollen, je nachdem, welche Aufgaben Sie erfüllen "
 "werden. Die Melendez-Gesellschaft hat sich hauptsächlich auf Frachtschiffe spezialisiert. Ich empfehle "
-"entweder unser Melendez-Quicksilver-Expressfrachtschiff für Frachtmissionen, die ein Zeitlimit haben, oder "
+"entweder unser Melendez-Quecksilber-Expressfrachtschiff für Frachtmissionen, die ein Zeitlimit haben, oder "
 "unser Melendez-Koala-Kompaktmassenfrachtschiff für Missionen, die den Transport großer Mengen an Fracht "
 "erfordern. Wir danken Ihnen herzlich für Ihren Einkauf bei der Melendez-Gesellschaft!“"
 
@@ -36078,7 +36078,7 @@ msgstr "Braut"
 
 #: dat/scripts/pilot/pirate.lua:243
 msgid "Brigand"
-msgstr "Brigand"
+msgstr "Brigant"
 
 #: dat/scripts/pilot/pirate.lua:244
 msgid "Bulk"
@@ -36710,7 +36710,7 @@ msgstr "Raven"
 
 #: dat/scripts/pilot/pirate.lua:402
 msgid "Reaver"
-msgstr "Reaver"
+msgstr "Reiver"
 
 #: dat/scripts/pilot/pirate.lua:403
 msgid "Recluse"
@@ -41390,7 +41390,7 @@ msgstr "Kartendekoratortextur „%s“ konnte nicht geladen werden."
 #: src/map.c:2600
 #, c-format
 msgid "Map decorator has unknown node '%s'."
-msgstr "Kartendekorator hat unbekannen Node „%s“"
+msgstr "Kartendekorator hat unbekannen Node „%s“."
 
 #. Create window.
 #: src/map_find.c:231 src/map_find.c:786 src/map_find.c:918
@@ -45087,7 +45087,7 @@ msgstr "Drohne"
 
 #: src/ship.c:205 dat/ships/drone_heavy.xml:2
 msgid "Heavy Drone"
-msgstr "Schwere Drohne"
+msgstr "Schwerdrohne"
 
 #: src/ship.c:207
 msgid "Mothership"
@@ -46621,7 +46621,7 @@ msgstr ""
 
 #: dat/assets/aldous.xml:2
 msgid "Aldous"
-msgstr "Aldous"
+msgstr "Aldus"
 
 #: dat/assets/aldous.xml:27
 msgid ""
@@ -46630,8 +46630,8 @@ msgid ""
 "the list. Nevertheless, a handful of brave souls have chosen to make this planet their home. The ocean may be "
 "toxic, but it also happens to be the perfect environment for producing high quality positronic circuitry."
 msgstr ""
-"Der Planet Aldous ist ein riesiges Meer aus einer für den Menschen giftigen Flüssigkeit. Selbst die geringste "
-"Exposition gegenüber dem giftigen Material in Aldous’ Ozean ist tödlich. Was die Bewohnbarkeit betrifft, so "
+"Der Planet Aldus ist ein riesiges Meer aus einer für den Menschen giftigen Flüssigkeit. Selbst die geringste "
+"Exposition gegenüber dem giftigen Material in Aldus’ Ozean ist tödlich. Was die Bewohnbarkeit betrifft, so "
 "stehen Planeten wie dieser an letzter Stelle der Liste. Dennoch haben sich eine Handvoll mutiger Seelen "
 "entschieden, diesen Planeten zu ihrer Heimat zu machen. Der Ozean mag zwar giftig sein, aber er ist zufällig "
 "auch die perfekte Umgebung für die Herstellung hochwertiger positronischer Schaltkreise."
@@ -46651,7 +46651,7 @@ msgstr ""
 
 #: dat/assets/aldous_moon.xml:2
 msgid "Aldous' moon"
-msgstr "Aldous’ Mond"
+msgstr "Aldus’ Mond"
 
 #: dat/assets/aleph.xml:2
 msgid "Aleph"
@@ -47081,7 +47081,7 @@ msgstr ""
 "Planeten zu einem guten Standort für die Waffenproduktion, die angesichts der Nähe zu Sol ein lukratives "
 "Geschäft war. Während der Fraktionskriege wurde Anubis vom Imperium annektiert, aber die örtliche Bevölkerung "
 "schloss sich später der Protestbewegung an, die schließlich zur Gründung von Haus Dvaered führte. Heute "
-"verwenden die Dvaered Anubis zur Herstellung von Munition und leichten Kampfschiffen zur Versorgung des Rälid-"
+"verwenden die Dvaered Anubis zur Herstellung von Munition und leichten Kampfschiffen zur Versorgung des Raelid-"
 "Außenpostens."
 
 #: dat/assets/anubis.xml:31
@@ -47204,11 +47204,11 @@ msgid ""
 "project was in fact so successful that Arcadia became a hub for food distribution throughout localized Za'lek "
 "space."
 msgstr ""
-"Eher ironisch, aber dennoch treffend benannt, ist Arcadia eine Welt, die von sauren Regenfällen und anderen, "
+"Eher ironisch, aber dennoch treffend benannt, ist Arkadien eine Welt, die von sauren Regenfällen und anderen, "
 "ebenso scheußlichen Wettermustern bombardiert wird. Als solches war es die Kernwelt eines erfolgreichen "
 "Experiments, um herauszufinden, ob ein solches Umfeld eine massive Kampagne zum Anbau von Feldfrüchten noch "
 "unterstützen kann, wenn die richtigen Isoliertechnologien und -verfahren eingesetzt werden. Das Projekt war "
-"in der Tat so erfolgreich, dass Arcadia zu einer Drehscheibe für die Verteilung von Nahrungsmitteln im "
+"in der Tat so erfolgreich, dass Arkadien zu einer Drehscheibe für die Verteilung von Nahrungsmitteln im "
 "gesamten näheren Za'lek-Raum wurde."
 
 #: dat/assets/arcadia.xml:29
@@ -47222,7 +47222,7 @@ msgstr ""
 
 #: dat/assets/arch_arai.xml:2
 msgid "Arch Arai"
-msgstr "Arch Arai"
+msgstr "Arch-Arai"
 
 #: dat/assets/arch_arai.xml:30
 msgid ""
@@ -47230,7 +47230,7 @@ msgid ""
 "the spell of the Touched. Now it is a fairly law-abiding Sirius world, earning its existence through trade "
 "and industry like almost every other planet."
 msgstr ""
-"Einst eine unabhängige Welt, Heimat von Piraten und Schwarzmarkthändlern, ist Arch Arai längst in den Bann "
+"Einst eine unabhängige Welt, Heimat von Piraten und Schwarzmarkthändlern, ist Arch-Arai längst in den Bann "
 "der Berührten geraten. Jetzt ist sie eine recht gesetzestreue Sirius-Welt, die wie fast jeder andere Planet "
 "ihre Existenz durch Handel und Industrie verdient."
 
@@ -47522,7 +47522,7 @@ msgstr "Awowa V"
 
 #: dat/assets/baba_yaga.xml:2
 msgid "Baba Yaga"
-msgstr "Baba Yaga"
+msgstr "Baba-Yaga"
 
 #: dat/assets/babylon_i.xml:2
 msgid "Babylon I"
@@ -47580,7 +47580,7 @@ msgstr ""
 
 #: dat/assets/beeklo_ii.xml:2
 msgid "Beeklo II"
-msgstr "Beeklo II"
+msgstr "Bieklo II"
 
 #: dat/assets/beene.xml:2
 msgid "Beene"
@@ -47629,7 +47629,7 @@ msgstr ""
 "Glockenturm-Station ist ein kleiner soromidischer militärischer Außenposten, dessen Hauptzweck darin besteht, "
 "das Adiadus-System linientreu zu halten. Da er so weit vom soromidischen Kern entfernt ist, gibt es wenig "
 "interstellaren Verkehr, und einige der Bewohner beginnen sich gelegentlich zu fragen, ob sie überhaupt Teil "
-"des soromidischen Kollektivs sind. Belltower ist hier, um sie daran zu erinnern, dass sie es sind."
+"des soromidischen Kollektivs sind. Glockenturm ist hier, um sie daran zu erinnern, dass sie es sind."
 
 #: dat/assets/belltower_station.xml:29
 msgid ""
@@ -47669,14 +47669,14 @@ msgstr ""
 
 #: dat/assets/benteen.xml:2
 msgid "Benteen"
-msgstr "Benteen"
+msgstr "Bentien"
 
 #: dat/assets/benteen.xml:27
 msgid ""
 "Benteen is one of the Empire's primary agriworlds. It grows most of the crops that are bound for the western "
 "systems. It is a quiet world, with little in the way of the bustle and fuss of other, more core, planets."
 msgstr ""
-"Benteen ist eine der wichtigsten Agrarwelten des Imperiums. Hier werden die meisten Feldfrüchte angebaut, die "
+"Bentien ist eine der wichtigsten Agrarwelten des Imperiums. Hier werden die meisten Feldfrüchte angebaut, die "
 "für die westlichen Systeme bestimmt sind. Es ist eine ruhige Welt, in der der Hektik und dem Trubel anderer "
 "Planeten, die mehr zum Kern gehören, wenig im Wege steht."
 
@@ -47690,7 +47690,7 @@ msgstr ""
 
 #: dat/assets/berkhere.xml:2
 msgid "Berkhere"
-msgstr "Berkhere"
+msgstr "Ganeffier"
 
 #: dat/assets/berkhere.xml:28
 msgid ""
@@ -47698,7 +47698,7 @@ msgid ""
 "minerals. The colony here relies on this mineral wealth for survival. Crops will not grow on this arid "
 "planet, so all food has to be imported."
 msgstr ""
-"Der größte Teil der Oberfläche von Berkhere besteht aus Fels, Staub und Sand. Aber unter dieser Oberfläche "
+"Der größte Teil der Oberfläche von Ganeffier besteht aus Fels, Staub und Sand. Aber unter dieser Oberfläche "
 "liegen seltene und wertvolle Edelsteine und Mineralien. Die Kolonie hier ist zum Überleben auf diesen "
 "Mineralienreichtum angewiesen. Auf diesem trockenen Planeten werden keine Feldfrüchte wachsen, so dass alle "
 "Nahrungsmittel importiert werden müssen."
@@ -47711,14 +47711,14 @@ msgid ""
 "Berkhere's future isn't in peril. Needless to say, the gem is heavily protected by security systems."
 msgstr ""
 "Die Weltraumhafenkneipe ist um einen zentralen Bereich herum angeordnet, der als Schaufenster für den größten "
-"ungeschliffenen Edelstein dient, der je unter den Sanden von Berkhere gefunden wurde. Er erinnert sowohl "
-"Besucher als auch die örtliche Bevölkerung daran, dass Berkhere immer noch wohlhabend ist. Solange der "
-"ausgestellte Edelstein nicht verkauft werden muss, so die Überlegung, ist die Zukunft von Berkhere nicht in "
+"ungeschliffenen Edelstein dient, der je unter den Sanden von Ganeffier gefunden wurde. Er erinnert sowohl "
+"Besucher als auch die örtliche Bevölkerung daran, dass Ganeffier immer noch wohlhabend ist. Solange der "
+"ausgestellte Edelstein nicht verkauft werden muss, so die Überlegung, ist die Zukunft von Ganeffier nicht in "
 "Gefahr. Unnötig zu sagen, dass der Edelstein durch Sicherheitssysteme stark geschützt ist."
 
 #: dat/assets/beth.xml:2
 msgid "Beth"
-msgstr "Beth"
+msgstr "Beff"
 
 #: dat/assets/bgg1356.xml:2
 msgid "BGG-1356"
@@ -47769,7 +47769,7 @@ msgstr ""
 
 #: dat/assets/bon_sebb.xml:2
 msgid "Bon Sebb"
-msgstr "Bon Sebb"
+msgstr "Bon-Sebb"
 
 #: dat/assets/bon_sebb.xml:30
 msgid ""
@@ -47777,7 +47777,7 @@ msgid ""
 "large area of the planet's surface is a gigantic junk yard, known as the \"Junkle\", where the locals \"hunt"
 "\" for useful equipment they can sell to each other, or to passing travellers."
 msgstr ""
-"Bon Sebb ist ein geheimnisvoller Ort. Objekte aus der ganzen Galaxie haben die Angewohnheit, hier "
+"Bon-Sebb ist ein geheimnisvoller Ort. Objekte aus der ganzen Galaxie haben die Angewohnheit, hier "
 "aufzutauchen. Tatsächlich ist ein großer Teil der Oberfläche des Planeten ein gigantischer Müllplatz, bekannt "
 "als „Müllchen“, wo die Einheimischen nach nützlicher Ausrüstung „jagen“, die sie untereinander oder an "
 "vorbeireisende Reisende verkaufen können."
@@ -47788,7 +47788,7 @@ msgid ""
 "patchworks of various designs and materials. The only somewhat symmetrical feature of the bar is a "
 "holoportrait of the Creator of the Universe, hanging over the lopsided bar."
 msgstr ""
-"Die Kneipe auf Bon Sebb ist aus Dingen gebaut, die aus dem Müllchen gerettet wurden. Die Wände und Möbel sind "
+"Die Kneipe auf Bon-Sebb ist aus Dingen gebaut, die aus dem Müllchen gerettet wurden. Die Wände und Möbel sind "
 "ein Patchwork aus verschiedenen Designs und Materialien. Das einzige etwas symmetrische Merkmal der Kneipe "
 "ist ein Holoportrait des Schöpfers des Universums, das über der schiefen Kneipe hängt."
 
@@ -47802,7 +47802,7 @@ msgstr "Bonanza II"
 
 #: dat/assets/boowoy.xml:2
 msgid "Boowoy"
-msgstr "Boowoy"
+msgstr "Buwoy"
 
 #: dat/assets/boowoy.xml:29
 msgid ""
@@ -47811,7 +47811,7 @@ msgid ""
 "awry. Now, the planet's ecosystem has been terminally disrupted, causing most of the surface to erode into "
 "desert."
 msgstr ""
-"Boowoy war nie eine sehr respektable Kolonie. Es wurde in der Hoffnung angesiedelt, dass die Welt in einen "
+"Buwoy war nie eine sehr respektable Kolonie. Es wurde in der Hoffnung angesiedelt, dass die Welt in einen "
 "schönen Wohnplaneten der Klasse M umgewandelt werden könnte, aber anhaltende Korruption und Misswirtschaft "
 "führten dazu, dass die Bemühungen schief gingen. Jetzt ist das Ökosystem des Planeten endgültig zerstört, so "
 "dass der größte Teil der Oberfläche zu Wüste erodiert ist."
@@ -47917,9 +47917,9 @@ msgid ""
 "as much as for the Imperial core systems."
 msgstr ""
 "Brucks ist ein geschäftiger, hoch bevölkerter imperialer Zivilplanet. Mit dem Niedergang des Imperiums hat er "
-"sich an der Grenze des gefährlichen Weltraums befunden, einer eher unbequemen Position. Da Brooks ein reicher "
+"sich an der Grenze des gefährlichen Weltraums befunden, einer eher unbequemen Position. Da Brucks ein reicher "
 "Planet mit viel wirtschaftlichem und politischem Gewicht innerhalb des Imperiums ist, schützt die Imperiale "
-"Marine Arcturus Brooks zuliebe ebenso wie die imperialen Hauptsysteme."
+"Marine Arcturus Brucks zuliebe ebenso wie die imperialen Hauptsysteme."
 
 #: dat/assets/brooks.xml:29
 msgid ""
@@ -47927,9 +47927,9 @@ msgid ""
 "traders put up with the inflated prices for refreshments and services at the spaceport bar, Brooks, after "
 "all, is a boom world and where profit is to made."
 msgstr ""
-"Auf Brooks ist alles teuer, etwas, das mit den meisten wirtschaftlich boomenden Welten einhergeht. Die "
+"Auf Brucks ist alles teuer, etwas, das mit den meisten wirtschaftlich boomenden Welten einhergeht. Die "
 "meisten Händler nehmen jedoch die überhöhten Preise für Erfrischungen und Dienstleistungen an der "
-"Weltraumhafenkneipe in Kauf, schließlich ist Brooks eine Boom-Welt, in der Gewinne gemacht werden sollen."
+"Weltraumhafenkneipe in Kauf, schließlich ist Brucks eine Boom-Welt, in der Gewinne gemacht werden sollen."
 
 #: dat/assets/buritt.xml:2
 msgid "Buritt"
@@ -47941,7 +47941,7 @@ msgid ""
 "will find much of the Dvaered middle class here, such as it is. You will also find a large-scale pollution of "
 "the natural environment but, with the Dvaered being Dvaered, no attempt is being made to address this."
 msgstr ""
-"Nicht so schön wie Varia im Darkstone-System, aber Buritt ist dennoch eine einigermaßen bewohnbare Welt. Man "
+"Nicht so schön wie Varia im Dunkelstein-System, aber Buritt ist dennoch eine einigermaßen bewohnbare Welt. Man "
 "findet hier viel von der Dvaered-Mittelklasse, so wie sie ist. Man wird auch eine groß angelegte "
 "Verschmutzung der natürlichen Umwelt vorfinden, aber da die Dvaered hier Dvaered sind, wird kein Versuch "
 "unternommen, dies anzugehen."
@@ -48179,7 +48179,7 @@ msgstr "Schmor"
 
 #: dat/assets/chriik.xml:2
 msgid "Chriik"
-msgstr "Chrick"
+msgstr "Tschrick"
 
 #: dat/assets/chriik.xml:29
 msgid ""
@@ -48188,7 +48188,7 @@ msgid ""
 "anything would want to live here in the first place. This makes it a perfect planet for heavy industries to "
 "set up shop since they can pollute all they want without repercussions."
 msgstr ""
-"Chrick ist eine tote Welt. Wie die meisten Wüstenplaneten hat er keine Gewässer und ein heißes Klima, aber im "
+"Tschrick ist eine tote Welt. Wie die meisten Wüstenplaneten hat er keine Gewässer und ein heißes Klima, aber im "
 "Gegensatz zu den meisten Wüstenplaneten gibt es auf ihm überhaupt kein einheimisches Leben. Es gibt in der "
 "Tat keinen Grund, warum irgendjemand oder irgendetwas überhaupt hier leben wollen würde. Das macht ihn zu "
 "einem perfekten Planeten für die Ansiedlung von Schwerindustrien, da sie alles, was sie wollen, ohne "
@@ -48205,19 +48205,19 @@ msgstr ""
 
 #: dat/assets/churchill_i.xml:2
 msgid "Churchill I"
-msgstr "Tschörschell I"
+msgstr "Kirchell I"
 
 #: dat/assets/churchill_ii.xml:2
 msgid "Churchill II"
-msgstr "Tschörschell II"
+msgstr "Kirchell II"
 
 #: dat/assets/churchill_iia.xml:2
 msgid "Churchill IIa"
-msgstr "Tschörschell IIa"
+msgstr "Kirchell IIa"
 
 #: dat/assets/claudius_mehan.xml:2
 msgid "Claudius Mehan"
-msgstr "Claudius Mehan"
+msgstr "Claudius-Mehan"
 
 #: dat/assets/cole_station.xml:2
 msgid "Cole Station"
@@ -48326,7 +48326,7 @@ msgstr ""
 
 #: dat/assets/cornwal_ordinance.xml:2
 msgid "Cornwal Ordinance"
-msgstr "Cornwal Ordonnanz"
+msgstr "Cornwal-Ordonnanz"
 
 #: dat/assets/cornwal_ordinance.xml:27
 msgid ""
@@ -48349,7 +48349,7 @@ msgid ""
 "talented businessman to have spread word of his merchandise so widely throughout Sirius space. The regular "
 "shipments required to keep business going helps too, so it is with the bar too."
 msgstr ""
-"Für eine so abgelegene Station ist Cornwal Ordonnanz von Händlern bemerkenswert gut frequentiert. Frederick "
+"Für eine so abgelegene Station ist Cornwal-Ordonnanz von Händlern bemerkenswert gut frequentiert. Frederick "
 "Cornwal ist ein talentierter Geschäftsmann, der seine Waren im gesamten Sirius-Raum so weit verbreitet hat. "
 "Die regelmäßigen Lieferungen, die erforderlich sind, um das Geschäft am Laufen zu halten, helfen ebenfalls, "
 "so auch bei der Kneipe."
@@ -48405,7 +48405,7 @@ msgid ""
 msgstr ""
 "Das ganze Wasser auf Kristen ist giftig, und als solches ist der Planet für alle außer den "
 "widerstandsfähigsten Lebensformen unwirtlich. Die Toxizität des Wassersystems bedeutet aber auch, dass "
-"bestimmte Stoffe hier sehr leicht gewonnen werden können. Aus diesem Grund ist die Siedlung auf Cristen ein "
+"bestimmte Stoffe hier sehr leicht gewonnen werden können. Aus diesem Grund ist die Siedlung auf Kristen ein "
 "einziger riesiger Komplex, der von der äußeren Umwelt isoliert ist."
 
 #: dat/assets/cristen.xml:28
@@ -48680,7 +48680,7 @@ msgstr "Dunkelstein V"
 
 #: dat/assets/dawn.xml:2
 msgid "Dawn"
-msgstr "Grauen"
+msgstr "Anbruch"
 
 #: dat/assets/dawn.xml:28
 msgid ""
@@ -48693,10 +48693,10 @@ msgid ""
 "to rally around Gilligan's Light."
 msgstr ""
 "Gilligans Licht war eines der ersten Systeme, das jemals für ein Kolonisationsprojekt ausgewählt wurde. "
-"Grauen war die erste Welt, die von Menschen in diesem Sektor des Weltraums betreten wurde, obwohl das hierher "
-"gesandte Kolonieschiff Mythril erst das fünfte war, das gestartet wurde. Nichtsdestotrotz erwies sich die "
-"Dawn als eine der fruchtbarsten Expeditionen des Ersten Wachstums, und ihre Entwicklung übertraf die der "
-"meisten anderen Welten. Mit dem Aufkommen der Hyperraum-Reisen fand sich die Dawn als lokale Hauptwelt der "
+"Anbruch war die erste Welt, die von Menschen in diesem Sektor des Weltraums betreten wurde, obwohl das hierher "
+"gesandte Kolonieschiff Mythril erst das fünfte war, das gestartet wurde. Nichtsdestotrotz erwies sich "
+"Anbruch als eine der fruchtbarsten Expeditionen des Ersten Wachstums, und ihre Entwicklung übertraf die der "
+"meisten anderen Welten. Mit dem Aufkommen der Hyperraum-Reisen fand sich Anbruch als lokale Hauptwelt der "
 "Front-Welten wieder, und so wird sie durch den über ihr hängenden Rat der Front geschmückt. Dieser Status ist "
 "strikt symbolisch, aber er erklärt, warum sich die FLF entschieden hat, sich um Gilligans Licht zu versammeln."
 
@@ -48706,34 +48706,34 @@ msgid ""
 "prevalent design in the early expansion era. Other than that, this bar doesn't have much to set it apart from "
 "others. The noise, the smell and the drunks are features that are commonplace throughout the galaxy."
 msgstr ""
-"Grauens Kneipe hat eine rustikale Ausstrahlung, und die Einheimischen haben Wert darauf gelegt, den Stil nahe "
+"Anbruchs Kneipe hat eine rustikale Ausstrahlung, und die Einheimischen haben Wert darauf gelegt, den Stil nahe "
 "an dem zu halten, was in der frühen Expansionszeit das vorherrschende Design war. Abgesehen davon hat diese "
 "Kneipe nicht viel, was sie von anderen unterscheidet. Der Lärm, der Geruch und die Betrunkenen sind Merkmale, "
 "die in der ganzen Galaxie alltäglich sind."
 
 #: dat/assets/delta_pavonis_i.xml:2
 msgid "Delta Pavonis I"
-msgstr "Delta Pavonis I"
+msgstr "Delta-Pavonis I"
 
 #: dat/assets/delta_pavonis_ii.xml:2
 msgid "Delta Pavonis II"
-msgstr "Delta Pavonis II"
+msgstr "Delta-Pavonis II"
 
 #: dat/assets/delta_pavonis_iia.xml:2
 msgid "Delta Pavonis IIa"
-msgstr "Delta Pavonis IIa"
+msgstr "Delta-Pavonis IIa"
 
 #: dat/assets/delta_polaris_i.xml:2
 msgid "Delta Polaris I"
-msgstr "Delta Polaris I"
+msgstr "Delta-Polaris I"
 
 #: dat/assets/delta_polaris_ii.xml:2
 msgid "Delta Polaris II"
-msgstr "Delta Polaris II"
+msgstr "Delta-Polaris II"
 
 #: dat/assets/delta_polaris_vi.xml:2
 msgid "Delta Polaris VI"
-msgstr "Delta Polaris VI"
+msgstr "Delta-Polaris VI"
 
 #: dat/assets/diabolos.xml:2
 msgid "Diabolos"
@@ -48857,7 +48857,7 @@ msgid ""
 msgstr ""
 "Doormatt ist eine schwach besiedelte Frontwelt, die noch immer geterraformt wird. Trotz des Geschehnisses "
 "wächst die Bevölkerung des Imperiums immer noch schnell, und es müssen neue Welten gesucht werden, um die "
-"Belastung zu verringern. Doormat ist eine dieser Welten."
+"Belastung zu verringern. Doormatt ist eine dieser Welten."
 
 #: dat/assets/doranthex_prime.xml:2
 msgid "Doranthex Prime"
@@ -48912,7 +48912,7 @@ msgstr ""
 "Patienten aufgrund einer längeren Exposition gegenüber bestimmten visuellen Wellenlängen vorübergehend an "
 "Hysterie erkranken. Dies wurde zunächst einer kontaminierten Lieferung von Lebensmitteln zugeschrieben, doch "
 "später stellte sich heraus, dass die Sonne im Apez-System anormale Wellenlängen ausstrahlte, deren "
-"Auswirkungen durch Partikel in der Dowue-Atmosphäre vervielfacht wurden. Kurz darauf wurde es für das gesamte "
+"Auswirkungen durch Partikel in der Dowü-Atmosphäre vervielfacht wurden. Kurz darauf wurde es für das gesamte "
 "Personal zur Pflicht, eine spezielle Schutzbrille zu tragen, die das schädliche Licht herausfiltern sollte."
 
 #: dat/assets/dowue.xml:30
@@ -48924,7 +48924,7 @@ msgid ""
 msgstr ""
 "Die Kneipe des Weltraumhafens Dowü ist besser bekannt als die „Gefrorene Garnele“, benannt nach einigen alten "
 "Krebstieren, die während des Baus des Weltraumhafens gefunden wurden. Es ist ein Ort, an dem die meisten "
-"Mitarbeiter ihre Zeit verbringen. Selbst mit Schutzbrille veranlassen die Gefahren des Dowue-Syndroms die "
+"Mitarbeiter ihre Zeit verbringen. Selbst mit Schutzbrille veranlassen die Gefahren des Dowü-Syndroms die "
 "meisten Menschen dazu, drinnen zu bleiben, und die Kneipe liegt im Herzen des Weltraumhafens."
 
 #: dat/assets/draconis_alpha.xml:2
@@ -48988,7 +48988,7 @@ msgstr ""
 "doch seine Schwerkraft ist vergleichbar. Dadurch war er ideal als Bevölkerungsbasis, was er auch heute noch "
 "ist. Drakonis Omega bleibt trotz seiner nun isolierten Lage dem Imperium fest verbunden. Die Menschen hier "
 "glauben, dass die Nachwirkungen des Geschehnisses nur vorübergehender Natur sind und dass das Imperium eines "
-"Tages seinen früheren Glanz wiedererlangen wird, wobei Draconis Omega natürlich im Vordergrund stehen wird."
+"Tages seinen früheren Glanz wiedererlangen wird, wobei Drakonis Omega natürlich im Vordergrund stehen wird."
 
 #: dat/assets/draconis_omega.xml:31
 msgid ""
@@ -49059,7 +49059,7 @@ msgstr ""
 
 #: dat/assets/dun_hill.xml:2
 msgid "Dun Hill"
-msgstr "Dunhill"
+msgstr "Dannhill"
 
 #: dat/assets/dun_hill.xml:27
 msgid ""
@@ -49067,7 +49067,7 @@ msgid ""
 "world has no real personality of its own as the population is imported from nearby planets. It isn't a "
 "pleasant place to live but, none-the-less, it has valuable resources the Empire would rather not go without."
 msgstr ""
-"Dunhill ist eine jener kleinen Bergbauwelten, die als völlig unbedeutend angesehen werden. Tatsächlich hat "
+"Dannhill ist eine jener kleinen Bergbauwelten, die als völlig unbedeutend angesehen werden. Tatsächlich hat "
 "die Welt keine wirkliche eigene Persönlichkeit, da die Bevölkerung von nahe gelegenen Planeten importiert "
 "wird. Es ist kein angenehmer Ort zum Leben, aber dennoch verfügt er über wertvolle Ressourcen, auf die das "
 "Imperium lieber nicht verzichten möchte."
@@ -49375,7 +49375,7 @@ msgstr ""
 "Die Eklipse-Station ist der wichtigste militärische Außenposten in diesem Gebiet des entwendeten Weltraums. "
 "Sie dient als Zollkontrollpunkt für imperiale Händler und Konsortiums-Händler, die nach Dvaer und darüber "
 "hinaus reisen wollen. Gleichzeitig hat sie den Auftrag, die Bedrohung durch Piraten in dieser Region des "
-"Weltraums zu minimieren. Es sollte daher nicht überraschen, dass die Eclipse-Station eine beträchtliche "
+"Weltraums zu minimieren. Es sollte daher nicht überraschen, dass die Eklipse-Station eine beträchtliche "
 "Flotte unterstützt."
 
 #: dat/assets/eclipse_station.xml:29
@@ -49639,7 +49639,7 @@ msgstr ""
 
 #: dat/assets/ember.xml:2
 msgid "Ember"
-msgstr "Ember"
+msgstr "Glühkohlen"
 
 #: dat/assets/ember.xml:29
 msgid ""
@@ -49650,12 +49650,12 @@ msgid ""
 "activity and turns them into raw materials for ship building. The business is quite lucrative, supplying a "
 "significant portion of all the materials for Sirius's ships."
 msgstr ""
-"Ember ist, wie ihr Hauptplanet Forge, eine heiße Welt. Ihre Oberfläche ist stellenweise geschmolzen, ihre "
+"Glühkohlen ist, wie ihr Hauptplanet Esse, eine heiße Welt. Ihre Oberfläche ist stellenweise geschmolzen, ihre "
 "Atmosphäre verbrennt einen ungeschützten Menschen in Sekundenschnelle bis auf die Knochen, und seismische "
 "Aktivität macht den Planeten selbst in einer geschützten Umgebung zu einer Todesfalle. Trotz alledem haben "
-"die Sirianer auf dem Mond von Forge eine beachtliche Industrie aufgebaut. Dieser Komplex befindet sich auf "
+"die Sirianer auf dem Mond von Esse eine beachtliche Industrie aufgebaut. Dieser Komplex befindet sich auf "
 "einer relativ stabilen Platte und sammelt die seltenen Materialien, die durch die vulkanische Aktivität von "
-"Ember entstehen, und wandelt sie in Rohstoffe für den Schiffsbau um. Das Geschäft ist recht lukrativ und "
+"Glühkohlen entstehen, und wandelt sie in Rohstoffe für den Schiffsbau um. Das Geschäft ist recht lukrativ und "
 "liefert einen beträchtlichen Teil aller Materialien für die Sirius-Schiffe."
 
 #: dat/assets/ember.xml:30
@@ -49664,9 +49664,9 @@ msgid ""
 "echelon. They have many tales to tell of the dangers of their job and the brutal nature of Ember's weather. "
 "None of them seem to be discontent with their lives though."
 msgstr ""
-"Die Weltraumhafenkneipe von Ember wird von Arbeitern aus dem Industriekomplex frequentiert, die meisten von "
+"Die Weltraumhafenkneipe von Glühkohlen wird von Arbeitern aus dem Industriekomplex frequentiert, die meisten von "
 "ihnen aus dem Shaira-Rang. Sie haben viele Geschichten über die Gefahren ihrer Arbeit und die brutale Natur "
-"des Emberschen Wetters zu erzählen. Keiner von ihnen scheint jedoch mit seinem Leben unzufrieden zu sein."
+"des Glühkohlener Wetters zu erzählen. Keiner von ihnen scheint jedoch mit seinem Leben unzufrieden zu sein."
 
 #: dat/assets/emperors_fist.xml:2
 msgid "Emperor's Fist"
@@ -49852,7 +49852,7 @@ msgid ""
 "security has to come from Hartwell Station in the neighboring system of Father's Pride."
 msgstr ""
 "Der Fazett-Außenposten ist kaum mehr als eine örtliche Polizeistation. Er wurde als Vorsichtsmaßnahme gegen "
-"die Bedrohung durch Piraten aus Khaas geschaffen, aber die Soromiden wissen, dass keine einzelne Station "
+"die Bedrohung durch Piraten aus Kahs geschaffen, aber die Soromiden wissen, dass keine einzelne Station "
 "einem koordinierten Angriff standhalten kann. Fazett ist meist ein sichtbares Zeichen der soromidischen "
 "Präsenz in Hätter. Sie beruhigt die örtliche Bevölkerung. Die wirkliche Sicherheit muss von der Hartbrunn-"
 "Station im benachbarten System „Vaters Stolz“ kommen."
@@ -50083,7 +50083,7 @@ msgstr ""
 
 #: dat/assets/forge.xml:2
 msgid "Forge"
-msgstr "Forge"
+msgstr "Esse"
 
 #: dat/assets/fort_sirius.xml:2
 msgid "Fort Sirius"
@@ -50204,7 +50204,7 @@ msgstr ""
 "Futzka ist eine ziemlich typische imperiale Zivilwelt. Sie hat eine gute Atmosphäre, eine stabile Tektonik "
 "und eine große Bevölkerung. Die Welt baut den größten Teil ihrer Nahrungsmittel selbst an, benötigt aber "
 "immer noch Importe, um über die Runden zu kommen. Der lokalen Bevölkerung geht es so gut, wie man es von "
-"einer imperialen Kolonie der Mittelklasse erwarten kann. Ansonsten gibt es wenig über Fuzka zu berichten."
+"einer imperialen Kolonie der Mittelklasse erwarten kann. Ansonsten gibt es wenig über Futzka zu berichten."
 
 #: dat/assets/fuzka.xml:31
 msgid ""
@@ -50302,14 +50302,14 @@ msgstr ""
 
 #: dat/assets/gath_station.xml:2
 msgid "Gath Station"
-msgstr "Gath-Station"
+msgstr "Gat-Station"
 
 #: dat/assets/gath_station.xml:27
 msgid ""
 "Gath Station is a local law enforcement station. It maintains security in the sector and responds to pirate "
 "attacks."
 msgstr ""
-"Die Gath-Station ist eine lokale Strafverfolgungsstation. Sie sorgt für die Sicherheit in diesem Sektor und "
+"Die Gat-Station ist eine lokale Strafverfolgungsstation. Sie sorgt für die Sicherheit in diesem Sektor und "
 "reagiert auf Piratenangriffe."
 
 #: dat/assets/gaula.xml:2
@@ -50375,9 +50375,9 @@ msgid ""
 msgstr ""
 "Die Kolonie auf Gayati gab es schon, bevor Sirichana sich auf Mutris niederließ. Damals war sie ein "
 "Außenposten einer der Fraktionen, die in den Fraktionskriegen zerstört, vergessen und von allen übersehen "
-"wurden. Da Gayathi keine Finanzierungs- und Versorgungsquellen mehr hatte, hatte es nie eine Chance, seine "
+"wurden. Da Gayati keine Finanzierungs- und Versorgungsquellen mehr hatte, hatte es nie eine Chance, seine "
 "wirtschaftliche Infrastruktur vollständig zu entwickeln. Als dann der Sirius als galaktische Macht aufstieg, "
-"geriet Gayathi unter seinen Einfluss. Jetzt ist es die Heimat einiger der frommsten Gläubigen, die im Sirius-"
+"geriet Gayati unter seinen Einfluss. Jetzt ist es die Heimat einiger der frommsten Gläubigen, die im Sirius-"
 "Raum zu finden sind."
 
 #: dat/assets/gem.xml:2
@@ -50819,15 +50819,15 @@ msgstr ""
 
 #: dat/assets/gruz_i.xml:2
 msgid "Gruz I"
-msgstr "Grutz I"
+msgstr "Gruz I"
 
 #: dat/assets/gruz_ii.xml:2
 msgid "Gruz II"
-msgstr "Grutz II"
+msgstr "Gruz II"
 
 #: dat/assets/gruz_iii.xml:2
 msgid "Gruz III"
-msgstr "Grutz III"
+msgstr "Gruz III"
 
 #: dat/assets/gutter_i.xml:2
 msgid "Gutter I"
@@ -50880,10 +50880,10 @@ msgid ""
 msgstr ""
 "Auf der offiziellen Liste der „unangenehmsten bewohnten Planeten der Galaxie“, die in regelmäßigen Abständen "
 "von der Gilligan-Stiftung erstellt wird, steht Halder ganz oben auf der Liste. In der Tat würde selbst der "
-"optimistischste Raumfahrer kaum einen guten Grund finden, warum jemand nach Haldr kommen, geschweige denn "
-"dort bleiben möchte. Wie sich herausstellt, hat das Hohe Kommando der Dvaered einen solchen Grund: Haldr "
+"optimistischste Raumfahrer kaum einen guten Grund finden, warum jemand nach Halder kommen, geschweige denn "
+"dort bleiben möchte. Wie sich herausstellt, hat das Hohe Kommando der Dvaered einen solchen Grund: Halder "
 "dient als Trainingsgelände für die Militärrekruten der Dvaered. Obwohl so mancher aufstrebende Soldat auf der "
-"radioaktiven Oberfläche von Haldr den Tod findet, sind diejenigen, die überleben, in der Tat harte Kämpfer."
+"radioaktiven Oberfläche von Halder den Tod findet, sind diejenigen, die überleben, in der Tat harte Kämpfer."
 
 #: dat/assets/haldr.xml:29
 msgid ""
@@ -50893,7 +50893,7 @@ msgid ""
 msgstr ""
 "Um in die Kneipe von Halder zu gelangen, muss man sich zunächst einer strengen Dekontaminationsprozedur "
 "unterziehen, auch wenn man direkt vom Weltraumhafen kommt. Diese Tatsache hat nicht wenige Besucher so "
-"unruhig gemacht, dass sie Haldr nie wieder besuchen wollen."
+"unruhig gemacht, dass sie Halder nie wieder besuchen wollen."
 
 #: dat/assets/haleb_iv.xml:2
 msgid "Haleb IV"
@@ -51157,7 +51157,7 @@ msgstr ""
 
 #: dat/assets/heronus_orbital.xml:2
 msgid "Heronus Orbital"
-msgstr "Heronus Orbital"
+msgstr "Heronus-Orbital"
 
 #: dat/assets/heronus_orbital.xml:27
 msgid ""
@@ -51166,10 +51166,10 @@ msgid ""
 "suffer a tremendous blow to their military capabilities. Needless to say, Heronus Orbital is one of the most "
 "heavily armed stations in Soromid space."
 msgstr ""
-"Heronus Orbital ist ein Militärstützpunkt, der direkt mit Heronus unten verbunden ist. Seine Hauptaufgabe ist "
+"Heronus-Orbital ist ein Militärstützpunkt, der direkt mit Heronus unten verbunden ist. Seine Hauptaufgabe ist "
 "der Schutz des Planeten, da er für die Soromidenflotte lebenswichtig ist. Wenn Heronus die Produktion neuer "
 "Schiffe einstellen würde, würden die Soromiden einen gewaltigen Schlag gegen ihre militärischen Fähigkeiten "
-"erleiden. Unnötig zu erwähnen, dass Heronus Orbital eine der am schwersten bewaffneten Stationen im "
+"erleiden. Unnötig zu erwähnen, dass Heronus-Orbital eine der am schwersten bewaffneten Stationen im "
 "soromidischen Raum ist."
 
 #: dat/assets/heronus_orbital.xml:28
@@ -51776,7 +51776,7 @@ msgid ""
 msgstr ""
 "Es kann fast keinen größeren Kontrast geben als den zwischen Jägnhild und Uries. Die eine ist eine Ozeanwelt, "
 "die mit allen möglichen unwahrscheinlichen Lebensformen gefüllt ist, während die andere ein lebloser Klumpen "
-"zusammengeballter Staub ist. Jaegnhild war eine der letzten Kolonien, die im Ersten Wachstum gegründet "
+"zusammengeballter Staub ist. Jägnhild war eine der letzten Kolonien, die im Ersten Wachstum gegründet "
 "wurden, aber unter allen auserwählten Welten war sie vielleicht die geeignetste für das Leben, als das "
 "Kolonieschiff ankam. Obwohl nicht viele die schwimmenden Städte als ihre Heimat bezeichnen, ist der "
 "Lebensstandard für eine Frontwelt ungewöhnlich hoch."
@@ -51950,7 +51950,7 @@ msgstr ""
 "Jaxhien wurde in einer Zeit gegründet, als die Soromiden bereits viele der Welten besiedelt hatten, die heute "
 "den Kern des Soromid-Herrschaftsgebiets bilden. Die Kolonisationsbemühungen konzentrierten sich mehr auf den "
 "Aufbau einer reibungslos funktionierenden Gesellschaft als auf Pionierarbeit, eine Mentalität, die sich auf "
-"lange Sicht ausgezahlt hat. Jaxheen leidet nicht unter vielen der Ineffizienzen, die in Gesellschaften zu "
+"lange Sicht ausgezahlt hat. Jaxhien leidet nicht unter vielen der Ineffizienzen, die in Gesellschaften zu "
 "finden sind, die sich aufbauend auf sich selbst entwickelt haben. Das hat die Welt wirtschaftlich recht "
 "mächtig gemacht."
 
@@ -52374,7 +52374,7 @@ msgstr ""
 "Kelim war die Zielwelt für Majestic, das elfte Kolonieschiff, das im ersten Wachstum von der Erde aus "
 "geschickt wurde. Majestic wurde hauptsächlich von Menschen aus Indien und dem Nahen Osten bevölkert, und "
 "obwohl der interstellare Verkehr nun schon seit vielen Zyklen alltäglich ist, sind die charakteristischen "
-"Merkmale dieses Gebietes immer noch auf den Gesichtern der Menschen von Khelim zu erkennen."
+"Merkmale dieses Gebietes immer noch auf den Gesichtern der Menschen von Kelim zu erkennen."
 
 #: dat/assets/khelim.xml:30
 msgid ""
@@ -52552,7 +52552,7 @@ msgid ""
 msgstr ""
 "Laarß ist eine Welt der Ressourcen. Vor der Gründung von Haus Dvaered versorgte es die imperiale Wirtschaft "
 "mit Rohstoffen zu Tiefstpreisen. Heute ist sein Hauptexportmarkt die Eist-Schiffswerft, die ständig auf "
-"Ressourcen für den Schiffbau angewiesen ist. Obwohl Laarss weitgehend dieselbe Bergbaukolonie ist wie zuvor, "
+"Ressourcen für den Schiffbau angewiesen ist. Obwohl Laarß weitgehend dieselbe Bergbaukolonie ist wie zuvor, "
 "gilt die Arbeit hier als Privileg für die Bürger von Haus Dvaered, wenn man bedenkt, dass es in Dvaer liegt."
 
 #: dat/assets/laarss.xml:30
@@ -52638,7 +52638,7 @@ msgid ""
 "of important Soromid systems, and the price of real estate on Larling is low. In addition, the world has "
 "quite relaxed environmental legislation, which means industries can cut on emission reduction costs."
 msgstr ""
-"Larling ist eine beliebte Welt für die Ansiedlung von Unternehmen und Industrien. Sergio Vix liegt in der "
+"Larling ist eine beliebte Welt für die Ansiedlung von Unternehmen und Industrien. Sergio-Vix liegt in der "
 "Nähe einer Reihe von wichtigen Soromid-Systemen, und die Immobilienpreise auf Larling sind niedrig. Darüber "
 "hinaus ist die Umweltgesetzgebung weltweit recht gelockert, was bedeutet, dass die Industrie die Kosten für "
 "die Emissionsreduzierung senken kann."
@@ -52726,7 +52726,7 @@ msgid ""
 msgstr ""
 "Langstein ist eine Bergbauwelt, in der die Soromiden die meisten der benötigten Ressourcen ernten. Ihr Durst "
 "nach Rohstoffen ist aufgrund der halborganischen Natur ihrer Schiffe beträchtlich gering, aber es gibt immer "
-"noch eine Nachfrage, und Long Rock ist hier, um zu liefern."
+"noch eine Nachfrage, und Langstein ist hier, um zu liefern."
 
 #: dat/assets/long_rock.xml:28
 msgid ""
@@ -52790,7 +52790,7 @@ msgid ""
 "Dvaered industrial world. However, unlike the Dvaered, the Sirii have put some thought into their "
 "infrastructure, and pollution is kept to a minimum."
 msgstr ""
-"Tschörschells wirtschaftliche Position hat Lorelei zu einer gut entwickelten Welt gemacht. Die konstanten "
+"Kirchells wirtschaftliche Position hat Lorelei zu einer gut entwickelten Welt gemacht. Die konstanten "
 "Handelseinnahmen haben große Wohnkomplexe und unterirdische Fabriken ermöglicht, die in einer geschändeten "
 "Industriewelt nicht fehl am Platz wären. Im Gegensatz zu den Dvaered haben sich die Sirianer jedoch Gedanken "
 "über ihre Infrastruktur gemacht, und die Umweltverschmutzung wird auf ein Minimum beschränkt."
@@ -52836,7 +52836,7 @@ msgstr ""
 
 #: dat/assets/luna_skona.xml:2
 msgid "Luna Skona"
-msgstr "Luna Skona"
+msgstr "Luna-Skona"
 
 #: dat/assets/luxsor.xml:2
 msgid "Luxsor"
@@ -53113,7 +53113,7 @@ msgstr ""
 "imperialen Hauptsysteme kontrollierte. Heute, in der Zeit nach dem Geschehnis, dient die Station als erste "
 "Verteidigungslinie gegen feindliche Elemente, die die isolierten Kolonien auf Tau Eins und darüber hinaus "
 "bedrohen. Da sie jedoch ständig unterbesetzt und unterausgerüstet ist, ist die Marius-Station kaum in der "
-"Lage, ihre eigene Präsenz in Rälid aufrechtzuerhalten, geschweige denn etwas anderes zu schützen."
+"Lage, ihre eigene Präsenz in Raelid aufrechtzuerhalten, geschweige denn etwas anderes zu schützen."
 
 #: dat/assets/marius_station.xml:29
 msgid ""
@@ -53192,7 +53192,7 @@ msgid ""
 "which makes it popular with smugglers to and from Sirius space. Maus Station intends to make sure that "
 "security in this area is as tight as everywhere else."
 msgstr ""
-"Die Maus-Station kontrolliert die Sprungroute, die zwischen Verex und Grutz verläuft. Diese Route umgeht "
+"Die Maus-Station kontrolliert die Sprungroute, die zwischen Verex und Gruz verläuft. Diese Route umgeht "
 "Dvaer vollständig, was sie bei Schmugglern in den und aus dem Sirius-Raum beliebt macht. Die Maus-Station "
 "will dafür sorgen, dass die Sicherheit in diesem Gebiet genauso streng ist wie überall sonst."
 
@@ -53363,7 +53363,7 @@ msgstr "MGG-1294"
 
 #: dat/assets/mida_proxima.xml:2
 msgid "Mida Proxima"
-msgstr "Mida Proxima"
+msgstr "Mida-Proxima"
 
 #: dat/assets/mirror_i.xml:2
 msgid "Mirror I"
@@ -53477,15 +53477,15 @@ msgstr ""
 
 #: dat/assets/monogram_iii.xml:2
 msgid "Monogram III"
-msgstr "Monogram III"
+msgstr "Monogramm III"
 
 #: dat/assets/monogram_iv.xml:2
 msgid "Monogram IV"
-msgstr "Monogram IV"
+msgstr "Monogramm IV"
 
 #: dat/assets/monogram_v.xml:2
 msgid "Monogram V"
-msgstr "Monogram V"
+msgstr "Monogramm V"
 
 #: dat/assets/monsoon_station.xml:2
 msgid "Monsoon Station"
@@ -54078,7 +54078,7 @@ msgstr ""
 "Nixa ist eine junge Kolonie. Sie wurde erst Jahre vor dem Auftreten des Geschehnisses besiedelt. Mit dem "
 "darauf folgenden galaxisweiten wirtschaftlichen Zusammenbruch kam das aufkeimende Wachstum von Nixa fast zum "
 "Stillstand. Die Bevölkerung kämpft darum, das Kolonisierungsprojekt dennoch zu einem Erfolg zu machen, aber "
-"jetzt, da Dune zu einem Randsystem geworden ist, scheinen die Chancen dafür gering."
+"jetzt, da Düne zu einem Randsystem geworden ist, scheinen die Chancen dafür gering."
 
 #: dat/assets/nixa.xml:28
 msgid ""
@@ -54123,8 +54123,8 @@ msgstr ""
 "Nokalin ist eine ziemlich gute Welt für die Bewohnung durch Menschen, besonders wenn es sich bei den "
 "betreffenden Menschen um Soromiden handelt. Die Oberfläche ist stabil und die einheimische Atmosphäre ist "
 "Nitrox. Gravitations- und Orbitalwerte sind nicht allzu weit vom Erdstandard entfernt. Es gibt nur ein "
-"Problem: Nocalin ist vollständig und völlig trocken. Nichts kann auf dieser Welt wachsen, ohne Wasser in "
-"Ozeanmenge zu importieren, was in jeder Hinsicht ein zu kostspieliger Vorgang ist. Folglich ist Nocalin "
+"Problem: Nokalin ist vollständig und völlig trocken. Nichts kann auf dieser Welt wachsen, ohne Wasser in "
+"Ozeanmenge zu importieren, was in jeder Hinsicht ein zu kostspieliger Vorgang ist. Folglich ist Nokalin "
 "vollständig von Nahrungsmittelimporten abhängig."
 
 #: dat/assets/nocalin.xml:30
@@ -54239,7 +54239,7 @@ msgstr "Nougat II"
 
 #: dat/assets/nova_shakar.xml:2
 msgid "Nova Shakar"
-msgstr "Nova Schakar"
+msgstr "Nova-Schakar"
 
 #: dat/assets/nova_shakar.xml:30
 msgid ""
@@ -54247,8 +54247,8 @@ msgid ""
 "Empire officials are settling here, given its close proximity to Gamma Polaris. In the time since then, it's "
 "become a supplier of many materials for the project, gaining importance within the Empire."
 msgstr ""
-"Nova Schakar war bis zum Beginn des Projekts „Imperators Faust“ ein völlig unauffälliger Planet des "
-"Imperiums. Aufgrund der Nähe zu Gamma Polaris siedeln sich hier immer mehr Beamte des Imperiums an. In der "
+"Nova-Schakar war bis zum Beginn des Projekts „Imperators Faust“ ein völlig unauffälliger Planet des "
+"Imperiums. Aufgrund der Nähe zu Gamma-Polaris siedeln sich hier immer mehr Beamte des Imperiums an. In der "
 "Zwischenzeit ist er zu einem Lieferanten vieler Materialien für das Projekt geworden und gewinnt innerhalb "
 "des Imperiums an Bedeutung."
 
@@ -54405,11 +54405,11 @@ msgstr ""
 
 #: dat/assets/old_king_cole.xml:2
 msgid "Old King Cole"
-msgstr "Alter König Cole"
+msgstr "Alter König Karl"
 
 #: dat/assets/old_man_jack.xml:2
 msgid "Old Man Jack"
-msgstr "Alter Mann Jack"
+msgstr "Alter Mann Jakob"
 
 #: dat/assets/olljan.xml:2
 msgid "Olljan"
@@ -54612,7 +54612,7 @@ msgid ""
 "a trade station within the system, to attract more traffic. Though the station is a far cry from commercial "
 "powerhouses like Darkshed, Opal Station must be considered a good effort by Frontier standards."
 msgstr ""
-"Da Varaati in einer ziemlich isolierten Ecke der Galaxie liegt, beschloss die lokale Regierung, in eine "
+"Da Varahti in einer ziemlich isolierten Ecke der Galaxie liegt, beschloss die lokale Regierung, in eine "
 "Handelsstation innerhalb des Systems zu investieren, um mehr Verkehr anzuziehen. Obwohl die Station weit "
 "entfernt von kommerziellen Kraftwerken wie Dunkelstall liegt, muss die Opal-Station nach den Standards der "
 "Front als eine gute Leistung angesehen werden."
@@ -55325,11 +55325,11 @@ msgstr ""
 
 #: dat/assets/provectus_nova_i.xml:2
 msgid "Provectus Nova I"
-msgstr "Provectus Nova I"
+msgstr "Provectus-Nova I"
 
 #: dat/assets/provectus_nova_ia.xml:2
 msgid "Provectus Nova Ia"
-msgstr "Provectus Nova Ia"
+msgstr "Provectus-Nova Ia"
 
 #: dat/assets/prp1.xml:2
 msgid "PRP-1"
@@ -55612,11 +55612,11 @@ msgstr "Radix III"
 
 #: dat/assets/raelid_ii.xml:2
 msgid "Raelid II"
-msgstr "Rälid II"
+msgstr "Raelid II"
 
 #: dat/assets/raelid_outpost.xml:2 dat/fleet.xml:828 dat/ships/raelid_outpost.xml:2
 msgid "Raelid Outpost"
-msgstr "Rälid-Außenposten"
+msgstr "Raelid-Außenposten"
 
 #: dat/assets/raelid_outpost.xml:28
 msgid ""
@@ -55634,7 +55634,7 @@ msgid ""
 "from the spotless bars of Polaris Prime, it's encrusted with dirt and you can sense the presence of other "
 "patrons by their smell alone. Truly, a Dvaered bar."
 msgstr ""
-"Die Rälid-Kneipe passt gut zum Dvaered-Klischee. Sie ist einer der markanteren Bereiche, sobald man den "
+"Die Raelid-Kneipe passt gut zum Dvaered-Klischee. Sie ist einer der markanteren Bereiche, sobald man den "
 "Andockbereich verlässt, und, wie viele Dvaered-Kneipen zu sein scheinen, ist sie viel größer, als sie "
 "funktionell notwendig ist. Weit entfernt von den makellosen Kneipen von Polaris Eins ist er mit Schmutz "
 "verkrustet, und man kann die Anwesenheit anderer Gäste allein am Geruch der Kneipen erkennen. Eine wahre "
@@ -55642,7 +55642,7 @@ msgstr ""
 
 #: dat/assets/raelid_prime.xml:2
 msgid "Raelid Prime"
-msgstr "Rälid Eins"
+msgstr "Raelid Eins"
 
 #: dat/assets/rage.xml:2
 msgid "Rage"
@@ -55740,7 +55740,7 @@ msgstr "Rei III"
 
 #: dat/assets/reidd.xml:2
 msgid "Reidd"
-msgstr "Reidd"
+msgstr "Reidt"
 
 #: dat/assets/reidd.xml:29
 msgid ""
@@ -55750,10 +55750,10 @@ msgid ""
 "and has dedicated 97% of Reidd's land surface to agricultural operations."
 msgstr ""
 "Einige Planeten haben einfach nicht die Kapazität, ihre eigene Bevölkerung zu ernähren, trotz "
-"fortgeschrittener Pflanzenanbautechniken. Reidd gehört nicht zu diesen Planeten. Tatsächlich ist Reidd "
+"fortgeschrittener Pflanzenanbautechniken. Reidd gehört nicht zu diesen Planeten. Tatsächlich ist Reidt "
 "aufgrund seiner Umlaufbahn und seiner axialen Neigung eine so gute landwirtschaftliche Welt, dass er viele "
 "Welten in nahe gelegenen Systemen versorgen kann. Die örtliche Regierung erkennt dies an und hat 97% der "
-"Landfläche von Reidd für landwirtschaftliche Betriebe vorgesehen."
+"Landfläche von Reidt für landwirtschaftliche Betriebe vorgesehen."
 
 #: dat/assets/reidd.xml:30
 msgid ""
@@ -55761,7 +55761,7 @@ msgid ""
 "any land surface. Still, the primary difference between this bar and most others in the galaxy is that pilots "
 "have to take an elevator to reach this one."
 msgstr ""
-"In einem vielleicht etwas übertriebenen Fall von Überreaktion ist Reidds Kneipe unterirdisch, um keine "
+"In einem vielleicht etwas übertriebenen Fall von Überreaktion ist Reidts Kneipe unterirdisch, um keine "
 "Landoberfläche opfern zu müssen. Der Hauptunterschied zwischen dieser Kneipe und den meisten anderen in der "
 "Galaxie besteht jedoch darin, dass die Piloten einen Aufzug nehmen müssen, um diese Kneipe zu erreichen."
 
@@ -55971,7 +55971,7 @@ msgid ""
 "Rostra does not have quite the same amenities as the other enclave cores, and the intellectual elite here "
 "live here primarily to avoid the politics in other enclaves and the capital."
 msgstr ""
-"Rostra ist eine weitere Enklavenkernwelt. Die Geradenbogen ist die größte der Enklaven, aber auch die "
+"Rostra ist eine weitere Enklavenkernwelt. Der Geradenbogen ist die größte der Enklaven, aber auch die "
 "schwächste, mit einer geteilten Agenda und der Last des Umgangs mit Piraten, die versuchen, in den Raum von "
 "Za'lek einzudringen. Als solche hat Rostra nicht ganz die gleichen Annehmlichkeiten wie die anderen "
 "Enklavenkerne, und die intellektuelle Elite hier lebt vor allem deshalb hier, um die Politik in anderen "
@@ -56062,7 +56062,7 @@ msgstr ""
 
 #: dat/assets/rudderfern.xml:2
 msgid "Rudderfern"
-msgstr "Rudderfern"
+msgstr "Ruderfarn"
 
 #: dat/assets/rudderfern.xml:28
 msgid ""
@@ -56071,7 +56071,7 @@ msgid ""
 "well-to-do Soromid have settled here, enjoying the pleasant environment and the high level of security "
 "offered in Father's Pride."
 msgstr ""
-"Rudderfern ist eine kleine, aber wohlhabende Soromidenkolonie. Ihre Primärkolonie, Vaters Stolz III, ist viel "
+"Ruderfarn ist eine kleine, aber wohlhabende Soromidenkolonie. Ihre Primärkolonie, Vaters Stolz III, ist viel "
 "zu feindselig, als dass selbst die Soromiden sie nutzen könnten, aber ihr Mond hat, abgesehen von seiner "
 "geringen Schwerkraft, sehr erdähnliche Eigenschaften. Viele wohlhabende Soromiden haben sich hier "
 "niedergelassen und genießen die angenehme Umgebung und das hohe Maß an Sicherheit, das in Vaters Stolz "
@@ -56083,8 +56083,8 @@ msgid ""
 "decorated walls and ceilings, and even actual Soromid serving personnel. Rudderfern rather takes pride in "
 "officially having the highest class spaceport bar in the known galaxy."
 msgstr ""
-"Die meisten Planeten haben Weltraumhafenkneipen. Aber nicht Rudderfern. Es hat eine Weltraumhafen-Lounge. Es "
-"hat stilvolle Möbel, reich verzierte Wände und Decken und sogar eine richtige Soromid-Bedienung. Rudderfern "
+"Die meisten Planeten haben Weltraumhafenkneipen. Aber nicht Ruderfarn. Es hat eine Weltraumhafen-Lounge. Es "
+"hat stilvolle Möbel, reich verzierte Wände und Decken und sogar eine richtige Soromid-Bedienung. Ruderfarn "
 "ist recht stolz darauf, offiziell die höchstklassige Weltraumhafenkneipe in der bekannten Galaxie zu haben."
 
 #: dat/assets/ruid.xml:2
@@ -56290,7 +56290,7 @@ msgid ""
 "this, as well as being a little small for the duty. The local clanworld tries to make up for this lack by "
 "exploiting the resources of other planets in the system."
 msgstr ""
-"Alter König Coles Mond Sanchez ist ein ziemlich schmutziger Ort. Die Tatsache, dass es der einzige "
+"Alter König Karls Mond Sanchez ist ein ziemlich schmutziger Ort. Die Tatsache, dass es der einzige "
 "Piratenstützpunkt weit und breit ist, hilft dabei, und er ist auch ziemlich klein. Die lokale Klanwelt "
 "versucht, diesen Mangel auszugleichen, indem sie die Ressourcen anderer Planeten des Systems ausbeutet."
 
@@ -56313,7 +56313,7 @@ msgid ""
 "are able to harvest many valuable materials from the sea floor."
 msgstr ""
 "Die Schwesterwelt von Greif III ist Sander. Aufgrund seiner weitgehend aquatischen Oberfläche ist seine "
-"Einwohnerzahl deutlich geringer als die von Griffin III, aber seine Ozeane versorgen viele nahe gelegene "
+"Einwohnerzahl deutlich geringer als die von Greif III, aber seine Ozeane versorgen viele nahe gelegene "
 "Planeten mit Nahrung, und die imperialen Bergbaubetriebe sind in der Lage, viele wertvolle Materialien vom "
 "Meeresboden zu ernten."
 
@@ -56328,7 +56328,7 @@ msgstr ""
 
 #: dat/assets/saraab.xml:2
 msgid "Saraab"
-msgstr "Saraab"
+msgstr "Sarahb"
 
 #: dat/assets/saraab.xml:28
 msgid ""
@@ -56337,7 +56337,7 @@ msgid ""
 "various manufacturing plants elsewhere in the galaxy. In fact, since the planet was first settled around the "
 "end of the Imperial Golden Age, its gravity has decreased by 17%."
 msgstr ""
-"Saraab ist eine kleine Bergbaukolonie. Der Kern des Planeten besteht aus wertvollen Metallen und ist fast "
+"Sarahb ist eine kleine Bergbaukolonie. Der Kern des Planeten besteht aus wertvollen Metallen und ist fast "
 "vollständig abgekühlt, was diese Welt zu einer riesigen Tagebaumine macht. Der Planet wird langsam abgebaut "
 "und zu verschiedenen Produktionsstätten in anderen Teilen der Galaxie gebracht. Seit der ersten Besiedlung "
 "des Planeten gegen Ende des Goldenen Zeitalters des Imperiums hat seine Schwerkraft sogar um 17% abgenommen."
@@ -56349,7 +56349,7 @@ msgid ""
 "cause serious discomfort for the patrons. The workers don't seem to mind however - they are used to "
 "gravitational shifts."
 msgstr ""
-"Wie auf vielen Welten mit geringer Schwerkraft sind auch in Saraabs Weltraumhafenkneipe an verschiedenen "
+"Wie auf vielen Welten mit geringer Schwerkraft sind auch in Sarahbs Weltraumhafenkneipe an verschiedenen "
 "Orten künstliche Schwerkraftgeneratoren installiert. Die Kneipe bildet da keine Ausnahme. Die Generatoren "
 "sind jedoch alt und gehen manchmal kaputt, was für die Besucher zu ernsthaften Unannehmlichkeiten führen "
 "kann. Den Arbeitern scheint es jedoch nichts auszumachen – sie sind an Gravitationsverschiebungen gewöhnt."
@@ -56372,14 +56372,14 @@ msgstr "Sarkophagus V"
 
 #: dat/assets/sarrii_station.xml:2
 msgid "Sarrii Station"
-msgstr "Sarri-Station"
+msgstr "Sarrie-Station"
 
 #: dat/assets/sarrii_station.xml:27
 msgid ""
 "Sarrii Station serves as the garrison point for the nearby planet of Wayline. The Dvaered garrison don't want "
 "to have to be on the planet at all, so they had this station built."
 msgstr ""
-"Die Sarri-Station dient als Garnisonspunkt für den nahe gelegenen Planeten Weylein. Da die Dvaered-Garnison "
+"Die Sarrie-Station dient als Garnisonspunkt für den nahe gelegenen Planeten Weylein. Da die Dvaered-Garnison "
 "überhaupt nicht auf dem Planeten sein möchte, hat sie diese Station bauen lassen."
 
 #: dat/assets/savoy.xml:2
@@ -56519,7 +56519,7 @@ msgstr "Seiben XI"
 
 #: dat/assets/selphod.xml:2
 msgid "Selphod"
-msgstr "Selpfot"
+msgstr "Selpfod"
 
 #: dat/assets/selphod.xml:28
 msgid ""
@@ -56528,7 +56528,7 @@ msgid ""
 "succumbing to hypothermia. Many have met a swift, excruciatingly painful end by venturing out in ill-sealed "
 "thermal suits."
 msgstr ""
-"Selpfot ist ein harter und unfruchtbarer Eisplanet. Die meisten Einheimischen haben sich nie außerhalb der "
+"Selpfod ist ein harter und unfruchtbarer Eisplanet. Die meisten Einheimischen haben sich nie außerhalb der "
 "etablierten Stützpunkte gewagt. Reisen im Freien erfordern einen starken Wärmeschutz mit einem persönlichen "
 "Generator, um den Träger vor einer Unterkühlung zu schützen. Viele haben ein schnelles, schmerzhaftes Ende "
 "gefunden, als sie sich in schlecht versiegelten Thermoanzügen hinauswagten."
@@ -56567,11 +56567,11 @@ msgstr ""
 
 #: dat/assets/sergio_vix_i.xml:2
 msgid "Sergio Vix I"
-msgstr "Sergio Vix I"
+msgstr "Sergio-Vix I"
 
 #: dat/assets/sergio_vix_iii.xml:2
 msgid "Sergio Vix III"
-msgstr "Sergio Vix III"
+msgstr "Sergio-Vix III"
 
 #: dat/assets/serria.xml:2
 msgid "Serria"
@@ -56646,7 +56646,7 @@ msgid ""
 msgstr ""
 "Scharak ist ein Ort, an dem die Wohlhabenden ihr Zuhause haben. Anstatt die gleiche Luft zu atmen wie die "
 "einfachen Leute auf Edorn unten, wählten die Menschen auf diesem Mond, ihre eigene Elitegesellschaft hier auf "
-"Sharak zu gründen."
+"Scharak zu gründen."
 
 #: dat/assets/sharak.xml:30
 msgid ""
@@ -56656,7 +56656,7 @@ msgid ""
 msgstr ""
 "Es gibt eine kleine öffentliche Stadt, die um den Weltraumhafen herum gebaut wurde, um Schiffe zu warten und "
 "die übliche planetarische Logistik abzuwickeln, aber der größte Teil der Fläche von Scharak ist Privatbesitz. "
-"Die Weltraumhafenkneipe ist die einzige öffentliche Erholungseinrichtung auf dem Antlitz von Sharak."
+"Die Weltraumhafenkneipe ist die einzige öffentliche Erholungseinrichtung auf dem Antlitz von Scharak."
 
 #: dat/assets/shariff_station.xml:2
 msgid "Shariff Station"
@@ -56668,7 +56668,7 @@ msgid ""
 "a popular target for FLF raids, and despite the many extra security measures that have been implemented in "
 "the past cycles, the losses continue to pile up."
 msgstr ""
-"Da es sich bei der Schariff-Station-Station um einen von den Dvaered eroberten Militärstützpunkt handelt, hat "
+"Da es sich bei der Schariff-Station um einen von den Dvaered eroberten Militärstützpunkt handelt, hat "
 "sie es schwer. So nahe am Frontraum ist die Station ein beliebtes Ziel für Angriffe der FLF, und trotz der "
 "vielen zusätzlichen Sicherheitsmaßnahmen, die in den vergangenen Zyklen umgesetzt wurden, häufen sich die "
 "Verluste weiter an."
@@ -56709,7 +56709,7 @@ msgid ""
 "and Shiarta is rich in same."
 msgstr ""
 "Wo Oma zu heiß ist, ist Schiarta zu kalt, um Trost zu spenden. Dennoch ist das Imperium immer auf der Suche "
-"nach Rohstoffen, und Shiarta ist reich an denselben."
+"nach Rohstoffen, und Schiarta ist reich an denselben."
 
 #: dat/assets/shiarta.xml:29
 msgid ""
@@ -56820,14 +56820,14 @@ msgstr ""
 
 #: dat/assets/sinass.xml:2
 msgid "Sinass"
-msgstr "Sinaß"
+msgstr "Sinass"
 
 #: dat/assets/sinass.xml:30
 msgid ""
 "Sinass is a fairly typical civilian Sirius world. Sirii of all echelons make their home here. Sinass provides "
 "most of the supplies needed by Fort Sirius."
 msgstr ""
-"Sinaß ist eine ziemlich typische zivile Sirius-Welt. Sirianer aller Ränge haben hier ihr Zuhause. Sinass "
+"Sinass ist eine ziemlich typische zivile Sirius-Welt. Sirianer aller Ränge haben hier ihr Zuhause. Sinass "
 "liefert den größten Teil der von Fort Sirius benötigten Vorräte."
 
 #: dat/assets/sinass.xml:31
@@ -56937,7 +56937,7 @@ msgstr ""
 
 #: dat/assets/sirou_alpha.xml:2
 msgid "Sirou Alpha"
-msgstr "Sirou Alpha"
+msgstr "Siru Alpha"
 
 #: dat/assets/sirou_alpha.xml:29
 msgid ""
@@ -56945,7 +56945,7 @@ msgid ""
 "it makes sense to have such a heavily reinforced station so close. The station is relatively new, with modern "
 "facilities all around."
 msgstr ""
-"Sirou Alpha ist eine Bastion der imperialen Kontrolle in diesem Sektor. Angesichts der Nähe Sirous zum "
+"Siru Alpha ist eine Bastion der imperialen Kontrolle in diesem Sektor. Angesichts der Nähe Sirus zum "
 "imperialen Zentrum macht es Sinn, eine so stark verstärkte Station so nah zu haben. Die Station ist relativ "
 "neu, mit modernen Einrichtungen rundherum."
 
@@ -56961,15 +56961,15 @@ msgstr ""
 
 #: dat/assets/sirou_i.xml:2
 msgid "Sirou I"
-msgstr "Sirou I"
+msgstr "Siru I"
 
 #: dat/assets/sirou_ii.xml:2
 msgid "Sirou II"
-msgstr "Sirou II"
+msgstr "Siru II"
 
 #: dat/assets/sirou_vi.xml:2
 msgid "Sirou VI"
-msgstr "Sirou VI"
+msgstr "Siru VI"
 
 #: dat/assets/sixbat_station.xml:2
 msgid "Sixbat Station"
@@ -57384,7 +57384,7 @@ msgstr ""
 
 #: dat/assets/sroolu.xml:2
 msgid "Sroolu"
-msgstr "Sroolu"
+msgstr "Srohlu"
 
 #: dat/assets/sroolu.xml:27
 msgid ""
@@ -57393,7 +57393,7 @@ msgid ""
 "products out of them. The operation seems to be making profit, though it seems it is fated to remain a minor "
 "player in the Sirian economy."
 msgstr ""
-"Sroolu ist der einsame Mond, der An'ku II umkreist. Die Kolonie beschäftigt sich hier hauptsächlich damit, "
+"Srohlu ist der einsame Mond, der An'ku II umkreist. Die Kolonie beschäftigt sich hier hauptsächlich damit, "
 "die in An'ku vorhandenen Ressourcen abzubauen, sie für die Verarbeitung zu veredeln und sogar einige "
 "Endprodukte von niedrigem Niveau daraus herzustellen. Das Unternehmen scheint Gewinne zu machen, obwohl es "
 "anscheinend dazu bestimmt ist, ein kleiner Akteur in der sirianischen Wirtschaft zu bleiben."
@@ -57404,7 +57404,7 @@ msgid ""
 "it intended for the entire workforce to fit inside at once. Suffice to say only part of the bar's floor "
 "surface is actually in use, the remaining space being screened off by mobile panels."
 msgstr ""
-"Sroolu ist nur eine kleine Kolonie, aber ihre Kneipe ist riesig, selbst für intergalaktische Verhältnisse. Es "
+"Srohlu ist nur eine kleine Kolonie, aber ihre Kneipe ist riesig, selbst für intergalaktische Verhältnisse. Es "
 "scheint, dass derjenige, der sie gebaut hat, die gesamte Belegschaft auf einmal hineinpressen wollte. Es "
 "genügt zu sagen, dass nur ein Teil der Bodenfläche der Kneipe tatsächlich genutzt wird, der übrige Raum ist "
 "durch bewegliche Trennwände abgeschirmt."
@@ -57606,9 +57606,9 @@ msgstr ""
 "Stutie ist eine ehemalige Gefängniswelt des Alten Imperiums. Da es eine atmungsaktive Atmosphäre und sonst "
 "wenig hatte, galt es als perfekt, um Kriminelle abzusetzen und sie dann zu vergessen. Als sich jedoch die "
 "Arbeiter der Unterschicht gegen das Imperium auflehnten, was zur Gründung des Hauses Dvaered führte, fiel "
-"Stutee unter den Zuständigkeitsbereich des neuen Großen Hauses. Das Haus Dvaered beschloss, die Stutee "
+"Stutie unter den Zuständigkeitsbereich des neuen Großen Hauses. Das Haus Dvaered beschloss, die Stutie "
 "dauerhafter anzusiedeln, indem es die ehemaligen Sträflinge unter seine Herrschaft brachte und sie arbeiten "
-"ließ. Obwohl Stutee nach wie vor von geringem materiellen Wert ist, macht seine Lage – ein Sprung von Dvaer – "
+"ließ. Obwohl Stutie nach wie vor von geringem materiellen Wert ist, macht seine Lage – ein Sprung von Dvaer – "
 "das wett."
 
 #: dat/assets/stutee.xml:30
@@ -57675,7 +57675,7 @@ msgstr "Suna II"
 
 #: dat/assets/suoer.xml:2
 msgid "Suoer"
-msgstr "Suoer"
+msgstr "Swör"
 
 #: dat/assets/suoer.xml:27
 msgid ""
@@ -57683,9 +57683,9 @@ msgid ""
 "it so much gravity that it significantly affects its primary, so both planets orbit each other. Suoer's high "
 "gravity also makes it a comfortable world to live on for humans."
 msgstr ""
-"Obwohl Suoer als Mond klassifiziert wird, ist er technisch gesehen ein Schwesterplanet von Esker IV. Sein "
+"Obwohl Swör als Mond klassifiziert wird, ist er technisch gesehen ein Schwesterplanet von Esker IV. Sein "
 "superdichter Kern verleiht ihm so viel Gravitation, dass er seinen Primärplaneten erheblich beeinflusst, so "
-"dass beide Planeten sich gegenseitig umkreisen. Die hohe Schwerkraft von Suoer macht ihn auch für Menschen zu "
+"dass beide Planeten sich gegenseitig umkreisen. Die hohe Schwerkraft von Swör macht ihn auch für Menschen zu "
 "einer komfortablen Welt zum Leben."
 
 #: dat/assets/sy1025.xml:2
@@ -57819,7 +57819,7 @@ msgid ""
 "hostile elements."
 msgstr ""
 "Tankard-Station ist eine wirtschaftliche Sirius-Raumfahrteinrichtung. Sie wickelt einen großen Teil aller in "
-"An'ku getätigten Handelsgeschäfte ab und dient auch als Umschlagplatz für die von Sroolu produzierten "
+"An'ku getätigten Handelsgeschäfte ab und dient auch als Umschlagplatz für die von Srohlu produzierten "
 "Materialien. Hier ist auch ein kleines Sicherheitskommando stationiert, aber dies dient lediglich dem Zoll, "
 "nicht so sehr der Abwehr feindlicher Elemente."
 
@@ -58042,7 +58042,7 @@ msgstr ""
 
 #: dat/assets/thar.xml:2
 msgid "Thar"
-msgstr "Thar"
+msgstr "Tar"
 
 #: dat/assets/thar.xml:28
 msgid ""
@@ -58051,9 +58051,9 @@ msgid ""
 "lifeforms, making it an almost completely sterile planet. With the advent of terraforming techniques it was "
 "finally made habitable for humans so they could exploit some of its many resources."
 msgstr ""
-"Thar ist eine einfache Bergbauwelt im Besitz der Dvaered. Sie weist eine sehr variable Atmosphäre auf, die "
+"Tar ist eine einfache Bergbauwelt im Besitz der Dvaered. Sie weist eine sehr variable Atmosphäre auf, die "
 "sich schnell von mehreren Kilometern Breite bis zu kaum existent verändern kann. Die Druckveränderungen sind "
-"für die meisten Lebensformen schädlich und machen Thar zu einem fast völlig sterilen Planeten. Mit dem "
+"für die meisten Lebensformen schädlich und machen Tar zu einem fast völlig sterilen Planeten. Mit dem "
 "Aufkommen der Terraforming-Techniken wurde er schließlich für Menschen bewohnbar gemacht, damit sie einige "
 "seiner vielen Ressourcen nutzen können."
 
@@ -58183,7 +58183,7 @@ msgstr "Theras III"
 
 #: dat/assets/thosson.xml:2
 msgid "Thosson"
-msgstr "Thosson"
+msgstr "Tossen"
 
 #: dat/assets/thosson.xml:28
 msgid ""
@@ -58192,7 +58192,7 @@ msgid ""
 "genetic manipulation. So far they haven't had much success, and their position on the planet is rather "
 "marginal. By and large, the Soromid believe in space more than in oceans."
 msgstr ""
-"Thosson ist größtenteils eine normale Wasserwelt, die von ihrem Wasserreichtum profitiert. Eine kleine "
+"Tossen ist größtenteils eine normale Wasserwelt, die von ihrem Wasserreichtum profitiert. Eine kleine "
 "soromidische Gemeinschaft auf dieser Welt hat es jedoch auf sich genommen, sich durch genetische Manipulation "
 "zu wasserbewohnenden Lebewesen zu entwickeln. Bislang hatten sie nicht viel Erfolg, und ihre Stellung auf dem "
 "Planeten ist eher marginal. Im Großen und Ganzen glauben die Soromiden mehr an den Weltraum als an die Ozeane."
@@ -58390,7 +58390,7 @@ msgstr ""
 
 #: dat/assets/torloth.xml:2
 msgid "Torloth"
-msgstr "Torlot"
+msgstr "Torloff"
 
 #: dat/assets/torloth.xml:28
 msgid ""
@@ -58399,10 +58399,10 @@ msgid ""
 "the heavy gravity of the planet necessitates constructing larger ships off-world. Torloth produces ships "
 "exclusively for delivery to Nexus depots and endorsed shipyards."
 msgstr ""
-"Torlot ist ein Planet für den schweren Bergbau. Er hat reichhaltige Erzen und Mineralien im Überfluss, ohne "
-"dass es eine nennenswerte lokale Fauna gibt. Torlot ist eine der Hochburgen des Nexus-Konzerns und beherbergt "
+"Torloff ist ein Planet für den schweren Bergbau. Er hat reichhaltige Erzen und Mineralien im Überfluss, ohne "
+"dass es eine nennenswerte lokale Fauna gibt. Torloff ist eine der Hochburgen des Nexus-Konzerns und beherbergt "
 "einige seiner wichtigen Schiffsfabriken, obwohl die schwere Schwerkraft des Planeten den Bau größerer Schiffe "
-"außerhalb der Welt erforderlich macht. Torloth produziert Schiffe ausschließlich für die Lieferung an Nexus-"
+"außerhalb der Welt erforderlich macht. Torloff produziert Schiffe ausschließlich für die Lieferung an Nexus-"
 "Depots und anerkannte Schiffswerften."
 
 #: dat/assets/torloth.xml:29
@@ -58678,11 +58678,11 @@ msgid ""
 "Turawee may be the only inhabited planet in the galaxy whose environment has not been significantly altered "
 "in any way by its occupants."
 msgstr ""
-"Zwischen Thymo und Turawi gibt es viele Unterschiede. Im Gegensatz zu seinem unfruchtbaren Vetter ist Turawee "
+"Zwischen Thymo und Turawi gibt es viele Unterschiede. Im Gegensatz zu seinem unfruchtbaren Vetter ist Turawi "
 "eine üppige, bequeme Welt, die selbst während des Dritten Wachstums nie kartographiert wurde. Die Soromiden, "
 "denen nur wenige natürliche Planeten der M-Klasse zur Verfügung stehen, kümmern sich gut um diese Welt. "
 "Während die meisten anderen Fraktionen mit dem Kompromiss zwischen Wohlstand und Ökologie zu kämpfen hätten, "
-"ist es den Soromiden gelungen, ein perfektes Gleichgewicht herzustellen. Turawee ist möglicherweise der "
+"ist es den Soromiden gelungen, ein perfektes Gleichgewicht herzustellen. Turawi ist möglicherweise der "
 "einzige bewohnte Planet in der Galaxie, dessen Umwelt durch seine Bewohner in keiner Weise wesentlich "
 "verändert wurde."
 
@@ -58698,7 +58698,7 @@ msgstr ""
 
 #: dat/assets/turnpike_station.xml:2
 msgid "Turnpike Station"
-msgstr "Turnpike-Station"
+msgstr "Mautweg-Station"
 
 #: dat/assets/turnpike_station.xml:29
 msgid ""
@@ -58706,7 +58706,7 @@ msgid ""
 "Empire space, making it a welcome opportunity for traders to barter with one another. The station also offers "
 "private storage and ship moorings for pilots who travel through this region of space a lot."
 msgstr ""
-"Turnpike-Station ist eine halbprivatisierte Handelseinrichtung. Sie befindet sich an einem der wichtigsten "
+"Mautweg-Station ist eine halbprivatisierte Handelseinrichtung. Sie befindet sich an einem der wichtigsten "
 "Knotenpunkte im Raum des Imperiums, was sie zu einer willkommenen Gelegenheit für Händler macht, miteinander "
 "zu handeln. Die Station bietet auch private Lager- und Schiffsliegeplätze für Piloten, die viel durch diese "
 "Region des Weltraums reisen."
@@ -58722,7 +58722,7 @@ msgstr ""
 
 #: dat/assets/tuur.xml:2
 msgid "Tuur"
-msgstr "Tuur"
+msgstr "Tuhr"
 
 #: dat/assets/uhp1001.xml:2
 msgid "UHP-1001"
@@ -59108,7 +59108,7 @@ msgstr "Vanir II"
 
 #: dat/assets/vao_vos.xml:2
 msgid "Vao Vos"
-msgstr "Vao Vos"
+msgstr "Vao-Vos"
 
 #: dat/assets/vao_vos.xml:27
 msgid ""
@@ -59117,7 +59117,7 @@ msgid ""
 "and package it up into high-efficiency power cells."
 msgstr ""
 "Das Odysseus-System liegt ziemlich nahe am sirianischen Hauptsystem, und das sirianische Zentrum benötigt "
-"immer mehr Energie. Vao Vos ist ein heißer Planet, der seine Sonne ziemlich eng umkreist, was ihn zu einem "
+"immer mehr Energie. Vao-Vos ist ein heißer Planet, der seine Sonne ziemlich eng umkreist, was ihn zu einem "
 "geeigneten Ort macht, um viel Energie zu erzeugen und diese in hocheffiziente Energiezellen zu verpacken."
 
 #: dat/assets/vao_vos.xml:28
@@ -59128,7 +59128,7 @@ msgid ""
 "clearly visible from the viewports. It often makes offworld visitors uneasy, which is undoubtedly what the "
 "designers had in mind."
 msgstr ""
-"Die Oberfläche von Vao Vos ist meist in flüssigem Zustand, auch auf der dunklen Seite. Die einheimischen "
+"Die Oberfläche von Vao-Vos ist meist in flüssigem Zustand, auch auf der dunklen Seite. Die einheimischen "
 "Kolonisten haben gelernt, mit ihrer Umgebung umzugehen, aber viele Weltraumhändler sind an solche Bedingungen "
 "nicht gewöhnt. Diese Weltraumhafenkneipe ist direkt auf ein Lavafeld gebaut, oder besser gesagt, direkt in "
 "dieses hinein. Die Anlage ist teilweise untergetaucht, was von den Sichtfenstern aus gut sichtbar ist. Das "
@@ -59136,7 +59136,7 @@ msgstr ""
 
 #: dat/assets/varaati.xml:2
 msgid "Varaati"
-msgstr "Varaati"
+msgstr "Varahti"
 
 #: dat/assets/varaati.xml:30
 msgid ""
@@ -59149,8 +59149,8 @@ msgstr ""
 "Archimedes war das sechzehnte Kolonieschiff, das von der Erde aus startete, und wies gegenüber seinen "
 "Vorgängern viele Verbesserungen auf. Obwohl ertragreiches Terraforming damals noch unbekannt war, verfügte "
 "das Schiff doch über recht effektive Atmosphärenausgleicher und Bodenverbesserer, die es ermöglichten, "
-"Varaati von einer Urwelt in eine stabile Klasse M zu verwandeln. Trotz dieses Erfolgs begann die "
-"wirtschaftliche Entwicklung Varaatis relativ spät, mit gutem Abstand nach Grauen und Tori."
+"Varahti von einer Urwelt in eine stabile Klasse M zu verwandeln. Trotz dieses Erfolgs begann die "
+"wirtschaftliche Entwicklung Varahtis relativ spät, mit gutem Abstand nach Anbruch und Tori."
 
 #: dat/assets/varaati.xml:31
 msgid ""
@@ -59158,7 +59158,7 @@ msgid ""
 "safety regulations are met and where the air is thick with odors you don't want to guess the origin of. In "
 "short, it's a great place to hang out."
 msgstr ""
-"Die Weltraumhafenkneipe von Varaati gehört zu den Orten, an denen alles in einem baufälligen Zustand ist, an "
+"Die Weltraumhafenkneipe von Varahti gehört zu den Orten, an denen alles in einem baufälligen Zustand ist, an "
 "denen keine Sicherheitsvorschriften eingehalten werden und an denen die Luft von Gerüchen durchzogen ist, "
 "deren Ursprung man nicht erraten möchte. Kurz gesagt, es ist ein großartiger Ort zum Abhängen."
 
@@ -59237,14 +59237,14 @@ msgstr "Vauban I-1"
 
 #: dat/assets/vault.xml:2
 msgid "Vault"
-msgstr "Vault"
+msgstr "Tresor"
 
 #: dat/assets/vault.xml:29
 msgid ""
 "Vault is a small world, with little in the way of industry to recommend it. It has respectable facilities, "
 "but is otherwise too poor for anyone to bother with the place."
 msgstr ""
-"Vault ist eine kleine Welt, in der die Industrie nur wenig anzubieten hat. Sie verfügt über respektable "
+"Tresor ist eine kleine Welt, in der die Industrie nur wenig anzubieten hat. Sie verfügt über respektable "
 "Einrichtungen, ist aber ansonsten zu arm, als dass sich jemand um den Ort wirklich Gedanken macht."
 
 #: dat/assets/vault.xml:30
@@ -59394,7 +59394,7 @@ msgstr "Diese Kneipe ist einfach und sauber. Jeder Zentimeter eine militärische
 
 #: dat/assets/vilati_vilata.xml:2
 msgid "Vilati Vilata"
-msgstr "Vilati Vilata"
+msgstr "Vilati-Vilata"
 
 #: dat/assets/vilati_vilata.xml:29
 msgid ""
@@ -59404,7 +59404,7 @@ msgid ""
 "successful industrial franchises on this planet, so although nobody likes living here, the place is home to a "
 "sizeable amount of workers."
 msgstr ""
-"Gefrorene Welten werden normalerweise nicht kolonisiert, es sei denn, es gibt sehr gute Gründe dafür. Vilati "
+"Gefrorene Welten werden normalerweise nicht kolonisiert, es sei denn, es gibt sehr gute Gründe dafür. Vilati-"
 "Vilata ist keine Ausnahme. Die Welt bietet einen Reichtum an wertvollen natürlichen Ressourcen sowie "
 "ausgedehnte subglaziale Höhlensysteme, die sich recht gut für die Besiedlung durch den Menschen eignen. Die "
 "Dvaered haben eine ihrer erfolgreichsten Industrieeinrichtungen auf diesem Planeten angesiedelt, und obwohl "
@@ -59491,7 +59491,7 @@ msgid ""
 "Wringer is causing trouble again."
 msgstr ""
 "Die Violin-Station ist einer der wichtigeren militärischen Außenposten der Sirianer. Da so viel Verkehr durch "
-"Tschörschell fließt, ist zusätzliche Sicherheit erforderlich. Die Violin-Station reagiert auch auf Unruhen in "
+"Kirchell fließt, ist zusätzliche Sicherheit erforderlich. Die Violin-Station reagiert auch auf Unruhen in "
 "Eiderdaun, wenn der Wringer wieder Ärger macht."
 
 #: dat/assets/virtual_civilian_standard.xml:2
@@ -59612,7 +59612,7 @@ msgstr "Virtuell: Za'lek-Abwesenheit"
 
 #: dat/assets/vlexair.xml:2
 msgid "Vlexair"
-msgstr "Vlexair"
+msgstr "Vlexär"
 
 #: dat/assets/vlexair.xml:28
 msgid ""
@@ -59620,7 +59620,7 @@ msgid ""
 "solidify, resulting in an ice age. Virtually no flora or fauna exist outside of the station. Due to its an "
 "extremely dangerous environment, it's proven suitable only to the Dvaered workers."
 msgstr ""
-"Vlexair ist eine raue, gefrorene Welt. Früher ein üppiges Paradies, ließ eine innere Katastrophe seinen "
+"Vlexär ist eine raue, gefrorene Welt. Früher ein üppiges Paradies, ließ eine innere Katastrophe seinen "
 "geschmolzenen Kern erstarren, was zu einer Eiszeit führte. Außerhalb der Station gibt es so gut wie keine "
 "Flora oder Fauna. Aufgrund seiner extrem gefährlichen Umgebung ist er nur für die Dvaered-Arbeiter geeignet."
 
@@ -59629,7 +59629,7 @@ msgid ""
 "The Vlexair bar is small, as far as Dvaered bars go. There's not much variety of drink other than the "
 "standard Dvaered grogs."
 msgstr ""
-"Die Vlexair-Kneipe ist klein für Dvaered-Verhältnisse. Es gibt nicht viel Auswahl an Getränken außer den "
+"Die Vlexär-Kneipe ist klein für Dvaered-Verhältnisse. Es gibt nicht viel Auswahl an Getränken außer den "
 "standardmäßigen Dvaered-Grogs."
 
 #: dat/assets/vlexon_i.xml:2
@@ -59656,7 +59656,7 @@ msgstr ""
 "Dvaered-Revolten entwickelte sich daraus ein ernstzunehmender Piratenklan. In dieser Zeit der Spannungen und "
 "Zwietracht beschlossen viele, dem Imperium den Rücken zu kehren und sich ein neues Leben aufzubauen und "
 "Reichtum zu erlangen, indem sie ihn anderen wegnahmen. Diejenigen, die in dieser Branche überlebten, strömten "
-"nach Vorca, und heute beherbergt der Planet eine beeindruckende Flotte an privaten Schiffen, deren Besitzer "
+"nach Vorka, und heute beherbergt der Planet eine beeindruckende Flotte an privaten Schiffen, deren Besitzer "
 "sich mehr oder weniger zusammengehörig fühlen."
 
 #: dat/assets/vorca.xml:32
@@ -59715,9 +59715,9 @@ msgstr ""
 "ist, brauchen die Arbeitskräfte einen anderen Ort zum Leben. Die Einwohner von Halir weigerten sich unter "
 "Berufung auf verschiedene komplizierte Rechte und Vorschriften, ihnen eine Unterkunft zu gewähren. Anstatt "
 "die lokale Regierung zu überzeugen, beschloss der imperiale Rat daher, vorgefertigte Überlebenseinheiten auf "
-"Vüre zu stationieren. Daher sollte Vuere eher als ein provisorisches Lager denn als Kolonie betrachtet "
+"Vüre zu stationieren. Daher sollte Vüre eher als ein provisorisches Lager denn als Kolonie betrachtet "
 "werden. Bei einer Bevölkerung dieser Größe und einer voraussichtlichen Aufenthaltsdauer von so langer Dauer "
-"ist es jedoch zweifelhaft, ob Vuere jemals wirklich aufgegeben wird."
+"ist es jedoch zweifelhaft, ob Vüre jemals wirklich aufgegeben wird."
 
 #: dat/assets/vuere.xml:29
 msgid ""
@@ -59967,7 +59967,7 @@ msgstr "Weylein m1"
 
 #: dat/assets/wayling_m2.xml:2
 msgid "Wayling m2"
-msgstr "Weylein m2"
+msgstr "Weyling m2"
 
 #: dat/assets/wellen.xml:2
 msgid "Wellen"
@@ -60235,7 +60235,7 @@ msgid ""
 "world of Boowoy, but the majority is traded out of system."
 msgstr ""
 "Diese landwirtschaftliche Anlage versorgt die nahe gelegenen Systeme mit Nahrungsmitteln. Ein Teil der "
-"Produkte wird in die nahe gelegene Welt von Boowoy verschifft, aber der größte Teil wird außerhalb des "
+"Produkte wird in die nahe gelegene Welt von Buwoy verschifft, aber der größte Teil wird außerhalb des "
 "Systems gehandelt."
 
 #: dat/assets/yaroslav_farming_station.xml:27
@@ -60251,7 +60251,7 @@ msgstr ""
 
 #: dat/assets/yrina.xml:2
 msgid "Yrina"
-msgstr "Yrina"
+msgstr "Ürina"
 
 #: dat/assets/yrina.xml:28
 msgid ""
@@ -60260,9 +60260,9 @@ msgid ""
 "be fluid are now solid, and therefore mined more easily. Yrina supplies mostly Aesir, but some of the more "
 "exotic elements are exported to other parts of Sirius space, and beyond."
 msgstr ""
-"Yrina ist eine Ressourcenwelt, die von den Sirianern abgebaut wird. Das Klima ist rau und fast die gesamte "
+"Ürina ist eine Ressourcenwelt, die von den Sirianern abgebaut wird. Das Klima ist rau und fast die gesamte "
 "Oberfläche des Planeten ist gefroren, aber in einigen Fällen ist das sogar wünschenswert, da Substanzen, die "
-"normalerweise flüssig wären, jetzt fest sind und daher leichter abgebaut werden können. Yrina liefert "
+"normalerweise flüssig wären, jetzt fest sind und daher leichter abgebaut werden können. Ürina liefert "
 "hauptsächlich Äsir, aber einige der exotischeren Elemente werden in andere Teile des Sirius-Raums und darüber "
 "hinaus exportiert."
 
@@ -60279,7 +60279,7 @@ msgstr ""
 
 #: dat/assets/zaals.xml:2
 msgid "Zaals"
-msgstr "Zaals"
+msgstr "Zahls"
 
 #: dat/assets/zaals.xml:29
 msgid ""
@@ -60289,8 +60289,8 @@ msgid ""
 "first iteration has begun to slip into the dark side. The current settlement is predicted to stay in the "
 "light for another forty cycles."
 msgstr ""
-"Zaals ist ein etwas seltsamer Planet mit einer Rotationsperiode, die fast (aber nicht ganz) identisch mit "
-"seiner Umlaufperiode ist. Ein Tag auf Zaals dauert viele, viele Zyklen. Die Siedlung der Soromiden wurde hier "
+"Zahls ist ein etwas seltsamer Planet mit einer Rotationsperiode, die fast (aber nicht ganz) identisch mit "
+"seiner Umlaufperiode ist. Ein Tag auf Zahls dauert viele, viele Zyklen. Die Siedlung der Soromiden wurde hier "
 "auf der der Sonne zugewandten Seite gebaut, wo die Bedingungen noch akzeptabel sind. Es handelt sich "
 "eigentlich um die zweite Iteration der Siedlung, da die erste Iteration begonnen hat, in die dunkle Seite "
 "abzugleiten. Es wird vorhergesagt, dass die gegenwärtige Siedlung noch vierzig Zyklen lang im Licht bleiben "
@@ -60410,7 +60410,7 @@ msgstr ""
 
 #: dat/assets/zembla_shakar.xml:2
 msgid "Zembla Shakar"
-msgstr "Zembla Schakar"
+msgstr "Zembla-Schakar"
 
 #: dat/assets/zembla_shakar.xml:29
 msgid ""
@@ -60418,7 +60418,7 @@ msgid ""
 "gigantic estates that they usually haven't seen all of. Most of the planet is off-limits to offworlders, and "
 "most traffic to the planet consists of import luxury goods and export waste products."
 msgstr ""
-"Zembla Schakar ist wie ein Zufluchtsort für die Elite innerhalb des Shakar-Systems. Die Menschen, die hier "
+"Zembla-Schakar ist wie ein Zufluchtsort für die Elite innerhalb des Schakar-Systems. Die Menschen, die hier "
 "leben, leben auf riesigen Ländereien, die sie normalerweise nicht vollständig gesehen haben. Der größte Teil "
 "des Planeten ist für Ausweltler tabu, und der meiste Verkehr auf dem Planeten besteht aus dem Import von "
 "Luxusgütern und dem Export von Abfallprodukten."
@@ -60520,7 +60520,7 @@ msgstr "Zethus"
 
 #: dat/assets/zhang_lu.xml:2
 msgid "Zhang Lu"
-msgstr "Zang Lu"
+msgstr "Zang-Lu"
 
 #: dat/assets/zhang_lu.xml:29
 msgid ""
@@ -60529,7 +60529,7 @@ msgid ""
 "terrain is irresistible for people who like mountaineering. There are countless peaks that have never been "
 "conquered, so tourists like to try and be the first to climb one."
 msgstr ""
-"Zhang Lu ist eine Welt mit ausgedehnten Gebirgsketten, von denen die größte fast ein Drittel der Erde "
+"Zang-Lu ist eine Welt mit ausgedehnten Gebirgsketten, von denen die größte fast ein Drittel der Erde "
 "umspannt. Die Welt ist selbst für soromidische Verhältnisse für eine Besiedlung völlig uninteressant, aber "
 "das zerklüftete Gelände ist für Menschen, die gerne bergsteigen, unwiderstehlich. Es gibt unzählige Gipfel, "
 "die noch nie erklommen wurden, so dass Touristen gerne versuchen, als Erste einen zu besteigen."
@@ -60983,7 +60983,7 @@ msgstr "Unabhängiger Schrödinger"
 
 #: dat/fleet.xml:14
 msgid "Independent Hyena"
-msgstr "Unabhängige Hyena"
+msgstr "Unabhängige Hyäne"
 
 #: dat/fleet.xml:21
 msgid "Independent Gawain"
@@ -61003,11 +61003,11 @@ msgstr "Ziviler Schrödinger"
 
 #: dat/fleet.xml:49 dat/fleet.xml:1239
 msgid "Civilian Hyena"
-msgstr "Zivile Hyena"
+msgstr "Zivile Hyäne"
 
 #: dat/fleet.xml:56 dat/fleet.xml:1246
 msgid "Civilian Llama"
-msgstr "Ziviles Lllama"
+msgstr "Ziviles Lama"
 
 #: dat/fleet.xml:63 dat/fleet.xml:1253
 msgid "Civilian Gawain"
@@ -61019,19 +61019,19 @@ msgstr "Werbe-Schrödinger"
 
 #: dat/fleet.xml:77
 msgid "Advertiser Hyena"
-msgstr "Werbe-Hyena"
+msgstr "Werbe-Hyäne"
 
 #: dat/fleet.xml:84
 msgid "Advertiser Llama"
-msgstr "Werbe-Llama"
+msgstr "Werbe-Lama"
 
 #: dat/fleet.xml:91
 msgid "Advertiser Gawain"
-msgstr "Werbe-Garain"
+msgstr "Werbe-Gawain"
 
 #: dat/fleet.xml:98
 msgid "Miner Llama"
-msgstr "Berarbeiter-Llama"
+msgstr "Berarbeiter-Lama"
 
 #: dat/fleet.xml:105
 msgid "Miner Koala"
@@ -61039,11 +61039,11 @@ msgstr "Berarbeiter-Koala"
 
 #: dat/fleet.xml:112
 msgid "Miner Mule"
-msgstr "Bergarbeiter-Mule"
+msgstr "Bergarbeiter-Muli"
 
 #: dat/fleet.xml:119 dat/fleet.xml:161 dat/fleet.xml:941 dat/fleet.xml:942
 msgid "Trader Llama"
-msgstr "Händler-Llama"
+msgstr "Händler-Lama"
 
 #: dat/fleet.xml:126 dat/fleet.xml:168 dat/fleet.xml:943
 msgid "Trader Koala"
@@ -61055,7 +61055,7 @@ msgstr "Händler-Rhino"
 
 #: dat/fleet.xml:140 dat/fleet.xml:807 dat/fleet.xml:808
 msgid "Trader Mule"
-msgstr "Händler-Mule"
+msgstr "Händler-Muli"
 
 #: dat/fleet.xml:147 dat/fleet.xml:189 dat/fleet.xml:812 dat/fleet.xml:813 dat/fleet.xml:814
 msgid "Trader Gawain"
@@ -61063,11 +61063,11 @@ msgstr "Händler-Gawain"
 
 #: dat/fleet.xml:154 dat/fleet.xml:196
 msgid "Trader Quicksilver"
-msgstr "Händler-Quicksilver"
+msgstr "Händler-Quecksilber"
 
 #: dat/fleet.xml:182
 msgid "Traders Guild Mule"
-msgstr "Händlergilde-Mule"
+msgstr "Händlergilde-Muli"
 
 #: dat/fleet.xml:203 dat/ships/proteron_kahan.xml:2
 msgid "Proteron Kahan"
@@ -61083,7 +61083,7 @@ msgstr "Proteron Watson"
 
 #: dat/fleet.xml:224 dat/ships/proteron_derivative.xml:2
 msgid "Proteron Derivative"
-msgstr "Proteron Derivative"
+msgstr "Proteron Derivativ"
 
 #: dat/fleet.xml:231
 msgid "Frontier Lancelot"
@@ -61095,15 +61095,15 @@ msgstr "Front-Phalanx"
 
 #: dat/fleet.xml:245
 msgid "Frontier Hyena"
-msgstr "Front-Hyena"
+msgstr "Front-Hyäne"
 
 #: dat/fleet.xml:252
 msgid "Frontier Ancestor"
-msgstr "Front-Ancestor"
+msgstr "Front-Ahne"
 
 #: dat/fleet.xml:259 dat/fleet.xml:1089
 msgid "FLF Pacifier"
-msgstr "FLF Pacifier"
+msgstr "FLF Befrieder"
 
 #: dat/fleet.xml:266 dat/fleet.xml:1078 dat/fleet.xml:1088
 msgid "FLF Vendetta"
@@ -61123,16 +61123,16 @@ msgstr "Abrtrünniger FLF-Lancelot"
 
 #: dat/fleet.xml:294 dat/fleet.xml:1066 dat/fleet.xml:1067 dat/fleet.xml:1068 dat/fleet.xml:1069
 msgid "Pirate Hyena"
-msgstr "Piraten-Hyena"
+msgstr "Piraten-Hyäne"
 
 #: dat/fleet.xml:301 dat/fleet.xml:1031 dat/fleet.xml:1032 dat/fleet.xml:1042 dat/fleet.xml:1043
 #: dat/fleet.xml:1055 dat/fleet.xml:1056 dat/ships/pirate_shark.xml:2
 msgid "Pirate Shark"
-msgstr "Piraten-Shark"
+msgstr "Piraten-Hai"
 
 #: dat/fleet.xml:308 dat/fleet.xml:1028 dat/fleet.xml:1039 dat/fleet.xml:1053 dat/ships/pirate_admonisher.xml:2
 msgid "Pirate Admonisher"
-msgstr "Pirate Admonisher"
+msgstr "Piraten-Admonierer"
 
 #: dat/fleet.xml:315 dat/fleet.xml:1007 dat/fleet.xml:1018 dat/fleet.xml:1019 dat/ships/pirate_vendetta.xml:2
 msgid "Pirate Vendetta"
@@ -61140,7 +61140,7 @@ msgstr "Piraten-Vendetta"
 
 #: dat/fleet.xml:322 dat/fleet.xml:1006 dat/fleet.xml:1016 dat/fleet.xml:1017 dat/ships/pirate_ancestor.xml:2
 msgid "Pirate Ancestor"
-msgstr "Piraten-Ancestor"
+msgstr "Piraten-Ahne"
 
 #: dat/fleet.xml:329 dat/fleet.xml:1029 dat/fleet.xml:1030 dat/fleet.xml:1054 dat/ships/pirate_rhino.xml:2
 msgid "Pirate Rhino"
@@ -61163,26 +61163,26 @@ msgstr "Kollektiv-Drohne"
 #: dat/fleet.xml:357 dat/fleet.xml:376 dat/fleet.xml:377 dat/fleet.xml:378 dat/fleet.xml:379 dat/fleet.xml:380
 #: dat/fleet.xml:381 dat/fleet.xml:382 dat/fleet.xml:383 dat/fleet.xml:393
 msgid "Collective Heavy Drone"
-msgstr "Schwere Kollektiv Drohne"
+msgstr "Kollektiv-Schwerdrohne"
 
 #: dat/fleet.xml:400 dat/fleet.xml:1172 dat/fleet.xml:1173 dat/fleet.xml:1174 dat/fleet.xml:1187
 #: dat/fleet.xml:1188 dat/fleet.xml:1189 dat/fleet.xml:1190 dat/fleet.xml:1191 dat/fleet.xml:1192
 #: dat/ships/sirius_fidelity.xml:2
 msgid "Sirius Fidelity"
-msgstr "Sirius Fidelity"
+msgstr "Sirius Treue"
 
 #: dat/fleet.xml:407 dat/ships/sirius_shaman.xml:2
 msgid "Sirius Shaman"
-msgstr "Sirius Shaman"
+msgstr "Sirius Schamane"
 
 #: dat/fleet.xml:414 dat/fleet.xml:1171 dat/fleet.xml:1184 dat/fleet.xml:1185 dat/fleet.xml:1186
 #: dat/ships/sirius_preacher.xml:2
 msgid "Sirius Preacher"
-msgstr "Sirius Preacher"
+msgstr "Sirius Prediger"
 
 #: dat/fleet.xml:421 dat/fleet.xml:1181 dat/ships/sirius_divinity.xml:2
 msgid "Sirius Divinity"
-msgstr "Sirius Divinity"
+msgstr "Sirius Divinität"
 
 #: dat/fleet.xml:428 dat/fleet.xml:1182 dat/fleet.xml:1183 dat/ships/sirius_dogma.xml:2
 msgid "Sirius Dogma"
@@ -61190,15 +61190,15 @@ msgstr "Sirius Dogma"
 
 #: dat/fleet.xml:435 dat/ships/soromid_brigand.xml:2
 msgid "Soromid Brigand"
-msgstr "Soromid Brigand"
+msgstr "Soromid Brigant"
 
 #: dat/fleet.xml:442 dat/ships/soromid_reaver.xml:2
 msgid "Soromid Reaver"
-msgstr "Soromid Reaver"
+msgstr "Soromid Reiver"
 
 #: dat/fleet.xml:449 dat/ships/soromid_marauder.xml:2
 msgid "Soromid Marauder"
-msgstr "Soromid Marauder"
+msgstr "Soromid Marodeur"
 
 #: dat/fleet.xml:456 dat/ships/soromid_odium.xml:2
 msgid "Soromid Odium"
@@ -61230,7 +61230,7 @@ msgstr "Dvaered Vendetta"
 #: dat/fleet.xml:498 dat/fleet.xml:528 dat/fleet.xml:529 dat/fleet.xml:538 dat/fleet.xml:1098 dat/fleet.xml:1099
 #: dat/ships/dvaered_ancestor.xml:2
 msgid "Dvaered Ancestor"
-msgstr "Dvaered Ancestor"
+msgstr "Dvaered Ahne"
 
 #: dat/fleet.xml:505 dat/fleet.xml:539 dat/fleet.xml:1100 dat/ships/dvaered_phalanx.xml:2
 msgid "Dvaered Phalanx"
@@ -61239,7 +61239,7 @@ msgstr "Dvaered Phalanx"
 #: dat/fleet.xml:512 dat/fleet.xml:540 dat/fleet.xml:547 dat/fleet.xml:548 dat/fleet.xml:549 dat/fleet.xml:1101
 #: dat/ships/dvaered_vigilance.xml:2
 msgid "Dvaered Vigilance"
-msgstr "Dvaered Vigilance"
+msgstr "Dvaered Vigilanz"
 
 #: dat/fleet.xml:519 dat/ships/dvaered_goddard.xml:2
 msgid "Dvaered Goddard"
@@ -61247,7 +61247,7 @@ msgstr "Dvaered Goddard"
 
 #: dat/fleet.xml:576 dat/ships/empire_shark.xml:2
 msgid "Empire Shark"
-msgstr "Imperium Shark"
+msgstr "Imperium Hai"
 
 #: dat/fleet.xml:583 dat/fleet.xml:604 dat/fleet.xml:605 dat/fleet.xml:616 dat/fleet.xml:617 dat/fleet.xml:618
 #: dat/fleet.xml:619 dat/fleet.xml:620 dat/fleet.xml:621 dat/fleet.xml:622 dat/fleet.xml:635 dat/fleet.xml:636
@@ -61262,17 +61262,17 @@ msgstr "Imperium Hawking"
 
 #: dat/fleet.xml:597 dat/fleet.xml:609 dat/fleet.xml:628 dat/ships/empire_peacemaker.xml:2
 msgid "Empire Peacemaker"
-msgstr "Imperium Peacemaker"
+msgstr "Imperium Friedenserzwinger"
 
 #: dat/fleet.xml:606 dat/fleet.xml:623 dat/fleet.xml:624 dat/fleet.xml:625 dat/fleet.xml:639 dat/fleet.xml:640
 #: dat/fleet.xml:651 dat/fleet.xml:660 dat/fleet.xml:661 dat/fleet.xml:678 dat/ships/empire_admonisher.xml:2
 msgid "Empire Admonisher"
-msgstr "Imperium Admonisher"
+msgstr "Imperium Admonierer"
 
 #: dat/fleet.xml:607 dat/fleet.xml:626 dat/fleet.xml:641 dat/fleet.xml:652 dat/fleet.xml:659 dat/fleet.xml:671
 #: dat/ships/empire_pacifier.xml:2
 msgid "Empire Pacifier"
-msgstr "Imperium Pacifier"
+msgstr "Imperium Befrieder"
 
 #: dat/fleet.xml:685 dat/ships/zalek_drone_light.xml:2
 msgid "Za'lek Light Drone"
@@ -61292,11 +61292,11 @@ msgstr "Za'lek-Schwerdrohne"
 
 #: dat/fleet.xml:713 dat/ships/zalek_sting.xml:2
 msgid "Za'lek Sting"
-msgstr "Za'lek Sting"
+msgstr "Za'lek Stich"
 
 #: dat/fleet.xml:720 dat/ships/zalek_demon.xml:2
 msgid "Za'lek Demon"
-msgstr "Za'lek Demon"
+msgstr "Za'lek Dämon"
 
 #: dat/fleet.xml:727 dat/ships/zalek_diablo.xml:2
 msgid "Za'lek Diablo"
@@ -61308,23 +61308,23 @@ msgstr "Za'lek Mephisto"
 
 #: dat/fleet.xml:741 dat/ships/zalek_hephaestus.xml:2
 msgid "Za'lek Hephaestus"
-msgstr "Za'lek Hephaestus"
+msgstr "Za'lek Hephästus"
 
 #: dat/fleet.xml:748
 msgid "ESS Trinity"
-msgstr "ESS Trinity"
+msgstr "IRS Dreiheit"
 
 #: dat/fleet.xml:755
 msgid "Starfire"
-msgstr "Starfire"
+msgstr "Sternfeuer"
 
 #: dat/fleet.xml:762
 msgid "Mercenary Pacifier"
-msgstr "Söldner-Pacifier"
+msgstr "Söldner-Befrieder"
 
 #: dat/fleet.xml:769
 msgid "Mercenary Ancestor"
-msgstr "Söldner-Ancestor"
+msgstr "Söldner-Ahne"
 
 #: dat/fleet.xml:776
 msgid "Mercenary Vendetta"
@@ -61334,7 +61334,7 @@ msgstr "Söldner-Vendetta"
 #: dat/fleet.xml:789 dat/fleet.xml:790 dat/fleet.xml:791 dat/fleet.xml:792 dat/fleet.xml:793 dat/fleet.xml:794
 #: dat/fleet.xml:795 dat/fleet.xml:796 dat/fleet.xml:797 dat/fleet.xml:798 dat/fleet.xml:799 dat/fleet.xml:800
 msgid "Raider Hyena"
-msgstr "Plünderer-Hyena"
+msgstr "Plünderer-Hyäne"
 
 #: dat/fleet.xml:809 dat/fleet.xml:810
 msgid "Trader Lancelot"
@@ -61342,7 +61342,7 @@ msgstr "Händler-Lancelot"
 
 #: dat/fleet.xml:811
 msgid "Trader Ancestor"
-msgstr "Händler-Ancestor"
+msgstr "Händler-Ahne"
 
 #: dat/fleet.xml:842 dat/fleet.xml:843 dat/fleet.xml:844 dat/fleet.xml:845
 msgid "Independent Vendetta"
@@ -61387,7 +61387,7 @@ msgstr "Piratenangreifer"
 
 #: dat/fleet.xml:950 dat/fleet.xml:951 dat/fleet.xml:952
 msgid "Convoy Llama"
-msgstr "Konvoi-Llama"
+msgstr "Konvoi-Lama"
 
 #: dat/fleet.xml:959 dat/fleet.xml:960 dat/fleet.xml:961 dat/fleet.xml:962
 msgid "Convoy Koala"
@@ -61401,48 +61401,48 @@ msgstr "Konvoi-Rhino"
 #: dat/fleet.xml:971 dat/fleet.xml:972 dat/fleet.xml:973 dat/fleet.xml:983 dat/fleet.xml:984 dat/fleet.xml:985
 #: dat/fleet.xml:994 dat/fleet.xml:995 dat/fleet.xml:998 dat/fleet.xml:999
 msgid "Convoy Mule"
-msgstr "Konvoi-Mule"
+msgstr "Konvoi-Muli"
 
 #: dat/fleet.xml:1008 dat/fleet.xml:1009 dat/fleet.xml:1020 dat/fleet.xml:1021 dat/fleet.xml:1044
 #: dat/fleet.xml:1045 dat/fleet.xml:1057 dat/fleet.xml:1058 dat/fleet.xml:1059 dat/ships/hyena.xml:2
 msgid "Hyena"
-msgstr "Hyena"
+msgstr "Hyäne"
 
 #: dat/fleet.xml:1076 dat/fleet.xml:1085 dat/fleet.xml:1086
 msgid "FLF Hyena"
-msgstr "FLF-Hyena"
+msgstr "FLF-Hyäne"
 
 #: dat/fleet.xml:1077 dat/fleet.xml:1087
 msgid "FLF Admonisher"
-msgstr "FLF-Admonisher"
+msgstr "FLF-Admonierer"
 
 #: dat/fleet.xml:1108 dat/ships/thurion_perspicacity.xml:2
 msgid "Thurion Perspicacity"
-msgstr "Thurion Perspicacity"
+msgstr "Thurion Scharfsinn"
 
 #: dat/fleet.xml:1115 dat/ships/thurion_ingenuity.xml:2
 msgid "Thurion Ingenuity"
-msgstr "Thurion Ingenuity"
+msgstr "Thurion Rafinesse"
 
 #: dat/fleet.xml:1122 dat/ships/thurion_scintillation.xml:2
 msgid "Thurion Scintillation"
-msgstr "Thurion Scintillation"
+msgstr "Thurion Szintillation"
 
 #: dat/fleet.xml:1129 dat/ships/thurion_virtuosity.xml:2
 msgid "Thurion Virtuosity"
-msgstr "Thurion Virtuosity"
+msgstr "Thurion Virtuosität"
 
 #: dat/fleet.xml:1136 dat/ships/thurion_taciturnity.xml:2
 msgid "Thurion Taciturnity"
-msgstr "Thurion Taciturnity"
+msgstr "Thurion Verschlossenheit"
 
 #: dat/fleet.xml:1143 dat/ships/thurion_apprehension.xml:2
 msgid "Thurion Apprehension"
-msgstr "Thurion Apprehension"
+msgstr "Thurion Auffassung"
 
 #: dat/fleet.xml:1150 dat/ships/thurion_certitude.xml:2
 msgid "Thurion Certitude"
-msgstr "Thurion Certitude"
+msgstr "Thurion Gewissheit"
 
 #: dat/fleet.xml:1157
 msgid "Ghost Ship"
@@ -61454,11 +61454,11 @@ msgstr "Nebelforschungs-Shuttle"
 
 #: dat/fleet.xml:1199 dat/fleet.xml:1200
 msgid "Nasin Llama"
-msgstr "Nasin-Llama"
+msgstr "Nasin-Lama"
 
 #: dat/fleet.xml:1201
 msgid "Nasin Mule"
-msgstr "Nasin-Mule"
+msgstr "Nasin-Muli"
 
 #: dat/fleet.xml:1208 dat/fleet.xml:1209 dat/fleet.xml:1210 dat/fleet.xml:1220 dat/fleet.xml:1221
 #: dat/fleet.xml:1222 dat/fleet.xml:1223
@@ -61467,11 +61467,11 @@ msgstr "Nasin-Lancelot"
 
 #: dat/fleet.xml:1211 dat/fleet.xml:1224 dat/fleet.xml:1225
 msgid "Nasin Admonisher"
-msgstr "Nasin-Admonisher"
+msgstr "Nasin-Admonierer"
 
 #: dat/fleet.xml:1218 dat/fleet.xml:1219
 msgid "Nasin Shark"
-msgstr "Nasin-Shark"
+msgstr "Nasin-Hai"
 
 #: dat/outfits/accessory/air_freshener.xml:2
 msgid "Air Freshener"
@@ -63795,14 +63795,14 @@ msgstr ""
 
 #: dat/outfits/launchers/fidelity_fighter_bay.xml:2
 msgid "Fidelity Fighter Bay"
-msgstr "Fidelity-Kämpferbucht"
+msgstr "Treue-Kämpferbucht"
 
 #: dat/outfits/launchers/fidelity_fighter_bay.xml:11
 msgid ""
 "This bay launches three Sirius Fidelity fighters. Weak individually, they are stronger when working together "
 "in groups. Quite apropos, given Sirian society."
 msgstr ""
-"In dieser Bucht werden drei Sirius-Fidelity-Kämpfer gestartet. Einzeln schwach, aber in Gruppen stark. Das "
+"In dieser Bucht werden drei Sirius-Treue-Kämpfer gestartet. Einzeln schwach, aber in Gruppen stark. Das "
 "ist angesichts der sirianischen Gesellschaft durchaus passend."
 
 #: dat/outfits/launchers/lancelot_fighter_bay.xml:2
@@ -64083,7 +64083,7 @@ msgid ""
 "The Za'lek Heavy Drone is a fearsome craft using very advanced AI techniques to be able to pilot itself. "
 "Three heavy drones can be operated from this bay, giving the mothership a good deal of punch."
 msgstr ""
-"Die schwere Drohne der Za'lek ist ein furchteinflößender Flugkörper, das sehr fortschrittliche KI-Techniken "
+"Die Schwerdrohne der Za'lek ist ein furchteinflößender Flugkörper, das sehr fortschrittliche KI-Techniken "
 "verwendet, um sich selbst steuern zu können. Drei schwere Drohnen können von dieser Bucht aus bedient werden, "
 "was dem Mutterschiff viel Schlagkraft verleiht."
 
@@ -64997,7 +64997,7 @@ msgid ""
 "target for shorter-ranged weapons to finish the target off."
 msgstr ""
 "Diese Energiezellen werden als eine Art „Munition“ für eine Langstrecken-Entladungskanone verwendet, die von "
-"den Za'lek und den schweren Drohnen des Kollektivs eingesetzt wird. Sie haben eine sehr große Reichweite und "
+"den Za'lek- und Kollektiv-Schwerdrohnen eingesetzt wird. Sie haben eine sehr große Reichweite und "
 "einen guten Schaden, was sie ideal macht, um ein Ziel für Waffen mit kurzer Reichweite weich zu machen, um "
 "das Ziel zu erledigen."
 
@@ -65051,7 +65051,7 @@ msgstr "Thurionenergiezelle III"
 
 #: dat/outfits/rockets/fidelity_fighter.xml:2
 msgid "Fidelity Fighter"
-msgstr "Fidelity-Kämpfer"
+msgstr "Treue-Kämpfer"
 
 #: dat/outfits/rockets/fidelity_fighter.xml:8
 msgid ""
@@ -65143,7 +65143,7 @@ msgid ""
 "The Za'lek Heavy Drone is a fearsome craft using very advanced AI techniques to be able to pilot itself. The "
 "fact it doesn't need a pilot nor life support systems makes it a much smaller and compact vessel."
 msgstr ""
-"Die schwere Drohne der Za'lek ist ein furchteinflößender Flugkörper, das sehr fortschrittliche KI-Techniken "
+"Die Schwerdrohne der Za'lek ist ein furchteinflößender Flugkörper, das sehr fortschrittliche KI-Techniken "
 "verwendet, um sich selbst steuern zu können. Die Tatsache, dass sie weder einen Piloten noch "
 "Lebenserhaltungssysteme benötigt, macht sie zu einem viel kleineren und kompakteren Schiff."
 
@@ -65952,19 +65952,19 @@ msgstr ""
 
 #: dat/ships/admonisher.xml:2
 msgid "Admonisher"
-msgstr "Admonisher"
+msgstr "Admonierer"
 
 #: dat/ships/admonisher.xml:12
 msgid ""
 "A very versatile combat ship. Nexus defines the Admonisher as a compromise between the ruggedness of the "
 "Pacifier and the agility of the Lancelot. Overall a very solid fighter."
 msgstr ""
-"Ein sehr vielseitiges Kampfschiff. Nexus definiert den Admonisher als einen Kompromiss zwischen der "
-"Robustheit des Pacifiers und der Wendigkeit des Lancelots. Insgesamt ein sehr solider Kämpfer."
+"Ein sehr vielseitiges Kampfschiff. Nexus definiert den Admonierer als einen Kompromiss zwischen der "
+"Robustheit des Befrieders und der Wendigkeit des Lancelots. Insgesamt ein sehr solider Kämpfer."
 
 #: dat/ships/ancestor.xml:2
 msgid "Ancestor"
-msgstr "Ancestor"
+msgstr "Ahne"
 
 #: dat/ships/ancestor.xml:12
 msgid ""
@@ -65972,7 +65972,7 @@ msgid ""
 "used by men many ages ago. Unlike the Goddard though, the electronics are done by House Dvaered, making it "
 "considerably inferior in that area."
 msgstr ""
-"Allgemein als „kleiner Goddard“ bezeichnet, hat der Ancestor auch seine Wurzeln in den primitiven "
+"Allgemein als „kleiner Goddard“ bezeichnet, hat der Ahne auch seine Wurzeln in den primitiven "
 "Flugapparaten, die vor vielen Jahrhunderten von den Menschen benutzt wurden. Im Gegensatz zum Goddard wird "
 "die Elektronik jedoch vom Haus Dvaered gemacht, was es in diesem Bereich erheblich unterlegen macht."
 
@@ -66010,7 +66010,7 @@ msgid ""
 "This military grade version of the Ancestor is equipped with slightly more armour than its standard "
 "counterpart, which improves the integrity of its hull at the cost of slightly increased base mass."
 msgstr ""
-"Diese militärtaugliche Version des Ancestors ist mit etwas mehr Panzerung ausgestattet als sein "
+"Diese militärtaugliche Version des Ahnen ist mit etwas mehr Panzerung ausgestattet als sein "
 "Standardpendant, was die Integrität seiner Hülle auf Kosten einer leicht erhöhten Basismasse verbessert."
 
 #: dat/ships/dvaered_goddard.xml:13
@@ -66054,7 +66054,7 @@ msgid ""
 "forward-mounted weapons than its standard counterpart, resulting in increased damage at the cost of slightly "
 "increased power consumption and heat production."
 msgstr ""
-"Diese militärische Version der Vigilance ist stärker gepanzert und lenkt mehr Energie auf ihre "
+"Diese militärische Version der Vigilanz ist stärker gepanzert und lenkt mehr Energie auf ihre "
 "vorwärtsgerichteten Waffen als ihr Standardpendant, was zu einem erhöhten Schaden auf Kosten eines leicht "
 "erhöhten Stromverbrauchs und einer erhöhten Wärmeproduktion führt."
 
@@ -66063,8 +66063,8 @@ msgid ""
 "This military grade version of the Admonisher is mostly identical in function to a standard Admonisher, but "
 "with slightly better armour, shields, and heat dissipation."
 msgstr ""
-"Diese militärische Version des Admonishers ist in der Funktion weitgehend identisch mit einem Standard-"
-"Admonisher, jedoch mit etwas besserer Panzerung, Schilden und Wärmeableitung."
+"Diese militärische Version des Admonierers ist in der Funktion weitgehend identisch mit einem Standard-"
+"Admonierer, jedoch mit etwas besserer Panzerung, Schilden und Wärmeableitung."
 
 #: dat/ships/empire_hawking.xml:13
 msgid ""
@@ -66087,8 +66087,8 @@ msgid ""
 "This military grade version of the Pacifier is mostly identical in function to a standard Pacifier, but with "
 "slightly better armour, shields, and heat dissipation."
 msgstr ""
-"Diese militärische Version des Pacifiers ist in der Funktion weitgehend identisch mit einem Standard-"
-"Pacifier, jedoch mit etwas besserer Panzerung, Schilden und Wärmeableitung."
+"Diese militärische Version des Befrieders ist in der Funktion weitgehend identisch mit einem Standard-"
+"Befrieder, jedoch mit etwas besserer Panzerung, Schilden und Wärmeableitung."
 
 #: dat/ships/empire_peacemaker.xml:13
 msgid ""
@@ -66097,8 +66097,8 @@ msgid ""
 "and can provide the fighter and bomber squadrons with much needed resupplies. Like most capital ships, "
 "however, it is vulnerable to attack from enemy bombers."
 msgstr ""
-"Der Peacemaker, der im Auftrag des Imperiums von den Nexus-Schiffswerften gebaut wurde, ist eines der größten "
-"Schiffe in der Galaxis und stellt selbst den mächtigen Goddard in den Schatten. Peacemaker fungieren in der "
+"Der Friedenserzwinger, der im Auftrag des Imperiums von den Nexus-Schiffswerften gebaut wurde, ist eines der größten "
+"Schiffe in der Galaxis und stellt selbst den mächtigen Goddard in den Schatten. Friedenserzwinger fungieren in der "
 "Regel als Flaggschiffe der imperialen Flotten und können die Jagd- und Bomberstaffeln mit dringend benötigten "
 "Nachschub versorgen. Wie die meisten Großkampfschiffe ist er jedoch anfällig für Angriffe feindlicher Bomber."
 
@@ -66108,8 +66108,8 @@ msgid ""
 "slightly better armour, shields, and heat dissipation. The military-grade materials used also result in the "
 "ship being slightly lighter than its generic counterpart."
 msgstr ""
-"Die imperiale militärische Version des Sharks ist in der Funktion weitgehend identisch mit einem Standard-"
-"Shark, jedoch mit etwas besserer Panzerung, Schilden und Wärmeableitung. Die verwendeten Materialien in "
+"Die imperiale militärische Version des Hais ist in der Funktion weitgehend identisch mit einem Standard-"
+"Hai, jedoch mit etwas besserer Panzerung, Schilden und Wärmeableitung. Die verwendeten Materialien in "
 "Militärqualität führen auch dazu, dass das Schiff etwas leichter ist als sein generisches Gegenstück."
 
 #: dat/ships/gawain.xml:2
@@ -66168,11 +66168,11 @@ msgid ""
 "reputable pilots, it's suspected that they sell to anyone willing to pay, as it seems there are countless "
 "Hyenas among the pirate ranks."
 msgstr ""
-"Die Hyena, das Hauptprodukt von Aerosys, ist schnell zu einem Favoriten der Piraten weit und breit geworden. "
+"Die Hyäne, das Hauptprodukt von Aerosys, ist schnell zu einem Favoriten der Piraten weit und breit geworden. "
 "Sie ist nicht gerade ein Kampfflugzeug und hat auch keine allzu großen Schlagkräfte, aber in Gruppen können "
 "sie fast mit jedem Schiff fertig werden, und es ist so einfach zu steuern, dass die Reaktionszeit erheblich "
 "verbessert wird. Obgleich Aerosys behauptet, dass ihre Schiffe nur an seriöse Piloten verkauft werden, wird "
-"vermutet, dass sie sie an jeden verkaufen, der bereit ist zu zahlen, da es anscheinend unzählige Hyenas in "
+"vermutet, dass sie sie an jeden verkaufen, der bereit ist zu zahlen, da es anscheinend unzählige Hyänen in "
 "den Reihen der Piraten gibt."
 
 #: dat/ships/kestrel.xml:2
@@ -66232,7 +66232,7 @@ msgstr ""
 
 #: dat/ships/llama.xml:2
 msgid "Llama"
-msgstr "Llama"
+msgstr "Lama"
 
 #: dat/ships/llama.xml:11
 msgid ""
@@ -66247,7 +66247,7 @@ msgstr ""
 
 #: dat/ships/mule.xml:2
 msgid "Mule"
-msgstr "Mule"
+msgstr "Muli"
 
 #: dat/ships/mule.xml:12
 msgid ""
@@ -66257,11 +66257,11 @@ msgid ""
 msgstr ""
 "Ein schwerer Frachter, der auf den Transport von Fracht durch die ganze Galaxis spezialisiert ist. Verfügt je "
 "nach Modell auch über ausreichende Unterkünfte für Passagiere, so dass angenehme Kreuzfahrten möglich sind. "
-"Der Mule ist ein beliebtes Ziel von Piraten, daher wird dringend empfohlen, gefährliche Systeme zu meiden."
+"Der Muli ist ein beliebtes Ziel von Piraten, daher wird dringend empfohlen, gefährliche Systeme zu meiden."
 
 #: dat/ships/pacifier.xml:2
 msgid "Pacifier"
-msgstr "Pacifier"
+msgstr "Befrieder"
 
 #: dat/ships/pacifier.xml:12
 msgid ""
@@ -66269,9 +66269,9 @@ msgid ""
 "border-patrol vessel, and as such it is able to withstand heavy punishment from raiding parties. The Pacifier "
 "features high fuel capacity to facilitate lengthy patrol routes."
 msgstr ""
-"Der Pacifier ist eine der älteren und vertrauenswürdigeren Konstruktionen von Nexus-Schiffswerften. Er wurde "
+"Der Befrieder ist eine der älteren und vertrauenswürdigeren Konstruktionen von Nexus-Schiffswerften. Er wurde "
 "in erster Linie als Grenzpatrouillenschiff konzipiert und als solches ist er in der Lage, schweren Beschuss "
-"durch Raubzüge zu überstehen. Der Pacifier verfügt über eine hohe Treibstoffkapazität, um lange "
+"durch Raubzüge zu überstehen. Der Befrieder verfügt über eine hohe Treibstoffkapazität, um lange "
 "Patrouillenrouten zu ermöglichen."
 
 #: dat/ships/phalanx.xml:2
@@ -66298,8 +66298,8 @@ msgid ""
 "the Pirate Admonisher features improved manoeuvrability, more weapons space, and slightly improved defenses, "
 "at a cost of cargo capacity and armor regeneration rates."
 msgstr ""
-"Der Standard-Admonisher ist ein mächtiges Schiff, vor allem wegen seiner Größe. Durch die übliche „Todenkopf“-"
-"Grundüberholung weist der Piraten-Admonisher eine verbesserte Manövrierfähigkeit, mehr Waffenraum und eine "
+"Der Standard-Admonierer ist ein mächtiges Schiff, vor allem wegen seiner Größe. Durch die übliche „Todenkopf“-"
+"Grundüberholung weist der Piraten-Admonierer eine verbesserte Manövrierfähigkeit, mehr Waffenraum und eine "
 "leicht verbesserte Verteidigung auf Kosten der Ladekapazität und der Panzerregenerationsraten auf."
 
 #: dat/ships/pirate_ancestor.xml:12
@@ -66308,7 +66308,7 @@ msgid ""
 "speeds would usually get ships to surrender without firing a shot. As better ships came out in the market, "
 "their use has fallen due to their archaic electronics and targeting systems."
 msgstr ""
-"Der Ancestor war eines der ersten Schiffe, das von Piraten geliebt wurde. Die großen, einschüchternden Flügel "
+"Der Ahne war eines der ersten Schiffe, das von Piraten geliebt wurde. Die großen, einschüchternden Flügel "
 "und die guten Höchstgeschwindigkeiten brachten die Schiffe gewöhnlich dazu, sich zu ergeben, ohne einen "
 "Schuss abzufeuern. Als bessere Schiffe auf den Markt kamen, ist ihr Einsatz aufgrund ihrer archaischen "
 "Elektronik und Zielsysteme zurückgegangen."
@@ -66347,7 +66347,7 @@ msgid ""
 "with an additional weapon mount, its handling suffers minimally while it's able to bring substantially more "
 "firepower to bear."
 msgstr ""
-"Der flinke Nexus-Schiffswerften-Shark hat sich als ausgezeichnete Grundlage für die Techniker von Totenkopf "
+"Der flinke Nexus-Schiffswerften-Hai hat sich als ausgezeichnete Grundlage für die Techniker von Totenkopf "
 "erwiesen. Ausgestattet mit einer zusätzlichen Waffenmontierung leidet seine Handhabung nur minimal, während "
 "er wesentlich mehr Feuerkraft zum Einsatz bringen kann."
 
@@ -66381,7 +66381,7 @@ msgid ""
 "several squadrons has been known to turn the tide of battle on many occasions."
 msgstr ""
 "Obwohl kleiner und weniger einschüchternd als seine größeren Geschwister im Arsenal von Proteron, ist ein "
-"Rudel von Derivaten immer noch ein Gegner, mit dem man rechnen muss. Getreu ihrem Namen ist sie die jüngste "
+"Rudel von Derivativen immer noch ein Gegner, mit dem man rechnen muss. Getreu ihrem Namen ist sie die jüngste "
 "in einer langen Reihe von Kämpfern, die weitgehend auf Trägerraketen basieren. Mit ihrer relativ geringen "
 "Feuerkraft sind sie für Duellkämpfe ungeeignet, aber eine Trägergruppe, die mehrere Geschwader entfesselt, "
 "ist dafür bekannt, bei vielen Gelegenheiten das Blatt in der Schlacht zu wenden."
@@ -66394,7 +66394,7 @@ msgid ""
 msgstr ""
 "Die Kahan ist ein hochmodernes Schiff. Sein Entwurf wurde kurz vor dem Geschehnis fertiggestellt, und es war "
 "auf dem besten Weg, das primäre Kampfschiff des Proteron-Militärs zu werden. Es besitzt zwar weniger "
-"Waffenhalterungen als der Pacifier, macht dies aber durch seine geringere Masse und seinen geringeren "
+"Waffenhalterungen als der Befrieder, macht dies aber durch seine geringere Masse und seinen geringeren "
 "strukturellen Raum aus."
 
 #: dat/ships/proteron_watson.xml:13
@@ -66408,14 +66408,14 @@ msgstr ""
 
 #: dat/ships/quicksilver.xml:2
 msgid "Quicksilver"
-msgstr "Quicksilver"
+msgstr "Quecksilber"
 
 #: dat/ships/quicksilver.xml:11
 msgid ""
 "While still a cargo hauler, the Quicksilver is quite different from Melendez's other offerings. Featuring a "
 "streamlined frame and oversized engines, it's the prime choice for expedient shipping."
 msgstr ""
-"Die Quicksilver ist zwar immer noch ein Frachtschlepper, doch unterscheidet sie sich deutlich von den anderen "
+"Der Quecksilber ist zwar immer noch ein Frachtschlepper, doch unterscheidet er sich deutlich von den anderen "
 "Angeboten von Melendez. Mit seinem stromlinienförmigen Rahmen und seinen überdimensionierten Motoren ist er "
 "die erste Wahl für eine zweckmäßige Verschiffung."
 
@@ -66458,14 +66458,14 @@ msgstr ""
 
 #: dat/ships/shark.xml:2
 msgid "Shark"
-msgstr "Shark"
+msgstr "Hai"
 
 #: dat/ships/shark.xml:12
 msgid ""
 "A newer Nexus Shipyards design, the Shark is an agile light fighter designed for in-system patrolling. While "
 "it's not as capable as its larger relative, the Lancelot, it's still an effective addition to any fleet."
 msgstr ""
-"Der Shark ist ein neuerer Entwurf der Nexus-Schiffswerften und ein wendiger, leichter Kampfflieger, der für "
+"Der Hai ist ein neuerer Entwurf der Nexus-Schiffswerften und ein wendiger, leichter Kampfflieger, der für "
 "systeminterne Patrouillenfahrten entwickelt wurde. Obwohl er nicht so leistungsfähig ist wie sein größerer "
 "Verwandter, dem Lancelot, ist er dennoch eine effektive Ergänzung für jede Flotte."
 
@@ -66477,8 +66477,8 @@ msgid ""
 "in any sizable fleet."
 msgstr ""
 "Zwar soll das Dogma den Kern jeder sirianischen Flotte bilden, doch nur wenige Kampfpiloten würden die "
-"Bedeutung der Divinity abtun. Obwohl sie im direkten Kampf nicht außergewöhnlich beeindruckend ist, verleiht "
-"ihr die Fähigkeit der Divinity, eine Vielzahl von Kampfflugzeugen einzusetzen, eine unvergleichliche "
+"Bedeutung der Divinität abtun. Obwohl sie im direkten Kampf nicht außergewöhnlich beeindruckend ist, verleiht "
+"ihr die Fähigkeit der Divinität, eine Vielzahl von Kampfflugzeugen einzusetzen, eine unvergleichliche "
 "Flexibilität im Kampf und dient als logistisches Schlüsselschiff in jeder größeren Flotte."
 
 #: dat/ships/sirius_dogma.xml:13
@@ -66495,7 +66495,7 @@ msgid ""
 "The Fidelity is the light fighter of House Sirius. While not particularly competent alone, it's often "
 "employed as a forward scout, bringing with it far deadlier allies."
 msgstr ""
-"Die Fidelity ist der leichte Kämpfer des Hauses Sirius. Obwohl sie allein nicht besonders kompetent ist, wird "
+"Die Treue ist der leichte Kämpfer des Hauses Sirius. Obwohl sie allein nicht besonders kompetent ist, wird "
 "sie oft als Späher eingesetzt und bringt weitaus tödlichere Verbündete mit sich."
 
 #: dat/ships/sirius_preacher.xml:13
@@ -66503,13 +66503,13 @@ msgid ""
 "The Preacher, as its name implies, is the primary vessel by which House Sirius projects its message and will. "
 "Fielding a large array of weaponry, the Preacher is adept at making converts out of unbelievers."
 msgstr ""
-"Der Preacher ist, wie sein Name schon sagt, das Hauptgefährt, durch das das Haus Sirius seine Botschaft und "
-"seinen Willen verbreitet. Der Preacher verfügt über eine breite Palette von Waffen und ist versiert darin, "
+"Der Prediger ist, wie sein Name schon sagt, das Hauptgefährt, durch das das Haus Sirius seine Botschaft und "
+"seinen Willen verbreitet. Der Prediger verfügt über eine breite Palette von Waffen und ist versiert darin, "
 "aus Ungläubigen Bekehrte zu machen."
 
 #: dat/ships/sirius_reverence.xml:2
 msgid "Sirius Reverence"
-msgstr "Sirius Reverence"
+msgstr "Sirius Hochwürden"
 
 #: dat/ships/sirius_reverence.xml:13
 msgid ""
@@ -66517,9 +66517,9 @@ msgid ""
 "those who carry a fraction of the Sirichana's will within themselves. Protected by the best shields money can "
 "buy, the Reverence is nevertheless weak in offense."
 msgstr ""
-"Eine abgewandelte Version des gebräuchlicheren Preacher, der Reverence, steht nur den Reinsten der Reinen zur "
+"Eine abgewandelte Version des gebräuchlicheren Predigers, der Hochwürden, steht nur den Reinsten der Reinen zur "
 "Verfügung, jenen, die einen Bruchteil des Willens des Sirichana in sich tragen. Geschützt durch die besten "
-"Schilde, die man für Geld kaufen kann, ist die Reverence dennoch schwach in der Offensive."
+"Schilde, die man für Geld kaufen kann, ist der Hochwürden dennoch schwach in der Offensive."
 
 #: dat/ships/sirius_shaman.xml:13
 msgid ""
@@ -66527,8 +66527,8 @@ msgid ""
 "is anything but. A purpose-built light missile platform, few enemies escape the reach of the Shaman."
 msgstr ""
 "Obwohl er aufgrund seiner relativ schlanken Form aus der Ferne mit einem leichten Kämpfer verwechselt werden "
-"könnte, ist der Shaman nichts dergleichen. Er ist eine speziell gebaute leichte Raketenplattform, und nur "
-"wenige Feinde entkommen der Reichweite des Shamans."
+"könnte, ist der Schamane nichts dergleichen. Er ist eine speziell gebaute leichte Raketenplattform, und nur "
+"wenige Feinde entkommen der Reichweite des Schamanen."
 
 #: dat/ships/soromid_arx.xml:13
 msgid ""
@@ -66546,7 +66546,7 @@ msgid ""
 "ship is lightly armoured and fairly fragile, but it makes up for this by being fast to grow and therefore "
 "relatively expendable."
 msgstr ""
-"Der Brigand ist ein schnelles, manövrierfähiges Bioschiff, das die Soromiden für Systempatrouillen und "
+"Der Brigant ist ein schnelles, manövrierfähiges Bioschiff, das die Soromiden für Systempatrouillen und "
 "Polizeiaufgaben einsetzen. Das Schiff ist leicht gepanzert und ziemlich zerbrechlich, aber es macht dies "
 "dadurch wett, dass es schnell wächst und daher relativ entbehrlich ist."
 
@@ -66565,8 +66565,8 @@ msgid ""
 "Marauder was developed to fill a bomber role, which calls for increased durability and ammunition chambers. "
 "This makes it quite a bit slower than its distant cousin."
 msgstr ""
-"Der Marauder wurde von derselben Basis wie der Brigand entwickelt, aber die beiden Schiffe sind recht "
-"unterschiedlich. Der Marauder wurde entwickelt, um eine Bomberrolle auszufüllen, was eine erhöhte Haltbarkeit "
+"Der Marodeur wurde von derselben Basis wie der Brigant entwickelt, aber die beiden Schiffe sind recht "
+"unterschiedlich. Der Marodeur wurde entwickelt, um eine Bomberrolle auszufüllen, was eine erhöhte Haltbarkeit "
 "und Munitionskammern erfordert. Dadurch ist er ein ganzes Stück langsamer als sein entfernter Cousin."
 
 #: dat/ships/soromid_nyx.xml:13
@@ -66593,8 +66593,8 @@ msgid ""
 "maneuverability are compounded by their durability, making the Reaver one of the most effective heavy "
 "fighters in the galaxy."
 msgstr ""
-"Reaver finden sich häufig an vorderster Front bei militärischen Einsätzen der Soromiden. Ihre gute "
-"Geschwindigkeit und Manövrierfähigkeit werden durch ihre Langlebigkeit noch verstärkt, was die Reaver zu "
+"Reiver finden sich häufig an vorderster Front bei militärischen Einsätzen der Soromiden. Ihre gute "
+"Geschwindigkeit und Manövrierfähigkeit werden durch ihre Langlebigkeit noch verstärkt, was die Reiver zu "
 "einem der effektivsten schweren Kampfflugzeuge in der Galaxis macht."
 
 #: dat/ships/soromid_vox.xml:13
@@ -66622,8 +66622,8 @@ msgid ""
 "capable of staying in combat and slugging it out, and when things get too hot, it can quickly retreat to "
 "recharge and regenerate. Also, like every Thurian ship, the electronics are well above average."
 msgstr ""
-"Die Thurion Ingenuity ist ein Kämpfer, der fürs Überleben gebaut ist. Wie alle Thurion-Schiffe stellt sie die "
-"defensiven Fähigkeiten an die erste und die offensiven Fähigkeiten an die zweite Stelle. Die Ingenuity ist "
+"Die Thurion Rafinesse ist ein Kämpfer, der fürs Überleben gebaut ist. Wie alle Thurion-Schiffe stellt sie die "
+"defensiven Fähigkeiten an die erste und die offensiven Fähigkeiten an die zweite Stelle. Die Rafinesse ist "
 "jedoch keineswegs ein schlechtes Kampfschiff. Sie ist in der Lage, im Kampf zu bestehen und den Kampf "
 "auszutragen, und wenn es zu heiß wird, kann sie sich schnell zurückziehen, um sich wieder aufzuladen und zu "
 "regenerieren. Auch die Elektronik ist, wie bei jedem Thurion-Schiff, weit überdurchschnittlich."
@@ -66631,7 +66631,7 @@ msgstr ""
 #: dat/ships/thurion_perspicacity.xml:13
 msgid "The Thurion Perspicacity is a fast, light fighter typically used for scouting or attacking in swarms."
 msgstr ""
-"Die Thurion Perspicacity ist ein schneller leichter Kämpfer, das typischerweise zum Auskundschaften oder "
+"Der Thurion Scharfsinn ist ein schneller leichter Kämpfer, das typischerweise zum Auskundschaften oder "
 "Angreifen in Schwärmen eingesetzt wird."
 
 #: dat/ships/thurion_scintillation.xml:13
@@ -66639,7 +66639,7 @@ msgid ""
 "The Thurion Scintillation is a bomber designed to attack from a large distance. It is better armed than any "
 "other Thurion ship of comparable size, but still not as well as other bombers."
 msgstr ""
-"Der Thurion Scintillation ist ein Bomber, der für Angriffe aus großer Entfernung ausgelegt ist. Er ist besser "
+"Der Thurion Szintillation ist ein Bomber, der für Angriffe aus großer Entfernung ausgelegt ist. Er ist besser "
 "bewaffnet als jedes andere Thurion-Schiff vergleichbarer Größe, aber immer noch nicht so gut bewaffnet wie "
 "andere Bomber."
 
@@ -66648,7 +66648,7 @@ msgid ""
 "The Thurion Taciturnity is an armoured and stealthy transport capable both of surviving the harsh nebula and "
 "defending itself from attack."
 msgstr ""
-"Der Thurion Taciturnity ist ein gepanzerter und getarnter Transporter, der in der Lage ist, sowohl den rauen "
+"Die Thurion Verschlossenheit ist ein gepanzerter und getarnter Transporter, der in der Lage ist, sowohl den rauen "
 "Nebel zu überleben als auch sich gegen Angriffe zu verteidigen."
 
 #: dat/ships/thurion_virtuosity.xml:13
@@ -66657,7 +66657,7 @@ msgid ""
 "less than stellar, the vessel's superior electronics and resistance to the harsh nebula more than make up for "
 "it."
 msgstr ""
-"Die Thurion Virtuosity ist ein mittelgroßes Schiff, das von den Thurion für Frontalangriffe eingesetzt wird. "
+"Die Thurion Vistuosität ist ein mittelgroßes Schiff, das von den Thurion für Frontalangriffe eingesetzt wird. "
 "Der Waffenraum ist zwar weniger als sternförmig, aber die überlegene Elektronik des Schiffes und die "
 "Widerstandsfähigkeit gegen den rauen Nebel machen dies mehr als wett."
 
@@ -66680,7 +66680,7 @@ msgstr ""
 
 #: dat/ships/vigilance.xml:2
 msgid "Vigilance"
-msgstr "Vigilance"
+msgstr "Vigilanz"
 
 #: dat/ships/vigilance.xml:12
 msgid ""
@@ -66688,7 +66688,7 @@ msgid ""
 "hardpoints, it's designed to hit as hard as possible. Given its Dvaered origins, it possesses inferior "
 "technology relative to its counterparts."
 msgstr ""
-"Die Vigilance ist die Verkörperung der Dvaered-Philosophie. Ausgestattet mit immensen Energiereserven und "
+"Die Vigilanz ist die Verkörperung der Dvaered-Philosophie. Ausgestattet mit immensen Energiereserven und "
 "sechs Waffenaufhängungen ist sie darauf ausgelegt, so hart wie möglich zu treffen. Aufgrund ihrer Dvaered-"
 "Herkunft verfügt sie über eine im Vergleich zu ihren Gegenstücken unterlegene Technologie."
 
@@ -66752,7 +66752,7 @@ msgid ""
 "seen, but commands respect."
 msgstr ""
 "Als Krone der Verteidigungsflotte des Hauses Za'lek dienen diese stolzen Stützpfeiler der Ideale der Za'lek "
-"dank ihrer überlegenen Sensorausstattung häufig als Nervenzentrum einer Za'lek-Kampfflotte. Die Hephaestus "
+"dank ihrer überlegenen Sensorausstattung häufig als Nervenzentrum einer Za'lek-Kampfflotte. Die Hephästus "
 "ist selten zu sehen, wird aber respektiert."
 
 #: dat/ships/zalek_imp.xml:2
@@ -66801,7 +66801,7 @@ msgid ""
 "The Sting Corvette is rather large for its size, but its advanced sensor suite, impressive weapons loadout, "
 "and tough shields makes it a good backbone to the fleet of House Za'lek."
 msgstr ""
-"Die Sting-Korvette ist für ihre Größe ziemlich groß, aber ihre fortschrittliche Sensorausstattung, ihre "
+"Die Stich-Korvette ist für ihre Größe ziemlich groß, aber ihre fortschrittliche Sensorausstattung, ihre "
 "beeindruckende Waffenausrüstung und ihre robusten Schilde machen sie zu einem guten Rückgrat der Flotte von "
 "Haus Za'lek."
 
@@ -66967,7 +66967,7 @@ msgstr "Andres"
 
 #: dat/ssys/aneel_azi.xml:2
 msgid "Aneel Azi"
-msgstr "Aneel Azi"
+msgstr "Aniel-Azi"
 
 #: dat/ssys/anger.xml:2
 msgid "Anger"
@@ -66995,7 +66995,7 @@ msgstr "Arandon"
 
 #: dat/ssys/arcanis.xml:2
 msgid "Arcanis"
-msgstr "Arcanis"
+msgstr "Arkanis"
 
 #: dat/ssys/arcturus.xml:2
 msgid "Arcturus"
@@ -67043,7 +67043,7 @@ msgstr "Bedimann"
 
 #: dat/ssys/beeklo.xml:2
 msgid "Beeklo"
-msgstr "Beeklo"
+msgstr "Bieklo"
 
 #: dat/ssys/behar.xml:2
 msgid "Behar"
@@ -67051,7 +67051,7 @@ msgstr "Behar"
 
 #: dat/ssys/blacin.xml:2
 msgid "Blacin"
-msgstr "Blacin"
+msgstr "Blazin"
 
 #: dat/ssys/blackwell.xml:2
 msgid "Blackwell"
@@ -67083,7 +67083,7 @@ msgstr "Brenden"
 
 #: dat/ssys/brimstone.xml:2
 msgid "Brimstone"
-msgstr "Brimstone"
+msgstr "Brennstein"
 
 #: dat/ssys/c00.xml:2
 msgid "C-00"
@@ -67115,7 +67115,7 @@ msgstr "Kastellan"
 
 #: dat/ssys/cherokee.xml:2
 msgid "Cherokee"
-msgstr "Cherokee"
+msgstr "Tscherokee"
 
 #: dat/ssys/chloe.xml:2
 msgid "Chloe"
@@ -67127,7 +67127,7 @@ msgstr "Chraan"
 
 #: dat/ssys/churchill.xml:2
 msgid "Churchill"
-msgstr "Tschörschell"
+msgstr "Kirchell"
 
 #: dat/ssys/cleai.xml:2
 msgid "Cleai"
@@ -67183,11 +67183,11 @@ msgstr "Defa"
 
 #: dat/ssys/delta_pavonis.xml:2
 msgid "Delta Pavonis"
-msgstr "Delta Pavonis"
+msgstr "Delta-Pavonis"
 
 #: dat/ssys/delta_polaris.xml:2
 msgid "Delta Polaris"
-msgstr "Delta Polaris"
+msgstr "Delta-Polaris"
 
 #: dat/ssys/dendria.xml:2
 msgid "Dendria"
@@ -67231,7 +67231,7 @@ msgstr "Druss"
 
 #: dat/ssys/dune.xml:2
 msgid "Dune"
-msgstr "Dune"
+msgstr "Düne"
 
 #: dat/ssys/duros.xml:2
 msgid "Duros"
@@ -67359,7 +67359,7 @@ msgstr "Gamel"
 
 #: dat/ssys/gamma_polaris.xml:2
 msgid "Gamma Polaris"
-msgstr "Gamma Polaris"
+msgstr "Gamma-Polaris"
 
 #: dat/ssys/gammacron.xml:2
 msgid "Gammacron"
@@ -67519,7 +67519,7 @@ msgstr "Kelvos"
 
 #: dat/ssys/khaas.xml:2
 msgid "Khaas"
-msgstr "Khaas"
+msgstr "Kahs"
 
 #: dat/ssys/kiwi.xml:2
 msgid "Kiwi"
@@ -67639,7 +67639,7 @@ msgstr "Mizar"
 
 #: dat/ssys/modus_manis.xml:2
 msgid "Modus Manis"
-msgstr "Modus Manis"
+msgstr "Modus-Manis"
 
 #: dat/ssys/mohawk.xml:2
 msgid "Mohawk"
@@ -67647,7 +67647,7 @@ msgstr "Mohawk"
 
 #: dat/ssys/monogram.xml:2
 msgid "Monogram"
-msgstr "Monogram"
+msgstr "Monogramm"
 
 #: dat/ssys/moor.xml:2
 msgid "Moor"
@@ -67859,7 +67859,7 @@ msgstr "Protera"
 
 #: dat/ssys/provectus_nova.xml:2
 msgid "Provectus Nova"
-msgstr "Provectus Nova"
+msgstr "Provectus-Nova"
 
 #: dat/ssys/pso.xml:2
 msgid "PSO"
@@ -67899,7 +67899,7 @@ msgstr "Radix"
 
 #: dat/ssys/raelid.xml:2
 msgid "Raelid"
-msgstr "Rälid"
+msgstr "Raelid"
 
 #: dat/ssys/ram.xml:2
 msgid "Ram"
@@ -67907,7 +67907,7 @@ msgstr "Ram"
 
 #: dat/ssys/rauthia.xml:2
 msgid "Rauthia"
-msgstr "Rauthia"
+msgstr "Rautia"
 
 #: dat/ssys/regas.xml:2
 msgid "Regas"
@@ -67923,7 +67923,7 @@ msgstr "Rei"
 
 #: dat/ssys/reptile.xml:2
 msgid "Reptile"
-msgstr "Reptile"
+msgstr "Reptil"
 
 #: dat/ssys/rhu.xml:2
 msgid "Rhu"
@@ -67931,7 +67931,7 @@ msgstr "Ru"
 
 #: dat/ssys/rockbed.xml:2
 msgid "Rockbed"
-msgstr "Rockbed"
+msgstr "Felsgrund"
 
 #: dat/ssys/rotide.xml:2
 msgid "Rotide"
@@ -67963,7 +67963,7 @@ msgstr "Sarkophagus"
 
 #: dat/ssys/sarrii.xml:2
 msgid "Sarrii"
-msgstr "Sarri"
+msgstr "Sarrie"
 
 #: dat/ssys/scarlet.xml:2
 msgid "Scarlet"
@@ -67991,7 +67991,7 @@ msgstr "Seran"
 
 #: dat/ssys/sergio_vix.xml:2
 msgid "Sergio Vix"
-msgstr "Sergio Vix"
+msgstr "Sergio-Vix"
 
 #: dat/ssys/severus.xml:2
 msgid "Severus"
@@ -68031,11 +68031,11 @@ msgstr "Sioux"
 
 #: dat/ssys/sirou.xml:2
 msgid "Sirou"
-msgstr "Sirou"
+msgstr "Siru"
 
 #: dat/ssys/slaccid.xml:2
 msgid "Slaccid"
-msgstr "Slaccid"
+msgstr "Slazid"
 
 #: dat/ssys/sleuth.xml:2
 msgid "Sleuth"
@@ -68095,7 +68095,7 @@ msgstr "Steintisch"
 
 #: dat/ssys/straight_row.xml:2
 msgid "Straight Row"
-msgstr "Geradbogen"
+msgstr "Geradenbogen"
 
 #: dat/ssys/suk.xml:2
 msgid "Suk"
@@ -68315,7 +68315,7 @@ msgstr "Yarn"
 
 #: dat/ssys/zacron.xml:2
 msgid "Zacron"
-msgstr "Zacron"
+msgstr "Zakron"
 
 #: dat/ssys/zemur.xml:2
 msgid "Zemur"
@@ -68852,7 +68852,7 @@ msgstr "Galileus"
 
 #: dat/AUTHORS:178
 msgid "   * Modeller of the Shark and Rhino"
-msgstr "   * Modellierer von Shark und Rhino"
+msgstr "   * Modellierer von Hai und Rhino"
 
 #: dat/AUTHORS:180
 msgid "Devin Khan"
@@ -69354,7 +69354,7 @@ msgstr "EvanR"
 
 #, fuzzy
 #~ msgid "advertiser"
-#~ msgstr "Werbe-Hyena"
+#~ msgstr "Werbe-Hyäne"
 
 #, fuzzy
 #~ msgid "miner"
@@ -69402,15 +69402,15 @@ msgstr "EvanR"
 
 #, fuzzy
 #~ msgid "dvaered_norun"
-#~ msgstr "Dvaered Ancestor"
+#~ msgstr "Dvaered Ahne"
 
 #, fuzzy
 #~ msgid "baddie"
-#~ msgstr "Dvaered Ancestor"
+#~ msgstr "Dvaered Ahne"
 
 #, fuzzy
 #~ msgid "baddie_norun"
-#~ msgstr "Dvaered Ancestor"
+#~ msgstr "Dvaered Ahne"
 
 #, fuzzy
 #~ msgid "thurion"
@@ -69468,7 +69468,7 @@ msgstr "EvanR"
 #~ msgstr "Sternenkarten"
 
 #~ msgid "Traders Guild Llama"
-#~ msgstr "Händlergilde-Lllama"
+#~ msgstr "Händlergilde-Lama"
 
 #~ msgid "Traders Guild Rhino"
 #~ msgstr "Händlergilde-Rhino"
@@ -69477,7 +69477,7 @@ msgstr "EvanR"
 #~ msgstr "Händlergilde-Gawain"
 
 #~ msgid "Traders Guild Quicksilver"
-#~ msgstr "Händlergilde-Quicksilver"
+#~ msgstr "Händlergilde-Quecksilber"
 
 #~ msgid "Collective Lge Swarm"
 #~ msgstr "Gr. Kollektivschwarm"
@@ -69573,7 +69573,7 @@ msgstr "EvanR"
 #~ msgstr "Händlerhinterhalt 5"
 
 #~ msgid "Pirate Hyena Pack"
-#~ msgstr "Piraten-Hyena-Rudel"
+#~ msgstr "Piraten-Hyänen-Rudel"
 
 #~ msgid "FLF Sml Force"
 #~ msgstr "Kl. FLF-Gruppe"
@@ -69603,7 +69603,7 @@ msgstr "EvanR"
 #~ msgstr "Proteron-Dissidenten-Schrödinger"
 
 #~ msgid "Proteron Dissident Hyena"
-#~ msgstr "Proteron-Dissidenten-Hyena"
+#~ msgstr "Proteron-Dissidenten-Hyäne"
 
 #~ msgid "Proteron Dissident Gawain"
 #~ msgstr "Proteron-Dissidenten-Gawain"
@@ -73162,7 +73162,7 @@ msgstr "EvanR"
 
 #, fuzzy
 #~ msgid "sirius/preach"
-#~ msgstr "Sirius Preacher"
+#~ msgstr "Sirius Prediger"
 
 #, fuzzy
 #~ msgid "flf/derelict"
@@ -73318,7 +73318,7 @@ msgstr "EvanR"
 
 #, fuzzy
 #~ msgid "sirius/achack04"
-#~ msgstr "Sirius Preacher"
+#~ msgstr "Sirius Prediger"
 
 #, fuzzy
 #~ msgid "neutral/shipwreck"
@@ -73366,27 +73366,27 @@ msgstr "EvanR"
 
 #, fuzzy
 #~ msgid "dvaered/assault_on_unicorn"
-#~ msgstr "Dvaered Ancestor"
+#~ msgstr "Dvaered Ahne"
 
 #, fuzzy
 #~ msgid "sirius/heretic/heretic0"
-#~ msgstr "Sirius Preacher"
+#~ msgstr "Sirius Prediger"
 
 #, fuzzy
 #~ msgid "sirius/heretic/heretic1"
-#~ msgstr "Sirius Preacher"
+#~ msgstr "Sirius Prediger"
 
 #, fuzzy
 #~ msgid "sirius/heretic/heretic2"
-#~ msgstr "Sirius Preacher"
+#~ msgstr "Sirius Prediger"
 
 #, fuzzy
 #~ msgid "sirius/heretic/heretic3"
-#~ msgstr "Sirius Preacher"
+#~ msgstr "Sirius Prediger"
 
 #, fuzzy
 #~ msgid "sirius/heretic/heretic4"
-#~ msgstr "Sirius Preacher"
+#~ msgstr "Sirius Prediger"
 
 #, fuzzy
 #~ msgid "shadow/shadowrun"
@@ -73402,11 +73402,11 @@ msgstr "EvanR"
 
 #, fuzzy
 #~ msgid "sirius/srs_ferry"
-#~ msgstr "Sirius Preacher"
+#~ msgstr "Sirius Prediger"
 
 #, fuzzy
 #~ msgid "dvaered/dv_diversion"
-#~ msgstr "Dvaered Ancestor"
+#~ msgstr "Dvaered Ahne"
 
 #, fuzzy
 #~ msgid "neutral/kidnapped/traffic_00"
@@ -73506,11 +73506,11 @@ msgstr "EvanR"
 
 #, fuzzy
 #~ msgid "dvaered/dv_rehab"
-#~ msgstr "Dvaered Ancestor"
+#~ msgstr "Dvaered Ahne"
 
 #, fuzzy
 #~ msgid "sirius/srs_rehab"
-#~ msgstr "Sirius Preacher"
+#~ msgstr "Sirius Prediger"
 
 #, fuzzy
 #~ msgid "pirate/fake_id"
