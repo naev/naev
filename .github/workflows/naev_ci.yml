@@ -198,7 +198,7 @@ jobs:
       - name: Compile AppImage
         id: appimageCompile
         run: |
-          script -c "./source/utils/buildAppImage.sh -c -m -s "source" -b "build" -o "${{ env.DESTDIR }}"" appImageBuildLog.txt
+          script -c "./source/utils/buildAppImage.sh -c -m -s "source" -b "build" -o "${{ github.workspace }}/dist"" appImageBuildLog.txt
         env:
           APPIMAGE_EXTRACT_AND_RUN: 1
 
@@ -213,7 +213,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: naev-AppImage-${{ github.sha }}
-          path: "${{ env.DESTDIR }}/out/*.AppImage"
+          path: "${{ github.workspace }}/dist/out/*.AppImage"
           if-no-files-found: error
 
   "Lua_Documentation":
