@@ -68,8 +68,7 @@ typedef struct glFontGlyph_s {
    uint32_t codepoint; /**< Real character. */
    GLfloat adv_x; /**< X advancement. */
    GLfloat adv_y; /**< Y advancement. */
-   /* Offsets are stored in the VBO and thus not an issue. */
-   glFontTex *tex; /**< Might be on different texture. */
+   int tex_index; /**< Might be on different texture. */
    GLushort vbo_id; /**< VBO index to use. */
    int next; /**< Stored as a linked list. */
 } glFontGlyph;
@@ -362,7 +361,7 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
 
    /* Save glyph data. */
    glyph->vbo_id = (n-8)/2;
-   glyph->tex = tex;
+   glyph->tex_index = tex - stsh->tex;
 
    /* Since the VBOs have possibly changed, we have to reset the data. */
    gl_vboActivateAttribOffset( stsh->vbo_vert, shaders.font.vertex,
@@ -1374,7 +1373,6 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch )
    /* Create new character. */
    glyph = &array_grow( &stsh->glyphs );
    glyph->codepoint = ch;
-   glyph->tex   = NULL;
    glyph->adv_x = ft_char.adv_x;
    glyph->adv_y = ft_char.adv_y;
    glyph->next  = -1;
@@ -1443,7 +1441,7 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    }
 
    /* Activate texture. */
-   glBindTexture(GL_TEXTURE_2D, glyph->tex->id);
+   glBindTexture(GL_TEXTURE_2D, stsh->tex[glyph->tex_index].id);
 
    gl_Matrix4_Uniform(shaders.font.projection, font_projection_mat);
 
