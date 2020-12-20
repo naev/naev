@@ -96,6 +96,7 @@ static void cli_render( double bx, double by, double w, double h, void *data );
 static void cli_printCoreString( const char *s );
 static int cli_printCore( lua_State *L, int cli_only );
 void cli_tabComplete( unsigned int wid );
+static int cli_initLua (void);
 
 
 /**
@@ -115,7 +116,7 @@ static void cli_printCoreString( const char *s )
       /* Don't handle tab for now. */
       if (tmp[p]=='\t')
          tmp[p] = ' ';
-      l = gl_printWidthForText(cli_font, &tmp[p], CLI_WIDTH-40 );
+      l = gl_printWidthForText(cli_font, &tmp[p], CLI_WIDTH-40, NULL );
       cli_addMessageMax( &tmp[p], l );
       p += l;
    } while (p < slen);
@@ -199,6 +200,21 @@ static int cli_script( lua_State *L )
    const char *fname;
    char buf[PATH_MAX], *bbuf;
    int n;
+
+   /* Reset loaded buffer. */
+   if (cli_env != LUA_NOREF) {
+      nlua_getenv( cli_env, "_LOADED" );
+      if (lua_istable(L,-1)) {
+         lua_pushnil(L);                     /* t, nil */
+         while (lua_next(L, -2) != 0) {      /* t, key, val */
+            lua_pop(L,1);                    /* t, key */
+            lua_pushvalue(L,-1);             /* t, key, key */
+            lua_pushnil(L);                  /* t, key, key, nil */
+            lua_rawset(L,-4);                /* t, key */
+         }                                   /* t */
+      }
+      lua_pop(L,1);                          /* */
+   }
 
    /* Handle parameters. */
    fname = luaL_optstring(L, 1, NULL);
@@ -428,10 +444,7 @@ void cli_tabComplete( unsigned int wid ) {
 }
 
 
-/**
- * @brief Initializes the CLI environment.
- */
-int cli_init (void)
+static int cli_initLua (void)
 {
    /* Already loaded. */
    if (cli_env != LUA_NOREF)
@@ -457,9 +470,20 @@ int cli_init (void)
    luaL_register( naevL, NULL, cli_methods );
    lua_settop( naevL, 0 );
 
+   return 0;
+}
+
+
+/**
+ * @brief Initializes the CLI environment.
+ */
+int cli_init (void)
+{
+   cli_initLua();
+
    /* Set the font. */
    cli_font    = malloc( sizeof(glFont) );
-   gl_fontInit( cli_font, FONT_MONOSPACE_PATH, conf.font_size_console, FONT_PATH_PREFIX );
+   gl_fontInit( cli_font, FONT_MONOSPACE_PATH, conf.font_size_console, FONT_PATH_PREFIX, 0 );
 
    /* Allocate the buffer. */
    cli_buffer = array_create(char*);

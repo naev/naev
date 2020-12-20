@@ -342,7 +342,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    while (p < len) {
 
       /* Get the length. */
-      i = gl_printWidthForText( NULL, &buf[p], w-40 );
+      i = gl_printWidthForText( NULL, &buf[p], w-40, NULL );
 
       /* Copy the line. */
       if (news_nlines+1 > news_mlines) {

@@ -2,11 +2,12 @@
 -- Image
 --]]
 local class = require 'class'
-local object = require 'love.object'
+local love = require 'love'
+local data = require 'love.data'
 local filesystem = require 'love.filesystem'
 
 local image = {}
-image.ImageData = class.inheritsFrom( object.Object )
+image.ImageData = class.inheritsFrom( data.Data )
 image.ImageData._type = "ImageData"
 function image.newImageData( ... )
    local arg = {...}
@@ -15,7 +16,7 @@ function image.newImageData( ... )
    if t=="number" then
       w = arg[1]
       h = arg[2]
-      d = data.new( w*h*4, "number" )
+      d = naev.data.new( w*h*4, "number" )
    elseif t=="string" then
       local f = filesystem.newFile(arg[1])
       d, w, h = naev.tex.readData( f )
@@ -27,12 +28,6 @@ function image.newImageData( ... )
    newd.h = h
    newd.d = d
    return newd
-end
-function image.ImageData:getSize()
-   return self.d:getSize()
-end
-function image.ImageData:getString()
-   return self.d:getString()
 end
 local function _id_pos(self,x,y) return 4*(y*self.w+x) end
 function image.ImageData:getDimensions() return self.w, self.h end

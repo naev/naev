@@ -183,7 +183,7 @@ void osd_wordwrap( OSD_t* osd )
          }
 
          /* Get text size. */
-         s = gl_printWidthForText( &gl_smallFont, &osd->msg[i][n], w );
+         s = gl_printWidthForText( &gl_smallFont, &osd->msg[i][n], w, NULL );
 
          if (n==0 && t==1)
             w -= osd_hyphenLen;

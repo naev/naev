@@ -1,6 +1,8 @@
 --[[
 -- Filesystem
 --]]
+local love = require 'love'
+
 local filesystem = {}
 
 function filesystem.getInfo( path, filtertype )

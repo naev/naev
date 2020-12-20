@@ -71,7 +71,6 @@
 PlayerConf_t conf = {
    .ndata = NULL,
    .language=NULL,
-   .sound_backend = NULL,
    .joystick_nam = NULL
 };
 
@@ -157,10 +156,10 @@ void conf_setDefaults (void)
    conf.zoom_stars   = 1.;
 
    /* Font sizes. */
-   conf.font_size_console = 10;
-   conf.font_size_intro   = 18;
-   conf.font_size_def     = 12;
-   conf.font_size_small   = 11;
+   conf.font_size_console = FONT_SIZE_CONSOLE_DEFAULT;
+   conf.font_size_intro   = FONT_SIZE_INTRO_DEFAULT;
+   conf.font_size_def     = FONT_SIZE_DEF_DEFAULT;
+   conf.font_size_small   = FONT_SIZE_SMALL_DEFAULT;
    conf.font_name_default = NULL;
    conf.font_name_monospace = NULL;
 
@@ -219,11 +218,7 @@ void conf_setGameplayDefaults (void)
  */
 void conf_setAudioDefaults (void)
 {
-   free(conf.sound_backend);
-   conf.sound_backend = NULL;
-
    /* Sound. */
-   conf.sound_backend = strdup(BACKEND_DEFAULT);
    conf.snd_voices   = VOICES_DEFAULT;
    conf.snd_pilotrel = PILOT_RELATIVE_DEFAULT;
    conf.al_efx       = USE_EFX_DEFAULT;
@@ -295,7 +290,6 @@ void conf_cleanup (void)
 {
    free(conf.ndata);
    free(conf.language);
-   free(conf.sound_backend);
    free(conf.joystick_nam);
 
    free(conf.lastversion);
@@ -388,7 +382,6 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "showpause", conf.pause_show );
 
       /* Sound. */
-      conf_loadString( lEnv, "sound_backend", conf.sound_backend );
       conf_loadInt( lEnv, "snd_voices", conf.snd_voices );
       conf.snd_voices = MAX( VOICES_MIN, conf.snd_voices ); /* Must be at least 16. */
       conf_loadBool( lEnv, "snd_pilotrel", conf.snd_pilotrel );
@@ -973,10 +966,6 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    /* Sound. */
-   conf_saveComment(_("Sound backend (can be \"openal\" or \"sdlmix\")"));
-   conf_saveString("sound_backend",conf.sound_backend);
-   conf_saveEmptyLine();
-
    conf_saveComment(_("Maximum number of simultaneous sounds to play, must be at least 16."));
    conf_saveInt("snd_voices",conf.snd_voices);
    conf_saveEmptyLine();
@@ -1051,13 +1040,13 @@ int conf_saveConfig ( const char* file )
    /* Fonts. */
    conf_saveComment(_("Font sizes (in pixels) for Naev"));
    conf_saveComment(_("Warning, setting to other than the default can cause visual glitches!"));
-   conf_saveComment(_("Console default: 10"));
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Console default: %d\n"), FONT_SIZE_CONSOLE_DEFAULT);
    conf_saveInt("font_size_console",conf.font_size_console);
-   conf_saveComment(_("Intro default: 18"));
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Intro default: %d\n"), FONT_SIZE_INTRO_DEFAULT);
    conf_saveInt("font_size_intro",conf.font_size_intro);
-   conf_saveComment(_("Default size: 12"));
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Default size: %d\n"), FONT_SIZE_DEF_DEFAULT);
    conf_saveInt("font_size_def",conf.font_size_def);
-   conf_saveComment(_("Small size: 10"));
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Small size: %d\n"), FONT_SIZE_SMALL_DEFAULT);
    conf_saveInt("font_size_small",conf.font_size_small);
    conf_saveComment(_("Default font to use: unset"));
    if (conf.font_name_default) {

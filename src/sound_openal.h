@@ -3,15 +3,12 @@
  */
 
 
-#if USE_OPENAL
-
-
 #ifndef SOUND_OPENAL_H
 #  define SOUND_OPENAL_H
 
 
 #include "sound.h"
-#include "sound_priv.h"
+#include "al.h"
 
 #include "ncompat.h"
 #include "nopenal.h"
@@ -19,27 +16,75 @@
 #include <vorbis/vorbisfile.h>
 
 
+/**
+ * @struct alSound
+ *
+ * @brief Contains a sound buffer.
+ */
+typedef struct alSound_ {
+   char *name; /**< Buffer's name. */
+   double length; /**< Length of the buffer. */
+   ALuint buf; /**< Buffer data. */
+} alSound;
+
+
+/**
+ * @typedef voice_state_t
+ * @brief The state of a voice.
+ * @sa alVoice
+ */
+typedef enum voice_state_ {
+   VOICE_STOPPED, /**< Voice is stopped. */
+   VOICE_PLAYING, /**< Voice is playing. */
+   VOICE_FADEOUT, /**< Voice is fading out. */
+   VOICE_DESTROY  /**< Voice should get destroyed asap. */
+} voice_state_t;
+
+
+/**
+ * @struct alVoice
+ *
+ * @brief Represents a voice in the game.
+ *
+ * A voice would be any object that is creating sound.
+ */
+typedef struct alVoice_ {
+   struct alVoice_ *prev; /**< Linked list previous member. */
+   struct alVoice_ *next; /**< Linked list next member. */
+
+   int id; /**< Identifier of the voice. */
+
+   voice_state_t state; /**< Current state of the sound. */
+   unsigned int flags; /**< Voice flags. */
+
+   ALfloat pos[3]; /**< Position of the voice. */
+   ALfloat vel[3]; /**< Velocity of the voice. */
+   ALuint source; /**< Source current in use. */
+   ALuint buffer; /**< Buffer attached to the voice. */
+} alVoice;
+
+
+/*
+ * Sound list.
+ */
+extern alVoice *voice_active; /**< Active voices. */
+
+
+/*
+ * Voice management.
+ */
+void voice_lock (void);
+void voice_unlock (void);
+alVoice* voice_new (void);
+int voice_add( alVoice* v );
+alVoice* voice_get( int id );
+
+
 /*
  * Vorbis stuff.
  */
 extern ov_callbacks sound_al_ovcall;
 extern ov_callbacks sound_al_ovcall_noclose;
-
-
-/*
- * OpenAL stuff.
- */
-#ifdef DEBUGGING
-#define al_checkErr()      al_checkHandleError( __func__ )
-void al_checkHandleError( const char *func );
-#else /* DEBUG */
-#define al_checkErr() /**< Hack to ignore errors when debugging. */
-#endif /* DEBUG */
-#if HAS_BIGENDIAN
-#  define VORBIS_ENDIAN    1
-#else /* HAS_BIGENDIAN */
-#  define VORBIS_ENDIAN    0
-#endif /* HAS_BIGENDIAN */
 
 
 /*
@@ -125,7 +170,3 @@ int sound_al_env( SoundEnv_t env, double param );
 
 
 #endif /* SOUND_OPENAL_H */
-
-#endif /* USE_OPENAL */
-
-

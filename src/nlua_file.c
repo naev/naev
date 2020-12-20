@@ -70,6 +70,8 @@ int nlua_loadFile( nlua_env env )
 /**
  * @brief Lua bindings to interact with files.
  *
+ * @note The API here is designed to be compatibly with that of LÖVE.
+ *
  * @luamod file
  */
 /**
@@ -216,7 +218,7 @@ static int fileL_open( lua_State *L )
       return 2;
    }
    lf->mode = mode[0];
-   lf->size = (size_t)lf->rw->size;
+   lf->size = (size_t)SDL_RWsize(lf->rw);
 
    lua_pushboolean(L,1);
    return 1;
@@ -262,7 +264,7 @@ static int fileL_read( lua_State *L )
       NLUA_ERROR(L, _("file not open!"));
 
    /* Figure out how much to read. */
-   readlen = luaL_optlong(L,2,(long)lf->rw->size);
+   readlen = luaL_optinteger(L,2,SDL_RWsize(lf->rw));
 
    /* Create buffer and read into it. */
    buf = malloc( readlen );

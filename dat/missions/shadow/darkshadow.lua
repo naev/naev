@@ -346,7 +346,7 @@ function spawnSquads(highlight)
 
     -- Kickstart the patrol sequence
     for i, j in ipairs(leader) do
-        j:goto(leaderdest[i], false)
+        j:moveto(leaderdest[i], false)
     end
 
     -- Set up the rest of the patrol sequence
@@ -388,8 +388,8 @@ end
 function leaderIdle(pilot)
     for i, j in ipairs(leader) do
         if j == pilot then
-            if tick[i] then pilot:goto(leaderdest[i], false)
-            else pilot:goto(leaderstart[i], false)
+            if tick[i] then pilot:moveto(leaderdest[i], false)
+            else pilot:moveto(leaderstart[i], false)
             end
             tick[i] = not tick[i]
             return

@@ -34,11 +34,5 @@ int npng_readInto( npng_t *npng, png_bytep *row_pointers );
 png_bytep npng_readImage( npng_t *npng, png_bytep **rows, int *channels, int *pitch );
 SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip );
 
-/*
- * Metadata.
- */
-int npng_metadata( npng_t *npng, char *txt, char **data );
-
-
 #endif /* NPNG_H */
 

@@ -6,10 +6,88 @@ local prng = require 'prng'
 local object = require 'love.object'
 
 local function clamp01(x) return math.min(math.max(x, 0), 1) end
-math = {}
-math.RandomGenerator = class.inheritsFrom( object.Object )
-math.RandomGenerator._type = "RandomGenerator"
-function math.newRandomGenerator( low, high )
+love_math = {}
+
+--[[
+-- Transform class
+--]]
+love_math.Transform = class.inheritsFrom( object.Object )
+love_math.Transform._type = "Transform"
+function love_math.newTransform( ... )
+   local t = love_math.Transform.new()
+   t.T = naev.transform.new()
+   return t:setTransformation( ... )
+end
+function love_math.Transform:clone()
+   local t = love_math.Transform.new()
+   t.T = naev.transform.new( self.T )
+   return t
+end
+function love_math.Transform:setTransformation( ... )
+   local args = {...}
+   local n = #args
+   if n<1 then
+      return self
+   end
+   local x = arg[1]
+   local y = arg[2]
+   self:translate( x, y )
+   if n<3 then
+      return self
+   end
+   local a = arg[3]
+   if n<4 then
+      return self
+   end
+   local sx = arg[4]
+   local sy = arg[5] or sx
+   return self
+end
+function love_math.Transform:reset()
+   self.T = naev.transform.new()
+   return self
+end
+function love_math.Transform:translate( dx, dy )
+   self.T = self.T:translate( dx, dy, 0 )
+   return self
+end
+function love_math.Transform:scale( sx, sy )
+   sy = sy or sx
+   self.T = self.T:scale( sx, sy, 1 )
+   return self
+end
+function love_math.Transform:rotate( angle )
+   self.T = self.T:rotate2d( angle )
+   return self
+end
+function love_math.Transform:transformPoint( gx, gy )
+   local x, y = self.T:applyPoint( gx, gy, 0 )
+   return x, y
+end
+function love_math.Transform:transformDim( gw, gh )
+   local w, h = self.T:applyDim( gw, gh, 0 )
+   return w, h
+end
+function love_math.Transform:tostring()
+   local v = self.T:get()
+   return string.format(
+      "%.3f, %.3f, %.3f, %.3f\n"..
+      "%.3f, %.3f, %.3f, %.3f\n"..
+      "%.3f, %.3f, %.3f, %.3f\n"..
+      "%.3f, %.3f, %.3f, %.3f",
+      v[1][1], v[2][1], v[3][1], v[4][1],
+      v[2][2], v[2][2], v[3][2], v[4][2],
+      v[3][3], v[2][3], v[3][3], v[4][3],
+      v[4][4], v[2][4], v[3][4], v[4][4])
+end
+
+
+--[[
+-- RandomGenerator class
+--]]
+love_math.RandomGenerator = class.inheritsFrom( object.Object )
+love_math.RandomGenerator._type = "RandomGenerator"
+function love_math.newRandomGenerator( low, high )
    if low ~= nil then
       low = 0xCBBF7A44
       high = 0x0139408D
@@ -18,15 +96,15 @@ function math.newRandomGenerator( low, high )
    if high ~= nil then
       seed = seed .. tostring(high)
    end
-   local rng = math.RandomGenerator.new()
+   local rng = love_math.RandomGenerator.new()
    rng:setSeed( seed )
    return rng
 end
-function math.RandomGenerator:setSeed( seed )
+function love_math.RandomGenerator:setSeed( seed )
    prng.initHash( seed )
    self.z = prng.z
 end
-function math.RandomGenerator:random( min, max )
+function love_math.RandomGenerator:random( min, max )
    -- TODO get rid of this horrible hack and make prng return objects
    prng.z = self.z
    if min == nil then
@@ -37,9 +115,9 @@ function math.RandomGenerator:random( min, max )
       return prng.range(min,max)
    end
 end
-function math.RandomGenerator:getState() return self.z end
-function math.RandomGenerator:setState( state ) self.z = state end
-function math.random( min, max )
+function love_math.RandomGenerator:getState() return self.z end
+function love_math.RandomGenerator:setState( state ) self.z = state end
+function love_math.random( min, max )
    if min == nil then
       return naev.rnd.rnd()
    elseif max == nil then
@@ -48,7 +126,7 @@ function math.random( min, max )
       return naev.rnd.rnd( min, max )
    end
 end
-function math.colorToBytes(r, g, b, a)
+function love_math.colorToBytes(r, g, b, a)
 	if type(r) == "table" then
 		r, g, b, a = r[1], r[2], r[3], r[4]
 	end
@@ -58,7 +136,7 @@ function math.colorToBytes(r, g, b, a)
 	a = a ~= nil and floor(clamp01(a) * 255 + 0.5) or nil
 	return r, g, b, a
 end
-function math.colorFromBytes(r, g, b, a)
+function love_math.colorFromBytes(r, g, b, a)
 	if type(r) == "table" then
 		r, g, b, a = r[1], r[2], r[3], r[4]
 	end
@@ -69,4 +147,4 @@ function math.colorFromBytes(r, g, b, a)
 	return r, g, b, a
 end
 
-return math
+return love_math

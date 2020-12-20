@@ -3,8 +3,8 @@
 
 ![Naev Logo](https://naev.org/imgs/naev.png)
 
-Naev is a 2D space trading and combat game, taking inspiration from the Escape
-Velocity series, among others.
+Naev is a 2D space trading and combat game, taking inspiration from the [Escape
+Velocity series](https://en.wikipedia.org/wiki/Escape_Velocity_(video_game)), among others.
 
 You pilot a space ship from a top-down perspective, and are more or less free
 to do what you want. As the genre name implies, you’re able to trade and engage
@@ -32,7 +32,7 @@ an OpenGL-capable graphics card and driver, Naev requires the following:
 Install compile-time dependencies on Ubuntu 16.04 (and hopefully later) with:
 
 ```
-apt-get install build-essential libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev \
+apt-get install build-essential libsdl2-dev libsdl2-image-dev \
 libgl1-mesa-dev libxml2-dev libfreetype6-dev libpng-dev libopenal-dev \
 libvorbis-dev binutils-dev libiberty-dev autopoint intltool libfontconfig-dev \
 python3-pip

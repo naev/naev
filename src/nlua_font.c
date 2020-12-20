@@ -24,11 +24,17 @@ static int fontL_gc( lua_State *L );
 static int fontL_eq( lua_State *L );
 static int fontL_new( lua_State *L );
 static int fontL_height( lua_State *L );
+static int fontL_width( lua_State *L );
+static int fontL_setFilter( lua_State *L );
+static int fontL_addFallback( lua_State *L );
 static const luaL_Reg fontL_methods[] = {
    { "__gc", fontL_gc },
    { "__eq", fontL_eq },
    { "new", fontL_new },
    { "height", fontL_height },
+   { "width", fontL_width },
+   { "setFilter", fontL_setFilter },
+   { "addFallback", fontL_addFallback },
    {0,0}
 }; /**< Font metatable methods. */
 
@@ -153,25 +159,33 @@ static int fontL_eq( lua_State *L )
  * @brief Gets a font.
  *
  *    @luatparam String|Number fontname Name of the font.
- *    @luatparam[opt=1.] Number Font height.
+ *    @luatparam[opt=1.] size Number Font height.
  *    @luatreturn Font A newly created font.
- * @luafunc new( r, g, b, a )
+ * @luafunc new( fontname, size )
  */
 static int fontL_new( lua_State *L )
 {
    glFont font;
    int h;
-   const char *fname;
+   const char *fname, *prefix;
 
    if (lua_gettop(L)==1) {
-      fname = FONT_DEFAULT_PATH;
+      fname = NULL;
       h = luaL_checkint(L,1);
    }
    else {
-      fname = luaL_checkstring(L,1);
+      fname = luaL_optstring(L,1,NULL);
       h = luaL_checkint(L,2);
    }
-   if (gl_fontInit( &font, fname, h, "" ))
+
+   if (fname == NULL) {
+      fname = FONT_DEFAULT_PATH;
+      prefix = FONT_PATH_PREFIX;
+   }
+   else
+      prefix = "";
+
+   if (gl_fontInit( &font, fname, h, prefix, FONT_FLAG_DONTREUSE ))
       NLUA_ERROR(L, _("failed to load font '%s'"), fname);
 
    lua_pushfont( L, font );
@@ -193,3 +207,64 @@ static int fontL_height( lua_State *L )
    return 1;
 }
 
+
+/**
+ * @brief Gets the width of some text for a font.
+ *
+ *    @luatparam Font f Font to use.
+ *    @luatparam string text Text to get width of.
+ *    @luatreturn number Height of the font.
+ * @luafunc width( f, text )
+ */
+static int fontL_width( lua_State *L )
+{
+   glFont *font = luaL_checkfont(L,1);
+   const char *text = luaL_checkstring(L,2);
+   int width = gl_printWidthRaw( font, text );
+   lua_pushinteger(L, width);
+   return 1;
+}
+
+
+/**
+ * @brief Sets the font minification and magnification filters.
+ *
+ *    @luatparam Font font Font to set filter.
+ *    @luatparam string min Minification filter ("nearest" or "linear")
+ *    @luatparam[opt] string mag Magnification filter ("nearest" or "linear"). Defaults to min.
+ * @luafunc setFilter( font, min, mag )
+ */
+static int fontL_setFilter( lua_State *L )
+{
+   glFont *font = luaL_checkfont(L,1);
+   const char *smin = luaL_checkstring(L,2);
+   const char *smag = luaL_optstring(L,3,smin);
+   GLint min, mag;
+
+   min = gl_stringToFilter( smin );
+   mag = gl_stringToFilter( smag );
+
+   if (min==0 || mag==0)
+      NLUA_INVALID_PARAMETER(L);
+
+   gl_fontSetFilter( font, min, mag );
+
+   return 0;
+}
+
+
+/**
+ * @brief Adds a fallback to a font.
+ *
+ *    @luatparam Font font Font to set fallback to.
+ *    @luatparam string filename Name of the font to add.
+ * @luafunc addFallback( font, filename )
+ */
+static int fontL_addFallback( lua_State *L )
+{
+   glFont *font = luaL_checkfont(L,1);
+   const char *s = luaL_checkstring(L,2);
+   int ret = gl_fontAddFallback( font, s );
+   lua_pushboolean(L, !ret);
+   return 1;
+}

@@ -172,17 +172,17 @@ function jumpin()
       pinnacle:setInvincible(true)
       pinnacle:control()
       pinnacle:setHilight(true)
-      pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
+      pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
       idlehook = hook.pilot(pinnacle, "idle", "idle")
       hook.pilot(pinnacle, "hail", "hail")
    end
 end
 
 function idle()
-   pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400,  400), false)
-   pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-400,  400), false)
-   pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-400, -400), false)
-   pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
+   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400,  400), false)
+   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new(-400,  400), false)
+   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new(-400, -400), false)
+   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
 end
 
 function hail()

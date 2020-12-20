@@ -167,7 +167,7 @@ function moveSwarm(fleet, pos)
         if j:exists() then
             j:control()
             j:setVisplayer(true)
-            j:goto(j:pos() + dpos, false)
+            j:moveto(j:pos() + dpos, false)
         end
     end
 end

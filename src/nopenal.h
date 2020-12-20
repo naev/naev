@@ -3,11 +3,10 @@
  */
 
 
-#if USE_OPENAL
-
 #ifndef NOPENAL_H
 #  define NOPENAL_H
 
+#include "log.h"
 #include "ncompat.h"
 
 #include "AL/alc.h"
@@ -107,8 +106,12 @@ extern ALvoid (AL_APIENTRY *nalEffectiv)(ALuint,ALenum,ALint*);
 extern ALvoid (AL_APIENTRY *nalEffectf)(ALuint,ALenum,ALfloat);
 extern ALvoid (AL_APIENTRY *nalEffectfv)(ALuint,ALenum,ALfloat*);
 
+/* Debugging.  */
+#ifdef DEBUGGING
+#define al_checkErr()      al_checkHandleError( __func__ )
+void al_checkHandleError( const char *func );
+#else /* DEBUG */
+#define al_checkErr() /**< Hack to ignore errors when debugging. */
+#endif /* DEBUG */
+
 #endif /* NOPENAL_H */
-
-#endif /* USE_OPENAL */
-
-

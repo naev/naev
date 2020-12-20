@@ -13,6 +13,7 @@
 #include "naev.h"
 
 #include "nluadef.h"
+#include "lutf8lib.h"
 #include "log.h"
 #include "ndata.h"
 #include "nfile.h"
@@ -36,9 +37,6 @@
 #include "nlua_cli.h"
 #include "nlua_file.h"
 #include "nstring.h"
-
-
-#define NLUA_LOAD_TABLE "_LOADED" /**< Table to use to store the status of required libraries. */
 
 
 lua_State *naevL = NULL;
@@ -349,7 +347,6 @@ static int nlua_loadBasic( lua_State* L )
          NULL
    };
 
-
    luaL_openlibs(L);
 
    /* replace non-safe functions */
@@ -396,34 +393,30 @@ static int nlua_require( lua_State* L )
    filename = luaL_checkstring(L,1);
 
    /* Check to see if already included. */
-   lua_getfield( L, envtab, NLUA_LOAD_TABLE ); /* t */
+   lua_getfield( L, envtab, NLUA_LOAD_TABLE );  /* t */
    if (!lua_isnil(L,-1)) {
-#if 0
-      /* check if is console. */
-      nlua_getenv(__NLUA_CURENV, "__cli");
-      int isconsole = lua_toboolean(L,-1);
-      lua_pop(L,1);
-      /* just ignore if it is the console and reload the file. */
-      if (isconsole)
-         lua_pop(L,1);
-      /* otherwise skip already loaded files to be a bit faster. */
-      else {
-         lua_getfield(L,-1,filename); /* t, f */
-         /* Already included. */
-         if (!lua_isnil(L,-1)) {
-            lua_remove(L, -2); /* val */
-            return 1;
-         }
-         lua_pop(L,2); /* */
+      lua_getfield(L,-1,filename);              /* t, f */
+      /* Already included. */
+      if (!lua_isnil(L,-1)) {
+         lua_remove(L, -2);                     /* val */
+         return 1;
       }
-#else
-      lua_pop(L,1);
-#endif
+      lua_pop(L,2);                             /* */
    }
    /* Must create new NLUA_LOAD_TABLE table. */
    else {
       lua_newtable(L);              /* t */
       lua_setfield(L, envtab, NLUA_LOAD_TABLE); /* */
+   }
+
+   /* Hardcoded libraries. */
+   if (strcmp(filename,"utf8")==0) {
+      luaopen_utf8(L);                          /* val */
+      lua_getfield(L, envtab, NLUA_LOAD_TABLE); /* val, t */
+      lua_pushvalue(L, -2);                     /* val, t, val */
+      lua_setfield(L, -2, filename);            /* val, t */
+      lua_pop(L, 1);                            /* val */
+      return 1;
    }
 
    /* Get paths to check. */
@@ -515,9 +508,9 @@ static int nlua_require( lua_State* L )
       lua_pushboolean(L, 1);
    }
    lua_getfield(L, envtab, NLUA_LOAD_TABLE); /* val, t */
-   lua_pushvalue(L, -2); /* val, t, val */
-   lua_setfield(L, -2, filename);   /* val, t */
-   lua_pop(L, 1); /* val */
+   lua_pushvalue(L, -2);                     /* val, t, val */
+   lua_setfield(L, -2, filename);            /* val, t */
+   lua_pop(L, 1);                            /* val */
 
    /* cleanup, success */
    free(buf);

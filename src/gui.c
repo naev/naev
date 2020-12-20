@@ -367,7 +367,7 @@ void player_messageRaw( const char *str )
 
    /* Get length. */
    l = strlen(str);
-   i = gl_printWidthForText( NULL, str, gui_mesg_w - ((str[0] == '\t') ? 45. : 15.) );
+   i = gl_printWidthForText( NULL, str, gui_mesg_w - ((str[0] == '\t') ? 45. : 15.), NULL );
    p = 0;
    while (p < l) {
       /* Move pointer. */
@@ -395,7 +395,7 @@ void player_messageRaw( const char *str )
       p += i;
       if ((str[p] == '\n') || (str[p] == ' '))
          p++; /* Skip "empty char". */
-      i  = gl_printWidthForText( NULL, &str[p], gui_mesg_w - 45. ); /* They're tabbed so it's shorter. */
+      i  = gl_printWidthForText( NULL, &str[p], gui_mesg_w - 45., NULL ); /* They're tabbed so it's shorter. */
    }
 }
 
@@ -941,6 +941,16 @@ void gui_render( double dt )
 
    /* Render messages. */
    omsg_render( dt );
+}
+
+
+/**
+ * @brief Notifies GUI scripts that the player broke out of cooldown.
+ */
+void gui_cooldownEnd (void)
+{
+   if (gui_env != LUA_NOREF)
+      gui_doFunc( "end_cooldown" );
 }
 
 
@@ -1974,7 +1984,7 @@ static int gui_runFunc( const char* func, int nargs, int nret )
       err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       WARN(_("GUI Lua -> '%s': %s"),
             func, (err) ? err : _("unknown error"));
-      lua_pop(naevL,2);
+      lua_pop(naevL,1);
       return ret;
    }
 

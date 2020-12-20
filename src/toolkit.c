@@ -1364,7 +1364,7 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    c2.a = 0.7;
    toolkit_drawRect( x+1, y+1, w+18, h+18, &c2, NULL );
    toolkit_drawRect( x, y, w+18, h+18, &c, NULL );
-   gl_printTextRaw( &gl_smallFont, w , h, x + 9, y + 9, &cFontWhite, -1., alt );
+   gl_printTextRaw( &gl_smallFont, w , h, x + 9, y + 9, 0, &cFontWhite, -1., alt );
 }
 
 

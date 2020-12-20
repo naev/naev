@@ -245,19 +245,19 @@ function go_board ()
    if adm1 then
       adm1:control()
       adm1:setHostile(false)
-      adm1:goto(player.pos())
+      adm1:moveto(player.pos())
       hook.pilot(adm1, "idle", "fine_vanish")
    end
    if lance1 then
       lance1:control()
       lance1:setHostile(false)
-      lance1:goto(player.pos())
+      lance1:moveto(player.pos())
       hook.pilot(lance1, "idle", "fine_vanish")
    end
    if lance2 then
       lance2:control()
       lance2:setHostile(false)
-      lance2:goto(player.pos())
+      lance2:moveto(player.pos())
       hook.pilot(lance2, "idle", "fine_vanish")
    end
 end

@@ -22,9 +22,8 @@
 int nlua_loadFont( nlua_env env );
 
 /*
- * Colour operations
+ * Font operations
  */
-
 glFont* lua_tofont( lua_State *L, int ind );
 glFont* luaL_checkfont( lua_State *L, int ind );
 glFont* lua_pushfont( lua_State *L, glFont font );

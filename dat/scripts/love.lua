@@ -10,17 +10,18 @@ love.exec( 'pong' ) -- Will look for pong.lua or pong/main.lua
 """
 
 --]]
-local love = {}
-love._basepath = ""
-love._version_major = 11
-love._version_minor = 1
-love._version_patch = 3
-love._codename = "naev"
-love._default = {
-   title = "LÖVE",
-   w = 800,
-   h = 600,
-   fullscreen = false
+local love = {
+   _basepath = "",
+   _version_major = 11,
+   _version_minor = 1,
+   _version_patch = 3,
+   _codename = "naev",
+   _default = {
+      title = "LÖVE",
+      w = 800,
+      h = 600,
+      fullscreen = false,
+   },
 }
 function love._unimplemented() error(_("unimplemented")) end
 
@@ -163,22 +164,22 @@ function love.exec( path )
    t.window.fullscreen = love._default.fullscreen
    t.modules = {
          audio = true,
-         --data = true,
+         data = true,
          event = true,
-         --font = true,
+         font = true,
          graphics = true,
          image = true,
-         --joystick = true,
+         joystick = true,
          keyboard = true,
          math = true,
          mouse = true,
-         --physics = true
+         physics = true,
          sound = true,
          system = true,
-         --thread = true,
+         thread = true,
          timer = true,
-         --touch = true,
-         --video = true,
+         touch = true,
+         video = true,
          window = true
       }
 
@@ -200,6 +201,9 @@ function love.exec( path )
    love.w = t.window.width
    love.h = t.window.height
    love.fullscreen = t.window.fullscreen
+   if love.fullscreen then
+      love.w, love.h = love.window.getDesktopDimensions()
+   end
 
    -- Run set up function defined in Love2d spec
    require( mainpath )

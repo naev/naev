@@ -175,7 +175,7 @@ function idle()
         local angle = rnd.rnd() * 2 * math.pi
         local newlocation = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- New location is 750px away in a random direction
         p:taskClear()
-        p:goto(location + newlocation, false, false)
+        p:moveto(location + newlocation, false, false)
         hook.timer(5000, "idle")
     end
 end
