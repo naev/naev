@@ -348,10 +348,11 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
    glyph->tex_index = tex - stsh->tex;
 
    /* Since the VBOs have possibly changed, we have to reset the data. */
-   gl_vboActivateAttribOffset( stsh->vbo_vert, font_shader_vertex,
-         0, 2, GL_SHORT, 0 );
-   gl_vboActivateAttribOffset( stsh->vbo_tex, font_shader_tex_coord,
-         0, 2, GL_FLOAT, 0 );
+   /* TODO: This seems fragile. */
+   gl_vboActivateAttribOffset( stsh->vbo_vert, shaders.font.vertex, 0, 2, GL_SHORT, 0 );
+   gl_vboActivateAttribOffset( stsh->vbo_vert, shaders.font_outline.vertex, 0, 2, GL_SHORT, 0 );
+   gl_vboActivateAttribOffset( stsh->vbo_tex, shaders.font.tex_coord, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateAttribOffset( stsh->vbo_tex, shaders.font_outline.tex_coord, 0, 2, GL_FLOAT, 0 );
 
    return 0;
 }
