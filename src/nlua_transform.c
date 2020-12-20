@@ -23,6 +23,7 @@
 static int transformL_eq( lua_State *L );
 static int transformL_new( lua_State *L );
 static int transformL_mul( lua_State *L );
+static int transformL_get( lua_State *L );
 static int transformL_scale( lua_State *L );
 static int transformL_translate( lua_State *L );
 static int transformL_rotate2d( lua_State *L );
@@ -31,6 +32,7 @@ static int transformL_applyDim( lua_State *L );
 static const luaL_Reg transformL_methods[] = {
    { "__eq", transformL_eq },
    { "__mul", transformL_mul },
+   { "get", transformL_get },
    { "new", transformL_new },
    { "scale", transformL_scale },
    { "translate", transformL_translate },
@@ -180,6 +182,32 @@ static int transformL_mul( lua_State *L )
 
 
 /**
+ * @brief Gets all the values of the transform.
+ *
+ *    @luatparam Transform T Transform te get parameters of.
+ *    @luatreturn table 2D table containing all the values of the transform.
+ * @luafunc get( T )
+ */
+static int transformL_get( lua_State *L )
+{
+   gl_Matrix4 *M = luaL_checktransform(L, 1);
+   int i,j;
+   lua_newtable(L);              /* t */
+   for (i=0; i<4; i++) {
+      lua_pushinteger(L,i+1);    /* t, n */
+      lua_newtable(L);           /* t, n, t */
+      for (j=0; j<4; j++) {
+         lua_pushinteger(L,j+1); /* t, n, t, n */
+         lua_pushnumber(L,M->m[i][j]); /* t, n, t, n, n */
+         lua_rawset(L,-3);       /* t, n, t */
+      }
+      lua_rawset(L,-3);          /* t */
+   }
+   return 1;
+}
+
+
+/**
  * @brief Applies scaling to a transform.
  *
  *    @luatparam Transform T Transform to apply scaling to.
@@ -260,7 +288,7 @@ static int transformL_applyPoint( lua_State *L )
    gp[2] = luaL_checknumber(L,4);
 
    for (i=0; i<3; i++)
-      p[i] = M->m[i][0]*gp[0] + M->m[i][1]*gp[1] + M->m[i][2]*gp[2] + M->m[i][3];
+      p[i] = M->m[0][i]*gp[0] + M->m[1][i]*gp[1] + M->m[2][i]*gp[2] + M->m[3][i];
 
    lua_pushnumber(L, p[0]);
    lua_pushnumber(L, p[1]);
@@ -294,7 +322,7 @@ static int transformL_applyDim( lua_State *L )
    gp[2] = luaL_checknumber(L,4);
 
    for (i=0; i<3; i++)
-      p[i] = M->m[i][0]*gp[0] + M->m[i][1]*gp[1] + M->m[i][2]*gp[2];
+      p[i] = M->m[0][i]*gp[0] + M->m[1][i]*gp[1] + M->m[2][i]*gp[2];
 
    lua_pushnumber(L, p[0]);
    lua_pushnumber(L, p[1]);
