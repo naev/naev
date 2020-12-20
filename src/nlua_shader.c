@@ -169,17 +169,19 @@ static int shaderL_new( lua_State *L )
       NLUA_ERROR(L,_("shader failed to compile!"));
 
    /* Set up defaults. */
-#define ATTRIB(name) shader.name = glGetAttribLocation( shader.program, #name );
-#define UNIFORM(name) shader.name = glGetUniformLocation( shader.program, #name );
-   ATTRIB( ViewSpaceFromLocal );
-   ATTRIB( ClipSpaceFromView );
-   ATTRIB( ClipSpaceFromLocal );
-   ATTRIB( ViewNormalFromLocal );
+#define ATTRIB(name) \
+   shader.name = glGetAttribLocation( shader.program, #name );
+#define UNIFORM(name) \
+   shader.name = glGetUniformLocation( shader.program, #name );
+   UNIFORM( ViewSpaceFromLocal );
+   UNIFORM( ClipSpaceFromView );
+   UNIFORM( ClipSpaceFromLocal );
+   UNIFORM( ViewNormalFromLocal );
    UNIFORM( MainTex );
-   UNIFORM( VertexPosition );
-   UNIFORM( VertexTexCoord );
-   UNIFORM( VertexColor );
-   UNIFORM( ConstantColor );
+   ATTRIB( VertexPosition );
+   ATTRIB( VertexTexCoord );
+   ATTRIB( VertexColor );
+   ATTRIB( ConstantColor );
 
    gl_checkErr();
 
