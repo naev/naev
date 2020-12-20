@@ -68,6 +68,18 @@ function love_math.Transform:transformDim( gw, gh )
    local w, h = self.T:applyDim( gw, gh, 0 )
    return w, h
 end
+function love_math.Transform:tostring()
+   local v = self.T:get()
+   return string.format(
+      "%.3f, %.3f, %.3f, %.3f\n"..
+      "%.3f, %.3f, %.3f, %.3f\n"..
+      "%.3f, %.3f, %.3f, %.3f\n"..
+      "%.3f, %.3f, %.3f, %.3f",
+      v[1][1], v[2][1], v[3][1], v[4][1],
+      v[2][2], v[2][2], v[3][2], v[4][2],
+      v[3][3], v[2][3], v[3][3], v[4][3],
+      v[4][4], v[2][4], v[3][4], v[4][4])
+end
 
 
 --[[
