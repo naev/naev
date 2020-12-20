@@ -87,7 +87,7 @@ Again, you will only ever need to do this if you are a developer.
 
 ## CRASHES & PROBLEMS
 
-Please take a look at the FAQ (linked below) before submitting a new
+Please take a look at the [FAQ](https://github.com/naev/naev/wiki/FAQ) before submitting a new
 bug report, as it covers a number of common gameplay questions and
 common issues.
 
