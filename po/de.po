@@ -55775,11 +55775,11 @@ msgstr "Rhaana"
 
 #: dat/assets/rhaana.xml:27
 msgid ""
-"Rhanna is one of the outer worlds of Dvaered control. The population is high, but forced to live in insulated "
+"Rhaana is one of the outer worlds of Dvaered control. The population is high, but forced to live in insulated "
 "containment centers. It is a poor world, with little to recommend it to the wider galaxy. Thusly, it's very "
 "quiet."
 msgstr ""
-"Rhanna ist eine der äußeren Welten, die von den Dvaered beherrscht werden. Die Einwohnerzahl ist hoch, aber "
+"Rhaana ist eine der äußeren Welten, die von den Dvaered beherrscht werden. Die Einwohnerzahl ist hoch, aber "
 "gezwungen, in isolierten Eindämmungszentren zu leben. Es ist eine arme Welt, und es gibt wenig, was sie der "
 "weiteren Galaxie empfehlen könnte. Daher ist es sehr ruhig."
 
@@ -60536,7 +60536,7 @@ msgstr ""
 
 #: dat/assets/zhang_lu.xml:30
 msgid ""
-"The spaceport is build in a valley. The reason for this is that tourists arriving will immediately be "
+"The spaceport is built in a valley. The reason for this is that tourists arriving will immediately be "
 "presented with mountains towering over them on all sides, which really gets them in the mood. Unfortunately "
 "this location is less than practical from a pilot's point of view, as having mountains all around the "
 "spaceport severely limits the choice in approach vectors."
