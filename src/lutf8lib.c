@@ -24,6 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 #include "lutf8lib.h"
+#include "attributes.h"
 
 #include <assert.h>
 #include <string.h>
@@ -453,9 +454,10 @@ static int Lutf8_escape (lua_State *L) {
       case '4': case '5': case '6': case '7':
       case '8': case '9': case '{':
         break;
-      case 'x': case 'X': hex = 1; /* FALLTHOUGH */
+      case 'x': case 'X': hex = 1;
+         FALLTHROUGH;
       case 'u': case 'U': if (s+1 < e) { ++s; break; }
-                            /* FALLTHOUGH */
+         FALLTHROUGH;
       default:
         s = utf8_safe_decode(L, s, &ch);
         goto next;
@@ -981,7 +983,7 @@ static const char *match (MatchState *ms, const char *s, const char *p) {
             }
             case '+':  /* 1 or more repetitions */
               s = next_s;  /* 1 match already done */
-              /* go through */
+              FALLTHROUGH;
             case '*':  /* 0 or more repetitions */
               s = max_expand(ms, s, p, ep);
               break;
