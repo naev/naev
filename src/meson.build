@@ -162,6 +162,7 @@ lua_source = files(
    'nlua_tex.c',
    'nlua_time.c',
    'nlua_tk.c',
+   'nlua_transform.c',
    'nlua_var.c',
    'nlua_vec2.c'
 )
@@ -282,6 +283,7 @@ headers = files(
    'nlua_tex.h',
    'nlua_time.h',
    'nlua_tk.h',
+   'nlua_transform.h',
    'nlua_var.h',
    'nlua_vec2.h',
    'nluadef.h',

@@ -21,6 +21,7 @@
 #include "nlua_col.h"
 #include "nlua_tex.h"
 #include "nlua_font.h"
+#include "nlua_transform.h"
 #include "ndata.h"
 
 
@@ -69,10 +70,11 @@ int nlua_loadGFX( nlua_env env )
    /* Register the values */
    nlua_register(env, "gfx", gfxL_methods, 0);
 
-   /* We also load the texture, colour, and font modules as dependencies. */
+   /* We also load the texture, colour, font, and transform modules as dependencies. */
    nlua_loadCol( env );
    nlua_loadTex( env );
    nlua_loadFont( env );
+   nlua_loadTransform( env );
 
    return 0;
 }
