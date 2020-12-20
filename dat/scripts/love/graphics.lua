@@ -416,7 +416,7 @@ in vec4 VaryingColor;
 vec4 effect( vec4 vcolor, Image tex, vec2 texcoord, vec2 pixcoord );
 
 void main(void) {
-   love_PixelColor = effect(VaryingColor, MainTex, VaryingTexCoord.st, love_PixelCoord);
+   love_PixelColor = effect( VaryingColor, MainTex, VaryingTexCoord.st, love_PixelCoord );
 }
 ]]
    local vert = [[
