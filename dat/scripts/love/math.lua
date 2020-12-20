@@ -7,6 +7,72 @@ local object = require 'love.object'
 
 local function clamp01(x) return math.min(math.max(x, 0), 1) end
 love_math = {}
+
+--[[
+-- Transform class
+--]]
+love_math.Transform = class.inheritsFrom( object.Object )
+love_math.Transform._type = "Transform"
+function love_math.newTransform( ... )
+   local t = love_math.Transform.new()
+   t.T = naev.transform.new()
+   return t:setTransformation( ... )
+end
+function love_math.Transform:clone()
+   local t = love_math.Transform.new()
+   t.T = naev.transform.new( self.T )
+   return t
+end
+function love_math.Transform:setTransformation( ... )
+   local args = {...}
+   local n = #args
+   if n<1 then
+      return self
+   end
+   local x = arg[1]
+   local y = arg[2]
+   self:translate( x, y )
+   if n<3 then
+      return self
+   end
+   local a = arg[3]
+   if n<4 then
+      return self
+   end
+   local sx = arg[4]
+   local sy = arg[5] or sx
+   return self
+end
+function love_math.Transform:reset()
+   self.T = naev.transform.new()
+   return self
+end
+function love_math.Transform:translate( dx, dy )
+   self.T = self.T:translate( dx, dy, 0 )
+   return self
+end
+function love_math.Transform:scale( sx, sy )
+   sy = sy or sx
+   self.T = self.T:scale( sx, sy, 1 )
+   return self
+end
+function love_math.Transform:rotate( angle )
+   self.T = self.T:rotate2d( angle )
+   return self
+end
+function love_math.Transform:transformPoint( gx, gy )
+   local x, y = self.T:applyPoint( gx, gy, 0 )
+   return x, y
+end
+function love_math.Transform:transformDim( gw, gh )
+   local w, h = self.T:applyDim( gw, gh, 0 )
+   return w, h
+end
+
+
+--[[
+-- RandomGenerator class
+--]]
 love_math.RandomGenerator = class.inheritsFrom( object.Object )
 love_math.RandomGenerator._type = "RandomGenerator"
 function love_math.newRandomGenerator( low, high )
