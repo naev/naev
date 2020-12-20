@@ -8,9 +8,12 @@ local filesystem = require 'love.filesystem'
 local love_math = require 'love.math'
 
 local graphics = {
-      _bgcol = naev.colour.new( 0, 0, 0, 1 ),
-      _fgcol = naev.colour.new( 1, 1, 1, 1 )
-   }
+   _bgcol = naev.colour.new( 0, 0, 0, 1 ),
+   _fgcol = naev.colour.new( 1, 1, 1, 1 ),
+   _wraph = "clamp",
+   _wrapv = "clamp",
+   _wrapd = "clamp",
+}
 
 -- Helper functions
 local function _mode(m)
@@ -378,9 +381,12 @@ end
 --]]
 graphics.Shader = class.inheritsFrom( object.Object )
 graphics.Shader._type = "Shader"
-function graphics.newShader( code )
+function graphics.newShader( pixelcode, vertexcode )
    love._unimplemented()
-   return graphics.Shader.new()
+   return graphics.Shader.new( pixelcode, vertexcode )
+end
+function graphics.setShader( shader )
+   graphics._shader = shader or graphics._shader_default
 end
 
 
@@ -404,12 +410,24 @@ function graphics.setBlendMode( mode )
 end
 
 
--- Reset coordinate system
+-- Set some sane defaults.
+local pixelcode = [[
+    vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+    {
+        vec4 texcolor = Texel(tex, texture_coords);
+        return texcolor * color;
+    }
+]]
+local vertexcode = [[
+    vec4 position( mat4 transform_projection, vec4 vertex_position )
+    {
+        return transform_projection * vertex_position;
+    }
+]]
 graphics.setDefaultFilter( "linear", "linear", 1 )
 graphics.setNewFont( 12 )
 graphics.origin()
-graphics._wraph = "clamp"
-graphics._wrapv = "clamp"
-graphics._wrapd = "clamp"
+graphics._shader_default = graphics.newShader( pixkelcode, vertexcode )
+graphics.setShader( graphics._shader_default )
 
 return graphics
