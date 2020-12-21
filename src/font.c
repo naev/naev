@@ -1520,7 +1520,7 @@ static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname )
    size_t bufsize;
 
    /* Read font file. */
-   buf = (FT_Byte*)_nfile_readFile( &bufsize, fname );
+   buf = (FT_Byte*) ndata_read( fname, &bufsize );
    if (buf == NULL) {
       WARN(_("Unable to read font: %s"), fname );
       return -1;
