@@ -102,9 +102,7 @@ const char* ndata_name (void);
  * Individual file functions.
  */
 void* ndata_read( const char* filename, size_t *filesize );
-char** ndata_list( const char *path, size_t* nfiles );
 char** ndata_listRecursive( const char *path );
-void ndata_sortName( char **files, size_t nfiles );
 
 
 /*

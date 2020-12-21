@@ -12,6 +12,7 @@
 
 #include "naev.h"
 
+#include "physfs.h"
 #include "SDL.h"
 
 #include "array.h"
@@ -910,7 +911,7 @@ void mapedit_setGlobalLoadedInfos( mapOutfitsList_t* ns )
 static int mapedit_mapsList_refresh (void)
 {
    int len, is_map, nSystems, rarity;
-   size_t i, nfiles, bufsize;
+   size_t i, bufsize;
    char *buf;
    xmlNodePtr node, cur;
    xmlDocPtr doc;
@@ -922,9 +923,9 @@ static int mapedit_mapsList_refresh (void)
    mapsList_free();
    mapList = array_create( mapOutfitsList_t );
 
-   map_files = ndata_list( MAP_DATA_PATH, &nfiles );
+   map_files = PHYSFS_enumerateFiles( MAP_DATA_PATH );
    newMapItem = NULL;
-   for (i=0; i<nfiles; i++) {
+   for (i=0; map_files[i]!=NULL; i++) {
       description = NULL;
       price = 1000;
       rarity = 0;
@@ -1028,9 +1029,7 @@ static int mapedit_mapsList_refresh (void)
   }
 
    /* Clean up. */
-   for (i=0; i<nfiles; i++)
-      free( map_files[i] );
-   free( map_files );
+   PHYSFS_freeList( map_files );
 
    return 0;
 }

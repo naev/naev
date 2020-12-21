@@ -2416,16 +2416,15 @@ int outfit_load (void)
 int outfit_mapParse (void)
 {
    Outfit *o;
-   size_t i, len, bufsize, nfiles;
+   size_t i, len, bufsize;
    char *buf;
    xmlNodePtr node, cur;
    xmlDocPtr doc;
    char **map_files;
    char *file, *n;
 
-   map_files = ndata_list( MAP_DATA_PATH, &nfiles );
-   for (i=0; i<nfiles; i++) {
-
+   map_files = PHYSFS_enumerateFiles( MAP_DATA_PATH );
+   for (i=0; map_files[i]!=NULL; i++) {
       len  = strlen(MAP_DATA_PATH)+strlen(map_files[i])+2;
       file = malloc( len );
       nsnprintf( file, len, "%s%s", MAP_DATA_PATH, map_files[i] );
@@ -2475,9 +2474,7 @@ int outfit_mapParse (void)
    }
 
    /* Clean up. */
-   for (i=0; i<nfiles; i++)
-      free( map_files[i] );
-   free( map_files );
+   PHYSFS_freeList( map_files );
 
    return 0;
 }

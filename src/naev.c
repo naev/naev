@@ -554,13 +554,13 @@ int main( int argc, char** argv )
  */
 void loadscreen_load (void)
 {
-   unsigned int i;
    char file_path[PATH_MAX];
    char **loadscreens;
    size_t nload;
 
    /* Count the loading screens */
-   loadscreens = ndata_list( GFX_PATH"loading/", &nload );
+   loadscreens = PHYSFS_enumerateFiles( GFX_PATH"loading/" );
+   for (nload=0; loadscreens[nload]!=NULL; nload++) {}
 
    /* Must have loading screens */
    if (nload==0) {
@@ -580,9 +580,7 @@ void loadscreen_load (void)
    background_initStars( 1000 );
 
    /* Clean up. */
-   for (i=0; i<nload; i++)
-      free(loadscreens[i]);
-   free(loadscreens);
+   PHYSFS_freeList( loadscreens );
 }
 
 

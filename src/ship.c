@@ -1100,14 +1100,15 @@ int ships_load (void)
    /* Validity. */
    ss_check();
 
-   ship_files = ndata_list( SHIP_DATA_PATH, &nfiles );
+   ship_files = PHYSFS_enumerateFiles( SHIP_DATA_PATH );
+   for (nfiles=0; ship_files[nfiles]!=NULL; nfiles++) {}
 
    /* Initialize stack if needed. */
    if (ship_stack == NULL) {
       ship_stack = array_create_size(Ship, nfiles);
    }
 
-   for (i=0; i<(int)nfiles; i++) {
+   for (i=0; ship_files[i]!=NULL; i++) {
 
       /* Get the file name .*/
       sl   = strlen(SHIP_DATA_PATH)+strlen(ship_files[i])+1;
@@ -1150,9 +1151,7 @@ int ships_load (void)
    DEBUG( ngettext( "Loaded %d Ship", "Loaded %d Ships", array_size(ship_stack) ), array_size(ship_stack) );
 
    /* Clean up. */
-   for (i=0; i<(int)nfiles; i++)
-      free( ship_files[i] );
-   free( ship_files );
+   PHYSFS_freeList( ship_files );
 
    return 0;
 }

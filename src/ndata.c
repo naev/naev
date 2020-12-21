@@ -314,17 +314,6 @@ SDL_RWops *ndata_rwops( const char* filename )
 
 
 /**
- * @brief Gets a list of files in the ndata that are direct children of a path.
- *
- *    @sa nfile_readDir
- */
-char **ndata_list( const char *path, size_t *nfiles )
-{
-   return nfile_readDir( nfiles, ndata_dir, path );
-}
-
-
-/**
  * @brief Gets a list of files in the ndata below a certain path.
  *
  *    @sa nfile_readDirRecursive
@@ -333,20 +322,3 @@ char **ndata_listRecursive( const char *path )
 {
    return nfile_readDirRecursive( ndata_dir, path );
 }
-
-
-/**
- * @brief Sorts the files by name.
- *
- * Meant to be used directly by ndata_list.
- *
- *    @param files Filenames to sort.
- *    @param nfiles Number of files to sort.
- */
-void ndata_sortName( char **files, size_t nfiles )
-{
-   qsort( files, nfiles, sizeof(char*), strsort );
-}
-
-
-

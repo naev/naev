@@ -13,6 +13,7 @@
 
 #include "naev.h"
 
+#include "physfs.h"
 #include "SDL.h"
 
 #include "music_openal.h"
@@ -220,7 +221,7 @@ static void music_free (void)
 static int music_find (void)
 {
    char** files;
-   size_t nfiles,i;
+   size_t i;
    int suflen, flen;
    int nmusic;
 
@@ -228,12 +229,12 @@ static int music_find (void)
       return 0;
 
    /* get the file list */
-   files = ndata_list( MUSIC_PATH, &nfiles );
+   files = PHYSFS_enumerateFiles( MUSIC_PATH );
 
    /* load the profiles */
    nmusic = 0;
    suflen = strlen(MUSIC_SUFFIX);
-   for (i=0; i<nfiles; i++) {
+   for (i=0; files[i]!=NULL; i++) {
       flen = strlen(files[i]);
       if ((flen > suflen) &&
             strncmp( &files[i][flen - suflen], MUSIC_SUFFIX, suflen)==0) {
@@ -241,15 +242,12 @@ static int music_find (void)
          /* grow the selection size */
          nmusic++;
       }
-
-      /* Clean up. */
-      free(files[i]);
    }
 
    DEBUG( ngettext("Loaded %d Song", "Loaded %d Songs", nmusic ), nmusic );
 
    /* More clean up. */
-   free(files);
+   PHYSFS_freeList(files);
 
    return 0;
 }

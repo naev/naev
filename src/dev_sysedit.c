@@ -13,6 +13,7 @@
 
 #include "naev.h"
 
+#include "physfs.h"
 #include "SDL.h"
 
 #include "conf.h"
@@ -1971,8 +1972,8 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
 
    /* Find images first. */
    path           = land ? PLANET_GFX_EXTERIOR_PATH : PLANET_GFX_SPACE_PATH;
-   files          = ndata_list( path, &nfiles );
-   ndata_sortName( files, nfiles );
+   files          = PHYSFS_enumerateFiles( path );
+   for (nfiles=0; files[nfiles]; nfiles++) {}
    cells          = calloc( nfiles, sizeof(ImageArrayCell) );
 
    j              = 0;
@@ -1986,9 +1987,8 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
          memcpy( &cells[j].bg, &c, sizeof(glColour) );
          j++;
       }
-      free( files[i] );
    }
-   free( files );
+   PHYSFS_freeList( files );
 
    /* Add image array. */
    window_addImageArray( wid, 20, 20, w-60-BUTTON_WIDTH, h-60, "iarGFX", 128, 128, cells, j, NULL, NULL, NULL );

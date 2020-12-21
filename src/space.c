@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <float.h>
+#include "physfs.h"
 
 #include "nxml.h"
 
@@ -1732,7 +1733,6 @@ static int planets_load ( void )
    xmlNodePtr node;
    xmlDocPtr doc;
    Planet *p;
-   size_t nfiles;
    size_t i, len;
    Commodity **stdList;
    unsigned int stdNb;
@@ -1757,8 +1757,8 @@ static int planets_load ( void )
    stdList = standard_commodities( &stdNb );
 
    /* Load XML stuff. */
-   planet_files = ndata_list( PLANET_DATA_PATH, &nfiles );
-   for (i=0; i<nfiles; i++) {
+   planet_files = PHYSFS_enumerateFiles( PLANET_DATA_PATH );
+   for (i=0; planet_files[i]!=NULL; i++) {
       len  = (strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2);
       file = malloc( len );
       nsnprintf( file, len,"%s%s",PLANET_DATA_PATH,planet_files[i]);
@@ -1792,9 +1792,7 @@ static int planets_load ( void )
    }
 
    /* Clean up. */
-   for (i=0; i<nfiles; i++)
-      free( planet_files[i] );
-   free( planet_files );
+   PHYSFS_freeList( planet_files );
    free(stdList);
 
    return 0;
@@ -3241,10 +3239,11 @@ int space_load (void)
       return ret;
 
    /* Load asteroid graphics. */
-   asteroid_files = ndata_list( PLANET_GFX_SPACE_PATH"asteroid/", &nasterogfx );
+   asteroid_files = PHYSFS_enumerateFiles( PLANET_GFX_SPACE_PATH"asteroid/" );
+   for (nasterogfx=0; asteroid_files[nasterogfx]!=NULL; nasterogfx++) {}
    asteroid_gfx = malloc( sizeof(glTexture*) * systems_mstack );
 
-   for (i=0; i<nasterogfx; i++) {
+   for (i=0; asteroid_files[i]!=NULL; i++) {
       len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(asteroid_files[i])+11);
       nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",asteroid_files[i] );
       asteroid_gfx[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
@@ -3278,9 +3277,7 @@ int space_load (void)
    /* Calculate commodity prices (sinusoidal model). */
    economy_initialiseCommodityPrices();
 
-   for (i=0; i<nasterogfx; i++)
-      free(asteroid_files[i]);
-   free(asteroid_files);
+   PHYSFS_freeList( asteroid_files );
 
    return 0;
 }
@@ -3440,7 +3437,6 @@ static int systems_load (void)
    xmlDocPtr doc;
    StarSystem *sys;
    size_t i, len;
-   size_t nfiles;
 
    /* Allocate if needed. */
    if (systems_stack == NULL) {
@@ -3449,13 +3445,12 @@ static int systems_load (void)
       systems_nstack = 0;
    }
 
-   system_files = ndata_list( SYSTEM_DATA_PATH, &nfiles );
+   system_files = PHYSFS_enumerateFiles( SYSTEM_DATA_PATH );
 
    /*
     * First pass - loads all the star systems_stack.
     */
-   for (i=0; i<nfiles; i++) {
-
+   for (i=0; system_files[i]!=NULL; i++) {
       len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
       file = malloc( len );
       nsnprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
@@ -3489,8 +3484,7 @@ static int systems_load (void)
    /*
     * Second pass - loads all the jump routes.
     */
-   for (i=0; i<nfiles; i++) {
-
+   for (i=0; system_files[i]!=NULL; i++) {
       len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
       file = malloc( len );
       nsnprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
@@ -3521,9 +3515,7 @@ static int systems_load (void)
    DEBUG( ngettext( "       with %d Planet", "       with %d Planets", array_size(planet_stack) ), array_size(planet_stack) );
 
    /* Clean up. */
-   for (i=0; i<nfiles; i++)
-      free( system_files[i] );
-   free( system_files );
+   PHYSFS_freeList( system_files );
 
    return 0;
 }
