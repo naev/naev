@@ -116,6 +116,19 @@ if buildExec.disabled() == false
 
    naev_deps += lua
 
+   # PhysicsFS
+   physfs = dependency('physfs', required: false)
+   if not physfs.found()
+      physfs = import('cmake').subproject('physfs').dependency('physfs-static')
+   endif
+   naev_deps += physfs
+
+   if not lua.found()
+      lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
+   endif
+
+   naev_deps += lua
+
    ### Soft deps (required: false
 
    # BFD

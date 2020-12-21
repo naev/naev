@@ -26,6 +26,9 @@ an OpenGL-capable graphics card and driver, Naev requires the following:
 * binutils
 * intltool
 
+If you're cross-compiling for Windows, you must install this soft dependency:
+* [physfs](https://icculus.org/physfs/), example package name mingw-w64-physfs
+
 
 ### Ubuntu
 
@@ -41,7 +44,7 @@ pip3 install meson ninja
 
 ### Other \*nix
 
-See https://github.com/naev/naev/wiki/Compiling-on-*nix for package lists for several
+See [here](https://github.com/naev/naev/wiki/Compiling-on-*nix) for package lists for several
 distributions.
 
 ## COMPILING
