@@ -95,7 +95,7 @@ extern Pilot** pilot_stack; /**< @todo remove */
 extern int pilot_nstack; /**< @todo remove */
 
 
-extern int land_wid; /**< From land.c */
+extern unsigned int land_wid; /**< From land.c */
 
 
 /**
