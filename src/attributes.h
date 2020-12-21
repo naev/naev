@@ -40,6 +40,12 @@
    #define FORMAT( ... )
 #endif
 
+#if __has_attribute( deprecated )
+   #define DEPRECATED( msg ) __attribute__( ( deprecated( msg ) ) )
+#else
+   #define DEPRECATED( msg )
+#endif
+
 // User defined diagnosis
 #if __has_attribute( diagnose_if )
    #define WARN_IF( c, m ) __attribute__( ( diagnose_if( c, m, "warning" ) ) )
