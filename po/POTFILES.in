@@ -375,8 +375,12 @@ src/dev_uniedit.c
 src/dev_uniedit.h
 src/dialogue.c
 src/dialogue.h
+src/distance_field.c
+src/distance_field.h
 src/economy.c
 src/economy.h
+src/edtaa3func.c
+src/edtaa3func.h
 src/env.c
 src/env.h
 src/equipment.c
@@ -425,6 +429,8 @@ src/load.c
 src/load.h
 src/log.c
 src/log.h
+src/lutf8lib.c
+src/lutf8lib.h
 src/map.c
 src/map.h
 src/mapData.h
@@ -507,6 +513,8 @@ src/nlua_player.c
 src/nlua_player.h
 src/nlua_rnd.c
 src/nlua_rnd.h
+src/nlua_shader.c
+src/nlua_shader.h
 src/nlua_ship.c
 src/nlua_ship.h
 src/nlua_shiplog.c
@@ -519,6 +527,8 @@ src/nlua_time.c
 src/nlua_time.h
 src/nlua_tk.c
 src/nlua_tk.h
+src/nlua_transform.c
+src/nlua_transform.h
 src/nlua_var.c
 src/nlua_var.h
 src/nlua_vec2.c
@@ -640,6 +650,7 @@ src/tk/widget/text.c
 src/tk/widget/text.h
 src/toolkit.c
 src/toolkit.h
+src/unidata.h
 src/unidiff.c
 src/unidiff.h
 src/utf8.c
@@ -1082,6 +1093,7 @@ dat/assets/isador.xml
 dat/assets/jaan.xml
 dat/assets/jackson_ii.xml
 dat/assets/jackson_v.xml
+dat/assets/jacqueline.xml
 dat/assets/jade_court.xml
 dat/assets/jade_i.xml
 dat/assets/jade_ii.xml
@@ -1092,7 +1104,6 @@ dat/assets/jankelo.xml
 dat/assets/janko.xml
 dat/assets/janus_farming_station.xml
 dat/assets/janus_station.xml
-dat/assets/jacqueline.xml
 dat/assets/jasmine.xml
 dat/assets/jaxheen.xml
 dat/assets/jemard.xml
