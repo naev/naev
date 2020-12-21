@@ -11,7 +11,7 @@
 
 /** @cond */
 #include <limits.h>
-#include "physfs.h"
+#include "physfsrwops.h"
 
 #include "naev.h"
 /** @endcond */
@@ -501,7 +501,7 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
    int ret;
 
    /* Load the space sprite. */
-   rw    = ndata_rwops( str );
+   rw    = PHYSFSRWOPS_openRead( str );
    npng  = npng_open( rw );
    npng_dim( npng, &w, &h );
    surface = npng_readSurface( npng, gl_needPOT(), 1 );

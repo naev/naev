@@ -10,6 +10,8 @@
 
 
 /** @cond */
+#include "physfsrwops.h"
+
 #include "naev.h"
 /** @endcond */
 
@@ -66,7 +68,7 @@ int player_guiAdd( char* name )
    SDL_RWops *rw;
    char buf[PATH_MAX];
    nsnprintf( buf, sizeof(buf), GUI_PATH"%s.lua", name );
-   rw = ndata_rwops( buf );
+   rw = PHYSFSRWOPS_openRead( buf );
    if (rw == NULL) {
       WARN(_("GUI '%s' does not exist as a file: '%s' not found."), name, buf );
       return -1;

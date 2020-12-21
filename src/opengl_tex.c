@@ -12,6 +12,7 @@
 /** @cond */
 #include <stdio.h>
 #include <stdlib.h>
+#include "physfsrwops.h"
 
 #include "naev.h"
 /** @endcond */
@@ -20,7 +21,6 @@
 #include "gui.h"
 #include "log.h"
 #include "md5.h"
-#include "ndata.h"
 #include "nfile.h"
 #include "npng.h"
 #include "nstring.h"
@@ -740,7 +740,7 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    }
 
    /* Load from packfile */
-   rw = ndata_rwops( path );
+   rw = PHYSFSRWOPS_openRead( path );
    if (rw == NULL) {
       WARN(_("Failed to load surface '%s' from ndata."), path);
       return NULL;

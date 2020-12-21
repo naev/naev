@@ -12,7 +12,7 @@
 #include <float.h>
 #include <math.h>
 #include <stdlib.h>
-#include "physfs.h"
+#include "physfsrwops.h"
 
 #include "naev.h"
 /** @endcond */
@@ -2253,7 +2253,7 @@ int planet_setRadiusFromGFX(Planet* planet)
    /* New path. */
    nsnprintf( path, sizeof(path), "%s%s", PLANET_GFX_SPACE_PATH, planet->gfx_spacePath );
 
-   rw = ndata_rwops( path );
+   rw = PHYSFSRWOPS_openRead( path );
    if (rw == NULL) {
       WARN(_("Planet '%s' has nonexistent graphic '%s'!"), planet->name, planet->gfx_spacePath );
       return -1;
@@ -3353,7 +3353,7 @@ static int asteroidTypes_load (void)
                nsnprintf( file, len,"%s%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str,".png");
 
                /* Load sprite and make collision possible. */
-               rw    = ndata_rwops( file );
+               rw    = PHYSFSRWOPS_openRead( file );
                npng  = npng_open( rw );
                npng_dim( npng, &w, &h );
                surface = npng_readSurface( npng, gl_needPOT(), 1 );

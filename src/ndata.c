@@ -288,34 +288,6 @@ void* ndata_read( const char* filename, size_t *filesize )
 
 
 /**
- * @brief Creates an rwops from a file in the ndata.
- *
- *    @param filename Name of the file to create rwops of.
- *    @return rwops that accesses the file in the ndata.
- */
-SDL_RWops *ndata_rwops( const char* filename )
-{
-   char       path[ PATH_MAX ];
-   SDL_RWops *rw;
-
-   if ( nfile_concatPaths( path, PATH_MAX, ndata_dir, filename ) < 0 ) {
-      WARN( _( "Unable to open file '%s': file path too long." ), filename );
-      return NULL;
-   }
-
-   rw = SDL_RWFromFile( path, "rb" );
-   if ( rw != NULL ) {
-      ndata_loadedfile = 1;
-      return rw;
-   }
-
-   /* Wasn't able to open the file. */
-   WARN( _( "Unable to open file '%s': not found." ), filename );
-   return NULL;
-}
-
-
-/**
  * @brief Gets a list of files in the ndata below a certain path.
  *
  *    @sa nfile_readDirRecursive

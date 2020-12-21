@@ -14,7 +14,7 @@
  */
 
 /** @cond */
-#include "physfs.h"
+#include "physfsrwops.h"
 #include "SDL.h"
 #include "SDL_error.h"
 
@@ -1100,7 +1100,7 @@ static void window_caption (void)
    npng_t *npng;
 
    /* Load icon. */
-   rw = ndata_rwops( GFX_PATH"icon.png" );
+   rw = PHYSFSRWOPS_openRead( GFX_PATH"icon.png" );
    if (rw == NULL) {
       WARN( _("Icon (icon.png) not found!") );
       return;

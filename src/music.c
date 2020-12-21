@@ -10,7 +10,7 @@
 
 
 /** @cond */
-#include "physfs.h"
+#include "physfsrwops.h"
 #include "SDL.h"
 
 #include "naev.h"
@@ -316,7 +316,7 @@ int music_load( const char* name )
    music_name  = strdup(name);
    music_start = SDL_GetTicks();
    nsnprintf( filename, PATH_MAX, MUSIC_PATH"%s"MUSIC_SUFFIX, name);
-   rw = ndata_rwops( filename );
+   rw = PHYSFSRWOPS_openRead( filename );
    if (rw == NULL) {
       WARN(_("Music '%s' not found."), filename);
       return -1;

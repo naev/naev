@@ -7,12 +7,6 @@
 #  define NDATA_H
 
 
-/** @cond */
-#include <stdint.h>
-#include "SDL.h"
-/** @endcond */
-
-
 /*
  * Define various paths
  */
@@ -103,12 +97,6 @@ const char* ndata_name (void);
  */
 void* ndata_read( const char* filename, size_t *filesize );
 char** ndata_listRecursive( const char *path );
-
-
-/*
- * RWops.
- */
-SDL_RWops *ndata_rwops( const char* filename );
 
 
 #endif /* NDATA_H */

@@ -6,6 +6,7 @@
 /** @cond */
 #include <math.h>
 #include <sys/stat.h>
+#include "physfsrwops.h"
 #include "SDL.h"
 #include "SDL_endian.h"
 #include "SDL_thread.h"
@@ -18,7 +19,7 @@
 #include "conf.h"
 #include "log.h"
 #include "music_openal.h"
-#include "ndata.h"
+//#include "ndata.h"
 #include "sound.h"
 
 
@@ -682,7 +683,7 @@ int sound_al_load( alSound *snd, const char *filename )
    ALint freq, bits, channels, size;
 
    /* get the file data buffer from packfile */
-   rw = ndata_rwops( filename );
+   rw = PHYSFSRWOPS_openRead( filename );
 
    /* Check to see if it's an Ogg. */
    if (ov_test_callbacks( rw, &vf, NULL, 0, sound_al_ovcall_noclose )==0)
