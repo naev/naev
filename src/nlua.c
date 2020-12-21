@@ -8,34 +8,36 @@
  * @brief Handles creating and setting up basic Lua environments.
  */
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "nlua.h"
 
-#include "naev.h"
-
-#include "nluadef.h"
-#include "lutf8lib.h"
 #include "log.h"
+#include "lutf8lib.h"
 #include "ndata.h"
 #include "nfile.h"
-#include "nlua_rnd.h"
-#include "nlua_faction.h"
-#include "nlua_var.h"
-#include "nlua_naev.h"
-#include "nlua_planet.h"
-#include "nlua_system.h"
-#include "nlua_jump.h"
-#include "nlua_time.h"
-#include "nlua_news.h"
-#include "nlua_player.h"
-#include "nlua_pilot.h"
-#include "nlua_vec2.h"
+#include "nlua_cli.h"
+#include "nlua_commodity.h"
 #include "nlua_data.h"
 #include "nlua_diff.h"
-#include "nlua_outfit.h"
-#include "nlua_commodity.h"
-#include "nlua_shiplog.h"
-#include "nlua_cli.h"
+#include "nlua_faction.h"
 #include "nlua_file.h"
+#include "nlua_jump.h"
+#include "nlua_naev.h"
+#include "nlua_news.h"
+#include "nlua_outfit.h"
+#include "nlua_pilot.h"
+#include "nlua_planet.h"
+#include "nlua_player.h"
+#include "nlua_rnd.h"
+#include "nlua_shiplog.h"
+#include "nlua_system.h"
+#include "nlua_time.h"
+#include "nlua_var.h"
+#include "nlua_vec2.h"
+#include "nluadef.h"
 #include "nstring.h"
 
 

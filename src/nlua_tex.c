@@ -8,20 +8,21 @@
  * @brief Handles the Lua texture bindings.
  */
 
-#include "nlua_tex.h"
-
-#include "naev.h"
-
+/** @cond */
+#include <lauxlib.h>
 #include "SDL.h"
 
-#include <lauxlib.h>
+#include "naev.h"
+/** @endcond */
 
-#include "nluadef.h"
+#include "nlua_tex.h"
+
 #include "log.h"
-#include "npng.h"
 #include "ndata.h"
-#include "nlua_file.h"
 #include "nlua_data.h"
+#include "nlua_file.h"
+#include "nluadef.h"
+#include "npng.h"
 
 
 /* Helpers. */

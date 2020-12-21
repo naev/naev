@@ -3,34 +3,36 @@
  */
 
 
-#include "map.h"
+/** @cond */
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <float.h>
+#include "map.h"
 
-#include "log.h"
-#include "toolkit.h"
-#include "space.h"
-#include "opengl.h"
-#include "mission.h"
-#include "colour.h"
-#include "player.h"
-#include "faction.h"
-#include "dialogue.h"
-#include "gui.h"
-#include "map_find.h"
 #include "array.h"
+#include "colour.h"
+#include "dialogue.h"
+#include "faction.h"
+#include "gui.h"
+#include "log.h"
 #include "mapData.h"
-#include "nstring.h"
-#include "nmath.h"
-#include "nmath.h"
-#include "nxml.h"
-#include "ndata.h"
+#include "map_find.h"
 #include "map_system.h"
+#include "mission.h"
+#include "ndata.h"
+#include "nmath.h"
+#include "nmath.h"
+#include "nstring.h"
+#include "nxml.h"
+#include "opengl.h"
+#include "player.h"
+#include "space.h"
+#include "toolkit.h"
 #include "utf8.h"
 
 #define BUTTON_WIDTH    100 /**< Map button width. */

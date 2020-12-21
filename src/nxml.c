@@ -9,9 +9,11 @@
  */
 
 
-#include "nxml.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
+
+#include "nxml.h"
 
 #include "nstring.h"
 

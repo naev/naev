@@ -7,8 +7,6 @@
 #  define NLUA_TRANSFORM_H
 
 
-#include <lua.h>
-
 #include "nlua.h"
 #include "opengl.h"
 #include "opengl_matrix.h"

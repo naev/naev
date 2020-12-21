@@ -26,13 +26,14 @@
  */
 
 
-#include "threadpool.h"
-
+/** @cond */
+#include <stdlib.h>
 #include "SDL.h"
 #include "SDL_error.h"
 #include "SDL_thread.h"
+/** @endcond */
 
-#include <stdlib.h>
+#include "threadpool.h"
 
 #include "log.h"
 

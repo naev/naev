@@ -9,15 +9,16 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "slots.h"
 
-#include "naev.h"
-
-#include "nxml.h"
-
+#include "array.h"
 #include "log.h"
 #include "ndata.h"
-#include "array.h"
+#include "nxml.h"
 
 
 #define SP_XML_ID     "Slots" /**< XML Document tag. */

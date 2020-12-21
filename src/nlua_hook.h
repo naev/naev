@@ -6,8 +6,6 @@
 #ifndef NLUA_HOOK
 #  define NLUA_HOOK
 
-#include <lua.h>
-
 #include "nlua.h"
 
 

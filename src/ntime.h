@@ -7,7 +7,9 @@
 #  define NTIME_H
 
 
+/** @cond */
 #include <stdint.h>
+/** @endcond */
 
 
 #define NT_CYCLE_PERIODS   (5000)      /**< periods in a cycle */

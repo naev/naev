@@ -8,17 +8,19 @@
  * @brief Handles the player's escorts.
  */
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "escort.h"
 
-#include "naev.h"
-
+#include "dialogue.h"
+#include "hook.h"
 #include "log.h"
-#include "player.h"
 #include "nlua.h"
 #include "nluadef.h"
-#include "hook.h"
 #include "nstring.h"
-#include "dialogue.h"
+#include "player.h"
 
 
 #define ESCORT_PREALLOC    8 /**< Number of escorts to automatically allocate first. */

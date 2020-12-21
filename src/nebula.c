@@ -8,27 +8,29 @@
  * @brief Handles rendering and generating the nebula.
  */
 
-#include "nebula.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <errno.h>
 
-#include "log.h"
-#include "opengl.h"
-#include "nfile.h"
-#include "perlin.h"
-#include "rng.h"
-#include "menu.h"
-#include "player.h"
-#include "pause.h"
-#include "gui.h"
-#include "conf.h"
-#include "spfx.h"
-#include "npng.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nebula.h"
+
 #include "camera.h"
-#include "nstring.h"
+#include "conf.h"
+#include "gui.h"
+#include "log.h"
+#include "menu.h"
 #include "ndata.h"
+#include "nfile.h"
+#include "npng.h"
+#include "nstring.h"
+#include "opengl.h"
+#include "pause.h"
+#include "perlin.h"
+#include "player.h"
+#include "rng.h"
+#include "spfx.h"
 
 
 #define NEBULA_Z             16 /**< Z plane */

@@ -4,16 +4,15 @@
 
 
 
-#include "conf.h"
-
-#include "naev.h"
-
+/** @cond */
+#include <getopt.h> /* getopt_long */
 #include <stdlib.h> /* atoi */
 #include <unistd.h> /* getopt */
-#include "nstring.h" /* strdup */
-#include <getopt.h> /* getopt_long */
 
-#include "nlua.h"
+#include "naev.h"
+/** @endcond */
+
+#include "conf.h"
 
 #include "env.h"
 #include "input.h"
@@ -22,6 +21,7 @@
 #include "ndata.h"
 #include "nebula.h"
 #include "nfile.h"
+#include "nlua.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "player.h"

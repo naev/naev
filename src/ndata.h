@@ -7,9 +7,10 @@
 #  define NDATA_H
 
 
+/** @cond */
 #include <stdint.h>
-
 #include "SDL.h"
+/** @endcond */
 
 
 /*

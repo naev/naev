@@ -7,8 +7,6 @@
 #  define NLUA_SHADER_H
 
 
-#include <lua.h>
-
 #include "nlua.h"
 #include "opengl.h"
 

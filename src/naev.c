@@ -13,20 +13,12 @@
  * @brief Controls the overall game flow: data loading/unloading and game loop.
  */
 
-/*
- * includes
- */
-/* localised global */
+/** @cond */
 #include "physfs.h"
 #include "SDL.h"
-
 #include "SDL_error.h"
-#include "log.h" /* for DEBUGGING */
+
 #include "naev.h"
-
-
-/* global */
-#include "nstring.h" /* strdup */
 
 #if HAS_POSIX
 #include <time.h>
@@ -37,6 +29,10 @@
 #include <fenv.h>
 #endif /* defined(HAVE_FENV_H) && defined(DEBUGGING) && defined(_GNU_SOURCE) */
 
+#if defined ENABLE_NLS && ENABLE_NLS
+#include <locale.h>
+#endif /* defined ENABLE_NLS && ENABLE_NLS */
+
 #if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
 #include <signal.h>
 #include <execinfo.h>
@@ -45,8 +41,8 @@
 #include <bfd.h>
 #include <assert.h>
 #endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
+/** @endcond */
 
-/* local */
 #include "ai.h"
 #include "background.h"
 #include "camera.h"
@@ -68,6 +64,7 @@
 #include "joystick.h"
 #include "land.h"
 #include "load.h"
+#include "log.h"
 #include "map.h"
 #include "map_overlay.h"
 #include "map_system.h"
@@ -82,6 +79,7 @@
 #include "nlua_var.h"
 #include "npc.h"
 #include "npng.h"
+#include "nstring.h"
 #include "nxml.h"
 #include "opengl.h"
 #include "options.h"
@@ -91,6 +89,7 @@
 #include "pilot.h"
 #include "player.h"
 #include "rng.h"
+#include "semver.h"
 #include "ship.h"
 #include "slots.h"
 #include "sound.h"
@@ -102,11 +101,6 @@
 #include "toolkit.h"
 #include "unidiff.h"
 #include "weapon.h"
-#include "semver.h"
-
-#if defined ENABLE_NLS && ENABLE_NLS
-#include <locale.h>
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
 #define VERSION_FILE    "VERSION" /**< Version file by default. */

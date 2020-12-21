@@ -30,26 +30,26 @@
  */
 
 
-#include "opengl.h"
-
-#include "SDL_error.h"
-#include "naev.h"
-
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-#include <stdarg.h> /* va_list for gl_print */
-
-#include <zlib.h> /* Z_DEFAULT_COMPRESSION */
+/** @cond */
 #include <png.h>
-
+#include <stdarg.h> /* va_list for gl_print */
+#include <stdio.h>
+#include <stdlib.h>
+#include <zlib.h> /* Z_DEFAULT_COMPRESSION */
 #include "SDL.h"
+#include "SDL_error.h"
 #include "SDL_version.h"
 
+#include "naev.h"
+/** @endcond */
+
+#include "opengl.h"
+
+#include "conf.h"
+#include "gui.h"
 #include "log.h"
 #include "ndata.h"
-#include "gui.h"
-#include "conf.h"
+#include "nstring.h"
 
 
 /*

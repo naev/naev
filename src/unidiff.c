@@ -13,21 +13,23 @@
  */
 
 
-#include "unidiff.h"
+/** @cond */
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include "nstring.h"
+#include "unidiff.h"
 
-#include "log.h"
 #include "array.h"
-#include "nxml.h"
-#include "space.h"
-#include "ndata.h"
 #include "economy.h"
 #include "fleet.h"
+#include "log.h"
 #include "map_overlay.h"
+#include "ndata.h"
+#include "nstring.h"
+#include "nxml.h"
+#include "space.h"
 
 
 #define CHUNK_SIZE      32 /**< Size of chunk to allocate. */

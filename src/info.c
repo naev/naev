@@ -9,28 +9,29 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "info.h"
 
-#include "naev.h"
-
-#include "nstring.h"
-
-#include "menu.h"
-#include "toolkit.h"
 #include "dialogue.h"
-#include "log.h"
-#include "pilot.h"
-#include "space.h"
-#include "player.h"
-#include "mission.h"
-#include "ntime.h"
-#include "map.h"
-#include "land.h"
 #include "equipment.h"
 #include "gui.h"
+#include "land.h"
+#include "log.h"
+#include "map.h"
+#include "menu.h"
+#include "mission.h"
+#include "nstring.h"
+#include "ntime.h"
+#include "pilot.h"
+#include "player.h"
 #include "player_gui.h"
-#include "tk/toolkit_priv.h"
 #include "shiplog.h"
+#include "space.h"
+#include "tk/toolkit_priv.h"
+#include "toolkit.h"
 
 #define BUTTON_WIDTH    135 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */

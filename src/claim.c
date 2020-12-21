@@ -8,15 +8,17 @@
  * @brief Handles claiming of systems.
  */
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "claim.h"
 
-#include "naev.h"
-
-#include "log.h"
-#include "space.h"
 #include "array.h"
 #include "event.h"
+#include "log.h"
 #include "mission.h"
+#include "space.h"
 
 
 /**

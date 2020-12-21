@@ -14,21 +14,23 @@
  */
 
 
-#include "font.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
 
-#include "log.h"
+#include "naev.h"
+/** @endcond */
+
+#include "font.h"
+
 #include "array.h"
 #include "conf.h"
+#include "distance_field.h"
+#include "log.h"
 #include "ndata.h"
 #include "nfile.h"
 #include "utf8.h"
-#include "distance_field.h"
 
 
 #define FONT_DISTANCE_FIELD_BORDER  2 /**< Border of the distance field. */

@@ -8,23 +8,25 @@
  * @brief Lua system module.
  */
 
-#include "nlua_system.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
-#include "nlua_faction.h"
-#include "nlua_vec2.h"
-#include "nlua_planet.h"
-#include "nlua_jump.h"
-#include "log.h"
-#include "rng.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_system.h"
+
 #include "land.h"
 #include "land_outfits.h"
+#include "log.h"
 #include "map.h"
 #include "map_overlay.h"
+#include "nlua_faction.h"
+#include "nlua_jump.h"
+#include "nlua_planet.h"
+#include "nlua_vec2.h"
+#include "nluadef.h"
+#include "rng.h"
 #include "space.h"
 
 

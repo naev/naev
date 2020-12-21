@@ -8,11 +8,11 @@
 #  define OUTFIT_H
 
 
-#include "opengl.h"
-#include "sound.h"
-#include "commodity.h"
-#include "shipstats.h"
 #include "collision.h"
+#include "commodity.h"
+#include "opengl.h"
+#include "shipstats.h"
+#include "sound.h"
 
 
 /*

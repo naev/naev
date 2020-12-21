@@ -9,10 +9,16 @@
  */
 
 
-#include "land_trade.h"
+/** @cond */
+#include <assert.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
-#include "ndata.h"
+/** @endcond */
+
+#include "land_trade.h"
 
 #include "commodity.h"
 #include "dialogue.h"
@@ -21,15 +27,12 @@
 #include "land_shipyard.h"
 #include "log.h"
 #include "map_find.h"
+#include "ndata.h"
 #include "nstring.h"
 #include "player.h"
 #include "space.h"
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
-#include <assert.h>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 /*
  * Quantity to buy on one click

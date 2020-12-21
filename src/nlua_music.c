@@ -9,16 +9,18 @@
  */
 
 
-#include "nlua_music.h"
-
-#include "naev.h"
-
+/** @cond */
 #include "SDL.h"
 
-#include "nluadef.h"
-#include "music.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_music.h"
+
 #include "log.h"
+#include "music.h"
 #include "ndata.h"
+#include "nluadef.h"
 
 
 /* Music methods. */

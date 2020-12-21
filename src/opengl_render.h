@@ -8,6 +8,8 @@
 
 
 #include "opengl.h"
+#include "opengl_tex.h"
+#include "opengl_vbo.h"
 
 
 /*

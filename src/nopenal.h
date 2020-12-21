@@ -6,11 +6,13 @@
 #ifndef NOPENAL_H
 #  define NOPENAL_H
 
-#include "log.h"
-#include "ncompat.h"
-
+/** @cond */
 #include "AL/alc.h"
 #include "AL/al.h"
+/** @endcond */
+
+#include "log.h"
+#include "ncompat.h"
 
 /*
  * EFX stuff.

@@ -7,10 +7,8 @@
 #  define NLUA_OUTFIT_H
 
 
-#include <lua.h>
-
-#include "outfit.h"
 #include "nlua.h"
+#include "outfit.h"
 
 
 #define OUTFIT_METATABLE   "outfit" /**< Outfit metatable identifier. */

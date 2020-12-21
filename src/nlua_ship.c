@@ -8,18 +8,20 @@
  * @brief Handles the Lua ship bindings.
  */
 
-#include "nlua_ship.h"
-#include "slots.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_ship.h"
+
+#include "log.h"
 #include "nlua_outfit.h"
 #include "nlua_tex.h"
-#include "log.h"
+#include "nluadef.h"
 #include "rng.h"
+#include "slots.h"
 
 
 /* Ship metatable methods. */

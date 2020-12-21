@@ -12,16 +12,16 @@
  */
 
 
-#include "outfit.h"
+/** @cond */
+#include <math.h>
+#include <stdlib.h>
+#include "SDL_thread.h"
+#include "physfs.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include <math.h>
-#include "nstring.h"
-#include <stdlib.h>
-
-#include "physfs.h"
-#include "SDL_thread.h"
+#include "outfit.h"
 
 #include "array.h"
 #include "conf.h"
@@ -30,6 +30,7 @@
 #include "mapData.h"
 #include "ndata.h"
 #include "nfile.h"
+#include "nstring.h"
 #include "nstring.h"
 #include "nxml.h"
 #include "pilot.h"

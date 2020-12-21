@@ -7,8 +7,10 @@
 #  define NLUA_H
 
 
+/** @cond */
 #include <lua.h>
 #include <lauxlib.h>
+/** @endcond */
 
 
 #define NLUA_LOAD_TABLE "_LOADED" /**< Table to use to store the status of required libraries. */

@@ -7,9 +7,9 @@
 #  define NLUA_FILE_H
 
 
-#include <lua.h>
-
+/** @cond */
 #include "SDL.h"
+/** @endcond */
 
 #include "nlua.h"
 

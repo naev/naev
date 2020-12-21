@@ -9,11 +9,11 @@
 
 
 #include "collision.h"
+#include "commodity.h"
+#include "nxml.h"
 #include "opengl.h"
 #include "outfit.h"
 #include "sound.h"
-#include "nxml.h"
-#include "commodity.h"
 
 
 /* target gfx dimensions */

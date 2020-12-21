@@ -2,11 +2,14 @@
  * See Licensing and Copyright notice in naev.h
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
+/** @cond */
 #include <float.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
+#include "naev.h"
+/** @endcond */
 
 #include "map.h"
 
@@ -23,7 +26,6 @@
 #include "map_find.h"
 #include "map_system.h"
 #include "mission.h"
-#include "naev.h"
 #include "ndata.h"
 #include "nmath.h"
 #include "nstring.h"

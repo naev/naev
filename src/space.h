@@ -11,14 +11,14 @@ typedef struct Planet_ Planet;
 typedef struct JumpPoint_ JumpPoint;
 
 
-#include "faction.h"
-#include "opengl.h"
-#include "pilot.h"
 #include "commodity.h"
+#include "explosion.h"
+#include "faction.h"
 #include "fleet.h"
 #include "mission.h"
+#include "opengl.h"
+#include "pilot.h"
 #include "tech.h"
-#include "explosion.h"
 
 
 #define SYSTEM_SIMULATE_TIME  30. /**< Time to simulate system before player is added. */

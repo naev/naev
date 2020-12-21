@@ -8,16 +8,18 @@
  * @brief Handles the Lua commodity bindings.
  */
 
-#include "nlua_commodity.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_commodity.h"
+
+#include "log.h"
 #include "nlua_planet.h"
 #include "nlua_time.h"
-#include "log.h"
+#include "nluadef.h"
 #include "rng.h"
 
 

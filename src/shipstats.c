@@ -9,9 +9,11 @@
  */
 
 
-#include "shipstats.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
+
+#include "shipstats.h"
 
 #include "log.h"
 #include "nstring.h"

@@ -8,18 +8,21 @@
  * @brief Handles the planet stuff.
  */
 
-#include "dev_planet.h"
-#include "dev_uniedit.h"
+
+/** @cond */
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h> /* qsort */
+#include "dev_planet.h"
 
 #include "conf.h"
-#include "nxml.h"
-#include "physics.h"
+#include "dev_uniedit.h"
 #include "nfile.h"
 #include "nstring.h"
+#include "nxml.h"
+#include "physics.h"
 
 
 /**

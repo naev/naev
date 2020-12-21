@@ -6,8 +6,6 @@
 #ifndef NLUA_DIFF
 #  define NLUA_DIFF
 
-#include <lua.h>
-
 #include "nlua.h"
 
 /* individual library stuff */

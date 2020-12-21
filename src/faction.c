@@ -9,24 +9,25 @@
  */
 
 
-#include "faction.h"
-
-#include "naev.h"
-
-#include "nstring.h"
+/** @cond */
 #include <assert.h>
 #include <stdlib.h>
 
-#include "nxml.h"
+#include "naev.h"
+/** @endcond */
 
-#include "nlua.h"
-#include "nluadef.h"
-#include "opengl.h"
-#include "log.h"
-#include "ndata.h"
-#include "rng.h"
+#include "faction.h"
+
 #include "colour.h"
 #include "hook.h"
+#include "log.h"
+#include "ndata.h"
+#include "nlua.h"
+#include "nluadef.h"
+#include "nxml.h"
+#include "nstring.h"
+#include "opengl.h"
+#include "rng.h"
 #include "space.h"
 
 

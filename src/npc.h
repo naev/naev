@@ -8,8 +8,8 @@
 #  define NPC_H
 
 
-#include "opengl.h"
 #include "mission.h"
+#include "opengl.h"
 
 
 /*

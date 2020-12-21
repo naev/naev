@@ -10,17 +10,19 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "tech.h"
 
-#include "naev.h"
-
-#include "nxml.h"
+#include "array.h"
+#include "economy.h"
 #include "log.h"
 #include "ndata.h"
+#include "nxml.h"
 #include "outfit.h"
 #include "ship.h"
-#include "economy.h"
-#include "array.h"
 
 
 #define XML_TECH_ID         "Techs"          /**< Tech xml document tag. */

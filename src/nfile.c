@@ -11,12 +11,7 @@
  */
 
 
-#include "nfile.h"
-
-#include "naev.h"
-#include "conf.h"
-
-#include "nstring.h"
+/** @cond */
 #include <dirent.h>
 #include <limits.h>
 #include <stdarg.h>
@@ -24,21 +19,29 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+
+#include "naev.h"
+
 #if HAS_POSIX
 #include <sys/types.h>
 #include <unistd.h>
 #include <errno.h>
 #include <libgen.h>
 #endif /* HAS_POSIX */
-#if HAS_MACOS
-#include "glue_macos.h"
-#endif /* HAS_MACOS */
 #if HAS_WIN32
 #include <windows.h>
 #endif /* HAS_WIN32 */
+/** @endcond */
+
+#include "nfile.h"
 
 #include "array.h"
+#include "conf.h"
+#if HAS_MACOS
+#include "glue_macos.h"
+#endif /* HAS_MACOS */
 #include "log.h"
+#include "nstring.h"
 
 
 /**

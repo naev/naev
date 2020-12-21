@@ -7,7 +7,9 @@
 #ifndef MAP_OVERLAY_H
 #  define MAP_OVERLAY_H
 
+/** @cond */
 #include "SDL.h"
+/** @endcond */
 
 /* Map overlay. */
 int ovr_isOpen (void);

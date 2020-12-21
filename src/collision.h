@@ -9,9 +9,9 @@
 #  define COLLISION_H
 
 
+#include "nxml.h"
 #include "opengl.h"
 #include "physics.h"
-#include "nxml.h"
 
 
 /**

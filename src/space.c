@@ -8,52 +8,53 @@
  * @brief Handles all the space stuff, namely systems and planets.
  */
 
-#include "space.h"
-
-#include "naev.h"
-
-#include <stdlib.h>
-#include <math.h>
+/** @cond */
 #include <float.h>
+#include <math.h>
+#include <stdlib.h>
 #include "physfs.h"
 
-#include "nxml.h"
+#include "naev.h"
+/** @endcond */
 
-#include "opengl.h"
-#include "log.h"
-#include "rng.h"
-#include "ndata.h"
-#include "nfile.h"
-#include "pilot.h"
-#include "player.h"
-#include "pause.h"
-#include "weapon.h"
-#include "toolkit.h"
-#include "spfx.h"
-#include "ntime.h"
-#include "nebula.h"
-#include "sound.h"
-#include "music.h"
-#include "gui.h"
-#include "fleet.h"
-#include "mission.h"
-#include "conf.h"
-#include "queue.h"
-#include "economy.h"
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_pilot.h"
-#include "nlua_planet.h"
-#include "npng.h"
+#include "space.h"
+
 #include "background.h"
+#include "conf.h"
+#include "damagetype.h"
+#include "dev_uniedit.h"
+#include "economy.h"
+#include "fleet.h"
+#include "gui.h"
+#include "hook.h"
+#include "log.h"
+#include "map.h"
 #include "map_overlay.h"
 #include "menu.h"
-#include "nstring.h"
+#include "mission.h"
+#include "music.h"
+#include "ndata.h"
+#include "nebula.h"
+#include "nfile.h"
+#include "nlua.h"
+#include "nlua_pilot.h"
+#include "nlua_planet.h"
+#include "nluadef.h"
 #include "nmath.h"
-#include "map.h"
-#include "damagetype.h"
-#include "hook.h"
-#include "dev_uniedit.h"
+#include "npng.h"
+#include "nstring.h"
+#include "ntime.h"
+#include "nxml.h"
+#include "opengl.h"
+#include "pause.h"
+#include "pilot.h"
+#include "player.h"
+#include "queue.h"
+#include "rng.h"
+#include "sound.h"
+#include "spfx.h"
+#include "toolkit.h"
+#include "weapon.h"
 
 #define XML_PLANET_TAG        "asset" /**< Individual planet xml tag. */
 #define XML_SYSTEM_TAG        "ssys" /**< Individual systems xml tag. */

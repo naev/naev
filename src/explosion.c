@@ -9,15 +9,17 @@
  */
 
 
-#include "explosion.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
+
+#include "explosion.h"
 
 #include "log.h"
 #include "pilot.h"
-#include "weapon.h"
-#include "spfx.h"
 #include "rng.h"
+#include "spfx.h"
+#include "weapon.h"
 
 
 static int exp_s = -1; /**< Small explosion spfx. */

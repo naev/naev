@@ -8,28 +8,30 @@
  * @brief Handles the star system editor.
  */
 
-#include "dev_uniedit.h"
-
-#include "naev.h"
-
+/** @cond */
 #include "SDL.h"
 
-#include "space.h"
-#include "toolkit.h"
-#include "opengl.h"
+#include "naev.h"
+/** @endcond */
+
+#include "dev_uniedit.h"
+
+#include "conf.h"
+#include "dev_planet.h"
+#include "dev_sysedit.h"
+#include "dev_system.h"
+#include "dialogue.h"
+#include "economy.h"
 #include "map.h"
 #include "map_find.h"
-#include "dev_system.h"
-#include "dev_planet.h"
-#include "unidiff.h"
-#include "dialogue.h"
-#include "tk/toolkit_priv.h"
-#include "dev_sysedit.h"
-#include "pause.h"
 #include "nfile.h"
 #include "nstring.h"
-#include "economy.h"
-#include "conf.h"
+#include "opengl.h"
+#include "pause.h"
+#include "space.h"
+#include "tk/toolkit_priv.h"
+#include "toolkit.h"
+#include "unidiff.h"
 
 
 #define BUTTON_WIDTH    80 /**< Map button width. */

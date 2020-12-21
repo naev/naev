@@ -9,30 +9,32 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "input.h"
 
-#include "naev.h"
-
-#include "log.h"
-#include "player.h"
-#include "pilot.h"
-#include "pause.h"
-#include "toolkit.h"
-#include "menu.h"
-#include "info.h"
 #include "board.h"
-#include "map.h"
-#include "escort.h"
-#include "land.h"
-#include "nstd.h"
-#include "gui.h"
-#include "weapon.h"
-#include "console.h"
-#include "conf.h"
 #include "camera.h"
-#include "map_overlay.h"
+#include "conf.h"
+#include "console.h"
+#include "escort.h"
+#include "gui.h"
 #include "hook.h"
+#include "info.h"
+#include "land.h"
+#include "log.h"
+#include "map.h"
+#include "map_overlay.h"
+#include "menu.h"
+#include "nstd.h"
 #include "nstring.h"
+#include "pause.h"
+#include "pilot.h"
+#include "player.h"
+#include "toolkit.h"
+#include "weapon.h"
 
 
 #define MOUSE_HIDE   ( 3.) /**< Time in seconds to wait before hiding mouse again. */

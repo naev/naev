@@ -7,7 +7,6 @@
 #  define NLUA_NEWS_H
 
 
-#include <lua.h>
 #include "news.h"
 #include "nlua.h"
 

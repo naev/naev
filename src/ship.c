@@ -9,12 +9,14 @@
  */
 
 
-#include "ship.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <limits.h>
 #include "physfs.h"
+
+#include "naev.h"
+/** @endcond */
+
+#include "ship.h"
 
 #include "array.h"
 #include "colour.h"

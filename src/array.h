@@ -38,12 +38,15 @@
 #ifndef ARRAY_H
 #  define ARRAY_H
 
-#include <stddef.h>
+/** @cond */
 #include <assert.h>
+#include <stddef.h>
 #include <stdint.h>
+
 #ifdef HAVE_STDALIGN_H
 #include <stdalign.h>
 #endif /* HAVE_STDALIGN_H */
+/** @endcond */
 
 #ifdef DEBUGGING
 #define ARRAY_SENTINEL ((int)0xbabecafe) /**< Badass sentinel. */

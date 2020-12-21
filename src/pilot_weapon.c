@@ -27,19 +27,18 @@
  */
 
 
-#include "pilot.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
 
-#include "nxml.h"
-
-#include "log.h"
 #include "array.h"
-#include "weapon.h"
 #include "escort.h"
-
+#include "log.h"
+#include "nxml.h"
+#include "pilot.h"
 #include "player.h"
 #include "spfx.h"
+#include "weapon.h"
 
 
 /*

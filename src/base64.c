@@ -6,10 +6,12 @@
  * compliant with rfc3548
  */
 
-#include "base64.h"
-
-#include <stdlib.h>
+/** @cond */
 #include <stdint.h>
+#include <stdlib.h>
+/** @endcond */
+
+#include "base64.h"
 
 #include "nstring.h"
 

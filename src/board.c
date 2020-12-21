@@ -9,20 +9,22 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "board.h"
 
-#include "naev.h"
-
+#include "commodity.h"
+#include "damagetype.h"
+#include "hook.h"
 #include "log.h"
+#include "nstring.h"
 #include "pilot.h"
 #include "player.h"
-#include "toolkit.h"
-#include "space.h"
 #include "rng.h"
-#include "commodity.h"
-#include "hook.h"
-#include "damagetype.h"
-#include "nstring.h"
+#include "space.h"
+#include "toolkit.h"
 
 
 #define BOARDING_WIDTH  380 /**< Boarding window width. */

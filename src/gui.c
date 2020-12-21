@@ -10,11 +10,13 @@
  */
 
 
-#include "gui.h"
+/** @cond */
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
+#include "gui.h"
 
 #include "ai.h"
 #include "camera.h"

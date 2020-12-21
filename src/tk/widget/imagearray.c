@@ -9,12 +9,13 @@
  */
 
 
-#include "tk/toolkit_priv.h"
-
+/** @cond */
 #include <stdlib.h>
-#include "nstring.h"
+/** @endcond */
 
+#include "nstring.h"
 #include "opengl.h"
+#include "tk/toolkit_priv.h"
 
 
 /* Render. */

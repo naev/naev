@@ -8,38 +8,39 @@
  * @brief Handles the Lua console.
  */
 
+/** @cond */
+#define lua_c
+#include <ctype.h>
+#include <lauxlib.h>
+#include <lua.h>
+#include <lualib.h>
+#include <stdlib.h>
+
+#include "naev.h"
+/** @endcond */
+
 #include "console.h"
 
-#include "naev.h"
-
-#include <stdlib.h>
-#include <ctype.h>
-#include "nstring.h"
-
-#define lua_c
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-
+#include "array.h"
+#include "conf.h"
+#include "font.h"
 #include "log.h"
+#include "menu.h"
 #include "naev.h"
-#include "nlua.h"
-#include "nluadef.h"
 #include "ndata.h"
-#include "nlua_cli.h"
-#include "nlua_tk.h"
-#include "nlua_tex.h"
-#include "nlua_col.h"
+#include "nfile.h"
+#include "nlua.h"
+#include "nlua_audio.h"
 #include "nlua_bkg.h"
 #include "nlua_camera.h"
+#include "nlua_cli.h"
+#include "nlua_col.h"
 #include "nlua_music.h"
-#include "nlua_audio.h"
-#include "font.h"
+#include "nlua_tex.h"
+#include "nlua_tk.h"
+#include "nluadef.h"
+#include "nstring.h"
 #include "toolkit.h"
-#include "nfile.h"
-#include "menu.h"
-#include "conf.h"
-#include "array.h"
 
 
 #define BUTTON_WIDTH    50 /**< Button width. */

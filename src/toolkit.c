@@ -10,21 +10,22 @@
 
 /* TODO: better rendering with static VBO and smooth corners */
 
-#include "toolkit.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <stdarg.h>
 
-#include "tk/toolkit_priv.h"
+#include "naev.h"
+/** @endcond */
 
-#include "log.h"
-#include "pause.h"
-#include "opengl.h"
-#include "input.h"
-#include "nstd.h"
-#include "dialogue.h"
+#include "toolkit.h"
+
 #include "conf.h"
+#include "dialogue.h"
+#include "input.h"
+#include "log.h"
+#include "nstd.h"
+#include "opengl.h"
+#include "pause.h"
+#include "tk/toolkit_priv.h"
 
 
 #define INPUT_DELAY      conf.repeat_delay /**< Delay before starting to repeat. */

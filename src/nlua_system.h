@@ -7,10 +7,8 @@
 #  define NLUA_SYSTEM_H
 
 
-#include <lua.h>
-
-#include "space.h"
 #include "nlua.h"
+#include "space.h"
 
 
 #define SYSTEM_METATABLE   "system" /**< System metatable identifier. */

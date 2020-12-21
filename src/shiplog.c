@@ -1,3 +1,13 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
+/**
+ * @file shiplog.c
+ *
+ * @brief Handles a log/journal of the player's playthrough.
+ */
+
 #include "shiplog.h"
 /* Limit the journey log to 6 entries */
 

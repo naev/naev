@@ -58,19 +58,19 @@
  */
 
 
-#include "ai.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <ctype.h>
+#include <lauxlib.h>
+#include <lualib.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "physfs.h"
 
-/* yay more Lua */
-#include <lauxlib.h>
-#include <lualib.h>
+#include "naev.h"
+/** @endcond */
+
+#include "ai.h"
 
 #include "array.h"
 #include "board.h"
@@ -79,13 +79,13 @@
 #include "hook.h"
 #include "log.h"
 #include "ndata.h"
-#include "nluadef.h"
-#include "nlua_faction.h"
 #include "nlua.h"
+#include "nlua_faction.h"
 #include "nlua_pilot.h"
 #include "nlua_planet.h"
 #include "nlua_rnd.h"
 #include "nlua_vec2.h"
+#include "nluadef.h"
 #include "nstring.h"
 #include "physics.h"
 #include "pilot.h"

@@ -52,7 +52,9 @@
 #ifndef MD5_H
 #  define MD5_H
 
+/** @cond */
 #include <stdint.h>
+/** @endcond */
 
 /*
  * This package supports both compile-time and run-time determination of CPU

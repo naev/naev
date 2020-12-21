@@ -8,7 +8,9 @@
 #  define SOUND_H
 
 
+/** @cond */
 #include "SDL_mutex.h"
+/** @endcond */
 
 
 extern int sound_disabled;

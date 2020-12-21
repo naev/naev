@@ -9,11 +9,12 @@
  */
 
 
-#include "opengl.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
 
 #include "log.h"
+#include "opengl.h"
 
 
 /**

@@ -7,9 +7,9 @@
 #  define MISSION_H
 
 
-#include "opengl.h"
 #include "claim.h"
 #include "nlua.h"
+#include "opengl.h"
 
 
 /* availability by location */

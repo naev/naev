@@ -10,13 +10,15 @@
  * This information is important when creating a new game.
  */
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "start.h"
 
-#include "naev.h"
-
 #include "log.h"
-#include "nxml.h"
 #include "ndata.h"
+#include "nxml.h"
 
 
 #define XML_START_ID    "Start"  /**< XML document tag of module start file. */

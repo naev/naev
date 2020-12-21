@@ -10,17 +10,19 @@
  * These bindings control the factions.
  */
 
-#include "nlua_faction.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "log.h"
-#include "nluadef.h"
-#include "nlua_tex.h"
-#include "nlua_col.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_faction.h"
+
 #include "faction.h"
+#include "log.h"
+#include "nlua_col.h"
+#include "nlua_tex.h"
+#include "nluadef.h"
 
 
 /* Faction metatable methods */

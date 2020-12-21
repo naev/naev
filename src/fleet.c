@@ -10,17 +10,18 @@
  */
 
 
-#include "fleet.h"
-
-#include "naev.h"
-
-#include "nstring.h"
+/** @cond */
+#include <limits.h>
 #include <math.h>
 #include <stdlib.h>
-#include <limits.h>
 
+#include "naev.h"
+/** @endcond */
+
+#include "fleet.h"
+
+#include "nstring.h"
 #include "nxml.h"
-
 #include "log.h"
 #include "pilot.h"
 #include "ndata.h"

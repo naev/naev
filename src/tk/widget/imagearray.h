@@ -8,9 +8,9 @@
 #  define WGT_IMAGEARRAY_H
 
 
-#include "opengl.h"
-#include "font.h"
 #include "colour.h"
+#include "font.h"
+#include "opengl.h"
 
 typedef struct ImageArrayCell_ {
    glTexture* image; /**< Image to display. */

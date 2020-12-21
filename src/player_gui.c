@@ -9,12 +9,14 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "player_gui.h"
 
-#include "naev.h"
-
-#include "log.h"
 #include "array.h"
+#include "log.h"
 #ifdef DEBUGGING
 #include "ndata.h"
 #endif /* DEBUGGING */

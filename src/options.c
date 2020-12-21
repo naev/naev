@@ -9,22 +9,26 @@
  */
 
 
-#include "options.h"
-
-#include "naev.h"
-#include "nstring.h"
+/** @cond */
 #include <ctype.h>
 #include "SDL.h"
-#include "log.h"
-#include "input.h"
-#include "toolkit.h"
-#include "sound.h"
-#include "music.h"
-#include "nstd.h"
-#include "dialogue.h"
+
+#include "naev.h"
+/** @endcond */
+
+#include "options.h"
+
 #include "conf.h"
+#include "dialogue.h"
+#include "input.h"
+#include "log.h"
+#include "music.h"
 #include "ndata.h"
+#include "nstd.h"
+#include "nstring.h"
 #include "player.h"
+#include "sound.h"
+#include "toolkit.h"
 
 
 #define BUTTON_WIDTH    200 /**< Button width, standard across menus. */

@@ -8,22 +8,24 @@
  * @brief Handles the rendering of graphics on the screen.
  */
 
-#include "nlua_gfx.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
-#include "log.h"
-#include "opengl.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_gfx.h"
+
 #include "font.h"
-#include "nlua_col.h"
-#include "nlua_tex.h"
-#include "nlua_font.h"
-#include "nlua_transform.h"
-#include "nlua_shader.h"
+#include "log.h"
 #include "ndata.h"
+#include "nlua_col.h"
+#include "nlua_font.h"
+#include "nlua_shader.h"
+#include "nlua_tex.h"
+#include "nlua_transform.h"
+#include "nluadef.h"
+#include "opengl.h"
 
 
 /* GFX methods. */

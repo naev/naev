@@ -9,10 +9,12 @@
  */
 
 
-#include "tk/toolkit_priv.h"
-
+/** @cond */
 #include <stdlib.h>
+/** @endcond */
+
 #include "nstring.h"
+#include "tk/toolkit_priv.h"
 
 
 static Widget *chk_getWgt( const unsigned int wid, const char *name );

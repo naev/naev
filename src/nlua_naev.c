@@ -8,21 +8,23 @@
  * @brief Contains Naev generic Lua bindings.
  */
 
-#include "nlua_naev.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
-#include "nlua_evt.h"
-#include "nlua_misn.h"
-#include "log.h"
-#include "nstd.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_naev.h"
+
 #include "input.h"
 #include "land.h"
-#include "player.h"
+#include "log.h"
+#include "nlua_evt.h"
+#include "nlua_misn.h"
+#include "nluadef.h"
+#include "nstd.h"
 #include "nstring.h"
+#include "player.h"
 
 
 /* Naev methods. */

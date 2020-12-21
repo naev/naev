@@ -8,7 +8,9 @@
 #  define PHYSICS_H
 
 
+/** @cond */
 #include <math.h>
+/** @endcond */
 
 
 #define VX(v)     ((v).x) /**< Gets the X component of a vector. */

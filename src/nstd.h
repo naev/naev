@@ -8,9 +8,10 @@
 #  define NSTD_H
 
 
+/** @cond */
 #include <ctype.h>
-
 #include "SDL.h"
+/** @endcond */
 
 
 /**

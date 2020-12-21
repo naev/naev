@@ -9,19 +9,22 @@
  */
 
 
-#include "player.h"
+/** @cond */
+#include <time.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include "toolkit.h"
-#include "pause.h"
 #include "player.h"
+
+#include "conf.h"
+#include "pause.h"
 #include "pilot.h"
 #include "pilot_ew.h"
-#include "space.h"
+#include "player.h"
 #include "sound.h"
-#include "conf.h"
-#include <time.h>
+#include "space.h"
+#include "toolkit.h"
 
 
 extern double player_acc; /**< Player acceleration. */

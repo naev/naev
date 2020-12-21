@@ -9,26 +9,27 @@
  */
 
 
-#include "spfx.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <inttypes.h>
-
 #include "SDL.h"
 #include "SDL_haptic.h"
 
-#include "log.h"
+#include "naev.h"
+/** @endcond */
+
+#include "spfx.h"
+
 #include "array.h"
-#include "pilot.h"
-#include "physics.h"
-#include "opengl.h"
-#include "pause.h"
-#include "rng.h"
+#include "debris.h"
+#include "log.h"
 #include "ndata.h"
 #include "nxml.h"
-#include "debris.h"
+#include "opengl.h"
+#include "pause.h"
 #include "perlin.h"
+#include "physics.h"
+#include "pilot.h"
+#include "rng.h"
 
 
 #define SPFX_XML_ID     "spfxs" /**< XML Document tag. */

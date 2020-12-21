@@ -2,11 +2,14 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/** @cond */
 #include "naev.h"
-#include "opengl.h"
-#include "ndata.h"
+/** @endcond */
+
 #include "log.h"
+#include "ndata.h"
 #include "nstring.h"
+#include "opengl.h"
 
 
 #define GLSL_VERSION    "#version 140\n\n" /**< Version to use for all shaders. */

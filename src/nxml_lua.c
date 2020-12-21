@@ -9,9 +9,11 @@
  */
 
 
-#include "nxml_lua.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
+
+#include "nxml_lua.h"
 
 #include "base64.h"
 #include "log.h"

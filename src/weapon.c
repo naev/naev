@@ -12,25 +12,27 @@
  */
 
 
-#include "weapon.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <math.h>
 #include <stdlib.h>
-#include "nstring.h"
 
-#include "log.h"
-#include "rng.h"
-#include "pilot.h"
-#include "player.h"
+#include "naev.h"
+/** @endcond */
+
+#include "weapon.h"
+
+#include "ai.h"
+#include "camera.h"
 #include "collision.h"
-#include "spfx.h"
-#include "opengl.h"
 #include "explosion.h"
 #include "gui.h"
-#include "camera.h"
-#include "ai.h"
+#include "log.h"
+#include "nstring.h"
+#include "opengl.h"
+#include "pilot.h"
+#include "player.h"
+#include "rng.h"
+#include "spfx.h"
 
 
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */

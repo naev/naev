@@ -13,13 +13,9 @@
  */
 
 
-#include "economy.h"
-
-#include "naev.h"
-
-#include <stdio.h>
-#include "nstring.h"
+/** @cond */
 #include <stdint.h>
+#include <stdio.h>
 
 #ifdef HAVE_SUITESPARSE_CS_H
 #include <suitesparse/cs.h>
@@ -27,15 +23,21 @@
 #include <cs.h>
 #endif
 
-#include "nxml.h"
-#include "ndata.h"
+#include "naev.h"
+/** @endcond */
+
+#include "economy.h"
+
 #include "log.h"
-#include "spfx.h"
+#include "ndata.h"
+#include "nstring.h"
+#include "ntime.h"
+#include "nxml.h"
 #include "pilot.h"
 #include "player.h"
 #include "rng.h"
 #include "space.h"
-#include "ntime.h"
+#include "spfx.h"
 
 
 /*

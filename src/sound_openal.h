@@ -7,13 +7,14 @@
 #  define SOUND_OPENAL_H
 
 
-#include "sound.h"
+/** @cond */
+#include <vorbis/vorbisfile.h>
 #include "al.h"
+/** @endcond */
 
 #include "ncompat.h"
 #include "nopenal.h"
-
-#include <vorbis/vorbisfile.h>
+#include "sound.h"
 
 
 /**

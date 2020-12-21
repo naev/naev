@@ -8,16 +8,18 @@
  * @brief Handles files.
  */
 
-#include "nlua_file.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_file.h"
+
 #include "log.h"
 #include "ndata.h"
 #include "nfile.h"
+#include "nluadef.h"
 
 
 /* File metatable methods. */

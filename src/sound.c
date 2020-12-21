@@ -9,26 +9,27 @@
  */
 
 
-#include "sound.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <sys/stat.h>
-
 #include "physfs.h"
 #include "SDL.h"
-#include "SDL_thread.h"
 #include "SDL_mutex.h"
+#include "SDL_thread.h"
 
-#include "sound_openal.h"
-#include "log.h"
-#include "nstring.h"
-#include "ndata.h"
-#include "music.h"
-#include "physics.h"
-#include "conf.h"
-#include "player.h"
+#include "naev.h"
+/** @endcond */
+
+#include "sound.h"
+
 #include "camera.h"
+#include "conf.h"
+#include "log.h"
+#include "music.h"
+#include "ndata.h"
+#include "nstring.h"
+#include "physics.h"
+#include "player.h"
+#include "sound_openal.h"
 
 
 #define SOUND_SUFFIX_WAV   ".wav" /**< Suffix of sounds. */

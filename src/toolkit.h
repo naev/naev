@@ -8,12 +8,13 @@
 #  define TOOLKIT_H
 
 
+/** @cond */
 #include "SDL.h"
+/** @endcond */
 
-#include "tk/widget.h"
-
-#include "opengl.h"
 #include "font.h"
+#include "opengl.h"
+#include "tk/widget.h"
 
 
 int toolkit_isOpen (void);

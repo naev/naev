@@ -8,11 +8,13 @@
  * @brief A wrapper around some of the more complex libpng functions.
  */
 
-#include "npng.h"
+/** @cond */
+#include <png.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <png.h>
+#include "npng.h"
 
 #include "attributes.h"
 #include "log.h"

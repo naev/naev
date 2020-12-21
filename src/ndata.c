@@ -20,28 +20,30 @@
  *  5) dirname(argv[0])/ndata* (binary path)
  */
 
-#include "ndata.h"
-
-#include "naev.h"
+/** @cond */
 #include <limits.h>
+#include <stdarg.h>
 #include <stdlib.h>
-
+#include <string.h>
 #if HAS_WIN32
 #include <windows.h>
 #endif /* HAS_WIN32 */
-#if HAS_MACOS
-#include "glue_macos.h"
-#endif /* HAS_MACOS */
-#include <stdarg.h>
-#include <string.h>
 
 #include "physfs.h"
 #include "SDL.h"
 #include "SDL_mutex.h"
 
+#include "naev.h"
+/** @endcond */
+
+#include "ndata.h"
+
 #include "attributes.h"
 #include "conf.h"
 #include "env.h"
+#if HAS_MACOS
+#include "glue_macos.h"
+#endif /* HAS_MACOS */
 #include "log.h"
 #include "nfile.h"
 #include "npng.h"

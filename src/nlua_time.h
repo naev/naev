@@ -7,10 +7,8 @@
 #  define NLUA_TIME_H
 
 
-#include <lua.h>
-
-#include "ntime.h"
 #include "nlua.h"
+#include "ntime.h"
 
 
 #define TIME_METATABLE   "time" /**< Planet metatable identifier. */

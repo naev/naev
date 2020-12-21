@@ -9,28 +9,30 @@
  */
 
 
-#include "land_outfits.h"
+/** @cond */
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-#include <math.h>
+#include "land_outfits.h"
 
+#include "dialogue.h"
+#include "equipment.h"
+#include "hook.h"
+#include "land_takeoff.h"
 #include "log.h"
 #include "map.h"
-#include "equipment.h"
+#include "map_find.h"
+#include "nstring.h"
 #include "outfit.h"
-#include "hook.h"
 #include "player.h"
 #include "player_gui.h"
 #include "slots.h"
 #include "space.h"
 #include "toolkit.h"
-#include "dialogue.h"
-#include "map_find.h"
-#include "land_takeoff.h"
 
 
 #define  OUTFITS_IAR    "iarOutfits"

@@ -9,22 +9,23 @@
  */
 
 
-#include "music.h"
-
-#include "naev.h"
-
+/** @cond */
 #include "physfs.h"
 #include "SDL.h"
 
-#include "music_openal.h"
+#include "naev.h"
+/** @endcond */
 
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_var.h"
-#include "nlua_music.h"
-#include "log.h"
-#include "ndata.h"
+#include "music.h"
+
 #include "conf.h"
+#include "log.h"
+#include "music_openal.h"
+#include "ndata.h"
+#include "nlua.h"
+#include "nlua_music.h"
+#include "nlua_var.h"
+#include "nluadef.h"
 #include "nstring.h"
 
 

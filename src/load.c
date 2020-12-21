@@ -9,32 +9,34 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "load.h"
 
-#include "naev.h"
-
-#include "nxml.h"
-#include "log.h"
-#include "player.h"
-#include "nfile.h"
 #include "array.h"
-#include "space.h"
-#include "toolkit.h"
-#include "menu.h"
-#include "economy.h"
 #include "dialogue.h"
+#include "economy.h"
 #include "event.h"
-#include "news.h"
-#include "mission.h"
 #include "faction.h"
 #include "gui.h"
-#include "unidiff.h"
-#include "nlua_var.h"
-#include "land.h"
 #include "hook.h"
+#include "land.h"
+#include "log.h"
+#include "menu.h"
+#include "mission.h"
+#include "news.h"
+#include "nfile.h"
+#include "nlua_var.h"
 #include "nstring.h"
+#include "nxml.h"
 #include "outfit.h"
+#include "player.h"
 #include "shiplog.h"
+#include "space.h"
+#include "toolkit.h"
+#include "unidiff.h"
 
 #define LOAD_WIDTH      600 /**< Load window width. */
 #define LOAD_HEIGHT     500 /**< Load window height. */

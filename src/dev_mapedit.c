@@ -8,12 +8,14 @@
  * @brief Handles the star system editor.
  */
 
-#include "dev_mapedit.h"
-
-#include "naev.h"
-
+/** @cond */
 #include "physfs.h"
 #include "SDL.h"
+
+#include "naev.h"
+/** @endcond */
+
+#include "dev_mapedit.h"
 
 #include "array.h"
 #include "commodity.h"

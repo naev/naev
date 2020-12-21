@@ -7,10 +7,8 @@
 #  define NLUA_JUMP_H
 
 
-#include <lua.h>
-
-#include "space.h"
 #include "nlua.h"
+#include "space.h"
 
 
 #define JUMP_METATABLE   "jump" /**< Lua metatable identifier. */

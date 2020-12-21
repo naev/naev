@@ -3,20 +3,22 @@
  */
 
 
-#include "map_find.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <assert.h>
 
-#include "log.h"
-#include "toolkit.h"
-#include "map.h"
+#include "naev.h"
+/** @endcond */
+
+#include "map_find.h"
+
 #include "dialogue.h"
-#include "player.h"
-#include "tech.h"
-#include "space.h"
+#include "log.h"
+#include "map.h"
 #include "nstring.h"
+#include "player.h"
+#include "space.h"
+#include "tech.h"
+#include "toolkit.h"
 
 
 #define BUTTON_WIDTH    120 /**< Map button width. */

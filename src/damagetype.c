@@ -9,20 +9,22 @@
  */
 
 
-#include "damagetype.h"
-#include "naev.h"
-
+/** @cond */
 #include <inttypes.h>
-
 #include "SDL.h"
 
-#include "log.h"
+#include "naev.h"
+/** @endcond */
+
+#include "damagetype.h"
+
 #include "array.h"
-#include "pilot.h"
-#include "pause.h"
-#include "rng.h"
+#include "log.h"
 #include "ndata.h"
 #include "nxml.h"
+#include "pause.h"
+#include "pilot.h"
+#include "rng.h"
 #include "shipstats.h"
 
 

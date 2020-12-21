@@ -9,18 +9,16 @@
  */
 
 
-#include "land.h"
-
-#include "naev.h"
-
-#include <stdlib.h>
-#include <stdio.h>
+/** @cond */
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "physfs.h"
 
-#include "land_outfits.h"
-#include "land_shipyard.h"
-#include "land_trade.h"
+#include "naev.h"
+/** @endcond */
+
+#include "land.h"
 
 #include "camera.h"
 #include "conf.h"
@@ -31,6 +29,9 @@
 #include "event.h"
 #include "gui.h"
 #include "hook.h"
+#include "land_outfits.h"
+#include "land_shipyard.h"
+#include "land_trade.h"
 #include "log.h"
 #include "map.h"
 #include "menu.h"
@@ -38,9 +39,9 @@
 #include "music.h"
 #include "ndata.h"
 #include "news.h"
-#include "nluadef.h"
 #include "nlua.h"
 #include "nlua_tk.h"
+#include "nluadef.h"
 #include "npc.h"
 #include "nstring.h"
 #include "ntime.h"

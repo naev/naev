@@ -8,17 +8,19 @@
  * @brief Bindings for Camera functionality from Lua.
  */
 
-#include "nlua_camera.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
-#include "log.h"
-#include "nlua_vec2.h"
-#include "nlua_pilot.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_camera.h"
+
 #include "camera.h"
+#include "log.h"
+#include "nlua_pilot.h"
+#include "nlua_vec2.h"
+#include "nluadef.h"
 #include "player.h"
 #include "spfx.h"
 

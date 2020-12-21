@@ -8,8 +8,8 @@
 #  define WGT_IMAGE_H
 
 
-#include "font.h"
 #include "colour.h"
+#include "font.h"
 
 
 /**

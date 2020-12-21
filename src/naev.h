@@ -26,11 +26,13 @@
 #  define NAEV_H
 
 
-#include "ncompat.h"
-
-#include <limits.h>
+/** @cond */
 #include <inttypes.h>
+#include <limits.h>
 #include <math.h>
+/** @endcond */
+
+#include "ncompat.h"
 
 
 #define APPNAME            "Naev" /**< Application name. */

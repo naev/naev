@@ -7,14 +7,14 @@
 #  define OPENGL_TEX_H
 
 
+/** @cond */
 #include <stdint.h>
-
 #include "SDL.h"
+/** @endcond */
 
-#include "physics.h"
 #include "colour.h"
-
 #include "ncompat.h"
+#include "physics.h"
 
 
 /* Recommended for compatibility and such */

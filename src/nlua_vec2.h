@@ -7,9 +7,8 @@
 #  define NLUA_VEC2_H
 
 
-#include <lua.h>
-#include "physics.h"
 #include "nlua.h"
+#include "physics.h"
 
 
 #define VECTOR_METATABLE   "vec2"   /**< Vector metatable identifier. */

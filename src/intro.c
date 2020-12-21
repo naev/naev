@@ -12,21 +12,22 @@
  */
 
 
-#include "intro.h"
-
-#include "naev.h"
-
-#include "nstring.h"
-
+/** @cond */
 #include "SDL.h"
 
-#include "log.h"
-#include "ndata.h"
-#include "font.h"
-#include "music.h"
-#include "nstd.h"
-#include "toolkit.h"
+#include "naev.h"
+/** @endcond */
+
+#include "intro.h"
+
 #include "conf.h"
+#include "font.h"
+#include "log.h"
+#include "music.h"
+#include "ndata.h"
+#include "nstd.h"
+#include "nstring.h"
+#include "toolkit.h"
 
 
 #define INTRO_SPEED        30. /**< Speed of text in characters / second. */

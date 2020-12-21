@@ -7,6 +7,7 @@
 #ifndef XML_H
 #  define XML_H
 
+/** @cond */
 #include <errno.h>
 
 #ifdef __MINGW64_VERSION_MAJOR
@@ -22,6 +23,7 @@
 
 #include "libxml/parser.h"
 #include "libxml/xmlwriter.h"
+/** @endcond */
 
 #include "log.h"
 #include "opengl.h"

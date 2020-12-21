@@ -8,17 +8,19 @@
  * @brief Handles the star system editor.
  */
 
-#include "dev_sysedit.h"
-#include "dev_uniedit.h"
-
-#include "naev.h"
-
+/** @cond */
 #include "physfs.h"
 #include "SDL.h"
+
+#include "naev.h"
+/** @endcond */
+
+#include "dev_sysedit.h"
 
 #include "conf.h"
 #include "dev_planet.h"
 #include "dev_system.h"
+#include "dev_uniedit.h"
 #include "dialogue.h"
 #include "economy.h"
 #include "map.h"

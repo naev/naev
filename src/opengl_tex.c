@@ -9,22 +9,22 @@
  */
 
 
-#include "opengl.h"
+/** @cond */
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-
+#include "conf.h"
+#include "gui.h"
 #include "log.h"
+#include "md5.h"
 #include "ndata.h"
 #include "nfile.h"
-#include "gui.h"
-#include "conf.h"
 #include "npng.h"
-#include "md5.h"
+#include "nstring.h"
+#include "opengl.h"
 
 
 /*

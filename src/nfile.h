@@ -7,10 +7,12 @@
 #define NFILE_H
 
 
-#include "array.h"
+/** @cond */
 #include <stddef.h>
 #include <stdint.h>
+/** @endcond */
 
+#include "array.h"
 #include "attributes.h"
 
 

@@ -8,14 +8,16 @@
  * @brief Handles datas.
  */
 
-#include "nlua_data.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_data.h"
+
 #include "log.h"
+#include "nluadef.h"
 
 
 /* Helper functions. */

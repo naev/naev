@@ -3,22 +3,23 @@
  */
 
 
-#include "sound_openal.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <math.h>
 #include <sys/stat.h>
-
 #include "SDL.h"
-#include "SDL_thread.h"
 #include "SDL_endian.h"
+#include "SDL_thread.h"
 
-#include "music_openal.h"
-#include "sound.h"
-#include "ndata.h"
-#include "log.h"
+#include "naev.h"
+/** @endcond */
+
+#include "sound_openal.h"
+
 #include "conf.h"
+#include "log.h"
+#include "music_openal.h"
+#include "ndata.h"
+#include "sound.h"
 
 
 /*
