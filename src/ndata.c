@@ -71,7 +71,6 @@
  */
 static char      *ndata_dir        = NULL; /**< ndata directory name. */
 static SDL_mutex *ndata_lock       = NULL; /**< Lock for ndata creation. */
-static int        ndata_loadedfile = 0;    /**< Already loaded a file? */
 static int        ndata_source     = NDATA_SRC_SEARCH_START;
 
 
@@ -276,7 +275,6 @@ void* ndata_read( const char* filename, size_t *filesize )
 
    buf = nfile_readFile( filesize, ndata_dir, filename );
    if ( buf != NULL ) {
-      ndata_loadedfile = 1;
       return buf;
    }
 
