@@ -13,21 +13,21 @@
 
 #include "naev.h"
 
-#include "nstring.h"
 #include <limits.h>
+#include "physfs.h"
 
-#include "nxml.h"
-
+#include "array.h"
+#include "colour.h"
+#include "conf.h"
 #include "log.h"
 #include "ndata.h"
-#include "toolkit.h"
-#include "array.h"
-#include "conf.h"
+#include "nfile.h"
 #include "npng.h"
-#include "colour.h"
+#include "nstring.h"
+#include "nxml.h"
 #include "shipstats.h"
 #include "slots.h"
-#include "nfile.h"
+#include "toolkit.h"
 #include "unistd.h"
 
 
@@ -610,7 +610,7 @@ static int ship_loadPLG( Ship *temp, char *buf )
    nsnprintf( file, sl, "%s%s.xml", SHIP_POLYGON_PATH, buf );
 
    /* See if the file does exist. */
-   if (!ndata_exists(file)) {
+   if (!PHYSFS_exists(file)) {
       WARN(_("%s xml collision polygon does not exist!\n \
                Please use the script 'polygon_from_sprite.py' if sprites are used,\n \
                And 'polygonSTL.py' if 3D model is used in game.\n \

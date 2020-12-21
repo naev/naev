@@ -260,16 +260,6 @@ const char* ndata_name (void)
    return start_name();
 }
 
-/**
- * @brief Checks to see if a file is in the NDATA.
- *    @param filename Name of the file to check.
- *    @return 1 if the file exists, 0 otherwise.
- */
-int ndata_exists( const char *filename )
-{
-   return nfile_fileExists( ndata_dir, filename );
-}
-
 
 /**
  * @brief Reads a file from the ndata.

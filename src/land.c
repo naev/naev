@@ -15,40 +15,40 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "nstring.h"
 #include <math.h>
+#include "physfs.h"
 
 #include "land_outfits.h"
 #include "land_shipyard.h"
 #include "land_trade.h"
 
-#include "log.h"
-#include "toolkit.h"
+#include "camera.h"
+#include "conf.h"
 #include "dialogue.h"
-#include "player.h"
-#include "player_autonav.h"
-#include "rng.h"
-#include "music.h"
 #include "economy.h"
-#include "hook.h"
-#include "mission.h"
-#include "ntime.h"
-#include "save.h"
-#include "map.h"
-#include "news.h"
+#include "equipment.h"
 #include "escort.h"
 #include "event.h"
-#include "conf.h"
 #include "gui.h"
-#include "equipment.h"
-#include "npc.h"
-#include "camera.h"
+#include "hook.h"
+#include "log.h"
+#include "map.h"
 #include "menu.h"
+#include "mission.h"
+#include "music.h"
 #include "ndata.h"
-#include "nlua.h"
+#include "news.h"
 #include "nluadef.h"
+#include "nlua.h"
 #include "nlua_tk.h"
+#include "npc.h"
+#include "nstring.h"
+#include "ntime.h"
+#include "player.h"
+#include "rng.h"
+#include "save.h"
 #include "shiplog.h"
+#include "toolkit.h"
 
 
 /*
@@ -1407,7 +1407,7 @@ static void land_stranded (void)
    const char *file = RESCUE_PATH;
 
    /* Nothing to do if there's no rescue script. */
-   if (!ndata_exists(file))
+   if (!PHYSFS_exists(file))
       return;
 
    if (rescue_env == LUA_NOREF) {
