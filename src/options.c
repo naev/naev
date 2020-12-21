@@ -11,6 +11,7 @@
 
 /** @cond */
 #include <ctype.h>
+#include "physfs.h"
 #include "SDL.h"
 
 #include "naev.h"
@@ -235,8 +236,8 @@ static char** lang_list( int *n )
 static void opt_gameplay( unsigned int wid )
 {
    (void) wid;
-   char buf[PATH_MAX];
-   const char *path;
+   char buf[4096];
+   char **paths;
    int cw;
    int w, h, y, x, by, l, n, i;
    char *s;
@@ -269,11 +270,17 @@ static void opt_gameplay( unsigned int wid )
          &gl_smallFont, NULL, buf );
 #endif /* GIT_COMMIT */
    y -= 20;
-   path = ndata_getPath();
-   if (path == NULL)
-      nsnprintf( buf, sizeof(buf), _("not using ndata") );
-   else
-      nsnprintf( buf, sizeof(buf), _("ndata: %s"), path);
+
+   paths = PHYSFS_getSearchPath();
+   for (i=l=0; paths[i]!=NULL && (size_t)l < sizeof(buf); i++)
+   {
+      if (i == 0)
+         l = nsnprintf( buf, sizeof(buf), _("ndata: %s"), paths[i] );
+      else
+         l += nsnprintf( &buf[l], sizeof(buf)-l, ":%s", paths[i] );
+   }
+   PHYSFS_freeList(paths);
+   paths = NULL;
    window_addText( wid, x, y, cw, 20, 1, "txtNdata",
          &gl_smallFont, NULL, buf );
    y -= 40;
@@ -284,7 +291,7 @@ static void opt_gameplay( unsigned int wid )
    cw = (w-60)/2 - 40;
    y  = by;
    x  = 20;
-#if defined ENABLE_NLS && ENABLE_NLS
+#if ENABLE_NLS
    s = _("Language:");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 0, "txtLanguage",
