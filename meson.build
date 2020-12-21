@@ -119,7 +119,13 @@ if buildExec.disabled() == false
    # PhysicsFS
    physfs = dependency('physfs', required: false)
    if not physfs.found()
-      physfs = import('cmake').subproject('physfs').dependency('physfs-static')
+      cmake = import('cmake')
+      # Micro-manage the poor thing to death. This helps us survive AppImage packaging, though there should be a better way.
+      physfs_opts = cmake.subproject_options()
+      physfs_opts.add_cmake_defines({'PHYSFS_BUILD_SHARED': false, 'PHYSFS_BUILD_TEST': false})
+      # You wouldn't believe the screaming, otherwise...
+      physfs_opts.set_override_option('warning_level', '1')
+      physfs = cmake.subproject('physfs', options: physfs_opts).dependency('physfs-static')
    endif
    naev_deps += physfs
 
