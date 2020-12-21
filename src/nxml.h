@@ -142,6 +142,7 @@ do {if (xmlTextWriterEndDocument(w) < 0) { \
 /*
  * Functions for generic complex reading.
  */
+xmlDocPtr xml_parsePhysFS( const char* filename );
 glTexture* xml_parseTexture( xmlNodePtr node,
       const char *path, int defsx, int defsy,
       const unsigned int flags );

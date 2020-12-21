@@ -17,7 +17,6 @@
 
 #include "array.h"
 #include "log.h"
-#include "ndata.h"
 #include "nxml.h"
 
 
@@ -53,25 +52,14 @@ static int sp_check( unsigned int spid );
  */
 int sp_load (void)
 {
-   size_t bufsize;
-   char *buf;
    xmlNodePtr node, cur;
    xmlDocPtr doc;
    SlotProperty_t *sp;
 
    /* Load and read the data. */
-   buf = ndata_read( SP_DATA_PATH, &bufsize );
-   if (buf == NULL) {
-      WARN(_("Unable to read data from '%s'"), SP_DATA_PATH);
+   doc = xml_parsePhysFS( SP_DATA_PATH );
+   if (doc == NULL)
       return -1;
-   }
-
-   /* Load the document. */
-   doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN(_("Unable to parse document '%s'"), SP_DATA_PATH);
-      return -1;
-   }
 
    /* Check to see if document exists. */
    node = doc->xmlChildrenNode;
@@ -122,7 +110,6 @@ int sp_load (void)
 
    /* Clean up. */
    xmlFreeDoc(doc);
-   free(buf);
 
    return 0;
 }

@@ -1763,12 +1763,9 @@ static int planets_load ( void )
       len  = (strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2);
       file = malloc( len );
       nsnprintf( file, len,"%s%s",PLANET_DATA_PATH,planet_files[i]);
-      buf  = ndata_read( file, &bufsize );
-      doc  = xmlParseMemory( buf, bufsize );
+      doc = xml_parsePhysFS( file );
       if (doc == NULL) {
-         WARN(_("%s file is invalid xml!"),file);
          free(file);
-         free(buf);
          continue;
       }
 
@@ -1777,7 +1774,6 @@ static int planets_load ( void )
          WARN(_("Malformed %s file: does not contain elements"),file);
          free(file);
          xmlFreeDoc(doc);
-         free(buf);
          continue;
       }
 
@@ -1789,7 +1785,6 @@ static int planets_load ( void )
       /* Clean up. */
       free(file);
       xmlFreeDoc(doc);
-      free(buf);
    }
 
    /* Clean up. */
@@ -3293,8 +3288,7 @@ static int asteroidTypes_load (void)
 {
    int i, j, len, namdef, qttdef;
    AsteroidType *at;
-   size_t bufsize;
-   char *buf, *str, file[PATH_MAX];
+   char *str, file[PATH_MAX];
    xmlNodePtr node, cur, child;
    xmlDocPtr doc;
    png_uint_32 w, h;
@@ -3303,18 +3297,9 @@ static int asteroidTypes_load (void)
    SDL_Surface *surface;
 
    /* Load the data. */
-   buf = ndata_read( ASTERO_DATA_PATH, &bufsize );
-   if (buf == NULL) {
-      WARN(_("Unable to read data from '%s'"), ASTERO_DATA_PATH);
+   doc = xml_parsePhysFS( ASTERO_DATA_PATH );
+   if (doc == NULL)
       return -1;
-   }
-
-   /* Load the document. */
-   doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN(_("Unable to parse document '%s'"), ASTERO_DATA_PATH);
-      return -1;
-   }
 
    /* Get the root node. */
    node = doc->xmlChildrenNode;
@@ -3414,7 +3399,6 @@ static int asteroidTypes_load (void)
 
    /* Clean up. */
    xmlFreeDoc(doc);
-   free(buf);
 
    return 0;
 }
@@ -3432,8 +3416,7 @@ static int asteroidTypes_load (void)
  */
 static int systems_load (void)
 {
-   size_t bufsize;
-   char *buf, **system_files, *file;
+   char **system_files, *file;
    xmlNodePtr node;
    xmlDocPtr doc;
    StarSystem *sys;
@@ -3456,19 +3439,14 @@ static int systems_load (void)
       file = malloc( len );
       nsnprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
-      buf = ndata_read( file, &bufsize );
-      doc = xmlParseMemory( buf, bufsize );
-      if (doc == NULL) {
-         WARN(_("%s file is invalid xml!"),file);
-         free(buf);
+      doc = xml_parsePhysFS( file );
+      if (doc == NULL)
          continue;
-      }
 
       node = doc->xmlChildrenNode; /* first planet node */
       if (node == NULL) {
          WARN(_("Malformed %s file: does not contain elements"),file);
          xmlFreeDoc(doc);
-         free(buf);
          continue;
       }
 
@@ -3478,7 +3456,6 @@ static int systems_load (void)
 
       /* Clean up. */
       xmlFreeDoc(doc);
-      free(buf);
       free( file );
    }
 
@@ -3490,18 +3467,15 @@ static int systems_load (void)
       file = malloc( len );
       nsnprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
-      buf = ndata_read( file, &bufsize );
+      doc = xml_parsePhysFS( file );
       free( file );
-      doc = xmlParseMemory( buf, bufsize );
-      if (doc == NULL) {
-         free(buf);
+      file = NULL;
+      if (doc == NULL)
          continue;
-      }
 
       node = doc->xmlChildrenNode; /* first planet node */
       if (node == NULL) {
          xmlFreeDoc(doc);
-         free(buf);
          continue;
       }
 
@@ -3509,7 +3483,6 @@ static int systems_load (void)
 
       /* Clean up. */
       xmlFreeDoc(doc);
-      free(buf);
    }
 
    DEBUG( ngettext( "Loaded %d Star System", "Loaded %d Star Systems", systems_nstack ), systems_nstack );

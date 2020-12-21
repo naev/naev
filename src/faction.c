@@ -1465,23 +1465,12 @@ void factions_reset (void)
 int factions_load (void)
 {
    int mem;
-   size_t bufsize;
    xmlNodePtr factions, node;
-   char *buf;
-
-   /* Load and read the data. */
-   buf = ndata_read( FACTION_DATA_PATH, &bufsize);
-   if (buf == NULL) {
-      WARN(_("Unable to read data from '%s'"), FACTION_DATA_PATH);
-      return -1;
-   }
 
    /* Load the document. */
-   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN(_("Unable to parse document '%s'"), FACTION_DATA_PATH);
+   xmlDocPtr doc = xml_parsePhysFS( FACTION_DATA_PATH );
+   if (doc == NULL)
       return -1;
-   }
 
    node = doc->xmlChildrenNode; /* Factions node */
    if (!xml_isNode(node,XML_FACTION_ID)) {
@@ -1571,7 +1560,6 @@ int factions_load (void)
 #endif /* DEBUGGING */
 
    xmlFreeDoc(doc);
-   free(buf);
 
    DEBUG( ngettext( "Loaded %d Faction", "Loaded %d Factions", faction_nstack ), faction_nstack );
 
