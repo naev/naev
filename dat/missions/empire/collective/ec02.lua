@@ -30,8 +30,8 @@
 
 ]]--
 
-require "missions/empire/common.lua"
-require "numstring.lua"
+require "missions/empire/common"
+require "numstring"
 
 bar_desc = _("You notice Lt. Commander Dimitri at one of the booths.")
 misn_title = _("Collective Espionage")
@@ -167,7 +167,7 @@ function moveSwarm(fleet, pos)
         if j:exists() then
             j:control()
             j:setVisplayer(true)
-            j:goto(j:pos() + dpos, false)
+            j:moveto(j:pos() + dpos, false)
         end
     end
 end

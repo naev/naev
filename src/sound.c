@@ -19,9 +19,7 @@
 #include "SDL_thread.h"
 #include "SDL_mutex.h"
 
-#include "sound_priv.h"
 #include "sound_openal.h"
-#include "sound_sdlmix.h"
 #include "log.h"
 #include "nstring.h"
 #include "ndata.h"
@@ -71,49 +69,6 @@ static int snd_compressionG   = -1; /**< Compression sound group. */
 static double snd_compression_gain = 0.; /**< Current compression gain. */
 
 
-
-/*
- * Function pointers for backends.
- */
-/* Creation. */
-int  (*sound_sys_init) (void)          = NULL;
-void (*sound_sys_exit) (void)          = NULL;
- /* Sound creation. */
-int  (*sound_sys_load) ( alSound *snd, const char *filename ) = NULL;
-void (*sound_sys_free) ( alSound *snd ) = NULL;
- /* Sound settings. */
-int  (*sound_sys_volume) ( const double vol ) = NULL;
-double (*sound_sys_getVolume) (void)   = NULL;
-double (*sound_sys_getVolumeLog) (void)   = NULL;
- /* Sound playing. */
-int  (*sound_sys_play) ( alVoice *v, alSound *s )   = NULL;
-int  (*sound_sys_playPos) ( alVoice *v, alSound *s,
-      double px, double py, double vx, double vy ) = NULL;
-int  (*sound_sys_updatePos) ( alVoice *v, double px, double py,
-      double vx, double vy )           = NULL;
-void (*sound_sys_updateVoice) ( alVoice *v ) = NULL;
- /* Sound management. */
-void (*sound_sys_update) (void)        = NULL;
-void (*sound_sys_stop) ( alVoice *v )  = NULL;
-void (*sound_sys_pause) (void)         = NULL;
-void (*sound_sys_resume) (void)        = NULL;
-void (*sound_sys_setSpeed) ( double s ) = NULL;
-void (*sound_sys_setSpeedVolume) ( double vol ) = NULL;
-/* Listener. */
-int (*sound_sys_updateListener) ( double dir, double px, double py,
-      double vx, double vy )           = NULL;
-/* Groups. */
-int  (*sound_sys_createGroup) ( int size ) = NULL;
-int  (*sound_sys_playGroup) ( int group, alSound *s, int once ) = NULL;
-void (*sound_sys_stopGroup) ( int group ) = NULL;
-void (*sound_sys_pauseGroup) ( int group ) = NULL;
-void (*sound_sys_resumeGroup) ( int group ) = NULL;
-void (*sound_sys_speedGroup) ( int group, int enable ) = NULL;
-void (*sound_sys_volumeGroup) ( int group, double volume ) = NULL;
-/* Env. */
-int  (*sound_sys_env) ( SoundEnv_t env, double param ) = NULL;
-
-
 /*
  * prototypes
  */
@@ -143,105 +98,8 @@ int sound_init (void)
    if (sound_disabled && music_disabled)
       return 0;
 
-   /* Choose sound system. */
-   if ((sound_sys_init == NULL) && (conf.sound_backend != NULL) &&
-         (strcmp(conf.sound_backend,"openal")==0)) {
-#if USE_OPENAL
-      /*
-       * OpenAL Sound.
-       */
-      /* Creation. */
-      sound_sys_init       = sound_al_init;
-      sound_sys_exit       = sound_al_exit;
-      /* Sound Creation. */
-      sound_sys_load       = sound_al_load;
-      sound_sys_free       = sound_al_free;
-      /* Sound settings. */
-      sound_sys_volume     = sound_al_volume;
-      sound_sys_getVolume  = sound_al_getVolume;
-      sound_sys_getVolumeLog = sound_al_getVolumeLog;
-      /* Sound playing. */
-      sound_sys_play       = sound_al_play;
-      sound_sys_playPos    = sound_al_playPos;
-      sound_sys_updatePos  = sound_al_updatePos;
-      sound_sys_updateVoice = sound_al_updateVoice;
-      /* Sound management. */
-      sound_sys_update     = sound_al_update;
-      sound_sys_stop       = sound_al_stop;
-      sound_sys_pause      = sound_al_pause;
-      sound_sys_resume     = sound_al_resume;
-      sound_sys_setSpeed   = sound_al_setSpeed;
-      sound_sys_setSpeedVolume = sound_al_setSpeedVolume;
-      /* Listener. */
-      sound_sys_updateListener = sound_al_updateListener;
-      /* Groups. */
-      sound_sys_createGroup = sound_al_createGroup;
-      sound_sys_playGroup  = sound_al_playGroup;
-      sound_sys_stopGroup  = sound_al_stopGroup;
-      sound_sys_pauseGroup = sound_al_pauseGroup;
-      sound_sys_resumeGroup = sound_al_resumeGroup;
-      sound_sys_speedGroup = sound_al_speedGroup;
-      sound_sys_volumeGroup = sound_al_volumeGroup;
-      /* Env. */
-      sound_sys_env        = sound_al_env;
-#else /* USE_OPENAL */
-      WARN(_("OpenAL support not compiled in!"));
-#endif /* USE_OPENAL */
-   }
-   if ((sound_sys_init == NULL) && (conf.sound_backend != NULL) &&
-         (strcmp(conf.sound_backend,"sdlmix")==0)) {
-#if USE_SDLMIX
-      /*
-       * SDL_mixer Sound.
-       */
-      /* Creation. */
-      sound_sys_init       = sound_mix_init;
-      sound_sys_exit       = sound_mix_exit;
-      /* Sound Creation. */
-      sound_sys_load       = sound_mix_load;
-      sound_sys_free       = sound_mix_free;
-      /* Sound settings. */
-      sound_sys_volume     = sound_mix_volume;
-      sound_sys_getVolume  = sound_mix_getVolume;
-      sound_sys_getVolumeLog = sound_mix_getVolumeLog;
-      /* Sound playing. */
-      sound_sys_play       = sound_mix_play;
-      sound_sys_playPos    = sound_mix_playPos;
-      sound_sys_updatePos  = sound_mix_updatePos;
-      sound_sys_updateVoice = sound_mix_updateVoice;
-      /* Sound management. */
-      sound_sys_update     = sound_mix_update;
-      sound_sys_stop       = sound_mix_stop;
-      sound_sys_pause      = sound_mix_pause;
-      sound_sys_resume     = sound_mix_resume;
-      sound_sys_setSpeed   = sound_mix_setSpeed;
-      sound_sys_setSpeedVolume = sound_mix_setSpeedVolume;
-      /* Listener. */
-      sound_sys_updateListener = sound_mix_updateListener;
-      /* Groups. */
-      sound_sys_createGroup = sound_mix_createGroup;
-      sound_sys_playGroup  = sound_mix_playGroup;
-      sound_sys_stopGroup  = sound_mix_stopGroup;
-      sound_sys_pauseGroup = sound_mix_pauseGroup;
-      sound_sys_resumeGroup = sound_mix_resumeGroup;
-      sound_sys_speedGroup = sound_mix_speedGroup;
-      sound_sys_volumeGroup = sound_mix_volumeGroup;
-      /* Env. */
-      sound_sys_env        = sound_mix_env;
-#else /* USE_SDLMIX */
-      WARN(_("SDL_mixer support not compiled in!"));
-#endif /* USE_SDLMIX */
-   }
-   if (sound_sys_init == NULL) {
-      WARN(_("Unknown/Unavailable sound backend '%s'."), conf.sound_backend);
-      sound_disabled = 1;
-      WARN(_("Sound disabled."));
-      music_disabled = 1;
-      return 0;
-   }
-
    /* Initialize sound backend. */
-   ret = sound_sys_init();
+   ret = sound_al_init();
    if (ret != 0) {
       sound_disabled = 1;
       music_disabled = 1;
@@ -329,7 +187,7 @@ void sound_exit (void)
    sound_nlist = 0;
 
    /* Exit sound subsystem. */
-   sound_sys_exit();
+   sound_al_exit();
 
    /* Sound is done. */
    sound_initialized = 0;
@@ -397,7 +255,7 @@ int sound_play( int sound )
    s = &sound_list[sound];
 
    /* Try to play the sound. */
-   if (sound_sys_play( v, s ))
+   if (sound_al_play( v, s ))
       return -1;
 
    /* Set state and add to list. */
@@ -456,7 +314,7 @@ int sound_playPos( int sound, double px, double py, double vx, double vy )
    s = &sound_list[sound];
 
    /* Try to play the sound. */
-   if (sound_sys_playPos( v, s, px, py, vx, vy ))
+   if (sound_al_playPos( v, s, px, py, vx, vy ))
       return -1;
 
    /* Actually add the voice to the list. */
@@ -488,7 +346,7 @@ int sound_updatePos( int voice, double px, double py, double vx, double vy )
    if (v != NULL) {
 
       /* Update the voice. */
-      if (sound_sys_updatePos( v, px, py, vx, vy))
+      if (sound_al_updatePos( v, px, py, vx, vy))
          return -1;
    }
 
@@ -512,7 +370,7 @@ int sound_update( double dt )
       return 0;
 
    /* System update. */
-   sound_sys_update();
+   sound_al_update();
 
    if (voice_active == NULL)
       return 0;
@@ -523,7 +381,7 @@ int sound_update( double dt )
    for (v=voice_active; v!=NULL; v=v->next) {
 
       /* Run first to clear in same iteration. */
-      sound_sys_updateVoice( v );
+      sound_al_updateVoice( v );
 
       /* Destroy and toss into pool. */
       if ((v->state == VOICE_STOPPED) || (v->state == VOICE_DESTROY)) {
@@ -569,10 +427,10 @@ void sound_pause (void)
    if (sound_disabled)
       return;
 
-   sound_sys_pause();
+   sound_al_pause();
 
    if (snd_compression >= 0)
-      sound_sys_pauseGroup( snd_compressionG );
+      sound_al_pauseGroup( snd_compressionG );
 }
 
 
@@ -584,10 +442,10 @@ void sound_resume (void)
    if (sound_disabled)
       return;
 
-   sound_sys_resume();
+   sound_al_resume();
 
    if (snd_compression >= 0)
-      sound_sys_resumeGroup( snd_compressionG );
+      sound_al_resumeGroup( snd_compressionG );
 }
 
 
@@ -607,7 +465,7 @@ void sound_stopAll (void)
 
    voiceLock();
    for (v=voice_active; v!=NULL; v=v->next) {
-      sound_sys_stop( v );
+      sound_al_stop( v );
       v->state = VOICE_STOPPED;
    }
    voiceUnlock();
@@ -628,7 +486,7 @@ void sound_stop( int voice )
 
    v = voice_get(voice);
    if (v != NULL) {
-      sound_sys_stop( v );
+      sound_al_stop( v );
       v->state = VOICE_STOPPED;
    }
 
@@ -653,7 +511,7 @@ int sound_updateListener( double dir, double px, double py,
    if (sound_disabled)
       return 0;
 
-   return sound_sys_updateListener( dir, px, py, vx, vy );
+   return sound_al_updateListener( dir, px, py, vx, vy );
 }
 
 
@@ -683,16 +541,16 @@ void sound_setSpeed( double s )
             sound_playGroup( snd_compressionG, snd_compression, 0 ); /* Start playing only if it's not playing. */
          sound_volumeGroup( snd_compressionG, v );
       }
-      sound_sys_setSpeedVolume( 1.-v );
+      sound_al_setSpeedVolume( 1.-v );
    }
    else if (playing) {
       if (snd_compression >= 0)
          sound_stopGroup( snd_compressionG ); /* Stop compression sound. */
-      sound_sys_setSpeedVolume( 1. ); /* Restore volume. */
+      sound_al_setSpeedVolume( 1. ); /* Restore volume. */
    }
    snd_compression_gain = v;
 
-   return sound_sys_setSpeed( s );
+   return sound_al_setSpeed( s );
 }
 
 
@@ -777,7 +635,7 @@ int sound_volume( const double vol )
    if (sound_disabled)
       return 0;
 
-   return sound_sys_volume( vol );
+   return sound_al_volume( vol );
 }
 
 
@@ -791,7 +649,7 @@ double sound_getVolume (void)
    if (sound_disabled)
       return 0.;
 
-   return sound_sys_getVolume();
+   return sound_al_getVolume();
 }
 
 
@@ -805,7 +663,7 @@ double sound_getVolumeLog(void)
    if (sound_disabled)
       return 0.;
 
-   return sound_sys_getVolumeLog();
+   return sound_al_getVolumeLog();
 }
 
 
@@ -823,7 +681,7 @@ static int sound_load( alSound *snd, const char *filename )
    if (sound_disabled)
       return -1;
 
-   return sound_sys_load( snd, filename );
+   return sound_al_load( snd, filename );
 }
 
 
@@ -835,13 +693,11 @@ static int sound_load( alSound *snd, const char *filename )
 static void sound_free( alSound *snd )
 {
    /* Free general stuff. */
-   if (snd->name) {
-      free(snd->name);
-      snd->name = NULL;
-   }
+   free(snd->name);
+   snd->name = NULL;
 
    /* Free internals. */
-   sound_sys_free(snd);
+   sound_al_free(snd);
 }
 
 
@@ -856,7 +712,7 @@ int sound_createGroup( int size )
    if (sound_disabled)
       return 0;
 
-   return sound_sys_createGroup( size );
+   return sound_al_createGroup( size );
 }
 
 
@@ -876,7 +732,7 @@ int sound_playGroup( int group, int sound, int once )
    if ((sound < 0) || (sound >= sound_nlist))
       return -1;
 
-   return sound_sys_playGroup( group, &sound_list[sound], once );
+   return sound_al_playGroup( group, &sound_list[sound], once );
 }
 
 
@@ -890,7 +746,7 @@ void sound_stopGroup( int group )
    if (sound_disabled)
       return;
 
-   sound_sys_stopGroup( group );
+   sound_al_stopGroup( group );
 }
 
 
@@ -904,7 +760,7 @@ void sound_pauseGroup( int group )
    if (sound_disabled)
       return;
 
-   sound_sys_pauseGroup( group );
+   sound_al_pauseGroup( group );
 }
 
 
@@ -918,7 +774,7 @@ void sound_resumeGroup( int group )
    if (sound_disabled)
       return;
 
-   sound_sys_resumeGroup( group );
+   sound_al_resumeGroup( group );
 }
 
 
@@ -933,7 +789,7 @@ void sound_speedGroup( int group, int enable )
    if (sound_disabled)
       return;
 
-   sound_sys_speedGroup( group, enable );
+   sound_al_speedGroup( group, enable );
 }
 
 
@@ -948,7 +804,7 @@ void sound_volumeGroup( int group, double volume )
    if (sound_disabled)
       return;
 
-   sound_sys_volumeGroup( group, volume );
+   sound_al_volumeGroup( group, volume );
 }
 
 
@@ -964,7 +820,7 @@ int sound_env( SoundEnv_t env, double param )
    if (sound_disabled)
       return 0;
 
-   return sound_sys_env( env, param );
+   return sound_al_env( env, param );
 }
 
 

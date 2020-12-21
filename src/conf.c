@@ -60,8 +60,7 @@
    {                                              \
       nlua_getenv( env, n );                      \
       if ( lua_isstring( naevL, -1 ) ) {          \
-         if ( s != NULL )                         \
-            free( s );                            \
+         free( s );                            \
          s = strdup( lua_tostring( naevL, -1 ) ); \
       }                                           \
       lua_pop( naevL, 1 );                        \
@@ -72,7 +71,6 @@
 PlayerConf_t conf = {
    .ndata = NULL,
    .language=NULL,
-   .sound_backend = NULL,
    .joystick_nam = NULL
 };
 
@@ -129,19 +127,16 @@ void conf_setDefaults (void)
    conf_cleanup();
 
    /* ndata. */
-   if (conf.ndata != NULL)
-      free(conf.ndata);
+   free(conf.ndata);
    conf.ndata        = NULL;
 
    /* Language. */
-   if (conf.language != NULL)
-      free(conf.language);
+   free(conf.language);
    conf.language     = NULL;
 
    /* Joystick. */
    conf.joystick_ind = -1;
-   if (conf.joystick_nam != NULL)
-      free(conf.joystick_nam);
+   free(conf.joystick_nam);
    conf.joystick_nam = NULL;
 
    /* GUI. */
@@ -161,10 +156,10 @@ void conf_setDefaults (void)
    conf.zoom_stars   = 1.;
 
    /* Font sizes. */
-   conf.font_size_console = 10;
-   conf.font_size_intro   = 18;
-   conf.font_size_def     = 12;
-   conf.font_size_small   = 11;
+   conf.font_size_console = FONT_SIZE_CONSOLE_DEFAULT;
+   conf.font_size_intro   = FONT_SIZE_INTRO_DEFAULT;
+   conf.font_size_def     = FONT_SIZE_DEF_DEFAULT;
+   conf.font_size_small   = FONT_SIZE_SMALL_DEFAULT;
    conf.font_name_default = NULL;
    conf.font_name_monospace = NULL;
 
@@ -174,8 +169,7 @@ void conf_setDefaults (void)
    conf.devmode      = 0;
    conf.devautosave  = 0;
    conf.devcsv       = 0;
-   if (conf.lastversion != NULL)
-      free( conf.lastversion );
+   free( conf.lastversion );
    conf.lastversion = strdup( "" );
 
    /* Gameplay. */
@@ -194,14 +188,11 @@ void conf_setDefaults (void)
    conf.fpu_except   = 0; /* Causes many issues. */
 
    /* Editor. */
-   if (conf.dev_save_sys != NULL)
-      free( conf.dev_save_sys );
+   free( conf.dev_save_sys );
    conf.dev_save_sys = strdup( DEV_SAVE_SYSTEM_DEFAULT );
-   if (conf.dev_save_map != NULL)
-      free( conf.dev_save_map );
+   free( conf.dev_save_map );
    conf.dev_save_map = strdup( DEV_SAVE_MAP_DEFAULT );
-   if (conf.dev_save_asset != NULL)
-      free( conf.dev_save_asset );
+   free( conf.dev_save_asset );
    conf.dev_save_asset = strdup( DEV_SAVE_ASSET_DEFAULT );
 }
 
@@ -227,13 +218,7 @@ void conf_setGameplayDefaults (void)
  */
 void conf_setAudioDefaults (void)
 {
-   if (conf.sound_backend != NULL) {
-      free(conf.sound_backend);
-      conf.sound_backend = NULL;
-   }
-
    /* Sound. */
-   conf.sound_backend = strdup(BACKEND_DEFAULT);
    conf.snd_voices   = VOICES_DEFAULT;
    conf.snd_pilotrel = PILOT_RELATIVE_DEFAULT;
    conf.al_efx       = USE_EFX_DEFAULT;
@@ -276,7 +261,6 @@ void conf_setVideoDefaults (void)
    conf.vsync        = VSYNC_DEFAULT;
    conf.mipmaps      = MIPMAP_DEFAULT; /* Also cause for issues. */
    conf.compress     = TEXTURE_COMPRESSION_DEFAULT;
-   conf.interpolate  = INTERPOLATION_DEFAULT;
    conf.npot         = NPOT_TEXTURES_DEFAULT;
 
    /* Window. */
@@ -304,24 +288,15 @@ void conf_setVideoDefaults (void)
  */
 void conf_cleanup (void)
 {
-   if (conf.ndata != NULL)
-      free(conf.ndata);
-   if (conf.language != NULL)
-      free(conf.language);
-   if (conf.sound_backend != NULL)
-      free(conf.sound_backend);
-   if (conf.joystick_nam != NULL)
-      free(conf.joystick_nam);
+   free(conf.ndata);
+   free(conf.language);
+   free(conf.joystick_nam);
 
-   if (conf.lastversion != NULL)
-      free(conf.lastversion);
+   free(conf.lastversion);
 
-   if (conf.dev_save_sys != NULL)
-      free(conf.dev_save_sys);
-   if (conf.dev_save_map != NULL)
-      free(conf.dev_save_map);
-   if (conf.dev_save_asset != NULL)
-      free(conf.dev_save_asset);
+   free(conf.dev_save_sys);
+   free(conf.dev_save_map);
+   free(conf.dev_save_asset);
 
    /* Clear memory. */
    memset( &conf, 0, sizeof(conf) );
@@ -377,7 +352,6 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "vsync", conf.vsync );
       conf_loadBool( lEnv, "mipmaps", conf.mipmaps );
       conf_loadBool( lEnv, "compress", conf.compress );
-      conf_loadBool( lEnv, "interpolate", conf.interpolate );
       conf_loadBool( lEnv, "npot", conf.npot );
 
       /* Memory. */
@@ -408,7 +382,6 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "showpause", conf.pause_show );
 
       /* Sound. */
-      conf_loadString( lEnv, "sound_backend", conf.sound_backend );
       conf_loadInt( lEnv, "snd_voices", conf.snd_voices );
       conf.snd_voices = MAX( VOICES_MIN, conf.snd_voices ); /* Must be at least 16. */
       conf_loadBool( lEnv, "snd_pilotrel", conf.snd_pilotrel );
@@ -698,8 +671,7 @@ void conf_parseCLI( int argc, char** argv )
             nebu_forceGenerate();
             break;
          case 'N':
-            if (conf.ndata != NULL)
-               free(conf.ndata);
+            free(conf.ndata);
             conf.ndata = NULL;
             break;
          case 'X':
@@ -728,8 +700,7 @@ void conf_parseCLI( int argc, char** argv )
 
    /** @todo handle multiple ndata. */
    if (optind < argc) {
-      if (conf.ndata != NULL)
-         free(conf.ndata);
+      free(conf.ndata);
       conf.ndata = strdup( argv[ optind ] );
    }
 }
@@ -939,7 +910,6 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    conf_saveComment(_("Use OpenGL Texture Interpolation"));
-   conf_saveBool("interpolate",conf.interpolate);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Use OpenGL Non-\"Power of Two\" textures if available"));
@@ -996,10 +966,6 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    /* Sound. */
-   conf_saveComment(_("Sound backend (can be \"openal\" or \"sdlmix\")"));
-   conf_saveString("sound_backend",conf.sound_backend);
-   conf_saveEmptyLine();
-
    conf_saveComment(_("Maximum number of simultaneous sounds to play, must be at least 16."));
    conf_saveInt("snd_voices",conf.snd_voices);
    conf_saveEmptyLine();
@@ -1074,13 +1040,13 @@ int conf_saveConfig ( const char* file )
    /* Fonts. */
    conf_saveComment(_("Font sizes (in pixels) for Naev"));
    conf_saveComment(_("Warning, setting to other than the default can cause visual glitches!"));
-   conf_saveComment(_("Console default: 10"));
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Console default: %d\n"), FONT_SIZE_CONSOLE_DEFAULT);
    conf_saveInt("font_size_console",conf.font_size_console);
-   conf_saveComment(_("Intro default: 18"));
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Intro default: %d\n"), FONT_SIZE_INTRO_DEFAULT);
    conf_saveInt("font_size_intro",conf.font_size_intro);
-   conf_saveComment(_("Default size: 12"));
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Default size: %d\n"), FONT_SIZE_DEF_DEFAULT);
    conf_saveInt("font_size_def",conf.font_size_def);
-   conf_saveComment(_("Small size: 10"));
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Small size: %d\n"), FONT_SIZE_SMALL_DEFAULT);
    conf_saveInt("font_size_small",conf.font_size_small);
    conf_saveComment(_("Default font to use: unset"));
    if (conf.font_name_default) {

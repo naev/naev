@@ -1972,10 +1972,8 @@ void space_gfxUnload( StarSystem *sys )
    Planet *planet;
    for (i=0; i<sys->nplanets; i++) {
       planet = sys->planets[i];
-      if (planet->gfx_space != NULL) {
-         gl_freeTexture( planet->gfx_space );
-         planet->gfx_space = NULL;
-      }
+      gl_freeTexture( planet->gfx_space );
+      planet->gfx_space = NULL;
    }
 }
 
@@ -2007,7 +2005,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
    ncomms         = 0;
 
    /* Get the name. */
-   xmlr_attr( parent, "name", planet->name );
+   xmlr_attr_strd( parent, "name", planet->name );
 
    node = parent->xmlChildrenNode;
    do {
@@ -2231,8 +2229,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
             planet->ncommodities * sizeof(CommodityPrice));
    }
    /* Free temporary comms list. */
-   if (comms != NULL)
-      free(comms);
+   free(comms);
 
    /* Square to allow for linear multiplication with squared distances. */
    planet->hide = pow2(planet->hide);
@@ -2252,8 +2249,7 @@ int planet_setRadiusFromGFX(Planet* planet)
    SDL_RWops *rw;
    npng_t *npng;
    png_uint_32 w, h;
-   int nbuf;
-   char *buf, path[PATH_MAX], str[PATH_MAX];
+   char path[PATH_MAX];
 
    /* New path. */
    nsnprintf( path, sizeof(path), "%s%s", PLANET_GFX_SPACE_PATH, planet->gfx_spacePath );
@@ -2267,15 +2263,7 @@ int planet_setRadiusFromGFX(Planet* planet)
       npng = npng_open( rw );
       if (npng != NULL) {
          npng_dim( npng, &w, &h );
-         nbuf = npng_metadata( npng, "radius", &buf );
-         if (nbuf > 0) {
-            strncpy( str, buf, MIN( (unsigned int)nbuf, sizeof(str) ) );
-            str[ nbuf ] = '\0';
-            planet->radius = atof( str );
-         }
-         else
-            planet->radius = (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
-
+         planet->radius = (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
          npng_close( npng );
       }
       SDL_RWclose( rw );
@@ -2677,7 +2665,6 @@ void systems_reconstructPlanets (void)
  */
 static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 {
-   char *ptrc;
    xmlNodePtr cur, node;
    uint32_t flags;
 
@@ -2687,7 +2674,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    sys->npresence = 0;
    sys->ownerpresence = 0.;
 
-   sys->name = xml_nodeProp(parent,"name"); /* already mallocs */
+   xmlr_attr_strd( parent, "name", sys->name );
 
    node  = parent->xmlChildrenNode;
    do { /* load all the data */
@@ -2720,11 +2707,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
                sys->interference = xml_getFloat(cur);
             }
             else if (xml_isNode(cur,"nebula")) {
-               ptrc = xml_nodeProp(cur,"volatility");
-               if (ptrc != NULL) { /* Has volatility  */
-                  sys->nebu_volatility = atof(ptrc);
-                  free(ptrc);
-               }
+               xmlr_attr_float( cur, "volatility", sys->nebu_volatility );
                sys->nebu_density = xml_getFloat(cur);
             }
          } while (xml_nextNode(cur));
@@ -2838,7 +2821,7 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
    y = 0.;
 
    /* Get target. */
-   xmlr_attr( node, "target", buf );
+   xmlr_attr_strd( node, "target", buf );
    if (buf == NULL) {
       WARN(_("JumpPoint node for system '%s' has no target attribute."), sys->name);
       return -1;
@@ -2881,19 +2864,18 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
       y = atof(buf);
 
    /* Handle jump point type. */
-   xmlr_attr( node, "type", buf );
+   xmlr_attr_strd( node, "type", buf );
    if (buf == NULL);
    else if (strcmp(buf, "hidden") == 0)
       jp_setFlag(j,JP_HIDDEN);
    else if (strcmp(buf, "exitonly") == 0)
       jp_setFlag(j,JP_EXITONLY);
+   free( buf );
 
-   /* Handle jump point hide. */
-   xmlr_attr( node, "hide", buf );
-   if (buf == NULL)
+   /* Handle jump point hide. FIXME: Read optional float instead of int. */
+   xmlr_attr_atoi_neg1( node, "hide", j->hide );
+   if (j->hide == -1)
       j->hide = HIDE_DEFAULT_JUMP;
-   else
-      j->hide = atoi(buf);
 
    /* Set some stuff. */
    j->target = target;
@@ -2931,7 +2913,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    int pos;
 
    /* Get target. */
-   xmlr_attr( node, "target", buf );
+   xmlr_attr_strd( node, "target", buf );
    if (buf == NULL) {
       WARN(_("JumpPoint node for system '%s' has no target attribute."), sys->name);
       return -1;
@@ -2942,6 +2924,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
       free(buf);
       return -1;
    }
+   free(buf);
 
 #ifdef DEBUGGING
    int i;
@@ -2964,7 +2947,6 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    /* Set some stuff. */
    j->from = sys;
    j->target = target;
-   free(buf);
    j->targetid = j->target->id;
    j->radius = 200.;
 
@@ -2978,24 +2960,8 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
       /* Handle position. */
       if (xml_isNode(cur,"pos")) {
          pos = 1;
-         xmlr_attr( cur, "x", buf );
-         if (buf==NULL) {
-            WARN(_("JumpPoint for system '%s' has position node missing 'x' position, using 0."), sys->name);
-            x = 0.;
-         }
-         else {
-            x = atof(buf);
-            free(buf);
-         }
-         xmlr_attr( cur, "y", buf );
-         if (buf==NULL) {
-            WARN(_("JumpPoint for system '%s' has position node missing 'y' position, using 0."), sys->name);
-            y = 0.;
-         }
-         else {
-            y = atof(buf);
-            free(buf);
-         }
+         xmlr_attr_float( cur, "x", x );
+         xmlr_attr_float( cur, "y", y );
 
          /* Set position. */
          vect_cset( &j->pos, x, y );
@@ -3036,7 +3002,7 @@ static void system_parseJumps( const xmlNodePtr parent )
    char* name;
    xmlNodePtr cur, node;
 
-   name = xml_nodeProp(parent,"name"); /* already mallocs */
+   xmlr_attr_strd( parent, "name", name );
    sys = NULL;
    for (i=0; i<systems_nstack; i++) {
       if (strcmp( systems_stack[i].name, name)==0) {
@@ -3079,7 +3045,6 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    double x, y;
    char *name;
    int pos;
-   char *buf;
 
    /* Allocate more space. */
    sys->asteroids = realloc( sys->asteroids, (sys->nasteroids+1)*sizeof(AsteroidAnchor) );
@@ -3121,24 +3086,8 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
       /* Handle position. */
       if (xml_isNode(cur,"pos")) {
          pos = 1;
-         xmlr_attr( cur, "x", buf );
-         if (buf==NULL) {
-            WARN(_("Asteroid field for system '%s' has position node missing 'x' position, using 0."), sys->name);
-            x = 0.;
-         }
-         else {
-            x = atof(buf);
-            free(buf);
-         }
-         xmlr_attr( cur, "y", buf );
-         if (buf==NULL) {
-            WARN(_("Asteroid field for system '%s' has position node missing 'y' position, using 0."), sys->name);
-            y = 0.;
-         }
-         else {
-            y = atof(buf);
-            free(buf);
-         }
+         xmlr_attr_float( cur, "x", x );
+         xmlr_attr_float( cur, "y", y );
 
          /* Set position. */
          vect_cset( &a->pos, x, y );
@@ -3186,7 +3135,6 @@ static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys
    xmlNodePtr cur;
    double x, y;
    int pos;
-   char *buf;
 
    /* Allocate more space. */
    sys->astexclude = realloc( sys->astexclude, (sys->nastexclude+1)*sizeof(AsteroidExclusion) );
@@ -3206,24 +3154,8 @@ static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys
       /* Handle position. */
       if (xml_isNode(cur,"pos")) {
          pos = 1;
-         xmlr_attr( cur, "x", buf );
-         if (buf==NULL) {
-            WARN(_("Asteroid exclusion for system '%s' has position node missing 'x' position, using 0."), sys->name);
-            x = 0.;
-         }
-         else {
-            x = atof(buf);
-            free(buf);
-         }
-         xmlr_attr( cur, "y", buf );
-         if (buf==NULL) {
-            WARN(_("Asteroid exclusion for system '%s' has position node missing 'y' position, using 0."), sys->name);
-            y = 0.;
-         }
-         else {
-            y = atof(buf);
-            free(buf);
-         }
+         xmlr_attr_float( cur, "x", x );
+         xmlr_attr_float( cur, "y", y );
 
          /* Set position. */
          vect_cset( &a->pos, x, y );
@@ -3812,11 +3744,9 @@ void space_exit (void)
    AsteroidType *at;
 
    /* Free standalone graphic textures */
-   if (jumppoint_gfx != NULL)
-      gl_freeTexture(jumppoint_gfx);
+   gl_freeTexture(jumppoint_gfx);
    jumppoint_gfx = NULL;
-   if (jumpbuoy_gfx != NULL)
-      gl_freeTexture(jumpbuoy_gfx);
+   gl_freeTexture(jumpbuoy_gfx);
    jumpbuoy_gfx = NULL;
 
    /* Free asteroid graphics. */
@@ -3825,10 +3755,8 @@ void space_exit (void)
    free(asteroid_gfx);
 
    /* Free the names. */
-   if (planetname_stack != NULL)
-      free(planetname_stack);
-   if (systemname_stack != NULL)
-      free(systemname_stack);
+   free(planetname_stack);
+   free(systemname_stack);
    spacename_nstack = 0;
 
    /* Free the planets. */
@@ -3842,8 +3770,7 @@ void space_exit (void)
 
       /* graphics */
       if (pnt->gfx_spaceName != NULL) {
-         if (pnt->gfx_space != NULL)
-            gl_freeTexture( pnt->gfx_space );
+         gl_freeTexture( pnt->gfx_space );
          free(pnt->gfx_spaceName);
          free(pnt->gfx_spacePath);
       }
@@ -3871,20 +3798,12 @@ void space_exit (void)
    /* Free the systems. */
    for (i=0; i < systems_nstack; i++) {
       free(systems_stack[i].name);
-      if (systems_stack[i].fleets)
-         free(systems_stack[i].fleets);
-      if (systems_stack[i].jumps)
-         free(systems_stack[i].jumps);
-      if (systems_stack[i].background)
-         free(systems_stack[i].background);
-
-      if (systems_stack[i].presence)
-         free(systems_stack[i].presence);
-
-      if (systems_stack[i].planets != NULL)
-         free(systems_stack[i].planets);
-      if (systems_stack[i].planetsid != NULL)
-         free(systems_stack[i].planetsid);
+      free(systems_stack[i].fleets);
+      free(systems_stack[i].jumps);
+      free(systems_stack[i].background);
+      free(systems_stack[i].presence);
+      free(systems_stack[i].planets);
+      free(systems_stack[i].planetsid);
 
       /* Free the asteroids. */
       sys = &systems_stack[i];
@@ -4128,7 +4047,7 @@ int space_sysLoad( xmlNodePtr parent )
 
          do {
             if (xml_isNode(cur,"known")) {
-               xmlr_attr(cur,"sys",str);
+               xmlr_attr_strd(cur,"sys",str);
                if (str != NULL) { /* check for 5.0 saves */
                   sys = system_get(str);
                   free(str);
@@ -4374,8 +4293,7 @@ void space_reconstructPresences( void )
 
    /* Reset the presence in each system. */
    for (i=0; i<systems_nstack; i++) {
-      if (systems_stack[i].presence)
-         free(systems_stack[i].presence);
+      free(systems_stack[i].presence);
       systems_stack[i].presence  = NULL;
       systems_stack[i].npresence = 0;
       systems_stack[i].ownerpresence = 0.;

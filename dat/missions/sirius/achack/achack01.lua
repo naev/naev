@@ -19,8 +19,8 @@
 -- This is the first mission in the Academy Hack minor campaign.
 --]]
 
-require "missions/sirius/common.lua"
-require "numstring.lua"
+require "missions/sirius/common"
+require "numstring"
 
 
 title1 = _("A Sirian with a grudge")

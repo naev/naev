@@ -12,6 +12,9 @@
 #include "opengl.h"
 
 
+#define FONT_FLAG_DONTREUSE   (1<<1) /**< Don't reuse the font if it's loaded somewhere else. */
+
+
 /**
  * @brief Represents a font in memory.
  */
@@ -37,7 +40,8 @@ typedef struct glFontRestore_s {
  *
  * if font is NULL it uses the internal default font same with gl_print
  */
-int gl_fontInit( glFont* font, const char *fname, const unsigned int h );
+int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const char *prefix, unsigned int flags );
+int gl_fontAddFallback( glFont* font, const char *fname );
 void gl_freeFont( glFont* font );
 
 
@@ -55,7 +59,7 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
       const glColour* c, const double outlineR , const char *text);
 int gl_printTextRaw( const glFont *ft_font,
       const int width, const int height,
-      double bx, double by,
+      double bx, double by, int line_height,
       const glColour* c, const double outlineR, const char *text);
 void gl_printMarkerRaw( const glFont *ft_font,
       const double x, const double y,
@@ -77,14 +81,14 @@ PRINTF_FORMAT( 6, 7 ) int gl_printMid( const glFont *ft_font, const int width,
       double x, double y,
       const glColour* c, const char *fmt, ... );
 /* respects \n -> bx,by is TOP LEFT POSITION */
-PRINTF_FORMAT( 7, 8 ) int gl_printText( const glFont *ft_font,
+PRINTF_FORMAT( 8, 9 ) int gl_printText( const glFont *ft_font,
       int width, int height,
-      double bx, double by,
+      double bx, double by, int line_height,
       const glColour* c, const char *fmt, ... );
 
 /* Dimension stuff. */
 int gl_printWidthForTextLine( const glFont *ft_font, const char *text, int width );
-int gl_printWidthForText( const glFont *ft_font, const char *text, int width );
+int gl_printWidthForText( const glFont *ft_font, const char *text, int width, int *outw );
 int gl_printWidthRaw( const glFont *ft_font, const char *text );
 PRINTF_FORMAT( 2, 3 )int gl_printWidth( const glFont *ft_font, const char *fmt, ... );
 int gl_printHeightRaw( const glFont *ft_font, const int width, const char *text );
@@ -98,6 +102,9 @@ void gl_printRestoreLast (void);
 void gl_printRestore( const glFontRestore *restore );
 void gl_printStoreMax( glFontRestore *restore, const char *text, int max );
 void gl_printStore( glFontRestore *restore, const char *text );
+
+/* Misc stuff. */
+void gl_fontSetFilter( const glFont *ft_font, GLint min, GLint mag );
 
 
 #endif /* FONT_H */

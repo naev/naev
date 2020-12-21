@@ -334,6 +334,44 @@ glTexture* ship_loadCommGFX( Ship* s )
 
 
 /**
+ * @brief Gets the size of the ship.
+ *
+ *    @brief s Ship to get the size of.
+ * @return Size of the ship.
+ */
+int ship_size( const Ship *s )
+{
+   switch (s->class) {
+      case SHIP_CLASS_YACHT:
+      case SHIP_CLASS_LUXURY_YACHT:
+      case SHIP_CLASS_COURIER:
+      case SHIP_CLASS_SCOUT:
+      case SHIP_CLASS_FIGHTER:
+      case SHIP_CLASS_BOMBER:
+      case SHIP_CLASS_DRONE:
+         return 1;
+
+      case SHIP_CLASS_CRUISE_SHIP:
+      case SHIP_CLASS_ARMOURED_TRANSPORT:
+      case SHIP_CLASS_FREIGHTER:
+      case SHIP_CLASS_CORVETTE:
+      case SHIP_CLASS_DESTROYER:
+      case SHIP_CLASS_HEAVY_DRONE:
+         return 2;
+
+      case SHIP_CLASS_BULK_CARRIER:
+      case SHIP_CLASS_CRUISER:
+      case SHIP_CLASS_CARRIER:
+      case SHIP_CLASS_MOTHERSHIP:
+         return 3;
+
+      default:
+         return -1;
+   }
+}
+
+
+/**
  * @brief Generates a target graphic for a ship.
  */
 static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
@@ -534,7 +572,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
    ship_loadSpaceImage( temp, str, sx, sy );
 
    /* Load the engine sprite .*/
-   if (engine && conf.engineglow && conf.interpolate) {
+   if (engine && conf.engineglow) {
       nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
       ship_loadEngineImage( temp, str, sx, sy );
       if (temp->gfx_engine == NULL)
@@ -639,7 +677,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
    Outfit *o;
 
    /* Parse size. */
-   xmlr_attr( node, "size", buf );
+   xmlr_attr_strd( node, "size", buf );
    if (buf != NULL)
       base_size = outfit_toSlotSize( buf );
    else {
@@ -668,34 +706,16 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
 
    /* Get mount point for weapons. */
    if (type == OUTFIT_SLOT_WEAPON) {
-      xmlr_attr(node,"x",buf);
-      if (buf!=NULL) {
-         slot->mount.x = atof(buf);
-         free(buf);
-      }
-      else
-         WARN(_("Ship '%s' missing 'x' element of 'weapon' slot."),temp->name);
-      xmlr_attr(node,"y",buf);
-      if (buf!=NULL) {
-         slot->mount.y = atof(buf);
-         /* Since we measure in pixels, we have to modify it so it
-          *  doesn't get corrected by the ortho correction. */
-         slot->mount.y *= M_SQRT2;
-         free(buf);
-      }
-      else
-         WARN(_("Ship '%s' missing 'y' element of 'weapon' slot."),temp->name);
-      xmlr_attr(node,"h",buf);
-      if (buf!=NULL) {
-         slot->mount.h = atof(buf);
-         free(buf);
-      }
-      else
-         WARN(_("Ship '%s' missing 'h' element of 'weapon' slot."),temp->name);
+      xmlr_attr_float( node, "x", slot->mount.x );
+      xmlr_attr_float( node, "y", slot->mount.y );
+      /* Since we measure in pixels, we have to modify it so it
+       *  doesn't get corrected by the ortho correction. */
+      slot->mount.y *= M_SQRT2;
+      xmlr_attr_float( node, "h", slot->mount.h );
    }
 
    /* Parse property. */
-   xmlr_attr( node, "prop", buf );
+   xmlr_attr_strd( node, "prop", buf );
    if (buf != NULL) {
       slot->slot.spid = sp_get( buf );
       slot->exclusive = sp_exclusive( slot->slot.spid );
@@ -704,22 +724,14 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
    }
    //TODO: consider inserting those two parse blocks below inside the parse block above
 
-   /* Parse exclusive flag. */
-   xmlr_attr( node, "exclusive", buf );
-   if (buf != NULL) {
-      slot->exclusive = atoi( buf );
-      free( buf );
-   }
+   /* Parse exclusive flag, default false. */
+   xmlr_attr_int( node, "exclusive", slot->exclusive );
    //TODO: decide if exclusive should even belong in ShipOutfitSlot, remove this hack, and fix slot->exclusive to slot->slot.exclusive in it's two previous occurrences, meaning three lines above and 12 lines above
    /* hack */
    slot->slot.exclusive=slot->exclusive;
 
-   /* Parse required flag. */
-   xmlr_attr( node, "required", buf );
-   if (buf != NULL) {
-      slot->required  = atoi( buf );
-      free( buf );
-   }
+   /* Parse required flag, default false. */
+   xmlr_attr_int( node, "required", slot->required );
 
    /* Parse default outfit. */
    buf = xml_get(node);
@@ -753,9 +765,9 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    int i;
    xmlNodePtr cur, node;
    int sx, sy;
-   char *stmp, *buf;
+   char *buf;
    char str[PATH_MAX];
-   int l, m, h, engine;
+   int l, m, h, noengine;
    ShipStatList *ll;
 
    /* Clear memory. */
@@ -765,7 +777,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    ss_statsInit( &temp->stats_array );
 
    /* Get name. */
-   xmlr_attr(parent,"name",temp->name);
+   xmlr_attr_strd( parent, "name", temp->name );
    if (temp->name == NULL)
       WARN( _("Ship in %s has invalid or no name"), SHIP_DATA_PATH );
 
@@ -796,31 +808,17 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          }
 
          /* Get sprite size. */
-         xmlr_attr(node, "sx", stmp );
-         if (stmp != NULL) {
-            sx = atoi(stmp);
-            free(stmp);
-         }
-         else
+         xmlr_attr_atoi_neg1( node, "sx", sx );
+         if (sx == -1)
             sx = 8;
-         xmlr_attr(node, "sy", stmp );
-         if (stmp != NULL) {
-            sy = atoi(stmp);
-            free(stmp);
-         }
-         else
+         xmlr_attr_atoi_neg1( node, "sy", sy );
+         if (sy == -1)
             sy = 8;
 
-         xmlr_attr(node, "noengine", stmp );
-         if (stmp != NULL) {
-            engine = 0;
-            free(stmp);
-         }
-         else
-            engine = 1;
+         xmlr_attr_int(node, "noengine", noengine );
 
          /* Load the graphics. */
-         ship_loadGFX( temp, buf, sx, sy, engine );
+         ship_loadGFX( temp, buf, sx, sy, !noengine );
 
          /* Load the polygon. */
          ship_loadPLG( temp, buf );
@@ -846,19 +844,11 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          nsnprintf( str, PATH_MAX, GFX_PATH"%s", buf );
 
          /* Get sprite size. */
-         xmlr_attr(node, "sx", stmp );
-         if (stmp != NULL) {
-            sx = atoi(stmp);
-            free(stmp);
-         }
-         else
+         xmlr_attr_atoi_neg1( node, "sx", sx );
+         if (sx == -1)
             sx = 8;
-         xmlr_attr(node, "sy", stmp );
-         if (stmp != NULL) {
-            sy = atoi(stmp);
-            free(stmp);
-         }
-         else
+         xmlr_attr_atoi_neg1( node, "sy", sy );
+         if (sy == -1)
             sy = 8;
 
          /* Load the graphics. */
@@ -878,19 +868,11 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          nsnprintf( str, PATH_MAX, GFX_PATH"%s", buf );
 
          /* Get sprite size. */
-         xmlr_attr(node, "sx", stmp );
-         if (stmp != NULL) {
-            sx = atoi(stmp);
-            free(stmp);
-         }
-         else
+         xmlr_attr_atoi_neg1( node, "sx", sx );
+         if (sx == -1)
             sx = 8;
-         xmlr_attr(node, "sy", stmp );
-         if (stmp != NULL) {
-            sy = atoi(stmp);
-            free(stmp);
-         }
-         else
+         xmlr_attr_atoi_neg1( node, "sy", sy );
+         if (sy == -1)
             sy = 8;
 
          /* Load the graphics. */
@@ -1202,30 +1184,21 @@ void ships_free (void)
          outfit_freeSlot( &s->outfit_utility[j].slot );
       for (j=0; j<s->outfit_nweapon; j++)
          outfit_freeSlot( &s->outfit_weapon[j].slot );
-      if (s->outfit_structure != NULL)
-         free(s->outfit_structure);
-      if (s->outfit_utility != NULL)
-         free(s->outfit_utility);
-      if (s->outfit_weapon != NULL)
-         free(s->outfit_weapon);
+      free(s->outfit_structure);
+      free(s->outfit_utility);
+      free(s->outfit_weapon);
 
-      /* Free stats. */
-      if (s->stats != NULL)
-         ss_free( s->stats );
+      ss_free( s->stats );
 
       /* Free graphics. */
       gl_freeTexture(s->gfx_space);
-      if (s->gfx_engine != NULL)
-         gl_freeTexture(s->gfx_engine);
-      if (s->gfx_target != NULL)
-         gl_freeTexture(s->gfx_target);
-      if (s->gfx_store != NULL)
-         gl_freeTexture(s->gfx_store);
+      gl_freeTexture(s->gfx_engine);
+      gl_freeTexture(s->gfx_target);
+      gl_freeTexture(s->gfx_store);
       free(s->gfx_comm);
       for (j=0; j<s->gfx_noverlays; j++)
          gl_freeTexture(s->gfx_overlays[j]);
-      if (s->gfx_overlays != NULL)
-         free(s->gfx_overlays);
+      free(s->gfx_overlays);
 
       /* Free collision polygons. */
       if (s->npolygon != 0) {

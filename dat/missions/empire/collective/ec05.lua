@@ -47,8 +47,8 @@
 
 ]]--
 
-require "numstring.lua"
-require "missions/empire/common.lua"
+require "numstring"
+require "missions/empire/common"
 
 bar_desc = _("Dimitri should be around here, but you can't see him. You should probably look for him.")
 misn_title = _("Operation Black Trinity")
@@ -300,7 +300,7 @@ function call_drones_jump ()
       v:setHostile()
       v:setNoDisable(true)
       v:control()
-      v:goto( tp )
+      v:moveto( tp )
       hook.pilot( v, "attacked", "drone_attacked" )
       hook.pilot( v, "idle",     "drone_attacked" )
    end
@@ -344,7 +344,7 @@ function add_escorts( landed )
    paci:setFriendly()
    if trinity ~= nil then
       paci:control()
-      paci:goto( trinity:pos() )
+      paci:moveto( trinity:pos() )
    end
    for i=1, 6 do
       local lance = pilot.add("Empire Lancelot", "escort_player", param)[1]
@@ -352,7 +352,7 @@ function add_escorts( landed )
       lance:setFriendly()
       if trinity ~= nil then
          lance:control()
-         lance:goto( trinity:pos() )
+         lance:moveto( trinity:pos() )
       end
    end
 end

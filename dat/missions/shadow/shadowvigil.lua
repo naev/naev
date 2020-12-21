@@ -19,11 +19,11 @@
 -- This is the second mission in the "shadow" series.
 --]]
 
-require "proximity.lua"
-require "nextjump.lua"
-require "chatter.lua"
-require "selectiveclear.lua"
-require "missions/shadow/common.lua"
+require "proximity"
+require "nextjump"
+require "chatter"
+require "selectiveclear"
+require "missions/shadow/common"
 
 
 title = {}
@@ -321,7 +321,7 @@ function jumpin()
             dvaerplomat:setDir(180)
             dvaerplomat:setFaction("Diplomatic")
             diplomat:setInvincible(true)
-            diplomat:goto(vec2.new(1850, 4000), true)
+            diplomat:moveto(vec2.new(1850, 4000), true)
             diplomatidle = hook.pilot(diplomat, "idle", "diplomatIdle")
         else -- case en route, handle escorts flying to the next system, possibly combat
             for i, j in ipairs(escorts) do
@@ -505,7 +505,7 @@ function diplomatIdle()
         if j:exists() then
             j:setInvincible(true)
             j:taskClear()
-            j:goto(dvaerplomat:pos() + mypos[i], true)
+            j:moveto(dvaerplomat:pos() + mypos[i], true)
             j:face(dvaerplomat:pos())
         end
     end
@@ -535,7 +535,7 @@ function diplomatShutup()
 end
 
 function diplomatGo()
-    diplomat:goto(dvaerplomat:pos(), true)
+    diplomat:moveto(dvaerplomat:pos(), true)
     hook.rm(diplomatidle)
 end
 

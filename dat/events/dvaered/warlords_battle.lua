@@ -13,10 +13,10 @@
  --]]
 --  A battle between two Dvaered warlords. The player can join one of them and get a reward
 
-require "fleethelper.lua"
-require "fleet_form.lua"
-require "proximity.lua"
-require "numstring.lua"
+require "fleethelper"
+require "fleet_form"
+require "proximity"
+require "numstring"
 
 
 title = {}

@@ -21,8 +21,8 @@
 
 ]]--
 
-require "cargo_common.lua"
-require "numstring.lua"
+require "cargo_common"
+require "numstring"
 
 
 misn_desc = _("Pirate cargo transport of contraband goods to %s in the %s system.")

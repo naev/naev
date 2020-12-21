@@ -15,9 +15,8 @@ set -e
 SOURCEROOT="$(pwd)"
 BUILDPATH="$(pwd)/build/appimageBuild"
 NIGHTLY="false"
-USEMESON="false"
 BUILDOUTPUT="$(pwd)/dist"
-BUILDDEBUG="false"
+BUILDTYPE="release"
 
 while getopts dcnms:b:o: OPTION "$@"; do
     case $OPTION in
@@ -25,13 +24,10 @@ while getopts dcnms:b:o: OPTION "$@"; do
         set -x
         ;;
     c)
-        BUILDDEBUG="true"
+        BUILDTYPE="debug"
         ;;        
     n)
         NIGHTLY="true"
-        ;;
-    m)
-        USEMESON="true"
         ;;
     s)
         SOURCEROOT="${OPTARG}"
@@ -60,12 +56,8 @@ echo "SOURCE ROOT:        $SOURCEROOT"
 echo "BUILD ROOT:         $BUILDPATH"
 echo "NIGHTLY:            $NIGHTLY"
 echo "BUILD OUTPUT:       $BUILDOUTPUT"
-if [ "$USEMESON" = "true" ]; then
-    echo "MESON WRAPPER PATH: $MESON"
-else
-    echo "MESON BUILD:        $USEMESON"
-fi
-    
+echo "MESON WRAPPER PATH: $MESON"
+
 # Set DESTDIR
 
 OLDDISTDIR="$DISTDIR"
@@ -73,56 +65,18 @@ unset DESTDIR
 export DESTDIR="$BUILDOUTPUT/Naev.AppDir"
 
 # Run build
-if [ "$USEMESON" == "true" ]; then
-    if [ "$BUILDDEBUG" == "true" ]; then
-        # Setup AppImage Build Directory
-        sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
-        --native-file "$SOURCEROOT/utils/build/linux_appimage.ini" \
-        --buildtype debug \
-        -Db_lto=true \
-        -Dauto_features=enabled \
-        -Ddocs_c=disabled \
-        -Ddocs_lua=disabled \
-        
+# Setup AppImage Build Directory
+sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
+--native-file "$SOURCEROOT/utils/build/linux_appimage.ini" \
+--buildtype "$BUILDTYPE" \
+-Db_lto=true \
+-Dauto_features=enabled \
+-Ddocs_c=disabled \
+-Ddocs_lua=disabled
 
-        # Compile and Install Naev to DISTDIR
+# Compile and Install Naev to DISTDIR
 
-        sh "$MESON" install -C "$BUILDPATH"
-    else
-        # Setup AppImage Build Directory
-        sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
-        --native-file "$SOURCEROOT/utils/build/linux_appimage.ini" \
-        --buildtype release \
-        -Db_lto=true \
-        -Dauto_features=enabled \
-        -Ddocs_c=disabled \
-        -Ddocs_lua=disabled
-
-        # Compile and Install Naev to DISTDIR
-
-        sh "$MESON" install -C "$BUILDPATH"
-    fi
-else
-    pushd "$SOURCEROOT"
-    if [ "$BUILDDEBUG" == "true" ]; then
-        # Setup AppImage Build Directory
-        ./autogen.sh
-        ./configure --prefix=/usr
-
-        # Compile and Install Naev to DISTDIR
-        make -j"$(nproc --all)"
-        make install
-    else
-        # Setup AppImage Build Directory
-        ./autogen.sh
-        ./configure --disable-debug --prefix=/usr
-
-        # Compile and Install Naev to DISTDIR
-        make -j"$(nproc --all)"
-        make install
-    fi
-    popd
-fi
+sh "$MESON" install -C "$BUILDPATH"
 
 # Prep dist directory for appimage
 # (I hate this but otherwise linuxdeploy fails on systems that generate the desktop file)
@@ -143,7 +97,7 @@ fi
 if [ "$NIGHTLY" == "true" ]; then
     export VERSION="$VERSION.$BUILD_DATE"
 fi
-if [ "$BUILDDEBUG" == "true" ]; then
+if [[ "$BUILDTYPE" =~ "debug" ]]; then
     export VERSION="$VERSION+DEBUG.$BUILD_DATE"
 fi
 SUFFIX="$VERSION-linux-x86-64"

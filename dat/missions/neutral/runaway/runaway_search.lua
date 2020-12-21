@@ -21,8 +21,8 @@
    I'm joking about the last line a little. If you want to name him, feel free.
 --]]
 
-require "numstring.lua"
-require "missions/neutral/common.lua"
+require "numstring"
+require "missions/neutral/common"
 
 
 npc_name = _("Old Man")

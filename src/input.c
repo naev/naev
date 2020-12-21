@@ -878,25 +878,25 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          player_rmFlag(PLAYER_SECONDARY);
 
    /* Weapon sets. */
-   } else if (KEY("weapset1")) {
+   } else if (INGAME() && NODEAD() && KEY("weapset1")) {
       player_weapSetPress( 0, value, repeat );
-   } else if (KEY("weapset2")) {
+   } else if (INGAME() && NODEAD() && KEY("weapset2")) {
       player_weapSetPress( 1, value, repeat );
-   } else if (KEY("weapset3")) {
+   } else if (INGAME() && NODEAD() && KEY("weapset3")) {
       player_weapSetPress( 2, value, repeat );
-   } else if (KEY("weapset4")) {
+   } else if (INGAME() && NODEAD() && KEY("weapset4")) {
       player_weapSetPress( 3, value, repeat );
-   } else if (KEY("weapset5")) {
+   } else if (INGAME() && NODEAD() && KEY("weapset5")) {
       player_weapSetPress( 4, value, repeat );
-   } else if (KEY("weapset6")) {
+   } else if (INGAME() && NODEAD() && KEY("weapset6")) {
       player_weapSetPress( 5, value, repeat );
-   } else if (KEY("weapset7")) {
+   } else if (INGAME() && NODEAD() && KEY("weapset7")) {
       player_weapSetPress( 6, value, repeat );
-   } else if (KEY("weapset8")) {
+   } else if (INGAME() && NODEAD() && KEY("weapset8")) {
       player_weapSetPress( 7, value, repeat );
-   } else if (KEY("weapset9")) {
+   } else if (INGAME() && NODEAD() && KEY("weapset9")) {
       player_weapSetPress( 8, value, repeat );
-   } else if (KEY("weapset0")) {
+   } else if (INGAME() && NODEAD() && KEY("weapset0")) {
       player_weapSetPress( 9, value, repeat );
 
    /*
@@ -1176,7 +1176,7 @@ static void input_clickevent( SDL_Event* event )
 {
    unsigned int pid;
    int mx, my, pntid, jpid, astid, fieid;
-   int rx, ry, rh, rw, res;
+   int res;
    int autonav;
    double x, y, zoom, px, py;
    double ang, angp, mouseang;
@@ -1248,16 +1248,8 @@ static void input_clickevent( SDL_Event* event )
       /* Fall-through and handle as a normal click. */
    }
 
-   gui_radarGetPos( &rx, &ry );
-   gui_radarGetDim( &rw, &rh );
-   if ((mx > rx) && (mx <= rx + rw) && (my > ry) && (my <= ry + rh)) { /* Radar */
-      zoom = 1.;
-      gui_radarGetRes( &res );
-      x = (mx - (rx + rw / 2.)) * res + px;
-      y = (my - (ry + rh / 2.)) * res + py;
-      if (input_clickPos( event, x, y, zoom, 10. * res, 15. * res ))
-         return;
-   }
+   if (gui_radarClickEvent( event ))
+      return;
 
    /* Visual (on-screen) */
    gl_screenToGameCoords( &x, &y, (double)mx, (double)my );

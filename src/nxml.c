@@ -35,25 +35,14 @@ glTexture* xml_parseTexture( xmlNodePtr node,
    char *buf, filename[PATH_MAX];
    glTexture *tex;
 
+   xmlr_attr_atoi_neg1(node, "sx", sx );
+   xmlr_attr_atoi_neg1(node, "sy", sy );
+
    /*
     * Safe defaults.
     */
-   sx = defsx;
-   sy = defsy;
-
-   /* Read x sprites. */
-   xmlr_attr(node, "sx", buf );
-   if (buf != NULL) {
-      sx = atoi(buf);
-      free(buf);
-   }
-
-   /* Read y sprites. */
-   xmlr_attr(node, "sy", buf );
-   if (buf != NULL) {
-      sy = atoi(buf);
-      free(buf);
-   }
+   if (sx == -1) sx = defsx;
+   if (sy == -1) sy = defsy;
 
    /* Get graphic to load. */
    buf = xml_get( node );

@@ -56,8 +56,10 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y );
 static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h );
 static size_t gl_transSize( const int w, const int h );
 /* glTexture */
+static GLuint gl_texParameters( unsigned int flags );
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags, int freesur );
 static glTexture* gl_loadNewImage( const char* path, unsigned int flags );
+static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const unsigned int flags );
 /* List. */
 static glTexture* gl_texExists( const char* path );
 static int gl_texAdd( glTexture *tex );
@@ -215,6 +217,39 @@ static size_t gl_transSize( const int w, const int h )
 
 
 /**
+ * @brief Sets default texture parameters.
+ */
+static GLuint gl_texParameters( unsigned int flags )
+{
+   GLuint texture;
+
+   /* opengl texture binding */
+   glGenTextures( 1, &texture ); /* Creates the texture */
+   glBindTexture( GL_TEXTURE_2D, texture ); /* Loads the texture */
+
+   /* Filtering, LINEAR is better for scaling, nearest looks nicer, LINEAR
+    * also seems to create a bit of artifacts around the edges */
+   if ((gl_screen.scale != 1.) || (flags & OPENGL_TEX_MIPMAPS)) {
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+   }
+   else {
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+   }
+
+   /* Always wrap just in case. */
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+   /* Check errors. */
+   gl_checkErr();
+
+   return texture;
+}
+
+
+/**
  * @brief Prepares the surface to be loaded as a texture.
  *
  *    @param surface to load that is freed in the process.
@@ -283,6 +318,64 @@ int gl_texHasCompress (void)
    return conf.compress;
 }
 
+
+glTexture* gl_loadImageData( float *data, int w, int h, int pitch, int sx, int sy )
+{
+   int potw,poth, rw,rh;
+   float *datapot;
+   int i, j;
+   glTexture *texture;
+
+   /* Check if pot. */
+   datapot = NULL;
+   potw = gl_pot(w);
+   poth = gl_pot(h);
+   rw = w;
+   rh = h;
+   if (gl_needPOT() && ((w!=potw) || h!=poth)) {
+      rw = potw;
+      rh = poth;
+      datapot = calloc( sizeof(float), potw*poth );
+      for (i=0; i<h; i++)
+         for (j=0; j<w; j++)
+            datapot[ i*potw+j ] = data[ i*pitch+j ];
+   }
+
+   /* Set up the texture defaults */
+   texture = calloc( 1, sizeof(glTexture) );
+
+   texture->w     = (double) w;
+   texture->h     = (double) h;
+   texture->sx    = (double) sx;
+   texture->sy    = (double) sy;
+
+   /* Set up texture. */
+   texture->texture = gl_texParameters( 0 );
+
+   /* Copy over. */
+   if (datapot!=NULL)
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, potw, poth, 0, GL_RGBA, GL_FLOAT, datapot );
+   else
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_FLOAT, data );
+
+   /* Check errors. */
+   gl_checkErr();
+
+   /* Set up values. */
+   texture->rw    = (double) rw;
+   texture->rh    = (double) rh;
+   texture->sw    = texture->w / texture->sx;
+   texture->sh    = texture->h / texture->sy;
+   texture->srw   = texture->sw / texture->rw;
+   texture->srh   = texture->sh / texture->rh;
+
+   /* Clean up. */
+   free(datapot);
+
+   return texture;
+}
+
+
 /**
  * @brief Loads a surface into an opengl texture.
  *
@@ -305,24 +398,8 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
    if (rh != NULL)
       (*rh) = surface->h;
 
-   /* opengl texture binding */
-   glGenTextures( 1, &texture ); /* Creates the texture */
-   glBindTexture( GL_TEXTURE_2D, texture ); /* Loads the texture */
-
-   /* Filtering, LINEAR is better for scaling, nearest looks nicer, LINEAR
-    * also seems to create a bit of artifacts around the edges */
-   if ((gl_screen.scale != 1.) || (flags & OPENGL_TEX_MIPMAPS)) {
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-   }
-   else {
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-   }
-
-   /* Always wrap just in case. */
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+   /* Get texture. */
+   texture = gl_texParameters( flags );
 
    /* now lead the texture data up */
    SDL_LockSurface( surface );
@@ -620,6 +697,32 @@ glTexture* gl_newImage( const char* path, const unsigned int flags )
 
 
 /**
+ * @brief Loads an image as a texture.
+ *
+ * May not necessarily load the image but use one if it's already open.
+ *
+ * @note Does not close the SDL_RWops file.
+ *
+ *    @param path Path name used for checking cache and error reporting.
+ *    @param rw SDL_RWops structure to load from.
+ *    @param flags Flags to control image parameters.
+ *    @return Texture loaded from image.
+ */
+glTexture* gl_newImageRWops( const char* path, SDL_RWops *rw, const unsigned int flags )
+{
+   glTexture *t;
+
+   /* Check if it already exists. */
+   t = gl_texExists( path );
+   if (t != NULL)
+      return t;
+
+   /* Load the image */
+   return gl_loadNewImageRWops( path, rw, flags );
+}
+
+
+/**
  * @brief Only loads the image, does not add to stack unlike gl_newImage.
  *
  *    @param path Image to load.
@@ -629,13 +732,7 @@ glTexture* gl_newImage( const char* path, const unsigned int flags )
 static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
 {
    glTexture *texture;
-   SDL_Surface *surface;
    SDL_RWops *rw;
-   npng_t *npng;
-   png_uint_32 w, h;
-   int sx, sy;
-   char *str;
-   int len;
 
    if (path==NULL) {
       WARN(_("Trying to load image from NULL path."));
@@ -648,18 +745,40 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
       WARN(_("Failed to load surface '%s' from ndata."), path);
       return NULL;
    }
+
+   texture = gl_loadNewImageRWops( path, rw, flags );
+
+   SDL_RWclose( rw );
+   return texture;
+}
+
+
+/**
+ * @brief Only loads the image, does not add to stack unlike gl_newImage.
+ *
+ *    @param path Only used for debugging. Can be set to NULL.
+ *    @param rw SDL_Rwops structure to use to load.
+ *    @param flags Flags to control image parameters.
+ *    @return Texture loaded from image.
+ */
+static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const unsigned int flags )
+{
+   glTexture *texture;
+   SDL_Surface *surface;
+   npng_t *npng;
+   png_uint_32 w, h;
+
+   /* Placeholder for warnings. */
+   if (path==NULL)
+      path = _("unknown");
+
    npng     = npng_open( rw );
    if (npng == NULL) {
       WARN(_("File '%s' is not a png."), path );
+      SDL_RWclose( rw );
       return NULL;
    }
    npng_dim( npng, &w, &h );
-
-   /* Process metadata. */
-   len = npng_metadata( npng, "sx", &str );
-   sx  = (len > 0) ? atoi(str) : 1;
-   len = npng_metadata( npng, "sy", &str );
-   sy  = (len > 0) ? atoi(str) : 1;
 
    /* Load surface. */
    surface  = npng_readSurface( npng, gl_needPOT(), 1 );
@@ -667,16 +786,14 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
 
    if (surface == NULL) {
       WARN(_("'%s' could not be opened"), path );
-      SDL_RWclose( rw );
       return NULL;
    }
 
    if (flags & OPENGL_TEX_MAPTRANS)
-      texture = gl_loadImagePadTrans( path, surface, rw, flags, w, h, sx, sy, 1 );
+      texture = gl_loadImagePadTrans( path, surface, rw, flags, w, h, 1, 1, 1 );
    else
-      texture = gl_loadImagePad( path, surface, flags, w, h, sx, sy, 1 );
+      texture = gl_loadImagePad( path, surface, flags, w, h, 1, 1, 1 );
 
-   SDL_RWclose( rw );
    return texture;
 }
 
@@ -711,19 +828,46 @@ glTexture* gl_newSprite( const char* path, const int sx, const int sy,
 
 
 /**
+ * @brief Loads the texture immediately, but also sets it as a sprite.
+ *
+ *    @param path Image name for deduplication.
+ *    @param rw SDL_RWops structure to load for.
+ *    @param sx Number of X sprites in image.
+ *    @param sy Number of Y sprites in image.
+ *    @param flags Flags to control image parameters.
+ *    @return Texture loaded.
+ */
+glTexture* gl_newSpriteRWops( const char* path, SDL_RWops *rw,
+   const int sx, const int sy, const unsigned int flags )
+{
+   glTexture* texture;
+   texture = gl_newImageRWops( path, rw, flags );
+   if (texture == NULL)
+      return NULL;
+
+   /* will possibly overwrite an existing textur properties
+    * so we have to load same texture always the same sprites */
+   texture->sx    = (double) sx;
+   texture->sy    = (double) sy;
+   texture->sw    = texture->w / texture->sx;
+   texture->sh    = texture->h / texture->sy;
+   texture->srw   = texture->sw / texture->rw;
+   texture->srh   = texture->sh / texture->rh;
+   return texture;
+}
+
+
+/**
  * @brief Frees a texture.
  *
- *    @param texture Texture to free.
+ *    @param texture Texture to free. (If NULL, function does nothing.)
  */
 void gl_freeTexture( glTexture* texture )
 {
    glTexList *cur, *last;
 
-   /* Shouldn't be NULL (won't segfault though) */
-   if (texture == NULL) {
-      WARN(_("Attempting to free NULL texture!"));
+   if (texture == NULL)
       return;
-   }
 
    /* see if we can find it in stack */
    last = NULL;
@@ -733,10 +877,8 @@ void gl_freeTexture( glTexture* texture )
          if (cur->used <= 0) { /* not used anymore */
             /* free the texture */
             glDeleteTextures( 1, &texture->texture );
-            if (texture->trans != NULL)
-               free(texture->trans);
-            if (texture->name != NULL)
-               free(texture->name);
+            free(texture->trans);
+            free(texture->name);
             free(texture);
 
             /* free the list node */
@@ -761,10 +903,8 @@ void gl_freeTexture( glTexture* texture )
 
    /* Free anyways */
    glDeleteTextures( 1, &texture->texture );
-   if (texture->trans != NULL)
-      free(texture->trans);
-   if (texture->name != NULL)
-      free(texture->name);
+   free(texture->trans);
+   free(texture->name);
    free(texture);
 
    gl_checkErr();

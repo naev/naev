@@ -27,8 +27,8 @@
    -- These missions require fast ships, but higher tiers may also require increased cargo space.
 --]]
 
-require "cargo_common.lua"
-require "numstring.lua"
+require "cargo_common"
+require "numstring"
 
 
 misn_title = {}

@@ -25,10 +25,10 @@
 --      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 --]]
 
-require "fleethelper.lua" 
-require "proximity.lua"
-require "portrait.lua"
-require "missions/dvaered/common.lua"
+require "fleethelper" 
+require "proximity"
+require "portrait"
+require "missions/dvaered/common"
 
 
 title = {}
@@ -521,7 +521,7 @@ function controlFleet( fleetCur, pos, off )
             -- Too close to base or recalled
             if basedist < safestandoff or time <= 0 then
                 j:control()
-                j:goto( pos[i + off] )
+                j:moveto( pos[i + off] )
 
             -- See if we should engage
             elseif nearest ~= nil and (distance < 500 or j:idle()) then
@@ -531,7 +531,7 @@ function controlFleet( fleetCur, pos, off )
             -- Fly back to fleet
             elseif j:idle() then
                 j:control()
-                j:goto( pos[i + off] )
+                j:moveto( pos[i + off] )
             end
         end
     end
@@ -623,7 +623,7 @@ end
 
 function idle()
     updatepos()
-    obstinate:goto(fleetpos[1], false, false)
+    obstinate:moveto(fleetpos[1], false, false)
 end
 
 function updatepos()

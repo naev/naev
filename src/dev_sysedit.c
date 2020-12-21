@@ -272,10 +272,8 @@ static void sysedit_close( unsigned int wid, char *wgt )
    space_gfxLoad( sysedit_sys );
 
    /* Unload VBO */
-   if (sysedit_vbo != NULL) {
-      gl_vboDestroy(sysedit_vbo);
-      sysedit_vbo = NULL;
-   }
+   gl_vboDestroy(sysedit_vbo);
+   sysedit_vbo = NULL;
 
    /* Remove selection. */
    sysedit_deselect();
@@ -318,8 +316,7 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
    p->population = (uint64_t)strtoull( window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
 
    inp = window_getInput( sysedit_widEdit, "inpClass" );
-   if (p->class != NULL)
-      free( p->class );
+   free( p->class );
 
    if ((inp == NULL) || (strlen(inp) == 0))
       p->class = NULL;
@@ -327,8 +324,7 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
       p->class = strdup( inp );
 
    inp = window_getInput( sysedit_widEdit, "inpLand" );
-   if (p->land_func != NULL)
-      free( p->land_func );
+   free( p->land_func );
 
    if ((inp == NULL) || (strlen(inp) == 0))
       p->land_func = NULL;
@@ -1281,8 +1277,7 @@ static void sysedit_editPnt( void )
    window_addText( wid, x, y, l, 20, 1, "txtPop",
          NULL, NULL, s );
    window_addInput( wid, x += l + 5, y, 80, 20, "inpPop", 12, 1, NULL );
-   window_setInputFilter( wid, "inpPop",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`." );
+   window_setInputFilter( wid, "inpPop", INPUT_FILTER_NUMBER );
    x += 80 + 10;
 
    s = _("Class");
@@ -1308,8 +1303,7 @@ static void sysedit_editPnt( void )
    window_addText( wid, x, y, l, 20, 1, "txtPresence",
          NULL, NULL, s );
    window_addInput( wid, x += l + 5, y, 60, 20, "inpPresence", 5, 1, NULL );
-   window_setInputFilter( wid, "inpPresence",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpPresence", INPUT_FILTER_NUMBER );
    x += 60 + 10;
 
    s = _("Range");
@@ -1317,8 +1311,7 @@ static void sysedit_editPnt( void )
    window_addText( wid, x, y, l, 20, 1, "txtPresenceRange",
          NULL, NULL, s );
    window_addInput( wid, x += l + 5, y, 30, 20, "inpPresenceRange", 1, 1, NULL );
-   window_setInputFilter( wid, "inpPresenceRange",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`." );
+   window_setInputFilter( wid, "inpPresenceRange", INPUT_FILTER_NUMBER );
    x += 30 + 10;
 
    s = _("hide");
@@ -1326,8 +1319,7 @@ static void sysedit_editPnt( void )
    window_addText( wid, x, y, l, 20, 1, "txtHide",
          NULL, NULL, s );
    window_addInput( wid, x += l + 5, y, 50, 20, "inpHide", 4, 1, NULL );
-   window_setInputFilter( wid, "inpHide",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpHide", INPUT_FILTER_NUMBER );
    x += 50 + 10;
 
    (void)x;
@@ -1448,8 +1440,7 @@ static void sysedit_editJump( void )
    window_addText( wid, x, y, l, 20, 1, "txtHide",
          NULL, NULL, s );
    window_addInput( wid, x + l + 8, y, 50, 20, "inpHide", 4, 1, NULL );
-   window_setInputFilter( wid, "inpHide",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpHide", INPUT_FILTER_NUMBER );
    x += 50 + 10;
 
    (void)x;
@@ -1557,10 +1548,8 @@ static void sysedit_planetDescReturn( unsigned int wid, char *unused )
    mydesc    = window_getInput( wid, "txtDescription" );
    mybardesc = window_getInput( wid, "txtBarDescription" );
 
-   if (p->description)
-      free(p->description);
-   if (p->bar_description)
-      free(p->bar_description);
+   free(p->description);
+   free(p->bar_description);
    p->description     = NULL;
    p->bar_description = NULL;
 
@@ -1682,7 +1671,7 @@ static void sysedit_btnRmService( unsigned int wid, char *unused )
    char *selected;
    Planet *p;
 
-   selected = toolkit_getList( wid, "nstServicesHave" );
+   selected = toolkit_getList( wid, "lstServicesHave" );
    if ((selected==NULL) || (strcmp(selected,_("None"))==0))
       return;
 
@@ -1895,6 +1884,8 @@ static void sysedit_btnFaction( unsigned int wid_unused, char *unused )
    /* Add button. */
    window_addButton( wid, -20-(bw+15), 20, bw, BUTTON_HEIGHT,
          "btnAdd", _("Set"), sysedit_btnFactionSet );
+
+   free( factions );
 }
 
 
@@ -2037,6 +2028,7 @@ static void sysedit_btnGFXApply( unsigned int wid, char *wgt )
 
    if (land) {
       free( p->gfx_exteriorPath );
+      free( p->gfx_exterior );
       nsnprintf( buf, sizeof(buf), PLANET_GFX_EXTERIOR_PATH"%s", str );
       p->gfx_exteriorPath = strdup( str );
       p->gfx_exterior = strdup( buf );

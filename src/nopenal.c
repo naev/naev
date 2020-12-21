@@ -1,8 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#if USE_OPENAL
-
 #include "nopenal.h"
 
 /* Auxiliary Effect Slot. */
@@ -32,4 +30,48 @@ ALvoid (AL_APIENTRY *nalEffectiv)(ALuint,ALenum,ALint*);
 ALvoid (AL_APIENTRY *nalEffectf)(ALuint,ALenum,ALfloat);
 ALvoid (AL_APIENTRY *nalEffectfv)(ALuint,ALenum,ALfloat*);
 
-#endif /* USE_OPENAL */
+
+#ifdef DEBUGGING
+/**
+ * @brief Converts an OpenAL error to a string.
+ *
+ *    @param err Error to convert to string.
+ *    @return String corresponding to the error.
+ */
+void al_checkHandleError( const char *func )
+{
+   ALenum err;
+   const char *errstr;
+
+   /* Get the possible error. */
+   err = alGetError();
+
+   /* No error. */
+   if (err == AL_NO_ERROR)
+      return;
+
+   /* Get the message. */
+   switch (err) {
+      case AL_INVALID_NAME:
+         errstr = _("a bad name (ID) was passed to an OpenAL function");
+         break;
+      case AL_INVALID_ENUM:
+         errstr = _("an invalid enum value was passed to an OpenAL function");
+         break;
+      case AL_INVALID_VALUE:
+         errstr = _("an invalid value was passed to an OpenAL function");
+         break;
+      case AL_INVALID_OPERATION:
+         errstr = _("the requested operation is not valid");
+         break;
+      case AL_OUT_OF_MEMORY:
+         errstr = _("the requested operation resulted in OpenAL running out of memory");
+         break;
+
+      default:
+         errstr = _("unknown error");
+         break;
+   }
+   WARN(_("OpenAL error [%s]: %s"), func, errstr);
+}
+#endif /* DEBUGGING */

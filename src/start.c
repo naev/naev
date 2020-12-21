@@ -92,7 +92,7 @@ int start_load (void)
             xmlr_strd( cur, "event",   start_data.event );
 
             if (xml_isNode(cur,"ship")) {
-               xmlr_attr( cur, "name",    start_data.shipname );
+               xmlr_attr_strd( cur, "name",    start_data.shipname );
                xmlr_strd( cur, "ship",    start_data.ship );
             }
             else if (xml_isNode(cur, "system")) {

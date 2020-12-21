@@ -1,6 +1,6 @@
-require("ai/tpl/generic.lua")
-require("ai/personality/patrol.lua")
-require "numstring.lua"
+require("ai/tpl/generic")
+require("ai/personality/patrol")
+require "numstring"
 
 -- Settings
 mem.aggressive     = true

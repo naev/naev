@@ -66,7 +66,7 @@
 /* Currently our fonts/Cabin-SemiBold.otf lacks many fairly standard glyphs, so we are falling back to
  * the monospace font which has better coverage.
  * TODO solve this issue in a sane way. */
-#define FONT_PATH_PREFIX         "fonts/"
+#define FONT_PATH_PREFIX         "dat/fonts/"
 #define FONT_DEFAULT_PATH        N_("Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf") /**< Default font path. */
 #define FONT_MONOSPACE_PATH      N_("SourceCodePro-Semibold.ttf,D2CodingBold.ttf") /**< Default monospace font path. */
 

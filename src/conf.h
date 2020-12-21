@@ -33,7 +33,6 @@
 #define VSYNC_DEFAULT                        0     /**< Whether to wait for vertical sync. */
 #define MIPMAP_DEFAULT                       0     /**< Whether to use Mip Mapping. */
 #define TEXTURE_COMPRESSION_DEFAULT          0     /**< Whether to use texture compression. */
-#define INTERPOLATION_DEFAULT                1     /**< Whether to use interpolation. */
 #define NPOT_TEXTURES_DEFAULT                0     /**< Whether to allow non-power-of-two textures. */
 #define SCALE_FACTOR_DEFAULT                 1.    /**< Default scale factor. */
 #define SHOW_FPS_DEFAULT                     0     /**< Whether to display FPS on screen. */
@@ -41,6 +40,10 @@
 #define SHOW_PAUSE_DEFAULT                   1     /**< Whether to display pause status. */
 #define ENGINE_GLOWS_DEFAULT                 1     /**< Whether to display engine glows. */
 #define MINIMIZE_DEFAULT                     1     /**< Whether to minimize on focus loss. */
+#define FONT_SIZE_CONSOLE_DEFAULT            10    /**< Default console font size. */
+#define FONT_SIZE_INTRO_DEFAULT              18    /**< Default intro font size. */
+#define FONT_SIZE_DEF_DEFAULT                12    /**< Default font size. */
+#define FONT_SIZE_SMALL_DEFAULT              11    /**< Default small font size. */
 /* Audio options */
 #define VOICES_DEFAULT                       128   /**< Amount of voices to use. */
 #define VOICES_MIN                           16    /**< Minimum amount of voices to use. */
@@ -50,11 +53,6 @@
 #define MUTE_SOUND_DEFAULT                   0     /**< Whether sound should be disabled. */
 #define SOUND_VOLUME_DEFAULT                 0.6   /**< Default sound volume. */
 #define MUSIC_VOLUME_DEFAULT                 0.8   /**< Default music volume. */
-#if USE_OPENAL
-#define BACKEND_DEFAULT                      "openal"
-#else /* USE_OPENAL */
-#define BACKEND_DEFAULT                      "sdlmix"
-#endif /* USE_OPENAL */
 /* Editor Options */
 #define DEV_SAVE_SYSTEM_DEFAULT           "ssys/"
 #define DEV_SAVE_ASSET_DEFAULT            "assets/"
@@ -80,7 +78,6 @@ typedef struct PlayerConf_s {
    int vsync; /**< Whether or not to use vsync. */
    int mipmaps; /**< Use mipmaps. */
    int compress; /**< Use texture compression. */
-   int interpolate; /**< Use texture interpolation. */
    int npot; /**< Use NPOT textures if available. */
 
    /* Memory usage. */
@@ -96,7 +93,6 @@ typedef struct PlayerConf_s {
    int minimize; /**< Whether to minimize on focus loss. */
 
    /* Sound. */
-   char *sound_backend; /**< Sound backend to use. */
    int snd_voices; /**< Number of sound voices to use. */
    int snd_pilotrel; /**< Sound is relative to pilot when following. */
    int al_efx; /**< Should EFX extension be used? (only applicable for OpenAL) */

@@ -20,9 +20,30 @@
 #include "log.h"
 #include "dialogue.h"
 #include "nlua_outfit.h"
+#include "nlua_col.h"
+#include "nlua_gfx.h"
 #include "toolkit.h"
 #include "land.h"
 #include "land_outfits.h"
+#include "input.h"
+
+
+/* Stuff for the custom toolkit. */
+#define TK_CUSTOMDONE   "__customDone"
+typedef struct custom_functions_s {
+   lua_State *L; /**< Assosciated Lua state. */
+   int done; /**< Whether or not it is done. */
+   /* Function references. */
+   int update;
+   int draw;
+   int keyboard;
+   int mouse;
+} custom_functions_t;
+static int cust_update( double dt, void* data );
+static void cust_render( double x, double y, double w, double h, void* data );
+static int cust_event( unsigned int wid, SDL_Event *event, void* data );
+static int cust_key( SDL_Keycode key, SDL_Keymod mod, int pressed, custom_functions_t *cf );
+static int cust_mouse( int type, int button, double x, double y, custom_functions_t *cf );
 
 
 /* Toolkit methods. */
@@ -32,6 +53,12 @@ static int tk_input( lua_State *L );
 static int tk_choice( lua_State *L );
 static int tk_list( lua_State *L );
 static int tk_merchantOutfit( lua_State *L );
+static int tk_custom( lua_State *L );
+static int tk_customRename( lua_State *L );
+static int tk_customFullscreen( lua_State *L );
+static int tk_customResize( lua_State *L );
+static int tk_customSize( lua_State *L );
+static int tk_customDone( lua_State *L );
 static const luaL_Reg tk_methods[] = {
    { "msg", tk_msg },
    { "yesno", tk_yesno },
@@ -39,6 +66,12 @@ static const luaL_Reg tk_methods[] = {
    { "choice", tk_choice },
    { "list", tk_list },
    { "merchantOutfit", tk_merchantOutfit },
+   { "custom", tk_custom },
+   { "customRename", tk_customRename },
+   { "customFullscreen", tk_customFullscreen },
+   { "customResize", tk_customResize },
+   { "customSize", tk_customSize },
+   { "customDone", tk_customDone },
    {0,0}
 }; /**< Toolkit Lua methods. */
 
@@ -53,6 +86,8 @@ static const luaL_Reg tk_methods[] = {
 int nlua_loadTk( nlua_env env )
 {
    nlua_register(env, "tk", tk_methods, 0);
+   nlua_loadCol(env);
+   nlua_loadGFX(env);
    return 0;
 }
 
@@ -318,5 +353,286 @@ static int tk_merchantOutfit( lua_State *L )
    outfits_open( wid, outfits, noutfits );
 
    return 0;
+}
+
+
+/**
+ * @brief Creates a custom widget window.
+ *
+ *    @luatparam String title Title of the window.
+ *    @luatparam Number width Width of the drawable area of the widget.
+ *    @luatparam Number height Height of the drawable area of the widget.
+ *    @luatparam Function update Function to call when updating. Should take a single parameter which is a number indicating how many seconds passed from previous update.
+ *    @luatparam Function draw Function to call when drawing.
+ *    @luatparam Function keyboard Function to call when keyboard events are received.
+ *    @luatparam Function mouse Function to call when mouse events are received.
+ * @luafunc custom( title, width, height, update, draw, keyboard, mouse )
+ */
+static int tk_custom( lua_State *L )
+{
+   int w, h;
+   const char *caption;
+   custom_functions_t cf;
+
+   caption = luaL_checkstring(L, 1);
+   w = luaL_checkinteger(L, 2);
+   h = luaL_checkinteger(L, 3);
+
+   luaL_checktype(L, 4, LUA_TFUNCTION);
+   luaL_checktype(L, 5, LUA_TFUNCTION);
+   luaL_checktype(L, 6, LUA_TFUNCTION);
+   luaL_checktype(L, 7, LUA_TFUNCTION);
+   /* Set up custom function pointers. */
+   cf.L = L;
+   cf.done = 0;
+   lua_pushvalue(L, 4);
+   cf.update   = luaL_ref(L, LUA_REGISTRYINDEX);
+   lua_pushvalue(L, 5);
+   cf.draw     = luaL_ref(L, LUA_REGISTRYINDEX);
+   lua_pushvalue(L, 6);
+   cf.keyboard = luaL_ref(L, LUA_REGISTRYINDEX);
+   lua_pushvalue(L, 7);
+   cf.mouse    = luaL_ref(L, LUA_REGISTRYINDEX);
+
+   /* Set done condition. */
+   lua_pushboolean(L, 0);
+   lua_setglobal(L, TK_CUSTOMDONE );
+
+   /* Create the dialogue. */
+   dialogue_custom( caption, w, h, cust_update, cust_render, cust_event, &cf );
+
+   /* Clean up. */
+   cf.done = 1;
+   luaL_unref(L, LUA_REGISTRYINDEX, cf.update);
+   luaL_unref(L, LUA_REGISTRYINDEX, cf.draw);
+   luaL_unref(L, LUA_REGISTRYINDEX, cf.keyboard);
+   luaL_unref(L, LUA_REGISTRYINDEX, cf.mouse);
+
+   return 0;
+}
+
+
+/**
+ * @brief Renames the custom widget window.
+ *
+ *    @luatparam string displayname Name to give the custom widget window.
+ * @luafunc customRename( displayname )
+ */
+static int tk_customRename( lua_State *L )
+{
+   const char *s = luaL_checkstring(L,1);
+   unsigned int wid = window_get( "dlgMsg" );
+   if (wid == 0)
+      NLUA_ERROR(L, _("custom dialogue not open"));
+   window_setDisplayname( wid, s );
+   return 0;
+}
+
+
+/**
+ * @brief Sets the custom widget fullscreen.
+ *
+ *    @luatparam boolean enable Enable fullscreen or not.
+ * @luafunc customFullscreen( enable )
+ */
+static int tk_customFullscreen( lua_State *L )
+{
+   int enable = lua_toboolean(L,1);
+   unsigned int wid = window_get( "dlgMsg" );
+   if (wid == 0)
+      NLUA_ERROR(L, _("custom dialogue not open"));
+   dialogue_customFullscreen( enable );
+   return 0;
+}
+
+
+/**
+ * @brief Sets the custom widget fullscreen.
+ *
+ *    @luatparam number width Width of the widget to resize to.
+ *    @luatparam number height Height of the widget to resize to.
+ * @luafunc customResize( width, height )
+ */
+static int tk_customResize( lua_State *L )
+{
+   int w, h;
+   unsigned int wid = window_get( "dlgMsg" );
+   if (wid == 0)
+      NLUA_ERROR(L, _("custom dialogue not open"));
+   w = luaL_checkinteger(L,1);
+   h = luaL_checkinteger(L,2);
+   dialogue_customResize( w, h );
+   return 0;
+}
+
+
+/**
+ * @brief Gets the size of a custom widget.
+ *
+ *    @luatreturn number Width of the window.
+ *    @luatreturn number Height of the window.
+ * @luafunc customSize()
+ */
+static int tk_customSize( lua_State *L )
+{
+   int w, h;
+   unsigned int wid = window_get( "dlgMsg" );
+   if (wid == 0)
+      NLUA_ERROR(L, _("custom dialogue not open"));
+   window_dimWindow( wid, &w, &h );
+   lua_pushinteger(L,w);
+   lua_pushinteger(L,h);
+   return 2;
+}
+
+
+/**
+ * @brief Ends the execution of a custom widget.
+ * @luafunc customDone()
+ */
+static int tk_customDone( lua_State *L )
+{
+   unsigned int wid = window_get( "dlgMsg" );
+   if (wid == 0)
+      NLUA_ERROR(L, _("custom dialogue not open"));
+   lua_pushboolean(L, 1);
+   lua_setglobal(L, TK_CUSTOMDONE );
+   return 0;
+}
+
+
+static int cust_pcall( lua_State *L, int nargs, int nresults, custom_functions_t *cf )
+{
+   /* I would like to propagate the error to the original function calling the
+    * dialogue, however, tthat causes the game to segfault. Code is disabled
+    * for now. TODO Fix the error propagation. */
+#if 0
+   if (lua_pcall(L, nargs, nresults, 0)) {
+      DEBUG("ERROR");
+      cf->done = 1;
+      lua_error(L); /* propagate error */
+   }
+   return 0;
+#endif
+   int errf, ret;
+
+#if DEBUGGING
+   int top = lua_gettop(L);
+   lua_pushcfunction(L, nlua_errTrace);
+   lua_insert(L, -2-nargs);
+   errf = -2-nargs;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
+
+   ret = lua_pcall( L, nargs, nresults, errf );
+
+#if DEBUGGING
+   lua_remove(naevL, top-nargs);
+#endif /* DEBUGGING */
+
+   if (ret) {
+      cf->done = 1;
+      WARN(_("Custom dialogue internal error: %s"), lua_tostring(L,-1));
+      lua_pop(L,1);
+   }
+
+   return ret;
+}
+static int cust_update( double dt, void* data )
+{
+   int ret;
+   custom_functions_t *cf = (custom_functions_t*) data;
+   if (cf->done)
+      return 1; /* Mark done. */
+   lua_State *L = cf->L;
+   lua_rawgeti(L, LUA_REGISTRYINDEX, cf->update);
+   lua_pushnumber(L, dt);
+   if (cust_pcall( L, 1, 0, cf ))
+      return 1;
+   /* Check if done. */
+   lua_getglobal(L, TK_CUSTOMDONE );
+   ret = lua_toboolean(L, -1);
+   lua_pop(L, 1);
+   return ret;
+}
+static void cust_render( double x, double y, double w, double h, void* data )
+{
+   custom_functions_t *cf = (custom_functions_t*) data;
+   if (cf->done)
+      return;
+   lua_State *L = cf->L;
+   lua_rawgeti(L, LUA_REGISTRYINDEX, cf->draw);
+   lua_pushnumber(L, x);
+   lua_pushnumber(L, y);
+   lua_pushnumber(L, w);
+   lua_pushnumber(L, h);
+   cust_pcall( L, 4, 0, cf );
+}
+static int cust_event( unsigned int wid, SDL_Event *event, void* data )
+{
+   (void) wid;
+   custom_functions_t *cf = (custom_functions_t*) data;
+   if (cf->done)
+      return 0;
+
+   /* Handle all the events. */
+   switch (event->type) {
+      case SDL_MOUSEBUTTONDOWN:
+         return cust_mouse( 1, event->button.button, event->button.x, event->button.y, cf );
+      case SDL_MOUSEBUTTONUP:
+         return cust_mouse( 2, event->button.button, event->button.x, event->button.y, cf );
+      case SDL_MOUSEMOTION:
+         return cust_mouse( 3, -1, event->button.x, event->button.y, cf );
+
+      case SDL_KEYDOWN:
+         return cust_key( event->key.keysym.sym, event->key.keysym.mod, 1, cf );
+      case SDL_KEYUP:
+         return cust_key( event->key.keysym.sym, event->key.keysym.mod, 0, cf );
+
+      default:
+         return 0;
+   }
+
+   return 0;
+}
+static int cust_key( SDL_Keycode key, SDL_Keymod mod, int pressed, custom_functions_t *cf )
+{
+   int b;
+   lua_State *L = cf->L;
+   lua_rawgeti(L, LUA_REGISTRYINDEX, cf->keyboard);
+   lua_pushboolean(L, pressed );
+   lua_pushstring(L, SDL_GetKeyName(key));
+   lua_pushstring(L, input_modToText(mod));
+   if (cust_pcall( L, 3, 1, cf ))
+      return 0;
+   b = lua_toboolean(L, -1);
+   lua_pop(L,1);
+   return b;
+}
+static int cust_mouse( int type, int button, double x, double y, custom_functions_t *cf )
+{
+   int b;
+   lua_State *L = cf->L;
+   lua_rawgeti(L, LUA_REGISTRYINDEX, cf->mouse);
+   lua_pushnumber(L, x);
+   lua_pushnumber(L, y);
+   lua_pushnumber(L, type);
+   if (type < 3) {
+      switch (button) {
+         case SDL_BUTTON_LEFT:  button=1; break;
+         case SDL_BUTTON_RIGHT: button=2; break;
+         default:               button=3; break;
+      }
+      lua_pushnumber(L, button);
+      if (cust_pcall( L, 4, 1, cf ))
+         return 0;
+   }
+   else
+      if (cust_pcall( L, 3, 1, cf ))
+         return 0;
+   b = lua_toboolean(L, -1);
+   lua_pop(L,1);
+   return b;
 }
 

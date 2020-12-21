@@ -309,10 +309,8 @@ void shipyard_update( unsigned int wid, char* str )
  */
 void shipyard_cleanup (void)
 {
-   if (shipyard_list != NULL) {
-      free( shipyard_list );
-      shipyard_list = NULL;
-   }
+   free( shipyard_list );
+   shipyard_list = NULL;
    shipyard_selected = NULL;
 }
 

@@ -1060,8 +1060,7 @@ void ai_freetask( Task* t )
       t->next = NULL;
    }
 
-   if (t->name)
-      free(t->name);
+   free(t->name);
    free(t);
 }
 

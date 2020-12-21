@@ -24,9 +24,9 @@
 
 --]]
 
-require "scripts/cargo_common.lua"
-require "scripts/numstring.lua"
-require "missions/zalek/common.lua"
+require "scripts/cargo_common"
+require "scripts/numstring"
+require "missions/zalek/common"
 
 
 bar_desc = _("It appears she wants to talk with you.")

@@ -56,6 +56,7 @@ void gui_forceBlink (void);
  */
 void gui_messageInit( int width, int x, int y );
 void gui_clearMessages (void);
+void gui_cooldownEnd (void);
 void gui_messageScrollUp( int lines );
 void gui_messageScrollDown( int lines );
 
@@ -80,9 +81,8 @@ int gui_getMapOverlayBoundLeft(void);
  */
 int gui_radarInit( int circle, int w, int h );
 void gui_radarRender( double x, double y );
-void gui_radarGetPos( int *x, int *y );
-void gui_radarGetDim( int *w, int *h );
-void gui_radarGetRes( int *res );
+void gui_radarGetRes( double* res );
+int gui_radarClickEvent( SDL_Event* event );
 
 
 /*

@@ -20,8 +20,8 @@
 Za'lek Cargo Run. adapted from Drunkard Mission
 ]]--
 
-require "numstring.lua"
-require "missions/zalek/common.lua"
+require "numstring"
+require "missions/zalek/common"
 
 
 -- Bar Description
@@ -168,7 +168,7 @@ function takeoff()
       logan:setHilight(true)
       logan:hailPlayer()
       logan:control()
-      logan:goto(player.pilot():pos() + vec2.new( 150, 75), true)
+      logan:moveto(player.pilot():pos() + vec2.new( 150, 75), true)
       tk.msg( title[5], text[5] )
       hailhook = hook.pilot(logan, "hail", "hail")
    end

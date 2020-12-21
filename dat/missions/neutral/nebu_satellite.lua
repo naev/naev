@@ -27,8 +27,8 @@
 
 ]]--
 
-require "numstring.lua"
-require "missions/neutral/common.lua"
+require "numstring"
+require "missions/neutral/common"
 
 
 -- localization stuff, translators would work here

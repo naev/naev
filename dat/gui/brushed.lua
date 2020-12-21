@@ -2,8 +2,8 @@
    The new "brushed" UI.
 --]]
 
-require "numstring.lua"
-playerform = require "scripts/playerform.lua"
+require "numstring"
+playerform = require "scripts/playerform"
 
 function create()
 
@@ -115,8 +115,8 @@ function create()
    button_mouseover = tex.open( base .. "buttonHil.png" )
    button_pressed = tex.open( base .. "buttonPre.png" )
    button_disabled = tex.open( base .. "buttonDis.png" )
-   gui.targetPlanetGFX( tex.open( base .. "radar_planet.png" ) )
-   gui.targetPilotGFX(  tex.open( base .. "radar_ship.png" ) )
+   gui.targetPlanetGFX( tex.open( base .. "radar_planet.png", 2, 2 ) )
+   gui.targetPilotGFX(  tex.open( base .. "radar_ship.png", 2, 2 ) )
 
 
    --Positions
@@ -1071,11 +1071,18 @@ function render_cooldown( percent, seconds )
    local msg = _("Cooling down...\n%.1f seconds remaining"):format( seconds )
    local fail = true
    if cooldown_omsg ~= nil then
-      if player.omsgChange( cooldown_omsg, msg, 1 ) then
+      if player.omsgChange( cooldown_omsg, msg, seconds ) then
          fail = false
       end
    end
    if fail then
-      cooldown_omsg = player.omsgAdd( msg, 1 )
+      cooldown_omsg = player.omsgAdd( msg, seconds )
+   end
+end
+
+function end_cooldown()
+   if cooldown_omsg ~= nil then
+      player.omsgRm( cooldown_omsg )
+      cooldown_omsg = nil
    end
 end

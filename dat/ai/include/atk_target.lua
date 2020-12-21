@@ -1,6 +1,6 @@
 --[[
 --    Nongeneric Think functions for determining who to attack are found here
---    attack.lua contains bindings to these functions by ship class
+--    attack contains bindings to these functions by ship class
 --]]
 
 

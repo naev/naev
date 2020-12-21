@@ -19,9 +19,9 @@
 -- This is the first mission in the baron string.
 --]]
 
-require "portrait.lua"
-require "missions/baron/common.lua"
-require "missions/neutral/common.lua"
+require "portrait"
+require "missions/baron/common"
+require "missions/neutral/common"
 
 
 sysname1 = "Darkstone"
@@ -172,17 +172,17 @@ function jumpin()
       pinnacle:setInvincible(true)
       pinnacle:control()
       pinnacle:setHilight(true)
-      pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
+      pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
       idlehook = hook.pilot(pinnacle, "idle", "idle")
       hook.pilot(pinnacle, "hail", "hail")
    end
 end
 
 function idle()
-   pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400,  400), false)
-   pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-400,  400), false)
-   pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-400, -400), false)
-   pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
+   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400,  400), false)
+   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new(-400,  400), false)
+   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new(-400, -400), false)
+   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
 end
 
 function hail()

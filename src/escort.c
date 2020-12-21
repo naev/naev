@@ -67,8 +67,7 @@ void escort_freeList( Pilot *p ) {
 
    for (i=0; i<p->nescorts; i++)
       free(p->escorts[i].ship);
-   if (p->escorts)
-      free(p->escorts);
+   free(p->escorts);
    p->escorts = NULL;
    p->nescorts = 0;
 }

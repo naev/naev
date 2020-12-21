@@ -106,8 +106,7 @@ void window_checkboxCaption( const unsigned int wid, const char *name, char *dis
    if (wgt == NULL)
       return;
 
-   if (wgt->dat.chk.display != NULL)
-      free(wgt->dat.chk.display);
+   free(wgt->dat.chk.display);
    wgt->dat.chk.display = strdup(display);
 }
 

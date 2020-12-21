@@ -196,14 +196,10 @@ Commodity* commodity_getByIndex( const int indx )
 static void commodity_freeOne( Commodity* com )
 {
    CommodityModifier *this,*next;
-   if (com->name)
-      free(com->name);
-   if (com->description)
-      free(com->description);
-   if (com->gfx_store)
-      gl_freeTexture(com->gfx_store);
-   if (com->gfx_space)
-      gl_freeTexture(com->gfx_space);
+   free(com->name);
+   free(com->description);
+   gl_freeTexture(com->gfx_store);
+   gl_freeTexture(com->gfx_space);
    next = com->planet_modifier;
    com->planet_modifier = NULL;
    while (next != NULL ) {
@@ -322,7 +318,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       if (xml_isNode(node, "planet_modifier")) {
          newdict = malloc(sizeof(CommodityModifier));
          newdict->next = temp->planet_modifier;
-         newdict->name = xml_nodeProp(node,(xmlChar*)"type");
+         xmlr_attr_strd(node, "type", newdict->name);
          newdict->value = xml_getFloat(node);
          temp->planet_modifier = newdict;
          continue;
@@ -330,7 +326,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       if (xml_isNode(node, "faction_modifier")) {
          newdict = malloc(sizeof(CommodityModifier));
          newdict->next = temp->faction_modifier;
-         newdict->name = xml_nodeProp(node, (xmlChar*)"type");
+         xmlr_attr_strd(node, "type", newdict->name);
          newdict->value = xml_getFloat(node);
          temp->faction_modifier = newdict;
       }

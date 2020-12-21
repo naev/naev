@@ -23,8 +23,8 @@
    nasin, The Wringer / Suna. House Sirius is sending in recon parties.
    The player's job is to take out any and all Sirius in the system.]]
 
-require "numstring.lua"
-require "missions/sirius/common.lua"
+require "numstring"
+require "missions/sirius/common"
 
 
 bmsg = {}

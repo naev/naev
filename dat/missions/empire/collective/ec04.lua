@@ -31,10 +31,10 @@
 
 ]]--
 
-require "nextjump.lua"
-require "proximity.lua"
-require "numstring.lua"
-require "missions/empire/common.lua"
+require "nextjump"
+require "proximity"
+require "numstring"
+require "missions/empire/common"
 
 misn_title = _("Collective Extraction")
 misn_desc = {}
@@ -124,11 +124,11 @@ function enter()
 
         fleet1[1]:comm(escort_msg1:format(player.name()))
         fleet1[1]:taskClear()
-        fleet1[1]:goto(waypoint1, false, false)
-        fleet1[1]:goto(waypoint12, false, false)
+        fleet1[1]:moveto(waypoint1, false, false)
+        fleet1[1]:moveto(waypoint12, false, false)
         fleet2[1]:taskClear()
-        fleet2[1]:goto(waypoint2, false, false)
-        fleet2[1]:goto(waypoint22, false, false)
+        fleet2[1]:moveto(waypoint2, false, false)
+        fleet2[1]:moveto(waypoint22, false, false)
         hook.pilot(fleet1[1], "idle", "idle")
         hook.pilot(fleet2[1], "idle", "idle")
 

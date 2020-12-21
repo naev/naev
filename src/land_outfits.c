@@ -152,8 +152,7 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
       iar_outfits = calloc( OUTFITS_NTABS, sizeof(Outfit**) );
    else {
       for (int i=0; i<OUTFITS_NTABS; i++)
-         if (iar_outfits[i] != NULL)
-            free( iar_outfits[i] );
+         free( iar_outfits[i] );
       memset( iar_outfits, 0, sizeof(Outfit**) * OUTFITS_NTABS );
    }
 
@@ -327,8 +326,7 @@ static void outfits_genList( unsigned int wid )
 
    /* Set up the outfits to buy/sell */
    data = window_getData( wid );
-   if (iar_outfits[active] != NULL)
-      free( iar_outfits[active] );
+   free( iar_outfits[active] );
    if (data == NULL) {
       /* Use landed outfits. */
       iar_outfits[active] = tech_getOutfit( land_planet->tech, &noutfits );
@@ -916,14 +914,11 @@ static void outfits_renderMod( double bx, double by, double w, double h, void *d
 void outfits_cleanup(void)
 {
    /* Free stored positions. */
-   if (iar_data != NULL) {
-      free(iar_data);
-      iar_data = NULL;
-   }
+   free(iar_data);
+   iar_data = NULL;
    if (iar_outfits != NULL) {
       for (int i=0; i<OUTFITS_NTABS; i++)
-         if (iar_outfits[i] != NULL)
-            free( iar_outfits[i] );
+         free( iar_outfits[i] );
       free(iar_outfits);
       iar_outfits = NULL;
    }

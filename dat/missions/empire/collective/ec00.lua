@@ -30,9 +30,9 @@
 
 ]]--
 
-require "proximity.lua"
-require "numstring.lua"
-require "missions/empire/common.lua"
+require "proximity"
+require "numstring"
+require "missions/empire/common"
 
 bar_desc = _("You see an Empire Lt. Commander who seems to be motioning you over to the counter.")
 misn_title = _("Collective Scout")
@@ -175,7 +175,7 @@ function idle()
         local angle = rnd.rnd() * 2 * math.pi
         local newlocation = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- New location is 750px away in a random direction
         p:taskClear()
-        p:goto(location + newlocation, false, false)
+        p:moveto(location + newlocation, false, false)
         hook.timer(5000, "idle")
     end
 end

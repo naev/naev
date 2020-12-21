@@ -126,7 +126,7 @@ static int load_load( nsave_t *save, const char *path )
 
       if (xml_isNode(parent, "player")) {
          /* Get name. */
-         xmlr_attr(parent, "name", save->name);
+         xmlr_attr_strd(parent, "name", save->name);
          /* Parse rest. */
          node = parent->xmlChildrenNode;
          do {
@@ -151,8 +151,8 @@ static int load_load( nsave_t *save, const char *path )
 
             /* Ship info. */
             if (xml_isNode(node, "ship")) {
-               xmlr_attr(node, "name", save->shipname);
-               xmlr_attr(node, "model", save->shipmodel);
+               xmlr_attr_strd(node, "name", save->shipname);
+               xmlr_attr_strd(node, "model", save->shipmodel);
                continue;
             }
          } while (xml_nextNode(node));
@@ -254,22 +254,12 @@ void load_free (void)
       for (i=0; i<array_size(load_saves); i++) {
          ns = &load_saves[i];
          free(ns->path);
-         if (ns->name != NULL)
-            free(ns->name);
-
-         if (ns->version != NULL)
-            free(ns->version);
-
-         if (ns->data != NULL)
-            free(ns->data);
-
-         if (ns->planet != NULL)
-            free(ns->planet);
-
-         if (ns->shipname != NULL)
-            free(ns->shipname);
-         if (ns->shipmodel != NULL)
-            free(ns->shipmodel);
+         free(ns->name);
+         free(ns->version);
+         free(ns->data);
+         free(ns->planet);
+         free(ns->shipname);
+         free(ns->shipmodel);
       }
       array_free( load_saves );
    }

@@ -28,9 +28,9 @@
 --]]
 
 --Needed scripts
-require "numstring.lua"
-require "proximity.lua"
-require "portrait.lua"
+require "numstring"
+require "proximity"
+require "portrait"
 
 title = {}
 text = {}
@@ -325,7 +325,7 @@ function enter()
       opponent:setHostile()
 
       opponent:control()
-      opponent:goto(mispla:pos() + vec2.new( 1000,  1500))
+      opponent:moveto(mispla:pos() + vec2.new( 1000,  1500))
 
       --The TV and the security
       tv1 = pilot.addRaw( "Gawain", "civilian", mispla, "Dvaered" )

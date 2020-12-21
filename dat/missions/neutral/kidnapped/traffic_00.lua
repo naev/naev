@@ -19,8 +19,8 @@
       The first mission in a series of missions surrounding human trafficking. This mission consists of overhearing pirate a couple pirate conversations, disabling a trader ship, and returning the children home to their parents. It essentially sets up everything for the following 4 missions. 
 --]]
 
-require "portrait.lua"
-require "missions/neutral/common.lua"
+require "portrait"
+require "missions/neutral/common"
 
 
 sysname1 = "Arcturus"
@@ -205,10 +205,10 @@ function enter()
 end
 
 function idle()
-  kidnappers:goto(planet.get("Zhiru"):pos() + vec2.new( 800,  800), false)
-  kidnappers:goto(planet.get("Zhiru"):pos() + vec2.new(-800,  800), false)
-  kidnappers:goto(planet.get("Zhiru"):pos() + vec2.new(-800, -800), false)
-  kidnappers:goto(planet.get("Zhiru"):pos() + vec2.new( 800, -800), false)
+  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new( 800,  800), false)
+  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new(-800,  800), false)
+  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new(-800, -800), false)
+  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new( 800, -800), false)
 end
 
 function attackedkidnappers()

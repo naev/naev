@@ -97,7 +97,7 @@ int sp_load (void)
 
       sp    = &array_grow( &sp_array );
       memset( sp, 0, sizeof(SlotProperty_t) );
-      xmlr_attr( node, "name", sp->name );
+      xmlr_attr_strd( node, "name", sp->name );
       cur   = node->xmlChildrenNode;
       do {
          xml_onlyNodes(cur);

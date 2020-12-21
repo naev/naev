@@ -46,9 +46,6 @@
 #define xml_nextNode(n)     \
    ((n!=NULL) && ((n = n->next) != NULL))
 
-/* gets the property s of node n. WARNING: MALLOCS! */
-#define xml_nodeProp(n,s)     (char*)xmlGetProp(n,(xmlChar*)s)
-
 /* get data different ways */
 #define xml_raw(n)            ((char*)(n)->children->content)
 #define xml_get(n)            (((n)->children == NULL) ? NULL : (char*)(n)->children->content)
@@ -90,8 +87,19 @@
          WARN("Node '%s' already loaded and being replaced from '%s' to '%s'", \
                s, str, xml_raw(n) ); } \
       str = ((xml_get(n) == NULL) ? NULL : strdup(xml_raw(n))); continue; }}
+/** DEPRECATED synonym for xmlr_attr_strd. (This one just isn't explicit about being a malloc.)
+ * It's still used by old code that needs to be reviewed or deleted for other reasons. */
 #define xmlr_attr(n,s,a) \
-   a = xml_nodeProp(n,s)
+   a = (char*)xmlGetProp(n,(xmlChar*)s)
+#define xmlr_attr_int(n,s,a)     do {xmlr_attr(n,s,char*T); a = T==NULL ? 0 : strtol(  T, NULL, 10); free(T);} while(0)
+#define xmlr_attr_int(n,s,a)     do {xmlr_attr(n,s,char*T); a = T==NULL ? 0 : strtol(  T, NULL, 10); free(T);} while(0)
+#define xmlr_attr_uint(n,s,a)    do {xmlr_attr(n,s,char*T); a = T==NULL ? 0 : strtoul( T, NULL, 10); free(T);} while(0)
+#define xmlr_attr_long(n,s,a)    do {xmlr_attr(n,s,char*T); a = T==NULL ? 0 : strtoll( T, NULL, 10); free(T);} while(0)
+#define xmlr_attr_ulong(n,s,a)   do {xmlr_attr(n,s,char*T); a = T==NULL ? 0 : strtoull(T, NULL, 10); free(T);} while(0)
+#define xmlr_attr_float(n,s,a)   do {xmlr_attr(n,s,char*T); a = T==NULL ? 0 :     atof(T          ); free(T);} while(0)
+#define xmlr_attr_strd(n,s,a)    xmlr_attr(n,s,a)
+/** DEPRECATED common pattern for optional ints (actually of type int) */
+#define xmlr_attr_atoi_neg1(n,s,a) do {xmlr_attr(n,s,char*T); a = T==NULL ? -1 : atoi(T); free(T);} while(0)
 
 /*
  * writer crap

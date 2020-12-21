@@ -136,8 +136,7 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
    /* Clear data. */
    memset( temp, 0, sizeof(SPFX_Base) );
 
-   /* Get the name (mallocs). */
-   temp->name = xml_nodeProp(parent,"name");
+   xmlr_attr_strd( parent, "name", temp->name );
 
    /* Extract the data. */
    node = parent->xmlChildrenNode;
@@ -177,14 +176,10 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
  */
 static void spfx_base_free( SPFX_Base *effect )
 {
-   if (effect->name != NULL) {
-      free(effect->name);
-      effect->name = NULL;
-   }
-   if (effect->gfx != NULL) {
-      gl_freeTexture(effect->gfx);
-      effect->gfx = NULL;
-   }
+   free(effect->name);
+   effect->name = NULL;
+   gl_freeTexture(effect->gfx);
+   effect->gfx = NULL;
 }
 
 
@@ -286,12 +281,10 @@ void spfx_free (void)
 
    /* get rid of all the particles and free the stacks */
    spfx_clear();
-   if (spfx_stack_front)
-      free(spfx_stack_front);
+   free(spfx_stack_front);
    spfx_stack_front = NULL;
    spfx_mstack_front = 0;
-   if (spfx_stack_back)
-      free(spfx_stack_back);
+   free(spfx_stack_back);
    spfx_stack_back = NULL;
    spfx_mstack_back = 0;
 

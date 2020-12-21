@@ -24,8 +24,8 @@
 
 -- localization stuff, translators would work here
 
-require "fleethelper.lua"
-require "portrait.lua"
+require "fleethelper"
+require "portrait"
 
 
 destsysname = "Torg"
@@ -155,7 +155,7 @@ function enter()
          j:setHilight(true)
          j:setVisible(true)
          j:control()
-         j:goto(v)
+         j:moveto(v)
          table.insert(fleethooks, hook.pilot(j, "attacked", "fleetdv_attacked"))
       end
       

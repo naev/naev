@@ -79,27 +79,27 @@ end
 --[[
 -- Goes to a target position without braking
 --]]
-function __goto_nobrake ()
+function __moveto_nobrake ()
    local target   = ai.target()
    local dir      = ai.face( target, nil, true )
-   __goto_generic( target, dir, false )
+   __moveto_generic( target, dir, false )
 end
 
 
 --[[
 -- Goes to a target position without braking
 --]]
-function __goto_nobrake_raw ()
+function __moveto_nobrake_raw ()
    local target   = ai.target()
    local dir      = ai.face( target )
-   __goto_generic( target, dir, false )
+   __moveto_generic( target, dir, false )
 end
 
 
 --[[
 -- Goes to a precise position.
 --]]
-function __goto_precise ()
+function __moveto_precise ()
    local target   = ai.target()
    local dir      = ai.face( target, nil, true )
    local dist     = ai.dist( target )
@@ -128,27 +128,27 @@ end
 --[[
 -- Goes to a target position roughly
 --]]
-function goto ()
+function moveto ()
    local target   = ai.target()
    local dir      = ai.face( target, nil, true )
-   __goto_generic( target, dir, true )
+   __moveto_generic( target, dir, true )
 end
 
 
 --[[
--- Goto without velocity compensation.
+-- moveto without velocity compensation.
 --]]
-function goto_raw ()
+function moveto_raw ()
    local target   = ai.target()
    local dir      = ai.face( target )
-   __goto_generic( target, dir, true )
+   __moveto_generic( target, dir, true )
 end
 
 
 --[[
--- Generic GOTO function.
+-- Generic moveto function.
 --]]
-function __goto_generic( target, dir, brake, subtask )
+function __moveto_generic( target, dir, brake, subtask )
    local dist     = ai.dist( target )
    local bdist
    if brake then

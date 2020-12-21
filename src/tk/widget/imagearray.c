@@ -33,6 +33,7 @@ static void iar_focus( Widget* iar, double bx, double by );
 static void iar_scroll( Widget* iar, int direction );
 static void iar_centerSelected( Widget *iar );
 /* Misc. */
+static double iar_maxPos( Widget *iar );
 static void iar_setAltTextPos( Widget *iar, double bx, double by );
 static Widget *iar_getWidget( const unsigned int wid, const char *name );
 static char* toolkit_getNameById( Widget *wgt, int elem );
@@ -108,7 +109,7 @@ void window_addImageArray( const unsigned int wid,
    wgt->dat.iar.dblptr     = dblcall;
    wgt->dat.iar.xelem      = floor((w - 10.) / (double)(wgt->dat.iar.iw+10));
    wgt->dat.iar.yelem      = (wgt->dat.iar.xelem == 0) ? 0 :
-         (int)wgt->dat.iar.nelements / wgt->dat.iar.xelem + 1;
+         (nelem-1) / wgt->dat.iar.xelem + 1;
 
    if (wdw->focus == -1) /* initialize the focus */
       toolkit_nextFocus( wdw );
@@ -118,12 +119,17 @@ void window_addImageArray( const unsigned int wid,
 /**
  * @brief Gets image array effective dimensions.
  */
-static void iar_getDim( Widget* iar, double *w, double *h )
+static void iar_getDim( Widget* iar, double* w, double* h, double* xspace, double* yspace )
 {
-   if (w != NULL)
-      *w = iar->dat.iar.iw + 5.*2.;
-   if (h != NULL)
-      *h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
+   double _w, _h, _space;
+   _w = iar->dat.iar.iw + 5.*2.;
+   _h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
+   _space = ((int)iar->w - 10) % (int)_w;
+   _space /= (iar->dat.iar.xelem + 1);
+   if (w != NULL) *w = _w;
+   if (h != NULL) *h = _h;
+   if (xspace != NULL) *xspace = _space;
+   if (yspace != NULL) *yspace = _space;
 }
 
 
@@ -137,14 +143,13 @@ static void iar_getDim( Widget* iar, double *w, double *h )
 static void iar_render( Widget* iar, double bx, double by )
 {
    int i, j, k, pos;
-   double x,y, w,h, xcurs,ycurs;
+   double x,y, w,h, xcurs,ycurs, xspace,yspace;
    double scroll_pos;
    int xelem, yelem;
-   double xspace;
    const glColour *dc, *lc;
    glColour fontcolour;
    int is_selected;
-   double d;
+   double hmax;
 
    /*
     * Calculations.
@@ -154,12 +159,11 @@ static void iar_render( Widget* iar, double bx, double by )
    y = by + iar->y;
 
    /* element dimensions */
-   iar_getDim( iar, &w, &h );
+   iar_getDim( iar, &w, &h, &xspace, &yspace );
 
    /* number of elements */
    xelem = iar->dat.iar.xelem;
    yelem = iar->dat.iar.yelem;
-   xspace = (double)(((int)iar->w - 10) % (int)w) / (double)(xelem + 1);
 
    /* background */
    toolkit_drawRect( x, y, iar->w, iar->h, &cBlack, NULL );
@@ -167,28 +171,29 @@ static void iar_render( Widget* iar, double bx, double by )
    /*
     * Scrollbar.
     */
-   d          = h * (yelem - (int)(iar->h / h));
-   if (fabs(d) < 1e-05)
+   hmax = iar_maxPos( iar );
+   if (hmax == 0.)
       scroll_pos = 0.;
    else
-      scroll_pos = iar->dat.iar.pos / d;
+      scroll_pos = iar->dat.iar.pos / hmax;
    toolkit_drawScrollbar( x + iar->w - 10., y, 10., iar->h, scroll_pos );
 
    /*
     * Main drawing loop.
     */
    gl_clipRect( x, y, iar->w, iar->h );
-   ycurs = y + iar->h - h + iar->dat.iar.pos;
+   ycurs = y + iar->h - h + iar->dat.iar.pos - yspace;
    for (j=0; j<yelem; j++) {
-      xcurs = x + xspace;
+      xcurs = x + floor(xspace / 2);
 
       /*  Skip rows that are wholly outside of the viewport. */
       if ((ycurs > y + iar->h) || (ycurs + h < y)) {
-         ycurs -= h;
+         ycurs -= h + yspace;
          continue;
       }
 
       for (i=0; i<xelem; i++) {
+         xcurs += (xspace / 2);
 
          /* Get position. */
          pos = j*xelem + i;
@@ -265,17 +270,11 @@ static void iar_render( Widget* iar, double bx, double by )
          toolkit_drawOutline( xcurs + 2.,
                ycurs + 2.,
                w - 4., h - 4., 2., dc, NULL );
-         xcurs += w + xspace;
+         xcurs += w + (xspace / 2);
       }
-      ycurs -= h;
+      ycurs -= h + yspace;
    }
    gl_unclipRect();
-
-   /*
-    * Final outline.
-    */
-   // toolkit_drawOutline( x+1, y+1, iar->w-2, iar->h-2, 1., toolkit_colLight, NULL );
-   // toolkit_drawOutline( x+1, y+1, iar->w-2, iar->h-2, 2., toolkit_colDark, NULL );
 }
 
 
@@ -354,29 +353,19 @@ static int iar_key( Widget* iar, SDL_Keycode key, SDL_Keymod mod )
  */
 static void iar_centerSelected( Widget *iar )
 {
-   int y=0;
-   double h;
-   double hmax;
-   double ypos;
+   int y;
+   double h, hmax, yspace;
 
    /* Get dimensions. */
-   iar_getDim( iar, NULL, &h );
-
-   /* Ignore fancy stuff if smaller than height. */
-   if (h * iar->dat.iar.yelem < iar->h)
-      return;
+   iar_getDim( iar, NULL, &h, NULL, &yspace );
+   hmax = iar_maxPos( iar );
 
    /* Move if needed. */
-   hmax = h * (iar->dat.iar.yelem - (int)(iar->h / h));
-   if ( iar->dat.iar.selected >= 0 )
-     y = iar->dat.iar.selected / iar->dat.iar.xelem;
-   ypos = y * h;
-   /* Below. */
-   if (ypos < iar->dat.iar.pos)
-      iar->dat.iar.pos = ypos;
-   /* Above. */
-   if (ypos > iar->dat.iar.pos + iar->h - h)
-      iar->dat.iar.pos = ypos - h*floor(iar->h/h) + 10.;
+   if (hmax == 0. || iar->dat.iar.selected < 0)
+      return;
+
+   y = iar->dat.iar.selected / iar->dat.iar.xelem;
+   iar->dat.iar.pos = CLAMP( (y+1)*(h+yspace) - (iar->h-yspace), y*(h+yspace), iar->dat.iar.pos );
    iar->dat.iar.pos = CLAMP( 0., hmax, iar->dat.iar.pos );
 
    iar_setAltTextPos( iar, iar->dat.iar.altx, iar->dat.iar.alty );
@@ -476,21 +465,13 @@ static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
 {
    (void) rx;
    (void) ry;
-   double w,h;
-   int yelem;
    double hmax;
 
    if (iar->status == WIDGET_STATUS_SCROLLING) {
 
       y = CLAMP( 15, iar->h - 15., iar->h - y );
 
-      /* element dimensions */
-      iar_getDim( iar, &w, &h );
-
-      /* number of elements */
-      yelem = iar->dat.iar.yelem;
-
-      hmax = h * (yelem - (int)(iar->h / h));
+      hmax = iar_maxPos( iar );
       iar->dat.iar.pos = (y - 15.) * hmax / (iar->h - 30.);
 
       /* Does boundary checks. */
@@ -520,25 +501,18 @@ static void iar_cleanup( Widget* iar )
 
    if (iar->dat.iar.nelements > 0) { /* Free each text individually */
       for (i=0; i<iar->dat.iar.nelements; i++) {
-         if (iar->dat.iar.images[i].image != NULL)
-            gl_freeTexture( iar->dat.iar.images[i].image );
-         if (iar->dat.iar.images[i].caption != NULL)
-            free( iar->dat.iar.images[i].caption );
-         if (iar->dat.iar.images[i].alt != NULL)
-            free( iar->dat.iar.images[i].alt );
-         if (iar->dat.iar.images[i].slottype != NULL)
-            free( iar->dat.iar.images[i].slottype );
+         gl_freeTexture( iar->dat.iar.images[i].image );
+         free( iar->dat.iar.images[i].caption );
+         free( iar->dat.iar.images[i].alt );
+         free( iar->dat.iar.images[i].slottype );
 
          for (j=0; j<iar->dat.iar.images[i].nlayers; j++)
             gl_freeTexture( iar->dat.iar.images[i].layers[j] );
-         if (iar->dat.iar.images[i].layers != NULL)
-            free( iar->dat.iar.images[i].layers );
+         free( iar->dat.iar.images[i].layers );
       }
    }
 
-   /* Free the arrays */
-   if (iar->dat.iar.images != NULL)
-      free( iar->dat.iar.images );
+   free( iar->dat.iar.images );
 }
 
 
@@ -551,26 +525,22 @@ static void iar_cleanup( Widget* iar )
  */
 static void iar_scroll( Widget* iar, int direction )
 {
-   double w,h;
-   int yelem;
+   double h, yspace;
    double hmax;
 
    if (iar == NULL)
       return;
 
    /* element dimensions */
-   iar_getDim( iar, &w, &h );
-
-   /* number of elements */
-   yelem = iar->dat.iar.yelem;
+   iar_getDim( iar, NULL, &h, NULL, &yspace );
 
    /* maximum */
-   hmax = h * (yelem - (int)(iar->h / h));
+   hmax = iar_maxPos( iar );
    if (hmax < 0.)
       hmax = 0.;
 
    /* move */
-   iar->dat.iar.pos -= direction * h;
+   iar->dat.iar.pos -= direction * (h+yspace);
 
    /* Boundary check. */
    iar->dat.iar.pos = CLAMP( 0., hmax, iar->dat.iar.pos );
@@ -582,37 +552,50 @@ static void iar_scroll( Widget* iar, int direction )
 
 
 /**
+ * @brief Return the widget's maximum y position (.pos); this is 0 if all content fits.
+ */
+static double iar_maxPos( Widget *iar )
+{
+   double h, yspace, hmax;
+   iar_getDim( iar, NULL, &h, NULL, &yspace );
+   hmax = (h+yspace) * iar->dat.iar.yelem + yspace - iar->h;
+   return hmax < 1e-05 ? 0. : hmax;
+}
+
+
+/**
  * @brief See what widget is being focused.
  */
 static int iar_focusImage( Widget* iar, double bx, double by )
 {
-   int x, y;
-   double w, h;
+   int ix, iy;
+   double w,h, xspace,yspace, gx,gy;
    int xelem;
-   double xspace;
 
    /* element dimensions */
-   iar_getDim( iar, &w, &h );
+   iar_getDim( iar, &w, &h, &xspace, &yspace );
 
    /* number of elements */
    xelem = iar->dat.iar.xelem;
-   xspace = (double)(((int)iar->w - 10) % (int)w) / (double)(xelem + 1);
 
-   x = bx / (xspace + w);
-   y = (iar->h - by + iar->dat.iar.pos) / h;
+   /* Coordinates within the grid relative to element #0 */
+   gx = bx;
+   gy = iar->h - by + iar->dat.iar.pos;
+
+   ix = gx / (xspace + w);
+   iy = gy / (yspace + h);
 
    /* Reject anything too close to the scroll bar or exceeding nelements. */
-   if (y * xelem + x >= iar->dat.iar.nelements || bx >= iar->w - 10.)
+   if (iy * xelem + ix >= iar->dat.iar.nelements || bx >= iar->w - 10.)
       return -1;
 
    /* Verify that the mouse is on an icon. */
-   if ((bx < (x+1) * xspace + x * w) || (bx > (x+1) * (xspace + w) - 4.) ||
-         (by > iar->h + iar->dat.iar.pos - y * h - 4.))
+   if ((gx < (ix+1) * xspace + ix * w) || (gx > (ix+1) * (xspace + w) - 4.) ||
+       (gy < (iy+1) * yspace + iy * h) || (gy > (iy+1) * (yspace + h) - 4.))
       return -1;
 
-   return y * xelem + x;
+   return iy * xelem + ix;
 }
-
 
 
 /**
@@ -624,16 +607,9 @@ static int iar_focusImage( Widget* iar, double bx, double by )
  */
 static void iar_focus( Widget* iar, double bx, double by )
 {
-   double y, h;
+   double y;
    double scroll_pos, hmax;
-   int yelem;
    int selected;
-
-   /* element dimensions */
-   iar_getDim( iar, NULL, &h );
-
-   /* number of elements */
-   yelem = iar->dat.iar.yelem;
 
    /* Test for item click. */
    selected = iar_focusImage( iar, bx, by );
@@ -645,8 +621,8 @@ static void iar_focus( Widget* iar, double bx, double by )
    /* Scrollbar click. */
    else if (bx > iar->w - 10.) {
       /* Get bar position (center). */
-      hmax = h * (yelem - (int)(iar->h / h));
-      if (fabs(hmax) < 1e-05)
+      hmax = iar_maxPos( iar );
+      if (hmax == 0.)
          scroll_pos = 0.;
       else
          scroll_pos = iar->dat.iar.pos / hmax;
@@ -814,7 +790,6 @@ double toolkit_getImageArrayOffset( const unsigned int wid, const char* name )
  */
 int toolkit_setImageArrayOffset( const unsigned int wid, const char* name, double off )
 {
-   double h;
    double hmax;
 
    Widget *wgt = iar_getWidget( wid, name );
@@ -822,16 +797,15 @@ int toolkit_setImageArrayOffset( const unsigned int wid, const char* name, doubl
       return -1;
 
    /* Get dimensions. */
-   iar_getDim( wgt, NULL, &h );
+   hmax = iar_maxPos( wgt );
 
    /* Ignore fancy stuff if smaller than height. */
-   if (h * wgt->dat.iar.yelem < wgt->h) {
+   if (hmax == 0.) {
       wgt->dat.iar.pos = 0.;
       return 0;
    }
 
    /* Move if needed. */
-   hmax = h * (wgt->dat.iar.yelem - (int)(wgt->h / h));
    wgt->dat.iar.pos = CLAMP( 0., hmax, off );
 
    iar_setAltTextPos( wgt, wgt->dat.iar.altx, wgt->dat.iar.alty );

@@ -27,7 +27,7 @@
 
 -- Localization, choosing a language if Naev is translated for non-english-speaking locales.
 
-require "numstring.lua"
+require "numstring"
 
 
 text = {}
@@ -113,7 +113,7 @@ function targetIdle()
     angle = rnd.rnd() * 2 * math.pi
     newlocation = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- New location is 750px away in a random direction
     target:taskClear()
-    target:goto(location + newlocation, false, false)
+    target:moveto(location + newlocation, false, false)
     hook.timer(5000, "targetIdle")
 end
 

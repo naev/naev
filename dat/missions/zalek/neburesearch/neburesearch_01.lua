@@ -26,9 +26,9 @@
 
 ]]--
 
-require "scripts/nextjump.lua"
-require "scripts/numstring.lua"
-require "missions/zalek/common.lua"
+require "scripts/nextjump"
+require "scripts/numstring"
+require "missions/zalek/common"
 
 
 bar_desc = _("You see a scientist who is apparently looking for someone.")
@@ -300,7 +300,7 @@ function startAmbush()
     ships = pilot.add("Dvaered Small Patrol", "dvaered_norun", vec2.new(-1000,0))
     for i, j in ipairs(ships) do
         j:control(true)
-        j:goto(vec2.new(-8000,0))
+        j:moveto(vec2.new(-8000,0))
     end
     ambush = true
     hook.timer(15000, "ambushHail")

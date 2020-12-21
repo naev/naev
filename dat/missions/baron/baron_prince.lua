@@ -23,10 +23,10 @@
 -- This is the second mission in the baron string.
 --]]
 
-require "fleethelper.lua"
-require "numstring.lua"
-require "portrait.lua"
-require "missions/baron/common.lua"
+require "fleethelper"
+require "numstring"
+require "portrait"
+require "missions/baron/common"
 
 
 title = {}
@@ -339,7 +339,7 @@ function enter()
       pinnacle:setFriendly()
       pinnacle:control()
       pinnacle:setHilight(true)
-      pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false, false)
+      pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false, false)
       idlehook = hook.pilot(pinnacle, "idle", "idle")
       hhail = hook.pilot(pinnacle, "hail", "hail")
    elseif artifactA ~= nil or artifactB ~= nil or artifactC ~= nil or artifactReal ~= nil then
@@ -368,10 +368,10 @@ function enter()
 end
 
 function idle()
-   pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 500,  500), false)
-   pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-500,  500), false)
-   pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-500, -500), false)
-   pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false)
+   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 500,  500), false)
+   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new(-500,  500), false)
+   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new(-500, -500), false)
+   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false)
 end
 
 function hail()

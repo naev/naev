@@ -16,7 +16,7 @@ Control the fleet's movements by controlling the fleet leader, or "fleader".
 example:
 my_fleet = pilot.add("Pirate Hyena Pack")
 my_fleet = Forma:new(my_fleet,"echelon left",1500)
-my_fleet:setTask("goto",vec2.new(0,0))
+my_fleet:setTask("moveto",vec2.new(0,0))
 
 Current formations are:
 buffer            echelon left
@@ -497,7 +497,7 @@ function Forma:control()
          local goal = cons + p:pos()
 
          if cons:mod() >= 300 then
-            p:goto(goal, false, false)
+            p:moveto(goal, false, false)
             else
             p:face(goal)
          end
@@ -515,8 +515,8 @@ end
 function Forma:manageTask()
    if self.task and self.task[1] then 
       self.fleader:control()
-      if self.task[1] == "goto" then
-         self.fleader:goto(self.task[2])
+      if self.task[1] == "moveto" then
+         self.fleader:moveto(self.task[2])
       elseif self.task[1] == "land" then
          self.fleader:land(self.task[2])
       elseif self.task[1] == "hyperspace" then

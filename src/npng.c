@@ -387,29 +387,3 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
    free( row_pointers );
    return surface;
 }
-
-
-/**
- * @brief Gets metadata by name.
- *
- *    @param npng PNG image to query.
- *    @param txt Text name of the metadata to get.
- *    @param[out] data gotten.
- *    @return The length of the metadata or -1 if not found.
- */
-int npng_metadata( npng_t *npng, char *txt, char **data )
-{
-   int i;
-
-   for (i=0; i<npng->num_text; i++) {
-      if (strcmp( txt, npng->text_ptr[i].key )==0) {
-         *data = npng->text_ptr[i].text;
-         return npng->text_ptr[i].text_length;
-      }
-   }
-
-   return -1;
-}
-
-
-

@@ -20,6 +20,9 @@
 #include "font.h"
 #include "nlua_col.h"
 #include "nlua_tex.h"
+#include "nlua_font.h"
+#include "nlua_transform.h"
+#include "nlua_shader.h"
 #include "ndata.h"
 
 
@@ -28,7 +31,12 @@ static int gfxL_dim( lua_State *L );
 static int gfxL_renderTex( lua_State *L );
 static int gfxL_renderTexRaw( lua_State *L );
 static int gfxL_renderRect( lua_State *L );
+static int gfxL_renderCircle( lua_State *L );
 static int gfxL_fontSize( lua_State *L );
+/* TODO get rid of printDim and print in favour of printfDim and printf */
+static int gfxL_printfDim( lua_State *L );
+static int gfxL_printfWrap( lua_State *L );
+static int gfxL_printf( lua_State *L );
 static int gfxL_printDim( lua_State *L );
 static int gfxL_print( lua_State *L );
 static int gfxL_printText( lua_State *L );
@@ -39,15 +47,17 @@ static const luaL_Reg gfxL_methods[] = {
    { "renderTex", gfxL_renderTex },
    { "renderTexRaw", gfxL_renderTexRaw },
    { "renderRect", gfxL_renderRect },
+   { "renderCircle", gfxL_renderCircle },
    /* Printing. */
    { "fontSize", gfxL_fontSize },
+   { "printfDim", gfxL_printfDim },
+   { "printfWrap", gfxL_printfWrap },
+   { "printf", gfxL_printf },
    { "printDim", gfxL_printDim },
    { "print", gfxL_print },
    { "printText", gfxL_printText },
    {0,0}
 }; /**< GFX methods. */
-
-
 
 
 /**
@@ -61,9 +71,12 @@ int nlua_loadGFX( nlua_env env )
    /* Register the values */
    nlua_register(env, "gfx", gfxL_methods, 0);
 
-   /* We also load the texture and colour modules as dependencies. */
+   /* We also load the texture, colour, font, and transform modules as dependencies. */
    nlua_loadCol( env );
    nlua_loadTex( env );
+   nlua_loadFont( env );
+   nlua_loadTransform( env );
+   nlua_loadShader( env );
 
    return 0;
 }
@@ -182,18 +195,22 @@ static int gfxL_renderTex( lua_State *L )
  *    @luatparam number tex_w Sprite width to display as [-1.:1.]. Note if negative, it will flip the image horizontally.
  *    @luatparam number tex_h Sprite height to display as [-1.:1.] Note if negative, it will flip the image vertically.
  *    @luatparam[opt] Colour colour Colour to use when rendering.
- * @luafunc renderTexRaw( tex, pos_x, pos_y, pos_w, pos_h, sprite_x, sprite_y, tex_x, tex_y, tex_w, tex_h, colour )
+ *    @luatparam[opt] number angle Angle to rotate in radians.
+ * @luafunc renderTexRaw( tex, pos_x, pos_y, pos_w, pos_h, sprite_x, sprite_y, tex_x, tex_y, tex_w, tex_h, colour, angle )
  */
 static int gfxL_renderTexRaw( lua_State *L )
 {
    glTexture *t;
    glColour *col;
    double px,py, pw,ph, tx,ty, tw,th;
+   double angle;
    int sx, sy;
+   int top;
 
    NLUA_CHECKRW(L);
 
    /* Parameters. */
+   top = lua_gettop(L);
    col = NULL;
    t  = luaL_checktex( L, 1 );
    px = luaL_checknumber( L, 2 );
@@ -206,8 +223,9 @@ static int gfxL_renderTexRaw( lua_State *L )
    ty = luaL_checknumber( L, 9 );
    tw = luaL_checknumber( L, 10 );
    th = luaL_checknumber( L, 11 );
-   if (lua_iscolour( L, 12 ))
-      col = lua_tocolour( L, 12 );
+   if (top > 11)
+      col = luaL_checkcolour(L, 12 );
+   angle = luaL_optnumber(L,13,0.);
 
    /* Some safety checking. */
 #if DEBUGGING
@@ -230,7 +248,7 @@ static int gfxL_renderTexRaw( lua_State *L )
       ty -= th;
 
    /* Render. */
-   gl_blitTexture( t, px, py, pw, ph, tx, ty, tw, th, col, 0. );
+   gl_blitTexture( t, px, py, pw, ph, tx, ty, tw, th, col, angle );
    return 0;
 }
 
@@ -276,6 +294,38 @@ static int gfxL_renderRect( lua_State *L )
 
 
 /**
+ * @brief Renders a circle
+ *
+ *    @luatparam number x X position to render at.
+ *    @luatparam number y Y position to render at.
+ *    @luatparam number r Radius of the circle.
+ *    @luatparam Colour col Colour to use.
+ *    @luatparam[opt=false] boolean empty Whether or not it should be empty.
+ * @luafunc renderCircle( x, y, r, col, empty )
+ */
+static int gfxL_renderCircle( lua_State *L )
+{
+   glColour *col;
+   double x,y, r;
+   int empty;
+
+   NLUA_CHECKRW(L);
+
+   /* Parse parameters. */
+   x     = luaL_checknumber( L, 1 );
+   y     = luaL_checknumber( L, 2 );
+   r     = luaL_checknumber( L, 3 );
+   col   = luaL_checkcolour( L, 4 );
+   empty = lua_toboolean( L, 5 );
+
+   /* Render. */
+   gl_drawCircle( x, y, r, col, !empty );
+
+   return 0;
+}
+
+
+/**
  * @brief Gets the size of the font.
  *
  *    @luatparam boolean small Whether or not to get the size of the small font.
@@ -311,10 +361,7 @@ static int gfxL_printDim( lua_State *L )
    /* Parse parameters. */
    font  = lua_toboolean(L,1) ? &gl_smallFont : &gl_defFont;
    str   = luaL_checkstring(L,2);
-   if (lua_gettop(L) > 2)
-      width = luaL_checkinteger(L,3);
-   else
-      width = 0;
+   width = luaL_optinteger(L,3,0);
 
    /* Print length. */
    if (width == 0)
@@ -326,13 +373,148 @@ static int gfxL_printDim( lua_State *L )
 
 
 /**
+ * @brief Gets the size of the text to print.
+ *
+ *    @luatparam font font Font to use.
+ *    @luatparam string str Text to calculate length of.
+ *    @luatparam[opt] int width Optional parameter to indicate it is a block of text and to use this width.
+ * @luafunc printfDim( font, str, width )
+ */
+static int gfxL_printfDim( lua_State *L )
+{
+   const char *str;
+   int width;
+   glFont *font;
+
+   /* Parse parameters. */
+   font  = luaL_checkfont(L,1);
+   str   = luaL_checkstring(L,2);
+   width = luaL_optinteger(L,3,0);
+
+   /* Print length. */
+   if (width == 0)
+      lua_pushnumber( L, gl_printWidthRaw( font, str ) );
+   else
+      lua_pushnumber( L, gl_printHeightRaw( font, width, str ) );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the wrap for text.
+ *
+ *    @luatparam font font Font to use.
+ *    @luatparam string str Text to calculate length of.
+ *    @luatparam int width Width to wrap at.
+ *    @luatreturn table A table containing pairs of text and their width.
+ *    @luatreturn number Maximum width of all the lines.
+ * @luafunc printfWrap( font, str, width )
+ */
+static int gfxL_printfWrap( lua_State *L )
+{
+   const char *s;
+   int width, outw, maxw;
+   glFont *font;
+   int p, l, slen;
+   int linenum;
+   char *tmp;
+
+   /* Parse parameters. */
+   font  = luaL_checkfont(L,1);
+   s     = luaL_checkstring(L,2);
+   width = luaL_checkinteger(L,3);
+
+   /* Process output into table. */
+   lua_newtable(L);
+   tmp = strdup(s);
+   slen = strlen(s);
+   p = 0;
+   linenum = 1;
+   maxw = 0;
+   do {
+      if ((tmp[p] == ' ') || (tmp[p] == '\n'))
+         p++;
+      /* Don't handle tab for now. */
+      if (tmp[p]=='\t')
+         tmp[p] = ' ';
+      l = gl_printWidthForText(font, &tmp[p], width, &outw );
+      if (outw > maxw)
+         maxw = outw;
+
+      /* Create entry of form { string, width } in the table. */
+      lua_pushnumber(L, linenum++);    /* t, n */
+      lua_newtable(L);                 /* t, n, t */
+      lua_pushinteger(L, 1);           /* t, n, t, 1 */
+      lua_pushlstring(L, &tmp[p], l);  /* t, n, t, 1, s */
+      lua_rawset(L, -3);               /* t, n, t */
+      lua_pushinteger(L, 2);           /* t, n, t, 2 */
+      lua_pushinteger(L, outw);        /* t, n, t, 2, n */
+      lua_rawset(L, -3);               /* t, n, t */
+      lua_rawset(L, -3);               /* t */
+
+      p += l;
+
+   } while (p < slen);
+
+   /* Push max width. */
+   lua_pushinteger(L, maxw);
+
+   return 2;
+}
+
+
+/**
+ * @brief Prints text on the screen using a font.
+ *
+ * @usage gfx.printf( font, _("Hello World!"), 50, 50, colour.new("Red") ) -- Displays text in red at 50,50.
+ *
+ *    @luatparam font font Font to use.
+ *    @luatparam string str String to print.
+ *    @luatparam number x X position to print at.
+ *    @luatparam number y Y position to print at.
+ *    @luatparam Colour col Colour to print text.
+ *    @luatparam[opt] int max Maximum width to render up to.
+ *    @luatparam[opt] boolean center Whether or not to center it.
+ * @luafunc printf( font, str, x, y, col, max, center )
+ */
+static int gfxL_printf( lua_State *L )
+{
+   glFont *font;
+   const char *str;
+   double x, y;
+   glColour *col;
+   int max, mid;
+
+   NLUA_CHECKRW(L);
+
+   /* Parse parameters. */
+   font  = luaL_checkfont(L,1);
+   str   = luaL_checkstring(L,2);
+   x     = luaL_checknumber(L,3);
+   y     = luaL_checknumber(L,4);
+   col   = luaL_checkcolour(L,5);
+   max   = luaL_optinteger(L,6,0);
+   mid   = lua_toboolean(L,7);
+
+   /* Render. */
+   if (mid)
+      gl_printMidRaw( font, max, x, y, col, 0., str );
+   else if (max > 0)
+      gl_printMaxRaw( font, max, x, y, col, 0., str );
+   else
+      gl_printRaw( font, x, y, col, 0., str );
+   return 0;
+}
+
+
+/**
  * @brief Prints text on the screen.
  *
  * @usage gfx.print( nil, _("Hello World!"), 50, 50, colour.new("Red") ) -- Displays text in red at 50,50.
  * @usage gfx.print( true, _("Hello World!"), 50, 50, col, 100 ) -- Displays text to a maximum of 100 pixels wide.
  * @usage gfx.print( true, str, 50, 50, col, 100, true ) -- Displays centered text to a maximum of 100 pixels.
  *
- *    @luatparam bookean small Whether or not to use a small font.
+ *    @luatparam boolean small Whether or not to use a small font.
  *    @luatparam string str String to print.
  *    @luatparam number x X position to print at.
  *    @luatparam number y Y position to print at.
@@ -357,10 +539,7 @@ static int gfxL_print( lua_State *L )
    x     = luaL_checknumber(L,3);
    y     = luaL_checknumber(L,4);
    col   = luaL_checkcolour(L,5);
-   if (lua_gettop(L) >= 6)
-      max = luaL_checkinteger(L,6);
-   else
-      max = 0;
+   max   = luaL_optinteger(L,6,0);
    mid   = lua_toboolean(L,7);
 
    /* Render. */
@@ -386,13 +565,14 @@ static int gfxL_print( lua_State *L )
  *    @luatparam number w Width of the block of text.
  *    @luatparam number h Height of the block of text.
  *    @luatparam Colour col Colour to print text.
- * @luafunc printText( small, str, x, y, w, h, col )
+ *    @luatparam line_height Height of each line to print.
+ * @luafunc printText( small, str, x, y, w, h, col, line_height )
  */
 static int gfxL_printText( lua_State *L )
 {
    glFont *font;
    const char *str;
-   int w, h;
+   int w, h, lh;
    double x, y;
    glColour *col;
 
@@ -406,9 +586,10 @@ static int gfxL_printText( lua_State *L )
    w     = luaL_checkinteger(L,5);
    h     = luaL_checkinteger(L,6);
    col   = luaL_checkcolour(L,7);
+   lh    = luaL_optinteger(L,8,0);
 
    /* Render. */
-   gl_printTextRaw( font, w, h, x, y, col, -1., str );
+   gl_printTextRaw( font, w, h, x, y, lh, col, -1., str );
 
    return 0;
 }

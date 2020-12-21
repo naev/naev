@@ -23,7 +23,7 @@
       AUTHOR: thilo <thilo@thiloernst.de>
    --]]
 
-require "numstring.lua"
+require "numstring"
 
 
 -- Bar information, describes how the NPC appears in the bar
@@ -81,7 +81,7 @@ text[8] = _([[As soon as you get of your ship, you are surrounded by the group o
 title[9] = _("Sad nerds")
 text[9] = _([[As you get of your ship, you do not immediately see the nerds. You finally find them in a dark corner of the landing pad quietly sitting on their box, obviously not in a good mood. You greet them, but nobody speaks a word. You ask them what's wrong. The nerds warily glance at each other before Mia bursts out in frustration.
     "That aristocratic ass of a bored teenager! He snatched the prize from us! It wasn't even fair play. His box wasn't home built. It was a brand new ship's processing unit, on which he banged his hammer until it looked acceptable. And the corrupt assholes in the jury pretended not to notice!"
-    "So no, we didn't win" she adds after taking a few breaths to calm down. "Take us back to %s.]])
+    "So no, we didn't win" she adds after taking a few breaths to calm down. "Take us back to %s."]])
 
 -- you do not pickup the nerds in time
 title[10] = _("No more nerds")
@@ -191,7 +191,7 @@ function accept ()
 
       tk.msg(title[2], string.format(text[2], destPlanet:name()))
       local distance = vec2.dist( planet.pos(srcPlanet), planet.pos(destPlanet) )
-      local stuperpx = 1 / player.pilot():stats().speed_max * 30 -- from cargo_common.lua
+      local stuperpx = 1 / player.pilot():stats().speed_max * 30 -- from cargo_common
       expiryDate = time.get() + time.create(0, 0, 10010 + distance * stuperpx + 3300 ) -- takeoff + min travel time + leeway
 
       addNerdCargo()

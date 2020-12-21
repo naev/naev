@@ -15,7 +15,6 @@
 
 #include "SDL.h"
 
-#include "music_sdlmix.h"
 #include "music_openal.h"
 
 #include "nlua.h"
@@ -64,27 +63,6 @@ static int music_runLua( const char *situation );
 static char *music_name       = NULL; /**< Current music name. */
 static unsigned int music_start = 0; /**< Music start playing time. */
 static double music_timer     = 0.; /**< Music timer. */
-
-
-/*
- * Function pointers for backend.
- */
-/* Init/exit. */
-int  (*music_sys_init) (void)    = NULL;
-void (*music_sys_exit) (void)    = NULL;
-/* Loading. */
-int  (*music_sys_load) ( const char* name, SDL_RWops *rw ) = NULL;
-void (*music_sys_free) (void)    = NULL;
- /* Music control. */
-int  (*music_sys_volume)( const double vol ) = NULL;
-double (*music_sys_getVolume) (void) = NULL;
-double (*music_sys_getVolumeLog) (void) = NULL;
-void (*music_sys_play) (void)    = NULL;
-void (*music_sys_stop) (void)    = NULL;
-void (*music_sys_pause) (void)   = NULL;
-void (*music_sys_resume) (void)  = NULL;
-void (*music_sys_setPos) ( double sec ) = NULL;
-int  (*music_sys_isPlaying) (void) = NULL;
 
 
 /*
@@ -169,69 +147,8 @@ int music_init (void)
    if (music_disabled)
       return 0;
 
-   if ((conf.sound_backend != NULL) &&
-         (strcmp(conf.sound_backend,"sdlmix")==0)) {
-#if USE_SDLMIX
-      /*
-       * SDL_mixer backend.
-       */
-      /* Init/exit. */
-      music_sys_init = music_mix_init;
-      music_sys_exit = music_mix_exit;
-      /* Loading. */
-      music_sys_load = music_mix_load;
-      music_sys_free = music_mix_free;
-      /* Music control. */
-      music_sys_volume = music_mix_volume;
-      music_sys_getVolume = music_mix_getVolume;
-      music_sys_getVolumeLog = music_mix_getVolume;
-      music_sys_load = music_mix_load;
-      music_sys_play = music_mix_play;
-      music_sys_stop = music_mix_stop;
-      music_sys_pause = music_mix_pause;
-      music_sys_resume = music_mix_resume;
-      music_sys_setPos = music_mix_setPos;
-      music_sys_isPlaying = music_mix_isPlaying;
-#else /* USE_SDLMIX */
-      WARN(_("SDL_mixer support not compiled in!"));
-      return -1;
-#endif /* USE_SDLMIX */
-   }
-   else if ((conf.sound_backend != NULL) &&
-         (strcmp(conf.sound_backend,"openal")==0)) {
-#if USE_OPENAL
-      /*
-       * OpenAL backend.
-       */
-      /* Init/exit. */
-      music_sys_init = music_al_init;
-      music_sys_exit = music_al_exit;
-      /* Loading. */
-      music_sys_load = music_al_load;
-      music_sys_free = music_al_free;
-      /* Music control. */
-      music_sys_volume = music_al_volume;
-      music_sys_getVolume = music_al_getVolume;
-      music_sys_getVolumeLog = music_al_getVolumeLog;
-      music_sys_load = music_al_load;
-      music_sys_play = music_al_play;
-      music_sys_stop = music_al_stop;
-      music_sys_pause = music_al_pause;
-      music_sys_resume = music_al_resume;
-      music_sys_setPos = music_al_setPos;
-      music_sys_isPlaying = music_al_isPlaying;
-#else /* USE_OPENAL */
-      WARN(_("OpenAL support not compiled in!"));
-      return -1;
-#endif /* USE_OPENAL*/
-   }
-   else {
-      WARN(_("Unknown sound backend '%s'."), conf.sound_backend);
-      return -1;
-   }
-
    /* Start the subsystem. */
-   if (music_sys_init())
+   if (music_al_init())
       return -1;
 
    /* Load the music. */
@@ -266,7 +183,7 @@ void music_exit (void)
    music_free();
 
    /* Exit the subsystem. */
-   music_sys_exit();
+   music_al_exit();
 
    /* Destroy the lock. */
    if (music_lock != NULL) {
@@ -287,13 +204,11 @@ static void music_free (void)
    if (music_disabled)
       return;
 
-   if (music_name != NULL) {
-      free(music_name);
-      music_name = NULL;
-   }
+   free(music_name);
+   music_name = NULL;
    music_start = 0;
 
-   music_sys_free();
+   music_al_free();
 }
 
 
@@ -351,7 +266,7 @@ int music_volume( const double vol )
    if (music_disabled)
       return 0;
 
-   return music_sys_volume( vol );
+   return music_al_volume( vol );
 }
 
 
@@ -365,7 +280,7 @@ double music_getVolume (void)
    if (music_disabled)
       return 0.;
 
-   return music_sys_getVolume();
+   return music_al_getVolume();
 }
 
 
@@ -378,7 +293,7 @@ double music_getVolumeLog(void)
 {
    if (music_disabled)
       return 0.;
-   return music_sys_getVolumeLog();
+   return music_al_getVolumeLog();
 }
 
 
@@ -407,7 +322,7 @@ int music_load( const char* name )
       WARN(_("Music '%s' not found."), filename);
       return -1;
    }
-   music_sys_load( name, rw );
+   music_al_load( name, rw );
 
    return 0;
 }
@@ -420,7 +335,7 @@ void music_play (void)
 {
    if (music_disabled) return;
 
-   music_sys_play();
+   music_al_play();
 }
 
 
@@ -431,7 +346,7 @@ void music_stop (void)
 {
    if (music_disabled) return;
 
-   music_sys_stop();
+   music_al_stop();
 }
 
 
@@ -442,7 +357,7 @@ void music_pause (void)
 {
    if (music_disabled) return;
 
-   music_sys_pause();
+   music_al_pause();
 }
 
 
@@ -453,7 +368,7 @@ void music_resume (void)
 {
    if (music_disabled) return;
 
-   music_sys_resume();
+   music_al_resume();
 }
 
 
@@ -467,7 +382,7 @@ int music_isPlaying (void)
    if (music_disabled)
       return 0; /* Always not playing when music is off. */
 
-   return music_sys_isPlaying();
+   return music_al_isPlaying();
 }
 
 
@@ -509,7 +424,7 @@ void music_setPos( double sec )
    if (music_disabled)
       return;
 
-   music_sys_setPos( sec );
+   music_al_setPos( sec );
 }
 
 

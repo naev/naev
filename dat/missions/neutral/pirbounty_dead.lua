@@ -44,9 +44,9 @@
 
 --]]
 
-require "numstring.lua"
-require "jumpdist.lua"
-require "pilot/pirate.lua"
+require "numstring"
+require "jumpdist"
+require "pilot/pirate"
 
 subdue_title   = _("Captured Alive")
 subdue_text    = {}

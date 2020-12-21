@@ -18,7 +18,7 @@
 --]]
 
 
-require "factions/standing/skel.lua"
+require "factions/standing/skel"
 
 
 function faction_hit( current, amount, source, secondary )
