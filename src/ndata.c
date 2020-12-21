@@ -35,6 +35,7 @@
 #include <stdarg.h>
 #include <string.h>
 
+#include "physfs.h"
 #include "SDL.h"
 #include "SDL_mutex.h"
 
@@ -142,6 +143,11 @@ int ndata_setPath( const char *path )
       }
    }
 
+   if( PHYSFS_mount( ndata_dir, NULL, 0 ) == 0 ) {
+      WARN( "PhysicsFS mount failed: %s",
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      return -1;
+   }
    LOG( _( "Found ndata: %s" ), ndata_dir );
    ndata_testVersion();
 
@@ -230,6 +236,9 @@ int ndata_open (void)
  */
 void ndata_close (void)
 {
+   if( PHYSFS_unmount( ndata_dir ) == 0 )
+      WARN( "PhysicsFS unmount failed: %s",
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
    free( ndata_dir );
    ndata_dir = NULL;
 
