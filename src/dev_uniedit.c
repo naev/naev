@@ -1449,7 +1449,7 @@ static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
       if (p[i].real == ASSET_VIRTUAL)
          j = 1;
    if (j==0) {
-      dialogue_alert( _("No virtual assets to add! Please add virtual assets to dat/asset.xml first.") );
+      dialogue_alert( _("No virtual assets to add! Please add virtual assets to the 'assets' directory first.") );
       return;
    }
 
