@@ -1,3 +1,4 @@
+
 uniform vec4 color;
 uniform sampler2D sampler;
 
@@ -7,16 +8,10 @@ out vec4 color_out;
 const float glyph_center   = 0.5;
 
 void main(void) {
-   /* Standard rendering. */
-   /*
-   color_out = color;
-   color_out.a = texture(sampler, tex_coord_out).r;
-   */
-
-   /* Distance field rendering. */
    float dist = texture(sampler, tex_coord_out).r;
-   float width = fwidth(dist);
-   float alpha = smoothstep(glyph_center-width, glyph_center+width, dist);
+   float sigma = abs(abs(dFdx(dist))+abs(dFdy(dist)));
+   float delta = abs(abs(dFdx(dist))-abs(dFdy(dist)));
+   float alpha = clamp(.5 + (dist-glyph_center + clamp(dist-glyph_center,-delta,delta))/(sigma+delta+1e-4), 0, 1);
    color_out = vec4(color.rgb, alpha*color.a);
 
 #include "colorblind.glsl"

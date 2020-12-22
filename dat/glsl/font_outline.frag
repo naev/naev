@@ -10,9 +10,10 @@ const float outline_center = 0.55;
 
 void main(void) {
    float dist = texture(sampler, tex_coord_out).r;
-   float width = fwidth(dist);
-   float alpha = smoothstep(glyph_center-width, glyph_center+width, dist);
-   float beta = smoothstep(outline_center-width, outline_center+width, dist);
+   float sigma = abs(abs(dFdx(dist))+abs(dFdy(dist)));
+   float delta = abs(abs(dFdx(dist))-abs(dFdy(dist)));
+   float alpha = clamp(.5 + (dist-glyph_center + clamp(dist-glyph_center,-delta,delta))/(sigma+delta+1e-4), 0, 1);
+   float beta = clamp(.5 + (dist-outline_center + clamp(dist-outline_center,-delta,delta))/(sigma+delta+1e-4), 0, 1);
    vec3 rgb = mix(outline_color.rgb, color.rgb, beta);
    color_out = vec4(rgb, alpha*color.a);
 
