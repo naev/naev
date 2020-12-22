@@ -495,12 +495,8 @@ int main( int argc, char** argv )
    gl_freeFont(&gl_smallFont);
    gl_freeFont(&gl_defFontMono);
 
-   /* Close data. */
-   ndata_close();
-   start_cleanup();
-
-   /* Destroy conf. */
-   conf_cleanup(); /* Frees some memory the configuration allocated. */
+   start_cleanup(); /* Cleanup from start.c, not the first cleanup step. :) */
+   conf_cleanup(); /* Free some memory the configuration allocated. */
 
    /* exit subsystems */
    cli_exit(); /* Clean up the console. */
@@ -516,6 +512,8 @@ int main( int argc, char** argv )
    gl_exit(); /* Kills video output */
    sound_exit(); /* Kills the sound */
    news_exit(); /* Destroys the news. */
+
+   ndata_close(); /* Free PhysicsFS resources. */
 
    /* Free the icon. */
    if (naev_icon)
