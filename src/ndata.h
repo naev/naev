@@ -75,7 +75,6 @@
 #define FACTIONS_PATH            "factions/"
 #define GETTEXT_PATH             "gettext/" /* Doesn't use ndata functions. */
 #define BACKGROUND_PATH          "bkg/"
-#define LANGUAGES_PATH           "LANGUAGES"
 #define INTRO_PATH               "intro"
 #define RESCUE_PATH              "rescue.lua"
 

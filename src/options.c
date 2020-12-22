@@ -199,10 +199,9 @@ void opt_resize (void)
  */
 static char** lang_list( int *n )
 {
-   size_t fs;
-   char *buf;
    char **ls;
-   size_t i, j;
+   char **subdirs;
+   size_t i;
 
    /* Default English only. */
    ls = malloc( sizeof(char*)*128 );
@@ -211,19 +210,10 @@ static char** lang_list( int *n )
    *n = 2;
 
    /* Try to open the available languages. */
-   buf = ndata_read( LANGUAGES_PATH, &fs );
-   if (buf==NULL)
-      return ls;
-   j = 0;
-   for (i=0; i<fs; i++) {
-      if (!isspace(buf[i]) && (buf[i] != '\0'))
-         continue;
-      buf[i] = '\0';
-      if (*n < 128 && i > j)
-         ls[(*n)++] = strdup( &buf[j] );
-      j=i+1;
-   }
-   free(buf);
+   subdirs = PHYSFS_enumerateFiles( GETTEXT_PATH );
+   for (i=0; subdirs[i]!=NULL; i++)
+      ls[(*n)++] = strdup( subdirs[i] );
+   PHYSFS_freeList( subdirs );
 
    return ls;
 }
@@ -306,7 +296,7 @@ static void opt_gameplay( unsigned int wid )
    }
    window_addList( wid, x+l+20, y, cw-l-50, 70, "lstLanguage", ls, n, i, NULL, NULL );
    y -= 90;
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
+#endif /* ENABLE_NLS */
    window_addText( wid, x, y, cw, 20, 0, "txtCompile",
          NULL, NULL, _("Compilation Flags:") );
    y -= 30;

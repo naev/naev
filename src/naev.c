@@ -192,7 +192,7 @@ int main( int argc, char** argv )
       return -1;
    }
 
-#if defined ENABLE_NLS && ENABLE_NLS
+#if ENABLE_NLS
    /* Set up locales. */
    /* When using locales with difference in '.' and ',' for splitting numbers it
     * causes pretty much everything to blow up, so we must refer from loading the
@@ -202,9 +202,8 @@ int main( int argc, char** argv )
    /* We haven't loaded the ndata yet, so just try a path quickly. */
    nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, nfile_dirname(naev_binary()) );
    bindtextdomain( PACKAGE_NAME, langbuf );
-   //bindtextdomain("naev", "po/");
    textdomain( PACKAGE_NAME );
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
+#endif /* ENABLE_NLS */
 
    /* Parse version. */
    if (semver_parse( VERSION, &version_binary ))
