@@ -164,7 +164,7 @@ static int font_restoreLast      = 0; /**< Restore last colour. */
  */
 static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname, unsigned int h );
 static size_t font_limitSize( glFontStash *stsh, double h,
-      int *width, const char *text, const int max );
+      double* width, const char* text, const int max );
 static const glColour* gl_fontGetColour( uint32_t ch );
 /* Get unicode glyphs from cache. */
 static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch );
@@ -462,7 +462,7 @@ void gl_printStore( glFontRestore *restore, const char *text )
  *    @return Number of characters that fit.
  */
 static size_t font_limitSize( glFontStash *stsh, double h,
-      int *width, const char *text, const int max )
+      double* width, const char* text, const int max )
 {
    GLfloat n, scale;
    size_t i;
@@ -499,7 +499,7 @@ static size_t font_limitSize( glFontStash *stsh, double h,
    }
 
    if (width != NULL)
-      (*width) = (int)round(n);
+      *width = n;
    return i;
 }
 
@@ -565,7 +565,7 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
       /* Save last space. */
       if (text[i] == ' ') {
          lastspace = i;
-         lastwidth = n;
+         lastwidth = (int)round(n);
       }
 
       ch = u8_nextchar( text, &i );
@@ -762,7 +762,8 @@ int gl_printMidRaw(
       const char *text
       )
 {
-   int n, s;
+   double n;
+   int s;
    size_t ret, i;
    uint32_t ch;
 
@@ -1193,7 +1194,7 @@ static void gl_fontRenderStart( const glFontStash* stsh, double h, double x, dou
    }
    gl_uniformAColor(font_shader_color, col, a);
 
-   font_projection_mat = gl_Matrix4_Translate(gl_view_matrix, round(x), round(y), 0);
+   font_projection_mat = gl_Matrix4_Translate(gl_view_matrix, x, y, 0);
    s = h / FONT_DISTANCE_FIELD_SIZE;
    font_projection_mat = gl_Matrix4_Scale(font_projection_mat, s, s, 1 );
 
@@ -1493,13 +1494,6 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
    stsh->vbo_vert_data = calloc( 8*stsh->mvbo, sizeof(GLshort) );
    stsh->vbo_tex  = gl_vboCreateStatic( sizeof(GLfloat)*8*stsh->mvbo,  stsh->vbo_tex_data );
    stsh->vbo_vert = gl_vboCreateStatic( sizeof(GLshort)*8*stsh->mvbo, stsh->vbo_vert_data );
-
-   /* Initializes ASCII. */
-#if 0
-   for (i=0; i<128; i++)
-      if (isprint(i)) /* Only care about printables. */
-         gl_fontGetGlyph( stsh, i );
-#endif
 
    return 0;
 }
