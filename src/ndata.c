@@ -38,6 +38,7 @@
 
 #include "ndata.h"
 
+#include "array.h"
 #include "attributes.h"
 #include "conf.h"
 #include "env.h"
@@ -79,6 +80,7 @@ static int        ndata_source     = NDATA_SRC_SEARCH_START;
  */
 static void ndata_testVersion (void);
 static int ndata_isndata( const char *path );
+static int ndata_enumerateCallback( void* data, const char* origdir, const char* fname );
 
 
 /**
@@ -292,5 +294,48 @@ void* ndata_read( const char* filename, size_t *filesize )
  */
 char **ndata_listRecursive( const char *path )
 {
-   return nfile_readDirRecursive( ndata_dir, path );
+   char **files;
+   int i;
+
+   files = array_create( char * );
+   PHYSFS_enumerate( path, ndata_enumerateCallback, &files );
+   /* Ensure unique. PhysicsFS can enumerate a path twice if it's in multiple components of a union. */
+   qsort( files, array_size(files), sizeof(char*), strsort );
+   for (i=0; i+1<array_size(files); i++)
+      if (strcmp(files[i], files[i+1]) == 0) {
+         free( files[i] );
+         array_erase( &files, &files[i], &files[i+1] );
+      }
+   return files;
+}
+
+/**
+ * @brief The PHYSFS_EnumerateCallback for ndata_listRecursive
+ */
+static int ndata_enumerateCallback( void* data, const char* origdir, const char* fname )
+{
+   char *path;
+   const char *fmt;
+   size_t dir_len, path_size;
+   PHYSFS_Stat stat;
+
+   dir_len = strlen( origdir );
+   path_size = dir_len + strlen( fname ) + 2;
+   path = malloc( path_size );
+   fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
+   nsnprintf( path, path_size, fmt, origdir, fname );
+   if (!PHYSFS_stat( path, &stat )) {
+      WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      free( path );
+   }
+   else if (stat.filetype == PHYSFS_FILETYPE_REGULAR)
+      array_push_back( (char***)data, path );
+   else if (stat.filetype == PHYSFS_FILETYPE_DIRECTORY ) {
+      PHYSFS_enumerate( path, ndata_enumerateCallback, data );
+      free( path );
+   }
+   else
+      free( path );
+   return PHYSFS_ENUM_OK;
 }
