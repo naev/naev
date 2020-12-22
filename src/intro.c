@@ -25,7 +25,6 @@
 #include "log.h"
 #include "music.h"
 #include "ndata.h"
-#include "nstd.h"
 #include "nstring.h"
 #include "toolkit.h"
 

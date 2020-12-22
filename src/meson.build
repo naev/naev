@@ -294,7 +294,6 @@ headers = files(
    'nopenal.h',
    'npc.h',
    'npng.h',
-   'nstd.h',
    'nstring.h',
    'ntime.h',
    'nxml.h',

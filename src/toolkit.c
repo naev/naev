@@ -22,7 +22,6 @@
 #include "dialogue.h"
 #include "input.h"
 #include "log.h"
-#include "nstd.h"
 #include "opengl.h"
 #include "pause.h"
 #include "tk/toolkit_priv.h"
@@ -52,9 +51,6 @@ static int window_dead = 0; /**< There are dead windows lying around. */
  */
 static SDL_Keycode input_key             = 0; /**< Current pressed key. */
 static SDL_Keymod input_mod             = 0; /**< Current pressed modifier. */
-static unsigned int input_keyTime   = 0; /**< Tick pressed. */
-static int input_keyCounter         = 0; /**< Number of repetitions. */
-static char input_text              = 0; /**< Current character. */
 
 
 /*
@@ -1857,9 +1853,6 @@ static void toolkit_regKey( SDL_Keycode key )
    /* Don't reset values on repeat keydowns. */
    else if (input_key != key) {
       input_key         = key;
-      input_keyTime     = SDL_GetTicks();
-      input_keyCounter  = 0;
-      input_text        = nstd_checkascii(key) ? key : 0;
    }
 }
 
@@ -1888,9 +1881,6 @@ static void toolkit_unregKey( SDL_Keycode key )
 void toolkit_clearKey (void)
 {
    input_key         = 0;
-   input_keyTime     = 0;
-   input_keyCounter  = 0;
-   input_text        = 0;
 }
 /**
  * @brief Handles keyboard events.

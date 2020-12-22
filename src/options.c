@@ -25,7 +25,6 @@
 #include "log.h"
 #include "music.h"
 #include "ndata.h"
-#include "nstd.h"
 #include "nstring.h"
 #include "player.h"
 #include "sound.h"
@@ -647,11 +646,11 @@ static void menuKeybinds_genList( unsigned int wid )
                (void)p;
             }
 
-            /* SDL_GetKeyName returns lowercase which is ugly. */
-            if (nstd_isalpha(key))
-               nsnprintf(str[j], l, "%s <%s%c>", keybind_info[j][1], mod_text, nstd_toupper(key) );
+            /* Print key. Special-case ASCII letters (use uppercase, unlike SDL_GetKeyName.). */
+            if (key < 0x100 && isalpha(key))
+               nsnprintf(str[j], l, "%s <%s%c>", keybind_info[j][1], mod_text, toupper(key) );
             else
-               nsnprintf(str[j], l, "%s <%s%s>", keybind_info[j][1], mod_text, SDL_GetKeyName(key) );
+               nsnprintf(str[j], l, "%s <%s%s>", keybind_info[j][1], mod_text, _(SDL_GetKeyName(key)) );
             break;
          case KEYBIND_JAXISPOS:
             nsnprintf(str[j], l, "%s <ja+%d>", keybind_info[j][1], key);
@@ -732,17 +731,17 @@ static void menuKeybinds_update( unsigned int wid, char *name )
          nsnprintf(binding, sizeof(binding), _("Not bound"));
          break;
       case KEYBIND_KEYBOARD:
-         /* SDL_GetKeyName returns lowercase which is ugly. */
-         if (nstd_isalpha(key))
+         /* Print key. Special-case ASCII letters (use uppercase, unlike SDL_GetKeyName.). */
+         if (key < 0x100 && isalpha(key))
             nsnprintf(binding, sizeof(binding), _("keyboard:   %s%s%c"),
                   (mod != KMOD_NONE) ? input_modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
-                  nstd_toupper(key));
+                  toupper(key));
          else
             nsnprintf(binding, sizeof(binding), _("keyboard:   %s%s%s"),
                   (mod != KMOD_NONE) ? input_modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
-                  SDL_GetKeyName(key));
+                  _(SDL_GetKeyName(key)));
          break;
       case KEYBIND_JAXISPOS:
          nsnprintf(binding, sizeof(binding), _("joy axis pos:   <%d>"), key );

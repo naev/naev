@@ -20,7 +20,6 @@
 #include "log.h"
 #include "ncompat.h"
 #include "nmath.h"
-#include "nstd.h"
 #include "nstring.h"
 
 

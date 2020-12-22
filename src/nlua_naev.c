@@ -22,7 +22,6 @@
 #include "nlua_evt.h"
 #include "nlua_misn.h"
 #include "nluadef.h"
-#include "nstd.h"
 #include "nstring.h"
 #include "player.h"
 
