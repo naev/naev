@@ -596,65 +596,6 @@ char **_nfile_readDir( size_t *nfiles, const char *path )
 
 
 /**
- * @brief Lists all the visible files in a directory, at any depth.
- *
- * Should also sort by last modified but that's up to the OS in question.
- * Paths are relative to base directory.
- *
- *    @param _files If not NULL, pointer to an Array to accumulate results into.
- *    @param base_dir Root of the search (not part of returned file paths).
- *    @param sub_dir Subdirectory being searched (included in returend file paths).
- *    @return Array of (allocated) file paths relative to base_dir.
- */
-char **_nfile_readDirRecursive( char ***_files, const char *base_dir, const char *sub_dir )
-{
-   char child_path_buf[ PATH_MAX ];
-   char *child_path;
-   char **files;
-   char **cur_path_contents;
-   size_t n_cur_path_contents;
-
-   if ( _files == NULL )
-      files = array_create( char * );
-   else
-      files = *_files;
-
-   cur_path_contents = nfile_readDir( &n_cur_path_contents, base_dir, sub_dir );
-
-   for ( size_t i = 0; i < n_cur_path_contents; i += 1 ) {
-      if ( sub_dir == NULL )
-         child_path = cur_path_contents[ i ];
-      else if ( nfile_concatPaths( child_path_buf, PATH_MAX, sub_dir, cur_path_contents[ i ] ) < 0 ) {
-         WARN( _( "Error while opening %s/%s: Path is too long" ), sub_dir, cur_path_contents[ i ] );
-         for ( ; i < n_cur_path_contents; i += 1 )
-            free( cur_path_contents[ i ] );
-         free( cur_path_contents );
-         return NULL;
-      }
-      else {
-         child_path = child_path_buf;
-      }
-      if ( nfile_dirExists( base_dir, child_path ) ) {
-         /* Iterate over children. */
-         _nfile_readDirRecursive( &files, base_dir, child_path );
-      }
-      else {
-         array_push_back( &files, strdup( child_path ) );
-      }
-      free( cur_path_contents[ i ] );
-   }
-
-   /* Clean up. */
-   free( cur_path_contents );
-
-   if ( _files != NULL )
-      *_files = files;
-
-   return files;
-}
-
-
-/**
  * @brief Tries to read a file.
  *
  *    @param filesize Stores the size of the file.

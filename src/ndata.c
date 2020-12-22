@@ -288,9 +288,11 @@ void* ndata_read( const char* filename, size_t *filesize )
 
 
 /**
- * @brief Gets a list of files in the ndata below a certain path.
+ * @brief Lists all the visible files in a directory, at any depth.
  *
- *    @sa nfile_readDirRecursive
+ * Will sort by path, and (unlike underlying PhysicsFS) make sure to list each file path only once.
+ *
+ *    @return Array of (allocated) file paths relative to base_dir.
  */
 char **ndata_listRecursive( const char *path )
 {

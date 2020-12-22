@@ -86,9 +86,6 @@ char **_nfile_readDir( size_t *nfiles, const char *path );
    })
 // clang-format on
 
-char **_nfile_readDirRecursive( char ***files, const char *base_dir, const char *sub_dir );
-#define nfile_readDirRecursive( base_dir, sub_dir ) _nfile_readDirRecursive( NULL, base_dir, sub_dir )
-
 char *_nfile_readFile( size_t *filesize, const char *path );
 #define nfile_readFile( filesize, ... ) _nfile_path_macro( _nfile_readFile, NULL, ( filesize, ), ##__VA_ARGS__ )
 
