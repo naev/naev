@@ -581,12 +581,11 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
                *outw = lastwidth;
             return lastspace;
          }
-         else {
-            if (outw != NULL)
-               *outw = (int)round(n - glyph->adv_x * scale);
-            u8_dec( text, &i );
-            return i;
-         }
+         /* Case we weren't able to write any whole words. */
+         if (outw != NULL)
+            *outw = (int)round(n - glyph->adv_x * scale);
+         u8_dec( text, &i );
+         return i;
       }
    }
 
@@ -845,7 +844,7 @@ int gl_printTextRaw( const glFont *ft_font,
       const char *text
     )
 {
-   int p, s;
+   int p, s, l;
    double x,y;
    size_t i, ret;
    uint32_t ch;
@@ -869,7 +868,12 @@ int gl_printTextRaw( const glFont *ft_font,
    s = 0;
    p = 0; /* where we last drew up to */
    while (y - by > -1e-5) {
-      ret = p + gl_printWidthForText( ft_font, &text[p], width, NULL );
+      l = gl_printWidthForText( ft_font, &text[p], width, NULL );
+      if (l==0) {
+         WARN(_("can't fit a single character!"));
+         break;
+      }
+      ret = p + l;
 
       /* Must restore stuff. */
       gl_printRestoreLast();
@@ -1022,6 +1026,10 @@ int gl_printHeightRaw( const glFont *ft_font,
    p = 0;
    do {
       i = gl_printWidthForText( ft_font, &text[p], width, NULL );
+      if (i==0) {
+         WARN(_("can't fit a single character!"));
+         break;
+      }
       p += i + 1;
       y += 1.5*(double)ft_font->h; /* move position down */
    } while (text[p-1] != '\0');
