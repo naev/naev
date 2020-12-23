@@ -9,6 +9,8 @@
  */
 
 /** @cond */
+#include "physfs.h"
+
 #include "naev.h"
 /** @endcond */
 
@@ -182,7 +184,6 @@ int nlua_dofileenv(nlua_env env, const char *filename) {
  */
 nlua_env nlua_newEnv(int rw) {
    char packagepath[STRMAX];
-   const char *ndata;
    nlua_env ref;
    lua_newtable(naevL);
    lua_pushvalue(naevL, -1);
@@ -203,9 +204,8 @@ nlua_env nlua_newEnv(int rw) {
     * "package.path" to look in the data.
     * "package.cpath" unset */
    lua_getglobal(naevL, "package");
-   ndata = ndata_getPath();
    nsnprintf( packagepath, sizeof(packagepath),
-         "%s/?.lua;%s/"LUA_INCLUDE_PATH"?.lua", ndata, ndata );
+         "?.lua;"LUA_INCLUDE_PATH"?.lua" );
    lua_pushstring(naevL, packagepath);
    lua_setfield(naevL, -2, "path");
    lua_pushstring(naevL, "");
@@ -465,8 +465,8 @@ static int nlua_require( lua_State* L )
             path_filename[i] = '/';
 
       /* Try to load the file. */
-      if (nfile_fileExists( path_filename )) {
-         buf = _nfile_readFile( &bufsize, path_filename );
+      if (PHYSFS_exists( path_filename )) {
+         buf = ndata_read( path_filename, &bufsize );
          if (buf != NULL)
             break;
       }
