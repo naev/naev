@@ -33,7 +33,9 @@
 #include "utf8.h"
 
 
-#define FONT_DISTANCE_FIELD_BORDER  2 /**< Border of the distance field. */
+/* TODO figure out how much border is theoretically necessary to avoid bleed
+ * from adjacent characters. */
+#define FONT_DISTANCE_FIELD_BORDER  5 /**< Border of the distance field. */
 #define FONT_DISTANCE_FIELD_SIZE   64 /**< Size to render the fonts at. */
 #define HASH_LUT_SIZE 512 /**< Size of glyph look up table. */
 #define DEFAULT_TEXTURE_SIZE 1024 /**< Default size of texture caches for glyphs. */
