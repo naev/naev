@@ -36,7 +36,7 @@
 /* TODO figure out how much border is theoretically necessary to avoid bleed
  * from adjacent characters. */
 #define FONT_DISTANCE_FIELD_BORDER 5 /**< Border of the distance field. */
-#define FONT_DISTANCE_FIELD_SIZE   64 /**< Size to render the fonts at. */
+#define FONT_DISTANCE_FIELD_SIZE   (64-FONT_DISTANCE_FIELD_BORDER*2) /**< Size to render the fonts at. */
 #define HASH_LUT_SIZE 512 /**< Size of glyph look up table. */
 #define DEFAULT_TEXTURE_SIZE 1024 /**< Default size of texture caches for glyphs. */
 #define MAX_ROWS 64 /**< Max number of rows per texture cache. */
@@ -1557,7 +1557,7 @@ static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname )
    if (FT_IS_SCALABLE(face)) {
       if (FT_Set_Char_Size( face,
                0, /* Same as width. */
-               (FONT_DISTANCE_FIELD_SIZE-FONT_DISTANCE_FIELD_BORDER*2) * 64,
+               FONT_DISTANCE_FIELD_SIZE * 64,
                96, /* Create at 96 DPI */
                96)) /* Create at 96 DPI */
          WARN(_("FT_Set_Char_Size failed."));
