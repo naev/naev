@@ -88,6 +88,7 @@ typedef struct glFontGlyph_s {
  */
 typedef struct font_char_s {
    GLubyte *data; /**< Data of the character. */
+   GLfloat *dataf; /**< Float data of the character. */
    int w; /**< Width. */
    int h; /**< Height. */
    int off_x; /**< X offset when rendering. */
@@ -273,8 +274,12 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
    /* Upload data. */
    glBindTexture( GL_TEXTURE_2D, tex->id );
    glPixelStorei(GL_UNPACK_ALIGNMENT,1);
-   glTexSubImage2D( GL_TEXTURE_2D, 0, gr->x, gr->y, ch->w, ch->h,
-         GL_RED, GL_UNSIGNED_BYTE, ch->data );
+   if (ch->dataf != NULL)
+      glTexSubImage2D( GL_TEXTURE_2D, 0, gr->x, gr->y, ch->w, ch->h,
+            GL_RED, GL_FLOAT, ch->dataf );
+   else
+      glTexSubImage2D( GL_TEXTURE_2D, 0, gr->x, gr->y, ch->w, ch->h,
+            GL_RED, GL_UNSIGNED_BYTE, ch->data );
 
    /* Check for error. */
    gl_checkErr();
@@ -1102,6 +1107,8 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
       h = bitmap.rows;
 
       /* Store data. */
+      c->data = NULL;
+      c->dataf = NULL;
       if (bitmap.buffer == NULL) {
          /* Space characters tend to have no buffer. */
          b = 0;
@@ -1120,7 +1127,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
             for (u=0; u<w; u++)
                buffer[ (b+v)*rw+(b+u) ] = bitmap.buffer[ v*w+u ];
          /* Compute signed fdistance field with buffered glyph. */
-         c->data = make_distance_mapb( buffer, rw, rh );
+         c->dataf = make_distance_mapbf( buffer, rw, rh );
          free( buffer );
       }
       c->w     = rw;
