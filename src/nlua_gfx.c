@@ -425,6 +425,8 @@ static int gfxL_printfWrap( lua_State *L )
    font  = luaL_checkfont(L,1);
    s     = luaL_checkstring(L,2);
    width = luaL_checkinteger(L,3);
+   if (width < 0)
+      NLUA_ERROR(L,_("width has to be a positive value."));
 
    /* Process output into table. */
    lua_newtable(L);
@@ -442,6 +444,10 @@ static int gfxL_printfWrap( lua_State *L )
       l = gl_printWidthForText(font, &tmp[p], width, &outw );
       if (outw > maxw)
          maxw = outw;
+      if (l==0) {
+         WARN(_("can't fit a single character!"));
+         break;
+      }
 
       /* Create entry of form { string, width } in the table. */
       lua_pushnumber(L, linenum++);    /* t, n */
