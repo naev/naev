@@ -35,7 +35,7 @@
 
 /* TODO figure out how much border is theoretically necessary to avoid bleed
  * from adjacent characters. */
-#define FONT_DISTANCE_FIELD_BORDER  5 /**< Border of the distance field. */
+#define FONT_DISTANCE_FIELD_BORDER 5 /**< Border of the distance field. */
 #define FONT_DISTANCE_FIELD_SIZE   64 /**< Size to render the fonts at. */
 #define HASH_LUT_SIZE 512 /**< Size of glyph look up table. */
 #define DEFAULT_TEXTURE_SIZE 1024 /**< Default size of texture caches for glyphs. */
@@ -1135,7 +1135,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
       c->w     = rw;
       c->h     = rh;
       c->off_x = slot->bitmap_left-b;
-      c->off_y = slot->bitmap_top -b;
+      c->off_y = slot->bitmap_top +b;
       c->adv_x = (GLfloat)slot->advance.x / 64.;
       c->adv_y = (GLfloat)slot->advance.y / 64.;
 
