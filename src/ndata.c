@@ -267,23 +267,79 @@ const char* ndata_name (void)
 /**
  * @brief Reads a file from the ndata.
  *
- *    @param filename Name of the file to read.
+ *    @param path Path of the file to read.
  *    @param[out] filesize Stores the size of the file.
  *    @return The file data or NULL on error.
  */
-void* ndata_read( const char* filename, size_t *filesize )
+void* ndata_read( const char* path, size_t *filesize )
 {
    char *buf;
+   PHYSFS_file *file;
+   PHYSFS_sint64 len, n;
+   size_t pos;
+   PHYSFS_Stat path_stat;
 
-   buf = nfile_readFile( filesize, ndata_dir, filename );
-   if ( buf != NULL ) {
-      return buf;
+   if (!PHYSFS_stat( path, &path_stat )) {
+      WARN( _( "Error occurred while opening '%s': %s" ), path,
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      *filesize = 0;
+      return NULL;
+   }
+   if (path_stat.filetype != PHYSFS_FILETYPE_REGULAR) {
+      WARN( _( "Error occurred while opening '%s': It is not a regular file" ), path );
+      *filesize = 0;
+      return NULL;
    }
 
-   /* Wasn't able to open the file. */
-   WARN( _( "Unable to open file '%s': not found." ), filename );
-   *filesize = 0;
-   return NULL;
+   /* Open file. */
+   file = PHYSFS_openRead( path );
+   if ( file == NULL ) {
+      WARN( _( "Error occurred while opening '%s': %s" ), path,
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      *filesize = 0;
+      return NULL;
+   }
+
+   /* Get file size. TODO: Don't assume this is always possible? */
+   len = PHYSFS_fileLength( file );
+   if ( len == -1 ) {
+      WARN( _( "Error occurred while seeking '%s': %s" ), path,
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      PHYSFS_close( file );
+      *filesize = 0;
+      return NULL;
+   }
+
+   /* Allocate buffer. */
+   buf = malloc( len+1 );
+   if (buf == NULL) {
+      WARN(_("Out of Memory"));
+      PHYSFS_close( file );
+      *filesize = 0;
+      return NULL;
+   }
+   buf[len] = '\0';
+
+   /* Read the file. */
+   n = 0;
+   while ( n < len ) {
+      pos = PHYSFS_readBytes( file, &buf[ n ], len - n );
+      if ( pos <= 0 ) {
+         WARN( _( "Error occurred while reading '%s': %s" ), path,
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+         PHYSFS_close( file );
+         *filesize = 0;
+         free(buf);
+         return NULL;
+      }
+      n += pos;
+   }
+
+   /* Close the file. */
+   PHYSFS_close(file);
+
+   *filesize = len;
+   return buf;
 }
 
 
