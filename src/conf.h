@@ -40,6 +40,7 @@
 #define SHOW_PAUSE_DEFAULT                   1     /**< Whether to display pause status. */
 #define ENGINE_GLOWS_DEFAULT                 1     /**< Whether to display engine glows. */
 #define MINIMIZE_DEFAULT                     1     /**< Whether to minimize on focus loss. */
+#define BIG_ICONS_DEFAULT                    1     /**< Whether to display BIGGER icons. */
 #define FONT_SIZE_CONSOLE_DEFAULT            10    /**< Default console font size. */
 #define FONT_SIZE_INTRO_DEFAULT              18    /**< Default intro font size. */
 #define FONT_SIZE_DEF_DEFAULT                12    /**< Default font size. */
