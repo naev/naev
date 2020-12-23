@@ -258,29 +258,43 @@ function graphics.circle( mode, x, y, radius )
    x,y = _xy(x,y,0,0)
    naev.gfx.renderCircle( x, y, radius, graphics._fgcol, _mode(mode) )
 end
-function graphics.print( text, x, y )
+function graphics.print( text, ... )
+   local arg = {...}
+   local t = type(arg[1])
    -- We have to specify limit so we just put a ridiculously large value
-   graphics.printf( text, x, y, 1e6, "left" )
+   local w = 1e6
+   local align = "left"
+   if t=="number" then
+      local x = arg[1]
+      local y = arg[2]
+      graphics.printf( text, x, y, w, align )
+   else
+      local font = arg[1]
+      local x = arg[2]
+      local y = arg[3]
+      graphics.printf( text, font, x, y, w, align )
+   end
 end
 function graphics.printf( text, ... )
    local arg = {...}
    local x, y, limit, align, font, col
 
-   if type(arg[1])=="table" then
-      -- love.graphics.printf( text, font, x, y, limit, align )
-      font = arg[1]
-      x = arg[2]
-      y = arg[3]
-      limit = arg[4]
-      align = arg[5] or "left"
-   else
+   if type(arg[1])=="number" then
       -- love.graphics.printf( text, x, y, limit, align )
       font = graphics._font
       x = arg[1]
       y = arg[2]
       limit = arg[3]
-      align = arg[4] or "left"
+      align = arg[4]
+   else
+      -- love.graphics.printf( text, font, x, y, limit, align )
+      font = arg[1]
+      x = arg[2]
+      y = arg[3]
+      limit = arg[4]
+      align = arg[5]
    end
+   align = align or "left"
    col = graphics._fgcol
 
    x,y = _xy(x,y,limit,graphics._font.height)
@@ -340,7 +354,6 @@ function graphics.Font:setFallbacks( ... )
    local arg = {...}
    for k,v in ipairs(arg) do
       local filename = v.filename
-      print( filename )
       if not self.font:addFallback( filename ) then
          error(_("failed to set fallback font"))
       end
