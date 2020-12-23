@@ -162,7 +162,7 @@ static int font_restoreLast      = 0; /**< Restore last colour. */
 /*
  * prototypes
  */
-static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname );
+static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname, unsigned int h );
 static size_t font_limitSize( glFontStash *stsh, double h,
       int *width, const char *text, const int max );
 static const glColour* gl_fontGetColour( uint32_t ch );
@@ -1474,7 +1474,7 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
          strncpy( fullname, prefix, PATH_MAX );
          strncat( fullname, &fname[ch], i-ch );
          //fullname[i-ch] = '\0';
-         gl_fontstashAddFallback( stsh, fullname );
+         gl_fontstashAddFallback( stsh, fullname, h );
          ch = i;
          if (fname[i]==',')
             ch++;
@@ -1515,7 +1515,7 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
 int gl_fontAddFallback( glFont* font, const char *fname )
 {
    glFontStash *stsh = gl_fontGetStash( font );
-   return gl_fontstashAddFallback( stsh, fname );
+   return gl_fontstashAddFallback( stsh, fname, font->h );
 }
 
 
@@ -1526,12 +1526,13 @@ int gl_fontAddFallback( glFont* font, const char *fname )
  *    @param fname Name of the fallback to add.
  *    @return 0 on success.
  */
-static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname )
+static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname, unsigned int h )
 {
    glFontStashFreetype *ft;
    FT_Byte* buf;
    FT_Library library;
    FT_Face face;
+   FT_Matrix scale;
    size_t bufsize;
 
    /* Read font file. */
@@ -1561,10 +1562,13 @@ static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname )
    if (FT_IS_SCALABLE(face)) {
       if (FT_Set_Char_Size( face,
                0, /* Same as width. */
-               FONT_DISTANCE_FIELD_SIZE * 64,
+               h * 64,
                96, /* Create at 96 DPI */
                96)) /* Create at 96 DPI */
          WARN(_("FT_Set_Char_Size failed."));
+      scale.xx = scale.yy = (FT_Fixed)FONT_DISTANCE_FIELD_SIZE*0x10000/h;
+      scale.xy = scale.yx = 0;
+      FT_Set_Transform( face, &scale, NULL );
    }
    else
       WARN(_("Font isn't resizable!"));
