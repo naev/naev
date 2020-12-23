@@ -230,7 +230,8 @@ static int cli_script( lua_State *L )
       free(bbuf);
    }
 
-   /* Do the file. */
+   /* Do the file.
+    * This is purposely done outside of PHYSFS so we can do tests and such quickly. */
    if (luaL_loadfile(L, buf) != 0)
       lua_error(L);
 
