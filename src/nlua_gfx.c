@@ -444,10 +444,8 @@ static int gfxL_printfWrap( lua_State *L )
       l = gl_printWidthForText(font, &tmp[p], width, &outw );
       if (outw > maxw)
          maxw = outw;
-      if (l==0) {
-         WARN(_("can't fit a single character!"));
+      if (l==0)
          break;
-      }
 
       /* Create entry of form { string, width } in the table. */
       lua_pushnumber(L, linenum++);    /* t, n */

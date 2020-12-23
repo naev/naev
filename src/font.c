@@ -869,10 +869,8 @@ int gl_printTextRaw( const glFont *ft_font,
    p = 0; /* where we last drew up to */
    while (y - by > -1e-5) {
       l = gl_printWidthForText( ft_font, &text[p], width, NULL );
-      if (l==0) {
-         WARN(_("can't fit a single character!"));
+      if (l==0)
          break;
-      }
       ret = p + l;
 
       /* Must restore stuff. */
@@ -1026,10 +1024,8 @@ int gl_printHeightRaw( const glFont *ft_font,
    p = 0;
    do {
       i = gl_printWidthForText( ft_font, &text[p], width, NULL );
-      if (i==0) {
-         WARN(_("can't fit a single character!"));
+      if (i==0)
          break;
-      }
       p += i + 1;
       y += 1.5*(double)ft_font->h; /* move position down */
    } while (text[p-1] != '\0');
