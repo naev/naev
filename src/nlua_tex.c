@@ -15,6 +15,8 @@
 #include "naev.h"
 /** @endcond */
 
+#include "physfsrwops.h"
+
 #include "nlua_tex.h"
 
 #include "log.h"
@@ -198,6 +200,7 @@ static int texL_new( lua_State *L )
    if (lua_isdata(L,1)) {
       int w, h;
       ld = luaL_checkdata(L,1);
+      /* Since we don't know the size we need the width and height separately. */
       w = luaL_checkinteger(L,2);
       h = luaL_checkinteger(L,3);
       if ((w < 0 ) || (h < 0))
@@ -232,7 +235,7 @@ static int texL_new( lua_State *L )
    else {
       isopen = (lf->rw != NULL);
       if (!isopen)
-         lf->rw =  SDL_RWFromFile( lf->path, "r" );
+         lf->rw = PHYSFSRWOPS_openRead( lf->path );
       if (lf->rw==NULL)
          NLUA_ERROR(L, _("Unable to open '%s' to load texture"), lf->path);
       tex = gl_newSpriteRWops( lf->path, lf->rw, sx, sy, 0 );
@@ -286,7 +289,6 @@ static inline uint32_t get_pixel(SDL_Surface *surface, int x, int y)
 /**
  * @brief Reads image data from a file.
  *
- *
  *    @luatparam file File|string File or filename of the file to read the data from.
  *    @luatreturn Data Data containing the image data.
  *    @luatreturn number Width of the loaded data.
@@ -314,7 +316,7 @@ static int texL_readData( lua_State *L )
    }
    else
       s = luaL_checkstring(L,1);
-   rw = SDL_RWFromFile( s, "rb" );
+   rw = PHYSFSRWOPS_openRead( s );
    if (rw == NULL)
       NLUA_ERROR(L, _("problem opening file '%s' for reading"), s );
 
