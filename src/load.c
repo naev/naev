@@ -200,6 +200,10 @@ int load_refresh (void)
    /* Make sure files are none. */
    if (files == NULL)
       return 0;
+   if (nfiles == 0) {
+      free( files );
+      return 0;
+   }
 
    /* Make sure backups are after saves. */
    for (i=0; i<nfiles-1; i++) {
