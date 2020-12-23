@@ -628,7 +628,7 @@ static SDL_Surface* loadNebula( const char* file )
 
    /* loads the file */
    nsnprintf(file_path, PATH_MAX, "%s"NEBULA_PATH"%s", nfile_cachePath(), file );
-   rw    = SDL_RWFromFile( file_path, "rb" );;
+   rw    = SDL_RWFromFile( file_path, "rb" );
    if (rw == NULL) {
       WARN(_("Unable to create rwops from Nebula image: %s"), file);
       return NULL;
