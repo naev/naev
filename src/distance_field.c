@@ -131,3 +131,41 @@ make_distance_mapb( unsigned char *img,
 
     return out;
 }
+
+
+float*
+make_distance_mapbf( unsigned char *img,
+                    unsigned int width, unsigned int height )
+{
+    double * data    = (double *) calloc( width * height, sizeof(double) );
+    float *out       = (float *) malloc( width * height * sizeof(float) );
+    unsigned int i;
+
+    // find minimum and maximum values
+    double img_min = DBL_MAX;
+    double img_max = DBL_MIN;
+
+    for( i=0; i<width*height; ++i)
+    {
+        double v = img[i];
+        data[i] = v;
+        if (v > img_max)
+            img_max = v;
+        if (v < img_min)
+            img_min = v;
+    }
+
+    // Map values from 0 - 255 to 0.0 - 1.0
+    for( i=0; i<width*height; ++i)
+        data[i] = (img[i]-img_min)/img_max;
+
+    data = make_distance_mapd(data, width, height);
+
+    // lower to float
+    for( i=0; i<width*height; ++i)
+        out[i] = (float)(1-data[i]);
+
+    free( data );
+
+    return out;
+}
