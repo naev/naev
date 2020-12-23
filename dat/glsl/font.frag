@@ -17,10 +17,10 @@ void main(void) {
    /* Distance field rendering. */
    // dist is a value between 0 and 1 with 0.5 on the edge and 1 inside it.
    float dist = texture(sampler, tex_coord_out).r;
-   // fwidth computes the absolute value of the x and y derivatives
-   float width = fwidth(dist);
+   // fwidth sums the absolute value of the x and y derivatives
+   float hw = fwidth(dist)/2;
    // smoothstep maps values below 0.5 to 0 and above 0.5 to 1, with a smooth transition at 0.5.
-   float alpha = smoothstep(glyph_center-width, glyph_center+width, dist);
+   float alpha = smoothstep(glyph_center-hw, glyph_center+hw, dist);
    color_out = vec4(color.rgb, alpha*color.a);
 
 #include "colorblind.glsl"
