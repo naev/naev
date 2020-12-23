@@ -35,6 +35,8 @@ void window_addFader( const unsigned int wid,
 /* Misc functions. */
 void window_faderValue( const unsigned int wid,
       char* name, double value );
+void window_faderSetBoundedValue( const unsigned int wid,
+      char* name, double value );
 void window_faderBounds( const unsigned int wid,
       char* name, double min, double max );
 double window_getFaderValue( const unsigned int wid, char* name );

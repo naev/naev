@@ -570,6 +570,8 @@ src/pause.c
 src/pause.h
 src/perlin.c
 src/perlin.h
+src/physfsrwops.c
+src/physfsrwops.h
 src/physics.c
 src/physics.h
 src/pilot.c

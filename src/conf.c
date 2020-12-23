@@ -142,7 +142,7 @@ void conf_setDefaults (void)
    /* GUI. */
    conf.mesg_visible = 5;
    conf.map_overlay_opacity = MAP_OVERLAY_OPACITY_DEFAULT;
-   conf.big_icons = 1;
+   conf.big_icons = BIG_ICONS_DEFAULT;
 
    /* Repeat. */
    conf.repeat_delay = 500;
