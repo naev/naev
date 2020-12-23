@@ -10,7 +10,7 @@ const float glow_center    = 1.25;
 
 void main(void) {
    float dist = texture(sampler, tex_coord_out).r;
-   float width = fwidth(dist);
+   float width = fwidth(dist)/2;
    float alpha = smoothstep(glyph_center-width, glyph_center+width, dist);
    vec3 rgb = mix(glow_color.rgb, color.rgb, alpha);
    float mu = smoothstep(glyph_center, glow_center, sqrt(dist));
