@@ -14,11 +14,11 @@
 #include "naev.h"
 /** @endcond */
 
+#include "physfsrwops.h"
+
 #include "nlua_file.h"
 
 #include "log.h"
-#include "ndata.h"
-#include "nfile.h"
 #include "nluadef.h"
 
 
@@ -213,7 +213,11 @@ static int fileL_open( lua_State *L )
    lf = luaL_checkfile(L,1);
    mode = luaL_checkstring(L,2);
 
-   lf->rw = SDL_RWFromFile( lf->path, mode );
+   /* TODO handle mode. */
+   if (strcmp(mode,"w")==0)
+      lf->rw = PHYSFSRWOPS_openWrite( lf->path );
+   else
+      lf->rw = PHYSFSRWOPS_openRead( lf->path );
    if (lf->rw == NULL) {
       lua_pushboolean(L,0);
       lua_pushstring(L, SDL_GetError());
@@ -408,10 +412,18 @@ static int fileL_isopen( lua_State *L )
 static int fileL_filetype( lua_State *L )
 {
    const char *path = luaL_checkstring(L,1);
-   if (_nfile_dirExists(path))
-      lua_pushstring(L, "directory");
-   else if (_nfile_fileExists(path))
+   PHYSFS_Stat path_stat;
+
+   if (!PHYSFS_stat( path, &path_stat )) {
+      WARN( _( "Error occurred while opening '%s': %s" ), path,
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      lua_pushnil(L);
+      return 1;
+   }
+   if (path_stat.filetype != PHYSFS_FILETYPE_REGULAR)
       lua_pushstring(L, "file");
+   else if (path_stat.filetype == PHYSFS_FILETYPE_DIRECTORY)
+      lua_pushstring(L, "directory");
    else
       lua_pushnil(L);
    return 1;
