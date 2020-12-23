@@ -420,7 +420,7 @@ static int fileL_filetype( lua_State *L )
       lua_pushnil(L);
       return 1;
    }
-   if (path_stat.filetype != PHYSFS_FILETYPE_REGULAR)
+   if (path_stat.filetype == PHYSFS_FILETYPE_REGULAR)
       lua_pushstring(L, "file");
    else if (path_stat.filetype == PHYSFS_FILETYPE_DIRECTORY)
       lua_pushstring(L, "directory");
