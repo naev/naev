@@ -33,10 +33,8 @@
 #include "utf8.h"
 
 
-/* TODO figure out how much border is theoretically necessary to avoid bleed
- * from adjacent characters. */
-#define FONT_DISTANCE_FIELD_BORDER 5 /**< Border of the distance field. */
-#define FONT_DISTANCE_FIELD_SIZE   (64-FONT_DISTANCE_FIELD_BORDER*2) /**< Size to render the fonts at. */
+#define MAX_EFFECT_RADIUS 1 /**< Maximum pixel distance from glyph to outline/shadow/etc. */
+#define FONT_DISTANCE_FIELD_SIZE   55 /**< Size to render the fonts at. */
 #define HASH_LUT_SIZE 512 /**< Size of glyph look up table. */
 #define DEFAULT_TEXTURE_SIZE 1024 /**< Default size of texture caches for glyphs. */
 #define MAX_ROWS 64 /**< Max number of rows per texture cache. */
@@ -1115,7 +1113,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
       }
       else {
          /* Create a larger image using an extra border and center glyph. */
-         b = FONT_DISTANCE_FIELD_BORDER;
+         b = 1 + ((MAX_EFFECT_RADIUS+1) * FONT_DISTANCE_FIELD_SIZE - 1) / stsh->h;
          rw = w+b*2;
          rh = h+b*2;
          buffer = calloc( rw*rh, sizeof(GLubyte) );
