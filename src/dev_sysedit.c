@@ -222,7 +222,7 @@ void sysedit_open( StarSystem *sys )
          "btnRename", _("Rename"), sysedit_btnRename );
    i += 1;
 
-   /* New system. */
+   /* New planet. */
    window_addButtonKey( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnNew", _("New Planet"), sysedit_btnNew, SDLK_n );
    i += 2;
@@ -343,6 +343,9 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
 
    if (conf.devautosave)
       dpl_savePlanet( p );
+
+   /* Clean up presences. */
+   space_reconstructPresences();
 
    window_close( wid, unused );
 }
