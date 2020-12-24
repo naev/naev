@@ -218,7 +218,7 @@ static int dataL_get( lua_State *L )
    size_t mpos = dataL_checkpos( L, ld, pos );
    switch (ld->type) {
       case LUADATA_NUMBER:
-         lua_pushnumber(L, *((float*)&ld->data[mpos]));
+         lua_pushnumber(L, *((float*)(&ld->data[mpos])));
          break;
    }
    return 1;
@@ -239,7 +239,7 @@ static int dataL_set( lua_State *L )
    switch (ld->type) {
       case LUADATA_NUMBER:
          value = luaL_checknumber(L,3);
-         *((float*)&ld->data[mpos]) = value;
+         *((float*)(&ld->data[mpos])) = value;
          break;
    }
    return 0;
