@@ -1526,6 +1526,7 @@ int gl_fontAddFallback( glFont* font, const char *fname )
  *
  *    @param stsh Stash to add fallback to.
  *    @param fname Name of the fallback to add.
+ *    @param h Height to use for the font.
  *    @return 0 on success.
  */
 static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname, unsigned int h )
