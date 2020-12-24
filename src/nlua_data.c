@@ -182,11 +182,11 @@ static int dataL_new( lua_State *L )
    if (strcmp(type,"number")==0) {
       ld.type = LUADATA_NUMBER;
       ld.elem = sizeof(float);
-      ld.size = size*ld.elem;
-      ld.data = calloc( ld.elem, size );
    }
    else
       NLUA_ERROR(L, _("unknown data type '%s'"), type);
+   ld.size = size*ld.elem;
+   ld.data = calloc( ld.elem, size );
    lua_pushdata( L, ld );
    return 1;
 }
