@@ -77,8 +77,7 @@ typedef struct glFontTex_s {
  */
 typedef struct glFontGlyph_s {
    uint32_t codepoint; /**< Real character. */
-   GLfloat adv_x; /**< X advancement. */
-   GLfloat adv_y; /**< Y advancement. */
+   GLfloat adv_x; /**< X advancement on the screen. */
    int tex_index; /**< Might be on different texture. */
    GLushort vbo_id; /**< VBO index to use. */
    int next; /**< Stored as a linked list. */
@@ -95,8 +94,7 @@ typedef struct font_char_s {
    int h; /**< Height. */
    int off_x; /**< X offset when rendering. */
    int off_y; /**< Y offset when rendering. */
-   GLfloat adv_x; /**< X advancement. */
-   GLfloat adv_y; /**< Y advancement. */
+   GLfloat adv_x; /**< X advancement on the screen. */
    int tx; /**< Texture x position. */
    int ty; /**< Texture y position. */
    int tw; /**< Texture width. */
@@ -164,8 +162,7 @@ static int font_restoreLast      = 0; /**< Restore last colour. */
  * prototypes
  */
 static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname, unsigned int h );
-static size_t font_limitSize( glFontStash *stsh, double h,
-      int *width, const char *text, const int max );
+static size_t font_limitSize( glFontStash *stsh, int *width, const char *text, const int max );
 static const glColour* gl_fontGetColour( uint32_t ch );
 /* Get unicode glyphs from cache. */
 static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch );
@@ -174,7 +171,7 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch );
  * In particular, instead of writing char by char, they should be batched up by textures and rendered
  * when gl_fontRenderEnd() is called, saving lots of opengl calls.
  */
-static void gl_fontRenderStart( const glFontStash *stsh, double h, double x, double y, const glColour *c, double outlineR );
+static void gl_fontRenderStart( const glFontStash *stsh, double x, double y, const glColour *c, double outlineR );
 static int gl_fontRenderGlyph( glFontStash *stsh, uint32_t ch, const glColour *c, int state );
 static void gl_fontRenderEnd (void);
 
@@ -456,16 +453,14 @@ void gl_printStore( glFontRestore *restore, const char *text )
  * @brief Limits the text to max.
  *
  *    @param stsh Font stash to calculate width with.
- *    @param h Height to render font at.
  *    @param width Actual width it takes up.
  *    @param text Text to parse.
  *    @param max Max to look for.
  *    @return Number of characters that fit.
  */
-static size_t font_limitSize( glFontStash *stsh, double h,
-      int *width, const char *text, const int max )
+static size_t font_limitSize( glFontStash *stsh, int *width, const char *text, const int max )
 {
-   GLfloat n, scale;
+   GLfloat n;
    size_t i;
    uint32_t ch;
    int adv_x;
@@ -477,7 +472,6 @@ static size_t font_limitSize( glFontStash *stsh, double h,
    /* limit size */
    i = 0;
    n = 0.;
-   scale = (GLfloat)h / FONT_DISTANCE_FIELD_SIZE;
    while ((ch = u8_nextchar( text, &i ))) {
       /* Ignore escape sequence. */
       if (ch == '\a') {
@@ -491,10 +485,10 @@ static size_t font_limitSize( glFontStash *stsh, double h,
       adv_x = glyph->adv_x;
 
       /* See if enough room. */
-      n += adv_x * scale;
+      n += adv_x;
       if ((int)round(n) > max) {
          u8_dec( text, &i );
-         n -= adv_x * scale; /* actual size */
+         n -= adv_x; /* actual size */
          break;
       }
    }
@@ -516,7 +510,7 @@ static size_t font_limitSize( glFontStash *stsh, double h,
 int gl_printWidthForTextLine( const glFont *ft_font, const char *text, int width )
 {
    glFontStash *stsh = gl_fontGetStash( ft_font );
-   return font_limitSize( stsh, ft_font->h, NULL, text, width );
+   return font_limitSize( stsh, NULL, text, width );
 }
 
 
@@ -536,7 +530,7 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
    int lastspace, lastwidth;
    size_t i;
    uint32_t ch;
-   GLfloat n, scale;
+   GLfloat n;
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -544,7 +538,6 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
 
    /* limit size per line */
    lastspace = 0; /* last ' ' or '\n' in the text */
-   scale = (GLfloat)ft_font->h / FONT_DISTANCE_FIELD_SIZE;
    n = 0.; /* current width */
    i = 0; /* current position */
    while ((text[i] != '\n') && (text[i] != '\0')) {
@@ -573,7 +566,7 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
       /* Unicode. */
       glFontGlyph *glyph = gl_fontGetGlyph( stsh, ch );
       if (glyph!=NULL)
-         n += glyph->adv_x * scale;
+         n += glyph->adv_x;
 
       /* Check if out of bounds. */
       if (n > (GLfloat)width) {
@@ -584,7 +577,7 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
          }
          /* Case we weren't able to write any whole words. */
          if (outw != NULL)
-            *outw = (int)round(n - glyph->adv_x * scale);
+            *outw = (int)round(n - glyph->adv_x);
          u8_dec( text, &i );
          return i;
       }
@@ -623,7 +616,7 @@ void gl_printRaw( const glFont *ft_font, double x, double y, const glColour* c,
    /* Render it. */
    s = 0;
    i = 0;
-   gl_fontRenderStart( stsh, ft_font->h, x, y, c, outlineR );
+   gl_fontRenderStart( stsh, x, y, c, outlineR );
    while ((ch = u8_nextchar( text, &i )))
       s = gl_fontRenderGlyph( stsh, ch, c, s );
    gl_fontRenderEnd();
@@ -658,7 +651,6 @@ void gl_print( const glFont *ft_font,
       const double x, const double y,
       const glColour* c, const char *fmt, ... )
 {
-   /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
    char text[256]; /* holds the string */
    va_list ap;
 
@@ -697,11 +689,11 @@ int gl_printMaxRaw( const glFont *ft_font, const int max, double x, double y,
    glFontStash *stsh = gl_fontGetStash( ft_font );
 
    /* Limit size. */
-   ret = font_limitSize( stsh, ft_font->h, NULL, text, max );
+   ret = font_limitSize( stsh, NULL, text, max );
 
    /* Render it. */
    s = 0;
-   gl_fontRenderStart( stsh, ft_font->h, x, y, c, outlineR );
+   gl_fontRenderStart( stsh, x, y, c, outlineR );
    i = 0;
    while ((ch = u8_nextchar( text, &i )) && (i <= ret))
       s = gl_fontRenderGlyph( stsh, ch, c, s );
@@ -773,12 +765,12 @@ int gl_printMidRaw(
 
    /* limit size */
    n = 0;
-   ret = font_limitSize( stsh, ft_font->h, &n, text, width );
+   ret = font_limitSize( stsh, &n, text, width );
    x += (double)(width - n)/2.;
 
    /* Render it. */
    s = 0;
-   gl_fontRenderStart( stsh, ft_font->h, x, y, c, outlineR );
+   gl_fontRenderStart( stsh, x, y, c, outlineR );
    i = 0;
    while ((ch = u8_nextchar( text, &i )) && (i <= ret))
       s = gl_fontRenderGlyph( stsh, ch, c, s );
@@ -805,7 +797,6 @@ int gl_printMid( const glFont *ft_font, const int width,
       double x, double y,
       const glColour* c, const char *fmt, ... )
 {
-   /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
    char text[256]; /* holds the string */
    va_list ap;
 
@@ -878,7 +869,7 @@ int gl_printTextRaw( const glFont *ft_font,
       gl_printRestoreLast();
 
       /* Render it. */
-      gl_fontRenderStart( stsh, ft_font->h, x, y, c, outlineR );
+      gl_fontRenderStart( stsh, x, y, c, outlineR );
       for (i=p; i<ret; ) {
          ch = u8_nextchar( text, &i);
          s = gl_fontRenderGlyph( stsh, ch, c, s );
@@ -918,7 +909,6 @@ int gl_printText( const glFont *ft_font,
       double bx, double by, int line_height,
       const glColour* c, const char *fmt, ... )
 {
-   /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
    char text[4096]; /* holds the string */
    va_list ap;
 
@@ -944,7 +934,7 @@ int gl_printText( const glFont *ft_font,
  */
 int gl_printWidthRaw( const glFont *ft_font, const char *text )
 {
-   GLfloat n, scale;
+   GLfloat n;
    size_t i;
    uint32_t ch;
 
@@ -952,7 +942,6 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
       ft_font = &gl_defFont;
    glFontStash *stsh = gl_fontGetStash( ft_font );
 
-   scale = (GLfloat)ft_font->h / FONT_DISTANCE_FIELD_SIZE;
    n = 0.;
    i = 0;
    while ((ch = u8_nextchar( text, &i ))) {
@@ -966,7 +955,7 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
 
       /* Increment width. */
       glFontGlyph *glyph = gl_fontGetGlyph( stsh, ch );
-      n += glyph->adv_x * scale;
+      n += glyph->adv_x;
    }
 
    return (int)round(n);
@@ -1141,8 +1130,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
       c->h     = rh;
       c->off_x = slot->bitmap_left-b;
       c->off_y = slot->bitmap_top +b;
-      c->adv_x = (GLfloat)slot->advance.x / 64.;
-      c->adv_y = (GLfloat)slot->advance.y / 64.;
+      c->adv_x = (GLfloat)slot->metrics.horiAdvance / 64.;
 
       return 0;
    }
@@ -1154,9 +1142,9 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
 /**
  * @brief Starts the rendering engine.
  */
-static void gl_fontRenderStart( const glFontStash* stsh, double h, double x, double y, const glColour *c, double outlineR )
+static void gl_fontRenderStart( const glFontStash* stsh, double x, double y, const glColour *c, double outlineR )
 {
-   double a, s;
+   double a, scale;
    const glColour *col;
 
    outlineR = outlineR==-1 ? 1 : MAX( outlineR, 0 );
@@ -1195,8 +1183,8 @@ static void gl_fontRenderStart( const glFontStash* stsh, double h, double x, dou
    gl_uniformAColor(font_shader_color, col, a);
 
    font_projection_mat = gl_Matrix4_Translate(gl_view_matrix, round(x), round(y), 0);
-   s = h / FONT_DISTANCE_FIELD_SIZE;
-   font_projection_mat = gl_Matrix4_Scale(font_projection_mat, s, s, 1 );
+   scale = (double)stsh->h / FONT_DISTANCE_FIELD_SIZE;
+   font_projection_mat = gl_Matrix4_Scale(font_projection_mat, scale, scale, 1 );
 
    font_restoreLast = 0;
 
@@ -1294,7 +1282,6 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch )
    glyph = &array_grow( &stsh->glyphs );
    glyph->codepoint = ch;
    glyph->adv_x = ft_char.adv_x;
-   glyph->adv_y = ft_char.adv_y;
    glyph->next  = -1;
    idx = glyph - stsh->glyphs;
 
@@ -1327,6 +1314,7 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch )
  */
 static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c, int state )
 {
+   double scale;
    double a;
    const glColour *col;
 
@@ -1367,8 +1355,9 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    glDrawArrays( GL_TRIANGLE_STRIP, glyph->vbo_id, 4 );
 
    /* Translate matrix. */
+   scale = (double)stsh->h / FONT_DISTANCE_FIELD_SIZE;
    font_projection_mat = gl_Matrix4_Translate( font_projection_mat,
-         glyph->adv_x, glyph->adv_y, 0 );
+         glyph->adv_x/scale, 0, 0 );
 
    return 0;
 }
