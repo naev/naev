@@ -199,7 +199,7 @@ static size_t dataL_checkpos( lua_State *L, LuaData_t *ld, long pos )
    if (pos < 0)
       NLUA_ERROR(L, _("position argument must be positive!"));
    mpos = pos * ld->elem;
-   if (mpos > ld->size)
+   if (mpos >= ld->size)
       NLUA_ERROR(L, _("position argument out of bounds: %d of %d elements"), pos, ld->size/ld->elem);
    return mpos;
 }
