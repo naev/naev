@@ -16,6 +16,7 @@ local vn = {
    _bufcol = { 1, 1, 1 },
    _buffer = "",
    _title = nil,
+   _alpha = 1,
 }
 -- Drawing
 vn.textbox_font = love.graphics.newFont(16)
@@ -38,12 +39,17 @@ function vn._checkstarted()
    end
 end
 
+local function _set_col( col )
+   local a = col[4] or 1
+   love.graphics.setColor( col[1], col[2], col[3], a*vn._alpha )
+end
+
 local function _draw_bg( x, y, w, h, col, border_col )
-   col = col or {0, 0, 0}
-   border_col = border_col or {0.5, 0.5, 0.5}
-   love.graphics.setColor( border_col )
+   col = col or {0, 0, 0, 1}
+   border_col = border_col or {0.5, 0.5, 0.5, 1}
+   _set_col( border_col )
    love.graphics.rectangle( "fill", x, y, w, h )
-   love.graphics.setColor( col )
+   _set_col( col )
    love.graphics.rectangle( "fill", x+2, y+2, w-4, h-4 )
 end
 
@@ -57,11 +63,13 @@ function vn.draw()
          local lw, lh = love.window.getDimensions()
          local mw, mh = vn.textbox_w, vn.textbox_y
          local scale = math.min( mw/w, mh/h )
+         local col
          if c.talking then
-            love.graphics.setColor( 1, 1, 1 )
+            col = { 1, 1, 1 }
          else
-            love.graphics.setColor( 0.8, 0.8, 0.8 )
+            col = { 0.8, 0.8, 0.8 }
          end
+         _set_col( col )
          local x = (lw-w*scale)/2
          local y = mh-scale*h
          love.graphics.draw( c.image, x, y, 0, scale, scale )
@@ -76,7 +84,7 @@ function vn.draw()
    local bh = 20
    _draw_bg( x, y, w, h, vn.textbox_bg )
    -- Draw text
-   love.graphics.setColor( vn._bufcol )
+   _set_col( vn._bufcol )
    love.graphics.printf( vn._buffer, font, x+bw, y+bw, vn.textbox_w-bw )
 
    -- Namebox
@@ -93,7 +101,7 @@ function vn.draw()
       end
       _draw_bg( x, y, w, h, vn.namebox_bg )
       -- Draw text
-      love.graphics.setColor( vn._bufcol )
+      _set_col( vn._bufcol )
       love.graphics.print( vn._title, font, x+bw, y+bh )
    end
 
@@ -296,7 +304,7 @@ function vn.StateWait:_init()
    self._y = y+h-10-self._h
 end
 function vn.StateWait:_draw()
-   love.graphics.setColor( vn._bufcol )
+   _set_col( vn._bufcol )
    love.graphics.print( self._text, self._font, self._x, self._y )
 end
 --[[
@@ -353,13 +361,15 @@ function vn.StateMenu:_draw()
    local mx, my = love.mouse.getX(), love.mouse.getY()
    for k,v in ipairs(self._elem) do
       local text, x, y, w, h = unpack(v)
+      local col
       if _inbox( mx, my, gx+x, gy+y, w, h ) then
-         love.graphics.setColor( 0.5, 0.5, 0.5 )
+         col = {0.5, 0.5, 0.5}
       else
-         love.graphics.setColor( 0.2, 0.2, 0.2 )
+         col = {0.2, 0.2, 0.2}
       end
+      _set_col( col )
       love.graphics.rectangle( "fill", gx+x, gy+y, w, h )
-      love.graphics.setColor( 1, 1, 1 )
+      _set_col( {1, 1, 1} )
       love.graphics.print( text, font, gx+x+tb, gy+y+tb )
    end
 end
@@ -418,7 +428,7 @@ end
 -- Start
 --]]
 vn.StateStart ={}
-function vn.StateStart.new( label )
+function vn.StateStart.new()
    local s = vn.State.new()
    s._init = _finish
    s._type = "Start"
@@ -428,7 +438,7 @@ end
 -- End
 --]]
 vn.StateEnd ={}
-function vn.StateEnd.new( label )
+function vn.StateEnd.new()
    local s = vn.State.new()
    s._init = vn.StateEnd._init
    s._type = "End"
@@ -436,6 +446,36 @@ function vn.StateEnd.new( label )
 end
 function vn.StateEnd:_init()
    vn._state = #vn._states+1
+end
+--[[
+-- Fade-In
+--]]
+vn.StateFade ={}
+function vn.StateFade.new( seconds, fadestart, fadeend )
+   seconds = seconds or 0.2
+   local s = vn.State.new()
+   s._init = vn.StateFade._init
+   s._update = vn.StateFade._update
+   s._type = "Fade"
+   s._start = fadestart
+   s._end = fadeend
+   s._inc = s._end > s._start
+   s._fadetime = 1/seconds
+   if not s._inc then
+      s._fadetime = -s._fadetime
+   end
+   return s
+end
+function vn.StateFade:_init()
+   vn._alpha = self._start
+end
+function vn.StateFade:_update(dt)
+   vn._alpha = vn._alpha + dt * self._fadetime
+   if (self._inc and vn._alpha > self._end) or
+         (not self._inc and vn._alpha < self._end) then
+      vn._alpha = self._end
+      _finish(self)
+   end
 end
 
 
@@ -512,6 +552,13 @@ function vn.scene()
    table.insert( vn._states, vn.StateScene.new() )
 end
 
+function vn.fade( seconds, fadestart, fadeend )
+   vn._checkstarted()
+   table.insert( vn._states, vn.StateFade.new( seconds, fadestart, fadeend ) )
+end
+function vn.fadein( seconds ) vn.fade( seconds, 0, 1 ) end
+function vn.fadeout( seconds ) vn.fade( seconds, 1, 0 ) end
+
 function vn._jump( label )
    for k,v in ipairs(vn._states) do
       if v:type() == "Label" and v.label == label then
@@ -559,7 +606,7 @@ function vn.run()
       error( _("vn: run without any states") )
    end
    love._vn = true
-   love.exec( 'vn' )
+   love.exec( 'scripts/vn' )
 end
 
 -- Default characters
