@@ -125,6 +125,7 @@ typedef struct glFontStash_s {
    /* Generated values. */
    GLint magfilter; /**< Magnification filter. */
    GLint minfilter; /**< Minification filter. */
+   int h; /**< Font height. */
    int tw; /**< Width of textures. */
    int th; /**< Height of textures. */
    glFontTex *tex; /**< Textures. */
@@ -1442,7 +1443,7 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
    if (!(flags & FONT_FLAG_DONTREUSE)) {
       for (i=0; i<(size_t)array_size(avail_fonts); i++) {
          stsh = &avail_fonts[i];
-         if (strcmp(stsh->fname,fname)!=0)
+         if (strcmp(stsh->fname,fname)!=0 || stsh->h != (int)h)
             continue;
          /* Found a match! */
          stsh->refcount++;
@@ -1465,6 +1466,7 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
    stsh->minfilter = GL_LINEAR;
    stsh->tw = DEFAULT_TEXTURE_SIZE;
    stsh->th = DEFAULT_TEXTURE_SIZE;
+   stsh->h = h;
 
    /* Set up font stuff for next glyphs. */
    stsh->ft = array_create( glFontStashFreetype );
