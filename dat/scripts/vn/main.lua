@@ -21,7 +21,6 @@ function love.load()
    -- Transparent background in Naev
    love.graphics.setColor( 1, 1, 1, 1 )
    love.graphics.setBackgroundColor( 0, 0, 0, 0 )
-   love.graphics.setNewFont(20)
 
    -- Check to see if running standalone
    if not love._vn then

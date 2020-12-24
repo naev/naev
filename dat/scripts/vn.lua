@@ -347,7 +347,7 @@ function vn.StateMenu:_draw()
       end
       love.graphics.rectangle( "fill", gx+x, gy+y, w, h )
       love.graphics.setColor( 1, 1, 1 )
-      love.graphics.print( text, gx+x+tb, gy+y+tb )
+      love.graphics.print( text, font, gx+x+tb, gy+y+tb )
    end
 end
 function vn.StateMenu:_click( mx, my, button )
