@@ -211,7 +211,7 @@ static int texL_new( lua_State *L )
          NLUA_ERROR( L, _("Spritesheet dimensions must be positive") );
       if (ld->type != LUADATA_NUMBER)
          NLUA_ERROR( L, _("Data has invalid type for texture") );
-      if (w*h*ld->elem*4 > ld->size)
+      if (w*h*ld->elem*4 != ld->size)
          NLUA_ERROR( L, _("Texture dimensions don't match data size!") );
       tex = gl_loadImageData( (void*)ld->data, w, h, w, sx, sy );
       if (tex==NULL)
