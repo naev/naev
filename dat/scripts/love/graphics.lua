@@ -297,7 +297,7 @@ function graphics.printf( text, ... )
    align = align or "left"
    col = graphics._fgcol
 
-   x,y = _xy(x,y,limit,graphics._font.height)
+   x,y = _xy(x,y,limit,font.height)
 
    local wrapped, maxw = naev.gfx.printfWrap( font.font, text, limit )
 
