@@ -71,10 +71,7 @@ function vn.draw()
    -- Textbox
    local font = vn.textbox_font
    -- Draw background
-   local x = vn.textbox_x
-   local y = vn.textbox_y
-   local w = vn.textbox_w
-   local h = vn.textbox_h
+   local x, y, w, h = vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
    local bw = 20
    local bh = 20
    _draw_bg( x, y, w, h, vn.textbox_bg )
