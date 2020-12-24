@@ -415,8 +415,7 @@ static int fileL_filetype( lua_State *L )
    PHYSFS_Stat path_stat;
 
    if (!PHYSFS_stat( path, &path_stat )) {
-      WARN( _( "Error occurred while opening '%s': %s" ), path,
-            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      /* No need for warning, might not exist. */
       lua_pushnil(L);
       return 1;
    }
