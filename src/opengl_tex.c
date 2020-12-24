@@ -323,7 +323,7 @@ glTexture* gl_loadImageData( float *data, int w, int h, int pitch, int sx, int s
 {
    int potw,poth, rw,rh;
    float *datapot;
-   int i, j;
+   int i, j, k;
    glTexture *texture;
 
    /* Check if pot. */
@@ -335,10 +335,11 @@ glTexture* gl_loadImageData( float *data, int w, int h, int pitch, int sx, int s
    if (gl_needPOT() && ((w!=potw) || h!=poth)) {
       rw = potw;
       rh = poth;
-      datapot = calloc( sizeof(float), potw*poth );
+      datapot = calloc( sizeof(float)*4, potw*poth );
       for (i=0; i<h; i++)
          for (j=0; j<w; j++)
-            datapot[ i*potw+j ] = data[ i*pitch+j ];
+            for (k=0; k<4; k++)
+               datapot[ 4*(i*potw+j)+k ] = data[ 4*(i*pitch+j)+k ];
    }
 
    /* Set up the texture defaults */

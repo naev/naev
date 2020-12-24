@@ -341,7 +341,7 @@ static int texL_readData( lua_State *L )
       for (j=0; j<surface->w; j++) {
          pix = get_pixel( surface, j, i );
          SDL_GetRGBA( pix, surface->format, &r, &g, &b, &a );
-         size_t pos = 4*(i*surface->w+j);
+         size_t pos = 4*((surface->h-i-1)*surface->w+j);
          data[ pos+0 ] = ((float)r)/255.;
          data[ pos+1 ] = ((float)g)/255.;
          data[ pos+2 ] = ((float)b)/255.;
