@@ -12,6 +12,9 @@
    <location>Bar</location>
    <faction>Empire</faction>
   </avail>
+  <notes>
+   <campaign>Long Distance Shipping</campaign>
+  </notes>
  </mission>
  --]]
 --[[
@@ -22,13 +25,12 @@
 
 ]]--
 
-require "numstring.lua"
-require "jumpdist.lua"
-require "dat/missions/empire/common.lua"
+require "numstring"
+require "jumpdist"
+require "missions/empire/common"
 
 bar_desc = _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.")
 misn_title = _("Za'lek Long Distance Recruitment")
-misn_reward = _("500,000 credits")
 misn_desc = _("Deliver a shipping diplomat for the Empire to Gerhart Station in the Ganth system")
 title = {}
 title[1] = _("Spaceport Bar")
@@ -71,9 +73,9 @@ function accept ()
    misn.accept()
   
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-   reward = 500000
+   reward = 500000 -- 500K
    misn.setTitle(misn_title)
-   misn.setReward(misn_reward)
+   misn.setReward(creditstring(reward))
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
    misn.osdCreate(title[2], {misn_desc})
    -- Set up the goal

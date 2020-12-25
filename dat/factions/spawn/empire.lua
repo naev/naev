@@ -1,7 +1,7 @@
-require("dat/factions/spawn/common.lua")
-require("dat/factions/spawn/mercenary_helper.lua")
+require("factions/spawn/common")
+require("factions/spawn/mercenary_helper")
 
-local formation = require "dat/scripts/formation.lua"
+local formation = require "scripts/formation"
 
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()

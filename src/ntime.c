@@ -11,7 +11,7 @@
  * 1 period = 10e3 seconds
  *
  * Generally displayed as:
- *  UST <cycles>:<periods>.<seconds>
+ *  UST \<cycles\>:\<periods\>.\<seconds\>
  * The number of seconds digits can be variable, for example:
  *
  *  UST 630:3726.1
@@ -32,16 +32,18 @@
  */
 
 
-#include "ntime.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <stdio.h>
-#include "nstring.h"
 #include <stdlib.h>
 
-#include "hook.h"
+#include "naev.h"
+/** @endcond */
+
+#include "ntime.h"
+
 #include "economy.h"
+#include "hook.h"
+#include "nstring.h"
 
 
 #define NT_SECONDS_DIV   (1000)      /* Divider for extracting seconds. */
@@ -215,9 +217,9 @@ void ntime_prettyBuf( char *str, int max, ntime_t t, int d )
    periods = ntime_getPeriods( nt );
    seconds = ntime_getSeconds( nt );
    if ((cycles == 0) && (periods == 0)) /* only seconds */
-      nsnprintf( str, max, _("%04ds"), seconds );
+      nsnprintf( str, max, _("%04d s"), seconds );
    else if ((cycles == 0) || (d==0))
-      nsnprintf( str, max, _("%.*fp"), d, periods + 0.0001 * seconds );
+      nsnprintf( str, max, _("%.*f p"), d, periods + 0.0001 * seconds );
    else /* UST format */
       nsnprintf( str, max, _("UST %d:%.*f"), cycles, d, periods + 0.0001 * seconds );
 }

@@ -1,23 +1,26 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Space Family">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>100</chance>
-   <location>None</location>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>100</chance>
+  <location>None</location>
+ </avail>
+ <notes>
+  <done_evt name="Shipwreck">If you make the mistake to help Harrus</done_evt>
+ </notes>
+</mission>
+--]]
 --[[
 -- This is the mission part of the shipwrecked Space Family mission, started from a random event.
--- See dat/events/neutral/shipwreck.lua
+-- See dat/events/neutral/shipwreck
 --]]
 
-require "jumpdist.lua"
-require "dat/missions/neutral/common.lua"
+require "jumpdist"
+require "missions/neutral/common"
 
 
 shipname = _("August") --The ship will have a unique name
@@ -29,7 +32,7 @@ title[1] = _("Shipwrecked space family")
 text[1] = _([[The airlock opens, and you are greeted by a nervous-looking man, a shy woman, and three neurotic children.
     "Thank god you are here," the man says. "I don't know how much longer we could've held out. They left us for dead, you know. No fuel, no food and only auxiliary power to sustain us." He then begins to incoherently tell you how much his group has suffered in the past few periods, but you cut him short, not willing to put up with his endless babbling.
     With a few to-the-point questions you learn that the man's name is Harrus, and that he and his wife and children live, or at least used to live, aboard their trading vessel. "It was a good life, you know," Harrus tells you. "You get to see the galaxy, meet people and see planets, and all that while working from home because, haha, you take your home with you!"
-    You can't help but glance at Harrus' kids, who have begun enthusiastically stampeding through your ship, pressing any buttons low enough for them to reach, despite their mother's hopeless attempts to keep them under control.]])
+    You can't help but glance at Harrus's kids, who have begun enthusiastically stampeding through your ship, pressing any buttons low enough for them to reach, despite their mother's hopeless attempts to keep them under control.]])
 text[2] = _([[Harrus is about to launch into another anecdote about his existence as a trader, but you manage to forestall him. You soon learn that his family's lifestyle has come to an abrupt change at the hands of a minor gang of pirates. Though the %s had some weaponry and shielding systems, the attackers were too much for a single cargo ship.
     "I never thought it would end like this," Harrus sighs. "I mean, I knew space was dangerous, but I stayed clear of the unsafe areas. Stuck to the patrolled lanes. Didn't take any risks. I've got a family, you know."
     Then Harrus brightens up, apparently putting his recent misfortune behind him in the blink of an eye. "Everything's going to be fine now," he says cheerfully. "We've been rescued, and all we need now is for you to take us to a suitable world where we can build a new life."
@@ -41,7 +44,7 @@ harrass_msg = _([[You are going over a routine navigation check when Harrus ente
     "Captain," he says to you. "I hope I don't have to remind you that we must get to our destination as soon as possible. I have a wife and children to think of and frankly I find your, ah, facilities a bit lacking."
     You consider ordering Harrus off your bridge, but he doesn't seem the kind of man to back off, so the only thing you would accomplish is to sour the mood on your ship. You inform Harrus that you're making every effort to get his family to a safe haven, which seems to satisfy him. Finally alone again, you take a moment to subside before completing that check.]])
 directions[2] = _([[Harrus steps out of your ship and takes a look around the spaceport you docked at. "No, no. This won't do at all," he says disapprovingly. "This place is a mess! Look at the dust and grime!" He rounds on you. "How are we supposed to make a decent living in a dump like this? You've brought us to the wrong place altogether. I must say I'm disappointed. I demand you take us away from this abysmal hole this minute! Let's see... Yes, %s in %s will do. At least they're civilized there!"
-    You attempt to remind Harrus that it was in fact he who asked you to take him to this system in the first place, and that the spaceport is hardly a representation of the entire world, but the man doesn't want to hear it. He stalks back into your ship without another word, leaving you annoyed and frustrated. Harrus' wife worriedly peeks around the corner of the hatch, silently eyeing you her sympathy.
+    You attempt to remind Harrus that it was in fact he who asked you to take him to this system in the first place, and that the spaceport is hardly a representation of the entire world, but the man doesn't want to hear it. He stalks back into your ship without another word, leaving you annoyed and frustrated. Harrus's wife worriedly peeks around the corner of the hatch, silently eyeing you her sympathy.
     You heave a sigh, and proceed to the registration desk to get the docking formalities out of the way.]])
 directions[3] = _([["The sky! Have you LOOKED at it?"
     Harrus rounds on you with a furious expression. Your keen understanding of the human body language tells you he isn't happy. You thought he might be satisfied with the state of the spacedock, since it's kept in prime condition, and indeed he was. That changed as soon as he looked up.
@@ -98,12 +101,10 @@ function create ()
    targsys = getsysatdistance(nil, 3) -- Populate the array
    targsys = getlandablesystems( targsys )
    if #targsys == 0 then targsys = {system.get("Apez")} end -- In case no systems were found.
-   destsys = targsys[rnd.rnd(1, #targsys)] 
-   destsysname = system.name(destsys)
+   destsys = targsys[rnd.rnd(1, #targsys)]
    destplanet = getlandable(destsys) -- pick a landable planet in the destination system
-   destplanetname = destplanet:name()
-   tk.msg(title[2], string.format(directions[nextstop], destplanetname, destsysname)) -- NPC telling you where to go
-   misn.osdCreate(misn_title, {misn_desc[2]:format(destplanetname, destsysname)})
+   tk.msg(title[2], string.format(directions[nextstop], destplanet:name(), destsys:name())) -- NPC telling you where to go
+   misn.osdCreate(misn_title, {misn_desc[2]:format(destplanet:name(), destsys:name())})
    misn_marker = misn.markerAdd( destsys, "low" )
 
    -- Force unboard
@@ -136,7 +137,7 @@ end
 function land()
    if planet.cur() == destplanet then -- We've arrived!
       if nextstop >= 3 then -- This is the last stop
-         tk.msg(title[4], string.format(text[3], destsysname)) -- Final message
+         tk.msg(title[4], string.format(text[3], destsys:name())) -- Final message
          player.pay(500000)
          misn.cargoJet(carg_id)
          addMiscLog( log_text )
@@ -146,12 +147,10 @@ function land()
          targsys = getsysatdistance(nil, nextstop+1) -- Populate the array
          targsys = getlandablesystems( targsys )
          if #targsys == 0 then targsys = {system.get("Apez")} end -- In case no systems were found.
-         destsys = targsys[rnd.rnd(1, #targsys)] 
-         destsysname = system.name(destsys)
+         destsys = targsys[rnd.rnd(1, #targsys)]
          destplanet = getlandable(destsys) -- pick a landable planet in the destination system
-         destplanetname = destplanet:name()
-         tk.msg(title[2], string.format(directions[nextstop], destplanetname, destsysname)) -- NPC telling you where to go
-         misn.osdCreate(misn_title, {misn_desc[2]:format(destplanetname, destsysname)})
+         tk.msg(title[2], string.format(directions[nextstop], destplanet:name(), destsys:name())) -- NPC telling you where to go
+         misn.osdCreate(misn_title, {misn_desc[2]:format(destplanet:name(), destsys:name())})
          misn.markerMove( misn_marker, destsys )
       end
    end

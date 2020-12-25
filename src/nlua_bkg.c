@@ -8,17 +8,19 @@
  * @brief Bindings for modifying the space background.
  */
 
-#include "nlua_bkg.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
-#include "nlua_tex.h"
-#include "nlua_col.h"
-#include "log.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_bkg.h"
+
 #include "background.h"
+#include "log.h"
+#include "nlua_col.h"
+#include "nlua_tex.h"
+#include "nluadef.h"
 
 
 /* Background methods. */

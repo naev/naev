@@ -1,21 +1,24 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Alive Bounty">
-  <avail>
-   <priority>4</priority>
-   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
-   <chance>360</chance>
-   <location>Computer</location>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Za'lek</faction>
-  </avail>
- </mission>
- --]]
+ <avail>
+  <priority>4</priority>
+  <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+  <chance>360</chance>
+  <location>Computer</location>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <tier>3</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    Alive Pirate Bounty
@@ -40,16 +43,16 @@
 
 --]]
 
-require "numstring.lua"
-require "dat/missions/neutral/pirbounty_dead.lua"
+require "numstring"
+require "missions/neutral/pirbounty_dead"
 
 -- Localization
 kill_instead_title   = _("Better Dead than Free")
 kill_instead_text    = {}
-kill_instead_text[1] = _([[As you return to your ship, you are contacted by an officer. "I see you were unable to capture %s," the officer says. "Disappointing. However, we would rather this pirate be dead than roaming free, so you will be paid %s credits if you finish them off right now."]])
-kill_instead_text[2] = _([[On your way back to your ship, you receive a message from an officer. It reads, "Your failure to capture %s is disappointing. We really wanted to capture this pirate alive. However, we would rather he be dead than roaming free, so if you kill the pirate now, you will be paid the lesser sum of %s credits."]])
-kill_instead_text[3] = _([[When you return to your cockpit, you are contacted by an officer. "Pathetic! If I were in charge, I'd say you get no bounty! Can't fight off a couple low-life pirates?!" He sighs. "But lucky for you, I'm not in charge, and my higher-ups would rather %s be dead than free. So if you finish that scum off, you'll get %s credits. Just be snappy about it!" Having finished delivering the message, the officer then ceases communication.]])
-kill_instead_text[4] = _([[When you get back to the ship, you see a message giving you a new mission to kill %s; the reward is %s credits. Well, that's pitiful compared to what you were planning on collecting, but it's better than nothing.]])
+kill_instead_text[1] = _([[As you return to your ship, you are contacted by an officer. "I see you were unable to capture %s," the officer says. "Disappointing. However, we would rather this pirate be dead than roaming free, so you will be paid %s if you finish them off right now."]])
+kill_instead_text[2] = _([[On your way back to your ship, you receive a message from an officer. It reads, "Your failure to capture %s is disappointing. We really wanted to capture this pirate alive. However, we would rather he be dead than roaming free, so if you kill the pirate now, you will be paid the lesser sum of %s."]])
+kill_instead_text[3] = _([[When you return to your cockpit, you are contacted by an officer. "Pathetic! If I were in charge, I'd say you get no bounty! Can't fight off a couple low-life pirates?!" He sighs. "But lucky for you, I'm not in charge, and my higher-ups would rather %s be dead than free. So if you finish that scum off, you'll get %s. Just be snappy about it!" Having finished delivering the message, the officer then ceases communication.]])
+kill_instead_text[4] = _([[When you get back to the ship, you see a message giving you a new mission to kill %s; the reward is %s. Well, that's pitiful compared to what you were planning on collecting, but it's better than nothing.]])
 
 pay_capture_text    = {}
 pay_capture_text[1] = _("An officer takes %s into custody and hands you your pay.")
@@ -57,7 +60,7 @@ pay_capture_text[2] = _("The officer seems to think your acceptance of the alive
 pay_capture_text[3] = _("The officer you deal with seems to especially dislike %s. They take the pirate off your hands and hand you your pay without speaking a word.")
 pay_capture_text[4] = _("A fearful-looking officer rushes %s into a secure hold, pays you the appropriate bounty, and then hurries off.")
 pay_capture_text[5] = _("The officer you deal with thanks you profusely for capturing %s alive, pays you, and sends you off.")
-pay_capture_text[6] = _("Upon learning that you managed to capture %s alive, the previously depressed-looking officer suddenly brightens up. The pirate is swiftly taken into custody as you are handed your pay.")
+pay_capture_text[6] = _("Upon learning that you managed to capture %s alive, the officer who previously sported a defeated look suddenly brightens up. The pirate is swiftly taken into custody as you are handed your pay.")
 pay_capture_text[7] = _("When you ask the officer for your bounty on %s, they sigh, take the pirate into custody, go through some paperwork, and hand you your pay, mumbling something about how useless capturing pirates alive is.")
 
 pay_kill_text    = {}
@@ -137,7 +140,7 @@ function board_fail ()
       board_failed = true
       credits = credits / 5
       local t = kill_instead_text[ rnd.rnd( 1, #kill_instead_text ) ]:format(
-         name, numstring( credits ) )
+         name, creditstring( credits ) )
       tk.msg( kill_instead_title, t )
       osd_msg[2] = osd_msg_kill:format( name )
       misn.osdCreate( osd_title, osd_msg )

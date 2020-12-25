@@ -15,6 +15,9 @@ function atk_capital ()
    ai.hostile(target) -- Mark as hostile
    ai.settarget(target)
 
+   -- See if the enemy is still seeable
+   if not _atk_check_seeable() then return end
+
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
    local range = ai.getweaprange(3)
@@ -92,7 +95,7 @@ function _atk_g_capital( target, dist )
    end
 
    if shoot and not mem.recharge then
-      -- test if, by chance, the target can be hitten by cannons
+      -- test if, by chance, the target can be hit by cannons
       if aimdir < 10 then
          ai.shoot()
       end

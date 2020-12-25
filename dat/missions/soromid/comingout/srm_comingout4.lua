@@ -11,6 +11,9 @@
    <location>Bar</location>
    <faction>Soromid</faction>
   </avail>
+  <notes>
+   <campaign>Coming Out</campaign>
+  </notes>
  </mission>
  --]]
  --[[
@@ -32,8 +35,8 @@
 
 --]]
 
-require "numstring.lua"
-require "dat/missions/soromid/common.lua"
+require "numstring"
+require "missions/soromid/common"
 
 
 title = {}

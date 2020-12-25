@@ -10,17 +10,18 @@
  */
 
 
-#include "fleet.h"
-
-#include "naev.h"
-
-#include "nstring.h"
+/** @cond */
+#include <limits.h>
 #include <math.h>
 #include <stdlib.h>
-#include <limits.h>
 
+#include "naev.h"
+/** @endcond */
+
+#include "fleet.h"
+
+#include "nstring.h"
 #include "nxml.h"
-
 #include "log.h"
 #include "pilot.h"
 #include "ndata.h"
@@ -79,7 +80,7 @@ unsigned int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
 {
    unsigned int p;
    p = pilot_create( plt->ship,
-         plt->name,
+         _(plt->name), /* Currently, FleetPilots come from static XML in English, but Pilots have translated names. */
          flt->faction,
          (ai != NULL) ? ai :
                (plt->ai != NULL) ? plt->ai :
@@ -114,7 +115,7 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
    memset( temp, 0, sizeof(Fleet) );
    temp->faction = -1;
 
-   temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name"); /* already mallocs */
+   xmlr_attr(parent,"name",temp->name);
    if (temp->name == NULL)
       WARN( _("Fleet in %s has invalid or no name"), FLEET_DATA_PATH );
 
@@ -176,8 +177,7 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
                pilot->ship = ship_get(c);
                if (pilot->ship == NULL)
                   WARN(_("Pilot %s in Fleet %s has invalid ship"), pilot->name, temp->name);
-               if (c!=NULL)
-                  free(c);
+               free(c);
                continue;
             }
 
@@ -212,24 +212,13 @@ if (o) WARN( _("Fleet '%s' missing '%s' element"), s,temp->name)
 static int fleet_loadFleets (void)
 {
    int mem;
-   size_t bufsize;
-   char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
 
    /* Load the data. */
-   buf = ndata_read( FLEET_DATA_PATH, &bufsize);
-   if (buf == NULL) {
-      WARN(_("Unable to read data from '%s'"), FLEET_DATA_PATH);
+   doc = xml_parsePhysFS( FLEET_DATA_PATH );
+   if (doc == NULL)
       return -1;
-   }
-
-   /* Load the document. */
-   doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN(_("Unable to parse document '%s'"), FLEET_DATA_PATH);
-      return -1;
-   }
 
    node = doc->xmlChildrenNode; /* fleets node */
    if (strcmp((char*)node->name,"Fleets")) {
@@ -261,7 +250,6 @@ static int fleet_loadFleets (void)
    fleet_stack = realloc(fleet_stack, sizeof(Fleet) * nfleets);
 
    xmlFreeDoc(doc);
-   free(buf);
 
    return 0;
 }
@@ -294,10 +282,8 @@ void fleet_free (void)
    if (fleet_stack != NULL) {
       for (i=0; i<nfleets; i++) {
          for (j=0; j<fleet_stack[i].npilots; j++) {
-            if (fleet_stack[i].pilots[j].name)
-               free(fleet_stack[i].pilots[j].name);
-            if (fleet_stack[i].pilots[j].ai)
-               free(fleet_stack[i].pilots[j].ai);
+            free(fleet_stack[i].pilots[j].name);
+            free(fleet_stack[i].pilots[j].ai);
          }
          free(fleet_stack[i].name);
          free(fleet_stack[i].pilots);

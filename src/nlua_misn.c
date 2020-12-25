@@ -9,43 +9,42 @@
  */
 
 
-#include "nlua_misn.h"
+/** @cond */
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-#include <math.h>
+#include "nlua_misn.h"
 
-#include <lua.h>
-#include <lauxlib.h>
-
+#include "array.h"
+#include "gui_osd.h"
+#include "land.h"
+#include "log.h"
+#include "mission.h"
+#include "music.h"
+#include "ndata.h"
 #include "nlua.h"
-#include "nlua_hook.h"
-#include "nlua_player.h"
-#include "nlua_tk.h"
+#include "nlua_audio.h"
+#include "nlua_bkg.h"
+#include "nlua_camera.h"
 #include "nlua_faction.h"
-#include "nlua_spfx.h"
+#include "nlua_hook.h"
+#include "nlua_music.h"
+#include "nlua_player.h"
 #include "nlua_system.h"
 #include "nlua_tex.h"
-#include "nlua_camera.h"
-#include "nlua_music.h"
-#include "nlua_bkg.h"
-#include "player.h"
-#include "mission.h"
-#include "log.h"
-#include "rng.h"
-#include "toolkit.h"
-#include "land.h"
-#include "nxml.h"
+#include "nlua_tk.h"
 #include "nluadef.h"
-#include "music.h"
-#include "gui_osd.h"
 #include "npc.h"
-#include "array.h"
-#include "ndata.h"
+#include "nstring.h"
+#include "nxml.h"
+#include "player.h"
+#include "rng.h"
 #include "shiplog.h"
+#include "toolkit.h"
 
 
 /**
@@ -118,7 +117,7 @@ static const luaL_Reg misn_methods[] = {
 /**
  * @brief Registers all the mission libraries.
  *
- *    @param L Lua state.
+ *    @param env Lua environment.
  *    @return 0 on success.
  */
 int misn_loadLibs( nlua_env env )
@@ -130,7 +129,7 @@ int misn_loadLibs( nlua_env env )
    nlua_loadTex(env);
    nlua_loadBackground(env);
    nlua_loadMusic(env);
-   nlua_loadSpfx(env);
+   nlua_loadAudio(env);
    nlua_loadTk(env);
    return 0;
 }
@@ -139,7 +138,7 @@ int misn_loadLibs( nlua_env env )
  */
 /**
  * @brief Loads the mission Lua library.
- *    @param L Lua state.
+ *    @param env Lua environment.
  */
 int nlua_loadMisn( nlua_env env )
 {
@@ -228,6 +227,7 @@ void misn_runStart( Mission *misn, const char *func )
  *
  *    @param misn Mission that owns the function.
  *    @param func Name of the function to call.
+ *    @param nargs Number of arguments to pass.
  *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
  *            and 0 normally.
  */
@@ -295,8 +295,7 @@ static int misn_setTitle( lua_State *L )
    str = luaL_checkstring(L,1);
 
    cur_mission = misn_getFromLua(L);
-   if (cur_mission->title) /* cleanup old title */
-      free(cur_mission->title);
+   free(cur_mission->title);
    cur_mission->title = strdup(str);
 
    return 0;
@@ -318,8 +317,7 @@ static int misn_setDesc( lua_State *L )
    str = luaL_checkstring(L,1);
 
    cur_mission = misn_getFromLua(L);
-   if (cur_mission->desc) /* cleanup old description */
-      free(cur_mission->desc);
+   free(cur_mission->desc);
    cur_mission->desc = strdup(str);
 
    return 0;
@@ -338,8 +336,7 @@ static int misn_setReward( lua_State *L )
    str = luaL_checkstring(L,1);
 
    cur_mission = misn_getFromLua(L);
-   if (cur_mission->reward) /* cleanup old reward */
-      free(cur_mission->reward);
+   free(cur_mission->reward);
    cur_mission->reward = strdup(str);
    return 0;
 }
@@ -520,17 +517,11 @@ static int misn_setNPC( lua_State *L )
 
    cur_mission = misn_getFromLua(L);
 
-   /* Free if portrait is already set. */
-   if (cur_mission->portrait != NULL) {
-      gl_freeTexture(cur_mission->portrait);
-      cur_mission->portrait = NULL;
-   }
+   gl_freeTexture(cur_mission->portrait);
+   cur_mission->portrait = NULL;
 
-   /* Free NPC name. */
-   if (cur_mission->npc != NULL) {
-      free(cur_mission->npc);
-      cur_mission->npc = NULL;
-   }
+   free(cur_mission->npc);
+   cur_mission->npc = NULL;
 
    /* For no parameters just leave having freed NPC. */
    if (lua_gettop(L) == 0)
@@ -756,7 +747,7 @@ static int misn_cargoJet( lua_State *L )
 /**
  * @brief Creates a mission OSD.
  *
- * @note You can index elements by using '\t' as first character of an element.
+ * @note You can index elements by using '\\t' as first character of an element.
  *
  * @usage misn.osdCreate( "My OSD", {"Element 1", "Element 2"})
  *

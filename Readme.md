@@ -1,8 +1,10 @@
-![Nightly Release](https://github.com/naev/naev/workflows/Nightly%20Release/badge.svg) ![CI](https://github.com/naev/naev/workflows/CI/badge.svg)
+![Nightly Release](https://github.com/naev/naev/workflows/Nightly%20Release/badge.svg) ![CI](https://github.com/naev/naev/workflows/CI/badge.svg) [![Packaging status](https://repology.org/badge/tiny-repos/naev.svg)](https://repology.org/project/naev/versions)
 # NAEV README
 
-Naev is a 2D space trading and combat game, taking inspiration from the Escape
-Velocity series, among others.
+![Naev Logo](https://naev.org/imgs/naev.png)
+
+Naev is a 2D space trading and combat game, taking inspiration from the [Escape
+Velocity series](https://en.wikipedia.org/wiki/Escape_Velocity_(video_game)), among others.
 
 You pilot a space ship from a top-down perspective, and are more or less free
 to do what you want. As the genre name implies, you’re able to trade and engage
@@ -18,51 +20,51 @@ an OpenGL-capable graphics card and driver, Naev requires the following:
 * SDL 2
 * libxml2
 * freetype2
-* fontconfig
 * libpng
 * OpenAL
-* libvorbis (>= 1.2.1 necessary for Replaygain)
+* libvorbis
 * binutils
 * intltool
-* libzip
 
-Note that several distributions ship outdated versions of libvorbis, and
-thus libvorbisfile is statically linked into the release binary.
+If you're cross-compiling for Windows, you must install this soft dependency:
+* [physfs](https://icculus.org/physfs/), example package name mingw-w64-physfs
 
-Compiling your own binary on many distributions will result in Replaygain
-being disabled.
 
 ### Ubuntu
 
 Install compile-time dependencies on Ubuntu 16.04 (and hopefully later) with:
 
-```bash
-apt-get install build-essential automake libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev \
+```
+apt-get install build-essential libsdl2-dev libsdl2-image-dev \
 libgl1-mesa-dev libxml2-dev libfreetype6-dev libpng-dev libopenal-dev \
-libvorbis-dev binutils-dev libzip-dev libiberty-dev autopoint intltool libfontconfig-dev itstool autoconf-archive
+libvorbis-dev binutils-dev libiberty-dev autopoint intltool libfontconfig-dev \
+python3-pip
+pip3 install meson ninja
 ```
 
-### Other \*nix 
+### Other \*nix
 
-See https://github.com/naev/naev/wiki/Compiling-on-*nix for package lists for several
+See [here](https://github.com/naev/naev/wiki/Compiling-on-*nix) for package lists for several
 distributions.
 
 ## COMPILING
 
-Run: 
+Run:
 
 ```
 bash
-./autogen.sh && ./configure
-make
+meson setup builddir .
+cd builddir
+meson compile
+./naev.sh
 ```
 
-If you need special settings you should pass flags to configure, using -h
-will tell you what it supports.
+If you need special settings you can run `meson configure` in your build
+directory to see a list of all available options.
 
 ## INSTALLATION
 
-Naev currently supports make install which will install everything that
+Naev currently supports `meson install` which will install everything that
 is needed.
 
 If you wish to create a .desktop for your desktop environment, logos
@@ -79,16 +81,16 @@ text is modified. You can update all translation files with the
 following commands:
 
 ```
-./utils/update-po.sh # only necessary if files have been added or removed
-make
-make -C po update-po
+meson compile potfiles # only necessary if files have been added or removed
+meson compile naev-pot
+meson compile naev-update-po
 ```
 
 Again, you will only ever need to do this if you are a developer.
 
 ## CRASHES & PROBLEMS
 
-Please take a look at the FAQ (linked below) before submitting a new
+Please take a look at the [FAQ](https://github.com/naev/naev/wiki/FAQ) before submitting a new
 bug report, as it covers a number of common gameplay questions and
 common issues.
 

@@ -3,21 +3,23 @@
  */
 
 
-#include "map_find.h"
+/** @cond */
+#include <assert.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include "log.h"
-#include "toolkit.h"
-#include "map.h"
+#include "map_find.h"
+
 #include "dialogue.h"
-#include "player.h"
-#include "tech.h"
-#include "space.h"
+#include "log.h"
+#include "map.h"
 #include "nstring.h"
+#include "player.h"
+#include "space.h"
+#include "tech.h"
+#include "toolkit.h"
 
-
-#define MAP_WDWNAME     "Star Map" /**< Map window name. */
 
 #define BUTTON_WIDTH    120 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
@@ -33,6 +35,7 @@ static int map_find_ships   = 0; /**< Ships checkbox value. */
 /* Current found stuff. */
 static map_find_t *map_found_cur    = NULL;  /**< Pointer to found stuff. */
 static int map_found_ncur           = 0;     /**< Number of found stuff. */
+static char **map_foundOutfitNames  = NULL; /**< Internal names of outfits in the search results. */
 /* Tech hack. */
 static tech_group_t **map_known_techs = NULL; /**< Known techs. */
 static Planet **map_known_planets   = NULL;  /**< Known planets with techs. */
@@ -54,6 +57,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name );
 static int map_findSearchShips( unsigned int parent, const char *name );
 static void map_findSearch( unsigned int wid, char* str );
 /* Misc. */
+static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys, Planet *pnt );
 static int map_sortCompare( const void *p1, const void *p2 );
 static void map_sortFound( map_find_t *found, int n );
 static char map_getPlanetColourChar( Planet *p );
@@ -121,11 +125,9 @@ static int map_knownInit (void)
  */
 static void map_knownClean (void)
 {
-   if (map_known_techs != NULL)
-      free( map_known_techs );
+   free( map_known_techs );
    map_known_techs = NULL;
-   if (map_known_planets != NULL)
-      free( map_known_planets );
+   free( map_known_planets );
    map_known_planets = NULL;
    map_nknown = 0;
 }
@@ -182,8 +184,7 @@ static void map_findClose( unsigned int wid, char* str )
    window_close( wid, str );
 
    /* Clean up if necessary. */
-   if (map_found_cur != NULL)
-      free( map_found_cur );
+   free( map_found_cur );
    map_found_cur = NULL;
 
    /* Clean up. */
@@ -225,8 +226,11 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
    map_found_cur  = found;
    map_found_ncur = n;
 
+   /* Sort the found by distance. */
+   map_sortFound( found, n );
+
    /* Create window. */
-   wid = window_create( _("Search Results"), -1, -1, 500, 452 );
+   wid = window_create( "wswFindResult", _("Search Results"), -1, -1, 500, 452 );
    window_setParent( wid, parent );
    window_setAccept( wid, map_findDisplayMark );
    window_setCancel( wid, window_close );
@@ -236,7 +240,7 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
    for (i=0; i<n; i++)
       ll[i] = strdup( found[i].display );
    window_addList( wid, 20, -40, 460, 300,
-         "lstResult", ll, n, 0, NULL );
+         "lstResult", ll, n, 0, NULL, map_findDisplayMark );
 
    /* Buttons. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -380,6 +384,10 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
       }
 
       ve = &pnt->pos;
+
+      assert( vs != NULL );
+      assert( ve != NULL );
+
       d += vect_dist( vs, ve );
    }
 
@@ -388,6 +396,47 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
 
    *distance = d;
    return 0;
+}
+
+
+/**
+ * @brief Loads a search result into a table.
+ *
+ *    @param found Results array to save into.
+ *    @param n Position to use.
+ *    @param sys Result's star system.
+ *    @param pnt Result's planet, or NULL to leave unspecified.
+ *
+ */
+static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys, Planet *pnt )
+{
+   int ret;
+   char route_info[256];
+
+   /* Set some values. */
+   found[n].pnt      = pnt;
+   found[n].sys      = sys;
+
+   /* Set more values. */
+   ret = map_findDistance( sys, pnt, &found[n].jumps, &found[n].distance );
+   if (ret) {
+      found[n].jumps    = 10000;
+      found[n].distance = 1e6;
+      nsnprintf( route_info, sizeof(route_info), "%s", _("unknown route") );
+   }
+   else
+      nsnprintf( route_info, sizeof(route_info),
+            ngettext( "%d jump, %.0fk distance", "%d jumps, %.0fk distance", found[n].jumps ),
+            found[n].jumps, found[n].distance/1000. );
+
+   /* Set fancy name. */
+   if (pnt == NULL)
+      nsnprintf( found[n].display, sizeof(found[n].display),
+            _("%s (%s)"), _(sys->name), route_info );
+   else
+      nsnprintf( found[n].display, sizeof(found[n].display),
+            _("\a%c%s (%s, %s)"), map_getPlanetColourChar(pnt),
+            _(pnt->name), _(sys->name), route_info );
 }
 
 
@@ -403,7 +452,7 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
    const char *sysname;
    StarSystem *sys;
    char **names;
-   int len, n, ret;
+   int len, n;
    map_find_t *found;
 
    /* Search for names. */
@@ -437,25 +486,7 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
       if (found == NULL) /* Allocate results array on first match. */
          found = malloc( sizeof(map_find_t) * len );
 
-      /* Set more values. */
-      ret = map_findDistance( sys, NULL, &found[n].jumps, &found[n].distance );
-      if (ret) {
-         found[n].jumps    = 10000;
-         found[n].distance = 1e6;
-      }
-
-      /* Set some values. */
-      found[n].pnt      = NULL;
-      found[n].sys      = sys;
-
-      /* Set fancy name. */
-      if (ret)
-         nsnprintf( found[n].display, sizeof(found[n].display),
-               _("%s (unknown route)"), sys->name );
-      else
-         nsnprintf( found[n].display, sizeof(found[n].display),
-               _("%s (%d jumps, %.0fk distance)"),
-               sys->name, found[n].jumps, found[n].distance/1000. );
+      map_findAccumulateResult( found, n, sys, NULL );
       n++;
    }
    free(names);
@@ -463,9 +494,6 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
    /* No visible match. */
    if (n==0)
       return -1;
-
-   /* Sort the found by distance. */
-   map_sortFound( found, n );
 
    /* Display results. */
    map_findDisplayResult( parent, found, n );
@@ -483,7 +511,7 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
 {
    int i;
    char **names;
-   int len, n, ret;
+   int len, n;
    map_find_t *found;
    const char *sysname, *pntname;
    StarSystem *sys;
@@ -542,26 +570,7 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
       if (found == NULL) /* Allocate results array on first match. */
          found = malloc( sizeof(map_find_t) * len );
 
-      /* Set more values. */
-      ret = map_findDistance( sys, pnt, &found[n].jumps, &found[n].distance );
-      if (ret) {
-         found[n].jumps    = 10000;
-         found[n].distance = 1e6;
-      }
-
-      /* Set some values. */
-      found[n].pnt      = pnt;
-      found[n].sys      = sys;
-
-      /* Set fancy name. */
-      if (ret)
-         nsnprintf( found[n].display, sizeof(found[n].display),
-               _("\a%c%s (%s, unknown route)"), map_getPlanetColourChar(pnt),
-               names[i], sys->name );
-      else
-         nsnprintf( found[n].display, sizeof(found[n].display),
-               _("\a%c%s (%s, %d jumps, %.0fk distance)"), map_getPlanetColourChar(pnt),
-               names[i], sys->name, found[n].jumps, found[n].distance/1000. );
+      map_findAccumulateResult( found, n, sys, pnt );
       n++;
    }
    free(names);
@@ -569,9 +578,6 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
    /* No visible match. */
    if (n==0)
       return -1;
-
-   /* Sort the found by distance. */
-   map_sortFound( found, n );
 
    /* Display results. */
    map_findDisplayResult( parent, found, n );
@@ -594,7 +600,7 @@ static char map_getPlanetColourChar( Planet *p )
 
 
 /**
- * @brief Does fuzzy name matching for outfits.
+ * @brief Does fuzzy name matching for outfits. Searches translated names but returns internal names.
  */
 static char **map_fuzzyOutfits( Outfit **o, int n, const char *name, int *len )
 {
@@ -607,7 +613,7 @@ static char **map_fuzzyOutfits( Outfit **o, int n, const char *name, int *len )
    /* Do fuzzy search. */
    l = 0;
    for (i=0; i<n; i++) {
-      if (nstrcasestr( o[i]->name, name ) != NULL) {
+      if (nstrcasestr( _(o[i]->name), name ) != NULL) {
          names[l] = o[i]->name;
          l++;
       }
@@ -664,18 +670,18 @@ static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int
    window_addText( wid, iw + 128 + 20, -60 - gl_defFont.h - 20,
          280, 160, 0, "txtDescShort", &gl_smallFont, NULL, NULL );
    window_addText( wid, iw+20, -60-128-10,
-         60, 160, 0, "txtSDesc", &gl_smallFont, NULL,
-         _("Owned:\n"
+         90, 160, 0, "txtSDesc", &gl_smallFont, NULL,
+         _("\anOwned:\a0\n"
          "\n"
-         "Slot:\n"
-         "Size:\n"
-         "Mass:\n"
+         "\anSlot:\a0\n"
+         "\anSize:\a0\n"
+         "\anMass:\a0\n"
          "\n"
-         "Price:\n"
-         "Money:\n"
-         "License:\n") );
+         "\anPrice:\a0\n"
+         "\anMoney:\a0\n"
+         "\anLicense:\a0\n") );
    window_addText( wid, iw+20, -60-128-10,
-         280, 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
+         w - (20 + iw + 20 + 90), 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
    window_addText( wid, iw+20, -60-128-10-160,
          w-(iw+80), 180, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
@@ -705,8 +711,8 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
     * a 20 px gap, 280 px for the outfit's name and a final 20 px gap. */
    iw = w - 452;
 
-   outfit = outfit_get( toolkit_getList(wid, wgtname) );
-   window_modifyText( wid, "txtOutfitName", outfit->name );
+   outfit = outfit_get( map_foundOutfitNames[toolkit_getListPos(wid, wgtname)] );
+   window_modifyText( wid, "txtOutfitName", _(outfit->name) );
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 0, 0 );
 
    mass = outfit->mass;
@@ -715,7 +721,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
       mass += outfit_amount(outfit) * outfit_ammo(outfit)->mass;
    }
 
-   window_modifyText( wid, "txtDescription", outfit->description );
+   window_modifyText( wid, "txtDescription", _(outfit->description) );
    credits2str( buf2, outfit->price, 2 );
    credits2str( buf3, player.p->credits, 2 );
    nsnprintf( buf, PATH_MAX,
@@ -725,22 +731,22 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
          "%s\n"
          "%.0f tonnes\n"
          "\n"
-         "%s credits\n"
-         "%s credits\n"
+         "%s\n"
+         "%s\n"
          "%s\n"),
          player_outfitOwned(outfit),
-         outfit_slotName(outfit),
-         outfit_slotSize(outfit),
+         _(outfit_slotName(outfit)),
+         _(outfit_slotSize(outfit)),
          mass,
          buf2,
          buf3,
-         (outfit->license != NULL) ? outfit->license : _("None") );
+         (outfit->license != NULL) ? _(outfit->license) : _("None") );
    window_modifyText( wid, "txtDDesc", buf );
-   window_modifyText( wid, "txtOutfitName", outfit->name );
+   window_modifyText( wid, "txtOutfitName", _(outfit->name) );
    window_modifyText( wid, "txtDescShort", outfit->desc_short );
    th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, outfit->desc_short ) );
    window_moveWidget( wid, "txtSDesc", iw+20, -60-th-20 );
-   window_moveWidget( wid, "txtDDesc", iw+20+60, -60-th-20 );
+   window_moveWidget( wid, "txtDDesc", iw+20+90, -60-th-20 );
    th += gl_printHeightRaw( &gl_smallFont, 280, buf );
    window_moveWidget( wid, "txtDescription", iw+20, -60-th-40 );
 }
@@ -754,8 +760,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
 static int map_findSearchOutfits( unsigned int parent, const char *name )
 {
    int i, j;
-   char **names;
-   int len, n, ret;
+   int len, n;
    map_find_t *found;
    Planet *pnt;
    StarSystem *sys;
@@ -764,10 +769,12 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    Outfit *o, **olist;
    int nolist;
 
+   assert( map_foundOutfitNames == NULL /* else our reentrancy guard failed and we're about to crash. */ );
+
    /* Match planet first. */
    o     = NULL;
    oname = outfit_existsCase( name );
-   names = map_outfitsMatch( name, &len );
+   map_foundOutfitNames = map_outfitsMatch( name, &len );
    if (len <= 0)
       return -1;
    else if ((oname != NULL) && (len == 1))
@@ -777,18 +784,19 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       /* Ask which one player wants. */
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
-         list[i] = strdup( names[i] );
+         list[i] = strdup( _(map_foundOutfitNames[i]) );
       i = dialogue_listPanel( _("Search Results"), list, len, 452, 650,
             map_addOutfitDetailFields, map_showOutfitDetail,
             _("Search results for outfits matching '%s':"), name );
       if (i < 0) {
-         free(names);
+         free(map_foundOutfitNames);
+         map_foundOutfitNames = NULL;
          return 0;
       }
-      o = outfit_get( names[i] );
+      o = outfit_get( map_foundOutfitNames[i] );
    }
-   if (names != NULL)
-      free(names);
+   free(map_foundOutfitNames);
+   map_foundOutfitNames = NULL;
    if (o == NULL)
       return -1;
 
@@ -796,14 +804,12 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    found = NULL;
    n = 0;
    for (i=0; i<map_nknown; i++) {
-
       /* Try to find the outfit in the planet. */
       olist = tech_getOutfit( map_known_techs[i], &nolist );
       for (j=0; j<nolist; j++)
          if (olist[j] == o)
             break;
-      if (olist != NULL)
-         free(olist);
+      free(olist);
       if (j >= nolist)
          continue;
       pnt = map_known_planets[i];
@@ -819,35 +825,13 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       if (found == NULL) /* Allocate results array on first match. */
          found = malloc( sizeof(map_find_t) * map_nknown );
 
-      /* Set more values. */
-      ret = map_findDistance( sys, pnt, &found[n].jumps, &found[n].distance );
-      if (ret) {
-         found[n].jumps    = 10000;
-         found[n].distance = 1e6;
-      }
-
-      /* Set some values. */
-      found[n].pnt      = pnt;
-      found[n].sys      = sys;
-
-      /* Set fancy name. */
-      if (ret)
-         nsnprintf( found[n].display, sizeof(found[n].display),
-               _("\a%c%s (%s, unknown route)"), map_getPlanetColourChar(pnt),
-               pnt->name, sys->name );
-      else
-         nsnprintf( found[n].display, sizeof(found[n].display),
-               _("\a%c%s (%s, %d jumps, %.0fk distance)"), map_getPlanetColourChar(pnt),
-               pnt->name, sys->name, found[n].jumps, found[n].distance/1000. );
+      map_findAccumulateResult( found, n, sys, pnt );
       n++;
    }
 
    /* No visible match. */
    if (n==0)
       return -1;
-
-   /* Sort the found by distance. */
-   map_sortFound( found, n );
 
    /* Display results. */
    map_findDisplayResult( parent, found, n );
@@ -856,7 +840,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
 
 
 /**
- * @brief Does fuzzy name matching for ships;
+ * @brief Does fuzzy name matching for ships. Searches translated names but returns internal names.
  */
 static char **map_fuzzyShips( Ship **s, int n, const char *name, int *len )
 {
@@ -869,7 +853,7 @@ static char **map_fuzzyShips( Ship **s, int n, const char *name, int *len )
    /* Do fuzzy search. */
    l = 0;
    for (i=0; i<n; i++) {
-      if (nstrcasestr( s[i]->name, name ) != NULL) {
+      if (nstrcasestr( _(s[i]->name), name ) != NULL) {
          names[l] = s[i]->name;
          l++;
       }
@@ -910,7 +894,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
 {
    int i, j;
    char **names;
-   int len, n, ret;
+   int len, n;
    map_find_t *found;
    Planet *pnt;
    StarSystem *sys;
@@ -932,7 +916,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       /* Ask which one player wants. */
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
-         list[i] = strdup( names[i] );
+         list[i] = strdup( _(names[i]) );
       i = dialogue_list( _("Search Results"), list, len,
             _("Search results for ships matching '%s':"), name );
       if (i < 0) {
@@ -941,8 +925,8 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       }
       s = ship_get( names[i] );
    }
-   if (names != NULL)
-      free(names);
+   free(names);
+   names = NULL;
    if (s == NULL)
       return -1;
 
@@ -956,8 +940,8 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       for (j=0; j<nslist; j++)
          if (slist[j] == s)
             break;
-      if (slist != NULL)
-         free(slist);
+      free(slist);
+      slist = NULL;
       if (j >= nslist)
          continue;
       pnt = map_known_planets[i];
@@ -973,35 +957,13 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       if (found == NULL) /* Allocate results array on first match. */
          found = malloc( sizeof(map_find_t) * map_nknown );
 
-      /* Set more values. */
-      ret = map_findDistance( sys, pnt, &found[n].jumps, &found[n].distance );
-      if (ret) {
-         found[n].jumps    = 10000;
-         found[n].distance = 1e6;
-      }
-
-      /* Set some values. */
-      found[n].pnt      = pnt;
-      found[n].sys      = sys;
-
-      /* Set fancy name. */
-      if (ret)
-         nsnprintf( found[n].display, sizeof(found[n].display),
-               _("\a%c%s (%s, unknown route)"), map_getPlanetColourChar(pnt),
-               pnt->name, sys->name );
-      else
-         nsnprintf( found[n].display, sizeof(found[n].display),
-               _("\a%c%s (%s, %d jumps, %.0fk distance)"), map_getPlanetColourChar(pnt),
-               pnt->name, sys->name, found[n].jumps, found[n].distance/1000. );
+      map_findAccumulateResult( found, n, sys, pnt );
       n++;
    }
 
    /* No visible match. */
    if (n==0)
       return -1;
-
-   /* Sort the found by distance. */
-   map_sortFound( found, n );
 
    /* Display results. */
    map_findDisplayResult( parent, found, n );
@@ -1023,9 +985,14 @@ static void map_findSearch( unsigned int wid, char* str )
    if ( (name == NULL) || ( strcmp("", name) == 0 ) )
       return;
 
+   /* Prevent reentrancy, e.g. the toolkit spontaneously deciding a future mouseup event was the
+    * user releasing the clicked "Find" button and should reactivate it, never mind that they were
+    * actually clicking on the dialogue_listPanel we opened to present the results.
+    * FIXME: That behavior doesn't seem right, but I'm not sure if it's an actual bug or not. */
+   window_disableButton( wid, "btnSearch" );
+
    /* Clean up if necessary. */
-   if (map_found_cur != NULL)
-      free( map_found_cur );
+   free( map_found_cur );
    map_found_cur = NULL;
 
    /* Handle different search cases. */
@@ -1051,6 +1018,9 @@ static void map_findSearch( unsigned int wid, char* str )
    if (ret < 0)
       dialogue_alert( _("%s matching '%s' not found!"), searchname, name );
 
+   /* Safe at last. */
+   window_enableButton( wid, "btnSearch" );
+
    if (ret > 0)
       map_findClose( wid, str );
 }
@@ -1071,14 +1041,14 @@ void map_inputFind( unsigned int parent, char* str )
    /* Create the window. */
    w = 400;
    h = 220;
-   wid = window_create( "Find...", -1, -1, w, h );
+   wid = window_create( "wdwFind", _("Find..."), -1, -1, w, h );
    window_setAccept( wid, map_findSearch );
    window_setCancel( wid, map_findClose );
    window_setParent( wid, parent );
 
    /* Text. */
    y = -40;
-   window_addText( wid, 20, y, w, gl_defFont.h+4, 0,
+   window_addText( wid, 20, y, w - 50, gl_defFont.h+4, 0,
          "txtDescription", &gl_defFont, NULL,
          _("Enter keyword to search for:") );
    y -= 30;

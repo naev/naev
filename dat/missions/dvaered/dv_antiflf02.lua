@@ -1,18 +1,24 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Lure out the FLF">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <chance>10</chance>
-   <location>Bar</location>
-   <cond>var.peek("flfbase_intro") == 1</cond>
-   <faction>Dvaered</faction>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <chance>10</chance>
+  <location>Bar</location>
+  <cond>var.peek("flfbase_intro") == 1</cond>
+  <faction>Dvaered</faction>
+ </avail>
+ <notes>
+  <done_misn name="Take the Dvaered crew home"/>
+  <done_misn name="Deal with the FLF agent">If you deliver Gregar to the Dvaered</done_misn>
+  <provides name="The Dvaered know where Sindbad is"/>
+  <campaign>Doom the FLF</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 -- This is the second mission in the anti-FLF Dvaered campaign. The player is part of a Dvaered plot to smoke out the FLF base.
 -- stack variable flfbase_intro:
@@ -23,9 +29,9 @@
 
 -- localization stuff, translators would work here
 
-require "fleethelper.lua"
-require "portrait.lua"
-require "dat/missions/dvaered/common.lua"
+require "fleethelper"
+require "portrait"
+require "missions/dvaered/common"
 
 
 title = {}
@@ -49,7 +55,7 @@ text[3] = _([[As you take the last empty seat at the table, Colonel Urnus starts
     "Of course, we have conducted patrols in this system, but so far without result. Our sensors are severely impaired by the nebula in this system, so the chances of us finding the terrorist hive by our own devices are slim. Fortunately, our top strategists have come up with a ruse, one that will make the FLF come to us."
     "We will use a civilian ship - your ship, naturally - as a decoy," Urnus continues. The image on the wall zooms up to the %s system, and a white blip representing your ship appears near the jump point. "Your ship will be equipped with an IFF transponder in use by the FLF, so to anyone who isn't looking too closely you will appear as an FLF ship. Of course, this alone is not enough. The FLF will assume you know where their base is, since you look like one of them."
     The image on the wall updates again, this time showing several House Dvaered crests near your ship.
-    "Some time after you enter the system, several of our military assets will jump in and open fire. To the FLF, it will look like one of their own has come under attack! Since their base is nearby, they will undoubtably send reinforcements to help their 'comrade' out of a tight situation."]])
+    "Some time after you enter the system, several of our military assets will jump in and open fire. To the FLF, it will look like one of their own has come under attack! Since their base is nearby, they will undoubtedly send reinforcements to help their 'comrade' out of a tight situation."]])
     
 text[4] = _([["As soon as the FLF ships join the battle, you and the Dvaered ships will disengage and target the FLF instead. Your mission is to render at least one of their ships incapable of fighting, and board it. You can then access the ship's computer and download the flight log, which will require the location of the FLF base. Take this information to a Dvaered base, and your mission will be complete."
     The image on the wall updates one last time, simulating the battle as described by Colonel Urnus. Several FLF logos appear, which are promptly surrounded by the Dvaered ones. Then the logos turn gray, indicating that they've been disabled.
@@ -94,7 +100,7 @@ misn_reward = _("Serving alongside real Dvaered warlords")
 comm_msg["enter"] = _("Here come the FLF! All units, switch to EMPs and disable the terrorist ships!")
 comm_msg["victory"] = _("All targets neutralized. Download the flight log and let's get out of here!")
 
-log_text = _([[You aided the Dvaered in their efforts to locate a secret FLF base. You posed as an FLF pilot, luring real FLF pilots out so that one could be disabled and you could steal its flight logs. The Dvaered are now planning an assault on the terrorist base, and Colonel Urnus said that you can contact a Dvaered liason whenever you're ready for the operation.]])
+log_text = _([[You aided the Dvaered in their efforts to locate a secret FLF base. You posed as an FLF pilot, luring real FLF pilots out so that one could be disabled and you could steal its flight logs. The Dvaered are now planning an assault on the terrorist base, and Colonel Urnus said that you can contact a Dvaered liaison whenever you're ready for the operation.]])
 
 
 function create()
@@ -143,7 +149,7 @@ function jumpout()
 end
 
 function enter()
-    if system.cur():name() == destsysname and not logsfound then
+    if system.cur() == system.get(destsysname) and not logsfound then
         pilot.clear()
         pilot.toggleSpawn(false)
         misn.osdActive(2)

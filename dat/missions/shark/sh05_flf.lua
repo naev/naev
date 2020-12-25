@@ -1,27 +1,30 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The FLF Contact">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>3</priority>
-   <done>The Meeting</done>
-   <chance>3</chance>
-   <location>Bar</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Traders Guild</faction>
-   <faction>Za'lek</faction>
-   <cond>not diff.isApplied( "flf_dead" )</cond>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>3</priority>
+  <done>The Meeting</done>
+  <chance>3</chance>
+  <location>Bar</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Traders Guild</faction>
+  <faction>Za'lek</faction>
+  <cond>not diff.isApplied( "flf_dead" )</cond>
+ </avail>
+ <notes>
+  <campaign>Nexus show their teeth</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 
    This is the sixth mission of the Shark's teeth campaign. The player has to take contact with the FLF.
@@ -32,8 +35,8 @@
 
 --]]
 
-require "numstring.lua"
-require "dat/missions/shark/common.lua"
+require "numstring"
+require "missions/shark/common"
 
 
 title = {}
@@ -64,7 +67,6 @@ text[5] = _([[The FLF officers are clearly ready for battle, but after subduing 
 
 -- Mission details
 misn_title = _("The FLF Contact")
-misn_reward = _("%s credits")
 misn_desc = _("Nexus Shipyards is looking to strike a better deal with the FLF.")
 
 -- NPC
@@ -86,8 +88,6 @@ function create ()
    nextsys = system.get("Arandon") -- This should be the same as the system used in sh06!
 
    osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
-   paysys = system.get(paysys:name())
-   paypla = planet.get(paypla:name())
 
    misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith")
    misn.setDesc(bar_desc[1])
@@ -103,7 +103,7 @@ function accept()
       tk.msg(title[2], text[2]:format(nextsys:name()))
 
       misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward)))
+      misn.setReward(creditstring(reward))
       misn.setDesc(misn_desc)
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)
@@ -128,7 +128,7 @@ function land()
 end
 
 function hail( p )
-   if stage == 0 and p:faction():name() == "FLF" and not p:hostile() then
+   if stage == 0 and p:faction() == faction.get("FLF") and not p:hostile() then
       player.commClose()
       tk.msg(title[4], text[4])
       stage = 1
@@ -138,7 +138,7 @@ function hail( p )
 end
 
 function board( p )
-   if stage == 0 and p:faction():name() == "FLF" then
+   if stage == 0 and p:faction() == faction.get("FLF") then
       player.unboard()
       tk.msg(title[5], text[5])
       stage = 1

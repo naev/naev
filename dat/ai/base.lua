@@ -1,4 +1,4 @@
-require("dat/ai/include/basic.lua")
+require("ai/include/basic")
 
 
 -- Required control rate
@@ -42,7 +42,7 @@ function attack ()
       return
    end
 
-   -- Targetting stuff
+   -- Targeting stuff
    ai.hostile(target) -- Mark as hostile
    ai.settarget(target)
 

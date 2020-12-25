@@ -9,27 +9,28 @@
  */
 
 
-#include "nlua_hook.h"
+/** @cond */
+#include <lauxlib.h>
+#include <lua.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-#include <math.h>
+#include "nlua_hook.h"
 
-#include <lua.h>
-#include <lauxlib.h>
-
-#include "nluadef.h"
-#include "nlua_pilot.h"
-#include "nlua_time.h"
-#include "nlua_misn.h"
-#include "nlua_evt.h"
+#include "event.h"
 #include "hook.h"
 #include "log.h"
-#include "event.h"
 #include "mission.h"
+#include "nlua_evt.h"
+#include "nlua_misn.h"
+#include "nlua_pilot.h"
+#include "nlua_time.h"
+#include "nluadef.h"
+#include "nstring.h"
 
 
 /* Hook methods. */
@@ -99,7 +100,7 @@ static unsigned int hook_generic( lua_State *L, const char* stack, double ms, in
 
 /**
  * @brief Loads the hook Lua library.
- *    @param L Lua state.
+ *    @param env Lua environment.
  *    @return 0 on success.
  */
 int nlua_loadHook( nlua_env env )
@@ -163,7 +164,6 @@ static int hookL_rm( lua_State *L )
 /**
  * @brief Sets a Lua argument for a hook.
  *
- *    @param L State to set hook argument for.
  *    @param hook Hook to set argument for.
  *    @param ind Index of argument to set.
  *    @return 0 on success.
@@ -219,7 +219,6 @@ void hookL_unsetarg( unsigned int hook )
 /**
  * @brief Gets a Lua argument for a hook.
  *
- *    @param L Lua state to put argument in.
  *    @param hook Hook to get argument of.
  *    @return 0 on success.
  */
@@ -251,6 +250,7 @@ int hookL_getarg( unsigned int hook )
  *    @param stack Stack to put the hook in.
  *    @param ms Milliseconds to delay (pass stack as NULL to set as timer).
  *    @param pos Position in the stack of the function name.
+ *    @param date Resolution of the timer. (If passed, create a date-based hook.)
  *    @return The hook ID or 0 on error.
  */
 static unsigned int hook_generic( lua_State *L, const char* stack, double ms, int pos, ntime_t date )
@@ -268,7 +268,6 @@ static unsigned int hook_generic( lua_State *L, const char* stack, double ms, in
    running_event = event_getFromLua(L);
    running_mission = misn_getFromLua(L);
 
-   h = 0;
    if (running_mission != NULL) {
       /* make sure mission is a player mission */
       for (i=0; i<MISSION_MAX; i++)

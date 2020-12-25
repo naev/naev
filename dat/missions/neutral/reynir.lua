@@ -18,8 +18,11 @@
            return count &gt; 1
         end)()</cond>
  </avail>
+  <notes>
+   <tier>1</tier>
+  </notes>
 </mission>
- --]]
+--]]
 --[[
 
    MISSION: Hot dogs from space
@@ -35,8 +38,8 @@
 
 --]]
 
-require "numstring.lua"
-require "dat/missions/neutral/common.lua"
+require "numstring"
+require "missions/neutral/common"
 
 
 -- This section stores the strings (text) for the mission.
@@ -63,10 +66,10 @@ text[3] = _([["Thank you so much! Just fly me around in the system, preferably n
 
 title[4] = _("Reynir")
 text[4] = _([[Reynir walks out of the ship. You notice that he's bleeding out of both ears. "Where have you taken me?! Get me back to %s right now!!"]])
-text[5] = _([["Thank you so much! Here's %s tonnes of hot dogs. They're worth more than their weight in gold, aren't they?"]])
+text[5] = _([["Thank you so much! Here's %s of hot dogs. They're worth more than their weight in gold, aren't they?"]])
 text[6] = _([[Reynir walks out of the ship, amazed by the view. "So this is how %s looks like! I've always wondered... I want to go back to %s now, please."]])
 text[7] = _([[Reynir doesn't look happy when you meet him outside the ship.
-    "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's your reward, %s tonnes of hot dogs..."]])
+    "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's your reward, %s of hot dogs..."]])
 
 -- Comm chatter -- ??
 talk = {}
@@ -79,8 +82,8 @@ osd_msg[2] = _("Take Reynir home to %s")
 msg_abortTitle = "" 
 msg_abort = [[]]
 
-log_text_good = _([[You took an old man named Reynir on a ride in outer space. He was happy and paid you in the form of %s tonnes of hot dogs.]])
-log_text_bad = _([[You took an old man named Reynir on a ride in outer space, but he was made very angry because the distance you traveled led to him getting injured and losing his hearing. Still, he begrudgingly paid you in the form of %s tonnes of hot dogs.]])
+log_text_good = _([[You took an old man named Reynir on a ride in outer space. He was happy and paid you in the form of %s of hot dogs.]])
+log_text_bad = _([[You took an old man named Reynir on a ride in outer space, but he was made very angry because the distance you traveled led to him getting injured and losing his hearing. Still, he begrudgingly paid you in the form of %s of hot dogs.]])
 
 
 function create ()
@@ -135,9 +138,9 @@ function landed()
          reward_text = text[5]
          log_text = log_text_good
       end
-      tk.msg( title[4], string.format(reward_text, numstring(reward)) )
+      tk.msg( title[4], string.format(reward_text, tonnestring(reward)) )
       player.pilot():cargoAdd( cargoname, reward )
-      addMiscLog( log_text:format( numstring(reward) ) )
+      addMiscLog( log_text:format( tonnestring(reward) ) )
       misn.finish(true)
    -- If we're in misn_base_sys but not on misn_base then...
    elseif system.cur() == misn_base_sys then

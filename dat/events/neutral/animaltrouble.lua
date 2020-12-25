@@ -7,6 +7,9 @@
   <flags>
    <unique />
   </flags>
+  <notes>
+   <done_misn name="Animal transport">The rodents sabotage your ship</done_misn>
+  </notes>
  </event>
  --]]
 --[[
@@ -16,7 +19,7 @@
 -- This event occurs after the player has done the "Animal transport" mission.
 --]]
 
-require "dat/missions/neutral/common.lua"
+require "missions/neutral/common"
 
 
 text = {}
@@ -55,7 +58,7 @@ function continueProblems()
     newlocation = vec2.newP(dist, angle)
 
     ps:taskClear()
-    ps:goto(ps:pos() + newlocation, false, false)
+    ps:moveto(ps:pos() + newlocation, false, false)
 end
 
 function buck()

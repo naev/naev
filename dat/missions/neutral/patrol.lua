@@ -17,6 +17,9 @@
    <faction>Thurion</faction>
    <faction>Za'lek</faction>
   </avail>
+  <notes>
+   <tier>3</tier>
+  </notes>
  </mission>
 --]]
 --[[
@@ -43,8 +46,8 @@
 
 --]]
 
-require "numstring.lua"
-require "jumpdist.lua"
+require "numstring"
+require "jumpdist"
 
 pay_title = _("Mission Completed")
 pay_text    = {}
@@ -55,12 +58,11 @@ pay_text[4] = _("An officer goes through the necessary paperwork, looking bored 
 
 abandon_title = _("Mission Abandoned")
 abandon_text    = {}
-abandon_text[1] = _("You are sent a message informing you that landing in the middle of a patrol mission is considered to be abandonment. As such, your contract is void and you will not recieve payment.")
+abandon_text[1] = _("You are sent a message informing you that landing in the middle of a patrol mission is considered to be abandonment. As such, your contract is void and you will not receive payment.")
 
 
 -- Mission details
 misn_title  = _("Patrol of the %s System")
-misn_reward = _("%s credits")
 misn_desc   = _("Patrol specified points in the %s system, eliminating any hostiles you encounter.")
 
 -- Messages
@@ -75,7 +77,6 @@ msg[6] = _("MISSION FAILURE! You have left the %s system.")
 osd_title  = _("Patrol")
 osd_msg    = {}
 osd_msg[1] = _("Fly to the %s system")
-osd_msg_2  = _("Go to indicated point (%d remaining)")
 osd_msg[2] = "(null)"
 osd_msg[3] = _("Eliminate hostiles")
 osd_msg[4] = _("Land on the nearest %s planet and collect your pay")
@@ -91,7 +92,7 @@ use_hidden_jumps = false
 function get_enemies( sys )
    local enemies = 0
    for i, j in ipairs( paying_faction:enemies() ) do
-      local p = sys:presences()[j:name()]
+      local p = sys:presences()[j:nameRaw()]
       if p ~= nil then
          enemies = enemies + p
       end
@@ -105,7 +106,7 @@ function create ()
 
    local systems = getsysatdistance( system.cur(), 1, 2,
       function(s)
-         local this_faction = s:presences()[paying_faction:name()]
+         local this_faction = s:presences()[paying_faction:nameRaw()]
          return this_faction ~= nil and this_faction > 0 and get_enemies(s) > 0
       end, nil, use_hidden_jumps )
    if get_enemies( system.cur() ) then
@@ -156,7 +157,7 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title:format( missys:name() ) )
    misn.setDesc( misn_desc:format( missys:name() ) )
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
 
@@ -165,7 +166,11 @@ function accept ()
    misn.accept()
 
    osd_msg[1] = osd_msg[1]:format( missys:name() )
-   osd_msg[2] = osd_msg_2:format( #points )
+   osd_msg[2] = gettext.ngettext(
+      "Go to indicated point (%d remaining)",
+      "Go to indicated point (%d remaining)",
+      #points
+   ):format( #points )
    osd_msg[4] = osd_msg[4]:format( paying_faction:name() )
    misn.osdCreate( osd_title, osd_msg )
 
@@ -291,7 +296,11 @@ function timer ()
          points["__save"] = true
 
          player.msg( msg[1] )
-         osd_msg[2] = osd_msg_2:format( #points )
+         osd_msg[2] = gettext.ngettext(
+            "Go to indicated point (%d remaining)",
+            "Go to indicated point (%d remaining)",
+            #points
+         ):format( #points )
          misn.osdCreate( osd_title, osd_msg )
          misn.osdActive(2)
          if mark ~= nil then

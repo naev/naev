@@ -10,6 +10,9 @@
    <location>Bar</location>
    <faction>Soromid</faction>
   </avail>
+  <notes>
+   <campaign>Coming Out</campaign>
+  </notes>
  </mission>
  --]]
 --[[
@@ -31,8 +34,8 @@
 
 --]]
 
-require "numstring.lua"
-require "dat/missions/soromid/common.lua"
+require "numstring"
+require "missions/soromid/common"
 
 
 title = {}
@@ -85,7 +88,7 @@ landtext[2] = _([["It's been so long!" Chelsea's mother says. "Your hair's getti
     Her mother is silent for a moment, then gets up out of her chair. Chelsea gets up as well, a look of fear in her eyes, then a look of surprise as her mother locks her in an embrace. She hugs her mother back and starts to sob. "I'm proud of you, Chelsea," her mother says. Out of Chelsea's view, her father shrugs and finishes his drink.]])
 
 landtext[3] = _([[After Chelsea's mother releases her, she wipes a few tears from her eyes and gives you a friendly hug. "Thank you," she says. "You've been a great friend and joining me here has been a great help." She lets go of you. "I'm sure you must be busy! But hey, do come back once in a while, OK? I'm going to stick around on this planet for the time being. It'll be nice to see you again!"
-    Taking your cue, you say goodbye for now, excuse yourself from the table, and make your way back to your ship. As you enter your cockpit you find a credit chip worth %s credits! It's not much, but it's something.]])
+    Taking your cue, you say goodbye for now, excuse yourself from the table, and make your way back to your ship. As you enter your cockpit you find a credit chip worth %s! It's not much, but it's something.]])
 
 misn_title = _("Coming Out")
 misn_desc = _("Your new friend needs you to take them to their parents in %s.")
@@ -184,7 +187,7 @@ function land ()
 
       tk.msg( "", landtext[1] )
       tk.msg( "", landtext[2] )
-      tk.msg( "", landtext[3]:format( numstring( credits ) ) )
+      tk.msg( "", landtext[3]:format( creditstring( credits ) ) )
       player.pay(credits)
 
       local t = time.get():tonumber()

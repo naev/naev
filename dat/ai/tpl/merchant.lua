@@ -1,4 +1,4 @@
-require("dat/ai/include/basic.lua")
+require("ai/include/basic")
 
 -- Variables
 mem.enemy_close = 500 -- Distance enemy is too close for comfort

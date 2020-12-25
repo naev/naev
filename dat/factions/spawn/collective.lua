@@ -1,4 +1,4 @@
-require("dat/factions/spawn/common.lua")
+require("factions/spawn/common")
 
 
 -- @brief Spawns a small swarm.

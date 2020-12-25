@@ -9,26 +9,27 @@
  */
 
 
-#include "spfx.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <inttypes.h>
-
 #include "SDL.h"
 #include "SDL_haptic.h"
 
-#include "log.h"
+#include "naev.h"
+/** @endcond */
+
+#include "spfx.h"
+
 #include "array.h"
-#include "pilot.h"
-#include "physics.h"
-#include "opengl.h"
-#include "pause.h"
-#include "rng.h"
+#include "debris.h"
+#include "log.h"
 #include "ndata.h"
 #include "nxml.h"
-#include "debris.h"
+#include "opengl.h"
+#include "pause.h"
 #include "perlin.h"
+#include "physics.h"
+#include "pilot.h"
+#include "rng.h"
 
 
 #define SPFX_XML_ID     "spfxs" /**< XML Document tag. */
@@ -136,8 +137,7 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
    /* Clear data. */
    memset( temp, 0, sizeof(SPFX_Base) );
 
-   /* Get the name (mallocs). */
-   temp->name = xml_nodeProp(parent,"name");
+   xmlr_attr_strd( parent, "name", temp->name );
 
    /* Extract the data. */
    node = parent->xmlChildrenNode;
@@ -177,14 +177,10 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
  */
 static void spfx_base_free( SPFX_Base *effect )
 {
-   if (effect->name != NULL) {
-      free(effect->name);
-      effect->name = NULL;
-   }
-   if (effect->gfx != NULL) {
-      gl_freeTexture(effect->gfx);
-      effect->gfx = NULL;
-   }
+   free(effect->name);
+   effect->name = NULL;
+   gl_freeTexture(effect->gfx);
+   effect->gfx = NULL;
 }
 
 
@@ -213,24 +209,13 @@ int spfx_get( char* name )
  */
 int spfx_load (void)
 {
-   size_t bufsize;
-   char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
 
    /* Load and read the data. */
-   buf = ndata_read( SPFX_DATA_PATH, &bufsize );
-   if (buf == NULL) {
-      WARN(_("Unable to read data from '%s'"), SPFX_DATA_PATH);
+   doc = xml_parsePhysFS( SPFX_DATA_PATH );
+   if (doc == NULL)
       return -1;
-   }
-
-   /* Load the document. */
-   doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN(_("Unable to parse document '%s'"), SPFX_DATA_PATH);
-      return -1;
-   }
 
    /* Check to see if document exists. */
    node = doc->xmlChildrenNode;
@@ -261,7 +246,6 @@ int spfx_load (void)
 
    /* Clean up. */
    xmlFreeDoc(doc);
-   free(buf);
 
 
    /*
@@ -286,12 +270,10 @@ void spfx_free (void)
 
    /* get rid of all the particles and free the stacks */
    spfx_clear();
-   if (spfx_stack_front)
-      free(spfx_stack_front);
+   free(spfx_stack_front);
    spfx_stack_front = NULL;
    spfx_mstack_front = 0;
-   if (spfx_stack_back)
-      free(spfx_stack_back);
+   free(spfx_stack_back);
    spfx_stack_back = NULL;
    spfx_mstack_back = 0;
 
@@ -583,8 +565,8 @@ void spfx_shake( double mod )
 /**
  * @brief Gets the current shake position.
  *
- *    @param[out] X X shake position.
- *    @param[out] Y Y shake position.
+ *    @param[out] x X shake position.
+ *    @param[out] y Y shake position.
  */
 void spfx_getShake( double *x, double *y )
 {

@@ -2,282 +2,242 @@ on: [push, pull_request]
 
 name: CI
 
+env:
+  DESTDIR: "${{ github.workspace }}/dist"
+  MESON: "${{ github.workspace }}/repo/meson.sh"
+
 jobs:
-  "Windows-MinGW32":
-    runs-on: windows-latest
+  "Meson_Compile_Naev":
 
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            shell: bash
+            config: linux.ini
+
+          - os: windows-latest
+            shell: msys2 {0}
+            config: windows.ini
+            
     defaults:
       run:
-        shell: msys2 {0}
+        shell: ${{ matrix.shell }}
+
+    runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Setup MINGW32 Environment
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: MINGW32
-        update: true
-        install: mingw-w64-i686-libtool mingw-w64-i686-toolchain mingw-w64-i686-gcc mingw-w64-i686-SDL2 mingw-w64-i686-SDL2_mixer mingw-w64-i686-SDL2_image mingw-w64-i686-libxml2 mingw-w64-i686-libpng mingw-w64-i686-openal mingw-w64-i686-libvorbis mingw-w64-i686-binutils mingw-w64-i686-fontconfig mingw-w64-i686-libzip mingw-w64-i686-gettext mingw-w64-i686-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool
-    
-    - name: Checkout Naev Repository 
-      uses: actions/checkout@v2
-
-    - name: Test-Build Naev on Win32
+    - name: Update APT Cache
+      if: ${{ runner.os == 'Linux'}}
       run: |
-        ./autogen.sh
-        ./configure
-        make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3"
+        sudo apt-get update
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: naev-win32-${{ github.sha }}
-        path: ${{ github.workspace }}/src/naev.exe
+    - name: Install Additional Build Dependencies
+      if: ${{ runner.os == 'Linux'}}
+      run: |
+        sudo apt-get install \
+          build-essential \
+          binutils-dev \
+          gettext \
+          intltool \
+          libsdl2-dev \
+          libsdl2-image-dev \
+          libgl1-mesa-dev \
+          libgl1-mesa-dri \
+          libxml2-dev \
+          libfreetype6-dev \
+          libpng-dev \
+          libopenal-dev \
+          libvorbis-dev \
+          libiberty-dev \
+          llvm \
+          ninja-build \
+          xvfb
 
-  "Windows-MinGW64":
-    runs-on: windows-latest
-
-    defaults:
-      run:
-        shell: msys2 {0}
-
-    steps:
-    - name: Setup MINGW64 Environment
+    - name: Install MinGW Packages
+      if: ${{ runner.os == 'Windows'}}
       uses: msys2/setup-msys2@v2
       with:
         msystem: MINGW64
         update: true
-        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool
+        path-type: strict
+        install: git tar mingw-w64-x86_64-clang mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-make mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-openal mingw-w64-x86_64-physfs mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2
 
-    - name: Checkout Naev Repository 
+    - name: Checkout Naev Repository
       uses: actions/checkout@v2
+      with:
+        path: repo
+        fetch-depth: 0
 
-    - name: Test-Build Naev on Win64
+    - name:  Package Meson Dist
       run: |
-        ./autogen.sh
-        ./configure
-        make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3"
-    
+        sh $MESON setup dist repo -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
+        sh $MESON dist -C dist --no-tests --include-subprojects
+        
+    - name: Upload Meson Dist Artifact
+      uses: actions/upload-artifact@v2
+      if: ${{ runner.os == 'Linux' }}
+      with:
+        name: naev-meson-dist-${{ github.sha }}
+        path: ${{ github.workspace }}/dist/meson-dist/*
+        if-no-files-found: error
+        
+    - name: Extract Source
+      run: |
+        mkdir source
+        tar -xf dist/meson-dist/naev-*.tar.xz -C source --strip 1
+      working-directory: "${{ github.workspace }}"
+
+    - name: Meson Setup
+      id: setup
+      run: |
+        sh $MESON setup build source \
+            --native-file='source/utils/build/${{ matrix.config }}' \
+            --buildtype=debug \
+            -Db_lto=true \
+            -Dauto_features=enabled \
+            -Ddocs_c=disabled \
+            -Ddocs_lua=disabled
+
+    - name: Upload Setup Log
+      uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.setup.outcome == 'failure' }}
+      with:
+        name: ${{ matrix.os }}-meson-${{ github.sha }}-setup-log
+        path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+        if-no-files-found: ignore
+
+    - name: Meson Compile
+      id: compile
+      run: |
+        sh $MESON compile -C build
+
+    - name: Upload Compile Log
+      uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.compile.outcome == 'failure' }}
+      with:
+        name: ${{ matrix.os }}-meson-${{ github.sha }}-compile-log
+        path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+        if-no-files-found: ignore
+
+    - name: Meson Test
+      id: tests
+      run: |
+        sh $MESON test -C build --print-errorlogs
+
+    - name: Upload Test Log
+      uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.tests.outcome == 'failure' }}
+      with:
+        name: ${{ matrix.os }}-meson-${{ github.sha }}-test-log
+        path: ${{ github.workspace }}/build/meson-logs/testlog.txt
+        if-no-files-found: ignore
+
+    - name: Test Meson Install
+      run: |
+        sh $MESON install -C build
+
+    - name: Upload Install Log
+      uses: actions/upload-artifact@v2
+      if: ${{ success() || steps.compile.outcome == 'failure' }}
+      with:
+        name: ${{ matrix.os }}-meson-${{ github.sha }}-install-log
+        path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+        if-no-files-found: ignore
+
+  "AppImage_Compile_Naev":
+    needs: Meson_Compile_Naev
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - buildtype: meson
+
+    runs-on: ubuntu-16.04
+
+    steps:
+    - name: Update APT Cache
+      run: |
+        sudo apt-get update
+
+    - name: Install Additional Build Dependencies
+      run: |
+        sudo apt-get install \
+          binutils-dev \
+          build-essential \
+          gettext \
+          intltool \
+          libfreetype6-dev \
+          libgl1-mesa-dev \
+          libiberty-dev \
+          libopenal-dev \
+          libpng-dev \
+          libsdl2-dev \
+          libsdl2-image-dev \
+          libvorbis-dev \
+          libxml2-dev \
+          ninja-build=1.7.1-1~ubuntu16.04.1
+        sudo update-alternatives --install /usr/bin/llvm-ar llvm-ar /usr/bin/llvm-ar-9 90
+
+    - name: Checkout Naev Repository
+      uses: actions/checkout@v2
+      with:
+        path: repo
+        fetch-depth: 0
+
+    - name: Compile AppImage Meson
+      id: mesonCompile
+      run: |
+        ./repo/utils/buildAppImage.sh -c -m -s "repo" -b "build" -o "${{ env.DESTDIR }}" |& tee -a appImageBuildLog.txt
+
+    - name: Upload Compile Log
+      uses: actions/upload-artifact@v2
+      if: ${{ (success() || steps.mesonCompile.outcome == 'failure') }}
+      with:
+        name: naev-${{ github.sha }}-${{ matrix.buildtype }}AppImageBuild-log
+        path: ${{ github.workspace }}/appImageBuildLog.txt
+        if-no-files-found: ignore
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: naev-win64-${{ github.sha }}
-        path: ${{ github.workspace }}/src/naev.exe
+        name: naev-${{ matrix.buildtype }}AppImage-${{ github.sha }}
+        path: "${{ env.DESTDIR }}/out/*.AppImage"
+        if-no-files-found: error
 
-  "Linux-x86":
+  "Documentation":
+    needs: [AppImage_Compile_Naev, Meson_Compile_Naev]
     runs-on: ubuntu-20.04
 
     steps:
     - name: Update APT Cache
       run: |
-        sudo dpkg --add-architecture i386
         sudo apt-get update
-
-    - name: Install Build Dependencies
-      run: |
-        sudo apt-get install \
-          build-essential \
-          automake \
-          autoconf-archive \
-          gcc-multilib \
-          libsdl2-dev:i386 \
-          libsdl2-mixer-dev:i386 \
-          libsdl2-image-dev:i386 \
-          libgl1-mesa-dev:i386 \
-          libglu1-mesa-dev:i386 \
-          libxml2-dev:i386 \
-          libfontconfig1-dev:i386 \
-          libfreetype6-dev:i386 \
-          libpng-dev:i386 \
-          libopenal-dev:i386 \
-          libvorbis-dev:i386 \
-          libzip-dev:i386 \
-          libiberty-dev:i386 \
-          libluajit-5.1-dev:i386 \
-          gettext \
-          autopoint \
-          intltool \
-          itstool
-
-    - name: Checkout Naev Repository 
-      uses: actions/checkout@v2
-
-    - name: Build Naev on Linux32
-      run: |
-        ./autogen.sh
-        ./configure --build=x86_64-linux-gnu --host=i686-linux-gnu
-        make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3 -m32"
-        LDFLAGS: "-m32"
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: naev-lin32-${{ github.sha }}
-        path: ${{ github.workspace }}/src/naev
-
-  "Linux-x86_64":
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Update APT Cache
-      run: |
-        sudo apt-get update
-
-    - name: Install Additional Build Dependencies
-      run: |
-        sudo apt-get install \
-          build-essential \
-          automake \
-          autoconf-archive \
-          libsdl2-dev \
-          libsdl2-mixer-dev \
-          libsdl2-image-dev \
-          libgl1-mesa-dev \
-          libxml2-dev \
-          libfontconfig1-dev \
-          libfreetype6-dev \
-          libpng-dev \
-          libopenal-dev \
-          libvorbis-dev \
-          binutils-dev \
-          libzip-dev \
-          libiberty-dev \
-          libluajit-5.1-dev \
-          gettext \
-          autopoint \
-          intltool \
-          itstool
-
-    - name: Checkout Naev Repository 
-      uses: actions/checkout@v2
-
-    - name: Test-Build Naev on Linux64
-      run: |
-        ./autogen.sh
-        ./configure --build=x86_64-linux-gnu --host=x86_64-linux-gnu
-        make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3"
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: naev-lin64-${{ github.sha }}
-        path: ${{ github.workspace }}/src/naev
-
-  "macOS":
-    runs-on: macos-latest
-
-    steps:
-    - name: Update Homebrew Cache
-      run: |
-        brew update
-
-    - name: Install Additional Build Dependencies
-      run: |
-        brew install \
-          automake \
-          autoconf-archive \
-          pkg-config \
-          fontconfig \
-          luajit \
-          intltool \
-          itstool \
-          sdl2 \
-          sdl2_mixer \
-          sdl2_image \
-          openal-soft
-          
-    - name: Remove Homebrew Perl
-      run: |
-        brew uninstall --ignore-dependencies perl
         
-    - name: Checkout Naev Repository 
-      uses: actions/checkout@v2
-
-    - name: Test-Build Naev on MacOS
-      run: |
-        # PKGCONFIG configuration for OpenAL
-        export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/opt/openal-soft/lib/pkgconfig"
-        
-        ./autogen.sh
-        ./configure
-        make -j$(sysctl -n hw.logicalcpu)
-      env:
-        CFLAGS: "-O3 -mmacosx-version-min=10.7"
-    
-    - name: Build MacOS Bundle
-      run: ./extras/macos/bundle.sh
-    
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: naev-macos-${{ github.sha }}
-        path: ${{ github.workspace }}/Naev.app/ 
-
-  "Lua-Documentation":
-    runs-on: ubuntu-latest
-    needs: [Windows-MinGW64, Windows-MinGW32, macOS, Linux-x86_64, Linux-x86]
-
-    steps:
-    - name: Install SSH Key
-      uses: shimataro/ssh-key-action@v2.0.3
-      with:
-        key: ${{ secrets.SSH_KEY }}
-        name: id_rsa # optional
-        known_hosts: ${{ secrets.KNOWN_HOSTS }}
-      if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
-
-    - name: Update APT Cache
-      run: |
-        sudo apt-get update
-
     - name: Install Additional Build Dependencies
       run: |
         sudo apt-get install \
-          build-essential \
-          automake \
-          autoconf-archive \
-          libsdl2-dev \
-          libsdl2-mixer-dev \
-          libsdl2-image-dev \
-          libgl1-mesa-dev \
-          libxml2-dev \
-          libfontconfig1-dev \
-          libfreetype6-dev \
-          libpng-dev \
-          libopenal-dev \
-          libvorbis-dev \
-          binutils-dev \
-          libzip-dev \
-          libiberty-dev \
-          libluajit-5.1-dev \
           lua-ldoc \
-          gettext \
-          autopoint \
-          intltool \
-          itstool
-
-    - name: Checkout Naev Repository 
+          graphviz \
+          doxygen \
+          ninja-build
+          
+    - name: Checkout Naev Repository
       uses: actions/checkout@v2
-
-    - name: Build Naev Lua Documentation
-      run: |
-        ./autogen.sh
-        ./configure
-        make -C docs lua
-    
-    - name: Upload Lua Documentation
-      run: rsync -e "ssh -o 'StrictHostKeyChecking no'" -rv --delete docs/html/ travis@iandouglasscott.com:/srv/naevdoc
-      if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
       with:
-        name: naev-luadocs-${{ github.sha }}
-        path: ${{ github.workspace }}/docs/html/
+        path: repo
+        fetch-depth: 0
+        
+    - name: Meson Build
+      run: |
+        sh $MESON setup build repo \
+            -Dexecutable=disabled
+        
+    - name: Trigger API Site Update
+      if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
+      run: |
+        curl -X POST https://api.github.com/repos/naev/naev.github.io/dispatches \
+        -H 'Accept: application/vnd.github.everest-preview+json' \
+        -u ${{ secrets.WEBSITE_ACCESS_TOKEN }} \
+        --data '{"event_type": "api", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'

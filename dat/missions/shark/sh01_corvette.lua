@@ -19,6 +19,9 @@
    <faction>Traders Guild</faction>
    <faction>Za'lek</faction>
   </avail>
+  <notes>
+   <campaign>Nexus show their teeth</campaign>
+  </notes>
  </mission>
  --]]
 --[[
@@ -32,8 +35,8 @@
 
 --]]
 
-require "numstring.lua"
-require "dat/missions/shark/common.lua"
+require "numstring"
+require "missions/shark/common"
 
 
 title = {}
@@ -48,7 +51,7 @@ text[1] = _([["I have another job for you. The Baron was unfortunately not as im
     "What do you say? Are you interested?"]])
 
 refusetitle = _("Sorry, not interested")
-refusetext = _([["Ok, that's alright."]])
+refusetext = _([["OK, that's alright."]])
 
 title[2] = _("Wonderful")
 text[2] = _([["Great! Go and meet our pilot in %s. After the job is done, meet me on %s in the %s system."]])
@@ -63,7 +66,6 @@ text[4] = _([[Your mission failed.]])
 
 -- Mission details
 misn_title = _("Sharkman is back")
-misn_reward = _("%s credits")
 misn_desc = _("Nexus Shipyards wants you to fake a loss against a Lancelot while piloting a Destroyer class ship.")
 
 -- NPC
@@ -115,7 +117,7 @@ function accept()
       osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
 
       misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward/2)))
+      misn.setReward(creditstring(reward/2))
       misn.setDesc(misn_desc)
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)
@@ -193,8 +195,8 @@ function lets_go()
    sharkboy:setFuel(true)
    stage = 1
 
-   hook.pilot( sharkboy, "death", "shark_dead" )
-   hook.pilot( player.pilot(), "disable", "disabled" )
+   shark_dead_hook = hook.pilot( sharkboy, "death", "shark_dead" )
+   disabled_hook = hook.pilot( player.pilot(), "disable", "disabled" )
 end
 
 function shark_dead()  --you killed the shark
@@ -214,4 +216,8 @@ function disabled(pilot, attacker)
    --making sure the shark doesn't continue attacking the player
    sharkboy:hyperspace(escapesys)
    sharkboy:setNoDeath(true)
+
+   -- Clean up now unneeded hooks
+   hook.rm(shark_dead_hook)
+   hook.rm(disabled_hook)
 end

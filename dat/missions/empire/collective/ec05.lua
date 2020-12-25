@@ -12,6 +12,10 @@
    <location>Bar</location>
    <planet>Omega Station</planet>
   </avail>
+  <notes>
+   <campaign>Collective</campaign>
+   <tier>4</tier>
+  </notes>
  </mission>
  --]]
 --[[
@@ -43,12 +47,11 @@
 
 ]]--
 
-require "numstring.lua"
-require "dat/missions/empire/common.lua"
+require "numstring"
+require "missions/empire/common"
 
 bar_desc = _("Dimitri should be around here, but you can't see him. You should probably look for him.")
 misn_title = _("Operation Black Trinity")
-misn_reward = _("%s credits")
 misn_desc = {}
 misn_desc[1] = _("Arrest the ESS Trinity in %s")
 misn_desc[2] = _("Return to base at %s in %s")
@@ -134,14 +137,14 @@ function accept ()
 
    -- Mission details
    misn.setTitle(misn_title)
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setReward( creditstring( credits ) )
    misn.setDesc( string.format(misn_desc[1], misn_target_sys:name() ))
    osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
    osd_msg[3] = osd_msg[3]:format(misn_base:name())
    misn.osdCreate(misn_title, osd_msg)
    
    tk.msg( title[2], string.format(text[3], misn_base:name() ) )
-   tk.msg( title[3], string.format(text[4], "Eiroik"))
+   tk.msg( title[3], string.format(text[4], _("Eiroik")))
    emp_addCollectiveLog( log_text_intro )
    tk.msg( title[4], string.format(text[5], misn_target_sys:name(), misn_target_sys:name() ) )
 
@@ -297,7 +300,7 @@ function call_drones_jump ()
       v:setHostile()
       v:setNoDisable(true)
       v:control()
-      v:goto( tp )
+      v:moveto( tp )
       hook.pilot( v, "attacked", "drone_attacked" )
       hook.pilot( v, "idle",     "drone_attacked" )
    end
@@ -341,7 +344,7 @@ function add_escorts( landed )
    paci:setFriendly()
    if trinity ~= nil then
       paci:control()
-      paci:goto( trinity:pos() )
+      paci:moveto( trinity:pos() )
    end
    for i=1, 6 do
       local lance = pilot.add("Empire Lancelot", "escort_player", param)[1]
@@ -349,7 +352,7 @@ function add_escorts( landed )
       lance:setFriendly()
       if trinity ~= nil then
          lance:control()
-         lance:goto( trinity:pos() )
+         lance:moveto( trinity:pos() )
       end
    end
 end

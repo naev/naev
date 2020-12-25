@@ -9,11 +9,15 @@
 #  define LOG_H
 
 
-#include <stdio.h>
+/** @cond */
 #include <signal.h>
+#include <stdio.h>
 
-/* Get text stuff. */
 #include "gettext.h"
+/** @endcond */
+
+#include "nstring.h"
+
 #if defined ENABLE_NLS && ENABLE_NLS
 #define _(String) gettext(String)
 #define gettext_noop(String) String
@@ -33,15 +37,16 @@
 #ifdef DEBUG
 #  undef DEBUG
 #  define DEBUG(str, args...) LOG(str, ## args)
-#ifndef DEBUGGING
-#  define DEBUGGING
-#endif /* DEBUGGING */
+#  ifndef DEBUGGING
+#    define DEBUGGING 1
+#  endif /* DEBUGGING */
 #else /* DEBUG */
 #  define DEBUG(str, args...) do {;} while (0)
 #endif /* DEBUG */
+#define DEBUG_BLANK() DEBUG("%s", "")
 
 
-int logprintf( FILE *stream, int newline, const char *fmt, ... );
+PRINTF_FORMAT( 3, 4 ) int logprintf( FILE *stream, int newline, const char *fmt, ... );
 void log_redirect (void);
 int log_isTerminal (void);
 void log_copy( int enable );

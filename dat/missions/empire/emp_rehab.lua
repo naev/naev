@@ -15,6 +15,6 @@
 --
 --]]
 
-require "dat/missions/rehab_common.lua"
+require "missions/rehab_common"
 
 fac = faction.get("Empire")

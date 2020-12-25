@@ -41,21 +41,22 @@
  */
 
 
-#include "perlin.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <math.h>
 #include <stdlib.h>
-#include "nstring.h"
-
 #include "SDL.h"
 #include "SDL_thread.h"
-#include "threadpool.h"
+
+#include "naev.h"
+/** @endcond */
+
+#include "perlin.h"
 
 #include "log.h"
-#include "rng.h"
 #include "nfile.h"
+#include "nstring.h"
+#include "rng.h"
+#include "threadpool.h"
 
 
 #define SIMPLEX_SCALE 0.5f
@@ -521,7 +522,7 @@ float noise_simplex1( perlin_data_t* pdata, float f[1] )
 /**
  * @brief Frees some noise data.
  *
- *    @param noise Noise data to free.
+ *    @param pdata Noise data to free.
  */
 void noise_delete( perlin_data_t* pdata )
 {
@@ -664,9 +665,9 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
       return NULL;
    }
 
-   /* Some debug information and time setting */
+   /* This can take a while, so show what's happening. */
    s = SDL_GetTicks();
-   DEBUG(_("Generating Nebula of size %dx%dx%d"), w, h, n);
+   LOG(_("Generating Nebula of size %dx%dx%d"), w, h, n);
 
    /* Prepare for generation. */
    _max        = malloc( sizeof(float) * n );
@@ -712,7 +713,7 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
    free(_max);
 
    /* Results */
-   DEBUG(_("Nebula Generated in %d ms"), SDL_GetTicks() - s );
+   LOG(_("Nebula Generated in %d ms"), SDL_GetTicks() - s );
    return nebula;
 }
 

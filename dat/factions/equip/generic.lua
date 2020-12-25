@@ -1,4 +1,4 @@
-require "jumpdist.lua"
+require "jumpdist"
 
 
 -- Table of available core systems by class.
@@ -335,14 +335,14 @@ equip_classOutfits_utilities = {
       {
          varied = true;
          "Reactor Class II", "Medium Shield Booster", "Milspec Scrambler",
-         "Droid Repair Crew", "Boarding Androids MKI"
+         "Droid Repair Crew", "Boarding Androids MK1"
       }
    },
    ["Armoured Transport"] = {
       {
          varied = true;
          "Reactor Class II", "Medium Shield Booster", "Milspec Scrambler",
-         "Droid Repair Crew", "Boarding Androids MKI"
+         "Droid Repair Crew", "Boarding Androids MK1"
       }
    },
    ["Fighter"] = {
@@ -363,28 +363,28 @@ equip_classOutfits_utilities = {
       {
          varied = true;
          "Reactor Class II", "Medium Shield Booster", "Milspec Scrambler",
-         "Droid Repair Crew", "Boarding Androids MKI", "Hellburner"
+         "Droid Repair Crew", "Boarding Androids MK1", "Hellburner"
       }
    },
    ["Destroyer"] = {
       {
          varied = true;
          "Reactor Class II", "Medium Shield Booster", "Droid Repair Crew",
-         "Boarding Androids MKI"
+         "Boarding Androids MK1"
       }
    },
    ["Cruiser"] = {
       {
          varied = true;
          "Reactor Class III", "Large Shield Booster", "Droid Repair Crew",
-         "Boarding Androids MKII"
+         "Boarding Androids MK2"
       }
    },
    ["Carrier"] = {
       {
          varied = true;
          "Reactor Class III", "Large Shield Booster", "Droid Repair Crew",
-         "Boarding Androids MKII"
+         "Boarding Androids MK2"
       }
    },
    ["Drone"] = {
@@ -997,7 +997,7 @@ function equip_warn( p, outfit, q, bypass )
    if bypass == nil then bypass = false end
    local r = pilot.addOutfit( p, outfit, q, bypass )
    if r <= 0 then
-      warn("Could not equip " .. outfit .. " on pilot " .. p:name() .. "!")
+      warn( string.format( _("Could not equip %s on pilot %s!"), outfit, p:name() ) )
    end
    return r
 end
@@ -1094,7 +1094,7 @@ function equip_generic( p )
    p:rmOutfit( "all" )
    p:rmOutfit( "cores" )
 
-   local shipname = p:ship():name()
+   local shipname = p:ship():nameRaw()
    local basetype = p:ship():baseType()
    local class = p:ship():class()
    local success
@@ -1183,7 +1183,7 @@ function equip_generic( p )
    if #avail_cargo > 0 then
       for i=1,rnd.rnd(1,3) do
          local ncargo = rnd.rnd( 0, p:cargoFree() )
-         p:cargoAdd( avail_cargo[ rnd.rnd( 1, #avail_cargo ) ]:name(), ncargo )
+         p:cargoAdd( avail_cargo[ rnd.rnd( 1, #avail_cargo ) ]:nameRaw(), ncargo )
       end
    end
 end

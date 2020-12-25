@@ -1,5 +1,6 @@
-require("dat/ai/tpl/generic.lua")
-require("dat/ai/personality/patrol.lua")
+require("ai/tpl/generic")
+require("ai/personality/patrol")
+require "numstring"
 
 -- Settings
 mem.aggressive = true
@@ -33,7 +34,7 @@ function create ()
       if standing < 50 then
          mem.refuel_no = _("\"Mare magno turbantibus. That means that I don't care about your problems.\"")
       else
-         mem.refuel_msg = string.format(_("\"For you I could make an exception for %d credits.\""), mem.refuel)
+         mem.refuel_msg = string.format(_("\"For you I could make an exception for %s.\""), creditstring(mem.refuel))
       end
    end
 

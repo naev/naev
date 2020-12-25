@@ -4,66 +4,73 @@
 
 
 
-#include "conf.h"
-
-#include "naev.h"
-
+/** @cond */
+#include <getopt.h> /* getopt_long */
 #include <stdlib.h> /* atoi */
 #include <unistd.h> /* getopt */
-#include "nstring.h" /* strdup */
-#include <getopt.h> /* getopt_long */
 
-#include "nlua.h"
+#include "naev.h"
+/** @endcond */
 
-#include "log.h"
-#include "utf8.h"
-#include "player.h"
+#include "conf.h"
+
+#include "env.h"
 #include "input.h"
-#include "opengl.h"
+#include "log.h"
 #include "music.h"
-#include "nebula.h"
 #include "ndata.h"
+#include "nebula.h"
 #include "nfile.h"
+#include "nlua.h"
 #include "nstring.h"
+#include "opengl.h"
+#include "player.h"
+#include "utf8.h"
 
 
-#define  conf_loadInt(n,i)    \
-{nlua_getenv(env,n); \
-if (lua_isnumber(naevL, -1)) { \
-   i = (int)lua_tonumber(naevL, -1); \
-} \
-lua_pop(naevL,1);}
+#define conf_loadInt( env, n, i )            \
+   {                                         \
+      nlua_getenv( env, n );                 \
+      if ( lua_isnumber( naevL, -1 ) ) {     \
+         i = (int)lua_tonumber( naevL, -1 ); \
+      }                                      \
+      lua_pop( naevL, 1 );                   \
+   }
 
-#define  conf_loadFloat(n,f)    \
-{nlua_getenv(env,n); \
-if (lua_isnumber(naevL, -1)) { \
-   f = (double)lua_tonumber(naevL, -1); \
-} \
-lua_pop(naevL,1);}
+#define conf_loadFloat( env, n, f )             \
+   {                                            \
+      nlua_getenv( env, n );                    \
+      if ( lua_isnumber( naevL, -1 ) ) {        \
+         f = (double)lua_tonumber( naevL, -1 ); \
+      }                                         \
+      lua_pop( naevL, 1 );                      \
+   }
 
-#define  conf_loadBool(n,b)   \
-{nlua_getenv(env, n); \
-if (lua_isnumber(naevL,-1)) \
-   b = (lua_tonumber(naevL,-1) != 0.); \
-else if (!lua_isnil(naevL,-1)) \
-   b = lua_toboolean(naevL, -1); \
-lua_pop(naevL,1);}
+#define conf_loadBool( env, n, b )                \
+   {                                              \
+      nlua_getenv( env, n );                      \
+      if ( lua_isnumber( naevL, -1 ) )            \
+         b = ( lua_tonumber( naevL, -1 ) != 0. ); \
+      else if ( !lua_isnil( naevL, -1 ) )         \
+         b = lua_toboolean( naevL, -1 );          \
+      lua_pop( naevL, 1 );                        \
+   }
 
-#define  conf_loadString(n,s) \
-{nlua_getenv(env, n); \
-if (lua_isstring(naevL, -1)) { \
-   if (s != NULL) \
-      free(s); \
-   s = strdup(lua_tostring(naevL, -1)); \
-} \
-lua_pop(naevL,1);}
+#define conf_loadString( env, n, s )              \
+   {                                              \
+      nlua_getenv( env, n );                      \
+      if ( lua_isstring( naevL, -1 ) ) {          \
+         free( s );                            \
+         s = strdup( lua_tostring( naevL, -1 ) ); \
+      }                                           \
+      lua_pop( naevL, 1 );                        \
+   }
 
 
 /* Global configuration. */
 PlayerConf_t conf = {
    .ndata = NULL,
    .language=NULL,
-   .sound_backend = NULL,
    .joystick_nam = NULL
 };
 
@@ -72,8 +79,6 @@ extern int show_fps;
 extern int max_fps;
 extern int indjoystick;
 extern char* namjoystick;
-/* from player.c */
-extern const char *keybind_info[][3]; /* keybindings */
 /* from input.c */
 extern unsigned int input_afterburnSensitivity;
 
@@ -81,15 +86,15 @@ extern unsigned int input_afterburnSensitivity;
 /*
  * prototypes
  */
-static void print_usage( char **argv );
+static void print_usage( void );
 
 
 /*
  * prints usage
  */
-static void print_usage( char **argv )
+static void print_usage( void )
 {
-   LOG(_("Usage: %s [OPTIONS] [DATA]"), argv[0]);
+   LOG( _( "Usage: %s [OPTIONS] [DATA]" ), env.argv0 );
    LOG(_("Options are:"));
    LOG(_("   -f, --fullscreen      activate fullscreen"));
    LOG(_("   -F n, --fps n         limit frames per second to n"));
@@ -103,7 +108,6 @@ static void print_usage( char **argv )
    LOG(_("   -m f, --mvol f        sets the music volume to f"));
    LOG(_("   -s f, --svol f        sets the sound volume to f"));
    LOG(_("   -G, --generate        regenerates the nebula (slow)"));
-   LOG(_("   -N, --nondata         do not use ndata and try to use laid out files"));
    LOG(_("   -d, --datapath        specifies a custom path for all user data (saves, screenshots, etc.)"));
    LOG(_("   -X, --scale           defines the scale factor"));
 #ifdef DEBUGGING
@@ -123,23 +127,22 @@ void conf_setDefaults (void)
    conf_cleanup();
 
    /* ndata. */
-   if (conf.ndata != NULL)
-      free(conf.ndata);
+   free(conf.ndata);
    conf.ndata        = NULL;
 
    /* Language. */
-   if (conf.language != NULL)
-      free(conf.language);
+   free(conf.language);
    conf.language     = NULL;
 
    /* Joystick. */
    conf.joystick_ind = -1;
-   if (conf.joystick_nam != NULL)
-      free(conf.joystick_nam);
+   free(conf.joystick_nam);
    conf.joystick_nam = NULL;
 
    /* GUI. */
    conf.mesg_visible = 5;
+   conf.map_overlay_opacity = MAP_OVERLAY_OPACITY_DEFAULT;
+   conf.big_icons = BIG_ICONS_DEFAULT;
 
    /* Repeat. */
    conf.repeat_delay = 500;
@@ -153,10 +156,10 @@ void conf_setDefaults (void)
    conf.zoom_stars   = 1.;
 
    /* Font sizes. */
-   conf.font_size_console = 10;
-   conf.font_size_intro   = 18;
-   conf.font_size_def     = 12;
-   conf.font_size_small   = 11;
+   conf.font_size_console = FONT_SIZE_CONSOLE_DEFAULT;
+   conf.font_size_intro   = FONT_SIZE_INTRO_DEFAULT;
+   conf.font_size_def     = FONT_SIZE_DEF_DEFAULT;
+   conf.font_size_small   = FONT_SIZE_SMALL_DEFAULT;
    conf.font_name_default = NULL;
    conf.font_name_monospace = NULL;
 
@@ -166,8 +169,7 @@ void conf_setDefaults (void)
    conf.devmode      = 0;
    conf.devautosave  = 0;
    conf.devcsv       = 0;
-   if (conf.lastversion != NULL)
-      free( conf.lastversion );
+   free( conf.lastversion );
    conf.lastversion = strdup( "" );
 
    /* Gameplay. */
@@ -186,14 +188,11 @@ void conf_setDefaults (void)
    conf.fpu_except   = 0; /* Causes many issues. */
 
    /* Editor. */
-   if (conf.dev_save_sys != NULL)
-      free( conf.dev_save_sys );
+   free( conf.dev_save_sys );
    conf.dev_save_sys = strdup( DEV_SAVE_SYSTEM_DEFAULT );
-   if (conf.dev_save_map != NULL)
-      free( conf.dev_save_map );
+   free( conf.dev_save_map );
    conf.dev_save_map = strdup( DEV_SAVE_MAP_DEFAULT );
-   if (conf.dev_save_asset != NULL)
-      free( conf.dev_save_asset );
+   free( conf.dev_save_asset );
    conf.dev_save_asset = strdup( DEV_SAVE_ASSET_DEFAULT );
 }
 
@@ -219,13 +218,7 @@ void conf_setGameplayDefaults (void)
  */
 void conf_setAudioDefaults (void)
 {
-   if (conf.sound_backend != NULL) {
-      free(conf.sound_backend);
-      conf.sound_backend = NULL;
-   }
-
    /* Sound. */
-   conf.sound_backend = strdup(BACKEND_DEFAULT);
    conf.snd_voices   = VOICES_DEFAULT;
    conf.snd_pilotrel = PILOT_RELATIVE_DEFAULT;
    conf.al_efx       = USE_EFX_DEFAULT;
@@ -242,18 +235,19 @@ void conf_setAudioDefaults (void)
 void conf_setVideoDefaults (void)
 {
    int w, h, f;
+   SDL_DisplayMode resolution;
 
    /* More complex resolution handling. */
    f = 0;
-   if ((gl_screen.desktop_w > 0) && (gl_screen.desktop_h > 0)) {
+   if (SDL_GetCurrentDisplayMode( 0, &resolution ) == 0) {
       /* Try higher resolution. */
       w = RESOLUTION_W_DEFAULT;
       h = RESOLUTION_H_DEFAULT;
 
       /* Fullscreen and fit everything onscreen. */
-      if ((gl_screen.desktop_w <= w) || (gl_screen.desktop_h <= h)) {
-         w = gl_screen.desktop_w;
-         h = gl_screen.desktop_h;
+      if ((resolution.w <= w) || (resolution.h <= h)) {
+         w = resolution.w;
+         h = resolution.h;
          f = FULLSCREEN_DEFAULT;
       }
    }
@@ -267,7 +261,6 @@ void conf_setVideoDefaults (void)
    conf.vsync        = VSYNC_DEFAULT;
    conf.mipmaps      = MIPMAP_DEFAULT; /* Also cause for issues. */
    conf.compress     = TEXTURE_COMPRESSION_DEFAULT;
-   conf.interpolate  = INTERPOLATION_DEFAULT;
    conf.npot         = NPOT_TEXTURES_DEFAULT;
 
    /* Window. */
@@ -295,24 +288,15 @@ void conf_setVideoDefaults (void)
  */
 void conf_cleanup (void)
 {
-   if (conf.ndata != NULL)
-      free(conf.ndata);
-   if (conf.language != NULL)
-      free(conf.language);
-   if (conf.sound_backend != NULL)
-      free(conf.sound_backend);
-   if (conf.joystick_nam != NULL)
-      free(conf.joystick_nam);
+   free(conf.ndata);
+   free(conf.language);
+   free(conf.joystick_nam);
 
-   if (conf.lastversion != NULL)
-      free(conf.lastversion);
+   free(conf.lastversion);
 
-   if (conf.dev_save_sys != NULL)
-      free(conf.dev_save_sys);
-   if (conf.dev_save_map != NULL)
-      free(conf.dev_save_map);
-   if (conf.dev_save_asset != NULL)
-      free(conf.dev_save_asset);
+   free(conf.dev_save_sys);
+   free(conf.dev_save_map);
+   free(conf.dev_save_asset);
 
    /* Clear memory. */
    memset( &conf, 0, sizeof(conf) );
@@ -329,11 +313,11 @@ void conf_loadConfigPath( void )
    if (!nfile_fileExists(file))
       return;
 
-   nlua_env env = nlua_newEnv(0);
-   if (nlua_dofileenv(env, file) == 0)
-      conf_loadString("datapath",conf.datapath);
+   nlua_env lEnv = nlua_newEnv( 0 );
+   if ( nlua_dofileenv( lEnv, file ) == 0 )
+      conf_loadString( lEnv, "datapath", conf.datapath );
 
-   nlua_freeEnv(env);
+   nlua_freeEnv( lEnv );
 }
 
 
@@ -354,30 +338,29 @@ int conf_loadConfig ( const char* file )
       return nfile_touch(file);
 
    /* Load the configuration. */
-   nlua_env env = nlua_newEnv(0);
-   if (nlua_dofileenv(env, file) == 0) {
+   nlua_env lEnv = nlua_newEnv( 0 );
+   if ( nlua_dofileenv( lEnv, file ) == 0 ) {
 
       /* ndata. */
-      conf_loadString("data",conf.ndata);
+      conf_loadString( lEnv, "data", conf.ndata );
 
       /* Language. */
-      conf_loadString("language",conf.language);
+      conf_loadString( lEnv, "language", conf.language );
 
       /* OpenGL. */
-      conf_loadInt("fsaa",conf.fsaa);
-      conf_loadBool("vsync",conf.vsync);
-      conf_loadBool("mipmaps",conf.mipmaps);
-      conf_loadBool("compress",conf.compress);
-      conf_loadBool("interpolate",conf.interpolate);
-      conf_loadBool("npot",conf.npot);
+      conf_loadInt( lEnv, "fsaa", conf.fsaa );
+      conf_loadBool( lEnv, "vsync", conf.vsync );
+      conf_loadBool( lEnv, "mipmaps", conf.mipmaps );
+      conf_loadBool( lEnv, "compress", conf.compress );
+      conf_loadBool( lEnv, "npot", conf.npot );
 
       /* Memory. */
-      conf_loadBool("engineglow",conf.engineglow);
+      conf_loadBool( lEnv, "engineglow", conf.engineglow );
 
       /* Window. */
       w = h = 0;
-      conf_loadInt("width",w);
-      conf_loadInt("height",h);
+      conf_loadInt( lEnv, "width", w );
+      conf_loadInt( lEnv, "height", h );
       if (w != 0) {
          conf.explicit_dim = 1;
          conf.width = w;
@@ -386,31 +369,30 @@ int conf_loadConfig ( const char* file )
          conf.explicit_dim = 1;
          conf.height = h;
       }
-      conf_loadFloat("scalefactor",conf.scalefactor);
-      conf_loadBool("fullscreen",conf.fullscreen);
-      conf_loadBool("modesetting",conf.modesetting);
-      conf_loadBool("minimize",conf.minimize);
+      conf_loadFloat( lEnv, "scalefactor", conf.scalefactor );
+      conf_loadBool( lEnv, "fullscreen", conf.fullscreen );
+      conf_loadBool( lEnv, "modesetting", conf.modesetting );
+      conf_loadBool( lEnv, "minimize", conf.minimize );
 
       /* FPS */
-      conf_loadBool("showfps",conf.fps_show);
-      conf_loadInt("maxfps",conf.fps_max);
+      conf_loadBool( lEnv, "showfps", conf.fps_show );
+      conf_loadInt( lEnv, "maxfps", conf.fps_max );
 
       /*  Pause */
-      conf_loadBool("showpause",conf.pause_show);
+      conf_loadBool( lEnv, "showpause", conf.pause_show );
 
       /* Sound. */
-      conf_loadString("sound_backend",conf.sound_backend);
-      conf_loadInt("snd_voices",conf.snd_voices);
-      conf.snd_voices = MAX( 16, conf.snd_voices ); /* Must be at least 16. */
-      conf_loadBool("snd_pilotrel",conf.snd_pilotrel);
-      conf_loadBool("al_efx",conf.al_efx);
-      conf_loadInt("al_bufsize", conf.al_bufsize);
-      conf_loadBool("nosound",conf.nosound);
-      conf_loadFloat("sound",conf.sound);
-      conf_loadFloat("music",conf.music);
+      conf_loadInt( lEnv, "snd_voices", conf.snd_voices );
+      conf.snd_voices = MAX( VOICES_MIN, conf.snd_voices ); /* Must be at least 16. */
+      conf_loadBool( lEnv, "snd_pilotrel", conf.snd_pilotrel );
+      conf_loadBool( lEnv, "al_efx", conf.al_efx );
+      conf_loadInt( lEnv, "al_bufsize", conf.al_bufsize );
+      conf_loadBool( lEnv, "nosound", conf.nosound );
+      conf_loadFloat( lEnv, "sound", conf.sound );
+      conf_loadFloat( lEnv, "music", conf.music );
 
       /* Joystick. */
-      nlua_getenv(env, "joystick");
+      nlua_getenv( lEnv, "joystick" );
       if (lua_isnumber(naevL, -1))
          conf.joystick_ind = (int)lua_tonumber(naevL, -1);
       else if (lua_isstring(naevL, -1))
@@ -418,56 +400,59 @@ int conf_loadConfig ( const char* file )
       lua_pop(naevL,1);
 
       /* GUI. */
-      conf_loadInt("mesg_visible",conf.mesg_visible);
+      conf_loadInt( lEnv, "mesg_visible", conf.mesg_visible );
       if (conf.mesg_visible <= 0)
          conf.mesg_visible = 5;
+      conf_loadFloat( lEnv, "map_overlay_opacity", conf.map_overlay_opacity );
+      conf.map_overlay_opacity = CLAMP(0, 1, conf.map_overlay_opacity);
+      conf_loadBool( lEnv, "big_icons", conf.big_icons );
 
       /* Key repeat. */
-      conf_loadInt("repeat_delay",conf.repeat_delay);
-      conf_loadInt("repeat_freq",conf.repeat_freq);
+      conf_loadInt( lEnv, "repeat_delay", conf.repeat_delay );
+      conf_loadInt( lEnv, "repeat_freq", conf.repeat_freq );
 
       /* Zoom. */
-      conf_loadBool("zoom_manual",conf.zoom_manual);
-      conf_loadFloat("zoom_far",conf.zoom_far);
-      conf_loadFloat("zoom_near",conf.zoom_near);
-      conf_loadFloat("zoom_speed",conf.zoom_speed);
-      conf_loadFloat("zoom_stars",conf.zoom_stars);
+      conf_loadBool( lEnv, "zoom_manual", conf.zoom_manual );
+      conf_loadFloat( lEnv, "zoom_far", conf.zoom_far );
+      conf_loadFloat( lEnv, "zoom_near", conf.zoom_near );
+      conf_loadFloat( lEnv, "zoom_speed", conf.zoom_speed );
+      conf_loadFloat( lEnv, "zoom_stars", conf.zoom_stars );
 
       /* Font size. */
-      conf_loadInt("font_size_console",conf.font_size_console);
-      conf_loadInt("font_size_intro",conf.font_size_intro);
-      conf_loadInt("font_size_def",conf.font_size_def);
-      conf_loadInt("font_size_small",conf.font_size_small);
-      conf_loadString("font_name_default",conf.font_name_default);
-      conf_loadString("font_name_monospace",conf.font_name_monospace);
+      conf_loadInt( lEnv, "font_size_console", conf.font_size_console );
+      conf_loadInt( lEnv, "font_size_intro", conf.font_size_intro );
+      conf_loadInt( lEnv, "font_size_def", conf.font_size_def );
+      conf_loadInt( lEnv, "font_size_small", conf.font_size_small );
+      conf_loadString( lEnv, "font_name_default", conf.font_name_default );
+      conf_loadString( lEnv, "font_name_monospace", conf.font_name_monospace );
 
       /* Misc. */
-      conf_loadFloat("compression_velocity",conf.compression_velocity);
-      conf_loadFloat("compression_mult",conf.compression_mult);
-      conf_loadBool("redirect_file",conf.redirect_file);
-      conf_loadBool("save_compress",conf.save_compress);
-      conf_loadInt("afterburn_sensitivity",conf.afterburn_sens);
-      conf_loadInt("mouse_thrust",conf.mouse_thrust);
-      conf_loadFloat("mouse_doubleclick",conf.mouse_doubleclick);
-      conf_loadFloat("autonav_abort",conf.autonav_reset_speed);
-      conf_loadBool("devmode",conf.devmode);
-      conf_loadBool("devautosave",conf.devautosave);
-      conf_loadBool("conf_nosave",conf.nosave);
-      conf_loadString("lastversion", conf.lastversion);
+      conf_loadFloat( lEnv, "compression_velocity", conf.compression_velocity );
+      conf_loadFloat( lEnv, "compression_mult", conf.compression_mult );
+      conf_loadBool( lEnv, "redirect_file", conf.redirect_file );
+      conf_loadBool( lEnv, "save_compress", conf.save_compress );
+      conf_loadInt( lEnv, "afterburn_sensitivity", conf.afterburn_sens );
+      conf_loadInt( lEnv, "mouse_thrust", conf.mouse_thrust );
+      conf_loadFloat( lEnv, "mouse_doubleclick", conf.mouse_doubleclick );
+      conf_loadFloat( lEnv, "autonav_abort", conf.autonav_reset_speed );
+      conf_loadBool( lEnv, "devmode", conf.devmode );
+      conf_loadBool( lEnv, "devautosave", conf.devautosave );
+      conf_loadBool( lEnv, "conf_nosave", conf.nosave );
+      conf_loadString( lEnv, "lastversion", conf.lastversion );
 
       /* Debugging. */
-      conf_loadBool("fpu_except",conf.fpu_except);
+      conf_loadBool( lEnv, "fpu_except", conf.fpu_except );
 
       /* Editor. */
-      conf_loadString("dev_save_sys",conf.dev_save_sys);
-      conf_loadString("dev_save_map",conf.dev_save_map);
-      conf_loadString("dev_save_asset",conf.dev_save_asset);
+      conf_loadString( lEnv, "dev_save_sys", conf.dev_save_sys );
+      conf_loadString( lEnv, "dev_save_map", conf.dev_save_map );
+      conf_loadString( lEnv, "dev_save_asset", conf.dev_save_asset );
 
       /*
        * Keybindings.
        */
       for (i=0; keybind_info[i][0] != NULL; i++) {
-         nlua_getenv(env, keybind_info[i][0]);
+         nlua_getenv( lEnv, keybind_info[ i ][ 0 ] );
          /* Handle "none". */
          if (lua_isstring(naevL,-1)) {
             str = lua_tostring(naevL,-1);
@@ -543,19 +528,10 @@ int conf_loadConfig ( const char* file )
 
                /* Set modifier, probably should be able to handle two at a time. */
                if (mod != NULL) {
-                  /* The "rctrl/lctrl" friends are for compat with 0.4.0 and older, remove around 0.5.0 or so. */
                   if      (strcmp(mod,"ctrl")==0)    m = NMOD_CTRL;
-                  else if (strcmp(mod,"lctrl")==0)   m = NMOD_CTRL; /* compat. */
-                  else if (strcmp(mod,"rctrl")==0)   m = NMOD_CTRL; /* compat. */
                   else if (strcmp(mod,"shift")==0)   m = NMOD_SHIFT;
-                  else if (strcmp(mod,"lshift")==0)  m = NMOD_SHIFT; /* compat. */
-                  else if (strcmp(mod,"rshift")==0)  m = NMOD_SHIFT; /* compat. */
                   else if (strcmp(mod,"alt")==0)     m = NMOD_ALT;
-                  else if (strcmp(mod,"lalt")==0)    m = NMOD_ALT; /* compat. */
-                  else if (strcmp(mod,"ralt")==0)    m = NMOD_ALT; /* compat. */
                   else if (strcmp(mod,"meta")==0)    m = NMOD_META;
-                  else if (strcmp(mod,"lmeta")==0)   m = NMOD_META; /* compat. */
-                  else if (strcmp(mod,"rmeta")==0)   m = NMOD_META; /* compat. */
                   else if (strcmp(mod,"any")==0)     m = NMOD_ALL;
                   else if (strcmp(mod,"none")==0)    m = NMOD_NONE;
                   else {
@@ -579,11 +555,11 @@ int conf_loadConfig ( const char* file )
    else { /* failed to load the config file */
       WARN(_("Config file '%s' has invalid syntax:"), file );
       WARN("   %s", lua_tostring(naevL,-1));
-      nlua_freeEnv(env);
+      nlua_freeEnv( lEnv );
       return 1;
    }
 
-   nlua_freeEnv(env);
+   nlua_freeEnv( lEnv );
    return 0;
 }
 
@@ -633,7 +609,6 @@ void conf_parseCLI( int argc, char** argv )
       { "mvol", required_argument, 0, 'm' },
       { "svol", required_argument, 0, 's' },
       { "generate", no_argument, 0, 'G' },
-      { "nondata", no_argument, 0, 'N' },
       { "scale", required_argument, 0, 'X' },
 #ifdef DEBUGGING
       { "devmode", no_argument, 0, 'D' },
@@ -696,8 +671,7 @@ void conf_parseCLI( int argc, char** argv )
             nebu_forceGenerate();
             break;
          case 'N':
-            if (conf.ndata != NULL)
-               free(conf.ndata);
+            free(conf.ndata);
             conf.ndata = NULL;
             break;
          case 'X':
@@ -719,14 +693,16 @@ void conf_parseCLI( int argc, char** argv )
             /* by now it has already displayed the version */
             exit(EXIT_SUCCESS);
          case 'h':
-            print_usage(argv);
+            print_usage();
             exit(EXIT_SUCCESS);
       }
    }
 
    /** @todo handle multiple ndata. */
-   if (optind < argc)
+   if (optind < argc) {
+      free(conf.ndata);
       conf.ndata = strdup( argv[ optind ] );
+   }
 }
 
 
@@ -934,7 +910,6 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    conf_saveComment(_("Use OpenGL Texture Interpolation"));
-   conf_saveBool("interpolate",conf.interpolate);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Use OpenGL Non-\"Power of Two\" textures if available"));
@@ -968,20 +943,20 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("fullscreen",conf.fullscreen);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Use video modesetting when fullscreen is enabled (SDL2-only)"));
+   conf_saveComment(_("Use video modesetting when fullscreen is enabled"));
    conf_saveBool("modesetting",conf.modesetting);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Minimize on focus loss (SDL2-only)"));
+   conf_saveComment(_("Minimize on focus loss"));
    conf_saveBool("minimize",conf.minimize);
    conf_saveEmptyLine();
 
    /* FPS */
-   conf_saveComment(_("Display a framerate counter"));
+   conf_saveComment(_("Display a frame rate counter"));
    conf_saveBool("showfps",conf.fps_show);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Limit the rendering framerate"));
+   conf_saveComment(_("Limit the rendering frame rate"));
    conf_saveInt("maxfps",conf.fps_max);
    conf_saveEmptyLine();
 
@@ -991,11 +966,7 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    /* Sound. */
-   conf_saveComment(_("Sound backend (can be \"openal\" or \"sdlmix\")"));
-   conf_saveString("sound_backend",conf.sound_backend);
-   conf_saveEmptyLine();
-
-   conf_saveComment(_("Maxmimum number of simultaneous sounds to play, must be at least 16."));
+   conf_saveComment(_("Maximum number of simultaneous sounds to play, must be at least 16."));
    conf_saveInt("snd_voices",conf.snd_voices);
    conf_saveEmptyLine();
 
@@ -1037,6 +1008,9 @@ int conf_saveConfig ( const char* file )
    /* GUI. */
    conf_saveComment(_("Number of lines visible in the comm window."));
    conf_saveInt("mesg_visible",conf.mesg_visible);
+   conf_saveComment(_("Opacity fraction (0-1) for the overlay map."));
+   conf_saveFloat("map_overlay_opacity", conf.map_overlay_opacity);
+   conf_saveBool("big_icons", conf.big_icons);
    conf_saveEmptyLine();
 
    /* Key repeat. */
@@ -1066,13 +1040,13 @@ int conf_saveConfig ( const char* file )
    /* Fonts. */
    conf_saveComment(_("Font sizes (in pixels) for Naev"));
    conf_saveComment(_("Warning, setting to other than the default can cause visual glitches!"));
-   conf_saveComment(_("Console default: 10"));
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Console default: %d\n"), FONT_SIZE_CONSOLE_DEFAULT);
    conf_saveInt("font_size_console",conf.font_size_console);
-   conf_saveComment(_("Intro default: 18"));
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Intro default: %d\n"), FONT_SIZE_INTRO_DEFAULT);
    conf_saveInt("font_size_intro",conf.font_size_intro);
-   conf_saveComment(_("Default size: 12"));
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Default size: %d\n"), FONT_SIZE_DEF_DEFAULT);
    conf_saveInt("font_size_def",conf.font_size_def);
-   conf_saveComment(_("Small size: 10"));
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Small size: %d\n"), FONT_SIZE_SMALL_DEFAULT);
    conf_saveInt("font_size_small",conf.font_size_small);
    conf_saveComment(_("Default font to use: unset"));
    if (conf.font_name_default) {
@@ -1103,7 +1077,7 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("redirect_file",conf.redirect_file);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Enables compression on savegames"));
+   conf_saveComment(_("Enables compression on saved games"));
    conf_saveBool("save_compress",conf.save_compress);
    conf_saveEmptyLine();
 
@@ -1131,7 +1105,7 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("devautosave",conf.devautosave);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Save the config everytime game exits (rewriting this bit)"));
+   conf_saveComment(_("Save the config every time game exits (rewriting this bit)"));
    conf_saveInt("conf_nosave",conf.nosave);
    conf_saveEmptyLine();
 

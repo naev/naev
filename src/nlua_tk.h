@@ -7,8 +7,6 @@
 #  define NLUA_TK_H
 
 
-#include <lua.h>
-
 #include "nlua.h"
 
 

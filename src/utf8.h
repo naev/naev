@@ -1,7 +1,19 @@
 #ifndef UTF8_H
 #define UTF8_H
 
-extern int locale_is_utf8;
+/** @cond */
+#include <stdlib.h>
+#include <stdint.h>
+/** @endcond */
+
+/** 
+ * @file utf8.h
+ * Utilities from cutef8: https://github.com/JeffBezanson/cutef8
+ * @note Its current README says, "I now use and recommend utf8proc instead of this library."
+ * @note Some unused functions (and supporting polyfills, macro tweaks) have been removed.
+ * In the unlikely event more cutef8 features are required, check earlier revisions in git. */
+
+#include "nstring.h"
 
 /* is c the start of a utf8 sequence? */
 #define isutf(c) (((c)&0xC0)!=0x80)
@@ -51,31 +63,8 @@ char read_escape_control_char(char c);
    input characters processed */
 size_t u8_read_escape_sequence(const char *src, size_t ssz, uint32_t *dest);
 
-/* given a wide character, convert it to an ASCII escape sequence stored in
-   buf, where buf is "sz" bytes. returns the number of characters output.
-   sz must be at least 3. */
-int u8_escape_wchar(char *buf, size_t sz, uint32_t ch);
-
 /* convert a string "src" containing escape sequences to UTF-8 */
 size_t u8_unescape(char *buf, size_t sz, const char *src);
-
-/* convert UTF-8 "src" to escape sequences.
-
-   sz is buf size in bytes. must be at least 12.
-
-   if escape_quotes is nonzero, quote characters will be escaped.
-
-   if ascii is nonzero, the output is 7-bit ASCII, no UTF-8 survives.
-
-   starts at src[*pi], updates *pi to point to the first unprocessed
-   byte of the input.
-
-   end is one more than the last allowable value of *pi.
-
-   returns number of bytes placed in buf, including a NUL terminator.
-*/
-size_t u8_escape(char *buf, size_t sz, const char *src, size_t *pi, size_t end,
-                 int escape_quotes, int ascii);
 
 /* utility predicates used by the above */
 int octal_digit(char c);
@@ -93,17 +82,6 @@ char *u8_memrchr(const char *s, uint32_t ch, size_t sz);
 
 /* count the number of characters in a UTF-8 string */
 size_t u8_strlen(const char *s);
-
-/* number of columns occupied by a string */
-size_t u8_strwidth(const char *s);
-
-int u8_is_locale_utf8(const char *locale);
-
-/* printf where the format string and arguments may be in UTF-8.
-   you can avoid this function and just use ordinary printf() if the current
-   locale is UTF-8. */
-size_t u8_vprintf(const char *fmt, va_list ap);
-size_t u8_printf(const char *fmt, ...);
 
 /* determine whether a sequence of bytes is valid UTF-8. length is in bytes */
 int u8_isvalid(const char *str, size_t length);

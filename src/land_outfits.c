@@ -9,28 +9,30 @@
  */
 
 
-#include "land_outfits.h"
+/** @cond */
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-#include <math.h>
+#include "land_outfits.h"
 
+#include "dialogue.h"
+#include "equipment.h"
+#include "hook.h"
+#include "land_takeoff.h"
 #include "log.h"
 #include "map.h"
-#include "equipment.h"
+#include "map_find.h"
+#include "nstring.h"
 #include "outfit.h"
-#include "hook.h"
 #include "player.h"
 #include "player_gui.h"
 #include "slots.h"
 #include "space.h"
 #include "toolkit.h"
-#include "dialogue.h"
-#include "map_find.h"
-#include "land_takeoff.h"
 
 
 #define  OUTFITS_IAR    "iarOutfits"
@@ -46,6 +48,7 @@ typedef struct LandOutfitData_ {
 
 
 static iar_data_t *iar_data = NULL; /**< Stored image array positions. */
+static Outfit ***iar_outfits = NULL; /**< Outfits associated with the image array cells. */
 
 /* Modifier for buying and selling quantity. */
 static int outfits_mod = 1;
@@ -81,7 +84,7 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
 
    /* Calculate image array dimensions. */
    if (iw != NULL)
-      *iw = 310 + (*w-800);
+      *iw = 704 + (*w - LAND_WIDTH);
    if (ih != NULL)
       *ih = *h - 60;
 
@@ -114,8 +117,9 @@ static void outfits_onClose( unsigned int wid, char *str )
 /**
  * @brief Opens the outfit exchange center window.
  *
- *    @params wid Window ID to open at.
- *    @params Outfits Outfit list to sell. Set to NULL if this is the landed player store.
+ *    @param wid Window ID to open at.
+ *    @param outfits Outfit list to sell. Set to NULL if this is the landed player store.
+ *    @param noutfits Length of \p outfits.
  */
 void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
 {
@@ -124,10 +128,10 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
 
    /* Set up window data. */
    if (outfits!=NULL) {
-      data = calloc( 1, sizeof(LandOutfitData) );
-      data->outfits = calloc( noutfits, sizeof(Outfit*) );
-      memcpy( data->outfits, outfits, sizeof(Outfit*)*noutfits );
+      data           = malloc( sizeof( LandOutfitData ) );
       data->noutfits = noutfits;
+      data->outfits  = malloc( data->noutfits * sizeof( Outfit ) );
+      memcpy( data->outfits, outfits, data->noutfits * sizeof( Outfit ) );
       window_setData( wid, data );
       window_onClose( wid, outfits_onClose );
    }
@@ -145,6 +149,13 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
          iar_data = calloc( OUTFITS_NTABS, sizeof(iar_data_t) );
       else
          memset( iar_data, 0, sizeof(iar_data_t) * OUTFITS_NTABS );
+   }
+   if (iar_outfits == NULL)
+      iar_outfits = calloc( OUTFITS_NTABS, sizeof(Outfit**) );
+   else {
+      for (int i=0; i<OUTFITS_NTABS; i++)
+         free( iar_outfits[i] );
+      memset( iar_outfits, 0, sizeof(Outfit**) * OUTFITS_NTABS );
    }
 
    /* will allow buying from keyboard */
@@ -170,36 +181,38 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
    window_addButtonKey( wid, off -= 20+bw, 20,
          bw, bh, "btnFindOutfits",
          _("Find Outfits"), outfits_find, SDLK_f );
+   (void)off;
 
-   /* fancy 128x128 image */
-   window_addRect( wid, 19 + iw + 20, -50, 128, 129, "rctImage", &cBlack, 0 );
-   window_addImage( wid, 20 + iw + 20, -50-128, 0, 0, "imgOutfit", NULL, 1 );
+   /* fancy 192x192 image */
+   window_addRect( wid, -17, -46, 200, 199, "rctImage", &cBlack, 0 );
+   window_addImage( wid, -20, -50, 192, 192, "imgOutfit", NULL, 1 );
 
    /* cust draws the modifier */
    window_addCust( wid, -40-bw, 60+2*bh,
          bw, bh, "cstMod", 0, outfits_renderMod, NULL, NULL );
 
    /* the descriptive text */
-   window_addText( wid, 20 + iw + 20 + 128 + 20, -60,
-         280, 160, 0, "txtOutfitName", &gl_defFont, NULL, NULL );
-   window_addText( wid, 20 + iw + 20 + 128 + 20, -60 - gl_defFont.h - 20,
-         280, 320, 0, "txtDescShort", &gl_smallFont, NULL, NULL );
-   window_addText( wid, 20 + iw + 20, -60-128-10,
-         60, 160, 0, "txtSDesc", &gl_smallFont, NULL,
-         _("Owned:\n"
+   window_addText( wid, 20 + iw + 20, -40,
+         w - (20 + iw + 20) - 200 - 20, 160, 0, "txtOutfitName", &gl_defFont, NULL, NULL );
+   window_addText( wid, 20 + iw + 20, -40 - gl_defFont.h - 30,
+         w - (20 + iw + 20) - 200 - 20, 320, 0, "txtDescShort", &gl_smallFont, NULL, NULL );
+
+   window_addText( wid, 20 + iw + 20, 0,
+         90, 160, 0, "txtSDesc", &gl_smallFont, NULL,
+         _("\anOwned:\a0\n"
          "\n"
-         "Slot:\n"
-         "Size:\n"
-         "Mass:\n"
+         "\anSlot:\a0\n"
+         "\anSize:\a0\n"
+         "\anMass:\a0\n"
          "\n"
-         "Price:\n"
-         "Money:\n"
-         "License:\n") );
-   window_addText( wid, 20 + iw + 20 + 60, -60-128-10,
-         250, 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
-   window_addText( wid, 20 + iw + 20, -60-128-10-160,
-         w-(iw+80), 180, 0, "txtDescription",
-         &gl_smallFont, NULL, NULL );
+         "\anPrice:\a0\n"
+         "\anMoney:\a0\n"
+         "\anLicense:\a0\n") );
+   window_addText( wid, 20 + iw + 20 + 90, 0,
+         w - (20 + iw + 20 + 90), 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
+   window_addText( wid, 20 + iw + 20, 0,
+         w-(iw+80), h, /* TODO: Size exactly and resize instead of moving? */
+	 0, "txtDescription", &gl_smallFont, NULL, NULL );
 
    /* Create the image array. */
    outfits_genList( wid );
@@ -249,25 +262,6 @@ void outfits_regenList( unsigned int wid, char *str )
    free(focused);
 }
 
-
-static int outfit_filterWeapon( const Outfit *o )
-{ return ((o->slot.type == OUTFIT_SLOT_WEAPON) && !sp_required( o->slot.spid )); }
-
-static int outfit_filterUtility( const Outfit *o )
-{ return ((o->slot.type == OUTFIT_SLOT_UTILITY) && !sp_required( o->slot.spid )); }
-
-static int outfit_filterStructure( const Outfit *o )
-{ return ((o->slot.type == OUTFIT_SLOT_STRUCTURE) && !sp_required( o->slot.spid )); }
-
-static int outfit_filterCore( const Outfit *o )
-{ return sp_required( o->slot.spid ); }
-
-static int outfit_filterOther( const Outfit *o )
-{
-   return (!sp_required( o->slot.spid ) && ((o->slot.type == OUTFIT_SLOT_NULL)
-         || (o->slot.type == OUTFIT_SLOT_NA)));
-}
-
 /**
  * @brief Generates the outfit list.
  *
@@ -284,17 +278,17 @@ static void outfits_genList( unsigned int wid )
       outfit_filterOther
    };
    const char *tabnames[] = {
-      _("All"), _("\ab W "), _("\ag U "), _("\ap S "), _("\aRCore"), _("Other")
+      _("All"), _(OUTFIT_LABEL_WEAPON), _(OUTFIT_LABEL_UTILITY), _(OUTFIT_LABEL_STRUCTURE), _(OUTFIT_LABEL_CORE), _("Other")
    };
 
    int active;
    int fx, fy, fw, fh, barw; /* Input filter. */
-   Outfit **outfits;
    ImageArrayCell *coutfits;
    int noutfits;
    int w, h, iw, ih;
    char *filtertext;
    LandOutfitData *data;
+   int iconsize;
 
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, NULL, NULL );
@@ -313,7 +307,7 @@ static void outfits_genList( unsigned int wid )
 
       /* Only create the filter widget if it will be a reasonable size. */
       if (iw >= 30) {
-         window_addInput( wid, fx, fy, fw, fh, OUTFITS_FILTER, 32, 1, &gl_smallFont );
+         window_addInput( wid, fx + 15, fy +1, fw, fh, OUTFITS_FILTER, 32, 1, &gl_smallFont );
          window_setInputCallback( wid, OUTFITS_FILTER, outfits_regenList );
       }
    }
@@ -334,24 +328,28 @@ static void outfits_genList( unsigned int wid )
 
    /* Set up the outfits to buy/sell */
    data = window_getData( wid );
+   free( iar_outfits[active] );
    if (data == NULL) {
       /* Use landed outfits. */
-      outfits = tech_getOutfit( land_planet->tech, &noutfits );
+      iar_outfits[active] = tech_getOutfit( land_planet->tech, &noutfits );
    }
    else {
       /* Use custom list. */
       noutfits = data->noutfits;
-      outfits = calloc( noutfits, sizeof(Outfit*) );
-      memcpy( outfits, data->outfits, sizeof(Outfit*)*noutfits );
+      iar_outfits[active] = calloc( noutfits, sizeof(Outfit*) );
+      memcpy( iar_outfits[active], data->outfits, sizeof(Outfit*)*noutfits );
    }
-   noutfits = outfits_filter( outfits, noutfits,
+   noutfits = outfits_filter( iar_outfits[active], noutfits,
          tabfilters[active], filtertext );
-   coutfits = outfits_imageArrayCells( outfits, &noutfits );
-   free(outfits);
+   coutfits = outfits_imageArrayCells( iar_outfits[active], &noutfits );
 
+   if (!conf.big_icons && (((iw*ih)/(128*128)) < noutfits))
+      iconsize = 96;
+   else
+      iconsize = 128;
    window_addImageArray( wid, 20, 20,
-         iw, ih - 31, OUTFITS_IAR, 64, 64,
-         coutfits, noutfits, outfits_update, outfits_rmouse );
+         iw, ih - 34, OUTFITS_IAR, iconsize, iconsize,
+         coutfits, noutfits, outfits_update, outfits_rmouse, NULL );
 
    /* write the outfits stuff */
    outfits_update( wid, NULL );
@@ -366,9 +364,9 @@ static void outfits_genList( unsigned int wid )
 void outfits_update( unsigned int wid, char* str )
 {
    (void)str;
-   char *outfitname;
+   int i, active;
    Outfit* outfit;
-   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN], buf4[PATH_MAX];
+   char buf[PATH_MAX], buf_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN], buf_license[PATH_MAX];
    double th;
    int iw, ih;
    int w, h;
@@ -378,9 +376,10 @@ void outfits_update( unsigned int wid, char* str )
    outfits_getSize( wid, &w, &h, &iw, &ih, NULL, NULL );
 
    /* Get and set parameters. */
-   outfitname = toolkit_getImageArray( wid, OUTFITS_IAR );
-   if (strcmp(outfitname,_("None"))==0) { /* No outfits */
-      window_modifyImage( wid, "imgOutfit", NULL, 0, 0 );
+   active = window_tabWinGetActive( wid, OUTFITS_TAB );
+   i = toolkit_getImageArrayPos( wid, OUTFITS_IAR );
+   if (i < 0 || iar_outfits[active] == NULL) { /* No outfits */
+      window_modifyImage( wid, "imgOutfit", NULL, 192, 192 );
       window_disableButton( wid, "btnBuyOutfit" );
       window_disableButton( wid, "btnSellOutfit" );
       nsnprintf( buf, PATH_MAX,
@@ -398,41 +397,41 @@ void outfits_update( unsigned int wid, char* str )
       window_modifyText( wid, "txtDescShort", NULL );
       window_modifyText( wid, "txtDescription", NULL );
       /* Reposition. */
-      th = 128;
-      window_moveWidget( wid, "txtSDesc", 40+iw+20, -60-th-20 );
-      window_moveWidget( wid, "txtDDesc", 40+iw+20+60, -60-th-20 );
-      window_moveWidget( wid, "txtDescription", 20+iw+40, -240 );
+      th = 64;
+      window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th-30-32 );
+      window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th-30-32 );
+      window_moveWidget( wid, "txtDescription", 20+iw+20, -240-32);
       return;
    }
 
-   outfit = outfit_get( outfitname );
+   outfit = iar_outfits[active][i];
 
    /* new image */
-   window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 0, 0 );
+   window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 192, 192 );
 
-   if (outfit_canBuy(outfitname, land_planet) > 0)
+   if (outfit_canBuy(outfit->name, land_planet) > 0)
       window_enableButton( wid, "btnBuyOutfit" );
    else
       window_disableButtonSoft( wid, "btnBuyOutfit" );
 
    /* gray out sell button */
-   if (outfit_canSell(outfitname) > 0)
+   if (outfit_canSell(outfit->name) > 0)
       window_enableButton( wid, "btnSellOutfit" );
    else
       window_disableButtonSoft( wid, "btnSellOutfit" );
 
    /* new text */
    window_modifyText( wid, "txtDescription", _(outfit->description) );
-   price2str( buf2, outfit_getPrice(outfit), player.p->credits, 2 );
-   credits2str( buf3, player.p->credits, 2 );
+   price2str( buf_price, outfit_getPrice(outfit), player.p->credits, 2 );
+   credits2str( buf_credits, player.p->credits, 2 );
 
    if (outfit->license == NULL)
-      strncpy( buf4, _("None"), sizeof(buf4) );
+      strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
    else if (player_hasLicense( outfit->license ))
-      strncpy( buf4, _(outfit->license), sizeof(buf4) );
+      strncpy( buf_license, _(outfit->license), sizeof(buf_license)-1 );
    else
-      nsnprintf( buf4, sizeof(buf4), "\ar%s\a0", _(outfit->license) );
-   buf4[ sizeof(buf4)-1 ] = '\0';
+      nsnprintf( buf_license, sizeof(buf_license), "\ar%s\a0", _(outfit->license) );
+   buf_license[ sizeof(buf_license)-1 ] = '\0';
 
    mass = outfit->mass;
    if ((outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
@@ -447,24 +446,25 @@ void outfits_update( unsigned int wid, char* str )
          "%s\n"
          "%.0f tonnes\n"
          "\n"
-         "%s credits\n"
-         "%s credits\n"
+         "%s\n"
+         "%s\n"
          "%s\n"),
          player_outfitOwned(outfit),
          _(outfit_slotName(outfit)),
          _(outfit_slotSize(outfit)),
          mass,
-         buf2,
-         buf3,
-         buf4 );
+         buf_price,
+         buf_credits,
+         buf_license );
    window_modifyText( wid, "txtDDesc", buf );
    window_modifyText( wid, "txtOutfitName", _(outfit->name) );
-   window_modifyText( wid, "txtDescShort", _(outfit->desc_short) );
-   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, _(outfit->desc_short) ) );
-   window_moveWidget( wid, "txtSDesc", 40+iw+20, -60-th-20 );
-   window_moveWidget( wid, "txtDDesc", 40+iw+20+60, -60-th-20 );
-   th += gl_printHeightRaw( &gl_smallFont, 250, buf );
-   window_moveWidget( wid, "txtDescription", 20+iw+40, -60-th-20 );
+   window_modifyText( wid, "txtDescShort", outfit->desc_short );
+   th = gl_printHeightRaw( &gl_smallFont, w - (20 + iw + 20) - 200 - 20, outfit->desc_short );
+   window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th-30-32 );
+   window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th-30-32 );
+   th += gl_printHeightRaw( &gl_smallFont, w - (20 + iw + 20) - 200 - 20, buf );
+   th = MAX( th, 192 );
+   window_moveWidget( wid, "txtDescription", 20+iw+20, -40-th-30-32 );
 }
 
 
@@ -494,6 +494,7 @@ void outfits_updateEquipmentOutfits( void )
  *
  *    @param wid Unused.
  *    @param wgt Unused.
+ *    @param old Tab changed from.
  *    @param tab Tab changed to.
  */
 static void outfits_changeTab( unsigned int wid, char *wgt, int old, int tab )
@@ -530,7 +531,6 @@ static void outfits_changeTab( unsigned int wid, char *wgt, int old, int tab )
  * @brief Applies a filter function and string to a list of outfits.
  *
  *    @param outfits Array of outfits to filter.
- *    @param[out] toutfits Optional array of outfit textures to generate.
  *    @param n Number of outfits in the array.
  *    @param filter Filter function to run on each outfit.
  *    @param name Name fragment that each outfit name must contain.
@@ -613,14 +613,14 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
          o = outfits[i];
 
          coutfits[i].image = gl_dupTexture( o->gfx_store );
-         coutfits[i].caption = strdup( o->name );
+         coutfits[i].caption = strdup( _(o->name) );
          coutfits[i].quantity = player_outfitOwned(o);
 
          /* Background colour. */
          c = outfit_slotSizeColour( &o->slot );
          if (c == NULL)
             c = &cBlack;
-         col_blend( &coutfits[i].bg, c, &cGrey70, 0.4 );
+         col_blend( &coutfits[i].bg, c, &cGrey70, 1 );
 
          /* Short description. */
          if (o->desc_short == NULL)
@@ -634,16 +634,16 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
 
             l = strlen(o->desc_short) + 128;
             coutfits[i].alt = malloc( l );
-            p  = snprintf( &coutfits[i].alt[0], l, "%s\n", o->name );
+            p  = nsnprintf( &coutfits[i].alt[0], l, "%s\n", _(o->name) );
             if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
-               p += snprintf( &coutfits[i].alt[p], l-p, _("\aRUnique\a0\n") );
+               p += nsnprintf( &coutfits[i].alt[p], l-p, _("\aoUnique\a0\n") );
             if ((o->slot.spid!=0) && (p < l))
-               p += snprintf( &coutfits[i].alt[p], l-p, _("\aRSlot %s\a0\n"),
-                     sp_display( o->slot.spid ) );
+               p += nsnprintf( &coutfits[i].alt[p], l-p, _("\aoSlot %s\a0\n"),
+                     _( sp_display( o->slot.spid ) ) );
             if (p < l)
-               p += snprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );
+               p += nsnprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );
             if ((o->mass > 0.) && (p < l))
-               snprintf( &coutfits[i].alt[p], l-p,
+               nsnprintf( &coutfits[i].alt[p], l-p,
                      _("\n%.0f Tonnes"),
                      mass );
          }
@@ -672,9 +672,10 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
 
 /**
  * @brief Checks to see if the player can buy the outfit.
- *    @param outfit Outfit to buy.
+ *    @param name Outfit to buy.
+ *    @param planet Where the player is shopping.
  */
-int outfit_canBuy( char *name, Planet *planet )
+int outfit_canBuy( const char *name, Planet *planet )
 {
    int failure;
    credits_t price;
@@ -710,14 +711,14 @@ int outfit_canBuy( char *name, Planet *planet )
    /* not enough $$ */
    if (!player_hasCredits(price)) {
       credits2str( buf, price - player.p->credits, 2 );
-      land_errDialogueBuild( _("You need %s more credits."), buf);
+      land_errDialogueBuild( _("You need %s more."), buf);
       failure = 1;
    }
    /* Needs license. */
    if ((!player_hasLicense(outfit->license)) &&
          ((planet == NULL) || (!planet_hasService(planet, PLANET_SERVICE_BLACKMARKET)))) {
       land_errDialogueBuild( _("You need the '%s' license to buy this outfit."),
-               outfit->license );
+               _(outfit->license) );
       failure = 1;
    }
 
@@ -729,7 +730,6 @@ int outfit_canBuy( char *name, Planet *planet )
  * @brief Player right-clicks on an outfit.
  *    @param wid Window player is buying ship from.
  *    @param widget_name Name of the window. (unused)
- *    @param shipname Name of the ship the player wants to buy. (unused)
  */
 static void outfits_rmouse( unsigned int wid, char* widget_name )
 {
@@ -744,16 +744,17 @@ static void outfits_rmouse( unsigned int wid, char* widget_name )
 static void outfits_buy( unsigned int wid, char* str )
 {
    (void) str;
-   char *outfitname;
+   int i, active;
    Outfit* outfit;
    int q;
    HookParam hparam[3];
 
-   outfitname = strdup(toolkit_getImageArray( wid, OUTFITS_IAR ));
-   if (strcmp(outfitname, _("None")) == 0)
+   active = window_tabWinGetActive( wid, OUTFITS_TAB );
+   i = toolkit_getImageArrayPos( wid, OUTFITS_IAR );
+   if (i < 0 || iar_outfits[active] == NULL)
       return;
 
-   outfit = outfit_get( outfitname );
+   outfit = iar_outfits[active][i];
    q = outfits_getMod();
    /* Can only get one unique item. */
    if (outfit_isProp(outfit, OUTFIT_PROP_UNIQUE) ||
@@ -762,30 +763,29 @@ static void outfits_buy( unsigned int wid, char* str )
       q = MIN(q,1);
 
    /* can buy the outfit? */
-   if (land_errDialogue( outfitname, "buyOutfit" ))
+   if (land_errDialogue( outfit->name, "buyOutfit" ))
       return;
 
    /* Actually buy the outfit. */
    player_modCredits( -outfit->price * player_addOutfit( outfit, q ) );
    outfits_updateEquipmentOutfits();
    hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = outfitname;
+   hparam[0].u.str   = outfit->name;
    hparam[1].type    = HOOK_PARAM_NUMBER;
    hparam[1].u.num   = q;
    hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "outfit_buy", hparam );
    if (land_takeoff)
       takeoff(1);
-   free(outfitname);
 
    /* Regenerate list. */
    outfits_regenList( wid, NULL );
 }
 /**
  * @brief Checks to see if the player can sell the selected outfit.
- *    @param outfit Outfit to try to sell.
+ *    @param name Outfit to try to sell.
  */
-int outfit_canSell( char *name )
+int outfit_canSell( const char *name )
 {
    int failure;
    Outfit *outfit;
@@ -833,34 +833,34 @@ int outfit_canSell( char *name )
 static void outfits_sell( unsigned int wid, char* str )
 {
    (void)str;
-   char *outfitname;
+   int i, active;
    Outfit* outfit;
    int q;
    HookParam hparam[3];
 
-   outfitname = strdup(toolkit_getImageArray( wid, OUTFITS_IAR ));
-   if (strcmp(outfitname, _("None")) == 0)
+   active = window_tabWinGetActive( wid, OUTFITS_TAB );
+   i = toolkit_getImageArrayPos( wid, OUTFITS_IAR );
+   if (i < 0 || iar_outfits[active] == NULL)
       return;
 
-   outfit      = outfit_get( outfitname );
+   outfit      = iar_outfits[active][i];
 
    q = outfits_getMod();
 
    /* Check various failure conditions. */
-   if (land_errDialogue( outfitname, "sellOutfit" ))
+   if (land_errDialogue( outfit->name, "sellOutfit" ))
       return;
 
    player_modCredits( outfit->price * player_rmOutfit( outfit, q ) );
    outfits_updateEquipmentOutfits();
    hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = outfitname;
+   hparam[0].u.str   = outfit->name;
    hparam[1].type    = HOOK_PARAM_NUMBER;
    hparam[1].u.num   = q;
    hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "outfit_sell", hparam );
    if (land_takeoff)
       takeoff(1);
-   free(outfitname);
 
    /* Regenerate list. */
    outfits_regenList( wid, NULL );
@@ -889,6 +889,7 @@ static int outfits_getMod (void)
  *    @param by Base Y position to render at.
  *    @param w Width to render at.
  *    @param h Height to render at.
+ *    @param data Unused.
  */
 static void outfits_renderMod( double bx, double by, double w, double h, void *data )
 {
@@ -905,18 +906,22 @@ static void outfits_renderMod( double bx, double by, double w, double h, void *d
    if (q==1) return; /* Ignore no modifier. */
 
    nsnprintf( buf, 8, "%dx", q );
-   gl_printMid( &gl_smallFont, w, bx, by, &cFontWhite, buf );
+   gl_printMidRaw( &gl_smallFont, w, bx, by, &cFontWhite, -1, buf );
 }
 
 
 /**
  * @brief Cleans up outfit globals.
  */
-void outfits_cleanup( void )
+void outfits_cleanup(void)
 {
    /* Free stored positions. */
-   if (iar_data != NULL) {
-      free(iar_data);
-      iar_data = NULL;
+   free(iar_data);
+   iar_data = NULL;
+   if (iar_outfits != NULL) {
+      for (int i=0; i<OUTFITS_NTABS; i++)
+         free( iar_outfits[i] );
+      free(iar_outfits);
+      iar_outfits = NULL;
    }
 }

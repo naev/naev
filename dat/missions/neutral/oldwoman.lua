@@ -10,6 +10,9 @@
    <location>Bar</location>
    <faction>Dvaered</faction>  -- Note: additional conditionals present in mission script!
   </avail>
+  <notes>
+   <tier>1</tier>
+  </notes>
  </mission>
  --]]
 --[[
@@ -20,11 +23,11 @@
 --
 --]]
 
-require "cargo_common.lua"
-require "dat/missions/neutral/common.lua"
+require "cargo_common"
+require "missions/neutral/common"
 
 
--- Localization, choosing a language if naev is translated for non-english-speaking locales.
+-- Localization, choosing a language if Naev is translated for non-english-speaking locales.
 title1 = _("An elderly lady")
 text1 = _([[You decide to ask the old woman if there's something you can help her with.
     "As a matter of fact, there is," she creaks. "I want to visit my cousin, she lives on %s, you know, in the %s system, it's a Sirian place. But I don't have a ship and those blasted passenger lines around here don't fly on Sirius space! I tell you, customer service really has gone down the gutter over the years. In my space faring days, there would always be some transport ready to take you anywhere! But now look at me, I'm forced to get to the spaceport bar to see if there's a captain willing to take me! It's a disgrace, that's what it is. What a galaxy we live in! But I ramble. You seem like you've got time on your hands. Fancy making a trip down to %s? I'll pay you a decent fare, of course."]])

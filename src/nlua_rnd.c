@@ -8,17 +8,19 @@
  * @brief Lua bindings for the Naev random number generator.
  */
 
-#include "nlua_rnd.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_rnd.h"
+
 #include "log.h"
-#include "rng.h"
 #include "map.h"
 #include "ndata.h"
+#include "nluadef.h"
+#include "rng.h"
 
 
 /* Random methods. */
@@ -219,6 +221,8 @@ static int rnd_permutation( lua_State *L )
          lua_gettable(   L, 1 );
       lua_settable(   L, -3 );
    }
+
+   free( values );
 
    return 1;
 }

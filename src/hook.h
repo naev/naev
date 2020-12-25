@@ -8,18 +8,17 @@
 
 
 #include "mission.h"
-
-#include "nlua_pilot.h"
 #include "nlua_faction.h"
-#include "nlua_planet.h"
 #include "nlua_jump.h"
+#include "nlua_pilot.h"
+#include "nlua_planet.h"
 
 
 #define HOOK_MAX_PARAM  3 /**< Maximum hook params, to avoid dynamic allocation. */
 
 
 /**
- * @Brief The hook parameter types.
+ * @brief The hook parameter types.
  */
 typedef enum HookParamType_e {
    HOOK_PARAM_NIL, /**< No hook parameter. */
@@ -86,7 +85,7 @@ nlua_env hook_env( unsigned int hook );
  *    - "standing" - Whenever faction changes.
  *    - "load" - Run on load.
  *    - "discover" - When something is discovered.
- *    - "pay" - When player recieves or loses money.
+ *    - "pay" - When player receives or loses money.
  *  - Landing
  *    - "land" - When landed
  *    - "outfits" - When visited outfitter

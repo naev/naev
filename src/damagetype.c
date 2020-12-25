@@ -9,20 +9,22 @@
  */
 
 
-#include "damagetype.h"
-#include "naev.h"
-
+/** @cond */
 #include <inttypes.h>
-
 #include "SDL.h"
 
-#include "log.h"
+#include "naev.h"
+/** @endcond */
+
+#include "damagetype.h"
+
 #include "array.h"
-#include "pilot.h"
-#include "pause.h"
-#include "rng.h"
+#include "log.h"
 #include "ndata.h"
 #include "nxml.h"
+#include "pause.h"
+#include "pilot.h"
+#include "rng.h"
 #include "shipstats.h"
 
 
@@ -69,8 +71,7 @@ static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
    /* Clear data. */
    memset( temp, 0, sizeof(DTYPE) );
 
-   /* Get the name (mallocs). */
-   temp->name = xml_nodeProp(parent,"name");
+   xmlr_attr_strd( parent, "name", temp->name );
 
    /* Extract the data. */
    node = parent->xmlChildrenNode;
@@ -80,7 +81,7 @@ static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
       if (xml_isNode(node, "shield")) {
          temp->sdam = xml_getFloat(node);
 
-         xmlr_attr(node, "stat", stat);
+         xmlr_attr_strd( node, "stat", stat );
          if (stat != NULL) {
             temp->soffset = ss_offsetFromType( ss_typeFromName(stat) );
             free(stat);
@@ -91,7 +92,7 @@ static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
       else if (xml_isNode(node, "armour")) {
          temp->adam = xml_getFloat(node);
 
-         xmlr_attr(node, "stat", stat);
+         xmlr_attr_strd( node, "stat", stat );
          if (stat != NULL) {
             temp->aoffset = ss_offsetFromType( ss_typeFromName(stat) );
             free(stat);
@@ -102,11 +103,11 @@ static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
       xmlr_float(node, "armour", temp->adam);
       xmlr_float(node, "knockback", temp->knock);
 
-      WARN("Unknown node of type '%s' in damage node '%s'.", node->name, temp->name);
+      WARN(_("Unknown node of type '%s' in damage node '%s'."), node->name, temp->name);
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
-   if (o) WARN("DTYPE '%s' invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
+   if (o) WARN(_("DTYPE '%s' invalid '"s"' element"), temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->sdam<0.,"shield");
    MELEMENT(temp->adam<0.,"armour");
    MELEMENT(temp->knock<0.,"knockback");
@@ -123,10 +124,8 @@ static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
  */
 static void DTYPE_free( DTYPE *damtype )
 {
-   if (damtype->name != NULL) {
-      free(damtype->name);
-      damtype->name = NULL;
-   }
+   free(damtype->name);
+   damtype->name = NULL;
 }
 
 
@@ -142,7 +141,7 @@ int dtype_get( char* name )
    for (i=0; i<array_size(dtype_types); i++)
       if (strcmp(dtype_types[i].name, name)==0)
          return i;
-   WARN("Damage type '%s' not found in stack.", name);
+   WARN(_("Damage type '%s' not found in stack."), name);
    return -1;
 }
 
@@ -153,7 +152,7 @@ int dtype_get( char* name )
 static DTYPE* dtype_validType( int type )
 {
    if ((type < 0) || (type >= array_size(dtype_types))) {
-      WARN("Damage type '%d' is invalid.", type);
+      WARN(_("Damage type '%d' is invalid."), type);
       return NULL;
    }
    return &dtype_types[ type ];
@@ -179,24 +178,13 @@ char* dtype_damageTypeToStr( int type )
  */
 int dtype_load (void)
 {
-   size_t bufsize;
-   char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
 
    /* Load and read the data. */
-   buf = ndata_read( DTYPE_DATA_PATH, &bufsize );
-   if (buf == NULL) {
-      WARN(_("Unable to read data from '%s'"), DTYPE_DATA_PATH);
+   doc = xml_parsePhysFS( DTYPE_DATA_PATH );
+   if (doc == NULL)
       return -1;
-   }
-
-   /* Load the document. */
-   doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN(_("Unable to parse document '%s'"), DTYPE_DATA_PATH);
-      return -1;
-   }
 
    /* Check to see if document exists. */
    node = doc->xmlChildrenNode;
@@ -230,7 +218,6 @@ int dtype_load (void)
 
    /* Clean up. */
    xmlFreeDoc(doc);
-   free(buf);
 
    return 0;
 }
@@ -259,11 +246,13 @@ void dtype_free (void)
  *    @param[out] knockback Knockback modifier.
  *    @param[in] absorb Absorption value.
  *    @param[in] dmg Damage information.
+ *    @param[in] s Ship stats to use.
  */
 void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *knockback, const Damage *dmg, ShipStats *s )
 {
    DTYPE *dtype;
    char *ptr;
+   double multiplier;
 
    /* Must be valid. */
    dtype = dtype_validType( dmg->type );
@@ -283,8 +272,9 @@ void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *
           * ss_statsInit and turn the value into a multiplier.
           */
          ptr = (char*) s;
+         memcpy(&multiplier, &ptr[ dtype->soffset ], sizeof(double));
          *dshield = dtype->sdam * dmg->damage * absorb *
-               (2. - *(double*) &ptr[ dtype->soffset ]);
+               (2. - multiplier);
       }
    }
    if (darmour != NULL) {
@@ -292,8 +282,9 @@ void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *
          *darmour    = dtype->adam * dmg->damage * absorb;
       else {
          ptr = (char*) s;
+         memcpy(&multiplier, &ptr[ dtype->aoffset ], sizeof(double));
          *darmour = dtype->adam * dmg->damage * absorb *
-               (2. - *(double*) &ptr[ dtype->aoffset ]);
+               (2. - multiplier);
       }
    }
 

@@ -15,6 +15,9 @@
    <faction>Goddard</faction>
    <faction>Sirius</faction>
   </avail>
+  <notes>
+   <campaign>Kidnapping</campaign>
+  </notes>
  </mission>
  --]]
 --[[
@@ -30,8 +33,8 @@
 
 --]]
 
-require "portrait.lua"
-require "dat/missions/neutral/common.lua"
+require "portrait"
+require "missions/neutral/common"
 
 
 -- Bar information
@@ -61,7 +64,7 @@ text[3] = _([["I don't think he is here. He must be in one of the other systems.
 text[4] = _([["I think this is it! We found him!"]])
 text[5] = _([[You radio the ship with a message saying you have his sister on board and that she has a message for him.
     "My sister? What the heck could she want from me? Prepare for docking."]])
-text[7] = _([[The woman stands next to you while the airlock opens. You see the grin on the man's face change to a baffled expression, then hear the sound of a blaster. Before you even realize what has happened, the lady rushes past you and closes the airdock.
+text[7] = _([[The woman stands next to you while the airlock opens. You see the grin on the man's face change to a baffled expression, then hear the sound of a blaster. Before you even realize what has happened, the lady rushes past you and closes the airlock.
     You find an arrangement of credit chips she left in your ship along with a note: "Sorry."]])
 refusetitle = _("Sorry, I can't")
 refusetext = _([["How can you be such a heartless person? What has this universe become?..."]])
@@ -118,7 +121,7 @@ end
 
 
 -- Entering a system
--- checking if it is right system, updating osd, if right system: create ship and wait for hail
+-- checking if it is right system, updating OSD, if right system: create ship and wait for hail
 
 function sys_enter ()
    -- Check to see if reaching target system
@@ -134,18 +137,18 @@ function sys_enter ()
             break
          end
       end
-      -- if we visisted a system w/o the brother: update osd
+      -- if we visited a system without the brother: update OSD
       if nmsys ~= #targetsys then
          misn.osdDestroy()
          if #targetsys == 2 then
-            misn.osdCreate(misn_title, {misn_desc[2]:format(targetsys[1]:name(),targetsys[2]:name()),misn_desc[4]})
-            misn.setDesc(misn_desc[2]:format(targetsys[1]:name(),targetsys[2]:name()))
+            misn.osdCreate(misn_title, {misn_desc[2]:format(targetsys[1]:name(), targetsys[2]:name()), misn_desc[4]})
+            misn.setDesc(misn_desc[2]:format(targetsys[1]:name(), targetsys[2]:name()))
          else
-            misn.osdCreate(misn_title, {misn_desc[1]:format(targetsys[1]:name()),misn_desc[4]})
+            misn.osdCreate(misn_title, {misn_desc[1]:format(targetsys[1]:name()), misn_desc[4]})
             misn.setDesc(misn_desc[1]:format(targetsys[1]:name()))
          end
          misn.osdActive(1)
-         --update osd
+         --update OSD
       end
    else
       hook.timer( 3000,"do_msg2")
@@ -156,7 +159,7 @@ function sys_enter ()
       broship:setInvincible(true)
       broship:control()
       broship:setHilight(true)
-      broship:goto(bropla:pos() + vec2.new( 400, -400), false)
+      broship:moveto(bropla:pos() + vec2.new( 400, -400), false)
       -- just some moving around, stolen from baron missions ;D
       idlehook = hook.pilot(broship, "idle", "idle",broship,bropla)
       misn.osdActive(2)
@@ -164,7 +167,7 @@ function sys_enter ()
       jpt = get_nearest_jump(broship)
       jpx,jpy = jpt:pos():get()
       px,py = broship:pos():get()
-      -- set spawn point btwn the broship and jumppoint
+      -- set spawn point between the broship and jumppoint
       spx, spy = (2*jpx/3+px/3), (2*jpy/3+py/3)
       sp = vec2.new(spx,spy)
       badguys = {}
@@ -203,10 +206,10 @@ function got_boarded(shipp)
 end
 -- idle
 function idle(shipp,pplanet)
-    shipp:goto(pplanet:pos() + vec2.new( 400,  400), false)
-    shipp:goto(pplanet:pos() + vec2.new(-400,  400), false)
-    shipp:goto(pplanet:pos() + vec2.new(-400, -400), false)
-    shipp:goto(pplanet:pos() + vec2.new( 400, -400), false)
+    shipp:moveto(pplanet:pos() + vec2.new( 400,  400), false)
+    shipp:moveto(pplanet:pos() + vec2.new(-400,  400), false)
+    shipp:moveto(pplanet:pos() + vec2.new(-400, -400), false)
+    shipp:moveto(pplanet:pos() + vec2.new( 400, -400), false)
 end
 --delay for msgs because if no delay they will pop in mid transit from system to system. A wait function would be awesome...
 function do_msg ()

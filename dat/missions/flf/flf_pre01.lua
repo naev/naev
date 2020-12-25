@@ -1,16 +1,20 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Deal with the FLF agent">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <chance>100</chance>
-   <location>None</location>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <chance>100</chance>
+  <location>None</location>
+ </avail>
+ <notes>
+  <done_evt name="FLF/DV Derelicts">If you choose to help Gregar</done_evt>
+  <campaign>Join the FLF</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 -- This is the first "prelude" mission leading to the FLF campaign. The player takes a FLF agent onboard, then either turns him in to the Dvaered or delivers him to a hidden FLF base.
 -- stack variable flfbase_intro:
@@ -21,9 +25,9 @@
 
 -- localization stuff, translators would work here
 
-require "fleethelper.lua"
-require "dat/missions/flf/flf_common.lua"
-require "dat/missions/dvaered/common.lua"
+require "fleethelper"
+require "missions/flf/flf_common"
+require "missions/dvaered/common"
 
 
 title = {}
@@ -85,7 +89,7 @@ misn_desc = _("You have taken onboard a member of the FLF. You must either take 
 misn_reward = _("A chance to learn more about the FLF")
 
 log_text_flf = _([[You helped escort FLF Lt. Gregar Fletcher to the secret FLF base, Sindbad. This has earned you a small level of trust from the FLF and enabled you to freely access the FLF base.]])
-log_text_dv = _([[You turned in FLF Lt. Gregar Fletcher to Dvaered authorities. The Dvaered captain who took him off your hands said that you could join in on a campaign against the FLF terrorists; you can direct questions to a Dvaered public liason. You may want to scout out this liason.]])
+log_text_dv = _([[You turned in FLF Lt. Gregar Fletcher to Dvaered authorities. The Dvaered captain who took him off your hands said that you could join in on a campaign against the FLF terrorists; you can direct questions to a Dvaered public liaison. You may want to scout out this liaison.]])
 
 
 function create()
@@ -157,7 +161,7 @@ end
 -- There are two cases we need to check here: landing on the FLF base and landing on a Dvaered world.
 function land()
     -- Case FLF base
-    if planet.cur():name() == "Sindbad" then
+    if planet.cur() == planet.get("Sindbad") then
         tk.msg(title[4], text[4]:format(player.name()))
         tk.msg(title[4], text[5])
         var.push("flfbase_intro", 2)
@@ -215,10 +219,10 @@ function annai()
     for i, j in ipairs(fleetFLF) do
         if j:exists() then
             j:control()
-            j:goto(player.pos()) -- NOT the player pilot, or the task may not pop properly.
-            j:goto(waypoint2, false)
-            j:goto(waypoint1, false)
-            j:goto(waypoint0 + poss[i])
+            j:moveto(player.pos()) -- NOT the player pilot, or the task may not pop properly.
+            j:moveto(waypoint2, false)
+            j:moveto(waypoint1, false)
+            j:moveto(waypoint0 + poss[i])
         end
     end
     spawner = hook.timer(1000, "spawnbase")

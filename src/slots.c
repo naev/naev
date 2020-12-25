@@ -9,21 +9,21 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "slots.h"
 
-#include "naev.h"
-
-#include "nxml.h"
-
-#include "log.h"
-#include "ndata.h"
 #include "array.h"
+#include "log.h"
+#include "nxml.h"
 
 
 #define SP_XML_ID     "Slots" /**< XML Document tag. */
 #define SP_XML_TAG    "slot" /**< SP XML node tag. */
 
-#define SP_DATA_PATH  "dat/slots.xml" /**< Location of the sp datafile. */
+#define SP_DATA_PATH  "slots.xml" /**< Location of the sp datafile. */
 
 
 /**
@@ -52,25 +52,14 @@ static int sp_check( unsigned int spid );
  */
 int sp_load (void)
 {
-   size_t bufsize;
-   char *buf;
    xmlNodePtr node, cur;
    xmlDocPtr doc;
    SlotProperty_t *sp;
 
    /* Load and read the data. */
-   buf = ndata_read( SP_DATA_PATH, &bufsize );
-   if (buf == NULL) {
-      WARN(_("Unable to read data from '%s'"), SP_DATA_PATH);
+   doc = xml_parsePhysFS( SP_DATA_PATH );
+   if (doc == NULL)
       return -1;
-   }
-
-   /* Load the document. */
-   doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN(_("Unable to parse document '%s'"), SP_DATA_PATH);
-      return -1;
-   }
 
    /* Check to see if document exists. */
    node = doc->xmlChildrenNode;
@@ -97,7 +86,7 @@ int sp_load (void)
 
       sp    = &array_grow( &sp_array );
       memset( sp, 0, sizeof(SlotProperty_t) );
-      xmlr_attr( node, "name", sp->name );
+      xmlr_attr_strd( node, "name", sp->name );
       cur   = node->xmlChildrenNode;
       do {
          xml_onlyNodes(cur);
@@ -114,14 +103,13 @@ int sp_load (void)
             continue;
          }
 
-         WARN(_("Slot Property '%s' has unknown node '%s'."), cur->name);
+         WARN(_("Slot Property '%s' has unknown node '%s'."), node->name, cur->name);
       } while (xml_nextNode(cur));
 
    } while (xml_nextNode(node));
 
    /* Clean up. */
    xmlFreeDoc(doc);
-   free(buf);
 
    return 0;
 }
@@ -150,7 +138,7 @@ void sp_cleanup (void)
 /**
  * @brief Gets the id of a slot property.
  *
- *    @pram name Name to match.
+ *    @param name Name to match.
  *    @return ID of the slot property.
  */
 unsigned int sp_get( const char *name )
@@ -181,7 +169,7 @@ static int sp_check( unsigned int spid )
 
 
 /**
- * @brief Gets the display name of a slot property.
+ * @brief Gets the display name of a slot property (in English).
  */
 const char *sp_display( unsigned int spid )
 {
@@ -192,7 +180,7 @@ const char *sp_display( unsigned int spid )
 
 
 /**
- * @brief Gets the description of a slot property.
+ * @brief Gets the description of a slot property (in English).
  */
 const char *sp_description( unsigned int spid )
 {

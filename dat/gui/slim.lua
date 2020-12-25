@@ -2,7 +2,8 @@
    The new "slim" GUI
 --]]
 
-playerform = require "dat/scripts/playerform.lua"
+require "numstring"
+playerform = require "scripts/playerform"
 
 function create()
 
@@ -48,7 +49,7 @@ function create()
    col_slot_bg = colour.new( 12/255, 14/255, 20/255 )
 
    --Load Images
-   local base = "dat/gfx/gui/slim/"
+   local base = "gfx/gui/slim/"
    player_pane_t = tex.open( base .. "frame_player_top.png" )
    player_pane_m = tex.open( base .. "frame_player_middle.png" )
    player_pane_b = tex.open( base .. "frame_player_bottom.png" )
@@ -90,7 +91,7 @@ function create()
    sheen_weapon = tex.open( base .. "sheen_weapon.png" )
    sheen_tiny = tex.open( base .. "sheen_tiny.png" )
    bottom_bar = tex.open( base .. "bottombar.png" )
-   target_dir = tex.open( base .. "dir.png" )
+   target_dir = tex.open( base .. "dir.png", 6, 6 )
    warnlight1 = tex.open( base .. "warnlight1.png" )
    warnlight2 = tex.open( base .. "warnlight2.png" )
    warnlight3 = tex.open( base .. "warnlight3.png" )
@@ -102,8 +103,8 @@ function create()
    cargo_light_off = tex.open( base .. "cargo_off.png" )
    cargo_light_on =  tex.open( base .. "cargo_on.png" )
    question = tex.open( base .. "question.png" )
-   gui.targetPlanetGFX( tex.open( base .. "radar_planet.png" ) )
-   gui.targetPilotGFX(  tex.open( base .. "radar_ship.png" ) )
+   gui.targetPlanetGFX( tex.open( base .. "radar_planet.png", 2, 2 ) )
+   gui.targetPilotGFX(  tex.open( base .. "radar_ship.png", 2, 2 ) )
 
    -- Active outfit list.
    slot = tex.open( base .. "slot.png" )
@@ -185,7 +186,7 @@ function create()
    y_ammo = pl_pane_y - 27
 
    -- Missile lock warning
-   missile_lock_text = _("Warning - Missile Lockon Detected")
+   missile_lock_text = _("Warning - Missile Lock-on Detected")
    missile_lock_length = gfx.printDim( false, missile_lock_text )
 
    -- Active cooldown display
@@ -369,7 +370,7 @@ function update_nav()
          services = { "missions", "outfits", "shipyard", "commodity" }
 
          -- "Spaceport" is nicer than "Land"
-         table.insert( planet.services, "Spaceport" )
+         table.insert( planet.services, N_("Spaceport") )
          for k,v in ipairs(services) do
             table.insert( planet.services, pntflags[v] )
          end
@@ -381,7 +382,7 @@ function update_nav()
    end
    if nav_hyp then
       if nav_hyp:known() then
-         navstring = _(nav_hyp:name())
+         navstring = nav_hyp:name()
       else
          navstring = _("Unknown")
       end
@@ -401,7 +402,7 @@ end
 
 function update_cargo()
    cargol = pp:cargoList()
-   cargofree = string.format( _(" (%st free)"), pp:cargoFree() )
+   cargofree = string.format( _(" (%s free)"), tonnestring_short( pp:cargoFree() ) )
    cargofreel = gfx.printDim( true, cargofree )
    cargoterml = gfx.printDim( true, ", [...]" )
    cargo = {}
@@ -409,7 +410,7 @@ function update_cargo()
       if v.q == 0 then
          cargo[k] = v.name
       else
-         cargo[k] = string.format( _("%dt %s"), v.q, _(v.name) )
+         cargo[k] = tonnestring_short(v.q) .. " " .. _(v.name)
       end
       if v.m then
          cargo[k] = cargo[k] .. "*"
@@ -690,7 +691,7 @@ function render( dt, dt_mod )
 
    --Weapon bars
    for num, weapon in ipairs(wset) do
-      txt = weapon.name
+      txt = _(weapon.name)
       if weapon.left then -- Truncate names for readability.
          if weapon.type == "Bolt Cannon" or weapon.type == "Beam Cannon" then
             txt = string.gsub(txt,"Cannon", "C.")
@@ -753,7 +754,7 @@ function render( dt, dt_mod )
 
       gfx.renderRect( x, y, width, height, col)
       gfx.renderTex( bg_bar_weapon, x, y )
-      gfx.print( true, "Set formation", x, y + 8, col_txt_bar, width, true )
+      gfx.print( true, _("Set formation"), x, y + 8, col_txt_bar, width, true )
    end
 
    --Warning Light
@@ -819,7 +820,7 @@ function render( dt, dt_mod )
          end
 
          if aset[i].weapset then
-            gfx.print( true, aset[i].weapset, slot_x + slot_img_offs_x + 5,
+            gfx.print( true, _(aset[i].weapset), slot_x + slot_img_offs_x + 5,
                   slot_y + slot_img_offs_y + 5, col_txt_bar, slot_w, false )
          end
 
@@ -1019,7 +1020,7 @@ function render( dt, dt_mod )
       if pntflags.land then
          local services_h = 60
          for k,v in ipairs(planet.services) do
-            gfx.print(true, v, ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, col_txt_top )
+            gfx.print(true, _(v), ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, col_txt_top )
             services_h = services_h + 14
          end
       else
@@ -1038,7 +1039,7 @@ function render( dt, dt_mod )
    local fuel = player.fuel()
 
    if fuel > 0 then
-      fuelstring = string.format( gettext.ngettext("%d (%d jump)", "%d (%d jumps)", jumps), fuel, jumps)
+      fuelstring = string.format( "%d (%s)", fuel, jumpstring(jumps) )
    else
       fuelstring = _("none")
    end

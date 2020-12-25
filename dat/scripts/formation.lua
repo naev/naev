@@ -25,7 +25,7 @@ function formations.cross(leader)
 end
 
 function formations.buffer(leader)
-   -- Buffer logic. Consecutive arcs eminating from the fleader. Stored as polar coordinates.
+   -- Buffer logic. Consecutive arcs emanating from the fleader. Stored as polar coordinates.
    local pilots = leader:followers()
    local class_count = count_classes(pilots)
    local angle, radius
@@ -80,7 +80,7 @@ function formations.echelon_left(leader)
       leader:msg(p, "form-pos", {angle, radius})
       flip = flip * -1
       angle = 135 + (90 * flip)
-      radius = 100 * (math.ceil(i / 2)) -- Increase the radius every 2 positions
+      radius = 100 * (math.ceil((i+1) / 2)) -- Increase the radius every 2 positions
    end
 end
 
@@ -94,7 +94,7 @@ function formations.echelon_right(leader)
       leader:msg(p, "form-pos", {angle, radius})
       flip = flip * -1
       angle = 225 + (90 * flip)
-      radius = 100 * (math.ceil(i / 2))
+      radius = 100 * (math.ceil((i+1) / 2))
    end
 end
 
@@ -108,7 +108,7 @@ function formations.column(leader)
       leader:msg(p, "form-pos", {angle, radius})
       flip = flip * -1
       angle = 90 + (90 * flip)
-      radius = 100 * (math.ceil(i/2)) --Increase the radius every 2 ships.
+      radius = 100 * (math.ceil((i+1)/2)) --Increase the radius every 2 ships.
    end
 end
 
@@ -122,7 +122,7 @@ function formations.wall(leader)
       leader:msg(p, "form-pos", {angle, radius})
       flip = flip * -1
       angle = 180 + (90 * flip)
-      radius = 100 * (math.ceil(i/2)) --Increase the radius every 2 ships.
+      radius = 100 * (math.ceil((i+1)/2)) --Increase the radius every 2 ships.
    end
 end
 
@@ -136,12 +136,12 @@ function formations.fishbone(leader)
       leader:msg(p, "form-pos", {angle, radius})
       if flip == 0 then
          flip = -1
-         radius = (orig_radius * (math.ceil(i/3))) + ((orig_radius * (math.ceil(i/3))) / 30)
+         radius = (orig_radius * (math.ceil((i+1)/3))) + ((orig_radius * (math.ceil((i+1)/3))) / 30)
       elseif flip == -1 then
          flip = 1
       elseif flip == 1 then
          flip = 0
-         radius = orig_radius * (math.ceil(i/3))
+         radius = orig_radius * (math.ceil((i+1)/3))
       end
       angle = (22.5 * flip) / (radius / orig_radius)
    end
@@ -157,12 +157,12 @@ function formations.chevron(leader)
       leader:msg(p, "form-pos", {angle, radius})
       if flip == 0 then
          flip = -1
-         radius = (orig_radius * (math.ceil(i/3))) - ((orig_radius * (math.ceil(i/3))) / 20)
+         radius = (orig_radius * (math.ceil((i+1)/3))) - ((orig_radius * (math.ceil((i+1)/3))) / 20)
       elseif flip == -1 then
          flip = 1
       elseif flip == 1 then
          flip = 0
-         radius = orig_radius * (math.ceil(i/3))
+         radius = orig_radius * (math.ceil((i+1)/3))
       end
       angle = (22.5 * flip) / (radius / orig_radius)
    end

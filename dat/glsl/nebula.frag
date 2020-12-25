@@ -1,5 +1,3 @@
-#version 130
-
 uniform vec4 color;
 uniform vec2 center;
 uniform float radius;
@@ -11,4 +9,6 @@ void main(void) {
    if (dist < radius) {
       color_out.a *= (dist / radius);
    }
+
+#include "colorblind.glsl"
 }

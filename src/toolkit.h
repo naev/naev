@@ -8,12 +8,13 @@
 #  define TOOLKIT_H
 
 
+/** @cond */
 #include "SDL.h"
+/** @endcond */
 
-#include "tk/widget.h"
-
-#include "opengl.h"
 #include "font.h"
+#include "opengl.h"
+#include "tk/widget.h"
 
 
 int toolkit_isOpen (void);
@@ -22,10 +23,10 @@ int toolkit_isOpen (void);
 /*
  * creation
  */
-unsigned int window_create( const char* name,
+unsigned int window_create( const char* name, const char *displayname,
       const int x, const int y, /* position */
       const int w, const int h ); /* dimensions */
-unsigned int window_createFlags( const char* name,
+unsigned int window_createFlags( const char* name, const char *displayname,
       const int x, const int y, /* position */
       const int w, const int h, unsigned int flags ); /* dimensions */
 
@@ -42,8 +43,10 @@ void window_handleKeys( const unsigned int wid,
 void window_handleEvents( const unsigned int wid,
       int (*eventhandler)(unsigned int,SDL_Event*) );
 void window_move( const unsigned int wid, int x, int y );
+void window_resize( const unsigned int wid, int w, int h );
 void window_raise( unsigned int wid );
 void window_lower( unsigned int wid );
+int window_setDisplayname( const unsigned int wid, const char *displayname );
 
 
 /*
@@ -55,16 +58,17 @@ int window_existsID( const unsigned int wid );
 int widget_exists( const unsigned int wid, const char* wgtname );
 unsigned int window_get( const char* wdwname );
 void window_dimWindow( const unsigned int wid, int *w, int *h );
-void window_dimWidget( const unsigned int wid, char *name, int *w, int *h );
+void window_posWindow( const unsigned int wid, int *x, int *y );
+void window_dimWidget( const unsigned int wid, const char *name, int *w, int *h );
 char* window_getFocus( const unsigned int wid );
-void window_posWidget( const unsigned int wid,
-      char* name, int *x, int *y );
-void window_moveWidget( const unsigned int wid,
-      char* name, int x, int y );
+void window_posWidget( const unsigned int wid, const char* name, int *x, int *y );
+void window_moveWidget( const unsigned int wid, const char* name, int x, int y );
+void window_resizeWidget( const unsigned int wid, const char* name, int w, int h );
 
 /*
  * destruction
  */
+void toolkit_closeAll( void );
 void window_close( unsigned int wid, char *str );
 void window_destroy( const unsigned int wid );
 void window_destroyWidget( unsigned int wid, const char* wgtname );

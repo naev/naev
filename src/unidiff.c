@@ -13,23 +13,36 @@
  */
 
 
-#include "unidiff.h"
+/** @cond */
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include "nstring.h"
+#include "unidiff.h"
 
-#include "log.h"
-#include "nxml.h"
-#include "space.h"
-#include "ndata.h"
+#include "array.h"
 #include "economy.h"
 #include "fleet.h"
+#include "log.h"
 #include "map_overlay.h"
+#include "ndata.h"
+#include "nstring.h"
+#include "nxml.h"
+#include "space.h"
 
 
 #define CHUNK_SIZE      32 /**< Size of chunk to allocate. */
+
+
+/**
+ * @brief Universe diff filepath list.
+ */
+typedef struct UniDiffData_ {
+   char *name; /**< Name of the diff (read from XML). */
+   char *filename; /**< Filename of the diff. */
+} UniDiffData_t;
+static UniDiffData_t *diff_available = NULL; /**< Available diffs. */
 
 
 /**
@@ -131,14 +144,12 @@ typedef struct UniDiff_ {
  * Diff stack.
  */
 static UniDiff_t *diff_stack = NULL; /**< Currently applied universe diffs. */
-static int diff_nstack = 0; /**< Number of diffs in the stack. */
-static int diff_mstack = 0; /**< Currently allocated diffs. */
 
 
 /*
  * Prototypes.
  */
-static UniDiff_t* diff_get( const char *name );
+NONNULL( 1 ) static UniDiff_t *diff_get( const char *name );
 static UniDiff_t *diff_newDiff (void);
 static int diff_removeDiff( UniDiff_t *diff );
 static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node );
@@ -152,6 +163,47 @@ static void diff_cleanupHunk( UniHunk_t *hunk );
 /* Externed. */
 int diff_save( xmlTextWriterPtr writer ); /**< Used in save.c */
 int diff_load( xmlNodePtr parent ); /**< Used in save.c */
+
+
+/**
+ * @brief Loads available universe diffs.
+ *
+ *    @return 0 on success.
+ */
+int diff_loadAvailable (void)
+{
+   int i;
+   char **diff_files;
+   xmlDocPtr doc;
+   xmlNodePtr node;
+   UniDiffData_t *diff;
+
+   diff_files     = ndata_listRecursive( UNIDIFF_DATA_PATH );
+   diff_available = array_create_size( UniDiffData_t, array_size( diff_files ) );
+   for ( i = 0; i < array_size( diff_files ); i++ ) {
+      /* Parse the header. */
+      doc = xml_parsePhysFS( diff_files[i] );
+      if (doc == NULL)
+         return -1;
+
+      node = doc->xmlChildrenNode;
+      if (!xml_isNode(node,"unidiff")) {
+         ERR( _("Malformed XML header for '%s' UniDiff: missing root element '%s'"), diff_files[i], "unidiff" );
+         return -1;
+      }
+
+      diff = &array_grow(&diff_available);
+      diff->filename = diff_files[i];
+      xmlr_attr_strd(node, "name", diff->name);
+      xmlFreeDoc(doc);
+   }
+   array_free( diff_files );
+   array_shrink(&diff_available);
+
+   DEBUG( ngettext("Loaded %d UniDiff", "Loaded %d UniDiffs", array_size(diff_available) ), array_size(diff_available) );
+
+   return 0;
+}
 
 
 /**
@@ -177,7 +229,9 @@ int diff_isApplied( const char *name )
 static UniDiff_t* diff_get( const char *name )
 {
    int i;
-   for (i=0; i<diff_nstack; i++)
+   if (diff_stack == NULL)
+      return NULL;
+   for (i=0; i<array_size(diff_stack); i++)
       if (strcmp(diff_stack[i].name,name)==0)
          return &diff_stack[i];
    return NULL;
@@ -194,58 +248,43 @@ int diff_apply( const char *name )
 {
    xmlNodePtr node;
    xmlDocPtr doc;
-   size_t bufsize;
-   char *buf;
-   char *diffname;
+   char *filename;
+   int i;
 
    /* Check if already applied. */
    if (diff_isApplied(name))
       return 0;
 
-   buf = ndata_read( DIFF_DATA_PATH, &bufsize );
-   doc = xmlParseMemory( buf, bufsize );
+   filename = NULL;
+   for (i=0; i<array_size(diff_available); i++) {
+      if (strcmp(diff_available[i].name,name)==0) {
+         filename = diff_available[i].filename;
+         break;
+      }
+   }
+   if (filename == NULL) {
+      WARN(_("UniDiff '%s' not found in %s!"), name, UNIDIFF_DATA_PATH);
+      return -1;
+   }
+
+   doc = xml_parsePhysFS( filename );
 
    node = doc->xmlChildrenNode;
-   if (strcmp((char*)node->name,"unidiffs")) {
-      ERR(_("Malformed unidiff file: missing root element 'unidiffs'"));
+   if (strcmp((char*)node->name,"unidiff")) {
+      ERR(_("Malformed unidiff file: missing root element 'unidiff'"));
       return 0;
    }
 
-   node = node->xmlChildrenNode; /* first system node */
-   if (node == NULL) {
-      ERR(_("Malformed unidiff file: does not contain elements"));
-      return 0;
-   }
+   /* Apply it. */
+   diff_patch( node );
 
-   do {
-      if (xml_isNode(node,"unidiff")) {
-         /* Check to see if it's the diff we're looking for. */
-         xmlr_attr(node,"name",diffname);
-         if (strcmp(diffname,name)==0) {
-            /* Apply it. */
-            diff_patch( node );
-
-            /* Clean up. */
-            free(diffname);
-            xmlFreeDoc(doc);
-            free(buf);
-
-            /* Re-compute the economy. */
-            economy_execQueued();
-            economy_initialiseCommodityPrices();
-
-            return 0;
-         }
-         free(diffname);
-      }
-   } while (xml_nextNode(node));
-
-   /* More clean up. */
    xmlFreeDoc(doc);
-   free(buf);
 
-   WARN(_("UniDiff '%s' not found in %s."), name, DIFF_DATA_PATH);
-   return -1;
+   /* Re-compute the economy. */
+   economy_execQueued();
+   economy_initialiseCommodityPrices();
+
+   return 0;
 }
 
 
@@ -265,7 +304,7 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
    /* Set the target. */
    memset(&base, 0, sizeof(UniHunk_t));
    base.target.type = HUNK_TARGET_SYSTEM;
-   xmlr_attr(node,"name",base.target.u.name);
+   xmlr_attr_strd(node,"name",base.target.u.name);
    if (base.target.u.name==NULL) {
       WARN(_("Unidiff '%s' has a system node without a 'name' tag, not applying."), diff->name);
       return -1;
@@ -276,18 +315,19 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
    do {
       xml_onlyNodes(cur);
       if (xml_isNode(cur,"asset")) {
+         buf = xml_get( cur );
+         if ( buf == NULL ) {
+            WARN( _( "Unidiff '%s': Null hunk type." ), diff->name );
+            continue;
+         }
+
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
 
          /* Get the asset to modify. */
-         xmlr_attr(cur,"name",hunk.u.name);
+         xmlr_attr_strd(cur,"name",hunk.u.name);
 
          /* Get the type. */
-         buf = xml_get(cur);
-         if (buf==NULL) {
-            WARN(_("Unidiff '%s': Null hunk type."), diff->name);
-            continue;
-         }
          if (strcmp(buf,"add")==0)
             hunk.type = HUNK_TYPE_ASSET_ADD;
          else if (strcmp(buf,"remove")==0)
@@ -307,19 +347,19 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          continue;
       }
       else if (xml_isNode(cur,"jump")) {
+         buf = xml_get( cur );
+         if ( buf == NULL ) {
+            WARN( _( "Unidiff '%s': Null hunk type." ), diff->name );
+            continue;
+         }
+
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
 
          /* Get the jump point to modify. */
-         xmlr_attr(cur,"target",hunk.u.name);
+         xmlr_attr_strd(cur,"target",hunk.u.name);
 
          /* Get the type. */
-         buf = xml_get(cur);
-         if (buf==NULL) {
-            WARN(_("Unidiff '%s': Null hunk type."), diff->name);
-            continue;
-         }
-
          if (strcmp(buf,"add")==0)
             hunk.type = HUNK_TYPE_JUMP_ADD;
          else if (strcmp(buf,"remove")==0)
@@ -362,7 +402,7 @@ static int diff_patchTech( UniDiff_t *diff, xmlNodePtr node )
    /* Set the target. */
    memset(&base, 0, sizeof(UniHunk_t));
    base.target.type = HUNK_TARGET_TECH;
-   xmlr_attr(node,"name",base.target.u.name);
+   xmlr_attr_strd(node,"name",base.target.u.name);
    if (base.target.u.name==NULL) {
       WARN(_("Unidiff '%s' has an target node without a 'name' tag"), diff->name);
       return -1;
@@ -432,7 +472,7 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
    /* Set the target. */
    memset(&base, 0, sizeof(UniHunk_t));
    base.target.type = HUNK_TARGET_ASSET;
-   xmlr_attr(node,"name",base.target.u.name);
+   xmlr_attr_strd(node,"name",base.target.u.name);
    if (base.target.u.name==NULL) {
       WARN(_("Unidiff '%s' has an target node without a 'name' tag"), diff->name);
       return -1;
@@ -486,7 +526,7 @@ static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
    /* Set the target. */
    memset(&base, 0, sizeof(UniHunk_t));
    base.target.type = HUNK_TARGET_FACTION;
-   xmlr_attr(node,"name",base.target.u.name);
+   xmlr_attr_strd(node,"name",base.target.u.name);
    if (base.target.u.name==NULL) {
       WARN(_("Unidiff '%s' has an target node without a 'name' tag"), diff->name);
       return -1;
@@ -531,18 +571,19 @@ static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
          continue;
       }
       else if (xml_isNode(cur,"faction")) {
+         buf = xml_get( cur );
+         if ( buf == NULL ) {
+            WARN( _( "Unidiff '%s': Null hunk type." ), diff->name );
+            continue;
+         }
+
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
 
          /* Get the faction to set the association of. */
-         xmlr_attr(cur,"name",hunk.u.name);
+         xmlr_attr_strd(cur,"name",hunk.u.name);
 
          /* Get the type. */
-         buf = xml_get(cur);
-         if (buf==NULL) {
-            WARN(_("Unidiff '%s': Null hunk type."), diff->name);
-            continue;
-         }
          if (strcmp(buf,"ally")==0)
             hunk.type = HUNK_TYPE_FACTION_ALLY;
          else if (strcmp(buf,"enemy")==0)
@@ -587,7 +628,7 @@ static int diff_patch( xmlNodePtr parent )
    /* Prepare it. */
    diff = diff_newDiff();
    memset(diff, 0, sizeof(UniDiff_t));
-   xmlr_attr(parent,"name",diff->name);
+   xmlr_attr_strd(parent,"name",diff->name);
 
    /* Whether or not we need to update the universe. */
    univ_update = 0;
@@ -614,7 +655,9 @@ static int diff_patch( xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    if (diff->nfailed > 0) {
-      WARN(_("Unidiff '%s' failed to apply %d hunks."), diff->name, diff->nfailed);
+      WARN(
+         ngettext( "Unidiff '%s' failed to apply %d hunk.", "Unidiff '%s' failed to apply %d hunks.", diff->nfailed ),
+         diff->name, diff->nfailed );
       for (i=0; i<diff->nfailed; i++) {
          fail   = &diff->failed[i];
          target = fail->target.u.name;
@@ -698,7 +741,6 @@ static int diff_patch( xmlNodePtr parent )
 /**
  * @brief Applies a hunk and adds it to the diff.
  *
- *    @param diff Diff to which the hunk belongs.
  *    @param hunk Hunk to apply.
  *    @return 0 on success.
  */
@@ -890,14 +932,32 @@ void diff_remove( const char *name )
 
 
 /**
- * @brief Removes all active diffs.
+ * @brief Removes all active diffs. (Call before economy_destroy().)
  */
 void diff_clear (void)
 {
-   while (diff_nstack > 0)
-      diff_removeDiff(&diff_stack[diff_nstack-1]);
+   if (diff_stack==NULL)
+      return;
+
+   while (array_size(diff_stack) > 0)
+      diff_removeDiff(&diff_stack[array_size(diff_stack)-1]);
 
    economy_execQueued();
+}
+
+
+/**
+ * @brief Clean up after diff_loadAvailable().
+ */
+void diff_free (void)
+{
+   diff_clear();
+   for (int i = 0; i < array_size(diff_available); i++) {
+      free(diff_available[i].name);
+      free(diff_available[i].filename);
+   }
+   array_free(diff_available);
+   diff_available = NULL;
 }
 
 
@@ -909,21 +969,9 @@ void diff_clear (void)
 static UniDiff_t *diff_newDiff (void)
 {
    /* Check if needs initialization. */
-   if (diff_stack == NULL) {
-      diff_mstack = CHUNK_SIZE;
-      diff_stack = malloc(diff_mstack * sizeof(UniDiff_t));
-      diff_nstack = 1;
-      return &diff_stack[0];
-   }
-
-   diff_nstack++;
-   /* Check if need to grow. */
-   if (diff_nstack > diff_mstack) {
-      diff_mstack += CHUNK_SIZE;
-      diff_stack = realloc(diff_stack, diff_mstack * sizeof(UniDiff_t));
-   }
-
-   return &diff_stack[diff_nstack-1];
+   if (diff_stack == NULL)
+      diff_stack = array_create(UniDiff_t);
+   return &array_grow(&diff_stack);
 }
 
 
@@ -1001,10 +1049,7 @@ static int diff_removeDiff( UniDiff_t *diff )
    }
 
    diff_cleanup(diff);
-   diff_nstack--;
-   i = diff - diff_stack;
-   memmove(&diff_stack[i], &diff_stack[i+1], sizeof(UniDiff_t) * (diff_nstack-i));
-
+   array_erase( &diff_stack, diff, &diff[1] );
    return 0;
 }
 
@@ -1021,12 +1066,10 @@ static void diff_cleanup( UniDiff_t *diff )
    free(diff->name);
    for (i=0; i<diff->napplied; i++)
       diff_cleanupHunk(&diff->applied[i]);
-   if (diff->applied != NULL)
-      free(diff->applied);
+   free(diff->applied);
    for (i=0; i<diff->nfailed; i++)
       diff_cleanupHunk(&diff->failed[i]);
-   if (diff->failed != NULL)
-      free(diff->failed);
+   free(diff->failed);
    memset(diff, 0, sizeof(UniDiff_t));
 }
 
@@ -1038,10 +1081,10 @@ static void diff_cleanup( UniDiff_t *diff )
  */
 static void diff_cleanupHunk( UniHunk_t *hunk )
 {
-   if (hunk->target.u.name != NULL)
-      free(hunk->target.u.name);
+   free(hunk->target.u.name);
+   hunk->target.u.name = NULL;
 
-   switch (hunk->type) {
+   switch (hunk->type) { /* TODO: Does it really matter? */
       case HUNK_TYPE_ASSET_ADD:
       case HUNK_TYPE_ASSET_REMOVE:
       case HUNK_TYPE_ASSET_BLACKMARKET:
@@ -1058,8 +1101,7 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
       case HUNK_TYPE_FACTION_ENEMY:
       case HUNK_TYPE_FACTION_NEUTRAL:
       case HUNK_TYPE_FACTION_REALIGN:
-         if (hunk->u.name != NULL)
-            free(hunk->u.name);
+         free(hunk->u.name);
          hunk->u.name = NULL;
          break;
 
@@ -1082,10 +1124,12 @@ int diff_save( xmlTextWriterPtr writer )
    UniDiff_t *diff;
 
    xmlw_startElem(writer,"diffs");
-   for (i=0; i<diff_nstack; i++) {
-      diff = &diff_stack[i];
+   if (diff_stack != NULL) {
+      for (i=0; i<array_size(diff_stack); i++) {
+         diff = &diff_stack[i];
 
-      xmlw_elem(writer, "diff", "%s", diff->name);
+         xmlw_elem(writer, "diff", "%s", diff->name);
+      }
    }
    xmlw_endElem(writer); /* "diffs" */
 
@@ -1102,6 +1146,7 @@ int diff_save( xmlTextWriterPtr writer )
 int diff_load( xmlNodePtr parent )
 {
    xmlNodePtr node, cur;
+   char *     diffName;
 
    diff_clear();
 
@@ -1110,8 +1155,14 @@ int diff_load( xmlNodePtr parent )
       if (xml_isNode(node,"diffs")) {
          cur = node->xmlChildrenNode;
          do {
-            if (xml_isNode(cur,"diff"))
-               diff_apply( xml_get(cur) );
+            if ( xml_isNode( cur, "diff" ) ) {
+               diffName = xml_get( cur );
+               if ( diffName == NULL ) {
+                  WARN( _( "Expected node \"diff\" to contain the name of a unidiff. Was empty." ) );
+                  continue;
+               }
+               diff_apply( diffName );
+            }
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));

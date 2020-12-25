@@ -3,7 +3,11 @@
 <event name="Kidnapped">
   <trigger>enter</trigger>
   <chance>15</chance>
-  <cond>player.misnDone("Kidnapped") == false and var.peek("traffic_00_active") == nil and system.cur():name() == "Arcturus" and player.numOutfit("Mercenary License") &gt; 0</cond>
+  <cond>player.misnDone("Kidnapped") == false and var.peek("traffic_00_active") == nil and system.cur() == system.get("Arcturus") and player.numOutfit("Mercenary License") &gt; 0</cond>
+  <notes>
+   <campaign>Kidnapping</campaign>
+   <tier>3</tier>
+  </notes>
  </event>
 --]]
 --[[ 

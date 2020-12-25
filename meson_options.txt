@@ -1,0 +1,7 @@
+option('paranoid'    , type: 'boolean', value: false    , description: 'Promote run-time warnings to errors.')
+option('executable'  , type: 'feature', value: 'enabled', description: 'Enable compilation of Naev\'s executable.')
+option('docs_c'      , type: 'feature', value: 'auto'   , description: 'Enable compilation of Naev\'s C documentation.')
+option('docs_lua'    , type: 'feature', value: 'auto'   , description: 'Enable compilation of Naev\'s Lua documentation.')
+option('luajit'      , type: 'feature', value: 'auto'   , description: 'Enable LuaJIT rather than standard Lua.')
+option('nls'         , type: 'feature', value: 'enabled', description: 'Enable NLS translations.')
+option('ndata_path'  , type: 'string' , value: ''       , description: 'Set the path ndata will be installed to (relative to the install prefix).')

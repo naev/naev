@@ -7,7 +7,9 @@
 #  define GLUE_MACOS_H
 
 
+/** @cond */
 #include <stddef.h>
+/** @endcond */
 
 
 int macos_isBundle ();

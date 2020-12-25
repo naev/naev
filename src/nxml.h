@@ -7,10 +7,23 @@
 #ifndef XML_H
 #  define XML_H
 
+/** @cond */
 #include <errno.h>
+
+#ifdef __MINGW64_VERSION_MAJOR
+   /* HACK: libxml2 assumes in its function declarations that its format
+    * strings are handled by the native (legacy Microsoft) printf-family
+    * functions. Their source even #defines vsnprintf to _vsnprintf for maximum
+    * breakage. However, testing a shows, e.g., xmlw_attr with PRIu64 formats
+    * will still work on a MinGW64 build.
+    * Therefore, we vandalize their (unfixable) diagnostics Dvaered-style.
+    * */
+#  define LIBXML_ATTR_FORMAT( fmt, args )
+#endif
 
 #include "libxml/parser.h"
 #include "libxml/xmlwriter.h"
+/** @endcond */
 
 #include "log.h"
 #include "opengl.h"
@@ -34,9 +47,6 @@
 /* gets the next node */
 #define xml_nextNode(n)     \
    ((n!=NULL) && ((n = n->next) != NULL))
-
-/* gets the property s of node n. WARNING: MALLOCS! */
-#define xml_nodeProp(n,s)     (char*)xmlGetProp(n,(xmlChar*)s)
 
 /* get data different ways */
 #define xml_raw(n)            ((char*)(n)->children->content)
@@ -76,11 +86,22 @@
 #define xmlr_strd(n,s,str) \
    {if (xml_isNode(n,s)) { \
       if (str != NULL) { \
-         WARN("Node '%s' already loaded and being trying to replace '%s' with '%s'", \
+         WARN("Node '%s' already loaded and being replaced from '%s' to '%s'", \
                s, str, xml_raw(n) ); } \
       str = ((xml_get(n) == NULL) ? NULL : strdup(xml_raw(n))); continue; }}
+/** DEPRECATED synonym for xmlr_attr_strd. (This one just isn't explicit about being a malloc.)
+ * It's still used by old code that needs to be reviewed or deleted for other reasons. */
 #define xmlr_attr(n,s,a) \
-   a = xml_nodeProp(n,s)
+   a = (char*)xmlGetProp(n,(xmlChar*)s)
+#define xmlr_attr_int(n,s,a)     do {xmlr_attr(n,s,char*T); a = T==NULL ? 0 : strtol(  T, NULL, 10); free(T);} while(0)
+#define xmlr_attr_int(n,s,a)     do {xmlr_attr(n,s,char*T); a = T==NULL ? 0 : strtol(  T, NULL, 10); free(T);} while(0)
+#define xmlr_attr_uint(n,s,a)    do {xmlr_attr(n,s,char*T); a = T==NULL ? 0 : strtoul( T, NULL, 10); free(T);} while(0)
+#define xmlr_attr_long(n,s,a)    do {xmlr_attr(n,s,char*T); a = T==NULL ? 0 : strtoll( T, NULL, 10); free(T);} while(0)
+#define xmlr_attr_ulong(n,s,a)   do {xmlr_attr(n,s,char*T); a = T==NULL ? 0 : strtoull(T, NULL, 10); free(T);} while(0)
+#define xmlr_attr_float(n,s,a)   do {xmlr_attr(n,s,char*T); a = T==NULL ? 0 :     atof(T          ); free(T);} while(0)
+#define xmlr_attr_strd(n,s,a)    xmlr_attr(n,s,a)
+/** DEPRECATED common pattern for optional ints (actually of type int) */
+#define xmlr_attr_atoi_neg1(n,s,a) do {xmlr_attr(n,s,char*T); a = T==NULL ? -1 : atoi(T); free(T);} while(0)
 
 /*
  * writer crap
@@ -121,6 +142,7 @@ do {if (xmlTextWriterEndDocument(w) < 0) { \
 /*
  * Functions for generic complex reading.
  */
+xmlDocPtr xml_parsePhysFS( const char* filename );
 glTexture* xml_parseTexture( xmlNodePtr node,
       const char *path, int defsx, int defsy,
       const unsigned int flags );

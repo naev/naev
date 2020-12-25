@@ -8,11 +8,13 @@
  * @brief Generic development routines.
  */
 
-#include "dev.h"
+/** @cond */
+#include "SDL.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include "SDL.h"
+#include "dev.h"
 
 #include "log.h"
 #include "nfile.h"

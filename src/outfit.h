@@ -8,11 +8,11 @@
 #  define OUTFIT_H
 
 
-#include "opengl.h"
-#include "sound.h"
-#include "commodity.h"
-#include "shipstats.h"
 #include "collision.h"
+#include "commodity.h"
+#include "opengl.h"
+#include "shipstats.h"
+#include "sound.h"
 
 
 /*
@@ -27,6 +27,16 @@
                                                    when timer is up. */
 #define OUTFIT_PROP_WEAP_BLOWUP_SHIELD (1<<13) /**< Weapon blows up (shield spfx)
                                                    when timer is up. */
+
+/* Outfit filter labels. [Doc comments are also translator notes and must precede the #define.] */
+/** Color-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title. */
+#define OUTFIT_LABEL_WEAPON            N_("\ab W ")
+/** Color-coded abbreviation for "Utility [outfit]", short enough to use as a tab/column title. */
+#define OUTFIT_LABEL_UTILITY           N_("\ag U ")
+/** Color-coded abbreviation for "Structure [outfit]", short enough to use as a tab/column title. */
+#define OUTFIT_LABEL_STRUCTURE         N_("\ap S ")
+/** Color-coded abbreviation for "Core [outfit]", short enough to use as a tab/column title. */
+#define OUTFIT_LABEL_CORE              N_("\aoCore")
 
 
 /*
@@ -90,7 +100,7 @@ typedef enum OutfitSlotSize_ {
  * @brief Ammo AI types.
  */
 typedef enum OutfitAmmoAI_ {
-   AMMO_AI_DUMB, /**< No AI. */
+   AMMO_AI_UNGUIDED, /**< No AI. */
    AMMO_AI_SEEK, /**< Aims at the target. */
    AMMO_AI_SMART /**< Aims at the target, correcting for relative velocity. */
 } OutfitAmmoAI;
@@ -186,7 +196,7 @@ typedef struct OutfitLauncherData_ {
    int amount;       /**< Amount of ammo it can store. */
    double reload_time; /**< Time it takes to reload 1 ammo. */
 
-   /* Lockon information. */
+   /* Lock-on information. */
    double lockon;    /**< Time it takes to lock on the target */
    double ew_target; /**< Target ewarfare at which it the lockon time is based off of. */
    double ew_target2; /**< Target ewarfare squared for quicker comparisons. */
@@ -397,6 +407,15 @@ const char* outfit_getAmmoAI( const Outfit *o );
  */
 const char *outfit_existsCase( const char* name );
 char **outfit_searchFuzzyCase( const char* name, int *n );
+
+/*
+ * Filter.
+ */
+int outfit_filterWeapon( const Outfit *o );
+int outfit_filterUtility( const Outfit *o );
+int outfit_filterStructure( const Outfit *o );
+int outfit_filterCore( const Outfit *o );
+int outfit_filterOther( const Outfit *o );
 
 /*
  * get data from outfit

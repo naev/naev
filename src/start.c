@@ -10,13 +10,15 @@
  * This information is important when creating a new game.
  */
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "start.h"
 
-#include "naev.h"
-
 #include "log.h"
-#include "nxml.h"
 #include "ndata.h"
+#include "nxml.h"
 
 
 #define XML_START_ID    "Start"  /**< XML document tag of module start file. */
@@ -47,8 +49,6 @@ static ndata_start_t start_data; /**< The actual starting data. */
  */
 int start_load (void)
 {
-   size_t bufsize;
-   char *buf;
    xmlNodePtr node, cur, tmp;
    xmlDocPtr doc;
    int cycles, periods, seconds;
@@ -59,12 +59,9 @@ int start_load (void)
    seconds = -1;
 
    /* Try to read the file. */
-   buf = ndata_read( START_DATA_PATH, &bufsize );
-   if (buf == NULL)
+   doc = xml_parsePhysFS( START_DATA_PATH );
+   if (doc == NULL)
       return -1;
-
-   /* Load the XML file. */
-   doc = xmlParseMemory( buf, bufsize );
 
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,XML_START_ID)) {
@@ -92,7 +89,7 @@ int start_load (void)
             xmlr_strd( cur, "event",   start_data.event );
 
             if (xml_isNode(cur,"ship")) {
-               xmlr_attr( cur, "name",    start_data.shipname );
+               xmlr_attr_strd( cur, "name",    start_data.shipname );
                xmlr_strd( cur, "ship",    start_data.ship );
             }
             else if (xml_isNode(cur, "system")) {
@@ -131,7 +128,6 @@ int start_load (void)
 
    /* Clean up. */
    xmlFreeDoc(doc);
-   free(buf);
 
    /* Safety checking. */
 #define MELEMENT(o,s) \
@@ -229,8 +225,8 @@ const char* start_system (void)
 
 /**
  * @brief Gets the starting position of the player.
- *    @param[out] Starting X position.
- *    @param[out] Starting Y position.
+ *    @param[out] x Starting X position.
+ *    @param[out] y Starting Y position.
  */
 void start_position( double *x, double *y )
 {

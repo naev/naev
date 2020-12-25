@@ -1,4 +1,5 @@
 /*
+
  * See Licensing and Copyright notice in naev.h
  */
 
@@ -9,55 +10,58 @@
  */
 
 
-#include "gui.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <stdlib.h>
 
-#include "player.h"
-#include "nxml.h"
-#include "pilot.h"
-#include "log.h"
-#include "opengl.h"
-#include "font.h"
-#include "ndata.h"
-#include "space.h"
-#include "rng.h"
-#include "land.h"
-#include "sound.h"
-#include "economy.h"
-#include "pause.h"
-#include "menu.h"
-#include "toolkit.h"
-#include "dialogue.h"
-#include "mission.h"
-#include "nlua_misn.h"
-#include "ntime.h"
-#include "hook.h"
-#include "map.h"
-#include "nfile.h"
-#include "spfx.h"
-#include "unidiff.h"
-#include "comm.h"
-#include "intro.h"
-#include "perlin.h"
+#include "naev.h"
+/** @endcond */
+
+#include "gui.h"
+
 #include "ai.h"
-#include "music.h"
-#include "nmath.h"
-#include "gui_osd.h"
-#include "conf.h"
-#include "nebula.h"
 #include "camera.h"
-#include "pilot.h"
+#include "comm.h"
+#include "conf.h"
+#include "dialogue.h"
+#include "economy.h"
+#include "font.h"
+#include "gui_omsg.h"
+#include "gui_osd.h"
+#include "hook.h"
+#include "input.h"
+#include "intro.h"
+#include "land.h"
+#include "log.h"
+#include "map.h"
+#include "menu.h"
+#include "mission.h"
+#include "music.h"
+#include "ndata.h"
+#include "nebula.h"
+#include "nfile.h"
 #include "nlua.h"
-#include "nluadef.h"
 #include "nlua_gfx.h"
 #include "nlua_gui.h"
+#include "nlua_misn.h"
 #include "nlua_tex.h"
 #include "nlua_tk.h"
-#include "gui_omsg.h"
+#include "nluadef.h"
+#include "nmath.h"
 #include "nstring.h"
+#include "ntime.h"
+#include "nxml.h"
+#include "opengl.h"
+#include "pause.h"
+#include "perlin.h"
+#include "pilot.h"
+#include "pilot.h"
+#include "player.h"
+#include "rng.h"
+#include "sound.h"
+#include "space.h"
+#include "spfx.h"
+#include "toolkit.h"
+#include "unidiff.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
@@ -66,7 +70,7 @@
 #define INTERFERENCE_LAYERS      16 /**< Number of interference layers. */
 #define INTERFERENCE_CHANGE_DT   0.1 /**< Speed to change at. */
 
-#define RADAR_BLINK_PILOT        1. /**< Blink rate of the pilot target on radar. */
+#define RADAR_BLINK_PILOT        0.5 /**< Blink rate of the pilot target on radar. */
 #define RADAR_BLINK_PLANET       1. /**< Blink rate of the planet target on radar. */
 
 
@@ -80,7 +84,6 @@ static double blink_pilot     = 0.; /**< Timer on target blinking on radar. */
 static double blink_planet    = 0.; /**< Timer on planet blinking on radar. */
 
 /* for VBO. */
-static gl_vbo *gui_triangle_vbo = NULL;
 static gl_vbo *gui_planet_vbo = NULL;
 static gl_vbo *gui_radar_select_vbo = NULL;
 static gl_vbo *gui_planet_blink_vbo = NULL;
@@ -94,7 +97,7 @@ extern Pilot** pilot_stack; /**< @todo remove */
 extern int pilot_nstack; /**< @todo remove */
 
 
-extern int land_wid; /**< From land.c */
+extern unsigned int land_wid; /**< From land.c */
 
 
 /**
@@ -113,6 +116,51 @@ static double gui_viewport_y = 0.; /**< GUI Viewport Y offset. */
 static double gui_viewport_w = 0.; /**< GUI Viewport width. */
 static double gui_viewport_h = 0.; /**< GUI Viewport height. */
 
+/**
+ * Map overlay
+ */
+/**
+ * @struct MapOverlay
+ *
+ * @brief Represents map overlay config values
+ */
+typedef struct MapOverlay_ {
+   /* GUI parameters */
+   int boundTop;
+   int boundRight;
+   int boundBottom;
+   int boundLeft;
+} MapOverlay;
+static MapOverlay map_overlay = {
+  .boundTop = 0,
+  .boundRight = 0,
+  .boundBottom = 0,
+  .boundLeft = 0,
+};
+int map_overlay_height(void)
+{
+   return SCREEN_H - map_overlay.boundTop - map_overlay.boundBottom;
+}
+int map_overlay_width(void)
+{
+   return SCREEN_W - map_overlay.boundLeft - map_overlay.boundRight;
+}
+int map_overlay_center_x(void)
+{
+   return map_overlay_width() / 2 + map_overlay.boundLeft;
+}
+int map_overlay_center_y(void)
+{
+   return map_overlay_height() / 2 + map_overlay.boundBottom;
+}
+double map_overlay_scale_x(void)
+{
+  return (double)map_overlay_width() / (double)SCREEN_W;
+}
+double map_overlay_scale_y(void)
+{
+  return (double)map_overlay_height() / (double)SCREEN_H;
+}
 
 /**
  * @struct Radar
@@ -193,7 +241,7 @@ static void gui_renderBorder( double dt );
 static void gui_renderMessages( double dt );
 static const glColour *gui_getPlanetColour( int i );
 static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int cy, const glColour *col );
-static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape );
+static void gui_blink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape, const glColour *col, const double blinkInterval, const double blinkVar );
 static const glColour* gui_getPilotColour( const Pilot* p );
 static void gui_renderInterference (void);
 static void gui_calcBorders (void);
@@ -217,6 +265,7 @@ void gui_setDefaults (void)
 /**
  * @brief Initializes the message system.
  *
+ *    @param width Message width.
  *    @param x X position to set at.
  *    @param y Y position to set at.
  */
@@ -320,7 +369,7 @@ void player_messageRaw( const char *str )
 
    /* Get length. */
    l = strlen(str);
-   i = gl_printWidthForText( NULL, str, gui_mesg_w - ((str[0] == '\t') ? 45. : 15.) );
+   i = gl_printWidthForText( NULL, str, gui_mesg_w - ((str[0] == '\t') ? 45. : 15.), NULL );
    p = 0;
    while (p < l) {
       /* Move pointer. */
@@ -348,7 +397,7 @@ void player_messageRaw( const char *str )
       p += i;
       if ((str[p] == '\n') || (str[p] == ' '))
          p++; /* Skip "empty char". */
-      i  = gl_printWidthForText( NULL, &str[p], gui_mesg_w - 45. ); /* They're tabbed so it's shorter. */
+      i  = gl_printWidthForText( NULL, &str[p], gui_mesg_w - 45., NULL ); /* They're tabbed so it's shorter. */
    }
 }
 
@@ -486,7 +535,7 @@ void gui_renderTargetReticles( int x, int y, int w, int h, const glColour* c )
 /**
  * @brief Renders the players pilot target.
  *
- *    @double dt Current delta tick.
+ *    @param dt Current delta tick.
  */
 static void gui_renderPilotTarget( double dt )
 {
@@ -512,7 +561,7 @@ static void gui_renderPilotTarget( double dt )
    }
 
    /* Make sure target is still in range. */
-   if (!pilot_inRangePilot( player.p, p )) {
+   if (!pilot_inRangePilot( player.p, p, NULL )) {
       pilot_setTarget( player.p, player.p->id );
       gui_setTarget();
       return;
@@ -675,10 +724,7 @@ static void gui_renderBorder( double dt )
          ccol.b = col->b;
          ccol.a = int_a;
 
-         gl_beginSolidProgram(gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0), &ccol);
-         gl_vboActivateAttribOffset( gui_triangle_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-         glDrawArrays( GL_LINE_STRIP, 0, 4 );
-         gl_endSolidProgram();
+         gl_renderTriangleEmpty( cx, cy, -jp->angle, 10., 1., &ccol );
       }
    }
 
@@ -687,7 +733,7 @@ static void gui_renderBorder( double dt )
       plt = pilot_stack[i];
 
       /* See if in sensor range. */
-      if (!pilot_inRangePilot(player.p, plt))
+      if (!pilot_inRangePilot(player.p, plt, NULL))
          continue;
 
       /* Check if out of range. */
@@ -901,9 +947,80 @@ void gui_render( double dt )
 
 
 /**
+ * @brief Notifies GUI scripts that the player broke out of cooldown.
+ */
+void gui_cooldownEnd (void)
+{
+   if (gui_env != LUA_NOREF)
+      gui_doFunc( "end_cooldown" );
+}
+
+
+/**
+ * @brief Sets map overlay bounds.
+ *
+ *    @param top Top boundary in pixels
+ *    @param right Right boundary in pixels
+ *    @param bottom Bottom boundary in pixels
+ *    @param left Left boundary in pixels
+ *
+ *    @return 0 on success 
+ */
+void gui_setMapOverlayBounds( int top, int right, int bottom, int left )
+{
+   map_overlay.boundTop = top;
+   map_overlay.boundRight = right;
+   map_overlay.boundBottom = bottom;
+   map_overlay.boundLeft = left;
+}
+
+/**
+ * @brief Gets map overlay bound (top)
+ *
+ *    @return Map overlay bound (top) in px
+ */
+int gui_getMapOverlayBoundTop(void)
+{
+  return map_overlay.boundTop;
+}
+
+/**
+ * @brief Gets map overlay bound (right)
+ *
+ *    @return Map overlay bound (right) in px
+ */
+int gui_getMapOverlayBoundRight(void)
+{
+  return map_overlay.boundRight;
+}
+
+/**
+ * @brief Gets map overlay bound (bottom)
+ *
+ *    @return Map overlay bound (bottom) in px
+ */
+int gui_getMapOverlayBoundBottom(void)
+{
+  return map_overlay.boundBottom;
+}
+
+/**
+ * @brief Gets map overlay bound (left)
+ *
+ *    @return Map overlay bound (left) in px
+ */
+int gui_getMapOverlayBoundLeft(void)
+{
+  return map_overlay.boundLeft;
+}
+
+
+/**
  * @brief Initializes the radar.
  *
  *    @param circle Whether or not the radar is circular.
+ *    @param w Radar width.
+ *    @param h Radar height.
  */
 int gui_radarInit( int circle, int w, int h )
 {
@@ -1003,37 +1120,11 @@ void gui_radarRender( double x, double y )
 
 
 /**
- * @brief Gets the radar's position.
- *
- *    @param[out] x X position.
- *    @param[out] y Y position.
- */
-void gui_radarGetPos( int *x, int *y )
-{
-   *x = gui_radar.x;
-   *y = gui_radar.y;
-}
-
-
-/**
- * @brief Gets the radar's dimensions.
- *
- *    @param[out] w Width.
- *    @param[out] h Height.
- */
-void gui_radarGetDim( int *w, int *h )
-{
-   *w = gui_radar.w;
-   *h = gui_radar.h;
-}
-
-
-/**
  * @brief Outputs the radar's resolution.
  *
  *    @param[out] res Current zoom ratio.
  */
-void gui_radarGetRes( int *res )
+void gui_radarGetRes( double* res )
 {
    *res = gui_radar.res;
 }
@@ -1055,9 +1146,9 @@ void gui_clearMessages (void)
  */
 static void gui_renderMessages( double dt )
 {
-   double x, y, h, hs, vx, vy;
+   double x, y, h, hs, vx, vy, dy;
    int v, i, m, o;
-   glColour c;
+   glColour c, msgc;
 
    /* Coordinate translation. */
    x = gui_mesg_x;
@@ -1072,10 +1163,13 @@ static void gui_renderMessages( double dt )
    c.r = 1.;
    c.g = 1.;
    c.b = 1.;
+   msgc.r = 0.;
+   msgc.g = 0.;
+   msgc.b = 0.;
+   msgc.a = 0.6;
 
    /* Render background. */
-   h  = conf.mesg_visible*gl_defFont.h*1.2;
-   gl_renderRect( x-2., y-2., gui_mesg_w-13., h+4., &cBlackHilight );
+   h = 0;
 
    /* Set up position. */
    vx = x;
@@ -1109,15 +1203,20 @@ static void gui_renderMessages( double dt )
          if (mesg_stack[m].str[0] != '\0') {
             if (mesg_stack[m].str[0] == '\t') {
                gl_printRestore( &mesg_stack[m].restore );
-               gl_printMaxRaw( NULL, gui_mesg_w - 45., x + 30, y, &cFontWhite, &mesg_stack[m].str[1] );
+               dy = gl_printHeightRaw( NULL, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
+               gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &msgc );
+               gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 45., x + 30, y + 3, &cFontWhite, -1., &mesg_stack[m].str[1] );
+            } else {
+               dy = gl_printHeightRaw( NULL, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
+               gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &msgc );
+               gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 15., x, y + 3, &cFontWhite, -1., mesg_stack[m].str );
             }
-            else
-               gl_printMaxRaw( NULL, gui_mesg_w - 15., x, y, &cFontWhite, mesg_stack[m].str );
+            h += dy;
+            y += dy;
          }
       }
 
       /* Increase position. */
-      y += (double)gl_defFont.h*1.2;
    }
 
    /* Render position. */
@@ -1193,15 +1292,20 @@ static const glColour* gui_getPilotColour( const Pilot* p )
  * @brief Renders a pilot in the GUI radar.
  *
  *    @param p Pilot to render.
+ *    @param shape Shape of the radar (RADAR_RECT or RADAR_CIRCLE).
+ *    @param w Width.
+ *    @param h Height.
+ *    @param res Radar resolution.
+ *    @param overlay Whether to render onto the overlay.
  */
 void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res, int overlay )
 {
-   int x, y, sx, sy;
-   double px, py;
+   int x, y;
+   double scale;
    glColour col;
 
    /* Make sure is in range. */
-   if (!pilot_inRangePilot( player.p, p ))
+   if (!pilot_inRangePilot( player.p, p, NULL ))
       return;
 
    /* Get position. */
@@ -1214,16 +1318,11 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       y = (int)((p->solid->pos.y - player.p->solid->pos.y) / res);
    }
    /* Get size. */
-   sx = (int)(PILOT_SIZE_APROX/2. * p->ship->gfx_space->sw / res);
-   sy = (int)(PILOT_SIZE_APROX/2. * p->ship->gfx_space->sh / res);
-   if (sx < 1.)
-      sx = 1.;
-   if (sy < 1.)
-      sy = 1.;
+   scale = (double)ship_size( p->ship ) * (1. + RADAR_RES_MAX / res );
 
    /* Check if pilot in range. */
    if ( ((shape==RADAR_RECT) &&
-            ((ABS(x) > w/2+sx) || (ABS(y) > h/2.+sy)) ) ||
+            ((ABS(x) > (w+scale)/2.) || (ABS(y) > (h+scale)/2.)) ) ||
          ((shape==RADAR_CIRCLE) &&
             ((x*x+y*y) > (int)(w*w))) ) {
 
@@ -1235,38 +1334,36 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
    /* Transform coordinates into the 0,0 -> SCREEN_W, SCREEN_H range. */
    if (overlay) {
-      x += SCREEN_W / 2;
-      y += SCREEN_H / 2;
+      x += map_overlay_center_x();
+      y += map_overlay_center_y();
       w *= 2.;
       h *= 2.;
    }
 
    /* Draw selection if targeted. */
+   /*col = cRadar_tPilot;
+   col.a = 1.-interference_alpha; */
    if (p->id == player.p->target) {
-      if (blink_pilot < RADAR_BLINK_PILOT/2.) {
-         col = cRadar_tPilot;
-         col.a = 1.-interference_alpha;
-
-         gl_beginSolidProgram(gl_Matrix4_Translate(gl_view_matrix, x, y, 0), &cRadar_tPilot);
-         gl_vboActivateAttribOffset( gui_radar_select_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-         glDrawArrays( GL_LINES, 0, 8 );
-         gl_endSolidProgram();
-      }
+      gui_blink( w, h, 0, x, y, 12, RADAR_RECT, &cRadar_hilight, RADAR_BLINK_PILOT, blink_pilot);
    }
 
-   /* Draw square. */
-   px     = MAX(x-sx,-w);
-   py     = MAX(y-sy, -h);
-   if (pilot_isFlag(p, PILOT_HILIGHT) && (blink_pilot < RADAR_BLINK_PILOT/2.))
+   if (p->id == player.p->target) 
       col = cRadar_hilight;
+   else if (pilot_isFlag(p, PILOT_HILIGHT))
+      col = cRadar_tPilot;
    else
       col = *gui_getPilotColour(p);
+      // col = cRadar_hilight;
    col.a = 1.-interference_alpha;
-   gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &col );
+
+   glLineWidth( 2. );
+   gl_renderTriangleEmpty( x, y, p->solid->dir, scale, 1., &cBlack );
+   glLineWidth( 1. );
+   gl_renderTriangleEmpty( x, y, p->solid->dir, scale, 1., &col );
 
    /* Draw name. */
    if (overlay && pilot_isFlag(p, PILOT_HILIGHT))
-      gl_printRaw( &gl_smallFont, x+2*sx+5., y-gl_smallFont.h/2., &col, p->name );
+      gl_printMarkerRaw( &gl_smallFont, x+scale+5., y-gl_smallFont.h/2., &col, p->name );
 }
 
 
@@ -1274,6 +1371,10 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
  * @brief Renders an asteroid in the GUI radar.
  *
  *    @param a Asteroid to render.
+ *    @param w Width.
+ *    @param h Height.
+ *    @param res Radar resolution.
+ *    @param overlay Whether to render onto the overlay.
  */
 void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int overlay )
 {
@@ -1309,8 +1410,8 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
 
    /* Transform coordinates into the 0,0 -> SCREEN_W, SCREEN_H range. */
    if (overlay) {
-      x += SCREEN_W / 2;
-      y += SCREEN_H / 2;
+      x += map_overlay_center_x();
+      y += map_overlay_center_y();
       w *= 2.;
       h *= 2.;
    }
@@ -1333,11 +1434,8 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
    ccol.a = 1.-interference_alpha;
    gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &ccol );
 
-   if (targeted && (blink_pilot >= RADAR_BLINK_PILOT/2.)) {
-      gl_beginSolidProgram(gl_Matrix4_Translate(gl_view_matrix, x, y, 0), &ccol);
-      gl_vboActivateAttribOffset( gui_radar_select_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-      glDrawArrays( GL_LINES, 0, 8 );
-      gl_endSolidProgram();
+   if (targeted){
+      gui_blink( w, h, 0, x, y, 12, RADAR_RECT, &ccol, RADAR_BLINK_PILOT, blink_pilot );
    }
 }
 
@@ -1348,7 +1446,7 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
 void gui_renderPlayer( double res, int overlay )
 {
    double x, y, r;
-   glColour textCol = { cRadar_player.r, cRadar_player.g, cRadar_player.b, 0.99 };
+   // glColour textCol = { cRadar_player.r, cRadar_player.g, cRadar_player.b, 0.99 };
    /* XXX: textCol is a hack to prevent the text from overly obscuring
     * overlay display of other things. Effectively disables outlines for
     * the text. Should ultimately be replaced with some other method of
@@ -1356,21 +1454,25 @@ void gui_renderPlayer( double res, int overlay )
     * as a font change, but using this fix for now. */
 
    if (overlay) {
-      x = player.p->solid->pos.x / res + SCREEN_W / 2;
-      y = player.p->solid->pos.y / res + SCREEN_H / 2;
-      r = 5.;
-   }
-   else {
+      x = player.p->solid->pos.x / res + map_overlay_center_x();
+      y = player.p->solid->pos.y / res + map_overlay_center_y();
+      r = MIN(SCREEN_W,SCREEN_H)*0.012;
+   } else {
       x = 0.;
       y = 0.;
-      r = 3.;
+      r = MIN(SCREEN_W,SCREEN_H)*0.008;
    }
 
    /* Render the cross. */
-   gl_renderCross( x, y, r, &cRadar_player );
+   // gl_renderCross( x, y, r, &cRadar_player );
+   glLineWidth( 2. );
+   gl_renderTriangleEmpty( x - 1, y, player.p->solid->dir, r, 2., &cBlack );
+   gl_renderTriangleEmpty( x + 1, y, player.p->solid->dir, r, 2., &cBlack );
+   gl_renderTriangleEmpty( x, y - 1, player.p->solid->dir, r, 2., &cBlack );
+   gl_renderTriangleEmpty( x, y + 1, player.p->solid->dir, r, 2., &cBlack );
 
-   if (overlay)
-      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &textCol, _("You") );
+   gl_renderTriangleEmpty( x, y, player.p->solid->dir, r, 2., &cRadar_player );
+   glLineWidth( 1. );
 }
 
 
@@ -1409,22 +1511,18 @@ void gui_forceBlink (void)
 /**
  * @brief Renders the planet blink around a position on the minimap.
  */
-static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape )
+static void gui_blink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape, const glColour *col, const double blinkInterval, const double blinkVar )
 {
    (void) w;
    (void) h;
    (void) rc;
    (void) shape;
-   glColour col;
    gl_Matrix4 projection;
 
-   if (blink_planet < RADAR_BLINK_PLANET/2.) {
-      col = cRadar_tPlanet;
-      col.a = 1.-interference_alpha;
-
+   if (blinkVar < blinkInterval/2.) {
       projection = gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0);
       projection = gl_Matrix4_Scale(projection, vr, vr, 1);
-      gl_beginSolidProgram(projection, &col);
+      gl_beginSolidProgram(projection, col);
       gl_vboActivateAttribOffset( gui_planet_blink_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
       glDrawArrays( GL_LINES, 0, 8 );
       gl_endSolidProgram();
@@ -1482,11 +1580,10 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
  */
 void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
-   int x, y;
-   int cx, cy, r, rc;
-   GLfloat vr;
+   GLfloat cx, cy, x, y, r, vr, rc;
    glColour col;
    Planet *planet;
+   char buf[STRMAX_SHORT];
 
    /* Make sure is known. */
    if ( !planet_isKnown( cur_system->planets[ind] ))
@@ -1494,31 +1591,21 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
 
    /* Default values. */
    planet = cur_system->planets[ind];
-   r     = (int)(planet->radius*2. / res);
-   vr    = MAX( r, 3. ); /* Make sure it's visible. */
+   r     = planet->radius*2. / res;
+   vr    = overlay ? planet->mo.radius : MAX( r, 15.);
+
    if (overlay) {
-      cx    = (int)(planet->pos.x / res);
-      cy    = (int)(planet->pos.y / res);
+      cx    = planet->pos.x / res;
+      cy    = planet->pos.y / res;
    }
    else {
-      cx    = (int)((planet->pos.x - player.p->solid->pos.x) / res);
-      cy    = (int)((planet->pos.y - player.p->solid->pos.y) / res);
+      cx    = (planet->pos.x - player.p->solid->pos.x) / res;
+      cy    = (planet->pos.y - player.p->solid->pos.y) / res;
    }
-   if (shape==RADAR_CIRCLE)
-      rc = (int)(w*w);
-   else
-      rc = 0;
 
    /* Check if in range. */
-   if (shape == RADAR_RECT) {
-      /* Out of range. */
-      if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
-         if ((player.p->nav_planet == ind) && !overlay)
-            gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy, &cRadar_tPlanet );
-         return;
-      }
-   }
-   else if (shape == RADAR_CIRCLE) {
+   if (shape == RADAR_CIRCLE) {
+      rc = w*w;
       x = ABS(cx)-r;
       y = ABS(cy)-r;
       /* Out of range. */
@@ -1528,68 +1615,94 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
          return;
       }
    }
+   else {
+      rc = 0;
+      if (shape == RADAR_RECT) {
+         /* Out of range. */
+         if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
+            if ((player.p->nav_planet == ind) && !overlay)
+               gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy, &cRadar_tPlanet );
+            return;
+         }
+      }
+   }
 
    if (overlay) {
       /* Transform coordinates. */
-      cx += SCREEN_W / 2;
-      cy += SCREEN_H / 2;
+      cx += map_overlay_center_x();
+      cy += map_overlay_center_y();
       w  *= 2.;
       h  *= 2.;
    }
 
-   /* Do the blink. */
-   if (ind == player.p->nav_planet)
-      gui_planetBlink( w, h, rc, cx, cy, vr, shape );
 
    /* Get the colour. */
    col = *gui_getPlanetColour(ind);
    if (!overlay)
       col.a = 1.-interference_alpha;
 
+   /* Do the blink. */
+   if (ind == player.p->nav_planet)
+      gui_blink( w, h, rc, cx, cy, vr, shape, &col, RADAR_BLINK_PLANET, blink_planet);
+
+   /* 
    gl_beginSolidProgram(gl_Matrix4_Scale(gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0), vr, vr, 1), &col);
    gl_vboActivateAttribOffset( gui_planet_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINE_STRIP, 0, 5 );
    gl_endSolidProgram();
+   */
+   gl_drawCircle( cx - 1, cy, vr/2.5, &cBlack, 0 );
+   gl_renderCross( cx - 1, cy, vr/2.5, &cBlack );
+   gl_drawCircle( cx + 1, cy, vr/2.5, &cBlack, 0 );
+   gl_renderCross( cx + 1, cy, vr/2.5, &cBlack );
+   gl_drawCircle( cx, cy - 1, vr/2.5, &cBlack, 0 );
+   gl_renderCross( cx, cy - 1, vr/2.5, &cBlack );
+   gl_drawCircle( cx, cy + 1, vr/2.5, &cBlack, 0 );
+   gl_renderCross( cx, cy + 1, vr/2.5, &cBlack );
 
-   /* Render name. */
-   /* XXX: Hack to prevent the text from overly obscuring overlay
-    * display of other things. Effectively disables outlines for this
-    * text. Should ultimately be replaced with some other method of
-    * rendering the text, since the problem could be caused by as little
-    * as a font change, but using this fix for now. */
-   col.a = MIN( col.a, 0.99 );
-   if (overlay)
-      gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, planet->name );
+   gl_drawCircle( cx, cy, vr/2.5, &col, 0 );
+   gl_renderCross( cx, cy, vr/2.5, &col );
+   //glLineWidth(1.);
+
+   if (overlay) {
+      nsnprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(planet), _(planet->name) );
+      gl_printMarkerRaw( &gl_smallFont, cx+planet->mo.text_offx, cy+planet->mo.text_offy, &col, buf );
+   }
 }
 
 
 /**
  * @brief Renders a jump point on the minimap.
  *
- *    @param i Jump point to render.
+ *    @param ind Jump point to render.
+ *    @param shape Shape of the radar (RADAR_RECT or RADAR_CIRCLE).
+ *    @param w Width.
+ *    @param h Height.
+ *    @param res Radar resolution.
+ *    @param overlay Whether to render onto the overlay.
  */
 void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
-   int cx, cy, x, y, r, rc;
-   GLfloat vr;
+   GLfloat cx, cy, x, y, r, vr, rc;
    glColour col;
    JumpPoint *jp;
-   gl_Matrix4 projection;
+   char buf[STRMAX_SHORT];
+
 
    /* Default values. */
    jp    = &cur_system->jumps[ind];
-   r     = (int)(jumppoint_gfx->sw / res);
-   vr    = MAX( r, 3. ); /* Make sure it's visible. */
+   r     = jumppoint_gfx->sw / res;
+   vr    = overlay ? jp->mo.radius : MAX( r, 10. );
    if (overlay) {
-      cx    = (int)(jp->pos.x / res);
-      cy    = (int)(jp->pos.y / res);
+      cx    = jp->pos.x / res;
+      cy    = jp->pos.y / res;
    }
    else {
-      cx    = (int)((jp->pos.x - player.p->solid->pos.x) / res);
-      cy    = (int)((jp->pos.y - player.p->solid->pos.y) / res);
+      cx    = (jp->pos.x - player.p->solid->pos.x) / res;
+      cy    = (jp->pos.y - player.p->solid->pos.y) / res;
    }
    if (shape==RADAR_CIRCLE)
-      rc = (int)(w*w);
+      rc = w*w;
    else
       rc = 0;
 
@@ -1619,41 +1732,41 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    if (overlay) {
       /* Transform coordinates. */
-      cx += SCREEN_W / 2;
-      cy += SCREEN_H / 2;
+      cx += map_overlay_center_x();
+      cy += map_overlay_center_y();
       w  *= 2.;
       h  *= 2.;
    }
 
    /* Do the blink. */
    if (ind == player.p->nav_hyperspace) {
-      gui_planetBlink( w, h, rc, cx, cy, vr, shape );
-      col = cGreen;
+      col = cWhite;
+      gui_blink( w, h, rc, cx, cy, vr, shape, &col, RADAR_BLINK_PLANET, blink_planet );
    }
    else if (jp_isFlag(jp, JP_HIDDEN))
       col = cRed;
    else
-      col = cWhite;
+      col = cPurple;
 
    if (!overlay)
       col.a = 1.-interference_alpha;
 
-   projection = gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0);
-   projection = gl_Matrix4_Rotate2d(projection, -M_PI/2-jp->angle);
-   gl_beginSolidProgram(projection, &col);
-   gl_vboActivateAttribOffset( gui_triangle_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_LINE_STRIP, 0, 4 );
-   gl_endSolidProgram();
+   glLineWidth( 3. );
+   gl_renderTriangleEmpty( cx - 1, cy, -jp->angle, vr, 2., &cBlack );
+   gl_renderTriangleEmpty( cx + 1, cy, -jp->angle, vr, 2., &cBlack );
+   gl_renderTriangleEmpty( cx, cy - 1, -jp->angle, vr, 2., &cBlack );
+   gl_renderTriangleEmpty( cx, cy + 1, -jp->angle, vr, 2., &cBlack );
+
+   gl_renderTriangleEmpty( cx, cy, -jp->angle, vr, 2., &col );
+   glLineWidth( 1. );
 
    /* Render name. */
-   /* XXX: Hack to prevent the text from overly obscuring overlay
-    * display of other things. Effectively disables outlines for this
-    * text. Should ultimately be replaced with some other method of
-    * rendering the text, since the problem could be caused by as little
-    * as a font change, but using this fix for now. */
-   col.a = MIN( col.a, 0.99 );
-   if (overlay)
-      gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, sys_isKnown(jp->target) ? jp->target->name : _("Unknown") );
+   if (overlay) {
+      nsnprintf(
+            buf, sizeof(buf), "%s%s", jump_getSymbol(jp),
+            sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
+      gl_printMarkerRaw( &gl_smallFont, cx+jp->mo.text_offx, cy+jp->mo.text_offy, &col, buf );
+   }
 }
 
 
@@ -1750,17 +1863,6 @@ int gui_init (void)
    /*
     * VBO.
     */
-   if (gui_triangle_vbo == NULL) {
-         vertex[0] = -5.;
-         vertex[1] = -5.;
-         vertex[2] = 5.;
-         vertex[3] = -5.;
-         vertex[4] = 0;
-         vertex[5] = 5.;
-         vertex[6] = -5.;
-         vertex[7] = -5.;
-      gui_triangle_vbo = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
-   }
 
    if (gui_planet_vbo == NULL) {
       vertex[0] = 0;
@@ -1799,20 +1901,20 @@ int gui_init (void)
    if (gui_planet_blink_vbo == NULL) {
       vertex[0] = -1;
       vertex[1] = 1;
-      vertex[2] = -1.2;
-      vertex[3] = 1.2;
+      vertex[2] = -1.3;
+      vertex[3] = 1.3;
       vertex[4] = 1;
       vertex[5] = 1;
-      vertex[6] = 1.2;
-      vertex[7] = 1.2;
+      vertex[6] = 1.3;
+      vertex[7] = 1.3;
       vertex[8] = 1;
       vertex[9] = -1;
-      vertex[10] = 1.2;
-      vertex[11] = -1.2;
+      vertex[10] = 1.3;
+      vertex[11] = -1.3;
       vertex[12] = -1;
       vertex[13] = -1;
-      vertex[14] = -1.2;
-      vertex[15] = -1.2;
+      vertex[14] = -1.3;
+      vertex[15] = -1.3;
       gui_planet_blink_vbo = gl_vboCreateStatic( sizeof(GLfloat) * 16, vertex );
    }
 
@@ -1884,7 +1986,7 @@ static int gui_runFunc( const char* func, int nargs, int nret )
       err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       WARN(_("GUI Lua -> '%s': %s"),
             func, (err) ? err : _("unknown error"));
-      lua_pop(naevL,2);
+      lua_pop(naevL,1);
       return ret;
    }
 
@@ -1967,7 +2069,7 @@ void gui_updateFaction (void)
 /**
  * @brief Calls trigger functions depending on who the pilot is.
  *
- *    @param The pilot to act based upon.
+ *    @param pilot The pilot to act based upon.
  */
 void gui_setGeneric( Pilot* pilot )
 {
@@ -2014,7 +2116,7 @@ int gui_load( const char* name )
    gui_cleanup();
 
    /* Open file. */
-   nsnprintf( path, sizeof(path), "dat/gui/%s.lua", name );
+   nsnprintf( path, sizeof(path), GUI_PATH"%s.lua", name );
    buf = ndata_read( path, &bufsize );
    if (buf == NULL) {
       WARN(_("Unable to find GUI '%s'."), path );
@@ -2090,10 +2192,8 @@ static void gui_createInterference( Radar *radar )
    }
 
    for (k=0; k<INTERFERENCE_LAYERS; k++) {
-
       /* Free the old texture. */
-      if (radar->interference[k] != NULL)
-         gl_freeTexture(radar->interference[k]);
+      gl_freeTexture(radar->interference[k]);
 
       /* Create the temporary surface. */
       sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
@@ -2156,10 +2256,8 @@ void gui_cleanup (void)
 
    /* Interference. */
    for (i=0; i<INTERFERENCE_LAYERS; i++) {
-      if (gui_radar.interference[i] != NULL) {
-         gl_freeTexture(gui_radar.interference[i]);
-         gui_radar.interference[i] = NULL;
-      }
+      gl_freeTexture(gui_radar.interference[i]);
+      gui_radar.interference[i] = NULL;
    }
 
    /* Set the viewport. */
@@ -2193,48 +2291,27 @@ void gui_cleanup (void)
  */
 void gui_free (void)
 {
-   /* Clean up gui. */
    gui_cleanup();
 
-   /* Free messages. */
-   if (mesg_stack != NULL) {
-      free(mesg_stack);
-      mesg_stack = NULL;
-   }
+   free(mesg_stack);
+   mesg_stack = NULL;
 
-   /* Free VBOs. */
-   if (gui_triangle_vbo != NULL) {
-      gl_vboDestroy( gui_triangle_vbo );
-      gui_triangle_vbo = NULL;
-   }
-   if (gui_planet_vbo != NULL) {
-      gl_vboDestroy( gui_planet_vbo );
-      gui_planet_vbo = NULL;
-   }
-   if (gui_radar_select_vbo != NULL) {
-      gl_vboDestroy( gui_radar_select_vbo );
-      gui_radar_select_vbo = NULL;
-   }
-   if (gui_planet_blink_vbo != NULL) {
-      gl_vboDestroy( gui_planet_blink_vbo );
-      gui_planet_blink_vbo = NULL;
-   }
+   gl_vboDestroy( gui_planet_vbo );
+   gui_planet_vbo = NULL;
+   gl_vboDestroy( gui_radar_select_vbo );
+   gui_radar_select_vbo = NULL;
+   gl_vboDestroy( gui_planet_blink_vbo );
+   gui_planet_blink_vbo = NULL;
 
-   /* Clean up the osd. */
    osd_exit();
 
-   /* Free icons. */
-   if (gui_ico_hail != NULL)
-      gl_freeTexture( gui_ico_hail );
+   gl_freeTexture( gui_ico_hail );
    gui_ico_hail = NULL;
-   if (gui_target_planet != NULL)
-      gl_freeTexture( gui_target_planet );
+   gl_freeTexture( gui_target_planet );
    gui_target_planet = NULL;
-   if (gui_target_pilot != NULL)
-      gl_freeTexture( gui_target_pilot );
+   gl_freeTexture( gui_target_pilot );
    gui_target_pilot = NULL;
 
-   /* Free overlay messages. */
    omsg_cleanup();
 }
 
@@ -2249,7 +2326,7 @@ void gui_setRadarRel( int mod )
    gui_radar.res += mod * RADAR_RES_INTERVAL;
    gui_radar.res = CLAMP( RADAR_RES_MIN, RADAR_RES_MAX, gui_radar.res );
 
-   player_message( _("\apRadar set to %dx."), (int)gui_radar.res );
+   player_message( _("\aoRadar set to %dx."), (int)gui_radar.res );
 }
 
 
@@ -2280,8 +2357,7 @@ glTexture* gui_hailIcon (void)
  */
 void gui_targetPlanetGFX( glTexture *gfx )
 {
-   if (gui_target_planet != NULL)
-      gl_freeTexture( gui_target_planet );
+   gl_freeTexture( gui_target_planet );
    gui_target_planet = gl_dupTexture( gfx );
 }
 
@@ -2291,11 +2367,46 @@ void gui_targetPlanetGFX( glTexture *gfx )
  */
 void gui_targetPilotGFX( glTexture *gfx )
 {
-   if (gui_target_pilot != NULL)
-      gl_freeTexture( gui_target_pilot );
+   gl_freeTexture( gui_target_pilot );
    gui_target_pilot = gl_dupTexture( gfx );
 }
 
+/**
+ * @brief Translates a mouse position from an SDL_Event to GUI coordinates.
+ */
+static void gui_eventToScreenPos( int* sx, int* sy, int ex, int ey )
+{
+   gl_windowToScreenPos( sx, sy, ex - gui_viewport_x, ey - gui_viewport_y );
+}
+
+
+/**
+ * @brief Handles a click at a position in the current system
+ *
+ *    @brief event The click event.
+ *    @return Whether the click was used to trigger an action.
+ */
+int gui_radarClickEvent( SDL_Event* event )
+{
+   int mxr, myr, in_bounds;
+   double x, y, cx, cy;
+
+   gui_eventToScreenPos( &mxr, &myr, event->button.x, event->button.y );
+   if (gui_radar.shape == RADAR_RECT) {
+      cx = gui_radar.x + gui_radar.w / 2.;
+      cy = gui_radar.y + gui_radar.h / 2.;
+      in_bounds = (2*ABS( mxr-cx ) <= gui_radar.w && 2*ABS( myr-cy ) <= gui_radar.h);
+   } else {
+      cx = gui_radar.x;
+      cy = gui_radar.y;
+      in_bounds = (pow2( mxr-cx ) + pow2( myr-cy ) <= pow2( gui_radar.w ));
+   }
+   if (!in_bounds)
+      return 0;
+   x = (mxr - cx) * gui_radar.res + player.p->solid->pos.x;
+   y = (myr - cy) * gui_radar.res + player.p->solid->pos.y;
+   return input_clickPos( event, x, y, 1., 10. * gui_radar.res, 15. * gui_radar.res );
+}
 
 /**
  * @brief Handles GUI events.
@@ -2320,8 +2431,7 @@ int gui_handleEvent( SDL_Event *evt )
          if (!gui_L_mmove)
             break;
          gui_prepFunc( "mouse_move" );
-         gl_windowToScreenPos( &x, &y, evt->motion.x - gui_viewport_x,
-               evt->motion.y - gui_viewport_y );
+         gui_eventToScreenPos( &x, &y, evt->motion.x, evt->motion.y );
          lua_pushnumber( naevL, x );
          lua_pushnumber( naevL, y );
          gui_runFunc( "mouse_move", 2, 0 );
@@ -2334,8 +2444,7 @@ int gui_handleEvent( SDL_Event *evt )
             break;
          gui_prepFunc( "mouse_click" );
          lua_pushnumber( naevL, evt->button.button+1 );
-         gl_windowToScreenPos( &x, &y, evt->button.x - gui_viewport_x,
-            evt->button.y - gui_viewport_y );
+         gui_eventToScreenPos( &x, &y, evt->button.x, evt->button.y );
          lua_pushnumber( naevL, x );
          lua_pushnumber( naevL, y );
          lua_pushboolean( naevL, (evt->type==SDL_MOUSEBUTTONDOWN) );

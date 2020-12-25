@@ -9,24 +9,26 @@
  */
 
 
-#include "options.h"
-
-#include "naev.h"
-
-#include "nstring.h"
-
+/** @cond */
+#include <ctype.h>
+#include "physfs.h"
 #include "SDL.h"
 
-#include "log.h"
-#include "input.h"
-#include "toolkit.h"
-#include "sound.h"
-#include "music.h"
-#include "nstd.h"
-#include "dialogue.h"
+#include "naev.h"
+/** @endcond */
+
+#include "options.h"
+
 #include "conf.h"
+#include "dialogue.h"
+#include "input.h"
+#include "log.h"
+#include "music.h"
 #include "ndata.h"
+#include "nstring.h"
 #include "player.h"
+#include "sound.h"
+#include "toolkit.h"
 
 
 #define BUTTON_WIDTH    200 /**< Button width, standard across menus. */
@@ -41,10 +43,10 @@
 static unsigned int opt_wid = 0;
 static unsigned int *opt_windows;
 static const char *opt_names[] = {
-   "Gameplay",
-   "Video",
-   "Audio",
-   "Input"
+   N_("Gameplay"),
+   N_("Video"),
+   N_("Audio"),
+   N_("Input")
 };
 
 
@@ -54,9 +56,6 @@ static int opt_restart = 0;
 /*
  * External stuff.
  */
-extern const char *keybind_info[][3]; /**< from input.c */
-
-
 static const char *opt_selectedKeybind; /**< Selected keybinding. */
 static int opt_lastKeyPress = 0; /**< Last keypress. */
 
@@ -71,6 +70,7 @@ static void opt_needRestart (void);
 static char** lang_list( int *n );
 static void opt_gameplay( unsigned int wid );
 static void opt_setAutonavResetSpeed( unsigned int wid, char *str );
+static void opt_setMapOverlayOpacity( unsigned int wid, char *str );
 static void opt_OK( unsigned int wid, char *str );
 static int opt_gameplaySave( unsigned int wid, char *str );
 static void opt_gameplayDefaults( unsigned int wid, char *str );
@@ -80,6 +80,7 @@ static void opt_video( unsigned int wid );
 static void opt_videoRes( unsigned int wid, char *str );
 static int opt_videoSave( unsigned int wid, char *str );
 static void opt_videoDefaults( unsigned int wid, char *str );
+static void opt_getVideoMode( int *w, int *h, int *fullscreen );
 static void opt_setScalefactor( unsigned int wid, char *str );
 /* Audio. */
 static void opt_audio( unsigned int wid );
@@ -107,19 +108,25 @@ static void opt_unsetKey( unsigned int wid, char *str );
  */
 void opt_menu (void)
 {
+   size_t i;
    int w, h;
+   char **names;
 
    /* Dimensions. */
    w = 680;
    h = 525;
 
    /* Create window and tabs. */
-   opt_wid = window_create( "Options", -1, -1, w, h );
+   opt_wid = window_create( "wdwOptions", _("Options"), -1, -1, w, h );
    window_setCancel( opt_wid, opt_close );
 
    /* Create tabbed window. */
+   names = calloc( sizeof(char*), sizeof(opt_names)/sizeof(char*) );
+   for (i=0; i<sizeof(opt_names)/sizeof(char*); i++)
+      names[i] = gettext(opt_names[i]);
    opt_windows = window_addTabbedWindow( opt_wid, -1, -1, -1, -1, "tabOpt",
-         OPT_WINDOWS, opt_names, 0 );
+         OPT_WINDOWS, (const char**)names, 0 );
+   free(names);
 
    /* Load tabs. */
    opt_gameplay(  opt_windows[ OPT_WIN_GAMEPLAY ] );
@@ -169,10 +176,11 @@ static void opt_close( unsigned int wid, char *name )
 
 
 /**
- * @brief Handles resize events for the options menu.
+ * @brief Handles resize events nfor the options menu.
  */
 void opt_resize (void)
 {
+   int w, h, fullscreen;
    char buf[16];
 
    /* Nothing to do if not open. */
@@ -180,7 +188,8 @@ void opt_resize (void)
       return;
 
    /* Update the resolution input widget. */
-   nsnprintf( buf, sizeof(buf), "%dx%d", gl_screen.rw, gl_screen.rh );
+   opt_getVideoMode( &w, &h, &fullscreen );
+   nsnprintf( buf, sizeof(buf), "%dx%d", w, h );
    window_setInput( opt_windows[OPT_WIN_VIDEO], "inpRes", buf );
 }
 
@@ -190,10 +199,8 @@ void opt_resize (void)
  */
 static char** lang_list( int *n )
 {
-   size_t fs;
-   char *buf;
    char **ls;
-   int j;
+   char **subdirs;
    size_t i;
 
    /* Default English only. */
@@ -203,18 +210,10 @@ static char** lang_list( int *n )
    *n = 2;
 
    /* Try to open the available languages. */
-   buf = ndata_read( "dat/LANGUAGES", &fs );
-   if (buf==NULL)
-      return ls;
-   j = 0;
-   for (i=0; i<fs; i++) {
-      if ((buf[i] != '\n') && (buf[i] != '\0'))
-         continue;
-      buf[i] = '\0';
-      if (*n < 128)
-         ls[(*n)++] = strdup( &buf[j] );
-      j=i+1;
-   }
+   subdirs = PHYSFS_enumerateFiles( GETTEXT_PATH );
+   for (i=0; subdirs[i]!=NULL; i++)
+      ls[(*n)++] = strdup( subdirs[i] );
+   PHYSFS_freeList( subdirs );
 
    return ls;
 }
@@ -226,8 +225,8 @@ static char** lang_list( int *n )
 static void opt_gameplay( unsigned int wid )
 {
    (void) wid;
-   char buf[PATH_MAX];
-   const char *path;
+   char buf[4096];
+   char **paths;
    int cw;
    int w, h, y, x, by, l, n, i;
    char *s;
@@ -250,23 +249,29 @@ static void opt_gameplay( unsigned int wid )
    /* Information. */
    cw = (w-40);
    x = 20;
-   y = -60;
+   y = -35;
    window_addText( wid, x, y, cw, 20, 1, "txtVersion",
-         NULL, NULL, naev_version(1) );
+         &gl_smallFont, NULL, naev_version(1) );
    y -= 20;
 #ifdef GIT_COMMIT
    nsnprintf( buf, sizeof(buf), _("Commit: %s"), GIT_COMMIT );
    window_addText( wid, x, y, cw, 20, 1, "txtCommit",
-         NULL, NULL, buf );
+         &gl_smallFont, NULL, buf );
 #endif /* GIT_COMMIT */
    y -= 20;
-   path = ndata_getPath();
-   if (path == NULL)
-      nsnprintf( buf, sizeof(buf), _("not using ndata") );
-   else
-      nsnprintf( buf, sizeof(buf), _("ndata: %s"), path);
+
+   paths = PHYSFS_getSearchPath();
+   for (i=l=0; paths[i]!=NULL && (size_t)l < sizeof(buf); i++)
+   {
+      if (i == 0)
+         l = nsnprintf( buf, sizeof(buf), _("ndata: %s"), paths[i] );
+      else
+         l += nsnprintf( &buf[l], sizeof(buf)-l, ":%s", paths[i] );
+   }
+   PHYSFS_freeList(paths);
+   paths = NULL;
    window_addText( wid, x, y, cw, 20, 1, "txtNdata",
-         NULL, NULL, buf );
+         &gl_smallFont, NULL, buf );
    y -= 40;
    by = y;
 
@@ -275,8 +280,8 @@ static void opt_gameplay( unsigned int wid )
    cw = (w-60)/2 - 40;
    y  = by;
    x  = 20;
-#if defined ENABLE_NLS && ENABLE_NLS
-   s = _("Language");
+#if ENABLE_NLS
+   s = _("Language:");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 0, "txtLanguage",
          NULL, NULL, s );
@@ -289,14 +294,14 @@ static void opt_gameplay( unsigned int wid )
       if (i>=n)
          i = 0;
    }
-   window_addList( wid, x+l+20, y, cw-l-50, 70, "lstLanguage", ls, n, i, NULL );
+   window_addList( wid, x+l+20, y, cw-l-50, 70, "lstLanguage", ls, n, i, NULL, NULL );
    y -= 90;
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
-   window_addText( wid, x+20, y, cw, 20, 0, "txtCompile",
-         NULL, NULL, _("Compilation Flags") );
+#endif /* ENABLE_NLS */
+   window_addText( wid, x, y, cw, 20, 0, "txtCompile",
+         NULL, NULL, _("Compilation Flags:") );
    y -= 30;
    window_addText( wid, x, y, cw, h+y-20, 0, "txtFlags",
-         NULL, &cFontPurple,
+         &gl_smallFont, &cFontOrange,
          ""
 #ifdef DEBUGGING
 #ifdef DEBUG_PARANOID
@@ -316,41 +321,50 @@ static void opt_gameplay( unsigned int wid )
 #else
          "Unknown OS\n"
 #endif
-#ifdef USE_OPENAL
-         "With OpenAL\n"
-#endif /* USE_OPENAL */
-#ifdef USE_SDLMIX
-         "With SDL_mixer\n"
-#endif
 #ifdef HAVE_LUAJIT
          "Using LuaJIT\n"
 #endif
-#ifdef NDATA_DEF
-         "ndata: "NDATA_DEF"\n"
-#endif /* NDATA_DEF */
          );
 
 
+   y -= window_getTextHeight(wid, "txtFlags") + 10;
+
    /* Options. */
+
+   /* MOpacity abort. */
+   window_addText( wid, x, y, cw, 20, 0, "txtAMOpacity",
+         NULL, NULL, _("Map Overlay Opacity:") );
+   y -= 20;
+
+   /* MOpacity abort fader. */
+   window_addText( wid, x, y, cw, 20, 1, "txtMOpacity",
+         &gl_smallFont, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x, y, cw, 20, "fadMapOverlayOpacity", 0., 1.,
+         conf.map_overlay_opacity, opt_setMapOverlayOpacity );
+   y -= 40;
+
+
+   (void) y;
    x = 20 + cw + 20;
    y  = by;
    cw += 80;
 
    /* Autonav abort. */
-   window_addText( wid, x+65, y, 150, 150, 0, "txtAAutonav",
+   window_addText( wid, x, y, cw-130, 20, 0, "txtAAutonav",
          NULL, NULL, _("Stop Speedup At:") );
    y -= 20;
 
    /* Autonav abort fader. */
    window_addText( wid, x, y, cw, 20, 1, "txtAutonav",
-         NULL, NULL, NULL );
+         &gl_smallFont, NULL, NULL );
    y -= 20;
    window_addFader( wid, x, y, cw, 20, "fadAutonav", 0., 1.,
          conf.autonav_reset_speed, opt_setAutonavResetSpeed );
    y -= 40;
 
-   window_addText( wid, x+20, y, cw, 20, 0, "txtSettings",
-         NULL, NULL, _("Settings") );
+   window_addText( wid, x, y, cw, 20, 0, "txtSettings",
+         NULL, NULL, _("Settings:") );
    y -= 25;
 
    window_addCheckbox( wid, x, y, cw, 20,
@@ -363,17 +377,17 @@ static void opt_gameplay( unsigned int wid )
          "chkMouseThrust", _("Enable mouse-flying thrust control"), NULL, conf.mouse_thrust );
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkCompress", _("Enable savegame compression"), NULL, conf.save_compress );
-   y -= 30;
+         "chkCompress", _("Enable saved game compression"), NULL, conf.save_compress );
+   y -= 40;
    s = _("Visible Messages");
    l = gl_printWidthRaw( NULL, s );
-   window_addText( wid, -100, y, l, 20, 1, "txtSMSG",
+   window_addText( wid, x, y, l, 20, 1, "txtSMSG",
          NULL, NULL, s );
    window_addInput( wid, -50, y, 40, 20, "inpMSG", 4, 1, NULL );
    y -= 30;
    s = _("Max Time Compression Factor");
    l = gl_printWidthRaw( NULL, s );
-   window_addText( wid, -100, y, l, 20, 1, "txtTMax",
+   window_addText( wid, x, y, l, 20, 1, "txtTMax",
          NULL, NULL, s );
    window_addInput( wid, -50, y, 40, 20, "inpTMax", 4, 1, NULL );
 
@@ -431,6 +445,7 @@ static int opt_gameplaySave( unsigned int wid, char *str )
 
    /* Faders. */
    conf.autonav_reset_speed = window_getFaderValue(wid, "fadAutonav");
+   conf.map_overlay_opacity = window_getFaderValue(wid, "fadMapOverlayOpacity");
 
    /* Input boxes. */
    vmsg = window_getInput( wid, "inpMSG" );
@@ -460,6 +475,7 @@ static void opt_gameplayDefaults( unsigned int wid, char *str )
 
    /* Faders. */
    window_faderValue( wid, "fadAutonav", AUTONAV_RESET_SPEED_DEFAULT );
+   window_faderValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
 
    /* Input boxes. */
    nsnprintf( vmsg, sizeof(vmsg), "%d", INPUT_MESSAGES_DEFAULT );
@@ -484,6 +500,7 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
 
    /* Faders. */
    window_faderValue( wid, "fadAutonav", conf.autonav_reset_speed );
+   window_faderValue( wid, "fadMapOverlayOpacity", conf.map_overlay_opacity );
 
    /* Input boxes. */
    nsnprintf( vmsg, sizeof(vmsg), "%d", conf.mesg_visible );
@@ -565,7 +582,7 @@ static void opt_keybinds( unsigned int wid )
    /* Text stuff. */
    window_addText( wid, 20+lw+20, -40, w-(20+lw+20), 30, 1, "txtName",
          NULL, NULL, NULL );
-   window_addText( wid, 20+lw+20, -90, w-(20+lw+20), h-70-60-bh,
+   window_addText( wid, 20+lw+20, -90, w-(20+lw+20), h-170-3*bh,
          0, "txtDesc", &gl_smallFont, NULL, NULL );
 
    /* Generate the list. */
@@ -577,11 +594,10 @@ static void opt_keybinds( unsigned int wid )
  * @brief Generates the keybindings list.
  *
  *    @param wid Window to update.
- *    @param regen Whether to destroy and recreate the widget.
  */
 static void menuKeybinds_genList( unsigned int wid )
 {
-   int i, j, l, p;
+   int         j, l, p;
    char **str, mod_text[64];
    SDL_Keycode key;
    KeybindType type;
@@ -594,10 +610,12 @@ static void menuKeybinds_genList( unsigned int wid )
    menuKeybinds_getDim( wid, &w, &h, &lw, &lh, NULL, NULL );
 
    /* Create the list. */
-   for (i=0; keybind_info[i][0] != NULL; i++);
-   str = malloc(sizeof(char*) * i);
-   for (j=0; j < i; j++) {
-      l = 64;
+   str = malloc( sizeof( char * ) * input_numbinds );
+   for ( j = 0; j < input_numbinds; j++ ) {
+      l = 128; /* GCC deduces 68 because we have a format string "%s <%s%c>"
+                * where "char mod_text[64]" is one of the "%s" args.
+                * (that plus brackets plus %c + null gets to 68.
+                * Just set to 128 as it's a power of two. */
       str[j] = malloc(l);
       key = input_getKeybind( keybind_info[j][0], &type, &mod );
       switch (type) {
@@ -616,13 +634,14 @@ static void menuKeybinds_genList( unsigned int wid )
                   p += nsnprintf( &mod_text[p], sizeof(mod_text)-p, "alt+" );
                if (mod & NMOD_META)
                   p += nsnprintf( &mod_text[p], sizeof(mod_text)-p, "meta+" );
+               (void)p;
             }
 
-            /* SDL_GetKeyName returns lowercase which is ugly. */
-            if (nstd_isalpha(key))
-               nsnprintf(str[j], l, "%s <%s%c>", keybind_info[j][1], mod_text, nstd_toupper(key) );
+            /* Print key. Special-case ASCII letters (use uppercase, unlike SDL_GetKeyName.). */
+            if (key < 0x100 && isalpha(key))
+               nsnprintf(str[j], l, "%s <%s%c>", keybind_info[j][1], mod_text, toupper(key) );
             else
-               nsnprintf(str[j], l, "%s <%s%s>", keybind_info[j][1], mod_text, SDL_GetKeyName(key) );
+               nsnprintf(str[j], l, "%s <%s%s>", keybind_info[j][1], mod_text, _(SDL_GetKeyName(key)) );
             break;
          case KEYBIND_JAXISPOS:
             nsnprintf(str[j], l, "%s <ja+%d>", keybind_info[j][1], key);
@@ -658,8 +677,7 @@ static void menuKeybinds_genList( unsigned int wid )
       window_destroyWidget( wid, "lstKeybinds" );
    }
 
-   window_addList( wid, 20, -40, lw, lh, "lstKeybinds",
-         str, i, 0, menuKeybinds_update );
+   window_addList( wid, 20, -40, lw, lh, "lstKeybinds", str, input_numbinds, 0, menuKeybinds_update, opt_setKey );
 
    if (regen) {
       toolkit_setListPos( wid, "lstKeybinds", pos );
@@ -704,17 +722,17 @@ static void menuKeybinds_update( unsigned int wid, char *name )
          nsnprintf(binding, sizeof(binding), _("Not bound"));
          break;
       case KEYBIND_KEYBOARD:
-         /* SDL_GetKeyName returns lowercase which is ugly. */
-         if (nstd_isalpha(key))
+         /* Print key. Special-case ASCII letters (use uppercase, unlike SDL_GetKeyName.). */
+         if (key < 0x100 && isalpha(key))
             nsnprintf(binding, sizeof(binding), _("keyboard:   %s%s%c"),
                   (mod != KMOD_NONE) ? input_modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
-                  nstd_toupper(key));
+                  toupper(key));
          else
             nsnprintf(binding, sizeof(binding), _("keyboard:   %s%s%s"),
                   (mod != KMOD_NONE) ? input_modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
-                  SDL_GetKeyName(key));
+                  _(SDL_GetKeyName(key)));
          break;
       case KEYBIND_JAXISPOS:
          nsnprintf(binding, sizeof(binding), _("joy axis pos:   <%d>"), key );
@@ -800,7 +818,6 @@ static void opt_keyDefaults( unsigned int wid, char *str )
  *
  *    @param wid Window calling the callback.
  *    @param str Name of the widget calling the callback.
- *    @param type 0 for sound, 1 for audio.
  */
 static void opt_setAudioLevel( unsigned int wid, char *str )
 {
@@ -824,7 +841,7 @@ static void opt_setAudioLevel( unsigned int wid, char *str )
 
 
 /**
- * @brief Sets the sound or music volume string based on level and sound backend.
+ * @brief Sets the sound or music volume string based on level.
  *
  *    @param[out] buf Buffer to use.
  *    @param max Maximum length of the buffer.
@@ -854,11 +871,8 @@ static void opt_audioLevelStr( char *buf, int max, int type, double pos )
 static void opt_audio( unsigned int wid )
 {
    (void) wid;
-   int i, j;
    int cw;
-   int w, h, y, x, l;
-   char **s;
-   const char *str;
+   int w, h, y, x;
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
@@ -874,43 +888,13 @@ static void opt_audio( unsigned int wid )
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDefaults", _("Defaults"), opt_audioDefaults );
 
-   /* General options. */
    cw = (w-60)/2;
    x = 20;
    y = -60;
-   window_addText( wid, x+20, y, cw, 20, 0, "txtSGeneral",
-         NULL, NULL, _("General") );
-   y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkNosound", _("Disable all sound/music"), NULL, conf.nosound );
    y -= 30;
-   str = _("Backends");
-   l = gl_printWidthRaw( NULL, str );
-   window_addText( wid, x, y, l, 40, 0, "txtSBackends",
-         NULL, NULL, str );
-   l += 10;
-   i = 0;
-   j = 0;
-   s = malloc(sizeof(char*)*2);
-#if USE_OPENAL
-   if (strcmp(conf.sound_backend,"openal")==0)
-      j = i;
-   s[i++] = strdup(_("openal"));
-#endif /* USE_OPENAL */
-#if USE_SDLMIX
-   if (strcmp(conf.sound_backend,"sdlmix")==0)
-      j = i;
-   s[i++] = strdup(_("sdlmix"));
-#endif /* USE_SDLMIX */
-   if (i==0)
-      s[i++] = strdup(_("none"));
-   window_addList( wid, x+l, y, cw-(x+l), 40, "lstSound", s, i, j, NULL );
-   y -= 50;
 
-   /* OpenAL options. */
-   window_addText( wid, x+20, y, cw, 20, 0, "txtSOpenal",
-         NULL, NULL, _("OpenAL") );
-   y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkEFX", _("EFX (More CPU)"), NULL, conf.al_efx );
 
@@ -918,7 +902,7 @@ static void opt_audio( unsigned int wid )
    /* Sound levels. */
    x = 20 + cw + 20;
    y = -60;
-   window_addText( wid, x+20, y, 100, 20, 0, "txtSVolume",
+   window_addText( wid, x+20, y, cw-40, 20, 0, "txtSVolume",
          NULL, NULL, _("Volume Levels") );
    y -= 30;
 
@@ -961,30 +945,13 @@ static int opt_audioSave( unsigned int wid, char *str )
 {
    (void) str;
    int f;
-   char *s;
 
-   /* General. */
    f = window_checkboxState( wid, "chkNosound" );
    if (conf.nosound != f) {
       conf.nosound = f;
       opt_needRestart();
    }
 
-   /* Backend. */
-   s = toolkit_getList( wid, "lstSound" );
-   if (conf.sound_backend != NULL) {
-      if (strcmp(s,conf.sound_backend)!=0) {
-         free(conf.sound_backend);
-         conf.sound_backend = strdup(s);
-         opt_needRestart();
-      }
-   }
-   else {
-      conf.sound_backend = strdup(s);
-      opt_needRestart();
-   }
-
-   /* OpenAL. */
    f = window_checkboxState( wid, "chkEFX" );
    if (conf.al_efx != f) {
       conf.al_efx = f;
@@ -1014,10 +981,6 @@ static void opt_audioDefaults( unsigned int wid, char *str )
    /* Checkboxes. */
    window_checkboxSet( wid, "chkNosound", MUTE_SOUND_DEFAULT );
    window_checkboxSet( wid, "chkEFX", USE_EFX_DEFAULT );
-
-   /* List. */
-   toolkit_setList( wid, "lstSound",
-         (conf.sound_backend==NULL) ? _("none") : BACKEND_DEFAULT );
 }
 
 
@@ -1033,9 +996,6 @@ static void opt_audioUpdate( unsigned int wid )
    /* Faders. */
    window_faderValue( wid, "fadSound", conf.sound );
    window_faderValue( wid, "fadMusic", conf.music );
-
-   /* Backend box */
-   /* TODO */
 }
 
 
@@ -1117,7 +1077,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
             case SDL_HAT_LEFT:
                type = KEYBIND_JHAT_LEFT;
                break;
-            case SDL_HAT_RIGHT: 
+            case SDL_HAT_RIGHT:
                type = KEYBIND_JHAT_RIGHT;
                break;
             default:
@@ -1169,7 +1129,7 @@ static void opt_setKey( unsigned int wid, char *str )
    /* Create new window. */
    w = 20 + 2*(BUTTON_WIDTH + 20);
    h = 20 + BUTTON_HEIGHT + 20 + 20 + 80 + 40;
-   new_wid = window_create( "Set Keybinding", -1, -1, w, h );
+   new_wid = window_create( "wdwSetKey", _("Set Keybinding"), -1, -1, w, h );
    window_handleEvents( new_wid, opt_setKeyEvent );
    window_setParent( new_wid, wid );
 
@@ -1248,17 +1208,17 @@ static void opt_video( unsigned int wid )
          NULL, NULL, _("Resolution") );
    y -= 40;
    window_addInput( wid, x, y, 100, 20, "inpRes", 16, 1, NULL );
-   window_setInputFilter( wid, "inpRes",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpRes", INPUT_FILTER_RESOLUTION );
    window_addCheckbox( wid, x+20+100, y, 100, 20,
          "chkFullscreen", _("Fullscreen"), NULL, conf.fullscreen );
    y -= 30;
    SDL_DisplayMode mode;
    int k;
-   int n = SDL_GetNumDisplayModes( 0 );
+   int display_index = SDL_GetWindowDisplayIndex( gl_screen.window );
+   int n = SDL_GetNumDisplayModes( display_index );
    j = 1;
    for (i=0; i<n; i++) {
-      SDL_GetDisplayMode( 0, i, &mode  );
+      SDL_GetDisplayMode( display_index, i, &mode  );
       if ((mode.w == conf.width) && (mode.h == conf.height))
          j = 0;
    }
@@ -1271,7 +1231,7 @@ static void opt_video( unsigned int wid )
       nres     = 1;
    }
    for (i=0; i<n; i++) {
-      SDL_GetDisplayMode( 0, i, &mode  );
+      SDL_GetDisplayMode( display_index, i, &mode  );
       res[ nres ] = malloc(16);
       nsnprintf( res[ nres ], 16, "%dx%d", mode.w, mode.h );
 
@@ -1279,15 +1239,17 @@ static void opt_video( unsigned int wid )
       for (k=0; k<nres; k++)
          if (strcmp( res[k], res[nres] )==0)
             break;
-      if (k<nres)
+      if (k<nres) {
+         free( res[nres] );
          continue;
+      }
 
       /* Add as default if necessary and increment. */
       if ((mode.w == conf.width) && (mode.h == conf.height))
          res_def = i;
       nres++;
    }
-   window_addList( wid, x, y, 140, 100, "lstRes", res, nres, -1, opt_videoRes );
+   window_addList( wid, x, y, 140, 100, "lstRes", res, nres, -1, opt_videoRes, NULL );
    y -= 120;
    window_addText( wid, x, y-3, 110, 20, 0, "txtScale",
          NULL, NULL, NULL );
@@ -1306,8 +1268,7 @@ static void opt_video( unsigned int wid )
          NULL, NULL, s );
    window_addInput( wid, x+l+20, y, 40, 20, "inpFPS", 4, 1, NULL );
    toolkit_setListPos( wid, "lstRes", res_def);
-   window_setInputFilter( wid, "inpFPS",
-         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpFPS", INPUT_FILTER_NUMBER );
    nsnprintf( buf, sizeof(buf), "%d", conf.fps_max );
    window_setInput( wid, "inpFPS", buf );
    y -= 30;
@@ -1330,9 +1291,6 @@ static void opt_video( unsigned int wid )
          "chkMipmaps", _("Mipmaps*"), NULL, conf.mipmaps );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkInterpolate", _("Interpolation*"), NULL, conf.interpolate );
-   y -= 20;
-   window_addCheckbox( wid, x, y, cw, 20,
          "chkNPOT", _("NPOT Textures*"), NULL, conf.npot );
    y -= 30;
    window_addText( wid, x, y, cw, 20, 1,
@@ -1349,6 +1307,14 @@ static void opt_video( unsigned int wid )
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkMinimize", _("Minimize on focus loss"), NULL, conf.minimize );
+   y -= 40;
+
+   /* GUI */
+   window_addText( wid, x+20, y, 100, 20, 0, "txtSGUI",
+         NULL, NULL, _("GUI") );
+   y -= 30;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkBigIcons", _("Bigger icons"), NULL, conf.big_icons );
 
    /* Restart text. */
    window_addText( wid, 20, 20 + BUTTON_HEIGHT,
@@ -1390,31 +1356,13 @@ static void opt_videoRes( unsigned int wid, char *str )
 static int opt_videoSave( unsigned int wid, char *str )
 {
    (void) str;
-   int i, j, s;
-   char *inp, buf[16], width[16], height[16];
-   int w, h, f, fullscreen;
+   char *inp;
+   int ret, w, h, f, fullscreen;
 
    /* Handle resolution. */
    inp = window_getInput( wid, "inpRes" );
-   memset( width, '\0', sizeof(width) );
-   memset( height, '\0', sizeof(height) );
-   j = 0;
-   s = 0;
-   for (i=0; i<16; i++) {
-      if (isdigit(inp[i])) {
-         if (j==0)
-            width[s++] = inp[i];
-         else
-            height[s++] = inp[i];
-      }
-      else {
-         j++;
-         s = 0;
-      }
-   }
-   w = atoi(width);
-   h = atoi(height);
-   if ((w==0) || (h==0)) {
+   ret = sscanf( inp, " %d %*[^0-9] %d", &w, &h );
+   if (ret != 2 || w <= 0 || h <= 0) {
       dialogue_alert( _("Height/Width invalid. Should be formatted like 1024x768.") );
       return 1;
    }
@@ -1422,115 +1370,10 @@ static int opt_videoSave( unsigned int wid, char *str )
    /* Fullscreen. */
    fullscreen = window_checkboxState( wid, "chkFullscreen" );
 
-   int origw, origh, origf, mode, changed;
-   int rw, rh, nw, nh; /* Real width and height. */
-   SDL_DisplayMode current;
-
-   changed = 0;
-   SDL_GetWindowSize( gl_screen.window, &rw, &rh );
-   SDL_GetWindowDisplayMode( gl_screen.window, &current );
-   mode = (conf.modesetting) ?
-         SDL_WINDOW_FULLSCREEN : SDL_WINDOW_FULLSCREEN_DESKTOP;
-
-   origw = conf.width;
-   origh = conf.height;
-   origf = conf.fullscreen;
-
-   if ((w != conf.width) || (h != conf.height)) {
-      conf.explicit_dim = 1;
-      conf.width  = w;
-      conf.height = h;
-   }
-
-   /* Enable or disable fullscreen. */
-   if (fullscreen != conf.fullscreen) {
-      conf.fullscreen = fullscreen;
-      changed = 1;
-
-      if (fullscreen) {
-         if (conf.modesetting) {
-            current.w = w;
-            current.h = h;
-
-            SDL_SetWindowDisplayMode( gl_screen.window, &current );
-         }
-         SDL_SetWindowFullscreen( gl_screen.window, mode );
-      }
-      else /* Restore windowed mode. */
-         SDL_SetWindowFullscreen( gl_screen.window, 0 );
-   }
-
-   if ((w != rw) || (h != rh)) {
-      /* Attempt to detect maximized state (doesn't work on X11) */
-      if (SDL_GetWindowFlags(gl_screen.window) & SDL_WINDOW_MAXIMIZED)
-         dialogue_alert(_("Resolution can't be changed while maximized."));
-      /* Set size. Done second, because it can't be set while fullscreen. */
-      else {
-         /* Can't change window size while fullscreen. */
-         if (fullscreen && origf)
-            opt_needRestart();
-         else if (!fullscreen) {
-            SDL_SetWindowSize( gl_screen.window, w, h );
-            naev_resize( w, h );
-            SDL_SetWindowPosition( gl_screen.window,
-                  SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
-
-            changed = 1;
-         }
-      }
-   }
-
-   /* Desktop fullscreen size must be determined dynamically. */
-   if (fullscreen && !conf.modesetting)
-      SDL_GetWindowSize( gl_screen.window, &nw, &nh );
-   else {
-      nw = conf.width;
-      nh = conf.height;
-   }
-
-   /* Settings have changed, switch and offer to reset. */
-   if (changed && !dialogue_YesNo(_("Keep Video Settings"),
-         _("Do you want to keep running at %dx%d %s?"),
-         nw, nh, fullscreen ? _("fullscreen") : _("windowed"))) {
-      conf.width      = origw;
-      conf.height     = origh;
-      conf.fullscreen = origf;
-      window_checkboxSet( wid, "chkFullscreen", conf.fullscreen );
-
-      /* Restore previous resolution. */
-      if ((w != rw) || (h != rw)) {
-         SDL_SetWindowSize( gl_screen.window, rw, rh );
-         naev_resize( rw, rh );
-         SDL_SetWindowPosition( gl_screen.window,
-               SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
-      }
-
-      /* Restore windowed mode. */
-      if (fullscreen && (fullscreen != conf.fullscreen))
-         SDL_SetWindowFullscreen( gl_screen.window, 0 );
-      else if (!fullscreen && (fullscreen != conf.fullscreen)) {
-         if  (conf.modesetting) {
-            current.w = origw;
-            current.h = origh;
-
-            SDL_SetWindowDisplayMode( gl_screen.window, &current );
-         }
-         SDL_SetWindowFullscreen( gl_screen.window, mode );
-      }
-
-      nsnprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
-      window_setInput( wid, "inpRes", buf );
-
-      dialogue_msg( _("Video Settings Restored"),
-            _("Resolution reset to %dx%d %s."),
-            rw, rh, conf.fullscreen ? _("fullscreen") : _("windowed") );
-
-      return 1;
-   }
-   else if (changed) {
-      nsnprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
-      window_setInput( wid, "inpRes", buf );
-   }
+   ret = opt_setVideoMode( w, h, fullscreen, 1 );
+   window_checkboxSet( wid, "chkFullscreen", conf.fullscreen );
+   if (ret != 0)
+      return ret;
 
    /* FPS. */
    conf.fps_show = window_checkboxState( wid, "chkFPS" );
@@ -1546,11 +1389,6 @@ static int opt_videoSave( unsigned int wid, char *str )
    f = window_checkboxState( wid, "chkMipmaps" );
    if (conf.mipmaps != f) {
       conf.mipmaps = f;
-      opt_needRestart();
-   }
-   f = window_checkboxState( wid, "chkInterpolate" );
-   if (conf.interpolate != f) {
-      conf.interpolate = f;
       opt_needRestart();
    }
    f = window_checkboxState( wid, "chkNPOT" );
@@ -1572,8 +1410,94 @@ static int opt_videoSave( unsigned int wid, char *str )
             conf.minimize ? "1" : "0" );
    }
 
+   /* GUI. */
+   conf.big_icons = window_checkboxState( wid, "chkBigIcons" );
+
    return 0;
 }
+
+
+/**
+ * @brief Applies new video-mode options.
+ *
+ *    @param w Width of the video mode (if fullscreen) or window in screen coordinates (otherwise).
+ *    @param h Height of the video mode (if fullscreen) or window in screen coordinates (otherwise).
+ *    @param fullscreen Whether it's a fullscreen mode.
+ *    @param confirm Whether to confirm the new settings.
+ *    @return 0 on success.
+ */
+int opt_setVideoMode( int w, int h, int fullscreen, int confirm )
+{
+   int old_conf_w, old_conf_h, old_conf_f, status;
+   int old_w, old_h, old_f, new_w, new_h, new_f;
+   int changed_size, maximized;
+
+   opt_getVideoMode( &old_w, &old_h, &old_f );
+   old_conf_w = conf.width;
+   old_conf_h = conf.height;
+   old_conf_f = conf.fullscreen;
+   conf.width = w;
+   conf.height = h;
+   conf.fullscreen = fullscreen;
+
+   status = gl_setupFullscreen();
+   if (status == 0 && !fullscreen && (w != old_w || h != old_h)) {
+      SDL_SetWindowSize( gl_screen.window, w, h );
+      SDL_SetWindowPosition( gl_screen.window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
+   }
+   naev_resize();
+
+   opt_getVideoMode( &new_w, &new_h, &new_f );
+   changed_size = new_w != old_w || new_h != old_h;
+   maximized = !new_f && (SDL_GetWindowFlags(gl_screen.window) & SDL_WINDOW_MAXIMIZED);
+
+   if (confirm && !changed_size && maximized)
+      dialogue_alert(_("Resolution can't be changed while maximized."));
+   if (confirm && (status != 0 || new_f != fullscreen))
+      opt_needRestart();
+
+   if (confirm && (status != 0 || changed_size || new_f != old_f) && !dialogue_YesNo(_("Keep Video Settings"),
+         _("Do you want to keep running at %dx%d %s?"),
+         new_w, new_h, new_f ? _("fullscreen") : _("windowed"))) {
+
+      opt_setVideoMode( old_conf_w, old_conf_h, old_conf_f, 0 );
+
+      dialogue_msg( _("Video Settings Restored"),
+            _("Resolution reset to %dx%d %s."),
+            old_w, old_h, conf.fullscreen ? _("fullscreen") : _("windowed") );
+
+      return 1;
+   }
+
+   conf.explicit_dim = conf.explicit_dim || w != old_conf_w || h != old_conf_h;
+   return 0;
+}
+
+
+/**
+ * @brief Detects the video-mode options corresponding to the gl_screen we have set up.
+ *
+ *    @param[out] w Width of the video mode (if fullscreen) or window in screen coordinates (otherwise).
+ *    @param[out] h Height of the video mode (if fullscreen) or window in screen coordinates (otherwise).
+ *    @param[out] fullscreen Whether it's a fullscreen mode.
+ */
+static void opt_getVideoMode( int *w, int *h, int *fullscreen )
+{
+   SDL_DisplayMode mode;
+   /* Warning: this test may be inadequate depending on our setup.
+    * Example (Wayland): if I called SDL_SetWindowDisplayMode with an impossibly large size, then SDL_SetWindowFullscreen,
+    * I see a window on my desktop whereas SDL2 window flags report a fullscreen mode.
+    * Mitigation: be strict about how the setup is done in opt_setVideoMode / gl_setupFullscreen, and never bypass them. */
+   *fullscreen = (SDL_GetWindowFlags(gl_screen.window) & SDL_WINDOW_FULLSCREEN) != 0;
+   if (*fullscreen && conf.modesetting) {
+      SDL_GetWindowDisplayMode( gl_screen.window, &mode );
+      *w = mode.w;
+      *h = mode.h;
+   }
+   else
+      SDL_GetWindowSize( gl_screen.window, w, h );
+}
+
 
 /**
  * @brief Sets video defaults.
@@ -1594,14 +1518,14 @@ static void opt_videoDefaults( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkFullscreen", FULLSCREEN_DEFAULT );
    window_checkboxSet( wid, "chkVSync", VSYNC_DEFAULT );
    window_checkboxSet( wid, "chkMipmaps", MIPMAP_DEFAULT );
-   window_checkboxSet( wid, "chkInterpolate", INTERPOLATION_DEFAULT );
    window_checkboxSet( wid, "chkNPOT", NPOT_TEXTURES_DEFAULT );
    window_checkboxSet( wid, "chkFPS", SHOW_FPS_DEFAULT );
    window_checkboxSet( wid, "chkEngineGlow", ENGINE_GLOWS_DEFAULT );
    window_checkboxSet( wid, "chkMinimize", MINIMIZE_DEFAULT );
+   window_checkboxSet( wid, "chkBigIcons", BIG_ICONS_DEFAULT );
 
    /* Faders. */
-   window_faderValue(  wid, "fadScale", SCALE_FACTOR_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadScale", SCALE_FACTOR_DEFAULT );
 }
 
 /**
@@ -1609,15 +1533,38 @@ static void opt_videoDefaults( unsigned int wid, char *str )
  *
  *    @param wid Window calling the callback.
  *    @param str Name of the widget calling the callback.
- *    @param type 0 for sound, 1 for audio.
  */
 static void opt_setScalefactor( unsigned int wid, char *str )
 {
    char buf[32];
    double scale = window_getFaderValue(wid, str);
+   scale = round(scale * 10) / 10;     // Reasonable precision. Clearer value.
    if (FABS(conf.scalefactor-scale) > 1e-4)
       opt_needRestart();
    conf.scalefactor = scale;
    nsnprintf( buf, sizeof(buf), _("Scaling: %.1fx"), conf.scalefactor );
    window_modifyText( wid, "txtScale", buf );
 }
+
+
+
+/**
+ * @brief Callback to set autonav abort threshold.
+ *
+ *    @param wid Window calling the callback.
+ *    @param str Name of the widget calling the callback.
+ */
+static void opt_setMapOverlayOpacity( unsigned int wid, char *str )
+{
+   char buf[PATH_MAX];
+   double map_overlay_opacity;
+
+   /* Set fader. */
+   map_overlay_opacity = window_getFaderValue(wid, str);
+
+   nsnprintf( buf, sizeof(buf), _("%.0f%%"), map_overlay_opacity * 100 );
+
+   window_modifyText( wid, "txtMOpacity", buf );
+}
+
+

@@ -9,16 +9,18 @@
  */
 
 
+/** @cond */
+#include <math.h>
+
+#include "naev.h"
+/** @endcond */
+
 #include "colour.h"
 
-#include <math.h>
-#include "nstring.h"
-
-#include "nmath.h"
-#include "naev.h"
 #include "log.h"
 #include "ncompat.h"
-#include "nstd.h"
+#include "nmath.h"
+#include "nstring.h"
 
 
 /*
@@ -31,26 +33,32 @@ const glColour cGrey80     = { .r=0.80, .g=0.80, .b=0.80, .a=1. }; /**< Grey 80%
 const glColour cGrey70     = { .r=0.70, .g=0.70, .b=0.70, .a=1. }; /**< Grey 70% */
 const glColour cGrey60     = { .r=0.60, .g=0.60, .b=0.60, .a=1. }; /**< Grey 60% */
 const glColour cGrey50     = { .r=0.50, .g=0.50, .b=0.50, .a=1. }; /**< Grey 50% */
+const glColour cGrey45     = { .r=0.45, .g=0.45, .b=0.45, .a=1. }; /**< Grey 45% */
 const glColour cGrey40     = { .r=0.40, .g=0.40, .b=0.40, .a=1. }; /**< Grey 40% */
+const glColour cGrey35     = { .r=0.35, .g=0.35, .b=0.35, .a=1. }; /**< Grey 35% */
 const glColour cGrey30     = { .r=0.30, .g=0.30, .b=0.30, .a=1. }; /**< Grey 30% */
+const glColour cGrey25     = { .r=0.25, .g=0.25, .b=0.25, .a=1. }; /**< Grey 25% */
 const glColour cGrey20     = { .r=0.20, .g=0.20, .b=0.20, .a=1. }; /**< Grey 20% */
+const glColour cGrey15     = { .r=0.15, .g=0.15, .b=0.15, .a=1. }; /**< Grey 15% */
 const glColour cGrey10     = { .r=0.10, .g=0.10, .b=0.10, .a=1. }; /**< Grey 10% */
 const glColour cBlack      = { .r=0.00, .g=0.00, .b=0.00, .a=1. }; /**< Black */
 
 /* Greens. */
+const glColour cDarkGreen      = { .r=0.10, .g=0.50, .b=0.10, .a=1. }; /**< Dark Green */
 const glColour cGreen      = { .r=0.20, .g=0.80, .b=0.20, .a=1. }; /**< Green */
 const glColour cPrimeGreen = { .r=0.00, .g=1.00, .b=0.00, .a=1. }; /**< Primary Green */
 /* Reds. */
 const glColour cDarkRed    = { .r=0.60, .g=0.10, .b=0.10, .a=1. }; /**< Dark Red */
 const glColour cRed        = { .r=0.80, .g=0.20, .b=0.20, .a=1. }; /**< Red */
 const glColour cPrimeRed   = { .r=1.00, .g=0.00, .b=0.00, .a=1. }; /**< Primary Red */
+const glColour cBrightRed  = { .r=1.00, .g=0.60, .b=0.60, .a=1. }; /**< Bright Red */
 /* Oranges. */
 const glColour cOrange     = { .r=0.90, .g=0.70, .b=0.10, .a=1. }; /**< Orange */
 /* Yellows. */
 const glColour cGold       = { .r=1.00, .g=0.84, .b=0.00, .a=1. }; /**< Gold */
 const glColour cYellow     = { .r=0.80, .g=0.80, .b=0.00, .a=1. }; /**< Yellow */
 /* Blues. */
-const glColour cMidnightBlue = { .r=0.40, .g=0.4, .b=0.60, .a=1. }; /**< Midnight Blue. */
+const glColour cMidnightBlue = { .r=0.10, .g=0.10, .b=0.4, .a=1. }; /**< Midnight Blue. */
 const glColour cDarkBlue   = { .r=0.10, .g=0.10, .b=0.60, .a=1. }; /**< Dark Blue */
 const glColour cBlue       = { .r=0.20, .g=0.20, .b=0.80, .a=1. }; /**< Blue */
 const glColour cLightBlue  = { .r=0.40, .g=0.40, .b=1.00, .a=1. }; /**< Light Blue */
@@ -73,20 +81,17 @@ const glColour cBlackHilight  =  { .r = 0.0, .g = 0.0, .b = 0.0, .a = 0.4 }; /**
 /* toolkit */
 const glColour cHilight       =  { .r = 0.1, .g = 0.9, .b = 0.1, .a = 0.6 }; /**< Hilight colour */
 /* objects */
-const glColour cInert         =  { .r = 0.6, .g = 0.6, .b = 0.6, .a = 1.  }; /**< Inert object colour */
-const glColour cMapInert      =  { .r = 0.4, .g = 0.4, .b = 0.4, .a = 1. }; /**< Inert object map screen text colour */
-const glColour cNeutral       =  { .r = 0.9, .g = 1.0, .b = 0.3, .a = 1.  }; /**< Neutral object colour */
-const glColour cMapNeutral    =  { .r = 0.2, .g = 0.2, .b = 0.2, .a = 1.  }; /**< Neutral object map screen text colour */
-const glColour cFriend        =  { .r = 0.0, .g = 0.8, .b = 0.0, .a = 1.  }; /**< Friend object colour */
-const glColour cHostile       =  { .r = 0.9, .g = 0.2, .b = 0.2, .a = 1.  }; /**< Hostile object colour */
-const glColour cRestricted    =  { .r = 1.0, .g = 0.6, .b = 0.0, .a = 1.  }; /**< Restricted object colour. */
-const glColour cDRestricted   =  { .r = 0.7, .g = 0.3, .b = 0.0, .a = 1.  }; /**< Restricted object colour. Darkened for use on white. */
+const glColour cInert         =  { .r=221./255., .g=221./255., .b=221./255., .a=1. }; /**< Inert object colour */
+const glColour cNeutral       =  { .r=221./255., .g=204./255., .b=119./255., .a=1. }; /**< Neutral object colour */
+const glColour cFriend        =  {  .r=68./255., .g=170./255., .b=153./255., .a=1. }; /**< Friend object colour */
+const glColour cHostile       =  { .r=170./255.,  .g=68./255., .b=153./255., .a=1. }; /**< Hostile object colour */
+const glColour cRestricted    =  { .r=153./255., .g=153./255.,  .b=51./255., .a=1. }; /**< Restricted object colour. */
 /* radar */
 const glColour cRadar_player  =  { .r = 0.4, .g = 0.8, .b = 0.4, .a = 1.  }; /**< Player colour on radar. */
-const glColour cRadar_tPilot  =  { .r = 0.8, .g = 0.5, .b = 0.0, .a = 1.  }; /**< Targeted object colour on radar. */
-const glColour cRadar_tPlanet =  { .r = 0.7, .g = 0.0, .b = 0.9, .a = 1.  }; /**< Targeted planet colour. */
+const glColour cRadar_tPilot  =  { .r = 1.0, .g = 1.0, .b = 1.0, .a = 1.  }; /**< Targeted object colour on radar. */
+const glColour cRadar_tPlanet =  { .r = 1.0, .g = 1.0, .b = 1.0, .a = 1.  }; /**< Targeted planet colour. */
 const glColour cRadar_weap    =  { .r = 0.8, .g = 0.2, .b = 0.2, .a = 1.  }; /**< Weapon colour on radar. */
-const glColour cRadar_hilight =  { .r = 0.0, .g = 0.8, .b = 0.8, .a = 1.  }; /**< Radar hilighted object. */
+const glColour cRadar_hilight =  { .r = 0.6, .g = 1.0, .b = 1.0, .a = 1.  }; /**< Radar hilighted object. */
 /* health */
 const glColour cShield        =  { .r = 0.2, .g = 0.2, .b = 0.8, .a = 1.  }; /**< Shield bar colour. */
 const glColour cArmour        =  { .r = 0.5, .g = 0.5, .b = 0.5, .a = 1.  }; /**< Armour bar colour. */
@@ -98,11 +103,11 @@ const glColour cFuel          =  { .r = 0.9, .g = 0.1, .b = 0.4, .a = 1.  }; /**
 const glColour cFontRed       =  { .r = 1.0, .g = 0.4, .b = 0.4, .a = 1.  }; /**< Red font colour. */
 const glColour cFontGreen     =  { .r = 0.6, .g = 1.0, .b = 0.4, .a = 1.  }; /**< Green font colour. */
 const glColour cFontBlue      =  { .r = 0.4, .g = 0.6, .b = 1.0, .a = 1.  }; /**< Blue font colour. */
-const glColour cFontOrange    =  { .r = 1.0, .g = 0.7, .b = 0.2, .a = 1.  }; /**< Orange font colour. */
 const glColour cFontYellow    =  { .r = 1.0, .g = 1.0, .b = 0.5, .a = 1.  }; /**< Yellow font colour. */
 const glColour cFontWhite     =  { .r = 0.95, .g = 0.95, .b = 0.95, .a = 1.  }; /**< White font colour. */
 const glColour cFontGrey      =  { .r = 0.7, .g = 0.7, .b = 0.7, .a = 1.  }; /**< Grey font colour. */
 const glColour cFontPurple    =  { .r = 1.0, .g = 0.3, .b = 1.0, .a = 1.  }; /**< Purple font colour. */
+const glColour cFontOrange    =  { .r = 1.0, .g = 0.7, .b = 0.3, .a = 1.  }; /**< Orange font colour. */
 
 
 /**
@@ -248,7 +253,7 @@ void col_blend( glColour *blend, const glColour *fg, const glColour *bg, double 
 
 
 #define CHECK_COLOUR(colour) \
-      if (STRCASECMP(name, #colour) == 0) return &c##colour /**< Checks the colour. */
+      if (strcasecmp(name, #colour) == 0) return &c##colour /**< Checks the colour. */
 /**
  * @brief Returns a colour from its name
  *
@@ -323,7 +328,7 @@ const glColour* col_fromName( const char* name )
       CHECK_COLOUR(MidnightBlue);
    }
 
-   WARN(_("Unknown colour %"), name);
+   WARN(_("Unknown colour %s"), name);
    return NULL;
 }
 #undef CHECK_COLOUR

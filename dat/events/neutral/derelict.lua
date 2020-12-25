@@ -4,6 +4,9 @@
   <trigger>enter</trigger>
   <chance>10</chance>
   <cond>system.cur():faction() ~= nil</cond>
+  <notes>
+   <tier>1</tier>
+  </notes>
  </event>
  --]]
 --[[
@@ -36,13 +39,13 @@ ntext[14] = _([[As you walk through the corridors of the derelict, you can't hel
 gtitle = _("Lucky find!")
 gtext = {}
 gtext[1] = _([[The derelict appears deserted, its passengers long gone. However, they seem to have left behind a small amount of credit chips in their hurry to leave! You decide to help yourself to them, and leave the derelict.]])
-gtext[2] = _([[The derelict is empty, and seems to have been thoroughly picked over by other space bucceneers. However, the ship's computer contains a map of the %s! You download it into your own computer.]])
+gtext[2] = _([[The derelict is empty, and seems to have been thoroughly picked over by other space buccaneers. However, the ship's computer contains a map of the %s! You download it into your own computer.]])
 gtext[3] = _([[This ship looks like any old piece of scrap at a glance, but it is actually an antique, one of the very first of its kind ever produced! Museums all over the galaxy would love to have a ship like this. You plant a beacon on the derelict to mark it for salvaging, and contact the %s authorities. Your reputation with them has slightly improved.]])
 
 --=== BAD EVENTS ===--
 btitle = _("Oh no!")
 btext = {}
-btext[1] = _([[The moment you affix your boarding clamp to the derelect ship, it triggers a boobytrap! The derelict explodes, severely damaging your ship. You escaped death this time, but it was a close call!]])
+btext[1] = _([[The moment you affix your boarding clamp to the derelict ship, it triggers a booby trap! The derelict explodes, severely damaging your ship. You escaped death this time, but it was a close call!]])
 btext[2] = _([[You board the derelict ship and search its interior, but you find nothing. When you return to your ship, however, it turns out there were Space Leeches onboard the derelict - and they've now attached themselves to your ship! You scorch them off with a plasma torch, but it's too late. The little buggers have already drunk all of your fuel. You're not jumping anywhere until you find some more!]])
 btext[3] = _([[You affix your boarding clamp and walk aboard the derelict ship. You've only spent a couple of hectoseconds searching the interior when there is a proximity alarm from your ship! Pirates are closing on your position! Clearly this derelict was a trap! You run back onto your ship and prepare to unboard, but you've lost precious time. The pirates are already in firing range...]])
 

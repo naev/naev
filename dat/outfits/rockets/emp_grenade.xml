@@ -21,6 +21,6 @@
    <physical>8</physical>
    <disable>50</disable>
   </damage>
-  <ai>dumb</ai>
+  <ai>unguided</ai>
  </specific>
 </outfit>

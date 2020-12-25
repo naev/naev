@@ -1,28 +1,31 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="A Small Diversion">
-  <flags>
-    <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <cond>faction.playerStanding("Dvaered") &gt; 5</cond>
-   <chance>10</chance>
-   <location>Bar</location>
-   <planet>Doranthex Prime</planet>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <cond>faction.playerStanding("Dvaered") &gt; 5</cond>
+  <chance>10</chance>
+  <location>Bar</location>
+  <planet>Doranthex Prime</planet>
+ </avail>
+ <notes>
+  <tier>2</tier>
+ </notes>
+</mission>
+--]]
 --[[
-   -- This is a oneoff mission where you help a new Dvaered Warlord takeover a planet
+   -- This is a one-off mission where you help a new Dvaered Warlord takeover a planet
    -- To Do: fix fighters being idle after mission ends
    -- Other editors, feel free to update dialog to make it more dvaered like.
 --]]
 
 -- localization stuff, translators would work here
 
-require "fleethelper.lua"
-require "portrait.lua"
+require "fleethelper"
+require "portrait"
 
 
 destsysname = "Torg"
@@ -130,7 +133,7 @@ function jumpout()
 end
 
 function enter()
-   if system.cur():name() == destsysname then
+   if system.cur() == system.get(destsysname) then
       pilot.toggleSpawn(false)
       pilot.clear()
       misn.osdActive(2)
@@ -152,7 +155,7 @@ function enter()
          j:setHilight(true)
          j:setVisible(true)
          j:control()
-         j:goto(v)
+         j:moveto(v)
          table.insert(fleethooks, hook.pilot(j, "attacked", "fleetdv_attacked"))
       end
       

@@ -14,7 +14,7 @@ Spawns a travelling merchant that can sell the player if interested.
 
 --]]
 
-trader_name = _("Mad Maroni")
+trader_name = _("Machiavellian Misi")
 store_name = string.format(_("%s's \"Fine\" Wares"), trader_name)
 broadcastmsg = {
    string.format(_("%s's the name and selling fine shit is my game! Come get your outfits here!"), trader_name),
@@ -61,9 +61,23 @@ function create ()
    hailed_player = false
    hailhook = hook.pilot( p, "hail", "hail" )
    boardhook = hook.pilot( p, "board", "board" )
+
+   hook.jumpout("leave")
+   hook.land("leave")
+end
+
+function leave () --event ends on player leaving the system or landing
+    evt.finish()
 end
 
 function broadcast ()
+   -- End the event if for any reason the trader stops existing
+   if not p:exists() then
+      evt.finish()
+      return
+   end
+
+   -- Cycle through broadcasts
    if broadcastid > #broadcastmsg then broadcastid = 1 end
    p:broadcast( broadcastmsg[broadcastid], true )
    broadcastid = broadcastid+1
@@ -100,9 +114,9 @@ function board ()
 
    -- Always available outfits
    -- TODO add more
-   outfits = {
+   local outfits = {
       'Air Freshener',
-      'Valkyrie Ride',
+      'Valkyrie Beam',
       'Hades Torch',
    }
 
@@ -130,7 +144,7 @@ function board ()
    end
 
    -- Start the merchant and unboard.
-   tk.merchant( store_name, outfits )
+   tk.merchantOutfit( store_name, outfits )
    player.unboard()
 end
 

@@ -11,15 +11,19 @@
    <location>Bar</location>
    <faction>Sirius</faction>
   </avail>
+  <notes>
+   <campaign>Academy Hack</campaign>
+  </notes>
  </mission>
  --]]
 --[[
 -- This is the third mission in the Academy Hack minor campaign.
 --]]
 
-require "fleethelper.lua"
-require "proximity.lua"
-require "dat/missions/sirius/common.lua"
+require "fleethelper"
+require "proximity"
+require "missions/sirius/common"
+require "numstring"
 
 
 title1 = _("Talking to Joanne")
@@ -40,7 +44,7 @@ text3 = _([["Oh, I'm glad to hear that. Here, I'll upload the details of Harja's
 
 title3 = _("Harja's ire")
 text4 = _([[You hail Harja's ship. A few moments later his face appears on your console. When he recognizes you, his face sets in an angry scowl.
-    "You! How dare you show your face to me again after doublecrossing me like that! I had a perfect shot at taking out that damn woman, but you had to go and tip her off instead. Worse, you even helped her fight off the other guys I hired to blast her into space dust! You ruined everything! The past cycles of my life, completely wasted! Damn you!"
+    "You! How dare you show your face to me again after double-crossing me like that! I had a perfect shot at taking out that damn woman, but you had to go and tip her off instead. Worse, you even helped her fight off the other guys I hired to blast her into space dust! You ruined everything! The past cycles of my life, completely wasted! Damn you!"
     You try to convince Harja that you want to have a word with him about this matter, but he is furious. "I've got nothing to say to a traitorous scumbag like you! Now leave me alone, I'm having a bad day as it is without you spoiling it further!" With that, Harja breaks the connection. Oh well, looks like you're going to have to do this the hard way.]])
 
 title4 = _("A friendly chat at gunpoint")
@@ -48,12 +52,12 @@ text5 = _([[You step through the airlock onto Harja's ship. Harja comes storming
     "What do you mean, my side of the story?" Harja grumbles after you've explained your actions. "I'm taking revenge, that's all there is to it. Did she tell you about the academy on Sinass? Okay. Did she also tell you how she framed me for the computer hack? No, I bet she didn't! But that's the truth of it, mark my words! She knew I was at least as good as she was, so she needed to get rid of me to be sure she'd get the promotion. Oh yeah, she's a clever one, is Joanne. She knew nobody would believe she'd try to forge her own scores, and everyone knew I was her only competition. So she set me up! Just to get me expelled! I spent almost my whole life up to that point getting to where I was, and she destroyed it in a single night. Yeah, I want revenge. It's all I've got left."]])
 
 text6 = _([[You point out that Harja had more than enough motive to place that hack himself, and that, unlike Harja's, you have no reason to doubt Joanne's integrity. Harja deflates a little.
-    "Okay, look, I know what it looks like. I know I was hanging out on the Wringer, that I hired you as a hitman and that I lied about her being a criminal. That doesn't help my case. But I didn't do it! I was confident I could win the promotion fair and square. Still think I would have gotten it if I hadn't been thrown out. I can't prove it, but on Sirichana I swear it wasn't me. And now you either believe me or you believe her. I've told you everything."
+    "Okay, look, I know what it looks like. I know I was hanging out on the Wringer, that I hired you as a hit man and that I lied about her being a criminal. That doesn't help my case. But I didn't do it! I was confident I could win the promotion fair and square. Still think I would have gotten it if I hadn't been thrown out. I can't prove it, but on Sirichana I swear it wasn't me. And now you either believe me or you believe her. I've told you everything."
     It's clear to you that you're not going to get anything else out of him. You don't know what to make of this. Both Harja and Joanne seem convinced that the other hacked the academy's computer, and neither of them has any evidence to prove their claim. This whole matter doesn't seem any closer to a conclusion than before, but you have little choice other than to report your findings to Joanne at this point.]])
 
 title5 = _("Full circle")
 text7 = _([[You meet Joanne in the spaceport bar. She listens to your account of your conversation with Harja. When you're finished, she frowns.
-    "I've got to admit, I find his story a little disturbing. He genuinely seems to believe I framed him for that hack, just as I believe he tried to frame me. From what you told me, it doesn't seem like he was just putting up a self-righteous story to justify his actions, and I wouldn't expect that from him anyway. But that's impossible. Besides the two of us, there was nobody who had the slightest interest in removing eiter one of us from the academy. I know I didn't do it, so that means Harja must have done it. Only..." Joanne pauses. "You said he swore an oath. Whatever else I might think of him, I can't quite believe he would abuse his Sirian beliefs in such a way. We Sirii take our faith very seriously.
+    "I've got to admit, I find his story a little disturbing. He genuinely seems to believe I framed him for that hack, just as I believe he tried to frame me. From what you told me, it doesn't seem like he was just putting up a self-righteous story to justify his actions, and I wouldn't expect that from him anyway. But that's impossible. Besides the two of us, there was nobody who had the slightest interest in removing either one of us from the academy. I know I didn't do it, so that means Harja must have done it. Only..." Joanne pauses. "You said he swore an oath. Whatever else I might think of him, I can't quite believe he would abuse his Sirian beliefs in such a way. We Sirii take our faith very seriously.
     "I don't know what to say, %s. The more I find out about all this, the less sense it makes. I need to think about this, see if there's something I can figure out on my side. I suspect this isn't the end of it yet, though, so I may need your help again soon. But for now, I should give you what I promised you so you can take care of your other matters."
     Joanne pays you the agreed upon sum. Then she walks out of the spaceport bar, a thoughtful expression on her face. It seems your role in the conflict between Joanne and Harja is growing. Who knows where it'll end.]])
 
@@ -82,9 +86,9 @@ osd_msg[3] = _("Return to Joanne on %s (%s)")
 osd_msg["__save"] = true
 
 misn_desc = _("Joanne wants you to find Harja and interrogate him about his motives.")
-misn_reward = _("1,000,000 credits")
+misn_reward = creditstring(1000000) -- 1M
 
-log_text = _([[Joanne hired you to interrogate Harja about his motives for trying to assassinate her. He was unwilling to talk to you, but when you backed him into a corner, Harja claimed that it was Joanne who hacked the High Acadamy's main computer to change her scores in an atttempt to frame him. He swore "on Sirichana" that he wasn't responsible for the hack. Joanne took this oath seriously, saying that he wouldn't "abuse his Sirian beliefs". She said that she may need your help again soon.]])
+log_text = _([[Joanne hired you to interrogate Harja about his motives for trying to assassinate her. He was unwilling to talk to you, but when you backed him into a corner, Harja claimed that it was Joanne who hacked the High Acadamy's main computer to change her scores in an attempt to frame him. He swore "on Sirichana" that he wasn't responsible for the hack. Joanne took this oath seriously, saying that he wouldn't "abuse his Sirian beliefs". She said that she may need your help again soon.]])
 
 
 function create()
@@ -122,7 +126,7 @@ function accept()
    datehook = hook.date(time.create(0, 2, 0), "date")
 end
 
--- Jumpout hook.
+-- Jump-out hook.
 function jumpout()
    origin = system.cur()
 end
@@ -138,7 +142,7 @@ end
 function date()
    if (harja == nil or not harja:exists()) and system.cur():presences()["Sirius"] then
       -- Determine spawn point. The reason why we don't use the normal random is that we don't want Harja spawning from the same place as the player.
-      local spawnpoints = _mergeTables(system.cur():adjacentSystems(), system.cur():planets()) -- _mergeTables() is defined in fleethelper.lua.
+      local spawnpoints = _mergeTables(system.cur():adjacentSystems(), system.cur():planets()) -- _mergeTables() is defined in fleethelper.
       for i, j in ipairs(spawnpoints) do
          if j == origin then
             table.remove(spawnpoints, i) -- The place the player entered from is not a valid spawn point.

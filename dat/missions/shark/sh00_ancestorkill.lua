@@ -19,6 +19,10 @@
    <faction>Traders Guild</faction>
    <faction>Za'lek</faction>
   </avail>
+  <notes>
+   <campaign>Nexus show their teeth</campaign>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --[[
@@ -35,9 +39,9 @@
 --]]
 
 --Needed scripts
-require "pilot/pirate.lua"
-require "numstring.lua"
-require "dat/missions/shark/common.lua"
+require "pilot/pirate"
+require "numstring"
+require "missions/shark/common"
 
 
 title = {}
@@ -66,7 +70,6 @@ text[4] = _([[As you step on the ground, Arnold Smith greets you. "That was a gr
 
 -- Mission details
 misn_title = _("A Shark Bites")
-misn_reward = _("%s credits")
 misn_desc = _("Nexus Shipyards needs you to demonstrate to Baron Sauterfeldt the capabilities of Nexus designs.")
 
 -- NPC
@@ -92,9 +95,9 @@ log_text = _([[You helped Nexus Shipyards demonstrate the capabilities of their 
 function create ()
 
    --Change here to change the planet and the system
-   sysname = "Ingot"
-   planame = "Ulios"
-   bsyname = "Toaxis"
+   local sysname = "Ingot"
+   local planame = "Ulios"
+   local bsyname = "Toaxis"
    missys = system.get(sysname)
    mispla = planet.get(planame)
    battlesys = system.get(bsyname)
@@ -122,7 +125,7 @@ function accept()
       osd_msg[3] = osd_msg[3]:format(mispla:name())
 
       misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward)))
+      misn.setReward(creditstring(reward))
       misn.setDesc(misn_desc)
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)
@@ -173,7 +176,7 @@ function enter()
 
       --Check if the player uses a Shark
       playership = player.pilot():ship()
-      playershipname = playership:name()
+      playershipname = playership:nameRaw()
 
       if playershipname ~= "Shark" and playershipname ~= "Empire Shark" then
          player.msg( "\ar" .. noshark_msg .. "\a0" )
@@ -185,7 +188,7 @@ function enter()
       pilot.toggleSpawn(false)
 
       -- spawns the bad guy
-      badboy = pilot.add( "Pirate Ancestor", nil, 0 )[1]
+      badboy = pilot.add( "Pirate Ancestor", nil, system.get("Raelid") )[1]
       badboy:rename(piratename)
       badboy:setHostile()
       badboy:setVisplayer()

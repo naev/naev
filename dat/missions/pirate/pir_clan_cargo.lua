@@ -8,6 +8,9 @@
    <location>Bar</location>
    <faction>Pirate</faction>
   </avail>
+  <notes>
+   <tier>2</tier>
+  </notes>
  </mission>
  --]]
 --[[
@@ -21,13 +24,12 @@
 
 ]]--
 
-require "numstring.lua"
-require "jumpdist.lua"
-require "portrait.lua"
+require "numstring"
+require "jumpdist"
+require "portrait"
 
 bar_desc = _("You see a pirate lord raving about something. A significant crowd has gathered around.")
 misn_title = _("Clans trade")
-misn_reward = _("%s credits")
 misn_desc = _("Deliver some boxes to the pirate clan of %s, in the %s system.")
 title = {}
 title[1] = _("Spaceport Bar")
@@ -43,7 +45,7 @@ text[3]   = _("Your mission was a complete success! The clan you just gave the p
 
 function create ()
    -- Note: this mission does not make any system claims.
-   local landed = planet.cur():name()
+   local landed = planet.cur():nameRaw()
 
    -- target destination
    local planets = {}
@@ -77,12 +79,12 @@ function accept ()
    -- Mission details
    reward = rnd.rnd(10,20) * 100000 -- Hey, this mission is probably hell, after all.
    misn.setTitle(misn_title)
-   misn.setReward( string.format(misn_reward, numstring(reward)) )
-   misn.setDesc( string.format(misn_desc,dest:name(),sys:name()))
+   misn.setReward( creditstring(reward) )
+   misn.setDesc( string.format(misn_desc, dest:name(), sys:name()))
 
    -- Flavour text and mini-briefing
    tk.msg( title[2], string.format( text[2], dest:name() ))
-   misn.osdCreate(title[2], {misn_desc:format(dest:name(),sys:name())})
+   misn.osdCreate(title[2], {misn_desc:format(dest:name(), sys:name())})
 
    -- Set up the goal
    packages = misn.cargoAdd("Packages", 5)

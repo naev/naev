@@ -6,6 +6,9 @@
   <cond>player.misnActive("Baron") == false and player.misnActive("Prince") == false and system.cur() == system.get("Ingot")</cond>
   <flags>
   </flags>
+  <notes>
+   <campaign>Baron Sauterfeldt</campaign>
+  </notes>
  </event>
  --]]
 --[[
@@ -21,13 +24,13 @@ function create()
     baronship:setInvincible(true)
     baronship:setFriendly()
     baronship:control()
-    baronship:goto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false, false)
+    baronship:moveto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false, false)
     hook.pilot(baronship, "idle", "idle")
 end
 
 function idle()
-    baronship:goto(planet.get("Ulios"):pos() + vec2.new( 500,  500), false, false)
-    baronship:goto(planet.get("Ulios"):pos() + vec2.new(-500,  500), false, false)
-    baronship:goto(planet.get("Ulios"):pos() + vec2.new(-500, -500), false, false)
-    baronship:goto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false, false)
+    baronship:moveto(planet.get("Ulios"):pos() + vec2.new( 500,  500), false, false)
+    baronship:moveto(planet.get("Ulios"):pos() + vec2.new(-500,  500), false, false)
+    baronship:moveto(planet.get("Ulios"):pos() + vec2.new(-500, -500), false, false)
+    baronship:moveto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false, false)
 end

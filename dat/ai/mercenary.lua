@@ -1,5 +1,6 @@
-require("dat/ai/tpl/generic.lua")
-require("dat/ai/personality/patrol.lua")
+require("ai/tpl/generic")
+require("ai/personality/patrol")
+require "numstring"
 
 -- Settings
 mem.armour_run = 40
@@ -13,7 +14,7 @@ function create ()
 
    if rnd.int() > 0.7 then
       mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (750. * rnd.int() + 2500.)
-      mem.bribe_prompt = string.format(_("\"Your life is worth %d credits to me.\""), mem.bribe )
+      mem.bribe_prompt = string.format(_("\"Your life is worth %s to me.\""), creditstring(mem.bribe) )
       mem.bribe_paid = _("\"Beat it.\"")
    else
       if rnd.int() > 0.5 then

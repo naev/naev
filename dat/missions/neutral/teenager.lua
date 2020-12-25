@@ -11,6 +11,9 @@
    <faction>Dvaered</faction>
    <cond>player.numOutfit("Mercenary License") &gt; 0 and planet.cur():class() ~= "0" and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3"</cond>
   </avail>
+  <notes>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --[[
@@ -22,7 +25,10 @@
 --
 --]]
 
--- Localization, choosing a language if naev is translated for non-english-speaking locales.
+-- Localization, choosing a language if Naev is translated for non-english-speaking locales.
+
+require "numstring"
+
 
 text = {}
 title = {}
@@ -34,14 +40,14 @@ title[2] = _("It's a lousy job, but...")
 text[2] = _([["Thank you! The yacht doesn't have a working hyperdrive, so they won't have left the system. It's a Gawain named Credence. Just disable it and board it, then transport my disobedient son and his girlfriend back here. Don't worry about the yacht, I'll have it recovered later. Oh, and one more thing, though it should go without saying: whatever you do, don't destroy the yacht! I don't want to lose my son over this. Well then, I hope to see you again soon."]])
 
 title[3] = _("Whoops!")
-text[3] = _([[You have destroyed the Gawain! The family presses charges, and you are sentenced to a %d fine in absence of attendance.]])
+text[3] = _([[You have destroyed the Gawain! The family presses charges, and you are sentenced to a %s fine in absence of attendance.]])
 
 title[4] = _("End of the line, boyo")
 text[4] = _([[You board the Gawain and find an enraged teenage boy and a disillusioned teenage girl. The boy is furious that you attacked and disabled his ship, but when you mention that his father is quite upset and wants him to come home right now, he quickly pipes down. You march the young couple onto your ship and seal the airlock behind you.]])
 
 title[5] = _("You're grounded, young man")
 text[5] = _([[The boy's father awaits you at the spaceport. He gives his son and the young lady a stern look and curtly commands them to wait for him in the spaceport hall. The couple droops off, and the father turns to face you.
-"You've done me a service, captain," he says. "As promised, I have a reward for a job well done. You'll find it in your bank account. I'm going to give my son a reprimand he'll not soon forget, so hopefully he won't repeat this little stunt anytime soon. Well then, I must be going. Thank you again, and good luck on your travels."]])
+    "You've done me a service, captain," he says. "As promised, I have a reward for a job well done. You'll find it in your bank account. I'm going to give my son a reprimand he'll not soon forget, so hopefully he won't repeat this little stunt anytime soon. Well then, I must be going. Thank you again, and good luck on your travels."]])
 
 NPCname = _("A middle-aged man")
 NPCdesc = _("You see a middle-aged man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot.")
@@ -107,7 +113,7 @@ function targetIdle()
     angle = rnd.rnd() * 2 * math.pi
     newlocation = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- New location is 750px away in a random direction
     target:taskClear()
-    target:goto(location + newlocation, false, false)
+    target:moveto(location + newlocation, false, false)
     hook.timer(5000, "targetIdle")
 end
 
@@ -117,7 +123,7 @@ end
 
 function targetDeath()
     fine = math.max(-20000, -player.credits()) -- Fine 20K, or take the player for all he has
-    tk.msg(title[3], text[3]:format(-fine))
+    tk.msg(title[3], text[3]:format(creditstring(-fine)))
     player.pay(fine) -- I love this statement.
     misn.finish(true)
 end

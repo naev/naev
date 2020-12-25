@@ -8,32 +8,34 @@
  * @brief Handles saving/loading games.
  */
 
-#include "save.h"
+/** @cond */
+#include <errno.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <errno.h> /* errno */
+#include "save.h"
 
-#include "log.h"
-#include "nxml.h"
-#include "nstring.h"
-#include "player.h"
-#include "dialogue.h"
-#include "menu.h"
-#include "nfile.h"
-#include "hook.h"
-#include "ndata.h"
-#include "unidiff.h"
-#include "nlua_var.h"
-#include "event.h"
-#include "news.h"
 #include "conf.h"
-#include "land.h"
+#include "dialogue.h"
+#include "event.h"
 #include "gui.h"
+#include "hook.h"
+#include "land.h"
 #include "load.h"
+#include "log.h"
+#include "menu.h"
+#include "ndata.h"
+#include "news.h"
+#include "nfile.h"
+#include "nlua_var.h"
+#include "nstring.h"
+#include "nxml.h"
+#include "player.h"
 #include "shiplog.h"
+#include "unidiff.h"
 
-int save_loaded   = 0; /**< Just loaded the savegame. */
+int save_loaded   = 0; /**< Just loaded the saved game. */
 
 
 /*
@@ -119,7 +121,7 @@ int save_all (void)
 
    /* Save the version and such. */
    xmlw_startElem(writer,"version");
-   xmlw_elem( writer, "naev", "%d.%d.%d", VMAJOR, VMINOR, VREV );
+   xmlw_elem( writer, "naev", "%s", VERSION );
    xmlw_elem( writer, "data", "%s", ndata_name() );
    xmlw_endElem(writer); /* "version" */
 
@@ -134,14 +136,14 @@ int save_all (void)
    xmlw_done(writer);
 
    /* Write to file. */
-   if ((nfile_dirMakeExist("%s", nfile_dataPath()) < 0) ||
-         (nfile_dirMakeExist("%ssaves", nfile_dataPath()) < 0)) {
+   if ((nfile_dirMakeExist(nfile_dataPath()) < 0) ||
+         (nfile_dirMakeExist(nfile_dataPath(), "saves") < 0)) {
       WARN(_("Failed to create save directory '%ssaves'."), nfile_dataPath());
       goto err_writer;
    }
    nsnprintf(file, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
 
-   /* Back up old savegame. */
+   /* Back up old saved game. */
    if (!save_loaded) {
       if (nfile_backupIfExists(file) < 0) {
          WARN(_("Aborting save..."));
@@ -154,7 +156,7 @@ int save_all (void)
     * Luckily we have a copy just in case... */
    xmlFreeTextWriter(writer);
    if (xmlSaveFileEnc(file, doc, "UTF-8") < 0) {
-      WARN(_("Failed to write savegame!  You'll most likely have to restore it by copying your backup savegame over your current savegame."));
+      WARN(_("Failed to write saved game!  You'll most likely have to restore it by copying your backup saved game over your current saved game."));
       goto err;
    }
    xmlFreeDoc(doc);
@@ -169,20 +171,20 @@ err:
 }
 
 /**
- * @brief Reload the current savegame.
+ * @brief Reload the current saved game.
  */
 void save_reload (void)
 {
    char path[PATH_MAX];
    nsnprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
-   load_game( path, 0 );
+   load_gameFile( path );
 }
 
 
 /**
- * @brief Checks to see if there's a savegame available.
+ * @brief Checks to see if there's a saved game available.
  *
- *    @return 1 if a savegame is available, 0 otherwise.
+ *    @return 1 if a saved game is available, 0 otherwise.
  */
 int save_hasSave (void)
 {
@@ -191,7 +193,7 @@ int save_hasSave (void)
    int has_save;
 
    /* Look for saved games. */
-   files = nfile_readDir( &nfiles, "%ssaves", nfile_dataPath() );
+   files = nfile_readDir( &nfiles, nfile_dataPath(), "saves" );
    has_save = 0;
    for (i=0; i<nfiles; i++) {
       len = strlen(files[i]);

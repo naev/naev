@@ -8,8 +8,8 @@
 #  define NPC_H
 
 
-#include "opengl.h"
 #include "mission.h"
+#include "opengl.h"
 
 
 /*
@@ -35,7 +35,6 @@ void npc_sort (void);
 void npc_generate (void);
 void npc_patchMission( Mission *misn );
 void npc_clear (void);
-void npc_freeAll (void);
 
 /*
  * Land image array stuff.

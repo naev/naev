@@ -9,7 +9,7 @@
   <price>100000</price>
   <description>A heavy-duty variant of the PT-500, the PT-600 exceeds its predecessor in all respects. Its considerably higher mass restricts its use to larger medium vessels such as destroyers.</description>
   <gfx_store>core_system_basic_m2</gfx_store>
- <rarity>4</rarity></general>
+ </general>
  <specific type="modification">
   <cpu_max>77</cpu_max>
   <shield>400</shield>

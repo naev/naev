@@ -1,8 +1,8 @@
 --[[
-   basically just copied skel.lua and made it work.
+   basically just copied skel and made it work.
 --]]
 
-require "dat/factions/standing/skel.lua"
+require "factions/standing/skel"
 
 -- Faction caps.
 _fcap_kill       = 20 -- Kill cap

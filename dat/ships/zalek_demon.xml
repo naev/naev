@@ -2,7 +2,7 @@
 <ship name="Za'lek Demon">
  <base_type>Demon</base_type>
  <GFX sx="12" sy="12">demon</GFX>
- <rarity>4</rarity>
+ <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
@@ -10,7 +10,7 @@
  <time_mod>2</time_mod>
  <fabricator>Za'lek Fabricators</fabricator>
  <license>Medium Combat Vessel License</license>
- <description>House Za'lek's ferociously-named destroyer has earned the moniker with disproportionatly powerful shields and energy management, as well as size. Its handling suffers, and has poor armor like all Za'lek ships, but this comes as poor consolation to the Za'lek's enemies.</description>
+ <description>House Za'lek's ferociously-named destroyer has earned the moniker with disproportionately powerful shields and energy management, as well as size. Its handling suffers, and has poor armor like all Za'lek ships, but this comes as poor consolation to the Za'lek's enemies.</description>
  <health>
   <absorb>20</absorb>
   <armour>400</armour>

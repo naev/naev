@@ -9,12 +9,16 @@
  */
 
 
-#include "player_gui.h"
+/** @cond */
+#include "physfsrwops.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include "log.h"
+#include "player_gui.h"
+
 #include "array.h"
+#include "log.h"
 #ifdef DEBUGGING
 #include "ndata.h"
 #endif /* DEBUGGING */
@@ -63,8 +67,8 @@ int player_guiAdd( char* name )
    /* Make sure the GUI is vaild. */
    SDL_RWops *rw;
    char buf[PATH_MAX];
-   nsnprintf( buf, sizeof(buf), "dat/gui/%s.lua", name );
-   rw = ndata_rwops( buf );
+   nsnprintf( buf, sizeof(buf), GUI_PATH"%s.lua", name );
+   rw = PHYSFSRWOPS_openRead( buf );
    if (rw == NULL) {
       WARN(_("GUI '%s' does not exist as a file: '%s' not found."), name, buf );
       return -1;

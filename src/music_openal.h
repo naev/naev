@@ -6,9 +6,9 @@
 #ifndef MUSIC_OPENAL_H
 #  define MUSIC_OPENAL_H
 
-#if USE_OPENAL
-
+/** @cond */
 #include "SDL_rwops.h"
+/** @endcond */
 
 #include "nopenal.h"
 
@@ -45,7 +45,5 @@ void music_al_pause (void);
 void music_al_resume (void);
 void music_al_setPos( double sec );
 int music_al_isPlaying (void);
-
-#endif /* USE_OPENAL */
 
 #endif /* MUSIC_OPENAL_H */

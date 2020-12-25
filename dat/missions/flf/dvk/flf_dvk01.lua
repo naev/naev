@@ -12,6 +12,10 @@
    <faction>FLF</faction>
    <cond>faction.playerStanding("FLF") &gt;= 10</cond>
   </avail>
+  <notes>
+   <campaign>Save the Frontier</campaign>
+   <tier>4</tier>
+  </notes>
  </mission>
  --]]
 --[[
@@ -33,8 +37,8 @@
 
 --]]
 
-require "dat/missions/flf/flf_diversion.lua"
-require "dat/missions/flf/flf_common.lua"
+require "missions/flf/flf_diversion"
+require "missions/flf/flf_common"
 
 -- localization stuff
 title = {}

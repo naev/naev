@@ -17,6 +17,9 @@
    <faction>Traders Guild</faction>
    <faction>Za'lek</faction>
   </avail>
+  <notes>
+   <tier>1</tier>
+  </notes>
  </mission>
  --]]
 --[[
@@ -24,8 +27,8 @@
    -- Most of these missions require BULK ships. Not for small ships!
 --]]
 
-require "cargo_common.lua"
-require "numstring.lua"
+require "cargo_common"
+require "numstring"
 
 
 misn_desc = {}
@@ -35,12 +38,6 @@ misn_desc[1] = _("Medium shipment to %s in the %s system.")
 misn_desc[2] = _("Sizable cargo delivery to %s in the %s system.")
 misn_desc[3] = _("Large cargo delivery to %s in the %s system.")
 misn_desc[4] = _("Bulk freight delivery to %s in the %s system.")
-
-misn_details = _([[
-Cargo: %s (%s)
-Jumps: %d
-Travel distance: %d
-%s]])
 
 piracyrisk = {}
 piracyrisk[1] = _("Piracy Risk: None")
@@ -87,7 +84,7 @@ function create()
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
    -- Reward depends on type of cargo hauled. Hauling expensive commodities gives a better deal.
    -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
-   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
+   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
    amount = rnd.rnd(5 + 25 * tier, 20 + 60 * tier)
    jumpreward = commodity.price(cargo)
    distreward = math.log(100*commodity.price(cargo))/100
@@ -96,12 +93,8 @@ function create()
    misn.setTitle( _("Shipment to %s in %s (%s)"):format(
          destplanet:name(), destsys:name(), tonnestring(amount) ) )
    misn.markerAdd(destsys, "computer")
-   misn.setDesc(
-      misn_desc[tier]:format( destplanet:name(), destsys:name() ) .. "\n\n"
-      .. misn_details:format(
-         cargo, tonnestring(amount), numjumps, traveldist, piracyrisk ) )
+   cargo_setDesc( misn_desc[tier]:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, nil, piracyrisk );
    misn.setReward( creditstring(reward) )
-
 end
 
 -- Mission is accepted
@@ -123,7 +116,7 @@ end
 function land()
    if planet.cur() == destplanet then
       -- Semi-random message.
-      tk.msg( cargo_land_title, cargo_land[rnd.rnd(1, #cargo_land)]:format(cargo) )
+      tk.msg( cargo_land_title, cargo_land[rnd.rnd(1, #cargo_land)]:format(_(cargo)) )
       player.pay(reward)
       misn.finish(true)
    end

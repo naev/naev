@@ -9,52 +9,47 @@
  */
 
 
-#include "land.h"
+/** @cond */
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "physfs.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-#include <math.h>
+#include "land.h"
 
+#include "camera.h"
+#include "conf.h"
+#include "dialogue.h"
+#include "economy.h"
+#include "equipment.h"
+#include "escort.h"
+#include "event.h"
+#include "gui.h"
+#include "hook.h"
 #include "land_outfits.h"
 #include "land_shipyard.h"
 #include "land_trade.h"
-
 #include "log.h"
-#include "toolkit.h"
-#include "dialogue.h"
-#include "player.h"
-#include "player_autonav.h"
-#include "rng.h"
-#include "music.h"
-#include "economy.h"
-#include "hook.h"
-#include "mission.h"
-#include "ntime.h"
-#include "save.h"
 #include "map.h"
-#include "news.h"
-#include "escort.h"
-#include "event.h"
-#include "conf.h"
-#include "gui.h"
-#include "equipment.h"
-#include "npc.h"
-#include "camera.h"
 #include "menu.h"
+#include "mission.h"
+#include "music.h"
 #include "ndata.h"
+#include "news.h"
 #include "nlua.h"
-#include "nluadef.h"
 #include "nlua_tk.h"
+#include "nluadef.h"
+#include "npc.h"
+#include "nstring.h"
+#include "ntime.h"
+#include "player.h"
+#include "rng.h"
+#include "save.h"
 #include "shiplog.h"
-
-/* global/main window */
-#define LAND_WIDTH   800 /**< Land window width. */
-#define LAND_HEIGHT  600 /**< Land window height. */
-#define PORTRAIT_WIDTH 200
-#define PORTRAIT_HEIGHT 150
+#include "toolkit.h"
 
 
 /*
@@ -166,7 +161,7 @@ int land_doneLoading (void)
  * @brief Makes sure it's valid to change ships in the equipment view.
  *    @param shipname Ship being changed to.
  */
-int can_swapEquipment( char* shipname )
+int can_swapEquipment( const char *shipname )
 {
    int failure = 0;
    Pilot *newship;
@@ -183,7 +178,7 @@ int can_swapEquipment( char* shipname )
                "You have %d tonne more cargo than the new ship can hold.",
                "You have %d tonnes more cargo than the new ship can hold.",
                diff),
-            diff, shipname );
+            diff );
       failure = 1;
    }
    if (pilot_hasDeployed(player.p)) { /* Escorts are in space. */
@@ -199,7 +194,7 @@ int can_swapEquipment( char* shipname )
  *    @param name Name of the ship, outfit or commodity being acted upon.
  *    @param type Type of action.
  */
-int land_errDialogue( char* name, char* type )
+int land_errDialogue( const char *name, char *type )
 {
    errorlist_ptr = NULL;
    if (strcmp(type,"tradeShip")==0)
@@ -261,7 +256,7 @@ static void bar_getDim( int wid,
    window_dimWindow( wid, w, h );
 
    /* Calculate dimensions of portraits. */
-   *iw = 300 + (*w - 800);
+   *iw = 704 + (*w - LAND_WIDTH);
    *ih = *h - 60;
 
    /* Calculate button dimensions. */
@@ -283,7 +278,7 @@ static void bar_open( unsigned int wid )
 
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
-   dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, land_planet->bar_description );
+   dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, _(land_planet->bar_description) );
 
    /* Approach when pressing enter */
    window_setAccept( wid, bar_approach );
@@ -300,7 +295,7 @@ static void bar_open( unsigned int wid )
    window_addText( wid, iw + 40, -40,
          w - iw - 60, dh, 0,
          "txtDescription", &gl_smallFont, NULL,
-         land_planet->bar_description );
+         _(land_planet->bar_description) );
 
    /* Add portrait text. */
    th = -40 - dh - 40;
@@ -381,8 +376,8 @@ static int bar_genList( unsigned int wid )
       }
    }
    window_addImageArray( wid, 20, -40,
-         iw, ih, "iarMissions", 100, 75,
-         portraits, n, bar_update, bar_approach );
+         iw, ih, "iarMissions", 128, 96,
+         portraits, n, bar_update, bar_approach, bar_approach );
 
    /* Restore position. */
    toolkit_setImageArrayPos( wid, "iarMissions", pos );
@@ -418,7 +413,7 @@ static void bar_update( unsigned int wid, char* str )
 
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
-   dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, land_planet->bar_description );
+   dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, _(land_planet->bar_description) );
 
    /* Get array. */
    pos = toolkit_getImageArrayPos( wid, "iarMissions" );
@@ -485,8 +480,7 @@ static void bar_close( unsigned int wid, char *name )
       return;
    }
 
-   if (mission_portrait != NULL)
-      gl_freeTexture(mission_portrait);
+   gl_freeTexture(mission_portrait);
    mission_portrait = NULL;
 }
 /**
@@ -568,15 +562,15 @@ static void misn_open( unsigned int wid )
          _("Date:\n"
          "Free Space:"));
    window_addText( wid, w/2 + 110, y,
-         w/2 - 90, 40, 0,
+         w/2 - 130, 40, 0,
          "txtDate", NULL, NULL, NULL );
    y -= 2 * gl_defFont.h + 50;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, 20, 0,
-         "txtReward", &gl_smallFont, NULL, _("Reward: None") );
+         "txtReward", &gl_smallFont, NULL, _("\anReward:\a0 None") );
    y -= 20;
    window_addText( wid, w/2 + 10, y,
-         w/2 - 30, h/2-90, 0,
+         w/2 - 30, y - 40 + h - 2*LAND_BUTTON_HEIGHT, 0,
          "txtDesc", &gl_smallFont, NULL, NULL );
 
    /* map */
@@ -689,7 +683,7 @@ static void misn_genList( unsigned int wid, int first )
    }
    window_addList( wid, 20, -40,
          w/2 - 30, h/2 - 35,
-         "lstMission", misn_names, j, 0, misn_update );
+         "lstMission", misn_names, j, 0, misn_update, misn_accept );
 
    /* Restore focus. */
    window_setFocus( wid, focused );
@@ -721,7 +715,7 @@ static void misn_update( unsigned int wid, char* str )
 
    active_misn = toolkit_getList( wid, "lstMission" );
    if (strcmp(active_misn,_("No Missions"))==0) {
-      window_modifyText( wid, "txtReward", _("Reward: None") );
+      window_modifyText( wid, "txtReward", _("\anReward:\a0 None") );
       window_modifyText( wid, "txtDesc",
             _("There are no missions available here.") );
       window_disableButton( wid, "btnAcceptMission" );
@@ -732,7 +726,7 @@ static void misn_update( unsigned int wid, char* str )
    mission_sysComputerMark( misn );
    if (misn->markers != NULL)
       map_center( system_getIndex( misn->markers[0].sys )->name );
-   nsnprintf( txt, sizeof(txt), _("Reward: %s"), misn->reward );
+   nsnprintf( txt, sizeof(txt), _("\anReward:\a0 %s"), misn->reward );
    window_modifyText( wid, "txtReward", txt );
    window_modifyText( wid, "txtDesc", misn->desc );
    window_enableButton( wid, "btnAcceptMission" );
@@ -792,16 +786,30 @@ static void spaceport_buyMap( unsigned int wid, char *str )
    w = land_getWid( LAND_WINDOW_OUTFITS );
    if (w > 0)
       outfits_regenList( w, NULL );
+
+   /* Update main tab. */
+   land_updateMainTab();
 }
 
 
 /**
- * @brief Adds the "Buy Local Map" button if needed.
+ * @brief Adds the "Buy Local Map" button if needed and updates info.
  */
-void land_checkAddMap (void)
+void land_updateMainTab (void)
 {
-   char buf[ECON_CRED_STRLEN], cred[ECON_CRED_STRLEN];
+   char buf[STRMAX], cred[ECON_CRED_STRLEN], tons[STRMAX_SHORT];
    Outfit *o;
+
+   /* Update credits. */
+   tonnes2str( tons, player.p->cargo_free );
+   credits2str( cred, player.p->credits, 2 );
+   nsnprintf( buf, sizeof(buf),
+         _("%s\n"
+         "%s\n"
+         "%s\n"
+         "%s"),
+         _(land_planet->name), _(cur_system->name), tons, cred );
+   window_modifyText( land_windows[0], "txtDInfo", buf );
 
    /* Maps are only offered if the planet provides fuel. */
    if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL))
@@ -915,15 +923,15 @@ void land_genWindows( int load, int changetab )
    regen = landed;
 
    /* Create window. */
-   if ((gl_screen.rw < 1024) || (gl_screen.rh < 768)) {
+   if (SCREEN_W < LAND_WIDTH || SCREEN_H < LAND_HEIGHT) {
       w = -1; /* Fullscreen. */
       h = -1;
    }
    else {
-      w = 800 + 0.5 * (SCREEN_W - 800);
-      h = 600 + 0.5 * (SCREEN_H - 600);
+      w = LAND_WIDTH + 0.5 * (SCREEN_W - LAND_WIDTH);
+      h = LAND_HEIGHT + 0.5 * (SCREEN_H - LAND_HEIGHT);
    }
-   land_wid = window_create( p->name, -1, -1, w, h );
+   land_wid = window_create( "wdwLand", _(p->name), -1, -1, w, h );
    window_onClose( land_wid, land_cleanupWindow );
 
    /* Set window map to invalid. */
@@ -983,7 +991,7 @@ void land_genWindows( int load, int changetab )
    land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
 
    /* Add local system map button. */
-   land_checkAddMap();
+   land_updateMainTab();
 
    /* 2) Set as landed and run hooks. */
    if (!regen) {
@@ -1003,7 +1011,7 @@ void land_genWindows( int load, int changetab )
          npc_generate(); /* Generate bar npc. */
    }
 
-   
+
    /* 4) Create other tabs. */
 #define should_open(s, w) \
    (planet_hasService(land_planet, s) && (!land_tabGenerated(w)))
@@ -1054,7 +1062,7 @@ void land_genWindows( int load, int changetab )
    /* Refresh the map button in case the player couldn't afford it prior to
     * mission payment.
     */
-   land_checkAddMap();
+   land_updateMainTab();
 
    /* Refuel if necessary. */
    land_refuel();
@@ -1067,7 +1075,7 @@ void land_genWindows( int load, int changetab )
 /**
  * @brief Sets the land window tab.
  *
- *    @param Tab to set like LAND_WINDOW_COMMODITY.
+ *    @param window Tab to set like LAND_WINDOW_COMMODITY.
  *    @return 0 on success.
  */
 int land_setWindow( int window )
@@ -1109,7 +1117,7 @@ void land( Planet* p, int load )
 
    /* Average economy prices that player has seen */
    economy_averageSeenPrices( p );
-   
+
    /* Clear the NPC. */
    npc_clear();
 
@@ -1135,7 +1143,8 @@ static void land_createMainTab( unsigned int wid )
 {
    glTexture *logo;
    int offset;
-   int w,h;
+   int w, h, th;
+   const char *bufSInfo;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -1159,7 +1168,19 @@ static void land_createMainTab( unsigned int wid )
    window_addImage( wid, 20, -40, 400, 400, "imgPlanet", gfx_exterior, 1 );
    window_addText( wid, 440, -20-offset,
          w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,
-         "txtPlanetDesc", &gl_smallFont, NULL, land_planet->description);
+         "txtPlanetDesc", &gl_smallFont, NULL, _(land_planet->description) );
+
+   /* Player stats. */
+   bufSInfo = _(
+         "Stationed at:\n"
+         "System:\n"
+         "Free Space:\n"
+         "Money:" );
+   th = gl_printHeightRaw( &gl_defFont, 200, bufSInfo );
+   window_addText( wid, 20, 20, 200, th,
+         0, "txtSInfo", &gl_defFont, NULL, bufSInfo );
+   window_addText( wid, 20+200, 20, w - 20 - (20+200) - LAND_BUTTON_WIDTH,
+         th, 0, "txtDInfo", &gl_defFont, NULL, NULL );
 
    /*
     * buttons
@@ -1210,7 +1231,7 @@ static void land_changeTab( unsigned int wid, char *wgt, int old, int tab )
          /* Must regenerate outfits. */
          switch (i) {
             case LAND_WINDOW_MAIN:
-               land_checkAddMap();
+               land_updateMainTab();
                break;
             case LAND_WINDOW_OUTFITS:
                outfits_update( w, NULL );
@@ -1290,7 +1311,7 @@ void takeoff( int delay )
    if (!player_canTakeoff()) {
       char message[512];
       pilot_reportSpaceworthy( player.p, message, sizeof(message) );
-      dialogue_msg( _("Ship not fit for flight"), message );
+      dialogue_msgRaw( _("Ship not fit for flight"), message );
 
       /* Check whether the player needs rescuing. */
       land_stranded();
@@ -1349,7 +1370,7 @@ void takeoff( int delay )
    if (delay)
       ntime_inc( ntime_create( 0, 1, 0 ) ); /* 1 period */
    nt = ntime_pretty( 0, 2 );
-   player_message( _("\apTaking off from %s on %s."), land_planet->name, nt);
+   player_message( _("\aoTaking off from %s on %s."), _(land_planet->name), nt);
    free(nt);
 
    /* Hooks and stuff. */
@@ -1384,10 +1405,10 @@ static void land_stranded (void)
 {
    char *buf;
    size_t bufsize;
-   const char *file = "dat/rescue.lua";
+   const char *file = RESCUE_PATH;
 
    /* Nothing to do if there's no rescue script. */
-   if (!ndata_exists(file))
+   if (!PHYSFS_exists(file))
       return;
 
    if (rescue_env == LUA_NOREF) {
@@ -1443,13 +1464,15 @@ void land_cleanup (void)
    /* Clean up mission computer. */
    for (i=0; i<mission_ncomputer; i++)
       mission_cleanup( &mission_computer[i] );
-   if (mission_computer != NULL)
-      free(mission_computer);
+   free(mission_computer);
    mission_computer  = NULL;
    mission_ncomputer = 0;
 
    /* Clean up bar missions. */
-   npc_freeAll();
+   npc_clear();
+
+   /* Clean up shipyard. */
+   shipyard_cleanup();
 
    /* Clean up rescue Lua. */
    if (rescue_env != LUA_NOREF) {

@@ -9,38 +9,40 @@
  */
 
 
-#include "nlua_player.h"
+/** @cond */
+#include <lauxlib.h>
+#include <lua.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-#include <math.h>
+#include "nlua_player.h"
 
-#include <lua.h>
-#include <lauxlib.h>
-
-#include "nluadef.h"
-#include "nlua_pilot.h"
-#include "nlua_vec2.h"
-#include "log.h"
-#include "player.h"
 #include "board.h"
-#include "mission.h"
-#include "event.h"
-#include "land.h"
-#include "nlua_system.h"
-#include "nlua_outfit.h"
-#include "nlua_planet.h"
-#include "map.h"
-#include "map_overlay.h"
-#include "hook.h"
 #include "comm.h"
-#include "land_outfits.h"
+#include "event.h"
 #include "gui.h"
 #include "gui_omsg.h"
+#include "hook.h"
+#include "land.h"
+#include "land_outfits.h"
+#include "log.h"
+#include "map.h"
+#include "map_overlay.h"
+#include "mission.h"
+#include "nlua_outfit.h"
+#include "nlua_pilot.h"
+#include "nlua_planet.h"
+#include "nlua_ship.h"
+#include "nlua_system.h"
+#include "nlua_vec2.h"
+#include "nluadef.h"
+#include "nstring.h"
 #include "pause.h"
+#include "player.h"
 
 
 /* Player methods. */
@@ -168,7 +170,9 @@ static int playerL_getname( lua_State *L )
    return 1;
 }
 /**
- * @brief Gets the player's ship's name.
+ * @brief Gets the player's ship's name (given by the player).
+ *
+ * @note Not to be confused with getting the player's ship that can be done with player.pilot():ship().
  *
  *    @luatreturn string The name of the ship the player is currently in.
  * @luafunc ship()
@@ -231,7 +235,7 @@ static int playerL_credits( lua_State *L )
    return 1 + has_dec;
 }
 /**
- * @brief Sends the player an ingame message.
+ * @brief Sends the player an in-game message.
  *
  *    @luatparam string message Message to send the player.
  * @luafunc msg( message )
@@ -501,7 +505,7 @@ static int playerL_autonavDest( lua_State *L )
  * Possible options are:<br/>
  * <ul>
  *  <li>abort : (string) autonav abort message</li>
- *  <li>no2x : (boolean) whether to prevent the player from engaging double-speed, default false</li>
+ *  <li>no2x : (boolean) whether to prevent the player from increasing the speed, default false</li>
  *  <li>gui : (boolean) enables the player's gui, default disabled</li>
  * </ul>
  *
@@ -546,28 +550,27 @@ static int playerL_cinematics( lua_State *L )
       lua_pop( L, 1 );
    }
 
-   /* Remove doublespeed. */
-   if (player_isFlag( PLAYER_DOUBLESPEED )) {
-      player_rmFlag( PLAYER_DOUBLESPEED );
-      pause_setSpeed( player_dt_default() );
-      sound_setSpeed( 1. );
-   }
-
    if (b) {
-      /* Do stuff. */
-      player_autonavAbort( abort_msg );
-      player_rmFlag( PLAYER_DOUBLESPEED );
-      ovr_setOpen(0);
-      pause_setSpeed( player_dt_default() );
+      /* Reset speeds. This will override the player's ship base speed. */
+      player.speed = 1.;
       sound_setSpeed( 1. );
+      pause_setSpeed( 1. );
 
+      /* Get rid of stuff that could be bothersome. */
+      player_autonavAbort( abort_msg );
+      ovr_setOpen(0);
+
+      /* Handle options. */
       if (!f_gui)
          player_setFlag( PLAYER_CINEMATICS_GUI );
-
       if (f_2x)
          player_setFlag( PLAYER_CINEMATICS_2X );
    }
    else {
+      /* Reset speed properly to player speed. */
+      player_resetSpeed();
+
+      /* Clean up flags. */
       player_rmFlag( PLAYER_CINEMATICS_GUI );
       player_rmFlag( PLAYER_CINEMATICS_2X );
    }
@@ -850,20 +853,12 @@ static int playerL_outfits( lua_State *L )
  */
 static int playerL_numOutfit( lua_State *L )
 {
-   const char *str;
    Outfit *o;
    int q, unequipped_only;
 
    /* Handle parameters. */
-   str = luaL_checkstring(L, 1);
+   o = luaL_validoutfit(L, 1);
    unequipped_only = lua_toboolean(L, 2);
-
-   /* Get outfit. */
-   o = outfit_get( str );
-   if (o==NULL) {
-      NLUA_ERROR(L, "Outfit '%s' not found.", str);
-      return 0;
-   }
 
    /* Count the outfit. */
    if (unequipped_only)
@@ -886,7 +881,6 @@ static int playerL_numOutfit( lua_State *L )
  */
 static int playerL_addOutfit( lua_State *L  )
 {
-   const char *str;
    Outfit *o;
    int q;
 
@@ -896,16 +890,9 @@ static int playerL_addOutfit( lua_State *L  )
    q = 1;
 
    /* Handle parameters. */
-   str = luaL_checkstring(L, 1);
+   o = luaL_validoutfit(L, 1);
    if (lua_gettop(L) > 1)
       q = luaL_checkint(L, 2);
-
-   /* Get outfit. */
-   o = outfit_get( str );
-   if (o==NULL) {
-      NLUA_ERROR(L, _("Outfit '%s' not found."), str);
-      return 0;
-   }
 
    /* Add the outfits. */
    player_addOutfit( o, q );
@@ -934,45 +921,45 @@ static int playerL_rmOutfit( lua_State *L )
    int i, q, noutfits;
 
    NLUA_CHECKRW(L);
+   NLUA_MIN_ARGS(1);
 
-   /* Defaults. */
-   q = 1;
-
-   /* Handle parameters. */
-   str = luaL_checkstring(L, 1);
+   /* Get quantity. */
+   q = 1; /* Default. */
    if (lua_gettop(L) > 1)
       q = luaL_checkint(L, 2);
 
-   if (strcmp(str,"all")==0) {
-      noutfits = player_numOutfits();
-      /* Removing nothing is a bad idea. */
-      if (noutfits == 0)
+   /* Handle special case it's "all". */
+   if (lua_isstring(L, 1)) {
+      str = luaL_checkstring(L, 1);
+
+      if (strcmp(str,"all")==0) {
+         noutfits = player_numOutfits();
+         /* Removing nothing is a bad idea. */
+         if (noutfits == 0)
+            return 0;
+
+         poutfits = player_getOutfits( &noutfits );
+         outfits = malloc( sizeof(Outfit*) * noutfits );
+         for (i=0; i<noutfits; i++)
+            outfits[i] = (Outfit*)poutfits[i].o;
+
+         for (i=0; i<noutfits; i++) {
+            o = outfits[i];
+            q = player_outfitOwned(o);
+            player_rmOutfit(o, q);
+         }
+         /* Clean up. */
+         free(outfits);
+
+         /* Update equipment list. */
+         outfits_updateEquipmentOutfits();
          return 0;
-
-      poutfits = player_getOutfits( &noutfits );
-      outfits = malloc( sizeof(Outfit*) * noutfits );
-      for (i=0; i<noutfits; i++)
-         outfits[i] = (Outfit*)poutfits[i].o;
-
-      for (i=0; i<noutfits; i++) {
-         o = outfits[i];
-         q = player_outfitOwned(o);
-         player_rmOutfit(o, q);
       }
-      /* Clean up. */
-      free(outfits);
    }
-   else {
-      /* Get outfit. */
-      o = outfit_get( str );
-      if (o==NULL) {
-         NLUA_ERROR(L, _("Outfit '%s' not found."), str);
-         return 0;
-      }
 
-      /* Remove the outfits. */
-      player_rmOutfit( o, q );
-   }
+   /* Usual case. */
+   o = luaL_validoutfit(L, 1);
+   player_rmOutfit( o, q );
 
    /* Update equipment list. */
    outfits_updateEquipmentOutfits();
@@ -986,65 +973,24 @@ static int playerL_rmOutfit( lua_State *L )
  */
 static Pilot* playerL_newShip( lua_State *L )
 {
-   const char *str, *name, *pntname;
+   const char *name;
    Ship *s;
    Pilot *new_ship;
-   Planet *pnt, *t;
    int noname;
 
-   /* Defaults. */
-   t = NULL;
-
    /* Handle parameters. */
-   str  = luaL_checkstring(L, 1);
+   s    = luaL_validship(L, 1);
    if (lua_gettop(L) > 1)
       name = luaL_checkstring(L,2);
    else
-      name = str;
-   if (lua_isstring(L,3))
-      pntname = luaL_checkstring (L,3);
-   else {
-      if (!landed)
-         NLUA_ERROR(L,_("Must be landed to add a new ship to the player without specifying planet to add to!"));
-      pntname = NULL;
-   }
-   noname = lua_toboolean(L,4);
-
-   /* Get planet. */
-   if (pntname != NULL) {
-      pnt = planet_get( pntname );
-      if (pnt == NULL) {
-         NLUA_ERROR(L, _("Planet '%s' not found!"), pntname);
-         return 0;
-      }
-      /* Horrible hack to swap variables. */
-      t = land_planet;
-      land_planet = pnt;
-   }
-   else
-      pnt = NULL;
-
-   /* Must be landed if pnt is NULL. */
-   if ((pnt == NULL) && (land_planet==NULL)) {
-      NLUA_ERROR(L, _("Player must be landed to add a ship without location parameter."));
-      return 0;
-   }
-
-   /* Get ship. */
-   s = ship_get(str);
-   if (s==NULL) {
-      NLUA_ERROR(L, _("Ship '%s' not found."), str);
-      return 0;
-   }
+      name = s->name;
+   noname = lua_toboolean(L,3);
 
    /* Add the ship, look in case it's cancelled. */
    do {
       new_ship = player_newShip( s, name, 0, noname );
    } while (new_ship == NULL);
 
-   /* Undo the horrible hack. */
-   if (t != NULL)
-      land_planet = t;
 
    return new_ship;
 }
@@ -1059,9 +1005,8 @@ static Pilot* playerL_newShip( lua_State *L )
  *
  *    @luatparam string ship Name of the ship to add.
  *    @luatparam[opt] string name Name to give the ship if player refuses to name it (defaults to shipname if omitted).
- *    @luatparam[opt] Planet loc Location to add to, if nil or omitted it adds it to local planet (must be landed).
  *    @luatparam[opt=false] boolean noname If true does not let the player name the ship.
- * @luafunc addShip( ship, name, loc, noname )
+ * @luafunc addShip( ship, name, noname )
  */
 static int playerL_addShip( lua_State *L )
 {
@@ -1073,12 +1018,14 @@ static int playerL_addShip( lua_State *L )
 
 /**
  * @brief Swaps the player's current ship with a new ship given to him.
+ *
+ * @note You shouldn't use this directly unless you know what you are doing. If the player's cargo doesn't fit in the new ship, it won't be moved over and can lead to a whole slew of issues.
+ *
  *    @luatparam string ship Name of the ship to add.
  *    @luatparam[opt] string name Name to give the ship if player refuses to name it (defaults to shipname if omitted).
- *    @luatparam[opt] Planet loc Location to add to, if nil or omitted it adds it to local planet (must be landed).
  *    @luatparam[opt=false] boolean noname If true does not let the player name the ship.
  *    @luatparam[opt=false] boolean remove If true removes the player's current ship (so it replaces and doesn't swap).
- * @luafunc swapShip( ship, name, loc, noname, remove )
+ * @luafunc swapShip( ship, name, noname, remove )
  */
 static int playerL_swapShip( lua_State *L )
 {
@@ -1088,7 +1035,7 @@ static int playerL_swapShip( lua_State *L )
 
    NLUA_CHECKRW(L);
 
-   remship = lua_toboolean(L,5);
+   remship = lua_toboolean(L,4);
    p       = playerL_newShip( L );
    cur     = player.p->name;
    player_swapShip( p->name );

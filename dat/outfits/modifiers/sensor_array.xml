@@ -3,12 +3,13 @@
  <general>
   <slot>utility</slot>
   <size>small</size>
+  <rarity>3</rarity>
   <mass>2</mass>
   <price>250000</price>
   <description>To detect other ships despite heavy ambient radiation the Thurion have developed powerful sensor arrays. By installing these additional sensors, the distance at which ships can be detected is increased.</description>
   <gfx_store>jammer0</gfx_store>
   <cpu>-8</cpu>
- <rarity>3</rarity></general>
+ </general>
  <specific type="modification">
   <energy_usage>10</energy_usage>
   <ew_detect>25</ew_detect>

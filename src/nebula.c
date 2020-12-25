@@ -8,32 +8,35 @@
  * @brief Handles rendering and generating the nebula.
  */
 
-#include "nebula.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <errno.h>
 
-#include "log.h"
-#include "opengl.h"
-#include "nfile.h"
-#include "perlin.h"
-#include "rng.h"
-#include "menu.h"
-#include "player.h"
-#include "pause.h"
-#include "gui.h"
-#include "conf.h"
-#include "spfx.h"
-#include "npng.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nebula.h"
+
 #include "camera.h"
-#include "nstring.h"
+#include "conf.h"
+#include "gui.h"
+#include "log.h"
+#include "menu.h"
 #include "ndata.h"
+#include "nfile.h"
+#include "npng.h"
+#include "nstring.h"
+#include "opengl.h"
+#include "pause.h"
+#include "perlin.h"
+#include "player.h"
+#include "rng.h"
+#include "spfx.h"
 
 
 #define NEBULA_Z             16 /**< Z plane */
 #define NEBULA_PUFFS         32 /**< Amount of puffs to generate */
 #define NEBULA_PATH_BG       "nebu_bg_%dx%d_%02d.png" /**< Nebula path format. */
+#define NEBULA_FILENAME_MAX   256 /**< Upper bound for nebula file names; it and NEBULA_PATH must fit into PATH_MAX. */
 
 #define NEBULA_PUFF_BUFFER   300 /**< Nebula buffer */
 
@@ -48,6 +51,7 @@ static int nebu_w    = 0; /**< BG Nebula width. */
 static int nebu_h    = 0; /**< BG Nebula height. */
 static int nebu_pw   = 0; /**< BG Padded Nebula width. */
 static int nebu_ph   = 0; /**< BG Padded Nebula height. */
+static int nebu_regen= 0; /**< Whether to force Nebula generation. */
 
 /* Information on rendering */
 static int cur_nebu[2]           = { 0, 1 }; /**< Nebulae currently rendering. */
@@ -121,7 +125,7 @@ int nebu_init (void)
 static int nebu_init_recursive( int iter )
 {
    int i;
-   char nebu_file[PATH_MAX];
+   char nebu_file[NEBULA_FILENAME_MAX];
    SDL_Surface* nebu_sur;
    int ret;
 
@@ -131,13 +135,9 @@ static int nebu_init_recursive( int iter )
       return -1;
    }
 
-   /* Special code to regenerate the nebula */
-   if ((nebu_w == -9) && (nebu_h == -9))
-      nebu_generate();
-
    /* Set expected sizes */
-   nebu_w  = SCREEN_W;
-   nebu_h  = SCREEN_H;
+   nebu_w  = gl_screen.rw;
+   nebu_h  = gl_screen.rh;
    if (gl_needPOT()) {
       nebu_pw = gl_pot(nebu_w);
       nebu_ph = gl_pot(nebu_h);
@@ -147,9 +147,14 @@ static int nebu_init_recursive( int iter )
       nebu_ph = nebu_h;
    }
 
+   /* Special code to regenerate the nebula */
+   if (nebu_regen)
+      nebu_generate();
+   nebu_regen = 0;
+
    /* Load each, checking for compatibility and padding */
    for (i=0; i<NEBULA_Z; i++) {
-      nsnprintf( nebu_file, PATH_MAX, NEBULA_PATH_BG, nebu_w, nebu_h, i );
+      nsnprintf( nebu_file, NEBULA_FILENAME_MAX, NEBULA_PATH_BG, nebu_w, nebu_h, i );
 
       /* Check compatibility. */
       if (nebu_checkCompat( nebu_file ))
@@ -172,8 +177,8 @@ static int nebu_init_recursive( int iter )
    /* Generate puffs after the recursivity stuff. */
    nebu_generatePuffs();
 
-   /* Display loaded nebulas. */
-   DEBUG(_("Loaded %d Nebula Layers"), NEBULA_Z);
+   /* Display loaded nebulae. */
+   DEBUG( ngettext( "Loaded %d Nebula Layer", "Loaded %d Nebula Layers", NEBULA_Z ), NEBULA_Z );
 
    nebu_vbo_init();
    nebu_loaded = 1;
@@ -231,7 +236,7 @@ static int nebu_loadTexture( SDL_Surface *sur, int w, int h, glTexture **tex )
 
    if ((w!=0) && (h!=0) &&
          (((*tex)->rw != w) || ((*tex)->rh != h))) {
-      WARN(_("Nebula size doesn't match expected! (%dx%d instead of %dx%d)"),
+      WARN(_("Nebula size doesn't match expected! (%fx%f instead of %dx%d)"),
             (*tex)->rw, (*tex)->rh, nebu_pw, nebu_ph );
       return -1;
    }
@@ -255,10 +260,8 @@ void nebu_exit (void)
    for (i=0; i<NEBULA_PUFFS; i++)
       gl_freeTexture( nebu_pufftexs[i] );
 
-   if (nebu_vboOverlay != NULL) {
-      gl_vboDestroy( nebu_vboOverlay );
-      nebu_vboOverlay= NULL;
-   }
+   gl_vboDestroy( nebu_vboOverlay );
+   nebu_vboOverlay= NULL;
 }
 
 
@@ -407,7 +410,6 @@ void nebu_renderOverlay( const double dt )
 /**
  * @brief Renders the puffs.
  *
- *    @param dt Current delta tick.
  *    @param below_player Render the puffs below player or above player?
  */
 static void nebu_renderPuffs( int below_player )
@@ -494,7 +496,7 @@ void nebu_prep( double density, double volatility )
  */
 void nebu_forceGenerate (void)
 {
-   nebu_w = nebu_h = -9; /* \o/ magic numbers */
+   nebu_regen = 1;
 }
 
 
@@ -508,32 +510,27 @@ static int nebu_generate (void)
    int i;
    float *nebu;
    const char *cache;
-   char nebu_file[PATH_MAX];
-   int w,h;
+   char nebu_file[NEBULA_FILENAME_MAX];
    int ret;
 
    /* Warn user of what is happening. */
    loadscreen_render( 0.05, _("Generating Nebula (slow, run once)...") );
 
-   /* Get resolution to create at. */
-   w = SCREEN_W;
-   h = SCREEN_H;
-
    /* Try to make the dir first if it fails. */
    cache = nfile_cachePath();
-   nfile_dirMakeExist( "%s", cache );
-   nfile_dirMakeExist( "%s"NEBULA_PATH, cache );
+   nfile_dirMakeExist( cache );
+   nfile_dirMakeExist( cache, NEBULA_PATH );
 
    /* Generate all the nebula backgrounds */
-   nebu = noise_genNebulaMap( w, h, NEBULA_Z, 5. );
+   nebu = noise_genNebulaMap( nebu_w, nebu_h, NEBULA_Z, 5. );
 
    /* Start saving - compression can take a bit. */
    loadscreen_render( 0.05, _("Compressing Nebula layers...") );
 
    /* Save each nebula as an image */
    for (i=0; i<NEBULA_Z; i++) {
-      nsnprintf( nebu_file, PATH_MAX, NEBULA_PATH_BG, w, h, i );
-      ret = saveNebula( &nebu[ i*w*h ], w, h, nebu_file );
+      nsnprintf( nebu_file, NEBULA_FILENAME_MAX, NEBULA_PATH_BG, nebu_w, nebu_h, i );
+      ret = saveNebula( &nebu[ i*nebu_w*nebu_h ], nebu_w, nebu_h, nebu_file );
       if (ret != 0)
          break; /* An error has happened */
    }
@@ -581,7 +578,7 @@ static void nebu_generatePuffs (void)
 static int nebu_checkCompat( const char* file )
 {
    /* first check to see if file exists */
-   if (nfile_fileExists("%s"NEBULA_PATH"%s", nfile_cachePath(), file) == 0)
+   if ( nfile_fileExists( nfile_cachePath(), NEBULA_PATH, file ) == 0 )
       return -1;
    return 0;
 }
@@ -631,7 +628,7 @@ static SDL_Surface* loadNebula( const char* file )
 
    /* loads the file */
    nsnprintf(file_path, PATH_MAX, "%s"NEBULA_PATH"%s", nfile_cachePath(), file );
-   rw    = SDL_RWFromFile( file_path, "rb" );;
+   rw    = SDL_RWFromFile( file_path, "rb" );
    if (rw == NULL) {
       WARN(_("Unable to create rwops from Nebula image: %s"), file);
       return NULL;

@@ -12,17 +12,22 @@
    <location>Bar</location>
    <faction>Sirius</faction>
   </avail>
+  <notes>
+   <campaign>Academy Hack</campaign>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --[[
 -- This is the second mission in the Academy Hack minor campaign.
 --]]
 
-require "dat/scripts/nextjump.lua"
-require "fleethelper.lua"
-require "selectiveclear.lua"
-require "proximity.lua"
-require "dat/missions/sirius/common.lua"
+require "scripts/nextjump"
+require "fleethelper"
+require "selectiveclear"
+require "proximity"
+require "missions/sirius/common"
+require "numstring"
 
 
 title1 = _("An unexpected reunion")
@@ -92,7 +97,7 @@ osd_final = {_("Land on Sroolu to get your reward")}
 osd_final["__save"] = true
 
 misn_desc = _("Joanne needs you to escort her ship and fight off mercenaries sent to kill her.")
-misn_reward = _("750,000 credits")
+misn_reward = creditstring(750000) -- 750K
 
 log_text = _([[Joanne, the Serra military officer who Harja tried to hire you to assassinate, enlisted you to aid her against would-be assassins. Along the way, she explained that Harja was a classmate of hers in the High Academy. According to her, Harja had hacked into the academy's main computer to change all of her grades to perfect scores in an attempt to sabotage her by making her look like a cheater.]])
 

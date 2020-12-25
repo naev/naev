@@ -8,15 +8,17 @@
  * @brief Handles the Lua outfit bindings.
  */
 
-#include "nlua_outfit.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
-#include "nlua_tex.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_outfit.h"
+
 #include "log.h"
+#include "nlua_tex.h"
+#include "nluadef.h"
 #include "rng.h"
 #include "slots.h"
 
@@ -25,6 +27,7 @@
 static int outfitL_eq( lua_State *L );
 static int outfitL_get( lua_State *L );
 static int outfitL_name( lua_State *L );
+static int outfitL_nameRaw( lua_State *L );
 static int outfitL_type( lua_State *L );
 static int outfitL_typeBroad( lua_State *L );
 static int outfitL_cpu( lua_State *L );
@@ -36,6 +39,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "__eq", outfitL_eq },
    { "get", outfitL_get },
    { "name", outfitL_name },
+   { "nameRaw", outfitL_nameRaw },
    { "type", outfitL_type },
    { "typeBroad", outfitL_typeBroad },
    { "cpu", outfitL_cpu },
@@ -195,7 +199,7 @@ static int outfitL_eq( lua_State *L )
  *
  * @usage s = outfit.get( "Heavy Laser" ) -- Gets the heavy laser
  *
- *    @luatparam string s Name of the outfit to get.
+ *    @luatparam string s Raw (untranslated) name of the outfit to get.
  *    @luatreturn Outfit|nil The outfit matching name or nil if error.
  * @luafunc get( s )
  */
@@ -218,16 +222,48 @@ static int outfitL_get( lua_State *L )
    lua_pushoutfit(L, lo);
    return 1;
 }
+
+
 /**
- * @brief Gets the name of the outfit's outfit.
+ * @brief Gets the translated name of the outfit.
  *
- * @usage outfitname = s:name()
+ * This translated name should be used for display purposes (e.g.
+ * messages). It cannot be used as an identifier for the outfit; for
+ * that, use outfit.nameRaw() instead.
  *
- *    @luatparam Outfit s Outfit to get outfit name.
- *    @luatreturn string The name of the outfit's outfit.
+ * @usage outfitname = s:name() -- Equivalent to `_(s:nameRaw())`
+ *
+ *    @luatparam Outfit s Outfit to get the translated name of.
+ *    @luatreturn string The translated name of the outfit.
  * @luafunc name( s )
  */
 static int outfitL_name( lua_State *L )
+{
+   Outfit *o;
+
+   /* Get the outfit. */
+   o  = luaL_validoutfit(L,1);
+
+   /** Return the outfit name. */
+   lua_pushstring(L, _(o->name));
+   return 1;
+}
+
+
+/**
+ * @brief Gets the raw (untranslated) name of the outfit.
+ *
+ * This untranslated name should be used for identification purposes
+ * (e.g. can be passed to outfit.get()). It should not be used directly
+ * for display purposes without manually translating it with _().
+ *
+ * @usage outfitrawname = s:nameRaw()
+ *
+ *    @luatparam Outfit s Outfit to get the raw name of.
+ *    @luatreturn string The raw name of the outfit.
+ * @luafunc nameRaw( s )
+ */
+static int outfitL_nameRaw( lua_State *L )
 {
    Outfit *o;
 
@@ -246,7 +282,7 @@ static int outfitL_name( lua_State *L )
  * @usage print( o:type() ) -- Prints the type of the outfit
  *
  *    @luatparam Outfit o Outfit to get information of.
- *    @luatreturn string The name of the outfit type.
+ *    @luatreturn string The name of the outfit type (in English).
  * @luafunc type( o )
  */
 static int outfitL_type( lua_State *L )
@@ -265,7 +301,7 @@ static int outfitL_type( lua_State *L )
  * @usage print( o:typeBroad() ) -- Prints the broad type of the outfit
  *
  *    @luatparam Outfit o Outfit to get information of.
- *    @luatreturn string The name of the outfit broad type.
+ *    @luatreturn string The name of the outfit broad type (in English).
  * @luafunc typeBroad( o )
  */
 static int outfitL_typeBroad( lua_State *L )
@@ -299,7 +335,7 @@ static int outfitL_cpu( lua_State *L )
  * @usage slot_name, slot_size, slot_prop = o:slot() -- Gets an outfit's slot info
  *
  *    @luatparam Outfit o Outfit to get information of.
- *    @luatreturn string Human readable name.
+ *    @luatreturn string Human readable name (in English).
  *    @luatreturn string Human readable size.
  *    @luatreturn string Human readable property.
  * @luafunc slot( o )

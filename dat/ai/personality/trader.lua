@@ -1,6 +1,6 @@
 -- Default task to run when idle
 function idle ()
-   if not mem.boss then -- Pilot nover had a boss
+   if not mem.boss then -- Pilot never had a boss
       mem.boss = ai.getBoss()
    end
 

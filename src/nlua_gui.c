@@ -8,20 +8,22 @@
  * @brief Bindings for GUI functionality from Lua.
  */
 
-#include "nlua_gui.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
-#include "log.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_gui.h"
+
 #include "gui.h"
-#include "gui_osd.h"
 #include "gui_omsg.h"
-#include "nlua_tex.h"
-#include "menu.h"
+#include "gui_osd.h"
 #include "info.h"
+#include "log.h"
+#include "menu.h"
+#include "nlua_tex.h"
+#include "nluadef.h"
 
 
 /* GUI methods. */
@@ -38,6 +40,7 @@ static int guiL_mouseClickEnable( lua_State *L );
 static int guiL_mouseMoveEnable( lua_State *L );
 static int guiL_menuInfo( lua_State *L );
 static int guiL_menuSmall( lua_State *L );
+static int guiL_setMapOverlayBounds( lua_State *L );
 static const luaL_Reg guiL_methods[] = {
    { "viewport", guiL_viewport },
    { "fpsPos", guiL_fpsPos },
@@ -52,6 +55,7 @@ static const luaL_Reg guiL_methods[] = {
    { "mouseMoveEnable", guiL_mouseMoveEnable },
    { "menuInfo", guiL_menuInfo },
    { "menuSmall", guiL_menuSmall },
+   { "setMapOverlayBounds", guiL_setMapOverlayBounds },
    {0,0}
 }; /**< GUI methods. */
 
@@ -423,4 +427,27 @@ static int guiL_menuSmall( lua_State *L )
    return 0;
 }
 
+
+/**
+ * @brief Sets map boundaries
+ *
+ *    @luatparam number top Top boundary in pixels
+ *    @luatparam number right Right boundary in pixels
+ *    @luatparam number bottom Bottom boundary in pixels
+ *    @luatparam number left Left boundary in pixels
+ * @luafunc setMapOverlayBounds( top, right, bottom, left )
+ */
+static int guiL_setMapOverlayBounds( lua_State *L )
+{
+   int top, right, bottom, left;
+   NLUA_CHECKRW(L);
+
+   top = luaL_checkinteger(L,1);
+   right = luaL_checkinteger(L,2);
+   bottom = luaL_checkinteger(L,3);
+   left = luaL_checkinteger(L,4);
+
+   gui_setMapOverlayBounds(top, right, bottom, left);
+   return 0;
+}
 

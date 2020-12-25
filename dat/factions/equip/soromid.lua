@@ -1,4 +1,4 @@
-require("dat/factions/equip/generic.lua")
+require "factions/equip/generic"
 
 
 equip_typeOutfits_weapons["Brigand"] = {
@@ -12,9 +12,11 @@ equip_typeOutfits_weapons["Brigand"] = {
    }
 }
 
+-- TODO: Design bio-weapons for larger ship types, then equip them here.
+
 
 --[[
--- @brief Does soromid pilot equipping
+-- @brief Does Soromid pilot equipping
 --
 --    @param p Pilot to equip
 --]]

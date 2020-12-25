@@ -12,20 +12,23 @@
    <location>Bar</location>
    <planet>The Wringer</planet>
   </avail>
+  <notes>
+   <campaign>Heretic</campaign>
+  </notes>
  </mission>
  --]]
 --[[misn title - the egress]]
---[[this mission begins with the frenetic nasin wanting to escape
-   the wringer due to being overwhelmed by house sirius. the player
-   loads up with as many nasin as their vessel will carry, and takes
-   them to seek refuge in the ingot system on planet ulios, where they
+--[[this mission begins with the frenetic Nasin wanting to escape
+   The Wringer due to being overwhelmed by House Sirius. The player
+   loads up with as many Nasin as their vessel will carry, and takes
+   them to seek refuge in the ingot system on planet Ulios, where they
    begin to rebuild and plan.... (ominous music).
    this mission is designed to be the end of part 1, and is supposed
    to be very hard, and slightly combat oriented, but more supposed to
    involve smuggling elements.]]
 
-require "numstring.lua"
-require "dat/missions/sirius/common.lua"
+require "numstring"
+require "missions/sirius/common"
 
 
 --beginning messages
@@ -38,7 +41,7 @@ bmsg[2] = _([["Thank you! I knew you would do it!" Draga then proceeds to file a
 emsg = {}
 emsg[1] = _([[You land on %s and open the bay doors. You are still amazed at how many people Draga had helped get into the cargo hold. As you help everyone out of your ship, a man walks up to you. "Hello, my name is Jimmy. Thank you for helping all of these people. I am grateful. I've heard about you from Draga, and I will be forever in your debt. Here, please, take this." He presses a credit chip in your hand just as you finish helping everyone out of your ship. It seems it was a job well done.]])
 
---mission osd
+--mission OSD
 osd = {}
 osd[1] = _("Fly the refugees to %s in the %s system.")
 
@@ -48,28 +51,27 @@ misn_title = _("The Egress")
 npc_name = _("Draga")
 bar_desc = _("Draga is running around, helping the few Nasin in the bar to get stuff together and get out.")
 misn_desc = _("Assist the Nasin refugees by flying to %s in %s, and unloading them there.")
-misn_reward = _("%s credits")
 
 log_text = _([[You helped rescue as many Nasin as your ship could hold to Ulios. Draga was killed by a Sirian soldier as he attempted to rescue his people. When you made it to Ulios, a man named Jimmy gave you a credit chip and said that he "will be forever in your debt".]])
 
 
 function create()
    --this mission make no system claims.
-   --initalize your variables
+   --initialize your variables
    nasin_rep = faction.playerStanding("Nasin")
    misn_tracker = var.peek("heretic_misn_tracker")
    reward = math.floor((100000+(math.random(5,8)*2000)*(nasin_rep^1.315))*.01+.5)/.01
    homeasset = planet.cur()
-   targetasset, targetsys = planet.get("Ulios") --this will be the new HQ for the nasin in the next part.
+   targetasset, targetsys = planet.get("Ulios") --this will be the new HQ for the Nasin in the next part.
    --set some mission stuff
    misn.setNPC(npc_name, "sirius/unique/draga")
    misn.setDesc(bar_desc)
 
-   osd[1] = osd[1]:format(targetasset:name(),targetsys:name())
+   osd[1] = osd[1]:format(targetasset:name(), targetsys:name())
 end
 
 function accept()
-   --inital convo. Kept it a yes no to help with the urgent feeling of the situation.
+   --initial convo. Kept it a yes/no to help with the urgent feeling of the situation.
 
    local msg = bmsg[1]:format( targetasset:name(), targetsys:name() )
    if not tk.yesno(misn_title, msg) then
@@ -83,7 +85,7 @@ function accept()
    free_cargo = player.pilot():cargoFree()
    people_carried =  (16 * free_cargo) + 7 --average weight per person is 62kg. one ton / 62 is 16. added the +7 for ships with 0 cargo.
    misn.setTitle(misn_title)
-   misn.setReward(misn_reward:format(numstring(reward)))
+   misn.setReward(creditstring(reward))
    misn.setDesc(misn_desc:format( targetasset:name(), targetsys:name()))
    misn.osdCreate(misn_title,osd)
    refugees = misn.cargoAdd("Refugees",free_cargo)
@@ -110,7 +112,7 @@ function lastsys()
    last_sys_in = system.cur()
 end
 
-function attacked() --several systems where the sirius have 'strategically placed' an assault fleet to try and kill some nasin.
+function attacked() --several systems where the Sirius have 'strategically placed' an assault fleet to try and kill some Nasin.
    dangersystems = {
    system.get("Neon"),
    system.get("Pike"),
@@ -138,14 +140,14 @@ function attacked() --several systems where the sirius have 'strategically place
    end
 end
 
-function misn_over() --arent you glad thats over?
+function misn_over() --aren't you glad thats over?
    if planet.cur() == planet.get("Ulios") then
       --introing one of the characters in the next chapter.
       tk.msg(misn_title,emsg[1]:format( targetasset:name() ))
       player.pay(reward)
       misn.cargoRm(refugees)
       misn_tracker = misn_tracker + 1
-      faction.modPlayer("Nasin",25) --big boost to the nasin, for completing the prologue
+      faction.modPlayer("Nasin",25) --big boost to the Nasin, for completing the prologue
       var.push("heretic_misn_tracker",misn_tracker)
       misn.osdDestroy()
       player.allowSave(true)

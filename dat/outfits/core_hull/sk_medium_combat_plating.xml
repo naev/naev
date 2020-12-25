@@ -4,12 +4,12 @@
   <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>medium</size>
-  <rarity>3</rarity>
   <mass>140</mass>
   <price>360000</price>
   <description>Designed for corvettes and similarly-sized vessels, Schafer &amp; Kane's medium combat plating provides ample protection utilizing the latest in defensive materials.</description>
   <gfx_store>combat_hull_m</gfx_store>
- <priority>3</priority></general>
+  <priority>3</priority>
+ </general>
  <specific type="modification">
   <cargo>16</cargo>
   <absorb>16</absorb>

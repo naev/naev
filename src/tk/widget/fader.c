@@ -12,6 +12,10 @@
 #include "tk/toolkit_priv.h"
 
 
+#define KNOB_DEF_THICKNESS 15.
+#define TRACK_DEF_THICKNESS 5.
+
+
 static void fad_render( Widget* fad, double bx, double by );
 static int fad_mclick( Widget* fad, int button, int x, int y );
 static int fad_mmove( Widget* fad, int x, int y, int rx, int ry );
@@ -86,28 +90,36 @@ void window_addFader( const unsigned int wid,
  */
 static void fad_render( Widget* fad, double bx, double by )
 {
+
    double pos;
    double w,h;
    double tx,ty, tw,th;
    double kx,ky, kw,kh;
+   int horizontal;
 
    /* Some values. */
-   pos = (fad->dat.fad.value-fad->dat.fad.min) / (fad->dat.fad.max-fad->dat.fad.min);
+   pos = (fad->dat.fad.value - fad->dat.fad.min) / (fad->dat.fad.max - fad->dat.fad.min);
    w = fad->w;
    h = fad->h;
+   horizontal = w > h;
 
-   /* Track. */
-   tx = bx + fad->x + (h > w ? (w - 5.) / 2 : 0);
-   ty = by + fad->y + (h < w ? (h - 5.) / 2 : 0);
-   tw = (h < w ? w : 5.);
-   th = (h > w ? h : 5.);
+   /* Knob wh. */
+   kw = (horizontal ? KNOB_DEF_THICKNESS : w);
+   kh = (!horizontal ? KNOB_DEF_THICKNESS : h);
+
+   /* Track wh. */
+   tw = (horizontal ? w - kw : TRACK_DEF_THICKNESS);
+   th = (!horizontal ? h - kh : TRACK_DEF_THICKNESS);
+
+   /* Track xy. */
+   tx = bx + fad->x + (!horizontal ? (w - TRACK_DEF_THICKNESS) / 2 : kw / 2);
+   ty = by + fad->y + (horizontal ? (h - TRACK_DEF_THICKNESS) / 2 : kh / 2);
+
+   /* Knob xy. */
+   kx = tx + (horizontal ? tw * pos - kw / 2 : (-kw + tw) / 2);
+   ky = ty + (!horizontal ? th * pos - kh / 2 : (-kh + th) / 2);
+
    toolkit_drawRect(tx, ty, tw , th, toolkit_colLight, NULL);
-
-   /* Knob. */
-   kx = bx + fad->x + (h < w ? w * pos - 5. : 0);
-   ky = by + fad->y + (h > w ? h * pos - 5. : 0);
-   kw = (h < w ? 15. : w);
-   kh = (h > w ? 15. : h);
 
    /* Draw. */
    toolkit_drawRect(kx, ky, kw, kh, toolkit_colLight, NULL);
@@ -123,7 +135,7 @@ static void fad_render( Widget* fad, double bx, double by )
  */
 static int fad_mmove( Widget* fad, int x, int y, int rx, int ry )
 {
-   double d;
+   double d; /* from 0. to 1. */
    (void) rx;
    (void) ry;
 
@@ -131,8 +143,18 @@ static int fad_mmove( Widget* fad, int x, int y, int rx, int ry )
    if (fad->status != WIDGET_STATUS_SCROLLING)
       return 0;
 
-   /* Set the fader value. */
-   d = (fad->w > fad->h) ? (double)x / fad->w : (double)y / fad->h;
+   /* Map x,y onto track coordinate d. */
+   if (fad->w > fad->h) {
+      d = ((double)x - KNOB_DEF_THICKNESS / 2) / (fad->w - KNOB_DEF_THICKNESS);
+   } else {
+      d = ((double)y - KNOB_DEF_THICKNESS / 2) / (fad->h - KNOB_DEF_THICKNESS);
+   }
+
+   /* Clamp d to not get off track. */
+   d = d > 1. ? 1. : d;
+   d = d < 0. ? 0. : d;
+
+   /* Set the value. */
    fad_setValue(fad, d);
 
    return 1;
@@ -144,35 +166,15 @@ static int fad_mmove( Widget* fad, int x, int y, int rx, int ry )
  */
 static int fad_mclick( Widget* fad, int button, int x, int y )
 {
-   int kx, ky, kw, kh;
-   double pos;
-
    /* Only handle left mouse button. */
    if (button != SDL_BUTTON_LEFT)
       return 0;
 
-   /* Get position. */
-   pos = (fad->dat.fad.value-fad->dat.fad.min) / (fad->dat.fad.max-fad->dat.fad.min);
-
-   /* Knob. */
-   if (fad->h < fad->w) {
-      kx = fad->w * pos - 5;
-      kw = 15;
-
-      /* Out of bounds, jump the knob. */
-      if ((x < kx) || (x >= kx + kw))
-         fad_setValue(fad, (double)x / fad->w );
-   }
-   else {
-      ky = fad->h * pos - 5;
-      kh = 15;
-
-      /* Out of bounds, jump the knob. */
-      if ((y < ky) || (y >= ky + kh))
-         fad_setValue(fad, (double)y / fad->h );
-   }
    /* Always scroll. */
    fad->status = WIDGET_STATUS_SCROLLING;
+
+   /* Make initial move. */
+   fad_mmove(fad, x, y, 0, 0);
 
    return 0;
 }
@@ -201,11 +203,13 @@ static int fad_key( Widget* fad, SDL_Keycode key, SDL_Keymod mod )
       case SDLK_RIGHT:
       case SDLK_UP:
          fad_setValue( fad, cur+0.05 );
+         ret = 1;
          break;
 
       case SDLK_LEFT:
       case SDLK_DOWN:
          fad_setValue( fad, cur-0.05 );
+         ret = 1;
          break;
 
       default:
@@ -269,7 +273,7 @@ static void fad_setValue( Widget *fad, double value )
  *
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the widget.
- *    @para value Value to set fader to.
+ *    @param value Value to set fader to (between 0 and 1).
  */
 void window_faderValue( const unsigned int wid,
       char* name, double value )
@@ -286,6 +290,50 @@ void window_faderValue( const unsigned int wid,
       WARN("Not setting fader value on non-fader widget '%s'.", name);
       return;
    }
+
+   /* Set fader value. */
+   fad_setValue(wgt, value);
+}
+
+
+/**
+ * @brief Sets a fader widget value within range of bounds.
+ *
+ * This is a helper or selectively substituted function to assist
+ * with setting a value of a Fader when we really intend the value
+ * to be within a bounded range, such as 10 through 100. By default
+ * faders seem to use 0 through 1 as their valid range.
+ *
+ * There was a specific difficulty where Scalefactor was to default to
+ * value of 1, while in the 0..1 range; it would always be set to Max.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget.
+ *    @param value Value to set fader to (between Min and Max)
+ */
+void window_faderSetBoundedValue( const unsigned int wid,
+      char* name, double value )
+{
+   const double INTRINSIC_MIN = 0.;
+   const double INTRINSIC_MAX = 1.;
+   Widget *wgt;
+
+   /* Get the widget. */
+   wgt = window_getwgt(wid, name);
+   if (wgt == NULL)
+      return;
+
+   /* Verify the type. */
+   if (wgt->type != WIDGET_FADER) {
+      WARN("Not setting fader value on non-fader widget '%s'.", name);
+      return;
+   }
+
+   /* Convert value from bounded range to 'intrinsic' range. */
+   value = (value - wgt->dat.fad.min) / (wgt->dat.fad.max - wgt->dat.fad.min);
+
+   /* Ensure the value is within the acceptable range of values. */
+   value = CLAMP(INTRINSIC_MIN, INTRINSIC_MAX, value);
 
    /* Set fader value. */
    fad_setValue(wgt, value);

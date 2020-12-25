@@ -1,5 +1,6 @@
-require("dat/ai/tpl/generic.lua")
-require("dat/ai/personality/patrol.lua")
+require("ai/tpl/generic")
+require("ai/personality/patrol")
+require "numstring"
 
 --[[
 
@@ -33,21 +34,21 @@ function create ()
    else
       mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (300. * rnd.rnd() + 850.)
       bribe_prompt = {
-            _("\"It'll cost you %d credits for me to ignore your pile of rubbish.\""),
-            _("\"I'm in a good mood so I'll let you go for %d credits.\""),
-            _("\"Send me %d credits or you're dead.\""),
-            _("\"Pay up %d credits or it's the end of the line.\""),
-            _("\"Your money or your life. %d credits and make the choice quickly.\""),
-            _("\"Money talks bub. %d up front or get off my channel.\""),
-            _("\"Shut up and give me your money! %d credits now.\""),
-            _("\"You're either really desperate or really rich. %d or shut up.\""),
-            _("\"If you're willing to negotiate I'll gladly take %d credits to not kill you.\""),
-            _("\"You give me %d credits and I'll act like I never saw you.\""),
-            _("\"So this is the part where you pay up or get shot up. Your choice. What'll be, %d or...\""),
-            _("\"Pay up or don't. %d credits now just means I'll wait till later to collect the rest.\""),
-            _("\"This is a toll road, pay up %d credits or die.\""),
+            _("\"It'll cost you %s for me to ignore your pile of rubbish.\""),
+            _("\"I'm in a good mood so I'll let you go for %s.\""),
+            _("\"Send me %s or you're dead.\""),
+            _("\"Pay up %s or it's the end of the line.\""),
+            _("\"Your money or your life. %s and make the choice quickly.\""),
+            _("\"Money talks bub. %s up front or get off my channel.\""),
+            _("\"Shut up and give me your money! %s now.\""),
+            _("\"You're either really desperate or really rich. %s or shut up.\""),
+            _("\"If you're willing to negotiate I'll gladly take %s to not kill you.\""),
+            _("\"You give me %s and I'll act like I never saw you.\""),
+            _("\"So this is the part where you pay up or get shot up. Your choice. What'll be, %s or...\""),
+            _("\"Pay up or don't. %s now just means I'll wait till later to collect the rest.\""),
+            _("\"This is a toll road, pay up %s or die.\""),
       }
-      mem.bribe_prompt = string.format(bribe_prompt[ rnd.rnd(1,#bribe_prompt) ], mem.bribe)
+      mem.bribe_prompt = string.format(bribe_prompt[ rnd.rnd(1,#bribe_prompt) ], creditstring(mem.bribe))
       bribe_paid = {
             _("\"You're lucky I'm so kind.\""),
             _("\"Life doesn't get easier than this.\""),
@@ -75,8 +76,8 @@ function create ()
       if standing > 60 then
          mem.refuel = mem.refuel * 0.5
       end
-      mem.refuel_msg = string.format(_("\"For you, only %d credits for a hundred units of fuel.\""),
-            mem.refuel);
+      mem.refuel_msg = string.format(_("\"For you, only %s for a hundred units of fuel.\""),
+            creditstring(mem.refuel));
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system

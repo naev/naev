@@ -8,7 +8,9 @@
 #  define INPUT_H
 
 
+/** @cond */
 #include "SDL.h"
+/** @endcond */
 
 
 #define NMOD_NONE    0
@@ -17,6 +19,10 @@
 #define NMOD_ALT     (1<<2)
 #define NMOD_META    (1<<3)
 #define NMOD_ALL     0xFFFF /**< Comfort thing SDL is lacking. */
+
+
+#define KEY_PRESS    ( 1.) /**< Key is pressed. */
+#define KEY_RELEASE  (-1.) /**< Key is released. */
 
 
 /* input types */
@@ -31,6 +37,10 @@ typedef enum {
    KEYBIND_JHAT_LEFT, /**< Joystick hat left direction keybinding. */
    KEYBIND_JHAT_RIGHT /**< Joystick hat right direction keybinding. */
 } KeybindType; /**< Keybind types. */
+
+
+extern const char *keybind_info[][ 3 ];
+extern const int   input_numbinds;
 
 
 /*

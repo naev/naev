@@ -18,13 +18,16 @@
    <faction>Traders Guild</faction>
    <faction>Za'lek</faction>
   </avail>
+  <notes>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --Escort a convoy of traders to a destination--
 
-require "nextjump.lua"
-require "cargo_common.lua"
-require "numstring.lua"
+require "nextjump"
+require "cargo_common"
+require "numstring"
 
 
 misn_title = {}
@@ -36,12 +39,6 @@ misn_title[5] = _("Escort a huge convoy to %s in %s.")
 
 misn_desc = _("A convoy of traders needs protection while they go to %s in %s. You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so.")
    
-misn_details = _([[
-Cargo: %s
-Jumps: %d
-Travel distance: %d
-%s]])
-
 piracyrisk = {}
 piracyrisk[1] = _("Piracy Risk: None")
 piracyrisk[2] = _("Piracy Risk: Low")
@@ -58,7 +55,7 @@ slow[2] = _([[The destination is %s away, but you only have enough fuel for %s. 
 landsuccesstitle = _("Success!")
 landsuccesstext = _("You successfully escorted the trading convoy to the destination. There wasn't a single casualty and you are rewarded the full amount.")
 
-landcasualtytitle = _("Success with Casualities")
+landcasualtytitle = _("Success with Casualties")
 landcasualtytext = {}
 landcasualtytext[1] = _("You've arrived with the trading convoy more or less intact. Your pay is docked slightly due to the loss of part of the convoy.")
 landcasualtytext[2] = _("You arrive with what's left of the convoy. It's not much, but it's better than nothing. You are paid a steeply discounted amount.")
@@ -121,9 +118,7 @@ function create()
    
    misn.setTitle( misn_title[convoysize]:format(
       destplanet:name(), destsys:name() ) )
-   misn.setDesc( misn_desc:format( destplanet:name(), destsys:name() )
-      .. "\n\n" .. misn_details:format(
-         cargo, numjumps, traveldist, piracyrisk ) )
+   cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, nil, destplanet, nil, piracyrisk );
    misn.markerAdd(destsys, "computer")
    misn.setReward( creditstring(reward) )
 end
@@ -227,7 +222,7 @@ function traderJump( p, j )
       exited = exited + 1
       if p:exists() then
          player.msg( string.format(
-            "%s has jumped to %s.", p:name(), j:dest():name() ) )
+            _("%s has jumped to %s."), p:name(), j:dest():name() ) )
       end
    else
       traderDeath()

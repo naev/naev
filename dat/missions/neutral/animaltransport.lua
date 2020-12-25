@@ -11,19 +11,22 @@
    <faction>Sirius</faction>
    <cond>planet.cur():class() ~= "0" and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3"</cond>
   </avail>
+  <notes>
+   <tier>1</tier>
+  </notes>
  </mission>
  --]]
 --[[
 --
 -- MISSION: Animal transport
 -- DESCRIPTION: A man asks you to transport a crate of specially bred creatures for
--- his in-law's exitic pet store on another planet. It's a standard fare A-to-B mission,
+-- his in-law's exotic pet store on another planet. It's a standard fare A-to-B mission,
 -- but doing this mission infests the player's current ship with the creatures.
 --
 --]]
 
-require "jumpdist.lua"
-require "dat/missions/neutral/common.lua"
+require "jumpdist"
+require "missions/neutral/common"
 
 
 text = {}

@@ -8,6 +8,8 @@
 #  define LAND_H
 
 
+#include "conf.h"
+#include "nstring.h"
 #include "space.h"
 
 
@@ -24,6 +26,13 @@ enum {
    LAND_WINDOW_COMMODITY,    /**< Commodity window. */
    LAND_NUMWINDOWS           /**< Number of land windows. */
 };
+
+
+/* global/main window */
+#define LAND_WIDTH   RESOLUTION_W_MIN /**< Land window width. */
+#define LAND_HEIGHT  RESOLUTION_H_MIN /**< Land window height. */
+#define PORTRAIT_WIDTH 200
+#define PORTRAIT_HEIGHT 150
 
 
 /*
@@ -69,7 +78,7 @@ int land_setWindow( int window );
  * Internal usage.
  */
 void land_refuel (void);
-void land_checkAddMap (void);
+void land_updateMainTab (void);
 void land_buttonTakeoff( unsigned int wid, char *unused );
 unsigned int land_getWid( int window );
 void bar_regen (void);
@@ -77,11 +86,11 @@ void bar_regen (void);
 /*
  * Error dialogue generation and associated checks.
  */
-int can_swap( char* shipname );
-int can_swapEquipment( char* shipname );
-int can_sell( char* shipname );
-int land_errDialogue( char* name, char* type );
-void land_errDialogueBuild( const char *fmt, ... );
+int  can_swap( const char *shipname );
+int  can_swapEquipment( const char *shipname );
+int  can_sell( const char *shipname );
+int  land_errDialogue( const char *name, char *type );
+PRINTF_FORMAT( 1, 2 ) void land_errDialogueBuild( const char *fmt, ... );
 
 
 #endif /* LAND_H */

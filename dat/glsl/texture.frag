@@ -1,5 +1,3 @@
-#version 130
-
 uniform vec4 color;
 uniform sampler2D sampler;
 
@@ -8,4 +6,6 @@ out vec4 color_out;
 
 void main(void) {
    color_out = color * texture(sampler, tex_coord);
+
+#include "colorblind.glsl"
 }

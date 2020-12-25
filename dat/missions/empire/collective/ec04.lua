@@ -12,6 +12,9 @@
    <location>Land</location>
    <planet>Omega Station</planet>
   </avail>
+  <notes>
+   <campaign>Collective</campaign>
+  </notes>
  </mission>
  --]]
 --[[
@@ -28,13 +31,12 @@
 
 ]]--
 
-require "nextjump.lua"
-require "proximity.lua"
-require "numstring.lua"
-require "dat/missions/empire/common.lua"
+require "nextjump"
+require "proximity"
+require "numstring"
+require "missions/empire/common"
 
 misn_title = _("Collective Extraction")
-misn_reward = _("%s credits")
 misn_desc = {}
 misn_desc[1] = _("Check for survivors on %s in %s")
 misn_desc[2] = _("Travel back to %s in %s")
@@ -87,7 +89,7 @@ function create ()
 
       -- Mission details
       misn.setTitle(misn_title)
-      misn.setReward( misn_reward:format( numstring( credits ) ) )
+      misn.setReward( creditstring( credits ) )
       misn.setDesc( string.format(misn_desc[1], misn_target:name(), misn_target_sys:name() ))
       tk.msg( title[1], string.format(text[2], misn_target_sys:name(), misn_target:name()) )
       osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
@@ -122,11 +124,11 @@ function enter()
 
         fleet1[1]:comm(escort_msg1:format(player.name()))
         fleet1[1]:taskClear()
-        fleet1[1]:goto(waypoint1, false, false)
-        fleet1[1]:goto(waypoint12, false, false)
+        fleet1[1]:moveto(waypoint1, false, false)
+        fleet1[1]:moveto(waypoint12, false, false)
         fleet2[1]:taskClear()
-        fleet2[1]:goto(waypoint2, false, false)
-        fleet2[1]:goto(waypoint22, false, false)
+        fleet2[1]:moveto(waypoint2, false, false)
+        fleet2[1]:moveto(waypoint22, false, false)
         hook.pilot(fleet1[1], "idle", "idle")
         hook.pilot(fleet2[1], "idle", "idle")
 

@@ -8,16 +8,16 @@
 --
 --]]
 
-require "dat/scripts/numstring.lua"
+require "scripts/numstring"
 
 
 misn_title = _("%s Rehabilitation")
 misn_desc = _([[You may pay a fine for a chance to redeem yourself in the eyes of a faction you have offended. You may interact with this faction as if your reputation were neutral, but your reputation will not actually improve until you've regained their trust. ANY hostile action against this faction will immediately void this agreement.
 Faction: %s
-Cost: %s credits]])
+Cost: %s]])
 misn_reward = _("None")
 
-lowmoney = _("You don't have enough money. You need at least %s credits to buy a cessation of hostilities with this faction.")
+lowmoney = _("You don't have enough money. You need at least %s to buy a cessation of hostilities with this faction.")
 accepted = _([[Your application has been processed. The %s security forces will no longer attack you on sight. You may conduct your business in %s space again, but remember that you still have a criminal record! If you attack any traders, civilians or %s ships, or commit any other felony against this faction, you will immediately become their enemy again.
 While this agreement is active your reputation will not change, but if you continue to behave properly and perform beneficial services, your past offenses will eventually be stricken from the record.]])
 
@@ -28,8 +28,7 @@ successtitle = _("%s Rehabilitation Successful")
 successtext = _([[Congratulations, you have successfully worked your way back into good standing with this faction. Try not to relapse into your life of crime!]])
 
 osd_msg = {}
-osd_msg[1] = _("You need to gain %d more reputation")
-osd_msg1 = _("You need to gain %d more reputation")
+osd_msg[1] = "(null)"
 osd_msg["__save"] = true
 
 
@@ -52,13 +51,13 @@ function create()
     setFine(rep)
     
     misn.setTitle(misn_title:format(fac:name()))
-    misn.setDesc(misn_desc:format(fac:name(), numstring(fine)))
+    misn.setDesc(misn_desc:format(fac:name(), creditstring(fine)))
     misn.setReward(misn_reward)
 end
 
 function accept()
     if player.credits() < fine then
-        tk.msg("", lowmoney:format(numstring(fine)))
+        tk.msg("", lowmoney:format(creditstring(fine)))
         misn.finish()
     end
     
@@ -68,7 +67,11 @@ function accept()
     fac:modPlayerRaw(-rep)
     
     misn.accept()
-    osd_msg[1] = osd_msg1:format(-rep)
+    osd_msg[1] = gettext.ngettext(
+       "You need to gain %d more reputation",
+       "You need to gain %d more reputation",
+       -rep
+    ):format(-rep)
     misn.osdCreate(misn_title:format(fac:name()), osd_msg)
     
     standhook = hook.standing("standing")
@@ -96,7 +99,11 @@ function standing(hookfac, delta)
 
             excess = excess + delta
             fac:modPlayerRaw(-delta)
-            osd_msg[1] = osd_msg1:format(-rep)
+            osd_msg[1] = gettext.ngettext(
+               "You need to gain %d more reputation",
+               "You need to gain %d more reputation",
+               -rep
+            ):format(-rep)
             misn.osdCreate(misn_title:format(fac:name()), osd_msg)
         else
             excess = excess + delta

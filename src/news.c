@@ -9,28 +9,29 @@
  */
 
 
-#include "news.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "naev.h"
+/** @endcond */
+
+#include "news.h"
 
 #include "log.h"
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_misn.h"
-#include "nlua_faction.h"
-#include "nlua_diff.h"
-#include "nlua_var.h"
 #include "ndata.h"
-#include "toolkit.h"
+#include "nlua.h"
+#include "nlua_diff.h"
+#include "nlua_faction.h"
+#include "nlua_misn.h"
+#include "nlua_var.h"
+#include "nluadef.h"
 #include "nstring.h"
 #include "ntime.h"
 #include "nxml.h"
 #include "nxml_lua.h"
 #include "space.h"
+#include "toolkit.h"
 
 
 #define NEWS_MAX_LENGTH       8192
@@ -69,7 +70,7 @@ static int largestID;
  */
 static void news_render( double bx, double by, double w, double h, void *data );
 static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
-      double w, double h, void *data );
+      double w, double h, double rx, double ry, void *data );
 static int news_parseArticle( xmlNodePtr parent );
 int news_saveArticles( xmlTextWriterPtr writer ); /* externed in save.c */
 int news_loadArticles( xmlNodePtr parent ); /* externed in load.c */
@@ -254,13 +255,14 @@ news_t* news_get(int id)
 /**
  * @brief Generates news from newslist from specific faction AND Generic news
  *
- *    @param the faction of wanted news
+ *    @param faction the faction of wanted news
  * @return 0 on success
  */
 int *generate_news( char* faction )
 {
    news_t *temp, *article_ptr;
    int p;
+   char *article_time;
 
    p = 0;
    article_ptr = news_list;
@@ -285,10 +287,12 @@ int *generate_news( char* faction )
                && (strcmp(article_ptr->faction, faction) == 0) ) ) {
          /* XXX: magic number */
          if (article_ptr->date && (article_ptr->date < 40000000000000)) {
+            article_time = ntime_pretty(article_ptr->date, 1);
             p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
                "%s: %s\a0\n\n"
-               , article_ptr->title, ntime_pretty(article_ptr->date, 1), article_ptr->desc );
+               , article_ptr->title, article_time, article_ptr->desc );
+            free( article_time );
          }
          else {
             p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
@@ -300,12 +304,12 @@ int *generate_news( char* faction )
 
       article_ptr = article_ptr->next;
 
-   } while (article_ptr != NULL);
+   } while (article_ptr != NULL && p < NEWS_MAX_LENGTH);
 
    if (p == 0)
-      nsnprintf(buf, NEWS_MAX_LENGTH, _("\n\nSorry, no news today\n\n\n"));
+      p = nsnprintf(buf, NEWS_MAX_LENGTH, _("\n\nSorry, no news today\n\n\n"));
 
-   len = p;
+   len = MIN( p, NEWS_MAX_LENGTH );
 
    return 0;
 }
@@ -333,14 +337,13 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
 
 
    /* Now load up the text. */
-   i = 0;
    p = 0;
    news_nlines = 0;
 
    while (p < len) {
 
       /* Get the length. */
-      i = gl_printWidthForText( NULL, &buf[p], w-40 );
+      i = gl_printWidthForText( NULL, &buf[p], w-40, NULL );
 
       /* Copy the line. */
       if (news_nlines+1 > news_mlines) {
@@ -384,19 +387,24 @@ void clear_newslines (void)
 
 
 /**
- * @brief wid Window receiving the mouse events.
+ * @brief News widget mouse event handler.
  *
+ *    @param wid Window receiving the mouse events.
  *    @param event Mouse event being received.
  *    @param mx X position of the mouse.
  *    @param my Y position of the mouse.
  *    @param w Width of the widget.
  *    @param h Height of the widget.
+ *    @param rx Relative X movement (only valid for motion).
+ *    @param ry Relative Y movement (only valid for motion).
+ *    @param data Unused.
  */
 static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
-      double w, double h, void *data )
+      double w, double h, double rx, double ry, void *data )
 {
    (void) wid;
    (void) data;
+   (void) rx;
 
    switch (event->type) {
       case SDL_MOUSEWHEEL:
@@ -426,7 +434,7 @@ static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
 
       case SDL_MOUSEMOTION:
          if (news_drag)
-            news_pos -= event->motion.yrel;
+            news_pos -= ry;
          break;
    }
 
@@ -441,6 +449,7 @@ static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
  *    @param by Base Y position to render at.
  *    @param w Width of the widget.
  *    @param h Height of the widget.
+ *    @param data Unused.
  */
 static void news_render( double bx, double by, double w, double h, void *data )
 {
@@ -485,7 +494,7 @@ static void news_render( double bx, double by, double w, double h, void *data )
 
       gl_printRestore( &news_restores[i] );
       gl_printMidRaw( news_font, w-40.,
-            bx+10, by+y, &cFontGreen, news_lines[i] );
+            bx+10, by+y, &cFontGreen, -1., news_lines[i] );
 
       /* Increment line and position. */
       y -= news_font->h + 5.;
@@ -498,15 +507,16 @@ static void news_render( double bx, double by, double w, double h, void *data )
  */
 static char* make_clean( char* unclean )
 {
-   int i, j;
+   int i, j, l;
    char *new;
 
-   new = malloc( 4*strlen(unclean)+1 );
+   l = 4*strlen(unclean)+1;
+   new = malloc( l );
 
    for (i=0, j=0; unclean[i] != 0; i++, j++) {
       if (unclean[i] == 27) {
          new[j++] = '\\';
-         j += sprintf( &new[j], "%.3d", unclean[i] )-1;
+         j += nsnprintf( &new[j], l, "%.3d", unclean[i] )-1;
       }
       else
          new[j] = unclean[i];
@@ -637,7 +647,7 @@ int news_loadArticles( xmlNodePtr parent )
  */
 static int news_parseArticle( xmlNodePtr parent )
 {
-   char *ntitle, *ndesc, *title, *desc, *faction, *tag;
+   char *ntitle, *ndesc, *title, *desc, *faction;
    char *buff;
    ntime_t date, date_to_rm;
    xmlNodePtr node;
@@ -647,7 +657,7 @@ static int news_parseArticle( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
 
 #define NEWS_READ(elem, s) \
-xmlr_attr(node, s, elem); \
+xmlr_attr_strd(node, s, elem); \
 if (elem == NULL) { WARN(_("Event is missing '%s', skipping."), s); goto cleanup; }
 
    do {
@@ -661,7 +671,6 @@ if (elem == NULL) { WARN(_("Event is missing '%s', skipping."), s); goto cleanup
       title   = NULL;
       desc    = NULL;
       faction = NULL;
-      tag     = NULL;
 
       NEWS_READ(title, "title");
       NEWS_READ(desc, "desc");
@@ -684,13 +693,11 @@ if (elem == NULL) { WARN(_("Event is missing '%s', skipping."), s); goto cleanup
       ntitle = get_fromclean(title);
       ndesc  = get_fromclean(desc);
 
-      /* Optional. */
-      xmlr_attr(node, "tag", tag);
 
       /* make the article*/
       n_article = new_article(ntitle, ndesc, faction, date, date_to_rm);
-      if (tag != NULL)
-         n_article->tag = strdup(tag);
+      /* Read optional tag. */
+      xmlr_attr_strd(node, "tag", n_article->tag);
 
 cleanup:
       free(ntitle);
@@ -698,7 +705,6 @@ cleanup:
       free(title);
       free(desc);
       free(faction);
-      free(tag);
    } while (xml_nextNode(node));
 #undef NEWS_READ
 

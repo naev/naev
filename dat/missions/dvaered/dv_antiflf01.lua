@@ -9,6 +9,10 @@
    <chance>100</chance>
    <location>None</location>
   </avail>
+  <notes>
+   <done_evt name="FLF/DV Derelicts">If you choose to help the Dvaered</done_evt>
+   <campaign>Doom the FLF</campaign>
+  </notes>
  </mission>
  --]]
 --[[
@@ -20,7 +24,7 @@
 --      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 --]]
 
-require "dat/missions/dvaered/common.lua"
+require "missions/dvaered/common"
 
 
 title = {}
@@ -49,7 +53,7 @@ osd_desc = {_("Take the Dvaered crew on board your ship to any Dvaered controlle
 misn_desc = _("Take the Dvaered crew on board your ship to any Dvaered controlled world or station.")
 misn_reward = _("A chance to aid in the effort against the FLF")
 
-log_text = _([[You rescued the crew of a Dvaered ship that was disabled by an FLF ship. The Dvaered officer mentioned that a campaign is being prepared against the FLF terrorists; if you are interested in joining in that operation, you can seek out a Dvaered liason.]])
+log_text = _([[You rescued the crew of a Dvaered ship that was disabled by an FLF ship. The Dvaered officer mentioned that a campaign is being prepared against the FLF terrorists; if you are interested in joining in that operation, you can seek out a Dvaered liaison.]])
 
 
 function create()

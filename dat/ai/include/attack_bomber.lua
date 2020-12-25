@@ -34,7 +34,7 @@ function atk_b ()
 
    -- Get bombing tool
    secondary, special = ai.secondary("ranged")
-   if secondary ~= "Launcher" or special == "Dumb" then -- No launcher, must melee
+   if secondary ~= "Launcher" or special == "Unguided" then -- No launcher, must melee
       atk_b_melee( target, dist, secondary, special )
    end
 

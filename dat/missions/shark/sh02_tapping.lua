@@ -6,7 +6,8 @@
   </flags>
   <avail>
    <priority>3</priority>
-   <cond>player.misnDone("Sharkman Is Back") and player.misnDone("Operation Cold Metal")</cond>
+   <cond>diff.isApplied("collective_dead")</cond>
+   <done>Sharkman Is Back</done>
    <chance>3</chance>
    <location>Bar</location>
    <faction>Dvaered</faction>
@@ -18,6 +19,10 @@
    <faction>Traders Guild</faction>
    <faction>Za'lek</faction>
   </avail>
+  <notes>
+   <requires name="The Collective is dead and no one will miss them"/>
+   <campaign>Nexus show their teeth</campaign>
+  </notes>
  </mission>
  --]]
 --[[
@@ -32,8 +37,8 @@
 
 --]]
 
-require "numstring.lua"
-require "dat/missions/shark/common.lua"
+require "numstring"
+require "missions/shark/common"
 
 
 title = {}
@@ -50,13 +55,13 @@ text[1] = _([[You sit at Smith's table and ask him if he has a job for you. "Of 
     "It's not exactly legal. That being said, you're just doing the delivery, so you almost certainly won't be implicated. What do you say? Is this something you can do?"]])
 
 refusetitle = _("Sorry, not interested")
-refusetext = _([["Ok, sorry to bother you."]])
+refusetext = _([["OK, sorry to bother you."]])
 
 title[2] = _("The job")
 text[2] = _([["I'm glad to hear it. Go meet our agent on %s in the %s system. Oh, yes, and I suppose I should mention that I'm known as 'James Neptune' to the agent. Good luck!"]])
 
 title[3] = _("Good job")
-text[3] = _([[The Nexus employee greets you as you reach the ground. "Excellent! I will just need to spend a few hectoseconds analyzing these recordings. See if you can find me in the bar soon; I might have another job for you.]])
+text[3] = _([[The Nexus employee greets you as you reach the ground. "Excellent! I will just need to spend a few hectoseconds analyzing these recordings. See if you can find me in the bar soon; I might have another job for you."]])
 
 title[4] = _("Time to go back to Alteris")
 text[4] = _([[You approach the agent and obtain the package without issue. Before you leave, he suggests that you stay vigilant. "They might come after you," he says.]])
@@ -64,8 +69,7 @@ text[4] = _([[You approach the agent and obtain the package without issue. Befor
 
 -- Mission details
 misn_title = _("Unfair Competition")
-misn_reward = _("%s credits")
-misn_desc = _("Nexus Shipyard is in competition with House Sirius.")
+misn_desc = _("Nexus Shipyards is in competition with House Sirius.")
 
 -- NPC
 npc_desc[1] = _("Arnold Smith")
@@ -105,13 +109,13 @@ function accept()
 
    if tk.yesno(title[1], text[1]:format(pplname, psyname)) then
       misn.accept()
-      tk.msg(title[2], text[2]:format(mispla:name(),missys:name()))
+      tk.msg(title[2], text[2]:format(mispla:name(), missys:name()))
 
-      osd_msg[1] = osd_msg[1]:format(mispla:name(),missys:name())
+      osd_msg[1] = osd_msg[1]:format(mispla:name(), missys:name())
       osd_msg[2] = osd_msg[2]:format(pplname, psyname)
 
       misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward)))
+      misn.setReward(creditstring(reward))
       misn.setDesc(misn_desc)
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)
@@ -152,7 +156,7 @@ function enter()
       hook.timer( 2000, "ambush" )
       proba = proba - 0.2
    elseif stage == 1 then
-      --the probality of an ambush goes up when you cross a system without meeting any ennemy
+      --the probability of an ambush goes up when you cross a system without meeting any ennemy
       proba = proba + 0.1
    end
 end
@@ -305,7 +309,7 @@ function corvette()
 end
 
 function cruiser()
-   --spawning a Krestel with massive missile weaponry
+   --spawning a Kestrel with massive missile weaponry
    badguy = pilot.addRaw( "Kestrel","mercenary", nil, "Mercenary" )
    badguy:setHostile()
    badguy:rename(_("Mercenary"))
@@ -369,7 +373,7 @@ function add_llama()
 end
 
 function littleofall()
-   --spawning random ennemies
+   --spawning random enemies
    if rnd.rnd() < 0.5 then
       interceptors()
    else

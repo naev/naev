@@ -10,6 +10,9 @@
    <location>Bar</location>
    <planet>Niflheim</planet>
   </avail>
+  <notes>
+   <tier>1</tier>
+  </notes>
  </mission>
  --]]
 --[[
@@ -17,8 +20,8 @@
 Za'lek Cargo Run. adapted from Drunkard Mission
 ]]--
 
-require "numstring.lua"
-require "dat/missions/zalek/common.lua"
+require "numstring"
+require "missions/zalek/common"
 
 
 -- Bar Description
@@ -49,7 +52,7 @@ text[1] = _([[This Za'lek scientist seems to be looking for someone. As you appr
 
 title[2] = _("A long haul through tough territory")
 text[2] = _([[You say that he is looking at one right now. Rather surprisingly, the he laughs slightly, looking relieved. "Thank you, captain! I was hoping that you could help me. My name is Dr. Andrej Logan. The job will be a bit dangerous, but I will pay you handsomely for your services.
-    "I need a load of equipment that is stuck at %s in the %s system. Unfortunately, that requires going through the pirate-infested fringe space between the Empire, Za'lek and Dvaered. Seeing as no one can agree whose responsibility it is to clean the vermin out, the pirates have made that route dangerous to traverse. I have had a devil of a time finding someone willing to take the mission on. Once you get the equipment, please deliver it to %s in the %s system. I will meet you there.]])
+    "I need a load of equipment that is stuck at %s in the %s system. Unfortunately, that requires going through the pirate-infested fringe space between the Empire, Za'lek and Dvaered. Seeing as no one can agree whose responsibility it is to clean the vermin out, the pirates have made that route dangerous to traverse. I have had a devil of a time finding someone willing to take the mission on. Once you get the equipment, please deliver it to %s in the %s system. I will meet you there."]])
 
 title[3] = _("Deliver the Equipment")
 text[3] = _([[Once planetside, you find the acceptance area and type in the code Dr. Logan gave you to pick up the equipment. Swiftly, a group of droids backed by a human overseer loads the heavy reinforced crates on your ship and you are ready to go.]])
@@ -65,10 +68,10 @@ title[6] = _("A Small Delay")
 text[6] = _([["Hello again. It's Dr. Logan. I am terribly sorry for the delay. As agreed, you will be paid your fee. I am pleased by your help, captain; I hope we meet again."]])
 
 title[7] = _("Bonus")
-text[7] = _([["For your trouble, I will add a bonus of %s credits to your fee. I am pleased by your help, captain; I hope we meet again."]])
+text[7] = _([["For your trouble, I will add a bonus of %s to your fee. I am pleased by your help, captain; I hope we meet again."]])
 
 title[8] = _("Check Account")
-text[8] = _([[You check your account balance as he closes the comm channel to find yourself %s credits richer. A good compensation indeed. You feel better already.]])
+text[8] = _([[You check your account balance as he closes the comm channel to find yourself %s richer. A good compensation indeed. You feel better already.]])
 
 title[9] = _("No Room")
 text[9] = _([[You don't have enough cargo space to accept this mission.]])
@@ -165,7 +168,7 @@ function takeoff()
       logan:setHilight(true)
       logan:hailPlayer()
       logan:control()
-      logan:goto(player.pilot():pos() + vec2.new( 150, 75), true)
+      logan:moveto(player.pilot():pos() + vec2.new( 150, 75), true)
       tk.msg( title[5], text[5] )
       hailhook = hook.pilot(logan, "hail", "hail")
    end
@@ -175,7 +178,7 @@ function hail()
    tk.msg( title[6], text[6] )
 
 --   eventually I'll implement a bonus
---   tk.msg( title[7], text[7]:format( numstring(bonus) ) )
+--   tk.msg( title[7], text[7]:format( creditstring(bonus) ) )
 
    hook.timer("1", "closehail")
 end
@@ -183,7 +186,7 @@ end
 function closehail()
    bonus = 0
    player.pay( payment )
-   tk.msg( title[8], text[8]:format( numstring(payment) ) )
+   tk.msg( title[8], text[8]:format( creditstring(payment) ) )
    logan:setVisplayer(false)
    logan:setHilight(false)
    logan:setInvincible(false) 

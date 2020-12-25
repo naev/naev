@@ -12,7 +12,6 @@
 
 void mapedit_open( unsigned int wid_unused, char *unused );
 void mapedit_selectText (void);
-char *mapedit_nameFilter( char *name );
 
 
 #endif /* DEV_MAPEDIT_H */

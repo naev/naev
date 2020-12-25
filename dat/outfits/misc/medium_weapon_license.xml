@@ -5,6 +5,6 @@
   <price>50000</price>
   <gfx_store>license</gfx_store>
   <description>This license will authorize you to buy and use medium weapons like the ion cannon.</description>
- <rarity>6</rarity></general>
+ </general>
  <specific type="license" />
 </outfit>

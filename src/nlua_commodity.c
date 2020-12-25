@@ -8,23 +8,27 @@
  * @brief Handles the Lua commodity bindings.
  */
 
-#include "nlua_commodity.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_commodity.h"
+
+#include "log.h"
 #include "nlua_planet.h"
 #include "nlua_time.h"
-#include "log.h"
+#include "nluadef.h"
 #include "rng.h"
 
 
 /* Commodity metatable methods. */
 static int commodityL_eq( lua_State *L );
 static int commodityL_get( lua_State *L );
+static int commodityL_getStandard( lua_State *L );
 static int commodityL_name( lua_State *L );
+static int commodityL_nameRaw( lua_State *L );
 static int commodityL_price( lua_State *L );
 static int commodityL_priceAt( lua_State *L );
 static int commodityL_priceAtTime( lua_State *L );
@@ -32,7 +36,9 @@ static const luaL_Reg commodityL_methods[] = {
    { "__tostring", commodityL_name },
    { "__eq", commodityL_eq },
    { "get", commodityL_get },
+   { "getStandard", commodityL_getStandard },
    { "name", commodityL_name },
+   { "nameRaw", commodityL_nameRaw },
    { "price", commodityL_price },
    { "priceAt", commodityL_priceAt },
    { "priceAtTime", commodityL_priceAtTime },
@@ -182,14 +188,12 @@ static int commodityL_eq( lua_State *L )
 }
 
 
-
-
 /**
  * @brief Gets a commodity.
  *
  * @usage s = commodity.get( "Food" ) -- Gets the food commodity
  *
- *    @luatparam string s Name of the commodity to get.
+ *    @luatparam string s Raw (untranslated) name of the commodity to get.
  *    @luatreturn Commodity|nil The commodity matching name or nil if error.
  * @luafunc get( s )
  */
@@ -212,16 +216,76 @@ static int commodityL_get( lua_State *L )
    lua_pushcommodity(L, commodity);
    return 1;
 }
+
+
 /**
- * @brief Gets the name of the commodity's commodity.
+ * @brief Gets the list of standard commodities.
  *
- * @usage commodityname = s:name()
+ * @luatreturn table A table containing commodity objects, namely those which are standard (buyable/sellable anywhere).
+ * @luafunc getStandard()
+ */
+static int commodityL_getStandard( lua_State *L )
+{
+   unsigned int i, nb;
+   Commodity **standard;
+
+   /* Get commodity. */
+   standard = standard_commodities( &nb );
+
+   /* Push. */
+   lua_newtable( L );                       /* Stack: t */
+   for (i=0; i<nb; i++) {
+      lua_pushnumber( L, i+1 );            /* Stack: t, i (1-based index) */
+      lua_pushcommodity( L, standard[i] ); /* Stack: t, i, c */
+      lua_rawset( L, -3 );                 /* Stack: t */
+   }
+
+   free( standard );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the translated name of the commodity.
  *
- *    @luatparam Commodity s Commodity to get commodity name.
- *    @luatreturn string The name of the commodity's commodity.
+ * This translated name should be used for display purposes (e.g.
+ * messages). It cannot be used as an identifier for the commodity; for
+ * that, use commodity.nameRaw() instead.
+ *
+ * @usage commodityname = s:name() -- Equivalent to `_(s:nameRaw())`
+ *
+ *    @luatparam Commodity s Commodity to get the translated name of.
+ *    @luatreturn string The translated name of the commodity.
  * @luafunc name( s )
  */
 static int commodityL_name( lua_State *L )
+{
+   Commodity *c;
+
+   /* Get the commodity. */
+   c  = luaL_validcommodity(L,1);
+
+   /** Return the commodity name. */
+   lua_pushstring(L, _(c->name));
+   return 1;
+}
+
+
+/**
+ * @brief Gets the raw (untranslated) name of the commodity.
+ *
+ * This untranslated name should be used for identification purposes
+ * (e.g. can be passed to commodity.get()). It should not be used
+ * directly for display purposes without manually translating it with
+ * _().
+ *
+ * @usage commodityrawname = s:nameRaw()
+ *
+ *    @luatparam Commodity s Commodity to get the raw name of.
+ *    @luatreturn string The raw name of the commodity.
+ * @luafunc nameRaw( s )
+ */
+static int commodityL_nameRaw( lua_State *L )
 {
    Commodity *c;
 

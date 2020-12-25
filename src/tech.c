@@ -10,17 +10,19 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "tech.h"
 
-#include "naev.h"
-
-#include "nxml.h"
+#include "array.h"
+#include "economy.h"
 #include "log.h"
 #include "ndata.h"
+#include "nxml.h"
 #include "outfit.h"
 #include "ship.h"
-#include "economy.h"
-#include "array.h"
 
 
 #define XML_TECH_ID         "Techs"          /**< Tech xml document tag. */
@@ -97,35 +99,27 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group
 int tech_load (void)
 {
    int i, ret, s;
-   size_t bufsize;
-   char *buf, *data;
+   char *buf;
    xmlNodePtr node, parent;
    xmlDocPtr doc;
    tech_group_t *tech;
 
    /* Load the data. */
-   data = ndata_read( TECH_DATA_PATH, &bufsize );
-   if (data == NULL)
+   doc = xml_parsePhysFS( TECH_DATA_PATH );
+   if (doc == NULL)
       return -1;
-
-   /* Load the document. */
-   doc = xmlParseMemory( data, bufsize );
-   if (doc == NULL) {
-      WARN("'%s' is not a valid XML file.", TECH_DATA_PATH);
-      return -1;
-   }
 
    /* Load root element. */
    parent = doc->xmlChildrenNode;
    if (!xml_isNode(parent,XML_TECH_ID)) {
-      WARN("Malformed "TECH_DATA_PATH" file: missing root element '"XML_TECH_ID"'");
+      WARN(_("Malformed %s file: missing root element '%s'"), TECH_DATA_PATH, XML_TECH_ID);
       return -1;
    }
 
    /* Get first node. */
    node = parent->xmlChildrenNode;
    if (node == NULL) {
-      WARN("Malformed "TECH_DATA_PATH" file: does not contain elements");
+      WARN(_("Malformed %s file: does not contain elements"), TECH_DATA_PATH);
       return -1;
    }
 
@@ -139,7 +133,7 @@ int tech_load (void)
       xml_onlyNodes(node);
       /* Must match tag. */
       if (!xml_isNode(node, XML_TECH_TAG)) {
-         WARN("'"XML_TECH_ID"' has unknown node '%s'.", node->name);
+         WARN(_("'%s' has unknown node '%s'."), XML_TECH_ID, node->name);
          continue;
       }
       if (ret==0) /* Write over failures. */
@@ -156,8 +150,7 @@ int tech_load (void)
       if (!xml_isNode(node, XML_TECH_TAG))
          continue;
 
-      /* Must avoid warning by checking explicit NULL. */
-      xmlr_attr( node, "name", buf );
+      xmlr_attr_strd( node, "name", buf );
       if (buf == NULL)
          continue;
 
@@ -176,7 +169,6 @@ int tech_load (void)
    DEBUG( ngettext( "Loaded %d tech group", "Loaded %d tech groups", s ), s );
 
    /* Free memory. */
-   free(data);
    xmlFreeDoc(doc);
 
    return 0;
@@ -207,8 +199,7 @@ void tech_free (void)
  */
 static void tech_freeGroup( tech_group_t *grp )
 {
-   if (grp->name != NULL)
-      free(grp->name);
+   free(grp->name);
    if (grp->items != NULL)
       array_free( grp->items );
 }
@@ -316,9 +307,9 @@ static int tech_parseNode( tech_group_t *tech, xmlNodePtr parent )
    memset( tech, 0, sizeof(tech_group_t) );
 
    /* Get name. */
-   xmlr_attr( parent, "name", tech->name);
+   xmlr_attr_strd( parent, "name", tech->name );
    if (tech->name == NULL) {
-      WARN("tech node does not have 'name' attribute");
+      WARN(_("tech node does not have 'name' attribute"));
       return 1;
    }
 
@@ -344,12 +335,12 @@ static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent )
          /* Must have name. */
          name = xml_get( node );
          if (name == NULL) {
-            WARN("Tech group '%s' has an item without a value.", tech->name);
+            WARN(_("Tech group '%s' has an item without a value."), tech->name);
             continue;
          }
 
          /* Try to find hard-coded type. */
-         buf = xml_nodeProp( node, "type" );
+         xmlr_attr_strd( node, "type", buf );
          if (buf == NULL) {
             ret = 1;
             if (ret)
@@ -360,43 +351,34 @@ static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent )
                ret = tech_addItemShip( tech, name );
             if (ret)
                ret = tech_addItemCommodity( tech, name );
-            if (ret) {
-               WARN("Generic item '%s' not found in tech group '%s'",
+            if (ret)
+               WARN(_("Generic item '%s' not found in tech group '%s'"),
                      name, tech->name );
-               continue;
-            }
          }
          else if (strcmp(buf,"group")==0) {
-            if (!tech_addItemGroup( tech, name )) {
-               WARN("Group item '%s' not found in tech group '%s'.",
+            if (!tech_addItemGroup( tech, name ))
+               WARN(_("Group item '%s' not found in tech group '%s'."),
                      name, tech->name );
-               continue;
-            }
          }
          else if (strcmp(buf,"outfit")==0) {
-            if (!tech_addItemGroup( tech, name )) {
-               WARN("Outfit item '%s' not found in tech group '%s'.",
+            if (!tech_addItemGroup( tech, name ))
+               WARN(_("Outfit item '%s' not found in tech group '%s'."),
                      name, tech->name );
-               continue;
-            }
          }
          else if (strcmp(buf,"ship")==0) {
-            if (!tech_addItemGroup( tech, name )) {
-               WARN("Ship item '%s' not found in tech group '%s'.",
+            if (!tech_addItemGroup( tech, name ))
+               WARN(_("Ship item '%s' not found in tech group '%s'."),
                      name, tech->name );
-               continue;
-            }
          }
          else if (strcmp(buf,"commodity")==0) {
-            if (!tech_addItemGroup( tech, name )) {
-               WARN("Commodity item '%s' not found in tech group '%s'.",
+            if (!tech_addItemGroup( tech, name ))
+               WARN(_("Commodity item '%s' not found in tech group '%s'."),
                      name, tech->name );
-               continue;
-            }
          }
+         free( buf );
          continue;
       }
-      WARN("Tech group '%s' has unknown node '%s'.", tech->name, node->name);
+      WARN(_("Tech group '%s' has unknown node '%s'."), tech->name, node->name);
    } while (xml_nextNode( node ));
 
    return 0;
@@ -489,7 +471,7 @@ int tech_addItem( const char *name, const char *value )
    /* Get ID. */
    id = tech_getID( name );
    if (id < 0) {
-      WARN("Trying to add item '%s' to non-existant tech '%s'.", value, name );
+      WARN(_("Trying to add item '%s' to non-existent tech '%s'."), value, name );
       return -1;
    }
 
@@ -505,7 +487,7 @@ int tech_addItem( const char *name, const char *value )
    if (ret)
       ret = tech_addItemCommodity( tech, value );
    if (ret) {
-      WARN("Generic item '%s' not found in tech group '%s'", value, name );
+      WARN(_("Generic item '%s' not found in tech group '%s'"), value, name );
       return -1;
    }
 
@@ -529,7 +511,7 @@ int tech_addItemTech( tech_group_t *tech, const char *value )
    if (ret)
       ret = tech_addItemCommodity( tech, value );
    if (ret) {
-      WARN("Generic item '%s' not found in tech group", value );
+      WARN(_("Generic item '%s' not found in tech group"), value );
       return -1;
    }
 
@@ -555,13 +537,13 @@ int tech_rmItemTech( tech_group_t *tech, const char *value )
       }
    }
 
-   WARN("Item '%s' not found in tech group", value );
+   WARN(_("Item '%s' not found in tech group"), value );
    return -1;
 }
 
 
 /**
- * @Brief Removes a tech item.
+ * @brief Removes a tech item.
  */
 int tech_rmItem( const char *name, const char *value )
 {
@@ -572,7 +554,7 @@ int tech_rmItem( const char *name, const char *value )
    /* Get ID. */
    id = tech_getID( name);
    if (id < 0) {
-      WARN("Trying to remove item '%s' to non-existant tech '%s'.", value, name );
+      WARN(_("Trying to remove item '%s' to non-existent tech '%s'."), value, name );
       return -1;
    }
 
@@ -589,7 +571,7 @@ int tech_rmItem( const char *name, const char *value )
       }
    }
 
-   WARN("Item '%s' not found in tech group '%s'", value, name );
+   WARN(_("Item '%s' not found in tech group '%s'"), value, name );
    return -1;
 }
 

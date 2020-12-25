@@ -12,6 +12,9 @@
    <faction>FLF</faction>
    <cond>faction.playerStanding("FLF") &gt;= 80</cond>
   </avail>
+  <notes>
+   <campaign>Save the Frontier</campaign>
+  </notes>
  </mission>
  --]]
 --[[
@@ -33,9 +36,9 @@
 
 --]]
 
-require "numstring.lua"
-require "fleethelper.lua"
-require "dat/missions/flf/flf_common.lua"
+require "numstring"
+require "fleethelper"
+require "missions/flf/flf_common"
 
 -- Localization stuff
 title = {}

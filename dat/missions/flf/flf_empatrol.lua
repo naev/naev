@@ -9,6 +9,9 @@
    <faction>Frontier</faction>
    <cond>diff.isApplied("flf_vs_empire") and not diff.isApplied( "flf_dead" )</cond>
   </avail>
+  <notes>
+   <requires name="The Empire and the FLF are enemies"/>
+  </notes>
  </mission>
  --]]
 --[[
@@ -30,7 +33,7 @@
 
 --]]
 
-require "dat/missions/flf/flf_patrol.lua"
+require "missions/flf/flf_patrol"
 
 misn_title = {}
 misn_title[1] = _("FLF: Single Empire patrol in %s")

@@ -642,7 +642,7 @@
        - sirius_fyrra_f1.png
        - sirius_fyrra_f2.png
        - sirius_fyrra_m1.png
-- Layla Marchant, based on components by Nihilos:
+- The Diligent Circle, based on components by Nihilos:
    license: CC-by 3.0
    portraits:
      - dvaered:
@@ -971,7 +971,7 @@
    outfit:
      store:
        - brushedGUI.png
-- Layla Marchant, based on work by Scaatis:
+- The Diligent Circle, based on work by Scaatis:
    license: CC-by 3.0
    gui:
      brushed:
@@ -980,10 +980,14 @@
        - frame_planet_top.png
        - outfit.png
        - speedDouble.png
-- Layla Marchant, based on work from Vega Strike and work by Enigmatic:
+- The Diligent Circle, based on work from Vega Strike and work by Enigmatic:
    license: GPLv3
    map:
       - proteron.png
+- The Diligent Circle, based on work from Josh Combs:
+   license: CC-by-sa 3.0
+   map:
+     - nebula.png
 - Nikola Whallon <6.saturn.6@gmail.com>:
    license: GPLv3 / CC-by 3
    planet:
@@ -1019,8 +1023,6 @@
      - nebula31.png
      - nebula32.png
      - nebula33.png
-   map:
-     - nebula.png
 - Galileus:
    license: CC-by-sa 3.0
    loading:
@@ -1450,11 +1452,11 @@
    intro:
      - faster_than_light.png
      - first_steps_into_space.png
-- diligentcircle (based on work by Unnamed <https://opengameart.org/users/unnamed> and Ingo Ruhnke):
+- The Diligent Circle (based on work by Unnamed <https://opengameart.org/users/unnamed> and Ingo Ruhnke):
    license: GPLv3
    intro:
      - reign_of_daedris.png
-- diligentcircle (based on work by ShinyOgre <https://opengameart.org/users/shinyogre> and Vega Strike):
+- The Diligent Circle (based on work by ShinyOgre <https://opengameart.org/users/shinyogre> and Vega Strike):
    license: GPLv3
    intro:
      - questions.png
@@ -1466,6 +1468,10 @@
      - rarity_3.png
      - rarity_4.png
      - rarity_5.png
+- Edgar Simo-Serra \"bobbens\" (based on work by GNOME PROJECT):
+   license: CC-by-sa 3.0
+   overlays:
+     - active.png
 - Écrivain <https://opengameart.org/users/%C3%A9crivain>:
    license: CC0
    overlay:
@@ -1474,3 +1480,16 @@
    license: PD
    overlay:
      - portrait_exclamation.png
+- nenau (based on work from Vega Strike and Kinniken):
+   license: GPLv3+
+   map:
+     - dvaered.png
+     - frontier.png
+     - sirius.png
+     - soromid.png
+     - zalek.png
+- nenau:
+   license: GPLv3+
+   logo:
+     - miner_small.png
+     - miner_tiny.png

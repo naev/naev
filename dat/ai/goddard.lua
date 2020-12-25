@@ -1,5 +1,6 @@
-require("dat/ai/tpl/generic.lua")
-require("dat/ai/personality/patrol.lua")
+require("ai/tpl/generic")
+require("ai/personality/patrol")
+require "numstring"
 
 -- Settings
 mem.aggressive = true
@@ -27,8 +28,8 @@ function create ()
       standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
       if standing > 60 then mem.refuel = mem.refuel * 0.7 end
-      mem.refuel_msg = string.format( _("\"I could do you the favour of refueling for the price of %d credits.\""),
-            mem.refuel )
+      mem.refuel_msg = string.format( _("\"I could do you the favour of refueling for the price of %s.\""),
+            creditstring(mem.refuel) )
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system

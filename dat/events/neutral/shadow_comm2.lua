@@ -6,19 +6,17 @@
   <cond>system.cur():presence("hostile") &lt; 300 and player.misnDone("Shadow Vigil") and not (player.misnDone("Dark Shadow") or var.peek("darkshadow_active") == true)</cond>
   <flags>
   </flags>
+  <notes>
+   <done_misn name="Shadow Vigil"/>
+   <campaign>Shadow</campaign>
+  </notes>
  </event>
  --]]
 --[[
 -- Comm Event for the Shadow missions
 --]]
 
-require ("proximity.lua") 
-
--- localization stuff, translators would work here
-lang = naev.lang()
-if lang == "es" then
-else -- default english
-end
+require ("proximity") 
 
 function create ()
     hailie = hook.timer(20000, "hailme")

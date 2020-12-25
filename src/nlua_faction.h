@@ -7,8 +7,6 @@
 #  define NLUA_FACTION_H
 
 
-#include <lua.h>
-
 #include "nlua.h"
 
 

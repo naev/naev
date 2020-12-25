@@ -1,3 +1,13 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
+/**
+ * @file shiplog.c
+ *
+ * @brief Handles a log/journal of the player's playthrough.
+ */
+
 #include "shiplog.h"
 /* Limit the journey log to 6 entries */
 
@@ -23,8 +33,8 @@ int shiplog_create(const char *idstr, const char *logname, const char *type, con
       shipLog = calloc( sizeof(ShipLog), 1);
    }
    indx = shipLog->nlogs;
-  
-   id = -1;
+
+   id = LOG_ID_INVALID;
    if ( overwrite == 1 ) {
       /* check to see whether this idstr or logname and type has been created before, and if so, remove all entries of that logid */
       if ( idstr != NULL ) {
@@ -63,7 +73,7 @@ int shiplog_create(const char *idstr, const char *logname, const char *type, con
    } else if ( overwrite == 2 ) {
       /* check to see whether this type has been created before, and if so, remove all entries. */
       int found = 0;
-      id = -1;
+      id = LOG_ID_INVALID;
       for ( i=0; i<shipLog->nlogs; i++ ) {
          if ( ( ( idstr != NULL ) && ( shipLog->idstrList[i] != NULL )
                   && ( strcmp(idstr, shipLog->idstrList[i]) == 0 ) )
@@ -85,11 +95,9 @@ int shiplog_create(const char *idstr, const char *logname, const char *type, con
                shipLog->nameList[i] = strdup(logname);
                shipLog->maxLen[i] = maxLen;
             } else { /* a previous entry of this type as been found, so just invalidate this logid. */
-               shipLog->idList[i] = -1;
-               if ( shipLog->idstrList[i] != NULL ) {
-                  free( shipLog->idstrList[i] );
-                  shipLog->idstrList[i] = NULL;
-               }
+               shipLog->idList[i] = LOG_ID_INVALID;
+               free( shipLog->idstrList[i] );
+               shipLog->idstrList[i] = NULL;
             }
          }
       }
@@ -106,7 +114,7 @@ int shiplog_create(const char *idstr, const char *logname, const char *type, con
             break;
          }
       }
-   }  
+   }
    if ( indx == shipLog->nlogs) {
       /* create a new id for this log */
       id = -1;
@@ -131,7 +139,6 @@ int shiplog_create(const char *idstr, const char *logname, const char *type, con
          shipLog->idstrList[indx] = NULL;
       else
          shipLog->idstrList[indx] = strdup(idstr);
-            
    }
    return id;
 }
@@ -155,7 +162,8 @@ int shiplog_append(const char *idstr, const char *msg)
    }
    if ( i==shipLog->nlogs ) {
       WARN(_("Warning - log not found: creating it"));
-      id = shiplog_create( idstr, _("Please report this log as an error to github.com/naev"), idstr, 0, 0 );
+      id = shiplog_create( idstr, _( "Please report this log as an error to github.com/naev" ),
+                           idstr != NULL ? idstr : "", 0, 0 );
    } else {
       id = shipLog->idList[i];
    }
@@ -236,7 +244,7 @@ int shiplog_appendByID(const int logid,const char *msg)
 /**
  * @brief Deletes a log (e.g. a cancelled mission may wish to do this, or the user might).
  *
- * @param logid of the log to remove
+ * @param logid of the log to remove, or LOG_ID_ALL
  */
 void shiplog_delete(const int logid)
 {
@@ -246,12 +254,12 @@ void shiplog_delete(const int logid)
    if (shipLog == NULL)
       return;
 
-   if ( logid < 0 )
+   if ( logid < 0 && logid != LOG_ID_ALL )
       return;
 
    e = shipLog->head;
    while ( e != NULL ) {
-      if ( e->id == logid ) {
+      if ( logid == LOG_ID_ALL || logid == e->id ) {
          if ( e->prev != NULL )
             ((ShipLogEntry*)e->prev)->next = e->next;
          if ( e->next != NULL )
@@ -270,17 +278,16 @@ void shiplog_delete(const int logid)
    }
 
    for ( i=0; i<shipLog->nlogs; i++) {
-      if ( shipLog->idList[i] == logid ) {
-         shipLog->idList[i] = -1;
+      if ( logid == LOG_ID_ALL || logid == shipLog->idList[i] ) {
+         shipLog->idList[i] = LOG_ID_INVALID;
          free(shipLog->nameList[i]);
          shipLog->nameList[i] = NULL;
          free(shipLog->typeList[i]);
          shipLog->typeList[i] = NULL;
-         if ( shipLog->idstrList[i] != NULL ) {
-            free ( shipLog->idstrList[i] );
-            shipLog->idstrList[i] = NULL;
-         }
+         free ( shipLog->idstrList[i] );
+         shipLog->idstrList[i] = NULL;
          shipLog->maxLen[i]=0;
+         shipLog->removeAfter[i] = 0;
       }
    }
 }
@@ -332,27 +339,16 @@ void shiplog_deleteType(const char *type)
  */
 void shiplog_clear(void)
 {
-   ShipLogEntry *e, *tmp;
    if ( shipLog == NULL ) {
       shipLog = calloc( sizeof(ShipLog), 1);
    }
-   e=shipLog->head;
-   while ( e != NULL ) {
-      free( e->msg );
-      tmp = e;
-      e = e->next;
-      free ( tmp );
-   }
-   if ( shipLog->idList )
-      free ( shipLog->idList );
-   if ( shipLog->nameList )
-      free ( shipLog->nameList );
-   if ( shipLog->typeList )
-      free ( shipLog->typeList );
-   if ( shipLog->idstrList )
-      free ( shipLog->idstrList );
-   if ( shipLog->maxLen )
-      free ( shipLog->maxLen );
+   shiplog_delete( LOG_ID_ALL );
+   free( shipLog->idList );
+   free( shipLog->nameList );
+   free( shipLog->typeList );
+   free( shipLog->idstrList );
+   free( shipLog->maxLen );
+   free( shipLog->removeAfter );
    memset(shipLog, 0, sizeof(ShipLog));
 }
 
@@ -415,24 +411,16 @@ int shiplog_load( xmlNodePtr parent )
 {
    xmlNodePtr node, cur;
    ShipLogEntry *e;
-   char *str;
    int id,i;
    shiplog_clear();
-   
+
    node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node,"shiplog")) {
          cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur, "entry")) {
-               xmlr_attr(cur, "id", str);
-               if (str) {
-                  id = atoi(str);
-                  free(str);
-               } else {
-                  id = 0;
-                  WARN(_("Warning - no ID in shipLog entry\n"));
-               }
+               xmlr_attr_int(cur, "id", id);
                /* check this ID isn't already present */
                for ( i=0; i<shipLog->nlogs; i++ ) {
                   if ( shipLog->idList[i] == id )
@@ -447,29 +435,13 @@ int shiplog_load( xmlNodePtr parent )
                   shipLog->idstrList = realloc( shipLog->idstrList, sizeof(char*) * shipLog->nlogs);
                   shipLog->maxLen = realloc( shipLog->maxLen, sizeof(int) * shipLog->nlogs);
                   shipLog->idList[shipLog->nlogs-1] = id;
-                  shipLog->removeAfter[shipLog->nlogs-1] = 0;
-                  shipLog->idstrList[shipLog->nlogs-1] = NULL;
-                  shipLog->maxLen[shipLog->nlogs-1] = 0;
-                  xmlr_attr(cur, "t", str);
-                  if (str) {
-                     shipLog->typeList[shipLog->nlogs-1] = str;
-                  } else {
+                  xmlr_attr_strd( cur, "t", shipLog->typeList[shipLog->nlogs-1] );
+                  xmlr_attr_long( cur, "r", shipLog->removeAfter[shipLog->nlogs-1] );
+                  xmlr_attr_strd( cur, "s", shipLog->idstrList[shipLog->nlogs-1] );
+                  xmlr_attr_int( cur, "m", shipLog->maxLen[shipLog->nlogs-1] );
+                  if (shipLog->typeList[shipLog->nlogs-1] == NULL) {
                      shipLog->typeList[shipLog->nlogs-1] = strdup("No type");
                      WARN(_("No ID in shipLog entry"));
-                  }
-                  xmlr_attr(cur, "r", str);
-                  if (str) {
-                     shipLog->removeAfter[shipLog->nlogs-1] = atol(str);
-                     free(str);
-                  }
-                  xmlr_attr(cur, "s", str);
-                  if (str) {
-                     shipLog->idstrList[shipLog->nlogs-1] = str;
-                  }
-                  xmlr_attr(cur, "m", str);
-                  if (str) {
-                     shipLog->maxLen[shipLog->nlogs-1] = atoi(str);
-                     free(str);
                   }
                   shipLog->nameList[shipLog->nlogs-1] = strdup(xml_raw(cur));
                }
@@ -482,21 +454,9 @@ int shiplog_load( xmlNodePtr parent )
                else
                   shipLog->tail->next = e;
                shipLog->tail = e;
-               
-               xmlr_attr(cur, "id", str);
-               if (str) {
-                  e->id = atoi(str);
-                  free(str);
-               } else {
-                  WARN(_("Warning - no ID for shipLog entry"));
-               }
-               xmlr_attr(cur, "t", str);
-               if (str) {
-                  e->time = atol(str);
-                  free(str);
-               } else {
-                  WARN(_("Warning - no time for shipLog entry"));
-               }
+
+               xmlr_attr_int( cur, "id", e->id );
+               xmlr_attr_long( cur, "t", e->time );
                e->msg = strdup(xml_raw(cur));
             }
          } while (xml_nextNode(cur));
@@ -512,13 +472,13 @@ void shiplog_listTypes( int *ntypes, char ***logTypes, int includeAll )
    ntime_t t = ntime_get();
 
    if ( includeAll ) {
-      types = malloc(sizeof(char**));
+      types    = malloc( sizeof( char * ) );
       n = 1;
-      types[0] = strdup("All");
+      types[0] = strdup( _("All") );
    }
    for ( i=0; i<shipLog->nlogs; i++ ) {
       if ( shipLog->removeAfter[i] > 0 && shipLog->removeAfter[i]<t ) {
-         /* log expired, so remove (which sets id to -1) */
+         /* log expired, so remove (which sets id to LOG_ID_INVALID) */
          shiplog_delete(shipLog->idList[i]);
       }
       if ( shipLog->idList[i] >= 0 ) {
@@ -529,7 +489,7 @@ void shiplog_listTypes( int *ntypes, char ***logTypes, int includeAll )
          }
          if ( j==n ) {/*This log type not found, so add.*/
             n++;
-            types = realloc(types, sizeof(char**) * n);
+            types      = realloc( types, sizeof( char * ) * n );
             types[n-1] = strdup(shipLog->typeList[i]);
          }
       }
@@ -538,36 +498,42 @@ void shiplog_listTypes( int *ntypes, char ***logTypes, int includeAll )
    *logTypes=types;
 }
 
-void shiplog_listLogsOfType( char *type, int *nlogs, char ***logsOut, int **logIDs, int includeAll )
+/**
+ * @brief Lists matching logs (which haven't expired via "removeAfter") into the provided arrays.
+ *
+ *    @param type The log-type to match (or NULL to match any type).
+ *    @param[out] nlogs Number of logs emitted.
+ *    @param[out] logsOut Matching log-names. Will be reallocated as needed. Emitted strings must be freed.
+ *    @param[out] logIDs Matching log ID lists. Will be reallocated as needed. Emitted lists are owned by the shipLog.
+ *    @param includeAll Whether to include the special "All" log.
+ */
+
+void shiplog_listLogsOfType( const char *type, int *nlogs, char ***logsOut, int **logIDs, int includeAll )
 {
-   int i, n = 0, all = 0;
-   char **logs = NULL;
-   int *logid = NULL;
+   int i, n;
+   char **logs;
+   int *logid;
    ntime_t t = ntime_get();
 
+   n = !!includeAll;
+   logs = realloc(*logsOut, sizeof(char*) * n);
+   logid = realloc(*logIDs, sizeof(int) * n);
    if ( includeAll ) {
-      logs = malloc(sizeof(char**));
-      n=1;
-      logs[0] = strdup( "All" );
-      logid = malloc(sizeof(int*));
-      logid[0] = -1;
-   }
-   if ( strcmp(type, "All") == 0 ) {
-      /*Match all types*/
-      all = 1;
+      logs[0] = strdup( _("All") );
+      logid[0] = LOG_ID_ALL;
    }
    if ( shipLog->nlogs > 0 ) {
       for ( i=shipLog->nlogs-1; i>=0; i-- ) {
          if ( shipLog->removeAfter[i] > 0 && shipLog->removeAfter[i]<t ) {
-            /* log expired, so remove (which sets id to -1) */
+            /* log expired, so remove (which sets id to LOG_ID_INVALID) */
             shiplog_delete(shipLog->idList[i]);
          }
          if ( ( shipLog->idList[i] >= 0 )
-               && ( all || ( strcmp(type, shipLog->typeList[i]) == 0 ) ) ) {
+               && ( (type == NULL) || ( strcmp(type, shipLog->typeList[i]) == 0 ) ) ) {
             n++;
-            logs = realloc(logs, sizeof(char**) * n);
+            logs       = realloc( logs, sizeof( char * ) * n );
             logs[n-1] = strdup(shipLog->nameList[i]);
-            logid = realloc(logid, sizeof(int*) * n);
+            logid      = realloc( logid, sizeof( int ) * n );
             logid[n-1] = shipLog->idList[i];
          }
       }
@@ -579,13 +545,8 @@ void shiplog_listLogsOfType( char *type, int *nlogs, char ***logsOut, int **logI
 
 int shiplog_getIdOfLogOfType( const char *type, int selectedLog )
 {
-   int i, all = 0, n = 0;
+   int i, n = 0;
    ntime_t t = ntime_get();
-
-   if ( strcmp(type, "All") == 0 ) {
-      /*Match all types*/
-      all = 1;
-   }
 
    for ( i=shipLog->nlogs-1; i>=0; i-- ) {
       if ( (shipLog->removeAfter[i] > 0) && (shipLog->removeAfter[i] < t) ) {
@@ -593,7 +554,7 @@ int shiplog_getIdOfLogOfType( const char *type, int selectedLog )
          shiplog_delete(shipLog->idList[i]);
       }
       if ( ( shipLog->idList[i] >= 0 )
-            && (all || ( strcmp(type, shipLog->typeList[i]) == 0 ) ) ) {
+            && ((type == NULL) || ( strcmp(type, shipLog->typeList[i]) == 0 ) ) ) {
          if ( n == selectedLog )
             break;
          n++;
@@ -602,7 +563,6 @@ int shiplog_getIdOfLogOfType( const char *type, int selectedLog )
    if ( i>=0 )
       i = shipLog->idList[i];
    return i; /* -1 if not found */
-   
 }
 
 /**
@@ -631,9 +591,9 @@ ShipLogEntry *shiplog_removeEntry( ShipLogEntry *e )
 }
 
 /**
- * @brief Get all log entries matching logid, or if logid==-1, matching type, or if type==NULL, all.
+ * @brief Get all log entries matching logid, or if logid==LOG_ID_ALL, matching type, or if type==NULL, all.
  */
-void shiplog_listLog( int logid, char *type,int *nentries, char ***logentries, int incempty )
+void shiplog_listLog( int logid, const char *type,int *nentries, char ***logentries, int incempty )
 {
    int i,n = 0,all = 0;
    char **entries = NULL;
@@ -641,13 +601,12 @@ void shiplog_listLog( int logid, char *type,int *nentries, char ***logentries, i
    char buf[5000];
    int pos;
    e = shipLog->head;
-   if ( ( logid == -1 ) && ( ( strcmp(type, "All") == 0 ) ) ) {
-      /* Match all types if logid == -1 */
+   if ( logid == LOG_ID_ALL ) {
       all = 1;
    }
    while ( e != NULL ) {
       use = NULL;
-      if ( logid == -1 ) {
+      if ( logid == LOG_ID_ALL ) {
          if ( all ) { /* add the log */
             if ( e->id >= 0)
                use=e;
@@ -675,18 +634,18 @@ void shiplog_listLog( int logid, char *type,int *nentries, char ***logentries, i
          pos += nsnprintf(&buf[pos], 5000-pos, ":  %s", use->msg);
          entries[n-1] = strdup(buf);
       }
-      
+
       e = e -> next;
    }
+   (void)pos;
    if ( ( n == 0 ) && ( incempty != 0 ) ) {
       /*empty list, so add "Empty" */
       n = 1;
       entries = realloc(entries,sizeof(char*));
-      entries[0] = strdup("Empty");
+      entries[0] = strdup(_("Empty"));
    }
    *logentries = entries;
    *nentries = n;
-   
 }
 
 /**

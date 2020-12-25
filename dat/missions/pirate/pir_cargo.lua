@@ -8,6 +8,9 @@
    <location>Computer</location>
    <faction>Pirate</faction>
   </avail>
+  <notes>
+   <tier>1</tier>
+  </notes>
  </mission>
  --]]
 --[[
@@ -18,17 +21,11 @@
 
 ]]--
 
-require "cargo_common.lua"
-require "numstring.lua"
+require "cargo_common"
+require "numstring"
 
 
 misn_desc = _("Pirate cargo transport of contraband goods to %s in the %s system.")
-
-misn_details = _([[
-Cargo: %s (%s)
-Jumps: %d
-Travel distance: %d
-Time limit: %s]])
 
 msg_timeup = _("MISSION FAILED: You have failed to deliver the goods on time!")
 
@@ -68,11 +65,11 @@ function create()
 
    -- We’re redefining the cargo
    local cargoes = {
-      "Unmarked Boxes",
-      "Weapons",
-      "Drugs",
-      "Exotic Animals",
-      "Radioactive Materials",
+      N_("Unmarked Boxes"),
+      N_("Weapons"),
+      N_("Drugs"),
+      N_("Exotic Animals"),
+      N_("Radioactive Materials"),
    }
    cargo = cargoes[rnd.rnd(1, #cargoes)]
 
@@ -89,7 +86,7 @@ function create()
    end
    
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
-   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
+   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
    amount    = rnd.rnd(10 + 3 * tier, 20 + 4 * tier) 
    jumpreward = 1500
    distreward = 0.30
@@ -97,15 +94,10 @@ function create()
    
    misn.setTitle( string.format(
       _("PIRACY: Illegal Cargo transport (%s of %s)"), tonnestring(amount),
-      cargo ) )
+      _(cargo) ) )
    misn.markerAdd(destsys, "computer")
-   misn.setDesc(
-      misn_desc:format( destplanet:name(), destsys:name() ) .. "\n\n"
-      .. misn_details:format(
-         cargo, tonnestring(amount), numjumps, traveldist,
-         (timelimit - time.get()):str() ) )
+   cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit );
    misn.setReward( creditstring(reward) )
-
 end
 
 -- Mission is accepted
@@ -132,7 +124,7 @@ function accept()
    carg_id = misn.cargoAdd( cargo, amount )
    tk.msg( _("Mission Accepted"), string.format(
       _("%s of %s are loaded onto your ship."), tonnestring(amount),
-      cargo ) )
+      _(cargo) ) )
    local osd_msg = {}
    osd_msg[1] = osd_msg1:format(
       destplanet:name(), destsys:name(), timelimit:str(),
@@ -146,7 +138,7 @@ end
 function land()
    if planet.cur() == destplanet then
          tk.msg( _("Successful Delivery"), string.format(
-            _("The containers of %s are unloaded at the docks."), cargo ) )
+            _("The containers of %s are unloaded at the docks."), _(cargo) ) )
       player.pay(reward)
       n = var.peek("ps_misn")
       if n ~= nil then

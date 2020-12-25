@@ -12,15 +12,19 @@
    <location>Bar</location>
    <planet>The Wringer</planet>
   </avail>
+  <notes>
+   <campaign>Heretic</campaign>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --[[misn title - the patrol]]
 --[[in this mission, the player will be guarding the "high command" of the
-   nasin, the wringer/suna. house sirius is sending in recon parties.
-   the players job is to take out any and all sirius in the system.]]
+   nasin, The Wringer / Suna. House Sirius is sending in recon parties.
+   The player's job is to take out any and all Sirius in the system.]]
 
-require "numstring.lua"
-require "dat/missions/sirius/common.lua"
+require "numstring"
+require "missions/sirius/common"
 
 
 bmsg = {}
@@ -33,7 +37,7 @@ bmsg[3] = _([["Gah! I should have known you would be so spineless! Get out of my
 
 --message at the end
 emsg_1 = _([[You land, having defeated the small recon force, and find Draga with a smile on his face. "Great job!" he says. "I see you really are what you're made out to be and not just some overblown merchant!" He hands you a credit chip. "Thank you for your services. Meet us in the bar again sometime. We will certainly have another mission for you."]])
---mission osd
+--mission OSD
 osd = {}
 osd[1] = _("Destroy the Sirius patrol")
 osd[2] = _("Land on %s")
@@ -42,15 +46,14 @@ misn_title = _("The Patrol")
 npc_name = _("An Imposing Man")
 bar_desc = _("This man leans against the bar while looking right at you.")
 chronic_failure = _([[Draga's face goes red with fury when he sees you. For a moment you start to worry he might beat you into a pulp for abandoning your mission, but he moves along, fuming. You breathe a sigh of release; you may have angered Nasin, but at least you're still alive.]])
-out_sys_failure_msg = _([[As you abandon your mission, you recieve a message from Draga saying that Nasin has no need for deserters. You hope you made the right decision.]])
+out_sys_failure_msg = _([[As you abandon your mission, you receive a message from Draga saying that Nasin has no need for deserters. You hope you made the right decision.]])
 misn_desc = _("You have been hired once again by Nasin, this time to destroy a Sirius patrol that has entered %s.")
-misn_reward = _("%s credits")
 
 log_text = _([[You eliminated a Sirian patrol for Draga, high commander of Nasin's operations. He said that Nasin will have another mission for you if you meet him in the bar on The Wringer again.]])
 
 
 function create()
-   --this mission does make one system claim, in suna.
+   --this mission does make one system claim, in Suna.
    --initialize the variables
    homeasset, homesys = planet.cur()
    if not misn.claim(homesys) then
@@ -67,7 +70,7 @@ function create()
    deathcount = 0
    --set the mission stuff
    misn.setTitle(misn_title)
-   misn.setReward(misn_reward:format(numstring(reward)))
+   misn.setReward(creditstring(reward))
    misn.setNPC(npc_name, "sirius/unique/draga")
    misn.setDesc(bar_desc)
 
@@ -97,13 +100,13 @@ end
 
 function takeoff()
    pilot.clear()
-   pilot.toggleSpawn("Sirius",false) --the only sirius i want in the system currently is the recon force
+   pilot.toggleSpawn("Sirius",false) --the only Sirius i want in the system currently is the recon force
    recon = pilot.add("Sirius Recon Force",nil,system.get("Herakin"))
    attackers = pilot.add("Nasin Sml Attack Fleet",nil,homeasset) --a little assistance
    n_recon = #recon --using a deathcounter to track success
    for i,p in ipairs(recon) do
       p:setHilight(true)
-      p:setNoJump(true) --dont want the enemy to jump or land, which might happen if the player is slow, or neutral to Sirius.
+      p:setNoJump(true) --don't want the enemy to jump or land, which might happen if the player is slow, or neutral to Sirius.
       p:setNoLand(true)
       p:setHostile(true)
    end

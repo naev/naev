@@ -12,6 +12,10 @@
    <location>Bar</location>
    <planet>Omega Station</planet>
   </avail>
+  <notes>
+   <provides name="The Collective is dead and no one will miss them"/>
+   <campaign>Collective</campaign>
+  </notes>
  </mission>
  --]]
 --[[
@@ -25,9 +29,9 @@
 
 ]]--
 
-require "proximity.lua"
-require "fleethelper.lua"
-require "dat/missions/empire/common.lua"
+require "proximity"
+require "fleethelper"
+require "missions/empire/common"
 
 bar_desc = _("You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them.")
 misn_title = _("Operation Cold Metal")

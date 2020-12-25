@@ -4,12 +4,12 @@
   <typename>Bioship Shell</typename>
   <slot prop="bio_hull">structure</slot>
   <size>large</size>
+  <rarity>2</rarity>
   <priority>7</priority>
   <mass>1950</mass>
   <price>1450000</price>
-  <description>The shell is a Soromid bioship's natural protection, equivalent to hulls of synthetic ships. The shell is responsible both for protecting the organism's internal organs and for creating camoflauge to reduce the risk of being detected by hostiles. This shell has reached stage X, its full potential.</description>
+  <description>The shell is a Soromid bioship's natural protection, equivalent to hulls of synthetic ships. The shell is responsible both for protecting the organism's internal organs and for creating camouflage to reduce the risk of being detected by hostiles. This shell has reached stage X, its full potential.</description>
   <gfx_store>organic_hull_x</gfx_store>
-  <rarity>5</rarity>
  </general>
  <specific type="modification">
   <cargo>90</cargo>

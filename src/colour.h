@@ -8,7 +8,9 @@
 #  define COLOUR_H
 
 
+/** @cond */
 #include "glad.h"
+/** @endcond */
 
 
 /**
@@ -34,16 +36,22 @@ extern const glColour cGrey80;
 extern const glColour cGrey70;
 extern const glColour cGrey60;
 extern const glColour cGrey50;
+extern const glColour cGrey45;
 extern const glColour cGrey40;
+extern const glColour cGrey35;
 extern const glColour cGrey30;
+extern const glColour cGrey25;
 extern const glColour cGrey20;
+extern const glColour cGrey15;
 extern const glColour cGrey10;
 
+extern const glColour cDarkGreen;
 extern const glColour cGreen;
 extern const glColour cPrimeGreen;
 extern const glColour cDarkRed;
 extern const glColour cRed;
 extern const glColour cPrimeRed;
+extern const glColour cBrightRed;
 extern const glColour cOrange;
 extern const glColour cYellow;
 extern const glColour cMidnightBlue;
@@ -62,21 +70,15 @@ extern const glColour cAqua;
 /*
  * game specific
  */
-/*
- * game specific
- */
 extern const glColour cBlackHilight;
 /* toolkit */
 extern const glColour cHilight;
 /* objects */
 extern const glColour cInert;
-extern const glColour cMapInert;
 extern const glColour cNeutral;
-extern const glColour cMapNeutral;
 extern const glColour cFriend;
 extern const glColour cHostile;
 extern const glColour cRestricted;
-extern const glColour cDRestricted;
 /* radar */
 extern const glColour cRadar_player;
 extern const glColour cRadar_tPilot;
@@ -98,8 +100,11 @@ extern const glColour cFontWhite;
 extern const glColour cFontGrey;
 extern const glColour cFontPurple;
 
-const glColour* col_fromName( const char* name );
 
+/*
+ * Misc functions.
+ */
+const glColour* col_fromName( const char* name );
 
 /*
  * Colour space conversion routines.

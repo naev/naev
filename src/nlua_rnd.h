@@ -7,8 +7,6 @@
 #  define NLUA_RND_H
 
 
-#include <lua.h>
-
 #include "nlua.h"
 
 

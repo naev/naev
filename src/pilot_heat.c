@@ -10,11 +10,13 @@
  */
 
 
-#include "pilot_heat.h"
+/** @cond */
+#include <math.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <math.h>
+#include "pilot_heat.h"
 
 #include "log.h"
 
@@ -204,7 +206,7 @@ double pilot_heatUpdateSlot( Pilot *p, PilotOutfitSlot *o, double dt )
  *  To being "space temperature"
  *
  *    @param p Pilot to update.
- *    @param Q Heat energy moved from slots.
+ *    @param Q_cond Heat energy moved from slots.
  *    @param dt Delta tick.
  */
 void pilot_heatUpdateShip( Pilot *p, double Q_cond, double dt )
@@ -239,7 +241,6 @@ double pilot_heatEfficiencyMod( double T, double Tb, double Tc )
  * @brief Overrides the usual heat model during active cooldown.
  *
  *    @param p  Pilot to update.
- *    @param dt Delta tick.
  */
 void pilot_heatUpdateCooldown( Pilot *p )
 {

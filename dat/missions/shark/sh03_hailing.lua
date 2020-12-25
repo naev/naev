@@ -11,6 +11,9 @@
    <location>Bar</location>
    <planet>Darkshed</planet>
   </avail>
+  <notes>
+   <campaign>Nexus show their teeth</campaign>
+  </notes>
  </mission>
  --]]
 --[[
@@ -24,8 +27,8 @@
 
 --]]
 
-require "numstring.lua"
-require "dat/missions/shark/common.lua"
+require "numstring"
+require "missions/shark/common"
 
 
 title = {}
@@ -40,13 +43,13 @@ text[1] = _([["Hello there, nice to meet you again! According to the information
     "Can I count on you to do this for me?"]])
 
 refusetitle = _("Sorry, not interested")
-refusetext = _([["Ok, come back when you are interested."]])
+refusetext = _([["OK, come back when you are interested."]])
 
 title[2] = _("Time to go")
 text[2] = _([["Fantastic! I am known as Donald Ulnish to the Council member. Good luck."]])
 
 title[3] = _("Good job")
-text[3] = _([[Smith seems to relax as you tell him that everything went according to plan. "Fantastic! I have another mission for you; meet me in the bar when you are ready to bring me to %s in the %s system.]])
+text[3] = _([[Smith seems to relax as you tell him that everything went according to plan. "Fantastic! I have another mission for you; meet me in the bar when you are ready to bring me to %s in the %s system."]])
 
 title[4] = _("Time to go back to %s")
 text[4] = _([[The captain of the Hawking answers you. When you say that you have a message from Donald Ulnish, he redirects you to one of his officers who takes the message. Now, back to %s.]])
@@ -54,8 +57,7 @@ text[4] = _([[The captain of the Hawking answers you. When you say that you have
 
 -- Mission details
 misn_title = _("Invitation")
-misn_reward = _("%s credits")
-misn_desc = _("Nexus Shipyard asks you to help initiate a secret meeting")
+misn_desc = _("Nexus Shipyards asks you to help initiate a secret meeting")
 
 -- NPC
 npc_desc[1] = _("Arnold Smith")
@@ -72,12 +74,12 @@ log_text = _([[You helped Nexus Shipyards initiate a secret meeting with a membe
 function create ()
 
    --Change here to change the planets and the systems
-   mispla,missys = planet.getLandable(faction.get("Frontier"))  -- mispla will be usefull to locate the Hawking
+   mispla,missys = planet.getLandable(faction.get("Frontier"))  -- mispla will be useful to locate the Hawking
    pplname = "Darkshed"
    psyname = "Alteris"
    paysys = system.get(psyname)
    paypla = planet.get(pplname)
-   nextpla, nextsys = planet.get("Curie") -- This should be the same as the planet used in sh04_meeting.lua!
+   nextpla, nextsys = planet.get("Curie") -- This should be the same as the planet used in sh04_meeting!
 
    if not misn.claim(missys) then
       misn.finish(false)
@@ -100,7 +102,7 @@ function accept()
       osd_msg[2] = osd_msg[2]:format(pplname, psyname)
 
       misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward)))
+      misn.setReward(creditstring(reward))
       misn.setDesc(misn_desc)
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)

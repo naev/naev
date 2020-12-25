@@ -8,24 +8,27 @@
  * @brief Handles the Lua ship bindings.
  */
 
-#include "nlua_ship.h"
-#include "slots.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_ship.h"
+
+#include "log.h"
 #include "nlua_outfit.h"
 #include "nlua_tex.h"
-#include "log.h"
+#include "nluadef.h"
 #include "rng.h"
+#include "slots.h"
 
 
 /* Ship metatable methods. */
 static int shipL_eq( lua_State *L );
 static int shipL_get( lua_State *L );
 static int shipL_name( lua_State *L );
+static int shipL_nameRaw( lua_State *L );
 static int shipL_baseType( lua_State *L );
 static int shipL_class( lua_State *L );
 static int shipL_slots( lua_State *L );
@@ -39,6 +42,7 @@ static const luaL_Reg shipL_methods[] = {
    { "__eq", shipL_eq },
    { "get", shipL_get },
    { "name", shipL_name },
+   { "nameRaw", shipL_nameRaw },
    { "baseType", shipL_baseType },
    { "class", shipL_class },
    { "slots", shipL_slots },
@@ -197,7 +201,7 @@ static int shipL_eq( lua_State *L )
  *
  * @usage s = ship.get( "Hyena" ) -- Gets the hyena
  *
- *    @luatparam string s Name of the ship to get.
+ *    @luatparam string s Raw (untranslated) name of the ship to get.
  *    @luatreturn Ship The ship matching name or nil if error.
  * @luafunc get( s )
  */
@@ -220,16 +224,48 @@ static int shipL_get( lua_State *L )
    lua_pushship(L, ship);
    return 1;
 }
+
+
 /**
- * @brief Gets the name of the ship.
+ * @brief Gets the translated name of the ship.
  *
- * @usage shipname = s:name()
+ * This translated name should be used for display purposes (e.g.
+ * messages). It cannot be used as an identifier for the ship; for
+ * that, use ship.nameRaw() instead.
  *
- *    @luatparam Ship s Ship to get ship name.
- *    @luatreturn string The name of the ship.
+ * @usage shipname = s:name() -- Equivalent to `_(s:nameRaw())`
+ *
+ *    @luatparam Ship s Ship to get the translated name of.
+ *    @luatreturn string The translated name of the ship.
  * @luafunc name( s )
  */
 static int shipL_name( lua_State *L )
+{
+   Ship *s;
+
+   /* Get the ship. */
+   s  = luaL_validship(L,1);
+
+   /** Return the ship name. */
+   lua_pushstring(L, _(s->name));
+   return 1;
+}
+
+
+/**
+ * @brief Gets the raw (untranslated) name of the ship.
+ *
+ * This untranslated name should be used for identification purposes
+ * (e.g. can be passed to ship.get()). It should not be used directly
+ * for display purposes without manually translating it with _().
+ *
+ * @usage shipname = s:nameRaw()
+ *
+ *    @luatparam Ship s Ship to get the raw name of.
+ *    @luatreturn string The raw name of the ship.
+ * @luafunc nameRaw( s )
+ */
+static int shipL_nameRaw( lua_State *L )
 {
    Ship *s;
 
@@ -243,14 +279,14 @@ static int shipL_name( lua_State *L )
 
 
 /**
- * @brief Gets the ship's base type.
+ * @brief Gets the raw (untranslated) name of the ship's base type.
  *
  * For example "Empire Lancelot" and "Lancelot" are both of the base type "Lancelot".
  *
  * @usage type = s:baseType()
  *
- *    @luatparam Ship s Ship to get the ship base type.
- *    @luatreturn string The name of the ship base type.
+ *    @luatparam Ship s Ship to get the ship base type of.
+ *    @luatreturn string The raw name of the ship base type.
  * @luafunc baseType( s )
  */
 static int shipL_baseType( lua_State *L )
@@ -266,12 +302,12 @@ static int shipL_baseType( lua_State *L )
 
 
 /**
- * @brief Gets the name of the ship's class.
+ * @brief Gets the raw (untranslated) name of the ship's class.
  *
  * @usage shipclass = s:class()
  *
- *    @luatparam Ship s Ship to get ship class name.
- *    @luatreturn string The name of the ship's class.
+ *    @luatparam Ship s Ship to get ship class name of.
+ *    @luatreturn string The raw name of the ship's class.
  * @luafunc class( s )
  */
 static int shipL_class( lua_State *L )
@@ -318,7 +354,8 @@ static int shipL_slots( lua_State *L )
  * @usage for i, v in ipairs( ship.getSlots( ship.get("Llama") ) ) do print(v["type"]) end
  *
  *    @luaparam s Ship to get slots of
- *    @luareturn A table of tables with slot properties string "size", string "type", and string "property"
+ *    @luareturn A table of tables with slot properties string "size", string "type", and string "property".
+ *               (Strings are English.)
  * @luafunc getSlots( s )
  */
 static int shipL_getSlots( lua_State *L )

@@ -6,6 +6,9 @@
   <flags>
    <unique />
   </flags>
+  <notes>
+   <tier>5</tier>
+  </notes>
  </event>
  --]]
 --[[

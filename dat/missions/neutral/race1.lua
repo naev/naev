@@ -19,7 +19,7 @@
 --
 --]]
 
-require "numstring.lua"
+require "numstring"
 
 
 text = {}
@@ -28,10 +28,10 @@ ftitle = {}
 ftext = {}
 
 title[1] = _("Looking for a 4th")
-text[1] = _([["Hiya there! We're having a race around this system system soon and need a 4th person to participate. You have to bring a Yacht class ship, and there's a prize of %s credits if you win. Interested?"]])
+text[1] = _([["Hiya there! We're having a race around this system system soon and need a 4th person to participate. You have to bring a Yacht class ship, and there's a prize of %s if you win. Interested?"]])
 
 title[2] = _("Awesome")
-text[2] = _([["Thats great! Here's how it works: We will all be in a Yacht class ship. Once we take off from %s, there will be a countdown, and then we will proceed to the various checkpoints in order, boarding them before going to the next checkpoint. After the last checkpoint has been boarded, head back to %s and land. Let's have some fun!"]])
+text[2] = _([["That's great! Here's how it works: We will all be in a Yacht class ship. Once we take off from %s, there will be a countdown, and then we will proceed to the various checkpoints in order, boarding them before going to the next checkpoint. After the last checkpoint has been boarded, head back to %s and land. Let's have some fun!"]])
 
 title[3] = _("Checkpoint %s reached")
 text[3] = _("Proceed to Checkpoint %s")
@@ -58,7 +58,6 @@ NPCname = _("A laid back person")
 NPCdesc = _("You see a laid back person, who appears to be one of the locals, looking around the bar.")
 
 misndesc = _("You're participating in a race!")
-misnreward = _("%s credits")
 
 OSDtitle = _("Racing Skills 1")
 OSD = {}
@@ -96,11 +95,11 @@ end
 
 
 function accept ()
-   if tk.yesno(title[1], text[1]:format(numstring(credits))) then
+   if tk.yesno(title[1], text[1]:format(creditstring(credits))) then
       misn.accept()
       OSD[4] = string.format(OSD[4], curplanet:name())
       misn.setDesc(misndesc)
-      misn.setReward(misnreward:format(numstring(credits)))
+      misn.setReward(creditstring(credits))
       misn.osdCreate(OSDtitle, OSD)
       tk.msg(title[2], string.format(text[2], curplanet:name(), curplanet:name()))
       hook.takeoff("takeoff")
@@ -178,7 +177,7 @@ function counter()
       hook.rm(counterhook)
       for i, j in ipairs(racers) do
          j:control()
-         j:goto(checkpoint[target[i]]:pos())
+         j:moveto(checkpoint[target[i]]:pos())
          hook.pilot(j, "land", "racerland")
       end
       hp1 = hook.pilot(racers[1], "idle", "racer1idle")
@@ -201,10 +200,10 @@ end
 
 function nexttarget1()
    if target[1] == 4 then
-      racers[1]:land(curplanet:name())
+      racers[1]:land(curplanet)
       hook.rm(hp1)
    else
-      racers[1]:goto(checkpoint[target[1]]:pos())
+      racers[1]:moveto(checkpoint[target[1]]:pos())
    end
 end
 
@@ -219,10 +218,10 @@ end
 
 function nexttarget2()
    if target[2] == 4 then
-      racers[2]:land(curplanet:name())
+      racers[2]:land(curplanet)
       hook.rm(hp2)
    else
-      racers[2]:goto(checkpoint[target[2]]:pos())
+      racers[2]:moveto(checkpoint[target[2]]:pos())
    end
 end
 
@@ -237,10 +236,10 @@ end
 
 function nexttarget3()
    if target[3] == 4 then
-      racers[3]:land(curplanet:name())
+      racers[3]:land(curplanet)
       hook.rm(hp3)
    else
-      racers[3]:goto(checkpoint[target[3]]:pos())
+      racers[3]:moveto(checkpoint[target[3]]:pos())
    end
 end
 
@@ -275,7 +274,7 @@ end
 
 
 function racerland(p)
-   player.msg( string.format(landmsg, p:name(),curplanet:name()))
+   player.msg( string.format(landmsg, p:name(), curplanet:name()))
 end
 
 

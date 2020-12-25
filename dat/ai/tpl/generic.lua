@@ -1,6 +1,6 @@
-require("dat/ai/include/basic.lua")
-require("dat/ai/include/attack.lua")
-local formation = require("dat/scripts/formation.lua")
+require("ai/include/basic")
+require("ai/include/attack")
+local formation = require("scripts/formation")
 
 --[[
 -- Variables to adjust AI
@@ -35,7 +35,7 @@ mem.form_pos      = nil -- Position in formation (for follower)
 of the point the pilot has to follow when using follow_accurate.
 The reference direction is the target's velocity direction.
 For example, radius = 100 and angle = 180 means that the pilot will stay
-behing his target at a distance of 100 units.
+behind his target at a distance of 100 units.
 angle = 90 will make the pilot try to be on the left of his target,
 angle = 0 means that the pilot tries to be in front of the target.]]
 mem.radius         = 100 --  Requested distance between follower and target

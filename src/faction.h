@@ -7,9 +7,9 @@
 #  define FACTION_H
 
 
-#include "opengl.h"
 #include "colour.h"
 #include "nlua.h"
+#include "opengl.h"
 
 
 #define FACTION_PLAYER  0  /**< Hardcoded player faction identifier. */

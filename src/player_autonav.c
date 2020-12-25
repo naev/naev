@@ -9,19 +9,22 @@
  */
 
 
-#include "player.h"
+/** @cond */
+#include <time.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include "toolkit.h"
-#include "pause.h"
 #include "player.h"
+
+#include "conf.h"
+#include "pause.h"
 #include "pilot.h"
 #include "pilot_ew.h"
-#include "space.h"
+#include "player.h"
 #include "sound.h"
-#include "conf.h"
-#include <time.h>
+#include "space.h"
+#include "toolkit.h"
 
 
 extern double player_acc; /**< Player acceleration. */
@@ -40,7 +43,7 @@ static double lasta;
 static int player_autonavSetup (void);
 static void player_autonav (void);
 static int player_autonavApproach( const Vector2d *pos, double *dist2, int count_target );
-static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel );
+static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow );
 static int player_autonavBrake (void);
 
 
@@ -49,16 +52,9 @@ static int player_autonavBrake (void);
  */
 void player_autonavResetSpeed (void)
 {
-   if (player_isFlag(PLAYER_DOUBLESPEED)) {
-      tc_mod         = 2. * player_dt_default();
-      pause_setSpeed( tc_mod );
-      sound_setSpeed( 2 );
-   } else {
-      tc_mod         = player_dt_default();
-      pause_setSpeed( tc_mod );
-      sound_setSpeed( 1 );
-   }
+   tc_mod = 1.;
    tc_rampdown = 0;
+   player_resetSpeed();
 }
 
 
@@ -111,10 +107,10 @@ static int player_autonavSetup (void)
    /* Autonav is mutually-exclusive with other autopilot methods. */
    player_restoreControl( PINPUT_AUTONAV, NULL );
 
-   player_message(_("\apAutonav initialized."));
+   player_message(_("\aoAutonav initialized."));
    if (!player_isFlag(PLAYER_AUTONAV)) {
 
-      tc_base   = player_dt_default() * (player_isFlag(PLAYER_DOUBLESPEED) ? 2. : 1.);
+      tc_base   = player_dt_default() * player.speed;
       tc_mod    = tc_base;
       if (conf.compression_mult >= 1.)
          player.tc_max = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
@@ -135,7 +131,7 @@ static int player_autonavSetup (void)
    /* Set flag and tc_mod just in case. */
    player_setFlag(PLAYER_AUTONAV);
    pause_setSpeed( tc_mod );
-   sound_setSpeed( tc_mod / player_dt_default() );
+   sound_setSpeed( tc_mod );
 
    /* Make sure time acceleration starts immediately. */
    player.autonav_timer = 0.;
@@ -174,7 +170,8 @@ void player_autonavPos( double x, double y )
       return;
 
    player.autonav    = AUTONAV_POS_APPROACH;
-   player.autonavmsg = "position";
+   player.autonavmsg = _("position");
+   player.autonavcol = '0';
    vect_cset( &player.autonav_pos, x, y );
 }
 
@@ -191,7 +188,8 @@ void player_autonavPnt( char *name )
       return;
 
    player.autonav    = AUTONAV_PNT_APPROACH;
-   player.autonavmsg = p->name;
+   player.autonavmsg = _(p->name);
+   player.autonavcol = planet_getColourChar( p );
    vect_cset( &player.autonav_pos, p->pos.x, p->pos.y );
 }
 
@@ -210,6 +208,7 @@ void player_autonavPil( unsigned int p )
 
    player.autonav    = AUTONAV_PLT_FOLLOW;
    player.autonavmsg = pilot->name;
+   player.autonavcol = '0';
 }
 
 
@@ -280,7 +279,7 @@ void player_autonavAbort( const char *reason )
       /* Break possible hyperspacing. */
       if (pilot_isFlag(player.p, PILOT_HYP_PREP)) {
          pilot_hyperspaceAbort(player.p);
-         player_message(_("\apAborting hyperspace sequence."));
+         player_message(_("\aoAborting hyperspace sequence."));
       }
 
       /* Reset time compression. */
@@ -365,7 +364,7 @@ static void player_autonav (void)
       case AUTONAV_POS_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
-            player_message( _("\apAutonav arrived at position.") );
+            player_message( _("\aoAutonav arrived at position.") );
             player_autonavEnd();
          }
          else if (!tc_rampdown)
@@ -375,8 +374,8 @@ static void player_autonav (void)
       case AUTONAV_PNT_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
-            player_message( _("\apAutonav arrived at \a%c%s\a\0."),
-                  planet_getColourChar( planet_get(player.autonavmsg) ),
+            player_message( _("\aoAutonav arrived at \a%c%s\a0."),
+                  player.autonavcol,
                   player.autonavmsg );
             player_autonavEnd();
          }
@@ -388,15 +387,15 @@ static void player_autonav (void)
          p = pilot_get( player.p->target );
          if (p == NULL)
             p = pilot_get( PLAYER_ID );
-         if ((p->id == PLAYER_ID) || (!pilot_inRangePilot( player.p, p ))) {
+         if ((p->id == PLAYER_ID) || (!pilot_inRangePilot( player.p, p, NULL ))) {
             /* TODO : handle the different reasons: pilot is too far, jumped, landed or died. */
-            player_message( _("\ap%s has been lost."),
+            player_message( _("\ao%s has been lost."),
                               player.autonavmsg );
             player_accel( 0. );
             player_autonavEnd();
          }
          else
-            player_autonavFollow( &p->solid->pos, &p->solid->vel );
+            player_autonavFollow( &p->solid->pos, &p->solid->vel, pilot_isDisabled(p)==0 );
          break;
    }
 }
@@ -456,8 +455,9 @@ static int player_autonavApproach( const Vector2d *pos, double *dist2, int count
  *
  *    @param[in] pos Position to go to.
  *    @param[in] vel Velocity of the target.
+ *    @param[in] follow Whether to follow, or arrive at
  */
-static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel )
+static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow )
 {
    double Kp, Kd, angle, radius, d;
    Vector2d dir, point;
@@ -468,7 +468,9 @@ static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel )
    Kd = 20;
    radius = 100;
 
-   /* Find a point behind the target at a distance of radius */
+   /* Find a point behind the target at a distance of radius unless stationary, or not following */
+   if ( !follow || ( vel->x == 0 && vel->y == 0 ) )
+      radius = 0;
    angle = M_PI + vel->angle;
    vect_cset( &point, pos->x + radius * cos(angle),
               pos->y + radius * sin(angle) );
@@ -539,7 +541,7 @@ int player_autonavShouldResetSpeed (void)
    pstk = pilot_getAll( &n );
    for (i=0; i<n; i++) {
       if ( ( pstk[i]->id != PLAYER_ID ) && pilot_isHostile( pstk[i] )
-            && pilot_inRangePilot( player.p, pstk[i] )
+            && pilot_inRangePilot( player.p, pstk[i], NULL ) == 1
             && !pilot_isDisabled( pstk[i] ) ) {
          hostiles = 1;
          break;
@@ -572,6 +574,7 @@ int player_autonavShouldResetSpeed (void)
  * @brief Handles autonav thinking.
  *
  *    @param pplayer Player doing the thinking.
+ *    @param dt Current delta tick.
  */
 void player_thinkAutonav( Pilot *pplayer, double dt )
 {

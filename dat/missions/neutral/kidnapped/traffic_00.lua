@@ -1,13 +1,17 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Kidnapped">
-  <avail>
-   <priority>4</priority>
-   <chance>100</chance>
-   <location>None</location>
-  </avail>
- </mission>
- --]]
+ <avail>
+  <priority>4</priority>
+  <chance>100</chance>
+  <location>None</location>
+ </avail>
+ <notes>
+  <done_evt name="Kidnapped">Triggers</done_evt>
+  <campaign>Kidnapping</campaign>
+ </notes>
+</mission>
+--]]
 --[[
       MISSION: Kidnapped
       AUTHOR: Superkoop - John Koopman
@@ -15,8 +19,8 @@
       The first mission in a series of missions surrounding human trafficking. This mission consists of overhearing pirate a couple pirate conversations, disabling a trader ship, and returning the children home to their parents. It essentially sets up everything for the following 4 missions. 
 --]]
 
-require "portrait.lua"
-require "dat/missions/neutral/common.lua"
+require "portrait"
+require "missions/neutral/common"
 
 
 sysname1 = "Arcturus"
@@ -40,9 +44,9 @@ title[2] = _("Thank you!")
 text[2] = _([[The two parents immediately begin thanking you quite profusely, spending a few hectoseconds simply telling you how much they truly appreciate your assistance. After a while, you realize that if these children are going to be rescued this cycle you are going to need to get started sooner rather than later. "Yes, quite right," the father replies. "No need to delay any longer than absolutely necessary. I don't know a whole lot, but you should be able to eavesdrop on some pirates at a bar. The bar in %s on %s has been known to serve pirates occasionally, so stopping there would be a good course of action. We will anticipate your return. Again, this means so much to us." Before you know it, the two parents are at it again, thanking you like it's all they know how to do. Before it gets really bad, you bid farewell, break communication, and get on your way.]])
 
 title[3] = _("Rumors")
-text[3] = _([[You sit down at a table adjacent to these two pirates, ordering a drink and trying to act as inconspicuous as you know how. You catch the pirates in mid-conversation. "...And he says to me 'I will give you everything, please just leave me alone!' So I take his credits, and all I get is 2k! He's clearly holding back on me, trust me, I know! So I trash his ship, and what do you know, he really didn't have any more. It's tough making any money these days, sometimes I think I gotta get into a different line o' work."
+text[3] = _([[You sit down at a table adjacent to these two pirates, ordering a drink and trying to act as inconspicuous as you know how. You catch the pirates in mid-conversation. "...And he says to me 'I will give you everything, please just leave me alone!' So I take his credits, and all I get is 2K! He's clearly holding back on me, trust me, I know! So I trash his ship, and what do you know, he really didn't have any more. It's tough making any money these days, sometimes I think I gotta get into a different line o' work."
     The other pirate sitting there replies with a glint in his eye, "Actually, I heard in the bar over on %s that you can make fat stacks doing a little more risky work. You just gotta nab some brats, and you can sell em for 15 big ones a pop!"
-    "Human trafficking? No way man, that stuff gives me the heeby jeebies!" The other pirate replies.
+    "Human trafficking? No way man, that stuff gives me the heebie jeebies!" The other pirate replies.
     "Whatever, man."
     After a brief pause the first pirate starts talking, "So I was seeing the doctor the other day and he said that rash on my back is probably an allergic reaction."
     From that point you figure the conversation will not be picking up again, and having a lead you decide to take it.]])
@@ -201,10 +205,10 @@ function enter()
 end
 
 function idle()
-  kidnappers:goto(planet.get("Zhiru"):pos() + vec2.new( 800,  800), false)
-  kidnappers:goto(planet.get("Zhiru"):pos() + vec2.new(-800,  800), false)
-  kidnappers:goto(planet.get("Zhiru"):pos() + vec2.new(-800, -800), false)
-  kidnappers:goto(planet.get("Zhiru"):pos() + vec2.new( 800, -800), false)
+  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new( 800,  800), false)
+  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new(-800,  800), false)
+  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new(-800, -800), false)
+  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new( 800, -800), false)
 end
 
 function attackedkidnappers()

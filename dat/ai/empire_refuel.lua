@@ -1,5 +1,5 @@
-require("dat/ai/empire_idle.lua")
-require("dat/ai/personality/patrol.lua")
+require("ai/empire_idle")
+require("ai/personality/patrol")
 
 -- Settings
 mem.aggressive = false

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<its:rules xmlns:its="http://www.w3.org/2005/11/its" version="1.0">
+  <!-- General Rules -->
+  <its:translateRule selector="/*" translate="no"/>
+
+  <!-- Start -->
+  <its:translateRule selector="/Start/name" translate="yes"/>
+  <its:translateRule selector="/Start/player/ship/@name" translate="yes"/>
+
+  <!-- Factions -->
+  <its:translateRule selector="/Factions/faction/display" translate="yes"/>
+  <its:translateRule selector="/Factions/faction/name" translate="yes"/>
+  <its:translateRule selector="/Factions/faction/longname" translate="yes"/>
+
+  <!-- Slots -->
+  <its:translateRule selector="/Slots/slot/display" translate="yes"/>
+  <its:translateRule selector="/Slots/slot/description" translate="yes"/>
+
+  <!-- Commodities -->
+  <its:translateRule selector="/Commodities/commodity/name" translate="yes"/>
+  <its:translateRule selector="/Commodities/commodity/description" translate="yes"/>
+
+  <!-- Assets -->
+  <its:translateRule selector="/asset/@name" translate="yes"/>
+  <its:translateRule selector="/asset/general/bar" translate="yes"/>
+  <its:translateRule selector="/asset/general/description" translate="yes"/>
+
+  <!-- Ships -->
+  <its:translateRule selector="/ship/@name" translate="yes"/>
+  <its:translateRule selector="/ship/fabricator" translate="yes"/>
+  <its:translateRule selector="/ship/description" translate="yes"/>
+
+  <!-- Outfits -->
+  <its:translateRule selector="/outfit/@name" translate="yes"/>
+  <its:translateRule selector="/outfit/general/description" translate="yes"/>
+
+  <!-- Star Systems -->
+  <its:translateRule selector="/ssys/@name" translate="yes"/>
+
+  <!-- Fleets -->
+  <its:translateRule selector="/Fleets/fleet/pilots/pilot/@name" translate="yes"/>
+</its:rules>

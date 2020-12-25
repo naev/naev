@@ -8,28 +8,29 @@
  * @brief Handles displaying backgrounds.
  */
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "background.h"
 
-#include "naev.h"
-
-#include "nxml.h"
-
-#include "opengl.h"
-#include "log.h"
-#include "player.h"
-#include "conf.h"
-#include "rng.h"
-#include "pause.h"
 #include "array.h"
-#include "ndata.h"
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_tex.h"
-#include "nlua_col.h"
-#include "nlua_bkg.h"
 #include "camera.h"
+#include "conf.h"
+#include "log.h"
+#include "ndata.h"
 #include "nebula.h"
+#include "nlua.h"
+#include "nlua_bkg.h"
+#include "nlua_col.h"
+#include "nlua_tex.h"
+#include "nluadef.h"
 #include "nstring.h"
+#include "nxml.h"
+#include "opengl.h"
+#include "pause.h"
+#include "player.h"
+#include "rng.h"
 
 
 /**
@@ -122,12 +123,8 @@ void background_initStars( int n )
       star_vertex[6*i+5] = star_vertex[6*i+2];
    }
 
-   /* Destroy old VBO. */
-   if (star_vertexVBO != NULL) {
-      gl_vboDestroy( star_vertexVBO );
-   }
-
-   /* Create now VBO. */
+   /* Recreate VBO. */
+   gl_vboDestroy( star_vertexVBO );
    star_vertexVBO = gl_vboCreateStatic(
          nstars * sizeof(GLfloat) * 6, star_vertex );
 
@@ -357,7 +354,7 @@ static nlua_env background_create( const char *name )
    nlua_env env;
 
    /* Create file name. */
-   nsnprintf( path, sizeof(path), "dat/bkg/%s.lua", name );
+   nsnprintf( path, sizeof(path), BACKGROUND_PATH"%s.lua", name );
 
    /* Create the Lua env. */
    env = nlua_newEnv(1);
@@ -516,11 +513,8 @@ void background_free (void)
       nlua_freeEnv( bkg_cur_env );
    bkg_cur_env = LUA_NOREF;
 
-   /* Destroy VBOs. */
-   if (star_vertexVBO != NULL) {
-      gl_vboDestroy( star_vertexVBO );
-      star_vertexVBO = NULL;
-   }
+   gl_vboDestroy( star_vertexVBO );
+   star_vertexVBO = NULL;
 
    nstars = 0;
 }
@@ -539,7 +533,7 @@ void background_getTextures(unsigned int *n, glTexture ***imgs)
   }
 
   *n = array_size( bkg_image_arr_bk );
-  *imgs = malloc( sizeof(glTexture**)*(*n) );
+  *imgs = malloc( sizeof( glTexture * ) * ( *n ) );
   for ( i=0; i<*n; i++ ) {
     bkg = &bkg_image_arr_bk[i];
     if ( bkg->image != NULL )

@@ -7,11 +7,29 @@
 # define NLUADEF_H
 
 
-#include <lua.h>
+/** @cond */
 #include <lauxlib.h>
+#include <lua.h>
 #include <lualib.h>
+/** @endcond */
+
+#include "attributes.h"
 #include "log.h"
 
+
+/*
+ * A number of lua error functions don't ruturn, but arnen't marked
+ * as such. These redeclarations ensure that the compiler and analizer are
+ * aware that no return will take place when compiling our code.
+ */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wredundant-decls"
+
+NORETURN extern int lua_error( lua_State *L );
+NORETURN extern int luaL_error( lua_State *L, const char *fmt, ... );
+NORETURN extern int luaL_typerror( lua_State *L, int narg, const char *tname );
+
+#pragma GCC diagnostic pop
 
 /*
  * debug stuff

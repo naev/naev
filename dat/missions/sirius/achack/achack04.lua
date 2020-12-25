@@ -8,6 +8,10 @@
    <priority>3</priority>
    <location>None</location>
   </avail>
+  <notes>
+   <done_evt name="Achack04 Helper">Triggers</done_evt>
+   <campaign>Academy Hack</campaign>
+  </notes>
  </mission>
  --]]
 --[[
@@ -15,10 +19,11 @@
 -- This mission is started from a helper event.
 --]]
 
-require "fleethelper.lua"
-require "proximity.lua"
-require "enum.lua"
-require "dat/missions/sirius/common.lua"
+require "fleethelper"
+require "proximity"
+require "enum"
+require "missions/sirius/common"
+require "numstring"
 
 
 title1 = _("You have mail")
@@ -96,7 +101,7 @@ osd_msg["__save"] = true
 
 misn_desc = _("Joanne has contacted you. She wants to meet you on %s (%s).")
 misn_desc2 = _("Joanne wants you to find Harja and convince him to meet her in person.")
-misn_reward = _("1,500,000 credits")
+misn_reward = creditstring(1500000) -- 1.5M
 
 log_text = _([[You were hired by Joanne to deliver an invitation to Harja to talk with her. He agreed on the condition that you first deal with associates of his that were coming after him. When Joanne and Harja met, they came to an agreement that neither of them were responsible for the hack of the High Academy main computer which was the source of their feud. Joanne said that she will probably call for you again when she's figured out how to proceed.]])
 
@@ -211,7 +216,7 @@ function jumpin()
    end
 end
 
--- Jumpout hook.
+-- Jump-out hook.
 function jumpout()
    enter_src = system.cur()
 end

@@ -10,6 +10,9 @@
    <location>Bar</location>
    <cond>system.cur() == system.get("Alteris")</cond>
   </avail>
+  <notes>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --[[
@@ -22,7 +25,7 @@
 
 --]]
 
-require "dat/missions/pirate/common.lua"
+require "missions/pirate/common"
 
 
 -- Bar information

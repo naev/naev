@@ -1,22 +1,22 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Defend the System 3">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>3</chance>
-   <done>Defend the System 2</done>
-   <location>None</location>
-   <faction>Dvaered</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Soromid</faction>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>3</chance>
+  <done>Defend the System 2</done>
+  <location>None</location>
+  <faction>Dvaered</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Soromid</faction>
+ </avail>
+</mission>
+--]]
 --[[
 
    MISSION: Defend the System 3
@@ -41,13 +41,13 @@ Because of bad planning, this mission is badly organized.
 Anyone looking for a model of good mission-making should look elsewhere! -- the author
 ]]--
 
-require "dat/scripts/numstring.lua"
+require "scripts/numstring"
 
 -- This section stores the strings (text) for the mission.
 
 -- Mission details
 misn_title = _("Defend the System")
-misn_reward = _("%s credits and the pleasure of serving the Empire.")
+misn_reward = _("%s and the pleasure of serving the Empire.")
 misn_desc = _("Defend the system against a pirate fleet.")
 
 -- Stage one: in the bar you hear a fleet of Pirates have invaded the system.
@@ -105,54 +105,52 @@ noTitle = _("Observe the action.")
 
 -- Create the mission on the current planet, and present the first Bar text.
 function create()
+   this_planet, this_system = planet.cur()
+   if ( this_system:presences()["Pirate"]
+         or this_system:presences()["Collective"]
+         or this_system:presences()["FLF"]
+         or this_system == system.get("Gamma Polaris")
+         or this_system == system.get("Doeston")
+         or this_system == system.get("NGC-7291") ) then
+      misn.finish(false) 
+   end
 
-      this_planet, this_system = planet.cur()
-      if ( this_system:presences()["Pirate"] or 
-           this_system:presences()["Collective"] or 
-           this_system:presences()["FLF"] or
-           this_system:name() == "Gamma Polaris" or
-           this_system:name() == "Doeston" or
-           this_system:name() == "NGC-7291") then
-         misn.finish(false) 
-      end
-
-    missys = {this_system}
-    if not misn.claim(missys) then
-        misn.finish(false)
-    end
+   missys = {this_system}
+   if not misn.claim(missys) then
+      misn.finish(false)
+   end
  
-      planet_name = planet.name( this_planet)
-      system_name = this_system:name()
-      if tk.yesno( title[1], text[1] ) then
-         misn.accept()
-         tk.msg( title[11], text[11])
-         reward = 40000
-         misn.setReward( string.format( misn_reward, numstring(reward)) )
-         misn.setDesc( misn_desc)
-         misn.setTitle( misn_title)
-         misn.markerAdd( this_system, "low" )
-         defender = true
+   planet_name = this_planet:name()
+   system_name = this_system:name()
+   if tk.yesno( title[1], text[1] ) then
+      misn.accept()
+      tk.msg( title[11], text[11])
+      reward = 40000
+      misn.setReward( string.format( misn_reward, creditstring(reward)) )
+      misn.setDesc( misn_desc)
+      misn.setTitle( misn_title)
+      misn.markerAdd( this_system, "low" )
+      defender = true
 
-     -- hook an abstract deciding function to player entering a system
-         hook.enter( "enter_system")
+  -- hook an abstract deciding function to player entering a system
+      hook.enter( "enter_system")
 
-     -- hook warm reception to player landing
-         hook.land( "celebrate_victory")
+  -- hook warm reception to player landing
+      hook.land( "celebrate_victory")
+   
+   else
+  -- If player didn't accept the mission, the battle's still on, but player has no stake.
+      misn.accept()
+      var.push( "dts_firstSystem", "planet_name")
+      tk.msg( title[5], text[5])
+      misn.setReward( noReward)
+      misn.setDesc( noDesc)
+      misn.setTitle( noTitle)
+      defender = false
       
-      else
-     -- If player didn't accept the mission, the battle's still on, but player has no stake.
-         misn.accept()
-         var.push( "dts_firstSystem", "planet_name")
-         tk.msg( title[5], text[5])
-         misn.setReward( noReward)
-         misn.setDesc( noDesc)
-         misn.setTitle( noTitle)
-         defender = false
-         
-     -- hook an abstract deciding function to player entering a system when not part of defense
-         hook.enter( "enter_system")
-      end
-
+  -- hook an abstract deciding function to player entering a system when not part of defense
+      hook.enter( "enter_system")
+   end
 end
 
 -- Decides what to do when player either takes off starting planet or jumps into another system

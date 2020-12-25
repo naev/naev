@@ -12,6 +12,9 @@
    <location>Bar</location>
    <planet>Omega Station</planet>
   </avail>
+  <notes>
+   <campaign>Collective</campaign>
+  </notes>
  </mission>
  --]]
 --[[
@@ -27,11 +30,12 @@
 
 ]]--
 
-require "dat/missions/empire/common.lua"
+require "missions/empire/common"
+require "numstring"
 
 bar_desc = _("You notice Lt. Commander Dimitri at one of the booths.")
 misn_title = _("Collective Espionage")
-misn_reward = _("700,000 credits")
+misn_reward = creditstring(700000) -- 700K
 misn_desc = {}
 misn_desc[1] = _("Land on %s in the %s system to monitor Collective communications")
 misn_desc[2] = _("Travel back to %s in %s")
@@ -48,7 +52,7 @@ text[3] = _([["The plan is to have you infiltrate Collective space alone to not 
 text[4] = _([[You quickly land on %s and hide in its deep dense methane atmosphere. Your monitoring gear flickers into action, hopefully catching something of some use. With some luck there won't be too many Collective drones when you take off.]])
 text[5] = _([[That should be enough. Time to report your findings.]])
 text[6] = _([[As your ship touches ground, you see Lt. Commander Dimitri come out to greet you.
-    "How was the weather?" he asks jokingly. "Glad to see you're still in one piece. We'll get right on analyzing the data acquired. Those robots have to be up to something. Meet me in the bar later. Meanwhile give yourself a treat; you've earned it. We've made a 700k credit deposit into your bank account. Enjoy it."]])
+    "How was the weather?" he asks jokingly. "Glad to see you're still in one piece. We'll get right on analyzing the data acquired. Those robots have to be up to something. Meet me in the bar later. Meanwhile give yourself a treat; you've earned it. We've made a 700K credit deposit into your bank account. Enjoy it."]])
 
 osd_msg = {}
 osd_msg[1] = _("Fly to %s and land on %s")
@@ -163,7 +167,7 @@ function moveSwarm(fleet, pos)
         if j:exists() then
             j:control()
             j:setVisplayer(true)
-            j:goto(j:pos() + dpos, false)
+            j:moveto(j:pos() + dpos, false)
         end
     end
 end

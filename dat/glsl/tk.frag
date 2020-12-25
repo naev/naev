@@ -1,5 +1,3 @@
-#version 130
-
 uniform vec4 dc;
 uniform vec4 c;
 uniform vec4 lc;
@@ -31,4 +29,6 @@ void main(void) {
    color_out = mix(oc, color_out, clamp(d - 1, 0., 1.));
 
    color_out.a = d;
+
+#include "colorblind.glsl"
 }

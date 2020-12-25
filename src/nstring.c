@@ -8,9 +8,11 @@
  * @brief Some string routines for naev.
  */
 
-#include "nstring.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
+
+#include "nstring.h"
 
 #include "log.h"
 
@@ -89,7 +91,7 @@ const char *nstrcasestr( const char *haystack, const char *needle )
 /**
  * @brief nsnprintf wrapper.
  */
-#if !(HAS_POSIX && defined(_GNU_SOURCE))
+#if !HAS_SNPRINTF
 int nsnprintf( char *text, size_t maxlen, const char *fmt, ... )
 {
    va_list ap;
@@ -104,7 +106,7 @@ int nsnprintf( char *text, size_t maxlen, const char *fmt, ... )
 
    return retval;
 }
-#endif /* !(HAS_POSIX && defined(_GNU_SOURCE)) */
+#endif /* !HAS_SNPRINTF */
 
 /**
  * @brief nstrndup wrapper.
@@ -122,4 +124,13 @@ char* nstrndup( const char *s, size_t n )
    return (char *) memcpy (new, s, len);
 }
 #endif /* !(HAS_POSIX && defined(_GNU_SOURCE)) */
+
+
+/**
+ * @brief Sort function for sorting strings with qsort().
+ */
+int strsort( const void *p1, const void *p2 )
+{
+   return strcmp(*(const char **) p1, *(const char **) p2);
+}
 

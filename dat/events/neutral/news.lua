@@ -1,17 +1,17 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Generic News">
-  <trigger>land</trigger>
-  <chance>100</chance>
- </event>
- --]]
+ <trigger>land</trigger>
+ <chance>100</chance>
+</event>
+--]]
 --[[
 -- Event for creating news
 --
 --]]
 
-require "numstring.lua"
-require "jumpdist.lua"
+require "numstring"
+require "jumpdist"
 
 
 header_table = {}
@@ -137,7 +137,7 @@ articles["Generic"] = {
    },
    {
       tag = N_("The Best Spaceport Bars"),
-      desc = _("Where can you get the best gargleblaster?  The famous exotic drinks list at the Doranthex Lava Room charmed our reviewer, but if you care for ambiance, don't miss the Goddard Bar.")
+      desc = _("Where can you get the best gargle blaster?  The famous exotic drinks list at the Doranthex Lava Room charmed our reviewer, but if you care for ambiance, don't miss the Goddard Bar.")
    },
    {
       tag = N_("RIP: The Floating Vagabond"),
@@ -151,7 +151,7 @@ articles["Generic"] = {
       tag = N_("Former Pirate Writes Target Management Self-Help Book"),
       desc = string.format(
          _("A former pirate shares her story on how she steered herself away from piracy, which she wrote about in an award-winning self-help book. \"I used to spend my whole life pressing %s to target enemies, but my life changed when I had a dream about a cat munching on some grass. 'Are you using the %s key?' it asked. 'I find that it is very useful.' I have been doing as the strange cat in my dream said ever since, and I no longer have to lose money or alienate friends. If the universe followed this simple advice, I suspect we would live in a much safer society.\""),
-         _(naev.keyGet("target_nearest")), _(naev.keyGet("target_hostile")) )
+         naev.keyGet("target_nearest"), naev.keyGet("target_hostile") )
    },
 }
 
@@ -227,7 +227,7 @@ articles["Goddard"] = {
    },
    {
       tag = N_("Melendez CEO on Strategy"),
-      desc = _("The Chief Executive Officer of ship maker Melendez Inc. thinks manufacturers should follow his company's lead in keeping costs down and producing for the mass market.")
+      desc = _("The Chief Executive Officer of ship maker Melendez Corp. thinks manufacturers should follow his company's lead in keeping costs down and producing for the mass market.")
    },
    {
       tag = N_("The Goddard Exception"),
@@ -261,7 +261,7 @@ articles["Sirius"] = {
    --]]
    {
       tag = N_("Dvaered extorting pilgrims"),
-      desc = _("Recent pilgrims headed to Mutris have been telling stories of extortion and violations by Dvaered operators. Dvaered Warlord Kra'tok claims that these are \"delusions of the touched\". Official complaints have been made to the Emperor.")
+      desc = _("Recent pilgrims headed to Mutris have been telling stories of extortion and violations by Dvaered operators. Dvaered Warlord Kra'tok claims that these are \"figments of the touched's imagination\". Official complaints have been made to the Emperor.")
    },
    --[[
       Human interest.
@@ -482,7 +482,7 @@ end
 function create()
    local f = planet.cur():faction()
    if f == nil then evt.finish(false) end
-   local my_faction = f:name()
+   local my_faction = f:nameRaw()
 
    add_header( my_faction )
    add_article( my_faction )

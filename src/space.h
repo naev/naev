@@ -7,15 +7,18 @@
 #ifndef SPACE_H
 #  define SPACE_H
 
+typedef struct Planet_ Planet;
+typedef struct JumpPoint_ JumpPoint;
 
-#include "faction.h"
-#include "opengl.h"
-#include "pilot.h"
+
 #include "commodity.h"
+#include "explosion.h"
+#include "faction.h"
 #include "fleet.h"
 #include "mission.h"
+#include "opengl.h"
+#include "pilot.h"
 #include "tech.h"
-#include "explosion.h"
 
 
 #define SYSTEM_SIMULATE_TIME  30. /**< Time to simulate system before player is added. */
@@ -68,6 +71,18 @@ enum {
 
 
 /**
+ * @struct MapOverlayPos
+ *
+ * @brief Saves the layout decisions from positioning labeled objects on the overlay.
+ */
+typedef struct MapOverlayPos_ {
+   float radius; /**< Diameter for display on the map overlay. No, it's not the radius, why do you ask? */
+   float text_offx; /**< x offset of the caption text. */
+   float text_offy; /**< y offset of the caption text. */
+} MapOverlayPos;
+
+
+/**
  * @struct Planet
  *
  * @brief Represents a planet.
@@ -85,18 +100,18 @@ typedef struct Planet_ {
 
    /* Asset details. */
    double presenceAmount; /**< The amount of presence this asset exerts. */
+   double hide;           /**< The ewarfare hide value for an asset. */
    int presenceRange; /**< The range of presence exertion of this asset. */
    int real; /**< If the asset is tangible or not. */
-   double hide; /**< The ewarfare hide value for an asset. */
 
    /* Landing details. */
+   int can_land;      /**< Whether or not the player can land. */
    int land_override; /**< Forcibly allows the player to either be able to land or not (+1 is land, -1 is not, 0 otherwise). */
    char *land_func; /**< Landing function to execute. */
-   int can_land; /**< Whether or not the player can land. */
    char *land_msg; /**< Message on landing. */
-   credits_t bribe_price; /**< Cost of bribing. */
    char *bribe_msg; /**< Bribe message. */
    char *bribe_ack_msg; /**< Bribe ACK message. */
+   credits_t bribe_price;   /**< Cost of bribing. */
    int bribed; /**< If planet has been bribed. */
 
    /* Landed details. */
@@ -117,6 +132,7 @@ typedef struct Planet_ {
 
    /* Misc. */
    unsigned int flags; /**< flags for planet properties */
+   MapOverlayPos mo;   /**< Overlay layout data. */
 } Planet;
 
 
@@ -172,9 +188,12 @@ typedef struct SystemPresence_ {
 /**
  * @brief Represents a jump lane.
  */
-typedef struct JumpPoint_ {
-   StarSystem *target; /**< Target star system to jump to. */
+typedef struct JumpPoint_ JumpPoint;
+struct JumpPoint_ {
+   StarSystem *from; /**< System containing this jump point. */
    int targetid; /**< ID of the target star system. */
+   StarSystem *target; /**< Target star system to jump to. */
+   JumpPoint *returnJump; /**< How to get back. Can be NULL */
    Vector2d pos; /**< Position in the system. */
    double radius; /**< Radius of jump range. */
    unsigned int flags; /**< Flags related to the jump point's status. */
@@ -184,9 +203,9 @@ typedef struct JumpPoint_ {
    double sina; /**< Sinus of the angle. */
    int sx; /**< X sprite to use. */
    int sy; /**< Y sprite to use. */
-} JumpPoint;
+   MapOverlayPos mo;   /**< Overlay layout data. */
+};
 extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
-
 
 /**
  * @brief Represents a type of asteroid.
@@ -316,7 +335,7 @@ struct StarSystem_ {
    /* Economy. */
    CommodityPrice *averagePrice;
    int ncommodities;
-  
+
    /* Misc. */
    unsigned int flags; /**< flags for system properties */
 };
@@ -368,6 +387,7 @@ int planet_setRadiusFromGFX(Planet* planet);
  */
 JumpPoint* jump_get( const char* jumpname, const StarSystem* sys );
 JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys );
+const char *jump_getSymbol( JumpPoint *jp );
 
 /*
  * system adding/removing stuff.

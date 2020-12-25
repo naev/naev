@@ -1,5 +1,5 @@
 -- Generic equipping routines, helper functions and outfit definitions.
-require("dat/factions/equip/generic.lua")
+require("factions/equip/generic")
 
 
 equip_classOutfits_weapons["Yacht"] = {

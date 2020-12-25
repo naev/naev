@@ -8,15 +8,18 @@
  * @brief Handles the ship development routines.
  */
 
-#include "dev_ship.h"
 
-#include "naev.h"
-
+/** @cond */
 #include "SDL.h"
 
+#include "naev.h"
+/** @endcond */
+
+#include "dev_ship.h"
+
 #include "log.h"
-#include "ship.h"
 #include "nstring.h"
+#include "ship.h"
 
 
 /**

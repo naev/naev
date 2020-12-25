@@ -1,0 +1,3 @@
+project('SuiteSparse')
+
+subdir('CSparse')

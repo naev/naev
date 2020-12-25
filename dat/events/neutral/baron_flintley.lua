@@ -4,6 +4,10 @@
   <trigger>land</trigger>
   <chance>100</chance>
   <cond>player.misnActive("Baron") == false and planet.cur() == planet.get("Tau Station") and player.misnDone("Prince")</cond>
+  <notes>
+   <done_misn name="Prince"/>
+   <campaign>Baron Sauterfeldt</campaign>
+  </notes>
  </event>
  --]]
 --[[

@@ -4,12 +4,13 @@
   <slot>weapon</slot>
   <size>large</size>
   <license>Light Combat Vessel License</license>
+  <rarity>2</rarity>
   <mass>320</mass>
   <price>1200000</price>
   <gfx_store>zalek_drone_heavy_fighter</gfx_store>
   <description>The Za'lek Heavy Drone is a fearsome craft using very advanced AI techniques to be able to pilot itself. Three heavy drones can be operated from this bay, giving the mothership a good deal of punch.</description>
   <cpu>-35</cpu>
- <rarity>5</rarity></general>
+ </general>
  <specific type="fighter bay" secondary="1">
   <ammo>Za'lek Heavy Drone Fighter</ammo>
   <delay>5</delay>

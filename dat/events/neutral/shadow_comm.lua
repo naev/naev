@@ -6,14 +6,19 @@
   <cond>system.cur():presence("hostile") &lt; 300 and player.misnDone("Shadowrun") and not (player.misnDone("Shadow Vigil") or var.peek("shadowvigil_active") == true)</cond>
   <flags>
   </flags>
+  <notes>
+   <done_misn name="Shadowrun"/>
+   <campaign>Shadow</campaign>
+   <tier>3</tier>
+  </notes>
  </event>
  --]]
 --[[
 -- Comm Event for the Shadow missions
 --]]
 
-require "proximity.lua"
-require "dat/missions/shadow/common.lua"
+require "proximity"
+require "missions/shadow/common"
 
 
 -- localization stuff, translators would work here

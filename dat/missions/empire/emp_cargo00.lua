@@ -10,6 +10,9 @@
    <location>Bar</location>
    <faction>Empire</faction>
   </avail>
+  <notes>
+   <tier>1</tier>
+  </notes>
  </mission>
  --]]
 --[[
@@ -21,13 +24,12 @@
 
 ]]--
 
-require "numstring.lua"
-require "jumpdist.lua"
-require "dat/missions/empire/common.lua"
+require "numstring"
+require "jumpdist"
+require "missions/empire/common"
 
 bar_desc = _("You see an Empire Lieutenant who seems to be looking at you.")
 misn_title = _("Empire Recruitment")
-misn_reward = _("%s credits")
 misn_desc = _("Deliver some parcels for the Empire to %s in %s.")
 title = {}
 title[1] = _("Spaceport Bar")
@@ -83,12 +85,12 @@ function accept ()
    -- Mission details
    reward = 30000
    misn.setTitle(misn_title)
-   misn.setReward( string.format(misn_reward, numstring(reward)) )
-   misn.setDesc( string.format(misn_desc,dest:name(),sys:name()))
+   misn.setReward( creditstring(reward) )
+   misn.setDesc( string.format(misn_desc, dest:name(), sys:name()))
 
    -- Flavour text and mini-briefing
    tk.msg( title[2], string.format( text[2], dest:name() ))
-   misn.osdCreate(title[2], {misn_desc:format(dest:name(),sys:name())})
+   misn.osdCreate(title[2], {misn_desc:format(dest:name(), sys:name())})
 
    -- Set up the goal
    parcels = misn.cargoAdd("Parcels", 0)

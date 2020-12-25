@@ -15,6 +15,9 @@
    <faction>Soromid</faction>
    <faction>Za'lek</faction>
   </avail>
+  <notes>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --[[
@@ -41,9 +44,9 @@
 
 --]]
 
-require "numstring.lua"
-require "jumpdist.lua"
-require "pilot/pirate.lua"
+require "numstring"
+require "jumpdist"
+require "pilot/pirate"
 
 subdue_title   = _("Captured Alive")
 subdue_text    = {}
@@ -92,7 +95,6 @@ misn_title[2] = _("Small Dead or Alive Bounty in %s")
 misn_title[3] = _("Moderate Dead or Alive Bounty in %s")
 misn_title[4] = _("High Dead or Alive Bounty in %s")
 misn_title[5] = _("Dangerous Dead or Alive Bounty in %s")
-misn_reward = _("%s credits")
 misn_desc   = _("The pirate known as %s was recently seen in the %s system. %s authorities want this pirate dead or alive.")
 
 -- Messages
@@ -158,7 +160,7 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title[level]:format( missys:name() ) )
    misn.setDesc( misn_desc:format( name, missys:name(), paying_faction:name() ) )
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
 

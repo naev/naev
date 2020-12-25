@@ -26,17 +26,19 @@
  */
 
 
-#include "opengl.h"
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "opengl_render.h"
 
-#include "naev.h"
-
+#include "camera.h"
+#include "conf.h"
+#include "gui.h"
 #include "log.h"
 #include "ndata.h"
-#include "gui.h"
-#include "conf.h"
-#include "camera.h"
 #include "nstring.h"
+#include "opengl.h"
 
 
 #define OPENGL_RENDER_VBO_SIZE      256 /**< Size of VBO. */
@@ -47,6 +49,7 @@ gl_vbo *gl_squareVBO = 0;
 static gl_vbo *gl_squareEmptyVBO = 0;
 static gl_vbo *gl_crossVBO = 0;
 static gl_vbo *gl_lineVBO = 0;
+static gl_vbo *gl_triangleVBO = 0;
 static int gl_renderVBOtexOffset = 0; /**< VBO texture offset. */
 static int gl_renderVBOcolOffset = 0; /**< VBO colour offset. */
 
@@ -161,6 +164,32 @@ void gl_renderCross( double x, double y, double r, const glColour *c )
 
 
 /**
+ * @brief Renders a triangle at a given position.
+ *
+ *    @param x X position to center at.
+ *    @param y Y position to center at.
+ *    @param a Angle the triangle should "face" (right is 0.)
+ *    @param s Scaling of the triangle.
+ *    @param length Length deforming factor. Setting it to a value of other than 1. moves away from an equilateral triangle.
+ *    @param c Colour to use.
+ */
+void gl_renderTriangleEmpty( double x, double y, double a, double s, double length, const glColour *c )
+{
+   gl_Matrix4 projection;
+
+   projection = gl_Matrix4_Translate(gl_view_matrix, x, y, 0);
+   if (a != 0.)
+      projection = gl_Matrix4_Rotate2d(projection, a);
+   projection = gl_Matrix4_Scale(projection, s*length, s, 1.);
+
+   gl_beginSolidProgram(projection, c);
+   gl_vboActivateAttribOffset( gl_triangleVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
+   glDrawArrays( GL_LINE_STRIP, 0, 4 );
+   gl_endSolidProgram();
+}
+
+
+/**
  * @brief Texture blitting backend.
  *
  *    @param texture Texture to blit.
@@ -173,13 +202,16 @@ void gl_renderCross( double x, double y, double r, const glColour *c )
  *    @param tw Texture width. [0:1]
  *    @param th Texture height. [0:1]
  *    @param c Colour to use (modifies texture colour).
+ *    @param angle Rotation to apply (radians ccw around the center).
  */
 void gl_blitTexture(  const glTexture* texture,
       const double x, const double y,
       const double w, const double h,
       const double tx, const double ty,
-      const double tw, const double th, const glColour *c )
+      const double tw, const double th, const glColour *c, const double angle )
 {
+   // Half width and height
+   double hw, hh; 
    gl_Matrix4 projection, tex_mat;
 
    glUseProgram(shaders.texture.program);
@@ -191,10 +223,21 @@ void gl_blitTexture(  const glTexture* texture,
    if (c == NULL)
       c = &cWhite;
 
+   hw = w/2.0;
+   hh = h/2.0;
+
+
    /* Set the vertex. */
    projection = gl_view_matrix;
-   projection = gl_Matrix4_Translate(projection, x, y, 0);
-   projection = gl_Matrix4_Scale(projection, w, h, 1);
+   if (angle==0.){
+     projection = gl_Matrix4_Translate(projection, x, y, 0);
+     projection = gl_Matrix4_Scale(projection, w, h, 1);
+   } else {
+     projection = gl_Matrix4_Translate(projection, x+hw, y+hh, 0);
+     projection = gl_Matrix4_Rotate2d(projection, angle);
+     projection = gl_Matrix4_Translate(projection, -hw, -hh, 0);
+     projection = gl_Matrix4_Scale(projection, w, h, 1);
+   }
    glEnableVertexAttribArray( shaders.texture.vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
          0, 2, GL_FLOAT, 0 );
@@ -232,6 +275,8 @@ void gl_blitTexture(  const glTexture* texture,
  *    @param inter Amount of interpolation to do.
  *    @param x X position of the texture on the screen.
  *    @param y Y position of the texture on the screen.
+ *    @param w Width on the screen. (units pixels)
+ *    @param h Height on the screen. (units pixels)
  *    @param tx X position within the texture.
  *    @param ty Y position within the texture.
  *    @param tw Texture width.
@@ -246,18 +291,18 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
       const double tw, const double th, const glColour *c )
 {
    /* No interpolation. */
-   if (!conf.interpolate || (tb == NULL)) {
-      gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );
+   if (tb == NULL) {
+      gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
       return;
    }
 
    /* Corner cases. */
    if (inter == 1.) {
-      gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );
+      gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
       return;
    }
    else if (inter == 0.) {
-      gl_blitTexture( tb, x, y, w, h, tx, ty, tw, th, c );
+      gl_blitTexture( tb, x, y, w, h, tx, ty, tw, th, c, 0. );
       return;
    }
 
@@ -310,7 +355,7 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
 
 
 /**
- * @brief Converts ingame coordinates to screen coordinates.
+ * @brief Converts in-game coordinates to screen coordinates.
  *
  *    @param[out] nx New screen X coord.
  *    @param[out] ny New screen Y coord.
@@ -333,10 +378,10 @@ void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
 
 
 /**
- * @brief Converts screen coordinates to ingame coordinates.
+ * @brief Converts screen coordinates to in-game coordinates.
  *
- *    @param[out] nx New ingame X coord.
- *    @param[out] ny New ingame Y coord.
+ *    @param[out] nx New in-game X coord.
+ *    @param[out] ny New in-game Y coord.
  *    @param bx Screen X coord to translate.
  *    @param by Screen Y coord to translate.
  */
@@ -391,7 +436,7 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
    ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
 
    gl_blitTexture( sprite, x, y, w, h,
-         tx, ty, sprite->srw, sprite->srh, c );
+         tx, ty, sprite->srw, sprite->srh, c, 0. );
 }
 
 
@@ -433,6 +478,8 @@ void gl_blitSpriteInterpolate( const glTexture* sa, const glTexture *sb,
  *    @param inter Amount to interpolate.
  *    @param bx X position of the texture relative to the player.
  *    @param by Y position of the texture relative to the player.
+ *    @param scalew X scale factor.
+ *    @param scaleh Y scale factor.
  *    @param sx X position of the sprite to use.
  *    @param sy Y position of the sprite to use.
  *    @param c Colour to use (modifies texture colour).
@@ -490,7 +537,7 @@ void gl_blitStaticSprite( const glTexture* sprite, const double bx, const double
 
    /* actual blitting */
    gl_blitTexture( sprite, x, y, sprite->sw, sprite->sh,
-         tx, ty, sprite->srw, sprite->srh, c );
+         tx, ty, sprite->srw, sprite->srh, c, 0. );
 }
 
 
@@ -522,7 +569,7 @@ void gl_blitScaleSprite( const glTexture* sprite,
 
    /* actual blitting */
    gl_blitTexture( sprite, x, y, bw, bh,
-         tx, ty, sprite->srw, sprite->srh, c );
+         tx, ty, sprite->srw, sprite->srh, c, 0. );
 }
 
 
@@ -552,7 +599,7 @@ void gl_blitScale( const glTexture* texture,
 
    /* Actual blitting. */
    gl_blitTexture( texture, x, y, bw, bh,
-         tx, ty, texture->srw, texture->srh, c );
+         tx, ty, texture->srw, texture->srh, c, 0. );
 }
 
 /**
@@ -574,7 +621,7 @@ void gl_blitStatic( const glTexture* texture,
 
    /* actual blitting */
    gl_blitTexture( texture, x, y, texture->sw, texture->sh,
-         0., 0., texture->srw, texture->srh, c );
+         0., 0., texture->srw, texture->srh, c, 0. );
 }
 
 
@@ -670,10 +717,10 @@ void gl_drawCircle( const double cx, const double cy,
 /**
  * @brief Draws a line.
  *
- *    @param cx x1 position of the first point in screen coordinates.
- *    @param cy y1 position of the first point in screen coordinates.
- *    @param cx x1 position of the second point in screen coordinates.
- *    @param cy y1 position of the second point in screen coordinates.
+ *    @param x1 X position of the first point in screen coordinates.
+ *    @param y1 Y position of the first point in screen coordinates.
+ *    @param x2 X position of the second point in screen coordinates.
+ *    @param y2 Y position of the second point in screen coordinates.
  *    @param c Colour to use.
  */
 void gl_drawLine( const double x1, const double y1,
@@ -743,43 +790,53 @@ int gl_initRender (void)
    gl_renderVBOtexOffset = sizeof(GLfloat) * OPENGL_RENDER_VBO_SIZE*2;
    gl_renderVBOcolOffset = sizeof(GLfloat) * OPENGL_RENDER_VBO_SIZE*(2+2);
 
-   vertex[0] = 0;
-   vertex[1] = 0;
-   vertex[2] = 1;
-   vertex[3] = 0;
-   vertex[4] = 0;
-   vertex[5] = 1;
-   vertex[6] = 1;
-   vertex[7] = 1;
+   vertex[0] = 0.;
+   vertex[1] = 0.;
+   vertex[2] = 1.;
+   vertex[3] = 0.;
+   vertex[4] = 0.;
+   vertex[5] = 1.;
+   vertex[6] = 1.;
+   vertex[7] = 1.;
    gl_squareVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
 
-   vertex[0] = 0;
-   vertex[1] = 0;
-   vertex[2] = 1;
-   vertex[3] = 0;
-   vertex[4] = 1;
-   vertex[5] = 1;
-   vertex[6] = 0;
-   vertex[7] = 1;
-   vertex[8] = 0;
-   vertex[9] = 0;
+   vertex[0] = 0.;
+   vertex[1] = 0.;
+   vertex[2] = 1.;
+   vertex[3] = 0.;
+   vertex[4] = 1.;
+   vertex[5] = 1.;
+   vertex[6] = 0.;
+   vertex[7] = 1.;
+   vertex[8] = 0.;
+   vertex[9] = 0.;
    gl_squareEmptyVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
 
    vertex[0] = 0.;
-   vertex[1] = -1;
+   vertex[1] = -1.;
    vertex[2] = 0.;
-   vertex[3] = 1;
-   vertex[4] = -1;
+   vertex[3] = 1.;
+   vertex[4] = -1.;
    vertex[5] = 0.;
-   vertex[6] = 1;
+   vertex[6] = 1.;
    vertex[7] = 0.;
    gl_crossVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
 
-   vertex[0] = 0;
-   vertex[1] = 0;
-   vertex[2] = 1;
-   vertex[3] = 0;
+   vertex[0] = 0.;
+   vertex[1] = 0.;
+   vertex[2] = 1.;
+   vertex[3] = 0.;
    gl_lineVBO = gl_vboCreateStatic( sizeof(GLfloat) * 4, vertex );
+
+   vertex[0] = 0.5*cos(4.*M_PI/3.);
+   vertex[1] = 0.5*sin(4.*M_PI/3.);
+   vertex[2] = 0.5*cos(0.);
+   vertex[3] = 0.5*sin(0.);
+   vertex[4] = 0.5*cos(2.*M_PI/3.);
+   vertex[5] = 0.5*sin(2.*M_PI/3.);
+   vertex[6] = vertex[0];
+   vertex[7] = vertex[1];
+   gl_triangleVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
 
    gl_checkErr();
 
@@ -798,5 +855,6 @@ void gl_exitRender (void)
    gl_vboDestroy( gl_squareEmptyVBO );
    gl_vboDestroy( gl_crossVBO );
    gl_vboDestroy( gl_lineVBO );
+   gl_vboDestroy( gl_triangleVBO );
    gl_renderVBO = NULL;
 }

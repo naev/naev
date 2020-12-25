@@ -12,7 +12,7 @@
  * Menu status.
  */
 #define MENU_MAIN       (1<<0) /**< Main menu (titlescreen). */
-#define MENU_SMALL      (1<<1) /**< Small ingame menu. */
+#define MENU_SMALL      (1<<1) /**< Small in-game menu. */
 #define MENU_INFO       (1<<2) /**< Player information menu. */
 #define MENU_DEATH      (1<<3) /**< Player death menu. */
 #define MENU_OPTIONS    (1<<4) /**< Player's options menu. */

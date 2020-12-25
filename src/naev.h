@@ -26,11 +26,13 @@
 #  define NAEV_H
 
 
-#include "ncompat.h"
-
-#include <limits.h>
+/** @cond */
 #include <inttypes.h>
+#include <limits.h>
 #include <math.h>
+/** @endcond */
+
+#include "ncompat.h"
 
 
 #define APPNAME            "Naev" /**< Application name. */
@@ -42,12 +44,19 @@
 #define MIN(x,y)           (((x)>(y))?(y):(x)) /**< Returns minimum. */
 #define CLAMP(a, b, x)     ((x)<(a)?(a):((x)>(b)?(b):(x))) /**< Clamps x between a and b: a <= x <= b. */
 
+#define SIGN(x)            (((x)>0)?1:-1) /**< Returns the sign of a value. */
+#define FSIGN(x)           (((x)>0.)?1.:-1.) /**< Returns the sign of a value. */
+
 #define pow2(x)            ((x)*(x)) /**< ^2 */
 
 /* maximum filename path */
 #ifndef PATH_MAX
 #  define PATH_MAX         256 /**< If not already defined. */
 #endif /* PATH_MAX */
+
+/* Default maximum string length */
+#define STRMAX 4096
+#define STRMAX_SHORT 1024
 
 
 
@@ -63,44 +72,16 @@
 #endif
 
 
-/* I've heard talk of PRIuN being evil, so there's this sad panda here.
- *
- *             :OOkxddkkdc
- *           cl;.......',d0kl'
- *          l;...........'c0NWO;
- *        ,xo'............',lkKdx:
- *        0x,''...........',;;::oO0,
- *       :0:,'''.......;dl,',',;xXNNx.
- *       00c;,,,,.....'KXXKOd:,;oXWWNNd
- *     ,KXx:;,;:xd'....ck0XNXo;:l0NNNNN0.
- *    oXNNOc;,,lNNk',,,...,cl::cd0NNNXXXK,
- *    XXXNNKo;;kNNd',;;,..',;cloONNNNNNXXk
- *  .dNNNNNNXdckNK:'',::::c;:ldkXNWWNNNNNX.
- * cXNNWWWWNNKoloc:,,:cldOoodkKxcKWWWWWWNN;
- * 0NWWWWWWNXl''';ooodkxOxk00o.  xNWWWWWWNd
- * ;odkOOkxo:       .',,,,'      ;K0NKNKNNk
- *                                 .cxxkk,.
- */
-#ifndef PRIu64
-#   define PRIu64    "%ju" /**< Illegal, evil and probably eats babies too. */
-#endif
-#ifndef PRIi64
-#   define PRIi64    "%jd" /**< Illegal, evil and probably eats babies too. */
-#endif
-
-
 /*
  * Misc stuff.
  */
 extern const double fps_min;
 void fps_setPos( double x, double y );
-void naev_resize( int w, int h );
+void naev_resize (void);
 void naev_toggleFullscreen (void);
 void update_routine( double dt, int enter_sys );
-int naev_versionString( char *str, size_t slen, int major, int minor, int rev );
 char *naev_version( int long_version );
-int naev_versionParse( int version[3], char *buf, int nbuf );
-int naev_versionCompare( int version[3] );
+int naev_versionCompare( const char *version );
 char *naev_binary (void);
 void naev_quit (void);
 

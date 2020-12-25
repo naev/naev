@@ -9,7 +9,7 @@
   <description>The Headhunter class interceptor missile is a medium calibre missile that can deal devastating damage to small and medium sized targets, while remaining reasonably fast and agile. Most effective when launched at distant enemies.</description>
   <gfx_store>headhunterlauncher</gfx_store>
   <cpu>-5</cpu>
- <rarity>3</rarity></general>
+ </general>
  <specific type="launcher" secondary="1">
   <ammo>Headhunter Missile</ammo>
   <delay>3.5</delay>

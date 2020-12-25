@@ -12,6 +12,9 @@
    <planet>Darkshed</planet>
    <cond>not diff.isApplied( "flf_dead" )</cond>
   </avail>
+  <notes>
+   <campaign>Nexus show their teeth</campaign>
+  </notes>
  </mission>
  --]]
 --[[
@@ -25,10 +28,10 @@
 --]]
 
 --Needed scripts
-require "pilot/pirate.lua"
-require "numstring.lua"
-require "jumpdist.lua"
-require "dat/missions/shark/common.lua"
+require "pilot/pirate"
+require "numstring"
+require "jumpdist"
+require "missions/shark/common"
 
 
 title = {}
@@ -58,12 +61,11 @@ text[4] = _("You have killed the four pirates. Now to return to %s and collect y
 
 title[5] = _("That was impressive")
 text[5] = _([[Smith awaits your arrival at the spaceport. When you exit your ship, he smiles and walks up to you. "Good job," he says. "Our deal is secure, thanks to you. Here is your pay and something extra for your hard work. Thank you for all your help!"
-    He hands you a credit chip and what appears to be a Nexus Shipyard commemorative sandwich holder.]])
+    He hands you a credit chip and what appears to be a Nexus Shipyards commemorative sandwich holder.]])
 
 -- Mission details
 misn_title = _("The Last Detail")
-misn_reward = _("%s credits")
-misn_desc = _("Nexus Shipyard has tasked you with killing four pirates.")
+misn_desc = _("Nexus Shipyards has tasked you with killing four pirates.")
 
 -- NPC
 npc_desc[1] = _("Arnold Smith")
@@ -107,7 +109,7 @@ function create ()
    paysys = system.get(psyname)
    paypla = planet.get(pplname)
 
-   if not misn.claim(gawsys) and misn.claim(kersys1) and misn.claim(kersys2) and misn.claim(godsys) then
+   if not misn.claim({gawsys, kersys1, kersys2, godsys}) then
       misn.finish(false)
    end
 
@@ -134,12 +136,12 @@ function accept()
 
    if tk.yesno(title[1], text[1]) then
       misn.accept()
-      tk.msg(title[2], text[2]:format(gawname,gawsys:name(),kername1,kersys1:name(),kername2,kersys2:name(),godname,godsys:name()))
+      tk.msg(title[2], text[2]:format(gawname, gawsys:name(), kername1, kersys1:name(), kername2, kersys2:name(), godname, godsys:name()))
 
       osd_msg[2] = osd_msg[2]:format(pplname,psyname)
 
       misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward)))
+      misn.setReward(creditstring(reward))
       misn.setDesc(misn_desc)
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)
@@ -186,7 +188,7 @@ function enter()
       baddie:setHostile()
       baddie:setHilight()
       baddie:control()
-      baddie:goto(pos)
+      baddie:moveto(pos)
 
       --The pirate becomes nice defensive outfits
       baddie:rmOutfit("all")
@@ -259,10 +261,10 @@ function enter()
 end
 
 function idle(pilot,pos)  --the Gawain is flying around a random point
-   baddie:goto(pos + vec2.new( 800,  800), false, false)
-   baddie:goto(pos + vec2.new(-800,  800), false, false)
-   baddie:goto(pos + vec2.new(-800, -800), false, false)
-   baddie:goto(pos + vec2.new( 800, -800), false, false)
+   baddie:moveto(pos + vec2.new( 800,  800), false, false)
+   baddie:moveto(pos + vec2.new(-800,  800), false, false)
+   baddie:moveto(pos + vec2.new(-800, -800), false, false)
+   baddie:moveto(pos + vec2.new( 800, -800), false, false)
 end
 
 function attacked()  --the Gawain is going away

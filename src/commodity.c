@@ -13,24 +13,27 @@
  */
 
 
-#include "economy.h"
-#include "commodity.h"
-#include "naev.h"
-
+/** @cond */
 #include <stdio.h>
-#include "nstring.h"
 #include <stdint.h>
 
-#include "nxml.h"
-#include "ndata.h"
+#include "naev.h"
+/** @endcond */
+
+#include "commodity.h"
+
+#include "economy.h"
+#include "hook.h"
 #include "log.h"
-#include "spfx.h"
+#include "ndata.h"
+#include "nstring.h"
+#include "ntime.h"
+#include "nxml.h"
 #include "pilot.h"
 #include "player.h"
 #include "rng.h"
 #include "space.h"
-#include "ntime.h"
-#include "hook.h"
+#include "spfx.h"
 
 
 #define XML_COMMODITY_ID      "Commodities" /**< XML document identifier */
@@ -47,7 +50,7 @@ int commodity_nstack       = 0; /**< Number of commodities in the stack. */
 
 
 /* standard commodities (ie. sellable and buyable anywhere) */
-static int* commodity_standard = NULL; /**< Contains all the standard commoditie's indices. */
+static int* commodity_standard = NULL; /**< Contains all the standard commodity's indices. */
 static int commodity_nstandard = 0; /**< Number of standard commodities. */
 
 
@@ -72,36 +75,34 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent );
 /**
  * @brief Converts credits to a usable string for displaying.
  *
- *    @param[out] str Output is stored here, must have at least a length of 32
- *                     char.
+ *    @param[out] str Output is stored here, must have at least a size of ECON_CRED_STRLEN.
  *    @param credits Credits to display.
  *    @param decimals Decimals to use.
  */
 void credits2str( char *str, credits_t credits, int decimals )
 {
    if (decimals < 0)
-      nsnprintf( str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
+      nsnprintf( str, ECON_CRED_STRLEN, _("%"CREDITS_PRI" ¤"), credits );
    else if (credits >= 1000000000000000000LL)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*fE", decimals, (double)credits / 1000000000000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, _("%.*f E¤"), decimals, (double)credits / 1000000000000000000. );
    else if (credits >= 1000000000000000LL)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*fP", decimals, (double)credits / 1000000000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, _("%.*f P¤"), decimals, (double)credits / 1000000000000000. );
    else if (credits >= 1000000000000LL)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*fT", decimals, (double)credits / 1000000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, _("%.*f T¤"), decimals, (double)credits / 1000000000000. );
    else if (credits >= 1000000000L)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*fG", decimals, (double)credits / 1000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, _("%.*f G¤"), decimals, (double)credits / 1000000000. );
    else if (credits >= 1000000)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*fM", decimals, (double)credits / 1000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, _("%.*f M¤"), decimals, (double)credits / 1000000. );
    else if (credits >= 1000)
-      nsnprintf( str, ECON_CRED_STRLEN, "%.*fK", decimals, (double)credits / 1000. );
+      nsnprintf( str, ECON_CRED_STRLEN, _("%.*f k¤"), decimals, (double)credits / 1000. );
    else
-      nsnprintf (str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
+      nsnprintf (str, ECON_CRED_STRLEN, _("%"CREDITS_PRI" ¤"), credits );
 }
 
 /**
  * @brief Given a price and on-hand credits, outputs a colourized string.
  *
- *    @param[out] str Output is stored here, must have at least a length of 32
- *                     char.
+ *    @param[out] str Output is stored here, must have at least a size of ECON_CRED_STRLEN.
  *    @param price Price to display.
  *    @param credits Credits available.
  *    @param decimals Decimals to use.
@@ -117,6 +118,18 @@ void price2str(char *str, credits_t price, credits_t credits, int decimals )
    buf = strdup(str);
    nsnprintf(str, ECON_CRED_STRLEN, "\ar%s\a0", buf);
    free(buf);
+}
+
+
+/**
+ * @brief Converts tonnes to a usable string for displaying.
+ *
+ *    @param[out] str Output is stored here, must have at least a size of ECON_MASS_STRLEN.
+ *    @param tonnes Number of tonnes to display.
+ */
+void tonnes2str( char *str, int tonnes )
+{
+   snprintf( str, ECON_MASS_STRLEN, ngettext( "%d tonne", "%d tonnes", tonnes ), tonnes );
 }
 
 /**
@@ -186,14 +199,10 @@ Commodity* commodity_getByIndex( const int indx )
 static void commodity_freeOne( Commodity* com )
 {
    CommodityModifier *this,*next;
-   if (com->name)
-      free(com->name);
-   if (com->description)
-      free(com->description);
-   if (com->gfx_store)
-      gl_freeTexture(com->gfx_store);
-   if (com->gfx_space)
-      gl_freeTexture(com->gfx_space);
+   free(com->name);
+   free(com->description);
+   gl_freeTexture(com->gfx_store);
+   gl_freeTexture(com->gfx_space);
    next = com->planet_modifier;
    com->planet_modifier = NULL;
    while (next != NULL ) {
@@ -312,7 +321,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       if (xml_isNode(node, "planet_modifier")) {
          newdict = malloc(sizeof(CommodityModifier));
          newdict->next = temp->planet_modifier;
-         newdict->name = xml_nodeProp(node,(xmlChar*)"type");
+         xmlr_attr_strd(node, "type", newdict->name);
          newdict->value = xml_getFloat(node);
          temp->planet_modifier = newdict;
          continue;
@@ -320,7 +329,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       if (xml_isNode(node, "faction_modifier")) {
          newdict = malloc(sizeof(CommodityModifier));
          newdict->next = temp->faction_modifier;
-         newdict->name = xml_nodeProp(node, (xmlChar*)"type");
+         xmlr_attr_strd(node, "type", newdict->name);
          newdict->value = xml_getFloat(node);
          temp->faction_modifier = newdict;
       }
@@ -340,7 +349,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    
 
 #if 0 /* shouldn't be needed atm */
-#define MELEMENT(o,s)   if (o) WARN("Commodity '%s' missing '"s"' element", temp->name)
+#define MELEMENT(o,s)   if (o) WARN( _("Commodity '%s' missing '"s"' element"), temp->name)
    MELEMENT(temp->description==NULL,"description");
    MELEMENT(temp->high==0,"high");
    MELEMENT(temp->medium==0,"medium");
@@ -549,7 +558,7 @@ void gatherable_gather( int pilot )
 
          if (q>0) {
             if (pilot_isPlayer(p)) {
-               player_message( ngettext("%d ton of %s gathered", "%d tons of %s gathered", q), q, gat->type->name );
+               player_message( ngettext("%d ton of %s gathered", "%d tons of %s gathered", q), q, _(gat->type->name) );
 
                /* Run hooks. */
                hparam[0].type    = HOOK_PARAM_STRING;
@@ -587,22 +596,13 @@ void gatherable_gather( int pilot )
  */
 int commodity_load (void)
 {
-   size_t bufsize;
-   char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
 
    /* Load the file. */
-   buf = ndata_read( COMMODITY_DATA_PATH, &bufsize);
-   if (buf == NULL)
+   doc = xml_parsePhysFS( COMMODITY_DATA_PATH );
+   if (doc == NULL)
       return -1;
-
-   /* Handle the XML. */
-   doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN(_("'%s' is not valid XML."), COMMODITY_DATA_PATH);
-      return -1;
-   }
 
    node = doc->xmlChildrenNode; /* Commodities node */
    if (strcmp((char*)node->name,XML_COMMODITY_ID)) {
@@ -639,7 +639,6 @@ int commodity_load (void)
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
-   free(buf);
 
    DEBUG( ngettext( "Loaded %d Commodity", "Loaded %d Commodities", commodity_nstack ), commodity_nstack );
 
@@ -660,6 +659,7 @@ void commodity_free (void)
    free( commodity_stack );
    commodity_stack = NULL;
    commodity_nstack = 0;
+   free( commodity_standard );
    commodity_standard = NULL;
    commodity_nstandard = 0;
 

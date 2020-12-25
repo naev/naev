@@ -12,6 +12,9 @@
    <done>Empire Shipping 3</done>
    <planet>Omega Station</planet>
   </avail>
+  <notes>
+   <campaign>Collective</campaign>
+  </notes>
  </mission>
  --]]
 --[[
@@ -27,13 +30,12 @@
 
 ]]--
 
-require "proximity.lua"
-require "numstring.lua"
-require "dat/missions/empire/common.lua"
+require "proximity"
+require "numstring"
+require "missions/empire/common"
 
 bar_desc = _("You see an Empire Lt. Commander who seems to be motioning you over to the counter.")
 misn_title = _("Collective Scout")
-misn_reward = _("%s credits")
 misn_desc = {}
 misn_desc[1] = _("Find a scout last seen in the %s system")
 misn_desc[2] = _("Travel back to %s in %s")
@@ -93,8 +95,8 @@ function accept ()
 
    -- Mission details
    misn.setTitle(misn_title)
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
-   misn.setDesc( string.format(misn_desc[1],misn_nearby:name()))
+   misn.setReward( creditstring( credits ) )
+   misn.setDesc( string.format(misn_desc[1], misn_nearby:name()))
 
    -- Flavour text and mini-briefing
    tk.msg( title[2], string.format( text[2], misn_base_sys:name() ) )
@@ -106,6 +108,7 @@ function accept ()
    osd_msg[3] = osd_msg[3]:format(misn_base:name(), misn_base_sys:name())
    misn.osdCreate(misn_title, osd_msg)
    hook.enter("enter")
+   hook.jumpout("jumpout")
    hook.land("land")
 end
 
@@ -114,6 +117,10 @@ function enter()
    sys = system.cur()
 
    if sys == misn_target and misn_stage == 0 then
+      -- Force Collective music (note: must clear these later on).
+      var.push("music_ambient_force", "Collective")
+      var.push("music_combat_force", "Collective")
+
       pilot.clear()
       pilot.toggleSpawn(false)
       misn.osdActive(2)
@@ -122,6 +129,15 @@ function enter()
       misn.osdActive(1)
    end
 end
+
+
+function jumpout()
+   if system.cur() == misn_target then
+      var.pop("music_ambient_force")
+      var.pop("music_combat_force")
+   end
+end
+
 
 function spotdrone()
    p = pilot.add("Collective Drone", "scout", vec2.new(8000, -20000))[1]
@@ -135,7 +151,7 @@ function spotdrone()
    -- update mission
    misn.osdActive(3)
    player.msg(msg_spotdrone)
-   misn.setDesc( string.format(misn_desc[2],misn_base:name(),misn_base_sys:name()) )
+   misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name()) )
    misn_stage = 1
    misn.markerMove( misn_marker, misn_base_sys )
 end
@@ -144,7 +160,7 @@ function land()
    pnt = planet.cur()
 
    if misn_stage == 1 and  pnt == misn_base then
-      tk.msg( title[3], string.format(text[4],misn_target:name()) )
+      tk.msg( title[3], string.format(text[4], misn_target:name()) )
       faction.modPlayerSingle("Empire",5)
       player.pay(credits)
       emp_addCollectiveLog( log_text_success )
@@ -159,7 +175,7 @@ function idle()
         local angle = rnd.rnd() * 2 * math.pi
         local newlocation = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- New location is 750px away in a random direction
         p:taskClear()
-        p:goto(location + newlocation, false, false)
+        p:moveto(location + newlocation, false, false)
         hook.timer(5000, "idle")
     end
 end
@@ -172,5 +188,9 @@ function kill()
 end
 
 function abort()
+   if system.cur() == misn_target then
+      var.pop("music_ambient_force")
+      var.pop("music_combat_force")
+   end
    misn.finish(false)
 end

@@ -9,43 +9,42 @@
  */
 
 
-#include "nlua_shiplog.h"
+/** @cond */
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-#include <math.h>
+#include "nlua_shiplog.h"
 
-#include <lua.h>
-#include <lauxlib.h>
-
+#include "array.h"
+#include "gui_osd.h"
+#include "land.h"
+#include "log.h"
+#include "mission.h"
+#include "music.h"
+#include "ndata.h"
 #include "nlua.h"
-#include "nlua_hook.h"
-#include "nlua_player.h"
-#include "nlua_tk.h"
+#include "nlua_bkg.h"
+#include "nlua_camera.h"
 #include "nlua_faction.h"
+#include "nlua_hook.h"
+#include "nlua_misn.h"
+#include "nlua_music.h"
+#include "nlua_player.h"
 #include "nlua_system.h"
 #include "nlua_tex.h"
-#include "nlua_camera.h"
-#include "nlua_music.h"
-#include "nlua_bkg.h"
-#include "nlua_misn.h"
-#include "player.h"
-#include "mission.h"
-#include "log.h"
-#include "rng.h"
-#include "toolkit.h"
-#include "land.h"
-#include "nxml.h"
+#include "nlua_tk.h"
 #include "nluadef.h"
-#include "music.h"
-#include "gui_osd.h"
 #include "npc.h"
-#include "array.h"
-#include "ndata.h"
+#include "nstring.h"
+#include "nxml.h"
+#include "player.h"
+#include "rng.h"
 #include "shiplog.h"
+#include "toolkit.h"
 
 int shiplog_loadShiplog( nlua_env env );
 static int shiplog_createLog( lua_State *L );
@@ -62,7 +61,7 @@ static const luaL_Reg shiplog_methods[] = {
  */
 /**
  * @brief Loads the mission Lua library.
- *    @param L Lua state.
+ *    @param env Lua environment.
  */
 int nlua_loadShiplog( nlua_env env )
 {
@@ -116,8 +115,7 @@ static int shiplog_createLog( lua_State *L )
       idstr = strdup(nidstr);
    /* Create a new shiplog */
    shiplog_create( idstr, logname, logtype, overwrite, maxLen );
-   if ( idstr != NULL )
-      free( idstr );
+   free( idstr );
    lua_pushnumber(L, 0);
    return 1;
 }

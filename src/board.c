@@ -9,20 +9,22 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "board.h"
 
-#include "naev.h"
-
+#include "commodity.h"
+#include "damagetype.h"
+#include "hook.h"
 #include "log.h"
+#include "nstring.h"
 #include "pilot.h"
 #include "player.h"
-#include "toolkit.h"
-#include "space.h"
 #include "rng.h"
-#include "commodity.h"
-#include "hook.h"
-#include "damagetype.h"
-#include "nstring.h"
+#include "space.h"
+#include "toolkit.h"
 
 
 #define BOARDING_WIDTH  380 /**< Boarding window width. */
@@ -122,7 +124,7 @@ void player_board (void)
 
    /* pilot will be boarded */
    pilot_setFlag(p,PILOT_BOARDED);
-   player_message(_("\apBoarding ship \a%c%s\a0."), c, p->name);
+   player_message(_("\aoBoarding ship \a%c%s\a0."), c, p->name);
 
    /* Don't unboard. */
    board_stopboard = 0;
@@ -146,7 +148,7 @@ void player_board (void)
    /*
     * create the boarding window
     */
-   wdw = window_create( "Boarding", -1, -1, BOARDING_WIDTH, BOARDING_HEIGHT );
+   wdw = window_create( "wdwBoarding", _("Boarding"), -1, -1, BOARDING_WIDTH, BOARDING_HEIGHT );
 
    window_addText( wdw, 20, -30, 120, 60,
          0, "txtCargo", &gl_smallFont, NULL,
@@ -212,7 +214,7 @@ static void board_stealCreds( unsigned int wdw, char* str )
    p = pilot_get(player.p->target);
 
    if (p->credits==0) { /* you can't steal from the poor */
-      player_message(_("\apThe ship has no credits."));
+      player_message(_("\aoThe ship has no credits."));
       return;
    }
 
@@ -221,7 +223,7 @@ static void board_stealCreds( unsigned int wdw, char* str )
    player_modCredits( p->credits );
    p->credits = 0;
    board_update( wdw ); /* update the lack of credits */
-   player_message(_("\apYou manage to steal the ship's credits."));
+   player_message(_("\aoYou manage to steal the ship's credits."));
 }
 
 
@@ -240,7 +242,7 @@ static void board_stealCargo( unsigned int wdw, char* str )
    p = pilot_get(player.p->target);
 
    if (p->ncommodities==0) { /* no cargo */
-      player_message(_("\apThe ship has no cargo."));
+      player_message(_("\aoThe ship has no cargo."));
       return;
    }
    else if (pilot_cargoFree(player.p) <= 0) {
@@ -259,7 +261,7 @@ static void board_stealCargo( unsigned int wdw, char* str )
    }
 
    board_update( wdw );
-   player_message(_("\apYou manage to steal the ship's cargo."));
+   player_message(_("\aoYou manage to steal the ship's cargo."));
 }
 
 
@@ -277,7 +279,7 @@ static void board_stealFuel( unsigned int wdw, char* str )
    p = pilot_get(player.p->target);
 
    if (p->fuel <= 0) { /* no fuel. */
-      player_message(_("\apThe ship has no fuel."));
+      player_message(_("\aoThe ship has no fuel."));
       return;
    }
    else if (player.p->fuel == player.p->fuel_max) {
@@ -299,7 +301,7 @@ static void board_stealFuel( unsigned int wdw, char* str )
    }
 
    board_update( wdw );
-   player_message(_("\apYou manage to steal the ship's fuel."));
+   player_message(_("\aoYou manage to steal the ship's fuel."));
 }
 
 
@@ -370,7 +372,7 @@ static void board_stealAmmo( unsigned int wdw, char* str )
            pilot_rmAmmo(p, target_outfit_slot, nadded);
            nreloaded += nadded;
            if (nadded > 0)
-              player_message(_("\apYou looted %d %s(s)"), nadded, ammo->name);
+              player_message(_("\aoYou looted: %d × %s"), nadded, _(ammo->name));
            if (nammo <= 0) {
               break;
            }
@@ -442,9 +444,9 @@ static int board_fail( unsigned int wdw )
    if (ret == 0)
       return 0;
    else if (ret < 0) /* killed ship. */
-      player_message(_("\apYou have tripped the ship's self-destruct mechanism!"));
+      player_message(_("\aoYou have tripped the ship's self-destruct mechanism!"));
    else /* you just got locked out */
-      player_message(_("\apThe ship's security system locks %s out."),
+      player_message(_("\aoThe ship's security system locks %s out."),
             (player.p->ship->crew > 0) ? "your crew" : "you" );
 
    board_exit( wdw, NULL);
@@ -474,7 +476,7 @@ static void board_update( unsigned int wdw )
 
    /* Commodities. */
    if ((p->ncommodities==0) && (j < PATH_MAX))
-      j += snprintf( &str[j], PATH_MAX-j, _("none\n") );
+      j += nsnprintf( &str[j], PATH_MAX-j, _("none\n") );
    else {
       total_cargo = 0;
       for (i=0; i<p->ncommodities; i++) {
@@ -484,29 +486,30 @@ static void board_update( unsigned int wdw )
             continue;
          total_cargo += p->commodities[i].quantity;
       }
-      j += snprintf( &str[j], PATH_MAX-j, _("%d tonnes\n"), total_cargo );
+      j += nsnprintf( &str[ j ], PATH_MAX - j, ngettext( "%d tonne\n", "%d tonnes\n", total_cargo ), total_cargo );
    }
 
    /* Fuel. */
    if (p->fuel <= 0) {
       if (j < PATH_MAX)
-         j += snprintf( &str[j], PATH_MAX-j, _("none\n") );
+         j += nsnprintf( &str[j], PATH_MAX-j, _("none\n") );
    }
    else {
       if (j < PATH_MAX)
-         j += snprintf( &str[j], PATH_MAX-j, _("%d Units\n"), p->fuel );
+         j += nsnprintf( &str[ j ], PATH_MAX - j, ngettext( "%d unit\n", "%d units\n", p->fuel ), p->fuel );
    }
 
    /* Missiles */
    int nmissiles = pilot_countAmmo(p);
    if (nmissiles <= 0) {
       if (j < PATH_MAX)
-        j += snprintf( &str[j], PATH_MAX-j, _("none\n") );
+        j += nsnprintf( &str[j], PATH_MAX-j, _("none\n") );
    }
    else {
       if (j < PATH_MAX)
-        j += snprintf( &str[j], PATH_MAX-j, _("%d missiles\n"), nmissiles );
+         j += nsnprintf( &str[ j ], PATH_MAX - j, ngettext( "%d missile\n", "%d missiles\n", nmissiles ), nmissiles );
    }
+   (void)j;
 
    window_modifyText( wdw, "txtData", str );
 }
@@ -585,9 +588,8 @@ void pilot_boardComplete( Pilot *p )
       p->credits       += worth;
       target->credits  -= worth;
       credits2str( creds, worth, 2 );
-      player_message( ngettext(
-               "\a%c%s\a0 has plundered %s credit from your ship!",
-               "\a%c%s\a0 has plundered %s credits from your ship!", worth),
+      player_message(
+            _("\a%c%s\a0 has plundered %s from your ship!"),
             pilot_getFactionColourChar(p), p->name, creds );
    }
    else {

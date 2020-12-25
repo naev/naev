@@ -55,6 +55,11 @@ function _atk_drone_ranged( target, dist )
    -- Check if in range
    if dist < ai.getweaprange( 4 ) and dir < 30 then
       ai.weapset( 4 )
+   else
+      -- First test if we should zz
+      if _atk_decide_zz() then
+         ai.pushsubtask("_atk_zigzag")
+      end
    end
 
    -- Always launch fighters
@@ -76,6 +81,9 @@ function atk_drone ()
    -- Targeting stuff
    ai.hostile(target) -- Mark as hostile
    ai.settarget(target)
+
+   -- See if the enemy is still seeable
+   if not _atk_check_seeable() then return end
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
@@ -105,6 +113,11 @@ function _atk_d_flyby( target, dist )
    local range = ai.getweaprange(3)
    local dir = 0
    ai.weapset( 3 ) -- Forward/turrets
+
+   -- First test if we should zz
+   if _atk_decide_zz() then
+      ai.pushsubtask("_atk_zigzag")
+   end
 
    -- Far away, must approach
    if dist > (3 * range) then
@@ -140,7 +153,7 @@ function _atk_d_flyby( target, dist )
    else
 
       dir = ai.aim(target)
-      --not accellerating here is the only difference between the aggression levels. This can probably be an aggression AI parameter
+      --not accelerating here is the only difference between the aggression levels. This can probably be an aggression AI parameter
       if mem.aggressive == true then
          ai.accel()
       end
@@ -164,6 +177,11 @@ function _atk_d_space_sup( target, dist )
    local range = ai.getweaprange(3)
    local dir   = 0
    ai.weapset( 3 ) -- Forward/turrets
+
+   -- First test if we should zz
+   if _atk_decide_zz() then
+      ai.pushsubtask("_atk_zigzag")
+   end
 
    --if we're far away from the target, then turn and approach
    if dist > (1.1*range) then

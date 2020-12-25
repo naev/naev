@@ -38,13 +38,13 @@ Make comm chatter appear during the battle
 Add some consequences if the player aborts the mission
 ]]--
 
-require "dat/scripts/numstring.lua"
+require "scripts/numstring"
 
 -- This section stores the strings (text) for the mission.
 
 -- Mission details
 misn_title = _("Defend the System")
-misn_reward = _("%s credits and the pleasure of serving the Empire.")
+misn_reward = _("%s and the pleasure of serving the Empire.")
 misn_desc = _("Defend the system against a pirate fleet.")
 
 -- Stage one: in the bar you hear a fleet of Pirates have invaded the system.
@@ -84,7 +84,7 @@ comm[9] = _("Comm Trader>You're a coward, %s. You better hope I never see you ag
 comm[10] = _("Comm Trader>You're running away now, %s? The fight's finished, you know...")
 title[4] = _("Good job!")
 text[4] = _([[The debris from the battle disappears behind you in a blur of light. A moment after you emerge from hyperspace, a Imperial ship jumps in behind you and hails you.
-    "Please hold course and confirm your identity, %s."  You send your license code and wait for a moment. "Ok, that's fine. We're just making sure no pirates escaped. You were part of the battle, weren't you?  Surprised you didn't return for the bounty, pilot. Listen, I appreciate what you did back there. I have family on %s. When I'm not flying overhead, it's good to know there are good samaritans like you who will step up. Thanks."
+    "Please hold course and confirm your identity, %s."  You send your license code and wait for a moment. "OK, that's fine. We're just making sure no pirates escaped. You were part of the battle, weren't you?  Surprised you didn't return for the bounty, pilot. Listen, I appreciate what you did back there. I have family on %s. When I'm not flying overhead, it's good to know there are good Samaritans like you who will step up. Thanks."
 ]])
 title[5] = _("Left behind")
 text[5] = _([[The Commodore turns and walks off. Eight men and women follow her, but you stay put.
@@ -99,51 +99,49 @@ noTitle = _("Observe the action.")
 -- Create the mission on the current planet, and present the first Bar text.
 function create()
 
-      this_planet, this_system = planet.cur()
-      if ( this_system:presences()["Pirate"] or 
-           this_system:presences()["Collective"] or 
-           this_system:presences()["FLF"] ) 
-         then misn.finish(false) 
-      end
+   this_planet, this_system = planet.cur()
+   if ( this_system:presences()["Pirate"]
+         or this_system:presences()["Collective"]
+         or this_system:presences()["FLF"] ) then
+      misn.finish(false)
+   end
 
-    missys = {this_system}
-    if not misn.claim(missys) then
-        misn.finish(false)
-    end
- 
-      planet_name = planet.name( this_planet)
-      system_name = this_system:name()
-      if tk.yesno( title[1], text[1] ) then
-         misn.accept()
-         var.push( "dts_firstSystem", "planet_name")
-         tk.msg( title[11], text[11])
-         reward = 40000
-         misn.setReward( string.format( misn_reward, numstring(reward)) )
-         misn.setDesc( misn_desc)
-         misn.setTitle( misn_title)
-         misn.markerAdd( this_system, "low" )
-         defender = true
+   missys = {this_system}
+   if not misn.claim(missys) then
+      misn.finish(false)
+   end
 
-     -- hook an abstract deciding function to player entering a system
-         hook.enter( "enter_system")
+   planet_name = this_planet:name()
+   system_name = this_system:name()
+   if tk.yesno( title[1], text[1] ) then
+      misn.accept()
+      var.push( "dts_firstSystem", "planet_name")
+      tk.msg( title[11], text[11])
+      reward = 40000
+      misn.setReward( string.format( misn_reward, creditstring(reward)) )
+      misn.setDesc( misn_desc)
+      misn.setTitle( misn_title)
+      misn.markerAdd( this_system, "low" )
+      defender = true
 
-     -- hook warm reception to player landing
-         hook.land( "celebrate_victory")
-      
-      else
-     -- If player didn't accept the mission, the battle's still on, but player has no stake.
-         misn.accept()
-         var.push( "dts_firstSystem", "planet_name")
-         tk.msg( title[5], text[5])
-         misn.setReward( noReward)
-         misn.setDesc( noDesc)
-         misn.setTitle( noTitle)
-         defender = false
-         
-     -- hook an abstract deciding function to player entering a system when not part of defense
-         hook.enter( "enter_system")
-      end
+      -- hook an abstract deciding function to player entering a system
+      hook.enter( "enter_system")
 
+      -- hook warm reception to player landing
+      hook.land( "celebrate_victory")
+   else
+      -- If player didn't accept the mission, the battle's still on, but player has no stake.
+      misn.accept()
+      var.push( "dts_firstSystem", "planet_name")
+      tk.msg( title[5], text[5])
+      misn.setReward( noReward)
+      misn.setDesc( noDesc)
+      misn.setTitle( noTitle)
+      defender = false
+
+      -- hook an abstract deciding function to player entering a system when not part of defense
+      hook.enter( "enter_system")
+   end
 end
 
 -- Decides what to do when player either takes off starting planet or jumps into another system

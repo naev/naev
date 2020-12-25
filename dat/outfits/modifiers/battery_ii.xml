@@ -8,7 +8,7 @@
   <price>120000</price>
   <description>A large battery unit designed to hold 400 MJ of energy. Ideally mounted on medium-to-large vessels.</description>
   <gfx_store>capacitor2-g</gfx_store>
- <rarity>2</rarity></general>
+ </general>
  <specific type="modification">
   <energy>400</energy>
  </specific>

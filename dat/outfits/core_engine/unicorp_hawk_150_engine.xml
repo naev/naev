@@ -4,7 +4,6 @@
   <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>small</size>
-  <rarity>1</rarity>
   <mass>6</mass>
   <price>15000</price>
   <description>The Hawk 150 is a low-budget, general-purpose engine many civilians use to propel their ships. It's not particularly effective, but it's a lightweight engine with low energy demands, making it a solid choice for small vessels.</description>

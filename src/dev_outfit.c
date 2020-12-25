@@ -8,16 +8,18 @@
  * @brief Handles the outfit development routines.
  */
 
-#include "dev_outfit.h"
-
-#include "naev.h"
-
+/** @cond */
 #include "SDL.h"
 
-#include "log.h"
-#include "outfit.h"
+#include "naev.h"
+/** @endcond */
+
+#include "dev_outfit.h"
+
 #include "damagetype.h"
+#include "log.h"
 #include "nstring.h"
+#include "outfit.h"
 
 
 /**

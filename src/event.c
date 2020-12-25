@@ -13,34 +13,36 @@
  */
 
 
-#include "event.h"
-
-#include "naev.h"
-
-#include <stdint.h>
+/** @cond */
 #include "nstring.h"
+#include <stdint.h>
 #include <stdlib.h>
 
-#include "log.h"
+#include "naev.h"
+/** @endcond */
+
+#include "event.h"
+
 #include "array.h"
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_evt.h"
-#include "nlua_hook.h"
-#include "nlua_tk.h"
-#include "nlua_camera.h"
-#include "nlua_bkg.h"
-#include "nlua_tex.h"
-#include "nlua_music.h"
-#include "nlua_spfx.h"
-#include "rng.h"
-#include "ndata.h"
-#include "nxml.h"
-#include "nxml_lua.h"
 #include "cond.h"
 #include "hook.h"
-#include "player.h"
+#include "log.h"
+#include "ndata.h"
+#include "nlua.h"
+#include "nlua_audio.h"
+#include "nlua_bkg.h"
+#include "nlua_camera.h"
+#include "nlua_evt.h"
+#include "nlua_hook.h"
+#include "nlua_music.h"
+#include "nlua_tex.h"
+#include "nlua_tk.h"
+#include "nluadef.h"
 #include "npc.h"
+#include "nxml.h"
+#include "nxml_lua.h"
+#include "player.h"
+#include "rng.h"
 
 
 #define XML_EVENT_ID          "Events" /**< XML document identifier */
@@ -193,7 +195,7 @@ int event_run( unsigned int eventid, const char *func )
 /**
  * @brief Gets the name of the event data.
  *
- *    @param ev Event to get name of data from.
+ *    @param eventid Event to get name of data from.
  *    @return Name of data ev has.
  */
 const char *event_getData( unsigned int eventid )
@@ -242,7 +244,7 @@ static unsigned int event_genID (void)
 /**
  * @brief Creates an event.
  *
- *    @param data Data to base event off of.
+ *    @param dataid Data to base event off of.
  *    @param id ID to use (0 to generate).
  *    @return 0 on success.
  */
@@ -277,7 +279,7 @@ static int event_create( int dataid, unsigned int *id )
    nlua_loadTex(ev->env);
    nlua_loadBackground(ev->env);
    nlua_loadMusic(ev->env);
-   nlua_loadSpfx(ev->env);
+   nlua_loadAudio(ev->env);
    nlua_loadTk(ev->env);
 
    /* Load file. */
@@ -446,7 +448,7 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
    memset( temp, 0, sizeof(EventData) );
 
    /* get the name */
-   temp->name = xml_nodeProp(parent, "name");
+   xmlr_attr_strd(parent, "name", temp->name);
    if (temp->name == NULL)
       WARN(_("Event in %s has invalid or no name"), EVENT_DATA_PATH);
 
@@ -489,6 +491,9 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
          } while (xml_nextNode(cur));
          continue;
       }
+
+      /* Notes for the python mission mapping script. */
+      else if (xml_isNode(node,"notes")) continue;
 
       /* Condition. */
       xmlr_strd(node,"cond",temp->cond);
@@ -535,18 +540,18 @@ static int event_cmp( const void* a, const void* b )
  */
 int events_load (void)
 {
-   size_t i, nfiles;
+   int    i;
    char **event_files;
 
    /* Run over events. */
-   event_data = array_create(EventData);
-   event_files = ndata_listRecursive( EVENT_DATA_PATH, &nfiles );
-   for (i=0; i<nfiles; i++) {
-      event_parseFile( event_files[i] );
-      free( event_files[i] );
+   event_files = ndata_listRecursive( EVENT_DATA_PATH );
+   event_data  = array_create_size( EventData, array_size( event_files ) );
+   for ( i = 0; i < array_size( event_files ); i++ ) {
+      event_parseFile( event_files[ i ] );
+      free( event_files[ i ] );
    }
-   free( event_files );
-   array_shrink(&event_data);
+   array_free( event_files );
+   array_shrink( &event_data );
 
    /* Sort based on priority so higher priority missions can establish claims first. */
    qsort( event_data, array_size(event_data), sizeof(EventData), event_cmp );
@@ -565,8 +570,8 @@ static int event_parseFile( const char* file )
    size_t bufsize;
    xmlNodePtr node;
    xmlDocPtr doc;
-   char *filebuf, *luabuf;
-   const char *pos;
+   char *filebuf;
+   const char *pos, *start_pos;
    EventData *temp;
 
 #ifdef DEBUGGING
@@ -587,19 +592,20 @@ static int event_parseFile( const char* file )
       pos = nstrnstr( filebuf, "function create", bufsize );
       if ((pos != NULL) && !strncmp(pos,"--common",bufsize))
          WARN(_("Event '%s' has create function but no XML header!"), file);
+      free(filebuf);
       return 0;
    }
 
    /* Separate XML header and Lua. */
+   start_pos = nstrnstr( filebuf, "<?xml ", bufsize );
    pos = nstrnstr( filebuf, "--]]", bufsize );
-   if (pos == NULL) {
+   if (pos == NULL || start_pos == NULL) {
       WARN(_("Event file '%s' has missing XML header!"), file);
       return -1;
    }
-   luabuf = &filebuf[ pos-filebuf+4 ];
 
    /* Parse the header. */
-   doc = xmlParseMemory( &filebuf[5], pos-filebuf-5 );
+   doc = xmlParseMemory( start_pos, pos-start_pos );
    if (doc == NULL) {
       WARN(_("Unable to parse document XML header for Event '%s'"), file);
       return -1;
@@ -614,9 +620,8 @@ static int event_parseFile( const char* file )
 
    temp = &array_grow(&event_data);
    event_parseXML( temp, node );
-   temp->lua = calloc( 1, bufsize-(luabuf-filebuf)+1 );
+   temp->lua = strdup(filebuf);
    temp->sourcefile = strdup(file);
-   strncpy( temp->lua, luabuf, bufsize-(luabuf-filebuf) );
 
 #ifdef DEBUGGING
    /* Check to see if syntax is valid. */
@@ -631,6 +636,7 @@ static int event_parseFile( const char* file )
 
    /* Clean up. */
    xmlFreeDoc(doc);
+   free(filebuf);
 
    return 0;
 }
@@ -643,14 +649,10 @@ static int event_parseFile( const char* file )
  */
 static void event_freeData( EventData *event )
 {
-   if (event->name)
-      free( event->name );
-   if (event->lua)
-      free( event->lua );
-   if (event->sourcefile)
-      free( event->sourcefile );
-   if (event->cond)
-      free( event->cond );
+   free( event->name );
+   free( event->lua );
+   free( event->sourcefile );
+   free( event->cond );
 #if DEBUGGING
    memset( event, 0, sizeof(EventData) );
 #endif /* DEBUGGING */
@@ -667,9 +669,7 @@ void events_cleanup (void)
    /* Free active events. */
    for (i=0; i<event_nactive; i++)
       event_cleanup( &event_active[i] );
-   if (event_active != NULL)
-      free(event_active);
-
+   free(event_active);
    event_active = NULL;
    event_nactive = 0;
    event_mactive = 0;
@@ -689,7 +689,7 @@ void events_exit (void)
    if (event_data != NULL) {
       for (i=0; i<array_size(event_data); i++)
          event_freeData( &event_data[i] );
-      free(event_data);
+      array_free(event_data);
    }
    event_data  = NULL;
 }
@@ -859,7 +859,7 @@ static int events_parseActive( xmlNodePtr parent )
       if (!xml_isNode(node,"event"))
          continue;
 
-      xmlr_attr(node,"name",buf);
+      xmlr_attr_strd(node,"name",buf);
       if (buf==NULL) {
          WARN(_("Event has missing 'name' attribute, skipping."));
          continue;
@@ -871,13 +871,7 @@ static int events_parseActive( xmlNodePtr parent )
          continue;
       }
       free(buf);
-      xmlr_attr(node,"id",buf);
-      if (buf==NULL) {
-         WARN(_("Event with data '%s' has missing 'id' attribute, skipping."), event_dataName(data));
-         continue;
-      }
-      id = atoi(buf);
-      free(buf);
+      xmlr_attr_uint(node,"id",id);
       if (id==0) {
          WARN(_("Event with data '%s' has invalid 'id' attribute, skipping."), event_dataName(data));
          continue;

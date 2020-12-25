@@ -10,19 +10,21 @@
  */
 
 
-#include "pilot.h"
 
+/** @cond */
 #include "naev.h"
+/** @endcond */
 
-#include "nxml.h"
-
-#include "log.h"
-#include "player.h"
-#include "space.h"
+#include "escort.h"
 #include "gui.h"
-#include "slots.h"
+#include "log.h"
 #include "nstring.h"
+#include "nxml.h"
 #include "outfit.h"
+#include "pilot.h"
+#include "player.h"
+#include "slots.h"
+#include "space.h"
 
 
 /*
@@ -142,7 +144,7 @@ void pilot_lockClear( Pilot *p )
  * Position is relative to the pilot.
  *
  *    @param p Pilot to get mount position of.
- *    @param id ID of the mount.
+ *    @param w Slot of the mount.
  *    @param[out] v Position of the mount.
  *    @return 0 on success.
  */
@@ -241,16 +243,10 @@ int pilot_dock( Pilot *p, Pilot *target )
    if (i >= target->nescorts)
       return -1;
    /* Free if last pilot. */
-   if (target->nescorts == 1) {
-      free(target->escorts);
-      target->escorts   = NULL;
-      target->nescorts  = 0;
-   }
-   else {
-      memmove( &target->escorts[i], &target->escorts[i+1],
-            sizeof(Escort_t) * (target->nescorts-i-1) );
-      target->nescorts--;
-   }
+   if (target->nescorts == 1)
+      escort_freeList(target);
+   else
+      escort_rmListIndex(target, i);
 
    /* Destroy the pilot. */
    pilot_delete(p);
@@ -561,11 +557,11 @@ const char* pilot_checkSpaceworthy( Pilot *p )
  *    @param bufSize Size of the buffer.
  *    @return Number of issues encountered.
  */
-#define SPACEWORTHY_CHECK(cond,msg) \
-if (cond) { ret++; \
-   if (pos < bufSize) pos += snprintf( &buf[pos], bufSize-pos, (msg) ); }
 int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
 {
+   #define SPACEWORTHY_CHECK(cond,msg) \
+   if (cond) { ret++; \
+      if (pos < bufSize) pos += nsnprintf( &buf[pos], bufSize-pos, (msg) ); }
    int pos = 0;
    int ret = 0;
 
@@ -590,7 +586,8 @@ int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
    /* Misc. */
    SPACEWORTHY_CHECK( p->fuel_max < 0,         _("!! Insufficient Fuel Maximum\n") );
    SPACEWORTHY_CHECK( p->fuel_consumption < 0, _("!! Insufficient Fuel Consumption\n") );
-   SPACEWORTHY_CHECK( p->cargo_free < 0,        _("!! Insufficient Free Cargo Space\n") );
+   SPACEWORTHY_CHECK( p->cargo_free < 0,       _("!! Insufficient Free Cargo Space\n") );
+   SPACEWORTHY_CHECK( p->crew < 0,             _("!! Insufficient Crew\n") );
 
    /*buffer is full, lets write that there is more then what's copied */
    if (pos > bufSize-1) {
@@ -616,7 +613,7 @@ int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
  * @brief Checks to see if a pilot has an outfit with a specific outfit type.
  *
  *    @param p Pilot to check.
- *    @param t Outfit type to check.
+ *    @param limit Outfit (limiting) type to check.
  *    @return the amount of outfits of this type the pilot has.
  */
 static int pilot_hasOutfitLimit( Pilot *p, const char *limit )
@@ -654,6 +651,9 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o )
       /* Check outfit limit. */
       if ((o->limit != NULL) && pilot_hasOutfitLimit( p, o->limit ))
          return _("Already have an outfit of this type installed");
+      /* Check to see if already equipped unique. */
+      if (outfit_isProp(o,OUTFIT_PROP_UNIQUE) && (pilot_numOutfit(p,o)>0))
+         return _("Can only install unique outfit once.");
    }
    else {
       /* Check fighter bay. */
@@ -681,7 +681,7 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity 
 
    /* Failure cases. */
    if (s->outfit == NULL) {
-      WARN(_("Pilot '%s': Trying to add ammo to unequiped slot."), pilot->name );
+      WARN(_("Pilot '%s': Trying to add ammo to unequipped slot."), pilot->name );
       return 0;
    }
    else if (!outfit_isLauncher(s->outfit) && !outfit_isFighterBay(s->outfit)) {
@@ -742,7 +742,7 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
 
    /* Failure cases. */
    if (s->outfit == NULL) {
-      WARN(_("Pilot '%s': Trying to remove ammo from unequiped slot."), pilot->name );
+      WARN(_("Pilot '%s': Trying to remove ammo from unequipped slot."), pilot->name );
       return 0;
    }
    else if (!outfit_isLauncher(s->outfit) && !outfit_isFighterBay(s->outfit)) {
@@ -872,10 +872,10 @@ void pilot_fillAmmo( Pilot* pilot )
 
 
 /**
- * @brief Gets all the outfits in nice text form.
+ * @brief Gets all the outfits in nice (localized) text form.
  *
  *    @param pilot Pilot to get the outfits from.
- *    @@return A list of all the outfits in a nice form.
+ *    @return A list of all the outfits in a nice form (in the currently set language).
  */
 char* pilot_getOutfits( const Pilot* pilot )
 {
@@ -892,11 +892,13 @@ char* pilot_getOutfits( const Pilot* pilot )
       if (pilot->outfits[i]->outfit == NULL)
          continue;
       p += nsnprintf( &buf[p], len-p, (p==0) ? "%s" : ", %s",
-            pilot->outfits[i]->outfit->name );
+            _(pilot->outfits[i]->outfit->name) );
    }
 
    if (p==0)
       p += nsnprintf( &buf[p], len-p, _("None") );
+
+   (void)p;
 
    return buf;
 }

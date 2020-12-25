@@ -1,0 +1,37 @@
+#include <winresrc.h>
+#include <winuser.h>
+
+1 RT_MANIFEST "naev.exe.manifest"
+101 ICON DISCARDABLE "logo.ico"
+
+VS_VERSION_INFO VERSIONINFO
+FILEFLAGSMASK 0x17L
+#ifdef DEBUG
+	FILEFLAGS 0x3L
+#else
+	FILEFLAGS 0x2L
+#endif
+FILEVERSION @VMAJOR@,@VMINOR@,@VREV@,0
+FILEOS 0x4L
+FILETYPE 0x1L
+FILESUBTYPE 0x0L
+BEGIN
+	BLOCK "StringFileInfo"
+	BEGIN
+		BLOCK "040004b0"
+		BEGIN
+			VALUE "Comments", "https://naev.org/"
+			VALUE "CompanyName", "Naev Team"
+			VALUE "FileDescription", "Naev: Sea of Darkness"
+			VALUE "InternalName", "naev"
+			VALUE "LegalCopyright", "Copyright (C) 2006-2020"
+			VALUE "OriginalFilename", "naev.exe"
+			VALUE "ProductName", "Naev: Sea of Darkness"
+			VALUE "ProductVersion", "@VMAJOR@.@VMINOR@.@VREV@"
+		END
+	END
+	BLOCK "VarFileInfo"
+	BEGIN
+		VALUE "Translation", 0x400, 1200
+	END
+END

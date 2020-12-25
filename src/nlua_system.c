@@ -8,23 +8,25 @@
  * @brief Lua system module.
  */
 
-#include "nlua_system.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
-#include "nlua_faction.h"
-#include "nlua_vec2.h"
-#include "nlua_planet.h"
-#include "nlua_jump.h"
-#include "log.h"
-#include "rng.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_system.h"
+
 #include "land.h"
 #include "land_outfits.h"
+#include "log.h"
 #include "map.h"
 #include "map_overlay.h"
+#include "nlua_faction.h"
+#include "nlua_jump.h"
+#include "nlua_planet.h"
+#include "nlua_vec2.h"
+#include "nluadef.h"
+#include "rng.h"
 #include "space.h"
 
 
@@ -34,6 +36,7 @@ static int systemL_get( lua_State *L );
 static int systemL_getAll( lua_State *L );
 static int systemL_eq( lua_State *L );
 static int systemL_name( lua_State *L );
+static int systemL_nameRaw( lua_State *L );
 static int systemL_faction( lua_State *L );
 static int systemL_nebula( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
@@ -60,6 +63,7 @@ static const luaL_Reg system_methods[] = {
    { "__eq", systemL_eq },
    { "__tostring", systemL_name },
    { "name", systemL_name },
+   { "nameRaw", systemL_nameRaw },
    { "faction", systemL_faction },
    { "nebula", systemL_nebula },
    { "jumpDist", systemL_jumpdistance },
@@ -224,7 +228,7 @@ static int systemL_cur( lua_State *L )
  * @brief Gets a system.
  *
  * Behaves differently depending on what you pass as param: <br/>
- *    - string : Gets the system by name. <br/>
+ *    - string : Gets the system by raw (untranslated) name. <br/>
  *    - planet : Gets the system by planet. <br/>
  *
  * @usage sys = system.get( p ) -- Gets system where planet 'p' is located.
@@ -308,15 +312,40 @@ static int systemL_eq( lua_State *L )
 }
 
 /**
- * @brief Returns the system's name.
+ * @brief Returns the system's translated name.
  *
- * @usage name = sys:name()
+ * This translated name should be used for display purposes (e.g.
+ * messages). It cannot be used as an identifier for the system; for
+ * that, use system.nameRaw() instead.
  *
- *    @luatparam System s System to get name of.
- *    @luatreturn string The name of the system.
+ * @usage name = sys:name() -- Equivalent to `_(sys:nameRaw())`
+ *
+ *    @luatparam System s System to get the translated name of.
+ *    @luatreturn string The translated name of the system.
  * @luafunc name( s )
  */
 static int systemL_name( lua_State *L )
+{
+   StarSystem *sys;
+   sys = luaL_validsystem(L,1);
+   lua_pushstring(L, _(sys->name));
+   return 1;
+}
+
+/**
+ * @brief Returns the system's raw (untranslated) name.
+ *
+ * This untranslated name should be used for identification purposes
+ * (e.g. can be passed to system.get()). It should not be used directly
+ * for display purposes without manually translating it with _().
+ *
+ * @usage name = sys:nameRaw()
+ *
+ *    @luatparam System s System to get the raw name of.
+ *    @luatreturn string The raw name of the system.
+ * @luafunc nameRaw( s )
+ */
+static int systemL_nameRaw( lua_State *L )
 {
    StarSystem *sys;
    sys = luaL_validsystem(L,1);
@@ -426,9 +455,11 @@ static int systemL_jumpdistance( lua_State *L )
  * @brief Gets jump path from current system, or to another.
  *
  * Does different things depending on the parameter type:
- *    - nil : Gets path to current system.
- *    - string : Gets path to system matching name.
- *    - system : Gets path to system
+ * <ul>
+ *    <li>nil : Gets path to current system.</li>
+ *    <li>string : Gets path to system with the given raw (untranslated) name.</li>
+ *    <li>system : Gets path to system</li>
+ * </ul>
  *
  * @usage jumps = sys:jumpPath() -- Path from sys to current system.
  * @usage jumps = sys:jumpPath( "Draygar" ) -- Path from sys to Draygar.
@@ -565,8 +596,7 @@ static int systemL_jumps( lua_State *L )
    lua_newtable(L);
    for (i=0; i<s->njumps; i++) {
       /* Skip exit-only jumps if requested. */
-      if ((exitonly) && (jp_isFlag( jump_getTarget( s->jumps[i].target, s ),
-            JP_EXITONLY)))
+      if ((exitonly) && (jp_isFlag( &s->jumps[i],  JP_EXITONLY)))
             continue;
 
       lj.srcid  = s->id;
@@ -739,6 +769,8 @@ static int systemL_addGatherable( lua_State *L )
 
 /**
  * @brief Returns the factions that have presence in a system and their respective presence values.
+ *        Faction names are internal -- can be passed to other functions as a faction identifier, but
+ *        should not be shown to the user without being translated by _().
  *
  *  @usage if sys:presences()["Empire"] then -- Checks to see if Empire has ships in the system
  *  @usage if sys:presences()[faction.get("Pirate")] then -- Checks to see if the Pirates have ships in the system
@@ -774,7 +806,7 @@ static int systemL_presences( lua_State *L )
  * @brief Gets the planets in a system.
  *
  * @usage for key, planet in ipairs( sys:planets() ) do -- Iterate over planets in system
- * @usage if #sys:planets() > 0 then -- System has planets
+ * @usage if \#sys:planets() > 0 then -- System has planets
  *
  *    @luatparam System s System to get planets of
  *    @luatreturn {Planet,...} A table with all the planets

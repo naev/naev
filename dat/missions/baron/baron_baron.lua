@@ -1,23 +1,27 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Baron">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>100</chance>
-   <location>None</location>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>100</chance>
+  <location>None</location>
+ </avail>
+ <notes>
+  <done_evt name="Baroncomm_baron">Triggers</done_evt>
+  <campaign>Baron Sauterfeldt</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 -- This is the first mission in the baron string.
 --]]
 
-require "portrait.lua"
-require "dat/missions/baron/common.lua"
-require "dat/missions/neutral/common.lua"
+require "portrait"
+require "missions/baron/common"
+require "missions/neutral/common"
 
 
 sysname1 = "Darkstone"
@@ -168,17 +172,17 @@ function jumpin()
       pinnacle:setInvincible(true)
       pinnacle:control()
       pinnacle:setHilight(true)
-      pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
+      pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
       idlehook = hook.pilot(pinnacle, "idle", "idle")
       hook.pilot(pinnacle, "hail", "hail")
    end
 end
 
 function idle()
-   pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400,  400), false)
-   pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-400,  400), false)
-   pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-400, -400), false)
-   pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
+   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400,  400), false)
+   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new(-400,  400), false)
+   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new(-400, -400), false)
+   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
 end
 
 function hail()

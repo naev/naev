@@ -1,5 +1,3 @@
-#version 130
-
 in vec4 vertex;
 uniform mat4 projection;
 uniform float radius;

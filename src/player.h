@@ -7,6 +7,7 @@
 #  define PLAYER_H
 
 
+#include "nstring.h"
 #include "pilot.h"
 
 /** Player flag enum. */
@@ -25,7 +26,6 @@ enum {
    PLAYER_CREATING,     /**< player is being created */
    PLAYER_AUTONAV,      /**< player has autonavigation on. */
    PLAYER_NOLAND,       /**< player is not allowed to land (cleared on enter). */
-   PLAYER_DOUBLESPEED,  /**< player is running at double speed. */
    PLAYER_CINEMATICS_GUI, /**< Disable rendering the GUI when in cinematics mode. */
    PLAYER_CINEMATICS_2X, /**< Disables usage of the 2x button when in cinematics mode. */
    PLAYER_HOOK_LAND,    /**< Hook hack to avoid running hooks in the middle of the pilot stack. */
@@ -37,6 +37,7 @@ enum {
 };
 
 typedef char PlayerFlags[ PLAYER_FLAGS_MAX ];
+
 
 /* flag functions */
 #define player_isFlag(f)   (player.flags[f])
@@ -75,10 +76,15 @@ typedef struct Player_s {
    int autonav; /**< Current autonav state. */
    Vector2d autonav_pos; /**< Target autonav position. */
    char *autonavmsg; /**< String to print on arrival. */
+   char autonavcol; /**< Colour for autonav target description (e.g., hostile). */
    double tc_max; /**< Maximum time compression value (bounded by ship speed or conf setting). */
    double autonav_timer; /**< Timer that prevents time accel after a reset. */
    double mousex; /**< Mouse X position (for mouse flying). */
    double mousey; /**< Mouse Y position (for mouse flying). */
+   double speed; /**< Gameplay speed modifier, multiplies the ship base speed. */
+
+   /* Loaded game version. */
+   char *loaded_version; /**< Version of the loaded save game. */
 } Player_t;
 
 
@@ -145,12 +151,13 @@ void player_render( double dt );
  * Message stuff, in gui.c
  */
 void player_messageToggle( int enable );
-void player_message( const char *fmt, ... );
+PRINTF_FORMAT( 1, 2 )void player_message( const char *fmt, ... );
 void player_messageRaw ( const char *str );
 
 /*
  * misc
  */
+void player_resetSpeed (void);
 void player_restoreControl( int reason, char *str );
 void player_checkLandAck (void);
 void player_nolandMsg( const char *str );
@@ -176,11 +183,11 @@ int player_ships( char** sships, glTexture** tships );
 void player_shipsSort (void);
 const PlayerShip_t* player_getShipStack( int *n );
 int player_nships (void);
-int player_hasShip( char* shipname );
-Pilot* player_getShip( char* shipname );
-void player_swapShip( char* shipname );
-credits_t player_shipPrice( char* shipname );
-void player_rmShip( char* shipname );
+int                 player_hasShip( const char *shipname );
+Pilot *             player_getShip( const char *shipname );
+void                player_swapShip( const char *shipname );
+credits_t           player_shipPrice( const char *shipname );
+void                player_rmShip( const char *shipname );
 
 
 /*
@@ -213,7 +220,7 @@ int player_eventAlreadyDone( int id );
 /*
  * licenses
  */
-void player_addLicense( char *license );
+NONNULL( 1 ) void player_addLicense( char *license );
 int player_hasLicense( char *license );
 char **player_getLicenses( int *nlicenses );
 
@@ -261,7 +268,7 @@ void player_targetEscort( int prev );
 /*
  * keybind actions
  */
-void player_weapSetPress( int id, int type, int repeat );
+void player_weapSetPress( int id, double value, int repeat );
 void player_land (void);
 int player_jump (void);
 void player_screenshot (void);

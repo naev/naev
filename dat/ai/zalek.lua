@@ -1,7 +1,8 @@
-require("dat/ai/tpl/generic.lua")
-require("dat/ai/personality/patrol.lua")
+require("ai/tpl/generic")
+require("ai/personality/patrol")
+require "numstring"
 
--- We’ll consider the Za’lek prefer to turn a bad (ie. battle) situation into
+-- We’ll consider the Za'lek prefer to turn a bad (i.e. battle) situation into
 -- a profitable one by getting money and selling fuel if possible if the player
 -- hasn’t been too hostile in the past.
 
@@ -24,13 +25,13 @@ function create()
          mem.refuel = mem.refuel * 0.6
       end
       -- Most likely no chance to refuel
-      mem.refuel_msg = string.format( _("\"I will agree to refuel your ship for %d credits.\""), mem.refuel )
+      mem.refuel_msg = string.format( _("\"I will agree to refuel your ship for %s.\""), creditstring(mem.refuel) )
    end
 
    -- See if can be bribed
    if rnd.rnd() > 0.7 then
       mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (500. * rnd.rnd() + 1750.)
-      mem.bribe_prompt = string.format(_("\"We will agree to end the battle for %d credits.\""), mem.bribe )
+      mem.bribe_prompt = string.format(_("\"We will agree to end the battle for %s.\""), creditstring(mem.bribe) )
       mem.bribe_paid = _("\"Temporarily stopping fire.\"")
    else
       -- FIXME: Could be made more Za'lek-like.
@@ -40,7 +41,7 @@ function create()
          _("\"Don't make me laugh. Eat laser beam!\""),
          _("\"My drones aren't interested in your ill-gotten gains and neither am I!\""),
          _("\"Ahaha! Nice one! Oh, you're actually serious? Ahahahaha!\""),
-         _("\"While I admire the spirit of it, testing my patience will is suicide, NOT science.\"")
+         _("\"While I admire the spirit of it, testing my patience is suicide, NOT science.\"")
       }
       mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
    end

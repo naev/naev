@@ -10,15 +10,17 @@
  */
 
 
-#include "pilot.h"
 
-#include "naev.h"
-
+/** @cond */
 #include <math.h>
 
+#include "naev.h"
+/** @endcond */
+
 #include "log.h"
-#include "space.h"
+#include "pilot.h"
 #include "player.h"
+#include "space.h"
 
 static double sensor_curRange    = 0.; /**< Current base sensor range, used to calculate
                                          what is in range and what isn't. */
@@ -102,7 +104,7 @@ double pilot_ewMass( double mass )
 /**
  * @brief Gets the electronic warfare asteroid modifier.
  *
- *    @param pilot.
+ *    @param p Pilot.
  *    @return The electronic warfare asteroid modifier.
  */
 double pilot_ewAsteroid( Pilot *p )
@@ -171,11 +173,18 @@ int pilot_inRange( const Pilot *p, double x, double y )
  *
  *    @param p Pilot who is trying to check to see if other is in sensor range.
  *    @param target Target of p to check to see if is in sensor range.
+ *    @param[out] dist2 Distance squared of the two pilots. Set to NULL if you're not interested.
  *    @return 1 if they are in range, 0 if they aren't and -1 if they are detected fuzzily.
  */
-int pilot_inRangePilot( const Pilot *p, const Pilot *target )
+int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2)
 {
    double d, sense;
+
+   /* Get distance if needed. */
+   if (dist2 != NULL) {
+      d = vect_dist2( &p->solid->pos, &target->solid->pos );
+      *dist2 = d;
+   }
 
    /* Special case player or omni-visible. */
    if ((pilot_isPlayer(p) && pilot_isFlag(target, PILOT_VISPLAYER)) ||
@@ -183,8 +192,9 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target )
          target->parent == p->id)
       return 1;
 
-   /* Get distance. */
-   d = vect_dist2( &p->solid->pos, &target->solid->pos );
+   /* Get distance if still needed */
+   if (dist2 == NULL)
+      d = vect_dist2( &p->solid->pos, &target->solid->pos );
 
    sense = sensor_curRange * p->ew_detect;
    if (d * target->ew_evasion < sense)
@@ -271,7 +281,7 @@ int pilot_inRangeAsteroid( const Pilot *p, int ast, int fie )
  * @brief Check to see if a jump point is in sensor range of the pilot.
  *
  *    @param p Pilot who is trying to check to see if the jump point is in sensor range.
- *    @param target Jump point to see if is in sensor range.
+ *    @param i target Jump point to see if is in sensor range.
  *    @return 1 if they are in range, 0 if they aren't.
  */
 int pilot_inRangeJump( const Pilot *p, int i )

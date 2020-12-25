@@ -3,34 +3,36 @@
  */
 
 
-#include "map.h"
+/** @cond */
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <float.h>
+#include "map.h"
 
-#include "log.h"
-#include "toolkit.h"
-#include "space.h"
-#include "opengl.h"
-#include "mission.h"
-#include "colour.h"
-#include "player.h"
-#include "faction.h"
-#include "dialogue.h"
-#include "gui.h"
-#include "map_find.h"
 #include "array.h"
+#include "colour.h"
+#include "dialogue.h"
+#include "faction.h"
+#include "gui.h"
+#include "log.h"
 #include "mapData.h"
-#include "nstring.h"
-#include "nmath.h"
-#include "nmath.h"
-#include "nxml.h"
-#include "ndata.h"
+#include "map_find.h"
 #include "map_system.h"
+#include "mission.h"
+#include "ndata.h"
+#include "nmath.h"
+#include "nstring.h"
+#include "nxml.h"
+#include "opengl.h"
+#include "player.h"
+#include "space.h"
+#include "toolkit.h"
+#include "utf8.h"
 
 #define BUTTON_WIDTH    100 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
@@ -86,11 +88,12 @@ static void map_renderPath( double x, double y, double a );
 static void map_renderMarkers( double x, double y, double r, double a );
 static void map_renderCommod( double bx, double by, double x, double y,
                               double w, double h, double r, int editor);
+static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Commodity *c );
 static void map_drawMarker( double x, double y, double r, double a,
       int num, int cur, int type );
 /* Mouse. */
 static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data );
+      double w, double h, double rx, double ry, void *data );
 /* Misc. */
 static glTexture *gl_genFactionDisk( int radius );
 static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
@@ -113,7 +116,7 @@ int map_init (void)
    GLfloat vertex[6];
 
    /* Create the VBO. */
-   map_vbo = gl_vboCreateStream( sizeof(GLfloat) * 3*(2+4), NULL );
+   map_vbo = gl_vboCreateStream( sizeof(GLfloat) * 6*(2+4), NULL );
 
    vertex[0] = 1;
    vertex[1] = 0;
@@ -135,14 +138,10 @@ void map_exit (void)
 {
    int i;
 
-   /* Destroy the VBO. */
-   if (map_vbo != NULL) {
-      gl_vboDestroy(map_vbo);
-      map_vbo = NULL;
-   }
+   gl_vboDestroy(map_vbo);
+   map_vbo = NULL;
 
-   if (gl_faction_disk != NULL)
-      gl_freeTexture( gl_faction_disk );
+   gl_freeTexture( gl_faction_disk );
 
    if (decorator_stack != NULL) {
       for (i=0; i<decorator_nstack; i++)
@@ -212,7 +211,7 @@ void map_open (void)
    h = MAX(540, SCREEN_H - 100);
 
    /* create the window. */
-   wid = window_create( MAP_WDWNAME, -1, -1, w, h );
+   wid = window_create( MAP_WDWNAME, _("Star Map"), -1, -1, w, h );
    window_setCancel( wid, map_window_close );
    window_handleKeys( wid, map_keyHandler );
 
@@ -245,7 +244,7 @@ void map_open (void)
 
    /* System Name */
    window_addText( wid, -90 + 80, y, 160, 20, 1, "txtSysname",
-         &gl_defFont, NULL, cur->name );
+         &gl_defFont, NULL, _(cur->name) );
    y -= 10;
 
    /* Faction image */
@@ -304,8 +303,8 @@ void map_open (void)
     * [+] [-]  Nebula, Interference
     */
    /* Zoom buttons */
-   window_addButton( wid, -60, 40 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomIn", "+", map_buttonZoom );
-   window_addButton( wid, -20, 40 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomOut", "-", map_buttonZoom );
+   window_addButtonKey( wid, -60, 40 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomIn", "+", map_buttonZoom, SDLK_EQUALS );
+   window_addButtonKey( wid, -20, 40 + BUTTON_HEIGHT, 30, BUTTON_HEIGHT, "btnZoomOut", "-", map_buttonZoom, SDLK_MINUS );
    /* Situation text */
    window_addText( wid, 20, 10, w - 120 - 4*BUTTON_WIDTH, 30, 0,
                    "txtSystemStatus", &gl_smallFont, NULL, NULL );
@@ -395,15 +394,13 @@ static void map_update( unsigned int wid )
    StarSystem *sys;
    int f, h, x, y;
    unsigned int services;
-   int l;
-   int hasPresence, hasPlanets;
+   int hasPlanets;
    char t;
    const char *sym, *adj;
    char buf[PATH_MAX];
    int p;
    glTexture *logo;
    double w;
-   double unknownPresence;
    Commodity *c;
 
    /* Needs map to update. */
@@ -426,14 +423,14 @@ static void map_update( unsigned int wid )
    if ( cur_commod >= 0 ) {
       c = commod_known[cur_commod];
       if ( cur_commod_mode == 0 ) {
-         if (sys!=NULL) {
-            snprintf(buf,PATH_MAX,"%s prices trading from %s shown: Positive/blue values mean a profit\nwhile negative/orange values mean a loss when sold at the corresponding system.",c->name,sys->name);
-            window_modifyText( wid, "txtSystemStatus", buf );
-         }
-      } else {
-         snprintf(buf,PATH_MAX,"Known %s prices shown. Galaxy-wide average: %.2f",c->name,commod_av_gal_price);
+         nsnprintf( buf, PATH_MAX,
+                   _("%s prices trading from %s shown: Positive/blue values mean a profit\n"
+                     "while negative/orange values mean a loss when sold at the corresponding system."),
+                   _(c->name), _(sys->name) );
          window_modifyText( wid, "txtSystemStatus", buf );
-
+      } else {
+         nsnprintf(buf, PATH_MAX, _("Known %s prices shown. Galaxy-wide average: %.2f"), _(c->name), commod_av_gal_price);
+         window_modifyText( wid, "txtSystemStatus", buf );
       }
    } else {
       window_modifyText( wid, "txtSystemStatus", NULL );
@@ -452,7 +449,7 @@ static void map_update( unsigned int wid )
        * Right Text
        */
       if (sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED))
-         window_modifyText( wid, "txtSysname", sys->name );
+         window_modifyText( wid, "txtSysname", _(sys->name) );
       else
          window_modifyText( wid, "txtSysname", _("Unknown") );;
 
@@ -494,7 +491,7 @@ static void map_update( unsigned int wid )
    }
 
    /* System is known */
-   window_modifyText( wid, "txtSysname", sys->name );
+   window_modifyText( wid, "txtSysname", _(sys->name) );
 
    f         = -1;
    for (i=0; i<sys->nplanets; i++) {
@@ -550,37 +547,11 @@ static void map_update( unsigned int wid )
    window_moveWidget( wid, "txtStanding", x + 50, y - gl_smallFont.h - 5 );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
-   /* Get presence. */
-   hasPresence = 0;
-   buf[0]      = '\0';
-   l           = 0;
-   unknownPresence = 0;
-   for (i=0; i < sys->npresence; i++) {
-      if (sys->presence[i].value <= 0)
-         continue;
-      hasPresence = 1;
-      if (faction_isKnown( sys->presence[i].faction )) {
-         t = faction_getColourChar(sys->presence[i].faction);
-         /* Use map grey instead of default neutral colour */
-         l += nsnprintf( &buf[l], PATH_MAX-l, "%s\a0%s: \a%c%.0f",
-                        (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
-                        t, sys->presence[i].value);
-      }
-      else
-         unknownPresence += sys->presence[i].value;
-      if (l > PATH_MAX)
-         break;
-   }
-   if (unknownPresence != 0)
-      l += nsnprintf( &buf[l], PATH_MAX-l, "%s\a0%s: \a%c%.0f",
-                     (l==0)?"":"\n", _("Unknown"), 'N', unknownPresence);
-   if (hasPresence == 0)
-      nsnprintf(buf, PATH_MAX, "N/A");
    window_moveWidget( wid, "txtSPresence", x, y );
    window_moveWidget( wid, "txtPresence", x + 50, y-gl_smallFont.h-5 );
-   window_modifyText( wid, "txtPresence", buf );
+   map_updateFactionPresence( wid, "txtPresence", sys, 0 );
    /* Scroll down. */
-   h  = gl_printHeightRaw( &gl_smallFont, w, buf );
+   h = window_getTextHeight( wid, "txtPresence" );
    y -= 40 + (h - gl_smallFont.h);
 
    /* Get planets */
@@ -600,16 +571,16 @@ static void map_update( unsigned int wid )
 
       if (!hasPlanets)
          p += nsnprintf( &buf[p], PATH_MAX-p, "\a%c%s%s\an",
-               t, sym, sys->planets[i]->name );
+               t, sym, _(sys->planets[i]->name) );
       else
          p += nsnprintf( &buf[p], PATH_MAX-p, ",\n\a%c%s%s\an",
-               t, sym, sys->planets[i]->name );
+               t, sym, _(sys->planets[i]->name) );
       hasPlanets = 1;
       if (p > PATH_MAX)
          break;
    }
    if (hasPlanets == 0) {
-      strncpy( buf, _("None"), PATH_MAX );
+      strncpy( buf, _("None"), sizeof(buf)-1 );
       buf[sizeof(buf)-1] = '\0';
    }
    /* Update text. */
@@ -632,9 +603,11 @@ static void map_update( unsigned int wid )
    /*nsnprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
    for (i=PLANET_SERVICE_MISSIONS; i<=PLANET_SERVICE_SHIPYARD; i<<=1)
       if (services & i)
-         p += nsnprintf( &buf[p], PATH_MAX-p, "%s\n", planet_getServiceName(i) );
+         p += nsnprintf( &buf[p], PATH_MAX-p, "%s\n", _(planet_getServiceName(i)) );
    if (buf[0] == '\0')
       p += nsnprintf( &buf[p], PATH_MAX-p, _("None"));
+   (void)p;
+
    window_modifyText( wid, "txtServices", buf );
 
 
@@ -696,6 +669,7 @@ static void map_update( unsigned int wid )
             p += nsnprintf(&buf[p], PATH_MAX-p, _("Asteroid Field"));
       }
       window_modifyText( wid, "txtSystemStatus", buf );
+      (void)p;
    }
 }
 
@@ -1000,7 +974,7 @@ void map_renderFactionDisks( double x, double y, int editor)
       gl_blitTexture(
             gl_faction_disk,
             tx - sw/2, ty - sh/2, sw, sh,
-            0., 0., gl_faction_disk->srw, gl_faction_disk->srw, &c );
+            0., 0., gl_faction_disk->srw, gl_faction_disk->srw, &c, 0.);
    }
 }
 
@@ -1136,63 +1110,58 @@ void map_renderSystems( double bx, double by, double x, double y,
  */
 static void map_renderPath( double x, double y, double a )
 {
-   int j;
+   int j, k, sign;
    const glColour *col;
-   GLfloat vertex[8*(2+4)];
-   StarSystem *jsys, *lsys;
+   double w0, w1, x0, y0, x1, y1, h0, h1;
+   GLfloat vertex[(3*2)*(2+4)];
+   StarSystem *sys1, *sys0;
    int jmax, jcur;
 
    if (map_path != NULL) {
-      lsys = cur_system;
+      sys0 = cur_system;
       jmax = pilot_getJumps(player.p); /* Maximum jumps. */
       jcur = jmax; /* Jump range remaining. */
 
-      /* Generate smooth lines. */
-      glLineWidth( CLAMP(1., 4., 2. * map_zoom)*gl_screen.scale );
-
       for (j=0; j<map_npath; j++) {
-         jsys = map_path[j];
+         sys1 = map_path[j];
          if (jcur == jmax && jmax > 0)
             col = &cGreen;
          else if (jcur < 1)
             col = &cRed;
          else
             col = &cYellow;
+         x0 = x + sys0->pos.x * map_zoom;
+         y0 = y + sys0->pos.y * map_zoom;
+         x1 = x + sys1->pos.x * map_zoom;
+         y1 = y + sys1->pos.y * map_zoom;
+         w0 = w1 = MIN( map_zoom, 1.5 ) / hypot( x0-x1, y0-y1 );
+         w0 *= jcur >= 1 ? 4 : 2;
          jcur--;
+         w1 *= jcur >= 1 ? 4 : 2;
 
          /* Draw the lines. */
-         vertex[0]  = x + lsys->pos.x * map_zoom;
-         vertex[1]  = y + lsys->pos.y * map_zoom;
-         vertex[2]  = vertex[0] + (jsys->pos.x - lsys->pos.x)/2. * map_zoom;
-         vertex[3]  = vertex[1] + (jsys->pos.y - lsys->pos.y)/2. * map_zoom;
-         vertex[4]  = x + jsys->pos.x * map_zoom;
-         vertex[5]  = y + jsys->pos.y * map_zoom;
-         vertex[6]  = col->r;
-         vertex[7]  = col->g;
-         vertex[8]  = col->b;
-         vertex[9]  = a / 4. + .25;
-         vertex[10] = col->r;
-         vertex[11] = col->g;
-         vertex[12] = col->b;
-         vertex[13] = a / 2. + .5;
-         vertex[14] = col->r;
-         vertex[15] = col->g;
-         vertex[16] = col->b;
-         vertex[17] = a / 4. + .25;
-         gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
+         for (k=0; k<3*2; k++) {
+            h0 = 1 - .5*(k/2);  /* Fraction of the way toward (x0, y0) */
+            h1 = .5*(k/2);      /* Fraction of the way toward (x1, y1) */
+            sign = k%2 * 2 - 1; /* Alternating +/- */
+            vertex[2*k+0] = h0*x0 + h1*x1 + sign*(y1-y0)*(h0*w0+h1*w1);
+            vertex[2*k+1] = h0*y0 + h1*y1 - sign*(x1-x0)*(h0*w0+h1*w1);
+            vertex[4*k+12] = col->r;
+            vertex[4*k+13] = col->g;
+            vertex[4*k+14] = col->b;
+            vertex[4*k+15] = a/4. + .25 + h0*h1; /* More solid in the middle for some reason. */
+         }
+         gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 6*(2+4), vertex );
 
          gl_beginSmoothProgram(gl_view_matrix);
          gl_vboActivateAttribOffset( map_vbo, shaders.smooth.vertex, 0, 2, GL_FLOAT, 0 );
          gl_vboActivateAttribOffset( map_vbo, shaders.smooth.vertex_color,
-               sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
-         glDrawArrays( GL_LINE_STRIP, 0, 3 );
+               sizeof(GLfloat) * 2*6, 4, GL_FLOAT, 0 );
+         glDrawArrays( GL_TRIANGLE_STRIP, 0, 6 );
          gl_endSmoothProgram();
 
-         lsys = jsys;
+         sys0 = sys1;
       }
-
-      /* Reset render parameters. */
-      glLineWidth( 1. );
    }
 }
 
@@ -1216,7 +1185,7 @@ void map_renderNames( double bx, double by, double x, double y,
       if ((!editor && !sys_isKnown(sys)) || (map_zoom <= 0.5 ))
          continue;
 
-      textw = gl_printWidthRaw( &gl_smallFont, sys->name );
+      textw = gl_printWidthRaw( &gl_smallFont, _(sys->name) );
       tx = x + (sys->pos.x+11.) * map_zoom;
       ty = y + (sys->pos.y-5.) * map_zoom;
 
@@ -1224,9 +1193,7 @@ void map_renderNames( double bx, double by, double x, double y,
       if (!rectOverlap(tx, ty, textw, gl_smallFont.h, bx, by, w, h))
          continue;
 
-      gl_print( &gl_smallFont,
-            tx, ty,
-            &cWhite, sys->name );
+      gl_printRaw( &gl_smallFont, tx, ty, &cWhite, -1, _(sys->name) );
 
    }
 
@@ -1253,9 +1220,7 @@ void map_renderNames( double bx, double by, double x, double y,
             nsnprintf( buf, sizeof(buf), "\agH: %.2f", n );
          else
             nsnprintf( buf, sizeof(buf), "H: %.2f", n );
-         gl_print( &gl_smallFont,
-               tx, ty,
-               &cGrey70, buf );
+         gl_printRaw( &gl_smallFont, tx, ty, &cGrey70, -1, buf );
       }
    }
 }
@@ -1313,7 +1278,6 @@ static void map_renderMarkers( double x, double y, double r, double a )
    }
 }
 
-#define setcolour(R,G,B) ({ccol.r=(R);ccol.g=(G);ccol.b=(B);ccol.a=1;})
 /*
  * Makes all systems dark grey.
  */
@@ -1341,7 +1305,7 @@ static void map_renderSysBlack(double bx, double by, double x,double y, double w
 
       /* If system is known fill it. */
       if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
-         setcolour(0.1,0.1,0.1);
+         ccol = cGrey10;
          gl_drawCircle( tx, ty , r, &ccol, 1 );
       }
    }
@@ -1362,8 +1326,6 @@ void map_renderCommod( double bx, double by, double x, double y,
    Commodity *c;
    glColour ccol;
    double best,worst,maxPrice,minPrice,curMaxPrice,curMinPrice,thisPrice;
-   char buf[80];
-   int textw;
    /* If not plotting commodities, return */
    if (cur_commod == -1 || map_selected == -1)
       return;
@@ -1385,11 +1347,7 @@ void map_renderCommod( double bx, double by, double x, double y,
             }
          }
          if ( k == land_planet->ncommodities ) { /* commodity of interest not found */
-            textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
-            gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
-            snprintf(buf,80,"%s here",c->name);
-            textw = gl_printWidthRaw( &gl_smallFont, buf);
-            gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
+            map_renderCommodIgnorance( x, y, sys, c );
             map_renderSysBlack(bx,by,x,y,w,h,r,editor);
             return;
          }
@@ -1413,23 +1371,14 @@ void map_renderCommod( double bx, double by, double x, double y,
 
             }
             if ( maxPrice == 0 ) {/* no prices are known here */
-               textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
-               gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
-               snprintf(buf,80,"%s here",c->name);
-               textw = gl_printWidthRaw( &gl_smallFont, buf);
-               gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
+               map_renderCommodIgnorance( x, y, sys, c );
                map_renderSysBlack(bx,by,x,y,w,h,r,editor);
                return;
-
             }
             curMaxPrice=maxPrice;
             curMinPrice=minPrice;
          } else {
-            textw = gl_printWidthRaw( &gl_smallFont, _("No price info for") );
-            gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, _("No price info for"));
-            snprintf(buf,80,"%s here",c->name);
-            textw = gl_printWidthRaw( &gl_smallFont, buf);
-            gl_print( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, buf);
+            map_renderCommodIgnorance( x, y, sys, c );
             map_renderSysBlack(bx,by,x,y,w,h,r,editor);
             return;
          }
@@ -1476,17 +1425,17 @@ void map_renderCommod( double bx, double by, double x, double y,
                if ( best >= 0 ) {/* draw circle above */
                   gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &cLightBlue, "%.1f",best);
                   best = tanh ( 2*best / curMinPrice );
-                  setcolour(1-best,1-best,best);/*yellow (0) to blue (1)*/
+                  col_blend( &ccol, &cFontBlue, &cFontYellow, best );
                   gl_drawCircle( tx, ty /*+ r*/ , /*(0.1 + best) **/ r, &ccol, 1 );
                } else {/* draw circle below */
                   gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &cOrange, "%.1f",worst);
-                  worst= tanh ( -2*worst/ curMaxPrice );
-                  setcolour(1,1-worst/2,0);/*yellow (0) to orange (1)*/
+                  worst = tanh ( -2*worst/ curMaxPrice );
+                  col_blend( &ccol, &cFontOrange, &cFontYellow, worst );
                   gl_drawCircle( tx, ty /*- r*/ , /*(0.1 - worst) **/ r, &ccol, 1 );
                }
             } else {
                /* Commodity not sold here */
-               setcolour(0.1,0.1,0.1);
+               ccol = cGrey10;
                gl_drawCircle( tx, ty , r, &ccol, 1 );
 
             }
@@ -1536,23 +1485,94 @@ void map_renderCommod( double bx, double by, double x, double y,
                sumPrice/=sumCnt;
                if ( sumPrice < commod_av_gal_price ) {
                   frac = tanh(5*(commod_av_gal_price / sumPrice - 1));
-                  setcolour(1,1-frac/2,0);/*orange(1) to yellow(0)*/
+                  col_blend( &ccol, &cFontOrange, &cFontYellow, frac );
                } else {
                   frac = tanh(5*(sumPrice / commod_av_gal_price - 1));
-                  setcolour(1-frac,1-frac,frac);/*yellow (0) to blue (1)*/
+                  col_blend( &ccol, &cFontBlue, &cFontYellow, frac );
                }
                gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &ccol, "%.1f",sumPrice);
                gl_drawCircle( tx, ty , r, &ccol, 1 );
             } else {
                /* Commodity not sold here */
-               setcolour(0.1,0.1,0.1);
+               ccol = cGrey10;
                gl_drawCircle( tx, ty , r, &ccol, 1 );
             }
          }
       }
    }
 }
-#undef setcolour
+
+
+/*
+ * Renders the economy information
+ */
+
+static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Commodity *c ) {
+   int textw;
+   char buf[80], *line2;
+   size_t charn;
+
+   nsnprintf( buf, 80, _("No price info for\n%s here"), _(c->name) );
+   line2 = u8_strchr( buf, '\n', &charn );
+   if ( line2 != NULL ) {
+      *line2++ = '\0';
+      textw = gl_printWidthRaw( &gl_smallFont, line2 );
+      gl_printRaw( &gl_smallFont, x + (sys->pos.x)*map_zoom - textw/2, y + (sys->pos.y-15)*map_zoom, &cRed, -1, line2 );
+   }
+   textw = gl_printWidthRaw( &gl_smallFont, buf );
+   gl_printRaw( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, -1, buf );
+}
+
+
+/**
+ * @brief Updates a text widget with a system's presence info.
+ *
+ *    @param wid Window to which the text widget belongs.
+ *    @param name Name of the text widget.
+ *    @param sys System whose faction presence we're reporting.
+ *    @param omniscient Whether to dispaly complete information (editor view).
+ *                      (As currently interpreted, this also means un-translated, even if the user isn't using English.)
+ */
+void map_updateFactionPresence( const unsigned int wid, const char *name, const StarSystem *sys, int omniscient )
+{
+   int    i;
+   size_t l;
+   char   buf[ 1024 ];
+   int    hasPresence;
+   double unknownPresence;
+
+   buf[ 0 ]        = '\0';
+   l               = 0;
+   hasPresence     = 0;
+   unknownPresence = 0;
+
+   for ( i = 0; i < sys->npresence; i++ ) {
+      if ( sys->presence[ i ].value <= 0 )
+         continue;
+
+      hasPresence = 1;
+      if ( !omniscient && !faction_isKnown( sys->presence[ i ].faction ) ) {
+         unknownPresence += sys->presence[ i ].value;
+         break;
+      }
+      /* Use map grey instead of default neutral colour */
+      l += nsnprintf( &buf[ l ], sizeof( buf ) - l, "%s\a0%s: \a%c%.0f", ( l == 0 ) ? "" : "\n",
+                      omniscient ? faction_name( sys->presence[ i ].faction )
+                                 : faction_shortname( sys->presence[ i ].faction ),
+                      faction_getColourChar( sys->presence[ i ].faction ), sys->presence[ i ].value );
+      if ( l > sizeof( buf ) )
+         break;
+   }
+   if ( unknownPresence != 0 && l <= sizeof( buf ) )
+      l += nsnprintf( &buf[ l ], sizeof( buf ) - l, "%s\a0%s: \a%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
+                      unknownPresence );
+
+   if ( hasPresence == 0 )
+      nsnprintf( buf, sizeof( buf ), _( "None" ) );
+
+   (void) l;
+   window_modifyText( wid, name, buf );
+}
 
 /**
  * @brief Map custom widget mouse handling.
@@ -1565,10 +1585,12 @@ void map_renderCommod( double bx, double by, double x, double y,
  *    @param h Height of the widget.
  */
 static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data )
+      double w, double h, double rx, double ry, void *data )
 {
    (void) wid;
    (void) data;
+   (void) rx;
+   (void) ry;
    int i;
    double x,y, t;
    StarSystem *sys;
@@ -1613,7 +1635,7 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
 
             if ((pow2(mx-x)+pow2(my-y)) < t) {
                if (map_selected != -1) {
-                  if ( sys == system_getIndex( map_selected ) ) {
+                  if (sys == system_getIndex( map_selected ) && sys_isKnown(sys)) {
                      map_system_open( map_selected );
                      map_drag = 0;
                   }
@@ -1633,8 +1655,8 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
    case SDL_MOUSEMOTION:
       if (map_drag) {
          /* axis is inverted */
-         map_xpos -= event->motion.xrel;
-         map_ypos += event->motion.yrel;
+         map_xpos -= rx;
+         map_ypos += ry;
       }
       break;
    }
@@ -1682,6 +1704,8 @@ static void map_genModeList(void)
    Planet *p;
    StarSystem *sys;
    int totGot = 0;
+   const char *odd_template, *even_template, *commod_text;
+
    if ( commod_known == NULL )
       commod_known = malloc(sizeof(Commodity*) * commodity_getN());
    memset(commod_known,0,sizeof(Commodity*)*commodity_getN());
@@ -1713,15 +1737,18 @@ static void map_genModeList(void)
    }
    nmap_modes = 2*totGot + 1;
    map_modes = calloc( sizeof(char*), nmap_modes );
-   map_modes[0] = strdup("Travel (Default)");
+   map_modes[0] = strdup(_("Travel (Default)"));
 
+   odd_template = _("%s: Cost");
+   even_template = _("%s: Trade");
    for ( i=0; i<totGot; i++ ) {
-      l = strlen(commod_known[i]->name) + 7;
+      commod_text = _(commod_known[i]->name);
+      l = strlen(odd_template) + strlen(commod_text) - 2 /*"%s"*/ + 1 /* '\0' */;
       map_modes[ 2*i + 1 ] = malloc(l);
-      nsnprintf(map_modes[2*i+1],l, "%s: Cost", commod_known[i]->name );
-      l+=6;
+      nsnprintf( map_modes[2*i+1], l, odd_template, commod_text );
+      l = strlen(even_template) + strlen(commod_text) - 2 /*"%s"*/ + 1 /* '\0' */;
       map_modes[ 2*i + 2 ] = malloc(l);
-      nsnprintf(map_modes[2*i+2],l, "%s: Trade", commod_known[i]->name );
+      nsnprintf( map_modes[2*i+2], l, even_template, commod_text );
    }
 }
 
@@ -1806,8 +1833,8 @@ static void map_buttonCommodity( unsigned int wid, char* str )
          else
             defpos = cur_commod*2 + 2 - cur_commod_mode;
 
-         window_addList( wid, -10, 60, 200, 200,
-                         "lstMapMode", this_map_modes, nmap_modes, defpos, map_modeUpdate );
+         window_addList( wid, -10, 60, 200, 200, "lstMapMode",
+                         this_map_modes, nmap_modes, defpos, map_modeUpdate, NULL );
       }
    }
 }
@@ -1819,8 +1846,7 @@ static void map_buttonCommodity( unsigned int wid, char* str )
 static void map_window_close( unsigned int wid, char *str )
 {
    int i;
-   if ( commod_known != NULL )
-      free ( commod_known );
+   free ( commod_known );
    commod_known = NULL;
    if ( map_modes != NULL ) {
       for ( i=0; i<nmap_modes; i++ )
@@ -1867,11 +1893,9 @@ void map_clear (void)
       map_xpos = 0.;
       map_ypos = 0.;
    }
-   if (map_path != NULL) {
-      free(map_path);
-      map_path = NULL;
-      map_npath = 0;
-   }
+   free(map_path);
+   map_path = NULL;
+   map_npath = 0;
 
    /* default system is current system */
    map_selectCur();
@@ -1976,8 +2000,7 @@ void map_select( StarSystem *sys, char shifted )
 
       /* select the current system and make a path to it */
       if (!shifted) {
-          if (map_path)
-             free(map_path);
+         free( map_path );
           map_path  = NULL;
           map_npath = 0;
       }
@@ -2150,8 +2173,7 @@ static void A_freeList( SysNode *first )
    p = NULL;
    n = first;
    do {
-      if (p != NULL)
-         free(p);
+      free(p);
       p = n;
    } while ((n=n->gnext) != NULL);
    free(p);
@@ -2203,8 +2225,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    /* Check self. */
    if ((ssys == esys) || (ssys->njumps==0)) {
       (*njumps) = 0;
-      if (old_data != NULL)
-         free( old_data );
+      free( old_data );
       return NULL;
    }
 
@@ -2212,8 +2233,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    if (!ignore_known && !sys_isKnown(esys) && !space_sysReachable(esys)) {
       /* can't reach - don't make path */
       (*njumps) = 0;
-      if (old_data != NULL)
-         free( old_data );
+      free( old_data );
       return NULL;
    }
 
@@ -2286,8 +2306,9 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    }
 
    /* Build path backwards if not broken from loop. */
-   if (esys == cur->sys) {
+   if ( cur != NULL && esys == cur->sys ) {
       (*njumps) = A_g(cur);
+      assert( *njumps > 0 );
       if (old_data == NULL)
          res      = malloc( sizeof(StarSystem*) * (*njumps) );
       else {
@@ -2303,8 +2324,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    else {
       (*njumps) = 0;
       res = NULL;
-      if (old_data != NULL)
-         free( old_data );
+      free( old_data );
    }
 
    /* free the linked lists */
@@ -2472,7 +2492,7 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
 /**
  * @brief Centers the map on a planet.
  *
- *    @param sys System to center the map on.
+ *    @param sys System to center the map on (internal name).
  *    @return 0 on success.
  */
 int map_center( const char *sys )
@@ -2498,32 +2518,23 @@ int map_center( const char *sys )
  */
 int map_load (void)
 {
-   size_t bufsize;
-   char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
 
    /* Load the file. */
-   buf = ndata_read( MAP_DECORATOR_DATA_PATH, &bufsize);
-   if (buf == NULL)
+   doc = xml_parsePhysFS( MAP_DECORATOR_DATA_PATH );
+   if (doc == NULL)
       return -1;
-
-   /* Handle the XML. */
-   doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN("'%s' is not valid XML.", MAP_DECORATOR_DATA_PATH);
-      return -1;
-   }
 
    node = doc->xmlChildrenNode; /* map node */
    if (strcmp((char*)node->name,"map")) {
-      ERR("Malformed "MAP_DECORATOR_DATA_PATH" file: missing root element 'map'");
+      ERR(_("Malformed %s file: missing root element 'map'"), MAP_DECORATOR_DATA_PATH );
       return -1;
    }
 
    node = node->xmlChildrenNode;
    if (node == NULL) {
-      ERR("Malformed "MAP_DECORATOR_DATA_PATH" file: does not contain elements");
+      ERR(_("Malformed %s file: does not contain elements"), MAP_DECORATOR_DATA_PATH);
       return -1;
    }
 
@@ -2540,13 +2551,12 @@ int map_load (void)
 
       }
       else
-         WARN("'"MAP_DECORATOR_DATA_PATH"' has unknown node '%s'.", node->name);
+         WARN(_("'%s' has unknown node '%s'."), MAP_DECORATOR_DATA_PATH, node->name);
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
-   free(buf);
 
-   DEBUG("Loaded %d map decorators.", decorator_nstack);
+   DEBUG( ngettext( "Loaded %d map decorator.", "Loaded %d map decorators.", decorator_nstack ), decorator_nstack );
 
    return 0;
 }
@@ -2573,12 +2583,12 @@ static int map_decorator_parse( MapDecorator *temp, xmlNodePtr parent ) {
                MAP_DECORATOR_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
 
          if (temp->image == NULL) {
-            WARN("Could not load map decorator texture '%s'.", xml_get(node));
+            WARN(_("Could not load map decorator texture '%s'."), xml_get(node));
          }
 
          continue;
       }
-      WARN("Map decorator has unknown node '%s'.", node->name);
+      WARN(_("Map decorator has unknown node '%s'."), node->name);
    } while (xml_nextNode(node));
 
    return 0;

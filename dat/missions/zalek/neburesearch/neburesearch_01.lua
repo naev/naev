@@ -1,4 +1,5 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
 <mission name="Advanced Nebula Research">
  <flags>
   <unique />
@@ -10,20 +11,24 @@
   <location>Bar</location>
   <planet>Vilati Vilata</planet>
  </avail>
+  <notes>
+   <campaign>Nebula Research</campaign>
+  </notes>
 </mission>
 --]]
 --[[
    
    Mission: Advanced Nebula Research
    
-   Description: This time the post doc asks the player for help. Reference data of further nebula are needed to understand the Sol nebula. The player has to escort a refitted transport ship through pirate and dvaered space.
+   Description: This time the postdoc asks the player for help. Reference data of further nebula are needed to understand the Sol nebula. The player has to escort a refitted transport ship through Pirate and Dvaered space.
    
    Difficulty: Medium
 
 ]]--
 
-include "dat/scripts/nextjump.lua"
-include "dat/scripts/numstring.lua"
+require "scripts/nextjump"
+require "scripts/numstring"
+require "missions/zalek/common"
 
 
 bar_desc = _("You see a scientist who is apparently looking for someone.")
@@ -37,16 +42,16 @@ title[3] = _("Trouble inbound")
 title[4] = _("Scans complete")
 title[5] = _("Mission accomplished")
 text = {}
-text[1] = _([["Captain %s if I'm not mistaken? Well met. I heared you recently helped one of our students. My name is Dr. Mensing and I am working for professor Voges as well.
-    Your timing is just perfect. You see, we planed an expedition but the captain we hired to escort our transport ship backed out in the last minute. It's quite bothersome being stranded right in Dvaered space. Would you be willing to assist us intead?"]])
-text[2] = _([["While the data recorded by Robert is of good quality he seems to have completely forgotten that we need reference data of similarly dense nebulae. We have already installed his sensors on a transport ship. The nearby PSO nebula should be a good candidate but there are the pirate systems inbetween. Also the target systems are controled by the Dvaered. Hard to say wheter the dvaered or the pirates are more dangerous. So this is why we need an escort.
-    We will travel through %s, %s, and %s. Just passing through the systems should be sufficient. Also, I want to visist the %s station before returning back to %s. You have to make sure no one shoots us down during our expedition."]])
+text[1] = _([["Captain %s if I'm not mistaken? Well met. I heard you recently helped one of our students. My name is Dr. Mensing and I am working for professor Voges as well.
+    Your timing is just perfect. You see, we planed an expedition but the captain we hired to escort our transport ship backed out in the last minute. It's quite bothersome being stranded right in Dvaered space. Would you be willing to assist us instead?"]])
+text[2] = _([["While the data recorded by Robert is of good quality he seems to have completely forgotten that we need reference data of similarly dense nebulae. We have already installed his sensors on a transport ship. The nearby PSO nebula should be a good candidate but there are the pirate systems in between. Also the target systems are controled by the Dvaered. Hard to say whether the Dvaered or the pirates are more dangerous. So this is why we need an escort.
+    We will travel through %s, %s, and %s. Just passing through the systems should be sufficient. Also, I want to visit the %s station before returning back to %s. You have to make sure no one shoots us down during our expedition."]])
 text[3] = _([["Please follow us, %s. Make sure to jump to the next system after we jumped out. We'll have to land on some planets on our way to refuel."]])
 text[4] = _([[Suddenly your comm system turns on, receiving a conversation between the ship you are escorting and a Dvaered patrol ship.
     "I assure you, we mean no harm. We are just a convoy of scientists passing through Dvaered space." says Dr. Mensing.
-    The responce sounds harsh. "Do you think we're stupid or something? You're obviously a spy scouting our systems' defences."
+    The response sounds harsh. "Do you think we're naïve? You're obviously a spy scouting our systems' defences."
     "Please calm down. I'm sure there is a diplomatic solution for our misunderstanding."
-    The dvaered officer replies "We can see that your ship is stuffed with sensors. Your intentions are obvious. Prepare for your ship being boarded."]])
+    The Dvaered officer replies "We can see that your ship is stuffed with sensors. Your intentions are obvious. Prepare for your ship being boarded."]])
 text[5] = _([[Dr. Mensing  pauses, apparently choosing her words with care.
     "Fine, do whatever you want. Our reasoning is obviously beyond the imagination of your degenerate intellect." With this answer the comm shuts off. Your sensors show that a Dvaered patrol changed their course and is heading straight towards the transporter.]])
 text[6] = _([["The situation would have escalated anyway." argues Dr. Mensing, this time directly speaking towards you.
@@ -81,7 +86,7 @@ function create()
     homeworld = "Bastion Station"
     ambush = false
     stage = 0
-    credits = 800000  -- 800k
+    credits = 800000  -- 800K
     
     -- Spaceport bar stuff
     misn.setNPC(_("A scientist"), "zalek/unique/mensing")
@@ -113,19 +118,19 @@ function accept()
     t_planet[7] = planet.get("Vilati Vilata")
     t_planet[8] = homeworld
     
-    tk.msg(title[1], string.format(text[2], t_sys[2]:name(), t_sys[3]:name(), t_sys[4]:name(), station, homeworld))
+    tk.msg(title[1], string.format(text[2], t_sys[2]:name(), t_sys[3]:name(), t_sys[4]:name(), _(station), _(homeworld)))
     
     -- Set up mission information
     destsys = t_sys[1]
     misn.setTitle(mtitle)
     misn.setReward(string.format(misn_reward, creditstring(credits)))
-    misn.setDesc(string.format(mdesc, station, t_sys[5]:name()))
+    misn.setDesc(string.format(mdesc, _(station), t_sys[5]:name()))
     nextsys = getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
     
     misn.accept()
     osd_msg[1] = string.format(osd_msg[1], t_planet[5]:name(), destsys:name())
-    osd_msg[2] = string.format(osd_msg[2], station, t_sys[5]:name())
-    osd_msg[3] = string.format(osd_msg[3], homeworld, t_sys[8]:name())
+    osd_msg[2] = string.format(osd_msg[2], _(station), t_sys[5]:name())
+    osd_msg[3] = string.format(osd_msg[3], _(homeworld), t_sys[8]:name())
     misn.osdCreate(osd_title, osd_msg)
     misn_marker = misn.markerAdd(destsys, "low")
     
@@ -190,7 +195,7 @@ function land()
         tk.msg(landfailtitle, landfailtext)
         misn.finish(false)
     elseif planet.cur() == planet.get(station) and not station_visited then
-        tk.msg(refueltitle, string.format(refueltext, homeworld))
+        tk.msg(refueltitle, string.format(refueltext, _(homeworld)))
         station_visited = true
         misn.osdActive(3)
     elseif planet.cur() == planet.get(homeworld) then
@@ -234,7 +239,7 @@ function transporterJump(p, j)
     exited = true
     if p:exists() then
         player.msg(string.format(
-            "%s has jumped to %s.", p:name(), j:dest():name()))
+            _("%s has jumped to %s."), p:name(), j:dest():name()))
     end
 end
 
@@ -242,7 +247,7 @@ function transporterLand(p, j)
     exited = true
     if p:exists() then
         player.msg(string.format(
-            "%s has landed on %s.", p:name(), destplanet:name()))
+            _("%s has landed on %s."), p:name(), destplanet:name()))
     end
 end
 
@@ -286,7 +291,7 @@ function spawnTransporter()
     transporter:setVisplayer()
     transporter:setVisible() -- Hack to make ambushes more reliable.
     transporter:setFriendly()
-    transporter:rename("Research Shuttle")
+    transporter:rename( _("Research Shuttle") )
     continueToDest(transporter)
     hook.timer( 2000, "timer_transporterSafe" )
 end
@@ -295,7 +300,7 @@ function startAmbush()
     ships = pilot.add("Dvaered Small Patrol", "dvaered_norun", vec2.new(-1000,0))
     for i, j in ipairs(ships) do
         j:control(true)
-        j:goto(vec2.new(-8000,0))
+        j:moveto(vec2.new(-8000,0))
     end
     ambush = true
     hook.timer(15000, "ambushHail")

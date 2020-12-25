@@ -8,8 +8,8 @@
 #  define SPFX_H
 
 
-#include "physics.h"
 #include "opengl.h"
+#include "physics.h"
 
 
 #define SPFX_LAYER_FRONT   0 /**< Front spfx layer. */

@@ -17,6 +17,9 @@
    <faction>Traders Guild</faction>
    <faction>Za'lek</faction>
   </avail>
+  <notes>
+   <tier>1</tier>
+  </notes>
  </mission>
  --]]
 --[[
@@ -24,8 +27,8 @@
    -- These missions require fast ships, but higher tiers may also require increased cargo space.
 --]]
 
-require "cargo_common.lua"
-require "numstring.lua"
+require "cargo_common"
+require "numstring"
 
 
 misn_title = {}
@@ -43,14 +46,6 @@ misn_desc[1] = _("Priority shipment to %s in the %s system.")
 misn_desc[2] = _("Pressing cargo delivery to %s in the %s system.")
 misn_desc[3] = _("Urgent cargo delivery to %s in the %s system.")
 misn_desc[4] = _("Emergency cargo delivery to %s in the %s system.")
-
-misn_details = _([[
-Cargo: %s (%s)
-Jumps: %d
-Travel distance: %d
-%s
-Time limit: %s
-]])
 
 piracyrisk = {}
 piracyrisk[1] = _("Piracy Risk: None")
@@ -120,7 +115,7 @@ function create()
    
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
    -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
-   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
+   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
    amount     = rnd.rnd(10 + 5 * tier, 20 + 6 * tier) -- 45 max (quicksilver)
    jumpreward = commodity.price(cargo)*1.2
    distreward = math.log(300*commodity.price(cargo))/100
@@ -129,11 +124,7 @@ function create()
    misn.setTitle( misn_title[tier]:format(
       destplanet:name(), destsys:name(), tonnestring(amount) ) )
    misn.markerAdd(destsys, "computer")
-   misn.setDesc(
-      misn_desc[tier]:format( destplanet:name(), destsys:name() ) .. "\n\n"
-      .. misn_details:format(
-         cargo, tonnestring(amount), numjumps, traveldist, piracyrisk,
-         (timelimit - time.get()):str() ) )
+   cargo_setDesc( misn_desc[tier]:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit, piracyrisk );
    misn.setReward( creditstring(reward) )
 end
 
@@ -156,6 +147,13 @@ function accept()
             destplanet:name() ) ) then
          misn.finish()
       end
+   elseif system.cur():jumpDist(destsys, false, true) == nil
+         or system.cur():jumpDist(destsys, false, true) < numjumps then
+      if not tk.yesno( _("Unknown route"), string.format(
+            _("The fastest route to %s is not currently known to you. Landing to buy maps, spending time searching for unknown jumps, or taking a route longer than %s may cause you to miss the deadline. Accept the mission anyway?"),
+            destplanet:name(), jumpstring(numjumps) ) ) then
+         misn.finish()
+      end
    end
    misn.accept()
    intime = true
@@ -174,11 +172,11 @@ function land()
    if planet.cur() == destplanet then
       if intime then
       -- Semi-random message.
-      tk.msg( cargo_land_title, cargo_land[rnd.rnd(1, #cargo_land)]:format(cargo) )
+      tk.msg( cargo_land_title, cargo_land[rnd.rnd(1, #cargo_land)]:format(_(cargo)) )
    else
       -- Semi-random message for being late.
       tk.msg( cargo_land_title, cargo_land_slow[rnd.rnd(1, #cargo_land_slow)]:format(
-         cargo, creditstring(reward / 2), creditstring(reward) ) )
+         _(cargo), creditstring(reward / 2), creditstring(reward) ) )
       reward = reward / 2
    end
    player.pay(reward)

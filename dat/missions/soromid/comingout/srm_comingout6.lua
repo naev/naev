@@ -1,19 +1,22 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Moving Up">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <done>Garbage Person</done>
-   <chance>30</chance>
-   <location>Bar</location>
-   <faction>Soromid</faction>
-   <cond>var.peek("comingout_time") == nil or time.get() &gt;= time.fromnumber(var.peek("comingout_time")) + time.create(0, 20, 0)</cond>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <done>Garbage Person</done>
+  <chance>30</chance>
+  <location>Bar</location>
+  <faction>Soromid</faction>
+  <cond>var.peek("comingout_time") == nil or time.get() &gt;= time.fromnumber(var.peek("comingout_time")) + time.create(0, 20, 0)</cond>
+ </avail>
+ <notes>
+  <campaign>Coming Out</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 
    Moving Up
@@ -33,10 +36,10 @@
 
 --]]
 
-require "numstring.lua"
-require "jumpdist.lua"
-require "pilot/pirate.lua"
-require "dat/missions/soromid/common.lua"
+require "numstring"
+require "jumpdist"
+require "pilot/pirate"
+require "missions/soromid/common"
 
 
 title = {}
@@ -45,7 +48,7 @@ text = {}
 title[1] = _("A Great Opportunity")
 text[1] = _([[You greet Chelsea as usual and have a friendly chat with them. You learn that they had a close call recently with another thug, but they managed to shake the thug off with their new ship.
     "It's a lot better than before. The work is tough though. I've been picking off small pirates with bounties on their heads, doing relatively safe system patrols, that sort of thing. I'm supposed to be getting a better ship soon, but it's going to be difficult." You ask them why that is. "Well, I came across someone who's offering me a bargain on a new ship! Well, not new exactly. It's used, but in much better condition than that rust bucket I got before. Supposedly this guy used to be a Dvaered warlord and is offering me his old Vigilance if I just take care of this one pirate known as %s. Trouble is they're piloting a ship that's stronger than my own...."
-    Chelsea pauses in contemplation for a moment. "Say, do you think you could help me out on this one? I just need you to help me kill the pirate in %s. I'll give you %s credits for the trouble. How about it?"]])
+    Chelsea pauses in contemplation for a moment. "Say, do you think you could help me out on this one? I just need you to help me kill the pirate in %s. I'll give you %s for the trouble. How about it?"]])
 
 text[2] = _([["Fantastic! Thank you for the help! I'll meet you in %s and we can take the pirate out. Let's do this!"]])
 
@@ -54,11 +57,10 @@ text[3] = _([["Ah, you're busy, eh? Oh well. Let me know if you change your mind
 text[4] = _([["Hey, %s! Any chance you could reconsider? I could use your help."]])
 
 title[5] = _("Death Of A Pirate")
-text[5] = _([[Chelsea pops up on your viewscreen and grins. "We did it!" they say. "Thanks for all the help, %s. I've transferred the money into your account. See you next time with my new ship!" You say your goodbyes and go back to your own advantures.]])
+text[5] = _([[Chelsea pops up on your viewscreen and grins. "We did it!" they say. "Thanks for all the help, %s. I've transferred the money into your account. See you next time with my new ship!" You say your goodbyes and go back to your own adventures.]])
 
 misn_title = _("Moving Up")
 misn_desc = _("Chelsea needs you help them kill a wanted pirate in %s.")
-misn_reward = _("%s credits")
 
 npc_name = _("Chelsea")
 npc_desc = _("Oh, it's Chelsea! You feel an urge to say hello.")
@@ -103,7 +105,7 @@ function accept ()
    if started then
       txt = text[4]:format( player.name() )
    else
-      txt = text[1]:format( pirname, missys:name(), numstring( credits ) )
+      txt = text[1]:format( pirname, missys:name(), creditstring( credits ) )
    end
    started = true
 
@@ -113,7 +115,7 @@ function accept ()
 
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( missys:name() ) )
-      misn.setReward( misn_reward:format( numstring( credits ) ) )
+      misn.setReward( creditstring( credits ) )
       marker = misn.markerAdd( missys, "high" )
 
       hook.enter( "enter" )

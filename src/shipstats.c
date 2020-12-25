@@ -9,9 +9,11 @@
  */
 
 
-#include "shipstats.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
+
+#include "shipstats.h"
 
 #include "log.h"
 #include "nstring.h"
@@ -103,7 +105,7 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_LAUNCH_RANGE,       launch_range,        gettext_noop("Launch Range") ),
    D__ELEM( SS_TYPE_D_LAUNCH_DAMAGE,      launch_damage,       gettext_noop("Damage (Launcher)") ),
    D__ELEM( SS_TYPE_D_AMMO_CAPACITY,      ammo_capacity,       gettext_noop("Ammo Capacity") ),
-   D__ELEM( SS_TYPE_D_LAUNCH_LOCKON,      launch_lockon,       gettext_noop("Launch Lockon") ),
+   D__ELEM( SS_TYPE_D_LAUNCH_LOCKON,      launch_lockon,       gettext_noop("Launch Lock-on") ),
 
    DI_ELEM( SS_TYPE_D_FORWARD_HEAT,       fwd_heat,            gettext_noop("Heat (Cannon)") ),
    D__ELEM( SS_TYPE_D_FORWARD_DAMAGE,     fwd_damage,          gettext_noop("Damage (Cannon)") ),
@@ -230,6 +232,7 @@ int ss_statsInit( ShipStats *stats )
 {
    int i;
    char *ptr;
+   char *fieldptr;
    double *dbl;
    const ShipStatsLookup *sl;
 
@@ -247,7 +250,8 @@ int ss_statsInit( ShipStats *stats )
       /* Handle doubles. */
       switch (sl->data) {
          case SS_DATA_TYPE_DOUBLE:
-            dbl   = (double*) &ptr[ sl->offset ];
+            fieldptr = &ptr[ sl->offset ];
+            memcpy(&dbl, &fieldptr, sizeof(double*));
             *dbl  = 1.0;
             break;
 
@@ -274,6 +278,7 @@ int ss_statsInit( ShipStats *stats )
 int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipStats *amount )
 {
    char *ptr;
+   char *fieldptr;
    double *dbl;
    int *i;
    const ShipStatsLookup *sl = &ss_lookup[ list->type ];
@@ -282,7 +287,8 @@ int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipSta
    switch (sl->data) {
       case SS_DATA_TYPE_DOUBLE:
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-         dbl   = (double*) &ptr[ sl->offset ];
+         fieldptr = &ptr[ sl->offset ];
+         memcpy(&dbl, &fieldptr, sizeof(double*));
          *dbl += list->d.d;
          if ((sl->data==SS_DATA_TYPE_DOUBLE) && (*dbl < 0.)) /* Don't let the values go negative. */
             *dbl = 0.;
@@ -291,28 +297,32 @@ int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipSta
          if (amount != NULL) {
             if ((sl->inverted && (list->d.d < 0.)) ||
                   (!sl->inverted && (list->d.d > 0.))) {
-               ptr      = (char*) amount;
-               dbl      = (double*) &ptr[ sl->offset ];
+               memcpy(&ptr, &amount, sizeof(char*));
+               fieldptr = &ptr[ sl->offset ];
+               memcpy(&dbl, &fieldptr, sizeof(double*));
                (*dbl)  += 1.0;
             }
          }
          break;
 
       case SS_DATA_TYPE_INTEGER:
-         i     = (int*) &ptr[ sl->offset ];
+         fieldptr = &ptr[ sl->offset ];
+         memcpy(&i, &fieldptr, sizeof(int*));
          *i   += list->d.i;
          if (amount != NULL) {
             if ((sl->inverted && (list->d.i < 0)) ||
                   (!sl->inverted && (list->d.i > 0))) {
-               ptr      = (char*) amount;
-               i        = (int*) &ptr[ sl->offset ];
+               memcpy(&ptr, &amount, sizeof(char*));
+               fieldptr = &ptr[ sl->offset ];
+               memcpy(&i, &fieldptr, sizeof(int*));
                (*i)    += 1;
             }
          }
          break;
 
       case SS_DATA_TYPE_BOOLEAN:
-         i     = (int*) &ptr[ sl->offset ];
+         fieldptr = &ptr[ sl->offset ];
+         memcpy(&i, &fieldptr, sizeof(int*));
          *i    = 1; /* Can only set to true. */
          break;
    }
@@ -478,7 +488,7 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
 /**
  * @brief Writes the ship statistics description.
  *
- *    @param s Ship stats to use.
+ *    @param ll Ship stats to use.
  *    @param buf Buffer to write to.
  *    @param len Space left in the buffer.
  *    @param newline Add a newline at start.
@@ -527,13 +537,13 @@ int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline )
  *    @param buf Buffer to write to.
  *    @param len Space left in the buffer.
  *    @param newline Add a newline at start.
- *    @param pilot Stats come from a pilot.
  *    @return Number of characters written.
  */
 int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )
 {
    int i, l, left;
    char *ptr;
+   char *fieldptr;
    double *dbl;
    int *num;
    const ShipStatsLookup *sl;
@@ -554,22 +564,26 @@ int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )
 
       switch (sl->data) {
          case SS_DATA_TYPE_DOUBLE:
-            dbl   = (double*) &ptr[ sl->offset ];
+            fieldptr = &ptr[ sl->offset ];
+            memcpy(&dbl, &fieldptr, sizeof(double*));
             l    += ss_printD( &buf[l], left, (newline||(l!=0)), ((*dbl)-1.), sl );
             break;
 
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-            dbl   = (double*) &ptr[ sl->offset ];
+            fieldptr = &ptr[ sl->offset ];
+            memcpy(&dbl, &fieldptr, sizeof(double*));
             l    += ss_printA( &buf[l], left, (newline||(l!=0)), (*dbl), sl );
             break;
 
          case SS_DATA_TYPE_INTEGER:
-            num   = (int*) &ptr[ sl->offset ];
+            fieldptr = &ptr[ sl->offset ];
+            memcpy(&num, &fieldptr, sizeof(int*));
             l    += ss_printI( &buf[l], left, (newline||(l!=0)), (*num), sl );
             break;
 
          case SS_DATA_TYPE_BOOLEAN:
-            num   = (int*) &ptr[ sl->offset ];
+            fieldptr = &ptr[ sl->offset ];
+            memcpy(&num, &fieldptr, sizeof(int*));
             l    += ss_printB( &buf[l], left, (newline||(l!=0)), (*num), sl );
             break;
       }
@@ -617,18 +631,18 @@ int ss_csv( const ShipStats *s, char *buf, int len )
 
       switch (sl->data) {
          case SS_DATA_TYPE_DOUBLE:
-            dbl = *(double*) &ptr[ sl->offset ];
+            memcpy(&dbl, &ptr[ sl->offset ], sizeof(double));
             l  += nsnprintf( &buf[l], left, "%f,", (dbl - 1.) * 100. );
             break;
 
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-            dbl = *(double*) &ptr[ sl->offset ];
+            memcpy(&dbl, &ptr[ sl->offset ], sizeof(double));
             l  += nsnprintf( &buf[l], left, "%f,", dbl );
             break;
 
          case SS_DATA_TYPE_INTEGER:
          case SS_DATA_TYPE_BOOLEAN:
-            num = *(int*) &ptr[ sl->offset ];
+            memcpy(&num, &ptr[ sl->offset ], sizeof(int));
             l  += nsnprintf( &buf[l], left, "%d,", num );
             break;
       }

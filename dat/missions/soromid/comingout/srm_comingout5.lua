@@ -1,21 +1,24 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Garbage Person">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <done>Visiting Family</done>
-   <chance>30</chance>
-   <location>Bar</location>
-   <faction>Soromid</faction>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <done>Visiting Family</done>
+  <chance>30</chance>
+  <location>Bar</location>
+  <faction>Soromid</faction>
+ </avail>
+ <notes>
+  <campaign>Coming Out</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 
-   Garbage Person
+   Waste Collector
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -32,9 +35,9 @@
 
 --]]
 
-require "numstring.lua"
-require "dat/missions/soromid/comingout/srm_comingout3.lua"
-require "dat/missions/soromid/common.lua"
+require "numstring"
+require "missions/soromid/comingout/srm_comingout3"
+require "missions/soromid/common"
 
 
 title = {}
@@ -42,7 +45,7 @@ text = {}
 
 title[1] = _("The Dirty Job")
 text[1] = _([[You walk over to Chelsea to greet them when you notice an unpleasant odor coming off of them. Chelsea notices you. "Ah! %s! Uh, sorry about the smell. I don't know why the hell I did this, but I took a job from some guy here and now I'm stuck with it." You ask what kind of job it is. "Erm, I kind of agreed to take their trash from them." You grimace. "Yeah," Chelsea says, "it's gross. And what's worse, I'm in over my head. I've already taken the garbage and my new ship is packed to the brim with the stuff, but there's thugs outside that seem to be waiting for me." A look of rage appears on their face as they turn to the side. "You can probably guess who's responsible for that." The thought had crossed your mind as well.
-    Chelsea turns back to you. "I know I ask a lot of you, but could you help me once again? I just need an escort to %s so I can drop off this garbage there. I'll give you %s credits for the trouble. What do you say?"]])
+    Chelsea turns back to you. "I know I ask a lot of you, but could you help me once again? I just need an escort to %s so I can drop off this garbage there. I'll give you %s for the trouble. What do you say?"]])
 
 text[2] = _([["I appreciate it very much. I'll wait at the hangar until you're ready to take off. Get ready for a fight when we get out of the atmosphere; it's going to be a bumpy ride."]])
 
@@ -55,7 +58,6 @@ text[6] = _([[As you dock, you can't help but notice the foul smell of garbage a
 
 misn_title = _("Waste Collector")
 misn_desc = _("Chelsea needs an escort to %s so they can get rid of the garbage now filling their ship.")
-misn_reward = _("%s credits")
 
 npc_name = _("Chelsea")
 npc_desc = _("Chelsea seems like they're stressed. Maybe you should see how they're doing?")
@@ -82,7 +84,7 @@ function accept ()
    if started then
       txt = text[4]
    else
-      txt = text[1]:format( player.name(), misplanet:name(), numstring( credits ) )
+      txt = text[1]:format( player.name(), misplanet:name(), creditstring( credits ) )
    end
    started = true
 
@@ -93,7 +95,7 @@ function accept ()
 
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( misplanet:name() ) )
-      misn.setReward( misn_reward:format( numstring( credits ) ) )
+      misn.setReward( creditstring( credits ) )
       marker = misn.markerAdd( missys, "low" )
 
       osd_desc[1] = osd_desc[1]:format( misplanet:name(), missys:name() )
@@ -124,7 +126,7 @@ function spawnChelseaShip( param )
    chelsea:addOutfit( "Fury Missile", 80 )
    chelsea:addOutfit( "Droid Repair Crew" )
    chelsea:addOutfit( "Milspec Scrambler" )
-   chelsea:addOutfit( "Boarding Androids MKI" )
+   chelsea:addOutfit( "Boarding Androids MK1" )
    chelsea:addOutfit( "Cargo Pod", 4 )
 
    chelsea:setHealth( 100, 100 )

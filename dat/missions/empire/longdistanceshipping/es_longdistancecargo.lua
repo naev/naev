@@ -9,6 +9,9 @@
    <location>Computer</location>
    <faction>Empire</faction>
   </avail>
+  <notes>
+   <campaign>Long Distance Shipping</campaign>
+  </notes>
  </mission>
  --]]
 --[[
@@ -17,19 +20,11 @@
    
 ]]--
 
-require "cargo_common.lua"
-require "numstring.lua"
+require "cargo_common"
+require "numstring"
 
 
 misn_desc  = _("Official Empire long distance cargo transport to %s in the %s system.")
-
-misn_details = _([[
-Cargo: %s (%s)
-Jumps: %d
-Travel distance: %d
-%s
-Time limit: %s
-]])
 
 piracyrisk = {}
 piracyrisk[1] = _("Piracy Risk: None")
@@ -100,7 +95,7 @@ function create()
    end
 
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
-   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
+   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
    amount     = rnd.rnd(10 + 3 * tier, 20 + 4 * tier) 
 	jumpreward = commodity.price(cargo)*1.5
    distreward = math.log(300*commodity.price(cargo))/100
@@ -108,15 +103,10 @@ function create()
 
    misn.setTitle( string.format(
       _("ES: Long distance cargo transport (%s of %s)"), tonnestring(amount),
-      cargo ) )
+      _(cargo) ) )
    misn.markerAdd(destsys, "computer")
-   misn.setDesc(
-      misn_desc:format( destplanet:name(), destsys:name() ) .. "\n\n"
-      .. misn_details:format(
-         cargo, tonnestring(amount), numjumps, traveldist, piracyrisk,
-         (timelimit - time.get()):str() ) )
+   cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit, piracyrisk );
    misn.setReward( creditstring(reward) )
-
 end
 
 -- Mission is accepted
@@ -143,7 +133,7 @@ function accept()
    carg_id = misn.cargoAdd( cargo, amount )
    tk.msg( _("Mission Accepted"), string.format(
       _("The Empire workers load the %s of %s onto your ship."),
-      tonnestring(amount), cargo ) )
+      tonnestring(amount), _(cargo) ) )
    local osd_msg = {}
    osd_msg[1] = osd_msg1:format(
       destplanet:name(), destsys:name(), timelimit:str(),
@@ -157,7 +147,7 @@ end
 function land()
    if planet.cur() == destplanet then
       tk.msg( _("Successful Delivery"), string.format(
-         _("The Empire workers unload the %s at the docks."), cargo ) )
+         _("The Empire workers unload the %s at the docks."), _(cargo) ) )
       player.pay(reward)
       n = var.peek("es_misn")
       if n ~= nil then

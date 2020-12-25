@@ -6,8 +6,6 @@
 #ifndef NLUA_VAR
 #  define NLUA_VAR
 
-#include <lua.h>
-
 #include "nlua.h"
 
 

@@ -7,7 +7,9 @@
 #  define NLUA_PILOT_H
 
 
+/** @cond */
 #include <lua.h>
+/** @endcond */
 
 #include "pilot.h"
 

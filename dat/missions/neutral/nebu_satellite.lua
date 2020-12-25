@@ -12,6 +12,9 @@
    <faction>Empire</faction>
    <faction>Goddard</faction>
   </avail>
+  <notes>
+   <tier>2</tier>
+  </notes>
  </mission>
  --]]
 --[[
@@ -24,15 +27,14 @@
 
 ]]--
 
-require "numstring.lua"
-require "dat/missions/neutral/common.lua"
+require "numstring"
+require "missions/neutral/common"
 
 
 -- localization stuff, translators would work here
 bar_desc = _("A bunch of scientists seem to be chattering nervously among themselves.")
 mtitle = {}
 mtitle[1] = _("Nebula Satellite")
-misn_reward = _("%s credits")
 mdesc = {}
 mdesc[1] = _("Go to the %s system to launch the probe.")
 mdesc[2] = _("Drop off the scientists at %s in the %s system.")
@@ -45,7 +47,7 @@ text[1] = _([[You approach the scientists. They seem a bit nervous and one mutte
     "Hello Captain, we're looking for a ship to take us into the Sol Nebula. Would you be willing to take us there?"]])
 text[2] = _([["We had a trip scheduled with a space trader ship, but they backed out at the last minute. So we were stuck here until you came. We've got a research probe that we have to release into the %s system to monitor the Nebula's growth rate. The probe launch procedure is pretty straightforward and shouldn't have any complications."
     He takes a deep breath, "We hope to be able to find out more secrets of the Sol Nebula so mankind can once again regain its lost patrimony. So far the radiation and volatility of the deeper areas haven't been very kind to our instruments. That's why we designed this satellite we're going to launch."]])
-text[3] = _([["The plan is for you to take us to %s so we can launch the probe, and then return us to our home at %s in the %s system. The probe will automatically send us the data we need if all goes well. You'll be paid %s credits when we arrive."]])
+text[3] = _([["The plan is for you to take us to %s so we can launch the probe, and then return us to our home at %s in the %s system. The probe will automatically send us the data we need if all goes well. You'll be paid %s when we arrive."]])
 text[4] = _([[The scientists thank you for your help before going back to their home to continue their nebula research. One of them gives you a mock-up of the satellite you helped them launch as a keepsake.]])
 text[9] = _([["You do not have enough free cargo space to accept this mission!"]])
 launch = {}
@@ -100,7 +102,7 @@ function accept ()
 
    -- Set up mission information
    misn.setTitle( mtitle[1] )
-   misn.setReward( string.format( misn_reward, numstring(credits) ) )
+   misn.setReward( creditstring(credits) )
    misn.setDesc( string.format( mdesc[1], satellite_sys:name() ) )
    misn_marker = misn.markerAdd( satellite_sys, "low" )
 
@@ -110,7 +112,7 @@ function accept ()
    -- More flavour text
    tk.msg( title[2], string.format(text[2], satellite_sys:name()) )
    tk.msg( title[2], string.format(text[3], satellite_sys:name(),
-         homeworld:name(), homeworld_sys:name(), numstring(credits) ) )
+         homeworld:name(), homeworld_sys:name(), creditstring(credits) ) )
 
    misn.osdCreate(mtitle[1], {mdesc[1]:format(satellite_sys:name())})
    -- Set up hooks

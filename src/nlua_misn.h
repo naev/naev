@@ -6,7 +6,9 @@
 #ifndef NLUA_MISN
 #  define NLUA_MISN
 
+/** @cond */
 #include <lua.h>
+/** @endcond */
 
 #include "mission.h"
 

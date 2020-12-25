@@ -8,17 +8,19 @@
  * @brief Lua news module.
  */
 
-#include "nlua_news.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_news.h"
+
 #include "land.h"
+#include "nlua_time.h"
 #include "nluadef.h"
 #include "nstring.h"
 #include "ntime.h"
-#include "nlua_time.h"
 
 
 extern news_t *news_list; /**< Linked list containing all articles */
@@ -371,13 +373,12 @@ int newsL_get( lua_State *L )
             || (article_ptr->faction == NULL) )
          continue;
 
-      if ( print_all || ( date == article_ptr->date )
-            || ( characteristic
-               && ( ( strcmp(article_ptr->title, characteristic) == 0 )
-                  || ( strcmp(article_ptr->desc, characteristic) == 0 )
-                  || ( strcmp(article_ptr->faction, characteristic) == 0 ) ) )
-            || ( ( article_ptr->tag != NULL )
-               && ( strcmp(article_ptr->tag, characteristic) == 0 ) ) ) {
+      if ( print_all || date == article_ptr->date
+           || ( characteristic
+                && ( strcmp( article_ptr->title, characteristic ) == 0
+                     || strcmp( article_ptr->desc, characteristic ) == 0
+                     || strcmp( article_ptr->faction, characteristic ) == 0
+                     || ( article_ptr->tag != NULL && strcmp( article_ptr->tag, characteristic ) == 0 ) ) ) ) {
          lua_pushnumber(L, k++); /* key */
          Larticle = article_ptr->id;
          lua_pusharticle(L, Larticle); /* value */
@@ -386,8 +387,7 @@ int newsL_get( lua_State *L )
 
    } while ((article_ptr = article_ptr->next) != NULL);
 
-   if (characteristic != NULL)
-      free(characteristic);
+   free(characteristic);
 
    return 1;
 }
@@ -541,18 +541,21 @@ int newsL_bind( lua_State *L )
       /* traverse table */
       while (lua_next(L, -2)) {
          if (!(a = luaL_validarticle(L, -1))) {
+            free( tag );
             WARN(_("Bad argument to news.date(), must be article or a table of "
                  "articles"));
             return 0;
          }
+         article_ptr = news_get( *a );
          if (article_ptr == NULL) {
+            free( tag );
             WARN(_("\nArticle not valid"));
             return 0;
          }
-         article_ptr = news_get(*a);
          article_ptr->tag = strdup(tag);
          lua_pop(L, 1);
       }
+      free( tag );
    }
    else {
       if (!(a = luaL_validarticle(L, 1))) {

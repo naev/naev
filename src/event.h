@@ -7,8 +7,8 @@
 #  define EVENT_H
 
 
-#include "nlua.h"
 #include "claim.h"
+#include "nlua.h"
 
 
 /**

@@ -1,578 +1,313 @@
 on:
+  repository_dispatch:
+    types: manual-prerelease
   push:
-    tags:   
-      - '!naev-*.*.*'
-      - 'naev-*.*.*-beta*'
+    tags:
+      - '!v*.*.*'
+      - 'v*.*.*-beta*'
 
-name: Release
+name: Pre-Release
 
 jobs:
-  "Windows-MinGW32":
-    runs-on: windows-latest
-
-    defaults:
-      run:
-        shell: msys2 {0}
+  "Generate_Source":
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Setup MINGW32 Environment
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: MINGW32
-        update: true
-        install: mingw-w64-i686-libtool mingw-w64-i686-toolchain mingw-w64-i686-gcc mingw-w64-i686-SDL2 mingw-w64-i686-SDL2_mixer mingw-w64-i686-SDL2_image mingw-w64-i686-libxml2 mingw-w64-i686-libpng mingw-w64-i686-openal mingw-w64-i686-libvorbis mingw-w64-i686-binutils mingw-w64-i686-fontconfig mingw-w64-i686-freetype mingw-w64-i686-libzip mingw-w64-i686-gettext mingw-w64-i686-luajit mingw-w64-i686-nsis libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool zip unzip python3-pip
+      - name: Update APT Cache
+        run: |
+          sudo apt-get update
+
+      - name: Install Build Dependencies
+        run: |
+          sudo apt-get install \
+            automake \
+            autopoint \
+            autoconf-archive \
+            build-essential \
+            binutils-dev \
+            gettext \
+            intltool \
+            libsdl2-dev \
+            libsdl2-mixer-dev \
+            libsdl2-image-dev \
+            libgl1-mesa-dev \
+            libxml2-dev \
+            libfreetype6-dev \
+            libpng-dev \
+            libopenal-dev \
+            libvorbis-dev \
+            libiberty-dev
+
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Generate source archive
+        run: |
+          ./autogen.sh
+          ./configure
+          make dist-gzip
+          make dat/VERSION
+
+      - name: Collect Artifacts
+        run: |
+          mkdir -p dist/out
+          mv naev-*.tar.gz dist/out/source.tar.gz
+          cp dat/VERSION dist/out
+
+      - name: Upload Source Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-dist
+          path: ${{ github.workspace }}/dist/out/source.tar.gz
+          if-no-files-found: error
+
+      - name: Upload Version Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-version
+          path: ${{ github.workspace }}/dist/out/VERSION
+          if-no-files-found: error
+
+      - name: Upload Deployment Script Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-steam-deployment
+          path: ${{ github.workspace }}/utils/ci/steam/*
+          if-no-files-found: error
+
+  "Build_Naev_Release":
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-16.04
+            buildoutput: naev-linux-x86-64
+            shell: bash
+            make: make
+          - os: windows-latest
+            buildoutput: naev-win64
+            shell: msys2 {0}
+            make: mingw32-make
     
-    - name: Checkout Naev Repository 
-      uses: actions/checkout@v2
-
-    - name: Build Naev on Win32
-      run: |
-        ./autogen.sh
-        ./configure --disable-debug
-        make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3"
-
-    - name: Build Windows Installer
-      run: ./extras/windows/packageWindows.sh
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: win32
-        path: |
-          ${{ github.workspace }}/naev-win32.exe
-          ${{ github.workspace }}/naev-win32.zip
-
-  "Windows-MinGW64":
-    runs-on: windows-latest
-
     defaults:
       run:
-        shell: msys2 {0}
+        shell: ${{ matrix.shell }}
+            
+    runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Setup MINGW64 Environment
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: MINGW64
-        update: true
-        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-libzip mingw-w64-x86_64-gettext mingw-w64-x86_64-luajit mingw-w64-x86_64-nsis libtool autoconf autoconf-archive automake automake-wrapper git gettext pkgconfig make intltool itstool zip unzip python3-pip
+      - name: Update APT Cache
+        if: ${{ runner.os == 'Linux'}}
+        run: |
+          sudo apt-get update
 
-    - name: Checkout Naev Repository 
-      uses: actions/checkout@v2
+      - name: Install Build Dependencies
+        if: ${{ runner.os == 'Linux'}}
+        run: |
+          sudo apt-get install \
+            automake \
+            autopoint \
+            autoconf-archive \
+            build-essential \
+            binutils-dev \
+            gettext \
+            intltool \
+            libsdl2-dev \
+            libsdl2-mixer-dev \
+            libsdl2-image-dev \
+            libgl1-mesa-dev \
+            libxml2-dev \
+            libfreetype6-dev \
+            libpng-dev \
+            libopenal-dev \
+            libvorbis-dev \
+            libiberty-dev \
+            libluajit-5.1-dev \
+            libsuitesparse-dev
+            
+      - name: Install MinGW Packages
+        if: ${{ runner.os == 'Windows'}}
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-clang mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-itstool mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-python-pip mingw-w64-x86_64-luajit mingw-w64-x86_64-nsis mingw-w64-x86_64-make mingw-w64-x86_64-pkg-config mingw-w64-x86_64-suitesparse autoconf autoconf-archive automake-wrapper git intltool python tar
 
-    - name: Build Naev on Win64
-      run: |
-        ./autogen.sh
-        ./configure --disable-debug
-        make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3"
-
-    - name: Build Windows Installer
-      run: |
-        ./extras/windows/packageWindows.sh
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: win64
-        path: |
-          ${{ github.workspace }}/naev-win64.exe
-          ${{ github.workspace }}/naev-win64.zip
-
-  "Linux-x86":
-    runs-on: ubuntu-20.04
-
-    steps:
-    - name: Update APT Cache
-      run: |
-        sudo dpkg --add-architecture i386
-        sudo apt-get update
-
-    - name: Install Build Dependencies
-      run: |
-        sudo apt-get install \
-          build-essential \
-          automake \
-          autoconf-archive \
-          gcc-multilib \
-          libsdl2-dev:i386 \
-          libsdl2-mixer-dev:i386 \
-          libsdl2-image-dev:i386 \
-          libgl1-mesa-dev:i386 \
-          libglu1-mesa-dev:i386 \
-          libxml2-dev:i386 \
-          libfontconfig1-dev:i386 \
-          libfreetype6-dev:i386 \
-          libpng-dev:i386 \
-          libopenal-dev:i386 \
-          libvorbis-dev:i386 \
-          libzip-dev:i386 \
-          libiberty-dev:i386 \
-          libluajit-5.1-dev:i386 \
-          gettext \
-          autopoint \
-          intltool \
-          itstool
-
-    - name: Checkout Naev Repository 
-      uses: actions/checkout@v2
-
-    - name: Build Naev on Linux32
-      run: |
-        ./autogen.sh
-        ./configure --disable-debug --build=x86_64-linux-gnu --host=i686-linux-gnu
-        make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3 -m32"
-        LDFLAGS: "-m32"
-
-    - name: Package Linux32 Release
-      run: |
-        mv src/naev src/naev-linux-x86-32
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: linux-x86-32
-        path: ${{ github.workspace }}/src/naev-linux-x86-32
-
-
-  "Linux-Steam-x86":
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+          
+      - name: Build Naev for Win64
+        if: ${{ runner.os == 'Windows'}}
+        run: |
+          ./autogen.sh
+          ./configure --disable-debug
+          $MAKE -j$(nproc --all)
+        env:
+          CFLAGS: "-O3"
+          MAKE: "${{ matrix.make }}"
+          
+      - name: Build and Package Naev for Linux64
+        if: ${{ runner.os == 'Linux'}}
+        run: |
+          ./utils/buildAppImage.sh -s "$(pwd)" -b "$(pwd)" -o "$(pwd)/dist"
+        env:
+          CFLAGS: "-O3"
+          
+      - name: Build Windows Installer
+        if: ${{ runner.os == 'Windows'}}
+        run: |
+          ./extras/windows/packageWindows.sh -s "$(pwd)" -b "$(pwd)" -o "$(pwd)/dist"
+          
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.buildoutput }}
+          path: |
+            ${{ github.workspace }}/dist/out/*
+          if-no-files-found: error
+            
+  "Build_Naev_Steam_Release":
     runs-on: ubuntu-latest
-    container:
-      image: dosowisko/steam-runtime-i386
-      volumes:
-        - ${{ github.workspace }}:${{ github.workspace }}
-        
-    steps:
-    - name: Clone Naev Repository 
-      run: |
-        git clone https://github.com/naev/naev.git ${{ github.workspace }}
 
-    - name: Install Additional Build Dependencies
-      run: |
-        sudo apt-get -y install autoconf-archive intltool itstool
-
-    - name: Build Naev for Steam on Linux32
-      run: |
-        cd ${{ github.workspace }}
-        ./autogen.sh
-        ./configure --disable-debug --without-libzip --build=i386-linux-gnu --host=i386-linux-gnu
-        make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3 -std=gnu11"
-
-    - name: Collect Steam Linux32 Release
-      run: |
-        mv ${{ github.workspace }}/src/naev ${{ github.workspace }}/naev.x32
-        chmod +x ${{ github.workspace }}/naev.x32
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: steam-x86-32
-        path: ${{ github.workspace }}/naev.x32
-
-  "Linux-x86_64":
-    runs-on: ubuntu-20.04
-
-    steps:
-    - name: Update APT Cache
-      run: |
-        sudo apt-get update
-
-    - name: Install Build Dependencies
-      run: |
-        sudo apt-get install \
-          build-essential \
-          automake \
-          autoconf-archive \
-          binutils-dev \
-          libsdl2-dev \
-          libsdl2-mixer-dev \
-          libsdl2-image-dev \
-          libgl1-mesa-dev \
-          libglu1-mesa-dev \
-          libxml2-dev \
-          libfontconfig1-dev \
-          libfreetype6-dev \
-          libpng-dev \
-          libopenal-dev \
-          libvorbis-dev \
-          libzip-dev \
-          libiberty-dev \
-          libluajit-5.1-dev \
-          gettext \
-          autopoint \
-          intltool \
-          itstool
-
-    - name: Checkout Naev Repository 
-      uses: actions/checkout@v2
-
-    - name: Build Naev on Linux64
-      run: |
-        ./autogen.sh
-        ./configure --disable-debug --build=x86_64-linux-gnu --host=x86_64-linux-gnu
-        make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3"
-
-    - name: Package Linux64 Release
-      run: |
-        mv src/naev src/naev-linux-x86-64
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: linux-x86-64
-        path: ${{ github.workspace }}/src/naev-linux-x86-64
-
-  "Linux-Steam-x86_64":
-    runs-on: ubuntu-latest
     container:
       image: dosowisko/steam-runtime-amd64
       volumes:
         - ${{ github.workspace }}:${{ github.workspace }}
 
     steps:
-    - name: Clone Naev Repository 
-      run: |
-        git clone https://github.com/naev/naev.git ${{ github.workspace }}
+      - name: Clone Naev Repository
+        run: |
+          git clone https://github.com/naev/naev.git ${{ github.workspace }}
 
-    - name: Install Additional Build Dependencies
-      run: |
-        sudo apt-get -y install autoconf-archive intltool itstool
+      - name: Install Additional Build Dependencies
+        run: |
+          sudo apt-get -y install autoconf-archive intltool
 
-    - name: Build Naev for Steam on Linux64
-      run: |
-        cd ${{ github.workspace }}
-        ./autogen.sh
-        ./configure --disable-debug --without-libzip --build=x86_64-linux-gnu
-        make -j$(nproc --all)
-      env:
-        CFLAGS: "-O3 -std=gnu11"
+      - name: Build Naev for Steam on Linux64
+        run: |
+          cd ${{ github.workspace }}
+          ./autogen.sh
+          ./configure --disable-debug --build=x86_64-linux-gnu
+          make -j$(nproc --all)
+          make data
+        env:
+          CFLAGS: "-O3 -std=gnu11"
 
-    - name: Collect Steam Linux64 Release
-      run: |
-        mv ${{ github.workspace }}/src/naev ${{ github.workspace }}/naev.x64
-        chmod +x ${{ github.workspace }}/naev.x64
+      - name: Collect Steam Linux64 Artifacts
+        run: |
+          mkdir -p ${{ github.workspace }}/dist/out/
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: steam-x86-64
-        path: ${{ github.workspace }}/naev.x64
+          mv ${{ github.workspace }}/src/naev ${{ github.workspace }}/dist/out/naev.x64
+          chmod +x ${{ github.workspace }}/dist/out/naev.x64
 
-  "macOS":
-    runs-on: macos-latest
+          tar -cJvf ${{ github.workspace }}/dist/out/steam-ndata.tar.xz dat
+      
+      - name: Upload Naev Binary Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: naev-steamruntime
+          path: ${{ github.workspace }}/dist/out/naev.x64
+
+      - name: Upload Naev Data Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: naev-ndata
+          path: ${{ github.workspace }}/dist/out/steam-ndata.tar.xz
+
+  "Upload_Naev_Release":
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - releasetype: github
+          - releasetype: steam
+          - releasetype: itch
+            
+    runs-on: ubuntu-latest
+    needs: [Generate_Source, Build_Naev_Release, Build_Naev_Steam_Release]
+    if: ${{ github.repository == 'naev/naev' }}
 
     steps:
-    - name: Update Homebrew Cache
-      run: |
-        brew update
-
-    - name: Install Additional Build Dependencies
-      run: |
-        brew install \
-          automake \
-          autoconf-archive \
-          pkg-config \
-          fontconfig \
-          luajit \
-          intltool \
-          itstool \
-          sdl2 \
-          sdl2_mixer \
-          sdl2_image \
-          openal-soft
+      - name: Create Release Staging and Output Areas
+        run: |
+          mkdir -p {temp,dist/{staging,out/{lin64,win64}}}
           
-    - name: Remove Homebrew Perl
-      run: |
-        brew uninstall --ignore-dependencies perl
-        
-    - name: Checkout Naev Repository 
-      uses: actions/checkout@v2
-
-    - name: Build Naev on MacOS
-      run: |
-        # PKGCONFIG configuration for OpenAL
-        export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/opt/openal-soft/lib/pkgconfig"
-        
-        ./autogen.sh
-        ./configure --disable-debug
-        make -j$(sysctl -n hw.logicalcpu)
-      env:
-        CFLAGS: "-O3 -mmacosx-version-min=10.7"
-    
-    - name: Package MacOS Release
-      run: |
-        ./extras/macos/bundle.sh
-        zip -r naev-macos.zip Naev.app/*
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: macos
-        path: ${{ github.workspace }}/naev-macos.zip
-
-  "Generate-Source":
-      runs-on: ubuntu-latest
-
-      steps:
       - name: Update APT Cache
-        run: |
-          sudo apt-get update
-
-      - name: Install Build Dependencies
-        run: |
-          sudo apt-get install \
-            build-essential \
-            automake \
-            autoconf-archive \
-            libsdl2-dev \
-            libsdl2-mixer-dev \
-            libsdl2-image-dev \
-            libgl1-mesa-dev \
-            libxml2-dev \
-            libfontconfig1-dev \
-            libfreetype6-dev \
-            libpng-dev \
-            libopenal-dev \
-            libvorbis-dev \
-            binutils-dev \
-            libzip-dev \
-            libiberty-dev \
-            libluajit-5.1-dev \
-            gettext \
-            autopoint \
-            intltool \
-            itstool
-
-      - name: Checkout Naev Repository 
-        uses: actions/checkout@v2
-
-      - name: Generate source archive
-        run: |
-          ./autogen.sh
-          ./configure
-          make dist-bzip2
-
-      - name: Check if source archive is valid
-        run: |
-          # This currently doesn't work correctly.
-          # make distcheck 
-
-      - name: Prepare source artifact
-        run: |
-          make VERSION
-          VERSION="$(cat VERSION)"
-          mv naev-$VERSION.tar.bz2 source.tar.bz2
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: source
-          path: ${{ github.workspace }}/source.tar.bz2
-
-  "Generate-NData":
-      runs-on: ubuntu-latest
-
-      steps:
-      - name: Update APT Cache
-        run: |
-          sudo apt-get update
-
-      - name: Install Build Dependencies
-        run: |
-          sudo apt-get install \
-            build-essential \
-            automake \
-            autoconf-archive \
-            libsdl2-dev \
-            libsdl2-mixer-dev \
-            libsdl2-image-dev \
-            libgl1-mesa-dev \
-            libxml2-dev \
-            libfontconfig1-dev \
-            libfreetype6-dev \
-            libpng-dev \
-            libopenal-dev \
-            libvorbis-dev \
-            binutils-dev \
-            libzip-dev \
-            libiberty-dev \
-            libluajit-5.1-dev \
-            gettext \
-            autopoint \
-            intltool \
-            itstool
-
-      - name: Checkout Naev Repository 
-        uses: actions/checkout@v2
-
-      - name: Generate ndata
-        run: |
-          ./autogen.sh
-          ./configure
-          make pot
-          make "ndata.zip"
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ndata
-          path: ${{ github.workspace }}/ndata.zip
-
-  "Upload-Release":
-      runs-on: ubuntu-latest
-      needs: [Windows-MinGW64, Windows-MinGW32, macOS, Linux-x86_64, Linux-x86, Generate-NData, Generate-Source]
-      if: ${{ github.repository == 'naev/naev' }}
-      
-      steps:
-      - name: Update APT Cache
-        run: |
-          sudo apt-get update
-
-      - name: Install Build Dependencies
-        run: |
-          sudo apt-get install \
-            build-essential \
-            automake \
-            autoconf-archive \
-            libsdl2-dev \
-            libsdl2-mixer-dev \
-            libsdl2-image-dev \
-            libgl1-mesa-dev \
-            libxml2-dev \
-            libfontconfig1-dev \
-            libfreetype6-dev \
-            libpng-dev \
-            libopenal-dev \
-            libvorbis-dev \
-            binutils-dev \
-            libzip-dev \
-            libiberty-dev \
-            libluajit-5.1-dev \
-            gettext \
-            autopoint \
-            intltool \
-            itstool
-
-      - name: Checkout Naev Repository 
-        uses: actions/checkout@v2
-
-      - name: Get VERSION
-        run: |
-          ./autogen.sh
-          ./configure
-          make VERSION
-
-      - name: Create Release Staging Area
-        run: |
-          mkdir -p temp   
-
-      - name: Download Build Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          path: ${{ github.workspace }}/temp/
-          
-      - name: Collect files for distribution
-        run: |
-          mkdir -p dist
-
-          VERSION="$(cat VERSION)"
-           # Get version, negative minors mean betas
-          if [[ -n $(echo "${VERSION}" | grep "-") ]]; then
-              BASEVER=$(echo "${VERSION}" | sed 's/\.-.*//')
-              BETAVER=$(echo "${VERSION}" | sed 's/.*-//')
-              VERSION="${BASEVER}.0-beta${BETAVER}"
-          fi
-
-          mv temp/linux-x86-64/naev-linux-x86-64 dist/naev-$VERSION-linux-x86-64
-          mv temp/linux-x86-32/naev-linux-x86-32 dist/naev-$VERSION-linux-x86-32
-          mv temp/macos/naev-macos.zip dist/naev-$VERSION-macos.zip
-          mv temp/win64/naev-win64.exe dist/naev-$VERSION-win64.exe
-          mv temp/win64/naev-win64.zip dist/naev-$VERSION-win64.zip
-          mv temp/win32/naev-win32.exe dist/naev-$VERSION-win32.exe
-          mv temp/win32/naev-win32.zip dist/naev-$VERSION-win32.zip
-          mv temp/source/source.tar.bz2 dist/naev-$VERSION-source.tar.bz2
-          mv temp/ndata/ndata.zip dist/ndata-$VERSION.zip
-
-      - name: Upload Release Assets
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: true
-          files: |
-            ${{ github.workspace }}/dist/*
-
-  "Upload-Steam":
-      runs-on: ubuntu-latest
-      needs: [Windows-MinGW64, Windows-MinGW32, Linux-Steam-x86_64, Linux-Steam-x86, Generate-NData]
-      if: ${{ github.repository == 'naev/naev' }}
-      
-      steps:
-      - name: Update APT Cache
+        if: ${{ matrix.releasetype == 'steam' }}
         run: |
           sudo add-apt-repository multiverse
           sudo dpkg --add-architecture i386
           sudo apt-get update
 
-      - name: Install Build Dependencies
-        run: |
-          sudo apt-get install \
-            build-essential \
-            automake \
-            autoconf-archive \
-            libsdl2-dev \
-            libsdl2-mixer-dev \
-            libsdl2-image-dev \
-            libgl1-mesa-dev \
-            libxml2-dev \
-            libfontconfig1-dev \
-            libfreetype6-dev \
-            libpng-dev \
-            libopenal-dev \
-            libvorbis-dev \
-            binutils-dev \
-            libzip-dev \
-            libiberty-dev \
-            libluajit-5.1-dev \
-            gettext \
-            autopoint \
-            intltool \
-            itstool
-
       - name: Install SteamCMD
+        if: ${{ matrix.releasetype == 'steam' }}
         run: |
           echo steamcmd steam/question select "I AGREE" | sudo debconf-set-selections
-          sudo apt install lib32gcc1 steamcmd
-
-      - name: Checkout Naev Repository 
-        uses: actions/checkout@v2
-
-      - name: Get VERSION
+          sudo apt-get install lib32gcc1 libsdl2-2.0-0:i386 steamcmd
+          
+      - name: Install Butler
+        if: ${{ matrix.releasetype == 'itch' }}
         run: |
-          ./autogen.sh
-          ./configure
-          make VERSION
+          wget -O temp/butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip temp/butler.zip
+          chmod +x butler
+          ./butler -V
 
-      - name: Create Release Staging Area
-        run: |
-          mkdir -p ${{ github.workspace }}/extras/steam/temp/ 
-
-      - name: Download Build Artifacts
+      - name: Download Artifacts
         uses: actions/download-artifact@v2
         with:
-          path: ${{ github.workspace }}/extras/steam/temp/
-          
-      - name: Build and Upload Steam Release
+          path: ${{ github.workspace }}/dist/staging
+
+      - name: Build Github Release
+        if: ${{ matrix.releasetype == 'github' }}
         run: |
-          ./extras/steam/SteamDeploy.sh
+          BUILD_DATE="$(date +%Y%m%d)"
+          VERSION="$(<"dist/staging/naev-version/VERSION")"
+          SUFFIX="$VERSION"
+
+          mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/naev-$SUFFIX-linux-x86-64.AppImage
+          mv dist/staging/naev-win64/naev*.exe dist/out/naev-$SUFFIX-win64.exe
+          mv dist/staging/naev-dist/source.tar.gz dist/out/naev-$SUFFIX-source.tar.gz
+
+          chmod +x dist/out/naev-$SUFFIX-linux-x86-64.AppImage
+
+      - name: Upload Github Release
+        if: ${{ matrix.releasetype == 'github' }}
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: true
+          files: |
+            ${{ github.workspace }}/dist/out/*
+          
+      - name: Build and Upload itch.io Release
+        if: ${{ matrix.releasetype == 'itch' }}
+        run: |
+          BUILD_DATE="$(date +%Y%m%d)"
+          VERSION="$(<"dist/staging/naev-version/VERSION")"
+          SUFFIX="$VERSION"
+
+          mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
+          chmod +x dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
+
+          tar -Jxf "dist/staging/naev-win64/steam-win64.tar.xz" -C "dist/out/win64"
+          tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64"
+          
+          ./butler push --userversion="$SUFFIX" dist/out/lin64 naev/naev:linux-x86-64-beta
+          ./butler push --userversion="$SUFFIX" dist/out/win64 naev/naev:windows-x86-64-beta
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+
+      - name: Build and Upload Steam Release
+        if: ${{ matrix.releasetype == 'steam' }}
+        run: |
+          chmod -R +x dist/staging/naev-steam-deployment
+          cp -r dist/staging/naev-steam-deployment/* ${{ github.workspace }}
+          ./SteamDeploy.sh -v "${{ github.workspace }}/dist/staging/naev-version" -t "${{ github.workspace }}/dist/staging" -o "${{ github.workspace }}/dist/out"
         env:
           STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
           STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}

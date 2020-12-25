@@ -12,6 +12,9 @@
    <faction>FLF</faction>
    <cond>faction.playerStanding("FLF") &gt;= 90</cond>
   </avail>
+  <notes>
+   <campaign>Save the Frontier</campaign>
+  </notes>
  </mission>
  --]]
 --[[
@@ -33,8 +36,8 @@
 
 --]]
 
-require "dat/missions/flf/flf_rogue.lua"
-require "dat/missions/flf/flf_common.lua"
+require "missions/flf/flf_rogue"
+require "missions/flf/flf_common"
 
 title = {}
 text = {}
@@ -90,7 +93,6 @@ function accept ()
       marker = misn.markerAdd( missys, "high" )
 
       osd_desc[1] = osd_desc[1]:format( missys:name() )
-      osd_desc[2] = osd_desc[2]:format( misn_level[level] )
       misn.osdCreate( osd_title, osd_desc )
 
       rogue_ships_left = 0

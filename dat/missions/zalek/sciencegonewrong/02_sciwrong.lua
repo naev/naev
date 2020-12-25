@@ -1,18 +1,18 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The one with the Runaway">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <done>The one with the Visit</done>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>Gastan</planet>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <done>The one with the Visit</done>
+  <chance>100</chance>
+  <location>Bar</location>
+  <planet>Gastan</planet>
+ </avail>
+</mission>
+--]]
 --[[
    Mission: The one with the Runaway
    Description: A prototype drone runs away and needs to be caught by the player
@@ -24,9 +24,8 @@
    Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
 
-require "fleethelper.lua"
-require "factions/spawn/zalek/lua"
-require "dat/missions/zalek/common.lua"
+require "fleethelper"
+require "missions/zalek/common"
 
 
 -- set text variables
@@ -54,7 +53,7 @@ title[1] = _([[In the bar]])
 title[2] = _([[On the intercom]])
 title[3] = _([[On your ship]])
 title[4] = _([[Back on %s]])
-text[1]  = _([["Hey there again! I need your help. I was finishing up my prototype, you see. It's ingenious. But you see, there was a minor hiccup. It's nothing major, it is just, well, that I lost it. But I would not be Dr. Geller if I had not put a tracking mechanism into it! So I want you to catch it and bring it back, ok? You can do that, right?"]])
+text[1]  = _([["Hey there again! I need your help. I was finishing up my prototype, you see. It's ingenious. But you see, there was a minor hiccup. It's nothing major, it is just, well, that I lost it. But I would not be Dr. Geller if I had not put a tracking mechanism into it! So I want you to catch it and bring it back, OK? You can do that, right?"]])
 text[2] = _([["Excellent! I will join you this time. Let's go."]])
 text[3] = _([["There! The tracker shows it must be here! It is right next to %s! If you hail it I might be able to patch the software. That should give me control again. But you have to be close so the data transfer is as stable as possible."]])
 text[4] = _([["Huh, I don't understand. This should not be happening. Hold on. I can't get access."]])
@@ -70,14 +69,14 @@ text[11] = _([["It seems the drone has found a way to shield itself from the EM 
 text[12] = _([["There you go! Get it!"]])
 text[13] = _([["This is strange, the engines are starting to heat up... oh, shit, if they continue like this the drone will explode in about 20 seconds! You'd better hurry!"]])
 text[14] = _([["NOOOOOOOOO! My drone! You imbecile! You failed me!"]])
--- final msg when returning to gastan
+-- final message when returning to Gastan
 text[15] = _([["The things I do for science! Now let me go back to my lab and analyze the drone. I need to figure out exactly what happened and what went wrong. Once I know more I might need you again. Oh, and here, for your service!" A small bag containing a credit chip and a tiny toy drone is tossed your way.]])
 
 -- text if the mission is failed
 fail_text = _([["NOOOOOO! What have you done!? My prototype! It's going to take me weeks to rebuild it! You incompetent nincompoop!"]])
 -- osd_msg
 osd_msg[1] = _("Go to the %s system and hail the prototype")
-osd_msg[2] = _("Disable to prototype")
+osd_msg[2] = _("Disable the prototype")
 osd_msg[3] = _("Return the prototype to %s in the %s system")
 -- refuestext 
 refusetitle = _("No Science Today")
@@ -131,7 +130,7 @@ function game_of_drones ()
 
    t_drone = pilot.add("Za'lek Scout Drone", "trader",t_pla[1] )[1] -- prototype is a scout drone
    t_drone:addOutfit("Tricon Zephyr II Engine")
-   -- add sth so it is not insta disable with one shot?
+   -- add something so it is not insta-disabled with one shot?
    --t_drone:addOutfit("Tricon Zephyr II Engine")
    t_drone:setFaction("Civilian")
    t_drone:rename(_("Prototype Drone"))
@@ -139,7 +138,7 @@ function game_of_drones ()
    t_drone:control()
    t_drone:setHilight(true)
    t_drone:setVisplayer(true)
-   t_drone:goto(t_drone:pos() + vec2.new( 400, -400), false)
+   t_drone:moveto(t_drone:pos() + vec2.new( 400, -400), false)
    -- just some moving around, stolen from baron missions ;D
    idlehook = hook.pilot(t_drone, "idle", "targetIdle")
    misn.osdActive(2)
@@ -184,7 +183,7 @@ function sp_baddies()
    end
    jps = system.cur():jumps()
    t_drone:taskClear()
-   t_sys[3] = jps[1]:dest():name()
+   t_sys[3] = jps[1]:dest():nameRaw()
    t_drone:hyperspace(jps[1]:dest())
 end
 
@@ -212,7 +211,7 @@ end
 
 function drone_jumped ()
    --begin the chase: 
-   tk.msg(title[3],text[9]:format(t_sys[3]))
+   tk.msg(title[3], text[9]:format(_(t_sys[3])))
    misn.markerRm(mmarker)
    if (jumps==0) then
       mmarker = misn.markerAdd(system.get(t_sys[3]),"high")
@@ -240,13 +239,13 @@ function chase_of_drones ()
    tk.msg(title[3],text[10])
    t_drone = pilot.add("Za'lek Scout Drone", "dummy",vec2.newP(rnd.rnd(0,system.cur():radius()/5),rnd.rnd(0,359)))[1] -- prototype is a scout drone
    t_drone:addOutfit("Tricon Zephyr II Engine")
-   -- add sth so it is not insta disable with one shot?
+   -- add something so it is not insta-disabled with one shot?
    t_drone:setFaction("Civilian")
    t_drone:rename(_("Prototype Drone"))
    t_drone:control()
    t_drone:setHilight(true)
    t_drone:setVisplayer(true)
-   t_drone:goto(t_drone:pos() + vec2.new( 400, -400), false)
+   t_drone:moveto(t_drone:pos() + vec2.new( 400, -400), false)
    t_stats = t_drone:stats()
    t_drone:setHealth(50,100)
    t_drone:setNoDisable()
@@ -274,7 +273,7 @@ function drone_attacked()
    t_drone:setVisplayer(true)
    jps = system.cur():jumps()
    t_drone:taskClear()
-   t_sys[3] = jps[1]:dest():name()
+   t_sys[3] = jps[1]:dest():nameRaw()
    t_drone:hyperspace(jps[1]:dest())
    hook.timer(4000,"drone_disableable")
 end
@@ -359,10 +358,10 @@ end
 
 -- keep drone moving
 function targetIdle()
-   t_drone:goto(t_drone:pos() + vec2.new( 400,  400), false)
-   t_drone:goto(t_drone:pos() + vec2.new(-400,  400), false)
-   t_drone:goto(t_drone:pos() + vec2.new(-400, -400), false)
-   t_drone:goto(t_drone:pos() + vec2.new( 400, -400), false)
+   t_drone:moveto(t_drone:pos() + vec2.new( 400,  400), false)
+   t_drone:moveto(t_drone:pos() + vec2.new(-400,  400), false)
+   t_drone:moveto(t_drone:pos() + vec2.new(-400, -400), false)
+   t_drone:moveto(t_drone:pos() + vec2.new( 400, -400), false)
    hook.rm(idlehook)
    idlehook = hook.timer(5000, "targetIdle")
 end

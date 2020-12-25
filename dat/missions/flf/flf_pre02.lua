@@ -1,18 +1,24 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Disrupt a Dvaered Patrol">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <chance>100</chance>
-   <location>Bar</location>
-   <cond>var.peek("flfbase_intro") == 2</cond>
-   <planet>Sindbad</planet>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <chance>100</chance>
+  <location>Bar</location>
+  <cond>var.peek("flfbase_intro") == 2</cond>
+  <planet>Sindbad</planet>
+ </avail>
+ <notes>
+  <done_misn name="Deal with the FLF agent">If you return Gregar to Sindbad</done_misn>
+  <provides name="The Dvaered know where Sindbad is">If you betray the FLF</provides>
+  <campaign>Join the FLF</campaign>
+  <tier>3</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    This program is free software: you can redistribute it and/or modify
@@ -34,10 +40,10 @@
 
 --]]
 
-require "fleethelper.lua"
-require "dat/missions/flf/flf_patrol.lua"
-require "dat/missions/flf/flf_common.lua"
-require "dat/missions/dvaered/common.lua"
+require "fleethelper"
+require "missions/flf/flf_patrol"
+require "missions/flf/flf_common"
+require "missions/dvaered/common"
 
 title = {}
 text = {}
@@ -91,7 +97,7 @@ DVtitle[5] = _("End of negotiations")
 DVtext[5] = _([[Colonel Urnus is visibly annoyed by your response. "Very well then," he bites at you. "In that case you will be destroyed along with the rest of that terrorist scum. Helm, full speed ahead! All batteries, fire at will!"]])
 
 DVtitle[6] = _("A reward for a job well botched")
-DVtext[6] = _([[Soon after docking, you are picked up by a couple of soldiers, who escort you to Colonel Urnus' office. Urnus greets you warmly, and offers you a seat and a cigar. You take the former, not the latter.
+DVtext[6] = _([[Soon after docking, you are picked up by a couple of soldiers, who escort you to Colonel Urnus's office. Urnus greets you warmly, and offers you a seat and a cigar. You take the former, not the latter.
     "I am most pleased with the outcome of this situation, citizen," Urnus begins. "To be absolutely frank with you, I was beginning to get frustrated. My superiors have been breathing down my neck, demanding results on those blasted FLF, but they are as slippery as eels. Just when you think you've cornered them, poof! They're gone, lost in that nebula. Thick as soup, that thing. I don't know how they can even find their own way home!"]])
 
 DVtext[7] = _([[Urnus takes a puff of his cigar and blows out a ring of smoke. It doesn't take a genius to figure out you're the best thing that's happened to him in a long time.
@@ -120,7 +126,7 @@ npc_name = _("FLF petty officer")
 npc_desc = _("There is a low-ranking officer of the Frontier Liberation Front sitting at one of the tables. She seems somewhat more receptive than most people in the bar.")
 
 log_text_flf = _([[You earned the complete trust of the FLF by eliminating a Dvaered patrol and then refusing to change sides when the Dvaereds pressured you to. You can now consider yourself to be one of the FLF.]])
-log_text_dv = _([[As you were conducting a mission to earn the trust of the FLF, Dvaered Colonel Urnus offered you a deal: you could betray the FLF and provide information on the location of the hidden FLF base in exchange for a monetary reward and immunity against any punishment. You accepted the deal, leading to an enraged wing of FLF pilots attacking you in retaliation. The FLF terrorists were repelled, however, and Urnus told you to keep an eye out for one of the Dvaered liasons so you can join the Dvaered in the upcoming mission to destroy Sindbad.]])
+log_text_dv = _([[As you were conducting a mission to earn the trust of the FLF, Dvaered Colonel Urnus offered you a deal: you could betray the FLF and provide information on the location of the hidden FLF base in exchange for a monetary reward and immunity against any punishment. You accepted the deal, leading to an enraged wing of FLF pilots attacking you in retaliation. The FLF terrorists were repelled, however, and Urnus told you to keep an eye out for one of the Dvaered liaisons so you can join the Dvaered in the upcoming mission to destroy Sindbad.]])
 
 
 function create ()
@@ -146,8 +152,7 @@ function accept ()
       marker = misn.markerAdd( missys, "low" )
       misn.setReward( misn_rwrd )
 
-      DVplanet = "Raelid Outpost"
-      DVsys = "Raelid"
+      DVplanet, DVsys = planet.get("Raelid Outpost")
 
       reinforcements_arrived = false
       dv_ships_left = 0
@@ -248,7 +253,7 @@ function hail ()
    choice = tk.choice( DVtitle[1], DVtext[3]:format( player.name() ),
       DVchoice1, DVchoice2 )
    if choice == 1 then
-      tk.msg( DVtitle[4], DVtext[4]:format( DVplanet, DVsys ) )
+      tk.msg( DVtitle[4], DVtext[4]:format( DVplanet:name(), DVsys:name() ) )
 
       faction.get("FLF"):setPlayerStanding( -100 )
       local standing = faction.get("Dvaered"):playerStanding()
@@ -264,12 +269,12 @@ function hail ()
       end
 
       job_done = true
-      osd_desc[1] = DVosd[1]:format( DVsys, DVplanet )
+      osd_desc[1] = DVosd[1]:format( DVsys:name(), DVplanet:name() )
       osd_desc[2] = nil
       misn.osdActive( 1 )
       misn.osdCreate( misn_title, osd_desc )
       misn.markerRm( marker )
-      marker = misn.markerAdd( system.get(DVsys), "high" )
+      marker = misn.markerAdd( DVsys, "high" )
 
       spawner = hook.timer( 3000, "timer_spawnHostileFLF" )
       hook.land( "land_dv" )
@@ -389,7 +394,7 @@ end
 
 function land_dv ()
    leave()
-   if planet.cur():name() == DVplanet then
+   if planet.cur() == DVplanet then
       tk.msg( DVtitle[6], DVtext[6] )
       tk.msg( DVtitle[6], DVtext[7] )
       tk.msg( DVtitle[6], DVtext[8] )

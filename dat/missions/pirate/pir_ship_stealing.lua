@@ -7,6 +7,9 @@
    <location>Bar</location>
    <cond>faction.playerStanding("Pirate") &gt;= 0 or planet.cur():faction() == faction.get("Pirate")</cond>
   </avail>
+  <notes>
+   <tier>2</tier>
+  </notes>
  </mission>
  --]]
 --[[
@@ -24,10 +27,11 @@
    happen (at least, I hope…) he’ll be pursued by a few fighters.
 --]]
 
-require "jumpdist.lua"
-require "numstring.lua"
-require "portrait.lua"
-require "dat/factions/equip/generic.lua"
+require "swapship"
+require "jumpdist"
+require "numstring"
+require "portrait"
+require "factions/equip/generic"
 
 
 title = _("Stealing a %s")
@@ -56,6 +60,11 @@ success = {
    title = _("Ship successfully stolen!"),
    message = _([[It took you a while, but you finally make it into the ship and take control of it with the access codes you were given. Hopefully, you will be able to sell this %s, or maybe even to use it.
     Enemy ships will probably be after you as soon as you leave the atmosphere, so you should get ready and use the time you have on this planet wisely.]])
+}
+
+unableto = {
+   title = _("Ship left alone!"),
+   message = _("Before you make it into the ship and take control of it, you realize you are not ready to deal with the logistics of moving your cargo over. You decide to leave the ship stealing business for later.")
 }
 
 base_price = 100000
@@ -104,7 +113,7 @@ ships = {
       bomber    = { "Soromid Marauder" },
       corvette  = { "Soromid Odium" },
       destroyer = { "Soromid Nyx" },
-      cruiser   = { "Soromid Ira" },
+      cruiser   = { "Soromid Ira", "Soromid Vox" },
       carrier   = { "Soromid Arx" },
    },
    ["Za'lek"] = {
@@ -178,13 +187,12 @@ function random_planet()
       function(s)
          for i, v in ipairs(s:planets()) do
             local f = v:faction()
-            if f and ships[f:name()] and v:services().shipyard then
+            if f and ships[f:nameRaw()] and v:services().shipyard then
                planets[#planets + 1] = v
             end
          end 
          return false
-      end
-   )
+      end, nil, true )
 
    if #planets > 0 then
       return planets[rnd.rnd(1,#planets)]
@@ -252,7 +260,7 @@ function create ()
       misn.finish(false)
    end
 
-   theship.faction = theship.planet:faction():name()
+   theship.faction = theship.planet:faction():nameRaw()
    theship.class   = random_class(theship.faction)
 
    if not theship.class then
@@ -273,7 +281,7 @@ end
 
 function accept()
    if tk.yesno( informer.title, informer.message:format(
-         theship.faction, theship.class, creditstring(theship.price) ) ) then
+         _(theship.faction), _(theship.class), creditstring(theship.price) ) ) then
       if player.credits() >= theship.price then
          tk.msg( approval.title, approval.message:format(
             theship.planet:name(), theship.system:name() ) )
@@ -282,10 +290,10 @@ function accept()
          misn.accept()
 
          -- Mission title, reward, description
-         misn.setTitle( title:format( theship.class ) )
-         misn.setReward( reward:format( theship.class ) )
+         misn.setTitle( title:format( _(theship.class) ) )
+         misn.setReward( reward:format( _(theship.class) ) )
          misn.setDesc( description:format(
-            theship.planet:name(),  theship.system:name(), theship.class ) )
+            theship.planet:name(), theship.system:name(), _(theship.class) ) )
 
          -- Mission marker
          misn.markerAdd( theship.system, "low" )
@@ -294,13 +302,13 @@ function accept()
          misn.osdCreate(
             string.format(
                title,
-               theship.class
+               _(theship.class)
             ), {
                string.format(
                   description,
                   theship.planet:name(),
                   theship.system:name(),
-                  theship.class
+                  _(theship.class)
                )
             }
          )
@@ -320,6 +328,16 @@ end
 function land()
    local landed = planet.cur()
    if landed == theship.planet then
+      -- Try to swap ships
+      local tmp = pilot.addRaw( theship.exact_class, nil, nil, 'Independent' )
+      equip_generic( tmp )
+      if not swapship( tmp ) then
+         -- Failed to swap ship!
+         tk.msg( unableto.title, unableto.message )
+         tmp:rm() -- Get rid of the temporary pilot
+         return
+      end
+
       -- Oh yeah, we stole the ship. \o/
       tk.msg(
          success.title,

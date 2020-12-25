@@ -9,14 +9,15 @@
  */
 
 
-#include "opengl.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
 
 #include "log.h"
+#include "opengl.h"
 
 
-#define BUFFER_OFFSET(i) ((char *)NULL + (i)) /**< Taken from OpengL spec. */
+#define BUFFER_OFFSET(i) ((char *)(sizeof(char) * (i))) /**< Taken from OpengL spec. */
 
 
 /**
@@ -266,16 +267,14 @@ void gl_vboActivateAttribOffset( gl_vbo *vbo, GLuint index, GLuint offset,
 /**
  * @brief Destroys a VBO.
  *
- *    @param vbo VBO to destroy.
+ *    @param vbo VBO to destroy. (If NULL, function does nothing.)
  */
 void gl_vboDestroy( gl_vbo *vbo )
 {
-   /* Destroy VBO. */
+   if (vbo == NULL)
+      return;
+
    glDeleteBuffers( 1, &vbo->id );
-
-   /* Check for errors. */
    gl_checkErr();
-
-   /* Free memory. */
    free(vbo);
 }

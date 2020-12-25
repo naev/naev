@@ -8,9 +8,11 @@
 #  define TOOLKIT_PRIV_H
 
 
+/** @cond */
 #include "naev.h"
-#include "log.h"
+/** @endcond */
 
+#include "log.h"
 #include "tk/widget.h"
 
 
@@ -20,6 +22,12 @@
 extern const glColour* toolkit_colLight;
 extern const glColour* toolkit_col;
 extern const glColour* toolkit_colDark;
+
+extern const glColour* tab_active;
+extern const glColour* tab_activeB;
+extern const glColour* tab_inactive;
+extern const glColour* tab_inactiveB;
+extern const glColour* tab_background;
 
 
 /**
@@ -97,6 +105,7 @@ typedef struct Widget_ {
    int (*textevent) ( struct Widget_ *wgt, const char *text ); /**< Text event function handler for the widget. */
    int (*mmoveevent) ( struct Widget_ *wgt, int x, int y, int rx, int ry); /**< Mouse movement handler function for the widget. */
    int (*mclickevent) ( struct Widget_ *wgt, int button, int x, int y ); /**< Mouse click event handler function for the widget. */
+   int (*mdoubleclickevent) ( struct Widget_ *wgt, int button, int x, int y ); /**< Double-click handler, bypassing the click handler if provided. */
    int (*mwheelevent) ( struct Widget_ *wgt, SDL_MouseWheelEvent event ); /**< Mouse click event handler function for the widget. */
    void (*scrolldone) ( struct Widget_ *wgt ); /**< Scrolling is over. */
    int (*rawevent) ( struct Widget_ *wgt, SDL_Event *event ); /**< Raw event handler function for widget. */
@@ -132,8 +141,10 @@ typedef struct Widget_ {
 #define WINDOW_NOFOCUS     (1<<0) /**< Window can not be active window. */
 #define WINDOW_NOINPUT     (1<<1) /**< Window receives no input. */
 #define WINDOW_NORENDER    (1<<2) /**< Window does not render even if it should. */
-#define WINDOW_NOBORDER    (1<<3) /**< Window does not need border. */
+#define WINDOW_NOBORDER    (1<<3) /**< Window does not need border (this is the window background and title, only renders widgets). */
 #define WINDOW_FULLSCREEN  (1<<4) /**< Window is fullscreen. */
+#define WINDOW_CENTERX     (1<<5) /**< Window is X-centered. */
+#define WINDOW_CENTERY     (1<<6) /**< Window is Y-centered. */
 #define WINDOW_KILL        (1<<9) /**< Window should die. */
 #define window_isFlag(w,f) ((w)->flags & (f)) /**< Checks a window flag. */
 #define window_setFlag(w,f) ((w)->flags |= (f)) /**< Sets a window flag. */
@@ -150,6 +161,7 @@ typedef struct Window_ {
 
    unsigned int id; /**< Unique ID. */
    char *name; /**< Window name - should be unique. */
+   char *displayname; /**< Display name obtained with gettext. */
    unsigned int flags; /**< Window flags. */
    int idgen; /**< ID generator for widgets. */
 

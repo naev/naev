@@ -7,10 +7,8 @@
 #  define NLUA_COL_H
 
 
-#include <lua.h>
-
-#include "nlua.h"
 #include "colour.h"
+#include "nlua.h"
 
 
 #define COL_METATABLE      "colour" /**< COL metatable identifier. */

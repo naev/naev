@@ -12,25 +12,27 @@
  */
 
 
-#include "weapon.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <math.h>
 #include <stdlib.h>
-#include "nstring.h"
 
-#include "log.h"
-#include "rng.h"
-#include "pilot.h"
-#include "player.h"
+#include "naev.h"
+/** @endcond */
+
+#include "weapon.h"
+
+#include "ai.h"
+#include "camera.h"
 #include "collision.h"
-#include "spfx.h"
-#include "opengl.h"
 #include "explosion.h"
 #include "gui.h"
-#include "camera.h"
-#include "ai.h"
+#include "log.h"
+#include "nstring.h"
+#include "opengl.h"
+#include "pilot.h"
+#include "player.h"
+#include "rng.h"
+#include "spfx.h"
 
 
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
@@ -927,7 +929,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
             }
          }
       }
-      /* dumb weapons hit anything not of the same faction */
+      /* unguided weapons hit anything not of the same faction */
       else {
          if (weapon_checkCanHit(w,p)) {
             if (usePoly) {
@@ -1275,6 +1277,7 @@ static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
  *    @param vel Velocity of the turret.
  *    @param dir Direction facing parent ship and turret.
  *    @param time Expected flight time.
+ *    @param swivel Maximum angle between weapon and straight ahead.
  */
 static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir,
@@ -1471,7 +1474,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    }
 
    /* Handle seekers. */
-   if (w->outfit->u.amm.ai != AMMO_AI_DUMB) {
+   if (w->outfit->u.amm.ai != AMMO_AI_UNGUIDED) {
       w->think = think_seeker; /* AI is the same atm. */
 
       /* If they are seeking a pilot, increment lockon counter. */
@@ -1531,6 +1534,11 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
    w->update   = weapon_update;
    w->status   = WEAPON_STATUS_OK;
    w->strength = 1.;
+
+   /* Inform the target. */
+   pilot_target = pilot_get(target);
+   if (pilot_target != NULL)
+      pilot_target->projectiles++;
 
    switch (outfit->type) {
 
@@ -1637,6 +1645,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
 
       default:
          WARN(_("Unknown weapon layer!"));
+         return;
    }
 
    if (*mLayer > *nLayer) /* more memory alloced than needed */
@@ -1846,12 +1855,14 @@ static void weapon_free( Weapon* w )
 {
    Pilot *pilot_target;
 
+   pilot_target = pilot_get( w->target );
+
    /* Decrement target lockons if needed */
-   if (outfit_isSeeker(w->outfit)) {
-      pilot_target = pilot_get( w->target );
-      if (pilot_target != NULL)
+   if (pilot_target != NULL) {
+      pilot_target->projectiles--;
+      if (outfit_isSeeker(w->outfit))
          pilot_target->lockons--;
-   }
+      }
 
    /* Stop playing sound if beam weapon. */
    if (outfit_isBeam(w->outfit)) {
@@ -1900,26 +1911,20 @@ void weapon_exit (void)
    weapon_clear();
 
    /* Destroy front layer. */
-   if (wbackLayer != NULL) {
-      free(wbackLayer);
-      wbackLayer  = NULL;
-      mwbacklayer = 0;
-   }
+   free(wbackLayer);
+   wbackLayer  = NULL;
+   mwbacklayer = 0;
 
    /* Destroy back layer. */
-   if (wfrontLayer != NULL) {
-      free(wfrontLayer);
-      wfrontLayer  = NULL;
-      mwfrontLayer = 0;
-   }
+   free(wfrontLayer);
+   wfrontLayer  = NULL;
+   mwfrontLayer = 0;
 
    /* Destroy VBO. */
-   if (weapon_vbo != NULL) {
-      free( weapon_vboData );
-      weapon_vboData = NULL;
-      gl_vboDestroy( weapon_vbo );
-      weapon_vbo = NULL;
-   }
+   free( weapon_vboData );
+   weapon_vboData = NULL;
+   gl_vboDestroy( weapon_vbo );
+   weapon_vbo = NULL;
 }
 
 

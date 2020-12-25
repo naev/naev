@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unidiff name="test">
+ <system name="Hakoi">
+  <jump target="Gamma Polaris" x="10" y="10" hide="0">add</jump>
+ </system>
+ <system name="Gamma Polaris">
+  <jump target="Hakoi" type="exitonly">add</jump>
+ </system>
+</unidiff>
+

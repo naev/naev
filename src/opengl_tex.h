@@ -7,14 +7,14 @@
 #  define OPENGL_TEX_H
 
 
+/** @cond */
 #include <stdint.h>
-
 #include "SDL.h"
+/** @endcond */
 
-#include "physics.h"
 #include "colour.h"
-
 #include "ncompat.h"
+#include "physics.h"
 
 
 /* Recommended for compatibility and such */
@@ -85,14 +85,18 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface ); /* Only preps it */
 /*
  * Creating.
  */
+glTexture* gl_loadImageData( float *data, int w, int h, int pitch, int sx, int sy );
 glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
       unsigned int flags, int w, int h, int sx, int sy, int freesur );
 glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWops *rw,
       unsigned int flags, int w, int h, int sx, int sy, int freesur );
 glTexture* gl_loadImage( SDL_Surface* surface, const unsigned int flags ); /* Frees the surface. */
 glTexture* gl_newImage( const char* path, const unsigned int flags );
+glTexture* gl_newImageRWops( const char* path, SDL_RWops *rw, const unsigned int flags ); /* Does not close the RWops. */
 glTexture* gl_newSprite( const char* path, const int sx, const int sy,
       const unsigned int flags );
+glTexture* gl_newSpriteRWops( const char* path, SDL_RWops *rw,
+   const int sx, const int sy, const unsigned int flags );
 glTexture* gl_dupTexture( glTexture *texture );
 
 /*

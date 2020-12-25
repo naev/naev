@@ -9,11 +9,11 @@
 
 
 #include "collision.h"
+#include "commodity.h"
+#include "nxml.h"
 #include "opengl.h"
 #include "outfit.h"
 #include "sound.h"
-#include "nxml.h"
-#include "commodity.h"
 
 
 /* target gfx dimensions */
@@ -172,6 +172,7 @@ ShipClass ship_classFromString( char* str );
 credits_t ship_basePrice( const Ship* s );
 credits_t ship_buyPrice( const Ship* s );
 glTexture* ship_loadCommGFX( Ship* s );
+int ship_size( const Ship *s );
 
 
 /*

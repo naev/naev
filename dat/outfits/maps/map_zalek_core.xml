@@ -5,7 +5,7 @@
   <price>25000</price>
   <description>This map contains the heart of Za'lek space, including its capital Ruadan and central hub, Za'lek.</description>
   <gfx_store>map</gfx_store>
- <rarity>1</rarity></general>
+ </general>
  <specific type="map">
   <sys name="Ruadan">
    <jump>Damien</jump>

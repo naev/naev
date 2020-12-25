@@ -1,0 +1,5 @@
+[wrap-git]
+url = https://github.com/DrTimothyAldenDavis/SuiteSparse.git
+revision = v5.8.1
+
+patch_directory = SuiteSparse

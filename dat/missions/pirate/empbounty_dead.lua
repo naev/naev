@@ -10,6 +10,9 @@
    <faction>Independent</faction>
    <faction>FLF</faction>
   </avail>
+  <notes>
+   <tier>3</tier>
+  </notes>
  </mission>
  --]]
 --[[
@@ -41,9 +44,9 @@
 
 --]]
 
-require "numstring.lua"
-require "jumpdist.lua"
-require "dat/missions/pirate/common.lua"
+require "numstring"
+require "jumpdist"
+require "missions/pirate/common"
 
 
 -- Mission details
@@ -54,7 +57,6 @@ misn_title[3] = _("PIRACY: Moderate Assassination Job in %s")
 misn_title[4] = _("PIRACY: Big Assassination Job in %s")
 misn_title[5] = _("PIRACY: Dangerous Assassination Job in %s")
 misn_title[6] = _("PIRACY: Highly Dangerous Assassination Job in %s")
-misn_reward = _("%s credits")
 misn_desc   = _("A meddlesome %s pilot was recently seen in the %s system. Local crime lords want this pilot dead.")
 desc_illegal_warning = _("WARNING: This mission is illegal and will get you in trouble with the authorities!")
 
@@ -129,7 +131,7 @@ function create ()
       misn.finish( false )
    end
 
-   jumps_permitted = system.cur():jumpDist(missys) + rnd.rnd( 3, 10 )
+   jumps_permitted = system.cur():jumpDist(missys, true) + rnd.rnd( 3, 10 )
    if rnd.rnd() < 0.05 then
       jumps_permitted = jumps_permitted - 1
    end
@@ -148,7 +150,7 @@ function create ()
       misn.setDesc( misn_desc:format( target_faction, missys:name() ) .. "\n\n" .. desc_illegal_warning )
    end
 
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
 
