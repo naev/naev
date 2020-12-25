@@ -16,7 +16,6 @@ Spawns a travelling merchant that can sell the player if interested.
 local vn = require 'vn'
 local portrait = require 'portrait'
 local imageproc = require 'imageproc'
-local love_image = require 'love.image'
 
 trader_name = _("Machiavellian Misi")
 trader_portrait = "none"
@@ -34,7 +33,6 @@ broadcastmsg = {
 first_hail_title = trader_name
 first_hail_message = _('"Howdy Human! Er, I mean, Greetings! If you want to take a look at my wonderful, exquisite, propitious, meretricious, effulgent, ... wait, what was I talking about? Oh yes, please come see my wares on my ship. You are welcome to board anytime!"')
 
-board_title = trader_name
 board_message = _("You open the airlock and are immediately greeted by an intense humidity and heat, almost like a jungle. As you advance through the dimly lit ship you can see all types of mold and plants crowing in crevices in the wall. Wait, was that a small animal scurrying around? Eventually you reach the cargo hold that has been re-adapted as a sort of bazaar. It is a mess of different wares and most don't seem of much value, there might be some interesting find.")
 
 function create ()
@@ -99,8 +97,7 @@ end
 function hail ()
    if not var.peek('travelling_trader_hailed') then
       var.push('travelling_trader_hailed', true)
-      local holo = love_image.newImageData( portrait.getFullPath(trader_portrait) )
-      holo = imageproc.hologram( holo )
+      local holo = imageproc.hologram( portrait.getFullPath(trader_portrait) )
 
       vn.clear()
       vn.scene()
