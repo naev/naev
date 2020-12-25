@@ -189,7 +189,7 @@ function vn.na( what, nowait ) vn.say( "narrator", what, nowait ) end
 vn.State = {}
 vn.State_mt = { __index = vn.State }
 local function _dummy() end
-local function _finish(self) self._done = true end
+local function _finish(self) self.done = true end
 local function _inbox( mx, my, x, y, w, h )
    return (mx>=x and mx<= mx+w and my>=y and my<=y+h)
 end
@@ -202,12 +202,12 @@ function vn.State.new()
    s._update = _dummy
    s._click = _dummy
    s._key = _dummy
-   s._done = false
+   s.done = false
    return s
 end
 function vn.State:type() return self._type end
 function vn.State:init()
-   self._done = false
+   self.done = false
    self:_init()
 end
 function vn.State:draw()
@@ -226,7 +226,7 @@ function vn.State:key( key )
    self:_key( key )
    vn._checkDone()
 end
-function vn.State:isDone() return self._done end
+function vn.State:isDone() return self.done end
 --[[
 -- Scene
 --]]
@@ -656,6 +656,15 @@ function vn.fadein( seconds ) vn.fade( seconds, 0, 1 ) end
 --    @param seconds Number of seconds to fully fade out.
 --]]
 function vn.fadeout( seconds ) vn.fade( seconds, 1, 0 ) end
+
+--[[
+-- @brief Custom states. Only use if you know what you are doing.
+--]]
+function vn.custom()
+   local s = vn.State.new()
+   table.insert( vn._states, s )
+   return s
+end
 
 function vn._jump( label )
    for k,v in ipairs(vn._states) do
