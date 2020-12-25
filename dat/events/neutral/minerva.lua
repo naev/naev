@@ -135,6 +135,10 @@ function terminal()
             tokens_get() ) end )
    local trades = {
       {"Ripper Cannon", 100},
+      {"Teracom Fury Launcher", 500},
+      {"Railgun", 1000},
+      {"Grave Lance", 1200},
+      {"Admonisher", 7000},
    }
    local handler = function (idx)
       -- Jump in case of 'Back'
