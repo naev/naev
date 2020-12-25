@@ -1029,7 +1029,11 @@ int economy_sysLoad( xmlNodePtr parent )
                   if (xml_isNode(nodeAsset, "planet")) {
                      xmlr_attr_strd(nodeAsset,"name",str);
                      planet = planet_get(str);
+                     if (planet==NULL)
+                        WARN(_("Planet '%s' has saved economy data but doesn't exist!"), str);
                      free(str);
+                     if (planet==NULL)
+                        continue;
                      nodeCommodity = nodeAsset->xmlChildrenNode;
                      do{
                         if (xml_isNode(nodeCommodity, "commodity")) {
