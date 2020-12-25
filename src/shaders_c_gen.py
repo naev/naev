@@ -66,13 +66,6 @@ SHADERS = [
       vs_path = "font.vert",
       fs_path = "font.frag",
       attributes = ["vertex", "tex_coord"],
-      uniforms = ["projection", "color"]
-   ),
-   Shader(
-      name = "font_outline",
-      vs_path = "font.vert",
-      fs_path = "font_outline.frag",
-      attributes = ["vertex", "tex_coord"],
       uniforms = ["projection", "color", "outline_color"]
    ),
    Shader(

@@ -45,10 +45,6 @@
  * we can be lazy and use global variables.
  */
 static gl_Matrix4 font_projection_mat; /**< Projection matrix. */
-static GLuint font_shader_vertex; /**< Shader vertex info. */
-static GLuint font_shader_tex_coord; /**< Shader texture info. */
-static GLuint font_shader_color; /**< Main color for the shader. */
-static GLuint font_shader_projection; /**< Projection uniform for the shader. */
 
 
 /**
@@ -356,11 +352,8 @@ static int gl_fontAddGlyphTex( glFontStash *stsh, font_char_t *ch, glFontGlyph *
    glyph->tex_index = tex - stsh->tex;
 
    /* Since the VBOs have possibly changed, we have to reset the data. */
-   /* TODO: This seems fragile. */
    gl_vboActivateAttribOffset( stsh->vbo_vert, shaders.font.vertex, 0, 2, GL_SHORT, 0 );
-   gl_vboActivateAttribOffset( stsh->vbo_vert, shaders.font_outline.vertex, 0, 2, GL_SHORT, 0 );
    gl_vboActivateAttribOffset( stsh->vbo_tex, shaders.font.tex_coord, 0, 2, GL_FLOAT, 0 );
-   gl_vboActivateAttribOffset( stsh->vbo_tex, shaders.font_outline.tex_coord, 0, 2, GL_FLOAT, 0 );
 
    return 0;
 }
@@ -1164,22 +1157,12 @@ static void gl_fontRenderStart( const glFontStash* stsh, double x, double y, con
       }
    }
 
-   if (outlineR == 0.) {
-      glUseProgram(shaders.font.program);
-      font_shader_color = shaders.font.color;
-      font_shader_vertex = shaders.font.vertex;
-      font_shader_tex_coord = shaders.font.tex_coord;
-      font_shader_projection = shaders.font.projection;
-   }
-   else {
-      glUseProgram(shaders.font_outline.program);
-      gl_uniformColor(shaders.font_outline.outline_color, &cGrey10);
-      font_shader_color = shaders.font_outline.color;
-      font_shader_vertex = shaders.font_outline.vertex;
-      font_shader_tex_coord = shaders.font_outline.tex_coord;
-      font_shader_projection = shaders.font_outline.projection;
-   }
-   gl_uniformAColor(font_shader_color, col, a);
+   glUseProgram(shaders.font.program);
+   gl_uniformAColor(shaders.font.color, col, a);
+   if (outlineR == 0.)
+      gl_uniformAColor(shaders.font.outline_color, col, 0.);
+   else
+      gl_uniformColor(shaders.font.outline_color, &cGrey10);
 
    font_projection_mat = gl_Matrix4_Translate(gl_view_matrix, round(x), round(y), 0);
    scale = (double)stsh->h / FONT_DISTANCE_FIELD_SIZE;
@@ -1188,10 +1171,10 @@ static void gl_fontRenderStart( const glFontStash* stsh, double x, double y, con
    font_restoreLast = 0;
 
    /* Activate the appropriate VBOs. */
-   glEnableVertexAttribArray( font_shader_vertex );
-   gl_vboActivateAttribOffset( stsh->vbo_vert, font_shader_vertex, 0, 2, GL_SHORT, 0 );
-   glEnableVertexAttribArray( font_shader_tex_coord );
-   gl_vboActivateAttribOffset( stsh->vbo_tex, font_shader_tex_coord, 0, 2, GL_FLOAT, 0 );
+   glEnableVertexAttribArray( shaders.font.vertex );
+   gl_vboActivateAttribOffset( stsh->vbo_vert, shaders.font.vertex, 0, 2, GL_SHORT, 0 );
+   glEnableVertexAttribArray( shaders.font.tex_coord );
+   gl_vboActivateAttribOffset( stsh->vbo_tex, shaders.font.tex_coord, 0, 2, GL_FLOAT, 0 );
 }
 
 
@@ -1326,12 +1309,12 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
       a   = (c==NULL) ? 1. : c->a;
       if (col == NULL) {
          if (c==NULL)
-            gl_uniformColor(font_shader_color, &cWhite);
+            gl_uniformColor(shaders.font.color, &cWhite);
          else
-            gl_uniformColor(font_shader_color, c);
+            gl_uniformColor(shaders.font.color, c);
       }
       else
-         gl_uniformAColor(font_shader_color, col, a );
+         gl_uniformAColor(shaders.font.color, col, a );
       font_lastCol = col;
       return 0;
    }
@@ -1348,7 +1331,7 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    /* Activate texture. */
    glBindTexture(GL_TEXTURE_2D, stsh->tex[glyph->tex_index].id);
 
-   gl_Matrix4_Uniform(font_shader_projection, font_projection_mat);
+   gl_Matrix4_Uniform(shaders.font.projection, font_projection_mat);
 
    /* Draw the element. */
    glDrawArrays( GL_TRIANGLE_STRIP, glyph->vbo_id, 4 );
@@ -1367,8 +1350,8 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
  */
 static void gl_fontRenderEnd (void)
 {
-   glDisableVertexAttribArray( font_shader_vertex );
-   glDisableVertexAttribArray( font_shader_tex_coord );
+   glDisableVertexAttribArray( shaders.font.vertex );
+   glDisableVertexAttribArray( shaders.font.tex_coord );
    glUseProgram(0);
 
    /* Check for errors. */
