@@ -10,7 +10,7 @@ love.exec( 'pong' ) -- Will look for pong.lua or pong/main.lua
 """
 
 --]]
-local love = {
+love = {
    _basepath = "",
    _version_major = 11,
    _version_minor = 1,
