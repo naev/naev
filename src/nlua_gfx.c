@@ -417,7 +417,7 @@ static int gfxL_printfWrap( lua_State *L )
    const char *s;
    int width, outw, maxw;
    glFont *font;
-   int p, l, slen;
+   int lp, p, l, slen;
    int linenum;
    char *tmp;
 
@@ -432,10 +432,12 @@ static int gfxL_printfWrap( lua_State *L )
    lua_newtable(L);
    tmp = strdup(s);
    slen = strlen(s);
+   lp = 0;
    p = 0;
    linenum = 1;
    maxw = 0;
    do {
+      lp = p;
       if ((tmp[p] == ' ') || (tmp[p] == '\n'))
          p++;
       /* Don't handle tab for now. */
@@ -444,8 +446,6 @@ static int gfxL_printfWrap( lua_State *L )
       l = gl_printWidthForText(font, &tmp[p], width, &outw );
       if (outw > maxw)
          maxw = outw;
-      if (l==0)
-         break;
 
       /* Create entry of form { string, width } in the table. */
       lua_pushnumber(L, linenum++);    /* t, n */
@@ -459,7 +459,8 @@ static int gfxL_printfWrap( lua_State *L )
       lua_rawset(L, -3);               /* t */
 
       p += l;
-
+      if (lp==p)
+         break;
    } while (p < slen);
 
    /* Push max width. */
