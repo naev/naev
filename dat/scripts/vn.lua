@@ -385,10 +385,14 @@ function vn.StateMenu:_init()
       h = h + sh + b
       self._elem[k] = elem
    end
-   self._w = w
+   self._w = math.max( w, 300 )
    self._h = h-b
-   self._x = (love.w-w)/2
-   self._y = (love.h-h)/2-100
+   self._x = (love.w-self._w)/2
+   self._y = (love.h-self._h)/2-100
+   -- Make all boxes max width
+   for k,v in ipairs(self._elem) do
+      v[4] = self._w
+   end
 end
 function vn.StateMenu:_draw()
    local font = vn.namebox_font
