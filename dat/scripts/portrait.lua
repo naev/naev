@@ -16,14 +16,15 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 --]]
+local portrait = {}
 
 
-portraits_m = {}
-portraits_f = {}
-portraits_mil_m = {}
-portraits_mil_f = {}
+local portraits_m = {}
+local portraits_f = {}
+local portraits_mil_m = {}
+local portraits_mil_f = {}
 
-portraits_m_neutral = {
+local portraits_m_neutral = {
    "neutral/male1",
    "neutral/male2",
    "neutral/male3",
@@ -41,7 +42,7 @@ portraits_m_neutral = {
    "neutral/thief1",
    "neutral/thief2",
 }
-portraits_f_neutral = {
+local portraits_f_neutral = {
    "neutral/female1",
    "neutral/female2",
    "neutral/female3",
@@ -188,13 +189,13 @@ portraits_mil_f["Pirate"] = portraits_f["Pirate"]
 --[[
 -- @brief Choose a random male civilian portrait.
 --
--- @usage misn.setNPC( "Sam", getMalePortrait( "Pirate" ) )
+-- @usage misn.setNPC( "Sam", getMale( "Pirate" ) )
 --
 --    @luaparam faction Name of faction to get a portrait for, or nil for neutral.
 --
--- @luafunc getMalePortrait( faction )
+-- @luafunc getMale( faction )
 --]]
-function getMalePortrait( faction )
+function portrait.getMale( faction )
    if portraits_m[faction] ~= nil then
       return portraits_m[faction][ rnd.rnd( 1, #portraits_m[faction] ) ]
    else
@@ -206,13 +207,13 @@ end
 --[[
 -- @brief Choose a random female civilian portrait.
 --
--- @usage misn.setNPC( "Sam", getFemalePortrait() )
+-- @usage misn.setNPC( "Sam", getFemale() )
 --
 --    @luaparam faction Name of faction to get a portrait for, or nil for neutral.
 --
--- @luafunc getFemalePortrait( faction )
+-- @luafunc getFemale( faction )
 --]]
-function getFemalePortrait( faction )
+function portrait.getFemale( faction )
    if portraits_f[faction] ~= nil then
       return portraits_f[faction][ rnd.rnd( 1, #portraits_f[faction] ) ]
    else
@@ -224,17 +225,17 @@ end
 --[[
 -- @brief Choose a random civilian portrait of any gender.
 --
--- @usage misn.setNPC( "Sam", getPortrait( "Empire" ) )
+-- @usage misn.setNPC( "Sam", get( "Empire" ) )
 --
 --    @luaparam faction Name of faction to get a portrait for, or nil for neutral.
 --
--- @luafunc getPortrait( faction )
+-- @luafunc get( faction )
 --]]
-function getPortrait( faction )
+function portrait.get( faction )
    if rnd.rnd() < 0.5 then
-      return getMalePortrait( faction )
+      return portrait.getMale( faction )
    else
-      return getFemalePortrait( faction )
+      return portrait.getFemale( faction )
    end
 end
 
@@ -242,13 +243,13 @@ end
 --[[
 -- @brief Choose a random male military portrait.
 --
--- @usage misn.setNPC( "Sam", getMaleMilPortrait( "Pirate" ) )
+-- @usage misn.setNPC( "Sam", getMaleMil( "Pirate" ) )
 --
 --    @luaparam faction Name of faction to get a portrait for, or nil for neutral.
 --
--- @luafunc getMaleMilPortrait( faction )
+-- @luafunc getMaleMil( faction )
 --]]
-function getMaleMilPortrait( faction )
+function portrait.getMaleMil( faction )
    if portraits_mil_m[faction] ~= nil then
       return portraits_mil_m[faction][ rnd.rnd( 1, #portraits_mil_m[faction] ) ]
    else
@@ -260,13 +261,13 @@ end
 --[[
 -- @brief Choose a random female military portrait.
 --
--- @usage misn.setNPC( "Sam", getFemaleMilPortrait( "Dvaered" ) )
+-- @usage misn.setNPC( "Sam", getFemaleMil( "Dvaered" ) )
 --
 --    @luaparam faction Name of faction to get a portrait for, or nil for neutral.
 --
--- @luafunc getFemaleMilPortrait( faction )
+-- @luafunc getFemaleMil( faction )
 --]]
-function getFemaleMilPortrait( faction )
+function portrait.getFemaleMil( faction )
    if portraits_mil_f[faction] ~= nil then
       return portraits_mil_f[faction][ rnd.rnd( 1, #portraits_mil_f[faction] ) ]
    else
@@ -278,16 +279,19 @@ end
 --[[
 -- @brief Choose a random military portrait of any gender.
 --
--- @usage misn.setNPC( "Sam", getMilPortrait( "Empire" ) )
+-- @usage misn.setNPC( "Sam", getMil( "Empire" ) )
 --
 --    @luaparam faction Name of faction to get a portrait for, or nil for neutral.
 --
--- @luafunc getMilPortrait( faction )
+-- @luafunc getMil( faction )
 --]]
-function getMilPortrait( faction )
+function portrait.getMil( faction )
    if rnd.rnd() < 0.5 then
-      return getMaleMilPortrait( faction )
+      return portrait.getMaleMil( faction )
    else
-      return getFemaleMilPortrait( faction )
+      return portrait.getFemaleMil( faction )
    end
 end
+
+
+return portrait

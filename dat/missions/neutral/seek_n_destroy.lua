@@ -33,7 +33,7 @@
 
 require "numstring"
 require "jumpdist"
-require "portrait"
+local portrait = require "portrait"
 require "pilot/pirate"
 
 clue_title   = _("I know the pilot you're looking for")
@@ -547,7 +547,7 @@ function land ()
       else -- NPC tells the clue
          know = 2
       end
-      mynpc = misn.npcAdd("clue_bar", npc_desc, getPortrait("Pirate"), bar_desc)
+      mynpc = misn.npcAdd("clue_bar", npc_desc, portrait.get("Pirate"), bar_desc)
 
    -- Player wants to be paid
    elseif planet.cur():faction() == paying_faction and stage == 4 then

@@ -30,7 +30,7 @@
 require "swapship"
 require "jumpdist"
 require "numstring"
-require "portrait"
+local portrait = require "portrait"
 require "factions/equip/generic"
 
 
@@ -275,7 +275,7 @@ function create ()
 
    theship.system = theship.planet:system()
 
-   misn.setNPC( _("A Pirate informer"), getPortrait("Pirate") )
+   misn.setNPC( _("A Pirate informer"), portrait.get("Pirate") )
    misn.setDesc( informer.description )
 end
 

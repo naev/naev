@@ -25,7 +25,7 @@
 
 require "fleethelper"
 require "numstring"
-require "portrait"
+local portrait = require "portrait"
 require "missions/baron/common"
 
 
@@ -220,11 +220,11 @@ end
 
 function land()
    if planet.cur() == artifactplanetA and not artifactA then
-      sellnpc = misn.npcAdd("seller", _("Artifact seller"), getPortrait("Pirate"), sellerdesc, 4)
+      sellnpc = misn.npcAdd("seller", _("Artifact seller"), portrait.get("Pirate"), sellerdesc, 4)
    elseif planet.cur() == artifactplanetB and not artifactB then
-      sellnpc = misn.npcAdd("seller", _("Artifact seller"), getPortrait("Pirate"), sellerdesc, 4)
+      sellnpc = misn.npcAdd("seller", _("Artifact seller"), portrait.get("Pirate"), sellerdesc, 4)
    elseif planet.cur() == artifactplanetC and not artifactC then
-      sellnpc = misn.npcAdd("seller", _("Artifact seller"), getPortrait("Pirate"), sellerdesc, 4)
+      sellnpc = misn.npcAdd("seller", _("Artifact seller"), portrait.get("Pirate"), sellerdesc, 4)
    elseif planet.cur() == flintplanet then
       if flintleyfirst then
          flintnpc = misn.npcAdd("flintley", flint_npc1, "neutral/unique/flintley", flint_bar1, 4)

@@ -12,7 +12,7 @@
 --]]
 
 require "events/tutorial/tutorial_common"
-require "portrait"
+local portrait = require "portrait"
 
 -- Factions which will NOT get generic texts if possible.  Factions
 -- listed here not spawn generic civilian NPCs or get aftercare texts.
@@ -315,7 +315,7 @@ function spawnNPC()
    end
 
    -- Select a portrait
-   local portrait = getPortrait(fac)
+   local portrait = portrait.get(fac)
 
    -- Select a description for the civilian.
    local desc = civ_desc[rnd.rnd(1, #civ_desc)]
