@@ -540,8 +540,10 @@ function vn.Character.new( who, params )
    c.who = who
    c.color = params.color or vn._default.color
    local image = params.image
-   if type(image)=='string' then
-      image = graphics.newImage( image )
+   if image ~= nil then
+      if type(image)=='string' or image:type()=="ImageData" then
+         image = graphics.newImage( image )
+      end
    end
    c.image = image
    c.hidetitle = params.hidetitle
