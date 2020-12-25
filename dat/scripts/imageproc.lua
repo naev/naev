@@ -7,6 +7,12 @@ local image = require 'love.image'
 local imageproc = {
 }
 
+local function _toimage( input )
+   if type(input)=="string" then
+      return image.newImageData( input )
+   end
+   return input
+end
 local function _grey( r, g, b )
    return 0.2989*r + 0.5870*g + 0.1140*b
 end
@@ -16,6 +22,7 @@ end
 -- greyscale values.
 --]]
 function imageproc.applyMap( img, colA, colB )
+   img = _toimage(img)
    local ra, ga, ba = colA[1], colA[2], colA[3]
    local rb, gb, bb = colB[1], colB[2], colB[3]
    local function _colormap( x, y, r, g, b, alpha )
@@ -37,6 +44,7 @@ end
 -- @brief Converts an image to greyscale.
 --]]
 function imageproc.greyscale( img )
+   img = _toimage(img)
    local w, h = img:getDimensions()
    local out = image.newImageData( w, h )
    out:paste( img, 0, 0, 0, 0, w, h )
@@ -47,6 +55,7 @@ end
 -- @brief Creates a scanline effect on an image.
 --]]
 function imageproc.scanlines( img, bandlength, bandgap )
+   img = _toimage(img)
    local function _scanlines( x, y, r, g, b, a )
       if (y % (bandlength+bandgap)) < bandlength then
          return 0, 0, 0, 1
@@ -66,6 +75,8 @@ end
 -- @note Equation is imgA * weightA + imgB * weightB + bias
 --]]
 function imageproc.addWeighted( imgA, imgB, weightA, weightB, bias )
+   imgA = _toimage(imgA)
+   imgB = _toimage(imgB)
    weightB = weightB or 1-weightA
    bias = bias or 0
    local aw, ah = imgA:getDimensions()
@@ -94,6 +105,7 @@ end
 -- Applies blur to an image.
 --]]
 function imageproc.blur( img, k )
+   img = _toimage(img)
    local t = type(k)
    if t ~= 'table' then
       -- Create kernel
@@ -181,6 +193,7 @@ end
 -- @brief Shifts an image by dx and dy. Does not wrap.
 --]]
 function imageproc.shift( img, dx, dy )
+   img = _toimage(img)
    local w, h = img:getDimensions()
    local out = image.newImageData( w, h )
    out:paste( img, dx, dy, 0, 0, w-dx, h-dy )
@@ -191,6 +204,7 @@ end
 -- @brief Creates a fancy hologram effect on an image.
 --]]
 function imageproc.hologram( img )
+   img = _toimage(img)
    -- Adapted from https://elder.dev/posts/open-source-virtual-background/
    local w, h = img:getDimensions()
    local holo = imageproc.applyMap( img, {0, 1, 0.5}, {0, 0, 1} )
