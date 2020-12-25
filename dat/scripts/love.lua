@@ -25,19 +25,6 @@ love = {
 }
 function love._unimplemented() error(_("unimplemented")) end
 
---[[
--- Dummy game-defined functions
---]]
-function love.conf(t) end -- dummy
-function love.load() end --dummy
-function love.draw() end -- dummy
-function love.update( dt ) end -- dummy
-function love.keypressed( key, scancode, isrepeat ) end -- dummy
-function love.keyreleased( key, scancode ) end -- dummy
-function love.mousemoved( x, y, dx, dy, istouch ) end -- dummy
-function love.mousepressed( x, y, button, istouch ) end -- dummy
-function love.mousereleased( x, y, button, istouch ) end -- dummy
-
 
 --[[
 -- Base
@@ -159,6 +146,23 @@ function love.exec( path )
       else
          error( string.format( _("'%s' is not a valid love2d game!"), path) )
       end
+   end
+
+   -- Reset functions
+   local function _noop() end
+   local f = {
+      "conf",
+      "load",
+      "draw",
+      "update",
+      "keypressed",
+      "keyreleased",
+      "mousemoved",
+      "mousepressed",
+      "mousereleased",
+   }
+   for k,v in ipairs(f) do
+      love[v] = _noop
    end
 
    -- Only stuff we care about atm
