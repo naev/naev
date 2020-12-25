@@ -1143,20 +1143,13 @@ static void gl_fontRenderStart( const glFontStash* stsh, double x, double y, con
    outlineR = outlineR==-1 ? 1 : MAX( outlineR, 0 );
 
    /* Handle colour. */
-   if (font_restoreLast) {
-      a   = (c==NULL) ? 1. : c->a;
+   a = (c==NULL) ? 1. : c->a;
+   if (font_restoreLast)
       col = font_lastCol;
-   }
-   else {
-      if (c==NULL) {
-         col = &cWhite;
-         a = 1.;
-      }
-      else {
-         col = c;
-         a = c->a;
-      }
-   }
+   else if (c==NULL)
+      col = &cWhite;
+   else
+      col = c;
 
    glUseProgram(shaders.font.program);
    gl_uniformAColor(shaders.font.color, col, a);
@@ -1307,15 +1300,13 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    }
    if (state == 1) {
       col = gl_fontGetColour( ch );
-      a   = (c==NULL) ? 1. : c->a;
-      if (col == NULL) {
-         if (c==NULL)
-            gl_uniformColor(shaders.font.color, &cWhite);
-         else
-            gl_uniformColor(shaders.font.color, c);
-      }
-      else
+      a = (c==NULL) ? 1. : c->a;
+      if (col != NULL)
          gl_uniformAColor(shaders.font.color, col, a );
+      else if (c==NULL)
+         gl_uniformColor(shaders.font.color, &cWhite);
+      else
+         gl_uniformColor(shaders.font.color, c);
       font_lastCol = col;
       return 0;
    }
