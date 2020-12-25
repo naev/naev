@@ -577,7 +577,7 @@ int window_setDisplayname( const unsigned int wid, const char *displayname )
 /**
  * @brief Gets the ID of a window.
  *
- * @note Gets the top window manatching the ID first.
+ * @note Gets the top window matching the ID first.
  *
  *    @param wdwname Name of the window to get ID of.
  *    @return ID of the window.
