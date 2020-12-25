@@ -1280,6 +1280,7 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch )
    gl_fontAddGlyphTex( stsh, &ft_char, glyph );
 
    free(ft_char.data);
+   free(ft_char.dataf);
 
    return glyph;
 }
