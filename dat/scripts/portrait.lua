@@ -294,4 +294,12 @@ function portrait.getMil( faction )
 end
 
 
+--[[
+-- @brief Gets the full path of a portrait relative to the data directory.
+--]]
+function portrait.getFullPath( str )
+   return "gfx/portraits/"..str..".png"
+end
+
+
 return portrait
