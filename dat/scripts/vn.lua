@@ -724,8 +724,6 @@ end
 --]]
 function vn.clear()
    local var = {
-      "_characters",
-      "_states",
       "_state",
       "_bufcol",
       "_buffer",
@@ -735,6 +733,9 @@ function vn.clear()
    for k,v in ipairs(var) do
       vn[v] = vn._default[v]
    end
+   -- Have to create new tables
+   vn._characters = {}
+   vn._states = {}
 end
 
 --[[
@@ -746,6 +747,7 @@ function vn.reset()
    for k,v in pairs(vn._default) do
       vn[k] = v
    end
+   vn.clear()
 end
 
 -- Default characters
