@@ -4,33 +4,39 @@
 -- Based on Love2D API
 --]]
 local utf8 = require 'utf8'
+local love = require 'love'
+local graphics = require 'love.graphics'
+local window = require 'love.window'
 
 local vn = {
    speed = 0.04,
    color = {1,1,1},
 
    -- Internal usage
-   _characters = {},
-   _states = {},
-   _state = 0,
-   _bufcol = { 1, 1, 1 },
-   _buffer = "",
-   _title = nil,
-   _alpha = 1,
+   _default = {
+      _characters = {},
+      _states = {},
+      _state = 0,
+      _bufcol = { 1, 1, 1 },
+      _buffer = "",
+      _title = nil,
+      _alpha = 1,
+   }
 }
 -- Drawing
-vn.textbox_font = love.graphics.newFont(16)
-vn.textbox_w = 800
-vn.textbox_h = 200
-vn.textbox_x = (love.w-vn.textbox_w)/2
-vn.textbox_y = love.h-230
-vn.textbox_bg = {0, 0, 0, 1}
-vn.namebox_font = love.graphics.newFont(20)
-vn.namebox_w = -1 -- Autosize
-vn.namebox_h = 20*2+vn.namebox_font:getHeight()
-vn.namebox_x = vn.textbox_x
-vn.namebox_y = vn.textbox_y - vn.namebox_h - 20
-vn.namebox_bg = vn.textbox_bg
+local lw, lh = window.getDesktopDimensions()
+vn._default.textbox_font = graphics.newFont(16)
+vn._default.textbox_w = 800
+vn._default.textbox_h = 200
+vn._default.textbox_x = (lw-vn._default.textbox_w)/2
+vn._default.textbox_y = lh-230
+vn._default.textbox_bg = {0, 0, 0, 1}
+vn._default.namebox_font = graphics.newFont(20)
+vn._default.namebox_w = -1 -- Autosize
+vn._default.namebox_h = 20*2+vn._default.namebox_font:getHeight()
+vn._default.namebox_x = vn._default.textbox_x
+vn._default.namebox_y = vn._default.textbox_y - vn._default.namebox_h - 20
+vn._default.namebox_bg = vn._default.textbox_bg
 
 
 function vn._checkstarted()
@@ -41,18 +47,22 @@ end
 
 local function _set_col( col )
    local a = col[4] or 1
-   love.graphics.setColor( col[1], col[2], col[3], a*vn._alpha )
+   graphics.setColor( col[1], col[2], col[3], a*vn._alpha )
 end
 
 local function _draw_bg( x, y, w, h, col, border_col )
    col = col or {0, 0, 0, 1}
    border_col = border_col or {0.5, 0.5, 0.5, 1}
    _set_col( border_col )
-   love.graphics.rectangle( "fill", x, y, w, h )
+   graphics.rectangle( "fill", x, y, w, h )
    _set_col( col )
-   love.graphics.rectangle( "fill", x+2, y+2, w-4, h-4 )
+   graphics.rectangle( "fill", x+2, y+2, w-4, h-4 )
 end
 
+
+--[[
+-- @brief Main drawing function.
+--]]
 function vn.draw()
    -- Draw characters
    -- TODO handle multiple characters and characters appearing in the middle
@@ -72,7 +82,7 @@ function vn.draw()
          _set_col( col )
          local x = (lw-w*scale)/2
          local y = mh-scale*h
-         love.graphics.draw( c.image, x, y, 0, scale, scale )
+         graphics.draw( c.image, x, y, 0, scale, scale )
       end
    end
 
@@ -85,7 +95,7 @@ function vn.draw()
    _draw_bg( x, y, w, h, vn.textbox_bg )
    -- Draw text
    _set_col( vn._bufcol )
-   love.graphics.printf( vn._buffer, font, x+bw, y+bw, vn.textbox_w-bw )
+   graphics.printf( vn._buffer, font, x+bw, y+bw, vn.textbox_w-bw )
 
    -- Namebox
    if vn._title ~= nil and utf8.len(vn._title)>0 then
@@ -102,7 +112,7 @@ function vn.draw()
       _draw_bg( x, y, w, h, vn.namebox_bg )
       -- Draw text
       _set_col( vn._bufcol )
-      love.graphics.print( vn._title, font, x+bw, y+bh )
+      graphics.print( vn._title, font, x+bw, y+bh )
    end
 
    -- Draw if necessary
@@ -111,6 +121,11 @@ function vn.draw()
    s:draw()
 end
 
+
+--[[
+-- @brief Main updating function.
+--    @param dt Update tick.
+--]]
 function vn.update(dt)
    -- Out of states
    if vn._state > #vn._states then
@@ -128,6 +143,11 @@ function vn.update(dt)
    s:update( dt )
 end
 
+
+--[[
+-- @brief Key press handler.
+--    @param key Name of the key pressed.
+--]]
 function vn.keypressed( key )
    if key=="escape" then
       love.event.quit()
@@ -139,6 +159,13 @@ function vn.keypressed( key )
    s:key( key )
 end
 
+
+--[[
+-- @brief Mouse press handler.
+--    @param mx X position of the click.
+--    @param my Y position of the click.
+--    @param button Button that was pressed.
+--]]
 function vn.mousepressed( mx, my, button )
    if vn.isDone() then return end
    local s = vn._states[ vn._state ]
@@ -147,7 +174,13 @@ end
 
 
 -- Helpers
+--[[
+-- @brief Makes the player say something.
+--]]
 function vn.me( what, nowait ) vn.say( "me", what, nowait ) end
+--[[
+-- @brief Makes the narrator say something.
+--]]
 function vn.na( what, nowait ) vn.say( "narrator", what, nowait ) end
 
 --[[
@@ -305,7 +338,7 @@ function vn.StateWait:_init()
 end
 function vn.StateWait:_draw()
    _set_col( vn._bufcol )
-   love.graphics.print( self._text, self._font, self._x, self._y )
+   graphics.print( self._text, self._font, self._x, self._y )
 end
 --[[
 -- Menu
@@ -368,9 +401,9 @@ function vn.StateMenu:_draw()
          col = {0.2, 0.2, 0.2}
       end
       _set_col( col )
-      love.graphics.rectangle( "fill", gx+x, gy+y, w, h )
+      graphics.rectangle( "fill", gx+x, gy+y, w, h )
       _set_col( {1, 1, 1} )
-      love.graphics.print( text, font, gx+x+tb, gy+y+tb )
+      graphics.print( text, font, gx+x+tb, gy+y+tb )
    end
 end
 function vn.StateMenu:_click( mx, my, button )
@@ -483,8 +516,18 @@ end
 -- Character
 --]]
 vn.Character = {}
+--[[
+-- @brief Makes a player say something.
+--]]
 function vn.Character:say( what, nowait ) return vn.say( self.who, what, nowait ) end
 vn.Character_mt = { __index = vn.Character, __call = vn.Character.say }
+--[[
+-- @brief Creates a new character without adding it to the VN.
+-- @note The character can be added with vn.newCharacter.
+--    @param who Name of the character to add.
+--    @param params Parameter table.
+--    @return New character.
+--]]
 function vn.Character.new( who, params )
    local c = {}
    setmetatable( c, vn.Character_mt )
@@ -493,13 +536,19 @@ function vn.Character.new( who, params )
    c.color = params.color or vn._default.color
    local image = params.image
    if type(image)=='string' then
-      image = love.graphics.newImage( image )
+      image = graphics.newImage( image )
    end
    c.image = image
    c.hidetitle = params.hidetitle
    c.params = params
    return c
 end
+--[[
+-- @brief Creates a new character.
+--    @param who Name (or previously created character) to add.
+--    @param params Parameter table.
+--    @return New character.
+--]]
 function vn.newCharacter( who, params )
    local c
    if type(who)=="string" then
@@ -511,11 +560,24 @@ function vn.newCharacter( who, params )
    return c
 end
 
+--[[
+-- @brief Starts a new scene.
+--    @param background Background image to set or none if nil.
+--]]
 function vn.scene( background )
    vn._checkstarted()
    table.insert( vn._states, vn.StateScene.new( background ) )
 end
 
+--[[
+-- @brief Has a character say something.
+--
+-- @note "me" and "narrator" are specila meta-characters.
+--
+--    @param who The name of the character that is saying something.
+--    @param what What the character is saying.
+--    @param nowait Whether or not to introduce a wait or just skip to the next text right away (defaults to false).
+--]]
 function vn.say( who, what, nowait )
    vn._checkstarted()
    table.insert( vn._states, vn.StateSay.new( who, what ) )
@@ -524,17 +586,30 @@ function vn.say( who, what, nowait )
    end
 end
 
+--[[
+-- @brief Opens a menu the player can select from.
+--    @param items Table of items to select from, they should be of the form "{text, label}" where "text" is what is displayed and "label" is what is passed to the handler.
+--    @param handler Function to handle what happens when an item is selecetdd. Defaults to vn.jump.
+--]]
 function vn.menu( items, handler )
    vn._checkstarted()
    handler = handler or vn.jump
    table.insert( vn._states, vn.StateMenu.new( items, handler ) )
 end
 
+--[[
+-- @brief Inserts a label. This does nothing but serve as a reference for vn.jump
+--    @param label Name of the label to insert.
+--]]
 function vn.label( label )
    vn._checkstarted()
    table.insert( vn._states, vn.StateLabel.new( label ) )
 end
 
+--[[
+-- @brief Inserts a jump. This skips to a certain label.
+--    @param label Name of the label to jump to.
+--]]
 function vn.jump( label )
    if vn._started then
       vn._jump( label )
@@ -542,21 +617,33 @@ function vn.jump( label )
    table.insert( vn._states, vn.StateJump.new( label ) )
 end
 
+--[[
+-- @brief Finishes the VN.
+--]]
 function vn.done()
    vn._checkstarted()
    table.insert( vn._states, vn.StateEnd.new() )
 end
 
-function vn.scene()
-   vn._checkstarted()
-   table.insert( vn._states, vn.StateScene.new() )
-end
-
+--[[
+-- @brief Inserts a fade.
+--    @param seconds Number of seconds to fade.
+--    @param fadestart Starting fade opacity.
+--    @param fadeend Ending fade opacity.
+--]]
 function vn.fade( seconds, fadestart, fadeend )
    vn._checkstarted()
    table.insert( vn._states, vn.StateFade.new( seconds, fadestart, fadeend ) )
 end
+--[[
+-- @brief Wrapper to fade in.
+--    @param seconds Number of seconds to fully fade in.
+--]]
 function vn.fadein( seconds ) vn.fade( seconds, 0, 1 ) end
+--[[
+-- @brief Wrapper to fade out.
+--    @param seconds Number of seconds to fully fade out.
+--]]
 function vn.fadeout( seconds ) vn.fade( seconds, 1, 0 ) end
 
 function vn._jump( label )
@@ -597,10 +684,22 @@ function vn._checkDone()
    end
 end
 
+
+--[[
+-- @brief Checks to see if the VN is done running or not.
+--    @return true if it is done running, false otherwise
+--]]
 function vn.isDone()
    return vn._state > #vn._states
 end
 
+
+--[[
+-- @brief Runs the visual novel environment.
+--
+-- @note You have to set up the states first.
+-- @note This function doesn't return until the VN is done running.
+--]]
 function vn.run()
    if #vn._states == 0 then
       error( _("vn: run without any states") )
@@ -609,8 +708,42 @@ function vn.run()
    love.exec( 'scripts/vn' )
 end
 
+--[[
+-- @brief Clears the fundamental running variables. Run before starting a new VN instance.
+--
+-- @note Leaves customization to colors and positions untouched.
+--]]
+function vn.clear()
+   local var = {
+      "_characters",
+      "_states",
+      "_state",
+      "_bufcol",
+      "_buffer",
+      "_title",
+      "_alpha"
+   }
+   for k,v in ipairs(var) do
+      vn[k] = vn._default[k]
+   end
+end
+
+--[[
+-- @brief Fully resets the VN environment to default values.
+--
+-- @note This automatically does vn.clear() too.
+--]]
+function vn.reset()
+   for k,v in pairs(vn._default) do
+      vn[k] = v
+   end
+end
+
 -- Default characters
 vn._me = vn.Character.new( "me", { color={1, 1, 1}, hidetitle=true } )
 vn._na = vn.Character.new( "narrator", { color={0.5, 0.5, 0.5}, hidetitle=true } )
+
+-- Set defaults
+vn.reset()
 
 return vn
