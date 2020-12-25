@@ -286,7 +286,7 @@ function vn.StateSay:_init()
    self._pos = utf8.next( self._textbuf )
    self._text = ""
    local c = vn._getCharacter( self.who )
-   vn._bufcol = c.color
+   vn._bufcol = c.color or vn._default._bufcol
    vn._buffer = self._text
    if c.hidetitle then
       vn._title = nil
