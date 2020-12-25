@@ -706,6 +706,8 @@ function vn.run()
    end
    love._vn = true
    love.exec( 'scripts/vn' )
+   love._vn = nil
+   vn._started = false
 end
 
 --[[
@@ -724,7 +726,7 @@ function vn.clear()
       "_alpha"
    }
    for k,v in ipairs(var) do
-      vn[k] = vn._default[k]
+      vn[v] = vn._default[v]
    end
 end
 
