@@ -33,7 +33,8 @@ function create()
    npc_blackjack = evt.npcAdd( "blackjack", blackjack_name, blackjack_portrait, blackjack_desc, gambling_priority )
    npc_chuckaluck = evt.npcAdd( "chuckaluck", chuckaluck_name, chuckaluck_portrait, chuckaluck_desc, gambling_priority )
 
-   if not var.peek( "minerva_firsttime" ) then
+   -- If they player never had tokens, it is probably their first time
+   if not var.peek( "minerva_tokens" ) then
       hook.land( "enterbar", "bar" )
    end
    -- End event on takeoff.
@@ -59,11 +60,14 @@ function enterbar()
    local g = vn.newCharacter( _("Greeter"),
          { image=portrait.getFullPath( greeter_portrait ) } )
    vn.fadein()
-   vn.na( "Explore ship text" )
-   g:say( "welcome text" )
-   g:say( "more explanation" )
+   vn.na( _("As soon as you enter the spaceport bar, a neatly dressed individual runs up to you and hands you a complementary drink. It is hard to make out what he is saying over all the background noise created by other patrons and gambling machines, but you try to make it out as best as you can.") )
+   g:say( "\"Welcome to the Minerva Station resort! It appears to be your first time here. As you enjoy your complementary drink, let me briefly explain to you how this wonderful place works. It is all very exciting!\"" )
+   g:say( "\"The currency we use on this station are Minerva Tokens. Unlike credits, they are physical and so very pretty! You can not buy Minerva Tokens directly, however, by participating and betting credits in the various fine games available, you can obtain Minerva Tokens. When you have enough Minerva Tokens, you are able to buy fabulous prizes and enjoy more exclusive areas of our resort. To start out your fun Minerva Adventure®, please enjoy these 100 complementary Minerva Tokens!\"" )
+   g:say( "\"If you want more information or want to check your balance. Please use the terminals located throughout the station. And remember, 'life is short, spend it at Minerva Station'®!\"" )
    vn.fadeout()
    vn.run()
+
+   tokens_pay( 100 )
 
    --var.push( "minerva_firsttime", true )
 end
@@ -74,6 +78,7 @@ function terminal()
       _(" THIS IS SO EXCITING."),
       _(" YOU SEEM LIKE YOU MIGHT ENJOY A GAME OF BLACKJACK."),
       _(" FORTUNE FAVOURS THE PERSISTENT."),
+      _(" LIFE IS SHORT, SPEND IT AT MINERVA STATION."),
    }
    vn.clear()
    vn.scene()
