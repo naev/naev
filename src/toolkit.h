@@ -65,6 +65,7 @@ void window_moveWidget( const unsigned int wid,
 /*
  * destruction
  */
+void toolkit_closeAll( void );
 void window_close( unsigned int wid, char *str );
 void window_destroy( const unsigned int wid );
 void window_destroyWidget( unsigned int wid, const char* wgtname );
