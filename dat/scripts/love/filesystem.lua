@@ -28,13 +28,14 @@ function filesystem.newFile( filename )
    return naev.file.new( love._basepath..filename )
 end
 function filesystem.read( name, size )
-   local f = naev.file.new( name )
-   f:open('r')
+   local f = filesystem.newFile( name )
+   local ret, err = f:open('r')
+   print( name, ret, err )
    local buf,len
    if size then
       buf,len = f:read( size )
    else
-      buf,len = f.read()
+      buf,len = f:read()
    end
    f:close()
    return buf, len
