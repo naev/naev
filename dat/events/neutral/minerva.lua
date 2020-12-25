@@ -28,6 +28,11 @@ chuckaluck_desc = _("A fast-paced luck-based betting game using dice. You can pl
 greeter_portrait = portrait.get() -- TODO replace?
 
 function create()
+   -- Make sure it's in the right place
+   if planet.cur():name() ~= "Minerva Station" then
+      evt.finish()
+   end
+
    -- Create NPCs
    npc_terminal = evt.npcAdd( "terminal", terminal_name, terminal_portrait, terminal_desc, gambling_priority )
    npc_blackjack = evt.npcAdd( "blackjack", blackjack_name, blackjack_portrait, blackjack_desc, gambling_priority )
@@ -132,7 +137,7 @@ function terminal()
                   "\"YOU CAN TRADE IN YOUR PRECIOUS \ap%d MINERVA TOKENS\a0 FOR THE FOLLOWING GOODS.\"", tokens_get()),
             tokens_get() ) end )
    local trades = {
-      {"Laser Cannon", 500}
+      {"Ripper Cannon", 100},
    }
    local handler = function (idx)
       -- Jump in case of 'Back'
