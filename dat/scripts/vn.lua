@@ -276,9 +276,14 @@ function vn.StateSay.new( who, what )
    return s
 end
 function vn.StateSay:_init()
+   if type(self.what)=="function" then
+      self._textbuf = self.what()
+   else
+      self._textbuf = self.what
+   end
    self._timer = vn.speed
-   self._len = utf8.len( self.what )
-   self._pos = utf8.next( self.what )
+   self._len = utf8.len( self._textbuf )
+   self._pos = utf8.next( self._textbuf )
    self._text = ""
    local c = vn._getCharacter( self.who )
    vn._bufcol = c.color
@@ -302,14 +307,14 @@ function vn.StateSay:_update( dt )
          _finish( self )
          return
       end
-      self._pos = utf8.next( self.what, self._pos )
-      self._text = string.sub( self.what, 1, self._pos )
+      self._pos = utf8.next( self._textbuf, self._pos )
+      self._text = string.sub( self._textbuf, 1, self._pos )
       self._timer = self._timer + vn.speed
       vn._buffer = self._text
    end
 end
 function vn.StateSay:_finish()
-   self._text = self.what
+   self._text = self._textbuf
    vn._buffer = self._text
    _finish( self )
 end
