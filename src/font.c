@@ -859,7 +859,7 @@ int gl_printTextRaw( const glFont *ft_font,
    p = 0; /* where we last drew up to */
    while (y - by > -1e-5) {
       l = gl_printWidthForText( ft_font, &text[p], width, NULL );
-      if ((l==0) && (tmp[p]!='\0'))
+      if ((l==0) && (text[p]!='\0'))
          break;
       ret = p + l;
 
@@ -1012,7 +1012,7 @@ int gl_printHeightRaw( const glFont *ft_font,
    p = 0;
    do {
       i = gl_printWidthForText( ft_font, &text[p], width, NULL );
-      if ((i==0) && (tmp[p]!='\0'))
+      if ((i==0) && (text[p]!='\0'))
          break;
       p += i + 1;
       y += 1.5*(double)ft_font->h; /* move position down */
