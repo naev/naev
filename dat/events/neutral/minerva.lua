@@ -14,6 +14,7 @@
 local portrait = require "portrait"
 local vn = require 'vn'
 local ngettext = gettext.ngettext
+local love = require 'love'
 
 -- NPC Stuff
 gambling_priority = 3
@@ -31,9 +32,9 @@ greeter_portrait = portrait.get() -- TODO replace?
 function create()
 
    -- Create NPCs
-   npc_terminal = evt.npcAdd( "terminal", terminal_name, terminal_portrait, terminal_desc, gambling_priority )
-   npc_blackjack = evt.npcAdd( "blackjack", blackjack_name, blackjack_portrait, blackjack_desc, gambling_priority )
-   npc_chuckaluck = evt.npcAdd( "chuckaluck", chuckaluck_name, chuckaluck_portrait, chuckaluck_desc, gambling_priority )
+   npc_terminal = evt.npcAdd( "approach_terminal", terminal_name, terminal_portrait, terminal_desc, gambling_priority )
+   npc_blackjack = evt.npcAdd( "approach_blackjack", blackjack_name, blackjack_portrait, blackjack_desc, gambling_priority )
+   npc_chuckaluck = evt.npcAdd( "approach_chuckaluck", chuckaluck_name, chuckaluck_portrait, chuckaluck_desc, gambling_priority )
 
    -- If they player never had tokens, it is probably their first time
    if not var.peek( "minerva_tokens" ) then
@@ -66,14 +67,14 @@ function enterbar()
    vn.na( _("As soon as you enter the spaceport bar, a neatly dressed individual runs up to you and hands you a complementary drink. It is hard to make out what he is saying over all the background noise created by other patrons and gambling machines, but you try to make it out as best as you can.") )
    g:say( _("\"Welcome to the Minerva Station resort! It appears to be your first time here. As you enjoy your complementary drink, let me briefly explain to you how this wonderful place works. It is all very exciting!\"") )
    g:say( _("\"The currency we use on this station are Minerva Tokens. Unlike credits, they are physical and so very pretty! You can not buy Minerva Tokens directly, however, by participating and betting credits in the various fine games available, you can obtain Minerva Tokens. When you have enough Minerva Tokens, you are able to buy fabulous prizes and enjoy more exclusive areas of our resort. To start out your fun Minerva Adventure®, please enjoy these 10 complementary Minerva Tokens!\"") )
-   g:say( _("\"If you want more information or want to check your balance. Please use the terminals located throughout the station. And remember, 'life is short, spend it at Minerva Station'®!\"") )
+   g:say( _("\"If you want more information or want to check your balance. Please use the terminals located throughout the station. I highly recommend you check out our universe-famous Cyborg Chicken at the blackjack table, and always remember, 'life is short, spend it at Minerva Station'®!\"") )
    vn.fadeout()
    vn.run()
 
    tokens_pay( 10 )
 end
 
-function terminal()
+function approach_terminal()
    local msgs = {
       _(" TODAY MIGHT BE YOUR LUCKY DAY."),
       _(" THIS IS SO EXCITING."),
@@ -170,11 +171,44 @@ function terminal()
    vn.run()
 end
 
-function blackjack()
+function approach_blackjack()
+   local firsttime = not var.peek("cc_known")
+   -- Not adding to queue first
+   local cc = vn.Character.new( blackjack_name,
+         { image=portrait.getFullPath(blackjack_portrait) } )
    vn.clear()
+   vn.scene()
+   if firsttime then
+      vn.fadein()
+      vn.na( _("You make your way to the blackjack table which seems to be surrounded by many patrons, some of which are apparently taking pictures of something. You eventually have to elbow your way to the front to get a view of what is going on." ) )
+      --vn.appear( cc )
+      vn.newCharacter( cc )
+      vn.na( _("When you make it to the front you are greeted by the cold eyes of what apparently seems to be the Cyborg Chicken you were told about. It seems to be sizing the crowd while playing against a patron. The way it moves is very uncanny with short precise mechanical motions. You can tell it has been doing this for a while. You watch as the game progresses and the patron loses all his credits to the chicken, who seems unfazed.") )
+      var.push("cc_known",true)
+   end
+   if not firsttime then
+      vn.newCharacter( cc )
+      vn.fadein()
+      vn.na( _("You elbow your way to the front of the table and are once again greeted by the cold mechanical eyes of Cyborg Chicken.") )
+   end
+   vn.label("menu")
+   local play_blackjack = false
+   vn.menu( {
+      { _("Play"), "blackjack" },
+      { _("Leave"), "leave" },
+   }, function (idx)
+         play_blackjack = (idx=="blackjack")
+      end )
+   vn.label( "leave" )
+   vn.fadeout()
+   vn.run()
+
+   if play_blackjack then
+      love.exec('blackjack')
+   end
 end
 
-function chuckaluck()
+function approach_chuckaluck()
 end
 
 --[[
