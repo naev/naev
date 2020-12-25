@@ -13,8 +13,14 @@
 Spawns a travelling merchant that can sell the player if interested.
 
 --]]
+local vn = require 'vn'
+local portrait = require 'portrait'
+local imageproc = require 'imageproc'
+local love_image = require 'love.image'
 
 trader_name = _("Machiavellian Misi")
+trader_portrait = "none"
+trader_colour = {1, 0.3, 1}
 store_name = string.format(_("%s's \"Fine\" Wares"), trader_name)
 broadcastmsg = {
    string.format(_("%s's the name and selling fine shit is my game! Come get your outfits here!"), trader_name),
@@ -93,13 +99,28 @@ end
 function hail ()
    if not var.peek('travelling_trader_hailed') then
       var.push('travelling_trader_hailed', true)
-      tk.msg( first_hail_title, first_hail_message )
+      local holo = love_image.newImageData( portrait.getFullPath(trader_portrait) )
+      holo = imageproc.hologram( holo )
+
+      vn.clear()
+      vn.scene()
+      local mm = vn.newCharacter( trader_name,
+         { image=holo, color=trader_colour } )
+      vn.fadein()
+      mm:say( first_hail_message )
+      vn.fadeout()
+      vn.run()
       player.commClose()
    end
 end
 
 function board ()
-   tk.msg( board_title, board_message )
+   vn.clear()
+   vn.scene()
+   vn.fadein()
+   vn.na( board_message )
+   vn.fadeout()
+   vn.run()
 
    --[[
       Ideas
