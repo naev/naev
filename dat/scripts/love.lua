@@ -122,7 +122,14 @@ function love.exec( path )
    -- Save path to restore it later
    love._path = package.path
 
-   package.path = package.path..";?.lua"
+   -- only add to path if not there, saves path pollution if crashing
+   local function addtopath( path )
+      local id = string.find( package.path, path, 1, true )
+      if id == nil then
+         package.path = package.path..path
+      end
+   end
+   addtopath(";?.lua")
 
    love._focus = false
    love._started = false
@@ -133,7 +140,7 @@ function love.exec( path )
    if info then
       if info.type == "directory" then
          love._basepath = path.."/" -- Allows loading files relatively
-         package.path = package.path..string.format(";%s/?.lua", path)
+         addtopath(string.format(";%s/?.lua", path))
          -- Run conf if exists
          if love.filesystem.getInfo( path.."/conf.lua" ) ~= nil then
             confpath = path.."/conf"
@@ -183,9 +190,14 @@ function love.exec( path )
          window = true
       }
 
+   local function dolua( path )
+      _LOADED[path] = nil -- reset loadedness
+      require(path)
+   end
+
    -- Configure
    if confpath ~= nil then
-      require( confpath )
+      dolua( confpath )
    end
    love.conf(t)
 
@@ -206,7 +218,7 @@ function love.exec( path )
    end
 
    -- Run set up function defined in Love2d spec
-   require( mainpath )
+   dolua( mainpath )
    love.load()
 
    -- Actually run in Naev
