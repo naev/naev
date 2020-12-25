@@ -444,7 +444,7 @@ static int gfxL_printfWrap( lua_State *L )
       l = gl_printWidthForText(font, &tmp[p], width, &outw );
       if (outw > maxw)
          maxw = outw;
-      if (l==0)
+      if ((l==0) && (tmp[p]!='\n'))
          break;
 
       /* Create entry of form { string, width } in the table. */
