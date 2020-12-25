@@ -76,20 +76,6 @@ SHADERS = [
       uniforms = ["projection", "color", "outline_color"]
    ),
    Shader(
-      name = "font_glow",
-      vs_path = "font.vert",
-      fs_path = "font_glow.frag",
-      attributes = ["vertex", "tex_coord"],
-      uniforms = ["projection", "color", "glow_color"]
-   ),
-   Shader(
-      name = "font_outline_glow",
-      vs_path = "font.vert",
-      fs_path = "font_outline_glow.frag",
-      attributes = ["vertex", "tex_coord"],
-      uniforms = ["projection", "color", "outline_color", "glow_color"]
-   ),
-   Shader(
       name = "beam",
       vs_path = "beam.vert",
       fs_path = "beam.frag",
