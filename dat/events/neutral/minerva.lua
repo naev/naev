@@ -38,6 +38,7 @@ function create()
       hook.land( "enterbar", "bar" )
    end
    -- End event on takeoff.
+   tokens_landed = tokens_get()
    hook.takeoff( "leave" )
 end
 
@@ -141,6 +142,15 @@ function terminal()
          vn.jump(idx)
          return
       end
+
+      local t = trades[idx]
+      if t[2] > tokens_get() then
+         -- Not enough money.
+         vn.jump( "trade_notenough" )
+         return
+      end
+
+      -- TODO Open item dialogue
    end
    local opts = {}
    for k,v in ipairs(trades) do
@@ -167,5 +177,6 @@ end
 --    Event is over when player takes off.
 --]]
 function leave ()
+   local diff = tokens_get()-tokens_landed
    evt.finish()
 end
