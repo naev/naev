@@ -175,6 +175,9 @@ void menu_main (void)
       return;
    }
 
+   /* Close all open windows. */
+   toolkit_closeAll();
+
    /* Clean up GUI - must be done before using SCREEN_W or SCREEN_H. */
    gui_cleanup();
    player_soundStop(); /* Stop sound. */

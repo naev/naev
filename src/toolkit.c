@@ -933,6 +933,17 @@ void widget_cleanup( Widget *widget )
 
 
 /**
+ * @brief Closes all open toolkit windows.
+ */
+void toolkit_closeAll( void )
+{
+   Window *w;
+   for (w = windows; w != NULL; w = w->next)
+      window_destroy( w->id );
+}
+
+
+/**
  * @brief Helper function to automatically close the window calling it.
  *
  *    @param wid Window to close.
