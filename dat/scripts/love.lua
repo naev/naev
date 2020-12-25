@@ -106,6 +106,10 @@ end
 -- Initialize
 --]]
 function love.exec( path )
+   if love._started then
+      error(_("can only run one Love2D instance at a time!"))
+   end
+
    -- Save path to restore it later
    love._path = package.path
 
@@ -234,6 +238,7 @@ function love.exec( path )
    love._started = true
    naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
    -- Doesn't actually get here until the dialogue is closed
+   love._started = false
 
    -- Reset libraries that were potentially crushed
    for k,v in pairs(naev) do _G[k] = v end
