@@ -95,7 +95,7 @@ function vn.draw()
    _draw_bg( x, y, w, h, vn.textbox_bg )
    -- Draw text
    _set_col( vn._bufcol )
-   graphics.printf( vn._buffer, font, x+bw, y+bw, vn.textbox_w-bw )
+   graphics.printf( vn._buffer, font, x+bw, y+bw, vn.textbox_w-2*bw )
 
    -- Namebox
    if vn._title ~= nil and utf8.len(vn._title)>0 then
