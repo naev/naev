@@ -42,6 +42,7 @@ function create()
    hook.takeoff( "leave" )
 end
 
+-- Roughly 1 token is 1000 credits
 function tokens_get()
    local v = var.peek( "minerva_tokens" )
    if v == nil then
@@ -49,7 +50,6 @@ function tokens_get()
    end
    return v
 end
-
 function tokens_pay( amount )
    local v = tokens_get()
    var.push( "minerva_tokens", v+amount )
@@ -63,14 +63,12 @@ function enterbar()
    vn.fadein()
    vn.na( _("As soon as you enter the spaceport bar, a neatly dressed individual runs up to you and hands you a complementary drink. It is hard to make out what he is saying over all the background noise created by other patrons and gambling machines, but you try to make it out as best as you can.") )
    g:say( _("\"Welcome to the Minerva Station resort! It appears to be your first time here. As you enjoy your complementary drink, let me briefly explain to you how this wonderful place works. It is all very exciting!\"") )
-   g:say( _("\"The currency we use on this station are Minerva Tokens. Unlike credits, they are physical and so very pretty! You can not buy Minerva Tokens directly, however, by participating and betting credits in the various fine games available, you can obtain Minerva Tokens. When you have enough Minerva Tokens, you are able to buy fabulous prizes and enjoy more exclusive areas of our resort. To start out your fun Minerva Adventure®, please enjoy these 100 complementary Minerva Tokens!\"") )
+   g:say( _("\"The currency we use on this station are Minerva Tokens. Unlike credits, they are physical and so very pretty! You can not buy Minerva Tokens directly, however, by participating and betting credits in the various fine games available, you can obtain Minerva Tokens. When you have enough Minerva Tokens, you are able to buy fabulous prizes and enjoy more exclusive areas of our resort. To start out your fun Minerva Adventure®, please enjoy these 10 complementary Minerva Tokens!\"") )
    g:say( _("\"If you want more information or want to check your balance. Please use the terminals located throughout the station. And remember, 'life is short, spend it at Minerva Station'®!\"") )
    vn.fadeout()
    vn.run()
 
-   tokens_pay( 100 )
-
-   --var.push( "minerva_firsttime", true )
+   tokens_pay( 10 )
 end
 
 function terminal()
