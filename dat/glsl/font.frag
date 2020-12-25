@@ -6,9 +6,9 @@ in vec2 tex_coord_out;
 out vec4 color_out;
 
 // How thick to render glyphs; 0 is very thick, 1 is very thin
-const float glyph_center   = 0.5;
+const float glyph_center   = 0.515;
 // between 0 and glyph_center is a thick outline, above glyph_center is no outline
-const float outline_center = 0.1;
+const float outline_center = 0.187;
 
 void main(void) {
    // dist is a value between 0 and 1 with 0.5 on the edge and 1 inside it.

@@ -33,7 +33,7 @@
 #include "utf8.h"
 
 
-#define MAX_EFFECT_RADIUS 1 /**< Maximum pixel distance from glyph to outline/shadow/etc. */
+#define MAX_EFFECT_RADIUS 2 /**< Maximum pixel distance from glyph to outline/shadow/etc. */
 #define FONT_DISTANCE_FIELD_SIZE   55 /**< Size to render the fonts at. */
 #define HASH_LUT_SIZE 512 /**< Size of glyph look up table. */
 #define DEFAULT_TEXTURE_SIZE 1024 /**< Default size of texture caches for glyphs. */
@@ -1115,7 +1115,8 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
             for (u=0; u<w; u++)
                buffer[ (b+v)*rw+(b+u) ] = bitmap.buffer[ v*w+u ];
          /* Compute signed fdistance field with buffered glyph. */
-         c->dataf = make_distance_mapbf( buffer, rw, rh );
+         c->dataf = make_distance_mapbf( buffer, rw, rh,
+               (double)(MAX_EFFECT_RADIUS*FONT_DISTANCE_FIELD_SIZE) / stsh->h);
          free( buffer );
       }
       c->w     = rw;
