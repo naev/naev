@@ -34,6 +34,7 @@ static int outfitL_cpu( lua_State *L );
 static int outfitL_slot( lua_State *L );
 static int outfitL_icon( lua_State *L );
 static int outfitL_price( lua_State *L );
+static int outfitL_description( lua_State *L );
 static const luaL_Reg outfitL_methods[] = {
    { "__tostring", outfitL_name },
    { "__eq", outfitL_eq },
@@ -46,6 +47,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "slot", outfitL_slot },
    { "icon", outfitL_icon },
    { "price", outfitL_price },
+   { "description", outfitL_description },
    {0,0}
 }; /**< Outfit metatable methods. */
 
@@ -384,3 +386,19 @@ static int outfitL_price( lua_State *L )
    return 1;
 }
 
+
+/**
+ * @brief Gets the description of an outfit.
+ *
+ * @usage description = o:description()
+ *
+ *    @luatparam String o Outfit to get the description of.
+ *    @luatreturn string The description (without translating).
+ * @luafunc description( o )
+ */
+static int outfitL_description( lua_State *L )
+{
+   Outfit *o = luaL_validoutfit(L,1);
+   lua_pushstring(L, o->description);
+   return 1;
+}
