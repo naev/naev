@@ -16,6 +16,7 @@ local vn = require 'vn'
 local ngettext = gettext.ngettext
 local blackjack = require 'minigames.blackjack'
 local lg = require 'love.graphics'
+local window = require 'love.window'
 
 -- NPC Stuff
 gambling_priority = 3
@@ -199,24 +200,32 @@ function approach_blackjack()
    } )
    vn.label( "blackjack" )
    -- Resize the window
+   local lw, lh = window.getDesktopDimensions()
    local textbox_h = vn.textbox_h
+   local textbox_y = vn.textbox_y
    local blackjack_h = 500
+   local blackjack_y = lh-blackjack_h
    vn.animation( 0.2, function (alpha)
-      local lw, lh = lg.getDimensions()
       vn.textbox_h = textbox_h + (blackjack_h - textbox_h)*alpha
-      vn.textbox_y = lh - 30 - vn.textbox_h
+      vn.textbox_y = textbox_y + (blackjack_y - textbox_y)*alpha
    end )
    local bj = vn.custom()
-   bj._init = function ()
-      blackjack.init( vn.textbox_w, vn.textbox_h )
+   bj._init = function( self )
+      blackjack.init( vn.textbox_w, vn.textbox_h, function (status)
+         self.done = true
+      end )
       blackjack.deal()
    end
-   bj._draw = function ( self )
+   bj._draw = function( self )
       local x, y, w, h =  vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
+      -- Horrible hack where we draw ontop of the textbox a background
       lg.setColor( 0.5, 0.5, 0.5 )
       lg.rectangle( "fill", x, y, w, h )
       lg.setColor( 0, 0, 0 )
       lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
+
+      -- Draw blackjack game
+      y = y + blackjack.font:getHeight()+10
       blackjack.draw( x, y, w, h)
    end
    bj._keypressed = function( self, key )
@@ -227,9 +236,8 @@ function approach_blackjack()
    end
    -- Undo the resize
    vn.animation( 0.2, function (alpha)
-      local lw, lh = lg.getDimensions()
       vn.textbox_h = blackjack_h + (textbox_h - blackjack_h)*alpha
-      vn.textbox_y = lh - 30 - vn.textbox_h
+      vn.textbox_y = blackjack_y + (textbox_y - blackjack_y)*alpha
    end )
    vn.label( "leave" )
    vn.fadeout()
