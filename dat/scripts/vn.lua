@@ -70,7 +70,7 @@ function vn.draw()
    for k,c in ipairs( vn._characters ) do
       if c.image ~= nil then
          local w, h = c.image:getDimensions()
-         local lw, lh = love.window.getDimensions()
+         local lw, lh = love.graphics.getDimensions()
          local mw, mh = vn.textbox_w, vn.textbox_y
          local scale = math.min( mw/w, mh/h )
          local col
@@ -156,7 +156,7 @@ function vn.keypressed( key )
 
    if vn.isDone() then return end
    local s = vn._states[ vn._state ]
-   s:key( key )
+   s:keypressed( key )
 end
 
 
@@ -169,7 +169,7 @@ end
 function vn.mousepressed( mx, my, button )
    if vn.isDone() then return end
    local s = vn._states[ vn._state ]
-   s:click( mx, my, button )
+   s:mousepressed( mx, my, button )
 end
 
 
@@ -200,8 +200,8 @@ function vn.State.new()
    s._init = _dummy
    s._draw = _dummy
    s._update = _dummy
-   s._click = _dummy
-   s._key = _dummy
+   s._mousepressed = _dummy
+   s._keypressed = _dummy
    s.done = false
    return s
 end
@@ -218,12 +218,12 @@ function vn.State:update( dt )
    self:_update( dt )
    vn._checkDone()
 end
-function vn.State:click( mx, my, button )
-   self:_click( mx, my, button )
+function vn.State:mousepressed( mx, my, button )
+   self:_mousepressed( mx, my, button )
    vn._checkDone()
 end
-function vn.State:key( key )
-   self:_key( key )
+function vn.State:keypressed( key )
+   self:_keypressed( key )
    vn._checkDone()
 end
 function vn.State:isDone() return self.done end
@@ -268,8 +268,8 @@ function vn.StateSay.new( who, what )
    local s = vn.State.new()
    s._init = vn.StateSay._init
    s._update = vn.StateSay._update
-   s._click = vn.StateSay._finish
-   s._key = vn.StateSay._finish
+   s._mousepressed = vn.StateSay._finish
+   s._keypressed = vn.StateSay._finish
    s._type = "Say"
    s.who = who
    s.what = what
@@ -326,8 +326,8 @@ function vn.StateWait.new()
    local s = vn.State.new()
    s._init = vn.StateWait._init
    s._draw = vn.StateWait._draw
-   s._click = _finish
-   s._key = _finish
+   s._mousepressed = _finish
+   s._keypressed = _finish
    s._type = "Wait"
    return s
 end
@@ -353,8 +353,8 @@ function vn.StateMenu.new( items, handler )
    local s = vn.State.new()
    s._init = vn.StateMenu._init
    s._draw = vn.StateMenu._draw
-   s._click = vn.StateMenu._click
-   s._key = vn.StateMenu._key
+   s._mousepressed = vn.StateMenu._mousepressed
+   s._keypressed = vn.StateMenu._keypressed
    s._type = "Menu"
    s.items = items
    s.handler = handler
@@ -415,7 +415,7 @@ function vn.StateMenu:_draw()
       graphics.print( text, font, gx+x+tb, gy+y+tb )
    end
 end
-function vn.StateMenu:_click( mx, my, button )
+function vn.StateMenu:_mousepressed( mx, my, button )
    if button ~= 1 then
       return
    end
@@ -429,7 +429,7 @@ function vn.StateMenu:_click( mx, my, button )
       end
    end
 end
-function vn.StateMenu:_key( key )
+function vn.StateMenu:_keypressed( key )
    local n = tonumber(key)
    if n == nil then return end
    if n==0 then n = n + 10 end
