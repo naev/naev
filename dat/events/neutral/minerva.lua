@@ -14,7 +14,8 @@
 local portrait = require "portrait"
 local vn = require 'vn'
 local ngettext = gettext.ngettext
-local love = require 'love'
+local blackjack = require 'minigames.blackjack'
+local lg = require 'love.graphics'
 
 -- NPC Stuff
 gambling_priority = 3
@@ -192,20 +193,40 @@ function approach_blackjack()
       vn.na( _("You elbow your way to the front of the table and are once again greeted by the cold mechanical eyes of Cyborg Chicken.") )
    end
    vn.label("menu")
-   local play_blackjack = false
    vn.menu( {
       { _("Play"), "blackjack" },
       { _("Leave"), "leave" },
-   }, function (idx)
-         play_blackjack = (idx=="blackjack")
-      end )
+   } )
+   vn.label( "blackjack" )
+   local bj = vn.custom()
+   bj._init = function ()
+      -- Resize the VN boxes to be bigger
+      local lw, lh = lg.getDimensions()
+      vn.textbox_h = 500
+      vn.textbox_y = lh - 30 - vn.textbox_h
+
+      blackjack.init( vn.textbox_w, vn.textbox_h )
+      blackjack.deal()
+   end
+   bj._draw = function ( self )
+      local x, y, w, h =  vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
+      lg.setColor( 0.5, 0.5, 0.5 )
+      lg.rectangle( "fill", x, y, w, h )
+      lg.setColor( 0, 0, 0 )
+      lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
+      blackjack.draw( x, y, w, h)
+   end
+   bj._keypressed = function( self, key )
+      blackjack.keypressed( key )
+   end
+   bj._mousepressed = function( self, mx, my, button )
+      blackjack.mousepressed( mx, my, button )
+   end
    vn.label( "leave" )
    vn.fadeout()
    vn.run()
 
-   if play_blackjack then
-      love.exec('blackjack')
-   end
+   vn.reset()
 end
 
 function approach_chuckaluck()
