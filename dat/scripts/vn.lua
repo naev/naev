@@ -490,34 +490,29 @@ function vn.StateEnd:_init()
    vn._state = #vn._states+1
 end
 --[[
--- Fade-In
+-- Animation
 --]]
-vn.StateFade ={}
-function vn.StateFade.new( seconds, fadestart, fadeend )
-   seconds = seconds or 0.2
+vn.StateAnimation = {}
+function vn.StateAnimation.new( seconds, func )
    local s = vn.State.new()
-   s._init = vn.StateFade._init
-   s._update = vn.StateFade._update
-   s._type = "Fade"
-   s._start = fadestart
-   s._end = fadeend
-   s._inc = s._end > s._start
-   s._fadetime = 1/seconds
-   if not s._inc then
-      s._fadetime = -s._fadetime
-   end
+   s._init = vn.StateAnimation._init
+   s._update = vn.StateAnimation._update
+   s._type = "Animation"
+   s._seconds = seconds
+   s._func = func
    return s
 end
-function vn.StateFade:_init()
-   vn._alpha = self._start
+function vn.StateAnimation:_init()
+   self._accum = 0
+   self._func( 0 )
 end
-function vn.StateFade:_update(dt)
-   vn._alpha = vn._alpha + dt * self._fadetime
-   if (self._inc and vn._alpha > self._end) or
-         (not self._inc and vn._alpha < self._end) then
-      vn._alpha = self._end
+function vn.StateAnimation:_update(dt)
+   self._accum = self._accum + dt
+   if self._accum > self._seconds then
+      self._accum = self._seconds
       _finish(self)
    end
+   self._func( self._accum / self._seconds )
 end
 
 
@@ -643,8 +638,12 @@ end
 --    @param fadeend Ending fade opacity.
 --]]
 function vn.fade( seconds, fadestart, fadeend )
+   seconds = seconds or 0.2
    vn._checkstarted()
-   table.insert( vn._states, vn.StateFade.new( seconds, fadestart, fadeend ) )
+   local func = function( alpha )
+      vn._alpha = fadestart + (fadeend-fadestart)*alpha
+   end
+   table.insert( vn._states, vn.StateAnimation.new( seconds, func ) )
 end
 --[[
 -- @brief Wrapper to fade in.
@@ -656,6 +655,10 @@ function vn.fadein( seconds ) vn.fade( seconds, 0, 1 ) end
 --    @param seconds Number of seconds to fully fade out.
 --]]
 function vn.fadeout( seconds ) vn.fade( seconds, 1, 0 ) end
+function vn.animation( seconds, func )
+   vn._checkstarted()
+   table.insert( vn._states, vn.StateAnimation.new( seconds, func ) )
+end
 
 --[[
 -- @brief Custom states. Only use if you know what you are doing.
