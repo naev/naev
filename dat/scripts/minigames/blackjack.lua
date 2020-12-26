@@ -2,13 +2,14 @@ local lg = require 'love.graphics'
 
 local bj = {} -- too lazy to write blackjack over and over
 
-function bj.init( w, h )
+function bj.init( w, h, donefunc )
    local cardio = require 'minigames.cardio'
    bj.deck = cardio.newDeckWestern( false )
    bj.font = lg.newFont(16)
    -- Scaling factor
    h = h - 3*bj.font:getHeight()
    bj.scale = math.min( 1, h / 300 )
+   bj.donefunc = donefunc
 end
 
 local function _total( cards )
@@ -27,6 +28,14 @@ local function _total( cards )
    return total, aces
 end
 
+local function _done( status )
+   bj.done = true
+   bj.status = status
+   if bj.donefunc then
+      bj.donefunc( status )
+   end
+end
+
 function bj.deal()
    bj.status = 0
    bj.done = false
@@ -41,13 +50,11 @@ function bj.deal()
    local p = _total(bj.player)
    local d = _total(bj.dealer)
    if p==21 and d==21 then
-      bj.done = true
+      __done(0)
    elseif p==21 then
-      bj.status = 1
-      bj.done = true
+      __done(1)
    elseif d==21 then
-      bj.status = -1
-      bj.done = true
+      __done(-1)
    end
 end
 
@@ -56,8 +63,7 @@ function bj.hit()
    -- Check if player lost
    local p = _total(bj.player)
    if p > 21 then
-      bj.status = -1
-      bj.done = true
+      _done(-1)
    else
       -- See if dealer grabs another card
       local d, da = _total(bj.dealer)
@@ -67,8 +73,7 @@ function bj.hit()
       -- Check if dealer lost
       d = _total(bj.dealer)
       if d > 21 then
-         bj.status = 1
-         bj.done = true
+         _done(1)
       end
    end
 end
@@ -82,13 +87,12 @@ function bj.stay()
       d = _total(bj.dealer)
    end
    if d>21 then
-      bj.status = 1
+      _done(1)
    elseif d>p then
-      bj.status = -1
+      _done(-1)
    elseif p>d then
-      bj.status = 1
+      _done(1)
    end
-   bj.done = true
 end
 
 function bj.ai()
