@@ -198,13 +198,16 @@ function approach_blackjack()
       { _("Leave"), "leave" },
    } )
    vn.label( "blackjack" )
+   -- Resize the window
+   local textbox_h = vn.textbox_h
+   local blackjack_h = 500
+   vn.animation( 0.2, function (alpha)
+      local lw, lh = lg.getDimensions()
+      vn.textbox_h = textbox_h + (blackjack_h - textbox_h)*alpha
+      vn.textbox_y = lh - 30 - vn.textbox_h
+   end )
    local bj = vn.custom()
    bj._init = function ()
-      -- Resize the VN boxes to be bigger
-      local lw, lh = lg.getDimensions()
-      vn.textbox_h = 500
-      vn.textbox_y = lh - 30 - vn.textbox_h
-
       blackjack.init( vn.textbox_w, vn.textbox_h )
       blackjack.deal()
    end
@@ -222,6 +225,12 @@ function approach_blackjack()
    bj._mousepressed = function( self, mx, my, button )
       blackjack.mousepressed( mx, my, button )
    end
+   -- Undo the resize
+   vn.animation( 0.2, function (alpha)
+      local lw, lh = lg.getDimensions()
+      vn.textbox_h = blackjack_h + (textbox_h - blackjack_h)*alpha
+      vn.textbox_y = lh - 30 - vn.textbox_h
+   end )
    vn.label( "leave" )
    vn.fadeout()
    vn.run()
