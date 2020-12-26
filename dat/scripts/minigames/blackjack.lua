@@ -136,7 +136,7 @@ function bj.draw( bx, by, bw, bh)
    else
       str = tostring(_total(bj.dealer))
    end
-   lg.print( string.format("Dealer: %s",str), bj.font, x, y )
+   lg.print( string.format(_("Dealer: %s"),str), bj.font, x, y )
    y = y + bj.font:getHeight()+10
    _drawhand( x, y, bj.dealer, not bj.done )
 
@@ -145,7 +145,7 @@ function bj.draw( bx, by, bw, bh)
    x = rs
    y = y + (h + sep)*bj.scale
    lg.setColor( 1, 1, 1 )
-   lg.print( string.format("Player: %d",tplayer), bj.font, x, y )
+   lg.print( string.format(_("Player: %d"),tplayer), bj.font, x, y )
    y = y + bj.font:getHeight()+10
    _drawhand( x, y, bj.player )
 
@@ -154,20 +154,20 @@ function bj.draw( bx, by, bw, bh)
    local d = _total(bj.dealer)
    local msg = nil
    if bj.status < 0 then
-      msg = "You lost!"
+      msg = _("You lost!")
       if #bj.dealer == 2 and d==21 then
-         msg = "Blackjack! "..msg
+         msg = string.format(_("Blackjack! %s"), msg)
       end
    elseif bj.status > 0 then
-      msg = "You won!"
+      msg = _("You won!")
       if #bj.player == 2 and p==21 then
-         msg = "Blackjack! "..msg
+         msg = string.format(_("Blackjack! %s"), msg)
       end
    elseif bj.done then
       if #bj.player==2 and #bj.dealer==2 and d==21 and p==21 then
-         msg = "Double Blackjack! Push!"
+         msg = _("Double Blackjack! Push!")
       else
-         msg = "Push!"
+         msg = _("Push!")
       end
    end
    if msg ~= nil then
