@@ -240,10 +240,9 @@ function approach_blackjack()
       vn.textbox_y = blackjack_y + (textbox_y - blackjack_y)*alpha
    end )
    vn.label( "leave" )
+   vn.na( _("You leave the blackjack table behind and head back to the main area.") )
    vn.fadeout()
    vn.run()
-
-   vn.reset()
 end
 
 function approach_chuckaluck()
