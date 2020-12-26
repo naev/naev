@@ -493,18 +493,25 @@ end
 -- Animation
 --]]
 vn.StateAnimation = {}
-function vn.StateAnimation.new( seconds, func )
+function vn.StateAnimation.new( seconds, func, drawfunc )
    local s = vn.State.new()
    s._init = vn.StateAnimation._init
    s._update = vn.StateAnimation._update
+   s._draw = vn.StateAnimation._draw
    s._type = "Animation"
    s._seconds = seconds
    s._func = func
+   s._drawfunc = drawfunc
    return s
 end
 function vn.StateAnimation:_init()
    self._accum = 0
-   self._func( 0 )
+   if self._func then
+      self._func( 0 )
+   end
+   if self._drawfunc then
+      self._drawfunc( 0 )
+   end
 end
 function vn.StateAnimation:_update(dt)
    self._accum = self._accum + dt
@@ -512,7 +519,14 @@ function vn.StateAnimation:_update(dt)
       self._accum = self._seconds
       _finish(self)
    end
-   self._func( self._accum / self._seconds )
+   if self._func then
+      self._func( self._accum / self._seconds )
+   end
+end
+function vn.StateAnimation:_draw(dt)
+   if self._drawfunc then
+      self._drawfunc( self._accum / self._seconds )
+   end
 end
 
 
@@ -655,9 +669,15 @@ function vn.fadein( seconds ) vn.fade( seconds, 0, 1 ) end
 --    @param seconds Number of seconds to fully fade out.
 --]]
 function vn.fadeout( seconds ) vn.fade( seconds, 1, 0 ) end
-function vn.animation( seconds, func )
+
+--[[
+-- @brief Allows doing arbitrary animations.
+--
+--    @params Seconds to perform the animation
+--]]
+function vn.animation( seconds, func, drawfunc )
    vn._checkstarted()
-   table.insert( vn._states, vn.StateAnimation.new( seconds, func ) )
+   table.insert( vn._states, vn.StateAnimation.new( seconds, func, drawfunc ) )
 end
 
 --[[
