@@ -37,6 +37,7 @@ static int shipL_CPU( lua_State *L );
 static int shipL_gfxTarget( lua_State *L );
 static int shipL_gfx( lua_State *L );
 static int shipL_price( lua_State *L );
+static int shipL_description( lua_State *L );
 static const luaL_Reg shipL_methods[] = {
    { "__tostring", shipL_name },
    { "__eq", shipL_eq },
@@ -51,6 +52,7 @@ static const luaL_Reg shipL_methods[] = {
    { "price", shipL_price },
    { "gfxTarget", shipL_gfxTarget },
    { "gfx", shipL_gfx },
+   { "description", shipL_description },
    {0,0}
 }; /**< Ship metatable methods. */
 
@@ -522,5 +524,23 @@ static int shipL_gfx( lua_State *L )
    }
    lua_pushtex( L, tex );
    return 1;
+}
+
+
+/**
+ * @brief Gets the description of the ship.
+ *
+ * @usage description = s:description()
+ *
+ *    @luatparam Ship s Ship to get the description of.
+ *    @luatreturn number The description of the ship.
+ * @luafunc description( s )
+ */
+static int shipL_description( lua_State *L )
+{
+   Ship *s;
+   s = luaL_validship(L,1);
+   lua_pushstring(L, s->description);
+   return 2;
 }
 
