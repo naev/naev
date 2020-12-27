@@ -178,6 +178,8 @@ function approach_terminal()
       elseif t[2][2]=="ship" then
          local s = ship.get(t[1])
          tradein_item.description = s:description()
+      else
+         error(_("unknown tradein type"))
       end
       vn.jump( "trade_confirm" )
    end
