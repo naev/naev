@@ -583,7 +583,7 @@ function vn.newCharacter( who, params )
    return c
 end
 function vn.appear( c, seconds )
-   seconds = seconds or 1 --0.2
+   seconds = seconds or 0.2
    local func = function( alpha )
       c.alpha = alpha
    end
