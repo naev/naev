@@ -69,8 +69,6 @@ end
 --]]
 function vn.draw()
    -- Draw characters
-   -- TODO handle multiple characters and characters appearing in the middle
-   -- of conversations
    for k,c in ipairs( vn._characters ) do
       if c.image ~= nil then
          local w, h = c.image:getDimensions()
@@ -84,7 +82,7 @@ function vn.draw()
             col = { 0.8, 0.8, 0.8 }
          end
          _set_col( col, c.alpha )
-         local x = (lw-w*scale)/2
+         local x = c.offset - w*scale/2
          local y = mh-scale*h
          graphics.draw( c.image, x, y, 0, scale, scale )
       end
@@ -263,6 +261,21 @@ end
 function vn.StateCharacter:_init()
    table.insert( vn._characters, self.character )
    self.character.alpha = 1
+   -- TODO better centering
+   local lw, lh = graphics.getDimensions()
+   local nimg = 0
+   for k,c in ipairs(vn._characters) do
+      if c.image ~= nil then
+         nimg = nimg+1
+      end
+   end
+   local n = 0
+   for k,c in ipairs(vn._characters) do
+      if c.image ~= nil then
+         n = n+1
+         c.offset = lw * n/(nimg+1)
+      end
+   end
    _finish(self)
 end
 --[[
@@ -636,10 +649,17 @@ function vn.newCharacter( who, params )
 end
 function vn.appear( c, seconds )
    seconds = seconds or 0.2
-   local func = function( alpha )
-      c.alpha = alpha
+   if getmetatable(c)==vn.Character_mt then
+      c = {c}
    end
-   vn.newCharacter( c )
+   local func = function( alpha )
+      for k,v in ipairs(c) do
+         v.alpha = alpha
+      end
+   end
+   for k,v in ipairs(c) do
+      vn.newCharacter(v)
+   end
    vn.animation( seconds, func )
 end
 
