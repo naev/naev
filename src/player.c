@@ -2640,6 +2640,10 @@ int player_addOutfit( const Outfit *o, int quantity )
    if (quantity == 0)
       return 0;
 
+   /* Don't readd uniques. */
+   if (outfit_isProp(o,OUTFIT_PROP_UNIQUE) && (player_outfitOwned(o)>0))
+      return 0;
+
    /* special case if it's a map */
    if (outfit_isMap(o)) {
       map_map(o);
