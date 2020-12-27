@@ -45,6 +45,8 @@
  * we can be lazy and use global variables.
  */
 static gl_Matrix4 font_projection_mat; /**< Projection matrix. */
+static FT_UInt    prev_glyph_index; /**< Index of last character drawn (for kerning). */
+static int        prev_glyph_ft_index; /**< HACK: Index into which stsh->ft[_].face? */
 
 
 /**
@@ -72,6 +74,7 @@ typedef struct glFontTex_s {
 typedef struct glFontGlyph_s {
    uint32_t codepoint; /**< Real character. */
    GLfloat adv_x; /**< X advancement on the screen. */
+   int ft_index; /**< HACK: Index into the array of fallback fonts. */
    int tex_index; /**< Might be on different texture. */
    GLushort vbo_id; /**< VBO index to use. */
    int next; /**< Stored as a linked list. */
@@ -86,6 +89,7 @@ typedef struct font_char_s {
    GLfloat *dataf; /**< Float data of the character. */
    int w; /**< Width. */
    int h; /**< Height. */
+   int ft_index; /**< HACK: Index into the array of fallback fonts. */
    int off_x; /**< X offset when rendering. */
    int off_y; /**< Y offset when rendering. */
    GLfloat adv_x; /**< X advancement on the screen. */
@@ -1124,6 +1128,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
       c->off_x = slot->bitmap_left-b;
       c->off_y = slot->bitmap_top +b;
       c->adv_x = (GLfloat)slot->metrics.horiAdvance / 64.;
+      c->ft_index = i;
 
       return 0;
    }
@@ -1163,6 +1168,7 @@ static void gl_fontRenderStart( const glFontStash* stsh, double x, double y, con
    font_projection_mat = gl_Matrix4_Scale(font_projection_mat, scale, scale, 1 );
 
    font_restoreLast = 0;
+   prev_glyph_index = 0;
 
    /* Activate the appropriate VBOs. */
    glEnableVertexAttribArray( shaders.font.vertex );
@@ -1258,6 +1264,7 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch )
    glyph = &array_grow( &stsh->glyphs );
    glyph->codepoint = ch;
    glyph->adv_x = ft_char.adv_x;
+   glyph->ft_index = ft_char.ft_index;
    glyph->next  = -1;
    idx = glyph - stsh->glyphs;
 
@@ -1294,6 +1301,9 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    double scale;
    double a;
    const glColour *col;
+   FT_Face ft_face;
+   FT_UInt ft_glyph_index;
+   FT_Vector kerning;
 
    /* Handle escape sequences. */
    if (ch == '\a') {/* Start sequence. */
@@ -1321,6 +1331,18 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
       return -1;
    }
 
+   /* Kern if possible. */
+   scale = (double)stsh->h / FONT_DISTANCE_FIELD_SIZE;
+   ft_face = stsh->ft[glyph->ft_index].face;
+   ft_glyph_index = FT_Get_Char_Index( ft_face, ch );
+   if (prev_glyph_index && prev_glyph_ft_index == glyph->ft_index) {
+      FT_Get_Kerning( ft_face, prev_glyph_index, ft_glyph_index, FT_KERNING_DEFAULT, &kerning );
+      font_projection_mat = gl_Matrix4_Translate( font_projection_mat,
+            (kerning.x>>6)/scale, 0, 0 );
+   }
+   prev_glyph_index = ft_glyph_index;
+   prev_glyph_ft_index = glyph->ft_index;
+
    /* Activate texture. */
    glBindTexture(GL_TEXTURE_2D, stsh->tex[glyph->tex_index].id);
 
@@ -1330,7 +1352,6 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    glDrawArrays( GL_TRIANGLE_STRIP, glyph->vbo_id, 4 );
 
    /* Translate matrix. */
-   scale = (double)stsh->h / FONT_DISTANCE_FIELD_SIZE;
    font_projection_mat = gl_Matrix4_Translate( font_projection_mat,
          glyph->adv_x/scale, 0, 0 );
 
