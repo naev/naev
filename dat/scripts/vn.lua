@@ -20,7 +20,7 @@ local vn = {
       _bufcol = { 1, 1, 1 },
       _buffer = "",
       _title = nil,
-      _alpha = 1,
+      _globalalpha = 1,
    }
 }
 -- Drawing
@@ -45,9 +45,11 @@ function vn._checkstarted()
    end
 end
 
-local function _set_col( col )
+local function _set_col( col, alpha )
    local a = col[4] or 1
-   graphics.setColor( col[1], col[2], col[3], a*vn._alpha )
+   alpha = alpha or 1
+   a = a*alpha
+   graphics.setColor( col[1], col[2], col[3], a*vn._globalalpha )
 end
 
 local function _draw_bg( x, y, w, h, col, border_col )
@@ -79,7 +81,7 @@ function vn.draw()
          else
             col = { 0.8, 0.8, 0.8 }
          end
-         _set_col( col )
+         _set_col( col, c.alpha )
          local x = (lw-w*scale)/2
          local y = mh-scale*h
          graphics.draw( c.image, x, y, 0, scale, scale )
@@ -258,6 +260,7 @@ function vn.StateCharacter.new( character )
 end
 function vn.StateCharacter:_init()
    table.insert( vn._characters, self.character )
+   self.character.alpha = 1
    _finish(self)
 end
 --[[
@@ -579,6 +582,14 @@ function vn.newCharacter( who, params )
    table.insert( vn._states, vn.StateCharacter.new( c ) )
    return c
 end
+function vn.appear( c, seconds )
+   seconds = seconds or 1 --0.2
+   local func = function( alpha )
+      c.alpha = alpha
+   end
+   table.insert( vn._states, vn.StateCharacter.new( c ) )
+   vn.animation( seconds, func )
+end
 
 --[[
 -- @brief Starts a new scene.
@@ -655,7 +666,7 @@ function vn.fade( seconds, fadestart, fadeend )
    seconds = seconds or 0.2
    vn._checkstarted()
    local func = function( alpha )
-      vn._alpha = fadestart + (fadeend-fadestart)*alpha
+      vn._globalalpha = fadestart + (fadeend-fadestart)*alpha
    end
    table.insert( vn._states, vn.StateAnimation.new( seconds, func ) )
 end
@@ -764,7 +775,7 @@ function vn.clear()
       "_bufcol",
       "_buffer",
       "_title",
-      "_alpha"
+      "_globalalpha"
    }
    for k,v in ipairs(var) do
       vn[v] = vn._default[v]
