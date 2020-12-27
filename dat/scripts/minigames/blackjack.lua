@@ -6,10 +6,26 @@ function bj.init( w, h, donefunc )
    local cardio = require 'minigames.cardio'
    bj.deck = cardio.newDeckWestern( false )
    bj.font = lg.newFont(16)
+
+   -- Compute position stuff
+   bj.bets =  {_("Bet 10 k¤"), _("Bet 100 k¤"), _("Leave")}
+   bj.bets_b = 15
+   bj.bets_w = -bj.bets_b
+   for k,s in ipairs(bj.bets) do
+      local bw = bj.font:getWidth(s) + 3*bj.bets_b
+      bj.bets_w = bj.bets_w + bw
+   end
+   bj.bets_x = (w-bj.bets_w)/2
+
    -- Scaling factor
-   h = h - 3*bj.font:getHeight()
-   bj.scale = math.min( 1, h / 300 )
+   -- Total height is: scale*(105*2+sep)+40+3*font:height
+   h = h - 4*bj.font:getHeight() - 60 - bj.bets_b*2
+   bj.scale = math.min( 1, h/240 )
    bj.donefunc = donefunc
+end
+
+local function _inbox( mx, my, x, y, w, h )
+   return (mx>=x and mx<=x+w and my>=y and my<=y+h)
 end
 
 local function _total( cards )
@@ -50,11 +66,11 @@ function bj.deal()
    local p = _total(bj.player)
    local d = _total(bj.dealer)
    if p==21 and d==21 then
-      __done(0)
+      _done(0)
    elseif p==21 then
-      __done(1)
+      _done(1)
    elseif d==21 then
-      __done(-1)
+      _done(-1)
    end
 end
 
@@ -92,6 +108,8 @@ function bj.stay()
       _done(-1)
    elseif p>d then
       _done(1)
+   else
+      _done(0)
    end
 end
 
@@ -158,14 +176,14 @@ function bj.draw( bx, by, bw, bh)
    local d = _total(bj.dealer)
    local msg = nil
    if bj.status < 0 then
-      msg = _("You lost!")
+      msg = _("\arYou lost!\a0")
       if #bj.dealer == 2 and d==21 then
-         msg = string.format(_("Blackjack! %s"), msg)
+         msg = string.format(_("\apBlackjack!\a0 %s"), msg)
       end
    elseif bj.status > 0 then
-      msg = _("You won!")
+      msg = _("\agYou won!\a0")
       if #bj.player == 2 and p==21 then
-         msg = string.format(_("Blackjack! %s"), msg)
+         msg = string.format(_("\apBlackjack!\a0 %s"), msg)
       end
    elseif bj.done then
       if #bj.player==2 and #bj.dealer==2 and d==21 and p==21 then
@@ -180,10 +198,35 @@ function bj.draw( bx, by, bw, bh)
       lg.setColor( 1, 1, 1 )
       lg.print( msg, bj.font, x, y )
    end
+
+   -- Buttons
+   if bj.done then
+      local mx, my = love.mouse.getX(), love.mouse.getY()
+      y = y + bj.font:getHeight()+20
+      x = bx + bj.bets_x
+      h = bj.font:getHeight()
+      local b = bj.bets_b
+      for k,s in ipairs( bj.bets ) do
+         w = bj.font:getWidth( s )
+         local col
+         if _inbox( mx, my, x, y, w+2*b, h+2*b ) then
+            col = {0.5, 0.5, 0.5}
+         else
+            col = {0, 0, 0}
+         end
+         lg.setColor( 0.5, 0.5, 0.5 )
+         lg.rectangle( "fill", x, y, w+2*b, h+2*b )
+         lg.setColor( col )
+         lg.rectangle( "fill", x+2, y+2, w+2*b-4, h+2*b-4 )
+         lg.setColor( 1, 1, 1 )
+         lg.print( s, bj.font, x+b, y+b )
+         x = x + 3*b + w
+      end
+   end
 end
 
 function bj.keypressed( key )
-   if bj.status ~= 0 then
+   if bj.done then
       bj.deal()
       return
    end
@@ -193,6 +236,9 @@ function bj.keypressed( key )
    elseif key=="s" then
       bj.stay()
    end
+end
+
+function bj.mousepressed( mx, my, button )
 end
 
 return bj
