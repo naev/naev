@@ -145,12 +145,16 @@ void opt_menu (void)
  */
 static void opt_OK( unsigned int wid, char *str )
 {
-   int ret;
+   int ret, prompted_restart;
 
+   prompted_restart = opt_restart;
    ret = 0;
    ret |= opt_gameplaySave( opt_windows[ OPT_WIN_GAMEPLAY ], str);
    ret |= opt_audioSave(    opt_windows[ OPT_WIN_AUDIO ], str);
    ret |= opt_videoSave(    opt_windows[ OPT_WIN_VIDEO ], str);
+
+   if (opt_restart && !prompted_restart)
+      dialogue_msgRaw( _("Warning"), _("Restart Naev for changes to take effect.") );
 
    /* Close window if no errors occurred. */
    if (!ret)
