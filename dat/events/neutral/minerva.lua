@@ -131,42 +131,98 @@ function approach_terminal()
                   "\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE \ap%d MINERVA TOKENS\a0.\"", tokens_get()),
          tokens_get() ) end )
    vn.jump( "trade_menu" )
+   vn.label( "trade_soldout" )
+   t:say( _("\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. TAKE \"") )
+   t:say( function() return string.format(
+         ngettext("\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE \ap%d MINERVA TOKEN\a0.\"",
+                  "\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE \ap%d MINERVA TOKENS\a0.\"", tokens_get()),
+         tokens_get() ) end )
+   vn.jump( "trade_menu" )
    vn.label( "trade" )
    t:say( function() return string.format(
          ngettext("\"YOU CAN TRADE IN YOUR PRECIOUS \ap%d MINERVA TOKEN\a0 FOR THE FOLLOWING GOODS.\"",
                   "\"YOU CAN TRADE IN YOUR PRECIOUS \ap%d MINERVA TOKENS\a0 FOR THE FOLLOWING GOODS.\"", tokens_get()),
             tokens_get() ) end )
    local trades = {
-      {"Ripper Cannon", 100},
-      {"Teracom Fury Launcher", 500},
-      {"Railgun", 1000},
-      {"Grave Lance", 1200},
-      {"Admonisher", 7000},
+      {"Ripper Cannon", {100, "outfit"}},
+      {"Teracom Fury Launcher", {500, "outfit"}},
+      {"Railgun", {1000, "outfit"}},
+      {"Grave Lance", {1200, "outfit"}},
+      {"Fuzzy Dice", {5000, "outfit"}},
+      {"Admonisher", {7000, "ship"}},
    }
+   local tradein_item = nil
    local handler = function (idx)
       -- Jump in case of 'Back'
-      if type(idx)=="string" then
+      if idx=="start" then
          vn.jump(idx)
          return
       end
 
+      if idx < 0 then
+         vn.jump( "trade_soldout" )
+         return
+      end
+
       local t = trades[idx]
-      if t[2] > tokens_get() then
+      local tokens = t[2][1]
+      if tokens > tokens_get() then
          -- Not enough money.
          vn.jump( "trade_notenough" )
          return
       end
 
-      -- TODO Open item dialogue
+      tradein_item = t
+      if t[2][2]=="outfit" then
+         local o = outfit.get(t[1])
+         tradein_item.description = o:description()
+      elseif t[2][2]=="ship" then
+         local s = ship.get(t[1])
+         tradein_item.description = s:description()
+      end
+      vn.jump( "trade_confirm" )
    end
    local opts = {}
    for k,v in ipairs(trades) do
-      opts[k] = { string.format(_("%s (%d Tokens)"), v[1], v[2]), k }
+      local tokens = v[2][1]
+      local soldout = (v[2][2]=="outfit" and player.numOutfit(v[1])>0)
+      if soldout then
+         opts[k] = { string.format(_("%s (sold out)"), _(v[1])), -1 }
+      else
+         opts[k] = { string.format(_("%s (%d Tokens)"), _(v[1]), tokens), k }
+      end
    end
    table.insert( opts, {_("Back"), "start"} )
    vn.label( "trade_menu" )
    vn.menu( opts, handler )
    vn.jump( "start" )
+
+   -- Buying stuff
+   vn.label( "trade_confirm" )
+   t:say( function () return string.format(
+         _("\"ARE YOU SURE YOU WANT TO TRADE IN FOR THE '%s'? THE DESCRIPTION IS AS FOLLOWS:\"\n%s"),
+         _(tradein_item[1]), _(tradein_item.description) ) end )
+   vn.menu( {
+      { _("Trade"), "trade_consumate" },
+      { _("Cancel"), "trade" },
+   }, function (idx)
+      if idx=="trade_consumate" then
+         local t = tradein_item
+         tokens_pay( -t[2][1] )
+         if t[2][2]=="outfit" then
+            player.addOutfit( t[1] )
+         elseif t[2][2]=="ship" then
+            player.addShip( t[1] )
+         else
+            error(_("unknown tradein type"))
+         end
+      end
+      vn.jump(idx)
+   end )
+   vn.label("trade_consumate")
+   -- TODO play a little jingle here
+   t:say( _("\"THANK YOU FOR YOUR BUSINESS.\"") )
+   vn.jump("trade")
 
    vn.label( "leave" )
    vn.fadeout()
