@@ -508,6 +508,7 @@ function vn.StateAnimation.new( seconds, func, drawfunc, transition )
    s._seconds = seconds
    s._func = func
    s._drawfunc = drawfunc
+   -- These transitions are taken from CSS spec
    if type(transition)=='table' then
       s._x2, s._y2, s._x3, s._y3 = unpack(transition)
    elseif transition=="ease" then
