@@ -407,31 +407,20 @@ static void opt_gameplay( unsigned int wid )
 static int opt_gameplaySave( unsigned int wid, char *str )
 {
    (void) str;
-   int f, p;
+   int f, p, newlang;
    char *vmsg, *tmax, *s;
 
    /* List. */
    p = toolkit_getListPos( wid, "lstLanguage" );
-   if (p==0) {
-      if (conf.language != NULL) {
-         free(conf.language);
-         conf.language = NULL;
-         opt_needRestart();
-      }
-   }
-   else {
-      s = toolkit_getList( wid, "lstLanguage" );
-      if (conf.language != NULL) {
-         if (strcmp(s,conf.language)!=0) {
-            free(conf.language);
-            conf.language = strdup(s);
-            opt_needRestart();
-         }
-      }
-      else {
-         conf.language = strdup(s);
-         opt_needRestart();
-      }
+   s = p==0 ? NULL : toolkit_getList( wid, "lstLanguage" );
+   newlang = ((s != NULL) != (conf.language != NULL))
+	  || ((s != NULL) && (strcmp( s, conf.language) != 0));
+   if (newlang) {
+      free( conf.language );
+      conf.language = s==NULL ? NULL : strdup( s );
+      /* Apply setting going forward; advise restart to regen other text. */
+      gettext_setLanguage( conf.language );
+      opt_needRestart();
    }
 
    /* Checkboxes. */
