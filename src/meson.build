@@ -37,6 +37,7 @@ source = files(
    'faction.c',
    'fleet.c',
    'font.c',
+   'gettext.c',
    'glad.c',
    'gui.c',
    'gui_omsg.c',

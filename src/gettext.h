@@ -18,9 +18,7 @@
 #ifndef _LIBGETTEXT_H
 #define _LIBGETTEXT_H 1
 
-/* NLS can be disabled through the configure --disable-nls option
-   or through "#define ENABLE NLS 0" before including this file.  */
-#if defined ENABLE_NLS && ENABLE_NLS
+void gettext_setLanguage( const char* lang );
 
 /* Get declarations of GNU message catalog functions.  */
 # include <libintl.h>
@@ -37,52 +35,6 @@
 #  define ngettext(Msgid1, Msgid2, N) \
      dngettext (DEFAULT_TEXT_DOMAIN, Msgid1, Msgid2, N)
 # endif
-
-#else
-
-/* Many header files from the libstdc++ coming with g++ 3.3 or newer include
-   <libintl.h>, which chokes if dcgettext is defined as a macro.  So include
-   it now, to make later inclusions of <libintl.h> a NOP.  */
-#if defined(__cplusplus) && defined(__GNUG__) && (__GNUC__ >= 3)
-# include <cstdlib>
-# if (__GLIBC__ >= 2 && !defined __UCLIBC__) || _GLIBCXX_HAVE_LIBINTL_H
-#  include <libintl.h>
-# endif
-#endif
-
-/* Disabled NLS.
-   The casts to 'const char *' serve the purpose of producing warnings
-   for invalid uses of the value returned from these functions.
-   On pre-ANSI systems without 'const', the config.h file is supposed to
-   contain "#define const".  */
-# undef gettext
-# define gettext(Msgid) ((const char *) (Msgid))
-# undef dgettext
-# define dgettext(Domainname, Msgid) ((void) (Domainname), gettext (Msgid))
-# undef dcgettext
-# define dcgettext(Domainname, Msgid, Category) \
-    ((void) (Category), dgettext (Domainname, Msgid))
-# undef ngettext
-# define ngettext(Msgid1, Msgid2, N) \
-    ((N) == 1 \
-     ? ((void) (Msgid2), (const char *) (Msgid1)) \
-     : ((void) (Msgid1), (const char *) (Msgid2)))
-# undef dngettext
-# define dngettext(Domainname, Msgid1, Msgid2, N) \
-    ((void) (Domainname), ngettext (Msgid1, Msgid2, N))
-# undef dcngettext
-# define dcngettext(Domainname, Msgid1, Msgid2, N, Category) \
-    ((void) (Category), dngettext (Domainname, Msgid1, Msgid2, N))
-# undef textdomain
-# define textdomain(Domainname) ((const char *) (Domainname))
-# undef bindtextdomain
-# define bindtextdomain(Domainname, Dirname) \
-    ((void) (Domainname), (const char *) (Dirname))
-# undef bind_textdomain_codeset
-# define bind_textdomain_codeset(Domainname, Codeset) \
-    ((void) (Domainname), (const char *) (Codeset))
-
-#endif
 
 /* Prefer gnulib's setlocale override over libintl's setlocale override.  */
 #ifdef GNULIB_defined_setlocale

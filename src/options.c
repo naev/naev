@@ -284,7 +284,6 @@ static void opt_gameplay( unsigned int wid )
    cw = (w-60)/2 - 40;
    y  = by;
    x  = 20;
-#if ENABLE_NLS
    s = _("Language:");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 0, "txtLanguage",
@@ -300,7 +299,6 @@ static void opt_gameplay( unsigned int wid )
    }
    window_addList( wid, x+l+20, y, cw-l-50, 70, "lstLanguage", ls, n, i, NULL, NULL );
    y -= 90;
-#endif /* ENABLE_NLS */
    window_addText( wid, x, y, cw, 20, 0, "txtCompile",
          NULL, NULL, _("Compilation Flags:") );
    y -= 30;
@@ -413,7 +411,6 @@ static int opt_gameplaySave( unsigned int wid, char *str )
    char *vmsg, *tmax, *s;
 
    /* List. */
-#if defined ENABLE_NLS && ENABLE_NLS
    p = toolkit_getListPos( wid, "lstLanguage" );
    if (p==0) {
       if (conf.language != NULL) {
@@ -436,7 +433,6 @@ static int opt_gameplaySave( unsigned int wid, char *str )
          opt_needRestart();
       }
    }
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
 
    /* Checkboxes. */
    f = window_checkboxState( wid, "chkAfterburn" );
