@@ -31,12 +31,14 @@ vn._default.textbox_h = 200
 vn._default.textbox_x = (lw-vn._default.textbox_w)/2
 vn._default.textbox_y = lh-230
 vn._default.textbox_bg = {0, 0, 0, 1}
+vn._default.textbox_alpha = 1
 vn._default.namebox_font = graphics.newFont(20)
 vn._default.namebox_w = -1 -- Autosize
 vn._default.namebox_h = 20*2+vn._default.namebox_font:getHeight()
 vn._default.namebox_x = vn._default.textbox_x
 vn._default.namebox_y = vn._default.textbox_y - vn._default.namebox_h - 20
 vn._default.namebox_bg = vn._default.textbox_bg
+vn._default.namebox_alpha = 1
 
 
 function vn._checkstarted()
@@ -52,12 +54,12 @@ local function _set_col( col, alpha )
    graphics.setColor( col[1], col[2], col[3], a*vn._globalalpha )
 end
 
-local function _draw_bg( x, y, w, h, col, border_col )
+local function _draw_bg( x, y, w, h, col, border_col, alpha )
    col = col or {0, 0, 0, 1}
    border_col = border_col or {0.5, 0.5, 0.5, 1}
-   _set_col( border_col )
+   _set_col( border_col, alpha )
    graphics.rectangle( "fill", x, y, w, h )
-   _set_col( col )
+   _set_col( col, alpha )
    graphics.rectangle( "fill", x+2, y+2, w-4, h-4 )
 end
 
@@ -94,9 +96,9 @@ function vn.draw()
    local x, y, w, h = vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
    local bw = 20
    local bh = 20
-   _draw_bg( x, y, w, h, vn.textbox_bg )
+   _draw_bg( x, y, w, h, vn.textbox_bg, nil, vn.textbox_alpha )
    -- Draw text
-   _set_col( vn._bufcol )
+   _set_col( vn._bufcol, vn.textbox_alpha )
    graphics.printf( vn._buffer, font, x+bw, y+bw, vn.textbox_w-2*bw )
 
    -- Namebox
@@ -111,9 +113,9 @@ function vn.draw()
       if w < 0 then
          w = font:getWidth( vn._title )+2*bw
       end
-      _draw_bg( x, y, w, h, vn.namebox_bg )
+      _draw_bg( x, y, w, h, vn.namebox_bg, nil, vn.namebox_alpha )
       -- Draw text
-      _set_col( vn._bufcol )
+      _set_col( vn._bufcol, vn.namebox_alpha )
       graphics.print( vn._title, font, x+bw, y+bh )
    end
 
@@ -496,7 +498,8 @@ end
 -- Animation
 --]]
 vn.StateAnimation = {}
-function vn.StateAnimation.new( seconds, func, drawfunc )
+function vn.StateAnimation.new( seconds, func, drawfunc, transition )
+   transition = transition or "ease"
    local s = vn.State.new()
    s._init = vn.StateAnimation._init
    s._update = vn.StateAnimation._update
@@ -505,6 +508,19 @@ function vn.StateAnimation.new( seconds, func, drawfunc )
    s._seconds = seconds
    s._func = func
    s._drawfunc = drawfunc
+   if type(transition)=='table' then
+      s._x2, s._y2, s._x3, s._y3 = unpack(transition)
+   elseif transition=="ease" then
+      s._x2, s._y2, s._x3, s._y3 = 0.25, 0.1, 0.25, 1
+   elseif transition=="ease-in" then
+      s._x2, s._y2, s._x3, s._y3 = 0.42, 0, 1, 1
+   elseif transition=="ease-out" then
+      s._x2, s._y2, s._x3, s._y3 = 0, 0, 0.58, 1
+   elseif transition=="ease-in-out" then
+      s._x2, s._y2, s._x3, s._y3 = 0.42, 0, 0.58, 0
+   elseif transition=="linear" then
+      s._x2, s._y2, s._x3, s._y3 = 0, 0, 1, 1
+   end
    return s
 end
 function vn.StateAnimation:_init()
@@ -516,6 +532,41 @@ function vn.StateAnimation:_init()
       self._drawfunc( 0 )
    end
 end
+-- quadratic bezier curve
+local function _bezier( u, x2, x3 )
+   -- We assume x1,y1 is always 0,0 and x4,y4 is always 1,1
+   local c4 = math.pow(1-u,3)
+   local c3 = 3*u*math.pow(1-u,2)
+   local c2 = 3*math.pow(u,2)*(1-u)
+   --local c1 = math.pow(u,3)
+   return c4+c3*x3+c2*x2
+end
+-- simple binary search, should work for monotonic functions
+local function _bezier_yatx( xtarget, x2, x3, y2, y3 )
+   if xtarget==0 then
+      return 0
+   elseif xtarget==1 then
+      return 1
+   end
+   local lower = 0
+   local upper = 1
+   local middle = 0.5
+   local xtol = 0.001 -- usually finishes in a few iterations
+   local x = _bezier( middle, x2, x3 )
+   while math.abs(xtarget-x) > xtol do
+      if xtarget < x then
+         lower = middle
+      else
+         upper = middle
+      end
+      middle = (upper+lower)/2
+      x = _bezier( middle, x2, x3 )
+   end
+   return _bezier( middle, y2, y3 )
+end
+local function _animation_alpha( self )
+   return _bezier_yatx( self._accum / self._seconds, self._x2, self._x3, self._y2, self._y3 )
+end
 function vn.StateAnimation:_update(dt)
    self._accum = self._accum + dt
    if self._accum > self._seconds then
@@ -523,12 +574,12 @@ function vn.StateAnimation:_update(dt)
       _finish(self)
    end
    if self._func then
-      self._func( self._accum / self._seconds )
+      self._func( _animation_alpha(self) )
    end
 end
 function vn.StateAnimation:_draw(dt)
    if self._drawfunc then
-      self._drawfunc( self._accum / self._seconds )
+      self._drawfunc( _animation_alpha(self) )
    end
 end
 
@@ -587,7 +638,7 @@ function vn.appear( c, seconds )
    local func = function( alpha )
       c.alpha = alpha
    end
-   table.insert( vn._states, vn.StateCharacter.new( c ) )
+   vn.newCharacter( c )
    vn.animation( seconds, func )
 end
 
@@ -686,9 +737,9 @@ function vn.fadeout( seconds ) vn.fade( seconds, 1, 0 ) end
 --
 --    @params Seconds to perform the animation
 --]]
-function vn.animation( seconds, func, drawfunc )
+function vn.animation( seconds, func, drawfunc, transition )
    vn._checkstarted()
-   table.insert( vn._states, vn.StateAnimation.new( seconds, func, drawfunc ) )
+   table.insert( vn._states, vn.StateAnimation.new( seconds, func, drawfunc, transition ) )
 end
 
 --[[
