@@ -195,7 +195,7 @@ vn.State_mt = { __index = vn.State }
 local function _dummy() end
 local function _finish(self) self.done = true end
 local function _inbox( mx, my, x, y, w, h )
-   return (mx>=x and mx<= mx+w and my>=y and my<=y+h)
+   return (mx>=x and mx<=x+w and my>=y and my<=y+h)
 end
 function vn.State.new()
    local s = {}
