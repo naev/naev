@@ -35,6 +35,7 @@ static int outfitL_slot( lua_State *L );
 static int outfitL_icon( lua_State *L );
 static int outfitL_price( lua_State *L );
 static int outfitL_description( lua_State *L );
+static int outfitL_unique( lua_State *L );
 static const luaL_Reg outfitL_methods[] = {
    { "__tostring", outfitL_name },
    { "__eq", outfitL_eq },
@@ -48,6 +49,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "icon", outfitL_icon },
    { "price", outfitL_price },
    { "description", outfitL_description },
+   { "unique", outfitL_unique },
    {0,0}
 }; /**< Outfit metatable methods. */
 
@@ -400,5 +402,22 @@ static int outfitL_description( lua_State *L )
 {
    Outfit *o = luaL_validoutfit(L,1);
    lua_pushstring(L, o->description);
+   return 1;
+}
+
+
+/**
+ * @brief Gets whether or not an outfit is unique
+ *
+ * @usage isunique = o:unique()
+ *
+ *    @luatparam String o Outfit to get the uniqueness of.
+ *    @luatreturn boolean The uniqueness of the outfit.
+ * @luafunc unique( o )
+ */
+static int outfitL_unique( lua_State *L )
+{
+   Outfit *o = luaL_validoutfit(L,1);
+   lua_pushboolean(L, outfit_isProp(o, OUTFIT_PROP_UNIQUE));
    return 1;
 }
