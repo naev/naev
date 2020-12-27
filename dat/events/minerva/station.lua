@@ -40,7 +40,7 @@ function create()
 
    -- If they player never had tokens, it is probably their first time
    if not var.peek( "minerva_tokens" ) then
-      hook.land( "enterbar", "bar" )
+      hook.land( "bargreeter", "bar" )
    end
    -- End event on takeoff.
    tokens_landed = tokens_get()
@@ -49,18 +49,38 @@ end
 
 -- Roughly 1 token is 1000 credits
 function tokens_get()
-   local v = var.peek( "minerva_tokens" )
-   if v == nil then
-      return 0
-   end
-   return v
+   return var.peek( "minerva_tokens" ) or 0
+end
+function tokes_get_gained()
+   return var.peek( "minerva_tokens_gained" ) or 0
 end
 function tokens_pay( amount )
    local v = tokens_get()
    var.push( "minerva_tokens", v+amount )
+   -- Store lifetime earnings
+   if amount > 0 then
+      v = var.peek( "minerva_tokens_gained" ) or 0
+      var.push( "minerva_tokens_gained", v+amount )
+   end
 end
 
-function enterbar()
+local function has_event( name )
+   return player.evtDone( name ) or player.evtActive( name )
+end
+--[[
+-- Function that handles creating and starting random events that occur at the
+-- bar. This is triggered randomly upon finishing gambling activities.
+--]]
+function random_event()
+   -- Altercation 1
+   local alter1 = "Minerva Station Altercation 1"
+   if not has_event(alter1) and tokens_get_gained() > 10 and rnd.rnd()<0.25 then
+      naev.eventStart(alter1)
+      return
+   end
+end
+
+function bargreeter()
    vn.clear()
    vn.scene()
    local g = vn.newCharacter( _("Greeter"),
@@ -229,6 +249,9 @@ function approach_terminal()
    vn.label( "leave" )
    vn.fadeout()
    vn.run()
+
+   -- Handle random bar events if necessary
+   random_event()
 end
 
 function approach_blackjack()
@@ -260,7 +283,7 @@ function approach_blackjack()
    vn.label( "explanation" )
    vn.na( "Cyborg Chicken's eyes blink one second and go blank as a pre-recorded explanation is played from its back. Wait... are those embedded speakers?" )
    cc("\"Welcome to MINERVA STATIONS blackjack table. The objective of this card game is to get as close to a value of 21 without going over. All cards are worth their rank except for Jack, Queen, and King which are all worth 10, and ace is either worth 1 or 11. You win if you have a higher value than CYBORG CHICKEN without going over 21.\"")
-   vn.na( "Cyborg Chicken eyes flutter as it seems like conciousnsess returns to its body." )
+   vn.na( "Cyborg Chicken eyes flutter as it seems like conciousness returns to its body." )
    vn.jump("menu")
    vn.label( "blackjack" )
    -- Resize the window
@@ -309,9 +332,14 @@ function approach_blackjack()
    vn.na( _("You leave the blackjack table behind and head back to the main area.") )
    vn.fadeout()
    vn.run()
+
+   -- Handle random bar events if necessary
+   random_event()
 end
 
 function approach_chuckaluck()
+   -- Handle random bar events if necessary
+   random_event()
 end
 
 --[[
