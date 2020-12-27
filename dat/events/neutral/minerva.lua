@@ -36,7 +36,7 @@ function create()
    -- Create NPCs
    npc_terminal = evt.npcAdd( "approach_terminal", terminal_name, terminal_portrait, terminal_desc, gambling_priority )
    npc_blackjack = evt.npcAdd( "approach_blackjack", blackjack_name, blackjack_portrait, blackjack_desc, gambling_priority )
-   npc_chuckaluck = evt.npcAdd( "approach_chuckaluck", chuckaluck_name, chuckaluck_portrait, chuckaluck_desc, gambling_priority )
+   --npc_chuckaluck = evt.npcAdd( "approach_chuckaluck", chuckaluck_name, chuckaluck_portrait, chuckaluck_desc, gambling_priority )
 
    -- If they player never had tokens, it is probably their first time
    if not var.peek( "minerva_tokens" ) then
@@ -234,7 +234,7 @@ end
 function approach_blackjack()
    local firsttime = not var.peek("cc_known")
    -- Not adding to queue first
-   local cc = vn.Character.new( blackjack_name,
+   local cc = vn.Character.new( _("Cyborg Chicken"),
          { image=portrait.getFullPath(blackjack_portrait) } )
    vn.clear()
    vn.scene()
@@ -254,8 +254,14 @@ function approach_blackjack()
    vn.label("menu")
    vn.menu( {
       { _("Play"), "blackjack" },
+      { _("Explanation"), _("explanation") },
       { _("Leave"), "leave" },
    } )
+   vn.label( "explanation" )
+   vn.na( "Cyborg Chicken's eyes blink one second and go blank as a pre-recorded explanation is played from its back. Wait... are those embedded speakers?" )
+   cc("\"Welcome to MINERVA STATIONS blackjack table. The objective of this card game is to get as close to a value of 21 without going over. All cards are worth their rank except for Jack, Queen, and King which are all worth 10, and ace is either worth 1 or 11. You win if you have a higher value than CYBORG CHICKEN without going over 21.\"")
+   vn.na( "Cyborg Chicken eyes flutter as it seems like conciousnsess returns to its body." )
+   vn.jump("menu")
    vn.label( "blackjack" )
    -- Resize the window
    local lw, lh = window.getDesktopDimensions()
