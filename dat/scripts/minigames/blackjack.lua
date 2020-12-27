@@ -251,8 +251,8 @@ local function trybet( credits )
    else
       player.pay(-betamount)
       bj.betamount = betamount
-      bj.deal()
       bj.msg = string.format(_("You bet %s."),creditstring(betamount))
+      bj.deal()
    end
 end
 
