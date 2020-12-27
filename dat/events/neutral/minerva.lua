@@ -212,10 +212,9 @@ function approach_blackjack()
    end )
    local bj = vn.custom()
    bj._init = function( self )
-      blackjack.init( vn.textbox_w, vn.textbox_h, function (status)
-         --self.done = true
+      blackjack.init( vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h, function ()
+         self.done = true
       end )
-      blackjack.deal()
    end
    bj._draw = function( self )
       local x, y, w, h =  vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
@@ -226,7 +225,6 @@ function approach_blackjack()
       lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
 
       -- Draw blackjack game
-      y = y + blackjack.font:getHeight()+10
       blackjack.draw( x, y, w, h)
    end
    bj._keypressed = function( self, key )
