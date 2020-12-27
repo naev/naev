@@ -276,8 +276,10 @@ function approach_blackjack()
    end )
    local bj = vn.custom()
    bj._init = function( self )
+      -- TODO play some blackjack music
       blackjack.init( vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h, function ()
          self.done = true
+         -- TODO go back to normal music
       end )
    end
    bj._draw = function( self )
@@ -313,7 +315,7 @@ function approach_chuckaluck()
 end
 
 --[[
---    Event is over when player takes off.
+-- Event is over when player takes off.
 --]]
 function leave ()
    local diff = tokens_get()-tokens_landed
