@@ -533,7 +533,7 @@ static int shipL_gfx( lua_State *L )
  * @usage description = s:description()
  *
  *    @luatparam Ship s Ship to get the description of.
- *    @luatreturn number The description of the ship.
+ *    @luatreturn string The description of the ship.
  * @luafunc description( s )
  */
 static int shipL_description( lua_State *L )
@@ -541,6 +541,6 @@ static int shipL_description( lua_State *L )
    Ship *s;
    s = luaL_validship(L,1);
    lua_pushstring(L, s->description);
-   return 2;
+   return 1;
 }
 
