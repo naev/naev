@@ -183,8 +183,7 @@ function approach_blackjack()
    if firsttime then
       vn.fadein()
       vn.na( _("You make your way to the blackjack table which seems to be surrounded by many patrons, some of which are apparently taking pictures of something. You eventually have to elbow your way to the front to get a view of what is going on." ) )
-      --vn.appear( cc )
-      vn.newCharacter( cc )
+      vn.appear( cc )
       vn.na( _("When you make it to the front you are greeted by the cold eyes of what apparently seems to be the Cyborg Chicken you were told about. It seems to be sizing the crowd while playing against a patron. The way it moves is very uncanny with short precise mechanical motions. You can tell it has been doing this for a while. You watch as the game progresses and the patron loses all his credits to the chicken, who seems unfazed.") )
       var.push("cc_known",true)
    end
@@ -208,6 +207,7 @@ function approach_blackjack()
    vn.animation( 0.2, function (alpha)
       vn.textbox_h = textbox_h + (blackjack_h - textbox_h)*alpha
       vn.textbox_y = textbox_y + (blackjack_y - textbox_y)*alpha
+      vn.namebox_alpha = 1-alpha
    end )
    local bj = vn.custom()
    bj._init = function( self )
@@ -238,6 +238,7 @@ function approach_blackjack()
    vn.animation( 0.2, function (alpha)
       vn.textbox_h = blackjack_h + (textbox_h - blackjack_h)*alpha
       vn.textbox_y = blackjack_y + (textbox_y - blackjack_y)*alpha
+      vn.namebox_alpha = alpha
    end )
    vn.label( "leave" )
    vn.na( _("You leave the blackjack table behind and head back to the main area.") )
