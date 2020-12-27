@@ -132,7 +132,6 @@ function approach_terminal()
          tokens_get() ) end )
    vn.jump( "trade_menu" )
    vn.label( "trade_soldout" )
-   t:say( _("\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. TAKE \"") )
    t:say( function() return string.format(
          ngettext("\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE \ap%d MINERVA TOKEN\a0.\"",
                   "\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE \ap%d MINERVA TOKENS\a0.\"", tokens_get()),
@@ -145,7 +144,7 @@ function approach_terminal()
             tokens_get() ) end )
    local trades = {
       {"Ripper Cannon", {100, "outfit"}},
-      {"Teracom Fury Launcher", {500, "outfit"}},
+      {"TeraCom Fury Launcher", {500, "outfit"}},
       {"Railgun", {1000, "outfit"}},
       {"Grave Lance", {1200, "outfit"}},
       {"Fuzzy Dice", {5000, "outfit"}},
@@ -185,11 +184,11 @@ function approach_terminal()
    local opts = {}
    for k,v in ipairs(trades) do
       local tokens = v[2][1]
-      local soldout = (v[2][2]=="outfit" and player.numOutfit(v[1])>0)
+      local soldout = (v[2][2]=="outfit" and outfit.unique(v[1]) and player.numOutfit(v[1])>0)
       if soldout then
-         opts[k] = { string.format(_("%s (sold out)"), _(v[1])), -1 }
+         opts[k] = { string.format(_("%s (\arSOLD OUT\a0)"), _(v[1])), -1 }
       else
-         opts[k] = { string.format(_("%s (%d Tokens)"), _(v[1]), tokens), k }
+         opts[k] = { string.format(_("%s (\ap%d Tokens\a0)"), _(v[1]), tokens), k }
       end
    end
    table.insert( opts, {_("Back"), "start"} )
@@ -211,6 +210,7 @@ function approach_terminal()
          tokens_pay( -t[2][1] )
          if t[2][2]=="outfit" then
             player.addOutfit( t[1] )
+            player.msg( _("Gambling Bounty"), string.format(_("Obtained: %s"),t[1]))
          elseif t[2][2]=="ship" then
             player.addShip( t[1] )
          else
