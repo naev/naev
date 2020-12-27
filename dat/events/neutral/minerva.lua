@@ -192,6 +192,7 @@ function approach_blackjack()
       vn.fadein()
       vn.na( _("You elbow your way to the front of the table and are once again greeted by the cold mechanical eyes of Cyborg Chicken.") )
    end
+   vn.na( "", true ) -- Clear buffer without waiting
    vn.label("menu")
    vn.menu( {
       { _("Play"), "blackjack" },
@@ -212,7 +213,7 @@ function approach_blackjack()
    local bj = vn.custom()
    bj._init = function( self )
       blackjack.init( vn.textbox_w, vn.textbox_h, function (status)
-         self.done = true
+         --self.done = true
       end )
       blackjack.deal()
    end
