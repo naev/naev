@@ -44,7 +44,7 @@ function create ()
    dv( _("\"You Za'lek punk. Bring your ass outside and I will fill your ship with holes just like your lies!\"") )
    zl( _("\"When you are getting eviscerated by my drones, I hope you realize you have brought this upon yourself, Dvaered trash!\"") )
    vn.disappear( {zl, dv} )
-   vn.na( _("The Za'lek and Dvaered ruffians storm off to their ships to apparently fight to the death to solve their quarrel. Truly civilized individuals.") )
+   vn.na( _("The Za'lek and Dvaered ruffians storm off to their ships to apparently fight to the death to solve their quarrel. Truly civilized individuals.\nIt seems like it could be an opportunity to curry favour with either one of the factions if you wished to intervene in their fight.") )
    vn.fadeout()
    vn.run()
 
@@ -130,13 +130,15 @@ function angrypeople ()
 end
 
 
-function zl_attacked ()
+function zl_attacked( victim, attacker )
+   if attacker ~= player.pilot() then return end
    player_side = "dvaered"
    zl:broadcast( _("Et tu brute?") )
    zl:setHostile(true)
 end
 
-function dv_attacked ()
+function dv_attacked( victim, attacker )
+   if attacker ~= player.pilot() then return end
    player_side = "zalek"
    dv:broadcast( _("Et tu brute?") )
    dv:setHostile(true)
@@ -147,21 +149,23 @@ function zl_dead ()
       dv:attack( player.pilot() )
    else
       hook.rm( angrytimer )
-      if player_side=="dvaered" then
-         local holo = imageproc.hologram( dvaered_image )
-         vn.clear()
-         vn.scene()
-         vn.fadein()
-         local dv = vn.newCharacter( dvaered_name,
-            { image=holo, color=dvaered_colour } )
-         dv( _("\"Thank you for the help with the Za'lek scum. Let us celebrate with a drink in the bar down at Minerva Station!\"") )
-         vn.fadeout()
-         vn.run()
-         var.push( "minerva_altercation_helped", "dvaered" )
-      else
-         dv:broadcast( _("Dust to dust.") )
+      if dv:exists() then
+         if player_side=="dvaered" then
+            local holo = imageproc.hologram( dvaered_image )
+            vn.clear()
+            vn.scene()
+            vn.fadein()
+            local dv = vn.newCharacter( dvaered_name,
+               { image=holo, color=dvaered_colour } )
+            dv( _("\"Thank you for the help with the Za'lek scum. Let us celebrate with a drink in the bar down at Minerva Station!\"") )
+            vn.fadeout()
+            vn.run()
+            var.push( "minerva_altercation_helped", "dvaered" )
+         else
+            dv:broadcast( _("Dust to dust.") )
+         end
+         dv:land( planet.get("Minerva Station") )
       end
-      dv:land( planet.get("Minerva Station") )
       pilot.toggleSpawn(true)
    end
 end
@@ -171,21 +175,23 @@ function dv_dead ()
       zl:attack( player.pilot() )
    else
       hook.rm( angrytimer )
-      if player_side=="dvaered" then
-         local holo = imageproc.hologram( zalek_image )
-         vn.clear()
-         vn.scene()
-         vn.fadein()
-         local zl = vn.newCharacter( zalek_name,
-            { image=holo, color=zalek_colour } )
-         zl( _("\"As my computations predicted, the Dvaered scum was no match for the Za'lek superiority. Let us celebrate with a drink down at Minerva Station\"") )
-         vn.fadeout()
-         vn.run()
-         var.push( "minerva_altercation_helped", "zalek" )
-      else
-         zl:broadcast( _("Good riddance.") )
+      if zl:exists() then
+         if player_side=="dvaered" then
+            local holo = imageproc.hologram( zalek_image )
+            vn.clear()
+            vn.scene()
+            vn.fadein()
+            local zl = vn.newCharacter( zalek_name,
+               { image=holo, color=zalek_colour } )
+            zl( _("\"As my computations predicted, the Dvaered scum was no match for the Za'lek superiority. Let us celebrate with a drink down at Minerva Station\"") )
+            vn.fadeout()
+            vn.run()
+            var.push( "minerva_altercation_helped", "zalek" )
+         else
+            zl:broadcast( _("Good riddance.") )
+         end
+         zl:land( planet.get("Minerva Station") )
       end
-      zl:land( planet.get("Minerva Station") )
       pilot.toggleSpawn(true)
    end
 end
