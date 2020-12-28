@@ -251,16 +251,26 @@ end
 -- Character
 --]]
 vn.StateCharacter ={}
-function vn.StateCharacter.new( character )
+function vn.StateCharacter.new( character, remove )
    local s = vn.State.new()
    s._init = vn.StateCharacter._init
    s._type = "Character"
    s.character = character
+   s.remove = remove or false
    return s
 end
 function vn.StateCharacter:_init()
-   table.insert( vn._characters, self.character )
-   self.character.alpha = 1
+   if s.remove then
+      for k,c in ipairs(vn._characters) do
+         if c==self.character then
+            table.remove( vn._characters, k )
+            break
+         end
+      end
+   else
+      table.insert( vn._characters, self.character )
+      self.character.alpha = 1
+   end
    -- TODO better centering
    local lw, lh = graphics.getDimensions()
    local nimg = 0
@@ -661,6 +671,21 @@ function vn.appear( c, seconds )
       vn.newCharacter(v)
    end
    vn.animation( seconds, func )
+end
+function vn.disappear( c, seconds )
+   seconds = seconds or 0.2
+   if getmetatable(c)==vn.Character_mt then
+      c = {c}
+   end
+   local func = function( alpha )
+      for k,v in ipairs(c) do
+         v.alpha = 1-alpha
+      end
+   end
+   vn.animation( seconds, func )
+   for k,v in ipairs(c) do
+      vn.newCharacter(v, true)
+   end
 end
 
 --[[
