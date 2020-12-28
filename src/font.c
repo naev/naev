@@ -26,6 +26,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
+#include FT_MODULE_H
 
 #include "log.h"
 #include "array.h"
@@ -39,7 +40,9 @@
 #define DEFAULT_TEXTURE_SIZE 1024 /**< Default size of texture caches for glyphs. */
 
 
-static gl_Matrix4 font_projection_mat;
+static gl_Matrix4 font_projection_mat; /**< Projection matrix. */
+static FT_Library font_library = NULL; /**< Global, reference-counted FreeType library. */
+static int        font_library_refs = 0; /**< Our refcount for font_library, because FreeType inexplicably hides its own. */
 
 
 /**
@@ -98,7 +101,6 @@ typedef struct font_char_s {
 typedef struct glFontStashFreetype_s {
    char *fontname; /**< Font name. */
    FT_Face face; /**< Face structure. */
-   FT_Library library; /**< Library. */
    FT_Byte *fontdata; /**< Font data buffer. */
 } glFontStashFreetype;
 
@@ -1480,7 +1482,6 @@ static void gl_fontRenderEnd (void)
  */
 int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
 {
-   FT_Library library;
    FT_Face face;
    size_t bufsize;
    FT_Byte* buf;
@@ -1525,13 +1526,15 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
          }
 
          /* Create a FreeType font library. */
-         if (FT_Init_FreeType(&library)) {
-            WARN(_("FT_Init_FreeType failed with font %s."), ft->fontname);
-            return -1;
+         if (font_library_refs++ == 0) {
+            if (FT_Init_FreeType( &font_library )) {
+               WARN(_("FT_Init_FreeType failed with font %s."), ft->fontname);
+               return -1;
+            }
          }
 
          /* Object which freetype uses to store font info. */
-         if (FT_New_Memory_Face( library, buf, bufsize, 0, &face )) {
+         if (FT_New_Memory_Face( font_library, buf, bufsize, 0, &face )) {
             WARN(_("FT_New_Face failed loading library from %s"), ft->fontname);
             return -1;
          }
@@ -1554,7 +1557,6 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
 
          /* Save stuff. */
          ft->face     = face;
-         ft->library  = library;
          ft->fontdata = buf;
          ch = i;
          if (fname[i]==',')
@@ -1579,7 +1581,6 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    for (i=0; i<128; i++)
       if (isprint(i)) /* Only care about printables. */
          gl_fontGetGlyph( stsh, i );
-
    return 0;
 }
 
@@ -1601,10 +1602,14 @@ void gl_freeFont( glFont* font )
       ft = &stsh->ft[i];
       free(ft->fontname);
       FT_Done_Face(ft->face);
-      //FT_Done_FreeType(ft->library);
       free(ft->fontdata);
    }
    array_free( stsh->ft );
+
+   if (--font_library_refs == 0) {
+      FT_Done_FreeType( font_library );
+      font_library = NULL;
+   }
 
    for (i=0; i<array_size(stsh->tex); i++)
       glDeleteTextures( 1, &stsh->tex->id );
