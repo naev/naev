@@ -213,7 +213,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: naev-AppImage-${{ github.sha }}
-          path: "${{ env.DESTDIR }}/out/*.AppImage"
+          path: "${{ github.workspace }}/dist/out/*.AppImage"
           if-no-files-found: error
 
   "Lua_Documentation":
