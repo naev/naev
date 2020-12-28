@@ -1,10 +1,6 @@
 on:
   repository_dispatch:
     types: manual-prerelease
-  push:
-    branches:
-    - '0.8.x'
-    - '!master'
     tags:
       - '!v*.*.*'
       - 'v*.*.*-beta*'
@@ -58,7 +54,7 @@ jobs:
         run: |
           mkdir -p dist/out
           mv naev-*.tar.gz dist/out/source.tar.gz
-          cp dat/VERSION dist/out
+          cp CHANGELOG dist/out
 
       - name: Upload Source Artifact
         uses: actions/upload-artifact@v2
@@ -67,11 +63,11 @@ jobs:
           path: ${{ github.workspace }}/dist/out/source.tar.gz
           if-no-files-found: error
 
-      - name: Upload Version Artifact
+      - name: Upload Changelog Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: naev-version
-          path: ${{ github.workspace }}/dist/out/VERSION
+          name: naev-changelog
+          path: ${{ github.workspace }}/dist/out/CHANGELOG
           if-no-files-found: error
 
       - name: Upload Deployment Script Artifact
@@ -178,49 +174,43 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: dosowisko/steam-runtime-amd64
-      volumes:
-        - ${{ github.workspace }}:${{ github.workspace }}
+      image: projectsynchro/synchros_sexy_docker_images:naev-steamruntime
 
     steps:
-      - name: Clone Naev Repository
-        run: |
-          git clone --depth 1 --branch 0.8.x https://github.com/naev/naev.git ${{ github.workspace }}
-
-      - name: Install Additional Build Dependencies
-        run: |
-          sudo apt-get -y install autoconf-archive intltool
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true
 
       - name: Build Naev for Steam on Linux64
         run: |
-          cd ${{ github.workspace }}
           ./autogen.sh
-          ./configure --disable-debug --build=x86_64-linux-gnu
+          ./configure --disable-debug
           make -j$(nproc --all)
           make data
         env:
-          CFLAGS: "-O3 -std=gnu11"
+          CFLAGS: "-O3"
 
       - name: Collect Steam Linux64 Artifacts
         run: |
-          mkdir -p ${{ github.workspace }}/dist/out/
+          mkdir -p dist/out/
 
-          mv ${{ github.workspace }}/src/naev ${{ github.workspace }}/dist/out/naev.x64
-          chmod +x ${{ github.workspace }}/dist/out/naev.x64
+          mv src/naev dist/out/naev.x64
+          chmod +x dist/out/naev.x64
 
-          tar -cJvf ${{ github.workspace }}/dist/out/steam-ndata.tar.xz dat
+          tar -cJvf dist/out/steam-ndata.tar.xz dat
       
       - name: Upload Naev Binary Artifact
         uses: actions/upload-artifact@v1
         with:
           name: naev-steamruntime
-          path: ${{ github.workspace }}/dist/out/naev.x64
+          path: dist/out/naev.x64
 
       - name: Upload Naev Data Artifact
         uses: actions/upload-artifact@v1
         with:
           name: naev-ndata
-          path: ${{ github.workspace }}/dist/out/steam-ndata.tar.xz
+          path: dist/out/steam-ndata.tar.xz
 
   "Upload_Naev_Release":
     strategy:
@@ -279,14 +269,13 @@ jobs:
 
           chmod +x dist/out/naev-$SUFFIX-linux-x86-64.AppImage
 
-      - name: Upload Github Release
-        if: ${{ matrix.releasetype == 'github' }}
-        uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Create Release
+        uses: ncipollo/release-action@v1
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          artifacts: "dist/out/*.*"
+          bodyFile: "dist/staging/naev-changelog/CHANGELOG"
+          token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: true
-          files: |
-            ${{ github.workspace }}/dist/out/*
           
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
