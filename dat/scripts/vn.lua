@@ -260,12 +260,17 @@ function vn.StateCharacter.new( character, remove )
    return s
 end
 function vn.StateCharacter:_init()
-   if s.remove then
+   if self.remove then
+      local found = false
       for k,c in ipairs(vn._characters) do
          if c==self.character then
             table.remove( vn._characters, k )
+            found = true
             break
          end
+      end
+      if not found then
+         error(_("character not found to remove!"))
       end
    else
       table.insert( vn._characters, self.character )
@@ -684,7 +689,7 @@ function vn.disappear( c, seconds )
    end
    vn.animation( seconds, func )
    for k,v in ipairs(c) do
-      vn.newCharacter(v, true)
+      table.insert( vn._states, vn.StateCharacter.new( v, true ) )
    end
 end
 
