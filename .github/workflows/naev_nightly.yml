@@ -1,8 +1,8 @@
 on:
   repository_dispatch:
     types: manual-nightly
-  schedule:
-    - cron: '0 0 * * *'
+#  schedule:
+#    - cron: '0 0 * * *'
 
 name: Nightly Release
 
@@ -194,8 +194,8 @@ jobs:
       matrix:
         include:
           - releasetype: github
-          - releasetype: steam
-          - releasetype: itch
+#          - releasetype: steam
+#          - releasetype: itch
 
     runs-on: ubuntu-latest
     needs:
