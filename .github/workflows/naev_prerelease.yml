@@ -185,7 +185,7 @@ jobs:
     steps:
       - name: Clone Naev Repository
         run: |
-          git clone https://github.com/naev/naev.git ${{ github.workspace }}
+          git clone --depth 1 --branch 0.8.x https://github.com/naev/naev.git ${{ github.workspace }}
 
       - name: Install Additional Build Dependencies
         run: |
