@@ -198,7 +198,7 @@ jobs:
       - name: Compile AppImage
         id: appimageCompile
         run: |
-          script -c "./source/utils/buildAppImage.sh -c -m -s "source" -b "build" -o "${{ github.workspace }}/dist"" appImageBuildLog.txt
+          script -c "./source/utils/buildAppImage.sh -c -m -s "source" -b "build" -o "${{ env.DESTDIR }}"" appImageBuildLog.txt
         env:
           APPIMAGE_EXTRACT_AND_RUN: 1
 
