@@ -56,6 +56,7 @@ jobs:
           mkdir -p dist/out
           mv naev-*.tar.gz dist/out/source.tar.gz
           cp CHANGELOG dist/out
+          cp VERSION dist/out
 
       - name: Upload Source Artifact
         uses: actions/upload-artifact@v2
@@ -69,6 +70,13 @@ jobs:
         with:
           name: naev-changelog
           path: ${{ github.workspace }}/dist/out/CHANGELOG
+          if-no-files-found: error
+
+      - name: Upload VERSION Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-version
+          path: ${{ github.workspace }}/dist/out/VERSION
           if-no-files-found: error
 
       - name: Upload Deployment Script Artifact
