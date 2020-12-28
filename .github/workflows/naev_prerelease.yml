@@ -2,9 +2,13 @@ on:
   repository_dispatch:
     types: manual-prerelease
   push:
+    branches:
+    - '!0.8.x'
+    - 'master'
     tags:
       - '!v*.*.*'
       - 'v*.*.*-beta*'
+      - 'v*.*.*-rc*'
 
 name: Pre-Release
 
