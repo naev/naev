@@ -3,7 +3,7 @@ on: [push, pull_request]
 name: CI
 
 env:
-  DESTDIR: "${{ github.workspace }}/dist/"
+  DESTDIR: "${{ github.workspace }}/dist"
 
 jobs:
   "Package_Source":
@@ -210,10 +210,10 @@ jobs:
           path: ${{ github.workspace }}/appImageBuildLog.txt
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: naev-AppImage-${{ github.sha }}
-          path: "${{ github.workspace }}/dist/out/*.AppImage"
+          path: "${{ env.DESTDIR }}/out/*.AppImage"
           if-no-files-found: error
 
   "Lua_Documentation":
