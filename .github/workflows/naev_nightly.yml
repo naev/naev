@@ -217,6 +217,15 @@ jobs:
 #    if: ${{ github.repository == 'naev/naev' }}
 
     steps:
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v2
+
+      - name: Generate commit changelog
+        uses: Bullrich/generate-release-changelog@master
+        id: changelog
+        env:
+          REPO: ${{ github.repository }}
+
       - name: Delete old nightly tag and release.
         uses: dev-drprasad/delete-tag-and-release@v0.1.2
         with:
@@ -224,9 +233,6 @@ jobs:
           tag_name: nightly
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Checkout Naev Repository
-        uses: actions/checkout@v2
 
       - name: Create 'nightly' tag
         uses: EndBug/latest-tag@latest
@@ -281,7 +287,8 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "${{ github.workspace }}/dist/out/*.*"
-          bodyFile: "${{ github.workspace }}/dist/staging/naev-changelog/CHANGELOG"
+          body: |
+            ${{ steps.Changelog.outputs.changelog }}
           token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: true
           tag: 'nightly'
