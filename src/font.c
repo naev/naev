@@ -18,6 +18,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
+#include FT_MODULE_H
 
 #include "naev.h"
 /** @endcond */
@@ -45,6 +46,8 @@
  * we can be lazy and use global variables.
  */
 static gl_Matrix4 font_projection_mat; /**< Projection matrix. */
+static FT_Library font_library = NULL; /**< Global, reference-counted FreeType library. */
+static int        font_library_refs = 0; /**< Our refcount for font_library, because FreeType inexplicably hides its own. */
 static FT_UInt    prev_glyph_index; /**< Index of last character drawn (for kerning). */
 static int        prev_glyph_ft_index; /**< HACK: Index into which stsh->ft[_].face? */
 
@@ -106,7 +109,6 @@ typedef struct font_char_s {
 typedef struct glFontStashFreetype_s {
    char *fontname; /**< Font name. */
    FT_Face face; /**< Face structure. */
-   FT_Library library; /**< Library. */
    FT_Byte *fontdata; /**< Font data buffer. */
 } glFontStashFreetype;
 
@@ -1447,6 +1449,14 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
    int ch;
    char fullname[PATH_MAX];
 
+   /* Initialize FreeType. */
+   if (font_library_refs++ == 0) {
+      if (FT_Init_FreeType( &font_library )) {
+         WARN(_("FT_Init_FreeType failed with font %s."), fname);
+         return -1;
+      }
+   }
+
    /* Replace name if NULL. */
    if (fname == NULL)
       fname = FONT_DEFAULT_PATH;
@@ -1549,7 +1559,6 @@ static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname, unsign
 {
    glFontStashFreetype *ft;
    FT_Byte* buf;
-   FT_Library library;
    FT_Face face;
    FT_Matrix scale;
    size_t bufsize;
@@ -1561,14 +1570,8 @@ static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname, unsign
       return -1;
    }
 
-   /* Create a FreeType font library. */
-   if (FT_Init_FreeType(&library)) {
-      WARN(_("FT_Init_FreeType failed with font %s."), fname);
-      return -1;
-   }
-
    /* Object which freetype uses to store font info. */
-   if (FT_New_Memory_Face( library, buf, bufsize, 0, &face )) {
+   if (FT_New_Memory_Face( font_library, buf, bufsize, 0, &face )) {
       WARN(_("FT_New_Face failed loading library from %s"), fname);
       return -1;
    }
@@ -1598,7 +1601,6 @@ static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname, unsign
 
    /* Save stuff. */
    ft->face     = face;
-   ft->library  = library;
    ft->fontdata = buf;
 
    /* Success. */
@@ -1632,6 +1634,11 @@ void gl_freeFont( glFont* font )
       free(ft->fontdata);
    }
    array_free( stsh->ft );
+
+   if (--font_library_refs == 0) {
+      FT_Done_FreeType( font_library );
+      font_library = NULL;
+   }
 
    free( stsh->fname );
    for (i=0; i<array_size(stsh->tex); i++)
