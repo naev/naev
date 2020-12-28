@@ -1223,6 +1223,13 @@ static void system_scheduler( double dt, int init )
                continue;
             }
             pilot->presence = lua_tonumber(naevL,-1);
+            if (pilot->faction != p->faction) {
+               WARN( _("Lua spawn script for faction '%s' actually spawned a '%s' pilot."),
+                     faction_name( p->faction ),
+                     faction_name( pilot->faction ) );
+               n = getPresenceIndex( cur_system, pilot->faction );
+               p = &cur_system->presence[n];
+            }
             p->curUsed     += pilot->presence;
             lua_pop(naevL,2); /* tk, k */
          }
