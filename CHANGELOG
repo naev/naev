@@ -1,8 +1,14 @@
 
 * 0.9.0 (unreleased)
+   * Gameplay
+      * Added gambling resort "Minerva Station"
+      * New missions
+         * Follow happenings on "Minerva Station"
    * Engine
       * Improved how Lua was being loaded
       * Added library that supports lots of Love2D API in Naev
+      * Added Visual Novel library
+      * Added card games
 
 * 0.8.0
    * Gameplay
