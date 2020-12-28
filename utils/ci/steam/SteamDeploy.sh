@@ -15,11 +15,11 @@ set -e
 
 # Defaults
 NIGHTLY="false"
-BETA="false"
+PRERELEASE="false"
 SCRIPTROOT="$(pwd)"
 DRYRUN="false"
 
-while getopts dncv:s:t:o: OPTION "$@"; do
+while getopts dnpc:s:t:o: OPTION "$@"; do
     case $OPTION in
     d)
         set -x
@@ -27,11 +27,11 @@ while getopts dncv:s:t:o: OPTION "$@"; do
     n)
         NIGHTLY="true"
         ;;
+    p)
+        PRERELEASE="true"
+        ;;
     c)
         DRYRUN="true"
-        ;;
-    v)
-        VERSIONPATH="${OPTARG}"
         ;;
     s)
         SCRIPTROOT="${OPTARG}"
@@ -44,21 +44,6 @@ while getopts dncv:s:t:o: OPTION "$@"; do
         ;;
     esac
 done
-
-if [ -f "$VERSIONPATH/VERSION" ]; then
-    export VERSION="$(<"$VERSIONPATH/VERSION")"
-else
-    echo "The VERSION file is missing from $VERSIONPATH."
-    exit 1
-fi
-
-# Get version, negative minors mean betas
-if [ -n $(echo "$VERSION" | grep "beta") ]; then
-    BETA="true"
-else
-    echo "could not find VERSION file"
-    exit 1
-fi
 
 # Make Steam dist path if it does not exist
 mkdir -p "$STEAMPATH"/content/lin64
@@ -99,11 +84,11 @@ if [ "$DRYRUN" == "false" ]; then
         # Run steam upload with 2fa key
         steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http "$STEAMPATH/scripts/app_build_598530_nightly.vdf" +quit
     else
-        if [ "$BETA" == "true" ]; then 
+        if [ "$PRERELEASE" == "true" ]; then 
             # Run steam upload with 2fa key
             steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http "$STEAMPATH/scripts/app_build_598530_prerelease.vdf" +quit
 
-        elif [ "$BETA" == "false" ]; then 
+        elif [ "$PRERELEASE" == "false" ]; then 
             # Move soundtrack stuff to deployment area
             cp "$TEMPPATH"/naev-steam-soundtrack/*.mp3 "$STEAMPATH/content/soundtrack"
             cp "$TEMPPATH"/naev-steam-soundtrack/*.png "$STEAMPATH/content/soundtrack"
@@ -113,7 +98,7 @@ if [ "$DRYRUN" == "false" ]; then
             steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +run_app_build_http "$STEAMPATH/scripts/app_build_1411430_soundtrack.vdf" +quit
 
         else
-            echo "Something went wrong determining if this is a beta or not."
+            echo "Something went wrong determining if this is a PRERELEASE or not."
         fi
     fi
 elif [ "$DRYRUN" == "true" ]; then
@@ -128,11 +113,11 @@ elif [ "$DRYRUN" == "true" ]; then
         echo "steamcmd nightly build"
         ls -l -R "$STEAMPATH"
     else
-        if [ "$BETA" == "true" ]; then 
+        if [ "$PRERELEASE" == "true" ]; then 
             # Run steam upload with 2fa key
-            echo "steamcmd beta build"
+            echo "steamcmd PRERELEASE build"
             ls -l -R "$STEAMPATH"
-        elif [ "$BETA" == "false" ]; then 
+        elif [ "$PRERELEASE" == "false" ]; then 
             # Move soundtrack stuff to deployment area
             cp -v "$TEMPPATH"/naev-steam-soundtrack/*.mp3 "$STEAMPATH/content/soundtrack"
             cp -v "$TEMPPATH"/naev-steam-soundtrack/*.png "$STEAMPATH/content/soundtrack"
@@ -143,7 +128,7 @@ elif [ "$DRYRUN" == "true" ]; then
             ls -l -R "$STEAMPATH"
 
         else
-            echo "Something went wrong determining if this is a beta or not."
+            echo "Something went wrong determining if this is a PRERELEASE or not."
         fi
     fi
 
