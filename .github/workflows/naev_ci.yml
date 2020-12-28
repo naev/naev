@@ -210,10 +210,10 @@ jobs:
           path: ${{ github.workspace }}/appImageBuildLog.txt
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v1
         with:
           name: naev-AppImage-${{ github.sha }}
-          path: "${{ env.DESTDIR }}/out/*.AppImage"
+          path: "${{ github.workspace }}/dist/out/*.AppImage"
           if-no-files-found: error
 
   "Lua_Documentation":
