@@ -279,6 +279,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "${{ github.workspace }}/dist/out/*.*"
+          name: "Nightly Build"
           body: |
             ${{ steps.Changelog.outputs.changelog }}
           token: ${{ secrets.GITHUB_TOKEN }}
