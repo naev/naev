@@ -206,7 +206,7 @@ jobs:
         Windows_Naev_Release,
         Steam_Naev_Release,
       ]
-    if: ${{ github.repository == 'naev/naev' }}
+#    if: ${{ github.repository == 'naev/naev' }}
 
     steps:
       - name: Create Release Staging and Output Areas
