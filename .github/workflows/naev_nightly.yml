@@ -217,6 +217,14 @@ jobs:
 #    if: ${{ github.repository == 'naev/naev' }}
 
     steps:
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v2
+
+      - name: Update 'nightly' tag
+        uses: EndBug/latest-tag@latest
+        with:
+          tag-name: nightly
+          
       - name: Create Release Staging and Output Areas
         run: |
           mkdir -p {temp,dist/{staging,out/{lin64,win64}}}
@@ -260,14 +268,6 @@ jobs:
           mv dist/staging/naev-dist/source.tar.xz dist/out/naev-$SUFFIX-source.tar.xz
 
           chmod +x dist/out/naev-$SUFFIX-linux-x86-64.AppImage
-
-      - name: Checkout Naev Repository
-        uses: actions/checkout@v2
-
-      - name: Update 'nightly' tag
-        uses: EndBug/latest-tag@latest
-        with:
-          tag-name: nightly
 
       - name: Create Release
         uses: ncipollo/release-action@v1
