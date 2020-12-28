@@ -22,9 +22,9 @@ function atk_corvette ()
    local dist  = ai.dist( target ) -- get distance
    local range = ai.getweaprange(3, 0)
    local range2 = ai.getweaprange(3, 1)
-   
+
    if range2 > range then
-    range = range2
+      range = range2
    end
 
    -- We first bias towards range
