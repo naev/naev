@@ -9,7 +9,7 @@
 # If -n is passed to the script, a nightly build will be generated
 # and uploaded to Steam
 #
-# Pass in [-d] [-n] (set this for nightly builds) [-n] (set this for CI testing) -v <VERSIONPATH> (Sets path of the VERSION file.) -s <SCRIPTROOT> (Sets path to look for additional steam scripts.) -t <TEMPPATH> (Steam build artefact location) -o <STEAMPATH> (Steam dist output directory)
+# Pass in [-d] [-n] (set this for nightly builds) [-p] (set this for pre-release builds.) [-c] (set this for CI testing) -s <SCRIPTROOT> (Sets path to look for additional steam scripts.) -t <TEMPPATH> (Steam build artefact location) -o <STEAMPATH> (Steam dist output directory)
 
 set -e
 
