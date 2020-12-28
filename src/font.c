@@ -1167,7 +1167,7 @@ static void gl_fontRenderStart( const glFontStash* stsh, double x, double y, con
    if (outlineR == 0.)
       gl_uniformAColor(shaders.font.outline_color, col, 0.);
    else
-      gl_uniformColor(shaders.font.outline_color, &cGrey10);
+      gl_uniformAColor(shaders.font.outline_color, &cGrey10, a);
 
    font_projection_mat = gl_Matrix4_Translate(gl_view_matrix, round(x), round(y), 0);
    scale = (double)stsh->h / FONT_DISTANCE_FIELD_SIZE;
