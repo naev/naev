@@ -127,7 +127,7 @@ jobs:
         MAKE: "${{ matrix.make }}"
 
   "AppImage_Compile_Naev":
-    needs: [Meson_Compile_Naev, Autotools_Compile_Naev]
+    needs: [Autotools_Compile_Naev]
     strategy:
       fail-fast: false
       matrix:
