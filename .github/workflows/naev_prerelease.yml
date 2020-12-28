@@ -2,8 +2,6 @@ on:
   repository_dispatch:
     types: manual-prerelease
   push:
-    branches-ignore:
-      - "master"
     tags:
       - '!v*.*.*'
       - 'v*.*.*-beta*'
