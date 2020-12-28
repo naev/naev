@@ -200,7 +200,7 @@ int diff_loadAvailable (void)
    array_free( diff_files );
    array_shrink(&diff_available);
 
-   DEBUG( ngettext("Loaded %d UniDiff", "Loaded %d UniDiffs", array_size(diff_available) ), array_size(diff_available) );
+   DEBUG( n_("Loaded %d UniDiff", "Loaded %d UniDiffs", array_size(diff_available) ), array_size(diff_available) );
 
    return 0;
 }
@@ -656,7 +656,7 @@ static int diff_patch( xmlNodePtr parent )
 
    if (diff->nfailed > 0) {
       WARN(
-         ngettext( "Unidiff '%s' failed to apply %d hunk.", "Unidiff '%s' failed to apply %d hunks.", diff->nfailed ),
+         n_( "Unidiff '%s' failed to apply %d hunk.", "Unidiff '%s' failed to apply %d hunks.", diff->nfailed ),
          diff->name, diff->nfailed );
       for (i=0; i<diff->nfailed; i++) {
          fail   = &diff->failed[i];

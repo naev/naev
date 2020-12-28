@@ -486,7 +486,7 @@ static void board_update( unsigned int wdw )
             continue;
          total_cargo += p->commodities[i].quantity;
       }
-      j += nsnprintf( &str[ j ], PATH_MAX - j, ngettext( "%d tonne\n", "%d tonnes\n", total_cargo ), total_cargo );
+      j += nsnprintf( &str[ j ], PATH_MAX - j, n_( "%d tonne\n", "%d tonnes\n", total_cargo ), total_cargo );
    }
 
    /* Fuel. */
@@ -496,7 +496,7 @@ static void board_update( unsigned int wdw )
    }
    else {
       if (j < PATH_MAX)
-         j += nsnprintf( &str[ j ], PATH_MAX - j, ngettext( "%d unit\n", "%d units\n", p->fuel ), p->fuel );
+         j += nsnprintf( &str[ j ], PATH_MAX - j, n_( "%d unit\n", "%d units\n", p->fuel ), p->fuel );
    }
 
    /* Missiles */
@@ -507,7 +507,7 @@ static void board_update( unsigned int wdw )
    }
    else {
       if (j < PATH_MAX)
-         j += nsnprintf( &str[ j ], PATH_MAX - j, ngettext( "%d missile\n", "%d missiles\n", nmissiles ), nmissiles );
+         j += nsnprintf( &str[ j ], PATH_MAX - j, n_( "%d missile\n", "%d missiles\n", nmissiles ), nmissiles );
    }
    (void)j;
 

@@ -1561,7 +1561,7 @@ int factions_load (void)
 
    xmlFreeDoc(doc);
 
-   DEBUG( ngettext( "Loaded %d Faction", "Loaded %d Factions", faction_nstack ), faction_nstack );
+   DEBUG( n_( "Loaded %d Faction", "Loaded %d Factions", faction_nstack ), faction_nstack );
 
    return 0;
 }

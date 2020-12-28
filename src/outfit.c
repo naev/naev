@@ -2387,14 +2387,14 @@ int outfit_load (void)
       if (i == start)
          continue;
 
-      WARN( ngettext( "Name collision! %d outfit is named '%s'", "Name collision! %d outfits are named '%s'",
+      WARN( n_( "Name collision! %d outfit is named '%s'", "Name collision! %d outfits are named '%s'",
                       i + 1 - start ),
             i + 1 - start, outfit_names[ start ] );
    }
    free(outfit_names);
 #endif
 
-   DEBUG( ngettext( "Loaded %d Outfit", "Loaded %d Outfits", noutfits ), noutfits );
+   DEBUG( n_( "Loaded %d Outfit", "Loaded %d Outfits", noutfits ), noutfits );
 
    return 0;
 }

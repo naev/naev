@@ -174,7 +174,7 @@ int can_swapEquipment( const char *shipname )
    }
    if (pilot_cargoUsed(player.p) > (pilot_cargoFree(newship) + pilot_cargoUsed(newship))) { /* Current ship has too much cargo. */
       diff = pilot_cargoUsed(player.p) - pilot_cargoFree(newship);
-      land_errDialogueBuild( ngettext(
+      land_errDialogueBuild( n_(
                "You have %d tonne more cargo than the new ship can hold.",
                "You have %d tonnes more cargo than the new ship can hold.",
                diff),
@@ -707,7 +707,7 @@ static void misn_update( unsigned int wid, char* str )
 
    /* Update date stuff. */
    buf = ntime_pretty( 0, 2 );
-   nsnprintf( txt, sizeof(txt), ngettext(
+   nsnprintf( txt, sizeof(txt), n_(
             "%s\n%d Tonne", "%s\n%d Tonnes", player.p->cargo_free),
          buf, player.p->cargo_free );
    free(buf);

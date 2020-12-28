@@ -585,7 +585,7 @@ int ai_load (void)
       }
    }
 
-   DEBUG( ngettext("Loaded %d AI Profile", "Loaded %d AI Profiles", array_size(profiles) ), array_size(profiles) );
+   DEBUG( n_("Loaded %d AI Profile", "Loaded %d AI Profiles", array_size(profiles) ), array_size(profiles) );
 
    /* More clean up. */
    PHYSFS_freeList( files );

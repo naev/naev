@@ -24,6 +24,8 @@ i18n.gettext(meson.project_name(),
 
         '--keyword=_',
         '--keyword=N_',
+        '--keyword=n_:1,2',
+        '--keyword=p_:1c,2',
         '--keyword=gettext.gettext_noop',
 
         '--package-name=' + meson.project_name(),

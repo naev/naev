@@ -166,7 +166,7 @@ int tech_load (void)
    } while (xml_nextNode(node));
 
    /* Info. */
-   DEBUG( ngettext( "Loaded %d tech group", "Loaded %d tech groups", s ), s );
+   DEBUG( n_( "Loaded %d tech group", "Loaded %d tech groups", s ), s );
 
    /* Free memory. */
    xmlFreeDoc(doc);

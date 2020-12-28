@@ -395,7 +395,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       int stars   = nBgImgs>0 ? nBgImgs-1 : 0;
       cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("System: %s\n"), _(sys->name) );
       /* display sun information */
-      cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, ngettext("%d-star system\n", "%d-star system\n", stars), stars );
+      cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, n_("%d-star system\n", "%d-star system\n", stars), stars );
 
       /* Nebula. */
       if (sys->nebu_density > 0. ) {
@@ -716,13 +716,13 @@ static void map_system_array_update( unsigned int wid, char* str ) {
 
       if ( owned > 0 ) {
          credits2str( buf_buy_price, com->lastPurchasePrice, -1 );
-         i += nsnprintf( &infobuf[i], sizeof(infobuf)-i, ngettext(
+         i += nsnprintf( &infobuf[i], sizeof(infobuf)-i, n_(
                          "#nYou have:#0 %d tonne, purchased at %s/t\n",
                          "#nYou have:#0 %d tonnes, purchased at %s/t\n",
                          owned), owned, buf_buy_price );
       }
       else
-         i += nsnprintf( &infobuf[i], sizeof(infobuf)-i, ngettext(
+         i += nsnprintf( &infobuf[i], sizeof(infobuf)-i, n_(
                          "#nYou have:#0 %d tonne\n",
                          "#nYou have:#0 %d tonnes\n",
                          owned), owned );

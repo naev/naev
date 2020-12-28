@@ -1880,7 +1880,7 @@ void player_brokeHyperspace (void)
          player_autonavEnd();
       }
       else {
-         player_message( ngettext(
+         player_message( n_(
                   "#oAutonav continuing until destination (%d jump left).",
                   "#oAutonav continuing until destination (%d jumps left).",
                   map_npath),
