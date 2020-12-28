@@ -56,7 +56,7 @@ jobs:
           mkdir -p dist/out
           mv naev-*.tar.gz dist/out/source.tar.gz
           cp CHANGELOG dist/out
-          cp VERSION dist/out
+          cp dat/VERSION dist/out
 
       - name: Upload Source Artifact
         uses: actions/upload-artifact@v2
