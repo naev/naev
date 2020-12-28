@@ -32,6 +32,7 @@ jobs:
           mkdir -p dist/out/steam
           mv build/meson-dist/naev-*.tar.xz dist/out/source.tar.xz
           cp source/dat/VERSION dist/out
+          cp source/CHANGELOG dist/out
           cp -r source/utils/ci/steam/* dist/out/steam
 
       - name: Upload Source Artifact
@@ -46,6 +47,13 @@ jobs:
         with:
           name: naev-version
           path: ${{ github.workspace }}/dist/out/VERSION
+          if-no-files-found: error
+
+      - name: Upload Changelog Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-changelog
+          path: ${{ github.workspace }}/dist/out/CHANGELOG
           if-no-files-found: error
 
       - name: Upload Deployment Script Artifact
@@ -252,16 +260,19 @@ jobs:
 
           chmod +x dist/out/naev-$SUFFIX-linux-x86-64.AppImage
 
-      - name: Upload Github Release
-        if: ${{ matrix.releasetype == 'github' }}
-        uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Update 'nightly' tag
+        uses: EndBug/latest-tag@latest
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "nightly"
+          tag-name: nightly
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/out/*.*"
+          bodyFile: "dist/staging/naev-changelog/CHANGELOG"
+          token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: true
-          title: "Nightly Build"
-          files: |
-            ${{ github.workspace }}/dist/out/*
+          tag: 'nightly'
 
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
