@@ -1,9 +1,8 @@
 on:
   repository_dispatch:
     types: manual-nightly
-  push:
-#  schedule:
-#    - cron: '0 0 * * *'
+  schedule:
+    - cron: "0 0 * * *"
 
 name: Nightly Release
 
@@ -20,7 +19,6 @@ jobs:
           fetch-depth: 0
           path: source
           submodules: true
-          
 
       - name: Package Dist
         run: |
@@ -32,7 +30,6 @@ jobs:
           mkdir -p dist/out/steam
           mv build/meson-dist/naev-*.tar.xz dist/out/source.tar.xz
           cp source/dat/VERSION dist/out
-          cp source/CHANGELOG dist/out
           cp -r source/utils/ci/steam/* dist/out/steam
 
       - name: Upload Source Artifact
@@ -49,13 +46,6 @@ jobs:
           path: ${{ github.workspace }}/dist/out/VERSION
           if-no-files-found: error
 
-      - name: Upload Changelog Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: naev-changelog
-          path: ${{ github.workspace }}/dist/out/CHANGELOG
-          if-no-files-found: error
-
       - name: Upload Deployment Script Artifact
         uses: actions/upload-artifact@v2
         with:
@@ -66,6 +56,7 @@ jobs:
   "Linux_Naev_Release":
     needs: "Package_Source"
     runs-on: ubuntu-latest
+
     container:
       image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
 
@@ -96,6 +87,7 @@ jobs:
   "Windows_Naev_Release":
     needs: "Package_Source"
     runs-on: windows-latest
+
     defaults:
       run:
         shell: msys2 {0}
@@ -203,8 +195,8 @@ jobs:
       matrix:
         include:
           - releasetype: github
-#          - releasetype: steam
-#          - releasetype: itch
+          - releasetype: steam
+          - releasetype: itch
 
     runs-on: ubuntu-latest
     needs:
@@ -214,7 +206,7 @@ jobs:
         Windows_Naev_Release,
         Steam_Naev_Release,
       ]
-#    if: ${{ github.repository == 'naev/naev' }}
+    if: ${{ github.repository == 'naev/naev' }}
 
     steps:
       - name: Checkout Naev Repository
@@ -291,7 +283,7 @@ jobs:
             ${{ steps.Changelog.outputs.changelog }}
           token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: true
-          tag: 'nightly'
+          tag: "nightly"
 
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
