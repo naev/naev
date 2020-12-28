@@ -88,6 +88,10 @@ po/*.gmo
 *.gen.c
 *.gen.h
 src/shaders_c_gen
+test-suite.log
+check-po.sh.log
+check-po.sh.trs
+
 
 /.cproject
 /.project

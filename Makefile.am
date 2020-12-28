@@ -26,7 +26,7 @@ VERSIONFILE = $(top_builddir)/dat/VERSION
 LICENSEFILE = $(top_builddir)/dat/LICENSE
 LANGUAGEFILE = $(top_builddir)/dat/LANGUAGES
 
-EXTRA_DIST = build/config.rpath LICENSE extras dat utils org.naev.naev.desktop org.naev.naev.metainfo.xml
+EXTRA_DIST = build/config.rpath LICENSE extras dat utils org.naev.naev.desktop org.naev.naev.metainfo.xml check-po.sh
 CLEANFILES = $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE) $(LICENSEFILE)
 
 if HAVE_NLS
@@ -39,6 +39,8 @@ NAEVPOT     = $(top_builddir)/po/$(PACKAGE).pot
 XMLPOT      = $(top_builddir)/po/xml.pot
 EXTRA_DIST += $(XMLFILES) $(TRANSLATIONITS)
 CLEANFILES += $(CREDITSPOT) $(NAEVPOT) $(XMLPOT)
+TESTS = check-po.sh
+AM_TESTS_ENVIRONMENT = POFILE='$(srcdir)/po/de.po'; EXPECT=9000; export POFILE EXPECT;
 endif # HAVE_NLS
 
 .PHONY: data pot docs utils help install-ndata soundtrack
