@@ -654,7 +654,7 @@ static int pilotL_addFleet( lua_State *L )
  *
  *    @luatparam string shipname Name of the ship to add.
  *    @luatparam string|nil ai AI to give the pilot.
- *    @luatparam System|Planet param Position to create the pilot at. See pilot.add for further information.
+ *    @luatparam System|Planet|Vec2 param Position to create the pilot at. See pilot.add for further information.
  *    @luatparam Faction faction Faction to give the pilot.
  *    @luatreturn Pilot The created pilot.
  * @luafunc addRaw( shipname, ai, param, faction )
