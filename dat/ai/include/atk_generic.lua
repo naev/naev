@@ -201,7 +201,7 @@ function _atk_g_ranged_kite( target, dist )
    local velmod, veldir = p:vel():polar()
    if velmod < 0.8*p:stats().speed or math.abs(targetdir-veldir) > 30 then
       local dir = ai.face( target, true )
-      if dir < 30 then
+      if math.abs(180-dir) < 30 then
          ai.accel()
       end
       return
@@ -215,8 +215,8 @@ function _atk_g_ranged_kite( target, dist )
          ai.weapset( 4 )
       end
 
-      ai.weapset( 3 ) -- Set turret/forward weaponset.
       if dir < 10 then
+         ai.weapset( 3 ) -- Set turret/forward weaponset.
          ai.shoot()
       end
    end
