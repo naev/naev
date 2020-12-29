@@ -1,5 +1,12 @@
+* 0.8.1
+   * Engine
+      * Fixed a crash-loop when the "saves" folder gets populated by Steam data (or other files) and no Naev save files.
+      * Fixed intermittent error messages about the "Lua Spawn script for faction 'Trader'".
+      * Fixed rare/potential bugs in font and save-file code.
+      * Updated German translation.
+      * Improved text in minor ways.
 
-* 0.8.0 (unreleased)
+* 0.8.0
    * Gameplay
       * Overhaul of the interface to be more sleek and functional
          * Interface is much more slick
