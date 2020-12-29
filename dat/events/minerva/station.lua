@@ -36,9 +36,41 @@ patron_names = {
 }
 patron_descriptions = {
    _("A gambling patron enjoying his time at the station."),
+   _("A tourist looking a bit bewildered at all the noises and shiny lights all over."),
+   _("A patron who seems down on his luck."),
+   _("A patron who looks exhilarated as if they won big today."),
+   _("A patron that looks like they have spend a lot of time at the station. There are clear dark circles under their eyes."),
+   _("A patron that looks strangely out of place."),
+   _("A patron that fits in perfectly into the gambling station."),
 }
 patron_messages = {
-   _("It's great to be here!"),
+   _([["This place is totally what I thought it would be. The lights, the sounds, the action! I feel like I'm in Heaven!"]]),
+   _([["It's incredible! Who would have thought to make money physical! These Minerva Tokens defy all logic!"]]),
+   function ()
+      local soldoutmsg = ""
+      if player.numOutfit("Fuzzy Dice") > 0 then
+         soldoutmsg = _(" Wait, what? What do you mean they are sold out!?")
+      end
+      return string.format(_([["I really have my eyes on the Fuzzy Dice available at the terminal. I always wanted to own a piece of history!%s"]]), soldoutmsg ) end,
+   _([["I played 20 hands of blackjack with that Cyborg Chicken. I may have lost them all, but that was worth every credit!"]]),
+   _([["This place is great! I still have no idea how to play blackjack, but I just keep on playing again and again against that Cyborg Chicken."]]),
+   function () return string.format(
+      _([["I came all the way from %s to be here! We don't have anything like this back at home."]]),
+      planet.get( {faction.get("Dvaered"), faction.get("Za'lek"), faction.get("Empire"), faction.get("Soromid")} ):name()
+   ) end,
+   _([["Critics of Minerva Station say that being able to acquire nice outfits here without needing licenses increases piracy. I think they are all lame!"]]),
+   _([["I really want to go to the VIP hot springs they have, but I don't have the tokens. How does that even work in a space station?"]]),
+   _([["I hear you can do all sorts of crazy stuff here if you have enough tokens. Need... to.. get.. more...!"]]),
+   _([["I have never seen robots talk so roboty like the terminals here. That is so retro!"]]),
+   _([["I scrounged up my lifetime savings to get a ticket here, but I forgot to bring extra to gamble..."]]),
+   _([["I gambled all my savings away... I'm going to get killed when I get back home..."]]),
+   _([["They say you shouldn't gamble more than you can afford to lose. I wish someone had told me that yesterday. I don't even own a ship anymore!"]]),
+   _([["I like to play blackjack. I'm not addicted to gambling. I'm addicted to sitting in a semi-circle."]]), -- Mitch Hedberg
+   _([["Gambling has brought our family together. We had to move to a smaller house."]]), -- Tommy Cooper
+   _([["You don’t gamble to win. You gamble so you can gamble the next day."]]), -- Bert Ambrose
+   _([["A credit won is twice as sweet as a credit earned!"]]), -- Paul Newman (dollar -> credit)
+   _([["There is a very easy way to return from Minerva Station with a small fortune: come here with a large one!"]]), -- Jack Yelton (paraphrased)
+   _([["Luck always seems to be against the ones who depends on it."]]),
 }
 
 function create()
@@ -51,11 +83,12 @@ function create()
    -- Create random noise NPCs
    local npatrons = rnd.rnd(3,5)
    npc_patrons = {}
+   local msglist = rnd.permutation( patron_messages ) -- avoids duplicates
    for i = 1,npatrons do
       local name = patron_names[ rnd.rnd(1, #patron_names) ]
       local img = portrait.get()
       local desc = patron_descriptions[ rnd.rnd(1, #patron_descriptions) ]
-      local msg = patron_messages[ rnd.rnd(1, #patron_messages) ]
+      local msg = msglist[i]
       local id = evt.npcAdd( "approach_patron", name, img, desc, 10 )
       local npcdata = { name=name, image=portrait.getFullPath(img), message=msg }
       npc_patrons[id] = npcdata
