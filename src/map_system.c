@@ -657,7 +657,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                    "\anThrust:\a0 %.0f kN/tonne    "
                    "\anSpeed:\a0 %.0f m/s\n"
                    "\anTurn:\a0 %.0f deg/s    "
-                   "\anTime Dilation:\a0 %.0f%%\n"
+                   "\anTime Constant:\a0 %.0f%%\n"
                    "\anAbsorption:\a0 %.0f%% damage\n"
                    "\anShield:\a0 %.0f MJ (%.1f MW)    "
                    "\anArmour:\a0 %.0f MJ (%.1f MW)\n"
