@@ -95,12 +95,10 @@ jobs:
         sh $MESON setup build source \
             --native-file='source/utils/build/${{ matrix.config }}' \
             --buildtype=debug \
-            --wrap-mode=forcefallback \
             -Db_lto=true \
             -Dauto_features=enabled \
             -Ddocs_c=disabled \
-            -Ddocs_lua=disabled \
-            -Dforce_fallback_for=SuiteSparse
+            -Ddocs_lua=disabled
 
     - name: Upload Setup Log
       uses: actions/upload-artifact@v2
