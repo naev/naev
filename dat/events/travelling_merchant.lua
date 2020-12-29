@@ -128,6 +128,7 @@ function board ()
    * Weapon that does double damage to the user if misses
    * Weapon that damages the user each time it is shot (some percent only)
    * Space mines! AOE damage that affects everyone, but they don't move (useful for missions too!)
+   * Something that modifies time compression as an active outfit
    --]]
 
    -- Always available outfits
