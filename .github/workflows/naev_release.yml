@@ -279,6 +279,7 @@ jobs:
 
       - name: Create Release
         uses: ncipollo/release-action@v1
+        if: ${{ matrix.releasetype == 'github' }}
         with:
           artifacts: "dist/out/*.*"
           bodyFile: "dist/staging/naev-changelog/CHANGELOG"
