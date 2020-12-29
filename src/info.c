@@ -414,7 +414,7 @@ static void info_openShip( unsigned int wid )
          "\anThrust:\a0\n"
          "\anSpeed:\a0\n"
          "\anTurn:\a0\n"
-         "\anTime Dilation:\a0\n"
+         "\anTime Constant:\a0\n"
          "\n"
          "\anAbsorption:\a0\n"
          "\anShield:\a0\n"
@@ -459,7 +459,7 @@ static void ship_update( unsigned int wid )
          "%.0f kN/tonne\n"
          "%.0f m/s (max %.0f m/s)\n"
          "%.0f deg/s\n"
-         "%.0f%%\n" /* Time Dilation (dt_default) */
+         "%.0f%%\n" /* Time Constant (dt_default) */
          "\n"
          "%.0f%%\n" /* Absorbption */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Shield */

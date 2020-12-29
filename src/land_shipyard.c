@@ -128,7 +128,7 @@ void shipyard_open( unsigned int wid )
          "\anThrust:\n\a0"
          "\anSpeed:\n\a0"
          "\anTurn:\n\a0"
-         "\anTime Dilation:\n\a0"
+         "\anTime Constant:\n\a0"
          "\n"
          "\anAbsorption:\n\a0"
          "\anShield:\n\a0"

@@ -6,7 +6,7 @@
  <sound>engine</sound>
  <class>Freighter</class>
  <price>900000</price>
- <time_mod>2</time_mod>
+ <time_mod>1.5</time_mod>
  <fabricator>Melendez Corp.</fabricator>
  <license>Large Civilian Vessel License</license>
  <description>A heavy freighter specialized in transporting cargo throughout the galaxy. Also has sufficient accommodations for passengers depending on the model, allowing for enjoyable cruises. The Mule is a favorite target of pirates, so avoiding dangerous systems is strongly advised.</description>

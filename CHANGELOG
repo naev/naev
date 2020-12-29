@@ -1,4 +1,3 @@
-
 * 0.9.0 (unreleased)
    * Gameplay
       * Added gambling resort "Minerva Station"
@@ -9,6 +8,14 @@
       * Added library that supports lots of Love2D API in Naev
       * Added Visual Novel library
       * Added card games
+
+* 0.8.1
+   * Engine
+      * Fixed a crash-loop when the "saves" folder gets populated by Steam data (or other files) and no Naev save files.
+      * Fixed intermittent error messages about the "Lua Spawn script for faction 'Trader'".
+      * Fixed rare/potential bugs in font and save-file code.
+      * Updated German translation.
+      * Improved text in minor ways.
 
 * 0.8.0
    * Gameplay
