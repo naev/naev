@@ -1,10 +1,10 @@
 on:
-  repository_dispatch:
-    types: manual-prerelease
   push:
     tags:
-      - '!v*.*.*'
-      - 'v*.*.*-beta*'
+      - "!v*.*.*"
+      - "v*.*.*-alpha*"
+      - "v*.*.*-beta*"
+      - "v*.*.*-rc*"
 
 name: Pre-Release
 
@@ -54,6 +54,7 @@ jobs:
         run: |
           mkdir -p dist/out
           mv naev-*.tar.gz dist/out/source.tar.gz
+          cp CHANGELOG dist/out
           cp dat/VERSION dist/out
 
       - name: Upload Source Artifact
@@ -63,7 +64,14 @@ jobs:
           path: ${{ github.workspace }}/dist/out/source.tar.gz
           if-no-files-found: error
 
-      - name: Upload Version Artifact
+      - name: Upload Changelog Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-changelog
+          path: ${{ github.workspace }}/dist/out/CHANGELOG
+          if-no-files-found: error
+
+      - name: Upload VERSION Artifact
         uses: actions/upload-artifact@v2
         with:
           name: naev-version
@@ -90,11 +98,11 @@ jobs:
             buildoutput: naev-win64
             shell: msys2 {0}
             make: mingw32-make
-    
+
     defaults:
       run:
         shell: ${{ matrix.shell }}
-            
+
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -126,7 +134,7 @@ jobs:
             libiberty-dev \
             libluajit-5.1-dev \
             libsuitesparse-dev
-            
+
       - name: Install MinGW Packages
         if: ${{ runner.os == 'Windows'}}
         uses: msys2/setup-msys2@v2
@@ -139,7 +147,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
-          
+
       - name: Build Naev for Win64
         if: ${{ runner.os == 'Windows'}}
         run: |
@@ -149,19 +157,19 @@ jobs:
         env:
           CFLAGS: "-O3"
           MAKE: "${{ matrix.make }}"
-          
+
       - name: Build and Package Naev for Linux64
         if: ${{ runner.os == 'Linux'}}
         run: |
           ./utils/buildAppImage.sh -s "$(pwd)" -b "$(pwd)" -o "$(pwd)/dist"
         env:
           CFLAGS: "-O3"
-          
+
       - name: Build Windows Installer
         if: ${{ runner.os == 'Windows'}}
         run: |
           ./extras/windows/packageWindows.sh -s "$(pwd)" -b "$(pwd)" -o "$(pwd)/dist"
-          
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -169,54 +177,48 @@ jobs:
           path: |
             ${{ github.workspace }}/dist/out/*
           if-no-files-found: error
-            
+
   "Build_Naev_Steam_Release":
     runs-on: ubuntu-latest
 
     container:
-      image: dosowisko/steam-runtime-amd64
-      volumes:
-        - ${{ github.workspace }}:${{ github.workspace }}
+      image: projectsynchro/synchros_sexy_docker_images:naev-steamruntime
 
     steps:
-      - name: Clone Naev Repository
-        run: |
-          git clone https://github.com/naev/naev.git ${{ github.workspace }}
-
-      - name: Install Additional Build Dependencies
-        run: |
-          sudo apt-get -y install autoconf-archive intltool
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v1
+        with:
+          submodules: recursive
 
       - name: Build Naev for Steam on Linux64
         run: |
-          cd ${{ github.workspace }}
           ./autogen.sh
-          ./configure --disable-debug --build=x86_64-linux-gnu
+          ./configure --disable-debug
           make -j$(nproc --all)
           make data
         env:
-          CFLAGS: "-O3 -std=gnu11"
+          CFLAGS: "-O3"
 
       - name: Collect Steam Linux64 Artifacts
         run: |
-          mkdir -p ${{ github.workspace }}/dist/out/
+          mkdir -p dist/out/
 
-          mv ${{ github.workspace }}/src/naev ${{ github.workspace }}/dist/out/naev.x64
-          chmod +x ${{ github.workspace }}/dist/out/naev.x64
+          mv src/naev dist/out/naev.x64
+          chmod +x dist/out/naev.x64
 
-          tar -cJvf ${{ github.workspace }}/dist/out/steam-ndata.tar.xz dat
-      
+          tar -cJvf dist/out/steam-ndata.tar.xz dat
+
       - name: Upload Naev Binary Artifact
         uses: actions/upload-artifact@v1
         with:
           name: naev-steamruntime
-          path: ${{ github.workspace }}/dist/out/naev.x64
+          path: dist/out/naev.x64
 
       - name: Upload Naev Data Artifact
         uses: actions/upload-artifact@v1
         with:
           name: naev-ndata
-          path: ${{ github.workspace }}/dist/out/steam-ndata.tar.xz
+          path: dist/out/steam-ndata.tar.xz
 
   "Upload_Naev_Release":
     strategy:
@@ -226,7 +228,7 @@ jobs:
           - releasetype: github
           - releasetype: steam
           - releasetype: itch
-            
+
     runs-on: ubuntu-latest
     needs: [Generate_Source, Build_Naev_Release, Build_Naev_Steam_Release]
     if: ${{ github.repository == 'naev/naev' }}
@@ -235,7 +237,7 @@ jobs:
       - name: Create Release Staging and Output Areas
         run: |
           mkdir -p {temp,dist/{staging,out/{lin64,win64}}}
-          
+
       - name: Update APT Cache
         if: ${{ matrix.releasetype == 'steam' }}
         run: |
@@ -248,7 +250,7 @@ jobs:
         run: |
           echo steamcmd steam/question select "I AGREE" | sudo debconf-set-selections
           sudo apt-get install lib32gcc1 libsdl2-2.0-0:i386 steamcmd
-          
+
       - name: Install Butler
         if: ${{ matrix.releasetype == 'itch' }}
         run: |
@@ -275,15 +277,14 @@ jobs:
 
           chmod +x dist/out/naev-$SUFFIX-linux-x86-64.AppImage
 
-      - name: Upload Github Release
-        if: ${{ matrix.releasetype == 'github' }}
-        uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Create Release
+        uses: ncipollo/release-action@v1
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          artifacts: "dist/out/*.*"
+          bodyFile: "dist/staging/naev-changelog/CHANGELOG"
+          token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: true
-          files: |
-            ${{ github.workspace }}/dist/out/*
-          
+
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
         run: |
@@ -296,7 +297,7 @@ jobs:
 
           tar -Jxf "dist/staging/naev-win64/steam-win64.tar.xz" -C "dist/out/win64"
           tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64"
-          
+
           ./butler push --userversion="$SUFFIX" dist/out/lin64 naev/naev:linux-x86-64-beta
           ./butler push --userversion="$SUFFIX" dist/out/win64 naev/naev:windows-x86-64-beta
         env:
@@ -307,7 +308,7 @@ jobs:
         run: |
           chmod -R +x dist/staging/naev-steam-deployment
           cp -r dist/staging/naev-steam-deployment/* ${{ github.workspace }}
-          ./SteamDeploy.sh -v "${{ github.workspace }}/dist/staging/naev-version" -t "${{ github.workspace }}/dist/staging" -o "${{ github.workspace }}/dist/out"
+          ./SteamDeploy.sh -p -t "${{ github.workspace }}/dist/staging" -o "${{ github.workspace }}/dist/out"
         env:
           STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
           STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}
