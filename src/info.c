@@ -143,7 +143,7 @@ void menu_info( int window )
 
    /* Create tabbed window. */
    for (i=0; i<INFO_WINDOWS; i++)
-      names[i] = gettext(info_names[i]);
+      names[i] = _(info_names[i]);
    info_windows = window_addTabbedWindow( info_wid, -1, -1, -1, -1, "tabInfo",
          INFO_WINDOWS, names, 0 );
 
