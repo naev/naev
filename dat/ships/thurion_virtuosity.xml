@@ -7,7 +7,7 @@
  <sound>engine</sound>
  <class>Corvette</class>
  <price>1100000</price>
- <time_mod>1.5</time_mod>
+ <time_mod>1.25</time_mod>
  <fabricator>Thurion shipyards</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>The Thurion Virtuosity is a medium-size ship used by the Thurion for frontal assaults. While weapon space is less than stellar, the vessel's superior electronics and resistance to the harsh nebula more than make up for it.</description>
