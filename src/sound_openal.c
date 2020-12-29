@@ -3,22 +3,24 @@
  */
 
 
-#include "sound_openal.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <math.h>
 #include <sys/stat.h>
-
+#include "physfsrwops.h"
 #include "SDL.h"
-#include "SDL_thread.h"
 #include "SDL_endian.h"
+#include "SDL_thread.h"
 
-#include "music_openal.h"
-#include "sound.h"
-#include "ndata.h"
-#include "log.h"
+#include "naev.h"
+/** @endcond */
+
+#include "sound_openal.h"
+
 #include "conf.h"
+#include "log.h"
+#include "music_openal.h"
+//#include "ndata.h"
+#include "sound.h"
 
 
 /*
@@ -54,10 +56,6 @@
 
 
 #define SOUND_FADEOUT         100
-
-
-#define soundLock()     SDL_mutexP(sound_lock)
-#define soundUnlock()   SDL_mutexV(sound_lock)
 
 
 /*
@@ -586,9 +584,9 @@ static int sound_al_loadWav( alSound *snd, SDL_RWops *rw )
    /* Load into openal. */
    soundLock();
    /* Create new buffer. */
-   alGenBuffers( 1, &snd->u.al.buf );
+   alGenBuffers( 1, &snd->buf );
    /* Put into the buffer. */
-   alBufferData( snd->u.al.buf, format, wav_buffer, wav_length, wav_spec.freq );
+   alBufferData( snd->buf, format, wav_buffer, wav_length, wav_spec.freq );
    soundUnlock();
 
    /* Clean up. */
@@ -653,14 +651,14 @@ static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf )
    i = 0;
    while (i < len) {
       /* Fill buffer with data in the 16 bit signed samples format. */
-      i += ov_read( vf, &buf[i], len-i, VORBIS_ENDIAN, 2, 1, &section );
+      i += ov_read( vf, &buf[i], len-i, HAS_BIGENDIAN, 2, 1, &section );
    }
 
    soundLock();
    /* Create new buffer. */
-   alGenBuffers( 1, &snd->u.al.buf );
+   alGenBuffers( 1, &snd->buf );
    /* Put into buffer. */
-   alBufferData( snd->u.al.buf, format, buf, len, info->rate );
+   alBufferData( snd->buf, format, buf, len, info->rate );
    soundUnlock();
 
    /* Clean up. */
@@ -685,7 +683,7 @@ int sound_al_load( alSound *snd, const char *filename )
    ALint freq, bits, channels, size;
 
    /* get the file data buffer from packfile */
-   rw = ndata_rwops( filename );
+   rw = PHYSFSRWOPS_openRead( filename );
 
    /* Check to see if it's an Ogg. */
    if (ov_test_callbacks( rw, &vf, NULL, 0, sound_al_ovcall_noclose )==0)
@@ -712,10 +710,10 @@ int sound_al_load( alSound *snd, const char *filename )
    soundLock();
 
    /* Get the length of the sound. */
-   alGetBufferi( snd->u.al.buf, AL_FREQUENCY, &freq );
-   alGetBufferi( snd->u.al.buf, AL_BITS, &bits );
-   alGetBufferi( snd->u.al.buf, AL_CHANNELS, &channels );
-   alGetBufferi( snd->u.al.buf, AL_SIZE, &size );
+   alGetBufferi( snd->buf, AL_FREQUENCY, &freq );
+   alGetBufferi( snd->buf, AL_BITS, &bits );
+   alGetBufferi( snd->buf, AL_CHANNELS, &channels );
+   alGetBufferi( snd->buf, AL_SIZE, &size );
    if ((freq==0) || (bits==0) || (channels==0)) {
       WARN(_("Something went wrong when loading sound file '%s'."), filename);
       snd->length = 0;
@@ -740,7 +738,7 @@ void sound_al_free( alSound *snd )
    soundLock();
 
    /* free the stuff */
-   alDeleteBuffers( 1, &snd->u.al.buf );
+   alDeleteBuffers( 1, &snd->buf );
 
    soundUnlock();
 }
@@ -835,37 +833,37 @@ static int al_playVoice( alVoice *v, alSound *s,
       ALfloat px, ALfloat py, ALfloat vx, ALfloat vy, ALint relative )
 {
    /* Set up the source and buffer. */
-   v->u.al.source = sound_al_getSource();
-   if (v->u.al.source == 0)
+   v->source = sound_al_getSource();
+   if (v->source == 0)
       return -1;
-   v->u.al.buffer = s->u.al.buf;
+   v->buffer = s->buf;
 
    soundLock();
 
    /* Attach buffer. */
-   alSourcei( v->u.al.source, AL_BUFFER, v->u.al.buffer );
+   alSourcei( v->source, AL_BUFFER, v->buffer );
 
    /* Enable positional sound. */
-   alSourcei( v->u.al.source, AL_SOURCE_RELATIVE, relative );
+   alSourcei( v->source, AL_SOURCE_RELATIVE, relative );
 
    /* Update position. */
-   v->u.al.pos[0] = px;
-   v->u.al.pos[1] = py;
-   v->u.al.pos[2] = 0.;
-   v->u.al.vel[0] = vx;
-   v->u.al.vel[1] = vy;
-   v->u.al.vel[2] = 0.;
+   v->pos[0] = px;
+   v->pos[1] = py;
+   v->pos[2] = 0.;
+   v->vel[0] = vx;
+   v->vel[1] = vy;
+   v->vel[2] = 0.;
 
    /* Set up properties. */
-   alSourcef(  v->u.al.source, AL_GAIN, svolume*svolume_speed );
-   alSourcefv( v->u.al.source, AL_POSITION, v->u.al.pos );
-   alSourcefv( v->u.al.source, AL_VELOCITY, v->u.al.vel );
+   alSourcef(  v->source, AL_GAIN, svolume*svolume_speed );
+   alSourcefv( v->source, AL_POSITION, v->pos );
+   alSourcefv( v->source, AL_VELOCITY, v->vel );
 
    /* Defaults just in case. */
-   alSourcei( v->u.al.source, AL_LOOPING, AL_FALSE );
+   alSourcei( v->source, AL_LOOPING, AL_FALSE );
 
    /* Start playing. */
-   alSourcePlay( v->u.al.source );
+   alSourcePlay( v->source );
 
    /* Check for errors. */
    al_checkErr();
@@ -913,10 +911,10 @@ int sound_al_playPos( alVoice *v, alSound *s,
 int sound_al_updatePos( alVoice *v,
             double px, double py, double vx, double vy )
 {
-   v->u.al.pos[0] = px;
-   v->u.al.pos[1] = py;
-   v->u.al.vel[0] = vx;
-   v->u.al.vel[1] = vy;
+   v->pos[0] = px;
+   v->pos[1] = py;
+   v->vel[0] = vx;
+   v->vel[1] = vy;
 
    return 0;
 }
@@ -932,7 +930,7 @@ void sound_al_updateVoice( alVoice *v )
    ALint state;
 
    /* Invalid source, mark to delete. */
-   if (v->u.al.source == 0) {
+   if (v->source == 0) {
       v->state = VOICE_DESTROY;
       return;
    }
@@ -940,11 +938,11 @@ void sound_al_updateVoice( alVoice *v )
    soundLock();
 
    /* Get status. */
-   alGetSourcei( v->u.al.source, AL_SOURCE_STATE, &state );
+   alGetSourcei( v->source, AL_SOURCE_STATE, &state );
    if (state == AL_STOPPED) {
 
       /* Remove buffer so it doesn't start up again if resume is called. */
-      alSourcei( v->u.al.source, AL_BUFFER, AL_NONE );
+      alSourcei( v->source, AL_BUFFER, AL_NONE );
 
       /* Check for errors. */
       al_checkErr();
@@ -952,9 +950,9 @@ void sound_al_updateVoice( alVoice *v )
       soundUnlock();
 
       /* Put source back on the list. */
-      source_stack[source_nstack] = v->u.al.source;
+      source_stack[source_nstack] = v->source;
       source_nstack++;
-      v->u.al.source = 0;
+      v->source = 0;
 
       /* Mark as stopped - erased next iteration. */
       v->state = VOICE_STOPPED;
@@ -962,9 +960,9 @@ void sound_al_updateVoice( alVoice *v )
    }
 
    /* Set up properties. */
-   alSourcef(  v->u.al.source, AL_GAIN, svolume*svolume_speed );
-   alSourcefv( v->u.al.source, AL_POSITION, v->u.al.pos );
-   alSourcefv( v->u.al.source, AL_VELOCITY, v->u.al.vel );
+   alSourcef(  v->source, AL_GAIN, svolume*svolume_speed );
+   alSourcefv( v->source, AL_POSITION, v->pos );
+   alSourcefv( v->source, AL_VELOCITY, v->vel );
 
    /* Check for errors. */
    al_checkErr();
@@ -980,8 +978,8 @@ void sound_al_stop( alVoice* voice )
 {
    soundLock();
 
-   if (voice->u.al.source != 0)
-      alSourceStop( voice->u.al.source );
+   if (voice->source != 0)
+      alSourceStop( voice->source );
 
    /* Check for errors. */
    al_checkErr();
@@ -1271,7 +1269,7 @@ int sound_al_playGroup( int group, alSound *s, int once )
             continue;
 
          /* Attach buffer. */
-         alSourcei( g->sources[j], AL_BUFFER, s->u.al.buf );
+         alSourcei( g->sources[j], AL_BUFFER, s->buf );
 
          /* Do not do positional sound. */
          alSourcei( g->sources[j], AL_SOURCE_RELATIVE, AL_TRUE );
@@ -1468,49 +1466,3 @@ void sound_al_update (void)
       }
    }
 }
-
-
-#ifdef DEBUGGING
-/**
- * @brief Converts an OpenAL error to a string.
- *
- *    @param err Error to convert to string.
- *    @return String corresponding to the error.
- */
-void al_checkHandleError( const char *func )
-{
-   ALenum err;
-   const char *errstr;
-
-   /* Get the possible error. */
-   err = alGetError();
-
-   /* No error. */
-   if (err == AL_NO_ERROR)
-      return;
-
-   /* Get the message. */
-   switch (err) {
-      case AL_INVALID_NAME:
-         errstr = _("a bad name (ID) was passed to an OpenAL function");
-         break;
-      case AL_INVALID_ENUM:
-         errstr = _("an invalid enum value was passed to an OpenAL function");
-         break;
-      case AL_INVALID_VALUE:
-         errstr = _("an invalid value was passed to an OpenAL function");
-         break;
-      case AL_INVALID_OPERATION:
-         errstr = _("the requested operation is not valid");
-         break;
-      case AL_OUT_OF_MEMORY:
-         errstr = _("the requested operation resulted in OpenAL running out of memory");
-         break;
-
-      default:
-         errstr = _("unknown error");
-         break;
-   }
-   WARN(_("OpenAL error [%s]: %s"), func, errstr);
-}
-#endif /* DEBUGGING */

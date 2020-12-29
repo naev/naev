@@ -10,42 +10,44 @@
  */
 
 
-#include "pilot.h"
-
-#include "naev.h"
-
+/** @cond */
+#include <limits.h>
 #include <math.h>
 #include <stdlib.h>
-#include <limits.h>
 
-#include "array.h"
-#include "nxml.h"
-#include "nstring.h"
-#include "log.h"
-#include "weapon.h"
-#include "ndata.h"
-#include "spfx.h"
-#include "rng.h"
-#include "hook.h"
-#include "map.h"
-#include "explosion.h"
-#include "escort.h"
-#include "music.h"
-#include "player.h"
-#include "player_autonav.h"
-#include "gui.h"
-#include "board.h"
-#include "debris.h"
-#include "ntime.h"
+#include "naev.h"
+/** @endcond */
+
+#include "pilot.h"
+
 #include "ai.h"
+#include "array.h"
+#include "board.h"
+#include "camera.h"
+#include "damagetype.h"
+#include "debris.h"
+#include "escort.h"
+#include "explosion.h"
 #include "faction.h"
 #include "font.h"
+#include "gui.h"
+#include "hook.h"
 #include "land.h"
 #include "land_outfits.h"
 #include "land_shipyard.h"
-#include "camera.h"
-#include "damagetype.h"
+#include "log.h"
+#include "map.h"
+#include "music.h"
+#include "ndata.h"
+#include "nstring.h"
+#include "ntime.h"
+#include "nxml.h"
 #include "pause.h"
+#include "player.h"
+#include "player_autonav.h"
+#include "rng.h"
+#include "spfx.h"
+#include "weapon.h"
 
 
 #define PILOT_CHUNK_MIN 128 /**< Minimum chunks to increment pilot_stack by */

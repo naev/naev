@@ -8,6 +8,11 @@
 #  define SOUND_H
 
 
+/** @cond */
+#include "SDL_mutex.h"
+/** @endcond */
+
+
 extern int sound_disabled;
 
 
@@ -65,6 +70,11 @@ void sound_volumeGroup( int group, double volume );
  * Environmental functions.
  */
 int sound_env( SoundEnv_t env, double param );
+
+/* Lock for OpenAL operations. */
+extern SDL_mutex *sound_lock; /**< Global sound lock, used for all OpenAL calls. */
+#define soundLock()        SDL_mutexP(sound_lock)
+#define soundUnlock()      SDL_mutexV(sound_lock)
 
 
 #endif /* SOUND_H */

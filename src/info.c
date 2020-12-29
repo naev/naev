@@ -9,28 +9,29 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "info.h"
 
-#include "naev.h"
-
-#include "nstring.h"
-
-#include "menu.h"
-#include "toolkit.h"
 #include "dialogue.h"
-#include "log.h"
-#include "pilot.h"
-#include "space.h"
-#include "player.h"
-#include "mission.h"
-#include "ntime.h"
-#include "map.h"
-#include "land.h"
 #include "equipment.h"
 #include "gui.h"
+#include "land.h"
+#include "log.h"
+#include "map.h"
+#include "menu.h"
+#include "mission.h"
+#include "nstring.h"
+#include "ntime.h"
+#include "pilot.h"
+#include "player.h"
 #include "player_gui.h"
-#include "tk/toolkit_priv.h"
 #include "shiplog.h"
+#include "space.h"
+#include "tk/toolkit_priv.h"
+#include "toolkit.h"
 
 #define BUTTON_WIDTH    135 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
@@ -413,7 +414,7 @@ static void info_openShip( unsigned int wid )
          "\anThrust:\a0\n"
          "\anSpeed:\a0\n"
          "\anTurn:\a0\n"
-         "\anTime Dilation:\a0\n"
+         "\anTime Constant:\a0\n"
          "\n"
          "\anAbsorption:\a0\n"
          "\anShield:\a0\n"
@@ -458,7 +459,7 @@ static void ship_update( unsigned int wid )
          "%.0f kN/tonne\n"
          "%.0f m/s (max %.0f m/s)\n"
          "%.0f deg/s\n"
-         "%.0f%%\n" /* Time Dilation (dt_default) */
+         "%.0f%%\n" /* Time Constant (dt_default) */
          "\n"
          "%.0f%%\n" /* Absorbption */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Shield */

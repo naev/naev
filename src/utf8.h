@@ -1,8 +1,10 @@
 #ifndef UTF8_H
 #define UTF8_H
 
+/** @cond */
 #include <stdlib.h>
 #include <stdint.h>
+/** @endcond */
 
 /** 
  * @file utf8.h

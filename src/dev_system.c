@@ -8,18 +8,20 @@
  * @brief Handles development of star system stuff.
  */
 
-#include "dev_system.h"
-#include "dev_uniedit.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <stdlib.h> /* qsort */
 
+#include "naev.h"
+/** @endcond */
+
+#include "dev_system.h"
+
 #include "conf.h"
-#include "nxml.h"
-#include "space.h"
-#include "physics.h"
+#include "dev_uniedit.h"
 #include "nstring.h"
+#include "nxml.h"
+#include "physics.h"
+#include "space.h"
 
 
 /*

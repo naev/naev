@@ -8,12 +8,7 @@
  * @brief Home of logprintf.
  */
 
-#include "log.h"
-
-#include "naev.h"
-#include "nfile.h"
-#include "nstring.h"
-
+/** @cond */
 #include <errno.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -21,11 +16,18 @@
 #include <sys/types.h>
 #include <time.h> /* strftime */
 
+#include "naev.h"
+
 #if HAS_POSIX
 #include <unistd.h> /* isatty */
 #endif
+/** @endcond */
+
+#include "log.h"
 
 #include "console.h"
+#include "nfile.h"
+#include "nstring.h"
 
 
 /**< Temporary storage buffers. */

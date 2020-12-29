@@ -8,27 +8,29 @@
  * @brief Handles rendering and generating the nebula.
  */
 
-#include "nebula.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <errno.h>
 
-#include "log.h"
-#include "opengl.h"
-#include "nfile.h"
-#include "perlin.h"
-#include "rng.h"
-#include "menu.h"
-#include "player.h"
-#include "pause.h"
-#include "gui.h"
-#include "conf.h"
-#include "spfx.h"
-#include "npng.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nebula.h"
+
 #include "camera.h"
-#include "nstring.h"
+#include "conf.h"
+#include "gui.h"
+#include "log.h"
+#include "menu.h"
 #include "ndata.h"
+#include "nfile.h"
+#include "npng.h"
+#include "nstring.h"
+#include "opengl.h"
+#include "pause.h"
+#include "perlin.h"
+#include "player.h"
+#include "rng.h"
+#include "spfx.h"
 
 
 #define NEBULA_Z             16 /**< Z plane */
@@ -626,7 +628,7 @@ static SDL_Surface* loadNebula( const char* file )
 
    /* loads the file */
    nsnprintf(file_path, PATH_MAX, "%s"NEBULA_PATH"%s", nfile_cachePath(), file );
-   rw    = SDL_RWFromFile( file_path, "rb" );;
+   rw    = SDL_RWFromFile( file_path, "rb" );
    if (rw == NULL) {
       WARN(_("Unable to create rwops from Nebula image: %s"), file);
       return NULL;

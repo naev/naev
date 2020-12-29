@@ -8,8 +8,6 @@
 #  define NLUA_MUSIC_H
 
 
-#include <lua.h>
-
 #include "nlua.h"
 
 

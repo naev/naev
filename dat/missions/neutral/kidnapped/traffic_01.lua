@@ -159,7 +159,7 @@ function sys_enter ()
       broship:setInvincible(true)
       broship:control()
       broship:setHilight(true)
-      broship:goto(bropla:pos() + vec2.new( 400, -400), false)
+      broship:moveto(bropla:pos() + vec2.new( 400, -400), false)
       -- just some moving around, stolen from baron missions ;D
       idlehook = hook.pilot(broship, "idle", "idle",broship,bropla)
       misn.osdActive(2)
@@ -206,10 +206,10 @@ function got_boarded(shipp)
 end
 -- idle
 function idle(shipp,pplanet)
-    shipp:goto(pplanet:pos() + vec2.new( 400,  400), false)
-    shipp:goto(pplanet:pos() + vec2.new(-400,  400), false)
-    shipp:goto(pplanet:pos() + vec2.new(-400, -400), false)
-    shipp:goto(pplanet:pos() + vec2.new( 400, -400), false)
+    shipp:moveto(pplanet:pos() + vec2.new( 400,  400), false)
+    shipp:moveto(pplanet:pos() + vec2.new(-400,  400), false)
+    shipp:moveto(pplanet:pos() + vec2.new(-400, -400), false)
+    shipp:moveto(pplanet:pos() + vec2.new( 400, -400), false)
 end
 --delay for msgs because if no delay they will pop in mid transit from system to system. A wait function would be awesome...
 function do_msg ()

@@ -9,27 +9,28 @@
  */
 
 
-#include "nlua_hook.h"
+/** @cond */
+#include <lauxlib.h>
+#include <lua.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-#include <math.h>
+#include "nlua_hook.h"
 
-#include <lua.h>
-#include <lauxlib.h>
-
-#include "nluadef.h"
-#include "nlua_pilot.h"
-#include "nlua_time.h"
-#include "nlua_misn.h"
-#include "nlua_evt.h"
+#include "event.h"
 #include "hook.h"
 #include "log.h"
-#include "event.h"
 #include "mission.h"
+#include "nlua_evt.h"
+#include "nlua_misn.h"
+#include "nlua_pilot.h"
+#include "nlua_time.h"
+#include "nluadef.h"
+#include "nstring.h"
 
 
 /* Hook methods. */

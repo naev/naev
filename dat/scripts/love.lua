@@ -10,17 +10,18 @@ love.exec( 'pong' ) -- Will look for pong.lua or pong/main.lua
 """
 
 --]]
-local love = {}
-love._basepath = ""
-love._version_major = 11
-love._version_minor = 1
-love._version_patch = 3
-love._codename = "naev"
-love._default = {
-   title = "LÖVE",
-   w = 800,
-   h = 600,
-   fullscreen = false
+local love = {
+   _basepath = "",
+   _version_major = 11,
+   _version_minor = 1,
+   _version_patch = 3,
+   _codename = "naev",
+   _default = {
+      title = "LÖVE",
+      w = 800,
+      h = 600,
+      fullscreen = false,
+   },
 }
 function love._unimplemented() error(_("unimplemented")) end
 

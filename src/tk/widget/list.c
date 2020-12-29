@@ -9,10 +9,12 @@
  */
 
 
-#include "tk/toolkit_priv.h"
-
+/** @cond */
 #include <stdlib.h>
+/** @endcond */
+
 #include "nstring.h"
+#include "tk/toolkit_priv.h"
 
 #define CELLPADV 8
 #define CELLHEIGHT (gl_smallFont.h + CELLPADV)

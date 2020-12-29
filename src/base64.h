@@ -6,7 +6,9 @@
 #  define BASE64_H
 
 
+/** @cond */
 #include <stddef.h>
+/** @endcond */
 
 
 char* base64_encode( size_t *len, const char *src, size_t sz );

@@ -2,6 +2,7 @@
 -- Audio
 --]]
 local class = require 'class'
+local love = require 'love'
 local object = require 'love.object'
 
 local audio = {}

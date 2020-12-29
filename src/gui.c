@@ -10,11 +10,13 @@
  */
 
 
-#include "gui.h"
+/** @cond */
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
+#include "gui.h"
 
 #include "ai.h"
 #include "camera.h"
@@ -95,7 +97,7 @@ extern Pilot** pilot_stack; /**< @todo remove */
 extern int pilot_nstack; /**< @todo remove */
 
 
-extern int land_wid; /**< From land.c */
+extern unsigned int land_wid; /**< From land.c */
 
 
 /**
@@ -941,6 +943,16 @@ void gui_render( double dt )
 
    /* Render messages. */
    omsg_render( dt );
+}
+
+
+/**
+ * @brief Notifies GUI scripts that the player broke out of cooldown.
+ */
+void gui_cooldownEnd (void)
+{
+   if (gui_env != LUA_NOREF)
+      gui_doFunc( "end_cooldown" );
 }
 
 
@@ -1974,7 +1986,7 @@ static int gui_runFunc( const char* func, int nargs, int nret )
       err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       WARN(_("GUI Lua -> '%s': %s"),
             func, (err) ? err : _("unknown error"));
-      lua_pop(naevL,2);
+      lua_pop(naevL,1);
       return ret;
    }
 

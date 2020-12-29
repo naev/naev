@@ -10,36 +10,36 @@
  * These bindings control the planets and systems.
  */
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "nlua_pilot.h"
 
-#include "naev.h"
-
-#include <lauxlib.h>
-
+#include "ai.h"
+#include "array.h"
+#include "camera.h"
+#include "damagetype.h"
+#include "escort.h"
+#include "gui.h"
+#include "land_outfits.h"
+#include "log.h"
 #include "nlua.h"
-#include "nluadef.h"
+#include "nlua_col.h"
 #include "nlua_faction.h"
-#include "nlua_vec2.h"
+#include "nlua_jump.h"
+#include "nlua_outfit.h"
+#include "nlua_planet.h"
 #include "nlua_ship.h"
 #include "nlua_system.h"
-#include "nlua_planet.h"
-#include "nlua_outfit.h"
-#include "nlua_jump.h"
-#include "log.h"
-#include "rng.h"
+#include "nlua_vec2.h"
+#include "nluadef.h"
 #include "pilot.h"
 #include "pilot_heat.h"
 #include "player.h"
+#include "rng.h"
 #include "space.h"
-#include "ai.h"
-#include "nlua_col.h"
 #include "weapon.h"
-#include "gui.h"
-#include "camera.h"
-#include "damagetype.h"
-#include "land_outfits.h"
-#include "array.h"
-#include "escort.h"
 
 
 /*
@@ -138,7 +138,7 @@ static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
 static int pilotL_memory( lua_State *L );
 static int pilotL_taskclear( lua_State *L );
-static int pilotL_goto( lua_State *L );
+static int pilotL_moveto( lua_State *L );
 static int pilotL_face( lua_State *L );
 static int pilotL_brake( lua_State *L );
 static int pilotL_follow( lua_State *L );
@@ -236,7 +236,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "control", pilotL_control },
    { "memory", pilotL_memory },
    { "taskClear", pilotL_taskclear },
-   { "goto", pilotL_goto },
+   { "moveto", pilotL_moveto },
    { "face", pilotL_face },
    { "brake", pilotL_brake },
    { "follow", pilotL_follow },
@@ -3317,7 +3317,7 @@ static int pilotL_idle( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to change manual control settings.
  *    @luatparam[opt=1] boolean enable If true or nil enables pilot manual control, otherwise enables automatic AI.
- * @luasee goto
+ * @luasee moveto
  * @luasee brake
  * @luasee follow
  * @luasee attack
@@ -3446,14 +3446,14 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task )
 
 
 /**
- * @brief Makes the pilot goto a position.
+ * @brief Makes the pilot move to a position.
  *
  * Pilot must be under manual control for this to work.
  *
- * @usage p:goto( v ) -- Goes to v precisely and braking
- * @usage p:goto( v, true, true ) -- Same as p:goto( v )
- * @usage p:goto( v, false ) -- Goes to v without braking compensating velocity
- * @usage p:goto( v, false, false ) -- Really rough approximation of going to v without braking
+ * @usage p:moveto( v ) -- Goes to v precisely and braking
+ * @usage p:moveto( v, true, true ) -- Same as p:moveto( v )
+ * @usage p:moveto( v, false ) -- Goes to v without braking compensating velocity
+ * @usage p:moveto( v, false, false ) -- Really rough approximation of going to v without braking
  *
  *    @luatparam Pilot p Pilot to tell to go to a position.
  *    @luatparam Vec2 v Vector target for the pilot.
@@ -3462,9 +3462,9 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task )
  *    @luatparam[opt=1] boolean compensate If true (or nil) compensates for velocity, otherwise it
  *              doesn't. It only affects if brake is not set.
  * @luasee control
- * @luafunc goto( p, v, brake, compensate )
+ * @luafunc moveto( p, v, brake, compensate )
  */
-static int pilotL_goto( lua_State *L )
+static int pilotL_moveto( lua_State *L )
 {
    Pilot *p;
    Task *t;
@@ -3489,13 +3489,13 @@ static int pilotL_goto( lua_State *L )
 
    /* Set the task. */
    if (brake) {
-      tsk = "__goto_precise";
+      tsk = "__moveto_precise";
    }
    else {
       if (compensate)
-         tsk = "__goto_nobrake";
+         tsk = "__moveto_nobrake";
       else
-         tsk = "__goto_nobrake_raw";
+         tsk = "__moveto_nobrake_raw";
    }
    t        = pilotL_newtask( L, p, tsk );
    lua_pushvector( L, *vec );

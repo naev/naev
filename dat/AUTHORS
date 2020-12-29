@@ -13,6 +13,8 @@ Ian Douglas Scott "ids1024" <ian@iandouglasscott.com>
 Layla and Emmy "The Diligent Circle" <diligentcircle@riseup.net>
    * Misc. Development
 
+Justin Blanchard "UncombedCoconut" <UncombedCoconut@gmail.com>
+   * Code Carnage and Bug Beating
 
 Past Development Team
 ---------------------------------------
@@ -52,6 +54,10 @@ Askyel
 nenau
    * Misc. Development
 
+Jack Greiner <jack@emoss.org>
+   * CI dude
+   * Bringer of automated releases
+   * Various helper scripts and build system tweaks
 
 Contributions
 ---------------------------------------
@@ -159,11 +165,6 @@ Alastair Basden
    * Economy development
    * Ship log
    * Solar system information screen
-   
-Jack Greiner <jack@emoss.org>
-   * CI dude
-   * Bringer of automated releases
-   * Various helper scripts and build system tweaks
 
 Music by Matthew Pablo
 http://www.matthewpablo.com

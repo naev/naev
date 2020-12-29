@@ -8,15 +8,17 @@
  * @brief Contains Lua bindings for the console.
  */
 
-#include "nlua_cli.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_cli.h"
+
 #include "log.h"
 #include "mission.h"
+#include "nluadef.h"
 
 
 /* CLI */

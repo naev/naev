@@ -10,14 +10,16 @@
  * These bindings control the planets and systems.
  */
 
-#include "nlua_vec2.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_vec2.h"
+
 #include "log.h"
+#include "nluadef.h"
 
 
 /* Vector metatable methods */

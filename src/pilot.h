@@ -8,14 +8,14 @@
 
 #include "pilot_flags.h"
 
+#include "ai.h"
+#include "commodity.h"
+#include "faction.h"
+#include "ntime.h"
+#include "outfit.h"
 #include "physics.h"
 #include "ship.h"
-#include "ai.h"
-#include "outfit.h"
-#include "faction.h"
 #include "sound.h"
-#include "commodity.h"
-#include "ntime.h"
 #include "space.h"
 
 

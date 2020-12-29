@@ -9,9 +9,11 @@
  */
 
 
-#include "collision.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
+
+#include "collision.h"
 
 #include "log.h"
 

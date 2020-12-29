@@ -9,33 +9,35 @@
  */
 
 
-#include "equipment.h"
+/** @cond */
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-#include <math.h>
+#include "equipment.h"
 
-#include "log.h"
-#include "land.h"
-#include "toolkit.h"
-#include "dialogue.h"
-#include "player.h"
-#include "mission.h"
-#include "ntime.h"
 #include "conf.h"
+#include "dialogue.h"
 #include "gui.h"
-#include "land_outfits.h"
+#include "hook.h"
 #include "info.h"
+#include "land.h"
+#include "land_outfits.h"
+#include "land_takeoff.h"
+#include "log.h"
+#include "map.h"
+#include "mission.h"
+#include "ndata.h"
+#include "nstring.h"
+#include "ntime.h"
+#include "player.h"
 #include "shipstats.h"
 #include "slots.h"
-#include "map.h"
-#include "ndata.h"
-#include "hook.h"
-#include "land_takeoff.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
+#include "toolkit.h"
 
 
 /*
@@ -293,7 +295,7 @@ void equipment_open( unsigned int wid )
       "\anThrust:\n\a0"
       "\anSpeed:\n\a0"
       "\anTurn:\n\a0"
-      "\anTime Dilation:\n\a0"
+      "\anTime Constant:\n\a0"
       "\n"
       "\anAbsorption:\n\a0"
       "\anShield:\n\a0"

@@ -44,14 +44,6 @@ if useNLS.disabled() == false
             ],
         install_dir: ndata_path / 'dat/gettext',
     )
-
-    # LANGUAGES file generation
-    generate_languages = run_command(gen_languages)
-    if generate_languages.returncode() != 0
-    error(generate_languages.stderr())
-    else
-    meson.add_dist_script('../'+add_to_package, 'dat/LANGUAGES')
-    endif
 endif
 
 config_data.set10('ENABLE_NLS', hasNGetText)

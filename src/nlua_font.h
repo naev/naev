@@ -7,10 +7,8 @@
 #  define NLUA_FONT_H
 
 
-#include <lua.h>
-
-#include "nlua.h"
 #include "font.h"
+#include "nlua.h"
 
 
 #define FONT_METATABLE      "font" /**< Font metatable identifier. */
@@ -22,9 +20,8 @@
 int nlua_loadFont( nlua_env env );
 
 /*
- * Colour operations
+ * Font operations
  */
-
 glFont* lua_tofont( lua_State *L, int ind );
 glFont* luaL_checkfont( lua_State *L, int ind );
 glFont* lua_pushfont( lua_State *L, glFont font );

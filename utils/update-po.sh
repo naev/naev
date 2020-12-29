@@ -14,8 +14,13 @@ set -x
 # For historical reasons, we generate a few sections individually. (There used to be multiple POTFILES*.in outputs.)
 # Source code section:
 TMPFILE=$(mktemp)
-find src/ -name "*.[ch]" -not \( -name glue_macos.h -or -name khrplatform.h -or -name "shaders*gen*" \) >> "$TMPFILE"
-find dat/ -name "*.lua" >> "$TMPFILE"
+if [ -d .git ]; then
+   git ls-files -- 'src/**.[ch]' ':!:*/glue_macos.h' ':!:*/khrplatform.h' ':!:*/shaders*gen*' >> "$TMPFILE"
+   git ls-files -- 'dat/**.lua' >> "$TMPFILE"
+else
+   find src/ -name "*.[ch]" -not \( -name glue_macos.h -or -name khrplatform.h -or -name "shaders*gen*" \) >> "$TMPFILE"
+   find dat/ -name "*.lua" >> "$TMPFILE"
+fi
 
 LC_ALL=C sort "$TMPFILE" > "$ROOT/po/POTFILES.in"
 
@@ -28,7 +33,7 @@ find dat/outfits -name "*.xml" >> "$TMPFILE"
 find dat/ships -name "*.xml" >> "$TMPFILE"
 find dat/ssys -name "*.xml" >> "$TMPFILE"
 
-LC_ALL=C sort "$TMPFILE" > "$ROOT/po/POTFILES.in"
+LC_ALL=C sort "$TMPFILE" >> "$ROOT/po/POTFILES.in"
 
 rm "$TMPFILE" # clean-up
 

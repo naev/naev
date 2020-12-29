@@ -12,9 +12,11 @@
  */
 
 
-#include "pause.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
+
+#include "pause.h"
 
 #include "player.h"
 #include "sound.h"

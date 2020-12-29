@@ -9,22 +9,26 @@
  */
 
 
-#include "options.h"
+/** @cond */
+#include <ctype.h>
+#include "physfs.h"
+#include "SDL.h"
 
 #include "naev.h"
-#include "nstring.h"
-#include <ctype.h>
-#include "SDL.h"
-#include "log.h"
-#include "input.h"
-#include "toolkit.h"
-#include "sound.h"
-#include "music.h"
-#include "nstd.h"
-#include "dialogue.h"
+/** @endcond */
+
+#include "options.h"
+
 #include "conf.h"
+#include "dialogue.h"
+#include "input.h"
+#include "log.h"
+#include "music.h"
 #include "ndata.h"
+#include "nstring.h"
 #include "player.h"
+#include "sound.h"
+#include "toolkit.h"
 
 
 #define BUTTON_WIDTH    200 /**< Button width, standard across menus. */
@@ -141,12 +145,16 @@ void opt_menu (void)
  */
 static void opt_OK( unsigned int wid, char *str )
 {
-   int ret;
+   int ret, prompted_restart;
 
+   prompted_restart = opt_restart;
    ret = 0;
    ret |= opt_gameplaySave( opt_windows[ OPT_WIN_GAMEPLAY ], str);
    ret |= opt_audioSave(    opt_windows[ OPT_WIN_AUDIO ], str);
    ret |= opt_videoSave(    opt_windows[ OPT_WIN_VIDEO ], str);
+
+   if (opt_restart && !prompted_restart)
+      dialogue_msgRaw( _("Warning"), _("Restart Naev for changes to take effect.") );
 
    /* Close window if no errors occurred. */
    if (!ret)
@@ -195,10 +203,9 @@ void opt_resize (void)
  */
 static char** lang_list( int *n )
 {
-   size_t fs;
-   char *buf;
    char **ls;
-   size_t i, j;
+   char **subdirs;
+   size_t i;
 
    /* Default English only. */
    ls = malloc( sizeof(char*)*128 );
@@ -207,19 +214,10 @@ static char** lang_list( int *n )
    *n = 2;
 
    /* Try to open the available languages. */
-   buf = ndata_read( LANGUAGES_PATH, &fs );
-   if (buf==NULL)
-      return ls;
-   j = 0;
-   for (i=0; i<fs; i++) {
-      if (!isspace(buf[i]) && (buf[i] != '\0'))
-         continue;
-      buf[i] = '\0';
-      if (*n < 128 && i > j)
-         ls[(*n)++] = strdup( &buf[j] );
-      j=i+1;
-   }
-   free(buf);
+   subdirs = PHYSFS_enumerateFiles( GETTEXT_PATH );
+   for (i=0; subdirs[i]!=NULL; i++)
+      ls[(*n)++] = strdup( subdirs[i] );
+   PHYSFS_freeList( subdirs );
 
    return ls;
 }
@@ -231,8 +229,8 @@ static char** lang_list( int *n )
 static void opt_gameplay( unsigned int wid )
 {
    (void) wid;
-   char buf[PATH_MAX];
-   const char *path;
+   char buf[4096];
+   char **paths;
    int cw;
    int w, h, y, x, by, l, n, i;
    char *s;
@@ -265,11 +263,17 @@ static void opt_gameplay( unsigned int wid )
          &gl_smallFont, NULL, buf );
 #endif /* GIT_COMMIT */
    y -= 20;
-   path = ndata_getPath();
-   if (path == NULL)
-      nsnprintf( buf, sizeof(buf), _("not using ndata") );
-   else
-      nsnprintf( buf, sizeof(buf), _("ndata: %s"), path);
+
+   paths = PHYSFS_getSearchPath();
+   for (i=l=0; paths[i]!=NULL && (size_t)l < sizeof(buf); i++)
+   {
+      if (i == 0)
+         l = nsnprintf( buf, sizeof(buf), _("ndata: %s"), paths[i] );
+      else
+         l += nsnprintf( &buf[l], sizeof(buf)-l, ":%s", paths[i] );
+   }
+   PHYSFS_freeList(paths);
+   paths = NULL;
    window_addText( wid, x, y, cw, 20, 1, "txtNdata",
          &gl_smallFont, NULL, buf );
    y -= 40;
@@ -280,7 +284,7 @@ static void opt_gameplay( unsigned int wid )
    cw = (w-60)/2 - 40;
    y  = by;
    x  = 20;
-#if defined ENABLE_NLS && ENABLE_NLS
+#if ENABLE_NLS
    s = _("Language:");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 0, "txtLanguage",
@@ -296,7 +300,7 @@ static void opt_gameplay( unsigned int wid )
    }
    window_addList( wid, x+l+20, y, cw-l-50, 70, "lstLanguage", ls, n, i, NULL, NULL );
    y -= 90;
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
+#endif /* ENABLE_NLS */
    window_addText( wid, x, y, cw, 20, 0, "txtCompile",
          NULL, NULL, _("Compilation Flags:") );
    y -= 30;
@@ -475,6 +479,7 @@ static void opt_gameplayDefaults( unsigned int wid, char *str )
 
    /* Faders. */
    window_faderValue( wid, "fadAutonav", AUTONAV_RESET_SPEED_DEFAULT );
+   window_faderValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
 
    /* Input boxes. */
    nsnprintf( vmsg, sizeof(vmsg), "%d", INPUT_MESSAGES_DEFAULT );
@@ -636,11 +641,11 @@ static void menuKeybinds_genList( unsigned int wid )
                (void)p;
             }
 
-            /* SDL_GetKeyName returns lowercase which is ugly. */
-            if (nstd_isalpha(key))
-               nsnprintf(str[j], l, "%s <%s%c>", keybind_info[j][1], mod_text, nstd_toupper(key) );
+            /* Print key. Special-case ASCII letters (use uppercase, unlike SDL_GetKeyName.). */
+            if (key < 0x100 && isalpha(key))
+               nsnprintf(str[j], l, "%s <%s%c>", keybind_info[j][1], mod_text, toupper(key) );
             else
-               nsnprintf(str[j], l, "%s <%s%s>", keybind_info[j][1], mod_text, SDL_GetKeyName(key) );
+               nsnprintf(str[j], l, "%s <%s%s>", keybind_info[j][1], mod_text, _(SDL_GetKeyName(key)) );
             break;
          case KEYBIND_JAXISPOS:
             nsnprintf(str[j], l, "%s <ja+%d>", keybind_info[j][1], key);
@@ -721,17 +726,17 @@ static void menuKeybinds_update( unsigned int wid, char *name )
          nsnprintf(binding, sizeof(binding), _("Not bound"));
          break;
       case KEYBIND_KEYBOARD:
-         /* SDL_GetKeyName returns lowercase which is ugly. */
-         if (nstd_isalpha(key))
+         /* Print key. Special-case ASCII letters (use uppercase, unlike SDL_GetKeyName.). */
+         if (key < 0x100 && isalpha(key))
             nsnprintf(binding, sizeof(binding), _("keyboard:   %s%s%c"),
                   (mod != KMOD_NONE) ? input_modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
-                  nstd_toupper(key));
+                  toupper(key));
          else
             nsnprintf(binding, sizeof(binding), _("keyboard:   %s%s%s"),
                   (mod != KMOD_NONE) ? input_modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
-                  SDL_GetKeyName(key));
+                  _(SDL_GetKeyName(key)));
          break;
       case KEYBIND_JAXISPOS:
          nsnprintf(binding, sizeof(binding), _("joy axis pos:   <%d>"), key );
@@ -1521,9 +1526,10 @@ static void opt_videoDefaults( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkFPS", SHOW_FPS_DEFAULT );
    window_checkboxSet( wid, "chkEngineGlow", ENGINE_GLOWS_DEFAULT );
    window_checkboxSet( wid, "chkMinimize", MINIMIZE_DEFAULT );
+   window_checkboxSet( wid, "chkBigIcons", BIG_ICONS_DEFAULT );
 
    /* Faders. */
-   window_faderValue(  wid, "fadScale", SCALE_FACTOR_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadScale", SCALE_FACTOR_DEFAULT );
 }
 
 /**
@@ -1536,6 +1542,7 @@ static void opt_setScalefactor( unsigned int wid, char *str )
 {
    char buf[32];
    double scale = window_getFaderValue(wid, str);
+   scale = round(scale * 10) / 10;     // Reasonable precision. Clearer value.
    if (FABS(conf.scalefactor-scale) > 1e-4)
       opt_needRestart();
    conf.scalefactor = scale;

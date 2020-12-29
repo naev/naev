@@ -188,7 +188,7 @@ function enter()
       baddie:setHostile()
       baddie:setHilight()
       baddie:control()
-      baddie:goto(pos)
+      baddie:moveto(pos)
 
       --The pirate becomes nice defensive outfits
       baddie:rmOutfit("all")
@@ -261,10 +261,10 @@ function enter()
 end
 
 function idle(pilot,pos)  --the Gawain is flying around a random point
-   baddie:goto(pos + vec2.new( 800,  800), false, false)
-   baddie:goto(pos + vec2.new(-800,  800), false, false)
-   baddie:goto(pos + vec2.new(-800, -800), false, false)
-   baddie:goto(pos + vec2.new( 800, -800), false, false)
+   baddie:moveto(pos + vec2.new( 800,  800), false, false)
+   baddie:moveto(pos + vec2.new(-800,  800), false, false)
+   baddie:moveto(pos + vec2.new(-800, -800), false, false)
+   baddie:moveto(pos + vec2.new( 800, -800), false, false)
 end
 
 function attacked()  --the Gawain is going away

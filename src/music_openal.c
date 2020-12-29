@@ -2,21 +2,22 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/** @cond */
+#include <math.h>
+#include <vorbis/vorbisfile.h>
+#include "SDL.h"
+#include "SDL_rwops.h"
+#include "SDL_thread.h"
+
+#include "naev.h"
+/** @endcond */
+
 #include "music_openal.h"
 
-#include <math.h>
-
-#include "SDL.h"
-#include "SDL_thread.h"
-#include "SDL_rwops.h"
-
-#include <vorbis/vorbisfile.h>
-
+#include "conf.h"
+#include "log.h"
 #include "music.h"
 #include "sound_openal.h"
-#include "naev.h"
-#include "log.h"
-#include "conf.h"
 
 
 /**
@@ -24,10 +25,6 @@
  */
 #define RG_PREAMP_DB       0.0
 
-
-/* Lock for OpenAL operations. */
-#define soundLock()        SDL_mutexP(sound_lock)
-#define soundUnlock()      SDL_mutexV(sound_lock)
 
 /* Lock for all state/cond operations. */
 #define musicLock()        SDL_mutexP(music_state_lock)
@@ -77,7 +74,6 @@ static char *music_buf              = NULL; /**< Music playing buffer. */
 /*
  * Locks.
  */
-extern SDL_mutex *sound_lock; /**< Global sound lock, used for all OpenAL calls. */
 static SDL_mutex *music_vorbis_lock = NULL; /**< Lock for vorbisfile operations. */
 static SDL_cond  *music_state_cond  = NULL; /**< Cond for thread to signal status updates. */
 static SDL_mutex *music_state_lock  = NULL; /**< Lock for music state. */
@@ -543,7 +539,7 @@ static int stream_loadBuffer( ALuint buffer )
             &music_vorbis.stream,   /* stream */
             &music_buf[size],       /* data */
             music_bufSize - size,   /* amount to read */
-            VORBIS_ENDIAN,          /* big endian? */
+            HAS_BIGENDIAN,          /* big endian? */
             2,                      /* 16 bit */
             1,                      /* signed */
             &section,               /* current bitstream */
@@ -554,7 +550,7 @@ static int stream_loadBuffer( ALuint buffer )
             &music_vorbis.stream,   /* stream */
             &music_buf[size],       /* data */
             music_bufSize - size,   /* amount to read */
-            VORBIS_ENDIAN,          /* big endian? */
+            HAS_BIGENDIAN,          /* big endian? */
             2,                      /* 16 bit */
             1,                      /* signed */
             &section );             /* current bitstream */

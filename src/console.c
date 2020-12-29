@@ -8,38 +8,39 @@
  * @brief Handles the Lua console.
  */
 
+/** @cond */
+#define lua_c
+#include <ctype.h>
+#include <lauxlib.h>
+#include <lua.h>
+#include <lualib.h>
+#include <stdlib.h>
+
+#include "naev.h"
+/** @endcond */
+
 #include "console.h"
 
-#include "naev.h"
-
-#include <stdlib.h>
-#include <ctype.h>
-#include "nstring.h"
-
-#define lua_c
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-
+#include "array.h"
+#include "conf.h"
+#include "font.h"
 #include "log.h"
+#include "menu.h"
 #include "naev.h"
-#include "nlua.h"
-#include "nluadef.h"
 #include "ndata.h"
-#include "nlua_cli.h"
-#include "nlua_tk.h"
-#include "nlua_tex.h"
-#include "nlua_col.h"
+#include "nfile.h"
+#include "nlua.h"
+#include "nlua_audio.h"
 #include "nlua_bkg.h"
 #include "nlua_camera.h"
+#include "nlua_cli.h"
+#include "nlua_col.h"
 #include "nlua_music.h"
-#include "nlua_audio.h"
-#include "font.h"
+#include "nlua_tex.h"
+#include "nlua_tk.h"
+#include "nluadef.h"
+#include "nstring.h"
 #include "toolkit.h"
-#include "nfile.h"
-#include "menu.h"
-#include "conf.h"
-#include "array.h"
 
 
 #define BUTTON_WIDTH    50 /**< Button width. */
@@ -96,6 +97,7 @@ static void cli_render( double bx, double by, double w, double h, void *data );
 static void cli_printCoreString( const char *s );
 static int cli_printCore( lua_State *L, int cli_only );
 void cli_tabComplete( unsigned int wid );
+static int cli_initLua (void);
 
 
 /**
@@ -200,6 +202,21 @@ static int cli_script( lua_State *L )
    char buf[PATH_MAX], *bbuf;
    int n;
 
+   /* Reset loaded buffer. */
+   if (cli_env != LUA_NOREF) {
+      nlua_getenv( cli_env, "_LOADED" );
+      if (lua_istable(L,-1)) {
+         lua_pushnil(L);                     /* t, nil */
+         while (lua_next(L, -2) != 0) {      /* t, key, val */
+            lua_pop(L,1);                    /* t, key */
+            lua_pushvalue(L,-1);             /* t, key, key */
+            lua_pushnil(L);                  /* t, key, key, nil */
+            lua_rawset(L,-4);                /* t, key */
+         }                                   /* t */
+      }
+      lua_pop(L,1);                          /* */
+   }
+
    /* Handle parameters. */
    fname = luaL_optstring(L, 1, NULL);
    n     = lua_gettop(L);
@@ -213,7 +230,8 @@ static int cli_script( lua_State *L )
       free(bbuf);
    }
 
-   /* Do the file. */
+   /* Do the file.
+    * This is purposely done outside of PHYSFS so we can do tests and such quickly. */
    if (luaL_loadfile(L, buf) != 0)
       lua_error(L);
 
@@ -428,10 +446,7 @@ void cli_tabComplete( unsigned int wid ) {
 }
 
 
-/**
- * @brief Initializes the CLI environment.
- */
-int cli_init (void)
+static int cli_initLua (void)
 {
    /* Already loaded. */
    if (cli_env != LUA_NOREF)
@@ -456,6 +471,17 @@ int cli_init (void)
    nlua_pushenv(cli_env);
    luaL_register( naevL, NULL, cli_methods );
    lua_settop( naevL, 0 );
+
+   return 0;
+}
+
+
+/**
+ * @brief Initializes the CLI environment.
+ */
+int cli_init (void)
+{
+   cli_initLua();
 
    /* Set the font. */
    cli_font    = malloc( sizeof(glFont) );

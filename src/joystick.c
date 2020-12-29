@@ -9,17 +9,18 @@
  */
 
 
-#include "joystick.h"
+/** @cond */
+#include "SDL.h"
+#include "SDL_haptic.h"
+#include "SDL_joystick.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include "nstring.h"
-
-#include "SDL.h"
-#include "SDL_joystick.h"
-#include "SDL_haptic.h"
+#include "joystick.h"
 
 #include "log.h"
+#include "nstring.h"
 
 
 static SDL_Joystick *joystick = NULL; /**< Current joystick in use. */

@@ -2,11 +2,14 @@
  * See Licensing and Copyright notice in naev.h
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
+/** @cond */
 #include <float.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
+#include "naev.h"
+/** @endcond */
 
 #include "map.h"
 
@@ -23,7 +26,6 @@
 #include "map_find.h"
 #include "map_system.h"
 #include "mission.h"
-#include "naev.h"
 #include "ndata.h"
 #include "nmath.h"
 #include "nstring.h"
@@ -655,7 +657,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                    "\anThrust:\a0 %.0f kN/tonne    "
                    "\anSpeed:\a0 %.0f m/s\n"
                    "\anTurn:\a0 %.0f deg/s    "
-                   "\anTime Dilation:\a0 %.0f%%\n"
+                   "\anTime Constant:\a0 %.0f%%\n"
                    "\anAbsorption:\a0 %.0f%% damage\n"
                    "\anShield:\a0 %.0f MJ (%.1f MW)    "
                    "\anArmour:\a0 %.0f MJ (%.1f MW)\n"

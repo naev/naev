@@ -9,10 +9,13 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "nxml.h"
 
-#include "naev.h"
-
+#include "ndata.h"
 #include "nstring.h"
 
 
@@ -73,3 +76,27 @@ void xmlw_setParams( xmlTextWriterPtr writer )
 }
 
 
+/**
+ * @brief Analogous to xmlParseMemory/xmlParseFile.
+ * @param filename PhysFS file name.
+ * @return doc (must xmlFreeDoc) on success, NULL on failure (will warn user).
+ */
+xmlDocPtr xml_parsePhysFS( const char* filename )
+{
+   char *buf;
+   size_t bufsize;
+   xmlDocPtr doc;
+
+   /* @TODO: Don't slurp?
+    * Can we directly create an InputStream backed by PHYSFS_*, or use SAX? */
+   buf = ndata_read( filename, &bufsize );
+   if (buf == NULL) {
+      WARN( _("Unable to read data from '%s'"), filename );
+      return NULL;
+   }
+   doc = xmlParseMemory( buf, bufsize );
+   if (doc == NULL)
+      WARN( _("Unable to parse document '%s'"), filename );
+   free( buf );
+   return doc;
+}

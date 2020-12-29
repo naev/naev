@@ -13,21 +13,23 @@
  */
 
 
-#include "unidiff.h"
+/** @cond */
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include "nstring.h"
+#include "unidiff.h"
 
-#include "log.h"
 #include "array.h"
-#include "nxml.h"
-#include "space.h"
-#include "ndata.h"
 #include "economy.h"
 #include "fleet.h"
+#include "log.h"
 #include "map_overlay.h"
+#include "ndata.h"
+#include "nstring.h"
+#include "nxml.h"
+#include "space.h"
 
 
 #define CHUNK_SIZE      32 /**< Size of chunk to allocate. */
@@ -172,8 +174,6 @@ int diff_loadAvailable (void)
 {
    int i;
    char **diff_files;
-   size_t bufsize;
-   char *filebuf;
    xmlDocPtr doc;
    xmlNodePtr node;
    UniDiffData_t *diff;
@@ -181,19 +181,10 @@ int diff_loadAvailable (void)
    diff_files     = ndata_listRecursive( UNIDIFF_DATA_PATH );
    diff_available = array_create_size( UniDiffData_t, array_size( diff_files ) );
    for ( i = 0; i < array_size( diff_files ); i++ ) {
-      /* Load string. */
-      filebuf = ndata_read( diff_files[i], &bufsize );
-      if (filebuf == NULL) {
-         WARN(_("Unable to read data from '%s'"), diff_files[i]);
-         return -1;
-      }
-
       /* Parse the header. */
-      doc = xmlParseMemory( filebuf, bufsize );
-      if (doc == NULL) {
-         WARN(_("Unable to parse document XML for UniDiff '%s'"), diff_files[i]);
+      doc = xml_parsePhysFS( diff_files[i] );
+      if (doc == NULL)
          return -1;
-      }
 
       node = doc->xmlChildrenNode;
       if (!xml_isNode(node,"unidiff")) {
@@ -205,7 +196,6 @@ int diff_loadAvailable (void)
       diff->filename = diff_files[i];
       xmlr_attr_strd(node, "name", diff->name);
       xmlFreeDoc(doc);
-      free(filebuf);
    }
    array_free( diff_files );
    array_shrink(&diff_available);
@@ -258,8 +248,6 @@ int diff_apply( const char *name )
 {
    xmlNodePtr node;
    xmlDocPtr doc;
-   size_t bufsize;
-   char *buf;
    char *filename;
    int i;
 
@@ -279,8 +267,7 @@ int diff_apply( const char *name )
       return -1;
    }
 
-   buf = ndata_read( filename, &bufsize );
-   doc = xmlParseMemory( buf, bufsize );
+   doc = xml_parsePhysFS( filename );
 
    node = doc->xmlChildrenNode;
    if (strcmp((char*)node->name,"unidiff")) {
@@ -292,7 +279,6 @@ int diff_apply( const char *name )
    diff_patch( node );
 
    xmlFreeDoc(doc);
-   free(buf);
 
    /* Re-compute the economy. */
    economy_execQueued();

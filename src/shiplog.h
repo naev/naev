@@ -7,9 +7,11 @@
 #  define SHIPLOG_H
 
 
+/** @cond */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+/** @endcond */
 
 #include "attributes.h"
 #include "nstring.h"

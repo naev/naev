@@ -116,6 +116,25 @@ if buildExec.disabled() == false
 
    naev_deps += lua
 
+   # PhysicsFS
+   physfs = dependency('physfs', required: false)
+   if not physfs.found()
+      cmake = import('cmake')
+      # Micro-manage the poor thing to death. This helps us survive AppImage packaging, though there should be a better way.
+      physfs_opts = cmake.subproject_options()
+      physfs_opts.add_cmake_defines({'PHYSFS_BUILD_SHARED': false, 'PHYSFS_BUILD_TEST': false})
+      # You wouldn't believe the screaming, otherwise...
+      physfs_opts.set_override_option('warning_level', '1')
+      physfs = cmake.subproject('physfs', options: physfs_opts).dependency('physfs-static')
+   endif
+   naev_deps += physfs
+
+   if not lua.found()
+      lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
+   endif
+
+   naev_deps += lua
+
    ### Soft deps (required: false
 
    # BFD
@@ -141,9 +160,11 @@ if buildExec.disabled() == false
    # Standard library feature tests
    config_data.set10('HAVE_DECL_SETENV', cc.has_header_symbol('stdlib.h', 'setenv'))
    config_data.set10('HAVE_DECL__PUTENV_S', cc.has_header_symbol('stdlib.h', '_putenv_s'))
-   config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'gutenv_s'))
+   config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'getenv_s'))
    config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept'))
+   config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
+   config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
    config_data.set10('HAVE_OV_READ_FILTER', cc.has_header_symbol('vorbis/vorbisfile.h', 'ov_read_filter'))
    config_data.set10('HAVE_STDALIGN_H', cc.has_header('stdalign.h'))
 

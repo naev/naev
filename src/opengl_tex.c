@@ -9,22 +9,22 @@
  */
 
 
-#include "opengl.h"
+/** @cond */
+#include <stdio.h>
+#include <stdlib.h>
+#include "physfsrwops.h"
 
 #include "naev.h"
+/** @endcond */
 
-
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-
-#include "log.h"
-#include "ndata.h"
-#include "nfile.h"
-#include "gui.h"
 #include "conf.h"
-#include "npng.h"
+#include "gui.h"
+#include "log.h"
 #include "md5.h"
+#include "nfile.h"
+#include "npng.h"
+#include "nstring.h"
+#include "opengl.h"
 
 
 /*
@@ -323,7 +323,7 @@ glTexture* gl_loadImageData( float *data, int w, int h, int pitch, int sx, int s
 {
    int potw,poth, rw,rh;
    float *datapot;
-   int i, j;
+   int i, j, k;
    glTexture *texture;
 
    /* Check if pot. */
@@ -335,10 +335,11 @@ glTexture* gl_loadImageData( float *data, int w, int h, int pitch, int sx, int s
    if (gl_needPOT() && ((w!=potw) || h!=poth)) {
       rw = potw;
       rh = poth;
-      datapot = calloc( sizeof(float), potw*poth );
+      datapot = calloc( sizeof(float)*4, potw*poth );
       for (i=0; i<h; i++)
          for (j=0; j<w; j++)
-            datapot[ i*potw+j ] = data[ i*pitch+j ];
+            for (k=0; k<4; k++)
+               datapot[ 4*(i*potw+j)+k ] = data[ 4*(i*pitch+j)+k ];
    }
 
    /* Set up the texture defaults */
@@ -740,7 +741,7 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    }
 
    /* Load from packfile */
-   rw = ndata_rwops( path );
+   rw = PHYSFSRWOPS_openRead( path );
    if (rw == NULL) {
       WARN(_("Failed to load surface '%s' from ndata."), path);
       return NULL;
@@ -767,9 +768,6 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const u
    SDL_Surface *surface;
    npng_t *npng;
    png_uint_32 w, h;
-   int sx, sy;
-   char *str;
-   int len;
 
    /* Placeholder for warnings. */
    if (path==NULL)
@@ -778,16 +776,9 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const u
    npng     = npng_open( rw );
    if (npng == NULL) {
       WARN(_("File '%s' is not a png."), path );
-      SDL_RWclose( rw );
       return NULL;
    }
    npng_dim( npng, &w, &h );
-
-   /* Process metadata. */
-   len = npng_metadata( npng, "sx", &str );
-   sx  = (len > 0) ? atoi(str) : 1;
-   len = npng_metadata( npng, "sy", &str );
-   sy  = (len > 0) ? atoi(str) : 1;
 
    /* Load surface. */
    surface  = npng_readSurface( npng, gl_needPOT(), 1 );
@@ -799,9 +790,9 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const u
    }
 
    if (flags & OPENGL_TEX_MAPTRANS)
-      texture = gl_loadImagePadTrans( path, surface, rw, flags, w, h, sx, sy, 1 );
+      texture = gl_loadImagePadTrans( path, surface, rw, flags, w, h, 1, 1, 1 );
    else
-      texture = gl_loadImagePad( path, surface, flags, w, h, sx, sy, 1 );
+      texture = gl_loadImagePad( path, surface, flags, w, h, 1, 1, 1 );
 
    return texture;
 }

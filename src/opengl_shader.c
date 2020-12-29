@@ -2,14 +2,27 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/** @cond */
 #include "naev.h"
-#include "opengl.h"
-#include "ndata.h"
+/** @endcond */
+
 #include "log.h"
+#include "ndata.h"
 #include "nstring.h"
+#include "opengl.h"
 
 
 #define GLSL_VERSION    "#version 140\n\n" /**< Version to use for all shaders. */
+
+
+/*
+ * Prototypes.
+ */
+static char* gl_shader_loadfile( const char *filename, size_t *size, int main, const char *prepend );
+static GLuint gl_shader_compile( GLuint type, const char *buf,
+      GLint length, const char *filename);
+static int gl_program_link( GLuint program );
+static int gl_program_make( GLuint vertex_shader, GLuint fragment_shader );
 
 
 /**
@@ -18,9 +31,10 @@
  *    @param[in] filename Filename of the shader to load.
  *    @param[out] size Size of the loaded shader.
  *    @param[in] main Whether or not this is the main shader.
+ *    @param[in] prepend String that should be prepended.
  *    @return The loaded shader buffer.
  */
-static char* gl_shader_loadfile( const char *filename, size_t *size, int main )
+static char* gl_shader_loadfile( const char *filename, size_t *size, int main, const char *prepend )
 {
    size_t i, bufsize, ibufsize, fbufsize;
    char *buf, *fbuf, *ibuf, *newbuf;
@@ -38,12 +52,12 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, int main )
       return NULL;
    }
 
-   if (main) {
-      /* Prepend the GLSL version.
-      * TODO add #defines as necessary based on the code. */
-      bufsize = fbufsize+sizeof(GLSL_VERSION);
+   /* Prepend useful information if available. */
+   if (main && (prepend != NULL)) {
+      bufsize = fbufsize+strlen(prepend)+1;
       buf = malloc( bufsize );
-      snprintf( buf, bufsize, "%s%s", GLSL_VERSION, fbuf );
+      snprintf( buf, bufsize, "%s%s", prepend, fbuf );
+      buf[bufsize-1] = '\0';
       free( fbuf );
    }
    else {
@@ -80,7 +94,7 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, int main )
       include[i] = '\0'; /* Last character should be " or > */
 
       /* Recursive loading and handling of #includes. */
-      ibuf = gl_shader_loadfile( include, &ibufsize, 0 );
+      ibuf = gl_shader_loadfile( include, &ibufsize, 0, NULL );
 
       /* Move data over. */
       newbuf = malloc( bufsize+ibufsize );
@@ -116,16 +130,13 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, int main )
 /**
  * @brief Open and compile GLSL shader from ndata.
  */
-GLuint gl_shader_read(GLuint type, const char *filename) {
-   size_t bufsize;
-   char *buf, *log;
+static GLuint gl_shader_compile( GLuint type, const char *buf,
+      GLint length, const char *filename)
+{
+   char *log;
    GLuint shader;
-   GLint length, compile_status, log_length;
+   GLint compile_status, log_length;
 
-   /* Load the main shader. */
-   buf = gl_shader_loadfile( filename, &bufsize, 1 );
-   length = bufsize;
-  
    /* Compile it. */
    shader = glCreateShader(type);
    glShaderSource(shader, 1, (const char**)&buf, &length);
@@ -141,16 +152,19 @@ GLuint gl_shader_read(GLuint type, const char *filename) {
       free(log);
       shader = 0;
    }
-   
-   free(buf);
-
+   gl_checkErr();
    return shader;
 }
 
+
 /**
  * @brief Link a GLSL program and check for link error.
+ *
+ *    @param[in] program Program to link.
+ *    @return 0 on success.
  */
-int gl_program_link(GLuint program) {
+static int gl_program_link( GLuint program )
+{
    GLint link_status, log_length;
    char *log;
 
@@ -170,13 +184,61 @@ int gl_program_link(GLuint program) {
    return 0;
 }
 
-int gl_program_vert_frag(const char *vert, const char *frag) {
-   GLuint vertex_shader, fragment_shader, program;
 
-   vertex_shader = gl_shader_read(GL_VERTEX_SHADER, vert);
-   fragment_shader = gl_shader_read(GL_FRAGMENT_SHADER, frag);
+/**
+ * @brief Loads a vertex and fragment shader from files.
+ *
+ *    @param[in] vertfile Vertex shader filename.
+ *    @param[in] fragfile Fragment shader filename.
+ *    @return The shader compiled program.
+ */
+int gl_program_vert_frag( const char *vertfile, const char *fragfile )
+{
+   char *vert_str, *frag_str;
+   size_t vert_size, frag_size;
+   GLuint vertex_shader, fragment_shader;
 
-   program = 0;
+   vert_str = gl_shader_loadfile( vertfile, &vert_size, 1, GLSL_VERSION );
+   frag_str = gl_shader_loadfile( fragfile, &frag_size, 1, GLSL_VERSION );
+
+   vertex_shader = gl_shader_compile( GL_VERTEX_SHADER, vert_str, vert_size, vertfile );
+   fragment_shader = gl_shader_compile( GL_FRAGMENT_SHADER, frag_str, frag_size, fragfile );
+
+   free( vert_str );
+   free( frag_str );
+
+   return gl_program_make( vertex_shader, fragment_shader );
+}
+
+
+/**
+ * @brief Loads a vertex and fragment shader from strings.
+ *
+ *    @param[in] vert Vertex shader string.
+ *    @param[in] vert_size Size of the vertex shader string.
+ *    @param[in] frag Fragment shader string.
+ *    @param[in] frag_size Size of the fragment shader string.
+ *    @return The shader compiled program.
+ */
+int gl_program_vert_frag_string( const char *vert, size_t vert_size, const char *frag, size_t frag_size )
+{
+   GLuint vertex_shader, fragment_shader;
+   vertex_shader = gl_shader_compile( GL_VERTEX_SHADER, vert, vert_size, NULL );
+   fragment_shader = gl_shader_compile( GL_FRAGMENT_SHADER, frag, frag_size, NULL );
+   return gl_program_make( vertex_shader, fragment_shader );
+}
+
+
+/**
+ * @brief Makes a shader program from a vertex and fragment shader.
+ *
+ *    @param vertex_shader Vertex shader to make program from.
+ *    @param fragment_shader Fragment shader to make program from.
+ *    @return New shader program.
+ */
+static int gl_program_make( GLuint vertex_shader, GLuint fragment_shader )
+{
+   GLuint program = 0;
    if (vertex_shader != 0 && fragment_shader != 0) {
       program = glCreateProgram();
       glAttachShader(program, vertex_shader);

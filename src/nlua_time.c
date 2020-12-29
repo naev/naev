@@ -8,16 +8,17 @@
  * @brief Time manipulation Lua bindings.
  */
 
-#include "nlua_time.h"
-
-#include "naev.h"
-
+/** @cond */
+#include <lauxlib.h>
 #include <stdlib.h>
 
-#include <lauxlib.h>
+#include "naev.h"
+/** @endcond */
 
-#include "nluadef.h"
+#include "nlua_time.h"
+
 #include "log.h"
+#include "nluadef.h"
 #include "ntime.h"
 
 

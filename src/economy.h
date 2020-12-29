@@ -5,10 +5,13 @@
 #ifndef ECONOMY_H
 #  define ECONOMY_H
 
+/** @cond */
 #include <stdint.h>
-#include "opengl.h"
+/** @endcond */
 
+#include "opengl.h"
 #include "space.h"
+
 
 /*
  * Economy stuff.

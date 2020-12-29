@@ -6,7 +6,9 @@
 #ifndef ENV_H
 #define ENV_H
 
+/** @cond */
 #include <stdlib.h>
+/** @endcond */
 
 
 typedef struct _env_t {

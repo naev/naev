@@ -1,6 +1,8 @@
 --[[
 -- Filesystem
 --]]
+local love = require 'love'
+
 local filesystem = {}
 
 function filesystem.getInfo( path, filtertype )
@@ -18,6 +20,11 @@ function filesystem.getInfo( path, filtertype )
    return nil
 end
 function filesystem.newFile( filename )
+   local ftype = naev.file.filetype( filename )
+   if ftype == "file" then
+      return naev.file.new( filename )
+   end
+   -- Fallback to love path
    return naev.file.new( love._basepath..filename )
 end
 function filesystem.read( name, size )

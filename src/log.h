@@ -9,10 +9,13 @@
 #  define LOG_H
 
 
-#include <stdio.h>
+/** @cond */
 #include <signal.h>
+#include <stdio.h>
 
 #include "gettext.h"
+/** @endcond */
+
 #include "nstring.h"
 
 #if defined ENABLE_NLS && ENABLE_NLS

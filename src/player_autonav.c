@@ -9,19 +9,22 @@
  */
 
 
-#include "player.h"
+/** @cond */
+#include <time.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include "toolkit.h"
-#include "pause.h"
 #include "player.h"
+
+#include "conf.h"
+#include "pause.h"
 #include "pilot.h"
 #include "pilot_ew.h"
-#include "space.h"
+#include "player.h"
 #include "sound.h"
-#include "conf.h"
-#include <time.h>
+#include "space.h"
+#include "toolkit.h"
 
 
 extern double player_acc; /**< Player acceleration. */
@@ -537,10 +540,9 @@ int player_autonavShouldResetSpeed (void)
 
    pstk = pilot_getAll( &n );
    for (i=0; i<n; i++) {
-      if ( (pstk[i]->id != PLAYER_ID) && pilot_isHostile(pstk[i])
-            && pilot_isFlag(pstk[i], PILOT_HOSTILE) /* Only count actively hostile pilots */
-            && pilot_inRangePilot(player.p, pstk[i], NULL) == 1
-            && !pilot_isDisabled(pstk[i]) ) {
+      if ( ( pstk[i]->id != PLAYER_ID ) && pilot_isHostile( pstk[i] )
+            && pilot_inRangePilot( player.p, pstk[i], NULL ) == 1
+            && !pilot_isDisabled( pstk[i] ) ) {
          hostiles = 1;
          break;
       }

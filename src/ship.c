@@ -9,25 +9,27 @@
  */
 
 
-#include "ship.h"
+/** @cond */
+#include <limits.h>
+#include "physfsrwops.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include "nstring.h"
-#include <limits.h>
+#include "ship.h"
 
-#include "nxml.h"
-
+#include "array.h"
+#include "colour.h"
+#include "conf.h"
 #include "log.h"
 #include "ndata.h"
-#include "toolkit.h"
-#include "array.h"
-#include "conf.h"
+#include "nfile.h"
 #include "npng.h"
-#include "colour.h"
+#include "nstring.h"
+#include "nxml.h"
 #include "shipstats.h"
 #include "slots.h"
-#include "nfile.h"
+#include "toolkit.h"
 #include "unistd.h"
 
 
@@ -499,7 +501,7 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
    int ret;
 
    /* Load the space sprite. */
-   rw    = ndata_rwops( str );
+   rw    = PHYSFSRWOPS_openRead( str );
    npng  = npng_open( rw );
    npng_dim( npng, &w, &h );
    surface = npng_readSurface( npng, gl_needPOT(), 1 );
@@ -595,7 +597,6 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
  */
 static int ship_loadPLG( Ship *temp, char *buf )
 {
-   size_t bufsize;
    char *file;
    int sl;
    CollPoly *polygon;
@@ -610,7 +611,7 @@ static int ship_loadPLG( Ship *temp, char *buf )
    nsnprintf( file, sl, "%s%s.xml", SHIP_POLYGON_PATH, buf );
 
    /* See if the file does exist. */
-   if (!ndata_exists(file)) {
+   if (!PHYSFS_exists(file)) {
       WARN(_("%s xml collision polygon does not exist!\n \
                Please use the script 'polygon_from_sprite.py' if sprites are used,\n \
                And 'polygonSTL.py' if 3D model is used in game.\n \
@@ -620,12 +621,9 @@ static int ship_loadPLG( Ship *temp, char *buf )
    }
 
    /* Load the XML. */
-   buf  = ndata_read( file, &bufsize );
-   doc  = xmlParseMemory( buf, bufsize );
-   free(buf);
+   doc  = xml_parsePhysFS( file );
 
    if (doc == NULL) {
-      WARN(_("%s file is invalid xml!"), file);
       free(file);
       return 0;
    }
@@ -1091,8 +1089,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
  */
 int ships_load (void)
 {
-   size_t bufsize, nfiles;
-   char *buf, **ship_files, *file;
+   size_t nfiles;
+   char **ship_files, *file;
    int i, sl;
    xmlNodePtr node;
    xmlDocPtr doc;
@@ -1100,27 +1098,24 @@ int ships_load (void)
    /* Validity. */
    ss_check();
 
-   ship_files = ndata_list( SHIP_DATA_PATH, &nfiles );
+   ship_files = PHYSFS_enumerateFiles( SHIP_DATA_PATH );
+   for (nfiles=0; ship_files[nfiles]!=NULL; nfiles++) {}
 
    /* Initialize stack if needed. */
    if (ship_stack == NULL) {
       ship_stack = array_create_size(Ship, nfiles);
    }
 
-   for (i=0; i<(int)nfiles; i++) {
-
+   for (i=0; ship_files[i]!=NULL; i++) {
       /* Get the file name .*/
       sl   = strlen(SHIP_DATA_PATH)+strlen(ship_files[i])+1;
       file = malloc( sl );
       nsnprintf( file, sl, "%s%s", SHIP_DATA_PATH, ship_files[i] );
 
       /* Load the XML. */
-      buf  = ndata_read( file, &bufsize );
-      doc  = xmlParseMemory( buf, bufsize );
+      doc  = xml_parsePhysFS( file );
 
       if (doc == NULL) {
-         free(buf);
-         WARN(_("%s file is invalid xml!"), file);
          free(file);
          continue;
       }
@@ -1128,7 +1123,6 @@ int ships_load (void)
       node = doc->xmlChildrenNode; /* First ship node */
       if (node == NULL) {
          xmlFreeDoc(doc);
-         free(buf);
          WARN(_("Malformed %s file: does not contain elements"), file);
          free(file);
          continue;
@@ -1142,7 +1136,6 @@ int ships_load (void)
 
       /* Clean up. */
       xmlFreeDoc(doc);
-      free(buf);
    }
 
    /* Shrink stack. */
@@ -1150,9 +1143,7 @@ int ships_load (void)
    DEBUG( ngettext( "Loaded %d Ship", "Loaded %d Ships", array_size(ship_stack) ), array_size(ship_stack) );
 
    /* Clean up. */
-   for (i=0; i<(int)nfiles; i++)
-      free( ship_files[i] );
-   free( ship_files );
+   PHYSFS_freeList( ship_files );
 
    return 0;
 }

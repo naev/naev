@@ -1,7 +1,8 @@
 --[[
 -- Mouse
 --]]
--- Internal function that connects to Naev
+local love = require 'love'
+
 local mouse = {}
 mouse.x = 0
 mouse.y = 0
@@ -14,6 +15,5 @@ function mouse.isDown( button ) return mouse.down[button]==true end
 function mouse.setVisible( visible )
    love._unimplemented()
 end
-
 
 return mouse

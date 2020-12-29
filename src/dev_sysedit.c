@@ -8,16 +8,19 @@
  * @brief Handles the star system editor.
  */
 
-#include "dev_sysedit.h"
-#include "dev_uniedit.h"
+/** @cond */
+#include "physfs.h"
+#include "SDL.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include "SDL.h"
+#include "dev_sysedit.h"
 
 #include "conf.h"
 #include "dev_planet.h"
 #include "dev_system.h"
+#include "dev_uniedit.h"
 #include "dialogue.h"
 #include "economy.h"
 #include "map.h"
@@ -219,7 +222,7 @@ void sysedit_open( StarSystem *sys )
          "btnRename", _("Rename"), sysedit_btnRename );
    i += 1;
 
-   /* New system. */
+   /* New planet. */
    window_addButtonKey( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnNew", _("New Planet"), sysedit_btnNew, SDLK_n );
    i += 2;
@@ -340,6 +343,9 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
 
    if (conf.devautosave)
       dpl_savePlanet( p );
+
+   /* Clean up presences. */
+   space_reconstructPresences();
 
    window_close( wid, unused );
 }
@@ -1971,8 +1977,8 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
 
    /* Find images first. */
    path           = land ? PLANET_GFX_EXTERIOR_PATH : PLANET_GFX_SPACE_PATH;
-   files          = ndata_list( path, &nfiles );
-   ndata_sortName( files, nfiles );
+   files          = PHYSFS_enumerateFiles( path );
+   for (nfiles=0; files[nfiles]; nfiles++) {}
    cells          = calloc( nfiles, sizeof(ImageArrayCell) );
 
    j              = 0;
@@ -1986,9 +1992,8 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
          memcpy( &cells[j].bg, &c, sizeof(glColour) );
          j++;
       }
-      free( files[i] );
    }
-   free( files );
+   PHYSFS_freeList( files );
 
    /* Add image array. */
    window_addImageArray( wid, 20, 20, w-60-BUTTON_WIDTH, h-60, "iarGFX", 128, 128, cells, j, NULL, NULL, NULL );

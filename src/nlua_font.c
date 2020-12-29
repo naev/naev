@@ -8,15 +8,17 @@
  * @brief Handles fonts.
  */
 
-#include "nlua_font.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_font.h"
+
+#include "log.h"
 #include "ndata.h"
 #include "nluadef.h"
-#include "log.h"
 
 
 /* Font metatable methods. */
@@ -24,13 +26,17 @@ static int fontL_gc( lua_State *L );
 static int fontL_eq( lua_State *L );
 static int fontL_new( lua_State *L );
 static int fontL_height( lua_State *L );
+static int fontL_width( lua_State *L );
 static int fontL_setFilter( lua_State *L );
+static int fontL_addFallback( lua_State *L );
 static const luaL_Reg fontL_methods[] = {
    { "__gc", fontL_gc },
    { "__eq", fontL_eq },
    { "new", fontL_new },
    { "height", fontL_height },
+   { "width", fontL_width },
    { "setFilter", fontL_setFilter },
+   { "addFallback", fontL_addFallback },
    {0,0}
 }; /**< Font metatable methods. */
 
@@ -205,6 +211,24 @@ static int fontL_height( lua_State *L )
 
 
 /**
+ * @brief Gets the width of some text for a font.
+ *
+ *    @luatparam Font f Font to use.
+ *    @luatparam string text Text to get width of.
+ *    @luatreturn number Height of the font.
+ * @luafunc width( f, text )
+ */
+static int fontL_width( lua_State *L )
+{
+   glFont *font = luaL_checkfont(L,1);
+   const char *text = luaL_checkstring(L,2);
+   int width = gl_printWidthRaw( font, text );
+   lua_pushinteger(L, width);
+   return 1;
+}
+
+
+/**
  * @brief Sets the font minification and magnification filters.
  *
  *    @luatparam Font font Font to set filter.
@@ -228,4 +252,21 @@ static int fontL_setFilter( lua_State *L )
    gl_fontSetFilter( font, min, mag );
 
    return 0;
+}
+
+
+/**
+ * @brief Adds a fallback to a font.
+ *
+ *    @luatparam Font font Font to set fallback to.
+ *    @luatparam string filename Name of the font to add.
+ * @luafunc addFallback( font, filename )
+ */
+static int fontL_addFallback( lua_State *L )
+{
+   glFont *font = luaL_checkfont(L,1);
+   const char *s = luaL_checkstring(L,2);
+   int ret = gl_fontAddFallback( font, s );
+   lua_pushboolean(L, !ret);
+   return 1;
 }

@@ -5,9 +5,12 @@
  * MIT licensed
  */
 
+/** @cond */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+/** @endcond */
+
 #include "semver.h"
 
 #define SLICE_SIZE   50

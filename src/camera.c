@@ -9,18 +9,20 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "camera.h"
 
-#include "naev.h"
-
-#include "log.h"
+#include "background.h"
 #include "conf.h"
-#include "space.h"
 #include "gui.h"
+#include "log.h"
 #include "nebula.h"
 #include "pause.h"
-#include "background.h"
 #include "player.h"
+#include "space.h"
 
 
 #define CAMERA_DIR      (M_PI/2.)

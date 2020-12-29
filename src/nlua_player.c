@@ -9,39 +9,40 @@
  */
 
 
-#include "nlua_player.h"
+/** @cond */
+#include <lauxlib.h>
+#include <lua.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-#include <math.h>
+#include "nlua_player.h"
 
-#include <lua.h>
-#include <lauxlib.h>
-
-#include "nluadef.h"
-#include "nlua_pilot.h"
-#include "nlua_vec2.h"
-#include "log.h"
-#include "player.h"
 #include "board.h"
-#include "mission.h"
-#include "event.h"
-#include "land.h"
-#include "nlua_system.h"
-#include "nlua_outfit.h"
-#include "nlua_planet.h"
-#include "nlua_ship.h"
-#include "map.h"
-#include "map_overlay.h"
-#include "hook.h"
 #include "comm.h"
-#include "land_outfits.h"
+#include "event.h"
 #include "gui.h"
 #include "gui_omsg.h"
+#include "hook.h"
+#include "land.h"
+#include "land_outfits.h"
+#include "log.h"
+#include "map.h"
+#include "map_overlay.h"
+#include "mission.h"
+#include "nlua_outfit.h"
+#include "nlua_pilot.h"
+#include "nlua_planet.h"
+#include "nlua_ship.h"
+#include "nlua_system.h"
+#include "nlua_vec2.h"
+#include "nluadef.h"
+#include "nstring.h"
 #include "pause.h"
+#include "player.h"
 
 
 /* Player methods. */

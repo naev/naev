@@ -8,28 +8,29 @@
  * @brief Handles displaying backgrounds.
  */
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "background.h"
 
-#include "naev.h"
-
-#include "nxml.h"
-
-#include "opengl.h"
-#include "log.h"
-#include "player.h"
-#include "conf.h"
-#include "rng.h"
-#include "pause.h"
 #include "array.h"
-#include "ndata.h"
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_tex.h"
-#include "nlua_col.h"
-#include "nlua_bkg.h"
 #include "camera.h"
+#include "conf.h"
+#include "log.h"
+#include "ndata.h"
 #include "nebula.h"
+#include "nlua.h"
+#include "nlua_bkg.h"
+#include "nlua_col.h"
+#include "nlua_tex.h"
+#include "nluadef.h"
 #include "nstring.h"
+#include "nxml.h"
+#include "opengl.h"
+#include "pause.h"
+#include "player.h"
+#include "rng.h"
 
 
 /**

@@ -10,17 +10,18 @@
  */
 
 
-#include "fleet.h"
-
-#include "naev.h"
-
-#include "nstring.h"
+/** @cond */
+#include <limits.h>
 #include <math.h>
 #include <stdlib.h>
-#include <limits.h>
 
+#include "naev.h"
+/** @endcond */
+
+#include "fleet.h"
+
+#include "nstring.h"
 #include "nxml.h"
-
 #include "log.h"
 #include "pilot.h"
 #include "ndata.h"
@@ -211,24 +212,13 @@ if (o) WARN( _("Fleet '%s' missing '%s' element"), s,temp->name)
 static int fleet_loadFleets (void)
 {
    int mem;
-   size_t bufsize;
-   char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
 
    /* Load the data. */
-   buf = ndata_read( FLEET_DATA_PATH, &bufsize);
-   if (buf == NULL) {
-      WARN(_("Unable to read data from '%s'"), FLEET_DATA_PATH);
+   doc = xml_parsePhysFS( FLEET_DATA_PATH );
+   if (doc == NULL)
       return -1;
-   }
-
-   /* Load the document. */
-   doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN(_("Unable to parse document '%s'"), FLEET_DATA_PATH);
-      return -1;
-   }
 
    node = doc->xmlChildrenNode; /* fleets node */
    if (strcmp((char*)node->name,"Fleets")) {
@@ -260,7 +250,6 @@ static int fleet_loadFleets (void)
    fleet_stack = realloc(fleet_stack, sizeof(Fleet) * nfleets);
 
    xmlFreeDoc(doc);
-   free(buf);
 
    return 0;
 }

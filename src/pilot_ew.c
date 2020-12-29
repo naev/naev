@@ -10,15 +10,17 @@
  */
 
 
-#include "pilot.h"
 
-#include "naev.h"
-
+/** @cond */
 #include <math.h>
 
+#include "naev.h"
+/** @endcond */
+
 #include "log.h"
-#include "space.h"
+#include "pilot.h"
 #include "player.h"
+#include "space.h"
 
 static double sensor_curRange    = 0.; /**< Current base sensor range, used to calculate
                                          what is in range and what isn't. */

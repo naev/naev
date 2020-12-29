@@ -21,21 +21,23 @@
  */
 
 
-#include "dialogue.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <stdarg.h>
 #include <stdlib.h>
 
-#include "log.h"
-#include "toolkit.h"
-#include "pause.h"
-#include "opengl.h"
+#include "naev.h"
+/** @endcond */
+
+#include "dialogue.h"
+
 #include "input.h"
+#include "log.h"
 #include "menu.h"
-#include "nstring.h"
 #include "ndata.h"
+#include "nstring.h"
+#include "opengl.h"
+#include "pause.h"
+#include "toolkit.h"
 
 
 static int dialogue_open; /**< Number of dialogues open. */

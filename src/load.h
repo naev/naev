@@ -7,7 +7,9 @@
 #  define LOAD_H
 
 
+/** @cond */
 #include <stdint.h>
+/** @endcond */
 
 #include "ntime.h"
 

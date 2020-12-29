@@ -26,17 +26,19 @@
  */
 
 
-#include "opengl.h"
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "opengl_render.h"
 
-#include "naev.h"
-
+#include "camera.h"
+#include "conf.h"
+#include "gui.h"
 #include "log.h"
 #include "ndata.h"
-#include "gui.h"
-#include "conf.h"
-#include "camera.h"
 #include "nstring.h"
+#include "opengl.h"
 
 
 #define OPENGL_RENDER_VBO_SIZE      256 /**< Size of VBO. */

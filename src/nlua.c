@@ -8,37 +8,39 @@
  * @brief Handles creating and setting up basic Lua environments.
  */
 
-#include "nlua.h"
+/** @cond */
+#include "physfs.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include "nluadef.h"
+#include "nlua.h"
+
 #include "log.h"
+#include "lutf8lib.h"
 #include "ndata.h"
 #include "nfile.h"
-#include "nlua_rnd.h"
-#include "nlua_faction.h"
-#include "nlua_var.h"
-#include "nlua_naev.h"
-#include "nlua_planet.h"
-#include "nlua_system.h"
-#include "nlua_jump.h"
-#include "nlua_time.h"
-#include "nlua_news.h"
-#include "nlua_player.h"
-#include "nlua_pilot.h"
-#include "nlua_vec2.h"
+#include "nlua_cli.h"
+#include "nlua_commodity.h"
 #include "nlua_data.h"
 #include "nlua_diff.h"
-#include "nlua_outfit.h"
-#include "nlua_commodity.h"
-#include "nlua_shiplog.h"
-#include "nlua_cli.h"
+#include "nlua_faction.h"
 #include "nlua_file.h"
+#include "nlua_jump.h"
+#include "nlua_naev.h"
+#include "nlua_news.h"
+#include "nlua_outfit.h"
+#include "nlua_pilot.h"
+#include "nlua_planet.h"
+#include "nlua_player.h"
+#include "nlua_rnd.h"
+#include "nlua_shiplog.h"
+#include "nlua_system.h"
+#include "nlua_time.h"
+#include "nlua_var.h"
+#include "nlua_vec2.h"
+#include "nluadef.h"
 #include "nstring.h"
-
-
-#define NLUA_LOAD_TABLE "_LOADED" /**< Table to use to store the status of required libraries. */
 
 
 lua_State *naevL = NULL;
@@ -182,7 +184,6 @@ int nlua_dofileenv(nlua_env env, const char *filename) {
  */
 nlua_env nlua_newEnv(int rw) {
    char packagepath[STRMAX];
-   const char *ndata;
    nlua_env ref;
    lua_newtable(naevL);
    lua_pushvalue(naevL, -1);
@@ -203,9 +204,8 @@ nlua_env nlua_newEnv(int rw) {
     * "package.path" to look in the data.
     * "package.cpath" unset */
    lua_getglobal(naevL, "package");
-   ndata = ndata_getPath();
    nsnprintf( packagepath, sizeof(packagepath),
-         "%s/?.lua;%s/"LUA_INCLUDE_PATH"?.lua", ndata, ndata );
+         "?.lua;"LUA_INCLUDE_PATH"?.lua" );
    lua_pushstring(naevL, packagepath);
    lua_setfield(naevL, -2, "path");
    lua_pushstring(naevL, "");
@@ -349,7 +349,6 @@ static int nlua_loadBasic( lua_State* L )
          NULL
    };
 
-
    luaL_openlibs(L);
 
    /* replace non-safe functions */
@@ -396,34 +395,30 @@ static int nlua_require( lua_State* L )
    filename = luaL_checkstring(L,1);
 
    /* Check to see if already included. */
-   lua_getfield( L, envtab, NLUA_LOAD_TABLE ); /* t */
+   lua_getfield( L, envtab, NLUA_LOAD_TABLE );  /* t */
    if (!lua_isnil(L,-1)) {
-#if 0
-      /* check if is console. */
-      nlua_getenv(__NLUA_CURENV, "__cli");
-      int isconsole = lua_toboolean(L,-1);
-      lua_pop(L,1);
-      /* just ignore if it is the console and reload the file. */
-      if (isconsole)
-         lua_pop(L,1);
-      /* otherwise skip already loaded files to be a bit faster. */
-      else {
-         lua_getfield(L,-1,filename); /* t, f */
-         /* Already included. */
-         if (!lua_isnil(L,-1)) {
-            lua_remove(L, -2); /* val */
-            return 1;
-         }
-         lua_pop(L,2); /* */
+      lua_getfield(L,-1,filename);              /* t, f */
+      /* Already included. */
+      if (!lua_isnil(L,-1)) {
+         lua_remove(L, -2);                     /* val */
+         return 1;
       }
-#else
-      lua_pop(L,1);
-#endif
+      lua_pop(L,2);                             /* */
    }
    /* Must create new NLUA_LOAD_TABLE table. */
    else {
       lua_newtable(L);              /* t */
       lua_setfield(L, envtab, NLUA_LOAD_TABLE); /* */
+   }
+
+   /* Hardcoded libraries. */
+   if (strcmp(filename,"utf8")==0) {
+      luaopen_utf8(L);                          /* val */
+      lua_getfield(L, envtab, NLUA_LOAD_TABLE); /* val, t */
+      lua_pushvalue(L, -2);                     /* val, t, val */
+      lua_setfield(L, -2, filename);            /* val, t */
+      lua_pop(L, 1);                            /* val */
+      return 1;
    }
 
    /* Get paths to check. */
@@ -470,8 +465,8 @@ static int nlua_require( lua_State* L )
             path_filename[i] = '/';
 
       /* Try to load the file. */
-      if (nfile_fileExists( path_filename )) {
-         buf = _nfile_readFile( &bufsize, path_filename );
+      if (PHYSFS_exists( path_filename )) {
+         buf = ndata_read( path_filename, &bufsize );
          if (buf != NULL)
             break;
       }
@@ -515,9 +510,9 @@ static int nlua_require( lua_State* L )
       lua_pushboolean(L, 1);
    }
    lua_getfield(L, envtab, NLUA_LOAD_TABLE); /* val, t */
-   lua_pushvalue(L, -2); /* val, t, val */
-   lua_setfield(L, -2, filename);   /* val, t */
-   lua_pop(L, 1); /* val */
+   lua_pushvalue(L, -2);                     /* val, t, val */
+   lua_setfield(L, -2, filename);            /* val, t */
+   lua_pop(L, 1);                            /* val */
 
    /* cleanup, success */
    free(buf);

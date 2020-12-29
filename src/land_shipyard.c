@@ -9,26 +9,28 @@
  */
 
 
-#include "land_shipyard.h"
+/** @cond */
+#include <assert.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <assert.h>
+#include "land_shipyard.h"
 
-#include "nstring.h"
-#include "log.h"
-#include "player.h"
-#include "space.h"
-#include "toolkit.h"
-#include "tk/toolkit_priv.h"
 #include "dialogue.h"
-#include "map_find.h"
 #include "hook.h"
 #include "land_takeoff.h"
+#include "log.h"
+#include "map_find.h"
 #include "ndata.h"
+#include "nstring.h"
+#include "player.h"
+#include "space.h"
+#include "tk/toolkit_priv.h"
+#include "toolkit.h"
 
 
 /*
@@ -126,7 +128,7 @@ void shipyard_open( unsigned int wid )
          "\anThrust:\n\a0"
          "\anSpeed:\n\a0"
          "\anTurn:\n\a0"
-         "\anTime Dilation:\n\a0"
+         "\anTime Constant:\n\a0"
          "\n"
          "\anAbsorption:\n\a0"
          "\anShield:\n\a0"

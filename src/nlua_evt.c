@@ -9,28 +9,27 @@
  */
 
 
-#include "nlua_evt.h"
+/** @cond */
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-#include <math.h>
+#include "nlua_evt.h"
 
-#include <lua.h>
-#include <lauxlib.h>
-
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_system.h"
-#include "nlua_hook.h"
-#include "log.h"
 #include "event.h"
+#include "log.h"
 #include "mission.h"
-#include "player.h"
-#include "npc.h"
 #include "ndata.h"
+#include "nlua.h"
+#include "nlua_hook.h"
+#include "nlua_system.h"
+#include "nluadef.h"
+#include "npc.h"
+#include "nstring.h"
+#include "player.h"
 
 
 /**

@@ -10,9 +10,11 @@
  */
 
 
-#include "comm.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
+
+#include "comm.h"
 
 #include "ai.h"
 #include "commodity.h"

@@ -7,6 +7,7 @@
 #ifndef XML_H
 #  define XML_H
 
+/** @cond */
 #include <errno.h>
 
 #ifdef __MINGW64_VERSION_MAJOR
@@ -22,6 +23,7 @@
 
 #include "libxml/parser.h"
 #include "libxml/xmlwriter.h"
+/** @endcond */
 
 #include "log.h"
 #include "opengl.h"
@@ -140,6 +142,7 @@ do {if (xmlTextWriterEndDocument(w) < 0) { \
 /*
  * Functions for generic complex reading.
  */
+xmlDocPtr xml_parsePhysFS( const char* filename );
 glTexture* xml_parseTexture( xmlNodePtr node,
       const char *path, int defsx, int defsy,
       const unsigned int flags );

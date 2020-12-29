@@ -9,58 +9,60 @@
  */
 
 
-#include "player.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <stdlib.h>
 
-#include "nxml.h"
-#include "pilot.h"
-#include "log.h"
-#include "opengl.h"
-#include "font.h"
-#include "ndata.h"
-#include "space.h"
-#include "rng.h"
-#include "land.h"
-#include "land_outfits.h"
-#include "sound.h"
-#include "economy.h"
-#include "pause.h"
-#include "menu.h"
-#include "toolkit.h"
-#include "dialogue.h"
-#include "mission.h"
-#include "nlua_misn.h"
-#include "ntime.h"
-#include "hook.h"
-#include "map.h"
-#include "map_overlay.h"
-#include "nfile.h"
-#include "spfx.h"
-#include "unidiff.h"
-#include "comm.h"
-#include "intro.h"
-#include "perlin.h"
+#include "naev.h"
+/** @endcond */
+
+#include "player.h"
+
 #include "ai.h"
-#include "music.h"
-#include "gui.h"
-#include "gui_omsg.h"
-#include "nlua_var.h"
-#include "escort.h"
-#include "event.h"
-#include "conf.h"
-#include "nebula.h"
-#include "equipment.h"
 #include "camera.h"
 #include "claim.h"
-#include "player_gui.h"
-#include "start.h"
+#include "comm.h"
+#include "conf.h"
+#include "dialogue.h"
+#include "economy.h"
+#include "equipment.h"
+#include "escort.h"
+#include "event.h"
+#include "font.h"
+#include "gui.h"
+#include "gui_omsg.h"
+#include "hook.h"
 #include "input.h"
+#include "intro.h"
+#include "land.h"
+#include "land_outfits.h"
+#include "log.h"
+#include "map.h"
+#include "map_overlay.h"
+#include "menu.h"
+#include "mission.h"
+#include "music.h"
+#include "ndata.h"
+#include "nebula.h"
 #include "news.h"
+#include "nfile.h"
+#include "nlua_misn.h"
+#include "nlua_var.h"
 #include "nstring.h"
+#include "ntime.h"
+#include "nxml.h"
+#include "opengl.h"
+#include "pause.h"
+#include "perlin.h"
+#include "pilot.h"
+#include "player_gui.h"
+#include "rng.h"
 #include "shiplog.h"
+#include "sound.h"
+#include "space.h"
+#include "spfx.h"
+#include "start.h"
+#include "toolkit.h"
+#include "unidiff.h"
 
 
 /*
@@ -1315,8 +1317,10 @@ void player_restoreControl( int reason, char *str )
    if (reason != PINPUT_BRAKING) {
       pilot_rmFlag(player.p, PILOT_BRAKING);
       pilot_rmFlag(player.p, PILOT_COOLDOWN_BRAKE);
-      if (pilot_isFlag(player.p, PILOT_COOLDOWN))
+      if (pilot_isFlag(player.p, PILOT_COOLDOWN)) {
+         gui_cooldownEnd();
          pilot_cooldownEnd(player.p, str);
+      }
    }
 }
 

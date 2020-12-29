@@ -13,24 +13,27 @@
  */
 
 
-#include "economy.h"
-#include "commodity.h"
-#include "naev.h"
-
+/** @cond */
 #include <stdio.h>
-#include "nstring.h"
 #include <stdint.h>
 
-#include "nxml.h"
-#include "ndata.h"
+#include "naev.h"
+/** @endcond */
+
+#include "commodity.h"
+
+#include "economy.h"
+#include "hook.h"
 #include "log.h"
-#include "spfx.h"
+#include "ndata.h"
+#include "nstring.h"
+#include "ntime.h"
+#include "nxml.h"
 #include "pilot.h"
 #include "player.h"
 #include "rng.h"
 #include "space.h"
-#include "ntime.h"
-#include "hook.h"
+#include "spfx.h"
 
 
 #define XML_COMMODITY_ID      "Commodities" /**< XML document identifier */
@@ -593,22 +596,13 @@ void gatherable_gather( int pilot )
  */
 int commodity_load (void)
 {
-   size_t bufsize;
-   char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
 
    /* Load the file. */
-   buf = ndata_read( COMMODITY_DATA_PATH, &bufsize);
-   if (buf == NULL)
+   doc = xml_parsePhysFS( COMMODITY_DATA_PATH );
+   if (doc == NULL)
       return -1;
-
-   /* Handle the XML. */
-   doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN(_("'%s' is not valid XML."), COMMODITY_DATA_PATH);
-      return -1;
-   }
 
    node = doc->xmlChildrenNode; /* Commodities node */
    if (strcmp((char*)node->name,XML_COMMODITY_ID)) {
@@ -645,7 +639,6 @@ int commodity_load (void)
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
-   free(buf);
 
    DEBUG( ngettext( "Loaded %d Commodity", "Loaded %d Commodities", commodity_nstack ), commodity_nstack );
 

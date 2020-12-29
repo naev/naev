@@ -13,13 +13,9 @@
  */
 
 
-#include "economy.h"
-
-#include "naev.h"
-
-#include <stdio.h>
-#include "nstring.h"
+/** @cond */
 #include <stdint.h>
+#include <stdio.h>
 
 #ifdef HAVE_SUITESPARSE_CS_H
 #include <suitesparse/cs.h>
@@ -27,15 +23,21 @@
 #include <cs.h>
 #endif
 
-#include "nxml.h"
-#include "ndata.h"
+#include "naev.h"
+/** @endcond */
+
+#include "economy.h"
+
 #include "log.h"
-#include "spfx.h"
+#include "ndata.h"
+#include "nstring.h"
+#include "ntime.h"
+#include "nxml.h"
 #include "pilot.h"
 #include "player.h"
 #include "rng.h"
 #include "space.h"
-#include "ntime.h"
+#include "spfx.h"
 
 
 /*
@@ -1027,7 +1029,11 @@ int economy_sysLoad( xmlNodePtr parent )
                   if (xml_isNode(nodeAsset, "planet")) {
                      xmlr_attr_strd(nodeAsset,"name",str);
                      planet = planet_get(str);
+                     if (planet==NULL)
+                        WARN(_("Planet '%s' has saved economy data but doesn't exist!"), str);
                      free(str);
+                     if (planet==NULL)
+                        continue;
                      nodeCommodity = nodeAsset->xmlChildrenNode;
                      do{
                         if (xml_isNode(nodeCommodity, "commodity")) {

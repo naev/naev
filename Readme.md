@@ -3,8 +3,8 @@
 
 ![Naev Logo](https://naev.org/imgs/naev.png)
 
-Naev is a 2D space trading and combat game, taking inspiration from the Escape
-Velocity series, among others.
+Naev is a 2D space trading and combat game, taking inspiration from the [Escape
+Velocity series](https://en.wikipedia.org/wiki/Escape_Velocity_(video_game)), among others.
 
 You pilot a space ship from a top-down perspective, and are more or less free
 to do what you want. As the genre name implies, you’re able to trade and engage
@@ -26,6 +26,9 @@ an OpenGL-capable graphics card and driver, Naev requires the following:
 * binutils
 * intltool
 
+If you're cross-compiling for Windows, you must install this soft dependency:
+* [physfs](https://icculus.org/physfs/), example package name mingw-w64-physfs
+
 
 ### Ubuntu
 
@@ -41,7 +44,7 @@ pip3 install meson ninja
 
 ### Other \*nix
 
-See https://github.com/naev/naev/wiki/Compiling-on-*nix for package lists for several
+See [here](https://github.com/naev/naev/wiki/Compiling-on-*nix) for package lists for several
 distributions.
 
 ## COMPILING
@@ -87,7 +90,7 @@ Again, you will only ever need to do this if you are a developer.
 
 ## CRASHES & PROBLEMS
 
-Please take a look at the FAQ (linked below) before submitting a new
+Please take a look at the [FAQ](https://github.com/naev/naev/wiki/FAQ) before submitting a new
 bug report, as it covers a number of common gameplay questions and
 common issues.
 

@@ -8,26 +8,27 @@
  * @brief Handles the Lua texture bindings.
  */
 
-#include "nlua_tex.h"
-
-#include "naev.h"
-
+/** @cond */
+#include <lauxlib.h>
 #include "SDL.h"
 
-#include <lauxlib.h>
+#include "naev.h"
+/** @endcond */
 
-#include "nluadef.h"
+#include "physfsrwops.h"
+
+#include "nlua_tex.h"
+
 #include "log.h"
-#include "npng.h"
 #include "ndata.h"
-#include "nlua_file.h"
 #include "nlua_data.h"
+#include "nlua_file.h"
+#include "nluadef.h"
+#include "npng.h"
 
 
 /* Helpers. */
 static inline uint32_t get_pixel(SDL_Surface *surface, int x, int y);
-static GLint get_filter( const char *s );
-static GLint get_clamp( const char *s );
 
 
 /* Texture metatable methods. */
@@ -199,6 +200,7 @@ static int texL_new( lua_State *L )
    if (lua_isdata(L,1)) {
       int w, h;
       ld = luaL_checkdata(L,1);
+      /* Since we don't know the size we need the width and height separately. */
       w = luaL_checkinteger(L,2);
       h = luaL_checkinteger(L,3);
       if ((w < 0 ) || (h < 0))
@@ -209,7 +211,7 @@ static int texL_new( lua_State *L )
          NLUA_ERROR( L, _("Spritesheet dimensions must be positive") );
       if (ld->type != LUADATA_NUMBER)
          NLUA_ERROR( L, _("Data has invalid type for texture") );
-      if (w*h*ld->elem*4 > ld->size)
+      if (w*h*ld->elem*4 != ld->size)
          NLUA_ERROR( L, _("Texture dimensions don't match data size!") );
       tex = gl_loadImageData( (void*)ld->data, w, h, w, sx, sy );
       if (tex==NULL)
@@ -233,7 +235,7 @@ static int texL_new( lua_State *L )
    else {
       isopen = (lf->rw != NULL);
       if (!isopen)
-         lf->rw =  SDL_RWFromFile( lf->path, "r" );
+         lf->rw = PHYSFSRWOPS_openRead( lf->path );
       if (lf->rw==NULL)
          NLUA_ERROR(L, _("Unable to open '%s' to load texture"), lf->path);
       tex = gl_newSpriteRWops( lf->path, lf->rw, sx, sy, 0 );
@@ -287,7 +289,6 @@ static inline uint32_t get_pixel(SDL_Surface *surface, int x, int y)
 /**
  * @brief Reads image data from a file.
  *
- *
  *    @luatparam file File|string File or filename of the file to read the data from.
  *    @luatreturn Data Data containing the image data.
  *    @luatreturn number Width of the loaded data.
@@ -315,7 +316,7 @@ static int texL_readData( lua_State *L )
    }
    else
       s = luaL_checkstring(L,1);
-   rw = SDL_RWFromFile( s, "rb" );
+   rw = PHYSFSRWOPS_openRead( s );
    if (rw == NULL)
       NLUA_ERROR(L, _("problem opening file '%s' for reading"), s );
 
@@ -340,11 +341,11 @@ static int texL_readData( lua_State *L )
       for (j=0; j<surface->w; j++) {
          pix = get_pixel( surface, j, i );
          SDL_GetRGBA( pix, surface->format, &r, &g, &b, &a );
-         size_t pos = 4*(i*surface->w+j);
-         data[ pos+0 ] = (float)r;
-         data[ pos+1 ] = (float)g;
-         data[ pos+2 ] = (float)b;
-         data[ pos+3 ] = (float)a;
+         size_t pos = 4*((surface->h-i-1)*surface->w+j);
+         data[ pos+0 ] = ((float)r)/255.;
+         data[ pos+1 ] = ((float)g)/255.;
+         data[ pos+2 ] = ((float)b)/255.;
+         data[ pos+3 ] = ((float)a)/255.;
       }
    }
    SDL_UnlockSurface( surface );
@@ -490,16 +491,6 @@ static int texL_setFilter( lua_State *L )
 }
 
 
-static GLint get_clamp( const char *s )
-{
-   if (strcmp(s,"clamp")==0)
-      return GL_CLAMP_TO_EDGE;
-   else if (strcmp(s,"repeat")==0)
-      return GL_REPEAT;
-   else if (strcmp(s,"mirroredrepeat")==0)
-      return GL_MIRRORED_REPEAT;
-   return 0;
-}
 /**
  * @brief Sets the texture wrapping.
  *
@@ -517,9 +508,9 @@ static int texL_setWrap( lua_State *L )
    const char *sdepth = luaL_optstring(L,4,shoriz);
    GLint horiz, vert, depth;
 
-   horiz = get_clamp( shoriz );
-   vert = get_clamp( svert );
-   depth = get_clamp( sdepth );
+   horiz = gl_stringToClamp( shoriz );
+   vert = gl_stringToClamp( svert );
+   depth = gl_stringToClamp( sdepth );
 
    if (horiz==0 || vert==0 || depth==0)
       NLUA_INVALID_PARAMETER(L);

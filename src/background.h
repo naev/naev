@@ -8,8 +8,8 @@
 #  define BACKGROUND_H
 
 
-#include "opengl.h"
 #include "colour.h"
+#include "opengl.h"
 
 
 /* Render. */

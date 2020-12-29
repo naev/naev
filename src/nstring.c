@@ -8,9 +8,11 @@
  * @brief Some string routines for naev.
  */
 
-#include "nstring.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
+
+#include "nstring.h"
 
 #include "log.h"
 

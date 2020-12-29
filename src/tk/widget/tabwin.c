@@ -9,14 +9,15 @@
  */
 
 
-#include "tk/toolkit_priv.h"
-
+/** @cond */
 #include <stdlib.h>
-#include "nstring.h"
+/** @endcond */
 
-#include "toolkit.h"
 #include "font.h"
 #include "../../input.h" /* Hack for now. */
+#include "nstring.h"
+#include "tk/toolkit_priv.h"
+#include "toolkit.h"
 
 
 #define TAB_HEIGHT   30

@@ -9,16 +9,18 @@
  */
 
 
+/** @cond */
+#include <math.h>
+
+#include "naev.h"
+/** @endcond */
+
 #include "colour.h"
 
-#include <math.h>
-#include "nstring.h"
-
-#include "nmath.h"
-#include "naev.h"
 #include "log.h"
 #include "ncompat.h"
-#include "nstd.h"
+#include "nmath.h"
+#include "nstring.h"
 
 
 /*
