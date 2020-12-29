@@ -2,7 +2,7 @@ on:
   repository_dispatch:
     types: manual-nightly
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
 name: Nightly Release
 
@@ -19,7 +19,6 @@ jobs:
           fetch-depth: 0
           path: source
           submodules: true
-          
 
       - name: Package Dist
         run: |
@@ -57,6 +56,7 @@ jobs:
   "Linux_Naev_Release":
     needs: "Package_Source"
     runs-on: ubuntu-latest
+
     container:
       image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
 
@@ -87,6 +87,7 @@ jobs:
   "Windows_Naev_Release":
     needs: "Package_Source"
     runs-on: windows-latest
+
     defaults:
       run:
         shell: msys2 {0}
@@ -97,7 +98,7 @@ jobs:
         with:
           msystem: MINGW64
           update: true
-          install: git python tar mingw-w64-x86_64-clang mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-luajit mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-nsis mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2 mingw-w64-x86_64-suitesparse
+          install: git python tar mingw-w64-x86_64-clang mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-luajit mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-nsis mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-physfs mingw-w64-x86_64-SDL2 mingw-w64-x86_64-suitesparse
 
       - name: Get Source
         uses: actions/download-artifact@v2
@@ -208,9 +209,32 @@ jobs:
     if: ${{ github.repository == 'naev/naev' }}
 
     steps:
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v2
+
+      - name: Generate commit changelog
+        uses: Bullrich/generate-release-changelog@master
+        id: changelog
+        env:
+          REPO: ${{ github.repository }}
+
+      - name: Delete old nightly tag and release.
+        uses: dev-drprasad/delete-tag-and-release@v0.1.2
+        with:
+          delete_release: true
+          tag_name: nightly
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create 'nightly' tag
+        uses: EndBug/latest-tag@latest
+        with:
+          tag-name: nightly
+
       - name: Create Release Staging and Output Areas
         run: |
           mkdir -p {temp,dist/{staging,out/{lin64,win64}}}
+        working-directory: ${{ github.workspace }}
 
       - name: Update APT Cache
         if: ${{ matrix.releasetype == 'steam' }}
@@ -251,16 +275,16 @@ jobs:
 
           chmod +x dist/out/naev-$SUFFIX-linux-x86-64.AppImage
 
-      - name: Upload Github Release
-        if: ${{ matrix.releasetype == 'github' }}
-        uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Create Release
+        uses: ncipollo/release-action@v1
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "nightly"
+          artifacts: "${{ github.workspace }}/dist/out/*.*"
+          name: "Nightly Build"
+          body: |
+            ${{ steps.Changelog.outputs.changelog }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: true
-          title: "Nightly Build"
-          files: |
-            ${{ github.workspace }}/dist/out/*
+          tag: "nightly"
 
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
@@ -285,7 +309,7 @@ jobs:
         run: |
           chmod -R +x dist/staging/naev-steam-deployment
           cp -r dist/staging/naev-steam-deployment/* ${{ github.workspace }}
-          ./SteamDeploy.sh -n -v "${{ github.workspace }}/dist/staging/naev-version" -t "${{ github.workspace }}/dist/staging" -o "${{ github.workspace }}/dist/out"
+          ./SteamDeploy.sh -n -t "${{ github.workspace }}/dist/staging" -o "${{ github.workspace }}/dist/out"
         env:
           STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
           STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}
