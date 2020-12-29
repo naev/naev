@@ -14,6 +14,11 @@
 require "events/tutorial/tutorial_common"
 local portrait = require "portrait"
 
+-- List of planets where there will be NO generic NPCs
+blacklist = {
+   "Minerva Station",
+}
+
 -- Factions which will NOT get generic texts if possible.  Factions
 -- listed here not spawn generic civilian NPCs or get aftercare texts.
 -- Meant for factions which are either criminal (FLF, Pirate) or unaware
@@ -263,6 +268,19 @@ msg_edone =                {{"Animal trouble", _([["What? You had rodents sabota
 function create()
    -- Logic to decide what to spawn, if anything.
    -- TODO: Do not spawn any NPCs on restricted assets.
+
+   local blacklisted = false
+   local cur = planet.cur():name()
+   for k,v in ipairs(blacklist) do
+      if cur == v then
+         blacklisted = true
+         break
+      end
+   end
+   if blacklisted then
+      evt.finish()
+   end
+
 
    -- Chance of a jump point message showing up. As this gradually goes
    -- down, it is replaced by lore messages. See spawnNPC function below.
