@@ -51,7 +51,7 @@ end
 function tokens_get()
    return var.peek( "minerva_tokens" ) or 0
 end
-function tokes_get_gained()
+function tokens_get_gained()
    return var.peek( "minerva_tokens_gained" ) or 0
 end
 function tokens_pay( amount )
