@@ -31,12 +31,35 @@ chuckaluck_portrait = "none" -- TODO replace
 chuckaluck_desc = _("A fast-paced luck-based betting game using dice. You can play against other patrons.")
 greeter_portrait = portrait.get() -- TODO replace?
 
+patron_names = {
+   _("Patron"),
+}
+patron_descriptions = {
+   _("A gambling patron enjoying his time at the station."),
+}
+patron_messages = {
+   _("It's great to be here!"),
+}
+
 function create()
 
    -- Create NPCs
    npc_terminal = evt.npcAdd( "approach_terminal", terminal_name, terminal_portrait, terminal_desc, gambling_priority )
    npc_blackjack = evt.npcAdd( "approach_blackjack", blackjack_name, blackjack_portrait, blackjack_desc, gambling_priority )
    --npc_chuckaluck = evt.npcAdd( "approach_chuckaluck", chuckaluck_name, chuckaluck_portrait, chuckaluck_desc, gambling_priority )
+
+   -- Create random noise NPCs
+   local npatrons = rnd.rnd(3,5)
+   npc_patrons = {}
+   for i = 1,npatrons do
+      local name = patron_names[ rnd.rnd(1, #patron_names) ]
+      local img = portrait.get()
+      local desc = patron_descriptions[ rnd.rnd(1, #patron_descriptions) ]
+      local msg = patron_messages[ rnd.rnd(1, #patron_messages) ]
+      local id = evt.npcAdd( "approach_patron", name, img, desc, 10 )
+      local npcdata = { name=name, image=portrait.getFullPath(img), message=msg }
+      npc_patrons[id] = npcdata
+   end
 
    -- If they player never had tokens, it is probably their first time
    if not var.peek( "minerva_tokens" ) then
@@ -337,9 +360,21 @@ function approach_blackjack()
    random_event()
 end
 
-function approach_chuckaluck()
+function approach_chuckaluck ()
    -- Handle random bar events if necessary
    random_event()
+end
+
+-- Just do random noise
+function approach_patron( id )
+   local npcdata = npc_patrons[id]
+   vn.clear()
+   vn.scene()
+   local patron = vn.newCharacter( npcdata.name, { image=npcdata.image } )
+   vn.fadein()
+   patron( npcdata.message )
+   vn.fadeout()
+   vn.run()
 end
 
 --[[
