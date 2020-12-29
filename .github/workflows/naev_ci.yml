@@ -62,7 +62,7 @@ jobs:
         msystem: MINGW64
         update: true
         path-type: strict
-        install: git tar mingw-w64-x86_64-clang mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-make mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2
+        install: git tar mercurial mingw-w64-x86_64-cmake mingw-w64-x86_64-clang mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-make mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2
 
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
@@ -95,10 +95,12 @@ jobs:
         sh $MESON setup build source \
             --native-file='source/utils/build/${{ matrix.config }}' \
             --buildtype=debug \
+            --wrap-mode=forcefallback \
             -Db_lto=true \
             -Dauto_features=enabled \
             -Ddocs_c=disabled \
-            -Ddocs_lua=disabled
+            -Ddocs_lua=disabled \
+            -Dforce_fallback_for=SuiteSparse
 
     - name: Upload Setup Log
       uses: actions/upload-artifact@v2
