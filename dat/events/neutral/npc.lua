@@ -13,6 +13,7 @@
 
 require "events/tutorial/tutorial_common"
 local portrait = require "portrait"
+local vn = require 'vn'
 
 -- List of planets where there will be NO generic NPCs
 blacklist = {
@@ -333,7 +334,7 @@ function spawnNPC()
    end
 
    -- Select a portrait
-   local portrait = portrait.get(fac)
+   local image = portrait.get(fac)
 
    -- Select a description for the civilian.
    local desc = civ_desc[rnd.rnd(1, #civ_desc)]
@@ -358,9 +359,9 @@ function spawnNPC()
          msg = getLoreMessage(fac)
       end
    end
-   local npcdata = {name = npcname, msg = msg, func = func}
+   local npcdata = {name = npcname, msg = msg, func = func, image = portrait.getFullPath(image)}
 
-   id = evt.npcAdd("talkNPC", npcname, portrait, desc, 10)
+   id = evt.npcAdd("talkNPC", npcname, image, desc, 10)
    npcs[id] = npcdata
 end
 
@@ -477,7 +478,13 @@ function talkNPC(id)
       npcdata.func()
    end
 
-   tk.msg(npcdata.name, npcdata.msg)
+   vn.clear()
+   vn.scene()
+   local npc = vn.newCharacter( npcdata.name, { image=npcdata.image } )
+   vn.fadein()
+   npc( npcdata.msg )
+   vn.fadeout()
+   vn.run()
 
    -- Reduce jump message chance
    var.push( "npc_jm_chance", math.max( jm_chance - 0.025, jm_chance_min ) )
