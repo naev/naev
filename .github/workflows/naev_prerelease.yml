@@ -5,6 +5,7 @@ on:
     tags:
       - '!v*.*.*'
       - 'v*.*.*-beta*'
+      - 'v*.*.*-rc*'
 
 name: Pre-Release
 
