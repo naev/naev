@@ -129,6 +129,7 @@ function board ()
    * Weapon that damages the user each time it is shot (some percent only)
    * Space mines! AOE damage that affects everyone, but they don't move (useful for missions too!)
    * Something that modifies time compression as an active outfit
+   * Something that lowers damage all over but converts it all to disable (fwd_dam_as_dis)
    --]]
 
    -- Always available outfits
