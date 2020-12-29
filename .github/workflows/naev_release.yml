@@ -1,8 +1,8 @@
 on:
-  repository_dispatch:
-    types: manual-release
+  push:
     tags:
       - 'v*.*.*'
+      - '!v*.*.*-alpha*'
       - '!v*.*.*-beta*'
       - '!v*.*.*-rc*'
 
@@ -54,6 +54,7 @@ jobs:
         run: |
           mkdir -p dist/out
           mv naev-*.tar.gz dist/out/source.tar.gz
+          cp CHANGELOG dist/out
           cp dat/VERSION dist/out
 
       - name: Upload Source Artifact
@@ -63,7 +64,14 @@ jobs:
           path: ${{ github.workspace }}/dist/out/source.tar.gz
           if-no-files-found: error
 
-      - name: Upload Version Artifact
+      - name: Upload Changelog Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-changelog
+          path: ${{ github.workspace }}/dist/out/CHANGELOG
+          if-no-files-found: error
+
+      - name: Upload VERSION Artifact
         uses: actions/upload-artifact@v2
         with:
           name: naev-version
@@ -174,125 +182,43 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: dosowisko/steam-runtime-amd64
-      volumes:
-        - ${{ github.workspace }}:${{ github.workspace }}
+      image: projectsynchro/synchros_sexy_docker_images:naev-steamruntime
 
     steps:
-      - name: Clone Naev Repository
-        run: |
-          git clone --depth 1 --branch 0.8.x https://github.com/naev/naev.git ${{ github.workspace }}
-
-      - name: Install Additional Build Dependencies
-        run: |
-          sudo apt-get -y install autoconf-archive intltool
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v1
+        with:
+          submodules: recursive
 
       - name: Build Naev for Steam on Linux64
         run: |
-          cd ${{ github.workspace }}
           ./autogen.sh
-          ./configure --disable-debug --build=x86_64-linux-gnu
+          ./configure --disable-debug
           make -j$(nproc --all)
           make data
         env:
-          CFLAGS: "-O3 -std=gnu11"
+          CFLAGS: "-O3"
 
       - name: Collect Steam Linux64 Artifacts
         run: |
-          mkdir -p ${{ github.workspace }}/dist/out/
+          mkdir -p dist/out/
 
-          mv ${{ github.workspace }}/src/naev ${{ github.workspace }}/dist/out/naev.x64
-          chmod +x ${{ github.workspace }}/dist/out/naev.x64
+          mv src/naev dist/out/naev.x64
+          chmod +x dist/out/naev.x64
 
-          tar -cJvf ${{ github.workspace }}/dist/out/steam-ndata.tar.xz dat
+          tar -cJvf dist/out/steam-ndata.tar.xz dat
       
       - name: Upload Naev Binary Artifact
         uses: actions/upload-artifact@v1
         with:
           name: naev-steamruntime
-          path: ${{ github.workspace }}/dist/out/naev.x64
+          path: dist/out/naev.x64
 
       - name: Upload Naev Data Artifact
         uses: actions/upload-artifact@v1
         with:
           name: naev-ndata
-          path: ${{ github.workspace }}/dist/out/steam-ndata.tar.xz
-
-  "Build_Naev_Steam_Soundtrack":
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Update APT Cache
-        run: |
-          sudo apt-get update
-
-      - name: Install Build Dependencies
-        run: |
-          sudo apt-get install \
-            automake \
-            autopoint \
-            autoconf-archive \
-            build-essential \
-            binutils-dev \
-            ffmpeg \
-            gettext \
-            intltool \
-            libsdl2-dev \
-            libsdl2-mixer-dev \
-            libsdl2-image-dev \
-            libgl1-mesa-dev \
-            libxml2-dev \
-            libfreetype6-dev \
-            libpng-dev \
-            libopenal-dev \
-            libvorbis-dev \
-            libiberty-dev \
-            unzip \
-            zip
-            
-      - name: Install Python Modules
-        run: |
-          python3 -m pip install mutagen
-          
-      - name: Checkout Naev Repository
-        uses: actions/checkout@v2
-        with:
-          submodules: true
-
-      - name: Generate Soundtrack
-        run: |
-          ./autogen.sh
-          ./configure
-          make dat/VERSION
-          make soundtrack
-
-      - name: Collect Artifacts
-        run: |
-          VERSION="$(cat dat/VERSION)"
-          mkdir -p dist/staging
-          mkdir -p dist/out/steam
-
-          unzip naev-$VERSION-soundtrack.zip -d dist/staging
-          cp naev-$VERSION-soundtrack.zip dist/out
-          cp extras/logos/naev_soundtrack_cover.png dist/out/steam
-
-      - name: Transcode Steam Soundtrack
-        run: |
-          ./utils/convertToMP3.sh -i dist/staging -f ogg -o dist/out/steam
-
-      - name: Upload Soundtrack Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: naev-soundtrack
-          path: ${{ github.workspace }}/dist/out/naev-*-soundtrack.zip
-          if-no-files-found: error
-          
-      - name: Upload Steam Soundtrack Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: naev-steam-soundtrack
-          path: ${{ github.workspace }}/dist/out/steam/*
-          if-no-files-found: error
+          path: dist/out/steam-ndata.tar.xz
 
   "Upload_Naev_Release":
     strategy:
@@ -304,13 +230,13 @@ jobs:
           - releasetype: itch
             
     runs-on: ubuntu-latest
-    needs: [Generate_Source, Build_Naev_Release, Build_Naev_Steam_Release, Build_Naev_Steam_Soundtrack]
+    needs: [Generate_Source, Build_Naev_Release, Build_Naev_Steam_Release]
     if: ${{ github.repository == 'naev/naev' }}
 
     steps:
       - name: Create Release Staging and Output Areas
         run: |
-          mkdir -p {temp,dist/{staging,out/{lin64,win64,soundtrack}}}
+          mkdir -p {temp,dist/{staging,out/{lin64,win64}}}
           
       - name: Update APT Cache
         if: ${{ matrix.releasetype == 'steam' }}
@@ -348,18 +274,16 @@ jobs:
           mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/naev-$SUFFIX-linux-x86-64.AppImage
           mv dist/staging/naev-win64/naev*.exe dist/out/naev-$SUFFIX-win64.exe
           mv dist/staging/naev-dist/source.tar.gz dist/out/naev-$SUFFIX-source.tar.gz
-          mv dist/staging/naev-soundtrack/naev-*-soundtrack.zip dist/out/naev-$SUFFIX-soundtrack.zip
 
           chmod +x dist/out/naev-$SUFFIX-linux-x86-64.AppImage
 
-      - name: Upload Github Release
-        if: ${{ matrix.releasetype == 'github' }}
-        uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Create Release
+        uses: ncipollo/release-action@v1
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          artifacts: "dist/out/*.*"
+          bodyFile: "dist/staging/naev-changelog/CHANGELOG"
+          token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: false
-          files: |
-            ${{ github.workspace }}/dist/out/*
           
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
@@ -369,15 +293,13 @@ jobs:
           SUFFIX="$VERSION"
 
           mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
-          mv dist/staging/naev-steam-soundtrack/* dist/out/soundtrack
           chmod +x dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
 
           tar -Jxf "dist/staging/naev-win64/steam-win64.tar.xz" -C "dist/out/win64"
           tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64"
           
-          ./butler push --userversion="$SUFFIX" dist/out/lin64 naev/naev:linux-x86-64
-          ./butler push --userversion="$SUFFIX" dist/out/win64 naev/naev:windows-x86-64
-          ./butler push --userversion="$SUFFIX" dist/out/soundtrack naev/naev:soundtrack
+          ./butler push --userversion="$SUFFIX" dist/out/lin64 naev/naev:linux-x86-64-beta
+          ./butler push --userversion="$SUFFIX" dist/out/win64 naev/naev:windows-x86-64-beta
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
 
@@ -386,7 +308,7 @@ jobs:
         run: |
           chmod -R +x dist/staging/naev-steam-deployment
           cp -r dist/staging/naev-steam-deployment/* ${{ github.workspace }}
-          ./SteamDeploy.sh -v "${{ github.workspace }}/dist/staging/naev-version" -t "${{ github.workspace }}/dist/staging" -o "${{ github.workspace }}/dist/out"
+          ./SteamDeploy.sh -t "${{ github.workspace }}/dist/staging" -o "${{ github.workspace }}/dist/out"
         env:
           STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
           STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}
