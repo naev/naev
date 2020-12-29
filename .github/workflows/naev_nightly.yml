@@ -211,15 +211,18 @@ jobs:
     steps:
       - name: Checkout Naev Repository
         uses: actions/checkout@v2
+        if: ${{ matrix.releasetype == 'github' }}
 
       - name: Generate commit changelog
         uses: Bullrich/generate-release-changelog@master
+        if: ${{ matrix.releasetype == 'github' }}
         id: changelog
         env:
           REPO: ${{ github.repository }}
 
       - name: Delete old nightly tag and release.
         uses: dev-drprasad/delete-tag-and-release@v0.1.2
+        if: ${{ matrix.releasetype == 'github' }}
         with:
           delete_release: true
           tag_name: nightly
@@ -228,6 +231,7 @@ jobs:
 
       - name: Create 'nightly' tag
         uses: EndBug/latest-tag@latest
+        if: ${{ matrix.releasetype == 'github' }}
         with:
           tag-name: nightly
 
@@ -277,6 +281,7 @@ jobs:
 
       - name: Create Release
         uses: ncipollo/release-action@v1
+        if: ${{ matrix.releasetype == 'github' }}
         with:
           artifacts: "${{ github.workspace }}/dist/out/*.*"
           name: "Nightly Build"
