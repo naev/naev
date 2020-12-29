@@ -7,7 +7,7 @@
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>1400000</price>
- <time_mod>1.75</time_mod>
+ <time_mod>1.375</time_mod>
  <fabricator>Proteron</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>The Kahan is a cutting-edge vessel. Its design was completed shortly before the Incident, and it was on track to become the Proteron military's primary combat vessel. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its lower mass and structural space.</description>

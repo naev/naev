@@ -7,7 +7,7 @@
  <sound>engine</sound>
  <class>Armoured Transport</class>
  <price>1600000</price>
- <time_mod>2</time_mod>
+ <time_mod>1.5</time_mod>
  <fabricator>Thurion shipyards</fabricator>
  <license>Large Civilian Vessel License</license>
  <description>The Thurion Taciturnity is an armoured and stealthy transport capable both of surviving the harsh nebula and defending itself from attack.</description>
