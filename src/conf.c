@@ -739,7 +739,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
    while ((ch = u8_nextchar( text, &i ))) {
       /* Check if we can print this as a friendly backslash-escape */
       switch (ch) {
-         case '\a':  slashescape = 'a';   break;
+         case '#':  slashescape = 'a';   break;
          case '\b':  slashescape = 'b';   break;
          case '\f':  slashescape = 'f';   break;
          case '\n':  slashescape = 'n';   break;

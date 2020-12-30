@@ -135,14 +135,14 @@ end
 
 function jumpout()
    if stage == 1 then --player trying to escape
-      player.msg( "\ar" .. msg_run .. "\a0" )
+      player.msg( "#r" .. msg_run .. "#0" )
       misn.finish(false)
    end
 end
 
 function land()
    if stage == 1 then --player trying to escape
-      player.msg( "\ar" .. msg_run .. "\a0" )
+      player.msg( "#r" .. msg_run .. "#0" )
       misn.finish(false)
    end
    if stage == 2 and planet.cur() == paypla then
@@ -200,7 +200,7 @@ function lets_go()
 end
 
 function shark_dead()  --you killed the shark
-   player.msg( "\ar" .. msg_destroyed .. "\a0" )
+   player.msg( "#r" .. msg_destroyed .. "#0" )
    misn.finish(false)
 end
 

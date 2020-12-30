@@ -118,28 +118,28 @@ void shipyard_open( unsigned int wid )
          &gl_smallFont, NULL, NULL );
 
    /* text */
-   buf = _("\anModel:\n\a0"
-         "\anClass:\n\a0"
-         "\anFabricator:\n\a0"
-         "\anCrew:\n\a0"
+   buf = _("#nModel:\n#0"
+         "#nClass:\n#0"
+         "#nFabricator:\n#0"
+         "#nCrew:\n#0"
          "\n"
-         "\anCPU:\n\a0"
-         "\anMass:\n\a0"
-         "\anThrust:\n\a0"
-         "\anSpeed:\n\a0"
-         "\anTurn:\n\a0"
-         "\anTime Constant:\n\a0"
+         "#nCPU:\n#0"
+         "#nMass:\n#0"
+         "#nThrust:\n#0"
+         "#nSpeed:\n#0"
+         "#nTurn:\n#0"
+         "#nTime Constant:\n#0"
          "\n"
-         "\anAbsorption:\n\a0"
-         "\anShield:\n\a0"
-         "\anArmour:\n\a0"
-         "\anEnergy:\n\a0"
-         "\anCargo Space:\n\a0"
-         "\anFuel:\n\a0"
-         "\anFuel Use:\n\a0"
-         "\anPrice:\n\a0"
-         "\anMoney:\n\a0"
-         "\anLicense:\n\a0");
+         "#nAbsorption:\n#0"
+         "#nShield:\n#0"
+         "#nArmour:\n#0"
+         "#nEnergy:\n#0"
+         "#nCargo Space:\n#0"
+         "#nFuel:\n#0"
+         "#nFuel Use:\n#0"
+         "#nPrice:\n#0"
+         "#nMoney:\n#0"
+         "#nLicense:\n#0");
    th = gl_printHeightRaw( &gl_smallFont, 106, buf );
    y  = -35;
    window_addText( wid, 20+iw+20, y,

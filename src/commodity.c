@@ -116,7 +116,7 @@ void price2str(char *str, credits_t price, credits_t credits, int decimals )
       return;
 
    buf = strdup(str);
-   nsnprintf(str, ECON_CRED_STRLEN, "\ar%s\a0", buf);
+   nsnprintf(str, ECON_CRED_STRLEN, "#r%s#0", buf);
    free(buf);
 }
 

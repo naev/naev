@@ -82,7 +82,7 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
 #ifndef NOLOGPRINTFCONSOLE
    /* Add to console. */
    if (stream == stderr) {
-      buf[0] = '\a';
+      buf[0] = '#';
       buf[1] = 'r';
       cli_addMessage( buf );
    }

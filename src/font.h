@@ -12,7 +12,7 @@
 #include "opengl.h"
 
 
-#define FONT_COLOUR_CODE      '\a'
+#define FONT_COLOUR_CODE      '#'
 
 
 #define FONT_FLAG_DONTREUSE   (1<<1) /**< Don't reuse the font if it's loaded somewhere else. */

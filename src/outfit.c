@@ -1671,14 +1671,14 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          "%s"
          "%s",
          _(outfit_getType(temp)),
-         (temp->u.mod.active) ? _("\n\arActivated Outfit\a0") : "" );
+         (temp->u.mod.active) ? _("\n#rActivated Outfit#0") : "" );
 
 #define DESC_ADD(x, s) \
 if ((x) != 0) \
    do { \
-      i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "\n\a%c", ((x)>0)?'g':'r' ); \
+      i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "\n#%c", ((x)>0)?'g':'r' ); \
       i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, s, x ); \
-      i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "\a0" ); \
+      i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "#0" ); \
    } while(0)
    DESC_ADD( temp->cpu,                _("%+.0f CPU") );
    DESC_ADD( temp->u.mod.thrust,       _("%+.0f Thrust") );
@@ -1760,7 +1760,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          _("%s\n"
-         "\arActivated Outfit\a0\n"
+         "#rActivated Outfit#0\n"
          "%.0f CPU\n"
          "Only one can be equipped\n"
          "%.0f Maximum Effective Mass\n"

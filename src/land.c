@@ -567,7 +567,7 @@ static void misn_open( unsigned int wid )
    y -= 2 * gl_defFont.h + 50;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, 20, 0,
-         "txtReward", &gl_smallFont, NULL, _("\anReward:\a0 None") );
+         "txtReward", &gl_smallFont, NULL, _("#nReward:#0 None") );
    y -= 20;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, y - 40 + h - 2*LAND_BUTTON_HEIGHT, 0,
@@ -715,7 +715,7 @@ static void misn_update( unsigned int wid, char* str )
 
    active_misn = toolkit_getList( wid, "lstMission" );
    if (strcmp(active_misn,_("No Missions"))==0) {
-      window_modifyText( wid, "txtReward", _("\anReward:\a0 None") );
+      window_modifyText( wid, "txtReward", _("#nReward:#0 None") );
       window_modifyText( wid, "txtDesc",
             _("There are no missions available here.") );
       window_disableButton( wid, "btnAcceptMission" );
@@ -726,7 +726,7 @@ static void misn_update( unsigned int wid, char* str )
    mission_sysComputerMark( misn );
    if (misn->markers != NULL)
       map_center( system_getIndex( misn->markers[0].sys )->name );
-   nsnprintf( txt, sizeof(txt), _("\anReward:\a0 %s"), misn->reward );
+   nsnprintf( txt, sizeof(txt), _("#nReward:#0 %s"), misn->reward );
    window_modifyText( wid, "txtReward", txt );
    window_modifyText( wid, "txtDesc", misn->desc );
    window_enableButton( wid, "btnAcceptMission" );
@@ -1370,7 +1370,7 @@ void takeoff( int delay )
    if (delay)
       ntime_inc( ntime_create( 0, 1, 0 ) ); /* 1 period */
    nt = ntime_pretty( 0, 2 );
-   player_message( _("\aoTaking off from %s on %s."), _(land_planet->name), nt);
+   player_message( _("#oTaking off from %s on %s."), _(land_planet->name), nt);
    free(nt);
 
    /* Hooks and stuff. */

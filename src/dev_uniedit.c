@@ -681,7 +681,7 @@ static void uniedit_renameSys (void)
       sys = uniedit_sys[i];
 
       /* Get name. */
-      name = dialogue_input( _("Rename Star System"), 1, 32, _("What do you want to rename \ar%s\a0?"), sys->name );
+      name = dialogue_input( _("Rename Star System"), 1, 32, _("What do you want to rename #r%s#0?"), sys->name );
 
       /* Keep current name. */
       if (name == NULL)
@@ -1228,7 +1228,7 @@ static void uniedit_editSys (void)
 
    /* Rename button. */
    y = -45;
-   nsnprintf( buf, sizeof(buf), _("Name: \an%s"), (uniedit_nsys > 1) ? _("\arvarious") : uniedit_sys[0]->name );
+   nsnprintf( buf, sizeof(buf), _("Name: #n%s"), (uniedit_nsys > 1) ? _("#rvarious") : uniedit_sys[0]->name );
    window_addText( wid, x, y, 180, 15, 0, "txtName", &gl_smallFont, NULL, buf );
    window_addButton( wid, 200, y+3, BUTTON_WIDTH, 21, "btnRename", _("Rename"), uniedit_btnEditRename );
 
@@ -1525,7 +1525,7 @@ static void uniedit_btnEditRename( unsigned int wid, char *unused )
    uniedit_renameSys();
 
    /* Update text. */
-   nsnprintf( buf, sizeof(buf), _("Name: %s"), (uniedit_nsys > 1) ? _("\arvarious") : uniedit_sys[0]->name );
+   nsnprintf( buf, sizeof(buf), _("Name: %s"), (uniedit_nsys > 1) ? _("#rvarious") : uniedit_sys[0]->name );
    window_modifyText( wid, "txtName", buf );
 }
 

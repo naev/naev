@@ -570,10 +570,10 @@ static void map_update( unsigned int wid )
       sym = planet_getSymbol(sys->planets[i]);
 
       if (!hasPlanets)
-         p += nsnprintf( &buf[p], PATH_MAX-p, "\a%c%s%s\an",
+         p += nsnprintf( &buf[p], PATH_MAX-p, "#%c%s%s#n",
                t, sym, _(sys->planets[i]->name) );
       else
-         p += nsnprintf( &buf[p], PATH_MAX-p, ",\n\a%c%s%s\an",
+         p += nsnprintf( &buf[p], PATH_MAX-p, ",\n#%c%s%s#n",
                t, sym, _(sys->planets[i]->name) );
       hasPlanets = 1;
       if (p > PATH_MAX)
@@ -1217,7 +1217,7 @@ void map_renderNames( double bx, double by, double x, double y,
          /* Display. */
          n = sqrt(sys->jumps[j].hide);
          if (n == 0.)
-            nsnprintf( buf, sizeof(buf), "\agH: %.2f", n );
+            nsnprintf( buf, sizeof(buf), "#gH: %.2f", n );
          else
             nsnprintf( buf, sizeof(buf), "H: %.2f", n );
          gl_printRaw( &gl_smallFont, tx, ty, &cGrey70, -1, buf );
@@ -1556,7 +1556,7 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
          break;
       }
       /* Use map grey instead of default neutral colour */
-      l += nsnprintf( &buf[ l ], sizeof( buf ) - l, "%s\a0%s: \a%c%.0f", ( l == 0 ) ? "" : "\n",
+      l += nsnprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n",
                       omniscient ? faction_name( sys->presence[ i ].faction )
                                  : faction_shortname( sys->presence[ i ].faction ),
                       faction_getColourChar( sys->presence[ i ].faction ), sys->presence[ i ].value );
@@ -1564,7 +1564,7 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
          break;
    }
    if ( unknownPresence != 0 && l <= sizeof( buf ) )
-      l += nsnprintf( &buf[ l ], sizeof( buf ) - l, "%s\a0%s: \a%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
+      l += nsnprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
                       unknownPresence );
 
    if ( hasPresence == 0 )
