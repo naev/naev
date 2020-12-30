@@ -314,7 +314,7 @@ char read_escape_control_char(char c)
     else if (c == 'v')
         return '\v';
     else if (c == 'a')
-        return '#';
+        return '\a';
     return c;
 }
 
