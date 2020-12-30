@@ -62,17 +62,17 @@ local function _done( status )
    local d = _total(bj.dealer)
    local msg
    if p>21 or (d<=21 and p<d) then
-      msg = _("\arYou lost!\a0")
+      msg = _("#rYou lost!#0")
       if #bj.dealer == 2 and d==21 then
-         msg = string.format(_("\apBlackjack!\a0 %s"), msg)
+         msg = string.format(_("#pBlackjack!#0 %s"), msg)
       end
    elseif d>21 or (p<=21 and d<p) then
       local won = bj.betamount / 1000
       local tokens = var.peek("minerva_tokens") or 0
       var.push("minerva_tokens",tokens+won)
-      msg = string.format(_("\agYou won \ap%d Minerva Tokens\ag!\a0"), won)
+      msg = string.format(_("#gYou won #p%d Minerva Tokens#g!#0"), won)
       if #bj.player == 2 and p==21 then
-         msg = string.format(_("\apBlackjack!\a0 %s"), msg)
+         msg = string.format(_("#pBlackjack!#0 %s"), msg)
       end
    else
       if #bj.player==2 and #bj.dealer==2 and d==21 and p==21 then
@@ -239,7 +239,7 @@ function bj.draw( bx, by, bw, bh)
    end
    y = bj.bets_y + h+3*b
    local tokens = var.peek("minerva_tokens") or 0
-   local s = string.format(_("You have %s credits and \ap%s Minerva Tokens\a0."), creditstring(player.credits()), numstring(tokens))
+   local s = string.format(_("You have %s credits and #p%s Minerva Tokens#0."), creditstring(player.credits()), numstring(tokens))
    w = bj.font:getWidth( s )
    lg.print( s, bj.font, bx+(bw-w)/2, y )
 end
@@ -247,7 +247,7 @@ end
 local function trybet( credits )
    local betamount = 10000
    if credits < betamount then
-      bj.msg = string.format(_("\arNot enough credits! You only have %s!\a0"), creditstring(player.credits()))
+      bj.msg = string.format(_("#rNot enough credits! You only have %s!#0"), creditstring(player.credits()))
    else
       player.pay(-betamount)
       bj.betamount = betamount

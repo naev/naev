@@ -166,8 +166,8 @@ function approach_terminal()
    vn.fadein()
    vn.label( "start" )
    t:say( function() return string.format(
-         N_("\"VALUED CUSTOMER, YOU HAVE \ap%d MINERVA TOKEN\a0.%s\n\nWHAT DO YOU WISH TO DO TODAY?\"",
-            "\"VALUED CUSTOMER, YOU HAVE \ap%d MINERVA TOKENS\a0.%s\n\nWHAT DO YOU WISH TO DO TODAY?\"", tokens_get()),
+         N_("\"VALUED CUSTOMER, YOU HAVE #p%d MINERVA TOKEN#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?\"",
+            "\"VALUED CUSTOMER, YOU HAVE #p%d MINERVA TOKENS#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?\"", tokens_get()),
                tokens_get(), msgs[rnd.rnd(1,#msgs)]) end )
    vn.menu( {
       {_("Information"), "info"},
@@ -202,20 +202,20 @@ function approach_terminal()
 
    vn.label( "trade_notenough" )
    t:say( function() return string.format(
-         N_("\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE \ap%d MINERVA TOKEN\a0.\"",
-            "\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE \ap%d MINERVA TOKENS\a0.\"", tokens_get()),
+         N_("\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d MINERVA TOKEN#0.\"",
+            "\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d MINERVA TOKENS#0.\"", tokens_get()),
          tokens_get() ) end )
    vn.jump( "trade_menu" )
    vn.label( "trade_soldout" )
    t:say( function() return string.format(
-         N_("\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE \ap%d MINERVA TOKEN\a0.\"",
-            "\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE \ap%d MINERVA TOKENS\a0.\"", tokens_get()),
+         N_("\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d MINERVA TOKEN#0.\"",
+            "\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d MINERVA TOKENS#0.\"", tokens_get()),
          tokens_get() ) end )
    vn.jump( "trade_menu" )
    vn.label( "trade" )
    t:say( function() return string.format(
-         N_("\"YOU CAN TRADE IN YOUR PRECIOUS \ap%d MINERVA TOKEN\a0 FOR THE FOLLOWING GOODS.\"",
-            "\"YOU CAN TRADE IN YOUR PRECIOUS \ap%d MINERVA TOKENS\a0 FOR THE FOLLOWING GOODS.\"", tokens_get()),
+         N_("\"YOU CAN TRADE IN YOUR PRECIOUS #p%d MINERVA TOKEN#0 FOR THE FOLLOWING GOODS.\"",
+            "\"YOU CAN TRADE IN YOUR PRECIOUS #p%d MINERVA TOKENS#0 FOR THE FOLLOWING GOODS.\"", tokens_get()),
             tokens_get() ) end )
    local trades = {
       {"Ripper Cannon", {100, "outfit"}},
@@ -263,9 +263,9 @@ function approach_terminal()
       local tokens = v[2][1]
       local soldout = (v[2][2]=="outfit" and outfit.unique(v[1]) and player.numOutfit(v[1])>0)
       if soldout then
-         opts[k] = { string.format(_("%s (\arSOLD OUT\a0)"), _(v[1])), -1 }
+         opts[k] = { string.format(_("%s (#rSOLD OUT#0)"), _(v[1])), -1 }
       else
-         opts[k] = { string.format(_("%s (\ap%d Tokens\a0)"), _(v[1]), tokens), k }
+         opts[k] = { string.format(_("%s (#p%d Tokens#0)"), _(v[1]), tokens), k }
       end
    end
    table.insert( opts, {_("Back"), "start"} )

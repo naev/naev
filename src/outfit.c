@@ -2286,8 +2286,7 @@ static int outfit_parse( Outfit* temp, const char* file )
             /* Add extra description task if available. */
             if (desc_extra != NULL) {
                l = strlen(temp->desc_short);
-               /* TODO handle the colour in the xml desc_extra. XML 1.0 doesn't support \a though. */
-               nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l, "\n\ap%s\a0", desc_extra );
+               nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l, "\%s", desc_extra );
                free( desc_extra );
                desc_extra = NULL;
             }
