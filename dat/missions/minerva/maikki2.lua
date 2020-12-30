@@ -27,6 +27,7 @@
 -- 3. Mentions eccentric colleague at Westhaven
 -- 4. Eccentric colleague makes the player mine some stupid stuff for him.
 -- 5. Tells you he saved him and sent him off to "Minerva Station".
+-- 6. Go back and report to Maikki confirming her info.
 --
 -- Eccentric Scientist in "Westhaven" (slightly senile with dementia).
 --]]
