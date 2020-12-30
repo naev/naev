@@ -206,13 +206,13 @@ static void info_openMain( unsigned int wid )
    nt = ntime_pretty( ntime_get(), 2 );
    window_addText( wid, 40, 20, 120, h-80,
          0, "txtDPilot", &gl_smallFont, NULL,
-         _("\anPilot:\a0\n"
-         "\anDate:\a0\n"
-         "\anCombat Rating:\a0\n"
+         _("#nPilot:#0\n"
+         "#nDate:#0\n"
+         "#nCombat Rating:#0\n"
          "\n"
-         "\anMoney:\a0\n"
-         "\anShip:\a0\n"
-         "\anFuel:\a0")
+         "#nMoney:#0\n"
+         "#nShip:#0\n"
+         "#nFuel:#0")
          );
    credits2str( creds, player.p->credits, 2 );
    nsnprintf( str, 128,
@@ -404,26 +404,26 @@ static void info_openShip( unsigned int wid )
    /* Text. */
    window_addText( wid, 40, -60, 100, h-60, 0, "txtSDesc", &gl_smallFont,
          NULL,
-         _("\anName:\a0\n"
-         "\anModel:\a0\n"
-         "\anClass:\a0\n"
-         "\anCrew:\a0\n"
+         _("#nName:#0\n"
+         "#nModel:#0\n"
+         "#nClass:#0\n"
+         "#nCrew:#0\n"
          "\n"
-         "\anMass:\a0\n"
-         "\anJump Time:\a0\n"
-         "\anThrust:\a0\n"
-         "\anSpeed:\a0\n"
-         "\anTurn:\a0\n"
-         "\anTime Constant:\a0\n"
+         "#nMass:#0\n"
+         "#nJump Time:#0\n"
+         "#nThrust:#0\n"
+         "#nSpeed:#0\n"
+         "#nTurn:#0\n"
+         "#nTime Constant:#0\n"
          "\n"
-         "\anAbsorption:\a0\n"
-         "\anShield:\a0\n"
-         "\anArmour:\a0\n"
-         "\anEnergy:\a0\n"
-         "\anCargo Space:\a0\n"
-         "\anFuel:\a0\n"
+         "#nAbsorption:#0\n"
+         "#nShield:#0\n"
+         "#nArmour:#0\n"
+         "#nEnergy:#0\n"
+         "#nCargo Space:#0\n"
+         "#nFuel:#0\n"
          "\n"
-         "\anStats:\a0\n")
+         "#nStats:#0\n")
          );
    window_addText( wid, 180, -60, w-20-180-180., h-60, 0, "txtDDesc", &gl_smallFont,
          NULL, NULL );
@@ -1026,7 +1026,7 @@ static void info_openMissions( unsigned int wid )
    /* text */
    window_addText( wid, 300+40, -60,
          200, 40, 0, "txtSReward",
-         &gl_smallFont, NULL, _("\anReward:\a0") );
+         &gl_smallFont, NULL, _("#nReward:#0") );
    window_addText( wid, 300+40, -80,
          200, 40, 0, "txtReward", &gl_smallFont, NULL, NULL );
    window_addText( wid, 300+40, -120,

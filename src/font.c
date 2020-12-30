@@ -154,7 +154,7 @@ glFont gl_defFontMono; /**< Default mono font. */
 
 
 /* Last used colour. */
-static const glColour *font_lastCol    = NULL; /**< Stores last colour used (activated by '\\a'). */
+static const glColour *font_lastCol    = NULL; /**< Stores last colour used (activated by FONT_COLOUR_CODE). */
 static int font_restoreLast      = 0; /**< Restore last colour. */
 
 
@@ -424,7 +424,7 @@ void gl_printStoreMax( glFontRestore *restore, const char *text, int max )
    col = restore->col; /* Use whatever is there. */
    for (i=0; (text[i]!='\0') && (i<=max); i++) {
       /* Only want escape sequences. */
-      if (text[i] != '\a')
+      if (text[i] != FONT_COLOUR_CODE)
          continue;
 
       /* Get colour. */
@@ -475,7 +475,7 @@ static size_t font_limitSize( glFontStash *stsh, int *width, const char *text, c
    n = 0.;
    while ((ch = u8_nextchar( text, &i ))) {
       /* Ignore escape sequence. */
-      if (ch == '\a') {
+      if (ch == FONT_COLOUR_CODE) {
          if (text[i] != '\0')
             i++;
          continue;
@@ -550,7 +550,7 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
       }
 
       /* Ignore escape sequence. */
-      if (text[i] == '\a') {
+      if (text[i] == FONT_COLOUR_CODE) {
          if (text[i+1] != '\0')
             i += 2;
          else
@@ -952,7 +952,7 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
    i = 0;
    while ((ch = u8_nextchar( text, &i ))) {
       /* Ignore escape sequence. */
-      if (ch == '\a') {
+      if (ch == FONT_COLOUR_CODE) {
          if (text[i] != '\0')
             i++;
 
@@ -1343,7 +1343,7 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    int kern_adv_x;
 
    /* Handle escape sequences. */
-   if (ch == '\a') {/* Start sequence. */
+   if ((ch == FONT_COLOUR_CODE) && (state==0)) {/* Start sequence. */
       return 1;
    }
    if (state == 1) {

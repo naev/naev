@@ -26,7 +26,7 @@ nebu_volat_title = _("Volatility Rising")
 nebu_volat_msg = _([[As you jump the system you notice a small alarm lights up in the control panel:
     %s
     Looking over the systems it seems like the nebula is unstable here and is beginning to damage the ship's shields. If the volatility gets any stronger, it could be fatal to the %s. Going deeper into the nebula could prove to be a very risky endeavour.]])
-nebu_volat_wng = "\ar" .. _("WARNING: NEBULA VOLATILITY DETECTED") .. "\a0"
+nebu_volat_wng = "#r" .. _("WARNING: NEBULA VOLATILITY DETECTED") .. "#0"
 
 
 function create ()

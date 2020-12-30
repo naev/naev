@@ -290,14 +290,14 @@ int *generate_news( char* faction )
             article_time = ntime_pretty(article_ptr->date, 1);
             p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
-               "%s: %s\a0\n\n"
+               "%s: %s#0\n\n"
                , article_ptr->title, article_time, article_ptr->desc );
             free( article_time );
          }
          else {
             p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
-               "%s\a0\n\n"
+               "%s#0\n\n"
                , article_ptr->title, article_ptr->desc );
          }
       }

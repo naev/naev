@@ -983,7 +983,7 @@ const glColour* faction_getColour( int f )
 /**
  * @brief Gets the faction character associated to its standing with the player.
  *
- * Use this to do something like "\a%c", faction_getColourChar( some_faction ) in the
+ * Use this to do something like "#%c", faction_getColourChar( some_faction ) in the
  *  font print routines.
  *
  *    @param f Faction to get the colour of based on player's standing.

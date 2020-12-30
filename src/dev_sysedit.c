@@ -367,7 +367,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 
    /* Check for collision. */
    if (planet_exists( name )) {
-      dialogue_alert( _("Planet by the name of \ar'%s'\a0 already exists in the \ar'%s'\a0 system"),
+      dialogue_alert( _("Planet by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
             name, planet_getSystem( name ) );
       free(name);
       sysedit_btnNew( 0, NULL );
@@ -420,13 +420,13 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
 
          /* Get new name. */
          name = dialogue_input( _("New Planet Creation"), 1, 32,
-               _("What do you want to rename the planet \ar%s\a0?"), p->name );
+               _("What do you want to rename the planet #r%s#0?"), p->name );
          if (name == NULL)
             continue;
 
          /* Check for collision. */
          if (planet_exists( name )) {
-            dialogue_alert( _("Planet by the name of \ar'%s'\a0 already exists in the \ar'%s'\a0 system"),
+            dialogue_alert( _("Planet by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
                   name, planet_getSystem( name ) );
             free(name);
             continue;

@@ -259,7 +259,7 @@ static void btn_updateHotkey( Widget *btn )
    display[match] = '\0'; /* Cuts the string into two. */
 
    /* Copy both parts and insert the character in the middle. */
-   nsnprintf( buf, sizeof(buf), "%s\aw%c\a0%s", display, target, &display[match+1] );
+   nsnprintf( buf, sizeof(buf), "%s#w%c#0%s", display, target, &display[match+1] );
 
    free(btn->dat.btn.display);
    btn->dat.btn.display = strdup(buf);
