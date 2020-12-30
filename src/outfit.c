@@ -2102,7 +2102,7 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
 static int outfit_parse( Outfit* temp, const char* file )
 {
    xmlNodePtr cur, ccur, node, parent;
-   char *prop;
+   char *prop, *desc_extra;
    const char *cprop;
    int group, m, l;
    ShipStatList *ll;
@@ -2119,6 +2119,7 @@ static int outfit_parse( Outfit* temp, const char* file )
 
    /* Clear data. */
    memset( temp, 0, sizeof(Outfit) );
+   desc_extra = NULL;
 
    xmlr_attr_strd(parent,"name",temp->name);
    if (temp->name == NULL)
@@ -2142,6 +2143,7 @@ static int outfit_parse( Outfit* temp, const char* file )
             xmlr_long(cur,"price",temp->price);
             xmlr_strd(cur,"limit",temp->limit);
             xmlr_strd(cur,"description",temp->description);
+            xmlr_strd(cur,"desc_extra",desc_extra);
             xmlr_strd(cur,"typename",temp->typename);
             xmlr_int(cur,"priority",temp->priority);
             if (xml_isNode(cur,"unique")) {
@@ -2281,6 +2283,14 @@ static int outfit_parse( Outfit* temp, const char* file )
          if (temp->desc_short) {
             l = strlen(temp->desc_short);
             ss_statsListDesc( temp->stats, &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l, 1 );
+            /* Add extra description task if available. */
+            if (desc_extra != NULL) {
+               l = strlen(temp->desc_short);
+               /* TODO handle the colour in the xml desc_extra. XML 1.0 doesn't support \a though. */
+               nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l, "\n\ap%s\a0", desc_extra );
+               free( desc_extra );
+               desc_extra = NULL;
+            }
          }
 
          continue;
