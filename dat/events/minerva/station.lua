@@ -258,19 +258,21 @@ function approach_terminal()
       end
       vn.jump( "trade_confirm" )
    end
-   local opts = {}
-   for k,v in ipairs(trades) do
-      local tokens = v[2][1]
-      local soldout = (v[2][2]=="outfit" and outfit.unique(v[1]) and player.numOutfit(v[1])>0)
-      if soldout then
-         opts[k] = { string.format(_("%s (#rSOLD OUT#0)"), _(v[1])), -1 }
-      else
-         opts[k] = { string.format(_("%s (#p%d Tokens#0)"), _(v[1]), tokens), k }
-      end
-   end
-   table.insert( opts, {_("Back"), "start"} )
    vn.label( "trade_menu" )
-   vn.menu( opts, handler )
+   vn.menu( function ()
+      local opts = {}
+      for k,v in ipairs(trades) do
+         local tokens = v[2][1]
+         local soldout = (v[2][2]=="outfit" and outfit.unique(v[1]) and player.numOutfit(v[1])>0)
+         if soldout then
+            opts[k] = { string.format(_("%s (#rSOLD OUT#0)"), _(v[1])), -1 }
+         else
+            opts[k] = { string.format(_("%s (#p%d Tokens#0)"), _(v[1]), tokens), k }
+         end
+      end
+      table.insert( opts, {_("Back"), "start"} )
+      return opts
+   end, handler )
    vn.jump( "start" )
 
    -- Buying stuff
