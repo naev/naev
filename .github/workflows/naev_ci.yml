@@ -61,7 +61,7 @@ jobs:
           tar -xf naev-dist-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
 
       - name: Meson Setup
-        if: ${{ matrix.tag != naev-windows }}
+        if: ${{ matrix.tag != 'naev-windows' }}
         id: setup
         run: |
           meson setup build source \
@@ -75,7 +75,7 @@ jobs:
               -Dforce_fallback_for=SuiteSparse
 
       - name: Cross-compile Meson Setup
-        if: ${{ matrix.tag == naev-windows }}
+        if: ${{ matrix.tag == 'naev-windows' }}
         id: setup
         run: |
           meson setup build source \
