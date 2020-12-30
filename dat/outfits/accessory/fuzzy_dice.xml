@@ -9,6 +9,7 @@
   <mass>0</mass>
   <price>1000000</price>
   <description>A pair of fuzzy dice that can be hung inside your ship. Apparently they are supposed to bring you good luck. This particular pair was said to belong to starship pilot Xioni, who was famous for recovering artefacts from the nebula before she disappeared mysteriously.</description>
+  <desc_extra>Improves luck!</desc_extra>
   <gfx_store>placeholder</gfx_store>
  <rarity>6</rarity></general>
  <specific type="modification">
