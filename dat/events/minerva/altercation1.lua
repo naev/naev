@@ -16,6 +16,7 @@
 --]]
 local portrait = require "portrait"
 local vn = require 'vn'
+local imageproc = require 'imageproc'
 
 zalek_image = portrait.getFullPath( "none" )
 zalek_name = _("Za'lek Belligerent")
@@ -76,9 +77,9 @@ function takeoff ()
    zl:rename( zalek_name )
    zl:setNoDisable( true )
    dv:control()
-   dv:attack( zl )
+   dv:face(zl)
    zl:control()
-   zl:attack( dv )
+   zl:face(dv)
 
    -- Prepare hooks
    hook.pilot( zl, "death", "zl_dead" )
@@ -87,25 +88,36 @@ function takeoff ()
    hook.pilot( dv, "attacked", "dv_attacked" )
 
    -- Messages
-   zl_msgs = {
+   dv_msgs = {
       _("*incoherent expletives*"),
       _("Disgusting Za'lek scum!"),
       _("Your head will make a fine trophy on my ships!"),
       _("I shall wash my hull in your blood!"),
       _("Za'lek trash!"),
    }
-   dv_msgs = {
+   zl_msgs = {
       _("My defense protocols will make short work of you!"),
       _("I'll teach you physics Dvaered punk!"),
       _("My ship's hull is less thick than your Dvaered skull!"),
       _("You Dvaereds smell worse than my vials of thiol!"),
    }
    zl_yelling = (rnd.rnd()<0.5)
-   angrytimer = hook.timer( 3000, "angrypeople" )
+   angrytimer = hook.timer( 1000, "angrypeople" )
+   attacktimer = hook.timer( 5000, "startattack" )
+   player_side = nil
 
    -- Set up hooks when it is over
    hook.jumpout("leave")
    hook.land("leave")
+end
+
+function startattack ()
+   if player_side == nil then
+      dv:taskClear()
+      zl:taskClear()
+      dv:attack( zl )
+      zl:attack( dv )
+   end
 end
 
 function cycle_messages( msgs, id )
@@ -132,20 +144,38 @@ end
 
 function zl_attacked( victim, attacker )
    if attacker ~= player.pilot() then return end
-   player_side = "dvaered"
-   zl:broadcast( _("Et tu brute?") )
-   zl:setHostile(true)
+   --zl:taskClear()
+   --zl:attack( player.pilot() )
+   if player_side=="zalek" then
+      player_side = "neither"
+   elseif player_side == nil then
+      player_side = "dvaered"
+      zl:broadcast( _("Et tu brute?") )
+      zl:setHostile(true)
+      dv:setFriendly(true)
+      dv:taskClear()
+      dv:attack( zl )
+   end
 end
 
 function dv_attacked( victim, attacker )
    if attacker ~= player.pilot() then return end
-   player_side = "zalek"
-   dv:broadcast( _("Et tu brute?") )
-   dv:setHostile(true)
+   --dv:taskClear()
+   --dv:attack( player.pilot() )
+   if player_side=="dvaered" then
+      player_side = "neither"
+   elseif player_side == nil then
+      player_side = "zalek"
+      dv:broadcast( _("Et tu brute?") )
+      dv:setHostile(true)
+      zl:setFriendly(true)
+      zl:taskClear()
+      zl:attack( dv )
+   end
 end
 
 function zl_dead ()
-   if player_side=="zalek" then
+   if player_side=="zalek" or player_side=="neither" then
       dv:attack( player.pilot() )
    else
       hook.rm( angrytimer )
@@ -167,9 +197,9 @@ function dv_hail ()
    vn.clear()
    vn.scene()
    vn.fadein()
-   local dv = vn.newCharacter( dvaered_name,
+   local dvc = vn.newCharacter( dvaered_name,
       { image=holo, color=dvaered_colour } )
-   dv( _("\"Thank you for the help with the Za'lek scum. Let us celebrate with a drink in the bar down at Minerva Station!\"") )
+   dvc( _("\"Thank you for the help with the Za'lek scum. Let us celebrate with a drink in the bar down at Minerva Station!\"") )
    vn.fadeout()
    vn.run()
    var.push( "minerva_altercation_helped", "dvaered" )
@@ -178,7 +208,7 @@ function dv_hail ()
 end
 
 function dv_dead ()
-   if player_side=="dvaered" then
+   if player_side=="dvaered" or player_side=="neither" then
       zl:attack( player.pilot() )
    else
       hook.rm( angrytimer )
@@ -200,9 +230,9 @@ function zl_hail ()
    vn.clear()
    vn.scene()
    vn.fadein()
-   local zl = vn.newCharacter( zalek_name,
+   local zlc = vn.newCharacter( zalek_name,
       { image=holo, color=zalek_colour } )
-   zl( _("\"As my computations predicted, the Dvaered scum was no match for the Za'lek superiority. Let us celebrate with a drink down at Minerva Station\"") )
+   zlc( _("\"As my computations predicted, the Dvaered scum was no match for the Za'lek superiority. Let us celebrate with a drink down at Minerva Station\"") )
    vn.fadeout()
    vn.run()
    var.push( "minerva_altercation_helped", "zalek" )
