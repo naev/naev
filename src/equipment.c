@@ -1152,7 +1152,7 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
       return;
 
    /* Save focus. */
-   focused = strdup(window_getFocus(wid));
+   focused = window_getFocus( wid );
 
    /* Save positions. */
    if (outfits) {

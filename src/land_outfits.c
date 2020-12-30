@@ -242,7 +242,7 @@ void outfits_regenList( unsigned int wid, char *str )
       return;
 
    /* Save focus. */
-   focused = strdup(window_getFocus(wid));
+   focused = window_getFocus( wid );
 
    /* Save positions. */
    tab = window_tabWinGetActive( wid, OUTFITS_TAB );

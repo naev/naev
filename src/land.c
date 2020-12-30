@@ -334,7 +334,7 @@ static int bar_genList( unsigned int wid )
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
 
    /* Save focus. */
-   focused = strdup(window_getFocus(wid));
+   focused = window_getFocus( wid );
 
    /* Destroy widget if already exists. */
    if (widget_exists( wid, "iarMissions" )) {
@@ -656,7 +656,7 @@ static void misn_genList( unsigned int wid, int first )
    int w,h;
 
    /* Save focus. */
-   focused = strdup(window_getFocus(wid));
+   focused = window_getFocus(wid);
 
    if (!first)
       window_destroyWidget( wid, "lstMission" );
