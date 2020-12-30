@@ -386,7 +386,8 @@ static int bar_genList( unsigned int wid )
 
    /* Restore focus. */
    window_setFocus( wid, focused );
-   free(focused);
+   if (focused != NULL);
+      free( focused );
 
    return 0;
 }
@@ -687,7 +688,8 @@ static void misn_genList( unsigned int wid, int first )
 
    /* Restore focus. */
    window_setFocus( wid, focused );
-   free(focused);
+   if (focused != NULL);
+      free( focused );
    /* duplicateed the save focus functionaility from the bar */
 }
 /**

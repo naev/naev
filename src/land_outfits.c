@@ -258,7 +258,8 @@ void outfits_regenList( unsigned int wid, char *str )
 
    /* Restore focus. */
    window_setFocus( wid, focused );
-   free(focused);
+   if (focused != NULL);
+      free( focused );
 }
 
 /**
