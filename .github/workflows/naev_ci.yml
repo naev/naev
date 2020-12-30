@@ -118,7 +118,7 @@ jobs:
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
   "AppImage_Compile_Naev":
-    needs: [Package_Source, Linux_Compile_Naev]
+    needs: [Package_Source, Compile_Naev]
     runs-on: ubuntu-latest
     container:
       image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
@@ -159,7 +159,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2004
-    needs: [Package_Source, Linux_Compile_Naev, Windows_Compile_Naev]
+    needs: [Package_Source, Compile_Naev]
 
     steps:
       - name: Get Source
