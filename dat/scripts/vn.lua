@@ -390,11 +390,18 @@ function vn.StateMenu.new( items, handler )
    s._keypressed = vn.StateMenu._keypressed
    s._type = "Menu"
    s.items = items
+   s._items = nil
    s.handler = handler
    s._choose = vn.StateMenu._choose
    return s
 end
 function vn.StateMenu:_init()
+   -- Check to see if function
+   if type(self.items)=="function" then
+      self._items = self.items()
+   else
+      self._items = self.items
+   end
    -- Set up the graphics stuff
    local font = vn.namebox_font
    -- Border information
@@ -406,7 +413,7 @@ function vn.StateMenu:_init()
    local w = 0
    local h = 0
    self._elem = {}
-   for k,v in ipairs(self.items) do
+   for k,v in ipairs(self._items) do
       local text = string.format("%d. %s", k, v[1])
       local sw, wrapped = font:getWrap( text, 900 )
       sw = sw + 2*tb
@@ -466,11 +473,11 @@ function vn.StateMenu:_keypressed( key )
    local n = tonumber(key)
    if n == nil then return end
    if n==0 then n = n + 10 end
-   if n > #self.items then return end
+   if n > #self._items then return end
    self:_choose(n)
 end
 function vn.StateMenu:_choose( n )
-   self.handler( self.items[n][2] )
+   self.handler( self._items[n][2] )
    _finish( self )
 end
 --[[
