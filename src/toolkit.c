@@ -2348,6 +2348,10 @@ void window_setFocus( const unsigned int wid, const char* wgtname )
    Window *wdw;
    Widget *wgt;
 
+   /* If widget name is NULL, we should not proceed */
+   if (wgtname == NULL)
+      return;
+
    /* Get window. */
    wdw = window_wget(wid);
    if (wdw == NULL)
