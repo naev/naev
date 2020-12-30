@@ -61,7 +61,8 @@ function takeoff ()
    -- Create the ships
    -- TODO add meta-factions so we can get them to kill each other
    -- without manual control. This would allow adding more ships so the
-   -- player has more time to help and such
+   -- player has more time to help and such. This should also allow
+   -- getting rid of all the ridiculous "attack" cases.
    -- Maybe look at warlords_battle.lua
    local pos = planet.get("Minerva Station"):pos()
    local dvpos = pos + vec2.newP( 700, 120 )
@@ -112,11 +113,12 @@ function takeoff ()
 end
 
 function startattack ()
-   if player_side == nil then
+   if not fighting_started then
       dv:taskClear()
       zl:taskClear()
       dv:attack( zl )
       zl:attack( dv )
+      fighting_started = true
    end
 end
 
@@ -141,11 +143,15 @@ function angrypeople ()
    angrytimer = hook.timer( 2000, "angrypeople" )
 end
 
-
 function zl_attacked( victim, attacker )
    if attacker ~= player.pilot() then return end
-   --zl:taskClear()
-   --zl:attack( player.pilot() )
+   if not fighting_started then
+      zl:taskClear()
+      zl:attack( player.pilot() )
+      dv:taskClear()
+      dv:attack( zl )
+      fighting_started = true
+   end
    if player_side=="zalek" then
       player_side = "neither"
    elseif player_side == nil then
@@ -160,8 +166,13 @@ end
 
 function dv_attacked( victim, attacker )
    if attacker ~= player.pilot() then return end
-   --dv:taskClear()
-   --dv:attack( player.pilot() )
+   if not fighting_started then
+      dv:taskClear()
+      dv:attack( player.pilot() )
+      zl:taskClear()
+      zl:attack( zl )
+      fighting_started = true
+   end
    if player_side=="dvaered" then
       player_side = "neither"
    elseif player_side == nil then
