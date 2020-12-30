@@ -22,6 +22,7 @@ gambling_priority = 3
 terminal_name = _("Terminal")
 terminal_portrait = "none" -- TODO replace
 terminal_desc = _("A terminal with which you can check your current token balance and buy items with tokens.")
+terminal_colour = {0.8, 0.8, 0.8}
 blackjack_name = _("Blackjack")
 blackjack_portrait = "none" -- TODO replace
 blackjack_desc = _("Seems to be one of the more popular card games where you can play blackjack against a \"cyborg chicken\".")
@@ -162,7 +163,8 @@ function approach_terminal()
    vn.clear()
    vn.scene()
    local t = vn.newCharacter( terminal_name,
-         { image=portrait.getFullPath(terminal_portrait), color={0.8, 0.8, 0.8} } )
+         { image=portrait.getFullPath(terminal_portrait),
+           color=terminal_colour } )
    vn.fadein()
    vn.label( "start" )
    t:say( function() return string.format(
@@ -278,7 +280,7 @@ function approach_terminal()
    -- Buying stuff
    vn.label( "trade_confirm" )
    t:say( function () return string.format(
-         _("\"ARE YOU SURE YOU WANT TO TRADE IN FOR THE '%s'? THE DESCRIPTION IS AS FOLLOWS:\"\n%s"),
+         _("\"ARE YOU SURE YOU WANT TO TRADE IN FOR THE '#w%s#0'? THE DESCRIPTION IS AS FOLLOWS:\"\n#w%s#0"),
          _(tradein_item[1]), _(tradein_item.description) ) end )
    vn.menu( {
       { _("Trade"), "trade_consumate" },
