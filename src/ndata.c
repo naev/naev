@@ -118,6 +118,15 @@ int ndata_setPath( const char *path )
       case NDATA_SRC_USER:
          // This already didn't work out when we checked the provided path.
       case NDATA_SRC_DEFAULT:
+#if HAS_MACOS
+         if ( macos_isBundle() && macos_resourcesPath( buf, PATH_MAX ) >= 0 ) {
+            len = strlen( buf ) + 1 + strlen(NDATA_PATHNAME);
+            ndata_dir    = malloc(len+1);
+            nsnprintf( ndata_dir, len+1, "%s/%s", buf, NDATA_PATHNAME );
+            ndata_source = NDATA_SRC_DEFAULT;
+            break;
+         }
+#endif /* HAS_MACOS */
          if ( env.isAppImage && nfile_concatPaths( buf, PATH_MAX, env.appdir, PKGDATADIR, NDATA_PATHNAME ) >= 0 && ndata_isndata( buf ) ) {
             ndata_dir    = strdup( buf );
             ndata_source = NDATA_SRC_DEFAULT;
