@@ -63,6 +63,24 @@ local function _draw_bg( x, y, w, h, col, border_col, alpha )
    graphics.rectangle( "fill", x+2, y+2, w-4, h-4 )
 end
 
+function _draw_character( c )
+   if c.image == nil then return end
+   local w, h = c.image:getDimensions()
+   local lw, lh = love.graphics.getDimensions()
+   local mw, mh = vn.textbox_w, vn.textbox_y
+   local scale = math.min( mw/w, mh/h )
+   local col
+   if c.talking then
+      col = { 1, 1, 1 }
+   else
+      col = { 0.8, 0.8, 0.8 }
+   end
+   _set_col( col, c.alpha )
+   local x = c.offset - w*scale/2
+   local y = mh-scale*h
+   graphics.draw( c.image, x, y, 0, scale, scale )
+end
+
 
 --[[
 -- @brief Main drawing function.
@@ -70,21 +88,13 @@ end
 function vn.draw()
    -- Draw characters
    for k,c in ipairs( vn._characters ) do
-      if c.image ~= nil then
-         local w, h = c.image:getDimensions()
-         local lw, lh = love.graphics.getDimensions()
-         local mw, mh = vn.textbox_w, vn.textbox_y
-         local scale = math.min( mw/w, mh/h )
-         local col
-         if c.talking then
-            col = { 1, 1, 1 }
-         else
-            col = { 0.8, 0.8, 0.8 }
-         end
-         _set_col( col, c.alpha )
-         local x = c.offset - w*scale/2
-         local y = mh-scale*h
-         graphics.draw( c.image, x, y, 0, scale, scale )
+      if not c.talking then
+         _draw_character( c )
+      end
+   end
+   for k,c in ipairs( vn._characters ) do
+      if c.talking then
+         _draw_character( c )
       end
    end
 
