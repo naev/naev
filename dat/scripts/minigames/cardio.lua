@@ -70,7 +70,9 @@ function cardio.newCardWestern( rank, suite )
 end
 local function _torankstr( rank )
    local s
-   if rank == 11 then
+   if rank == 1 then
+      return "A"
+   elseif rank == 11 then
       return "J"
    elseif rank == 12 then
       return "Q"
@@ -78,6 +80,19 @@ local function _torankstr( rank )
       return "K"
    end
    return tostring(rank)
+end
+local function _tosuitestr( suite )
+   if suite=="diamond" then
+      return "♦"
+   elseif suite=="heart" then
+      return "♥"
+   elseif suite=="spade" then
+      return "♠"
+   elseif suite=="club" then
+      return "♣"
+   else
+      return "?"
+   end
 end
 function cardio.CardWestern:drawBack( x, y )
    -- background
@@ -99,7 +114,7 @@ function cardio.CardWestern:draw( x, y )
 
    -- number
    local font = cardio.CardWestern.font
-   local s = tostring(_torankstr(self.rank))
+   local s = _torankstr(self.rank)
    local w = font:getWidth(s)
    if self.suite=="heart" or self.suite=="diamond" then
       lg.setColor( 1, 0.2, 0.2 )
@@ -107,7 +122,7 @@ function cardio.CardWestern:draw( x, y )
       lg.setColor( 0, 0, 0 )
    end
    lg.print( s, font, x+6+(63-w)/2, y+5+10 )
-   s = string.upper(string.sub(self.suite,1,1))
+   s = _tosuitestr(self.suite)
    w = font:getWidth(s)
    lg.print( s, font, x+6+(63-w)/2, y+5+50 )
 end
