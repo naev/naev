@@ -1195,7 +1195,7 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
 
    /* Restore focus. */
    window_setFocus( wid, focused );
-   if (focused != NULL);
+   if (focused != NULL)
       free( focused );
 }
 
