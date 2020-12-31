@@ -139,6 +139,8 @@ jobs:
         id: appimageCompile
         run: |
           script -c "./source/utils/buildAppImage.sh -c -m -s "source" -b "build" -o "${{ github.workspace }}/dist"" appImageBuildLog.txt
+          ls -l ${{ github.workspace }}/dist
+          ls -l ${{ github.workspace }}/dist/out
         env:
           APPIMAGE_EXTRACT_AND_RUN: 1
 
@@ -155,7 +157,7 @@ jobs:
         with:
           name: naev-${{ github.sha }}-AppImageBuild
           path: |
-            ${{ github.workspace }}/dist/out/*.AppImage
+            ${{ github.workspace }}/dist/out/*.*
           if-no-files-found: error
 
   "Lua_Documentation":
