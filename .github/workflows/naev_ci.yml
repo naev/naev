@@ -192,11 +192,9 @@ jobs:
         include:
           - os: macos-10.15
             config: macos.ini
-            pkg-config-path: "/usr/local/opt/openal-soft/lib/pkgconfig"
 
           - os: macos-11.0
             config: macos.ini
-            pkg-config-path: "/usr/local/opt/openal-soft/lib/pkgconfig"
 
     runs-on: "${{ matrix.os }}"
 
@@ -206,8 +204,7 @@ jobs:
           brew update
           brew install \
             intltool \
-            mercurial \
-            openal-soft \
+            physfs \
             sdl2
 
       - name: Setup Python
@@ -233,13 +230,11 @@ jobs:
           meson setup build source \
               --native-file='source/utils/build/${{ matrix.config }}' \
               --buildtype=debug \
-              --wrap-mode=forcefallback \
               --pkg-config-path=${{ matrix.pkg-config-path }} \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
-              -Ddocs_lua=disabled \
-              -Dforce_fallback_for=SuiteSparse
+              -Ddocs_lua=disabled
 
       - name: Upload Setup Log
         uses: actions/upload-artifact@v1
