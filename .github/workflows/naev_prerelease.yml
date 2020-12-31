@@ -49,6 +49,13 @@ jobs:
           path: ${{ github.workspace }}/dist/out/VERSION
           if-no-files-found: error
 
+      - name: Upload Changelog Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-changelog
+          path: ${{ github.workspace }}/dist/out/CHANGELOG
+          if-no-files-found: error
+
       - name: Upload Deployment Script Artifact
         uses: actions/upload-artifact@v2
         with:
@@ -251,13 +258,13 @@ jobs:
           chmod +x dist/out/naev-$SUFFIX-linux-x86-64.AppImage
 
       - name: Upload Github Release
+        uses: ncipollo/release-action@v1
         if: ${{ matrix.releasetype == 'github' }}
-        uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          artifacts: "dist/out/*.*"
+          bodyFile: "dist/staging/naev-changelog/CHANGELOG"
+          token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: true
-          files: |
-            ${{ github.workspace }}/dist/out/*
 
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
