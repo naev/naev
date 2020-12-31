@@ -2345,7 +2345,8 @@ static Widget* toolkit_getFocus( Window *wdw )
  * @brief Sets the focused widget in a window.
  *
  *    @param wid ID of the window to get widget from.
- *    @param wgtname Name of the widget to set focus to.
+ *    @param wgtname Name of the widget to set focus to,
+ *                   or NULL to clear the focus.
  */
 void window_setFocus( const unsigned int wid, const char* wgtname )
 {
@@ -2357,12 +2358,13 @@ void window_setFocus( const unsigned int wid, const char* wgtname )
    if (wdw == NULL)
       return;
 
+   toolkit_focusClear( wdw );
+
    /* Get widget. */
-   wgt = window_getwgt(wid,wgtname);
+   wgt = wgtname==NULL ? NULL : window_getwgt( wid, wgtname );
    if (wgt == NULL)
       return;
 
-   toolkit_focusClear( wdw );
    toolkit_focusWidget( wdw, wgt );
 }
 
@@ -2371,7 +2373,7 @@ void window_setFocus( const unsigned int wid, const char* wgtname )
  * @brief Gets the focused widget in a window.
  *
  *    @param wid ID of the window to get widget from.
- *    @return The focused widget's name.
+ *    @return The focused widget's name (strdup()ed string or NULL).
  */
 char* window_getFocus( const unsigned int wid )
 {
@@ -2386,7 +2388,7 @@ char* window_getFocus( const unsigned int wid )
    /* Find focused widget. */
    for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
       if (wgt->id == wdw->focus)
-         return wgt->name;
+         return strdup( wgt->name );
 
    return NULL;
 }
