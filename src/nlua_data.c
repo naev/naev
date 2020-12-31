@@ -282,8 +282,10 @@ static int dataL_paste( lua_State *L )
    long sw = luaL_checklong(L,5) * source->elem;
 
    /* Check fits. */
-   if ((dx+sw >= (long)dest->size) || (sx+sw >= (long)source->size))
-      NLUA_ERROR(L, _("size mismatch: out of bound access"));
+   if (dx+sw > (long)dest->size)
+      NLUA_ERROR(L, _("size mismatch: out of bound access dest: %d of %d elements"), dx+sw, dest->size);
+   else if (sx+sw > (long)source->size)
+      NLUA_ERROR(L, _("size mismatch: out of bound access of source: %d of %d elements"), sx+sw, source->size);
 
    /* Copy memory over. */
    memcpy( &dest->data[dx], &source->data[sx], sw );
