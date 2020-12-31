@@ -4,6 +4,7 @@ name: CI
 
 env:
   DESTDIR: "${{ github.workspace }}/dist"
+  WINEPREFIX: "/tmp/.wine"
 
 jobs:
   "Package_Source":
@@ -78,8 +79,6 @@ jobs:
         if: ${{ matrix.tag == 'naev-windows' }}
         id: crossSetup
         run: |
-          chown "$USER":"$USER" -R /github/home
-          winecfg
           meson setup build source \
               --cross-file='source/utils/build/${{ matrix.config }}' \
               --buildtype=debug \
