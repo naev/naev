@@ -47,7 +47,7 @@ echo "NIGHTLY:      $NIGHTLY"
 echo "BUILD OUTPUT: $BUILDOUTPUT"
 
 # MinGW DLL search paths
-MINGW_BUNDLEDLLS_SEARCH_PATH="/mingw64/bin:/usr/x86_64-w64-mingw32/bin"
+MINGW_BUNDLEDLLS_SEARCH_PATH="/mingw64/bin:/usr/x86_64-w64-mingw32/bin:/usr/lib/mxe/usr/x86_64-w64-mingw32.shared/bin"
 # Include all subdirs (mingw-bundledlls can't search recursively) of in-tree and out-of-tree subproject dirs.
 # Normally, Meson builds everything out-of-tree, but some subprojects have their own build systems which do as they please.
 for MESON_SUBPROJ_DIR in "${SOURCEROOT}/subprojects" "${BUILDPATH}/subprojects"; do
@@ -92,7 +92,7 @@ cp "$BUILDPATH/naev.exe" "$STAGING/naev-$SUFFIX.exe"
 
 # Collect DLLs
 echo "Collecting DLLs in staging area"
-/usr/bin/python3 "$SOURCEROOT/extras/windows/mingw-bundledlls/mingw-bundledlls" --copy "$STAGING/naev-$SUFFIX.exe"
+python3 "$SOURCEROOT/extras/windows/mingw-bundledlls/mingw-bundledlls" --copy "$STAGING/naev-$SUFFIX.exe"
 
 # Create distribution folder
 

@@ -1,5 +1,6 @@
 #!/bin/bash
 # Renders audio to mp3, while retaining metadata
+# Requires ffmpeg to be installed and available on PATH
 
 # Pass in -i <inputDir> (no trailing '/') -f <fileextension> -o <outputDir> (no trailing '/')
 
