@@ -78,7 +78,7 @@ jobs:
         if: ${{ matrix.tag == 'naev-windows' }}
         id: crossSetup
         run: |
-          chown "$USER":"$USER" -R /github
+          chown "$USER":"$USER" -R /github/home
           winecfg
           meson setup build source \
               --cross-file='source/utils/build/${{ matrix.config }}' \
