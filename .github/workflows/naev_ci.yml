@@ -142,19 +142,12 @@ jobs:
         env:
           APPIMAGE_EXTRACT_AND_RUN: 1
 
-      - name: Upload AppImage Compile Log
+      - name: Upload AppImage Artifacts
         uses: actions/upload-artifact@v1
         if: ${{ (success() || steps.appimageCompile.outcome == 'failure') }}
         with:
-          name: naev-${{ github.sha }}-AppImageBuild-log
-          path: ${{ github.workspace }}/appImageBuildLog.txt
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: naev-AppImage-${{ github.sha }}
-          path: "${{ github.workspace }}/dist/out/*.AppImage"
-          if-no-files-found: error
+          name: naev-${{ github.sha }}-AppImageBuild
+          path: ${{ github.workspace }}/*
 
   "Lua_Documentation":
     runs-on: ubuntu-latest
