@@ -1,10 +1,10 @@
 on:
   push:
     tags:
-      - '!v*.*.*'
-      - 'v*.*.*-alpha*'
-      - 'v*.*.*-beta*'
-      - 'v*.*.*-rc*'
+      - "!v*.*.*"
+      - "v*.*.*-alpha*"
+      - "v*.*.*-beta*"
+      - "v*.*.*-rc*"
 
 name: Pre-Release
 
@@ -210,7 +210,7 @@ jobs:
       - name: Create Release Staging and Output Areas
         run: |
           mkdir -p {temp,dist/{staging,out/{lin64,win64}}}
-          
+
       - name: Update APT Cache
         if: ${{ matrix.releasetype == 'steam' }}
         run: |
@@ -223,7 +223,7 @@ jobs:
         run: |
           echo steamcmd steam/question select "I AGREE" | sudo debconf-set-selections
           sudo apt-get install lib32gcc1 libsdl2-2.0-0:i386 steamcmd
-          
+
       - name: Install Butler
         if: ${{ matrix.releasetype == 'itch' }}
         run: |
@@ -258,7 +258,7 @@ jobs:
           prerelease: true
           files: |
             ${{ github.workspace }}/dist/out/*
-          
+
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
         run: |
@@ -271,7 +271,7 @@ jobs:
 
           tar -Jxf "dist/staging/naev-win64/steam-win64.tar.xz" -C "dist/out/win64"
           tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64" --strip 1
-          
+
           ./butler push --userversion="$SUFFIX" dist/out/lin64 naev/naev:linux-x86-64-beta
           ./butler push --userversion="$SUFFIX" dist/out/win64 naev/naev:windows-x86-64-beta
         env:
