@@ -32,6 +32,7 @@ static int dataL_get( lua_State *L );
 static int dataL_set( lua_State *L );
 static int dataL_getSize( lua_State *L );
 static int dataL_getString( lua_State *L );
+static int dataL_paste( lua_State *L );
 static const luaL_Reg dataL_methods[] = {
    { "__gc", dataL_gc },
    { "__eq", dataL_eq },
@@ -40,6 +41,7 @@ static const luaL_Reg dataL_methods[] = {
    { "set", dataL_set },
    { "getSize", dataL_getSize },
    { "getString", dataL_getString },
+   { "paste", dataL_paste },
    {0,0}
 }; /**< Data metatable methods. */
 
@@ -267,5 +269,28 @@ static int dataL_getString( lua_State *L )
    return 1;
 }
 
+
+/**
+ * @luafunc paste( dest, source, dx, sx, sw )
+ */
+static int dataL_paste( lua_State *L )
+{
+   LuaData_t *dest = luaL_checkdata(L,1);
+   LuaData_t *source = luaL_checkdata(L,2);
+   long dx = luaL_checklong(L,3) * dest->elem;
+   long sx = luaL_checklong(L,4) * source->elem;
+   long sw = luaL_checklong(L,5) * source->elem;
+
+   /* Check fits. */
+   if ((dx+sw >= (long)dest->size) || (sx+sw >= (long)source->size))
+      NLUA_ERROR(L, _("size mismatch: out of bound access"));
+
+   /* Copy memory over. */
+   memcpy( &dest->data[dx], &source->data[sx], sw );
+
+   /* Return destination. */
+   lua_pushvalue(L,1);
+   return 1;
+}
 
 
