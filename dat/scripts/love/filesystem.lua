@@ -7,7 +7,7 @@ local filesystem = {}
 
 function filesystem.getInfo( path, filtertype )
    local ftype = naev.file.filetype( path )
-   if filtertype ~= ftype then
+   if filetype ~= nil and filtertype ~= ftype then
       return nil
    end
    if ftype == "directory" then
