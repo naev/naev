@@ -239,7 +239,7 @@ jobs:
 
       - name: Transcode Steam Soundtrack
         run: |
-          ./utils/convertToMP3.sh -i dist/staging -f ogg -o dist/out/steam
+          ./source/utils/convertToMP3.sh -i dist/staging -f ogg -o dist/out/steam
 
       - name: Upload Soundtrack Artifact
         uses: actions/upload-artifact@v2
