@@ -2,7 +2,7 @@
 ;SetCompress Off
 
 ;Enables Unicode installer to clear ANSI deprecation message 
-Unicode true
+;Unicode true
 ;Version, Icon and URL
 ;!define SUFFIX "0.8.0-win64"
 !define URL "https://naev.org"
