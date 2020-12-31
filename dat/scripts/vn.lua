@@ -67,9 +67,19 @@ end
 function _draw_character( c )
    if c.image == nil then return end
    local w, h = c.image:getDimensions()
+   local isportrait = (w==200 and h==150)
    local lw, lh = love.graphics.getDimensions()
    local mw, mh = vn.textbox_w, vn.textbox_y
-   local scale = math.min( mw/w, mh/h )
+   local scale, x, y
+   if isportrait then
+      scale = math.min( mw/w, mh/h )
+      x = c.offset - w*scale/2
+      y = mh-scale*h
+   else
+      scale = lh/h
+      x = c.offset - w*scale/2
+      y = 0
+   end
    local col
    if c.talking then
       col = { 1, 1, 1 }
@@ -77,8 +87,6 @@ function _draw_character( c )
       col = { 0.8, 0.8, 0.8 }
    end
    _set_col( col, c.alpha )
-   local x = c.offset - w*scale/2
-   local y = mh-scale*h
    graphics.draw( c.image, x, y, 0, scale, scale )
 end
 
@@ -299,7 +307,16 @@ function vn.StateCharacter:_init()
    for k,c in ipairs(vn._characters) do
       if c.image ~= nil then
          n = n+1
-         c.offset = lw * n/(nimg+1)
+         local w, h = c.image:getDimensions()
+         if nimg == 1 then
+            c.offset = lw/2
+         elseif nimg == 2 then
+            c.offset = ((n-1)*0.5 + 0.25)*lw
+         elseif nimg == 3 then
+            c.offset = ((n-1)*0.35 + 0.15)*lw
+         else
+            error(_("vn: unsupported number of characters"))
+         end
       end
    end
    _finish(self)
