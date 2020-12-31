@@ -204,7 +204,7 @@ jobs:
           brew update
           brew install \
             intltool \
-            physfs \
+            mercurial --with-custom-python \
             sdl2
 
       - name: Setup Python
