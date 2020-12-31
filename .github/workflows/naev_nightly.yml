@@ -9,6 +9,7 @@ name: Nightly Release
 jobs:
   "Package_Source":
     runs-on: ubuntu-latest
+
     container:
       image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
 
@@ -86,20 +87,15 @@ jobs:
 
   "Windows_Naev_Release":
     needs: "Package_Source"
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        shell: msys2 {0}
+    env:
+      WINEPREFIX: "/tmp/.wine"
+
+    container:
+      image: projectsynchro/synchros_sexy_docker_images:naev-windows
 
     steps:
-      - name: Install MinGW Packages
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: MINGW64
-          update: true
-          install: git python tar mingw-w64-x86_64-clang mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-luajit mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-nsis mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-physfs mingw-w64-x86_64-SDL2 mingw-w64-x86_64-suitesparse
-
       - name: Get Source
         uses: actions/download-artifact@v2
         with:
@@ -113,7 +109,7 @@ jobs:
       - name: Meson Setup
         run: |
           meson setup build source \
-            --native-file='source/utils/build/windows.ini' \
+            --cross-file='source/utils/build/windows_cross_mxe.ini' \
             --buildtype=release \
             -Db_lto=true \
             -Dauto_features=enabled \
@@ -195,8 +191,8 @@ jobs:
       matrix:
         include:
           - releasetype: github
-          - releasetype: steam
-          - releasetype: itch
+#          - releasetype: steam
+#          - releasetype: itch
 
     runs-on: ubuntu-latest
     needs:
@@ -206,7 +202,7 @@ jobs:
         Windows_Naev_Release,
         Steam_Naev_Release,
       ]
-    if: ${{ github.repository == 'naev/naev' }}
+    #if: ${{ github.repository == 'naev/naev' }}
 
     steps:
       - name: Checkout Naev Repository
