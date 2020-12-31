@@ -123,7 +123,8 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
-
+      volumes:
+        - /tmp/out:${{ github.workspace }}/VolMount
     steps:
       - name: Get Source
         uses: actions/download-artifact@v1
@@ -138,24 +139,26 @@ jobs:
       - name: Compile AppImage
         id: appimageCompile
         run: |
-          script -c "./source/utils/buildAppImage.sh -c -m -s "source" -b "build" -o "dist"" appImageBuildLog.txt
+          mkdir -p /tmp/out
+          script -c "./source/utils/buildAppImage.sh -c -m -s "source" -b "build" -o "$DESTDIR"" /tmp/out/appImageBuildLog.txt
+          cp $DESTDIR/out/*.AppImage /tmp/out
         env:
           APPIMAGE_EXTRACT_AND_RUN: 1
 
       - name: Upload AppImage Compile Log
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v1
         if: ${{ (success() || steps.appimageCompile.outcome == 'failure') }}
         with:
           name: naev-${{ github.sha }}-AppImageBuild-log
           path: |
-            appImageBuildLog.txt
+            ${{ github.workspace }}/VolMount/*.txt
 
       - name: Upload AppImage Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v1
         with:
           name: naev-${{ github.sha }}-AppImageBuild
           path: |
-            dist/out/*
+            ${{ github.workspace }}/VolMount/*.AppImage
           if-no-files-found: error
 
   "Lua_Documentation":
