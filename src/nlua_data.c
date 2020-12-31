@@ -33,6 +33,7 @@ static int dataL_set( lua_State *L );
 static int dataL_getSize( lua_State *L );
 static int dataL_getString( lua_State *L );
 static int dataL_paste( lua_State *L );
+static int dataL_addWeighted( lua_State *L );
 static const luaL_Reg dataL_methods[] = {
    { "__gc", dataL_gc },
    { "__eq", dataL_eq },
@@ -42,6 +43,7 @@ static const luaL_Reg dataL_methods[] = {
    { "getSize", dataL_getSize },
    { "getString", dataL_getString },
    { "paste", dataL_paste },
+   { "addWeighted", dataL_addWeighted },
    {0,0}
 }; /**< Data metatable methods. */
 
@@ -296,3 +298,41 @@ static int dataL_paste( lua_State *L )
 }
 
 
+/**
+ * @luafunc addWeighted( A, B, alpha, beta, bias )
+ */
+static int dataL_addWeighted( lua_State *L )
+{
+   LuaData_t *A = luaL_checkdata(L,1);
+   LuaData_t *B = luaL_checkdata(L,2);
+   LuaData_t out;
+   double alpha = luaL_checknumber(L,3);
+   double beta = luaL_optnumber(L,4,1.-alpha);
+   double bias = luaL_optnumber(L,5,0.);
+   int i, n;
+   float *o, *a, *b;
+
+   /* Checks. */
+   if (A->size != B->size)
+      NLUA_ERROR(L, _("size mismatch: A has %d elements but B has %d elements"), A->size, B->size );
+   if (A->type != LUADATA_NUMBER || B->type != LUADATA_NUMBER)
+      NLUA_ERROR(L, _("dataWeighted is only implemented for number types"));
+
+   /* Create new data. */
+   out.size = A->size;
+   out.elem = A->elem;
+   out.type = A->type;
+   out.data = malloc( out.size );
+
+   /* Interpolate. */
+   n = out.size / out.elem;
+   a = (float*)A->data;
+   b = (float*)B->data;
+   o = (float*)out.data;
+   for (i=0; i<n; i++)
+      o[i] = a[i]*alpha + b[i]*beta + bias;
+
+   /* Return destination. */
+   lua_pushdata(L,out);
+   return 1;
+}
