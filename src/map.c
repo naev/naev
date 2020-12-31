@@ -2556,7 +2556,7 @@ int map_load (void)
 
    xmlFreeDoc(doc);
 
-   DEBUG( ngettext( "Loaded %d map decorator.", "Loaded %d map decorators.", decorator_nstack ), decorator_nstack );
+   DEBUG( ngettext( "Loaded %d map decorator", "Loaded %d map decorators", decorator_nstack ), decorator_nstack );
 
    return 0;
 }

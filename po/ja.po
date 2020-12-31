@@ -37721,8 +37721,8 @@ msgstr ""
 
 #: src/map.c:2568
 #, fuzzy, c-format
-msgid "Loaded %d map decorator."
-msgid_plural "Loaded %d map decorators."
+msgid "Loaded %d map decorator"
+msgid_plural "Loaded %d map decorators"
 msgstr[0] "%dの党派を読み込んだ"
 
 #: src/map.c:2595
