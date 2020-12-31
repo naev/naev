@@ -108,6 +108,14 @@ jobs:
           name: ${{ matrix.tag }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.tag }}-${{ github.sha }}-buildArtifacts
+          path: |
+            ${{ github.workspace }}/build
+          if-no-files-found: error
+
       - name: Test Install
         run: |
           meson install -C build
@@ -123,7 +131,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
-      
+
     steps:
       - name: Get Source
         uses: actions/download-artifact@v1
