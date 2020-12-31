@@ -2,7 +2,7 @@
 <Slots>
  <slot name="accessory">
   <display>Accessory</display>
-  <description>This slot is used to equip accessories that can enhance the ship's performance.</description>
+  <description>This slot is used to equip accessories that can enhance the ship's performance. Outfits that fit in these slots are not generally acquirable by normal means.</description>
   <exclusive/>
  </slot>
  <slot name="systems">
