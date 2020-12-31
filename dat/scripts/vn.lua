@@ -7,6 +7,7 @@ local utf8 = require 'utf8'
 local love = require 'love'
 local graphics = require 'love.graphics'
 local window = require 'love.window'
+local filesystem = require 'love.filesystem'
 
 local vn = {
    speed = 0.04,
@@ -652,10 +653,25 @@ function vn.Character.new( who, params )
    params = params or {}
    c.who = who
    c.color = params.color or vn._default.color
-   local image = params.image
-   if image ~= nil then
-      if type(image)=='string' or image:type()=="ImageData" then
-         image = graphics.newImage( image )
+   local pimage = params.image
+   if pimage ~= nil then
+      if type(pimage)=='string' then
+         local searchpath = { "",
+               "gfx/vn/characters/" }
+         for k,s in ipairs(searchpath) do
+            local info = filesystem.getInfo( s..pimage )
+            if info ~= nil then
+               image = graphics.newImage( s..pimage )
+               if image ~= nil then
+                  break
+               end
+            end
+         end
+         if image == nil then
+            error(string.format(_("vn: character image '%s' not found!"),pimage))
+         end
+      elseif pimage:type()=="ImageData" then
+         image = graphics.newImage( pimage )
       end
    end
    c.image = image
