@@ -203,7 +203,7 @@ if buildExec.disabled() == false
    )
 
    if host_machine.system() == 'darwin'
-      add_languages('objc')
+      add_languages('objc', native: false)
       naev_source += mac_source
       naev_deps += dependency('Foundation', required: true )
    endif
