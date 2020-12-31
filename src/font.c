@@ -850,7 +850,7 @@ int gl_printTextRaw( const glFont *ft_font,
    x = bx;
    y = by + height - (double)ft_font->h; /* y is top left corner */
 
-   /* Defalut to 1.5 line height. */
+   /* Default to 1.5 line height. */
    if (line_height == 0)
       line_height = 1.5*(double)ft_font->h;
 
@@ -1572,7 +1572,7 @@ static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname, unsign
 
    /* Object which freetype uses to store font info. */
    if (FT_New_Memory_Face( font_library, buf, bufsize, 0, &face )) {
-      WARN(_("FT_New_Face failed loading library from %s"), fname);
+      WARN(_("FT_New_Memory_Face failed loading library from %s"), fname);
       return -1;
    }
 
