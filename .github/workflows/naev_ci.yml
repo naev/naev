@@ -143,7 +143,7 @@ jobs:
           APPIMAGE_EXTRACT_AND_RUN: 1
 
       - name: Upload AppImage Artifacts
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         if: ${{ (success() || steps.appimageCompile.outcome == 'failure') }}
         with:
           name: naev-${{ github.sha }}-AppImageBuild
