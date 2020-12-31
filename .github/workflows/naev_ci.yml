@@ -139,11 +139,6 @@ jobs:
         id: appimageCompile
         run: |
           script -c "./source/utils/buildAppImage.sh -c -m -s "source" -b "build" -o "dist"" appImageBuildLog.txt
-          pwd
-          ls -l ${{ github.workspace }}/dist
-          pwd
-          ls -l ${{ github.workspace }}/dist/out
-          pwd
         env:
           APPIMAGE_EXTRACT_AND_RUN: 1
 
