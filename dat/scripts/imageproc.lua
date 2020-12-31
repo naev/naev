@@ -77,28 +77,12 @@ end
 function imageproc.addWeighted( imgA, imgB, weightA, weightB, bias )
    imgA = _toimage(imgA)
    imgB = _toimage(imgB)
-   weightB = weightB or 1-weightA
-   bias = bias or 0
-   local aw, ah = imgA:getDimensions()
-   local bw, bh = imgB:getDimensions()
-   if aw~=bw or ah~=bh then
-      error(_("dimensions don't match"))
-   end
-   local img = image.newImageData( aw, ah )
-   local alpha = weightA
-   local beta  = weightB
-   for u = 0,aw-1 do
-      for v = 0,ah-1 do
-         local ra, ga, ba, aa = imgA:getPixel(u,v)
-         local rb, gb, bb, ab = imgB:getPixel(u,v)
-         local r = ra*alpha + rb*beta + bias
-         local g = ga*alpha + gb*beta + bias
-         local b = ba*alpha + bb*beta + bias
-         local a = aa*alpha + ab*beta + bias
-         img:setPixel( u, v, r, g, b, a )
-      end
-   end
-   return img
+   -- Touching ImageData internals is not very good...
+   local out = image.ImageData.new()
+   out.w = imgA.w
+   out.h = imgA.h
+   out.d = naev.data.addWeighted( imgA.d, imgB.d, weightA, weightB, bias )
+   return out
 end
 
 --[[
