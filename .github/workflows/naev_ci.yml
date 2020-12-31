@@ -206,6 +206,7 @@ jobs:
           brew update
           brew install \
             intltool \
+            mercurial \
             openal-soft \
             sdl2
 
