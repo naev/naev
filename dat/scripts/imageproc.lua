@@ -208,9 +208,9 @@ function imageproc.hologram( img )
    -- Adapted from https://elder.dev/posts/open-source-virtual-background/
    local w, h = img:getDimensions()
    local holo = imageproc.applyMap( img, {0, 1, 0.5}, {0, 0, 1} )
-   local bandlength = 2/150*h
-   local bandgap = 3/150*h
-   holo = imageproc.scanlines( holo, math.floor(bandlength+0.5), math.floor(bandgap+0.5) )
+   local bandlength = math.max( math.floor( 2/300*h + 0.5 ), 2 )
+   local bandgap = math.max( math.floor( 3/300*h + 0.5 ), 3 )
+   holo = imageproc.scanlines( holo, bandlength, bandgap )
    -- Ghosting
    local k = 1
    local holo_blur = imageproc.blur( holo, k )
