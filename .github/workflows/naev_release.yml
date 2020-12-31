@@ -234,7 +234,7 @@ jobs:
           mkdir -p dist/out/steam
 
           unzip build/naev-*-soundtrack.zip -d dist/staging
-          cp naev-*-soundtrack.zip dist/out
+          cp build/naev-*-soundtrack.zip dist/out
           cp extras/logos/naev_soundtrack_cover.png dist/out/steam
 
       - name: Transcode Steam Soundtrack
