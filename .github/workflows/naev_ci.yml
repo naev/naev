@@ -91,12 +91,12 @@ jobs:
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v1
+        if: ${{ matrix.tag != 'naev-steamruntime' }}
+        uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.tag }}-${{ github.sha }}-buildArtifacts
           path: |
             ${{ github.workspace }}/build
-          if-no-files-found: error
 
       - name: Test Install
         run: |
