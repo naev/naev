@@ -138,7 +138,7 @@ jobs:
       - name: Compile AppImage
         id: appimageCompile
         run: |
-          script -c "./source/utils/buildAppImage.sh -c -m -s "source" -b "build" -o "${{ github.workspace }}/dist"" appImageBuildLog.txt
+          script -c "./source/utils/buildAppImage.sh -c -m -s "source" -b "build" -o "dist"" appImageBuildLog.txt
           pwd
           ls -l ${{ github.workspace }}/dist
           pwd
