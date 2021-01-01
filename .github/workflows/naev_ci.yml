@@ -125,7 +125,7 @@ jobs:
     steps:
       - name: TEMPORARY STEP Install Mercurial
         run: |
-          sudo apt-get install mercurial
+          apt-get install mercurial
 
       - name: Get Source
         uses: actions/download-artifact@v1
