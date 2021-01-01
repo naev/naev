@@ -86,8 +86,13 @@ function _draw_character( c )
    else
       col = { 0.8, 0.8, 0.8 }
    end
+   local flip = 1
+   if c.offset > 0.5*lw then
+      flip = -1
+      x = x + scale*w
+   end
    _set_col( col, c.alpha )
-   graphics.draw( c.image, x, y, 0, scale, scale )
+   graphics.draw( c.image, x, y, 0, flip*scale, scale )
 end
 
 
