@@ -59,7 +59,7 @@ static int nlua_ngettext( lua_State *L );
 static int nlua_gettext_noop( lua_State *L );
 static const luaL_Reg gettext_methods[] = {
    { "gettext",  nlua_gettext },
-   { "n_", nlua_ngettext },
+   { "ngettext", nlua_ngettext },
    { "gettext_noop", nlua_gettext_noop },
    {0,0}
 }; /**< Vector metatable methods. */
@@ -83,12 +83,12 @@ static int nlua_gettext( lua_State *L )
 /**
  * @brief gettext support for singular and plurals.
  *
- * @usage n_( str )
+ * @usage ngettext( str )
  *    @luatparam msgid1 Singular form.
  *    @luatparam msgid2 Plural form.
  *    @luatparam n Number of elements.
  *    @luatreturn The string converted to gettext.
- * @luafunc n_( msgid1, msgid2, n )
+ * @luafunc ngettext( msgid1, msgid2, n )
  */
 static int nlua_ngettext( lua_State *L )
 {
@@ -364,6 +364,7 @@ static int nlua_loadBasic( lua_State* L )
    /* Gettext functionality. */
    lua_register(L, "_", nlua_gettext);
    lua_register(L, "N_", nlua_gettext_noop);
+   lua_register(L, "n_", nlua_ngettext);
    luaL_register(L, "gettext", gettext_methods);
 
    return 0;
