@@ -127,7 +127,6 @@ jobs:
         run: |
           sudo apt-get install mercurial
 
-    steps:
       - name: Get Source
         uses: actions/download-artifact@v1
         with:
