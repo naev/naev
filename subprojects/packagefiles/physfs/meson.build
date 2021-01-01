@@ -1,4 +1,12 @@
-project('physfs', 'c', version: '3.0.2', default_options: ['default_library=static', 'warning_level=1'])
+project('physfs', 'c', version: '3.0.2')
+
+# Contrary to Meson 0.56's documentation, specifying default_options: ['warning_level=1'] has no effect. DIY.
+cc = meson.get_compiler('c')
+foreach arg: ['-Wno-int-in-bool-context', '-Wno-sign-compare', '-Wno-unused-parameter']
+   if cc.has_argument(arg)
+      add_project_arguments(arg, language : 'c')
+   endif
+endforeach
 
 # Increment this if/when we break backwards compatibility.
 physfs_soversion = 1
@@ -37,10 +45,7 @@ physfs_sources += [
    'src/physfs_archiver_vdf.c',
 ]
 
-libphysfs = library('physfs', physfs_sources,
-   dependencies: physfs_deps,
-   include_directories: 'src',
-)
+libphysfs = static_library('physfs', physfs_sources, dependencies: physfs_deps)
 
 physfs_dep = declare_dependency(
     link_with: libphysfs,
