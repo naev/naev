@@ -57,5 +57,11 @@ function accept ()
    end
 
    misn.accept()
+   hook.land( "land" )
 end
 
+
+function land ()
+   if planet.cur() == planet.get("Cerberus") then
+   end
+end
