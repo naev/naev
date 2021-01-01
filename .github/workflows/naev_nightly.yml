@@ -98,7 +98,6 @@ jobs:
     steps:
       - name: Container-specific setup
         run: |
-          apt-get install -y mercurial  # TODO: Make this part of the image.
           echo /usr/lib/mxe/usr/bin >> $GITHUB_PATH
 
       - name: Get Source
