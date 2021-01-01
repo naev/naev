@@ -93,6 +93,7 @@ if buildExec.disabled() == false
    sdl = dependency('sdl2', required: true)
    naev_deps += [
       dependency('freetype2', required: true),
+      dependency('physfs', fallback: ['physfs', 'physfs_dep'], required: true),
       sdl,
       declare_dependency(
          dependencies: dependency('libpng', required: true),
@@ -116,26 +117,7 @@ if buildExec.disabled() == false
 
    naev_deps += lua
 
-   # PhysicsFS
-   physfs = dependency('physfs', required: false)
-   if not physfs.found()
-      cmake = import('cmake')
-      # Micro-manage the poor thing to death. This helps us survive AppImage packaging, though there should be a better way.
-      physfs_opts = cmake.subproject_options()
-      physfs_opts.add_cmake_defines({'PHYSFS_BUILD_SHARED': false, 'PHYSFS_BUILD_TEST': false})
-      # You wouldn't believe the screaming, otherwise...
-      physfs_opts.set_override_option('warning_level', '1')
-      physfs = cmake.subproject('physfs', options: physfs_opts).dependency('physfs-static')
-   endif
-   naev_deps += physfs
-
-   if not lua.found()
-      lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
-   endif
-
-   naev_deps += lua
-
-   ### Soft deps (required: false
+   ### Soft deps (required: false)
 
    # BFD
    if get_option('debug')
