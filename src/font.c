@@ -1444,7 +1444,7 @@ void gl_fontSetFilter( const glFont *ft_font, GLint min, GLint mag )
  */
 int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const char *prefix, unsigned int flags )
 {
-   size_t i;
+   size_t i, len, plen;
    glFontStash *stsh;
    int ch;
    char fullname[PATH_MAX];
@@ -1497,11 +1497,12 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
    /* Set up font stuff for next glyphs. */
    stsh->ft = array_create( glFontStashFreetype );
    ch = 0;
-   for (i=0; i<strlen(fname)+1; i++) {
+   len = strlen(fname);
+   plen = strlen(prefix);
+   for (i=0; i<=len; i++) {
       if ((fname[i]=='\0') || (fname[i]==',')) {
-         strncpy( fullname, prefix, PATH_MAX );
-         strncat( fullname, &fname[ch], i-ch );
-         //fullname[i-ch] = '\0';
+         strncpy( fullname, prefix, PATH_MAX-1 );
+         strncat( fullname, &fname[ch], MIN( PATH_MAX-1-plen, i-ch ) );
          gl_fontstashAddFallback( stsh, fullname, h );
          ch = i;
          if (fname[i]==',')
