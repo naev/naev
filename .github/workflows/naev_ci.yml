@@ -141,7 +141,7 @@ jobs:
       - name: Meson Setup
         id: setup
         run: |
-          export PATH="$PATH:/usr/lib/mxe/usr/bin" \
+          export PATH="$PATH:/usr/lib/mxe/usr/bin"
           meson setup build source \
               --cross-file='source/utils/build/${{ matrix.config }}' \
               --buildtype=debug \

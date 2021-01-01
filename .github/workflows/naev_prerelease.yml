@@ -118,7 +118,7 @@ jobs:
 
       - name: Meson Setup
         run: |
-          export PATH="$PATH:/usr/lib/mxe/usr/bin" \
+          export PATH="$PATH:/usr/lib/mxe/usr/bin"
           meson setup build source \
             --cross-file='source/utils/build/windows_cross_mxe.ini' \
             --buildtype=release \
