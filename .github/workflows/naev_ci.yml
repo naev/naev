@@ -123,9 +123,10 @@ jobs:
       image: "projectsynchro/synchros_sexy_docker_images:${{ matrix.tag }}"
 
     steps:
-      - name: TEMPORARY STEP Install Mercurial
+      - name: Container-specific setup
         run: |
-          apt-get install -y mercurial
+          apt-get install -y mercurial  # TODO: Make this part of the image.
+          echo /usr/lib/mxe/usr/bin >> $GITHUB_PATH
 
       - name: Get Source
         uses: actions/download-artifact@v1
@@ -140,7 +141,6 @@ jobs:
       - name: Meson Setup
         id: setup
         run: |
-          export PATH="$PATH:/usr/lib/mxe/usr/bin"
           meson setup build source \
               --cross-file='source/utils/build/${{ matrix.config }}' \
               --buildtype=debug \

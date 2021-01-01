@@ -96,6 +96,11 @@ jobs:
       image: projectsynchro/synchros_sexy_docker_images:naev-windows
 
     steps:
+      - name: Container-specific setup
+        run: |
+          apt-get install -y mercurial  # TODO: Make this part of the image.
+          echo /usr/lib/mxe/usr/bin >> $GITHUB_PATH
+
       - name: Get Source
         uses: actions/download-artifact@v2
         with:
@@ -108,7 +113,6 @@ jobs:
 
       - name: Meson Setup
         run: |
-          export PATH="$PATH:/usr/lib/mxe/usr/bin"
           meson setup build source \
             --cross-file='source/utils/build/windows_cross_mxe.ini' \
             --buildtype=release \
