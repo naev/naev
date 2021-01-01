@@ -211,7 +211,7 @@ jobs:
 
       - name: Install Meson and Ninja via pip
         run: |
-          pip install meson ninja
+          pip install mercurial meson ninja
 
       - name: Get Source
         uses: actions/download-artifact@v1
