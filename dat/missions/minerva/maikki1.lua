@@ -114,7 +114,7 @@ function approach_maikki ()
       maikki(_([["accept msg"]]))
       vn.func( function ()
          -- Accepted
-         misn_state==0
+         misn_state=0
          misn.accept()
          misn_osd = misn.osdCreate( misn_title,
             { string.format(_("Look around the %s system"), searchsys) } )
