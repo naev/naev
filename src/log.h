@@ -18,14 +18,12 @@
 
 #include "nstring.h"
 
-#if defined ENABLE_NLS && ENABLE_NLS
 #define _(String) gettext(String)
 #define gettext_noop(String) String
-#else /* defined ENABLE_NLS && ENABLE_NLS */
-#define _(String) String
-#define gettext_noop(String) String
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
 #define N_(String) String
+
+#define n_(String1,String2,n) ngettext(String1,String2,n)
+#define p_(Msgctx,Msgid) pgettext(Msgctx,Msgid)
 
 #define LOG(str, args...)  (logprintf(stdout, 1, str, ## args))
 #ifdef DEBUG_PARANOID /* Will cause WARNs to blow up */

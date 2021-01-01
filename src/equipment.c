@@ -793,7 +793,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       pos += nsnprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
    if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
       nsnprintf( &alt[pos], sizeof(alt)-pos,
-            ngettext("\n%.0f Tonne", "\n%.0f Tonnes", mass),
+            n_("\n%.0f Tonne", "\n%.0f Tonnes", mass),
             mass );
 
    /* Draw the text. */

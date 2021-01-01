@@ -38175,8 +38175,8 @@ msgstr "'%s'임무에 대한 잘못된 XML 헤더: 루트 요소 '%s'누락"
 
 #: src/map.c:2568
 #, c-format
-msgid "Loaded %d map decorator."
-msgid_plural "Loaded %d map decorators."
+msgid "Loaded %d map decorator"
+msgid_plural "Loaded %d map decorators"
 msgstr[0] ""
 
 #: src/map.c:2595

@@ -1136,9 +1136,9 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
    GLshort tri[5][4];
    glColour colours[10];
 
-   x -= b - thick;
+   x -= (b - thick);
    w += 2 * (b - thick);
-   y -= b - thick;
+   y -= (b - thick);
    h += 2 * (b - thick);
    lc = lc ? lc : c;
 

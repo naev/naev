@@ -29,9 +29,7 @@
 #include <fenv.h>
 #endif /* defined(HAVE_FENV_H) && defined(DEBUGGING) && defined(_GNU_SOURCE) */
 
-#if defined ENABLE_NLS && ENABLE_NLS
 #include <locale.h>
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
 
 #if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
 #include <signal.h>
@@ -177,7 +175,7 @@ void naev_quit (void)
  */
 int main( int argc, char** argv )
 {
-   char buf[PATH_MAX], langbuf[PATH_MAX];
+   char buf[PATH_MAX];
 
    env_detect( argc, argv );
 
@@ -192,18 +190,8 @@ int main( int argc, char** argv )
       return -1;
    }
 
-#if ENABLE_NLS
    /* Set up locales. */
-   /* When using locales with difference in '.' and ',' for splitting numbers it
-    * causes pretty much everything to blow up, so we must refer from loading the
-    * numeric type of the locale. */
-   setlocale( LC_ALL, "" );
-   setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
-   /* We haven't loaded the ndata yet, so just try a path quickly. */
-   nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, nfile_dirname(naev_binary()) );
-   bindtextdomain( PACKAGE_NAME, langbuf );
-   textdomain( PACKAGE_NAME );
-#endif /* ENABLE_NLS */
+   gettext_setLanguage( NULL );
 
    /* Parse version. */
    if (semver_parse( VERSION, &version_binary ))
@@ -291,36 +279,8 @@ int main( int argc, char** argv )
    if (ndata_open() != 0)
       ERR( _("Failed to open ndata.") );
 
-#if defined ENABLE_NLS && ENABLE_NLS
-   /* Try to set the language again if Naev is attempting to override the locale stuff.
-    * This is done late because this is the first stage at which we have the conf file
-    * fully loaded.
-    * Note: We tried setlocale( LC_ALL, ... ), but it bails if no corresponding system
-    * locale exists. That's too restrictive when we only need our own language catalogs. */
-   if (conf.language == NULL)
-      nsetenv( "LANGUAGE", "", 0 );
-   else {
-      nsetenv( "LANGUAGE", conf.language, 1 );
-      DEBUG(_("Reset language to \"%s\""), conf.language);
-   }
-   /* HACK: All of our code assumes it's working with UTF-8, so force gettext to return it.
-    * Testing under Wine shows it may default to Windows-1252, resulting in glitched translations
-    * like "Loading Ships..." -> "Schiffe laden \x85" which our font code will render improperly. */
-   nsetenv( "OUTPUT_CHARSET", "utf-8", 1 );
-   /* Horrible hack taken from https://www.gnu.org/software/gettext/manual/html_node/gettext-grok.html .
-    * Not entirely sure it is necessary, but just in case... */
-   {
-      extern int  _nl_msg_cat_cntr;
-      ++_nl_msg_cat_cntr;
-   }
-   /* If we don't disable LC_NUMERIC, lots of stuff blows up because 1,000 can be interpreted as
-    * 1.0 in certain languages. */
-   if (setlocale( LC_NUMERIC, "C" )==NULL) /* Disable numeric locale part. */
-      WARN(_("Unable to set LC_NUMERIC to 'C'!"));
-   nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, ndata_getPath() );
-   bindtextdomain( PACKAGE_NAME, langbuf );
-   textdomain( PACKAGE_NAME );
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
+   /* We now know which translations to use. */
+   gettext_setLanguage( conf.language );
 
    /* Load the start info. */
    if (start_load())

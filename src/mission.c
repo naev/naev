@@ -886,7 +886,7 @@ int missions_load (void)
    /* Sort based on priority so higher priority missions can establish claims first. */
    qsort( mission_stack, array_size(mission_stack), sizeof(MissionData), missions_cmp );
 
-   DEBUG( ngettext("Loaded %d Mission", "Loaded %d Missions", array_size(mission_stack) ), array_size(mission_stack) );
+   DEBUG( n_("Loaded %d Mission", "Loaded %d Missions", array_size(mission_stack) ), array_size(mission_stack) );
 
    return 0;
 }

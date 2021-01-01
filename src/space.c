@@ -3492,8 +3492,8 @@ static int systems_load (void)
       xmlFreeDoc(doc);
    }
 
-   DEBUG( ngettext( "Loaded %d Star System", "Loaded %d Star Systems", systems_nstack ), systems_nstack );
-   DEBUG( ngettext( "       with %d Planet", "       with %d Planets", array_size(planet_stack) ), array_size(planet_stack) );
+   DEBUG( n_( "Loaded %d Star System", "Loaded %d Star Systems", systems_nstack ), systems_nstack );
+   DEBUG( n_( "       with %d Planet", "       with %d Planets", array_size(planet_stack) ), array_size(planet_stack) );
 
    /* Clean up. */
    PHYSFS_freeList( system_files );

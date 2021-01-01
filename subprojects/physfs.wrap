@@ -1,3 +1,5 @@
 [wrap-hg]
 url = https://hg.icculus.org/icculus/physfs/
 revision = release-3.0.2
+
+patch_directory = physfs

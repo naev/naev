@@ -426,7 +426,7 @@ static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys
    }
    else
       nsnprintf( route_info, sizeof(route_info),
-            ngettext( "%d jump, %.0fk distance", "%d jumps, %.0fk distance", found[n].jumps ),
+            n_( "%d jump, %.0fk distance", "%d jumps, %.0fk distance", found[n].jumps ),
             found[n].jumps, found[n].distance/1000. );
 
    /* Set fancy name. */

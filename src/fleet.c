@@ -265,7 +265,7 @@ int fleet_load (void)
    if (fleet_loadFleets())
       return -1;
 
-   DEBUG( ngettext( "Loaded %d Fleet", "Loaded %d Fleets", nfleets ), nfleets );
+   DEBUG( n_( "Loaded %d Fleet", "Loaded %d Fleets", nfleets ), nfleets );
 
    return 0;
 }

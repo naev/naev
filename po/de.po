@@ -41377,10 +41377,10 @@ msgstr "Defekte „%s“-Datei: fehlendes Wurzelelement „map“"
 
 #: src/map.c:2568
 #, c-format
-msgid "Loaded %d map decorator."
-msgid_plural "Loaded %d map decorators."
-msgstr[0] "%d Kartendekorator geladen."
-msgstr[1] "%d Kartendekoratoren geladen."
+msgid "Loaded %d map decorator"
+msgid_plural "Loaded %d map decorators"
+msgstr[0] "%d Kartendekorator geladen"
+msgstr[1] "%d Kartendekoratoren geladen"
 
 #: src/map.c:2595
 #, c-format

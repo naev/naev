@@ -850,7 +850,7 @@ int gl_printTextRaw( const glFont *ft_font,
    x = bx;
    y = by + height - (double)ft_font->h; /* y is top left corner */
 
-   /* Defalut to 1.5 line height. */
+   /* Default to 1.5 line height. */
    if (line_height == 0)
       line_height = 1.5*(double)ft_font->h;
 
@@ -1444,7 +1444,7 @@ void gl_fontSetFilter( const glFont *ft_font, GLint min, GLint mag )
  */
 int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const char *prefix, unsigned int flags )
 {
-   size_t i;
+   size_t i, len, plen;
    glFontStash *stsh;
    int ch;
    char fullname[PATH_MAX];
@@ -1497,11 +1497,12 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
    /* Set up font stuff for next glyphs. */
    stsh->ft = array_create( glFontStashFreetype );
    ch = 0;
-   for (i=0; i<strlen(fname)+1; i++) {
+   len = strlen(fname);
+   plen = strlen(prefix);
+   for (i=0; i<=len; i++) {
       if ((fname[i]=='\0') || (fname[i]==',')) {
-         strncpy( fullname, prefix, PATH_MAX );
-         strncat( fullname, &fname[ch], i-ch );
-         //fullname[i-ch] = '\0';
+         strncpy( fullname, prefix, PATH_MAX-1 );
+         strncat( fullname, &fname[ch], MIN( PATH_MAX-1-plen, i-ch ) );
          gl_fontstashAddFallback( stsh, fullname, h );
          ch = i;
          if (fname[i]==',')
@@ -1521,13 +1522,6 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
    stsh->vbo_vert_data = calloc( 8*stsh->mvbo, sizeof(GLshort) );
    stsh->vbo_tex  = gl_vboCreateStatic( sizeof(GLfloat)*8*stsh->mvbo,  stsh->vbo_tex_data );
    stsh->vbo_vert = gl_vboCreateStatic( sizeof(GLshort)*8*stsh->mvbo, stsh->vbo_vert_data );
-
-   /* Initializes ASCII. */
-#if 0
-   for (i=0; i<128; i++)
-      if (isprint(i)) /* Only care about printables. */
-         gl_fontGetGlyph( stsh, i );
-#endif
 
    return 0;
 }
@@ -1572,7 +1566,7 @@ static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname, unsign
 
    /* Object which freetype uses to store font info. */
    if (FT_New_Memory_Face( font_library, buf, bufsize, 0, &face )) {
-      WARN(_("FT_New_Face failed loading library from %s"), fname);
+      WARN(_("FT_New_Memory_Face failed loading library from %s"), fname);
       return -1;
    }
 
