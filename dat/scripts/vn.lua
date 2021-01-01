@@ -849,6 +849,18 @@ function vn.animation( seconds, func, drawfunc, transition )
 end
 
 --[[
+-- @brief Runs a function and continues execution.
+--]]
+function vn.func( func )
+   local s = vn.State.new()
+   s._init = function (self)
+      func()
+      _finish(self)
+   end
+   table.insert( vn._states, s )
+end
+
+--[[
 -- @brief Custom states. Only use if you know what you are doing.
 --]]
 function vn.custom()
