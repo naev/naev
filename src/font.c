@@ -1523,13 +1523,6 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
    stsh->vbo_tex  = gl_vboCreateStatic( sizeof(GLfloat)*8*stsh->mvbo,  stsh->vbo_tex_data );
    stsh->vbo_vert = gl_vboCreateStatic( sizeof(GLshort)*8*stsh->mvbo, stsh->vbo_vert_data );
 
-   /* Initializes ASCII. */
-#if 0
-   for (i=0; i<128; i++)
-      if (isprint(i)) /* Only care about printables. */
-         gl_fontGetGlyph( stsh, i );
-#endif
-
    return 0;
 }
 
