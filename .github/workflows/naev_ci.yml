@@ -205,6 +205,7 @@ jobs:
         run: |
           brew update
           brew install \
+            openal \
             intltool \
             libvorbis \
             sdl2
