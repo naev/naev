@@ -15,12 +15,19 @@ physfs_deps = [dependency('threads')]
 physfs_sources = []
 
 if host_machine.system() == 'darwin'
+   add_languages('objc', native: false)
    physfs_deps += dependency('Foundation', required: true )
    physfs_deps += dependency('IOKit', required: true )
    physfs_sources += 'src/physfs_platform_apple.m'
+elif host_machine.system() == 'haiku'
+   add_languages('cpp', native: false)
+   cpp = meson.get_compiler('cpp')
+   physfs_deps += cpp.find_library('be')
+   physfs_deps += cpp.find_library('root')
+   physfs_sources += 'src/physfs_platform_haiku.cpp'
 endif
 
-# TODO: Not nobly supporting SunPro/Haiku/WinRT at this point.
+# TODO: Not nobly supporting SunPro/WinRT at this point.
 
 physfs_sources += [
    'src/physfs.c',
