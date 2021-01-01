@@ -192,9 +192,11 @@ jobs:
         include:
           - os: macos-10.15
             config: macos.ini
+            pkg-config-path: /usr/local/opt/openal-soft/lib/pkgconfig
 
           - os: macos-11.0
             config: macos.ini
+            pkg-config-path: /usr/local/opt/openal-soft/lib/pkgconfig
 
     runs-on: "${{ matrix.os }}"
 
@@ -204,6 +206,7 @@ jobs:
           brew update
           brew install \
             intltool \
+            libvorbis \
             sdl2
 
       - name: Setup Python
