@@ -168,14 +168,6 @@ int ndata_setPath( const char *path )
 
 
 /**
- * @brief Get the current ndata path.
- */
-const char *ndata_getPath( void )
-{
-   return ndata_dir;
-}
-
-/**
  * @brief Checks to see if a directory is an ndata.
  */
 static int ndata_isndata( const char *dir )
