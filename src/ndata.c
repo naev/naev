@@ -365,6 +365,7 @@ char **ndata_listRecursive( const char *path )
       if (strcmp(files[i], files[i+1]) == 0) {
          free( files[i] );
          array_erase( &files, &files[i], &files[i+1] );
+	 i--; /* We're not done checking for dups of files[i]. */
       }
    return files;
 }
