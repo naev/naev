@@ -96,6 +96,10 @@ jobs:
       image: projectsynchro/synchros_sexy_docker_images:naev-windows
 
     steps:
+      - name: Container-specific setup
+        run: |
+          echo /usr/lib/mxe/usr/bin >> $GITHUB_PATH
+
       - name: Get Source
         uses: actions/download-artifact@v2
         with:

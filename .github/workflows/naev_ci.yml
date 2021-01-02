@@ -123,6 +123,10 @@ jobs:
       image: "projectsynchro/synchros_sexy_docker_images:${{ matrix.tag }}"
 
     steps:
+      - name: Container-specific setup
+        run: |
+          echo /usr/lib/mxe/usr/bin >> $GITHUB_PATH
+
       - name: Get Source
         uses: actions/download-artifact@v1
         with:
@@ -192,9 +196,11 @@ jobs:
         include:
           - os: macos-10.15
             config: macos.ini
+            pkg-config-path: /usr/local/opt/openal-soft/lib/pkgconfig
 
           - os: macos-11.0
             config: macos.ini
+            pkg-config-path: /usr/local/opt/openal-soft/lib/pkgconfig
 
     runs-on: "${{ matrix.os }}"
 
@@ -203,7 +209,9 @@ jobs:
         run: |
           brew update
           brew install \
+            openal-soft \
             intltool \
+            libvorbis \
             sdl2
 
       - name: Setup Python
@@ -211,7 +219,7 @@ jobs:
 
       - name: Install Meson and Ninja via pip
         run: |
-          pip install mercurial meson ninja
+          pip install meson ninja
 
       - name: Get Source
         uses: actions/download-artifact@v1
