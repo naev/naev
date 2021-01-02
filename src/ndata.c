@@ -256,17 +256,6 @@ void ndata_close (void)
 
 
 /**
- * @brief Gets the ndata's name.
- *
- *    @return The ndata's name.
- */
-const char* ndata_name (void)
-{
-   return start_name();
-}
-
-
-/**
  * @brief Reads a file from the ndata.
  *
  *    @param path Path of the file to read.

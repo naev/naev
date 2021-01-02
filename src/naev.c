@@ -279,9 +279,7 @@ int main( int argc, char** argv )
    /* Load the start info. */
    if (start_load())
       ERR( _("Failed to load module start data.") );
-
-   /* Load the data basics. */
-   LOG(" %s", ndata_name());
+   LOG(" %s", start_name());
    DEBUG_BLANK();
 
    /* Display the SDL Version. */
@@ -1066,7 +1064,7 @@ static void window_caption (void)
    }
 
    /* Set caption. */
-   nsnprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
+   nsnprintf(buf, PATH_MAX, APPNAME" - %s", start_name());
    SDL_SetWindowTitle( gl_screen.window, buf );
    SDL_SetWindowIcon(  gl_screen.window, naev_icon );
 }
@@ -1090,7 +1088,7 @@ char *naev_version( int long_version )
 #else /* DEBUGGING */
                "",
 #endif /* DEBUGGING */
-               ndata_name() );
+               start_name() );
       return version_human;
    }
 
