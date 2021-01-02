@@ -12,6 +12,7 @@
 /** @cond */
 #include <locale.h>
 #include <stdlib.h>
+#include "physfs.h"
 
 #include "naev.h"
 /** @endcond */
@@ -60,17 +61,29 @@ void gettext_init()
  */
 void gettext_setLanguage( const char* lang )
 {
-   char langbuf[256];
+   char root[256], **paths;
+   int i;
 
-   /* Note: We tried setlocale( LC_ALL, ... ), but it bails if no corresponding system
-    * locale exists. That's too restrictive when we only need our own language catalogs. */
    if (lang == NULL)
       lang = gettext_systemLanguage;
 
+   /* Set the environment variable used by GNU gettext. This can help logging/messages
+    * emitted by libraries appear in the user's native language. (setlocale(LC_ALL, ...) may
+    * seem like a better idea, but it checks unnecessarily for system locale definitions. */
    nsetenv( "LANGUAGE", lang, 1 );
-   DEBUG( _("Reset language to \"%s\""), lang );
-   nsnprintf( langbuf, sizeof(langbuf), GETTEXT_PATH"%s/LC_MESSAGES/"PACKAGE_NAME".mo", lang );
-   gettext_addCat( langbuf );
+   nsnprintf( root, sizeof(root), GETTEXT_PATH"%s", lang );
+   if (!PHYSFS_exists( root ))
+      return;
+
+   /* @TODO This code orders the translations alphabetically by file path.
+    * That doesn't make sense, but this is a new use case and it's unclear
+    * how we should determine precedence in case multiple .mo files exist. */
+   paths = ndata_listRecursive( root );
+   for (i=0; i<array_size(paths); i++) {
+      gettext_addCat( paths[i] );
+      free( paths[i] );
+   }
+   array_free( paths );
 }
 
 
