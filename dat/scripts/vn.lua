@@ -67,7 +67,7 @@ end
 function _draw_character( c )
    if c.image == nil then return end
    local w, h = c.image:getDimensions()
-   local isportrait = (w==200 and h==150)
+   local isportrait = (w>h)
    local lw, lh = love.graphics.getDimensions()
    local mw, mh = vn.textbox_w, vn.textbox_y
    local scale, x, y
