@@ -191,7 +191,7 @@ int main( int argc, char** argv )
    }
 
    /* Set up locales. */
-   gettext_setLanguage( NULL );
+   gettext_init();
 
    /* Parse version. */
    if (semver_parse( VERSION, &version_binary ))

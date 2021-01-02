@@ -10,6 +10,7 @@
 #include <stdint.h>
 /** @endcond */
 
+void gettext_init();
 void gettext_setLanguage( const char* lang );
 
 char* gettext_ngettext( const char* msgid, const char* msgid_plural, uint64_t n );
