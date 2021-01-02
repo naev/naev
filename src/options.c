@@ -110,7 +110,7 @@ void opt_menu (void)
 {
    size_t i;
    int w, h;
-   char **names;
+   const char **names;
 
    /* Dimensions. */
    w = 680;
@@ -233,7 +233,7 @@ static void opt_gameplay( unsigned int wid )
    char **paths;
    int cw;
    int w, h, y, x, by, l, n, i;
-   char *s;
+   const char *s;
    char **ls;
 
    /* Get size. */
@@ -758,7 +758,7 @@ static void menuKeybinds_update( unsigned int wid, char *name )
 static void opt_keyDefaults( unsigned int wid, char *str )
 {
    (void) str;
-   char *title, *caption, *ret;
+   const char *title, *caption, *ret;
    int i, ind;
 
    const int n = 3;
@@ -840,7 +840,7 @@ static void opt_setAudioLevel( unsigned int wid, char *str )
 static void opt_audioLevelStr( char *buf, int max, int type, double pos )
 {
    double vol, magic;
-   char *str;
+   const char *str;
 
    str = type ? _("Music Volume") : _("Sound Volume");
    vol = type ? music_getVolumeLog() : sound_getVolumeLog();

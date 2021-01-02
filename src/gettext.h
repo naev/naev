@@ -13,7 +13,7 @@
 void gettext_init();
 void gettext_setLanguage( const char* lang );
 
-char* gettext_ngettext( const char* msgid, const char* msgid_plural, uint64_t n );
+const char* gettext_ngettext( const char* msgid, const char* msgid_plural, uint64_t n );
 const char* gettext_pgettext( const char* lookup, const char* msgid );
 
 /** A pseudo function call that serves as a marker for the automated

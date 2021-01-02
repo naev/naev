@@ -262,7 +262,7 @@ int escorts_clear( Pilot *parent )
 int escort_playerCommand( Pilot *e )
 {
    int i;
-   char *title, *caption, *ret;
+   const char *title, *caption, *ret;
 
    /* "Attack My Target" order is omitted deliberately since e is your
     * target, making "Attack My Target" a useless command. */

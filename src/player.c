@@ -244,7 +244,8 @@ static void player_newSetup()
 void player_new (void)
 {
    int r;
-   char *title, *caption, *ret, buf[PATH_MAX];
+   const char *title, *caption;
+   char *ret, buf[PATH_MAX];
 
    const char *speed_opts[] = {
       _("Normal Speed"),
@@ -1303,7 +1304,7 @@ void player_resetSpeed (void)
  *    @param reason Reason for aborting (see player.h)
  *    @param str String accompanying the reason.
  */
-void player_restoreControl( int reason, char *str )
+void player_restoreControl( int reason, const char *str )
 {
    if (player.p==NULL)
       return;

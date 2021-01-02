@@ -977,8 +977,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
 static void map_findSearch( unsigned int wid, char* str )
 {
    int ret;
-   char *name;
-   char *searchname;
+   const char *name, *searchname;
 
    /* Get the name. */
    name = window_getInput( wid, "inpSearch" );

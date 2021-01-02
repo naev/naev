@@ -98,7 +98,7 @@ static void gettext_addCat( const char* path )
  * @return The translation in the message catalog, if it exists, else whichever of msgid1 or msgid2 is
  *         appropriate in English. The returned string must not be modified or freed.
  */
-char* gettext_ngettext( const char* msgid, const char* msgid_plural, uint64_t n )
+const char* gettext_ngettext( const char* msgid, const char* msgid_plural, uint64_t n )
 {
    msgcat_t *chain;
    const char* trans;
@@ -111,7 +111,7 @@ char* gettext_ngettext( const char* msgid, const char* msgid_plural, uint64_t n 
          return (char*)trans;
    }
 
-   return (char*)(n>1 && msgid_plural!=NULL ? msgid_plural : msgid);
+   return n>1 && msgid_plural!=NULL ? msgid_plural : msgid;
 }
 
 /**

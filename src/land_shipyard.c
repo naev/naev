@@ -47,7 +47,7 @@ static void shipyard_buy( unsigned int wid, char* str );
 static void shipyard_trade( unsigned int wid, char* str );
 static void shipyard_rmouse( unsigned int wid, char* widget_name );
 static void shipyard_renderSlots( double bx, double by, double bw, double bh, void *data );
-static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str, ShipOutfitSlot *s, int n );
+static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s, int n );
 static void shipyard_find( unsigned int wid, char* str );
 
 
@@ -606,7 +606,7 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
 /**
  * @brief Renders a row of ship slots.
  */
-static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str, ShipOutfitSlot *s, int n )
+static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s, int n )
 {
    (void) bw;
    int i;

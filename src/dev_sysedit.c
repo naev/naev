@@ -1243,7 +1243,8 @@ static void sysedit_editPnt( void )
 {
    unsigned int wid;
    int x, y, w, l, bw;
-   char buf[1024], *s, title[100];
+   char buf[1024], title[100];
+   const char *s;
    Planet *p;
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
@@ -1402,7 +1403,8 @@ static void sysedit_editJump( void )
 {
    unsigned int wid;
    int x, y, w, l, bw;
-   char buf[1024], *s;
+   char buf[1024];
+   const char *s;
    JumpPoint *j;
 
    j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
@@ -1494,7 +1496,8 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
    (void) unused;
    int x, y, h, w, bw;
    Planet *p;
-   char *desc, *bardesc, title[100];
+   const char *desc, *bardesc;
+   char title[100];
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
