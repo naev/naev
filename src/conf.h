@@ -173,7 +173,6 @@ void conf_setAudioDefaults (void);
 void conf_setVideoDefaults (void);
 void conf_loadConfigPath( void );
 int conf_loadConfig( const char* file );
-void conf_parseCLIPath( int argc, char** argv );
 void conf_parseCLI( int argc, char** argv );
 void conf_cleanup (void);
 

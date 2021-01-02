@@ -249,9 +249,6 @@ int main( int argc, char** argv )
     */
    conf_loadConfigPath();
 
-   /* Parse the user data path override first. */
-   conf_parseCLIPath( argc, argv );
-
    /* Create the home directory if needed. */
    if ( nfile_dirMakeExist( nfile_configPath() ) )
       WARN( _("Unable to create config directory '%s'"), nfile_configPath());

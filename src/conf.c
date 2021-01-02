@@ -12,6 +12,8 @@
 #include "naev.h"
 /** @endcond */
 
+#include "physfs.h"
+
 #include "conf.h"
 
 #include "env.h"
@@ -108,7 +110,7 @@ static void print_usage( void )
    LOG(_("   -m f, --mvol f        sets the music volume to f"));
    LOG(_("   -s f, --svol f        sets the sound volume to f"));
    LOG(_("   -G, --generate        regenerates the nebula (slow)"));
-   LOG(_("   -d, --datapath        specifies a custom path for all user data (saves, screenshots, etc.)"));
+   LOG(_("   -d, --datapath        adds a new datapath to be mounted (used for looking for game assets)"));
    LOG(_("   -X, --scale           defines the scale factor"));
 #ifdef DEBUGGING
    LOG(_("   --devmode             enables dev mode perks like the editors"));
@@ -564,32 +566,6 @@ int conf_loadConfig ( const char* file )
 }
 
 
-void conf_parseCLIPath( int argc, char** argv )
-{
-   static struct option long_options[] = {
-      { "datapath", required_argument, 0, 'd' },
-      { NULL, 0, 0, 0 }
-   };
-
-   int option_index = 1;
-   int c = 0;
-
-   /* GNU giveth, and GNU taketh away.
-    * If we don't specify "-" as the first char, getopt will happily
-    * mangle the initial argument order, probably causing crashes when
-    * passing arguments that take values, such as -H and -W.
-    */
-   while ((c = getopt_long(argc, argv, "-:d:",
-         long_options, &option_index)) != -1) {
-      switch(c) {
-         case 'd':
-            conf.datapath = strdup(optarg);
-            break;
-      }
-   }
-}
-
-
 /*
  * parses the CLI options
  */
@@ -630,7 +606,7 @@ void conf_parseCLI( int argc, char** argv )
          long_options, &option_index)) != -1) {
       switch (c) {
          case 'd':
-            /* Does nothing, datapath is parsed earlier. */
+            PHYSFS_mount( optarg, NULL, 1 );
             break;
          case 'f':
             conf.fullscreen = 1;

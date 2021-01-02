@@ -236,8 +236,11 @@ int ndata_open (void)
    ndata_lock = SDL_CreateMutex();
 
    /* Set path to configuration. */
+   ndata_setPath(conf.ndata);
+   /*
    if (ndata_setPath(conf.ndata))
       ERR(_("Couldn't find ndata"));
+   */
 
    return 0;
 }
@@ -248,9 +251,7 @@ int ndata_open (void)
  */
 void ndata_close (void)
 {
-   if( PHYSFS_unmount( ndata_dir ) == 0 )
-      WARN( "PhysicsFS unmount failed: %s",
-            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+   PHYSFS_deinit();
    free( ndata_dir );
    ndata_dir = NULL;
 
