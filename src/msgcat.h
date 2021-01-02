@@ -13,7 +13,7 @@ typedef struct msgcat {
    const void *map;             /**< .mo file contents, which we'd mmap() but for PhysicsFS. */
    size_t map_size;             /**< .mo file size. */
    const char *plural_rule;     /**< .mo "Plural-Forms" expression (RHS of "plural="), used by ngettext. */
-   int nplurals;                /**< .mo "Plural-Forms" expression (RHS of "nplurals="), used by ngettext. */
+   uint64_t nplurals;           /**< .mo "Plural-Forms" expression (RHS of "nplurals="), used by ngettext. */
 } msgcat_t;
 
 void msgcat_init( msgcat_t* p, const void* map, size_t map_size );

@@ -62,7 +62,7 @@ void msgcat_init( msgcat_t* p, const void* map, size_t map_size )
    p->map_size = map_size;
 
    const char *rule = "n!=1;";
-   unsigned long np = 2;
+   uint64_t np = 2;
    const char *r = msgcat_mo_lookup(p->map, p->map_size, "");
    char *z;
    while (r && strncmp(r, "Plural-Forms:", 13)) {
@@ -107,7 +107,7 @@ const char* msgcat_ngettext( const msgcat_t* p, const char* msgid1, const char* 
     * msgid2 to request that dcngettext suppress plural processing. */
 
    if (msgid2 && p->nplurals) {
-      unsigned long plural = msgcat_plural_eval(p->plural_rule, n);
+      uint64_t plural = msgcat_plural_eval(p->plural_rule, n);
       if (plural > p->nplurals) return NULL;
       while (plural--) {
          size_t rem = p->map_size - (trans - (char *)p->map);
@@ -125,7 +125,7 @@ const char* msgcat_ngettext( const msgcat_t* p, const char* msgid1, const char* 
 /* ===================== https://git.musl-libc.org/cgit/musl/tree/src/locale/__mo_lookup.c =================== */
 static inline uint32_t swapc(uint32_t x, int c)
 {
-	return c ? x>>24 | x>>8&0xff00 | x<<8&0xff0000 | x<<24 : x;
+	return c ? (x>>24) | (x>>8&0xff00) | (x<<8&0xff0000) | (x<<24) : x;
 }
 
 const char *msgcat_mo_lookup(const void *p, size_t size, const char *s)
