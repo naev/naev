@@ -199,9 +199,6 @@ int main( int argc, char** argv )
 
    /* Print the version */
    LOG( " %s v%s (%s)", APPNAME, naev_version(0), HOST );
-#ifdef GIT_COMMIT
-   DEBUG( _(" git HEAD at %s"), GIT_COMMIT );
-#endif /* GIT_COMMIT */
 
    if ( env.isAppImage )
       LOG( "AppImage detected. Running from: %s", env.appdir );
