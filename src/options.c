@@ -123,7 +123,7 @@ void opt_menu (void)
    /* Create tabbed window. */
    names = calloc( sizeof(char*), sizeof(opt_names)/sizeof(char*) );
    for (i=0; i<sizeof(opt_names)/sizeof(char*); i++)
-      names[i] = gettext(opt_names[i]);
+      names[i] = _(opt_names[i]);
    opt_windows = window_addTabbedWindow( opt_wid, -1, -1, -1, -1, "tabOpt",
          OPT_WINDOWS, (const char**)names, 0 );
    free(names);
