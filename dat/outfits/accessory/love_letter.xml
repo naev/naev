@@ -10,6 +10,7 @@
   <price>1000000</price>
   <description>A misplaced love letter that you were supposed to deliver, reading the first line "My tootlepumps, how frompscious are thein pluckerpumps..." you are fairly certain that you did a favour in not delivering it. At least it makes your ship look cuter.</description>
   <gfx_store>placeholder</gfx_store>
+  <desc_extra>#rLove is in the air.#0</desc_extra>
  <rarity>6</rarity></general>
  <specific type="modification">
   <stress_dissipation>10</stress_dissipation>

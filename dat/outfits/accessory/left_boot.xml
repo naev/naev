@@ -10,6 +10,7 @@
   <price>1000000</price>
   <description>The left boot of a high-ranking Empire official. It doesn't seem to fit you and is full of confetti. You're not sure what to do with it, but it might liven up the ship.</description>
   <gfx_store>placeholder</gfx_store>
+  <desc_extra>#gSmells funky.#0</desc_extra>
  <rarity>6</rarity></general>
  <specific type="modification">
   <cpu_mod>10</cpu_mod>
