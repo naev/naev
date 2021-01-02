@@ -82,7 +82,6 @@ void naev_toggleFullscreen (void);
 void update_routine( double dt, int enter_sys );
 char *naev_version( int long_version );
 int naev_versionCompare( const char *version );
-char *naev_binary (void);
 void naev_quit (void);
 
 

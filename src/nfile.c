@@ -263,39 +263,6 @@ const char* nfile_cachePath (void)
 }
 
 
-static char dirname_buf[PATH_MAX];
-/**
- * @brief Portable version of dirname.
- *
- * Unlike most implementations of dirname, this does not modify path, instead
- * it returns a modified buffer. The contents of the returned pointer can change
- * in subsequent calls.
- */
-const char *_nfile_dirname( const char *path )
-{
-#if HAS_POSIX
-   strncpy( dirname_buf, path, sizeof(dirname_buf) );
-   dirname_buf[PATH_MAX-1]='\0';
-   return dirname( dirname_buf );
-#elif HAS_WIN32
-   int i;
-   for (i=strlen(path)-1; i>=0; i--)
-      if (nfile_isSeparator( path[i] ))
-         break;
-
-   /* Nothing found. */
-   if (i<=0)
-      return path;
-
-   /* New dirname. */
-   strncpy( dirname_buf, path, MIN(sizeof(dirname_buf)-1, (size_t)i) );
-   return dirname_buf;
-#else
-#error "Functionality not implemented for your OS."
-#endif /* HAS_POSIX */
-}
-
-
 #if HAS_POSIX
 #define MKDIR mkdir( opath, mode )
 static int mkpath( const char *path, mode_t mode )
