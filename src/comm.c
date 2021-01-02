@@ -52,7 +52,7 @@ extern int pilot_nstack;
  */
 /* Static. */
 static unsigned int comm_open( glTexture *gfx, int faction,
-      int override, int bribed, char *name );
+      int override, int bribed, const char *name );
 static unsigned int comm_openPilotWindow (void);
 static void comm_addPilotSpecialButtons( unsigned int wid );
 static void comm_close( unsigned int wid, char *unused );
@@ -275,7 +275,7 @@ int comm_openPlanet( Planet *planet )
  *    @return The comm window id.
  */
 static unsigned int comm_open( glTexture *gfx, int faction,
-      int override, int bribed, char *name )
+      int override, int bribed, const char *name )
 {
    int namex, standx, logox, y;
    int namew, standw, logow, width;

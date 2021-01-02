@@ -116,7 +116,7 @@ typedef struct UniHunk_ {
       char *name;
    } u; /**< Actual data to patch. */
    union {
-      char *name;
+      const char *name;
       int data;
    } o; /** Old data to possibly replace. */
 } UniHunk_t;

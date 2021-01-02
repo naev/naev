@@ -18,13 +18,6 @@
 
 #include "nstring.h"
 
-#define _(String) gettext(String)
-#define gettext_noop(String) String
-#define N_(String) String
-
-#define n_(String1,String2,n) ngettext(String1,String2,n)
-#define p_(Msgctx,Msgid) pgettext(Msgctx,Msgid)
-
 #define LOG(str, args...)  (logprintf(stdout, 1, str, ## args))
 #ifdef DEBUG_PARANOID /* Will cause WARNs to blow up */
 #define WARN(str, args...) (logprintf(stderr, 0, _("WARNING %s:%d [%s]: "), __FILE__, __LINE__, __func__), logprintf( stderr, 1, str, ## args), abort())

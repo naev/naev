@@ -191,7 +191,7 @@ int main( int argc, char** argv )
    }
 
    /* Set up locales. */
-   gettext_setLanguage( NULL );
+   gettext_init();
 
    /* Parse version. */
    if (semver_parse( VERSION, &version_binary ))
@@ -248,9 +248,6 @@ int main( int argc, char** argv )
     * is the only place likely to be checked.
     */
    conf_loadConfigPath();
-
-   /* Parse the user data path override first. */
-   conf_parseCLIPath( argc, argv );
 
    /* Create the home directory if needed. */
    if ( nfile_dirMakeExist( nfile_configPath() ) )

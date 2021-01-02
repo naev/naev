@@ -1207,7 +1207,8 @@ static void uniedit_editSys (void)
 {
    unsigned int wid;
    int x, y, l;
-   char buf[128], *s;
+   char buf[128];
+   const char *s;
    StarSystem *sys;
 
    /* Must have a system. */
