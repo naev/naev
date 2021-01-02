@@ -11,6 +11,7 @@
   <gfx_store>afterburner2</gfx_store>
   <limit>afterburner</limit>
   <cpu>-6</cpu>
+  <desc_extra>#rHot hot hot!#0</desc_extra>
  </general>
  <stats>
   <armour_damage>10</armour_damage>
