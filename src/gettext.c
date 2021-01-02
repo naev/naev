@@ -27,11 +27,17 @@
 #include "nstring.h"
 
 
-static char gettext_systemLanguage[64] = "en";  /**< Language set by the environment when we started up. */
-static msgcat_t **gettext_msgcatChain = NULL;   /**< Pointer to the Array of message catalogs to try in order. */
-static msgcat_t *evil = NULL;                   /**< Initial implementation. */
+typedef struct translation {
+   char *language;              /**< Language code (allocated string). */
+   msgcat_t *chain;             /**< Array of message catalogs to try in order. */
+   struct translation *next;    /**< Next entry in the list of loaded translations. */
+} translation_t;
 
-static void gettext_addCat( const char* path );
+
+static char gettext_systemLanguage[64] = "en";          /**< Language set by the environment when we started up. */
+static translation_t *gettext_translations = NULL;      /**< Linked list of loaded translation chains. */
+static translation_t *gettext_activeTranslation = NULL; /**< Active language's code. */
+
 
 /**
  * @brief Initialize the translation system.
@@ -42,8 +48,6 @@ void gettext_init()
 {
    const char *language;
 
-   evil = array_create( msgcat_t );
-   gettext_msgcatChain = &evil;
    setlocale( LC_ALL, "" );
    /* If we don't disable LC_NUMERIC, lots of stuff blows up because 1,000 can be interpreted as
     * 1.0 in certain languages. */
@@ -61,45 +65,49 @@ void gettext_init()
  */
 void gettext_setLanguage( const char* lang )
 {
+   translation_t *newtrans, **ptrans;
    char root[256], **paths;
    int i;
+   const char* map;
+   size_t map_size;
 
    if (lang == NULL)
       lang = gettext_systemLanguage;
+   if (gettext_activeTranslation != NULL && !strcmp( lang, gettext_activeTranslation->language ))
+      return;
 
    /* Set the environment variable used by GNU gettext. This can help logging/messages
     * emitted by libraries appear in the user's native language. (setlocale(LC_ALL, ...) may
     * seem like a better idea, but it checks unnecessarily for system locale definitions. */
    nsetenv( "LANGUAGE", lang, 1 );
-   nsnprintf( root, sizeof(root), GETTEXT_PATH"%s", lang );
-   if (!PHYSFS_exists( root ))
-      return;
+
+   /* Search for the selected language in the loaded translations. */
+   for (ptrans = &gettext_translations; *ptrans != NULL; ptrans = &(*ptrans)->next)
+      if (!strcmp( lang, (*ptrans)->language )) {
+         gettext_activeTranslation = *ptrans;
+         return;
+      }
+
+   /* Load a new translation chain from ndata, and activate it. */
+   newtrans = calloc( 1, sizeof( translation_t ) );
+   newtrans->language = strdup( lang );
+   newtrans->chain = array_create( msgcat_t );
 
    /* @TODO This code orders the translations alphabetically by file path.
     * That doesn't make sense, but this is a new use case and it's unclear
     * how we should determine precedence in case multiple .mo files exist. */
+   nsnprintf( root, sizeof(root), GETTEXT_PATH"%s", lang );
    paths = ndata_listRecursive( root );
    for (i=0; i<array_size(paths); i++) {
-      gettext_addCat( paths[i] );
+      map = ndata_read( paths[i], &map_size );
+      if (map != NULL) {
+         msgcat_init( &array_grow( &newtrans->chain ), map, map_size );
+         DEBUG( _("Adding translations from %s"), paths[i] );
+      }
       free( paths[i] );
    }
    array_free( paths );
-}
-
-
-/**
- * @brief Open the given ndata path and put that catalog at the end of gettext_msgcatChain.
- */
-static void gettext_addCat( const char* path )
-{
-   const char* map;
-   size_t map_size;
-
-   map = ndata_read( path, &map_size );
-   if (map != NULL) {
-      msgcat_init( &array_grow( gettext_msgcatChain ), map, map_size );
-      DEBUG( _("Using translations from %s"), path );
-   }
+   gettext_activeTranslation = *ptrans = newtrans;
 }
 
 /**
@@ -117,11 +125,13 @@ const char* gettext_ngettext( const char* msgid, const char* msgid_plural, uint6
    const char* trans;
    int i;
 
-   chain = *gettext_msgcatChain;
-   for (i=0; i<array_size(chain); i++) {
-      trans = msgcat_ngettext( &chain[i], msgid, msgid_plural, n );
-      if (trans != NULL)
-         return (char*)trans;
+   if (gettext_activeTranslation != NULL) {
+      chain = gettext_activeTranslation->chain;
+      for (i=0; i<array_size(chain); i++) {
+         trans = msgcat_ngettext( &chain[i], msgid, msgid_plural, n );
+         if (trans != NULL)
+            return (char*)trans;
+      }
    }
 
    return n>1 && msgid_plural!=NULL ? msgid_plural : msgid;
