@@ -31,13 +31,13 @@ local vn = require 'vn'
 local portrait = require 'portrait'
 
 maikki_name = _("Distraught Young Woman")
-maikki_portrait = "none"
+maikki_portrait = "maikki"
 maikki_description = _("yeah")
-maikki_image = portrait.getFullPath(maikki_portrait) --"maikki.png"
+maikki_image = "maikki.png"
 maikki_colour = { 1, 0.73, 0.97 }
 
 oldman_name = _("Old Man")
-oldman_portrait = "none"
+oldman_portrait = "old_man"
 oldman_description = _("Old man.")
 oldman_image = "old_man.png"
 

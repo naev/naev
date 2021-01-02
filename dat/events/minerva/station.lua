@@ -26,6 +26,7 @@ terminal_colour = {0.8, 0.8, 0.8}
 blackjack_name = _("Blackjack")
 blackjack_portrait = "none" -- TODO replace
 blackjack_desc = _("Seems to be one of the more popular card games where you can play blackjack against a \"cyborg chicken\".")
+blackjack_image = "cyborg_chicken.png"
 chuckaluck_name = _("Chuck-a-luck")
 chuckaluck_portrait = "none" -- TODO replace
 chuckaluck_desc = _("A fast-paced luck-based betting game using dice. You can play against other patrons.")
@@ -317,7 +318,7 @@ function approach_blackjack()
    local firsttime = not var.peek("cc_known")
    -- Not adding to queue first
    local cc = vn.Character.new( _("Cyborg Chicken"),
-         { image=portrait.getFullPath(blackjack_portrait) } )
+         { image=blackjack_image } )
    vn.clear()
    vn.scene()
    if firsttime then
