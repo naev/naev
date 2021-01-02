@@ -199,8 +199,13 @@ static int cli_printOnly( lua_State *L )
 static int cli_script( lua_State *L )
 {
    const char *fname;
-   char buf[PATH_MAX], *bbuf;
+   char *buf;
+   size_t blen;
    int n;
+
+   /* Handle parameters. */
+   fname = luaL_checkstring(L, 1);
+   n = lua_gettop(L);
 
    /* Reset loaded buffer. */
    if (cli_env != LUA_NOREF) {
@@ -217,23 +222,11 @@ static int cli_script( lua_State *L )
       lua_pop(L,1);                          /* */
    }
 
-   /* Handle parameters. */
-   fname = luaL_optstring(L, 1, NULL);
-   n     = lua_gettop(L);
-
-   /* Try to find the file if it exists. */
-   if (nfile_fileExists(fname))
-      nsnprintf( buf, sizeof(buf), "%s", fname );
-   else {
-      bbuf = strdup( naev_binary() );
-      nsnprintf( buf, sizeof(buf), "%s/%s", nfile_dirname( bbuf ), fname );
-      free(bbuf);
-   }
-
-   /* Do the file.
-    * This is purposely done outside of PHYSFS so we can do tests and such quickly. */
-   if (luaL_loadfile(L, buf) != 0)
+   /* Do the file from PHYSFS. */
+   buf = ndata_read( fname, &blen );
+   if (luaL_loadbuffer( L, buf, blen, fname ) != 0)
       lua_error(L);
+   free( buf );
 
    /* Return the stuff. */
    nlua_pushenv(cli_env);
