@@ -459,7 +459,8 @@ static void bar_update( unsigned int wid, char* str )
 
    /* Set portrait. */
    window_modifyText(  wid, "txtPortrait", npc_getName( pos ) );
-   window_modifyImage( wid, "imgPortrait", npc_getTexture( pos ), 0, 0 );
+   window_modifyImage( wid, "imgPortrait", npc_getTexture( pos ),
+         PORTRAIT_WIDTH, PORTRAIT_HEIGHT );
 
    /* Set mission description. */
    window_modifyText(  wid, "txtMission", npc_getDesc( pos ));
