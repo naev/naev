@@ -24,7 +24,7 @@ BEGIN
 			VALUE "CompanyName", "Naev Team"
 			VALUE "FileDescription", "Naev: Sea of Darkness"
 			VALUE "InternalName", "naev"
-			VALUE "LegalCopyright", "Copyright (C) 2006-2020"
+			VALUE "LegalCopyright", "Copyright (C) 2006-2021"
 			VALUE "OriginalFilename", "naev.exe"
 			VALUE "ProductName", "Naev: Sea of Darkness"
 			VALUE "ProductVersion", "@VMAJOR@.@VMINOR@.@VREV@"

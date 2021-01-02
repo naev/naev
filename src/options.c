@@ -257,12 +257,6 @@ static void opt_gameplay( unsigned int wid )
    window_addText( wid, x, y, cw, 20, 1, "txtVersion",
          &gl_smallFont, NULL, naev_version(1) );
    y -= 20;
-#ifdef GIT_COMMIT
-   nsnprintf( buf, sizeof(buf), _("Commit: %s"), GIT_COMMIT );
-   window_addText( wid, x, y, cw, 20, 1, "txtCommit",
-         &gl_smallFont, NULL, buf );
-#endif /* GIT_COMMIT */
-   y -= 20;
 
    paths = PHYSFS_getSearchPath();
    for (i=l=0; paths[i]!=NULL && (size_t)l < sizeof(buf); i++)
