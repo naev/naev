@@ -13,6 +13,7 @@ local minerva = {
    },
    maikki = {
       name = _("Maikki"),
+      description = _("TODO"),
       portrait = "maikki",
       image = "maikki.png",
       colour = {1, 0.73, 0.97},

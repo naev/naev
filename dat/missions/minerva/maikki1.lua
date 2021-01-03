@@ -76,6 +76,12 @@ function accept ()
       return
    end
 
+   misn.accept()
+   misn_osd = misn.osdCreate( misn_title,
+      { string.format(_("Look around the %s system"), searchsys) } )
+   hook.land( "land" )
+   hook.enter( "enter" )
+
    -- Re-add Maikki if accepted
    land()
 end
@@ -85,7 +91,7 @@ function land ()
    if planet.cur() == planet.get("Cerberus") then
       npc_oldman = misn.npcAdd( "approach_oldman", oldman_name, oldman_portrait, oldman_desc )
    elseif planet.cur() == planet.get("Minerva Station") then
-      npc_maikki = misn.npcAdd( "approach_maikki", maikki_name, maikki_portrait, maikki_description )
+      npc_maikki = misn.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
    end
 end
 
@@ -111,15 +117,7 @@ function approach_maikki ()
 
       vn.label( "accept" )
       maikki(_([["accept msg"]]))
-      vn.func( function ()
-         -- Accepted
-         misn_state=0
-         misn.accept()
-         misn_osd = misn.osdCreate( misn_title,
-            { string.format(_("Look around the %s system"), searchsys) } )
-         hook.land( "land" )
-         hook.enter( "enter" )
-      end )
+      vn.func( function () misn_state=0 end )
    elseif misn_state==4 then
       -- Finish mission
       maikki(_([["finish text"]]))
