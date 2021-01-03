@@ -541,11 +541,12 @@ int npc_isImportant( int i )
  *
  *    @brief Returns 1 on destroyed, 0 on not destroyed.
  */
-static int npc_approach_giver( unsigned int idx )
+static int npc_approach_giver( NPC_t *npc )
 {
    int i;
    int ret;
    Mission *misn;
+   unsigned int id;
 
    /* Make sure player can accept the mission. */
    for (i=0; i<MISSION_MAX; i++)
@@ -557,12 +558,13 @@ static int npc_approach_giver( unsigned int idx )
    }
 
    /* Get mission. */
-   misn = &npc_array[idx].u.g;
+   misn = &npc->u.g;
+   id   = npc->id;
    ret  = mission_accept( misn );
    if ((ret==0) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
       if (ret==-1)
          mission_cleanup( misn );
-      npc_rm( &npc_array[idx] );
+      npc_rm( npc_arrayGet(id) );
       ret = 1;
    }
    else
@@ -591,7 +593,7 @@ int npc_approach( int i )
    /* Handle type. */
    switch (npc->type) {
       case NPC_TYPE_GIVER:
-         return npc_approach_giver( i );
+         return npc_approach_giver( npc );
 
       case NPC_TYPE_MISSION:
          misn_runStart( npc->u.m.misn, npc->u.m.func );
