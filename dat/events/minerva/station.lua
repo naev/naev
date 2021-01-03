@@ -370,7 +370,7 @@ function approach_blackjack()
       vn.namebox_alpha = 1-alpha
       cc.offset = dealer_x + (dealer_newx - dealer_x)*alpha
    end
-   vn.animation( 0.2, function (alpha) setup_blackjack(alpha) end )
+   vn.animation( 0.5, function (alpha) setup_blackjack(alpha) end )
    local bj = vn.custom()
    bj._init = function( self )
       -- TODO play some blackjack music
@@ -397,7 +397,7 @@ function approach_blackjack()
       blackjack.mousepressed( mx, my, button )
    end
    -- Undo the resize
-   vn.animation( 0.2, function (alpha) setup_blackjack(1-alpha) end )
+   vn.animation( 0.5, function (alpha) setup_blackjack(1-alpha) end )
    vn.label( "leave" )
    vn.na( _("You leave the blackjack table behind and head back to the main area.") )
    vn.fadeout()
