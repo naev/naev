@@ -46,7 +46,10 @@ misn_reward = _("???")
 misn_desc = _("Maikki wants you to help her find her father.")
 
 searchsys = "Doeston"
+cutscenesys = "Arandon"
+stealthsys = "Zerantix"
 -- Mission states:
+--  nil: mission not accepted yet
 --    0: going to doeston
 --    1: talked to old man, going to arandon
 --    2: saw scavengers, go back to old man
@@ -64,7 +67,7 @@ end
 
 
 function accept ()
-   if not misn.claim( {system.get("Arandon"), system.get("Zerantix")} ) then
+   if not misn.claim( {system.get(cutscenesys), system.get(stealthsys)} ) then
       misn.finish( false )
    end
 
@@ -76,9 +79,11 @@ function accept ()
       return
    end
 
+   -- Formally accept the mission and set up stuff
    misn.accept()
    misn_osd = misn.osdCreate( misn_title,
       { string.format(_("Look around the %s system"), searchsys) } )
+   misn_marker = misn.markerAdd( system.get(searchsys), "low" )
    hook.land( "land" )
    hook.enter( "enter" )
 
@@ -129,12 +134,23 @@ function approach_maikki ()
       {_("Ask about her father"), "father"},
       {_("Leave"), "leave"},
    }
+   if misn_state >=4 then
+      table.insert( opts, 1, {_("Show her the XXX"), "showloot"} )
+   end
    vn.label( "menu" )
    vn.menu( opts )
 
    vn.label( "father" )
-   maikki( _("Blah") )
+   maikki(_([["Blah"]]))
    vn.jump( "menu_msg" )
+
+   vn.label( "showloot" )
+   maikki(_([["Blah"]]))
+   vn.func( function ()
+      -- TODO give reward
+      misn.finish(true)
+   end )
+   vn.done()
 
    vn.label( "menu_msg" )
    maikki( _([["Is there anything you would like to know about?"]]) )
@@ -157,14 +173,22 @@ function approach_oldman ()
 
    vn.label( "menu" )
    local opts = {
+      {_("Ask about Kex McPherson"), "kex" },
       {_("Ask about Doeston"), "doeston"},
       {_("Ask about the Nebula"), "nebula"},
       {_("Leave"), "leave"},
    }
-   if misn_state==2 then
+   if misn_state>=2 then
       table.insert( opts, 1, {_("Ask about scavengers you saw"), "scavengers"} )
    end
+   if misn_state >=4 then
+      table.insert( opts, 1, {_("Show him the XXX"), "showloot"} )
+   end
    vn.menu( opts )
+
+   vn.label( "kex" )
+   om(_([[""]]))
+   vn.jump( "menu_msg" )
 
    vn.label( "doeston" )
    om(_([[""]]))
@@ -174,8 +198,17 @@ function approach_oldman ()
    om(_([[""]]))
    vn.jump( "menu_msg" )
 
+   vn.label( "scavengers" )
+   om(_([[""]]))
+   vn.func( function () if misn_state==2 then misn_state=3 end end )
+   vn.jump( "menu_msg" )
+
+   vn.label( "showloot" )
+   om(_([[""]]))
+   vn.jump( "menu_msg" )
+
    vn.label( "menu_msg" )
-   om( _([[He gives you a bored look.\n"Is there anything else you would like to know about?"]]) )
+   om( _([[He gives you a bored look as he takes a sip from his drink.\n"Is there anything else you would like to know about?"]]) )
    vn.jump( "menu" )
 
    vn.label( "leave" )
@@ -185,9 +218,9 @@ end
 
 
 function enter ()
-   if system.cur() == system.get("Arandon") and misn_state==1 then
+   if system.cur() == system.get(cutscenesys) and misn_state==1 then
       -- Cutscene with scavengers
-   elseif system.cur() == system.get("Zerantix") and misn_state==3 then
+   elseif system.cur() == system.get(stealthsys) and misn_state==3 then
       -- Have to follow scavengers
    end
 end
