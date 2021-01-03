@@ -27,14 +27,15 @@ function create ()
    end
 
    -- Selects an advertiser message
-   msg = {
+   local msg = {
       _("Fly safe, fly Milspec."),
       _("Reynir's Hot Dogs: enjoy the authentic taste of tradition."),
       _("Everyone is faster than light, but only Tricon engines are faster than thought!"),
       _("Dare excellence! Dare Teracom rockets!"),
       _("Most people are ordinary. For the others, Nexus designed the Shark fighter."),
       _("Never take off without your courage. Never take off without your Vendetta."),
-      _("Unicorp: low price and high quality!")
+      _("Unicorp: low price and high quality!"),
+      _("Life is short, spend it at Minerva Station in the Limbo System!"),
    }
 
    -- Faction specific messages
