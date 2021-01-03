@@ -27,14 +27,14 @@
 -- 7. Player finds a picture among the debris.
 -- 8. Return to Maikki
 --]]
+local minerva = require "minerva"
 local vn = require 'vn'
-local portrait = require 'portrait'
 
 maikki_name = _("Distraught Young Woman")
-maikki_portrait = "maikki"
 maikki_description = _("yeah")
-maikki_image = "maikki.png"
-maikki_colour = { 1, 0.73, 0.97 }
+maikki_portrait = minerva.maikki.portrait
+maikki_image = minerva.maikki.image
+maikki_colour = minerva.maikki.colour
 
 oldman_name = _("Old Man")
 oldman_portrait = "old_man"

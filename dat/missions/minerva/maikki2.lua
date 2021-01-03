@@ -31,18 +31,21 @@
 --
 -- Eccentric Scientist in "Westhaven" (slightly senile with dementia).
 --]]
+local minerva = require "minerva"
 local vn = require 'vn'
 
-npc_name = _("Maikki")
-npc_portrait = "none"
-npc_description = _("yeah")
+maikki_description = _("yeah")
+maikki_name = minerva.maikki.name
+maikki_portrait = minerva.maikki.portrait
+maikki_image = minerva.maikki.image
+maikki_colour = minerva.maikki.colour
 
 misn_title = _("Finding Father")
 misn_reward = _("???")
 misn_desc = _("Maikki wants you to help her find her father.")
 
 function create ()
-   misn.setNPC( npc_name, npc_portrait )
+   misn.setNPC( maikki_name, maikki_portrait )
    misn.setDesc( npc_description )
 end
 
