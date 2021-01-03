@@ -2449,7 +2449,7 @@ static int pilotL_rmOutfit( lua_State *L )
    Pilot *p;
    const char *outfit;
    Outfit *o;
-   int q, removed;
+   int q, removed, matched = 0;
 
    NLUA_CHECKRW(L);
 
@@ -2470,6 +2470,7 @@ static int pilotL_rmOutfit( lua_State *L )
             removed++;
          }
          pilot_calcStats( p ); /* Recalculate stats. */
+         matched = 1;
       }
       /* If outfit is "cores", we remove cores only. */
       else if (strcmp(outfit,"cores")==0) {
@@ -2480,9 +2481,11 @@ static int pilotL_rmOutfit( lua_State *L )
             removed++;
          }
          pilot_calcStats( p ); /* Recalculate stats. */
+         matched = 1;
       }
    }
-   else {
+
+   if (!matched) {
       o = luaL_validoutfit(L,2);
 
       /* Remove the outfit outfit. */
