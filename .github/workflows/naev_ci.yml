@@ -62,7 +62,7 @@ jobs:
         msystem: MINGW64
         update: true
         path-type: strict
-        install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-clang mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-itstool mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-make mingw-w64-x86_64-pkg-config autoconf autoconf-archive automake-wrapper git intltool tar
+        install: mingw-w64-x86_64-gcc-libs mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-clang mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-itstool mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-make mingw-w64-x86_64-pkg-config autoconf autoconf-archive automake-wrapper git intltool tar
 
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
