@@ -156,14 +156,10 @@ void background_renderStars( const double dt )
    GLfloat h, w;
    GLfloat x, y, m;
    double z;
-   int shade_mode;
    gl_Matrix4 projection;
-
-   /* TODO: Use geometry shader instead of drawing both points and lines */
 
    glUseProgram(shaders.stars.program);
 
-   glPointSize(1 / gl_screen.scale);
    glLineWidth(1 / gl_screen.scale);
 
    /* Do some scaling for now. */
@@ -173,16 +169,12 @@ void background_renderStars( const double dt )
    projection = gl_Matrix4_Scale( projection, z, z, 1 );
 
    /* Decide on shade mode. */
-   shade_mode = 0;
    x = 0;
    y = 0;
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
          !player_isFlag(PLAYER_CREATING)) {
 
       if (pilot_isFlag(player.p,PILOT_HYPERSPACE)) { /* hyperspace fancy effects */
-
-         shade_mode = 1;
-
          /* lines get longer the closer we are to finishing the jump */
          m  = MAX( 0, HYPERSPACE_STARS_BLUR-player.p->ptimer );
          m /= HYPERSPACE_STARS_BLUR;
@@ -191,8 +183,6 @@ void background_renderStars( const double dt )
          y = m*sin(VANGLE(player.p->solid->vel));
       }
       else if (dt_mod * VMOD(player.p->solid->vel) > 500. ) {
-         shade_mode = 1;
-
          /* Very short lines tend to flicker horribly. A stock Llama at 2x
           * speed just so happens to make very short lines. A 5px minimum
           * is long enough to (mostly) alleviate the flickering.
@@ -221,18 +211,13 @@ void background_renderStars( const double dt )
    glUniform2f(shaders.stars.star_xy, star_x, star_y);
    glUniform2f(shaders.stars.wh, w, h);
    glUniform2f(shaders.stars.xy, x, y);
-   if (shade_mode) {
-      glDrawArrays( GL_LINES, 0, nstars );
-      glDrawArrays( GL_POINTS, 0, nstars ); /* This second pass is when the lines are very short that they "lose" intensity. */
-   }
-   else
-      glDrawArrays( GL_POINTS, 0, nstars );
+   glUniform1f(shaders.stars.scale, 1 / gl_screen.scale);
+   glDrawArrays( GL_LINES, 0, nstars );
 
    /* Disable vertex array. */
    glDisableVertexAttribArray( shaders.stars.vertex );
    glDisableVertexAttribArray( shaders.stars.brightness );
 
-   glPointSize(1 / gl_screen.scale);
    glLineWidth(1 / gl_screen.scale);
 
    glUseProgram(0);
