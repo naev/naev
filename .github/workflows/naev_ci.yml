@@ -198,9 +198,11 @@ jobs:
             config: macos.ini
             pkg-config-path: /usr/local/opt/openal-soft/lib/pkgconfig
 
-          - os: macos-11.0
-            config: macos.ini
-            pkg-config-path: /usr/local/opt/openal-soft/lib/pkgconfig
+          # Alas, these instances don't grow on trees. As of 2021-01-03, we commonly see the CI die with a useless "This check failed" message.
+          # Hopefully we can reenable this check sometime soon.
+          # - os: macos-11.0
+          #   config: macos.ini
+          #   pkg-config-path: /usr/local/opt/openal-soft/lib/pkgconfig
 
     runs-on: "${{ matrix.os }}"
 
