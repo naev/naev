@@ -66,6 +66,9 @@ dat/events/cinematic/DvdFLFbattle.lua
 dat/events/dvaered/warlords_battle.lua
 dat/events/flf/derelict.lua
 dat/events/flf/flf_catastrophe.lua
+dat/events/minerva/altercation1.lua
+dat/events/minerva/chicken_rendezvous.lua
+dat/events/minerva/station.lua
 dat/events/naev_needs_YOU.lua
 dat/events/neutral/animaltrouble.lua
 dat/events/neutral/baron_comm.lua
@@ -188,6 +191,8 @@ dat/missions/flf/flf_pirates.lua
 dat/missions/flf/flf_pre01.lua
 dat/missions/flf/flf_pre02.lua
 dat/missions/flf/flf_rogue.lua
+dat/missions/minerva/maikki1.lua
+dat/missions/minerva/maikki2.lua
 dat/missions/neutral/animaltransport.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
@@ -313,6 +318,8 @@ dat/scripts/love/timer.lua
 dat/scripts/love/touch.lua
 dat/scripts/love/video.lua
 dat/scripts/love/window.lua
+dat/scripts/minigames/blackjack.lua
+dat/scripts/minigames/cardio.lua
 dat/scripts/misnhelper.lua
 dat/scripts/nextjump.lua
 dat/scripts/numstring.lua
@@ -1242,6 +1249,7 @@ dat/assets/mgg003.xml
 dat/assets/mgg007.xml
 dat/assets/mgg1294.xml
 dat/assets/mida_proxima.xml
+dat/assets/minerva_station.xml
 dat/assets/mirror_i.xml
 dat/assets/mirror_iv.xml
 dat/assets/mirror_vi.xml
@@ -1854,6 +1862,7 @@ dat/faction.xml
 dat/fleet.xml
 dat/map.xml
 dat/outfits/accessory/air_freshener.xml
+dat/outfits/accessory/fuzzy_dice.xml
 dat/outfits/accessory/left_boot.xml
 dat/outfits/accessory/love_letter.xml
 dat/outfits/accessory/pentagram_of_valor.xml
