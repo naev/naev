@@ -2455,9 +2455,7 @@ static int pilotL_rmOutfit( lua_State *L )
    /* Get parameters. */
    removed = 0;
    p      = luaL_validpilot(L,1);
-   q      = 1;
-   if (lua_gettop(L) > 2)
-      q = luaL_checkint(L,3);
+   q      = luaL_optinteger(L,3,1);
 
    if (lua_isstring(L,2)) {
       outfit = luaL_checkstring(L,2);
