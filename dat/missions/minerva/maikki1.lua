@@ -41,6 +41,14 @@ oldman_portrait = "old_man"
 oldman_description = _("Old man.")
 oldman_image = "old_man.png"
 
+scav_name = _("Scavengers")
+scav_portrait = "scavenger1"
+scav_desc = _("You see a pair of dirty looking fellows talking loudly among themselves.")
+scavengera_image = "scavenger1.png"
+scavengerb_image = scavengera_image
+scavengera_colour = nil
+scavengerb_colour = nil
+
 misn_title = _("Finding Father")
 misn_reward = _("???")
 misn_desc = _("Maikki wants you to help her find her father.")
@@ -53,9 +61,10 @@ stealthsys = "Zerantix"
 --  nil: mission not accepted yet
 --    0: going to doeston
 --    1: talked to old man, going to arandon
---    2: saw scavengers, go back to old man
---    3: talked to old man again, going to zerantix
---    4: looted ship
+--    2: saw scavengers, go back to doeston
+--    3: talked to old man again
+--    4: talk to scavengers, going to zerantix
+--    5: looted ship
 misn_state = nil
 
 
@@ -96,6 +105,9 @@ end
 function land ()
    if planet.cur() == planet.get("Cerberus") then
       npc_oldman = misn.npcAdd( "approach_oldman", oldman_name, oldman_portrait, oldman_desc )
+      if misn_state==3 or misn_state==4 then
+         npc_scavenger = misn.npcAdd( "approach_scavengers", scav_name, scav_portrait, scav_desc )
+      end
    elseif planet.cur() == planet.get("Minerva Station") then
       npc_maikki = misn.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
    end
@@ -124,7 +136,7 @@ function approach_maikki ()
       vn.label( "accept" )
       maikki(_([["accept msg"]]))
       vn.func( function () misn_state=0 end )
-   elseif misn_state==4 then
+   elseif misn_state==5 then
       -- Finish mission
       maikki(_([["finish text"]]))
       vn.done()
@@ -183,6 +195,9 @@ function approach_oldman ()
       table.insert( opts, 1, {_("Ask about scavengers you saw"), "scavengers"} )
    end
    if misn_state >=4 then
+      table.insert( opts, 1, {string.format(_("Ask about %s"),stealthsys), "stealthmisn"} )
+   end
+   if misn_state >=5 then
       table.insert( opts, 1, {_("Show him the XXX"), "showloot"} )
    end
    vn.menu( opts )
@@ -209,12 +224,13 @@ function approach_oldman ()
    om(_([[""]]))
    vn.func( function ()
       if misn_state==2 then
-         misn_osd = misn.osdCreate( misn_title,
-            { string.format(_("Follow the scavengers in the %s system"), stealthsys) } )
-         misn.markerMove( misn_marker, system.get(stealthsys) )
          misn_state=3
       end
    end )
+   vn.jump( "menu_msg" )
+
+   vn.label( "stealthmisn" )
+   om(_([[""]]))
    vn.jump( "menu_msg" )
 
    vn.label( "showloot" )
@@ -226,6 +242,37 @@ function approach_oldman ()
    vn.jump( "menu" )
 
    vn.label( "leave" )
+   vn.fadeout()
+   vn.run()
+end
+
+
+function approach_scavengers ()
+   vn.clear()
+   vn.scene()
+   local scavA = vn.newCharacter( _("Scavenger A"),
+         { image=scavengera_image, color=scavengera_colour } )
+   local scavB = vn.newCharacter( _("Scavenger B"),
+         { image=scavengerb_image, color=scavengerb_colour } )
+   vn.fadein()
+   vn.na(_("You see some scavengers at the bar. They are clearly plastered. They don't really seem to be aware of your presence."))
+
+   if misn_state==4 then
+      -- Already got mission, just give player a refresher
+
+   else
+      -- Blabber target to player
+
+      vn.func( function ()
+         if misn_state==3 then
+            misn_osd = misn.osdCreate( misn_title,
+               { string.format(_("Follow the scavengers in the %s system"), stealthsys) } )
+            misn.markerMove( misn_marker, system.get(stealthsys) )
+            misn_state=4
+         end
+      end )
+   end
+
    vn.fadeout()
    vn.run()
 end
