@@ -20,11 +20,12 @@ local window = require 'love.window'
 -- NPC Stuff
 gambling_priority = 3
 terminal_name = _("Terminal")
-terminal_portrait = "none" -- TODO replace
+terminal_portrait = "minerva_terminal"
 terminal_desc = _("A terminal with which you can check your current token balance and buy items with tokens.")
+terminal_image = "minerva_terminal.png"
 terminal_colour = {0.8, 0.8, 0.8}
 blackjack_name = _("Blackjack")
-blackjack_portrait = "none" -- TODO replace
+blackjack_portrait = "blackjack"
 blackjack_desc = _("Seems to be one of the more popular card games where you can play blackjack against a \"cyborg chicken\".")
 blackjack_image = "cyborg_chicken.png"
 chuckaluck_name = _("Chuck-a-luck")
@@ -102,6 +103,10 @@ function create()
    -- End event on takeoff.
    tokens_landed = tokens_get()
    hook.takeoff( "leave" )
+
+   -- Custom music
+   music.load( "meeting_mtfox" )
+   music.play()
 end
 
 -- Roughly 1 token is 1000 credits
@@ -164,8 +169,7 @@ function approach_terminal()
    vn.clear()
    vn.scene()
    local t = vn.newCharacter( terminal_name,
-         { image=portrait.getFullPath(terminal_portrait),
-           color=terminal_colour } )
+         { image=terminal_image, color=terminal_colour } )
    vn.fadein()
    vn.label( "start" )
    t:say( function() return string.format(
