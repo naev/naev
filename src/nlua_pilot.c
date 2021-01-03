@@ -3696,7 +3696,7 @@ static int pilotL_runaway( lua_State *L )
    /* Set the task. */
    t        = pilotL_newtask( L, p, (nojump) ? "__runaway_nojump" : "__runaway" );
    lua_pushpilot(L, pt->id);
-   t->dat = luaL_ref(L, LUA_REGISTRYINDEX);;
+   t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
 
    return 0;
 }
@@ -3756,7 +3756,7 @@ static int pilotL_hyperspace( lua_State *L )
       lj.srcid  = cur_system->id;
       lj.destid = jp->targetid;
       lua_pushjump(L, lj);
-      t->dat = luaL_ref(L, LUA_REGISTRYINDEX);;
+      t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
       return 0;
    }
    /* Not found. */

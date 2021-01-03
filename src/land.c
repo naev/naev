@@ -322,7 +322,8 @@ static void bar_open( unsigned int wid )
  */
 static int bar_genList( unsigned int wid )
 {
-   ImageArrayCell *portraits;
+   ImageArrayCell *portraits, *p;
+   glTexture *bg;
    char *focused;
    int w, h, iw, ih, bw, bh;
    int i, n, pos;
@@ -358,7 +359,7 @@ static int bar_genList( unsigned int wid )
       n            = 1;
       portraits    = calloc(1, sizeof(ImageArrayCell));
       portraits[0].image = gl_dupTexture(mission_portrait);
-      portraits[0].caption = strdup(_("News"));;
+      portraits[0].caption = strdup(_("News"));
    }
    else {
       n            = n+1;
@@ -366,13 +367,17 @@ static int bar_genList( unsigned int wid )
       portraits[0].image = gl_dupTexture(mission_portrait);
       portraits[0].caption = strdup(_("News"));
       for (i=0; i<npc_getArraySize(); i++) {
-         portraits[i+1].image = gl_dupTexture( npc_getTexture(i) );
-         portraits[i+1].caption = strdup( npc_getName(i) );
-         if (npc_isImportant(i)) {
-            portraits[i+1].layers = malloc( sizeof(glTexture*) );
-            portraits[i+1].layers[0] = gl_newImage( OVERLAY_GFX_PATH"portrait_exclamation.png", 0 );
-            portraits[i+1].nlayers = 1;
+         p = &portraits[i+1];
+         bg = npc_getBackground(i);
+         p->caption = strdup( npc_getName(i) );
+         if (bg!=NULL) {
+            p->image = gl_dupTexture( bg );
+            p->layers = gl_addTexArray( p->layers, &p->nlayers, gl_dupTexture( npc_getTexture(i) ) );
          }
+         else
+            p->image = gl_dupTexture( npc_getTexture(i) );
+         if (npc_isImportant(i))
+            p->layers = gl_addTexArray( p->layers, &p->nlayers, gl_newImage( OVERLAY_GFX_PATH"portrait_exclamation.png", 0 ) );
       }
    }
    window_addImageArray( wid, 20, -40,
@@ -427,6 +432,8 @@ static void bar_update( unsigned int wid, char* str )
       /* Destroy portrait. */
       if (widget_exists(wid, "imgPortrait"))
          window_destroyWidget(wid, "imgPortrait");
+      if (widget_exists(wid, "imgPortraitBG"))
+         window_destroyWidget(wid, "imgPortraitBG");
 
       /* Disable button. */
       window_disableButton( wid, "btnApproach" );
@@ -449,6 +456,10 @@ static void bar_update( unsigned int wid, char* str )
       window_destroyWidget( wid, "cstNews" );
 
    /* Create widgets if needed. */
+   if (!widget_exists(wid, "imgPortraitBG")) /* Must be first */
+      window_addImage( wid, iw + 40 + (w-iw-60-PORTRAIT_WIDTH)/2,
+            -(40 + dh + 40 + gl_defFont.h + 20 + PORTRAIT_HEIGHT),
+            0, 0, "imgPortraitBG", NULL, 1 );
    if (!widget_exists(wid, "imgPortrait"))
       window_addImage( wid, iw + 40 + (w-iw-60-PORTRAIT_WIDTH)/2,
             -(40 + dh + 40 + gl_defFont.h + 20 + PORTRAIT_HEIGHT),
@@ -460,6 +471,8 @@ static void bar_update( unsigned int wid, char* str )
    /* Set portrait. */
    window_modifyText(  wid, "txtPortrait", npc_getName( pos ) );
    window_modifyImage( wid, "imgPortrait", npc_getTexture( pos ),
+         PORTRAIT_WIDTH, PORTRAIT_HEIGHT );
+   window_modifyImage( wid, "imgPortraitBG", npc_getBackground( pos ),
          PORTRAIT_WIDTH, PORTRAIT_HEIGHT );
 
    /* Set mission description. */

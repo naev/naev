@@ -886,15 +886,16 @@ static int misn_osdGetActiveItem( lua_State *L )
  *    @luatparam string portrait Portrait to use for the NPC (from GFX_PATH/portraits*.png).
  *    @luatparam string desc Description associated to the NPC.
  *    @luatparam[opt=5] number priority Optional priority argument (highest is 0, lowest is 10).
+ *    @luatparam[opt=nil] string background Optional parameter specifying the background to use.
  *    @luatreturn number The ID of the NPC to pass to npcRm.
- * @luafunc npcAdd( func, name, portrait, desc, priority )
+ * @luafunc npcAdd( func, name, portrait, desc, priority, background )
  */
 static int misn_npcAdd( lua_State *L )
 {
    unsigned int id;
    int priority;
-   const char *func, *name, *gfx, *desc;
-   char portrait[PATH_MAX];
+   const char *func, *name, *gfx, *desc, *bg;
+   char portrait[PATH_MAX], background[PATH_MAX];
    Mission *cur_mission;
 
    /* Handle parameters. */
@@ -903,16 +904,19 @@ static int misn_npcAdd( lua_State *L )
    gfx  = luaL_checkstring(L, 3);
    desc = luaL_checkstring(L, 4);
 
-   /* Optional priority. */
+   /* Optional parameters. */
    priority = luaL_optinteger(L,5,5);
+   bg   = luaL_optstring(L,6,NULL);
 
    /* Set path. */
    nsnprintf( portrait, PATH_MAX, GFX_PATH"portraits/%s.png", gfx );
+   if (bg!=NULL)
+      nsnprintf( background, PATH_MAX, GFX_PATH"portraits/%s.png", bg );
 
    cur_mission = misn_getFromLua(L);
 
    /* Add npc. */
-   id = npc_add_mission( cur_mission, func, name, priority, portrait, desc );
+   id = npc_add_mission( cur_mission, func, name, priority, portrait, desc, (bg==NULL) ? bg :background );
 
    /* Return ID. */
    if (id > 0) {

@@ -24,6 +24,7 @@
 #include "log.h"
 #include "nstring.h"
 #include "opengl.h"
+#include "ndata.h"
 
 
 /**
@@ -59,6 +60,7 @@ typedef struct NPC_s {
    int priority; /**< NPC priority, 5 is average, 0 is highest, 10 is lowest. */
    char *name; /**< Translated, human-readable name of the NPC. */
    glTexture *portrait; /**< Portrait of the NPC. */
+   glTexture *background; /**< Background of the NPC. */
    char *desc; /**< Translated, human-readable NPC description. */
    union {
       Mission g; /**< Mission information (for mission giver). */
@@ -122,6 +124,7 @@ static unsigned int npc_add_giver( Mission *misn )
    npc.name       = strdup(misn->npc);
    npc.priority   = misn->data->avail.priority;
    npc.portrait   = gl_dupTexture(misn->portrait);
+   npc.background = NULL;
    npc.desc       = strdup(misn->desc);
    npc.u.g        = *misn;
 
@@ -133,7 +136,7 @@ static unsigned int npc_add_giver( Mission *misn )
  * @brief Adds a mission NPC to the mission computer.
  */
 unsigned int npc_add_mission( Mission *misn, const char *func, const char *name,
-      int priority, const char *portrait, const char *desc )
+      int priority, const char *portrait, const char *desc, const char *background )
 {
    NPC_t npc;
 
@@ -142,6 +145,10 @@ unsigned int npc_add_mission( Mission *misn, const char *func, const char *name,
    npc.name       = strdup( name );
    npc.priority   = priority;
    npc.portrait   = gl_newImage( portrait, 0 );
+   if (background != NULL)
+      npc.background = gl_newImage( background, 0 );
+   else
+      npc.background = NULL;
    npc.desc       = strdup( desc );
    npc.u.m.misn   = misn;
    npc.u.m.func   = strdup( func );
@@ -154,7 +161,7 @@ unsigned int npc_add_mission( Mission *misn, const char *func, const char *name,
  * @brief Adds a event NPC to the mission computer.
  */
 unsigned int npc_add_event( unsigned int evt, const char *func, const char *name,
-      int priority, const char *portrait, const char *desc )
+      int priority, const char *portrait, const char *desc, const char *background )
 {
    NPC_t npc;
 
@@ -163,6 +170,10 @@ unsigned int npc_add_event( unsigned int evt, const char *func, const char *name
    npc.name       = strdup( name );
    npc.priority   = priority;
    npc.portrait   = gl_newImage( portrait, 0 );
+   if (background != NULL)
+      npc.background = gl_newImage( background, 0 );
+   else
+      npc.background = NULL;
    npc.desc       = strdup( desc );
    npc.u.e.id     = evt;
    npc.u.e.func   = strdup( func );
@@ -399,6 +410,8 @@ static void npc_free( NPC_t *npc )
    /* Common free stuff. */
    free(npc->name);
    gl_freeTexture(npc->portrait);
+   if (npc->background != NULL)
+      gl_freeTexture(npc->background);
    free(npc->desc);
 
    /* Type-specific free stuff. */
@@ -454,48 +467,6 @@ int npc_getArraySize (void)
 
 
 /**
- * @brief Get the npc array names for an image array.
- *
- *    @param names Name array to fill.
- *    @param n Number to fill with.
- */
-int npc_getNameArray( char **names, int n )
-{
-   int i;
-
-   if (npc_array == NULL)
-      return 0;
-
-   /* Create the array. */
-   for (i=0; i<MIN(n,array_size(npc_array)); i++)
-      names[i] = strdup( npc_array[i].name );
-
-   return i;
-}
-
-
-/**
- * @brief Get the npc array textures for an image array.
- *
- *    @param tex Texture array to fill.
- *    @param n Number to fill with.
- */
-int npc_getTextureArray( glTexture **tex, int n )
-{
-   int i;
-
-   if (npc_array == NULL)
-      return 0;
-
-   /* Create the array. */
-   for (i=0; i<MIN(n,array_size(npc_array)); i++)
-      tex[i] = npc_array[i].portrait;
-
-   return i;
-}
-
-
-/**
  * @brief Get the name of an NPC.
  */
 const char *npc_getName( int i )
@@ -505,6 +476,22 @@ const char *npc_getName( int i )
       return NULL;
 
    return npc_array[i].name;
+}
+
+
+/**
+ * @brief Get the background of an NPC.
+ */
+glTexture *npc_getBackground( int i )
+{
+   /* Make sure in bounds. */
+   if (i<0 || npc_array == NULL || i>=array_size(npc_array))
+      return NULL;
+
+   /* TODO choose the background based on the planet or something. */
+   if (npc_array[i].background == NULL)
+      npc_array[i].background = gl_newImage( GFX_PATH"portraits/background.png", 0 );
+   return npc_array[i].background;
 }
 
 
