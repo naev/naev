@@ -175,10 +175,12 @@ end
 --    @param key Name of the key pressed.
 --]]
 function vn.keypressed( key )
+   --[[
    if key=="escape" then
       love.event.quit()
       return
    end
+   --]]
 
    if vn.isDone() then return end
    local s = vn._states[ vn._state ]
