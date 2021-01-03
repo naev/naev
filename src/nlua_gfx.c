@@ -8,22 +8,24 @@
  * @brief Handles the rendering of graphics on the screen.
  */
 
-#include "nlua_gfx.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
-#include "log.h"
-#include "opengl.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_gfx.h"
+
 #include "font.h"
-#include "nlua_col.h"
-#include "nlua_tex.h"
-#include "nlua_font.h"
-#include "nlua_transform.h"
-#include "nlua_shader.h"
+#include "log.h"
 #include "ndata.h"
+#include "nlua_col.h"
+#include "nlua_font.h"
+#include "nlua_shader.h"
+#include "nlua_tex.h"
+#include "nlua_transform.h"
+#include "nluadef.h"
+#include "opengl.h"
 
 
 /* GFX methods. */
@@ -415,7 +417,7 @@ static int gfxL_printfWrap( lua_State *L )
    const char *s;
    int width, outw, maxw;
    glFont *font;
-   int p, l, slen;
+   int lp, p, l, slen;
    int linenum;
    char *tmp;
 
@@ -423,15 +425,19 @@ static int gfxL_printfWrap( lua_State *L )
    font  = luaL_checkfont(L,1);
    s     = luaL_checkstring(L,2);
    width = luaL_checkinteger(L,3);
+   if (width < 0)
+      NLUA_ERROR(L,_("width has to be a positive value."));
 
    /* Process output into table. */
    lua_newtable(L);
    tmp = strdup(s);
    slen = strlen(s);
+   lp = 0;
    p = 0;
    linenum = 1;
    maxw = 0;
    do {
+      lp = p;
       if ((tmp[p] == ' ') || (tmp[p] == '\n'))
          p++;
       /* Don't handle tab for now. */
@@ -453,7 +459,8 @@ static int gfxL_printfWrap( lua_State *L )
       lua_rawset(L, -3);               /* t */
 
       p += l;
-
+      if (lp==p)
+         break;
    } while (p < slen);
 
    /* Push max width. */

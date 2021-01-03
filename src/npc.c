@@ -9,19 +9,21 @@
  */
 
 
-#include "npc.h"
+/** @cond */
+#include <lua.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include "nstring.h"
+#include "npc.h"
 
-#include "log.h"
-#include "land.h"
-#include "opengl.h"
 #include "array.h"
 #include "dialogue.h"
 #include "event.h"
-#include <lua.h>
+#include "land.h"
+#include "log.h"
+#include "nstring.h"
+#include "opengl.h"
 
 
 /**

@@ -12,30 +12,32 @@
  */
 
 
-#include "outfit.h"
+/** @cond */
+#include <math.h>
+#include <stdlib.h>
+#include "SDL_thread.h"
+#include "physfs.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include <math.h>
-#include "nstring.h"
-#include <stdlib.h>
+#include "outfit.h"
 
-#include "nxml.h"
-#include "SDL_thread.h"
-
+#include "array.h"
+#include "conf.h"
+#include "damagetype.h"
 #include "log.h"
+#include "mapData.h"
 #include "ndata.h"
 #include "nfile.h"
-#include "spfx.h"
-#include "array.h"
-#include "ship.h"
-#include "conf.h"
-#include "pilot_heat.h"
 #include "nstring.h"
+#include "nstring.h"
+#include "nxml.h"
 #include "pilot.h"
-#include "damagetype.h"
+#include "pilot_heat.h"
+#include "ship.h"
 #include "slots.h"
-#include "mapData.h"
+#include "spfx.h"
 #include "unistd.h"
 
 
@@ -1038,7 +1040,6 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
  */
 static int outfit_loadPLG( Outfit *temp, char *buf, unsigned int bolt )
 {
-   size_t bufsize;
    char *file;
    int sl;
    CollPoly *polygon;
@@ -1056,7 +1057,7 @@ static int outfit_loadPLG( Outfit *temp, char *buf, unsigned int bolt )
    nsnprintf( file, sl, "%s%s.xml", OUTFIT_POLYGON_PATH, buf );
 
    /* See if the file does exist. */
-   if (!ndata_exists(file)) {
+   if (!PHYSFS_exists(file)) {
       WARN(_("%s xml collision polygon does not exist!\n \
                Please use the script 'polygon_from_sprite.py' \
 that can be found in Naev's artwork repo."), file);
@@ -1065,12 +1066,9 @@ that can be found in Naev's artwork repo."), file);
    }
 
    /* Load the XML. */
-   buf  = ndata_read( file, &bufsize );
-   doc  = xmlParseMemory( buf, bufsize );
-   free(buf);
+   doc  = xml_parsePhysFS( file );
 
    if (doc == NULL) {
-      WARN(_("%s file is invalid xml!"), file);
       free(file);
       return 0;
    }
@@ -1673,14 +1671,14 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          "%s"
          "%s",
          _(outfit_getType(temp)),
-         (temp->u.mod.active) ? _("\n\arActivated Outfit\a0") : "" );
+         (temp->u.mod.active) ? _("\n#rActivated Outfit#0") : "" );
 
 #define DESC_ADD(x, s) \
 if ((x) != 0) \
    do { \
-      i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "\n\a%c", ((x)>0)?'g':'r' ); \
+      i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "\n#%c", ((x)>0)?'g':'r' ); \
       i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, s, x ); \
-      i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "\a0" ); \
+      i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "#0" ); \
    } while(0)
    DESC_ADD( temp->cpu,                _("%+.0f CPU") );
    DESC_ADD( temp->u.mod.thrust,       _("%+.0f Thrust") );
@@ -1762,7 +1760,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          _("%s\n"
-         "\arActivated Outfit\a0\n"
+         "#rActivated Outfit#0\n"
          "%.0f CPU\n"
          "Only one can be equipped\n"
          "%.0f Maximum Effective Mass\n"
@@ -2107,16 +2105,11 @@ static int outfit_parse( Outfit* temp, const char* file )
    char *prop;
    const char *cprop;
    int group, m, l;
-   size_t bufsize;
    ShipStatList *ll;
-   char *buf = ndata_read( file, &bufsize );
 
-   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN(_("%s file is invalid xml!"),file);
-      free(buf);
+   xmlDocPtr doc = xml_parsePhysFS( file );
+   if (doc == NULL)
       return -1;
-   }
 
    parent = doc->xmlChildrenNode; /* first system node */
    if (parent == NULL) {
@@ -2308,7 +2301,6 @@ if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< 
 #undef MELEMENT
 
    xmlFreeDoc(doc);
-   free(buf);
 
    return 0;
 }
@@ -2395,14 +2387,14 @@ int outfit_load (void)
       if (i == start)
          continue;
 
-      WARN( ngettext( "Name collision! %d outfit is named '%s'", "Name collision! %d outfits are named '%s'",
+      WARN( n_( "Name collision! %d outfit is named '%s'", "Name collision! %d outfits are named '%s'",
                       i + 1 - start ),
             i + 1 - start, outfit_names[ start ] );
    }
    free(outfit_names);
 #endif
 
-   DEBUG( ngettext( "Loaded %d Outfit", "Loaded %d Outfits", noutfits ), noutfits );
+   DEBUG( n_( "Loaded %d Outfit", "Loaded %d Outfits", noutfits ), noutfits );
 
    return 0;
 }
@@ -2415,26 +2407,22 @@ int outfit_load (void)
 int outfit_mapParse (void)
 {
    Outfit *o;
-   size_t i, len, bufsize, nfiles;
-   char *buf;
+   size_t i, len;
    xmlNodePtr node, cur;
    xmlDocPtr doc;
    char **map_files;
    char *file, *n;
 
-   map_files = ndata_list( MAP_DATA_PATH, &nfiles );
-   for (i=0; i<nfiles; i++) {
-
+   map_files = PHYSFS_enumerateFiles( MAP_DATA_PATH );
+   for (i=0; map_files[i]!=NULL; i++) {
       len  = strlen(MAP_DATA_PATH)+strlen(map_files[i])+2;
       file = malloc( len );
       nsnprintf( file, len, "%s%s", MAP_DATA_PATH, map_files[i] );
 
-      buf = ndata_read( file, &bufsize );
-      doc = xmlParseMemory( buf, bufsize );
+      doc = xml_parsePhysFS( file );
       if (doc == NULL) {
          WARN(_("%s file is invalid xml!"), file);
          free(file);
-         free(buf);
          continue;
       }
 
@@ -2443,7 +2431,6 @@ int outfit_mapParse (void)
          WARN( _("Malformed '%s' file: does not contain elements"), OUTFIT_DATA_PATH );
          free(file);
          xmlFreeDoc(doc);
-         free(buf);
          continue;
       }
 
@@ -2453,7 +2440,6 @@ int outfit_mapParse (void)
       if (!outfit_isMap(o)) { /* If its not a map, we don't care. */
          free(file);
          xmlFreeDoc(doc);
-         free(buf);
          continue;
       }
 
@@ -2470,13 +2456,10 @@ int outfit_mapParse (void)
       /* Clean up. */
       free(file);
       xmlFreeDoc(doc);
-      free(buf);
    }
 
    /* Clean up. */
-   for (i=0; i<nfiles; i++)
-      free( map_files[i] );
-   free( map_files );
+   PHYSFS_freeList( map_files );
 
    return 0;
 }

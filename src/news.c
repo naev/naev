@@ -9,28 +9,29 @@
  */
 
 
-#include "news.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "naev.h"
+/** @endcond */
+
+#include "news.h"
 
 #include "log.h"
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_misn.h"
-#include "nlua_faction.h"
-#include "nlua_diff.h"
-#include "nlua_var.h"
 #include "ndata.h"
-#include "toolkit.h"
+#include "nlua.h"
+#include "nlua_diff.h"
+#include "nlua_faction.h"
+#include "nlua_misn.h"
+#include "nlua_var.h"
+#include "nluadef.h"
 #include "nstring.h"
 #include "ntime.h"
 #include "nxml.h"
 #include "nxml_lua.h"
 #include "space.h"
+#include "toolkit.h"
 
 
 #define NEWS_MAX_LENGTH       8192
@@ -86,7 +87,7 @@ static void clear_newslines (void);
  *    @param date_to_rm date to remove the article
  * @return pointer to new article
  */
-news_t* new_article(char* title, char* content, char* faction, ntime_t date,
+news_t* new_article(char* title, char* content, const char* faction, ntime_t date,
     ntime_t date_to_rm)
 {
    news_t *article_ptr, *n_article;
@@ -257,7 +258,7 @@ news_t* news_get(int id)
  *    @param faction the faction of wanted news
  * @return 0 on success
  */
-int *generate_news( char* faction )
+int *generate_news( const char* faction )
 {
    news_t *temp, *article_ptr;
    int p;
@@ -289,14 +290,14 @@ int *generate_news( char* faction )
             article_time = ntime_pretty(article_ptr->date, 1);
             p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
-               "%s: %s\a0\n\n"
+               "%s: %s#0\n\n"
                , article_ptr->title, article_time, article_ptr->desc );
             free( article_time );
          }
          else {
             p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
-               "%s\a0\n\n"
+               "%s#0\n\n"
                , article_ptr->title, article_ptr->desc );
          }
       }

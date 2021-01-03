@@ -9,20 +9,22 @@
  */
 
 
-#include "damagetype.h"
-#include "naev.h"
-
+/** @cond */
 #include <inttypes.h>
-
 #include "SDL.h"
 
-#include "log.h"
+#include "naev.h"
+/** @endcond */
+
+#include "damagetype.h"
+
 #include "array.h"
-#include "pilot.h"
-#include "pause.h"
-#include "rng.h"
+#include "log.h"
 #include "ndata.h"
 #include "nxml.h"
+#include "pause.h"
+#include "pilot.h"
+#include "rng.h"
 #include "shipstats.h"
 
 
@@ -176,24 +178,13 @@ char* dtype_damageTypeToStr( int type )
  */
 int dtype_load (void)
 {
-   size_t bufsize;
-   char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
 
    /* Load and read the data. */
-   buf = ndata_read( DTYPE_DATA_PATH, &bufsize );
-   if (buf == NULL) {
-      WARN(_("Unable to read data from '%s'"), DTYPE_DATA_PATH);
+   doc = xml_parsePhysFS( DTYPE_DATA_PATH );
+   if (doc == NULL)
       return -1;
-   }
-
-   /* Load the document. */
-   doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN(_("Unable to parse document '%s'"), DTYPE_DATA_PATH);
-      return -1;
-   }
 
    /* Check to see if document exists. */
    node = doc->xmlChildrenNode;
@@ -227,7 +218,6 @@ int dtype_load (void)
 
    /* Clean up. */
    xmlFreeDoc(doc);
-   free(buf);
 
    return 0;
 }

@@ -8,7 +8,10 @@
 #  define COMMODITY_H
 
 
+/** @cond */
 #include <stdint.h>
+/** @endcond */
+
 #include "opengl.h"
 
 

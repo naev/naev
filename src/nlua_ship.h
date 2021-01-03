@@ -7,10 +7,8 @@
 #  define NLUA_SHIP_H
 
 
-#include <lua.h>
-
-#include "ship.h"
 #include "nlua.h"
+#include "ship.h"
 
 
 #define SHIP_METATABLE   "ship" /**< Ship metatable identifier. */

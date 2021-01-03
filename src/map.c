@@ -3,34 +3,35 @@
  */
 
 
-#include "map.h"
+/** @cond */
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <float.h>
+#include "map.h"
 
-#include "log.h"
-#include "toolkit.h"
-#include "space.h"
-#include "opengl.h"
-#include "mission.h"
-#include "colour.h"
-#include "player.h"
-#include "faction.h"
-#include "dialogue.h"
-#include "gui.h"
-#include "map_find.h"
 #include "array.h"
+#include "colour.h"
+#include "dialogue.h"
+#include "faction.h"
+#include "gui.h"
+#include "log.h"
 #include "mapData.h"
-#include "nstring.h"
-#include "nmath.h"
-#include "nmath.h"
-#include "nxml.h"
-#include "ndata.h"
+#include "map_find.h"
 #include "map_system.h"
+#include "mission.h"
+#include "ndata.h"
+#include "nmath.h"
+#include "nstring.h"
+#include "nxml.h"
+#include "opengl.h"
+#include "player.h"
+#include "space.h"
+#include "toolkit.h"
 #include "utf8.h"
 
 #define BUTTON_WIDTH    100 /**< Map button width. */
@@ -569,10 +570,10 @@ static void map_update( unsigned int wid )
       sym = planet_getSymbol(sys->planets[i]);
 
       if (!hasPlanets)
-         p += nsnprintf( &buf[p], PATH_MAX-p, "\a%c%s%s\an",
+         p += nsnprintf( &buf[p], PATH_MAX-p, "#%c%s%s#n",
                t, sym, _(sys->planets[i]->name) );
       else
-         p += nsnprintf( &buf[p], PATH_MAX-p, ",\n\a%c%s%s\an",
+         p += nsnprintf( &buf[p], PATH_MAX-p, ",\n#%c%s%s#n",
                t, sym, _(sys->planets[i]->name) );
       hasPlanets = 1;
       if (p > PATH_MAX)
@@ -1216,7 +1217,7 @@ void map_renderNames( double bx, double by, double x, double y,
          /* Display. */
          n = sqrt(sys->jumps[j].hide);
          if (n == 0.)
-            nsnprintf( buf, sizeof(buf), "\agH: %.2f", n );
+            nsnprintf( buf, sizeof(buf), "#gH: %.2f", n );
          else
             nsnprintf( buf, sizeof(buf), "H: %.2f", n );
          gl_printRaw( &gl_smallFont, tx, ty, &cGrey70, -1, buf );
@@ -1555,7 +1556,7 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
          break;
       }
       /* Use map grey instead of default neutral colour */
-      l += nsnprintf( &buf[ l ], sizeof( buf ) - l, "%s\a0%s: \a%c%.0f", ( l == 0 ) ? "" : "\n",
+      l += nsnprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n",
                       omniscient ? faction_name( sys->presence[ i ].faction )
                                  : faction_shortname( sys->presence[ i ].faction ),
                       faction_getColourChar( sys->presence[ i ].faction ), sys->presence[ i ].value );
@@ -1563,7 +1564,7 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
          break;
    }
    if ( unknownPresence != 0 && l <= sizeof( buf ) )
-      l += nsnprintf( &buf[ l ], sizeof( buf ) - l, "%s\a0%s: \a%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
+      l += nsnprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
                       unknownPresence );
 
    if ( hasPresence == 0 )
@@ -2517,22 +2518,13 @@ int map_center( const char *sys )
  */
 int map_load (void)
 {
-   size_t bufsize;
-   char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
 
    /* Load the file. */
-   buf = ndata_read( MAP_DECORATOR_DATA_PATH, &bufsize);
-   if (buf == NULL)
+   doc = xml_parsePhysFS( MAP_DECORATOR_DATA_PATH );
+   if (doc == NULL)
       return -1;
-
-   /* Handle the XML. */
-   doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN(_("'%s' is not valid XML."), MAP_DECORATOR_DATA_PATH);
-      return -1;
-   }
 
    node = doc->xmlChildrenNode; /* map node */
    if (strcmp((char*)node->name,"map")) {
@@ -2563,9 +2555,8 @@ int map_load (void)
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
-   free(buf);
 
-   DEBUG( ngettext( "Loaded %d map decorator.", "Loaded %d map decorators.", decorator_nstack ), decorator_nstack );
+   DEBUG( n_( "Loaded %d map decorator", "Loaded %d map decorators", decorator_nstack ), decorator_nstack );
 
    return 0;
 }

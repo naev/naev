@@ -9,26 +9,28 @@
  */
 
 
-#include "land_shipyard.h"
+/** @cond */
+#include <assert.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <assert.h>
+#include "land_shipyard.h"
 
-#include "nstring.h"
-#include "log.h"
-#include "player.h"
-#include "space.h"
-#include "toolkit.h"
-#include "tk/toolkit_priv.h"
 #include "dialogue.h"
-#include "map_find.h"
 #include "hook.h"
 #include "land_takeoff.h"
+#include "log.h"
+#include "map_find.h"
 #include "ndata.h"
+#include "nstring.h"
+#include "player.h"
+#include "space.h"
+#include "tk/toolkit_priv.h"
+#include "toolkit.h"
 
 
 /*
@@ -45,7 +47,7 @@ static void shipyard_buy( unsigned int wid, char* str );
 static void shipyard_trade( unsigned int wid, char* str );
 static void shipyard_rmouse( unsigned int wid, char* widget_name );
 static void shipyard_renderSlots( double bx, double by, double bw, double bh, void *data );
-static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str, ShipOutfitSlot *s, int n );
+static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s, int n );
 static void shipyard_find( unsigned int wid, char* str );
 
 
@@ -116,28 +118,28 @@ void shipyard_open( unsigned int wid )
          &gl_smallFont, NULL, NULL );
 
    /* text */
-   buf = _("\anModel:\n\a0"
-         "\anClass:\n\a0"
-         "\anFabricator:\n\a0"
-         "\anCrew:\n\a0"
+   buf = _("#nModel:\n#0"
+         "#nClass:\n#0"
+         "#nFabricator:\n#0"
+         "#nCrew:\n#0"
          "\n"
-         "\anCPU:\n\a0"
-         "\anMass:\n\a0"
-         "\anThrust:\n\a0"
-         "\anSpeed:\n\a0"
-         "\anTurn:\n\a0"
-         "\anTime Dilation:\n\a0"
+         "#nCPU:\n#0"
+         "#nMass:\n#0"
+         "#nThrust:\n#0"
+         "#nSpeed:\n#0"
+         "#nTurn:\n#0"
+         "#nTime Constant:\n#0"
          "\n"
-         "\anAbsorption:\n\a0"
-         "\anShield:\n\a0"
-         "\anArmour:\n\a0"
-         "\anEnergy:\n\a0"
-         "\anCargo Space:\n\a0"
-         "\anFuel:\n\a0"
-         "\anFuel Use:\n\a0"
-         "\anPrice:\n\a0"
-         "\anMoney:\n\a0"
-         "\anLicense:\n\a0");
+         "#nAbsorption:\n#0"
+         "#nShield:\n#0"
+         "#nArmour:\n#0"
+         "#nEnergy:\n#0"
+         "#nCargo Space:\n#0"
+         "#nFuel:\n#0"
+         "#nFuel Use:\n#0"
+         "#nPrice:\n#0"
+         "#nMoney:\n#0"
+         "#nLicense:\n#0");
    th = gl_printHeightRaw( &gl_smallFont, 106, buf );
    y  = -35;
    window_addText( wid, 20+iw+20, y,
@@ -194,7 +196,7 @@ void shipyard_update( unsigned int wid, char* str )
    (void)str;
    int i;
    Ship* ship;
-   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
+   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN], buf_license[PATH_MAX];
 
    i = toolkit_getImageArrayPos( wid, "iarShipyard" );
 
@@ -245,6 +247,14 @@ void shipyard_update( unsigned int wid, char* str )
    price2str( buf2, ship_buyPrice(ship), player.p->credits, 2 );
    credits2str( buf3, player.p->credits, 2 );
 
+   if (ship->license == NULL)
+      strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
+   else if (player_hasLicense( ship->license ))
+      strncpy( buf_license, _(ship->license), sizeof(buf_license)-1 );
+   else
+      nsnprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
+   buf_license[ sizeof(buf_license)-1 ] = '\0';
+
    nsnprintf( buf, PATH_MAX,
          _("%s\n"
          "%s\n"
@@ -289,7 +299,7 @@ void shipyard_update( unsigned int wid, char* str )
          ship->fuel_consumption,
          buf2,
          buf3,
-         (ship->license != NULL) ? _(ship->license) : _("None") );
+         buf_license );
    window_modifyText( wid,  "txtDDesc", buf );
 
    if (!shipyard_canBuy( ship->name, land_planet ))
@@ -443,7 +453,7 @@ int can_swap( const char *shipname )
 
    if (pilot_cargoUsed(player.p) > ship->cap_cargo) { /* Current ship has too much cargo. */
       diff = pilot_cargoUsed(player.p) - ship->cap_cargo;
-      land_errDialogueBuild( ngettext(
+      land_errDialogueBuild( n_(
                "You have %g tonne more cargo than the new ship can hold.",
                "You have %g tonnes more cargo than the new ship can hold.",
                diff ),
@@ -596,7 +606,7 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
 /**
  * @brief Renders a row of ship slots.
  */
-static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str, ShipOutfitSlot *s, int n )
+static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s, int n )
 {
    (void) bw;
    int i;

@@ -8,34 +8,38 @@
  * @brief Handles creating and setting up basic Lua environments.
  */
 
-#include "nlua.h"
+/** @cond */
+#include "physfs.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include "nluadef.h"
-#include "lutf8lib.h"
+#include "nlua.h"
+
 #include "log.h"
+#include "lutf8lib.h"
 #include "ndata.h"
 #include "nfile.h"
-#include "nlua_rnd.h"
-#include "nlua_faction.h"
-#include "nlua_var.h"
-#include "nlua_naev.h"
-#include "nlua_planet.h"
-#include "nlua_system.h"
-#include "nlua_jump.h"
-#include "nlua_time.h"
-#include "nlua_news.h"
-#include "nlua_player.h"
-#include "nlua_pilot.h"
-#include "nlua_vec2.h"
+#include "nlua_cli.h"
+#include "nlua_commodity.h"
 #include "nlua_data.h"
 #include "nlua_diff.h"
-#include "nlua_outfit.h"
-#include "nlua_commodity.h"
-#include "nlua_shiplog.h"
-#include "nlua_cli.h"
+#include "nlua_faction.h"
 #include "nlua_file.h"
+#include "nlua_jump.h"
+#include "nlua_naev.h"
+#include "nlua_news.h"
+#include "nlua_outfit.h"
+#include "nlua_pilot.h"
+#include "nlua_planet.h"
+#include "nlua_player.h"
+#include "nlua_rnd.h"
+#include "nlua_shiplog.h"
+#include "nlua_system.h"
+#include "nlua_time.h"
+#include "nlua_var.h"
+#include "nlua_vec2.h"
+#include "nluadef.h"
 #include "nstring.h"
 
 
@@ -93,7 +97,7 @@ static int nlua_ngettext( lua_State *L )
    stra = luaL_checkstring(L, 1);
    strb = luaL_checkstring(L, 2);
    n    = luaL_checkinteger(L,3);
-   lua_pushstring(L, ngettext( stra, strb, n ) );
+   lua_pushstring(L, n_( stra, strb, n ) );
    return 1;
 }
 
@@ -180,7 +184,6 @@ int nlua_dofileenv(nlua_env env, const char *filename) {
  */
 nlua_env nlua_newEnv(int rw) {
    char packagepath[STRMAX];
-   const char *ndata;
    nlua_env ref;
    lua_newtable(naevL);
    lua_pushvalue(naevL, -1);
@@ -201,9 +204,8 @@ nlua_env nlua_newEnv(int rw) {
     * "package.path" to look in the data.
     * "package.cpath" unset */
    lua_getglobal(naevL, "package");
-   ndata = ndata_getPath();
    nsnprintf( packagepath, sizeof(packagepath),
-         "%s/?.lua;%s/"LUA_INCLUDE_PATH"?.lua", ndata, ndata );
+         "?.lua;"LUA_INCLUDE_PATH"?.lua" );
    lua_pushstring(naevL, packagepath);
    lua_setfield(naevL, -2, "path");
    lua_pushstring(naevL, "");
@@ -362,6 +364,7 @@ static int nlua_loadBasic( lua_State* L )
    /* Gettext functionality. */
    lua_register(L, "_", nlua_gettext);
    lua_register(L, "N_", nlua_gettext_noop);
+   lua_register(L, "n_", nlua_ngettext);
    luaL_register(L, "gettext", gettext_methods);
 
    return 0;
@@ -463,8 +466,8 @@ static int nlua_require( lua_State* L )
             path_filename[i] = '/';
 
       /* Try to load the file. */
-      if (nfile_fileExists( path_filename )) {
-         buf = _nfile_readFile( &bufsize, path_filename );
+      if (PHYSFS_exists( path_filename )) {
+         buf = ndata_read( path_filename, &bufsize );
          if (buf != NULL)
             break;
       }

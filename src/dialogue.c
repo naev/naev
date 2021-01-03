@@ -21,21 +21,23 @@
  */
 
 
-#include "dialogue.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <stdarg.h>
 #include <stdlib.h>
 
-#include "log.h"
-#include "toolkit.h"
-#include "pause.h"
-#include "opengl.h"
+#include "naev.h"
+/** @endcond */
+
+#include "dialogue.h"
+
 #include "input.h"
+#include "log.h"
 #include "menu.h"
-#include "nstring.h"
 #include "ndata.h"
+#include "nstring.h"
+#include "opengl.h"
+#include "pause.h"
+#include "toolkit.h"
 
 
 static int dialogue_open; /**< Number of dialogues open. */
@@ -516,7 +518,7 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
          ((int)strlen(input) < min))) { /* must be longer than min */
 
       if (input) {
-         dialogue_alert( ngettext(
+         dialogue_alert( n_(
                   "Input must be at least %d character long!",
                   "Input must be at least %d characters long!", min),
                min );

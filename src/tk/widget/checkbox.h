@@ -22,7 +22,7 @@ typedef struct WidgetCheckboxData_ {
 void window_addCheckbox( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
-      char* name, char* display, /* label name, display name */
+      char* name, const char* display, /* label name, display name */
       void (*call) (unsigned int,char*), /* toggle function */
       int default_state ); /* default state. */
 

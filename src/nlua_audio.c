@@ -8,17 +8,19 @@
  * @brief Bindings for Special effects functionality from Lua.
  */
 
-#include "nlua_audio.h"
 
-#include "naev.h"
-
-#include "nstring.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
-#include "sound.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_audio.h"
+
 #include "nlua_vec2.h"
+#include "nluadef.h"
+#include "nstring.h"
+#include "sound.h"
 
 
 /* Camera methods. */

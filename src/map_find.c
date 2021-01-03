@@ -3,20 +3,22 @@
  */
 
 
-#include "map_find.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <assert.h>
 
-#include "log.h"
-#include "toolkit.h"
-#include "map.h"
+#include "naev.h"
+/** @endcond */
+
+#include "map_find.h"
+
 #include "dialogue.h"
-#include "player.h"
-#include "tech.h"
-#include "space.h"
+#include "log.h"
+#include "map.h"
 #include "nstring.h"
+#include "player.h"
+#include "space.h"
+#include "tech.h"
+#include "toolkit.h"
 
 
 #define BUTTON_WIDTH    120 /**< Map button width. */
@@ -424,7 +426,7 @@ static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys
    }
    else
       nsnprintf( route_info, sizeof(route_info),
-            ngettext( "%d jump, %.0fk distance", "%d jumps, %.0fk distance", found[n].jumps ),
+            n_( "%d jump, %.0fk distance", "%d jumps, %.0fk distance", found[n].jumps ),
             found[n].jumps, found[n].distance/1000. );
 
    /* Set fancy name. */
@@ -433,7 +435,7 @@ static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys
             _("%s (%s)"), _(sys->name), route_info );
    else
       nsnprintf( found[n].display, sizeof(found[n].display),
-            _("\a%c%s (%s, %s)"), map_getPlanetColourChar(pnt),
+            _("#%c%s (%s, %s)"), map_getPlanetColourChar(pnt),
             _(pnt->name), _(sys->name), route_info );
 }
 
@@ -669,15 +671,15 @@ static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int
          280, 160, 0, "txtDescShort", &gl_smallFont, NULL, NULL );
    window_addText( wid, iw+20, -60-128-10,
          90, 160, 0, "txtSDesc", &gl_smallFont, NULL,
-         _("\anOwned:\a0\n"
+         _("#nOwned:#0\n"
          "\n"
-         "\anSlot:\a0\n"
-         "\anSize:\a0\n"
-         "\anMass:\a0\n"
+         "#nSlot:#0\n"
+         "#nSize:#0\n"
+         "#nMass:#0\n"
          "\n"
-         "\anPrice:\a0\n"
-         "\anMoney:\a0\n"
-         "\anLicense:\a0\n") );
+         "#nPrice:#0\n"
+         "#nMoney:#0\n"
+         "#nLicense:#0\n") );
    window_addText( wid, iw+20, -60-128-10,
          w - (20 + iw + 20 + 90), 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
    window_addText( wid, iw+20, -60-128-10-160,
@@ -975,8 +977,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
 static void map_findSearch( unsigned int wid, char* str )
 {
    int ret;
-   char *name;
-   char *searchname;
+   const char *name, *searchname;
 
    /* Get the name. */
    name = window_getInput( wid, "inpSearch" );

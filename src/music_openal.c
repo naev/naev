@@ -2,21 +2,22 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/** @cond */
+#include <math.h>
+#include <vorbis/vorbisfile.h>
+#include "SDL.h"
+#include "SDL_rwops.h"
+#include "SDL_thread.h"
+
+#include "naev.h"
+/** @endcond */
+
 #include "music_openal.h"
 
-#include <math.h>
-
-#include "SDL.h"
-#include "SDL_thread.h"
-#include "SDL_rwops.h"
-
-#include <vorbis/vorbisfile.h>
-
+#include "conf.h"
+#include "log.h"
 #include "music.h"
 #include "sound_openal.h"
-#include "naev.h"
-#include "log.h"
-#include "conf.h"
 
 
 /**

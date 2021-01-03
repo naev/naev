@@ -10,21 +10,21 @@
 
 /* TODO: better rendering with static VBO and smooth corners */
 
-#include "toolkit.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <stdarg.h>
 
-#include "tk/toolkit_priv.h"
+#include "naev.h"
+/** @endcond */
 
-#include "log.h"
-#include "pause.h"
-#include "opengl.h"
-#include "input.h"
-#include "nstd.h"
-#include "dialogue.h"
+#include "toolkit.h"
+
 #include "conf.h"
+#include "dialogue.h"
+#include "input.h"
+#include "log.h"
+#include "opengl.h"
+#include "pause.h"
+#include "tk/toolkit_priv.h"
 
 
 #define INPUT_DELAY      conf.repeat_delay /**< Delay before starting to repeat. */
@@ -51,9 +51,6 @@ static int window_dead = 0; /**< There are dead windows lying around. */
  */
 static SDL_Keycode input_key             = 0; /**< Current pressed key. */
 static SDL_Keymod input_mod             = 0; /**< Current pressed modifier. */
-static unsigned int input_keyTime   = 0; /**< Tick pressed. */
-static int input_keyCounter         = 0; /**< Number of repetitions. */
-static char input_text              = 0; /**< Current character. */
 
 
 /*
@@ -936,6 +933,17 @@ void widget_cleanup( Widget *widget )
 
 
 /**
+ * @brief Closes all open toolkit windows.
+ */
+void toolkit_closeAll( void )
+{
+   Window *w;
+   for (w = windows; w != NULL; w = w->next)
+      window_destroy( w->id );
+}
+
+
+/**
  * @brief Helper function to automatically close the window calling it.
  *
  *    @param wid Window to close.
@@ -1123,9 +1131,9 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
    GLshort tri[5][4];
    glColour colours[10];
 
-   x -= b - thick;
+   x -= (b - thick);
    w += 2 * (b - thick);
-   y -= b - thick;
+   y -= (b - thick);
    h += 2 * (b - thick);
    lc = lc ? lc : c;
 
@@ -1856,9 +1864,6 @@ static void toolkit_regKey( SDL_Keycode key )
    /* Don't reset values on repeat keydowns. */
    else if (input_key != key) {
       input_key         = key;
-      input_keyTime     = SDL_GetTicks();
-      input_keyCounter  = 0;
-      input_text        = nstd_checkascii(key) ? key : 0;
    }
 }
 
@@ -1887,9 +1892,6 @@ static void toolkit_unregKey( SDL_Keycode key )
 void toolkit_clearKey (void)
 {
    input_key         = 0;
-   input_keyTime     = 0;
-   input_keyCounter  = 0;
-   input_text        = 0;
 }
 /**
  * @brief Handles keyboard events.
@@ -2338,7 +2340,8 @@ static Widget* toolkit_getFocus( Window *wdw )
  * @brief Sets the focused widget in a window.
  *
  *    @param wid ID of the window to get widget from.
- *    @param wgtname Name of the widget to set focus to.
+ *    @param wgtname Name of the widget to set focus to,
+ *                   or NULL to clear the focus.
  */
 void window_setFocus( const unsigned int wid, const char* wgtname )
 {
@@ -2350,12 +2353,13 @@ void window_setFocus( const unsigned int wid, const char* wgtname )
    if (wdw == NULL)
       return;
 
+   toolkit_focusClear( wdw );
+
    /* Get widget. */
-   wgt = window_getwgt(wid,wgtname);
+   wgt = wgtname==NULL ? NULL : window_getwgt( wid, wgtname );
    if (wgt == NULL)
       return;
 
-   toolkit_focusClear( wdw );
    toolkit_focusWidget( wdw, wgt );
 }
 
@@ -2364,7 +2368,7 @@ void window_setFocus( const unsigned int wid, const char* wgtname )
  * @brief Gets the focused widget in a window.
  *
  *    @param wid ID of the window to get widget from.
- *    @return The focused widget's name.
+ *    @return The focused widget's name (strdup()ed string or NULL).
  */
 char* window_getFocus( const unsigned int wid )
 {
@@ -2379,7 +2383,7 @@ char* window_getFocus( const unsigned int wid )
    /* Find focused widget. */
    for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
       if (wgt->id == wdw->focus)
-         return wgt->name;
+         return strdup( wgt->name );
 
    return NULL;
 }

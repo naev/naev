@@ -290,6 +290,7 @@ dat/scripts/enum.lua
 dat/scripts/fleet_form.lua
 dat/scripts/fleethelper.lua
 dat/scripts/formation.lua
+dat/scripts/imageproc.lua
 dat/scripts/jumpdist.lua
 dat/scripts/love.lua
 dat/scripts/love/audio.lua
@@ -323,6 +324,9 @@ dat/scripts/prng.lua
 dat/scripts/proximity.lua
 dat/scripts/selectiveclear.lua
 dat/scripts/swapship.lua
+dat/scripts/vn.lua
+dat/scripts/vn/conf.lua
+dat/scripts/vn/main.lua
 dat/snd/music.lua
 src/ai.c
 src/ai.h
@@ -375,8 +379,12 @@ src/dev_uniedit.c
 src/dev_uniedit.h
 src/dialogue.c
 src/dialogue.h
+src/distance_field.c
+src/distance_field.h
 src/economy.c
 src/economy.h
+src/edtaa3func.c
+src/edtaa3func.h
 src/env.c
 src/env.h
 src/equipment.c
@@ -393,6 +401,7 @@ src/fleet.c
 src/fleet.h
 src/font.c
 src/font.h
+src/gettext.c
 src/gettext.h
 src/glad.c
 src/glad.h
@@ -425,6 +434,8 @@ src/load.c
 src/load.h
 src/log.c
 src/log.h
+src/lutf8lib.c
+src/lutf8lib.h
 src/map.c
 src/map.h
 src/mapData.h
@@ -440,6 +451,8 @@ src/menu.c
 src/menu.h
 src/mission.c
 src/mission.h
+src/msgcat.c
+src/msgcat.h
 src/music.c
 src/music.h
 src/music_openal.c
@@ -507,6 +520,8 @@ src/nlua_player.c
 src/nlua_player.h
 src/nlua_rnd.c
 src/nlua_rnd.h
+src/nlua_shader.c
+src/nlua_shader.h
 src/nlua_ship.c
 src/nlua_ship.h
 src/nlua_shiplog.c
@@ -519,6 +534,8 @@ src/nlua_time.c
 src/nlua_time.h
 src/nlua_tk.c
 src/nlua_tk.h
+src/nlua_transform.c
+src/nlua_transform.h
 src/nlua_var.c
 src/nlua_var.h
 src/nlua_vec2.c
@@ -532,7 +549,6 @@ src/npc.c
 src/npc.h
 src/npng.c
 src/npng.h
-src/nstd.h
 src/nstring.c
 src/nstring.h
 src/ntime.c
@@ -561,6 +577,8 @@ src/pause.c
 src/pause.h
 src/perlin.c
 src/perlin.h
+src/physfsrwops.c
+src/physfsrwops.h
 src/physics.c
 src/physics.h
 src/pilot.c
@@ -640,6 +658,7 @@ src/tk/widget/text.c
 src/tk/widget/text.h
 src/toolkit.c
 src/toolkit.h
+src/unidata.h
 src/unidiff.c
 src/unidiff.h
 src/utf8.c
@@ -1082,6 +1101,7 @@ dat/assets/isador.xml
 dat/assets/jaan.xml
 dat/assets/jackson_ii.xml
 dat/assets/jackson_v.xml
+dat/assets/jacqueline.xml
 dat/assets/jade_court.xml
 dat/assets/jade_i.xml
 dat/assets/jade_ii.xml
@@ -1092,7 +1112,6 @@ dat/assets/jankelo.xml
 dat/assets/janko.xml
 dat/assets/janus_farming_station.xml
 dat/assets/janus_station.xml
-dat/assets/jaqeline.xml
 dat/assets/jasmine.xml
 dat/assets/jaxheen.xml
 dat/assets/jemard.xml

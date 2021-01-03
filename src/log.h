@@ -9,20 +9,14 @@
 #  define LOG_H
 
 
-#include <stdio.h>
+/** @cond */
 #include <signal.h>
+#include <stdio.h>
 
 #include "gettext.h"
-#include "nstring.h"
+/** @endcond */
 
-#if defined ENABLE_NLS && ENABLE_NLS
-#define _(String) gettext(String)
-#define gettext_noop(String) String
-#else /* defined ENABLE_NLS && ENABLE_NLS */
-#define _(String) String
-#define gettext_noop(String) String
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
-#define N_(String) String
+#include "nstring.h"
 
 #define LOG(str, args...)  (logprintf(stdout, 1, str, ## args))
 #ifdef DEBUG_PARANOID /* Will cause WARNs to blow up */

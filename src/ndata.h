@@ -7,11 +7,6 @@
 #  define NDATA_H
 
 
-#include <stdint.h>
-
-#include "SDL.h"
-
-
 /*
  * Define various paths
  */
@@ -38,12 +33,12 @@
 #define EVENT_DATA_PATH          "events/" /**< Path to events XML. */
 #define UNIDIFF_DATA_PATH        "unidiff/" /**< Path to unidiff XML. */
 #define SPFX_DATA_PATH           "spfx.xml" /**< Location of the spfx datafile. */
-#define DTYPE_DATA_PATH          "damagetype.xml" /**< Location of the spfx datafile. */
+#define DTYPE_DATA_PATH          "damagetype.xml" /**< Damage-type definitions. */
 #define COMMODITY_DATA_PATH      "commodity.xml" /**< Commodity XML file. */
 #define FLEET_DATA_PATH          "fleet.xml" /**< Where to find fleet data. */
 #define TECH_DATA_PATH           "tech.xml"   /**< XML file containing techs. */
 #define ASTERO_DATA_PATH         "asteroids.xml" /**< Asteroid types XML file. */
-#define MAP_DECORATOR_DATA_PATH  "map.xml" /**< Commodity XML file. */
+#define MAP_DECORATOR_DATA_PATH  "map.xml" /**< Where the map has background images. */
 
 #define MISSION_LUA_PATH         "missions/" /**< Path to Lua files. */
 #define EVENT_LUA_PATH           "events/" /**< Path to Lua files. */
@@ -66,7 +61,7 @@
 /* Currently our fonts/Cabin-SemiBold.otf lacks many fairly standard glyphs, so we are falling back to
  * the monospace font which has better coverage.
  * TODO solve this issue in a sane way. */
-#define FONT_PATH_PREFIX         "dat/fonts/"
+#define FONT_PATH_PREFIX         "fonts/"
 #define FONT_DEFAULT_PATH        N_("Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf") /**< Default font path. */
 #define FONT_MONOSPACE_PATH      N_("SourceCodePro-Semibold.ttf,D2CodingBold.ttf") /**< Default monospace font path. */
 
@@ -80,7 +75,6 @@
 #define FACTIONS_PATH            "factions/"
 #define GETTEXT_PATH             "gettext/" /* Doesn't use ndata functions. */
 #define BACKGROUND_PATH          "bkg/"
-#define LANGUAGES_PATH           "LANGUAGES"
 #define INTRO_PATH               "intro"
 #define RESCUE_PATH              "rescue.lua"
 
@@ -93,25 +87,13 @@ void ndata_close (void);
 /*
  * General.
  */
-int ndata_check( const char* path );
 int ndata_setPath( const char* path );
-const char* ndata_getPath (void);
-const char* ndata_name (void);
 
 /*
  * Individual file functions.
  */
-int ndata_exists( const char* filename );
 void* ndata_read( const char* filename, size_t *filesize );
-char** ndata_list( const char *path, size_t* nfiles );
 char** ndata_listRecursive( const char *path );
-void ndata_sortName( char **files, size_t nfiles );
-
-
-/*
- * RWops.
- */
-SDL_RWops *ndata_rwops( const char* filename );
 
 
 #endif /* NDATA_H */

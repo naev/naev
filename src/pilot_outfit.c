@@ -10,20 +10,21 @@
  */
 
 
-#include "pilot.h"
 
+/** @cond */
 #include "naev.h"
-
-#include "nxml.h"
+/** @endcond */
 
 #include "escort.h"
-#include "log.h"
-#include "player.h"
-#include "space.h"
 #include "gui.h"
-#include "slots.h"
+#include "log.h"
 #include "nstring.h"
+#include "nxml.h"
 #include "outfit.h"
+#include "pilot.h"
+#include "player.h"
+#include "slots.h"
+#include "space.h"
 
 
 /*

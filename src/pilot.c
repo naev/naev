@@ -10,42 +10,44 @@
  */
 
 
-#include "pilot.h"
-
-#include "naev.h"
-
+/** @cond */
+#include <limits.h>
 #include <math.h>
 #include <stdlib.h>
-#include <limits.h>
 
-#include "array.h"
-#include "nxml.h"
-#include "nstring.h"
-#include "log.h"
-#include "weapon.h"
-#include "ndata.h"
-#include "spfx.h"
-#include "rng.h"
-#include "hook.h"
-#include "map.h"
-#include "explosion.h"
-#include "escort.h"
-#include "music.h"
-#include "player.h"
-#include "player_autonav.h"
-#include "gui.h"
-#include "board.h"
-#include "debris.h"
-#include "ntime.h"
+#include "naev.h"
+/** @endcond */
+
+#include "pilot.h"
+
 #include "ai.h"
+#include "array.h"
+#include "board.h"
+#include "camera.h"
+#include "damagetype.h"
+#include "debris.h"
+#include "escort.h"
+#include "explosion.h"
 #include "faction.h"
 #include "font.h"
+#include "gui.h"
+#include "hook.h"
 #include "land.h"
 #include "land_outfits.h"
 #include "land_shipyard.h"
-#include "camera.h"
-#include "damagetype.h"
+#include "log.h"
+#include "map.h"
+#include "music.h"
+#include "ndata.h"
+#include "nstring.h"
+#include "ntime.h"
+#include "nxml.h"
 #include "pause.h"
+#include "player.h"
+#include "player_autonav.h"
+#include "rng.h"
+#include "spfx.h"
+#include "weapon.h"
 
 
 #define PILOT_CHUNK_MIN 128 /**< Minimum chunks to increment pilot_stack by */
@@ -888,7 +890,7 @@ void pilot_cooldown( Pilot *p )
    }
 
    if (p->id == PLAYER_ID)
-      player_message(_("\aoActive cooldown engaged."));
+      player_message(_("#oActive cooldown engaged."));
 
    /* Disable active outfits. */
    if (pilot_outfitOffAll( p ) > 0)
@@ -943,12 +945,12 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
    /* Send message to player. */
    if (p->id == PLAYER_ID) {
       if (p->ctimer < 0.)
-         player_message(_("\aoActive cooldown completed."));
+         player_message(_("#oActive cooldown completed."));
       else {
          if (reason != NULL)
-            player_message(_("\arActive cooldown aborted: %s!"), reason);
+            player_message(_("#rActive cooldown aborted: %s!"), reason);
          else
-            player_message(_("\arActive cooldown aborted!"));
+            player_message(_("#rActive cooldown aborted!"));
       }
    }
 
@@ -1111,7 +1113,7 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_i
    /* Only really affects player.p atm. */
    if (target == PLAYER_ID) {
       c = pilot_getFactionColourChar( p );
-      player_message( _("\a%cComm %s>\a0 \"%s\""), c, p->name, msg );
+      player_message( _("#%cComm %s>#0 \"%s\""), c, p->name, msg );
 
       /* Set comm message. */
       pilot_setCommMsg( p, msg );
@@ -1139,7 +1141,7 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
       return;
 
    c = pilot_getFactionColourChar( p );
-   player_message( _("\a%cBroadcast %s>\a0 \"%s\""), c, p->name, msg );
+   player_message( _("#%cBroadcast %s>#0 \"%s\""), c, p->name, msg );
 
    /* Set comm message. */
    pilot_setCommMsg( p, msg );
@@ -2285,14 +2287,14 @@ static void pilot_hyperspace( Pilot* p, double dt )
 
          if (pilot_isPlayer(p))
             if (!player_isFlag(PLAYER_AUTONAV))
-               player_message( _("\arStrayed too far from jump point: jump aborted.") );
+               player_message( _("#rStrayed too far from jump point: jump aborted.") );
       }
       else if (pilot_isFlag(p,PILOT_AFTERBURNER)) {
          pilot_hyperspaceAbort( p );
 
          if (pilot_isPlayer(p))
             if (!player_isFlag(PLAYER_AUTONAV))
-               player_message( _("\arAfterburner active: jump aborted.") );
+               player_message( _("#rAfterburner active: jump aborted.") );
       }
       else {
          if (p->ptimer < 0.) { /* engines ready */
@@ -2312,7 +2314,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
 
          if (pilot_isPlayer(p))
             if (!player_isFlag(PLAYER_AUTONAV))
-               player_message( _("\arStrayed too far from jump point: jump aborted.") );
+               player_message( _("#rStrayed too far from jump point: jump aborted.") );
       }
       else {
          /* If the ship needs to charge up its hyperdrive, brake. */

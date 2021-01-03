@@ -10,19 +10,21 @@
  */
 
 
-#include "pilot_hook.h"
-
-#include "naev.h"
-
+/** @cond */
+#include <limits.h>
 #include <math.h>
 #include <stdlib.h>
-#include <limits.h>
 
-#include "nxml.h"
-#include "nstring.h"
-#include "log.h"
-#include "hook.h"
+#include "naev.h"
+/** @endcond */
+
+#include "pilot_hook.h"
+
 #include "array.h"
+#include "hook.h"
+#include "log.h"
+#include "nstring.h"
+#include "nxml.h"
 
 
 static PilotHook *pilot_globalHooks = NULL; /**< Global hooks that affect all pilots. */

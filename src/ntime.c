@@ -32,16 +32,18 @@
  */
 
 
-#include "ntime.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <stdio.h>
-#include "nstring.h"
 #include <stdlib.h>
 
-#include "hook.h"
+#include "naev.h"
+/** @endcond */
+
+#include "ntime.h"
+
 #include "economy.h"
+#include "hook.h"
+#include "nstring.h"
 
 
 #define NT_SECONDS_DIV   (1000)      /* Divider for extracting seconds. */

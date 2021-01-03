@@ -9,17 +9,18 @@
  */
 
 
-#include "joystick.h"
+/** @cond */
+#include "SDL.h"
+#include "SDL_haptic.h"
+#include "SDL_joystick.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include "nstring.h"
-
-#include "SDL.h"
-#include "SDL_joystick.h"
-#include "SDL_haptic.h"
+#include "joystick.h"
 
 #include "log.h"
+#include "nstring.h"
 
 
 static SDL_Joystick *joystick = NULL; /**< Current joystick in use. */
@@ -144,7 +145,7 @@ static void joystick_debug (void)
 
    /* figure out how many joysticks there are */
    numjoysticks = SDL_NumJoysticks();
-   DEBUG( ngettext("%d joystick detected", "%d joysticks detected", numjoysticks), numjoysticks );
+   DEBUG( n_("%d joystick detected", "%d joysticks detected", numjoysticks), numjoysticks );
    for (i=0; i < numjoysticks; i++) {
       const char *jname;
       jname = SDL_JoystickNameForIndex(i);

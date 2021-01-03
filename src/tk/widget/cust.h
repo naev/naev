@@ -8,7 +8,9 @@
 #  define WGT_CUST_H
 
 
+/** @cond */
 #include "SDL.h"
+/** @endcond */
 
 
 /**

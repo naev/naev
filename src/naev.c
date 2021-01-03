@@ -13,19 +13,12 @@
  * @brief Controls the overall game flow: data loading/unloading and game loop.
  */
 
-/*
- * includes
- */
-/* localised global */
+/** @cond */
+#include "physfsrwops.h"
 #include "SDL.h"
-
 #include "SDL_error.h"
-#include "log.h" /* for DEBUGGING */
+
 #include "naev.h"
-
-
-/* global */
-#include "nstring.h" /* strdup */
 
 #if HAS_POSIX
 #include <time.h>
@@ -36,6 +29,8 @@
 #include <fenv.h>
 #endif /* defined(HAVE_FENV_H) && defined(DEBUGGING) && defined(_GNU_SOURCE) */
 
+#include <locale.h>
+
 #if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
 #include <signal.h>
 #include <execinfo.h>
@@ -44,8 +39,8 @@
 #include <bfd.h>
 #include <assert.h>
 #endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
+/** @endcond */
 
-/* local */
 #include "ai.h"
 #include "background.h"
 #include "camera.h"
@@ -67,6 +62,7 @@
 #include "joystick.h"
 #include "land.h"
 #include "load.h"
+#include "log.h"
 #include "map.h"
 #include "map_overlay.h"
 #include "map_system.h"
@@ -81,6 +77,7 @@
 #include "nlua_var.h"
 #include "npc.h"
 #include "npng.h"
+#include "nstring.h"
 #include "nxml.h"
 #include "opengl.h"
 #include "options.h"
@@ -90,6 +87,7 @@
 #include "pilot.h"
 #include "player.h"
 #include "rng.h"
+#include "semver.h"
 #include "ship.h"
 #include "slots.h"
 #include "sound.h"
@@ -101,11 +99,6 @@
 #include "toolkit.h"
 #include "unidiff.h"
 #include "weapon.h"
-#include "semver.h"
-
-#if defined ENABLE_NLS && ENABLE_NLS
-#include <locale.h>
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
 #define VERSION_FILE    "VERSION" /**< Version file by default. */
@@ -116,7 +109,6 @@
 static int quit               = 0; /**< For primary loop */
 static unsigned int time_ms   = 0; /**< used to calculate FPS and movement. */
 static glTexture *loading     = NULL; /**< Loading screen. */
-static char *binary_path      = NULL; /**< argv[0] */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
 static int fps_skipped        = 0; /**< Skipped last frame? */
 /* Version stuff. */
@@ -182,29 +174,22 @@ void naev_quit (void)
  */
 int main( int argc, char** argv )
 {
-   char buf[PATH_MAX], langbuf[PATH_MAX];
+   char buf[PATH_MAX];
 
    env_detect( argc, argv );
 
    if (!log_isTerminal())
       log_copy(1);
 
-   /* Save the binary path. */
-   binary_path = strdup( env.argv0 );
+   /* Set up PhysicsFS. */
+   if( PHYSFS_init( env.argv0 ) == 0 ) {
+      ERR( "PhysicsFS initialization failed: %s",
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      return -1;
+   }
 
-#if defined ENABLE_NLS && ENABLE_NLS
    /* Set up locales. */
-   /* When using locales with difference in '.' and ',' for splitting numbers it
-    * causes pretty much everything to blow up, so we must refer from loading the
-    * numeric type of the locale. */
-   setlocale( LC_ALL, "" );
-   setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
-   /* We haven't loaded the ndata yet, so just try a path quickly. */
-   nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, nfile_dirname(naev_binary()) );
-   bindtextdomain( PACKAGE_NAME, langbuf );
-   //bindtextdomain("naev", "po/");
-   textdomain( PACKAGE_NAME );
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
+   gettext_init();
 
    /* Parse version. */
    if (semver_parse( VERSION, &version_binary ))
@@ -212,9 +197,6 @@ int main( int argc, char** argv )
 
    /* Print the version */
    LOG( " %s v%s (%s)", APPNAME, naev_version(0), HOST );
-#ifdef GIT_COMMIT
-   DEBUG( _(" git HEAD at %s"), GIT_COMMIT );
-#endif /* GIT_COMMIT */
 
    if ( env.isAppImage )
       LOG( "AppImage detected. Running from: %s", env.appdir );
@@ -262,9 +244,6 @@ int main( int argc, char** argv )
     */
    conf_loadConfigPath();
 
-   /* Parse the user data path override first. */
-   conf_parseCLIPath( argc, argv );
-
    /* Create the home directory if needed. */
    if ( nfile_dirMakeExist( nfile_configPath() ) )
       WARN( _("Unable to create config directory '%s'"), nfile_configPath());
@@ -292,43 +271,13 @@ int main( int argc, char** argv )
    if (ndata_open() != 0)
       ERR( _("Failed to open ndata.") );
 
-#if defined ENABLE_NLS && ENABLE_NLS
-   /* Try to set the language again if Naev is attempting to override the locale stuff.
-    * This is done late because this is the first stage at which we have the conf file
-    * fully loaded.
-    * Note: We tried setlocale( LC_ALL, ... ), but it bails if no corresponding system
-    * locale exists. That's too restrictive when we only need our own language catalogs. */
-   if (conf.language == NULL)
-      nsetenv( "LANGUAGE", "", 0 );
-   else {
-      nsetenv( "LANGUAGE", conf.language, 1 );
-      DEBUG(_("Reset language to \"%s\""), conf.language);
-   }
-   /* HACK: All of our code assumes it's working with UTF-8, so force gettext to return it.
-    * Testing under Wine shows it may default to Windows-1252, resulting in glitched translations
-    * like "Loading Ships..." -> "Schiffe laden \x85" which our font code will render improperly. */
-   nsetenv( "OUTPUT_CHARSET", "utf-8", 1 );
-   /* Horrible hack taken from https://www.gnu.org/software/gettext/manual/html_node/gettext-grok.html .
-    * Not entirely sure it is necessary, but just in case... */
-   {
-      extern int  _nl_msg_cat_cntr;
-      ++_nl_msg_cat_cntr;
-   }
-   /* If we don't disable LC_NUMERIC, lots of stuff blows up because 1,000 can be interpreted as
-    * 1.0 in certain languages. */
-   if (setlocale( LC_NUMERIC, "C" )==NULL) /* Disable numeric locale part. */
-      WARN(_("Unable to set LC_NUMERIC to 'C'!"));
-   nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, ndata_getPath() );
-   bindtextdomain( PACKAGE_NAME, langbuf );
-   textdomain( PACKAGE_NAME );
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
+   /* We now know which translations to use. */
+   gettext_setLanguage( conf.language );
 
    /* Load the start info. */
    if (start_load())
       ERR( _("Failed to load module start data.") );
-
-   /* Load the data basics. */
-   LOG(" %s", ndata_name());
+   LOG(" %s", start_name());
    DEBUG_BLANK();
 
    /* Display the SDL Version. */
@@ -496,12 +445,8 @@ int main( int argc, char** argv )
    gl_freeFont(&gl_smallFont);
    gl_freeFont(&gl_defFontMono);
 
-   /* Close data. */
-   ndata_close();
-   start_cleanup();
-
-   /* Destroy conf. */
-   conf_cleanup(); /* Frees some memory the configuration allocated. */
+   start_cleanup(); /* Cleanup from start.c, not the first cleanup step. :) */
+   conf_cleanup(); /* Free some memory the configuration allocated. */
 
    /* exit subsystems */
    cli_exit(); /* Clean up the console. */
@@ -518,6 +463,8 @@ int main( int argc, char** argv )
    sound_exit(); /* Kills the sound */
    news_exit(); /* Destroys the news. */
 
+   ndata_close(); /* Free PhysicsFS resources. */
+
    /* Free the icon. */
    if (naev_icon)
       SDL_FreeSurface(naev_icon);
@@ -527,11 +474,10 @@ int main( int argc, char** argv )
    /* Clean up parser. */
    xmlCleanupParser();
 
+   PHYSFS_deinit();
+
    /* Clean up signal handler. */
    debug_sigClose();
-
-   /* Last free. */
-   free(binary_path);
 
    /* Delete logs if empty. */
    log_clean();
@@ -546,13 +492,13 @@ int main( int argc, char** argv )
  */
 void loadscreen_load (void)
 {
-   unsigned int i;
    char file_path[PATH_MAX];
    char **loadscreens;
    size_t nload;
 
    /* Count the loading screens */
-   loadscreens = ndata_list( GFX_PATH"loading/", &nload );
+   loadscreens = PHYSFS_enumerateFiles( GFX_PATH"loading/" );
+   for (nload=0; loadscreens[nload]!=NULL; nload++) {}
 
    /* Must have loading screens */
    if (nload==0) {
@@ -572,9 +518,7 @@ void loadscreen_load (void)
    background_initStars( 1000 );
 
    /* Clean up. */
-   for (i=0; i<nload; i++)
-      free(loadscreens[i]);
-   free(loadscreens);
+   PHYSFS_freeList( loadscreens );
 }
 
 
@@ -586,9 +530,16 @@ void loadscreen_load (void)
  */
 void loadscreen_render( double done, const char *msg )
 {
+   const double SHIP_IMAGE_WIDTH = 512.;  /**< Loadscreen Ship Image Width */
+   const double SHIP_IMAGE_HEIGHT = 512.; /**< Loadscreen Ship Image Height */
    glColour col;
-   double bx,by, bw,bh;
-   double x,y, w,h, rh;
+   double bx;  /**<  Blit Image X Coord */
+   double by;  /**<  Blit Image Y Coord */
+   double x;   /**<  Progress Bar X Coord */
+   double y;   /**<  Progress Bar Y Coord */
+   double w;   /**<  Progress Bar Width Basis */
+   double h;   /**<  Progress Bar Height Basis */
+   double rh;  /**<  Loading Progress Text Relative Height */
    SDL_Event event;
 
    /* Clear background. */
@@ -601,23 +552,18 @@ void loadscreen_render( double done, const char *msg )
     * Dimensions.
     */
    /* Image. */
-   bw = 512.;
-   bh = 512.;
-   bx = (SCREEN_W-bw)/2.;
-   by = (SCREEN_H-bh)/2.;
+   bx = (SCREEN_W-SHIP_IMAGE_WIDTH)/2.;
+   by = (SCREEN_H-SHIP_IMAGE_HEIGHT)/2.;
    /* Loading bar. */
-   w  = gl_screen.w * 0.4;
-   h  = gl_screen.h * 0.02;
+   w  = SCREEN_W * 0.4;
+   h  = SCREEN_H * 0.02;
    rh = h + gl_defFont.h + 4.;
    x  = (SCREEN_W-w)/2.;
-   if (SCREEN_H < 768)
-      y  = (SCREEN_H-h)/2.;
-   else
-      y  = (SCREEN_H-bw)/2 - rh - 5.;
+   y  = (SCREEN_H-SHIP_IMAGE_HEIGHT)/2. - rh - 5.;
 
    /* Draw loading screen image. */
    if (loading != NULL)
-      gl_blitScale( loading, bx, by, bw, bh, NULL );
+      gl_blitScale( loading, bx, by, SHIP_IMAGE_WIDTH, SHIP_IMAGE_HEIGHT, NULL );
 
    /* Draw progress bar. */
    /* BG. */
@@ -1098,7 +1044,7 @@ static void window_caption (void)
    npng_t *npng;
 
    /* Load icon. */
-   rw = ndata_rwops( GFX_PATH"icon.png" );
+   rw = PHYSFSRWOPS_openRead( GFX_PATH"icon.png" );
    if (rw == NULL) {
       WARN( _("Icon (icon.png) not found!") );
       return;
@@ -1113,7 +1059,7 @@ static void window_caption (void)
    }
 
    /* Set caption. */
-   nsnprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
+   nsnprintf(buf, PATH_MAX, APPNAME" - %s", start_name());
    SDL_SetWindowTitle( gl_screen.window, buf );
    SDL_SetWindowIcon(  gl_screen.window, naev_icon );
 }
@@ -1137,7 +1083,7 @@ char *naev_version( int long_version )
 #else /* DEBUGGING */
                "",
 #endif /* DEBUGGING */
-               ndata_name() );
+               start_name() );
       return version_human;
    }
 
@@ -1171,15 +1117,6 @@ int naev_versionCompare( const char *version )
    }
    semver_free( &sv );
    return res;
-}
-
-
-/**
- * @brief Returns the naev binary path.
- */
-char *naev_binary (void)
-{
-   return binary_path;
 }
 
 

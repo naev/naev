@@ -8,13 +8,16 @@
  * @brief Some math routines for naev.
  */
 
-#include "nmath.h"
-#include "rng.h"
-#include "naev.h"
-
+/** @cond */
 #include <math.h>
 
+#include "naev.h"
+/** @endcond */
+
+#include "nmath.h"
+
 #include "log.h"
+#include "rng.h"
 
 
 /**

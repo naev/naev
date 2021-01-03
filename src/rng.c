@@ -11,25 +11,27 @@
  */
 
 
-#include "rng.h"
+/** @cond */
+#include <errno.h>
+#include <math.h>
+#include <stdint.h>
+#include <time.h>
+#include <unistd.h>
+#include "SDL.h"
 
 #include "naev.h"
 
-#include <stdint.h>
-#include <math.h>
-#include <unistd.h>
-#include <time.h>
-#include <errno.h>
 #if HAS_POSIX
-#include <sys/time.h>
 #include <fcntl.h>
+#include <sys/time.h>
 #endif /* HAS_POSIX */
 #if HAS_WIN32
-#include <sys/types.h>
 #include <sys/timeb.h>
+#include <sys/types.h>
 #endif /* HAS_WIN32 */
+/** @endcond */
 
-#include "SDL.h"
+#include "rng.h"
 
 #include "log.h"
 

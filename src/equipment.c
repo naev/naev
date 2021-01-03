@@ -9,33 +9,35 @@
  */
 
 
-#include "equipment.h"
+/** @cond */
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-#include <math.h>
+#include "equipment.h"
 
-#include "log.h"
-#include "land.h"
-#include "toolkit.h"
-#include "dialogue.h"
-#include "player.h"
-#include "mission.h"
-#include "ntime.h"
 #include "conf.h"
+#include "dialogue.h"
 #include "gui.h"
-#include "land_outfits.h"
+#include "hook.h"
 #include "info.h"
+#include "land.h"
+#include "land_outfits.h"
+#include "land_takeoff.h"
+#include "log.h"
+#include "map.h"
+#include "mission.h"
+#include "ndata.h"
+#include "nstring.h"
+#include "ntime.h"
+#include "player.h"
 #include "shipstats.h"
 #include "slots.h"
-#include "map.h"
-#include "ndata.h"
-#include "hook.h"
-#include "land_takeoff.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
+#include "toolkit.h"
 
 
 /*
@@ -282,27 +284,27 @@ void equipment_open( unsigned int wid )
          _("Unequip"), equipment_unequipShip, SDLK_u );
 
    /* text */
-   buf = _("\anName:\n\a0"
-      "\anModel:\n\a0"
-      "\anClass:\n\a0"
-      "\anCrew:\n\a0"
-      "\anValue:\n\a0"
+   buf = _("#nName:\n#0"
+      "#nModel:\n#0"
+      "#nClass:\n#0"
+      "#nCrew:\n#0"
+      "#nValue:\n#0"
       "\n"
-      "\anMass:\n\a0"
-      "\anJump Time:\n\a0"
-      "\anThrust:\n\a0"
-      "\anSpeed:\n\a0"
-      "\anTurn:\n\a0"
-      "\anTime Dilation:\n\a0"
+      "#nMass:\n#0"
+      "#nJump Time:\n#0"
+      "#nThrust:\n#0"
+      "#nSpeed:\n#0"
+      "#nTurn:\n#0"
+      "#nTime Constant:\n#0"
       "\n"
-      "\anAbsorption:\n\a0"
-      "\anShield:\n\a0"
-      "\anArmour:\n\a0"
-      "\anEnergy:\n\a0"
-      "\anCargo Space:\n\a0"
-      "\anFuel:\n\a0"
+      "#nAbsorption:\n#0"
+      "#nShield:\n#0"
+      "#nArmour:\n#0"
+      "#nEnergy:\n#0"
+      "#nCargo Space:\n#0"
+      "#nFuel:\n#0"
       "\n"
-      "\anShip Status:\a0");
+      "#nShip Status:#0");
    x = 20 + sw + 20 + 180 + 20 + 30;
    y = -190;
    window_addText( wid, x, y,
@@ -759,7 +761,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          return;
 
       pos = nsnprintf( alt, sizeof(alt),
-            "\ao%s", _( sp_display( slot->sslot->slot.spid ) ) );
+            "#o%s", _( sp_display( slot->sslot->slot.spid ) ) );
       if (slot->sslot->slot.exclusive && (pos < (int)sizeof(alt)))
          pos += nsnprintf( &alt[pos], sizeof(alt)-pos,
                _(" [exclusive]") );
@@ -783,15 +785,15 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          "%s",
          _(o->name) );
    if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
-      pos += nsnprintf( &alt[pos], sizeof(alt)-pos, _("\n\aoUnique\a0") );
+      pos += nsnprintf( &alt[pos], sizeof(alt)-pos, _("\n#oUnique#0") );
    if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
-      pos += nsnprintf( &alt[pos], sizeof(alt)-pos, _("\n\aoSlot %s\a0"),
+      pos += nsnprintf( &alt[pos], sizeof(alt)-pos, _("\n#oSlot %s#0"),
             _( sp_display( o->slot.spid ) ) );
    if (pos < (int)sizeof(alt))
       pos += nsnprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
    if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
       nsnprintf( &alt[pos], sizeof(alt)-pos,
-            ngettext("\n%.0f Tonne", "\n%.0f Tonnes", mass),
+            n_("\n%.0f Tonne", "\n%.0f Tonnes", mass),
             mass );
 
    /* Draw the text. */
@@ -1151,7 +1153,7 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
       return;
 
    /* Save focus. */
-   focused = strdup(window_getFocus(wid));
+   focused = window_getFocus( wid );
 
    /* Save positions. */
    if (outfits) {
@@ -1549,24 +1551,24 @@ void equipment_updateShips( unsigned int wid, char* str )
          _("%s\n"
          "%s\n"
          "%s\n"
-         "\a%c%s%.0f\a0\n"
+         "#%c%s%.0f#0\n"
          "%s\n"
          "\n"
-         "%.0f\a0 tonnes\n"
+         "%.0f#0 tonnes\n"
          "%s average\n"
-         "\a%c%s%.0f\a0 kN/tonne\n"
-         "\a%c%s%.0f\a0 m/s (max \a%c%s%.0f\a0 m/s)\n"
-         "\a%c%s%.0f\a0 deg/s\n"
+         "#%c%s%.0f#0 kN/tonne\n"
+         "#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)\n"
+         "#%c%s%.0f#0 deg/s\n"
          "%.0f%%\n"
          "\n"
-         "\a%c%s%.0f%%\n"
-         "\a%c%s%.0f\a0 MJ (\a%c%s%.1f\a0 MW)\n"
-         "\a%c%s%.0f\a0 MJ (\a%c%s%.1f\a0 MW)\n"
-         "\a%c%s%.0f\a0 MJ (\a%c%s%.1f\a0 MW)\n"
-         "%d / \a%c%s%d\a0 tonnes\n"
+         "#%c%s%.0f%%\n"
+         "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
+         "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
+         "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
+         "%d / #%c%s%d#0 tonnes\n"
          "%d units (%d jumps)\n"
          "\n"
-         "\a%c%s\a0"),
+         "#%c%s#0"),
          /* Generic. */
       ship->name,
       _(ship->ship->name),

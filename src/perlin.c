@@ -41,21 +41,22 @@
  */
 
 
-#include "perlin.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <math.h>
 #include <stdlib.h>
-#include "nstring.h"
-
 #include "SDL.h"
 #include "SDL_thread.h"
-#include "threadpool.h"
+
+#include "naev.h"
+/** @endcond */
+
+#include "perlin.h"
 
 #include "log.h"
-#include "rng.h"
 #include "nfile.h"
+#include "nstring.h"
+#include "rng.h"
+#include "threadpool.h"
 
 
 #define SIMPLEX_SCALE 0.5f

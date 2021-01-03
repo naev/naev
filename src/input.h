@@ -8,7 +8,9 @@
 #  define INPUT_H
 
 
+/** @cond */
 #include "SDL.h"
+/** @endcond */
 
 
 #define NMOD_NONE    0

@@ -10,36 +10,36 @@
  * These bindings control the planets and systems.
  */
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "nlua_pilot.h"
 
-#include "naev.h"
-
-#include <lauxlib.h>
-
+#include "ai.h"
+#include "array.h"
+#include "camera.h"
+#include "damagetype.h"
+#include "escort.h"
+#include "gui.h"
+#include "land_outfits.h"
+#include "log.h"
 #include "nlua.h"
-#include "nluadef.h"
+#include "nlua_col.h"
 #include "nlua_faction.h"
-#include "nlua_vec2.h"
+#include "nlua_jump.h"
+#include "nlua_outfit.h"
+#include "nlua_planet.h"
 #include "nlua_ship.h"
 #include "nlua_system.h"
-#include "nlua_planet.h"
-#include "nlua_outfit.h"
-#include "nlua_jump.h"
-#include "log.h"
-#include "rng.h"
+#include "nlua_vec2.h"
+#include "nluadef.h"
 #include "pilot.h"
 #include "pilot_heat.h"
 #include "player.h"
+#include "rng.h"
 #include "space.h"
-#include "ai.h"
-#include "nlua_col.h"
 #include "weapon.h"
-#include "gui.h"
-#include "camera.h"
-#include "damagetype.h"
-#include "land_outfits.h"
-#include "array.h"
-#include "escort.h"
 
 
 /*
@@ -2448,16 +2448,14 @@ static int pilotL_rmOutfit( lua_State *L )
    Pilot *p;
    const char *outfit;
    Outfit *o;
-   int q, removed;
+   int q, removed, matched = 0;
 
    NLUA_CHECKRW(L);
 
    /* Get parameters. */
    removed = 0;
    p      = luaL_validpilot(L,1);
-   q      = 1;
-   if (lua_gettop(L) > 2)
-      q = luaL_checkint(L,3);
+   q      = luaL_optinteger(L,3,1);
 
    if (lua_isstring(L,2)) {
       outfit = luaL_checkstring(L,2);
@@ -2471,6 +2469,7 @@ static int pilotL_rmOutfit( lua_State *L )
             removed++;
          }
          pilot_calcStats( p ); /* Recalculate stats. */
+         matched = 1;
       }
       /* If outfit is "cores", we remove cores only. */
       else if (strcmp(outfit,"cores")==0) {
@@ -2481,9 +2480,11 @@ static int pilotL_rmOutfit( lua_State *L )
             removed++;
          }
          pilot_calcStats( p ); /* Recalculate stats. */
+         matched = 1;
       }
    }
-   else {
+
+   if (!matched) {
       o = luaL_validoutfit(L,2);
 
       /* Remove the outfit outfit. */
@@ -3863,7 +3864,7 @@ static int pilotL_hailPlayer( lua_State *L )
    if (enable) {
       /* Send message. */
       c = pilot_getFactionColourChar( p );
-      player_message( _("\a%c%s\a0 is hailing you."), c, p->name );
+      player_message( _("#%c%s#0 is hailing you."), c, p->name );
 
       /* Set flag. */
       pilot_setFlag( p, PILOT_HAILING );

@@ -8,7 +8,9 @@
 #  define COLOUR_H
 
 
+/** @cond */
 #include "glad.h"
+/** @endcond */
 
 
 /**

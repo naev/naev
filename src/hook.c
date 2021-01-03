@@ -22,24 +22,26 @@
  */
 
 
-#include "hook.h"
-
-#include "naev.h"
-
-#include "nstring.h"
+/** @cond */
 #include <assert.h>
 #include <stdlib.h>
 
+#include "naev.h"
+/** @endcond */
+
+#include "hook.h"
+
+#include "claim.h"
+#include "event.h"
 #include "log.h"
+#include "menu.h"
+#include "mission.h"
+#include "nlua_hook.h"
+#include "nlua_pilot.h"
+#include "nstring.h"
 #include "nxml.h"
 #include "player.h"
-#include "event.h"
-#include "claim.h"
-#include "nlua_pilot.h"
-#include "nlua_hook.h"
-#include "mission.h"
 #include "space.h"
-#include "menu.h"
 
 
 #define HOOK_CHUNK   32 /**< Size to grow by when out of space */

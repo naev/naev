@@ -9,9 +9,8 @@
  */
 
 
-#include "tk/toolkit_priv.h"
-
 #include "opengl.h"
+#include "tk/toolkit_priv.h"
 
 
 static void cst_render( Widget* cst, double bx, double by );

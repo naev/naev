@@ -9,28 +9,30 @@
  */
 
 
-#include "land_outfits.h"
+/** @cond */
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-#include <math.h>
+#include "land_outfits.h"
 
+#include "dialogue.h"
+#include "equipment.h"
+#include "hook.h"
+#include "land_takeoff.h"
 #include "log.h"
 #include "map.h"
-#include "equipment.h"
+#include "map_find.h"
+#include "nstring.h"
 #include "outfit.h"
-#include "hook.h"
 #include "player.h"
 #include "player_gui.h"
 #include "slots.h"
 #include "space.h"
 #include "toolkit.h"
-#include "dialogue.h"
-#include "map_find.h"
-#include "land_takeoff.h"
 
 
 #define  OUTFITS_IAR    "iarOutfits"
@@ -197,15 +199,15 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
 
    window_addText( wid, 20 + iw + 20, 0,
          90, 160, 0, "txtSDesc", &gl_smallFont, NULL,
-         _("\anOwned:\a0\n"
+         _("#nOwned:#0\n"
          "\n"
-         "\anSlot:\a0\n"
-         "\anSize:\a0\n"
-         "\anMass:\a0\n"
+         "#nSlot:#0\n"
+         "#nSize:#0\n"
+         "#nMass:#0\n"
          "\n"
-         "\anPrice:\a0\n"
-         "\anMoney:\a0\n"
-         "\anLicense:\a0\n") );
+         "#nPrice:#0\n"
+         "#nMoney:#0\n"
+         "#nLicense:#0\n") );
    window_addText( wid, 20 + iw + 20 + 90, 0,
          w - (20 + iw + 20 + 90), 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
    window_addText( wid, 20 + iw + 20, 0,
@@ -241,7 +243,7 @@ void outfits_regenList( unsigned int wid, char *str )
       return;
 
    /* Save focus. */
-   focused = strdup(window_getFocus(wid));
+   focused = window_getFocus( wid );
 
    /* Save positions. */
    tab = window_tabWinGetActive( wid, OUTFITS_TAB );
@@ -428,7 +430,7 @@ void outfits_update( unsigned int wid, char* str )
    else if (player_hasLicense( outfit->license ))
       strncpy( buf_license, _(outfit->license), sizeof(buf_license)-1 );
    else
-      nsnprintf( buf_license, sizeof(buf_license), "\ar%s\a0", _(outfit->license) );
+      nsnprintf( buf_license, sizeof(buf_license), "#r%s#0", _(outfit->license) );
    buf_license[ sizeof(buf_license)-1 ] = '\0';
 
    mass = outfit->mass;
@@ -634,9 +636,9 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
             coutfits[i].alt = malloc( l );
             p  = nsnprintf( &coutfits[i].alt[0], l, "%s\n", _(o->name) );
             if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
-               p += nsnprintf( &coutfits[i].alt[p], l-p, _("\aoUnique\a0\n") );
+               p += nsnprintf( &coutfits[i].alt[p], l-p, _("#oUnique#0\n") );
             if ((o->slot.spid!=0) && (p < l))
-               p += nsnprintf( &coutfits[i].alt[p], l-p, _("\aoSlot %s\a0\n"),
+               p += nsnprintf( &coutfits[i].alt[p], l-p, _("#oSlot %s#0\n"),
                      _( sp_display( o->slot.spid ) ) );
             if (p < l)
                p += nsnprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );

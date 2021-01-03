@@ -8,15 +8,17 @@
  * @brief Handles fonts.
  */
 
-#include "nlua_font.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_font.h"
+
+#include "log.h"
 #include "ndata.h"
 #include "nluadef.h"
-#include "log.h"
 
 
 /* Font metatable methods. */

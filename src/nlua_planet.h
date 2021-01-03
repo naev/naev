@@ -7,10 +7,8 @@
 #  define NLUA_PLANET_H
 
 
-#include <lua.h>
-
-#include "space.h"
 #include "nlua.h"
+#include "space.h"
 
 
 #define PLANET_METATABLE   "planet" /**< Planet metatable identifier. */

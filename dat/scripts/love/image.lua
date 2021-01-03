@@ -55,6 +55,19 @@ function image.ImageData:paste( source, dx, dy, sx, sy, sw, sh )
          self:setPixel( dx+x, dy+y, source:getPixel( sx+x, sy+y ) )
       end
    end
+   return self
+end
+function image.ImageData:mapPixel( pixelFunction, x, y, width, height )
+   x = x or 0
+   y = y or 0
+   width = width or self:getWidth()
+   height = height or self:getHeight()
+   for u = x,width-1 do
+      for v = y,height-1 do
+         self:setPixel( u, v, pixelFunction( u, v, self:getPixel( u, v ) ) )
+      end
+   end
+   return self
 end
 
 

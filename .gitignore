@@ -22,7 +22,6 @@ extras/steam/content
 extras/steam/output
 extras/windows/installer/bin
 dist/*
-dat/LANGUAGES
 dat/VERSION
 release.log
 Naev.app

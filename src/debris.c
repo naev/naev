@@ -9,15 +9,17 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "debris.h"
 
-#include "naev.h"
-
 #include "log.h"
-#include "pilot.h"
-#include "spfx.h"
-#include "rng.h"
 #include "nstring.h"
+#include "pilot.h"
+#include "rng.h"
+#include "spfx.h"
 
 
 static int *debris_spfx = NULL; /**< Debris special effects. */

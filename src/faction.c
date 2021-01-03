@@ -9,24 +9,25 @@
  */
 
 
-#include "faction.h"
-
-#include "naev.h"
-
-#include "nstring.h"
+/** @cond */
 #include <assert.h>
 #include <stdlib.h>
 
-#include "nxml.h"
+#include "naev.h"
+/** @endcond */
 
-#include "nlua.h"
-#include "nluadef.h"
-#include "opengl.h"
-#include "log.h"
-#include "ndata.h"
-#include "rng.h"
+#include "faction.h"
+
 #include "colour.h"
 #include "hook.h"
+#include "log.h"
+#include "ndata.h"
+#include "nlua.h"
+#include "nluadef.h"
+#include "nxml.h"
+#include "nstring.h"
+#include "opengl.h"
+#include "rng.h"
 #include "space.h"
 
 
@@ -239,7 +240,7 @@ int faction_setKnown( int id, int state )
  *    @param f Faction to get the name of.
  *    @return Name of the faction (internal/English).
  */
-char* faction_name( int f )
+const char* faction_name( int f )
 {
    if (!faction_isFaction(f)) {
       WARN(_("Faction id '%d' is invalid."),f);
@@ -259,7 +260,7 @@ char* faction_name( int f )
  *    @param f Faction to get the name of.
  *    @return Name of the faction (in player's native language).
  */
-char* faction_shortname( int f )
+const char* faction_shortname( int f )
 {
    if (!faction_isFaction(f)) {
       WARN(_("Faction id '%d' is invalid."),f);
@@ -283,7 +284,7 @@ char* faction_shortname( int f )
  *    @param f Faction to get the name of.
  *    @return The faction's long name (in player's native language).
  */
-char* faction_longname( int f )
+const char* faction_longname( int f )
 {
    if (!faction_isFaction(f)) {
       WARN(_("Faction id '%d' is invalid."),f);
@@ -982,7 +983,7 @@ const glColour* faction_getColour( int f )
 /**
  * @brief Gets the faction character associated to its standing with the player.
  *
- * Use this to do something like "\a%c", faction_getColourChar( some_faction ) in the
+ * Use this to do something like "#%c", faction_getColourChar( some_faction ) in the
  *  font print routines.
  *
  *    @param f Faction to get the colour of based on player's standing.
@@ -1464,23 +1465,12 @@ void factions_reset (void)
 int factions_load (void)
 {
    int mem;
-   size_t bufsize;
    xmlNodePtr factions, node;
-   char *buf;
-
-   /* Load and read the data. */
-   buf = ndata_read( FACTION_DATA_PATH, &bufsize);
-   if (buf == NULL) {
-      WARN(_("Unable to read data from '%s'"), FACTION_DATA_PATH);
-      return -1;
-   }
 
    /* Load the document. */
-   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN(_("Unable to parse document '%s'"), FACTION_DATA_PATH);
+   xmlDocPtr doc = xml_parsePhysFS( FACTION_DATA_PATH );
+   if (doc == NULL)
       return -1;
-   }
 
    node = doc->xmlChildrenNode; /* Factions node */
    if (!xml_isNode(node,XML_FACTION_ID)) {
@@ -1570,9 +1560,8 @@ int factions_load (void)
 #endif /* DEBUGGING */
 
    xmlFreeDoc(doc);
-   free(buf);
 
-   DEBUG( ngettext( "Loaded %d Faction", "Loaded %d Factions", faction_nstack ), faction_nstack );
+   DEBUG( n_( "Loaded %d Faction", "Loaded %d Factions", faction_nstack ), faction_nstack );
 
    return 0;
 }

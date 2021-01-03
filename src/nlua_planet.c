@@ -8,29 +8,31 @@
  * @brief Lua planet module.
  */
 
-#include "nlua_planet.h"
-
+/** @cond */
 #include "naev.h"
 
 #include <lauxlib.h>
+/** @endcond */
 
-#include "nluadef.h"
-#include "nlua_faction.h"
-#include "nlua_vec2.h"
-#include "nlua_system.h"
-#include "nlua_tex.h"
-#include "nlua_ship.h"
-#include "nlua_outfit.h"
-#include "nlua_commodity.h"
-#include "nlua_col.h"
-#include "nlua_time.h"
-#include "log.h"
-#include "rng.h"
+#include "nlua_planet.h"
+
 #include "land.h"
 #include "land_outfits.h"
+#include "log.h"
 #include "map.h"
+#include "nlua_col.h"
+#include "nlua_commodity.h"
+#include "nlua_faction.h"
+#include "nlua_outfit.h"
+#include "nlua_ship.h"
+#include "nlua_system.h"
+#include "nlua_tex.h"
+#include "nlua_time.h"
+#include "nlua_vec2.h"
+#include "nluadef.h"
 #include "nmath.h"
 #include "nstring.h"
+#include "rng.h"
 
 
 /* Planet metatable methods */

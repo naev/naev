@@ -8,28 +8,30 @@
  * @brief Handles the star system editor.
  */
 
-#include "dev_uniedit.h"
-
-#include "naev.h"
-
+/** @cond */
 #include "SDL.h"
 
-#include "space.h"
-#include "toolkit.h"
-#include "opengl.h"
+#include "naev.h"
+/** @endcond */
+
+#include "dev_uniedit.h"
+
+#include "conf.h"
+#include "dev_planet.h"
+#include "dev_sysedit.h"
+#include "dev_system.h"
+#include "dialogue.h"
+#include "economy.h"
 #include "map.h"
 #include "map_find.h"
-#include "dev_system.h"
-#include "dev_planet.h"
-#include "unidiff.h"
-#include "dialogue.h"
-#include "tk/toolkit_priv.h"
-#include "dev_sysedit.h"
-#include "pause.h"
 #include "nfile.h"
 #include "nstring.h"
-#include "economy.h"
-#include "conf.h"
+#include "opengl.h"
+#include "pause.h"
+#include "space.h"
+#include "tk/toolkit_priv.h"
+#include "toolkit.h"
+#include "unidiff.h"
 
 
 #define BUTTON_WIDTH    80 /**< Map button width. */
@@ -679,7 +681,7 @@ static void uniedit_renameSys (void)
       sys = uniedit_sys[i];
 
       /* Get name. */
-      name = dialogue_input( _("Rename Star System"), 1, 32, _("What do you want to rename \ar%s\a0?"), sys->name );
+      name = dialogue_input( _("Rename Star System"), 1, 32, _("What do you want to rename #r%s#0?"), sys->name );
 
       /* Keep current name. */
       if (name == NULL)
@@ -1205,7 +1207,8 @@ static void uniedit_editSys (void)
 {
    unsigned int wid;
    int x, y, l;
-   char buf[128], *s;
+   char buf[128];
+   const char *s;
    StarSystem *sys;
 
    /* Must have a system. */
@@ -1226,7 +1229,7 @@ static void uniedit_editSys (void)
 
    /* Rename button. */
    y = -45;
-   nsnprintf( buf, sizeof(buf), _("Name: \an%s"), (uniedit_nsys > 1) ? _("\arvarious") : uniedit_sys[0]->name );
+   nsnprintf( buf, sizeof(buf), _("Name: #n%s"), (uniedit_nsys > 1) ? _("#rvarious") : uniedit_sys[0]->name );
    window_addText( wid, x, y, 180, 15, 0, "txtName", &gl_smallFont, NULL, buf );
    window_addButton( wid, 200, y+3, BUTTON_WIDTH, 21, "btnRename", _("Rename"), uniedit_btnEditRename );
 
@@ -1449,7 +1452,7 @@ static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
       if (p[i].real == ASSET_VIRTUAL)
          j = 1;
    if (j==0) {
-      dialogue_alert( _("No virtual assets to add! Please add virtual assets to dat/asset.xml first.") );
+      dialogue_alert( _("No virtual assets to add! Please add virtual assets to the 'assets' directory first.") );
       return;
    }
 
@@ -1523,7 +1526,7 @@ static void uniedit_btnEditRename( unsigned int wid, char *unused )
    uniedit_renameSys();
 
    /* Update text. */
-   nsnprintf( buf, sizeof(buf), _("Name: %s"), (uniedit_nsys > 1) ? _("\arvarious") : uniedit_sys[0]->name );
+   nsnprintf( buf, sizeof(buf), _("Name: %s"), (uniedit_nsys > 1) ? _("#rvarious") : uniedit_sys[0]->name );
    window_modifyText( wid, "txtName", buf );
 }
 

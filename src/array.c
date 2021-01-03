@@ -1,8 +1,14 @@
-#include "array.h"
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
 
+/** @cond */
 #include <limits.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+/** @endcond */
+
+#include "array.h"
 
 #include "nstring.h"
 

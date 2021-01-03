@@ -10,11 +10,13 @@
  */
 
 
-#include "gui.h"
+/** @cond */
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
+#include "gui.h"
 
 #include "ai.h"
 #include "camera.h"
@@ -95,7 +97,7 @@ extern Pilot** pilot_stack; /**< @todo remove */
 extern int pilot_nstack; /**< @todo remove */
 
 
-extern int land_wid; /**< From land.c */
+extern unsigned int land_wid; /**< From land.c */
 
 
 /**
@@ -2324,7 +2326,7 @@ void gui_setRadarRel( int mod )
    gui_radar.res += mod * RADAR_RES_INTERVAL;
    gui_radar.res = CLAMP( RADAR_RES_MIN, RADAR_RES_MAX, gui_radar.res );
 
-   player_message( _("\aoRadar set to %dx."), (int)gui_radar.res );
+   player_message( _("#oRadar set to %dx."), (int)gui_radar.res );
 }
 
 

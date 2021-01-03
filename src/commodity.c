@@ -13,24 +13,27 @@
  */
 
 
-#include "economy.h"
-#include "commodity.h"
-#include "naev.h"
-
+/** @cond */
 #include <stdio.h>
-#include "nstring.h"
 #include <stdint.h>
 
-#include "nxml.h"
-#include "ndata.h"
+#include "naev.h"
+/** @endcond */
+
+#include "commodity.h"
+
+#include "economy.h"
+#include "hook.h"
 #include "log.h"
-#include "spfx.h"
+#include "ndata.h"
+#include "nstring.h"
+#include "ntime.h"
+#include "nxml.h"
 #include "pilot.h"
 #include "player.h"
 #include "rng.h"
 #include "space.h"
-#include "ntime.h"
-#include "hook.h"
+#include "spfx.h"
 
 
 #define XML_COMMODITY_ID      "Commodities" /**< XML document identifier */
@@ -113,7 +116,7 @@ void price2str(char *str, credits_t price, credits_t credits, int decimals )
       return;
 
    buf = strdup(str);
-   nsnprintf(str, ECON_CRED_STRLEN, "\ar%s\a0", buf);
+   nsnprintf(str, ECON_CRED_STRLEN, "#r%s#0", buf);
    free(buf);
 }
 
@@ -126,7 +129,7 @@ void price2str(char *str, credits_t price, credits_t credits, int decimals )
  */
 void tonnes2str( char *str, int tonnes )
 {
-   snprintf( str, ECON_MASS_STRLEN, ngettext( "%d tonne", "%d tonnes", tonnes ), tonnes );
+   snprintf( str, ECON_MASS_STRLEN, n_( "%d tonne", "%d tonnes", tonnes ), tonnes );
 }
 
 /**
@@ -555,7 +558,7 @@ void gatherable_gather( int pilot )
 
          if (q>0) {
             if (pilot_isPlayer(p)) {
-               player_message( ngettext("%d ton of %s gathered", "%d tons of %s gathered", q), q, _(gat->type->name) );
+               player_message( n_("%d ton of %s gathered", "%d tons of %s gathered", q), q, _(gat->type->name) );
 
                /* Run hooks. */
                hparam[0].type    = HOOK_PARAM_STRING;
@@ -593,22 +596,13 @@ void gatherable_gather( int pilot )
  */
 int commodity_load (void)
 {
-   size_t bufsize;
-   char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
 
    /* Load the file. */
-   buf = ndata_read( COMMODITY_DATA_PATH, &bufsize);
-   if (buf == NULL)
+   doc = xml_parsePhysFS( COMMODITY_DATA_PATH );
+   if (doc == NULL)
       return -1;
-
-   /* Handle the XML. */
-   doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN(_("'%s' is not valid XML."), COMMODITY_DATA_PATH);
-      return -1;
-   }
 
    node = doc->xmlChildrenNode; /* Commodities node */
    if (strcmp((char*)node->name,XML_COMMODITY_ID)) {
@@ -645,9 +639,8 @@ int commodity_load (void)
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
-   free(buf);
 
-   DEBUG( ngettext( "Loaded %d Commodity", "Loaded %d Commodities", commodity_nstack ), commodity_nstack );
+   DEBUG( n_( "Loaded %d Commodity", "Loaded %d Commodities", commodity_nstack ), commodity_nstack );
 
    return 0;
 

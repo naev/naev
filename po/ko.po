@@ -5569,8 +5569,8 @@ msgstr ""
 
 #: dat/events/neutral/npc.lua:192
 msgid ""
-"\"Are you trading commodities? You can hold down \abctrl\a0 to buy 50 of "
-"them at a time, and \abshift\a0 to buy 100. And if you press them both at "
+"\"Are you trading commodities? You can hold down #bctrl#0 to buy 50 of "
+"them at a time, and #bshift#0 to buy 100. And if you press them both at "
 "once, you can buy 500 at a time! You can actually do that with outfits too, "
 "but why would you want to buy 50 laser cannons?\""
 msgstr ""
@@ -5713,8 +5713,8 @@ msgstr ""
 #: dat/events/neutral/npc.lua:211
 msgid ""
 "\"Did you know that you can automatically follow pilot with Autonav? It's "
-"true! Just \ableft-click\a0 the pilot to target them and then \abright-click"
-"\a0 your target to follow! I like to use this feature for escort missions. "
+"true! Just #bleft-click#0 the pilot to target them and then #bright-click"
+"#0 your target to follow! I like to use this feature for escort missions. "
 "It makes them a lot less tedious.\""
 msgstr ""
 
@@ -28638,7 +28638,7 @@ msgstr ""
 #. along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #.
 #. --
-#. FIXME: Have to use a table for some of it due to \a bug.
+#. FIXME: Have to use a table for some of it due to # bug.
 #: dat/missions/tutorial/tutorial.lua:42
 msgid "Passing The Sky"
 msgstr ""
@@ -28692,7 +28692,7 @@ msgid ""
 "\"Perfect! That was easy enough, right? We at Melendez Corporation recommend "
 "this manner of flight, which we call 'keyboard flight'. However, there is "
 "one other way you can fly if you so choose: press %s on your console and "
-"your Melendez Corporation ship will follow your \abmouse pointer\a0 "
+"your Melendez Corporation ship will follow your #bmouse pointer#0 "
 "automatically! It's up to you which method you prefer to use.\n"
 "    \"Ah, you may also have noticed the mission on-screen display on your "
 "monitor! As you can see, you completed your first objective of the Tutorial "
@@ -28704,13 +28704,13 @@ msgstr ""
 msgid ""
 "\"On that note, let's go over landing! All kinds of actions, like landing on "
 "planets, hailing ships, boarding disabled ships, and jumping to other "
-"systems can be accomplished by \abdouble-clicking\a0 on an applicable "
+"systems can be accomplished by #bdouble-clicking#0 on an applicable "
 "target, or alternatively by pressing certain buttons on your control "
 "console. How about you try landing on %s? You'll need to first slow down "
 "your ship so that the landing procedure can be carried out safely; you can "
 "do this either with your regular movement controls or, if you prefer, by "
 "pressing %s, which will bring your Melendez Corporation ship to a complete "
-"stop. You can then land either by \abdouble-clicking\a0 on the planet, or by "
+"stop. You can then land either by #bdouble-clicking#0 on the planet, or by "
 "targeting the planet with %s and then pressing %s. Give it a try!\""
 msgstr ""
 
@@ -28847,7 +28847,7 @@ msgid ""
 "Corporation always require the latest Autonav technology with all of our "
 "ships!\n"
 "    \"Autonav is simple and elegant. Simply press %s to open your ship's "
-"overlay map, then simply \abright-click\a0 on any location, planet, ship, or "
+"overlay map, then simply #bright-click#0 on any location, planet, ship, or "
 "jump point to instantly take your ship right to it! The trip will take just "
 "as long, but advanced Melendez Corporation technology allows you to step "
 "away from your controls, making it seem as though time is passing at a "
@@ -28932,8 +28932,8 @@ msgid ""
 "\"You have done very well, %s! As you can see, the trip consumed fuel. You "
 "consume fuel any time you make a jump and can refuel by landing on a "
 "friendly planet. If you find yourself in a pinch, you may also be able to "
-"buy fuel from other pilots in the system; hail a pilot by \abdouble-clicking"
-"\a0 on them, or by selecting them with %s and then pressing %s.\n"
+"buy fuel from other pilots in the system; hail a pilot by #bdouble-clicking"
+"#0 on them, or by selecting them with %s and then pressing %s.\n"
 "    \"Ah, that reminds me: you can also attempt to bribe hostile ships, such "
 "as pirates, by hailing them. Bribes work better on some factions than on "
 "others; pirates will happily take your offer and may even sell you fuel "
@@ -34351,34 +34351,34 @@ msgid "unknown error"
 msgstr ""
 
 #: src/board.c:87
-msgid "\arYou need a target to board first!"
+msgid "#rYou need a target to board first!"
 msgstr ""
 
 #: src/board.c:97
 #, fuzzy
-msgid "\arTarget ship can not be boarded."
+msgid "#rTarget ship can not be boarded."
 msgstr "탑승 준비!"
 
 #: src/board.c:101
-msgid "\arYour target cannot be boarded again."
+msgid "#rYour target cannot be boarded again."
 msgstr ""
 
 #: src/board.c:105
-msgid "\arYou cannot board a ship that isn't disabled!"
+msgid "#rYou cannot board a ship that isn't disabled!"
 msgstr ""
 
 #: src/board.c:110
-msgid "\arYou are too far away to board your target."
+msgid "#rYou are too far away to board your target."
 msgstr ""
 
 #: src/board.c:116
 #, fuzzy
-msgid "\arYou are going too fast to board the ship."
+msgid "#rYou are going too fast to board the ship."
 msgstr "너는 FLF와 어울리지 않아."
 
 #: src/board.c:125
 #, c-format
-msgid "\aoBoarding ship \a%c%s\a0."
+msgid "#oBoarding ship #%c%s#0."
 msgstr ""
 
 #.
@@ -34418,67 +34418,67 @@ msgstr ""
 
 #. you can't steal from the poor
 #: src/board.c:215
-msgid "\aoThe ship has no credits."
+msgid "#oThe ship has no credits."
 msgstr ""
 
 #. update the lack of credits
 #: src/board.c:224
-msgid "\aoYou manage to steal the ship's credits."
+msgid "#oYou manage to steal the ship's credits."
 msgstr ""
 
 #. no cargo
 #: src/board.c:243
-msgid "\aoThe ship has no cargo."
+msgid "#oThe ship has no cargo."
 msgstr ""
 
 #: src/board.c:247
 #, fuzzy
-msgid "\arYou have no room for the ship's cargo."
+msgid "#rYou have no room for the ship's cargo."
 msgstr "너는 제국에 걸맞지 않아!"
 
 #: src/board.c:262
-msgid "\aoYou manage to steal the ship's cargo."
+msgid "#oYou manage to steal the ship's cargo."
 msgstr ""
 
 #. no fuel.
 #: src/board.c:280
-msgid "\aoThe ship has no fuel."
+msgid "#oThe ship has no fuel."
 msgstr ""
 
 #: src/board.c:284
-msgid "\arYour ship is at maximum fuel capacity."
+msgid "#rYour ship is at maximum fuel capacity."
 msgstr ""
 
 #: src/board.c:302
-msgid "\aoYou manage to steal the ship's fuel."
+msgid "#oYou manage to steal the ship's fuel."
 msgstr ""
 
 #: src/board.c:323
-msgid "\arThe ship has no ammo."
+msgid "#rThe ship has no ammo."
 msgstr ""
 
 #: src/board.c:328
-msgid "\arYou are already at max ammo."
+msgid "#rYou are already at max ammo."
 msgstr ""
 
 #: src/board.c:373
 #, c-format
-msgid "\aoYou looted: %d × %s"
+msgid "#oYou looted: %d × %s"
 msgstr ""
 
 #: src/board.c:383
-msgid "\arThere is no ammo compatible with your launchers on board."
+msgid "#rThere is no ammo compatible with your launchers on board."
 msgstr ""
 
 #. killed ship.
 #: src/board.c:445
-msgid "\aoYou have tripped the ship's self-destruct mechanism!"
+msgid "#oYou have tripped the ship's self-destruct mechanism!"
 msgstr ""
 
 #. you just got locked out
 #: src/board.c:447
 #, c-format
-msgid "\aoThe ship's security system locks %s out."
+msgid "#oThe ship's security system locks %s out."
 msgstr ""
 
 #: src/board.c:477 src/board.c:493 src/board.c:504
@@ -34505,7 +34505,7 @@ msgstr[0] ""
 
 #: src/board.c:590
 #, c-format
-msgid "\a%c%s\a0 has plundered %s from your ship!"
+msgid "#%c%s#0 has plundered %s from your ship!"
 msgstr ""
 
 #: src/claim.c:295
@@ -34529,17 +34529,17 @@ msgid "Unknown colour %s"
 msgstr ""
 
 #: src/comm.c:110
-msgid "\arTarget is out of communications range"
+msgid "#rTarget is out of communications range"
 msgstr ""
 
 #: src/comm.c:124
 #, c-format
-msgid "\a%c%s\ar is jumping and can't respond"
+msgid "#%c%s#r is jumping and can't respond"
 msgstr ""
 
 #: src/comm.c:130
 #, c-format
-msgid "\a%c%s\ar does not respond"
+msgid "#%c%s#r does not respond"
 msgstr ""
 
 #: src/comm.c:207
@@ -35223,7 +35223,7 @@ msgstr ""
 
 #: src/console.c:611
 #, fuzzy
-msgid "\agWelcome to the Lua console!"
+msgid "#gWelcome to the Lua console!"
 msgstr "네뷸라에 온것을 환영합니다"
 
 #. Create the window.
@@ -35371,12 +35371,12 @@ msgstr ""
 #: src/dev_sysedit.c:364 src/dev_sysedit.c:423
 #, c-format
 msgid ""
-"Planet by the name of \ar'%s'\a0 already exists in the \ar'%s'\a0 system"
+"Planet by the name of #r'%s'#0 already exists in the #r'%s'#0 system"
 msgstr ""
 
 #: src/dev_sysedit.c:417
 #, fuzzy, c-format
-msgid "What do you want to rename the planet \ar%s\a0?"
+msgid "What do you want to rename the planet #r%s#0?"
 msgstr "\"원하는게 뭐야!?\""
 
 #: src/dev_sysedit.c:465
@@ -35603,7 +35603,7 @@ msgstr ""
 
 #: src/dev_uniedit.c:682
 #, fuzzy, c-format
-msgid "What do you want to rename \ar%s\a0?"
+msgid "What do you want to rename #r%s#0?"
 msgstr "\"원하는게 뭐야!?\""
 
 #. Get name.
@@ -35654,11 +35654,11 @@ msgstr ""
 
 #: src/dev_uniedit.c:1229
 #, c-format
-msgid "Name: \an%s"
+msgid "Name: #n%s"
 msgstr ""
 
 #: src/dev_uniedit.c:1229 src/dev_uniedit.c:1526
-msgid "\arvarious"
+msgid "#rvarious"
 msgstr ""
 
 #. Add general stats
@@ -35809,27 +35809,27 @@ msgstr ""
 #. text
 #: src/equipment.c:285
 msgid ""
-"\anName:\n"
-"\a0\anModel:\n"
-"\a0\anClass:\n"
-"\a0\anCrew:\n"
-"\a0\anValue:\n"
-"\a0\n"
-"\anMass:\n"
-"\a0\anJump Time:\n"
-"\a0\anThrust:\n"
-"\a0\anSpeed:\n"
-"\a0\anTurn:\n"
-"\a0\anTime Dilation:\n"
-"\a0\n"
-"\anAbsorption:\n"
-"\a0\anShield:\n"
-"\a0\anArmour:\n"
-"\a0\anEnergy:\n"
-"\a0\anCargo Space:\n"
-"\a0\anFuel:\n"
-"\a0\n"
-"\anShip Status:\a0"
+"#nName:\n"
+"#0#nModel:\n"
+"#0#nClass:\n"
+"#0#nCrew:\n"
+"#0#nValue:\n"
+"#0\n"
+"#nMass:\n"
+"#0#nJump Time:\n"
+"#0#nThrust:\n"
+"#0#nSpeed:\n"
+"#0#nTurn:\n"
+"#0#nTime Dilation:\n"
+"#0\n"
+"#nAbsorption:\n"
+"#0#nShield:\n"
+"#0#nArmour:\n"
+"#0#nEnergy:\n"
+"#0#nCargo Space:\n"
+"#0#nFuel:\n"
+"#0\n"
+"#nShip Status:#0"
 msgstr ""
 
 #: src/equipment.c:316
@@ -35880,14 +35880,14 @@ msgstr ""
 #: src/equipment.c:786
 msgid ""
 "\n"
-"\aoUnique\a0"
+"#oUnique#0"
 msgstr ""
 
 #: src/equipment.c:788
 #, c-format
 msgid ""
 "\n"
-"\aoSlot %s\a0"
+"#oSlot %s#0"
 msgstr ""
 
 #: src/equipment.c:794
@@ -35920,24 +35920,24 @@ msgid ""
 "%s\n"
 "%s\n"
 "%s\n"
-"\a%c%s%.0f\a0\n"
+"#%c%s%.0f#0\n"
 "%s\n"
 "\n"
-"%.0f\a0 tonnes\n"
+"%.0f#0 tonnes\n"
 "%s average\n"
-"\a%c%s%.0f\a0 kN/tonne\n"
-"\a%c%s%.0f\a0 m/s (max \a%c%s%.0f\a0 m/s)\n"
-"\a%c%s%.0f\a0 deg/s\n"
+"#%c%s%.0f#0 kN/tonne\n"
+"#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)\n"
+"#%c%s%.0f#0 deg/s\n"
 "%.0f%%\n"
 "\n"
-"\a%c%s%.0f%%\n"
-"\a%c%s%.0f\a0 MJ (\a%c%s%.1f\a0 MW)\n"
-"\a%c%s%.0f\a0 MJ (\a%c%s%.1f\a0 MW)\n"
-"\a%c%s%.0f\a0 MJ (\a%c%s%.1f\a0 MW)\n"
-"%d / \a%c%s%d\a0 tonnes\n"
+"#%c%s%.0f%%\n"
+"#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
+"#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
+"#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
+"%d / #%c%s%d#0 tonnes\n"
 "%d units (%d jumps)\n"
 "\n"
-"\a%c%s\a0"
+"#%c%s#0"
 msgstr ""
 
 #: src/equipment.c:1777
@@ -35993,19 +35993,19 @@ msgstr ""
 
 #: src/escort.c:210
 #, c-format
-msgid "\agEscorts: \a0Attacking %s."
+msgid "#gEscorts: #0Attacking %s."
 msgstr ""
 
 #: src/escort.c:223
-msgid "\agEscorts: \a0Holding position."
+msgid "#gEscorts: #0Holding position."
 msgstr ""
 
 #: src/escort.c:236
-msgid "\agEscorts: \a0Returning to ship."
+msgid "#gEscorts: #0Returning to ship."
 msgstr ""
 
 #: src/escort.c:249
-msgid "\agEscorts: \a0Clearing orders."
+msgid "#gEscorts: #0Clearing orders."
 msgstr ""
 
 #: src/escort.c:268
@@ -36030,7 +36030,7 @@ msgid "Select the order to give to this escort."
 msgstr ""
 
 #: src/escort.c:325
-msgid "\agEscorts: \a0Jumping."
+msgid "#gEscorts: #0Jumping."
 msgstr ""
 
 #: src/event.c:285
@@ -36449,7 +36449,7 @@ msgstr ""
 
 #: src/gui.c:2317
 #, c-format
-msgid "\aoRadar set to %dx."
+msgid "#oRadar set to %dx."
 msgstr ""
 
 #: src/gui_osd.c:235
@@ -36561,13 +36561,13 @@ msgstr ""
 
 #: src/info.c:208
 msgid ""
-"\anPilot:\a0\n"
-"\anDate:\a0\n"
-"\anCombat Rating:\a0\n"
+"#nPilot:#0\n"
+"#nDate:#0\n"
+"#nCombat Rating:#0\n"
 "\n"
-"\anMoney:\a0\n"
-"\anShip:\a0\n"
-"\anFuel:\a0"
+"#nMoney:#0\n"
+"#nShip:#0\n"
+"#nFuel:#0"
 msgstr ""
 
 #: src/info.c:218
@@ -36624,26 +36624,26 @@ msgstr ""
 
 #: src/info.c:406
 msgid ""
-"\anName:\a0\n"
-"\anModel:\a0\n"
-"\anClass:\a0\n"
-"\anCrew:\a0\n"
+"#nName:#0\n"
+"#nModel:#0\n"
+"#nClass:#0\n"
+"#nCrew:#0\n"
 "\n"
-"\anMass:\a0\n"
-"\anJump Time:\a0\n"
-"\anThrust:\a0\n"
-"\anSpeed:\a0\n"
-"\anTurn:\a0\n"
-"\anTime Dilation:\a0\n"
+"#nMass:#0\n"
+"#nJump Time:#0\n"
+"#nThrust:#0\n"
+"#nSpeed:#0\n"
+"#nTurn:#0\n"
+"#nTime Dilation:#0\n"
 "\n"
-"\anAbsorption:\a0\n"
-"\anShield:\a0\n"
-"\anArmour:\a0\n"
-"\anEnergy:\a0\n"
-"\anCargo Space:\a0\n"
-"\anFuel:\a0\n"
+"#nAbsorption:#0\n"
+"#nShield:#0\n"
+"#nArmour:#0\n"
+"#nEnergy:#0\n"
+"#nCargo Space:#0\n"
+"#nFuel:#0\n"
 "\n"
-"\anStats:\a0\n"
+"#nStats:#0\n"
 msgstr ""
 
 #: src/info.c:451
@@ -36743,7 +36743,7 @@ msgid "Abort"
 msgstr ""
 
 #: src/info.c:1028
-msgid "\anReward:\a0"
+msgid "#nReward:#0"
 msgstr ""
 
 #. no missions
@@ -37504,7 +37504,7 @@ msgid ""
 msgstr ""
 
 #: src/land.c:569 src/land.c:717
-msgid "\anReward:\a0 None"
+msgid "#nReward:#0 None"
 msgstr ""
 
 #: src/land.c:624
@@ -37527,7 +37527,7 @@ msgstr ""
 
 #: src/land.c:728
 #, c-format
-msgid "\anReward:\a0 %s"
+msgid "#nReward:#0 %s"
 msgstr ""
 
 #: src/land.c:774 src/land.c:819
@@ -37595,7 +37595,7 @@ msgstr ""
 
 #: src/land.c:1372
 #, c-format
-msgid "\aoTaking off from %s on %s."
+msgid "#oTaking off from %s on %s."
 msgstr ""
 
 #. error has occurred
@@ -37618,15 +37618,15 @@ msgstr ""
 
 #: src/land_outfits.c:200 src/map_find.c:672
 msgid ""
-"\anOwned:\a0\n"
+"#nOwned:#0\n"
 "\n"
-"\anSlot:\a0\n"
-"\anSize:\a0\n"
-"\anMass:\a0\n"
+"#nSlot:#0\n"
+"#nSize:#0\n"
+"#nMass:#0\n"
 "\n"
-"\anPrice:\a0\n"
-"\anMoney:\a0\n"
-"\anLicense:\a0\n"
+"#nPrice:#0\n"
+"#nMoney:#0\n"
+"#nLicense:#0\n"
 msgstr ""
 
 #: src/land_outfits.c:279
@@ -37661,12 +37661,12 @@ msgid ""
 msgstr ""
 
 #: src/land_outfits.c:637
-msgid "\aoUnique\a0\n"
+msgid "#oUnique#0\n"
 msgstr ""
 
 #: src/land_outfits.c:639
 #, c-format
-msgid "\aoSlot %s\a0\n"
+msgid "#oSlot %s#0\n"
 msgstr ""
 
 #: src/land_outfits.c:645
@@ -37734,29 +37734,29 @@ msgstr ""
 #. text
 #: src/land_shipyard.c:119
 msgid ""
-"\anModel:\n"
-"\a0\anClass:\n"
-"\a0\anFabricator:\n"
-"\a0\anCrew:\n"
-"\a0\n"
-"\anCPU:\n"
-"\a0\anMass:\n"
-"\a0\anThrust:\n"
-"\a0\anSpeed:\n"
-"\a0\anTurn:\n"
-"\a0\anTime Dilation:\n"
-"\a0\n"
-"\anAbsorption:\n"
-"\a0\anShield:\n"
-"\a0\anArmour:\n"
-"\a0\anEnergy:\n"
-"\a0\anCargo Space:\n"
-"\a0\anFuel:\n"
-"\a0\anFuel Use:\n"
-"\a0\anPrice:\n"
-"\a0\anMoney:\n"
-"\a0\anLicense:\n"
-"\a0"
+"#nModel:\n"
+"#0#nClass:\n"
+"#0#nFabricator:\n"
+"#0#nCrew:\n"
+"#0\n"
+"#nCPU:\n"
+"#0#nMass:\n"
+"#0#nThrust:\n"
+"#0#nSpeed:\n"
+"#0#nTurn:\n"
+"#0#nTime Dilation:\n"
+"#0\n"
+"#nAbsorption:\n"
+"#0#nShield:\n"
+"#0#nArmour:\n"
+"#0#nEnergy:\n"
+"#0#nCargo Space:\n"
+"#0#nFuel:\n"
+"#0#nFuel Use:\n"
+"#0#nPrice:\n"
+"#0#nMoney:\n"
+"#0#nLicense:\n"
+"#0"
 msgstr ""
 
 #: src/land_shipyard.c:207
@@ -37869,13 +37869,13 @@ msgstr ""
 
 #: src/land_trade.c:86
 msgid ""
-"\anYou have:\a0\n"
-"\anPurchased for:\a0\n"
-"\anMarket Price:\a0\n"
-"\anFree Space:\a0\n"
-"\anMoney:\a0\n"
-"\anAverage price here:\a0\n"
-"\anAverage price all:\a0"
+"#nYou have:#0\n"
+"#nPurchased for:#0\n"
+"#nMarket Price:#0\n"
+"#nFree Space:#0\n"
+"#nMoney:#0\n"
+"#nAverage price here:#0\n"
+"#nAverage price all:#0"
 msgstr ""
 
 #: src/land_trade.c:158
@@ -37932,7 +37932,7 @@ msgstr "게임 불러오기"
 
 #: src/load.c:310
 #, c-format
-msgid "%s \ar(Backup)\a0"
+msgid "%s #r(Backup)#0"
 msgstr ""
 
 #: src/load.c:334
@@ -37942,47 +37942,47 @@ msgstr "뒤"
 #: src/load.c:378
 #, fuzzy, c-format
 msgid ""
-"\anName:\n"
-"\a0   %s\n"
+"#nName:\n"
+"#0   %s\n"
 "\n"
-"\anVersion:\n"
-"\a0   %s\n"
+"#nVersion:\n"
+"#0   %s\n"
 "\n"
-"\anDate:\n"
-"\a0   %s\n"
+"#nDate:\n"
+"#0   %s\n"
 "\n"
-"\anPlanet:\n"
-"\a0   %s\n"
+"#nPlanet:\n"
+"#0   %s\n"
 "\n"
-"\anCredits:\n"
-"\a0   %s\n"
+"#nCredits:\n"
+"#0   %s\n"
 "\n"
-"\anShip Name:\n"
-"\a0   %s\n"
+"#nShip Name:\n"
+"#0   %s\n"
 "\n"
-"\anShip Model:\n"
-"\a0   %s"
+"#nShip Model:\n"
+"#0   %s"
 msgstr ""
-"\\an이름:\n"
-"\\a0   %s\n"
+"#n이름:\n"
+"#0   %s\n"
 "\n"
-"\\an버전:\n"
-"\\a0   %s\n"
+"#n버전:\n"
+"#0   %s\n"
 "\n"
-"\\an날짜:\n"
-"\\a0   %s\n"
+"#n날짜:\n"
+"#0   %s\n"
 "\n"
-"\\an행성:\n"
-"\\a0   %s\n"
+"#n행성:\n"
+"#0   %s\n"
 "\n"
-"\\an크레딧:\n"
-"\\a0   %s\n"
+"#n크레딧:\n"
+"#0   %s\n"
 "\n"
-"\\an배 이름:\n"
-"\\a0   %s\n"
+"#n배 이름:\n"
+"#0   %s\n"
 "\n"
-"\\an배 종류:\n"
-"\\a0   %s"
+"#n배 종류:\n"
+"#0   %s"
 
 #: src/load.c:422
 msgid "Save game version mismatch"
@@ -37992,12 +37992,12 @@ msgstr "게임 버전 불일치 저장"
 #, fuzzy, c-format
 msgid ""
 "Save game '%s' version does not match Naev version:\n"
-"   Save version: \ar%s\a0\n"
+"   Save version: #r%s#0\n"
 "   Naev version: %s\n"
 "Are you sure you want to load this game? It may lose data."
 msgstr ""
 "저장 게임 '%s'버전이 Naev 버전과 일치하지 않습니다.\n"
-"    저장 버전: \\ ar%s\\a0\n"
+"    저장 버전: #r%s#0\n"
 "    Naev 버전: %s\n"
 "이 게임을 로드 하시겠습니까? 데이터가 손실 될 수 있습니다."
 
@@ -38022,8 +38022,8 @@ msgstr "저장된 게임 '%s'이 잘못되었습니다!"
 #. Welcome message - must be before space_init.
 #: src/load.c:617 src/player.c:340
 #, fuzzy, c-format
-msgid "\agWelcome to %s!"
-msgstr "\\ag %s에 오신 것을 환영합니다!"
+msgid "#gWelcome to %s!"
+msgstr "#g %s에 오신 것을 환영합니다!"
 
 #: src/load.c:628
 msgid "Old version detected. Sanitizing ships for slots"
@@ -38175,8 +38175,8 @@ msgstr "'%s'임무에 대한 잘못된 XML 헤더: 루트 요소 '%s'누락"
 
 #: src/map.c:2568
 #, c-format
-msgid "Loaded %d map decorator."
-msgid_plural "Loaded %d map decorators."
+msgid "Loaded %d map decorator"
+msgid_plural "Loaded %d map decorators"
 msgstr[0] ""
 
 #: src/map.c:2595
@@ -38219,7 +38219,7 @@ msgstr[0] "%s (%d 점프, %.0fk 거리)"
 
 #: src/map_find.c:436
 #, c-format
-msgid "\a%c%s (%s, %s)"
+msgid "#%c%s (%s, %s)"
 msgstr ""
 
 #: src/map_find.c:788
@@ -38480,48 +38480,48 @@ msgid ""
 "\n"
 "%s\n"
 "\n"
-"\anOwned:\a0 %d    \anSlot: \a0%s    \anSize: \a0%s\n"
-"\anMass:\a0    %.0f tonnes     \anPrice:\a0 %s\n"
-"\anLicense:\a0 %s"
+"#nOwned:#0 %d    #nSlot: #0%s    #nSize: #0%s\n"
+"#nMass:#0    %.0f tonnes     #nPrice:#0 %s\n"
+"#nLicense:#0 %s"
 msgstr ""
 
 #: src/map_system.c:648
 #, c-format
 msgid ""
-"\anModel:\a0 %s    \anClass:\a0 %s\n"
+"#nModel:#0 %s    #nClass:#0 %s\n"
 "\n"
 "%s\n"
 "\n"
-"\anFabricator:\a0 %s    \anCrew:\a0 %d\n"
-"\anCPU:\a0 %.0f teraflops    \anMass:\a0 %.0f tonnes\n"
-"\anThrust:\a0 %.0f kN/tonne    \anSpeed:\a0 %.0f m/s\n"
-"\anTurn:\a0 %.0f deg/s    \anTime Dilation:\a0 %.0f%%\n"
-"\anAbsorption:\a0 %.0f%% damage\n"
-"\anShield:\a0 %.0f MJ (%.1f MW)    \anArmour:\a0 %.0f MJ (%.1f MW)\n"
-"\anEnergy:\a0 %.0f MJ (%.1f MW)\n"
-"\anCargo Space:\a0 %.0f tonnes\n"
-"\anFuel:\a0 %d units  \anFuel Use:\a0 %d units\n"
-"\anPrice:\a0 %s  \anLicense:\a0 %s\n"
+"#nFabricator:#0 %s    #nCrew:#0 %d\n"
+"#nCPU:#0 %.0f teraflops    #nMass:#0 %.0f tonnes\n"
+"#nThrust:#0 %.0f kN/tonne    #nSpeed:#0 %.0f m/s\n"
+"#nTurn:#0 %.0f deg/s    #nTime Dilation:#0 %.0f%%\n"
+"#nAbsorption:#0 %.0f%% damage\n"
+"#nShield:#0 %.0f MJ (%.1f MW)    #nArmour:#0 %.0f MJ (%.1f MW)\n"
+"#nEnergy:#0 %.0f MJ (%.1f MW)\n"
+"#nCargo Space:#0 %.0f tonnes\n"
+"#nFuel:#0 %d units  #nFuel Use:#0 %d units\n"
+"#nPrice:#0 %s  #nLicense:#0 %s\n"
 "%s"
 msgstr ""
 
 #: src/map_system.c:718
 #, c-format
-msgid "\anYou have:\a0 %d tonne, purchased at %s/t\n"
-msgid_plural "\anYou have:\a0 %d tonnes, purchased at %s/t\n"
+msgid "#nYou have:#0 %d tonne, purchased at %s/t\n"
+msgid_plural "#nYou have:#0 %d tonnes, purchased at %s/t\n"
 msgstr[0] ""
 
 #: src/map_system.c:724
 #, c-format
-msgid "\anYou have:\a0 %d tonne\n"
-msgid_plural "\anYou have:\a0 %d tonnes\n"
+msgid "#nYou have:#0 %d tonne\n"
+msgid_plural "#nYou have:#0 %d tonnes\n"
 msgstr[0] ""
 
 #: src/map_system.c:729
 #, c-format
 msgid ""
-"\anAverage price seen here:\a0 %s/t ± %s/t\n"
-"\anAverage price seen everywhere:\a0 %s/t ± %s/t\n"
+"#nAverage price seen here:#0 %s/t ± %s/t\n"
+"#nAverage price seen everywhere:#0 %s/t ± %s/t\n"
 msgstr ""
 
 #: src/map_system.c:734
@@ -39676,7 +39676,7 @@ msgstr ""
 
 #: src/nlua_pilot.c:3866
 #, c-format
-msgid "\a%c%s\a0 is hailing you."
+msgid "#%c%s#0 is hailing you."
 msgstr ""
 
 #: src/nlua_planet.c:172
@@ -40685,7 +40685,7 @@ msgstr ""
 #: src/outfit.c:1676
 msgid ""
 "\n"
-"\arActivated Outfit\a0"
+"#rActivated Outfit#0"
 msgstr ""
 
 #: src/outfit.c:1685
@@ -40767,7 +40767,7 @@ msgstr ""
 #, c-format
 msgid ""
 "%s\n"
-"\arActivated Outfit\a0\n"
+"#rActivated Outfit#0\n"
 "%.0f CPU\n"
 "Only one can be equipped\n"
 "%.0f Maximum Effective Mass\n"
@@ -40928,22 +40928,22 @@ msgstr ""
 #. Outfit filter labels. [Doc comments are also translator notes and must precede the #define.]
 #. * Color-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title.
 #: src/outfit.h:33
-msgid "\ab W "
+msgid "#b W "
 msgstr ""
 
 #. * Color-coded abbreviation for "Utility [outfit]", short enough to use as a tab/column title.
 #: src/outfit.h:35
-msgid "\ag U "
+msgid "#g U "
 msgstr ""
 
 #. * Color-coded abbreviation for "Structure [outfit]", short enough to use as a tab/column title.
 #: src/outfit.h:37
-msgid "\ap S "
+msgid "#p S "
 msgstr ""
 
 #. * Color-coded abbreviation for "Core [outfit]", short enough to use as a tab/column title.
 #: src/outfit.h:39
-msgid "\aoCore"
+msgid "#oCore"
 msgstr ""
 
 #: src/perlin.c:669
@@ -40962,38 +40962,38 @@ msgid "Solid initialization did not specify correct update function!"
 msgstr ""
 
 #: src/pilot.c:891
-msgid "\aoActive cooldown engaged."
+msgid "#oActive cooldown engaged."
 msgstr ""
 
 #: src/pilot.c:946
-msgid "\aoActive cooldown completed."
+msgid "#oActive cooldown completed."
 msgstr ""
 
 #: src/pilot.c:949
 #, c-format
-msgid "\arActive cooldown aborted: %s!"
+msgid "#rActive cooldown aborted: %s!"
 msgstr ""
 
 #: src/pilot.c:951
-msgid "\arActive cooldown aborted!"
+msgid "#rActive cooldown aborted!"
 msgstr ""
 
 #: src/pilot.c:1114
 #, c-format
-msgid "\a%cComm %s>\a0 \"%s\""
+msgid "#%cComm %s>#0 \"%s\""
 msgstr ""
 
 #: src/pilot.c:1142
 #, c-format
-msgid "\a%cBroadcast %s>\a0 \"%s\""
+msgid "#%cBroadcast %s>#0 \"%s\""
 msgstr ""
 
 #: src/pilot.c:2288 src/pilot.c:2315
-msgid "\arStrayed too far from jump point: jump aborted."
+msgid "#rStrayed too far from jump point: jump aborted."
 msgstr ""
 
 #: src/pilot.c:2295
-msgid "\arAfterburner active: jump aborted."
+msgid "#rAfterburner active: jump aborted."
 msgstr ""
 
 #: src/pilot.c:2335
@@ -41399,31 +41399,31 @@ msgid "Asteroid targeted"
 msgstr ""
 
 #: src/player.c:1460
-msgid "\arThere are no planets to land on."
+msgid "#rThere are no planets to land on."
 msgstr ""
 
 #: src/player.c:1497
-msgid "\arDocking stabilizers malfunctioning, cannot land."
+msgid "#rDocking stabilizers malfunctioning, cannot land."
 msgstr ""
 
 #: src/player.c:1504
-msgid "\arYou can't land here."
+msgid "#rYou can't land here."
 msgstr ""
 
 #. No shoes, no shirt, no lifeforms, no service.
 #: src/player.c:1522
 #, c-format
-msgid "\aoReady to land on %s."
+msgid "#oReady to land on %s."
 msgstr ""
 
 #: src/player.c:1532
 #, c-format
-msgid "\arYou are too far away to land on %s."
+msgid "#rYou are too far away to land on %s."
 msgstr ""
 
 #: src/player.c:1537
 #, c-format
-msgid "\arYou are going too fast to land on %s."
+msgid "#rYou are going too fast to land on %s."
 msgstr ""
 
 #: src/player.c:1576
@@ -41432,7 +41432,7 @@ msgstr ""
 
 #: src/player.c:1587
 #, c-format
-msgid "\a%c%s>\a0 Landing permission revoked."
+msgid "#%c%s>#0 Landing permission revoked."
 msgstr ""
 
 #: src/player.c:1614
@@ -41446,39 +41446,39 @@ msgstr ""
 
 #: src/player.c:1731
 #, c-format
-msgid "\arReceiving hail! Press %s to respond."
+msgid "#rReceiving hail! Press %s to respond."
 msgstr ""
 
 #: src/player.c:1786
-msgid "\arAborting hyperspace sequence."
+msgid "#rAborting hyperspace sequence."
 msgstr ""
 
 #: src/player.c:1793
-msgid "\arYou are too far from a jump point to initiate hyperspace."
+msgid "#rYou are too far from a jump point to initiate hyperspace."
 msgstr ""
 
 #: src/player.c:1795 src/player_autonav.c:81
-msgid "\arHyperspace drive is offline."
+msgid "#rHyperspace drive is offline."
 msgstr ""
 
 #: src/player.c:1797
 #, fuzzy
-msgid "\arYou do not have enough fuel to hyperspace jump."
+msgid "#rYou do not have enough fuel to hyperspace jump."
 msgstr "\"나는 여분의 연료가 없다.\""
 
 #: src/player.c:1799
-msgid "\aoPreparing for hyperspace."
+msgid "#oPreparing for hyperspace."
 msgstr ""
 
 #: src/player.c:1875
 #, c-format
-msgid "\aoAutonav arrived at the %s system."
+msgid "#oAutonav arrived at the %s system."
 msgstr ""
 
 #: src/player.c:1880
 #, c-format
-msgid "\aoAutonav continuing until destination (%d jump left)."
-msgid_plural "\aoAutonav continuing until destination (%d jumps left)."
+msgid "#oAutonav continuing until destination (%d jump left)."
+msgid_plural "#oAutonav continuing until destination (%d jumps left)."
 msgstr[0] ""
 
 #: src/player.c:2110
@@ -41498,23 +41498,23 @@ msgstr ""
 
 #: src/player.c:2162
 #, c-format
-msgid "\ar%s is out of comm range, unable to contact."
+msgid "#r%s is out of comm range, unable to contact."
 msgstr ""
 
 #: src/player.c:2186 src/player.c:2209
-msgid "\arNo target selected to hail."
+msgid "#rNo target selected to hail."
 msgstr ""
 
 #: src/player.c:2237
-msgid "\arYou haven't been hailed by any pilots."
+msgid "#rYou haven't been hailed by any pilots."
 msgstr ""
 
 #: src/player.c:2258
-msgid "\aoMouse flying enabled."
+msgid "#oMouse flying enabled."
 msgstr ""
 
 #: src/player.c:2264
-msgid "\arMouse flying disabled."
+msgid "#rMouse flying disabled."
 msgstr ""
 
 #: src/player.c:2501
@@ -41684,11 +41684,11 @@ msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr ""
 
 #: src/player_autonav.c:76
-msgid "\arNot enough fuel to jump for autonav."
+msgid "#rNot enough fuel to jump for autonav."
 msgstr ""
 
 #: src/player_autonav.c:107
-msgid "\aoAutonav initialized."
+msgid "#oAutonav initialized."
 msgstr ""
 
 #: src/player_autonav.c:170
@@ -41698,30 +41698,30 @@ msgstr "옵션"
 
 #: src/player_autonav.c:268
 #, c-format
-msgid "\arAutonav aborted: %s!"
+msgid "#rAutonav aborted: %s!"
 msgstr ""
 
 #: src/player_autonav.c:270
-msgid "\arAutonav aborted!"
+msgid "#rAutonav aborted!"
 msgstr ""
 
 #: src/player_autonav.c:279
-msgid "\aoAborting hyperspace sequence."
+msgid "#oAborting hyperspace sequence."
 msgstr ""
 
 #: src/player_autonav.c:364
-msgid "\aoAutonav arrived at position."
+msgid "#oAutonav arrived at position."
 msgstr ""
 
 #: src/player_autonav.c:374
 #, c-format
-msgid "\aoAutonav arrived at \a%c%s\a0."
+msgid "#oAutonav arrived at #%c%s#0."
 msgstr ""
 
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
 #: src/player_autonav.c:389
 #, c-format
-msgid "\ao%s has been lost."
+msgid "#o%s has been lost."
 msgstr ""
 
 #: src/player_autonav.c:587
@@ -42421,7 +42421,7 @@ msgstr ""
 
 #: src/space.c:1349
 #, c-format
-msgid "You discovered \a%c%s\a0."
+msgid "You discovered #%c%s#0."
 msgstr ""
 
 #: src/space.c:1366
@@ -42439,12 +42439,12 @@ msgstr ""
 
 #: src/space.c:1510
 #, c-format
-msgid "\aoEntering System %s on %s."
+msgid "#oEntering System %s on %s."
 msgstr ""
 
 #: src/space.c:1512
 #, c-format
-msgid "\arWARNING - Volatile nebula detected in %s! Taking damage!"
+msgid "#rWARNING - Volatile nebula detected in %s! Taking damage!"
 msgstr ""
 
 #: src/space.c:1745
@@ -47750,13 +47750,13 @@ msgid ""
 "is mostly pre-packaged stuff. Not bad, but not amazing either."
 msgstr ""
 
-#: dat/assets/jaqeline.xml:2
-msgid "Jaqeline"
+#: dat/assets/jacqueline.xml:2
+msgid "Jacqueline"
 msgstr ""
 
-#: dat/assets/jaqeline.xml:28
+#: dat/assets/jacqueline.xml:28
 msgid ""
-"Though technically an oceanic world, Jaqueline's oceans are filled with "
+"Though technically an oceanic world, Jacqueline's oceans are filled with "
 "algae that absorb light and release toxic fumes into the planet's "
 "atmosphere. The organic soup is so thick that the planet appears purple when "
 "seen from space. The Soromid, true to form, have taken a great interest in "
@@ -47764,9 +47764,9 @@ msgid ""
 "here, treating the whole planet as a laboratory."
 msgstr ""
 
-#: dat/assets/jaqeline.xml:29
+#: dat/assets/jacqueline.xml:29
 msgid ""
-"Though Jaqueline is a fascinating world (according to the Soromid anyway), "
+"Though Jacqueline is a fascinating world (according to the Soromid anyway), "
 "little can be seen of it for an ordinary ship captain visiting here. The "
 "spaceport and its neighboring habitation complex are completely shielded "
 "from the outside environment, and any windows would soon be rendered opaque, "
@@ -63421,9 +63421,9 @@ msgstr ""
 #~ msgstr "NULL 텍스처를 해제하려고합니다!"
 
 #, c-format
-#~ msgid "\\a%c%s (%s, unknown route)"
-#~ msgstr "\\a%c%s (%s, 알 수 없는 경로)"
+#~ msgid "#%c%s (%s, unknown route)"
+#~ msgstr "#%c%s (%s, 알 수 없는 경로)"
 
 #, c-format
-#~ msgid "\\a%c%s (%s, %d jumps, %.0fk distance)"
-#~ msgstr "\\a%c%s (%s, %d 점프, %.0fk 거리)"
+#~ msgid "#%c%s (%s, %d jumps, %.0fk distance)"
+#~ msgstr "#%c%s (%s, %d 점프, %.0fk 거리)"

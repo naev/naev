@@ -12,25 +12,27 @@
  */
 
 
-#include "weapon.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <math.h>
 #include <stdlib.h>
-#include "nstring.h"
 
-#include "log.h"
-#include "rng.h"
-#include "pilot.h"
-#include "player.h"
+#include "naev.h"
+/** @endcond */
+
+#include "weapon.h"
+
+#include "ai.h"
+#include "camera.h"
 #include "collision.h"
-#include "spfx.h"
-#include "opengl.h"
 #include "explosion.h"
 #include "gui.h"
-#include "camera.h"
-#include "ai.h"
+#include "log.h"
+#include "nstring.h"
+#include "opengl.h"
+#include "pilot.h"
+#include "player.h"
+#include "rng.h"
+#include "spfx.h"
 
 
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
@@ -67,6 +69,7 @@ typedef struct Weapon_ {
 
    double real_vel; /**< Keeps track of the real velocity. */
    double dam_mod; /**< Damage modifier. */
+   double dam_as_dis_mod; /**< Damage as disable modifier. */
    int voice; /**< Weapon's voice. */
    double exp_timer; /**< Explosion timer for beams. */
    double life; /**< Total life. */
@@ -1096,10 +1099,10 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    /* Get general details. */
    odmg              = outfit_damage( w->outfit );
    parent            = pilot_get( w->parent );
-   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage );
+   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage * (1.-w->dam_as_dis_mod) );
    dmg.penetration   = odmg->penetration;
    dmg.type          = odmg->type;
-   dmg.disable       = odmg->disable;
+   dmg.disable       = MAX( 0., odmg->disable + dmg.damage * w->dam_as_dis_mod );
 
    /* Play sound if they have it. */
    s = outfit_soundHit(w->outfit);
@@ -1381,10 +1384,14 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    acc =  HEAT_WORST_ACCURACY * pilot_heatAccuracyMod( T );
 
    /* Stat modifiers. */
-   if (outfit->type == OUTFIT_TYPE_TURRET_BOLT)
+   if (outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
       w->dam_mod *= parent->stats.tur_damage;
-   else
+      w->dam_as_dis_mod = parent->stats.tur_dam_as_dis;
+   }
+   else {
       w->dam_mod *= parent->stats.fwd_damage;
+      w->dam_as_dis_mod = parent->stats.fwd_dam_as_dis;
+   }
 
    /* Calculate direction. */
    rdir += RNG_2SIGMA() * acc;
@@ -1522,6 +1529,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
    /* Create basic features */
    w           = calloc( 1, sizeof(Weapon) );
    w->dam_mod  = 1.; /* Default of 100% damage. */
+   w->dam_as_dis_mod = 0.; /* Default of 0% damage to disable. */
    w->faction  = parent->faction; /* non-changeable */
    w->parent   = parent->id; /* non-changeable */
    w->target   = target; /* non-changeable */

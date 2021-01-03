@@ -8,10 +8,10 @@
 #  define TECH_H
 
 
-#include "outfit.h"
-#include "ship.h"
 #include "commodity.h"
 #include "nxml.h"
+#include "outfit.h"
+#include "ship.h"
 
 
 /*

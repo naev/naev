@@ -58,39 +58,40 @@
  */
 
 
-#include "ai.h"
-
-#include "naev.h"
-
-#include <stdlib.h>
-#include <stdio.h> /* malloc realloc */
-#include <math.h>
-#include <ctype.h> /* isdigit */
-
-/* yay more Lua */
+/** @cond */
+#include <ctype.h>
 #include <lauxlib.h>
 #include <lualib.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "physfs.h"
 
-#include "nstring.h" /* strncpy strlen strncat strcmp strdup */
-#include "log.h"
-#include "pilot.h"
-#include "player.h"
-#include "physics.h"
-#include "ndata.h"
-#include "rng.h"
-#include "space.h"
-#include "faction.h"
+#include "naev.h"
+/** @endcond */
+
+#include "ai.h"
+
+#include "array.h"
+#include "board.h"
 #include "escort.h"
+#include "faction.h"
+#include "hook.h"
+#include "log.h"
+#include "ndata.h"
 #include "nlua.h"
-#include "nluadef.h"
-#include "nlua_vec2.h"
-#include "nlua_rnd.h"
+#include "nlua_faction.h"
 #include "nlua_pilot.h"
 #include "nlua_planet.h"
-#include "nlua_faction.h"
-#include "board.h"
-#include "hook.h"
-#include "array.h"
+#include "nlua_rnd.h"
+#include "nlua_vec2.h"
+#include "nluadef.h"
+#include "nstring.h"
+#include "physics.h"
+#include "pilot.h"
+#include "player.h"
+#include "rng.h"
+#include "space.h"
 
 
 /*
@@ -561,19 +562,19 @@ void ai_destroy( Pilot* p )
 int ai_load (void)
 {
    char** files;
-   size_t nfiles, i;
+   size_t i;
    char path[PATH_MAX];
    int flen, suflen;
 
    /* get the file list */
-   files = ndata_list( AI_PATH, &nfiles );
+   files = PHYSFS_enumerateFiles( AI_PATH );
 
    /* Create array. */
    profiles = array_create( AI_Profile );
 
    /* load the profiles */
    suflen = strlen(AI_SUFFIX);
-   for (i=0; i<nfiles; i++) {
+   for (i=0; files[i]!=NULL; i++) {
       flen = strlen(files[i]);
       if ((flen > suflen) &&
             strncmp(&files[i][flen-suflen], AI_SUFFIX, suflen)==0) {
@@ -582,15 +583,12 @@ int ai_load (void)
          if (ai_loadProfile(path)) /* Load the profile */
             WARN( _("Error loading AI profile '%s'"), path);
       }
-
-      /* Clean up. */
-      free(files[i]);
    }
 
-   DEBUG( ngettext("Loaded %d AI Profile", "Loaded %d AI Profiles", array_size(profiles) ), array_size(profiles) );
+   DEBUG( n_("Loaded %d AI Profile", "Loaded %d AI Profiles", array_size(profiles) ), array_size(profiles) );
 
    /* More clean up. */
-   free(files);
+   PHYSFS_freeList( files );
 
    /* Load equipment thingy. */
    return ai_loadEquip();

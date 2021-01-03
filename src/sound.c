@@ -9,25 +9,27 @@
  */
 
 
-#include "sound.h"
+/** @cond */
+#include <sys/stat.h>
+#include "physfs.h"
+#include "SDL.h"
+#include "SDL_mutex.h"
+#include "SDL_thread.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include <sys/stat.h>
+#include "sound.h"
 
-#include "SDL.h"
-#include "SDL_thread.h"
-#include "SDL_mutex.h"
-
-#include "sound_openal.h"
-#include "log.h"
-#include "nstring.h"
-#include "ndata.h"
-#include "music.h"
-#include "physics.h"
-#include "conf.h"
-#include "player.h"
 #include "camera.h"
+#include "conf.h"
+#include "log.h"
+#include "music.h"
+#include "ndata.h"
+#include "nstring.h"
+#include "physics.h"
+#include "player.h"
+#include "sound_openal.h"
 
 
 #define SOUND_SUFFIX_WAV   ".wav" /**< Suffix of sounds. */
@@ -560,7 +562,7 @@ void sound_setSpeed( double s )
 static int sound_makeList (void)
 {
    char** files;
-   size_t nfiles,i;
+   size_t i;
    char path[PATH_MAX];
    char tmp[64];
    int len, suflen, flen;
@@ -570,12 +572,12 @@ static int sound_makeList (void)
       return 0;
 
    /* get the file list */
-   files = ndata_list( SOUND_PATH, &nfiles );
+   files = PHYSFS_enumerateFiles( SOUND_PATH );
 
    /* load the profiles */
    mem = 0;
    suflen = strlen(SOUND_SUFFIX_WAV);
-   for (i=0; i<nfiles; i++) {
+   for (i=0; files[i]!=NULL; i++) {
       flen = strlen(files[i]);
 
       /* Must be longer than suffix. */
@@ -608,17 +610,14 @@ static int sound_makeList (void)
       nsnprintf( path, PATH_MAX, SOUND_PATH"%s", files[i] );
       if (sound_load( &sound_list[sound_nlist-1], path ))
          sound_nlist--; /* Song not actually added. */
-
-      /* Clean up. */
-      free(files[i]);
    }
    /* shrink to minimum ram usage */
    sound_list = realloc( sound_list, sound_nlist*sizeof(alSound));
 
-   DEBUG( ngettext("Loaded %d Sound", "Loaded %d Sounds", sound_nlist), sound_nlist );
+   DEBUG( n_("Loaded %d Sound", "Loaded %d Sounds", sound_nlist), sound_nlist );
 
-   /* More clean up. */
-   free(files);
+   /* Clean up. */
+   PHYSFS_freeList( files );
 
    return 0;
 }

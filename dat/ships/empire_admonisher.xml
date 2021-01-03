@@ -7,7 +7,7 @@
  <sound>engine</sound>
  <class>Corvette</class>
  <price>700000</price>
- <time_mod>1.5</time_mod>
+ <time_mod>1.25</time_mod>
  <fabricator>Nexus Shipyards</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>This military grade version of the Admonisher is mostly identical in function to a standard Admonisher, but with slightly better armour, shields, and heat dissipation.</description>

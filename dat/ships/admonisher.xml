@@ -6,7 +6,7 @@
  <sound>engine</sound>
  <class>Corvette</class>
  <price>600000</price>
- <time_mod>1.5</time_mod>
+ <time_mod>1.25</time_mod>
  <fabricator>Nexus Shipyards</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>A very versatile combat ship. Nexus defines the Admonisher as a compromise between the ruggedness of the Pacifier and the agility of the Lancelot. Overall a very solid fighter.</description>

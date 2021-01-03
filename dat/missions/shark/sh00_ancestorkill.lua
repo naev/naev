@@ -165,7 +165,7 @@ end
 --jumping out the system
 function jumpout()
    if stage == 2 then   --You were supposed to kill him, not to go away !
-      player.msg( "\ar" .. leave_msg .. "\a0" )
+      player.msg( "#r" .. leave_msg .. "#0" )
       misn.finish(false)
    end
 end
@@ -179,7 +179,7 @@ function enter()
       playershipname = playership:nameRaw()
 
       if playershipname ~= "Shark" and playershipname ~= "Empire Shark" then
-         player.msg( "\ar" .. noshark_msg .. "\a0" )
+         player.msg( "#r" .. noshark_msg .. "#0" )
          misn.finish(false)
       end
 
@@ -215,7 +215,7 @@ function beginbattle()
 end
 
 function pirate_jump()  --he went away
-   player.msg( "\ar" .. piratejump_msg .. "\a0" )
+   player.msg( "#r" .. piratejump_msg .. "#0" )
    misn.finish( false )
 end
 

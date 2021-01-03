@@ -8,11 +8,13 @@
  * @brief Lua jump module.
  */
 
-#include "nlua_jump.h"
+/** @cond */
+#include <lauxlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <lauxlib.h>
+#include "nlua_jump.h"
 
 #include "nluadef.h"
 #include "nlua_vec2.h"

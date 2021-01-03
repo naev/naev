@@ -9,9 +9,11 @@
  */
 
 
-#include "queue.h"
-
+/** @cond */
 #include <stdlib.h>
+/** @endcond */
+
+#include "queue.h"
 
 #include "log.h"
 

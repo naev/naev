@@ -10,17 +10,19 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "tech.h"
 
-#include "naev.h"
-
-#include "nxml.h"
+#include "array.h"
+#include "economy.h"
 #include "log.h"
 #include "ndata.h"
+#include "nxml.h"
 #include "outfit.h"
 #include "ship.h"
-#include "economy.h"
-#include "array.h"
 
 
 #define XML_TECH_ID         "Techs"          /**< Tech xml document tag. */
@@ -97,23 +99,15 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group
 int tech_load (void)
 {
    int i, ret, s;
-   size_t bufsize;
-   char *buf, *data;
+   char *buf;
    xmlNodePtr node, parent;
    xmlDocPtr doc;
    tech_group_t *tech;
 
    /* Load the data. */
-   data = ndata_read( TECH_DATA_PATH, &bufsize );
-   if (data == NULL)
+   doc = xml_parsePhysFS( TECH_DATA_PATH );
+   if (doc == NULL)
       return -1;
-
-   /* Load the document. */
-   doc = xmlParseMemory( data, bufsize );
-   if (doc == NULL) {
-      WARN(_("'%s' is not a valid XML file."), TECH_DATA_PATH);
-      return -1;
-   }
 
    /* Load root element. */
    parent = doc->xmlChildrenNode;
@@ -172,10 +166,9 @@ int tech_load (void)
    } while (xml_nextNode(node));
 
    /* Info. */
-   DEBUG( ngettext( "Loaded %d tech group", "Loaded %d tech groups", s ), s );
+   DEBUG( n_( "Loaded %d tech group", "Loaded %d tech groups", s ), s );
 
    /* Free memory. */
-   free(data);
    xmlFreeDoc(doc);
 
    return 0;

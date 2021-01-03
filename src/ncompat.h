@@ -8,7 +8,9 @@
 #  define NCOMPAT_H
 
 
+/** @cond */
 #include "SDL.h"
+/** @endcond */
 
 
 /* System specific. */

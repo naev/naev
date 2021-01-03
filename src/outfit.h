@@ -8,11 +8,11 @@
 #  define OUTFIT_H
 
 
-#include "opengl.h"
-#include "sound.h"
-#include "commodity.h"
-#include "shipstats.h"
 #include "collision.h"
+#include "commodity.h"
+#include "opengl.h"
+#include "shipstats.h"
+#include "sound.h"
 
 
 /*
@@ -30,13 +30,13 @@
 
 /* Outfit filter labels. [Doc comments are also translator notes and must precede the #define.] */
 /** Color-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title. */
-#define OUTFIT_LABEL_WEAPON            N_("\ab W ")
+#define OUTFIT_LABEL_WEAPON            N_("#b W ")
 /** Color-coded abbreviation for "Utility [outfit]", short enough to use as a tab/column title. */
-#define OUTFIT_LABEL_UTILITY           N_("\ag U ")
+#define OUTFIT_LABEL_UTILITY           N_("#g U ")
 /** Color-coded abbreviation for "Structure [outfit]", short enough to use as a tab/column title. */
-#define OUTFIT_LABEL_STRUCTURE         N_("\ap S ")
+#define OUTFIT_LABEL_STRUCTURE         N_("#p S ")
 /** Color-coded abbreviation for "Core [outfit]", short enough to use as a tab/column title. */
-#define OUTFIT_LABEL_CORE              N_("\aoCore")
+#define OUTFIT_LABEL_CORE              N_("#oCore")
 
 
 /*

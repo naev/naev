@@ -10,9 +10,11 @@
  */
 
 
-#include "comm.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
+
+#include "comm.h"
 
 #include "ai.h"
 #include "commodity.h"
@@ -50,7 +52,7 @@ extern int pilot_nstack;
  */
 /* Static. */
 static unsigned int comm_open( glTexture *gfx, int faction,
-      int override, int bribed, char *name );
+      int override, int bribed, const char *name );
 static unsigned int comm_openPilotWindow (void);
 static void comm_addPilotSpecialButtons( unsigned int wid );
 static void comm_close( unsigned int wid, char *unused );
@@ -107,7 +109,7 @@ int comm_openPilot( unsigned int pilot )
    /* Make sure pilot in range. */
    if (!pilot_isFlag(p, PILOT_HAILING) &&
          pilot_inRangePilot( player.p, comm_pilot, NULL ) <= 0) {
-      player_message(_("\arTarget is out of communications range"));
+      player_message(_("#rTarget is out of communications range"));
       comm_pilot = NULL;
       return -1;
    }
@@ -121,13 +123,13 @@ int comm_openPilot( unsigned int pilot )
 
    /* Must not be jumping. */
    if (pilot_isFlag(comm_pilot, PILOT_HYPERSPACE)) {
-      player_message(_("\a%c%s\ar is jumping and can't respond"), c, comm_pilot->name);
+      player_message(_("#%c%s#r is jumping and can't respond"), c, comm_pilot->name);
       return 0;
    }
 
    /* Must not be disabled. */
    if (pilot_isFlag(comm_pilot, PILOT_DISABLED)) {
-      player_message(_("\a%c%s\ar does not respond"), c, comm_pilot->name);
+      player_message(_("#%c%s#r does not respond"), c, comm_pilot->name);
       return 0;
    }
 
@@ -241,7 +243,7 @@ int comm_openPlanet( Planet *planet )
    /* Make sure planet in range. */
    /* Function uses planet index in local system, so I moved this to player.c.
    if ( pilot_inRangePlanet( player.p, planet->id ) <= 0 ) {
-      player_message("\arTarget is out of communications range.");
+      player_message("#rTarget is out of communications range.");
       comm_planet = NULL;
       return 0;
    }
@@ -273,7 +275,7 @@ int comm_openPlanet( Planet *planet )
  *    @return The comm window id.
  */
 static unsigned int comm_open( glTexture *gfx, int faction,
-      int override, int bribed, char *name )
+      int override, int bribed, const char *name )
 {
    int namex, standx, logox, y;
    int namew, standw, logow, width;

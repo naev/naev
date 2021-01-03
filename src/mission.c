@@ -9,34 +9,36 @@
  */
 
 
-#include "mission.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <stdint.h>
-#include "nstring.h"
 #include <stdlib.h>
 
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_faction.h"
-#include "nlua_ship.h"
-#include "nlua_misn.h"
-#include "nlua_shiplog.h"
-#include "rng.h"
-#include "log.h"
+#include "naev.h"
+/** @endcond */
+
+#include "mission.h"
+
+#include "array.h"
+#include "cond.h"
+#include "faction.h"
+#include "gui_osd.h"
 #include "hook.h"
+#include "land.h"
+#include "log.h"
 #include "ndata.h"
+#include "nlua.h"
+#include "nlua_faction.h"
+#include "nlua_misn.h"
+#include "nlua_ship.h"
+#include "nlua_shiplog.h"
+#include "nluadef.h"
+#include "npc.h"
+#include "nstring.h"
 #include "nxml.h"
 #include "nxml_lua.h"
-#include "faction.h"
 #include "player.h"
+#include "rng.h"
 #include "space.h"
-#include "cond.h"
-#include "gui_osd.h"
-#include "npc.h"
-#include "array.h"
-#include "land.h"
 
 
 #define XML_MISSION_TAG       "mission" /**< XML mission tag. */
@@ -884,7 +886,7 @@ int missions_load (void)
    /* Sort based on priority so higher priority missions can establish claims first. */
    qsort( mission_stack, array_size(mission_stack), sizeof(MissionData), missions_cmp );
 
-   DEBUG( ngettext("Loaded %d Mission", "Loaded %d Missions", array_size(mission_stack) ), array_size(mission_stack) );
+   DEBUG( n_("Loaded %d Mission", "Loaded %d Missions", array_size(mission_stack) ), array_size(mission_stack) );
 
    return 0;
 }

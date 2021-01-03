@@ -9,44 +9,45 @@
  */
 
 
-#include "menu.h"
-
-#include "naev.h"
-
-#include "nstring.h"
-
+/** @cond */
 #include "SDL.h"
 
-#include "toolkit.h"
-#include "tk/toolkit_priv.h" /* Needed for menu_main_resize */
-#include "dialogue.h"
-#include "log.h"
-#include "pilot.h"
-#include "space.h"
-#include "player.h"
-#include "mission.h"
-#include "ntime.h"
-#include "save.h"
-#include "load.h"
-#include "land.h"
-#include "rng.h"
-#include "nebula.h"
-#include "pause.h"
-#include "options.h"
-#include "intro.h"
-#include "music.h"
-#include "map.h"
-#include "nfile.h"
-#include "info.h"
+#include "naev.h"
+/** @endcond */
+
+#include "menu.h"
+
+#include "board.h"
+#include "camera.h"
 #include "comm.h"
 #include "conf.h"
-#include "dev_uniedit.h"
 #include "dev_mapedit.h"
+#include "dev_uniedit.h"
+#include "dialogue.h"
 #include "gui.h"
-#include "start.h"
-#include "camera.h"
-#include "board.h"
+#include "info.h"
+#include "intro.h"
+#include "land.h"
+#include "load.h"
+#include "log.h"
+#include "map.h"
+#include "mission.h"
+#include "music.h"
 #include "ndata.h"
+#include "nebula.h"
+#include "nfile.h"
+#include "nstring.h"
+#include "ntime.h"
+#include "options.h"
+#include "pause.h"
+#include "pilot.h"
+#include "player.h"
+#include "rng.h"
+#include "save.h"
+#include "space.h"
+#include "start.h"
+#include "tk/toolkit_priv.h" /* Needed for menu_main_resize */
+#include "toolkit.h"
 
 
 #define MAIN_WIDTH      200 /**< Main menu width. */
@@ -174,6 +175,9 @@ void menu_main (void)
       return;
    }
 
+   /* Close all open windows. */
+   toolkit_closeAll();
+
    /* Clean up GUI - must be done before using SCREEN_W or SCREEN_H. */
    gui_cleanup();
    player_soundStop(); /* Stop sound. */
@@ -234,7 +238,7 @@ void menu_main (void)
          "btnOptions", _("Options"), menu_options_button, SDLK_o );
    y -= BUTTON_HEIGHT+20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnCredits", pgettext("Menu|", "Credits"), menu_main_credits, SDLK_c );
+         "btnCredits", p_("Menu|", "Credits"), menu_main_credits, SDLK_c );
    y -= BUTTON_HEIGHT+20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", _("Exit"), menu_exit, SDLK_x );

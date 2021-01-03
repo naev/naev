@@ -13,19 +13,21 @@
   A UTF-8 validation routine is included.
 */
 
+/** @cond */
+#if HAVE_ALLOCA_H 
+#   include <alloca.h> /* Not available in windows, necessary for linux. */
+#endif /* HAVE_ALLOCA_H */
+#include <assert.h>
+#if HAVE_MALLOC_H
+#   include <malloc.h>
+#endif /* HAVE_MALLOC_H */
+#include <stdio.h>
+#include <string.h>
+/** @endcond */
+
 #include "utf8.h"
 
 #include "ncompat.h"
-
-#include <stdio.h>
-#include <string.h>
-
-#if HAS_WIN32
-#include <malloc.h>
-#else /* HAS_WIN32 */
-#include <alloca.h> /* Not available in windows, necessary for linux. */
-#endif /* HAS_WIN32 */
-#include <assert.h>
 
 static const uint32_t offsetsFromUTF8[6] = {
     0x00000000UL, 0x00003080UL, 0x000E2080UL,

@@ -7,8 +7,6 @@
 #  define NLUA_DATA_H
 
 
-#include <lua.h>
-
 #include "nlua.h"
 
 
@@ -24,7 +22,7 @@ typedef enum LuaDataType_e {
  * @brief Wrapper to datas.
  */
 typedef struct LuaData_s {
-   size_t size; /**< Size of buffer. */
+   size_t size; /**< Size of buffer (already multiplied by elem). */
    size_t elem; /**< Size of an element. */
    char *data; /**< Actually allocated data. */
    LuaDataType_t type; /**< Type of the data. */

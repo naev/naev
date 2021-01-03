@@ -9,30 +9,31 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "input.h"
 
-#include "naev.h"
-
-#include "log.h"
-#include "player.h"
-#include "pilot.h"
-#include "pause.h"
-#include "toolkit.h"
-#include "menu.h"
-#include "info.h"
 #include "board.h"
-#include "map.h"
-#include "escort.h"
-#include "land.h"
-#include "nstd.h"
-#include "gui.h"
-#include "weapon.h"
-#include "console.h"
-#include "conf.h"
 #include "camera.h"
-#include "map_overlay.h"
+#include "conf.h"
+#include "console.h"
+#include "escort.h"
+#include "gui.h"
 #include "hook.h"
+#include "info.h"
+#include "land.h"
+#include "log.h"
+#include "map.h"
+#include "map_overlay.h"
+#include "menu.h"
 #include "nstring.h"
+#include "pause.h"
+#include "pilot.h"
+#include "player.h"
+#include "toolkit.h"
+#include "weapon.h"
 
 
 #define MOUSE_HIDE   ( 3.) /**< Time in seconds to wait before hiding mouse again. */
@@ -498,11 +499,11 @@ void input_getKeybindDisplay( const char *keybind, char *buf, int len )
          /* Handle mod. */
          if ((mod != NMOD_NONE) && (mod != NMOD_ALL))
             p += nsnprintf( &buf[p], len-p, "%s + ", input_modToText(mod) );
-         /* Print key. @TODO: This is dodgy in terms of translation. Is it the best we can do? */
-         if (nstd_isalpha(key))
-            p += nsnprintf( &buf[p], len-p, "%c", nstd_toupper(key) );
+         /* Print key. Special-case ASCII letters (use uppercase, unlike SDL_GetKeyName.). */
+         if (key < 0x100 && isalpha(key))
+            p += nsnprintf( &buf[p], len-p, "%c", toupper(key) );
          else
-            p += nsnprintf( &buf[p], len-p, "%s", gettext(SDL_GetKeyName(key)) );
+            p += nsnprintf( &buf[p], len-p, "%s", _(SDL_GetKeyName(key)) );
          (void)p;
          break;
 

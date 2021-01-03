@@ -6,8 +6,7 @@
 #ifndef NLUA_SHIPLOG
 #  define NLUA_SHIPLOG
 
-#include <lua.h>
-#include <nlua.h>
+#include "nlua.h"
 #include "shiplog.h"
 
 /* individual library stuff */

@@ -3,17 +3,19 @@
  */
 
 
-#include "gui_osd.h"
+/** @cond */
+#include <stdlib.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include "nstring.h"
+#include "gui_osd.h"
 
-#include "log.h"
-#include "opengl.h"
-#include "font.h"
 #include "array.h"
+#include "font.h"
+#include "log.h"
+#include "nstring.h"
+#include "opengl.h"
 
 
 /**

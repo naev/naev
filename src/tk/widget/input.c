@@ -9,14 +9,15 @@
  */
 
 
-#include "tk/toolkit_priv.h"
-
+/** @cond */
 #include <stdlib.h>
 #include <assert.h>
+/** @endcond */
 
-#include "nstd.h"
 #include "nstring.h"
+#include "tk/toolkit_priv.h"
 #include "utf8.h"
+#include "font.h"
 
 
 static void inp_render( Widget* inp, double bx, double by );
@@ -209,6 +210,10 @@ static int inp_addKey( Widget* inp, uint32_t ch )
          if (c == ch)
             return 1; /* Ignored. */
    }
+
+   /* TODO make this properly escape the font colour codes. */
+   if (ch==FONT_COLOUR_CODE)
+      return 1;
 
    /* Make sure it's not full. */
    if (u8_strlen(inp->dat.inp.input) >= inp->dat.inp.char_max-1)

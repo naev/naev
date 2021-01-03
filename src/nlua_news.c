@@ -8,17 +8,19 @@
  * @brief Lua news module.
  */
 
-#include "nlua_news.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_news.h"
+
 #include "land.h"
+#include "nlua_time.h"
 #include "nluadef.h"
 #include "nstring.h"
 #include "ntime.h"
-#include "nlua_time.h"
 
 
 extern news_t *news_list; /**< Linked list containing all articles */

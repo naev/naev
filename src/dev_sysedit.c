@@ -8,16 +8,19 @@
  * @brief Handles the star system editor.
  */
 
-#include "dev_sysedit.h"
-#include "dev_uniedit.h"
+/** @cond */
+#include "physfs.h"
+#include "SDL.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include "SDL.h"
+#include "dev_sysedit.h"
 
 #include "conf.h"
 #include "dev_planet.h"
 #include "dev_system.h"
+#include "dev_uniedit.h"
 #include "dialogue.h"
 #include "economy.h"
 #include "map.h"
@@ -219,7 +222,7 @@ void sysedit_open( StarSystem *sys )
          "btnRename", _("Rename"), sysedit_btnRename );
    i += 1;
 
-   /* New system. */
+   /* New planet. */
    window_addButtonKey( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnNew", _("New Planet"), sysedit_btnNew, SDLK_n );
    i += 2;
@@ -341,6 +344,9 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
    if (conf.devautosave)
       dpl_savePlanet( p );
 
+   /* Clean up presences. */
+   space_reconstructPresences();
+
    window_close( wid, unused );
 }
 
@@ -361,7 +367,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 
    /* Check for collision. */
    if (planet_exists( name )) {
-      dialogue_alert( _("Planet by the name of \ar'%s'\a0 already exists in the \ar'%s'\a0 system"),
+      dialogue_alert( _("Planet by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
             name, planet_getSystem( name ) );
       free(name);
       sysedit_btnNew( 0, NULL );
@@ -414,13 +420,13 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
 
          /* Get new name. */
          name = dialogue_input( _("New Planet Creation"), 1, 32,
-               _("What do you want to rename the planet \ar%s\a0?"), p->name );
+               _("What do you want to rename the planet #r%s#0?"), p->name );
          if (name == NULL)
             continue;
 
          /* Check for collision. */
          if (planet_exists( name )) {
-            dialogue_alert( _("Planet by the name of \ar'%s'\a0 already exists in the \ar'%s'\a0 system"),
+            dialogue_alert( _("Planet by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
                   name, planet_getSystem( name ) );
             free(name);
             continue;
@@ -1237,7 +1243,8 @@ static void sysedit_editPnt( void )
 {
    unsigned int wid;
    int x, y, w, l, bw;
-   char buf[1024], *s, title[100];
+   char buf[1024], title[100];
+   const char *s;
    Planet *p;
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
@@ -1396,7 +1403,8 @@ static void sysedit_editJump( void )
 {
    unsigned int wid;
    int x, y, w, l, bw;
-   char buf[1024], *s;
+   char buf[1024];
+   const char *s;
    JumpPoint *j;
 
    j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
@@ -1488,7 +1496,8 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
    (void) unused;
    int x, y, h, w, bw;
    Planet *p;
-   char *desc, *bardesc, title[100];
+   const char *desc, *bardesc;
+   char title[100];
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
@@ -1971,8 +1980,8 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
 
    /* Find images first. */
    path           = land ? PLANET_GFX_EXTERIOR_PATH : PLANET_GFX_SPACE_PATH;
-   files          = ndata_list( path, &nfiles );
-   ndata_sortName( files, nfiles );
+   files          = PHYSFS_enumerateFiles( path );
+   for (nfiles=0; files[nfiles]; nfiles++) {}
    cells          = calloc( nfiles, sizeof(ImageArrayCell) );
 
    j              = 0;
@@ -1986,9 +1995,8 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
          memcpy( &cells[j].bg, &c, sizeof(glColour) );
          j++;
       }
-      free( files[i] );
    }
-   free( files );
+   PHYSFS_freeList( files );
 
    /* Add image array. */
    window_addImageArray( wid, 20, 20, w-60-BUTTON_WIDTH, h-60, "iarGFX", 128, 128, cells, j, NULL, NULL, NULL );

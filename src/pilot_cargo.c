@@ -10,13 +10,15 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "pilot_cargo.h"
 
-#include "naev.h"
-
-#include "log.h"
 #include "economy.h"
 #include "gui.h"
+#include "log.h"
 
 
 /* Private common implementation */

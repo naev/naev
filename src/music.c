@@ -9,21 +9,23 @@
  */
 
 
-#include "music.h"
-
-#include "naev.h"
-
+/** @cond */
+#include "physfsrwops.h"
 #include "SDL.h"
 
-#include "music_openal.h"
+#include "naev.h"
+/** @endcond */
 
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_var.h"
-#include "nlua_music.h"
-#include "log.h"
-#include "ndata.h"
+#include "music.h"
+
 #include "conf.h"
+#include "log.h"
+#include "music_openal.h"
+#include "ndata.h"
+#include "nlua.h"
+#include "nlua_music.h"
+#include "nlua_var.h"
+#include "nluadef.h"
 #include "nstring.h"
 
 
@@ -220,7 +222,7 @@ static void music_free (void)
 static int music_find (void)
 {
    char** files;
-   size_t nfiles,i;
+   size_t i;
    int suflen, flen;
    int nmusic;
 
@@ -228,12 +230,12 @@ static int music_find (void)
       return 0;
 
    /* get the file list */
-   files = ndata_list( MUSIC_PATH, &nfiles );
+   files = PHYSFS_enumerateFiles( MUSIC_PATH );
 
    /* load the profiles */
    nmusic = 0;
    suflen = strlen(MUSIC_SUFFIX);
-   for (i=0; i<nfiles; i++) {
+   for (i=0; files[i]!=NULL; i++) {
       flen = strlen(files[i]);
       if ((flen > suflen) &&
             strncmp( &files[i][flen - suflen], MUSIC_SUFFIX, suflen)==0) {
@@ -241,15 +243,12 @@ static int music_find (void)
          /* grow the selection size */
          nmusic++;
       }
-
-      /* Clean up. */
-      free(files[i]);
    }
 
-   DEBUG( ngettext("Loaded %d Song", "Loaded %d Songs", nmusic ), nmusic );
+   DEBUG( n_("Loaded %d Song", "Loaded %d Songs", nmusic ), nmusic );
 
    /* More clean up. */
-   free(files);
+   PHYSFS_freeList(files);
 
    return 0;
 }
@@ -317,7 +316,7 @@ int music_load( const char* name )
    music_name  = strdup(name);
    music_start = SDL_GetTicks();
    nsnprintf( filename, PATH_MAX, MUSIC_PATH"%s"MUSIC_SUFFIX, name);
-   rw = ndata_rwops( filename );
+   rw = PHYSFSRWOPS_openRead( filename );
    if (rw == NULL) {
       WARN(_("Music '%s' not found."), filename);
       return -1;

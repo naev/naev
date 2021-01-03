@@ -9,22 +9,22 @@
  */
 
 
-#include "opengl.h"
+/** @cond */
+#include <stdio.h>
+#include <stdlib.h>
+#include "physfsrwops.h"
 
 #include "naev.h"
+/** @endcond */
 
-
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-
-#include "log.h"
-#include "ndata.h"
-#include "nfile.h"
-#include "gui.h"
 #include "conf.h"
-#include "npng.h"
+#include "gui.h"
+#include "log.h"
 #include "md5.h"
+#include "nfile.h"
+#include "npng.h"
+#include "nstring.h"
+#include "opengl.h"
 
 
 /*
@@ -323,7 +323,7 @@ glTexture* gl_loadImageData( float *data, int w, int h, int pitch, int sx, int s
 {
    int potw,poth, rw,rh;
    float *datapot;
-   int i, j;
+   int i, j, k;
    glTexture *texture;
 
    /* Check if pot. */
@@ -335,10 +335,11 @@ glTexture* gl_loadImageData( float *data, int w, int h, int pitch, int sx, int s
    if (gl_needPOT() && ((w!=potw) || h!=poth)) {
       rw = potw;
       rh = poth;
-      datapot = calloc( sizeof(float), potw*poth );
+      datapot = calloc( sizeof(float)*4, potw*poth );
       for (i=0; i<h; i++)
          for (j=0; j<w; j++)
-            datapot[ i*potw+j ] = data[ i*pitch+j ];
+            for (k=0; k<4; k++)
+               datapot[ 4*(i*potw+j)+k ] = data[ 4*(i*pitch+j)+k ];
    }
 
    /* Set up the texture defaults */
@@ -740,7 +741,7 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    }
 
    /* Load from packfile */
-   rw = ndata_rwops( path );
+   rw = PHYSFSRWOPS_openRead( path );
    if (rw == NULL) {
       WARN(_("Failed to load surface '%s' from ndata."), path);
       return NULL;
@@ -775,7 +776,6 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const u
    npng     = npng_open( rw );
    if (npng == NULL) {
       WARN(_("File '%s' is not a png."), path );
-      SDL_RWclose( rw );
       return NULL;
    }
    npng_dim( npng, &w, &h );
@@ -1063,7 +1063,7 @@ void gl_exitTextures (void)
    if (texture_list != NULL) {
       DEBUG(_("Texture leak detected!"));
       for (tex=texture_list; tex!=NULL; tex=tex->next)
-         DEBUG( ngettext( "   '%s' opened %d time", "   '%s' opened %d times", tex->used ), tex->tex->name, tex->used );
+         DEBUG( n_( "   '%s' opened %d time", "   '%s' opened %d times", tex->used ), tex->tex->name, tex->used );
    }
 }
 

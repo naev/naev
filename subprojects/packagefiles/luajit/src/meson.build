@@ -52,10 +52,11 @@ if host_machine.system() == 'windows'
         dependencies: luajit_dependencies,
     )
 else
+    asmtype = (host_machine.system() == 'darwin' ? 'machasm' : 'elfasm')
     ljcore_sources += custom_target('lj_vm.s',
         input : [],
         output : 'lj_vm.s',
-        command : [buildvm, '-m', 'elfasm', '-o', '@OUTPUT@']
+        command : [buildvm, '-m', asmtype, '-o', '@OUTPUT@']
     )
     libluajit = static_library('luajit', ljlib_sources + ljcore_sources + buildvm_headers,
         include_directories: luajit_source_dir,

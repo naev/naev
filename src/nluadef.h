@@ -7,9 +7,11 @@
 # define NLUADEF_H
 
 
-#include <lua.h>
+/** @cond */
 #include <lauxlib.h>
+#include <lua.h>
 #include <lualib.h>
+/** @endcond */
 
 #include "attributes.h"
 #include "log.h"

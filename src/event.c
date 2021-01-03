@@ -13,34 +13,36 @@
  */
 
 
-#include "event.h"
-
-#include "naev.h"
-
-#include <stdint.h>
+/** @cond */
 #include "nstring.h"
+#include <stdint.h>
 #include <stdlib.h>
 
-#include "log.h"
+#include "naev.h"
+/** @endcond */
+
+#include "event.h"
+
 #include "array.h"
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_evt.h"
-#include "nlua_hook.h"
-#include "nlua_tk.h"
-#include "nlua_camera.h"
-#include "nlua_bkg.h"
-#include "nlua_tex.h"
-#include "nlua_music.h"
-#include "nlua_audio.h"
-#include "rng.h"
-#include "ndata.h"
-#include "nxml.h"
-#include "nxml_lua.h"
 #include "cond.h"
 #include "hook.h"
-#include "player.h"
+#include "log.h"
+#include "ndata.h"
+#include "nlua.h"
+#include "nlua_audio.h"
+#include "nlua_bkg.h"
+#include "nlua_camera.h"
+#include "nlua_evt.h"
+#include "nlua_hook.h"
+#include "nlua_music.h"
+#include "nlua_tex.h"
+#include "nlua_tk.h"
+#include "nluadef.h"
 #include "npc.h"
+#include "nxml.h"
+#include "nxml_lua.h"
+#include "player.h"
+#include "rng.h"
 
 
 #define XML_EVENT_ID          "Events" /**< XML document identifier */
@@ -554,7 +556,7 @@ int events_load (void)
    /* Sort based on priority so higher priority missions can establish claims first. */
    qsort( event_data, array_size(event_data), sizeof(EventData), event_cmp );
 
-   DEBUG( ngettext("Loaded %d Event", "Loaded %d Events", array_size(event_data) ), array_size(event_data) );
+   DEBUG( n_("Loaded %d Event", "Loaded %d Events", array_size(event_data) ), array_size(event_data) );
 
    return 0;
 }

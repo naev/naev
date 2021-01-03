@@ -7,8 +7,8 @@
 #  define NXML_LUA_H
 
 
-#include "nxml.h"
 #include "nlua.h"
+#include "nxml.h"
 
 
 int nxml_persistLua( nlua_env env, xmlTextWriterPtr writer );

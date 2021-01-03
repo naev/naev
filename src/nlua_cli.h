@@ -7,8 +7,6 @@
 #  define NLUA_CLI_H
 
 
-#include <lua.h>
-
 #include "nlua.h"
 
 

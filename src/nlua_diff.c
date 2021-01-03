@@ -9,20 +9,21 @@
  */
 
 
-#include "nlua_diff.h"
+/** @cond */
+#include "nstring.h"
+#include <lauxlib.h>
+#include <lua.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+/** @endcond */
 
 #include "naev.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-#include <math.h>
+#include "nlua_diff.h"
 
-#include <lua.h>
-#include <lauxlib.h>
-
-#include "nluadef.h"
 #include "log.h"
+#include "nluadef.h"
 #include "unidiff.h"
 
 

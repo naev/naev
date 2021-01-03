@@ -10,11 +10,13 @@
  */
 
 
-#include "pilot_heat.h"
+/** @cond */
+#include <math.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <math.h>
+#include "pilot_heat.h"
 
 #include "log.h"
 

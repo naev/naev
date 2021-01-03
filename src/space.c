@@ -8,51 +8,53 @@
  * @brief Handles all the space stuff, namely systems and planets.
  */
 
-#include "space.h"
+/** @cond */
+#include <float.h>
+#include <math.h>
+#include <stdlib.h>
+#include "physfsrwops.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <math.h>
-#include <float.h>
+#include "space.h"
 
-#include "nxml.h"
-
-#include "opengl.h"
-#include "log.h"
-#include "rng.h"
-#include "ndata.h"
-#include "nfile.h"
-#include "pilot.h"
-#include "player.h"
-#include "pause.h"
-#include "weapon.h"
-#include "toolkit.h"
-#include "spfx.h"
-#include "ntime.h"
-#include "nebula.h"
-#include "sound.h"
-#include "music.h"
-#include "gui.h"
-#include "fleet.h"
-#include "mission.h"
-#include "conf.h"
-#include "queue.h"
-#include "economy.h"
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_pilot.h"
-#include "nlua_planet.h"
-#include "npng.h"
 #include "background.h"
+#include "conf.h"
+#include "damagetype.h"
+#include "dev_uniedit.h"
+#include "economy.h"
+#include "fleet.h"
+#include "gui.h"
+#include "hook.h"
+#include "log.h"
+#include "map.h"
 #include "map_overlay.h"
 #include "menu.h"
-#include "nstring.h"
+#include "mission.h"
+#include "music.h"
+#include "ndata.h"
+#include "nebula.h"
+#include "nfile.h"
+#include "nlua.h"
+#include "nlua_pilot.h"
+#include "nlua_planet.h"
+#include "nluadef.h"
 #include "nmath.h"
-#include "map.h"
-#include "damagetype.h"
-#include "hook.h"
-#include "dev_uniedit.h"
+#include "npng.h"
+#include "nstring.h"
+#include "ntime.h"
+#include "nxml.h"
+#include "opengl.h"
+#include "pause.h"
+#include "pilot.h"
+#include "player.h"
+#include "queue.h"
+#include "rng.h"
+#include "sound.h"
+#include "spfx.h"
+#include "toolkit.h"
+#include "weapon.h"
 
 #define XML_PLANET_TAG        "asset" /**< Individual planet xml tag. */
 #define XML_SYSTEM_TAG        "ssys" /**< Individual systems xml tag. */
@@ -1223,6 +1225,13 @@ static void system_scheduler( double dt, int init )
                continue;
             }
             pilot->presence = lua_tonumber(naevL,-1);
+            if (pilot->faction != p->faction) {
+               WARN( _("Lua spawn script for faction '%s' actually spawned a '%s' pilot."),
+                     faction_name( p->faction ),
+                     faction_name( pilot->faction ) );
+               n = getPresenceIndex( cur_system, pilot->faction );
+               p = &cur_system->presence[n];
+            }
             p->curUsed     += pilot->presence;
             lua_pop(naevL,2); /* tk, k */
          }
@@ -1346,7 +1355,7 @@ void space_update( const double dt )
       for (i=0; i<cur_system->nplanets; i++) {
          if (( !planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i ))) {
             planet_setKnown( cur_system->planets[i] );
-            player_message( _("You discovered \a%c%s\a0."),
+            player_message( _("You discovered #%c%s#0."),
                   planet_getColourChar( cur_system->planets[i] ),
                   _(cur_system->planets[i]->name) );
             hparam[0].type  = HOOK_PARAM_STRING;
@@ -1507,9 +1516,9 @@ void space_init( const char* sysname )
       cur_system = &systems_stack[i];
 
       nt = ntime_pretty(0, 2);
-      player_message(_("\aoEntering System %s on %s."), _(sysname), nt);
+      player_message(_("#oEntering System %s on %s."), _(sysname), nt);
       if (cur_system->nebu_volatility > 0.) {
-         player_message(_("\arWARNING - Volatile nebula detected in %s! Taking damage!"), _(sysname));
+         player_message(_("#rWARNING - Volatile nebula detected in %s! Taking damage!"), _(sysname));
       }
       free(nt);
 
@@ -1732,7 +1741,6 @@ static int planets_load ( void )
    xmlNodePtr node;
    xmlDocPtr doc;
    Planet *p;
-   size_t nfiles;
    size_t i, len;
    Commodity **stdList;
    unsigned int stdNb;
@@ -1757,17 +1765,14 @@ static int planets_load ( void )
    stdList = standard_commodities( &stdNb );
 
    /* Load XML stuff. */
-   planet_files = ndata_list( PLANET_DATA_PATH, &nfiles );
-   for (i=0; i<nfiles; i++) {
+   planet_files = PHYSFS_enumerateFiles( PLANET_DATA_PATH );
+   for (i=0; planet_files[i]!=NULL; i++) {
       len  = (strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2);
       file = malloc( len );
       nsnprintf( file, len,"%s%s",PLANET_DATA_PATH,planet_files[i]);
-      buf  = ndata_read( file, &bufsize );
-      doc  = xmlParseMemory( buf, bufsize );
+      doc = xml_parsePhysFS( file );
       if (doc == NULL) {
-         WARN(_("%s file is invalid xml!"),file);
          free(file);
-         free(buf);
          continue;
       }
 
@@ -1776,7 +1781,6 @@ static int planets_load ( void )
          WARN(_("Malformed %s file: does not contain elements"),file);
          free(file);
          xmlFreeDoc(doc);
-         free(buf);
          continue;
       }
 
@@ -1788,13 +1792,10 @@ static int planets_load ( void )
       /* Clean up. */
       free(file);
       xmlFreeDoc(doc);
-      free(buf);
    }
 
    /* Clean up. */
-   for (i=0; i<nfiles; i++)
-      free( planet_files[i] );
-   free( planet_files );
+   PHYSFS_freeList( planet_files );
    free(stdList);
 
    return 0;
@@ -2254,7 +2255,7 @@ int planet_setRadiusFromGFX(Planet* planet)
    /* New path. */
    nsnprintf( path, sizeof(path), "%s%s", PLANET_GFX_SPACE_PATH, planet->gfx_spacePath );
 
-   rw = ndata_rwops( path );
+   rw = PHYSFSRWOPS_openRead( path );
    if (rw == NULL) {
       WARN(_("Planet '%s' has nonexistent graphic '%s'!"), planet->name, planet->gfx_spacePath );
       return -1;
@@ -3241,10 +3242,11 @@ int space_load (void)
       return ret;
 
    /* Load asteroid graphics. */
-   asteroid_files = ndata_list( PLANET_GFX_SPACE_PATH"asteroid/", &nasterogfx );
+   asteroid_files = PHYSFS_enumerateFiles( PLANET_GFX_SPACE_PATH"asteroid/" );
+   for (nasterogfx=0; asteroid_files[nasterogfx]!=NULL; nasterogfx++) {}
    asteroid_gfx = malloc( sizeof(glTexture*) * systems_mstack );
 
-   for (i=0; i<nasterogfx; i++) {
+   for (i=0; asteroid_files[i]!=NULL; i++) {
       len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(asteroid_files[i])+11);
       nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",asteroid_files[i] );
       asteroid_gfx[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
@@ -3278,9 +3280,7 @@ int space_load (void)
    /* Calculate commodity prices (sinusoidal model). */
    economy_initialiseCommodityPrices();
 
-   for (i=0; i<nasterogfx; i++)
-      free(asteroid_files[i]);
-   free(asteroid_files);
+   PHYSFS_freeList( asteroid_files );
 
    return 0;
 }
@@ -3295,8 +3295,7 @@ static int asteroidTypes_load (void)
 {
    int i, j, len, namdef, qttdef;
    AsteroidType *at;
-   size_t bufsize;
-   char *buf, *str, file[PATH_MAX];
+   char *str, file[PATH_MAX];
    xmlNodePtr node, cur, child;
    xmlDocPtr doc;
    png_uint_32 w, h;
@@ -3305,18 +3304,9 @@ static int asteroidTypes_load (void)
    SDL_Surface *surface;
 
    /* Load the data. */
-   buf = ndata_read( ASTERO_DATA_PATH, &bufsize );
-   if (buf == NULL) {
-      WARN(_("Unable to read data from '%s'"), ASTERO_DATA_PATH);
+   doc = xml_parsePhysFS( ASTERO_DATA_PATH );
+   if (doc == NULL)
       return -1;
-   }
-
-   /* Load the document. */
-   doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN(_("Unable to parse document '%s'"), ASTERO_DATA_PATH);
-      return -1;
-   }
 
    /* Get the root node. */
    node = doc->xmlChildrenNode;
@@ -3355,7 +3345,7 @@ static int asteroidTypes_load (void)
                nsnprintf( file, len,"%s%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str,".png");
 
                /* Load sprite and make collision possible. */
-               rw    = ndata_rwops( file );
+               rw    = PHYSFSRWOPS_openRead( file );
                npng  = npng_open( rw );
                npng_dim( npng, &w, &h );
                surface = npng_readSurface( npng, gl_needPOT(), 1 );
@@ -3416,7 +3406,6 @@ static int asteroidTypes_load (void)
 
    /* Clean up. */
    xmlFreeDoc(doc);
-   free(buf);
 
    return 0;
 }
@@ -3434,13 +3423,11 @@ static int asteroidTypes_load (void)
  */
 static int systems_load (void)
 {
-   size_t bufsize;
-   char *buf, **system_files, *file;
+   char **system_files, *file;
    xmlNodePtr node;
    xmlDocPtr doc;
    StarSystem *sys;
    size_t i, len;
-   size_t nfiles;
 
    /* Allocate if needed. */
    if (systems_stack == NULL) {
@@ -3449,30 +3436,24 @@ static int systems_load (void)
       systems_nstack = 0;
    }
 
-   system_files = ndata_list( SYSTEM_DATA_PATH, &nfiles );
+   system_files = PHYSFS_enumerateFiles( SYSTEM_DATA_PATH );
 
    /*
     * First pass - loads all the star systems_stack.
     */
-   for (i=0; i<nfiles; i++) {
-
+   for (i=0; system_files[i]!=NULL; i++) {
       len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
       file = malloc( len );
       nsnprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
-      buf = ndata_read( file, &bufsize );
-      doc = xmlParseMemory( buf, bufsize );
-      if (doc == NULL) {
-         WARN(_("%s file is invalid xml!"),file);
-         free(buf);
+      doc = xml_parsePhysFS( file );
+      if (doc == NULL)
          continue;
-      }
 
       node = doc->xmlChildrenNode; /* first planet node */
       if (node == NULL) {
          WARN(_("Malformed %s file: does not contain elements"),file);
          xmlFreeDoc(doc);
-         free(buf);
          continue;
       }
 
@@ -3482,31 +3463,26 @@ static int systems_load (void)
 
       /* Clean up. */
       xmlFreeDoc(doc);
-      free(buf);
       free( file );
    }
 
    /*
     * Second pass - loads all the jump routes.
     */
-   for (i=0; i<nfiles; i++) {
-
+   for (i=0; system_files[i]!=NULL; i++) {
       len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
       file = malloc( len );
       nsnprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
-      buf = ndata_read( file, &bufsize );
+      doc = xml_parsePhysFS( file );
       free( file );
-      doc = xmlParseMemory( buf, bufsize );
-      if (doc == NULL) {
-         free(buf);
+      file = NULL;
+      if (doc == NULL)
          continue;
-      }
 
       node = doc->xmlChildrenNode; /* first planet node */
       if (node == NULL) {
          xmlFreeDoc(doc);
-         free(buf);
          continue;
       }
 
@@ -3514,16 +3490,13 @@ static int systems_load (void)
 
       /* Clean up. */
       xmlFreeDoc(doc);
-      free(buf);
    }
 
-   DEBUG( ngettext( "Loaded %d Star System", "Loaded %d Star Systems", systems_nstack ), systems_nstack );
-   DEBUG( ngettext( "       with %d Planet", "       with %d Planets", array_size(planet_stack) ), array_size(planet_stack) );
+   DEBUG( n_( "Loaded %d Star System", "Loaded %d Star Systems", systems_nstack ), systems_nstack );
+   DEBUG( n_( "       with %d Planet", "       with %d Planets", array_size(planet_stack) ), array_size(planet_stack) );
 
    /* Clean up. */
-   for (i=0; i<nfiles; i++)
-      free( system_files[i] );
-   free( system_files );
+   PHYSFS_freeList( system_files );
 
    return 0;
 }

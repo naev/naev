@@ -8,15 +8,17 @@
  * @brief Handles the Lua outfit bindings.
  */
 
-#include "nlua_outfit.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
-#include "nlua_tex.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_outfit.h"
+
 #include "log.h"
+#include "nlua_tex.h"
+#include "nluadef.h"
 #include "rng.h"
 #include "slots.h"
 

@@ -9,32 +9,34 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "load.h"
 
-#include "naev.h"
-
-#include "nxml.h"
-#include "log.h"
-#include "player.h"
-#include "nfile.h"
 #include "array.h"
-#include "space.h"
-#include "toolkit.h"
-#include "menu.h"
-#include "economy.h"
 #include "dialogue.h"
+#include "economy.h"
 #include "event.h"
-#include "news.h"
-#include "mission.h"
 #include "faction.h"
 #include "gui.h"
-#include "unidiff.h"
-#include "nlua_var.h"
-#include "land.h"
 #include "hook.h"
+#include "land.h"
+#include "log.h"
+#include "menu.h"
+#include "mission.h"
+#include "news.h"
+#include "nfile.h"
+#include "nlua_var.h"
 #include "nstring.h"
+#include "nxml.h"
 #include "outfit.h"
+#include "player.h"
 #include "shiplog.h"
+#include "space.h"
+#include "toolkit.h"
+#include "unidiff.h"
 
 #define LOAD_WIDTH      600 /**< Load window width. */
 #define LOAD_HEIGHT     500 /**< Load window height. */
@@ -200,6 +202,10 @@ int load_refresh (void)
    /* Make sure files are none. */
    if (files == NULL)
       return 0;
+   if (nfiles == 0) {
+      free( files );
+      return 0;
+   }
 
    /* Make sure backups are after saves. */
    for (i=0; i<nfiles-1; i++) {
@@ -307,7 +313,7 @@ void load_loadGameMenu (void)
          ns       = &nslist[i];
          len      = strlen(ns->path);
          if (strcmp(&ns->path[len-10],".ns.backup")==0) {
-            nsnprintf( buf, sizeof(buf), _("%s \ar(Backup)\a0"), ns->name );
+            nsnprintf( buf, sizeof(buf), _("%s #r(Backup)#0"), ns->name );
             names[i] = strdup(buf);
          }
          else
@@ -375,20 +381,20 @@ static void load_menu_update( unsigned int wid, char *str )
    credits2str( credits, ns->credits, 2 );
    ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
    nsnprintf( buf, sizeof(buf),
-         _("\anName:\n"
-         "\a0   %s\n\n"
-         "\anVersion:\n"
-         "\a0   %s\n\n"
-         "\anDate:\n"
-         "\a0   %s\n\n"
-         "\anPlanet:\n"
-         "\a0   %s\n\n"
-         "\anCredits:\n"
-         "\a0   %s\n\n"
-         "\anShip Name:\n"
-         "\a0   %s\n\n"
-         "\anShip Model:\n"
-         "\a0   %s"),
+         _("#nName:\n"
+         "#0   %s\n\n"
+         "#nVersion:\n"
+         "#0   %s\n\n"
+         "#nDate:\n"
+         "#0   %s\n\n"
+         "#nPlanet:\n"
+         "#0   %s\n\n"
+         "#nCredits:\n"
+         "#0   %s\n\n"
+         "#nShip Name:\n"
+         "#0   %s\n\n"
+         "#nShip Model:\n"
+         "#0   %s"),
          ns->name, ns->version, date, ns->planet,
          credits, ns->shipname, ns->shipmodel );
    window_modifyText( wid, "txtPilot", buf );
@@ -421,7 +427,7 @@ static void load_menu_load( unsigned int wdw, char *str )
    if (ABS(diff) >= 2) {
       if (!dialogue_YesNo( _("Save game version mismatch"),
             _("Save game '%s' version does not match Naev version:\n"
-            "   Save version: \ar%s\a0\n"
+            "   Save version: #r%s#0\n"
             "   Naev version: %s\n"
             "Are you sure you want to load this game? It may lose data."),
             save, ns->version, VERSION ))
@@ -614,8 +620,8 @@ static int load_gameInternal( const char* file, const char* version )
    player_cleanup();
 
    /* Welcome message - must be before space_init. */
-   player_message( _("\agWelcome to %s!"), APPNAME );
-   player_message( "\ag v%s", naev_version(0) );
+   player_message( _("#gWelcome to %s!"), APPNAME );
+   player_message( "#g v%s", naev_version(0) );
 
    /* Now begin to load. */
    diff_load(node); /* Must load first to work properly. */

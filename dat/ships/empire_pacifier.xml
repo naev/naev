@@ -7,7 +7,7 @@
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>1100000</price>
- <time_mod>2</time_mod>
+ <time_mod>1.5</time_mod>
  <fabricator>Nexus Shipyards</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>This military grade version of the Pacifier is mostly identical in function to a standard Pacifier, but with slightly better armour, shields, and heat dissipation.</description>

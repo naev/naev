@@ -20,27 +20,31 @@
  *  5) dirname(argv[0])/ndata* (binary path)
  */
 
-#include "ndata.h"
-
-#include "naev.h"
+/** @cond */
 #include <limits.h>
+#include <stdarg.h>
 #include <stdlib.h>
-
+#include <string.h>
 #if HAS_WIN32
 #include <windows.h>
 #endif /* HAS_WIN32 */
-#if HAS_MACOS
-#include "glue_macos.h"
-#endif /* HAS_MACOS */
-#include <stdarg.h>
-#include <string.h>
 
+#include "physfs.h"
 #include "SDL.h"
 #include "SDL_mutex.h"
 
+#include "naev.h"
+/** @endcond */
+
+#include "ndata.h"
+
+#include "array.h"
 #include "attributes.h"
 #include "conf.h"
 #include "env.h"
+#if HAS_MACOS
+#include "glue_macos.h"
+#endif /* HAS_MACOS */
 #include "log.h"
 #include "nfile.h"
 #include "npng.h"
@@ -68,7 +72,6 @@
  */
 static char      *ndata_dir        = NULL; /**< ndata directory name. */
 static SDL_mutex *ndata_lock       = NULL; /**< Lock for ndata creation. */
-static int        ndata_loadedfile = 0;    /**< Already loaded a file? */
 static int        ndata_source     = NDATA_SRC_SEARCH_START;
 
 
@@ -77,6 +80,7 @@ static int        ndata_source     = NDATA_SRC_SEARCH_START;
  */
 static void ndata_testVersion (void);
 static int ndata_isndata( const char *path );
+static int ndata_enumerateCallback( void* data, const char* origdir, const char* fname );
 
 
 /**
@@ -116,6 +120,15 @@ int ndata_setPath( const char *path )
       case NDATA_SRC_USER:
          // This already didn't work out when we checked the provided path.
       case NDATA_SRC_DEFAULT:
+#if HAS_MACOS
+         if ( macos_isBundle() && macos_resourcesPath( buf, PATH_MAX ) >= 0 ) {
+            len = strlen( buf ) + 1 + strlen(NDATA_PATHNAME);
+            ndata_dir    = malloc(len+1);
+            nsnprintf( ndata_dir, len+1, "%s/%s", buf, NDATA_PATHNAME );
+            ndata_source = NDATA_SRC_DEFAULT;
+            break;
+         }
+#endif /* HAS_MACOS */
          if ( env.isAppImage && nfile_concatPaths( buf, PATH_MAX, env.appdir, PKGDATADIR, NDATA_PATHNAME ) >= 0 && ndata_isndata( buf ) ) {
             ndata_dir    = strdup( buf );
             ndata_source = NDATA_SRC_DEFAULT;
@@ -129,7 +142,7 @@ int ndata_setPath( const char *path )
          }
          FALLTHROUGH;
       case NDATA_SRC_BINARY:
-         nfile_concatPaths( buf, PATH_MAX, nfile_dirname(naev_binary()), NDATA_PATHNAME );
+         nfile_concatPaths( buf, PATH_MAX, PHYSFS_getBaseDir(), NDATA_PATHNAME );
          if ( ndata_isndata( buf ) ) {
             ndata_dir    = strdup( buf );
             ndata_source = NDATA_SRC_BINARY;
@@ -142,20 +155,17 @@ int ndata_setPath( const char *path )
       }
    }
 
+   if( PHYSFS_mount( ndata_dir, NULL, 0 ) == 0 ) {
+      WARN( "PhysicsFS mount failed: %s",
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      return -1;
+   }
    LOG( _( "Found ndata: %s" ), ndata_dir );
    ndata_testVersion();
 
    return 0;
 }
 
-
-/**
- * @brief Get the current ndata path.
- */
-const char *ndata_getPath( void )
-{
-   return ndata_dir;
-}
 
 /**
  * @brief Checks to see if a directory is an ndata.
@@ -218,8 +228,11 @@ int ndata_open (void)
    ndata_lock = SDL_CreateMutex();
 
    /* Set path to configuration. */
+   ndata_setPath(conf.ndata);
+   /*
    if (ndata_setPath(conf.ndata))
       ERR(_("Couldn't find ndata"));
+   */
 
    return 0;
 }
@@ -230,6 +243,7 @@ int ndata_open (void)
  */
 void ndata_close (void)
 {
+   PHYSFS_deinit();
    free( ndata_dir );
    ndata_dir = NULL;
 
@@ -242,112 +256,136 @@ void ndata_close (void)
 
 
 /**
- * @brief Gets the ndata's name.
- *
- *    @return The ndata's name.
- */
-const char* ndata_name (void)
-{
-   return start_name();
-}
-
-/**
- * @brief Checks to see if a file is in the NDATA.
- *    @param filename Name of the file to check.
- *    @return 1 if the file exists, 0 otherwise.
- */
-int ndata_exists( const char *filename )
-{
-   return nfile_fileExists( ndata_dir, filename );
-}
-
-
-/**
  * @brief Reads a file from the ndata.
  *
- *    @param filename Name of the file to read.
+ *    @param path Path of the file to read.
  *    @param[out] filesize Stores the size of the file.
  *    @return The file data or NULL on error.
  */
-void* ndata_read( const char* filename, size_t *filesize )
+void* ndata_read( const char* path, size_t *filesize )
 {
    char *buf;
+   PHYSFS_file *file;
+   PHYSFS_sint64 len, n;
+   size_t pos;
+   PHYSFS_Stat path_stat;
 
-   buf = nfile_readFile( filesize, ndata_dir, filename );
-   if ( buf != NULL ) {
-      ndata_loadedfile = 1;
-      return buf;
+   if (!PHYSFS_stat( path, &path_stat )) {
+      WARN( _( "Error occurred while opening '%s': %s" ), path,
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      *filesize = 0;
+      return NULL;
    }
-
-   /* Wasn't able to open the file. */
-   WARN( _( "Unable to open file '%s': not found." ), filename );
-   *filesize = 0;
-   return NULL;
-}
-
-
-/**
- * @brief Creates an rwops from a file in the ndata.
- *
- *    @param filename Name of the file to create rwops of.
- *    @return rwops that accesses the file in the ndata.
- */
-SDL_RWops *ndata_rwops( const char* filename )
-{
-   char       path[ PATH_MAX ];
-   SDL_RWops *rw;
-
-   if ( nfile_concatPaths( path, PATH_MAX, ndata_dir, filename ) < 0 ) {
-      WARN( _( "Unable to open file '%s': file path too long." ), filename );
+   if (path_stat.filetype != PHYSFS_FILETYPE_REGULAR) {
+      WARN( _( "Error occurred while opening '%s': It is not a regular file" ), path );
+      *filesize = 0;
       return NULL;
    }
 
-   rw = SDL_RWFromFile( path, "rb" );
-   if ( rw != NULL ) {
-      ndata_loadedfile = 1;
-      return rw;
+   /* Open file. */
+   file = PHYSFS_openRead( path );
+   if ( file == NULL ) {
+      WARN( _( "Error occurred while opening '%s': %s" ), path,
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      *filesize = 0;
+      return NULL;
    }
 
-   /* Wasn't able to open the file. */
-   WARN( _( "Unable to open file '%s': not found." ), filename );
-   return NULL;
+   /* Get file size. TODO: Don't assume this is always possible? */
+   len = PHYSFS_fileLength( file );
+   if ( len == -1 ) {
+      WARN( _( "Error occurred while seeking '%s': %s" ), path,
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      PHYSFS_close( file );
+      *filesize = 0;
+      return NULL;
+   }
+
+   /* Allocate buffer. */
+   buf = malloc( len+1 );
+   if (buf == NULL) {
+      WARN(_("Out of Memory"));
+      PHYSFS_close( file );
+      *filesize = 0;
+      return NULL;
+   }
+   buf[len] = '\0';
+
+   /* Read the file. */
+   n = 0;
+   while ( n < len ) {
+      pos = PHYSFS_readBytes( file, &buf[ n ], len - n );
+      if ( pos <= 0 ) {
+         WARN( _( "Error occurred while reading '%s': %s" ), path,
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+         PHYSFS_close( file );
+         *filesize = 0;
+         free(buf);
+         return NULL;
+      }
+      n += pos;
+   }
+
+   /* Close the file. */
+   PHYSFS_close(file);
+
+   *filesize = len;
+   return buf;
 }
 
 
 /**
- * @brief Gets a list of files in the ndata that are direct children of a path.
+ * @brief Lists all the visible files in a directory, at any depth.
  *
- *    @sa nfile_readDir
- */
-char **ndata_list( const char *path, size_t *nfiles )
-{
-   return nfile_readDir( nfiles, ndata_dir, path );
-}
-
-
-/**
- * @brief Gets a list of files in the ndata below a certain path.
+ * Will sort by path, and (unlike underlying PhysicsFS) make sure to list each file path only once.
  *
- *    @sa nfile_readDirRecursive
+ *    @return Array of (allocated) file paths relative to base_dir.
  */
 char **ndata_listRecursive( const char *path )
 {
-   return nfile_readDirRecursive( ndata_dir, path );
-}
+   char **files;
+   int i;
 
+   files = array_create( char * );
+   PHYSFS_enumerate( path, ndata_enumerateCallback, &files );
+   /* Ensure unique. PhysicsFS can enumerate a path twice if it's in multiple components of a union. */
+   qsort( files, array_size(files), sizeof(char*), strsort );
+   for (i=0; i+1<array_size(files); i++)
+      if (strcmp(files[i], files[i+1]) == 0) {
+         free( files[i] );
+         array_erase( &files, &files[i], &files[i+1] );
+	 i--; /* We're not done checking for dups of files[i]. */
+      }
+   return files;
+}
 
 /**
- * @brief Sorts the files by name.
- *
- * Meant to be used directly by ndata_list.
- *
- *    @param files Filenames to sort.
- *    @param nfiles Number of files to sort.
+ * @brief The PHYSFS_EnumerateCallback for ndata_listRecursive
  */
-void ndata_sortName( char **files, size_t nfiles )
+static int ndata_enumerateCallback( void* data, const char* origdir, const char* fname )
 {
-   qsort( files, nfiles, sizeof(char*), strsort );
+   char *path;
+   const char *fmt;
+   size_t dir_len, path_size;
+   PHYSFS_Stat stat;
+
+   dir_len = strlen( origdir );
+   path_size = dir_len + strlen( fname ) + 2;
+   path = malloc( path_size );
+   fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
+   nsnprintf( path, path_size, fmt, origdir, fname );
+   if (!PHYSFS_stat( path, &stat )) {
+      WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      free( path );
+   }
+   else if (stat.filetype == PHYSFS_FILETYPE_REGULAR)
+      array_push_back( (char***)data, path );
+   else if (stat.filetype == PHYSFS_FILETYPE_DIRECTORY ) {
+      PHYSFS_enumerate( path, ndata_enumerateCallback, data );
+      free( path );
+   }
+   else
+      free( path );
+   return PHYSFS_ENUM_OK;
 }
-
-
-

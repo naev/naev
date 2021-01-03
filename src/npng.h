@@ -7,9 +7,10 @@
 #  define NPNG_H
 
 
-#include "SDL.h"
-
+/** @cond */
 #include <png.h>
+#include "SDL.h"
+/** @endcond */
 
 
 typedef struct npng_s npng_t;

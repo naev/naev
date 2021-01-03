@@ -7,10 +7,8 @@
 #  define NLUA_TEX_H
 
 
-#include <lua.h>
-
-#include "opengl.h"
 #include "nlua.h"
+#include "opengl.h"
 
 
 #define TEX_METATABLE      "tex" /**< Texture metatable identifier. */

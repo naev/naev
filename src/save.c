@@ -8,30 +8,32 @@
  * @brief Handles saving/loading games.
  */
 
-#include "save.h"
+/** @cond */
+#include <errno.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include <errno.h> /* errno */
+#include "save.h"
 
-#include "log.h"
-#include "nxml.h"
-#include "nstring.h"
-#include "player.h"
-#include "dialogue.h"
-#include "menu.h"
-#include "nfile.h"
-#include "hook.h"
-#include "ndata.h"
-#include "unidiff.h"
-#include "nlua_var.h"
-#include "event.h"
-#include "news.h"
 #include "conf.h"
-#include "land.h"
+#include "dialogue.h"
+#include "event.h"
 #include "gui.h"
+#include "hook.h"
+#include "land.h"
 #include "load.h"
+#include "log.h"
+#include "menu.h"
+#include "news.h"
+#include "nfile.h"
+#include "nlua_var.h"
+#include "nstring.h"
+#include "nxml.h"
+#include "player.h"
 #include "shiplog.h"
+#include "start.h"
+#include "unidiff.h"
 
 int save_loaded   = 0; /**< Just loaded the saved game. */
 
@@ -120,7 +122,7 @@ int save_all (void)
    /* Save the version and such. */
    xmlw_startElem(writer,"version");
    xmlw_elem( writer, "naev", "%s", VERSION );
-   xmlw_elem( writer, "data", "%s", ndata_name() );
+   xmlw_elem( writer, "data", "%s", start_name() );
    xmlw_endElem(writer); /* "version" */
 
    /* Save the data. */

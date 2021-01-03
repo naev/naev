@@ -1,5 +1,5 @@
 /*
- * Copyright 2006-2020 Naev DevTeam
+ * Copyright 2006-2021 Naev DevTeam
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,11 +26,13 @@
 #  define NAEV_H
 
 
-#include "ncompat.h"
-
-#include <limits.h>
+/** @cond */
 #include <inttypes.h>
+#include <limits.h>
 #include <math.h>
+/** @endcond */
+
+#include "ncompat.h"
 
 
 #define APPNAME            "Naev" /**< Application name. */
@@ -80,7 +82,6 @@ void naev_toggleFullscreen (void);
 void update_routine( double dt, int enter_sys );
 char *naev_version( int long_version );
 int naev_versionCompare( const char *version );
-char *naev_binary (void);
 void naev_quit (void);
 
 

@@ -8,20 +8,22 @@
  * @brief Bindings for GUI functionality from Lua.
  */
 
-#include "nlua_gui.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
-#include "log.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_gui.h"
+
 #include "gui.h"
-#include "gui_osd.h"
 #include "gui_omsg.h"
-#include "nlua_tex.h"
-#include "menu.h"
+#include "gui_osd.h"
 #include "info.h"
+#include "log.h"
+#include "menu.h"
+#include "nlua_tex.h"
+#include "nluadef.h"
 
 
 /* GUI methods. */

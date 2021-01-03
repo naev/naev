@@ -9,26 +9,27 @@
  */
 
 
-#include "spfx.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <inttypes.h>
-
 #include "SDL.h"
 #include "SDL_haptic.h"
 
-#include "log.h"
+#include "naev.h"
+/** @endcond */
+
+#include "spfx.h"
+
 #include "array.h"
-#include "pilot.h"
-#include "physics.h"
-#include "opengl.h"
-#include "pause.h"
-#include "rng.h"
+#include "debris.h"
+#include "log.h"
 #include "ndata.h"
 #include "nxml.h"
-#include "debris.h"
+#include "opengl.h"
+#include "pause.h"
 #include "perlin.h"
+#include "physics.h"
+#include "pilot.h"
+#include "rng.h"
 
 
 #define SPFX_XML_ID     "spfxs" /**< XML Document tag. */
@@ -208,24 +209,13 @@ int spfx_get( char* name )
  */
 int spfx_load (void)
 {
-   size_t bufsize;
-   char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
 
    /* Load and read the data. */
-   buf = ndata_read( SPFX_DATA_PATH, &bufsize );
-   if (buf == NULL) {
-      WARN(_("Unable to read data from '%s'"), SPFX_DATA_PATH);
+   doc = xml_parsePhysFS( SPFX_DATA_PATH );
+   if (doc == NULL)
       return -1;
-   }
-
-   /* Load the document. */
-   doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN(_("Unable to parse document '%s'"), SPFX_DATA_PATH);
-      return -1;
-   }
 
    /* Check to see if document exists. */
    node = doc->xmlChildrenNode;
@@ -256,7 +246,6 @@ int spfx_load (void)
 
    /* Clean up. */
    xmlFreeDoc(doc);
-   free(buf);
 
 
    /*

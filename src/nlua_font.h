@@ -7,10 +7,8 @@
 #  define NLUA_FONT_H
 
 
-#include <lua.h>
-
-#include "nlua.h"
 #include "font.h"
+#include "nlua.h"
 
 
 #define FONT_METATABLE      "font" /**< Font metatable identifier. */

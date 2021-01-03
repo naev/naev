@@ -6,8 +6,6 @@
 #ifndef NLUA_PLAYER
 #  define NLUA_PLAYER
 
-#include <lua.h>
-
 #include "nlua.h"
 
 

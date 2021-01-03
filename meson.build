@@ -28,6 +28,7 @@ endif
 # Initializeation
 config_data = configuration_data()
 naev_deps = []
+naev_link_args = []
 
 ndata_path = get_option('ndata_path')
 if ndata_path == ''
@@ -93,6 +94,7 @@ if buildExec.disabled() == false
    sdl = dependency('sdl2', required: true)
    naev_deps += [
       dependency('freetype2', required: true),
+      dependency('physfs', fallback: ['physfs', 'physfs_dep'], required: true),
       sdl,
       declare_dependency(
          dependencies: dependency('libpng', required: true),
@@ -110,13 +112,19 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_LUAJIT', lua.found())
    summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
 
-   if not lua.found()
+   if lua.found()
+      if host_machine.system() == 'darwin'
+         # The main executable must be linked with these flags, or else LuaJIT will crash instantly.
+         # Ref: https://luajit.org/install.html
+         naev_link_args += ['-pagezero_size', '10000', '-image_base', '100000000']
+      endif
+   else
       lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
    endif
 
    naev_deps += lua
 
-   ### Soft deps (required: false
+   ### Soft deps (required: false)
 
    # BFD
    if get_option('debug')
@@ -143,7 +151,9 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_DECL__PUTENV_S', cc.has_header_symbol('stdlib.h', '_putenv_s'))
    config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'getenv_s'))
    config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept'))
+   config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
+   config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
    config_data.set10('HAVE_OV_READ_FILTER', cc.has_header_symbol('vorbis/vorbisfile.h', 'ov_read_filter'))
    config_data.set10('HAVE_STDALIGN_H', cc.has_header('stdalign.h'))
 
@@ -182,7 +192,7 @@ if buildExec.disabled() == false
    )
 
    if host_machine.system() == 'darwin'
-      add_languages('objc')
+      add_languages('objc', native: false)
       naev_source += mac_source
       naev_deps += dependency('Foundation', required: true )
    endif
@@ -210,6 +220,7 @@ if buildExec.disabled() == false
       naev_source,
       include_directories: include_dirs,
       dependencies: naev_deps,
+      link_args: naev_link_args,
       export_dynamic: bfd.found(),
       install: true)
 

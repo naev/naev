@@ -8,14 +8,16 @@
  * @brief Handles datas.
  */
 
-#include "nlua_data.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_data.h"
+
 #include "log.h"
+#include "nluadef.h"
 
 
 /* Helper functions. */
@@ -180,11 +182,11 @@ static int dataL_new( lua_State *L )
    if (strcmp(type,"number")==0) {
       ld.type = LUADATA_NUMBER;
       ld.elem = sizeof(float);
-      ld.size = size*ld.elem;
-      ld.data = calloc( ld.elem, size );
    }
    else
       NLUA_ERROR(L, _("unknown data type '%s'"), type);
+   ld.size = size*ld.elem;
+   ld.data = calloc( ld.elem, size );
    lua_pushdata( L, ld );
    return 1;
 }
@@ -197,7 +199,7 @@ static size_t dataL_checkpos( lua_State *L, LuaData_t *ld, long pos )
    if (pos < 0)
       NLUA_ERROR(L, _("position argument must be positive!"));
    mpos = pos * ld->elem;
-   if (mpos > ld->size)
+   if (mpos >= ld->size)
       NLUA_ERROR(L, _("position argument out of bounds: %d of %d elements"), pos, ld->size/ld->elem);
    return mpos;
 }
@@ -216,7 +218,7 @@ static int dataL_get( lua_State *L )
    size_t mpos = dataL_checkpos( L, ld, pos );
    switch (ld->type) {
       case LUADATA_NUMBER:
-         lua_pushnumber(L, *((float*)&ld->data[mpos]));
+         lua_pushnumber(L, *((float*)(&ld->data[mpos])));
          break;
    }
    return 1;
@@ -237,7 +239,7 @@ static int dataL_set( lua_State *L )
    switch (ld->type) {
       case LUADATA_NUMBER:
          value = luaL_checknumber(L,3);
-         *((float*)&ld->data[mpos]) = value;
+         *((float*)(&ld->data[mpos])) = value;
          break;
    }
    return 0;

@@ -6,7 +6,9 @@
 #ifndef MUSIC_OPENAL_H
 #  define MUSIC_OPENAL_H
 
+/** @cond */
 #include "SDL_rwops.h"
+/** @endcond */
 
 #include "nopenal.h"
 

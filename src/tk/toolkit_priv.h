@@ -8,9 +8,11 @@
 #  define TOOLKIT_PRIV_H
 
 
+/** @cond */
 #include "naev.h"
-#include "log.h"
+/** @endcond */
 
+#include "log.h"
 #include "tk/widget.h"
 
 

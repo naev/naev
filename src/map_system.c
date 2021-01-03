@@ -2,11 +2,14 @@
  * See Licensing and Copyright notice in naev.h
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
+/** @cond */
 #include <float.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
+#include "naev.h"
+/** @endcond */
 
 #include "map.h"
 
@@ -23,7 +26,6 @@
 #include "map_find.h"
 #include "map_system.h"
 #include "mission.h"
-#include "naev.h"
 #include "ndata.h"
 #include "nmath.h"
 #include "nstring.h"
@@ -393,7 +395,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       int stars   = nBgImgs>0 ? nBgImgs-1 : 0;
       cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("System: %s\n"), _(sys->name) );
       /* display sun information */
-      cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, ngettext("%d-star system\n", "%d-star system\n", stars), stars );
+      cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, n_("%d-star system\n", "%d-star system\n", stars), stars );
 
       /* Nebula. */
       if (sys->nebu_density > 0. ) {
@@ -465,14 +467,14 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          hasPresence = 1;
          if ( faction_isKnown( sys->presence[i].faction ) ) {
             t = faction_getColourChar( sys->presence[i].faction );
-            cnt += nsnprintf( &buf[cnt], sizeof( buf ) - cnt, "\a0%s: \a%c%.0f\n",
+            cnt += nsnprintf( &buf[cnt], sizeof( buf ) - cnt, "#0%s: #%c%.0f\n",
                               faction_shortname( sys->presence[i].faction ),
                               t, sys->presence[i].value);
          } else
             unknownPresence += sys->presence[i].value;
       }
       if (unknownPresence != 0)
-         cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, "\a0Unknown: \a%c%.0f\n",
+         cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, "#0Unknown: #%c%.0f\n",
                            'N', unknownPresence );
       if (hasPresence == 0)
          cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Presence: N/A\n"));
@@ -615,7 +617,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       else if (player_hasLicense( outfit->license ))
          strncpy( buf_license, _(outfit->license), sizeof(buf_license)-1 );
       else
-         nsnprintf( buf_license, sizeof( buf_license ), "\ar%s\a0", _(outfit->license) );
+         nsnprintf( buf_license, sizeof( buf_license ), "#r%s#0", _(outfit->license) );
       buf_license[ sizeof( buf_license )-1 ] = '\0';
 
       mass = outfit->mass;
@@ -625,9 +627,9 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       }
       nsnprintf( infobuf, PATH_MAX,
                  _("%s\n\n%s\n\n%s\n\n"
-                   "\anOwned:\a0 %d    \anSlot: \a0%s    \anSize: \a0%s\n"
-                   "\anMass:\a0    %.0f tonnes     \anPrice:\a0 %s\n"
-                   "\anLicense:\a0 %s"),
+                   "#nOwned:#0 %d    #nSlot: #0%s    #nSize: #0%s\n"
+                   "#nMass:#0    %.0f tonnes     #nPrice:#0 %s\n"
+                   "#nLicense:#0 %s"),
                  _(outfit->name),
                  _(outfit->description),
                  outfit->desc_short,
@@ -645,26 +647,26 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       price2str( buf_price, ship_buyPrice( ship ), player.p->credits, 2 );
 
       nsnprintf( infobuf, PATH_MAX,
-                 _("\anModel:\a0 %s    "
-                   "\anClass:\a0 %s\n"
+                 _("#nModel:#0 %s    "
+                   "#nClass:#0 %s\n"
                    "\n%s\n\n"
-                   "\anFabricator:\a0 %s    "
-                   "\anCrew:\a0 %d\n"
-                   "\anCPU:\a0 %.0f teraflops    "
-                   "\anMass:\a0 %.0f tonnes\n"
-                   "\anThrust:\a0 %.0f kN/tonne    "
-                   "\anSpeed:\a0 %.0f m/s\n"
-                   "\anTurn:\a0 %.0f deg/s    "
-                   "\anTime Dilation:\a0 %.0f%%\n"
-                   "\anAbsorption:\a0 %.0f%% damage\n"
-                   "\anShield:\a0 %.0f MJ (%.1f MW)    "
-                   "\anArmour:\a0 %.0f MJ (%.1f MW)\n"
-                   "\anEnergy:\a0 %.0f MJ (%.1f MW)\n"
-                   "\anCargo Space:\a0 %.0f tonnes\n"
-                   "\anFuel:\a0 %d units  "
-                   "\anFuel Use:\a0 %d units\n"
-                   "\anPrice:\a0 %s  "
-                   "\anLicense:\a0 %s\n"
+                   "#nFabricator:#0 %s    "
+                   "#nCrew:#0 %d\n"
+                   "#nCPU:#0 %.0f teraflops    "
+                   "#nMass:#0 %.0f tonnes\n"
+                   "#nThrust:#0 %.0f kN/tonne    "
+                   "#nSpeed:#0 %.0f m/s\n"
+                   "#nTurn:#0 %.0f deg/s    "
+                   "#nTime Constant:#0 %.0f%%\n"
+                   "#nAbsorption:#0 %.0f%% damage\n"
+                   "#nShield:#0 %.0f MJ (%.1f MW)    "
+                   "#nArmour:#0 %.0f MJ (%.1f MW)\n"
+                   "#nEnergy:#0 %.0f MJ (%.1f MW)\n"
+                   "#nCargo Space:#0 %.0f tonnes\n"
+                   "#nFuel:#0 %d units  "
+                   "#nFuel Use:#0 %d units\n"
+                   "#nPrice:#0 %s  "
+                   "#nLicense:#0 %s\n"
                    "%s"),
                  _(ship->name),
                  _(ship_class(ship)),
@@ -714,20 +716,20 @@ static void map_system_array_update( unsigned int wid, char* str ) {
 
       if ( owned > 0 ) {
          credits2str( buf_buy_price, com->lastPurchasePrice, -1 );
-         i += nsnprintf( &infobuf[i], sizeof(infobuf)-i, ngettext(
-                         "\anYou have:\a0 %d tonne, purchased at %s/t\n",
-                         "\anYou have:\a0 %d tonnes, purchased at %s/t\n",
+         i += nsnprintf( &infobuf[i], sizeof(infobuf)-i, n_(
+                         "#nYou have:#0 %d tonne, purchased at %s/t\n",
+                         "#nYou have:#0 %d tonnes, purchased at %s/t\n",
                          owned), owned, buf_buy_price );
       }
       else
-         i += nsnprintf( &infobuf[i], sizeof(infobuf)-i, ngettext(
-                         "\anYou have:\a0 %d tonne\n",
-                         "\anYou have:\a0 %d tonnes\n",
+         i += nsnprintf( &infobuf[i], sizeof(infobuf)-i, n_(
+                         "#nYou have:#0 %d tonne\n",
+                         "#nYou have:#0 %d tonnes\n",
                          owned), owned );
 
       i += nsnprintf( &infobuf[i], sizeof(infobuf)-i,
-                      _("\anAverage price seen here:\a0 %s/t ± %s/t\n"
-                         "\anAverage price seen everywhere:\a0 %s/t ± %s/t\n"),
+                      _("#nAverage price seen here:#0 %s/t ± %s/t\n"
+                         "#nAverage price seen everywhere:#0 %s/t ± %s/t\n"),
                       buf_mean, buf_std, buf_globalmean, buf_globalstd );
    }
    else

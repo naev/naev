@@ -7,7 +7,7 @@
  <sound>engine</sound>
  <class>Drone</class>
  <price>300000</price>
- <time_mod>0.75</time_mod>
+ <time_mod>0.875</time_mod>
  <fabricator>Robosys</fabricator>
  <description>This is a modified version of the robotic drone that includes a life support system for humans.</description>
  <health>

@@ -3,8 +3,10 @@
  */
 
 
+/** @cond */
 #include <float.h>
 #include "SDL.h"
+/** @endcond */
 
 #include "map_overlay.h"
 

@@ -4,16 +4,17 @@
 
 
 
-#include "conf.h"
-
-#include "naev.h"
-
+/** @cond */
+#include <getopt.h> /* getopt_long */
 #include <stdlib.h> /* atoi */
 #include <unistd.h> /* getopt */
-#include "nstring.h" /* strdup */
-#include <getopt.h> /* getopt_long */
 
-#include "nlua.h"
+#include "naev.h"
+/** @endcond */
+
+#include "physfs.h"
+
+#include "conf.h"
 
 #include "env.h"
 #include "input.h"
@@ -22,6 +23,7 @@
 #include "ndata.h"
 #include "nebula.h"
 #include "nfile.h"
+#include "nlua.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "player.h"
@@ -108,7 +110,7 @@ static void print_usage( void )
    LOG(_("   -m f, --mvol f        sets the music volume to f"));
    LOG(_("   -s f, --svol f        sets the sound volume to f"));
    LOG(_("   -G, --generate        regenerates the nebula (slow)"));
-   LOG(_("   -d, --datapath        specifies a custom path for all user data (saves, screenshots, etc.)"));
+   LOG(_("   -d, --datapath        adds a new datapath to be mounted (used for looking for game assets)"));
    LOG(_("   -X, --scale           defines the scale factor"));
 #ifdef DEBUGGING
    LOG(_("   --devmode             enables dev mode perks like the editors"));
@@ -142,7 +144,7 @@ void conf_setDefaults (void)
    /* GUI. */
    conf.mesg_visible = 5;
    conf.map_overlay_opacity = MAP_OVERLAY_OPACITY_DEFAULT;
-   conf.big_icons = 1;
+   conf.big_icons = BIG_ICONS_DEFAULT;
 
    /* Repeat. */
    conf.repeat_delay = 500;
@@ -564,32 +566,6 @@ int conf_loadConfig ( const char* file )
 }
 
 
-void conf_parseCLIPath( int argc, char** argv )
-{
-   static struct option long_options[] = {
-      { "datapath", required_argument, 0, 'd' },
-      { NULL, 0, 0, 0 }
-   };
-
-   int option_index = 1;
-   int c = 0;
-
-   /* GNU giveth, and GNU taketh away.
-    * If we don't specify "-" as the first char, getopt will happily
-    * mangle the initial argument order, probably causing crashes when
-    * passing arguments that take values, such as -H and -W.
-    */
-   while ((c = getopt_long(argc, argv, "-:d:",
-         long_options, &option_index)) != -1) {
-      switch(c) {
-         case 'd':
-            conf.datapath = strdup(optarg);
-            break;
-      }
-   }
-}
-
-
 /*
  * parses the CLI options
  */
@@ -630,7 +606,7 @@ void conf_parseCLI( int argc, char** argv )
          long_options, &option_index)) != -1) {
       switch (c) {
          case 'd':
-            /* Does nothing, datapath is parsed earlier. */
+            PHYSFS_mount( optarg, NULL, 1 );
             break;
          case 'f':
             conf.fullscreen = 1;
@@ -739,7 +715,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
    while ((ch = u8_nextchar( text, &i ))) {
       /* Check if we can print this as a friendly backslash-escape */
       switch (ch) {
-         case '\a':  slashescape = 'a';   break;
+         case '#':  slashescape = 'a';   break;
          case '\b':  slashescape = 'b';   break;
          case '\f':  slashescape = 'f';   break;
          case '\n':  slashescape = 'n';   break;

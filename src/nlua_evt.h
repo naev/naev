@@ -7,8 +7,11 @@
 #  define NLUA_EVT
 
 
-#include "event.h"
+/** @cond */
 #include <lua.h>
+/** @endcond */
+
+#include "event.h"
 
 
 /* Run Lua for an event. */

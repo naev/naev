@@ -8,24 +8,25 @@
  * @brief Naev toolkit Lua module.
  */
 
-#include "nlua_tk.h"
-
-#include "naev.h"
-
+/** @cond */
+#include <lauxlib.h>
 #include <stdlib.h>
 
-#include <lauxlib.h>
+#include "naev.h"
+/** @endcond */
 
-#include "nluadef.h"
-#include "log.h"
+#include "nlua_tk.h"
+
 #include "dialogue.h"
-#include "nlua_outfit.h"
-#include "nlua_col.h"
-#include "nlua_gfx.h"
-#include "toolkit.h"
+#include "input.h"
 #include "land.h"
 #include "land_outfits.h"
-#include "input.h"
+#include "log.h"
+#include "nlua_col.h"
+#include "nlua_gfx.h"
+#include "nlua_outfit.h"
+#include "nluadef.h"
+#include "toolkit.h"
 
 
 /* Stuff for the custom toolkit. */

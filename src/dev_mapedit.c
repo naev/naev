@@ -8,11 +8,14 @@
  * @brief Handles the star system editor.
  */
 
-#include "dev_mapedit.h"
+/** @cond */
+#include "physfs.h"
+#include "SDL.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include "SDL.h"
+#include "dev_mapedit.h"
 
 #include "array.h"
 #include "commodity.h"
@@ -751,9 +754,8 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
 {
    (void)str;
    int pos, n, len, compareLimit, i, found;
-   size_t bufsize;
    mapOutfitsList_t *ns;
-   char *save, *buf, *file, *name, *systemName;
+   char *save, *file, *name, *systemName;
    xmlNodePtr node;
    xmlDocPtr doc;
    StarSystem *sys;
@@ -775,22 +777,19 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
    file = malloc( len );
    nsnprintf( file, len, "%s%s", MAP_DATA_PATH, ns->fileName );
 
-   buf = ndata_read( file, &bufsize );
-   doc = xmlParseMemory( buf, bufsize );
+   doc = xml_parsePhysFS( file );
 
    /* Get first node, normally "outfit" */
    node = doc->xmlChildrenNode;
    if (node == NULL) {
       free(file);
       xmlFreeDoc(doc);
-      free(buf);
       return;
    }
 
    if (!xml_isNode(node,"outfit")) {
       free(file);
       xmlFreeDoc(doc);
-      free(buf);
       return;
    }
 
@@ -800,7 +799,6 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
       free(name);
       free(file);
       xmlFreeDoc(doc);
-      free(buf);
       return;
    } else {
       free(name);
@@ -854,7 +852,6 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
    
    free(file);
    xmlFreeDoc(doc);
-   free(buf);
 
    window_destroy( wdw );
 }
@@ -910,8 +907,7 @@ void mapedit_setGlobalLoadedInfos( mapOutfitsList_t* ns )
 static int mapedit_mapsList_refresh (void)
 {
    int len, is_map, nSystems, rarity;
-   size_t i, nfiles, bufsize;
-   char *buf;
+   size_t i;
    xmlNodePtr node, cur;
    xmlDocPtr doc;
    char **map_files;
@@ -922,9 +918,9 @@ static int mapedit_mapsList_refresh (void)
    mapsList_free();
    mapList = array_create( mapOutfitsList_t );
 
-   map_files = ndata_list( MAP_DATA_PATH, &nfiles );
+   map_files = PHYSFS_enumerateFiles( MAP_DATA_PATH );
    newMapItem = NULL;
-   for (i=0; i<nfiles; i++) {
+   for (i=0; map_files[i]!=NULL; i++) {
       description = NULL;
       price = 1000;
       rarity = 0;
@@ -933,12 +929,9 @@ static int mapedit_mapsList_refresh (void)
       file = malloc( len );
       nsnprintf( file, len, "%s%s", MAP_DATA_PATH, map_files[i] );
 
-      buf = ndata_read( file, &bufsize );
-      doc = xmlParseMemory( buf, bufsize );
+      doc = xml_parsePhysFS( file );
       if (doc == NULL) {
-         WARN(_("%s file is invalid xml!"), file);
          free(file);
-         free(buf);
          continue;
       }
 
@@ -947,14 +940,12 @@ static int mapedit_mapsList_refresh (void)
       if (node == NULL) {
          free(file);
          xmlFreeDoc(doc);
-         free(buf);
          return -1;
       }
 
       if (!xml_isNode(node,"outfit")) {
          free(file);
          xmlFreeDoc(doc);
-         free(buf);
          return -1;
       }
 
@@ -994,7 +985,6 @@ static int mapedit_mapsList_refresh (void)
          free(name);
          free(file);
          xmlFreeDoc(doc);
-         free(buf);
          continue;
       }
 
@@ -1024,13 +1014,10 @@ static int mapedit_mapsList_refresh (void)
       /* Clean up. */
       free(name);
       free(file);
-      free(buf);
   }
 
    /* Clean up. */
-   for (i=0; i<nfiles; i++)
-      free( map_files[i] );
-   free( map_files );
+   PHYSFS_freeList( map_files );
 
    return 0;
 }

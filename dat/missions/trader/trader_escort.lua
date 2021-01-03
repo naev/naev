@@ -401,11 +401,11 @@ end
 function fail( message )
    if message ~= nil then
       -- Pre-colourized, do nothing.
-      if message:find("\a") then
+      if message:find("#") then
          player.msg( message )
       -- Colourize in red.
       else
-         player.msg( "\ar" .. message .. "\a0" )
+         player.msg( "#r" .. message .. "#0" )
       end
    end
    misn.finish( false )

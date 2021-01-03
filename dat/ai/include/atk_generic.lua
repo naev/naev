@@ -98,104 +98,157 @@ function atk_generic ()
 end
 
 
+function _atk_g_ranged_dogfight( target, dist )
+   local dir
+   if not mem.careful or dist < 3 * ai.getweaprange(3, 0) * mem.atk_approach then
+      dir = ai.face(target) -- Normal face the target
+   else
+      dir = ai.careful_face(target) -- Careful method
+   end
+
+   -- Check if in range to shoot missiles
+   if dist < ai.getweaprange( 4 ) and dir < 30 then
+      ai.weapset( 4 )
+   else
+      -- Test if we should zz
+      if ai.pilot():stats().mass < 400 and _atk_decide_zz() then
+         ai.pushsubtask("_atk_zigzag")
+      end
+   end
+
+   -- Approach for melee
+   if dir < 10 then
+      ai.accel()
+      ai.weapset( 3 ) -- Set turret/forward weaponset.
+      ai.shoot()
+   end
+end
+function _atk_g_ranged_strafe( target, dist )
+--[[ The pilot tries first to place himself at range and at constant velocity.
+      When he is stabilized, he starts shooting until he has to correct his trajectory again
+
+      If he doesn't manage to shoot missiles after a few seconds
+      (because the target dodges),
+      he gives up and just faces the target and shoot (provided he is in range)
+]]
+
+   local p = ai.pilot()
+
+   -- Estimate the range
+   local radial_vel = ai.relvel(target, true)
+   local range = ai.getweaprange( 4 )
+   range = math.min ( range - dist * radial_vel / ( ai.getweapspeed( 4 ) - radial_vel ), range )
+
+   local goal = ai.follow_accurate(target, range * 0.8, 0, 10, 20, "keepangle")
+   local mod = vec2.mod(goal - p:pos())
+
+   --Must approach or stabilize
+   if mod > 3000 then
+      -- mustapproach allows a hysteretic behaviour
+      mem.mustapproach = true
+   end
+   if dist > range*0.95 then
+      mem.outofrange = true
+   end
+
+   if (mem.mustapproach and not ai.timeup(1) ) or mem.outofrange then
+      local dir   = ai.face(goal)
+      if dir < 10 and mod > 300 then
+         ai.accel()
+         --mem.stabilized = false
+      -- ship must be stabilized since 2 secs
+      elseif ai.relvel(target) < 5 and not ai.timeup(1) then--[[if not mem.stabilized then
+         mem.stabilized = true
+         ai.settimer(0, 2000)
+      elseif not ai.timeup(1) and ai.timeup(0) then
+         -- If the ship manages to catch its mark, reset the timer]]
+         --ai.settimer(1, 10000)
+         mem.mustapproach = false
+      end
+      if dist < range*0.85 then
+         mem.outofrange = false
+      end
+
+   else -- In range
+      local dir  = ai.face(target)
+      if dir < 30 then
+         ai.set_shoot_indicator(false)
+         ai.weapset( 4 )
+         -- If he managed to shoot, reinitialize the timer
+         if ai.shoot_indicator() and not ai.timeup(1) then
+            ai.settimer(1, 13000)
+         end
+      end
+   end
+
+   --The pilot just arrived in the good zone :
+   --From now, if ship doesn't manage to stabilize within a few seconds, shoot anyway
+   if dist < 1.5*range and not mem.inzone then
+      mem.inzone = true
+      ai.settimer(1, mod/p:stats().speed*700 )
+   end
+end
+function _atk_g_ranged_kite( target, dist )
+   local p = ai.pilot()
+
+   -- Estimate the range
+   local range = ai.getweaprange( 4 )
+
+   -- Try to keep velocity vector away from enemy
+   local targetpos = target:pos()
+   local selfpos = p:pos()
+   local unused, targetdir = (selfpos-targetpos):polar()
+   local velmod, veldir = p:vel():polar()
+   if velmod < 0.8*p:stats().speed or math.abs(targetdir-veldir) > 30 then
+      local dir = ai.face( target, true )
+      if math.abs(180-dir) < 30 then
+         ai.accel()
+      end
+      return
+   end
+
+   -- We are flying away, so try to kite
+   local dir = ai.aim(target) -- aim instead of facing
+   if dir < 30 then
+      if dist < range*0.95 then
+         ai.set_shoot_indicator(false)
+         ai.weapset( 4 )
+      end
+
+      if dir < 10 then
+         ai.weapset( 3 ) -- Set turret/forward weaponset.
+         ai.shoot()
+      end
+   end
+end
 --[[
 -- Enters ranged combat with the target
 --]]
 function _atk_g_ranged( target, dist )
+   local range = ai.getweaprange( 4 )
+   local relvel = ai.relvel( target )
+   local istargeted = (target:target()==ai.pilot())
+   local wrange = math.min( ai.getweaprange(3,0), ai.getweaprange(3,1) )
 
    -- Pilot thinks dogfight is the best
-   if ai.relhp(target)*ai.reldps(target) >= 0.25 
-         or ai.getweapspeed(4) < target:stats().speed_max*1.2 
-         or ai.getweaprange(4) < ai.getweaprange(1)*1.5 then
-
-      local dir
-      if not mem.careful or dist < 3 * ai.getweaprange(3, 0) * mem.atk_approach then
-         dir = ai.face(target) -- Normal face the target
+   if ai.relhp(target)*ai.reldps(target) >= 0.25
+         or ai.getweapspeed(4) < target:stats().speed_max*1.2
+         or range < ai.getweaprange(1)*1.5 then
+      _atk_g_ranged_dogfight( target, dist )
+   elseif target:target()==ai.pilot() and dist < 1.3*range then
+      local tvel = target:vel()
+      local pvel = ai.pilot():vel()
+      local vel = (tvel-pvel):polar()
+      -- If will make contact soon, try to engage
+      if dist < wrange+8*vel then
+         _atk_g_ranged_dogfight( target, dist )
       else
-         dir = ai.careful_face(target) -- Careful method
+      -- Getting chased, try to kite
+         _atk_g_ranged_kite( target, dist )
       end
-
-      -- Check if in range to shoot missiles
-      if dist < ai.getweaprange( 4 ) and dir < 30 then
-         ai.weapset( 4 )
-      else
-         -- Test if we should zz
-         if ai.pilot():stats().mass < 400 and _atk_decide_zz() then
-            ai.pushsubtask("_atk_zigzag")
-         end
-      end
-
-      -- Approach for melee
-      if dir < 10 then
-         ai.accel()
-      end
-
-   else   --Pilot fears his enemy
-
-   --[[ The pilot tries first to place himself at range and at constant velocity.
-        When he is stabilized, he starts shooting until he has to correct his trajectory again
-
-        If he doesn't manage to shoot missiles after a few seconds 
-        (because the target dodges),
-        he gives up and just faces the target and shoot (provided he is in range)
-   ]]
-
-      local p = ai.pilot()
-
-      -- Estimate the range
-      local radial_vel = ai.relvel(target, true)
-      local range = ai.getweaprange( 4 )
-      range = math.min ( range - dist * radial_vel / ( ai.getweapspeed( 4 ) - radial_vel ), range )
-
-      local goal = ai.follow_accurate(target, range * 0.8, 0, 10, 20, "keepangle")
-      local mod = vec2.mod(goal - p:pos())
-
-      --Must approach or stabilize
-      if mod > 3000 then
-         -- mustapproach allows a hysteretic behaviour
-         mem.mustapproach = true
-      end
-      if dist > range*0.95 then
-         mem.outofrange = true
-      end
-
-      if (mem.mustapproach and not ai.timeup(1) ) or mem.outofrange then
-         local dir   = ai.face(goal)
-         if dir < 10 and mod > 300 then
-            ai.accel()
-            --mem.stabilized = false
-         -- ship must be stabilized since 2 secs
-         elseif ai.relvel(target) < 5 and not ai.timeup(1) then--[[if not mem.stabilized then
-            mem.stabilized = true
-            ai.settimer(0, 2000)
-         elseif not ai.timeup(1) and ai.timeup(0) then
-            -- If the ship manages to catch its mark, reset the timer]]
-            --ai.settimer(1, 10000)
-            mem.mustapproach = false
-         end
-         if dist < range*0.85 then
-            mem.outofrange = false
-         end
-
-      else -- In range
-         local dir  = ai.face(target)
-         if dir < 30 then
-            ai.set_shoot_indicator(false)
-            ai.weapset( 4 )
-            -- If he managed to shoot, reinitialize the timer
-            if ai.shoot_indicator() and not ai.timeup(1) then
-               ai.settimer(1, 13000)
-            end
-         end
-      end
-
-      --The pilot just arrived in the good zone : 
-      --From now, if ship doesn't manage to stabilize within a few seconds, shoot anyway
-      if dist < 1.5*range and not mem.inzone then
-         mem.inzone = true
-         ai.settimer(1, mod/p:stats().speed*700 )
-      end
-
+   else
+      -- Enemy is distracted, try to strafe and harass without engaging
+      _atk_g_ranged_strafe( target, dist )
    end
 
    -- Always launch fighters for now

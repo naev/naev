@@ -8,38 +8,39 @@
  * @brief Handles the Lua console.
  */
 
+/** @cond */
+#define lua_c
+#include <ctype.h>
+#include <lauxlib.h>
+#include <lua.h>
+#include <lualib.h>
+#include <stdlib.h>
+
+#include "naev.h"
+/** @endcond */
+
 #include "console.h"
 
-#include "naev.h"
-
-#include <stdlib.h>
-#include <ctype.h>
-#include "nstring.h"
-
-#define lua_c
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-
+#include "array.h"
+#include "conf.h"
+#include "font.h"
 #include "log.h"
+#include "menu.h"
 #include "naev.h"
-#include "nlua.h"
-#include "nluadef.h"
 #include "ndata.h"
-#include "nlua_cli.h"
-#include "nlua_tk.h"
-#include "nlua_tex.h"
-#include "nlua_col.h"
+#include "nfile.h"
+#include "nlua.h"
+#include "nlua_audio.h"
 #include "nlua_bkg.h"
 #include "nlua_camera.h"
+#include "nlua_cli.h"
+#include "nlua_col.h"
 #include "nlua_music.h"
-#include "nlua_audio.h"
-#include "font.h"
+#include "nlua_tex.h"
+#include "nlua_tk.h"
+#include "nluadef.h"
+#include "nstring.h"
 #include "toolkit.h"
-#include "nfile.h"
-#include "menu.h"
-#include "conf.h"
-#include "array.h"
 
 
 #define BUTTON_WIDTH    50 /**< Button width. */
@@ -198,8 +199,13 @@ static int cli_printOnly( lua_State *L )
 static int cli_script( lua_State *L )
 {
    const char *fname;
-   char buf[PATH_MAX], *bbuf;
+   char *buf;
+   size_t blen;
    int n;
+
+   /* Handle parameters. */
+   fname = luaL_checkstring(L, 1);
+   n = lua_gettop(L);
 
    /* Reset loaded buffer. */
    if (cli_env != LUA_NOREF) {
@@ -216,22 +222,11 @@ static int cli_script( lua_State *L )
       lua_pop(L,1);                          /* */
    }
 
-   /* Handle parameters. */
-   fname = luaL_optstring(L, 1, NULL);
-   n     = lua_gettop(L);
-
-   /* Try to find the file if it exists. */
-   if (nfile_fileExists(fname))
-      nsnprintf( buf, sizeof(buf), "%s", fname );
-   else {
-      bbuf = strdup( naev_binary() );
-      nsnprintf( buf, sizeof(buf), "%s/%s", nfile_dirname( bbuf ), fname );
-      free(bbuf);
-   }
-
-   /* Do the file. */
-   if (luaL_loadfile(L, buf) != 0)
+   /* Do the file from PHYSFS. */
+   buf = ndata_read( fname, &blen );
+   if (luaL_loadbuffer( L, buf, blen, fname ) != 0)
       lua_error(L);
+   free( buf );
 
    /* Return the stuff. */
    nlua_pushenv(cli_env);
@@ -306,7 +301,7 @@ static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
       /* Go up in history. */
       case SDLK_UP:
          for (i=cli_history; i>=0; i--) {
-            if (strncmp(cli_buffer[i], "\aC>", 3) == 0) {
+            if (strncmp(cli_buffer[i], "#C>", 3) == 0) {
                /* Strip escape codes from beginning and end */
                str = nstrndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
                if (i == cli_history &&
@@ -332,7 +327,7 @@ static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 
          /* Find next buffer. */
          for (i=cli_history+1; i<array_size(cli_buffer); i++) {
-            if (strncmp(cli_buffer[i], "\aC>", 3) == 0) {
+            if (strncmp(cli_buffer[i], "#C>", 3) == 0) {
                str = nstrndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
                window_setInput( wid, "inpInput", str );
                free(str);
@@ -538,7 +533,7 @@ static void cli_input( unsigned int wid, char *unused )
       return;
 
    /* Put the message in the console. */
-   nsnprintf( buf, CLI_MAX_INPUT+7, "\aC%s %s\a0",
+   nsnprintf( buf, CLI_MAX_INPUT+7, "#C%s %s#0",
          cli_firstline ? "> " : ">>", str );
    cli_printCoreString( buf );
 
@@ -632,8 +627,8 @@ void cli_open (void)
    if (cli_firstOpen) {
       char buf[256];
       cli_addMessage( "" );
-      cli_addMessage( _("\agWelcome to the Lua console!") );
-      nsnprintf( buf, sizeof(buf), "\ag "APPNAME" v%s", naev_version(0) );
+      cli_addMessage( _("#gWelcome to the Lua console!") );
+      nsnprintf( buf, sizeof(buf), "#g "APPNAME" v%s", naev_version(0) );
       cli_printCoreString( buf );
       cli_addMessage( "" );
       cli_firstOpen = 0;

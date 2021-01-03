@@ -8,12 +8,13 @@
 #  define TOOLKIT_H
 
 
+/** @cond */
 #include "SDL.h"
+/** @endcond */
 
-#include "tk/widget.h"
-
-#include "opengl.h"
 #include "font.h"
+#include "opengl.h"
+#include "tk/widget.h"
 
 
 int toolkit_isOpen (void);
@@ -67,6 +68,7 @@ void window_resizeWidget( const unsigned int wid, const char* name, int w, int h
 /*
  * destruction
  */
+void toolkit_closeAll( void );
 void window_close( unsigned int wid, char *str );
 void window_destroy( const unsigned int wid );
 void window_destroyWidget( unsigned int wid, const char* wgtname );

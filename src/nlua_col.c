@@ -8,14 +8,17 @@
  * @brief Handles colours.
  */
 
-#include "nlua_col.h"
 
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nluadef.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_col.h"
+
 #include "log.h"
+#include "nluadef.h"
 
 
 /* Colour metatable methods. */

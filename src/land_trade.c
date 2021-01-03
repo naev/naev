@@ -9,10 +9,16 @@
  */
 
 
-#include "land_trade.h"
+/** @cond */
+#include <assert.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
-#include "ndata.h"
+/** @endcond */
+
+#include "land_trade.h"
 
 #include "commodity.h"
 #include "dialogue.h"
@@ -21,15 +27,12 @@
 #include "land_shipyard.h"
 #include "log.h"
 #include "map_find.h"
+#include "ndata.h"
 #include "nstring.h"
 #include "player.h"
 #include "space.h"
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
-#include <assert.h>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 /*
  * Quantity to buy on one click
@@ -83,13 +86,13 @@ void commodity_exchange_open( unsigned int wid )
          "txtName", &gl_defFont, NULL, _("None") );
 
    bufSInfo = _(
-           "\anYou have:\a0\n"
-           "\anPurchased for:\a0\n"
-           "\anMarket Price:\a0\n"
-           "\anFree Space:\a0\n"
-           "\anMoney:\a0\n"
-           "\anAverage price here:\a0\n"
-           "\anAverage price all:\a0");
+           "#nYou have:#0\n"
+           "#nPurchased for:#0\n"
+           "#nMarket Price:#0\n"
+           "#nFree Space:#0\n"
+           "#nMoney:#0\n"
+           "#nAverage price here:#0\n"
+           "#nAverage price all:#0");
    infoHeight = gl_printHeightRaw(&gl_smallFont, LAND_BUTTON_WIDTH+80, bufSInfo);
    window_addText( wid, 40 + iw, -60 - titleHeight, 200, infoHeight, 0,
          "txtSInfo", &gl_smallFont, NULL, bufSInfo );

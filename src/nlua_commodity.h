@@ -7,8 +7,6 @@
 #  define NLUA_COMMODITY_H
 
 
-#include <lua.h>
-
 #include "commodity.h"
 #include "nlua.h"
 

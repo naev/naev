@@ -9,9 +9,11 @@
  */
 
 
-#include "cond.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
+
+#include "cond.h"
 
 #include "log.h"
 #include "nlua.h"
