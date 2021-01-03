@@ -18,7 +18,7 @@ local portrait = require 'portrait'
 local imageproc = require 'imageproc'
 
 trader_name = _("Machiavellian Misi")
-trader_portrait = "none"
+trader_portrait = "misi"
 trader_colour = {1, 0.3, 1}
 store_name = string.format(_("%s's \"Fine\" Wares"), trader_name)
 broadcastmsg = {
