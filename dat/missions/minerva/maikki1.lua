@@ -93,8 +93,7 @@ end
 function approach_maikki ()
    vn.clear()
    vn.scene()
-   local maikki = vn.newCharacter( maikki_name,
-         { image=maikki_image, color=maikki_colour } )
+   local maikki = vn.newCharacter( minerva.vn_maikki() )
    vn.fadein()
 
    if misn_state==nil then
