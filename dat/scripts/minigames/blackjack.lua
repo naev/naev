@@ -1,3 +1,4 @@
+local minerva = require "minerva"
 local lg = require 'love.graphics'
 require 'numstring'
 
@@ -68,8 +69,7 @@ local function _done( status )
       end
    elseif d>21 or (p<=21 and d<p) then
       local won = bj.betamount / 1000
-      local tokens = var.peek("minerva_tokens") or 0
-      var.push("minerva_tokens",tokens+won)
+      minerva.tokens_pay( won )
       msg = string.format(_("#gYou won #p%d Minerva Tokens#g!#0"), won)
       if #bj.player == 2 and p==21 then
          msg = string.format(_("#pBlackjack!#0 %s"), msg)
@@ -238,15 +238,14 @@ function bj.draw( bx, by, bw, bh)
       x = x + 3*b + w
    end
    y = bj.bets_y + h+3*b
-   local tokens = var.peek("minerva_tokens") or 0
+   local tokens = minerva.tokens_get()
    local s = string.format(_("You have %s credits and #p%s Minerva Tokens#0."), creditstring(player.credits()), numstring(tokens))
    w = bj.font:getWidth( s )
    lg.print( s, bj.font, bx+(bw-w)/2, y )
 end
 
-local function trybet( credits )
-   local betamount = 10000
-   if credits < betamount then
+local function trybet( betamount )
+   if player.credits() < betamount then
       bj.msg = string.format(_("#rNot enough credits! You only have %s!#0"), creditstring(player.credits()))
    else
       player.pay(-betamount)

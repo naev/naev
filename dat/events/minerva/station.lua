@@ -11,6 +11,7 @@
 -- Event handling the gambling stuff going on at Minerva station
 --]]
 
+local minerva = require "minerva"
 local portrait = require "portrait"
 local vn = require 'vn'
 local blackjack = require 'minigames.blackjack'
@@ -101,29 +102,12 @@ function create()
       hook.land( "bargreeter", "bar" )
    end
    -- End event on takeoff.
-   tokens_landed = tokens_get()
+   tokens_landed = minerva.tokens_get()
    hook.takeoff( "leave" )
 
    -- Custom music
    music.load( "meeting_mtfox" )
    music.play()
-end
-
--- Roughly 1 token is 1000 credits
-function tokens_get()
-   return var.peek( "minerva_tokens" ) or 0
-end
-function tokens_get_gained()
-   return var.peek( "minerva_tokens_gained" ) or 0
-end
-function tokens_pay( amount )
-   local v = tokens_get()
-   var.push( "minerva_tokens", v+amount )
-   -- Store lifetime earnings
-   if amount > 0 then
-      v = var.peek( "minerva_tokens_gained" ) or 0
-      var.push( "minerva_tokens_gained", v+amount )
-   end
 end
 
 local function has_event( name )
@@ -136,10 +120,16 @@ end
 function random_event()
    -- Altercation 1
    local alter1 = "Minerva Station Altercation 1"
-   if not has_event(alter1) and tokens_get_gained() > 10 and rnd.rnd()<0.25 then
-      naev.eventStart(alter1)
+   if not has_event(alter1) and minerva.tokens_get_gained() > 10 and rnd.rnd() < 0.25 then
+      hook.safe( "start_alter1" )
       return
    end
+end
+
+-- TODO probably a bug, but we should be able to pass a hook argument instead of hardcoding the function
+-- Doesn't seem to work however
+function start_alter1 ()
+   naev.eventStart( "Minerva Station Altercation 1" )
 end
 
 function bargreeter()
@@ -155,7 +145,7 @@ function bargreeter()
    vn.fadeout()
    vn.run()
 
-   tokens_pay( 10 )
+   minerva.tokens_pay( 10 )
 end
 
 function approach_terminal()
@@ -174,8 +164,8 @@ function approach_terminal()
    vn.label( "start" )
    t:say( function() return string.format(
          n_("\"VALUED CUSTOMER, YOU HAVE #p%d MINERVA TOKEN#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?\"",
-            "\"VALUED CUSTOMER, YOU HAVE #p%d MINERVA TOKENS#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?\"", tokens_get()),
-               tokens_get(), msgs[rnd.rnd(1,#msgs)]) end )
+            "\"VALUED CUSTOMER, YOU HAVE #p%d MINERVA TOKENS#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?\"", minerva.tokens_get()),
+               minerva.tokens_get(), msgs[rnd.rnd(1,#msgs)]) end )
    vn.menu( {
       {_("Information"), "info"},
       {_("Trade-in"), "trade"},
@@ -210,20 +200,20 @@ function approach_terminal()
    vn.label( "trade_notenough" )
    t:say( function() return string.format(
          n_("\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d MINERVA TOKEN#0.\"",
-            "\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d MINERVA TOKENS#0.\"", tokens_get()),
-         tokens_get() ) end )
+            "\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d MINERVA TOKENS#0.\"", minerva.tokens_get()),
+         minerva.tokens_get() ) end )
    vn.jump( "trade_menu" )
    vn.label( "trade_soldout" )
    t:say( function() return string.format(
          n_("\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d MINERVA TOKEN#0.\"",
-            "\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d MINERVA TOKENS#0.\"", tokens_get()),
-         tokens_get() ) end )
+            "\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d MINERVA TOKENS#0.\"", minerva.tokens_get()),
+         minerva.tokens_get() ) end )
    vn.jump( "trade_menu" )
    vn.label( "trade" )
    t:say( function() return string.format(
          n_("\"YOU CAN TRADE IN YOUR PRECIOUS #p%d MINERVA TOKEN#0 FOR THE FOLLOWING GOODS.\"",
-            "\"YOU CAN TRADE IN YOUR PRECIOUS #p%d MINERVA TOKENS#0 FOR THE FOLLOWING GOODS.\"", tokens_get()),
-            tokens_get() ) end )
+            "\"YOU CAN TRADE IN YOUR PRECIOUS #p%d MINERVA TOKENS#0 FOR THE FOLLOWING GOODS.\"", minerva.tokens_get()),
+            minerva.tokens_get() ) end )
    local trades = {
       {"Ripper Cannon", {100, "outfit"}},
       {"TeraCom Fury Launcher", {500, "outfit"}},
@@ -247,7 +237,7 @@ function approach_terminal()
 
       local t = trades[idx]
       local tokens = t[2][1]
-      if tokens > tokens_get() then
+      if tokens > minerva.tokens_get() then
          -- Not enough money.
          vn.jump( "trade_notenough" )
          return
@@ -293,7 +283,7 @@ function approach_terminal()
    }, function (idx)
       if idx=="trade_consumate" then
          local t = tradein_item
-         tokens_pay( -t[2][1] )
+         minerva.tokens_pay( -t[2][1] )
          if t[2][2]=="outfit" then
             player.addOutfit( t[1] )
             player.msg( _("Gambling Bounty"), string.format(_("Obtained: %s"),t[1]))
@@ -428,6 +418,6 @@ end
 -- Event is over when player takes off.
 --]]
 function leave ()
-   local diff = tokens_get()-tokens_landed
+   local diff = minerva.tokens_get()-tokens_landed
    evt.finish()
 end
