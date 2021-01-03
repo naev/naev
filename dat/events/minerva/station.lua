@@ -353,14 +353,24 @@ function approach_blackjack()
    -- Resize the window
    local lw, lh = window.getDesktopDimensions()
    local textbox_h = vn.textbox_h
+   local textbox_x = vn.textbox_x
    local textbox_y = vn.textbox_y
+   local dealer_x, dealer_newx
    local blackjack_h = 500
+   local blackjack_x = math.min( lw-vn.textbox_w-100, textbox_x+200 )
    local blackjack_y = lh-blackjack_h
-   vn.animation( 0.2, function (alpha)
+   local setup_blackjack = function (alpha)
+      if dealer_x == nil then
+         dealer_x = cc.offset
+         dealer_newx = 0.2*lw
+      end
       vn.textbox_h = textbox_h + (blackjack_h - textbox_h)*alpha
+      vn.textbox_x = textbox_x + (blackjack_x - textbox_x)*alpha
       vn.textbox_y = textbox_y + (blackjack_y - textbox_y)*alpha
       vn.namebox_alpha = 1-alpha
-   end )
+      cc.offset = dealer_x + (dealer_newx - dealer_x)*alpha
+   end
+   vn.animation( 0.2, function (alpha) setup_blackjack(alpha) end )
    local bj = vn.custom()
    bj._init = function( self )
       -- TODO play some blackjack music
@@ -387,11 +397,7 @@ function approach_blackjack()
       blackjack.mousepressed( mx, my, button )
    end
    -- Undo the resize
-   vn.animation( 0.2, function (alpha)
-      vn.textbox_h = blackjack_h + (textbox_h - blackjack_h)*alpha
-      vn.textbox_y = blackjack_y + (textbox_y - blackjack_y)*alpha
-      vn.namebox_alpha = alpha
-   end )
+   vn.animation( 0.2, function (alpha) setup_blackjack(1-alpha) end )
    vn.label( "leave" )
    vn.na( _("You leave the blackjack table behind and head back to the main area.") )
    vn.fadeout()
