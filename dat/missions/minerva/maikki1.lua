@@ -45,6 +45,7 @@ misn_title = _("Finding Father")
 misn_reward = _("???")
 misn_desc = _("Maikki wants you to help her find her father.")
 
+mainsys = "Limbo"
 searchsys = "Doeston"
 cutscenesys = "Arandon"
 stealthsys = "Zerantix"
@@ -188,6 +189,12 @@ function approach_oldman ()
 
    vn.label( "kex" )
    om(_([[""]]))
+   vn.func( function ()
+      if misn_state==0 then
+         misn.markerMove( misn_marker, system.get(cutscenesys) )
+         misn_state=1
+      end
+   end )
    vn.jump( "menu_msg" )
 
    vn.label( "doeston" )
@@ -200,7 +207,14 @@ function approach_oldman ()
 
    vn.label( "scavengers" )
    om(_([[""]]))
-   vn.func( function () if misn_state==2 then misn_state=3 end end )
+   vn.func( function ()
+      if misn_state==2 then
+         misn_osd = misn.osdCreate( misn_title,
+            { string.format(_("Follow the scavengers in the %s system"), stealthsys) } )
+         misn.markerMove( misn_marker, system.get(stealthsys) )
+         misn_state=3
+      end
+   end )
    vn.jump( "menu_msg" )
 
    vn.label( "showloot" )
@@ -220,7 +234,13 @@ end
 function enter ()
    if system.cur() == system.get(cutscenesys) and misn_state==1 then
       -- Cutscene with scavengers
+      --misn.markerMove( misn_marker, system.get(searchsys) )
+      --misn_state=2
    elseif system.cur() == system.get(stealthsys) and misn_state==3 then
       -- Have to follow scavengers
+      --misn_osd = misn.osdCreate( misn_title,
+      --    { string.format(_("Return to %s in the %s system"), minerva.maikki.name, mainsys) } )
+      --misn.markerMove( misn_marker, system.get(mainsys) )
+      --misn_state=4
    end
 end
