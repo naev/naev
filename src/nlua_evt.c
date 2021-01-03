@@ -188,10 +188,7 @@ static int evt_npcAdd( lua_State *L )
    desc = luaL_checkstring(L, 4);
 
    /* Optional priority. */
-   if (lua_gettop(L) > 4)
-      priority = luaL_checkint( L, 5 );
-   else
-      priority = 5;
+   priority = luaL_optinteger(L,5,5);
 
    /* Set path. */
    nsnprintf( portrait, PATH_MAX, GFX_PATH"portraits/%s.png", gfx );
