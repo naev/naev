@@ -109,7 +109,6 @@
 static int quit               = 0; /**< For primary loop */
 static unsigned int time_ms   = 0; /**< used to calculate FPS and movement. */
 static glTexture *loading     = NULL; /**< Loading screen. */
-static char *binary_path      = NULL; /**< argv[0] */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
 static int fps_skipped        = 0; /**< Skipped last frame? */
 /* Version stuff. */
@@ -182,9 +181,8 @@ int main( int argc, char** argv )
    if (!log_isTerminal())
       log_copy(1);
 
-   /* Save the binary path. */
-   binary_path = strdup( env.argv0 );
-   if( PHYSFS_init( naev_binary() ) == 0 ) {
+   /* Set up PhysicsFS. */
+   if( PHYSFS_init( env.argv0 ) == 0 ) {
       ERR( "PhysicsFS initialization failed: %s",
             PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
       return -1;
@@ -279,9 +277,7 @@ int main( int argc, char** argv )
    /* Load the start info. */
    if (start_load())
       ERR( _("Failed to load module start data.") );
-
-   /* Load the data basics. */
-   LOG(" %s", ndata_name());
+   LOG(" %s", start_name());
    DEBUG_BLANK();
 
    /* Display the SDL Version. */
@@ -482,9 +478,6 @@ int main( int argc, char** argv )
 
    /* Clean up signal handler. */
    debug_sigClose();
-
-   /* Last free. */
-   free(binary_path);
 
    /* Delete logs if empty. */
    log_clean();
@@ -1066,7 +1059,7 @@ static void window_caption (void)
    }
 
    /* Set caption. */
-   nsnprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
+   nsnprintf(buf, PATH_MAX, APPNAME" - %s", start_name());
    SDL_SetWindowTitle( gl_screen.window, buf );
    SDL_SetWindowIcon(  gl_screen.window, naev_icon );
 }
@@ -1090,7 +1083,7 @@ char *naev_version( int long_version )
 #else /* DEBUGGING */
                "",
 #endif /* DEBUGGING */
-               ndata_name() );
+               start_name() );
       return version_human;
    }
 
@@ -1124,15 +1117,6 @@ int naev_versionCompare( const char *version )
    }
    semver_free( &sv );
    return res;
-}
-
-
-/**
- * @brief Returns the naev binary path.
- */
-char *naev_binary (void)
-{
-   return binary_path;
 }
 
 

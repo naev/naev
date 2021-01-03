@@ -142,7 +142,7 @@ int ndata_setPath( const char *path )
          }
          FALLTHROUGH;
       case NDATA_SRC_BINARY:
-         nfile_concatPaths( buf, PATH_MAX, nfile_dirname(naev_binary()), NDATA_PATHNAME );
+         nfile_concatPaths( buf, PATH_MAX, PHYSFS_getBaseDir(), NDATA_PATHNAME );
          if ( ndata_isndata( buf ) ) {
             ndata_dir    = strdup( buf );
             ndata_source = NDATA_SRC_BINARY;
@@ -252,17 +252,6 @@ void ndata_close (void)
       SDL_DestroyMutex(ndata_lock);
       ndata_lock = NULL;
    }
-}
-
-
-/**
- * @brief Gets the ndata's name.
- *
- *    @return The ndata's name.
- */
-const char* ndata_name (void)
-{
-   return start_name();
 }
 
 

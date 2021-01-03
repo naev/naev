@@ -88,7 +88,6 @@ void ndata_close (void);
  * General.
  */
 int ndata_setPath( const char* path );
-const char* ndata_name (void);
 
 /*
  * Individual file functions.

@@ -16,6 +16,7 @@ physfs_sources = []
 
 if host_machine.system() == 'darwin'
    add_languages('objc', native: false)
+   add_project_arguments('-Wno-unused-parameter', language : 'objc')
    physfs_deps += dependency('Foundation', required: true )
    physfs_deps += dependency('IOKit', required: true )
    physfs_sources += 'src/physfs_platform_apple.m'

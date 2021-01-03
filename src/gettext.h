@@ -10,11 +10,13 @@
 #include <stdint.h>
 /** @endcond */
 
+#include "attributes.h"
+
 void gettext_init();
 void gettext_setLanguage( const char* lang );
 
 const char* gettext_ngettext( const char* msgid, const char* msgid_plural, uint64_t n );
-const char* gettext_pgettext( const char* lookup, const char* msgid );
+FORMAT_ARG( 2 ) const char* gettext_pgettext( const char* lookup, const char* msgid );
 
 /** A pseudo function call that serves as a marker for the automated
  * extraction of messages, but does not call gettext(). The run-time
@@ -30,13 +32,19 @@ const char* gettext_pgettext( const char* lookup, const char* msgid );
  * if the message catalogs in ndata provide it. Otherwise, it returns its
  * input. The returned string must not be modified or freed.
  */
-#define _( msgid )                    gettext_ngettext( msgid, NULL, 1 )
+FORMAT_ARG(1) static inline const char* _( const char* msgid )
+{
+   return gettext_ngettext( msgid, NULL, 1 );
+}
 
 /** \see gettext_noop */
 #define N_( msgid )                   gettext_noop( msgid )
 
 /** \see gettext_ngettext() */
-#define n_( msgid, msgid_plural, n )  gettext_ngettext( msgid, msgid_plural, n )
+FORMAT_ARG(1) static inline const char* n_( const char* msgid, const char* msgid_plural, uint64_t n )
+{
+   return gettext_ngettext( msgid, msgid_plural, n );
+}
 
 /** The separator between msgctxt and msgid in a .mo file.  */
 #define GETTEXT_CONTEXT_GLUE "\004"
