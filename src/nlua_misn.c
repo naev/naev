@@ -748,6 +748,7 @@ static int misn_cargoJet( lua_State *L )
  * @brief Creates a mission OSD.
  *
  * @note You can index elements by using '\\t' as first character of an element.
+ * @note Destroys an osd if it already exists.
  *
  * @usage misn.osdCreate( "My OSD", {"Element 1", "Element 2"})
  *
