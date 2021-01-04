@@ -214,6 +214,7 @@ jobs:
             openal-soft \
             intltool \
             libvorbis \
+            luajit \
             sdl2
 
       - name: Setup Python
