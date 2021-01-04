@@ -203,7 +203,10 @@ function approach_oldman ()
    vn.menu( opts )
 
    vn.label( "kex" )
-   om(_([[""]]))
+   om(_([["Kex? Now that is not a name I've heard in a while."]]))
+   om(_([["Kex was a great guy. He used to hang out here before venturing into the nebula, spending his time with the useless lot of us. Shame that he went missing."]]))
+   om(_([["Since they never found his ship, I like to think that he made it to the other side of the nebula, if there is one.\nHe takes a long swig from his drink."]]))
+   om(_([["Still that doesn't stop the odd folk here and there from trying to find it, they usually don't end up much past Arandon."]]))
    vn.func( function ()
       if misn_state==0 then
          misn.markerMove( misn_marker, system.get(cutscenesys) )
@@ -213,11 +216,16 @@ function approach_oldman ()
    vn.jump( "menu_msg" )
 
    vn.label( "doeston" )
-   om(_([[""]]))
+   om(_([["Not much to do in Doeston. Mainly a stopping place for all them crazy folk heading into the nebula. Maybe if I were any younger I would be with them exploring, but can't with this bad knee."\nHe pats his left knee.]]))
+   om(_([["It used to be a more popular place, but with most of the easy pickings getting scavenged out of the nebula, not many people come here after all. Especially not after the disappearance of famous scavengers like Kex and Xioni."\nHe muses thoughtfully.]]))
+   om(_([["To better times."\nHe downs his drink and orders another.]]))
    vn.jump( "menu_msg" )
 
    vn.label( "nebula" )
-   om(_([[""]]))
+   om(_([[He whistles casually.\n"The nebula's a real piece of work. It's almost mesmerizing to fly through it, however, it do got quite a character. If you try to go too deep into 'er you can't easily get back. Many a soul has been lost in there."]]))
+   -- TODO play eerie sound
+   om(_([[He goes a bit quieter and gets closer to you.\n"Rumour has it that there are ghosts lurking in the depths. I've seen people come back, pale as snow, "claiming they seen them."]]))
+   om(_([["I believe it be the boredom getting to their heads. Likely naught but a scavenger or some debris."]]))
    vn.jump( "menu_msg" )
 
    vn.label( "scavengers" )
@@ -242,6 +250,7 @@ function approach_oldman ()
    vn.jump( "menu" )
 
    vn.label( "leave" )
+   vn.na(_("You take your leave."))
    vn.fadeout()
    vn.run()
 end
