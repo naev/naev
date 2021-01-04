@@ -31,14 +31,14 @@ local minerva = require "minerva"
 local vn = require 'vn'
 
 maikki_name = _("Distraught Young Woman")
-maikki_description = _("yeah")
+maikki_description = _("You see a small young woman sitting by herself. She has a worried expression on her face.")
 maikki_portrait = minerva.maikki.portrait
 maikki_image = minerva.maikki.image
 maikki_colour = minerva.maikki.colour
 
 oldman_name = _("Old Man")
 oldman_portrait = "old_man"
-oldman_description = _("Old man.")
+oldman_description = _("You see a nonchalant old man sipping on his drink with a carefree aura.")
 oldman_image = "old_man.png"
 
 scav_name = _("Scavengers")
@@ -141,6 +141,7 @@ function approach_maikki ()
          misn_state=-1
       end )
       maikki(_([["I was told he would be here, but I've been here for ages and haven't gotten anywhere."\nShe gives out a heavy sigh.]]))
+      maikki:rename( minerva.maikki.name )
       maikki(_([["My name is Maisie, but you can call me Maikki."]]))
       vn.label( "menu" )
       vn.menu( {
@@ -153,7 +154,7 @@ function approach_maikki ()
             vn.jump( "notenough" )
          else
             minerva.tokens_pay( -10 )
-            minerva.maikki_mood_mod( +1 )
+            minerva.maikki_mood_mod( 1 )
          end
       end )
       vn.na(_("You offer her a drink. After staring intently at the drink menu, she orders a strawberry cheesecake caramel parfait with extra berries. Wait, was that even on the menu?"))
@@ -203,7 +204,11 @@ function approach_maikki ()
    vn.jump( "menu_msg" )
 
    vn.label( "showloot" )
-   maikki(_([["Blah"]]))
+   vn.na(_("You show her the picture you found in Zerantix of her and her parents."))
+   maikki(_([[As she stares deeply at the picture, her eyes tear up.]]))
+   maikki(_([["I'm sorry, I shouldn't be crying. I hardly even know the man. It's just seeing us together just brings back some memories which I had thought I had forgotten."]]))
+   vn.na(_("You give a few moments to recover before explaining her what you saw in the wreck."))
+   maikki(_([[""]]))
    vn.func( function ()
       -- TODO give reward
       -- TODO play victory sound
@@ -212,11 +217,11 @@ function approach_maikki ()
    vn.done()
 
    vn.label( "menu_msg" )
-   maikki( _([["Is there anything you would like to know about?"]]) )
+   maikki(_([["Is there anything you would like to know about?"]]))
    vn.jump( "menu" )
 
    vn.label( "leave" )
-   vn.na( "You take your leave to continue the search for her father." )
+   vn.na(_("You take your leave to continue the search for her father."))
    vn.fadeout()
    vn.run()
 end
@@ -354,11 +359,23 @@ function enter ()
       -- cutscene
       --misn.markerMove( misn_marker, system.get(searchsys) )
       --misn_state=2
-   elseif system.cur() == system.get(stealthsys) and misn_state==3 then
+   elseif system.cur() == system.get(stealthsys) and misn_state==4 then
       -- Have to follow scavengers
-      --misn_osd = misn.osdCreate( misn_title,
-      --    { string.format(_("Return to %s in the %s system"), minerva.maikki.name, mainsys) } )
-      --misn.markerMove( misn_marker, system.get(mainsys) )
-      --misn_state=4
+      -- boardhook = hook.pilot( wreck, "board", "board_wreck" )
    end
+end
+
+
+function board_wreck ()
+   vn.clear()
+   vn.fadein()
+   vn.na(_(""))
+   vn.fadeout()
+   vn.run()
+
+   -- Move target back to origin
+   misn_osd = misn.osdCreate( misn_title,
+         { string.format(_("Return to %s in the %s system"), minerva.maikki.name, mainsys) } )
+   misn.markerMove( misn_marker, system.get(mainsys) )
+   misn_state=5
 end
