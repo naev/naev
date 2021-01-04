@@ -31,7 +31,7 @@
 --  591ish - maikki is born
 --  593:3726.4663 - the incident
 --  596ish - Kex disappears (maikki is 8ish)
---  603ish - game start (~15 yeasr after incident, maikki is 18ish)
+--  603ish - game start (~15 years after incident, maikki is 18ish)
 --]]
 local minerva = require "minerva"
 local portrait = require 'portrait'
