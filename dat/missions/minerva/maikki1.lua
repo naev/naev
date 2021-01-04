@@ -218,12 +218,14 @@ function approach_maikki ()
    maikki(_([[As she stares deeply at the picture, her eyes tear up.]]))
    maikki(_([["I'm sorry, I shouldn't be crying. I hardly even know the man. It's just seeing us together just brings back some memories which I had thought I had forgotten."]]))
    vn.na(_("You give a few moments to recover before explaining her what you saw in the wreck and your encounter with the scavengers."))
-   maikki(_([[""]]))
+   maikki(_([["What could the Za'lek have to do with my father? If you didn't find a body I'm sure he survived!"\nShe looks clearly excited.]]))
+   maikki(_([["I think I have an idea for our next steps. Meet me up here in a bit. I have to get some information first."]]))
    vn.func( function ()
-      -- TODO give reward
+      -- no reward, yet...
       -- TODO play victory sound
       misn.finish(true)
    end )
+   vn.fadeout()
    vn.done()
 
    vn.label( "menu_msg" )
@@ -419,6 +421,7 @@ function scavengers_encounter ()
          player.pay( -bribeamount )
       end
    end )
+   -- TODO play money sound
    vn.na(string.format(_("You wire them %s."), creditstring(bribeamount)))
    scavB(_([["I guess this isn't worth our trouble. We already got enough stuff for the Za'leks already."]]))
    scavA(_([["C'mon, let's get out of here. This place gives me the creeps. Feel like a ghost is going to pop out any minute."]]))
