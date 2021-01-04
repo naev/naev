@@ -1386,12 +1386,16 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    /* Stat modifiers. */
    if (outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
       w->dam_mod *= parent->stats.tur_damage;
-      w->dam_as_dis_mod = parent->stats.tur_dam_as_dis;
+      /* dam_as_dis is computed as multiplier, must be corrected. */
+      w->dam_as_dis_mod = parent->stats.tur_dam_as_dis-1.;
    }
    else {
       w->dam_mod *= parent->stats.fwd_damage;
-      w->dam_as_dis_mod = parent->stats.fwd_dam_as_dis;
+      /* dam_as_dis is computed as multiplier, must be corrected. */
+      w->dam_as_dis_mod = parent->stats.fwd_dam_as_dis-1.;
    }
+   /* Clamping, but might not actually be necessary if weird things want to be done. */
+   w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
 
    /* Calculate direction. */
    rdir += RNG_2SIGMA() * acc;

@@ -1,32 +1,36 @@
-//#define PROTANOPE 1
-//#define DEUTERANOPE 1
-//#define TRITANOPE 1
+//#define COLORBLIND_MODE 5
 
-#if defined(PROTANOPE) || defined(DEUTERANOPE) || defined(TRITANOPE)
-// RGB to LMS matrix conversion
-float L = (17.8824f * color_out.r) + (43.5161f * color_out.g) + (4.11935f * color_out.b);
-float M = (3.45565f * color_out.r) + (27.1554f * color_out.g) + (3.86714f * color_out.b);
-float S = (0.0299566f * color_out.r) + (0.184309f * color_out.g) + (1.46709f * color_out.b);
-   
+#ifdef COLORBLIND_MODE
+// Convert to LMS
+float L = (0.31399022f * color_out.r) + (0.63951294f * color_out.g) + (0.04649755f * color_out.b);
+float M = (0.15537241f * color_out.r) + (0.75789446f * color_out.g) + (0.08670142f * color_out.b);
+float S = (0.01775239f * color_out.r) + (0.10944209f * color_out.g) + (0.87256922f * color_out.b);
+
 // Simulate color blindness
-#ifdef PROTANOPE // Protanope - reds are greatly reduced (1% men)
-float l = 0.0f * L + 2.02344f * M + -2.52581f * S;
-#else /* PROTANOPE */
-float l = 1.0f * L + 0.0f * M + 0.0f * S;
-#endif /* PROTANOPE */
-#ifdef DEUTERANOPE // Deuteranope - greens are greatly reduced (1% men)
-float m = 0.494207f * L + 0.0f * M + 1.24827f * S;
-#else /* DEUTERANOPE */
+#if COLORBLIND_MODE == 1 // Protanope - reds are greatly reduced (1% men)
+float l = 0.0f * L + 1.05118294f * M + -0.05116099 * S;
 float m = 0.0f * L + 1.0f * M + 0.0f * S;
-#endif /* DEUTERANOPE */
-#ifdef TRITANOPE // Tritanope - blues are greatly reduced (0.003% population)
-float s = -0.395913f * L + 0.801109f * M + 0.0f * S;
-#else /* TRITANOPE */
 float s = 0.0f * L + 0.0f * M + 1.0f * S;
-#endif /* TRITANOPE */
-   
-// LMS to RGB matrix conversion
-color_out.r = (0.0809444479f * l) + (-0.130504409f * m) + (0.116721066f * s);
-color_out.g = (-0.0102485335f * l) + (0.0540193266f * m) + (-0.113614708f * s);
-color_out.b = (-0.000365296938f * l) + (-0.00412161469f * m) + (0.693511405f * s);
-#endif /* defined(PROTANOPE) || defined(DEUTERANOPE) || defined(TRITANOPE) */
+#elif COLORBLIND_MODE == 2 // Deuteranope - greens are greatly reduced (1% men)
+float l = 1.0f * L + 0.0f * M + 0.0f * S;
+float m = 0.9513092 * L + 0.0f * M + 0.04866992 * S;
+float s = 0.0f * L + 0.0f * M + 1.0f * S;
+#elif COLORBLIND_MODE == 3 // Tritanope - blues are greatly reduced (0.003% population)
+float l = 1.0f * L + 0.0f * M + 0.0f * S;
+float m = 0.0f * L + 1.0f * M + 0.0f * S;
+float s = -0.86744736 * L + 1.86727089f * M + 0.0f * S;
+#elif COLORBLIND_MODE == 4 // Blue Cone Monochromat (high light conditions)
+float l = 0.01775f * L + 0.10945f * M + 0.87262f * S;
+float m = 0.01775f * L + 0.10945f * M + 0.87262f * S;
+float s = 0.01775f * L + 0.10945f * M + 0.87262f * S;
+#elif COLORBLIND_MODE == 5 // Rod Monochromat (Achromatopsia)
+float l = 0.212656f * L + 0.715158f * M + 0.072186f * S;
+float m = 0.212656f * L + 0.715158f * M + 0.072186f * S;
+float s = 0.212656f * L + 0.715158f * M + 0.072186f * S;
+#endif /* COLORBLIND_MODE */
+
+// Convert to RGB
+color_out.r = (5.47221206f * l) + (-4.6419601f * m) + (0.16963708f * s);
+color_out.g = (-1.1252419f * l) + (2.29317094f * m) + (-0.1678952f * s);
+color_out.b = (0.02980165f * l) + (-0.19318073f * m) + (1.16364789f * s);
+#endif /* MONOCHROME */
