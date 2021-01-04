@@ -299,8 +299,10 @@ function vn.StateCharacter:_init()
          error(_("character not found to remove!"))
       end
    else
-      table.insert( vn._characters, self.character )
-      self.character.alpha = 1
+      local c = self.character
+      table.insert( vn._characters, c )
+      c.alpha = 1
+      c.displayname = c.who -- reset name
    end
    -- TODO better centering
    local lw, lh = graphics.getDimensions()
@@ -359,7 +361,7 @@ function vn.StateSay:_init()
    if c.hidetitle then
       vn._title = nil
    else
-      vn._title = c.who
+      vn._title = c.displayname or c.who
    end
    -- Reset talking
    for k,v in ipairs( vn._characters ) do
@@ -703,6 +705,15 @@ function vn.Character.new( who, params )
    c.params = params
    return c
 end
+function vn.Character:rename( newname )
+   vn._checkstarted()
+   local s = vn.State.new()
+   s._init = function (state)
+      self.displayname = newname
+      _finish(state)
+   end
+   table.insert( vn._states, s )
+end
 --[[
 -- @brief Creates a new character.
 --    @param who Name (or previously created character) to add.
@@ -854,6 +865,7 @@ end
 -- @brief Runs a function and continues execution.
 --]]
 function vn.func( func )
+   vn._checkstarted()
    local s = vn.State.new()
    s._init = function (self)
       func()
@@ -866,6 +878,7 @@ end
 -- @brief Custom states. Only use if you know what you are doing.
 --]]
 function vn.custom()
+   vn._checkstarted()
    local s = vn.State.new()
    table.insert( vn._states, s )
    return s
