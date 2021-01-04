@@ -29,6 +29,16 @@ LANGUAGEFILE = $(top_builddir)/dat/LANGUAGES
 EXTRA_DIST = build/config.rpath LICENSE extras dat utils org.naev.naev.desktop org.naev.naev.metainfo.xml check-po.sh
 CLEANFILES = $(NAEV) $(VERSIONFILE) $(LANGUAGEFILE) $(LICENSEFILE)
 
+if HAVE_MACOS
+$(top_builddir)/Info.plist: $(top_srcdir)/extras/macos/Info.plist.in
+	./config.status -q --file=$@:$<
+INSTALL_SCRIPT_CRAP = $(top_builddir)/Info.plist
+else # HAVE_MACOS
+INSTALL_SCRIPT_CRAP =
+endif # HAVE_MACOS
+
+CLEANFILES += $(INSTALL_SCRIPT_CRAP)
+
 if HAVE_NLS
 XMLFILES    = $(top_srcdir)/po/POTFILES_XML.in
 TRANSLATIONITS = $(top_srcdir)/po/its/translation.its
@@ -47,7 +57,7 @@ endif # HAVE_NLS
 
 all-local: $(NAEV) data
 
-data: pot $(VERSIONFILE) $(LICENSEFILE)
+data: pot $(VERSIONFILE) $(LICENSEFILE) $(INSTALL_SCRIPT_CRAP)
 
 $(LICENSEFILE): $(top_srcdir)/LICENSE
 	@echo "  CP    $<"
