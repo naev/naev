@@ -1278,8 +1278,9 @@ void space_update( const double dt )
       system_scheduler( dt, 0 );
 
    /*
-    * Volatile systems.
+    * Nebula.
     */
+   nebu_update( dt );
    if (cur_system->nebu_volatility > 0.) {
       dmg.type          = dtype_get("nebula");
       dmg.damage        = pow2(cur_system->nebu_volatility) / 500. * dt;
