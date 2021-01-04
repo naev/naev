@@ -110,7 +110,7 @@ end
 
 function land ()
    if planet.cur() == planet.get("Cerberus") then
-      npc_oldman = misn.npcAdd( "approach_oldman", oldman_name, oldman_portrait, oldman_desc )
+      npc_oldman = misn.npcAdd( "approach_oldman", oldman_name, oldman_portrait, oldman_description )
       if misn_state==3 or misn_state==4 or bribed_scavengers==true then
          npc_scavenger = misn.npcAdd( "approach_scavengers", scav_name, scav_portrait, scav_desc )
       end
@@ -277,8 +277,8 @@ function approach_oldman ()
    om(_([["Kex? Now that is not a name I've heard in a while."
 He nods reflectively.]]))
    om(_([["Kex was a great guy. He used to hang out here before venturing into the nebula, spending his time with the useless lot of us. Shame that he went missing."]]))
-   om(_([["Since they never found his ship, I like to think that he made it to the other side of the nebula, if there is one.
-He takes a long swig from his drink."]]))
+   om(_([["Since they never found his ship, I like to think that he made it to the other side of the nebula, if there is one."
+He takes a long swig from his drink.]]))
    om(_([["Still that doesn't stop the odd folk here and there from trying to find it, they usually don't end up much past Arandon."]]))
    vn.func( function ()
       if misn_state==0 then
@@ -302,7 +302,7 @@ He downs his drink and orders another.]]))
 "The nebula's a real piece of work. It's almost mesmerizing to fly through it, however, it do got quite a character. If you try to go too deep into 'er you can't easily get back. Many a soul has been lost in there."]]))
    -- TODO play eerie sound
    om(_([[He goes a bit quieter and gets closer to you.
-"Rumour has it that there are ghosts lurking in the depths. I've seen people come back, pale as snow, "claiming they seen them."]]))
+"Rumour has it that there are ghosts lurking in the depths. I've seen people come back, pale as snow, claiming they seen them."]]))
    om(_([["I believe it be the boredom getting to their heads. Likely naught but a scavenger or some debris."]]))
    vn.jump( "menu_msg" )
 
@@ -403,7 +403,7 @@ function enter ()
       -- cutscene
       -- TODO meta-factions
       local j = jump.get( cutscenesys, searchsys )
-      local pos = j:pos() + vec2.new(5000,7000)
+      local pos = j:pos() + vec2.new(3000,5000)
       pscavB = pilot.addRaw( "Vendetta", "independent", pos, "Scavenger" )
       pscavB:rename(_("Scavenger Vendetta"))
       pscavB:control()
@@ -430,10 +430,14 @@ cutscene_messages = {
 function cutscene_timer ()
    local dist = pscavB:pos():dist( player.pos() )
    pscavB:taskClear()
+   if hailhook ~= nil then
+      hook.rm( hailhook )
+      hailhook = nil
+   end
    if (dist < 1000) then
       pscavB:face( player.pilot() )
       pscavB:hailPlayer()
-      hook.pilot( pscavB, "hail", cutscene_hail )
+      hailhook = hook.pilot( pscavB, "hail", "cutscene_hail" )
    else
       pscavB:brake()
       cutscene_msg = (cutscene_msg % #cutscene_messages)+1
@@ -485,7 +489,7 @@ function cutscene_hail ()
       cuttimer = hook.timer( 3000, "cutscene_timer" )
    else
       pscavB:taskClear()
-      pscavB:hyperspace( searchsys )
+      pscavB:hyperspace( system.get(searchsys) )
       misn.markerMove( misn_marker, system.get(searchsys) )
       misn_state=2
       hook.rm( cuttimer ) -- reset timer
