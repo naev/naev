@@ -26,6 +26,12 @@
 -- 6. They lead the player to some debris and start looting. Player gets to talk to them and convince to leave, or kill them. Learns that Za'lek have been buying the goods.
 -- 7. Player finds a picture among the debris.
 -- 8. Return to Maikki
+--
+-- Some dates for lore purposes:
+--  591ish - maikki is born
+--  593:3726.4663 - the incident
+--  596ish - Kex disappears (maikki is 8ish)
+--  603ish - game start (~15 yeasr after incident, maikki is 18ish)
 --]]
 local minerva = require "minerva"
 local vn = require 'vn'
@@ -181,7 +187,7 @@ function approach_maikki ()
    vn.menu( opts )
 
    vn.label( "father" )
-   maikki(_([["I don't remember him at all since he disappeared when I was only three, but before my mother died, she told me he was a famous space pilot."]]))
+   maikki(_([["I don't remember him at all since he disappeared when I was only 5 cycles old, but before my mother died, she told me he was a famous space pilot."]]))
    maikki(_([["She used to tell me stories about how he would go on all sorts of brave adventures in the nebula to recover artefacts of human history."]]))
    vn.menu( {
       { _([["He was a scavenger?"]]), "menuscholar" },
@@ -367,9 +373,50 @@ end
 
 
 function board_wreck ()
+   local saw_bridge, saw_dormitory, saw_engineroom
    vn.clear()
    vn.fadein()
-   vn.na(_(""))
+   vn.na(_("You can see clear laser burns on the hull of the wreck as you approach the ship and prepare to board. This doesn't look like it was an accident."))
+   vn.na(_("You board the wreck in your space suit and begin to investigate the insides of the ship."))
+   vn.label("menu")
+   -- Give player the illusion of choice
+   vn.menu( function ()
+      local opts = {}
+      if not saw_bridge then
+         table.insert( opts, { _("Investigate the bridge"), "bridge" } )
+      end
+      if not saw_dormitory then
+         table.insert( opts, { _("Investigate the dormitories"), "dormitories" } )
+      end
+      if not saw_engineroom then
+         table.insert( opts, { _("Investigate the engine room"), "engineroom" } )
+      end
+      if saw_bridge and saw_dormitory and saw_engineroom then
+         table.insert( opts, { _("Leave"), "leave" } )
+      end
+      return opts
+   end )
+
+   vn.label("bridge")
+   vn.na(_("You make your way to what is left of the bridge. You can see what appears to be very old space-weathered bloodstains over most of the controls. However, there are no bodies to be seen around."))
+   vn.func( function () saw_bridge = true end )
+   vn.jump("menu")
+
+   vn.label("dormitories")
+   vn.na(_("The dormitories are the part of the ship that appear to have been kept in best shape, if you don't count all the damage that seems to have been done by scavengers trying to find parts to sell."))
+   vn.na(_("Although there seems to be nothing of value left, a small piece of paper catches your eye. You grab what appears to be a picture of two adults and a child. The child looks very familiar."))
+   -- TODO play bingo sound
+   vn.na(_("You turn the picture around and you see that 'Maikki 596:0928' is written in the corner. You should probably bring this back to Maikki."))
+   vn.func( function () saw_dormitory = true end )
+   vn.jump("menu")
+
+   vn.label("engineroom")
+   vn.na(_("The engine room seems to be the part that took most of the beating. It seems like most of it was sliced off by some powerful beam weapon. Someone really didn't want this ship getting away."))
+   vn.func( function () saw_engineroom = true end )
+   vn.jump("menu")
+
+   vn.label("leave")
+   vn.na(_("After your thorough investigation, you leave the wreck behind and get back into your ship."))
    vn.fadeout()
    vn.run()
 
