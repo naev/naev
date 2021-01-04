@@ -221,6 +221,12 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", uniedit_buttonZoom );
    window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", uniedit_buttonZoom );
 
+   /* Nebula. */
+   window_addText( wid, -20, -40, 100, 20, 0, "txtSNebula",
+         &gl_smallFont, NULL, _("Nebula:") );
+   window_addText( wid, -10, -40-gl_smallFont.h-5, 110, 100, 0, "txtNebula",
+         &gl_smallFont, NULL, _("N/A") );
+
    /* Presence. */
    window_addText( wid, -20, -140, 100, 20, 0, "txtSPresence",
          &gl_smallFont, NULL, _("Presence:") );
@@ -875,6 +881,7 @@ static void uniedit_deselect (void)
    window_disableButton( uniedit_wid, "btnEdit" );
    window_disableButton( uniedit_wid, "btnOpen" );
    window_modifyText( uniedit_wid, "txtSelected", _("No selection") );
+   window_modifyText( uniedit_wid, "txtNebula", _("N/A") );
    window_modifyText( uniedit_wid, "txtPresence", _("N/A") );
 }
 
@@ -938,7 +945,7 @@ static void uniedit_selectRm( StarSystem *sys )
 void uniedit_selectText (void)
 {
    int i, l;
-   char buf[1024];
+   char buf[STRMAX];
    StarSystem *sys;
 
    l = 0;
@@ -955,9 +962,17 @@ void uniedit_selectText (void)
       if (uniedit_nsys == 1) {
          sys         = uniedit_sys[0];
          map_updateFactionPresence( uniedit_wid, "txtPresence", sys, 1 );
+
+         if (sys->nebu_density<=0.)
+            snprintf( buf, sizeof(buf), _("None") );
+         else
+            snprintf( buf, sizeof(buf), _("%.0f Density\n%.0fVolatility"), sys->nebu_density, sys->nebu_volatility);
+         window_modifyText( uniedit_wid, "txtNebula", buf );
       }
-      else
+      else {
+         window_modifyText( uniedit_wid, "txtNebula", _("Multiple selected") );
          window_modifyText( uniedit_wid, "txtPresence", _("Multiple selected") );
+      }
    }
 }
 
