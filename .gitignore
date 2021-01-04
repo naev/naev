@@ -45,7 +45,7 @@ stdout.txt
 *.pbxuser
 *.mode1v3
 extras/.dirstamp
-extras/macos/Info.plist
+Info.plist
 extras/steam/2fa/2fa.txt
 extras/steam/content
 extras/steam/output
