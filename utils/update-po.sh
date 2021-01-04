@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 ROOT=${1-$(pwd)}
 
