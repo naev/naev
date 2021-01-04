@@ -6,6 +6,7 @@
 * 0.8.1
    * Gameplay
       * Lowered large ships' time constant (renamed from time dilation) by 50% of the deviation from 100%.
+      * Tweaked Za'lek ships' stats and outfit slot behavior to match expectations.
    * Engine
       * Restored macOS support (with caveats; see https://github.com/naev/naev/wiki/FAQ).
       * Fixed a crash-loop when the "saves" folder gets populated by Steam data (or other files) and no Naev save files.
