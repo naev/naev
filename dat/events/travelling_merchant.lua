@@ -15,7 +15,6 @@ Spawns a travelling merchant that can sell the player if interested.
 --]]
 local vn = require 'vn'
 local portrait = require 'portrait'
-local imageproc = require 'imageproc'
 
 trader_name = _("Machiavellian Misi") -- Mireia Sibeko
 trader_portrait = "misi"
@@ -97,7 +96,7 @@ end
 function hail ()
    if not var.peek('travelling_trader_hailed') then
       var.push('travelling_trader_hailed', true)
-      local holo = imageproc.hologram( portrait.getFullPath(trader_portrait) )
+      local holo = portrait.hologram( trader_portrait )
 
       vn.clear()
       vn.scene()
