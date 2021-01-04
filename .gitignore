@@ -16,7 +16,7 @@ stdout.txt
 .DS_Store
 *.pbxuser
 *.mode1v3
-extras/macos/Info.plist
+Info.plist
 extras/steam/2fa/2fa.txt
 extras/steam/content
 extras/steam/output
