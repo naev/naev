@@ -34,7 +34,9 @@
 --  603ish - game start (~15 yeasr after incident, maikki is 18ish)
 --]]
 local minerva = require "minerva"
+local portrait = require 'portrait'
 local vn = require 'vn'
+require 'numstring'
 
 maikki_name = _("Distraught Young Woman")
 maikki_description = _("You see a small young woman sitting by herself. She has a worried expression on her face.")
@@ -52,6 +54,8 @@ scav_portrait = "scavenger1"
 scav_desc = _("You see a pair of dirty looking fellows talking loudly among themselves.")
 scavengera_image = "scavenger1.png"
 scavengerb_image = scavengera_image
+scavengera_portrait = "scavenger1"
+scavengerb_portrait = scavengera_portrait
 scavengera_colour = nil
 scavengerb_colour = nil
 
@@ -213,7 +217,7 @@ function approach_maikki ()
    vn.na(_("You show her the picture you found in Zerantix of her and her parents."))
    maikki(_([[As she stares deeply at the picture, her eyes tear up.]]))
    maikki(_([["I'm sorry, I shouldn't be crying. I hardly even know the man. It's just seeing us together just brings back some memories which I had thought I had forgotten."]]))
-   vn.na(_("You give a few moments to recover before explaining her what you saw in the wreck."))
+   vn.na(_("You give a few moments to recover before explaining her what you saw in the wreck and your encounter with the scavengers."))
    maikki(_([[""]]))
    vn.func( function ()
       -- TODO give reward
@@ -372,9 +376,79 @@ function enter ()
 end
 
 
+function scavengers_encounter ()
+   local bribeamount = 100000 -- 100k credits
+
+   vn.clear()
+   vn.scene()
+   local scavA = vn.newCharacter( _("Scavenger A"),
+         { image=portrait.hologram(scavengera_portrait),
+         color=scavengera_colour } )
+   local scavB = vn.newCharacter( _("Scavenger B"),
+         { image=portrait.hologram( scavengerb_portrait ),
+         color=scavengerb_colour } )
+   vn.fadein()
+
+   vn.na(_("Two angry scavengers appear on your screen."))
+   scavB(_([["You better beat it, punk. We are doing business here."]]))
+   scavA(_([["Yeah, the Za'lek wouldn't like it if we weren't able to deliver the goods they want."]]))
+   scavB(_("He scowls at his partner before staring you down again.\nThis ain't no place for people like you. Get lost or we'll leave you in a worse state than that wreck over there.\nHe points at the wreck nearby."))
+   vn.menu( {
+      { _([["What is that about the Za'lek?"]]), "zalek" },
+      { _("Lock your weapon systems on their ships"), "locked" },
+   })
+
+   vn.label("zalek")
+   scavB(_([[He glares at his partner.\n"This is why I always tell you to keep your mouth shut!"]]))
+   scavA(_([["Iamnit, why can't shit go right for a change?"\nHe seems to be clutching his head. A headache perhaps?]]))
+   vn.menu( {
+      { _([["Look I just want to talk"]]), "trytalk" },
+      { string.format(_([[Try to bribe them (#r%s>0)]]), creditstring(bribeamount)), "trybribe" },
+   })
+
+   -- TODO possibly add a pacifist option here too
+   vn.label("trytalk")
+   scavA(_([["What do you want to talk about asshole? This is our job."]]))
+   vn.jump("stall")
+
+   vn.label("trybribe")
+   vn.func( function ()
+      if player.credits() < bribeamount then
+         vn.jump("poor")
+      else
+         player.pay( -bribeamount )
+      end
+   end )
+   vn.na(string.format(_("You wire them %s."), creditstring(bribeamount)))
+   scavB(_([["I guess this isn't worth our trouble. We already got enough stuff for the Za'leks already."]]))
+   scavA(_([["C'mon, let's get out of here. This place gives me the creeps. Feel like a ghost is going to pop out any minute."]]))
+   scavB(_([["Next round in Doeston is on me."]]))
+   vn.na(_("The scavengers disappear from your screen as you see their ships start to head back to Arandon."))
+   vn.fadeout()
+   vn.done()
+
+   -- Fight to the death :D
+   vn.label("poor")
+   vn.na(_("You don't have enough money to bribe them and fumble with words."))
+   vn.label("stall")
+   scavB(_([["He's stalling for time! He must have reinforcements coming!"]]))
+   vn.label("locked")
+   scavA(_([["Shit man! I knew we shouldn't have come here."]]))
+   scavB(_([["Shut up and follow my lead!"]]))
+   vn.na(_("You detect they are powering up their weapon systems."))
+   vn.func( function ()
+      -- Fight player
+   end )
+
+   vn.fadeout()
+   vn.run()
+end
+
+
 function board_wreck ()
    local saw_bridge, saw_dormitory, saw_engineroom
    vn.clear()
+   vn.scene()
    vn.fadein()
    vn.na(_("You can see clear laser burns on the hull of the wreck as you approach the ship and prepare to board. This doesn't look like it was an accident."))
    vn.na(_("You board the wreck in your space suit and begin to investigate the insides of the ship."))
