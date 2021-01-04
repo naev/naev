@@ -58,6 +58,7 @@ static int cur_nebu[2]           = { 0, 1 }; /**< Nebulae currently rendering. *
 static double nebu_timer         = 0.; /**< Timer since last render. */
 
 /* Nebula properties */
+static double nebu_density = 0.; /**< The density. */
 static double nebu_view = 0.; /**< How far player can see. */
 static double nebu_dt   = 0.; /**< How fast nebula changes. */
 
@@ -325,6 +326,23 @@ static void nebu_renderMultitexture( const double dt )
       &cBlue);
 }
 
+
+/**
+ * @brief Updates visibility and stuff.
+ */
+void nebu_update( double dt )
+{
+   (void) dt;
+   double mod = 1.;
+
+   if (player.p != NULL)
+      mod = player.p->ew_detect;
+
+   /* At density 1000 you're blind */
+   nebu_view = (1000. - nebu_density) * mod;
+}
+
+
 /**
  * @brief Regenerates the overlay.
  */
@@ -468,7 +486,8 @@ void nebu_prep( double density, double volatility )
    (void)volatility;
    int i;
 
-   nebu_view = 1000. - density;  /* At density 1000 you're blind */
+   nebu_density = density;
+   nebu_update( 0. );
    nebu_dt   = 2000. / (density + 100.); /* Faster at higher density */
    nebu_timer = nebu_dt;
 
