@@ -317,11 +317,12 @@ He downs his drink and orders another.]]))
    vn.jump( "menu_msg" )
 
    vn.label( "stealthmisn" )
-   om(_([[""]]))
+   om(string.format(_([["%s? That should be just past %s. Do you think the scavengers could have found something there?"]]), stealthsys, cutscenesys))
+   om(_([["If you plan to go, you should bring your best sensors. It's very hard to see anything due to the density of the nebula there."]]))
    vn.jump( "menu_msg" )
 
    vn.label( "showloot" )
-   om(_([[""]]))
+   om(_([["Wow! Where did you find that picture of Kex? He looks younger than I remember him!"]]))
    vn.jump( "menu_msg" )
 
    vn.label( "menu_msg" )
@@ -393,14 +394,102 @@ end
 
 function enter ()
    if system.cur() == system.get(cutscenesys) and misn_state==1 then
-      -- Cutscene with scavengerA
+      -- Set up system
+      pilot.clear()
+      pilot.toggleSpawn(false)
+
+      -- Cutscene with scavengerB
       -- Scavenger is flying to doeston from arandon (near the middle)
       -- cutscene
-      --misn.markerMove( misn_marker, system.get(searchsys) )
-      --misn_state=2
+      -- TODO meta-factions
+      local j = jump.get( cutscenesys, searchsys )
+      local pos = j:pos() + vec2.new(5000,7000)
+      pscavB = pilot.addRaw( "Vendetta", "independent", pos, "Scavenger" )
+      pscavB:rename(_("Scavenger Vendetta"))
+      pscavB:control()
+      pscavB:brake()
+      cuttimer = hook.timer( 3000, "cutscene_timer" )
+      pscavB:setInvincible() -- annoying to handle the case the player kills them
    elseif system.cur() == system.get(stealthsys) and misn_state==4 then
+      -- Set up system
+      pilot.clear()
+      pilot.toggleSpawn(false)
       -- Have to follow scavengers
       -- boardhook = hook.pilot( wreck, "board", "board_wreck" )
+   end
+end
+
+cutscene_msg = 0
+cutscene_messages = {
+   _("Sensors damaged. Requesting assistance."),
+   _("S.O.S. Scavenger here, sensors damaged."),
+   _("Is anybody out there? Sensors damaged, requesting assistance."),
+   _("Mayday! Requesting assistance. Wait, what was that?"),
+}
+
+function cutscene_timer ()
+   local dist = pscavB:pos():dist( player.pos() )
+   pscavB:taskClear()
+   if (dist < 1000) then
+      pscavB:face( player.pilot() )
+      pscavB:hailPlayer()
+      hook.pilot( pscavB, "hail", cutscene_hail )
+   else
+      pscavB:brake()
+      cutscene_msg = (cutscene_msg % #cutscene_messages)+1
+      local msg = cutscene_messages[ cutscene_msg ]
+      pscavB:broadcast( msg )
+   end
+   cuttimer = hook.timer( 3000, "cutscene_timer" )
+end
+
+
+function cutscene_hail ()
+   local asshole = false
+   vn.clear()
+   vn.scene()
+   local scavB = vn.newCharacter( _("Scavenger"),
+         { image=portrait.hologram( scavengerb_portrait ),
+         color=scavengerb_colour } )
+   vn.fadein()
+   vn.na(_("The comm flickers as a scavenger appears into view. He looks a bit pale."))
+   scavB(_([["Thank you. I thought I was a goner. My sensors failed me at the worst time and it's impossible to see shit in this nebula."]]))
+   scavB(string.format(_([["Could you tell me the way to %s? I have to get out of here as soon as possible."]]), searchsys))
+   vn.menu( {
+      { _("Give him directions"), "help" },
+      { _("Leave"), "leave" },
+   } )
+
+   vn.label("leave")
+   vn.na(_("You close the comm and leave the scavenger to his fate."))
+   vn.func( function () asshole = true end )
+   vn.fadeout()
+   vn.done()
+
+   vn.label("help")
+   scavB(_([["Thanks! I can't wait to get out of this hellhole."]]))
+   scavB(_([["Don't tell me you've also come here to scavenge? I'm telling you, this place is haunted."]]))
+   scavB(_([["I was told this would be easy money on the blackmarket, but this wasn't what I expected at all."]]))
+   scavB(_([["Anyway, good luck scavenging."]]))
+   vn.na(_("The scavenger disappears from view."))
+   vn.fadeout()
+   vn.run()
+
+   -- Close comm immediately
+   player.commClose()
+
+   -- Was player an asshole?
+   if asshole then
+      pscavB:broadcast( _("Asshole!") )
+      hook.rm( cuttimer ) -- reset timer
+      cuttimer = hook.timer( 3000, "cutscene_timer" )
+   else
+      pscavB:taskClear()
+      pscavB:hyperspace( searchsys )
+      misn.markerMove( misn_marker, system.get(searchsys) )
+      misn_state=2
+      hook.rm( cuttimer ) -- reset timer
+      pilot.toggleSpawn(true)
    end
 end
 

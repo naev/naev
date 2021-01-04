@@ -562,4 +562,14 @@
    <enemy>Comingout_associates</enemy>
   </enemies>
  </faction>
+ <faction>
+  <name>Scavenger</name>
+  <display>Scavenger</display>
+  <static />
+  <invisible />
+  <known />
+  <player>0</player>
+  <standing>static</standing>
+  <equip>pirate</equip>
+ </faction>
 </Factions>
