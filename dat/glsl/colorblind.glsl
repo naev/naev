@@ -1,4 +1,4 @@
-//#define COLORBLIND_MODE 1
+//#define COLORBLIND_MODE 5
 
 #ifdef COLORBLIND_MODE
 // Convert to LMS
@@ -19,11 +19,11 @@ float s = 0.0f * L + 0.0f * M + 1.0f * S;
 float l = 1.0f * L + 0.0f * M + 0.0f * S;
 float m = 0.0f * L + 1.0f * M + 0.0f * S;
 float s = -0.86744736 * L + 1.86727089f * M + 0.0f * S;
-#elif COLORBLIND_MODE == 4 // Blue Cone Monochromat
+#elif COLORBLIND_MODE == 4 // Blue Cone Monochromat (high light conditions)
 float l = 0.01775f * L + 0.10945f * M + 0.87262f * S;
 float m = 0.01775f * L + 0.10945f * M + 0.87262f * S;
 float s = 0.01775f * L + 0.10945f * M + 0.87262f * S;
-#elif COLORBLIND_MODE == 5 // Rod monochromat (Achromatopsia)
+#elif COLORBLIND_MODE == 5 // Rod Monochromat (Achromatopsia)
 float l = 0.212656f * L + 0.715158f * M + 0.072186f * S;
 float m = 0.212656f * L + 0.715158f * M + 0.072186f * S;
 float s = 0.212656f * L + 0.715158f * M + 0.072186f * S;
