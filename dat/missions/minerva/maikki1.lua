@@ -59,6 +59,7 @@ cutscenesys = "Arandon"
 stealthsys = "Zerantix"
 -- Mission states:
 --  nil: mission not accepted yet
+--   -1: mission started, have to talk to maikki
 --    0: going to doeston
 --    1: talked to old man, going to arandon
 --    2: saw scavengers, go back to doeston
@@ -89,11 +90,6 @@ function accept ()
       return
    end
 
-   -- Formally accept the mission and set up stuff
-   misn.accept()
-   misn_osd = misn.osdCreate( misn_title,
-      { string.format(_("Look around the %s system"), searchsys) } )
-   misn_marker = misn.markerAdd( system.get(searchsys), "low" )
    hook.land( "land" )
    hook.enter( "enter" )
 
@@ -122,24 +118,54 @@ function approach_maikki ()
 
    if misn_state==nil then
       -- Start mission
-      maikki( _([["Blah"]]) )
-
+      vn.na(_("You approach a young woman who seems somewhat distraught. It looks like she has something important on her mind."))
+      maikki(_([["You wouldn't happen to be from around here? I'm looking for someone. I was told they would be here, but I never expected this place to be so...\nShe trails off."]]) )
       vn.menu( {
-         { _("Help Maikki find her father"), "accept" },
+         { _([["spacious?"]]), "menu1done" },
+         { _([["grubby?"]]), "menu1done" },
+      } )
+      vn.label( "menu1done" )
+      maikki(_([[She frowns a bit.\n"...unsubstantial. Furthermore, it is all so tacky! I thought such a famous gambling world would be much more cute!"]]))
+      maikki(_([[She suddenly remembers why she came here and your eyes light up.\n"You wouldn't happen to be familiar with the station? I'm looking for someone"]]))
+      vn.menu( {
+         { _("Offer to help her"), "accept" },
          { _("Decline to help"), "decline" },
       } )
-
       vn.label( "decline" )
-      maikki(_([["decline msg"]]))
+      vn.na(_("You feel it is best to leave her alone for now and disappear into the crowds leaving her once again alone to her worries."))
       vn.done()
 
       vn.label( "accept" )
-      maikki(_([["accept msg"]]))
-      vn.func( function () misn_state=0 end )
-   elseif misn_state==5 then
-      -- Finish mission
-      maikki(_([["finish text"]]))
-      vn.done()
+      vn.func( function ()
+         misn.accept()
+         misn_state=-1
+      end )
+      maikki(_([["I was told he would be here, but I've been here for ages and haven't gotten anywhere."\nShe gives out a heavy sigh.]]))
+      maikki(_([["My name is Maisie, but you can call me Maikki."]]))
+      vn.label( "menu" )
+      vn.menu( {
+         { _("Offer her a drink (#p10 Minerva Tokens#0)"), "drink" },
+         { _("Ask her who she is looking for"), "nodrink" },
+      } )
+      vn.label( "drink" )
+      vn.func( function ()
+         if minerva.tokens_get() < 10 then
+            vn.jump( "notenough" )
+         else
+            minerva.tokens_pay( -10 )
+            minerva.maikki_mood_mod( +1 )
+         end
+      end )
+      vn.na(_("You offer her a drink. After staring intently at the drink menu, she orders a strawberry cheesecake caramel parfait with extra berries. Wait, was that even on the menu?"))
+      maikki(_([["Thank you! At least the food isn't bad here!"\nShe starts eating the parfait, which seems to be larger than her head.]]))
+      vn.jump( "nodrink" )
+
+      vn.label( "notenough" )
+      vn.na(_("You do not have enough Minerva Tokens to buy her a drink."))
+      vn.jump( "menu" )
+
+      vn.label( "nodrink" )
+      maikki(_([["The truth is I am looking for my father. He disappeared when I was a little girl and I don't even remember a single memory of him."]]))
    end
 
    -- Normal chitchat
@@ -148,19 +174,39 @@ function approach_maikki ()
       {_("Leave"), "leave"},
    }
    if misn_state >=4 then
-      table.insert( opts, 1, {_("Show her the XXX"), "showloot"} )
+      table.insert( opts, 1, {_("Show her the picture"), "showloot"} )
    end
    vn.label( "menu" )
    vn.menu( opts )
 
    vn.label( "father" )
-   maikki(_([["Blah"]]))
+   maikki(_([["I don't remember him at all since he disappeared when I was only three, but before my mother died, she told me he was a famous space pilot."]]))
+   maikki(_([["She used to tell me stories about how he would go on all sorts of brave adventures in the nebula to recover artefacts of human history."]]))
+   vn.menu( {
+      { _([["He was a scavenger?"]]), "menuscholar" },
+      { _([["He was a scholar?"]]), "menuscholar" },
+   } )
+   vn.label( "menuscholar" )
+   maikki(_([["I like to think that he was a scholar, but most people would call him a scavenger."]]))
+   maikki(_([["My mother died without telling me, but after her death, while going through her stuff, I found out that my father was the famous Kex McPherson!"]]))
+   maikki(_([["Apparently, one day he went into the nebula with his business partner Mireia and they were never seen again. All attempts to find them failed."]]))
+   maikki(_([["Most people believe they are dead, but I think he was kidnapped and is being held here. Maybe he hit his head and even forgot who he was!"]]))
+   maikki(_([["I don't have a spaceship, but while I look around here, could you try to look for hints around where he went missing? I heard he was very fond of the Cerberus bar in Doeston. Maybe there is a hint there."]]))
+   vn.func( function ()
+      if misn_state < 0 then
+         misn_state = 0
+         misn_osd = misn.osdCreate( misn_title,
+            { string.format(_("Look around the %s system"), searchsys) } )
+         misn_marker = misn.markerAdd( system.get(searchsys), "low" )
+      end
+   end )
    vn.jump( "menu_msg" )
 
    vn.label( "showloot" )
    maikki(_([["Blah"]]))
    vn.func( function ()
       -- TODO give reward
+      -- TODO play victory sound
       misn.finish(true)
    end )
    vn.done()
@@ -170,7 +216,7 @@ function approach_maikki ()
    vn.jump( "menu" )
 
    vn.label( "leave" )
-   vn.na( "You take your leave." )
+   vn.na( "You take your leave to continue the search for her father." )
    vn.fadeout()
    vn.run()
 end
@@ -198,7 +244,7 @@ function approach_oldman ()
       table.insert( opts, 1, {string.format(_("Ask about %s"),stealthsys), "stealthmisn"} )
    end
    if misn_state >=5 then
-      table.insert( opts, 1, {_("Show him the XXX"), "showloot"} )
+      table.insert( opts, 1, {_("Show him the picture"), "showloot"} )
    end
    vn.menu( opts )
 
@@ -217,7 +263,7 @@ function approach_oldman ()
 
    vn.label( "doeston" )
    om(_([["Not much to do in Doeston. Mainly a stopping place for all them crazy folk heading into the nebula. Maybe if I were any younger I would be with them exploring, but can't with this bad knee."\nHe pats his left knee.]]))
-   om(_([["It used to be a more popular place, but with most of the easy pickings getting scavenged out of the nebula, not many people come here after all. Especially not after the disappearance of famous scavengers like Kex and Xioni."\nHe muses thoughtfully.]]))
+   om(_([["It used to be a more popular place, but with most of the easy pickings getting scavenged out of the nebula, not many people come here after all. Especially not after the disappearance of famous scavengers like Kex and Mireia."\nHe muses thoughtfully.]]))
    om(_([["To better times."\nHe downs his drink and orders another.]]))
    vn.jump( "menu_msg" )
 
@@ -233,6 +279,7 @@ function approach_oldman ()
    vn.func( function ()
       if misn_state==2 then
          misn_state=3
+         npc_scavenger = misn.npcAdd( "approach_scavengers", scav_name, scav_portrait, scav_desc )
       end
    end )
    vn.jump( "menu_msg" )
@@ -302,7 +349,9 @@ end
 
 function enter ()
    if system.cur() == system.get(cutscenesys) and misn_state==1 then
-      -- Cutscene with scavengers
+      -- Cutscene with scavengerA
+      -- Scavenger is flying to doeston from arandon (near the middle)
+      -- cutscene
       --misn.markerMove( misn_marker, system.get(searchsys) )
       --misn_state=2
    elseif system.cur() == system.get(stealthsys) and misn_state==3 then

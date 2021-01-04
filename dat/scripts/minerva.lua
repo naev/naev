@@ -48,4 +48,12 @@ function minerva.tokens_pay( amount )
    end
 end
 
+-- Maikki stuff
+function minerva.maikki_mood_get()
+   return var.peek( "maikki_mood" ) or 0
+end
+function minerva.maikki_mood_mod( amount )
+   var.push( "maikki_mood", minerva.maikki_mood_get()+amount )
+end
+
 return minerva
