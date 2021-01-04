@@ -1290,6 +1290,10 @@ static void opt_video( unsigned int wid )
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkMinimize", _("Minimize on focus loss"), NULL, conf.minimize );
+   y -= 20;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkColorblind", _("Colorblind mode"), NULL,
+         conf.colorblind );
    y -= 40;
 
    /* GUI */
@@ -1391,6 +1395,11 @@ static int opt_videoSave( unsigned int wid, char *str )
       conf.minimize = f;
       SDL_SetHint( SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS,
             conf.minimize ? "1" : "0" );
+   }
+   f = window_checkboxState( wid, "chkColorblind" );
+   if (conf.colorblind != f) {
+      conf.colorblind = f;
+      opt_needRestart();
    }
 
    /* GUI. */
