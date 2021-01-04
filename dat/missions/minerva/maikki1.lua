@@ -111,7 +111,7 @@ end
 function land ()
    if planet.cur() == planet.get("Cerberus") then
       npc_oldman = misn.npcAdd( "approach_oldman", oldman_name, oldman_portrait, oldman_desc )
-      if misn_state==3 or misn_state==4 then
+      if misn_state==3 or misn_state==4 or bribed_scavengers==true then
          npc_scavenger = misn.npcAdd( "approach_scavengers", scav_name, scav_portrait, scav_desc )
       end
    elseif planet.cur() == planet.get("Minerva Station") then
@@ -344,6 +344,14 @@ function approach_scavengers ()
    local scavB = vn.newCharacter( _("Scavenger B"),
          { image=scavengerb_image, color=scavengerb_colour } )
    vn.fadein()
+
+   if bribed_scavengers==true then
+      -- TODO maybe more text?
+      scavB(_([["What are you looking at?"]]))
+      vn.fadeout()
+      vn.done()
+   end
+
    vn.na(_("You see some scavengers at the bar. They are clearly plastered. They don't really seem to be aware of your presence."))
 
    if misn_state==4 then
@@ -442,6 +450,7 @@ He seems to be clutching his head. A headache perhaps?]]))
          vn.jump("poor")
       else
          player.pay( -bribeamount )
+         bribed_scavengers = true
       end
    end )
    -- TODO play money sound
