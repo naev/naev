@@ -203,7 +203,7 @@ function approach_oldman ()
    vn.menu( opts )
 
    vn.label( "kex" )
-   om(_([["Kex? Now that is not a name I've heard in a while."]]))
+   om(_([["Kex? Now that is not a name I've heard in a while."\nHe nods reflectively.]]))
    om(_([["Kex was a great guy. He used to hang out here before venturing into the nebula, spending his time with the useless lot of us. Shame that he went missing."]]))
    om(_([["Since they never found his ship, I like to think that he made it to the other side of the nebula, if there is one.\nHe takes a long swig from his drink."]]))
    om(_([["Still that doesn't stop the odd folk here and there from trying to find it, they usually don't end up much past Arandon."]]))
@@ -268,10 +268,22 @@ function approach_scavengers ()
 
    if misn_state==4 then
       -- Already got mission, just give player a refresher
-
+      scavB(_([["Aren't you drinking too much. Don't forget to fix my sensors before we leave to Zerantix tomorrow."]]))
+      scavA(_([["Meee? Drinkinging tooo mich? Thatss sshtoopid."\nHe takes another long swig of his drink and burps.]]))
    else
       -- Blabber target to player
-
+      scavA(_([["...and then I said to him 'while that may look like a hamster, it's got a bite like a moose!'"]]))
+      va.na(_("The scavengers hoot with laughter."))
+      scavB(_([["That's a great story. Them space hamsters be wicked."]]))
+      scavA(_([["About tomorrow, you sure the info is correct? Going that deep into the nebula always gives me the chills."\nHe shivers exaggeratedly.]]))
+      scavB(_([["Yeah! I saw it with my own eyes. That shit is legit. Seems to be the wreck of a scavenger."]]))
+      scavA(_([["Why didn't you haul it back then? We might not be able to find it again!"]]))
+      -- TODO play bingo sound
+      scavB(_([["How many times do I have to tell you? My sensors were acting up, didn't want to spend too long in Zerantix with all them ghosts around."]]))
+      scavA(_([["I'll take a look at fixing your sensors. Ain't nothing these brutes can't fix!"\nHe pats his biceps in a fairly uninspiring way.]]))
+      scavB(_([["Yeah, let's do that after one more round of drinks. Got to get there before other scroungers get there."]]))
+      scavA(_([["To our future success in Zerantix!"]]))
+      vn.na(_("They cheer, down their drinks, and order another round. Perhaps the wreck in Zerantix is related to Kex somehow."))
       vn.func( function ()
          if misn_state==3 then
             misn_osd = misn.osdCreate( misn_title,
@@ -282,6 +294,7 @@ function approach_scavengers ()
       end )
    end
 
+   vn.na(_("You take your leave without them noticing you."))
    vn.fadeout()
    vn.run()
 end
