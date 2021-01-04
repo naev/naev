@@ -129,14 +129,17 @@ function approach_maikki ()
    if misn_state==nil then
       -- Start mission
       vn.na(_("You approach a young woman who seems somewhat distraught. It looks like she has something important on her mind."))
-      maikki(_([["You wouldn't happen to be from around here? I'm looking for someone. I was told they would be here, but I never expected this place to be so...\nShe trails off."]]) )
+      maikki(_([["You wouldn't happen to be from around here? I'm looking for someone. I was told they would be here, but I never expected this place to be so..."
+She trails off.]]) )
       vn.menu( {
          { _([["spacious?"]]), "menu1done" },
          { _([["grubby?"]]), "menu1done" },
       } )
       vn.label( "menu1done" )
-      maikki(_([[She frowns a bit.\n"...unsubstantial. Furthermore, it is all so tacky! I thought such a famous gambling world would be much more cute!"]]))
-      maikki(_([[She suddenly remembers why she came here and your eyes light up.\n"You wouldn't happen to be familiar with the station? I'm looking for someone"]]))
+      maikki(_([[She frowns a bit.
+"...unsubstantial. Furthermore, it is all so tacky! I thought such a famous gambling world would be much more cute!"]]))
+      maikki(_([[She suddenly remembers why she came here and your eyes light up.
+"You wouldn't happen to be familiar with the station? I'm looking for someone"]]))
       vn.menu( {
          { _("Offer to help her"), "accept" },
          { _("Decline to help"), "decline" },
@@ -150,10 +153,10 @@ function approach_maikki ()
          misn.accept()
          misn_state=-1
       end )
-      maikki(_([["I was told he would be here, but I've been here for ages and haven't gotten anywhere."\nShe gives out a heavy sigh.]]))
+      maikki(_([["I was told he would be here, but I've been here for ages and haven't gotten anywhere."
+She gives out a heavy sigh.]]))
       maikki:rename( minerva.maikki.name )
       maikki(_([["My name is Maisie, but you can call me Maikki."]]))
-      vn.label( "menu" )
       vn.menu( {
          { _("Offer her a drink (#p10 Minerva Tokens#0)"), "drink" },
          { _("Ask her who she is looking for"), "nodrink" },
@@ -168,7 +171,8 @@ function approach_maikki ()
          end
       end )
       vn.na(_("You offer her a drink. After staring intently at the drink menu, she orders a strawberry cheesecake caramel parfait with extra berries. Wait, was that even on the menu?"))
-      maikki(_([["Thank you! At least the food isn't bad here!"\nShe starts eating the parfait, which seems to be larger than her head.]]))
+      maikki(_([["Thank you! At least the food isn't bad here!"
+She starts eating the parfait, which seems to be larger than her head.]]))
       vn.jump( "nodrink" )
 
       vn.label( "notenough" )
@@ -177,6 +181,9 @@ function approach_maikki ()
 
       vn.label( "nodrink" )
       maikki(_([["The truth is I am looking for my father. He disappeared when I was a little girl and I don't even remember a single memory of him."]]))
+
+   else
+      vn.na(_("You approach Maikki who seems to be enjoying a parfait."))
    end
 
    -- Normal chitchat
@@ -184,7 +191,7 @@ function approach_maikki ()
       {_("Ask about her father"), "father"},
       {_("Leave"), "leave"},
    }
-   if misn_state >=4 then
+   if misn_state and misn_state >=4 then
       table.insert( opts, 1, {_("Show her the picture"), "showloot"} )
    end
    vn.label( "menu" )
@@ -218,7 +225,8 @@ function approach_maikki ()
    maikki(_([[As she stares deeply at the picture, her eyes tear up.]]))
    maikki(_([["I'm sorry, I shouldn't be crying. I hardly even know the man. It's just seeing us together just brings back some memories which I had thought I had forgotten."]]))
    vn.na(_("You give a few moments to recover before explaining her what you saw in the wreck and your encounter with the scavengers."))
-   maikki(_([["What could the Za'lek have to do with my father? If you didn't find a body I'm sure he survived!"\nShe looks clearly excited.]]))
+   maikki(_([["What could the Za'lek have to do with my father? If you didn't find a body I'm sure he survived!"
+She looks clearly excited.]]))
    maikki(_([["I think I have an idea for our next steps. Meet me up here in a bit. I have to get some information first."]]))
    vn.func( function ()
       -- no reward, yet...
@@ -266,9 +274,11 @@ function approach_oldman ()
    vn.menu( opts )
 
    vn.label( "kex" )
-   om(_([["Kex? Now that is not a name I've heard in a while."\nHe nods reflectively.]]))
+   om(_([["Kex? Now that is not a name I've heard in a while."
+He nods reflectively.]]))
    om(_([["Kex was a great guy. He used to hang out here before venturing into the nebula, spending his time with the useless lot of us. Shame that he went missing."]]))
-   om(_([["Since they never found his ship, I like to think that he made it to the other side of the nebula, if there is one.\nHe takes a long swig from his drink."]]))
+   om(_([["Since they never found his ship, I like to think that he made it to the other side of the nebula, if there is one.
+He takes a long swig from his drink."]]))
    om(_([["Still that doesn't stop the odd folk here and there from trying to find it, they usually don't end up much past Arandon."]]))
    vn.func( function ()
       if misn_state==0 then
@@ -279,15 +289,20 @@ function approach_oldman ()
    vn.jump( "menu_msg" )
 
    vn.label( "doeston" )
-   om(_([["Not much to do in Doeston. Mainly a stopping place for all them crazy folk heading into the nebula. Maybe if I were any younger I would be with them exploring, but can't with this bad knee."\nHe pats his left knee.]]))
-   om(_([["It used to be a more popular place, but with most of the easy pickings getting scavenged out of the nebula, not many people come here after all. Especially not after the disappearance of famous scavengers like Kex and Mireia."\nHe muses thoughtfully.]]))
-   om(_([["To better times."\nHe downs his drink and orders another.]]))
+   om(_([["Not much to do in Doeston. Mainly a stopping place for all them crazy folk heading into the nebula. Maybe if I were any younger I would be with them exploring, but can't with this bad knee."
+He pats his left knee.]]))
+   om(_([["It used to be a more popular place, but with most of the easy pickings getting scavenged out of the nebula, not many people come here after all. Especially not after the disappearance of famous scavengers like Kex and Mireia."
+He muses thoughtfully.]]))
+   om(_([["To better times."
+He downs his drink and orders another.]]))
    vn.jump( "menu_msg" )
 
    vn.label( "nebula" )
-   om(_([[He whistles casually.\n"The nebula's a real piece of work. It's almost mesmerizing to fly through it, however, it do got quite a character. If you try to go too deep into 'er you can't easily get back. Many a soul has been lost in there."]]))
+   om(_([[He whistles casually.
+"The nebula's a real piece of work. It's almost mesmerizing to fly through it, however, it do got quite a character. If you try to go too deep into 'er you can't easily get back. Many a soul has been lost in there."]]))
    -- TODO play eerie sound
-   om(_([[He goes a bit quieter and gets closer to you.\n"Rumour has it that there are ghosts lurking in the depths. I've seen people come back, pale as snow, "claiming they seen them."]]))
+   om(_([[He goes a bit quieter and gets closer to you.
+"Rumour has it that there are ghosts lurking in the depths. I've seen people come back, pale as snow, "claiming they seen them."]]))
    om(_([["I believe it be the boredom getting to their heads. Likely naught but a scavenger or some debris."]]))
    vn.jump( "menu_msg" )
 
@@ -310,7 +325,8 @@ function approach_oldman ()
    vn.jump( "menu_msg" )
 
    vn.label( "menu_msg" )
-   om( _([[He gives you a bored look as he takes a sip from his drink.\n"Is there anything else you would like to know about?"]]) )
+   om( _([[He gives you a bored look as he takes a sip from his drink.
+"Is there anything else you would like to know about?"]]) )
    vn.jump( "menu" )
 
    vn.label( "leave" )
@@ -333,18 +349,21 @@ function approach_scavengers ()
    if misn_state==4 then
       -- Already got mission, just give player a refresher
       scavB(_([["Aren't you drinking too much. Don't forget to fix my sensors before we leave to Zerantix tomorrow."]]))
-      scavA(_([["Meee? Drinkinging tooo mich? Thatss sshtoopid."\nHe takes another long swig of his drink and burps.]]))
+      scavA(_([["Meee? Drinkinging tooo mich? Thatss sshtoopid."
+He takes another long swig of his drink and burps.]]))
    else
       -- Blabber target to player
       scavA(_([["...and then I said to him 'while that may look like a hamster, it's got a bite like a moose!'"]]))
       va.na(_("The scavengers hoot with laughter."))
       scavB(_([["That's a great story. Them space hamsters be wicked."]]))
-      scavA(_([["About tomorrow, you sure the info is correct? Going that deep into the nebula always gives me the chills."\nHe shivers exaggeratedly.]]))
+      scavA(_([["About tomorrow, you sure the info is correct? Going that deep into the nebula always gives me the chills."
+He shivers exaggeratedly.]]))
       scavB(_([["Yeah! I saw it with my own eyes. That shit is legit. Seems to be the wreck of a scavenger."]]))
       scavA(_([["Why didn't you haul it back then? We might not be able to find it again!"]]))
       -- TODO play bingo sound
       scavB(_([["How many times do I have to tell you? My sensors were acting up, didn't want to spend too long in Zerantix with all them ghosts around."]]))
-      scavA(_([["I'll take a look at fixing your sensors. Ain't nothing these brutes can't fix!"\nHe pats his biceps in a fairly uninspiring way.]]))
+      scavA(_([["I'll take a look at fixing your sensors. Ain't nothing these brutes can't fix!"
+He pats his biceps in a fairly uninspiring way.]]))
       scavB(_([["Yeah, let's do that after one more round of drinks. Got to get there before other scroungers get there."]]))
       scavA(_([["To our future success in Zerantix!"]]))
       vn.na(_("They cheer, down their drinks, and order another round. Perhaps the wreck in Zerantix is related to Kex somehow."))
@@ -394,15 +413,19 @@ function scavengers_encounter ()
    vn.na(_("Two angry scavengers appear on your screen."))
    scavB(_([["You better beat it, punk. We are doing business here."]]))
    scavA(_([["Yeah, the Za'lek wouldn't like it if we weren't able to deliver the goods they want."]]))
-   scavB(_("He scowls at his partner before staring you down again.\nThis ain't no place for people like you. Get lost or we'll leave you in a worse state than that wreck over there.\nHe points at the wreck nearby."))
+   scavB(_([[He scowls at his partner before staring you down again.
+"This ain't no place for people like you. Get lost or we'll leave you in a worse state than that wreck over there."
+He points at the wreck nearby.]]))
    vn.menu( {
       { _([["What is that about the Za'lek?"]]), "zalek" },
       { _("Lock your weapon systems on their ships"), "locked" },
    })
 
    vn.label("zalek")
-   scavB(_([[He glares at his partner.\n"This is why I always tell you to keep your mouth shut!"]]))
-   scavA(_([["Iamnit, why can't shit go right for a change?"\nHe seems to be clutching his head. A headache perhaps?]]))
+   scavB(_([[He glares at his partner.
+"This is why I always tell you to keep your mouth shut!"]]))
+   scavA(_([["Iamnit, why can't shit go right for a change?"
+He seems to be clutching his head. A headache perhaps?]]))
    vn.menu( {
       { _([["Look I just want to talk"]]), "trytalk" },
       { string.format(_([[Try to bribe them (#r%s>0)]]), creditstring(bribeamount)), "trybribe" },
