@@ -205,6 +205,7 @@ if buildExec.disabled() == false
 
    if host_machine.system() == 'darwin'
       add_languages('objc', native: false)
+      configure_file(input: 'extras/macos/Info.plist.in', output: 'Info.plist', configuration: config_data)
       naev_source += mac_source
       naev_deps += dependency('Foundation', required: true )
    endif
