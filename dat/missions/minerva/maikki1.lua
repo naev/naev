@@ -307,7 +307,11 @@ He downs his drink and orders another.]]))
    vn.jump( "menu_msg" )
 
    vn.label( "scavengers" )
-   om(_([[""]]))
+   om(_([["It's not uncommon to see scavengers around here. Although there are no where near as many as there were in Kex's time."]]))
+   om(_([[He takes a long sip, gets close and whispers.
+"You wouldn't suppose they found something interesting?"]]))
+   om(_([["Suppose not. However, you could ask them over there. Those two look like they could be scavengers."]]))
+   vn.na(_("He points to a table with two fairly drunk people."))
    vn.func( function ()
       if misn_state==2 then
          misn_state=3
@@ -363,7 +367,7 @@ He takes another long swig of his drink and burps.]]))
    else
       -- Blabber target to player
       scavA(_([["...and then I said to him 'while that may look like a hamster, it's got a bite like a moose!'"]]))
-      va.na(_("The scavengers hoot with laughter."))
+      vn.na(_("The scavengers hoot with laughter."))
       scavB(_([["That's a great story. Them space hamsters be wicked."]]))
       scavA(_([["About tomorrow, you sure the info is correct? Going that deep into the nebula always gives me the chills."
 He shivers exaggeratedly.]]))
