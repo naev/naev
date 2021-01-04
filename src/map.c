@@ -41,6 +41,8 @@
 #define MAP_LOOP_PROT   1000 /**< Number of iterations max in pathfinding before
                                  aborting. */
 
+#define MAP_MARKER_CYCLE  1000 /**< Time of a mission marker's animation cycle in milliseconds. */
+
 /* map decorator stack */
 static MapDecorator* decorator_stack = NULL; /**< Contains all the map decorators. */
 static int decorator_nstack       = 0; /**< Number of map decorators in the stack. */
@@ -700,7 +702,7 @@ static void map_drawMarker( double x, double y, double r, double a,
       int num, int cur, int type )
 {
    static const glColour* colours[] = {
-      &cGreen, &cBlue, &cRed, &cOrange, &cYellow
+      &cMarkerNew, &cMarkerPlot, &cMarkerHigh, &cMarkerLow, &cMarkerComputer
    };
 
    double alpha;
@@ -819,8 +821,9 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* Render jump routes. */
    map_renderJumps( x, y, 0 );
 
-   /* Cause alpha to move smoothly between 0-1 every second. */
-   col.a = ABS( 500 - (int)SDL_GetTicks() % 1000 ) / 500.;
+   /* Cause alpha to move smoothly between 0-1. */
+   col.a = ( ABS(MAP_MARKER_CYCLE - (int)SDL_GetTicks() % (2*MAP_MARKER_CYCLE))
+         / (double)MAP_MARKER_CYCLE );
 
    /* Render the player's jump route. */
    if ( cur_commod == -1 )
