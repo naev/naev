@@ -16,13 +16,12 @@
 --]]
 local portrait = require "portrait"
 local vn = require 'vn'
-local imageproc = require 'imageproc'
 
-zalek_holo = portrait.getFullPath( "zalek_thug1" )
+zalek_holo = "zalek_thug1"
 zalek_image = "zalek_thug1.png"
 zalek_name = _("Za'lek Belligerent")
 zalek_colour = {1, 0.4, 0.4}
-dvaered_holo = portrait.getFullPath( "dvaered_thug1" )
+dvaered_holo = "dvaered_thug1"
 dvaered_image = "dvaered_thug1.png"
 dvaered_name = _("Dvaered Hooligan")
 dvaered_colour = {1, 0.7, 0.3}
@@ -208,7 +207,7 @@ function zl_dead ()
 end
 
 function dv_hail ()
-   local holo = imageproc.hologram( dvaered_holo )
+   local holo = portrait.hologram( dvaered_holo )
    vn.clear()
    vn.scene()
    vn.fadein()
@@ -241,7 +240,7 @@ function dv_dead ()
 end
 
 function zl_hail ()
-   local holo = imageproc.hologram( zalek_holo )
+   local holo = portrait.hologram( zalek_holo )
    vn.clear()
    vn.scene()
    vn.fadein()
