@@ -16,8 +16,9 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 --]]
-local portrait = {}
+local imageproc = require "imageproc"
 
+local portrait = {}
 
 local portraits_m = {}
 local portraits_f = {}
@@ -299,6 +300,14 @@ end
 --]]
 function portrait.getFullPath( str )
    return "gfx/portraits/"..str..".png"
+end
+
+
+--[[
+-- @brief Gets the hologram image from the portrait.
+--]]
+function portrait.hologram( str )
+   return imageproc.hologram( portrait.getFullPath( str ) )
 end
 
 
