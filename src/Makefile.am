@@ -333,5 +333,5 @@ $(top_builddir)/extras/windows/resource.rc: $(top_srcdir)/extras/windows/resourc
 endif
 
 if HAVE_MACOS
-naev_SOURCES += glue_macos.m
+naev_SOURCES += glue_macos.m glue_macos.h
 endif
