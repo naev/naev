@@ -94,10 +94,16 @@ jobs:
             buildoutput: naev-linux-x86-64
             shell: bash
             make: make
+
           - os: windows-latest
             buildoutput: naev-win64
             shell: msys2 {0}
             make: mingw32-make
+
+          - os: macos-10.15
+            shell: bash
+            make: make
+            pkg-config-path: '/usr/local/opt/openal-soft/lib/pkgconfig'
 
     defaults:
       run:
@@ -143,13 +149,33 @@ jobs:
           update: true
           install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-clang mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-itstool mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-python-pip mingw-w64-x86_64-luajit mingw-w64-x86_64-nsis mingw-w64-x86_64-make mingw-w64-x86_64-pkg-config mingw-w64-x86_64-suitesparse autoconf autoconf-archive automake-wrapper git intltool python tar
 
+      - name: Install Homebrew Packages
+        if: ${{ runner.os == 'macOS'}}
+        run: |
+          brew update
+          # Library installation is a work in progress. This way results in a build that requires >=10.15.
+          # TODO: install compatible ones and set MACOSX_DEPLOYMENT_TARGET.
+          brew install \
+              autoconf-archive \
+              automake \
+              openal-soft \
+              intltool \
+              libvorbis \
+              luajit \
+              sdl2 \
+              sdl2_image \
+              sdl2_mixer
+          # Workaround for basically https://github.com/synfig/synfig/issues/794#issuecomment-479560192
+          # --ignore-dependencies because this breaks svn and it doesn't matter.
+          brew uninstall --ignore-dependencies perl
+
       - name: Checkout Naev Repository
         uses: actions/checkout@v2
         with:
           submodules: true
 
-      - name: Build Naev for Win64
-        if: ${{ runner.os == 'Windows'}}
+      - name: Build Naev for Legacy OS
+        if: ${{ runner.os == 'Windows' || runner.os == 'macOS' }}
         run: |
           ./autogen.sh
           ./configure --disable-debug
@@ -157,6 +183,7 @@ jobs:
         env:
           CFLAGS: "-O3"
           MAKE: "${{ matrix.make }}"
+          PKG_CONFIG_PATH: "${{ matrix.pkg_config_path }}"
 
       - name: Build and Package Naev for Linux64
         if: ${{ runner.os == 'Linux'}}
@@ -169,6 +196,14 @@ jobs:
         if: ${{ runner.os == 'Windows'}}
         run: |
           ./extras/windows/packageWindows.sh -s "$(pwd)" -b "$(pwd)" -o "$(pwd)/dist"
+
+      - name: Build macOS Installer
+        if: ${{ runner.os == 'macOS'}}
+        run: |
+          ./extras/macos/bundle.py -s "$(pwd)" -b "$(pwd)" -o "$(pwd)/dist"
+          pushd dist/out
+          zip -r naev-macos.zip Naev.app/*
+          popd
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
@@ -236,7 +271,7 @@ jobs:
     steps:
       - name: Create Release Staging and Output Areas
         run: |
-          mkdir -p {temp,dist/{staging,out/{lin64,win64}}}
+          mkdir -p {temp,dist/{staging,out/{lin64,macos,win64}}}
 
       - name: Update APT Cache
         if: ${{ matrix.releasetype == 'steam' }}
@@ -272,6 +307,7 @@ jobs:
           SUFFIX="$VERSION"
 
           mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/naev-$SUFFIX-linux-x86-64.AppImage
+          mv dist/staging/naev-macos/*.zip dist/out/naev-$SUFFIX-macos.zip
           mv dist/staging/naev-win64/naev*.exe dist/out/naev-$SUFFIX-win64.exe
           mv dist/staging/naev-dist/source.tar.gz dist/out/naev-$SUFFIX-source.tar.gz
 
@@ -296,10 +332,13 @@ jobs:
           mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
           chmod +x dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
 
+          mv dist/staging/naev-macos/*.zip dist/out/macos/naev-$SUFFIX-macos.zip
+
           tar -Jxf "dist/staging/naev-win64/steam-win64.tar.xz" -C "dist/out/win64"
           tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64"
 
           ./butler push --userversion="$SUFFIX" dist/out/lin64 naev/naev:linux-x86-64-beta
+          ./butler push --userversion="$SUFFIX" dist/out/macos naev/naev:macos-x86-64-beta
           ./butler push --userversion="$SUFFIX" dist/out/win64 naev/naev:windows-x86-64-beta
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}

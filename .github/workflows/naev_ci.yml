@@ -15,10 +15,17 @@ jobs:
           - os: ubuntu-20.04
             shell: bash
             make: make
+            pkg-config-path: "[]"
 
           - os: windows-latest
             shell: msys2 {0}
             make: mingw32-make
+            pkg-config-path: "[]"
+
+          - os: macos-10.15
+            shell: bash
+            make: make
+            pkg-config-path: '/usr/local/opt/openal-soft/lib/pkgconfig'
 
     defaults:
       run:
@@ -64,6 +71,27 @@ jobs:
         path-type: strict
         install: mingw-w64-x86_64-libtool mingw-w64-x86_64-toolchain mingw-w64-x86_64-clang mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-libxml2 mingw-w64-x86_64-libpng mingw-w64-x86_64-openal mingw-w64-x86_64-libvorbis mingw-w64-x86_64-binutils mingw-w64-x86_64-itstool mingw-w64-x86_64-freetype mingw-w64-x86_64-gettext mingw-w64-x86_64-make mingw-w64-x86_64-pkg-config autoconf autoconf-archive automake-wrapper git intltool tar
 
+    - name: Install Homebrew Packages
+      if: ${{ runner.os == 'macOS'}}
+      run: |
+        brew update
+        # Library installation is a work in progress. This way results in a build that requires >=10.15.
+        # TODO: install compatible ones and set MACOSX_DEPLOYMENT_TARGET.
+        brew install \
+            autoconf-archive \
+            automake \
+            openal-soft \
+            intltool \
+            libvorbis \
+            luajit \
+            sdl2 \
+            sdl2_image \
+            sdl2_mixer
+        # Workaround for basically https://github.com/synfig/synfig/issues/794#issuecomment-479560192
+        # --ignore-dependencies because this breaks svn and it doesn't matter.
+        brew uninstall --ignore-dependencies perl
+
+
     - name: Checkout Naev Repository
       uses: actions/checkout@v2
       with:
@@ -77,6 +105,7 @@ jobs:
       working-directory: repo
       env:
         MAKE: "${{ matrix.make }}"
+        PKG_CONFIG_PATH: "${{ matrix.pkg_config_path }}"
 
     - name: Package Autotools Dist
       run: |
@@ -105,6 +134,7 @@ jobs:
       working-directory: source
       env:
         MAKE: "${{ matrix.make }}"
+        PKG_CONFIG_PATH: "${{ matrix.pkg_config_path }}"
 
     - name: Upload Configure Log
       uses: actions/upload-artifact@v2
@@ -125,6 +155,11 @@ jobs:
       working-directory: "source"
       env:
         MAKE: "${{ matrix.make }}"
+
+    - name: Build macOS Installer
+      if: ${{ runner.os == 'macOS'}}
+      run: ./extras/macos/bundle.py -s "$(pwd)" -b "$(pwd)" -o "$(pwd)/dist"
+      working-directory: "source"
 
   "AppImage_Compile_Naev":
     needs: [Autotools_Compile_Naev]
