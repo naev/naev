@@ -3,7 +3,7 @@
       * Lowered large ships' time constant (renamed from time dilation) by 50% of the deviation from 100%.
       * Tweaked Za'lek ships' stats and outfit slot behavior to match expectations.
    * Engine
-      * Restored macOS support (with caveats; see https://github.com/naev/naev/wiki/FAQ).
+      * Restored macOS support. (Caveats: official builds only run on  10.15 Catalina and later so far, and running Naev on those versions requires a Gatekeeper bypass. See https://github.com/naev/naev/wiki/FAQ for details.)
       * Fixed a crash-loop when the "saves" folder gets populated by Steam data (or other files) and no Naev save files.
       * Fixed intermittent error messages about the "Lua Spawn script for faction 'Trader'".
       * Fixed rare/potential bugs in font and save-file code.
