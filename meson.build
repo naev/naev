@@ -193,6 +193,7 @@ if buildExec.disabled() == false
 
    if host_machine.system() == 'darwin'
       add_languages('objc', native: false)
+      configure_file(input: 'extras/macos/Info.plist.in', output: 'Info.plist', configuration: config_data)
       naev_source += mac_source
       naev_deps += dependency('Foundation', required: true )
    endif
@@ -228,6 +229,7 @@ if buildExec.disabled() == false
       input: 'utils/build/naev.sh',
       output: 'naev.sh',
       configuration: {
+         'build_root': meson.current_build_dir(),
          'source_root': meson.source_root(),
          'naev_bin' : naev_bin.full_path()
       }

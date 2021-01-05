@@ -34,7 +34,7 @@ def main():
     # Build basic structure.
     for subdir in 'MacOS', 'Resources', 'Frameworks':
         trace(os.makedirs, os.path.join(app_path, 'Contents', subdir), exist_ok=True)
-    trace(shutil.copy, os.path.join(args.sourceroot, 'extras/macos/Info.plist'), os.path.join(app_path, 'Contents'))
+    trace(shutil.copy, os.path.join(args.buildroot, 'Info.plist'), os.path.join(app_path, 'Contents'))
     trace(shutil.copy, os.path.join(args.sourceroot, 'extras/macos/naev.icns'), os.path.join(app_path, 'Contents/Resources'))
 
     # Gather Naev and dependencies.

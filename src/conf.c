@@ -272,6 +272,7 @@ void conf_setVideoDefaults (void)
    conf.explicit_dim = 0; /* No need for a define, this is only for first-run. */
    conf.scalefactor  = SCALE_FACTOR_DEFAULT;
    conf.minimize     = MINIMIZE_DEFAULT;
+   conf.colorblind   = COLORBLIND_DEFAULT;
 
    /* FPS. */
    conf.fps_show     = SHOW_FPS_DEFAULT;
@@ -375,6 +376,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "fullscreen", conf.fullscreen );
       conf_loadBool( lEnv, "modesetting", conf.modesetting );
       conf_loadBool( lEnv, "minimize", conf.minimize );
+      conf_loadBool( lEnv, "colorblind", conf.colorblind );
 
       /* FPS */
       conf_loadBool( lEnv, "showfps", conf.fps_show );
@@ -925,6 +927,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Minimize on focus loss"));
    conf_saveBool("minimize",conf.minimize);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Colorblind mode"));
+   conf_saveBool("colorblind",conf.colorblind);
    conf_saveEmptyLine();
 
    /* FPS */
