@@ -203,11 +203,13 @@ static int fad_key( Widget* fad, SDL_Keycode key, SDL_Keymod mod )
       case SDLK_RIGHT:
       case SDLK_UP:
          fad_setValue( fad, cur+0.05 );
+         ret = 1;
          break;
 
       case SDLK_LEFT:
       case SDLK_DOWN:
          fad_setValue( fad, cur-0.05 );
+         ret = 1;
          break;
 
       default:
@@ -271,7 +273,7 @@ static void fad_setValue( Widget *fad, double value )
  *
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the widget.
- *    @para value Value to set fader to.
+ *    @param value Value to set fader to (between 0 and 1).
  */
 void window_faderValue( const unsigned int wid,
       char* name, double value )
@@ -288,6 +290,50 @@ void window_faderValue( const unsigned int wid,
       WARN("Not setting fader value on non-fader widget '%s'.", name);
       return;
    }
+
+   /* Set fader value. */
+   fad_setValue(wgt, value);
+}
+
+
+/**
+ * @brief Sets a fader widget value within range of bounds.
+ *
+ * This is a helper or selectively substituted function to assist
+ * with setting a value of a Fader when we really intend the value
+ * to be within a bounded range, such as 10 through 100. By default
+ * faders seem to use 0 through 1 as their valid range.
+ *
+ * There was a specific difficulty where Scalefactor was to default to
+ * value of 1, while in the 0..1 range; it would always be set to Max.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget.
+ *    @param value Value to set fader to (between Min and Max)
+ */
+void window_faderSetBoundedValue( const unsigned int wid,
+      char* name, double value )
+{
+   const double INTRINSIC_MIN = 0.;
+   const double INTRINSIC_MAX = 1.;
+   Widget *wgt;
+
+   /* Get the widget. */
+   wgt = window_getwgt(wid, name);
+   if (wgt == NULL)
+      return;
+
+   /* Verify the type. */
+   if (wgt->type != WIDGET_FADER) {
+      WARN("Not setting fader value on non-fader widget '%s'.", name);
+      return;
+   }
+
+   /* Convert value from bounded range to 'intrinsic' range. */
+   value = (value - wgt->dat.fad.min) / (wgt->dat.fad.max - wgt->dat.fad.min);
+
+   /* Ensure the value is within the acceptable range of values. */
+   value = CLAMP(INTRINSIC_MIN, INTRINSIC_MAX, value);
 
    /* Set fader value. */
    fad_setValue(wgt, value);

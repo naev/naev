@@ -194,7 +194,7 @@ void shipyard_update( unsigned int wid, char* str )
    (void)str;
    int i;
    Ship* ship;
-   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
+   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN], buf_license[PATH_MAX];
 
    i = toolkit_getImageArrayPos( wid, "iarShipyard" );
 
@@ -245,6 +245,14 @@ void shipyard_update( unsigned int wid, char* str )
    price2str( buf2, ship_buyPrice(ship), player.p->credits, 2 );
    credits2str( buf3, player.p->credits, 2 );
 
+   if (ship->license == NULL)
+      strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
+   else if (player_hasLicense( ship->license ))
+      strncpy( buf_license, _(ship->license), sizeof(buf_license)-1 );
+   else
+      nsnprintf( buf_license, sizeof(buf_license), "\ar%s\a0", _(ship->license) );
+   buf_license[ sizeof(buf_license)-1 ] = '\0';
+
    nsnprintf( buf, PATH_MAX,
          _("%s\n"
          "%s\n"
@@ -289,7 +297,7 @@ void shipyard_update( unsigned int wid, char* str )
          ship->fuel_consumption,
          buf2,
          buf3,
-         (ship->license != NULL) ? _(ship->license) : _("None") );
+         buf_license );
    window_modifyText( wid,  "txtDDesc", buf );
 
    if (!shipyard_canBuy( ship->name, land_planet ))
