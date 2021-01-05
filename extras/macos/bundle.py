@@ -26,7 +26,7 @@ def main():
     args = parser.parse_args()
 
     trace.enabled = args.debug
-    app_path = f'{args.buildoutput}/Naev.app'
+    app_path = f'{args.buildoutput}/out/Naev.app'
 
     #Clean previous build.
     trace(shutil.rmtree, app_path, ignore_errors=True)
