@@ -59,22 +59,21 @@ function takeoff ()
    pilot.clear()
    pilot.toggleSpawn(false)
 
+   -- Meta factions
+   local fdv = faction.dynAdd( "Dvaered", "dv_thug", "Dvaered Thug" )
+   local fzl = faction.dynAdd( "Za'lek", "zl_thug", "Za'lek Thug" )
+   faction.dynEnemy( fdv, fzl )
    -- Create the ships
-   -- TODO add meta-factions so we can get them to kill each other
-   -- without manual control. This would allow adding more ships so the
-   -- player has more time to help and such. This should also allow
-   -- getting rid of all the ridiculous "attack" cases.
-   -- Maybe look at warlords_battle.lua
    local pos = planet.get("Minerva Station"):pos()
    local dvpos = pos + vec2.newP( 700, 120 )
    local zlpos = pos + vec2.newP( 500, 300 )
    local unused, dvface = (zlpos-dvpos):polar()
    local unused, zlface = (dvpos-zlpos):polar()
-   dv = pilot.addRaw("Dvaered Phalanx", "dvaered", dvpos, "Dvaered" )
+   dv = pilot.addRaw("Dvaered Phalanx", "dvaered", dvpos, "dv_thug" )
    dv:setDir( dvface )
    dv:rename( dvaered_name )
    dv:setNoDisable( true )
-   zl = pilot.addRaw("Za'lek Sting", "zalek", zlpos, "Za'lek" )
+   zl = pilot.addRaw("Za'lek Sting", "zalek", zlpos, "zl_thug" )
    zl:setDir( zlface )
    zl:rename( zalek_name )
    zl:setNoDisable( true )
@@ -116,10 +115,8 @@ end
 
 function startattack ()
    if not fighting_started then
-      dv:taskClear()
-      zl:taskClear()
-      dv:attack( zl )
-      zl:attack( dv )
+      dv:control(false)
+      zl:control(false)
       fighting_started = true
    end
 end
@@ -148,13 +145,7 @@ end
 
 function zl_attacked( victim, attacker )
    if attacker ~= player.pilot() then return end
-   if not fighting_started then
-      zl:taskClear()
-      zl:attack( player.pilot() )
-      dv:taskClear()
-      dv:attack( zl )
-      fighting_started = true
-   end
+   startattack()
    if player_side=="zalek" then
       player_side = "neither"
    elseif player_side == nil then
@@ -162,20 +153,12 @@ function zl_attacked( victim, attacker )
       zl:broadcast( _("Et tu brute?") )
       zl:setHostile(true)
       dv:setFriendly(true)
-      dv:taskClear()
-      dv:attack( zl )
    end
 end
 
 function dv_attacked( victim, attacker )
    if attacker ~= player.pilot() then return end
-   if not fighting_started then
-      dv:taskClear()
-      dv:attack( player.pilot() )
-      zl:taskClear()
-      zl:attack( zl )
-      fighting_started = true
-   end
+   startattack()
    if player_side=="dvaered" then
       player_side = "neither"
    elseif player_side == nil then
@@ -183,18 +166,18 @@ function dv_attacked( victim, attacker )
       dv:broadcast( _("Et tu brute?") )
       dv:setHostile(true)
       zl:setFriendly(true)
-      zl:taskClear()
-      zl:attack( dv )
    end
 end
 
 function zl_dead ()
    if player_side=="zalek" or player_side=="neither" then
+      dv:control()
       dv:attack( player.pilot() )
    else
       hook.rm( angrytimer )
       if dv:exists() then
          if player_side=="dvaered" then
+            zl:control()
             dv:brake()
             dv:hailPlayer()
             hail.pilot( dv, "hail", "dv_hail" )
@@ -223,11 +206,13 @@ end
 
 function dv_dead ()
    if player_side=="dvaered" or player_side=="neither" then
+      zl:control()
       zl:attack( player.pilot() )
    else
       hook.rm( angrytimer )
       if zl:exists() then
          if player_side=="zalek" then
+            zl:control()
             zl:brake()
             zl:hailPlayer()
             hook.pilot( zl, "hail", "zl_hail" )
