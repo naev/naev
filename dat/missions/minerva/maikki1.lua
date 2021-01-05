@@ -419,12 +419,26 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
       -- Have to follow scavengers
-      -- boardhook = hook.pilot( wreck, "board", "board_wreck" )
+      waypoints = {
+         vec2.new( -15000,  8000 ),
+         vec2.new( -12000, 13000 ), -- 6000 dist or 30s
+         vec2.new( -10000,  7000 ), -- 6000 dist or 30s
+         vec2.new(  -9000, 12000 ), -- 5000 dist or 25s
+      }
+      local pos = waypoints[1]
+      local posA = pos + vec2.new( 100, 80 )
+      local posB = pos + vec2.new( -50, -20 )
+      pscavA = pilot.addRaw( "Shark", "independent", posA, "Scavenger" )
+      pscavB = pilot.addRaw( "Vendetta", "independent", posB, "Scavenger" )
+      for k,p in ipairs{ pscavA, pscavB } do
+         pscavA:control()
+         pscavA:setSpeedLimit( 200 )
+         hook_pilot( pscavA, "attacked", "scav_attacked" )
+      end
+      pscavA:face( pscavB )
+      pscavB:face( pscavA )
 
-      -- Start is roughly (-15000,  8000)
-      -- waypoint1        (-10000, 13000)
-      -- waypoint2        (     0,  7000)
-      -- End is           (  9000, 12000)
+      hook.timer( 3000, "stealthstart" )
    end
 end
 
@@ -437,6 +451,7 @@ cutscene_messages = {
 }
 
 function cutscene_timer ()
+   if not pscavB:exists() then return end
    local dist = pscavB:pos():dist( player.pos() )
    pscavB:taskClear()
    if hailhook ~= nil then
@@ -507,6 +522,200 @@ function cutscene_hail ()
 end
 
 
+function stealthstart ()
+   local pp = player.pilot()
+   pp:control()
+   pp:brake()
+
+   -- Start the cinematics
+   stealthanimation = 0
+   player.cinematics( true )
+   camera.set( waypoints[1], true )
+   hook.timer( 3000, "stealthstartanimation" )
+end
+
+
+function stealthstartanimation ()
+   stealthanimation = stealthanimation+1
+   if stealthanimation==0 then
+      pscavB:broadcast( _("Damnit! I thought I told you to fix the sensors.") , true )
+      hook.timer( 3000, "stealthstartanimation" )
+   elseif stealthanimation==1 then
+      pscavA:broadcast( _("Hey! I fixed them, it's this damn nebula that must have broken them again."), true )
+      hook.timer( 3000, "stealthstartanimation" )
+   elseif stealthanimation==2 then
+      pscavB:broadcast( _("Damnit. I really dislike broadcasting, but my encryption also seems damaged now."), true )
+      hook.timer( 3000, "stealthstartanimation" )
+   elseif stealthanimation==3 then
+      pscavA:broadcast( _("Don't worry, it's not like there's anybody else here."), true )
+      hook.timer( 3000, "stealthstartanimation" )
+   elseif stealthanimation==4 then
+      pscavB:broadcast( _("Let's just get this over with."), true )
+      hook.timer( 3000, "stealthstartanimation" )
+   elseif stealthanimation==5 then
+      -- Back to player
+      player.cinematics( false )
+      camera.set( nil, true )
+      player.pilot():control(false)
+      stealthtarget = 0
+      hook.timer( 3000, "stealthheartbeat" )
+   end
+end
+
+
+stealthmesages = {
+   { pscavA, 3000, _("This place always gives me the creeps.") },
+   { pscavB, 3000, _("C'mon, the guy said that this was a great wreck.") },
+   { pscavB, 3000, _("You know the Za'lek pay premium for this sort of shit, right?") },
+   { pscavA, 3000, _("Yeah, yeah...  just hope we don't see any ghosts.") },
+   { pscavB, 3000, _("You don't really believe in them do you?") },
+   { pscavA, 3000, _("Dude, there's really freaky shit out there.") },
+   { pscavB, 3000, _("Yeah, but most of that freaky shit are Soromid bioengineered crap.") },
+   { pscavA, 3000, _("Ugh, Soromids give me the creeps.") },
+   { pscavB, 5000, _("I'd take them over Za'leks any day. I have no idea what Za'leks are thinking.") },
+   -- 29 seconds
+   { pscavA, 3000, _("Hey, did you see something?") },
+   { pscavB, 3000, _("How the hell am I supposed to see anything with my sensors broken, dipshit?") },
+   { pscavA, 3000, _("I already said I was sorry!") },
+   { pscavB, 3000, _("This is coming out of your cut.") },
+   { pscavA, -1, _("C'mon!") },
+   -- Cut off point here, restarts at heading to waypoint[4]
+   { pscavB, 3000, _("We should be there soon.") },
+   { pscavA, 3000, _("I swear I'll never come to the nebula again after this...") },
+   { pscavB, -1, _("That's what you said last time too!") }
+}
+function stealthbroadcast ()
+   stealthmsg = stealthmsg+1
+   if stealthmsg > #stealthmesages then
+      return
+   end
+
+   local msg = stealthmesages[ stealthmsg ]
+   msg[1]:broadcast( msg[3] )
+
+   if msg[2] > 0 then
+      stealthbroadcasthook = hook.timer( msg[2], "stealthbroadcast" )
+   end
+end
+
+function stealthheartbeat ()
+   local pp = player.pilot()
+   local dist= math.min ( pscavA:dist(pp), pscavB:dist(pp) )
+   -- TODO base on cloak distance
+   if dist < 1000 then
+      pscavA:broadcast( _("Run!") )
+      pscavA:broadcast( _("There's definately something there! Scram!") )
+      pscavA:control(false)
+      pscavB:control(false)
+      player.msg( _("#rYou have been detected! Stealth failed!") )
+      return
+   -- TODO base on sensor distance
+   elseif dist > 3000 then
+      pscavA:rm()
+      pscavB:rm()
+      if wreck ~= nil then
+         wreck:rm()
+      end
+      player.msg( _("#rYou lost track of the scavengers! Stealth failed!") )
+      return
+   end
+
+   if stealthtarget==0 then
+      -- Starting out
+      pscavB:broadcast( _("Let's get going.") )
+      pscavA:clearTasks()
+      pscavB:clearTasks()
+      pscavA:follow( pscavB )
+      stealthtarget = 1
+      pscavB:moveto( waypoints[stealthtarget] )
+      stealthmsg = 0
+      hook.timer( 3000, "stealthbroadcast" )
+   else
+      -- Check if made it to next target
+      local pos = waypoints[ stealthtarget ]
+      dist = pscavA:dist( pos )
+      if dist < 500 then
+         -- Finished current target, go to next
+         stealthtarget = stealthtarget+1
+         if stealthtarget > #waypoints then
+            -- Made it to target
+            for k,p in ipairs{ pscavA, pscavB } do
+               p:clearTasks()
+               p:brake()
+               p:face( wreck )
+            end
+            local pp = player.pilot()
+            pp:control()
+            pp:brake()
+            player.cinematics( true )
+            camera.set( waypoints[ #waypoints ], true )
+            wreckscene = 0
+            hook.timer( 3000, "wreckcutscene" )
+            return
+         else
+            -- pscavA is following pscavB
+            if stealthtarget==3 then
+               if not stopped_once then
+                  pscavB:clearTasks()
+                  pscavB:brake()
+                  pscavB:broadcast( _("Did you see something?") )
+                  stealthtarget = 2 -- Should trigger another catch
+                  stopped_once = true
+                  hook.timer( 5000, "stealthheartbeat" )
+                  return
+               else
+                  pscavA:broadcast( _("It's your imagination. Let's get this over with.") )
+                  pscavB:clearTasks()
+                  pscavB:moveto( waypoints[stealthtarget] )
+                  hook.timer( 3000, "stealthbroadcast" )
+               end
+            else
+               pscavB:clearTasks()
+               pscavB:moveto( waypoints[stealthtarget] )
+            end
+         end
+
+         -- Spawn the wreck
+         if stealthtarget==4 then
+            pos = waypoints[ #waypoints ]
+            wreck = pilot.addRaw( "Rhino", "independent", pos, "Derelict" )
+            wreck:rename( _("Ship Wreck") )
+            wreck:disable()
+            wreck:setInvincible()
+            hook.pilot( wreck, "board", "board_wreck" )
+         end
+      else
+         -- Still travelling to target
+      end
+   end
+
+   hook.timer( 500, "stealthheartbeat" )
+end
+
+
+function wreckcutscene ()
+   wreckscene = wreckscene + 1
+   if wreckscene==1 then
+      pscavB:broadcast( _("Looks like we made it!"), true )
+   elseif wreckscene==2 then
+      pscavA:broadcast( _("We came all the way for this wreck? It better be worth it..."), true )
+   elseif wreckscene==3 then
+      pscavB:broadcast( _("They said it was whatshisname... Xex? Vex? Some famous guy's wreck."), true )
+   elseif wreckscene==4 then
+      pscavA:broadcast( _("Wait, someone is there!"), true )
+   elseif wreckscene==5 then
+      scavengers_encounter()
+      found_wreck = true
+      local pp = player.pilot()
+      pp:control( false )
+      player.cinematics( false )
+      camera.set( nil, true )
+      return
+   end
+   hook.timer( 3000, "wreckcutscene" )
+end
+
+
 function scavengers_encounter ()
    local bribeamount = 100000 -- 100k credits
 
@@ -574,11 +783,27 @@ He seems to be clutching his head. A headache perhaps?]]))
    scavB(_([["Shut up and follow my lead!"]]))
    vn.na(_("You detect they are powering up their weapon systems."))
    vn.func( function ()
-      -- Fight player
+      for k,p in ipairs{ pscavA, pscavB } do
+         p:clearTasks()
+         p:attack( player.pilot() )
+         -- TODO add angry messages
+      end
    end )
 
    vn.fadeout()
    vn.run()
+end
+
+
+function scav_attacked ()
+   if found_wreck then return end
+   player.msg(_("MISSION FAILED! Scavenger attacked."))
+   for k,p in ipairs{pscavA, pscavB} do
+      if p:exists() then
+         p:control( false )
+      end
+   end
+   misn.finish( false )
 end
 
 
@@ -636,4 +861,11 @@ function board_wreck ()
          { string.format(_("Return to %s in the %s system"), minerva.maikki.name, mainsys) } )
    misn.markerMove( misn_marker, system.get(mainsys) )
    misn_state=5
+
+   -- Clear scavengers if exist
+   for k,p in ipairs{pscavA, pscavB} do
+      if p:exists() then
+         p:rm()
+      end
+   end
 end
