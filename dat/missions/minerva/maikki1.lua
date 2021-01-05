@@ -412,6 +412,7 @@ function enter ()
       -- TODO meta-factions
       local j = jump.get( cutscenesys, searchsys )
       local pos = j:pos() + vec2.new(3000,5000)
+      local fscav = faction.dynAdd( "Independent", "Scavenger", "Scavenger" )
       pscavB = pilot.addRaw( "Vendetta", "independent", pos, "Scavenger" )
       pscavB:rename(_("Scavenger Vendetta"))
       pscavB:control()
@@ -432,6 +433,7 @@ function enter ()
       local pos = waypoints[1]
       local posA = pos + vec2.new( 100, 80 )
       local posB = pos + vec2.new( -50, -20 )
+      local fscav = faction.dynAdd( "Independent", "Scavenger", "Scavenger" )
       pscavA = pilot.addRaw( "Shark", "independent", posA, "Scavenger" )
       pscavB = pilot.addRaw( "Vendetta", "independent", posB, "Scavenger" )
       for k,p in ipairs{ pscavA, pscavB } do

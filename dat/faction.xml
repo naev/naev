@@ -563,15 +563,6 @@
   </enemies>
  </faction>
  <faction>
-  <name>Scavenger</name>
-  <static />
-  <invisible />
-  <known />
-  <player>0</player>
-  <standing>static</standing>
-  <equip>pirate</equip>
- </faction>
- <faction>
   <name>Strangelove</name>
   <display>Independent</display>
   <static />
