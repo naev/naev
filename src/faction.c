@@ -36,11 +36,10 @@
 #define XML_FACTION_TAG    "faction" /**< XML tag identifier. */
 
 
-#define CHUNK_SIZE         32 /**< Size of chunk for allocation. */
-
 #define FACTION_STATIC        (1<<0) /**< Faction doesn't change standing with player. */
 #define FACTION_INVISIBLE     (1<<1) /**< Faction isn't exposed to the player. */
 #define FACTION_KNOWN         (1<<2) /**< Faction is known to the player. */
+#define FACTION_DYNAMIC       (1<<3) /**< Faction was created dynamically. */
 
 #define faction_setFlag(fa,f) ((fa)->flags |= (f))
 #define faction_rmFlag(fa,f)  ((fa)->flags &= ~(f))
@@ -217,6 +216,15 @@ int faction_setInvisible( int id, int state )
 int faction_isKnown( int id )
 {
    return faction_isKnown_( &faction_stack[id] );
+}
+
+
+/**
+ * @brief Is faction dynamic.
+ */
+int faction_isDynamic( int id )
+{
+   return faction_isFlag( &faction_stack[id], FACTION_DYNAMIC );
 }
 
 /**
@@ -1697,4 +1705,67 @@ int *faction_getGroup( int *n, int which )
    }
 
    return group;
+}
+
+
+/**
+ * @brief Clears dynamic factions.
+ */
+void factions_clearDynamic (void)
+{
+   int i;
+   Faction *f;
+   for (i=0; i<array_size(faction_stack); i++) {
+      f = &faction_stack[i];
+      if (faction_isFlag(f, FACTION_DYNAMIC)) {
+         array_erase( &faction_stack, f, f+1 );
+         i--;
+      }
+   }
+}
+
+
+/**
+ * @brief Dynamically add a faction.
+ *
+ *    @param base Faction to base it off (negative for none).
+ *    @param name Name of the faction to set.
+ *    @param display Display name to use.
+ */
+int faction_dynAdd( int base, const char *name, const char *display )
+{
+   Faction *f, *bf;
+   int i, *tmp;
+
+   f = &array_grow( &faction_stack );
+   memset( f, 0, sizeof(Faction) );
+   f->name = strdup( name );
+   f->displayname = strdup( display );
+   if (base>=0) {
+      bf = &faction_stack[base];
+
+      if (bf->logo_small!=NULL)
+         f->logo_small = gl_dupTexture( bf->logo_small );
+      if (bf->logo_tiny!=NULL)
+         f->logo_tiny = gl_dupTexture( bf->logo_tiny );
+
+      f->allies = array_create( int );
+      for (i=0; i<array_size(bf->allies); i++) {
+         tmp = &array_grow( &bf->allies );
+         *tmp = i;
+      }
+      f->enemies = array_create( int );
+      for (i=0; i<array_size(bf->enemies); i++) {
+         tmp = &array_grow( &bf->enemies );
+         *tmp = i;
+      }
+
+      f->player_def = bf->player_def;
+      f->player = bf->player;
+   }
+   faction_setFlag( f, FACTION_STATIC );
+   faction_setFlag( f, FACTION_INVISIBLE );
+   faction_setFlag( f, FACTION_DYNAMIC );
+
+   return array_size(faction_stack)-1;
 }

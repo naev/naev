@@ -1496,8 +1496,8 @@ void space_init( const char* sysname )
    weapon_clear(); /* get rid of all the weapons */
    spfx_clear(); /* get rid of the explosions */
    gatherable_free(); /* get rid of gatherable stuff. */
-   gatherable_free();
    background_clear(); /* Get rid of the background. */
+   factions_clearDynamic(); /* get rid of dynamic factions. */
    space_spawn = 1; /* spawn is enabled by default. */
    interference_timer = 0.; /* Restart timer. */
    if (player.p != NULL) {

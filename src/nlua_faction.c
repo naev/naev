@@ -45,6 +45,9 @@ static int factionL_logoTiny( lua_State *L );
 static int factionL_colour( lua_State *L );
 static int factionL_isknown( lua_State *L );
 static int factionL_setknown( lua_State *L );
+static int factionL_dynAdd( lua_State *L );
+static int factionL_dynAlly( lua_State *L );
+static int factionL_dynEnemy( lua_State *L );
 static const luaL_Reg faction_methods[] = {
    { "get", factionL_get },
    { "__eq", factionL_eq },
@@ -66,6 +69,9 @@ static const luaL_Reg faction_methods[] = {
    { "colour", factionL_colour },
    { "known", factionL_isknown },
    { "setKnown", factionL_setknown },
+   { "dynAdd", factionL_dynAdd },
+   { "dynAlly", factionL_dynAlly },
+   { "dynEnemy", factionL_dynEnemy },
    {0,0}
 }; /**< Faction metatable methods. */
 
@@ -604,3 +610,72 @@ static int factionL_setknown( lua_State *L )
    return 0;
 }
 
+
+/**
+ * @brief Adds a faction dynamically.
+ *
+ *    @luatparam Faction base Faction to base it off of or nil for new faction.
+ *    @luatparam string name Name to give the faction.
+ *    @luatparam[opt] string display Display name to give the faction.
+ * @luafunc dynAdd( base, name, display )
+ */
+static int factionL_dynAdd( lua_State *L )
+{
+   int fac;
+   const char *name, *display;
+
+   NLUA_CHECKRW(L);
+
+   if (lua_isfaction(L, 1))
+      fac = luaL_validfaction(L,1);
+   else
+      fac = -1;
+   name = luaL_checkstring(L,2);
+   display = luaL_optstring(L,3,NULL);
+
+   if (display==NULL)
+      display = name;
+
+   lua_pushfaction( L, faction_dynAdd( fac, name, display ) );
+   return 1;
+}
+
+
+/**
+ * @brief Adds allies to a faction. Only works with dynamic factions.
+ *
+ *    @luatparam Faction fac Faction to add ally to.
+ *    @luatparam Faction ally Faction to add as an ally.
+ * @luafunc dynAllay( fac, ally )
+ */
+static int factionL_dynAlly( lua_State *L )
+{
+   int fac, ally;
+   NLUA_CHECKRW(L);
+   fac = luaL_validfaction(L,1);
+   if (!faction_isDynamic(fac))
+      NLUA_ERROR(L,_("Can only add allies to dynamic factions"));
+   ally = luaL_validfaction(L,2);
+   faction_addAlly(fac, ally);
+   return 0;
+}
+
+
+/**
+ * @brief Adds enemies to a faction. Only works with dynamic factions.
+ *
+ *    @luatparam Faction fac Faction to add enemy to.
+ *    @luatparam Faction enemy Faction to add as an enemy.
+ * @luafunc dynAllay( fac, enemy )
+ */
+static int factionL_dynEnemy( lua_State *L )
+{
+   int fac, enemy;
+   NLUA_CHECKRW(L);
+   fac = luaL_validfaction(L,1);
+   if (!faction_isDynamic(fac))
+      NLUA_ERROR(L,_("Can only add allies to dynamic factions"));
+   enemy = luaL_validfaction(L,2);
+   faction_addAlly(fac, enemy);
+   return 0;
+}
