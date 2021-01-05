@@ -118,7 +118,9 @@ $(MKSPR):
 	$(MAKE) -C utils/mkspr
 
 install-data-local:
-	(cd $(top_srcdir)/dat; find . -type f -exec install -Dm 644 "{}" "$(DESTDIR)$(pkgdatadir)/dat/{}" \;)
+	(cd $(top_srcdir)/dat \
+	 && find . -type d -exec install -d     "{}" "$(DESTDIR)$(pkgdatadir)/dat/{}" \; \
+	 && find . -type f -exec install -m 644 "{}" "$(DESTDIR)$(pkgdatadir)/dat/{}" \; )
 
 clean-local:
 	(rm -rf $(top_builddir)/dat/gettext)
