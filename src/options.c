@@ -110,7 +110,7 @@ void opt_menu (void)
 {
    size_t i;
    int w, h;
-   char **names;
+   const char **names;
 
    /* Dimensions. */
    w = 680;
@@ -123,7 +123,7 @@ void opt_menu (void)
    /* Create tabbed window. */
    names = calloc( sizeof(char*), sizeof(opt_names)/sizeof(char*) );
    for (i=0; i<sizeof(opt_names)/sizeof(char*); i++)
-      names[i] = gettext(opt_names[i]);
+      names[i] = _(opt_names[i]);
    opt_windows = window_addTabbedWindow( opt_wid, -1, -1, -1, -1, "tabOpt",
          OPT_WINDOWS, (const char**)names, 0 );
    free(names);
@@ -233,7 +233,7 @@ static void opt_gameplay( unsigned int wid )
    char **paths;
    int cw;
    int w, h, y, x, by, l, n, i;
-   char *s;
+   const char *s;
    char **ls;
 
    /* Get size. */
@@ -257,12 +257,6 @@ static void opt_gameplay( unsigned int wid )
    window_addText( wid, x, y, cw, 20, 1, "txtVersion",
          &gl_smallFont, NULL, naev_version(1) );
    y -= 20;
-#ifdef GIT_COMMIT
-   nsnprintf( buf, sizeof(buf), _("Commit: %s"), GIT_COMMIT );
-   window_addText( wid, x, y, cw, 20, 1, "txtCommit",
-         &gl_smallFont, NULL, buf );
-#endif /* GIT_COMMIT */
-   y -= 20;
 
    paths = PHYSFS_getSearchPath();
    for (i=l=0; paths[i]!=NULL && (size_t)l < sizeof(buf); i++)
@@ -284,7 +278,6 @@ static void opt_gameplay( unsigned int wid )
    cw = (w-60)/2 - 40;
    y  = by;
    x  = 20;
-#if ENABLE_NLS
    s = _("Language:");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 0, "txtLanguage",
@@ -300,7 +293,6 @@ static void opt_gameplay( unsigned int wid )
    }
    window_addList( wid, x+l+20, y, cw-l-50, 70, "lstLanguage", ls, n, i, NULL, NULL );
    y -= 90;
-#endif /* ENABLE_NLS */
    window_addText( wid, x, y, cw, 20, 0, "txtCompile",
          NULL, NULL, _("Compilation Flags:") );
    y -= 30;
@@ -409,34 +401,21 @@ static void opt_gameplay( unsigned int wid )
 static int opt_gameplaySave( unsigned int wid, char *str )
 {
    (void) str;
-   int f, p;
+   int f, p, newlang;
    char *vmsg, *tmax, *s;
 
    /* List. */
-#if defined ENABLE_NLS && ENABLE_NLS
    p = toolkit_getListPos( wid, "lstLanguage" );
-   if (p==0) {
-      if (conf.language != NULL) {
-         free(conf.language);
-         conf.language = NULL;
-         opt_needRestart();
-      }
+   s = p==0 ? NULL : toolkit_getList( wid, "lstLanguage" );
+   newlang = ((s != NULL) != (conf.language != NULL))
+	  || ((s != NULL) && (strcmp( s, conf.language) != 0));
+   if (newlang) {
+      free( conf.language );
+      conf.language = s==NULL ? NULL : strdup( s );
+      /* Apply setting going forward; advise restart to regen other text. */
+      gettext_setLanguage( conf.language );
+      opt_needRestart();
    }
-   else {
-      s = toolkit_getList( wid, "lstLanguage" );
-      if (conf.language != NULL) {
-         if (strcmp(s,conf.language)!=0) {
-            free(conf.language);
-            conf.language = strdup(s);
-            opt_needRestart();
-         }
-      }
-      else {
-         conf.language = strdup(s);
-         opt_needRestart();
-      }
-   }
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
 
    /* Checkboxes. */
    f = window_checkboxState( wid, "chkAfterburn" );
@@ -773,7 +752,7 @@ static void menuKeybinds_update( unsigned int wid, char *name )
 static void opt_keyDefaults( unsigned int wid, char *str )
 {
    (void) str;
-   char *title, *caption, *ret;
+   const char *title, *caption, *ret;
    int i, ind;
 
    const int n = 3;
@@ -855,7 +834,7 @@ static void opt_setAudioLevel( unsigned int wid, char *str )
 static void opt_audioLevelStr( char *buf, int max, int type, double pos )
 {
    double vol, magic;
-   char *str;
+   const char *str;
 
    str = type ? _("Music Volume") : _("Sound Volume");
    vol = type ? music_getVolumeLog() : sound_getVolumeLog();
@@ -1311,6 +1290,10 @@ static void opt_video( unsigned int wid )
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkMinimize", _("Minimize on focus loss"), NULL, conf.minimize );
+   y -= 20;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkColorblind", _("Colorblind mode"), NULL,
+         conf.colorblind );
    y -= 40;
 
    /* GUI */
@@ -1412,6 +1395,11 @@ static int opt_videoSave( unsigned int wid, char *str )
       conf.minimize = f;
       SDL_SetHint( SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS,
             conf.minimize ? "1" : "0" );
+   }
+   f = window_checkboxState( wid, "chkColorblind" );
+   if (conf.colorblind != f) {
+      conf.colorblind = f;
+      opt_needRestart();
    }
 
    /* GUI. */

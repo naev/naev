@@ -29,9 +29,7 @@
 #include <fenv.h>
 #endif /* defined(HAVE_FENV_H) && defined(DEBUGGING) && defined(_GNU_SOURCE) */
 
-#if defined ENABLE_NLS && ENABLE_NLS
 #include <locale.h>
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
 
 #if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
 #include <signal.h>
@@ -111,7 +109,6 @@
 static int quit               = 0; /**< For primary loop */
 static unsigned int time_ms   = 0; /**< used to calculate FPS and movement. */
 static glTexture *loading     = NULL; /**< Loading screen. */
-static char *binary_path      = NULL; /**< argv[0] */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
 static int fps_skipped        = 0; /**< Skipped last frame? */
 /* Version stuff. */
@@ -177,33 +174,22 @@ void naev_quit (void)
  */
 int main( int argc, char** argv )
 {
-   char buf[PATH_MAX], langbuf[PATH_MAX];
+   char buf[PATH_MAX];
 
    env_detect( argc, argv );
 
    if (!log_isTerminal())
       log_copy(1);
 
-   /* Save the binary path. */
-   binary_path = strdup( env.argv0 );
-   if( PHYSFS_init( naev_binary() ) == 0 ) {
+   /* Set up PhysicsFS. */
+   if( PHYSFS_init( env.argv0 ) == 0 ) {
       ERR( "PhysicsFS initialization failed: %s",
             PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
       return -1;
    }
 
-#if ENABLE_NLS
    /* Set up locales. */
-   /* When using locales with difference in '.' and ',' for splitting numbers it
-    * causes pretty much everything to blow up, so we must refer from loading the
-    * numeric type of the locale. */
-   setlocale( LC_ALL, "" );
-   setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
-   /* We haven't loaded the ndata yet, so just try a path quickly. */
-   nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, nfile_dirname(naev_binary()) );
-   bindtextdomain( PACKAGE_NAME, langbuf );
-   textdomain( PACKAGE_NAME );
-#endif /* ENABLE_NLS */
+   gettext_init();
 
    /* Parse version. */
    if (semver_parse( VERSION, &version_binary ))
@@ -211,9 +197,6 @@ int main( int argc, char** argv )
 
    /* Print the version */
    LOG( " %s v%s (%s)", APPNAME, naev_version(0), HOST );
-#ifdef GIT_COMMIT
-   DEBUG( _(" git HEAD at %s"), GIT_COMMIT );
-#endif /* GIT_COMMIT */
 
    if ( env.isAppImage )
       LOG( "AppImage detected. Running from: %s", env.appdir );
@@ -261,9 +244,6 @@ int main( int argc, char** argv )
     */
    conf_loadConfigPath();
 
-   /* Parse the user data path override first. */
-   conf_parseCLIPath( argc, argv );
-
    /* Create the home directory if needed. */
    if ( nfile_dirMakeExist( nfile_configPath() ) )
       WARN( _("Unable to create config directory '%s'"), nfile_configPath());
@@ -291,43 +271,13 @@ int main( int argc, char** argv )
    if (ndata_open() != 0)
       ERR( _("Failed to open ndata.") );
 
-#if defined ENABLE_NLS && ENABLE_NLS
-   /* Try to set the language again if Naev is attempting to override the locale stuff.
-    * This is done late because this is the first stage at which we have the conf file
-    * fully loaded.
-    * Note: We tried setlocale( LC_ALL, ... ), but it bails if no corresponding system
-    * locale exists. That's too restrictive when we only need our own language catalogs. */
-   if (conf.language == NULL)
-      nsetenv( "LANGUAGE", "", 0 );
-   else {
-      nsetenv( "LANGUAGE", conf.language, 1 );
-      DEBUG(_("Reset language to \"%s\""), conf.language);
-   }
-   /* HACK: All of our code assumes it's working with UTF-8, so force gettext to return it.
-    * Testing under Wine shows it may default to Windows-1252, resulting in glitched translations
-    * like "Loading Ships..." -> "Schiffe laden \x85" which our font code will render improperly. */
-   nsetenv( "OUTPUT_CHARSET", "utf-8", 1 );
-   /* Horrible hack taken from https://www.gnu.org/software/gettext/manual/html_node/gettext-grok.html .
-    * Not entirely sure it is necessary, but just in case... */
-   {
-      extern int  _nl_msg_cat_cntr;
-      ++_nl_msg_cat_cntr;
-   }
-   /* If we don't disable LC_NUMERIC, lots of stuff blows up because 1,000 can be interpreted as
-    * 1.0 in certain languages. */
-   if (setlocale( LC_NUMERIC, "C" )==NULL) /* Disable numeric locale part. */
-      WARN(_("Unable to set LC_NUMERIC to 'C'!"));
-   nsnprintf( langbuf, sizeof(langbuf), "%s/"GETTEXT_PATH, ndata_getPath() );
-   bindtextdomain( PACKAGE_NAME, langbuf );
-   textdomain( PACKAGE_NAME );
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
+   /* We now know which translations to use. */
+   gettext_setLanguage( conf.language );
 
    /* Load the start info. */
    if (start_load())
       ERR( _("Failed to load module start data.") );
-
-   /* Load the data basics. */
-   LOG(" %s", ndata_name());
+   LOG(" %s", start_name());
    DEBUG_BLANK();
 
    /* Display the SDL Version. */
@@ -528,9 +478,6 @@ int main( int argc, char** argv )
 
    /* Clean up signal handler. */
    debug_sigClose();
-
-   /* Last free. */
-   free(binary_path);
 
    /* Delete logs if empty. */
    log_clean();
@@ -1112,7 +1059,7 @@ static void window_caption (void)
    }
 
    /* Set caption. */
-   nsnprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
+   nsnprintf(buf, PATH_MAX, APPNAME" - %s", start_name());
    SDL_SetWindowTitle( gl_screen.window, buf );
    SDL_SetWindowIcon(  gl_screen.window, naev_icon );
 }
@@ -1136,7 +1083,7 @@ char *naev_version( int long_version )
 #else /* DEBUGGING */
                "",
 #endif /* DEBUGGING */
-               ndata_name() );
+               start_name() );
       return version_human;
    }
 
@@ -1170,15 +1117,6 @@ int naev_versionCompare( const char *version )
    }
    semver_free( &sv );
    return res;
-}
-
-
-/**
- * @brief Returns the naev binary path.
- */
-char *naev_binary (void)
-{
-   return binary_path;
 }
 
 

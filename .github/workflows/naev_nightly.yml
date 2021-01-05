@@ -9,6 +9,7 @@ name: Nightly Release
 jobs:
   "Package_Source":
     runs-on: ubuntu-latest
+
     container:
       image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
 
@@ -72,7 +73,6 @@ jobs:
           tar -xf source.tar.xz -C source --strip 1
 
       - name: Compile AppImage
-        id: appimageCompile
         run: |
           ./source/utils/buildAppImage.sh -m -s "source" -b "build" -o "${{ env.DESTDIR }}"
         env:
@@ -86,19 +86,18 @@ jobs:
 
   "Windows_Naev_Release":
     needs: "Package_Source"
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        shell: msys2 {0}
+    env:
+      WINEPREFIX: "/tmp/.wine"
+
+    container:
+      image: projectsynchro/synchros_sexy_docker_images:naev-windows
 
     steps:
-      - name: Install MinGW Packages
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: MINGW64
-          update: true
-          install: git python tar mingw-w64-x86_64-clang mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-luajit mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-nsis mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-physfs mingw-w64-x86_64-SDL2 mingw-w64-x86_64-suitesparse
+      - name: Container-specific setup
+        run: |
+          echo /usr/lib/mxe/usr/bin >> $GITHUB_PATH
 
       - name: Get Source
         uses: actions/download-artifact@v2
@@ -113,7 +112,7 @@ jobs:
       - name: Meson Setup
         run: |
           meson setup build source \
-            --native-file='source/utils/build/windows.ini' \
+            --cross-file='source/utils/build/windows_cross_mxe.ini' \
             --buildtype=release \
             -Db_lto=true \
             -Dauto_features=enabled \
@@ -123,6 +122,7 @@ jobs:
       - name: Meson Compile
         run: |
           meson compile -C build
+          meson compile -C build naev-gmo
 
       - name: Build Windows Installer
         run: |
@@ -132,6 +132,70 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: naev-win64
+          path: ${{ github.workspace }}/dist/out/*
+          if-no-files-found: error
+
+  "Darwin_Naev_Release":
+    needs: "Package_Source"
+    runs-on: macos-10.15
+
+    steps:
+      - name: Install Homebrew Packages
+        run: |
+          brew update
+          # Library installation is a work in progress. This way results in a build that requires >=10.15.
+          # TODO: install compatible ones and set MACOSX_DEPLOYMENT_TARGET.
+          brew install \
+            openal-soft \
+            intltool \
+            libvorbis \
+            luajit \
+            sdl2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+
+      - name: Install Meson and Ninja via pip
+        run: |
+          pip install meson ninja
+
+      - name: Get Source
+        uses: actions/download-artifact@v2
+        with:
+          name: naev-dist
+
+      - name: Extract Source
+        run: |
+          mkdir source
+          tar -xf source.tar.xz -C source --strip 1
+
+      - name: Meson Setup
+        run: |
+          meson setup build source \
+              --native-file='source/utils/build/macos.ini' \
+              --buildtype=release \
+              --pkg-config-path=/usr/local/opt/openal-soft/lib/pkgconfig \
+              -Db_lto=true \
+              -Dauto_features=enabled \
+              -Ddocs_c=disabled \
+              -Ddocs_lua=disabled
+
+      - name: Meson Compile
+        run: |
+          meson compile -C build
+          meson compile -C build naev-gmo
+
+      - name: Build macOS Installer
+        run: |
+          ./source/extras/macos/bundle.py -n -s "source" -b "build" -o "$(pwd)/dist"
+          pushd dist/out
+          zip -r naev-macos.zip Naev.app/*
+          popd
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-macos
           path: ${{ github.workspace }}/dist/out/*
           if-no-files-found: error
 
@@ -154,7 +218,6 @@ jobs:
           tar -xf naev-dist/source.tar.xz -C source --strip 1
 
       - name: Meson Setup
-        id: setup
         run: |
           meson setup build source \
               --native-file='source/utils/build/linux_steamruntime.ini' \
@@ -167,6 +230,7 @@ jobs:
       - name: Meson Compile
         run: |
           meson compile -C build
+          meson compile -C build naev-gmo
 
       - name: Collect Steam Linux64 Artifacts
         run: |
@@ -175,6 +239,7 @@ jobs:
           mv build/naev dist/out/naev.x64
           chmod +x dist/out/naev.x64
 
+          source/utils/package-po.sh -b build -o source
           tar -cJvf dist/out/steam-ndata.tar.xz source/dat
 
       - name: Upload Naev Binary Artifact
@@ -204,6 +269,7 @@ jobs:
         Package_Source,
         Linux_Naev_Release,
         Windows_Naev_Release,
+        Darwin_Naev_Release,
         Steam_Naev_Release,
       ]
     if: ${{ github.repository == 'naev/naev' }}
@@ -237,7 +303,7 @@ jobs:
 
       - name: Create Release Staging and Output Areas
         run: |
-          mkdir -p {temp,dist/{staging,out/{lin64,win64}}}
+          mkdir -p {temp,dist/{staging,out/{lin64,macos,win64}}}
         working-directory: ${{ github.workspace }}
 
       - name: Update APT Cache
@@ -274,6 +340,7 @@ jobs:
           SUFFIX="$VERSION.$BUILD_DATE"
 
           mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/naev-$SUFFIX-linux-x86-64.AppImage
+          mv dist/staging/naev-macos/*.zip dist/out/naev-$SUFFIX-macos.zip
           mv dist/staging/naev-win64/naev*.exe dist/out/naev-$SUFFIX-win64.exe
           mv dist/staging/naev-dist/source.tar.xz dist/out/naev-$SUFFIX-source.tar.xz
 
@@ -301,10 +368,13 @@ jobs:
           mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
           chmod +x dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
 
+          mv dist/staging/naev-macos/*.zip dist/out/macos/naev-$SUFFIX-macos.zip
+
           tar -Jxf "dist/staging/naev-win64/steam-win64.tar.xz" -C "dist/out/win64"
           tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64" --strip 1
 
           ./butler push --userversion="$SUFFIX" dist/out/lin64 naev/naev:linux-x86-64-nightly
+          ./butler push --userversion="$SUFFIX" dist/out/macos naev/naev:macos-x86-64-nightly
           ./butler push --userversion="$SUFFIX" dist/out/win64 naev/naev:windows-x86-64-nightly
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}

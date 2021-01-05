@@ -290,6 +290,7 @@ dat/scripts/enum.lua
 dat/scripts/fleet_form.lua
 dat/scripts/fleethelper.lua
 dat/scripts/formation.lua
+dat/scripts/imageproc.lua
 dat/scripts/jumpdist.lua
 dat/scripts/love.lua
 dat/scripts/love/audio.lua
@@ -323,6 +324,9 @@ dat/scripts/prng.lua
 dat/scripts/proximity.lua
 dat/scripts/selectiveclear.lua
 dat/scripts/swapship.lua
+dat/scripts/vn.lua
+dat/scripts/vn/conf.lua
+dat/scripts/vn/main.lua
 dat/snd/music.lua
 src/ai.c
 src/ai.h
@@ -397,6 +401,7 @@ src/fleet.c
 src/fleet.h
 src/font.c
 src/font.h
+src/gettext.c
 src/gettext.h
 src/glad.c
 src/glad.h
@@ -446,6 +451,8 @@ src/menu.c
 src/menu.h
 src/mission.c
 src/mission.h
+src/msgcat.c
+src/msgcat.h
 src/music.c
 src/music.h
 src/music_openal.c

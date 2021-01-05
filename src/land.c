@@ -174,7 +174,7 @@ int can_swapEquipment( const char *shipname )
    }
    if (pilot_cargoUsed(player.p) > (pilot_cargoFree(newship) + pilot_cargoUsed(newship))) { /* Current ship has too much cargo. */
       diff = pilot_cargoUsed(player.p) - pilot_cargoFree(newship);
-      land_errDialogueBuild( ngettext(
+      land_errDialogueBuild( n_(
                "You have %d tonne more cargo than the new ship can hold.",
                "You have %d tonnes more cargo than the new ship can hold.",
                diff),
@@ -335,7 +335,7 @@ static int bar_genList( unsigned int wid )
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
 
    /* Save focus. */
-   focused = strdup(window_getFocus(wid));
+   focused = window_getFocus( wid );
 
    /* Destroy widget if already exists. */
    if (widget_exists( wid, "iarMissions" )) {
@@ -459,7 +459,8 @@ static void bar_update( unsigned int wid, char* str )
 
    /* Set portrait. */
    window_modifyText(  wid, "txtPortrait", npc_getName( pos ) );
-   window_modifyImage( wid, "imgPortrait", npc_getTexture( pos ), 0, 0 );
+   window_modifyImage( wid, "imgPortrait", npc_getTexture( pos ),
+         PORTRAIT_WIDTH, PORTRAIT_HEIGHT );
 
    /* Set mission description. */
    window_modifyText(  wid, "txtMission", npc_getDesc( pos ));
@@ -567,7 +568,7 @@ static void misn_open( unsigned int wid )
    y -= 2 * gl_defFont.h + 50;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, 20, 0,
-         "txtReward", &gl_smallFont, NULL, _("\anReward:\a0 None") );
+         "txtReward", &gl_smallFont, NULL, _("#nReward:#0 None") );
    y -= 20;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, y - 40 + h - 2*LAND_BUTTON_HEIGHT, 0,
@@ -656,7 +657,7 @@ static void misn_genList( unsigned int wid, int first )
    int w,h;
 
    /* Save focus. */
-   focused = strdup(window_getFocus(wid));
+   focused = window_getFocus(wid);
 
    if (!first)
       window_destroyWidget( wid, "lstMission" );
@@ -707,7 +708,7 @@ static void misn_update( unsigned int wid, char* str )
 
    /* Update date stuff. */
    buf = ntime_pretty( 0, 2 );
-   nsnprintf( txt, sizeof(txt), ngettext(
+   nsnprintf( txt, sizeof(txt), n_(
             "%s\n%d Tonne", "%s\n%d Tonnes", player.p->cargo_free),
          buf, player.p->cargo_free );
    free(buf);
@@ -715,7 +716,7 @@ static void misn_update( unsigned int wid, char* str )
 
    active_misn = toolkit_getList( wid, "lstMission" );
    if (strcmp(active_misn,_("No Missions"))==0) {
-      window_modifyText( wid, "txtReward", _("\anReward:\a0 None") );
+      window_modifyText( wid, "txtReward", _("#nReward:#0 None") );
       window_modifyText( wid, "txtDesc",
             _("There are no missions available here.") );
       window_disableButton( wid, "btnAcceptMission" );
@@ -726,7 +727,7 @@ static void misn_update( unsigned int wid, char* str )
    mission_sysComputerMark( misn );
    if (misn->markers != NULL)
       map_center( system_getIndex( misn->markers[0].sys )->name );
-   nsnprintf( txt, sizeof(txt), _("\anReward:\a0 %s"), misn->reward );
+   nsnprintf( txt, sizeof(txt), _("#nReward:#0 %s"), misn->reward );
    window_modifyText( wid, "txtReward", txt );
    window_modifyText( wid, "txtDesc", misn->desc );
    window_enableButton( wid, "btnAcceptMission" );
@@ -827,10 +828,10 @@ void land_updateMainTab (void)
    /* Else create it. */
    else {
       /* Refuel button. */
-      credits2str( cred, o->price, 2 );
+      credits2str( cred, o->price, 0 );
       nsnprintf( buf, sizeof(buf), _("Buy Local Map (%s)"), cred );
       window_addButtonKey( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20),
-            LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnMap",
+            LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnMap",
             buf, spaceport_buyMap, SDLK_b );
    }
 
@@ -1370,7 +1371,7 @@ void takeoff( int delay )
    if (delay)
       ntime_inc( ntime_create( 0, 1, 0 ) ); /* 1 period */
    nt = ntime_pretty( 0, 2 );
-   player_message( _("\aoTaking off from %s on %s."), _(land_planet->name), nt);
+   player_message( _("#oTaking off from %s on %s."), _(land_planet->name), nt);
    free(nt);
 
    /* Hooks and stuff. */

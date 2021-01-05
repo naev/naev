@@ -97,7 +97,7 @@ static int nlua_ngettext( lua_State *L )
    stra = luaL_checkstring(L, 1);
    strb = luaL_checkstring(L, 2);
    n    = luaL_checkinteger(L,3);
-   lua_pushstring(L, ngettext( stra, strb, n ) );
+   lua_pushstring(L, n_( stra, strb, n ) );
    return 1;
 }
 
@@ -364,6 +364,7 @@ static int nlua_loadBasic( lua_State* L )
    /* Gettext functionality. */
    lua_register(L, "_", nlua_gettext);
    lua_register(L, "N_", nlua_gettext_noop);
+   lua_register(L, "n_", nlua_ngettext);
    luaL_register(L, "gettext", gettext_methods);
 
    return 0;

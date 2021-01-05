@@ -1278,8 +1278,9 @@ void space_update( const double dt )
       system_scheduler( dt, 0 );
 
    /*
-    * Volatile systems.
+    * Nebula.
     */
+   nebu_update( dt );
    if (cur_system->nebu_volatility > 0.) {
       dmg.type          = dtype_get("nebula");
       dmg.damage        = pow2(cur_system->nebu_volatility) / 500. * dt;
@@ -1355,7 +1356,7 @@ void space_update( const double dt )
       for (i=0; i<cur_system->nplanets; i++) {
          if (( !planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i ))) {
             planet_setKnown( cur_system->planets[i] );
-            player_message( _("You discovered \a%c%s\a0."),
+            player_message( _("You discovered #%c%s#0."),
                   planet_getColourChar( cur_system->planets[i] ),
                   _(cur_system->planets[i]->name) );
             hparam[0].type  = HOOK_PARAM_STRING;
@@ -1495,8 +1496,8 @@ void space_init( const char* sysname )
    weapon_clear(); /* get rid of all the weapons */
    spfx_clear(); /* get rid of the explosions */
    gatherable_free(); /* get rid of gatherable stuff. */
-   gatherable_free();
    background_clear(); /* Get rid of the background. */
+   factions_clearDynamic(); /* get rid of dynamic factions. */
    space_spawn = 1; /* spawn is enabled by default. */
    interference_timer = 0.; /* Restart timer. */
    if (player.p != NULL) {
@@ -1516,9 +1517,9 @@ void space_init( const char* sysname )
       cur_system = &systems_stack[i];
 
       nt = ntime_pretty(0, 2);
-      player_message(_("\aoEntering System %s on %s."), _(sysname), nt);
+      player_message(_("#oEntering System %s on %s."), _(sysname), nt);
       if (cur_system->nebu_volatility > 0.) {
-         player_message(_("\arWARNING - Volatile nebula detected in %s! Taking damage!"), _(sysname));
+         player_message(_("#rWARNING - Volatile nebula detected in %s! Taking damage!"), _(sysname));
       }
       free(nt);
 
@@ -3492,8 +3493,8 @@ static int systems_load (void)
       xmlFreeDoc(doc);
    }
 
-   DEBUG( ngettext( "Loaded %d Star System", "Loaded %d Star Systems", systems_nstack ), systems_nstack );
-   DEBUG( ngettext( "       with %d Planet", "       with %d Planets", array_size(planet_stack) ), array_size(planet_stack) );
+   DEBUG( n_( "Loaded %d Star System", "Loaded %d Star Systems", systems_nstack ), systems_nstack );
+   DEBUG( n_( "       with %d Planet", "       with %d Planets", array_size(planet_stack) ), array_size(planet_stack) );
 
    /* Clean up. */
    PHYSFS_freeList( system_files );

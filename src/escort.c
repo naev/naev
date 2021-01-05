@@ -209,7 +209,7 @@ int escorts_attack( Pilot *parent )
       lua_pop(naevL, 1);
    }
    if ((ret == 0) && (parent == player.p))
-      player_message(_("\agEscorts: \a0Attacking %s."), t->name);
+      player_message(_("#gEscorts: #0Attacking %s."), t->name);
    return ret;
 }
 /**
@@ -222,7 +222,7 @@ int escorts_hold( Pilot *parent )
    int ret;
    ret = escort_command( parent, "e_hold", 0 );
    if ((ret == 0) && (parent == player.p))
-         player_message(_("\agEscorts: \a0Holding position."));
+         player_message(_("#gEscorts: #0Holding position."));
    return ret;
 }
 /**
@@ -235,7 +235,7 @@ int escorts_return( Pilot *parent )
    int ret;
    ret = escort_command( parent, "e_return", 0 );
    if ((ret == 0) && (parent == player.p))
-      player_message(_("\agEscorts: \a0Returning to ship."));
+      player_message(_("#gEscorts: #0Returning to ship."));
    return ret;
 }
 /**
@@ -248,7 +248,7 @@ int escorts_clear( Pilot *parent )
    int ret;
    ret = escort_command( parent, "e_clear", 0 );
    if ((ret == 0) && (parent == player.p))
-      player_message(_("\agEscorts: \a0Clearing orders."));
+      player_message(_("#gEscorts: #0Clearing orders."));
    return ret;
 }
 
@@ -262,7 +262,7 @@ int escorts_clear( Pilot *parent )
 int escort_playerCommand( Pilot *e )
 {
    int i;
-   char *title, *caption, *ret;
+   const char *title, *caption, *ret;
 
    /* "Attack My Target" order is omitted deliberately since e is your
     * target, making "Attack My Target" a useless command. */
@@ -324,6 +324,6 @@ int escorts_jump( Pilot *parent, JumpPoint *jp )
    lua_pop(naevL, 1);
 
    if ((ret == 0) && (parent == player.p))
-      player_message(_("\agEscorts: \a0Jumping."));
+      player_message(_("#gEscorts: #0Jumping."));
    return ret;
 }

@@ -40,6 +40,7 @@
 #define SHOW_PAUSE_DEFAULT                   1     /**< Whether to display pause status. */
 #define ENGINE_GLOWS_DEFAULT                 1     /**< Whether to display engine glows. */
 #define MINIMIZE_DEFAULT                     1     /**< Whether to minimize on focus loss. */
+#define COLORBLIND_DEFAULT                   0     /**< Whether to enable colorblindness simulation. */
 #define BIG_ICONS_DEFAULT                    1     /**< Whether to display BIGGER icons. */
 #define FONT_SIZE_CONSOLE_DEFAULT            10    /**< Default console font size. */
 #define FONT_SIZE_INTRO_DEFAULT              18    /**< Default intro font size. */
@@ -84,7 +85,7 @@ typedef struct PlayerConf_s {
    /* Memory usage. */
    int engineglow; /**< Sets engine glow. */
 
-   /* Window dimensions. */
+   /* Video options. */
    int width; /**< Width of the window to use. */
    int height; /**< Height of the window to use. */
    int explicit_dim; /**< Dimension is explicit. */
@@ -92,6 +93,7 @@ typedef struct PlayerConf_s {
    int fullscreen; /**< Whether or not game is fullscreen. */
    int modesetting; /**< Whether to use modesetting for fullscreen. */
    int minimize; /**< Whether to minimize on focus loss. */
+   int colorblind; /**< Whether to enable colorblindness simulation. */
 
    /* Sound. */
    int snd_voices; /**< Number of sound voices to use. */
@@ -173,7 +175,6 @@ void conf_setAudioDefaults (void);
 void conf_setVideoDefaults (void);
 void conf_loadConfigPath( void );
 int conf_loadConfig( const char* file );
-void conf_parseCLIPath( int argc, char** argv );
 void conf_parseCLI( int argc, char** argv );
 void conf_cleanup (void);
 

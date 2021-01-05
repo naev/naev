@@ -118,7 +118,7 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_TURRET_TRACKING,    tur_tracking,        gettext_noop("Tracking (Turret)") ),
    D__ELEM( SS_TYPE_D_TURRET_FIRERATE,    tur_firerate,        gettext_noop("Fire Rate (Turret)") ),
    DI_ELEM( SS_TYPE_D_TURRET_ENERGY,      tur_energy,          gettext_noop("Energy Usage (Turret)") ),
-   D__ELEM( SS_TYPE_D_TURRET_DAMAGE_AS_DISABLE, tur_dam_as_dis,gettext_noop("Damage as Disable (Cannon)") ),
+   D__ELEM( SS_TYPE_D_TURRET_DAMAGE_AS_DISABLE, tur_dam_as_dis,gettext_noop("Damage as Disable (Turret)") ),
 
    D__ELEM( SS_TYPE_D_NEBULA_ABSORB_SHIELD,  nebu_absorb_shield,   gettext_noop("Nebula Resistance (Shield)") ),
    D__ELEM( SS_TYPE_D_NEBULA_ABSORB_ARMOUR,  nebu_absorb_armour,   gettext_noop("Nebula Resistance (Armour)") ),
@@ -436,7 +436,7 @@ static int ss_printD( char *buf, int len, int newline, double d, const ShipStats
 {
    if (FABS(d) < 1e-10)
       return 0;
-   return nsnprintf( buf, len, "%s\a%s%+.0f%% %s\a0",
+   return nsnprintf( buf, len, "%s#%s%+.0f%% %s#0",
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
          d*100., _(sl->display) );
@@ -450,7 +450,7 @@ static int ss_printA( char *buf, int len, int newline, double d, const ShipStats
 {
    if (FABS(d) < 1e-10)
       return 0;
-   return nsnprintf( buf, len, "%s\a%s%+.0f %s\a0",
+   return nsnprintf( buf, len, "%s#%s%+.0f %s#0",
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
          d, _(sl->display) );
@@ -464,7 +464,7 @@ static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLoo
 {
    if (i == 0)
       return 0;
-   return nsnprintf( buf, len, "%s\a%s%+d %s\a0",
+   return nsnprintf( buf, len, "%s#%s%+d %s#0",
          (newline) ? "\n" : "",
          ss_printI_colour( i, sl ),
          i, _(sl->display) );
@@ -478,7 +478,7 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
 {
    if (!b)
       return 0;
-   return nsnprintf( buf, len, "%s\a%s%s\a0",
+   return nsnprintf( buf, len, "%s#%s%s#0",
          (newline) ? "\n" : "",
          ss_printI_colour( b, sl ),
          _(sl->display) );

@@ -556,7 +556,7 @@ int events_load (void)
    /* Sort based on priority so higher priority missions can establish claims first. */
    qsort( event_data, array_size(event_data), sizeof(EventData), event_cmp );
 
-   DEBUG( ngettext("Loaded %d Event", "Loaded %d Events", array_size(event_data) ), array_size(event_data) );
+   DEBUG( n_("Loaded %d Event", "Loaded %d Events", array_size(event_data) ), array_size(event_data) );
 
    return 0;
 }

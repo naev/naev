@@ -6,6 +6,7 @@
 #include "naev.h"
 /** @endcond */
 
+#include "conf.h"
 #include "log.h"
 #include "ndata.h"
 #include "nstring.h"
@@ -13,6 +14,7 @@
 
 
 #define GLSL_VERSION    "#version 140\n\n" /**< Version to use for all shaders. */
+#define GLSL_COLORBLIND "#define COLORBLIND_MODE ROD_MONOCHROMACY\n" /**< Line to enable colorblind mode. */
 
 
 /*
@@ -194,18 +196,32 @@ static int gl_program_link( GLuint program )
  */
 int gl_program_vert_frag( const char *vertfile, const char *fragfile )
 {
-   char *vert_str, *frag_str;
-   size_t vert_size, frag_size;
+   char *vert_str, *frag_str, *prepend, *buf;
+   size_t vert_size, frag_size, prepend_len;
    GLuint vertex_shader, fragment_shader;
 
-   vert_str = gl_shader_loadfile( vertfile, &vert_size, 1, GLSL_VERSION );
-   frag_str = gl_shader_loadfile( fragfile, &frag_size, 1, GLSL_VERSION );
+   prepend_len = strlen(GLSL_VERSION) + 1;
+   prepend = malloc( sizeof(prepend) * prepend_len );
+   strcpy( prepend, GLSL_VERSION );
+
+   if ( conf.colorblind ) {
+      prepend_len = strlen(prepend) + strlen(GLSL_COLORBLIND) + 1;
+      buf = malloc( sizeof(buf) * prepend_len );
+      nsnprintf( buf, prepend_len, "%s%s", prepend, GLSL_COLORBLIND );
+      buf[prepend_len - 1] = '\0';
+      free( prepend );
+      prepend = buf;
+   }
+
+   vert_str = gl_shader_loadfile( vertfile, &vert_size, 1, prepend );
+   frag_str = gl_shader_loadfile( fragfile, &frag_size, 1, prepend );
 
    vertex_shader = gl_shader_compile( GL_VERTEX_SHADER, vert_str, vert_size, vertfile );
    fragment_shader = gl_shader_compile( GL_FRAGMENT_SHADER, frag_str, frag_size, fragfile );
 
    free( vert_str );
    free( frag_str );
+   free( prepend );
 
    return gl_program_make( vertex_shader, fragment_shader );
 }

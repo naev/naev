@@ -76,12 +76,12 @@ void player_autonavStart (void)
    }
 
    if (player.p->fuel < player.p->fuel_consumption) {
-      player_message(_("\arNot enough fuel to jump for autonav."));
+      player_message(_("#rNot enough fuel to jump for autonav."));
       return;
    }
 
    if (pilot_isFlag( player.p, PILOT_NOJUMP)) {
-      player_message(_("\arHyperspace drive is offline."));
+      player_message(_("#rHyperspace drive is offline."));
       return;
    }
 
@@ -107,7 +107,7 @@ static int player_autonavSetup (void)
    /* Autonav is mutually-exclusive with other autopilot methods. */
    player_restoreControl( PINPUT_AUTONAV, NULL );
 
-   player_message(_("\aoAutonav initialized."));
+   player_message(_("#oAutonav initialized."));
    if (!player_isFlag(PLAYER_AUTONAV)) {
 
       tc_base   = player_dt_default() * player.speed;
@@ -268,9 +268,9 @@ void player_autonavAbort( const char *reason )
 
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (reason != NULL)
-         player_message(_("\arAutonav aborted: %s!"), reason);
+         player_message(_("#rAutonav aborted: %s!"), reason);
       else
-         player_message(_("\arAutonav aborted!"));
+         player_message(_("#rAutonav aborted!"));
       player_rmFlag(PLAYER_AUTONAV);
 
       /* Get rid of acceleration. */
@@ -279,7 +279,7 @@ void player_autonavAbort( const char *reason )
       /* Break possible hyperspacing. */
       if (pilot_isFlag(player.p, PILOT_HYP_PREP)) {
          pilot_hyperspaceAbort(player.p);
-         player_message(_("\aoAborting hyperspace sequence."));
+         player_message(_("#oAborting hyperspace sequence."));
       }
 
       /* Reset time compression. */
@@ -364,7 +364,7 @@ static void player_autonav (void)
       case AUTONAV_POS_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
-            player_message( _("\aoAutonav arrived at position.") );
+            player_message( _("#oAutonav arrived at position.") );
             player_autonavEnd();
          }
          else if (!tc_rampdown)
@@ -374,7 +374,7 @@ static void player_autonav (void)
       case AUTONAV_PNT_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
-            player_message( _("\aoAutonav arrived at \a%c%s\a0."),
+            player_message( _("#oAutonav arrived at #%c%s#0."),
                   player.autonavcol,
                   player.autonavmsg );
             player_autonavEnd();
@@ -389,7 +389,7 @@ static void player_autonav (void)
             p = pilot_get( PLAYER_ID );
          if ((p->id == PLAYER_ID) || (!pilot_inRangePilot( player.p, p, NULL ))) {
             /* TODO : handle the different reasons: pilot is too far, jumped, landed or died. */
-            player_message( _("\ao%s has been lost."),
+            player_message( _("#o%s has been lost."),
                               player.autonavmsg );
             player_accel( 0. );
             player_autonavEnd();

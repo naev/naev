@@ -538,8 +538,7 @@ void mission_cleanup( Mission* misn )
    free(misn->npc);
 
    /* Markers. */
-   if (misn->markers != NULL)
-      array_free( misn->markers );
+   array_free( misn->markers );
 
    /* Claims. */
    if (misn->claims != NULL)
@@ -886,7 +885,7 @@ int missions_load (void)
    /* Sort based on priority so higher priority missions can establish claims first. */
    qsort( mission_stack, array_size(mission_stack), sizeof(MissionData), missions_cmp );
 
-   DEBUG( ngettext("Loaded %d Mission", "Loaded %d Missions", array_size(mission_stack) ), array_size(mission_stack) );
+   DEBUG( n_("Loaded %d Mission", "Loaded %d Missions", array_size(mission_stack) ), array_size(mission_stack) );
 
    return 0;
 }

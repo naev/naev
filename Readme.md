@@ -42,6 +42,20 @@ python3-pip
 pip3 install meson ninja
 ```
 
+### macOS
+
+Warning: this procedure is inadequate if you want to build a Naev.app that you can share with users of older macOS versions than your own.
+
+Dependencies may be installed using [Homebrew](https://brew.sh):
+```
+brew install freetype gettext intltool libpng libvorbis luajit meson openal-soft physfs pkg-config sdl2_image suite-sparse
+```
+Building the latest available code in git is recommended, but to build version 0.8 you can add `sdl2_mixer` (and `autoconf-archive` and `automake` if using Autotools to build).
+
+Meson needs an extra argument to find Homebrew's `openal-soft` package: `--pkg-config-path=/usr/local/opt/openal-soft/lib/pkgconfig`.
+If build may fail if `suite-sparse` is installed via Homebrew, citing an undefined reference to `_cs_di_spfree`. A workaround is to pass `--force-fallback-for=SuiteSparse`.
+(These arguments may be passed to the initial `meson setup` or applied later using `meson configure`. For 0.8/Autotools, set the `PKG_CONFIG_PATH` environment variable before running `./configure`.)
+
 ### Other \*nix
 
 See [here](https://github.com/naev/naev/wiki/Compiling-on-*nix) for package lists for several
@@ -56,6 +70,7 @@ bash
 meson setup builddir .
 cd builddir
 meson compile
+meson compile naev-gmo  # To make non-English translations available
 ./naev.sh
 ```
 

@@ -318,7 +318,7 @@
 <div class="container-fluid nebula-bg mt-5">
     <div class="container">
         <footer class="row text-muted">
-            <p class="col-xs-12 col-sm-6 text-left">© 2019 Naev Development Blarg</p>
+            <p class="col-xs-12 col-sm-6 text-left">© $(ldoc.updatetime:sub(1,4)) Naev Development Blarg</p>
             <p class="col-xs-12 col-sm-6 text-right">Original content licensed under CC-By-SA 4.0</p>
         </footer>
     </div>

@@ -75,7 +75,7 @@ typedef struct Player_s {
    double crating; /**< Combat rating. */
    int autonav; /**< Current autonav state. */
    Vector2d autonav_pos; /**< Target autonav position. */
-   char *autonavmsg; /**< String to print on arrival. */
+   const char *autonavmsg; /**< String to print on arrival. */
    char autonavcol; /**< Colour for autonav target description (e.g., hostile). */
    double tc_max; /**< Maximum time compression value (bounded by ship speed or conf setting). */
    double autonav_timer; /**< Timer that prevents time accel after a reset. */
@@ -158,7 +158,7 @@ void player_messageRaw ( const char *str );
  * misc
  */
 void player_resetSpeed (void);
-void player_restoreControl( int reason, char *str );
+void player_restoreControl( int reason, const char *str );
 void player_checkLandAck (void);
 void player_nolandMsg( const char *str );
 void player_clear (void);

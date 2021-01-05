@@ -59,7 +59,7 @@ SHADERS = [
       vs_path = "stars.vert",
       fs_path = "stars.frag",
       attributes = ["vertex", "brightness"],
-      uniforms = ["projection", "star_xy", "wh", "xy"]
+      uniforms = ["projection", "star_xy", "wh", "xy", "scale"]
    ),
    Shader(
       name = "font",

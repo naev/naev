@@ -18,15 +18,6 @@
 
 #include "nstring.h"
 
-#if defined ENABLE_NLS && ENABLE_NLS
-#define _(String) gettext(String)
-#define gettext_noop(String) String
-#else /* defined ENABLE_NLS && ENABLE_NLS */
-#define _(String) String
-#define gettext_noop(String) String
-#endif /* defined ENABLE_NLS && ENABLE_NLS */
-#define N_(String) String
-
 #define LOG(str, args...)  (logprintf(stdout, 1, str, ## args))
 #ifdef DEBUG_PARANOID /* Will cause WARNs to blow up */
 #define WARN(str, args...) (logprintf(stderr, 0, _("WARNING %s:%d [%s]: "), __FILE__, __LINE__, __func__), logprintf( stderr, 1, str, ## args), abort())

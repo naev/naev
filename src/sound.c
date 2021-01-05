@@ -614,7 +614,7 @@ static int sound_makeList (void)
    /* shrink to minimum ram usage */
    sound_list = realloc( sound_list, sound_nlist*sizeof(alSound));
 
-   DEBUG( ngettext("Loaded %d Sound", "Loaded %d Sounds", sound_nlist), sound_nlist );
+   DEBUG( n_("Loaded %d Sound", "Loaded %d Sounds", sound_nlist), sound_nlist );
 
    /* Clean up. */
    PHYSFS_freeList( files );

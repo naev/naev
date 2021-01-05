@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SOURCE_ROOT=$(realpath -m "$MESON_SOURCE_ROOT")
+SOURCE_ROOT="$MESON_SOURCE_ROOT"
 
 if [ -d "$SOURCE_ROOT/.git/" ]; then
     # In the git repo. Build the tag from git info

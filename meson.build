@@ -28,6 +28,7 @@ endif
 # Initializeation
 config_data = configuration_data()
 naev_deps = []
+naev_link_args = []
 
 ndata_path = get_option('ndata_path')
 if ndata_path == ''
@@ -93,6 +94,7 @@ if buildExec.disabled() == false
    sdl = dependency('sdl2', required: true)
    naev_deps += [
       dependency('freetype2', required: true),
+      dependency('physfs', fallback: ['physfs', 'physfs_dep'], required: true),
       sdl,
       declare_dependency(
          dependencies: dependency('libpng', required: true),
@@ -110,32 +112,19 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_LUAJIT', lua.found())
    summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
 
-   if not lua.found()
+   if lua.found()
+      if host_machine.system() == 'darwin'
+         # The main executable must be linked with these flags, or else LuaJIT will crash instantly.
+         # Ref: https://luajit.org/install.html
+         naev_link_args += ['-pagezero_size', '10000', '-image_base', '100000000']
+      endif
+   else
       lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
    endif
 
    naev_deps += lua
 
-   # PhysicsFS
-   physfs = dependency('physfs', required: false)
-   if not physfs.found()
-      cmake = import('cmake')
-      # Micro-manage the poor thing to death. This helps us survive AppImage packaging, though there should be a better way.
-      physfs_opts = cmake.subproject_options()
-      physfs_opts.add_cmake_defines({'PHYSFS_BUILD_SHARED': false, 'PHYSFS_BUILD_TEST': false})
-      # You wouldn't believe the screaming, otherwise...
-      physfs_opts.set_override_option('warning_level', '1')
-      physfs = cmake.subproject('physfs', options: physfs_opts).dependency('physfs-static')
-   endif
-   naev_deps += physfs
-
-   if not lua.found()
-      lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
-   endif
-
-   naev_deps += lua
-
-   ### Soft deps (required: false
+   ### Soft deps (required: false)
 
    # BFD
    if get_option('debug')
@@ -203,7 +192,8 @@ if buildExec.disabled() == false
    )
 
    if host_machine.system() == 'darwin'
-      add_languages('objc')
+      add_languages('objc', native: false)
+      configure_file(input: 'extras/macos/Info.plist.in', output: 'Info.plist', configuration: config_data)
       naev_source += mac_source
       naev_deps += dependency('Foundation', required: true )
    endif
@@ -231,6 +221,7 @@ if buildExec.disabled() == false
       naev_source,
       include_directories: include_dirs,
       dependencies: naev_deps,
+      link_args: naev_link_args,
       export_dynamic: bfd.found(),
       install: true)
 
@@ -238,6 +229,7 @@ if buildExec.disabled() == false
       input: 'utils/build/naev.sh',
       output: 'naev.sh',
       configuration: {
+         'build_root': meson.current_build_dir(),
          'source_root': meson.source_root(),
          'naev_bin' : naev_bin.full_path()
       }
