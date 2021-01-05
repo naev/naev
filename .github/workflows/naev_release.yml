@@ -339,9 +339,9 @@ jobs:
           tar -Jxf "dist/staging/naev-win64/steam-win64.tar.xz" -C "dist/out/win64"
           tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64"
 
-          ./butler push --userversion="$SUFFIX" dist/out/lin64 naev/naev:linux-x86-64-beta
-          ./butler push --userversion="$SUFFIX" dist/out/macos naev/naev:macos-x86-64-beta
-          ./butler push --userversion="$SUFFIX" dist/out/win64 naev/naev:windows-x86-64-beta
+          ./butler push --userversion="$SUFFIX" dist/out/lin64 naev/naev:linux-x86-64
+          ./butler push --userversion="$SUFFIX" dist/out/macos naev/naev:macos-x86-64
+          ./butler push --userversion="$SUFFIX" dist/out/win64 naev/naev:windows-x86-64
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
 
