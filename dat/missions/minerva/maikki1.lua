@@ -214,7 +214,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
       if misn_state < 0 then
          misn_state = 0
          misn_osd = misn.osdCreate( misn_title,
-            { string.format(_("Look around the %s system"), searchsys) } )
+            { string.format(_("Look around the %s system"), _(searchsys)) } )
          misn_marker = misn.markerAdd( system.get(searchsys), "low" )
       end
    end )
@@ -271,7 +271,7 @@ function approach_oldman ()
       table.insert( opts, 1, {_("Ask about scavengers you saw"), "scavengers"} )
    end
    if misn_state >=4 then
-      table.insert( opts, 1, {string.format(_("Ask about %s"),stealthsys), "stealthmisn"} )
+      table.insert( opts, 1, {string.format(_("Ask about %s"),_(stealthsys)), "stealthmisn"} )
    end
    if misn_state >=5 then
       table.insert( opts, 1, {_("Show him the picture"), "showloot"} )
@@ -326,7 +326,7 @@ He downs his drink and orders another.]]))
    vn.jump( "menu_msg" )
 
    vn.label( "stealthmisn" )
-   om(string.format(_([["%s? That should be just past %s. Do you think the scavengers could have found something there?"]]), stealthsys, cutscenesys))
+   om(string.format(_([["%s? That should be just past %s. Do you think the scavengers could have found something there?"]]), _(stealthsys), _(cutscenesys)))
    om(_([["If you plan to go, you should bring your best sensors. It's very hard to see anything due to the density of the nebula there."]]))
    vn.jump( "menu_msg" )
 
@@ -388,7 +388,7 @@ He pats his biceps in a fairly uninspiring way.]]))
       vn.func( function ()
          if misn_state==3 then
             misn_osd = misn.osdCreate( misn_title,
-               { string.format(_("Follow the scavengers in the %s system"), stealthsys) } )
+               { string.format(_("Follow the scavengers in the %s system"), _(stealthsys)) } )
             misn.markerMove( misn_marker, system.get(stealthsys) )
             misn_state=4
          end
@@ -487,7 +487,7 @@ function cutscene_hail ()
    vn.fadein()
    vn.na(_("The comm flickers as a scavenger appears into view. He looks a bit pale."))
    scavB(_([["Thank you. I thought I was a goner. My sensors failed me at the worst time and it's impossible to see shit in this nebula."]]))
-   scavB(string.format(_([["Could you tell me the way to %s? I have to get out of here as soon as possible."]]), searchsys))
+   scavB(string.format(_([["Could you tell me the way to %s? I have to get out of here as soon as possible."]]), _(searchsys)))
    vn.menu( {
       { _("Give him directions"), "help" },
       { _("Leave"), "leave" },
@@ -787,6 +787,7 @@ He seems to be clutching his head. A headache perhaps?]]))
       else
          player.pay( -bribeamount )
          bribed_scavengers = true
+         var.push( "maikki_scavengers_alive", true )
          for k,p in ipairs{ pscavA, pscavB } do
             p:taskClear()
             p:hyperspace( system.get(cutscenesys) )
@@ -887,7 +888,7 @@ function board_wreck ()
 
    -- Move target back to origin
    misn_osd = misn.osdCreate( misn_title,
-         { string.format(_("Return to %s in the %s system"), minerva.maikki.name, mainsys) } )
+         { string.format(_("Return to %s in the %s system"), minerva.maikki.name, _(mainsys)) } )
    misn.markerMove( misn_marker, system.get(mainsys) )
    misn_state=5
 
