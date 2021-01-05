@@ -231,7 +231,7 @@ She looks clearly excited.]]))
    vn.func( function ()
       -- no reward, yet...
       -- TODO play victory sound
-      misn.finish(true)
+      mission_finish = true
    end )
    vn.fadeout()
    vn.done()
@@ -244,6 +244,11 @@ She looks clearly excited.]]))
    vn.na(_("You take your leave to continue the search for her father."))
    vn.fadeout()
    vn.run()
+
+   -- Can't run it in the VN or it causes an error
+   if mission_finish then
+      misn.finish(true)
+   end
 end
 
 
