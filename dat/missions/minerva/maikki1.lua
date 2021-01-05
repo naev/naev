@@ -702,7 +702,7 @@ function stealthheartbeat ()
 
          -- Spawn the wreck
          if stealthtarget==4 then
-            pos = waypoints[ #waypoints ]
+            pos = waypoints[ #waypoints ] + vec2.new(-10, -50)
             wreck = pilot.addRaw( "Rhino", "independent", pos, "Derelict" )
             wreck:rename( _("Ship Wreck") )
             wreck:disable()
