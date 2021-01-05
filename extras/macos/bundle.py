@@ -26,25 +26,29 @@ def main():
     args = parser.parse_args()
 
     trace.enabled = args.debug
-    app_path = os.path.join(args.buildoutput, 'Naev.app')
+    app_path = f'{args.buildoutput}/Naev.app'
 
     #Clean previous build.
     trace(shutil.rmtree, app_path, ignore_errors=True)
 
     # Build basic structure.
     for subdir in 'MacOS', 'Resources', 'Frameworks':
-        trace(os.makedirs, os.path.join(app_path, 'Contents', subdir), exist_ok=True)
-    trace(shutil.copy, os.path.join(args.buildroot, 'Info.plist'), os.path.join(app_path, 'Contents'))
-    trace(shutil.copy, os.path.join(args.sourceroot, 'extras/macos/naev.icns'), os.path.join(app_path, 'Contents/Resources'))
+        trace(os.makedirs, f'{app_path}/Contents/{subdir}')
+    trace(shutil.copy, f'{args.buildroot}/Info.plist', f'{app_path}/Contents')
+    trace(shutil.copy, f'{args.sourceroot}/extras/macos/naev.icns', f'{app_path}/Contents/Resources')
 
     # Gather Naev and dependencies.
-    trace(copy_with_deps, os.path.join(args.buildroot, 'naev'), app_path, dest='Contents/MacOS')
+    trace(copy_with_deps, f'{args.buildroot}/naev', app_path, dest='Contents/MacOS')
 
     # Strip headers, especially from the SDL2 framework.
     trace(subprocess.check_call, ['find', app_path, '-name', 'Headers', '-prune', '-exec', 'rm', '-r', '{}', '+'])
 
+    # Install data.
+    trace(shutil.copytree, f'{args.sourceroot}/dat', f'{app_path}/Contents/Resources/dat')
+    trace(subprocess.check_call, [f'{args.sourceroot}/utils/package-po.sh',
+        '-b', args.buildroot, '-o', f'{app_path}/Contents/Resources'])
+
     print(f'Successfully created {app_path}')
-    print(f'*** NOTE: This script expects other steps to create {app_path}/Contents/Resources/dat')
 
 
 def trace(f, *args, **kwargs):
