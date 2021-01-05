@@ -73,7 +73,6 @@ jobs:
           tar -xf source.tar.xz -C source --strip 1
 
       - name: Compile AppImage
-        id: appimageCompile
         run: |
           ./source/utils/buildAppImage.sh -m -s "source" -b "build" -o "${{ env.DESTDIR }}"
         env:
@@ -219,7 +218,6 @@ jobs:
           tar -xf naev-dist/source.tar.xz -C source --strip 1
 
       - name: Meson Setup
-        id: setup
         run: |
           meson setup build source \
               --native-file='source/utils/build/linux_steamruntime.ini' \
