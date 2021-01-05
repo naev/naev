@@ -87,7 +87,6 @@ typedef struct Faction_ {
 } Faction;
 
 static Faction* faction_stack = NULL; /**< Faction stack. */
-int faction_nstack = 0; /**< Number of factions in the faction stack. */
 
 
 /*
@@ -118,11 +117,11 @@ int faction_get( const char* name )
       return FACTION_PLAYER;
 
    if (name != NULL) {
-      for (i=0; i<faction_nstack; i++)
+      for (i=0; i<array_size(faction_stack); i++)
          if (strcmp(faction_stack[i].name, name)==0)
             break;
 
-      if (i != faction_nstack)
+      if (i != array_size(faction_stack))
          return i;
    }
 
@@ -141,11 +140,11 @@ int* faction_getAll( int *n )
    int m;
 
    /* Set up. */
-   f  = malloc( sizeof(int) * faction_nstack );
+   f  = malloc( sizeof(int) * array_size(faction_stack) );
 
    /* Get IDs. */
    m = 0;
-   for (i=0; i<faction_nstack; i++)
+   for (i=0; i<array_size(faction_stack); i++)
       if (!faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ))
          f[m++] = i;
 
@@ -163,11 +162,11 @@ int* faction_getKnown( int *n )
    int m;
 
    /* Set up. */
-   f  = malloc( sizeof(int) * faction_nstack );
+   f  = malloc( sizeof(int) * array_size(faction_stack) );
 
    /* Get IDs. */
    m = 0;
-   for (i=0; i<faction_nstack; i++)
+   for (i=0; i<array_size(faction_stack); i++)
       if (!faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ) && faction_isKnown_( &faction_stack[i] ))
          f[m++] = i;
 
@@ -182,7 +181,7 @@ void faction_clearKnown()
 {
    int i;
 
-   for ( i=0; i<faction_nstack; i++)
+   for ( i=0; i<array_size(faction_stack); i++)
       if ( faction_isKnown_( &faction_stack[i] ))
          faction_rmFlag( &faction_stack[i], FACTION_KNOWN );
 }
@@ -368,7 +367,7 @@ int* faction_getEnemies( int f, int *n )
    if (f == FACTION_PLAYER) {
       enemies = array_create( int );
 
-      for (i=0; i<faction_nstack; i++)
+      for (i=0; i<array_size(faction_stack); i++)
          if (faction_isPlayerEnemy(i)) {
             tmp = &array_grow( &enemies );
             *tmp = i;
@@ -405,7 +404,7 @@ int* faction_getAllies( int f, int *n )
    if (f == FACTION_PLAYER) {
       allies = array_create( int );
 
-      for (i=0; i<faction_nstack; i++)
+      for (i=0; i<array_size(faction_stack); i++)
          if (faction_isPlayerFriend(i)) {
             tmp = &array_grow( &allies );
             *tmp = i;
@@ -1193,7 +1192,7 @@ int areAllies( int a, int b )
  */
 int faction_isFaction( int f )
 {
-   if ((f<0) || (f>=faction_nstack))
+   if ((f<0) || (f>=array_size(faction_stack)))
       return 0;
    return 1;
 }
@@ -1420,7 +1419,7 @@ static void faction_parseSocial( xmlNodePtr parent )
 void factions_reset (void)
 {
    int i;
-   for (i=0; i<faction_nstack; i++) {
+   for (i=0; i<array_size(faction_stack); i++) {
       faction_stack[i].player = faction_stack[i].player_def;
       faction_stack[i].flags = faction_stack[i].oflags;
    }
@@ -1434,8 +1433,10 @@ void factions_reset (void)
  */
 int factions_load (void)
 {
-   int mem;
    xmlNodePtr factions, node;
+   int i, j, k, r;
+   Faction *f, *sf;
+
 
    /* Load the document. */
    xmlDocPtr doc = xml_parsePhysFS( FACTION_DATA_PATH );
@@ -1455,36 +1456,28 @@ int factions_load (void)
    }
 
    /* player faction is hard-coded */
-   faction_stack = calloc( 1, sizeof(Faction) );
-   faction_stack[0].name = strdup("Player");
-   faction_stack[0].flags = FACTION_STATIC | FACTION_INVISIBLE;
-   faction_stack[0].equip_env = LUA_NOREF;
-   faction_stack[0].env = LUA_NOREF;
-   faction_stack[0].sched_env = LUA_NOREF;
-   faction_stack[0].allies = array_create( int );
-   faction_stack[0].enemies = array_create( int );
-   faction_nstack++;
+   faction_stack = array_create( Faction );
+   f = &array_grow( &faction_stack );
+   memset( f, 0, sizeof(Faction) );
+   f->name        = strdup("Player");
+   f->flags       = FACTION_STATIC | FACTION_INVISIBLE;
+   f->equip_env   = LUA_NOREF;
+   f->env         = LUA_NOREF;
+   f->sched_env   = LUA_NOREF;
+   f->allies      = array_create( int );
+   f->enemies     = array_create( int );
 
    /* First pass - gets factions */
    node = factions;
-   mem = 0;
    do {
       if (xml_isNode(node,XML_FACTION_TAG)) {
-         /* See if must grow memory.  */
-         faction_nstack++;
-         if (faction_nstack > mem) {
-            mem += CHUNK_SIZE;
-            faction_stack = realloc(faction_stack, sizeof(Faction)*mem);
-         }
+         f = &array_grow( &faction_stack );
 
          /* Load faction. */
-         faction_parse(&faction_stack[faction_nstack-1], node);
-         faction_stack[faction_nstack-1].oflags = faction_stack[faction_nstack-1].flags;
+         faction_parse( f, node );
+         f->oflags = f->flags;
       }
    } while (xml_nextNode(node));
-
-   /* Shrink to minimum size. */
-   faction_stack = realloc(faction_stack, sizeof(Faction)*faction_nstack);
 
    /* Second pass - sets allies and enemies */
    node = factions;
@@ -1493,12 +1486,8 @@ int factions_load (void)
          faction_parseSocial(node);
    } while (xml_nextNode(node));
 
-#ifdef DEBUGGING
-   int i, j, k, r;
-   Faction *f, *sf;
-
-   /* Third pass, makes sure allies/enemies are valid. */
-   for (i=0; i<faction_nstack; i++) {
+   /* Third pass, Make allies/enemies symmetric. */
+   for (i=0; i<array_size(faction_stack); i++) {
       f = &faction_stack[i];
 
       /* First run over allies and make sure it's mutual. */
@@ -1532,11 +1521,10 @@ int factions_load (void)
             faction_addEnemy( f->enemies[j], i );
       }
    }
-#endif /* DEBUGGING */
 
    xmlFreeDoc(doc);
 
-   DEBUG( n_( "Loaded %d Faction", "Loaded %d Factions", faction_nstack ), faction_nstack );
+   DEBUG( n_( "Loaded %d Faction", "Loaded %d Factions", array_size(faction_stack) ), array_size(faction_stack) );
 
    return 0;
 }
@@ -1550,7 +1538,7 @@ void factions_free (void)
    int i;
 
    /* free factions */
-   for (i=0; i<faction_nstack; i++) {
+   for (i=0; i<array_size(faction_stack); i++) {
       free(faction_stack[i].name);
       free(faction_stack[i].longname);
       free(faction_stack[i].displayname);
@@ -1565,9 +1553,8 @@ void factions_free (void)
       if (faction_stack[i].equip_env != LUA_NOREF)
          nlua_freeEnv( faction_stack[i].equip_env );
    }
-   free(faction_stack);
+   array_free(faction_stack);
    faction_stack = NULL;
-   faction_nstack = 0;
 }
 
 
@@ -1583,7 +1570,7 @@ int pfaction_save( xmlTextWriterPtr writer )
 
    xmlw_startElem(writer,"factions");
 
-   for (i=1; i<faction_nstack; i++) { /* player is faction 0 */
+   for (i=1; i<array_size(faction_stack); i++) { /* player is faction 0 */
       /* Must not be static. */
       if (faction_isFlag( &faction_stack[i], FACTION_STATIC ))
          continue;
@@ -1671,14 +1658,14 @@ int *faction_getGroup( int *n, int which )
 
    switch(which) {
       case 0: /* 'all' */
-         *n = faction_nstack;
+         *n = array_size(faction_stack);
          group = malloc(sizeof(int) * *n);
-         for (i = 0; i < faction_nstack; i++)
+         for (i = 0; i < array_size(faction_stack); i++)
             group[i] = i;
          break;
 
       case 1: /* 'friendly' */
-         for (i = 0; i < faction_nstack; i++)
+         for (i = 0; i < array_size(faction_stack); i++)
             if (areAllies(FACTION_PLAYER, i)) {
                (*n)++;
                group = realloc(group, sizeof(int) * *n);
@@ -1687,7 +1674,7 @@ int *faction_getGroup( int *n, int which )
          break;
 
       case 2: /* 'neutral' */
-         for (i = 0; i < faction_nstack; i++)
+         for (i = 0; i < array_size(faction_stack); i++)
             if (!areAllies(FACTION_PLAYER, i) && !areEnemies(FACTION_PLAYER, i)) {
                (*n)++;
                group = realloc(group, sizeof(int) * *n);
@@ -1696,7 +1683,7 @@ int *faction_getGroup( int *n, int which )
          break;
 
       case 3: /* 'hostile' */
-         for (i = 0; i < faction_nstack; i++)
+         for (i = 0; i < array_size(faction_stack); i++)
             if (areEnemies(FACTION_PLAYER, i)) {
                (*n)++;
                group = realloc(group, sizeof(int) * *n);
