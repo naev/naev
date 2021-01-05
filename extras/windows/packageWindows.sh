@@ -83,6 +83,7 @@ mkdir -p "$STAGING"
 # Move data to staging folder
 echo "moving data to staging area"
 cp -r "$SOURCEROOT/dat" "$STAGING"
+"$SOURCEROOT"/utils/package-po.sh -b "$BUILDPATH" -o "$STAGING"
 
 echo "copying naev logo to staging area"
 cp "$SOURCEROOT/extras/logos/logo.ico" "$SOURCEROOT/extras/windows/installer"

@@ -82,6 +82,7 @@ jobs:
         id: compile
         run: |
           meson compile -C build
+          meson compile -C build naev-gmo
 
       - name: Upload Compile Log
         uses: actions/upload-artifact@v1
@@ -161,6 +162,7 @@ jobs:
         id: compile
         run: |
           meson compile -C build
+          meson compile -C build naev-gmo
 
       - name: Upload Compile Log
         uses: actions/upload-artifact@v2
@@ -257,6 +259,7 @@ jobs:
         id: compile
         run: |
           meson compile -C build
+          meson compile -C build naev-gmo
 
       - name: Upload Compile Log
         uses: actions/upload-artifact@v2
@@ -355,6 +358,7 @@ jobs:
       - name: Meson Compile
         run: |
           meson compile -C build
+          meson compile -C build naev-gmo
 
       - name: Trigger API Documentation Update
         if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
