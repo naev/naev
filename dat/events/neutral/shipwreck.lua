@@ -22,12 +22,11 @@
 --]]
 
 -- Text
-broadcastmsg = _("SOS. This is %s. We are shipwrecked. Requesting immediate assistance.")
+broadcastmsg = _("SOS. This is %s. We are shipwrecked. Please #bboard#0 us by positioning your ship over ours and then #bdouble-clicking#0 on our ship.")
 shipname = _("August") --The ship will have a unique name
 shipwreck = _("Shipwrecked %s")
 
 function create ()
-
     -- The shipwreck will be a random trader vessel.
     r = rnd.rnd()
     if r > 0.95 then
@@ -63,16 +62,16 @@ function create ()
     hook.land("endevent")
 end
 
-function broadcast()
+function broadcast ()
     -- Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
     if not p[1]:exists() then
-       return
+        return
     end
     p[1]:broadcast( string.format(broadcastmsg, shipname), true )
     bctimer = hook.timer(15000, "broadcast")
 end
 
-function rescue()
+function rescue ()
     -- Player boards the shipwreck and rescues the crew, this spawns a new mission.
     hook.rm(bctimer)
     naev.missionStart("The Space Family")

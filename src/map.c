@@ -41,7 +41,7 @@
 #define MAP_LOOP_PROT   1000 /**< Number of iterations max in pathfinding before
                                  aborting. */
 
-#define MAP_MARKER_CYCLE  1000 /**< Time of a mission marker's animation cycle in milliseconds. */
+#define MAP_MARKER_CYCLE  750 /**< Time of a mission marker's animation cycle in milliseconds. */
 
 /* map decorator stack */
 static MapDecorator* decorator_stack = NULL; /**< Contains all the map decorators. */
