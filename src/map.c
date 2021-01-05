@@ -1993,13 +1993,15 @@ void map_jump (void)
 void map_select( StarSystem *sys, char shifted )
 {
    unsigned int wid;
-   int i;
+   int i, autonav;
 
-   wid = window_get(MAP_WDWNAME);
+   wid = 0;
+   if (window_exists(MAP_WDWNAME))
+      wid = window_get(MAP_WDWNAME);
 
    if (sys == NULL) {
       map_selectCur();
-      window_disableButton( wid, "btnAutonav" );
+      autonav = 0;
    }
    else {
       map_selected = sys - systems_stack;
@@ -2025,7 +2027,7 @@ void map_select( StarSystem *sys, char shifted )
             player_hyperspacePreempt(0);
             player_targetHyperspaceSet( -1 );
             player_autonavAbortJump(NULL);
-            window_disableButton( wid, "btnAutonav" );
+            autonav = 0;
          }
          else  {
             /* see if it is a valid hyperspace target */
@@ -2036,14 +2038,21 @@ void map_select( StarSystem *sys, char shifted )
                   break;
                }
             }
-            window_enableButton( wid, "btnAutonav" );
+            autonav = 1;
          }
       }
       else { /* unreachable. */
          player_targetHyperspaceSet( -1 );
          player_autonavAbortJump(NULL);
-         window_disableButton( wid, "btnAutonav" );
+         autonav = 0;
       }
+   }
+
+   if (!wid == 0) {
+      if (autonav)
+         window_enableButton( wid, "btnAutonav" );
+      else
+         window_disableButton( wid, "btnAutonav" );
    }
 
    map_update(wid);
