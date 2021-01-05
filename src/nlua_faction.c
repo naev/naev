@@ -614,6 +614,8 @@ static int factionL_setknown( lua_State *L )
 /**
  * @brief Adds a faction dynamically.
  *
+ * @note Defaults to known.
+ *
  *    @luatparam Faction base Faction to base it off of or nil for new faction.
  *    @luatparam string name Name to give the faction.
  *    @luatparam[opt] string display Display name to give the faction.
@@ -621,20 +623,17 @@ static int factionL_setknown( lua_State *L )
  */
 static int factionL_dynAdd( lua_State *L )
 {
-   int fac;
+   LuaFaction fac;
    const char *name, *display;
 
    NLUA_CHECKRW(L);
 
-   if (lua_isfaction(L, 1))
+   if (!lua_isnil(L, 1))
       fac = luaL_validfaction(L,1);
    else
       fac = -1;
    name = luaL_checkstring(L,2);
-   display = luaL_optstring(L,3,NULL);
-
-   if (display==NULL)
-      display = name;
+   display = luaL_optstring(L,3,name);
 
    lua_pushfaction( L, faction_dynAdd( fac, name, display ) );
    return 1;
@@ -650,7 +649,7 @@ static int factionL_dynAdd( lua_State *L )
  */
 static int factionL_dynAlly( lua_State *L )
 {
-   int fac, ally;
+   LuaFaction fac, ally;
    NLUA_CHECKRW(L);
    fac = luaL_validfaction(L,1);
    if (!faction_isDynamic(fac))
@@ -670,12 +669,12 @@ static int factionL_dynAlly( lua_State *L )
  */
 static int factionL_dynEnemy( lua_State *L )
 {
-   int fac, enemy;
+   LuaFaction fac, enemy;
    NLUA_CHECKRW(L);
    fac = luaL_validfaction(L,1);
    if (!faction_isDynamic(fac))
       NLUA_ERROR(L,_("Can only add allies to dynamic factions"));
    enemy = luaL_validfaction(L,2);
-   faction_addAlly(fac, enemy);
+   faction_addEnemy(fac, enemy);
    return 0;
 }
