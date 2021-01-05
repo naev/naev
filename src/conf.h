@@ -40,6 +40,7 @@
 #define SHOW_PAUSE_DEFAULT                   1     /**< Whether to display pause status. */
 #define ENGINE_GLOWS_DEFAULT                 1     /**< Whether to display engine glows. */
 #define MINIMIZE_DEFAULT                     1     /**< Whether to minimize on focus loss. */
+#define BIG_ICONS_DEFAULT                    1     /**< Whether to display BIGGER icons. */
 /* Audio options */
 #define VOICES_DEFAULT                       128   /**< Amount of voices to use. */
 #define VOICES_MIN                           16    /**< Minimum amount of voices to use. */

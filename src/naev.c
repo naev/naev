@@ -587,9 +587,16 @@ void loadscreen_load (void)
  */
 void loadscreen_render( double done, const char *msg )
 {
+   const double SHIP_IMAGE_WIDTH = 512.;  /**< Loadscreen Ship Image Width */
+   const double SHIP_IMAGE_HEIGHT = 512.; /**< Loadscreen Ship Image Height */
    glColour col;
-   double bx,by, bw,bh;
-   double x,y, w,h, rh;
+   double bx;  /**<  Blit Image X Coord */
+   double by;  /**<  Blit Image Y Coord */
+   double x;   /**<  Progress Bar X Coord */
+   double y;   /**<  Progress Bar Y Coord */
+   double w;   /**<  Progress Bar Width Basis */
+   double h;   /**<  Progress Bar Height Basis */
+   double rh;  /**<  Loading Progress Text Relative Height */
    SDL_Event event;
 
    /* Clear background. */
@@ -602,23 +609,18 @@ void loadscreen_render( double done, const char *msg )
     * Dimensions.
     */
    /* Image. */
-   bw = 512.;
-   bh = 512.;
-   bx = (SCREEN_W-bw)/2.;
-   by = (SCREEN_H-bh)/2.;
+   bx = (SCREEN_W-SHIP_IMAGE_WIDTH)/2.;
+   by = (SCREEN_H-SHIP_IMAGE_HEIGHT)/2.;
    /* Loading bar. */
-   w  = gl_screen.w * 0.4;
-   h  = gl_screen.h * 0.02;
+   w  = SCREEN_W * 0.4;
+   h  = SCREEN_H * 0.02;
    rh = h + gl_defFont.h + 4.;
    x  = (SCREEN_W-w)/2.;
-   if (SCREEN_H < 768)
-      y  = (SCREEN_H-h)/2.;
-   else
-      y  = (SCREEN_H-bw)/2 - rh - 5.;
+   y  = (SCREEN_H-SHIP_IMAGE_HEIGHT)/2. - rh - 5.;
 
    /* Draw loading screen image. */
    if (loading != NULL)
-      gl_blitScale( loading, bx, by, bw, bh, NULL );
+      gl_blitScale( loading, bx, by, SHIP_IMAGE_WIDTH, SHIP_IMAGE_HEIGHT, NULL );
 
    /* Draw progress bar. */
    /* BG. */

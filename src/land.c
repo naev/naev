@@ -830,10 +830,10 @@ void land_updateMainTab (void)
    /* Else create it. */
    else {
       /* Refuel button. */
-      credits2str( cred, o->price, 2 );
+      credits2str( cred, o->price, 0 );
       nsnprintf( buf, sizeof(buf), _("Buy Local Map (%s)"), cred );
       window_addButtonKey( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20),
-            LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnMap",
+            LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnMap",
             buf, spaceport_buyMap, SDLK_b );
    }
 

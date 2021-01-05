@@ -481,6 +481,7 @@ static void opt_gameplayDefaults( unsigned int wid, char *str )
 
    /* Faders. */
    window_faderValue( wid, "fadAutonav", AUTONAV_RESET_SPEED_DEFAULT );
+   window_faderValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
 
    /* Input boxes. */
    nsnprintf( vmsg, sizeof(vmsg), "%d", INPUT_MESSAGES_DEFAULT );
@@ -1584,9 +1585,10 @@ static void opt_videoDefaults( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkFPS", SHOW_FPS_DEFAULT );
    window_checkboxSet( wid, "chkEngineGlow", ENGINE_GLOWS_DEFAULT );
    window_checkboxSet( wid, "chkMinimize", MINIMIZE_DEFAULT );
+   window_checkboxSet( wid, "chkBigIcons", BIG_ICONS_DEFAULT );
 
    /* Faders. */
-   window_faderValue(  wid, "fadScale", SCALE_FACTOR_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadScale", SCALE_FACTOR_DEFAULT );
 }
 
 /**
@@ -1599,6 +1601,7 @@ static void opt_setScalefactor( unsigned int wid, char *str )
 {
    char buf[32];
    double scale = window_getFaderValue(wid, str);
+   scale = round(scale * 10) / 10;     // Reasonable precision. Clearer value.
    if (FABS(conf.scalefactor-scale) > 1e-4)
       opt_needRestart();
    conf.scalefactor = scale;
