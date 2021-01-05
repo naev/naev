@@ -484,14 +484,10 @@ void background_free (void)
    bkg_def_env = LUA_NOREF;
 
    /* Free the images. */
-   if (bkg_image_arr_ft != NULL) {
-      array_free( bkg_image_arr_ft );
-      bkg_image_arr_ft = NULL;
-   }
-   if (bkg_image_arr_bk != NULL) {
-      array_free( bkg_image_arr_bk );
-      bkg_image_arr_bk = NULL;
-   }
+   array_free( bkg_image_arr_ft );
+   bkg_image_arr_ft = NULL;
+   array_free( bkg_image_arr_bk );
+   bkg_image_arr_bk = NULL;
 
    /* Free the Lua. */
    if (bkg_cur_env != LUA_NOREF)
