@@ -420,6 +420,11 @@ function enter ()
       pilot.toggleSpawn(false)
       -- Have to follow scavengers
       -- boardhook = hook.pilot( wreck, "board", "board_wreck" )
+
+      -- Start is roughly (-15000,  8000)
+      -- waypoint1        (-10000, 13000)
+      -- waypoint2        (     0,  7000)
+      -- End is           (  9000, 12000)
    end
 end
 
@@ -495,7 +500,7 @@ function cutscene_hail ()
       pscavB:taskClear()
       pscavB:hyperspace( system.get(searchsys) )
       misn.markerMove( misn_marker, system.get(searchsys) )
-      misn_state=2
+      misn_state = 2
       hook.rm( cuttimer ) -- reset timer
       pilot.toggleSpawn(true)
    end
