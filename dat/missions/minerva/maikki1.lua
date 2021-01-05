@@ -80,6 +80,9 @@ misn_state = nil
 
 
 function create ()
+   if not misn.claim( {system.get(cutscenesys), system.get(stealthsys)} ) then
+      misn.finish( false )
+   end
    misn.setNPC( maikki_name, maikki_portrait )
    misn.setDesc( maikki_description )
    misn.setReward( misn_reward )
@@ -88,10 +91,6 @@ end
 
 
 function accept ()
-   if not misn.claim( {system.get(cutscenesys), system.get(stealthsys)} ) then
-      misn.finish( false )
-   end
-
    approach_maikki()
 
    -- If not accepted, misn_state will still be nil
@@ -151,7 +150,7 @@ She trails off.]]) )
       vn.label( "accept" )
       vn.func( function ()
          misn.accept()
-         misn_state=-1
+         misn_state = -1
       end )
       maikki(_([["I was told he would be here, but I've been here for ages and haven't gotten anywhere."
 She gives out a heavy sigh.]]))
