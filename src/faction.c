@@ -92,6 +92,7 @@ static Faction* faction_stack = NULL; /**< Faction stack. */
  * Prototypes
  */
 /* static */
+static void faction_freeOne( Faction *f );
 static void faction_sanitizePlayer( Faction* faction );
 static void faction_modPlayerLua( int f, double mod, const char *source, int secondary );
 static int faction_parse( Faction* temp, xmlNodePtr parent );
@@ -467,8 +468,6 @@ void faction_addEnemy( int f, int o )
          return;
    }
 
-   if (ff->enemies == NULL)
-      ff->enemies = array_create( int );
    tmp = &array_grow( &ff->enemies );
    *tmp = o;
 }
@@ -543,8 +542,6 @@ void faction_addAlly( int f, int o )
          return;
    }
 
-   if (ff->allies == NULL)
-      ff->allies = array_create( int );
    tmp = &array_grow( &ff->allies );
    *tmp = o;
 }
@@ -1539,6 +1536,27 @@ int factions_load (void)
 
 
 /**
+ * @brief Frees a single faction.
+ */
+static void faction_freeOne( Faction *f )
+{
+   free(f->name);
+   free(f->longname);
+   free(f->displayname);
+   gl_freeTexture(f->logo_small);
+   gl_freeTexture(f->logo_tiny);
+   array_free(f->allies);
+   array_free(f->enemies);
+   if (f->sched_env != LUA_NOREF)
+      nlua_freeEnv( f->sched_env );
+   if (f->env != LUA_NOREF)
+      nlua_freeEnv( f->env );
+   if (f->equip_env != LUA_NOREF)
+      nlua_freeEnv( f->equip_env );
+}
+
+
+/**
  * @brief Frees the factions.
  */
 void factions_free (void)
@@ -1546,21 +1564,8 @@ void factions_free (void)
    int i;
 
    /* free factions */
-   for (i=0; i<array_size(faction_stack); i++) {
-      free(faction_stack[i].name);
-      free(faction_stack[i].longname);
-      free(faction_stack[i].displayname);
-      gl_freeTexture(faction_stack[i].logo_small);
-      gl_freeTexture(faction_stack[i].logo_tiny);
-      array_free(faction_stack[i].allies);
-      array_free(faction_stack[i].enemies);
-      if (faction_stack[i].sched_env != LUA_NOREF)
-         nlua_freeEnv( faction_stack[i].sched_env );
-      if (faction_stack[i].env != LUA_NOREF)
-         nlua_freeEnv( faction_stack[i].env );
-      if (faction_stack[i].equip_env != LUA_NOREF)
-         nlua_freeEnv( faction_stack[i].equip_env );
-   }
+   for (i=0; i<array_size(faction_stack); i++)
+      faction_freeOne( &faction_stack[i] );
    array_free(faction_stack);
    faction_stack = NULL;
 }
@@ -1718,6 +1723,7 @@ void factions_clearDynamic (void)
    for (i=0; i<array_size(faction_stack); i++) {
       f = &faction_stack[i];
       if (faction_isFlag(f, FACTION_DYNAMIC)) {
+         faction_freeOne( f );
          array_erase( &faction_stack, f, f+1 );
          i--;
       }
@@ -1739,8 +1745,14 @@ int faction_dynAdd( int base, const char *name, const char *display )
 
    f = &array_grow( &faction_stack );
    memset( f, 0, sizeof(Faction) );
-   f->name = strdup( name );
+   f->name        = strdup( name );
    f->displayname = strdup( display );
+   f->allies      = array_create( int );
+   f->enemies     = array_create( int );
+   f->equip_env   = LUA_NOREF;
+   f->env         = LUA_NOREF;
+   f->sched_env   = LUA_NOREF;
+   f->flags       = FACTION_STATIC | FACTION_INVISIBLE | FACTION_DYNAMIC | FACTION_KNOWN;
    if (base>=0) {
       bf = &faction_stack[base];
 
@@ -1749,23 +1761,18 @@ int faction_dynAdd( int base, const char *name, const char *display )
       if (bf->logo_tiny!=NULL)
          f->logo_tiny = gl_dupTexture( bf->logo_tiny );
 
-      f->allies = array_create( int );
       for (i=0; i<array_size(bf->allies); i++) {
-         tmp = &array_grow( &bf->allies );
+         tmp = &array_grow( &f->allies );
          *tmp = i;
       }
-      f->enemies = array_create( int );
       for (i=0; i<array_size(bf->enemies); i++) {
-         tmp = &array_grow( &bf->enemies );
+         tmp = &array_grow( &f->enemies );
          *tmp = i;
       }
 
       f->player_def = bf->player_def;
       f->player = bf->player;
    }
-   faction_setFlag( f, FACTION_STATIC );
-   faction_setFlag( f, FACTION_INVISIBLE );
-   faction_setFlag( f, FACTION_DYNAMIC );
 
    return array_size(faction_stack)-1;
 }
