@@ -70,6 +70,7 @@ bash
 meson setup builddir .
 cd builddir
 meson compile
+meson compile naev-gmo  # To make non-English translations available
 ./naev.sh
 ```
 
