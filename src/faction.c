@@ -441,7 +441,7 @@ int* faction_getAllies( int f, int *n )
  *    @param f The faction to add an enemy to.
  *    @param o The other faction to make an enemy.
  */
-void faction_addEnemy( int f, int o)
+void faction_addEnemy( int f, int o )
 {
    Faction *ff;
    int i;
@@ -487,7 +487,7 @@ void faction_addEnemy( int f, int o)
  *    @param f The faction to remove an enemy from.
  *    @param o The other faction to remove as an enemy.
  */
-void faction_rmEnemy( int f, int o)
+void faction_rmEnemy( int f, int o )
 {
    Faction *ff;
    int i;
@@ -518,7 +518,7 @@ void faction_rmEnemy( int f, int o)
  *    @param f The faction to add an ally to.
  *    @param o The other faction to make an ally.
  */
-void faction_addAlly( int f, int o)
+void faction_addAlly( int f, int o )
 {
    Faction *ff;
    int i;
@@ -564,7 +564,7 @@ void faction_addAlly( int f, int o)
  *    @param f The faction to remove an ally from.
  *    @param o The other faction to remove as an ally.
  */
-void faction_rmAlly( int f, int o)
+void faction_rmAlly( int f, int o )
 {
    Faction *ff;
    int i;
@@ -1535,12 +1535,14 @@ int factions_load (void)
 
          r = 0;
          for (k=0; k < sf->nallies; k++)
-            if (sf->allies[k] == i)
+            if (sf->allies[k] == i) {
                r = 1;
+               break;
+            }
 
+         /* Add ally if necessary. */
          if (r == 0)
-            WARN(_("Faction: %s and %s aren't completely mutual allies!"),
-                  f->name, sf->name );
+            faction_addAlly( f->allies[j], i );
       }
 
       /* Now run over enemies. */
@@ -1549,12 +1551,13 @@ int factions_load (void)
 
          r = 0;
          for (k=0; k < sf->nenemies; k++)
-            if (sf->enemies[k] == i)
+            if (sf->enemies[k] == i) {
                r = 1;
+               break;
+            }
 
          if (r == 0)
-            WARN(_("Faction: %s and %s aren't completely mutual enemies!"),
-                  f->name, sf->name );
+            faction_addEnemy( f->enemies[j], i );
       }
    }
 #endif /* DEBUGGING */
