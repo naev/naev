@@ -229,6 +229,7 @@ if buildExec.disabled() == false
       input: 'utils/build/naev.sh',
       output: 'naev.sh',
       configuration: {
+         'build_root': meson.current_build_dir(),
          'source_root': meson.source_root(),
          'naev_bin' : naev_bin.full_path()
       }
