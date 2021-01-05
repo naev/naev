@@ -75,7 +75,6 @@ function make_macos {
    else
       "$SOURCEROOT/extras/macos/bundle.py" -s "$SOURCEROOT" -b "$BUILDPATH" -o "$BUILDOUTPUT"
    fi
-   echo "WIP, remember to install a suitable dat/ in Contents/Resources. Don't forget dat/gettext."
 }
 
 function make_steam {
