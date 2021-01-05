@@ -86,6 +86,8 @@ hintsys = {}
 for k,v in ipairs(hintpnt) do
    hintsys[k] = planet.get(v):system():nameRaw()
 end
+eccpnt = "Strangelove Lab"
+eccdiff = "strangelove"
 eccsys = "Westhaven"
 
 -- Mission states:
@@ -93,8 +95,9 @@ eccsys = "Westhaven"
 --    0: Going to the three hints
 --    1: Go to fourth hint
 --    2: Go to westhaven
---    3: Mining stuff
---    4: Going back to Minerva Station
+--    3: Found base
+--    4: Mining stuff
+--    5: Going back to Minerva Station
 misn_state = nil
 
 
@@ -189,12 +192,22 @@ end
 function land ()
    if planet.cur() == planet.get("Minerva Station") then
       npc_maikki = misn.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
+
    elseif planet.cur() == planet.get( hintpnt[1] ) then
       npc_hint1 = misn.npcAdd( "approach_hint1", hint1_name, hint1_portrait, hint1_description )
+
    elseif planet.cur() == planet.get( hintpnt[2] ) then
       npc_hint2 = misn.npcAdd( "approach_hint2", hint2_name, hint2_portrait, hint2_description )
+
    elseif planet.cur() == planet.get( hintpnt[3] ) then
       npc_hint3 = misn.npcAdd( "approach_hint3", hint3_name, hint3_portrait, hint3_description )
+
+   elseif misn_state >= 1 and  planet.cur() == planet.get( hintpnt[3] ) then
+      npc_hint4 = misn.npcAdd( "approach_hint4", hint4_name, hint4_portrait, hint4_description )
+
+   elseif diff.isApplied(eccdiff) and planet.cur() == planet.get(eccpnt) then
+      npc_ecc = misn.npcAdd( "approach_eccentric", ecc_name, ecc_portrait, ecc_description )
+
    end
 end
 
@@ -290,5 +303,9 @@ end
 
 
 function enter ()
+   if system.cur() == system.get(eccsys) then
+      -- TODO security protocol
+      diff.apply( eccdiff )
+   end
 end
 
