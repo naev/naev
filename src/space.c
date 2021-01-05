@@ -2003,7 +2003,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
    flags          = 0;
    planet->real   = ASSET_REAL;
    planet->hide   = 0.01;
-   planet->presenceAmount = -0.1;
    comms          = NULL;
    ncomms         = 0;
 
@@ -2185,7 +2184,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
             (planet->tech==NULL), "tech" );
       /*MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
             (planet->ncommodities==0),"commodity" );*/
-      MELEMENT( (flags&FLAG_FACTIONSET) && (planet->presenceAmount < 0.),
+      MELEMENT( (flags&FLAG_FACTIONSET) && (planet->presenceAmount == 0.),
             "presence" );
    }
 #undef MELEMENT
