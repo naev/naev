@@ -158,7 +158,7 @@ function enter()
         faction.get("FLF"):setPlayerStanding( -100 )
         
         hook.timer(2000, "commFLF")
-        hook.timer(25000, "wakeUpGregarYouLazyBugger")
+        hook.timer(15000, "wakeUpGregarYouLazyBugger")
     end
 end
 
