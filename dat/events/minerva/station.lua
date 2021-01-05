@@ -120,7 +120,7 @@ end
 function random_event()
    -- Altercation 1
    local alter1 = "Minerva Station Altercation 1"
-   if not has_event(alter1) and minerva.tokens_get_gained() > 10 and rnd.rnd() < 0.25 then
+   if not has_event(alter1) and minerva.tokens_get_gained() > 10 and rnd.rnd() < 0.5 then
       hook.safe( "start_alter1" )
       return
    end
