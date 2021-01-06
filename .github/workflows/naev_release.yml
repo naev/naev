@@ -83,7 +83,6 @@ jobs:
           tar -xf source.tar.xz -C source --strip 1
 
       - name: Compile AppImage
-        id: appimageCompile
         run: |
           ./source/utils/buildAppImage.sh -m -s "source" -b "build" -o "${{ env.DESTDIR }}"
         env:
@@ -144,6 +143,70 @@ jobs:
         with:
           name: naev-win64
           path: ${{ github.workspace }}/dist/out/*
+          if-no-files-found: error
+
+  "Darwin_Naev_Release":
+    needs: "Package_Source"
+    runs-on: macos-10.15
+
+    steps:
+      - name: Install Homebrew Packages
+        run: |
+          brew update
+          # Library installation is a work in progress. This way results in a build that requires >=10.15.
+          # TODO: install compatible ones and set MACOSX_DEPLOYMENT_TARGET.
+          brew install \
+            openal-soft \
+            intltool \
+            libvorbis \
+            luajit \
+            sdl2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+
+      - name: Install Meson and Ninja via pip
+        run: |
+          pip install meson ninja
+
+      - name: Get Source
+        uses: actions/download-artifact@v2
+        with:
+          name: naev-dist
+
+      - name: Extract Source
+        run: |
+          mkdir source
+          tar -xf source.tar.xz -C source --strip 1
+
+      - name: Meson Setup
+        run: |
+          meson setup build source \
+              --native-file='source/utils/build/macos.ini' \
+              --buildtype=release \
+              --pkg-config-path=/usr/local/opt/openal-soft/lib/pkgconfig \
+              -Db_lto=true \
+              -Dauto_features=enabled \
+              -Ddocs_c=disabled \
+              -Ddocs_lua=disabled
+
+      - name: Meson Compile
+        run: |
+          meson compile -C build
+          meson compile -C build naev-gmo
+
+      - name: Build macOS Installer
+        run: |
+          ./source/extras/macos/bundle.py -s "source" -b "build" -o "$(pwd)/dist"
+          pushd dist/out
+          zip -r naev-macos.zip Naev.app/*
+          popd
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-macos
+          path: ${{ github.workspace }}/dist/out/*.zip
           if-no-files-found: error
 
   "Steam_Naev_Release":
@@ -221,7 +284,6 @@ jobs:
           tar -xf naev-dist/source.tar.xz -C source --strip 1
 
       - name: Meson Setup
-        id: setup
         run: |
           meson setup build source \
               --native-file='source/utils/build/linux_steamruntime.ini' \
@@ -277,6 +339,7 @@ jobs:
         Package_Source,
         Linux_Naev_Release,
         Windows_Naev_Release,
+        Darwin_Naev_Release,
         Steam_Naev_Release,
       ]
     if: ${{ github.repository == 'naev/naev' }}
@@ -284,7 +347,7 @@ jobs:
     steps:
       - name: Create Release Staging and Output Areas
         run: |
-          mkdir -p {temp,dist/{staging,out/{lin64,win64,soundtrack}}}
+          mkdir -p {temp,dist/{staging,out/{lin64,macos,win64,soundtrack}}}
 
       - name: Update APT Cache
         if: ${{ matrix.releasetype == 'steam' }}
@@ -320,8 +383,9 @@ jobs:
           SUFFIX="$VERSION"
 
           mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/naev-$SUFFIX-linux-x86-64.AppImage
+          mv dist/staging/naev-macos/*.zip dist/out/naev-$SUFFIX-macos.zip
           mv dist/staging/naev-win64/naev*.exe dist/out/naev-$SUFFIX-win64.exe
-          mv dist/staging/naev-dist/source.tar.gz dist/out/naev-$SUFFIX-source.tar.xz
+          mv dist/staging/naev-dist/source.tar.xz dist/out/naev-$SUFFIX-source.tar.xz
           mv dist/staging/naev-soundtrack/naev-*-soundtrack.zip dist/out/naev-$SUFFIX-soundtrack.zip
 
           chmod +x dist/out/naev-$SUFFIX-linux-x86-64.AppImage
@@ -346,10 +410,13 @@ jobs:
           mv dist/staging/naev-steam-soundtrack/* dist/out/soundtrack
           chmod +x dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
 
+          mv dist/staging/naev-macos/*.zip dist/out/macos/naev-$SUFFIX-macos.zip
+
           tar -Jxf "dist/staging/naev-win64/steam-win64.tar.xz" -C "dist/out/win64"
           tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64"
 
           ./butler push --userversion="$SUFFIX" dist/out/lin64 naev/naev:linux-x86-64
+          ./butler push --userversion="$SUFFIX" dist/out/macos naev/naev:macos-x86-64
           ./butler push --userversion="$SUFFIX" dist/out/win64 naev/naev:windows-x86-64
           ./butler push --userversion="$SUFFIX" dist/out/soundtrack naev/naev:soundtrack
         env:

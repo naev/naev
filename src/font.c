@@ -1640,8 +1640,7 @@ void gl_freeFont( glFont* font )
    array_free( stsh->tex );
    stsh->tex = NULL;
 
-   if (stsh->glyphs != NULL)
-      array_free( stsh->glyphs );
+   array_free( stsh->glyphs );
    stsh->glyphs = NULL;
    gl_vboDestroy(stsh->vbo_tex);
    stsh->vbo_tex = NULL;

@@ -212,6 +212,8 @@ jobs:
       - name: Install Homebrew Packages
         run: |
           brew update
+          # Library installation is a work in progress. This way results in a build that requires >=10.15.
+          # TODO: install compatible ones and set MACOSX_DEPLOYMENT_TARGET.
           brew install \
             openal-soft \
             intltool \
