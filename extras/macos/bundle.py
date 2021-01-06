@@ -13,7 +13,7 @@ import shutil
 import subprocess
 
 
-LOCAL_LIB_ROOTS = ('/opt/local', '/usr/local',)
+LOCAL_LIB_ROOTS = ('/opt/local', '/usr/lib/osxcross', '/usr/local')
 
 
 def main():
