@@ -123,6 +123,9 @@ function approach_maikki ()
    vn.clear()
    vn.scene()
    local maikki = vn.newCharacter( minerva.vn_maikki() )
+   if misn_state==nil then
+      maikki:rename( maikki_name )
+   end
    vn.fadein()
 
    if misn_state==nil then
@@ -514,10 +517,11 @@ function cutscene_hail ()
 
    -- Was player an asshole?
    if asshole then
-      pscavB:broadcast( _("Asshole!") )
+      pscavB:broadcast(_("Asshole!"))
       hook.rm( cuttimer ) -- reset timer
       cuttimer = hook.timer( 3000, "cutscene_timer" )
    else
+      pscavB:broadcast(_("Thanks!"))
       pscavB:taskClear()
       pscavB:hyperspace( system.get(searchsys) )
       misn.markerMove( misn_marker, system.get(searchsys) )
