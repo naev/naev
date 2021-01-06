@@ -252,6 +252,12 @@ if buildExec.disabled() == false
       install_dir: ndata_path,
    )
 
+   install_subdir(
+      'artwork',
+      install_dir: ndata_path / 'dat',
+      strip_directory: true,
+   )
+
    if host_machine.system() not in ['windows', 'cygwin', 'emscripten', 'android', 'darwin']
          metainfo_file = 'org.naev.naev.metainfo.xml'
 
