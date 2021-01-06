@@ -4,7 +4,7 @@
 # This script should be run after compiling Naev.
 
 # This script assumes a dependency must be bundled (with priority over any installations the end user might have) if either
-# | it's in /usr/local (Homebrew?)
+# | it's in a known Homebrew or osxcross path (LOCAL_LIB_ROOTS below)
 # | it's relative to the rpath (Meson subproject / embedded lib)
 
 import argparse
@@ -13,7 +13,7 @@ import shutil
 import subprocess
 
 
-LOCAL_LIB_ROOTS = ('/usr/local',)
+LOCAL_LIB_ROOTS = ('/opt/local', '/usr/local',)
 
 
 def main():
