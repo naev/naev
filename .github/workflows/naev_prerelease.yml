@@ -210,7 +210,7 @@ jobs:
         with:
           name: ${{ matrix.buildoutput }}
           path: |
-            ${{ github.workspace }}/dist/out/*
+            ${{ github.workspace }}/dist/out/*.zip
           if-no-files-found: error
 
   "Build_Naev_Steam_Release":
