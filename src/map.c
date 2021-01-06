@@ -2044,7 +2044,7 @@ void map_select( StarSystem *sys, char shifted )
       }
    }
 
-   if (!wid == 0) {
+   if (wid != 0) {
       if (autonav)
          window_enableButton( wid, "btnAutonav" );
       else
