@@ -89,7 +89,7 @@ def copy_with_deps(bin_src, app_path, dest='Contents/Frameworks', exe_rpaths=Non
     if exe_rpaths is None:
         exe_rpaths = list(rpaths)
 
-    change_cmd = ['install_name_tool']
+    change_cmd = [host_program('install_name_tool')]
     if bin_dst.endswith('/naev'):
         change_cmd.extend(['-add_rpath', '@executable_path/../Frameworks'])
     if bin_dst.endswith('.dylib'):
@@ -113,7 +113,7 @@ def copy_with_deps(bin_src, app_path, dest='Contents/Frameworks', exe_rpaths=Non
 def otool_results(bin_src):
     operands = {'LC_LOAD_DYLIB': [], 'LC_RPATH': []}
     operand_list = unwanted = []
-    for line in subprocess.check_output(['otool', '-l', bin_src]).decode().splitlines():
+    for line in subprocess.check_output([host_program('otool'), '-l', bin_src]).decode().splitlines():
         line = line.lstrip()
         if line.startswith('cmd '):
             operand_list = operands.get(line[4:], unwanted)
@@ -138,6 +138,13 @@ def search_and_pop_rpath(dylib, rpaths, loader_path):
                 dylib_path = dylib_path or trial_path  # We should bundle the first matching lib.
                 rpaths.remove(rpath)
     return dylib_path
+
+
+def host_program(name):
+    try:
+        return os.environ['HOST'] + '-' + name
+    except KeyError:
+        return name
 
 
 if __name__ == '__main__':
