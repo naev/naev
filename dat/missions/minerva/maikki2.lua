@@ -54,7 +54,7 @@ hint2_portrait = "zalek1"
 hint2_image = "zalek1.png"
 hint2_colour = nil
 
-hint3_name = _("Prof. Foo")
+hint3_name = _("Dr. Foo")
 hint3_description = _("Foo")
 hint3_portrait = "zalek1"
 hint3_image = "zalek1.png"
@@ -66,7 +66,7 @@ hint4_portrait = "zalek1"
 hint4_image = "zalek1.png"
 hint4_colour = nil
 
-ecc_name = _("Dr. Strangelove")
+ecc_name = _("Prof. Strangelove")
 ecc_description = nil -- unneeded
 ecc_portrait = "zalek1"
 ecc_image = "zalek1.png"
