@@ -60,7 +60,7 @@ cp -v "$TEMPPATH"/naev-steamruntime/naev.x64 "$STEAMPATH"/content/lin64
 chmod +x "$STEAMPATH"/content/lin64/naev.x64
           
 # Move macOS bundle to deployment location
-unzip "$TEMPPATH/naev-macOS/naev-macos.zip" -d "$STEAMPATH/content/macos/"
+unzip "$TEMPPATH/naev-macos/naev-macos.zip" -d "$STEAMPATH/content/macos/"
 
 # Unzip Windows binary and DLLs and move to deployment location
 tar -Jxf "$TEMPPATH/naev-win64/steam-win64.tar.xz" -C "$STEAMPATH/content/win64"
