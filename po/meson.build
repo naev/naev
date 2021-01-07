@@ -1,9 +1,3 @@
-# Naev Deps
-if not cc.has_function('ngettext')
-    libintl = cc.find_library('intl', required: true)
-    naev_deps += libintl
-endif
-
 # Building translations
 i18n = import('i18n')
 
