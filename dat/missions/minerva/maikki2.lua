@@ -42,25 +42,25 @@ maikki_portrait = minerva.maikki.portrait
 maikki_image = minerva.maikki.image
 maikki_colour = minerva.maikki.colour
 
-hint1_name = _("Prof. Foo")
+hint1_name = _("Prof. Sato")
 hint1_description = _("Foo")
 hint1_portrait = "zalek1"
 hint1_image = "zalek1.png"
 hint1_colour = nil
 
-hint2_name = _("Prof. Foo")
+hint2_name = _("Prof. Stova")
 hint2_description = _("Foo")
 hint2_portrait = "zalek1"
 hint2_image = "zalek1.png"
 hint2_colour = nil
 
-hint3_name = _("Dr. Foo")
+hint3_name = _("Dr. Cayne")
 hint3_description = _("Foo")
 hint3_portrait = "zalek1"
 hint3_image = "zalek1.png"
 hint3_colour = nil
 
-hint4_name = _("Prof. Foo")
+hint4_name = _("Prof. Hsu")
 hint4_description = _("Foo")
 hint4_portrait = "zalek1"
 hint4_image = "zalek1.png"
@@ -166,8 +166,10 @@ function approach_maikki ()
    local maikki = vn.newCharacter( minerva.vn_maikki() )
    vn.fadein()
 
+   vn.na(_("You approach Maikki who seems to have a fierce determination in her look."))
    if misn_state==nil then
-      maikki(_([["blah"]]))
+      maikki(_([[She looks encouraged by your findings in the nebula.
+"From what you told me, I think I have a good idea for our next lead. Would you be interested in helping again?"]]))
       vn.menu( {
          { _("Help Maikki again"), "accept" },
          { _("Decline to help"), "decline" },
@@ -181,9 +183,66 @@ function approach_maikki ()
          misn_accept()
          misn_state = 0
       end )
-      -- give an option to improve her mood
+      maikki(_([["I think we should be able to find out what happened to my father's ship in the nebula. It seems like someone is very interested on stuff that is being found in the nebula and is behind the scavengers you met. Whoever is behind them could also be related to whatever happened to the ship in the first place."]]))
+      maikki(_([["I ran a check on Za'lek researchers that would likely be interested in stuff taken from the nebula and there seems to be less than I imagined. I was able to get a list of three researchers. I'll give you the details on them and you should pay them a visit to see if they know anything."]]))
+      maikki(_([[She leans in close to you and looks into your eyes with fierce determination.
+"You will do whatever it takes to find him right?"]]))
+      vn.menu( {
+         { _([["Yes!"]]), "doall" },
+         { _([["Maybe..."]]), "dosome" },
+         { _([["No"]]), "donone" },
+      } )
+      vn.label("doall")
+      vn.func( function ()
+         minerva.maikki_mood_mod( 1 )
+      end )
+      maikki(_([["You know the Za'lek can be very stubborn at times and may need some convincing."
+She winks at you.]]))
+      vn.jump("introcont")
+
+      vn.label("dosome")
+      maikki(_([["i thought that after your experience in the nebula you would understand how dangerous this can get."]]))
+      vn.jump("introcont")
+
+      vn.label("donone")
+      vn.func( function ()
+         minerva.maikki_mood_mod( -1 )
+      end )
+      maikki(_([[She glares at you.
+"I hope you're joking. This is very important to me and I hope you don't lose this lead..."]]))
+      vn.jump("introcont")
+
+      vn.label("introcont")
+      maikki(string.format(_([["The three Za'lek researchers you should seek out are:
+%s in the %s system,
+%s in the %s system,
+and %s in the %s system."]]),
+         hint1_name, hintsys[1],
+         hint2_name, hintsys[2],
+         hint3_name, hintsys[3]
+      ))
+      maikki(_([["Apparently the three researchers used to work together in some project about the nebula origins, but never really made anything public. I totally think that they must know something about this, the disappearance of my father was big news!"]]))
+      maikki(_([[She looks at you expectantly.
+"I will stay here and search for him more. Please pay those creepy Za'lek researchers a visit and see if you can find out what happened to my father!"]]))
    end
 
+   local opts = {
+      {_("Ask about the researchers"), "researchers"},
+      {_("Leave"), "leave"},
+   }
+   vn.label( "menu" )
+   vn.menu( opts )
+
+   vn.label( "researchers" )
+   maikki(_([[""]]))
+   vn.jump( "menu_msg" )
+
+   vn.label( "menu_msg" )
+   maikki(_([["Is there anything you would like to know about?"]]))
+   vn.jump( "menu" )
+
+   vn.label( "leave" )
+   vn.na(_("You take your leave to continue the search for her father."))
    vn.fadeout()
    vn.run()
 end

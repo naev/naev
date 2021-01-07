@@ -226,10 +226,18 @@ She starts eating the parfait, which seems to be larger than her head.]]))
    vn.na(_("You show her the picture you found in Zerantix of her and her parents."))
    maikki(_([[As she stares deeply at the picture, her eyes tear up.]]))
    maikki(_([["I'm sorry, I shouldn't be crying. I hardly even know the man. It's just seeing us together just brings back some memories which I had thought I had forgotten."]]))
+   maikki(_([["He looks so goofy in this picture, and my mother looks so happy... This is what should have been my childhood..."
+She s]]))
    vn.na(_("You give a few moments to recover before explaining her what you saw in the wreck and your encounter with the scavengers."))
-   maikki(_([["What could the Za'lek have to do with my father? If you didn't find a body I'm sure he survived!"
-She looks clearly excited.]]))
-   maikki(_([["I think I have an idea for our next steps. Meet me up here in a bit. I have to get some information first."]]))
+   maikki(_([[She dries her eyes with a handkerchief trying unsuccessfully not to smear her makeup.
+"From what you tell me, it seems like it wasn't an accident..."
+She looks up expectantly.]]))
+   maikki(_([["If you didn't find a body I'm sure he survived! He shouldn't be a guy that dies that easily!"
+She looks clearly excited at the possibility.]]))
+   maikki(_([[She furrows her brows.
+"The scavengers were selling to the Za'lek right? What could the Za'lek have to do with my father so far away? I always thought those creeps couldn't be up to anything good."]]))
+   maikki(_([[Her face glows.
+"I think I have an idea for our next steps. Meet me up here in a bit. I have to get some information first."]]))
    vn.func( function ()
       -- no reward, yet...
       -- TODO play victory sound
