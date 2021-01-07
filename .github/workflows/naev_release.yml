@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
+      image: "ghcr.io/projectsynchro/naev-ubuntu1604:latest"
 
     steps:
       - name: Checkout Naev Repository
@@ -69,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
+      image: "ghcr.io/projectsynchro/naev-ubuntu1604:latest"
 
     steps:
       - name: Get Source
@@ -102,7 +102,7 @@ jobs:
       WINEPREFIX: "/tmp/.wine"
 
     container:
-      image: projectsynchro/synchros_sexy_docker_images:naev-windows
+      image: "ghcr.io/projectsynchro/naev-windows:latest"
 
     steps:
       - name: Container-specific setup
@@ -214,7 +214,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: projectsynchro/synchros_sexy_docker_images:naev-steamruntime
+      image: "ghcr.io/projectsynchro/naev-steamruntime:latest"
 
     steps:
       - name: Get Source
@@ -270,7 +270,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
+      image: "ghcr.io/projectsynchro/naev-ubuntu1604:latest"
 
     steps:
       - name: Get Source

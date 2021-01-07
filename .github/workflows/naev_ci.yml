@@ -4,13 +4,12 @@ name: CI
 
 env:
   DESTDIR: "${{ github.workspace }}/dist"
-  WINEPREFIX: "/tmp/.wine"
 
 jobs:
   "Package_Source":
     runs-on: ubuntu-latest
     container:
-      image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
+      image: "ghcr.io/projectsynchro/naev-ubuntu1604:latest"
 
     steps:
       - name: Checkout Naev Repository
@@ -37,15 +36,15 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - tag: naev-ubuntu2004
+          - image: naev-ubuntu2004
             config: linux.ini
 
-          - tag: naev-steamruntime
+          - image: naev-steamruntime
             config: linux_steamruntime.ini
 
     runs-on: ubuntu-latest
     container:
-      image: "projectsynchro/synchros_sexy_docker_images:${{ matrix.tag }}"
+      image: "ghcr.io/projectsynchro/${{ matrix.image }}:latest"
 
     steps:
       - name: Get Source
@@ -75,7 +74,7 @@ jobs:
         uses: actions/upload-artifact@v1
         if: ${{ success() || steps.setup.outcome == 'failure' }}
         with:
-          name: ${{ matrix.tag }}-${{ github.sha }}-setup-log
+          name: ${{ matrix.image }}-${{ github.sha }}-setup-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Meson Compile
@@ -88,14 +87,14 @@ jobs:
         uses: actions/upload-artifact@v1
         if: ${{ success() || steps.compile.outcome == 'failure' }}
         with:
-          name: ${{ matrix.tag }}-${{ github.sha }}-compile-log
+          name: ${{ matrix.image }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Upload Build Artifacts
-        if: ${{ matrix.tag != 'naev-steamruntime' }}
+        if: ${{ matrix.image != 'naev-steamruntime' }}
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.tag }}-${{ github.sha }}-buildArtifacts
+          name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
           path: |
             ${{ github.workspace }}/build
 
@@ -106,7 +105,7 @@ jobs:
       - name: Upload Install Log
         uses: actions/upload-artifact@v1
         with:
-          name: ${{ matrix.tag }}-${{ github.sha }}-install-log
+          name: ${{ matrix.image }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
   "Windows_Compile_Naev":
@@ -116,18 +115,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - tag: naev-windows
+          - image: naev-windows
             config: windows_cross_mxe.ini
 
     runs-on: ubuntu-latest
     container:
-      image: "projectsynchro/synchros_sexy_docker_images:${{ matrix.tag }}"
+      image: "ghcr.io/projectsynchro/${{ matrix.image }}:latest"
 
     steps:
-      - name: Container-specific setup
-        run: |
-          echo /usr/lib/mxe/usr/bin >> $GITHUB_PATH
-
       - name: Get Source
         uses: actions/download-artifact@v1
         with:
@@ -155,7 +150,7 @@ jobs:
         uses: actions/upload-artifact@v2
         if: ${{ success() || steps.setup.outcome == 'failure' }}
         with:
-          name: ${{ matrix.tag }}-${{ github.sha }}-setup-log
+          name: ${{ matrix.image }}-${{ github.sha }}-setup-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Meson Compile
@@ -168,13 +163,13 @@ jobs:
         uses: actions/upload-artifact@v2
         if: ${{ success() || steps.compile.outcome == 'failure' }}
         with:
-          name: ${{ matrix.tag }}-${{ github.sha }}-compile-log
+          name: ${{ matrix.image }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.tag }}-${{ github.sha }}-buildArtifacts
+          name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
           path: |
             ${{ github.workspace }}/build
           if-no-files-found: error
@@ -186,7 +181,7 @@ jobs:
       - name: Upload Install Log
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.tag }}-${{ github.sha }}-install-log
+          name: ${{ matrix.image }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
   "Darwin_Compile_Naev":
@@ -254,7 +249,7 @@ jobs:
         uses: actions/upload-artifact@v1
         if: ${{ success() || steps.setup.outcome == 'failure' }}
         with:
-          name: ${{ matrix.tag }}-${{ github.sha }}-setup-log
+          name: ${{ matrix.os }}-${{ github.sha }}-setup-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Meson Compile
@@ -267,13 +262,13 @@ jobs:
         uses: actions/upload-artifact@v2
         if: ${{ success() || steps.compile.outcome == 'failure' }}
         with:
-          name: ${{ matrix.tag }}-${{ github.sha }}-compile-log
+          name: ${{ matrix.os }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.tag }}-${{ github.sha }}-buildArtifacts
+          name: ${{ matrix.os }}-${{ github.sha }}-buildArtifacts
           path: |
             ${{ github.workspace }}/build
           if-no-files-found: error
@@ -285,14 +280,14 @@ jobs:
       - name: Upload Install Log
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.tag }}-${{ github.sha }}-install-log
+          name: ${{ matrix.os }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
   "AppImage_Compile_Naev":
     needs: [Package_Source, Linux_Compile_Naev]
     runs-on: ubuntu-latest
     container:
-      image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
+      image: "ghcr.io/projectsynchro/naev-ubuntu1604:latest"
 
     steps:
       - name: Get Source
@@ -332,7 +327,7 @@ jobs:
   "Lua_Documentation":
     runs-on: ubuntu-latest
     container:
-      image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu2004
+      image: "ghcr.io/projectsynchro/naev-ubuntu2004:latest"
     needs:
       [
         Package_Source,
