@@ -3,9 +3,9 @@
 
 project('luajit', 'c', version : '2.0.5', default_options : ['c_winlibs='])
 
-#if host_machine.system() == 'darwin'
-#    error('Abandon all hope, ye who enter here. Building LuaJIT this way still leads to mysterious crashes related to memory management. The Homebrew version works just fine. Maybe 2.1 will be less fussy.')
-#endif
+if host_machine.system() == 'darwin'
+    error('Abandon all hope, ye who enter here. Building LuaJIT this way still leads to mysterious crashes related to memory management. The Homebrew version works just fine. Maybe 2.1 will be less fussy.')
+endif
 
 cc = meson.get_compiler('c')
 libm = cc.find_library('m', required : false)
