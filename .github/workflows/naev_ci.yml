@@ -191,38 +191,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: macos-10.15
-            config: macos.ini
-            pkg-config-path: /usr/local/opt/openal-soft/lib/pkgconfig
+          - image: naev-macos
+            config: macos_cross_osxcross.ini
 
-          # Alas, these instances don't grow on trees. As of 2021-01-03, we commonly see the CI die with a useless "This check failed" message.
-          # Hopefully we can reenable this check sometime soon.
-          # - os: macos-11.0
-          #   config: macos.ini
-          #   pkg-config-path: /usr/local/opt/openal-soft/lib/pkgconfig
-
-    runs-on: "${{ matrix.os }}"
+    runs-on: ubuntu-latest
+    container:
+      image: "ghcr.io/projectsynchro/${{ matrix.image }}:latest"
 
     steps:
-      - name: Install Homebrew Packages
-        run: |
-          brew update
-          # Library installation is a work in progress. This way results in a build that requires >=10.15.
-          # TODO: install compatible ones and set MACOSX_DEPLOYMENT_TARGET.
-          brew install \
-            openal-soft \
-            intltool \
-            libvorbis \
-            luajit \
-            sdl2
-
-      - name: Setup Python
-        uses: actions/setup-python@v2
-
-      - name: Install Meson and Ninja via pip
-        run: |
-          pip install meson ninja
-
       - name: Get Source
         uses: actions/download-artifact@v1
         with:
