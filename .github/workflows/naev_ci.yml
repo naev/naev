@@ -213,7 +213,7 @@ jobs:
         id: setup
         run: |
           meson setup build source \
-              --native-file='source/utils/build/${{ matrix.config }}' \
+              --cross-file='source/utils/build/${{ matrix.config }}' \
               --buildtype=debug \
               --pkg-config-path=${{ matrix.pkg-config-path }} \
               -Db_lto=true \
