@@ -1,10 +1,6 @@
 minilua = executable('minilua', 'minilua.c', dependencies: libm, install: false, native: true)
 
-lj_arch_run = cc.run(lj_arch_test_source)
-if not lj_arch_run.compiled() or lj_arch_run.returncode() != 0
-    error('error running luajit arch testing program: ' + lj_arch_run.stderr())
-endif
-lj_arch_list = lj_arch_run.stdout().split(':')
+lj_arch_list = ['x64', 'x64', '-DLUAJIT_TARGET=LUAJIT_ARCH_x64,-DLUAJIT_OS=LUAJIT_OS_OSX,-DLJ_ARCH_HASFPU=1,-DLJ_ABI_SOFTFP=0', '-D,ENDIAN_LE,-D,P64,-D,JIT,-D,FFI,-D,FPU,-D,HFABI,-D,VER=']
 
 # Print output of lj_arch_test for information purpose.
 foreach line : lj_arch_list
