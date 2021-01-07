@@ -32,5 +32,6 @@ buildvm = executable('buildvm',
     c_args: buildvm_defines,
     dependencies: libm,
     install: false,
-    native: true
+    native: true,
+    override_options: ['b_sanitize=none'], # :(
 )

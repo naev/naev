@@ -28,7 +28,6 @@ endif
 # Initializeation
 config_data = configuration_data()
 naev_deps = []
-naev_link_args = []
 
 ndata_path = get_option('ndata_path')
 if ndata_path == ''
@@ -112,13 +111,7 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_LUAJIT', lua.found())
    summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
 
-   if lua.found()
-      if host_machine.system() == 'darwin'
-         # The main executable must be linked with these flags, or else LuaJIT will crash instantly.
-         # Ref: https://luajit.org/install.html
-         naev_link_args += ['-pagezero_size', '10000', '-image_base', '100000000']
-      endif
-   else
+   if not lua.found()
       lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
    endif
 
@@ -221,7 +214,6 @@ if buildExec.disabled() == false
       naev_source,
       include_directories: include_dirs,
       dependencies: naev_deps,
-      link_args: naev_link_args,
       export_dynamic: bfd.found(),
       install: true)
 
@@ -236,6 +228,7 @@ if buildExec.disabled() == false
    )
 
    install_data(
+      'gpl.txt',
       'LICENSE',
       'README',
       install_dir: get_option('datadir') / 'doc/naev'
