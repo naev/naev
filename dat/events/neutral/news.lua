@@ -541,7 +541,7 @@ function add_article( my_faction )
       return
    end
 
-   local exp = time.get() + time.create( 0, 50, 5000 * rnd.sigma() )
+   local exp = time.get() + time.create( 0, 10, 5000 * rnd.sigma() )
    local a = news.add( my_faction, title, desc, exp )
    a:bind( tag )
    var.push( "news_last_article", time.get():tonumber() )
@@ -552,7 +552,7 @@ function add_econ_article ()
    local last_article = var.peek( "news_last_econ_article" )
    local t = nil
    if last_article ~= nil then t = time.fromnumber( last_article ) end
-   if (t == nil or time.get() - t > time.create( 0, 1, 0 ))
+   if (t == nil or time.get() - t > time.create( 0, 2, 0 ))
          and rnd.rnd() < 0.75 then
       local planets = {}
       for i, s in ipairs( getsysatdistance( system.cur(), 2, 4 ) ) do
@@ -568,7 +568,7 @@ function add_econ_article ()
          local p = planets[ rnd.rnd( 1, #planets ) ]
          local pd = time.get() - time.create(
                0, p:system():jumpDist() + rnd.rnd( 0, 1 ), 9000 * rnd.sigma() )
-         local exp = time.get() + time.create( 0, 20, 5000 * rnd.sigma() )
+         local exp = time.get() + time.create( 0, 5, 5000 * rnd.sigma() )
          local commchoices = p:commoditiesSold()
          local commod = commchoices[ rnd.rnd( 1, #commchoices ) ]
          local price = commod:priceAtTime( p, pd )
