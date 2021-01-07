@@ -35,12 +35,25 @@ const char *x_arch_option = NULL;
 lj_arch = "x64";
 #elif LJ_TARGET_X86
 lj_arch = "x86";
+#elif LJ_TARGET_ARM64
+lj_arch = "arm64";
+#ifdef __AARCH64EB__
+x_arch_option = "-D__AARCH64EB__=1";
+#endif
 #elif LJ_TARGET_ARM
 lj_arch = "arm";
 #elif LJ_TARGET_PPC
 lj_arch = "ppc";
-#elif LJ_TARGET_PPCSPE
-lj_arch = "ppcspe";
+#if LJ_LE
+x_arch_option = "-DLJ_ARCH_ENDIAN=LUAJIT_LE";
+#else
+x_arch_option = "-DLJ_ARCH_ENDIAN=LUAJIT_BE";
+#endif
+#elif LJ_TARGET_MIPS64
+lj_arch = "mips64";
+#ifdef MIPSEL
+x_arch_option = "-D__MIPSEL__=1";
+#endif
 #elif LJ_TARGET_MIPS
 lj_arch = "mips";
 #ifdef MIPSEL
@@ -80,15 +93,16 @@ char luajit_os_def[128];
 sprintf(luajit_os_def, "-DLUAJIT_OS=LUAJIT_OS_%s", lj_os);
 arch_defs[arch_defs_n++] = luajit_os_def;
 
-#ifdef LJ_TARGET_X64
-dasm_arch = "x86";
-#else
 dasm_arch = lj_arch;
-#endif
 
 const char *dasm[32];
 int dasm_n = 0;
 
+#if LJ_LE
+add_def(dasm, &dasm_n, "ENDIAN_LE");
+#else
+add_def(dasm, &dasm_n, "ENDIAN_BE");
+#endif
 #if LJ_ARCH_BITS == 64
 add_def(dasm, &dasm_n, "P64");
 #endif
@@ -130,8 +144,8 @@ add_def(dasm, &dasm_n, arm_arch_version);
 add_def(dasm, &dasm_n, "WIN");
 #endif
 
-#if (!defined LJ_TARGET_X64 && defined LJ_TARGET_X86) && __SSE2__ == 1
-add_def(dasm, &dasm_n, "SSE");
+#ifdef LJ_TARGET_MIPSR6
+add_def(dasm, &dasm_n, "MIPSR6");
 #endif
 
 printf("%s%s%s%s", lj_arch, MAIN_SEPARATOR, dasm_arch, MAIN_SEPARATOR);
