@@ -196,7 +196,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: naev-macos
-          path: ${{ github.workspace }}/dist/out/*
+          path: ${{ github.workspace }}/dist/out/*.zip
           if-no-files-found: error
 
   "Steam_Naev_Release":

@@ -206,7 +206,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: naev-macos
-          path: ${{ github.workspace }}/dist/out/*
+          path: ${{ github.workspace }}/dist/out/*.zip
           if-no-files-found: error
 
   "Steam_Naev_Release":
@@ -385,7 +385,7 @@ jobs:
           mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/naev-$SUFFIX-linux-x86-64.AppImage
           mv dist/staging/naev-macos/*.zip dist/out/naev-$SUFFIX-macos.zip
           mv dist/staging/naev-win64/naev*.exe dist/out/naev-$SUFFIX-win64.exe
-          mv dist/staging/naev-dist/source.tar.gz dist/out/naev-$SUFFIX-source.tar.xz
+          mv dist/staging/naev-dist/source.tar.xz dist/out/naev-$SUFFIX-source.tar.xz
           mv dist/staging/naev-soundtrack/naev-*-soundtrack.zip dist/out/naev-$SUFFIX-soundtrack.zip
 
           chmod +x dist/out/naev-$SUFFIX-linux-x86-64.AppImage
