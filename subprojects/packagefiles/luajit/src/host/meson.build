@@ -1,6 +1,6 @@
 minilua = executable('minilua', 'minilua.c', dependencies: libm, install: false, native: true)
 
-if not host_machine.system() == 'darwin'
+if host_machine.system() != 'darwin'
     lj_arch_run = cc.run(lj_arch_test_source)
     if not lj_arch_run.compiled() or lj_arch_run.returncode() != 0
         error('error running luajit arch testing program: ' + lj_arch_run.stderr())
