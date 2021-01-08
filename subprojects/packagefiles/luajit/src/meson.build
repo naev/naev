@@ -1,5 +1,3 @@
-lj_arch_test_source = files('lj_arch_test.c')
-
 subdir('host')
 
 ljlib_sources = ['lib_base.c', 'lib_math.c', 'lib_bit.c', 'lib_string.c', 'lib_table.c', 'lib_io.c', 'lib_os.c', 'lib_package.c', 'lib_debug.c', 'lib_jit.c', 'lib_ffi.c']
