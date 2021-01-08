@@ -26,12 +26,12 @@ jobs:
       - name: Package Dist
         run: |
           meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
-          meson dist -C build --no-tests --include-subprojects
+          meson dist -C build --formats=gztar --no-tests --include-subprojects
 
       - name: Collect Artifacts
         run: |
           mkdir -p dist/out/steam
-          mv build/meson-dist/naev-*.tar.xz dist/out/source.tar.xz
+          mv build/meson-dist/naev-*.tar.gz dist/out/source.tar.gz
           cp source/CHANGELOG dist/out
           cp source/dat/VERSION dist/out
           cp -r source/utils/ci/steam/* dist/out/steam
@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: naev-dist
-          path: ${{ github.workspace }}/dist/out/source.tar.xz
+          path: ${{ github.workspace }}/dist/out/source.tar.gz
           if-no-files-found: error
 
       - name: Upload Version Artifact
@@ -80,7 +80,7 @@ jobs:
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf source.tar.xz -C source --strip 1
+          tar -xf source.tar.gz -C source --strip 1
 
       - name: Compile AppImage
         run: |
@@ -110,7 +110,7 @@ jobs:
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf source.tar.xz -C source --strip 1
+          tar -xf source.tar.gz -C source --strip 1
 
       - name: Meson Setup
         run: |
@@ -153,7 +153,7 @@ jobs:
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf source.tar.xz -C source --strip 1
+          tar -xf source.tar.gz -C source --strip 1
 
       - name: Meson Setup
         run: |
@@ -199,7 +199,7 @@ jobs:
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-dist/source.tar.xz -C source --strip 1
+          tar -xf naev-dist/source.tar.gz -C source --strip 1
 
       - name: Meson Setup
         run: |
@@ -299,7 +299,7 @@ jobs:
           mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/naev-$SUFFIX-linux-x86-64.AppImage
           mv dist/staging/naev-macos/*.zip dist/out/naev-$SUFFIX-macos.zip
           mv dist/staging/naev-win64/naev*.exe dist/out/naev-$SUFFIX-win64.exe
-          mv dist/staging/naev-dist/source.tar.xz dist/out/naev-$SUFFIX-source.tar.xz
+          mv dist/staging/naev-dist/source.tar.gz dist/out/naev-$SUFFIX-source.tar.gz
 
           chmod +x dist/out/naev-$SUFFIX-linux-x86-64.AppImage
 

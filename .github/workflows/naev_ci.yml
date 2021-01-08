@@ -21,7 +21,7 @@ jobs:
       - name: Package Dist
         run: |
           meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
-          meson dist -C build --no-tests --include-subprojects
+          meson dist -C build --formats=gztar --no-tests --include-subprojects
 
       - name: Upload Dist Artifact
         uses: actions/upload-artifact@v2
@@ -55,7 +55,7 @@ jobs:
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.gz -C source --strip 1
 
       - name: Meson Setup
         id: setup
@@ -131,7 +131,7 @@ jobs:
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.gz -C source --strip 1
 
       - name: Meson Setup
         id: setup
@@ -207,7 +207,7 @@ jobs:
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.gz -C source --strip 1
 
       - name: Meson Setup
         id: setup
@@ -273,7 +273,7 @@ jobs:
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.gz -C source --strip 1
 
       - name: Compile AppImage
         id: appimageCompile
@@ -320,7 +320,7 @@ jobs:
       - name: Extract Source
         run: |
           mkdir source
-          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.gz -C source --strip 1
 
       - name: Meson Setup
         run: |
