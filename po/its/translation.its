@@ -35,6 +35,7 @@
 
   <!-- Outfits -->
   <its:translateRule selector="/outfit/@name" translate="yes"/>
+  <its:translateRule selector="/outfit/general/typename" translate="yes"/>
   <its:translateRule selector="/outfit/general/description" translate="yes"/>
 
   <!-- Star Systems -->
