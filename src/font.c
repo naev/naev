@@ -1445,7 +1445,7 @@ void gl_fontSetFilter( const glFont *ft_font, GLint min, GLint mag )
 int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const char *prefix, unsigned int flags )
 {
    size_t i, len, plen;
-   glFontStash *stsh;
+   glFontStash *stsh, *reusable_stsh_slot;
    int ch;
    char fullname[PATH_MAX];
 
@@ -1466,9 +1466,15 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
       avail_fonts = array_create( glFontStash );
 
    /* Check if available. */
+   reusable_stsh_slot = NULL;
    if (!(flags & FONT_FLAG_DONTREUSE)) {
       for (i=0; i<(size_t)array_size(avail_fonts); i++) {
          stsh = &avail_fonts[i];
+         if (stsh->fname == NULL) {
+            /* This glFontStash must have been zeroed by gl_freeFont after its refcount dropped to zero. */
+            reusable_stsh_slot = stsh;
+            continue;
+         }
          if (strcmp(stsh->fname,fname)!=0 || stsh->h != (int)h)
             continue;
          /* Found a match! */
@@ -1480,7 +1486,10 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
    }
 
    /* Create new font. */
-   stsh = &array_grow( &avail_fonts );
+   if (reusable_stsh_slot != NULL)
+      stsh = reusable_stsh_slot;
+   else
+      stsh = &array_grow( &avail_fonts );
    memset( stsh, 0, sizeof(glFontStash) );
    stsh->refcount = 1; /* Initialize refcount. */
    stsh->fname = strdup(fname);
@@ -1603,6 +1612,9 @@ static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname, unsign
 
 /**
  * @brief Frees a loaded font.
+ *        Caution: its glFontStash still has a slot in avail_fonts.
+ *        At the time of writing, it's enough to zero it so it cannot
+ *        match a future font request.
  *
  *    @param font Font to free.
  */
@@ -1638,16 +1650,11 @@ void gl_freeFont( glFont* font )
    for (i=0; i<array_size(stsh->tex); i++)
       glDeleteTextures( 1, &stsh->tex->id );
    array_free( stsh->tex );
-   stsh->tex = NULL;
 
    array_free( stsh->glyphs );
-   stsh->glyphs = NULL;
    gl_vboDestroy(stsh->vbo_tex);
-   stsh->vbo_tex = NULL;
    gl_vboDestroy(stsh->vbo_vert);
-   stsh->vbo_vert = NULL;
    free(stsh->vbo_tex_data);
-   stsh->vbo_tex_data = NULL;
    free(stsh->vbo_vert_data);
-   stsh->vbo_vert_data = NULL;
+   memset( stsh, 0, sizeof(glFontStash) );
 }
