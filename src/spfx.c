@@ -103,11 +103,7 @@ typedef struct SPFX_ {
 
 /* front stack is for effects on player, back is for the rest */
 static SPFX *spfx_stack_front = NULL; /**< Frontal special effect layer. */
-static int spfx_nstack_front = 0; /**< Number of special effects in front. */
-static int spfx_mstack_front = 0; /**< Memory allocated for frontal special effects. */
 static SPFX *spfx_stack_back = NULL; /**< Back special effect layer. */
-static int spfx_nstack_back = 0; /**< Number of special effects in back. */
-static int spfx_mstack_back = 0; /**< Memory allocated for special effects in back. */
 
 
 /*
@@ -116,8 +112,7 @@ static int spfx_mstack_back = 0; /**< Memory allocated for special effects in ba
 /* General. */
 static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent );
 static void spfx_base_free( SPFX_Base *effect );
-static void spfx_destroy( SPFX *layer, int *nlayer, int spfx );
-static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt );
+static void spfx_update_layer( SPFX *layer, const double dt );
 /* Haptic. */
 static int spfx_hapticInit (void);
 static void spfx_hapticRumble( double mod );
@@ -254,6 +249,10 @@ int spfx_load (void)
    spfx_hapticInit();
    shake_noise = noise_new( 1, NOISE_DEFAULT_HURST, NOISE_DEFAULT_LACUNARITY );
 
+   /* Stacks. */
+   spfx_stack_front = array_create( SPFX );
+   spfx_stack_back = array_create( SPFX );
+
    return 0;
 }
 
@@ -270,12 +269,10 @@ void spfx_free (void)
 
    /* get rid of all the particles and free the stacks */
    spfx_clear();
-   free(spfx_stack_front);
+   array_free(spfx_stack_front);
    spfx_stack_front = NULL;
-   spfx_mstack_front = 0;
-   free(spfx_stack_back);
+   array_free(spfx_stack_back);
    spfx_stack_back = NULL;
-   spfx_mstack_back = 0;
 
    /* now clear the effects */
    for (i=0; i<array_size(spfx_effects); i++)
@@ -314,28 +311,10 @@ void spfx_add( int effect,
    /*
     * Select the Layer
     */
-   if (layer == SPFX_LAYER_FRONT) { /* front layer */
-      if (spfx_mstack_front < spfx_nstack_front+1) { /* need more memory */
-         if (spfx_mstack_front == 0)
-            spfx_mstack_front = SPFX_CHUNK_MIN;
-         else
-            spfx_mstack_front += MIN( spfx_mstack_front, SPFX_CHUNK_MAX );
-         spfx_stack_front = realloc( spfx_stack_front, spfx_mstack_front*sizeof(SPFX) );
-      }
-      cur_spfx = &spfx_stack_front[spfx_nstack_front];
-      spfx_nstack_front++;
-   }
-   else if (layer == SPFX_LAYER_BACK) { /* back layer */
-      if (spfx_mstack_back < spfx_nstack_back+1) { /* need more memory */
-         if (spfx_mstack_back == 0)
-            spfx_mstack_back = SPFX_CHUNK_MIN;
-         else
-            spfx_mstack_back += MIN( spfx_mstack_back, SPFX_CHUNK_MAX );
-         spfx_stack_back = realloc( spfx_stack_back, spfx_mstack_back*sizeof(SPFX) );
-      }
-      cur_spfx = &spfx_stack_back[spfx_nstack_back];
-      spfx_nstack_back++;
-   }
+   if (layer == SPFX_LAYER_FRONT) /* front layer */
+      cur_spfx = &array_grow( &spfx_stack_front );
+   else if (layer == SPFX_LAYER_BACK) /* back layer */
+      cur_spfx = &array_grow( &spfx_stack_back );
    else {
       WARN(_("Invalid SPFX layer."));
       return;
@@ -360,35 +339,12 @@ void spfx_add( int effect,
  */
 void spfx_clear (void)
 {
-   int i;
-
-   /* Clear front layer */
-   for (i=spfx_nstack_front-1; i>=0; i--)
-      spfx_destroy( spfx_stack_front, &spfx_nstack_front, i );
-
-   /* Clear back layer */
-   for (i=spfx_nstack_back-1; i>=0; i--)
-      spfx_destroy( spfx_stack_back, &spfx_nstack_back, i );
-
    /* Clear rumble */
    shake_set = 0;
    shake_off = 1;
    shake_force_mod = 0.;
    vectnull( &shake_pos );
    vectnull( &shake_vel );
-}
-
-/**
- * @brief Destroys an active spfx.
- *
- *    @param layer Layer the spfx is on.
- *    @param nlayer Pointer to the number of elements in the layer.
- *    @param spfx Position of the spfx in the stack.
- */
-static void spfx_destroy( SPFX *layer, int *nlayer, int spfx )
-{
-   (*nlayer)--;
-   memmove( &layer[spfx], &layer[spfx+1], (*nlayer-spfx)*sizeof(SPFX) );
 }
 
 
@@ -399,8 +355,8 @@ static void spfx_destroy( SPFX *layer, int *nlayer, int spfx )
  */
 void spfx_update( const double dt )
 {
-   spfx_update_layer( spfx_stack_front, &spfx_nstack_front, dt );
-   spfx_update_layer( spfx_stack_back, &spfx_nstack_back, dt );
+   spfx_update_layer( spfx_stack_front, dt );
+   spfx_update_layer( spfx_stack_back, dt );
 }
 
 
@@ -408,19 +364,18 @@ void spfx_update( const double dt )
  * @brief Updates an individual spfx.
  *
  *    @param layer Layer the spfx is on.
- *    @param nlayer Pointer to the associated nlayer.
  *    @param dt Current delta tick.
  */
-static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt )
+static void spfx_update_layer( SPFX *layer, const double dt )
 {
    int i;
 
-   for (i=0; i<*nlayer; i++) {
+   for (i=0; i<array_size(layer); i++) {
       layer[i].timer -= dt; /* less time to live */
 
       /* time to die! */
       if (layer[i].timer < 0.) {
-         spfx_destroy( layer, nlayer, i );
+         array_erase( &layer, &layer[i], &layer[i+1] );
          i--;
          continue;
       }
@@ -676,7 +631,7 @@ void spfx_cinematic (void)
 void spfx_render( const int layer )
 {
    SPFX *spfx_stack;
-   int i, spfx_nstack;
+   int i;
    SPFX_Base *effect;
    int sx, sy;
    double time;
@@ -686,12 +641,10 @@ void spfx_render( const int layer )
    switch (layer) {
       case SPFX_LAYER_FRONT:
          spfx_stack = spfx_stack_front;
-         spfx_nstack = spfx_nstack_front;
          break;
 
       case SPFX_LAYER_BACK:
          spfx_stack = spfx_stack_back;
-         spfx_nstack = spfx_nstack_back;
          break;
 
       default:
@@ -700,7 +653,7 @@ void spfx_render( const int layer )
    }
 
    /* Now render the layer */
-   for (i=spfx_nstack-1; i>=0; i--) {
+   for (i=array_size(spfx_stack)-1; i>=0; i--) {
       effect = &spfx_effects[ spfx_stack[i].effect ];
 
       /* Simplifies */
