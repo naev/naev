@@ -10,6 +10,7 @@
 
 /** @cond */
 #include "SDL_mutex.h"
+#include "SDL_rwops.h"
 /** @endcond */
 
 
@@ -38,6 +39,13 @@ double sound_getVolume (void);
 double sound_getVolumeLog (void);
 void sound_stopAll (void);
 void sound_setSpeed( double s );
+
+
+/*
+ * source management
+ */
+int source_newRW( SDL_RWops *rw, const char* name );
+int source_new( const char* filename );
 
 
 /*

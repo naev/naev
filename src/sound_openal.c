@@ -673,17 +673,14 @@ static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf )
  * @brief Loads the sound.
  *
  *    @param snd Sound to load.
- *    @param filename Name of the file to load into sound.
+ *    @param rw File to load from.
+ *    @param name Name for debugging purposes.
  */
-int sound_al_load( alSound *snd, const char *filename )
+int sound_al_load( alSound *snd, SDL_RWops *rw, const char *name )
 {
    int ret;
-   SDL_RWops *rw;
    OggVorbis_File vf;
    ALint freq, bits, channels, size;
-
-   /* get the file data buffer from packfile */
-   rw = PHYSFSRWOPS_openRead( filename );
 
    /* Check to see if it's an Ogg. */
    if (ov_test_callbacks( rw, &vf, NULL, 0, sound_al_ovcall_noclose )==0)
@@ -698,12 +695,9 @@ int sound_al_load( alSound *snd, const char *filename )
       ret = sound_al_loadWav( snd, rw );
    }
 
-   /* Close RWops. */
-   SDL_RWclose(rw);
-
    /* Failed to load. */
    if (ret != 0) {
-      WARN(_("Failed to load sound file '%s'."), filename);
+      WARN(_("Failed to load sound file '%s'."), name);
       return ret;
    }
 
@@ -715,7 +709,7 @@ int sound_al_load( alSound *snd, const char *filename )
    alGetBufferi( snd->buf, AL_CHANNELS, &channels );
    alGetBufferi( snd->buf, AL_SIZE, &size );
    if ((freq==0) || (bits==0) || (channels==0)) {
-      WARN(_("Something went wrong when loading sound file '%s'."), filename);
+      WARN(_("Something went wrong when loading sound file '%s'."), name);
       snd->length = 0;
    }
    else

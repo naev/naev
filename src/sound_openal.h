@@ -114,7 +114,7 @@ void sound_al_exit (void);
 /*
  * Sound creation.
  */
-int sound_al_load( alSound *snd, const char *filename );
+int sound_al_load( alSound *snd, SDL_RWops *rw, const char *name );
 void sound_al_free( alSound *snd );
 
 

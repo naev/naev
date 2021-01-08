@@ -19,6 +19,8 @@
 #include "naev.h"
 /** @endcond */
 
+#include "physfsrwops.h"
+
 #include "sound.h"
 
 #include "array.h"
@@ -76,7 +78,6 @@ static double snd_compression_gain = 0.; /**< Current compression gain. */
  */
 /* General. */
 static int sound_makeList (void);
-static int sound_load( alSound *snd, const char *filename );
 static void sound_free( alSound *snd );
 /* Voices. */
 
@@ -564,7 +565,7 @@ static int sound_makeList (void)
    char path[PATH_MAX];
    char tmp[64];
    int len, suflen, flen;
-   alSound *snd;
+   SDL_RWops *rw;
 
    if (sound_disabled)
       return 0;
@@ -599,12 +600,11 @@ static int sound_makeList (void)
       tmp[len] = '\0';
 
       /* Load the sound. */
-      snd = &array_grow( &sound_list );
-      snd->name = strdup(tmp);
       nsnprintf( path, PATH_MAX, SOUND_PATH"%s", files[i] );
-      snd->filename = strdup( path );
-      if (sound_load( snd, path ))
-         array_erase( &sound_list, snd, snd+1 ); /* Song not actually added. */
+      rw = PHYSFSRWOPS_openRead( path );
+      source_newRW( rw, tmp );
+      SDL_RWclose( rw );
+
    }
 
    DEBUG( n_("Loaded %d Sound", "Loaded %d Sounds", array_size(sound_list)), array_size(sound_list) );
@@ -656,24 +656,6 @@ double sound_getVolumeLog (void)
       return 0.;
 
    return sound_al_getVolumeLog();
-}
-
-
-/**
- * @brief Loads a sound into the sound_list.
- *
- *    @param snd Sound to load into.
- *    @param filename Name fo the file to load.
- *    @return 0 on success.
- *
- * @sa sound_makeList
- */
-static int sound_load( alSound *snd, const char *filename )
-{
-   if (sound_disabled)
-      return -1;
-
-   return sound_al_load( snd, filename );
 }
 
 
@@ -913,5 +895,41 @@ alVoice* voice_get( int id )
    voiceUnlock();
 
    return v;
+}
+
+
+/**
+ * @brief Loads a new sound source from a RWops.
+ */
+int source_newRW( SDL_RWops *rw, const char *name )
+{
+   int ret;
+   alSound snd, *sndl;
+
+   if (sound_disabled)
+      return -1;
+
+   memset( &snd, 0, sizeof(alSound) );
+   ret = sound_al_load( &snd, rw, name );
+   if (ret)
+      return -1;
+
+   sndl = &array_grow( &sound_list );
+   memcpy( sndl, &snd, sizeof(alSound) );
+   sndl->name = strdup( name );
+
+   return sndl-sound_list;
+}
+
+
+/**
+ * @brief Loads a new source from a file.
+ */
+int source_new( const char* filename )
+{
+   SDL_RWops *rw = PHYSFSRWOPS_openRead( filename );
+   int id = source_newRW( rw, filename );
+   SDL_RWclose( rw );
+   return id;
 }
 
