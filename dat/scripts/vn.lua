@@ -8,6 +8,7 @@ local love = require 'love'
 local graphics = require 'love.graphics'
 local window = require 'love.window'
 local filesystem = require 'love.filesystem'
+local audio = require 'love.audio'
 
 local vn = {
    speed = 0.04,
@@ -22,6 +23,8 @@ local vn = {
       _buffer = "",
       _title = nil,
       _globalalpha = 1,
+      --_soundTalk = audio.newSource( "sfx/talk.wav" ),
+      _pitchValues = {0.7, 0.8, 1.0, 1.2, 1.3},
    }
 }
 -- Drawing
@@ -381,6 +384,13 @@ function vn.StateSay:_update( dt )
       self._text = string.sub( self._textbuf, 1, self._pos )
       self._timer = self._timer + vn.speed
       vn._buffer = self._text
+
+      -- play sound
+      if vn._soundTalk then
+         local p = vn._pitchValues[ rnd.rnd(1,#vn._pitchValues) ]
+         vn._soundTalk:setPitch( p )
+         vn._soundTalk:play()
+      end
    end
 end
 function vn.StateSay:_finish()
