@@ -105,7 +105,6 @@ static double player_hailTimer = 0.; /**< Timer for hailing. */
  * player pilot stack - ships he has
  */
 static PlayerShip_t* player_stack   = NULL;  /**< Stack of ships player has. */
-static int player_nstack            = 0;     /**< Number of ships player has. */
 
 
 /*
@@ -200,6 +199,8 @@ Planet* player_load( xmlNodePtr parent ); /* save.c */
  */
 int player_init (void)
 {
+   if (player_stack==NULL)
+      player_stack = array_create( PlayerShip_t );
    player_initSound();
    return 0;
 }
@@ -334,6 +335,9 @@ static int player_newMake (void)
    Ship *ship;
    const char *shipname;
    double x,y;
+
+   if (player_stack==NULL)
+      player_stack = array_create( PlayerShip_t );
 
    /* Time. */
    ntime_set( start_date() );
@@ -503,11 +507,9 @@ static Pilot* player_newShipMake( const char* name )
    }
    else {
       /* Grow memory. */
-      player_stack = realloc(player_stack, sizeof(PlayerShip_t)*(player_nstack+1));
-      ship        = &player_stack[player_nstack];
+      ship        = &array_grow( &player_stack );
       /* Create the ship. */
       ship->p     = pilot_createEmpty( player_ship, name, faction_get("Player"), "player", flags );
-      player_nstack++;
       new_pilot   = ship->p;
    }
 
@@ -537,7 +539,7 @@ void player_swapShip( const char *shipname )
    Vector2d v;
    double dir;
 
-   for (i=0; i<player_nstack; i++) {
+   for (i=0; i<array_size(player_stack); i++) {
       if (strcmp(shipname,player_stack[i].p->name)!=0)
          continue;
 
@@ -608,7 +610,7 @@ credits_t player_shipPrice( const char *shipname )
       ship = player.p;
    else {
       /* Find the ship. */
-      for (i=0; i<player_nstack; i++) {
+      for (i=0; i<array_size(player_stack); i++) {
          if (strcmp(shipname,player_stack[i].p->name)==0) {
             ship = player_stack[i].p;
             break;
@@ -635,7 +637,7 @@ void player_rmShip( const char *shipname )
 {
    int i, w;
 
-   for (i=0; i<player_nstack; i++) {
+   for (i=0; i<array_size(player_stack); i++) {
       /* Not the ship we are looking for. */
       if (strcmp(shipname,player_stack[i].p->name)!=0)
          continue;
@@ -643,13 +645,7 @@ void player_rmShip( const char *shipname )
       /* Free player ship. */
       pilot_free(player_stack[i].p);
 
-      /* Move memory to make adjacent. */
-      memmove( player_stack+i, player_stack+i+1,
-            sizeof(PlayerShip_t) * (player_nstack-i-1) );
-      player_nstack--; /* Shrink stack. */
-      /* Realloc memory to smaller size. */
-      player_stack = realloc( player_stack,
-            sizeof(PlayerShip_t) * (player_nstack) );
+      array_erase( &player_stack, &player_stack[i], &player_stack[i+1] );
    }
 
    /* Update ship list if landed. */
@@ -709,13 +705,12 @@ void player_cleanup (void)
    ovr_setOpen(0);
 
    /* clean up the stack */
-   for (i=0; i<player_nstack; i++) {
+   for (i=0; i<array_size(player_stack); i++) {
       pilot_free(player_stack[i].p);
    }
-   free(player_stack);
+   array_free(player_stack);
    player_stack = NULL;
    /* nothing left */
-   player_nstack = 0;
 
    free(player_outfits);
    player_outfits  = NULL;
@@ -2404,11 +2399,11 @@ static int player_shipsCompare( const void *arg1, const void *arg2 )
  */
 void player_shipsSort (void)
 {
-   if (player_nstack == 0)
+   if (array_size(player_stack) == 0)
       return;
 
    /* Sort. */
-   qsort( player_stack, player_nstack, sizeof(PlayerShip_t), player_shipsCompare );
+   qsort( player_stack, array_size(player_stack), sizeof(PlayerShip_t), player_shipsCompare );
 }
 
 
@@ -2424,19 +2419,19 @@ int player_ships( char** sships, glTexture** tships )
 {
    int i;
 
-   if (player_nstack == 0)
+   if (array_size(player_stack) == 0)
       return 0;
 
    /* Sort. */
    player_shipsSort();
 
    /* Create the struct. */
-   for (i=0; i < player_nstack; i++) {
+   for (i=0; i < array_size(player_stack); i++) {
       sships[i] = strdup(player_stack[i].p->name);
       tships[i] = player_stack[i].p->ship->gfx_store;
    }
 
-   return player_nstack;
+   return array_size(player_stack);
 }
 
 
@@ -2448,7 +2443,7 @@ int player_ships( char** sships, glTexture** tships )
  */
 const PlayerShip_t* player_getShipStack( int *n )
 {
-   *n = player_nstack;
+   *n = array_size(player_stack);
    return player_stack;
 }
 
@@ -2460,7 +2455,7 @@ const PlayerShip_t* player_getShipStack( int *n )
  */
 int player_nships (void)
 {
-   return player_nstack;
+   return array_size(player_stack);
 }
 
 
@@ -2479,7 +2474,7 @@ int player_hasShip( const char *shipname )
       return 1;
 
    /* Check stocked ships. */
-   for (i=0; i < player_nstack; i++)
+   for (i=0; i < array_size(player_stack); i++)
       if (strcmp(player_stack[i].p->name, shipname)==0)
          return 1;
    return 0;
@@ -2499,7 +2494,7 @@ Pilot *player_getShip( const char *shipname )
    if ((player.p != NULL) && (strcmp(shipname,player.p->name)==0))
       return player.p;
 
-   for (i=0; i < player_nstack; i++)
+   for (i=0; i < array_size(player_stack); i++)
       if (strcmp(player_stack[i].p->name, shipname)==0)
          return player_stack[i].p;
 
@@ -2552,7 +2547,7 @@ int player_outfitOwnedTotal( const Outfit* o )
    q  = player_outfitOwned(o);
 
    q += pilot_numOutfit( player.p, o );
-   for (i=0; i<player_nstack; i++)
+   for (i=0; i<array_size(player_stack); i++)
       q += pilot_numOutfit( player_stack[i].p, o );
 
    return q;
@@ -3024,7 +3019,7 @@ int player_save( xmlTextWriterPtr writer )
 
    /* Ships. */
    xmlw_startElem(writer,"ships");
-   for (i=0; i<player_nstack; i++)
+   for (i=0; i<array_size(player_stack); i++)
       player_saveShip( writer, player_stack[i].p );
    xmlw_endElem(writer); /* "ships" */
 
@@ -3231,6 +3226,9 @@ Planet* player_load( xmlNodePtr parent )
    pnt = NULL;
    map_cleanup();
 
+   if (player_stack==NULL)
+      player_stack = array_create( PlayerShip_t );
+
    node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node,"player"))
@@ -3375,7 +3373,7 @@ static Planet* player_parse( xmlNodePtr parent )
       pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
       WARN(_("Player ship does not exist!"));
 
-      if (player_nstack == 0) {
+      if (array_size(player_stack) == 0) {
          WARN(_("Player has no other ships, giving starting ship."));
          pilot_create( ship_get(start_ship()), "MIA",
                faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
@@ -3383,7 +3381,7 @@ static Planet* player_parse( xmlNodePtr parent )
       else {
 
          /* Just give player.p a random ship in the stack. */
-         old_ship = player_stack[player_nstack-1].p;
+         old_ship = player_stack[array_size(player_stack)-1].p;
          pilot_create( old_ship->ship, old_ship->name,
                faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
          player_rmShip( old_ship->name );
@@ -3694,6 +3692,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    PilotFlags flags;
    unsigned int pid;
    int autoweap, level, weapid, active_set, aim_lines, in_range, weap_type;
+   PlayerShip_t *ps;
 
    xmlr_attr_strd( parent, "name", name );
    xmlr_attr_strd( parent, "model", model );
@@ -3837,9 +3836,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
    /* add it to the stack if it's not what the player is in */
    if (is_player == 0) {
-      player_stack = realloc(player_stack, sizeof(PlayerShip_t)*(player_nstack+1));
-      player_stack[player_nstack].p    = ship;
-      player_nstack++;
+      ps = &array_grow( &player_stack );
+      ps->p = ship;
    }
 
    /* Sets inrange by default if weapon sets are missing. */
