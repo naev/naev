@@ -128,8 +128,10 @@ int sound_init (void)
    }
 
    /* Set volume. */
-   if ((conf.sound > 1.) || (conf.sound < 0.))
+   if ((conf.sound > 1.) || (conf.sound < 0.)) {
       WARN(_("Sound has invalid value, clamping to [0:1]."));
+      conf.sound = CLAMP( 0., 1., conf.sound );
+   }
    sound_volume(conf.sound);
 
    /* Initialized. */
