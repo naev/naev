@@ -69,18 +69,19 @@ if buildExec.disabled() == false
    if 'SuiteSparse' not in get_option('force_fallback_for')
       csparse_names = ['csparse', 'cxsparse']
       foreach n : csparse_names
-         csparse = cc.find_library(n, required: false)
+         csparse = cc.find_library(n, required: false, has_headers: ['suitesparse/cs.h'])
+         if csparse.found()
+            config_data.set10('HAVE_SUITESPARSE_CS_H', true)
+            break
+         endif
+         csparse = cc.find_library(n, required: false, has_headers: ['cs.h'])
          if csparse.found()
             break
          endif
       endforeach
    endif
 
-   if csparse.found()
-      if cc.has_header('suitesparse/cs.h')
-         config_data.set10('HAVE_SUITESPARSE_CS_H', true)
-      endif
-   else
+   if not csparse.found()
       csparse = dependency(
          'SuiteSparse',
          fallback: ['SuiteSparse', 'CSparse_dep'],
@@ -91,6 +92,12 @@ if buildExec.disabled() == false
    naev_deps += cc.find_library('m', required : false)
 
    sdl = dependency('sdl2', required: true)
+
+   libxml2 = cc.find_library('xml2', required: false)
+   if not libxml2.found()
+      libxml2 = dependency('libxml-2.0', required: true)
+   endif
+
    naev_deps += [
       dependency('freetype2', required: true),
       dependency('physfs', fallback: ['physfs', 'physfs_dep'], required: true),
@@ -99,7 +106,7 @@ if buildExec.disabled() == false
          dependencies: dependency('libpng', required: true),
          compile_args: '-DNOLOGPRINTFCONSOLE',
          link_args: '-DNOLOGPRINTFCONSOLE'),
-      dependency('libxml-2.0', required: true)
+      libxml2,
    ]
 
    # Lua

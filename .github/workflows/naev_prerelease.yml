@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
+      image: "ghcr.io/projectsynchro/naev-ubuntu1604:latest"
 
     steps:
       - name: Checkout Naev Repository
@@ -69,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
+      image: "ghcr.io/projectsynchro/naev-ubuntu1604:latest"
 
     steps:
       - name: Get Source
@@ -98,17 +98,10 @@ jobs:
     needs: "Package_Source"
     runs-on: ubuntu-latest
 
-    env:
-      WINEPREFIX: "/tmp/.wine"
-
     container:
-      image: projectsynchro/synchros_sexy_docker_images:naev-windows
+      image: "ghcr.io/projectsynchro/naev-windows:latest"
 
     steps:
-      - name: Container-specific setup
-        run: |
-          echo /usr/lib/mxe/usr/bin >> $GITHUB_PATH
-
       - name: Get Source
         uses: actions/download-artifact@v2
         with:
@@ -147,28 +140,11 @@ jobs:
 
   "Darwin_Naev_Release":
     needs: "Package_Source"
-    runs-on: macos-10.15
+    runs-on: ubuntu-latest
+    container:
+      image: "ghcr.io/projectsynchro/naev-macos:latest"
 
     steps:
-      - name: Install Homebrew Packages
-        run: |
-          brew update
-          # Library installation is a work in progress. This way results in a build that requires >=10.15.
-          # TODO: install compatible ones and set MACOSX_DEPLOYMENT_TARGET.
-          brew install \
-            openal-soft \
-            intltool \
-            libvorbis \
-            luajit \
-            sdl2
-
-      - name: Setup Python
-        uses: actions/setup-python@v2
-
-      - name: Install Meson and Ninja via pip
-        run: |
-          pip install meson ninja
-
       - name: Get Source
         uses: actions/download-artifact@v2
         with:
@@ -182,9 +158,8 @@ jobs:
       - name: Meson Setup
         run: |
           meson setup build source \
-              --native-file='source/utils/build/macos.ini' \
+              --cross-file='source/utils/build/macos_cross_osxcross.ini' \
               --buildtype=release \
-              --pkg-config-path=/usr/local/opt/openal-soft/lib/pkgconfig \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
@@ -198,9 +173,8 @@ jobs:
       - name: Build macOS Installer
         run: |
           ./source/extras/macos/bundle.py -s "source" -b "build" -o "$(pwd)/dist"
-          pushd dist/out
+          cd dist/out
           zip -r naev-macos.zip Naev.app/*
-          popd
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
@@ -214,7 +188,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: projectsynchro/synchros_sexy_docker_images:naev-steamruntime
+      image: "ghcr.io/projectsynchro/naev-steamruntime:latest"
 
     steps:
       - name: Get Source
