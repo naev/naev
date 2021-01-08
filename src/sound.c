@@ -21,6 +21,7 @@
 
 #include "sound.h"
 
+#include "array.h"
 #include "camera.h"
 #include "conf.h"
 #include "log.h"
@@ -51,7 +52,6 @@ static int sound_initialized  = 0; /**< Whether or not sound is initialized. */
  * Sound list.
  */
 static alSound *sound_list    = NULL; /**< List of available sounds. */
-static int sound_nlist        = 0; /**< Number of available sounds. */
 
 
 /*
@@ -182,11 +182,9 @@ void sound_exit (void)
    }
 
    /* free the sounds */
-   for (i=0; i<sound_nlist; i++)
+   for (i=0; i<array_size(sound_list); i++)
       sound_free( &sound_list[i] );
-   free( sound_list );
-   sound_list = NULL;
-   sound_nlist = 0;
+   array_free( sound_list );
 
    /* Exit sound subsystem. */
    sound_al_exit();
@@ -209,7 +207,7 @@ int sound_get( const char* name )
    if (sound_disabled)
       return 0;
 
-   for (i=0; i<sound_nlist; i++)
+   for (i=0; i<array_size(sound_list); i++)
       if (strcmp(name, sound_list[i].name)==0)
          return i;
 
@@ -247,7 +245,7 @@ int sound_play( int sound )
    if (sound_disabled)
       return 0;
 
-   if ((sound < 0) || (sound >= sound_nlist))
+   if ((sound < 0) || (sound >= array_size(sound_list)))
       return -1;
 
    /* Gets a new voice. */
@@ -290,7 +288,7 @@ int sound_playPos( int sound, double px, double py, double vx, double vy )
    if (sound_disabled)
       return 0;
 
-   if ((sound < 0) || (sound >= sound_nlist))
+   if ((sound < 0) || (sound >= array_size(sound_list)))
       return -1;
 
    target = cam_getTarget();
@@ -566,7 +564,7 @@ static int sound_makeList (void)
    char path[PATH_MAX];
    char tmp[64];
    int len, suflen, flen;
-   int mem;
+   alSound *snd;
 
    if (sound_disabled)
       return 0;
@@ -574,8 +572,10 @@ static int sound_makeList (void)
    /* get the file list */
    files = PHYSFS_enumerateFiles( SOUND_PATH );
 
+   /* Create the list. */
+   sound_list = array_create( alSound );
+
    /* load the profiles */
-   mem = 0;
    suflen = strlen(SOUND_SUFFIX_WAV);
    for (i=0; files[i]!=NULL; i++) {
       flen = strlen(files[i]);
@@ -593,28 +593,20 @@ static int sound_makeList (void)
          continue;
       }
 
-      /* grow the selection size */
-      sound_nlist++;
-      if (sound_nlist > mem) { /* we must grow */
-         mem += 32; /* we'll overallocate most likely */
-         sound_list = realloc( sound_list, mem*sizeof(alSound));
-      }
-
       /* remove the suffix */
       len = flen - suflen;
       strncpy( tmp, files[i], len );
       tmp[len] = '\0';
 
       /* Load the sound. */
-      sound_list[sound_nlist-1].name = strdup(tmp);
+      snd = &array_grow( &sound_list );
+      snd->name = strdup(tmp);
       nsnprintf( path, PATH_MAX, SOUND_PATH"%s", files[i] );
-      if (sound_load( &sound_list[sound_nlist-1], path ))
-         sound_nlist--; /* Song not actually added. */
+      if (sound_load( snd, path ))
+         array_erase( &sound_list, snd, snd+1 ); /* Song not actually added. */
    }
-   /* shrink to minimum ram usage */
-   sound_list = realloc( sound_list, sound_nlist*sizeof(alSound));
 
-   DEBUG( n_("Loaded %d Sound", "Loaded %d Sounds", sound_nlist), sound_nlist );
+   DEBUG( n_("Loaded %d Sound", "Loaded %d Sounds", array_size(sound_list)), array_size(sound_list) );
 
    /* Clean up. */
    PHYSFS_freeList( files );
@@ -728,7 +720,7 @@ int sound_playGroup( int group, int sound, int once )
    if (sound_disabled)
       return 0;
 
-   if ((sound < 0) || (sound >= sound_nlist))
+   if ((sound < 0) || (sound >= array_size(sound_list)))
       return -1;
 
    return sound_al_playGroup( group, &sound_list[sound], once );
