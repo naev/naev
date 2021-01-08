@@ -228,12 +228,17 @@ and %s in the %s system."]]),
 
    local opts = {
       {_("Ask about the researchers"), "researchers"},
+      {_("Ask about her father"), "father"},
       {_("Leave"), "leave"},
    }
    vn.label( "menu" )
    vn.menu( opts )
 
    vn.label( "researchers" )
+   maikki(_([[""]]))
+   vn.jump( "menu_msg" )
+
+   vn.label( "father" )
    maikki(_([[""]]))
    vn.jump( "menu_msg" )
 
