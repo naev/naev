@@ -225,7 +225,7 @@ jobs:
         uses: actions/upload-artifact@v1
         if: ${{ success() || steps.setup.outcome == 'failure' }}
         with:
-          name: ${{ matrix.os }}-${{ github.sha }}-setup-log
+          name: ${{ matrix.image }}-${{ github.sha }}-setup-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Meson Compile
@@ -238,13 +238,13 @@ jobs:
         uses: actions/upload-artifact@v2
         if: ${{ success() || steps.compile.outcome == 'failure' }}
         with:
-          name: ${{ matrix.os }}-${{ github.sha }}-compile-log
+          name: ${{ matrix.image }}-${{ github.sha }}-compile-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.os }}-${{ github.sha }}-buildArtifacts
+          name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
           path: |
             ${{ github.workspace }}/build
           if-no-files-found: error
