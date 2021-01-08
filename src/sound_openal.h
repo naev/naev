@@ -23,6 +23,7 @@
  * @brief Contains a sound buffer.
  */
 typedef struct alSound_ {
+   char *filename; /**< Name of the file loaded from. */
    char *name; /**< Buffer's name. */
    double length; /**< Length of the buffer. */
    ALuint buf; /**< Buffer data. */

@@ -602,6 +602,7 @@ static int sound_makeList (void)
       snd = &array_grow( &sound_list );
       snd->name = strdup(tmp);
       nsnprintf( path, PATH_MAX, SOUND_PATH"%s", files[i] );
+      snd->filename = strdup( path );
       if (sound_load( snd, path ))
          array_erase( &sound_list, snd, snd+1 ); /* Song not actually added. */
    }
@@ -685,7 +686,7 @@ static void sound_free( alSound *snd )
 {
    /* Free general stuff. */
    free(snd->name);
-   snd->name = NULL;
+   free(snd->filename);
 
    /* Free internals. */
    sound_al_free(snd);
