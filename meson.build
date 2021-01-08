@@ -93,9 +93,9 @@ if buildExec.disabled() == false
 
    sdl = dependency('sdl2', required: true)
 
-   libxml2 = cc.find_library('xml2', required: false)
+   libxml2 = dependency('libxml-2.0', required: false)
    if not libxml2.found()
-      libxml2 = dependency('libxml-2.0', required: true)
+      libxml2 = cc.find_library('xml2', required: true)  # e.g., MacOSX SDK
    endif
 
    naev_deps += [
