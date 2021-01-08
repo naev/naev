@@ -215,7 +215,6 @@ jobs:
           meson setup build source \
               --cross-file='source/utils/build/${{ matrix.config }}' \
               --buildtype=debug \
-              --pkg-config-path=${{ matrix.pkg-config-path }} \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
@@ -256,7 +255,7 @@ jobs:
       - name: Upload Install Log
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.os }}-${{ github.sha }}-install-log
+          name: ${{ matrix.image }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
   "AppImage_Compile_Naev":
