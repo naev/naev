@@ -1,5 +1,5 @@
 project('naev', 'c',
-   version : '0.8.0',
+   version : '0.8.1',
    default_options : [
       'warning_level=2',
       'optimization=g',
