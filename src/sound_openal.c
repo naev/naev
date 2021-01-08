@@ -133,8 +133,8 @@ static int al_enableEFX (void);
 static ALuint sound_al_getSource (void);
 static int al_playVoice( alVoice *v, alSound *s,
       ALfloat px, ALfloat py, ALfloat vx, ALfloat vy, ALint relative );
-static int sound_al_loadWav( alSound *snd, SDL_RWops *rw );
-static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf );
+static int sound_al_loadWav( ALuint *buf, SDL_RWops *rw );
+static int sound_al_loadOgg( ALuint *buf, OggVorbis_File *vf );
 /*
  * Pausing.
  */
@@ -547,7 +547,7 @@ void sound_al_exit (void)
  *    @param snd Sound to load wav into.
  *    @param rw Data for the wave.
  */
-static int sound_al_loadWav( alSound *snd, SDL_RWops *rw )
+static int sound_al_loadWav( ALuint *buf, SDL_RWops *rw )
 {
    SDL_AudioSpec wav_spec;
    Uint32 wav_length;
@@ -584,9 +584,9 @@ static int sound_al_loadWav( alSound *snd, SDL_RWops *rw )
    /* Load into openal. */
    soundLock();
    /* Create new buffer. */
-   alGenBuffers( 1, &snd->buf );
+   alGenBuffers( 1, buf );
    /* Put into the buffer. */
-   alBufferData( snd->buf, format, wav_buffer, wav_length, wav_spec.freq );
+   alBufferData( *buf, format, wav_buffer, wav_length, wav_spec.freq );
    soundUnlock();
 
    /* Clean up. */
@@ -622,7 +622,7 @@ static const char* vorbis_getErr( int err )
  *    @param snd Sound to load ogg into.
  *    @param vf Vorbisfile containing the song.
  */
-static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf )
+static int sound_al_loadOgg( ALuint *buf, OggVorbis_File *vf )
 {
    int ret;
    long i;
@@ -630,7 +630,7 @@ static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf )
    vorbis_info *info;
    ALenum format;
    ogg_int64_t len;
-   char *buf;
+   char *data;
 
    /* Finish opening the file. */
    ret = ov_test_open(vf);
@@ -645,25 +645,67 @@ static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf )
    len    = ov_pcm_total( vf, -1 ) * info->channels * 2;
 
    /* Allocate memory. */
-   buf = malloc( len );
+   data = malloc( len );
 
    /* Fill buffer. */
    i = 0;
    while (i < len) {
       /* Fill buffer with data in the 16 bit signed samples format. */
-      i += ov_read( vf, &buf[i], len-i, HAS_BIGENDIAN, 2, 1, &section );
+      i += ov_read( vf, &data[i], len-i, HAS_BIGENDIAN, 2, 1, &section );
    }
 
    soundLock();
    /* Create new buffer. */
-   alGenBuffers( 1, &snd->buf );
+   alGenBuffers( 1, buf );
    /* Put into buffer. */
-   alBufferData( snd->buf, format, buf, len, info->rate );
+   alBufferData( *buf, format, data, len, info->rate );
    soundUnlock();
 
    /* Clean up. */
-   free(buf);
+   free(data);
    ov_clear(vf);
+
+   return 0;
+}
+
+
+/**
+ * @brief Loads the sound.
+ *
+ *    @param buf Buffer to load.
+ *    @param rw File to load from.
+ *    @param name Name for debugging purposes.
+ */
+int sound_al_buffer( ALuint *buf, SDL_RWops *rw, const char *name )
+{
+   int ret;
+   OggVorbis_File vf;
+
+   /* Check to see if it's an Ogg. */
+   if (ov_test_callbacks( rw, &vf, NULL, 0, sound_al_ovcall_noclose )==0)
+      ret = sound_al_loadOgg( buf, &vf );
+
+   /* Otherwise try WAV. */
+   else {
+      /* Destroy the partially loaded vorbisfile. */
+      ov_clear(&vf);
+
+      /* Try to load Wav. */
+      ret = sound_al_loadWav( buf, rw );
+   }
+
+   /* Failed to load. */
+   if (ret != 0) {
+      WARN(_("Failed to load sound file '%s'."), name);
+      return ret;
+   }
+
+   soundLock();
+
+   /* Check for errors. */
+   al_checkErr();
+
+   soundUnlock();
 
    return 0;
 }
@@ -679,23 +721,9 @@ static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf )
 int sound_al_load( alSound *snd, SDL_RWops *rw, const char *name )
 {
    int ret;
-   OggVorbis_File vf;
    ALint freq, bits, channels, size;
 
-   /* Check to see if it's an Ogg. */
-   if (ov_test_callbacks( rw, &vf, NULL, 0, sound_al_ovcall_noclose )==0)
-      ret = sound_al_loadOgg( snd, &vf );
-
-   /* Otherwise try WAV. */
-   else {
-      /* Destroy the partially loaded vorbisfile. */
-      ov_clear(&vf);
-
-      /* Try to load Wav. */
-      ret = sound_al_loadWav( snd, rw );
-   }
-
-   /* Failed to load. */
+   ret = sound_al_buffer( &snd->buf, rw, name );
    if (ret != 0) {
       WARN(_("Failed to load sound file '%s'."), name);
       return ret;
