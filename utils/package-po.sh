@@ -6,7 +6,6 @@ set -e
 
 # Defaults
 BUILDPATH="$(pwd)/build"
-NIGHTLY="false"
 STAGING="$(pwd)/dist"
 
 while getopts dns:b:o: OPTION "$@"; do
@@ -28,4 +27,5 @@ if compgen -G "${BUILDPATH}/po/*.gmo" > /dev/null; then
         mkdir -p "$STAGING"/dat/gettext/$LANG/LC_MESSAGES
         cp -v "${MO_PATH}" "$STAGING"/dat/gettext/$LANG/LC_MESSAGES/naev.mo
     done
+    grep -q '%<PRI' "${BUILDPATH}/po/*.gmo" && echo "***WARNING: 'sysdep' strings like %<PRIu64> cannot be translated. Try %.0f?"
 fi
