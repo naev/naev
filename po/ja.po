@@ -51410,13 +51410,13 @@ msgid ""
 msgstr ""
 
 #: dat/assets/shade__sunshine_station.xml:2
-msgid "Shade &amp; Sunshine Station"
+msgid "Shade & Sunshine Station"
 msgstr ""
 
 #: dat/assets/shade__sunshine_station.xml:27
 msgid ""
 "When the Soromid do something to do with biology, you can assume they do it "
-"really well. Shade &amp; Sunshine is a crop growing station with an amazing "
+"really well. Shade & Sunshine is a crop growing station with an amazing "
 "output. Between the eternal day granted by the station's alignment with the "
 "sun and the Soromid's skill with genetic manipulation, crops here are among "
 "the most bountiful in the entire galaxy."
@@ -51424,7 +51424,7 @@ msgstr ""
 
 #: dat/assets/shade__sunshine_station.xml:28
 msgid ""
-"Shade &amp; Sunshine rotates the crops it grows on a regular basis. The "
+"Shade & Sunshine rotates the crops it grows on a regular basis. The "
 "spacedock bar is themed on the currently cultivated crops, using subtle "
 "lighting and holopaintings along the walls."
 msgstr ""
@@ -56998,143 +56998,143 @@ msgid "Patchwork Medium Plating"
 msgstr ""
 
 #: dat/outfits/core_hull/sk_heavy_combat_plating.xml:2
-msgid "S&amp;K Heavy Combat Plating"
+msgid "S&K Heavy Combat Plating"
 msgstr ""
 
 #: dat/outfits/core_hull/sk_heavy_combat_plating.xml:9
 msgid ""
-"This heavy plating developed by Schafer &amp; Kane Industries can endure "
+"This heavy plating developed by Schafer & Kane Industries can endure "
 "prolonged battle. Quite a few captains and their crews owe their lives to "
 "this armour configuration."
 msgstr ""
 
 #: dat/outfits/core_hull/sk_large_cargo_hull.xml:2
-msgid "S&amp;K Large Cargo Hull"
+msgid "S&K Large Cargo Hull"
 msgstr ""
 
 #: dat/outfits/core_hull/sk_large_cargo_hull.xml:10
 msgid ""
-"This cargo hull from Schafer &amp; Kane Industries makes use of state-of-the-"
+"This cargo hull from Schafer & Kane Industries makes use of state-of-the-"
 "art defensive alloys, which allows it to free up even more space for cargo "
 "without sacrificing too much durability."
 msgstr ""
 
 #: dat/outfits/core_hull/sk_light_combat_plating.xml:2
-msgid "S&amp;K Light Combat Plating"
+msgid "S&K Light Combat Plating"
 msgstr ""
 
 #: dat/outfits/core_hull/sk_light_combat_plating.xml:10
 msgid ""
-"Schafer &amp; Kane Industries mostly develop for larger ships, but the Light "
+"Schafer & Kane Industries mostly develop for larger ships, but the Light "
 "Combat Plating configuration is a product made for fighters and bombers, "
 "providing optimum protection."
 msgstr ""
 
 #: dat/outfits/core_hull/sk_light_stealth_plating.xml:2
-msgid "S&amp;K Light Stealth Plating"
+msgid "S&K Light Stealth Plating"
 msgstr ""
 
 #: dat/outfits/core_hull/sk_light_stealth_plating.xml:10
 msgid ""
-"Designed for military scouting and patrol vessels, Schafer &amp; Kane's "
+"Designed for military scouting and patrol vessels, Schafer & Kane's "
 "Light Stealth Plating configuration features the latest in sensor-absorbing "
 "materials and geometry."
 msgstr ""
 
 #: dat/outfits/core_hull/sk_medium_cargo_hull.xml:2
-msgid "S&amp;K Medium Cargo Hull"
+msgid "S&K Medium Cargo Hull"
 msgstr ""
 
 #: dat/outfits/core_hull/sk_medium_cargo_hull.xml:10
 msgid ""
-"Schafer &amp; Kane Industries have developed a hull modification that "
+"Schafer & Kane Industries have developed a hull modification that "
 "provides both ample cargo space and protection."
 msgstr ""
 
 #: dat/outfits/core_hull/sk_medium_combat_plating.xml:2
-msgid "S&amp;K Medium Combat Plating"
+msgid "S&K Medium Combat Plating"
 msgstr ""
 
 #: dat/outfits/core_hull/sk_medium_combat_plating.xml:9
 msgid ""
-"Designed for corvettes and similarly-sized vessels, Schafer &amp; Kane's "
+"Designed for corvettes and similarly-sized vessels, Schafer & Kane's "
 "medium combat plating provides ample protection utilizing the latest in "
 "defensive materials."
 msgstr ""
 
 #: dat/outfits/core_hull/sk_medium_stealth_plating.xml:2
-msgid "S&amp;K Medium Stealth Plating"
+msgid "S&K Medium Stealth Plating"
 msgstr ""
 
 #: dat/outfits/core_hull/sk_medium_stealth_plating.xml:9
 msgid ""
 "Medium-sized ships are usually not in the business of remaining undetected, "
-"but Schafer &amp; Kane Industries have nevertheless developed a hull "
+"but Schafer & Kane Industries have nevertheless developed a hull "
 "modification that helps in this area"
 msgstr ""
 
 #: dat/outfits/core_hull/sk_mediumheavy_combat_plating.xml:2
-msgid "S&amp;K Medium-Heavy Combat Plating"
+msgid "S&K Medium-Heavy Combat Plating"
 msgstr ""
 
 #: dat/outfits/core_hull/sk_mediumheavy_combat_plating.xml:10
 msgid ""
-"Designed for destroyers and similarly-sized vessels, Schafer &amp; Kane's "
+"Designed for destroyers and similarly-sized vessels, Schafer & Kane's "
 "medium-heavy combat plating provides excellent protection from everything "
 "save capital-class threats."
 msgstr ""
 
 #: dat/outfits/core_hull/sk_mediumheavy_stealth_plating.xml:2
-msgid "S&amp;K Medium-Heavy Stealth Plating"
+msgid "S&K Medium-Heavy Stealth Plating"
 msgstr ""
 
 #: dat/outfits/core_hull/sk_mediumheavy_stealth_plating.xml:10
 msgid ""
 "Though vessels weighing in at nearly a thousand tonnes can seldom be called "
-"stealthy, Schafer &amp; Kane's medium-heavy stealth plating does what it can "
+"stealthy, Schafer & Kane's medium-heavy stealth plating does what it can "
 "to reduce sensor signatures, without sacrificing protection."
 msgstr ""
 
 #: dat/outfits/core_hull/sk_small_cargo_hull.xml:2
-msgid "S&amp;K Small Cargo Hull"
+msgid "S&K Small Cargo Hull"
 msgstr ""
 
 #: dat/outfits/core_hull/sk_small_cargo_hull.xml:10
 msgid ""
 "Though a pricey investment for small couriers, this hull modification from "
-"Schafer &amp; Kane Industries provides an impressive amount of cargo space "
+"Schafer & Kane Industries provides an impressive amount of cargo space "
 "without compromising the hull's integrity."
 msgstr ""
 
 #: dat/outfits/core_hull/sk_superheavy_combat_plating.xml:2
-msgid "S&amp;K Superheavy Combat Plating"
+msgid "S&K Superheavy Combat Plating"
 msgstr ""
 
 #: dat/outfits/core_hull/sk_superheavy_combat_plating.xml:10
 msgid ""
 "Considered the best standard plating configuration on the market, this hull "
-"modification from Schafer &amp; Kane Industries is generally found only on "
+"modification from Schafer & Kane Industries is generally found only on "
 "important capital ships."
 msgstr ""
 
 #: dat/outfits/core_hull/sk_ultralight_combat_plating.xml:2
-msgid "S&amp;K Ultralight Combat Plating"
+msgid "S&K Ultralight Combat Plating"
 msgstr ""
 
 #: dat/outfits/core_hull/sk_ultralight_combat_plating.xml:9
 msgid ""
-"Schafer &amp; Kane Industries mostly develop for larger ships, but the "
+"Schafer & Kane Industries mostly develop for larger ships, but the "
 "Ultralight Combat Plating configuration is a product made for light fighters "
 "and in-system patrol craft, providing optimum protection."
 msgstr ""
 
 #: dat/outfits/core_hull/sk_ultralight_stealth_plating.xml:2
-msgid "S&amp;K Ultralight Stealth Plating"
+msgid "S&K Ultralight Stealth Plating"
 msgstr ""
 
 #: dat/outfits/core_hull/sk_ultralight_stealth_plating.xml:9
 msgid ""
-"Designed for military scouting vessels, Schafer &amp; Kane's Ultralight "
+"Designed for military scouting vessels, Schafer & Kane's Ultralight "
 "Stealth Plating configuration features the latest in sensor-absorbing "
 "materials and geometry."
 msgstr ""

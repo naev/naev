@@ -56858,12 +56858,12 @@ msgstr ""
 "das Gehirn schädigt."
 
 #: dat/assets/shade__sunshine_station.xml:2
-msgid "Shade &amp; Sunshine Station"
+msgid "Shade & Sunshine Station"
 msgstr "Schatten-und-Sonnenschein-Station"
 
 #: dat/assets/shade__sunshine_station.xml:27
 msgid ""
-"When the Soromid do something to do with biology, you can assume they do it really well. Shade &amp; Sunshine "
+"When the Soromid do something to do with biology, you can assume they do it really well. Shade & Sunshine "
 "is a crop growing station with an amazing output. Between the eternal day granted by the station's alignment "
 "with the sun and the Soromid's skill with genetic manipulation, crops here are among the most bountiful in "
 "the entire galaxy."
@@ -56875,7 +56875,7 @@ msgstr ""
 
 #: dat/assets/shade__sunshine_station.xml:28
 msgid ""
-"Shade &amp; Sunshine rotates the crops it grows on a regular basis. The spacedock bar is themed on the "
+"Shade & Sunshine rotates the crops it grows on a regular basis. The spacedock bar is themed on the "
 "currently cultivated crops, using subtle lighting and holopaintings along the walls."
 msgstr ""
 "Die auf Schatten und Sonnenschein angebauten Pflanzen werden regelmäßig gewechselt. Die Kneipe wird mit "
@@ -63154,49 +63154,49 @@ msgid "Patchwork Medium Plating"
 msgstr "Flickwerkmittelplattierung"
 
 #: dat/outfits/core_hull/sk_heavy_combat_plating.xml:2
-msgid "S&amp;K Heavy Combat Plating"
-msgstr "S&amp;K-Schwerkampfplattierung"
+msgid "S&K Heavy Combat Plating"
+msgstr "S&K-Schwerkampfplattierung"
 
 #: dat/outfits/core_hull/sk_heavy_combat_plating.xml:9
 msgid ""
-"This heavy plating developed by Schafer &amp; Kane Industries can endure prolonged battle. Quite a few "
+"This heavy plating developed by Schafer & Kane Industries can endure prolonged battle. Quite a few "
 "captains and their crews owe their lives to this armour configuration."
 msgstr ""
-"Diese von Schafer &amp; Kane Industries entwickelte Schwerplattierung kann einen längeren Kampf aushalten. "
+"Diese von Schafer & Kane Industries entwickelte Schwerplattierung kann einen längeren Kampf aushalten. "
 "Nicht wenige Kapitäne und ihre Besatzungen verdanken dieser Panzerkonfiguration ihr Leben."
 
 #: dat/outfits/core_hull/sk_large_cargo_hull.xml:2
-msgid "S&amp;K Large Cargo Hull"
-msgstr "S&amp;K-Großfrachtrumpf"
+msgid "S&K Large Cargo Hull"
+msgstr "S&K-Großfrachtrumpf"
 
 #: dat/outfits/core_hull/sk_large_cargo_hull.xml:10
 msgid ""
-"This cargo hull from Schafer &amp; Kane Industries makes use of state-of-the-art defensive alloys, which "
+"This cargo hull from Schafer & Kane Industries makes use of state-of-the-art defensive alloys, which "
 "allows it to free up even more space for cargo without sacrificing too much durability."
 msgstr ""
-"Dieser Frachtrumpf von Schafer &amp; Kane Industries verwendet hochmoderne Verteidigungslegierungen, die es "
+"Dieser Frachtrumpf von Schafer & Kane Industries verwendet hochmoderne Verteidigungslegierungen, die es "
 "ihm ermöglichen, noch mehr Raum für die Fracht freizumachen, ohne dabei allzu viel Stabilität zu opfern."
 
 #: dat/outfits/core_hull/sk_light_combat_plating.xml:2
-msgid "S&amp;K Light Combat Plating"
-msgstr "S&amp;K-Leichtkampfplattierung"
+msgid "S&K Light Combat Plating"
+msgstr "S&K-Leichtkampfplattierung"
 
 #: dat/outfits/core_hull/sk_light_combat_plating.xml:10
 msgid ""
-"Schafer &amp; Kane Industries mostly develop for larger ships, but the Light Combat Plating configuration is "
+"Schafer & Kane Industries mostly develop for larger ships, but the Light Combat Plating configuration is "
 "a product made for fighters and bombers, providing optimum protection."
 msgstr ""
-"Schafer &amp; Kane Industries entwickelt hauptsächlich für größere Schiffe, aber die Konfiguration "
+"Schafer & Kane Industries entwickelt hauptsächlich für größere Schiffe, aber die Konfiguration "
 "„Leichtkampfplattierung“ ist ein Produkt, das für Jäger und Bomber entwickelt wurde und optimalen Schutz "
 "bietet."
 
 #: dat/outfits/core_hull/sk_light_stealth_plating.xml:2
-msgid "S&amp;K Light Stealth Plating"
-msgstr "S&amp;K-Leichttarnplattierung"
+msgid "S&K Light Stealth Plating"
+msgstr "S&K-Leichttarnplattierung"
 
 #: dat/outfits/core_hull/sk_light_stealth_plating.xml:10
 msgid ""
-"Designed for military scouting and patrol vessels, Schafer &amp; Kane's Light Stealth Plating configuration "
+"Designed for military scouting and patrol vessels, Schafer & Kane's Light Stealth Plating configuration "
 "features the latest in sensor-absorbing materials and geometry."
 msgstr ""
 "Entwickelt für militärische Aufklärungs- und Patrouillenschiffe ist Schafer & Amp; Kanes "
@@ -63204,111 +63204,111 @@ msgstr ""
 "ausgestattet."
 
 #: dat/outfits/core_hull/sk_medium_cargo_hull.xml:2
-msgid "S&amp;K Medium Cargo Hull"
-msgstr "S&amp;K-Mittelfrachtrumpf"
+msgid "S&K Medium Cargo Hull"
+msgstr "S&K-Mittelfrachtrumpf"
 
 #: dat/outfits/core_hull/sk_medium_cargo_hull.xml:10
 msgid ""
-"Schafer &amp; Kane Industries have developed a hull modification that provides both ample cargo space and "
+"Schafer & Kane Industries have developed a hull modification that provides both ample cargo space and "
 "protection."
 msgstr ""
-"Schafer &amp; Kane Industries hat eine Rumpfmodifikation entwickelt, die sowohl ausreichend Laderaum als auch "
+"Schafer & Kane Industries hat eine Rumpfmodifikation entwickelt, die sowohl ausreichend Laderaum als auch "
 "Schutz bietet."
 
 #: dat/outfits/core_hull/sk_medium_combat_plating.xml:2
-msgid "S&amp;K Medium Combat Plating"
-msgstr "S&amp;K-Mittelkampfplattierung"
+msgid "S&K Medium Combat Plating"
+msgstr "S&K-Mittelkampfplattierung"
 
 #: dat/outfits/core_hull/sk_medium_combat_plating.xml:9
 msgid ""
-"Designed for corvettes and similarly-sized vessels, Schafer &amp; Kane's medium combat plating provides ample "
+"Designed for corvettes and similarly-sized vessels, Schafer & Kane's medium combat plating provides ample "
 "protection utilizing the latest in defensive materials."
 msgstr ""
 "Entwickelt für Korvetten und Schiffe ähnlicher Größe, bietet Schafer & Amp; Kanes Mittelkampfplattierung "
 "reichlich Schutz unter Verwendung der neuesten Verteidigungsmaterialien."
 
 #: dat/outfits/core_hull/sk_medium_stealth_plating.xml:2
-msgid "S&amp;K Medium Stealth Plating"
-msgstr "S&amp;K-Mitteltarnplattierung"
+msgid "S&K Medium Stealth Plating"
+msgstr "S&K-Mitteltarnplattierung"
 
 #: dat/outfits/core_hull/sk_medium_stealth_plating.xml:9
 msgid ""
-"Medium-sized ships are usually not in the business of remaining undetected, but Schafer &amp; Kane Industries "
+"Medium-sized ships are usually not in the business of remaining undetected, but Schafer & Kane Industries "
 "have nevertheless developed a hull modification that helps in this area"
 msgstr ""
-"Bei mittelgroßen Schiffen geht es in der Regel nicht darum, unentdeckt zu bleiben, aber Schafer &amp; Kane "
+"Bei mittelgroßen Schiffen geht es in der Regel nicht darum, unentdeckt zu bleiben, aber Schafer & Kane "
 "Industries hat dennoch eine Rumpfmodifikation entwickelt, die in diesem Bereich hilft"
 
 #: dat/outfits/core_hull/sk_mediumheavy_combat_plating.xml:2
-msgid "S&amp;K Medium-Heavy Combat Plating"
-msgstr "S&amp;K-Halbschwerkampfplattierung"
+msgid "S&K Medium-Heavy Combat Plating"
+msgstr "S&K-Halbschwerkampfplattierung"
 
 #: dat/outfits/core_hull/sk_mediumheavy_combat_plating.xml:10
 msgid ""
-"Designed for destroyers and similarly-sized vessels, Schafer &amp; Kane's medium-heavy combat plating "
+"Designed for destroyers and similarly-sized vessels, Schafer & Kane's medium-heavy combat plating "
 "provides excellent protection from everything save capital-class threats."
 msgstr ""
-"Entwickelt für Zerstörer und Schiffe ähnlicher Größe. Schafer &amp; Kanes mittelschwere Kampfpanzerung bietet "
+"Entwickelt für Zerstörer und Schiffe ähnlicher Größe. Schafer & Kanes mittelschwere Kampfpanzerung bietet "
 "hervorragenden Schutz vor allem außer vor Bedrohungen der Kapitalklasse."
 
 #: dat/outfits/core_hull/sk_mediumheavy_stealth_plating.xml:2
-msgid "S&amp;K Medium-Heavy Stealth Plating"
-msgstr "S&amp;K-Halbschwertarnplattierung"
+msgid "S&K Medium-Heavy Stealth Plating"
+msgstr "S&K-Halbschwertarnplattierung"
 
 #: dat/outfits/core_hull/sk_mediumheavy_stealth_plating.xml:10
 msgid ""
-"Though vessels weighing in at nearly a thousand tonnes can seldom be called stealthy, Schafer &amp; Kane's "
+"Though vessels weighing in at nearly a thousand tonnes can seldom be called stealthy, Schafer & Kane's "
 "medium-heavy stealth plating does what it can to reduce sensor signatures, without sacrificing protection."
 msgstr ""
 "Obwohl man Schiffe mit einem Gewicht von fast tausend Tonnen selten als Tarnschiffe bezeichnen kann, tut "
-"Schafer &amp; Kanes Halbschwertarnplattierung ihr Möglichstes, um die Sensorsignaturen zu reduzieren, ohne "
+"Schafer & Kanes Halbschwertarnplattierung ihr Möglichstes, um die Sensorsignaturen zu reduzieren, ohne "
 "die Panzerung zu beeinträchtigen."
 
 #: dat/outfits/core_hull/sk_small_cargo_hull.xml:2
-msgid "S&amp;K Small Cargo Hull"
-msgstr "S&amp;K-Kleinfrachtrumpf"
+msgid "S&K Small Cargo Hull"
+msgstr "S&K-Kleinfrachtrumpf"
 
 #: dat/outfits/core_hull/sk_small_cargo_hull.xml:10
 msgid ""
-"Though a pricey investment for small couriers, this hull modification from Schafer &amp; Kane Industries "
+"Though a pricey investment for small couriers, this hull modification from Schafer & Kane Industries "
 "provides an impressive amount of cargo space without compromising the hull's integrity."
 msgstr ""
-"Obwohl eine kostspielige Investition für kleine Kuriere, bietet diese Rumpfmodifikation von Schafer &amp; "
+"Obwohl eine kostspielige Investition für kleine Kuriere, bietet diese Rumpfmodifikation von Schafer & "
 "Kane Industries eine beeindruckende Menge an Frachtraum, ohne die Integrität des Rumpfes zu beeinträchtigen."
 
 #: dat/outfits/core_hull/sk_superheavy_combat_plating.xml:2
-msgid "S&amp;K Superheavy Combat Plating"
-msgstr "S&amp;K-Superschwerkampfplattierung"
+msgid "S&K Superheavy Combat Plating"
+msgstr "S&K-Superschwerkampfplattierung"
 
 #: dat/outfits/core_hull/sk_superheavy_combat_plating.xml:10
 msgid ""
-"Considered the best standard plating configuration on the market, this hull modification from Schafer &amp; "
+"Considered the best standard plating configuration on the market, this hull modification from Schafer & "
 "Kane Industries is generally found only on important capital ships."
 msgstr ""
-"Diese Rumpfmodifikation von Schafer &amp; Kane Industries gilt als die beste auf dem Markt erhältliche "
+"Diese Rumpfmodifikation von Schafer & Kane Industries gilt als die beste auf dem Markt erhältliche "
 "Standardkonfiguration für die Plattierung von Schiffsrümpfen und ist im Allgemeinen nur auf wichtigen "
 "Investitionsschiffen zu finden."
 
 #: dat/outfits/core_hull/sk_ultralight_combat_plating.xml:2
-msgid "S&amp;K Ultralight Combat Plating"
-msgstr "S&amp;K-Ultraleichtkampfplattierung"
+msgid "S&K Ultralight Combat Plating"
+msgstr "S&K-Ultraleichtkampfplattierung"
 
 #: dat/outfits/core_hull/sk_ultralight_combat_plating.xml:9
 msgid ""
-"Schafer &amp; Kane Industries mostly develop for larger ships, but the Ultralight Combat Plating "
+"Schafer & Kane Industries mostly develop for larger ships, but the Ultralight Combat Plating "
 "configuration is a product made for light fighters and in-system patrol craft, providing optimum protection."
 msgstr ""
-"Schafer &amp; Kane Industries entwickelt hauptsächlich für größere Schiffe, aber die "
+"Schafer & Kane Industries entwickelt hauptsächlich für größere Schiffe, aber die "
 "Ultraleichtkampfplattierung-Konfiguration ist ein Produkt, das für leichte Kampfflugzeuge und systeminterne "
 "Patrouillenschiffe entwickelt wurde und optimalen Schutz bietet."
 
 #: dat/outfits/core_hull/sk_ultralight_stealth_plating.xml:2
-msgid "S&amp;K Ultralight Stealth Plating"
-msgstr "S&amp;K-Ultraleichttarnplattierung"
+msgid "S&K Ultralight Stealth Plating"
+msgstr "S&K-Ultraleichttarnplattierung"
 
 #: dat/outfits/core_hull/sk_ultralight_stealth_plating.xml:9
 msgid ""
-"Designed for military scouting vessels, Schafer &amp; Kane's Ultralight Stealth Plating configuration "
+"Designed for military scouting vessels, Schafer & Kane's Ultralight Stealth Plating configuration "
 "features the latest in sensor-absorbing materials and geometry."
 msgstr ""
 "Entwickelt für militärische Aufklärungsschiffe ist Schafer & Amp; Kanes "
