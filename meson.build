@@ -92,6 +92,12 @@ if buildExec.disabled() == false
    naev_deps += cc.find_library('m', required : false)
 
    sdl = dependency('sdl2', required: true)
+
+   libxml2 = cc.find_library('xml2', required: false)
+   if not libxml2.found()
+      libxml2 = dependency('libxml-2.0', required: true)
+   endif
+
    naev_deps += [
       dependency('freetype2', required: true),
       sdl,
@@ -99,7 +105,7 @@ if buildExec.disabled() == false
          dependencies: dependency('libpng', required: true),
          compile_args: '-DNOLOGPRINTFCONSOLE',
          link_args: '-DNOLOGPRINTFCONSOLE'),
-      dependency('libxml-2.0', required: true)
+      libxml2,
    ]
 
    # Lua
