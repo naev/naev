@@ -117,7 +117,7 @@ if buildExec.disabled() == false
 
    naev_deps += lua
 
-   ### Soft deps (required: false
+   ### Soft deps (required: false)
 
    # BFD
    if get_option('debug')
