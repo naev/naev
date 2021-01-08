@@ -237,7 +237,7 @@ if buildExec.disabled() == false
    install_data(
       'gpl.txt',
       'LICENSE',
-      'README',
+      'Readme.md',
       install_dir: get_option('datadir') / 'doc/naev'
    )
 
