@@ -69,18 +69,19 @@ if buildExec.disabled() == false
    if 'SuiteSparse' not in get_option('force_fallback_for')
       csparse_names = ['csparse', 'cxsparse']
       foreach n : csparse_names
-         csparse = cc.find_library(n, required: false)
+         csparse = cc.find_library(n, required: false, has_headers: ['suitesparse/cs.h'])
+         if csparse.found()
+            config_data.set10('HAVE_SUITESPARSE_CS_H', true)
+            break
+         endif
+         csparse = cc.find_library(n, required: false, has_headers: ['cs.h'])
          if csparse.found()
             break
          endif
       endforeach
    endif
 
-   if csparse.found()
-      if cc.has_header('suitesparse/cs.h')
-         config_data.set10('HAVE_SUITESPARSE_CS_H', true)
-      endif
-   else
+   if not csparse.found()
       csparse = dependency(
          'SuiteSparse',
          fallback: ['SuiteSparse', 'CSparse_dep'],
