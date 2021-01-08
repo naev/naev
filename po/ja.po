@@ -37929,7 +37929,7 @@ msgstr ""
 #, c-format
 msgid ""
 "Planet: %s\n"
-"Planetary class: %s    Population: %<PRIu64>\n"
+"Planetary class: %s    Population: %.0f\n"
 msgstr ""
 
 #: src/map_system.c:515
