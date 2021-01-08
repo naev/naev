@@ -202,7 +202,7 @@ void sound_exit (void)
  *    @param name Name of the sound to get the id of.
  *    @return ID of the sound matching name.
  */
-int sound_get( char* name )
+int sound_get( const char* name )
 {
    int i;
 
@@ -657,7 +657,7 @@ double sound_getVolume (void)
  *
  *    @return The current sound volume level.
  */
-double sound_getVolumeLog(void)
+double sound_getVolumeLog (void)
 {
    if (sound_disabled)
       return 0.;
