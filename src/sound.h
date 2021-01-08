@@ -44,8 +44,8 @@ void sound_setSpeed( double s );
 /*
  * source management
  */
-int source_newRW( SDL_RWops *rw, const char* name );
-int source_new( const char* filename );
+int source_newRW( SDL_RWops *rw, const char *name, unsigned int flags );
+int source_new( const char* filename, unsigned int flags );
 
 
 /*

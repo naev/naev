@@ -602,9 +602,8 @@ static int sound_makeList (void)
       /* Load the sound. */
       nsnprintf( path, PATH_MAX, SOUND_PATH"%s", files[i] );
       rw = PHYSFSRWOPS_openRead( path );
-      source_newRW( rw, tmp );
+      source_newRW( rw, tmp, 0 );
       SDL_RWclose( rw );
-
    }
 
    DEBUG( n_("Loaded %d Sound", "Loaded %d Sounds", array_size(sound_list)), array_size(sound_list) );
@@ -901,10 +900,11 @@ alVoice* voice_get( int id )
 /**
  * @brief Loads a new sound source from a RWops.
  */
-int source_newRW( SDL_RWops *rw, const char *name )
+int source_newRW( SDL_RWops *rw, const char *name, unsigned int flags )
 {
    int ret;
    alSound snd, *sndl;
+   (void) flags;
 
    if (sound_disabled)
       return -1;
@@ -925,10 +925,10 @@ int source_newRW( SDL_RWops *rw, const char *name )
 /**
  * @brief Loads a new source from a file.
  */
-int source_new( const char* filename )
+int source_new( const char* filename, unsigned int flags )
 {
    SDL_RWops *rw = PHYSFSRWOPS_openRead( filename );
-   int id = source_newRW( rw, filename );
+   int id = source_newRW( rw, filename, flags );
    SDL_RWclose( rw );
    return id;
 }
