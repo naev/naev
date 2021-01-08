@@ -224,7 +224,7 @@ int sound_get( const char* name )
  *    @param sound ID of the buffer to get the length of..
  *    @return The length of the buffer.
  */
-double sound_length( int sound )
+double sound_getLength( int sound )
 {
    if (sound_disabled)
       return 0.;

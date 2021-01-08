@@ -44,7 +44,7 @@ void sound_setSpeed( double s );
  * sound sample management
  */
 int sound_get( const char* name );
-double sound_length( int sound );
+double sound_getLength( int sound );
 
 
 /*
