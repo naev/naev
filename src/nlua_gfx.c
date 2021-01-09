@@ -466,6 +466,7 @@ static int gfxL_printfWrap( lua_State *L )
    /* Push max width. */
    lua_pushinteger(L, maxw);
 
+   free( tmp );
    return 2;
 }
 
