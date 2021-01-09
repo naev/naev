@@ -201,7 +201,7 @@ function accept()
       misn.finish(false)
    end
    tk.msg(accept_title, accept_text1)
-   tk.msg(accept_title, accept_text2:format(_(hampla:name()), _(hamsys:name()), bombMass))
+   tk.msg(accept_title, accept_text2:format(hampla:name(), hamsys:name(), bombMass))
 
    misn.accept()
    misn.setDesc(misn_desc)
@@ -209,7 +209,7 @@ function accept()
 
    stage = 0
    hook.land("land")
-   misn.osdCreate( osd_title, {osd_msg1:format(_(hampla:name()), _(hamsys:name()), bombMass), osd_msg2:format(_(sabotpla:name()), _(sabotsys:name())), osd_msg3:format(_(duelpla:name()), _(duelsys:name()))} )
+   misn.osdCreate( osd_title, {osd_msg1:format(hampla:name(), hamsys:name(), bombMass), osd_msg2:format(sabotpla:name(), sabotsys:name()), osd_msg3:format(duelpla:name(), duelsys:name())} )
    mark = misn.markerAdd(hamsys, "low")
 end
 
@@ -236,7 +236,7 @@ function hamfresser()
    if (player.pilot():cargoFree() >= bombMass) then
       tk.msg( ham_title, ham_text1:format(bombMass,bombMass) )
       tk.msg( ham_title, ham_text2 )
-      tk.msg( ham_title, ham_text3:format(_(sabotpla:name()), _(sabotsys:name())) )
+      tk.msg( ham_title, ham_text3:format(sabotpla:name(), sabotsys:name()) )
       stage = 1
       hook.enter("enter")
       bomblet = misn.cargoAdd("Bomb", bombMass)
@@ -290,7 +290,7 @@ function enter()
       hook.timer(2000, "enter2_message")
       stage = 3
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {osd_msg5:format(_(intsys:name()), _(intpla:name())), osd_msg7, osd_msg8:format(_(duelpla:name()), _(duelsys:name()))} )
+      misn.osdCreate( osd_title, {osd_msg5:format(intsys:name(), intpla:name()), osd_msg7, osd_msg8:format(duelpla:name(), duelsys:name())} )
       mark = misn.markerAdd(intsys, "low")
 
    elseif stage == 3 and system.cur() == intsys then
@@ -392,12 +392,12 @@ function equipVendetta( pilot )
 end
 
 function enter1_message()
-   tk.msg(enter1_title, enter1_text:format(_(sabotpla:name())))
+   tk.msg(enter1_title, enter1_text:format(sabotpla:name()))
 end
 
 function enter2_message()
-   tk.msg(escape_title, escape_text:format(_(sabotsys:name()), _(sabotsys:name())))
-   tk.msg(next_title, next_text:format(_(intpla:name()), _(intsys:name()), player.name(), _(duelpla:name())))
+   tk.msg(escape_title, escape_text:format(sabotsys:name(), sabotsys:name()))
+   tk.msg(next_title, next_text:format(intpla:name(), intsys:name(), player.name(), duelpla:name()))
 end
 
 -- Battleaddict agrees for the player to approach
@@ -515,11 +515,11 @@ function phalanx_safe()
 end
 
 function majorTam()
-   tk.msg( preduel_title, preduel_text:format(_(sabotpla:name())) )
+   tk.msg( preduel_title, preduel_text:format(sabotpla:name()) )
    stage = 6
 
    misn.osdDestroy()
-   misn.osdCreate( osd_title, {osd_msg9, osd_msg10:format(_(duelpla:name()))} )
+   misn.osdCreate( osd_title, {osd_msg9, osd_msg10:format(duelpla:name())} )
    misn.markerRm(mark)
 end
 

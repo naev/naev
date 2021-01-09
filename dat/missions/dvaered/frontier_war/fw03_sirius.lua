@@ -169,7 +169,7 @@ function accept()
       tk.msg(refuse_title, refuse_text)
       misn.finish(false)
    end
-   tk.msg(accept_title, accept_text:format(_(destpla:name()), _(destsys:name())))
+   tk.msg(accept_title, accept_text:format(destpla:name(), destsys:name()))
 
    misn.accept()
    misn.osdCreate( osd_title, {osd_text1, osd_text2, osd_text3, osd_text4 } ) 
@@ -268,13 +268,13 @@ function enter()
       tk.msg( flee_title, clean_text )
       misn.finish(false)
    elseif stage == 6 then
-      tk.msg(flee_title, sland_text:format(_(nextt:name())))
+      tk.msg(flee_title, sland_text:format(nextt:name()))
       misn.finish(false)
 
    -- Enter after a fleeing enemy
    elseif stage == 4 then
       if system.cur() == nextt then
-         target = pilot.addRaw( shi:name(), "mercenary", previous, "Mercenary" )
+         target = pilot.addRaw( shi:nameRaw(), "mercenary", previous, "Mercenary" )
          target:setHealth( arm, sld, str )
          target:setTemp( tem )
          target:setHilight()
@@ -284,7 +284,7 @@ function enter()
          hook.pilot(target, "jump","lastOne_jump")
          hook.pilot(target, "land","lastOne_land")
       else
-      tk.msg(flee_title, sjump_text:format(_(nextt:name())))
+      tk.msg(flee_title, sjump_text:format(nextt:name()))
          misn.finish(false)
       end
    end
@@ -309,24 +309,24 @@ function land()
       tk.msg( flee_title, clean_text )
       misn.finish(false)
    elseif stage == 4 then
-      tk.msg(flee_title, sjump_text:format(_(nextt:name())))
+      tk.msg(flee_title, sjump_text:format(nextt:name()))
       misn.finish(false)
 
    -- Landing after an enemy (victory as well)
    elseif stage == 6 then
       if planet.cur() == nextt then
          compute_reward()
-         if shi:name() == "Kestrel" then -- it's Hamelsen and she escapes
-            tk.msg( execution_title, execution_text1:format(_(shi:name()), player.name()) )
+         if shi:nameRaw() == "Kestrel" then -- it's Hamelsen and she escapes
+            tk.msg( execution_title, execution_text1:format(shi:name(), player.name()) )
             tk.msg( execution_title, execution_failed_text2:format(creditstring(effective_credits)) )
          else -- No pity for non-Hamelsen henchmen
-            tk.msg( execution_title, execution_text1:format(_(shi:name()), player.name()) )
+            tk.msg( execution_title, execution_text1:format(shi:name(), player.name()) )
             tk.msg( execution_title, execution_text2, "portraits/neutral/female1.png" )
             tk.msg( execution_title, execution_text3:format(creditstring(effective_credits)) )
          end
          payNfinish()
       else
-         tk.msg(flee_title, sland_text:format(_(nextt:name())))
+         tk.msg(flee_title, sland_text:format(nextt:name()))
          misn.finish(false)
       end
    end
@@ -539,10 +539,10 @@ function baddie_jump( pilot, jump )
          tem = pilot:temp()
          shi = pilot:ship()
 
-         tk.msg(failed_title, jumpout_text:format(player.name(), _(nextt:name()))) -- TODO: ensure the cleaning doesn't take too long
+         tk.msg(failed_title, jumpout_text:format(player.name(), nextt:name())) -- TODO: ensure the cleaning doesn't take too long
          stage = 3
          misn.osdDestroy()
-         misn.osdCreate( osd_title, {osd_text5, osd_text6:format(_(nextt:name()))} )
+         misn.osdCreate( osd_title, {osd_text5, osd_text6:format(nextt:name())} )
          misn.markerAdd( nextt, "high" )
       else -- You won't follow several enemies
          tk.msg(failed_title, tflee_text)
@@ -557,12 +557,12 @@ function baddie_land( pilot, planet )
    if (elt_inlist( pilot, targetList ) > 0) then
       if stage == 1 then -- It's the first one who escapes
          nextt = planet
-         tk.msg(failed_title, land_text:format(player.name(), _(nextt:name())))
+         tk.msg(failed_title, land_text:format(player.name(), nextt:name()))
          stage = 5
 
          shi = pilot:ship()
          misn.osdDestroy()
-         misn.osdCreate( osd_title, {osd_text5, osd_text7:format(_(nextt:name()))} )
+         misn.osdCreate( osd_title, {osd_text5, osd_text7:format(nextt:name())} )
       else -- You won't follow several enemies
          tk.msg(failed_title, tflee_text)
          misn.finish(false)
@@ -624,7 +624,7 @@ function lastOne_died()
    player.msg( killAll )
    stage = 2
    misn.osdActive(4)
-   if shi:name() == "Kestrel" then 
+   if shi:nameRaw() == "Kestrel" then
       spawnHamelsen( target:pos() )
    end
 end

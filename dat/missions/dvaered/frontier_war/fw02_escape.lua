@@ -265,7 +265,7 @@ function accept()
       misn.finish(false)
    end
    tk.msg(accept_title, accept_text1)
-   tk.msg(accept_title, accept_text2:format(_(pripla:name()), _(prisys:name()), _(zlkpla:name()), _(zlksys:name()), _(hampla:name()), _(hamsys:name()), _(intsys:name()), _(reppla:name()) ))
+   tk.msg(accept_title, accept_text2:format(pripla:name(), prisys:name(), zlkpla:name(), zlksys:name(), hampla:name(), hamsys:name(), intsys:name(), reppla:name() ))
 
    misn.accept()
    misn.setDesc(misn_desc)
@@ -274,7 +274,7 @@ function accept()
    stage = 0
    hook.land("land")
    hook.enter("enter")
-   misn.osdCreate( osd_title, {osd_msg1:format(_(hampla:name()), _(hamsys:name())), osd_msg2:format(_(intsys:name())), osd_msg3:format(_(reppla:name()), _(repsys:name()))} )
+   misn.osdCreate( osd_title, {osd_msg1:format(hampla:name(), hamsys:name()), osd_msg2:format(intsys:name()), osd_msg3:format(reppla:name(), repsys:name())} )
    mark = misn.markerAdd(hamsys, "low")
 end
 
@@ -309,7 +309,7 @@ function land()
 
    -- Land to end the mission
    elseif stage >= 4 and planet.cur() == reppla then
-      tk.msg(back_title, back_text:format(_(hospPlanet:name()), player.name()))
+      tk.msg(back_title, back_text:format(hospPlanet:name(), player.name()))
       var.push("dv_empire_deal", false)
       var.push("dv_pirate_debt", false)
       shiplog.createLog( "frontier_war", _("Frontier War"), _("Dvaered") )
@@ -377,7 +377,7 @@ function fireSteal()
       tk.msg(hosp_title, hosp_text)
       stage = 4
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {osd_msg5:format(_(reppla:name()), _(repsys:name()))} )
+      misn.osdCreate( osd_title, {osd_msg5:format(reppla:name(), repsys:name())} )
       hook.pilot(nil, "death", "killed_zlk")
 
       hospPlanet = planet.cur()
@@ -391,7 +391,7 @@ end
 -- Test to see if the player killed a zlk inhabited ship
 function killed_zlk(pilot,killer)
    if pilot:faction() == faction.get("Za'lek") and killer == player.pilot() then
-      killed_ship = pilot:ship():name()
+      killed_ship = pilot:ship():nameRaw()
       if (elt_inlist( killed_ship, {"Za'lek Scout Drone", "Za'lek Light Drone", "Za'lek Heavy Drone", "Za'lek Bomber Drone"} ) == 0) then
          tk.msg(kill_title, kill_text)
          misn.finish(false)
@@ -462,7 +462,7 @@ function enter()
    end
 
    if stage >= 4 then
-      curname = system.cur():name()
+      curname = system.cur():nameRaw()
 
       -- Zlk Blocus:
       -- Pultatis -> Provectus Nova
@@ -790,7 +790,7 @@ function pirateDealer()
          player.pay(-pirate_price)
          tk.msg(pir_yes_title,pir_yes_text)
          misn.osdDestroy()
-         misn.osdCreate( osd_title, {osd_msg7:format(_(reppla:name()), _(repsys:name()))} )
+         misn.osdCreate( osd_title, {osd_msg7:format(reppla:name(), repsys:name())} )
          misn.npcRm(pirag)
          stage = 9
       else
@@ -799,7 +799,7 @@ function pirateDealer()
    elseif c == 2 then
       tk.msg(pir_debt_title,pir_debt_text)
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {osd_msg7:format(_(reppla:name()), _(repsys:name()))} )
+      misn.osdCreate( osd_title, {osd_msg7:format(reppla:name(), repsys:name())} )
       misn.npcRm(pirag)
       stage = 8
    else
@@ -810,7 +810,7 @@ function imperialAgent()
    if tk.yesno(imperial_title2, imperial_text2:format(player.name())) then
       tk.msg(imp_yes_title,imp_yes_text)
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {osd_msg6:format(_(reppla:name()), _(repsys:name()))} )
+      misn.osdCreate( osd_title, {osd_msg6:format(reppla:name(), repsys:name())} )
       misn.markerAdd( system.get("Alteris"), "plot" )
       misn.npcRm(impag)
       stage = 7
