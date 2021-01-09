@@ -10,6 +10,7 @@
    <done>Dvaered Escape</done>
    <location>Bar</location>
    <faction>Dvaered</faction>
+   <cond>var.peek("dv_pirate_debt") == false</cond>
   </avail>
  </mission>
  --]]
@@ -29,11 +30,11 @@
    6) Pursuit: you may land after the target
 --]]
 
-require "dat/missions/dvaered/frontier_war/fw_common.lua"
-require "selectiveclear.lua"
-require "dat/scripts/nextjump.lua"
-require "proximity.lua"
-require "numstring.lua"
+require "missions/dvaered/frontier_war/fw_common"
+require "selectiveclear"
+require "nextjump"
+require "proximity"
+require "numstring"
 
 --TODO: Set the priority and conditions of this mission
 
@@ -159,7 +160,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_name, "dvaered/dv_military_m3")
+   misn.setNPC(npc_name, portrait_tam)
    misn.setDesc(npc_desc)
 end
 
@@ -194,7 +195,7 @@ function accept()
    alive["__save"] = true
 
    toldya = {false,false,false,false} 
-   boozingTam = misn.npcAdd("discussWithTam", npc_name, "dvaered/dv_military_m3", npc_desc)
+   boozingTam = misn.npcAdd("discussWithTam", npc_name, portrait_tam, npc_desc)
 end
 
 -- Discussions with Major Tam at the bar
@@ -214,10 +215,14 @@ function enter()
 
    -- Entering the next system of the path
    if stage == 0 then
-      if (elt_dest_inlist(system.cur(),path) > 0) then
+      spawnEscort(previous)
+--      print(#path)
+--      print(path["__save"])
+--      print(path["1"]) -- TODO: problem with the __save stuff I guess
+      sysind = elt_dest_inlist(system.cur(), path) -- Save the index of the system in the list (useful to remove the marker later)
+      if (sysind > 0) or (system.cur() == startsys) then
          stage = 1
          misn.osdActive(2)
-         spawnEscort(previous)
 
          -- Decide from where the ambushers come
          if system.cur() == destsys then
@@ -228,7 +233,7 @@ function enter()
          end
 
          escort[1]:control(true)
-         escort[1]:goto( ambJp:pos() )  -- Let's say Strafer knows where they are supposed to come from...
+         escort[1]:moveto( ambJp:pos() )  -- Let's say Strafer knows where they are supposed to come from...
 
          if system.cur() == ambushsys then
             pilot.toggleSpawn("Pirate")
@@ -243,7 +248,7 @@ function enter()
             PW = PA/PA:mod() * 3000
             waitPoint = tamJp:pos() + PW
             badguys[1]:control()
-            badguys[1]:goto(waitPoint)
+            badguys[1]:moveto(waitPoint)
             hook.timer(500, "proximity", {location = waitPoint, radius = 3000, funcname = "badInPosition", focus = badguys[1]})
 
             escort[1]:taskClear()
@@ -358,8 +363,11 @@ function spawnEscort( origin )
       escort[1]:memory().shield_run = 90
       escort[1]:memory().shield_return = 95
 
-      --hook.pilot(escort[1], "hail", "escort_hailed") -- TODO: see if we want that for Strafer
+      hook.pilot(escort[1], "hail", "escort_hailed") -- TODO: see if we want that for Strafer
       hook.pilot(escort[1], "death", "escort_died1")
+
+      escort[1]:control()
+      escort[1]:follow(player.pilot(), true)
    end
 
    if alive[2] then
@@ -445,7 +453,7 @@ function straferScans()
    escort[1]:follow( player.pilot(), true )
    misn.osdActive(3)
 
-   -- Remove all the markers
+   -- Remove all the markers.
    for i, j in ipairs(marklist) do
       misn.markerRm( j )
    end
@@ -459,10 +467,7 @@ function straferReturns()
    stage = 0
    misn.osdActive(1)
 
-   -- Find the marker index and remove it
-   -- ind is 0 only if it's the original system
-   ind = elt_path_inlist( system:cur(), path )
-   misn.markerRm( marklist[ind+1] )
+   misn.markerRm( marklist[sysind+1] )
 end
 
 -- Baddies are in position: start the battle after a small delay
@@ -586,7 +591,7 @@ function strafer_choosePoint()
    escort[1]:taskClear()
    local sysrad = rnd.rnd() * system.cur():radius()
    local angle = rnd.rnd() * 2 * math.pi
-   escort[1]:goto( vec2.new(math.cos(angle) * sysrad, math.sin(angle) * sysrad), false, false )
+   escort[1]:moveto( vec2.new(math.cos(angle) * sysrad, math.sin(angle) * sysrad), false, false )
 end
 
 function increment_baddie()
@@ -667,8 +672,8 @@ end
 -- Pay and finish the mission
 function payNfinish()
    player.pay(effective_credits)
-   shiplog.createLog( "fw03", _("Frontier War"), _("Dvaered") )
-   shiplog.appendLog( "fw03", log_text )
+   shiplog.createLog( "frontier_war", _("Frontier War"), _("Dvaered") )
+   shiplog.appendLog( "frontier_war", log_text )
    misn.finish(true)
 end
 

@@ -20,7 +20,8 @@
 -- TODO: at some point before, it should have been suggested that it's a bad idea to try to betray Klank
 -- TODO: see chance for this event
 
-require "dat/missions/dvaered/frontier_war/fw_common.lua"
+require "missions/dvaered/frontier_war/fw_common"
+require "numstring"
 
 yesno_title = _("You are needed for a special job")
 yesno_text = _([[The pilot of the fighter uses the encrypted canal: "I have finally found you, %s. Better late than never. My employers want to congratulate you about how effective you have been with Lord Battleaddict. I am afraid there won't be many people to regret him." You answer that you don't know what it is about, and that as far as you know, Lord Battleaddict has been killed in a loyal duel by the General Klank. The interlocutor laughs "You're playing your part, eh? I can understand you, after all, they pay you well... Wait, no, they don't pay well. Not at all! How much was it for risking your life twice with this EMP bomb trick? %s? Haw haw haw! You can make better money with a cargo mission!
@@ -85,10 +86,10 @@ function begin ()
    end
 
    vedetta = pilot.add("Dvaered Vendetta", nil, source_system)[1]
-   hook.pilot(vedetta, "jump", "finish")
-   hook.pilot(vedetta, "death", "finish")
-   hook.land("finish")
-   hook.jumpout("finish")
+   finish1 = hook.pilot(vedetta, "jump", "finish")
+   finish2 = hook.pilot(vedetta, "death", "finish")
+   finish3 = hook.land("finish")
+   finish4 = hook.jumpout("finish")
     
    yohail = hook.timer( 4000, "hailme" );
 end
@@ -101,7 +102,7 @@ end
 -- Player answers to hail
 function hail()
    player.commClose()
-   local c = tk.choice(yesno_title, yesno_text:format(player.name(), creditstring(credits_01), creditsstring(credits)), yes_answer, no_answer)
+   local c = tk.choice(yesno_title, yesno_text:format(player.name(), creditstring(credits_01), creditstring(credits)), yes_answer, no_answer)
    if c == 1 then
       tk.msg(accept_title, accept_text:format(targetsys:name()))
       stage = 1
@@ -111,24 +112,29 @@ function hail()
    end
    source_system = system.cur()
    landhook = hook.land("reaction")
+
+   hook.rm(finish1)
+   hook.rm(finish2)
+   hook.rm(finish3)
+   hook.rm(finish4)
 end
 
 -- Reaction to player's choice at first landing
 function reaction()
    if stage == 1 then -- Traitor
-      tk.msg(traitor_title, traitor_text:format(player.name()), "portraits/dvaered/dv_military_f8.png")
+      tk.msg(traitor_title, traitor_text:format(player.name()), portrait_leblanc)
       var.push( "loyal2klank", false )
-      shiplog.createLog( "dv_klank_treason", _("Dvaered Military Coordination"), _("Dvaered") )
-      shiplog.appendLog( "dv_klank_treason", log_text_traitor )
+      shiplog.createLog( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
+      shiplog.appendLog( "dvaered_military", log_text_traitor )
       evt.finish(true)
    else -- Loyal
       tk.choice(loyal_title, loyal_text1:format(player.name()), money_answer, loyal_answer) -- Actually we don't care of the answer
-      tk.msg(loyal_title, loyal_text2, "portraits/dvaered/dv_military_f8.png")
+      tk.msg(loyal_title, loyal_text2, ("portraits/"..portrait_leblanc..".png"))
       tk.msg(loyal_title, loyal_text3)
       tk.msg(loyal_title, loyal_text4)
       var.push( "loyal2klank", true )
-      shiplog.createLog( "fwA", _("Dvaered Military Coordination"), _("Dvaered") )
-      shiplog.appendLog( "fwA", log_text_loyal )
+      shiplog.createLog( "frontier_war", _("Dvaered Military Coordination"), _("Dvaered") )
+      shiplog.appendLog( "frontier_war", log_text_loyal )
       evt.finish(true)
    end
 end

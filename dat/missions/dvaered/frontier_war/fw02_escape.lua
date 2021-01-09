@@ -33,12 +33,12 @@
    9) Accepted Pirate solution: can cross any blockade, but has paid cash
 --]]
 
-require "dat/scripts/nextjump.lua"
-require "selectiveclear.lua"
-require "proximity.lua"
-require "portrait.lua"
-require "dat/missions/dvaered/frontier_war/fw_common.lua"
-require "numstring.lua"
+require "nextjump"
+require "selectiveclear"
+require "proximity"
+require "portrait"
+require "missions/dvaered/frontier_war/fw_common"
+require "numstring"
 
 -- TODO: Set the priority and conditions of this mission
 -- TODO: add news comments about all this
@@ -230,9 +230,9 @@ osd_msg1  = _("Meet the rest of the team in %s in %s")
 osd_msg2  = _("Intercept the convoy in %s. Your Vendetta escort must survive")
 osd_msg3  = _("Report back on %s in %s")
 osd_msg4  = _("Land anywhere to let Hamfresser steal a machine. Time left: %s")
-osd_msg5  = _("Escape to on %s in %s. Do NOT destroy any Za'lek inhabited ship (only drones are allowed)")
-osd_msg6  = _("Escape to on %s in %s. Thanks to your deal with the Empire, the squadron in Alteris won't prevent you from jumping to Goddard")
-osd_msg7  = _("Escape to on %s in %s. Thanks to your new fake transponder, the squadrons should not stop you anymore")
+osd_msg5  = _("Escape to %s in %s. Do NOT destroy any Za'lek inhabited ship (only drones are allowed)")
+osd_msg6  = _("Escape to %s in %s. Thanks to your deal with the Empire, the squadron in Alteris won't prevent you from jumping to Goddard")
+osd_msg7  = _("Escape to %s in %s. Thanks to your new fake transponder, the squadrons should not stop you anymore")
 
 sting_comm_fight = _("You made a very big mistake!")
 sting_comm_flee = _("Just try to catch me, you pirate!")
@@ -255,7 +255,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(portrait_name, "dvaered/dv_military_f8")
+   misn.setNPC(portrait_name, portrait_leblanc)
    misn.setDesc(portrait_desc)
 end
 
@@ -283,11 +283,11 @@ function land()
 
    -- You land at the commando's planet
    if stage == 0 and planet.cur() == hampla then
-      hamfresser = misn.npcAdd("discussHam", hamfr_name, "dvaered/dv_military_m7", hamfr_desc)
-      nikolov = misn.npcAdd("discussNik", nikol_name, "dvaered/dv_military_f7", nikol_desc)
-      tronk = misn.npcAdd("discussTro", tronk_name, "dvaered/dv_military_m5", tronk_desc)
-      therus = misn.npcAdd("discussThe", theru_name, "dvaered/dv_military_f1", theru_desc)
-      strafer = misn.npcAdd("discussStr", straf_name, "dvaered/dv_military_m1", straf_desc)
+      hamfresser = misn.npcAdd("discussHam", hamfr_name, portrait_hamfresser, hamfr_desc)
+      nikolov = misn.npcAdd("discussNik", nikol_name, portrait_nikolov, nikol_desc)
+      tronk = misn.npcAdd("discussTro", tronk_name, portrait_tronk, tronk_desc)
+      therus = misn.npcAdd("discussThe", theru_name, portrait_therus, theru_desc)
+      strafer = misn.npcAdd("discussStr", straf_name, portrait_strafer, straf_desc)
 
       commando = misn.cargoAdd("Commando", commMass) -- TODO: see if it gets auto-removed at the end of mission
 
@@ -298,7 +298,7 @@ function land()
 
    -- You land to steal a medical machine
    elseif stage == 3 then
-      hamfresser = misn.npcAdd("fireSteal", hamfr_name, "dvaered/dv_military_m7", hamfr_des2)
+      hamfresser = misn.npcAdd("fireSteal", hamfr_name, portrait_hamfresser, hamfr_des2)
 
    -- Land at an Imperial planet and meet the agents
    elseif stage == 5 and planet.cur():faction() == faction.get("Empire") then
@@ -312,21 +312,21 @@ function land()
       tk.msg(back_title, back_text:format(_(hospPlanet:name()), player.name()))
       var.push("dv_empire_deal", false)
       var.push("dv_pirate_debt", false)
-      shiplog.createLog( "fw02", _("Frontier War"), _("Dvaered") )
+      shiplog.createLog( "frontier_war", _("Frontier War"), _("Dvaered") )
       if stage == 7 then -- Empire solution
          tk.msg(back_empire_title, back_empire_text:format(creditstring(credits_02)))
          var.push("dv_empire_deal", true)
-         shiplog.appendLog( "fw02", log_text_emp )
+         shiplog.appendLog( "frontier_war", log_text_emp )
       elseif stage == 8 then -- Pirate debt
          tk.msg(back_debt_title, back_debt_text:format(creditstring(pirate_price), creditstring(credits_02)))
          var.push("dv_pirate_debt", true)
-         shiplog.appendLog( "fw02", log_text_debt )
+         shiplog.appendLog( "frontier_war", log_text_debt )
       elseif stage == 9 then -- Pirate cash
          tk.msg(back_pay_title, back_pay_text:format(numstring(credits_02)))
-         shiplog.appendLog( "fw02", log_text_pay )
+         shiplog.appendLog( "frontier_war", log_text_pay )
       else -- Normally, the player should not achieve that (maybe with a trick I did not foresee, but it should be Xtremely hard)
          tk.msg(back_nodeal_title, back_nodeal_text:format(creditstring(credits_02)))
-         shiplog.appendLog( "fw02", log_text_raw )
+         shiplog.appendLog( "frontier_war", log_text_raw )
       end
       player.pay(credits_02)
 
@@ -343,13 +343,13 @@ end
 -- Put the npcs back at loading
 function load()
    if stage == 1 and planet.cur() == hampla then
-      hamfresser = misn.npcAdd("discussHam", hamfr_name, "dvaered/dv_military_m7", hamfr_desc)
-      nikolov = misn.npcAdd("discussNik", nikol_name, "dvaered/dv_military_f7", nikol_desc)
-      tronk = misn.npcAdd("discussTro", tronk_name, "dvaered/dv_military_m5", tronk_desc)
-      therus = misn.npcAdd("discussThe", theru_name, "dvaered/dv_military_f1", theru_desc)
-      strafer = misn.npcAdd("discussStr", straf_name, "dvaered/dv_military_m1", straf_desc)
+      hamfresser = misn.npcAdd("discussHam", hamfr_name, portrait_hamfresser, hamfr_desc)
+      nikolov = misn.npcAdd("discussNik", nikol_name, portrait_nikolov, nikol_desc)
+      tronk = misn.npcAdd("discussTro", tronk_name, portrait_tronk, tronk_desc)
+      therus = misn.npcAdd("discussThe", theru_name, portrait_therus, theru_desc)
+      strafer = misn.npcAdd("discussStr", straf_name, portrait_strafer, straf_desc)
    elseif stage == 3 then
-      hamfresser = misn.npcAdd("fireSteal", hamfr_name, "dvaered/dv_military_m7", hamfr_des2)
+      hamfresser = misn.npcAdd("fireSteal", hamfr_name, portrait_hamfresser, hamfr_des2)
    --elseif stage == 4 then -- TODO: decide if we do that
       --player.takeoff()
    end

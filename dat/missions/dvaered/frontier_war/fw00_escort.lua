@@ -29,11 +29,11 @@
 
 --TODO: Set the priority and conditions of this mission (should not start at first planet)
 
-require "dat/scripts/nextjump.lua"
-require "proximity.lua"
-require "selectiveclear.lua"
-require "dat/missions/dvaered/frontier_war/fw_common.lua"
-require "numstring.lua"
+require "nextjump"
+require "proximity"
+require "selectiveclear"
+require "missions/dvaered/frontier_war/fw_common"
+require "numstring"
 
 portrait_name = _("Dvaered officer")
 portrait_desc = _("This Dvaered senior officer could be looking for a pilot for hire. Why else would he stay at this bar?")
@@ -125,7 +125,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(portrait_name, "dvaered/dv_military_m3")
+   misn.setNPC(portrait_name, portrait_tam)
    misn.setDesc(portrait_desc)
 
    previous = planet:cur()
@@ -277,7 +277,7 @@ function encounterWarlord( name, origin )
    warlord = pilot.add("Dvaered Goddard", nil, origin)[1]
    warlord:rename( name )
    warlord:control(true)
-   warlord:goto( origin:pos() + vec2.newP(rnd.rnd(1000), rnd.rnd(360)) )
+   warlord:moveto( origin:pos() + vec2.newP(rnd.rnd(1000), rnd.rnd(360)) )
 
    warlord:setHilight()
 
@@ -285,7 +285,7 @@ function encounterWarlord( name, origin )
    for i = 1, 2 do
       p[i] = pilot.add("Dvaered Vendetta", nil, origin)[1]
       p[i]:control(true)
-      p[i]:goto( origin:pos() + vec2.newP(rnd.rnd(1000), rnd.rnd(360)) )
+      p[i]:moveto( origin:pos() + vec2.newP(rnd.rnd(1000), rnd.rnd(360)) )
    end
 
    majorTam:control()
@@ -322,14 +322,14 @@ function land() -- The player is only allowed to land on special occasions
       misn.markerRm(mark2)
       mark3 = misn.markerAdd(destsys3, "low")
    elseif stage == 8 then
-      shiplog.createLog( "fw00", _("Dvaered Military Coordination"), _("Dvaered") )
-      shiplog.appendLog( "fw00", log_text )
+      shiplog.createLog( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
+      shiplog.appendLog( "dvaered_military", log_text )
       tk.msg(end_title, end_text:format(creditstring(credits_00)))
 
       -- Major Tam gives Gauss Guns instead of credits, because Major Tam is a freak.
       GGprice = outfit.get("Gauss Gun"):price()
       nb = math.floor(credits_00/GGprice+0.5)
-      player.addoutfit("Gauss Gun", nb)
+      player.addOutfit("Gauss Gun", nb)
       misn.finish(true)
    else
       tk.msg(flee_title, flee_text)
@@ -338,11 +338,11 @@ function land() -- The player is only allowed to land on special occasions
    --hook.rm(jumpingTam)
    tamJumped = true
    previous = planet.cur()
-   boozingTam = misn.npcAdd("discussWithTam", npc_name, "dvaered/dv_military_m3", npc_desc)
+   boozingTam = misn.npcAdd("discussWithTam", npc_name, portrait_tam, npc_desc)
 end
 
 function loading()
-   boozingTam = misn.npcAdd("discussWithTam", npc_name, "dvaered/dv_military_m3", npc_desc)
+   boozingTam = misn.npcAdd("discussWithTam", npc_name, portrait_tam, npc_desc)
 end
 
 function meeting_timer() -- Delay the triggering of the meeting

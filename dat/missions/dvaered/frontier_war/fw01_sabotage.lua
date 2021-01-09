@@ -21,8 +21,8 @@
 
    Stages :
    0) Goto find Hamfresser
-   1) First try
-   2) Fleeing first time
+   1) First try. TODO: tell the player it's preferable to have refueled just before jumping in Ginger
+   2) Fleeing first time. TODO: see if it's possible to jettison the bomb (and make it not possible)
    3) Second try
    4) Fight with the Phalanx
    5) Way back
@@ -30,11 +30,11 @@
    7) Final landing
 --]]
 
-require "dat/scripts/nextjump.lua"
-require "proximity.lua"
-require "selectiveclear.lua"
-require "dat/missions/dvaered/frontier_war/fw_common.lua"
-require "numstring.lua"
+require "nextjump"
+require "proximity"
+require "selectiveclear"
+require "missions/dvaered/frontier_war/fw_common"
+require "numstring"
 
 --TODO: Set the priority and conditions of this mission (should not start at first planet)
 
@@ -82,7 +82,7 @@ check_text = _([[As you approach to the lighter ships that protect the cruiser, 
 
 kill_title = _("That could have worked")
 kill_text = _([[While approaching, you start to distinguish better the surface of the cruiser. You see a dozen of shuttles that transport material and tools form the planet to the ship, and when getting closer, you remark that the cruiser looks like an huge construction site with workers in spacesuit who are welding nanobond reinforcement plates on the hull. You hear behind you the chatter of the escort ships, that Hamfresser and his team are anxiously listening to: "Hey, Zog, I'm getting concerned about my daughter, her teacher told me she was non-violent with her classmates, do you think I should see a specialist?" "Meh, I don't know, honestly. The new holomovies are to blame, there is always less violence and more love in there. The government should take measures."
-   Suddenly, a message makes everyone come to a halt: "So, Colonel, when do we blow those fake plumbers out? I look forward to using my shredders a bit!" "Shut up, Lieutenant!" "Oah, come on, I'm on the encoded channel. Plumbers are not able to break our code" "But they're NOT plumbers, stupid!"
+   Suddenly, a message makes everyone come to a halt: "So, Colonel, when do we blow those fake plumbers out? I look forward to using my shredders a bit!" "Shut up, Caporal!" "Oah, come on, I'm on the encoded channel. Plumbers are not able to break our code" "But they're NOT plumbers, stupid!"
    Hamfresser looks at you, and simply declares "We abort the mission. get us out of that system, %s!" Strangely enough, none of the soldiers seem to show up signs of panic.]])
 
 combat_title = _("We told you not to use a combat ship!")
@@ -178,16 +178,20 @@ bombMass = 100
 
 
 function create()
-   hampla, hamsys     = planet.get("Morgan Station")
+   hampla, hamsys     = planet.get("Stutee") --Morgan Station
    sabotpla, sabotsys = planet.get(wlrd_planet)
    duelpla, duelsys   = planet.get("Dvaer Prime")
    intpla, intsys     = planet.get("Timu")
+
+   if planet.cur() == hampla then
+      misn.finish(false)
+   end
 
    if not misn.claim ( {sabotsys, duelsys, intsys} ) then
       misn.finish(false)
    end
 
-   misn.setNPC(portrait_name, "dvaered/dv_military_m3")
+   misn.setNPC(portrait_name, portrait_tam)
    misn.setDesc(portrait_desc)
 end
 
@@ -211,20 +215,20 @@ end
 
 function land()
    if stage == 0 and planet.cur() == hampla then -- Meet captain Hamfresser
-      captain = misn.npcAdd("hamfresser", npc_name, "dvaered/dv_military_m7", npc_desc)
+      captain = misn.npcAdd("hamfresser", npc_name, portrait_hamfresser, npc_desc)
 
    elseif stage == 2 then -- The player landed somewhere on Battleaddict's system
       tk.msg( capt_title, capt_text )
       misn.finish(false)
 
    elseif stage == 5 and planet.cur() == duelpla then -- Report back
-      tam = misn.npcAdd("majorTam", tam_name, "dvaered/dv_military_m3", tam_desc)
-      leb = misn.npcAdd("majorTam", tam_name, "dvaered/dv_military_f8", tam_desc)
+      tam = misn.npcAdd("majorTam", tam_name, portrait_tam, tam_desc)
+      leb = misn.npcAdd("majorTam", tam_name, portrait_leblanc, tam_desc)
 
    elseif stage == 7 and planet.cur() == duelpla then -- Epilogue
-      tam = misn.npcAdd("endMisn", team_name, "dvaered/dv_military_m3", team_desc)
-      leb = misn.npcAdd("endMisn", team_name, "dvaered/dv_military_f8", team_desc)
-      kla = misn.npcAdd("endMisn", team_name, "dvaered/dv_general1", team_desc)
+      tam = misn.npcAdd("endMisn", team_name, portrait_tam, team_desc)
+      leb = misn.npcAdd("endMisn", team_name, portrait_leblanc, team_desc)
+      kla = misn.npcAdd("endMisn", team_name, portrait_klank, team_desc)
    end
 end
 
@@ -257,7 +261,7 @@ function enter()
       warlord = pilot.add("Dvaered Goddard", nil, sabotpla)[1]
       warlord:rename( "Lord Battleaddict" )
       warlord:control(true)
-      warlord:goto( sabotpla:pos() + vec2.newP(rnd.rnd(1000), rnd.rnd(360)) )
+      warlord:moveto( sabotpla:pos() + vec2.newP(rnd.rnd(1000), rnd.rnd(360)) )
       warlord:memory().formation = "circleLarge"
       warlord:setHilight()
       equipGoddard( warlord, false )
@@ -339,14 +343,14 @@ function enter()
       randguy:face(klank)
 
       player.pilot():control()
-      player.pilot():goto( mypos + vec2.new(0, -step/2) ) -- To avoid being in the range
+      player.pilot():moveto( mypos + vec2.new(0, -step/2) ) -- To avoid being in the range
       player.cinematics( true, { gui = true } )
 
       camera.set( mypos + vec2.new(0, step/2) )
 
       hook.timer(5000, "beginDuel")
       hook.timer(15000, "disableDuel")
-      hook.timer(55000, "fighterDuel")
+      hook.timer(65000, "fighterDuel")
    end
 end
 
@@ -543,7 +547,7 @@ function disableDuel()
    battleaddict:disable()
 
    -- Explosion and such
-   spfx.soundPlay( "empexplode" )
+   audio.soundPlay( "empexplode" )
    camera.shake()
    hook.timer(1000, "moreSound1")
    hook.timer(2000, "moreSound2")
@@ -559,24 +563,17 @@ function disableDuel()
    hook.timer( 23000, "message", {pilot = hamelsen, msg = disable_comm13} )
 
    hook.timer( 28000, "message", {pilot = klank, msg = disable_comm7} )
-   hook.timer( 30000, "message", {pilot = battleaddict, msg = disable_comm8} )
-   hook.timer( 32000, "message", {pilot = klank, msg = disable_comm9} )
-   hook.timer( 34000, "message", {pilot = klank, msg = disable_comm10} )
-   hook.timer( 36000, "message", {pilot = battleaddict, msg = disable_comm11} )
+   hook.timer( 32000, "message", {pilot = battleaddict, msg = disable_comm8} )
+   hook.timer( 36000, "message", {pilot = klank, msg = disable_comm9} )
+   hook.timer( 38000, "message", {pilot = klank, msg = disable_comm10} )
+   hook.timer( 42000, "message", {pilot = battleaddict, msg = disable_comm11} )
 end
 
 function moreSound1()
-   spfx.soundPlay( "beam_off0" )
+   audio.soundPlay( "beam_off0" )
 end
 function moreSound2()
-   spfx.soundPlay( "hyperspace_powerdown" )
-end
-
--- Gets someone to make a message
-function message( arg )
-   local pilot = arg.pilot
-   local msg = arg.msg
-   pilot:broadcast( msg )
+   audio.soundPlay( "hyperspace_powerdown" )
 end
 
 -- Fighter duel
@@ -606,10 +603,10 @@ function fighterDuel()
    battleaddict2:memory().atk = atk_generic --atk_drone
 
    battleaddict2:control()
-   battleaddict2:goto( mypos + vec2.new(step,step/4), false, false ) -- Prevent them from staying on the top of their ships
+   battleaddict2:moveto( mypos + vec2.new(step,step/4), false, false ) -- Prevent them from staying on the top of their ships
    battleaddict2:attack(klank2)
    klank2:control()
-   klank2:goto( mypos + vec2.new(-step,step/4), false, false )
+   klank2:moveto( mypos + vec2.new(-step,step/4), false, false )
    klank2:attack(battleaddict2)
    hook.pilot( battleaddict2, "exploded", "battleaddict_killed" )
 
@@ -644,8 +641,8 @@ end
 function endMisn()
    tk.msg( epilogue_title, epilogue_text:format(creditstring(credits_01)) )
    player.pay(credits_01)
-   shiplog.createLog( "fw01", _("Dvaered Military Coordination"), _("Dvaered") )
-   shiplog.appendLog( "fw01", log_text )
+   shiplog.createLog( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
+   shiplog.appendLog( "dvaered_military", log_text )
    var.push( "loyal2klank", false ) -- This ensures the next mission will be available only once the traitor event is done
    misn.finish(true)
 end
