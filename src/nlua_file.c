@@ -278,6 +278,7 @@ static int fileL_read( lua_State *L )
 
    lua_pushlstring(L,buf,len);
    lua_pushinteger(L,len);
+   free( buf );
    return 2;
 }
 
