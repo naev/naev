@@ -2,6 +2,9 @@
 <its:rules xmlns:its="http://www.w3.org/2005/11/its" version="1.0">
   <!-- General Rules -->
   <its:translateRule selector="/*" translate="no"/>
+  <its:escapeRule selector="//*" escape="no"/>
+  <its:escapeRule selector="//*/@*" escape="no"/>
+
 
   <!-- Start -->
   <its:translateRule selector="/Start/name" translate="yes"/>
@@ -32,7 +35,9 @@
 
   <!-- Outfits -->
   <its:translateRule selector="/outfit/@name" translate="yes"/>
+  <its:translateRule selector="/outfit/general/typename" translate="yes"/>
   <its:translateRule selector="/outfit/general/description" translate="yes"/>
+  <its:translateRule selector="/outfit/general/desc_extra" translate="yes"/>
 
   <!-- Star Systems -->
   <its:translateRule selector="/ssys/@name" translate="yes"/>
