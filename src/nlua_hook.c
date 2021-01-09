@@ -714,7 +714,7 @@ static int hook_discover( lua_State *L )
    return 1;
 }
 /**
- * @brief Hooks the function to when the player receives  or loses money.
+ * @brief Hooks the function to when the player receives  or loses money through player.pay() (the Lua function only).
  *
  * The amount paid (or taken from the player) is passed as a parameter:<br/>
  * function f( amount, args )

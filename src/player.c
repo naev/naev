@@ -941,11 +941,6 @@ int player_hasCredits( credits_t amount )
  */
 credits_t player_modCredits( credits_t amount )
 {
-   HookParam p[2];
-   p[0].type = HOOK_PARAM_NUMBER;
-   p[0].u.num = (double)amount;
-   p[1].type = HOOK_PARAM_SENTINEL;
-   hooks_runParam( "pay", p );
    return pilot_modCredits( player.p, amount );
 }
 

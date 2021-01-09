@@ -192,12 +192,18 @@ static int playerL_shipname( lua_State *L )
  */
 static int playerL_pay( lua_State *L )
 {
+   HookParam p[2];
    credits_t money;
 
    NLUA_CHECKRW(L);
 
    money = CLAMP( CREDITS_MIN, CREDITS_MAX, (credits_t)round(luaL_checknumber(L,1)) );
    player_modCredits( money );
+
+   p[0].type = HOOK_PARAM_NUMBER;
+   p[0].u.num = (double)money;
+   p[1].type = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "pay", p );
 
    return 0;
 }
