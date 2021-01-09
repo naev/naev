@@ -318,6 +318,7 @@ dat/scripts/love/timer.lua
 dat/scripts/love/touch.lua
 dat/scripts/love/video.lua
 dat/scripts/love/window.lua
+dat/scripts/minerva.lua
 dat/scripts/minigames/blackjack.lua
 dat/scripts/minigames/cardio.lua
 dat/scripts/misnhelper.lua
@@ -1614,6 +1615,7 @@ dat/assets/stoma.xml
 dat/assets/stormgard.xml
 dat/assets/stormy.xml
 dat/assets/straight_row_ii.xml
+dat/assets/strangelove_lab.xml
 dat/assets/stutee.xml
 dat/assets/sudra.xml
 dat/assets/suk_ii.xml
@@ -1879,6 +1881,7 @@ dat/outfits/activated/hellburner.xml
 dat/outfits/activated/hidden_jump_scanner.xml
 dat/outfits/activated/milspec_jammer.xml
 dat/outfits/activated/unicorp_jammer.xml
+dat/outfits/activated/weapons_ionizer.xml
 dat/outfits/bio_weapons/bioplasma_organ_stage_1.xml
 dat/outfits/bio_weapons/bioplasma_organ_stage_2.xml
 dat/outfits/bio_weapons/bioplasma_organ_stage_3.xml
