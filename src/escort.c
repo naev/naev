@@ -278,7 +278,7 @@ int escort_playerCommand( Pilot *e )
    if (e == NULL)
       return 1;
 
-   title = _("Game Speed");
+   title = _("Escort Orders");
    caption = _("Select the order to give to this escort.");
 
    dialogue_makeChoice( title, caption, nopts );
