@@ -705,9 +705,9 @@ void player_cleanup (void)
    ovr_setOpen(0);
 
    /* clean up the stack */
-   for (i=0; i<array_size(player_stack); i++) {
-      pilot_free(player_stack[i].p);
-   }
+   if (player_stack != NULL)
+      for (i=0; i<array_size(player_stack); i++)
+         pilot_free(player_stack[i].p);
    array_free(player_stack);
    player_stack = NULL;
    /* nothing left */
