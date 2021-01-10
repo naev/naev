@@ -697,8 +697,7 @@ void pilot_weapSetCleanup( Pilot* p, int id )
 
    ws = pilot_weapSet(p,id);
 
-   if (ws->slots != NULL)
-      array_free( ws->slots );
+   array_free( ws->slots );
    ws->slots = NULL;
 
    /* Update range. */

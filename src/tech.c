@@ -166,7 +166,7 @@ int tech_load (void)
    } while (xml_nextNode(node));
 
    /* Info. */
-   DEBUG( ngettext( "Loaded %d tech group", "Loaded %d tech groups", s ), s );
+   DEBUG( n_( "Loaded %d tech group", "Loaded %d tech groups", s ), s );
 
    /* Free memory. */
    xmlFreeDoc(doc);
@@ -200,8 +200,7 @@ void tech_free (void)
 static void tech_freeGroup( tech_group_t *grp )
 {
    free(grp->name);
-   if (grp->items != NULL)
-      array_free( grp->items );
+   array_free( grp->items );
 }
 
 

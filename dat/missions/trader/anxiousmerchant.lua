@@ -35,7 +35,7 @@
 
 require "cargo_common"
 require "numstring"
-require "portrait"
+local portrait = require "portrait"
 
 
 bar_desc = _("You see a merchant at the bar in a clear state of anxiety.")
@@ -89,7 +89,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(_("Merchant"), getPortrait("Trader")) -- creates the merchant at the bar
+   misn.setNPC(_("Merchant"), portrait.get("Trader")) -- creates the merchant at the bar
    misn.setDesc(bar_desc) -- merchant's description
 
    stu_distance = 0.2 * travel_dist

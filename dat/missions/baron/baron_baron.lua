@@ -19,7 +19,7 @@
 -- This is the first mission in the baron string.
 --]]
 
-require "portrait"
+local portrait = require "portrait"
 require "missions/baron/common"
 require "missions/neutral/common"
 
@@ -158,9 +158,9 @@ end
 
 function land()
    if planet.cur() == planet.get(planetname) and not talked then
-      thief1 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), getPortrait("Pirate"), npc_desc)
-      thief2 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), getPortrait("Pirate"), npc_desc)
-      thief3 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), getPortrait("Pirate"), npc_desc)
+      thief1 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
+      thief2 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
+      thief3 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
    end
 end
 

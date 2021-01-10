@@ -145,7 +145,7 @@ static void joystick_debug (void)
 
    /* figure out how many joysticks there are */
    numjoysticks = SDL_NumJoysticks();
-   DEBUG( ngettext("%d joystick detected", "%d joysticks detected", numjoysticks), numjoysticks );
+   DEBUG( n_("%d joystick detected", "%d joysticks detected", numjoysticks), numjoysticks );
    for (i=0; i < numjoysticks; i++) {
       const char *jname;
       jname = SDL_JoystickNameForIndex(i);

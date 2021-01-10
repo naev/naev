@@ -71,15 +71,6 @@ int macos_configPath ( char *res, size_t n )
 
 
 /**
- * @brief Get the data directory path
- */
-int macos_dataPath ( char *res, size_t n )
-{
-   return macos_userLibraryDir( @"Application Support", res, n );
-}
-
-
-/**
  * @brief Get the cache directory path
  */
 int macos_cachePath ( char *res, size_t n )

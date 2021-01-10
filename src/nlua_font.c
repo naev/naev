@@ -130,7 +130,7 @@ int lua_isfont( lua_State *L, int ind )
  * @brief Frees a font.
  *
  *    @luatparam Font font Font to free.
- * @luafunc __gc( font )
+ * @luafunc __gc
  */
 static int fontL_gc( lua_State *L )
 {
@@ -145,7 +145,7 @@ static int fontL_gc( lua_State *L )
  *    @luatparam Font f1 Font 1 to compare.
  *    @luatparam Font f2 Font 2 to compare.
  *    @luatreturn boolean true if both fonts are the same.
- * @luafunc __eq( f1, f2 )
+ * @luafunc __eq
  */
 static int fontL_eq( lua_State *L )
 {
@@ -163,7 +163,7 @@ static int fontL_eq( lua_State *L )
  *    @luatparam String|Number fontname Name of the font.
  *    @luatparam[opt=1.] size Number Font height.
  *    @luatreturn Font A newly created font.
- * @luafunc new( fontname, size )
+ * @luafunc new
  */
 static int fontL_new( lua_State *L )
 {
@@ -200,7 +200,7 @@ static int fontL_new( lua_State *L )
  *
  *    @luatparam Font f Font to get the height of.
  *    @luatreturn number Height of the font.
- * @luafunc height( f )
+ * @luafunc height
  */
 static int fontL_height( lua_State *L )
 {
@@ -216,7 +216,7 @@ static int fontL_height( lua_State *L )
  *    @luatparam Font f Font to use.
  *    @luatparam string text Text to get width of.
  *    @luatreturn number Height of the font.
- * @luafunc width( f, text )
+ * @luafunc width
  */
 static int fontL_width( lua_State *L )
 {
@@ -234,7 +234,7 @@ static int fontL_width( lua_State *L )
  *    @luatparam Font font Font to set filter.
  *    @luatparam string min Minification filter ("nearest" or "linear")
  *    @luatparam[opt] string mag Magnification filter ("nearest" or "linear"). Defaults to min.
- * @luafunc setFilter( font, min, mag )
+ * @luafunc setFilter
  */
 static int fontL_setFilter( lua_State *L )
 {
@@ -260,7 +260,7 @@ static int fontL_setFilter( lua_State *L )
  *
  *    @luatparam Font font Font to set fallback to.
  *    @luatparam string filename Name of the font to add.
- * @luafunc addFallback( font, filename )
+ * @luafunc addFallback
  */
 static int fontL_addFallback( lua_State *L )
 {

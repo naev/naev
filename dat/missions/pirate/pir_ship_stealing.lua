@@ -27,10 +27,10 @@
    happen (at least, I hope…) he’ll be pursued by a few fighters.
 --]]
 
-require "swapship"
+local swapship = require "swapship"
 require "jumpdist"
 require "numstring"
-require "portrait"
+local portrait = require "portrait"
 require "factions/equip/generic"
 
 
@@ -275,7 +275,7 @@ function create ()
 
    theship.system = theship.planet:system()
 
-   misn.setNPC( _("A Pirate informer"), getPortrait("Pirate") )
+   misn.setNPC( _("A Pirate informer"), portrait.get("Pirate") )
    misn.setDesc( informer.description )
 end
 
@@ -331,7 +331,7 @@ function land()
       -- Try to swap ships
       local tmp = pilot.addRaw( theship.exact_class, nil, nil, 'Independent' )
       equip_generic( tmp )
-      if not swapship( tmp ) then
+      if not swapship.swap( tmp ) then
          -- Failed to swap ship!
          tk.msg( unableto.title, unableto.message )
          tmp:rm() -- Get rid of the temporary pilot

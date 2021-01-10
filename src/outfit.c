@@ -1671,14 +1671,14 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          "%s"
          "%s",
          _(outfit_getType(temp)),
-         (temp->u.mod.active) ? _("\n\arActivated Outfit\a0") : "" );
+         (temp->u.mod.active) ? _("\n#rActivated Outfit#0") : "" );
 
 #define DESC_ADD(x, s) \
 if ((x) != 0) \
    do { \
-      i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "\n\a%c", ((x)>0)?'g':'r' ); \
+      i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "\n#%c", ((x)>0)?'g':'r' ); \
       i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, s, x ); \
-      i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "\a0" ); \
+      i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "#0" ); \
    } while(0)
    DESC_ADD( temp->cpu,                _("%+.0f CPU") );
    DESC_ADD( temp->u.mod.thrust,       _("%+.0f Thrust") );
@@ -1760,7 +1760,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          _("%s\n"
-         "\arActivated Outfit\a0\n"
+         "#rActivated Outfit#0\n"
          "%.0f CPU\n"
          "Only one can be equipped\n"
          "%.0f Maximum Effective Mass\n"
@@ -2102,7 +2102,7 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
 static int outfit_parse( Outfit* temp, const char* file )
 {
    xmlNodePtr cur, ccur, node, parent;
-   char *prop;
+   char *prop, *desc_extra;
    const char *cprop;
    int group, m, l;
    ShipStatList *ll;
@@ -2119,6 +2119,7 @@ static int outfit_parse( Outfit* temp, const char* file )
 
    /* Clear data. */
    memset( temp, 0, sizeof(Outfit) );
+   desc_extra = NULL;
 
    xmlr_attr_strd(parent,"name",temp->name);
    if (temp->name == NULL)
@@ -2142,6 +2143,7 @@ static int outfit_parse( Outfit* temp, const char* file )
             xmlr_long(cur,"price",temp->price);
             xmlr_strd(cur,"limit",temp->limit);
             xmlr_strd(cur,"description",temp->description);
+            xmlr_strd(cur,"desc_extra",desc_extra);
             xmlr_strd(cur,"typename",temp->typename);
             xmlr_int(cur,"priority",temp->priority);
             if (xml_isNode(cur,"unique")) {
@@ -2281,6 +2283,13 @@ static int outfit_parse( Outfit* temp, const char* file )
          if (temp->desc_short) {
             l = strlen(temp->desc_short);
             ss_statsListDesc( temp->stats, &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l, 1 );
+            /* Add extra description task if available. */
+            if (desc_extra != NULL) {
+               l = strlen(temp->desc_short);
+               nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l, "\n%s", desc_extra );
+               free( desc_extra );
+               desc_extra = NULL;
+            }
          }
 
          continue;
@@ -2387,14 +2396,14 @@ int outfit_load (void)
       if (i == start)
          continue;
 
-      WARN( ngettext( "Name collision! %d outfit is named '%s'", "Name collision! %d outfits are named '%s'",
+      WARN( n_( "Name collision! %d outfit is named '%s'", "Name collision! %d outfits are named '%s'",
                       i + 1 - start ),
             i + 1 - start, outfit_names[ start ] );
    }
    free(outfit_names);
 #endif
 
-   DEBUG( ngettext( "Loaded %d Outfit", "Loaded %d Outfits", noutfits ), noutfits );
+   DEBUG( n_( "Loaded %d Outfit", "Loaded %d Outfits", noutfits ), noutfits );
 
    return 0;
 }

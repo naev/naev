@@ -50,7 +50,7 @@ end
 --]]
 graphics.Drawable = class.inheritsFrom( object.Object )
 graphics.Drawable._type = "Drawable"
-function graphics.Drawable._draw() error(_("unimplemented")) end
+function graphics.Drawable.draw() error(_("unimplemented")) end
 
 
 --[[
@@ -100,7 +100,7 @@ function graphics.Image:getWrap() return self.wraph, self.wrapv, self.wrapd end
 function graphics.Image:getDimensions() return self.w, self.h end
 function graphics.Image:getWidth() return self.w end
 function graphics.Image:getHeight() return self.h end
-function graphics.Image:_draw( ... )
+function graphics.Image:draw( ... )
    local arg = {...}
    local w,h = self.tex:dim()
    local x,y,r,sx,sy,tx,ty,tw,th
@@ -192,7 +192,7 @@ function graphics.SpriteBatch:add( ... )
    local arg = {...}
    love._unimplemented()
 end
-function graphics.SpriteBatch:_draw()
+function graphics.SpriteBatch:draw()
    love._unimplemented()
 end
 
@@ -248,7 +248,7 @@ function graphics.clear( ... )
    end
 end
 function graphics.draw( drawable, ... )
-   drawable:_draw( ... )
+   drawable:draw( ... )
 end
 function graphics.rectangle( mode, x, y, width, height )
    x,y,w,h = _xy(x,y,width,height)

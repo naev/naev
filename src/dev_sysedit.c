@@ -367,7 +367,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 
    /* Check for collision. */
    if (planet_exists( name )) {
-      dialogue_alert( _("Planet by the name of \ar'%s'\a0 already exists in the \ar'%s'\a0 system"),
+      dialogue_alert( _("Planet by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
             name, planet_getSystem( name ) );
       free(name);
       sysedit_btnNew( 0, NULL );
@@ -420,13 +420,13 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
 
          /* Get new name. */
          name = dialogue_input( _("New Planet Creation"), 1, 32,
-               _("What do you want to rename the planet \ar%s\a0?"), p->name );
+               _("What do you want to rename the planet #r%s#0?"), p->name );
          if (name == NULL)
             continue;
 
          /* Check for collision. */
          if (planet_exists( name )) {
-            dialogue_alert( _("Planet by the name of \ar'%s'\a0 already exists in the \ar'%s'\a0 system"),
+            dialogue_alert( _("Planet by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
                   name, planet_getSystem( name ) );
             free(name);
             continue;
@@ -1243,7 +1243,8 @@ static void sysedit_editPnt( void )
 {
    unsigned int wid;
    int x, y, w, l, bw;
-   char buf[1024], *s, title[100];
+   char buf[1024], title[100];
+   const char *s;
    Planet *p;
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
@@ -1402,7 +1403,8 @@ static void sysedit_editJump( void )
 {
    unsigned int wid;
    int x, y, w, l, bw;
-   char buf[1024], *s;
+   char buf[1024];
+   const char *s;
    JumpPoint *j;
 
    j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
@@ -1494,7 +1496,8 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
    (void) unused;
    int x, y, h, w, bw;
    Planet *p;
-   char *desc, *bardesc, title[100];
+   const char *desc, *bardesc;
+   char title[100];
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 

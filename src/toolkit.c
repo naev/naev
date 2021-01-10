@@ -577,18 +577,23 @@ int window_setDisplayname( const unsigned int wid, const char *displayname )
 /**
  * @brief Gets the ID of a window.
  *
+ * @note Gets the top window matching the ID first.
+ *
  *    @param wdwname Name of the window to get ID of.
  *    @return ID of the window.
  */
 unsigned int window_get( const char* wdwname )
 {
-   Window *w;
+   Window *w, *last;
    if (windows == NULL)
       return 0;
+   last = NULL;
    for (w = windows; w != NULL; w = w->next)
       if ((strcmp(w->name,wdwname)==0) && !window_isFlag(w, WINDOW_KILL))
-         return w->id;
-   return 0;
+         last = w;
+   if (last==NULL)
+      return 0;
+   return last->id;
 }
 
 
@@ -1131,9 +1136,9 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
    GLshort tri[5][4];
    glColour colours[10];
 
-   x -= b - thick;
+   x -= (b - thick);
    w += 2 * (b - thick);
-   y -= b - thick;
+   y -= (b - thick);
    h += 2 * (b - thick);
    lc = lc ? lc : c;
 
@@ -2340,7 +2345,8 @@ static Widget* toolkit_getFocus( Window *wdw )
  * @brief Sets the focused widget in a window.
  *
  *    @param wid ID of the window to get widget from.
- *    @param wgtname Name of the widget to set focus to.
+ *    @param wgtname Name of the widget to set focus to,
+ *                   or NULL to clear the focus.
  */
 void window_setFocus( const unsigned int wid, const char* wgtname )
 {
@@ -2352,12 +2358,13 @@ void window_setFocus( const unsigned int wid, const char* wgtname )
    if (wdw == NULL)
       return;
 
+   toolkit_focusClear( wdw );
+
    /* Get widget. */
-   wgt = window_getwgt(wid,wgtname);
+   wgt = wgtname==NULL ? NULL : window_getwgt( wid, wgtname );
    if (wgt == NULL)
       return;
 
-   toolkit_focusClear( wdw );
    toolkit_focusWidget( wdw, wgt );
 }
 
@@ -2366,7 +2373,7 @@ void window_setFocus( const unsigned int wid, const char* wgtname )
  * @brief Gets the focused widget in a window.
  *
  *    @param wid ID of the window to get widget from.
- *    @return The focused widget's name.
+ *    @return The focused widget's name (strdup()ed string or NULL).
  */
 char* window_getFocus( const unsigned int wid )
 {
@@ -2381,7 +2388,7 @@ char* window_getFocus( const unsigned int wid )
    /* Find focused widget. */
    for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
       if (wgt->id == wdw->focus)
-         return wgt->name;
+         return strdup( wgt->name );
 
    return NULL;
 }

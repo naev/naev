@@ -85,7 +85,7 @@ int nlua_loadRnd( nlua_env env )
  *    @luatparam number x First parameter, read description for details.
  *    @luatparam number y Second parameter, read description for details.
  *    @luatreturn number A randomly generated number, read description for details.
- * @luafunc rnd( x, y )
+ * @luafunc rnd
  */
 static int rnd_int( lua_State *L )
 {
@@ -118,7 +118,7 @@ static int rnd_int( lua_State *L )
  *
  * @usage n = 5.5 + rnd.sigma()/2. -- Creates a number from 5 to 6 slightly biased to 5.5.
  *    @luatreturn number A number from [-1:1] biased slightly towards 0.
- * @luafunc sigma()
+ * @luafunc sigma
  */
 static int rnd_sigma( lua_State *L )
 {
@@ -136,7 +136,7 @@ static int rnd_sigma( lua_State *L )
  * @usage n = 5.5 + rnd.twosigma()/4. -- Creates a number from 5 to 6 heavily biased to 5.5.
  *
  *    @luatreturn number A number from [-2:2] biased heavily towards 0.
- * @luafunc twosigma()
+ * @luafunc twosigma
  */
 static int rnd_twosigma( lua_State *L )
 {
@@ -155,7 +155,7 @@ static int rnd_twosigma( lua_State *L )
  * @usage n = 5.5 + rnd.threesigma()/6. -- Creates a number from 5 to 6 totally biased to 5.5.
  *
  *    @luatreturn number A number from [-3:3] biased totally towards 0.
- * @luafunc threesigma()
+ * @luafunc threesigma
  */
 static int rnd_threesigma( lua_State *L )
 {
@@ -176,7 +176,7 @@ static int rnd_threesigma( lua_State *L )
  *
  *    @luatparam number|table input Maximum value to permutate to.
  *    @luatreturn table A randomly permutated table.
- * @luafunc permutation( max )
+ * @luafunc permutation
  */
 static int rnd_permutation( lua_State *L )
 {

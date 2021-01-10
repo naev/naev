@@ -599,8 +599,7 @@ void ovr_mrkFree (void)
    ovr_mrkClear();
 
    /* Free array. */
-   if (ovr_markers != NULL)
-      array_free( ovr_markers );
+   array_free( ovr_markers );
    ovr_markers = NULL;
 }
 

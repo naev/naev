@@ -67,9 +67,8 @@ text[5] = _([[The moment of tension passes, and the officer leans back in his ch
 comm_msg = _("Nothing personal, mate, but we're expecting someone and you ain't him. No witnesses!")
 
 contacttitle = _("You have lost contact with your escorts!")
-contacttext = _([[Your escorts have disappeared from your sensor grid. Unfortunately, it seems you have no way of telling where they went.
-    
-You have failed to reach the FLF's hidden base.]])
+contacttext = _([[Your escorts have disappeared from your sensor grid. Unfortunately, it seems you have no way of knowing where they went.
+    You notice that Gregar has disappeared from your cockpit. You search around your ship, but he's nowhere to be found. Seeing no other option, you give up on your search. Perhaps he'll turn up somewhere later.]])
     
 turnintitle[1] = _("An opportunity to uphold the law")
 turnintext[1] = _([[You have arrived at a Dvaered controlled world, and you are harboring a FLF fugitive on your ship. Fortunately, Gregar is still asleep. You could choose to alert the authorities and turn him in, and possibly collect a reward.
@@ -149,19 +148,24 @@ function enter()
         pilot.clear()
 
         -- Add FLF ships that are to guide the player to the FLF base (but only after a battle!)
-        fleetFLF = addShips( "FLF Vendetta", "flf_norun", jumppos, 3 )
+        fleetFLF = addShips("FLF Vendetta", "flf_norun", jumppos, 3)
+        local c = player.pilot():ship():class()
+        if c == "Cruiser" or c == "Carrier" then
+            local p = pilot.add("FLF Pacifier", "flf_norun", jumppos)[1]
+            fleetFLF[#fleetFLF + 1] = p
+        end
         
         faction.get("FLF"):setPlayerStanding( -100 )
         
         hook.timer(2000, "commFLF")
-        hook.timer(25000, "wakeUpGregarYouLazyBugger")
+        hook.timer(15000, "wakeUpGregarYouLazyBugger")
     end
 end
 
 -- There are two cases we need to check here: landing on the FLF base and landing on a Dvaered world.
 function land()
     -- Case FLF base
-    if planet.cur() == planet.get("Sindbad") then
+    if diff.isApplied("FLF_base") and planet.cur() == planet.get("Sindbad") then
         tk.msg(title[4], text[4]:format(player.name()))
         tk.msg(title[4], text[5])
         var.push("flfbase_intro", 2)
@@ -189,13 +193,15 @@ end
 -- If the player has destroyed the FLF ships, nothing happens and a flag is set. In this case, the player can only do the Dvaered side of the mini-campaign.
 function wakeUpGregarYouLazyBugger()
     flfdead = true -- Prevents failure if ALL the ships are dead.
-    for i, j in ipairs(fleetFLF) do
-        if j:exists() then
-            j:setInvincible(true)
-            j:setFriendly()
-            j:setHealth(100,100)
-            j:changeAI("flf_norun")
-            j:setHilight(true)
+    for i, p in ipairs(fleetFLF) do
+        if p ~= nil and p:exists() then
+            p:setInvincible(true)
+            p:setFriendly()
+            p:setHealth(100,100)
+            p:changeAI("flf_norun")
+            p:setHilight(true)
+            p:control()
+            p:follow(player.pilot(), true)
             flfdead = false
         end
     end
@@ -205,8 +211,22 @@ function wakeUpGregarYouLazyBugger()
         faction.get("FLF"):setPlayerStanding( 5 ) -- Small buffer to ensure it doesn't go negative again right away.
         misn.osdCreate(misn_title, {osd_desc[1]:format(destsysname), osd_adddesc, osd_desc[2]})
         misn.osdActive(2)
+        hook.timer(500, "inRange")
+    end
+end
+
+function inRange()
+    local mindist = 2000 -- definitely OOR.
+    for i, p in ipairs(fleetFLF) do
+        if p ~= nil and p:exists() then
+            mindist = math.min(mindist, vec2.dist(p:pos(), player.pilot():pos()))
+        end
+    end
+    if mindist < 500 then
         hook.timer(2000, "annai")
         OORT = hook.timer(10000, "outOfRange")
+    else
+        hook.timer(500, "inRange")
     end
 end
 
@@ -216,13 +236,17 @@ function annai()
     poss[1] = vec2.new(0,70)
     poss[2] = vec2.new(50, -50)
     poss[3] = vec2.new(-50, -50)
-    for i, j in ipairs(fleetFLF) do
-        if j:exists() then
-            j:control()
-            j:moveto(player.pos()) -- NOT the player pilot, or the task may not pop properly.
-            j:moveto(waypoint2, false)
-            j:moveto(waypoint1, false)
-            j:moveto(waypoint0 + poss[i])
+    poss[4] = vec2.new(0,120)
+    local speed = player.pilot():stats().speed_max - 1
+    for i, p in ipairs(fleetFLF) do
+        if p ~= nil and p:exists() then
+            p:taskClear()
+            p:control()
+            p:setSpeedLimit(speed)
+            p:moveto(player.pos()) -- NOT the player pilot, or the task may not pop properly.
+            p:moveto(waypoint2, false)
+            p:moveto(waypoint1, false)
+            p:moveto(waypoint0 + poss[i])
         end
     end
     spawner = hook.timer(1000, "spawnbase")
@@ -231,9 +255,9 @@ end
 -- Part of the escort script
 function spawnbase()
     local mindist = 2000 -- definitely OOR.
-    for i, j in ipairs(fleetFLF) do
-        if j:exists() then
-            mindist = math.min(mindist, vec2.dist(j:pos(), waypoint0))
+    for i, p in ipairs(fleetFLF) do
+        if p ~= nil and p:exists() then
+            mindist = math.min(mindist, vec2.dist(p:pos(), waypoint0))
         end
     end
     if mindist < 1000 then
@@ -253,22 +277,16 @@ end
 -- Check if the player is still with his escorts
 function outOfRange()
     local mindist = 2000 -- definitely OOR.
-    for i, j in ipairs(fleetFLF) do
-        if j:exists() then
-            mindist = math.min(mindist, vec2.dist(j:pos(), player.pilot():pos()))
+    for i, p in ipairs(fleetFLF) do
+        if p ~= nil and p:exists() then
+            mindist = math.min(mindist, vec2.dist(p:pos(), player.pilot():pos()))
         end
     end
-    if mindist < 1000 then
+    if mindist < 1500 then
         OORT = hook.timer(2000, "outOfRange")
     else
-        -- TODO: handle mission failure due to distance to escorts
         tk.msg(contacttitle, contacttext)
-        for i, j in ipairs(fleetFLF) do
-            if j:exists() then
-                j:rm()
-            end
-        end
-        hook.rm(spawner)
+        abort()
     end
 end
 

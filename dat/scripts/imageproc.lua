@@ -7,6 +7,12 @@ local image = require 'love.image'
 local imageproc = {
 }
 
+local function _toimage( input )
+   if type(input)=="string" then
+      return image.newImageData( input )
+   end
+   return input
+end
 local function _grey( r, g, b )
    return 0.2989*r + 0.5870*g + 0.1140*b
 end
@@ -16,6 +22,7 @@ end
 -- greyscale values.
 --]]
 function imageproc.applyMap( img, colA, colB )
+   img = _toimage(img)
    local ra, ga, ba = colA[1], colA[2], colA[3]
    local rb, gb, bb = colB[1], colB[2], colB[3]
    local function _colormap( x, y, r, g, b, alpha )
@@ -37,6 +44,7 @@ end
 -- @brief Converts an image to greyscale.
 --]]
 function imageproc.greyscale( img )
+   img = _toimage(img)
    local w, h = img:getDimensions()
    local out = image.newImageData( w, h )
    out:paste( img, 0, 0, 0, 0, w, h )
@@ -47,6 +55,7 @@ end
 -- @brief Creates a scanline effect on an image.
 --]]
 function imageproc.scanlines( img, bandlength, bandgap )
+   img = _toimage(img)
    local function _scanlines( x, y, r, g, b, a )
       if (y % (bandlength+bandgap)) < bandlength then
          return 0, 0, 0, 1
@@ -66,52 +75,43 @@ end
 -- @note Equation is imgA * weightA + imgB * weightB + bias
 --]]
 function imageproc.addWeighted( imgA, imgB, weightA, weightB, bias )
-   weightB = weightB or 1-weightA
-   bias = bias or 0
-   local aw, ah = imgA:getDimensions()
-   local bw, bh = imgB:getDimensions()
-   if aw~=bw or ah~=bh then
-      error(_("dimensions don't match"))
-   end
-   local img = image.newImageData( aw, ah )
-   local alpha = weightA
-   local beta  = weightB
-   for u = 0,aw-1 do
-      for v = 0,ah-1 do
-         local ra, ga, ba, aa = imgA:getPixel(u,v)
-         local rb, gb, bb, ab = imgB:getPixel(u,v)
-         local r = ra*alpha + rb*beta + bias
-         local g = ga*alpha + gb*beta + bias
-         local b = ba*alpha + bb*beta + bias
-         local a = aa*alpha + ab*beta + bias
-         img:setPixel( u, v, r, g, b, a )
-      end
-   end
-   return img
+   imgA = _toimage(imgA)
+   imgB = _toimage(imgB)
+   -- Touching ImageData internals is not very good...
+   local out = image.ImageData.new()
+   out.w = imgA.w
+   out.h = imgA.h
+   out.d = naev.data.addWeighted( imgA.d, imgB.d, weightA, weightB, bias )
+   return out
 end
 
 --[[
 -- Applies blur to an image.
 --]]
 function imageproc.blur( img, k )
-   local t = type(k)
-   if t ~= 'table' then
+   img = _toimage(img)
+   if k==nil or type(k) ~= "table" then
       -- Create kernel
       local b
-      if t=='number' then
+      if type(k)=='number' then
          b = k
       else
          b = 2
       end
-      k = {}
-      local sum = math.pow(2*b+1, 2)
-      for u = 1,2*b+1 do
-         k[u] = {}
-         for v = 1,2*b+1 do
-            k[u][v] = 1/sum
+      local kw = 2*b+1
+      local kh = kw
+      k = image.newImageData( kw, kh )
+      local sum = kw*kh
+      for u = 0,kh-1 do
+         for v = 0,kw-1 do
+            local val = 1/sum
+            k:setPixel( u, v, val, val, val, val )
          end
       end
    end
+   local out = image.ImageData.new()
+   out.d, out.w, out.h = naev.data.convolve2d( img.d, img.w, img.h, k.d, k.w, k.h )
+   --[[
    local bw = (#k-1)/2
    local bh = (#k[1]-1)/2
    -- Create image
@@ -145,6 +145,7 @@ function imageproc.blur( img, k )
          out:setPixel( su, sv, r, g, b, a )
       end
    end
+   --]]
    return out
 end
 
@@ -156,31 +157,32 @@ function imageproc.blurGaussian( img, sigma, k )
    local w, h = img:getDimensions()
    -- Set up kernel
    local b = k 
-   local k = {}
+   local K = image.newImageData( kw, kh )
    local sum = 0
-   for u = 1,2*b+1 do
-      k[u] = {}
-      for v = 1,2*b+1 do
-         local num = math.pow((u-b-1), 2)+math.pow((v-b-1), 2)
+   for u = 0,2*b do
+      for v = 0,2*b do
+         local num = math.pow((u-b), 2)+math.pow((v-b), 2)
          local den = 2*math.pow(sigma,2)
          local val = math.exp(-num/den)
-         k[u][v] = val
+         K:setPixel( u, v, val, val, val, val )
          sum = sum + val
       end
    end
-   for u = 1,2*b+1 do
-      for v = 1,2*b+1 do
-         k[u][v] = k[u][v] / sum
+   for u = 0,2*b do
+      for v = 0,2*b do
+         local r, g, b, a = K:getPixel( u, v )
+         K:setPixel( u, v, r/sum, g/sum, b/sum, a/sum )
       end
    end
    -- Blur
-   return imageproc.blur( img, k )
+   return imageproc.blur( img, K )
 end
 
 --[[
 -- @brief Shifts an image by dx and dy. Does not wrap.
 --]]
 function imageproc.shift( img, dx, dy )
+   img = _toimage(img)
    local w, h = img:getDimensions()
    local out = image.newImageData( w, h )
    out:paste( img, dx, dy, 0, 0, w-dx, h-dy )
@@ -191,12 +193,15 @@ end
 -- @brief Creates a fancy hologram effect on an image.
 --]]
 function imageproc.hologram( img )
+   img = _toimage(img)
    -- Adapted from https://elder.dev/posts/open-source-virtual-background/
    local w, h = img:getDimensions()
    local holo = imageproc.applyMap( img, {0, 1, 0.5}, {0, 0, 1} )
-   holo = imageproc.scanlines( holo, 2, 3 )
+   local bandlength = math.max( math.floor( 2/300*h + 0.5 ), 2 )
+   local bandgap = math.max( math.floor( 3/300*h + 0.5 ), 3 )
+   holo = imageproc.scanlines( holo, bandlength, bandgap )
    -- Ghosting
-   local k = 1
+   local k = 3
    local holo_blur = imageproc.blur( holo, k )
    local bg = image.newImageData( holo_blur:getDimensions() )
    bg = bg:paste( img, k, k, 0, 0, w, h )

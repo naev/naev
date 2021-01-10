@@ -173,7 +173,7 @@ int lua_iscommodity( lua_State *L, int ind )
  *    @luatparam Commodity o1 First commodity to compare.
  *    @luatparam Commodity o2 Second commodity to compare.
  *    @luatreturn boolean true if both commodities are the same.
- * @luafunc __eq( o1, o2 )
+ * @luafunc __eq
  */
 static int commodityL_eq( lua_State *L )
 {
@@ -195,7 +195,7 @@ static int commodityL_eq( lua_State *L )
  *
  *    @luatparam string s Raw (untranslated) name of the commodity to get.
  *    @luatreturn Commodity|nil The commodity matching name or nil if error.
- * @luafunc get( s )
+ * @luafunc get
  */
 static int commodityL_get( lua_State *L )
 {
@@ -222,7 +222,7 @@ static int commodityL_get( lua_State *L )
  * @brief Gets the list of standard commodities.
  *
  * @luatreturn table A table containing commodity objects, namely those which are standard (buyable/sellable anywhere).
- * @luafunc getStandard()
+ * @luafunc getStandard
  */
 static int commodityL_getStandard( lua_State *L )
 {
@@ -256,7 +256,7 @@ static int commodityL_getStandard( lua_State *L )
  *
  *    @luatparam Commodity s Commodity to get the translated name of.
  *    @luatreturn string The translated name of the commodity.
- * @luafunc name( s )
+ * @luafunc name
  */
 static int commodityL_name( lua_State *L )
 {
@@ -283,7 +283,7 @@ static int commodityL_name( lua_State *L )
  *
  *    @luatparam Commodity s Commodity to get the raw name of.
  *    @luatreturn string The raw name of the commodity.
- * @luafunc nameRaw( s )
+ * @luafunc nameRaw
  */
 static int commodityL_nameRaw( lua_State *L )
 {
@@ -305,7 +305,7 @@ static int commodityL_nameRaw( lua_State *L )
  *
  *    @luatparam Commodity o Commodity to get information of.
  *    @luatreturn number The base price of the commodity.
- * @luafunc price( o )
+ * @luafunc price
  */
 static int commodityL_price( lua_State *L )
 {
@@ -323,7 +323,7 @@ static int commodityL_price( lua_State *L )
  *    @luatparam Commodity o Commodity to get information of.
  *    @luatparam Planet p Planet to get price at.
  *    @luatreturn number The price of the commodity at the planet.
- * @luafunc priceAt( o, p )
+ * @luafunc priceAt
  */
 static int commodityL_priceAt( lua_State *L )
 {
@@ -358,7 +358,7 @@ static int commodityL_priceAt( lua_State *L )
  *    @luatparam Planet p Planet to get price at.
  *    @luatparam Time t Time to get the price at.
  *    @luatreturn number The price of the commodity at the planet.
- * @luafunc priceAtTime( o, p, t )
+ * @luafunc priceAtTime
  */
 static int commodityL_priceAtTime( lua_State *L )
 {

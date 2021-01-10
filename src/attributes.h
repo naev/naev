@@ -40,6 +40,12 @@
    #define FORMAT( ... )
 #endif
 
+#if __has_attribute( format_arg )
+   #define FORMAT_ARG( n ) __attribute__( ( format_arg ( n ) ) )
+#else
+   #define FORMAT_ARG( n )
+#endif
+
 #if __has_attribute( deprecated )
    #define DEPRECATED( msg ) __attribute__( ( deprecated( msg ) ) )
 #else

@@ -572,7 +572,7 @@ end
 
 -- Succeed the mission
 function succeed ()
-   player.msg( "\ag" .. msg[4] .. "\a0" )
+   player.msg( "#g" .. msg[4] .. "#0" )
    player.pay( credits )
 
    -- Pirate rep cap increase
@@ -609,11 +609,11 @@ end
 function fail( message )
    if message ~= nil then
       -- Pre-colourized, do nothing.
-      if message:find("\a") then
+      if message:find("#") then
          player.msg( message )
       -- Colourize in red.
       else
-         player.msg( "\ar" .. message .. "\a0" )
+         player.msg( "#r" .. message .. "#0" )
       end
    end
    misn.finish( false )

@@ -116,7 +116,7 @@ void price2str(char *str, credits_t price, credits_t credits, int decimals )
       return;
 
    buf = strdup(str);
-   nsnprintf(str, ECON_CRED_STRLEN, "\ar%s\a0", buf);
+   nsnprintf(str, ECON_CRED_STRLEN, "#r%s#0", buf);
    free(buf);
 }
 
@@ -129,7 +129,7 @@ void price2str(char *str, credits_t price, credits_t credits, int decimals )
  */
 void tonnes2str( char *str, int tonnes )
 {
-   snprintf( str, ECON_MASS_STRLEN, ngettext( "%d tonne", "%d tonnes", tonnes ), tonnes );
+   snprintf( str, ECON_MASS_STRLEN, n_( "%d tonne", "%d tonnes", tonnes ), tonnes );
 }
 
 /**
@@ -558,7 +558,7 @@ void gatherable_gather( int pilot )
 
          if (q>0) {
             if (pilot_isPlayer(p)) {
-               player_message( ngettext("%d ton of %s gathered", "%d tons of %s gathered", q), q, _(gat->type->name) );
+               player_message( n_("%d ton of %s gathered", "%d tons of %s gathered", q), q, _(gat->type->name) );
 
                /* Run hooks. */
                hparam[0].type    = HOOK_PARAM_STRING;
@@ -640,7 +640,7 @@ int commodity_load (void)
 
    xmlFreeDoc(doc);
 
-   DEBUG( ngettext( "Loaded %d Commodity", "Loaded %d Commodities", commodity_nstack ), commodity_nstack );
+   DEBUG( n_( "Loaded %d Commodity", "Loaded %d Commodities", commodity_nstack ), commodity_nstack );
 
    return 0;
 

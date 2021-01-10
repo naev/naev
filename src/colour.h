@@ -79,6 +79,12 @@ extern const glColour cNeutral;
 extern const glColour cFriend;
 extern const glColour cHostile;
 extern const glColour cRestricted;
+/* mission markers */
+extern const glColour cMarkerNew;
+extern const glColour cMarkerComputer;
+extern const glColour cMarkerLow;
+extern const glColour cMarkerHigh;
+extern const glColour cMarkerPlot;
 /* radar */
 extern const glColour cRadar_player;
 extern const glColour cRadar_tPilot;

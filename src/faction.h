@@ -23,9 +23,10 @@ int* faction_getKnown( int *n );
 int faction_isInvisible( int id );
 int faction_setInvisible( int id, int state );
 int faction_isKnown( int id );
-char* faction_name( int f );
-char* faction_shortname( int f );
-char* faction_longname( int f );
+int faction_isDynamic( int id );
+const char* faction_name( int f );
+const char* faction_shortname( int f );
+const char* faction_longname( int f );
 void faction_addEnemy( int f, int o);
 void faction_rmEnemy( int f, int o);
 void faction_addAlly( int f, int o);
@@ -64,7 +65,11 @@ int areAllies( int a, int b );
 int factions_load (void);
 void factions_free (void);
 void factions_reset (void);
-void faction_clearKnown(void);
+void faction_clearKnown (void);
+
+/* Dynamic factions. */
+void factions_clearDynamic (void);
+int faction_dynAdd( int base, const char *name, const char *display );
 
 
 #endif /* FACTION_H */

@@ -221,6 +221,12 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", uniedit_buttonZoom );
    window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", uniedit_buttonZoom );
 
+   /* Nebula. */
+   window_addText( wid, -20, -40, 100, 20, 0, "txtSNebula",
+         &gl_smallFont, NULL, _("Nebula:") );
+   window_addText( wid, -10, -40-gl_smallFont.h-5, 110, 100, 0, "txtNebula",
+         &gl_smallFont, NULL, _("N/A") );
+
    /* Presence. */
    window_addText( wid, -20, -140, 100, 20, 0, "txtSPresence",
          &gl_smallFont, NULL, _("Presence:") );
@@ -681,7 +687,7 @@ static void uniedit_renameSys (void)
       sys = uniedit_sys[i];
 
       /* Get name. */
-      name = dialogue_input( _("Rename Star System"), 1, 32, _("What do you want to rename \ar%s\a0?"), sys->name );
+      name = dialogue_input( _("Rename Star System"), 1, 32, _("What do you want to rename #r%s#0?"), sys->name );
 
       /* Keep current name. */
       if (name == NULL)
@@ -875,6 +881,7 @@ static void uniedit_deselect (void)
    window_disableButton( uniedit_wid, "btnEdit" );
    window_disableButton( uniedit_wid, "btnOpen" );
    window_modifyText( uniedit_wid, "txtSelected", _("No selection") );
+   window_modifyText( uniedit_wid, "txtNebula", _("N/A") );
    window_modifyText( uniedit_wid, "txtPresence", _("N/A") );
 }
 
@@ -938,7 +945,7 @@ static void uniedit_selectRm( StarSystem *sys )
 void uniedit_selectText (void)
 {
    int i, l;
-   char buf[1024];
+   char buf[STRMAX];
    StarSystem *sys;
 
    l = 0;
@@ -955,9 +962,17 @@ void uniedit_selectText (void)
       if (uniedit_nsys == 1) {
          sys         = uniedit_sys[0];
          map_updateFactionPresence( uniedit_wid, "txtPresence", sys, 1 );
+
+         if (sys->nebu_density<=0.)
+            snprintf( buf, sizeof(buf), _("None") );
+         else
+            snprintf( buf, sizeof(buf), _("%.0f Density\n%.0fVolatility"), sys->nebu_density, sys->nebu_volatility);
+         window_modifyText( uniedit_wid, "txtNebula", buf );
       }
-      else
+      else {
+         window_modifyText( uniedit_wid, "txtNebula", _("Multiple selected") );
          window_modifyText( uniedit_wid, "txtPresence", _("Multiple selected") );
+      }
    }
 }
 
@@ -1207,7 +1222,8 @@ static void uniedit_editSys (void)
 {
    unsigned int wid;
    int x, y, l;
-   char buf[128], *s;
+   char buf[128];
+   const char *s;
    StarSystem *sys;
 
    /* Must have a system. */
@@ -1228,7 +1244,7 @@ static void uniedit_editSys (void)
 
    /* Rename button. */
    y = -45;
-   nsnprintf( buf, sizeof(buf), _("Name: \an%s"), (uniedit_nsys > 1) ? _("\arvarious") : uniedit_sys[0]->name );
+   nsnprintf( buf, sizeof(buf), _("Name: #n%s"), (uniedit_nsys > 1) ? _("#rvarious") : uniedit_sys[0]->name );
    window_addText( wid, x, y, 180, 15, 0, "txtName", &gl_smallFont, NULL, buf );
    window_addButton( wid, 200, y+3, BUTTON_WIDTH, 21, "btnRename", _("Rename"), uniedit_btnEditRename );
 
@@ -1525,7 +1541,7 @@ static void uniedit_btnEditRename( unsigned int wid, char *unused )
    uniedit_renameSys();
 
    /* Update text. */
-   nsnprintf( buf, sizeof(buf), _("Name: %s"), (uniedit_nsys > 1) ? _("\arvarious") : uniedit_sys[0]->name );
+   nsnprintf( buf, sizeof(buf), _("Name: %s"), (uniedit_nsys > 1) ? _("#rvarious") : uniedit_sys[0]->name );
    window_modifyText( wid, "txtName", buf );
 }
 

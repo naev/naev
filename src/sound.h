@@ -10,6 +10,7 @@
 
 /** @cond */
 #include "SDL_mutex.h"
+#include "SDL_rwops.h"
 /** @endcond */
 
 
@@ -33,24 +34,36 @@ void sound_exit (void);
 int sound_update( double dt );
 void sound_pause (void);
 void sound_resume (void);
-
-
-/*
- * sound manipulation functions
- */
-int sound_get( char* name );
-double sound_length( int sound );
 int sound_volume( const double vol );
 double sound_getVolume (void);
 double sound_getVolumeLog (void);
+void sound_stopAll (void);
+void sound_setSpeed( double s );
+
+
+/*
+ * source management
+ */
+int source_newRW( SDL_RWops *rw, const char *name, unsigned int flags );
+int source_new( const char* filename, unsigned int flags );
+
+
+/*
+ * sound sample management
+ */
+int sound_get( const char* name );
+double sound_getLength( int sound );
+
+
+/*
+ * voice management
+ */
 int sound_play( int sound );
 int sound_playPos( int sound, double px, double py, double vx, double vy );
 void sound_stop( int voice );
-void sound_stopAll (void);
 int sound_updatePos( int voice, double px, double py, double vx, double vy );
 int sound_updateListener( double dir, double px, double py,
       double vx, double vy );
-void sound_setSpeed( double s );
 
 
 /*

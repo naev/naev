@@ -1,9 +1,7 @@
-lj_arch_test_source = files('lj_arch_test.c')
-
 subdir('host')
 
 ljlib_sources = ['lib_base.c', 'lib_math.c', 'lib_bit.c', 'lib_string.c', 'lib_table.c', 'lib_io.c', 'lib_os.c', 'lib_package.c', 'lib_debug.c', 'lib_jit.c', 'lib_ffi.c']
-ljcore_sources = ['lj_gc.c', 'lj_err.c', 'lj_char.c', 'lj_bc.c', 'lj_obj.c', 'lj_str.c', 'lj_tab.c', 'lj_func.c', 'lj_udata.c', 'lj_meta.c', 'lj_debug.c', 'lj_state.c', 'lj_dispatch.c', 'lj_vmevent.c', 'lj_vmmath.c', 'lj_strscan.c', 'lj_api.c', 'lj_lex.c', 'lj_parse.c', 'lj_bcread.c', 'lj_bcwrite.c', 'lj_load.c', 'lj_ir.c', 'lj_opt_mem.c', 'lj_opt_fold.c', 'lj_opt_narrow.c', 'lj_opt_dce.c', 'lj_opt_loop.c', 'lj_opt_split.c', 'lj_opt_sink.c', 'lj_mcode.c', 'lj_snap.c', 'lj_record.c', 'lj_crecord.c', 'lj_ffrecord.c', 'lj_asm.c', 'lj_trace.c', 'lj_gdbjit.c', 'lj_ctype.c', 'lj_cdata.c', 'lj_cconv.c', 'lj_ccall.c', 'lj_ccallback.c', 'lj_carith.c', 'lj_clib.c', 'lj_cparse.c', 'lj_lib.c', 'lj_alloc.c', 'lib_aux.c', 'lib_init.c']
+ljcore_sources = ['lj_assert.c', 'lj_gc.c', 'lj_err.c', 'lj_char.c', 'lj_bc.c', 'lj_obj.c', 'lj_buf.c', 'lj_str.c', 'lj_tab.c', 'lj_func.c', 'lj_udata.c', 'lj_meta.c', 'lj_debug.c', 'lj_prng.c', 'lj_state.c', 'lj_dispatch.c', 'lj_vmevent.c', 'lj_vmmath.c', 'lj_strscan.c', 'lj_strfmt.c', 'lj_strfmt_num.c', 'lj_api.c', 'lj_profile.c', 'lj_lex.c', 'lj_parse.c', 'lj_bcread.c', 'lj_bcwrite.c', 'lj_load.c', 'lj_ir.c', 'lj_opt_mem.c', 'lj_opt_fold.c', 'lj_opt_narrow.c', 'lj_opt_dce.c', 'lj_opt_loop.c', 'lj_opt_split.c', 'lj_opt_sink.c', 'lj_mcode.c', 'lj_snap.c', 'lj_record.c', 'lj_crecord.c', 'lj_ffrecord.c', 'lj_asm.c', 'lj_trace.c', 'lj_gdbjit.c', 'lj_ctype.c', 'lj_cdata.c', 'lj_cconv.c', 'lj_ccall.c', 'lj_ccallback.c', 'lj_carith.c', 'lj_clib.c', 'lj_cparse.c', 'lj_lib.c', 'lj_alloc.c', 'lib_aux.c', 'lib_init.c']
 ljmain_sources = ['luajit.c']
 
 buildvm_commands = [
@@ -52,10 +50,11 @@ if host_machine.system() == 'windows'
         dependencies: luajit_dependencies,
     )
 else
-    ljcore_sources += custom_target('lj_vm.s',
+    asmtype = (host_machine.system() == 'darwin' ? 'machasm' : 'elfasm')
+    ljcore_sources += custom_target('lj_vm.S',
         input : [],
-        output : 'lj_vm.s',
-        command : [buildvm, '-m', 'elfasm', '-o', '@OUTPUT@']
+        output : 'lj_vm.S',
+        command : [buildvm, '-m', asmtype, '-o', '@OUTPUT@']
     )
     libluajit = static_library('luajit', ljlib_sources + ljcore_sources + buildvm_headers,
         include_directories: luajit_source_dir,

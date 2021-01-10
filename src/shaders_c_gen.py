@@ -59,35 +59,14 @@ SHADERS = [
       vs_path = "stars.vert",
       fs_path = "stars.frag",
       attributes = ["vertex", "brightness"],
-      uniforms = ["projection", "star_xy", "wh", "xy"]
+      uniforms = ["projection", "star_xy", "wh", "xy", "scale"]
    ),
    Shader(
       name = "font",
       vs_path = "font.vert",
       fs_path = "font.frag",
       attributes = ["vertex", "tex_coord"],
-      uniforms = ["projection", "color"]
-   ),
-   Shader(
-      name = "font_outline",
-      vs_path = "font.vert",
-      fs_path = "font_outline.frag",
-      attributes = ["vertex", "tex_coord"],
       uniforms = ["projection", "color", "outline_color"]
-   ),
-   Shader(
-      name = "font_glow",
-      vs_path = "font.vert",
-      fs_path = "font_glow.frag",
-      attributes = ["vertex", "tex_coord"],
-      uniforms = ["projection", "color", "glow_color"]
-   ),
-   Shader(
-      name = "font_outline_glow",
-      vs_path = "font.vert",
-      fs_path = "font_outline_glow.frag",
-      attributes = ["vertex", "tex_coord"],
-      uniforms = ["projection", "color", "outline_color", "glow_color"]
    ),
    Shader(
       name = "beam",

@@ -228,7 +228,7 @@ int lua_isjump( lua_State *L, int ind )
  *    @luatparam string|System dest See description.
  *    @luatreturn Jump Returns the jump.
  *    @luatreturn Jump Returns the inverse.
- * @luafunc get( src, dest )
+ * @luafunc get
  */
 static int jumpL_get( lua_State *L )
 {
@@ -281,7 +281,7 @@ static int jumpL_get( lua_State *L )
  *    @luatparam Jump j Jump comparing.
  *    @luatparam Jump comp jump to compare against.
  *    @luatreturn boolean true if both jumps are the same.
- * @luafunc __eq( j, comp )
+ * @luafunc __eq
  */
 static int jumpL_eq( lua_State *L )
 {
@@ -299,7 +299,7 @@ static int jumpL_eq( lua_State *L )
  * @usage v = j:pos()
  *    @luatparam Jump j Jump to get the position of.
  *    @luatreturn Vec2 The position of the jump in the system.
- * @luafunc pos( j )
+ * @luafunc pos
  */
 static int jumpL_position( lua_State *L )
 {
@@ -316,7 +316,7 @@ static int jumpL_position( lua_State *L )
  * @usage v = j:angle()
  *    @luatparam Jump j Jump to get the angle of.
  *    @luatreturn number The angle.
- * @luafunc angle( j )
+ * @luafunc angle
  */
 static int jumpL_angle( lua_State *L )
 {
@@ -334,7 +334,7 @@ static int jumpL_angle( lua_State *L )
  * @usage if not j:hidden() then -- Exclude hidden jumps.
  *    @luatparam Jump j Jump to get the hidden status of.
  *    @luatreturn boolean Whether the jump is hidden.
- * @luafunc hidden( j )
+ * @luafunc hidden
  */
 static int jumpL_hidden( lua_State *L )
 {
@@ -351,7 +351,7 @@ static int jumpL_hidden( lua_State *L )
  * @usage if jump.exitonly("Eneguoz", "Zied") then -- The jump point in Eneguoz cannot be entered.
  *    @luatparam Jump j Jump to get the exit-only status of.
  *    @luatreturn boolean Whether the jump is exit-only.
- * @luafunc exitonly( j )
+ * @luafunc exitonly
  */
 static int jumpL_exitonly( lua_State *L )
 {
@@ -368,7 +368,7 @@ static int jumpL_exitonly( lua_State *L )
  * @usage s = j:system()
  *    @luatparam Jump j Jump to get the system of.
  *    @luatreturn System The jump's system.
- * @luafunc system( j )
+ * @luafunc system
  */
 static int jumpL_system( lua_State *L )
 {
@@ -385,7 +385,7 @@ static int jumpL_system( lua_State *L )
  * @usage v = j:dest()
  *    @luatparam Jump j Jump to get the destination of.
  *    @luatreturn System The jump's destination system.
- * @luafunc dest( j )
+ * @luafunc dest
  */
 static int jumpL_dest( lua_State *L )
 {
@@ -404,7 +404,7 @@ static int jumpL_dest( lua_State *L )
  *
  *    @luatparam Jump j Jump to check if the player knows.
  *    @luatreturn boolean true if the player knows the jump.
- * @luafunc known( j )
+ * @luafunc known
  */
 static int jumpL_isKnown( lua_State *L )
 {
@@ -421,7 +421,7 @@ static int jumpL_isKnown( lua_State *L )
  * @usage j:setKnown( false ) -- Makes jump unknown.
  *    @luatparam Jump j Jump to set known.
  *    @luatparam[opt=true] boolean value Whether or not to set as known.
- * @luafunc setKnown( j, value )
+ * @luafunc setKnown
  */
 static int jumpL_setKnown( lua_State *L )
 {

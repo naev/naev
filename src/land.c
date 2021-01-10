@@ -174,7 +174,7 @@ int can_swapEquipment( const char *shipname )
    }
    if (pilot_cargoUsed(player.p) > (pilot_cargoFree(newship) + pilot_cargoUsed(newship))) { /* Current ship has too much cargo. */
       diff = pilot_cargoUsed(player.p) - pilot_cargoFree(newship);
-      land_errDialogueBuild( ngettext(
+      land_errDialogueBuild( n_(
                "You have %d tonne more cargo than the new ship can hold.",
                "You have %d tonnes more cargo than the new ship can hold.",
                diff),
@@ -322,7 +322,8 @@ static void bar_open( unsigned int wid )
  */
 static int bar_genList( unsigned int wid )
 {
-   ImageArrayCell *portraits;
+   ImageArrayCell *portraits, *p;
+   glTexture *bg;
    char *focused;
    int w, h, iw, ih, bw, bh;
    int i, n, pos;
@@ -335,7 +336,7 @@ static int bar_genList( unsigned int wid )
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
 
    /* Save focus. */
-   focused = strdup(window_getFocus(wid));
+   focused = window_getFocus( wid );
 
    /* Destroy widget if already exists. */
    if (widget_exists( wid, "iarMissions" )) {
@@ -358,7 +359,7 @@ static int bar_genList( unsigned int wid )
       n            = 1;
       portraits    = calloc(1, sizeof(ImageArrayCell));
       portraits[0].image = gl_dupTexture(mission_portrait);
-      portraits[0].caption = strdup(_("News"));;
+      portraits[0].caption = strdup(_("News"));
    }
    else {
       n            = n+1;
@@ -366,13 +367,17 @@ static int bar_genList( unsigned int wid )
       portraits[0].image = gl_dupTexture(mission_portrait);
       portraits[0].caption = strdup(_("News"));
       for (i=0; i<npc_getArraySize(); i++) {
-         portraits[i+1].image = gl_dupTexture( npc_getTexture(i) );
-         portraits[i+1].caption = strdup( npc_getName(i) );
-         if (npc_isImportant(i)) {
-            portraits[i+1].layers = malloc( sizeof(glTexture*) );
-            portraits[i+1].layers[0] = gl_newImage( OVERLAY_GFX_PATH"portrait_exclamation.png", 0 );
-            portraits[i+1].nlayers = 1;
+         p = &portraits[i+1];
+         bg = npc_getBackground(i);
+         p->caption = strdup( npc_getName(i) );
+         if (bg!=NULL) {
+            p->image = gl_dupTexture( bg );
+            p->layers = gl_addTexArray( p->layers, &p->nlayers, gl_dupTexture( npc_getTexture(i) ) );
          }
+         else
+            p->image = gl_dupTexture( npc_getTexture(i) );
+         if (npc_isImportant(i))
+            p->layers = gl_addTexArray( p->layers, &p->nlayers, gl_newImage( OVERLAY_GFX_PATH"portrait_exclamation.png", 0 ) );
       }
    }
    window_addImageArray( wid, 20, -40,
@@ -427,6 +432,8 @@ static void bar_update( unsigned int wid, char* str )
       /* Destroy portrait. */
       if (widget_exists(wid, "imgPortrait"))
          window_destroyWidget(wid, "imgPortrait");
+      if (widget_exists(wid, "imgPortraitBG"))
+         window_destroyWidget(wid, "imgPortraitBG");
 
       /* Disable button. */
       window_disableButton( wid, "btnApproach" );
@@ -449,6 +456,10 @@ static void bar_update( unsigned int wid, char* str )
       window_destroyWidget( wid, "cstNews" );
 
    /* Create widgets if needed. */
+   if (!widget_exists(wid, "imgPortraitBG")) /* Must be first */
+      window_addImage( wid, iw + 40 + (w-iw-60-PORTRAIT_WIDTH)/2,
+            -(40 + dh + 40 + gl_defFont.h + 20 + PORTRAIT_HEIGHT),
+            0, 0, "imgPortraitBG", NULL, 1 );
    if (!widget_exists(wid, "imgPortrait"))
       window_addImage( wid, iw + 40 + (w-iw-60-PORTRAIT_WIDTH)/2,
             -(40 + dh + 40 + gl_defFont.h + 20 + PORTRAIT_HEIGHT),
@@ -459,7 +470,10 @@ static void bar_update( unsigned int wid, char* str )
 
    /* Set portrait. */
    window_modifyText(  wid, "txtPortrait", npc_getName( pos ) );
-   window_modifyImage( wid, "imgPortrait", npc_getTexture( pos ), 0, 0 );
+   window_modifyImage( wid, "imgPortrait", npc_getTexture( pos ),
+         PORTRAIT_WIDTH, PORTRAIT_HEIGHT );
+   window_modifyImage( wid, "imgPortraitBG", npc_getBackground( pos ),
+         PORTRAIT_WIDTH, PORTRAIT_HEIGHT );
 
    /* Set mission description. */
    window_modifyText(  wid, "txtMission", npc_getDesc( pos ));
@@ -567,7 +581,7 @@ static void misn_open( unsigned int wid )
    y -= 2 * gl_defFont.h + 50;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, 20, 0,
-         "txtReward", &gl_smallFont, NULL, _("\anReward:\a0 None") );
+         "txtReward", &gl_smallFont, NULL, _("#nReward:#0 None") );
    y -= 20;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, y - 40 + h - 2*LAND_BUTTON_HEIGHT, 0,
@@ -656,7 +670,7 @@ static void misn_genList( unsigned int wid, int first )
    int w,h;
 
    /* Save focus. */
-   focused = strdup(window_getFocus(wid));
+   focused = window_getFocus(wid);
 
    if (!first)
       window_destroyWidget( wid, "lstMission" );
@@ -707,7 +721,7 @@ static void misn_update( unsigned int wid, char* str )
 
    /* Update date stuff. */
    buf = ntime_pretty( 0, 2 );
-   nsnprintf( txt, sizeof(txt), ngettext(
+   nsnprintf( txt, sizeof(txt), n_(
             "%s\n%d Tonne", "%s\n%d Tonnes", player.p->cargo_free),
          buf, player.p->cargo_free );
    free(buf);
@@ -715,7 +729,7 @@ static void misn_update( unsigned int wid, char* str )
 
    active_misn = toolkit_getList( wid, "lstMission" );
    if (strcmp(active_misn,_("No Missions"))==0) {
-      window_modifyText( wid, "txtReward", _("\anReward:\a0 None") );
+      window_modifyText( wid, "txtReward", _("#nReward:#0 None") );
       window_modifyText( wid, "txtDesc",
             _("There are no missions available here.") );
       window_disableButton( wid, "btnAcceptMission" );
@@ -726,7 +740,7 @@ static void misn_update( unsigned int wid, char* str )
    mission_sysComputerMark( misn );
    if (misn->markers != NULL)
       map_center( system_getIndex( misn->markers[0].sys )->name );
-   nsnprintf( txt, sizeof(txt), _("\anReward:\a0 %s"), misn->reward );
+   nsnprintf( txt, sizeof(txt), _("#nReward:#0 %s"), misn->reward );
    window_modifyText( wid, "txtReward", txt );
    window_modifyText( wid, "txtDesc", misn->desc );
    window_enableButton( wid, "btnAcceptMission" );
@@ -827,10 +841,10 @@ void land_updateMainTab (void)
    /* Else create it. */
    else {
       /* Refuel button. */
-      credits2str( cred, o->price, 2 );
+      credits2str( cred, o->price, 0 );
       nsnprintf( buf, sizeof(buf), _("Buy Local Map (%s)"), cred );
       window_addButtonKey( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20),
-            LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnMap",
+            LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnMap",
             buf, spaceport_buyMap, SDLK_b );
    }
 
@@ -902,6 +916,7 @@ unsigned int land_getWid( int window )
  */
 void land_genWindows( int load, int changetab )
 {
+   (void) load;
    int i, j;
    const char *names[LAND_NUMWINDOWS];
    int w, h;
@@ -997,18 +1012,17 @@ void land_genWindows( int load, int changetab )
    if (!regen) {
       landed = 1;
       music_choose("land"); /* Must be before hooks in case hooks change music. */
-      if (!load) {
-         hooks_run("land");
-      }
+      hooks_run("land");
       events_trigger( EVENT_TRIGGER_LAND );
 
       /* 3) Generate computer and bar missions. */
+      /* Generate bar missions first for claims. */
+      if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
+         npc_generate(); /* Generate bar npc. */
       if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS))
          mission_computer = missions_genList( &mission_ncomputer,
                land_planet->faction, land_planet->name, cur_system->name,
                MIS_AVAIL_COMPUTER );
-      if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
-         npc_generate(); /* Generate bar npc. */
    }
 
 
@@ -1370,7 +1384,7 @@ void takeoff( int delay )
    if (delay)
       ntime_inc( ntime_create( 0, 1, 0 ) ); /* 1 period */
    nt = ntime_pretty( 0, 2 );
-   player_message( _("\aoTaking off from %s on %s."), _(land_planet->name), nt);
+   player_message( _("#oTaking off from %s on %s."), _(land_planet->name), nt);
    free(nt);
 
    /* Hooks and stuff. */

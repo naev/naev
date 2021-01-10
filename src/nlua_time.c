@@ -170,7 +170,7 @@ int lua_istime( lua_State *L, int ind )
  *    @luatparam number periods Periods for the new time.
  *    @luatparam number seconds Seconds for the new time.
  *    @luatreturn Time A newly created time metatable.
- * @luafunc create( cycles, periods, seconds )
+ * @luafunc create
  */
 static int time_create( lua_State *L )
 {
@@ -194,7 +194,7 @@ static int time_create( lua_State *L )
  *
  *    @luatparam Time t1 Time metatable to add to.
  *    @luatparam Time t2 Time metatable added.
- * @luafunc add( t1, t2)
+ * @luafunc add
  */
 static int time_add( lua_State *L )
 {
@@ -237,7 +237,7 @@ static int time_add__( lua_State *L )
  *
  *    @luatparam Time t1 Time metatable to subtract from.
  *    @luatparam Time t2 Time metatable subtracted.
- * @luafunc sub( t1, t2)
+ * @luafunc sub
  */
 static int time_sub( lua_State *L )
 {
@@ -281,7 +281,7 @@ static int time_sub__( lua_State *L )
  *    @luatparam Time t1 Time to compare for equality.
  *    @luatparam Time t2 Time to compare for equality.
  *    @luatreturn boolean true if they're equal.
- * @luafunc __eq( t1, t2 )
+ * @luafunc __eq
  */
 static int time_eq( lua_State *L )
 {
@@ -299,7 +299,7 @@ static int time_eq( lua_State *L )
  *    @luatparam Time t1 Time to see if is is smaller than t2.
  *    @luatparam Time t2 Time see if is larger than t1.
  *    @luatreturn boolean true if t1 < t2
- * @luafunc __lt( t1, t2 )
+ * @luafunc __lt
  */
 static int time_lt( lua_State *L )
 {
@@ -317,7 +317,7 @@ static int time_lt( lua_State *L )
  *    @luatparam Time t1 Time to see if is is smaller or equal to than t2.
  *    @luatparam Time t2 Time see if is larger or equal to than t1.
  *    @luatreturn boolean true if t1 <= t2
- * @luafunc __le( t1, t2 )
+ * @luafunc __le
  */
 static int time_le( lua_State *L )
 {
@@ -333,7 +333,7 @@ static int time_le( lua_State *L )
  * @usage t = time.get()
  *
  *    @luatreturn Time Time in internal representation time.
- * @luafunc get()
+ * @luafunc get
  */
 static int time_get( lua_State *L )
 {
@@ -351,7 +351,7 @@ static int time_get( lua_State *L )
  *    @luatparam Time t Time to convert to pretty format.  If omitted, current time is used.
  *    @luatparam[opt=2] number d Decimals to use for displaying seconds (should be between 0 and 5).
  *    @luatreturn string The time in human readable format.
- * @luafunc str( t, d )
+ * @luafunc str
  */
 static int time_str( lua_State *L )
 {
@@ -385,7 +385,7 @@ static int time_str( lua_State *L )
  * @usage time.inc( time.create(0,0,100) ) -- Increments the time by 100 seconds.
  *
  *    @luatparam Time t Amount to increment or decrement the time by.
- * @luafunc inc( t )
+ * @luafunc inc
  */
 static int time_inc( lua_State *L )
 {
@@ -404,7 +404,7 @@ static int time_inc( lua_State *L )
  *
  *    @luatparam Time t Time to get number of.
  *    @luatreturn number Number representing time.
- * @luafunc tonumber( t )
+ * @luafunc tonumber
  */
 static int time_tonumber( lua_State *L )
 {
@@ -423,7 +423,7 @@ static int time_tonumber( lua_State *L )
  *
  *    @luatparam number num Number to get time from.
  *    @luatreturn Time Time representing number.
- * @luafunc fromnumber( num )
+ * @luafunc fromnumber
  */
 static int time_fromnumber( lua_State *L )
 {

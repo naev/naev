@@ -122,7 +122,7 @@ int nlua_loadTk( nlua_env env )
  *    @luatparam[opt=-1] string image Image file (*.png) to display in the window.
  *    @luatparam[opt=-1] number width width of the image to display. Negative values use image width.
  *    @luatparam[opt=-1] number height height of the image to display. Negative values use image height.
- * @luafunc msg( title, message )
+ * @luafunc msg
  */
 static int tk_msg( lua_State *L )
 {
@@ -155,7 +155,7 @@ static int tk_msg( lua_State *L )
  *    @luatparam string title Title of the window.
  *    @luatparam string message Message to display in the window.
  *    @luatreturn boolean true if yes was clicked, false if no was clicked.
- * @luafunc yesno( title, message )
+ * @luafunc yesno
  */
 static int tk_yesno( lua_State *L )
 {
@@ -180,7 +180,7 @@ static int tk_yesno( lua_State *L )
  *    @luatparam number max Maximum characters to accept.
  *    @luatparam string str Text to display in the window.
  *    @luatreturn string|nil nil if input was canceled or a string with the text written.
- * @luafunc input( title, min, max, str )
+ * @luafunc input
  */
 static int tk_input( lua_State *L )
 {
@@ -215,7 +215,7 @@ static int tk_input( lua_State *L )
  *    @luatparam string choices Option choices.
  *    @luatreturn number The number of the choice chosen.
  *    @luatreturn string The name of the choice chosen.
- * @luafunc choice( title, msg, ... )
+ * @luafunc choice
  */
 static int tk_choice( lua_State *L )
 {
@@ -269,7 +269,7 @@ static int tk_choice( lua_State *L )
  *    @luatparam string choices Option choices.
  *    @luatreturn number The number of the choice chosen.
  *    @luatreturn string The name of the choice chosen.
- * @luafunc list( title, msg, ... )
+ * @luafunc list
  */
 static int tk_list( lua_State *L )
 {
@@ -314,7 +314,7 @@ static int tk_list( lua_State *L )
  *
  *    @luatparam String name Name of the window.
  *    @luatparam Table outfits Table of outfits to sell/buy. It is possible to use either outfits or outfit names (strings).
- * @luafunc merchantOutfit( name, outfits )
+ * @luafunc merchantOutfit
  */
 static int tk_merchantOutfit( lua_State *L )
 {
@@ -367,7 +367,7 @@ static int tk_merchantOutfit( lua_State *L )
  *    @luatparam Function draw Function to call when drawing.
  *    @luatparam Function keyboard Function to call when keyboard events are received.
  *    @luatparam Function mouse Function to call when mouse events are received.
- * @luafunc custom( title, width, height, update, draw, keyboard, mouse )
+ * @luafunc custom
  */
 static int tk_custom( lua_State *L )
 {
@@ -417,7 +417,7 @@ static int tk_custom( lua_State *L )
  * @brief Renames the custom widget window.
  *
  *    @luatparam string displayname Name to give the custom widget window.
- * @luafunc customRename( displayname )
+ * @luafunc customRename
  */
 static int tk_customRename( lua_State *L )
 {
@@ -434,7 +434,7 @@ static int tk_customRename( lua_State *L )
  * @brief Sets the custom widget fullscreen.
  *
  *    @luatparam boolean enable Enable fullscreen or not.
- * @luafunc customFullscreen( enable )
+ * @luafunc customFullscreen
  */
 static int tk_customFullscreen( lua_State *L )
 {
@@ -452,7 +452,7 @@ static int tk_customFullscreen( lua_State *L )
  *
  *    @luatparam number width Width of the widget to resize to.
  *    @luatparam number height Height of the widget to resize to.
- * @luafunc customResize( width, height )
+ * @luafunc customResize
  */
 static int tk_customResize( lua_State *L )
 {
@@ -472,7 +472,7 @@ static int tk_customResize( lua_State *L )
  *
  *    @luatreturn number Width of the window.
  *    @luatreturn number Height of the window.
- * @luafunc customSize()
+ * @luafunc customSize
  */
 static int tk_customSize( lua_State *L )
 {
@@ -489,7 +489,7 @@ static int tk_customSize( lua_State *L )
 
 /**
  * @brief Ends the execution of a custom widget.
- * @luafunc customDone()
+ * @luafunc customDone
  */
 static int tk_customDone( lua_State *L )
 {

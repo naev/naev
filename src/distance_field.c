@@ -29,6 +29,15 @@ The views and conclusions contained in the software and documentation are
 those of the authors and should not be interpreted as representing official
 policies, either expressed or implied, of the freetype-gl project.
  */
+
+
+/**
+ * @file distance_field.c
+ *
+ * @brief Code for generating our distance fields (\see font.c).
+ * Based on the corresponding file in https://github.com/rougier/freetype-gl
+ */
+
 /** @cond */
 #include <math.h>
 #include <float.h>
@@ -38,8 +47,18 @@ policies, either expressed or implied, of the freetype-gl project.
 
 #include "edtaa3func.h"
 
+/**
+ * @brief Like the original: perform a Euclidean Distance Transform on the input and
+ *        normalize to [0,1], with a value of 0.5 on the boundary.
+ * @param data width*height values, row-major order. Positive values are object pixels.
+ *             Negative/zero values are background pixels.
+ * @param width Number of columns.
+ * @param height Number of rows.
+ * @param explicit_max If a positive number is passed in, saturate at that outer distance.
+ * @return Allocated distance field, values ranging from 0 (outermost) to 1 (innermost).
+ */
 double *
-make_distance_mapd( double *data, unsigned int width, unsigned int height )
+make_distance_mapd( double *data, unsigned int width, unsigned int height, double explicit_max )
 {
     short * xdist = (short *)  malloc( width * height * sizeof(short) );
     short * ydist = (short *)  malloc( width * height * sizeof(short) );
@@ -47,7 +66,7 @@ make_distance_mapd( double *data, unsigned int width, unsigned int height )
     double * gy      = (double *) calloc( width * height, sizeof(double) );
     double * outside = (double *) calloc( width * height, sizeof(double) );
     double * inside  = (double *) calloc( width * height, sizeof(double) );
-    double vmin = DBL_MAX;
+    double vmin = DBL_MAX, vmax = -DBL_MAX;
     unsigned int i;
 
     // Compute outside = edtaa3(bitmap); % Transform background (0's)
@@ -76,14 +95,19 @@ make_distance_mapd( double *data, unsigned int width, unsigned int height )
             vmin = outside[i];
     }
 
-    vmin = fabs(vmin);
+    vmax = explicit_max > 0 ? explicit_max : fabs(vmin);
 
     for( i=0; i<width*height; ++i)
     {
         double v = outside[i];
-        if     ( v < -vmin) outside[i] = -vmin;
-        else if( v > +vmin) outside[i] = +vmin;
-        data[i] = (outside[i]+vmin)/(2*vmin);
+        if ( v < vmin)
+            data[i] = 0;
+        else if( v < 0)
+            data[i] = .5-.5*outside[i]/vmin;
+        else if( v <= vmax)
+            data[i] = .5+.5*outside[i]/vmax;
+        else
+            data[i] = +1;
     }
 
     free( xdist );
@@ -95,47 +119,18 @@ make_distance_mapd( double *data, unsigned int width, unsigned int height )
     return data;
 }
 
-unsigned char *
-make_distance_mapb( unsigned char *img,
-                    unsigned int width, unsigned int height )
-{
-    double * data    = (double *) calloc( width * height, sizeof(double) );
-    unsigned char *out = (unsigned char *) malloc( width * height * sizeof(unsigned char) );
-    unsigned int i;
-
-    // find minimum and maximum values
-    double img_min = DBL_MAX;
-    double img_max = DBL_MIN;
-
-    for( i=0; i<width*height; ++i)
-    {
-        double v = img[i];
-        data[i] = v;
-        if (v > img_max)
-            img_max = v;
-        if (v < img_min)
-            img_min = v;
-    }
-
-    // Map values from 0 - 255 to 0.0 - 1.0
-    for( i=0; i<width*height; ++i)
-        data[i] = (img[i]-img_min)/img_max;
-
-    data = make_distance_mapd(data, width, height);
-
-    // map values from 0.0 - 1.0 to 0 - 255
-    for( i=0; i<width*height; ++i)
-        out[i] = (unsigned char)(255*(1-data[i]));
-
-    free( data );
-
-    return out;
-}
-
-
+/**
+ * @brief Perform a Euclidean Distance Transform on the input and normalize to [0,1],
+ *        with a value of 0.5 on the boundary.
+ * @param img Pixel values, row-major order.
+ * @param width Number of columns.
+ * @param height Number of rows.
+ * @param explicit_max If a positive number is passed in, saturate at that outer distance.
+ * @return Allocated distance field, values ranging from 0 (innermost) to 1 (outermost).
+ */
 float*
 make_distance_mapbf( unsigned char *img,
-                    unsigned int width, unsigned int height )
+                    unsigned int width, unsigned int height, double explicit_max )
 {
     double * data    = (double *) calloc( width * height, sizeof(double) );
     float *out       = (float *) malloc( width * height * sizeof(float) );
@@ -159,7 +154,7 @@ make_distance_mapbf( unsigned char *img,
     for( i=0; i<width*height; ++i)
         data[i] = (img[i]-img_min)/img_max;
 
-    data = make_distance_mapd(data, width, height);
+    data = make_distance_mapd(data, width, height, explicit_max);
 
     // lower to float
     for( i=0; i<width*height; ++i)

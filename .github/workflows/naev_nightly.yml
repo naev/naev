@@ -2,15 +2,16 @@ on:
   repository_dispatch:
     types: manual-nightly
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
 name: Nightly Release
 
 jobs:
   "Package_Source":
     runs-on: ubuntu-latest
+
     container:
-      image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
+      image: "ghcr.io/projectsynchro/naev-ubuntu1604:latest"
 
     steps:
       - name: Checkout Naev Repository
@@ -19,7 +20,6 @@ jobs:
           fetch-depth: 0
           path: source
           submodules: true
-          
 
       - name: Package Dist
         run: |
@@ -57,8 +57,9 @@ jobs:
   "Linux_Naev_Release":
     needs: "Package_Source"
     runs-on: ubuntu-latest
+
     container:
-      image: projectsynchro/synchros_sexy_docker_images:naev-ubuntu1604
+      image: "ghcr.io/projectsynchro/naev-ubuntu1604:latest"
 
     steps:
       - name: Get Source
@@ -72,7 +73,6 @@ jobs:
           tar -xf source.tar.xz -C source --strip 1
 
       - name: Compile AppImage
-        id: appimageCompile
         run: |
           ./source/utils/buildAppImage.sh -m -s "source" -b "build" -o "${{ env.DESTDIR }}"
         env:
@@ -86,19 +86,12 @@ jobs:
 
   "Windows_Naev_Release":
     needs: "Package_Source"
-    runs-on: windows-latest
-    defaults:
-      run:
-        shell: msys2 {0}
+    runs-on: ubuntu-latest
+
+    container:
+      image: "ghcr.io/projectsynchro/naev-windows:latest"
 
     steps:
-      - name: Install MinGW Packages
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: MINGW64
-          update: true
-          install: git python tar mingw-w64-x86_64-clang mingw-w64-x86_64-freetype mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libxml2 mingw-w64-x86_64-luajit mingw-w64-x86_64-mesa mingw-w64-x86_64-meson mingw-w64-x86_64-ninja mingw-w64-x86_64-nsis mingw-w64-x86_64-openal mingw-w64-x86_64-pkg-config mingw-w64-x86_64-SDL2 mingw-w64-x86_64-suitesparse
-
       - name: Get Source
         uses: actions/download-artifact@v2
         with:
@@ -112,7 +105,7 @@ jobs:
       - name: Meson Setup
         run: |
           meson setup build source \
-            --native-file='source/utils/build/windows.ini' \
+            --cross-file='source/utils/build/windows_cross_mxe.ini' \
             --buildtype=release \
             -Db_lto=true \
             -Dauto_features=enabled \
@@ -122,6 +115,7 @@ jobs:
       - name: Meson Compile
         run: |
           meson compile -C build
+          meson compile -C build naev-gmo
 
       - name: Build Windows Installer
         run: |
@@ -134,12 +128,57 @@ jobs:
           path: ${{ github.workspace }}/dist/out/*
           if-no-files-found: error
 
+  "Darwin_Naev_Release":
+    needs: "Package_Source"
+    runs-on: ubuntu-latest
+    container:
+      image: "ghcr.io/projectsynchro/naev-macos:latest"
+
+    steps:
+      - name: Get Source
+        uses: actions/download-artifact@v2
+        with:
+          name: naev-dist
+
+      - name: Extract Source
+        run: |
+          mkdir source
+          tar -xf source.tar.xz -C source --strip 1
+
+      - name: Meson Setup
+        run: |
+          meson setup build source \
+              --cross-file='source/utils/build/macos_cross_osxcross.ini' \
+              --buildtype=release \
+              -Db_lto=true \
+              -Dauto_features=enabled \
+              -Ddocs_c=disabled \
+              -Ddocs_lua=disabled
+
+      - name: Meson Compile
+        run: |
+          meson compile -C build
+          meson compile -C build naev-gmo
+
+      - name: Build macOS Installer
+        run: |
+          ./source/extras/macos/bundle.py -n -s "source" -b "build" -o "$(pwd)/dist"
+          cd dist/out
+          zip -r naev-macos.zip Naev.app/*
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-macos
+          path: ${{ github.workspace }}/dist/out/*.zip
+          if-no-files-found: error
+
   "Steam_Naev_Release":
     needs: "Package_Source"
     runs-on: ubuntu-latest
 
     container:
-      image: projectsynchro/synchros_sexy_docker_images:naev-steamruntime
+      image: "ghcr.io/projectsynchro/naev-steamruntime:latest"
 
     steps:
       - name: Get Source
@@ -153,7 +192,6 @@ jobs:
           tar -xf naev-dist/source.tar.xz -C source --strip 1
 
       - name: Meson Setup
-        id: setup
         run: |
           meson setup build source \
               --native-file='source/utils/build/linux_steamruntime.ini' \
@@ -166,6 +204,7 @@ jobs:
       - name: Meson Compile
         run: |
           meson compile -C build
+          meson compile -C build naev-gmo
 
       - name: Collect Steam Linux64 Artifacts
         run: |
@@ -174,6 +213,7 @@ jobs:
           mv build/naev dist/out/naev.x64
           chmod +x dist/out/naev.x64
 
+          source/utils/package-po.sh -b build -o source
           tar -cJvf dist/out/steam-ndata.tar.xz source/dat
 
       - name: Upload Naev Binary Artifact
@@ -203,14 +243,42 @@ jobs:
         Package_Source,
         Linux_Naev_Release,
         Windows_Naev_Release,
+        Darwin_Naev_Release,
         Steam_Naev_Release,
       ]
     if: ${{ github.repository == 'naev/naev' }}
 
     steps:
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v2
+        if: ${{ matrix.releasetype == 'github' }}
+
+      - name: Generate commit changelog
+        uses: Bullrich/generate-release-changelog@master
+        if: ${{ matrix.releasetype == 'github' }}
+        id: changelog
+        env:
+          REPO: ${{ github.repository }}
+
+      - name: Delete old nightly tag and release.
+        uses: dev-drprasad/delete-tag-and-release@v0.1.2
+        if: ${{ matrix.releasetype == 'github' }}
+        with:
+          delete_release: true
+          tag_name: nightly
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create 'nightly' tag
+        uses: EndBug/latest-tag@latest
+        if: ${{ matrix.releasetype == 'github' }}
+        with:
+          tag-name: nightly
+
       - name: Create Release Staging and Output Areas
         run: |
-          mkdir -p {temp,dist/{staging,out/{lin64,win64}}}
+          mkdir -p {temp,dist/{staging,out/{lin64,macos,win64}}}
+        working-directory: ${{ github.workspace }}
 
       - name: Update APT Cache
         if: ${{ matrix.releasetype == 'steam' }}
@@ -246,21 +314,23 @@ jobs:
           SUFFIX="$VERSION.$BUILD_DATE"
 
           mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/naev-$SUFFIX-linux-x86-64.AppImage
+          mv dist/staging/naev-macos/*.zip dist/out/naev-$SUFFIX-macos.zip
           mv dist/staging/naev-win64/naev*.exe dist/out/naev-$SUFFIX-win64.exe
           mv dist/staging/naev-dist/source.tar.xz dist/out/naev-$SUFFIX-source.tar.xz
 
           chmod +x dist/out/naev-$SUFFIX-linux-x86-64.AppImage
 
-      - name: Upload Github Release
+      - name: Create Release
+        uses: ncipollo/release-action@v1
         if: ${{ matrix.releasetype == 'github' }}
-        uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "nightly"
+          artifacts: "${{ github.workspace }}/dist/out/*.*"
+          name: "Nightly Build"
+          body: |
+            ${{ steps.Changelog.outputs.changelog }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: true
-          title: "Nightly Build"
-          files: |
-            ${{ github.workspace }}/dist/out/*
+          tag: "nightly"
 
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
@@ -272,10 +342,13 @@ jobs:
           mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
           chmod +x dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
 
+          mv dist/staging/naev-macos/*.zip dist/out/macos/naev-$SUFFIX-macos.zip
+
           tar -Jxf "dist/staging/naev-win64/steam-win64.tar.xz" -C "dist/out/win64"
           tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64" --strip 1
 
           ./butler push --userversion="$SUFFIX" dist/out/lin64 naev/naev:linux-x86-64-nightly
+          ./butler push --userversion="$SUFFIX" dist/out/macos naev/naev:macos-x86-64-nightly
           ./butler push --userversion="$SUFFIX" dist/out/win64 naev/naev:windows-x86-64-nightly
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
@@ -285,7 +358,7 @@ jobs:
         run: |
           chmod -R +x dist/staging/naev-steam-deployment
           cp -r dist/staging/naev-steam-deployment/* ${{ github.workspace }}
-          ./SteamDeploy.sh -n -v "${{ github.workspace }}/dist/staging/naev-version" -t "${{ github.workspace }}/dist/staging" -o "${{ github.workspace }}/dist/out"
+          ./SteamDeploy.sh -n -t "${{ github.workspace }}/dist/staging" -o "${{ github.workspace }}/dist/out"
         env:
           STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
           STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}

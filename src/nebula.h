@@ -21,6 +21,11 @@ void nebu_render( const double dt );
 void nebu_renderOverlay( const double dt );
 
 /*
+ * Update.
+ */
+void nebu_update( double dt );
+
+/*
  * Misc
  */
 int nebu_isLoaded (void);

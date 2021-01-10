@@ -87,7 +87,7 @@ static void clear_newslines (void);
  *    @param date_to_rm date to remove the article
  * @return pointer to new article
  */
-news_t* new_article(char* title, char* content, char* faction, ntime_t date,
+news_t* new_article(char* title, char* content, const char* faction, ntime_t date,
     ntime_t date_to_rm)
 {
    news_t *article_ptr, *n_article;
@@ -258,7 +258,7 @@ news_t* news_get(int id)
  *    @param faction the faction of wanted news
  * @return 0 on success
  */
-int *generate_news( char* faction )
+int *generate_news( const char* faction )
 {
    news_t *temp, *article_ptr;
    int p;
@@ -290,14 +290,14 @@ int *generate_news( char* faction )
             article_time = ntime_pretty(article_ptr->date, 1);
             p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
-               "%s: %s\a0\n\n"
+               "%s: %s#0\n\n"
                , article_ptr->title, article_time, article_ptr->desc );
             free( article_time );
          }
          else {
             p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
-               "%s\a0\n\n"
+               "%s#0\n\n"
                , article_ptr->title, article_ptr->desc );
          }
       }
