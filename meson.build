@@ -255,6 +255,7 @@ if buildExec.disabled() == false
    install_subdir(
       'artwork',
       install_dir: ndata_path / 'dat',
+      exclude_files: '.git',  # That's a marker used by "git submodule".
       strip_directory: true,
    )
 
