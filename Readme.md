@@ -31,16 +31,18 @@ If you're cross-compiling for Windows, you must install this soft dependency:
 
 
 ### Ubuntu
-
-Install compile-time dependencies on Ubuntu 16.04 (and hopefully later) with:
+Install compile-time dependencies on Ubuntu 20.04 (and hopefully later) with:
 
 ```
 apt-get install build-essential libsdl2-dev libsdl2-image-dev \
 libgl1-mesa-dev libxml2-dev libfreetype6-dev libpng-dev libopenal-dev \
 libvorbis-dev binutils-dev libiberty-dev autopoint intltool libfontconfig-dev \
-python3-pip
+libphysfs-dev libsuitesparse-dev python3-pip
 pip3 install meson ninja
 ```
+
+We do not suggest to build on Ubuntu releases < 20.04, as they do not provide the up-to-date releases 
+of the dependencies. Sorry.
 
 ### macOS
 
