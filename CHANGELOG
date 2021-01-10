@@ -4,6 +4,7 @@
       * New missions
          * Follow happenings on "Minerva Station"
    * Engine
+      * Fonts now use distance fields and much better in many cases
       * Improved how Lua was being loaded
       * Added library that supports lots of Love2D API in Naev
       * Added Visual Novel library
