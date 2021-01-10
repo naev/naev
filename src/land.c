@@ -1006,12 +1006,13 @@ void land_genWindows( int load, int changetab )
       events_trigger( EVENT_TRIGGER_LAND );
 
       /* 3) Generate computer and bar missions. */
+      /* Generate bar missions first for claims. */
+      if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
+         npc_generate(); /* Generate bar npc. */
       if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS))
          mission_computer = missions_genList( &mission_ncomputer,
                land_planet->faction, land_planet->name, cur_system->name,
                MIS_AVAIL_COMPUTER );
-      if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
-         npc_generate(); /* Generate bar npc. */
    }
 
 
