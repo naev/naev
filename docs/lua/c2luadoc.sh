@@ -39,7 +39,7 @@ sed -n                                                                         \
  -e 's|^ *\* *@todo|-- <em>TODO</em>|p'                                        \
  -e 's|^ *\* *@TODO|-- <em>TODO</em>|p'                                        \
  -e 's|^ *\* *@warning|-- <em>Warning</em>|p'                                  \
- -e 's|^ *\* *@note|-- <em>Note</em> |p'                                       \
+ -e 's|^ *\* *@note|-- <em>Note</em>|p'                                        \
 `# Custom tags:`                                                               \
  -e 's|^ *\* *@code|-- <pre>|p'                                                \
  -e 's|^ *\* *@endcode|-- </pre>|p'                                            \
