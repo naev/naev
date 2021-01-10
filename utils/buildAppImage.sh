@@ -69,6 +69,7 @@ export DESTDIR="$BUILDOUTPUT/Naev.AppDir"
 sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
 --native-file "$SOURCEROOT/utils/build/linux_appimage.ini" \
 --buildtype "$BUILDTYPE" \
+-Dnightly=$NIGHTLY \
 -Db_lto=true \
 -Dauto_features=enabled \
 -Ddocs_c=disabled \

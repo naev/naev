@@ -25,7 +25,7 @@ jobs:
 
       - name: Package Dist
         run: |
-          meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
+          meson setup build source -Dnightly=false -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
           meson dist -C build --no-tests --include-subprojects
 
       - name: Collect Artifacts
@@ -117,6 +117,7 @@ jobs:
           meson setup build source \
               --cross-file='source/utils/build/windows_cross_mxe.ini' \
               --buildtype=release \
+              -Dnightly=false \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
@@ -160,6 +161,7 @@ jobs:
           meson setup build source \
               --cross-file='source/utils/build/macos_cross_osxcross.ini' \
               --buildtype=release \
+              -Dnightly=false \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
@@ -206,6 +208,7 @@ jobs:
           meson setup build source \
               --native-file='source/utils/build/linux_steamruntime.ini' \
               --buildtype=release \
+              -Dnightly=false \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
