@@ -241,12 +241,6 @@ if buildExec.disabled() == false
       install_dir: get_option('datadir') / 'doc/naev'
    )
 
-   install_data(
-      'naev-confupdate.sh',
-      'extras/logos/naev.png',
-      install_dir: get_option('datadir') / 'naev'
-   )
-
    install_subdir(
       'dat',
       install_dir: ndata_path,
