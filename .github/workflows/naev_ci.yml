@@ -2,9 +2,6 @@ on: [push, pull_request]
 
 name: CI
 
-env:
-  DESTDIR: "${{ github.workspace }}/dist"
-
 jobs:
   "Package_Source":
     runs-on: ubuntu-latest
@@ -82,7 +79,6 @@ jobs:
         id: compile
         run: |
           meson compile -C build
-          meson compile -C build naev-gmo
 
       - name: Upload Compile Log
         uses: actions/upload-artifact@v1
@@ -102,6 +98,8 @@ jobs:
       - name: Test Install
         run: |
           meson install -C build
+        env:
+          DESTDIR: "${{ github.workspace }}/staging"
 
       - name: Upload Install Log
         uses: actions/upload-artifact@v1
@@ -138,9 +136,9 @@ jobs:
         id: setup
         run: |
           meson setup build source \
-              --prefix="$(pwd)"/source/extras/windows/installer/bin \
-              --bindir='' \
-              -Dndata_path='' \
+              --prefix="$(pwd)"/source/extras/windows/installer \
+              --bindir=bin \
+              -Dndata_path=bin \
               --cross-file='source/utils/build/${{ matrix.config }}' \
               --buildtype=debug \
               --wrap-mode=forcefallback \
@@ -162,7 +160,6 @@ jobs:
         id: compile
         run: |
           meson compile -C build
-          meson compile -C build naev-gmo
 
       - name: Upload Compile Log
         uses: actions/upload-artifact@v2
@@ -240,7 +237,6 @@ jobs:
         id: compile
         run: |
           meson compile -C build
-          meson compile -C build naev-gmo
 
       - name: Upload Compile Log
         uses: actions/upload-artifact@v2
@@ -340,7 +336,6 @@ jobs:
       - name: Meson Compile
         run: |
           meson compile -C build
-          meson compile -C build naev-gmo
 
       - name: Trigger API Documentation Update
         if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}

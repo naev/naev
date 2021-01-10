@@ -233,12 +233,15 @@ if buildExec.disabled() == false
       }
    )
 
-   install_data(
-      'gpl.txt',
-      'LICENSE',
-      'Readme.md',
-      install_dir: get_option('datadir') / 'doc/naev'
-   )
+   if host_machine.system() not in ['windows', 'darwin']
+      install_data(
+         'gpl.txt',
+         'LICENSE',
+         'Readme.md',
+         install_dir: get_option('datadir') / 'doc/naev'
+      )
+   endif
+   # TODO: And what if it is 'windows' or 'darwin'?
 
    install_subdir(
       'dat',
@@ -277,6 +280,13 @@ if buildExec.disabled() == false
    endif
 
    subdir('test')
+
+   if host_machine.system() == 'windows'
+     meson.add_install_script('extras/windows/packageWindows.sh', '-n', get_option('nightly').to_string())
+   endif
+   if host_machine.system() == 'darwin'
+     meson.add_install_script('extras/macos/bundle.py')
+   endif
 endif
 
 ####

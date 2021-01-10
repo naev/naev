@@ -62,19 +62,11 @@ function make_appimage {
 }
 
 function make_windows {
-   if [[ "$NIGHTLY" == "true" ]]; then
-      sh "$SOURCEROOT/extras/windows/packageWindows.sh" -n -s "$SOURCEROOT" -b "$BUILDPATH" -o "$BUILDOUTPUT"
-   else
-      sh "$SOURCEROOT/extras/windows/packageWindows.sh" -s "$SOURCEROOT" -b "$BUILDPATH" -o "$BUILDOUTPUT"
-   fi
+   meson install
 }
 
 function make_macos {
-   if [[ "$NIGHTLY" == "true" ]]; then
-      "$SOURCEROOT/extras/macos/bundle.py" -n -s "$SOURCEROOT" -b "$BUILDPATH" -o "$BUILDOUTPUT"
-   else
-      "$SOURCEROOT/extras/macos/bundle.py" -s "$SOURCEROOT" -b "$BUILDPATH" -o "$BUILDOUTPUT"
-   fi
+   meson install
 }
 
 function make_steam {

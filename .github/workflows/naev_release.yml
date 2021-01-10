@@ -115,9 +115,9 @@ jobs:
       - name: Meson Setup
         run: |
           meson setup build source \
-              --prefix="$(pwd)"/source/extras/windows/installer/bin \
-              --bindir='' \
-              -Dndata_path='' \
+              --prefix="$(pwd)"/source/extras/windows/installer \
+              --bindir=bin \
+              -Dndata_path=bin \
               --cross-file='source/utils/build/windows_cross_mxe.ini' \
               --buildtype=release \
               -Dnightly=false \
@@ -129,11 +129,10 @@ jobs:
       - name: Meson Compile
         run: |
           meson compile -C build
-          meson compile -C build naev-gmo
 
-      - name: Build Windows Installer
+      - name: Meson Install
         run: |
-          ./source/extras/windows/packageWindows.sh -s "source" -b "build" -o "$(pwd)/dist"
+          meson install -C build
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
@@ -176,11 +175,10 @@ jobs:
       - name: Meson Compile
         run: |
           meson compile -C build
-          meson compile -C build naev-gmo
 
-      - name: Build macOS Installer
+      - name: Meson Install
         run: |
-          ./source/extras/macos/bundle.py -s "source" -b "build" -o "$(pwd)/dist"
+          meson install -C build
           cd dist/out
           zip -r naev-macos.zip Naev.app/*
 

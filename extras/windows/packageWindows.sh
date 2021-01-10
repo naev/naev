@@ -1,39 +1,23 @@
 #!/bin/bash
-# WINDOWS PACKAGING SCRIPT FOR NAEV
-# Requires mingw-w64-x86_64-nsis to be installed, and the submodule in extras/windows/mingw-bundledlls to be available
-#
-# This script should be run after compiling Naev
-# It detects the current environment, and builds the appropriate NSIS installer
-# into the root naev directory.
-#
-# Pass in [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -o <BUILDOUTPUT> (Dist output directory)
+
+# WINDOWS INSTALL SCRIPT FOR NAEV
+# This script is called by "meson install" if building for Windows.
+# It builds the appropriate NSIS installer into the root naev directory.
+# Requires mingw-w64-x86_64-nsis to be installed, and the submodule in extras/windows/mingw-bundledlls to be available.
 
 set -e
 
 # Defaults
-SOURCEROOT="$(pwd)"
-BUILDPATH="$(pwd)/build"
+SOURCEROOT="${MESON_SOURCE_ROOT}"
+BUILDPATH="${MESON_BUILD_ROOT}"
 NIGHTLY="false"
 BUILDOUTPUT="$(pwd)/dist"
 
-while getopts dns:b:o: OPTION "$@"; do
+while getopts n: OPTION "$@"; do
     case $OPTION in
-    d)
-        set -x
-        ;;
     n)
-        NIGHTLY="true"
+        NIGHTLY="${OPTARG}"
         ;;
-    s)
-        SOURCEROOT="${OPTARG}"
-        ;;
-    b)
-        BUILDPATH="${OPTARG}"
-        ;;
-    o)
-        BUILDOUTPUT="${OPTARG}"
-        ;;
-        
     esac
 done
 
@@ -76,20 +60,14 @@ SUFFIX="$VERSION-win64"
 
 # Move compiled binary to staging folder.
 
-echo "creating staging area"
 STAGING="$SOURCEROOT/extras/windows/installer/bin"
-mkdir -p "$STAGING"
 
 # Move data to staging folder
-echo "moving data to staging area"
-cp -r "$SOURCEROOT/dat" "$STAGING"
-"$SOURCEROOT"/utils/package-po.sh -b "$BUILDPATH" -o "$STAGING"
-
 echo "copying naev logo to staging area"
 cp "$SOURCEROOT/extras/logos/logo.ico" "$SOURCEROOT/extras/windows/installer"
 
 echo "copying naev binary to staging area"
-cp "$BUILDPATH/naev.exe" "$STAGING/naev-$SUFFIX.exe"
+mv "$STAGING/naev.exe" "$STAGING/naev-$SUFFIX.exe"
 
 # Collect DLLs
 echo "Collecting DLLs in staging area"
