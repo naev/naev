@@ -160,10 +160,21 @@ function hintosd ()
 end
 
 
+
 function approach_maikki ()
    vn.clear()
    vn.scene()
    local maikki = vn.newCharacter( minerva.vn_maikki() )
+   local function seekoutmsg ()
+      maikki(string.format(_([["The three Za'lek researchers you should seek out are:
+%s in the %s system,
+%s in the %s system,
+and %s in the %s system."]]),
+         hint1_name, hintsys[1],
+         hint2_name, hintsys[2],
+         hint3_name, hintsys[3]
+      ))
+   end
    vn.fadein()
 
    vn.na(_("You approach Maikki who seems to have a fierce determination in her look."))
@@ -213,14 +224,7 @@ She winks at you.]]))
       vn.jump("introcont")
 
       vn.label("introcont")
-      maikki(string.format(_([["The three Za'lek researchers you should seek out are:
-%s in the %s system,
-%s in the %s system,
-and %s in the %s system."]]),
-         hint1_name, hintsys[1],
-         hint2_name, hintsys[2],
-         hint3_name, hintsys[3]
-      ))
+      seekoutmsg()
       maikki(_([["Apparently the three researchers used to work together in some project about the nebula origins, but never really made anything public. I totally think that they must know something about this, the disappearance of my father was big news!"]]))
       maikki(_([[She looks at you expectantly.
 "I will stay here and search for him more. Please pay those creepy Za'lek researchers a visit and see if you can find out what happened to my father!"]]))
@@ -228,18 +232,33 @@ and %s in the %s system."]]),
 
    local opts = {
       {_("Ask about the researchers"), "researchers"},
-      {_("Ask about her father"), "father"},
+      {_("Ask about her father (Kex)"), "father"},
       {_("Leave"), "leave"},
    }
+   -- TODO more options as more researchers are found
    vn.label( "menu" )
    vn.menu( opts )
 
    vn.label( "researchers" )
-   maikki(_([[""]]))
+   maikki(_([["The researchers I told you about were involved in some sort of project trying to find out the origins of the incident by analyzing artifacts taken from the nebula. Most of it is classified so I wasn't able to get much information."]]))
+   maikki(_([["Apparently the project was disbanded for some reason or other, and some members went missing. However, I was able to track down a few of them, but it wasn't too easy. They have some weird system called tenure that nobody understands and makes them move constantly from research laboratory to research laboratory. So droll!"]]))
+   seekoutmsg()
+   maikki(_([["I don't think it will be easy for you to get information from the Za'lek, they never give a straight answer and it's all "that is illogical" and "ma'am that beaker of acid is not a toy". So boring!"
+She frowns and shakes her head to the sides.]])
+   -- TODO messages regarding each of the researchers
    vn.jump( "menu_msg" )
 
    vn.label( "father" )
-   maikki(_([[""]]))
+   maikki(_([["I don't remember much about my father, most of what I know about him is stories from my late mother and stories told by pilots who knew him."]]))
+   maikki(_([[Her eyes light up.
+"Did you know that while scavenging near the incident, an asteroid hit his thrusters making them point the wrong way and he had to fly through five systems backwards through the nebula while chased by pirates? Sounds crazy!"]]))
+   maikki(_([["He was also said to be the first pilot to chart the entire systems in the Nebula after the incident. Not even getting his leg crushed while recovering parts of the last emperor's flagship stopped him from going back and back to the nebula."]]))
+   maikki(_([[Her eyes darken a little and her voice softens.
+"His obsession with finding the truth did mean he was away from home most of the time and my mother was probably very lonely. She told me he never came to any of my birthdays..."]]))
+   maikki(_([[Her eyes light up again.
+"However, those were exceptional times. Most of the universe and our history as humans was lost! I would like to love to be able to meet him again and be able to ask all sorts of things."]]))
+   maikki(_([["After you finding his ship in the nebula we have to get to the bottom of what happened! There is no way this was an accident, and I'm sure the Za'lek are involved in this. Since you didn't find a body, he has to be alive! We have to find out what happened and set things right!"
+Her eyes sparkle with determination.]]))
    vn.jump( "menu_msg" )
 
    vn.label( "menu_msg" )
