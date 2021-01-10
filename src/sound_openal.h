@@ -23,6 +23,7 @@
  * @brief Contains a sound buffer.
  */
 typedef struct alSound_ {
+   char *filename; /**< Name of the file loaded from. */
    char *name; /**< Buffer's name. */
    double length; /**< Length of the buffer. */
    ALuint buf; /**< Buffer data. */
@@ -113,7 +114,8 @@ void sound_al_exit (void);
 /*
  * Sound creation.
  */
-int sound_al_load( alSound *snd, const char *filename );
+int sound_al_buffer( ALuint *buf, SDL_RWops *rw, const char *name );
+int sound_al_load( alSound *snd, SDL_RWops *rw, const char *name );
 void sound_al_free( alSound *snd );
 
 

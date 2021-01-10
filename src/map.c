@@ -453,7 +453,7 @@ static void map_update( unsigned int wid )
       if (sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED))
          window_modifyText( wid, "txtSysname", _(sys->name) );
       else
-         window_modifyText( wid, "txtSysname", _("Unknown") );;
+         window_modifyText( wid, "txtSysname", _("Unknown") );
 
       /* Faction */
       window_modifyImage( wid, "imgFaction", NULL, 0, 0 );

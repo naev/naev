@@ -495,7 +495,7 @@ void faction_rmEnemy( int f, int o )
 
    for (i=0;i<array_size(ff->enemies);i++) {
       if (ff->enemies[i] == o) {
-         array_erase( &ff->enemies, &ff->enemies[o], &ff->enemies[o+1] );
+         array_erase( &ff->enemies, &ff->enemies[i], &ff->enemies[i+1] );
          return;
       }
    }
@@ -569,7 +569,7 @@ void faction_rmAlly( int f, int o )
 
    for (i=0;i<array_size(ff->allies);i++) {
       if (ff->allies[i] == o) {
-         array_erase( &ff->allies, &ff->allies[o], &ff->allies[o+1] );
+         array_erase( &ff->allies, &ff->allies[i], &ff->allies[i+1] );
          return;
       }
    }

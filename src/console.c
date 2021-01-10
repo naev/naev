@@ -162,7 +162,7 @@ static int cli_printCore( lua_State *L, int cli_only )
 /**
  * @brief Barebones warn implementation for Lua, allowing scripts to print warnings to stderr.
  *
- * @luafunc warn()
+ * @luafunc warn
  */
 int cli_warn( lua_State *L )
 {

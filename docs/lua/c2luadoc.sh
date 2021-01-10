@@ -33,6 +33,13 @@ sed -n                                                                         \
  -e 's|^ *\* *@class|-- @class|p'                                              \
  -e 's|^ *\* *@field|-- @field|p'                                              \
  -e 's|^ *\* *@release|-- @release|p'                                          \
+`# HACK: ldoc supports annotations: fixme, todo, warning.`                     \
+`# They eat your message. Let's do our own thing here.`                        \
+ -e 's|^ *\* *@fixme|-- <em>FIXME</em>|p'                                      \
+ -e 's|^ *\* *@todo|-- <em>TODO</em>|p'                                        \
+ -e 's|^ *\* *@TODO|-- <em>TODO</em>|p'                                        \
+ -e 's|^ *\* *@warning|-- <em>Warning</em>|p'                                  \
+ -e 's|^ *\* *@note|-- <em>Note</em>|p'                                        \
 `# Custom tags:`                                                               \
  -e 's|^ *\* *@code|-- <pre>|p'                                                \
  -e 's|^ *\* *@endcode|-- </pre>|p'                                            \

@@ -33,7 +33,7 @@
 
 --]]
 
-require "portrait"
+local portrait = require "portrait"
 require "missions/neutral/common"
 
 

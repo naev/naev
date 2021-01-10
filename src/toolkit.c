@@ -577,18 +577,23 @@ int window_setDisplayname( const unsigned int wid, const char *displayname )
 /**
  * @brief Gets the ID of a window.
  *
+ * @note Gets the top window matching the ID first.
+ *
  *    @param wdwname Name of the window to get ID of.
  *    @return ID of the window.
  */
 unsigned int window_get( const char* wdwname )
 {
-   Window *w;
+   Window *w, *last;
    if (windows == NULL)
       return 0;
+   last = NULL;
    for (w = windows; w != NULL; w = w->next)
       if ((strcmp(w->name,wdwname)==0) && !window_isFlag(w, WINDOW_KILL))
-         return w->id;
-   return 0;
+         last = w;
+   if (last==NULL)
+      return 0;
+   return last->id;
 }
 
 

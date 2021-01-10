@@ -12,7 +12,13 @@
 --]]
 
 require "events/tutorial/tutorial_common"
-require "portrait"
+local portrait = require "portrait"
+local vn = require 'vn'
+
+-- List of planets where there will be NO generic NPCs
+blacklist = {
+   "Minerva Station",
+}
 
 -- Factions which will NOT get generic texts if possible.  Factions
 -- listed here not spawn generic civilian NPCs or get aftercare texts.
@@ -60,6 +66,7 @@ msg_lore["general"] =      {_([["I heard the nebula is haunted! My uncle Bobby t
                               _([["I wouldn't travel north from Alteris if I were you, unless you're a good fighter! That area of space has really gone down the drain since the Incident."]]),
                               _([["Sometimes I look at the stars and wonder... are we the only sentient species in the universe?"]]),
                               _([["Hey, you ever wonder why we're here?" You respond that it's one of the great mysteries of the universe. Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? You don't know, but it sometimes keeps you up at night. As you say this, the citizen stares at you incredulously. "What?? No, I mean why are we in here, in this bar?"]]),
+                              _([["Life is so boring here. I would love to go gamble with all the famous people at Minerva Station."]]),
                            }
 
 msg_lore["Independent"] =  {_([["We're not part of any of the galactic superpowers. We can take care of ourselves!"]]),
@@ -264,6 +271,19 @@ function create()
    -- Logic to decide what to spawn, if anything.
    -- TODO: Do not spawn any NPCs on restricted assets.
 
+   local blacklisted = false
+   local cur = planet.cur():name()
+   for k,v in ipairs(blacklist) do
+      if cur == v then
+         blacklisted = true
+         break
+      end
+   end
+   if blacklisted then
+      evt.finish()
+   end
+
+
    -- Chance of a jump point message showing up. As this gradually goes
    -- down, it is replaced by lore messages. See spawnNPC function below.
    jm_chance_min = 0
@@ -315,7 +335,7 @@ function spawnNPC()
    end
 
    -- Select a portrait
-   local portrait = getPortrait(fac)
+   local image = portrait.get(fac)
 
    -- Select a description for the civilian.
    local desc = civ_desc[rnd.rnd(1, #civ_desc)]
@@ -340,9 +360,9 @@ function spawnNPC()
          msg = getLoreMessage(fac)
       end
    end
-   local npcdata = {name = npcname, msg = msg, func = func}
+   local npcdata = {name = npcname, msg = msg, func = func, image = portrait.getFullPath(image)}
 
-   id = evt.npcAdd("talkNPC", npcname, portrait, desc, 10)
+   id = evt.npcAdd("talkNPC", npcname, image, desc, 10)
    npcs[id] = npcdata
 end
 
@@ -459,7 +479,13 @@ function talkNPC(id)
       npcdata.func()
    end
 
-   tk.msg(npcdata.name, npcdata.msg)
+   vn.clear()
+   vn.scene()
+   local npc = vn.newCharacter( npcdata.name, { image=npcdata.image } )
+   vn.fadein()
+   npc( npcdata.msg )
+   vn.fadeout()
+   vn.run()
 
    -- Reduce jump message chance
    var.push( "npc_jm_chance", math.max( jm_chance - 0.025, jm_chance_min ) )

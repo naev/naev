@@ -156,7 +156,7 @@ int lua_isarticle( lua_State *L, int ind )
  *    @luatparam[opt] number|Time date_to_rm date to remove the article
  *    @luatparam[opt] number|Time date What time to put, defaults to current date, use 0 to not use a date
  *    @luatreturn Article The article matching name or nil if error.
- * @luafunc add( faction, title, body, date_to_rm, date )
+ * @luafunc add
  */
 int newsL_add( lua_State *L )
 {
@@ -287,7 +287,7 @@ int newsL_add( lua_State *L )
 /**
  * @brief Frees an article or a table of articles.
  *    @luatparam Article article article to free
- * @luafunc rm( article )
+ * @luafunc rm
  */
 int newsL_rm( lua_State *L )
 {
@@ -340,7 +340,7 @@ int newsL_rm( lua_State *L )
  *
  *    @luatparam[opt] number|String characteristic characteristic to match, or no parameter for all articles
  *    @luatreturn {Article,...} a table with matching articles
- * @luafunc get(characteristic)
+ * @luafunc get
  */
 int newsL_get( lua_State *L )
 {
@@ -401,7 +401,7 @@ int newsL_get( lua_State *L )
  *    @luatparam Article a1 article 1
  *    @luatparam Article a2 article 2
  *    @luatreturn boolean true if both systems are the same.
- * @luafunc __eq( a1, a2 )
+ * @luafunc __eq
  */
 int newsL_eq( lua_State *L )
 {
@@ -421,7 +421,7 @@ int newsL_eq( lua_State *L )
  * @brief Gets the article title.
  *    @luatparam Article a article to get the title of
  *    @luatreturn string title
- * @luafunc title(a)
+ * @luafunc title
  */
 int newsL_title( lua_State *L )
 {
@@ -444,7 +444,7 @@ int newsL_title( lua_State *L )
  * @brief Gets the article description.
  *    @luatparam Article a article to get the desc of
  *    @luatreturn string desc
- * @luafunc desc(a)
+ * @luafunc desc
  */
 int newsL_desc( lua_State *L )
 {
@@ -467,7 +467,7 @@ int newsL_desc( lua_State *L )
  * @brief Gets the article faction.
  *    @luatparam Article a article to get the faction of
  *    @luatreturn Faction faction
- * @luafunc faction(a)
+ * @luafunc faction
  */
 int newsL_faction( lua_State *L )
 {
@@ -490,7 +490,7 @@ int newsL_faction( lua_State *L )
  * @brief Gets the article date.
  *    @luatparam Article a article to get the date of
  *    @luatreturn number date
- * @luafunc date(a)
+ * @luafunc date
  */
 int newsL_date( lua_State *L )
 {
@@ -513,7 +513,7 @@ int newsL_date( lua_State *L )
  * @brief Tags an article or a table of articles with a string.
  *    @luatparam Article a Article to bind
  *    @luatparam string tag Tag to bind to the article
- * @luafunc bind(a, tag)
+ * @luafunc bind
  */
 int newsL_bind( lua_State *L )
 {

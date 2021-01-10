@@ -19,7 +19,7 @@
       The first mission in a series of missions surrounding human trafficking. This mission consists of overhearing pirate a couple pirate conversations, disabling a trader ship, and returning the children home to their parents. It essentially sets up everything for the following 4 missions. 
 --]]
 
-require "portrait"
+local portrait = require "portrait"
 require "missions/neutral/common"
 
 
@@ -140,15 +140,15 @@ end
   
 function land1()
   if planet.cur() == planet.get(bar1) and not eavesdropped1 and not eavesdropped2 then
-    bar1pir1 = misn.npcAdd("firstpirates", _("Pirate"), getMalePortrait("Pirate"), pir1_disc)
-    bar1pir2 = misn.npcAdd("firstpirates", _("Pirate"), getPortrait("Pirate"), pir1_disc)
+    bar1pir1 = misn.npcAdd("firstpirates", _("Pirate"), portrait.getMale("Pirate"), pir1_disc)
+    bar1pir2 = misn.npcAdd("firstpirates", _("Pirate"), portrait.get("Pirate"), pir1_disc)
   end
 end
 
 function land2()
   if planet.cur() == planet.get(bar2) and eavesdropped1 and not eavesdropped2 then
-    bar2pir1 = misn.npcAdd("secondpirates", _("Pirate"), getPortrait("Pirate"), pir2_disc)
-    bar2pir2 = misn.npcAdd("secondpirates", _("Pirate"), getPortrait("Pirate"), pir2_disc)
+    bar2pir1 = misn.npcAdd("secondpirates", _("Pirate"), portrait.get("Pirate"), pir2_disc)
+    bar2pir2 = misn.npcAdd("secondpirates", _("Pirate"), portrait.get("Pirate"), pir2_disc)
   end
 end
 

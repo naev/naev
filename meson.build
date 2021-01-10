@@ -28,7 +28,6 @@ endif
 # Initializeation
 config_data = configuration_data()
 naev_deps = []
-naev_link_args = []
 
 ndata_path = get_option('ndata_path')
 if ndata_path == ''
@@ -70,18 +69,19 @@ if buildExec.disabled() == false
    if 'SuiteSparse' not in get_option('force_fallback_for')
       csparse_names = ['csparse', 'cxsparse']
       foreach n : csparse_names
-         csparse = cc.find_library(n, required: false)
+         csparse = cc.find_library(n, required: false, has_headers: ['suitesparse/cs.h'])
+         if csparse.found()
+            config_data.set10('HAVE_SUITESPARSE_CS_H', true)
+            break
+         endif
+         csparse = cc.find_library(n, required: false, has_headers: ['cs.h'])
          if csparse.found()
             break
          endif
       endforeach
    endif
 
-   if csparse.found()
-      if cc.has_header('suitesparse/cs.h')
-         config_data.set10('HAVE_SUITESPARSE_CS_H', true)
-      endif
-   else
+   if not csparse.found()
       csparse = dependency(
          'SuiteSparse',
          fallback: ['SuiteSparse', 'CSparse_dep'],
@@ -92,6 +92,12 @@ if buildExec.disabled() == false
    naev_deps += cc.find_library('m', required : false)
 
    sdl = dependency('sdl2', required: true)
+
+   libxml2 = dependency('libxml-2.0', required: false)
+   if not libxml2.found()
+      libxml2 = cc.find_library('xml2', required: true)  # e.g., MacOSX SDK
+   endif
+
    naev_deps += [
       dependency('freetype2', required: true),
       dependency('physfs', fallback: ['physfs', 'physfs_dep'], required: true),
@@ -100,7 +106,7 @@ if buildExec.disabled() == false
          dependencies: dependency('libpng', required: true),
          compile_args: '-DNOLOGPRINTFCONSOLE',
          link_args: '-DNOLOGPRINTFCONSOLE'),
-      dependency('libxml-2.0', required: true)
+      libxml2,
    ]
 
    # Lua
@@ -112,13 +118,7 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_LUAJIT', lua.found())
    summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
 
-   if lua.found()
-      if host_machine.system() == 'darwin'
-         # The main executable must be linked with these flags, or else LuaJIT will crash instantly.
-         # Ref: https://luajit.org/install.html
-         naev_link_args += ['-pagezero_size', '10000', '-image_base', '100000000']
-      endif
-   else
+   if not lua.found()
       lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
    endif
 
@@ -221,7 +221,6 @@ if buildExec.disabled() == false
       naev_source,
       include_directories: include_dirs,
       dependencies: naev_deps,
-      link_args: naev_link_args,
       export_dynamic: bfd.found(),
       install: true)
 
@@ -236,8 +235,9 @@ if buildExec.disabled() == false
    )
 
    install_data(
+      'gpl.txt',
       'LICENSE',
-      'README',
+      'Readme.md',
       install_dir: get_option('datadir') / 'doc/naev'
    )
 
@@ -250,6 +250,13 @@ if buildExec.disabled() == false
    install_subdir(
       'dat',
       install_dir: ndata_path,
+   )
+
+   install_subdir(
+      'artwork',
+      install_dir: ndata_path / 'dat',
+      exclude_files: '.git',  # That's a marker used by "git submodule".
+      strip_directory: true,
    )
 
    if host_machine.system() not in ['windows', 'cygwin', 'emscripten', 'android', 'darwin']

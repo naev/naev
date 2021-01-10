@@ -13,8 +13,12 @@
 Spawns a travelling merchant that can sell the player if interested.
 
 --]]
+local vn = require 'vn'
+local portrait = require 'portrait'
 
-trader_name = _("Machiavellian Misi")
+trader_name = _("Machiavellian Misi") -- Mireia Sibeko
+trader_portrait = "misi"
+trader_colour = {1, 0.3, 1}
 store_name = string.format(_("%s's \"Fine\" Wares"), trader_name)
 broadcastmsg = {
    string.format(_("%s's the name and selling fine shit is my game! Come get your outfits here!"), trader_name),
@@ -25,10 +29,9 @@ broadcastmsg = {
    _("...and that's how I was able to get a third liver haha. Oops is this on? Er, nevermind that. Outfits for sale!"),
 }
 
-first_hail_title = trader_name
 first_hail_message = _('"Howdy Human! Er, I mean, Greetings! If you want to take a look at my wonderful, exquisite, propitious, meretricious, effulgent, ... wait, what was I talking about? Oh yes, please come see my wares on my ship. You are welcome to board anytime!"')
 
-board_title = trader_name
+-- TODO boarding VN stuff should allow talking to Misi and such.
 board_message = _("You open the airlock and are immediately greeted by an intense humidity and heat, almost like a jungle. As you advance through the dimly lit ship you can see all types of mold and plants crowing in crevices in the wall. Wait, was that a small animal scurrying around? Eventually you reach the cargo hold that has been re-adapted as a sort of bazaar. It is a mess of different wares and most don't seem of much value, there might be some interesting find.")
 
 function create ()
@@ -93,13 +96,27 @@ end
 function hail ()
    if not var.peek('travelling_trader_hailed') then
       var.push('travelling_trader_hailed', true)
-      tk.msg( first_hail_title, first_hail_message )
+      local holo = portrait.hologram( trader_portrait )
+
+      vn.clear()
+      vn.scene()
+      local mm = vn.newCharacter( trader_name,
+         { image=holo, color=trader_colour } )
+      vn.fadein()
+      mm:say( first_hail_message )
+      vn.fadeout()
+      vn.run()
       player.commClose()
    end
 end
 
 function board ()
-   tk.msg( board_title, board_message )
+   vn.clear()
+   vn.scene()
+   vn.fadein()
+   vn.na( board_message )
+   vn.fadeout()
+   vn.run()
 
    --[[
       Ideas
@@ -110,6 +127,8 @@ function board ()
    * Weapon that does double damage to the user if misses
    * Weapon that damages the user each time it is shot (some percent only)
    * Space mines! AOE damage that affects everyone, but they don't move (useful for missions too!)
+   * Something that modifies time compression as an active outfit
+   * Something that lowers damage all over but converts it all to disable (fwd_dam_as_dis)
    --]]
 
    -- Always available outfits

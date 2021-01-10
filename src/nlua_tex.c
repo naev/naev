@@ -152,7 +152,7 @@ int lua_istex( lua_State *L, int ind )
  * @brief Frees the texture.
  *
  *    @luatparam Tex t Texture to free.
- * @luafunc __gc( t )
+ * @luafunc __gc
  */
 static int texL_close( lua_State *L )
 {
@@ -179,7 +179,7 @@ static int texL_close( lua_State *L )
  *    @luatparam[opt=1] number sx Optional number of x sprites when path is Data.
  *    @luatparam[opt=1] number sy Optional number of y sprites when path is Data.
  *    @luatreturn Tex The opened texture or nil on error.
- * @luafunc open( path, w, h, sx, sy )
+ * @luafunc open
  */
 static int texL_new( lua_State *L )
 {
@@ -293,7 +293,7 @@ static inline uint32_t get_pixel(SDL_Surface *surface, int x, int y)
  *    @luatreturn Data Data containing the image data.
  *    @luatreturn number Width of the loaded data.
  *    @luatreturn number Height of the loaded data.
- * @luafunc readData( file )
+ * @luafunc readData
  */
 static int texL_readData( lua_State *L )
 {
@@ -373,7 +373,7 @@ static int texL_readData( lua_State *L )
  *    @luatreturn number The height the total image.
  *    @luatreturn number The width the sprites.
  *    @luatreturn number The height the sprites.
- * @luafunc dim( t )
+ * @luafunc dim
  */
 static int texL_dim( lua_State *L )
 {
@@ -400,7 +400,7 @@ static int texL_dim( lua_State *L )
  *    @luatreturn number The total number of sprites.
  *    @luatreturn number The number of X sprites.
  *    @luatreturn number The number of Y sprites.
- * @luafunc sprites( t )
+ * @luafunc sprites
  */
 static int texL_sprites( lua_State *L )
 {
@@ -427,7 +427,7 @@ static int texL_sprites( lua_State *L )
  *    @luatparam[opt=false] boolean b Whether radians should be used instead of degrees.
  *    @luatreturn number The x position of the sprite.
  *    @luatreturn number The y position of the sprite.
- * @luafunc spriteFromDir( t, a, b )
+ * @luafunc spriteFromDir
  */
 static int texL_spriteFromDir( lua_State *L )
 {
@@ -467,7 +467,7 @@ static int texL_spriteFromDir( lua_State *L )
  *    @luatparam Tex tex Texture to set filter.
  *    @luatparam string min Minification filter ("nearest" or "linear")
  *    @luatparam[opt] string mag Magnification filter ("nearest" or "linear"). Defaults to min.
- * @luafunc setFilter( tex, min, mag )
+ * @luafunc setFilter
  */
 static int texL_setFilter( lua_State *L )
 {
@@ -498,7 +498,7 @@ static int texL_setFilter( lua_State *L )
  *    @luatparam string horiz Horizontal wrapping ("clamp", "repeat", or "mirroredrepeat" )
  *    @luatparam[opt] string vert Vertical wrapping ("clamp", "repeat", or "mirroredrepeat" )
  *    @luatparam[opt] string depth Depth wrapping ("clamp", "repeat", or "mirroredrepeat" )
- * @luafunc setWrap( tex, horiz, vert, depth )
+ * @luafunc setWrap
  */
 static int texL_setWrap( lua_State *L )
 {

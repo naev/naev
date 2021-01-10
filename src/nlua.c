@@ -70,7 +70,7 @@ static const luaL_Reg gettext_methods[] = {
  * @usage _( str )
  *    @luatparam str String to gettext on.
  *    @luatreturn The string converted to gettext.
- * @luafunc gettext( str )
+ * @luafunc gettext
  */
 static int nlua_gettext( lua_State *L )
 {
@@ -88,7 +88,7 @@ static int nlua_gettext( lua_State *L )
  *    @luatparam msgid2 Plural form.
  *    @luatparam n Number of elements.
  *    @luatreturn The string converted to gettext.
- * @luafunc ngettext( msgid1, msgid2, n )
+ * @luafunc ngettext
  */
 static int nlua_ngettext( lua_State *L )
 {
@@ -107,7 +107,7 @@ static int nlua_ngettext( lua_State *L )
  * @usage N_( str )
  *    @luatparam str String to gettext on.
  *    @luatreturn The string converted to gettext.
- * @luafunc gettext_noop( str )
+ * @luafunc gettext_noop
  */
 static int nlua_gettext_noop( lua_State *L )
 {

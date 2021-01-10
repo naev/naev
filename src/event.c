@@ -95,7 +95,7 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent );
 static void event_freeData( EventData *event );
 static int event_create( int dataid, unsigned int *id );
 int events_saveActive( xmlTextWriterPtr writer );
-int events_loadActive( xmlNodePtr parent );;
+int events_loadActive( xmlNodePtr parent );
 static int events_parseActive( xmlNodePtr parent );
 
 

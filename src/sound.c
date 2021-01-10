@@ -19,8 +19,11 @@
 #include "naev.h"
 /** @endcond */
 
+#include "physfsrwops.h"
+
 #include "sound.h"
 
+#include "array.h"
 #include "camera.h"
 #include "conf.h"
 #include "log.h"
@@ -51,7 +54,6 @@ static int sound_initialized  = 0; /**< Whether or not sound is initialized. */
  * Sound list.
  */
 static alSound *sound_list    = NULL; /**< List of available sounds. */
-static int sound_nlist        = 0; /**< Number of available sounds. */
 
 
 /*
@@ -76,7 +78,6 @@ static double snd_compression_gain = 0.; /**< Current compression gain. */
  */
 /* General. */
 static int sound_makeList (void);
-static int sound_load( alSound *snd, const char *filename );
 static void sound_free( alSound *snd );
 /* Voices. */
 
@@ -127,8 +128,10 @@ int sound_init (void)
    }
 
    /* Set volume. */
-   if ((conf.sound > 1.) || (conf.sound < 0.))
+   if ((conf.sound > 1.) || (conf.sound < 0.)) {
       WARN(_("Sound has invalid value, clamping to [0:1]."));
+      conf.sound = CLAMP( 0., 1., conf.sound );
+   }
    sound_volume(conf.sound);
 
    /* Initialized. */
@@ -182,11 +185,9 @@ void sound_exit (void)
    }
 
    /* free the sounds */
-   for (i=0; i<sound_nlist; i++)
+   for (i=0; i<array_size(sound_list); i++)
       sound_free( &sound_list[i] );
-   free( sound_list );
-   sound_list = NULL;
-   sound_nlist = 0;
+   array_free( sound_list );
 
    /* Exit sound subsystem. */
    sound_al_exit();
@@ -202,14 +203,14 @@ void sound_exit (void)
  *    @param name Name of the sound to get the id of.
  *    @return ID of the sound matching name.
  */
-int sound_get( char* name )
+int sound_get( const char* name )
 {
    int i;
 
    if (sound_disabled)
       return 0;
 
-   for (i=0; i<sound_nlist; i++)
+   for (i=0; i<array_size(sound_list); i++)
       if (strcmp(name, sound_list[i].name)==0)
          return i;
 
@@ -224,7 +225,7 @@ int sound_get( char* name )
  *    @param sound ID of the buffer to get the length of..
  *    @return The length of the buffer.
  */
-double sound_length( int sound )
+double sound_getLength( int sound )
 {
    if (sound_disabled)
       return 0.;
@@ -247,7 +248,7 @@ int sound_play( int sound )
    if (sound_disabled)
       return 0;
 
-   if ((sound < 0) || (sound >= sound_nlist))
+   if ((sound < 0) || (sound >= array_size(sound_list)))
       return -1;
 
    /* Gets a new voice. */
@@ -290,7 +291,7 @@ int sound_playPos( int sound, double px, double py, double vx, double vy )
    if (sound_disabled)
       return 0;
 
-   if ((sound < 0) || (sound >= sound_nlist))
+   if ((sound < 0) || (sound >= array_size(sound_list)))
       return -1;
 
    target = cam_getTarget();
@@ -566,7 +567,7 @@ static int sound_makeList (void)
    char path[PATH_MAX];
    char tmp[64];
    int len, suflen, flen;
-   int mem;
+   SDL_RWops *rw;
 
    if (sound_disabled)
       return 0;
@@ -574,8 +575,10 @@ static int sound_makeList (void)
    /* get the file list */
    files = PHYSFS_enumerateFiles( SOUND_PATH );
 
+   /* Create the list. */
+   sound_list = array_create( alSound );
+
    /* load the profiles */
-   mem = 0;
    suflen = strlen(SOUND_SUFFIX_WAV);
    for (i=0; files[i]!=NULL; i++) {
       flen = strlen(files[i]);
@@ -593,28 +596,19 @@ static int sound_makeList (void)
          continue;
       }
 
-      /* grow the selection size */
-      sound_nlist++;
-      if (sound_nlist > mem) { /* we must grow */
-         mem += 32; /* we'll overallocate most likely */
-         sound_list = realloc( sound_list, mem*sizeof(alSound));
-      }
-
       /* remove the suffix */
       len = flen - suflen;
       strncpy( tmp, files[i], len );
       tmp[len] = '\0';
 
       /* Load the sound. */
-      sound_list[sound_nlist-1].name = strdup(tmp);
       nsnprintf( path, PATH_MAX, SOUND_PATH"%s", files[i] );
-      if (sound_load( &sound_list[sound_nlist-1], path ))
-         sound_nlist--; /* Song not actually added. */
+      rw = PHYSFSRWOPS_openRead( path );
+      source_newRW( rw, tmp, 0 );
+      SDL_RWclose( rw );
    }
-   /* shrink to minimum ram usage */
-   sound_list = realloc( sound_list, sound_nlist*sizeof(alSound));
 
-   DEBUG( n_("Loaded %d Sound", "Loaded %d Sounds", sound_nlist), sound_nlist );
+   DEBUG( n_("Loaded %d Sound", "Loaded %d Sounds", array_size(sound_list)), array_size(sound_list) );
 
    /* Clean up. */
    PHYSFS_freeList( files );
@@ -657,30 +651,12 @@ double sound_getVolume (void)
  *
  *    @return The current sound volume level.
  */
-double sound_getVolumeLog(void)
+double sound_getVolumeLog (void)
 {
    if (sound_disabled)
       return 0.;
 
    return sound_al_getVolumeLog();
-}
-
-
-/**
- * @brief Loads a sound into the sound_list.
- *
- *    @param snd Sound to load into.
- *    @param filename Name fo the file to load.
- *    @return 0 on success.
- *
- * @sa sound_makeList
- */
-static int sound_load( alSound *snd, const char *filename )
-{
-   if (sound_disabled)
-      return -1;
-
-   return sound_al_load( snd, filename );
 }
 
 
@@ -693,7 +669,7 @@ static void sound_free( alSound *snd )
 {
    /* Free general stuff. */
    free(snd->name);
-   snd->name = NULL;
+   free(snd->filename);
 
    /* Free internals. */
    sound_al_free(snd);
@@ -728,7 +704,7 @@ int sound_playGroup( int group, int sound, int once )
    if (sound_disabled)
       return 0;
 
-   if ((sound < 0) || (sound >= sound_nlist))
+   if ((sound < 0) || (sound >= array_size(sound_list)))
       return -1;
 
    return sound_al_playGroup( group, &sound_list[sound], once );
@@ -920,5 +896,42 @@ alVoice* voice_get( int id )
    voiceUnlock();
 
    return v;
+}
+
+
+/**
+ * @brief Loads a new sound source from a RWops.
+ */
+int source_newRW( SDL_RWops *rw, const char *name, unsigned int flags )
+{
+   int ret;
+   alSound snd, *sndl;
+   (void) flags;
+
+   if (sound_disabled)
+      return -1;
+
+   memset( &snd, 0, sizeof(alSound) );
+   ret = sound_al_load( &snd, rw, name );
+   if (ret)
+      return -1;
+
+   sndl = &array_grow( &sound_list );
+   memcpy( sndl, &snd, sizeof(alSound) );
+   sndl->name = strdup( name );
+
+   return sndl-sound_list;
+}
+
+
+/**
+ * @brief Loads a new source from a file.
+ */
+int source_new( const char* filename, unsigned int flags )
+{
+   SDL_RWops *rw = PHYSFSRWOPS_openRead( filename );
+   int id = source_newRW( rw, filename, flags );
+   SDL_RWclose( rw );
+   return id;
 }
 

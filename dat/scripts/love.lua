@@ -10,7 +10,7 @@ love.exec( 'pong' ) -- Will look for pong.lua or pong/main.lua
 """
 
 --]]
-local love = {
+love = {
    _basepath = "",
    _version_major = 11,
    _version_minor = 1,
@@ -24,19 +24,6 @@ local love = {
    },
 }
 function love._unimplemented() error(_("unimplemented")) end
-
---[[
--- Dummy game-defined functions
---]]
-function love.conf(t) end -- dummy
-function love.load() end --dummy
-function love.draw() end -- dummy
-function love.update( dt ) end -- dummy
-function love.keypressed( key, scancode, isrepeat ) end -- dummy
-function love.keyreleased( key, scancode ) end -- dummy
-function love.mousemoved( x, y, dx, dy, istouch ) end -- dummy
-function love.mousepressed( x, y, button, istouch ) end -- dummy
-function love.mousereleased( x, y, button, istouch ) end -- dummy
 
 
 --[[
@@ -108,9 +95,11 @@ local function _keyboard( pressed, key, mod )
    else
       love.keyreleased( k, k )
    end
+   --[[
    if k == "escape" then
       naev.tk.customDone()
    end
+   --]]
    return true
 end
 
@@ -119,10 +108,21 @@ end
 -- Initialize
 --]]
 function love.exec( path )
+   if love._started then
+      error(_("can only run one Love2D instance at a time!"))
+   end
+
    -- Save path to restore it later
    love._path = package.path
 
-   package.path = package.path..";?.lua"
+   -- only add to path if not there, saves path pollution if crashing
+   local function addtopath( path )
+      local id = string.find( package.path, path, 1, true )
+      if id == nil then
+         package.path = package.path..path
+      end
+   end
+   addtopath(";?.lua")
 
    love._focus = false
    love._started = false
@@ -133,7 +133,7 @@ function love.exec( path )
    if info then
       if info.type == "directory" then
          love._basepath = path.."/" -- Allows loading files relatively
-         package.path = package.path..string.format(";%s/?.lua", path)
+         addtopath(string.format(";%s/?.lua", path))
          -- Run conf if exists
          if love.filesystem.getInfo( path.."/conf.lua" ) ~= nil then
             confpath = path.."/conf"
@@ -152,6 +152,23 @@ function love.exec( path )
       else
          error( string.format( _("'%s' is not a valid love2d game!"), path) )
       end
+   end
+
+   -- Reset functions
+   local function _noop() end
+   local f = {
+      "conf",
+      "load",
+      "draw",
+      "update",
+      "keypressed",
+      "keyreleased",
+      "mousemoved",
+      "mousepressed",
+      "mousereleased",
+   }
+   for k,v in ipairs(f) do
+      love[v] = _noop
    end
 
    -- Only stuff we care about atm
@@ -183,9 +200,14 @@ function love.exec( path )
          window = true
       }
 
+   local function dolua( path )
+      _LOADED[path] = nil -- reset loadedness
+      require(path)
+   end
+
    -- Configure
    if confpath ~= nil then
-      require( confpath )
+      dolua( confpath )
    end
    love.conf(t)
 
@@ -206,7 +228,7 @@ function love.exec( path )
    end
 
    -- Run set up function defined in Love2d spec
-   require( mainpath )
+   dolua( mainpath )
    love.load()
 
    -- Actually run in Naev
@@ -218,6 +240,7 @@ function love.exec( path )
    love._started = true
    naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
    -- Doesn't actually get here until the dialogue is closed
+   love._started = false
 
    -- Reset libraries that were potentially crushed
    for k,v in pairs(naev) do _G[k] = v end

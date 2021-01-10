@@ -30,7 +30,7 @@
 -- localization stuff, translators would work here
 
 require "fleethelper"
-require "portrait"
+local portrait = require "portrait"
 require "missions/dvaered/common"
 
 
@@ -109,7 +109,7 @@ function create()
         abort()
     end
 
-    misn.setNPC("Dvaered liaison", getMaleMilPortrait("Dvaered"))
+    misn.setNPC("Dvaered liaison", portrait.getMaleMil("Dvaered"))
     misn.setDesc(npc_desc)
 end
 

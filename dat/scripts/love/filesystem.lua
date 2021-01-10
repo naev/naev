@@ -7,6 +7,9 @@ local filesystem = {}
 
 function filesystem.getInfo( path, filtertype )
    local ftype = naev.file.filetype( path )
+   if filetype ~= nil and filtertype ~= ftype then
+      return nil
+   end
    if ftype == "directory" then
       return { type = ftype }
    elseif ftype == "file" then
@@ -28,13 +31,14 @@ function filesystem.newFile( filename )
    return naev.file.new( love._basepath..filename )
 end
 function filesystem.read( name, size )
-   local f = naev.file.new( name )
-   f:open('r')
+   local f = filesystem.newFile( name )
+   local ret, err = f:open('r')
+   print( name, ret, err )
    local buf,len
    if size then
       buf,len = f:read( size )
    else
-      buf,len = f.read()
+      buf,len = f:read()
    end
    f:close()
    return buf, len

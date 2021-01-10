@@ -320,7 +320,7 @@ void commodity_sell( unsigned int wid, char* str )
    /* Get parameters. */
    q     = commodity_getMod();
    i     = toolkit_getImageArrayPos( wid, "iarTrade" );
-   com   = land_planet->commodities[i];;
+   com   = land_planet->commodities[i];
    price = planet_commodityPrice( land_planet, com );
 
    /* Check stuff. */

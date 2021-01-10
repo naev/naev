@@ -231,9 +231,6 @@ void hook_exclusionEnd( double dt )
    hook_time_accum = 0;
    hooks_updateDateExecute( temp );
 
-   /* Safe hooks. */
-   hooks_run( "safe" );
-
    /* Purge the dead. */
    hooks_purgeList();
 }
@@ -670,6 +667,9 @@ static void hooks_updateDateExecute( ntime_t change )
    hook_runningstack++; /* running hooks */
    for (j=1; j>=0; j--) {
       for (h=hook_list; h!=NULL; h=h->next) {
+         /* Not be deleting. */
+         if (h->delete)
+            continue;
          /* Find valid date hooks. */
          if (h->is_date == 0)
             continue;

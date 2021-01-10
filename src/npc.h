@@ -16,9 +16,9 @@
  * Adding.
  */
 unsigned int npc_add_mission( Mission *misn, const char *func, const char *name,
-      int priority, const char *portrait, const char *desc );
+      int priority, const char *portrait, const char *desc, const char *background );
 unsigned int npc_add_event( unsigned int evt, const char *func, const char *name,
-      int priority, const char *portrait, const char *desc );
+      int priority, const char *portrait, const char *desc, const char *background );
 
 /*
  * Removing.
@@ -40,9 +40,8 @@ void npc_clear (void);
  * Land image array stuff.
  */
 int npc_getArraySize (void);
-int npc_getNameArray( char **names, int n );
-int npc_getTextureArray( glTexture **tex, int n );
 const char *npc_getName( int i );
+glTexture *npc_getBackground( int i );
 glTexture *npc_getTexture( int i );
 const char *npc_getDesc( int i );
 int npc_isImportant( int i );
