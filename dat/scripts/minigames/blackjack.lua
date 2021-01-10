@@ -10,8 +10,8 @@ function bj.init( x, y, w, h, donefunc )
    bj.font = lg.newFont(16)
 
    -- Compute position stuff
-   bj.buttons = {_("Hit"), _("Stay")}
-   bj.bets =  {_("Bet 10 k¤"), _("Bet 100 k¤"), _("Leave")}
+   bj.buttons = {_("#wH#0it"), _("#wS#0tay")}
+   bj.bets =  {_("#w1#0. Bet 10 k¤"), _("#w2#0. Bet 100 k¤"), _("#w3#0. Leave")}
    bj.bets_b = 15
    bj.bets_w = -bj.bets_b
    for k,s in ipairs(bj.bets) do
@@ -233,7 +233,7 @@ function bj.draw( bx, by, bw, bh)
       lg.rectangle( "fill", x, y, w+2*b, h+2*b )
       lg.setColor( col )
       lg.rectangle( "fill", x+2, y+2, w+2*b-4, h+2*b-4 )
-      lg.setColor( 1, 1, 1 )
+      lg.setColor( 0.7, 0.7, 0.7 )
       lg.print( s, bj.font, x+b, y+b )
       x = x + 3*b + w
    end

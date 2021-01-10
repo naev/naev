@@ -461,7 +461,7 @@ function vn.StateMenu:_init()
    local h = 0
    self._elem = {}
    for k,v in ipairs(self._items) do
-      local text = string.format("%d. %s", k, v[1])
+      local text = string.format("#w%d#0. %s", k, v[1])
       local sw, wrapped = font:getWrap( text, 900 )
       sw = sw + 2*tb
       local sh =  2*tb + font:getHeight() + font:getLineHeight() * (#wrapped-1)
@@ -492,13 +492,14 @@ function vn.StateMenu:_draw()
       local text, x, y, w, h = unpack(v)
       local col
       if _inbox( mx, my, gx+x, gy+y, w, h ) then
-         col = {0.5, 0.5, 0.5}
+         -- Mouse over
+         col = {0.3, 0.3, 0.3}
       else
          col = {0.2, 0.2, 0.2}
       end
       _set_col( col )
       graphics.rectangle( "fill", gx+x, gy+y, w, h )
-      _set_col( {1, 1, 1} )
+      _set_col( {0.7, 0.7, 0.7} )
       graphics.print( text, font, gx+x+tb, gy+y+tb )
    end
 end
