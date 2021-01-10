@@ -214,17 +214,21 @@ jobs:
       - name: Meson Compile
         run: |
           meson compile -C build
-          meson compile -C build naev-gmo
+
+      - name: Meson Install
+        run: |
+          meson install -C build
+        env:
+          DESTDIR: ${{ github.workspace }}/staging
 
       - name: Collect Steam Linux64 Artifacts
         run: |
           mkdir -p dist/out/
 
-          mv build/naev dist/out/naev.x64
+          mv staging/usr/local/bin/naev dist/out/naev.x64
           chmod +x dist/out/naev.x64
 
-          source/utils/package-po.sh -b build -o source
-          tar -cJvf dist/out/steam-ndata.tar.xz source/dat
+          tar -cJvf dist/out/steam-ndata.tar.xz -C staging/usr/local/share/naev dat
 
       - name: Upload Naev Binary Artifact
         uses: actions/upload-artifact@v1
