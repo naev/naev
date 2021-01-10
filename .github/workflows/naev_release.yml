@@ -115,12 +115,12 @@ jobs:
       - name: Meson Setup
         run: |
           meson setup build source \
-            --cross-file='source/utils/build/windows_cross_mxe.ini' \
-            --buildtype=release \
-            -Db_lto=true \
-            -Dauto_features=enabled \
-            -Ddocs_c=disabled \
-            -Ddocs_lua=disabled
+              --cross-file='source/utils/build/windows_cross_mxe.ini' \
+              --buildtype=release \
+              -Db_lto=true \
+              -Dauto_features=enabled \
+              -Ddocs_c=disabled \
+              -Ddocs_lua=disabled
 
       - name: Meson Compile
         run: |

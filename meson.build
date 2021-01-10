@@ -45,7 +45,6 @@ subdir('po')
 ####
 buildExec = get_option('executable')
 if buildExec.disabled() == false
-
    debug    = get_option('debug')
    paranoid = get_option('paranoid')
    config_data.set_quoted('PACKAGE', meson.project_name())
@@ -254,9 +253,9 @@ if buildExec.disabled() == false
    )
 
    if host_machine.system() not in ['windows', 'cygwin', 'emscripten', 'android', 'darwin']
-         metainfo_file = 'org.naev.naev.metainfo.xml'
+      metainfo_file = 'org.naev.naev.metainfo.xml'
 
-         if (ascli_exe.found())
+      if (ascli_exe.found())
          # Create desktop-entry file from metainfo
          custom_target('gen-desktop-entry',
             input : [metainfo_file],
@@ -265,21 +264,19 @@ if buildExec.disabled() == false
             install: true,
             install_dir: join_paths (get_option ('datadir'), 'applications')
          )
-         else
-            install_data('org.naev.naev.desktop', install_dir: join_paths (get_option ('datadir'), 'applications'))
-         endif
+      else
+         install_data('org.naev.naev.desktop', install_dir: join_paths (get_option ('datadir'), 'applications'))
+      endif
 
-         install_data(metainfo_file, install_dir: get_option('datadir') / 'metainfo')
+      install_data(metainfo_file, install_dir: get_option('datadir') / 'metainfo')
 
       install_data(['extras/logos/logo16.png', 'extras/logos/logo32.png', 'extras/logos/logo64.png', 'extras/logos/logo128.png', 'extras/logos/naev.png'],
              rename : ['16x16/apps/naev.png', '32x32/apps/naev.png', '64x64/apps/naev.png', '128x128/apps/naev.png', '256x256/apps/naev.png'],
              install_dir: get_option('datadir') / 'icons/hicolor')
       install_man('naev.6')
-
    endif
 
    subdir('test')
-
 endif
 
 ####
