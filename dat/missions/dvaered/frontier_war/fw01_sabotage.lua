@@ -6,11 +6,14 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <chance>100</chance>
+   <chance>20</chance>
    <done>Dvaered Escort</done>
    <location>Bar</location>
    <faction>Dvaered</faction>
   </avail>
+  <notes>
+   <campaign>Frontier Invasion</campaign>
+  </notes>
  </mission>
  --]]
 --[[
@@ -35,8 +38,6 @@ require "proximity"
 require "selectiveclear"
 require "missions/dvaered/frontier_war/fw_common"
 require "numstring"
-
---TODO: Set the priority and conditions of this mission (should not start at first planet)
 
 portrait_name = _("Major Tam")
 portrait_desc = _("Major Tam may be in need of a pilot.")
@@ -345,6 +346,7 @@ function enter()
       player.pilot():control()
       player.pilot():moveto( mypos + vec2.new(0, -step/2) ) -- To avoid being in the range
       player.cinematics( true, { gui = true } )
+      player.pilot():setInvincible()
 
       camera.set( mypos + vec2.new(0, step/2) )
 
@@ -589,8 +591,8 @@ function fighterDuel()
    battleaddict2:control(true)
    battleaddict2:setFaction("Warlords")
 
-   battleaddict2:broadcast( takoff_comm2 )
-   hook.timer( 1000, "message", {pilot = klank2, msg = takoff_comm1} )
+   battleaddict2:broadcast( takoff_comm1 )
+   hook.timer( 1000, "message", {pilot = klank2, msg = takoff_comm2} )
    hook.timer( 1500, "message", {pilot = tam, msg = duel_comm1} )
    hook.timer( 2000, "message", {pilot = leblanc, msg = duel_comm2} )
    hook.timer( 2500, "message", {pilot = hamelsen, msg = duel_comm3} )
@@ -624,6 +626,7 @@ function battleaddict_killed()
    camera.set()
    player.pilot():control( false )
    player.cinematics( false )
+   player.pilot():setInvincible( false )
 
    stage = 7
    misn.osdActive(2)

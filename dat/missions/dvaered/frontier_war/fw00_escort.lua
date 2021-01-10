@@ -6,10 +6,15 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <chance>100</chance>
+   <chance>10</chance>
    <location>Bar</location>
    <faction>Dvaered</faction>
+   <cond>diff.isApplied("flf_dead") and system.get("Tarsus"):jumpDist() &lt; 4</cond>
   </avail>
+  <notes>
+   <campaign>Frontier Invasion</campaign>
+   <requires name="The FLF is dead"/>
+  </notes>
  </mission>
  --]]
 --[[
@@ -26,8 +31,6 @@
    5) Way to third system, battle with Hamelsen & such
    8) Land at last system
 --]]
-
---TODO: Set the priority and conditions of this mission (should not start at first planet)
 
 require "nextjump"
 require "proximity"
@@ -121,6 +124,10 @@ function create()
 
    fleepla, fleesys = planet.get("Odonga m1")
 
+   if system.cur() == destsys1 then -- We need the first target to be at least 1 jump ahead
+      misn.finish(false)
+   end
+
    if not misn.claim ( {destsys1, destsys2, destsys3} ) then
       misn.finish(false)
    end
@@ -167,9 +174,6 @@ function enter()
 
    spawnTam( previous )
    tamJumped = false
-
-   pilot.toggleSpawn("FLF") -- TODO : It's only for testing. It can be removed once FLF is dead
-   pilot.clearSelect("FLF")
 
    if stage == 0 then   -- Go to first rendezvous
       if system.cur() == destsys1 then -- Spawn the Warlord
@@ -437,12 +441,12 @@ function hamelsenAmbush()
 
    jp     = jump.get(system.cur(), previous)
    ambush = {}
-   for i = 1, 2 do
+   for i = 1, 3 do
       x = 1000 * rnd.rnd() + 1000
       y = 1000 * rnd.rnd() + 1000
       pos = jp:pos() + vec2.new(x,y)
 
-      ambush[i] = pilot.addRaw( "Lancelot", "baddie_norun", pos, "Warlords" )
+      ambush[i] = pilot.addRaw( "Shark", "baddie_norun", pos, "Warlords" )
       ambush[i]:setHostile()
       hook.pilot(ambush[i], "death", "ambushDied")
       hook.pilot(ambush[i], "land", "ambushDied")

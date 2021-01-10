@@ -4,6 +4,11 @@
   <trigger>land</trigger>
   <chance>100</chance>
   <cond>var.peek("dv_pirate_debt") == true</cond>
+  <notes>
+   <campaign>Frontier Invasion</campaign>
+   <done_evt name="Betray General Klank">If you don't betray</done_evt>
+   <requires name="General Klank wants his 10M back"/>
+  </notes>
  </event>
  --]]
 --[[ 
@@ -32,6 +37,7 @@ log_text = _("You repaid the Dvaered High Command. For now, your collaboration w
 function create()
    local who = rnd.rnd(1,#npc_name)
    evt.npcAdd("pay", npc_name[who], portraits[who], npc_desc[who])
+   hook.takeoff("takeoff")
 end
 
 function pay()
@@ -44,6 +50,11 @@ function pay()
          evt.finish(true)
       else
          tk.msg(pay_title,poor_text)
+         evt.finish(false)
       end
    end
+end
+
+function takeoff()
+   evt.finish(false)
 end

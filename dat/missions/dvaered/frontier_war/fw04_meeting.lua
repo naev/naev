@@ -6,11 +6,14 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <chance>100</chance>
+   <chance>25</chance>
    <done>Dvaered Diplomacy</done>
    <location>Bar</location>
    <faction>Dvaered</faction>
   </avail>
+  <notes>
+   <campaign>Frontier Invasion</campaign>
+  </notes>
  </mission>
  --]]
 --[[
@@ -33,8 +36,6 @@ require "proximity"
 require "portrait"
 require "numstring"
 
--- TODO: Set the priority and conditions of this mission
--- TODO: mission log adds a new rubric for each mission
 -- TODO: hooks to penalize attacking people
 
 npc_name = _("Lieutenant Strafer")
@@ -84,12 +85,18 @@ lore_text[4] = _([["You wish to become one of them?" Before you have a chance to
 
 quit = _("I am ready for action!")
 
+briefing_title = _("Read your messages")
+briefing_text = _("Don't forget to read the messages Captain Leblanc will send to you. It contains valuable information.")
+
 briefing0 = _("I hope everyone is listening carefully.")
 briefing1 = _("Every incoming pilot must be visually controlled by one of us.")
 briefing2 = _("I will notify each of you when you have a pilot to control.")
 briefing3 = _("And you will hear the following audio signal.")
 briefing4 = _("Last thing: I recall you have to beware the Warlords: some of them may want to shoot at you because they love to watch lighter ships dodge for their lives.")
 
+
+closer_title = _("An unidentified ship came close to the station")
+closer_text = _("A ship managed to approach the station, and you failed to control it. Fortunately, it was identified by the station's sensors and is not hostile. However, your failure to intercept it could have led to problems in the opposite case. As a consequence, your reward has been decreased.")
 
 lander_title = _("An unidentified ship landed on the station")
 lander_text = _("A ship managed to land on the station, and you failed to control it. Unidentified and potentially hostile individuals have entered the Dvaered High Command station: The mission is a failure.")
@@ -226,6 +233,7 @@ function accept()
    stage = 0
    hook.land("land")
    loadhook = hook.load("loading")
+   reward = credits_04
 end
 
 function loading()
@@ -254,8 +262,8 @@ function land()
    -- Player killed attackers, and can finally land for reward
    elseif (stage == 4 and planet.cur() == destpla) then
       tk.msg( debrief_title, debrief_text1, ("portraits/"..portrait_tam..".png") )
-      tk.msg( debrief_title, debrief_text2:format(creditstring(credits_04)), ("portraits/"..portrait_tam..".png") )
-      player.pay(credits_04)
+      tk.msg( debrief_title, debrief_text2:format(creditstring(reward)), ("portraits/"..portrait_tam..".png") )
+      player.pay(reward)
 
       shiplog.createLog( "frontier_war", _("Frontier War"), _("Dvaered") )
       shiplog.appendLog( "frontier_war", log_text )
@@ -420,7 +428,8 @@ function scheduleIncoming()
 
    hook.timer( 200000, "spawnHam" ) -- Hamelsen comes in
 
-   -- Briefing by Leblanc. TODO: add a tk.msg also
+   -- Briefing by Leblanc.
+   tk.msg( briefing_title, briefing_text )
    hook.timer( 4000, "message", {pilot = alpha[1], msg = briefing0} )
    hook.timer( 8000, "message", {pilot = alpha[1], msg = briefing1} )
    hook.timer( 12000, "message", {pilot = alpha[1], msg = briefing2} )
@@ -487,15 +496,16 @@ end
 
 -- Some patrol pilot is idle.
 function imDoingNothing( self )
-   rad = rnd.rnd() * 2000
+   rad = rnd.rnd() * 1000 + 1000
    ang = rnd.rnd() * 2 * math.pi
    self:moveto( targpos + vec2.new(math.cos(ang) * rad, math.sin(ang) * rad) )
 end
 
 -- A controlled ship is too close from station
 function toocloseControl( ind )
-   if (not canland[ind]) then
-      -- Player failed to control a ship: TODO: penalty
+   if (not canland[ind]) then -- Player failed to control a ship: penalty
+      tk.msg( closer_title, closer_text )
+      reward = reward - 10000
    end
 end
 function toocloseControl1()
@@ -644,7 +654,7 @@ function checkHamelsen()
    --hamelsen:rename( "Suspect Hyena" )
 
    hamelsen:taskClear()
-   hamelsen:runaway( player.pilot(), true ) -- First run away (for hellburner) then land -- TODO: check she uses afterburn ?
+   hamelsen:runaway( player.pilot(), true ) -- First run away (for hellburner) then land
    hook.timer( 5000, "hamelsenTowards" )
    hamelsen:setNoDeath()
    hamelsen:setNoDisable()
@@ -717,7 +727,7 @@ function deathOfStrafer()
    for i = 1, 10 do
       attackers[i] = pilot.addRaw( "Hyena", "baddie", system.get("Gremlin"), "Warlords" )
       attackers[i]:control()
-      attackers[i]:attack( alpha[2] ) -- TODO: if it is not enough, manually explode Strafer
+      attackers[i]:attack( alpha[2] )
    end
 
    hook.pilot( alpha[2], "exploded", "straferDied" )

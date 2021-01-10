@@ -14,6 +14,7 @@
  <notes>
   <requires name="The Dvaered know where Sindbad is"/>
   <campaign>Doom the FLF</campaign>
+  <provides name="The FLF is dead"/>
  </notes>
 </mission>
 --]]

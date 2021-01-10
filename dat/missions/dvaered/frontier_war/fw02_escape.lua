@@ -6,12 +6,17 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <chance>100</chance>
+   <chance>10</chance>
    <done>Dvaered Sabotage</done>
    <location>Bar</location>
    <cond>var.peek("loyal2klank") == true</cond>
    <faction>Dvaered</faction>
   </avail>
+  <notes>
+   <campaign>Frontier Invasion</campaign>
+   <done_evt name="Betray General Klank">If you don't betray</done_evt>
+   <provides name="General Klank wants his 10M back">If you get into debt</provides>
+  </notes>
  </mission>
  --]]
 --[[
@@ -40,7 +45,6 @@ require "portrait"
 require "missions/dvaered/frontier_war/fw_common"
 require "numstring"
 
--- TODO: Set the priority and conditions of this mission
 -- TODO: add news comments about all this
 -- TODO: check that no blockade has been forgotten
 
@@ -250,6 +254,10 @@ function create()
    zlkpla, zlksys = planet.get("House Za'lek Central Station")
 
    intsys = system.get("Poltergeist")
+
+   if planet.cur() == hampla then
+      misn.finish(false)
+   end
 
    if not misn.claim ( intsys ) then
       misn.finish(false)
@@ -631,7 +639,7 @@ function takeoff( )
 
       -- Clear all Zlk pilots in a given radius of the player to avoid being insta-killed at takeoff
       local dmin2 = 500^2
-      zlkPilots = pilot.get("Za'lek")
+      zlkPilots = pilot.get( { faction.get("Za'lek") } )
       for i, p in ipairs(zlkPilots) do
          if vec2.dist2(player.pilot():pos()-p:pos()) < dmin2 then
             p:rm()

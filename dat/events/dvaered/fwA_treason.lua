@@ -2,11 +2,15 @@
 <?xml version='1.0' encoding='utf8'?>
  <event name="Betray General Klank">
   <trigger>enter</trigger>
-  <chance>100</chance>
+  <chance>10</chance>
   <cond>system.cur():faction() == faction.get("Dvaered") and player.misnDone("Dvaered Sabotage") == true</cond>
   <flags>
    <unique />
   </flags>
+  <notes>
+   <campaign>Frontier Invasion</campaign>
+   <done_misn name="Dvaered Sabotage"/>
+  </notes>
  </event>
  --]]
 --[[ 
@@ -133,7 +137,7 @@ function reaction()
       tk.msg(loyal_title, loyal_text3)
       tk.msg(loyal_title, loyal_text4)
       var.push( "loyal2klank", true )
-      shiplog.createLog( "frontier_war", _("Dvaered Military Coordination"), _("Dvaered") )
+      shiplog.createLog( "frontier_war", _("Frontier War"), _("Dvaered") )
       shiplog.appendLog( "frontier_war", log_text_loyal )
       evt.finish(true)
    end

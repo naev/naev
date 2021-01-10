@@ -6,12 +6,16 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <chance>100</chance>
+   <chance>30</chance>
    <done>Dvaered Escape</done>
    <location>Bar</location>
    <faction>Dvaered</faction>
    <cond>var.peek("dv_pirate_debt") == false</cond>
   </avail>
+  <notes>
+   <campaign>Frontier Invasion</campaign>
+   <done_evt name="Repay General Klank"/>
+  </notes>
  </mission>
  --]]
 --[[
@@ -35,8 +39,6 @@ require "selectiveclear"
 require "nextjump"
 require "proximity"
 require "numstring"
-
---TODO: Set the priority and conditions of this mission
 
 npc_name = _("Major Tam")
 npc_desc = _("The major seems to be waiting for you.")
@@ -216,9 +218,7 @@ function enter()
    -- Entering the next system of the path
    if stage == 0 then
       spawnEscort(previous)
---      print(#path)
---      print(path["__save"])
---      print(path["1"]) -- TODO: problem with the __save stuff I guess
+
       sysind = elt_dest_inlist(system.cur(), path) -- Save the index of the system in the list (useful to remove the marker later)
       if (sysind > 0) or (system.cur() == startsys) then
          stage = 1
@@ -253,7 +253,6 @@ function enter()
 
             escort[1]:taskClear()
             escort[1]:follow( badguys[1] ) -- Yes, he's not supposed to know where they are, but it's safer for the trigger
-            --hook.timer(500, "proximity", {anchor = badguys[1], radius = 4000, funcname = "straferScans", focus = escort[1]})
             hook.timer(500, "proximityScan", {anchor = badguys[1], funcname = "straferScans", focus = escort[1]})
          else
             hook.timer(500, "proximity", {location = ambJp:pos(), radius = 4000, funcname = "straferReturns", focus = escort[1]})
