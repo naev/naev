@@ -244,7 +244,7 @@ She winks at you.]]))
    maikki(_([["Apparently the project was disbanded for some reason or other, and some members went missing. However, I was able to track down a few of them, but it wasn't too easy. They have some weird system called tenure that nobody understands and makes them move constantly from research laboratory to research laboratory. So droll!"]]))
    seekoutmsg()
    maikki(_([["I don't think it will be easy for you to get information from the Za'lek, they never give a straight answer and it's all "that is illogical" and "ma'am that beaker of acid is not a toy". So boring!"
-She frowns and shakes her head to the sides.]])
+She frowns and shakes her head to the sides.]]))
    -- TODO messages regarding each of the researchers
    vn.jump( "menu_msg" )
 
