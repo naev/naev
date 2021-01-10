@@ -105,6 +105,9 @@ jobs:
       - name: Meson Setup
         run: |
           meson setup build source \
+              --prefix="$(pwd)"/source/extras/windows/installer/bin \
+              --bindir='' \
+              -Dndata_path='' \
               --cross-file='source/utils/build/windows_cross_mxe.ini' \
               --buildtype=release \
               -Dnightly=true \
@@ -149,6 +152,9 @@ jobs:
       - name: Meson Setup
         run: |
           meson setup build source \
+              --prefix="$(pwd)"/dist/out/Naev.app \
+              --bindir=Contents/MacOS \
+              -Dndata_path=Contents/Resources \
               --cross-file='source/utils/build/macos_cross_osxcross.ini' \
               --buildtype=release \
               -Dnightly=true \

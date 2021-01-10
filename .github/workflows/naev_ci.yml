@@ -138,6 +138,9 @@ jobs:
         id: setup
         run: |
           meson setup build source \
+              --prefix="$(pwd)"/source/extras/windows/installer/bin \
+              --bindir='' \
+              -Dndata_path='' \
               --cross-file='source/utils/build/${{ matrix.config }}' \
               --buildtype=debug \
               --wrap-mode=forcefallback \
@@ -215,6 +218,9 @@ jobs:
         id: setup
         run: |
           meson setup build source \
+              --prefix="$(pwd)"/dist/out/Naev.app \
+              --bindir=Contents/MacOS \
+              -Dndata_path=Contents/Resources \
               --cross-file='source/utils/build/${{ matrix.config }}' \
               --buildtype=debug \
               -Dnightly=false \
