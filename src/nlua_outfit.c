@@ -180,7 +180,7 @@ int lua_isoutfit( lua_State *L, int ind )
  *    @luatparam Outfit o1 First outfit to compare.
  *    @luatparam Outfit o2 Second outfit to compare.
  *    @luatreturn boolean true if both outfits are the same.
- * @luafunc __eq( o1, o2 )
+ * @luafunc __eq
  */
 static int outfitL_eq( lua_State *L )
 {
@@ -205,7 +205,7 @@ static int outfitL_eq( lua_State *L )
  *
  *    @luatparam string s Raw (untranslated) name of the outfit to get.
  *    @luatreturn Outfit|nil The outfit matching name or nil if error.
- * @luafunc get( s )
+ * @luafunc get
  */
 static int outfitL_get( lua_State *L )
 {
@@ -239,7 +239,7 @@ static int outfitL_get( lua_State *L )
  *
  *    @luatparam Outfit s Outfit to get the translated name of.
  *    @luatreturn string The translated name of the outfit.
- * @luafunc name( s )
+ * @luafunc name
  */
 static int outfitL_name( lua_State *L )
 {
@@ -265,7 +265,7 @@ static int outfitL_name( lua_State *L )
  *
  *    @luatparam Outfit s Outfit to get the raw name of.
  *    @luatreturn string The raw name of the outfit.
- * @luafunc nameRaw( s )
+ * @luafunc nameRaw
  */
 static int outfitL_nameRaw( lua_State *L )
 {
@@ -287,7 +287,7 @@ static int outfitL_nameRaw( lua_State *L )
  *
  *    @luatparam Outfit o Outfit to get information of.
  *    @luatreturn string The name of the outfit type (in English).
- * @luafunc type( o )
+ * @luafunc type
  */
 static int outfitL_type( lua_State *L )
 {
@@ -306,7 +306,7 @@ static int outfitL_type( lua_State *L )
  *
  *    @luatparam Outfit o Outfit to get information of.
  *    @luatreturn string The name of the outfit broad type (in English).
- * @luafunc typeBroad( o )
+ * @luafunc typeBroad
  */
 static int outfitL_typeBroad( lua_State *L )
 {
@@ -323,7 +323,7 @@ static int outfitL_typeBroad( lua_State *L )
  *
  *    @luatparam Outfit o Outfit to get information of.
  *    @luatreturn string The amount of cpu the outfit uses.
- * @luafunc cpu( o )
+ * @luafunc cpu
  */
 static int outfitL_cpu( lua_State *L )
 {
@@ -342,7 +342,7 @@ static int outfitL_cpu( lua_State *L )
  *    @luatreturn string Human readable name (in English).
  *    @luatreturn string Human readable size.
  *    @luatreturn string Human readable property.
- * @luafunc slot( o )
+ * @luafunc slot
  */
 static int outfitL_slot( lua_State *L )
 {
@@ -362,7 +362,7 @@ static int outfitL_slot( lua_State *L )
  *
  *    @luatparam Outfit o Outfit to get information of.
  *    @luatreturn Tex The texture containing the icon of the outfit.
- * @luafunc icon( o )
+ * @luafunc icon
  */
 static int outfitL_icon( lua_State *L )
 {
@@ -379,7 +379,7 @@ static int outfitL_icon( lua_State *L )
  *
  *    @luatparam String o Outfit to get the price of.
  *    @luatreturn number The price, in credits.
- * @luafunc price( o )
+ * @luafunc price
  */
 static int outfitL_price( lua_State *L )
 {
@@ -396,7 +396,7 @@ static int outfitL_price( lua_State *L )
  *
  *    @luatparam String o Outfit to get the description of.
  *    @luatreturn string The description (without translating).
- * @luafunc description( o )
+ * @luafunc description
  */
 static int outfitL_description( lua_State *L )
 {
@@ -413,7 +413,7 @@ static int outfitL_description( lua_State *L )
  *
  *    @luatparam String o Outfit to get the uniqueness of.
  *    @luatreturn boolean The uniqueness of the outfit.
- * @luafunc unique( o )
+ * @luafunc unique
  */
 static int outfitL_unique( lua_State *L )
 {

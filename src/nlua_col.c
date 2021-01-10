@@ -142,7 +142,7 @@ int lua_iscolour( lua_State *L, int ind )
  *    @luatparam Colour c1 Colour 1 to compare.
  *    @luatparam Colour c2 Colour 2 to compare.
  *    @luatreturn boolean true if both colours are the same.
- * @luafunc __eq( c1, c2 )
+ * @luafunc __eq
  */
 static int colL_eq( lua_State *L )
 {
@@ -168,7 +168,7 @@ static int colL_eq( lua_State *L )
  *    @luatparam number b Blue value of the colour.
  *    @luatparam[opt=1.] number a Alpha value of the colour.
  *    @luatreturn Colour A newly created colour.
- * @luafunc new( r, g, b, a )
+ * @luafunc new
  */
 static int colL_new( lua_State *L )
 {
@@ -220,7 +220,7 @@ static int colL_new( lua_State *L )
  *
  *    @luatparam Colour col Colour to get alpha of.
  *    @luatreturn number The alpha of the colour.
- * @luafunc alpha( col )
+ * @luafunc alpha
  */
 static int colL_alpha( lua_State *L )
 {
@@ -242,7 +242,7 @@ static int colL_alpha( lua_State *L )
  *    @luatreturn number The red value of the colour.
  *    @luatreturn number The green value of the colour.
  *    @luatreturn number The blue value of the colour.
- * @luafunc rgb( col )
+ * @luafunc rgb
  */
 static int colL_rgb( lua_State *L )
 {
@@ -266,7 +266,7 @@ static int colL_rgb( lua_State *L )
  *    @luatreturn number The hue of the colour.
  *    @luatreturn number The saturation of the colour.
  *    @luatreturn number The value of the colour.
- * @luafunc hsv( col )
+ * @luafunc hsv
  */
 static int colL_hsv( lua_State *L )
 {
@@ -292,7 +292,7 @@ static int colL_hsv( lua_State *L )
  *    @luatparam number r Red value to set.
  *    @luatparam number g Green value to set.
  *    @luatparam number b Blue value to set.
- * @luafunc setRGB( col, r, g, b )
+ * @luafunc setRGB
  */
 static int colL_setrgb( lua_State *L )
 {
@@ -317,7 +317,7 @@ static int colL_setrgb( lua_State *L )
  *    @luatparam number h Hue value to set.
  *    @luatparam number s Saturation value to set.
  *    @luatparam number v Value to set.
- * @luafunc setHSV( col, h, s, v )
+ * @luafunc setHSV
  */
 static int colL_sethsv( lua_State *L )
 {
@@ -345,7 +345,7 @@ static int colL_sethsv( lua_State *L )
  *
  *    @luatparam Colour col Colour to set alpha of.
  *    @luatparam number alpha Alpha value to set.
- * @luafunc setAlpha( col, alpha )
+ * @luafunc setAlpha
  */
 static int colL_setalpha( lua_State *L )
 {

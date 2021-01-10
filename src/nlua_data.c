@@ -139,7 +139,7 @@ int lua_isdata( lua_State *L, int ind )
  * @brief Frees a data.
  *
  *    @luatparam Data data Data to free.
- * @luafunc __gc( data )
+ * @luafunc __gc
  */
 static int dataL_gc( lua_State *L )
 {
@@ -155,7 +155,7 @@ static int dataL_gc( lua_State *L )
  *    @luatparam Data d1 Data 1 to compare.
  *    @luatparam Data d2 Data 2 to compare.
  *    @luatreturn boolean true if both datas are the same.
- * @luafunc __eq( d1, d2 )
+ * @luafunc __eq
  */
 static int dataL_eq( lua_State *L )
 {
@@ -177,7 +177,7 @@ static int dataL_eq( lua_State *L )
  *    @luatparam number size Size to allocate for data.
  *    @luatparam string type Type of the data to create ("number")
  *    @luatreturn Data New data object.
- * @luafunc new( size, type )
+ * @luafunc new
  */
 static int dataL_new( lua_State *L )
 {
@@ -215,7 +215,7 @@ static size_t dataL_checkpos( lua_State *L, LuaData_t *ld, long pos )
 /**
  * @brief Gets the value of an element.
  *
- * @luafunc get( data, pos )
+ * @luafunc get
  */
 static int dataL_get( lua_State *L )
 {
@@ -234,7 +234,7 @@ static int dataL_get( lua_State *L )
 /**
  * @brief Sets the value of an element.
  *
- * @luafunc get( data, pos, value )
+ * @luafunc get
  */
 static int dataL_set( lua_State *L )
 {
@@ -253,7 +253,7 @@ static int dataL_set( lua_State *L )
 
 
 /**
- * @luafunc getSize( data )
+ * @luafunc getSize
  */
 static int dataL_getSize( lua_State *L )
 {
@@ -264,7 +264,7 @@ static int dataL_getSize( lua_State *L )
 
 
 /**
- * @luafunc getString( data )
+ * @luafunc getString
  */
 static int dataL_getString( lua_State *L )
 {
@@ -275,7 +275,7 @@ static int dataL_getString( lua_State *L )
 
 
 /**
- * @luafunc paste( dest, source, dx, sx, sw )
+ * @luafunc paste
  */
 static int dataL_paste( lua_State *L )
 {
@@ -301,7 +301,7 @@ static int dataL_paste( lua_State *L )
 
 
 /**
- * @luafunc addWeighted( A, B, alpha, beta, bias )
+ * @luafunc addWeighted
  */
 static int dataL_addWeighted( lua_State *L )
 {
@@ -341,7 +341,7 @@ static int dataL_addWeighted( lua_State *L )
 
 
 /**
- * @luafunc convolve2d( data, dw, dh, kernel, kw, kh )
+ * @luafunc convolve2d
  */
 static int dataL_convolve2d( lua_State *L )
 {

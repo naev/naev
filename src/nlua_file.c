@@ -145,7 +145,7 @@ int lua_isfile( lua_State *L, int ind )
  * @brief Frees a file.
  *
  *    @luatparam File file File to free.
- * @luafunc __gc( file )
+ * @luafunc __gc
  */
 static int fileL_gc( lua_State *L )
 {
@@ -164,7 +164,7 @@ static int fileL_gc( lua_State *L )
  *    @luatparam File f1 File 1 to compare.
  *    @luatparam File f2 File 2 to compare.
  *    @luatreturn boolean true if both files are the same.
- * @luafunc __eq( f1, f2 )
+ * @luafunc __eq
  */
 static int fileL_eq( lua_State *L )
 {
@@ -181,7 +181,7 @@ static int fileL_eq( lua_State *L )
  *
  *    @luatparam string path Path to open.
  *    @luatreturn File New file object.
- * @luafunc new( path )
+ * @luafunc new
  */
 static int fileL_new( lua_State *L )
 {
@@ -203,7 +203,7 @@ static int fileL_new( lua_State *L )
  *    @luatparam File File object to open.
  *    @luatparam mode Mode to open the file in (should be 'r', 'w', or 'a').
  *    @luatreturn boolean true on success, false and an error string on failure.
- * @luafunc open( file, mode )
+ * @luafunc open
  */
 static int fileL_open( lua_State *L )
 {
@@ -236,7 +236,7 @@ static int fileL_open( lua_State *L )
  *
  *    @luatparam File file File to close.
  *    @luatreturn true on success.
- * @luafunc close( file )
+ * @luafunc close
  */
 static int fileL_close( lua_State *L )
 {
@@ -258,7 +258,7 @@ static int fileL_close( lua_State *L )
  *    @luatparam[opt] number bytes Number of bytes to read or all if ommitted.
  *    @luatreturn string Read data.
  *    @luatreturn number Number of bytes actually read.
- * @luafunc read( file, bytes )
+ * @luafunc read
  */
 static int fileL_read( lua_State *L )
 {
@@ -289,7 +289,7 @@ static int fileL_read( lua_State *L )
  *    @luatparam File file File to write to.
  *    @luatparam string data Data to write.
  *    @luatparam[opt] number bytes Number of bytes to write.
- * @luafunc write( file, data, bytes )
+ * @luafunc write
  */
 static int fileL_write( lua_State *L )
 {
@@ -323,7 +323,7 @@ static int fileL_write( lua_State *L )
  *    @luatparam File file File to seek in.
  *    @luatparam number pos Position to seek to (from start of file).
  *    @luatreturn boolean true on success.
- * @luafunc seek( file, pos )
+ * @luafunc seek
  */
 static int fileL_seek( lua_State *L )
 {
@@ -348,7 +348,7 @@ static int fileL_seek( lua_State *L )
  *
  *    @luatparam File file File object to get name of.
  *    @luatreturn string Name of the file object.
- * @luafunc getFilename( file )
+ * @luafunc getFilename
  */
 static int fileL_name( lua_State *L )
 {
@@ -363,7 +363,7 @@ static int fileL_name( lua_State *L )
  *
  *    @luatparam File file File to get mode of.
  *    @luatreturn string Mode of the file (either 'c', 'w', 'r', or 'a')
- * @luafunc getMode( file )
+ * @luafunc getMode
  */
 static int fileL_mode( lua_State *L )
 {
@@ -378,7 +378,7 @@ static int fileL_mode( lua_State *L )
  *
  *    @luatparam File file File to get the size of.
  *    @luatreturn number Size of the file.
- * @luafunc getSize( file )
+ * @luafunc getSize
  */
 static int fileL_size( lua_State *L )
 {
@@ -393,7 +393,7 @@ static int fileL_size( lua_State *L )
  *
  *    @luatparam File file File to check to see if is open.
  *    @luatreturn boolean true if the file is open, false otherwise.
- * @luafunc isOpen( file )
+ * @luafunc isOpen
  */
 static int fileL_isopen( lua_State *L )
 {
@@ -408,7 +408,7 @@ static int fileL_isopen( lua_State *L )
  *
  *    @luatparam string path Path to check to see what type it is.
  *    @luatreturn string What type of file it is or nil if doesn't exist.
- * @luafunc filetype( path )
+ * @luafunc filetype
  */
 static int fileL_filetype( lua_State *L )
 {

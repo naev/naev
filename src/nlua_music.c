@@ -74,7 +74,7 @@ int nlua_loadMusic( nlua_env env )
  *
  *    @luatparam string situation Situation to choose.
  *    @luatparam number delay Delay in seconds.
- * @luafunc delay( situation, delay )
+ * @luafunc delay
  */
 static int musicL_delay( lua_State* L )
 {
@@ -95,7 +95,7 @@ static int musicL_delay( lua_State* L )
  * @brief Loads a song.
  *
  *    @luatparam string name Name of the song to load.
- * @luafunc load( name )
+ * @luafunc load
  */
 static int musicL_load( lua_State *L )
 {
@@ -115,7 +115,7 @@ static int musicL_load( lua_State *L )
 /**
  * @brief Plays the loaded song.
  *
- * @luafunc play()
+ * @luafunc play
  */
 static int musicL_play( lua_State *L )
 {
@@ -128,7 +128,7 @@ static int musicL_play( lua_State *L )
 /**
  * @brief Stops playing the current song.
  *
- * @luafunc stop()
+ * @luafunc stop
  */
 static int musicL_stop( lua_State *L )
 {
@@ -142,7 +142,7 @@ static int musicL_stop( lua_State *L )
  * @brief Checks to see if something is playing.
  *
  *    @luatreturn boolean true if something is playing.
- * @luafunc isPlaying()
+ * @luafunc isPlaying
  */
 static int musicL_isPlaying( lua_State* L )
 {
@@ -158,7 +158,7 @@ static int musicL_isPlaying( lua_State* L )
  *
  *    @luatreturn string The name of the current playing song or "none" if no song is playing.
  *    @luatreturn number The current offset inside the song (0. if music is none).
- * @luafunc current()
+ * @luafunc current
  */
 static int musicL_current( lua_State* L )
 {

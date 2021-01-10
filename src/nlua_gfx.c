@@ -104,7 +104,7 @@ int nlua_loadGFX( nlua_env env )
  *
  *    @luatreturn number The width of the Naev window.
  *    @luatreturn number The height of the Naev window.
- * @luafunc dim()
+ * @luafunc dim
  */
 static int gfxL_dim( lua_State *L )
 {
@@ -130,7 +130,7 @@ static int gfxL_dim( lua_State *L )
  *    @luatparam[opt=0] int sprite_x X sprite to render.
  *    @luatparam[opt=0] int sprite_y Y sprite to render.
  *    @luatparam[opt] Colour colour Colour to use when rendering.
- * @luafunc renderTex( tex, pos_x, pos_y, sprite_x, sprite_y, colour )
+ * @luafunc renderTex
  */
 static int gfxL_renderTex( lua_State *L )
 {
@@ -198,7 +198,7 @@ static int gfxL_renderTex( lua_State *L )
  *    @luatparam number tex_h Sprite height to display as [-1.:1.] Note if negative, it will flip the image vertically.
  *    @luatparam[opt] Colour colour Colour to use when rendering.
  *    @luatparam[opt] number angle Angle to rotate in radians.
- * @luafunc renderTexRaw( tex, pos_x, pos_y, pos_w, pos_h, sprite_x, sprite_y, tex_x, tex_y, tex_w, tex_h, colour, angle )
+ * @luafunc renderTexRaw
  */
 static int gfxL_renderTexRaw( lua_State *L )
 {
@@ -267,7 +267,7 @@ static int gfxL_renderTexRaw( lua_State *L )
  *    @luatparam number h Height of the rectangle.
  *    @luatparam Colour col Colour to use.
  *    @luatparam[opt=false] boolean empty Whether or not it should be empty.
- * @luafunc renderRect( x, y, w, h, col, empty )
+ * @luafunc renderRect
  */
 static int gfxL_renderRect( lua_State *L )
 {
@@ -303,7 +303,7 @@ static int gfxL_renderRect( lua_State *L )
  *    @luatparam number r Radius of the circle.
  *    @luatparam Colour col Colour to use.
  *    @luatparam[opt=false] boolean empty Whether or not it should be empty.
- * @luafunc renderCircle( x, y, r, col, empty )
+ * @luafunc renderCircle
  */
 static int gfxL_renderCircle( lua_State *L )
 {
@@ -332,7 +332,7 @@ static int gfxL_renderCircle( lua_State *L )
  *
  *    @luatparam boolean small Whether or not to get the size of the small font.
  *    @luatreturn[opt=false] The size in pixels of the font.
- * @luafunc fontSize( small )
+ * @luafunc fontSize
  */
 static int gfxL_fontSize( lua_State *L )
 {
@@ -352,7 +352,7 @@ static int gfxL_fontSize( lua_State *L )
  *    @luatparam boolean small Whether or not to use the small font.
  *    @luatparam string str Text to calculate length of.
  *    @luatparam[opt] int width Optional parameter to indicate it is a block of text and to use this width.
- * @luafunc printDim( small, str, width )
+ * @luafunc printDim
  */
 static int gfxL_printDim( lua_State *L )
 {
@@ -380,7 +380,7 @@ static int gfxL_printDim( lua_State *L )
  *    @luatparam font font Font to use.
  *    @luatparam string str Text to calculate length of.
  *    @luatparam[opt] int width Optional parameter to indicate it is a block of text and to use this width.
- * @luafunc printfDim( font, str, width )
+ * @luafunc printfDim
  */
 static int gfxL_printfDim( lua_State *L )
 {
@@ -410,7 +410,7 @@ static int gfxL_printfDim( lua_State *L )
  *    @luatparam int width Width to wrap at.
  *    @luatreturn table A table containing pairs of text and their width.
  *    @luatreturn number Maximum width of all the lines.
- * @luafunc printfWrap( font, str, width )
+ * @luafunc printfWrap
  */
 static int gfxL_printfWrap( lua_State *L )
 {
@@ -483,7 +483,7 @@ static int gfxL_printfWrap( lua_State *L )
  *    @luatparam Colour col Colour to print text.
  *    @luatparam[opt] int max Maximum width to render up to.
  *    @luatparam[opt] boolean center Whether or not to center it.
- * @luafunc printf( font, str, x, y, col, max, center )
+ * @luafunc printf
  */
 static int gfxL_printf( lua_State *L )
 {
@@ -529,7 +529,7 @@ static int gfxL_printf( lua_State *L )
  *    @luatparam Colour col Colour to print text.
  *    @luatparam[opt] int max Maximum width to render up to.
  *    @luatparam[opt] boolean center Whether or not to center it.
- * @luafunc print( small, str, x, y, col, max, center )
+ * @luafunc print
  */
 static int gfxL_print( lua_State *L )
 {
@@ -574,7 +574,7 @@ static int gfxL_print( lua_State *L )
  *    @luatparam number h Height of the block of text.
  *    @luatparam Colour col Colour to print text.
  *    @luatparam line_height Height of each line to print.
- * @luafunc printText( small, str, x, y, w, h, col, line_height )
+ * @luafunc printText
  */
 static int gfxL_printText( lua_State *L )
 {

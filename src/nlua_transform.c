@@ -134,7 +134,7 @@ int lua_istransform( lua_State *L, int ind )
  *    @luatparam Transform t1 Transform 1 to compare.
  *    @luatparam Transform t2 Transform 2 to compare.
  *    @luatreturn boolean true if both transforms are the same.
- * @luafunc __eq( t1, t2 )
+ * @luafunc __eq
  */
 static int transformL_eq( lua_State *L )
 {
@@ -150,7 +150,7 @@ static int transformL_eq( lua_State *L )
  * @brief Creates a new identity transform.Gets a transform.
  *
  *    @luatreturn Transform A new transform corresponding to an identity matrix.
- * @luafunc new( )
+ * @luafunc new
  */
 static int transformL_new( lua_State *L )
 {
@@ -171,7 +171,7 @@ static int transformL_new( lua_State *L )
  *    @luatparam Transform A First element to multiply.
  *    @luatparam Transform B Second element to multiply.
  *    @luatreturn Transform Result of multiplication.
- * @luafunc __mul( A, B )
+ * @luafunc __mul
  */
 static int transformL_mul( lua_State *L )
 {
@@ -188,7 +188,7 @@ static int transformL_mul( lua_State *L )
  *
  *    @luatparam Transform T Transform te get parameters of.
  *    @luatreturn table 2D table containing all the values of the transform.
- * @luafunc get( T )
+ * @luafunc get
  */
 static int transformL_get( lua_State *L )
 {
@@ -217,7 +217,7 @@ static int transformL_get( lua_State *L )
  *    @luatparam number y Y-axis scaling.
  *    @luatparam number z Z-axis scaling.
  *    @luatreturn Transform A new transformation.
- * @luafunc scale( T, x, y, z )
+ * @luafunc scale
  */
 static int transformL_scale( lua_State *L )
 {
@@ -238,7 +238,7 @@ static int transformL_scale( lua_State *L )
  *    @luatparam number y Y-axis translation.
  *    @luatparam number z Z-axis translation.
  *    @luatreturn Transform A new transformation.
- * @luafunc translate( T, x, y, z )
+ * @luafunc translate
  */
 static int transformL_translate( lua_State *L )
 {
@@ -256,7 +256,7 @@ static int transformL_translate( lua_State *L )
  *
  *    @luatparam Transform T Transform to apply rotation to.
  *    @luatparam number angle Angle to rotate (radians).
- * @luafunc rotate2d( T, angle )
+ * @luafunc rotate2d
  */
 static int transformL_rotate2d( lua_State *L )
 {
@@ -277,7 +277,7 @@ static int transformL_rotate2d( lua_State *L )
  *    @luatreturn number New X coordinate.
  *    @luatreturn number New Y coordinate.
  *    @luatreturn number New Z coordinate.
- * @luafunc applyPoint( T, x, y, z )
+ * @luafunc applyPoint
  */
 static int transformL_applyPoint( lua_State *L )
 {
@@ -311,7 +311,7 @@ static int transformL_applyPoint( lua_State *L )
  *    @luatreturn number New X coordinate.
  *    @luatreturn number New Y coordinate.
  *    @luatreturn number New Z coordinate.
- * @luafunc applyDim( T, x, y, z )
+ * @luafunc applyDim
  */
 static int transformL_applyDim( lua_State *L )
 {

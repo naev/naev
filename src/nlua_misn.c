@@ -285,7 +285,7 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
  * @brief Sets the current mission title.
  *
  *    @luatparam string title Title to use for mission.
- * @luafunc setTitle( title )
+ * @luafunc setTitle
  */
 static int misn_setTitle( lua_State *L )
 {
@@ -307,7 +307,7 @@ static int misn_setTitle( lua_State *L )
  *  can't specify bullet points or other fancy things like with the real OSD.
  *
  *    @luatparam string desc Description to use for mission.
- * @luafunc setDesc( desc )
+ * @luafunc setDesc
  */
 static int misn_setDesc( lua_State *L )
 {
@@ -326,7 +326,7 @@ static int misn_setDesc( lua_State *L )
  * @brief Sets the current mission reward description.
  *
  *    @luatparam string reward Description of the reward to use.
- * @luafunc setReward( reward )
+ * @luafunc setReward
  */
 static int misn_setReward( lua_State *L )
 {
@@ -355,7 +355,7 @@ static int misn_setReward( lua_State *L )
  *    @luatparam System sys System to mark.
  *    @luatparam string type Colouring scheme to use.
  *    @luatreturn number A marker ID to be used with markerMove and markerRm.
- * @luafunc markerAdd( sys, type )
+ * @luafunc markerAdd
  */
 static int misn_markerAdd( lua_State *L )
 {
@@ -403,7 +403,7 @@ static int misn_markerAdd( lua_State *L )
  *
  *    @luatparam number id ID of the mission marker to move.
  *    @luatparam System sys System to move the marker to.
- * @luafunc markerMove( id, sys )
+ * @luafunc markerMove
  */
 static int misn_markerMove( lua_State *L )
 {
@@ -453,7 +453,7 @@ static int misn_markerMove( lua_State *L )
  * @usage misn.markerRm( my_marker )
  *
  *    @luatparam number id ID of the marker to remove.
- * @luafunc markerRm( id )
+ * @luafunc markerRm
  */
 static int misn_markerRm( lua_State *L )
 {
@@ -507,7 +507,7 @@ static int misn_markerRm( lua_State *L )
  *
  *    @luatparam string name Name of the NPC.
  *    @luatparam string portrait Name of the portrait to use for the NPC.
- * @luafunc setNPC( name, portrait )
+ * @luafunc setNPC
  */
 static int misn_setNPC( lua_State *L )
 {
@@ -547,7 +547,7 @@ static int misn_setNPC( lua_State *L )
  *
  * @usage f = misn.factions()
  *    @luatreturn {Faction,...} A table containing the factions for whom the mission is available.
- * @luafunc factions()
+ * @luafunc factions
  */
 static int misn_factions( lua_State *L )
 {
@@ -574,7 +574,7 @@ static int misn_factions( lua_State *L )
  *
  * @usage if not misn.accept() then return end
  *    @luatreturn boolean true if mission was properly accepted.
- * @luafunc accept()
+ * @luafunc accept
  */
 static int misn_accept( lua_State *L )
 {
@@ -618,7 +618,7 @@ static int misn_accept( lua_State *L )
  *                     doesn't mark it as completed.  If the parameter isn't
  *                     passed it just ends the mission (without removing it
  *                     from the player's list of active missions).
- * @luafunc finish( properly )
+ * @luafunc finish
  */
 static int misn_finish( lua_State *L )
 {
@@ -655,7 +655,7 @@ static int misn_finish( lua_State *L )
  *    @luatparam string cargo Name of the cargo to add. This must match a cargo name defined in commodity.xml.
  *    @luatparam number quantity Quantity of cargo to add.
  *    @luatreturn number The id of the cargo which can be used in cargoRm.
- * @luafunc cargoAdd( cargo, quantity )
+ * @luafunc cargoAdd
  */
 static int misn_cargoAdd( lua_State *L )
 {
@@ -689,7 +689,7 @@ static int misn_cargoAdd( lua_State *L )
  *
  *    @luatparam number cargoid Identifier of the mission cargo.
  *    @luatreturn boolean true on success.
- * @luafunc cargoRm( cargoid )
+ * @luafunc cargoRm
  */
 static int misn_cargoRm( lua_State *L )
 {
@@ -718,7 +718,7 @@ static int misn_cargoRm( lua_State *L )
  *
  *    @luatparam number cargoid ID of the cargo to jettison.
  *    @luatreturn boolean true on success.
- * @luafunc cargoJet( cargoid )
+ * @luafunc cargoJet
  */
 static int misn_cargoJet( lua_State *L )
 {
@@ -754,7 +754,7 @@ static int misn_cargoJet( lua_State *L )
  *
  *    @luatparam string title Title to give the OSD.
  *    @luatparam {string,...} list List of elements to put in the OSD.
- * @luafunc osdCreate( title, list )
+ * @luafunc osdCreate
  */
 static int misn_osdCreate( lua_State *L )
 {
@@ -816,7 +816,7 @@ static int misn_osdCreate( lua_State *L )
 /**
  * @brief Destroys the mission OSD.
  *
- * @luafunc osdDestroy()
+ * @luafunc osdDestroy
  */
 static int misn_osdDestroy( lua_State *L )
 {
@@ -838,7 +838,7 @@ static int misn_osdDestroy( lua_State *L )
  * @note Uses Lua indexes, so 1 is first member, 2 is second and so on.
  *
  *    @luatparam number n Element of the OSD to make active.
- * @luafunc osdActive( n )
+ * @luafunc osdActive
  */
 static int misn_osdActive( lua_State *L )
 {
@@ -889,7 +889,7 @@ static int misn_osdGetActiveItem( lua_State *L )
  *    @luatparam[opt=5] number priority Optional priority argument (highest is 0, lowest is 10).
  *    @luatparam[opt=nil] string background Optional parameter specifying the background to use.
  *    @luatreturn number The ID of the NPC to pass to npcRm.
- * @luafunc npcAdd( func, name, portrait, desc, priority, background )
+ * @luafunc npcAdd
  */
 static int misn_npcAdd( lua_State *L )
 {
@@ -934,7 +934,7 @@ static int misn_npcAdd( lua_State *L )
  * @usage misn.npcRm( npc_id )
  *
  *    @luatparam number id ID of the NPC to remove.
- * @luafunc npcRm( id )
+ * @luafunc npcRm
  */
 static int misn_npcRm( lua_State *L )
 {
@@ -967,7 +967,7 @@ static int misn_npcRm( lua_State *L )
  *
  *    @luatparam System|String|{System,String...} params Table of systems/strings to claim or a single system/string.
  *    @luatreturn boolean true if was able to claim, false otherwise.
- * @luafunc claim( params )
+ * @luafunc claim
  */
 static int misn_claim( lua_State *L )
 {
