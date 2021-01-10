@@ -17,16 +17,13 @@ LOCAL_LIB_ROOTS = ('/opt/local', '/usr/lib/osxcross', '/usr/local')
 def main():
     app_path = os.environ['MESON_INSTALL_DESTDIR_PREFIX']
 
-    # Build basic structure.
-    trace(os.makedirs, f'{app_path}/Contents/Frameworks', exist_ok=True)
-    trace(shutil.copy, f'{os.environ["MESON_BUILD_ROOT"]}/Info.plist', f'{app_path}/Contents')
-    trace(shutil.copy, f'{os.environ["MESON_SOURCE_ROOT"]}/extras/macos/naev.icns', f'{app_path}/Contents/Resources')
+    # Create a directory for dynamic libraries.
+    # Docs allege Contents/Resources/lib is more idiomatic, but bundle.sh chose here.
+    trace(shutil.rmtree, f'{app_path}/Contents/Frameworks', ignore_errors=True)
+    trace(os.makedirs, f'{app_path}/Contents/Frameworks')
 
     # Gather Naev and dependencies.
     trace(copy_with_deps, f'{os.environ["MESON_BUILD_ROOT"]}/naev', app_path, dest='Contents/MacOS')
-
-    # Strip headers, especially from the SDL2 framework.
-    trace(subprocess.check_call, ['find', app_path, '-name', 'Headers', '-prune', '-exec', 'rm', '-r', '{}', '+'])
 
     print(f'Successfully created {app_path}')
 
@@ -35,23 +32,17 @@ def trace(f, *args, **kwargs):
     """ Run the given function on the given arguments. In debug mode, print the function call.
         (Indent if we trace while running a traced function.) """
 
-    trace.depth += 1
-    try:
-        if os.getenv('MESON_INSTALL_QUIET') is None:
-            # HACK: when tracing a function call, use unittest.mock to construct a pretty-printable version.
-            # HACK: when tracing subprocess shell commands, format them because it's unreadable otherwise.
-            if f.__module__ == 'subprocess' and len(args) == 1:
-                from subprocess import list2cmdline
-                print(f'[{trace.depth}]', '$', list2cmdline(args[0]))
-            else:
-                from unittest import mock
-                call = getattr(mock.call, f.__name__)(*args, **kwargs)
-                pretty = str(call).replace('call.', '', 1)
-                print(f'[{trace.depth}]', pretty)
-        return f(*args, **kwargs)
-    finally:
-        trace.depth -= 1
-trace.depth = 0
+    if os.getenv('MESON_INSTALL_QUIET') is None:
+        # HACK: when tracing a function call, use unittest.mock to construct a pretty-printable version.
+        # HACK: when tracing subprocess shell commands, format them because it's unreadable otherwise.
+        if f.__module__ == 'subprocess' and len(args) == 1:
+            from subprocess import list2cmdline
+            print('$', list2cmdline(args[0]))
+        else:
+            from unittest import mock
+            call = getattr(mock.call, f.__name__)(*args, **kwargs)
+            print(str(call).replace('call.', '', 1))
+    return f(*args, **kwargs)
 
 
 def copy_with_deps(bin_src, app_path, dest='Contents/Frameworks', exe_rpaths=None):
@@ -59,6 +50,7 @@ def copy_with_deps(bin_src, app_path, dest='Contents/Frameworks', exe_rpaths=Non
     bin_name = os.path.basename(bin_src)
     bin_dst = os.path.join(app_path, dest, bin_name)
 
+    os.makedirs(os.path.dirname(bin_dst), exist_ok=True)
     trace(shutil.copy, bin_src, bin_dst)
 
     dylibs, rpaths = otool_results(bin_src)
