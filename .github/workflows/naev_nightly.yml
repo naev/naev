@@ -222,7 +222,7 @@ jobs:
         run: |
           mkdir -p dist/out/
 
-          mv staging/usr/local/bin/naev dist/out/naev.x64
+          mv staging/usr/bin/naev dist/out/naev.x64
           chmod +x dist/out/naev.x64
 
           tar -cJvf dist/out/steam-ndata.tar.xz -C staging/usr/local/share/naev dat
