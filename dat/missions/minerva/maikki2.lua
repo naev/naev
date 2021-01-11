@@ -444,7 +444,6 @@ function approach_hint4 ()
    drshrimp:rename(_("Dr. Shrimp"))
    drshrimp(_([["My name is Cayne, but you can call me Dr. Shrimp. What would you like to know?"]]))
 
-   local asked_drshrimp = false
    vn.label("menu")
    vn.menu( function ()
       local opts = {
@@ -456,19 +455,55 @@ function approach_hint4 ()
       if asked_drshrimp then
          table.insert( opts, 1, {_("Ask about Calliope"), "calliope"} )
       end
+      if asked_strangelove then
+         table.insert( opts, 1, {_("Ask about Dr. Strangelove"), "strangelove"} )
+      elseif asked_members and asked_artifacts then
+         table.insert( opts, 1, {_("Anything else?..."), "strangelove"} )
+      end
       return opts end )
 
    vn.label("drshrimp")
+   drshrimp(string.format(_([["After the nebula project, like most other researchers on the team, I got the hell away from nebula research. One day while visiting %s I found about fresh-water shrimp breeding and became enthralled. One thing led to another, and now I'm doing shrimp research."]]), hintpnt[4]))
+   drshrimp(_([["You see, these shrimps are fascinating creatures. They have a really fast reproduction cycle, and reproduce in large numbers, allowing for simple genetic manipulation. While most are bred for colors and physical traits, some have also been trained for mental traits. Calliope here is an example of an extremely mentally capable shrimp."
+He taps the tank of the floating shrimp next to him.]]))
+   drshrimp(_([["The capability of these shrimp are endless, and they are helping us understand much more genetic modification than the brute-force approaches of the Soromid, although are technology is still lacking behind."]]))
+   drshrimp(_([["And what's best, look how cute they are!"
+He enthusiastically points towards Calliope.
+"Isn't she the cutest?]]))
+   drshrimp(_([["After focusing on shrimp for a few cycles, people started calling me Dr. Shrimp and the name stuck. Honestly, it's the best nickname they could give me. Makes me feel like getting my PhD was worth it!"]]))
    vn.func( function () asked_drshrimp = true end )
    vn.jump("menu_msg")
 
    vn.label("calliope")
+   drshrimp(_([["Calliope was bred for her mental faculties. With her special floating aquarium she is able to articulate up to 20 unique words! It's incredible! Not only that, but we kept her good looks! Plus as a neo-neo-neocaridina, she is much larger than neo-neocaridinas."]]))
+   shrimp(_([["FOOD. FOOD. FOOD."]]))
+   drshrimp(_([["What would I do without her?"
+He activates her food activation system and a pellet drops out.]]))
+   shrimp(_([["HAPPY. HAPPY."]]))
+   drshrimp(_([["She's the best shrimp we've been able to produce so far. She isn't capable of self-awareness yet, and tends to forget words if she isn't properly trained, but it is a start. By expanding their neural functionality we expect them to be compatible with neuro-implants eventually, and this will open up a whole set of new functionality, given that their reaction speed and neuro-motor ability is superb."]]))
+   drshrimp(_([["I named her after a muse from some archaic religion I found while researching. She is the only thing that keeps me going during my 17th post doctoral fellowship."]]))
    vn.jump("menu_msg")
 
    vn.label("artifacts")
+   drshrimp(_([["What sort of artifacts we were dealing with? All sorts. Pretty much anything we could get our hands on. We were trying to get a hold on stuff closer to the origin near Sol, but most of the time scavengers brought us stuff from the outer areas. Many times they even were trying to sell us random debris as nebula artifacts, but that's really easy to detect."]]))
+   drshrimp(_([["You see, the nebula emits a specific type of radiation. We aren't too familiar with it, but it does alter the subatomic particles of space debris in nearly imperceptible ways. Our tools could detect the alterations easily."]]))
+   drshrimp(_([["When the project failed, most of the artifacts were confiscated to hell who knows where, but I managed to keep a nut from what I think is a space station, but not entirely sure. It's a bit damaged beyond recognition."]]))
+   drshrimp(_([["With the failure of most nebula project, I don't think there is anybody buying nebula artifacts anymore. Not much of a market for them, and most easy to access debris has all been scavenged away. Some collectors are still interested in that, but that's about it. Furthermore, it's not entirely legal if you catch my drift."]]))
+   vn.func( function () asked_drshrimp = true end )
    vn.jump("menu_msg")
 
    vn.label("members")
+   drshrimp(_([["Most of the project members were full professors, which is probably why it failed. Us post doctoral researchers do the work and get no credit."]]))
+   drshrimp(_([["Many of the researchers lost their posts or went into hiding. The few I know that still are active are Prof. Stova, Prof. Sato, and Prof. Hsu. I think they even got some stupid promotion, while me and the other post docs lost our jobs."]]))
+   drshrimp(_([["It's pretty incredible to think that there were originally 100ish people in the project. Yet even with all the people fired for falsification of results, not a single tenured post opened! It's ridiculous! If industry wasn't so horrible I would quit academia in an instance!"]]))
+   drshrimp(_([["Now that I think of it, there was another guy. What was his name? I totally forget. Oh well."]]))
+   vn.func( function () asked_drshrimp = true end )
+   vn.jump("menu_msg")
+
+   vn.label("strangelove")
+   drshrimp(_([["Now I remember! There was a another post doctoral researcher who worked with me. "]]))
+   drshrimp(_([[""]]))
+   vn.func( function () asked_strangelove = true end )
    vn.jump("menu_msg")
 
    vn.label("menu_msg")
