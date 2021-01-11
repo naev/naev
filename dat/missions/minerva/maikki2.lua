@@ -42,32 +42,32 @@ maikki_portrait = minerva.maikki.portrait
 maikki_image = minerva.maikki.image
 maikki_colour = minerva.maikki.colour
 
-hint1_name = _("Prof. Sato")
-hint1_description = _("Foo")
+hint1_name = _("Prof. Sato") -- Computer Science / Mathematics
+hint1_description = _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.")
 hint1_portrait = "zalek1"
 hint1_image = "zalek1.png"
 hint1_colour = nil
 
-hint2_name = _("Prof. Stova")
+hint2_name = _("Prof. Stova") -- Material Science
 hint2_description = _("Foo")
 hint2_portrait = "zalek1"
 hint2_image = "zalek1.png"
 hint2_colour = nil
 
-hint3_name = _("Dr. Cayne")
+hint3_name = _("Prof. Hsu") -- Philosophy
 hint3_description = _("Foo")
 hint3_portrait = "zalek1"
 hint3_image = "zalek1.png"
 hint3_colour = nil
 
-hint4_name = _("Prof. Hsu")
-hint4_description = _("Foo")
-hint4_portrait = "zalek1"
-hint4_image = "zalek1.png"
+hint4_name = _("Dr. Cayne") -- Dr. Shrimp
+hint4_description = _("You see a young fellow intently reading a book. There seems to be a shrimp in a floating aquarium bowl floating around him.")
+hint4_portrait = "drshrimp"
+hint4_image = "drshrimp.png"
 hint4_colour = nil
 
 ecc_name = _("Prof. Strangelove")
-ecc_description = nil -- unneeded
+ecc_description = _("Foo")
 ecc_portrait = "zalek1"
 ecc_image = "zalek1.png"
 ecc_colour = nil
@@ -285,7 +285,7 @@ function land ()
    elseif planet.cur() == planet.get( hintpnt[3] ) then
       npc_hint3 = misn.npcAdd( "approach_hint3", hint3_name, hint3_portrait, hint3_description )
 
-   elseif misn_state >= 1 and  planet.cur() == planet.get( hintpnt[3] ) then
+   elseif misn_state >= 1 and  planet.cur() == planet.get( hintpnt[4] ) then
       npc_hint4 = misn.npcAdd( "approach_hint4", hint4_name, hint4_portrait, hint4_description )
 
    elseif diff.isApplied(eccdiff) and planet.cur() == planet.get(eccpnt) then
@@ -304,19 +304,49 @@ function visited ()
 end
 
 
+function lasthint( prof )
+   local visits = 0
+   if visitedhint1 then
+      visits = visits + 1
+   end
+   if visitedhint2 then
+      visits = visits + 1
+   end
+   if visitedhint3 then
+      visits = visits + 1
+   end
+
+   if visits > 2 then
+      prof(string.format(_([["Oh, I suddenly remembered. There was also a post doctoral research working on the project by the name of Cayne. I think he was last working at %s in the %s system."]]), hintpnt[4], hintsys[4]))
+   end
+end
+
+
 function approach_hint1 ()
    vn.clear()
    vn.scene()
    local prof = vn.newCharacter( hint1_name, { image=hint1_image, color=hint1_colour } )
    vn.fadein()
 
-   prof([["Blah"]])
+   vn.na(_("You approach the professor."))
+   prof(_([["Hello, how can I help you?"]]))
+   vn.me(_("You inquire to about whether or not they are interested in artifacts from the nebula."))
+   prof(_([["Very interesting, but I stopped working on that line of research several cycles ago. It was really a mess of a project. The project leader was pushing us very hard due to the other competition."]]))
+   prof(_([["In the end, some papers results were falsified and the project leader was barred from doing research. That was too much for them and they took their own life. How illogical!"]]))
+   prof(_([["If you are interested in the nebula research, you should go visit the museum of nebula artifacts. Although due to administrative changes, I don't think it'll open again for a few cycles."]]))
+   prof(_([["Oh, you might have good luck talking to other members of the project. However, most of us have moved on from that traumatic experience and are now researching new topics."]]))
+   prof(_([["Did I mention I have started working with infinitely meta-recursive hyper-tables? They are a fascinating type of data structure based on self-referencing Grassman manifold quasi-projections. They even implicitly handle non-convex elliptic reflections without any meta-heuristics!"
+They are getting excited.]]))
+   prof(_([["Although my grant has been rejected five times, the damn review board is still pushing the obsolete Riemann algebroid universal approximator theory and won't listen to anything else, they are definitely the future! I think they may even have a practical application!"
+Their excitement grows.]]))
+   vn.na(_("They don't seem like they will stop talking anytime soon... You take your leave as they start rambling in a trance-like state."))
+   lasthint( prof )
 
    vn.fadeout()
    vn.run()
 
    if not visitedhint1 then
-      visitedhint1 = true
+      visitedhint1 = tue
       misn.markerRm( markerhint1 )
       visited()
    end
@@ -329,7 +359,21 @@ function approach_hint2 ()
    local prof = vn.newCharacter( hint2_name, { image=hint2_image, color=hint2_colour } )
    vn.fadein()
 
-   prof([["Blah"]])
+   vn.na(_("You approach the professor."))
+   prof(_([["What can I do for you?"]]))
+   vn.me(_("You inquire to about whether or not they are interested in artifacts from the nebula."))
+   prof(_([[He rubs his temples.
+"Ah, the nebula artifacts... Not very good experiences with those, no, not really interested in them anymore."]]))
+   prof(_([["I was part of a really ambitious project to try to track down the origin of the incident, which just end up being a bureaucratic nightmare."]]))
+   prof(_([["You see, the bigger the research project, the more the project leader and co-leaders want to have meetings and goals and work packages."
+He shudders when he says the word "work packages".]]))
+   prof(_([["At the end, we were just chaining meetings and answering e-mails and not getting anything done. We ended up handing in a 5 page report written by an internal for the mid-project evaluation and almost lost all the funding. The project leader panicked and it all went to hell from there."]]))
+   prof(_([["All nebula research is doomed to end that way. I haven't seen a project succeed yet despite all the proposal calls attempting to address the issue."]]))
+   va.na(_("You inquire about other project members."))
+   prof(_([["The only logical step after that traumatic experience is to get as far away as possible fro nebula research. As far as I know all the project members moved to new topics, although none as exciting as mine."]]))
+   prof(_([["Have you heard of graphene infused hydro nano lattices? By taking sheets of graphene and creating strong lateral strain under the effect of strong Coriolis electro-magnetic induction fields, it is possible to obtain a behaviour similar to turbulent hydrofoils. And what's even better is that they naturally form octahedral quasi-lattices that allow absorbing most low-spectrum frequencies!"]]))
+   prof(_([["They could change material science as we know it! Image being able to create materials with almost any property you can desire! We do still have to solve the problem of the subatomic crystallite implosion, but once I finish recovering the notes from the crater left at my last laboratory, I should be able to solve it in no time. By the way, since the accident with my last assistant, I'm looking for a new one. Would you be interested?"]]))
+   va.na(_("You get away as fast as you can from them as they keep on rambling."))
 
    vn.fadeout()
    vn.run()
@@ -345,10 +389,21 @@ end
 function approach_hint3 ()
    vn.clear()
    vn.scene()
-   local prof = vn.newCharacter( hint3_name, { image=hint3_image, color=hint3_colour } )
+   local drshrimp = vn.newCharacter( hint3_name, { image=hint3_image, color=hint3_colour } )
    vn.fadein()
 
-   prof([["Blah"]])
+   vn.na(_("You approach the professor."))
+   prof(_([["Hello."]]))
+   vn.me(_("You inquire to about whether or not they are interested in artifacts from the nebula."))
+   prof(_([["Ah, such fond memories. I have never been interested in the artifacts from the nebula themselves, but I was part of a large project dealing with them on the philosophical and ethical committee."]]))
+   prof(_([["Recently, due to the illogical imbalance between science and humanities, all large Za'lek projects are require to have at least a 10% of humanities members. This has given me lots of opportunities to work on many interesting projects."]]))
+   prof(_([["Oh yes, on the nebula artifacts. I remember having fun conversations with our colleagues about whether or not the artifacts from the nebula actually do exist or not given that we are using imperfect sensorial organs to see, touch, and feel them. You see, given that we only perceive reality through our imperfect organs, can we actually know whether or not there is an absolute objective reality?"]]))
+   prof(_([["It is a very fascinating topic. Since there is no way to prove the existence of an absolute reality, from a practical point of view, there are infinite relative realities, where everyone has their own. Everything else is an illusion derived from us projecting our understanding and reality onto the reality of others, deforming them to a way we can interpret them with our perfect minds."]]))
+   vn.na(_("You inquire about the other members of the project."))
+   prof(_([["Other members? I recall a few, but they liked me so much, they promoted me and gave me a windowless room in the basement. What an honour. Anyway, back to what I was saying."]]))
+   prof(_([["We must also further question not only our sensorial organs, and the existence of nebula artifacts, but our own existence. We apparently are able to think and some would argue that by this, the only thing we can prove, given imperfect sensorial data, is our own existence. However, I argue that this too is an illusion, and that our existence itself is something we can't define."]]))
+   prof(_([["Every instant, what we perceive as ourselves is ceasing to exist and a new existence, which while very close to the "ourselves" from the previous instance, is, arguably, a completely new existence. This fluidity makes it, not only impossible to perceive nor understand our self as it is, but also makes it impossible to draw a line between different individuals..."]]))
+   va.na(_("You thank him and run away while he keeps on talking to himself."))
 
    vn.fadeout()
    vn.run()
@@ -364,11 +419,64 @@ end
 function approach_hint4 ()
    vn.clear()
    vn.scene()
-   local prof = vn.newCharacter( hint4_name, { image=hint4_image, color=hint4_colour } )
+   local drshrimp = vn.newCharacter( hint4_name, { image=hint4_image, color=hint4_colour } )
+   local shrimp = vn.newCharacter( _("Floating Shrimp"), { color={0.4, 0.6, 1.0} } )
    vn.fadein()
 
-   prof([["Blah"]])
+   vn.na(_("You approach the young man who has POST-DOCTORAL RESEARCHER written on his lab coat. He seems to be really into a book titled 'SHRIMP: Anatomical studies of the Neo-neo-neocaridina species'."))
+   drshrimp(_([["..."]]))
+   vn.na(_("You wait to see if they notice your presence. While the young man reading the book hasn't, it does seem like the strange shrimp-like creature floating in an aquarium near them has. You feel like it's staring into your soul."))
+   shrimp(_([[After what seems to be an eternity of a staring contest between you and the shrimp, you hear a loud beep and the shrimp's speaker begins to make a noise.
+"PERSON. PERSON."]]))
+   drshrimp(_([[The young man grumbles.
+"I told you I already submitted my temporal research proposal clarification application yesterday."]]))
+   drshrimp(_([[The young man suddenly breaks out of his reading stupor and looks at you as if you had appeared out of thin air.
+"Wait, what? Who are you?"]]))
+   shrimp(_([["PERSON. PERSON. PERSON."]]))
+   drshrimp(_([["C'mon Calliope, I already know that. Here, have a pellet."]]))
+   shrimp:rename("Calliope")
+   shrimp(_([[A pellet of shrimp food releases into the floating aquarium. The shrimp wastes no time in getting scarfing it down.
+"HAPPY. GOOD."]]))
+   drshrimp(_([["What do you want"]]))
+   vn.na(_("You explain to him that you are looking for information related to nebula artifacts."))
+   drshrimp(_([["Ah, that hellish project. Was doomed from the start you know. The full-time professors and researchers let their egos get to their heads and it derails spectacularly. I'm glad it ended as it did, or I would be still stuck in that purgatory."]]))
+   drshrimp(_([["I don't think most of the people remember me, but I was the one stuck doing most of the work. If you can call it that."]]))
+   drshrimp:rename(_("Dr. Shrimp"))
+   drshrimp(_([["My name is Cayne, but you can call me Dr. Shrimp. What would you like to know?"]]))
 
+   local asked_drshrimp = false
+   vn.label("menu")
+   vn.menu( function ()
+      local opts = {
+         {_([["Dr. Shrimp?"]]), "drshrimp" },
+         {_("Ask about nebula artifacts"), "artifacts" },
+         {_("Ask about other members."), "members" },
+         {_("Leave"), "leave" },
+      }
+      if asked_drshrimp then
+         table.insert( opts, 1, {_("Ask about Calliope"), "calliope"} )
+      end
+      return opts end )
+
+   vn.label("drshrimp")
+   vn.func( function () asked_drshrimp = true end )
+   vn.jump("menu_msg")
+
+   vn.label("calliope")
+   vn.jump("menu_msg")
+
+   vn.label("artifacts")
+   vn.jump("menu_msg")
+
+   vn.label("members")
+   vn.jump("menu_msg")
+
+   vn.label("menu_msg")
+   drshrimp(_([["Is there anything else you would like to know?"]]))
+   vn.jump("menu")
+
+   vn.label("leave")
+   vn.na(_("You take your leave."))
    vn.fadeout()
    vn.run()
 
