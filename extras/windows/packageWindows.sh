@@ -9,7 +9,7 @@ set -e
 
 # Defaults
 NIGHTLY="false"
-BUILDOUTPUT="$(pwd)/dist"
+BUILDOUTPUT="${MESON_SOURCE_ROOT}/../dist/out"
 STAGING="$MESON_SOURCE_ROOT/extras/windows/installer/bin"
 
 while getopts n: OPTION "$@"; do
@@ -51,13 +51,13 @@ echo "Collecting DLLs in staging area"
 
 # Create distribution folder
 echo "creating distribution folder if it doesn't exist"
-mkdir -p "$BUILDOUTPUT/out"
+mkdir -p "$BUILDOUTPUT"
 
 # Build installer
 makensis -DSUFFIX=$SUFFIX "$MESON_SOURCE_ROOT/extras/windows/installer/naev.nsi"
 
 # Move installer to distribution directory
-mv "$MESON_SOURCE_ROOT/extras/windows/installer/naev-$SUFFIX.exe" "$BUILDOUTPUT/out"
+mv "$MESON_SOURCE_ROOT/extras/windows/installer/naev-$SUFFIX.exe" "$BUILDOUTPUT"
 
 echo "Successfully built Windows Installer for $SUFFIX"
 
@@ -65,7 +65,7 @@ echo "Successfully built Windows Installer for $SUFFIX"
 pushd "$STAGING"
 tar -cJvf ../steam-win64.tar.xz *.dll *.exe
 popd
-mv "$STAGING"/../*.xz "$BUILDOUTPUT/out"
+mv "$STAGING"/../*.xz "$BUILDOUTPUT"
 
 echo "Successfully packaged Steam Tarball"
 
