@@ -347,13 +347,6 @@ function land()
          )
       )
 
-      -- The old ship the player used will still be on the planet. I’m not 
-      -- too sure what to do about it, but, well…
-      player.swapShip(theship.exact_class)
-
-      -- Equip the new ship.
-      equip_generic( player.pilot() )
-
       -- Hey, stealing a ship isn’t anything! (if you survive, that is)
       faction.modPlayerSingle("Pirate", rnd.rnd(3,5))
 
