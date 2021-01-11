@@ -318,6 +318,7 @@ function lasthint( prof )
 
    if visits > 2 then
       prof(string.format(_([["Oh, I suddenly remembered. There was also a post doctoral research working on the project by the name of Cayne. I think he was last working at %s in the %s system."]]), hintpnt[4], hintsys[4]))
+      -- TODO play bingo sound
    end
 end
 
@@ -369,11 +370,12 @@ function approach_hint2 ()
 He shudders when he says the word "work packages".]]))
    prof(_([["At the end, we were just chaining meetings and answering e-mails and not getting anything done. We ended up handing in a 5 page report written by an internal for the mid-project evaluation and almost lost all the funding. The project leader panicked and it all went to hell from there."]]))
    prof(_([["All nebula research is doomed to end that way. I haven't seen a project succeed yet despite all the proposal calls attempting to address the issue."]]))
-   va.na(_("You inquire about other project members."))
+   vn.na(_("You inquire about other project members."))
    prof(_([["The only logical step after that traumatic experience is to get as far away as possible fro nebula research. As far as I know all the project members moved to new topics, although none as exciting as mine."]]))
    prof(_([["Have you heard of graphene infused hydro nano lattices? By taking sheets of graphene and creating strong lateral strain under the effect of strong Coriolis electro-magnetic induction fields, it is possible to obtain a behaviour similar to turbulent hydrofoils. And what's even better is that they naturally form octahedral quasi-lattices that allow absorbing most low-spectrum frequencies!"]]))
    prof(_([["They could change material science as we know it! Image being able to create materials with almost any property you can desire! We do still have to solve the problem of the subatomic crystallite implosion, but once I finish recovering the notes from the crater left at my last laboratory, I should be able to solve it in no time. By the way, since the accident with my last assistant, I'm looking for a new one. Would you be interested?"]]))
-   va.na(_("You get away as fast as you can from them as they keep on rambling."))
+   vn.na(_("You get away as fast as you can from them as they keep on rambling."))
+   lasthint( prof )
 
    vn.fadeout()
    vn.run()
@@ -403,7 +405,8 @@ function approach_hint3 ()
    prof(_([["Other members? I recall a few, but they liked me so much, they promoted me and gave me a windowless room in the basement. What an honour. Anyway, back to what I was saying."]]))
    prof(_([["We must also further question not only our sensorial organs, and the existence of nebula artifacts, but our own existence. We apparently are able to think and some would argue that by this, the only thing we can prove, given imperfect sensorial data, is our own existence. However, I argue that this too is an illusion, and that our existence itself is something we can't define."]]))
    prof(_([["Every instant, what we perceive as ourselves is ceasing to exist and a new existence, which while very close to the "ourselves" from the previous instance, is, arguably, a completely new existence. This fluidity makes it, not only impossible to perceive nor understand our self as it is, but also makes it impossible to draw a line between different individuals..."]]))
-   va.na(_("You thank him and run away while he keeps on talking to himself."))
+   vn.na(_("You thank him and run away while he keeps on talking to himself."))
+   lasthint( prof )
 
    vn.fadeout()
    vn.run()
@@ -501,9 +504,20 @@ He activates her food activation system and a pellet drops out.]]))
    vn.jump("menu_msg")
 
    vn.label("strangelove")
-   drshrimp(_([["Now I remember! There was a another post doctoral researcher who worked with me. "]]))
-   drshrimp(_([[""]]))
-   vn.func( function () asked_strangelove = true end )
+   drshrimp(_([["Now I remember! There was a another post doctoral researcher who worked with me. He was a bit weird and kept obsessing with the nebula artifacts. Quite a few went missing during the project and I think it was probably him who was taking them."]]))
+   drshrimp(_([["He went really upset when the project was cancelled, threw a big tantrum and all. He was locked in his office for days until they managed to coax him out. Nobody really did much as we were all busy dealing with all the paperwork of the project."]]))
+   drshrimp(string.format(_([["Eventually he did get out and sort of disappeared. Last I heard, he said he was going to %s, which is a bit strange, because not only is there not a research center there, but there isn't even an inhabited planet nor station!"]]), eccsys))
+   drshrimp(_([["It's really weird but if you are really interested, I suppose you could try to take a look around there. The whole thing does give me the me the creeps."]]))
+   -- TODO play eerie sound
+   vn.func( function ()
+      asked_strangelove = true
+      if misn_state==1 then
+         misn_state = 2
+         misn.markerRm( markerhint4 )
+         misn.markerAdd( system.get(eccsys), "low" )
+         misn.osdCreate( misn_title, {string.format(_("\tGo to %s"), _(eccsys))} )
+      end
+   end )
    vn.jump("menu_msg")
 
    vn.label("menu_msg")
@@ -514,24 +528,17 @@ He activates her food activation system and a pellet drops out.]]))
    vn.na(_("You take your leave."))
    vn.fadeout()
    vn.run()
-
-   if misn_state==1 then
-      misn_state = 2
-      misn.markerRm( markerhint4 )
-      misn.markerAdd( system.get(eccsys), "low" )
-      misn.osdCreate( misn_title, {string.format(_("\tGo to %s"), _(eccsys))} )
-   end
-end
-
-
-function approach_eccentric ()
 end
 
 
 function enter ()
    if system.cur() == system.get(eccsys) then
       -- TODO security protocol
-      diff.apply( eccdiff )
+      --diff.apply( eccdiff )
    end
+end
+
+
+function approach_eccentric ()
 end
 
