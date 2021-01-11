@@ -100,9 +100,15 @@ function swapship.swap( template )
    player.swapShip( template:ship() )
    pp = player.pilot() -- Update struct to new pilot
 
+
+   -- Start with an empty ship
+   pp:rmOutfit( "all" )
+   pp:rmOutfit( "cores" )
+
    -- Copy equipment
    for k,v in ipairs( template:outfits() ) do
-      pp:addOutfit( v, 1, true )
+      pp = player.pilot()
+      pp:addOutfit( v, 1, false )
    end
 
    -- Delete pilot
