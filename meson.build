@@ -202,6 +202,7 @@ if buildExec.disabled() == false
    if host_machine.system() == 'windows'
       windows = import('windows')
       icon = files('extras/logos/logo.ico')
+      install_data(icon, install_dir: '.')
       res_include = include_directories('extras/logos')
       win_manifest = configure_file(input: 'extras/windows/naev.exe.manifest.in', output: 'naev.exe.manifest', configuration: config_data)
       win_rc = configure_file(input: 'extras/windows/resource.rc.in', output: 'resource.rc', configuration: config_data)
