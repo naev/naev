@@ -20,6 +20,9 @@
 #include "log.h"
 #include "opengl_tex.h"
 
+/* Internal prototypes.  */
+static int npng_readInto( npng_t *npng, png_bytep *row_pointers );
+
 
 /**
  * @brief Wrapper to libpng stuff.
@@ -248,19 +251,9 @@ int npng_dim( npng_t *npng, png_uint_32 *w, png_uint_32 *h )
 
 
 /**
- * @brief Gets the pitch of a png.
- */
-int npng_pitch( npng_t *npng )
-{
-   /* Make sure loaded info. */
-   return png_get_rowbytes( npng->png_ptr, npng->info_ptr );
-}
-
-
-/**
  * @brief Reads the PNG into a set of rows.
  */
-int npng_readInto( npng_t *npng, png_bytep *row_pointers )
+static int npng_readInto( npng_t *npng, png_bytep *row_pointers )
 {
    png_uint_32 width, height;
    int bit_depth, color_type, interlace_type;
@@ -280,43 +273,6 @@ int npng_readInto( npng_t *npng, png_bytep *row_pointers )
 
    /* Success. */
    return 0;
-}
-
-
-/**
- * @brief Reads the png data as 32 bit format.
- */
-png_bytep npng_readImage( npng_t *npng, png_bytep **rows, int *channels, int *pitch )
-{
-   png_bytep image_data;
-   png_uint_32 width, height;
-   png_bytep *row_pointers;
-   png_uint_32  i, rowbytes;
-
-   /* Get info. */
-   npng_dim( npng, &width, &height );
-   rowbytes = npng_pitch( npng );
-
-   /* Create the array of pointers to image data */
-   image_data = malloc( rowbytes * height );
-   if (image_data == NULL)
-      ERR( _("Out of Memory") );
-   row_pointers = malloc( sizeof(png_bytep) * height );
-   if (row_pointers == NULL)
-      ERR( _("Out of Memory") );
-   for (i=0; i<height; i++)
-      row_pointers[i] = image_data + i*rowbytes;
-
-   /* Return data. */
-   if (channels != NULL)
-      *channels = png_get_channels( npng->png_ptr, npng->info_ptr );
-   if (pitch != NULL)
-      *pitch = rowbytes;
-   if (rows != NULL)
-      *rows = row_pointers;
-   else
-      free( row_pointers );
-   return image_data;
 }
 
 
@@ -369,7 +325,6 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
       ERR( _("Out of Memory") );
       return NULL;
    }
-   /*if (bit_depth*channels < npng_pitch( npng )) DEBUG(" %d / %d ", bit_depth*channels, npng_pitch( npng ) );*/
 
    /* Create the array of pointers to image data */
    row_pointers = malloc( sizeof(png_bytep) * rheight );
