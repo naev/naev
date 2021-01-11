@@ -3299,10 +3299,6 @@ static int asteroidTypes_load (void)
    char *str, file[PATH_MAX];
    xmlNodePtr node, cur, child;
    xmlDocPtr doc;
-   png_uint_32 w, h;
-   SDL_RWops *rw;
-   npng_t *npng;
-   SDL_Surface *surface;
 
    /* Load the data. */
    doc = xml_parsePhysFS( ASTERO_DATA_PATH );
@@ -3344,18 +3340,7 @@ static int asteroidTypes_load (void)
                str = xml_get(cur);
                len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(str)+14);
                nsnprintf( file, len,"%s%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str,".png");
-
-               /* Load sprite and make collision possible. */
-               rw    = PHYSFSRWOPS_openRead( file );
-               npng  = npng_open( rw );
-               npng_dim( npng, &w, &h );
-               surface = npng_readSurface( npng, gl_needPOT(), 1 );
-               npng_close(npng);
-
-               at->gfxs[i] = gl_loadImagePadTrans( file, surface, rw,
-                             OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS,
-                             w, h, 1, 1, 1 );
-               SDL_RWclose( rw );
+               at->gfxs[i] = gl_newImage( file, OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
                i++;
             }
 
