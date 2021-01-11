@@ -11,6 +11,7 @@
 /** @cond */
 #include <lauxlib.h>
 #include "SDL.h"
+#include "SDL_image.h"
 
 #include "naev.h"
 /** @endcond */
@@ -24,7 +25,6 @@
 #include "nlua_data.h"
 #include "nlua_file.h"
 #include "nluadef.h"
-#include "npng.h"
 
 
 /* Helpers. */
@@ -297,7 +297,6 @@ static int texL_readData( lua_State *L )
    LuaData_t ld;
    SDL_Surface *surface;
    SDL_RWops *rw;
-   npng_t *npng;
    const char *s;
    size_t size;
    uint8_t r, g, b, a;
@@ -316,14 +315,10 @@ static int texL_readData( lua_State *L )
    if (rw == NULL)
       NLUA_ERROR(L, _("problem opening file '%s' for reading"), s );
 
-   /* Try to read the png. */
-   npng = npng_open( rw );
-   if (npng == NULL)
-      NLUA_ERROR(L, _("problem opening png for reading") );
-   surface = npng_readSurface( npng, 0 );
+   /* Try to read the image. */
+   surface = IMG_Load_RW( rw, 1 );
    if (surface == NULL)
-      NLUA_ERROR(L, _("problem reading png to surface") );
-   npng_close( npng );
+      NLUA_ERROR(L, _("problem opening image for reading") );
 
    /* Convert surface to LuaData_t */
    SDL_LockSurface( surface );
@@ -353,7 +348,6 @@ static int texL_readData( lua_State *L )
 
    /* Clean up. */
    SDL_FreeSurface( surface );
-   SDL_RWclose( rw );
 
    return 3;
 }
