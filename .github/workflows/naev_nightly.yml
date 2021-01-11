@@ -225,7 +225,7 @@ jobs:
           mv staging/usr/bin/naev dist/out/naev.x64
           chmod +x dist/out/naev.x64
 
-          tar -cJvf dist/out/steam-ndata.tar.xz -C staging/usr/local/share/naev dat
+          tar -cJvf dist/out/steam-ndata.tar.xz -C staging/usr/share/naev dat
 
       - name: Upload Naev Binary Artifact
         uses: actions/upload-artifact@v1
