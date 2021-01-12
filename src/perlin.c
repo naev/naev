@@ -56,7 +56,6 @@
 #include "nfile.h"
 #include "nstring.h"
 #include "rng.h"
-#include "threadpool.h"
 
 
 #define SIMPLEX_SCALE 0.5f
@@ -82,22 +81,6 @@ struct perlin_data_s {
 };
 
 
-/**
- * @brief Threading stuff.
- */
-typedef struct thread_args_ {
-   int z; /**< Z level working on. */
-   float zoom; /**< Zoom level of detail. */
-   int n; /**< Number of layers to generate. */
-   int h; /**< Height. */
-   int w; /**< Width. */
-   perlin_data_t *noise; /**< Parent noise. */
-   int octaves; /**< Octave parameters. */
-   float *max; /**< Maximum value. */
-   float *nebula; /**< Nebula loading into. */
-} thread_args;
-
-
 /*
  * prototypes
  */
@@ -105,34 +88,8 @@ typedef struct thread_args_ {
 static void normalize3( float f[3] );
 static void normalize2( float f[2] );
 /* noise processing. */
-static float lattice3( perlin_data_t *pdata, int ix, float fx,
-      int iy, float fy, int iz, float fz );
 static float lattice2( perlin_data_t *pdata, int ix, float fx, int iy, float fy );
 static float lattice1( perlin_data_t *pdata, int ix, float fx );
-/*Threading */
-static int noise_genNebulaMap_thread( void *data );
-
-
-/**
- * @brief Not sure what it does.
- */
-static float lattice3( perlin_data_t *pdata, int ix, float fx, int iy, float fy,
-int iz, float fz )
-{
-   int nIndex;
-   float value;
-
-   nIndex = 0;
-   nIndex = pdata->map[(nIndex + ix) & 0xFF];
-   nIndex = pdata->map[(nIndex + iy) & 0xFF];
-   nIndex = pdata->map[(nIndex + iz) & 0xFF];
-
-   value  = pdata->buffer[nIndex][0] * fx;
-   value += pdata->buffer[nIndex][1] * fy;
-   value += pdata->buffer[nIndex][2] * fz;
-
-   return value;
-}
 
 
 /**
@@ -269,63 +226,6 @@ perlin_data_t* noise_new( int dim, float hurst, float lacunarity )
 
 
 /**
- * @brief Gets some 3D Perlin noise from the data.
- *
- * Somewhat optimized for speed, probably can't get optimized much more.
- *
- *    @param pdata Perlin data to use.
- *    @param f Position of the noise to get.
- */
-float noise_get3( perlin_data_t* pdata, float f[3] )
-{
-   int n[3] __attribute__ ((aligned (32))); /* Indexes to pass to lattice function */
-   float r[3] __attribute__ ((aligned (32))); /* Remainders to pass to lattice function */
-   float w[3] __attribute__ ((aligned (32))); /* Cubic values to pass to interpolation function */
-   float value;
-   float v[8] __attribute__ ((aligned (32)));
-
-   n[0] = (int)f[0];
-   n[1] = (int)f[1];
-   n[2] = (int)f[2];
-
-   r[0] = f[0] - n[0];
-   r[1] = f[1] - n[1];
-   r[2] = f[2] - n[2];
-
-   w[0] = CUBIC(r[0]);
-   w[1] = CUBIC(r[1]);
-   w[2] = CUBIC(r[2]);
-
-   /*
-    * This is the big ugly bit in dire need of optimization
-    */
-   v[0] = lattice3(pdata, n[0],   r[0],   n[1],   r[1],   n[2],   r[2]);
-   v[1] = lattice3(pdata, n[0]+1, r[0]-1, n[1],   r[1],   n[2],   r[2]);
-   v[2] = lattice3(pdata, n[0],   r[0],   n[1]+1, r[1]-1, n[2],   r[2]);
-   v[3] = lattice3(pdata, n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2],   r[2]);
-   v[4] = lattice3(pdata, n[0],   r[0],   n[1],   r[1],   n[2]+1, r[2]-1);
-   v[5] = lattice3(pdata, n[0]+1, r[0]-1, n[1],   r[1],   n[2]+1, r[2]-1);
-   v[6] = lattice3(pdata, n[0],   r[0],   n[1]+1, r[1]-1, n[2]+1, r[2]-1);
-   v[7] = lattice3(pdata, n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2]+1, r[2]-1);
-   value = LERP(
-         LERP(
-            LERP(v[0], v[1], w[0]),
-            LERP(v[2], v[3], w[0]),
-            w[1]
-            ),
-         LERP(
-            LERP(v[4], v[5], w[0]),
-            LERP(v[6], v[7], w[0]),
-            w[1]
-            ),
-         w[2]
-         );
-
-   return CLAMP(-0.99999f, 0.99999f, value);
-}
-
-
-/**
  * @brief Gets some 2D Perlin noise from the data.
  *
  * Somewhat optimized for speed, probably can't get optimized much more.
@@ -396,38 +296,6 @@ float noise_get1( perlin_data_t* pdata, float f[1] )
 
 
 /**
- * @brief Gets 3d Turbulence noise for a position.
- *
- *    @param pdata Perlin data to generate noise from.
- *    @param f Position of the noise.
- *    @param octaves Octaves to use.
- *    @return The noise level at the position.
- */
-float noise_turbulence3( perlin_data_t* pdata, float f[3], int octaves )
-{
-   float tf[3];
-   /* Initialize locals */
-   float value = 0;
-   int i;
-
-   tf[0] = f[0];
-   tf[1] = f[1];
-   tf[2] = f[2];
-
-   /* Inner loop of spectral construction, where the fractal is built */
-   for (i=0; i<octaves; i++)
-   {
-      value += ABS(noise_get3(pdata,tf)) * pdata->exponent[i];
-      tf[0] *= pdata->lacunarity;
-      tf[1] *= pdata->lacunarity;
-      tf[2] *= pdata->lacunarity;
-   }
-
-   return CLAMP(-0.99999f, 0.99999f, value);
-}
-
-
-/**
  * @brief Gets 2d Turbulence noise for a position.
  *
  *    @param pdata Perlin data to generate noise from.
@@ -455,35 +323,6 @@ float noise_turbulence2( perlin_data_t* pdata, float f[2], int octaves )
 
    return CLAMP(-0.99999f, 0.99999f, value);
 }
-
-
-/**
- * @brief Gets 1d Turbulence noise for a position.
- *
- *    @param pdata Perlin data to generate noise from.
- *    @param f Position of the noise.
- *    @param octaves Octaves to use.
- *    @return The noise level at the position.
- */
-float noise_turbulence1( perlin_data_t* pdata, float f[1], int octaves )
-{
-   float tf[1];
-   /* Initialize locals */
-   float value = 0;
-   int i;
-
-   tf[0] = f[0];
-
-   /* Inner loop of spectral construction, where the fractal is built */
-   for (i=0; i<octaves; i++)
-   {
-      value += ABS(noise_get1(pdata,tf)) * pdata->exponent[i];
-      tf[0] *= pdata->lacunarity;
-   }
-
-   return CLAMP(-0.99999f, 0.99999f, value);
-}
-
 
 
 #define NOISE_SIMPLEX_GRADIENT_1D(n,h,x) { float grad; h &= 0xF; grad=1.0f+(h & 7); if ( h & 8 ) grad = -grad; n = grad * x; }
@@ -586,139 +425,6 @@ float* noise_genRadarInt( const int w, const int h, float rug )
 
 
 /**
- * @brief Thread worker for generating nebula stuff.
- *
- *    @param data Data to pass.
- */
-static int noise_genNebulaMap_thread( void *data )
-{
-   thread_args *args = (thread_args*) data;
-   float f[3];
-   float value;
-   int y, x;
-   float max;
-
-   /* Generate the layer. */
-   max = 0;
-   f[2] = args->zoom * (float)args->z / (float)args->n;
-
-   for (y=0; y<args->h; y++) {
-      f[1] = args->zoom * (float)y / (float)args->h;
-
-      for (x=0; x<args->w; x++) {
-         f[0] = args->zoom * (float)x / (float)args->w;
-
-         value = noise_turbulence3( args->noise, f, args->octaves );
-         if (max < value)
-            max = value;
-
-         args->nebula[args->z * args->w * args->h + y * args->w + x] = value;
-       }
-   }
-
-   /* Set up output. */
-   *args->max = max;
-
-   /* Clean up. */
-   free( args );
-   return 0;
-}
-
-
-/**
- * @brief Generates a 3d nebula map.
- *
- *    @param w Width of the map.
- *    @param h Height of the map.
- *    @param n Number of slices of the map (2d planes).
- *    @param rug Rugosity of the map.
- *    @return The map generated.
- */
-float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
-{
-   int x, y, z, i;
-   int octaves;
-   float hurst;
-   float lacunarity;
-   perlin_data_t* noise;
-   float *nebula;
-   float value;
-   float zoom;
-   float *_max;
-   float max;
-   unsigned int s;
-   thread_args *args;
-   ThreadQueue *vpool;
-
-   /* pretty default values */
-   octaves     = 3;
-   hurst       = NOISE_DEFAULT_HURST;
-   lacunarity  = NOISE_DEFAULT_LACUNARITY;
-   zoom        = rug * ((float)h/768.)*((float)w/1024.);
-
-   /* create noise and data */
-   noise      = noise_new( 3, hurst, lacunarity );
-   nebula     = malloc(sizeof(float)*w*h*n);
-   if (nebula == NULL) {
-      noise_delete( noise );
-      WARN(_("Out of Memory"));
-      return NULL;
-   }
-
-   /* This can take a while, so show what's happening. */
-   s = SDL_GetTicks();
-   LOG(_("Generating Nebula of size %dx%dx%d"), w, h, n);
-
-   /* Prepare for generation. */
-   _max        = malloc( sizeof(float) * n );
-
-   /* Initialize vpool */
-   vpool = vpool_create();
-
-   /* Start to create the nebula */
-   for (z=0; z<n; z++) {
-      /* Make ze arguments! */
-      args     = malloc( sizeof(thread_args) );
-      args->z  = z;
-      args->zoom = zoom;
-      args->n  = n;
-      args->h  = h;
-      args->w  = w;
-      args->noise = noise;
-      args->octaves = octaves;
-      args->max = &_max[z];
-      args->nebula = nebula;
-
-      /* Launch ze thread. */
-      vpool_enqueue( vpool, noise_genNebulaMap_thread, args );
-   }
-
-   /* Wait for threads to signal completion. */
-   vpool_wait( vpool );
-   max = 0.;
-   for (i=0; i<n; i++) {
-      if (_max[i]>max)
-         max = _max[i];
-   }
-
-   /* Post filtering */
-   value = 1. - max;
-   for (z=0; z<n; z++)
-      for (y=0; y<h; y++)
-         for (x=0; x<w; x++)
-            nebula[z*w*h + y*w + x] += value;
-
-   /* Clean up */
-   noise_delete( noise );
-   free(_max);
-
-   /* Results */
-   LOG(_("Nebula Generated in %d ms"), SDL_GetTicks() - s );
-   return nebula;
-}
-
-
-/**
  * @brief Generates tiny nebula puffs
  *
  *    @param w Width of the puff to generate.
@@ -790,5 +496,3 @@ float* noise_genNebulaPuffMap( const int w, const int h, float rug )
    /* Results */
    return nebula;
 }
-
-
