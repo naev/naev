@@ -128,8 +128,9 @@ function accept ()
    markerhint2 = misn.markerAdd( system.get(hintsys[2]), "low")
    markerhint3 = misn.markerAdd( system.get(hintsys[3]), "low")
    hintosd()
-   hook.land( "land" )
-   hook.enter( "enter" )
+   hook.land("land")
+   hook.load("land")
+   hook.enter("enter")
 
    -- Re-add Maikki if accepted
    land()

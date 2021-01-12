@@ -99,8 +99,9 @@ function accept ()
       return
    end
 
-   hook.land( "land" )
-   hook.enter( "enter" )
+   hook.land("land")
+   hook.load("land")
+   hook.enter("enter")
 
    -- Re-add Maikki if accepted
    land()
