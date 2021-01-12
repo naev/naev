@@ -125,7 +125,7 @@ static int nebu_init_recursive( int iter )
    int i;
    char nebu_file[NEBULA_FILENAME_MAX], file_path[PATH_MAX];
    SDL_RWops *rw;
-   int ret;
+   int ret, tw, th;
 
    /* Avoid too much recursivity. */
    if (iter > 3) {
@@ -168,9 +168,11 @@ static int nebu_init_recursive( int iter )
       nebu_textures[i] = gl_newImageRWops(file_path, rw, 0);
       SDL_RWclose( rw );
 
-      if ((nebu_textures[i]->rw != nebu_w) || (nebu_textures[i]->rh != nebu_h)) {
-         WARN(_("Nebula size doesn't match expected! (%fx%f instead of %dx%d)"),
-               nebu_textures[i]->rw, nebu_textures[i]->rh, nebu_pw, nebu_ph );
+      tw = (int)round(nebu_textures[i]->w);
+      th = (int)round(nebu_textures[i]->h);
+      if ((tw != nebu_w) || (th != nebu_h)) {
+         WARN(_("Nebula size doesn't match expected! (%dx%d instead of %dx%d)"),
+               tw, th, nebu_w, nebu_h );
             goto no_nebula;
       }
    }
