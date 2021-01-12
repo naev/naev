@@ -432,8 +432,8 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
       return;
 
    /* texture coords */
-   tx = sprite->sw*(double)(sx)/sprite->rw;
-   ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
+   tx = sprite->sw*(double)(sx)/sprite->w;
+   ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->h;
 
    gl_blitTexture( sprite, x, y, w, h,
          tx, ty, sprite->srw, sprite->srh, c, 0. );
@@ -505,8 +505,8 @@ void gl_blitSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
       return;
 
    /* texture coords */
-   tx = sa->sw*(double)(sx)/sa->rw;
-   ty = sa->sh*(sa->sy-(double)sy-1)/sa->rh;
+   tx = sa->sw*(double)(sx)/sa->w;
+   ty = sa->sh*(sa->sy-(double)sy-1)/sa->h;
 
    gl_blitTextureInterpolate( sa, sb, inter, x, y, w, h,
          tx, ty, sa->srw, sa->srh, c );
@@ -532,8 +532,8 @@ void gl_blitStaticSprite( const glTexture* sprite, const double bx, const double
    y = by;
 
    /* texture coords */
-   tx = sprite->sw*(double)(sx)/sprite->rw;
-   ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
+   tx = sprite->sw*(double)(sx)/sprite->w;
+   ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->h;
 
    /* actual blitting */
    gl_blitTexture( sprite, x, y, sprite->sw, sprite->sh,
@@ -564,8 +564,8 @@ void gl_blitScaleSprite( const glTexture* sprite,
    y = by;
 
    /* texture coords */
-   tx = sprite->sw*(double)(sx)/sprite->rw;
-   ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
+   tx = sprite->sw*(double)(sx)/sprite->w;
+   ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->h;
 
    /* actual blitting */
    gl_blitTexture( sprite, x, y, bw, bh,

@@ -379,7 +379,6 @@ int ship_size( const Ship *s )
 static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 {
    SDL_Surface *gfx, *gfx_store;
-   int potw, poth, potw_store, poth_store;
    int x, y, sw, sh;
    SDL_Rect rtemp, dstrect;
 #if 0 /* Required for scanlines. */
@@ -394,27 +393,13 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    sw = temp->gfx_space->w / sx;
    sh = temp->gfx_space->h / sy;
 
-   /* POT size. */
-   if (gl_needPOT()) {
-      potw = gl_pot( sw );
-      poth = gl_pot( sh );
-      potw_store = gl_pot( SHIP_TARGET_W );
-      poth_store = gl_pot( SHIP_TARGET_H );
-   }
-   else {
-      potw = sw;
-      poth = sh;
-      potw_store = SHIP_TARGET_W;
-      poth_store = SHIP_TARGET_H;
-   }
-
    /* Create the surface. */
    SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
 
    /* create the temp POT surface */
-   gfx = SDL_CreateRGBSurface( 0, potw, poth,
+   gfx = SDL_CreateRGBSurface( 0, sw, sh,
          surface->format->BytesPerPixel*8, RGBAMASK );
-   gfx_store = SDL_CreateRGBSurface( 0, potw_store, poth_store,
+   gfx_store = SDL_CreateRGBSurface( 0, SHIP_TARGET_W, SHIP_TARGET_H,
          surface->format->BytesPerPixel*8, RGBAMASK );
 
    if (gfx == NULL) {
@@ -504,7 +489,7 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
    rw    = PHYSFSRWOPS_openRead( str );
    npng  = npng_open( rw );
    npng_dim( npng, &w, &h );
-   surface = npng_readSurface( npng, gl_needPOT() );
+   surface = npng_readSurface( npng );
 
    /* Load the texture. */
    temp->gfx_space = gl_loadImagePadTrans( str, surface, rw,

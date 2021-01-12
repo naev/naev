@@ -261,7 +261,6 @@ void conf_setVideoDefaults (void)
    conf.vsync        = VSYNC_DEFAULT;
    conf.mipmaps      = MIPMAP_DEFAULT; /* Also cause for issues. */
    conf.compress     = TEXTURE_COMPRESSION_DEFAULT;
-   conf.npot         = NPOT_TEXTURES_DEFAULT;
 
    /* Window. */
    conf.fullscreen   = f;
@@ -353,7 +352,6 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "vsync", conf.vsync );
       conf_loadBool( lEnv, "mipmaps", conf.mipmaps );
       conf_loadBool( lEnv, "compress", conf.compress );
-      conf_loadBool( lEnv, "npot", conf.npot );
 
       /* Memory. */
       conf_loadBool( lEnv, "engineglow", conf.engineglow );
@@ -886,7 +884,6 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Use OpenGL Non-\"Power of Two\" textures if available"));
    conf_saveComment(_("Lowers memory usage by a lot, but may cause slow downs on some systems"));
-   conf_saveBool("npot",conf.npot);
    conf_saveEmptyLine();
 
    /* Memory. */

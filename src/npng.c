@@ -280,13 +280,12 @@ static int npng_readInto( npng_t *npng, png_bytep *row_pointers )
  * @brief Reads a PNG image into a surface.
  *
  *    @param npng PNG image to load.
- *    @param pad_pot Whether to pad the dimensions to a power of two.
  *    @return Surface with data from the PNG image.
  */
-SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot )
+SDL_Surface *npng_readSurface( npng_t *npng )
 {
    png_bytep *row_pointers;
-   png_uint_32 width, height, row, rheight;
+   png_uint_32 width, height, row;
    SDL_Surface *surface;
    int channels;
    Uint32 Rmask, Gmask, Bmask, Amask;
@@ -296,13 +295,6 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot )
    channels = png_get_channels( npng->png_ptr, npng->info_ptr );
    png_get_IHDR( npng->png_ptr, npng->info_ptr, &width, &height,
          &bit_depth, &color_type, &interlace_type, NULL, NULL );
-
-   /* Pad POT if needed. */
-   rheight = height;
-   if (pad_pot) {
-      width    = gl_pot( width );
-      height   = gl_pot( height );
-   }
 
    /* Allocate the SDL surface to hold the image */
    if (SDL_BYTEORDER == SDL_LIL_ENDIAN) {
@@ -326,12 +318,12 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot )
    }
 
    /* Create the array of pointers to image data */
-   row_pointers = malloc( sizeof(png_bytep) * rheight );
+   row_pointers = malloc( sizeof(png_bytep) * height );
    if (row_pointers == NULL) {
       ERR( _("Out of Memory") );
       return NULL;
    }
-   for (row=0; row<rheight; row++) { /* We only need to go to real height, not full height. */
+   for (row=0; row<height; row++) {
       row_pointers[row] = (png_bytep)
          (Uint8 *) surface->pixels + row * surface->pitch;
    }

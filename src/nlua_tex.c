@@ -214,7 +214,7 @@ static int texL_new( lua_State *L )
          NLUA_ERROR( L, _("Data has invalid type for texture") );
       if (w*h*ld->elem*4 != ld->size)
          NLUA_ERROR( L, _("Texture dimensions don't match data size!") );
-      tex = gl_loadImageData( (void*)ld->data, w, h, w, sx, sy );
+      tex = gl_loadImageData( (void*)ld->data, w, h, sx, sy );
       if (tex==NULL)
          return 0;
       lua_pushtex(L, tex);

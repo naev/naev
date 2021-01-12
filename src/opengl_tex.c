@@ -42,12 +42,6 @@ static glTexList* texture_list = NULL; /**< Texture list. */
 
 
 /*
- * Extensions.
- */
-static int gl_tex_ext_npot = 0; /**< Support for GL_ARB_texture_non_power_of_two. */
-
-
-/*
  * prototypes
  */
 /* misc */
@@ -56,26 +50,12 @@ static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h );
 static size_t gl_transSize( const int w, const int h );
 /* glTexture */
 static GLuint gl_texParameters( unsigned int flags );
-static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags, int freesur );
+static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int freesur );
 static glTexture* gl_loadNewImage( const char* path, unsigned int flags );
 static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigned int flags );
 /* List. */
 static glTexture* gl_texExists( const char* path );
 static int gl_texAdd( glTexture *tex );
-
-
-/**
- * @brief Gets the closest power of two.
- *    @param n Number to get closest power of two to.
- *    @return Closest power of two to the number.
- */
-int gl_pot( int n )
-{
-   int i = 1;
-   while (i < n)
-      i <<= 1;
-   return i;
-}
 
 
 /**
@@ -211,56 +191,6 @@ static GLuint gl_texParameters( unsigned int flags )
    return texture;
 }
 
-
-/**
- * @brief Prepares the surface to be loaded as a texture.
- *
- *    @param surface to load that is freed in the process.
- *    @return New surface that is prepared for texture loading.
- */
-SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
-{
-   SDL_Surface* temp;
-   int potw, poth;
-   SDL_Rect rtemp;
-
-   /* Make size power of two. */
-   potw = gl_pot(surface->w);
-   poth = gl_pot(surface->h);
-   if (gl_needPOT() && ((potw != surface->w) || (poth != surface->h))) {
-
-      /* we must blit with an SDL_Rect */
-      rtemp.x = rtemp.y = 0;
-      rtemp.w = surface->w;
-      rtemp.h = surface->h;
-
-      /* saves alpha */
-      SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
-
-      /* create the temp POT surface */
-      temp = SDL_CreateRGBSurface( 0, potw, poth,
-            surface->format->BytesPerPixel*8, RGBAMASK );
-
-      if (temp == NULL) {
-         WARN(_("Unable to create POT surface: %s"), SDL_GetError());
-         return 0;
-      }
-      if (SDL_FillRect( temp, NULL,
-               SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
-         WARN(_("Unable to fill rect: %s"), SDL_GetError());
-         return 0;
-      }
-
-      /* change the surface to the new blitted one */
-      SDL_BlitSurface( surface, &rtemp, temp, &rtemp);
-      SDL_FreeSurface( surface );
-      surface = temp;
-
-   }
-
-   return surface;
-}
-
 /**
  * @brief Checks to see if mipmaps are supported and enabled.
  *
@@ -282,28 +212,9 @@ int gl_texHasCompress (void)
 }
 
 
-glTexture* gl_loadImageData( float *data, int w, int h, int pitch, int sx, int sy )
+glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy )
 {
-   int potw,poth, rw,rh;
-   float *datapot;
-   int i, j, k;
    glTexture *texture;
-
-   /* Check if pot. */
-   datapot = NULL;
-   potw = gl_pot(w);
-   poth = gl_pot(h);
-   rw = w;
-   rh = h;
-   if (gl_needPOT() && ((w!=potw) || h!=poth)) {
-      rw = potw;
-      rh = poth;
-      datapot = calloc( sizeof(float)*4, potw*poth );
-      for (i=0; i<h; i++)
-         for (j=0; j<w; j++)
-            for (k=0; k<4; k++)
-               datapot[ 4*(i*potw+j)+k ] = data[ 4*(i*pitch+j)+k ];
-   }
 
    /* Set up the texture defaults */
    texture = calloc( 1, sizeof(glTexture) );
@@ -317,24 +228,16 @@ glTexture* gl_loadImageData( float *data, int w, int h, int pitch, int sx, int s
    texture->texture = gl_texParameters( 0 );
 
    /* Copy over. */
-   if (datapot!=NULL)
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, potw, poth, 0, GL_RGBA, GL_FLOAT, datapot );
-   else
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_FLOAT, data );
+   glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_FLOAT, data );
 
    /* Check errors. */
    gl_checkErr();
 
    /* Set up values. */
-   texture->rw    = (double) rw;
-   texture->rh    = (double) rh;
    texture->sw    = texture->w / texture->sx;
    texture->sh    = texture->h / texture->sy;
-   texture->srw   = texture->sw / texture->rw;
-   texture->srh   = texture->sh / texture->rh;
-
-   /* Clean up. */
-   free(datapot);
+   texture->srw   = texture->sw / texture->w;
+   texture->srh   = texture->sh / texture->h;
 
    return texture;
 }
@@ -345,22 +248,13 @@ glTexture* gl_loadImageData( float *data, int w, int h, int pitch, int sx, int s
  *
  *    @param surface Surface to load into a texture.
  *    @param flags Flags to use.
- *    @param[out] rw Real width of the texture.
- *    @param[out] rh Real height of the texture.
  *    @param freesur Whether or not to free the surface.
  *    @return The opengl texture id.
  */
-static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags, int freesur )
+static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int freesur )
 {
    GLuint texture;
    GLfloat param;
-
-   /* Prepare the surface. */
-   surface = gl_prepareSurface( surface );
-   if (rw != NULL)
-      (*rw) = surface->w;
-   if (rh != NULL)
-      (*rh) = surface->h;
 
    /* Get texture. */
    texture = gl_texParameters( flags );
@@ -529,7 +423,6 @@ glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
       unsigned int flags, int w, int h, int sx, int sy, int freesur )
 {
    glTexture *texture;
-   int rw, rh;
 
    /* Make sure doesn't already exist. */
    if (name != NULL) {
@@ -550,14 +443,12 @@ glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
    texture->sx    = (double) sx;
    texture->sy    = (double) sy;
 
-   texture->texture = gl_loadSurface( surface, &rw, &rh, flags, freesur );
+   texture->texture = gl_loadSurface( surface, flags, freesur );
 
-   texture->rw    = (double) rw;
-   texture->rh    = (double) rh;
    texture->sw    = texture->w / texture->sx;
    texture->sh    = texture->h / texture->sy;
-   texture->srw   = texture->sw / texture->rw;
-   texture->srh   = texture->sh / texture->rh;
+   texture->srw   = texture->sw / texture->w;
+   texture->srh   = texture->sh / texture->h;
    texture->flags = flags;
 
    if (name != NULL) {
@@ -745,7 +636,7 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigne
    npng_dim( npng, &w, &h );
 
    /* Load surface. */
-   surface  = npng_readSurface( npng, gl_needPOT() );
+   surface  = npng_readSurface( npng );
    flags   |= OPENGL_TEX_VFLIP;
    npng_close( npng );
 
@@ -786,8 +677,8 @@ glTexture* gl_newSprite( const char* path, const int sx, const int sy,
    texture->sy    = (double) sy;
    texture->sw    = texture->w / texture->sx;
    texture->sh    = texture->h / texture->sy;
-   texture->srw   = texture->sw / texture->rw;
-   texture->srh   = texture->sh / texture->rh;
+   texture->srw   = texture->sw / texture->w;
+   texture->srh   = texture->sh / texture->h;
    return texture;
 }
 
@@ -816,8 +707,8 @@ glTexture* gl_newSpriteRWops( const char* path, SDL_RWops *rw,
    texture->sy    = (double) sy;
    texture->sw    = texture->w / texture->sx;
    texture->sh    = texture->h / texture->sy;
-   texture->srw   = texture->sw / texture->rw;
-   texture->srh   = texture->sh / texture->rh;
+   texture->srw   = texture->sw / texture->w;
+   texture->srh   = texture->sh / texture->h;
    return texture;
 }
 
@@ -969,20 +860,6 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 
 
 /**
- * @brief Checks to see if OpenGL needs POT textures.
- *
- *    @return 0 if OpenGL doesn't needs POT textures.
- */
-int gl_needPOT (void)
-{
-   if (gl_tex_ext_npot && conf.npot)
-      return 0;
-   else
-      return 1;
-}
-
-
-/**
  * @brief Copy a texture array.
  */
 glTexture** gl_copyTexArray( glTexture **tex, int texn, int *n )
@@ -1010,9 +887,6 @@ glTexture** gl_copyTexArray( glTexture **tex, int texn, int *n )
  */
 int gl_initTextures (void)
 {
-   if (gl_hasVersion(2,0))
-      gl_tex_ext_npot = 1;
-
    return 0;
 }
 
