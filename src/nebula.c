@@ -23,7 +23,6 @@
 #include "menu.h"
 #include "ndata.h"
 #include "nfile.h"
-#include "npng.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "pause.h"
@@ -58,6 +57,7 @@ static int cur_nebu[2]           = { 0, 1 }; /**< Nebulae currently rendering. *
 static double nebu_timer         = 0.; /**< Timer since last render. */
 
 /* Nebula properties */
+static double nebu_density = 0.; /**< The density. */
 static double nebu_view = 0.; /**< How far player can see. */
 static double nebu_dt   = 0.; /**< How fast nebula changes. */
 
@@ -93,10 +93,8 @@ static double puff_y          = 0.;
  */
 static int nebu_init_recursive( int iter );
 static int nebu_checkCompat( const char* file );
-static int nebu_loadTexture( SDL_Surface *sur, int w, int h, glTexture **tex );
 static int nebu_generate (void);
 static int saveNebula( float *map, const uint32_t w, const uint32_t h, const char* file );
-static SDL_Surface* loadNebula( const char* file );
 static SDL_Surface* nebu_surfaceFromNebulaMap( float* map, const int w, const int h );
 /* Puffs. */
 static void nebu_generatePuffs (void);
@@ -125,9 +123,9 @@ int nebu_init (void)
 static int nebu_init_recursive( int iter )
 {
    int i;
-   char nebu_file[NEBULA_FILENAME_MAX];
-   SDL_Surface* nebu_sur;
-   int ret;
+   char nebu_file[NEBULA_FILENAME_MAX], file_path[PATH_MAX];
+   SDL_RWops *rw;
+   int ret, tw, th;
 
    /* Avoid too much recursivity. */
    if (iter > 3) {
@@ -161,17 +159,22 @@ static int nebu_init_recursive( int iter )
          goto no_nebula;
 
       /* Try to load. */
-      nebu_sur = loadNebula( nebu_file );
-      if (nebu_sur == NULL)
+      nsnprintf(file_path, PATH_MAX, "%s"NEBULA_PATH"%s", nfile_cachePath(), nebu_file );
+      rw = SDL_RWFromFile( file_path, "rb" );
+      if (rw == NULL) {
+         WARN(_("Unable to create rwops from Nebula image: %s"), nebu_file);
          goto no_nebula;
-      if ((nebu_sur->w != nebu_w) || (nebu_sur->h != nebu_h))
-         WARN(_("Nebula raw size doesn't match expected! (%dx%d instead of %dx%d)"),
-               nebu_sur->w, nebu_sur->h, nebu_w, nebu_h );
+      }
+      nebu_textures[i] = gl_newImageRWops(file_path, rw, 0);
+      SDL_RWclose( rw );
 
-      /* Load the texture */
-      ret = nebu_loadTexture( nebu_sur, nebu_pw, nebu_ph, &nebu_textures[i] );
-      if (ret)
-         goto no_nebula;
+      tw = (int)round(nebu_textures[i]->w);
+      th = (int)round(nebu_textures[i]->h);
+      if ((tw != nebu_w) || (th != nebu_h)) {
+         WARN(_("Nebula size doesn't match expected! (%dx%d instead of %dx%d)"),
+               tw, th, nebu_w, nebu_h );
+            goto no_nebula;
+      }
    }
 
    /* Generate puffs after the recursivity stuff. */
@@ -218,30 +221,6 @@ int nebu_isLoaded (void)
 double nebu_getSightRadius (void)
 {
    return nebu_view;
-}
-
-
-/**
- * @brief Loads sur into tex, checks for expected size of w and h.
- *
- *    @param sur Surface to load into texture.
- *    @param w Expected width of surface.
- *    @param h Expected height of surface.
- *    @param tex Already generated texture to load into.
- *    @return 0 on success;
- */
-static int nebu_loadTexture( SDL_Surface *sur, int w, int h, glTexture **tex )
-{
-   *tex = gl_loadImage(sur, 0);
-
-   if ((w!=0) && (h!=0) &&
-         (((*tex)->rw != w) || ((*tex)->rh != h))) {
-      WARN(_("Nebula size doesn't match expected! (%fx%f instead of %dx%d)"),
-            (*tex)->rw, (*tex)->rh, nebu_pw, nebu_ph );
-      return -1;
-   }
-
-   return 0;
 }
 
 
@@ -324,6 +303,23 @@ static void nebu_renderMultitexture( const double dt )
       0, 0, tw, th,
       &cBlue);
 }
+
+
+/**
+ * @brief Updates visibility and stuff.
+ */
+void nebu_update( double dt )
+{
+   (void) dt;
+   double mod = 1.;
+
+   if (player.p != NULL)
+      mod = player.p->ew_detect;
+
+   /* At density 1000 you're blind */
+   nebu_view = (1000. - nebu_density) * mod * 2;
+}
+
 
 /**
  * @brief Regenerates the overlay.
@@ -468,7 +464,8 @@ void nebu_prep( double density, double volatility )
    (void)volatility;
    int i;
 
-   nebu_view = 1000. - density;  /* At density 1000 you're blind */
+   nebu_density = density;
+   nebu_update( 0. );
    nebu_dt   = 2000. / (density + 100.); /* Faster at higher density */
    nebu_timer = nebu_dt;
 
@@ -610,44 +607,6 @@ static int saveNebula( float *map, const uint32_t w, const uint32_t h, const cha
    SDL_FreeSurface( sur );
 
    return ret;
-}
-
-
-/**
- * @brief Loads the nebulae from file.
- *
- *    @param file Path of the nebula to load.  Relative to base directory.
- *    @return A SDL surface with the nebula.
- */
-static SDL_Surface* loadNebula( const char* file )
-{
-   char file_path[PATH_MAX];
-   SDL_Surface* sur;
-   SDL_RWops *rw;
-   npng_t *npng;
-
-   /* loads the file */
-   nsnprintf(file_path, PATH_MAX, "%s"NEBULA_PATH"%s", nfile_cachePath(), file );
-   rw    = SDL_RWFromFile( file_path, "rb" );
-   if (rw == NULL) {
-      WARN(_("Unable to create rwops from Nebula image: %s"), file);
-      return NULL;
-   }
-   npng  = npng_open( rw );
-   if (npng == NULL) {
-      WARN(_("Unable to open Nebula image: %s"), file);
-      SDL_RWclose( rw );
-      return NULL;
-   }
-   sur   = npng_readSurface( npng, 0, 1 );
-   npng_close( npng );
-   SDL_RWclose( rw );
-   if (sur == NULL) {
-      WARN(_("Unable to load Nebula image: %s"), file);
-      return NULL;
-   }
-
-   return sur;
 }
 
 

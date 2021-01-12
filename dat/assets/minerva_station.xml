@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Minerva Station">
+ <pos>
+  <x>-3354.178874</x>
+  <y>-10499.199403</y>
+ </pos>
+ <GFX>
+  <space>station-commerce3.png</space>
+  <exterior>scrapped_station.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <value>100.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>50000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>The station consists of essentially one gigantic gambling complex. No matter where you go, there seems to be gambling going on, that combined with the constant coming and going of ships, creates a very high-energy frenetic environment. When docking to the station there is a big neon says that displays "What happens in Limbo, stays in Limbo".</description>
+  <bar>Like most of the station, the bar is directly built into the gambling complex, with a constant buzz of noises from the different slot machines and game tables. Station staff wiz around the floor bestowing complementary drinks to newcomers and heavy gamblers alike. You can feel how the entire ambience is designed to encourage excessive behaviour in a very carefully planned mechanical way.</bar>
+ </general>
+ <tech>
+  <item>Engines Cargo</item>
+  <item>Hulls Medium</item>
+  <item>Systems Medium</item>
+  <item>Systems High</item>
+  <item>Laser 1</item>
+  <item>Ion 1</item>
+  <item>Kinetic 1</item>
+  <item>Plasma 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Basic Outfits 2</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+ </tech>
+</asset>

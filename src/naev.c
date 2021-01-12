@@ -706,6 +706,9 @@ void main_loop( int update )
       update_all(); /* update game */
    }
 
+   /* Safe hook should be run every frame regardless of whether game is paused or not. */
+   hooks_run( "safe" );
+
    /*
     * Handle render.
     */

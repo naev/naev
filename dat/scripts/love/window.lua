@@ -56,7 +56,7 @@ end
 function window.getDisplayCount() return 1 end
 function window.getDisplayName( displayindex ) return "Naev" end
 function window.getDesktopDimensions() return naev.gfx.dim() end
-function window.getDimensions() return love.w, love.h end
+--function window.getDimensions() return love.w, love.h end -- Removed in Love2D 10.0
 function window.getWidth() return love.w end
 function window.getHeight() return love.h end
 function window.getDPIScale() return 1 end -- TODO return scaling factor?
@@ -92,7 +92,7 @@ function window.showMessageBox( title, message, ... )
    if type(arg[1])=="string" then
       tk.msg( title, message )
    else
-      local choice = tk.choice( title, message, unpack(arg) )
+      local choice = tk.choice( title, message, table.unpack(arg) )
       love._focus = true
       return choice
    end

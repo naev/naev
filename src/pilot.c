@@ -2249,7 +2249,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
 
       /* Time to play sound. */
       if ((p->id == PLAYER_ID) &&
-            (p->ptimer < sound_length(snd_hypPowUpJump)) &&
+            (p->ptimer < sound_getLength(snd_hypPowUpJump)) &&
             (p->timer[0] == -1.)) {
          p->timer[0] = -2.;
          player_soundPlay( snd_hypPowUpJump, 1 );

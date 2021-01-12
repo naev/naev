@@ -28,7 +28,6 @@ endif
 # Initializeation
 config_data = configuration_data()
 naev_deps = []
-naev_link_args = []
 
 ndata_path = get_option('ndata_path')
 if ndata_path == ''
@@ -46,7 +45,6 @@ subdir('po')
 ####
 buildExec = get_option('executable')
 if buildExec.disabled() == false
-
    debug    = get_option('debug')
    paranoid = get_option('paranoid')
    config_data.set_quoted('PACKAGE', meson.project_name())
@@ -70,18 +68,19 @@ if buildExec.disabled() == false
    if 'SuiteSparse' not in get_option('force_fallback_for')
       csparse_names = ['csparse', 'cxsparse']
       foreach n : csparse_names
-         csparse = cc.find_library(n, required: false)
+         csparse = cc.find_library(n, required: false, has_headers: ['suitesparse/cs.h'])
+         if csparse.found()
+            config_data.set10('HAVE_SUITESPARSE_CS_H', true)
+            break
+         endif
+         csparse = cc.find_library(n, required: false, has_headers: ['cs.h'])
          if csparse.found()
             break
          endif
       endforeach
    endif
 
-   if csparse.found()
-      if cc.has_header('suitesparse/cs.h')
-         config_data.set10('HAVE_SUITESPARSE_CS_H', true)
-      endif
-   else
+   if not csparse.found()
       csparse = dependency(
          'SuiteSparse',
          fallback: ['SuiteSparse', 'CSparse_dep'],
@@ -92,6 +91,12 @@ if buildExec.disabled() == false
    naev_deps += cc.find_library('m', required : false)
 
    sdl = dependency('sdl2', required: true)
+
+   libxml2 = dependency('libxml-2.0', required: false)
+   if not libxml2.found()
+      libxml2 = cc.find_library('xml2', required: true)  # e.g., MacOSX SDK
+   endif
+
    naev_deps += [
       dependency('freetype2', required: true),
       dependency('physfs', fallback: ['physfs', 'physfs_dep'], required: true),
@@ -100,7 +105,7 @@ if buildExec.disabled() == false
          dependencies: dependency('libpng', required: true),
          compile_args: '-DNOLOGPRINTFCONSOLE',
          link_args: '-DNOLOGPRINTFCONSOLE'),
-      dependency('libxml-2.0', required: true)
+      libxml2,
    ]
 
    # Lua
@@ -112,13 +117,7 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_LUAJIT', lua.found())
    summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
 
-   if lua.found()
-      if host_machine.system() == 'darwin'
-         # The main executable must be linked with these flags, or else LuaJIT will crash instantly.
-         # Ref: https://luajit.org/install.html
-         naev_link_args += ['-pagezero_size', '10000', '-image_base', '100000000']
-      endif
-   else
+   if not lua.found()
       lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
    endif
 
@@ -193,6 +192,9 @@ if buildExec.disabled() == false
 
    if host_machine.system() == 'darwin'
       add_languages('objc', native: false)
+      configure_file(input: 'extras/macos/Info.plist.in', output: 'Info.plist', configuration: config_data,
+         install: true, install_dir: 'Contents')
+      install_data('extras/macos/naev.icns', install_dir: ndata_path)
       naev_source += mac_source
       naev_deps += dependency('Foundation', required: true )
    endif
@@ -200,6 +202,7 @@ if buildExec.disabled() == false
    if host_machine.system() == 'windows'
       windows = import('windows')
       icon = files('extras/logos/logo.ico')
+      install_data(icon, install_dir: '.')
       res_include = include_directories('extras/logos')
       win_manifest = configure_file(input: 'extras/windows/naev.exe.manifest.in', output: 'naev.exe.manifest', configuration: config_data)
       win_rc = configure_file(input: 'extras/windows/resource.rc.in', output: 'resource.rc', configuration: config_data)
@@ -220,7 +223,6 @@ if buildExec.disabled() == false
       naev_source,
       include_directories: include_dirs,
       dependencies: naev_deps,
-      link_args: naev_link_args,
       export_dynamic: bfd.found(),
       install: true)
 
@@ -228,32 +230,38 @@ if buildExec.disabled() == false
       input: 'utils/build/naev.sh',
       output: 'naev.sh',
       configuration: {
+         'build_root': meson.current_build_dir(),
          'source_root': meson.source_root(),
          'naev_bin' : naev_bin.full_path()
       }
    )
 
-   install_data(
-      'LICENSE',
-      'README',
-      install_dir: get_option('datadir') / 'doc/naev'
-   )
-
-   install_data(
-      'naev-confupdate.sh',
-      'extras/logos/naev.png',
-      install_dir: get_option('datadir') / 'naev'
-   )
+   if host_machine.system() not in ['windows', 'darwin']
+      install_data(
+         'gpl.txt',
+         'LICENSE',
+         'Readme.md',
+         install_dir: get_option('datadir') / 'doc/naev'
+      )
+   endif
+   # TODO: And what if it is 'windows' or 'darwin'?
 
    install_subdir(
       'dat',
       install_dir: ndata_path,
    )
 
-   if host_machine.system() not in ['windows', 'cygwin', 'emscripten', 'android', 'darwin']
-         metainfo_file = 'org.naev.naev.metainfo.xml'
+   install_subdir(
+      'artwork',
+      install_dir: ndata_path / 'dat',
+      exclude_files: '.git',  # That's a marker used by "git submodule".
+      strip_directory: true,
+   )
 
-         if (ascli_exe.found())
+   if host_machine.system() not in ['windows', 'cygwin', 'emscripten', 'android', 'darwin']
+      metainfo_file = 'org.naev.naev.metainfo.xml'
+
+      if (ascli_exe.found())
          # Create desktop-entry file from metainfo
          custom_target('gen-desktop-entry',
             input : [metainfo_file],
@@ -262,21 +270,26 @@ if buildExec.disabled() == false
             install: true,
             install_dir: join_paths (get_option ('datadir'), 'applications')
          )
-         else
-            install_data('org.naev.naev.desktop', install_dir: join_paths (get_option ('datadir'), 'applications'))
-         endif
+      else
+         install_data('org.naev.naev.desktop', install_dir: join_paths (get_option ('datadir'), 'applications'))
+      endif
 
-         install_data(metainfo_file, install_dir: get_option('datadir') / 'metainfo')
+      install_data(metainfo_file, install_dir: get_option('datadir') / 'metainfo')
 
       install_data(['extras/logos/logo16.png', 'extras/logos/logo32.png', 'extras/logos/logo64.png', 'extras/logos/logo128.png', 'extras/logos/naev.png'],
              rename : ['16x16/apps/naev.png', '32x32/apps/naev.png', '64x64/apps/naev.png', '128x128/apps/naev.png', '256x256/apps/naev.png'],
              install_dir: get_option('datadir') / 'icons/hicolor')
       install_man('naev.6')
-
    endif
 
    subdir('test')
 
+   if host_machine.system() == 'windows'
+     meson.add_install_script('extras/windows/packageWindows.sh', '-n', get_option('nightly').to_string())
+   endif
+   if host_machine.system() == 'darwin'
+     meson.add_install_script('extras/macos/bundle.py')
+   endif
 endif
 
 ####

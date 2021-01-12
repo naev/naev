@@ -63,7 +63,7 @@ int nlua_loadBackground( nlua_env env )
 /**
  * @brief Clears any backgrounds that may currently be displaying.
  *
- * @luafunc clear()
+ * @luafunc clear
  */
 static int bkgL_clear( lua_State *L )
 {
@@ -91,7 +91,7 @@ static int bkgL_clear( lua_State *L )
  *    @luatparam[opt] Colour col Colour to tint image.
  *    @luatparam[opt=false] boolean foreground Whether or not it should be rendered above the stars.
  *    @luatreturn number ID of the background.
- * @luafunc image( image, x, y, move, scale, col, foreground )
+ * @luafunc image
  */
 static int bkgL_image( lua_State *L )
 {

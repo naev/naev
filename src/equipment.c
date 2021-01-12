@@ -430,8 +430,10 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       /* Must rechoose colour based on slot properties. */
       if (lst[i].sslot->required)
          rc = &cBrightRed;
-      else if (lst[i].sslot->slot.spid != 0)
+      else if (lst[i].sslot->exclusive)
          rc = &cWhite;
+      else if (lst[i].sslot->slot.spid != 0)
+         rc = &cBlack;
       else
          rc = dc;
 

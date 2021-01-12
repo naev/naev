@@ -309,6 +309,7 @@
   <item>Medium-Heavy Bioship Strong Fin Stage X</item>
   <item>Heavy Bioship Strong Fin Stage X</item>
   <item>Superheavy Bioship Strong Fin Stage X</item>
+  <item>Weapons Ionizer</item>
  </tech>
  <tech name="All Ships">
   <item>Llama</item>
@@ -418,10 +419,12 @@
   <item>Razor MK3</item>
   <item>Razor Turret MK2</item>
   <item>Razor Turret MK3</item>
+  <item>Weapons Ionizer</item>
  </tech>
  <tech name="Ion 3">
   <item>Heavy Ion Turret</item>
   <item>Heavy Razor Turret</item>
+  <item>Weapons Ionizer</item>
  </tech>
  <tech name="Kinetic 1">
   <item>Gauss Gun</item>
@@ -579,6 +582,7 @@
   <item>Medium Weapon License</item>
   <item>Medium Combat Vessel License</item>
   <item>Mercenary License</item>
+  <item>Weapons Ionizer</item>
   </tech>
  <tech name="Heavy Weapons 2">
   <item>Laser PD MK2</item>
@@ -671,6 +675,7 @@
   <item>Reverse Thrusters</item>
   <item>Medium Fuel Pod</item>
   <item>Large Fuel Pod</item>
+  <item>Weapons Ionizer</item>
  </tech>
  <tech name="Missiles 1">
   <item>Unicorp Banshee Launcher</item>

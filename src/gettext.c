@@ -10,6 +10,7 @@
 
 
 /** @cond */
+#include <ctype.h>
 #include <locale.h>
 #include <stdlib.h>
 #include "physfs.h"
@@ -24,7 +25,6 @@
 #include "log.h"
 #include "msgcat.h"
 #include "ndata.h"
-#include "nstring.h"
 
 
 typedef struct translation {
@@ -34,7 +34,7 @@ typedef struct translation {
 } translation_t;
 
 
-static char gettext_systemLanguage[64] = "en";          /**< Language set by the environment when we started up. */
+static char gettext_systemLanguage[64] = "";            /**< Language, or :-delimited list of them, from the system at startup. */
 static translation_t *gettext_translations = NULL;      /**< Linked list of loaded translation chains. */
 static translation_t *gettext_activeTranslation = NULL; /**< Active language's code. */
 
@@ -43,19 +43,33 @@ static translation_t *gettext_activeTranslation = NULL; /**< Active language's c
  * @brief Initialize the translation system.
  * There's no presumption that PhysicsFS is available, so this doesn't actually load translations.
  * There is no gettext_exit() because invalidating pointers to translated strings would be too dangerous.
+ * We loosely follow: https://www.gnu.org/software/gettext/manual/html_node/Locale-Environment-Variables.html
  */
 void gettext_init()
 {
+   const char *env_vars[] = {"LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG"};
    const char *language;
+   size_t i, j;
 
    setlocale( LC_ALL, "" );
    /* If we don't disable LC_NUMERIC, lots of stuff blows up because 1,000 can be interpreted as
     * 1.0 in certain languages. */
    setlocale( LC_NUMERIC, "C" ); /* Disable numeric locale part. */
 
-   language = getenv( "LANGUAGE" );
-   if (language != NULL)
-      strncpy( gettext_systemLanguage, language, sizeof(gettext_systemLanguage)-1 );
+   for (i = 0; i < sizeof(env_vars)/sizeof(env_vars[0]); i++) {
+      language = getenv( env_vars[i] );
+      /* Extract languages codes, e.g. "en_US:de_DE" -> "en:de" */
+      j = 0;
+      while (language != NULL && *language != 0 && j < sizeof(gettext_systemLanguage)-1) {
+         if (isalpha(*language) || *language == ':')
+            gettext_systemLanguage[j++] = *language++;
+         else
+            language = strchr(language, ':');
+         gettext_systemLanguage[j] = 0;
+      }
+      if (j > 0)
+         return; /* The first env var with language settings wins. */
+   }
 }
 
 /**
@@ -68,18 +82,13 @@ void gettext_setLanguage( const char* lang )
    translation_t *newtrans, **ptrans;
    char root[256], **paths;
    int i;
-   const char* map;
-   size_t map_size;
+   const char *map, *lang_part;
+   size_t map_size, lang_part_len;
 
    if (lang == NULL)
       lang = gettext_systemLanguage;
    if (gettext_activeTranslation != NULL && !strcmp( lang, gettext_activeTranslation->language ))
       return;
-
-   /* Set the environment variable used by GNU gettext. This can help logging/messages
-    * emitted by libraries appear in the user's native language. (setlocale(LC_ALL, ...) may
-    * seem like a better idea, but it checks unnecessarily for system locale definitions. */
-   nsetenv( "LANGUAGE", lang, 1 );
 
    /* Search for the selected language in the loaded translations. */
    for (ptrans = &gettext_translations; *ptrans != NULL; ptrans = &(*ptrans)->next)
@@ -96,17 +105,30 @@ void gettext_setLanguage( const char* lang )
    /* @TODO This code orders the translations alphabetically by file path.
     * That doesn't make sense, but this is a new use case and it's unclear
     * how we should determine precedence in case multiple .mo files exist. */
-   nsnprintf( root, sizeof(root), GETTEXT_PATH"%s", lang );
-   paths = ndata_listRecursive( root );
-   for (i=0; i<array_size(paths); i++) {
-      map = ndata_read( paths[i], &map_size );
-      if (map != NULL) {
-         msgcat_init( &array_grow( &newtrans->chain ), map, map_size );
-         DEBUG( _("Adding translations from %s"), paths[i] );
+   while (lang != NULL && *lang != 0) {
+      lang_part = lang;
+      lang = strchr(lang, ':');
+      if (lang == NULL)
+         lang_part_len = strlen(lang_part);
+      else {
+         lang_part_len = (size_t)(lang-lang_part);
+         lang++;
       }
-      free( paths[i] );
+      if (lang_part_len == 0)
+         continue;
+      strncpy( root, GETTEXT_PATH, sizeof(root)-1 );
+      strncat( root, lang_part, MIN( sizeof(root)-sizeof(GETTEXT_PATH), lang_part_len) );
+      paths = ndata_listRecursive( root );
+      for (i=0; i<array_size(paths); i++) {
+         map = ndata_read( paths[i], &map_size );
+         if (map != NULL) {
+            msgcat_init( &array_grow( &newtrans->chain ), map, map_size );
+            DEBUG( _("Adding translations from %s"), paths[i] );
+         }
+         free( paths[i] );
+      }
+      array_free( paths );
    }
-   array_free( paths );
    gettext_activeTranslation = *ptrans = newtrans;
 }
 

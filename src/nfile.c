@@ -19,6 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include "physfs.h"
 
 #include "naev.h"
 
@@ -139,39 +140,29 @@ static char naev_dataPath[PATH_MAX] = "\0"; /**< Store Naev's data path. */
  */
 const char* nfile_dataPath (void)
 {
-    if (naev_dataPath[0] == '\0') {
-        /* Global override is set. */
-        if (conf.datapath) {
-           nsnprintf( naev_dataPath, PATH_MAX, "%s/", conf.datapath );
-           return naev_dataPath;
-        }
-#if HAS_MACOS
-        if (macos_dataPath( naev_dataPath, PATH_MAX ) != 0) {
-           WARN(_("Cannot determine data path, using current directory."));
-           nsnprintf( naev_dataPath, PATH_MAX, "./naev/" );
-        }
-#elif HAS_UNIX
-        char *path = xdgGetRelativeHome( "XDG_DATA_HOME", "/.local/share" );
-        if (path == NULL) {
-            WARN(_("$XDG_DATA_HOME isn't set, using current directory."));
-            path = strdup(".");
-        }
+   const char *osDefault;
 
-        nsnprintf( naev_dataPath, PATH_MAX, "%s/naev/", path );
-        free (path);
-#elif HAS_WIN32
-      char *path = SDL_getenv("APPDATA");
-      if (path == NULL) {
-         WARN(_("%%APPDATA%% isn't set, using current directory."));
-         path = ".";
+   if (naev_dataPath[0] == '\0') {
+      /* Global override is set. */
+      if (conf.datapath) {
+         nsnprintf( naev_dataPath, PATH_MAX, "%s/", conf.datapath );
+         return naev_dataPath;
       }
-      nsnprintf( naev_dataPath, PATH_MAX, "%s/naev/", path );
+#if HAS_MACOS
+      /* For historical reasons predating physfs adoption, this case is different. */
+      osDefault = PHYSFS_getPrefDir(".", "org.naev.Naev");
 #else
-#error _("Feature needs implementation on this Operating System for Naev to work.")
+      /* TODO: Test Windows; we want \<org>\<app>\ to resolve the same as \naev\. */
+      osDefault = PHYSFS_getPrefDir(".", "naev");
 #endif
-    }
+      if (osDefault == NULL) {
+         WARN(_("Cannot determine data path, using current directory."));
+         osDefault = "./naev/";
+      }
+      strncpy( naev_dataPath, osDefault, PATH_MAX-1 );
+   }
 
-    return naev_dataPath;
+   return naev_dataPath;
 }
 
 

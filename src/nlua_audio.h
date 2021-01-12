@@ -6,6 +6,9 @@
 #ifndef NLUA_AUDIO_H
 #  define NLUA_AUDIO_H
 
+/** @cond */
+#include "al.h"
+/** @endcond */
 
 #include "nlua.h"
 
@@ -14,7 +17,8 @@
 
 
 typedef struct LuaAudio_s {
-   int placeholder;
+   ALuint source;
+   ALuint buffer;
 } LuaAudio_t;
 
 

@@ -80,7 +80,7 @@ int nlua_loadNaev( nlua_env env )
  *
  *    @luatreturn game_version The version of the game.
  *    @luatreturn save_version Version of current loaded save or nil if not loaded.
- * @luafunc version()
+ * @luafunc version
  */
 static int naev_Lversion( lua_State *L )
 {
@@ -98,7 +98,7 @@ static int naev_Lversion( lua_State *L )
  * Useful for doing timing on Lua functions.
  *
  *    @luatreturn number The SDL ticks since the application started running.
- * @luafunc ticks()
+ * @luafunc ticks
  */
 static int naev_ticks( lua_State *L )
 {
@@ -113,7 +113,7 @@ static int naev_ticks( lua_State *L )
  * @usage bindname = naev.keyGet( "accel" )
  *
  *    @luatparam string keyname Name of the keybinding to get value of. Valid values are listed in src/input.c: keybind_info.
- * @luafunc keyGet( keyname )
+ * @luafunc keyGet
  */
 static int naev_keyGet( lua_State *L )
 {
@@ -138,7 +138,7 @@ static int naev_keyGet( lua_State *L )
  * @usage naev.keyEnable( "accel", false ) -- Disables the acceleration key
  *    @luatparam string keyname Name of the key to disable (for example "accel").
  *    @luatparam[opt=false] boolean enable Whether to enable or disable.
- * @luafunc keyEnable( keyname, enable )
+ * @luafunc keyEnable
  */
 static int naev_keyEnable( lua_State *L )
 {
@@ -160,7 +160,7 @@ static int naev_keyEnable( lua_State *L )
  * @brief Enables all inputs.
  *
  * @usage naev.keyEnableAll() -- Enables all inputs
- * @luafunc keyEnableAll()
+ * @luafunc keyEnableAll
  */
 static int naev_keyEnableAll( lua_State *L )
 {
@@ -174,7 +174,7 @@ static int naev_keyEnableAll( lua_State *L )
  * @brief Disables all inputs.
  *
  * @usage naev.keyDisableAll() -- Disables all inputs
- * @luafunc keyDisableAll()
+ * @luafunc keyDisableAll
  */
 static int naev_keyDisableAll( lua_State *L )
 {
@@ -190,7 +190,7 @@ static int naev_keyDisableAll( lua_State *L )
  * @usage naev.eventStart( "Some Event" )
  *    @luatparam string evtname Name of the event to start.
  *    @luatreturn boolean true on success.
- * @luafunc eventStart( evtname )
+ * @luafunc eventStart
  */
 static int naev_eventStart( lua_State *L )
 {
@@ -219,7 +219,7 @@ static int naev_eventStart( lua_State *L )
  * @usage naev.missionStart( "Some Mission" )
  *    @luatparam string misnname Name of the mission to start.
  *    @luatreturn boolean true on success.
- * @luafunc missionStart( misnname )
+ * @luafunc missionStart
  */
 static int naev_missionStart( lua_State *L )
 {

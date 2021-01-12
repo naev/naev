@@ -1278,8 +1278,9 @@ void space_update( const double dt )
       system_scheduler( dt, 0 );
 
    /*
-    * Volatile systems.
+    * Nebula.
     */
+   nebu_update( dt );
    if (cur_system->nebu_volatility > 0.) {
       dmg.type          = dtype_get("nebula");
       dmg.damage        = pow2(cur_system->nebu_volatility) / 500. * dt;
@@ -1495,8 +1496,8 @@ void space_init( const char* sysname )
    weapon_clear(); /* get rid of all the weapons */
    spfx_clear(); /* get rid of the explosions */
    gatherable_free(); /* get rid of gatherable stuff. */
-   gatherable_free();
    background_clear(); /* Get rid of the background. */
+   factions_clearDynamic(); /* get rid of dynamic factions. */
    space_spawn = 1; /* spawn is enabled by default. */
    interference_timer = 0.; /* Restart timer. */
    if (player.p != NULL) {
@@ -2183,8 +2184,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
             (planet->tech==NULL), "tech" );
       /*MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
             (planet->ncommodities==0),"commodity" );*/
-      MELEMENT( (flags&FLAG_FACTIONSET) && (planet->presenceAmount == 0.),
-            "presence" );
+      /*MELEMENT( (flags&FLAG_FACTIONSET) && (planet->presenceAmount == 0.),
+            "presence" );*/
    }
 #undef MELEMENT
 
@@ -3298,10 +3299,6 @@ static int asteroidTypes_load (void)
    char *str, file[PATH_MAX];
    xmlNodePtr node, cur, child;
    xmlDocPtr doc;
-   png_uint_32 w, h;
-   SDL_RWops *rw;
-   npng_t *npng;
-   SDL_Surface *surface;
 
    /* Load the data. */
    doc = xml_parsePhysFS( ASTERO_DATA_PATH );
@@ -3343,18 +3340,7 @@ static int asteroidTypes_load (void)
                str = xml_get(cur);
                len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(str)+14);
                nsnprintf( file, len,"%s%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str,".png");
-
-               /* Load sprite and make collision possible. */
-               rw    = PHYSFSRWOPS_openRead( file );
-               npng  = npng_open( rw );
-               npng_dim( npng, &w, &h );
-               surface = npng_readSurface( npng, gl_needPOT(), 1 );
-               npng_close(npng);
-
-               at->gfxs[i] = gl_loadImagePadTrans( file, surface, rw,
-                             OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS,
-                             w, h, 1, 1, 1 );
-               SDL_RWclose( rw );
+               at->gfxs[i] = gl_newImage( file, OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
                i++;
             }
 

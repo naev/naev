@@ -23,7 +23,7 @@
 -- 3 = player has talked to SHITMAN
 --]]
 
-require "portrait"
+local portrait = require "portrait"
 require "missions/shadow/common"
 
 
@@ -189,10 +189,10 @@ function land()
    local landed = planet.cur()
    if pnt == landed then
       misn.npcAdd( "jorek", jorek_npc["name"], jorek_npc["portrait"], jorek_npc["desc"] )
-      misn.npcAdd( "officer", off_npc["name"], getMaleMilPortrait("Empire"), off_npc["desc"] )
-      misn.npcAdd( "soldier1", sol1_npc["name"], getMaleMilPortrait("Empire"), sol1_npc["desc"] )
-      misn.npcAdd( "soldier2", sol2_npc["name"], getMilPortrait("Empire"), sol2_npc["desc"] )
-      misn.npcAdd( "soldier2", sol2_npc["name"], getMilPortrait("Empire"), sol2_npc["desc"] )
+      misn.npcAdd( "officer", off_npc["name"], portrait.getMaleMil("Empire"), off_npc["desc"] )
+      misn.npcAdd( "soldier1", sol1_npc["name"], portrait.getMaleMil("Empire"), sol1_npc["desc"] )
+      misn.npcAdd( "soldier2", sol2_npc["name"], portrait.getMil("Empire"), sol2_npc["desc"] )
+      misn.npcAdd( "soldier2", sol2_npc["name"], portrait.getMil("Empire"), sol2_npc["desc"] )
    end
 end
 

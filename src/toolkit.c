@@ -577,18 +577,23 @@ int window_setDisplayname( const unsigned int wid, const char *displayname )
 /**
  * @brief Gets the ID of a window.
  *
+ * @note Gets the top window matching the ID first.
+ *
  *    @param wdwname Name of the window to get ID of.
  *    @return ID of the window.
  */
 unsigned int window_get( const char* wdwname )
 {
-   Window *w;
+   Window *w, *last;
    if (windows == NULL)
       return 0;
+   last = NULL;
    for (w = windows; w != NULL; w = w->next)
       if ((strcmp(w->name,wdwname)==0) && !window_isFlag(w, WINDOW_KILL))
-         return w->id;
-   return 0;
+         last = w;
+   if (last==NULL)
+      return 0;
+   return last->id;
 }
 
 
@@ -1557,7 +1562,6 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
 {
    int ret;
    Widget *wgt;
-   ret = 0;
 
    /* See if widget needs event. */
    for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
@@ -1571,12 +1575,15 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
    }
 
    /* Event handler. */
-   if (wdw->eventevent != NULL)
-      wdw->eventevent( wdw->id, event );
+   if (wdw->eventevent != NULL) {
+      ret = wdw->eventevent( wdw->id, event );
+      if (ret != 0)
+         return ret;
+   }
 
    /* Hack in case window got destroyed in eventevent. */
+   ret = 0;
    if (!window_isFlag(wdw, WINDOW_KILL)) {
-
       /* Pass it on. */
       switch (event->type) {
          case SDL_MOUSEMOTION:
@@ -1905,7 +1912,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    Widget *wgt;
    SDL_Keycode key;
    SDL_Keymod mod;
-   int handled = 0;
+   int ret;
 
    /* Event info. */
    key = event->key.keysym.sym;
@@ -1931,16 +1938,21 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    /* Trigger event function if exists. */
    if (wgt != NULL) {
       if (wgt->keyevent != NULL) {
-         if (wgt->keyevent( wgt, input_key, input_mod ))
-            return 1;
+         ret = wgt->keyevent( wgt, input_key, input_mod );
+         if (ret!=0)
+            return ret;
       }
    }
 
    /* Handle button hotkeys. */
-   for ( wgt = wdw->widgets; wgt != NULL; wgt = wgt->next )
+   for ( wgt = wdw->widgets; wgt != NULL; wgt = wgt->next ) {
       if ( ( wgt->type == WIDGET_BUTTON ) && ( wgt->dat.btn.key != 0 ) && ( wgt->dat.btn.key == input_key )
-           && wgt->keyevent != NULL )
-         return ( wgt->keyevent( wgt, SDLK_RETURN, input_mod ) );
+           && wgt->keyevent != NULL ) {
+         ret = wgt->keyevent( wgt, SDLK_RETURN, input_mod );
+         if (ret!=0)
+            return ret;
+      }
+   }
 
    /* Handle other cases where event might be used by the window. */
    switch (key) {
@@ -1964,15 +1976,19 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    }
 
    /* Finally the stuff gets passed to the custom key handler if it's defined. */
-   if (wdw->keyevent != NULL)
-      handled = (*wdw->keyevent)( wdw->id, input_key, input_mod );
+   if (wdw->keyevent != NULL) {
+      ret = (*wdw->keyevent)( wdw->id, input_key, input_mod );
+      if (ret!=0)
+         return ret;
+   }
 
    /* Placed here so it can be overriden in console for tab completion. */
-   if (!handled && key == SDLK_TAB) {
+   if (key == SDLK_TAB) {
       if (mod & (KMOD_LSHIFT | KMOD_RSHIFT))
          toolkit_prevFocus( wdw );
       else
          toolkit_nextFocus( wdw );
+      return 1;
    }
 
    return 0;
@@ -1980,6 +1996,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 static int toolkit_textEvent( Window *wdw, SDL_Event* event )
 {
    Widget *wgt;
+   int ret;
 
    /* See if window is valid. */
    if (wdw == NULL)
@@ -1990,8 +2007,9 @@ static int toolkit_textEvent( Window *wdw, SDL_Event* event )
 
    /* Trigger event function if exists. */
    if ((wgt != NULL) && (wgt->textevent != NULL)) {
-      if ((*wgt->textevent)( wgt, event->text.text ))
-         return 1;
+      ret = (*wgt->textevent)( wgt, event->text.text );
+      if (ret!=0)
+         return ret;
    }
 
    return 0;

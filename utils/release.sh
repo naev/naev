@@ -4,9 +4,9 @@
 # This script attempts to compile and build different parts of Naev
 # automatically in order to prepare for a new release. 
 #
-# Pass in [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -o <BUILDOUTPUT> (Dist output directory) -r <RUNNER> (must be specified)
+# Pass in [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -r <RUNNER> (must be specified)
 
-# All outputs will be within pwd if nothing is passed in
+# Output destination is ${BUILDPATH}/dist
 
 set -e
 
@@ -27,17 +27,14 @@ while getopts dns:b:o:r: OPTION "$@"; do
     b)
         BUILDPATH="${OPTARG}"
         ;;
-    o)
-        BUILDOUTPUT="${OPTARG}"
-        ;;
     r)
         RUNNER="${OPTARG}"
         ;;
     esac
 done
 
-if [[ -z "$SOURCEROOT" || -z "$BUILDPATH" || -z "$BUILDOUTPUT" || -z "$RUNNER" ]]; then
-    echo "usage: `basename $0` [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -o <BUILDOUTPUT> (Dist output directory) -r <RUNNER> (must be specified)"
+if [[ -z "$SOURCEROOT" || -z "$BUILDPATH" || -z "$RUNNER" ]]; then
+    echo "usage: `basename $0` [-d] [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -r <RUNNER> (must be specified)"
     exit 1
 fi
 
@@ -55,22 +52,18 @@ function get_version {
 
 function make_appimage {
    if [[ "$NIGHTLY" == "true" ]]; then
-      sh "$SOURCEROOT/utils/buildAppImage.sh" -n -s "$SOURCEROOT" -b "$BUILDPATH/appimage" -o "$BUILDOUTPUT"
+      sh "$SOURCEROOT/utils/buildAppImage.sh" -n -s "$SOURCEROOT" -b "$BUILDPATH/appimage"
    else
-      sh "$SOURCEROOT/utils/buildAppImage.sh" -s "$SOURCEROOT" -b "$BUILDPATH/appimage" -o "$BUILDOUTPUT"
+      sh "$SOURCEROOT/utils/buildAppImage.sh" -s "$SOURCEROOT" -b "$BUILDPATH/appimage"
    fi
 }
 
 function make_windows {
-   if [[ "$NIGHTLY" == "true" ]]; then
-      sh "$SOURCEROOT/extras/windows/packageWindows.sh" -n -s "$SOURCEROOT" -b "$BUILDPATH" -o "$BUILDOUTPUT"
-   else
-      sh "$SOURCEROOT/extras/windows/packageWindows.sh" -s "$SOURCEROOT" -b "$BUILDPATH" -o "$BUILDOUTPUT"
-   fi
+   meson install
 }
 
 function make_macos {
-   echo "WIP, this will be implemented in the near future."
+   meson install
 }
 
 function make_steam {
@@ -98,7 +91,7 @@ function make_itch {
 }
 
 # Create output dirdectory if necessary
-mkdir -p "$BUILDOUTPUT"
+mkdir -p "$BUILDPATH/dist"
 
 # Build Release stuff
 if [[ $RUNNER == "Windows" ]]; then

@@ -9,7 +9,7 @@ local function playerform()
    form_names[#form_names+1] = "None"
 
    local choice = tk.choice("Formation", "Choose a formation.",
-                            unpack(form_names))
+                            table.unpack(form_names))
 
    player.pilot():memory().formation = formation.keys[choice]
 end

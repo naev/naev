@@ -538,8 +538,7 @@ void mission_cleanup( Mission* misn )
    free(misn->npc);
 
    /* Markers. */
-   if (misn->markers != NULL)
-      array_free( misn->markers );
+   array_free( misn->markers );
 
    /* Claims. */
    if (misn->claims != NULL)

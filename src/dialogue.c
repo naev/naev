@@ -877,7 +877,7 @@ static int dialogue_custom_event( unsigned int wid, SDL_Event *event )
    return (*cd->event)( wid, event, cd->data );
 }
 /**
- * @brief Opens a dialogue window with an ok button and a fixed message.
+ * @brief Opens a custom dialogue window.
  *
  *    @param caption Window title.
  *    @param width Width of the widget.
@@ -944,6 +944,12 @@ void dialogue_custom( const char* caption, int width, int height,
 }
 
 
+/**
+ * @brief Converts a custom dialogue to fullscreen.
+ *
+ *    @param enable Whether or not to enable it.
+ *    @return 0 on success.
+ */
 int dialogue_customFullscreen( int enable )
 {
    struct dialogue_custom_data_s *cd;
@@ -981,6 +987,13 @@ int dialogue_customFullscreen( int enable )
 }
 
 
+/**
+ * @brief Resizes a custom dialogue.
+ *
+ *    @param width Width to set to.
+ *    @param height Height to set to.
+ *    @return 0 on success.
+ */
 int dialogue_customResize( int width, int height )
 {
    struct dialogue_custom_data_s *cd;

@@ -626,12 +626,15 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, const char
 
       x += 15.;
       toolkit_drawRect( x, by, 10, 10, c, NULL );
-      gl_renderRectEmpty( x, by, 10, 10, &cBlack );
 
       /* Add colour stripe depending on required/exclusiveness. */
       if (s[i].required)
          toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cBrightRed );
       else if (s[i].exclusive)
          toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cWhite );
+      else if (s[i].slot.spid != 0)
+         toolkit_drawTriangle( x, by, x+10, by+10, x, by+10, &cBlack );
+
+      gl_renderRectEmpty( x, by, 10, 10, &cBlack );
    }
 }

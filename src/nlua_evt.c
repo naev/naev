@@ -170,15 +170,16 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
  *    @luatparam string portrait Portrait to use for the NPC (from GFX_PATH/portraits/).
  *    @luatparam string desc Description associated to the NPC.
  *    @luatparam[opt=5] number priority Optional priority argument (highest is 0, lowest is 10).
+ *    @luatparam[opt=nil] string background Optional parameter specifying the background to use.
  *    @luatreturn number The ID of the NPC to pass to npcRm.
- * @luafunc npcAdd( func, name, portrait, desc, priority )
+ * @luafunc npcAdd
  */
 static int evt_npcAdd( lua_State *L )
 {
    unsigned int id;
    int priority;
-   const char *func, *name, *gfx, *desc;
-   char portrait[PATH_MAX];
+   const char *func, *name, *gfx, *desc, *bg;
+   char portrait[PATH_MAX], background[PATH_MAX];
    Event_t *cur_event;
 
    /* Handle parameters. */
@@ -187,19 +188,19 @@ static int evt_npcAdd( lua_State *L )
    gfx  = luaL_checkstring(L, 3);
    desc = luaL_checkstring(L, 4);
 
-   /* Optional priority. */
-   if (lua_gettop(L) > 4)
-      priority = luaL_checkint( L, 5 );
-   else
-      priority = 5;
+   /* Optional parameters. */
+   priority = luaL_optinteger(L,5,5);
+   bg   = luaL_optstring(L,6,NULL);
 
    /* Set path. */
    nsnprintf( portrait, PATH_MAX, GFX_PATH"portraits/%s.png", gfx );
+   if (bg!=NULL)
+      nsnprintf( background, PATH_MAX, GFX_PATH"portraits/%s.png", bg );
 
    cur_event = event_getFromLua(L);
 
    /* Add npc. */
-   id = npc_add_event( cur_event->id, func, name, priority, portrait, desc );
+   id = npc_add_event( cur_event->id, func, name, priority, portrait, desc, (bg==NULL) ? bg : background );
 
    /* Return ID. */
    if (id > 0) {
@@ -216,7 +217,7 @@ static int evt_npcAdd( lua_State *L )
  * @usage evt.npcRm( npc_id )
  *
  *    @luatparam number id ID of the NPC to remove.
- * @luafunc npcRm( id )
+ * @luafunc npcRm
  */
 static int evt_npcRm( lua_State *L )
 {
@@ -241,7 +242,7 @@ static int evt_npcRm( lua_State *L )
  *    @luatparam[opt=false] boolean properly If true and the event is unique it marks the event
  *                     as completed. If false it deletes the event but
  *                     doesn't mark it as completed.
- * @luafunc finish( properly )
+ * @luafunc finish
  */
 static int evt_finish( lua_State *L )
 {
@@ -270,7 +271,7 @@ static int evt_finish( lua_State *L )
  * @usage evt.save() -- Saves an event, which is by default disabled.
  *
  *    @luatparam[opt=true] boolean enable If true sets the event to save, otherwise tells the event to not save.
- * @luafunc save( enable )
+ * @luafunc save
  */
 static int evt_save( lua_State *L )
 {
@@ -301,7 +302,7 @@ static int evt_save( lua_State *L )
  *
  *    @luatparam System|String|{System,String...} params Table of systems/strings to claim or a single system/string.
  *    @luatreturn boolean true if was able to claim, false otherwise.
- * @luafunc claim( params )
+ * @luafunc claim
  */
 static int evt_claim( lua_State *L )
 {

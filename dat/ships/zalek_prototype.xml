@@ -31,15 +31,15 @@
   <weapon size="large" x="12" y="6" h="0" />
   <weapon size="large" x="15" y="-6" h="7" />
   <weapon size="large" x="15" y="6" h="7" />
-  <utility size="large" prop="systems">Unicorp PT-3400 Core System</utility>
+  <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-3400 Core System</utility>
   <utility size="large" prop="accessory" exclusive="1" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <structure size="large" prop="engines">Unicorp Eagle 6500 Engine</structure>
-  <structure size="large" prop="hull">Unicorp D-72 Heavy Plating</structure>
+  <structure size="large" prop="engines" exclusive="1" required="1">Unicorp Eagle 6500 Engine</structure>
+  <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-72 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

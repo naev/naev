@@ -1,9 +1,3 @@
-# Naev Deps
-if not cc.has_function('ngettext')
-    libintl = cc.find_library('intl', required: true)
-    naev_deps += libintl
-endif
-
 # Building translations
 i18n = import('i18n')
 
@@ -14,7 +8,7 @@ potfiles = custom_target(
     install: false
 )
 
-i18n.gettext(meson.project_name(),
+i18n.gettext('naev',
     data_dirs: meson.source_root() / 'po',
     args: [
         '--files-from=' + (meson.source_root() / 'po/POTFILES.in'),

@@ -1,3 +1,4 @@
+option('nightly'     , type: 'boolean', value: false    , description: 'Label this version as a nightly build.')
 option('paranoid'    , type: 'boolean', value: false    , description: 'Promote run-time warnings to errors.')
 option('executable'  , type: 'feature', value: 'enabled', description: 'Enable compilation of Naev\'s executable.')
 option('docs_c'      , type: 'feature', value: 'auto'   , description: 'Enable compilation of Naev\'s C documentation.')

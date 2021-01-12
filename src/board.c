@@ -122,8 +122,9 @@ void player_board (void)
    /* Is boarded. */
    board_boarded = 1;
 
-   /* pilot will be boarded */
-   pilot_setFlag(p,PILOT_BOARDED);
+   /* Mark pilot as boarded only if it isn't being active boarded. */
+   if (!pilot_isFlag(p,PILOT_BOARDABLE))
+      pilot_setFlag(p,PILOT_BOARDED);
    player_message(_("#oBoarding ship #%c%s#0."), c, p->name);
 
    /* Don't unboard. */

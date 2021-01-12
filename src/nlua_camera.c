@@ -73,7 +73,7 @@ int nlua_loadCamera( nlua_env env )
  *    @luatparam Pilot|Vec2|nil target It will follow pilots around. If nil, it follows the player.
  *    @luatparam[opt=false] boolean soft_over Indicates that the camera should fly over rather than instantly teleport.
  *    @luaparam[opt=2500] speed Speed at which to fly over if soft_over is true.
- * @luafunc set( target, soft_over, speed )
+ * @luafunc set
  */
 static int camL_set( lua_State *L )
 {
@@ -120,7 +120,7 @@ static int camL_set( lua_State *L )
  * @usage camera.shake( .5 ) -- Shakes the camera with amplitude .5
  *
  *    @luatparam float amplitude: amplitude of the shaking
- * @luafunc shake( amplitude )
+ * @luafunc shake
  */
 static int camL_shake( lua_State *L )
 {
