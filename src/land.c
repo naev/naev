@@ -916,7 +916,6 @@ unsigned int land_getWid( int window )
  */
 void land_genWindows( int load, int changetab )
 {
-   (void) load;
    int i, j;
    const char *names[LAND_NUMWINDOWS];
    int w, h;
@@ -1012,7 +1011,9 @@ void land_genWindows( int load, int changetab )
    if (!regen) {
       landed = 1;
       music_choose("land"); /* Must be before hooks in case hooks change music. */
-      hooks_run("land");
+      if (!load) {
+         hooks_run("land");
+      }
       events_trigger( EVENT_TRIGGER_LAND );
 
       /* 3) Generate computer and bar missions. */
