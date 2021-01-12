@@ -1562,7 +1562,6 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
 {
    int ret;
    Widget *wgt;
-   ret = 0;
 
    /* See if widget needs event. */
    for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
@@ -1583,8 +1582,8 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
    }
 
    /* Hack in case window got destroyed in eventevent. */
+   ret = 0;
    if (!window_isFlag(wdw, WINDOW_KILL)) {
-
       /* Pass it on. */
       switch (event->type) {
          case SDL_MOUSEMOTION:
