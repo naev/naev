@@ -1576,8 +1576,11 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
    }
 
    /* Event handler. */
-   if (wdw->eventevent != NULL)
-      wdw->eventevent( wdw->id, event );
+   if (wdw->eventevent != NULL) {
+      ret = wdw->eventevent( wdw->id, event );
+      if (ret != 0)
+         return ret;
+   }
 
    /* Hack in case window got destroyed in eventevent. */
    if (!window_isFlag(wdw, WINDOW_KILL)) {
@@ -1910,6 +1913,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    Widget *wgt;
    SDL_Keycode key;
    SDL_Keymod mod;
+   int ret;
 
    /* Event info. */
    key = event->key.keysym.sym;
@@ -1935,16 +1939,21 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    /* Trigger event function if exists. */
    if (wgt != NULL) {
       if (wgt->keyevent != NULL) {
-         if (wgt->keyevent( wgt, input_key, input_mod ))
-            return 1;
+         ret = wgt->keyevent( wgt, input_key, input_mod );
+         if (ret!=0)
+            return ret;
       }
    }
 
    /* Handle button hotkeys. */
-   for ( wgt = wdw->widgets; wgt != NULL; wgt = wgt->next )
+   for ( wgt = wdw->widgets; wgt != NULL; wgt = wgt->next ) {
       if ( ( wgt->type == WIDGET_BUTTON ) && ( wgt->dat.btn.key != 0 ) && ( wgt->dat.btn.key == input_key )
-           && wgt->keyevent != NULL )
-         return ( wgt->keyevent( wgt, SDLK_RETURN, input_mod ) );
+           && wgt->keyevent != NULL ) {
+         ret = wgt->keyevent( wgt, SDLK_RETURN, input_mod );
+         if (ret!=0)
+            return ret;
+      }
+   }
 
    /* Handle other cases where event might be used by the window. */
    switch (key) {
@@ -1968,8 +1977,11 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    }
 
    /* Finally the stuff gets passed to the custom key handler if it's defined. */
-   if (wdw->keyevent != NULL)
-      return (*wdw->keyevent)( wdw->id, input_key, input_mod );
+   if (wdw->keyevent != NULL) {
+      ret = (*wdw->keyevent)( wdw->id, input_key, input_mod );
+      if (ret!=0)
+         return ret;
+   }
 
    /* Placed here so it can be overriden in console for tab completion. */
    if (key == SDLK_TAB) {
@@ -1985,6 +1997,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 static int toolkit_textEvent( Window *wdw, SDL_Event* event )
 {
    Widget *wgt;
+   int ret;
 
    /* See if window is valid. */
    if (wdw == NULL)
@@ -1995,8 +2008,9 @@ static int toolkit_textEvent( Window *wdw, SDL_Event* event )
 
    /* Trigger event function if exists. */
    if ((wgt != NULL) && (wgt->textevent != NULL)) {
-      if ((*wgt->textevent)( wgt, event->text.text ))
-         return 1;
+      ret = (*wgt->textevent)( wgt, event->text.text );
+      if (ret!=0)
+         return ret;
    }
 
    return 0;
