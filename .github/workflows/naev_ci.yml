@@ -216,7 +216,7 @@ jobs:
         id: setup
         run: |
           meson setup build source \
-              --prefix="$(pwd)"/dist/out/Naev.app \
+              --prefix="$(pwd)"/build/dist/Naev.app \
               --bindir=Contents/MacOS \
               -Dndata_path=Contents/Resources \
               --cross-file='source/utils/build/${{ matrix.config }}' \
@@ -284,8 +284,7 @@ jobs:
       - name: Compile AppImage
         id: appimageCompile
         run: |
-          mkdir -p /tmp/out
-          script -c "./source/utils/buildAppImage.sh -c -m -s "source" -b "build" -o "$DESTDIR"" appImageBuildLog.txt
+          script -c "./source/utils/buildAppImage.sh -c -m -s source -b build" appImageBuildLog.txt
         env:
           APPIMAGE_EXTRACT_AND_RUN: 1
 
@@ -301,8 +300,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: naev-${{ github.sha }}-AppImageBuild
-          path: |
-            ${{ github.workspace }}/dist/out
+          path: ${{ github.workspace }}/build/dist
           if-no-files-found: error
 
   "Lua_Documentation":

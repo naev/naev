@@ -5,9 +5,9 @@
 # Written by Jack Greiner (ProjectSynchro on Github: https://github.com/ProjectSynchro/)
 #
 # For more information, see http://appimage.org/
-# Pass in [-d] [-c] (set this for debug builds) [-n] (set this for nightly builds) [-m] (set this if you want to use Meson) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory) -o <BUILDOUTPUT> (Dist output directory)
+# Pass in [-d] [-c] (set this for debug builds) [-n] (set this for nightly builds) [-m] (set this if you want to use Meson) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory)
 
-# All outputs will be within pwd if nothing is passed in
+# Output destination is ${BUILDPATH}/dist
 
 set -e
 
@@ -15,7 +15,6 @@ set -e
 SOURCEROOT="$(pwd)"
 BUILDPATH="$(pwd)/build/appimageBuild"
 NIGHTLY="false"
-BUILDOUTPUT="$(pwd)/dist"
 BUILDTYPE="release"
 
 while getopts dcnms:b:o: OPTION "$@"; do
@@ -35,9 +34,6 @@ while getopts dcnms:b:o: OPTION "$@"; do
     b)
         BUILDPATH="${OPTARG}"
         ;;
-    o)
-        BUILDOUTPUT="${OPTARG}"
-        ;;
     esac
 done
 
@@ -55,14 +51,9 @@ fi
 echo "SOURCE ROOT:        $SOURCEROOT"
 echo "BUILD ROOT:         $BUILDPATH"
 echo "NIGHTLY:            $NIGHTLY"
-echo "BUILD OUTPUT:       $BUILDOUTPUT"
 echo "MESON WRAPPER PATH: $MESON"
 
-# Set DESTDIR
-
-OLDDISTDIR="$DISTDIR"
-unset DESTDIR
-export DESTDIR="$BUILDOUTPUT/Naev.AppDir"
+export DESTDIR="$(readlink -mf "$BUILDPATH")/dist/Naev.AppDir"
 
 # Run build
 # Setup AppImage Build Directory
@@ -76,14 +67,11 @@ sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
 -Ddocs_lua=disabled
 
 # Compile and Install Naev to DISTDIR
-
 sh "$MESON" install -C "$BUILDPATH"
 
 # Prep dist directory for appimage
 # (I hate this but otherwise linuxdeploy fails on systems that generate the desktop file)
-
-rm "$DESTDIR"/usr/share/applications/*.desktop
-cp "$SOURCEROOT/org.naev.naev.desktop" "$DESTDIR/usr/share/applications/"
+cp -f "$SOURCEROOT/org.naev.naev.desktop" "$DESTDIR/usr/share/applications/"
 
 # Set ARCH of AppImage
 export ARCH=$(arch)
@@ -104,9 +92,9 @@ fi
 SUFFIX="$VERSION-linux-x86-64"
 
 # Make output dir (if it does not exist)
-mkdir -p "$BUILDOUTPUT/out"
+mkdir -p "$BUILDPATH/dist"
 
-export OUTPUT="$BUILDOUTPUT/out/naev-$SUFFIX.AppImage"
+export OUTPUT="$BUILDPATH/dist/naev-$SUFFIX.AppImage"
 
 # Get linuxdeploy's AppImage
 linuxdeploy="$BUILDPATH/linuxdeploy-x86_64.AppImage"
@@ -122,11 +110,5 @@ fi
     --appdir "$DESTDIR" \
     --output appimage
 
-# Move AppImage to dist/ and mark as executable
-
+# Mark as executable
 chmod +x "$OUTPUT"
-
-#Reset DESTDIR to what it was before
-
-unset DESTDIR
-export DESTDIR="$OLDDISTDIR"

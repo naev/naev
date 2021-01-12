@@ -30,38 +30,38 @@ jobs:
 
       - name: Collect Artifacts
         run: |
-          mkdir -p dist/out/steam
-          mv build/meson-dist/naev-*.tar.xz dist/out/source.tar.xz
-          cp source/CHANGELOG dist/out
-          cp source/dat/VERSION dist/out
-          cp -r source/utils/ci/steam/* dist/out/steam
+          mkdir -p build/dist/steam
+          mv build/meson-dist/naev-*.tar.xz build/dist/source.tar.xz
+          cp source/CHANGELOG build/dist
+          cp source/dat/VERSION build/dist
+          cp -r source/utils/ci/steam/* build/dist/steam
 
       - name: Upload Source Artifact
         uses: actions/upload-artifact@v2
         with:
           name: naev-dist
-          path: ${{ github.workspace }}/dist/out/source.tar.xz
+          path: ${{ github.workspace }}/build/dist/source.tar.xz
           if-no-files-found: error
 
       - name: Upload Version Artifact
         uses: actions/upload-artifact@v2
         with:
           name: naev-version
-          path: ${{ github.workspace }}/dist/out/VERSION
+          path: ${{ github.workspace }}/build/dist/VERSION
           if-no-files-found: error
 
       - name: Upload Changelog Artifact
         uses: actions/upload-artifact@v2
         with:
           name: naev-changelog
-          path: ${{ github.workspace }}/dist/out/CHANGELOG
+          path: ${{ github.workspace }}/build/dist/CHANGELOG
           if-no-files-found: error
 
       - name: Upload Deployment Script Artifact
         uses: actions/upload-artifact@v2
         with:
           name: naev-steam-deployment
-          path: ${{ github.workspace }}/dist/out/steam/*
+          path: ${{ github.workspace }}/build/dist/steam/*
           if-no-files-found: error
 
   "Linux_Naev_Release":
@@ -84,7 +84,7 @@ jobs:
 
       - name: Compile AppImage
         run: |
-          ./source/utils/buildAppImage.sh -m -s "source" -b "build" -o "${{ env.DESTDIR }}"
+          ./source/utils/buildAppImage.sh -m -s "source" -b "build"
         env:
           APPIMAGE_EXTRACT_AND_RUN: 1
 
@@ -92,7 +92,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: naev-linux-x86-64
-          path: "${{ env.DESTDIR }}/out/*.AppImage"
+          path: "${{ github.workspace }}/build/dist/*.AppImage"
 
   "Windows_Naev_Release":
     needs: "Package_Source"
@@ -138,7 +138,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: naev-win64
-          path: ${{ github.workspace }}/dist/out/*
+          path: ${{ github.workspace }}/build/dist/*
           if-no-files-found: error
 
   "Darwin_Naev_Release":
@@ -161,7 +161,7 @@ jobs:
       - name: Meson Setup
         run: |
           meson setup build source \
-              --prefix="$(pwd)"/dist/out/Naev.app \
+              --prefix="$(pwd)"/build/dist/Naev.app \
               --bindir=Contents/MacOS \
               -Dndata_path=Contents/Resources \
               --cross-file='source/utils/build/macos_cross_osxcross.ini' \
@@ -179,14 +179,14 @@ jobs:
       - name: Meson Install
         run: |
           meson install -C build
-          cd dist/out
+          cd build/dist
           zip -r naev-macos.zip Naev.app/*
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: naev-macos
-          path: ${{ github.workspace }}/dist/out/*.zip
+          path: ${{ github.workspace }}/build/dist/*.zip
           if-no-files-found: error
 
   "Steam_Naev_Release":
@@ -230,24 +230,24 @@ jobs:
 
       - name: Collect Steam Linux64 Artifacts
         run: |
-          mkdir -p dist/out/
+          mkdir -p build/dist/
 
-          mv staging/usr/bin/naev dist/out/naev.x64
-          chmod +x dist/out/naev.x64
+          mv staging/usr/bin/naev build/dist/naev.x64
+          chmod +x build/dist/naev.x64
 
-          tar -cJvf dist/out/steam-ndata.tar.xz -C staging/usr/share/naev dat
+          tar -cJvf build/dist/steam-ndata.tar.xz -C staging/usr/share/naev dat
 
       - name: Upload Naev Binary Artifact
         uses: actions/upload-artifact@v1
         with:
           name: naev-steamruntime
-          path: dist/out/naev.x64
+          path: build/dist/naev.x64
 
       - name: Upload Naev Data Artifact
         uses: actions/upload-artifact@v1
         with:
           name: naev-ndata
-          path: dist/out/steam-ndata.tar.xz
+          path: build/dist/steam-ndata.tar.xz
 
   "Steam_Naev_Soundtrack_Release":
     needs: "Package_Source"
@@ -284,29 +284,29 @@ jobs:
 
       - name: Collect Artifacts
         run: |
-          mkdir -p dist/staging
-          mkdir -p dist/out/steam
+          mkdir -p build/staging
+          mkdir -p build/dist/steam
 
-          unzip build/naev-*-soundtrack.zip -d dist/staging
-          cp build/naev-*-soundtrack.zip dist/out
-          cp source/extras/logos/naev_soundtrack_cover.png dist/out/steam
+          unzip build/naev-*-soundtrack.zip -d build/staging
+          cp build/naev-*-soundtrack.zip build/dist
+          cp source/extras/logos/naev_soundtrack_cover.png build/dist/steam
 
       - name: Transcode Steam Soundtrack
         run: |
-          ./source/utils/convertToMP3.sh -i dist/staging -f ogg -o dist/out/steam
+          ./source/utils/convertToMP3.sh -i build/staging -f ogg -o build/dist/steam
 
       - name: Upload Soundtrack Artifact
         uses: actions/upload-artifact@v2
         with:
           name: naev-soundtrack
-          path: ${{ github.workspace }}/dist/out/naev-*-soundtrack.zip
+          path: ${{ github.workspace }}/build/dist/naev-*-soundtrack.zip
           if-no-files-found: error
 
       - name: Upload Steam Soundtrack Artifact
         uses: actions/upload-artifact@v2
         with:
           name: naev-steam-soundtrack
-          path: ${{ github.workspace }}/dist/out/steam/*
+          path: ${{ github.workspace }}/build/dist/steam/*
           if-no-files-found: error
 
   "Upload_Naev_Release":
@@ -332,7 +332,7 @@ jobs:
     steps:
       - name: Create Release Staging and Output Areas
         run: |
-          mkdir -p {temp,dist/{staging,out/{lin64,macos,win64,soundtrack}}}
+          mkdir -p temp build/{staging,dist/{lin64,macos,win64,soundtrack}}
 
       - name: Update APT Cache
         if: ${{ matrix.releasetype == 'steam' }}
@@ -358,29 +358,29 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v2
         with:
-          path: ${{ github.workspace }}/dist/staging
+          path: ${{ github.workspace }}/build/staging
 
       - name: Build Github Release
         if: ${{ matrix.releasetype == 'github' }}
         run: |
           BUILD_DATE="$(date +%Y%m%d)"
-          VERSION="$(<"dist/staging/naev-version/VERSION")"
+          VERSION="$(<"build/staging/naev-version/VERSION")"
           SUFFIX="$VERSION"
 
-          mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/naev-$SUFFIX-linux-x86-64.AppImage
-          mv dist/staging/naev-macos/*.zip dist/out/naev-$SUFFIX-macos.zip
-          mv dist/staging/naev-win64/naev*.exe dist/out/naev-$SUFFIX-win64.exe
-          mv dist/staging/naev-dist/source.tar.xz dist/out/naev-$SUFFIX-source.tar.xz
-          mv dist/staging/naev-soundtrack/naev-*-soundtrack.zip dist/out/naev-$SUFFIX-soundtrack.zip
+          mv build/staging/naev-linux-x86-64/*.AppImage build/dist/naev-$SUFFIX-linux-x86-64.AppImage
+          mv build/staging/naev-macos/*.zip build/dist/naev-$SUFFIX-macos.zip
+          mv build/staging/naev-win64/naev*.exe build/dist/naev-$SUFFIX-win64.exe
+          mv build/staging/naev-dist/source.tar.xz build/dist/naev-$SUFFIX-source.tar.xz
+          mv build/staging/naev-soundtrack/naev-*-soundtrack.zip build/dist/naev-$SUFFIX-soundtrack.zip
 
-          chmod +x dist/out/naev-$SUFFIX-linux-x86-64.AppImage
+          chmod +x build/dist/naev-$SUFFIX-linux-x86-64.AppImage
 
       - name: Upload Github Release
         uses: ncipollo/release-action@v1
         if: ${{ matrix.releasetype == 'github' }}
         with:
-          artifacts: "dist/out/*.*"
-          bodyFile: "dist/staging/naev-changelog/CHANGELOG"
+          artifacts: "build/dist/*.*"
+          bodyFile: "build/staging/naev-changelog/CHANGELOG"
           token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: false
 
@@ -388,31 +388,31 @@ jobs:
         if: ${{ matrix.releasetype == 'itch' }}
         run: |
           BUILD_DATE="$(date +%Y%m%d)"
-          VERSION="$(<"dist/staging/naev-version/VERSION")"
+          VERSION="$(<"build/staging/naev-version/VERSION")"
           SUFFIX="$VERSION"
 
-          mv dist/staging/naev-linux-x86-64/*.AppImage dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
-          mv dist/staging/naev-steam-soundtrack/* dist/out/soundtrack
-          chmod +x dist/out/lin64/naev-$SUFFIX-linux-x86-64.AppImage
+          mv build/staging/naev-linux-x86-64/*.AppImage build/dist/lin64/naev-$SUFFIX-linux-x86-64.AppImage
+          mv build/staging/naev-steam-soundtrack/* build/dist/soundtrack
+          chmod +x build/dist/lin64/naev-$SUFFIX-linux-x86-64.AppImage
 
-          mv dist/staging/naev-macos/*.zip dist/out/macos/naev-$SUFFIX-macos.zip
+          mv build/staging/naev-macos/*.zip build/dist/macos/naev-$SUFFIX-macos.zip
 
-          tar -Jxf "dist/staging/naev-win64/steam-win64.tar.xz" -C "dist/out/win64"
-          tar -Jxf "dist/staging/naev-ndata/steam-ndata.tar.xz" -C "dist/out/win64"
+          tar -Jxf "build/staging/naev-win64/steam-win64.tar.xz" -C "build/dist/win64"
+          tar -Jxf "build/staging/naev-ndata/steam-ndata.tar.xz" -C "build/dist/win64"
 
-          ./butler push --userversion="$SUFFIX" dist/out/lin64 naev/naev:linux-x86-64
-          ./butler push --userversion="$SUFFIX" dist/out/macos naev/naev:macos-x86-64
-          ./butler push --userversion="$SUFFIX" dist/out/win64 naev/naev:windows-x86-64
-          ./butler push --userversion="$SUFFIX" dist/out/soundtrack naev/naev:soundtrack
+          ./butler push --userversion="$SUFFIX" build/dist/lin64 naev/naev:linux-x86-64
+          ./butler push --userversion="$SUFFIX" build/dist/macos naev/naev:macos-x86-64
+          ./butler push --userversion="$SUFFIX" build/dist/win64 naev/naev:windows-x86-64
+          ./butler push --userversion="$SUFFIX" build/dist/soundtrack naev/naev:soundtrack
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
 
       - name: Build and Upload Steam Release
         if: ${{ matrix.releasetype == 'steam' }}
         run: |
-          chmod -R +x dist/staging/naev-steam-deployment
-          cp -r dist/staging/naev-steam-deployment/* ${{ github.workspace }}
-          ./SteamDeploy.sh -t "${{ github.workspace }}/dist/staging" -o "${{ github.workspace }}/dist/out"
+          chmod -R +x build/staging/naev-steam-deployment
+          cp -r build/staging/naev-steam-deployment/* ${{ github.workspace }}
+          ./SteamDeploy.sh -t "${{ github.workspace }}/build/staging" -o "${{ github.workspace }}/build/dist"
         env:
           STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
           STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}
