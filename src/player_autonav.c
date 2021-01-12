@@ -209,6 +209,7 @@ void player_autonavPil( unsigned int p )
    player.autonav    = AUTONAV_PLT_FOLLOW;
    player.autonavmsg = pilot->name;
    player.autonavcol = '0';
+   player_message(_("#oAutonav: following %s."), pilot->name);
 }
 
 
