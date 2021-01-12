@@ -146,21 +146,21 @@ equip_typeOutfits_structurals["Scintillation"] = {
 equip_typeOutfits_structurals["Virtuosity"] = {
    {
       varied = true;
-      "Active Plating", "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
+      "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
       "Adaptive Stealth Plating"
    }
 }
 equip_typeOutfits_structurals["Taciturnity"] = {
    {
       varied = true;
-      "Active Plating", "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
+      "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
       "Adaptive Stealth Plating", "Cargo Pod"
    }
 }
 equip_typeOutfits_structurals["Apprehension"] = {
    {
       varied = true;
-      "Active Plating", "Nanobond Plating", "Medium Fuel Pod", "Battery II",
+      "Nanobond Plating", "Medium Fuel Pod", "Battery II",
       "Shield Capacitor III"
    }
 }
