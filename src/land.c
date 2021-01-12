@@ -1011,9 +1011,10 @@ void land_genWindows( int load, int changetab )
    if (!regen) {
       landed = 1;
       music_choose("land"); /* Must be before hooks in case hooks change music. */
-      if (!load) {
+      /* We don't run the "land" hook when loading. If you want to have it do stuff when loading, use the "load" hook.
+       * Note that you can use the same function for both hooks. */
+      if (!load)
          hooks_run("land");
-      }
       events_trigger( EVENT_TRIGGER_LAND );
 
       /* 3) Generate computer and bar missions. */
