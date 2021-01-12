@@ -1910,7 +1910,6 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    Widget *wgt;
    SDL_Keycode key;
    SDL_Keymod mod;
-   int handled = 0;
 
    /* Event info. */
    key = event->key.keysym.sym;
@@ -1970,14 +1969,15 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 
    /* Finally the stuff gets passed to the custom key handler if it's defined. */
    if (wdw->keyevent != NULL)
-      handled = (*wdw->keyevent)( wdw->id, input_key, input_mod );
+      return (*wdw->keyevent)( wdw->id, input_key, input_mod );
 
    /* Placed here so it can be overriden in console for tab completion. */
-   if (!handled && key == SDLK_TAB) {
+   if (key == SDLK_TAB) {
       if (mod & (KMOD_LSHIFT | KMOD_RSHIFT))
          toolkit_prevFocus( wdw );
       else
          toolkit_nextFocus( wdw );
+      return 1;
    }
 
    return 0;
