@@ -15,9 +15,10 @@ require "events/tutorial/tutorial_common"
 local portrait = require "portrait"
 local vn = require 'vn'
 
--- List of planets where there will be NO generic NPCs
+-- List of inhabited planets where there will be NO generic NPCs
 blacklist = {
    "Minerva Station",
+   "Strangelove Lab",
 }
 
 -- Factions which will NOT get generic texts if possible.  Factions
