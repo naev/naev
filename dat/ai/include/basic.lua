@@ -232,7 +232,7 @@ function follow_fleet ()
 
    local goal = leader
    if mem.form_pos ~= nil then
-      local angle, radius, method = unpack(mem.form_pos)
+      local angle, radius, method = table.unpack(mem.form_pos)
       goal = ai.follow_accurate(leader, radius, angle, mem.Kp, mem.Kd, method)
    end
 

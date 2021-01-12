@@ -92,7 +92,7 @@ function window.showMessageBox( title, message, ... )
    if type(arg[1])=="string" then
       tk.msg( title, message )
    else
-      local choice = tk.choice( title, message, unpack(arg) )
+      local choice = tk.choice( title, message, table.unpack(arg) )
       love._focus = true
       return choice
    end

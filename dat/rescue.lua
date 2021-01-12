@@ -107,7 +107,7 @@ function rescue()
          [[Your ship is missing %d core outfit. How do you want to resolve this?]],
          [[Your ship is missing %d core outfits. How do you want to resolve this?]], #missing)
       local ind, str = tk.choice( msg_title,
-            string.format(msg_missing, #missing), unpack(strings) )
+            string.format(msg_missing, #missing), table.unpack(strings) )
 
       opts[ind][2]() -- Run callback.
       if str == _("Cancel") then
@@ -156,7 +156,7 @@ function rescue()
          return
       end
 
-      local ind, str = tk.choice( msg_title, msg_prompt, unpack(strings) )
+      local ind, str = tk.choice( msg_title, msg_prompt, table.unpack(strings) )
 
       opts[ind][2]() -- Run callback.
       if str == _("Cancel") then

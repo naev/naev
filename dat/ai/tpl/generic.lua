@@ -70,7 +70,7 @@ end
 
 function handle_messages ()
    for _, v in ipairs(ai.messages()) do
-      local sender, msgtype, data = unpack(v)
+      local sender, msgtype, data = table.unpack(v)
       if sender == ai.pilot():leader() then
          if msgtype == "form-pos" then
             mem.form_pos = data
