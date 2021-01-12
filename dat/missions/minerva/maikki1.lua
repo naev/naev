@@ -240,7 +240,7 @@ She looks clearly excited at the possibility.]]))
 "I think I have an idea for our next steps. Meet me up here in a bit. I have to get some information first."]]))
    vn.func( function ()
       -- no reward, yet...
-      -- TODO play victory sound
+      vn.sfxVictory()
       mission_finish = true
    end )
    vn.fadeout()
@@ -315,7 +315,7 @@ He downs his drink and orders another.]]))
    vn.label( "nebula" )
    om(_([[He whistles casually.
 "The nebula's a real piece of work. It's almost mesmerizing to fly through it, however, it do got quite a character. If you try to go too deep into 'er you can't easily get back. Many a soul has been lost in there."]]))
-   -- TODO play eerie sound
+   vn.sfxEerie()
    om(_([[He goes a bit quieter and gets closer to you.
 "Rumour has it that there are ghosts lurking in the depths. I've seen people come back, pale as snow, claiming they seen them."]]))
    om(_([["I believe it be the boredom getting to their heads. Likely naught but a scavenger or some debris."]]))
@@ -388,7 +388,7 @@ He takes another long swig of his drink and burps.]]))
 He shivers exaggeratedly.]]))
       scavB(_([["Yeah! I saw it with my own eyes. That shit is legit. Seems to be the wreck of a scavenger."]]))
       scavA(_([["Why didn't you haul it back then? We might not be able to find it again!"]]))
-      -- TODO play bingo sound
+      vn.sfxBingo()
       scavB(_([["How many times do I have to tell you? My sensors were acting up, didn't want to spend too long in Zerantix with all them ghosts around."]]))
       scavA(_([["I'll take a look at fixing your sensors. Ain't nothing these brutes can't fix!"
 He pats his biceps in a fairly uninspiring way.]]))
@@ -420,7 +420,6 @@ function enter ()
       -- Cutscene with scavengerB
       -- Scavenger is flying to doeston from arandon (near the middle)
       -- cutscene
-      -- TODO meta-factions
       local j = jump.get( cutscenesys, searchsys )
       local pos = j:pos() + vec2.new(3000,5000)
       local fscav = faction.dynAdd( "Independent", "Scavenger", "Scavenger" )
@@ -807,7 +806,7 @@ He seems to be clutching his head. A headache perhaps?]]))
          end
       end
    end )
-   -- TODO play money sound
+   vn.sfxMoney()
    vn.na(string.format(_("You wire them %s."), creditstring(bribeamount)))
    scavB(_([["I guess this isn't worth our trouble. We already got enough stuff for the Za'leks already."]]))
    scavA(_([["C'mon, let's get out of here. This place gives me the creeps. Feel like a ghost is going to pop out any minute."]]))
@@ -884,7 +883,7 @@ function board_wreck ()
    vn.label("dormitories")
    vn.na(_("The dormitories are the part of the ship that appear to have been kept in best shape, if you don't count all the damage that seems to have been done by scavengers trying to find parts to sell."))
    vn.na(_("Although there seems to be nothing of value left, a small piece of paper catches your eye. You grab what appears to be a picture of two adults and a child. The child looks very familiar."))
-   -- TODO play bingo sound
+   vn.sfxBingo()
    vn.na(_("You turn the picture around and you see that 'Maikki 596:0928' is written in the corner. You should probably bring this back to Maikki."))
    vn.func( function () saw_dormitory = true end )
    vn.jump("menu")

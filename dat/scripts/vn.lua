@@ -886,6 +886,35 @@ function vn.func( func )
 end
 
 --[[
+-- @brief Plays a sound.
+--]]
+function vn.sfx( sfx )
+   vn._checkstarted()
+   local s = vn.State.new()
+   s._init = function (state)
+      sfx:play()
+      _finish(state)
+   end
+   table.insert( vn._states, s )
+end
+function vn.sfxMoney()
+   -- TODO
+   -- return vn.sfx( vn._sfx.money )
+end
+function vn.sfxVictory()
+   -- TODO
+   -- return vn.sfx( vn._sfx.victory )
+end
+function vn.sfxBingo()
+   -- TODO
+   -- return vn.sfx( vn._sfx.bingo )
+end
+function vn.sfxEerie()
+   -- TODO
+   -- return vn.sfx( vn._sfx.eerie )
+end
+
+--[[
 -- @brief Custom states. Only use if you know what you are doing.
 --]]
 function vn.custom()
