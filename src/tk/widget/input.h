@@ -24,6 +24,7 @@ typedef struct WidgetInputData_ {
    size_t pos; /**< Cursor position. */
    glFont *font; /**< Font to use. */
    void (*fptr) (unsigned int, char*); /**< Modify callback - triggered on text input. */
+   int creating; /**< Whether or not it was just created. */
 } WidgetInputData;
 
 
