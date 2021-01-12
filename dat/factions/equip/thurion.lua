@@ -59,56 +59,56 @@ equip_typeOutfits_utilities["Perspicacity"] = {
    {
       varied = true;
       "Unicorp Scrambler", "Sensor Array", "Jump Scanner",
-      "Thurion Reactor Class I", "Small Shield Booster", "Generic Afterburner"
+      "Reactor Class I", "Small Shield Booster", "Generic Afterburner"
    }
 }
 equip_typeOutfits_utilities["Ingenuity"] = {
    {
       num = 1;
-      "Droid Repair Crew", "Boarding Androids MK1", "Thurion Reactor Class II",
+      "Droid Repair Crew", "Boarding Androids MK1", "Reactor Class II",
       "Medium Shield Booster"
    },
    {
       varied = true;
-      "Sensor Array", "Unicorp Scrambler", "Thurion Reactor Class I",
+      "Sensor Array", "Unicorp Scrambler", "Reactor Class I",
       "Small Shield Booster", "Hellburner"
    }
 }
 equip_typeOutfits_utilities["Scintillation"] = {
    {
       varied = true;
-      "Sensor Array", "Unicorp Scrambler", "Thurion Reactor Class I",
+      "Sensor Array", "Unicorp Scrambler", "Reactor Class I",
       "Small Shield Booster", "Hellburner"
    }
 }
 equip_typeOutfits_utilities["Virtuosity"] = {
    {
       varied = true;
-      "Droid Repair Crew", "Boarding Androids MK1", "Thurion Reactor Class II",
+      "Droid Repair Crew", "Boarding Androids MK1", "Reactor Class II",
       "Medium Shield Booster"
    },
    {
       varied = true;
-      "Sensor Array", "Milspec Scrambler", "Thurion Reactor Class I",
+      "Sensor Array", "Milspec Scrambler", "Reactor Class I",
       "Small Shield Booster", "Hellburner"
    }
 }
 equip_typeOutfits_utilities["Taciturnity"] = {
    {
       varied = true;
-      "Droid Repair Crew", "Boarding Androids MK1", "Thurion Reactor Class II",
+      "Droid Repair Crew", "Boarding Androids MK1", "Reactor Class II",
       "Medium Shield Booster"
    },
    {
       varied = true;
-      "Sensor Array", "Milspec Scrambler", "Thurion Reactor Class I",
+      "Sensor Array", "Milspec Scrambler", "Reactor Class I",
       "Small Shield Booster", "Hellburner"
    }
 }
 equip_typeOutfits_utilities["Apprehension"] = {
    {
       varied = true;
-      "Boarding Androids MK2", "Thurion Reactor Class II",
+      "Boarding Androids MK2", "Reactor Class II",
       "Medium Shield Booster", "Droid Repair Crew", "Sensor Array",
       "Milspec Scrambler"
    }
@@ -116,7 +116,7 @@ equip_typeOutfits_utilities["Apprehension"] = {
 equip_typeOutfits_utilities["Certitude"] = {
    {
       varied = true;
-      "Boarding Androids MK2", "Thurion Reactor Class III",
+      "Boarding Androids MK2", "Reactor Class III",
       "Large Shield Booster", "Droid Repair Crew", "Sensor Array",
       "Milspec Scrambler"
    }
@@ -125,21 +125,21 @@ equip_typeOutfits_utilities["Certitude"] = {
 equip_typeOutfits_structurals["Perspicacity"] = {
    {
       varied = true;
-      "Adaptive Stealth Plating", "Fuel Pod", "Thurion Engine Reroute",
+      "Adaptive Stealth Plating", "Fuel Pod", "Engine Reroute",
       "Steering Thrusters", "Shield Capacitor"
    }
 }
 equip_typeOutfits_structurals["Ingenuity"] = {
    {
       varied = true;
-      "Adaptive Stealth Plating", "Fuel Pod", "Thurion Engine Reroute",
+      "Adaptive Stealth Plating", "Fuel Pod", "Engine Reroute",
       "Steering Thrusters", "Shield Capacitor"
    }
 }
 equip_typeOutfits_structurals["Scintillation"] = {
    {
       varied = true;
-      "Adaptive Stealth Plating", "Fuel Pod", "Thurion Engine Reroute",
+      "Adaptive Stealth Plating", "Fuel Pod", "Engine Reroute",
       "Steering Thrusters", "Shield Capacitor"
    }
 }

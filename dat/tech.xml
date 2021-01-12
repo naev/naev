@@ -93,9 +93,6 @@
   <item>Reactor Class II</item>
   <item>Reactor Class III</item>
   <item>Shield Capacitor</item>
-  <item>Thurion Reactor Class I</item>
-  <item>Thurion Reactor Class II</item>
-  <item>Thurion Reactor Class III</item>
   <item>Shield Capacitor II</item>
   <item>Shield Capacitor III</item>
   <item>Shield Capacitor IV</item>
@@ -109,7 +106,6 @@
   <item>Biometal Armour</item>
   <item>Droid Repair Crew</item>
   <item>Engine Reroute</item>
-  <item>Thurion Engine Reroute</item>
   <item>Improved Stabilizer</item>
   <item>Steering Thrusters</item>
   <item>Generic Afterburner</item>
@@ -850,10 +846,6 @@
   <item>Energy Dart</item>
   <item>Convulsion Launcher</item>
   <item>Turreted Convulsion Launcher</item>
-  <item>Thurion Reactor Class I</item>
-  <item>Thurion Reactor Class II</item>
-  <item>Thurion Reactor Class III</item>
-  <item>Thurion Engine Reroute</item>
   <item>Adaptive Stealth Plating</item>
   <item>Active Plating</item>
   <item>Map: Thurion Core</item>
