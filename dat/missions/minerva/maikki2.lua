@@ -66,8 +66,9 @@ hint4_portrait = "drshrimp"
 hint4_image = "drshrimp.png"
 hint4_colour = nil
 
-ecc_name = _("Prof. Strangelove")
-ecc_description = _("Foo")
+ecc_barname = _("Hologram Projector")
+ecc_name = _("Dr. Strangelove")
+ecc_description = _("There is a small hologram projector in the corner. It looks like you can use this to call someone.")
 ecc_portrait = "zalek1"
 ecc_image = "zalek1.png"
 ecc_colour = nil
@@ -89,6 +90,7 @@ end
 eccpnt = "Strangelove Lab"
 eccdiff = "strangelove"
 eccsys = "Westhaven"
+eccpos = vec2.new( 7500, -6000 ) -- Should coincide with "Strangelove Lab"
 
 -- Mission states:
 --  nil: mission not yet accepted
@@ -170,9 +172,9 @@ function approach_maikki ()
 %s in the %s system,
 %s in the %s system,
 and %s in the %s system."]]),
-         hint1_name, hintsys[1],
-         hint2_name, hintsys[2],
-         hint3_name, hintsys[3]
+         hint1_name, _(hintsys[1]),
+         hint2_name, _(hintsys[2]),
+         hint3_name, _(hintsys[3])
       ))
    end
    vn.fadein()
@@ -289,7 +291,7 @@ function land ()
       npc_hint4 = misn.npcAdd( "approach_hint4", hint4_name, hint4_portrait, hint4_description )
 
    elseif diff.isApplied(eccdiff) and planet.cur() == planet.get(eccpnt) then
-      npc_ecc = misn.npcAdd( "approach_eccentric", ecc_name, ecc_portrait, ecc_description )
+      npc_ecc = misn.npcAdd( "approach_eccentric", ecc_barname, ecc_portrait, ecc_description )
 
    end
 end
@@ -317,7 +319,7 @@ function lasthint( prof )
    end
 
    if visits > 2 then
-      prof(string.format(_([["Oh, I suddenly remembered. There was also a post doctoral research working on the project by the name of Cayne. I think he was last working at %s in the %s system."]]), hintpnt[4], hintsys[4]))
+      prof(string.format(_([["Oh, I suddenly remembered. There was also a post doctoral research working on the project by the name of Cayne. I think he was last working at %s in the %s system."]]), _(hintpnt[4]), _(hintsys[4])))
       -- TODO play bingo sound
    end
 end
@@ -466,7 +468,7 @@ function approach_hint4 ()
       return opts end )
 
    vn.label("drshrimp")
-   drshrimp(string.format(_([["After the nebula project, like most other researchers on the team, I got the hell away from nebula research. One day while visiting %s I found about fresh-water shrimp breeding and became enthralled. One thing led to another, and now I'm doing shrimp research."]]), hintpnt[4]))
+   drshrimp(string.format(_([["After the nebula project, like most other researchers on the team, I got the hell away from nebula research. One day while visiting %s I found about fresh-water shrimp breeding and became enthralled. One thing led to another, and now I'm doing shrimp research."]]), _(hintpnt[4])))
    drshrimp(_([["You see, these shrimps are fascinating creatures. They have a really fast reproduction cycle, and reproduce in large numbers, allowing for simple genetic manipulation. While most are bred for colors and physical traits, some have also been trained for mental traits. Calliope here is an example of an extremely mentally capable shrimp."
 He taps the tank of the floating shrimp next to him.]]))
    drshrimp(_([["The capability of these shrimp are endless, and they are helping us understand much more genetic modification than the brute-force approaches of the Soromid, although are technology is still lacking behind."]]))
@@ -506,7 +508,7 @@ He activates her food activation system and a pellet drops out.]]))
    vn.label("strangelove")
    drshrimp(_([["Now I remember! There was a another post doctoral researcher who worked with me. He was a bit weird and kept obsessing with the nebula artifacts. Quite a few went missing during the project and I think it was probably him who was taking them."]]))
    drshrimp(_([["He went really upset when the project was cancelled, threw a big tantrum and all. He was locked in his office for days until they managed to coax him out. Nobody really did much as we were all busy dealing with all the paperwork of the project."]]))
-   drshrimp(string.format(_([["Eventually he did get out and sort of disappeared. Last I heard, he said he was going to %s, which is a bit strange, because not only is there not a research center there, but there isn't even an inhabited planet nor station!"]]), eccsys))
+   drshrimp(string.format(_([["Eventually he did get out and sort of disappeared. Last I heard, he said he was going to %s, which is a bit strange, because not only is there not a research center there, but there isn't even an inhabited planet nor station!"]]), _(eccsys)))
    drshrimp(_([["It's really weird but if you are really interested, I suppose you could try to take a look around there. The whole thing does give me the me the creeps."]]))
    -- TODO play eerie sound
    vn.func( function ()
@@ -532,13 +534,130 @@ end
 
 
 function enter ()
-   if system.cur() == system.get(eccsys) then
-      -- TODO security protocol
-      --diff.apply( eccdiff )
+   if misn_state==2 and system.cur() == system.get(eccsys) then
+      pilot.clear()
+      pilot.toggleSpawn(false)
+      hook.timer( 30000, "ecc_timer" )
    end
 end
 
 
-function approach_eccentric ()
+function ecc_timer ()
+   player.msg(_("#pYour ship has detected a curious signal originating from inside the system.#0"))
+   sysmarker = system.mrkAdd( _("Curious Signal"), eccpos )
+   hook.timer( 500, "ecc_dist" )
 end
+
+function ecc_dist ()
+   local pp = player.pilot()
+   local dist = pp:pos():dist( eccpos )
+   if dist < 3000 then
+      system.mrkRm( sysmarker )
+      local spawners = {
+         "Za'lek Heavy Drone",
+         "Za'lek Light Drone",
+         "Za'lek Light Drone",
+      }
+      defense_systems = {}
+      for k,v in ipairs(spawners) do
+         local pos = eccpos + vec2.newP( rnd.rnd(0,100), rnd.rnd(0,359) )
+         local p = pilot.addRaw( v, "zalek", pos, "Strangelove" )
+         p:rename(_("Security Drone"))
+         p:control()
+         p:setHostile()
+         p:attack( pp )
+         hook.pilot( p, "death", "ecc_drone_dead" )
+         table.insert( defense_systems, p )
+      end
+      defense_systems[1]:broadcast(_("UNAUTHORIZED VESSEL DETECTED. ELIMINATING."))
+      return
+   end
+   hook.timer( 500, "ecc_dist" )
+end
+
+
+function ecc_drone_dead( p )
+   for k,v in ipairs(defense_systems) do
+      if v==p then
+         table.remove( defense_systems, k )
+         break
+      end
+   end
+
+   -- All dead
+   if #defense_systems==0 then
+      hook.timer( 5000, "ecc_timer_dead" )
+   end
+end
+
+
+function ecc_timer_dead ()
+   player.msg(_("Your ships detect that one of the asteroids isn't what it seems..."))
+   diff.apply( eccdiff )
+   misn_state = 3
+end
+
+
+function approach_eccentric ()
+   vn.clear()
+   vn.scene()
+   vn.fadein()
+   local dr = vn.newCharacter( ecc_name, { image=ecc_image, color=ecc_colour } )
+
+   if not ecc_visitedonce then
+      vn.na(_("The hologram projector flickers as what appears to be a grumpy old man appears into view. He doesn't look very pleased to be disturbed."))
+      dr(_([["How did you get in there? Who are you!"]]))
+      ecc_visitedonce = true
+   else
+      vn.na(_("The hologram projector flickers and Dr. Strangelove comes into view. He doesn't look very happy to see you again."))
+   end
+   vn.label("menu_msg")
+   dr(_([["What do you want?"]]))
+   vn.label("menu")
+   vn.menu({ function ()
+      local opts = {
+         {_("Ask about the nebula"), "nebula"},
+         {_("Ask about this place"), "laboratory"},
+         {_("Leave"), "leave"},
+      }
+      if misn_state==4 then
+         table.insert( opts, 1, {_("Ask about job"), "job"} )
+      end
+      return opts
+   end })
+
+   vn.label("nebula")
+   dr(_([[""]]))
+   -- skip back to message if already accepted job
+   vn.func( function () if misn_state>=4 then vn.jump("menu_msg") end end )
+   vn.menu( {
+      {_("Accept the job"), "jobaccept"},
+      {_("Refuse the job"), "jobrefuse"},
+   } )
+   vn.label("jobrefuse")
+   dr(_([["You don't scratch my back and I don't scratch yours."]]))
+   vn.jump("menu_msg")
+
+   vn.label("jobaccept")
+   dr(_([[""]]))
+   vn.func( function ()
+      misn.osdCreate( misn_title, {"Obtain exotic minerals from the %s asteroid field",_(eccsys)} )
+      misn_state = 4
+   end )
+   vn.jump("menu_msg")
+
+   vn.label("job")
+   dr(_([[""]]))
+   vn.jump("menu_msg")
+
+   vn.label("laboratory")
+   dr(_([[""]]))
+   vn.jump("menu_msg")
+
+   vn.label("leave")
+   vn.na(_("You turn off the hologram projector and Dr. Strangelove's image flickers and disappears."))
+   vn.fadeout()
+   vn.run()
+end
+
 
