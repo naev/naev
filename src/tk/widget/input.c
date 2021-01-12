@@ -79,7 +79,6 @@ void window_addInput( const unsigned int wid,
    wgt->dat.inp.view    = 0;
    wgt->dat.inp.input   = calloc( wgt->dat.inp.byte_max, 1 ); /* Maximum length of a unicode character is 4 bytes. */
    wgt->dat.inp.fptr    = NULL;
-   wgt->dat.inp.creating= 1; /* Newly created. */
 
    /* position/size */
    wgt->w = (double) w;
@@ -102,9 +101,6 @@ static void inp_render( Widget* inp, double bx, double by )
    int s;
    size_t p, w;
    int lines;
-
-   /* TODO Should probably be handled in a better place, but I guess this works? */
-   inp->dat.inp.creating = 0;
 
    x = bx + inp->x;
    y = by + inp->y;
@@ -181,10 +177,6 @@ static int inp_text( Widget* inp, const char *buf )
    size_t i;
    int ret;
    uint32_t ch;
-
-   /* Avoid running text events when the window was just created by a key event. */
-   if (inp->dat.inp.creating)
-      return 0;
 
    i = 0;
    ret = 0;
@@ -710,6 +702,7 @@ static void inp_focusGain( Widget* inp )
    input_pos.w = (int)inp->w;
    input_pos.h = (int)inp->h;
 
+   SDL_EventState( SDL_TEXTINPUT, SDL_ENABLE);
    SDL_StartTextInput();
    SDL_SetTextInputRect( &input_pos );
 }
@@ -723,6 +716,7 @@ static void inp_focusLose( Widget* inp )
 {
    (void) inp;
    SDL_StopTextInput();
+   SDL_EventState( SDL_TEXTINPUT, SDL_DISABLE);
 }
 
 
