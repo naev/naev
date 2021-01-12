@@ -55,6 +55,13 @@ SHADERS = [
       uniforms = ["projection", "color", "center", "radius"]
    ),
    Shader(
+      name = "nebula_background",
+      vs_path = "nebula.vert",
+      fs_path = "nebula_background.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "color", "center", "radius", "time"]
+   ),
+   Shader(
       name = "stars",
       vs_path = "stars.vert",
       fs_path = "stars.frag",
