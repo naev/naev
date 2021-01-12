@@ -534,6 +534,7 @@
   <item>Unicorp Jammer</item>
   <item>Large Civilian Vessel License</item>
   <item>Unicorp Medusa Launcher</item>
+  <item>Sensor Array</item>
   <item>Jump Scanner</item>
   <item>Local System Map</item>
   <item>Previous Generation Small Systems</item>
@@ -611,6 +612,7 @@
   <item>Star Maps</item>
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
+  <item>Sensor Array</item>
   <item>Jump Scanner</item>
   <item>Light Combat Vessel License</item>
   <item>Mercenary License</item>
@@ -854,7 +856,6 @@
   <item>Energy Missile</item>
   <item>Energy Torpedo</item>
   <item>Nebular Shielding Prototype</item>
-  <item>Sensor Array</item>
  </tech>
  <tech name="__Heavy Weapon License">
   <item>Heavy Weapon License</item>
