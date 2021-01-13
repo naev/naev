@@ -145,3 +145,4 @@ function scom.decrease( cur, max, timer )
 end
 
 
+return scom
