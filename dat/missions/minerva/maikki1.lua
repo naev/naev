@@ -755,7 +755,7 @@ end
 
 
 function scavengers_encounter ()
-   local bribeamount = 100000 -- 100k credits
+   local bribeamount = 500000 -- 500k credits
 
    vn.clear()
    vn.scene()
