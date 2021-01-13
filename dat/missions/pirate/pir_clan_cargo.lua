@@ -26,7 +26,7 @@
 
 require "numstring"
 require "jumpdist"
-require "portrait"
+local portrait = require "portrait"
 
 bar_desc = _("You see a pirate lord raving about something. A significant crowd has gathered around.")
 misn_title = _("Clans trade")
@@ -60,7 +60,7 @@ function create ()
    dest = planets[index][1]
    sys = planets[index][2]
 
-   misn.setNPC( _("Pirate Lord"), getMilPortrait("Pirate") )
+   misn.setNPC( _("Pirate Lord"), portrait.getMil("Pirate") )
    misn.setDesc( bar_desc )
 end
 

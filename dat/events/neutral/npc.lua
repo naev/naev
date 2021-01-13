@@ -12,7 +12,13 @@
 --]]
 
 require "events/tutorial/tutorial_common"
-require "portrait"
+local portrait = require "portrait"
+local vn = require 'vn'
+
+-- List of planets where there will be NO generic NPCs
+blacklist = {
+   "Minerva Station",
+}
 
 -- Factions which will NOT get generic texts if possible.  Factions
 -- listed here not spawn generic civilian NPCs or get aftercare texts.
@@ -60,6 +66,7 @@ msg_lore["general"] =      {_([["I heard the nebula is haunted! My uncle Bobby t
                               _([["I wouldn't travel north from Alteris if I were you, unless you're a good fighter! That area of space has really gone down the drain since the Incident."]]),
                               _([["Sometimes I look at the stars and wonder... are we the only sentient species in the universe?"]]),
                               _([["Hey, you ever wonder why we're here?" You respond that it's one of the great mysteries of the universe. Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? You don't know, but it sometimes keeps you up at night. As you say this, the citizen stares at you incredulously. "What?? No, I mean why are we in here, in this bar?"]]),
+                              _([["Life is so boring here. I would love to go gamble with all the famous people at Minerva Station."]]),
                            }
 
 msg_lore["Independent"] =  {_([["We're not part of any of the galactic superpowers. We can take care of ourselves!"]]),
@@ -189,7 +196,7 @@ msg_tip =                  {_([["I heard you can set your weapons to only fire w
                               _([["Many factions offer rehabilitation programs to criminals through the mission computer, giving them a chance to get back into their good graces. It can get really expensive for serious offenders though!"]]),
                               _([["These new-fangled missile systems! You can't even fire them unless you get a target lock first! But the same thing goes for your opponents. You can actually make it harder for them to lock on to your ship by equipping scramblers or jammers. Scout class ships are also harder to target."]]),
                               _([["You know how you can't change your ship or your equipment on some planets? Well, it seems you need an outfitter to change equipment, and a shipyard to change ships! Bet you didn't know that."]]),
-                              _("\"Are you trading commodities? You can hold down \abctrl\a0 to buy 50 of them at a time, and \abshift\a0 to buy 100. And if you press them both at once, you can buy 500 at a time! You can actually do that with outfits too, but why would you want to buy 50 laser cannons?\""),
+                              _("\"Are you trading commodities? You can hold down #bctrl#0 to buy 50 of them at a time, and #bshift#0 to buy 100. And if you press them both at once, you can buy 500 at a time! You can actually do that with outfits too, but why would you want to buy 50 laser cannons?\""),
                               _([["If you're on a mission you just can't beat, you can open the information panel and abort the mission. There's no penalty for doing it, so don't hesitate to try the mission again later."]]),
                               _([["Some weapons have a different effect on shields than they do on armor. Keep that in mind when equipping your ship."]]),
                               _([["Afterburners can speed you up a lot, but when they get hot they don't work as well anymore. Don't use them carelessly!"]]),
@@ -208,12 +215,12 @@ msg_tip =                  {_([["I heard you can set your weapons to only fire w
                               _([["There's always an exception to the rule, but I wouldn't recommend using forward-facing weapons on larger ships. Large ships' slower turn rates aren't able to keep up with the dashing and dodging of smaller ships, and aiming is harder anyway what with how complex these ships are. Turrets are much better; they aim automatically and usually do a very good job!"]]),
                               _([["Did you know that turrets' automatic tracking of targets is slowed down by cloaking? Well, now you do! Small ships majorly benefit from a scrambler or two; it makes it much easier to dodge those turrets on the larger ships."]]),
                               _([["Don't forget to have your target selected. Even if you have forward-facing weapons, the weapons will swivel a bit to track your target. But it's absolutely essential for turreted weapons."]]),
-                              _("\"Did you know that you can automatically follow pilot with Autonav? It's true! Just \ableft-click\a0 the pilot to target them and then \abright-click\a0 your target to follow! I like to use this feature for escort missions. It makes them a lot less tedious.\""),
+                              _("\"Did you know that you can automatically follow pilot with Autonav? It's true! Just #bleft-click#0 the pilot to target them and then #bright-click#0 your target to follow! I like to use this feature for escort missions. It makes them a lot less tedious.\""),
                               _([["The new aiming helper feature is awesome! Simply turn it on in your ship's weapons configuration and you get little guides telling you where you should aim to hit your target! I use it a lot."]]),
                               _([["The '¤' symbol is the official galactic symbol for credits. Supposedly it comes from the currency symbol of an ancient Earth civilization. It's sometimes expressed with SI prefixes: 'k¤' for thousands of credits, 'M¤' for millions of credits, and so on."]]),
                               _([["If you're piloting a medium ship, I'd recommend you invest in at least one turreted missile launcher. I had a close call a few decaperiods ago where a bomber nearly blew me to bits outside the range of my Laser Turrets. Luckily I just barely managed to escape to a nearby planet so I could escape the pilot. I've not had that problem ever since I equipped a turreted missile launcher."]]),
                               _([["I've heard that pirates have to keep their reputations up with other pirates by flying pirate ships. The Hyena is considered a pirate ship and is easy to get, but as for the others, I have no idea where they get them from."]]),
-                              string.format( _([["These computer symbols can be confusing sometimes! I've figured it out, though: '%s' means friendly, '%s' means neutral, '%s' means hostile, '%s' means restricted, and '%s' means uninhabited but landable. I wish someone had told me that!"]]), "\aF+\a0", "\aN~\a0", "\aH!!\a0", "\aR*\a0", "\aI=\a0" ),
+                              string.format( _([["These computer symbols can be confusing sometimes! I've figured it out, though: '%s' means friendly, '%s' means neutral, '%s' means hostile, '%s' means restricted, and '%s' means uninhabited but landable. I wish someone had told me that!"]]), "#F+#0", "#N~#0", "#H!!#0", "#R*#0", "#I=#0" ),
                            }
 
 -- Jump point messages.
@@ -263,6 +270,19 @@ msg_edone =                {{"Animal trouble", _([["What? You had rodents sabota
 function create()
    -- Logic to decide what to spawn, if anything.
    -- TODO: Do not spawn any NPCs on restricted assets.
+
+   local blacklisted = false
+   local cur = planet.cur():name()
+   for k,v in ipairs(blacklist) do
+      if cur == v then
+         blacklisted = true
+         break
+      end
+   end
+   if blacklisted then
+      evt.finish()
+   end
+
 
    -- Chance of a jump point message showing up. As this gradually goes
    -- down, it is replaced by lore messages. See spawnNPC function below.
@@ -315,7 +335,7 @@ function spawnNPC()
    end
 
    -- Select a portrait
-   local portrait = getPortrait(fac)
+   local image = portrait.get(fac)
 
    -- Select a description for the civilian.
    local desc = civ_desc[rnd.rnd(1, #civ_desc)]
@@ -340,9 +360,9 @@ function spawnNPC()
          msg = getLoreMessage(fac)
       end
    end
-   local npcdata = {name = npcname, msg = msg, func = func}
+   local npcdata = {name = npcname, msg = msg, func = func, image = portrait.getFullPath(image)}
 
-   id = evt.npcAdd("talkNPC", npcname, portrait, desc, 10)
+   id = evt.npcAdd("talkNPC", npcname, image, desc, 10)
    npcs[id] = npcdata
 end
 
@@ -459,7 +479,13 @@ function talkNPC(id)
       npcdata.func()
    end
 
-   tk.msg(npcdata.name, npcdata.msg)
+   vn.clear()
+   vn.scene()
+   local npc = vn.newCharacter( npcdata.name, { image=npcdata.image } )
+   vn.fadein()
+   npc( npcdata.msg )
+   vn.fadeout()
+   vn.run()
 
    -- Reduce jump message chance
    var.push( "npc_jm_chance", math.max( jm_chance - 0.025, jm_chance_min ) )

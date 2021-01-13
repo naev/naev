@@ -120,7 +120,7 @@ int lua_isshader( lua_State *L, int ind )
  * @brief Frees a shader.
  *
  *    @luatparam Shader shader Shader to free.
- * @luafunc __gc( shader )
+ * @luafunc __gc
  */
 static int shaderL_gc( lua_State *L )
 {
@@ -136,7 +136,7 @@ static int shaderL_gc( lua_State *L )
  *    @luatparam Shader f1 Shader 1 to compare.
  *    @luatparam Shader f2 Shader 2 to compare.
  *    @luatreturn boolean true if both shaders are the same.
- * @luafunc __eq( f1, f2 )
+ * @luafunc __eq
  */
 static int shaderL_eq( lua_State *L )
 {
@@ -154,7 +154,7 @@ static int shaderL_eq( lua_State *L )
  *    @luatparam string vertex Script containing the vertex shader.
  *    @luatparam string fragment String containing the fragment shader.
  *    @luatreturn Shader A newly created shader.
- * @luafunc new( vertex, fragment )
+ * @luafunc new
  */
 static int shaderL_new( lua_State *L )
 {

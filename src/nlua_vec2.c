@@ -170,7 +170,7 @@ int lua_isvector( lua_State *L, int ind )
  *    @luatparam number x If set, the X value for the new vector.
  *    @luatparam number y If set, the Y value for the new vector.
  *    @luatreturn Vec2 The new vector.
- * @luafunc new( x, y )
+ * @luafunc new
  */
 static int vectorL_new( lua_State *L )
 {
@@ -200,7 +200,7 @@ static int vectorL_new( lua_State *L )
  *    @luatparam[opt=0] number m If set, the modulus for the new vector.
  *    @luatparam[opt=0] number a If set, the angle for the new vector, in degrees.
  *    @luatreturn Vec2 The new vector.
- * @luafunc newP( m, a )
+ * @luafunc newP
  */
 static int vectorL_newP( lua_State *L )
 {
@@ -235,7 +235,7 @@ static int vectorL_newP( lua_State *L )
  *    @luatparam number|Vec2 x X coordinate or vector to add to.
  *    @luatparam number|nil y Y coordinate or nil to add to.
  *    @luatreturn Vec2 The result of the vector operation.
- * @luafunc add( v, x, y )
+ * @luafunc add
  */
 static int vectorL_add( lua_State *L )
 {
@@ -312,7 +312,7 @@ static int vectorL_add__( lua_State *L )
  *    @luatparam number|Vec2 x X coordinate or vector to subtract.
  *    @luatparam number|nil y Y coordinate or nil to subtract.
  *    @luatreturn Vec2 The result of the vector operation.
- * @luafunc sub( v, x, y )
+ * @luafunc sub
  */
 static int vectorL_sub( lua_State *L )
 {
@@ -382,7 +382,7 @@ static int vectorL_sub__( lua_State *L )
  *    @luatparam Vec2 v Vector to multiply.
  *    @luatparam number mod Amount to multiply by.
  *    @luatreturn Vec2 The result of the vector operation.
- * @luafunc mul( v, mod )
+ * @luafunc mul
  */
 static int vectorL_mul( lua_State *L )
 {
@@ -422,7 +422,7 @@ static int vectorL_mul__( lua_State *L )
  *    @luatparam Vec2 v Vector to divide.
  *    @luatparam number mod Amount to divide by.
  *    @luatreturn Vec2 The result of the vector operation.
- * @luafunc div( v, mod )
+ * @luafunc div
  */
 static int vectorL_div( lua_State *L )
 {
@@ -462,7 +462,7 @@ static int vectorL_div__( lua_State *L )
  *    @luatparam Vec2 v Vector to get position of.
  *    @luatreturn number X position of the vector.
  *    @luatreturn number Y position of the vector.
- * @luafunc get(v)
+ * @luafunc get
  */
 static int vectorL_get( lua_State *L )
 {
@@ -487,7 +487,7 @@ static int vectorL_get( lua_State *L )
  *    @luatparam Vec2 v Vector to get polar coordinates of.
  *    @luatreturn number The modulus of the vector.
  *    @luatreturn number The angle of the vector.
- * @luafunc polar(v)
+ * @luafunc polar
  */
 static int vectorL_polar( lua_State *L )
 {
@@ -509,7 +509,7 @@ static int vectorL_polar( lua_State *L )
  *    @luatparam Vec2 v Vector to set coordinates of.
  *    @luatparam number x X coordinate to set.
  *    @luatparam number y Y coordinate to set.
- * @luafunc set( v, x, y )
+ * @luafunc set
  */
 static int vectorL_set( lua_State *L )
 {
@@ -533,7 +533,7 @@ static int vectorL_set( lua_State *L )
  *    @luatparam Vec2 v Vector to set coordinates of.
  *    @luatparam number m Modulus to set.
  *    @luatparam number a Angle to set, in degrees.
- * @luafunc setP( v, m, a )
+ * @luafunc setP
  */
 static int vectorL_setP( lua_State *L )
 {
@@ -558,7 +558,7 @@ static int vectorL_setP( lua_State *L )
  *    @luatparam Vec2 v Vector to act as origin.
  *    @luatparam Vec2 v2 Vector to get distance from, uses origin (0,0) if not set.
  *    @luatreturn number The distance calculated.
- * @luafunc dist( v, v2 )
+ * @luafunc dist
  */
 static int vectorL_distance( lua_State *L )
 {
@@ -594,7 +594,7 @@ static int vectorL_distance( lua_State *L )
  *    @luatparam Vec2 v Vector to act as origin.
  *    @luatparam Vec2 v2 Vector to get squared distance from, uses origin (0,0) if not set.
  *    @luatreturn number The distance calculated.
- * @luafunc dist2( v, v2 )
+ * @luafunc dist2
  */
 static int vectorL_distance2( lua_State *L )
 {
@@ -625,7 +625,7 @@ static int vectorL_distance2( lua_State *L )
  * @brief Gets the modulus of the vector.
  *    @luatparam Vec2 v Vector to get modulus of.
  *    @luatreturn number The modulus of the vector.
- * @luafunc mod(v)
+ * @luafunc mod
  */
 static int vectorL_mod( lua_State *L )
 {

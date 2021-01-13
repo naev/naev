@@ -596,4 +596,21 @@
    <enemy>DHC</enemy>
   </enemies>
  </faction>
+ <faction>
+  <name>Strangelove</name>
+  <display>Independent</display>
+  <static />
+  <invisible />
+  <known />
+  <player>0</player>
+  <standing>static</standing>
+  <equip>pirate</equip>
+  <enemies>
+   <enemy>Za'lek</enemy>
+   <enemy>Pirate</enemy>
+   <enemy>Miner</enemy>
+   <enemy>Trader</enemy>
+   <enemy>Traders Guild</enemy>
+  </enemies>
+ </faction>
 </Factions>

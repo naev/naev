@@ -93,7 +93,7 @@ int nlua_loadShiplog( nlua_env env )
  *    @luatparam[opt] boolean overwrite Whether to remove previous entries of this logname and type (default false).
  *    @luatparam[opt] number maxLen Maximum length of the log (zero or nil for infinite) - if greater than this length, new entries appended will result in old entries being removed. 
  *
- * @luafunc createLog( idstr, logname, logtype, overwrite, maxLen )
+ * @luafunc createLog
  */
 static int shiplog_createLog( lua_State *L )
 {
@@ -127,7 +127,7 @@ static int shiplog_createLog( lua_State *L )
  *
  *    @luatparam string idstr ID string of the log to append to.
  *    @luatparam string message Message to append to the log.
- * @luafunc appendLog( idstr, message )
+ * @luafunc appendLog
  */
 static int shiplog_appendLog( lua_State *L )
 {

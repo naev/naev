@@ -95,7 +95,7 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent );
 static void event_freeData( EventData *event );
 static int event_create( int dataid, unsigned int *id );
 int events_saveActive( xmlTextWriterPtr writer );
-int events_loadActive( xmlNodePtr parent );;
+int events_loadActive( xmlNodePtr parent );
 static int events_parseActive( xmlNodePtr parent );
 
 
@@ -556,7 +556,7 @@ int events_load (void)
    /* Sort based on priority so higher priority missions can establish claims first. */
    qsort( event_data, array_size(event_data), sizeof(EventData), event_cmp );
 
-   DEBUG( ngettext("Loaded %d Event", "Loaded %d Events", array_size(event_data) ), array_size(event_data) );
+   DEBUG( n_("Loaded %d Event", "Loaded %d Events", array_size(event_data) ), array_size(event_data) );
 
    return 0;
 }

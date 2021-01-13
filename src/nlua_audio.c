@@ -11,6 +11,7 @@
 
 /** @cond */
 #include <lauxlib.h>
+#include "physfsrwops.h"
 
 #include "naev.h"
 /** @endcond */
@@ -19,8 +20,10 @@
 
 #include "nlua_vec2.h"
 #include "nluadef.h"
+#include "nlua_file.h"
 #include "nstring.h"
 #include "sound.h"
+#include "sound_openal.h"
 
 
 /* Camera methods. */
@@ -140,12 +143,13 @@ int lua_isaudio( lua_State *L, int ind )
  * @brief Frees a audio.
  *
  *    @luatparam Audio audio Audio to free.
- * @luafunc __gc( audio )
+ * @luafunc __gc
  */
 static int audioL_gc( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   (void) la; /* TODO */
+   alDeleteSources( 1, &la->source );
+   alDeleteBuffers( 1, &la->buffer );
    return 0;
 }
 
@@ -156,7 +160,7 @@ static int audioL_gc( lua_State *L )
  *    @luatparam Audio a1 Audio 1 to compare.
  *    @luatparam Audio a2 Audio 2 to compare.
  *    @luatreturn boolean true if both audios are the same.
- * @luafunc __eq( a1, a2 )
+ * @luafunc __eq
  */
 static int audioL_eq( lua_State *L )
 {
@@ -168,60 +172,133 @@ static int audioL_eq( lua_State *L )
 }
 
 
+/**
+ * @brief Creates a new audio source.
+ *
+ *    @luatparam string|File data Data to load the audio from.
+ *    @luatreturn Audio New audio corresponding to the data.
+ * @luafunc new
+ */
 static int audioL_new( lua_State *L )
 {
    LuaAudio_t la;
-   const char *str;
-   str = luaL_checkstring(L,1);
-   (void) str; /* TODO */
+   LuaFile_t *lf;
+   const char *name;
+   SDL_RWops *rw;
+   double master;
+
+   name = NULL;
+   rw = NULL;
+
+   if (lua_isstring(L,1))
+      name = lua_tostring(L,1);
+   else if (lua_isfile(L,1)) {
+      lf = lua_tofile(L,1);
+      name = lf->path;
+   }
+   else
+      NLUA_INVALID_PARAMETER(L);
+   rw = PHYSFSRWOPS_openRead( name );
+
+   alGenSources( 1, &la.source );
+   alGenBuffers( 1, &la.buffer );
+
+   sound_al_buffer( &la.buffer, rw, name );
+
+   /* Attach buffer. */
+   alSourcei( la.source, AL_BUFFER, la.buffer );
+
+   /* Defaults. */
+   master = sound_getVolumeLog();
+   alSourcef( la.source, AL_GAIN, master );
+
+   SDL_RWclose( rw );
+
    lua_pushaudio(L, la);
    return 1;
 }
 
 
+/**
+ * @brief Plays a source.
+ *
+ *    @luatparam Audio source Source to play.
+ *    @luatreturn boolean True on success.
+ * @luafunc play
+ */
 static int audioL_play( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   (void) la; /* TODO */
+   alSourcePlay( la->source );
    lua_pushboolean(L,1);
    return 1;
 }
 
 
+/**
+ * @brief Pauses a source.
+ *
+ *    @luatparam Audio source Source to pause.
+ *    @luatreturn boolean True on success.
+ * @luafunc pause
+ */
 static int audioL_pause( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   (void) la; /* TODO */
+   alSourcePause( la->source );
    return 0;
 }
 
 
+/**
+ * @brief Stops a source.
+ *
+ *    @luatparam Audio source Source to stop.
+ *    @luatreturn boolean True on success.
+ * @luafunc stop
+ */
 static int audioL_stop( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   (void) la; /* TODO */
+   alSourceStop( la->source );
    return 0;
 }
 
 
+/**
+ * @brief Sets the volume of a source.
+ *
+ *    @luatparam Audio source Source to set volume of.
+ *    @luatparam number vol Volume to set the source to.
+ * @luafunc setVolume
+ */
 static int audioL_setVolume( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    double volume = luaL_checknumber(L,2);
-   (void) la; /* TODO */
-   (void) volume; /* TODO */
+   double master = sound_getVolumeLog();
+   alSourcef( la->source, AL_GAIN, master * volume );
    return 0;
 }
 
 
+/**
+ * @brief Gets the volume of a source.
+ *
+ *    @luatparam Audio source Source to get volume of.
+ *    @luatreturn number Volume the source is set to.
+ * @luafunc getVolume
+ */
 static int audioL_getVolume( lua_State *L )
 {
    LuaAudio_t *la;
-   double volume;
+   double volume, master;
+   ALfloat alvol;
    if (lua_gettop(L)>0) {
       la = luaL_checkaudio(L,1);
-      (void) la; /* TODO */
-      volume = 0.;
+      alGetSourcef( la->source, AL_GAIN, &alvol );
+      master = sound_getVolumeLog();
+      volume = alvol / master;
    }
    else {
       volume = sound_getVolume();
@@ -231,22 +308,34 @@ static int audioL_getVolume( lua_State *L )
 }
 
 
+/**
+ * @brief Sets a source to be looping or not.
+ *
+ *    @luatparam Audio source Source to set looping state of.
+ *    @luatparam boolean enable Whether or not the source should be set to looping.
+ * @luafunc getVolume
+ */
 static int audioL_setLooping( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    int b = lua_toboolean(L,2);
-   (void) la; /* TODO */
-   (void) b; /* TODO */
+   alSourcei( la->source, AL_LOOPING, b );
    return 0;
 }
 
 
+/**
+ * @brief Sets the pitch of a source.
+ *
+ *    @luatparam Audio source Source to set pitch of.
+ *    @luatparam number pitch Pitch to set the source to.
+ * @luafunc setPitch
+ */
 static int audioL_setPitch( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    double pitch = luaL_checknumber(L,2);
-   (void) la; /* TODO */
-   (void) pitch; /* TODO */
+   alSourcei( la->source, AL_PITCH, pitch );
    return 0;
 }
 
@@ -263,7 +352,7 @@ static int audioL_setPitch( lua_State *L )
  *    @luatparam string s Name of the sound to play
  *    @luatparam[opt] Vec2 pos Position of the source
  *    @luatparam[opt] Vec2 vel Velocity of the source
- * @luafunc soundPlay( s )
+ * @luafunc soundPlay
  */
 static int audioL_soundPlay( lua_State *L )
 {

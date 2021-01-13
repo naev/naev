@@ -1,7 +1,7 @@
 # Files in this overlay derived from https://github.com/franko/luajit
 # as of commit d9791bf68eecfd3c41d669a0439577e59031a749 (2020-12-09).
 
-project('luajit', 'c', version : '2.0.5', default_options : ['c_winlibs='])
+project('luajit', 'c', version : '2.1.0-beta3', default_options : ['c_winlibs='])
 
 cc = meson.get_compiler('c')
 libm = cc.find_library('m', required : false)

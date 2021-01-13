@@ -50,10 +50,10 @@ function image.ImageData:setPixel( x, y, r, g, b, a )
 end
 function image.ImageData:paste( source, dx, dy, sx, sy, sw, sh )
    -- probably very slow
-   for x = 0,sw-1 do
-      for y = 0,sh-1 do
-         self:setPixel( dx+x, dy+y, source:getPixel( sx+x, sy+y ) )
-      end
+   for y = 0,sh-1 do
+      local dx = _id_pos(self, dx, dy+y )
+      local sx = _id_pos(source, sx, sy+y )
+      self.d:paste( source.d, dx, sx, 4*sw )
    end
    return self
 end

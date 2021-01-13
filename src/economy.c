@@ -602,7 +602,7 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
 
    CommodityModifier *cm;
    double base, scale, factor;
-   char *factionname;
+   const char *factionname;
 
    /* Check the faction is not NULL.*/
    if ( planet->faction == -1 ) {

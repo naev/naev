@@ -7,6 +7,8 @@
  *
  * @brief Controls the Pilot AI.
  *
+ * @luamod ai
+ *
  * AI Overview
  *
  * Concept: Goal (Task) Based AI with additional Optimization
@@ -585,7 +587,7 @@ int ai_load (void)
       }
    }
 
-   DEBUG( ngettext("Loaded %d AI Profile", "Loaded %d AI Profiles", array_size(profiles) ), array_size(profiles) );
+   DEBUG( n_("Loaded %d AI Profile", "Loaded %d AI Profiles", array_size(profiles) ), array_size(profiles) );
 
    /* More clean up. */
    PHYSFS_freeList( files );
@@ -1106,15 +1108,13 @@ static int ai_tasktarget( lua_State *L, Task *t )
  * ai.function( params )
  * @endcode
  *
- * @luamod ai
- *
  * @{
  */
 /**
  * @brief Pushes a task onto the pilot's task list.
  *    @luatparam string func Name of function to call for task.
  *    @luaparam[opt] data Data to pass to the function.  Supports any lua type.
- * @luafunc pushtask( func, data )
+ * @luafunc pushtask
  *    @return Number of Lua parameters.
  */
 static int aiL_pushtask( lua_State *L )
@@ -1125,7 +1125,7 @@ static int aiL_pushtask( lua_State *L )
 }
 /**
  * @brief Pops the current running task.
- * @luafunc poptask()
+ * @luafunc poptask
  *    @return Number of Lua parameters.
  */
 static int aiL_poptask( lua_State *L )
@@ -1145,7 +1145,7 @@ static int aiL_poptask( lua_State *L )
 /**
  * @brief Gets the current task's name.
  *    @luatreturn string The current task name or nil if there are no tasks.
- * @luafunc taskname()
+ * @luafunc taskname
  *    @return Number of Lua parameters.
  */
 static int aiL_taskname( lua_State *L )
@@ -1162,7 +1162,7 @@ static int aiL_taskname( lua_State *L )
  * @brief Gets the pilot's task target.
  *    @luareturn The pilot's target ship identifier or nil if no target.
  *    @luasee pushtask
- * @luafunc target()
+ * @luafunc target
  *    @return Number of Lua parameters.
  */
 static int aiL_gettarget( lua_State *L )
@@ -1180,7 +1180,7 @@ static int aiL_gettarget( lua_State *L )
  * @brief Pushes a subtask onto the pilot's task's subtask list.
  *    @luatparam string func Name of function to call for task.
  *    @luaparam[opt] data Data to pass to the function.  Supports any lua type.
- * @luafunc pushsubtask( func, data )
+ * @luafunc pushsubtask
  *    @return Number of Lua parameters.
  */
 static int aiL_pushsubtask( lua_State *L )
@@ -1191,7 +1191,7 @@ static int aiL_pushsubtask( lua_State *L )
 
 /**
  * @brief Pops the current running task.
- * @luafunc popsubtask()
+ * @luafunc popsubtask
  *    @return Number of Lua parameters.
  */
 static int aiL_popsubtask( lua_State *L )
@@ -1220,7 +1220,7 @@ static int aiL_popsubtask( lua_State *L )
 /**
  * @brief Gets the current subtask's name.
  *    @luatreturn string The current subtask name or nil if there are no subtasks.
- * @luafunc subtaskname()
+ * @luafunc subtaskname
  *    @return Number of Lua parameters.
  */
 static int aiL_subtaskname( lua_State *L )
@@ -1237,7 +1237,7 @@ static int aiL_subtaskname( lua_State *L )
  * @brief Gets the pilot's subtask target.
  *    @luareturn The pilot's target ship identifier or nil if no target.
  *    @luasee pushsubtask
- * @luafunc subtarget()
+ * @luafunc subtarget
  *    @return Number of Lua parameters.
  */
 static int aiL_getsubtarget( lua_State *L )
@@ -1254,7 +1254,7 @@ static int aiL_getsubtarget( lua_State *L )
 /**
  * @brief Gets the AI's pilot.
  *    @luatreturn Pilot The AI's pilot.
- * @luafunc pilot()
+ * @luafunc pilot
  *    @return Number of Lua parameters.
  */
 static int aiL_pilot( lua_State *L )
@@ -1267,7 +1267,7 @@ static int aiL_pilot( lua_State *L )
 /**
  * @brief Gets a random pilot in the system.
  *    @luatreturn Pilot|nil
- * @luafunc rndpilot()
+ * @luafunc rndpilot
  *    @return Number of Lua parameters.
  */
 static int aiL_getrndpilot( lua_State *L )
@@ -1293,7 +1293,7 @@ static int aiL_getrndpilot( lua_State *L )
  * @brief gets the nearest pilot to the current pilot
  *
  *    @luatreturn Pilot|nil
- *    @luafunc nearestpilot()
+ *    @luafunc nearestpilot
  */
 static int aiL_getnearestpilot( lua_State *L )
 {
@@ -1329,7 +1329,7 @@ static int aiL_getnearestpilot( lua_State *L )
  *
  *    @luatparam Vec2|Pilot pointer
  *    @luatreturn number The distance from the pointer.
- *    @luafunc dist( pointer )
+ *    @luafunc dist
  */
 static int aiL_getdistance( lua_State *L )
 {
@@ -1359,7 +1359,7 @@ static int aiL_getdistance( lua_State *L )
  *
  *    @luatparam Vec2|Pilot pointer
  *    @luatreturn number offset_distance
- *    @luafunc flyby_dist( pointer )
+ *    @luafunc flyby_dist
  */
 static int aiL_getflybydistance( lua_State *L )
 {
@@ -1401,7 +1401,7 @@ static int aiL_getflybydistance( lua_State *L )
  *
  *
  *    @luatreturn number Minimum braking distance.
- *    @luafunc minbrakedist()
+ *    @luafunc minbrakedist
  */
 static int aiL_minbrakedist( lua_State *L )
 {
@@ -1450,7 +1450,7 @@ static int aiL_minbrakedist( lua_State *L )
  *
  *    @luatparam Pilot target
  *    @luatreturn boolean Whether the target has bribed pilot.
- *    @luafunc isbribed( target )
+ *    @luafunc isbribed
  */
 static int aiL_isbribed( lua_State *L )
 {
@@ -1466,7 +1466,7 @@ static int aiL_isbribed( lua_State *L )
  *
  *    @luatparam Pilot target Pilot to get faction standing of.
  *    @luatreturn number|nil The faction standing of the target [-100,100] or nil if invalid.
- * @luafunc getstanding( target )
+ * @luafunc getstanding
  */
 static int aiL_getstanding( lua_State *L )
 {
@@ -1495,7 +1495,7 @@ static int aiL_getstanding( lua_State *L )
  * @brief Checks to see if pilot is at maximum velocity.
  *
  *    @luatreturn boolean Whether the pilot is at maximum velocity.
- *    @luafunc ismaxvel()
+ *    @luafunc ismaxvel
  */
 static int aiL_ismaxvel( lua_State *L )
 {
@@ -1510,7 +1510,7 @@ static int aiL_ismaxvel( lua_State *L )
  * @brief Checks to see if pilot is stopped.
  *
  *    @luatreturn boolean Whether the pilot is stopped.
- *    @luafunc isstopped()
+ *    @luafunc isstopped
  */
 static int aiL_isstopped( lua_State *L )
 {
@@ -1524,7 +1524,7 @@ static int aiL_isstopped( lua_State *L )
  *
  *    @luatparam Pilot target
  *    @luatreturn boolean Whether the target is an enemy.
- *    @luafunc isenemy( target )
+ *    @luafunc isenemy
  */
 static int aiL_isenemy( lua_State *L )
 {
@@ -1550,7 +1550,7 @@ static int aiL_isenemy( lua_State *L )
  *
  *    @luatparam Pilot target
  *    @luatreturn boolean Whether the target is an ally.
- *    @luafunc isally( target )
+ *    @luafunc isally
  */
 static int aiL_isally( lua_State *L )
 {
@@ -1575,7 +1575,7 @@ static int aiL_isally( lua_State *L )
  * @brief Checks to see if pilot has a missile lockon.
  *
  *    @luatreturn boolean Whether the pilot has a missile lockon.
- *    @luafunc haslockon()
+ *    @luafunc haslockon
  */
 
 static int aiL_haslockon( lua_State *L )
@@ -1589,7 +1589,7 @@ static int aiL_haslockon( lua_State *L )
  * @brief Checks to see if pilot has a projectile after him.
  *
  *    @luatreturn boolean Whether the pilot has a projectile after him.
- *    @luafunc hasprojectile()
+ *    @luafunc hasprojectile
  */
 
 static int aiL_hasprojectile( lua_State *L )
@@ -1603,7 +1603,7 @@ static int aiL_hasprojectile( lua_State *L )
  * @brief Starts accelerating the pilot.
  *
  *    @luatparam[opt=1.] number acceleration Fraction of pilot's maximum acceleration from 0 to 1.
- *    @luafunc accel( acceleration )
+ *    @luafunc accel
  */
 static int aiL_accel( lua_State *L )
 {
@@ -1627,7 +1627,7 @@ static int aiL_accel( lua_State *L )
  * @brief Starts turning the pilot.
  *
  *    @luatparam number vel Directional velocity from -1 to 1.
- *    @luafunc turn( vel )
+ *    @luafunc turn
  */
 static int aiL_turn( lua_State *L )
 {
@@ -1647,7 +1647,7 @@ static int aiL_turn( lua_State *L )
  *    @luatparam boolean invert Invert away from target.
  *    @luatparam boolean compensate Compensate for velocity?
  *    @luatreturn number Angle offset in degrees.
- * @luafunc face( target, invert, compensate )
+ * @luafunc face
  */
 static int aiL_face( lua_State *L )
 {
@@ -1738,7 +1738,7 @@ static int aiL_face( lua_State *L )
  * Only visible ships are taken into account.
  *
  *    @luatparam Pilot|Vec2|number target Target to go to.
- * @luafunc careful_face( target )
+ * @luafunc careful_face
  */
 static int aiL_careful_face( lua_State *L )
 {
@@ -1826,7 +1826,7 @@ static int aiL_careful_face( lua_State *L )
  *
  *    @luatparam Pilot target The pilot to aim at
  *    @luatreturn number The offset from the target aiming position (in degrees).
- * @luafunc aim( target )
+ * @luafunc aim
  */
 static int aiL_aim( lua_State *L )
 {
@@ -1856,7 +1856,7 @@ static int aiL_aim( lua_State *L )
  *
  *    @luatparam Pilot|Vec2 target Position or pilot to intercept.
  *    @luatreturn number The offset from the proper intercept course (in degrees).
- * @luafunc iface( target )
+ * @luafunc iface
  */
 static int aiL_iface( lua_State *L )
 {
@@ -1944,7 +1944,7 @@ static int aiL_iface( lua_State *L )
  *
  *    @luatparam Pilot|Vec2 target Position or pilot to compare facing to
  *    @luatreturn number The facing offset to the target (in degrees).
- * @luafunc dir( target )
+ * @luafunc dir
  *
  */
 static int aiL_dir( lua_State *L )
@@ -1988,7 +1988,7 @@ static int aiL_dir( lua_State *L )
  *
  *    @luatparam Pilot|Vec2 target Position or pilot to compare facing to
  *    @luatreturn number The facing offset to intercept-course to the target (in degrees).
- * @luafunc idir( target )
+ * @luafunc idir
  */
 static int aiL_idir( lua_State *L )
 {
@@ -2057,7 +2057,7 @@ static int aiL_idir( lua_State *L )
  * @brief Calculate the offset between the pilot's current direction of travel and the pilot's current facing.
  *
  *    @luatreturn number Offset
- *    @luafunc drift_facing()
+ *    @luafunc drift_facing
  */
 static int aiL_drift_facing( lua_State *L )
 {
@@ -2071,7 +2071,7 @@ static int aiL_drift_facing( lua_State *L )
  * @brief Brakes the pilot.
  *
  *    @luatreturn boolean Whether braking is finished.
- *    @luafunc brake()
+ *    @luafunc brake
  */
 
 static int aiL_brake( lua_State *L )
@@ -2092,7 +2092,7 @@ static int aiL_brake( lua_State *L )
  * @brief Get the nearest friendly planet to the pilot.
  *
  *    @luatreturn Planet|nil
- *    @luafunc nearestplanet()
+ *    @luafunc nearestplanet
  */
 static int aiL_getnearestplanet( lua_State *L )
 {
@@ -2129,7 +2129,7 @@ static int aiL_getnearestplanet( lua_State *L )
  * @brief Get a random planet.
  *
  *    @luatreturn Planet|nil
- *    @luafunc rndplanet()
+ *    @luafunc rndplanet
  */
 static int aiL_getrndplanet( lua_State *L )
 {
@@ -2153,7 +2153,7 @@ static int aiL_getrndplanet( lua_State *L )
  *
  *    @luatparam boolean only_friend Only check for ally planets.
  *    @luatreturn Planet|nil
- * @luafunc landplanet( only_friend )
+ * @luafunc landplanet
  */
 static int aiL_getlandplanet( lua_State *L )
 {
@@ -2210,7 +2210,7 @@ static int aiL_getlandplanet( lua_State *L )
  * @brief Lands on a planet.
  *
  *    @luatreturn boolean Whether landing was successful.
- *    @luafunc land()
+ *    @luafunc land
  */
 static int aiL_land( lua_State *L )
 {
@@ -2265,7 +2265,7 @@ static int aiL_land( lua_State *L )
  * @brief Tries to enter hyperspace.
  *
  *    @luatreturn number|nil Distance if too far away.
- *    @luafunc hyperspace()
+ *    @luafunc hyperspace
  */
 static int aiL_hyperspace( lua_State *L )
 {
@@ -2288,7 +2288,7 @@ static int aiL_hyperspace( lua_State *L )
  *
  *    @luatparam Jump target Hyperspace target
  *    @luareturn Vec2 Where to go to jump
- *    @luafunc sethyptarget(target)
+ *    @luafunc sethyptarget
  */
 static int aiL_sethyptarget( lua_State *L )
 {
@@ -2325,7 +2325,7 @@ static int aiL_sethyptarget( lua_State *L )
  * @brief Gets the nearest hyperspace target.
  *
  *    @luatreturn JumpPoint|nil
- *    @luafunc nearhyptarget()
+ *    @luafunc nearhyptarget
  */
 static int aiL_nearhyptarget( lua_State *L )
 {
@@ -2370,7 +2370,7 @@ static int aiL_nearhyptarget( lua_State *L )
  * @brief Gets a random hyperspace target.
  *
  *    @luatreturn JumpPoint|nil
- *    @luafunc rndhyptarget()
+ *    @luafunc rndhyptarget
  */
 static int aiL_rndhyptarget( lua_State *L )
 {
@@ -2415,7 +2415,7 @@ static int aiL_rndhyptarget( lua_State *L )
  * @brief Gets the relative velocity of a pilot.
  *
  *    @luatreturn number Relative velocity.
- * @luafunc relvel()
+ * @luafunc relvel
  */
 static int aiL_relvel( lua_State *L )
 {
@@ -2458,7 +2458,7 @@ static int aiL_relvel( lua_State *L )
  *    @luatparam number Kd The second controller parameter
  *    @luatparam[opt] string method Method to compute goal angle
  *    @luareturn The point to go to as a vector2.
- * @luafunc follow_accurate( target, radius, angle, Kp, Kd, method )
+ * @luafunc follow_accurate
  */
 static int aiL_follow_accurate( lua_State *L )
 {
@@ -2518,7 +2518,7 @@ static int aiL_follow_accurate( lua_State *L )
  *    @luatparam number Kp The first controller parameter
  *    @luatparam number Kd The second controller parameter
  *    @luareturn The point to go to as a vector2.
- * @luafunc face_accurate( target, radius, angle, Kp, Kd, method )
+ * @luafunc face_accurate
  */
 static int aiL_face_accurate( lua_State *L )
 {
@@ -2558,7 +2558,7 @@ static int aiL_face_accurate( lua_State *L )
 /**
  * @brief Completely stops the pilot if it is below minimum vel error (no insta-stops).
  *
- *    @luafunc stop()
+ *    @luafunc stop
  */
 static int aiL_stop( lua_State *L )
 {
@@ -2574,7 +2574,7 @@ static int aiL_stop( lua_State *L )
  * @brief Docks the ship.
  * 
  *    @luatparam Pilot target Pilot to dock with.
- *    @luafunc dock( target )
+ *    @luafunc dock
  */
 static int aiL_dock( lua_State *L )
 {
@@ -2592,7 +2592,7 @@ static int aiL_dock( lua_State *L )
  * @brief Sets the combat flag.
  * 
  *    @luatparam[opt=true] boolean val Value to set flag to.
- *    @luafunc combat( val )
+ *    @luafunc combat
  */
 static int aiL_combat( lua_State *L )
 {
@@ -2613,7 +2613,7 @@ static int aiL_combat( lua_State *L )
  * @brief Sets the pilot's target.
  * 
  *    @luaparam target Pilot to target.
- *    @luafunc settarget( target )
+ *    @luafunc settarget
  */
 static int aiL_settarget( lua_State *L )
 {
@@ -2629,7 +2629,7 @@ static int aiL_settarget( lua_State *L )
  * 
  *    @luaparam int field Id of the field to target.
  *    @luaparam int ast Id of the asteroid to target.
- *    @luafunc setasterotarget( field, ast )
+ *    @luafunc setasterotarget
  */
 static int aiL_setasterotarget( lua_State *L )
 {
@@ -2650,7 +2650,7 @@ static int aiL_setasterotarget( lua_State *L )
  * 
  *    @luaparam float rad Radius to search in.
  *    @luareturn int i Id of the gatherable or nil if none found.
- *    @luafunc getgatherable( field, ast )
+ *    @luafunc getgatherable
  */
 static int aiL_getGatherable( lua_State *L )
 {
@@ -2679,7 +2679,7 @@ static int aiL_getGatherable( lua_State *L )
  *    @luaparam int id Id of the gatherable.
  *    @luareturn vec2 pos position of the gatherable.
  *    @luareturn vec2 vel velocity of the gatherable.
- *    @luafunc gatherablepos( field, ast )
+ *    @luafunc gatherablepos
  */
 static int aiL_gatherablePos( lua_State *L )
 {
@@ -2705,7 +2705,7 @@ static int aiL_gatherablePos( lua_State *L )
  *
  *    @luatparam number id ID of the weapon set to switch to or fire.
  *    @luatparam[opt=true] boolean type true to activate, false to deactivate.
- * @luafunc weapset( id, type )
+ * @luafunc weapset
  */
 static int aiL_weapSet( lua_State *L )
 {
@@ -2756,7 +2756,7 @@ static int aiL_weapSet( lua_State *L )
  * @brief Does the pilot have cannons?
  *
  *    @luatreturn boolean True if the pilot has cannons.
- * @luafunc hascannons()
+ * @luafunc hascannons
  */
 static int aiL_hascannons( lua_State *L )
 {
@@ -2769,7 +2769,7 @@ static int aiL_hascannons( lua_State *L )
  * @brief Does the pilot have turrets?
  *
  *    @luatreturn boolean True if the pilot has turrets.
- * @luafunc hasturrets()
+ * @luafunc hasturrets
  */
 static int aiL_hasturrets( lua_State *L )
 {
@@ -2782,7 +2782,7 @@ static int aiL_hasturrets( lua_State *L )
  * @brief Does the pilot have afterburners?
  *
  *    @luatreturn boolean True if the pilot has afterburners.
- * @luafunc hasafterburners()
+ * @luafunc hasafterburners
  */
 static int aiL_hasafterburner( lua_State *L )
 {
@@ -2795,7 +2795,7 @@ static int aiL_hasafterburner( lua_State *L )
  * @brief Makes the pilot shoot
  *
  *    @luatparam[opt=false] boolean secondary Fire secondary weapons instead of primary.
- *    @luafunc shoot( secondary )
+ *    @luafunc shoot
  */
 static int aiL_shoot( lua_State *L )
 {
@@ -2816,7 +2816,7 @@ static int aiL_shoot( lua_State *L )
  * @brief Gets the nearest enemy.
  *
  *    @luatreturn Pilot|nil
- *    @luafunc getenemy()
+ *    @luafunc getenemy
  */
 static int aiL_getenemy( lua_State *L )
 {
@@ -2838,7 +2838,7 @@ static int aiL_getenemy( lua_State *L )
  *  @luatparam number lb Lower size bound
  *  @luatparam number ub upper size bound
  *  @luatreturn Pilot
- *  @luafunc getenemy_size( lb, ub )
+ *  @luafunc getenemy_size
  */
 static int aiL_getenemy_size( lua_State *L )
 {
@@ -2873,7 +2873,7 @@ static int aiL_getenemy_size( lua_State *L )
  *  @luatparam number hp goal HP map (0-1)
  *  @luatparam number range weighting for range (typically > 1)
  *  @luatreturn Pilot the best fitting target
- *  @luafunc getenemy_heuristic( mass, dps, hp, range )
+ *  @luafunc getenemy_heuristic
  */
 static int aiL_getenemy_heuristic( lua_State *L )
 {
@@ -2901,7 +2901,7 @@ static int aiL_getenemy_heuristic( lua_State *L )
  * @brief Sets the enemy hostile (basically notifies of an impending attack).
  *
  *    @luatparam Pilot target Pilot to set hostile.
- *    @luafunc hostile( target )
+ *    @luafunc hostile
  */
 static int aiL_hostile( lua_State *L )
 {
@@ -2922,7 +2922,7 @@ static int aiL_hostile( lua_State *L )
  *    @luatparam[opt] number id Optional parameter indicating id of weapon set to get range of, defaults to selected one.
  *    @luatparam[opt=-1] number level Level of weapon set to get range of.
  *    @luatreturn number The range of the weapon set.
- * @luafunc getweaprange( id, level )
+ * @luafunc getweaprange
  */
 static int aiL_getweaprange( lua_State *L )
 {
@@ -2947,7 +2947,7 @@ static int aiL_getweaprange( lua_State *L )
  *    @luatparam[opt] number id Optional parameter indicating id of weapon set to get speed of, defaults to selected one.
  *    @luatparam[opt=-1] number level Level of weapon set to get range of.
  *    @luatreturn number The range of the weapon set.
- * @luafunc getweapspeed( id, level )
+ * @luafunc getweapspeed
  */
 static int aiL_getweapspeed( lua_State *L )
 {
@@ -2971,7 +2971,7 @@ static int aiL_getweapspeed( lua_State *L )
  *
  *    @luatparam Pilot target Target to see if pilot can board.
  *    @luatreturn boolean true if pilot can board, false if it can't.
- * @luafunc canboard( target )
+ * @luafunc canboard
  */
 static int aiL_canboard( lua_State *L )
 {
@@ -2996,7 +2996,7 @@ static int aiL_canboard( lua_State *L )
  *
  *    @luatparam Pilot target The pilot whose mass we will compare.
  *    @luatreturn number A number from 0 to 1 mapping the relative masses.
- * @luafunc relsize( target )
+ * @luafunc relsize
  */
 static int aiL_relsize( lua_State *L )
 {
@@ -3016,7 +3016,7 @@ static int aiL_relsize( lua_State *L )
  *
  *    @luatparam Pilot target The pilot whose DPS we will compare.
  *    @luatreturn number A number from 0 to 1 mapping the relative DPSes.
- * @luafunc reldps( target )
+ * @luafunc reldps
  */
 static int aiL_reldps( lua_State *L )
 {
@@ -3036,7 +3036,7 @@ static int aiL_reldps( lua_State *L )
  *
  *    @luatparam Pilot target The pilot whose health we will compare.
  *    @luatreturn number A number from 0 to 1 mapping the relative healths.
- *    @luafunc relhp(target)
+ *    @luafunc relhp
  */
 static int aiL_relhp( lua_State *L )
 {
@@ -3056,7 +3056,7 @@ static int aiL_relhp( lua_State *L )
  * @brief Attempts to board the pilot's target.
  *
  *    @luatreturn boolean true if was able to board the target.
- *    @luafunc board()
+ *    @luafunc board
  */
 static int aiL_board( lua_State *L )
 {
@@ -3069,7 +3069,7 @@ static int aiL_board( lua_State *L )
  * @brief Attempts to refuel the pilot's target.
  *
  *    @luatreturn boolean true if pilot has begun refueling, false if it hasn't.
- *    @luafunc refuel()
+ *    @luafunc refuel
  */
 static int aiL_refuel( lua_State *L )
 {
@@ -3083,7 +3083,7 @@ static int aiL_refuel( lua_State *L )
  *
  *    @luatparam number timer Timer number.
  *    @luatparam[opt=0] number time Number of seconds to set timer to.
- *    @luafunc settimer(timer, time)
+ *    @luafunc settimer
  */
 static int aiL_settimer( lua_State *L )
 {
@@ -3104,7 +3104,7 @@ static int aiL_settimer( lua_State *L )
  *
  *    @luatparam number timer Timer number.
  *    @luatreturn boolean Whether time is up.
- *    @luafunc timeup(timer)
+ *    @luafunc timeup
  */
 
 static int aiL_timeup( lua_State *L )
@@ -3123,7 +3123,7 @@ static int aiL_timeup( lua_State *L )
  * @brief Set the seeker shoot indicator.
  *
  *    @luatparam boolean value to set the shoot indicator to.
- *    @luafunc set_shoot_indicator()
+ *    @luafunc set_shoot_indicator
  */
 static int aiL_set_shoot_indicator( lua_State *L )
 {
@@ -3136,7 +3136,7 @@ static int aiL_set_shoot_indicator( lua_State *L )
  * @brief Access the seeker shoot indicator (that is put to true each time a seeker is shot).
  *
  *    @luatreturn boolean true if the shoot_indicator is true.
- *    @luafunc set_shoot_indicator()
+ *    @luafunc set_shoot_indicator
  */
 static int aiL_shoot_indicator( lua_State *L )
 {
@@ -3149,7 +3149,7 @@ static int aiL_shoot_indicator( lua_State *L )
  * @brief Sends a distress signal.
  *
  *    @luatparam string|nil msg Message to send or nil.
- *    @luafunc distress( msg )
+ *    @luafunc distress
  */
 static int aiL_distress( lua_State *L )
 {
@@ -3171,7 +3171,7 @@ static int aiL_distress( lua_State *L )
  * @brief Picks a pilot that will command the current pilot.
  *
  *    @luatreturn Pilot|nil
- *    @luafunc getBoss()
+ *    @luafunc getBoss
  */
 static int aiL_getBoss( lua_State *L )
 {
@@ -3191,7 +3191,7 @@ static int aiL_getBoss( lua_State *L )
  * @brief Sets the pilot_nstack credits. Only call in create().
  *
  *    @luatparam number num Number of credits.
- *    @luafunc setcredits( num )
+ *    @luafunc setcredits
  */
 static int aiL_credits( lua_State *L )
 {
@@ -3209,7 +3209,7 @@ static int aiL_credits( lua_State *L )
 /**
  * @brief Returns and clears the pilots message queue.
  *
- *    @luafunc messages()
+ *    @luafunc messages
  *    @luatreturn {{},...} Messages.
  */
 static int aiL_messages( lua_State *L )

@@ -70,7 +70,11 @@ function make_windows {
 }
 
 function make_macos {
-   echo "WIP, this will be implemented in the near future."
+   if [[ "$NIGHTLY" == "true" ]]; then
+      "$SOURCEROOT/extras/macos/bundle.py" -n -s "$SOURCEROOT" -b "$BUILDPATH" -o "$BUILDOUTPUT"
+   else
+      "$SOURCEROOT/extras/macos/bundle.py" -s "$SOURCEROOT" -b "$BUILDPATH" -o "$BUILDOUTPUT"
+   fi
 }
 
 function make_steam {

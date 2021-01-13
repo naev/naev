@@ -260,7 +260,7 @@ int var_checkflag( char* str )
  *    @luatparam string name Name of the mission variable to get.
  *    @luareturn The value of the mission variable which will depend on what type
  *             it is.
- * @luafunc peek( name )
+ * @luafunc peek
  */
 static int var_peek( lua_State *L )
 {
@@ -297,7 +297,7 @@ static int var_peek( lua_State *L )
  * This does not give you any value and destroys it permanently (or until recreated).
  *
  *    @luatparam string name Name of the mission variable to pop.
- * @luafunc pop( name )
+ * @luafunc pop
  */
 static int var_pop( lua_State *L )
 {
@@ -328,7 +328,7 @@ static int var_pop( lua_State *L )
  *    @luatparam string name Name to use for the new mission variable.
  *    @luaparam value Value of the new mission variable.  Accepted types are:
  *                  nil, bool, string or number.
- * @luafunc push( name, value )
+ * @luafunc push
  */
 static int var_push( lua_State *L )
 {

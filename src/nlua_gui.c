@@ -104,7 +104,7 @@ int nlua_loadGUI( nlua_env env )
  *    @luatparam number y Y position to start clipping (bottom left is 0.)
  *    @luatparam number w Width of the clipping (width of the screen is default).
  *    @luatparam number h Height of the clipping (height of the screen is default).
- * @luafunc viewport( x, y, w, h )
+ * @luafunc viewport
  */
 static int guiL_viewport( lua_State *L )
 {
@@ -131,7 +131,7 @@ static int guiL_viewport( lua_State *L )
  *
  *    @luaparam x X position for the fps stuff.
  *    @luaparam y Y position for the fps stuff.
- * @luafunc fpsPos( x, y )
+ * @luafunc fpsPos
  */
 static int guiL_fpsPos( lua_State *L )
 {
@@ -151,7 +151,7 @@ static int guiL_fpsPos( lua_State *L )
  *    @luatparam number y Y position of the OSD display.
  *    @luatparam number w Width of the OSD display.
  *    @luatparam number h Height of the OSD display.
- * @luafunc osdInit( x, y, w, h )
+ * @luafunc osdInit
  */
 static int guiL_osdInit( lua_State *L )
 {
@@ -177,7 +177,7 @@ static int guiL_osdInit( lua_State *L )
  *    @luatparam number width Width of the message box.
  *    @luatparam number x X position of message box.
  *    @luatparam number y Y position of message box.
- * @luafunc mesgInit( width, x, y )
+ * @luafunc mesgInit
  */
 static int guiL_mesgInit( lua_State *L )
 {
@@ -202,7 +202,7 @@ static int guiL_mesgInit( lua_State *L )
  *    @luatparam number width Width of the omsg messages.
  *    @luatparam number x X center of the omsg messages.
  *    @luatparam number y Y center of the omsg messages.
- * @luafunc omsgInit( width, x, y )
+ * @luafunc omsgInit
  */
 static int guiL_omsgInit( lua_State *L )
 {
@@ -229,7 +229,7 @@ static int guiL_omsgInit( lua_State *L )
  *    @luatparam number circle Whether or not it should be a circle.
  *    @luatparam number width Width if it's not a circle or radius if it is a circle.
  *    @luatparam number height Only needed if not a circle.
- * @luafunc radarInit( circle, width, height )
+ * @luafunc radarInit
  */
 static int guiL_radarInit( lua_State *L )
 {
@@ -259,7 +259,7 @@ static int guiL_radarInit( lua_State *L )
  *
  *    @luatparam number x X position to render at.
  *    @luatparam number y Y position to render at.
- * @luafunc radarRender( x, y )
+ * @luafunc radarRender
  */
 static int guiL_radarRender( lua_State *L )
 {
@@ -281,7 +281,7 @@ static int guiL_radarRender( lua_State *L )
  * @brief Sets the Lua planet target GFX.
  *
  *    @luatparam Tex tex Texture to set for the planet targeting.
- * @luafunc targetPlanetGFX( tex )
+ * @luafunc targetPlanetGFX
  */
 static int guiL_targetPlanetGFX( lua_State *L )
 {
@@ -295,7 +295,7 @@ static int guiL_targetPlanetGFX( lua_State *L )
  * @brief Sets the Lua planet target GFX.
  *
  *    @luatparam Tex tex Texture to set for the planet targeting.
- * @luafunc targetPlanetGFX( tex )
+ * @luafunc targetPlanetGFX
  */
 static int guiL_targetPilotGFX( lua_State *L )
 {
@@ -313,7 +313,7 @@ static int guiL_targetPilotGFX( lua_State *L )
  * With button being the ID of the button, x/y being the position clicked and state being true if pressed, false if lifted. It should return true if it used the mouse event or false if it let it through.
  *
  *    @luatparam[opt=true] boolean enable Whether or not to enable the mouse click callback.
- * @luafunc mouseClickEnable()
+ * @luafunc mouseClickEnable
  */
 static int guiL_mouseClickEnable( lua_State *L )
 {
@@ -336,7 +336,7 @@ static int guiL_mouseClickEnable( lua_State *L )
  * With x/y being the position of the mouse.
  *
  *    @luatparam[opt] boolean enable Whether or not to enable the mouse movement callback.
- * @luafunc mouseMoveEnable()
+ * @luafunc mouseMoveEnable
  */
 static int guiL_mouseMoveEnable( lua_State *L )
 {
@@ -365,7 +365,7 @@ static int guiL_mouseMoveEnable( lua_State *L )
  * @usage gui.menuInfo( "ship" ) -- Opens ship tab
  *
  *    @luatparam[opt="main"] string window parameter indicating the tab to open at.
- * @luafunc menuInfo( window )
+ * @luafunc menuInfo
  */
 static int guiL_menuInfo( lua_State *L )
 {
@@ -415,7 +415,7 @@ static int guiL_menuInfo( lua_State *L )
  *
  * @usage gui.menuSmall()
  *
- * @luafunc menuSmall()
+ * @luafunc menuSmall
  */
 static int guiL_menuSmall( lua_State *L )
 {
@@ -435,7 +435,7 @@ static int guiL_menuSmall( lua_State *L )
  *    @luatparam number right Right boundary in pixels
  *    @luatparam number bottom Bottom boundary in pixels
  *    @luatparam number left Left boundary in pixels
- * @luafunc setMapOverlayBounds( top, right, bottom, left )
+ * @luafunc setMapOverlayBounds
  */
 static int guiL_setMapOverlayBounds( lua_State *L )
 {

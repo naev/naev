@@ -245,7 +245,7 @@ static int music_find (void)
       }
    }
 
-   DEBUG( ngettext("Loaded %d Song", "Loaded %d Songs", nmusic ), nmusic );
+   DEBUG( n_("Loaded %d Song", "Loaded %d Songs", nmusic ), nmusic );
 
    /* More clean up. */
    PHYSFS_freeList(files);

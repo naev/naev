@@ -37,6 +37,7 @@ static int shipL_CPU( lua_State *L );
 static int shipL_gfxTarget( lua_State *L );
 static int shipL_gfx( lua_State *L );
 static int shipL_price( lua_State *L );
+static int shipL_description( lua_State *L );
 static const luaL_Reg shipL_methods[] = {
    { "__tostring", shipL_name },
    { "__eq", shipL_eq },
@@ -51,6 +52,7 @@ static const luaL_Reg shipL_methods[] = {
    { "price", shipL_price },
    { "gfxTarget", shipL_gfxTarget },
    { "gfx", shipL_gfx },
+   { "description", shipL_description },
    {0,0}
 }; /**< Ship metatable methods. */
 
@@ -181,7 +183,7 @@ int lua_isship( lua_State *L, int ind )
  *    @luatparam Ship s1 First ship to compare.
  *    @luatparam Ship s2 Second ship to compare.
  *    @luatreturn boolean true if both ships are the same.
- * @luafunc __eq( s1, s2 )
+ * @luafunc __eq
  */
 static int shipL_eq( lua_State *L )
 {
@@ -203,7 +205,7 @@ static int shipL_eq( lua_State *L )
  *
  *    @luatparam string s Raw (untranslated) name of the ship to get.
  *    @luatreturn Ship The ship matching name or nil if error.
- * @luafunc get( s )
+ * @luafunc get
  */
 static int shipL_get( lua_State *L )
 {
@@ -237,7 +239,7 @@ static int shipL_get( lua_State *L )
  *
  *    @luatparam Ship s Ship to get the translated name of.
  *    @luatreturn string The translated name of the ship.
- * @luafunc name( s )
+ * @luafunc name
  */
 static int shipL_name( lua_State *L )
 {
@@ -263,7 +265,7 @@ static int shipL_name( lua_State *L )
  *
  *    @luatparam Ship s Ship to get the raw name of.
  *    @luatreturn string The raw name of the ship.
- * @luafunc nameRaw( s )
+ * @luafunc nameRaw
  */
 static int shipL_nameRaw( lua_State *L )
 {
@@ -287,7 +289,7 @@ static int shipL_nameRaw( lua_State *L )
  *
  *    @luatparam Ship s Ship to get the ship base type of.
  *    @luatreturn string The raw name of the ship base type.
- * @luafunc baseType( s )
+ * @luafunc baseType
  */
 static int shipL_baseType( lua_State *L )
 {
@@ -308,7 +310,7 @@ static int shipL_baseType( lua_State *L )
  *
  *    @luatparam Ship s Ship to get ship class name of.
  *    @luatreturn string The raw name of the ship's class.
- * @luafunc class( s )
+ * @luafunc class
  */
 static int shipL_class( lua_State *L )
 {
@@ -331,7 +333,7 @@ static int shipL_class( lua_State *L )
  *    @luatreturn number Number of weapon slots.
  *    @luatreturn number Number of utility slots.
  *    @luatreturn number Number of structure slots.
- * @luafunc slots( s )
+ * @luafunc slots
  */
 static int shipL_slots( lua_State *L )
 {
@@ -356,7 +358,7 @@ static int shipL_slots( lua_State *L )
  *    @luaparam s Ship to get slots of
  *    @luareturn A table of tables with slot properties string "size", string "type", and string "property".
  *               (Strings are English.)
- * @luafunc getSlots( s )
+ * @luafunc getSlots
  */
 static int shipL_getSlots( lua_State *L )
 {
@@ -429,7 +431,7 @@ static int shipL_getSlots( lua_State *L )
  *
  *    @luatparam Ship s Ship to get available CPU of.
  *    @luatreturn number The CPU available on the ship.
- * @luafunc cpu( s )
+ * @luafunc cpu
  */
 static int shipL_CPU( lua_State *L )
 {
@@ -452,7 +454,7 @@ static int shipL_CPU( lua_State *L )
  *    @luatparam Ship s Ship to get the price of.
  *    @luatreturn number The ship's final purchase price.
  *    @luatreturn number The ship's base price.
- * @luafunc price( s )
+ * @luafunc price
  */
 static int shipL_price( lua_State *L )
 {
@@ -474,7 +476,7 @@ static int shipL_price( lua_State *L )
  *
  *    @luatparam Ship s Ship to get target graphics of.
  *    @luatreturn Tex The target graphics of the ship.
- * @luafunc gfxTarget( s )
+ * @luafunc gfxTarget
  */
 static int shipL_gfxTarget( lua_State *L )
 {
@@ -504,7 +506,7 @@ static int shipL_gfxTarget( lua_State *L )
  *
  *    @luatparam Ship s Ship to get graphics of.
  *    @luatreturn Tex The graphics of the ship.
- * @luafunc gfx( s )
+ * @luafunc gfx
  */
 static int shipL_gfx( lua_State *L )
 {
@@ -521,6 +523,24 @@ static int shipL_gfx( lua_State *L )
       return 0;
    }
    lua_pushtex( L, tex );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the description of the ship.
+ *
+ * @usage description = s:description()
+ *
+ *    @luatparam Ship s Ship to get the description of.
+ *    @luatreturn string The description of the ship.
+ * @luafunc description
+ */
+static int shipL_description( lua_State *L )
+{
+   Ship *s;
+   s = luaL_validship(L,1);
+   lua_pushstring(L, s->description);
    return 1;
 }
 

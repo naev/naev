@@ -69,18 +69,19 @@ if buildExec.disabled() == false
    if 'SuiteSparse' not in get_option('force_fallback_for')
       csparse_names = ['csparse', 'cxsparse']
       foreach n : csparse_names
-         csparse = cc.find_library(n, required: false)
+         csparse = cc.find_library(n, required: false, has_headers: ['suitesparse/cs.h'])
+         if csparse.found()
+            config_data.set10('HAVE_SUITESPARSE_CS_H', true)
+            break
+         endif
+         csparse = cc.find_library(n, required: false, has_headers: ['cs.h'])
          if csparse.found()
             break
          endif
       endforeach
    endif
 
-   if csparse.found()
-      if cc.has_header('suitesparse/cs.h')
-         config_data.set10('HAVE_SUITESPARSE_CS_H', true)
-      endif
-   else
+   if not csparse.found()
       csparse = dependency(
          'SuiteSparse',
          fallback: ['SuiteSparse', 'CSparse_dep'],
@@ -91,14 +92,21 @@ if buildExec.disabled() == false
    naev_deps += cc.find_library('m', required : false)
 
    sdl = dependency('sdl2', required: true)
+
+   libxml2 = dependency('libxml-2.0', required: false)
+   if not libxml2.found()
+      libxml2 = cc.find_library('xml2', required: true)  # e.g., MacOSX SDK
+   endif
+
    naev_deps += [
       dependency('freetype2', required: true),
+      dependency('physfs', fallback: ['physfs', 'physfs_dep'], required: true),
       sdl,
       declare_dependency(
          dependencies: dependency('libpng', required: true),
          compile_args: '-DNOLOGPRINTFCONSOLE',
          link_args: '-DNOLOGPRINTFCONSOLE'),
-      dependency('libxml-2.0', required: true)
+      libxml2,
    ]
 
    # Lua
@@ -116,26 +124,7 @@ if buildExec.disabled() == false
 
    naev_deps += lua
 
-   # PhysicsFS
-   physfs = dependency('physfs', required: false)
-   if not physfs.found()
-      cmake = import('cmake')
-      # Micro-manage the poor thing to death. This helps us survive AppImage packaging, though there should be a better way.
-      physfs_opts = cmake.subproject_options()
-      physfs_opts.add_cmake_defines({'PHYSFS_BUILD_SHARED': false, 'PHYSFS_BUILD_TEST': false})
-      # You wouldn't believe the screaming, otherwise...
-      physfs_opts.set_override_option('warning_level', '1')
-      physfs = cmake.subproject('physfs', options: physfs_opts).dependency('physfs-static')
-   endif
-   naev_deps += physfs
-
-   if not lua.found()
-      lua = dependency('lua51', fallback: ['lua', 'lua_dep'], required: true)
-   endif
-
-   naev_deps += lua
-
-   ### Soft deps (required: false
+   ### Soft deps (required: false)
 
    # BFD
    if get_option('debug')
@@ -203,7 +192,8 @@ if buildExec.disabled() == false
    )
 
    if host_machine.system() == 'darwin'
-      add_languages('objc')
+      add_languages('objc', native: false)
+      configure_file(input: 'extras/macos/Info.plist.in', output: 'Info.plist', configuration: config_data)
       naev_source += mac_source
       naev_deps += dependency('Foundation', required: true )
    endif
@@ -238,14 +228,16 @@ if buildExec.disabled() == false
       input: 'utils/build/naev.sh',
       output: 'naev.sh',
       configuration: {
+         'build_root': meson.current_build_dir(),
          'source_root': meson.source_root(),
          'naev_bin' : naev_bin.full_path()
       }
    )
 
    install_data(
+      'gpl.txt',
       'LICENSE',
-      'README',
+      'Readme.md',
       install_dir: get_option('datadir') / 'doc/naev'
    )
 
@@ -258,6 +250,13 @@ if buildExec.disabled() == false
    install_subdir(
       'dat',
       install_dir: ndata_path,
+   )
+
+   install_subdir(
+      'artwork',
+      install_dir: ndata_path / 'dat',
+      exclude_files: '.git',  # That's a marker used by "git submodule".
+      strip_directory: true,
    )
 
    if host_machine.system() not in ['windows', 'cygwin', 'emscripten', 'android', 'darwin']

@@ -66,6 +66,9 @@ dat/events/cinematic/DvdFLFbattle.lua
 dat/events/dvaered/warlords_battle.lua
 dat/events/flf/derelict.lua
 dat/events/flf/flf_catastrophe.lua
+dat/events/minerva/altercation1.lua
+dat/events/minerva/chicken_rendezvous.lua
+dat/events/minerva/station.lua
 dat/events/naev_needs_YOU.lua
 dat/events/neutral/animaltrouble.lua
 dat/events/neutral/baron_comm.lua
@@ -188,6 +191,8 @@ dat/missions/flf/flf_pirates.lua
 dat/missions/flf/flf_pre01.lua
 dat/missions/flf/flf_pre02.lua
 dat/missions/flf/flf_rogue.lua
+dat/missions/minerva/maikki1.lua
+dat/missions/minerva/maikki2.lua
 dat/missions/neutral/animaltransport.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
@@ -290,6 +295,7 @@ dat/scripts/enum.lua
 dat/scripts/fleet_form.lua
 dat/scripts/fleethelper.lua
 dat/scripts/formation.lua
+dat/scripts/imageproc.lua
 dat/scripts/jumpdist.lua
 dat/scripts/love.lua
 dat/scripts/love/audio.lua
@@ -312,6 +318,9 @@ dat/scripts/love/timer.lua
 dat/scripts/love/touch.lua
 dat/scripts/love/video.lua
 dat/scripts/love/window.lua
+dat/scripts/minerva.lua
+dat/scripts/minigames/blackjack.lua
+dat/scripts/minigames/cardio.lua
 dat/scripts/misnhelper.lua
 dat/scripts/nextjump.lua
 dat/scripts/numstring.lua
@@ -323,6 +332,9 @@ dat/scripts/prng.lua
 dat/scripts/proximity.lua
 dat/scripts/selectiveclear.lua
 dat/scripts/swapship.lua
+dat/scripts/vn.lua
+dat/scripts/vn/conf.lua
+dat/scripts/vn/main.lua
 dat/snd/music.lua
 src/ai.c
 src/ai.h
@@ -397,6 +409,7 @@ src/fleet.c
 src/fleet.h
 src/font.c
 src/font.h
+src/gettext.c
 src/gettext.h
 src/glad.c
 src/glad.h
@@ -446,6 +459,8 @@ src/menu.c
 src/menu.h
 src/mission.c
 src/mission.h
+src/msgcat.c
+src/msgcat.h
 src/music.c
 src/music.h
 src/music_openal.c
@@ -1235,6 +1250,7 @@ dat/assets/mgg003.xml
 dat/assets/mgg007.xml
 dat/assets/mgg1294.xml
 dat/assets/mida_proxima.xml
+dat/assets/minerva_station.xml
 dat/assets/mirror_i.xml
 dat/assets/mirror_iv.xml
 dat/assets/mirror_vi.xml
@@ -1599,6 +1615,7 @@ dat/assets/stoma.xml
 dat/assets/stormgard.xml
 dat/assets/stormy.xml
 dat/assets/straight_row_ii.xml
+dat/assets/strangelove_lab.xml
 dat/assets/stutee.xml
 dat/assets/sudra.xml
 dat/assets/suk_ii.xml
@@ -1847,6 +1864,7 @@ dat/faction.xml
 dat/fleet.xml
 dat/map.xml
 dat/outfits/accessory/air_freshener.xml
+dat/outfits/accessory/fuzzy_dice.xml
 dat/outfits/accessory/left_boot.xml
 dat/outfits/accessory/love_letter.xml
 dat/outfits/accessory/pentagram_of_valor.xml
@@ -1863,6 +1881,7 @@ dat/outfits/activated/hellburner.xml
 dat/outfits/activated/hidden_jump_scanner.xml
 dat/outfits/activated/milspec_jammer.xml
 dat/outfits/activated/unicorp_jammer.xml
+dat/outfits/activated/weapons_ionizer.xml
 dat/outfits/bio_weapons/bioplasma_organ_stage_1.xml
 dat/outfits/bio_weapons/bioplasma_organ_stage_2.xml
 dat/outfits/bio_weapons/bioplasma_organ_stage_3.xml

@@ -69,6 +69,7 @@ typedef struct Weapon_ {
 
    double real_vel; /**< Keeps track of the real velocity. */
    double dam_mod; /**< Damage modifier. */
+   double dam_as_dis_mod; /**< Damage as disable modifier. */
    int voice; /**< Weapon's voice. */
    double exp_timer; /**< Explosion timer for beams. */
    double life; /**< Total life. */
@@ -1098,10 +1099,10 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    /* Get general details. */
    odmg              = outfit_damage( w->outfit );
    parent            = pilot_get( w->parent );
-   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage );
+   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage * (1.-w->dam_as_dis_mod) );
    dmg.penetration   = odmg->penetration;
    dmg.type          = odmg->type;
-   dmg.disable       = odmg->disable;
+   dmg.disable       = MAX( 0., odmg->disable + dmg.damage * w->dam_as_dis_mod );
 
    /* Play sound if they have it. */
    s = outfit_soundHit(w->outfit);
@@ -1383,10 +1384,18 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    acc =  HEAT_WORST_ACCURACY * pilot_heatAccuracyMod( T );
 
    /* Stat modifiers. */
-   if (outfit->type == OUTFIT_TYPE_TURRET_BOLT)
+   if (outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
       w->dam_mod *= parent->stats.tur_damage;
-   else
+      /* dam_as_dis is computed as multiplier, must be corrected. */
+      w->dam_as_dis_mod = parent->stats.tur_dam_as_dis-1.;
+   }
+   else {
       w->dam_mod *= parent->stats.fwd_damage;
+      /* dam_as_dis is computed as multiplier, must be corrected. */
+      w->dam_as_dis_mod = parent->stats.fwd_dam_as_dis-1.;
+   }
+   /* Clamping, but might not actually be necessary if weird things want to be done. */
+   w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
 
    /* Calculate direction. */
    rdir += RNG_2SIGMA() * acc;
@@ -1524,6 +1533,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
    /* Create basic features */
    w           = calloc( 1, sizeof(Weapon) );
    w->dam_mod  = 1.; /* Default of 100% damage. */
+   w->dam_as_dis_mod = 0.; /* Default of 0% damage to disable. */
    w->faction  = parent->faction; /* non-changeable */
    w->parent   = parent->id; /* non-changeable */
    w->target   = target; /* non-changeable */

@@ -30,7 +30,7 @@
 --Needed scripts
 require "numstring"
 require "proximity"
-require "portrait"
+local portrait = require "portrait"
 
 title = {}
 text = {}
@@ -113,11 +113,11 @@ npc_desc[6] = _("Strange pilot")
 bar_desc[6] = _([[This pilot looks like a pirate, but strangely enough, the authorities don't seem worried.]])
 
 npc_portrait = {}
-npc_portrait[2] = getPortrait()
-npc_portrait[3] = getPortrait()
-npc_portrait[4] = getPortrait("Empire")
-npc_portrait[5] = getPortrait("Dvaered")
-npc_portrait[6] = getPortrait("Pirate")
+npc_portrait[2] = portrait.get()
+npc_portrait[3] = portrait.get()
+npc_portrait[4] = portrait.get("Empire")
+npc_portrait[5] = portrait.get("Dvaered")
+npc_portrait[6] = portrait.get("Pirate")
 npc_portrait["__save"] = true
 
 -- OSD
@@ -140,7 +140,7 @@ function create ()
    
    --No system claim
 
-   officialFace = getMilPortrait( "Dvaered" )
+   officialFace = portrait.getMil( "Dvaered" )
    official = misn.setNPC(npc_desc[1], officialFace)
    misn.setDesc(bar_desc[1])
 

@@ -93,6 +93,8 @@ void _array_shrink_helper(void **a, size_t e_size)
 
 void _array_free_helper(void *a)
 {
+   if (a==NULL)
+      return;
    free(_array_private_container(a));
 }
 

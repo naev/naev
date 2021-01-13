@@ -120,6 +120,15 @@ int ndata_setPath( const char *path )
       case NDATA_SRC_USER:
          // This already didn't work out when we checked the provided path.
       case NDATA_SRC_DEFAULT:
+#if HAS_MACOS
+         if ( macos_isBundle() && macos_resourcesPath( buf, PATH_MAX ) >= 0 ) {
+            len = strlen( buf ) + 1 + strlen(NDATA_PATHNAME);
+            ndata_dir    = malloc(len+1);
+            nsnprintf( ndata_dir, len+1, "%s/%s", buf, NDATA_PATHNAME );
+            ndata_source = NDATA_SRC_DEFAULT;
+            break;
+         }
+#endif /* HAS_MACOS */
          if ( env.isAppImage && nfile_concatPaths( buf, PATH_MAX, env.appdir, PKGDATADIR, NDATA_PATHNAME ) >= 0 && ndata_isndata( buf ) ) {
             ndata_dir    = strdup( buf );
             ndata_source = NDATA_SRC_DEFAULT;
@@ -133,7 +142,7 @@ int ndata_setPath( const char *path )
          }
          FALLTHROUGH;
       case NDATA_SRC_BINARY:
-         nfile_concatPaths( buf, PATH_MAX, nfile_dirname(naev_binary()), NDATA_PATHNAME );
+         nfile_concatPaths( buf, PATH_MAX, PHYSFS_getBaseDir(), NDATA_PATHNAME );
          if ( ndata_isndata( buf ) ) {
             ndata_dir    = strdup( buf );
             ndata_source = NDATA_SRC_BINARY;
@@ -157,14 +166,6 @@ int ndata_setPath( const char *path )
    return 0;
 }
 
-
-/**
- * @brief Get the current ndata path.
- */
-const char *ndata_getPath( void )
-{
-   return ndata_dir;
-}
 
 /**
  * @brief Checks to see if a directory is an ndata.
@@ -227,8 +228,11 @@ int ndata_open (void)
    ndata_lock = SDL_CreateMutex();
 
    /* Set path to configuration. */
+   ndata_setPath(conf.ndata);
+   /*
    if (ndata_setPath(conf.ndata))
       ERR(_("Couldn't find ndata"));
+   */
 
    return 0;
 }
@@ -239,9 +243,7 @@ int ndata_open (void)
  */
 void ndata_close (void)
 {
-   if( PHYSFS_unmount( ndata_dir ) == 0 )
-      WARN( "PhysicsFS unmount failed: %s",
-            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+   PHYSFS_deinit();
    free( ndata_dir );
    ndata_dir = NULL;
 
@@ -250,17 +252,6 @@ void ndata_close (void)
       SDL_DestroyMutex(ndata_lock);
       ndata_lock = NULL;
    }
-}
-
-
-/**
- * @brief Gets the ndata's name.
- *
- *    @return The ndata's name.
- */
-const char* ndata_name (void)
-{
-   return start_name();
 }
 
 
@@ -363,6 +354,7 @@ char **ndata_listRecursive( const char *path )
       if (strcmp(files[i], files[i+1]) == 0) {
          free( files[i] );
          array_erase( &files, &files[i], &files[i+1] );
+	 i--; /* We're not done checking for dups of files[i]. */
       }
    return files;
 }

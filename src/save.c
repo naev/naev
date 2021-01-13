@@ -25,7 +25,6 @@
 #include "load.h"
 #include "log.h"
 #include "menu.h"
-#include "ndata.h"
 #include "news.h"
 #include "nfile.h"
 #include "nlua_var.h"
@@ -33,6 +32,7 @@
 #include "nxml.h"
 #include "player.h"
 #include "shiplog.h"
+#include "start.h"
 #include "unidiff.h"
 
 int save_loaded   = 0; /**< Just loaded the saved game. */
@@ -122,7 +122,7 @@ int save_all (void)
    /* Save the version and such. */
    xmlw_startElem(writer,"version");
    xmlw_elem( writer, "naev", "%s", VERSION );
-   xmlw_elem( writer, "data", "%s", ndata_name() );
+   xmlw_elem( writer, "data", "%s", start_name() );
    xmlw_endElem(writer); /* "version" */
 
    /* Save the data. */

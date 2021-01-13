@@ -48,9 +48,6 @@ const char *nfile_dataPath( void );
 const char *nfile_configPath( void );
 const char *nfile_cachePath( void );
 
-const char *_nfile_dirname( const char *path );
-#define nfile_dirname( ... ) _nfile_path_macro( _nfile_dirname, NULL, (), ##__VA_ARGS__ )
-
 int _nfile_dirMakeExist( const char *path );
 /**
  * @brief Creates a directory if it doesn't exist.

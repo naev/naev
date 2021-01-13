@@ -259,7 +259,7 @@ static void btn_updateHotkey( Widget *btn )
    display[match] = '\0'; /* Cuts the string into two. */
 
    /* Copy both parts and insert the character in the middle. */
-   nsnprintf( buf, sizeof(buf), "%s\aw%c\a0%s", display, target, &display[match+1] );
+   nsnprintf( buf, sizeof(buf), "%s#w%c#0%s", display, target, &display[match+1] );
 
    free(btn->dat.btn.display);
    btn->dat.btn.display = strdup(buf);
@@ -308,9 +308,9 @@ static void btn_render( Widget* btn, double bx, double by )
 
    /* set the colours */
    if (btn->dat.btn.disabled) {
-      c  = &cGrey20;
-      fc = &cFontGrey;
-      outline = &cGrey20;
+      c = &cGrey20;  // cGrey20 is also the background color
+      fc = &cGrey50; // Enabled text is cFontGrey 0.7; a little lighter
+      outline = &cGrey15;  // Slightly darker than the background
    }
    else {
       fc = &cFontGrey;
@@ -328,13 +328,14 @@ static void btn_render( Widget* btn, double bx, double by )
       }
    }
 
-
+   /* The face of the button, with c being the color */
    toolkit_drawRect( x, y, btn->w, btn->h, c, NULL );
 
    /* inner outline */
-   // toolkit_drawOutline( x, y, btn->w, btn->h, 0., outline, NULL );
+   // toolkit_drawOutline( x, y, btn->w, btn->h, 0, outline, NULL );
+
    /* outer outline */
-   toolkit_drawOutlineThick( x, y, btn->w, btn->h, 1., 2, outline, NULL );
+   toolkit_drawOutlineThick( x, y, btn->w, btn->h, 1, 2, outline, NULL );
 
    gl_printMidRaw( &gl_smallFont, (int)btn->w,
          bx + btn->x,

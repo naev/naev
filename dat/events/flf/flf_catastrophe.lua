@@ -82,6 +82,8 @@ text[14] = _([[Fascinated, you finally speak up, prompting a smile from the uplo
 
 log_text_flf = _([[The Empire discovered Sindbad. Try as you might, you and your comrades could not stop the combined onslaught of the Empire and the Dvaereds, and Sindbad erupted in a fiery explosion, killing Benito and all of your other comrades who were within Sindbad. Before the station exploded, Benito gave you a map leading into the unknown reaches of the inner nebula and told you to use the map to find what lies within in the hopes that one day, you can help the FLF rise again and defeat the Dvaereds once and for all. Her last words were short, but memorable: "Goodbye, %s. Stay vigilant."]])
 
+log_text_betrayal = _([[You turned on the FLF and helped the Empire and the Dvaereds destroy Sindbad for some reason.]])
+
 log_text_thurion = _([[Having braved the nebula, you were introduced to the Thurion by Alicia, one of many uploaded Thurion. The Thurion are the remnants of a secret project initiated by the Empire, Project Thurion. The Za'lek, the Collective, and the now-dead Proteron were also "great projects" of the Empire, but Project Thurion was seen as an embarrassment, prompting the Empire to attempt to kill the Thurion so word of their existence wouldn't get out. However, the Thurion learned a way to upload the human mind to a computer, allowing them to escape and rebuild.
     Now, the Thurion have formed a secret civilization. About half of the Thurion population is uploaded and Alicia was quick to extol the virtues of being uploaded, but also noted that you probably can't be uploaded due to a likelihood of excessive brain damage.
     In any case, you have earned the Thurion's trust and have been granted permission to roam Thurion space freely. You have promised to keep the Thurion's secret safe. Alicia has said that the Thurion may have missions for you in the future and has also recommended that you buy one of the Thurion's nebula-resistant ships.]])
@@ -98,6 +100,7 @@ function create ()
       "Empire Shark" }
    emp_minsize = 6
    found_thurion = false
+   player_attacks = 0
 
    bar_hook = hook.land( "enter_bar", "bar" )
    abort_hook = hook.enter( "takeoff_abort" )
@@ -154,6 +157,7 @@ function takeoff ()
    flf_base:addOutfit( "Base Ripper MK2", 8 )
    flf_base:setVisible()
    flf_base:setHilight()
+   hook.pilot( flf_base, "attacked", "pilot_attacked_sindbad" )
    hook.pilot( flf_base, "death", "pilot_death_sindbad" )
 
    -- Spawn FLF ships
@@ -222,25 +226,18 @@ function pilot_death_emp( pilot, attacker, arg )
 end
 
 
+function pilot_attacked_sindbad( pilot, attacker, arg )
+   if attacker == player.pilot()
+         and faction.get("FLF"):playerStanding() > -100 then
+      -- Punish the player with a faction hit every time they attack
+      faction.get("FLF"):modPlayer(-10)
+   end
+end
+
+
 function pilot_death_sindbad( pilot, attacker, arg )
-   music.stop()
-   music.load( "machina" )
-   music.play()
-   var.push( "music_wait", true )
-
-   player.pilot():setInvincible()
-   player.cinematics()
-   camera.set( flf_base )
-
-   tk.msg( title[6], text[6] )
-   tk.msg( title[6], text[7]:format( player.name() ) )
    player.pilot():setNoJump( false )
-   flf_setReputation( 100 )
-   faction.get("FLF"):setPlayerStanding( 100 )
-   flf_addLog( log_text_flf )
-   player.addOutfit( "Map: Inner Nebula Secret Jump" )
-   hook.jumpin( "jumpin" )
-   hook.land( "land" )
+   pilot.toggleSpawn( true )
 
    if diff.isApplied( "flf_pirate_ally" ) then
       diff.remove( "flf_pirate_ally" )
@@ -260,7 +257,33 @@ function pilot_death_sindbad( pilot, attacker, arg )
       end
    end
 
-   pilot.toggleSpawn( true )
+   if attacker == player.pilot()
+         or faction.get("FLF"):playerStanding() < 0 then
+      -- Player decided to help destroy Sindbad for some reason. Set FLF
+      -- reputation to "enemy", add a log entry, and finish the event
+      -- without giving the usual rewards.
+      faction.get("FLF"):setPlayerStanding( -100 )
+      flf_addLog( log_text_betrayal )
+      evt.finish( true )
+   end
+
+   music.stop()
+   music.load( "machina" )
+   music.play()
+   var.push( "music_wait", true )
+
+   player.pilot():setInvincible()
+   player.cinematics()
+   camera.set( flf_base )
+
+   tk.msg( title[6], text[6] )
+   tk.msg( title[6], text[7]:format( player.name() ) )
+   flf_setReputation( 100 )
+   faction.get("FLF"):setPlayerStanding( 100 )
+   flf_addLog( log_text_flf )
+   player.addOutfit( "Map: Inner Nebula Secret Jump" )
+   hook.jumpin( "jumpin" )
+   hook.land( "land" )
    hook.timer( 8000, "timer_plcontrol" )
 end
 

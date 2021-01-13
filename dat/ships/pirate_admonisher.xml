@@ -7,7 +7,7 @@
  <sound>engine</sound>
  <class>Corvette</class>
  <price>700000</price>
- <time_mod>1.5</time_mod>
+ <time_mod>1.25</time_mod>
  <fabricator>Skull and Bones</fabricator>
  <description>The stock Admonisher is a powerful vessel, especially for its size. Through the usual Skull and Bones refit the Pirate Admonisher features improved manoeuvrability, more weapons space, and slightly improved defenses, at a cost of cargo capacity and armor regeneration rates.</description>
  <health>
