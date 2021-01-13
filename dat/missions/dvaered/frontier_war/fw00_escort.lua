@@ -6,10 +6,10 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <chance>10</chance>
+   <chance>100</chance>
    <location>Bar</location>
    <faction>Dvaered</faction>
-   <cond>diff.isApplied("flf_dead") and system.get("Tarsus"):jumpDist() &lt; 4</cond>
+   <cond>diff.isApplied("flf_dead") and system.get("Tarsus"):jumpDist() &lt; 4 and (var.peek("invasion_time") == nil or time.get() &gt;= time.fromnumber(var.peek("invasion_time")) + time.create(0, 20, 0)) and not (planet.cur():services().shipyard == nil)</cond>
   </avail>
   <notes>
    <campaign>Frontier Invasion</campaign>
@@ -26,7 +26,7 @@
    0) Way to First system
    1) Land at first system
    2) Way to second system
-   3) Jumpout to ???
+   3) Jumpout to Awowa
    4) Land on fleepla
    5) Way to third system, battle with Hamelsen & such
    8) Land at last system
@@ -45,7 +45,7 @@ npc_name = _("Major Tam")
 npc_desc = _("Major Tam is a very friendly man. At least by Dvaered military standards.")
 
 propose_title = _("In need of a pilot")
-propose_text = _([[As you approach the officer, he hails you. "Hello, citizen %s. I was looking for you. Of course I know your name, you're one of the pilots who destroyed that damn FLF base in Surano. Let me introduce myself: I am Major Tam, from Dvaered High Command, and more precisely from the Space Forces Headquarters. I feel that you are a reliable pilot and the High Command could make more often use of your services. That is why I propose you for now a simple escort mission. What do you say?"]])
+propose_text = _([[As you approach the officer, he hails you. "Hello, citizen %s. I was looking for you. Of course I know your name, you're one of the pilots who destroyed that damn FLF base in Surano. Let me introduce myself: I am Major Tam, from Dvaered High Command, and more precisely from the Space Forces Headquarters. I feel that you are a reliable pilot and the High Command could make more often use of your services. That is why I propose you for now a simple escort mission. All that you need is a fast combat ship, that can keep up with my Vendetta. What do you say?"]])
 
 accept_title = _("Instructions")
 accept_text = _([[Tam seems satisfied with your answer. "I am going to pay a visit to three warlords, for military coordination reasons. They will be waiting for me in their respective Goddards in the systems %s, %s and %s. I need you to stick to my Vendetta and engage any hostile who could try to intercept me."]])
@@ -94,7 +94,7 @@ ambush_text = _([[As your ship starts to recover its normal speed after jumping 
 ambush_broadcast = _("You wanted to meet Lord Jim? What about you meet your doom instead?")
 
 saved_title1 = _("Hostiles eliminated")
-saved_text1 = _([[As the remaining attackers run away, you wonder why this Dvaered patrol helped you, contrary to what Tam had explained before. Then you receive the messages exchanged between Major Tam and the leader of the Dvaered squadron: "This time, I really owe you one, Captain", Tam says. "No problem, sir. " the other answers "But the most dangerous one escaped. The shark, you know, it was Hamelsen, Battleaddict's second in command. After we heard of what the old monkey had done to you, we put him under surveillance and we spot Hamelsen pursuing you with her shark, so we followed her, pretending we're just a police squadron. You know the rest."
+saved_text1 = _([[As the remaining attackers run away, you remark that a Dvaered patrol helped you, contrary to what Tam had explained before. Then you receive the messages exchanged between Major Tam and the leader of the Dvaered squadron: "This time, I really owe you one, Captain", Tam says. "No problem, sir. " the other answers "But the most dangerous one escaped. The shark, you know, it was Hamelsen, Battleaddict's second in command. After we heard of what the old monkey had done to you, we put him under surveillance and we spot Hamelsen pursuing you with her shark, so we followed her, pretending we're just a police squadron. You know the rest."
    Tam responds: "By the way, %s, let me introduce you the Captain Leblanc, she belongs to the Special Operations Force (SOF), part of Dvaered High Command (DHC). I didn't tell you, but her pilots always keep an eye on me from a distance when I have to meet warlords. %s is the private pilot I spoke to you, Captain." Leblanc responds: "Hello, citizen. I'm glad there are civilians like you who make their duty and serve the Dvaered Nation."]])
 
 saved_title2 = _("Two attacks are one too much")
@@ -165,10 +165,6 @@ function enter()
       tk.msg(flee_title, flee_text)
       misn.finish(false)
    end
-
---   if boozingTam ~= nil then
---      misn.npcRm(boozingTam)
---   end
 
    testPlayerSpeed()
 
@@ -377,32 +373,12 @@ function meeting()
       quickie = pilot.add("Dvaered Vendetta", nil, destpla2)[1]
       quickie:setFaction("Warlords")
 
-      quickie:rmOutfit("all")
-      quickie:rmOutfit("cores")
-      quickie:addOutfit("S&K Light Combat Plating")
-      quickie:addOutfit("Milspec Aegis 3601 Core System")
-      quickie:addOutfit("Tricon Zephyr II Engine")
-      quickie:addOutfit("Reactor Class I")
-      quickie:addOutfit("Improved Stabilizer")
-      quickie:addOutfit("Shredder",3)
-      quickie:addOutfit("Vulcan Gun",3)
-      quickie:setHealth(100,100)  -- TODO: does it give health to the player somehow ?!?
-      quickie:setEnergy(100)
-      quickie:setFuel(true)
-
-      hook.timer( 5000, "moreBadGuys" )
-
       majorTam:control()
       majorTam:memory().careful = true
       majorTam:runaway(quickie, true) -- The nojump prevents him to land as well
 
+      hook.timer( 2000, "attackMe" ) -- A small delay to give the player a chance in case an enemy is too close
       hook.timer( 15000, "tamHyperspace" ) -- At some point, he is supposed to jump
-
-      -- Change the enemies to Warlords in order to make them attack
-      for i = 1,#p do
-         p[i]:setFaction("Warlords")
-         p[i]:control(false)
-      end
 
       misn.osdDestroy()
       misn.osdCreate( osd_title, {osd_msg3:format(fleesys:name())} )
@@ -413,6 +389,30 @@ function meeting()
       majorTam:taskClear()
       majorTam:land(destpla3)
       misn.osdActive(2)
+   end
+end
+
+-- Makes Battleaddict's team actually attack the player
+function attackMe()
+   quickie:rmOutfit("all")
+   quickie:rmOutfit("cores")
+   quickie:addOutfit("S&K Light Combat Plating")
+   quickie:addOutfit("Milspec Aegis 3601 Core System")
+   quickie:addOutfit("Tricon Zephyr II Engine")
+   quickie:addOutfit("Reactor Class I")
+   quickie:addOutfit("Improved Stabilizer")
+   quickie:addOutfit("Shredder",3)
+   quickie:addOutfit("Vulcan Gun",3)
+   quickie:setHealth(100,100)  -- TODO: does it give health to the player somehow ?!?
+   quickie:setEnergy(100)
+   quickie:setFuel(true)
+
+   hook.timer( 5000, "moreBadGuys" )
+
+   -- Change the enemies to Warlords in order to make them attack
+   for i = 1,#p do
+      p[i]:setFaction("Warlords")
+      p[i]:control(false)
    end
 end
 
