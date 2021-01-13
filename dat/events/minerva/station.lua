@@ -296,7 +296,7 @@ function approach_terminal()
       vn.jump(idx)
    end )
    vn.label("trade_consumate")
-   -- TODO play a little jingle here
+   vn.sfxMoney()
    t:say( _("\"THANK YOU FOR YOUR BUSINESS.\"") )
    vn.jump("trade")
 
