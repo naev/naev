@@ -99,16 +99,16 @@ function accept ()
       return
    end
 
-   hook.land("land")
-   hook.load("land")
+   hook.land("generate_npc")
+   hook.load("generate_npc")
    hook.enter("enter")
 
    -- Re-add Maikki if accepted
-   land()
+   generate_npc()
 end
 
 
-function land ()
+function generate_npc ()
    if planet.cur() == planet.get("Cerberus") then
       npc_oldman = misn.npcAdd( "approach_oldman", oldman_name, oldman_portrait, oldman_description )
       if misn_state==3 or misn_state==4 or bribed_scavengers==true then
