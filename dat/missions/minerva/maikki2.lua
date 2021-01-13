@@ -98,8 +98,9 @@ eccpos = vec2.new( 7500, -6000 ) -- Should coincide with "Strangelove Lab"
 --    1: Go to fourth hint
 --    2: Go to westhaven
 --    3: Found base
---    4: Mining stuff
---    5: Going back to Minerva Station
+--    4: Destroy drones
+--    5: Going back to eccentric scientist
+--    6: Going back to Minerva Station
 misn_state = nil
 
 
@@ -128,12 +129,12 @@ function accept ()
    markerhint2 = misn.markerAdd( system.get(hintsys[2]), "low")
    markerhint3 = misn.markerAdd( system.get(hintsys[3]), "low")
    hintosd()
-   hook.land("land")
-   hook.load("land")
+   hook.land("generate_npc")
+   hook.load("generate_npc")
    hook.enter("enter")
 
    -- Re-add Maikki if accepted
-   land()
+   generate_npc()
 end
 
 
@@ -275,7 +276,7 @@ Her eyes sparkle with determination.]]))
 end
 
 
-function land ()
+function generate_npc ()
    if planet.cur() == planet.get("Minerva Station") then
       npc_maikki = misn.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
 
@@ -293,21 +294,13 @@ function land ()
 
    elseif diff.isApplied(eccdiff) and planet.cur() == planet.get(eccpnt) then
       npc_ecc = misn.npcAdd( "approach_eccentric", ecc_barname, ecc_portrait, ecc_description )
-
+      music.load("landing_sinister")
+      music.play()
    end
 end
 
 
-function visited ()
-   if misn_state==0 and visitedhint1 and visitedhint2 and visitedhint3 then
-      misn_state = 1
-      markerhint4 = misn.markerAdd( system.get(hintsys[4]) )
-   end
-   hintosd()
-end
-
-
-function lasthint( prof )
+function visitedhints ()
    local visits = 0
    if visitedhint1 then
       visits = visits + 1
@@ -318,10 +311,24 @@ function lasthint( prof )
    if visitedhint3 then
       visits = visits + 1
    end
+   return visits
+end
 
-   if visits > 2 then
-      prof(string.format(_([["Oh, I suddenly remembered. There was also a post doctoral research working on the project by the name of Cayne. I think he was last working at %s in the %s system."]]), _(hintpnt[4]), _(hintsys[4])))
+
+function visited ()
+   if misn_state==0 and visitedhints()==3 then
+      misn_state = 1
+      markerhint4 = misn.markerAdd( system.get(hintsys[4]) )
+   end
+   hintosd()
+end
+
+
+function lasthint( prof )
+   if visitedhints() > 2 then
       vn.sfxBingo()
+      prof(string.format(_([["Oh, I suddenly remembered. There was also a post doctoral research working on the project by the name of Cayne. I think he was last working at %s in the %s system."]]), _(hintpnt[4]), _(hintsys[4])))
+      -- The mission state will be updated afterwards
    end
 end
 
@@ -539,6 +546,30 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
       hook.timer( 30000, "ecc_timer" )
+   elseif misn_state==4 then
+      pilot.clear()
+      pilot.toggleSpawn(false)
+
+      -- We go with nebula music
+      music.load("nebu_battle1")
+      music.play()
+
+      -- Spawn the drones
+      feral_drones = {}
+      local p = pilot.addRaw( "Za'lek Heavy Drone", "zalek", pos, "Strangelove" )
+      p:rename(_("Feral Drone"))
+      table.insert( feral_drones, p )
+      pilot.hook( p, "death", "ecc_feral_boss_dead" )
+      pilot.hook( p, "attacked", "ecc_feral_boss_attacked" )
+      for i = 1,8 do
+         p = pilot.addRaw( "Za'lek Light Drone", "zalek", pos, "Strangelove" )
+         p:rename(_("Feral Drone"))
+         p:setHostile()
+         table.insert( feral_drones, p )
+         pilot.hook( p, "attacked", "ecc_feral_attacked" )
+      end
+
+      hook.timer( 500, "ecc_heartbeat" )
    end
 end
 
@@ -548,6 +579,7 @@ function ecc_timer ()
    sysmarker = system.mrkAdd( _("Curious Signal"), eccpos )
    hook.timer( 500, "ecc_dist" )
 end
+
 
 function ecc_dist ()
    local pp = player.pilot()
@@ -594,8 +626,25 @@ end
 
 function ecc_timer_dead ()
    player.msg(_("Your ships detect that one of the asteroids isn't what it seems..."))
+   -- TODO play eerie sound
+   --vn._sfx.eerie:play()
    diff.apply( eccdiff )
    misn_state = 3
+end
+
+
+function ecc_heartbeat ()
+   if #feral_drones==0 then return end
+   hook.timer( 500, "ecc_heartbeat" )
+end
+
+function ecc_feral_boss_dead( p)
+end
+
+function ecc_feral_boss_attacked( p )
+end
+
+function ecc_feral_attacked( p )
 end
 
 
@@ -608,6 +657,12 @@ function approach_eccentric ()
    if not ecc_visitedonce then
       vn.na(_("The hologram projector flickers as what appears to be a grumpy old man appears into view. He doesn't look very pleased to be disturbed."))
       dr(_([["How did you get in there? Who are you!"]]))
+      vn.na(_("You explain to him that you are looking for information about nebula artifacts."))
+      dr(_([["You sent you here? Was it Dr. Bob? That weasel was always after my precious artifacts. Well, he can't have them! I got all this with my hard worked sweat and tears! They're all mine!"
+He cackles manically.]]))
+      dr(_([["I have hidden them very well, even though you somehow got past my security system and made it into my laboratory, you'll never find them!"
+You glance at a crate labelled 'NEBULA ARTIFACTS #082' in the corner of the room.]]))
+      dr(_([["Anyway, I am very busy now, yes? All the science won't do itself. Almost have a new specimen ready and it will be better than ever! The old ones were fairly inadequate."]]))
       ecc_visitedonce = true
    else
       vn.na(_("The hologram projector flickers and Dr. Strangelove comes into view. He doesn't look very happy to see you again."))
@@ -628,7 +683,18 @@ function approach_eccentric ()
    end })
 
    vn.label("nebula")
-   dr(_([[""]]))
+   dr(_([["Ah yes, the nebula. The pinnacle of human creation! Isn't it just mesmerizing and beautiful to look at? I've always been attracted to it even since the incident destroyed my university. Destruction is so pretty, is it not?"]]))
+   dr(_([["I recently had the great opportunity to work directly on nebula research. Was a fabulous project with hundreds of the brightest Za'lek minds working in tandem! Not as brilliant as me, but the numbers were what mattered."
+He smiles as nostalgia takes him over.]]))
+   dr(_([["We were able to have dedicated teams recovering all sorts of incredible items! We even found the remains of a Proteron replicator! It was only able to replicate cheese fondue, but it was incredible. I integrated it with a drone platform and that has kept me healthy and in shape since! It should be in the bar if you want to try it."
+You see a greasy robot in the corner that is boiling some sort of brown liquid. Is that.. cheese?]]))
+   dr(_([["Anyway, it is a real shame that the bureaucrats in central station killed the project in its prime. At least I was able to bring most of the devices here and keep acquiring more artifacts afterwards. Haven't found anything as fancy as the replicator yet, but the bodies have been very interesting."]]))
+   vn.menu( {
+      {_([["Bodies...?"]]), "bodies"},
+      {_([["What devices?"]]), "bodies"},
+   } )
+   vn.labe("bodies")
+   dr(_([["Ahaha. You are interested, no? That information won't come cheap. I have a job that I would like you to do, and in exchange I might give you the information you seek."]]))
    -- skip back to message if already accepted job
    vn.func( function () if misn_state>=4 then vn.jump("menu_msg") end end )
    vn.menu( {
@@ -640,19 +706,30 @@ function approach_eccentric ()
    vn.jump("menu_msg")
 
    vn.label("jobaccept")
-   dr(_([[""]]))
+   dr(_([["I see you are braver than you look. I have a bit of an issue. You see, I was upgrading some of my drones with some nebula artifacts to test to see if the functionality could be improved. Sadly, an incompatibility resulted in the drones going... ahem... feral."]]))
+   dr(_([["I was going to try to deal with them with my security drones, but as you can guess, that is no longer an option since you smashed them to smithereens."
+He glares at you.]]))
+   dr(_([["While the drones themselves are dispensable, I need you to recover the nebula artifacts used in their upgrading. They should be roaming around the asteroid field and should be fairly easy to find. Make sure to recover the parts in one piece!"]]))
    vn.func( function ()
-      misn.osdCreate( misn_title, {"Obtain exotic minerals from the %s asteroid field",_(eccsys)} )
+      misn.osdCreate( misn_title, {"Recover nebula artifacts from the %s asteroid field",_(eccsys)} )
       misn_state = 4
    end )
    vn.jump("menu_msg")
 
    vn.label("job")
-   dr(_([[""]]))
+   dr(_([["It should be an easy job. All you have to do is recover the nebula artifacts from the feral drones. They may put up a fight or not be easy to catch, but I expect that a pilot who blasted through all my security drones will have no problem with a few feral drones. Try to bring the artifacts in one piece."
+He glares at you.]]))
    vn.jump("menu_msg")
 
    vn.label("laboratory")
-   dr(_([[""]]))
+   dr(_([["How do you like it? Cutting edge Za'lek research! I had to borrow a lot of things from my past jobs, but they can't have it back. It's all mine now! I made sure everything is covered in my scent so that they won't be able to appropriate it!"
+He smiles mischievously.]]))
+   dr(_([["My drones dug it out and it's the cosiest place I have ever lived in, but I don't get many guests. In fact, you are my..."
+He starts counting on his fingers intently.
+"...first guest! Yes that's it, first true biological living being other than me to visit!"
+You don't like how he puts emphasis on 'biological living'...]]))
+   dr(_([["Feel free to use the facilities as you please, but stay out of the backroom."
+Given the smell of the entire laboratory and especially the horrible wafts emanating from the backroom, you feel like it is best to heed his advice for your own safety.]]))
    vn.jump("menu_msg")
 
    vn.label("leave")
