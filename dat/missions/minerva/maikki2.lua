@@ -269,11 +269,23 @@ Her eyes sparkle with determination.]]))
    vn.jump( "menu_msg" )
 
    vn.label("news")
+   vn.na(_("You tell her your plight with the Za'lek researchers and Dr. Strangelove in particular, including the good news that Kex should be at Minerva Station, taken custody by some thugs."))
+   maikki(_([["The Za'leks were assholes as expected, but I'm glad you found out what I thought: that he's somewhere here being held captive or something... This is still all very weird though."]]))
+   maikki(_([["I'm a bit worried about that Dr. Strangelove, what exactly did he mean? Is he even a real doctor? We still even don't know happened in the nebula nor what they want with my father. Instead of answering questions we keep on finding new questions. I suppose that is progress?..."]]))
+   maikki(_([["Anyway, if we can believe Dr. Strangelove, my father is alive and somewhere here! I don't think we have any reason to doubt him, Za'leks don't tend to lie, they only bend the truth. All we have to do is find my father now and everything should fall in place."]]))
+   maikki(_([[She is visibly exciting.
+"It is all coming together! I will finally be able to meet him again! This is so great! I don't know what to tell him first. Do you think he'll recognize me?"]]))
+   maikki(_([["I don't have a lead at the moment, but it can't be far. Keep your eyes open and if you find anything look suspicious, please get in touch with me! I'll also be keeping my eyes open."]]))
+   maikki(_([["Oh, I almost forgot. I got lucky with a Pachinko machine and won a lot of Minerva Tokens and a lifetime supply of parfaits! Since I don't need the tokens to buy anything anymore, here, you can take them."]]))
    vn.func( function ()
       -- no reward, yet...
       vn.sfxVictory()
       mission_finish = true
+      minerva.tokens_pay( 500 ) -- roughly 1M if you consider winning rates
    end )
+   vn.na(_("You recieve #p500 Minerva Tokens#0."))
+   maikki(_([["I'll be around here if you find anything."]]))
+   vn.na(_("You take your leave. Without any leads, it might prove hard to find where Kex is. You wonder what your next steps should be..."))
    vn.done()
 
    vn.label( "menu_msg" )
@@ -566,10 +578,6 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      -- We go with nebula music
-      music.load("nebu_battle1")
-      music.play()
-
       local fdrone = faction.dynAdd( "Independent", "Feral Drone", "Feral Drone" )
       local function spawn_single( ship, pos )
          local p =  pilot.addRaw( boss, "drone_miner", pos, "Feral Drone" )
@@ -689,6 +697,10 @@ function ecc_feral_boss_attacked( p )
       feral_drone_boss:broadcast( drone_msgs[1] )
       drone_msgid = 0
       hook.time( 5000, "ecc_feral_boss_msg" )
+
+      -- We go with nebula music
+      music.load("nebu_battle1")
+      music.play()
    end
 end
 
