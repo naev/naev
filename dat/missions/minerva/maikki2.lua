@@ -734,7 +734,8 @@ function approach_eccentric ()
    vn.clear()
    vn.scene()
    vn.fadein()
-   local dr = vn.newCharacter( ecc_name, { image=ecc_image, color=ecc_colour } )
+   local dr = vn.newCharacter( ecc_name,
+         { color=ecc_colour, image=portrait.hologram( ecc_portrait ) } )
 
    if not ecc_visitedonce then
       vn.na(_("The hologram projector flickers as what appears to be a grumpy old man appears into view. He doesn't look very pleased to be disturbed."))
