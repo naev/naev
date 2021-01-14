@@ -229,7 +229,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
    maikki(_([[As she stares deeply at the picture, her eyes tear up.]]))
    maikki(_([["I'm sorry, I shouldn't be crying. I hardly even know the man. It's just seeing us together just brings back some memories which I had thought I had forgotten."]]))
    maikki(_([["He looks so goofy in this picture, and my mother looks so happy... This is what should have been my childhood..."
-She s]]))
+She reminisces.]]))
    vn.na(_("You give a few moments to recover before explaining her what you saw in the wreck and your encounter with the scavengers."))
    maikki(_([[She dries her eyes with a handkerchief trying unsuccessfully not to smear her makeup.
 "From what you tell me, it seems like it wasn't an accident..."
