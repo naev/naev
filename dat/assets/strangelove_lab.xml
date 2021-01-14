@@ -21,6 +21,7 @@
    <land/>
    <refuel/>
    <bar/>
+   <nomissionspawn/>
   </services>
   <commodities/>
   <description>The laboratory is concealed on an asteroid with all the infrastructure located underground. Inside, a network of dusty tunnels connects the different facilities, and put all together, the insides seem to be smaller than that of a medium-sized ship. It is incredible that anyone could survive, let alone live here.</description>
