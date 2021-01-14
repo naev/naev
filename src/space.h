@@ -63,6 +63,7 @@ enum {
  */
 #define PLANET_KNOWN       (1<<0) /**< Planet is known. */
 #define PLANET_BLACKMARKET (1<<1) /**< Planet is a black market. */
+#define PLANET_NOMISNSPAWN (1<<2) /**< No missions spawn nor trigger on this asset. */
 #define planet_isFlag(p,f)    ((p)->flags & (f)) /**< Checks planet flag. */
 #define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
 #define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */

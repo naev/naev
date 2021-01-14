@@ -32,7 +32,7 @@ int npc_rm_parentMission( Mission *misn );
  * Control.
  */
 void npc_sort (void);
-void npc_generate (void);
+void npc_generateMissions (void);
 void npc_patchMission( Mission *misn );
 void npc_clear (void);
 
