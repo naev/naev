@@ -6,7 +6,7 @@
   </flags>
   <avail>
    <priority>4</priority>
-   <chance>0</chance>
+   <chance>100</chance>
    <location>Bar</location>
    <planet>Minerva Station</planet>
    <done>Maikki's Father 1</done>
@@ -20,7 +20,7 @@
 -- Player found out that Za'lek doing stuff with the ship cargo.
 --
 -- 1. Told to try to find who could have been involved and given three places to look at.
--- Hint 1: Jorlas in Regas (University)
+-- Hint 1: Jorla in Regas (University)
 -- Hint 2: Cantina Station in Qulam (Trade Hub)
 -- Hint 3: Jurai in Hideyoshi's Star (University)
 -- 2. After talking to all three, the player is told to go to Naga in Damien (Underwater University)
@@ -42,6 +42,7 @@ maikki_portrait = minerva.maikki.portrait
 maikki_image = minerva.maikki.image
 maikki_colour = minerva.maikki.colour
 
+-- TODO customize all the portraits/images/descriptions
 hint1_name = _("Prof. Sato") -- Computer Science / Mathematics
 hint1_description = _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.")
 hint1_portrait = "zalek1"
@@ -49,13 +50,13 @@ hint1_image = "zalek1.png"
 hint1_colour = nil
 
 hint2_name = _("Prof. Stova") -- Material Science
-hint2_description = _("Foo")
+hint2_description = _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.")
 hint2_portrait = "zalek1"
 hint2_image = "zalek1.png"
 hint2_colour = nil
 
 hint3_name = _("Prof. Hsu") -- Philosophy
-hint3_description = _("Foo")
+hint3_description = _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.")
 hint3_portrait = "zalek1"
 hint3_image = "zalek1.png"
 hint3_colour = nil
@@ -78,7 +79,7 @@ misn_reward = _("???")
 misn_desc = _("Maikki wants you to help her find her father.")
 
 hintpnt = {
-   "Jorlan",
+   "Jorla",
    "Cantina Station",
    "Jurai",
    "Naga",
@@ -195,7 +196,7 @@ and %s in the %s system."]]),
 
       vn.label( "accept" )
       vn.func( function ()
-         misn_accept()
+         misn.accept()
          misn_state = 0
       end )
       maikki(_([["I think we should be able to find out what happened to my father's ship in the nebula. It seems like someone is very interested on stuff that is being found in the nebula and is behind the scavengers you met. Whoever is behind them could also be related to whatever happened to the ship in the first place."]]))
@@ -240,8 +241,8 @@ She winks at you.]]))
       {_("Leave"), "leave"},
    }
    -- TODO more options as more researchers are found
-   if misn_stage==6 then
-      table.insert( opts, {_("Tell her want you found"), "news"} )
+   if misn_state==6 then
+      table.insert( opts, 1, {_("Tell her want you found"), "news"} )
    end
    vn.label( "menu" )
    vn.menu( opts )
@@ -346,7 +347,7 @@ end
 function visited ()
    if misn_state==0 and visitedhints()==3 then
       misn_state = 1
-      markerhint4 = misn.markerAdd( system.get(hintsys[4]) )
+      markerhint4 = misn.markerAdd( system.get(hintsys[4]), "low" )
    end
    hintosd()
 end
@@ -385,7 +386,7 @@ Their excitement grows.]]))
    vn.run()
 
    if not visitedhint1 then
-      visitedhint1 = tue
+      visitedhint1 = true
       misn.markerRm( markerhint1 )
       visited()
    end
@@ -405,7 +406,7 @@ function approach_hint2 ()
 "Ah, the nebula artifacts... Not very good experiences with those, no, not really interested in them anymore."]]))
    prof(_([["I was part of a really ambitious project to try to track down the origin of the incident, which just end up being a bureaucratic nightmare."]]))
    prof(_([["You see, the bigger the research project, the more the project leader and co-leaders want to have meetings and goals and work packages."
-He shudders when he says the word "work packages".]]))
+They shudders when they says the word "work packages".]]))
    prof(_([["At the end, we were just chaining meetings and answering e-mails and not getting anything done. We ended up handing in a 5 page report written by an internal for the mid-project evaluation and almost lost all the funding. The project leader panicked and it all went to hell from there."]]))
    prof(_([["All nebula research is doomed to end that way. I haven't seen a project succeed yet despite all the proposal calls attempting to address the issue."]]))
    vn.na(_("You inquire about other project members."))
@@ -429,7 +430,7 @@ end
 function approach_hint3 ()
    vn.clear()
    vn.scene()
-   local drshrimp = vn.newCharacter( hint3_name, { image=hint3_image, color=hint3_colour } )
+   local prof = vn.newCharacter( hint3_name, { image=hint3_image, color=hint3_colour } )
    vn.fadein()
 
    vn.na(_("You approach the professor."))
@@ -443,7 +444,7 @@ function approach_hint3 ()
    prof(_([["Other members? I recall a few, but they liked me so much, they promoted me and gave me a windowless room in the basement. What an honour. Anyway, back to what I was saying."]]))
    prof(_([["We must also further question not only our sensorial organs, and the existence of nebula artifacts, but our own existence. We apparently are able to think and some would argue that by this, the only thing we can prove, given imperfect sensorial data, is our own existence. However, I argue that this too is an illusion, and that our existence itself is something we can't define."]]))
    prof(_([["Every instant, what we perceive as ourselves is ceasing to exist and a new existence, which while very close to the "ourselves" from the previous instance, is, arguably, a completely new existence. This fluidity makes it, not only impossible to perceive nor understand our self as it is, but also makes it impossible to draw a line between different individuals..."]]))
-   vn.na(_("You thank him and run away while he keeps on talking to himself."))
+   vn.na(_("You thank them and run away while they keeps on talking to himself."))
    lasthint( prof )
 
    vn.fadeout()
@@ -458,9 +459,16 @@ end
 
 
 function approach_hint4 ()
+   local name
+   if met_drshrimp then
+      name = _("Dr. Shrimp")
+   else
+      name = hint4_name
+   end
+
    vn.clear()
    vn.scene()
-   local drshrimp = vn.newCharacter( hint4_name, { image=hint4_image, color=hint4_colour } )
+   local drshrimp = vn.newCharacter( name, { image=hint4_image, color=hint4_colour } )
    local shrimp = vn.newCharacter( _("Floating Shrimp"), { color={0.4, 0.6, 1.0} } )
    vn.fadein()
 
@@ -471,19 +479,25 @@ function approach_hint4 ()
 "PERSON. PERSON."]]))
    drshrimp(_([[The young man grumbles.
 "I told you I already submitted my temporal research proposal clarification application yesterday."]]))
-   drshrimp(_([[The young man suddenly breaks out of his reading stupor and looks at you as if you had appeared out of thin air.
+   if not met_drshrimp then
+      drshrimp(_([[The young man suddenly breaks out of his reading stupor and looks at you as if you had appeared out of thin air.
 "Wait, what? Who are you?"]]))
-   shrimp(_([["PERSON. PERSON. PERSON."]]))
-   drshrimp(_([["C'mon Calliope, I already know that. Here, have a pellet."]]))
-   shrimp:rename("Calliope")
-   shrimp(_([[A pellet of shrimp food releases into the floating aquarium. The shrimp wastes no time in getting scarfing it down.
-"HAPPY. GOOD."]]))
-   drshrimp(_([["What do you want"]]))
-   vn.na(_("You explain to him that you are looking for information related to nebula artifacts."))
-   drshrimp(_([["Ah, that hellish project. Was doomed from the start you know. The full-time professors and researchers let their egos get to their heads and it derails spectacularly. I'm glad it ended as it did, or I would be still stuck in that purgatory."]]))
-   drshrimp(_([["I don't think most of the people remember me, but I was the one stuck doing most of the work. If you can call it that."]]))
-   drshrimp:rename(_("Dr. Shrimp"))
-   drshrimp(_([["My name is Cayne, but you can call me Dr. Shrimp. What would you like to know?"]]))
+      shrimp(_([["PERSON. PERSON. PERSON."]]))
+      drshrimp(_([["C'mon Calliope, I already know that. Here, have a pellet."]]))
+      shrimp:rename("Calliope")
+      shrimp(_([[A pellet of shrimp food releases into the floating aquarium. The shrimp wastes no time in getting scarfing it down.
+   "HAPPY. GOOD."]]))
+      drshrimp(_([["What do you want?"]]))
+      vn.na(_("You explain to him that you are looking for information related to nebula artifacts."))
+      drshrimp(_([["Ah, that hellish project. Was doomed from the start you know. The full-time professors and researchers let their egos get to their heads and it derails spectacularly. I'm glad it ended as it did, or I would be still stuck in that purgatory."]]))
+      drshrimp(_([["I don't think most of the people remember me, but I was the one stuck doing most of the work. If you can call it that."]]))
+      drshrimp:rename(_("Dr. Shrimp"))
+      drshrimp(_([["My name is Cayne, but you can call me Dr. Shrimp. What would you like to know?"]]))
+      vn.func( function () met_drshrimp = true end )
+   else
+      drshrimp(_([[The young man suddenly breaks out of his reading stupor and looks at you as if you had appeared out of thin air.
+"Ah, it is you again. Is there anything else you would want to know about?"]]))
+   end
 
    vn.label("menu")
    vn.menu( function ()
@@ -510,7 +524,7 @@ He taps the tank of the floating shrimp next to him.]]))
    drshrimp(_([["The capability of these shrimp are endless, and they are helping us understand much more genetic modification than the brute-force approaches of the Soromid, although are technology is still lacking behind."]]))
    drshrimp(_([["And what's best, look how cute they are!"
 He enthusiastically points towards Calliope.
-"Isn't she the cutest?]]))
+"Isn't she the cutest?"]]))
    drshrimp(_([["After focusing on shrimp for a few cycles, people started calling me Dr. Shrimp and the name stuck. Honestly, it's the best nickname they could give me. Makes me feel like getting my PhD was worth it!"]]))
    vn.func( function () asked_drshrimp = true end )
    vn.jump("menu_msg")
@@ -530,7 +544,7 @@ He activates her food activation system and a pellet drops out.]]))
    drshrimp(_([["You see, the nebula emits a specific type of radiation. We aren't too familiar with it, but it does alter the subatomic particles of space debris in nearly imperceptible ways. Our tools could detect the alterations easily."]]))
    drshrimp(_([["When the project failed, most of the artifacts were confiscated to hell who knows where, but I managed to keep a nut from what I think is a space station, but not entirely sure. It's a bit damaged beyond recognition."]]))
    drshrimp(_([["With the failure of most nebula project, I don't think there is anybody buying nebula artifacts anymore. Not much of a market for them, and most easy to access debris has all been scavenged away. Some collectors are still interested in that, but that's about it. Furthermore, it's not entirely legal if you catch my drift."]]))
-   vn.func( function () asked_drshrimp = true end )
+   vn.func( function () asked_artifacts = true end )
    vn.jump("menu_msg")
 
    vn.label("members")
@@ -538,7 +552,7 @@ He activates her food activation system and a pellet drops out.]]))
    drshrimp(_([["Many of the researchers lost their posts or went into hiding. The few I know that still are active are Prof. Stova, Prof. Sato, and Prof. Hsu. I think they even got some stupid promotion, while me and the other post docs lost our jobs."]]))
    drshrimp(_([["It's pretty incredible to think that there were originally 100ish people in the project. Yet even with all the people fired for falsification of results, not a single tenured post opened! It's ridiculous! If industry wasn't so horrible I would quit academia in an instance!"]]))
    drshrimp(_([["Now that I think of it, there was another guy. What was his name? I totally forget. Oh well."]]))
-   vn.func( function () asked_drshrimp = true end )
+   vn.func( function () asked_members = true end )
    vn.jump("menu_msg")
 
    vn.label("strangelove")
@@ -551,9 +565,9 @@ He activates her food activation system and a pellet drops out.]]))
       asked_strangelove = true
       if misn_state==1 then
          misn_state = 2
-         misn.markerRm( markerhint4 )
-         misn.markerAdd( system.get(eccsys), "low" )
          misn.osdCreate( misn_title, {string.format(_("\tGo to %s"), _(eccsys))} )
+         misn.markerRm( markerhint4 )
+         marker_ecc = misn.markerAdd( system.get(eccsys), "low" )
       end
    end )
    vn.jump("menu_msg")
@@ -580,27 +594,29 @@ function enter ()
 
       local fdrone = faction.dynAdd( "Independent", "Feral Drone", "Feral Drone" )
       local function spawn_single( ship, pos )
-         local p =  pilot.addRaw( boss, "drone_miner", pos, "Feral Drone" )
+         local p = pilot.addRaw( ship, "drone_miner", pos, "Feral Drone" )
          p:setNoJump(true)
          p:setNoLand(true)
          return p
       end
 
       -- Spawn the drones
+      local pos = eccpos + vec2.newP( 5000, rnd.rnd(0,359) )
       attacked_feral_drones = false
       local b = spawn_single( "Za'lek Heavy Drone", pos )
       feral_drone_boss = b
       b:rename(_("Feral Alpha Drone"))
-      b:setHighlight(true)
-      pilot.hook( b, "attacked", "ecc_feral_boss_attacked" )
-      pilot.hook( b, "death", "ecc_feral_boss_dead" )
+      b:setHilight(true)
+      hook.pilot( b, "attacked", "ecc_feral_boss_attacked" )
+      hook.pilot( b, "death", "ecc_feral_boss_dead" )
       b:setNoboard(true)
-      for i=1,3 do
+      local num = 3
+      for i=1,num do
          local fpos = pos + vec2.newP( 50, i*360/num )
          local p = spawn_single( "Za'lek Light Drone", fpos )
          p:rename(_("Feral Drone"))
          p:setLeader( b )
-         pilot.hook( p, "attacked", "ecc_feral_boss_attacked" )
+         hook.pilot( p, "attacked", "ecc_feral_boss_attacked" )
       end
    end
 end
@@ -666,9 +682,11 @@ end
 
 
 function ecc_feral_boss_dead ()
+   -- TODO add a pause or something so the player doesn't skip the entire sequence due to mashing keys
    vn.clear()
-   vn.fadein()
+   vn.scene()
    local voice = vn.newCharacter( _("Unknown Voice") )
+   vn.fadein()
    vn.na(_("While the drone is blowing up, you receive a faint voice-only transmission"))
    vn.sfxEerie()
    voice(_([["Thank you for setting me free..."]]))
@@ -678,7 +696,8 @@ function ecc_feral_boss_dead ()
    vn.run()
 
    nebula_artifacts = misn.cargoAdd( "Nebula Artifact?", 0 )
-   misn_stage = 5
+   misn_state = 5
+   misn.osdCreate( misn_title, {_("Go back to Dr. Strangelove")} )
 end
 
 drone_msgs = {
@@ -696,7 +715,7 @@ function ecc_feral_boss_attacked( p )
       attacked_feral_drones = true
       feral_drone_boss:broadcast( drone_msgs[1] )
       drone_msgid = 0
-      hook.time( 5000, "ecc_feral_boss_msg" )
+      hook.timer( 2000, "ecc_feral_boss_msg" )
 
       -- We go with nebula music
       music.load("nebu_battle1")
@@ -708,7 +727,7 @@ function ecc_feral_boss_msg ()
    drone_msgid = (drone_msgid % #drone_msgs)+1
    if feral_drone_boss:exists() then
       feral_drone_boss:broadcast( drone_msgs[ drone_msgid ] )
-      hook.time( 7000, "ecc_feral_boss_msg" )
+      hook.timer( 7000, "ecc_feral_boss_msg" )
    end
 end
 
@@ -734,7 +753,7 @@ You glance at a crate labelled 'NEBULA ARTIFACTS #082' in the corner of the room
    vn.label("menu_msg")
    dr(_([["What do you want?"]]))
    vn.label("menu")
-   vn.menu({ function ()
+   vn.menu( function ()
       local opts = {
          {_("Ask about the nebula"), "nebula"},
          {_("Ask about this place"), "laboratory"},
@@ -746,7 +765,7 @@ You glance at a crate labelled 'NEBULA ARTIFACTS #082' in the corner of the room
          table.insert( opts, 1, {_("Ask about job"), "job"} )
       end
       return opts
-   end })
+   end )
 
    vn.label("nebula")
    dr(_([["Ah yes, the nebula. The pinnacle of human creation! Isn't it just mesmerizing and beautiful to look at? I've always been attracted to it even since the incident destroyed my university. Destruction is so pretty, is it not?"]]))
@@ -760,7 +779,7 @@ He coughs, wracking his body.]]))
       {_([["Bodies...?"]]), "bodies"},
       {_([["What devices?"]]), "bodies"},
    } )
-   vn.labe("bodies")
+   vn.label("bodies")
    dr(_([["Ahaha. You are interested, no? That information won't come cheap. I have a job that I would like you to do, and in exchange I might give you the information you seek."]]))
    -- skip back to message if already accepted job
    vn.func( function () if misn_state>=4 then vn.jump("menu_msg") end end )
@@ -778,7 +797,7 @@ He coughs, wracking his body.]]))
 He glares at you.]]))
    dr(_([["While the drones themselves are dispensable, I need you to recover the nebula artifacts used in their upgrading. They should be roaming around the asteroid field and should be fairly easy to find. Make sure to recover the parts in one piece!"]]))
    vn.func( function ()
-      misn.osdCreate( misn_title, {"Recover nebula artifacts from the %s asteroid field",_(eccsys)} )
+      misn.osdCreate( misn_title, {string.format(_("Recover nebula artifacts from the %s asteroid field"),_(eccsys))} )
       misn_state = 4
    end )
    vn.jump("menu_msg")
@@ -829,7 +848,7 @@ He seems delirious.]]))
 He coughs convulsing.]]))
    dr(_([["The mind was good enough but not my body. No, and I don't have much time. I'm wasting away. So close and here wasting away. What uselessness."
 He lowers his gaze.]]))
-   va.na(_("You ask what happened to the 'individuals' in the experiments."))
+   vn.na(_("You ask what happened to the 'individuals' in the experiments."))
    dr(_([["I did try to track him down, last I checked he got caught by thugs at Minerva Station. Nasty place Limbo. No nebula and very stale space. Not beautiful at all."
 He coughs softly.]]))
    dr(_([["She tried to help me, but she too was weak of mind, and one day left for the stars. I couldn't stop her, but I thought I was close enough. I just need more time. One more cycle..."
@@ -839,6 +858,9 @@ His voice gets softer and softer as he keeps on mumbling.]]))
       misn.cargoRm( nebula_artifacts )
       misn_state = 6
       misn.npcRm( npc_ecc )
+      misn.osdCreate( misn_title, {_("Report back to Maikki in the Limbo system")} )
+      misn.markerAdd( system.get("Limbo"), "low")
+      misn.markerRm( marker_ecc )
    end )
    vn.na(_("You leave behind the hologram project and hope you won't have to deal with Dr. Strangelove in the future."))
    vn.fadeout()
