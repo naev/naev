@@ -682,11 +682,10 @@ end
 
 
 function ecc_feral_boss_dead ()
-   -- TODO add a pause or something so the player doesn't skip the entire sequence due to mashing keys
    vn.clear()
    vn.scene()
    local voice = vn.newCharacter( _("Unknown Voice") )
-   vn.fadein()
+   vn.fadein( 3 ) -- Really slow fade in so the player stops mashing keys due to combat (keypresses aren't processed in animations)
    vn.na(_("While the drone is blowing up, you receive a faint voice-only transmission"))
    vn.sfxEerie()
    voice(_([["Thank you for setting me free..."]]))
