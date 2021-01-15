@@ -2108,6 +2108,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
                      planet->services |= PLANET_SERVICE_OUTFITS | PLANET_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "shipyard"))
                      planet->services |= PLANET_SERVICE_SHIPYARD | PLANET_SERVICE_INHABITED;
+                  else if (xml_isNode(ccur, "nomissionspawn"))
+                     planet->flags |= PLANET_NOMISNSPAWN;
                   else if (xml_isNode(ccur, "blackmarket"))
                      planet->services |= PLANET_SERVICE_BLACKMARKET;
                   else

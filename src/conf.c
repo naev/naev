@@ -21,7 +21,6 @@
 #include "log.h"
 #include "music.h"
 #include "ndata.h"
-#include "nebula.h"
 #include "nfile.h"
 #include "nlua.h"
 #include "nstring.h"
@@ -109,7 +108,6 @@ static void print_usage( void )
    LOG(_("   -S, --sound           forces sound"));
    LOG(_("   -m f, --mvol f        sets the music volume to f"));
    LOG(_("   -s f, --svol f        sets the sound volume to f"));
-   LOG(_("   -G, --generate        regenerates the nebula (slow)"));
    LOG(_("   -d, --datapath        adds a new datapath to be mounted (used for looking for game assets)"));
    LOG(_("   -X, --scale           defines the scale factor"));
 #ifdef DEBUGGING
@@ -644,9 +642,6 @@ void conf_parseCLI( int argc, char** argv )
             break;
          case 's':
             conf.sound = atof(optarg);
-            break;
-         case 'G':
-            nebu_forceGenerate();
             break;
          case 'N':
             free(conf.ndata);

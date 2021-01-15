@@ -758,9 +758,6 @@ void naev_resize (void)
    /* Resets the overlay dimensions. */
    ovr_refresh();
 
-   if (nebu_isLoaded())
-      nebu_vbo_init();
-
    /* Re-center windows. */
    toolkit_reposition();
 

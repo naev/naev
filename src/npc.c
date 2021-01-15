@@ -362,7 +362,7 @@ void npc_sort (void)
 /**
  * @brief Generates the bar missions.
  */
-void npc_generate (void)
+void npc_generateMissions (void)
 {
    int i;
    Mission *missions;

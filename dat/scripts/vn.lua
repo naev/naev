@@ -692,26 +692,29 @@ function vn.Character.new( who, params )
    c.color = params.color or vn._default.color
    local pimage = params.image
    if pimage ~= nil then
+      local img
       if type(pimage)=='string' then
          local searchpath = { "",
                "gfx/vn/characters/" }
          for k,s in ipairs(searchpath) do
             local info = filesystem.getInfo( s..pimage )
             if info ~= nil then
-               image = graphics.newImage( s..pimage )
-               if image ~= nil then
+               img = graphics.newImage( s..pimage )
+               if img ~= nil then
                   break
                end
             end
          end
-         if image == nil then
+         if img == nil then
             error(string.format(_("vn: character image '%s' not found!"),pimage))
          end
       elseif pimage:type()=="ImageData" then
-         image = graphics.newImage( pimage )
+         img = graphics.newImage( pimage )
       end
+      c.image = img
+   else
+      c.image = nil
    end
-   c.image = image
    c.hidetitle = params.hidetitle
    c.params = params
    return c

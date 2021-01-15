@@ -922,7 +922,7 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
       lua_pushpilot(naevL, attacker->id);
    else /* Default to the victim's current target. */
       lua_pushpilot(naevL, distressed->target);
-   
+
    if (nlua_pcall(cur_pilot->ai->env, 2, 0)) {
       WARN( _("Pilot '%s' ai -> 'distress': %s"), cur_pilot->name, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
@@ -1732,7 +1732,7 @@ static int aiL_face( lua_State *L )
  * mobile robotics using the potential method.
  *
  * The principle is to consider the mobile object (ship) as a mechanical object.
- * Obstacles (enemies) and the target exert 
+ * Obstacles (enemies) and the target exert
  * attractive or repulsive force on this object.
  *
  * Only visible ships are taken into account.
@@ -1788,7 +1788,7 @@ static int aiL_careful_face( lua_State *L )
       /* Valid pilot isn't self, is in range, isn't the target and isn't disabled */
       if (pilot_isDisabled(p_i) ) continue;
       if (p_i->id == cur_pilot->id) continue;
-      if (p_i->id == p->id) continue; 
+      if (p_i->id == p->id) continue;
       if (pilot_inRangePilot(cur_pilot, p_i, NULL) != 1) continue;
 
       /* If the enemy is too close, ignore it*/
@@ -2167,6 +2167,10 @@ static int aiL_getlandplanet( lua_State *L )
    if (cur_system->nplanets == 0)
       return 0; /* no planets */
 
+   /* If pilot can't land ignore. */
+   if (pilot_isFlag(cur_pilot, PILOT_NOLAND))
+      return 0;
+
    /* Check if we should get only friendlies. */
    only_friend = lua_toboolean(L, 1);
 
@@ -2493,7 +2497,7 @@ static int aiL_follow_accurate( lua_State *L )
          VY(target->solid->pos) + radius * sin(angle2) );
 
    /*  Compute the direction using a pd controller */
-   vect_cset( &cons, (point.x - p->solid->pos.x) * Kp + 
+   vect_cset( &cons, (point.x - p->solid->pos.x) * Kp +
          (target->solid->vel.x - p->solid->vel.x) *Kd,
          (point.y - p->solid->pos.y) * Kp +
          (target->solid->vel.y - p->solid->vel.y) *Kd );
@@ -2540,7 +2544,7 @@ static int aiL_face_accurate( lua_State *L )
          pos->y + radius * sin(angle2) );
 
    /*  Compute the direction using a pd controller */
-   vect_cset( &cons, (point.x - p->solid->pos.x) * Kp + 
+   vect_cset( &cons, (point.x - p->solid->pos.x) * Kp +
          (vel->x - p->solid->vel.x) *Kd,
          (point.y - p->solid->pos.y) * Kp +
          (vel->y - p->solid->vel.y) *Kd );
@@ -2572,7 +2576,7 @@ static int aiL_stop( lua_State *L )
 
 /**
  * @brief Docks the ship.
- * 
+ *
  *    @luatparam Pilot target Pilot to dock with.
  *    @luafunc dock
  */
@@ -2590,7 +2594,7 @@ static int aiL_dock( lua_State *L )
 
 /**
  * @brief Sets the combat flag.
- * 
+ *
  *    @luatparam[opt=true] boolean val Value to set flag to.
  *    @luafunc combat
  */
@@ -2611,7 +2615,7 @@ static int aiL_combat( lua_State *L )
 
 /**
  * @brief Sets the pilot's target.
- * 
+ *
  *    @luaparam target Pilot to target.
  *    @luafunc settarget
  */
@@ -2626,7 +2630,7 @@ static int aiL_settarget( lua_State *L )
 
 /**
  * @brief Sets the pilot's asteroid target.
- * 
+ *
  *    @luaparam int field Id of the field to target.
  *    @luaparam int ast Id of the asteroid to target.
  *    @luafunc setasterotarget
@@ -2647,7 +2651,7 @@ static int aiL_setasterotarget( lua_State *L )
 
 /**
  * @brief Gets the closest gatherable within a radius.
- * 
+ *
  *    @luaparam float rad Radius to search in.
  *    @luareturn int i Id of the gatherable or nil if none found.
  *    @luafunc getgatherable
@@ -2675,7 +2679,7 @@ static int aiL_getGatherable( lua_State *L )
 
 /**
  * @brief Gets the pos and vel of a given gatherable.
- * 
+ *
  *    @luaparam int id Id of the gatherable.
  *    @luareturn vec2 pos position of the gatherable.
  *    @luareturn vec2 vel velocity of the gatherable.

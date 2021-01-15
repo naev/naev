@@ -2958,12 +2958,16 @@ static int pilotL_getStats( lua_State *L )
    PUSH_DOUBLE( L, "shield_regen", p->shield_regen );
    PUSH_DOUBLE( L, "energy_regen", p->energy_regen );
    /* Stats. */
+   PUSH_DOUBLE( L, "dmg_absorb", p->dmg_absorb );
+   PUSH_DOUBLE( L, "ew_hide", p->ew_hide );
+   PUSH_DOUBLE( L, "ew_detect", p->ew_detect );
    PUSH_DOUBLE( L, "jump_delay", ntime_convertSeconds( pilot_hyperspaceDelay(p) ) );
    PUSH_INT( L, "jumps", pilot_getJumps(p) );
 
    return 1;
 }
 #undef PUSH_DOUBLE
+#undef PUSH_INT
 
 
 /**
