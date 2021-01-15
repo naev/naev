@@ -104,12 +104,22 @@ typedef struct font_char_s {
 
 
 /**
+ * @brief Stores a font file. May be referenced by multiple glFonts for size or fallback reasons.
+ */
+typedef struct glFontFile_s {
+   char *name; /**< Font file name. */
+   int refcount; /**< Reference counting. */
+   FT_Byte *data; /**< Font data buffer. */
+   size_t datasize; /**< Font data size. */
+} glFontFile;
+
+
+/**
  * @brief Freetype Font structure.
  */
 typedef struct glFontStashFreetype_s {
-   char *fontname; /**< Font name. */
+   glFontFile *file; /**< Font file. */
    FT_Face face; /**< Face structure. */
-   FT_Byte *fontdata; /**< Font data buffer. */
 } glFontStashFreetype;
 
 
@@ -1087,7 +1097,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
          if (i<len-1)
             continue;
          else {
-            WARN(_("Font '%s' unicode character '%#x' not found in font! Using missing glyph."), ft->fontname, ch);
+            WARN(_("Font '%s' unicode character '%#x' not found in font! Using missing glyph."), ft->file->name, ch);
             ft = &stsh->ft[0]; /* Fallback to first font. */
          }
       }
@@ -1101,7 +1111,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
       slot = ft->face->glyph; /* Small shortcut. */
       bitmap = slot->bitmap; /* to simplify */
       if (bitmap.pixel_mode != FT_PIXEL_MODE_GRAY)
-         WARN(_("Font '%s' not using FT_PIXEL_MODE_GRAY!"), ft->fontname);
+         WARN(_("Font '%s' not using FT_PIXEL_MODE_GRAY!"), ft->file->name);
 
       w = bitmap.width;
       h = bitmap.rows;
@@ -1561,27 +1571,42 @@ int gl_fontAddFallback( glFont* font, const char *fname )
 static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname, unsigned int h )
 {
    glFontStashFreetype *ft;
-   FT_Byte* buf;
    FT_Face face;
    FT_Matrix scale;
-   size_t bufsize;
+   int i, j;
 
-   /* Read font file. */
-   buf = (FT_Byte*) ndata_read( fname, &bufsize );
-   if (buf == NULL) {
-      WARN(_("Unable to read font: %s"), fname );
-      return -1;
+   /* Set up file data. Reference a loaded copy if we have one. */
+   ft = &array_grow( &stsh->ft );
+   ft->file = NULL;
+   for (i=0; i<array_size(avail_fonts); i++) {
+      if (avail_fonts[i].ft == NULL)
+         continue;
+      for (j=0; j<array_size(avail_fonts[i].ft); j++)
+         if (ft != &avail_fonts[i].ft[j] && !strcmp( fname, avail_fonts[i].ft[j].file->name ))
+            ft->file = avail_fonts[i].ft[j].file;
+      if (ft->file != NULL) {
+         ft->file->refcount++;
+         break;
+      }
+   }
+
+   if (ft->file == NULL) {
+      /* Read font file. */
+      ft->file = malloc( sizeof( glFontFile ) );
+      ft->file->name = strdup( fname );
+      ft->file->refcount = 1;
+      ft->file->data = (FT_Byte*) ndata_read( fname, &ft->file->datasize );
+      if (ft->file->data == NULL) {
+         WARN(_("Unable to read font: %s"), fname );
+         return -1;
+      }
    }
 
    /* Object which freetype uses to store font info. */
-   if (FT_New_Memory_Face( font_library, buf, bufsize, 0, &face )) {
+   if (FT_New_Memory_Face( font_library, ft->file->data, ft->file->datasize, 0, &face )) {
       WARN(_("FT_New_Memory_Face failed loading library from %s"), fname);
       return -1;
    }
-
-   /* Set up name. */
-   ft = &array_grow( &stsh->ft );
-   ft->fontname = strdup( fname );
 
    /* Try to resize. */
    if (FT_IS_SCALABLE(face)) {
@@ -1604,7 +1629,6 @@ static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname, unsign
 
    /* Save stuff. */
    ft->face     = face;
-   ft->fontdata = buf;
 
    /* Success. */
    return 0;
@@ -1635,9 +1659,12 @@ void gl_freeFont( glFont* font )
 
    for (i=0; i<array_size(stsh->ft); i++) {
       ft = &stsh->ft[i];
-      free(ft->fontname);
+      if(--ft->file->refcount == 0) {
+         free(ft->file->name);
+         free(ft->file->data);
+         free(ft->file);
+      }
       FT_Done_Face(ft->face);
-      free(ft->fontdata);
    }
    array_free( stsh->ft );
 
