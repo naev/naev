@@ -99,7 +99,7 @@ function create()
 
    -- If they player never had tokens, it is probably their first time
    if not var.peek( "minerva_tokens" ) then
-      hook.land( "bargreeter", "bar" )
+      greeterhook = hook.land( "bargreeter", "bar" )
    end
    -- End event on takeoff.
    tokens_landed = minerva.tokens_get()
@@ -146,6 +146,7 @@ function bargreeter()
    vn.run()
 
    minerva.tokens_pay( 10 )
+   hook.rm( greeterhook ) -- Have to remove
 end
 
 function approach_terminal()
