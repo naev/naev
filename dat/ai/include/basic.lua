@@ -136,6 +136,14 @@ end
 
 
 --[[
+-- Goes to a point in order to inspect (same as moveto, but pops when attacking)
+--]]
+function inspect_moveto()
+   __moveto_nobrake()
+end
+
+
+--[[
 -- moveto without velocity compensation.
 --]]
 function moveto_raw ()
@@ -190,7 +198,6 @@ function follow ()
    -- Must approach
    if dir < 10 and dist > 300 then
       ai.accel()
- 
    end
 end
 function follow_accurate ()
