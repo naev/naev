@@ -551,20 +551,16 @@ end
 -- Tries to fly back to carrier
 function flyback ()
    local target = ai.pilot():leader()
-   local dir    = ai.face(target)
-   local dist   = ai.dist(target)
-   local bdist  = ai.minbrakedist()
+   local goal = ai.follow_accurate(target, 0, 0, mem.Kp, mem.Kd)
 
-   -- Try to brake
-   if not ai.isstopped() and dist < bdist then
-      ai.pushtask("brake")
+   local dir  = ai.face( goal )
+   local dist = ai.dist( goal )
 
-   -- Try to dock
-   elseif ai.isstopped() and dist < 30 then
+   if dist > 300 then
+      if dir < 10 then 
+         ai.accel()
+      end
+   else -- Time to dock
       ai.dock(target)
-
-   -- Far away, must approach
-   elseif dir < 10 then
-      ai.accel()
    end
 end
