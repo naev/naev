@@ -239,11 +239,8 @@ function follow_fleet ()
       end
 
       local angle, radius, method = table.unpack(mem.form_pos)
-      local goal0 = ai.follow_accurate(leader, radius, angle, 2*mem.Kp, 10*mem.Kd, method) -- Derivative-augmented controller
       local goal  = ai.follow_accurate(leader, radius, angle, mem.Kp, mem.Kd, method) -- Standard controller
-
       local dist  = ai.dist(goal)
-      local dist0 = ai.dist(goal0)
 
       if mem.app == 2 then
          local dir   = ai.face(goal)
@@ -258,7 +255,9 @@ function follow_fleet ()
       elseif mem.app == 1 then -- only small corrections to do
          if dist > 300 then -- We're much too far away, we need to toggle large correction
             mem.app = 2
-         else
+         else  -- Derivative-augmented controller
+            local goal0 = ai.follow_accurate(leader, radius, angle, 2*mem.Kp, 10*mem.Kd, method)
+            local dist0 = ai.dist(goal0)
             local dir = ai.face(goal0)
             if dist0 > 300 then
                if dir < 10 then  -- Must approach
