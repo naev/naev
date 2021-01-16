@@ -51,14 +51,14 @@ hint1_colour = nil
 
 hint2_name = _("Prof. Stova") -- Material Science
 hint2_description = _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.")
-hint2_portrait = "zalek1"
-hint2_image = "zalek1.png"
+hint2_portrait = "zalek2"
+hint2_image = "zalek2.png"
 hint2_colour = nil
 
 hint3_name = _("Prof. Hsu") -- Philosophy
 hint3_description = _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.")
-hint3_portrait = "zalek1"
-hint3_image = "zalek1.png"
+hint3_portrait = "zalek3"
+hint3_image = "zalek3.png"
 hint3_colour = nil
 
 hint4_name = _("Dr. Cayne") -- Dr. Shrimp
@@ -70,9 +70,9 @@ hint4_colour = nil
 ecc_barname = _("Hologram Projector")
 ecc_name = _("Dr. Strangelove")
 ecc_description = _("There is a small hologram projector in the corner. It looks like you can use this to call someone.")
-ecc_portrait = "zalek1"
-ecc_image = "zalek1.png"
-ecc_colour = nil
+ecc_portrait = "strangelove"
+ecc_image = "strangelove.png"
+ecc_colour = { 1, 0.3, 1} -- Purplish (close to nebula?)
 
 misn_title = _("Finding Father")
 misn_reward = _("???")
