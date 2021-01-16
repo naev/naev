@@ -1,5 +1,6 @@
 * 0.9.0 (unreleased)
    * Gameplay
+      * Added outfits that allow converting damage to disable
       * Added gambling resort "Minerva Station"
       * New missions
          * Follow happenings on "Minerva Station"
@@ -10,6 +11,7 @@
       * Added library that supports lots of Love2D API in Naev
       * Added Visual Novel library
       * Added card games
+      * Added dynamic factions
 
 * 0.8.1
    * Gameplay
