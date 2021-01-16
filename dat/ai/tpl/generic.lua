@@ -113,9 +113,13 @@ function control ()
 
    local task = ai.taskname()
 
-   -- TODO: Select new leader
+   -- Select new leader
    if ai.pilot():leader() ~= nil and not ai.pilot():leader():exists() then
-      ai.pilot():setLeader(nil)
+      local candidate = ai.getBoss()
+      if candidate ~= nil and candidate:leader() ~= nil then
+         candidate = candidate:leader()
+      end
+      ai.pilot():setLeader( candidate )
    end
 
    -- Cooldown completes silently.
