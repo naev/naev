@@ -45,7 +45,7 @@ npc_name = _("Major Tam")
 npc_desc = _("Major Tam is a very friendly man. At least by Dvaered military standards.")
 
 propose_title = _("In need of a pilot")
-propose_text = _([[As you approach the officer, he hails you. "Hello, citizen %s. I was looking for you. Of course I know your name, you're one of the pilots who destroyed that damn FLF base in Surano. Let me introduce myself: I am Major Tam, from Dvaered High Command, and more precisely from the Space Forces Headquarters. I feel that you are a reliable pilot and the High Command could make more often use of your services. That is why I propose you for now a simple escort mission. All that you need is a fast combat ship, that can keep up with my Vendetta. What do you say?"]])
+propose_text = _([[As you approach the officer, he hails you. "Hello, citizen %s. I was looking for you. Of course I know your name, you're one of the pilots who destroyed that damn FLF base in Surano. Let me introduce myself: I am Major Tam, from Dvaered High Command, and more precisely from the Space Force Headquarters. I feel that you are a reliable pilot and the High Command could make more often use of your services. That is why I propose you for now a simple escort mission. All that you need is a fast combat ship, that can keep up with my Vendetta. What do you say?"]])
 
 accept_title = _("Instructions")
 accept_text = _([[Tam seems satisfied with your answer. "I am going to pay a visit to three warlords, for military coordination reasons. They will be waiting for me in their respective Goddards in the systems %s, %s and %s. I need you to stick to my Vendetta and engage any hostile who could try to intercept me."]])
@@ -57,7 +57,7 @@ flee_title = _("What are you doing here?")
 flee_text = _("You were supposed to escort Major Tam, weren't you?")
 
 fail_title = _("Mission failed")
-fail_text = _([[As you watch the final explosion of Major Tam's ship dispatching around the system the remains of what once was a proud Vendetta, you realize that you're actually contemplating one of the most bitter failures of your career. "Meh", you finally think, "I'm sure I will have an other chance sooner or later."]])
+fail_text = _([[As you watch the final explosion of Major Tam's ship dispatching around the system the remains of what once was a proud Vendetta, you realize that you're actually contemplating one of the most bitter failures of your career. "Meh", you finally think, "I'm sure I will have another chance sooner or later."]])
 
 slow_title = _("Your ship is too slow")
 slow_text = _("Did you really expect to catch up with Major Tam with your current ship?")
@@ -72,21 +72,21 @@ discuss_title1 = _("Major Tam is ready")
 discuss_text1 = _([[How do you do, citizen? Did you enjoy the trip so far? I'm ready for next stop. I'll follow you when you take off.]])
 
 discuss_title2 = _("Major Tam is talkative today")
-discuss_text2 = _([["Hello, citizen. Did you already recover from Lord Battleaddict's last joke? It recalled me of my youth, when I used to belong to a fighter's squadron in Amaroq..." Do you want to encourage Tam to talk about his past?]])
+discuss_text2 = _([["Hello, citizen. Did you already recover from Lord Battleaddict's last joke? It reminded me of my youth, when I used to belong to a fighter's squadron in Amaroq..." Do you want to encourage Tam to talk about his past?]])
 
 discuss_title3 = _("Major Tam before he was at the Headquarters")
-discuss_text3 = _([["You know I've not always worked at the Headquarters. I started as a pilot at the DHC base on Rhaana. Oh, sorry, DHC stays for Dvaered High Command. You know, there are two kinds of Dvaered soldiers: there are those who directly obey to DHC, like myself, and there are the freaks, as we call them, (or the warriors, as they call themselves) the soldiers who obey to local Warlords. 
-   "Warlord's forces can be requisitioned by DHC, but only to fight a menace to the integrity of the Dvaered Nation, so in practice, they are most of the time left to themselves, and make wars one against each other. You know, foreigners sometimes think that the inner wars between warlords are pointless (I've even heard the word "stupid" once), but actually, it's the key to Dvaered philosophy. Without those wars, the Dvaered Nation would no longer exist as we know it, and we would have had to rely on totalitarianism, like the Empire, nostalgia of an idealized past, like the Frontier, oppressive technocracy like the Za'lek, or such...
+discuss_text3 = _([["You know I've not always worked at the Headquarters. I started as a pilot at the DHC base on Rhaana. Oh, sorry, DHC stays for Dvaered High Command. You know, there are two kinds of Dvaered soldiers: there are those who directly report to DHC, like myself, and the freaks, as we call them (or the warriors, as they call themselves), the soldiers who report to local Warlords.
+   "Warlords' forces can be requisitioned by DHC, but only to fight a menace to the integrity of the Dvaered Nation, so in practice, they are mostly left to themselves, and make war on each other. You know, foreigners sometimes think that the internicine conflicts between warlords are pointless (I've even heard the word "stupid" once), but actually, they're the key to Dvaered philosophy. Without those wars, the Dvaered Nation would no longer exist as we know it, and we would have had to rely on totalitarianism, like the Empire, nostalgia of an idealized past, like the Frontier, oppressive technocracy like the Za'lek, or such...
    "Hey, but am I deviating from our original subject? What was it already? Oh I don't remember. Anyway, citizen, if you want to take off, I'm ready."]])
 
 ready_title = _("Major Tam is ready")
 ready_text = _([["Anyway, citizen, if you want to take off, I'm ready."]])
 
 end_title = _("Thank you, citizen")
-end_text = _([[As you land, Major Tam greets you at the spaceport. "After the losses they got today, I doubt those mercenaries will come back at me before long. I need to report back at the Dvaer High Command station in Dvaer, and I don't need anymore escort. Oh, and, err... about the payment, I am afraid there is a little setback..." You start getting afraid he would try not to pay you, but he continues: "I don't know why, but the High Command has not credited the payment account yet... Well do you know what we are going to do? I will give you a set of %s worth Gauss Gun! One always needs Gauss Guns, no?"]])
+end_text = _([[As you land, Major Tam greets you at the spaceport. "After the losses they got today, I doubt those mercenaries will come back at me anytime soon. I need to report back at the Dvaer High Command station in Dvaer, and I don't need any more escorting. Oh, and, err... about the payment, I am afraid there is a little setback..." You start getting afraid he would try to stiff pay you, but he continues: "I don't know why, but the High Command has not credited the payment account yet... Well do you know what we are going to do? I will give you a set of Gauss Guns worth %s! One always needs Gauss Guns, no?"]])
 
 explain_title = _("That was really close!")
-explain_text = _([[You send a message to Major Tam to ask if you are safe now. "I think so" he answers, "Lord Battleaddict's troops won't follow us if we head to %s at once as the planet belongs to his deadliest enemy, Lady Pointblank." As you ask to him what happened, he answers: "You know, don't let Lord Battleaddict's reaction mislead you. He is not a bad person, he is just... hem... a bit old school. He is not in par with the ideas of the new generation of generals at Dvaered High Command, and wanted to make his point clear."
+explain_text = _([[You send a message to Major Tam to ask if you are safe now. "I think so" he answers, "Lord Battleaddict's troops won't follow us if we head to %s at once, as the planet belongs to his deadliest enemy, Lady Pointblank." As you ask to him what happened, he answers: "You know, don't let Lord Battleaddict's reaction mislead you. He is not a bad person, he is just... hem... a bit old school. He is not in par with the ideas of the new generation of generals at Dvaered High Command, and wanted to make his point clear."
    You ask Tam why the Dvaered patrol ships did not help you and he answers: "Don't expect the regular police or army to help you when you're in trouble with a warlord. Dvaered know that it is better not to be involved in warlord's affairs."]])
 
 ambush_title = _("Say hello to my mace rockets")
@@ -94,18 +94,18 @@ ambush_text = _([[As your ship starts to recover its normal speed after jumping 
 ambush_broadcast = _("You wanted to meet Lord Jim? What about you meet your doom instead?")
 
 saved_title1 = _("Hostiles eliminated")
-saved_text1 = _([[As the remaining attackers run away, you remark that a Dvaered patrol helped you, contrary to what Tam had explained before. Then you receive the messages exchanged between Major Tam and the leader of the Dvaered squadron: "This time, I really owe you one, Captain", Tam says. "No problem, sir. " the other answers "But the most dangerous one escaped. The shark, you know, it was Hamelsen, Battleaddict's second in command. After we heard of what the old monkey had done to you, we put him under surveillance and we spot Hamelsen pursuing you with her shark, so we followed her, pretending we're just a police squadron. You know the rest."
-   Tam responds: "By the way, %s, let me introduce you the Captain Leblanc, she belongs to the Special Operations Force (SOF), part of Dvaered High Command (DHC). I didn't tell you, but her pilots always keep an eye on me from a distance when I have to meet warlords. %s is the private pilot I spoke to you, Captain." Leblanc responds: "Hello, citizen. I'm glad there are civilians like you who make their duty and serve the Dvaered Nation."]])
+saved_text1 = _([[As the remaining attackers run away, you remark that a Dvaered patrol helped you, contrary to what Tam had explained before. Then you receive the messages exchanged between Major Tam and the leader of the Dvaered squadron: "This time, I really owe you one, Captain", Tam says. "No problem, sir. " the other answers "But the most dangerous one escaped. The Shark, you know, it was Hamelsen, Battleaddict's second in command. After we heard of what the old monkey had done to you, we put him under surveillance and we spotted Hamelsen pursuing you with her Shark, so we followed her, pretending we're just a police squadron. You know the rest."
+   Tam responds: "By the way, %s, let me introduce you the Captain Leblanc, she belongs to the Special Operations Force (SOF), part of Dvaered High Command (DHC). I didn't tell you, but her pilots always keep an eye on me from a distance when I have to meet warlords. %s is the private pilot I spoke to you, Captain." Leblanc responds: "Hello, citizen. I'm glad there are civilians like you who do their duty and serve the Dvaered Nation."]])
 
-saved_title2 = _("Two attacks are one too much")
+saved_title2 = _("Two attacks are one too many")
 saved_text2 = _([["Anyway," says Tam, "I am afraid this ambush is not acceptable." Leblanc responds: "True, sir. Attacking someone in one's system is a standard way of expression for a warlord, but setting an ambush here denotes a true lack of respect."
-   "He will have to respond for this, trust me." answers Tam, "I will refer to the chief. Meanwhile, I still have an appointment with Lord Jim. I just hope he will not try to make us dance as well..."]])
+   "He will have to answer for this, trust me." answers Tam, "I will refer to the chief. Meanwhile, I still have an appointment with Lord Jim. I just hope he will not try to make us dance as well..."]])
 
 meeting_broadcast = _("%s should be waiting for us in orbit around %s.")
 
 jumpmsg = _("Major Tam has jumped for the %s system.")
 
-log_text = _("The Major Tam, from the Space Forces Headquarters of Dvaered High Command (DHC) has employed you in the framework of the military coordination. One of the Warlords he was trying to pay a visit to, Lord Battleaddict, has tried to kill him twice, with help of his second in command, Colonel Hamelsen. It looks like trying to coordinate Dvaered warlords is a really dangerous job.")
+log_text = _("The Major Tam, from the Space Force Headquarters of Dvaered High Command (DHC) has employed you in the framework of the military coordination. One of the Warlords he was trying to pay a visit to, Lord Battleaddict, has tried to kill him twice, with help of his second in command, Colonel Hamelsen. It looks like trying to coordinate Dvaered warlords is a really dangerous job.")
 
 osd_title = _("Dvaered Escort")
 osd_msg1 = _("Escort Major Tam")

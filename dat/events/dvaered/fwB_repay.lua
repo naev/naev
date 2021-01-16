@@ -23,9 +23,9 @@ npc_name = { _("Major Tam"), _("Captain Leblanc"), _("Lieutenant Strafer") }
 portraits = { portrait_tam, portrait_leblanc, portrait_strafer }
 
 npc_desc = {}
-npc_desc[1] = _("In the Dvaered military reserved bar, where you now have access, you see the major, sitting at a table with a few High Command officers that you don't happend to know.")
+npc_desc[1] = _("In the Dvaered military reserved bar, where you now have access, you see the major, sitting at a table with a few High Command officers that you don't happen to know.")
 npc_desc[2] = _("Leblanc is relaxing at a table, with a group of Dvaered pilots.")
-npc_desc[3] = _([[Strafer plays cards with a few other soldiers. Of course, they don't use real money because "Dvaered Warriors never seize money of other people, excepted from the dead body of defeated enemies." As it is written on the dvaered good manners manual Strafer gave to you recently.]])
+npc_desc[3] = _([[Strafer plays cards with a few other soldiers. Of course, they don't use real money because "Dvaered Warriors never seize money of others, except the dead bodies of defeated enemies." As it is written on the Dvaered etiquette manual Strafer gave to you recently.]])
 
 pay_title = _("Do you want to repay DHC?")
 pay_text = _("You still owe %s credits to the High Command. Do you want to repay now?")
