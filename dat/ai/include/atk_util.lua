@@ -52,7 +52,7 @@ function _atk_check_seeable()
 
    ai.settarget(self) -- Un-target
    ai.poptask()
-   ai.pushtask("moveto", target:pos() )
+   ai.pushtask("inspect_moveto", target:pos() )
    return false
 end
 

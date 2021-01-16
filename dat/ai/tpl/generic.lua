@@ -84,6 +84,7 @@ function handle_messages ()
          -- Attack target
          elseif msgtype == "e_attack" then
             if data ~= nil and data:exists() then
+               clean_task( ai.taskname() )
                ai.pushtask("attack", data)
             end
          -- Hold position
@@ -281,6 +282,7 @@ function control ()
       -- See if really want to attack
       if attack then
          taunt(enemy, true)
+         clean_task( task )
          ai.pushtask("attack", enemy)
       end
    end
@@ -318,6 +320,7 @@ function attacked ( attacker )
          taunt( attacker, false )
 
          -- Now pilot fights back
+         clean_task( task )
          ai.pushtask("attack", attacker)
       else
 
@@ -427,17 +430,22 @@ function distress ( pilot, attacker )
    end
 
    local task = ai.taskname()
-   -- We're sort of busy
+   -- We're sort of busy. inspect_follow means we're getting close to a distressed ship
    if task == "attack" then
       local target = ai.target()
 
       if not target:exists() or ai.dist(target) > ai.dist(t) then
-         ai.pushtask( "attack", t )
+         if ai.pilot():inrange( t ) then
+            ai.pushtask( "attack", t )
+         end
       end
    -- If not fleeing or refueling, begin attacking
    elseif task ~= "runaway" and task ~= "refuel" then
       if mem.aggressive then
-         ai.pushtask( "attack", t )
+         if ai.pilot():inrange( t ) then -- TODO: something to help in the other case
+            clean_task( task )
+            ai.pushtask( "attack", t )
+         end
       else
          ai.pushtask( "runaway", t )
       end
@@ -538,6 +546,15 @@ function should_cooldown()
    end
    if pshield == nil then
       player.msg("pshield = nil")
+   end
+end
+
+
+-- Decide if the task is likely to become obsolete once attack is finished
+function clean_task( task )
+   if task == "brake" or task == "inspect_moveto" then
+      --print(task)
+      ai.poptask()
    end
 end
 
