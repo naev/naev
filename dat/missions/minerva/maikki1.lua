@@ -431,6 +431,9 @@ function enter ()
       pscavB:brake()
       cuttimer = hook.timer( 3000, "cutscene_timer" )
       pscavB:setInvincible() -- annoying to handle the case the player kills them
+      -- Timer in case the player doesn't find them in a long while
+      sysmaker = nil
+      cuttimeout = hook.timer( 120*1000, "cutscene_timeout" ) -- 2 minutes
    elseif system.cur() == system.get(stealthsys) and misn_state==4 then
       -- Set up system
       pilot.clear()
@@ -480,6 +483,15 @@ function cutscene_timer ()
       pscavB:face( player.pilot() )
       pscavB:hailPlayer()
       hailhook = hook.pilot( pscavB, "hail", "cutscene_hail" )
+      -- Get rid of the timeout hook
+      if cuttimeout then
+         hook.rm( cuttimeout )
+         cuttimeout = nil
+      end
+      if sysmarker then
+         system.mrkRm( sysmarker )
+         sysmarker = nil
+      end
    else
       pscavB:brake()
       cutscene_msg = (cutscene_msg % #cutscene_messages)+1
@@ -487,6 +499,13 @@ function cutscene_timer ()
       pscavB:broadcast( msg )
    end
    cuttimer = hook.timer( 3000, "cutscene_timer" )
+end
+
+
+function cutscene_timeout ()
+   player.msg(_("#pYour ship has detected a curious signal originating from inside the system.#0"))
+   sysmarker = system.mrkAdd( _("Curious Signal"), pscavB:pos() )
+   cuttimeout = nil
 end
 
 
