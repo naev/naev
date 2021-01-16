@@ -181,10 +181,16 @@
   <name>Artifact? C</name>
  </commodity>
  <commodity>
+  <name>Bomb</name>
+ </commodity>
+ <commodity>
   <name>Box</name>
  </commodity>
  <commodity>
   <name>Colonists</name>
+ </commodity>
+ <commodity>
+  <name>Commando</name>
  </commodity>
  <commodity>
   <name>Civilians</name>
@@ -209,6 +215,10 @@
  </commodity>
  <commodity>
   <name>Four Winds Informant</name>
+ </commodity>
+ <commodity>
+  <name>Fuel</name>
+  <gfx_space>fuel</gfx_space>
  </commodity>
  <commodity>
   <name>Gregar</name>

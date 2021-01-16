@@ -120,6 +120,7 @@
    <enemy>Sirius</enemy>
    <enemy>Soromid</enemy>
    <enemy>Thurion</enemy>
+   <enemy>DHC</enemy>
    <enemy>Trader</enemy>
    <enemy>Traders Guild</enemy>
    <enemy>Za'lek</enemy>
@@ -245,6 +246,7 @@
    <enemy>Dvaered</enemy>
    <enemy>Rogue FLF</enemy>
    <enemy>Rogue Pirate</enemy>
+   <enemy>DHC</enemy>
   </enemies>
  </faction>
  <faction>
@@ -560,6 +562,38 @@
   <equip>pirate</equip>
   <enemies>
    <enemy>Comingout_associates</enemy>
+  </enemies>
+ </faction>
+ <faction>
+  <name>DHC</name>
+  <logo>dvaered</logo>
+  <colour>brown</colour>
+  <longname>Dvaered High Command</longname>
+  <static />
+  <invisible />
+  <known />
+  <player>10</player>
+  <standing>static</standing>
+  <equip>dvaered</equip>
+  <enemies>
+   <enemy>Pirate</enemy>
+   <enemy>FLF</enemy>
+   <enemy>Warlords</enemy>
+  </enemies>
+ </faction>
+ <faction>
+  <name>Warlords</name>
+  <logo>dvaered</logo>
+  <colour>brown</colour>
+  <longname>Dvaered Warlords</longname>
+  <static />
+  <invisible />
+  <known />
+  <player>-10</player>
+  <standing>static</standing>
+  <equip>dvaered</equip>
+  <enemies>
+   <enemy>DHC</enemy>
   </enemies>
  </faction>
  <faction>
