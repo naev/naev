@@ -6,6 +6,7 @@ dat/ai/civilian.lua
 dat/ai/collective.lua
 dat/ai/collective_norun.lua
 dat/ai/distress_behaviour.lua
+dat/ai/drone_miner.lua
 dat/ai/dummy.lua
 dat/ai/dvaered.lua
 dat/ai/dvaered_norun.lua
@@ -63,6 +64,8 @@ dat/ai/zalek.lua
 dat/bkg/default.lua
 dat/events/bioship_upgrade.lua
 dat/events/cinematic/DvdFLFbattle.lua
+dat/events/dvaered/fwA_treason.lua
+dat/events/dvaered/fwB_repay.lua
 dat/events/dvaered/warlords_battle.lua
 dat/events/flf/derelict.lua
 dat/events/flf/flf_catastrophe.lua
@@ -154,6 +157,12 @@ dat/missions/dvaered/dv_antiflf02.lua
 dat/missions/dvaered/dv_antiflf03.lua
 dat/missions/dvaered/dv_diversion.lua
 dat/missions/dvaered/dv_rehab.lua
+dat/missions/dvaered/frontier_war/fw00_escort.lua
+dat/missions/dvaered/frontier_war/fw01_sabotage.lua
+dat/missions/dvaered/frontier_war/fw02_escape.lua
+dat/missions/dvaered/frontier_war/fw03_sirius.lua
+dat/missions/dvaered/frontier_war/fw04_meeting.lua
+dat/missions/dvaered/frontier_war/fw_common.lua
 dat/missions/empire/collective/ec00.lua
 dat/missions/empire/collective/ec01.lua
 dat/missions/empire/collective/ec02.lua
@@ -289,6 +298,7 @@ dat/rescue.lua
 dat/scripts/cargo_common.lua
 dat/scripts/chatter.lua
 dat/scripts/class.lua
+dat/scripts/colour.lua
 dat/scripts/coreprofile.lua
 dat/scripts/debug/debug.lua
 dat/scripts/enum.lua
