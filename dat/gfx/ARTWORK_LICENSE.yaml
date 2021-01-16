@@ -1488,6 +1488,9 @@
      - sirius.png
      - soromid.png
      - zalek.png
+   commodity:
+     - space:
+       - fuel.png
 - nenau:
    license: GPLv3+
    logo:
