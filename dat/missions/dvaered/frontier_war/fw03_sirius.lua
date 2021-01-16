@@ -53,7 +53,7 @@ accept_text = _([["You won't regret that!" Tam says... "Unless you're killed in 
    "On our side, we will not have much firepower, so I count on you to provide with the armor and the guns (but you should still be able to outrun mid-range destroyers). You will team up with Lieutenant Strafer, because it worked well last time, and two other pilots. But the SOF does not have countless pilots, so the amount of your reward will depend on how many of them come back. Strafer will fly a scout with high performance sensors. He will be our eyes, so his death would mean the end of the mission.
    "If you have any additional questions, I'll stay at the bar until we take off."]])
 
-refuse_title = _("An other time maybe")
+refuse_title = _("Another time maybe")
 refuse_text = _([[Major Tam really seems disappointed. "As you wish, citizen..."]])
 
 
@@ -65,24 +65,24 @@ question = {}
 lore_text = {}
 
 question[1] = _("Ask who are the assassins")
-lore_text[1] = _([["Good question, citizen! It is very likely that some people among the intelligence services of the other nations know that General Klank and myself are implied in the invasion project. They probably just don't know how imminent it is. So they could have hired henchmen to stop or annoy us. We have identified some of the henchmen actually, and they are the kind of independent mercenaries we find on any kind of shady operations... A bit like you in fact."]])
+lore_text[1] = _([["Good question, citizen! It is very likely that some people among the intelligence services of the other nations know that General Klank and myself are implicated in the invasion project. They probably just don't know how imminent it is. So they could have hired henchmen to stop or annoy us. We have identified some of the henchmen actually, and they are the kind of independent mercenaries we find on any kind of shady operations... A bit like you in fact."]])
 
 question[2] = _("Ask about Battleaddict's soldiers")
-lore_text[2] = _([["Aha! You're worrying about the soldiers of the Warlord we killed last time? Don't worry too much for them, most of them did not stay unemployed for long. When a warlord dies, his surviving followers are sent to the Dvaered Military Reserve, and they apply for positions in other warlords armies, or in the DHC. The only one I'm worrying about is the Colonel Hamelsen: it will be very difficult for her to find a position with a warlord as they prefer to have people they know at higher ranks, and the DHC only rarely recruits new colonels.
+lore_text[2] = _([["Aha! You're worrying about the soldiers of the Warlord we killed last time? Don't worry too much for them, most of them did not stay unemployed for long. When a warlord dies, his surviving followers are sent to the Dvaered Military Reserve, and they apply for positions in other warlords' armies, or in the DHC. The only one I'm worrying about is the Colonel Hamelsen: it will be very difficult for her to find a position with a warlord as they prefer to have people they know at higher ranks, and the DHC only rarely recruits new colonels.
    "That's a pity actually because this woman is probably the most talented officer of her generation. Do you know that she was the first one since the independence war who managed to become an ace before the end of her training?"]])
 
 question[3] = _("Ask about his deeds as fighter pilot")
 lore_text[3] = _([[You ask Major Tam to continue his story about when he used to be a fighter pilot at the DHC base on Rhaana. A small smile appears on his face and he turns his eyes to the roof.
-   "Do you want me to tell you how I became an ace? Oh yes, you do. So. To become a Dvaered ace, one has to score four attested fighter victories. An attested victory is recorded when you destroy alone any kind of enemy warship. As we tend to work in squads, we kind of often destroy ships without scoring any victory. My first one was a pirate hyena. The pilot was probably drunk or so and they headed right towards my Vendetta, broadcasting stupid taunts in the radio. My sergeant has been nice and did let the hyena to me. My second victory was against a freak... I mean a local warlord's pilot who claimed she could kill any DHC pilot in fair fight. Apparently, it was not true.
-   "But the two others... Actually it is a much longer story. I'll tell you an other time maybe."]])
+   "Do you want me to tell you how I became an ace? Oh yes, you do. So. To become a Dvaered ace, one has to score four attested fighter victories. An attested victory is recorded when you destroy alone any kind of enemy warship. As we tend to work in squads, we pretty often destroy ships without scoring any victory. My first one was a pirate hyena. The pilot was probably drunk or so and they headed right towards my Vendetta, broadcasting stupid taunts in the radio. My sergeant has been nice and did let the hyena to me. My second victory was against a freak... I mean a local warlord's pilot who claimed she could kill any DHC pilot in fair fight. Apparently, it was not true.
+   "But the two others... Actually it is a much longer story. I'll tell you another time maybe."]])
 
 question[4] = _("Ask news from Hamfresser")
 lore_text[4] = _([["Oh, the captain is doing well. He spent a few periods at the hospital, but it was not so serious. About the other ones, I'm not too sure. I don't know them very well actually, they are more like statistics to me. I know it's bad, but hey, I have so many things to think about right now.
-   "Oh, and we went to the funerals of the one who died, the private Amadeus Tronk, officially killed at training, of course. It was nice. Leblanc's squadron has made an aerial meeting with a mace rocket concerto for the occasion, and we organized a fight to death between a convinced criminal and a gladiator in General Klank's private arena. The role of it is to honour the memory of the dead warrior, and also to have some fun."]])
+   "Oh, and we went to the funerals of the one who died, the private Amadeus Tronk, officially killed in training, of course. It was nice. Leblanc's squadron has made an aerial meeting with a mace rocket concerto for the occasion, and we organized a fight to death between a convicted criminal and a gladiator in General Klank's private arena. The role of it is to honour the memory of the dead warrior, and also to have some fun."]])
 
 
 located_title = _("Enemies located")
-located_text = _([[You receive an encrypted message from Strafer "I've located the hostiles. We need to follow them from afar, and get ready for action."]])
+located_text = _([[You receive an encrypted message from Strafer. "I've located the hostiles. We need to follow them from afar, and get ready for action."]])
 scan_msg = _("Wait until Strafer has scanned the system")
 
 flee_title = _("What are you doing here?")
@@ -95,25 +95,25 @@ failed_title = _("This is not good")
 jumpout_text = _([[While your sensors lose the signal of the target you were supposed to kill, you expect to receive a mission failure message, but instead, you hear Tam's ship communication: "One of them escaped. Continue destroying the others. Afterwards, %s, you will jump to %s and destroy that ship."]])
 land_text = _([[While your sensors lose the signal of the target you were supposed to kill, you expect to receive a mission failure message, but instead, you hear Tam's ship communication: "One of them escaped. Continue destroying the others. Afterwards, %s, you will land on %s to keep track on the pilot."]])
 tamdie_text = _([[The blinking cross marked "Major Tam" on your radar screen suddenly turns off. You first believe this is an output bug and hit the screen with your open hand, but soon, you realize that the radar works perfectly well. This means that the major's ship got annihilated by the ambushers, and therefore your mission is a miserable failure.]])
-strdie_text = _([[You suddenly realize that your radar doesn't receive Strafer's sensors data. This means that the Lieutenant got killed. As a result, the fleet is like blind and the mission is failed.]])
-tflee_text = _([[Two of your targets went away. If there was only one, it could be manageable, but now, the mission has failed.]]) 
+strdie_text = _([[You suddenly realize that your radar doesn't receive Strafer's sensors data. This means that the Lieutenant got killed. As a result, the fleet is flying blind and the mission is failed.]])
+tflee_text = _([[Two of your targets went away. If there was only one, it could be manageable, but now, the mission has failed.]])
 
 execution_title = _("End of the hunt")
 execution_text1 = _([[You land and walk around the spacedock, in search of your target's ship. You finally see it. A mighty %s, covered by the stigmas of the battle that just occurred. You decide to hide yourself behind crates close to the ship and wait for the pilot to come back and take off in order to finish your job in space.
    When looking closer at the ship, you see ancient and recent marks on the hull, caused by all kinds of weapons during the lifetime of the ship, that have been repaired on spaceports. Among the ship's scars,you see a twisted welding around the ship's nose, filled with bubbles and think: "Damn! They've got to deal with the same old deficient welding android that fixed my airlock on Alteris last time!"
    Suddenly, you realize someone is whispering behind you "Hey, %s, you're wrecking my firing line!" You turn around and see nothing but a deformed crate that continues to speak: "It's me, Sergeant Nikolov. In the box. Hide yourself better or you will ruin our mission." You then remember that she is a member of the space infantry commandos, and Hamfresser's second in command. Tam probably sent her to execute the enemy pilot.]])
-execution_text2 = _([[A few times later, you see a woman coming from the empty corridor, anxiously looking behind her and pulling a key out of her pocket. While still approaching the ship, she presses the key's button and the ship beeps. At this very moment, a sudden and loud din coming from all around you shake your stomach and the pilot falls without a word. Nikolov and two other soldiers emerge from the crates. The sergeant approaches the pilot, knees and touches her pulse. She thoughtfully looks at her face "Damn! she looked like a nice person..." And then addresses to the soldiers: "All right, folks we pack up!" and the commando enters the ship with the body and takes off.
-   You stay alone, on the empty dock, with nothing but your thoughts. Even the broken crates have been picked up by the commando. You think about all the causes that pilot must have served in her life. The just causes, the evil ones... and all the others. "Meh," you think "killing people in space is definitely much better for the morale."]])
+execution_text2 = _([[A bit later, you see a woman coming from the empty corridor, anxiously looking behind her and pulling a key out of her pocket. While still approaching the ship, she presses the key's button and the ship beeps. At this very moment, a sudden and loud din erupts from all around you shake your stomach and the pilot falls without a word. Nikolov and two other soldiers emerge from the crates. The sergeant approaches the pilot, kneels and takes her pulse. She thoughtfully looks at her face "Damn! she looked like a nice person..." And then addresses to the soldiers: "All right, folks we pack up!" and the unit enters the ship with the body and takes off.
+   You stay alone, on the empty dock, with nothing but your thoughts. Even the broken crates have been picked up by the commandos. You think about all the causes that pilot must have served in her life. The just causes, the evil ones... and all the others. "Meh," you think "killing people in space is definitely much better for morale."]])
 execution_text3 = _([[When you finally go to the bar to think about something else, you get notified on your holowatch that %s have been transferred to your account. The leader of the ambushers has been identified: it's Colonel Hamelsen, who used to work for Battleaddict before his death. Unfortunately, the Colonel has escaped.]])
 
-execution_failed_text2 = _([[A few times later, you hear a message from Nikolov's radio: "Tam here. The target escaped and won't come back to the ship. Clear the spacedock." The spacemarines emerge from the crates and disappear in a blink, while you start heading to the bar. On the way, you meet Strafer who explains the situation: "We identified the hostile pilot: it was Colonel Hamelsen, Battleaddict's former second in command, but she went away by using one of her other ships and we lost her track.
+execution_failed_text2 = _([[A few times later, you hear a message from Nikolov's radio: "Tam here. The target escaped and won't come back to the ship. Clear the spacedock." The spacemarines emerge from the crates and disappear in a blink, while you start heading to the bar. On the way, you meet Strafer who explains the situation: "We identified the hostile pilot: it was Colonel Hamelsen, Battleaddict's former second in command, but she got away using one of her other ships and we lost her track.
    "Poor woman. It's hard to get a new post when you're the second in command of a dead warlord, you know. So I guess someone has managed to hire her to assassinate the major. Anyway, I guess you should have received your payment of %s by now."]])
 
-won_title = _("All target eliminated")
+won_title = _("All targets eliminated")
 won_text = _([[All three primary targets have been eliminated. The remaining ones are not dangerous anymore now. You can land to get your reward.]])
 
 pay_title = _("Mission accomplished")
-pay_text = _("Your mission is a success, excepted for the escape of the enemy leader, Colonel Hamelsen. you can now collect your %s reward.")
+pay_text = _("Your mission is a success, except for the escape of the enemy leader, Colonel Hamelsen. You can now collect your %s reward.")
 
 killMsg      = _("One of the targets was destroyed!")
 killAll      = _("The last target was destroyed! You can now land.")
@@ -126,11 +126,11 @@ preAmbushMsg = _("All right, let's wait for Tam")
 preAmbush1   = _("There will be roasted Tam for lunch today!")
 
 baddie_taunt  = _("What about I cook you to death?")
-baddie_signal = _("Tam is in the place, folks! don't miss him, this time!")
+baddie_signal = _("Tam is in place, folks! don't miss him, this time!")
 ham_runaway   = _("You won't catch me alive! Never!")
 
 
-misn_desc = _("You take part of an operation which goal is to trap and destroy a group of well armed henchmen who are after Major Tam.")
+misn_desc = _("You take part of an operation whose goal is to trap and destroy a group of well armed henchmen who are after Major Tam.")
 misn_reward = _("It depends how many of your wingmen come back.")
 log_text = _("A group of killers, who were after Major Tam have been trapped and killed. For now, we don't know who has paid them, but they were led by Colonel Hamelsen, who has managed to escape.")
 
@@ -174,7 +174,7 @@ function accept()
    tk.msg(accept_title, accept_text:format(destpla:name(), destsys:name()))
 
    misn.accept()
-   misn.osdCreate( osd_title, {osd_text1, osd_text2, osd_text3, osd_text4 } ) 
+   misn.osdCreate( osd_title, {osd_text1, osd_text2, osd_text3, osd_text4 } )
    misn.setDesc(misn_desc)
    misn.setReward(misn_reward)
 
@@ -196,7 +196,7 @@ function accept()
    alive = {true,true,true}
    alive["__save"] = true
 
-   toldya = {false,false,false,false} 
+   toldya = {false,false,false,false}
    boozingTam = misn.npcAdd("discussWithTam", npc_name, portrait_tam, npc_desc)
 end
 
