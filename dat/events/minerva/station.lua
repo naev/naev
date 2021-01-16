@@ -20,11 +20,7 @@ local window = require 'love.window'
 
 -- NPC Stuff
 gambling_priority = 3
-terminal_name = _("Terminal")
-terminal_portrait = "minerva_terminal"
-terminal_desc = _("A terminal with which you can check your current token balance and buy items with tokens.")
-terminal_image = "minerva_terminal.png"
-terminal_colour = {0.8, 0.8, 0.8}
+terminal = minerva.terminal
 blackjack_name = _("Blackjack")
 blackjack_portrait = "blackjack"
 blackjack_desc = _("Seems to be one of the more popular card games where you can play blackjack against a \"cyborg chicken\".")
@@ -79,7 +75,7 @@ patron_messages = {
 function create()
 
    -- Create NPCs
-   npc_terminal = evt.npcAdd( "approach_terminal", terminal_name, terminal_portrait, terminal_desc, gambling_priority )
+   npc_terminal = evt.npcAdd( "approach_terminal", terminal.name, terminal.portrait, terminal.description, gambling_priority )
    npc_blackjack = evt.npcAdd( "approach_blackjack", blackjack_name, blackjack_portrait, blackjack_desc, gambling_priority )
    --npc_chuckaluck = evt.npcAdd( "approach_chuckaluck", chuckaluck_name, chuckaluck_portrait, chuckaluck_desc, gambling_priority )
 
@@ -159,8 +155,8 @@ function approach_terminal()
    }
    vn.clear()
    vn.scene()
-   local t = vn.newCharacter( terminal_name,
-         { image=terminal_image, color=terminal_colour } )
+   local t = vn.newCharacter( terminal.name,
+         { image=terminal.image, color=terminal.colour } )
    vn.fadein()
    vn.label( "start" )
    t:say( function() return string.format(

@@ -2,6 +2,7 @@
 -- Helper functions and defines for the Minerva Station campaigns
 --]]
 local vn = require 'vn'
+local colour = require 'colour'
 
 local minerva = {
    -- Main Characters
@@ -17,6 +18,19 @@ local minerva = {
       portrait = "maikki",
       image = "maikki.png",
       colour = {1, 0.73, 0.97},
+   },
+   strangelove = {
+      name = _("Dr. Strangelove"),
+      portrait = "strangelove",
+      image = "strangelove.png",
+      colour = colour.FontPurple, -- Purplish (close to nebula?)
+   },
+   terminal = {
+      name = _("Terminal"),
+      description = _("A terminal with which you can check your current token balance and buy items with tokens."),
+      portrait = "minerva_terminal",
+      image = "minerva_terminal.png",
+      colour = {0.8, 0.8, 0.8},
    },
 }
 

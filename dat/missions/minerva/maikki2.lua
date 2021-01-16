@@ -36,12 +36,6 @@ local portrait = require 'portrait'
 local vn = require 'vn'
 require 'numstring'
 
-maikki_name = minerva.maikki.name
-maikki_description = minerva.maikki.description
-maikki_portrait = minerva.maikki.portrait
-maikki_image = minerva.maikki.image
-maikki_colour = minerva.maikki.colour
-
 -- TODO customize all the portraits/images/descriptions
 hint1_name = _("Prof. Sato") -- Computer Science / Mathematics
 hint1_description = _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.")
@@ -67,12 +61,10 @@ hint4_portrait = "drshrimp"
 hint4_image = "drshrimp.png"
 hint4_colour = nil
 
+strangelove = minerva.strangelove
 ecc_barname = _("Hologram Projector")
-ecc_name = _("Dr. Strangelove")
-ecc_description = _("There is a small hologram projector in the corner. It looks like you can use this to call someone.")
-ecc_portrait = "strangelove"
-ecc_image = "strangelove.png"
-ecc_colour = { 1, 0.3, 1} -- Purplish (close to nebula?)
+ecc_portrait = strangelove.portrait
+ecc_description = _("A terminal with which you can check your current token balance and buy items with tokens.")
 
 misn_title = _("Finding Father")
 misn_reward = _("???")
@@ -109,8 +101,8 @@ function create ()
    if not misn.claim( system.get(eccsys) ) then
       misn.finish( false )
    end
-   misn.setNPC( maikki_name, maikki_portrait )
-   misn.setDesc( maikki_description )
+   misn.setNPC( minerva.maikki.name, minerva.maikki.portrait )
+   misn.setDesc( minerva.maikki.description )
    misn.setReward( misn_reward )
    misn.setTitle( misn_title )
 end
@@ -734,8 +726,8 @@ function approach_eccentric ()
    vn.clear()
    vn.scene()
    vn.fadein()
-   local dr = vn.newCharacter( ecc_name,
-         { color=ecc_colour, image=portrait.hologram( ecc_portrait ) } )
+   local dr = vn.newCharacter( strangelove.name,
+         { color=strangelove.colour, image=portrait.hologram( strangelove.portrait ) } )
 
    if not ecc_visitedonce then
       vn.na(_("The hologram projector flickers as what appears to be a grumpy old man appears into view. He doesn't look very pleased to be disturbed."))
