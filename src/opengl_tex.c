@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "physfsrwops.h"
+#include "SDL_image.h"
 
 #include "naev.h"
 /** @endcond */
@@ -22,7 +23,6 @@
 #include "log.h"
 #include "md5.h"
 #include "nfile.h"
-#include "npng.h"
 #include "nstring.h"
 #include "opengl.h"
 
@@ -263,12 +263,12 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
    SDL_LockSurface( surface );
    if (gl_texHasCompress()) {
       glTexImage2D( GL_TEXTURE_2D, 0, GL_COMPRESSED_RGBA,
-            surface->w, surface->h, 0, GL_RGBA,
+            surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB,
             GL_UNSIGNED_BYTE, surface->pixels );
    }
    else {
       glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,
-            surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
+            surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, surface->pixels );
    }
    SDL_UnlockSurface( surface );
 
@@ -621,22 +621,17 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigne
 {
    glTexture *texture;
    SDL_Surface *surface;
-   npng_t *npng;
 
    /* Placeholder for warnings. */
    if (path==NULL)
       path = _("unknown");
 
-   npng     = npng_open( rw );
-   if (npng == NULL) {
-      WARN(_("File '%s' is not a png."), path );
+   surface = IMG_Load_RW( rw, 0 );
+   flags  |= OPENGL_TEX_VFLIP;
+   if (surface == NULL) {
+      WARN(_("Unable to load image '%s'."), path );
       return NULL;
    }
-
-   /* Load surface. */
-   surface  = npng_readSurface( npng );
-   flags   |= OPENGL_TEX_VFLIP;
-   npng_close( npng );
 
    if (surface == NULL) {
       WARN(_("'%s' could not be opened"), path );

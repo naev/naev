@@ -565,8 +565,6 @@ src/nopenal.c
 src/nopenal.h
 src/npc.c
 src/npc.h
-src/npng.c
-src/npng.h
 src/nstring.c
 src/nstring.h
 src/ntime.c

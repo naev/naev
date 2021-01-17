@@ -12,6 +12,7 @@
 /** @cond */
 #include <limits.h>
 #include "physfsrwops.h"
+#include "SDL_image.h"
 
 #include "naev.h"
 /** @endcond */
@@ -24,7 +25,6 @@
 #include "log.h"
 #include "ndata.h"
 #include "nfile.h"
-#include "npng.h"
 #include "nstring.h"
 #include "nxml.h"
 #include "shipstats.h"
@@ -480,14 +480,12 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
 {
    SDL_RWops *rw;
-   npng_t *npng;
    SDL_Surface *surface;
    int ret;
 
    /* Load the space sprite. */
    rw    = PHYSFSRWOPS_openRead( str );
-   npng  = npng_open( rw );
-   surface = npng_readSurface( npng );
+   surface = IMG_Load_RW( rw, 0 );
 
    /* Load the texture. */
    temp->gfx_space = gl_loadImagePadTrans( str, surface, rw,
@@ -500,7 +498,6 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
       return ret;
 
    /* Free stuff. */
-   npng_close( npng );
    SDL_RWclose( rw );
    SDL_FreeSurface( surface );
 
