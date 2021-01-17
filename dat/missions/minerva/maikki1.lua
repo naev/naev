@@ -9,7 +9,7 @@
    <chance>100</chance>
    <location>Bar</location>
    <planet>Minerva Station</planet>
-   <cond>player.evtDone("Minerva Station Altercation 1")</cond>
+   <cond>var.peek("minerva_altercation_probability")~=nil</cond>
   </avail>
  </mission>
 --]]
