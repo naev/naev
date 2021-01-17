@@ -96,7 +96,7 @@ function create ()
    end
    chickenleft()
    t1(_([["You let the chicken get away punk! How are you going to make up for this!"]]))
-   vn.na(_("You buy your time and eventually the station security comes escorting the thug away. As you go back to what you were doing, you see cyborg chicken in the distance who seems to wink at you. What wwas that all about?"))
+   vn.na(_("You buy your time and eventually the station security comes escorting the thug away. As you go back to what you were doing, you see cyborg chicken in the distance who seems to wink at you. What was that all about?"))
    vn.fadeout()
    vn.run()
 
