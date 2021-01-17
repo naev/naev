@@ -114,12 +114,14 @@ end
 -- bar. This is triggered randomly upon finishing gambling activities.
 --]]
 function random_event()
-   -- Altercation 1
-   local alter1 = "Minerva Station Altercation 1"
-   local alter2 = "Minerva Station Altercation 2"
-   if not has_event(alter1) and minerva.tokens_get_gained() > 10 and rnd.rnd() < 0.5 then
+   -- Conditional helpers
+   local alter1 = has_event("Minerva Station Altercation 1")
+   local alter2 = has_event("Minerva Station Altercation 2")
+   local maikki2 = player.misnDone("Maikki's Father 2")
+   -- Altercations
+   if not alter1 and minerva.tokens_get_gained() > 10 and rnd.rnd() < 0.5 then
       hook.safe( "start_alter1" )
-   elseif not has_event(alter2) and player.misnDone("Maikki's Father 2") and rnd.rnd() < 0.5 then
+   elseif not alter2 and maikki2 and rnd.rnd() < 0.5 then
       hook.safe( "start_alter2" )
    end
 end
