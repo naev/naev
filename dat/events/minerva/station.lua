@@ -356,7 +356,7 @@ function approach_blackjack()
    local dealer_x, dealer_newx
    local blackjack_h = 500
    local blackjack_x = math.min( lw-vn.textbox_w-100, textbox_x+200 )
-   local blackjack_y = lh-blackjack_h
+   local blackjack_y = (lh-blackjack_h)/2
    local setup_blackjack = function (alpha)
       if dealer_x == nil then
          dealer_x = cc.offset -- cc.offset is only set up when the they appear in the VN
