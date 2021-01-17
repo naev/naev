@@ -622,7 +622,6 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigne
    glTexture *texture;
    SDL_Surface *surface;
    npng_t *npng;
-   png_uint_32 w, h;
 
    /* Placeholder for warnings. */
    if (path==NULL)
@@ -633,7 +632,6 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigne
       WARN(_("File '%s' is not a png."), path );
       return NULL;
    }
-   npng_dim( npng, &w, &h );
 
    /* Load surface. */
    surface  = npng_readSurface( npng );
@@ -646,9 +644,9 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigne
    }
 
    if (flags & OPENGL_TEX_MAPTRANS)
-      texture = gl_loadImagePadTrans( path, surface, rw, flags, w, h, 1, 1, 1 );
+      texture = gl_loadImagePadTrans( path, surface, rw, flags, surface->w, surface->h, 1, 1, 1 );
    else
-      texture = gl_loadImagePad( path, surface, flags, w, h, 1, 1, 1 );
+      texture = gl_loadImagePad( path, surface, flags, surface->w, surface->h, 1, 1, 1 );
 
    return texture;
 }

@@ -23,11 +23,6 @@ npng_t *npng_open( SDL_RWops *rw );
 void npng_close( npng_t *npng );
 
 /*
- * Info.
- */
-int npng_dim( npng_t *npng, png_uint_32 *w, png_uint_32 *h );
-
-/*
  * Loading.
  */
 SDL_Surface *npng_readSurface( npng_t *npng );

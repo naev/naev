@@ -234,23 +234,6 @@ static int npng_info( npng_t *npng )
 
 
 /**
- * @brief Gets the dimensions of a png.
- *
- *    @param npng PNG to get dimensions of.
- *    @param[out] w Width of the png.
- *    @param[out] h Height of the png.
- */
-int npng_dim( npng_t *npng, png_uint_32 *w, png_uint_32 *h )
-{
-   /* Get data.  */
-   *w = png_get_image_width( npng->png_ptr, npng->info_ptr );
-   *h = png_get_image_height( npng->png_ptr, npng->info_ptr );
-
-   return 0;
-}
-
-
-/**
  * @brief Reads the PNG into a set of rows.
  */
 static int npng_readInto( npng_t *npng, png_bytep *row_pointers )

@@ -479,7 +479,6 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
  */
 static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
 {
-   png_uint_32 w, h;
    SDL_RWops *rw;
    npng_t *npng;
    SDL_Surface *surface;
@@ -488,13 +487,12 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
    /* Load the space sprite. */
    rw    = PHYSFSRWOPS_openRead( str );
    npng  = npng_open( rw );
-   npng_dim( npng, &w, &h );
    surface = npng_readSurface( npng );
 
    /* Load the texture. */
    temp->gfx_space = gl_loadImagePadTrans( str, surface, rw,
          OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP,
-         w, h, sx, sy, 0 );
+         surface->w, surface->h, sx, sy, 0 );
 
    /* Create the target graphic. */
    ret = ship_genTargetGFX( temp, surface, sx, sy );
