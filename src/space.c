@@ -12,7 +12,7 @@
 #include <float.h>
 #include <math.h>
 #include <stdlib.h>
-#include "physfsrwops.h"
+#include "physfs.h"
 
 #include "naev.h"
 /** @endcond */
@@ -41,7 +41,6 @@
 #include "nlua_planet.h"
 #include "nluadef.h"
 #include "nmath.h"
-#include "npng.h"
 #include "nstring.h"
 #include "ntime.h"
 #include "nxml.h"
