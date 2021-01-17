@@ -187,7 +187,8 @@ static int texL_new( lua_State *L )
    glTexture *tex;
    LuaFile_t *lf;
    LuaData_t *ld;
-   int sx, sy, isopen;
+   int sx, sy;
+   SDL_RWops *rw;
 
    NLUA_CHECKRW(L);
 
@@ -233,16 +234,11 @@ static int texL_new( lua_State *L )
    if (path != NULL)
       tex = gl_newSprite( path, sx, sy, 0 );
    else {
-      isopen = (lf->rw != NULL);
-      if (!isopen)
-         lf->rw = PHYSFSRWOPS_openRead( lf->path );
-      if (lf->rw==NULL)
-         NLUA_ERROR(L, _("Unable to open '%s' to load texture"), lf->path);
-      tex = gl_newSpriteRWops( lf->path, lf->rw, sx, sy, 0 );
-      if (!isopen) {
-         SDL_RWclose( lf->rw );
-         lf->rw = NULL;
-      }
+      rw = PHYSFSRWOPS_openRead( lf->path );
+      if (rw==NULL)
+         NLUA_ERROR(L,"Unable to open '%s'", lf->path );
+      tex = gl_newSpriteRWops( lf->path, rw, sx, sy, 0 );
+      SDL_RWclose( rw );
    }
 
    /* Failed to load. */
