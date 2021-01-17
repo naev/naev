@@ -413,7 +413,7 @@ function approach_chuckaluck ()
    vn.scene()
    local dealer = vn.newCharacter( _("Dealer"), {image=chuckaluck_image} )
    vn.fadein()
-   vn.na( _("You elbow your way to the front of the table and are once again greeted by the cold mechanical eyes of Cyborg Chicken.") )
+   vn.na(_("You approach the chuck-a-luck table."))
    vn.na( "", true ) -- Clear buffer without waiting
    vn.label("menu")
    vn.menu( {
@@ -422,7 +422,7 @@ function approach_chuckaluck ()
       { _("Leave"), "leave" },
    } )
    vn.label( "explanation" )
-   dealer("TODO")
+   dealer(_([["Chuck-a-luck is a straight-forward game. You make your bet and then place a wager on what number the dice will come up as. If the number you chose matches one die, you get win a token for each 1000 credits you bet. If you match two dice, you get double the amount of tokens. Furthermore, if you match all three dice, you get ten times the amount of tokens!"]]))
    vn.jump("menu")
 
    vn.label( "chuckaluck" )
