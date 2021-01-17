@@ -116,6 +116,8 @@ end
 function random_event()
    -- Conditional helpers
    local alter1 = has_event("Minerva Station Altercation 1")
+   local alter_helped = (var.peek("minerva_altercation_helped")~=nil)
+   local alter_prob = var.peek("minerva_altercation_probability") or 0.4
    local alter2 = has_event("Minerva Station Altercation 2")
    local maikki2 = player.misnDone("Maikki's Father 2")
    -- Altercations
@@ -123,6 +125,8 @@ function random_event()
       hook.safe( "start_alter1" )
    elseif not alter2 and maikki2 and rnd.rnd() < 0.5 then
       hook.safe( "start_alter2" )
+   elseif alter2 and not alter_helped and rnd.rnd() < alter_prob then
+      hook.safe( "start_alter1" )
    end
 end
 

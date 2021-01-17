@@ -3,14 +3,14 @@
 <event name="Minerva Station Altercation 1">
  <trigger>none</trigger>
  <chance>0</chance>
- <flags>
-  <unique />
- </flags>
+ <flags />
 </event>
 --]]
 
 --[[
 -- Some Za'lek and Dvaered get in a scuffle and go outside to fight.
+--
+-- Is repeatable!
 --
 -- Triggered from station.lua
 --]]
@@ -240,6 +240,8 @@ function zl_hail ()
 end
 
 function leave () --event ends on player leaving the system or landing
+   local prob = var.peek("minerva_altercation_probability") or 0.4
+   var.push( "minerva_altercation_probability", prob/1.5 )
    evt.finish(true)
 end
 
