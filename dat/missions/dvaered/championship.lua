@@ -138,7 +138,9 @@ function create ()
    missys = system.get(sysname)
    mispla = planet.get(planame)
    
-   --No system claim
+   if not misn.claim ( missys ) then
+      misn.finish(false)
+   end
 
    officialFace = portrait.getMil( "Dvaered" )
    official = misn.setNPC(npc_desc[1], officialFace)
