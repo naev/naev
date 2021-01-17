@@ -583,17 +583,13 @@ static int sound_makeList (void)
       flen = strlen(files[i]);
 
       /* Must be longer than suffix. */
-      if (flen < suflen) {
-         free(files[i]);
+      if (flen < suflen)
          continue;
-      }
 
       /* Make sure is wav or ogg. */
       if ((strncmp( &files[i][flen - suflen], SOUND_SUFFIX_WAV, suflen)!=0) &&
-            (strncmp( &files[i][flen - suflen], SOUND_SUFFIX_OGG, suflen)!=0)) {
-         free(files[i]);
+            (strncmp( &files[i][flen - suflen], SOUND_SUFFIX_OGG, suflen)!=0))
          continue;
-      }
 
       /* Load the sound. */
       nsnprintf( path, PATH_MAX, SOUND_PATH"%s", files[i] );
