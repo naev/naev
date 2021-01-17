@@ -199,6 +199,8 @@ static int audioL_new( lua_State *L )
    else
       NLUA_INVALID_PARAMETER(L);
    rw = PHYSFSRWOPS_openRead( name );
+   if (rw==NULL)
+      NLUA_ERROR(L,"Unable to open '%s'", name );
 
    alGenSources( 1, &la.source );
    alGenBuffers( 1, &la.buffer );
