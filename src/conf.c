@@ -108,7 +108,7 @@ static void print_usage( void )
    LOG(_("   -S, --sound           forces sound"));
    LOG(_("   -m f, --mvol f        sets the music volume to f"));
    LOG(_("   -s f, --svol f        sets the sound volume to f"));
-   LOG(_("   -d, --datapath        adds a new datapath to be mounted (used for looking for game assets)"));
+   LOG(_("   -d, --datapath        adds a new datapath to be mounted (i.e., appends it to the search path for game assets)"));
    LOG(_("   -X, --scale           defines the scale factor"));
 #ifdef DEBUGGING
    LOG(_("   --devmode             enables dev mode perks like the editors"));
@@ -584,7 +584,6 @@ void conf_parseCLI( int argc, char** argv )
       { "sound", no_argument, 0, 'S' },
       { "mvol", required_argument, 0, 'm' },
       { "svol", required_argument, 0, 's' },
-      { "generate", no_argument, 0, 'G' },
       { "scale", required_argument, 0, 'X' },
 #ifdef DEBUGGING
       { "devmode", no_argument, 0, 'D' },
@@ -602,7 +601,7 @@ void conf_parseCLI( int argc, char** argv )
     */
    optind = 0;
    while ((c = getopt_long(argc, argv,
-         "fF:Vd:j:J:W:H:MSm:s:X:GNhv",
+         "fF:Vd:j:J:W:H:MSm:s:X:Nhv",
          long_options, &option_index)) != -1) {
       switch (c) {
          case 'd':
