@@ -5,19 +5,9 @@
 /**
  * @file ndata.c
  *
- * @brief Wrapper to handle reading/writing the ndata file.
- *
- * Optimizes to minimize the opens and frees.
- *
- * Detection in a nutshell:
- *
- * -- DONE AT INIT --
- *  1) CLI option
- *  2) conf.lua option
- * -- DONE AS NEEDED --
- *  3) Current dir laid out (debug only)
- *  4) Compile time defined path
- *  5) dirname(argv[0])/ndata* (binary path)
+ * @brief Wrappers to set up and access game assets (mounted via PhysicsFS).
+ *        The main search for data takes place in ndata_open().
+ *        However, conf.c code may have seeded the search path based on command-line arguments.
  */
 
 /** @cond */
@@ -31,7 +21,6 @@
 
 #include "physfs.h"
 #include "SDL.h"
-#include "SDL_mutex.h"
 
 #include "naev.h"
 /** @endcond */
@@ -39,7 +28,6 @@
 #include "ndata.h"
 
 #include "array.h"
-#include "attributes.h"
 #include "conf.h"
 #include "env.h"
 #if HAS_MACOS
@@ -47,123 +35,26 @@
 #endif /* HAS_MACOS */
 #include "log.h"
 #include "nfile.h"
-#include "npng.h"
 #include "nstring.h"
-#include "nxml.h"
-#include "start.h"
-
-
-#define NDATA_PATHNAME  "dat" /**< Generic ndata file name. */
-
-#define NDATA_SRC_DEFAULT 2 /**< Default derectory. (Set at compile time) */
-#define NDATA_SRC_BINARY  3 /**< Next to the Naev binary */
-
-
-/*
- * ndata directory.
- */
-static char      *ndata_dir        = NULL; /**< ndata directory name. */
-static SDL_mutex *ndata_lock       = NULL; /**< Lock for ndata creation. */
-static int        ndata_source     = NDATA_SRC_DEFAULT;
 
 
 /*
  * Prototypes.
  */
 static void ndata_testVersion (void);
-static int ndata_isndata( const char *path );
+static int ndata_found (void);
 static int ndata_enumerateCallback( void* data, const char* origdir, const char* fname );
 
 
 /**
- * @brief Sets the current ndata path to use.
- *
- * Should be called before any function that accesses or reads from ndata.
- *
- *    @param path Path to set.
- *    @return 0 on success.
+ * @brief Checks to see if the physfs search path is enough to find game data.
  */
-int ndata_setPath( const char *path )
+static int ndata_found( void )
 {
-   int len;
-   char  buf[ PATH_MAX ];
-
-   free( ndata_dir );
-   ndata_dir = NULL;
-
-   if ( path != NULL && ndata_isndata( path ) ) {
-      len            = strlen( path );
-      ndata_dir      = strdup( path );
-      if ( nfile_isSeparator( ndata_dir[ len - 1 ] ) )
-         ndata_dir[ len - 1 ] = '\0';
-   }
-   else {
-      do {
-#if HAS_MACOS
-         if ( macos_isBundle() && macos_resourcesPath( buf, PATH_MAX ) >= 0 ) {
-            len = strlen( buf ) + 1 + strlen(NDATA_PATHNAME);
-            ndata_dir    = malloc(len+1);
-            nsnprintf( ndata_dir, len+1, "%s/%s", buf, NDATA_PATHNAME );
-            ndata_source = NDATA_SRC_DEFAULT;
-            break;
-         }
-#endif /* HAS_MACOS */
-         if ( env.isAppImage && nfile_concatPaths( buf, PATH_MAX, env.appdir, PKGDATADIR, NDATA_PATHNAME ) >= 0 && ndata_isndata( buf ) ) {
-            ndata_dir    = strdup( buf );
-            ndata_source = NDATA_SRC_DEFAULT;
-            break;
-         }
-         nfile_concatPaths( buf, PATH_MAX, PKGDATADIR, NDATA_PATHNAME );
-         if ( ndata_isndata( buf ) ) {
-            ndata_dir    = strdup( buf );
-            ndata_source = NDATA_SRC_DEFAULT;
-            break;
-         }
-
-         nfile_concatPaths( buf, PATH_MAX, PHYSFS_getBaseDir(), NDATA_PATHNAME );
-         if ( ndata_isndata( buf ) ) {
-            ndata_dir    = strdup( buf );
-            ndata_source = NDATA_SRC_BINARY;
-            break;
-         }
-
-         // Couldn't find ndata
-         return -1;
-      } while (0);
-   }
-
-   if( PHYSFS_mount( ndata_dir, NULL, 0 ) == 0 ) {
-      WARN( "PhysicsFS mount failed: %s",
-            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
-      return -1;
-   }
-   LOG( _( "Found ndata: %s" ), ndata_dir );
-   ndata_testVersion();
-
-   return 0;
-}
-
-
-/**
- * @brief Checks to see if a directory is an ndata.
- */
-static int ndata_isndata( const char *dir )
-{
-   if ( dir == NULL )
-      return 0;
-
-   /* File must exist. */
-   if ( !nfile_dirExists( dir ) )
-      return 0;
-
-   /* Verify that the directory contains dat/start.xml
-    * This is arbitrary, but it's one of the many hard-coded files that must
-    * be present for Naev to run.
+   /* Verify that we can find VERSION and start.xml.
+    * This is arbitrary, but these are among the hard dependencies to self-identify and start.
     */
-   if ( !nfile_fileExists( dir, START_DATA_PATH ) )
-      return 0;
-
-   return 1;
+   return PHYSFS_exists( "VERSION" ) && PHYSFS_exists( START_DATA_PATH );
 }
 
 
@@ -175,6 +66,9 @@ static void ndata_testVersion (void)
    size_t i, size;
    char *buf, cbuf[PATH_MAX];
    int diff;
+
+   if (!ndata_found())
+      ERR( _("Unable to find game data. You may need to install, specify a datapath, or run using naev.sh (if developing).") );
 
    /* Parse version. */
    buf = ndata_read( "VERSION", &size );
@@ -201,16 +95,34 @@ static void ndata_testVersion (void)
  */
 int ndata_open (void)
 {
-   /* Create the lock. */
-   ndata_lock = SDL_CreateMutex();
+   char buf[ PATH_MAX ];
 
-   /* Set path to configuration. */
-   ndata_setPath(conf.ndata);
-   /*
-   if (ndata_setPath(conf.ndata))
-      ERR(_("Couldn't find ndata"));
-   */
+   if ( conf.ndata != NULL && PHYSFS_mount( conf.ndata, NULL, 1 ) )
+      LOG(_("Added datapath from conf.lua file: %s"), conf.ndata);
 
+#if HAS_MACOS
+   if ( !ndata_found() && macos_isBundle() && macos_resourcesPath( buf, PATH_MAX-4 ) >= 0 && strncat( buf, "/dat", 4 ) ) {
+      LOG(_("Trying default datapath: %s"), buf);
+      PHYSFS_mount( buf, NULL, 1 );
+   }
+#endif /* HAS_MACOS */
+
+   if ( !ndata_found() && env.isAppImage && nfile_concatPaths( buf, PATH_MAX, env.appdir, PKGDATADIR, "dat" ) >= 0 ) {
+      LOG(_("Trying default datapath: %s"), buf);
+      PHYSFS_mount( buf, NULL, 1 );
+   }
+
+   if (!ndata_found() && nfile_concatPaths( buf, PATH_MAX, PKGDATADIR, "dat" ) >= 0) {
+      LOG(_("Trying default datapath: %s"), buf);
+      PHYSFS_mount( buf, NULL, 1 );
+   }
+
+   if (!ndata_found() && nfile_concatPaths( buf, PATH_MAX, PHYSFS_getBaseDir(), "dat" ) >= 0) {
+      LOG(_("Trying default datapath: %s"), buf);
+      PHYSFS_mount( buf, NULL, 1 );
+   }
+
+   ndata_testVersion();
    return 0;
 }
 
@@ -221,14 +133,6 @@ int ndata_open (void)
 void ndata_close (void)
 {
    PHYSFS_deinit();
-   free( ndata_dir );
-   ndata_dir = NULL;
-
-   /* Destroy the lock. */
-   if (ndata_lock != NULL) {
-      SDL_DestroyMutex(ndata_lock);
-      ndata_lock = NULL;
-   }
 }
 
 
