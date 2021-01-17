@@ -55,16 +55,8 @@
 
 #define NDATA_PATHNAME  "dat" /**< Generic ndata file name. */
 
-#define NDATA_SRC_CWD     0 /**< Current working directory. (debug builds only) */
-#define NDATA_SRC_USER    1 /**< User defined directory. */
 #define NDATA_SRC_DEFAULT 2 /**< Default derectory. (Set at compile time) */
 #define NDATA_SRC_BINARY  3 /**< Next to the Naev binary */
-
-#if DEBUGGING
-#define NDATA_SRC_SEARCH_START NDATA_SRC_CWD
-#else /* DEBUGGING */
-#define NDATA_SRC_SEARCH_START NDATA_SRC_USER
-#endif /* DEBUGGING */
 
 
 /*
@@ -72,7 +64,7 @@
  */
 static char      *ndata_dir        = NULL; /**< ndata directory name. */
 static SDL_mutex *ndata_lock       = NULL; /**< Lock for ndata creation. */
-static int        ndata_source     = NDATA_SRC_SEARCH_START;
+static int        ndata_source     = NDATA_SRC_DEFAULT;
 
 
 /*
@@ -104,22 +96,9 @@ int ndata_setPath( const char *path )
       ndata_dir      = strdup( path );
       if ( nfile_isSeparator( ndata_dir[ len - 1 ] ) )
          ndata_dir[ len - 1 ] = '\0';
-      ndata_source = NDATA_SRC_USER;
    }
    else {
-      ndata_source = NDATA_SRC_SEARCH_START;
-
-      switch ( ndata_source ) {
-      case NDATA_SRC_CWD:
-         if ( ndata_isndata( NDATA_PATHNAME ) ) {
-            ndata_dir    = strdup( NDATA_PATHNAME );
-            ndata_source = NDATA_SRC_CWD;
-            break;
-         }
-         FALLTHROUGH;
-      case NDATA_SRC_USER:
-         // This already didn't work out when we checked the provided path.
-      case NDATA_SRC_DEFAULT:
+      do {
 #if HAS_MACOS
          if ( macos_isBundle() && macos_resourcesPath( buf, PATH_MAX ) >= 0 ) {
             len = strlen( buf ) + 1 + strlen(NDATA_PATHNAME);
@@ -140,19 +119,17 @@ int ndata_setPath( const char *path )
             ndata_source = NDATA_SRC_DEFAULT;
             break;
          }
-         FALLTHROUGH;
-      case NDATA_SRC_BINARY:
+
          nfile_concatPaths( buf, PATH_MAX, PHYSFS_getBaseDir(), NDATA_PATHNAME );
          if ( ndata_isndata( buf ) ) {
             ndata_dir    = strdup( buf );
             ndata_source = NDATA_SRC_BINARY;
             break;
          }
-         FALLTHROUGH;
-      default:
+
          // Couldn't find ndata
          return -1;
-      }
+      } while (0);
    }
 
    if( PHYSFS_mount( ndata_dir, NULL, 0 ) == 0 ) {
