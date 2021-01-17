@@ -2,10 +2,21 @@
 -- Playing card game images
 --]]
 local lg = require 'love.graphics'
+local la = require 'love.audio'
 local class = require 'class'
 
 local cardio = {
+   sound = {
+      place = {
+         -- Added below
+      },
+   },
 }
+for i=1,8 do
+   local f = string.format("snd/sounds/gambling/cardSlide%d.ogg",i)
+   local s = la.newSource(f)
+   table.insert( cardio.sound.place, s )
+end
 
 --[[
 -- Card superclass

@@ -1,12 +1,24 @@
 local minerva = require "minerva"
 local lg = require 'love.graphics'
+local la = require 'love.audio'
+local cardio = require 'minigames.cardio'
 local love_math = require 'love.math'
 require 'numstring'
 
-local bj = {} -- too lazy to write blackjack over and over
+local bj = { -- too lazy to write blackjack over and over
+   sound = {
+      place = cardio.sound.place,
+      chips = {
+      }
+   }
+}
+for i=1,6 do
+   local f = string.format("snd/sounds/gambling/chipsStack%d.ogg",i)
+   local s = la.newSource(f)
+   table.insert( bj.sound.chips, s )
+end
 
 function bj.init( x, y, w, h, donefunc )
-   local cardio = require 'minigames.cardio'
    bj.deck = cardio.newDeckWestern( false )
    bj.font = lg.newFont(16)
 
@@ -162,6 +174,7 @@ function bj.deal()
 end
 
 function bj.hit()
+   bj.sound.place[love_math.random(1,#bj.sound.place)]:play()
    table.insert( bj.player, bj.deck:draw() )
    -- Check if player lost
    local p = _total(bj.player)
@@ -316,6 +329,7 @@ local function trybet( betamount )
       bj.betamount = betamount
       bj.msg = string.format(_("You bet %s."),creditstring(betamount))
       bj.deal()
+      bj.sound.chips[love_math.random(1,#bj.sound.chips)]:play()
    end
 end
 
