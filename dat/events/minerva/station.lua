@@ -116,9 +116,11 @@ end
 function random_event()
    -- Altercation 1
    local alter1 = "Minerva Station Altercation 1"
+   local alter2 = "Minerva Station Altercation 2"
    if not has_event(alter1) and minerva.tokens_get_gained() > 10 and rnd.rnd() < 0.5 then
       hook.safe( "start_alter1" )
-      return
+   elseif not has_event(alter2) and player.misnDone("Maikki's Father 2") and rnd.rnd() < 0.5 then
+      hook.safe( "start_alter2" )
    end
 end
 
@@ -126,6 +128,9 @@ end
 -- Doesn't seem to work however
 function start_alter1 ()
    naev.eventStart( "Minerva Station Altercation 1" )
+end
+function start_alter2 ()
+   naev.eventStart( "Minerva Station Altercation 2" )
 end
 
 function bargreeter()
