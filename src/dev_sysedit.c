@@ -2044,9 +2044,8 @@ static void sysedit_btnGFXApply( unsigned int wid, char *wgt )
    else { /* Free old texture, load new. */
       free( p->gfx_spacePath );
       gl_freeTexture( p->gfx_space );
-      p->gfx_space     = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
       p->gfx_spacePath = strdup( str );
-      planet_setRadiusFromGFX(p);
+      planet_gfxLoad( p );
    }
 
    /* For now we close. */

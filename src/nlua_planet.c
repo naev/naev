@@ -516,6 +516,7 @@ static int planetL_radius( lua_State *L )
 {
    Planet *p;
    p = luaL_validplanet(L,1);
+   planet_gfxLoad(p);  /* Ensure graphics measurements are available. */
    lua_pushnumber(L,p->radius);
    return 1;
 }
