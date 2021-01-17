@@ -645,7 +645,7 @@ static int factionL_dynAdd( lua_State *L )
  *
  *    @luatparam Faction fac Faction to add ally to.
  *    @luatparam Faction ally Faction to add as an ally.
- * @luafunc dynAlly( fac, ally )
+ * @luafunc dynAlly
  */
 static int factionL_dynAlly( lua_State *L )
 {
@@ -665,7 +665,7 @@ static int factionL_dynAlly( lua_State *L )
  *
  *    @luatparam Faction fac Faction to add enemy to.
  *    @luatparam Faction enemy Faction to add as an enemy.
- * @luafunc dynEnemy( fac, enemy )
+ * @luafunc dynEnemy
  */
 static int factionL_dynEnemy( lua_State *L )
 {
