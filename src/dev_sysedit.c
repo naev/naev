@@ -26,7 +26,6 @@
 #include "map.h"
 #include "ndata.h"
 #include "nfile.h"
-#include "npng.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "opengl_render.h"
