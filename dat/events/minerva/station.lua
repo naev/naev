@@ -125,7 +125,7 @@ function random_event()
       hook.safe( "start_alter1" )
    elseif not alter2 and maikki2 and rnd.rnd() < 0.5 then
       hook.safe( "start_alter2" )
-   elseif alter2 and not alter_helped and rnd.rnd() < alter_prob then
+   elseif not alter1 and alter2 and not alter_helped and rnd.rnd() < alter_prob then
       hook.safe( "start_alter1" )
    end
 end
