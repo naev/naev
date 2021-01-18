@@ -37,6 +37,7 @@
  */
 #define OPENGL_TEX_MAPTRANS   (1<<0) /**< Create a transparency map. */
 #define OPENGL_TEX_MIPMAPS    (1<<1) /**< Creates mipmaps. */
+#define OPENGL_TEX_VFLIP      (1<<2) /**< Assume loaded from an image (where positive y means down). */
 
 /**
  * @brief Abstraction for rendering sprite sheets.

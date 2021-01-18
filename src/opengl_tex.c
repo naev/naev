@@ -59,7 +59,7 @@ static size_t gl_transSize( const int w, const int h );
 static GLuint gl_texParameters( unsigned int flags );
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags, int freesur );
 static glTexture* gl_loadNewImage( const char* path, unsigned int flags );
-static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const unsigned int flags );
+static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigned int flags );
 /* List. */
 static glTexture* gl_texExists( const char* path );
 static int gl_texAdd( glTexture *tex );
@@ -595,6 +595,7 @@ glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
    texture->sh    = texture->h / texture->sy;
    texture->srw   = texture->sw / texture->rw;
    texture->srh   = texture->sh / texture->rh;
+   texture->flags = flags;
 
    if (name != NULL) {
       texture->name = strdup(name);
@@ -762,7 +763,7 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
  *    @param flags Flags to control image parameters.
  *    @return Texture loaded from image.
  */
-static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const unsigned int flags )
+static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigned int flags )
 {
    glTexture *texture;
    SDL_Surface *surface;
@@ -781,7 +782,8 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const u
    npng_dim( npng, &w, &h );
 
    /* Load surface. */
-   surface  = npng_readSurface( npng, gl_needPOT(), 1 );
+   surface  = npng_readSurface( npng, gl_needPOT() );
+   flags   |= OPENGL_TEX_VFLIP;
    npng_close( npng );
 
    if (surface == NULL) {

@@ -504,11 +504,11 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
    rw    = PHYSFSRWOPS_openRead( str );
    npng  = npng_open( rw );
    npng_dim( npng, &w, &h );
-   surface = npng_readSurface( npng, gl_needPOT(), 1 );
+   surface = npng_readSurface( npng, gl_needPOT() );
 
    /* Load the texture. */
    temp->gfx_space = gl_loadImagePadTrans( str, surface, rw,
-         OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS,
+         OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP,
          w, h, sx, sy, 0 );
 
    /* Create the target graphic. */

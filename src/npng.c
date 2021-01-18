@@ -281,10 +281,9 @@ static int npng_readInto( npng_t *npng, png_bytep *row_pointers )
  *
  *    @param npng PNG image to load.
  *    @param pad_pot Whether to pad the dimensions to a power of two.
- *    @param vflip Whether to flip vertically.
  *    @return Surface with data from the PNG image.
  */
-SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
+SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot )
 {
    png_bytep *row_pointers;
    png_uint_32 width, height, row, rheight;
@@ -333,7 +332,7 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
       return NULL;
    }
    for (row=0; row<rheight; row++) { /* We only need to go to real height, not full height. */
-      row_pointers[ vflip ? rheight-row-1 : row ] = (png_bytep)
+      row_pointers[row] = (png_bytep)
          (Uint8 *) surface->pixels + row * surface->pitch;
    }
 
