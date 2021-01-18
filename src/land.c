@@ -353,7 +353,7 @@ static int bar_genList( unsigned int wid )
 
    /* Set up missions. */
    if (mission_portrait == NULL)
-      mission_portrait = gl_newImage( PORTRAIT_GFX_PATH"news.png", 0 );
+      mission_portrait = gl_newImage( PORTRAIT_GFX_PATH"news.webp", 0 );
    n = npc_getArraySize();
    if (n <= 0) {
       n            = 1;
