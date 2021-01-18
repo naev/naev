@@ -4,7 +4,7 @@
   <license>Light Combat Vessel License</license>
   <mass>0</mass>
   <price>350000</price>
-  <gfx_store>license</gfx_store>
+  <gfx_store>license.png</gfx_store>
   <description>This license will authorize you to buy destroyer and corvette-class ships.</description>
  </general>
  <specific type="license" />

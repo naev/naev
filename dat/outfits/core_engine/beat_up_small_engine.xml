@@ -7,7 +7,7 @@
   <mass>15</mass>
   <price>0</price>
   <description>Clogged, corroded and cracked in every way possible while still remaining in functional condition, this engine really belongs on the scrap heap.</description>
-  <gfx_store>engine04</gfx_store>
+  <gfx_store>engine04.png</gfx_store>
  </general>
  <specific type="modification">
   <thrust>100</thrust>

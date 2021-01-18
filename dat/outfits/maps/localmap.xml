@@ -4,7 +4,7 @@
   <mass>0</mass>
   <price>5000</price>
   <description>This map contains information about the local system.</description>
-  <gfx_store>map</gfx_store>
+  <gfx_store>map.png</gfx_store>
  </general>
  <specific type="localmap">
   <jump_detect>1.25</jump_detect>

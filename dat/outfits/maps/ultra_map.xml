@@ -4,7 +4,7 @@
   <mass>0</mass>
   <price>1</price>
   <description>For cheating.</description>
-  <gfx_store>map</gfx_store>
+  <gfx_store>map.png</gfx_store>
   <rarity>6</rarity>
  </general>
  <specific type="map">

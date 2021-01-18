@@ -7,7 +7,7 @@
   <mass>70</mass>
   <price>55000</price>
   <description>Continuing Unicorp's PT series of core systems in the medium ship category, the PT-500 gives acceptable performance for an acceptable price.</description>
-  <gfx_store>core_system_basic_m1</gfx_store>
+  <gfx_store>core_system_basic_m1.png</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">

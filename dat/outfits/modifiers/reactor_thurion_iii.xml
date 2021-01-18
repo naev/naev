@@ -7,7 +7,7 @@
   <rarity>3</rarity>
   <mass>90</mass>
   <price>1550000</price>
-  <gfx_store>reactor_iii</gfx_store>
+  <gfx_store>reactor_iii.png</gfx_store>
   <description>Thurion-designed reactor that uses Positrons for a superior energy output.</description>
   <cpu>-40</cpu>
  </general>

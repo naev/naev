@@ -6,11 +6,11 @@
   <mass>1</mass>
   <price>15000</price>
   <description>This weapon is a cheat. It is not meant to be used by players.</description>
-  <gfx_store>laser2</gfx_store>
+  <gfx_store>laser2.png</gfx_store>
   <cpu>-1</cpu>
   <rarity>6</rarity></general>
  <specific type="bolt">
-  <gfx>laser2S</gfx>
+  <gfx>laser2S.png</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
@@ -18,7 +18,7 @@
   <speed>600</speed>
   <range>850</range>
   <falloff>270</falloff>
-  <gfx_end>laser1S</gfx_end>
+  <gfx_end>laser1S.png</gfx_end>
   <energy>1</energy>
   <heatup>60</heatup>
   <damage>

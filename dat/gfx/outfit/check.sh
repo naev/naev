@@ -13,9 +13,9 @@ echo "Checking for unused graphics..."
 for dir in store space; do
    cd "$dir"
    echo -e "\n   Unused outfit $dir gfx"
-   for img in *.png; do
-      [[ $img =~ -end.png ]] && continue
-      if ! cat ../${data}/*/*.xml | grep -q "<${!dir}[^_]*>${img%.png}<"; then
+   for img in *.{png,webp}; do
+      [[ $img =~ -end.(png|webp) ]] && continue
+      if ! cat ../${data}/*/*.xml | grep -q "<${!dir}[^_]*>${img}<"; then
          echo "      $img"
       fi
    done
@@ -26,9 +26,9 @@ echo -e "\nChecking for overused graphics..."
 for dir in store space; do
    cd "$dir"
    echo -e "\n   Overused outfit $dir gfx"
-   for img in *.png; do
-      [[ $img =~ -end.png ]] && continue
-      count=$(cat ../${data}/*/*.xml | grep -c "<${!dir}[^_]*>${img%.png}<")
+   for img in *.{png,webp}; do
+      [[ $img =~ -end.(png|webp) ]] && continue
+      count=$(cat ../${data}/*/*.xml | grep -c "<${!dir}[^_]*>${img}<")
       if [[ $count > 1 ]]; then
          echo "      $img => $count times"
       fi

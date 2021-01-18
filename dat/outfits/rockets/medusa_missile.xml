@@ -4,10 +4,10 @@
   <mass>1</mass>
   <price>0</price>
   <description>The Medusa class EMP cruise missile is a nonlethal weapon designed to knock out a ship's internal systems, rendering it harmless and ready for boarding. The warhead does only limited damage, so even lightly armoured targets can effectively be disabled with this weapon. However, the Medusa is not the most agile missile on the market.</description>
-  <gfx_store>missile</gfx_store>
+  <gfx_store>missile.png</gfx_store>
  </general>
  <specific type="ammo">
-  <gfx>seeker</gfx>
+  <gfx>seeker.png</gfx>
   <sound>seeker</sound>
   <sound_hit>medexp1</sound_hit>
   <spfx_shield>EmpM</spfx_shield>

@@ -4,10 +4,10 @@
   <mass>0.2</mass>
   <price>0</price>
   <description>The Thurion interceptor class missile focus on high agility rather than destructive power. While it does little damage to physical objects it is quite effective at disrupting shields.</description>
-  <gfx_store>convulsion</gfx_store>
+  <gfx_store>convulsion.png</gfx_store>
  </general>
  <specific type="ammo">
-  <gfx>convulsion</gfx>
+  <gfx>convulsion.png</gfx>
   <sound>seeker</sound>
   <sound_hit>medexp0</sound_hit>
   <spfx_shield>ExpM</spfx_shield>

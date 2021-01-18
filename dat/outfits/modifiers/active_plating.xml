@@ -7,7 +7,7 @@
   <rarity>3</rarity>
   <mass />
   <price>200000</price>
-  <gfx_store>active_plating</gfx_store>
+  <gfx_store>active_plating.png</gfx_store>
   <description>As the Thurion favour defense over offensive capabilities they developed this light-weight yet strong armour plating, at the expense of CPU usage.</description>
   <cpu>-10</cpu>
  </general>

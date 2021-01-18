@@ -7,7 +7,7 @@
   <rarity>3</rarity>
   <mass>240</mass>
   <price>1200000</price>
-  <gfx_store>drone_fighter</gfx_store>
+  <gfx_store>drone_fighter.png</gfx_store>
   <description>The Drone Fighter bay uses the advanced Collective technologies to sustain a group of three Drone Fighters. Drone Fighters require no pilot making them a safer approach in dangerous situations. They do however need some careful maintenance. All the tools needed to take care of them are provided with the bay.</description>
   <cpu>-30</cpu>
  </general>

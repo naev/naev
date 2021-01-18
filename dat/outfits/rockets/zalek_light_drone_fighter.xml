@@ -4,7 +4,7 @@
   <license>Light Combat Vessel License</license>
   <mass>10</mass>
   <price>0</price>
-  <gfx_store>zalek_drone_light_fighter</gfx_store>
+  <gfx_store>zalek_drone_light_fighter.png</gfx_store>
   <description>This tiny robotic drone built by the Za'lek is very weak by itself. However, they are compact and cheap, allowing them to be massed very easily.</description>
  </general>
  <specific type="fighter">

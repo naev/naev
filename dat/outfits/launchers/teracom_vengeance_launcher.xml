@@ -9,7 +9,7 @@
   <description>Vengeance class interceptor missiles are the heaviest interceptor missiles currently in production. Almost half the missile hull is used for payload, which decreases its ability to catch fast targets. Its designed to excel at killing armoured targets at the expense of making it poor against shields. Best paired with anti-shield weapons.
 
 TeraCom's patented launcher hardware considerably reduces the time it takes to achieve a lock. Sometimes, those few seconds can make all the difference.</description>
-  <gfx_store>headhunterlauncher</gfx_store>
+  <gfx_store>headhunterlauncher.png</gfx_store>
   <cpu>-10</cpu>
  </general>
  <specific type="launcher" secondary="1">

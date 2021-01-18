@@ -5,10 +5,10 @@
   <mass>0.1</mass>
   <price>0</price>
   <description>This energy cell is required for the initialization of the self-contained energy cascades the Thurion use for their homing energy weapons.</description>
-  <gfx_store>cpu_i</gfx_store>
+  <gfx_store>cpu_i.png</gfx_store>
  </general>
  <specific type="ammo">
-  <gfx>laser3S</gfx>
+  <gfx>laser3S.png</gfx>
   <sound>neutron</sound>
   <sound_hit>empexplode</sound_hit>
   <spfx_shield>EmpS</spfx_shield>
