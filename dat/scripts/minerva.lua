@@ -3,6 +3,7 @@
 --]]
 local vn = require 'vn'
 local colour = require 'colour'
+local portrait = require 'portrait'
 
 local minerva = {
    -- Main Characters
@@ -31,6 +32,12 @@ local minerva = {
       portrait = "minerva_terminal",
       image = "minerva_terminal.png",
       colour = {0.8, 0.8, 0.8},
+   },
+   pirate = {
+      name = _("Sketchy Individual"),
+      portrait = "pirate/pirate5", -- REPLACE
+      description = _("You see a sketchy-looking individual, they seem to have their gaze on you."),
+      image = portrait.getFullPath("pirate/pirate5"),
    },
 }
 

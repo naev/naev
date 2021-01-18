@@ -22,11 +22,6 @@ local portrait = require 'portrait'
 local vn = require 'vn'
 require 'numstring'
 
-sketchy_name = _("Sketchy Individual")
-sketchy_portrait = "pirate/pirate5" -- REPLACE
-sketchy_description = _("You see a sketchy-looking individual, they seem to have their gaze on you.")
-sketchy_image = portrait.getFullPath(sketchy_portrait) -- REPLACE
-
 misn_title = _("Dvaered Thugs")
 misn_reward = _("Cold hard credits")
 misn_desc = _("Someone wants you to mess around with Dvaered thugs.")
@@ -49,8 +44,8 @@ function create ()
    if not misn.claim( system.get(mainsys) ) then
       misn.finish( false )
    end
-   misn.setNPC( sketchy_name, sketchy_portrait )
-   misn.setDesc( sketchy_description )
+   misn.setNPC( minerva.pirate.name, minerva.pirate.portrait )
+   misn.setDesc( minerva.pirate.description )
    misn.setReward( misn_reward )
    misn.setTitle( misn_title )
 end
@@ -59,7 +54,7 @@ end
 function accept ()
    vn.clear()
    vn.scene()
-   local pir = vn.newCharacter( sketchy_name, {image=sketchy_image} )
+   local pir = vn.newCharacter( minerva.pirate.name, {image=minerva.pirate.image} )
    vn.fadein()
    vn.label( "leave" )
    vn.na(_("You approach the sketch individual who seems to be calling your attention."))
@@ -110,7 +105,7 @@ function land ()
    if misn_state==4 then
       vn.clear()
       vn.scene()
-      local pir = vn.newCharacter( sketchy_name, {image=sketchy_image} )
+      local pir = vn.newCharacter( minerva.pirate.name, {image=minerva.pirate.image} )
       vn.fadein()
       vn.na(_("After you land on Minerva Station you are once again greeted by the shady character that gave you the job dealing with the Dvaered thugs."))
       pir(_([["I hear it went rather well. This should cause more tension between the Za'lek and the Dvaered so we can get them off this station. However, this is only the beginning."]]))
