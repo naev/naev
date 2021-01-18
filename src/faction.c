@@ -1576,7 +1576,7 @@ static void faction_freeOne( Faction *f )
       nlua_freeEnv( f->sched_env );
    if (f->env != LUA_NOREF)
       nlua_freeEnv( f->env );
-   if (f->equip_env != LUA_NOREF)
+   if (!faction_isFlag(f, FACTION_DYNAMIC) && (f->equip_env != LUA_NOREF))
       nlua_freeEnv( f->equip_env );
 }
 
@@ -1797,6 +1797,10 @@ int faction_dynAdd( int base, const char *name, const char *display )
 
       f->player_def = bf->player_def;
       f->player = bf->player;
+      f->colour = bf->colour;
+
+      /* Lua stuff. */
+      f->equip_env = bf->equip_env;
    }
 
    return array_size(faction_stack)-1;
