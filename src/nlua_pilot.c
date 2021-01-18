@@ -451,7 +451,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
 {
    Fleet *flt;
    Ship *ship;
-   const char *fltname, *fltai, *faction;
+   const char *fltname, *fltai;
    int i, first;
    unsigned int p;
    double a, r;
@@ -482,12 +482,8 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
          NLUA_ERROR(L,_("Ship '%s' not found!"), fltname);
          return 0;
       }
-      faction = luaL_checkstring(L,4);
-      lf = faction_get(faction);
-      if (lf < 0) {
-         NLUA_ERROR(L,_("Faction '%s' not found in stack."), faction );
-         return 0;
-      }
+      /* Get faction from string or number. */
+      lf = luaL_validfaction(L,4);
    }
    else {
       flt = fleet_get( fltname );
