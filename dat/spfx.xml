@@ -1,89 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spfxs>
  <spfx name="ExpS">
-  <gfx sx="6" sy="5">exps</gfx>
+  <gfx sx="6" sy="5">exps.png</gfx>
   <anim>400</anim>
  </spfx>
  <spfx name="ExpM">
-  <gfx sx="6" sy="5">expm</gfx>
+  <gfx sx="6" sy="5">expm.png</gfx>
   <anim>450</anim>
  </spfx>
  <spfx name="ExpL">
-  <gfx sx="6" sy="5">expl</gfx>
+  <gfx sx="6" sy="5">expl.png</gfx>
   <anim>500</anim>
  </spfx>
  <spfx name="ExpM2">
-  <gfx sx="5" sy="5">expm2</gfx>
+  <gfx sx="5" sy="5">expm2.png</gfx>
   <anim>450</anim>
  </spfx>
  <spfx name="ExpL2">
-  <gfx sx="6" sy="5">expl2</gfx>
+  <gfx sx="6" sy="5">expl2.png</gfx>
   <anim>1300</anim>
  </spfx>
  <spfx name="cargo">
-  <gfx sx="6" sy="6">cargo</gfx>
+  <gfx sx="6" sy="6">cargo.png</gfx>
   <ttl>15000</ttl>
   <anim>5000</anim>
  </spfx>
  <spfx name="EmpS">
-  <gfx sx="6" sy="5">emps</gfx>
+  <gfx sx="6" sy="5">emps.png</gfx>
   <anim>400</anim>
  </spfx>
  <spfx name="EmpM">
-  <gfx sx="6" sy="5">empm</gfx>
+  <gfx sx="6" sy="5">empm.png</gfx>
   <anim>450</anim>
  </spfx>
  <spfx name="ShiS">
-  <gfx sx="6" sy="5">shis</gfx>
+  <gfx sx="6" sy="5">shis.png</gfx>
   <anim>400</anim>
  </spfx>
  <spfx name="ShiM">
-  <gfx sx="6" sy="5">shim</gfx>
+  <gfx sx="6" sy="5">shim.png</gfx>
   <anim>450</anim>
  </spfx>
  <spfx name="PlaS">
-  <gfx sx="6" sy="5">plas</gfx>
+  <gfx sx="6" sy="5">plas.png</gfx>
   <anim>400</anim>
  </spfx>
  <spfx name="PlaM">
-  <gfx sx="6" sy="5">plam</gfx>
+  <gfx sx="6" sy="5">plam.png</gfx>
   <anim>450</anim>
  </spfx>
  <spfx name="PlaS2">
-  <gfx sx="6" sy="5">plas2</gfx>
+  <gfx sx="6" sy="5">plas2.png</gfx>
   <anim>400</anim>
  </spfx>
  <spfx name="PlaM2">
-  <gfx sx="6" sy="5">plam2</gfx>
+  <gfx sx="6" sy="5">plam2.png</gfx>
   <anim>450</anim>  
  </spfx>
  <spfx name="Dbr0">
-  <gfx sx="6" sy="6">debris0</gfx>
+  <gfx sx="6" sy="6">debris0.png</gfx>
   <ttl>15000</ttl>
   <anim>5000</anim>
  </spfx>
  <spfx name="Dbr1">
-  <gfx sx="6" sy="6">debris1</gfx>
+  <gfx sx="6" sy="6">debris1.png</gfx>
   <ttl>15000</ttl>
   <anim>5000</anim>
  </spfx>
  <spfx name="Dbr2">
-  <gfx sx="6" sy="6">debris2</gfx>
+  <gfx sx="6" sy="6">debris2.png</gfx>
   <ttl>15000</ttl>
   <anim>5000</anim>
  </spfx>
  <spfx name="Dbr3">
-  <gfx sx="6" sy="6">debris3</gfx>
+  <gfx sx="6" sy="6">debris3.png</gfx>
   <ttl>15000</ttl>
   <anim>5000</anim>
  </spfx>
  <spfx name="Dbr4">
-  <gfx sx="6" sy="6">debris4</gfx>
+  <gfx sx="6" sy="6">debris4.png</gfx>
   <ttl>15000</ttl>
   <anim>5000</anim>
  </spfx>
  <spfx name="Dbr5">
-  <gfx sx="6" sy="6">debris5</gfx>
+  <gfx sx="6" sy="6">debris5.png</gfx>
   <ttl>15000</ttl>
   <anim>5000</anim>
  </spfx>
