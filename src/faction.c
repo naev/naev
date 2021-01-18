@@ -112,7 +112,6 @@ int pfaction_load( xmlNodePtr parent );
 static int faction_getRaw( const char* name )
 {
    int i;
-
    /* Escorts are part of the "player" faction. */
    if (strcmp(name, "Escort") == 0)
       return FACTION_PLAYER;
@@ -125,8 +124,6 @@ static int faction_getRaw( const char* name )
       if (i != array_size(faction_stack))
          return i;
    }
-
-   WARN(_("Faction '%s' not found in stack."), name);
    return -1;
 }
 
