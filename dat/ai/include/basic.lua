@@ -548,14 +548,18 @@ function __run_hyp ()
          if jdist > 3*bdist and pilot:stats().mass < 600 then
             jdir = ai.careful_face(jump)
          else --Heavy ships should rush to jump point
-            jdir = ai.face(jump)
+            jdir = ai.face( jump, nil, true )
          end
          if jdir < 10 then       
             ai.accel()
          end
       end
    else
-      ai.pushsubtask( "__run_hypbrake" )
+      if ai.instantJump() then
+         ai.pushsubtask( "__hyp_jump" )
+      else
+         ai.pushsubtask( "__run_hypbrake" )
+      end
    end
 
    --Afterburner: activate while far away from jump
@@ -653,7 +657,7 @@ function __hyp_approach ()
 
    -- 2 methods for dir
    if not mem.careful or dist < 3*bdist then
-      dir = ai.face( target )
+      dir = ai.face( target, nil, true )
    else
       dir = ai.careful_face( target )
    end
@@ -663,7 +667,11 @@ function __hyp_approach ()
       ai.accel()
    -- Need to start braking
    elseif dist < bdist then
-      ai.pushsubtask("__hyp_brake")
+      if ai.instantJump() then
+         ai.pushsubtask("__hyp_jump")
+      else
+         ai.pushsubtask("__hyp_brake")
+      end
    end
 end
 function __hyp_brake ()
@@ -677,10 +685,8 @@ end
 function __hyp_jump ()
    if ai.hyperspace() == nil then
       ai.pilot():msg(ai.pilot():followers(), "hyperspace", ai.nearhyptarget())
-      ai.poptask()
-   else
-      ai.popsubtask()
    end
+   ai.popsubtask() -- Keep the task even if succeeding in case pilot gets pushed away.
 end
 
 
