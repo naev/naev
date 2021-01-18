@@ -92,6 +92,7 @@ static Faction* faction_stack = NULL; /**< Faction stack. */
  * Prototypes
  */
 /* static */
+static int faction_getRaw( const char *name );
 static void faction_freeOne( Faction *f );
 static void faction_sanitizePlayer( Faction* faction );
 static void faction_modPlayerLua( int f, double mod, const char *source, int secondary );
@@ -108,7 +109,7 @@ int pfaction_load( xmlNodePtr parent );
  *    @param name Name of the faction to seek.
  *    @return ID of the faction.
  */
-int faction_get( const char* name )
+static int faction_getRaw( const char* name )
 {
    int i;
 
@@ -127,6 +128,33 @@ int faction_get( const char* name )
 
    WARN(_("Faction '%s' not found in stack."), name);
    return -1;
+}
+
+
+/**
+ * @brief Checks to see if a faction exists by name.
+ *
+ *    @param name Name of the faction to seek.
+ *    @return ID of the faction.
+ */
+int faction_exists( const char* name )
+{
+   return faction_getRaw(name)!=-1;
+}
+
+
+/**
+ * @brief Gets a faction ID by name.
+ *
+ *    @param name Name of the faction to seek.
+ *    @return ID of the faction.
+ */
+int faction_get( const char* name )
+{
+   int id = faction_getRaw(name);
+   if (id<0)
+      WARN(_("Faction '%s' not found in stack."), name);
+   return id;
 }
 
 

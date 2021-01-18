@@ -17,6 +17,7 @@
 
 /* get stuff */
 int faction_isFaction( int f );
+int faction_exists( const char* name );
 int faction_get( const char* name );
 int* faction_getAll( int *n );
 int* faction_getKnown( int *n );
