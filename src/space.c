@@ -3309,8 +3309,8 @@ static int asteroidTypes_load (void)
             if (xml_isNode(cur,"gfx")) {
                at->gfxs = realloc( at->gfxs, sizeof(glTexture*)*(i+1) );
                str = xml_get(cur);
-               len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(str)+14);
-               nsnprintf( file, len,"%s%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str,".png");
+               len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(str)+10);
+               nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str);
                at->gfxs[i] = gl_newImage( file, OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
                i++;
             }
