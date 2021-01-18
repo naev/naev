@@ -3198,9 +3198,6 @@ int space_load (void)
    jumppoint_gfx = gl_newSprite(  PLANET_GFX_SPACE_PATH"jumppoint.png", 4, 4, OPENGL_TEX_MIPMAPS );
    jumpbuoy_gfx = gl_newImage(  PLANET_GFX_SPACE_PATH"jumpbuoy.png", 0 );
 
-   /* Load map marker graphics - must be before systems_load(). */
-   // nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"marker/jumppoint.png" );
-
    /* Load planets. */
    ret = planets_load();
    if (ret < 0)
