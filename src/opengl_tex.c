@@ -51,7 +51,6 @@ static int gl_tex_ext_npot = 0; /**< Support for GL_ARB_texture_non_power_of_two
  * prototypes
  */
 /* misc */
-/*static int SDL_VFlipSurface( SDL_Surface* surface );*/
 static int SDL_IsTrans( SDL_Surface* s, int x, int y );
 static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h );
 static size_t gl_transSize( const int w, const int h );
@@ -77,42 +76,6 @@ int gl_pot( int n )
       i <<= 1;
    return i;
 }
-
-
-#if 0
-/**
- * @brief Flips the surface vertically.
- *
- *    @param surface Surface to flip.
- *    @return 0 on success.
- */
-static int SDL_VFlipSurface( SDL_Surface* surface )
-{
-   /* flip the image */
-   Uint8 *rowhi, *rowlo, *tmpbuf;
-   int y;
-
-   tmpbuf = malloc(surface->pitch);
-   if ( tmpbuf == NULL ) {
-      WARN("Out of memory");
-      return -1;
-   }
-
-   rowhi = (Uint8 *)surface->pixels;
-   rowlo = rowhi + (surface->h * surface->pitch) - surface->pitch;
-   for (y = 0; y < surface->h / 2; ++y ) {
-      memcpy(tmpbuf, rowhi, surface->pitch);
-      memcpy(rowhi, rowlo, surface->pitch);
-      memcpy(rowlo, tmpbuf, surface->pitch);
-      rowhi += surface->pitch;
-      rowlo -= surface->pitch;
-   }
-   free(tmpbuf);
-   /* flipping done */
-
-   return 0;
-}
-#endif
 
 
 /**
