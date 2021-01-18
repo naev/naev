@@ -243,7 +243,7 @@ void gl_blitTexture(  const glTexture* texture,
          0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
-   tex_mat = gl_Matrix4_Identity();
+   tex_mat = (texture->flags & OPENGL_TEX_VFLIP) ? gl_Matrix4_Ortho(-1, 1, 2, 0, 1, -1) : gl_Matrix4_Identity();
    tex_mat = gl_Matrix4_Translate(tex_mat, tx, ty, 0);
    tex_mat = gl_Matrix4_Scale(tex_mat, tw, th, 1);
 
@@ -328,7 +328,7 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_interpolate.vertex, 0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
-   tex_mat = gl_Matrix4_Identity();
+   tex_mat = (ta->flags & OPENGL_TEX_VFLIP) ? gl_Matrix4_Ortho(-1, 1, 2, 0, 1, -1) : gl_Matrix4_Identity();
    tex_mat = gl_Matrix4_Translate(tex_mat, tx, ty, 0);
    tex_mat = gl_Matrix4_Scale(tex_mat, tw, th, 1);
 

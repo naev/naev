@@ -51,7 +51,6 @@ static int gl_tex_ext_npot = 0; /**< Support for GL_ARB_texture_non_power_of_two
  * prototypes
  */
 /* misc */
-/*static int SDL_VFlipSurface( SDL_Surface* surface );*/
 static int SDL_IsTrans( SDL_Surface* s, int x, int y );
 static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h );
 static size_t gl_transSize( const int w, const int h );
@@ -59,7 +58,7 @@ static size_t gl_transSize( const int w, const int h );
 static GLuint gl_texParameters( unsigned int flags );
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags, int freesur );
 static glTexture* gl_loadNewImage( const char* path, unsigned int flags );
-static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const unsigned int flags );
+static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigned int flags );
 /* List. */
 static glTexture* gl_texExists( const char* path );
 static int gl_texAdd( glTexture *tex );
@@ -77,42 +76,6 @@ int gl_pot( int n )
       i <<= 1;
    return i;
 }
-
-
-#if 0
-/**
- * @brief Flips the surface vertically.
- *
- *    @param surface Surface to flip.
- *    @return 0 on success.
- */
-static int SDL_VFlipSurface( SDL_Surface* surface )
-{
-   /* flip the image */
-   Uint8 *rowhi, *rowlo, *tmpbuf;
-   int y;
-
-   tmpbuf = malloc(surface->pitch);
-   if ( tmpbuf == NULL ) {
-      WARN("Out of memory");
-      return -1;
-   }
-
-   rowhi = (Uint8 *)surface->pixels;
-   rowlo = rowhi + (surface->h * surface->pitch) - surface->pitch;
-   for (y = 0; y < surface->h / 2; ++y ) {
-      memcpy(tmpbuf, rowhi, surface->pitch);
-      memcpy(rowhi, rowlo, surface->pitch);
-      memcpy(rowlo, tmpbuf, surface->pitch);
-      rowhi += surface->pitch;
-      rowlo -= surface->pitch;
-   }
-   free(tmpbuf);
-   /* flipping done */
-
-   return 0;
-}
-#endif
 
 
 /**
@@ -595,6 +558,7 @@ glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
    texture->sh    = texture->h / texture->sy;
    texture->srw   = texture->sw / texture->rw;
    texture->srh   = texture->sh / texture->rh;
+   texture->flags = flags;
 
    if (name != NULL) {
       texture->name = strdup(name);
@@ -762,7 +726,7 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
  *    @param flags Flags to control image parameters.
  *    @return Texture loaded from image.
  */
-static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const unsigned int flags )
+static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigned int flags )
 {
    glTexture *texture;
    SDL_Surface *surface;
@@ -781,7 +745,8 @@ static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, const u
    npng_dim( npng, &w, &h );
 
    /* Load surface. */
-   surface  = npng_readSurface( npng, gl_needPOT(), 1 );
+   surface  = npng_readSurface( npng, gl_needPOT() );
+   flags   |= OPENGL_TEX_VFLIP;
    npng_close( npng );
 
    if (surface == NULL) {

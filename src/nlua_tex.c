@@ -320,7 +320,7 @@ static int texL_readData( lua_State *L )
    npng = npng_open( rw );
    if (npng == NULL)
       NLUA_ERROR(L, _("problem opening png for reading") );
-   surface = npng_readSurface( npng, 0, 0 );
+   surface = npng_readSurface( npng, 0 );
    if (surface == NULL)
       NLUA_ERROR(L, _("problem reading png to surface") );
    npng_close( npng );

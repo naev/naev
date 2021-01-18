@@ -30,7 +30,7 @@ int npng_dim( npng_t *npng, png_uint_32 *w, png_uint_32 *h );
 /*
  * Loading.
  */
-SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip );
+SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot );
 
 #endif /* NPNG_H */
 

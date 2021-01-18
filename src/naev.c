@@ -1050,7 +1050,7 @@ static void window_caption (void)
       return;
    }
    npng        = npng_open( rw );
-   naev_icon   = npng_readSurface( npng, 0, 0 );
+   naev_icon   = npng_readSurface( npng, 0 );
    npng_close( npng );
    SDL_RWclose( rw );
    if (naev_icon == NULL) {
