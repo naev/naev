@@ -2753,6 +2753,7 @@ static int aiL_weapSet( lua_State *L )
          }
       }
 
+      /* Active weapon sets only care about keypresses. */
       /* activate */
       if (type && !on)
          pilot_weapSetPress(p, id, +1 );
