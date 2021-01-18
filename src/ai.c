@@ -2758,7 +2758,7 @@ static int aiL_weapSet( lua_State *L )
          pilot_weapSetPress(p, id, +1 );
       /* deactivate */
       if (!type && on)
-         pilot_weapSetPress(p, id, -1 );
+         pilot_weapSetPress(p, id, +1 );
    }
    else {
       /* weapset type is weapon or change */
