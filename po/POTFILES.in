@@ -70,6 +70,7 @@ dat/events/dvaered/warlords_battle.lua
 dat/events/flf/derelict.lua
 dat/events/flf/flf_catastrophe.lua
 dat/events/minerva/altercation1.lua
+dat/events/minerva/altercation2.lua
 dat/events/minerva/chicken_rendezvous.lua
 dat/events/minerva/station.lua
 dat/events/naev_needs_YOU.lua
@@ -202,6 +203,7 @@ dat/missions/flf/flf_pre02.lua
 dat/missions/flf/flf_rogue.lua
 dat/missions/minerva/maikki1.lua
 dat/missions/minerva/maikki2.lua
+dat/missions/minerva/pirate1.lua
 dat/missions/neutral/animaltransport.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
@@ -331,6 +333,8 @@ dat/scripts/love/window.lua
 dat/scripts/minerva.lua
 dat/scripts/minigames/blackjack.lua
 dat/scripts/minigames/cardio.lua
+dat/scripts/minigames/chuckaluck.lua
+dat/scripts/minigames/diceio.lua
 dat/scripts/misnhelper.lua
 dat/scripts/nextjump.lua
 dat/scripts/numstring.lua
