@@ -674,6 +674,7 @@ void player_cleanup (void)
    space_clearKnown();
    land_cleanup();
    map_cleanup();
+   factions_clearDynamic();
 
    /* Reset controls. */
    player_accelOver();
