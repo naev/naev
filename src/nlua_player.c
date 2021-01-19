@@ -65,6 +65,7 @@ static int playerL_fuel( lua_State *L );
 static int playerL_refuel( lua_State *L );
 static int playerL_autonav( lua_State *L );
 static int playerL_autonavDest( lua_State *L );
+static int playerL_autonavAbort( lua_State *L );
 /* Cinematics. */
 static int playerL_cinematics( lua_State *L );
 /* Board stuff. */
@@ -107,6 +108,7 @@ static const luaL_Reg playerL_methods[] = {
    { "refuel", playerL_refuel },
    { "autonav", playerL_autonav },
    { "autonavDest", playerL_autonavDest },
+   { "autonavAbort", playerL_autonavAbort },
    { "cinematics", playerL_cinematics },
    { "unboard", playerL_unboard },
    { "takeoff", playerL_takeoff },
@@ -502,6 +504,24 @@ static int playerL_autonavDest( lua_State *L )
    lua_pushsystem( L, ls );
    lua_pushnumber( L, jumps );
    return 2;
+}
+
+
+/**
+ * @brief Gets the player's long term autonav destination.
+ *
+ * @usage sys, jumps = player.autonavAbort()
+ *
+ * @note Does not do anything if the player is not in autonav.
+ *
+ *    @luatreturn string Abort message.
+ * @luafunc autonavAbort
+ */
+static int playerL_autonavAbort( lua_State *L )
+{
+   const char *str = luaL_checkstring(L,1);
+   player_autonavAbort( str );
+   return 0;
 }
 
 
