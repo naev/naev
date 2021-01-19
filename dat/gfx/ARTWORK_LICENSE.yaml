@@ -308,7 +308,7 @@
        - 002.webp
        - 003.webp
    spfx:
-     - cargo.png
+     - cargo.webp
    ship:
      - admonisher:
        - \*
@@ -391,9 +391,9 @@
        - mace.png
        - macelauncher.png
    spfx:
-     - exps.png
-     - expm.png
-     - expl.png
+     - exps.webp
+     - expm.webp
+     - expl.webp
 - Basse:
    license: GPLv2+
    outfit:
@@ -455,12 +455,12 @@
        - beam_ragnarok_inv.png
        - banshee.png
    spfx:
-     - emps.png
-     - empm.png
-     - shis.png
-     - shim.png
-     - plas.png
-     - plam.png
+     - emps.webp
+     - empm.webp
+     - shis.webp
+     - shim.webp
+     - plas.webp
+     - plam.webp
 - Josiah Schwartfeger:
    license: CC-by 3.0
    root:
@@ -498,12 +498,12 @@
 - Renderwahn:
    license: CC-by 3.0
    spfx:
-     - debris0.png
-     - debris1.png
-     - debris2.png
-     - debris3.png
-     - debris4.png
-     - debris5.png
+     - debris0.webp
+     - debris1.webp
+     - debris2.webp
+     - debris3.webp
+     - debris4.webp
+     - debris5.webp
    logo:
      - pirate_*.png
    planet:
@@ -550,8 +550,8 @@
        - caesarlauncher.png
        - caesar.png
    spfx:
-     - plas2.png
-     - plam2.png
+     - plas2.webp
+     - plam2.webp
 - Thomas Fedor:
    license: PD
    outfit:
@@ -884,8 +884,8 @@
        - yellow01.webp
        - yellow02.webp
    spfx:
-     - expm2.png
-     - expl2.png
+     - expm2.webp
+     - expl2.webp
 - Scaatis:
    license: CC-by 3.0
    root:
