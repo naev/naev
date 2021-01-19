@@ -81,7 +81,7 @@ function create()
     dest_planet, dest_sys = planet.get("Jurai")
     
     -- Spaceport bar stuff
-    misn.setNPC(_("Dr. Mensing"), "zalek/unique/mensing")
+    misn.setNPC(_("Dr. Mensing"), "zalek/unique/mensing.png")
     misn.setDesc(bar_desc)
 end
 

@@ -75,7 +75,7 @@ function create ()
         abort()
     end  
 
-   misn.setNPC( _("Lt. Commander"), "empire/unique/dimitri" )
+   misn.setNPC( _("Lt. Commander"), "empire/unique/dimitri.png" )
    misn.setDesc( bar_desc )
 end
 

@@ -85,7 +85,7 @@ log_text = _([[You helped some drunkard deliver goods for some countess. You tho
 function create ()
    -- Note: this mission does not make any system claims.
 
-   misn.setNPC( _("Drunkard"), "neutral/unique/drunkard" )  -- creates the drunkard at the bar
+   misn.setNPC( _("Drunkard"), "neutral/unique/drunkard.png" )  -- creates the drunkard at the bar
    misn.setDesc( bar_desc )           -- drunkard's description
 
    -- Planets

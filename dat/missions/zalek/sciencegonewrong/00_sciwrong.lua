@@ -95,7 +95,7 @@ log_text = _([[You helped Dr. Geller obtain a "ghost ship piece" for his researc
 
 function create ()
    -- Spaceport bar stuff
-   misn.setNPC( _("A scientist"), "zalek/unique/geller" )
+   misn.setNPC( _("A scientist"), "zalek/unique/geller.png" )
    misn.setDesc( bar_desc )
 end
 function accept()

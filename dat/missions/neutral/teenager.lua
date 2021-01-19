@@ -65,7 +65,7 @@ function create ()
     cursys = system.cur()
     curplanet = planet.cur()
     OSD[2] = OSD[2]:format(planet.cur():name())
-    misn.setNPC(NPCname, "neutral/unique/middleaged")
+    misn.setNPC(NPCname, "neutral/unique/middleaged.png")
     misn.setDesc(NPCdesc)
 end
 

@@ -64,7 +64,7 @@ function create()
         abort()
     end
 
-    misn.setNPC(harjaname, "sirius/unique/harja")
+    misn.setNPC(harjaname, "sirius/unique/harja.png")
     misn.setDesc(harjadesc)
 end
 

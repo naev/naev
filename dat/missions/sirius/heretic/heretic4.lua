@@ -64,7 +64,7 @@ function create()
    homeasset = planet.cur()
    targetasset, targetsys = planet.get("Ulios") --this will be the new HQ for the Nasin in the next part.
    --set some mission stuff
-   misn.setNPC(npc_name, "sirius/unique/draga")
+   misn.setNPC(npc_name, "sirius/unique/draga.png")
    misn.setDesc(bar_desc)
 
    osd[1] = osd[1]:format(targetasset:name(), targetsys:name())

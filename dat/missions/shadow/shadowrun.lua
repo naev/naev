@@ -146,7 +146,7 @@ function create ()
     timelimit1 = 20 -- In STP
     timelimit2 = 50 -- In STP
     
-    misn.setNPC( _("A dark-haired woman"), "neutral/unique/rebina_casual" )
+    misn.setNPC( _("A dark-haired woman"), "neutral/unique/rebina_casual.png" )
     misn.setDesc( bar_desc ) 
 end
 

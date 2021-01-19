@@ -52,7 +52,7 @@
  *
  * An example would be:
  * @code
- * misn.setNPC( "Keer", "empire/unique/keer" )
+ * misn.setNPC( "Keer", "empire/unique/keer.png" )
  * misn.setDesc( "You see here Commodore Keer." )
  * @endcode
  *
@@ -500,13 +500,13 @@ static int misn_markerRm( lua_State *L )
  * @brief Sets the current mission NPC.
  *
  * This is used in bar missions where you talk to a person. The portraits are
- *  the ones found in GFX_PATH/portraits without the png extension. So for
- *  GFX_PATH/portraits/none.png you would just use "none".
+ *  the ones found in GFX_PATH/portraits. (For GFX_PATH/portraits/none.png
+ *  you would use "none.png".)
  *
- * @usage misn.setNPC( "Invisible Man", "none" )
+ * @usage misn.setNPC( "Invisible Man", "none.png" )
  *
  *    @luatparam string name Name of the NPC.
- *    @luatparam string portrait Name of the portrait to use for the NPC.
+ *    @luatparam string portrait File name of the portrait to use for the NPC.
  * @luafunc setNPC
  */
 static int misn_setNPC( lua_State *L )
@@ -535,7 +535,7 @@ static int misn_setNPC( lua_State *L )
    cur_mission->npc = strdup(name);
 
    /* Set portrait. */
-   nsnprintf( buf, PATH_MAX, GFX_PATH"portraits/%s.png", str );
+   nsnprintf( buf, PATH_MAX, GFX_PATH"portraits/%s", str );
    cur_mission->portrait = gl_newImage( buf, 0 );
 
    return 0;

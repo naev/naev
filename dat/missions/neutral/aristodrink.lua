@@ -95,7 +95,7 @@ function create ()
    -- Note: this mission does not make any system claims.
 
    -- creates the NPC at the bar to create the mission
-   misn.setNPC( _("Drinking Aristocrat"), "neutral/unique/aristocrat" )
+   misn.setNPC( _("Drinking Aristocrat"), "neutral/unique/aristocrat.png" )
    misn.setDesc( bar_desc )
 
    startplanet, startsys = planet.cur()

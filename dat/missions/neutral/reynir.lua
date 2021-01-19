@@ -88,7 +88,7 @@ log_text_bad = _([[You took an old man named Reynir on a ride in outer space, bu
 
 function create ()
    -- Note: this mission does not make any system claims. 
-   misn.setNPC( _("Reynir"), "neutral/unique/reynir" )
+   misn.setNPC( _("Reynir"), "neutral/unique/reynir.png" )
    misn.setDesc( bar_desc )
 
    -- Mission variables

@@ -80,7 +80,7 @@ function create ()
    reward = rnd.rnd(40,60)*1000
 
    -- Spaceport bar stuff
-   misn.setNPC( _("Ordinary Woman"), "neutral/unique/fakesister" )
+   misn.setNPC( _("Ordinary Woman"), "neutral/unique/fakesister.png" )
    misn.setDesc( bar_desc )
 end
 
