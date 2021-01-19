@@ -394,11 +394,11 @@ function approach_hint2 ()
    vn.na(_("You approach the professor."))
    prof(_([["What can I do for you?"]]))
    vn.me(_("You inquire to about whether or not they are interested in artifacts from the nebula."))
-   prof(_([[He rubs his temples.
+   prof(_([[They rubs their temples.
 "Ah, the nebula artifacts... Not very good experiences with those, no, not really interested in them anymore."]]))
    prof(_([["I was part of a really ambitious project to try to track down the origin of the incident, which just end up being a bureaucratic nightmare."]]))
    prof(_([["You see, the bigger the research project, the more the project leader and co-leaders want to have meetings and goals and work packages."
-They shudders when they says the word "work packages".]]))
+They shudder when they says the word "work packages".]]))
    prof(_([["At the end, we were just chaining meetings and answering e-mails and not getting anything done. We ended up handing in a 5 page report written by an internal for the mid-project evaluation and almost lost all the funding. The project leader panicked and it all went to hell from there."]]))
    prof(_([["All nebula research is doomed to end that way. I haven't seen a project succeed yet despite all the proposal calls attempting to address the issue."]]))
    vn.na(_("You inquire about other project members."))
@@ -436,7 +436,7 @@ function approach_hint3 ()
    prof(_([["Other members? I recall a few, but they liked me so much, they promoted me and gave me a windowless room in the basement. What an honour. Anyway, back to what I was saying."]]))
    prof(_([["We must also further question not only our sensorial organs, and the existence of nebula artifacts, but our own existence. We apparently are able to think and some would argue that by this, the only thing we can prove, given imperfect sensorial data, is our own existence. However, I argue that this too is an illusion, and that our existence itself is something we can't define."]]))
    prof(_([["Every instant, what we perceive as ourselves is ceasing to exist and a new existence, which while very close to the "ourselves" from the previous instance, is, arguably, a completely new existence. This fluidity makes it, not only impossible to perceive nor understand our self as it is, but also makes it impossible to draw a line between different individuals..."]]))
-   vn.na(_("You thank them and run away while they keeps on talking to himself."))
+   vn.na(_("You thank them and run away while they keeps on talking to themself."))
    lasthint( prof )
 
    vn.fadeout()
