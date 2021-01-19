@@ -6,7 +6,7 @@
  </pos>
  <GFX>
   <space>station-commerce2.png</space>
-  <exterior>station05.png</exterior>
+  <exterior>station05.webp</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>

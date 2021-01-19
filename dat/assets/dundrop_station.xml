@@ -6,7 +6,7 @@
  </pos>
  <GFX>
   <space>station-commerce2.png</space>
-  <exterior>traderoom.png</exterior>
+  <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

@@ -6,7 +6,7 @@
  </pos>
  <GFX>
   <space>I00.png</space>
-  <exterior>lava.png</exterior>
+  <exterior>lava.webp</exterior>
  </GFX>
  <general>
   <class>A</class>

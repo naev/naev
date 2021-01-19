@@ -6,7 +6,7 @@
  </pos>
  <GFX>
   <space>moon-C01.png</space>
-  <exterior>gas.png</exterior>
+  <exterior>gas.webp</exterior>
  </GFX>
  <general>
   <class>A</class>
