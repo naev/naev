@@ -1,17 +1,20 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Maikki's Father 2">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>Minerva Station</planet>
-   <done>Maikki's Father 1</done>
-  </avail>
- </mission>
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>100</chance>
+  <location>Bar</location>
+  <planet>Minerva Station</planet>
+  <done>Maikki's Father 1</done>
+ </avail>
+ <notes>
+  <campaign>Minerva</campaign>
+ </notes>
+</mission>
 --]]
 
 --[[

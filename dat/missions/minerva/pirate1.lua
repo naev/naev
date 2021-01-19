@@ -1,17 +1,21 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Minerva Pirates 1">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>Minerva Station</planet>
-   <cond>var.peek("minerva_altercation_probability")~=nil</cond>
-  </avail>
- </mission>
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>100</chance>
+  <location>Bar</location>
+  <planet>Minerva Station</planet>
+  <cond>var.peek("minerva_altercation_probability")~=nil</cond>
+ </avail>
+ <notes>
+  <campaign>Minerva</campaign>
+  <requires name="Minerva Altercation 1" />
+ </notes>
+</mission>
 --]]
 
 --[[

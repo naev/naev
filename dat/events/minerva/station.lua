@@ -4,6 +4,10 @@
  <trigger>land</trigger>
  <chance>100</chance>
  <cond>planet.cur():name()=="Minerva Station"</cond>
+ <notes>
+  <campaign>Minerva</campaign>
+  <provides name="Minerva Station" />
+ </notes>
 </event>
 --]]
 
