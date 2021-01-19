@@ -868,21 +868,21 @@
        - P01.png
        - P02.png
    bkg:
-     - nebula34.png
+     - nebula34.webp
      - star:
-       - blue01.png
-       - blue02.png
-       - blue04.png
-       - green01.png
-       - green02.png
-       - orange01.png
-       - orange02.png
-       - orange05.png
-       - redgiant01.png
-       - white01.png
-       - white02.png
-       - yellow01.png
-       - yellow02.png
+       - blue01.webp
+       - blue02.webp
+       - blue04.webp
+       - green01.webp
+       - green02.webp
+       - orange01.webp
+       - orange02.webp
+       - orange05.webp
+       - redgiant01.webp
+       - white01.webp
+       - white02.webp
+       - yellow01.webp
+       - yellow02.webp
    spfx:
      - expm2.png
      - expl2.png
@@ -1009,20 +1009,20 @@
 - Josh Combs <http://freeorion.org>:
    license: CC-by-sa 3.0
    bkg:
-     - nebula20.png
-     - nebula21.png
-     - nebula22.png
-     - nebula23.png
-     - nebula24.png
-     - nebula25.png
-     - nebula26.png
-     - nebula27.png
-     - nebula28.png
-     - nebula29.png
-     - nebula30.png
-     - nebula31.png
-     - nebula32.png
-     - nebula33.png
+     - nebula20.webp
+     - nebula21.webp
+     - nebula22.webp
+     - nebula23.webp
+     - nebula24.webp
+     - nebula25.webp
+     - nebula26.webp
+     - nebula27.webp
+     - nebula28.webp
+     - nebula29.webp
+     - nebula30.webp
+     - nebula31.webp
+     - nebula32.webp
+     - nebula33.webp
 - Galileus:
    license: CC-by-sa 3.0
    loading:
@@ -1070,7 +1070,7 @@
        - moon-P03.png
    bkg:
      star:
-       - redgiant02.png
+       - redgiant02.webp
 
 - M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>:
    license: CC-by-sa 3.0
@@ -1276,13 +1276,13 @@
 - NASA:
    license: PD
    bkg:
-     - nebula02.png
-     - nebula04.png
-     - nebula10.png
-     - nebula12.png
-     - nebula16.png
-     - nebula17.png
-     - nebula19.png
+     - nebula02.webp
+     - nebula04.webp
+     - nebula10.webp
+     - nebula12.webp
+     - nebula16.webp
+     - nebula17.webp
+     - nebula19.webp
 - NASA:
    license: PD (with modifications by PhoenixRiver, License PD)
    planet:
