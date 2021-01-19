@@ -113,7 +113,7 @@
      - first_class_passenger.png
      - forest_regenerators.png
      - fresh_water.png
-     - fullbody.png
+     - fullbody.webp
      - fusion_injectors.png
      - games.png
      - gold.png
@@ -895,7 +895,7 @@
      - slimv2
      - brushed:
        - A.png
-       - barBg.png
+       - barBg.webp
        - barFrame.png
        - barFrameLight.png
        - barSheen.png
@@ -909,8 +909,8 @@
        - endRight.png
        - extRight.png
        - fieldBg.png
-       - fieldBgCenter1.png
-       - fieldBgCenter2.png
+       - fieldBgCenter1.webp
+       - fieldBgCenter2.webp
        - fieldBgLeft1.png
        - fieldBgRight1.png
        - fieldBgRight2.png
@@ -920,8 +920,8 @@
        - fieldSheen.png
        - fieldSheenLeft.png
        - iconArmour.png
-       - iconCargo.png
-       - iconEnergy.png
+       - iconCargo.webp
+       - iconEnergy.webp
        - iconFuel.png
        - iconMissions.png
        - iconMoney.png
@@ -934,7 +934,7 @@
        - kinetic.png
        - laser.png
        - light.png
-       - lock.png
+       - lock.webp
        - lockon.png
        - lockonCircle.png
        - main.png
@@ -949,17 +949,17 @@
        - radar_planet.png
        - radar_ship.png
        - refireCircle.png
-       - speedOff.png
+       - speedOff.webp
        - speedOn.png
        - store.png
        - targetBg.png
        - targetFrame.png
        - targetSheen.png
-       - tooltipEmpty.png
-       - tooltipRight.png
-       - tooltipRightBottom.png
+       - tooltipEmpty.webp
+       - tooltipRight.webp
+       - tooltipRightBottom.webp
        - tooltipRightSideLeft.png
-       - tooltipRightTop.png
+       - tooltipRightTop.webp
        - topbar.png
        - topbarCenter.png
        - topbarSheen.png
@@ -967,7 +967,7 @@
        - weapon1.png
        - weapon2.png
    portraits:
-     - news.png
+     - news.webp
    outfit:
      store:
        - brushedGUI.png
@@ -1361,7 +1361,7 @@
    license: PD (with modifications by PhoenixRiver, License PD)
    planet:
      exterior:
-       - asteroid.png
+       - asteroid.webp
      space:
        - moon-D00.png
 - Ian D. Scott <ids1024>:

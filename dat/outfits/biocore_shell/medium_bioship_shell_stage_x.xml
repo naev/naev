@@ -8,7 +8,7 @@
   <mass>110</mass>
   <price>180000</price>
   <description>The shell is a Soromid bioship's natural protection, equivalent to hulls of synthetic ships. The shell is responsible both for protecting the organism's internal organs and for creating camouflage to reduce the risk of being detected by hostiles. This shell has reached stage X, its full potential.</description>
-  <gfx_store>organic_hull_m</gfx_store>
+  <gfx_store>organic_hull_m.png</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">

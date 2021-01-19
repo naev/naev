@@ -7,7 +7,7 @@
   <mass>1150</mass>
   <price>2200000</price>
   <description>This heavy plating developed by Schafer &amp; Kane Industries can endure prolonged battle. Quite a few captains and their crews owe their lives to this armour configuration.</description>
-  <gfx_store>combat_hull_l</gfx_store>
+  <gfx_store>combat_hull_l.png</gfx_store>
  </general>
  <specific type="modification">
   <cargo>65</cargo>

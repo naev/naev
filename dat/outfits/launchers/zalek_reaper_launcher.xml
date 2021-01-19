@@ -10,7 +10,7 @@
   <description>This weapon stretches the term 'miniaturized drone' nearly to its breaking point. It is effectively a slimmed-down standard drone platform with almost everything replaced in favor of a huge ferromagnetohydraulic bomb. It is the Za'lek's answer to torpedoes from less advanced nations, and an eloquent answer it certainly is.
 
 The Za'lek do not share the secrets of their 'missile' drones lightly. Only trusted allies of the Za'lek are trusted with these weapons.</description>
-  <gfx_store>zalek_reaper_launcher</gfx_store>
+  <gfx_store>zalek_reaper_launcher.png</gfx_store>
   <cpu>-34</cpu>
  </general>
  <specific type="launcher" secondary="1">

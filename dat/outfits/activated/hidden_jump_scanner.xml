@@ -7,7 +7,7 @@
   <mass>2</mass>
   <price>300000</price>
   <description>A specialized piece of sensor technology that can scan its immediate surroundings for unusual anomalies in the fabric of space. Although short ranged and only capable of scanning for a limited amount of time before needing to recharge, this scanner is capable of discovering jump points that regular sensors can't detect.</description>
-  <gfx_store>jammer1</gfx_store>
+  <gfx_store>jammer1.png</gfx_store>
   <limit>hidden_detector</limit>
  </general>
  <specific type="modification">

@@ -7,11 +7,11 @@
   <mass>7</mass>
   <price>17000</price>
   <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Pirates have taken a liking to this weapon.</description>
-  <gfx_store>plasma2</gfx_store>
+  <gfx_store>plasma2.png</gfx_store>
   <cpu>-5</cpu>
  </general>
  <specific type="bolt">
-  <gfx>plasma2</gfx>
+  <gfx>plasma2.png</gfx>
   <sound>plasma</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>PlaS2</spfx_armour>
@@ -19,7 +19,7 @@
   <speed>450</speed>
   <range>625</range>
   <falloff>260</falloff>
-  <gfx_end>plasma2-end</gfx_end>
+  <gfx_end>plasma2-end.png</gfx_end>
   <energy>10</energy>
   <heatup>25</heatup>
   <track>2</track>

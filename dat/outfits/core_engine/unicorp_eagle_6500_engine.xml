@@ -8,7 +8,7 @@
   <mass>65</mass>
   <price>400000</price>
   <description>The Eagle 6500 is Unicorp's largest and highest-capacity engine, though perhaps not a flagship model. Its relatively low price makes it attractive to captains on a tight budget, if their performance demands aren't too great.</description>
-  <gfx_store>engine02</gfx_store>
+  <gfx_store>engine02.png</gfx_store>
  </general>
  <specific type="modification">
   <thrust>37</thrust>

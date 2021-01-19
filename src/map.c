@@ -2592,7 +2592,7 @@ static int map_decorator_parse( MapDecorator *temp, xmlNodePtr parent ) {
       xmlr_int(node, "detection_radius", temp->detection_radius);
       if (xml_isNode(node,"image")) {
          temp->image = xml_parseTexture( node,
-               MAP_DECORATOR_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+               MAP_DECORATOR_GFX_PATH"%s", 1, 1, OPENGL_TEX_MIPMAPS );
 
          if (temp->image == NULL) {
             WARN(_("Could not load map decorator texture '%s'."), xml_get(node));

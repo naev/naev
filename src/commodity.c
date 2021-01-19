@@ -299,10 +299,10 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       xmlr_int(node, "price", temp->price);
       if (xml_isNode(node,"gfx_space"))
          temp->gfx_space = xml_parseTexture( node,
-               COMMODITY_GFX_PATH"space/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+               COMMODITY_GFX_PATH"space/%s", 1, 1, OPENGL_TEX_MIPMAPS );
       if (xml_isNode(node,"gfx_store")) {
          temp->gfx_store = xml_parseTexture( node,
-               COMMODITY_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+               COMMODITY_GFX_PATH"%s", 1, 1, OPENGL_TEX_MIPMAPS );
          if (temp->gfx_store != NULL) {
          } else {
             temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH"_default.png", 0 );

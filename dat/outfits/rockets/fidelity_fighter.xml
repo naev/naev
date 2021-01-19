@@ -4,7 +4,7 @@
   <license>Light Combat Vessel License</license>
   <mass>50</mass>
   <price>0</price>
-  <gfx_store>fidelity_fighter</gfx_store>
+  <gfx_store>fidelity_fighter.png</gfx_store>
   <description>The Sirius may not be the greatest fighter ever fielded by the Sirii, but they have strength in numbers and the faith of their pilots. </description>
  </general>
  <specific type="fighter">

@@ -7,11 +7,11 @@
   <mass>10</mass>
   <price>22000</price>
   <description>The Shredder quite lives up to the name its Dvaered manufacturers gave it. The sheer damage dealing capacity of this weapon makes Dvaered fighters dangerous to engage by ships that aren't substantially larger than they are.</description>
-  <gfx_store>shredder</gfx_store>
+  <gfx_store>shredder.png</gfx_store>
   <cpu>-8</cpu>
  </general>
  <specific type="bolt">
-  <gfx>gatling</gfx>
+  <gfx>gatling.png</gfx>
   <sound>autocannon</sound>
   <sound_hit>medexp0</sound_hit>
   <spfx_shield>ExpS</spfx_shield>

@@ -9,7 +9,7 @@
   <mass>0</mass>
   <price>1000000</price>
   <description>A mock-up of a satellite you helped launch into the nebula. It even has cute blinking lights!</description>
-  <gfx_store>placeholder</gfx_store>
+  <gfx_store>placeholder.webp</gfx_store>
  <rarity>6</rarity></general>
  <specific type="modification">
   <shield_mod>5</shield_mod>

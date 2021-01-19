@@ -4,7 +4,7 @@
   <license>Light Combat Vessel License</license>
   <mass>25</mass>
   <price>0</price>
-  <gfx_store>lancelot_empire_fighter</gfx_store>
+  <gfx_store>lancelot_empire_fighter.png</gfx_store>
   <description>This is an Imperial Lancelot class fighter adapted for usage in the Lancelot Fighter Bay. It contains all the features of the standalone Empire Lancelot with improved encrypted communication.</description>
  </general>
  <specific type="fighter">

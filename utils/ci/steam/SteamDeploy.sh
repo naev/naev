@@ -92,8 +92,7 @@ if [ "$DRYRUN" == "false" ]; then
         elif [ "$PRERELEASE" == "false" ]; then 
             mkdir -p "$STEAMPATH"/content/soundtrack
             # Move soundtrack stuff to deployment area
-            cp "$TEMPPATH"/naev-steam-soundtrack/*.mp3 "$STEAMPATH/content/soundtrack"
-            cp "$TEMPPATH"/naev-steam-soundtrack/*.png "$STEAMPATH/content/soundtrack"
+            cp "$TEMPPATH"/naev-steam-soundtrack/*.* "$STEAMPATH/content/soundtrack"
 
             # Run steam upload with 2fa key
             steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http "$STEAMPATH/scripts/app_build_598530_release.vdf" +quit

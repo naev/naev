@@ -6,7 +6,7 @@
   <mass>6</mass>
   <price>20000</price>
   <description>Afterburners provide your ship with an immediate boost to thrust and speed when activated. However, while the afterburner is active it will steadily drain the ship's energy and also generate heat. If the afterburner gets too hot its effect will diminish, and eventually it will shut off entirely.</description>
-  <gfx_store>afterburner</gfx_store>
+  <gfx_store>afterburner.png</gfx_store>
   <limit>afterburner</limit>
   <cpu>-2</cpu>
  </general>

@@ -8,11 +8,11 @@
   <mass>7</mass>
   <price>18000</price>
   <description>The BioPlasma Organ is the most basic organic weaponry available, and one of the most common. While it is not especially powerful and lags slightly behind its synthetic cousin, the Plasma Blaster MK3, in terms of raw power, it is prized for its reliability and low cognitive requirements. This organ has reached Stage X, its full potential</description>
-  <gfx_store>plasma2</gfx_store>
+  <gfx_store>plasma2.png</gfx_store>
   <cpu>-1</cpu>
  </general>
  <specific type="bolt">
-  <gfx>plasma2</gfx>
+  <gfx>plasma2.png</gfx>
   <sound>plasma</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>PlaS2</spfx_armour>
@@ -20,7 +20,7 @@
   <speed>500</speed>
   <range>900</range>
   <falloff>380</falloff>
-  <gfx_end>plasma2-end</gfx_end>
+  <gfx_end>plasma2-end.png</gfx_end>
   <energy>15</energy>
   <heatup>40</heatup>
   <track>2</track>

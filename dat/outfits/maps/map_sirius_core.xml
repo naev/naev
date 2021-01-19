@@ -4,7 +4,7 @@
   <mass>0</mass>
   <price>25000</price>
   <description>This map contains the location of Mutris, home of Sirichana and capital to the Sirians, as well as the surrounding systems.</description>
-  <gfx_store>map</gfx_store>
+  <gfx_store>map.png</gfx_store>
  </general>
  <specific type="map">
   <sys name="Aesir">

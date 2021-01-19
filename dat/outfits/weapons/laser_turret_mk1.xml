@@ -7,11 +7,11 @@
   <mass>26</mass>
   <price>17500</price>
   <description>A pair of laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. With a full 360 degrees of rotation, laser turrets provide affordable, energy-efficient firepower to less manoeuvrable ships.</description>
-  <gfx_store>laserturret</gfx_store>
+  <gfx_store>laserturret.png</gfx_store>
   <cpu>-14</cpu>
  </general>
  <specific type="turret bolt">
-  <gfx>laser1M</gfx>
+  <gfx>laser1M.png</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>

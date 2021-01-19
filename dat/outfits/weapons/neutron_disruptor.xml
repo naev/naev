@@ -8,11 +8,11 @@
   <license>Heavy Weapon License</license>
   <rarity>3</rarity>
   <description>The Neutron Disruptor uses high-energy pulses that modify the base composition of molecules, causing heavy damage. This weapon was first popular with the Collective, as until recently, firing it would produce radiation lethal to humans aboard the ship.</description>
-  <gfx_store>neutron</gfx_store>
+  <gfx_store>neutron.png</gfx_store>
   <cpu>-8</cpu>
  </general>
  <specific type="bolt">
-  <gfx>neutron</gfx>
+  <gfx>neutron.png</gfx>
   <sound>neutron</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
@@ -20,7 +20,7 @@
   <speed>650</speed>
   <range>425</range>
   <falloff>250</falloff>
-  <gfx_end>neutron-end</gfx_end>
+  <gfx_end>neutron-end.png</gfx_end>
   <energy>15</energy>
   <heatup>40</heatup>
   <track>3</track>
