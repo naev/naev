@@ -7,7 +7,7 @@
   <mass>0</mass>
   <price>130000</price>
   <description>With the addition of several additional steering thrusters, you can increase your ship's turning rate. A favourite among fighter pilots.</description>
-  <gfx_store>thruster</gfx_store>
+  <gfx_store>thruster.png</gfx_store>
  </general>
  <specific type="modification">
   <turn>10</turn>

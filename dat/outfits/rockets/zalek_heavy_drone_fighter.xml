@@ -4,7 +4,7 @@
   <license>Light Combat Vessel License</license>
   <mass>15</mass>
   <price>0</price>
-  <gfx_store>zalek_drone_heavy_fighter</gfx_store>
+  <gfx_store>zalek_drone_heavy_fighter.png</gfx_store>
   <description>The Za'lek Heavy Drone is a fearsome craft using very advanced AI techniques to be able to pilot itself. The fact it doesn't need a pilot nor life support systems makes it a much smaller and compact vessel.</description>
  </general>
  <specific type="fighter">

@@ -11,6 +11,7 @@
 /** @cond */
 #include <lauxlib.h>
 #include "SDL.h"
+#include "SDL_image.h"
 
 #include "naev.h"
 /** @endcond */
@@ -24,7 +25,6 @@
 #include "nlua_data.h"
 #include "nlua_file.h"
 #include "nluadef.h"
-#include "npng.h"
 
 
 /* Helpers. */
@@ -187,7 +187,8 @@ static int texL_new( lua_State *L )
    glTexture *tex;
    LuaFile_t *lf;
    LuaData_t *ld;
-   int sx, sy, isopen;
+   int sx, sy;
+   SDL_RWops *rw;
 
    NLUA_CHECKRW(L);
 
@@ -213,7 +214,7 @@ static int texL_new( lua_State *L )
          NLUA_ERROR( L, _("Data has invalid type for texture") );
       if (w*h*ld->elem*4 != ld->size)
          NLUA_ERROR( L, _("Texture dimensions don't match data size!") );
-      tex = gl_loadImageData( (void*)ld->data, w, h, w, sx, sy );
+      tex = gl_loadImageData( (void*)ld->data, w, h, sx, sy );
       if (tex==NULL)
          return 0;
       lua_pushtex(L, tex);
@@ -233,16 +234,11 @@ static int texL_new( lua_State *L )
    if (path != NULL)
       tex = gl_newSprite( path, sx, sy, 0 );
    else {
-      isopen = (lf->rw != NULL);
-      if (!isopen)
-         lf->rw = PHYSFSRWOPS_openRead( lf->path );
-      if (lf->rw==NULL)
-         NLUA_ERROR(L, _("Unable to open '%s' to load texture"), lf->path);
-      tex = gl_newSpriteRWops( lf->path, lf->rw, sx, sy, 0 );
-      if (!isopen) {
-         SDL_RWclose( lf->rw );
-         lf->rw = NULL;
-      }
+      rw = PHYSFSRWOPS_openRead( lf->path );
+      if (rw==NULL)
+         NLUA_ERROR(L,"Unable to open '%s'", lf->path );
+      tex = gl_newSpriteRWops( lf->path, rw, sx, sy, 0 );
+      SDL_RWclose( rw );
    }
 
    /* Failed to load. */
@@ -301,7 +297,6 @@ static int texL_readData( lua_State *L )
    LuaData_t ld;
    SDL_Surface *surface;
    SDL_RWops *rw;
-   npng_t *npng;
    const char *s;
    size_t size;
    uint8_t r, g, b, a;
@@ -320,14 +315,10 @@ static int texL_readData( lua_State *L )
    if (rw == NULL)
       NLUA_ERROR(L, _("problem opening file '%s' for reading"), s );
 
-   /* Try to read the png. */
-   npng = npng_open( rw );
-   if (npng == NULL)
-      NLUA_ERROR(L, _("problem opening png for reading") );
-   surface = npng_readSurface( npng, 0, 0 );
+   /* Try to read the image. */
+   surface = IMG_Load_RW( rw, 1 );
    if (surface == NULL)
-      NLUA_ERROR(L, _("problem reading png to surface") );
-   npng_close( npng );
+      NLUA_ERROR(L, _("problem opening image for reading") );
 
    /* Convert surface to LuaData_t */
    SDL_LockSurface( surface );
@@ -357,7 +348,6 @@ static int texL_readData( lua_State *L )
 
    /* Clean up. */
    SDL_FreeSurface( surface );
-   SDL_RWclose( rw );
 
    return 3;
 }

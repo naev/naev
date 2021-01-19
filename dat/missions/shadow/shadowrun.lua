@@ -85,7 +85,7 @@ misn_desc[1] = _("Fly to planet %s in the %s system and talk to Jorek. Once Jore
 -- NPC stuff
 jorek_npc = {}
 jorek_npc["name"] = _("An unpleasant man.")
-jorek_npc["portrait"] = "neutral/unique/jorek"
+jorek_npc["portrait"] = "neutral/unique/jorek.png"
 jorek_npc["desc"] = _("A middle-aged, cranky looking man is sitting at a table by himself. You are fairly certain that this is the fellow you're looking for.")
 jorek_title = {}
 jorek_title[1] = _("An unpleasant man")
@@ -146,7 +146,7 @@ function create ()
     timelimit1 = 20 -- In STP
     timelimit2 = 50 -- In STP
     
-    misn.setNPC( _("A dark-haired woman"), "neutral/unique/rebina_casual" )
+    misn.setNPC( _("A dark-haired woman"), "neutral/unique/rebina_casual.png" )
     misn.setDesc( bar_desc ) 
 end
 

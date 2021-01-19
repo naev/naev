@@ -37,6 +37,7 @@
  */
 #define OPENGL_TEX_MAPTRANS   (1<<0) /**< Create a transparency map. */
 #define OPENGL_TEX_MIPMAPS    (1<<1) /**< Creates mipmaps. */
+#define OPENGL_TEX_VFLIP      (1<<2) /**< Assume loaded from an image (where positive y means down). */
 
 /**
  * @brief Abstraction for rendering sprite sheets.
@@ -49,16 +50,14 @@ typedef struct glTexture_ {
    /* dimensions */
    double w; /**< Real width of the image. */
    double h; /**< Real height of the image. */
-   double rw; /**< Padded POT width of the image. */
-   double rh; /**< Padded POT height of the image. */
 
    /* sprites */
    double sx; /**< Number of sprites on the x axis. */
    double sy; /**< Number of sprites on the y axis. */
    double sw; /**< Width of a sprite. */
    double sh; /**< Height of a sprite. */
-   double srw; /**< Sprite render width - equivalent to sw/rw. */
-   double srh; /**< Sprite render height - equivalent to sh/rh. */
+   double srw; /**< Sprite render width - equivalent to sw/w. */
+   double srh; /**< Sprite render height - equivalent to sh/h. */
 
    /* data */
    GLuint texture; /**< the opengl texture itself */
@@ -75,17 +74,10 @@ typedef struct glTexture_ {
 int gl_initTextures (void);
 void gl_exitTextures (void);
 
-
-/*
- * Preparing.
- */
-int gl_pot( int n );
-SDL_Surface* gl_prepareSurface( SDL_Surface* surface ); /* Only preps it */
-
 /*
  * Creating.
  */
-glTexture* gl_loadImageData( float *data, int w, int h, int pitch, int sx, int sy );
+glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy );
 glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
       unsigned int flags, int w, int h, int sx, int sy, int freesur );
 glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWops *rw,
@@ -115,7 +107,6 @@ int gl_texHasCompress (void);
  */
 int gl_isTrans( const glTexture* t, const int x, const int y );
 void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir );
-int gl_needPOT (void);
 glTexture** gl_copyTexArray( glTexture **tex, int texn, int *n );
 glTexture** gl_addTexArray( glTexture **tex, int *n, glTexture *t );
 

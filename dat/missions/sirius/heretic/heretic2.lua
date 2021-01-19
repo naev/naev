@@ -71,7 +71,7 @@ function create()
    --set the mission stuff
    misn.setTitle(misn_title)
    misn.setReward(creditstring(reward))
-   misn.setNPC(npc_name, "sirius/unique/draga")
+   misn.setNPC(npc_name, "sirius/unique/draga.png")
    misn.setDesc(bar_desc)
 
    -- Format OSD

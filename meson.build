@@ -91,6 +91,7 @@ if buildExec.disabled() == false
    naev_deps += cc.find_library('m', required : false)
 
    sdl = dependency('sdl2', required: true)
+   sdl_image = dependency('SDL2_image', required: true)
 
    libxml2 = dependency('libxml-2.0', required: false)
    if not libxml2.found()
@@ -101,6 +102,7 @@ if buildExec.disabled() == false
       dependency('freetype2', required: true),
       dependency('physfs', fallback: ['physfs', 'physfs_dep'], required: true),
       sdl,
+      sdl_image,
       declare_dependency(
          dependencies: dependency('libpng', required: true),
          compile_args: '-DNOLOGPRINTFCONSOLE',

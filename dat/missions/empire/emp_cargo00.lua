@@ -66,7 +66,7 @@ function create ()
    dest = planets[index][1]
    sys = planets[index][2]
 
-   misn.setNPC( _("Lieutenant"), "empire/unique/czesc" )
+   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.png" )
    misn.setDesc( bar_desc )
 end
 

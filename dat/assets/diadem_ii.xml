@@ -5,8 +5,8 @@
   <y>3737.000000</y>
  </pos>
  <GFX>
-  <space>K00.png</space>
-  <exterior>asteroid.png</exterior>
+  <space>K00.webp</space>
+  <exterior>asteroid.webp</exterior>
  </GFX>
  <general>
   <class>K</class>

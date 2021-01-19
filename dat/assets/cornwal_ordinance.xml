@@ -5,8 +5,8 @@
   <y>8530.899774</y>
  </pos>
  <GFX>
-  <space>station-commerce.png</space>
-  <exterior>station03.png</exterior>
+  <space>station-commerce.webp</space>
+  <exterior>station03.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

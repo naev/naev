@@ -8,7 +8,7 @@
   <mass>15</mass>
   <price>110000</price>
   <description>Built by Za'lek Fabricators, this engine doesn't aim to be an efficient engine. Its goal is to be easily moddable in order to allow Za'lek scinetists to test new refrigeration and propulsion systems. These engines are very often modded by students, which makes them unreliable.</description>
-  <gfx_store>engine04</gfx_store>
+  <gfx_store>engine04.png</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">

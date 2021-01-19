@@ -6,11 +6,11 @@
   <mass>14</mass>
   <price>12500</price>
   <description>While little more than a mark 1 laser cannon mounted on a turret, the Laser Point Defense MK1 is nevertheless a decent defensive weapon for light vessels.</description>
-  <gfx_store>laserturret</gfx_store>
+  <gfx_store>laserturret.png</gfx_store>
   <cpu>-8</cpu>
  </general>
  <specific type="turret bolt">
-  <gfx>laser1S</gfx>
+  <gfx>laser1S.png</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>

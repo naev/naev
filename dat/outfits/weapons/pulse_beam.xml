@@ -7,7 +7,7 @@
   <mass>22</mass>
   <price>26000</price>
   <description>The Pulse Beam is an aptly named beam weapon designed to counter fighters with a rapid-firing, short-lived pulse. It doesn't do very much damage against larger targets, but fighters who get near ships equipped with this weapon will have a bad day.</description>
-  <gfx_store>ragnarok</gfx_store>
+  <gfx_store>ragnarok.png</gfx_store>
   <cpu>-14</cpu>
  </general>
  <specific type="turret beam">
@@ -25,7 +25,7 @@
   </damage>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <gfx>beam_orion_inv</gfx>
+  <gfx>beam_orion_inv.png</gfx>
   <sound>beam0</sound>
   <sound_off>beam_off0</sound_off>
  </specific>

@@ -5,8 +5,8 @@
   <y>10428.462646</y>
  </pos>
  <GFX>
-  <space>moon-M00.png</space>
-  <exterior>forest.png</exterior>
+  <space>moon-M00.webp</space>
+  <exterior>forest.webp</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

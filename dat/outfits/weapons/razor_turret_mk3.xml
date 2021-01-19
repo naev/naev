@@ -7,11 +7,11 @@
   <mass>28</mass>
   <price>46500</price>
   <description>House Sirius typically equips its independent capital ships with Razor Turret MK3s. Where the standard Razor MK3 is impractical, the turreted version provides great de-shielding capabilities for the slower members of the Sirian fleet.</description>
-  <gfx_store>ionturret</gfx_store>
+  <gfx_store>ionturret.png</gfx_store>
   <cpu>-18</cpu>
  </general>
  <specific type="turret bolt">
-  <gfx>razorM</gfx>
+  <gfx>razorM.png</gfx>
   <sound>ion</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
@@ -19,7 +19,7 @@
   <speed>800</speed>
   <range>1800</range>
   <falloff>1400</falloff>
-  <gfx_end>razorM-end</gfx_end>
+  <gfx_end>razorM-end.png</gfx_end>
   <energy>15</energy>
   <heatup>40</heatup>
   <track>1.6</track>

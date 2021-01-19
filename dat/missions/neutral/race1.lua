@@ -88,7 +88,7 @@ function create ()
    end
    cursys = system.cur()
    curplanet = planet.cur()
-   misn.setNPC(NPCname, "neutral/unique/laidback")
+   misn.setNPC(NPCname, "neutral/unique/laidback.png")
    misn.setDesc(NPCdesc)
    credits = rnd.rnd(20000, 100000)
 end

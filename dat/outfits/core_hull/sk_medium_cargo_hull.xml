@@ -8,7 +8,7 @@
   <mass>140</mass>
   <price>320000</price>
   <description>Schafer &amp; Kane Industries have developed a hull modification that provides both ample cargo space and protection.</description>
-  <gfx_store>medium_cargo_hull</gfx_store>
+  <gfx_store>medium_cargo_hull.png</gfx_store>
  </general>
  <specific type="modification">
   <cargo>120</cargo>

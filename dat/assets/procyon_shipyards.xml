@@ -5,8 +5,8 @@
   <y>4638.849591</y>
  </pos>
  <GFX>
-  <space>station-shipyard.png</space>
-  <exterior>station04.png</exterior>
+  <space>station-shipyard.webp</space>
+  <exterior>station04.webp</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

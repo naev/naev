@@ -5,8 +5,8 @@
   <y>-8887.528980</y>
  </pos>
  <GFX>
-  <space>station-shipyard.png</space>
-  <exterior>station03.png</exterior>
+  <space>station-shipyard.webp</space>
+  <exterior>station03.webp</exterior>
  </GFX>
  <presence>
   <faction>Goddard</faction>

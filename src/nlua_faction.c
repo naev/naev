@@ -635,6 +635,10 @@ static int factionL_dynAdd( lua_State *L )
    name = luaL_checkstring(L,2);
    display = luaL_optstring(L,3,name);
 
+   /* Check if exists. */
+   if (faction_exists(name))
+      NLUA_ERROR(L,"Faction '%s' already exists!");
+
    lua_pushfaction( L, faction_dynAdd( fac, name, display ) );
    return 1;
 }
@@ -645,7 +649,7 @@ static int factionL_dynAdd( lua_State *L )
  *
  *    @luatparam Faction fac Faction to add ally to.
  *    @luatparam Faction ally Faction to add as an ally.
- * @luafunc dynAllay
+ * @luafunc dynAlly
  */
 static int factionL_dynAlly( lua_State *L )
 {
@@ -665,7 +669,7 @@ static int factionL_dynAlly( lua_State *L )
  *
  *    @luatparam Faction fac Faction to add enemy to.
  *    @luatparam Faction enemy Faction to add as an enemy.
- * @luafunc dynAllay
+ * @luafunc dynEnemy
  */
 static int factionL_dynEnemy( lua_State *L )
 {

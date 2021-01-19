@@ -97,7 +97,7 @@ function create ()
    paysys = system.get(psyname)
    paypla = planet.get(pplname)
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith")
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.png")
    misn.setDesc(bar_desc[1])
 end
 
@@ -133,7 +133,7 @@ end
 function land()
    --The player is landing on the mission planet to get the box
    if stage == 0 and planet.cur() == mispla then
-      agent = misn.npcAdd("beginrun", npc_desc[2], "neutral/unique/nexus_agent", bar_desc[2])
+      agent = misn.npcAdd("beginrun", npc_desc[2], "neutral/unique/nexus_agent.png", bar_desc[2])
    end
 
    --Job is done

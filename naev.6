@@ -1,4 +1,4 @@
-.TH NAEV 6 "2009" "NAEV" "NAEV"
+.TH NAEV 6 "2021" "NAEV" "NAEV"
 .
 .SH NAME
 Naev \- A 2D space trading and combat game.
@@ -27,7 +27,8 @@ tens of light years, resulting in a massive, volatile nebula.
 .
 .TP
 .BI -d,\ --datapath \ dir
-Specifies a custom path for all user data (saves, screenshots, etc.)
+Adds a new datapath to be mounted (i.e., appends it to the search path for game assets).
+May be used more than once.
 .TP
 .BI --devmode
 Enables the universe editor (accessible via main menu).
@@ -40,9 +41,6 @@ Limits frames per second to \fInumber\fP
 .TP
 .B -f, --fullscreen
 Runs the game in full-screen mode
-.TP
-.B -G, --generate
-Regenerates the nebula images (slow)
 .TP
 .BI -H \ number
 Sets the window height to \fInumber\fP

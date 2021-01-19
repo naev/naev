@@ -77,7 +77,7 @@ function create ()
         misn.finish( false )
     end
 
-   misn.setNPC( _("Keer"), "empire/unique/keer" )
+   misn.setNPC( _("Keer"), "empire/unique/keer.png" )
    misn.setDesc( bar_desc )
 end
 

@@ -5,7 +5,7 @@
   <mass>0</mass>
   <price>500000</price>
   <description>This map contains the location of the jump points in and out of the Qorel expanse, a set of systems not accessible through standard jump points. Getting the location of these very special jump points is usually very costly to reduce the number of people having access to it.</description>
-  <gfx_store>map</gfx_store>
+  <gfx_store>map.png</gfx_store>
  </general>
  <specific type="map">
   <sys name="Acheron">

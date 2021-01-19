@@ -5,8 +5,8 @@
   <y>-5040.697911</y>
  </pos>
  <GFX>
-  <space>station-fleetbase2.png</space>
-  <exterior>station05.png</exterior>
+  <space>station-fleetbase2.webp</space>
+  <exterior>station05.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

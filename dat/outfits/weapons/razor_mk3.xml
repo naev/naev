@@ -7,11 +7,11 @@
   <mass>6.5</mass>
   <price>23000</price>
   <description>The heaviest version of the Razor is excellent at stripping the shields from those who would stand against House Sirius. In large engagements, Razor MK3s are often employed by support ships, whose task is to weaken a target before the heavy enforcer ships move in.</description>
-  <gfx_store>ioncannon</gfx_store>
+  <gfx_store>ioncannon.png</gfx_store>
   <cpu>-8</cpu>
  </general>
  <specific type="bolt">
-  <gfx>razorS</gfx>
+  <gfx>razorS.png</gfx>
   <sound>ion</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
@@ -19,7 +19,7 @@
   <speed>800</speed>
   <range>1000</range>
   <falloff>750</falloff>
-  <gfx_end>razorS-end</gfx_end>
+  <gfx_end>razorS-end.png</gfx_end>
   <energy>8</energy>
   <heatup>30</heatup>
   <track>2.25</track>

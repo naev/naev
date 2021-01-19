@@ -8,7 +8,7 @@
   <mass>60</mass>
   <price>75000</price>
   <description>Built with more sophisticated materials but fundamentally similar to the D-4 plating, the B-4 is a notable improvement over its predecessor in many respects, though it comes at a significantly increased price.</description>
-  <gfx_store>refined_hull_s</gfx_store>
+  <gfx_store>refined_hull_s.png</gfx_store>
  </general>
  <specific type="modification">
   <cargo>10</cargo>

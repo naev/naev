@@ -5,8 +5,8 @@
   <y>-4400.000000</y>
  </pos>
  <GFX>
-  <space>moon-G00.png</space>
-  <exterior>mining5.png</exterior>
+  <space>moon-G00.webp</space>
+  <exterior>mining5.webp</exterior>
  </GFX>
  <general>
   <class>A</class>

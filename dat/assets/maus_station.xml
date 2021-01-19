@@ -5,8 +5,8 @@
   <y>-7680.624142</y>
  </pos>
  <GFX>
-  <space>station-fleetbase3.png</space>
-  <exterior>station03.png</exterior>
+  <space>station-fleetbase3.webp</space>
+  <exterior>station03.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

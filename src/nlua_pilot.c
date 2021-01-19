@@ -451,7 +451,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
 {
    Fleet *flt;
    Ship *ship;
-   const char *fltname, *fltai, *faction;
+   const char *fltname, *fltai;
    int i, first;
    unsigned int p;
    double a, r;
@@ -482,12 +482,8 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
          NLUA_ERROR(L,_("Ship '%s' not found!"), fltname);
          return 0;
       }
-      faction = luaL_checkstring(L,4);
-      lf = faction_get(faction);
-      if (lf < 0) {
-         NLUA_ERROR(L,_("Faction '%s' not found in stack."), faction );
-         return 0;
-      }
+      /* Get faction from string or number. */
+      lf = luaL_validfaction(L,4);
    }
    else {
       flt = fleet_get( fltname );
@@ -1613,6 +1609,7 @@ static int outfit_compareActive( const void *slot1, const void *slot2 )
  * @brief Gets the outfits of a pilot.
  *
  *    @luatparam Pilot p Pilot to get outfits of.
+ *    @luatparam[opt=nil] string What slot type to get outfits of. Can be either nil, "weapon", "utility", or "structure".
  *    @luatreturn table The outfits of the pilot in an ordered list.
  * @luafunc outfits
  */
@@ -1620,9 +1617,26 @@ static int pilotL_outfits( lua_State *L )
 {
    int i, j;
    Pilot *p;
+   const char *type;
+   OutfitSlotType ost;
 
    /* Parse parameters */
-   p  = luaL_validpilot(L,1);
+   p     = luaL_validpilot(L,1);
+   type  = luaL_optstring(L,2,NULL);
+
+   /* Get type. */
+   if (type != NULL) {
+      if (strcmp(type,"structure")==0)
+         ost = OUTFIT_SLOT_STRUCTURE;
+      else if (strcmp(type,"utility")==0)
+         ost = OUTFIT_SLOT_UTILITY;
+      else if (strcmp(type,"weapon")==0)
+         ost = OUTFIT_SLOT_WEAPON;
+      else
+         NLUA_ERROR(L,_("Unknown slot type '%s'"), type);
+   }
+   else
+      ost = OUTFIT_SLOT_NULL;
 
    j  = 1;
    lua_newtable( L );
@@ -1630,6 +1644,10 @@ static int pilotL_outfits( lua_State *L )
 
       /* Get outfit. */
       if (p->outfits[i]->outfit == NULL)
+         continue;
+
+      /* Only match specific type. */
+      if ((ost!=OUTFIT_SLOT_NULL) && (p->outfits[i]->outfit->slot.type!=ost))
          continue;
 
       /* Set the outfit. */

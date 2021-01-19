@@ -5,8 +5,8 @@
   <y>-2491.943995</y>
  </pos>
  <GFX>
-  <space>station-agriculture.png</space>
-  <exterior>forest.png</exterior>
+  <space>station-agriculture.webp</space>
+  <exterior>forest.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

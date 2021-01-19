@@ -106,7 +106,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith")
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.png")
    misn.setDesc(bar_desc[1])
 end
 
@@ -146,7 +146,7 @@ function land()
 
    -- Did the player reach Ulios ?
    if planet.cur() == mispla and stage == 0 then
-      smith = misn.npcAdd("beginbattle", npc_desc[2], "neutral/unique/arnoldsmith", bar_desc[2])
+      smith = misn.npcAdd("beginbattle", npc_desc[2], "neutral/unique/arnoldsmith.png", bar_desc[2])
    end
 
    -- Did the player land again on Ulios after having killed the pirate

@@ -136,6 +136,14 @@ end
 
 
 --[[
+-- Goes to a point in order to inspect (same as moveto, but pops when attacking)
+--]]
+function inspect_moveto()
+   __moveto_nobrake()
+end
+
+
+--[[
 -- moveto without velocity compensation.
 --]]
 function moveto_raw ()
@@ -190,7 +198,6 @@ function follow ()
    -- Must approach
    if dir < 10 and dist > 300 then
       ai.accel()
- 
    end
 end
 function follow_accurate ()
@@ -226,33 +233,56 @@ function follow_fleet ()
       return
    end
 
-   if mem.app == nil then
-      mem.app = true
-   end
-
-   local goal = leader
-   if mem.form_pos ~= nil then
-      local angle, radius, method = table.unpack(mem.form_pos)
-      goal = ai.follow_accurate(leader, radius, angle, mem.Kp, mem.Kd, method)
-   end
-
-   local dir   = ai.face(goal)
-   local dist  = ai.dist(goal)
-
-   if mem.app == true then 
-      if dist > 10 then
-         if dir < 10 then  -- Must approach
-            ai.accel()
-         end
-      else  -- No need to approach anymore
-         mem.app = false
+   if mem.form_pos == nil then -- Simply follow unaccurately
+      local dir  = ai.face(leader)
+      local dist = ai.dist(leader)
+      if dist > 300 and dir < 10 then -- Must approach
+         ai.accel()
       end
-   else
-      if dist > 300 then   -- Must approach
-         mem.app = true
-      else   -- Face forward
-         goal = ai.pilot():pos() + leader:vel()
-         ai.face(goal)
+
+   else -- Ship has a precise position in formation
+      if mem.app == nil then
+         mem.app = 2
+      end
+
+      local angle, radius, method = table.unpack(mem.form_pos)
+      local goal  = ai.follow_accurate(leader, radius, angle, mem.Kp, mem.Kd, method) -- Standard controller
+      local dist  = ai.dist(goal)
+
+      if mem.app == 2 then
+         local dir   = ai.face(goal)
+         if dist > 300 then
+            if dir < 10 then  -- Must approach
+               ai.accel()
+            end
+         else  -- Toggle precise positioning controller
+            mem.app = 1
+         end
+
+      elseif mem.app == 1 then -- only small corrections to do
+         if dist > 300 then -- We're much too far away, we need to toggle large correction
+            mem.app = 2
+         else  -- Derivative-augmented controller
+            local goal0 = ai.follow_accurate(leader, radius, angle, 2*mem.Kp, 10*mem.Kd, method)
+            local dist0 = ai.dist(goal0)
+            local dir = ai.face(goal0)
+            if dist0 > 300 then
+               if dir < 10 then  -- Must approach
+                  ai.accel()
+               end
+            else  -- No need to approach anymore
+               mem.app = 0
+            end
+         end
+
+      else
+         local dir   = ai.face(goal)
+         if dist > 300 then   -- Must approach
+            mem.app = 1
+         else   -- Face forward
+            goal = ai.pilot():pos() + leader:vel()
+            ai.face(goal)
+         end
       end
    end
 end
@@ -518,14 +548,18 @@ function __run_hyp ()
          if jdist > 3*bdist and pilot:stats().mass < 600 then
             jdir = ai.careful_face(jump)
          else --Heavy ships should rush to jump point
-            jdir = ai.face(jump)
+            jdir = ai.face( jump, nil, true )
          end
          if jdir < 10 then       
             ai.accel()
          end
       end
    else
-      ai.pushsubtask( "__run_hypbrake" )
+      if ai.instantJump() then
+         ai.pushsubtask( "__hyp_jump" )
+      else
+         ai.pushsubtask( "__run_hypbrake" )
+      end
    end
 
    --Afterburner: activate while far away from jump
@@ -623,7 +657,7 @@ function __hyp_approach ()
 
    -- 2 methods for dir
    if not mem.careful or dist < 3*bdist then
-      dir = ai.face( target )
+      dir = ai.face( target, nil, true )
    else
       dir = ai.careful_face( target )
    end
@@ -633,7 +667,11 @@ function __hyp_approach ()
       ai.accel()
    -- Need to start braking
    elseif dist < bdist then
-      ai.pushsubtask("__hyp_brake")
+      if ai.instantJump() then
+         ai.pushsubtask("__hyp_jump")
+      else
+         ai.pushsubtask("__hyp_brake")
+      end
    end
 end
 function __hyp_brake ()
@@ -647,10 +685,8 @@ end
 function __hyp_jump ()
    if ai.hyperspace() == nil then
       ai.pilot():msg(ai.pilot():followers(), "hyperspace", ai.nearhyptarget())
-      ai.poptask()
-   else
-      ai.popsubtask()
    end
+   ai.popsubtask() -- Keep the task even if succeeding in case pilot gets pushed away.
 end
 
 

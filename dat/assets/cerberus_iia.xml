@@ -5,8 +5,8 @@
   <y>-5825.000000</y>
  </pos>
  <GFX>
-  <space>moon-K00.png</space>
-  <exterior>methane.png</exterior>
+  <space>moon-K00.webp</space>
+  <exterior>methane.webp</exterior>
  </GFX>
  <general>
   <class>K</class>

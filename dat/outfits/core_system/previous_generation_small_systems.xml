@@ -7,7 +7,7 @@
   <mass>10</mass>
   <price>0</price>
   <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
-  <gfx_store>cpu_i</gfx_store>
+  <gfx_store>cpu_i.png</gfx_store>
  </general>
  <specific type="modification">
   <cpu_max>10</cpu_max>

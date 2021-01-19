@@ -5,8 +5,8 @@
   <y>4039.606298</y>
  </pos>
  <GFX>
-  <space>station-shipyard.png</space>
-  <exterior>traderoom.png</exterior>
+  <space>station-shipyard.webp</space>
+  <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

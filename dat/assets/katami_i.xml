@@ -5,8 +5,8 @@
   <y>-3240.000000</y>
  </pos>
  <GFX>
-  <space>G00.png</space>
-  <exterior>traderoom.png</exterior>
+  <space>G00.webp</space>
+  <exterior>traderoom.webp</exterior>
  </GFX>
  <general>
   <class>A</class>

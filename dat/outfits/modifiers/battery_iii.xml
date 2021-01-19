@@ -7,7 +7,7 @@
   <mass>108</mass>
   <price>360000</price>
   <description>A massive battery unit designed to hold 1200 MJ of energy. Given the mass of this battery, it's advisable to only mount it on capital ships.</description>
-  <gfx_store>capacitor4-g</gfx_store>
+  <gfx_store>capacitor4-g.png</gfx_store>
  </general>
  <specific type="modification">
   <energy>1200</energy>

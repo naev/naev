@@ -171,6 +171,7 @@ static int aiL_minbrakedist( lua_State *L ); /* number minbrakedist( [number] ) 
 static int aiL_isbribed( lua_State *L ); /* bool isbribed( number ) */
 static int aiL_getstanding( lua_State *L ); /* number getstanding( number ) */
 static int aiL_getGatherable( lua_State *L ); /* integer getgatherable( radius ) */
+static int aiL_instantJump( lua_State *L ); /* bool instantJump() */
 
 /* boolean expressions */
 static int aiL_ismaxvel( lua_State *L ); /* boolean ismaxvel() */
@@ -276,6 +277,7 @@ static const luaL_Reg aiL_methods[] = {
    { "isbribed", aiL_isbribed },
    { "getstanding", aiL_getstanding },
    { "getgatherable", aiL_getGatherable },
+   { "instantJump", aiL_instantJump },
    /* movement */
    { "nearestplanet", aiL_getnearestplanet },
    { "rndplanet", aiL_getrndplanet },
@@ -1457,6 +1459,19 @@ static int aiL_isbribed( lua_State *L )
    Pilot *p;
    p = luaL_validpilot(L,1);
    lua_pushboolean(L, (p->id == PLAYER_ID) && pilot_isFlag(cur_pilot, PILOT_BRIBED));
+   return 1;
+}
+
+
+/**
+ * @brief Checks to see if pilot can instant jump.
+ *
+ *    @luatreturn boolean Whether the pilot can instant jump.
+ *    @luafunc instantJump
+ */
+static int aiL_instantJump( lua_State *L )
+{
+   lua_pushboolean(L, cur_pilot->stats.misc_instant_jump);
    return 1;
 }
 
@@ -2738,12 +2753,13 @@ static int aiL_weapSet( lua_State *L )
          }
       }
 
+      /* Active weapon sets only care about keypresses. */
       /* activate */
       if (type && !on)
          pilot_weapSetPress(p, id, +1 );
       /* deactivate */
       if (!type && on)
-         pilot_weapSetPress(p, id, -1 );
+         pilot_weapSetPress(p, id, +1 );
    }
    else {
       /* weapset type is weapon or change */

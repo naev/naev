@@ -5,7 +5,7 @@
   <mass>0</mass>
   <price>25000</price>
   <description>This map charts the known jumps that connect the systems occupied by the Collective. Sadly, the Empire has no accurate intel about Collective assets in the area.</description>
-  <gfx_store>map</gfx_store>
+  <gfx_store>map.png</gfx_store>
  </general>
  <specific type="map">
   <sys name="Hades">

@@ -89,7 +89,7 @@ function create ()
 
    osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith")
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.png")
    misn.setDesc(bar_desc[1])
 end
 

@@ -12,7 +12,7 @@
 #include <float.h>
 #include <math.h>
 #include <stdlib.h>
-#include "physfsrwops.h"
+#include "physfs.h"
 
 #include "naev.h"
 /** @endcond */
@@ -41,7 +41,6 @@
 #include "nlua_planet.h"
 #include "nluadef.h"
 #include "nmath.h"
-#include "npng.h"
 #include "nstring.h"
 #include "ntime.h"
 #include "nxml.h"
@@ -1943,6 +1942,21 @@ void planet_updateLand( Planet *p )
 
 
 /**
+ * @brief Loads a planet's graphics (and radius).
+ */
+void planet_gfxLoad( Planet *planet )
+{
+   if (planet->real != ASSET_REAL)
+      return;
+
+   if (planet->gfx_space == NULL) {
+      planet->gfx_space = gl_newImage( planet->gfx_spaceName, OPENGL_TEX_MIPMAPS );
+      planet->radius = (planet->gfx_space->w + planet->gfx_space->h)/4.;
+   }
+}
+
+
+/**
  * @brief Loads all the graphics for a star system.
  *
  *    @param sys System to load graphics for.
@@ -1950,16 +1964,8 @@ void planet_updateLand( Planet *p )
 void space_gfxLoad( StarSystem *sys )
 {
    int i;
-   Planet *planet;
-   for (i=0; i<sys->nplanets; i++) {
-      planet = sys->planets[i];
-
-      if (planet->real != ASSET_REAL)
-         continue;
-
-      if (planet->gfx_space == NULL)
-         planet->gfx_space = gl_newImage( planet->gfx_spaceName, OPENGL_TEX_MIPMAPS );
-   }
+   for (i=0; i<sys->nplanets; i++)
+      planet_gfxLoad( sys->planets[i] );
 }
 
 
@@ -2026,7 +2032,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
                nsnprintf( str, PATH_MAX, PLANET_GFX_SPACE_PATH"%s", xml_get(cur));
                planet->gfx_spaceName = strdup(str);
                planet->gfx_spacePath = xml_getStrd(cur);
-               planet_setRadiusFromGFX(planet);
+               planet->radius = -1.;
             }
             else if (xml_isNode(cur,"exterior")) { /* load land gfx */
                nsnprintf( str, PATH_MAX, PLANET_GFX_EXTERIOR_PATH"%s", xml_get(cur));
@@ -2238,40 +2244,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
    /* Square to allow for linear multiplication with squared distances. */
    planet->hide = pow2(planet->hide);
 
-   return 0;
-}
-
-
-/**
- * @brief Sets a planet's radius based on which space gfx it uses.
- *
- *    @param planet Planet to set radius for.
- *    @return 0 on success.
- */
-int planet_setRadiusFromGFX(Planet* planet)
-{
-   SDL_RWops *rw;
-   npng_t *npng;
-   png_uint_32 w, h;
-   char path[PATH_MAX];
-
-   /* New path. */
-   nsnprintf( path, sizeof(path), "%s%s", PLANET_GFX_SPACE_PATH, planet->gfx_spacePath );
-
-   rw = PHYSFSRWOPS_openRead( path );
-   if (rw == NULL) {
-      WARN(_("Planet '%s' has nonexistent graphic '%s'!"), planet->name, planet->gfx_spacePath );
-      return -1;
-   }
-   else {
-      npng = npng_open( rw );
-      if (npng != NULL) {
-         npng_dim( npng, &w, &h );
-         planet->radius = (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
-         npng_close( npng );
-      }
-      SDL_RWclose( rw );
-   }
    return 0;
 }
 
@@ -3223,11 +3195,8 @@ int space_load (void)
    systems_loading = 1;
 
    /* Load jump point graphic - must be before systems_load(). */
-   jumppoint_gfx = gl_newSprite(  PLANET_GFX_SPACE_PATH"jumppoint.png", 4, 4, OPENGL_TEX_MIPMAPS );
-   jumpbuoy_gfx = gl_newImage(  PLANET_GFX_SPACE_PATH"jumpbuoy.png", 0 );
-
-   /* Load map marker graphics - must be before systems_load(). */
-   // nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"marker/jumppoint.png" );
+   jumppoint_gfx = gl_newSprite(  PLANET_GFX_SPACE_PATH"jumppoint.webp", 4, 4, OPENGL_TEX_MIPMAPS );
+   jumpbuoy_gfx = gl_newImage(  PLANET_GFX_SPACE_PATH"jumpbuoy.webp", 0 );
 
    /* Load planets. */
    ret = planets_load();
@@ -3340,8 +3309,8 @@ static int asteroidTypes_load (void)
             if (xml_isNode(cur,"gfx")) {
                at->gfxs = realloc( at->gfxs, sizeof(glTexture*)*(i+1) );
                str = xml_get(cur);
-               len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(str)+14);
-               nsnprintf( file, len,"%s%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str,".png");
+               len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(str)+10);
+               nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str);
                at->gfxs[i] = gl_newImage( file, OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
                i++;
             }

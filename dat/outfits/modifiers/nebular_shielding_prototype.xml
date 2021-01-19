@@ -7,7 +7,7 @@
   <rarity>3</rarity>
   <mass>144</mass>
   <price>1200000</price>
-  <gfx_store>capacitor</gfx_store>
+  <gfx_store>capacitor.png</gfx_store>
   <description>A modification to the ship's shields that allows them to resist nebular volatility.</description>
  </general>
  <specific type="modification">

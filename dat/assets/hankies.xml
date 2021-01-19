@@ -5,8 +5,8 @@
   <y>17520.000000</y>
  </pos>
  <GFX>
-  <space>moon-G00.png</space>
-  <exterior>mining4.png</exterior>
+  <space>moon-G00.webp</space>
+  <exterior>mining4.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

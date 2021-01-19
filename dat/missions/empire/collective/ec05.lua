@@ -109,7 +109,7 @@ function create ()
       misn.finish(false)
    end
  
-   misn.setNPC( _("Dimitri?"), "unknown" )
+   misn.setNPC( _("Dimitri?"), "unknown.png" )
    misn.setDesc( bar_desc )
    credits = 2000000
 end

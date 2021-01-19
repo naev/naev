@@ -14,6 +14,7 @@
  <notes>
   <requires name="The Dvaered know where Sindbad is"/>
   <campaign>Doom the FLF</campaign>
+  <provides name="The FLF is dead"/>
  </notes>
 </mission>
 --]]
@@ -219,6 +220,8 @@ function land()
         diff.apply("FLF_base")
         diff.apply("flf_dead")
         dv_addAntiFLFLog( log_text )
+        local t = time.get():tonumber()
+        var.push( "invasion_time", t ) -- Timer for the frontier's invasion
         misn.finish(true)
     end
 end

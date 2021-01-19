@@ -5,8 +5,8 @@
   <y>31660.203761</y>
  </pos>
  <GFX>
-  <space>moon-I00.png</space>
-  <exterior>station01.png</exterior>
+  <space>moon-I00.webp</space>
+  <exterior>station01.webp</exterior>
  </GFX>
  <general>
   <class>A</class>

@@ -7,7 +7,7 @@
   <mass>2</mass>
   <price>250000</price>
   <description>This sensor array uses quadralens-magnified photon modulation to more easily detect the faint signals emitted by a distant ship, effectively boosting your ship's normal capability to see and identify other ships in space. This can be useful to counteract the effect of cloaking instruments and also increases the accuracy of short-range tracking information used by your ship's weapons system.</description>
-  <gfx_store>jammer0</gfx_store>
+  <gfx_store>jammer0.png</gfx_store>
   <cpu>-1</cpu>
  </general>
  <specific type="modification">

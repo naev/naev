@@ -5,8 +5,8 @@
   <y>5139.003418</y>
  </pos>
  <GFX>
-  <space>moon-D02.png</space>
-  <exterior>asteroid.png</exterior>
+  <space>moon-D02.webp</space>
+  <exterior>asteroid.webp</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

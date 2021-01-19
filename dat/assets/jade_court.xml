@@ -5,8 +5,8 @@
   <y>-4718.400357</y>
  </pos>
  <GFX>
-  <space>station-commerce.png</space>
-  <exterior>traderoom.png</exterior>
+  <space>station-commerce.webp</space>
+  <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

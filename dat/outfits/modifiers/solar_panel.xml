@@ -7,7 +7,7 @@
   <mass>3</mass>
   <price>25000</price>
   <description>A large panel that generates energy by collecting light and converting it into electricity. This will allow your ship to regenerate its energy supplies more quickly.</description>
-  <gfx_store>solar</gfx_store>
+  <gfx_store>solar.png</gfx_store>
  </general>
  <specific type="modification">
   <energy_regen>2.5</energy_regen>

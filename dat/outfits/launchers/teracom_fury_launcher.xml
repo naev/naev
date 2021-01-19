@@ -9,7 +9,7 @@
   <description>The Fury class interceptor missile is a lightweight missile propelled by a powerful engine, delivering its payload to its target quickly and efficiently. Its high agility comes at the cost of destructive power, however, limiting its effectiveness to light, nimble fighters.
 
 TeraCom's Fury Launcher is a high-performance missile launcher equipped with patented target tracking and missile arming technology, allowing pilots to get a lock on their target faster and more easily than with launchers made by competing brands.</description>
-  <gfx_store>teracom_fury_launcher</gfx_store>
+  <gfx_store>teracom_fury_launcher.png</gfx_store>
   <cpu>-6</cpu>
  </general>
  <specific type="launcher" secondary="1">

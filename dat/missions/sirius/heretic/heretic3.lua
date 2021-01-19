@@ -70,7 +70,7 @@ function create()
    end
    misn.setReward( creditstring( reward ) )
    misn.setTitle( misn_title )
-   misn.setNPC(npc_name, "sirius/unique/draga")
+   misn.setNPC(npc_name, "sirius/unique/draga.png")
    misn.setDesc(bar_desc)
 
    osd[1] = osd[1]:format(homeasset:name())

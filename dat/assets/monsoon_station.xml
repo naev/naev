@@ -5,8 +5,8 @@
   <y>-907.323198</y>
  </pos>
  <GFX>
-  <space>station-fleetbase2.png</space>
-  <exterior>station03.png</exterior>
+  <space>station-fleetbase2.webp</space>
+  <exterior>station03.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>

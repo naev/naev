@@ -63,11 +63,29 @@ distributions.
 
 ## COMPILING
 
-Run:
+### CLONING AND SUBMODULES
+
+Naev requires the artwork submodule to run from git. You can check out the
+submodules from the cloned repository with:
 
 ```bash
 git submodule init
 git submodule update
+```
+
+Not that `git submodule update` has to be run every time you `git pull` to stay
+up to date. This can also be done automatically by setting the following
+configuration:
+
+```bash
+git config submodule.recurse true
+```
+
+### COMPILATION
+
+Run:
+
+```bash
 meson setup builddir .
 cd builddir
 meson compile
@@ -98,6 +116,14 @@ update the submodules with the following command.
 ```bash
 git submodule update
 ```
+
+You can also set this to be done automatically on git pull with the following command:
+
+```bash
+git config submodule.recurse true
+```
+
+Afterwards, every time you perform a `git pull`, it will also update the artwork submodule.
 
 ## UPDATING PO FILES
 

@@ -84,6 +84,7 @@ function handle_messages ()
          -- Attack target
          elseif msgtype == "e_attack" then
             if data ~= nil and data:exists() then
+               clean_task( ai.taskname() )
                ai.pushtask("attack", data)
             end
          -- Hold position
@@ -113,9 +114,13 @@ function control ()
 
    local task = ai.taskname()
 
-   -- TODO: Select new leader
+   -- Select new leader
    if ai.pilot():leader() ~= nil and not ai.pilot():leader():exists() then
-      ai.pilot():setLeader(nil)
+      local candidate = ai.getBoss()
+      if candidate ~= nil and candidate:leader() ~= nil then
+         candidate = candidate:leader()
+      end
+      ai.pilot():setLeader( candidate )
    end
 
    -- Cooldown completes silently.
@@ -277,6 +282,7 @@ function control ()
       -- See if really want to attack
       if attack then
          taunt(enemy, true)
+         clean_task( task )
          ai.pushtask("attack", enemy)
       end
    end
@@ -314,6 +320,7 @@ function attacked ( attacker )
          taunt( attacker, false )
 
          -- Now pilot fights back
+         clean_task( task )
          ai.pushtask("attack", attacker)
       else
 
@@ -423,17 +430,22 @@ function distress ( pilot, attacker )
    end
 
    local task = ai.taskname()
-   -- We're sort of busy
+   -- We're sort of busy. inspect_follow means we're getting close to a distressed ship
    if task == "attack" then
       local target = ai.target()
 
       if not target:exists() or ai.dist(target) > ai.dist(t) then
-         ai.pushtask( "attack", t )
+         if ai.pilot():inrange( t ) then
+            ai.pushtask( "attack", t )
+         end
       end
    -- If not fleeing or refueling, begin attacking
    elseif task ~= "runaway" and task ~= "refuel" then
       if mem.aggressive then
-         ai.pushtask( "attack", t )
+         if ai.pilot():inrange( t ) then -- TODO: something to help in the other case
+            clean_task( task )
+            ai.pushtask( "attack", t )
+         end
       else
          ai.pushtask( "runaway", t )
       end
@@ -538,6 +550,15 @@ function should_cooldown()
 end
 
 
+-- Decide if the task is likely to become obsolete once attack is finished
+function clean_task( task )
+   if task == "brake" or task == "inspect_moveto" then
+      --print(task)
+      ai.poptask()
+   end
+end
+
+
 -- Holds position
 function hold ()
    if not ai.isstopped() then
@@ -551,20 +572,16 @@ end
 -- Tries to fly back to carrier
 function flyback ()
    local target = ai.pilot():leader()
-   local dir    = ai.face(target)
-   local dist   = ai.dist(target)
-   local bdist  = ai.minbrakedist()
+   local goal = ai.follow_accurate(target, 0, 0, mem.Kp, mem.Kd)
 
-   -- Try to brake
-   if not ai.isstopped() and dist < bdist then
-      ai.pushtask("brake")
+   local dir  = ai.face( goal )
+   local dist = ai.dist( goal )
 
-   -- Try to dock
-   elseif ai.isstopped() and dist < 30 then
+   if dist > 300 then
+      if dir < 10 then 
+         ai.accel()
+      end
+   else -- Time to dock
       ai.dock(target)
-
-   -- Far away, must approach
-   elseif dir < 10 then
-      ai.accel()
    end
 end

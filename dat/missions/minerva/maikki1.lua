@@ -1,17 +1,21 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Maikki's Father 1">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>Minerva Station</planet>
-   <cond>player.evtDone("Minerva Station Altercation 1")</cond>
-  </avail>
- </mission>
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>100</chance>
+  <location>Bar</location>
+  <planet>Minerva Station</planet>
+  <cond>var.peek("minerva_altercation_probability")~=nil</cond>
+ </avail>
+ <notes>
+  <campaign>Minerva</campaign>
+  <requires name="Minerva Altercation 1" />
+ </notes>
+</mission>
 --]]
 
 --[[
@@ -39,6 +43,8 @@ local portrait = require 'portrait'
 local vn = require 'vn'
 require 'numstring'
 
+logidstr = minerva.log.maikki.idstr
+
 maikki_name = _("Distraught Young Woman")
 maikki_description = _("You see a small young woman sitting by herself. She has a worried expression on her face.")
 maikki_portrait = minerva.maikki.portrait
@@ -46,21 +52,21 @@ maikki_image = minerva.maikki.image
 maikki_colour = minerva.maikki.colour
 
 oldman_name = _("Old Man")
-oldman_portrait = "old_man"
+oldman_portrait = "old_man.png"
 oldman_description = _("You see a nonchalant old man sipping on his drink with a carefree aura.")
 oldman_image = "old_man.png"
 
 scav_name = _("Scavengers")
-scav_portrait = "scavenger1"
+scav_portrait = "scavenger1.png"
 scav_desc = _("You see a pair of dirty looking fellows talking loudly among themselves.")
 scavengera_image = "scavenger1.png"
 scavengerb_image = scavengera_image
-scavengera_portrait = "scavenger1"
+scavengera_portrait = "scavenger1.png"
 scavengerb_portrait = scavengera_portrait
 scavengera_colour = nil
 scavengerb_colour = nil
 
-misn_title = _("Finding Father")
+misn_title = _("Finding Maikki's Father")
 misn_reward = _("???")
 misn_desc = _("Maikki wants you to help her find her father.")
 
@@ -156,6 +162,8 @@ She trails off.]]) )
       vn.func( function ()
          misn.accept()
          misn_state = -1
+         shiplog.createLog( logidstr, minerva.log.maikki.logname, minerva.log.maikki.logtype, true )
+         shiplog.appendLog( logidstr, _("You have agreed to help Maikki find her father (Kex).") )
       end )
       maikki(_([["I was told he would be here, but I've been here for ages and haven't gotten anywhere."
 She gives out a heavy sigh.]]))
@@ -220,6 +228,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
          misn_osd = misn.osdCreate( misn_title,
             { string.format(_("Look around the %s system"), _(searchsys)) } )
          misn_marker = misn.markerAdd( system.get(searchsys), "low" )
+         shiplog.appendLog( logidstr, _("You were told her father colud be near Doeston.") )
       end
    end )
    vn.jump( "menu_msg" )
@@ -244,6 +253,7 @@ She looks clearly excited at the possibility.]]))
       -- no reward, yet...
       vn.sfxVictory()
       mission_finish = true
+      shiplog.appendLog( logidstr, _("You gave Maikki the information you found in the nebula about her father.") )
    end )
    vn.fadeout()
    vn.done()
@@ -403,6 +413,7 @@ He pats his biceps in a fairly uninspiring way.]]))
                { string.format(_("Follow the scavengers in the %s system"), _(stealthsys)) } )
             misn.markerMove( misn_marker, system.get(stealthsys) )
             misn_state=4
+            shiplog.appendLog( logidstr, _("You overheard some scavengers talking about a wreck in Zerantix.") )
          end
       end )
    end
@@ -431,6 +442,9 @@ function enter ()
       pscavB:brake()
       cuttimer = hook.timer( 3000, "cutscene_timer" )
       pscavB:setInvincible() -- annoying to handle the case the player kills them
+      -- Timer in case the player doesn't find them in a long while
+      sysmaker = nil
+      cuttimeout = hook.timer( 120*1000, "cutscene_timeout" ) -- 2 minutes
    elseif system.cur() == system.get(stealthsys) and misn_state==4 then
       -- Set up system
       pilot.clear()
@@ -480,6 +494,15 @@ function cutscene_timer ()
       pscavB:face( player.pilot() )
       pscavB:hailPlayer()
       hailhook = hook.pilot( pscavB, "hail", "cutscene_hail" )
+      -- Get rid of the timeout hook
+      if cuttimeout then
+         hook.rm( cuttimeout )
+         cuttimeout = nil
+      end
+      if sysmarker then
+         system.mrkRm( sysmarker )
+         sysmarker = nil
+      end
    else
       pscavB:brake()
       cutscene_msg = (cutscene_msg % #cutscene_messages)+1
@@ -487,6 +510,13 @@ function cutscene_timer ()
       pscavB:broadcast( msg )
    end
    cuttimer = hook.timer( 3000, "cutscene_timer" )
+end
+
+
+function cutscene_timeout ()
+   player.msg(_("#pYour ship has detected a curious signal originating from inside the system.#0"))
+   sysmarker = system.mrkAdd( _("Curious Signal"), pscavB:pos() )
+   cuttimeout = nil
 end
 
 
@@ -537,6 +567,7 @@ function cutscene_hail ()
       misn_state = 2
       hook.rm( cuttimer ) -- reset timer
       pilot.toggleSpawn(true)
+      shiplog.appendLog( logidstr, _("You helped a scavenger in Arandon.") )
    end
 end
 
@@ -805,6 +836,7 @@ He seems to be clutching his head. A headache perhaps?]]))
             p:taskClear()
             p:hyperspace( system.get(cutscenesys) )
          end
+         shiplog.appendLog( logidstr, _("You found a wreck and bribed scavengers so that they left.") )
       end
    end )
    vn.sfxMoney()
@@ -831,6 +863,7 @@ He seems to be clutching his head. A headache perhaps?]]))
          p:attack( player.pilot() )
          -- TODO add angry messages
       end
+      shiplog.appendLog( logidstr, _("You found a wreck and were attacked by scavengers.") )
    end )
 
    vn.fadeout()
@@ -898,6 +931,8 @@ function board_wreck ()
    vn.na(_("After your thorough investigation, you leave the wreck behind and get back into your ship."))
    vn.fadeout()
    vn.run()
+
+   shiplog.appendLog( logidstr, _("You boarded the wreck which seems to be Kex's ship. You found a picture of his family and signs that this was not an accident with possible Za'lek involvement.") )
 
    -- Move target back to origin
    misn_osd = misn.osdCreate( misn_title,

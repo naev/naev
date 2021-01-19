@@ -4,6 +4,10 @@
  <trigger>land</trigger>
  <chance>100</chance>
  <cond>planet.cur():name()=="Minerva Station"</cond>
+ <notes>
+  <campaign>Minerva</campaign>
+  <provides name="Minerva Station" />
+ </notes>
 </event>
 --]]
 
@@ -15,23 +19,21 @@ local minerva = require "minerva"
 local portrait = require "portrait"
 local vn = require 'vn'
 local blackjack = require 'minigames.blackjack'
+local chuckaluck = require 'minigames.chuckaluck'
 local lg = require 'love.graphics'
 local window = require 'love.window'
 
 -- NPC Stuff
 gambling_priority = 3
-terminal_name = _("Terminal")
-terminal_portrait = "minerva_terminal"
-terminal_desc = _("A terminal with which you can check your current token balance and buy items with tokens.")
-terminal_image = "minerva_terminal.png"
-terminal_colour = {0.8, 0.8, 0.8}
+terminal = minerva.terminal
 blackjack_name = _("Blackjack")
-blackjack_portrait = "blackjack"
+blackjack_portrait = "blackjack.png"
 blackjack_desc = _("Seems to be one of the more popular card games where you can play blackjack against a \"cyborg chicken\".")
 blackjack_image = minerva.chicken.image
 chuckaluck_name = _("Chuck-a-luck")
-chuckaluck_portrait = "none" -- TODO replace
-chuckaluck_desc = _("A fast-paced luck-based betting game using dice. You can play against other patrons.")
+chuckaluck_portrait = "minervaceo.png" -- TODO replace
+chuckaluck_image = "minervaceo.png" -- TODO replace
+chuckaluck_desc = _("A fast-paced luck-based betting game using dice.")
 greeter_portrait = portrait.get() -- TODO replace?
 
 patron_names = {
@@ -79,9 +81,9 @@ patron_messages = {
 function create()
 
    -- Create NPCs
-   npc_terminal = evt.npcAdd( "approach_terminal", terminal_name, terminal_portrait, terminal_desc, gambling_priority )
+   npc_terminal = evt.npcAdd( "approach_terminal", terminal.name, terminal.portrait, terminal.description, gambling_priority )
    npc_blackjack = evt.npcAdd( "approach_blackjack", blackjack_name, blackjack_portrait, blackjack_desc, gambling_priority )
-   --npc_chuckaluck = evt.npcAdd( "approach_chuckaluck", chuckaluck_name, chuckaluck_portrait, chuckaluck_desc, gambling_priority )
+   npc_chuckaluck = evt.npcAdd( "approach_chuckaluck", chuckaluck_name, chuckaluck_portrait, chuckaluck_desc, gambling_priority )
 
    -- Create random noise NPCs
    local npatrons = rnd.rnd(3,5)
@@ -99,7 +101,7 @@ function create()
 
    -- If they player never had tokens, it is probably their first time
    if not var.peek( "minerva_tokens" ) then
-      hook.land( "bargreeter", "bar" )
+      greeterhook = hook.land( "bargreeter", "bar" )
    end
    -- End event on takeoff.
    tokens_landed = minerva.tokens_get()
@@ -118,11 +120,20 @@ end
 -- bar. This is triggered randomly upon finishing gambling activities.
 --]]
 function random_event()
-   -- Altercation 1
-   local alter1 = "Minerva Station Altercation 1"
-   if not has_event(alter1) and minerva.tokens_get_gained() > 10 and rnd.rnd() < 0.5 then
+   -- Conditional helpers
+   local alter1 = has_event("Minerva Station Altercation 1")
+   local alter_helped = (var.peek("minerva_altercation_helped")~=nil)
+   local alter_prob = var.peek("minerva_altercation_probability") or 0.4
+   local alter2 = has_event("Minerva Station Altercation 2")
+   local maikki2 = player.misnDone("Maikki's Father 2")
+   local r = rnd.rnd()
+   -- Altercations
+   if not alter1 and minerva.tokens_get_gained() > 10 and r < 0.5 then
       hook.safe( "start_alter1" )
-      return
+   elseif not alter2 and maikki2 and r < 0.5 then
+      hook.safe( "start_alter2" )
+   elseif not alter1 and alter2 and not alter_helped and r < alter_prob then
+      hook.safe( "start_alter1" )
    end
 end
 
@@ -130,6 +141,9 @@ end
 -- Doesn't seem to work however
 function start_alter1 ()
    naev.eventStart( "Minerva Station Altercation 1" )
+end
+function start_alter2 ()
+   naev.eventStart( "Minerva Station Altercation 2" )
 end
 
 function bargreeter()
@@ -146,6 +160,7 @@ function bargreeter()
    vn.run()
 
    minerva.tokens_pay( 10 )
+   hook.rm( greeterhook ) -- Have to remove
 end
 
 function approach_terminal()
@@ -158,8 +173,8 @@ function approach_terminal()
    }
    vn.clear()
    vn.scene()
-   local t = vn.newCharacter( terminal_name,
-         { image=terminal_image, color=terminal_colour } )
+   local t = vn.newCharacter( terminal.name,
+         { image=terminal.image, color=terminal.colour } )
    vn.fadein()
    vn.label( "start" )
    t:say( function() return string.format(
@@ -347,7 +362,7 @@ function approach_blackjack()
    local dealer_x, dealer_newx
    local blackjack_h = 500
    local blackjack_x = math.min( lw-vn.textbox_w-100, textbox_x+200 )
-   local blackjack_y = lh-blackjack_h
+   local blackjack_y = (lh-blackjack_h)/2
    local setup_blackjack = function (alpha)
       if dealer_x == nil then
          dealer_x = cc.offset -- cc.offset is only set up when the they appear in the VN
@@ -397,6 +412,77 @@ function approach_blackjack()
 end
 
 function approach_chuckaluck ()
+   -- Not adding to queue first
+   vn.clear()
+   vn.scene()
+   local dealer = vn.newCharacter( _("Dealer"), {image=chuckaluck_image} )
+   vn.fadein()
+   vn.na(_("You approach the chuck-a-luck table."))
+   vn.na( "", true ) -- Clear buffer without waiting
+   vn.label("menu")
+   vn.menu( {
+      { _("Play"), "chuckaluck" },
+      { _("Explanation"), _("explanation") },
+      { _("Leave"), "leave" },
+   } )
+   vn.label( "explanation" )
+   dealer(_([["Chuck-a-luck is a straight-forward game. You make your bet and then place a wager on what number the dice will come up as. If the number you chose matches one die, you get win a token for each 1000 credits you bet. If you match two dice, you get double the amount of tokens. Furthermore, if you match all three dice, you get ten times the amount of tokens!"]]))
+   vn.jump("menu")
+
+   vn.label( "chuckaluck" )
+   -- Resize the window
+   local lw, lh = window.getDesktopDimensions()
+   local textbox_h = vn.textbox_h
+   local textbox_x = vn.textbox_x
+   local textbox_y = vn.textbox_y
+   local dealer_x, dealer_newx
+   local chuckaluck_h = 500
+   local chuckaluck_x = math.min( lw-vn.textbox_w-100, textbox_x+200 )
+   local chuckaluck_y = (lh-chuckaluck_h)/2
+   local setup_chuckaluck = function (alpha)
+      if dealer_x == nil then
+         dealer_x = dealer.offset -- dealer.offset is only set up when the they appear in the VN
+         dealer_newx = 0.2*lw
+      end
+      vn.textbox_h = textbox_h + (chuckaluck_h - textbox_h)*alpha
+      vn.textbox_x = textbox_x + (chuckaluck_x - textbox_x)*alpha
+      vn.textbox_y = textbox_y + (chuckaluck_y - textbox_y)*alpha
+      vn.namebox_alpha = 1-alpha
+      dealer.offset = dealer_x + (dealer_newx - dealer_x)*alpha
+   end
+   vn.animation( 0.5, function (alpha) setup_chuckaluck(alpha) end )
+   local cl = vn.custom()
+   cl._init = function( self )
+      -- TODO play some gambling music
+      chuckaluck.init( vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h, function ()
+         self.done = true
+         -- TODO go back to normal music
+      end )
+   end
+   cl._draw = function( self )
+      local x, y, w, h =  vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
+      -- Horrible hack where we draw ontop of the textbox a background
+      lg.setColor( 0.5, 0.5, 0.5 )
+      lg.rectangle( "fill", x, y, w, h )
+      lg.setColor( 0, 0, 0 )
+      lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
+
+      -- Draw chuckaluck game
+      chuckaluck.draw( x, y, w, h)
+   end
+   cl._keypressed = function( self, key )
+      chuckaluck.keypressed( key )
+   end
+   cl._mousepressed = function( self, mx, my, button )
+      chuckaluck.mousepressed( mx, my, button )
+   end
+   -- Undo the resize
+   vn.animation( 0.5, function (alpha) setup_chuckaluck(1-alpha) end )
+   vn.label( "leave" )
+   vn.na( _("You leave the chuck-a-luck table behind and head back to the main area.") )
+   vn.fadeout()
+   vn.run()
+
    -- Handle random bar events if necessary
    random_event()
 end

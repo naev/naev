@@ -5,8 +5,8 @@
   <y>30966.666667</y>
  </pos>
  <GFX>
-  <space>D02.png</space>
-  <exterior>asteroid.png</exterior>
+  <space>D02.webp</space>
+  <exterior>asteroid.webp</exterior>
  </GFX>
  <general>
   <class>D</class>

@@ -1096,7 +1096,7 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
    xmlw_elem( writer, "mass", "%d", 0 );
    xmlw_elem( writer, "price", "%"CREDITS_PRI, ns->price );
    xmlw_elem( writer, "description", "%s", ns->description );
-   xmlw_elem( writer, "gfx_store", "%s", "map" );
+   xmlw_elem( writer, "gfx_store", "%s", "map.png" );
    xmlw_endElem( writer ); /* "general" */
 
    xmlw_startElem( writer, "specific" );

@@ -9,7 +9,7 @@
   <mass>0</mass>
   <price>1000000</price>
   <description>A shiny medal for your contribution to the Dvaered cause. On the back it says "not for rectal use". Wait, what?</description>
-  <gfx_store>placeholder</gfx_store>
+  <gfx_store>placeholder.webp</gfx_store>
  <rarity>6</rarity></general>
  <specific type="modification">
   <armour_mod>10</armour_mod>

@@ -5,8 +5,8 @@
   <y>500.000000</y>
  </pos>
  <GFX>
-  <space>G00.png</space>
-  <exterior>desertic3.png</exterior>
+  <space>G00.webp</space>
+  <exterior>desertic3.webp</exterior>
  </GFX>
  <general>
   <class>G</class>

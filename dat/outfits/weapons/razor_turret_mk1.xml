@@ -7,11 +7,11 @@
   <mass>16</mass>
   <price>14000</price>
   <description>Razor Turrets are popular among traders. Their high damage against shields is a great deterrent against attackers, because nothing puts a space pilot on edge like his shields rapidly coming down.</description>
-  <gfx_store>ionturret</gfx_store>
+  <gfx_store>ionturret.png</gfx_store>
   <cpu>-9</cpu>
  </general>
  <specific type="turret bolt">
-  <gfx>razorS</gfx>
+  <gfx>razorS.png</gfx>
   <sound>ion</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
@@ -19,7 +19,7 @@
   <speed>800</speed>
   <range>1100</range>
   <falloff>750</falloff>
-  <gfx_end>razorS-end</gfx_end>
+  <gfx_end>razorS-end.png</gfx_end>
   <energy>6.5</energy>
   <heatup>30</heatup>
   <track>2</track>

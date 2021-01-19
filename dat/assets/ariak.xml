@@ -5,8 +5,8 @@
   <y>3690.012035</y>
  </pos>
  <GFX>
-  <space>C00.png</space>
-  <exterior>lava.png</exterior>
+  <space>C00.webp</space>
+  <exterior>lava.webp</exterior>
  </GFX>
  <general>
   <class>C</class>

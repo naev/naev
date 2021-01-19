@@ -82,7 +82,7 @@ log_text = _([[You helped a Za'lek scientist deliver some equipment and were pai
 function create ()
    -- Note: this mission does not make any system claims.
 
-   misn.setNPC( _("Za'lek Scientist"), "zalek/unique/logan" )  -- creates the scientist at the bar
+   misn.setNPC( _("Za'lek Scientist"), "zalek/unique/logan.png" )  -- creates the scientist at the bar
    misn.setDesc( bar_desc )           -- description
 
    -- Planets

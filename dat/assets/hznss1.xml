@@ -5,8 +5,8 @@
   <y>8197.765081</y>
  </pos>
  <GFX>
-  <space>station-agriculture.png</space>
-  <exterior>forest2.png</exterior>
+  <space>station-agriculture.webp</space>
+  <exterior>forest2.webp</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>

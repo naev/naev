@@ -60,7 +60,7 @@ log_text = _([[You helped gather intel on the Collective by scanning Collective 
 
 function create ()
    -- Note: this mission does not make any system claims.
-   misn.setNPC( _("Dimitri"), "empire/unique/dimitri" )
+   misn.setNPC( _("Dimitri"), "empire/unique/dimitri.png" )
    misn.setDesc( bar_desc )
 end
 

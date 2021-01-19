@@ -205,7 +205,7 @@ static void initialize_image( intro_img_t *img )
  *
  *    @brief side Present image being displayed.
  *    @brief transition Image in transition or on deck.
- *    @brief img_file Path to the PNG on disk.
+ *    @brief img_file Path to the image file on disk.
  */
 static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
                                  const char *img_file )

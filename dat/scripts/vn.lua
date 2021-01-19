@@ -307,27 +307,29 @@ function vn.StateCharacter:_init()
       c.alpha = 1
       c.displayname = c.who -- reset name
    end
-   -- TODO better centering
-   local lw, lh = graphics.getDimensions()
-   local nimg = 0
-   for k,c in ipairs(vn._characters) do
-      if c.image ~= nil then
-         nimg = nimg+1
+   if not self.character.manualpos then
+      -- TODO better centering
+      local lw, lh = graphics.getDimensions()
+      local nimg = 0
+      for k,c in ipairs(vn._characters) do
+         if c.image ~= nil then
+            nimg = nimg+1
+         end
       end
-   end
-   local n = 0
-   for k,c in ipairs(vn._characters) do
-      if c.image ~= nil then
-         n = n+1
-         local w, h = c.image:getDimensions()
-         if nimg == 1 then
-            c.offset = lw/2
-         elseif nimg == 2 then
-            c.offset = ((n-1)*0.5 + 0.25)*lw
-         elseif nimg == 3 then
-            c.offset = ((n-1)*0.35 + 0.15)*lw
-         else
-            error(_("vn: unsupported number of characters"))
+      local n = 0
+      for k,c in ipairs(vn._characters) do
+         if c.image ~= nil then
+            n = n+1
+            local w, h = c.image:getDimensions()
+            if nimg == 1 then
+               c.offset = lw/2
+            elseif nimg == 2 then
+               c.offset = ((n-1)*0.5 + 0.25)*lw
+            elseif nimg == 3 then
+               c.offset = ((n-1)*0.35 + 0.15)*lw
+            else
+               error(_("vn: unsupported number of characters"))
+            end
          end
       end
    end
@@ -581,7 +583,7 @@ end
 -- Animation
 --]]
 vn.StateAnimation = {}
-function vn.StateAnimation.new( seconds, func, drawfunc, transition )
+function vn.StateAnimation.new( seconds, func, drawfunc, transition, initfunc )
    transition = transition or "ease"
    local s = vn.State.new()
    s._init = vn.StateAnimation._init
@@ -591,6 +593,7 @@ function vn.StateAnimation.new( seconds, func, drawfunc, transition )
    s._seconds = seconds
    s._func = func
    s._drawfunc = drawfunc
+   s._initfunc = initfunc
    -- These transitions are taken from CSS spec
    if type(transition)=='table' then
       s._x2, s._y2, s._x3, s._y3 = table.unpack(transition)
@@ -608,12 +611,15 @@ function vn.StateAnimation.new( seconds, func, drawfunc, transition )
    return s
 end
 function vn.StateAnimation:_init()
+   if self._initfunc then
+      self._params = self._initfunc()
+   end
    self._accum = 0
    if self._func then
-      self._func( 0 )
+      self._func( 0, self._params )
    end
    if self._drawfunc then
-      self._drawfunc( 0 )
+      self._drawfunc( 0, self._params )
    end
 end
 -- quadratic bezier curve
@@ -658,12 +664,12 @@ function vn.StateAnimation:_update(dt)
       _finish(self)
    end
    if self._func then
-      self._func( _animation_alpha(self) )
+      self._func( _animation_alpha(self), self._params )
    end
 end
 function vn.StateAnimation:_draw(dt)
    if self._drawfunc then
-      self._drawfunc( _animation_alpha(self) )
+      self._drawfunc( _animation_alpha(self), self._params )
    end
 end
 
@@ -870,9 +876,9 @@ function vn.fadeout( seconds ) vn.fade( seconds, 1, 0 ) end
 --
 --    @params Seconds to perform the animation
 --]]
-function vn.animation( seconds, func, drawfunc, transition )
+function vn.animation( seconds, func, drawfunc, transition, initfunc )
    vn._checkstarted()
-   table.insert( vn._states, vn.StateAnimation.new( seconds, func, drawfunc, transition ) )
+   table.insert( vn._states, vn.StateAnimation.new( seconds, func, drawfunc, transition, initfunc ) )
 end
 
 --[[

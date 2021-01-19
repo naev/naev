@@ -92,7 +92,7 @@ typedef struct Planet_ {
    int id; /**< Planet ID. */
    char* name; /**< planet name */
    Vector2d pos; /**< position in star system */
-   double radius; /**< Radius of the planet. */
+   double radius; /**< Radius of the planet. WARNING: lazy-loaded with gfx_space. */
 
    /* Planet details. */
    char *class; /**< Planet type. Uses Star Trek classification system (https://stexpanded.fandom.com/wiki/Planet_classifications) */
@@ -357,6 +357,7 @@ void space_exit (void);
  * planet stuff
  */
 Planet *planet_new (void);
+void planet_gfxLoad( Planet *p );
 int planet_hasSystem( const char* planetname );
 char* planet_getSystem( const char* planetname );
 Planet* planet_getAll( int *n );
@@ -380,7 +381,6 @@ char planet_getColourChar( Planet *p );
 const char *planet_getSymbol( Planet *p );
 const glColour* planet_getColour( Planet *p );
 void planet_updateLand( Planet *p );
-int planet_setRadiusFromGFX(Planet* planet);
 
 
 /*

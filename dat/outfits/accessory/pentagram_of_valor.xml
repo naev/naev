@@ -9,7 +9,7 @@
   <mass>0</mass>
   <price>1000000</price>
   <description>A token of commitment to the FLF cause. It smells oddly of fish.</description>
-  <gfx_store>placeholder</gfx_store>
+  <gfx_store>placeholder.webp</gfx_store>
  <rarity>6</rarity></general>
  <specific type="modification">
   <armour_mod>10</armour_mod>

@@ -5,8 +5,8 @@
   <y>2100.000000</y>
  </pos>
  <GFX>
-  <space>Y00.png</space>
-  <exterior>gas.png</exterior>
+  <space>Y00.webp</space>
+  <exterior>gas.webp</exterior>
  </GFX>
  <general>
   <class>Y</class>

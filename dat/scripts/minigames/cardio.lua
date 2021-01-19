@@ -2,10 +2,21 @@
 -- Playing card game images
 --]]
 local lg = require 'love.graphics'
+local la = require 'love.audio'
 local class = require 'class'
 
 local cardio = {
+   sound = {
+      place = {
+         -- Added below
+      },
+   },
 }
+for i=1,8 do
+   local f = string.format("snd/sounds/gambling/cardSlide%d.ogg",i)
+   local s = la.newSource(f)
+   table.insert( cardio.sound.place, s )
+end
 
 --[[
 -- Card superclass
@@ -13,7 +24,7 @@ local cardio = {
 -- Cards are designed to be drawn at 75 x 105 px
 --]]
 cardio.Card = class.inheritsFrom( lg.Drawable )
-function cardio.newcard()
+function cardio.newCard()
    local c = cardio.Card.new()
    return c
 end

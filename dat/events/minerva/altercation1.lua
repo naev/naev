@@ -3,25 +3,30 @@
 <event name="Minerva Station Altercation 1">
  <trigger>none</trigger>
  <chance>0</chance>
- <flags>
-  <unique />
- </flags>
+ <flags />
+ <notes>
+  <campaign>Minerva</campaign>
+  <requires name="Minerva Station">Random event hen gained >10 tokens</requires>
+  <provides name="Minerva Altercation 1" />
+ </notes>
 </event>
 --]]
 
 --[[
 -- Some Za'lek and Dvaered get in a scuffle and go outside to fight.
 --
+-- Is repeatable!
+--
 -- Triggered from station.lua
 --]]
 local portrait = require "portrait"
 local vn = require 'vn'
 
-zalek_holo = "zalek_thug1"
+zalek_holo = "zalek_thug1.png"
 zalek_image = "zalek_thug1.png"
 zalek_name = _("Za'lek Belligerent")
 zalek_colour = {1, 0.4, 0.4}
-dvaered_holo = "dvaered_thug1"
+dvaered_holo = "dvaered_thug1.png"
 dvaered_image = "dvaered_thug1.png"
 dvaered_name = _("Dvaered Hooligan")
 dvaered_colour = {1, 0.7, 0.3}
@@ -36,7 +41,7 @@ function create ()
          { image=dvaered_image, color=dvaered_colour } )
    vn.clear()
    vn.scene()
-   vn.fadein()
+   vn.fadein(1)
    vn.na( _("You hear a large commotion in one of the wings of Minerva Station. As you approach you can make out what seems to be an altercation between a group of Za'lek and Dvaered ruffians.") )
    vn.appear( {zl, dv} )
    dv( _("\"You were using a bloody computation drone to cheat your dirty Za'lek stink!\"") )
@@ -240,6 +245,8 @@ function zl_hail ()
 end
 
 function leave () --event ends on player leaving the system or landing
+   local prob = var.peek("minerva_altercation_probability") or 0.4
+   var.push( "minerva_altercation_probability", prob/1.5 )
    evt.finish(true)
 end
 

@@ -565,7 +565,6 @@ static int sound_makeList (void)
    char** files;
    size_t i;
    char path[PATH_MAX];
-   char tmp[64];
    int len, suflen, flen;
    SDL_RWops *rw;
 
@@ -584,27 +583,23 @@ static int sound_makeList (void)
       flen = strlen(files[i]);
 
       /* Must be longer than suffix. */
-      if (flen < suflen) {
-         free(files[i]);
+      if (flen < suflen)
          continue;
-      }
 
       /* Make sure is wav or ogg. */
       if ((strncmp( &files[i][flen - suflen], SOUND_SUFFIX_WAV, suflen)!=0) &&
-            (strncmp( &files[i][flen - suflen], SOUND_SUFFIX_OGG, suflen)!=0)) {
-         free(files[i]);
+            (strncmp( &files[i][flen - suflen], SOUND_SUFFIX_OGG, suflen)!=0))
          continue;
-      }
-
-      /* remove the suffix */
-      len = flen - suflen;
-      strncpy( tmp, files[i], len );
-      tmp[len] = '\0';
 
       /* Load the sound. */
       nsnprintf( path, PATH_MAX, SOUND_PATH"%s", files[i] );
       rw = PHYSFSRWOPS_openRead( path );
-      source_newRW( rw, tmp, 0 );
+
+      /* remove the suffix */
+      len = flen - suflen;
+      files[i][len] = '\0';
+
+      source_newRW( rw, files[i], 0 );
       SDL_RWclose( rw );
    }
 

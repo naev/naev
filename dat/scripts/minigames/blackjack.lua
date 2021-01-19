@@ -1,11 +1,24 @@
 local minerva = require "minerva"
 local lg = require 'love.graphics'
+local la = require 'love.audio'
+local cardio = require 'minigames.cardio'
+local love_math = require 'love.math'
 require 'numstring'
 
-local bj = {} -- too lazy to write blackjack over and over
+local bj = { -- too lazy to write blackjack over and over
+   sound = {
+      place = cardio.sound.place,
+      chips = {
+      }
+   }
+}
+for i=1,6 do
+   local f = string.format("snd/sounds/gambling/chipsStack%d.ogg",i)
+   local s = la.newSource(f)
+   table.insert( bj.sound.chips, s )
+end
 
 function bj.init( x, y, w, h, donefunc )
-   local cardio = require 'minigames.cardio'
    bj.deck = cardio.newDeckWestern( false )
    bj.font = lg.newFont(16)
 
@@ -34,6 +47,52 @@ function bj.init( x, y, w, h, donefunc )
    bj.dealer = {}
    bj.player = {}
    bj.msg = nil
+   bj.chatter = nil
+   bj.chatter_color = nil
+end
+
+local function _chatter( chat_type )
+   local text
+   bj.chatter_color = minerva.chicken.colour
+   if chat_type==nil then
+      text = nil
+   elseif chat_type=="won" then
+      if love_math.random() < 0.5 then
+         text = nil
+      else
+         local textlist = {
+            _("Cyborg Chicken does a little jig."),
+            _("Cyborg Chicken does a short dance."),
+            _("Cyborg Chicken strikes a cool pose."),
+            _("Cyborg Chicken squawks in delight."),
+            _("Cyborg Chicken looks happy."),
+            _("Cyborg Chicken does the robot."),
+            _("Cyborg Chicken beams."),
+         }
+         text = textlist[love_math.random(1,#textlist)]
+      end
+   elseif chat_type=="lost" then
+      if love_math.random() < 0.5 then
+         text = nil
+      else
+         local textlist = {
+            _("Cyborg Chicken looks a bit slum."),
+            _("Cyborg Chicken squints at you."),
+            _("Cyborg Chicken pecks at the ground."),
+            _("Cyborg Chicken kicks at the blackjack table."),
+            _("Cyborg Chicken beeps."),
+            _("Cyborg Chicken squawks defeatedly."),
+         }
+         text = textlist[love_math.random(1,#textlist)]
+      end
+   elseif chat_type=="push" then
+      text = _("Cyborg Chicken squawks.")
+   elseif chat_type=="won_blackjack" then
+      text = _("Cyborg Chicken looks very smug.")
+   elseif chat_type=="lost_blackjack" or chat_type=="double_blackjack" then
+      text = _("Cyborg Chicken squawks in surprise!")
+   end
+   bj.chatter = text
 end
 
 local function _inbox( mx, my, x, y, w, h )
@@ -66,19 +125,27 @@ local function _done( status )
       msg = _("#rYou lost!#0")
       if #bj.dealer == 2 and d==21 then
          msg = string.format(_("#pBlackjack!#0 %s"), msg)
+         _chatter( "won_blackjack" )
+      else
+         _chatter( "won" )
       end
    elseif d>21 or (p<=21 and d<p) then
       local won = bj.betamount / 1000
       minerva.tokens_pay( won )
-      msg = string.format(_("#gYou won #p%d Minerva Tokens#g!#0"), won)
+      msg = string.format(n_("#gYou won #p%d Minerva Token#g!#0","#gYou won #p%d Minerva Tokens#g!#0",won), won)
       if #bj.player == 2 and p==21 then
          msg = string.format(_("#pBlackjack!#0 %s"), msg)
+         _chatter( "lost_blackjack" )
+      else
+         _chatter( "lost" )
       end
    else
       if #bj.player==2 and #bj.dealer==2 and d==21 and p==21 then
          msg = _("Double Blackjack! Push!")
+         _chatter( "double_blackjack" )
       else
          msg = _("Push!")
+         _chatter( "push" )
       end
    end
    bj.msg = msg
@@ -86,6 +153,7 @@ local function _done( status )
 end
 
 function bj.deal()
+   bj.chatter = nil
    bj.status = 0
    bj.done = false
    bj.betting = false
@@ -106,6 +174,7 @@ function bj.deal()
 end
 
 function bj.hit()
+   bj.sound.place[love_math.random(1,#bj.sound.place)]:play()
    table.insert( bj.player, bj.deck:draw() )
    -- Check if player lost
    local p = _total(bj.player)
@@ -169,7 +238,15 @@ function bj.draw( bx, by, bw, bh)
    local h = 105
    local rs = bx + (bw-bj.scale*(w*4+sep*3))/2
    local x = rs
-   local y = by + 10
+   local y = by + 20
+
+   -- Special chatter
+   if bj.chatter then
+      lg.setColor( bj.chatter_color or {1,1,1} )
+      lg.print( bj.chatter, bj.font, x, y )
+   end
+   y = y + bj.font:getHeight()+20
+
    -- Dealer
    if #bj.dealer > 0 then
       lg.setColor( 1, 1, 1 )
@@ -239,7 +316,7 @@ function bj.draw( bx, by, bw, bh)
    end
    y = bj.bets_y + h+3*b
    local tokens = minerva.tokens_get()
-   local s = string.format(_("You have %s credits and #p%s Minerva Tokens#0."), creditstring(player.credits()), numstring(tokens))
+   local s = string.format(n_("You have %s credits and #p%s Minerva Token#0.", "You have %s credits and #p%s Minerva Tokens#0.", tokens), creditstring(player.credits()), numstring(tokens))
    w = bj.font:getWidth( s )
    lg.print( s, bj.font, bx+(bw-w)/2, y )
 end
@@ -252,6 +329,7 @@ local function trybet( betamount )
       bj.betamount = betamount
       bj.msg = string.format(_("You bet %s."),creditstring(betamount))
       bj.deal()
+      bj.sound.chips[love_math.random(1,#bj.sound.chips)]:play()
    end
 end
 

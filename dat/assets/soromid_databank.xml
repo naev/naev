@@ -5,8 +5,8 @@
   <y>12105.389613</y>
  </pos>
  <GFX>
-  <space>station-sphere.png</space>
-  <exterior>traderoom.png</exterior>
+  <space>station-sphere.webp</space>
+  <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

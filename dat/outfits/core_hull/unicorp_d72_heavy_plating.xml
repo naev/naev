@@ -8,7 +8,7 @@
   <mass>1350</mass>
   <price>360000</price>
   <description>Though a respectable design, the D-72 plating is outclassed by modern heavy weapons, with most seasoned captains opting for a heavier, more advanced plating.</description>
-  <gfx_store>base_hull_x</gfx_store>
+  <gfx_store>base_hull_x.png</gfx_store>
  </general>
  <specific type="modification">
   <cargo>90</cargo>

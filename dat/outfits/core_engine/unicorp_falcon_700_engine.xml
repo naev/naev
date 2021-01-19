@@ -7,7 +7,7 @@
   <mass>16</mass>
   <price>40000</price>
   <description>The Falcon 700 is a low-budget engine for use on corvettes and similarly-sized vessels. Its middling performance relegates it primarily to use on civilians vessels, as few captains are comfortable relying on bargain-priced propulsion systems when engaged in battle.</description>
-  <gfx_store>engine03</gfx_store>
+  <gfx_store>engine03.png</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">

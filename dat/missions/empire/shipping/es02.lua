@@ -81,7 +81,7 @@ function create ()
    end
 
    -- Add NPC.
-   misn.setNPC( _("Soldner"), "empire/unique/soldner" )
+   misn.setNPC( _("Soldner"), "empire/unique/soldner.png" )
    misn.setDesc( bar_desc )
 end
 

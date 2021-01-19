@@ -5,8 +5,8 @@
   <y>-4680.000000</y>
  </pos>
  <GFX>
-  <space>moon-M02.png</space>
-  <exterior>desertic2.png</exterior>
+  <space>moon-M02.webp</space>
+  <exterior>desertic2.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

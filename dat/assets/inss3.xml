@@ -5,8 +5,8 @@
   <y>14054.067443</y>
  </pos>
  <GFX>
-  <space>station-agriculture.png</space>
-  <exterior>forest.png</exterior>
+  <space>station-agriculture.webp</space>
+  <exterior>forest.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

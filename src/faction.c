@@ -92,6 +92,7 @@ static Faction* faction_stack = NULL; /**< Faction stack. */
  * Prototypes
  */
 /* static */
+static int faction_getRaw( const char *name );
 static void faction_freeOne( Faction *f );
 static void faction_sanitizePlayer( Faction* faction );
 static void faction_modPlayerLua( int f, double mod, const char *source, int secondary );
@@ -108,10 +109,9 @@ int pfaction_load( xmlNodePtr parent );
  *    @param name Name of the faction to seek.
  *    @return ID of the faction.
  */
-int faction_get( const char* name )
+static int faction_getRaw( const char* name )
 {
    int i;
-
    /* Escorts are part of the "player" faction. */
    if (strcmp(name, "Escort") == 0)
       return FACTION_PLAYER;
@@ -124,9 +124,34 @@ int faction_get( const char* name )
       if (i != array_size(faction_stack))
          return i;
    }
-
-   WARN(_("Faction '%s' not found in stack."), name);
    return -1;
+}
+
+
+/**
+ * @brief Checks to see if a faction exists by name.
+ *
+ *    @param name Name of the faction to seek.
+ *    @return ID of the faction.
+ */
+int faction_exists( const char* name )
+{
+   return faction_getRaw(name)!=-1;
+}
+
+
+/**
+ * @brief Gets a faction ID by name.
+ *
+ *    @param name Name of the faction to seek.
+ *    @return ID of the faction.
+ */
+int faction_get( const char* name )
+{
+   int id = faction_getRaw(name);
+   if (id<0)
+      WARN(_("Faction '%s' not found in stack."), name);
+   return id;
 }
 
 
@@ -1551,7 +1576,7 @@ static void faction_freeOne( Faction *f )
       nlua_freeEnv( f->sched_env );
    if (f->env != LUA_NOREF)
       nlua_freeEnv( f->env );
-   if (f->equip_env != LUA_NOREF)
+   if (!faction_isFlag(f, FACTION_DYNAMIC) && (f->equip_env != LUA_NOREF))
       nlua_freeEnv( f->equip_env );
 }
 
@@ -1772,7 +1797,11 @@ int faction_dynAdd( int base, const char *name, const char *display )
 
       f->player_def = bf->player_def;
       f->player = bf->player;
+      f->colour = bf->colour;
+
+      /* Lua stuff. */
+      f->equip_env = bf->equip_env;
    }
 
-   return array_size(faction_stack)-1;
+   return f-faction_stack;
 }

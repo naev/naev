@@ -96,7 +96,7 @@ function create ()
 
    started = false
 
-   misn.setNPC( npc_name, "soromid/unique/chelsea" )
+   misn.setNPC( npc_name, "soromid/unique/chelsea.png" )
    misn.setDesc( npc_desc )
 end
 
