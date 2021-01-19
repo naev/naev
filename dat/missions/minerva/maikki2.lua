@@ -39,25 +39,25 @@ require 'numstring'
 -- TODO customize all the portraits/images/descriptions
 hint1_name = _("Prof. Sato") -- Computer Science / Mathematics
 hint1_description = _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.")
-hint1_portrait = "zalek1"
+hint1_portrait = "zalek1.png"
 hint1_image = "zalek1.png"
 hint1_colour = nil
 
 hint2_name = _("Prof. Stova") -- Material Science
 hint2_description = _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.")
-hint2_portrait = "zalek2"
+hint2_portrait = "zalek2.png"
 hint2_image = "zalek2.png"
 hint2_colour = nil
 
 hint3_name = _("Prof. Hsu") -- Philosophy
 hint3_description = _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.")
-hint3_portrait = "zalek3"
+hint3_portrait = "zalek3.png"
 hint3_image = "zalek3.png"
 hint3_colour = nil
 
 hint4_name = _("Dr. Cayne") -- Dr. Shrimp
 hint4_description = _("You see a young fellow intently reading a book. There seems to be a shrimp in a floating aquarium bowl floating around him.")
-hint4_portrait = "drshrimp"
+hint4_portrait = "drshrimp.png"
 hint4_image = "drshrimp.png"
 hint4_colour = nil
 

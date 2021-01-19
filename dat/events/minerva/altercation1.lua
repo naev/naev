@@ -17,11 +17,11 @@
 local portrait = require "portrait"
 local vn = require 'vn'
 
-zalek_holo = "zalek_thug1"
+zalek_holo = "zalek_thug1.png"
 zalek_image = "zalek_thug1.png"
 zalek_name = _("Za'lek Belligerent")
 zalek_colour = {1, 0.4, 0.4}
-dvaered_holo = "dvaered_thug1"
+dvaered_holo = "dvaered_thug1.png"
 dvaered_image = "dvaered_thug1.png"
 dvaered_name = _("Dvaered Hooligan")
 dvaered_colour = {1, 0.7, 0.3}

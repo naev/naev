@@ -46,16 +46,16 @@ maikki_image = minerva.maikki.image
 maikki_colour = minerva.maikki.colour
 
 oldman_name = _("Old Man")
-oldman_portrait = "old_man"
+oldman_portrait = "old_man.png"
 oldman_description = _("You see a nonchalant old man sipping on his drink with a carefree aura.")
 oldman_image = "old_man.png"
 
 scav_name = _("Scavengers")
-scav_portrait = "scavenger1"
+scav_portrait = "scavenger1.png"
 scav_desc = _("You see a pair of dirty looking fellows talking loudly among themselves.")
 scavengera_image = "scavenger1.png"
 scavengerb_image = scavengera_image
-scavengera_portrait = "scavenger1"
+scavengera_portrait = "scavenger1.png"
 scavengerb_portrait = scavengera_portrait
 scavengera_colour = nil
 scavengerb_colour = nil

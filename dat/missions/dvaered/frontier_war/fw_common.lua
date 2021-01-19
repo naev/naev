@@ -37,14 +37,14 @@ lords = { _("Lord Jim"),
 
 
 -- Character's portraits. TODO: create unique portraits for them
-portrait_tam        = "dvaered/dv_military_m3" -- Major Tam: main mission giver of this campaign
-portrait_leblanc    = "dvaered/dv_military_f8" -- Captain Leblanc: secondary mission giver and partner for the second half of the campaign
-portrait_klank      = "dvaered/dv_general1"    -- Genenral Klank: boss of Major Tam, has few interactions with the player, excepted for the last mission
-portrait_hamfresser = "dvaered/dv_military_m7" -- Captain Hamfresser: player's sidekick for some of the missions
-portrait_strafer    = "dvaered/dv_military_m1" -- Lieutenant Stafer: partner of the player for the first half of the campaign, and subordinate of Captain Leblanc
-portrait_nikolov    = "dvaered/dv_military_f7" -- Sergeant Nikolov: second in command of Captain Hamfresser
-portrait_therus     = "dvaered/dv_military_f1" -- Caporal Therus: subordinate of Captain Hamfresser
-portrait_tronk      = "dvaered/dv_military_m5" -- Private Tronk: subordinate of Captain Hamfresser
+portrait_tam        = "dvaered/dv_military_m3.png" -- Major Tam: main mission giver of this campaign
+portrait_leblanc    = "dvaered/dv_military_f8.png" -- Captain Leblanc: secondary mission giver and partner for the second half of the campaign
+portrait_klank      = "dvaered/dv_general1.png"    -- Genenral Klank: boss of Major Tam, has few interactions with the player, excepted for the last mission
+portrait_hamfresser = "dvaered/dv_military_m7.png" -- Captain Hamfresser: player's sidekick for some of the missions
+portrait_strafer    = "dvaered/dv_military_m1.png" -- Lieutenant Stafer: partner of the player for the first half of the campaign, and subordinate of Captain Leblanc
+portrait_nikolov    = "dvaered/dv_military_f7.png" -- Sergeant Nikolov: second in command of Captain Hamfresser
+portrait_therus     = "dvaered/dv_military_f1.png" -- Caporal Therus: subordinate of Captain Hamfresser
+portrait_tronk      = "dvaered/dv_military_m5.png" -- Private Tronk: subordinate of Captain Hamfresser
 
 
 -- Decides wether the player is stronger than a corvette

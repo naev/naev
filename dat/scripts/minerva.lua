@@ -9,33 +9,33 @@ local minerva = {
    -- Main Characters
    chicken = {
       name = _("Cyborg Chicken"),
-      portrait = "cyborg_chicken",
+      portrait = "cyborg_chicken.png",
       image = "cyborg_chicken.png",
       colour = nil,
    },
    maikki = {
       name = _("Maikki"),
       description = _("You see a very cutely dressed young woman. She seems to have a worried expression on her face."),
-      portrait = "maikki",
+      portrait = "maikki.png",
       image = "maikki.png",
       colour = {1, 0.73, 0.97},
    },
    strangelove = {
       name = _("Dr. Strangelove"),
-      portrait = "strangelove",
+      portrait = "strangelove.png",
       image = "strangelove.png",
       colour = colour.FontPurple, -- Purplish (close to nebula?)
    },
    terminal = {
       name = _("Terminal"),
       description = _("A terminal with which you can check your current token balance and buy items with tokens."),
-      portrait = "minerva_terminal",
+      portrait = "minerva_terminal.png",
       image = "minerva_terminal.png",
       colour = {0.8, 0.8, 0.8},
    },
    pirate = {
       name = _("Sketchy Individual"),
-      portrait = "pirate/pirate5", -- REPLACE
+      portrait = "pirate/pirate5.png", -- REPLACE
       description = _("You see a sketchy-looking individual, they seem to have their gaze on you."),
       image = portrait.getFullPath("pirate/pirate5"),
    },

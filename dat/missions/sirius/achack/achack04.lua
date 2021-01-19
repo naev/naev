@@ -127,14 +127,14 @@ end
 function land()
    enter_src = planet.cur()
    if planet.cur() == startplanet and stage == stages.start then
-      joanne_npc = misn.npcAdd("talkJoanne", joannename, "sirius/unique/joanne", joannedesc, 4)
+      joanne_npc = misn.npcAdd("talkJoanne", joannename, "sirius/unique/joanne.png", joannedesc, 4)
    elseif planet.cur() == harjaplanet and stage <= stages.fetchHarja then
-      harja_npc = misn.npcAdd("talkHarja", harjaname, "sirius/unique/harja", harjadesc, 4)
+      harja_npc = misn.npcAdd("talkHarja", harjaname, "sirius/unique/harja.png", harjadesc, 4)
    elseif planet.cur() ~= startplanet and stage == stages.findHarja then
       -- Harja appears randomly in the spaceport bar.
       -- TODO: Add checks for planet metadata. Harja must not appear on military installations and such.
       if rnd.rnd() < 0.25 then
-         harja_npc = misn.npcAdd("talkHarja", harjaname, "sirius/unique/harja", harjadesc, 4)
+         harja_npc = misn.npcAdd("talkHarja", harjaname, "sirius/unique/harja.png", harjadesc, 4)
          harjaplanet, harjasys = planet.cur() -- Harja, once he spawns, stays put.
       end
    elseif planet.cur() == startplanet and stage == stages.finish then

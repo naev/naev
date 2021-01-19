@@ -21,7 +21,7 @@ text = _([[    Flintley greets you, relieved to see a friendly face. "Hello agai
     You spend some time chatting with Flintley, then you get back to work.]])
 
 function create ()
-    evt.npcAdd("flintley", "Flintley", "neutral/unique/flintley", desc, 5)
+    evt.npcAdd("flintley", "Flintley", "neutral/unique/flintley.png", desc, 5)
 end
 
 function flintley()
