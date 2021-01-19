@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-18 12:11-0500\n"
-"PO-Revision-Date: 2021-01-19 18:21+0000\n"
+"PO-Revision-Date: 2021-01-19 18:28+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -1515,7 +1515,7 @@ msgstr "„Pokud jsi ochoten vyjednávat, rád si vezmu %s, abych tě nezabil.�
 #: dat/ai/pirate.lua:46
 #, lua-format
 msgid "\"You give me %s and I'll act like I never saw you.\""
-msgstr ""
+msgstr "„Dáš mi %s a budu se chovat, jako bych tě nikdy neviděl.“"
 
 #: dat/ai/pirate.lua:47
 #, lua-format
@@ -1523,6 +1523,8 @@ msgid ""
 "\"So this is the part where you pay up or get shot up. Your choice. What'll "
 "be, %s or...\""
 msgstr ""
+"„Takže toto je chvíle, kdy zaplatíš nebo se necháš zastřelit. Tvoje volba. "
+"Bude to, %s nebo ...“"
 
 #: dat/ai/pirate.lua:48
 #, lua-format
@@ -1530,11 +1532,13 @@ msgid ""
 "\"Pay up or don't. %s now just means I'll wait till later to collect the "
 "rest.\""
 msgstr ""
+"„Zaplať nebo ne.%s teď jen znamená, že si počkám, až si později vyzvednu "
+"zbytek.“"
 
 #: dat/ai/pirate.lua:49
 #, lua-format
 msgid "\"This is a toll road, pay up %s or die.\""
-msgstr ""
+msgstr "„Toto je zpoplatněná trasa, zaplať %s nebo zemři.“"
 
 #: dat/ai/pirate.lua:53
 msgid "\"You're lucky I'm so kind.\""
