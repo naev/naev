@@ -68,9 +68,9 @@ ecc_barname = _("Hologram Projector")
 ecc_portrait = strangelove.portrait
 ecc_description = _("A terminal with which you can check your current token balance and buy items with tokens.")
 
-misn_title = _("Finding Father")
+misn_title = _("Finding Maikki's Father")
 misn_reward = _("???")
-misn_desc = _("Maikki wants you to help her find her father.")
+misn_desc = _("Maikki wants you to help her find out what happened to her father.")
 
 hintpnt = {
    "Jorla",

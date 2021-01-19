@@ -62,7 +62,7 @@ scavengerb_portrait = scavengera_portrait
 scavengera_colour = nil
 scavengerb_colour = nil
 
-misn_title = _("Finding Father")
+misn_title = _("Finding Maikki's Father")
 misn_reward = _("???")
 misn_desc = _("Maikki wants you to help her find her father.")
 
