@@ -5,7 +5,7 @@
   <y>-6000.000000</y>
  </pos>
  <GFX>
-  <space>asteroid/asteroid-D00.png</space>
+  <space>asteroid/asteroid-D00.webp</space>
   <exterior>rocky_small.webp</exterior>
  </GFX>
  <presence>
