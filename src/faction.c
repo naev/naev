@@ -1803,5 +1803,5 @@ int faction_dynAdd( int base, const char *name, const char *display )
       f->equip_env = bf->equip_env;
    }
 
-   return array_size(faction_stack)-1;
+   return f-faction_stack;
 }
