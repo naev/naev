@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-09 18:44-0500\n"
-"PO-Revision-Date: 2021-01-16 22:32+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2021-01-20 00:50+0000\n"
+"Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -115,6 +115,8 @@ msgstr "Unicorp: Kleiner Preis und große Qualität!"
 #: dat/ai/advertiser.lua:38
 msgid "Life is short, spend it at Minerva Station in the Limbo System!"
 msgstr ""
+"Das Leben ist kurz, verbringen Sie es auf der Minerva-Station im Limbo-"
+"System!"
 
 #. Faction specific messages
 #: dat/ai/advertiser.lua:43
@@ -3043,14 +3045,12 @@ msgstr ""
 #. -- Triggered from station.lua
 #. --
 #: dat/events/minerva/altercation1.lua:22
-#, fuzzy
 msgid "Za'lek Belligerent"
-msgstr "Za'lek-Wissenschaftler"
+msgstr "Za'lek Krieger"
 
 #: dat/events/minerva/altercation1.lua:26
-#, fuzzy
 msgid "Dvaered Hooligan"
-msgstr "Dvaered Vigilanz"
+msgstr "Dvaered Hooligan"
 
 #. Create scuffle
 #: dat/events/minerva/altercation1.lua:40
@@ -3059,42 +3059,57 @@ msgid ""
 "approach you can make out what seems to be an altercation between a group of "
 "Za'lek and Dvaered ruffians."
 msgstr ""
+"Du hörst einen großen Aufruhr in einem der Flügel der Minerva-Station. Als "
+"du dich näherst, kannst du eine Auseinandersetzung zwischen einer Gruppe von "
+"Za'lek und Dvaered ausmachen, die wie eine Schlägerei aussieht."
 
 #: dat/events/minerva/altercation1.lua:42
 msgid ""
 "\"You were using a bloody computation drone to cheat your dirty Za'lek stink!"
 "\""
 msgstr ""
+"„Du hast eine verdammte Rechendrohne benutzt, um deinen dreckigen Za'lek-"
+"Mist zu betrügen!“"
 
 #: dat/events/minerva/altercation1.lua:43
 msgid ""
 "\"Your logic makes no sense. Are you sure the excessive amounts of alcohol "
 "are making your rotten brain hallucinate?\""
 msgstr ""
+"„Deine Logik ergibt keinen Sinn. Bist du dir sicher, dass der übermäßige "
+"Alkoholgenuss dein verrottetes Gehirn halluzinieren lässt?“"
 
 #: dat/events/minerva/altercation1.lua:44
 msgid ""
 "\"You won't trick me with your fancy words. I know a cheater when I see one!"
 "\""
 msgstr ""
+"„Du wirst mich nicht mit deinen Schnöselworten einlullen können. Ich erkenne "
+"einen Betrüger, wenn ich ihn sehe!”"
 
 #: dat/events/minerva/altercation1.lua:45
 msgid ""
 "\"I wouldn't trust your judgment on bricks let alone anything that requires "
 "minimal intellect.\""
 msgstr ""
+"„Ich würde dich nicht mal Ziegelsteinen anvertrauen, geschweige denn bei "
+"etwas, das minimalen Intellekt erfordert.“"
 
 #: dat/events/minerva/altercation1.lua:46
 msgid ""
 "\"You Za'lek punk. Bring your ass outside and I will fill your ship with "
 "holes just like your lies!\""
 msgstr ""
+"„Du Za'lek-Punk. Bring deinen Arsch nach draußen und ich werde dein Schiff "
+"mit Löchern füllen, genau wie deine Lügen!“"
 
 #: dat/events/minerva/altercation1.lua:47
 msgid ""
 "\"When you are getting eviscerated by my drones, I hope you realize you have "
 "brought this upon yourself, Dvaered trash!\""
 msgstr ""
+"„Wenn du von meinen Drohnen ausgeweidet wirst, ist dir hoffentlich klar, "
+"dass du dir das selbst eingebrockt hast, Dvaered-Abschaum!“"
 
 #: dat/events/minerva/altercation1.lua:49
 msgid ""
@@ -3103,6 +3118,11 @@ msgid ""
 "It seems like it could be an opportunity to curry favour with either one of "
 "the factions if you wished to intervene in their fight."
 msgstr ""
+"Die Za'lek- und Dvaered-Rüpel stürmen zu ihren Schiffen, um anscheinend bis "
+"zum Tod zu kämpfen, um ihren Streit zu lösen. Wahrlich zivilisierte "
+"Individuen.\n"
+"Es scheint eine Gelegenheit zu sein, sich bei einer der beiden Fraktionen "
+"beliebt zu machen, wenn du in ihren Kampf eingreifen willst."
 
 #. Scuffle between Za'lek and Dvaered
 #. Set up system
@@ -3112,38 +3132,35 @@ msgstr ""
 #. Messages
 #: dat/events/minerva/altercation1.lua:93
 msgid "*incoherent expletives*"
-msgstr ""
+msgstr "*unverständliche Schimpfwörter*"
 
 #: dat/events/minerva/altercation1.lua:94
 msgid "Disgusting Za'lek scum!"
-msgstr ""
+msgstr "Ekelhafter Za'lek-Abschaum!"
 
 #: dat/events/minerva/altercation1.lua:95
-#, fuzzy
 msgid "Your head will make a fine trophy on my ships!"
-msgstr "Dein Kopf macht sich gut als Trophäe!"
+msgstr "Dein Kopf wird sich gut als Trophäe auf meinen Schiffen machen!"
 
 #: dat/events/minerva/altercation1.lua:97
-#, fuzzy
 msgid "Za'lek trash!"
-msgstr "Za'lek-Test"
+msgstr "Za'lek-Müll!"
 
 #: dat/events/minerva/altercation1.lua:100
-#, fuzzy
 msgid "My defense protocols will make short work of you!"
-msgstr "Meine Drohnen machen Hackfleisch aus dir!"
+msgstr "Meine Verteidigungsprotokolle werden kurzen Prozess mit Ihnen machen!"
 
 #: dat/events/minerva/altercation1.lua:101
 msgid "I'll teach you physics Dvaered punk!"
-msgstr ""
+msgstr "Dir bring ich Physik bei, Dvaered-Punk!"
 
 #: dat/events/minerva/altercation1.lua:102
 msgid "My ship's hull is less thick than your Dvaered skull!"
-msgstr ""
+msgstr "Mein Schiffsrumpf ist dünner als dein Dvaered-Dickkopf!"
 
 #: dat/events/minerva/altercation1.lua:103
 msgid "You Dvaereds smell worse than my vials of thiol!"
-msgstr ""
+msgstr "Ihr Dvaered stinkt übler als meine Thiolampullen!"
 
 #. Set up hooks when it is over
 #. Take turns yelling
@@ -3151,28 +3168,32 @@ msgstr ""
 #: dat/events/minerva/altercation1.lua:153
 #: dat/events/minerva/altercation1.lua:166
 msgid "Et tu brute?"
-msgstr ""
+msgstr "Brutus, auch du?"
 
 #: dat/events/minerva/altercation1.lua:185
 msgid "Dust to dust."
-msgstr ""
+msgstr "Staub zu Staub."
 
 #: dat/events/minerva/altercation1.lua:199
 msgid ""
 "\"Thank you for the help with the Za'lek scum. Let us celebrate with a drink "
 "in the bar down at Minerva Station!\""
 msgstr ""
+"„Danke für die Hilfe mit dem Za'lek-Abschaum. Lasst uns das mit einem Drink "
+"in der Kneipe unten auf der Minerva-Station feiern!“"
 
 #: dat/events/minerva/altercation1.lua:220
-#, fuzzy
 msgid "Good riddance."
-msgstr "Gute Nachrichten"
+msgstr "Auf Nimmerwiedersehen."
 
 #: dat/events/minerva/altercation1.lua:234
 msgid ""
 "\"As my computations predicted, the Dvaered scum was no match for the Za'lek "
 "superiority. Let us celebrate with a drink down at Minerva Station\""
 msgstr ""
+"„Wie meine Berechnungen voraussagten, war der Dvaered-Abschaum der Za'lek-"
+"Übermacht nicht gewachsen. Lasst uns das mit einem Drink auf der Minerva-"
+"Station feiern.“"
 
 #. event ends on player leaving the system or landing
 #.
@@ -3199,30 +3220,32 @@ msgstr ""
 #. --
 #. NPC Stuff
 #: dat/events/minerva/station.lua:23
-#, fuzzy
 msgid "Terminal"
-msgstr "Terminus"
+msgstr "Terminal"
 
 #: dat/events/minerva/station.lua:25
 msgid ""
 "A terminal with which you can check your current token balance and buy items "
 "with tokens."
 msgstr ""
+"Ein Terminal, mit dem du dein aktuelles Jeton-Guthaben überprüfen und "
+"Gegenstände mit Jetons kaufen kannst."
 
 #: dat/events/minerva/station.lua:28
-#, fuzzy
 msgid "Blackjack"
-msgstr "Schwarzmarkt"
+msgstr "Blackjack"
 
 #: dat/events/minerva/station.lua:30
 msgid ""
 "Seems to be one of the more popular card games where you can play blackjack "
 "against a \"cyborg chicken\"."
 msgstr ""
+"Scheint eines der beliebteren Kartenspiele zu sein, bei dem man Blackjack "
+"gegen ein „Cyborg-Huhn“ spielen kann."
 
 #: dat/events/minerva/station.lua:32
 msgid "Chuck-a-luck"
-msgstr ""
+msgstr "Chuck a Luck"
 
 #. TODO replace
 #: dat/events/minerva/station.lua:34
@@ -3230,60 +3253,71 @@ msgid ""
 "A fast-paced luck-based betting game using dice. You can play against other "
 "patrons."
 msgstr ""
+"Ein hektisches glücksbasiertes Wettspiel mit Würfeln. Du kannst gegen andere "
+"Gäste spielen."
 
 #. TODO replace?
 #: dat/events/minerva/station.lua:38
-#, fuzzy
 msgid "Patron"
-msgstr "Patrouille"
+msgstr "Gast"
 
 #: dat/events/minerva/station.lua:41
 msgid "A gambling patron enjoying his time at the station."
-msgstr ""
+msgstr "Ein spielender Gast hat eine gute Zeit auf der Station."
 
 #: dat/events/minerva/station.lua:42
 msgid ""
 "A tourist looking a bit bewildered at all the noises and shiny lights all "
 "over."
 msgstr ""
+"Ein Tourist, der etwas überwältigt von dem ganzen Lärm und den leuchtenden "
+"Lichtern überall zu sein scheint."
 
 #: dat/events/minerva/station.lua:43
 msgid "A patron who seems down on his luck."
-msgstr ""
+msgstr "Ein Gast, der anscheinend nicht so viel Glück gehabt hat."
 
 #: dat/events/minerva/station.lua:44
 msgid "A patron who looks exhilarated as if they won big today."
 msgstr ""
+"Ein Gast, der hocherfreut aussieht, als ob er heute etwas großes gewonnen "
+"hätte."
 
 #: dat/events/minerva/station.lua:45
 msgid ""
 "A patron that looks like they have spend a lot of time at the station. There "
 "are clear dark circles under their eyes."
 msgstr ""
+"Ein Gast, der aussieht, als hätte er viel Zeit auf der Station verbracht. Er "
+"hat deutliche dunkle Augenringe."
 
 #: dat/events/minerva/station.lua:46
 msgid "A patron that looks strangely out of place."
-msgstr ""
+msgstr "Ein Gast, der seltsam fehl am Platz aussieht."
 
 #: dat/events/minerva/station.lua:47
 msgid "A patron that fits in perfectly into the gambling station."
-msgstr ""
+msgstr "Ein Gast, der perfekt in die Glücksspielstation passt."
 
 #: dat/events/minerva/station.lua:50
 msgid ""
 "\"This place is totally what I thought it would be. The lights, the sounds, "
 "the action! I feel like I'm in Heaven!\""
 msgstr ""
+"„Dieser Ort ist genau so, wie ich mir ihn vorgestellt habe. Die Lichter, die "
+"Geräusche, die Action! Ich fühle mich wie im Himmel!“"
 
 #: dat/events/minerva/station.lua:51
 msgid ""
 "\"It's incredible! Who would have thought to make money physical! These "
 "Minerva Tokens defy all logic!\""
 msgstr ""
+"„Es ist unglaublich! Wer hätte gedacht, dass man Geld physisch machen kann! "
+"Diese Minerva-Jetons trotzen jeder Logik!“"
 
 #: dat/events/minerva/station.lua:55
 msgid " Wait, what? What do you mean they are sold out!?"
-msgstr ""
+msgstr " Bitte was? Was soll das heißen, sie sind ausverkauft?"
 
 #: dat/events/minerva/station.lua:57
 #, lua-format
@@ -3291,18 +3325,26 @@ msgid ""
 "\"I really have my eyes on the Fuzzy Dice available at the terminal. I "
 "always wanted to own a piece of history!%s\""
 msgstr ""
+"„Ich habe vor allem meine Augen auf die Plüschwürfel geworfen, die am "
+"Terminal erhältlich sind. Ich wollte schon immer ein Stück Geschichte "
+"besitzen!%s“"
 
 #: dat/events/minerva/station.lua:58
 msgid ""
 "\"I played 20 hands of blackjack with that Cyborg Chicken. I may have lost "
 "them all, but that was worth every credit!\""
 msgstr ""
+"„Ich habe 20 Runden Blackjack mit diesem Cyborg-Huhn gespielt. Ich habe sie "
+"zwar alle verloren, aber das war jeden Credit wert!“"
 
 #: dat/events/minerva/station.lua:59
 msgid ""
 "\"This place is great! I still have no idea how to play blackjack, but I "
 "just keep on playing again and again against that Cyborg Chicken.\""
 msgstr ""
+"„Dieser Ort ist großartig! Ich habe immer noch keine Ahnung, wie man "
+"Blackjack spielt, aber ich spiele einfach immer wieder gegen dieses Cyborg-"
+"Huhn.“"
 
 #: dat/events/minerva/station.lua:61
 #, lua-format
@@ -3310,54 +3352,75 @@ msgid ""
 "\"I came all the way from %s to be here! We don't have anything like this "
 "back at home.\""
 msgstr ""
+"„Ich bin den ganzen Weg von %s gekommen, um hier zu sein! So etwas haben wir "
+"zu Hause nicht.“"
 
 #: dat/events/minerva/station.lua:64
 msgid ""
 "\"Critics of Minerva Station say that being able to acquire nice outfits "
 "here without needing licenses increases piracy. I think they are all lame!\""
 msgstr ""
+"„Kritiker der Minerva-Station sagen, dass die Möglichkeit, hier schöne "
+"Ausstattungen zu erwerben, ohne Lizenzen zu benötigen, die Piraterie erhöht. "
+"Die sind doch alle behindert!“"
 
 #: dat/events/minerva/station.lua:65
 msgid ""
 "\"I really want to go to the VIP hot springs they have, but I don't have the "
 "tokens. How does that even work in a space station?\""
 msgstr ""
+"„Ich möchte wirklich zu den VIP-Thermen gehen, die sie haben, aber ich habe "
+"die Jetons nicht. Wie funktioniert das überhaupt in einer Raumstation?“"
 
 #: dat/events/minerva/station.lua:66
 msgid ""
 "\"I hear you can do all sorts of crazy stuff here if you have enough tokens. "
 "Need... to.. get.. more...!\""
 msgstr ""
+"„Ich habe gehört, dass man hier alle möglichen verrückten Sachen machen "
+"kann, wenn man genug Jetons hat. Ich ... muss ... mehr ... kriegen ...!“"
 
 #: dat/events/minerva/station.lua:67
 msgid ""
 "\"I have never seen robots talk so roboty like the terminals here. That is "
 "so retro!\""
 msgstr ""
+"„Ich habe noch nie Roboter gesehen, die so roboterhaft reden wie die "
+"Terminals hier. Das ist so retro!“"
 
 #: dat/events/minerva/station.lua:68
 msgid ""
 "\"I scrounged up my lifetime savings to get a ticket here, but I forgot to "
 "bring extra to gamble...\""
 msgstr ""
+"„Ich habe mein ganzes Erspartes zusammengeschnorrt, um ein Ticket hierher zu "
+"bekommen, aber ich habe vergessen, zusätzliches Geld für die Spiele "
+"mitzubringen ...“"
 
 #: dat/events/minerva/station.lua:69
 msgid ""
 "\"I gambled all my savings away... I'm going to get killed when I get back "
 "home...\""
 msgstr ""
+"„Ich habe meine ganzen Ersparnisse verspielt ... Wenn ich nach Hause kommen, "
+"wird man mich umbringen.“"
 
 #: dat/events/minerva/station.lua:70
 msgid ""
 "\"They say you shouldn't gamble more than you can afford to lose. I wish "
 "someone had told me that yesterday. I don't even own a ship anymore!\""
 msgstr ""
+"„Man sagt, man soll nicht mehr setzen, als man sich leisten kann, zu "
+"verlieren. Ich wünschte, jemand hätte mir das gestern gesagt. Ich besitze "
+"nicht mal mehr ein Schiff!“"
 
 #: dat/events/minerva/station.lua:71
 msgid ""
 "\"I like to play blackjack. I'm not addicted to gambling. I'm addicted to "
 "sitting in a semi-circle.\""
 msgstr ""
+"„Ich spiele gerne Blackjack. Ich bin nicht süchtig nach Glücksspiel. Ich bin "
+"süchtig danach, in einem Halbkreis zu sitzen.“"
 
 #. Mitch Hedberg
 #: dat/events/minerva/station.lua:72
@@ -3365,16 +3428,20 @@ msgid ""
 "\"Gambling has brought our family together. We had to move to a smaller "
 "house.\""
 msgstr ""
+"„Das Glücksspiel hat unsere Familie zusammengebracht. Wir mussten in ein "
+"kleineres Haus umziehen.“"
 
 #. Tommy Cooper
 #: dat/events/minerva/station.lua:73
 msgid "\"You don’t gamble to win. You gamble so you can gamble the next day.\""
 msgstr ""
+"„Du spielst nicht, um zu gewinnen. Du spielst, damit du am nächsten Tag "
+"spielen kannst.“"
 
 #. Bert Ambrose
 #: dat/events/minerva/station.lua:74
 msgid "\"A credit won is twice as sweet as a credit earned!\""
-msgstr ""
+msgstr "„Ein gewonnener Credit ist doppelt so süß wie ein verdienter Kredit!“"
 
 #. Paul Newman (dollar -> credit)
 #: dat/events/minerva/station.lua:75
@@ -3382,11 +3449,14 @@ msgid ""
 "\"There is a very easy way to return from Minerva Station with a small "
 "fortune: come here with a large one!\""
 msgstr ""
+"„Es gibt eine sehr einfache Möglichkeit, mit einem kleinen Vermögen von der "
+"Minerva-Station zurückzukehren: Kommen Sie mit einem großen Vermögen "
+"hierher!“"
 
 #. Jack Yelton (paraphrased)
 #: dat/events/minerva/station.lua:76
 msgid "\"Luck always seems to be against the ones who depends on it.\""
-msgstr ""
+msgstr "„Das Glück scheint immer gegen denjenigen zu sein, der es braucht.“"
 
 #. Create NPCs
 #. npc_chuckaluck = evt.npcAdd( "approach_chuckaluck", chuckaluck_name, chuckaluck_portrait, chuckaluck_desc, gambling_priority )
@@ -3403,9 +3473,8 @@ msgstr ""
 #. TODO probably a bug, but we should be able to pass a hook argument instead of hardcoding the function
 #. Doesn't seem to work however
 #: dat/events/minerva/station.lua:138
-#, fuzzy
 msgid "Greeter"
-msgstr "Grüßen"
+msgstr "Grüßer"
 
 #: dat/events/minerva/station.lua:141
 msgid ""
@@ -3414,6 +3483,11 @@ msgid ""
 "is saying over all the background noise created by other patrons and "
 "gambling machines, but you try to make it out as best as you can."
 msgstr ""
+"Sobald du die Kneipe des Weltraumhafens betrittst, kommt eine adrett "
+"gekleidete Person auf dich zu und gibt dir ein Getränk in die Hand. Es ist "
+"schwer zu verstehen, was er sagt, wenn man die Hintergrundgeräusche der "
+"anderen Gäste und der Spielautomaten hört, aber du versuchst es so gut es "
+"geht zu verstehen."
 
 #: dat/events/minerva/station.lua:142
 msgid ""
@@ -3443,23 +3517,23 @@ msgstr ""
 
 #: dat/events/minerva/station.lua:153
 msgid " TODAY MIGHT BE YOUR LUCKY DAY."
-msgstr ""
+msgstr " HEUTE KÖNNTE IHR GLÜCKSTAG SEIN."
 
 #: dat/events/minerva/station.lua:154
 msgid " THIS IS SO EXCITING."
-msgstr ""
+msgstr " DAS IST SO AUFREGEND."
 
 #: dat/events/minerva/station.lua:155
 msgid " YOU SEEM LIKE YOU MIGHT ENJOY A GAME OF BLACKJACK."
-msgstr ""
+msgstr " SIE SEHEN AUS, ALS KÖNNTE IHNEN EINE PARTIE BLACKJACK SPASS MACHEN."
 
 #: dat/events/minerva/station.lua:156
 msgid " FORTUNE FAVOURS THE PERSISTENT."
-msgstr ""
+msgstr " REICHTUM ERWARTET DIE GEDULDIGEN."
 
 #: dat/events/minerva/station.lua:157
 msgid " LIFE IS SHORT, SPEND IT AT MINERVA STATION."
-msgstr ""
+msgstr " DAS LEBEN IST KURZ, VERBRINGEN SIE ES AUF DER MINERVA-STATION."
 
 #: dat/events/minerva/station.lua:166
 #, lua-format
@@ -3472,15 +3546,19 @@ msgid_plural ""
 "\n"
 "WHAT DO YOU WISH TO DO TODAY?\""
 msgstr[0] ""
+"„WERTER KUNDE, SIE HABEN #p%d MINERVA-JETON.#0%s\n"
+"\n"
+"WAS MÖCHTEN SIE HEUTE TUN?“"
 msgstr[1] ""
+"„WERTER KUNDE, SIE HABEN #p%d MINERVA-JETONS.#0%s\n"
+"\n"
+"WAS MÖCHTEN SIE HEUTE TUN?“"
 
 #: dat/events/minerva/station.lua:170
-#, fuzzy
 msgid "Information"
-msgstr "Informationsmenü"
+msgstr "Information"
 
 #: dat/events/minerva/station.lua:171 dat/events/minerva/station.lua:183
-#, fuzzy
 msgid "Trade-in"
 msgstr "Eintauschen"
 
@@ -3497,20 +3575,20 @@ msgid ""
 "\"I AM PROGRAMMED TO EXPLAIN ABOUT THE WONDERFUL MINERVA STATION GAMBLING "
 "FACILITIES. WHAT WOULD YOU LIKE TO KNOW ABOUT?\""
 msgstr ""
+"„ICH BIN PROGRAMMIERT, IHNEN DIE WUNDERBAREN SPIELMÖGLICHKEITEN DER MINERVA-"
+"STATION ZU ERKLÄREN. WORÜBER MÖCHTEN SIE ETWAS WISSEN?“"
 
 #: dat/events/minerva/station.lua:178
 msgid "\"WHAT ELSE WOULD YOU LIKE TO KNOW?\""
-msgstr ""
+msgstr "„WAS MÖCHTEN SIE SONST WISSEN?“"
 
 #: dat/events/minerva/station.lua:181
-#, fuzzy
 msgid "Station"
-msgstr "Tau-Station"
+msgstr "Station"
 
 #: dat/events/minerva/station.lua:182
-#, fuzzy
 msgid "Gambling"
-msgstr "Larling"
+msgstr "Glücksspiel"
 
 #.
 #. -- Shader class
@@ -3585,9 +3663,8 @@ msgstr "Larling"
 #. --
 #. Main Characters
 #: dat/events/minerva/station.lua:184 dat/scripts/minerva.lua:9
-#, fuzzy
 msgid "Cyborg Chicken"
-msgstr "Chicken"
+msgstr "Cyborg-Huhn"
 
 #: dat/events/minerva/station.lua:185 dat/events/minerva/station.lua:270
 #: src/load.c:340
@@ -3610,6 +3687,12 @@ msgid ""
 "POSSIBLE TO PLAY GAMES USING CREDITS TO OBTAIN MINERVA TOKENS THAT CAN BE "
 "TRADED IN FOR GOODS AND SERVICES ANY TERMINAL THROUGHOUT THE STATION.\""
 msgstr ""
+"„OBWOHL GLÜCKSSPIELE IN DEN MEISTEN TEILEN DES IMPERIUMS NICHT ERLAUBT SIND, "
+"RÜHMT SICH DIE MINERVA-STATION EINES EXKLUSIVEN STATUS DANK DES IMPERIALEN "
+"ERLASSES 289.78 ARTIKEL 478 ABSCHNITT 19, DER ES ERLAUBT, GLÜCKSSPIELE OHNE "
+"EINSCHRÄNKUNGEN ZU GENIESSEN. ES IST MÖGLICH, SPIELE MIT CREDITS ZU SPIELEN, "
+"UM MINERVA-JETONS ZU ERHALTEN, DIE AN JEDEM TERMINAL AUF DER STATION GEGEN "
+"WAREN UND DIENSTLEISTUNGEN EINGETAUSCHT WERDEN KÖNNEN.“"
 
 #: dat/events/minerva/station.lua:194
 msgid ""
@@ -3619,6 +3702,11 @@ msgid ""
 "RESTRICTIONS. FURTHERMORE, THEY ALL HAVE 'I Got This Sucker at Minerva "
 "Station' ENGRAVED ON THEM.\""
 msgstr ""
+"„ES IST MÖGLICH, MINERVA-JETONS GEGEN WAREN UND DIENSTLEISTUNGEN AN "
+"TERMINALS IN DER GESAMTEN STATION EINZUTAUSCHEN. DANK DES IMPERIALEN "
+"ERLASSES 289.78 ARTIKEL 478 ABSCHNITT 72 UNTERLIEGEN ALLE EINTAUSCHGESCHÄFTE "
+"NICHT DEN ÜBLICHEN IMPERIALEN LIZENZBESCHRÄNKUNGEN. DARÜBER HINAUS HABEN SIE "
+"ALLE ‚Ich hab dieses Teil von Minerva-Station“ EINGRAVIERT.“"
 
 #: dat/events/minerva/station.lua:197
 msgid ""
@@ -3626,6 +3714,10 @@ msgid ""
 "UNIVERSE WILL YOU BE ABLE TO PLAY CARD GAMES WITH AN AI-ENHANCED CHICKEN "
 "CYBORG. IT IS A ONCE AND A LIFE-TIME CHANCE THAT YOU SHOULD NOT MISS.\""
 msgstr ""
+"„CYBORG-HUHN IST UNSER BELIEBTESTER BLACKJACK-CROUPIER. NIRGENDWO SONST IM "
+"UNIVERSUM WERDEN SIE DIE MÖGLICHKEIT HABEN, KARTENSPIELE MIT EINEM AI-"
+"VERBESSERTEN CYBORG-HUHN ZU SPIELEN. ES IST EINE EINMALIGE CHANCE, DIE SIE "
+"SICH NICHT ENTGEHEN LASSEN SOLLTEN.“"
 
 #: dat/events/minerva/station.lua:202
 #, lua-format
@@ -3638,7 +3730,13 @@ msgid_plural ""
 "REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d "
 "MINERVA TOKENS#0.\""
 msgstr[0] ""
+"„TUT MIR LEID, SIE HABEN NICHT GENUG MINERVA-JETONS, UM DEN GEWÜNSCHTEN "
+"GEGENSTAND EINZUTAUSCHEN. MÖCHTEN SIE GEGEN ETWAS ANDERES EINTAUSCHEN? SIE "
+"HABEN #p%d MINERVA-JETON#0.“"
 msgstr[1] ""
+"„TUT MIR LEID, SIE HABEN NICHT GENUG MINERVA-JETONS, UM DEN GEWÜNSCHTEN "
+"GEGENSTAND EINZUTAUSCHEN. MÖCHTEN SIE GEGEN ETWAS ANDERES EINTAUSCHEN? SIE "
+"HABEN #p%d MINERVA-JETONS#0.“"
 
 #: dat/events/minerva/station.lua:208
 #, lua-format
@@ -3667,19 +3765,18 @@ msgstr[1] ""
 #. Jump in case of 'Back'
 #. Not enough money.
 #: dat/events/minerva/station.lua:254 dat/events/minerva/station.lua:293
-#, fuzzy
 msgid "unknown tradein type"
-msgstr "Unbekannter Datentyp „%s“"
+msgstr "unbekannter tradein-Typ"
 
 #: dat/events/minerva/station.lua:265
 #, lua-format
 msgid "%s (#rSOLD OUT#0)"
-msgstr ""
+msgstr "%s (#rAUSVERKAUFT#0)"
 
 #: dat/events/minerva/station.lua:267
-#, fuzzy, lua-format
+#, lua-format
 msgid "%s (#p%d Tokens#0)"
-msgstr "%s (%s Tonnen)"
+msgstr "%s (#p%d Jetons#0)"
 
 #. Buying stuff
 #: dat/events/minerva/station.lua:278
@@ -3691,9 +3788,8 @@ msgid ""
 msgstr ""
 
 #: dat/events/minerva/station.lua:281
-#, fuzzy
 msgid "Trade"
-msgstr "Händler"
+msgstr "Handeln"
 
 #. Run callback.
 #. Rebuild tables, as we've added outfits.
@@ -3712,12 +3808,12 @@ msgstr "Abbrechen"
 #: dat/events/minerva/station.lua:289
 #, fuzzy
 msgid "Gambling Bounty"
-msgstr "Sirianisches Kopfgeld"
+msgstr "Glücksspielkopfgeld"
 
 #: dat/events/minerva/station.lua:289
-#, fuzzy, lua-format
+#, lua-format
 msgid "Obtained: %s"
-msgstr "Fleckige: %s"
+msgstr "Erhalten: %s"
 
 #. TODO play a little jingle here
 #: dat/events/minerva/station.lua:300
@@ -3752,19 +3848,16 @@ msgstr ""
 
 #. Clear buffer without waiting
 #: dat/events/minerva/station.lua:332
-#, fuzzy
 msgid "Play"
-msgstr "Alle spielen"
+msgstr "Spielen"
 
 #: dat/events/minerva/station.lua:333
-#, fuzzy
 msgid "Explanation"
-msgstr "Einwohnerzahl"
+msgstr "Erklärung"
 
 #: dat/events/minerva/station.lua:333
-#, fuzzy
 msgid "explanation"
-msgstr "Rebinas Erklärung"
+msgstr "Erklärung"
 
 #. Resize the window
 #. cc.offset is only set up when the they appear in the VN
@@ -5262,7 +5355,7 @@ msgid ""
 "have established the first colony of the Earth insects on the planet "
 "formerly known as G Scorpeii 5."
 msgstr ""
-"Während die Gärten für für den zukünftigen imperialen Verbund vorbereitet "
+"Während die Gärten für den zukünftigen imperialen Verbund vorbereitet "
 "werden, haben Insektenforscher die erste Kolonie der Insekten von der Erde "
 "auf dem Planeten, der früher als G Scorpeii 5 bekannt war, angelegt."
 
@@ -10207,7 +10300,7 @@ msgstr ""
 "kann wohl nicht alles haben. Mein Chef ist ein einigermaßen einflussreicher "
 "Herr, und … Aber nein, ich werde dich nicht mit Details langweilen. Einfach "
 "gesagt, Lord Sauterfeldt sucht nach einer bezahlten Hilfe und du scheint "
-"geeignet zu sein, nach deinem Schiff zu urteilen."
+"geeignet zu sein, nach deinem Schiff zu urteilen.“"
 
 #: dat/missions/baron/baron_baron.lua:40
 msgid ""
@@ -19347,12 +19440,11 @@ msgid "Distraught Young Woman"
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:42
-#, fuzzy
 msgid ""
 "You see a small young woman sitting by herself. She has a worried expression "
 "on her face."
 msgstr ""
-"Du siehst einen jungen Fyrra-Mann mit einem entschlossenem Gesichtsausdruck."
+"Du siehst eine Frau alleine sitzen. Sie hat einen besorgten Gesichtsausdruck."
 
 #. This mission does not make any system claims
 #. Our *cargo* weighs nothing
@@ -19390,9 +19482,8 @@ msgid "You see a nonchalant old man sipping on his drink with a carefree aura."
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:52
-#, fuzzy
 msgid "Scavengers"
-msgstr "Rächer"
+msgstr "Plünderer"
 
 #: dat/missions/minerva/maikki1.lua:54
 msgid ""
@@ -19401,9 +19492,8 @@ msgstr ""
 
 #. unneeded
 #: dat/missions/minerva/maikki1.lua:62 dat/missions/minerva/maikki2.lua:75
-#, fuzzy
 msgid "Finding Father"
-msgstr "Finde den Drink"
+msgstr "Vater finden"
 
 #: dat/missions/minerva/maikki1.lua:63 dat/missions/minerva/maikki2.lua:76
 #: src/faction.c:1006 src/faction.c:1021 src/faction.c:1028
@@ -19462,9 +19552,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:146
-#, fuzzy
 msgid "Offer to help her"
-msgstr "Zu den Geschäften"
+msgstr "Hilfe anbieten"
 
 #: dat/missions/minerva/maikki1.lua:147 dat/missions/minerva/maikki2.lua:175
 msgid "Decline to help"
@@ -19492,9 +19581,8 @@ msgid "Offer her a drink (#p10 Minerva Tokens#0)"
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:164
-#, fuzzy
 msgid "Ask her who she is looking for"
-msgstr "Ich kenne den Piloten, den du suchst"
+msgstr "Fragen, nach wen sie sucht"
 
 #: dat/missions/minerva/maikki1.lua:175
 msgid ""
@@ -19510,9 +19598,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:181
-#, fuzzy
 msgid "You do not have enough Minerva Tokens to buy her a drink."
-msgstr "#rDu hast nicht genügend Treibstoff für einen Hyperraumsprung."
+msgstr "Du hast nicht genügend Minverva-Jetons, um ihr einen Drink zu kaufen."
 
 #: dat/missions/minerva/maikki1.lua:185
 msgid ""
@@ -19585,9 +19672,9 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:219
-#, fuzzy, lua-format
+#, lua-format
 msgid "Look around the %s system"
-msgstr "Flieg zum „%s“-System"
+msgstr "Sieh dich im „%s“-System um"
 
 #: dat/missions/minerva/maikki1.lua:226
 msgid "You show her the picture you found in Zerantix of her and her parents."
@@ -19673,9 +19760,8 @@ msgid "Ask about Doeston"
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:277
-#, fuzzy
 msgid "Ask about the Nebula"
-msgstr "Willkommen im Nebel"
+msgstr "Über den Nebel fragen"
 
 #: dat/missions/minerva/maikki1.lua:281
 msgid "Ask about scavengers you saw"
@@ -19815,20 +19901,17 @@ msgstr "Du wirst es nicht lebend hier raus schaffen!"
 
 #. 100k credits
 #: dat/missions/minerva/maikki1.lua:362 dat/missions/minerva/maikki1.lua:762
-#, fuzzy
 msgid "Scavenger A"
-msgstr "Rächer"
+msgstr "Plünderer A"
 
 #: dat/missions/minerva/maikki1.lua:364 dat/missions/minerva/maikki1.lua:765
-#, fuzzy
 msgid "Scavenger B"
-msgstr "Rächer"
+msgstr "Plünderer B"
 
 #. TODO maybe more text?
 #: dat/missions/minerva/maikki1.lua:370
-#, fuzzy
 msgid "\"What are you looking at?\""
-msgstr "Was machst du hier?"
+msgstr "„Was guckst du so blöd?“"
 
 #: dat/missions/minerva/maikki1.lua:375
 msgid ""
@@ -19913,9 +19996,9 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:401
-#, fuzzy, lua-format
+#, lua-format
 msgid "Follow the scavengers in the %s system"
-msgstr "Flieg nach %s im „%s“-System"
+msgstr "Folge den Plünderern ins „%s“-System"
 
 #: dat/missions/minerva/maikki1.lua:408
 #, fuzzy
@@ -19928,9 +20011,8 @@ msgstr "Du bist ohne den Motor gereist."
 #. cutscene
 #. TODO meta-factions
 #: dat/missions/minerva/maikki1.lua:428
-#, fuzzy
 msgid "Scavenger Vendetta"
-msgstr "Söldner-Vendetta"
+msgstr "Plünderer-Vendetta"
 
 #. annoying to handle the case the player kills them
 #. Set up system
@@ -19939,9 +20021,8 @@ msgstr "Söldner-Vendetta"
 #. 6400 dist or 32s
 #. 5800 dist or 29s
 #: dat/missions/minerva/maikki1.lua:464
-#, fuzzy
 msgid "Sensors damaged. Requesting assistance."
-msgstr "SOS. Hier spricht %s. Primärsysteme defekt. Bitte um Unterstützung."
+msgstr "Sensoren beschädigt. Hilfe erbeten."
 
 #: dat/missions/minerva/maikki1.lua:465
 msgid "S.O.S. Scavenger here, sensors damaged."
@@ -19952,14 +20033,12 @@ msgid "Is anybody out there? Sensors damaged, requesting assistance."
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:467
-#, fuzzy
 msgid "Mayday! Requesting assistance. Wait, what was that?"
-msgstr "Hilfe erbeten. Wir werden angegriffen!"
+msgstr "Mayday! Brauchen Hilfe. Moment, was war das?"
 
 #: dat/missions/minerva/maikki1.lua:496
-#, fuzzy
 msgid "Scavenger"
-msgstr "Rächer"
+msgstr "Plünderer"
 
 #: dat/missions/minerva/maikki1.lua:500
 msgid ""
@@ -20019,7 +20098,6 @@ msgstr ""
 
 #. reset timer
 #: dat/missions/minerva/maikki1.lua:532
-#, fuzzy
 msgid "Thanks!"
 msgstr "Danke!"
 
@@ -20066,9 +20144,8 @@ msgid "Yeah, yeah...  just hope we don't see any ghosts."
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:590
-#, fuzzy
 msgid "You don't really believe in them do you?"
-msgstr "Du schaffst das! Ich glaube an dich."
+msgstr "Du glaubst nicht wirklich an sie, oder?"
 
 #: dat/missions/minerva/maikki1.lua:591
 msgid "Dude, there's really freaky shit out there."
@@ -20089,9 +20166,8 @@ msgstr ""
 
 #. 37 seconds
 #: dat/missions/minerva/maikki1.lua:596
-#, fuzzy
 msgid "Hey, did you see something?"
-msgstr "Hast du nicht etwas vergessen?"
+msgstr "Hey, hast du etwas gesehen?"
 
 #: dat/missions/minerva/maikki1.lua:597
 msgid ""
@@ -20113,9 +20189,8 @@ msgstr ""
 
 #. Cut off point here, restarts at heading to waypoint[4]
 #: dat/missions/minerva/maikki1.lua:603
-#, fuzzy
 msgid "We should be there soon."
-msgstr "Er sollte jetzt hier sein."
+msgstr "Wir sollten hier bald sein."
 
 #: dat/missions/minerva/maikki1.lua:604
 msgid "I swear I'll never come to the nebula again after this..."
@@ -20146,18 +20221,16 @@ msgstr ""
 
 #. Starting out
 #: dat/missions/minerva/maikki1.lua:664
-#, fuzzy
 msgid "Let's get going."
-msgstr "Los geht’s"
+msgstr "Los geht’s."
 
 #. Check if made it to next target
 #. Finished current target, go to next
 #. Made it to target
 #. pscavA is following pscavB
 #: dat/missions/minerva/maikki1.lua:699
-#, fuzzy
 msgid "Did you see something?"
-msgstr "Hast du nicht etwas vergessen?"
+msgstr "Hast du etwas gesehen?"
 
 #. Should trigger another catch
 #: dat/missions/minerva/maikki1.lua:705
@@ -20166,9 +20239,8 @@ msgstr ""
 
 #. Spawn the wreck
 #: dat/missions/minerva/maikki1.lua:720
-#, fuzzy
 msgid "Ship Wreck"
-msgstr "Schiffsbrüchiger %s"
+msgstr "Schiffswrack"
 
 #. Still travelling to target
 #: dat/missions/minerva/maikki1.lua:737
@@ -20245,9 +20317,9 @@ msgstr ""
 
 #. TODO play money sound
 #: dat/missions/minerva/maikki1.lua:811
-#, fuzzy, lua-format
+#, lua-format
 msgid "You wire them %s."
-msgstr "Dir fehlt: %s."
+msgstr "Du überweist ihnen %s."
 
 #: dat/missions/minerva/maikki1.lua:812
 msgid ""
@@ -20273,11 +20345,9 @@ msgstr ""
 
 #. Fight to the death :D
 #: dat/missions/minerva/maikki1.lua:821
-#, fuzzy
 msgid "You don't have enough money to bribe them and fumble with words."
 msgstr ""
-"Du hast nicht genügend Geld, um einen gefälschten Ausweis zu kaufen. Der "
-"Preis ist %s."
+"Du hast nicht genügend Geld, um sie zu bestechen und stammelst wirres Zeug."
 
 #: dat/missions/minerva/maikki1.lua:823
 msgid "\"He's stalling for time! He must have reinforcements coming!\""
@@ -20297,9 +20367,8 @@ msgstr ""
 
 #. TODO add angry messages
 #: dat/missions/minerva/maikki1.lua:843
-#, fuzzy
 msgid "MISSION FAILED! Scavenger attacked."
-msgstr "MISSION FEHLGESCHLAGEN: Du bist geflohen."
+msgstr "MISSION FEHLGESCHLAGEN! Plünderer angegriffen."
 
 #: dat/missions/minerva/maikki1.lua:858
 msgid ""
@@ -20315,9 +20384,8 @@ msgstr ""
 
 #. Give player the illusion of choice
 #: dat/missions/minerva/maikki1.lua:865
-#, fuzzy
 msgid "Investigate the bridge"
-msgstr "Ablenkungen auf der Brücke"
+msgstr "Untersuche die Brücke"
 
 #: dat/missions/minerva/maikki1.lua:868
 msgid "Investigate the dormitories"
@@ -20408,27 +20476,24 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:46 dat/missions/minerva/maikki2.lua:52
 #: dat/missions/minerva/maikki2.lua:58 dat/missions/minerva/maikki2.lua:64
-#, fuzzy
 msgid "Foo"
-msgstr "Nahrung"
+msgstr "Foo"
 
 #: dat/missions/minerva/maikki2.lua:51
 msgid "Prof. Stova"
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:57
-#, fuzzy
 msgid "Dr. Cayne"
-msgstr "Dr. Logan"
+msgstr "Dr. Cayne"
 
 #: dat/missions/minerva/maikki2.lua:63
 msgid "Prof. Hsu"
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:69
-#, fuzzy
 msgid "Prof. Strangelove"
-msgstr "Seltsamer Pilot"
+msgstr "Prof. Seltsam"
 
 #. Mission states:
 #. nil: mission not yet accepted
@@ -20446,9 +20511,9 @@ msgid "Investigate the Za'lek"
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:142
-#, fuzzy, lua-format
+#, lua-format
 msgid "\tGo to %s in %s"
-msgstr "Kehre nach %s in %s zurück"
+msgstr "\tGehe nach %s in %s"
 
 #: dat/missions/minerva/maikki2.lua:169
 msgid ""
@@ -20523,13 +20588,17 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:216
-#, fuzzy, lua-format
+#, lua-format
 msgid ""
 "\"The three Za'lek researchers you should seek out are:\n"
 "%s in the %s system,\n"
 "%s in the %s system,\n"
 "and %s in the %s system.\""
-msgstr "Finde den Bruder im „%s“-System, im „%s“-Syste oder dem „%s“-System"
+msgstr ""
+"„Die drei Za'lek-Wissenschaftler, die du aufsuchen solltest, sind:\n"
+"%s im ‚%s‘-System,\n"
+"%s im ‚%s‘-System\n"
+"und %s im ‚%s‘-System.“"
 
 #: dat/missions/minerva/maikki2.lua:224
 msgid ""
@@ -20555,9 +20624,9 @@ msgid "\"\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:360
-#, fuzzy, lua-format
+#, lua-format
 msgid "\tGo to %s"
-msgstr "Fliege nach %s"
+msgstr "\tGehe nach %s"
 
 #. TODO security protocol
 #.
@@ -24224,7 +24293,7 @@ msgstr ""
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:64
 msgid "\"I think this is it! We found him!\""
-msgstr "„Das muss es sein! Wir haben ihn gefunden!“ sagt die Frau."
+msgstr "„Das muss es sein! Wir haben ihn gefunden!“"
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:65
 msgid ""
@@ -31314,14 +31383,13 @@ msgid ""
 "all I can tell you.\""
 msgstr ""
 "Kapitän Rebina hat einige Informationen über die Organisation, für die sie "
-"arbeitet, offengelegt.\n"
-"    „Die Organisation, der ich angehöre, ist bekannt als die Vier Winde, "
-"oder besser gesagt … nicht bekannt als die Vier Winde. Wir halten uns "
-"bedeckt. Du wirst sicher noch nie von uns gehört haben. An dieser Stelle "
-"sollte ich hinzufügen, dass viele, die uns kennen, uns als die ‚Schatten‘ "
-"bezeichnen, aber dies ist nur ein umgangssprachlicher Name. Er deckt "
-"sicherlich nicht ab, was wir tun. Auf jeden Fall kann man sich uns als eine "
-"private Operation mit sehr spezifischen Zielen vorstellen. Zu diesem "
+"arbeitet, offengelegt. „Die Organisation, der ich angehöre, ist bekannt als "
+"die Vier Winde, oder besser gesagt … nicht bekannt als die Vier Winde. Wir "
+"halten uns bedeckt. Du wirst sicher noch nie von uns gehört haben. An dieser "
+"Stelle sollte ich hinzufügen, dass viele, die uns kennen, uns als die "
+"‚Schatten‘ bezeichnen, aber dies ist nur ein umgangssprachlicher Name. Er "
+"deckt sicherlich nicht ab, was wir tun. Auf jeden Fall kann man sich uns als "
+"eine private Operation mit sehr spezifischen Zielen vorstellen. Zu diesem "
 "Zeitpunkt ist dies alles, was ich dir sagen kann.“"
 
 #: dat/missions/shadow/shadowvigil.lua:121
@@ -41941,7 +42009,7 @@ msgstr "nicht implementiert"
 #. --
 #: dat/scripts/love.lua:112
 msgid "can only run one Love2D instance at a time!"
-msgstr ""
+msgstr "Es kann nur eine Love2D-Instanz gleichzeitig laufen!"
 
 #. Save path to restore it later
 #. only add to path if not there, saves path pollution if crashing
@@ -42041,15 +42109,15 @@ msgstr "Fallback-Schrift konnte nicht gesetzt werden"
 
 #: dat/scripts/minerva.lua:15
 msgid "Maikki"
-msgstr ""
+msgstr "Maikki"
 
 #: dat/scripts/minerva.lua:16
-#, fuzzy
 msgid ""
 "You see a very cutely dressed young woman. She seems to have a worried "
 "expression on her face."
 msgstr ""
-"Du siehst einen jungen Fyrra-Mann mit einem entschlossenem Gesichtsausdruck."
+"Du siehst eine sehr niedlich gekleidete junge Frau. Sie scheint einen "
+"besorgten Ausdruck auf ihrem Gesicht zu haben."
 
 #. Helpers to create main characters
 #. Token stuff
@@ -42059,80 +42127,79 @@ msgstr ""
 #. too lazy to write blackjack over and over
 #. Compute position stuff
 #: dat/scripts/minigames/blackjack.lua:13
-#, fuzzy
 msgid "Hit"
-msgstr "Piratenauftragsmörder"
+msgstr "Karte"
 
 #: dat/scripts/minigames/blackjack.lua:13
+#, fuzzy
 msgid "Stay"
-msgstr ""
+msgstr "Stay"
 
 #: dat/scripts/minigames/blackjack.lua:14
 msgid "Bet 10 k¤"
-msgstr ""
+msgstr "10 k¤ setzen"
 
 #: dat/scripts/minigames/blackjack.lua:14
 msgid "Bet 100 k¤"
-msgstr ""
+msgstr "100 k¤ setzen"
 
 #. Scaling factor
 #. Total height is: scale*(105*2+sep)+40+3*font:height
 #. Start out betting
 #: dat/scripts/minigames/blackjack.lua:66
 msgid "#rYou lost!#0"
-msgstr ""
+msgstr "#rDu hast verloren!#0"
 
 #: dat/scripts/minigames/blackjack.lua:68
 #: dat/scripts/minigames/blackjack.lua:75
 #, lua-format
 msgid "#pBlackjack!#0 %s"
-msgstr ""
+msgstr "#pBlackjack!#0 %s"
 
 #: dat/scripts/minigames/blackjack.lua:73
 #, lua-format
 msgid "#gYou won #p%d Minerva Tokens#g!#0"
-msgstr ""
+msgstr "#gDu hast #p%d Minerva-Jetons#g gewonnen!#0"
 
 #: dat/scripts/minigames/blackjack.lua:79
 msgid "Double Blackjack! Push!"
-msgstr ""
+msgstr "Doppel-Blackjack! Push!"
 
 #: dat/scripts/minigames/blackjack.lua:81
-#, fuzzy
 msgid "Push!"
-msgstr "Hinterhalt!"
+msgstr "Push!"
 
 #. Special case for blackjacks
 #. Check if player lost
 #. See if dealer grabs another card
 #. Dealer
 #: dat/scripts/minigames/blackjack.lua:183
-#, fuzzy, lua-format
+#, lua-format
 msgid "Dealer: %s"
-msgstr "Name: %s"
+msgstr "Croupier: %s"
 
 #. Player
 #: dat/scripts/minigames/blackjack.lua:196
-#, fuzzy, lua-format
+#, lua-format
 msgid "Player: %d"
-msgstr "Spielername"
+msgstr "Spieler: %d"
 
 #. Print status
 #. Buttons
 #: dat/scripts/minigames/blackjack.lua:242
 #, lua-format
 msgid "You have %s credits and #p%s Minerva Tokens#0."
-msgstr ""
+msgstr "Du hast %s Credits und #p%s Minerva-Jetons#0."
 
 #: dat/scripts/minigames/blackjack.lua:249
 #, lua-format
 msgid "#rNot enough credits! You only have %s!#0"
-msgstr ""
+msgstr "#rNicht genügend Credits! Du hast nur %s!#0"
 
 #: dat/scripts/minigames/blackjack.lua:253
-#, fuzzy, lua-format
+#, lua-format
 msgid "You bet %s."
-msgstr "Dir fehlt: %s."
+msgstr "Du setzt %s."
 
 #.
 #. -- Playing card game images
@@ -44494,15 +44561,14 @@ msgstr "vn: kann Zustände beim Laufen nicht ändern"
 #. -- Character
 #. --
 #: dat/scripts/vn.lua:302
-#, fuzzy
 msgid "character not found to remove!"
-msgstr "vn: Zeichen „%s“ nicht gefunden!"
+msgstr "Zu entfernendes Zeichen nicht gefunden!"
 
 #. reset name
 #. TODO better centering
 #: dat/scripts/vn.lua:330
 msgid "vn: unsupported number of characters"
-msgstr ""
+msgstr "vn: nicht unterstützte Anzahl an Zeichen"
 
 #.
 #. -- Say
@@ -44558,9 +44624,9 @@ msgstr ""
 #. --    @return New character.
 #. --
 #: dat/scripts/vn.lua:707
-#, fuzzy, lua-format
+#, lua-format
 msgid "vn: character image '%s' not found!"
-msgstr "vn: Zeichen „%s“ nicht gefunden!"
+msgstr "vn: Zeichenbild „%s“ nicht gefunden!"
 
 #.
 #. -- @brief Creates a new character.
@@ -46560,9 +46626,8 @@ msgid "Clear Orders"
 msgstr "Befehle leeren"
 
 #: src/escort.c:281
-#, fuzzy
 msgid "Escort Orders"
-msgstr "Befehle leeren"
+msgstr "Geleitbefehle"
 
 #: src/escort.c:282
 msgid "Select the order to give to this escort."
@@ -50050,7 +50115,7 @@ msgstr ""
 #: src/nebula.c:169
 #, c-format
 msgid "Nebula raw size doesn't match expected! (%dx%d instead of %dx%d)"
-msgstr "Rohe Nebelgröße passt nicht zur erwarteten Größe (%d×%d statt %d×%d)!"
+msgstr "Rohe Nebelgröße passt nicht zur erwarteten Größe (%d×%d statt %d×%d)"
 
 #. Display loaded nebulae.
 #: src/nebula.c:182
@@ -50067,7 +50132,7 @@ msgstr "Kein Nebel gefunden, wird erzeugt (dies kann etwas dauern)."
 #: src/nebula.c:240
 #, c-format
 msgid "Nebula size doesn't match expected! (%fx%f instead of %dx%d)"
-msgstr "Nebelgröße passt nicht zur erwarteten Größe (%f×%f statt %d×%d)!"
+msgstr "Nebelgröße passt nicht zur erwarteten Größe (%f×%f statt %d×%d)"
 
 #. Warn user of what is happening.
 #: src/nebula.c:536
@@ -50278,29 +50343,34 @@ msgid "position argument out of bounds: %d of %d elements"
 msgstr "Positionsargument außerhalb der Wertegrenzen: %d von %d Elementen"
 
 #: src/nlua_data.c:290
-#, fuzzy, c-format
+#, c-format
 msgid "size mismatch: out of bound access dest: %d of %d elements"
-msgstr "Positionsargument außerhalb der Wertegrenzen: %d von %d Elementen"
+msgstr ""
+"Größen stimmen nicht überein: Zugriff auf dest außerhalb des gültigen "
+"Bereichs: %d von %d Elementen"
 
 #: src/nlua_data.c:292
-#, fuzzy, c-format
+#, c-format
 msgid "size mismatch: out of bound access of source: %d of %d elements"
-msgstr "Positionsargument außerhalb der Wertegrenzen: %d von %d Elementen"
+msgstr ""
+"Größen stimmen nicht überein: Zugriff auf source außerhalb des gültigen "
+"Bereichs: %d von %d Elementen"
 
 #: src/nlua_data.c:319
 #, c-format
 msgid "size mismatch: A has %d elements but B has %d elements"
-msgstr ""
+msgstr "Größen stimmen nicht überein: A hat %d Elemente, aber B hat %d Elemente"
 
 #: src/nlua_data.c:321 src/nlua_data.c:367
 #, c-format
 msgid "%s is only implemented for number types"
-msgstr ""
+msgstr "%s ist nur für Zahlentypen implementiert"
 
 #: src/nlua_data.c:363 src/nlua_data.c:365
 #, c-format
 msgid "size mismatch for data: got %dx%dx4x%d, expected %d"
 msgstr ""
+"Größen stimmen für Daten nicht überein: erhielt %dx%dx4x%d, erwartete %d"
 
 #: src/nlua_evt.c:141
 #, c-format
@@ -50552,7 +50622,7 @@ msgstr "Pilot ist nicht unter manueller Steuerung."
 #: src/nlua_pilot.c:3751
 #, c-format
 msgid "Pilot '%s' can't jump out exit only jump '%s'"
-msgstr "Pilot „%s“ kann nicht aus einen Nur-Ausgangs-Sprung „%s“ springen."
+msgstr "Pilot „%s“ kann nicht aus einen Nur-Ausgangs-Sprung „%s“ springen"
 
 #. Not found.
 #: src/nlua_pilot.c:3763
@@ -51765,7 +51835,7 @@ msgstr "Ausstattung „%s“ hat einen unbekannten Platztyp „%s“."
 #: src/outfit.c:2200
 #, c-format
 msgid "Outfit '%s' has unknown general node '%s'"
-msgstr "Ausstattung „%s“ hat einen unbekannten generellen Node „%s“."
+msgstr "Ausstattung „%s“ hat einen unbekannten generellen Node „%s“"
 
 #: src/outfit.c:2226
 #, c-format
@@ -57726,7 +57796,7 @@ msgid "Eenerim"
 msgstr "Inerim"
 
 #: dat/assets/eenerim.xml:29
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "With over 80% of its surface covered in water, Eenerim teeters on the brink "
 "of classes M and O. The population here is spread out over many small or "
@@ -62300,9 +62370,8 @@ msgid "Mida Proxima"
 msgstr "Mida-Proxima"
 
 #: dat/assets/minerva_station.xml:2
-#, fuzzy
 msgid "Minerva Station"
-msgstr "Megan-Station"
+msgstr "Minerva-Station"
 
 #: dat/assets/minerva_station.xml:30
 msgid ""
@@ -62312,6 +62381,12 @@ msgid ""
 "environment. When docking to the station there is a big neon says that "
 "displays \"What happens in Limbo, stays in Limbo\"."
 msgstr ""
+"Die Station besteht im Wesentlichen aus einem gigantischen "
+"Glücksspielkomplex. Egal wo man hingeht, es scheint ein Glücksspiel im Gange "
+"zu sein, das in Kombination mit dem ständigen Kommen und Gehen von Schiffen "
+"eine sehr energiereiche, frenetische Umgebung schafft. Beim Andocken an die "
+"Station gibt es eine große Leuchtreklame, die „Was in Limbo passiert, bleibt "
+"in Limbo.“ anzeigt."
 
 #: dat/assets/minerva_station.xml:31
 msgid ""
@@ -62322,6 +62397,13 @@ msgid ""
 "ambience is designed to encourage excessive behaviour in a very carefully "
 "planned mechanical way."
 msgstr ""
+"Wie der Großteil der Station ist auch die Kneipe direkt in den "
+"Glücksspielkomplex eingebaut, mit einem konstanten Summen von Geräuschen der "
+"verschiedenen Spielautomaten und Spieltischen. Das Stationspersonal wuselt "
+"durch die Etage und schenkt sowohl Neuankömmlingen als auch Vielspielern "
+"kostenlose Getränke aus. Man spürt, wie das gesamte Ambiente darauf "
+"ausgelegt ist, exzessives Verhalten auf eine sehr sorgfältig geplante "
+"mechanische Weise zu fördern."
 
 #: dat/assets/mirror_i.xml:2
 msgid "Mirror I"
@@ -65063,7 +65145,7 @@ msgid "Reidd"
 msgstr "Reidt"
 
 #: dat/assets/reidd.xml:29
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Some planets just don't have the capacity to feed their own populations, "
 "despite advanced crop-growing techniques. Reidd is not one of those planets. "
@@ -67224,9 +67306,8 @@ msgid "Straight Row II"
 msgstr "Geradenbogen II"
 
 #: dat/assets/strangelove_lab.xml:2
-#, fuzzy
 msgid "Strangelove Lab"
-msgstr "Komische"
+msgstr "Seltsam-Labor"
 
 #: dat/assets/strangelove_lab.xml:26
 msgid ""
@@ -67236,6 +67317,12 @@ msgid ""
 "than that of a medium-sized ship. It is incredible that anyone could "
 "survive, let alone live here."
 msgstr ""
+"Das Labor ist auf einem Asteroiden versteckt, wobei sich die gesamte "
+"Infrastruktur unterirdisch befindet. Im Inneren verbindet ein Netzwerk aus "
+"staubigen Tunneln die verschiedenen Einrichtungen, und alles "
+"zusammengenommen scheint das Innere kleiner zu sein als das eines "
+"mittelgroßen Schiffes. Es ist unglaublich, dass jemand hier überleben, "
+"geschweige denn leben könnte."
 
 #: dat/assets/strangelove_lab.xml:27
 msgid ""
@@ -67245,6 +67332,12 @@ msgid ""
 "recreational things you can find are a chessboard that is missing about a "
 "dozen pieces and bottles of ethanol which you probably shouldn't be drinking."
 msgstr ""
+"Im Aufenthaltsraum des Labors stapeln sich Forschungsgeräte, die in den "
+"Ecken verstauben. Es scheint auch schlecht gekühlte biologische Proben zu "
+"geben, bei denen es dich nicht wundern würde, wenn sie sich bewegen. Die "
+"einzigen Freizeitdinge, die du finden kannst, sind ein Schachbrett, dem etwa "
+"ein Dutzend Figuren fehlen, und Flaschen mit Ethanol, die du wahrscheinlich "
+"nicht trinken solltest."
 
 #: dat/assets/stutee.xml:2
 msgid "Stutee"
@@ -68104,7 +68197,7 @@ msgid "Torg Crops"
 msgstr "Torg-Ackerbau"
 
 #: dat/assets/torg_crops.xml:27
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Torg Crops is a crop-growing station constructed by the Dvaered to avert a "
 "famine that threatened to erupt in the Torg and Doranthex systems some "
@@ -70268,7 +70361,7 @@ msgid "Worscha"
 msgstr "Worscha"
 
 #: dat/assets/worscha.xml:30
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Worscha is a relatively wealthy Sirian world with a mild climate and "
 "pleasant planetary conditions. Its rotation is a bit on the long side, about "
@@ -71179,9 +71272,8 @@ msgid "Comingout_thugs"
 msgstr "Comingout_thugs"
 
 #: dat/faction.xml:566
-#, fuzzy
 msgid "Strangelove"
-msgstr "Seltsamer Pilot"
+msgstr "Seltsam"
 
 #: dat/fleet.xml:7
 msgid "Independent Schroedinger"
@@ -71736,7 +71828,7 @@ msgstr ""
 
 #: dat/outfits/accessory/fuzzy_dice.xml:2
 msgid "Fuzzy Dice"
-msgstr ""
+msgstr "Plüschwürfel"
 
 #: dat/outfits/accessory/fuzzy_dice.xml:11
 msgid ""
@@ -71745,10 +71837,14 @@ msgid ""
 "starship pilot Mireia, who was famous for recovering artefacts from the "
 "nebula before she disappeared mysteriously."
 msgstr ""
+"Ein Paar Plüschwürfel, die in deinem Schiff aufgehängt werden können. "
+"Angeblich sollen sie dir Glück bringen. Dieses besondere Paar soll der "
+"Raumschiffpilotin Mireia gehört haben, die berühmt dafür war, Artefakte aus "
+"dem Nebel zu bergen, bevor sie auf mysteriöse Weise verschwand."
 
 #: dat/outfits/accessory/fuzzy_dice.xml:12
 msgid "#pImproves luck!#0"
-msgstr ""
+msgstr "#pVerbessert Glück!#0"
 
 #: dat/outfits/accessory/left_boot.xml:2
 msgid "Left Boot"
@@ -71766,7 +71862,7 @@ msgstr ""
 
 #: dat/outfits/accessory/left_boot.xml:13
 msgid "#gSmells funky.#0"
-msgstr ""
+msgstr "#gRiecht merkwürdig.#0"
 
 #: dat/outfits/accessory/love_letter.xml:2
 msgid "Love Letter"
@@ -71786,7 +71882,7 @@ msgstr ""
 
 #: dat/outfits/accessory/love_letter.xml:13
 msgid "#rLove is in the air.#0"
-msgstr ""
+msgstr "#rLiebe ist in der Luft.#0"
 
 #: dat/outfits/accessory/pentagram_of_valor.xml:2
 msgid "Pentagram of Valor"
@@ -72373,9 +72469,8 @@ msgstr "Schwere Bioschiffsschnellflosse Stufe 1"
 #: dat/outfits/biocore_fin/ultralight_bioship_strong_fin_stage_1.xml:4
 #: dat/outfits/biocore_fin/ultralight_bioship_strong_fin_stage_2.xml:5
 #: dat/outfits/biocore_fin/ultralight_bioship_strong_fin_stage_x.xml:4
-#, fuzzy
 msgid "Bioship Fin"
-msgstr "Bioschiffsflossen"
+msgstr "Bioschiffsflosse"
 
 #: dat/outfits/biocore_fin/heavy_bioship_fast_fin_stage_1.xml:9
 #: dat/outfits/biocore_fin/heavy_bioship_fast_fin_stage_2.xml:9
@@ -72992,9 +73087,8 @@ msgstr "Ausgeleierter großer Motor"
 #: dat/outfits/core_engine/unicorp_hawk_150_engine.xml:4
 #: dat/outfits/core_engine/unicorp_hawk_300_engine.xml:4
 #: dat/outfits/core_engine/zalek_test_engine.xml:4
-#, fuzzy
 msgid "Core Systems (Engine)"
-msgstr "Hauptsysteme"
+msgstr "Hauptsysteme (Motor)"
 
 #: dat/outfits/core_engine/beat_up_large_engine.xml:9
 #: dat/outfits/core_engine/beat_up_medium_engine.xml:9
@@ -73476,9 +73570,8 @@ msgstr "Dummy-Plattierung"
 #: dat/outfits/core_hull/unicorp_d2_light_plating.xml:4
 #: dat/outfits/core_hull/unicorp_d4_light_plating.xml:4
 #: dat/outfits/core_hull/unicorp_d8_medium_plating.xml:4
-#, fuzzy
 msgid "Core Systems (Hull)"
-msgstr "Hauptsysteme"
+msgstr "Hauptsysteme (Gerüst)"
 
 #: dat/outfits/core_hull/dummy_plating.xml:9
 msgid ""
@@ -73895,9 +73988,8 @@ msgstr "Dummy-Systeme"
 #: dat/outfits/core_system/unicorp_pt500_core_system.xml:4
 #: dat/outfits/core_system/unicorp_pt600_core_system.xml:4
 #: dat/outfits/core_system/unicorp_pt900_core_system.xml:4
-#, fuzzy
 msgid "Core Systems (System)"
-msgstr "Hauptsysteme"
+msgstr "Hauptsysteme (System)"
 
 #: dat/outfits/core_system/dummy_systems.xml:9
 msgid ""
@@ -75375,7 +75467,7 @@ msgstr "Aktivplattierung"
 #: dat/outfits/modifiers/nanobond_plating.xml:4
 #: dat/outfits/modifiers/plasteel_plating.xml:4
 msgid "Armour Modifier"
-msgstr ""
+msgstr "Panzerungsmodifikator"
 
 #: dat/outfits/modifiers/active_plating.xml:11
 msgid ""
@@ -75425,9 +75517,8 @@ msgstr "Batterie"
 
 #: dat/outfits/modifiers/battery.xml:4 dat/outfits/modifiers/battery_ii.xml:4
 #: dat/outfits/modifiers/battery_iii.xml:4
-#, fuzzy
 msgid "Power Modifier"
-msgstr "Beliebigen Modifikator setzen"
+msgstr "Energiemodifikator"
 
 #: dat/outfits/modifiers/battery.xml:9
 msgid ""
@@ -75486,7 +75577,7 @@ msgstr "Enterandroiden MKI"
 #: dat/outfits/modifiers/boarding_androids_mk1.xml:4
 #: dat/outfits/modifiers/boarding_androids_mk2.xml:4
 msgid "Crew enhancement"
-msgstr ""
+msgstr "Crewverbesserung"
 
 #: dat/outfits/modifiers/boarding_androids_mk1.xml:9
 msgid ""
@@ -75520,9 +75611,8 @@ msgstr "Frachtkapsel"
 #: dat/outfits/modifiers/cargo_pod.xml:4
 #: dat/outfits/modifiers/large_cargo_pod.xml:4
 #: dat/outfits/modifiers/medium_cargo_pod.xml:4
-#, fuzzy
 msgid "Cargo Expansion"
-msgstr "Frachtmission"
+msgstr "Frachtexpansion"
 
 #: dat/outfits/modifiers/cargo_pod.xml:9
 #: dat/outfits/modifiers/large_cargo_pod.xml:9
@@ -75538,7 +75628,7 @@ msgstr "Droidenreparaturcrew"
 
 #: dat/outfits/modifiers/droid_repair_crew.xml:4
 msgid "Armour Repair Modifier"
-msgstr ""
+msgstr "Panzerungsreparaturmodifikator"
 
 #: dat/outfits/modifiers/droid_repair_crew.xml:10
 msgid ""
@@ -75564,7 +75654,7 @@ msgstr "Motorenumleitung"
 #: dat/outfits/modifiers/steering_thrusters.xml:4
 #: dat/outfits/modifiers/thurion_engine_reroute.xml:4
 msgid "Manoevrability Modifier"
-msgstr ""
+msgstr "Manovrierfähigkeitsmodifikator"
 
 #: dat/outfits/modifiers/engine_reroute.xml:9
 #: dat/outfits/modifiers/thurion_engine_reroute.xml:10
@@ -75584,7 +75674,7 @@ msgstr "Vorwärtsschockabsorber"
 #: dat/outfits/modifiers/forward_shock_absorbers.xml:4
 #: dat/outfits/modifiers/power_regulation_override.xml:4
 msgid "Weapon Modifier (Forward)"
-msgstr ""
+msgstr "Waffenmodifikator (vorwärts)"
 
 #: dat/outfits/modifiers/forward_shock_absorbers.xml:9
 msgid ""
@@ -75602,7 +75692,7 @@ msgstr "Treibstoffkapsel"
 #: dat/outfits/modifiers/large_fuel_pod.xml:4
 #: dat/outfits/modifiers/medium_fuel_pod.xml:4
 msgid "Fuel Expansion"
-msgstr ""
+msgstr "Treibstoffexansion"
 
 #: dat/outfits/modifiers/fuel_pod.xml:9
 #: dat/outfits/modifiers/large_fuel_pod.xml:9
@@ -75618,9 +75708,8 @@ msgstr "Verbesserter Leistungsregler"
 
 #: dat/outfits/modifiers/improved_power_regulator.xml:4
 #: dat/outfits/modifiers/improved_refrigeration_cycle.xml:4
-#, fuzzy
 msgid "Weapon Modfier (Turret)"
-msgstr "Schwerer Ripper-Geschützturm"
+msgstr "Waffenmodifikator (Geschützturm)"
 
 #: dat/outfits/modifiers/improved_power_regulator.xml:10
 msgid ""
@@ -75705,9 +75794,8 @@ msgstr "Großer Schildverstärker"
 #: dat/outfits/modifiers/large_shield_booster.xml:4
 #: dat/outfits/modifiers/medium_shield_booster.xml:4
 #: dat/outfits/modifiers/small_shield_booster.xml:4
-#, fuzzy
 msgid "Shield Energy Modifier"
-msgstr "Beliebigen Modifikator setzen"
+msgstr "Schildenergiemodifikator"
 
 #: dat/outfits/modifiers/large_shield_booster.xml:9
 #: dat/outfits/modifiers/medium_shield_booster.xml:9
@@ -75777,9 +75865,8 @@ msgstr "Nebelabschirmungsprototyp"
 #: dat/outfits/modifiers/shield_capacitor_iii.xml:4
 #: dat/outfits/modifiers/shield_capacitor_iv.xml:4
 #: dat/outfits/modifiers/shield_nullifier.xml:4
-#, fuzzy
 msgid "Shield Power Modifier"
-msgstr "Schildnegierer"
+msgstr "Schildstärkenmodifikator"
 
 #: dat/outfits/modifiers/nebula_shielding0.xml:10
 msgid ""
@@ -75834,9 +75921,8 @@ msgstr "Reaktor, Klasse I"
 #: dat/outfits/modifiers/reactor_thurion_ii.xml:4
 #: dat/outfits/modifiers/reactor_thurion_iii.xml:4
 #: dat/outfits/modifiers/solar_panel.xml:4
-#, fuzzy
 msgid "Energy Modifier"
-msgstr "Energierakete"
+msgstr "Energiemodifikator"
 
 #: dat/outfits/modifiers/reactor_class_i.xml:10
 msgid ""
@@ -76025,9 +76111,8 @@ msgid "Targeting Array"
 msgstr "Zielfeld"
 
 #: dat/outfits/modifiers/targeting_array.xml:4
-#, fuzzy
 msgid "Weapon Modifier (Turret)"
-msgstr "Schwerer Ripper-Geschützturm"
+msgstr "Waffenmodifikator (Geschützturm)"
 
 #: dat/outfits/modifiers/targeting_array.xml:9
 msgid ""
@@ -76340,7 +76425,7 @@ msgstr ""
 
 #: dat/outfits/unique/hades_torch.xml:14
 msgid "#rHot hot hot!#0"
-msgstr ""
+msgstr "#rHeiß, heiß, heiß!#0"
 
 #: dat/outfits/unique/valkyrie_beam.xml:2
 msgid "Valkyrie Beam"
