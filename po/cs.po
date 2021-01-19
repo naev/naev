@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-18 12:11-0500\n"
-"PO-Revision-Date: 2021-01-19 18:28+0000\n"
+"PO-Revision-Date: 2021-01-20 00:50+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -1542,67 +1542,69 @@ msgstr "„Toto je zpoplatněná trasa, zaplať %s nebo zemři.“"
 
 #: dat/ai/pirate.lua:53
 msgid "\"You're lucky I'm so kind.\""
-msgstr ""
+msgstr "„Máš štěstí, že jsem tak laskavý.“"
 
 #: dat/ai/pirate.lua:54
 msgid "\"Life doesn't get easier than this.\""
-msgstr ""
+msgstr "„Život už nebude tak snadný.“"
 
 #: dat/ai/pirate.lua:55
 msgid "\"Pleasure doing business.\""
-msgstr ""
+msgstr "„Radost z podnikání.“"
 
 #: dat/ai/pirate.lua:56
 msgid "\"See you again, real soon.\""
-msgstr ""
+msgstr "„Uvidíme se znovu, opravdu brzy.“"
 
 #: dat/ai/pirate.lua:57
 msgid "\"I'll be around if you get generous again.\""
-msgstr ""
+msgstr "„Budu u tebe, pokud budeš opět tak velkorysý.“"
 
 #: dat/ai/pirate.lua:58
 msgid "\"Lucky day, lucky day!\""
-msgstr ""
+msgstr "„Šťastný den, šťastný den!“"
 
 #: dat/ai/pirate.lua:59
 msgid "\"And I didn't even have to kill anyone!\""
-msgstr ""
+msgstr "„A ani jsem nikoho nemusel zabít!“"
 
 #: dat/ai/pirate.lua:60
 msgid "\"See, this is how we become friends.\""
-msgstr ""
+msgstr "„Podívej, takto se z nás stanou přátelé.“"
 
 #: dat/ai/pirate.lua:61
 msgid "\"Now if I kill you it'll be just for fun!\""
-msgstr ""
+msgstr "„Když tě teď zabiju, bude to jen pro zábavu!“"
 
 #: dat/ai/pirate.lua:62
 msgid "\"You just made a good financial decision today.\""
-msgstr ""
+msgstr "„Právě jsi dnes udělal dobré finanční rozhodnutí.“"
 
 #: dat/ai/pirate.lua:63
 msgid "\"Know what? I won't kill you.\""
-msgstr ""
+msgstr "„Víš co? Nezabiju tě.“"
 
 #: dat/ai/pirate.lua:64
 msgid ""
 "\"Something feels strange. It's almost as if my urge to kill you has "
 "completely dissipated.\""
 msgstr ""
+"„Něco je špatně. Je to skoro, jako by se moje nutkání zabít tě úplně "
+"rozplynulo.“"
 
 #: dat/ai/pirate.lua:65
 msgid "\"Can I keep shooting you anyhow? No? You sure? Fine.\""
-msgstr ""
+msgstr "„Mohu tě i tak rozstřílet? Ne? Jsi si jistý? Fajn.“"
 
 #: dat/ai/pirate.lua:66
 msgid "\"And it only cost you an arm and a leg.\""
-msgstr ""
+msgstr "„A stálo tě to jen ruku a nohu.“"
 
 #. Deal with refueling
 #: dat/ai/pirate.lua:79
 #, lua-format
 msgid "\"For you, only %s for a hundred units of fuel.\""
-msgstr ""
+msgstr "„Pro vás, jen %s na sto jednotek paliva.“"
 
 #. This is the amount of waypoints the pilot will pass through before leaving the system
 #. Finish up creation
@@ -1610,103 +1612,105 @@ msgstr ""
 #. some taunts
 #: dat/ai/pirate.lua:100
 msgid "Prepare to be boarded!"
-msgstr ""
+msgstr "Připravte se na nástup!"
 
 #: dat/ai/pirate.lua:101
 msgid "Yohoho!"
-msgstr ""
+msgstr "Johoho!"
 
 #: dat/ai/pirate.lua:102
 msgid "Arr!"
-msgstr ""
+msgstr "Arr!"
 
 #: dat/ai/pirate.lua:103
 msgid "What's a ship like you doing in a place like this?"
-msgstr ""
+msgstr "Co dělá loď jako tvá na takovém místě?"
 
 #: dat/ai/pirate.lua:104
 msgid "Prepare to have your booty plundered!"
-msgstr ""
+msgstr "Připravte se na kořist!"
 
 #: dat/ai/pirate.lua:105
 msgid "Give me your credits or die!"
-msgstr ""
+msgstr "Dej mi své kredity nebo zemři!"
 
 #: dat/ai/pirate.lua:106
 msgid "Your ship's mine!"
-msgstr ""
+msgstr "Tvá loď je moje!"
 
 #: dat/ai/pirate.lua:107
 msgid "Oh ho ho, what do I see here?"
-msgstr ""
+msgstr "Oh ho ho, co tady vidím?"
 
 #: dat/ai/pirate.lua:108
 msgid "You may want to send that distress signal now."
-msgstr ""
+msgstr "Možná budeš chtít vyslat ten nouzový signál hned."
 
 #: dat/ai/pirate.lua:109
 msgid "It's time to die."
-msgstr ""
+msgstr "Je čas zemřít."
 
 #: dat/ai/pirate.lua:110
 msgid "Back so soon?"
-msgstr ""
+msgstr "Zpátky tak brzy?"
 
 #: dat/ai/pirate.lua:111
 msgid "What? Were you expecting prince charming?"
-msgstr ""
+msgstr "Snad jsi nečekal prince na bílém koni?"
 
 #: dat/ai/pirate.lua:112
 msgid "Long time no see."
-msgstr ""
+msgstr "Dlouho jsme se neviděli."
 
 #: dat/ai/pirate.lua:113
 msgid "Nothing personal, just business."
-msgstr ""
+msgstr "Nic osobního, jen obchod."
 
 #: dat/ai/pirate.lua:114
 msgid "Nothing personal."
-msgstr ""
+msgstr "Nic osobního."
 
 #: dat/ai/pirate.lua:115
 msgid "Just business."
-msgstr ""
+msgstr "Jen byznys."
 
 #: dat/ai/pirate.lua:116
 msgid "I can already taste the rum."
-msgstr ""
+msgstr "Už můžu ochutnat rum."
 
 #: dat/ai/pirate.lua:117
+#, fuzzy
 msgid "How else am I going to pay off my tab?"
-msgstr ""
+msgstr "Jak jinak zaplatím svou kartu?"
 
 #: dat/ai/pirate.lua:118
 msgid "Seems you're being shot at."
-msgstr ""
+msgstr "Vypadá to, že na tebe někdo střílí."
 
 #: dat/ai/pirate.lua:119
 msgid "I'm trying to kill you. Is it working?"
-msgstr ""
+msgstr "Snažím se tě zabít. Funguje to?"
 
 #: dat/ai/pirate.lua:120
 msgid "I'm sorry, I just don't like you."
-msgstr ""
+msgstr "Promiň, prostě tě nemám rád."
 
 #: dat/ai/pirate.lua:121
 msgid "Sorry, but I'm a private tracker."
-msgstr ""
+msgstr "Promiň, ale jsem soukromý sledovač."
 
 #: dat/ai/pirate.lua:126
+#, fuzzy
 msgid "You think that you can take me on?"
-msgstr ""
+msgstr "Myslíš si, že si mě můžeš vzít?"
 
 #: dat/ai/pirate.lua:127
 msgid "Die!"
-msgstr ""
+msgstr "Zemři!"
 
 #: dat/ai/pirate.lua:128
 msgid "You'll regret this!"
-msgstr ""
+msgstr "Toho budeš litovat!"
 
 #: dat/ai/pirate.lua:129
 msgid "You can either pray now or sit in hell later."
