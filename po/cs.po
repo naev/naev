@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-18 12:11-0500\n"
-"PO-Revision-Date: 2021-01-19 05:54+0000\n"
+"PO-Revision-Date: 2021-01-19 18:21+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -539,18 +539,19 @@ msgid "I've killed scum far more dangerous than you."
 msgstr "Zabil jsem spodinu mnohem nebezpečnější než jsi ty."
 
 #: dat/ai/flf.lua:70
+#, fuzzy
 msgid "Death to the enemies of the Frontier!"
-msgstr ""
+msgstr "Smrt nepřátelům Frontier!"
 
 #: dat/ai/frontier_police.lua:24
 msgid "\"The Frontier does not lower itself to common scum.\""
-msgstr ""
+msgstr "„Frontier se nesnižuje v obyčejnou lůzu.“"
 
 #. Handle refueling
 #: dat/ai/frontier_police.lua:35
 msgid ""
 "\"Mare magno turbantibus. That means that I don't care about your problems.\""
-msgstr ""
+msgstr "„Mare magno turbantibus. To znamená, že se o tvé problémy nestarám.“"
 
 #. Handle misc stuff
 #. This is the amount of waypoints the pilot will pass through before leaving the system
@@ -559,33 +560,33 @@ msgstr ""
 #. Offense is not actually used
 #: dat/ai/frontier_police.lua:57
 msgid "Alea iacta est!"
-msgstr ""
+msgstr "Alea iacta est!"
 
 #: dat/ai/frontier_police.lua:58
 msgid "Morituri te salutant!"
-msgstr ""
+msgstr "Morituri te salutant!"
 
 #: dat/ai/frontier_police.lua:60
 msgid "Cave canem!"
-msgstr ""
+msgstr "Cave canem!"
 
 #: dat/ai/goddard.lua:21
 msgid "\"House Goddard does not lower itself to common scum.\""
-msgstr ""
+msgstr "„Frakce Goddard se nesnižuje na obyčejnou špínu.“"
 
 #. Refueling
 #: dat/ai/goddard.lua:31
 #, lua-format
 msgid "\"I could do you the favour of refueling for the price of %s.\""
-msgstr ""
+msgstr "„Mohl bych ti udělat laskavost a doplnit palivo za cenu% s.“"
 
 #: dat/ai/goddard.lua:48
 msgid "These moments will be your last!"
-msgstr ""
+msgstr "Tyto okamžiky budou tvé poslední!"
 
 #: dat/ai/goddard.lua:49
 msgid "You are a parasite!"
-msgstr ""
+msgstr "Jsi parazit!"
 
 #.
 #. -- Main control function for bomber behavior.
@@ -1303,9 +1304,9 @@ msgstr ""
 #. Make sure mem.land is valid target
 #. Bail out if no valid planet could be found.
 #: dat/ai/include/basic.lua:381
-#, lua-format
+#, fuzzy, lua-format
 msgid "Pilot '%s' tried to land with no landable assets!"
-msgstr ""
+msgstr "Pilot '%s' se pokusil přistát bez přistávacích aktiv!"
 
 #. 2 methods depending on mem.careful
 #. Need to get closer
@@ -1377,22 +1378,22 @@ msgstr ""
 #. See if finished refueling
 #: dat/ai/include/basic.lua:818
 msgid "Finished fuel transfer."
-msgstr ""
+msgstr "Převod paliva hotov."
 
 #. This is the amount of waypoints the pilot will pass through before leaving the system
 #. Settings
 #: dat/ai/mercenary.lua:17
 #, lua-format
 msgid "\"Your life is worth %s to me.\""
-msgstr ""
+msgstr "„Tvůj život má pro mě hodnotu %s.“"
 
 #: dat/ai/mercenary.lua:18
 msgid "\"Beat it.\""
-msgstr ""
+msgstr "\"Vypadni!\""
 
 #: dat/ai/mercenary.lua:23
 msgid "\"I'm afraid you can't make it worth my while.\""
-msgstr ""
+msgstr "„Obávám se, že mi to za tu chvíli nestojí za to.“"
 
 #. This is the amount of waypoints the pilot will pass through before leaving the system
 #. Finish up creation
@@ -1401,32 +1402,32 @@ msgstr ""
 #. some taunts
 #: dat/ai/mercenary.lua:44
 msgid "Don't take this personally."
-msgstr ""
+msgstr "Neber to osobně."
 
 #: dat/ai/mercenary.lua:45
 msgid "It's just business."
-msgstr ""
+msgstr "Je to jen obchod."
 
 #: dat/ai/mercenary.lua:49
 msgid "Your skull will make a great hood ornament."
-msgstr ""
+msgstr "Z tvé lebky bude skvělá ozdoba na přídi mé lodi."
 
 #: dat/ai/mercenary.lua:50
 msgid "I've destroyed ships twice the size of yours!"
-msgstr ""
+msgstr "Zničil jsem lodě dvakrát větší než je ta tvá!"
 
 #: dat/ai/mercenary.lua:51
 msgid "I'll crush you like a grape!"
-msgstr ""
+msgstr "Rozdrtím tě jako hrozen!"
 
 #: dat/ai/mercenary.lua:52
 msgid "This isn't what I signed up for!"
-msgstr ""
+msgstr "To není to, k čemu jsem se upsal!"
 
 #. Communication stuff
 #: dat/ai/miner.lua:12
 msgid "\"I don't want any problem.\""
-msgstr ""
+msgstr "„Nechci žádný problémy.“"
 
 #. No idle function, ship won't react until it detects enemies
 #. Default task to run when idle. Similar as civilian, but with a message
@@ -1464,52 +1465,52 @@ msgstr ""
 #. Deal with bribeability
 #: dat/ai/pirate.lua:33
 msgid "\"You won't be able to slide out of this one!\""
-msgstr ""
+msgstr "„Z tohohle nebudeš schopen vyklouznout!“"
 
 #: dat/ai/pirate.lua:37
 #, lua-format
 msgid "\"It'll cost you %s for me to ignore your pile of rubbish.\""
-msgstr ""
+msgstr "„Stálo by tě %s, kdybych ignoroval tvou hromadu odpadků.“"
 
 #: dat/ai/pirate.lua:38
 #, lua-format
 msgid "\"I'm in a good mood so I'll let you go for %s.\""
-msgstr ""
+msgstr "„Mám dobrou náladu, takže tě nechám jít za %s.“"
 
 #: dat/ai/pirate.lua:39
 #, lua-format
 msgid "\"Send me %s or you're dead.\""
-msgstr ""
+msgstr "„Pošli mi %s, nebo jsi mrtvý.“"
 
 #: dat/ai/pirate.lua:40
 #, lua-format
 msgid "\"Pay up %s or it's the end of the line.\""
-msgstr ""
+msgstr "\"Zaplať %s, nebo je to tvůj konec.\""
 
 #: dat/ai/pirate.lua:41
 #, lua-format
 msgid "\"Your money or your life. %s and make the choice quickly.\""
-msgstr ""
+msgstr "„Peníze nebo život. %s a rozhodni se rychle.“"
 
 #: dat/ai/pirate.lua:42
 #, lua-format
 msgid "\"Money talks bub. %s up front or get off my channel.\""
-msgstr ""
+msgstr "„Peníze mluví kámo.%s předem nebo vypadni z mého kanálu.“"
 
 #: dat/ai/pirate.lua:43
 #, lua-format
 msgid "\"Shut up and give me your money! %s now.\""
-msgstr ""
+msgstr "„Drž hubu a dej mi své peníze! %s teď.“"
 
 #: dat/ai/pirate.lua:44
 #, lua-format
 msgid "\"You're either really desperate or really rich. %s or shut up.\""
-msgstr ""
+msgstr "„Jsi buď vážně zoufalý nebo opravdu bohatý. %s nebo drž hubu.“"
 
 #: dat/ai/pirate.lua:45
 #, lua-format
 msgid "\"If you're willing to negotiate I'll gladly take %s to not kill you.\""
-msgstr ""
+msgstr "„Pokud jsi ochoten vyjednávat, rád si vezmu %s, abych tě nezabil.“"
 
 #: dat/ai/pirate.lua:46
 #, lua-format
