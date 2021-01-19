@@ -262,8 +262,8 @@ function land()
 
    -- Player killed attackers, and can finally land for reward
    elseif (stage == 4 and planet.cur() == destpla) then
-      tk.msg( debrief_title, debrief_text1, ("portraits/"..portrait_tam..".png") )
-      tk.msg( debrief_title, debrief_text2:format(creditstring(reward)), ("portraits/"..portrait_tam..".png") )
+      tk.msg( debrief_title, debrief_text1, ("portraits/"..portrait_tam) )
+      tk.msg( debrief_title, debrief_text2:format(creditstring(reward)), ("portraits/"..portrait_tam) )
       player.pay(reward)
 
       shiplog.createLog( "frontier_war", _("Frontier War"), _("Dvaered") )

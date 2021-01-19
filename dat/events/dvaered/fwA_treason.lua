@@ -133,7 +133,7 @@ function reaction()
       evt.finish(true)
    else -- Loyal
       tk.choice(loyal_title, loyal_text1:format(player.name()), money_answer, loyal_answer) -- Actually we don't care of the answer
-      tk.msg(loyal_title, loyal_text2, ("portraits/"..portrait_leblanc..".png"))
+      tk.msg(loyal_title, loyal_text2, ("portraits/"..portrait_leblanc))
       tk.msg(loyal_title, loyal_text3)
       tk.msg(loyal_title, loyal_text4)
       var.push( "loyal2klank", true )
