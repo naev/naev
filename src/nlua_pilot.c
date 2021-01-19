@@ -1632,6 +1632,8 @@ static int pilotL_outfits( lua_State *L )
          ost = OUTFIT_SLOT_UTILITY;
       else if (strcmp(type,"weapon")==0)
          ost = OUTFIT_SLOT_WEAPON;
+      else
+         NLUA_ERROR(L,_("Unknown slot type '%s'"), type);
    }
    else
       ost = OUTFIT_SLOT_NULL;
