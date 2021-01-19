@@ -36,7 +36,7 @@ local portrait = require 'portrait'
 local vn = require 'vn'
 require 'numstring'
 
-logidstr = minerva.log.maikki,idstr
+logidstr = minerva.log.maikki.idstr
 
 -- TODO customize all the portraits/images/descriptions
 hint1_name = _("Prof. Sato") -- Computer Science / Mathematics

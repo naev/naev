@@ -39,7 +39,7 @@ local portrait = require 'portrait'
 local vn = require 'vn'
 require 'numstring'
 
-logidstr = minerva.log.maikki,idstr
+logidstr = minerva.log.maikki.idstr
 
 maikki_name = _("Distraught Young Woman")
 maikki_description = _("You see a small young woman sitting by herself. She has a worried expression on her face.")
