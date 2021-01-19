@@ -39,6 +39,19 @@ local minerva = {
       description = _("You see a sketchy-looking individual, they seem to have their gaze on you."),
       image = portrait.getFullPath("pirate/pirate5"),
    },
+
+   log = {
+      maikki = {
+         idstr = "log_minerva_maikki",
+         logname = _("Finding Maikki's Father"),
+         logtype = _("Minerva Station"),
+      },
+      pirate = {
+         idstr = "log_minerva_pirate",
+         logname = _("Shady Jobs at Minerva"),
+         logtype = _("Minerva Station"),
+      },
+   },
 }
 
 -- Helpers to create main characters
