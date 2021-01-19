@@ -37,7 +37,7 @@ local minerva = {
       name = _("Sketchy Individual"),
       portrait = "pirate/pirate5.png", -- REPLACE
       description = _("You see a sketchy-looking individual, they seem to have their gaze on you."),
-      image = portrait.getFullPath("pirate/pirate5"),
+      image = portrait.getFullPath("pirate/pirate5.png"),
    },
 
    log = {
