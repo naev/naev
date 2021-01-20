@@ -1,4 +1,4 @@
-![Nightly Release Status](https://github.com/naev/naev/workflows/Nightly%20Release/badge.svg) ![CI Status](https://github.com/naev/naev/workflows/CI/badge.svg) [![Packaging status](https://repology.org/badge/tiny-repos/naev.svg)](https://repology.org/project/naev/versions) ![Translation Status](https://hosted.weblate.org/widgets/naev/-/naev/svg-badge.svg)
+[![Nightly Release Status](https://github.com/naev/naev/workflows/Nightly%20Release/badge.svg)](https://github.com/naev/naev/actions?query=workflow%3A%22Nightly+Release%22) [![CI Status](https://github.com/naev/naev/workflows/CI/badge.svg)](https://github.com/naev/naev/actions?query=workflow%3ACI) [![Packaging status](https://repology.org/badge/tiny-repos/naev.svg)](https://repology.org/project/naev/versions) [![Translation Status](https://hosted.weblate.org/widgets/naev/-/naev/svg-badge.svg)](https://hosted.weblate.org/projects/naev/)
 # NAEV README
 
 ![Naev Logo](https://naev.org/imgs/naev.png)
