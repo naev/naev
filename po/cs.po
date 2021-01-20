@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-18 12:11-0500\n"
-"PO-Revision-Date: 2021-01-20 00:50+0000\n"
+"PO-Revision-Date: 2021-01-20 08:46+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -55,7 +55,7 @@ msgstr ""
 #: dat/ai/advertiser.lua:14 dat/ai/civilian.lua:14 dat/ai/independent.lua:17
 #: dat/ai/proteron_dissident.lua:20
 msgid "\"Just leave me alone!\""
-msgstr "\"Jen mě nech na pokoji!\""
+msgstr "\"Nech mě prostě na pokoji!\""
 
 #: dat/ai/advertiser.lua:15 dat/ai/civilian.lua:15 dat/ai/independent.lua:18
 #: dat/ai/proteron_dissident.lua:21
@@ -73,7 +73,7 @@ msgstr "\"Jdi ode mně pryč!\""
 #: dat/ai/trader.lua:21
 #, lua-format
 msgid "\"I'll supply your ship with fuel for %s.\""
-msgstr "„Dodám tvé lodi palivo na% s.“"
+msgstr "„Dodám tvé lodi palivo za %ů.“"
 
 #. Selects an advertiser message
 #: dat/ai/advertiser.lua:31
@@ -99,12 +99,12 @@ msgstr "Odvaha k dokonalosti! Troufněte si na rakety Teracom!"
 #: dat/ai/advertiser.lua:35
 msgid ""
 "Most people are ordinary. For the others, Nexus designed the Shark fighter."
-msgstr "Většina lidí je obyčejná. Pro ostatní navrhl Nexus stíhačku Shark."
+msgstr "Většina lidí je průměrná. Pro ostatní navrhl Nexus stíhačku Shark."
 
 #: dat/ai/advertiser.lua:36
 msgid ""
 "Never take off without your courage. Never take off without your Vendetta."
-msgstr "Nikdy neodstartujte bez vaší odvahy. Nikdy nevzlétněte bez Vendety."
+msgstr "Nikdy neodstartujte bez odvahy. Nikdy nevzlétněte bez Vendety."
 
 #: dat/ai/advertiser.lua:37
 msgid "Unicorp: low price and high quality!"
@@ -142,7 +142,7 @@ msgstr "Sázejte na Totoran a díky aréně vyhrajte neuvěřitelné částky!"
 
 #: dat/ai/advertiser.lua:55
 msgid "Special offer on Crow: buy one IR-eye, and the second comes for free!"
-msgstr "Speciální nabídka na Crow: kupte si jedno IR oko a druhé je zdarma!"
+msgstr "Speciální nabídka na Crow: kupte si jedno IR-oko a druhé je zdarma!"
 
 #. Note that when running in the main menu background, player.name() might not exist (==nil), so
 #. we need to add a check for that.
@@ -154,7 +154,7 @@ msgid ""
 "invite you to contribute other unpublished papers of relevant fields to the "
 "Interstellar Pay-to-win Journal for Mathematics and Applications."
 msgstr ""
-"Vážený Pr. % s, vaše nedávná práce v nás zanechala hluboký dojem. Vzhledem k "
+"Vážený Pr. %ů, vaše nedávná práce v nás zanechala hluboký dojem. Vzhledem k "
 "pokroku, novosti a možnému širokému uplatnění vaší inovace vás zveme k "
 "přispění dalších nepublikovaných příspěvků příslušných oborů do Interstellar "
 "Pay-to-win Journal pro matematiku a aplikace."
@@ -235,7 +235,7 @@ msgid "Requesting assistance. We are under attack!"
 msgstr "Žádost o pomoc. Jsme pod útokem!"
 
 #: dat/ai/distress_behaviour.lua:16
-#, lua-format
+#, fuzzy, lua-format
 msgid "%s vessel under attack! Requesting help!"
 msgstr "%s plavidlo napadeno! Žádám o pomoc!"
 
@@ -1714,31 +1714,31 @@ msgstr "Toho budeš litovat!"
 
 #: dat/ai/pirate.lua:129
 msgid "You can either pray now or sit in hell later."
-msgstr ""
+msgstr "Můžeš se modlit, nebo sedět v pekle později."
 
 #: dat/ai/pirate.lua:130
 msgid "Game over, you're dead!"
-msgstr ""
+msgstr "Hra skončila, jsi mrtvý!"
 
 #: dat/ai/pirate.lua:131
 msgid "I'm sorry things couldn't work out between us."
-msgstr ""
+msgstr "Je mi líto, ale mezi námi by to nemohlo fungovat."
 
 #: dat/ai/pirate.lua:132
 msgid "Knock it off!"
-msgstr ""
+msgstr "Nech toho!"
 
 #: dat/ai/pirate.lua:133
 msgid "Shooting back isn't allowed!"
-msgstr ""
+msgstr "Opětovaná střelba není povolena!"
 
 #: dat/ai/pirate.lua:134
 msgid "You owe me 20 credits!"
-msgstr ""
+msgstr "Dlužíš mi 20 kreditů!"
 
 #: dat/ai/pirate.lua:135
 msgid "You owe me a new paint job!"
-msgstr ""
+msgstr "Dlužíš mi nový nátěr lodi!"
 
 #: dat/ai/pirate.lua:136
 msgid "Fred here said to shoot the red blip."
@@ -1746,68 +1746,69 @@ msgstr ""
 
 #: dat/ai/pirate.lua:137
 msgid "Now you're in for it!"
-msgstr ""
+msgstr "Nyní jsi v tom!"
 
 #: dat/ai/pirate.lua:138
 msgid "Did you really think you would get away with that?"
-msgstr ""
+msgstr "Vážně jsi si myslel, že bys mohl uniknout jen tak?"
 
 #: dat/ai/pirate.lua:139
 msgid "I just painted this thing!"
-msgstr ""
+msgstr "Právě jsem tu věc natřel!"
 
 #: dat/ai/pirate.lua:140
 msgid "Rot."
-msgstr ""
+msgstr "Hniloba."
 
 #: dat/ai/pirate.lua:141
 msgid "Burn."
-msgstr ""
+msgstr "Hoř."
 
 #: dat/ai/pirate.lua:142
 msgid "I can't wait to see you burn."
-msgstr ""
+msgstr "Nemůžu se dočkat, až tě uvidím hořet."
 
 #: dat/ai/pirate.lua:143
 msgid "Just. Stop. Moving."
-msgstr ""
+msgstr "Tak už. Stůj. Nehýbej se."
 
 #: dat/ai/pirate.lua:144
 msgid "Die already!"
-msgstr ""
+msgstr "Zemři už!"
 
 #: dat/ai/pirate.lua:145
 msgid ""
 "Tell you what, if you can keep dodging for 20 hectoseconds I'll let you live."
 msgstr ""
+"Něco ti řeknu, pokud zvládneš unikat po dobu 20 hektosekund, nechám tě žít."
 
 #: dat/ai/pirate.lua:146
 msgid "Stop dodging!"
-msgstr ""
+msgstr "Přestaň uhýbat!"
 
 #: dat/ai/pirate.lua:147
 msgid "Okay, that's enough of that!"
-msgstr ""
+msgstr "Dobře, už je toho dost!"
 
 #: dat/ai/pirate.lua:148
 msgid "I'm gonna torrent you to bits!"
-msgstr ""
+msgstr "Rozpráším tě na kousky!"
 
 #. Settings
 #. Not too many credits.
 #. Lines to annoy the player.
 #: dat/ai/proteron.lua:19
 msgid "The Proteron are watching you."
-msgstr ""
+msgstr "Proteronové tě sledují."
 
 #. Get refuel chance
 #: dat/ai/proteron.lua:28
 msgid "\"My fuel isn't for sale.\""
-msgstr ""
+msgstr "„Moje palivo není na prodej.“"
 
 #: dat/ai/proteron.lua:31
 msgid "\"Sorry, my fuel isn't for sale.\""
-msgstr ""
+msgstr "„Promiň, moje palivo není na prodej.“"
 
 #. Most likely no chance to refuel
 #: dat/ai/proteron.lua:37
