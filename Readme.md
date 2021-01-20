@@ -133,7 +133,7 @@ Naev supports unicode and gettext since version 0.8.0.
 
 ### ONLINE TRANSLATION
 
-Naev is incorporated into weblate. You can easily translate directly with a web
+Naev is incorporated into Weblate. You can easily translate directly with a web
 interface to your chosen language at
 https://hosted.weblate.org/projects/naev/naev/ .
 
@@ -144,14 +144,13 @@ text is modified. You can update all translation files with the
 following commands:
 
 ```bash
-meson compile potfiles # only necessary if files have been added or removed
-meson compile naev-pot
-meson compile naev-update-po
+meson compile potfiles        # necessary if files have been added or removed
+meson compile naev-pot        # necessary if translatable strings changed
+meson compile naev-update-po  # necessary outside naev:master; otherwise Weblate will do this
 ```
 
 This wil allow you to edit the translation files in `po/` manually to modify
-translations. Note that this is not necessary unless you intend to do manual
-translation work without the online translation web interface.
+translations.
 
 ## CRASHES & PROBLEMS
 
