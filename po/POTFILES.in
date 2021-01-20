@@ -204,6 +204,7 @@ dat/missions/flf/flf_rogue.lua
 dat/missions/minerva/maikki1.lua
 dat/missions/minerva/maikki2.lua
 dat/missions/minerva/pirate1.lua
+dat/missions/minerva/pirate2.lua
 dat/missions/neutral/animaltransport.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
