@@ -38,5 +38,5 @@ LC_ALL=C sort "$TMPFILE" >> "$ROOT/po/POTFILES.in"
 rm "$TMPFILE" # clean-up
 
 # Credits section: We pull strings from the "intro" and "AUTHORS" files (inputs to credit rolls) into "credits.pot".
-awk -f "$ROOT/utils/update-po-credits.awk" dat/intro dat/AUTHORS > "$ROOT/po/credits.pot"
+python "$ROOT/po/credits_pot.py" dat/intro dat/AUTHORS > "$ROOT/po/credits.pot"
 echo "po/credits.pot" >> "$ROOT/po/POTFILES.in"
