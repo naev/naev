@@ -428,6 +428,7 @@ src/gettext.c
 src/gettext.h
 src/glad.c
 src/glad.h
+src/glue_macos.h
 src/gui.c
 src/gui.h
 src/gui_omsg.c
@@ -444,6 +445,7 @@ src/intro.c
 src/intro.h
 src/joystick.c
 src/joystick.h
+src/khrplatform.h
 src/land.c
 src/land.h
 src/land_outfits.c
