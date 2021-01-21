@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-20 14:14-0500\n"
-"PO-Revision-Date: 2021-01-20 08:46+0000\n"
+"PO-Revision-Date: 2021-01-21 13:37+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -73,7 +73,7 @@ msgstr "\"Jdi ode mně pryč!\""
 #: dat/ai/trader.lua:21
 #, lua-format
 msgid "\"I'll supply your ship with fuel for %s.\""
-msgstr "„Dodám tvé lodi palivo za %ů.“"
+msgstr "„Dodám tvé lodi palivo za %s.“"
 
 #. Selects an advertiser message
 #: dat/ai/advertiser.lua:31
@@ -147,17 +147,17 @@ msgstr "Speciální nabídka na Crow: kupte si jedno IR-oko a druhé je zdarma!"
 #. Note that when running in the main menu background, player.name() might not exist (==nil), so
 #. we need to add a check for that.
 #: dat/ai/advertiser.lua:62
-#, fuzzy, lua-format
+#, lua-format
 msgid ""
 "Dear Pr. %s, your recent work has left a deep impression on us. Due to the "
 "advance, novelty, and possible wide application of your innovation, we "
 "invite you to contribute other unpublished papers of relevant fields to the "
 "Interstellar Pay-to-win Journal for Mathematics and Applications."
 msgstr ""
-"Vážený Pr. %ů, vaše nedávná práce v nás zanechala hluboký dojem. Vzhledem k "
+"Vážený Pr. %s, vaše nedávná práce v nás zanechala hluboký dojem. Vzhledem k "
 "pokroku, novosti a možnému širokému uplatnění vaší inovace vás zveme k "
-"přispění dalších nepublikovaných příspěvků příslušných oborů do Interstellar "
-"Pay-to-win Journal pro matematiku a aplikace."
+"přispění dalších nepublikovaných příspěvků příslušných oborů do Žurnálu "
+"Interstellar Pay-to-win pro matematiku a aplikace."
 
 #: dat/ai/advertiser.lua:64
 msgid ""
@@ -368,7 +368,7 @@ msgstr "„Moje palivo je majetkem Impéria.“"
 #: dat/ai/empire.lua:39 dat/ai/soromid.lua:31
 #, lua-format
 msgid "\"I suppose I could spare some fuel for %s.\""
-msgstr "„Předpokládám, že bych mohl postrádat nějaké palivo pro%s.“"
+msgstr "„Předpokládám, že bych mohl postrádat nějaké palivo pro %s.“"
 
 #. See if can be bribed
 #: dat/ai/empire.lua:45
@@ -578,7 +578,7 @@ msgstr "„Frakce Goddard se nesnižuje na obyčejnou špínu.“"
 #: dat/ai/goddard.lua:31
 #, lua-format
 msgid "\"I could do you the favour of refueling for the price of %s.\""
-msgstr "„Mohl bych ti udělat laskavost a doplnit palivo za cenu% s.“"
+msgstr "„Mohl bych ti udělat laskavost a doplnit palivo za cenu%s.“"
 
 #: dat/ai/goddard.lua:48
 msgid "These moments will be your last!"
@@ -1813,22 +1813,22 @@ msgstr "„Promiň, moje palivo není na prodej.“"
 #: dat/ai/proteron.lua:37
 #, lua-format
 msgid "\"I can transfer some fuel for %s.\""
-msgstr ""
+msgstr "„Mohu přečerpat palivo za %s.“"
 
 #. See if can be bribed
 #: dat/ai/proteron.lua:43
 #, lua-format
 msgid ""
 "\"The Proteron can always use some income. %s and you were never here.\""
-msgstr ""
+msgstr "„Proteron může vždy použít nějaký příjem.%s a nikdy jsi tu nebyl.“"
 
 #: dat/ai/proteron.lua:44
 msgid "\"Get lost before I have to dispose of you.\""
-msgstr ""
+msgstr "„Ztrať se, než tě budu muset zlikvidovat.“"
 
 #: dat/ai/proteron.lua:48
 msgid "\"We like to make examples out of scum like you.\""
-msgstr ""
+msgstr "„Rádi děláme exemplární příklady ze špíny, jako jsi ty.“"
 
 #. This is the amount of waypoints the pilot will pass through before leaving the system
 #. Finish up creation
@@ -1837,51 +1837,51 @@ msgstr ""
 #. some taunts
 #: dat/ai/proteron.lua:75
 msgid "Animals like you don't deserve to live!"
-msgstr ""
+msgstr "Zvířata jako ty si nezaslouží žít!"
 
 #: dat/ai/proteron.lua:76
 msgid "Begone from this universe, inferior scum!"
-msgstr ""
+msgstr "Zmiz z tohoto vesmíru, podřadná spodino!"
 
 #: dat/ai/proteron.lua:77
 msgid "We will cleanse you and all other scum from this universe!"
-msgstr ""
+msgstr "Očistíme vás a všechny ostatní vyvrhele z tohoto vesmíru!"
 
 #: dat/ai/proteron.lua:78
 msgid "Enemies of the state will not be tolerated!"
-msgstr ""
+msgstr "Nepřátelé státu nebudou tolerováni!"
 
 #: dat/ai/proteron.lua:79
 msgid "Long live the Proteron!"
-msgstr ""
+msgstr "Ať žije Proteron!"
 
 #: dat/ai/proteron.lua:80
 msgid "War is peace!"
-msgstr ""
+msgstr "Válka je mír!"
 
 #: dat/ai/proteron.lua:81
 msgid "Freedom is slavery!"
-msgstr ""
+msgstr "Svoboda je otroctví!"
 
 #: dat/ai/proteron.lua:85
 msgid "How dare you attack the Proteron?!"
-msgstr ""
+msgstr "Jak se opovažuješ zaútočit na Proteron?!"
 
 #: dat/ai/proteron.lua:86
 msgid "I will have your head!"
-msgstr ""
+msgstr "Budu mít tvou hlavu!"
 
 #: dat/ai/proteron.lua:88
 msgid "Your fate has been sealed, dissident!"
-msgstr ""
+msgstr "Tvůj osud byl zpečetěn, disidente!"
 
 #: dat/ai/proteron.lua:89
 msgid "You will pay for your treason!"
-msgstr ""
+msgstr "Zaplatíš za svou zradu!"
 
 #: dat/ai/proteron.lua:90
 msgid "Die along with the old Empire!"
-msgstr ""
+msgstr "Zemřeš spolu se starým Impériem!"
 
 #. This is the amount of waypoints the pilot will pass through before leaving the system
 #. Settings
@@ -1898,18 +1898,18 @@ msgstr ""
 #. Get refuel chance
 #: dat/ai/sirius.lua:22 dat/ai/zalek.lua:23
 msgid "\"I do not have fuel to spare.\""
-msgstr ""
+msgstr "„Nemám palivo nazbyt.“"
 
 #. Most likely no chance to refuel
 #: dat/ai/sirius.lua:27
 #, lua-format
 msgid "\"I would be able to refuel your ship for %s.\""
-msgstr ""
+msgstr "„Byl bych schopen natankovat vaši loď za %s.“"
 
 #. Can't be bribed
 #: dat/ai/sirius.lua:32
 msgid "\"Your money is of no interest to me.\""
-msgstr ""
+msgstr "„Tvé peníze mě nezajímají.“"
 
 #. This is the amount of waypoints the pilot will pass through before leaving the system
 #. Finish up creation
@@ -1918,15 +1918,15 @@ msgstr ""
 #. some taunts
 #: dat/ai/sirius.lua:53
 msgid "The universe shall be cleansed of your presence!"
-msgstr ""
+msgstr "Vesmír bude očištěn od tvé přítomnosti!"
 
 #: dat/ai/sirius.lua:57
 msgid "Sirichana protect me!"
-msgstr ""
+msgstr "Sirichana mě ochraňuj!"
 
 #: dat/ai/sirius.lua:58
 msgid "You have made a grave error!"
-msgstr ""
+msgstr "Udělali jste vážnou chybu!"
 
 #: dat/ai/sirius.lua:59
 msgid "You do wrong in your provocations!"
