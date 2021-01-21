@@ -9,33 +9,16 @@ fi
 
 cd $ROOT
 
-set -x
-
-# For historical reasons, we generate a few sections individually. (There used to be multiple POTFILES*.in outputs.)
+# For historical reasons, we have a strange sort order.
 # Source code section:
-TMPFILE=$(mktemp)
 if [ -d .git ]; then
-   git ls-files -- 'src/**.[ch]' ':!:*/glue_macos.h' ':!:*/khrplatform.h' ':!:*/shaders*gen*' >> "$TMPFILE"
-   git ls-files -- 'dat/**.lua' >> "$TMPFILE"
+   git ls-files -- 'src/**.[ch]' 'dat/**.lua' | LC_ALL=C sort > "$ROOT/po/POTFILES.in"
 else
-   find src/ -name "*.[ch]" -not \( -name glue_macos.h -or -name khrplatform.h -or -name "shaders*gen*" \) >> "$TMPFILE"
-   find dat/ -name "*.lua" >> "$TMPFILE"
+   (find src/ -name "*.[ch]"; find dat/ -name "*.lua") | LC_ALL=C sort > "$ROOT/po/POTFILES.in"
 fi
 
-LC_ALL=C sort "$TMPFILE" > "$ROOT/po/POTFILES.in"
-
-rm "$TMPFILE" # clean-up
-
 # XML section
-find dat/ -maxdepth 1 -name "*.xml" > "$TMPFILE"
-find dat/assets -name "*.xml" >> "$TMPFILE"
-find dat/outfits -name "*.xml" >> "$TMPFILE"
-find dat/ships -name "*.xml" >> "$TMPFILE"
-find dat/ssys -name "*.xml" >> "$TMPFILE"
-
-LC_ALL=C sort "$TMPFILE" >> "$ROOT/po/POTFILES.in"
-
-rm "$TMPFILE" # clean-up
+find dat/ -name "*.xml" | egrep -v '/((space|ship)_polygon|unidiff)/' | LC_ALL=C sort >> "$ROOT/po/POTFILES.in"
 
 # Credits section: We pull strings from the "intro" and "AUTHORS" files (inputs to credit rolls) into "credits.pot".
 python "$ROOT/po/credits_pot.py" dat/intro dat/AUTHORS > "$ROOT/po/credits.pot"
