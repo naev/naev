@@ -429,7 +429,7 @@ jobs:
 
           # Build Soundtrack Release
 
-          mv build/staging/naev-steam-soundtrack/* build/dist/soundtrack
+          cp build/staging/naev-steam-soundtrack/* build/dist/soundtrack
 
           # Push builds to itch.io via butler
 
