@@ -272,7 +272,7 @@ jobs:
         if: ${{ matrix.releasetype == 'github' }}
 
       - name: Generate commit changelog
-        uses: Bullrich/generate-release-changelog@master
+        uses: Bullrich/generate-release-changelog@2.0.1
         if: ${{ matrix.releasetype == 'github' }}
         id: changelog
         env:
