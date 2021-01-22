@@ -81,8 +81,6 @@
  */
 static char** planetname_stack = NULL; /**< Planet name stack corresponding to system. */
 static char** systemname_stack = NULL; /**< System name stack corresponding to planet. */
-static int spacename_nstack = 0; /**< Size of planet<->system stack. */
-static int spacename_mstack = 0; /**< Size of memory in planet<->system stack. */
 
 
 /*
@@ -888,7 +886,7 @@ int planet_hasSystem( const char* planetname )
 {
    int i;
 
-   for (i=0; i<spacename_nstack; i++)
+   for (i=0; i<array_size(planetname_stack); i++)
       if (strcmp(planetname_stack[i],planetname)==0)
          return 1;
 
@@ -906,7 +904,7 @@ char* planet_getSystem( const char* planetname )
 {
    int i;
 
-   for (i=0; i<spacename_nstack; i++)
+   for (i=0; i<array_size(planetname_stack); i++)
       if (strcmp(planetname_stack[i],planetname)==0)
          return systemname_stack[i];
 
@@ -2253,6 +2251,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
 int system_addPlanet( StarSystem *sys, const char *planetname )
 {
    Planet *planet;
+   char **sn, **pn;
 
    if (sys == NULL)
       return -1;
@@ -2276,19 +2275,10 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    sys->planetsid[sys->nplanets-1]  = planet->id;
 
    /* add planet <-> star system to name stack */
-   spacename_nstack++;
-   if (spacename_nstack > spacename_mstack) {
-      if (spacename_mstack == 0)
-         spacename_mstack = CHUNK_SIZE;
-      else
-         spacename_mstack *= 2;
-      planetname_stack = realloc(planetname_stack,
-            sizeof(char*) * spacename_mstack);
-      systemname_stack = realloc(systemname_stack,
-            sizeof(char*) * spacename_mstack);
-   }
-   planetname_stack[spacename_nstack-1] = planet->name;
-   systemname_stack[spacename_nstack-1] = sys->name;
+   pn = &array_grow( &planetname_stack );
+   sn = &array_grow( &systemname_stack );
+   *pn = planet->name;
+   *sn = sys->name;
 
    economy_addQueuedUpdate();
    /* This is required to clear the player statistics for this planet */
@@ -2347,13 +2337,10 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
 
    /* Remove from the name stack thingy. */
    found = 0;
-   for (i=0; i<spacename_nstack; i++)
+   for (i=0; i<array_size(planetname_stack); i++)
       if (strcmp(planetname, planetname_stack[i])==0) {
-         spacename_nstack--;
-         memmove( &planetname_stack[i], &planetname_stack[i+1],
-               sizeof(char*) * (spacename_nstack-i) );
-         memmove( &systemname_stack[i], &systemname_stack[i+1],
-               sizeof(char*) * (spacename_nstack-i) );
+         array_erase( &planetname_stack, &planetname_stack[i], &planetname_stack[i+1] );
+         array_erase( &systemname_stack, &systemname_stack[i], &systemname_stack[i+1] );
          found = 1;
          break;
       }
@@ -3182,6 +3169,10 @@ int space_load (void)
    /* Loading. */
    systems_loading = 1;
 
+   /* Create some arrays. */
+   planetname_stack = array_create( char* );
+   systemname_stack = array_create( char* );
+
    /* Load jump point graphic - must be before systems_load(). */
    jumppoint_gfx = gl_newSprite(  PLANET_GFX_SPACE_PATH"jumppoint.webp", 4, 4, OPENGL_TEX_MIPMAPS );
    jumpbuoy_gfx = gl_newImage(  PLANET_GFX_SPACE_PATH"jumpbuoy.webp", 0 );
@@ -3670,9 +3661,8 @@ void space_exit (void)
    free(asteroid_gfx);
 
    /* Free the names. */
-   free(planetname_stack);
-   free(systemname_stack);
-   spacename_nstack = 0;
+   array_free(planetname_stack);
+   array_free(systemname_stack);
 
    /* Free the planets. */
    for (i=0; i < array_size(planet_stack); i++) {
