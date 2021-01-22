@@ -197,6 +197,7 @@ int var_load( xmlNodePtr parent )
  */
 static int var_add( misn_var *new_var )
 {
+   int i;
    misn_var *mv;
 
    /* check if already exists */
