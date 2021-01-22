@@ -45,7 +45,6 @@
 
 /* map decorator stack */
 static MapDecorator* decorator_stack = NULL; /**< Contains all the map decorators. */
-static int decorator_nstack       = 0; /**< Number of map decorators in the stack. */
 
 static double map_zoom        = 1.; /**< Zoom of the map. */
 static double map_xpos        = 0.; /**< Map X position. */
@@ -144,11 +143,10 @@ void map_exit (void)
    gl_freeTexture( gl_faction_disk );
 
    if (decorator_stack != NULL) {
-      for (i=0; i<decorator_nstack; i++)
+      for (i=0; i<array_size(decorator_stack); i++)
          gl_freeTexture( decorator_stack[i].image );
-      free( decorator_stack );
+      array_free( decorator_stack );
       decorator_stack = NULL;
-      decorator_nstack = 0;
    }
 }
 
@@ -892,7 +890,7 @@ void map_renderDecorators( double x, double y, int editor)
    double cc = cos ( commod_counter / 200. * M_PI );
    ccol.a = 2./3.*cc;
 
-   for (i=0; i<decorator_nstack; i++) {
+   for (i=0; i<array_size(decorator_stack); i++) {
 
       decorator = &decorator_stack[i];
 
@@ -2531,6 +2529,8 @@ int map_load (void)
    xmlNodePtr node;
    xmlDocPtr doc;
 
+   decorator_stack = array_create( MapDecorator );
+
    /* Load the file. */
    doc = xml_parsePhysFS( MAP_DECORATOR_DATA_PATH );
    if (doc == NULL)
@@ -2551,13 +2551,8 @@ int map_load (void)
    do {
       xml_onlyNodes(node);
       if (xml_isNode(node, "decorator")) {
-
-         /* Make room for decorators. */
-         decorator_stack = realloc(decorator_stack,
-               sizeof(MapDecorator)*(++decorator_nstack));
-
          /* Load decorator. */
-         map_decorator_parse(&decorator_stack[decorator_nstack-1], node);
+         map_decorator_parse( &array_grow(&decorator_stack), node );
 
       }
       else
@@ -2566,7 +2561,7 @@ int map_load (void)
 
    xmlFreeDoc(doc);
 
-   DEBUG( n_( "Loaded %d map decorator", "Loaded %d map decorators", decorator_nstack ), decorator_nstack );
+   DEBUG( n_( "Loaded %d map decorator", "Loaded %d map decorators", array_size(decorator_stack) ), array_size(decorator_stack) );
 
    return 0;
 }
