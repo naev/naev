@@ -103,30 +103,32 @@ int var_save( xmlTextWriterPtr writer )
 
    xmlw_startElem(writer,"vars");
 
-   for (i=0; i<array_size(var_stack); i++) {
-      xmlw_startElem(writer,"var");
+   if (var_stack!=NULL) {
+      for (i=0; i<array_size(var_stack); i++) {
+         xmlw_startElem(writer,"var");
 
-      xmlw_attr(writer,"name","%s",var_stack[i].name);
+         xmlw_attr(writer,"name","%s",var_stack[i].name);
 
-      switch (var_stack[i].type) {
-         case MISN_VAR_NIL:
-            xmlw_attr(writer,"type","nil");
-            break;
-         case MISN_VAR_NUM:
-            xmlw_attr(writer,"type","num");
-            xmlw_str(writer,"%f",var_stack[i].d.num);
-            break;
-         case MISN_VAR_BOOL:
-            xmlw_attr(writer,"type","bool");
-            xmlw_str(writer,"%d",var_stack[i].d.b);
-            break;
-         case MISN_VAR_STR:
-            xmlw_attr(writer,"type","str");
-            xmlw_str(writer,"%s",var_stack[i].d.str);
-            break;
+         switch (var_stack[i].type) {
+            case MISN_VAR_NIL:
+               xmlw_attr(writer,"type","nil");
+               break;
+            case MISN_VAR_NUM:
+               xmlw_attr(writer,"type","num");
+               xmlw_str(writer,"%f",var_stack[i].d.num);
+               break;
+            case MISN_VAR_BOOL:
+               xmlw_attr(writer,"type","bool");
+               xmlw_str(writer,"%d",var_stack[i].d.b);
+               break;
+            case MISN_VAR_STR:
+               xmlw_attr(writer,"type","str");
+               xmlw_str(writer,"%s",var_stack[i].d.str);
+               break;
+         }
+
+         xmlw_endElem(writer); /* "var" */
       }
-
-      xmlw_endElem(writer); /* "var" */
    }
 
    xmlw_endElem(writer); /* "vars" */
@@ -200,6 +202,9 @@ static int var_add( misn_var *new_var )
    int i;
    misn_var *mv;
 
+   if (var_stack==NULL)
+      var_stack = array_create( misn_var );
+
    /* check if already exists */
    for (i=0; i<array_size(var_stack); i++) {
       if (strcmp(new_var->name,var_stack[i].name)==0) { /* overwrite */
@@ -246,6 +251,9 @@ int var_checkflag( char* str )
 {
    int i;
 
+   if (var_stack==NULL)
+      return 0;
+
    for (i=0; i<array_size(var_stack); i++)
       if (strcmp(var_stack[i].name,str)==0)
          return 1;
@@ -266,6 +274,9 @@ static int var_peek( lua_State *L )
 
    /* Get the parameter. */
    str = luaL_checkstring(L,1);
+
+   if (var_stack==NULL)
+      return 0;
 
    for (i=0; i<array_size(var_stack); i++)
       if (strcmp(str,var_stack[i].name)==0) {
@@ -304,6 +315,9 @@ static int var_pop( lua_State *L )
    NLUA_CHECKRW(L);
 
    str = luaL_checkstring(L,1);
+
+   if (var_stack==NULL)
+      return 0;
 
    for (i=0; i<array_size(var_stack); i++)
       if (strcmp(str,var_stack[i].name)==0) {
@@ -387,6 +401,10 @@ static void var_free( misn_var* var )
 void var_cleanup (void)
 {
    int i;
+
+   if (var_stack==NULL)
+      return;
+
    for (i=0; i<array_size(var_stack); i++)
       var_free( &var_stack[i] );
 
