@@ -50,7 +50,6 @@ Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
 
 /* gatherables stack */
 static Gatherable* gatherable_stack = NULL; /**< Contains the gatherable stuff floating around. */
-static int gatherable_nstack        = 0; /**< Number of gatherables in the stack. */
 static float noscoop_timer                 = 1.; /**< Timer for the "full cargo" message . */
 
 /* @TODO remove externs. */
@@ -397,21 +396,20 @@ void commodity_Jettison( int pilot, Commodity* com, int quantity )
  */
 int gatherable_init( Commodity* com, Vector2d pos, Vector2d vel, double lifeleng, int qtt )
 {
-   gatherable_stack = realloc(gatherable_stack,
-                              sizeof(Gatherable)*(++gatherable_nstack));
+   Gatherable *g = &array_grow( &gatherable_stack );
 
-   gatherable_stack[gatherable_nstack-1].type = com;
-   gatherable_stack[gatherable_nstack-1].pos = pos;
-   gatherable_stack[gatherable_nstack-1].vel = vel;
-   gatherable_stack[gatherable_nstack-1].timer = 0.;
-   gatherable_stack[gatherable_nstack-1].quantity = qtt;
+   g->type = com;
+   g->pos = pos;
+   g->vel = vel;
+   g->timer = 0.;
+   g->quantity = qtt;
 
    if (lifeleng < 0.)
-      gatherable_stack[gatherable_nstack-1].lifeleng = RNGF()*100. + 50.;
+      g->lifeleng = RNGF()*100. + 50.;
    else
-      gatherable_stack[gatherable_nstack-1].lifeleng = lifeleng;
+      g->lifeleng = lifeleng;
 
-   return gatherable_nstack-1;
+   return g-gatherable_stack;
 }
 
 
@@ -423,22 +421,20 @@ int gatherable_init( Commodity* com, Vector2d pos, Vector2d vel, double lifeleng
 void gatherable_update( double dt )
 {
    int i;
+   Gatherable *g;
 
    /* Update the timer for "full cargo" message. */
    noscoop_timer += dt;
 
-   for (i=0; i < gatherable_nstack; i++) {
-      gatherable_stack[i].timer += dt;
-      gatherable_stack[i].pos.x += dt*gatherable_stack[i].vel.x;
-      gatherable_stack[i].pos.y += dt*gatherable_stack[i].vel.y;
+   for (i=0; i < array_size(gatherable_stack); i++) {
+      g = &gatherable_stack[i];
+      g->timer += dt;
+      g->pos.x += dt*gatherable_stack[i].vel.x;
+      g->pos.y += dt*gatherable_stack[i].vel.y;
 
       /* Remove the gatherable */
-      if (gatherable_stack[i].timer > gatherable_stack[i].lifeleng) {
-         gatherable_nstack--;
-         memmove( &gatherable_stack[i], &gatherable_stack[i+1],
-                 sizeof(Gatherable)*(gatherable_nstack-i) );
-         gatherable_stack = realloc(gatherable_stack,
-                                    sizeof(Gatherable) * gatherable_nstack);
+      if (g->timer > g->lifeleng) {
+         array_erase( &gatherable_stack, g, g+1 );
          i--;
       }
    }
@@ -450,9 +446,7 @@ void gatherable_update( double dt )
  */
 void gatherable_free( void )
 {
-   free(gatherable_stack);
-   gatherable_stack = NULL;
-   gatherable_nstack = 0;
+   array_erase( &gatherable_stack, array_begin(gatherable_stack), array_end(gatherable_stack) );
 }
 
 
@@ -464,7 +458,7 @@ void gatherable_render( void )
    int i;
    Gatherable *gat;
 
-   for (i=0; i < gatherable_nstack; i++) {
+   for (i=0; i < array_size(gatherable_stack); i++) {
       gat = &gatherable_stack[i];
       gl_blitSprite( gat->type->gfx_space, gat->pos.x, gat->pos.y, 0, 0, NULL );
    }
@@ -487,7 +481,7 @@ int gatherable_getClosest( Vector2d pos, double rad )
    curg = -1;
    mindist = INFINITY;
 
-   for (i=0; i < gatherable_nstack; i++) {
+   for (i=0; i < array_size(gatherable_stack); i++) {
       gat = &gatherable_stack[i];
       curdist = vect_dist(&pos, &gat->pos);
       if ( (curdist<mindist) && (curdist<rad) ) {
@@ -511,7 +505,7 @@ int gatherable_getPos( Vector2d* pos, Vector2d* vel, int id )
 {
    Gatherable *gat;
 
-   if ((id < 0) || (id > gatherable_nstack-1) ) {
+   if ((id < 0) || (id > array_size(gatherable_stack)-1) ) {
       vectnull( pos );
       vectnull( vel );
       return 0;
@@ -539,7 +533,7 @@ void gatherable_gather( int pilot )
 
    p = pilot_get( pilot );
 
-   for (i=0; i < gatherable_nstack; i++) {
+   for (i=0; i < array_size(gatherable_stack); i++) {
       gat = &gatherable_stack[i];
 
       if (vect_dist( &p->solid->pos, &gat->pos ) < GATHER_DIST ) {
@@ -560,11 +554,7 @@ void gatherable_gather( int pilot )
             }
 
             /* Remove the object from space. */
-            gatherable_nstack--;
-            memmove( &gatherable_stack[i], &gatherable_stack[i+1],
-                    sizeof(Gatherable)*(gatherable_nstack-i) );
-            gatherable_stack = realloc(gatherable_stack,
-                                       sizeof(Gatherable) * gatherable_nstack);
+            array_erase( &gatherable_stack, gat, gat+1 );
 
             /* Test if there is still cargo space */
             if ((pilot_cargoFree(p) < 1) && (pilot_isPlayer(p)))
@@ -593,6 +583,7 @@ int commodity_load (void)
 
    commodity_stack = array_create( Commodity );
    econ_comm = array_create( int );
+   gatherable_stack = array_create( Gatherable );
 
    /* Load the file. */
    doc = xml_parsePhysFS( COMMODITY_DATA_PATH );
@@ -653,5 +644,8 @@ void commodity_free (void)
    /* More clean up. */
    array_free( econ_comm );
    econ_comm = NULL;
+
+   array_free( gatherable_stack );
+   gatherable_stack = NULL;
 }
 
