@@ -28,6 +28,7 @@
 
 #include "economy.h"
 
+#include "array.h"
 #include "log.h"
 #include "ndata.h"
 #include "nstring.h"
@@ -57,7 +58,6 @@ extern int systems_nstack; /**< Number of star systems. */
 
 /* @TODO get rid of these externs. */
 extern Commodity* commodity_stack;
-extern int commodity_nstack;
 
 
 /*
@@ -876,7 +876,7 @@ void economy_initialiseCommodityPrices(void)
       economy_calcUpdatedCommodityPrice(sys);
    }
    /* And now free temporary commodity information */
-   for ( i=0 ; i<commodity_nstack; i++ ) {
+   for ( i=0 ; i<array_size(commodity_stack); i++ ) {
       com = &commodity_stack[i];
       next = com->planet_modifier;
       com->planet_modifier = NULL;
@@ -978,7 +978,7 @@ void economy_clearKnown (void)
          }
       }
    }
-   for (i=0; i<commodity_nstack; i++ ) {
+   for (i=0; i<array_size(commodity_stack); i++ ) {
       commodity_stack[i].lastPurchasePrice=0;
    }
 }
@@ -1086,7 +1086,7 @@ int economy_sysSave( xmlTextWriterPtr writer )
    CommodityPrice *cp;
    /* Save what the player has seen of the economy at each planet */
    xmlw_startElem(writer,"economy");
-   for (i=0; i<commodity_nstack; i++) {
+   for (i=0; i<array_size(commodity_stack); i++) {
       if ( commodity_stack[i].lastPurchasePrice > 0 ) {
          xmlw_startElem(writer, "lastPurchase");
          xmlw_attr(writer,"name","%s",commodity_stack[i].name);

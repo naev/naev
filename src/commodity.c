@@ -22,6 +22,7 @@
 
 #include "commodity.h"
 
+#include "array.h"
 #include "economy.h"
 #include "hook.h"
 #include "log.h"
@@ -46,7 +47,6 @@
 
 /* commodity stack */
 Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
-int commodity_nstack       = 0; /**< Number of commodities in the stack. */
 
 
 /* standard commodities (ie. sellable and buyable anywhere) */
@@ -141,7 +141,7 @@ void tonnes2str( char *str, int tonnes )
 Commodity* commodity_get( const char* name )
 {
    int i;
-   for (i=0; i<commodity_nstack; i++)
+   for (i=0; i<array_size(commodity_stack); i++)
       if (strcmp(commodity_stack[i].name,name)==0)
          return &commodity_stack[i];
 
@@ -159,7 +159,7 @@ Commodity* commodity_get( const char* name )
 Commodity* commodity_getW( const char* name )
 {
    int i;
-   for (i=0; i<commodity_nstack; i++)
+   for (i=0; i<array_size(commodity_stack); i++)
       if (strcmp(commodity_stack[i].name, name) == 0)
          return &commodity_stack[i];
    return NULL;
@@ -313,7 +313,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          temp->standard = 1;
          /* There is a shortcut list containing the standard commodities. */
          commodity_standard = realloc(commodity_standard, sizeof(int)*(++commodity_nstandard));
-         commodity_standard[ commodity_nstandard-1 ] = commodity_nstack-1;
+         commodity_standard[ commodity_nstandard-1 ] = array_size(commodity_stack)-1;
          continue;
       }
       xmlr_float(node, "population_modifier", temp->population_modifier);
@@ -598,6 +598,9 @@ int commodity_load (void)
 {
    xmlNodePtr node;
    xmlDocPtr doc;
+   Commodity *c;
+
+   commodity_stack = array_create( Commodity );
 
    /* Load the file. */
    doc = xml_parsePhysFS( COMMODITY_DATA_PATH );
@@ -620,18 +623,15 @@ int commodity_load (void)
       xml_onlyNodes(node);
       if (xml_isNode(node, XML_COMMODITY_TAG)) {
 
-         /* Make room for commodity. */
-         commodity_stack = realloc(commodity_stack,
-               sizeof(Commodity)*(++commodity_nstack));
-
          /* Load commodity. */
-         commodity_parse(&commodity_stack[commodity_nstack-1], node);
+         c = &array_grow(&commodity_stack);
+         commodity_parse( c, node );
 
          /* See if should get added to commodity list. */
-         if (commodity_stack[commodity_nstack-1].price > 0.) {
+         if (c->price > 0.) {
             econ_nprices++;
             econ_comm = realloc(econ_comm, econ_nprices * sizeof(int));
-            econ_comm[econ_nprices-1] = commodity_nstack-1;
+            econ_comm[econ_nprices-1] = array_size(commodity_stack)-1;
          }
       }
       else
@@ -640,7 +640,7 @@ int commodity_load (void)
 
    xmlFreeDoc(doc);
 
-   DEBUG( n_( "Loaded %d Commodity", "Loaded %d Commodities", commodity_nstack ), commodity_nstack );
+   DEBUG( n_( "Loaded %d Commodity", "Loaded %d Commodities", array_size(commodity_stack) ), array_size(commodity_stack) );
 
    return 0;
 
@@ -654,11 +654,10 @@ int commodity_load (void)
 void commodity_free (void)
 {
    int i;
-   for (i=0; i<commodity_nstack; i++)
+   for (i=0; i<array_size(commodity_stack); i++)
       commodity_freeOne( &commodity_stack[i] );
-   free( commodity_stack );
+   array_free( commodity_stack );
    commodity_stack = NULL;
-   commodity_nstack = 0;
    free( commodity_standard );
    commodity_standard = NULL;
    commodity_nstandard = 0;
