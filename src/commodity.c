@@ -48,12 +48,6 @@
 /* commodity stack */
 Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
 
-
-/* standard commodities (ie. sellable and buyable anywhere) */
-static int* commodity_standard = NULL; /**< Contains all the standard commodity's indices. */
-static int commodity_nstandard = 0; /**< Number of standard commodities. */
-
-
 /* gatherables stack */
 static Gatherable* gatherable_stack = NULL; /**< Contains the gatherable stuff floating around. */
 static int gatherable_nstack        = 0; /**< Number of gatherables in the stack. */
@@ -258,18 +252,18 @@ int commodity_compareTech( const void *commodity1, const void *commodity2 )
  */
 Commodity ** standard_commodities( unsigned int *nb )
 {
-   int i;
-   Commodity **com;
-
-   *nb = commodity_nstandard;
-
-   if (commodity_nstandard == 0)
-      return NULL;
-
-   com = malloc( commodity_nstandard * sizeof(Commodity*) );
-   for (i=0; i<commodity_nstandard; i++) {
-      com[i] = &commodity_stack[ commodity_standard[i] ];
+   int i, j, n;
+   Commodity *c, **com;
+   
+   n = array_size(commodity_stack);
+   com = malloc( n * sizeof(Commodity*) );
+   j = 0;
+   for (i=0; i<n; i++) {
+      c = &commodity_stack[i];
+      if (c->standard)
+         com[j++] = c;
    }
+   *nb = j;
    return com;
 }
 
@@ -311,9 +305,6 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       }
       if (xml_isNode(node, "standard")) {
          temp->standard = 1;
-         /* There is a shortcut list containing the standard commodities. */
-         commodity_standard = realloc(commodity_standard, sizeof(int)*(++commodity_nstandard));
-         commodity_standard[ commodity_nstandard-1 ] = array_size(commodity_stack)-1;
          continue;
       }
       xmlr_float(node, "population_modifier", temp->population_modifier);
@@ -658,9 +649,6 @@ void commodity_free (void)
       commodity_freeOne( &commodity_stack[i] );
    array_free( commodity_stack );
    commodity_stack = NULL;
-   free( commodity_standard );
-   commodity_standard = NULL;
-   commodity_nstandard = 0;
 
    /* More clean up. */
    free( econ_comm );
