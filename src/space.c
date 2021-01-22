@@ -122,7 +122,6 @@ static size_t nasterogfx = 0; /**< Nb of asteroid gfx. */
  * fleet spawn rate
  */
 int space_spawn = 1; /**< Spawn enabled by default. */
-extern int pilot_nstack;
 extern Pilot** pilot_stack;
 
 
@@ -1287,7 +1286,7 @@ void space_update( const double dt )
       dmg.disable       = 0.;
 
       /* Damage pilots in volatile systems. */
-      for (i=0; i<pilot_nstack; i++) {
+      for (i=0; i<array_size(pilot_stack); i++) {
          p = pilot_stack[i];
          pilot_hit( p, NULL, 0, &dmg, 0 );
       }

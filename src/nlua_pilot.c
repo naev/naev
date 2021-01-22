@@ -46,7 +46,6 @@
  * From pilot.c
  */
 extern Pilot** pilot_stack;
-extern int pilot_nstack;
 
 /*
  * From ai.c
@@ -807,7 +806,7 @@ static int pilotL_getPilots( lua_State *L )
       /* Now put all the matching pilots in a table. */
       lua_newtable(L);
       k = 1;
-      for (i=0; i<pilot_nstack; i++) {
+      for (i=0; i<array_size(pilot_stack); i++) {
          for (j=0; j<nfactions; j++) {
             if ((pilot_stack[i]->faction == factions[j]) &&
                   (d || !pilot_isDisabled(pilot_stack[i])) &&
@@ -826,7 +825,7 @@ static int pilotL_getPilots( lua_State *L )
       /* Now put all the matching pilots in a table. */
       lua_newtable(L);
       k = 1;
-      for (i=0; i<pilot_nstack; i++) {
+      for (i=0; i<array_size(pilot_stack); i++) {
          if ((d || !pilot_isDisabled(pilot_stack[i])) &&
                !pilot_isFlag(pilot_stack[i], PILOT_DELETE)) {
             lua_pushnumber(L, k++); /* key */
@@ -4007,7 +4006,7 @@ static int pilotL_setLeader( lua_State *L ) {
       escort_rmList(prev_leader, p->id);
 
    /* If the pilot has followers, they should be given the new leader as well */
-   for (i = 0; i<pilot_nstack; i++) {
+   for (i = 0; i<array_size(pilot_stack); i++) {
       if (pilot_stack[i]->parent == p->id) {
          pilot_stack[i]->parent = p->parent;
       }

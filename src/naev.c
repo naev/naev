@@ -648,6 +648,7 @@ void load_all (void)
    background_init();
    map_load();
    map_system_load();
+   pilots_init();
    weapon_init();
    player_init(); /* Initialize player stuff. */
    loadscreen_render( 1., _("Loading Completed!") );

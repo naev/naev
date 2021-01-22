@@ -458,6 +458,7 @@ void pilot_delete( Pilot *p );
  * init/cleanup
  */
 void pilot_destroy(Pilot* p);
+void pilots_init (void);
 void pilots_free (void);
 void pilots_clean (int persist);
 void pilots_clear (void);

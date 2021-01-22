@@ -58,11 +58,9 @@
 static unsigned int pilot_id = PLAYER_ID; /**< Stack of pilot ids to assure uniqueness */
 
 
-/* stack of pilot_nstack */
+/* stack of pilots */
 /* TODO replace with array.h infrastructure and make non-public. */
 Pilot** pilot_stack = NULL; /**< Not static, used in player.c, weapon.c, pause.c, space.c and ai.c */
-int pilot_nstack = 0; /**< same */
-static int pilot_mstack = 0; /**< Memory allocated for pilot_stack. */
 
 
 /* misc */
@@ -91,7 +89,7 @@ static int pilot_getStackPos( const unsigned int id );
  */
 Pilot** pilot_getAll( int *n )
 {
-   *n = pilot_nstack;
+   *n = array_size(pilot_stack);
    return pilot_stack;
 }
 
@@ -113,7 +111,7 @@ static int compid(const void *id, const void *p) {
 static int pilot_getStackPos( const unsigned int id )
 {
    /* binary search */
-   Pilot **pp = bsearch(&id, pilot_stack, pilot_nstack, sizeof(Pilot*), compid);
+   Pilot **pp = bsearch(&id, pilot_stack, array_size(pilot_stack), sizeof(Pilot*), compid);
    if (pp == NULL)
       return -1;
    else
@@ -140,13 +138,13 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    m = pilot_getStackPos(id);
 
    /* Unselect. */
-   if ((m == (pilot_nstack-1)) || (m == -1))
+   if ((m == (array_size(pilot_stack)-1)) || (m == -1))
       return PLAYER_ID;
 
    /* Get first one in range. */
    p = m+1;
    if (mode == 0) {
-      while (p < pilot_nstack) {
+      while (p < array_size(pilot_stack)) {
          if (((pilot_stack[p]->faction != FACTION_PLAYER) ||
                   pilot_isDisabled(pilot_stack[p])) &&
                !pilot_isFlag( pilot_stack[p], PILOT_INVISIBLE ) &&
@@ -157,7 +155,7 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    }
    /* Get first hostile in range. */
    if (mode == 1) {
-      while (p < pilot_nstack) {
+      while (p < array_size(pilot_stack)) {
          if ( ( pilot_stack[p]->faction != FACTION_PLAYER ) &&
                !pilot_isFlag( pilot_stack[p], PILOT_INVISIBLE ) &&
                pilot_inRangePilot( player.p, pilot_stack[p], NULL ) == 1 &&
@@ -194,7 +192,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
    if (m == -1)
       return PLAYER_ID;
    else if (m == 0)
-      p = pilot_nstack-1;
+      p = array_size(pilot_stack)-1;
    else
       p = m-1;
 
@@ -303,7 +301,7 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
 
    tp = 0;
    d  = 0.;
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
 
       if (!pilot_validEnemy( p, pilot_stack[i] ))
          continue;
@@ -334,7 +332,7 @@ unsigned int pilot_getNearestEnemy_size( const Pilot* p, double target_mass_LB, 
 
    tp = 0;
    d  = 0.;
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
 
       if (!pilot_validEnemy( p, pilot_stack[i] ))
          continue;
@@ -375,7 +373,7 @@ unsigned int pilot_getNearestEnemy_heuristic( const Pilot* p,
    current_heuristic_value = 10000.;
 
    tp = 0;
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
       target = pilot_stack[i];
 
       if (!pilot_validEnemy( p, target ))
@@ -431,7 +429,7 @@ unsigned int pilot_getBoss( const Pilot* p )
    /* Initialized to 0.25 which would mean equivalent power. */
    ppower = 0.5*0.5;
 
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
 
       /* Must be in range. */
       if (!pilot_inRangePilot( p, pilot_stack[i], NULL ))
@@ -496,7 +494,7 @@ double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y
 
    *tp = PLAYER_ID;
    d  = 0;
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
 
       /* Must not be self. */
       if (pilot_stack[i] == p)
@@ -543,7 +541,7 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
 
    *tp = PLAYER_ID;
    a   = ang + M_PI;
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
 
       /* Must not be self. */
       if (pilot_stack[i] == p)
@@ -1190,7 +1188,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int 
    }
 
    /* Now we must check to see if a pilot is in range. */
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
       /* Skip if unsuitable. */
       if ((pilot_stack[i]->ai == NULL) || (pilot_stack[i]->id == p->id) ||
             (pilot_isFlag(pilot_stack[i], PILOT_DEAD)) ||
@@ -1659,7 +1657,7 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
    rad2 = radius*radius;
    ddmg = *dmg;
 
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
       p = pilot_stack[i];
 
       /* Calculate a bit. */
@@ -2469,7 +2467,7 @@ ntime_t pilot_hyperspaceDelay( Pilot *p )
 void pilot_untargetAsteroid( int anchor, int asteroid )
 {
    int i;
-   for (i=0; i < pilot_nstack; i++) {
+   for (i=0; i < array_size(pilot_stack); i++) {
       if ((pilot_stack[i]->nav_asteroid == asteroid) && (pilot_stack[i]->nav_anchor == anchor)) {
          pilot_stack[i]->nav_asteroid = -1;
          pilot_stack[i]->nav_anchor   = -1;
@@ -2727,7 +2725,7 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
-   Pilot *dyn;
+   Pilot *dyn, **p;
 
    /* Allocate pilot memory. */
    dyn = malloc(sizeof(Pilot));
@@ -2736,18 +2734,9 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
       return 0;
    }
 
-   /* See if memory needs to grow */
-   if (pilot_nstack+1 > pilot_mstack) { /* needs to grow */
-      if (pilot_mstack == 0)
-         pilot_mstack = PILOT_CHUNK_MIN;
-      else
-         pilot_mstack += MIN( pilot_mstack, PILOT_CHUNK_MAX );
-      pilot_stack = realloc( pilot_stack, pilot_mstack*sizeof(Pilot*) );
-   }
-
    /* Set the pilot in the stack -- must be there before initializing */
-   pilot_stack[pilot_nstack] = dyn;
-   pilot_nstack++; /* there's a new pilot */
+   p = &array_grow( &pilot_stack );
+   *p = dyn;
 
    /* Initialize the pilot. */
    pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags, dockpilot, dockslot );
@@ -3007,9 +2996,7 @@ void pilot_destroy(Pilot* p)
    PilotOutfitSlot* dockslot;
 
    /* find the pilot */
-   for (i=0; i < pilot_nstack; i++)
-      if (pilot_stack[i]==p)
-         break;
+   i = pilot_getStackPos(p->id);
 
    /* Remove faction if necessary. */
    if (p->presence > 0) {
@@ -3027,10 +3014,16 @@ void pilot_destroy(Pilot* p)
 
    /* pilot is eliminated */
    pilot_free(p);
-   pilot_nstack--;
+   array_erase( &pilot_stack, &pilot_stack[i], &pilot_stack[i+1] );
+}
 
-   /* copy other pilots down */
-   memmove(&pilot_stack[i], &pilot_stack[i+1], (pilot_nstack-i)*sizeof(Pilot*));
+
+/**
+ * @brief Initializes pilot stuff.
+ */
+void pilots_init (void)
+{
+   pilot_stack = array_create( Pilot* );
 }
 
 
@@ -3044,12 +3037,11 @@ void pilots_free (void)
    pilot_freeGlobalHooks();
 
    /* Free pilots. */
-   for (i=0; i < pilot_nstack; i++)
+   for (i=0; i < array_size(pilot_stack); i++)
       pilot_free(pilot_stack[i]);
-   free(pilot_stack);
+   array_free(pilot_stack);
    pilot_stack = NULL;
    player.p = NULL;
-   pilot_nstack = 0;
 }
 
 
@@ -3062,7 +3054,7 @@ void pilots_clean (int persist)
 {
    int i, persist_count=0;
    Pilot *p;
-   for (i=0; i < pilot_nstack; i++) {
+   for (i=0; i < array_size(pilot_stack); i++) {
       /* move player and persisted pilots to start */
       if (pilot_stack[i] == player.p ||
           (persist && pilot_isFlag(pilot_stack[i], PILOT_PERSIST))) {
@@ -3079,8 +3071,7 @@ void pilots_clean (int persist)
       else /* rest get killed */
          pilot_free(pilot_stack[i]);
    }
-
-   pilot_nstack = persist_count;
+   array_erase( &pilot_stack, &pilot_stack[persist_count], array_end(pilot_stack) );
 
    /* Clear global hooks. */
    pilots_clearGlobalHooks();
@@ -3093,7 +3084,7 @@ void pilots_clean (int persist)
 void pilots_clear (void)
 {
    int i;
-   for (i=0; i < pilot_nstack; i++)
+   for (i=0; i < array_size(pilot_stack); i++)
       if (!pilot_isPlayer( pilot_stack[i] ))
          pilot_delete( pilot_stack[i] );
 }
@@ -3109,7 +3100,7 @@ void pilots_cleanAll (void)
       pilot_free(player.p);
       player.p = NULL;
    }
-   pilot_nstack = 0;
+   array_erase( &pilot_stack, array_begin(pilot_stack), array_end(pilot_stack) );
 }
 
 
@@ -3124,7 +3115,7 @@ void pilots_update( double dt )
    Pilot *p;
 
    /* Now update all the pilots. */
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
       p = pilot_stack[i];
 
       /* Destroy pilot and go on. */
@@ -3164,7 +3155,7 @@ void pilots_update( double dt )
    }
 
    /* Now update all the pilots. */
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
       p = pilot_stack[i];
 
       /* Ignore. */
@@ -3190,7 +3181,7 @@ void pilots_update( double dt )
 void pilots_render( double dt )
 {
    int i;
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
 
       /* Invisible, not doing anything. */
       if (pilot_isFlag(pilot_stack[i], PILOT_INVISIBLE))
@@ -3210,7 +3201,7 @@ void pilots_render( double dt )
 void pilots_renderOverlay( double dt )
 {
    int i;
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
 
       /* Invisible, not doing anything. */
       if (pilot_isFlag(pilot_stack[i], PILOT_INVISIBLE))

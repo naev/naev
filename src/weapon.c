@@ -51,7 +51,6 @@
  * pilot stuff
  */
 extern Pilot** pilot_stack;
-extern int pilot_nstack;
 
 
 /**
@@ -91,7 +90,7 @@ typedef struct Weapon_ {
 } Weapon;
 
 
-/* behind pilot_nstack layer */
+/* behind player layer */
 static Weapon** wbackLayer = NULL; /**< behind pilots */
 /* behind player layer */
 static Weapon** wfrontLayer = NULL; /**< in front of pilots, behind player */
@@ -322,7 +321,7 @@ static void think_seeker( Weapon* w, const double dt )
    if (w->target == w->parent)
       return; /* no self shooting */
 
-   p = pilot_get(w->target); /* no null pilot_nstack */
+   p = pilot_get(w->target); /* no null pilot */
    if (p==NULL) {
       weapon_setThrust( w, 0. );
       weapon_setTurn( w, 0. );
@@ -873,7 +872,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
    }
 
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
       p = pilot_stack[i];
 
       psx = pilot_stack[i]->tsx;
@@ -1048,7 +1047,7 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
          ai_attacked( p, shooter->id, dmg );
 
          /* Trigger a pseudo-distress that incurs no faction loss. */
-         for (i=0; i<pilot_nstack; i++) {
+         for (i=0; i<array_size(pilot_stack); i++) {
             /* Skip if unsuitable. */
             if ((pilot_stack[i]->ai == NULL) || (pilot_stack[i]->id == p->id) ||
                   (pilot_isFlag(pilot_stack[i], PILOT_DEAD)) ||

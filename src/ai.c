@@ -128,7 +128,6 @@ static nlua_env equip_env = LUA_NOREF; /**< Equipment enviornment. */
  * extern pilot hacks
  */
 extern Pilot** pilot_stack;
-extern int pilot_nstack;
 
 
 /*
@@ -1276,11 +1275,11 @@ static int aiL_getrndpilot( lua_State *L )
 {
    int p;
 
-   p = RNG(0, pilot_nstack-1);
+   p = RNG(0, array_size(pilot_stack)-1);
    /* Make sure it can't be the same pilot. */
    if (pilot_stack[p]->id == cur_pilot->id) {
       p++;
-      if (p >= pilot_nstack)
+      if (p >= array_size(pilot_stack))
          p = 0;
    }
    /* Last check. */
@@ -1308,7 +1307,7 @@ static int aiL_getnearestpilot( lua_State *L )
 
    /*cycle through all the pilots and find the closest one that is not the pilot */
 
-   for (i = 0; i<pilot_nstack; i++)
+   for (i = 0; i<array_size(pilot_stack); i++)
    {
        if (pilot_stack[i]->id != cur_pilot->id && vect_dist(&pilot_stack[i]->solid->pos, &cur_pilot->solid->pos) < dist)
        {
@@ -1797,7 +1796,7 @@ static int aiL_careful_face( lua_State *L )
    vect_cset( &F1, F1.x * k_goal / dist, F1.y * k_goal / dist) ;
 
    /* Cycle through all the pilots in order to compute the force */
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
       p_i = pilot_stack[i];
 
       /* Valid pilot isn't self, is in range, isn't the target and isn't disabled */
@@ -3208,7 +3207,7 @@ static int aiL_getBoss( lua_State *L )
 }
 
 /**
- * @brief Sets the pilot_nstack credits. Only call in create().
+ * @brief Sets the pilots credits. Only call in create().
  *
  *    @luatparam number num Number of credits.
  *    @luafunc setcredits

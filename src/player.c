@@ -147,7 +147,6 @@ static int events_ndone  = 0; /**< Number of completed events. */
  * Extern stuff for player ships.
  */
 extern Pilot** pilot_stack;
-extern int pilot_nstack;
 
 
 /*
@@ -569,7 +568,7 @@ void player_swapShip( const char *shipname )
 
       /* now swap the players */
       player_stack[i].p = player.p;
-      for (j=0; j<pilot_nstack; j++) /* find pilot in stack to swap */
+      for (j=0; j<array_size(pilot_stack); j++) /* find pilot in stack to swap */
          if (pilot_stack[j] == player.p) {
             player.p         = ship;
             pilot_stack[j] = ship;
@@ -1857,7 +1856,7 @@ void player_brokeHyperspace (void)
    map_jump();
 
    /* Add persisted pilots */
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
       if ((pilot_stack[i] != player.p) &&
             (pilot_isFlag(pilot_stack[i], PILOT_PERSIST))) {
          space_calcJumpInPos( cur_system, sys, &pilot_stack[i]->solid->pos, &pilot_stack[i]->solid->vel, &pilot_stack[i]->solid->dir );
@@ -1954,7 +1953,7 @@ void player_targetHostile (void)
 
    tp = PLAYER_ID;
    d  = 0;
-   for (int i=0; i<pilot_nstack; i++) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
       /* Shouldn't be disabled. */
       if (pilot_isDisabled(pilot_stack[i]))
          continue;
@@ -2136,7 +2135,7 @@ static void player_checkHail (void)
    Pilot *p;
 
    /* See if a pilot is hailing. */
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
       p = pilot_stack[i];
 
       /* Must be hailing. */
@@ -2220,7 +2219,7 @@ void player_autohail (void)
       return;
 
    /* Find pilot to autohail. */
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
       p = pilot_stack[i];
 
       /* Must be hailing. */
@@ -2229,7 +2228,7 @@ void player_autohail (void)
    }
 
    /* Not found any. */
-   if (i >= pilot_nstack) {
+   if (i >= array_size(pilot_stack)) {
       player_message(_("#rYou haven't been hailed by any pilots."));
       return;
    }
