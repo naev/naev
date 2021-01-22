@@ -111,9 +111,6 @@ static PlayerShip_t* player_stack   = NULL;  /**< Stack of ships player has. */
  * player outfit stack - outfits he has
  */
 static PlayerOutfit_t *player_outfits  = NULL;  /**< Outfits player has. */
-static int player_noutfits             = 0;     /**< Number of outfits player has. */
-static int player_moutfits             = 0;     /**< Current allocated memory. */
-#define OUTFIT_CHUNKSIZE               32       /**< Allocation chunk size. */
 
 
 /*
@@ -200,6 +197,8 @@ int player_init (void)
 {
    if (player_stack==NULL)
       player_stack = array_create( PlayerShip_t );
+   if (player_outfits==NULL)
+      player_outfits = array_create( PlayerOutfit_t );
    player_initSound();
    return 0;
 }
@@ -337,6 +336,8 @@ static int player_newMake (void)
 
    if (player_stack==NULL)
       player_stack = array_create( PlayerShip_t );
+   if (player_outfits==NULL)
+      player_outfits = array_create( PlayerOutfit_t );
 
    /* Time. */
    ntime_set( start_date() );
@@ -712,10 +713,8 @@ void player_cleanup (void)
    player_stack = NULL;
    /* nothing left */
 
-   free(player_outfits);
+   array_free(player_outfits);
    player_outfits  = NULL;
-   player_noutfits = 0;
-   player_moutfits = 0;
 
    free(missions_done);
    missions_done = NULL;
@@ -2524,7 +2523,7 @@ int player_outfitOwned( const Outfit* o )
       return 1;
 
    /* Try to find it. */
-   for (i=0; i<player_noutfits; i++)
+   for (i=0; i<array_size(player_outfits); i++)
       if (player_outfits[i].o == o)
          return player_outfits[i].q;
 
@@ -2573,7 +2572,7 @@ static int player_outfitCompare( const void *arg1, const void *arg2 )
  */
 const PlayerOutfit_t* player_getOutfits( int *n )
 {
-   *n = player_noutfits;
+   *n = array_size(player_outfits);
    return (const PlayerOutfit_t*) player_outfits;
 }
 
@@ -2591,17 +2590,17 @@ int player_getOutfitsFiltered( Outfit **outfits,
 {
    int i;
 
-   if (player_noutfits == 0)
+   if (array_size(player_outfits) == 0)
       return 0;
 
    /* We'll sort. */
-   qsort( player_outfits, player_noutfits,
+   qsort( player_outfits, array_size(player_outfits),
          sizeof(PlayerOutfit_t), player_outfitCompare );
 
-   for (i=0; i<player_noutfits; i++)
+   for (i=0; i<array_size(player_outfits); i++)
       outfits[i] = (Outfit*)player_outfits[i].o;
 
-   return outfits_filter( outfits, player_noutfits, filter, name );
+   return outfits_filter( outfits, array_size(player_outfits), filter, name );
 }
 
 
@@ -2612,7 +2611,7 @@ int player_getOutfitsFiltered( Outfit **outfits,
  */
 int player_numOutfits (void)
 {
-   return player_noutfits;
+   return array_size(player_outfits);
 }
 
 
@@ -2626,6 +2625,7 @@ int player_numOutfits (void)
 int player_addOutfit( const Outfit *o, int quantity )
 {
    int i;
+   PlayerOutfit_t *po;
 
    /* Validity check. */
    if (quantity == 0)
@@ -2656,7 +2656,7 @@ int player_addOutfit( const Outfit *o, int quantity )
    }
 
    /* Try to find it. */
-   for (i=0; i<player_noutfits; i++) {
+   for (i=0; i<array_size(player_outfits); i++) {
       if (player_outfits[i].o == o) {
          player_outfits[i].q  += quantity;
          return quantity;
@@ -2664,19 +2664,11 @@ int player_addOutfit( const Outfit *o, int quantity )
    }
 
    /* Allocate if needed. */
-   player_noutfits++;
-   if (player_noutfits > player_moutfits) {
-      if (player_moutfits == 0)
-         player_moutfits = OUTFIT_CHUNKSIZE;
-      else
-         player_moutfits *= 2;
-      player_outfits   = realloc( player_outfits,
-            sizeof(PlayerOutfit_t) * player_moutfits );
-   }
+   po = &array_grow( &player_outfits );
 
    /* Add the outfit. */
-   player_outfits[player_noutfits-1].o = o;
-   player_outfits[player_noutfits-1].q = quantity;
+   po->o = o;
+   po->q = quantity;
    return quantity;
 }
 
@@ -2693,18 +2685,15 @@ int player_rmOutfit( const Outfit *o, int quantity )
    int i, q;
 
    /* Try to find it. */
-   for (i=0; i<player_noutfits; i++) {
+   for (i=0; i<array_size(player_outfits); i++) {
       if (player_outfits[i].o == o) {
          /* See how many to remove. */
          q = MIN( player_outfits[i].q, quantity );
          player_outfits[i].q -= q;
 
          /* See if must remove element. */
-         if (player_outfits[i].q <= 0) {
-            player_noutfits--;
-            memmove( &player_outfits[i], &player_outfits[i+1],
-                  sizeof(PlayerOutfit_t) * (player_noutfits-i) );
-         }
+         if (player_outfits[i].q <= 0)
+            array_erase( &player_outfits, &player_outfits[i], &player_outfits[i+1] );
 
          /* Return removed outfits. */
          return q;
@@ -3027,7 +3016,7 @@ int player_save( xmlTextWriterPtr writer )
 
    /* Outfits. */
    xmlw_startElem(writer,"outfits");
-   for (i=0; i<player_noutfits; i++) {
+   for (i=0; i<array_size(player_outfits); i++) {
       xmlw_startElem(writer, "outfit");
       xmlw_attr(writer, "quantity", "%d", player_outfits[i].q);
       xmlw_str(writer, "%s", player_outfits[i].o->name);
@@ -3223,6 +3212,8 @@ Planet* player_load( xmlNodePtr parent )
 
    if (player_stack==NULL)
       player_stack = array_create( PlayerShip_t );
+   if (player_outfits==NULL)
+      player_outfits = array_create( PlayerOutfit_t );
 
    node = parent->xmlChildrenNode;
    do {
