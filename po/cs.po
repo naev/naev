@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-20 14:14-0500\n"
-"PO-Revision-Date: 2021-01-22 13:32+0000\n"
+"PO-Revision-Date: 2021-01-23 00:11+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -3966,23 +3966,29 @@ msgid ""
 "As the thug is distracted by you, Cyborg Chicken suddenly sprints and runs "
 "past you. Did it wink at you?"
 msgstr ""
+"Když zloděje rozptyluješ, Cyborgová slepice najednou sprintuje a běží kolem "
+"tebe. Mrklo to na tebe?"
 
 #: dat/events/minerva/altercation2.lua:86
 msgid ""
 "\"Not such a tough chicken anymore, huh? Going to beat you so bad we'll have "
 "chicken nuggets for lunch!\""
 msgstr ""
+"„Už nejsi tak drsný kuře, hm? Chystáme se tě zmlátit tak moc, že si dáme na "
+"oběd kuřecí nugetky!“"
 
 #: dat/events/minerva/altercation2.lua:87
 msgid ""
 "Cyborg Chicken blinks twice then sprints through the thugs legs and runs "
 "past you. The thug tries to chase but ends up bumping into you."
 msgstr ""
+"Cyborgová slepice dvakrát zamrká, pak proběhne rváči pod nohama a běží kolem "
+"vás. Rváč se ji snaží pronásledovat, ale nakonec do vás narazí."
 
 #: dat/events/minerva/altercation2.lua:102
 msgid ""
 "\"You let the chicken get away punk! How are you going to make up for this!\""
-msgstr ""
+msgstr "„Nechal jsi to kuře uniknout parchante! Za to zaplatíš!“"
 
 #: dat/events/minerva/altercation2.lua:103
 msgid ""
