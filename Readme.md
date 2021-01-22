@@ -146,7 +146,7 @@ following commands:
 ```bash
 meson compile potfiles        # necessary if files have been added or removed
 meson compile naev-pot        # necessary if translatable strings changed
-meson compile naev-update-po  # necessary outside naev:master; otherwise Weblate will do this
+meson compile naev-update-po  # necessary outside the main line, where Weblate handles it
 ```
 
 This wil allow you to edit the translation files in `po/` manually to modify
