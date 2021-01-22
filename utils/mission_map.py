@@ -52,6 +52,66 @@ elif directory[1] == 'naev':
 else:
     print("Failed to detect where you're running this script from\nPlease enter your path manually")
 
+def add_notes( name, parent, base_campaign, campaigns_list, tiers_list ):
+    notes = parent.find('notes')
+
+    if notes != None:
+        campaign = notes.find("campaign")
+        tier = notes.find("tier")
+    else:
+        campaign = None
+        tier = None
+
+    if campaign == None:
+        campTxt = base_campaign
+    else:
+        campTxt = campaign.text
+
+    if tier == None:
+        tierV = None
+    else:
+        tierV = int(tier.text)
+
+    campTxt = 'cluster: '+campTxt
+    campaigns_list.append(campTxt)
+    tiers_list.append(tierV)
+
+    if notes == None:
+        return
+
+    done_misn = notes.findall('done_misn')
+    for dm in done_misn:
+        previous = 'Misn: '+dm.attrib['name']
+        if dm.text == None:
+            dm.text = ""
+        extra_links.append( (previous, name, dm.text)  )
+
+    done_evt = notes.findall('done_evt')
+    for dm in done_evt:
+        previous = 'Evt: '+dm.attrib['name']
+        if dm.text == None:
+            dm.text = ""
+        extra_links.append( (previous, name, dm.text)  )
+
+    provides = notes.findall('provides')
+    for p in provides:
+        nextt = p.attrib['name']
+        if p.text == None:
+            p.text = ""
+        extra_links.append( (name, nextt, p.text)  )
+        if (not (nextt in meta_nodes)):
+            meta_nodes.append((nextt,campTxt))
+
+    requires = notes.findall('requires')
+    for r in requires:
+        previous = r.attrib['name']
+        if r.text == None:
+            r.text = ""
+        extra_links.append( (previous, name, r.text)  )
+        if (not (previous in meta_nodes)):
+            meta_nodes.append((previous,campTxt)) # TODO: there will be conflicts between differnent requires
+
+
 # Reads all the missions
 for missionfile in glob.glob( prefix+'/dat/missions/**/*.lua', recursive=True ):
     print(missionfile)
@@ -87,59 +147,7 @@ for missionfile in glob.glob( prefix+'/dat/missions/**/*.lua', recursive=True ):
             uniques.append(True)
 
     # Read the notes
-    campaign = None
-    tier = None
-    notes = misn.find('notes')
-    if notes != None:
-        campaign = notes.find("campaign")
-        tier = notes.find("tier")
-
-    if campaign == None:
-        campTxt = "Generic Missions"
-    else:
-        campTxt = campaign.text
-
-    if tier == None:
-        tierV = None
-    else:
-        tierV = int(tier.text)
-
-    campTxt = 'cluster: '+campTxt
-    camp.append(campTxt)
-    tierL.append(tierV)
-
-    if notes != None:
-        done_misn = notes.findall('done_misn')
-        for dm in done_misn:
-            previous = 'Misn: '+dm.attrib['name']
-            if dm.text == None:
-                dm.text = ""
-            extra_links.append( (previous, name, dm.text)  )
-
-        done_evt = notes.findall('done_evt')
-        for dm in done_evt:
-            previous = 'Evt: '+dm.attrib['name']
-            if dm.text == None:
-                dm.text = ""
-            extra_links.append( (previous, name, dm.text)  )
-
-        provides = notes.findall('provides')
-        for p in provides:
-            nextt = p.attrib['name']
-            if p.text == None:
-                p.text = ""
-            extra_links.append( (name, nextt, p.text)  )
-            if (not (nextt in meta_nodes)):
-                meta_nodes.append((nextt,campTxt))
-
-        requires = notes.findall('requires')
-        for r in requires:
-            previous = r.attrib['name']
-            if r.text == None:
-                r.text = ""
-            extra_links.append( (previous, name, r.text)  )
-            if (not (previous in meta_nodes)):
-                meta_nodes.append((previous,campTxt)) # TODO: there will be conflicts between differnent requires
+    add_notes( name, misn, "Generic Missions", camp, tierL )
 
     i += 1
 
@@ -181,62 +189,8 @@ for eventfile in glob.glob( prefix+'/dat/events/**/*.lua', recursive=True ):
         else:
             uniquesE.append(True)
 
-    # Read the notes TODO: one function
-    campaign = None
-    tier = None
-    notes = evt.find('notes')
-
-    if notes != None:
-        campaign = notes.find("campaign")
-        tier = notes.find("tier")
-
-    if campaign == None:
-        campTxt = "Generic Events"
-    else:
-        campTxt = campaign.text
-
-    if tier == None:
-        tierV = None
-    else:
-        tierV = int(tier.text)
-
-    campTxt = 'cluster: '+campTxt
-    campE.append(campTxt)
-    tierLE.append(tierV)
-
-    if notes != None:
-        done_misn = notes.findall('done_misn')
-        for dm in done_misn:
-            previous = 'Misn: '+dm.attrib['name']
-            if dm.text == None:
-                dm.text = ""
-            extra_links.append( (previous, name, dm.text)  )
-
-        provides = notes.findall('provides')
-        for p in provides:
-            nextt = p.attrib['name']
-            if p.text == None:
-                p.text = ""
-            extra_links.append( (name, nextt, p.text)  )
-            if (not (nextt in meta_nodes)):
-                meta_nodes.append((nextt,campTxt))
-
-        done_evt = notes.findall('done_evt')
-        for dm in done_evt:
-            previous = 'Evt: '+dm.attrib['name']
-            if dm.text == None:
-                dm.text = ""
-            extra_links.append( (previous, name, dm.text)  )
-
-        requires = notes.findall('requires')
-        for r in requires:
-            previous = r.attrib['name']
-            if r.text == None:
-                r.text = ""
-            extra_links.append( (previous, name, r.text)  )
-            if (not (previous in meta_nodes)):
-                meta_nodes.append((previous,campTxt))
-
+    # Read the notes
+    add_notes( name, evt, "Generic Events", campE, tierLE )
 
     i += 1
 
