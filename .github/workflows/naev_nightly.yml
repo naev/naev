@@ -29,7 +29,7 @@ jobs:
       - name: Collect Artifacts
         run: |
           mkdir -p build/dist
-          cp -r source/utils/ci/itch utils/ci/steam build/dist/
+          cp -r source/utils/ci/itch source/utils/ci/steam build/dist/
           mv build/meson-dist/naev-*.tar.xz build/dist/source.tar.xz
           cp source/dat/VERSION build/dist
 
