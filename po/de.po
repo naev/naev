@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-20 14:14-0500\n"
-"PO-Revision-Date: 2021-01-20 00:50+0000\n"
+"PO-Revision-Date: 2021-01-23 00:11+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
 "Language: de\n"
@@ -2513,7 +2513,7 @@ msgstr ""
 #. TODO: see chance for this event
 #: dat/events/dvaered/fwA_treason.lua:30
 msgid "You are needed for a special job"
-msgstr ""
+msgstr "Du wirst für eine besondere Aufgabe gebraucht"
 
 #: dat/events/dvaered/fwA_treason.lua:31
 #, lua-format
@@ -2544,13 +2544,11 @@ msgstr "Angebot annehmen"
 
 #: dat/events/dvaered/fwA_treason.lua:36
 msgid "Refuse and miss a unique opportunity"
-msgstr ""
+msgstr "Ablehnen und eine einzigartige Chance ausschlagen"
 
 #: dat/events/dvaered/fwA_treason.lua:38
-#, fuzzy
-#| msgid "Your Diary"
 msgid "Your task"
-msgstr "Dein Tagebuch"
+msgstr "Deine Aufgabe"
 
 #: dat/events/dvaered/fwA_treason.lua:39
 #, lua-format
@@ -2648,7 +2646,7 @@ msgstr ""
 
 #: dat/events/dvaered/fwA_treason.lua:57
 msgid "Money is not important, captain"
-msgstr ""
+msgstr "Geld ist nicht wichtig, Kapitän"
 
 #: dat/events/dvaered/fwA_treason.lua:59
 msgid "You tried to betray us"
