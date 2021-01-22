@@ -38,6 +38,9 @@
 #include "unidiff.h"
 
 
+extern StarSystem *systems_stack;
+
+
 #define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
@@ -73,8 +76,6 @@ typedef struct mapOutfitsList_s {
    credits_t price;
    int rarity;
 } mapOutfitsList_t;
-
-extern int systems_nstack;
 
 static mapOutfitsList_t *mapList = NULL; /* Array of map outfits for displaying in the Open window. */
 
@@ -434,7 +435,7 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             mx -= w/2 - mapedit_xpos;
             my -= h/2 - mapedit_ypos;
 
-            for (i=0; i<systems_nstack; i++) {
+            for (i=0; i<array_size(systems_stack); i++) {
                sys = system_getIndex( i );
 
                /* get position */
@@ -832,7 +833,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
 
       /* Find system */
       found  = 0;
-      for (i=0; i<systems_nstack; i++) {
+      for (i=0; i<array_size(systems_stack); i++) {
          sys = system_getIndex( i );
          compareLimit = strlen(systemName);
          if (strncmp(systemName, sys->name, compareLimit)==0) {

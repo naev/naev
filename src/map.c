@@ -72,8 +72,6 @@ static gl_vbo *marker_vbo = NULL;
  */
 /* space.c */
 extern StarSystem *systems_stack;
-extern int systems_nstack;
-extern int faction_nstack;
 
 /*land.c*/
 extern int landed;
@@ -346,7 +344,7 @@ static void map_update_commod_av_price()
    if ( cur_commod_mode !=0 ) {
       double totPrice = 0;
       int totPriceCnt = 0;
-      for (i=0; i<systems_nstack; i++) {
+      for (i=0; i<array_size(systems_stack); i++) {
          sys = system_getIndex( i );
 
          /* if system is not known, reachable, or marked. and we are not in the editor */
@@ -905,7 +903,7 @@ void map_renderDecorators( double x, double y, int editor)
       visible=0;
 
       if (!editor) {
-         for (j=0; j<systems_nstack && visible==0; j++) {
+         for (j=0; j<array_size(systems_stack) && visible==0; j++) {
             sys = system_getIndex( j );
 
             if (!sys_isKnown(sys))
@@ -950,7 +948,7 @@ void map_renderFactionDisks( double x, double y, int editor)
    /* Fade in the disks to allow toggling between commodity and nothing */
    double cc = cos ( commod_counter / 200. * M_PI );
 
-   for (i=0; i<systems_nstack; i++) {
+   for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
 
       /* System has no faction, or isn't known and we aren't in the editor. */
@@ -995,7 +993,7 @@ void map_renderJumps( double x, double y, int editor)
    /* Generate smooth lines. */
    glLineWidth( CLAMP(1., 4., 2. * map_zoom)*gl_screen.scale );
 
-   for (i=0; i<systems_nstack; i++) {
+   for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
 
       if (!sys_isKnown(sys) && !editor)
@@ -1070,7 +1068,7 @@ void map_renderSystems( double bx, double by, double x, double y,
    StarSystem *sys;
    double tx, ty;
 
-   for (i=0; i<systems_nstack; i++) {
+   for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
 
       /* if system is not known, reachable, or marked. and we are not in the editor */
@@ -1181,7 +1179,7 @@ void map_renderNames( double bx, double by, double x, double y,
    int i, j;
    char buf[32];
 
-   for (i=0; i<systems_nstack; i++) {
+   for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
 
       /* Skip system. */
@@ -1204,7 +1202,7 @@ void map_renderNames( double bx, double by, double x, double y,
    if (!editor || (map_zoom <= 1.0))
       return;
 
-   for (i=0; i<systems_nstack; i++) {
+   for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
       for (j=0; j<sys->njumps; j++) {
          jsys = sys->jumps[j].target;
@@ -1238,7 +1236,7 @@ static void map_renderMarkers( double x, double y, double r, double a )
    int i, j, n, m;
    StarSystem *sys;
 
-   for (i=0; i<systems_nstack; i++) {
+   for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
 
       /* We only care about marked now. */
@@ -1291,7 +1289,7 @@ static void map_renderSysBlack(double bx, double by, double x,double y, double w
    double tx,ty;
    glColour ccol;
 
-   for (i=0; i<systems_nstack; i++) {
+   for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
 
       /* if system is not known, reachable, or marked. and we are not in the editor */
@@ -1386,7 +1384,7 @@ void map_renderCommod( double bx, double by, double x, double y,
             return;
          }
       }
-      for (i=0; i<systems_nstack; i++) {
+      for (i=0; i<array_size(systems_stack); i++) {
          sys = system_getIndex( i );
 
          /* if system is not known, reachable, or marked. and we are not in the editor */
@@ -1448,7 +1446,7 @@ void map_renderCommod( double bx, double by, double x, double y,
       /*First calculate av price in all systems */
       /* This has already been done in map_update_commod_av_price */
       /* Now display the costs */
-      for (i=0; i<systems_nstack; i++) {
+      for (i=0; i<array_size(systems_stack); i++) {
          sys = system_getIndex( i );
 
          /* if system is not known, reachable, or marked. and we are not in the editor */
@@ -1624,7 +1622,7 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
          my -= h/2 - map_ypos;
          map_drag = 1;
 
-         for (i=0; i<systems_nstack; i++) {
+         for (i=0; i<array_size(systems_stack); i++) {
             sys = system_getIndex( i );
 
             /* must be reachable */
@@ -1712,7 +1710,7 @@ static void map_genModeList(void)
    if ( commod_known == NULL )
       commod_known = malloc(sizeof(Commodity*) * commodity_getN());
    memset(commod_known,0,sizeof(Commodity*)*commodity_getN());
-   for (i=0; i<systems_nstack; i++) {
+   for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
       for ( j=0 ; j<sys->nplanets; j++) {
          p=sys->planets[j];

@@ -53,7 +53,6 @@
 
 /* systems stack. */
 extern StarSystem *systems_stack; /**< Star system stack. */
-extern int systems_nstack; /**< Number of star systems. */
 
 
 /* @TODO get rid of these externs. */
@@ -245,7 +244,7 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std 
       *std = 0;
       return 1;
    }
-   for ( i=0; i<systems_nstack ; i++) {
+   for ( i=0; i<array_size(systems_stack) ; i++) {
       sys = &systems_stack[i];
       for ( j=0; j<sys->nplanets; j++) {
          p = sys->planets[j];
@@ -365,12 +364,12 @@ static int econ_createGMatrix (void)
    StarSystem *sys;
 
    /* Create the matrix. */
-   M = cs_spalloc( systems_nstack, systems_nstack, 1, 1, 1 );
+   M = cs_spalloc( array_size(systems_stack), array_size(systems_stack), 1, 1, 1 );
    if (M == NULL)
       ERR(_("Unable to create CSparse Matrix."));
 
    /* Fill the matrix. */
-   for (i=0; i < systems_nstack; i++) {
+   for (i=0; i < array_size(systems_stack); i++) {
       sys   = &systems_stack[i];
       Rsum = 0.;
 
@@ -424,7 +423,7 @@ int economy_init (void)
       return 0;
 
    /* Allocate price space. */
-   for (i=0; i<systems_nstack; i++) {
+   for (i=0; i<array_size(systems_stack); i++) {
       free(systems_stack[i].prices);
       systems_stack[i].prices = calloc(array_size(econ_comm), sizeof(double));
    }
@@ -502,7 +501,7 @@ int economy_update( unsigned int dt )
       return 0;
 
    /* Create the vector to solve the system. */
-   X = malloc(sizeof(double)*systems_nstack);
+   X = malloc(sizeof(double)*array_size(systems_stack));
    if (X == NULL) {
       WARN(_("Out of Memory"));
       return -1;
@@ -513,7 +512,7 @@ int economy_update( unsigned int dt )
 
 
       /* First we must load the vector with intensities. */
-      for (i=0; i<systems_nstack; i++)
+      for (i=0; i<array_size(systems_stack); i++)
          X[i] = econ_calcSysI( dt, &systems_stack[i], j );
 
       /* Solve the system. */
@@ -534,7 +533,7 @@ int economy_update( unsigned int dt )
       /*
       min = +HUGE_VALF;
       max = -HUGE_VALF;
-      for (i=0; i<systems_nstack; i++) {
+      for (i=0; i<array_size(systems_stack); i++) {
          if (X[i] < min)
             min = X[i];
          if (X[i] > max)
@@ -551,7 +550,7 @@ int economy_update( unsigned int dt )
        */
       scale    = 1.;
       offset   = 1.;
-      for (i=0; i<systems_nstack; i++)
+      for (i=0; i<array_size(systems_stack); i++)
          systems_stack[i].prices[j] = X[i] * scale + offset;
    }
 
@@ -576,7 +575,7 @@ void economy_destroy (void)
       return;
 
    /* Clean up the prices in the systems stack. */
-   for (i=0; i<systems_nstack; i++) {
+   for (i=0; i<array_size(systems_stack); i++) {
       free(systems_stack[i].prices);
       systems_stack[i].prices = NULL;
    }
@@ -845,7 +844,7 @@ void economy_initialiseCommodityPrices(void)
    Commodity *com;
    CommodityModifier *this, *next;
    /* First use planet attributes to set prices and variability */
-   for (k=0; k<systems_nstack; k++) {
+   for (k=0; k<array_size(systems_stack); k++) {
       sys = &systems_stack[k];
       for ( j=0; j<sys->nplanets; j++ ) {
          planet = sys->planets[j];
@@ -858,19 +857,19 @@ void economy_initialiseCommodityPrices(void)
    }
 
    /* Modify prices and availability based on system attributes, and do some inter-planet averaging to smooth prices */
-   for ( i=0; i<systems_nstack; i++ ) {
+   for ( i=0; i<array_size(systems_stack); i++ ) {
       sys = &systems_stack[i];
       economy_modifySystemCommodityPrice(sys);
    }
 
    /* Compute average prices for all systems */
-   for ( i=0; i<systems_nstack; i++ ) {
+   for ( i=0; i<array_size(systems_stack); i++ ) {
       sys = &systems_stack[i];
       economy_smoothCommodityPrice(sys);
    }
 
    /* Smooth prices based on neighbouring systems */
-   for ( i=0; i<systems_nstack; i++ ) {
+   for ( i=0; i<array_size(systems_stack); i++ ) {
       sys = &systems_stack[i];
       economy_calcUpdatedCommodityPrice(sys);
    }
@@ -964,7 +963,7 @@ void economy_clearKnown (void)
    StarSystem *sys;
    Planet *p;
    CommodityPrice *cp;
-   for (i=0; i<systems_nstack; i++) {
+   for (i=0; i<array_size(systems_stack); i++) {
       sys = &systems_stack[i];
       for (j=0; j<sys->nplanets; j++) {
          p=sys->planets[j];
@@ -1093,7 +1092,7 @@ int economy_sysSave( xmlTextWriterPtr writer )
          xmlw_endElem(writer);
       }
    }
-   for (i=0; i<systems_nstack; i++) {
+   for (i=0; i<array_size(systems_stack); i++) {
       doneSys=0;
       sys=&systems_stack[i];
       for (j=0; j<sys->nplanets; j++) {
