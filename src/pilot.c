@@ -50,9 +50,7 @@
 #include "weapon.h"
 
 
-#define PILOT_CHUNK_MIN 128 /**< Minimum chunks to increment pilot_stack by */
-#define PILOT_CHUNK_MAX 2048 /**< Maximum chunks to increment pilot_stack by */
-#define CHUNK_SIZE      32 /**< Size to allocate memory by. */
+#define PILOT_SIZE_MIN 128 /**< Minimum chunks to increment pilot_stack by */
 
 /* ID Generators. */
 static unsigned int pilot_id = PLAYER_ID; /**< Stack of pilot ids to assure uniqueness */
@@ -3023,7 +3021,7 @@ void pilot_destroy(Pilot* p)
  */
 void pilots_init (void)
 {
-   pilot_stack = array_create( Pilot* );
+   pilot_stack = array_create_size( Pilot*, PILOT_SIZE_MIN );
 }
 
 
