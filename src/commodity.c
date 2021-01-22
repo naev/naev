@@ -55,7 +55,6 @@ static float noscoop_timer                 = 1.; /**< Timer for the "full cargo"
 
 /* @TODO remove externs. */
 extern int *econ_comm;
-extern int econ_nprices;
 
 
 /*
@@ -164,9 +163,9 @@ Commodity* commodity_getW( const char* name )
  *
  *    @return Number of commodities globally.
  */
-int commodity_getN(void )
+int commodity_getN (void)
 {
-   return econ_nprices;
+   return array_size(econ_comm);
 }
 
 /**
@@ -177,7 +176,7 @@ int commodity_getN(void )
  */
 Commodity* commodity_getByIndex( const int indx )
 {
-   if ( indx < 0 || indx >= econ_nprices ) {
+   if ( indx < 0 || indx >= array_size(econ_comm) ) {
       WARN(_("Commodity with index %d not found"),indx);
       return NULL;
    }
@@ -590,8 +589,10 @@ int commodity_load (void)
    xmlNodePtr node;
    xmlDocPtr doc;
    Commodity *c;
+   int *e;
 
    commodity_stack = array_create( Commodity );
+   econ_comm = array_create( int );
 
    /* Load the file. */
    doc = xml_parsePhysFS( COMMODITY_DATA_PATH );
@@ -620,9 +621,8 @@ int commodity_load (void)
 
          /* See if should get added to commodity list. */
          if (c->price > 0.) {
-            econ_nprices++;
-            econ_comm = realloc(econ_comm, econ_nprices * sizeof(int));
-            econ_comm[econ_nprices-1] = array_size(commodity_stack)-1;
+            e = &array_grow( &econ_comm );
+            *e = array_size(commodity_stack)-1;
          }
       }
       else
@@ -651,6 +651,7 @@ void commodity_free (void)
    commodity_stack = NULL;
 
    /* More clean up. */
-   free( econ_comm );
+   array_free( econ_comm );
+   econ_comm = NULL;
 }
 

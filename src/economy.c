@@ -67,7 +67,6 @@ static int econ_initialized   = 0; /**< Is economy system initialized? */
 static int econ_queued        = 0; /**< Whether there are any queued updates. */
 static cs *econ_G             = NULL; /**< Admittance matrix. */
 int *econ_comm         = NULL; /**< Commodities to calculate. */
-int econ_nprices       = 0; /**< Number of prices to calculate. */
 
 
 /*
@@ -130,12 +129,12 @@ credits_t economy_getPriceAtTime( const Commodity *com,
    k = com - commodity_stack;
 
    /* Find what commodity that is. */
-   for (i=0; i<econ_nprices; i++)
+   for (i=0; i<array_size(econ_comm); i++)
       if (econ_comm[i] == k)
          break;
 
    /* Check if found. */
-   if (i >= econ_nprices) {
+   if (i >= array_size(econ_comm)) {
       WARN(_("Price for commodity '%s' not known."), com->name);
       return 0;
    }
@@ -177,12 +176,12 @@ int economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credit
    k = com - commodity_stack;
 
    /* Find what commodity this is */
-   for ( i=0; i<econ_nprices; i++ )
+   for ( i=0; i<array_size(econ_comm); i++ )
       if (econ_comm[i] == k)
          break;
 
    /* Check if found */
-   if ( i>= econ_nprices) {
+   if ( i>= array_size(econ_comm)) {
       WARN(_("Average price for commodity '%s' not known."), com->name);
       *mean=0;
       *std=0;
@@ -235,12 +234,12 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std 
    k = com - commodity_stack;
 
    /* Find what commodity this is */
-   for ( i=0; i<econ_nprices; i++ )
+   for ( i=0; i<array_size(econ_comm); i++ )
       if (econ_comm[i] == k)
          break;
 
    /* Check if found */
-   if ( i>= econ_nprices) {
+   if ( i>= array_size(econ_comm)) {
       WARN(_("Average price for commodity '%s' not known."), com->name);
       *mean = 0;
       *std = 0;
@@ -427,7 +426,7 @@ int economy_init (void)
    /* Allocate price space. */
    for (i=0; i<systems_nstack; i++) {
       free(systems_stack[i].prices);
-      systems_stack[i].prices = calloc(econ_nprices, sizeof(double));
+      systems_stack[i].prices = calloc(array_size(econ_comm), sizeof(double));
    }
 
    /* Mark economy as initialized. */
@@ -510,7 +509,7 @@ int economy_update( unsigned int dt )
    }
 
    /* Calculate the results for each price set. */
-   for (j=0; j<econ_nprices; j++) {
+   for (j=0; j<array_size(econ_comm); j++) {
 
 
       /* First we must load the vector with intensities. */
