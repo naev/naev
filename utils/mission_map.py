@@ -221,6 +221,13 @@ for eventfile in glob.glob( prefix+'/dat/events/**/*.lua', recursive=True ):
             if (not (nextt in meta_nodes)):
                 meta_nodes.append((nextt,campTxt))
 
+        done_evt = notes.findall('done_evt')
+        for dm in done_evt:
+            previous = 'Evt: '+dm.attrib['name']
+            if dm.text == None:
+                dm.text = ""
+            extra_links.append( (previous, name, dm.text)  )
+
         requires = notes.findall('requires')
         for r in requires:
             previous = r.attrib['name']
