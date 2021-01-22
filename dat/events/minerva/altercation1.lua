@@ -6,7 +6,7 @@
  <flags />
  <notes>
   <campaign>Minerva</campaign>
-  <requires name="Minerva Station">Random event hen gained >10 tokens</requires>
+  <requires name="Minerva Station">Random event when gained >10 tokens</requires>
   <provides name="Minerva Altercation 1" />
  </notes>
 </event>
