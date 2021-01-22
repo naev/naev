@@ -28,11 +28,12 @@ jobs:
 
       - name: Collect Artifacts
         run: |
-          mkdir -p build/dist/{steam,itch}
+          ls -R build  # see what the heck is going on
+          rm -rf build/dist
+          mkdir -p build/dist
+          cp -r source/utils/ci/{itch,steam} build/dist/
           mv build/meson-dist/naev-*.tar.xz build/dist/source.tar.xz
           cp source/dat/VERSION build/dist
-          cp -r source/utils/ci/steam/* build/dist/steam
-          cp -r source/utils/ci/itch/* build/dist/itch
 
       - name: Upload Source Artifact
         uses: actions/upload-artifact@v2
