@@ -51,7 +51,7 @@ Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
 /* gatherables stack */
 static Gatherable* gatherable_stack = NULL; /**< Contains the gatherable stuff floating around. */
 static int gatherable_nstack        = 0; /**< Number of gatherables in the stack. */
-float noscoop_timer                 = 1.; /**< Timer for the "full cargo" message . */
+static float noscoop_timer                 = 1.; /**< Timer for the "full cargo" message . */
 
 /* @TODO remove externs. */
 extern int *econ_comm;
