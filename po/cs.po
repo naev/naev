@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-20 14:14-0500\n"
-"PO-Revision-Date: 2021-01-21 13:37+0000\n"
+"PO-Revision-Date: 2021-01-22 13:32+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -124,9 +124,8 @@ msgid "You're quick and dependable? The Emperor needs you in the Armada!"
 msgstr "Jsi rychlý a spolehlivý? Císař tě potřebuje v armádě!"
 
 #: dat/ai/advertiser.lua:45
-#, fuzzy
 msgid "Help the police help you: denounce the dissidents."
-msgstr "Pomozte policii vám pomoci: vypovězte disidenty."
+msgstr "Pomozte policii: vypovězte disidenty."
 
 #: dat/ai/advertiser.lua:49
 msgid "Only your hard work will save the Dvaered economy!"
@@ -1865,7 +1864,7 @@ msgstr "Svoboda je otroctví!"
 
 #: dat/ai/proteron.lua:85
 msgid "How dare you attack the Proteron?!"
-msgstr "Jak se opovažuješ zaútočit na Proteron?!"
+msgstr "Jak se opovažuješ zaútočit na Proterony?!"
 
 #: dat/ai/proteron.lua:86
 msgid "I will have your head!"
@@ -1930,89 +1929,91 @@ msgstr "Udělali jste vážnou chybu!"
 
 #: dat/ai/sirius.lua:59
 msgid "You do wrong in your provocations!"
-msgstr ""
+msgstr "Tvé provokace jsou špatné!"
 
 #. Settings
 #. Not too many credits.
 #. Get refuel chance
 #: dat/ai/soromid.lua:22 dat/ai/soromid.lua:25
 msgid "\"The warriors of Sorom are not your personal refueller.\""
-msgstr ""
+msgstr "„Soromidští válečníci nejsou tvým osobním tankerem.“"
 
 #: dat/ai/soromid.lua:39
 msgid "\"Snivelling waste of carbon.\""
-msgstr ""
+msgstr "\"Ufňukaný uhlíkový odpad.\""
 
 #: dat/ai/soromid.lua:40
 msgid "\"Money won't save you from being purged from the gene pool.\""
-msgstr ""
+msgstr "„Peníze tě neuchrání před očištěním z genofondu.“"
 
 #: dat/ai/soromid.lua:41
 msgid "\"Culling you will be doing humanity a service.\""
-msgstr ""
+msgstr "„Když tě utratíme, bude to služba lidstvu.“"
 
 #: dat/ai/soromid.lua:42
 msgid "\"We do not consort with vermin.\""
-msgstr ""
+msgstr "\"Nespolčujeme se s havětí.\""
 
 #: dat/ai/soromid.lua:43
 msgid "\"Who do you take us for, the Empire?\""
-msgstr ""
+msgstr "„Za koho nás máš, Impérium?“"
 
 #: dat/ai/soromid.lua:66
 msgid "Culling you will be doing humanity a service."
-msgstr ""
+msgstr "Když tě utratíme, bude to služba lidstvu."
 
 #: dat/ai/soromid.lua:67
 msgid "Enjoy your last moments, worm!"
-msgstr ""
+msgstr "Užij si poslední chvíle, červe!"
 
 #: dat/ai/soromid.lua:68
 msgid "Time for a little natural selection!"
-msgstr ""
+msgstr "Je čas na trochu přirozeného výběru!"
 
 #: dat/ai/soromid.lua:69
 msgid "Might makes right!"
-msgstr ""
+msgstr "Síla tvoří právo!"
 
 #: dat/ai/soromid.lua:70
 msgid "Embrace your weakness!"
-msgstr ""
+msgstr "Přijmi svou slabost!"
 
 #: dat/ai/soromid.lua:74
 msgid "Cunning, but foolish."
-msgstr ""
+msgstr "Lstivý, ale hloupý."
 
 #: dat/ai/soromid.lua:75
 msgid "Ambush! Defend yourselves!"
-msgstr ""
+msgstr "Přepadení! Braňte se!"
 
 #: dat/ai/soromid.lua:76
 msgid "You should have picked easier prey!"
-msgstr ""
+msgstr "Měli jsi si vybrat snadnější kořist!"
 
 #: dat/ai/thurion.lua:18
 msgid "Vessel under attack! Requesting help!"
-msgstr ""
+msgstr "Plavidlo pod útokem! Žádám o pomoc!"
 
 #: dat/ai/thurion.lua:23
 msgid "01010101011011100110010001100101011100100010000001100001011101000111010001100001011000110110101100100001"
 msgstr ""
+"01010101011011100110010001100101011100100010000001100001011101000111010001100"
+"001011000110110101100100001"
 
 #. "Under attack!" in binary
 #. Credits.
 #. No bribe
 #: dat/ai/thurion.lua:37
 msgid "\"The Thurion will not be bribed!\""
-msgstr ""
+msgstr "„Thurion nebude podplácen!“"
 
 #: dat/ai/thurion.lua:38
 msgid "\"I have no use for your money.\""
-msgstr ""
+msgstr "„Tvé peníze mi jsou k ničemu.“"
 
 #: dat/ai/thurion.lua:39
 msgid "\"Credits are no replacement for a good shield.\""
-msgstr ""
+msgstr "„Kredity nenahrazují dobrý štít.“"
 
 #. This is the amount of waypoints the pilot will pass through before leaving the system
 #. Don't run away from master ship
@@ -2061,7 +2062,7 @@ msgstr ""
 #: dat/ai/tpl/generic.lua:59
 #, lua-format
 msgid "Formation '%s' not found"
-msgstr ""
+msgstr "Formace '%s' nebyla nalezena"
 
 #. Run instead of "control" when under manual control; use should be limited
 #. TODO: Made sure planet is the same
@@ -2202,91 +2203,96 @@ msgstr ""
 #. Communication stuff
 #: dat/ai/trader.lua:13
 msgid "\"The Space Traders do not negotiate with criminals.\""
-msgstr ""
+msgstr "„Vesmírní obchodníci nevyjednávají se zločinci.“"
 
 #. Most likely no chance to refuel
 #: dat/ai/zalek.lua:28
 #, lua-format
 msgid "\"I will agree to refuel your ship for %s.\""
-msgstr ""
+msgstr "„Souhlasím s natankováním vaší lodi za %s.“"
 
 #. See if can be bribed
 #: dat/ai/zalek.lua:34
 #, lua-format
 msgid "\"We will agree to end the battle for %s.\""
-msgstr ""
+msgstr "„Souhlasíme s ukončením bitvy za %s.“"
 
 #: dat/ai/zalek.lua:35
 msgid "\"Temporarily stopping fire.\""
-msgstr ""
+msgstr "„Dočasně přerušujeme palbu.“"
 
 #. FIXME: Could be made more Za'lek-like.
 #. Will this work? ~Areze
 #: dat/ai/zalek.lua:40
 msgid "\"Keep your cash, you troglodyte.\""
-msgstr ""
+msgstr "„Nech si své peníze, ty troglodyte.“"
 
 #: dat/ai/zalek.lua:41
 msgid "\"Don't make me laugh. Eat laser beam!\""
-msgstr ""
+msgstr "„Nerozesmívej mě. Sežer dávku z mého laseru!\""
 
 #: dat/ai/zalek.lua:42
 msgid ""
 "\"My drones aren't interested in your ill-gotten gains and neither am I!\""
-msgstr ""
+msgstr "„Moje drony se nezajímají o tvé špinavé zisky a ani já ne!“"
 
 #: dat/ai/zalek.lua:43
 msgid "\"Ahaha! Nice one! Oh, you're actually serious? Ahahahaha!\""
-msgstr ""
+msgstr "„Ahaha! Hezký! Ach, to myslíš vážně? Ahahahaha!“"
 
 #: dat/ai/zalek.lua:44
 msgid ""
 "\"While I admire the spirit of it, testing my patience is suicide, NOT "
 "science.\""
 msgstr ""
+"„I když obdivuji tvého ducha, testování mé trpělivosti je sebevražda, NE "
+"věda.“"
 
 #. This is the amount of waypoints the pilot will pass through before leaving the system
 #. Finish up creation
 #. Only 50% of actually taunting.
 #: dat/ai/zalek.lua:63
 msgid "Move drones in to engage. Cook this clown!"
-msgstr ""
+msgstr "Přesuňte drony, aby se zapojily. Uvařte tohoto klauna!"
 
 #: dat/ai/zalek.lua:64
 msgid "Say hello to my little friends!"
-msgstr ""
+msgstr "Pozdrav mé malé přátele!"
 
 #: dat/ai/zalek.lua:65
 msgid "Ooh, more victi- ah, volunteers for our experiments!"
-msgstr ""
+msgstr "Ó, více oběť... ehm, dobrovolníků pro naše experimenty!"
 
 #: dat/ai/zalek.lua:66
 msgid "We need a test subject to test our attack on; you'll do nicely!"
 msgstr ""
+"Potřebujeme testovací subjekt, abychom otestovali náš útok; výborně se na to "
+"hodíš!"
 
 #: dat/ai/zalek.lua:67
 msgid "Ready for a physics lesson, punk?"
-msgstr ""
+msgstr "Připraven na lekci fyziky, punkáči?"
 
 #: dat/ai/zalek.lua:68
+#, fuzzy
 msgid "After we wax you, we can return to our experiments!"
-msgstr ""
+msgstr "Poté, co tě navoskujeme, se můžeme vrátit k našim experimentům!"
 
 #: dat/ai/zalek.lua:72
 msgid "We're being attacked! Prepare defence protocols!"
-msgstr ""
+msgstr "Jsme napadeni! Připravte obranné protokoly!"
 
 #: dat/ai/zalek.lua:73
 msgid "You just made a big mistake!"
-msgstr ""
+msgstr "Právě jsi udělal velkou chybu!"
 
 #: dat/ai/zalek.lua:74
 msgid "Our technology will fix your attitude!"
-msgstr ""
+msgstr "Naše technologie napraví tvůj přístup!"
 
 #: dat/ai/zalek.lua:75
 msgid "You wanna do this? Have it your way."
-msgstr ""
+msgstr "Chceš to udělat? Ať je po tvém."
 
 #. We can do systems without nebula
 #. Start up PRNG based on system name for deterministic nebula
@@ -2382,9 +2388,10 @@ msgstr ""
 #.
 #: dat/events/cinematic/DvdFLFbattle.lua:31
 msgid "Dvaered forces engaged in combat with small terrorist group"
-msgstr ""
+msgstr "Dvaeredské síly zapojené do boje s malou teroristickou skupinou"
 
 #: dat/events/cinematic/DvdFLFbattle.lua:32
+#, fuzzy
 msgid ""
 "In what the Dvaered call a 'Mighty victory', a Dvaered force was attacked "
 "and damaged by a small group of underequipped and unorganized FLF, in the "
@@ -2393,10 +2400,16 @@ msgid ""
 "equipment, and the relative victory of the FLF will only embolden them, "
 "leading to more internal strife and violence."
 msgstr ""
+"V tom, co Dvaeredové nazývají „mocné vítězství“, byla Dvaeredská síla "
+"napadena a poškozena malou nedostatečně vybavenou a neorganizovanou skupinou "
+"FLF v systému Tuoladis. Dvaeredům se podařilo přijít o mnoho lodí a posádek "
+"v hodnotě desítek milionů kreditů oproti tomu malý gang lodí a vybavení "
+"nevalné hodnoty a relativní vítězství FLF je jen posílí, což povede k dalším "
+"vnitřním sporům a násilí."
 
 #: dat/events/cinematic/DvdFLFbattle.lua:38
 msgid "FLF terrorists blasted by joint Dvaered military forces"
-msgstr ""
+msgstr "Teroristé FLF rozdrcení Dvaeredskými spojenými vojenskými silami"
 
 #: dat/events/cinematic/DvdFLFbattle.lua:39
 msgid ""
@@ -2407,10 +2420,16 @@ msgid ""
 "and kill whomever they please. The Dvaered military is always ready to "
 "protect its citizens and kill and conquer those who would harm them."
 msgstr ""
+"Hlídku Dvaeredů v systému Tuoladis přepadl velký gang teroristů FLF. Hlídka "
+"Dvaeredů se držela pod útokem, dokud mocné kladivo, kterým jsou Dvaeredské "
+"síly, nespadlo a nerozdrtilo teroristy FLF mocným vítězstvím. Tento incident "
+"ukazuje ochotu teroristů zaútočit na nás a zabít kohokoli se jim zlíbí. "
+"Armáda Dvaeredů je vždy připravena chránit své občany a zabíjet a dobývat "
+"ty, kteří by jim ublížili."
 
 #: dat/events/cinematic/DvdFLFbattle.lua:45
 msgid "Dvaered forces engage FLF freedom fighters in open combat"
-msgstr ""
+msgstr "Dvaeredské síly napadají FLF bojovníky za svobodu v otevřeném boji"
 
 #: dat/events/cinematic/DvdFLFbattle.lua:46
 msgid ""
@@ -2422,10 +2441,17 @@ msgid ""
 "shall server as an example for all who dare to stand for freedom, in life or "
 "death."
 msgstr ""
+"Malá skupina FLF bojovníků za svobodu byla sužována Dvaeredskou hlídkou v "
+"systému Tuoladis, která okamžitě zavolala zálohu. Situace se vyhrotila a "
+"došlo k rozsáhlé bitvě, kde Dvaeredské síly ztratily lodě v hodnotě desítek "
+"milionů kreditů. Toto je poprvé, co FLF bojovníci za svobodu měli lodě a "
+"zbraně, aby se postavili na nohy proti Dvaeredům, a budou sloužit jako "
+"příklad pro všechny, kteří se odvážili postavit za svobodu, v životě nebo ve "
+"smrti."
 
 #: dat/events/cinematic/DvdFLFbattle.lua:52
 msgid "Dvaered, FLF clash in Tuoladis"
-msgstr ""
+msgstr "Dvaered, FLF se střetli v systému Tuoladis"
 
 #: dat/events/cinematic/DvdFLFbattle.lua:53
 msgid ""
@@ -2435,6 +2461,10 @@ msgid ""
 "the event as an excuse to call for military action against the frontier "
 "worlds."
 msgstr ""
+"Při náhodném setkání narazila hlídka Dvaeredů na skupinu FLF. Malá potyčka "
+"rychle přerostla v rozsáhlou bitvu o mnoha desítkách, ve které Dvaeredové "
+"prohlásili, že vyhráli. Vrchní velení Dvaered využilo událost jako záminku k "
+"výzvě k vojenské akci proti pohraničním světům."
 
 #. event ends on player leaving the system or landing
 #.
@@ -2463,7 +2493,7 @@ msgstr ""
 #. TODO: see chance for this event
 #: dat/events/dvaered/fwA_treason.lua:30
 msgid "You are needed for a special job"
-msgstr ""
+msgstr "Je tě potřeba pro speciální práci"
 
 #: dat/events/dvaered/fwA_treason.lua:31
 #, lua-format
@@ -2487,18 +2517,34 @@ msgid ""
 "you'll receive %s in the process. Oh yes, that's different from what you're "
 "used to! What do you say?\""
 msgstr ""
+"Pilot stíhačky používá šifrovaný kanál: \"Konečně jsem tě našel, %s. Lepší "
+"pozdě než nikdy. Moji zaměstnavatelé ti chtějí poblahopřát k tomu, jak "
+"efektivní jsi byl s lordem Battleaddictem. Obávám se, že nebude mnoho lidí, "
+"co by ho oplakávali. “ Odpovíš, že nevíš, o čem je řeč, a že pokud víš, lord "
+"Battleaddict byl zabit v čestném souboji generálem Klankem. Účastník se "
+"směje: „Hraješ svou roli, hm? Rozumím ti, koneckonců, platí ti dobře ... "
+"Počkej, ne, neplatí dobře. Vůbec ne! Kolik to bylo za to, že jsi riskoval "
+"život dvakrát s tímto EMP bombovým trikem? %s? Haa haa haa! Se zásobovací "
+"misí můžeš vydělat lepší peníze!\n"
+"   „Dokonce jsem to už jednou slyšel, zaplatili ti gaussovými zbraněmi! Ti "
+"muži jsou tak zoufalí, že?\n"
+"   „Teď, promluvme si vážně: chceš peníze a já chci pilota. Jsme připraveni "
+"spolu vyjít, ty a já! Potřebuji tě pro speciální úkol. Nepopírám, že to "
+"znamená jít proti zájmům generála Klanka, majora Tama a spol., ale pokud to "
+"uděláš dobře, nikdy nebudou vědět, že jsi v tom měl prsty, a během procesu "
+"obdržíš %s. Ano, to se hodně liší od toho, na co jsi zvyklý! Co říkáš?\""
 
 #: dat/events/dvaered/fwA_treason.lua:35 dat/missions/flf/flf_pre02.lua:90
 msgid "Accept the offer"
-msgstr ""
+msgstr "Přijmi nabídku"
 
 #: dat/events/dvaered/fwA_treason.lua:36
 msgid "Refuse and miss a unique opportunity"
-msgstr ""
+msgstr "Odmítni a zmeškej jedinečnou příležitost"
 
 #: dat/events/dvaered/fwA_treason.lua:38
 msgid "Your task"
-msgstr ""
+msgstr "Tvůj úkol"
 
 #: dat/events/dvaered/fwA_treason.lua:39
 #, lua-format
@@ -2506,21 +2552,23 @@ msgid ""
 "\"Very good choice, colleague!\" The pilot answers. \"Go to %s, and you will "
 "be hailed by an other Vendetta for your briefing.\""
 msgstr ""
+"„Velmi dobrá volba, kolego!“ Pilot odpovídá. „Přejdi na %s a tam tě přivítá "
+"jiná Vendeta s detaily tvé mise.“"
 
 #: dat/events/dvaered/fwA_treason.lua:41
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:53
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:85
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:54
 msgid "Too bad"
-msgstr ""
+msgstr "Škoda"
 
 #: dat/events/dvaered/fwA_treason.lua:42
 msgid "\"I see. Stay tuned, then, maybe we will see each other again!\""
-msgstr ""
+msgstr "„Chápu. Zůstaň na příjmu, možná se ještě uvidíme!“"
 
 #: dat/events/dvaered/fwA_treason.lua:44
 msgid "You are a loyal citizen of House Dvaered"
-msgstr ""
+msgstr "Jste věrným občanem rodu Dvaeredů"
 
 #: dat/events/dvaered/fwA_treason.lua:45
 #, lua-format
@@ -2530,6 +2578,10 @@ msgid ""
 "passed the test. You remained loyal to our general, in spite of the absurdly "
 "high reward they had proposed to you for betraying us.\""
 msgstr ""
+"Jak přistáváte, vidíte kapitánku Leblanc v přístavišti a ona vám blahopřeje: "
+"„Slyšela jsem o vás dobré věci, občane %s. Zdá se, že jste úspěšně prošel "
+"zkouškou. Navzdory absurdně vysoké odměně, kterou vám navrhli za to, aby "
+"jste nás zradil. “"
 
 #: dat/events/dvaered/fwA_treason.lua:46
 msgid ""
@@ -2550,6 +2602,21 @@ msgid ""
 "doomed to fail, creating weird and ugly monsters like the Empire, House "
 "Sirius or the Soromid.\""
 msgstr ""
+"„Peníze jsou druhořadé záležitosti, pilote. Jednoho dne jste bohatí, a "
+"druhého jste chudí. Udatnost je naopak ústřední otázkou života, protože v "
+"srdnatosti jsou všechny další vlastnosti, které Dvaered musí mít:\n"
+"   „Spravedlnost pochopit, co je třeba udělat,\n"
+"   „Věrnost vědět, komu můžete věřit, aby vám pomohl ve vašich povinnostech,"
+"\n"
+"   „Síla být schopen dělat to, co od vá vyžaduje Spravedlnost a Loajalita.\n"
+"   „Tato náročná morálka může vyžadovat, aby Dvaeredové riskovali své "
+"vlastní životy nebo zabíjeli pro komunitu, protože filozofie rodu Dvaeredů "
+"je filozofií života. A život nepřichází bez jeho protějšku, smrti. Být "
+"Dvaeredem znamená přijmout konečnou vládu vesmíru, konečnost všech věcí, na "
+"rozdíl od všech ostatních frakcí, které beznadějně sledují věčnost. Věčnost "
+"v posloupnosti císařů, věčnost ve víře, věčnost v pokroku biologicky "
+"vylepšeného lidstva. Jejich hledání je odsouzeno k neúspěchu, vytvářet "
+"podivné a ošklivé příšery jako jsou Impérium, Siriané nebo Soromidé. “"
 
 #: dat/events/dvaered/fwA_treason.lua:51
 msgid ""
@@ -2575,6 +2642,25 @@ msgid ""
 "for several periods, with a huge risk of ending up bogged down and "
 "vulnerable to attacks on other fronts.\""
 msgstr ""
+"„Dům Dvaered byl postaven s ohledem na tuto etiku života a smrti, kterou se "
+"učí všechny děti po celém světě v prostoru Dvaered. Takové vzdělání jste "
+"nedostali a přesto jste prošli testem věrnosti. To znamená, že Dvaeredské "
+"Vrchní Velení vám může věřit. Jako důkaz této důvěry vám mohu odhalit, co "
+"někteří z armády vědí, ale nikdy nebylo odhaleno cizákovi.\n"
+"   „Válečníci už jeden cyklus chamtivě sledují planety Pohraniční Aliance. "
+"Vzhledem k tomu, že FLF byla zničena, vrchní velení Dvaered dělá vše, co je "
+"v jejich silách, aby je zadržovalo, protože víme, že mnoho dalších frakcí "
+"trpělivě čeká až se necháme vtáhhnout do války s Pohraničím, aby nás "
+"napadli. Ale účelem válečníků je napadat světy a role DVV tomu nebrání, "
+"takže nakonec budeme muset tuto invazi povolit.\n"
+"   „Před několika desetiletími byl generál Klank povýšen na generála druhé "
+"třídy s úkolem organizovat tuto invazi. První plán invaze, který mu byl "
+"navržen, poskytoval každému válečníkovi obrovskou svobodu a umožňoval mu "
+"vybrat si, kterou planetu napadne a jak bude postupovat. Na rozdíl od "
+"ostatních generálů však Klank brzy pochopil, že taková dezorganizovaná "
+"invaze s nevyhnutelnou bitvou mezi válečníky bude trvat několik období, s "
+"obrovským rizikem, že skončí obklíčený a zranitelný útoky na ostatních "
+"frontách. “"
 
 #: dat/events/dvaered/fwA_treason.lua:54
 msgid ""
@@ -2587,18 +2673,26 @@ msgid ""
 "been weakened with Battleaddict's death, we will move to the diplomatic "
 "step. That is why you should expect to be summoned again by us.\""
 msgstr ""
+"„Proto generál Klank navrhl účinný invazní plán, který vyžaduje koordinaci "
+"úsilí všech válečných velitelů a jejich podporu rezervní flotilou přímo pod "
+"velením DVV. Problém je v tom, že mnoho válečníků nechce, aby DVV "
+"rozhodovalo, jak použijí svá vojska. Nejodvážnějším z nich byl lord "
+"Battleaddict, ale je tu i i Lady Bitterfight a lord Jim. Nyní, když byl "
+"vnitřní odpor vůči plánu oslaben Battleaddictovou smrtí, přejdeme k "
+"diplomatickému kroku. proto byste měl očekávat, že budete znovu námi "
+"povolán. “"
 
 #: dat/events/dvaered/fwA_treason.lua:56
 msgid "The amount of your rewards is pathetic"
-msgstr ""
+msgstr "Výše vašich odměn je žalostná"
 
 #: dat/events/dvaered/fwA_treason.lua:57
 msgid "Money is not important, captain"
-msgstr ""
+msgstr "Peníze nejsou důležité, kapitáne"
 
 #: dat/events/dvaered/fwA_treason.lua:59
 msgid "You tried to betray us"
-msgstr ""
+msgstr "Pokusil jsi se nás zradit"
 
 #: dat/events/dvaered/fwA_treason.lua:60
 #, lua-format
@@ -2610,6 +2704,12 @@ msgid ""
 "stupid people. With regards to how well you have helped us in the past, we "
 "will exceptionally let you live, but don't expect us to trust you anymore!\""
 msgstr ""
+"Jak přistáváte, vidíte kapitánku Leblanc v přístavišti a ona vás kárá: „Byla "
+"to past, %s. Skutečnost, že jste do ní spadli, dokazuje, že jste neloajální. "
+"Mimochodem neloajální a zcela zřejmě hloupý, pokud mohu dodat. A Vrchní "
+"Velení si nemůže dovolit pracovat s neloajálními a hloupými lidmi. S ohledem "
+"na to, jak dobře jste nám v minulosti pomohl, vás výjimečně necháme žít, ale "
+"neočekávejte, že budeme ještě věřit! “"
 
 #: dat/events/dvaered/fwA_treason.lua:62
 msgid ""
@@ -2618,6 +2718,9 @@ msgid ""
 "you that they will soon need your services in the framework of the "
 "preparation of the invasion of the Frontier."
 msgstr ""
+"Major Tam a kapitánka Leblanc z DVV otestovali vaši věrnost generálovi "
+"Klankovi. Test se ukázal jako nezvratný a kapitánka Leblanc vám odhalila, že "
+"budou brzy potřebovat vaše služby v rámci přípravy na invazi v Pohraničí."
 
 #: dat/events/dvaered/fwA_treason.lua:63
 msgid ""
@@ -2625,6 +2728,9 @@ msgid ""
 "General Klank... and you miserably failed. By chance, they did not kill you, "
 "but you'll have to find other employers."
 msgstr ""
+"Major Tam a kapitánka Leblanc z DVV otestovali vaši loajalitu vůči "
+"generálovi Klankovi ... a vy jste nešťastně selhali. Naštěstí vás nezabili, "
+"ale budete si muset najít jiné zaměstnavatele."
 
 #. Start at previous system
 #. TODO: not sure it's needed.
@@ -2686,7 +2792,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:325
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:647
 msgid "Dvaered Military Coordination"
-msgstr ""
+msgstr "Vojenská koordinace Dvaered"
 
 #: dat/events/dvaered/fwA_treason.lua:131
 #: dat/events/dvaered/fwA_treason.lua:140 dat/events/dvaered/fwB_repay.lua:47
@@ -2697,7 +2803,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:674
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:269 dat/faction.xml:253
 msgid "Dvaered"
-msgstr ""
+msgstr "Dvaered"
 
 #. Loyal
 #. Actually we don't care of the answer
@@ -2772,7 +2878,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:674
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:269
 msgid "Frontier War"
-msgstr ""
+msgstr "Pohraniční válka"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -2955,7 +3061,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:42
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:43
 msgid "Major Tam"
-msgstr ""
+msgstr "Major Tam"
 
 #. This ensures the next mission will be available only once the traitor event is done
 #.
@@ -3002,7 +3108,7 @@ msgstr ""
 #: dat/events/dvaered/fwB_repay.lua:21
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:51
 msgid "Captain Leblanc"
-msgstr ""
+msgstr "Kapitánka Leblanc"
 
 #. Test if an element is in a list of destinations
 #.
@@ -3044,7 +3150,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:41
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:58
 msgid "Lieutenant Strafer"
-msgstr ""
+msgstr "Poručík Strafer"
 
 #: dat/events/dvaered/fwB_repay.lua:26
 msgid ""
@@ -3052,10 +3158,12 @@ msgid ""
 "major, sitting at a table with a few High Command officers that you don't "
 "happen to know."
 msgstr ""
+"Ve vojenském vyhrazeném baru Dvaered, kam nyní máte přístup, vidíte majora, "
+"jak sedí u stolu s několika důstojníky vrchního velení, které neznáte."
 
 #: dat/events/dvaered/fwB_repay.lua:27
 msgid "Leblanc is relaxing at a table, with a group of Dvaered pilots."
-msgstr ""
+msgstr "Leblanc odpočívá u stolu se skupinou Dvaeredských pilotů."
 
 #: dat/events/dvaered/fwB_repay.lua:28
 msgid ""
@@ -3064,26 +3172,32 @@ msgid ""
 "the dead bodies of defeated enemies.\" As it is written on the Dvaered "
 "etiquette manual Strafer gave to you recently."
 msgstr ""
+"Strafer hraje karty s několika dalšími vojáky. Samozřejmě nepoužívají "
+"skutečné peníze, protože „Dvaeredští válečníci nikdy neberou peníze druhých, "
+"kromě mrtvých těl poražených nepřátel.“ Jak je napsáno v manuálu k etiketě "
+"Dvaeredů, který vám nedávno dal Strafer."
 
 #: dat/events/dvaered/fwB_repay.lua:30
 msgid "Do you want to repay DHC?"
-msgstr ""
+msgstr "Chcete splácet DVV?"
 
 #: dat/events/dvaered/fwB_repay.lua:31
 #, lua-format
 msgid "You still owe %s credits to the High Command. Do you want to repay now?"
-msgstr ""
+msgstr "Stále dlužíte %s kreditů Vrchnímu Velení. Chcete nyní splácet?"
 
 #: dat/events/dvaered/fwB_repay.lua:32
 #: dat/missions/neutral/seek_n_destroy.lua:77
 msgid "You don't have enough money."
-msgstr ""
+msgstr "Nemáte dost peněz."
 
 #: dat/events/dvaered/fwB_repay.lua:34
 msgid ""
 "You repaid the Dvaered High Command. For now, your collaboration with House "
 "Dvaered has not been lucrative AT ALL."
 msgstr ""
+"Splatili jste dluh Vrchnímu Velení Dvaered. Vaše spolupráce s rodem Dvaered "
+"prozatím nebyla VŮBEC lukrativní."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -3101,7 +3215,7 @@ msgstr ""
 #. A battle between two Dvaered warlords. The player can join one of them and get a reward
 #: dat/events/dvaered/warlords_battle.lua:25
 msgid "A battle is about to begin"
-msgstr ""
+msgstr "Bitva brzy začne"
 
 #: dat/events/dvaered/warlords_battle.lua:26
 #, lua-format
@@ -3112,10 +3226,14 @@ msgid ""
 "If you attack a warlord's ship, and he loses the battle, the other warlord "
 "will reward you. But if he wins, you will be hunted down.\""
 msgstr ""
+"„Hej, ty,“ říká kapitán lodi. „Zdá se, že nevíš, co se tady stane: mocný "
+"válečník z %s zaútočí na %s. Neměl bys tu zůstat, pokud nejsi žoldák. Víš, "
+"jak to funguje? Pokud zaútočíš na válečníkovu loď a on prohraje bitvu, druhý "
+"válečník tě odmění. Ale pokud vyhraje, budeš pronásledován. “"
 
 #: dat/events/dvaered/warlords_battle.lua:28
 msgid "Here comes your reward"
-msgstr ""
+msgstr "Zde je tvá odměna"
 
 #: dat/events/dvaered/warlords_battle.lua:29
 #, lua-format
@@ -3123,6 +3241,8 @@ msgid ""
 "\"Hello captain,\" a Dvaered officer says, \"You helped us in this battle. I "
 "am authorized to give you %s as a reward.\""
 msgstr ""
+"„Ahoj kapitáne,“ říká Dvaeredský důstojník, „pomohl jsi nám v této bitvě. "
+"Jsem oprávněn ti dát %s jako odměnu.“"
 
 #. thissystem and source_system must be adjacent (for those who use player.teleport)
 #. choose 1 particular planet
@@ -3161,20 +3281,22 @@ msgstr ""
 #: dat/events/flf/derelict.lua:17
 #, lua-format
 msgid "SOS. This is %s. Primary systems down. Requesting assistance."
-msgstr ""
+msgstr "SOS. Toto je %s. Primární systémy nefungují. Žádost o pomoc."
 
 #: dat/events/flf/derelict.lua:18
 #, lua-format
 msgid "Calling all ships. This is %s. Engines down, ship damaged. Please help."
 msgstr ""
+"Volám všechny lodě. Toto je %s. Motory nefungují, poškozená loď. Prosím "
+"pomozte."
 
 #: dat/events/flf/derelict.lua:19 dat/missions/flf/flf_pre02.lua:117
 msgid "Dvaered Patrol"
-msgstr ""
+msgstr "Dvaeredská Patrola"
 
 #: dat/events/flf/derelict.lua:20
 msgid "Frontier Patrol"
-msgstr ""
+msgstr "Pohraniční Patrola"
 
 #. Create the derelicts One Dvaered, one FLF.
 #. Set a bunch of vars, for no real reason
@@ -3213,7 +3335,7 @@ msgstr ""
 #. --
 #: dat/events/flf/flf_catastrophe.lua:40
 msgid "Catastrophe Looms"
-msgstr ""
+msgstr "Katastrofa na obzoru"
 
 #: dat/events/flf/flf_catastrophe.lua:41
 msgid ""
@@ -3221,6 +3343,9 @@ msgid ""
 "wrong. Everyone is frantic and you sense dread around your comrades. You are "
 "about to ask around when Benito approaches."
 msgstr ""
+"Když vstoupíte do baru na Sindbadu, okamžitě víte, že něco není v pořádku. "
+"Každý je zběsilý a vy cítíte strach kolem svých kamarádů. Chystáte se "
+"zeptat, když tu se objeví Benito."
 
 #: dat/events/flf/flf_catastrophe.lua:43
 #, lua-format
@@ -3234,6 +3359,13 @@ msgid ""
 "and told the Empire where our base is, and they even told them where our "
 "hidden jumps are! This is terrible!\""
 msgstr ""
+"„%s, je to hrozné,“ řekne s hrůzou v očích. „Našli nás. To zatracené "
+"Impérium nás našlo! Budu upřímná, ani nevím, jestli to dokážeme přežít.“ Na "
+"chvíli koktáš. Ne, to nemůže být pravda! Musí to být nějaká chyba! Jak lze "
+"takto porazit POF? Rozruch teď dává dokonalý smysl.\n"
+"     „To jsou ti zatracení zrádci!“ Benito pokračuje. „Jeden z nich odešel a "
+"řekl Impériu, kde je naše základna, a dokonce jim řekli, kde jsou naše "
+"skryté skoky! To je hrozné!“"
 
 #: dat/events/flf/flf_catastrophe.lua:46
 #, lua-format
@@ -3250,6 +3382,16 @@ msgid ""
 "Empire ships. You have to destroy all of the ships. I will be here helping "
 "to man the station; our defenses are weak, but better than nothing.\""
 msgstr ""
+"„Poslouchej, nemáme moc času. Kombinovaná flotila Impéria a Dvaeredů se "
+"právě chystá vstoupit z %s. Mají Peacemakery, Hawkingy, Goddardy, Pacifiery, "
+"jak to pojmenuješ. Jsou připraveni nás vymazat z mapy . %s, nevím, jak to "
+"říct, ale ... “Benito si trochu zaboří do kapes, než vytáhne malý datový "
+"čip. „Tady, vezmi si tohle,“ řekne, když ti to vtiskne do ruky. „To je plán "
+"B. Doufám, že k tomu nedojde, ale ... udržuj ho v bezpečí, jen pro případ.“\n"
+"     Benito si odkašle. „Ale jsem si jistá, že uhodneš, jaké je tvé poslání. "
+"Musíš se připojit k ostatním v boji proti přicházejícím říšským lodím. Musíš "
+"zničit všechny lodě. Budu zde pomáhat na stanici; naše obrana je slabá, ale "
+"lepší než nic. “"
 
 #: dat/events/flf/flf_catastrophe.lua:49
 msgid ""
@@ -3259,15 +3401,20 @@ msgid ""
 "this time, it's not in the usual playful tone you tend to expect of her. She "
 "then hurriedly exits toward the station's weapon controls room."
 msgstr ""
+"Zdá se, že ticho pohltilo místnost. Vidíš ústa svých soudruhů zběsile "
+"mluvit, ale neslyšíš je. Benito ti položí ruku na rameno a podívá se ti do "
+"očí. „Neumírej, vojáku,“ říká, ale tentokrát to není obvyklým hravým tónem, "
+"jaký od ní obvykle očekáváš. Pak spěšně vyšla k řídící místnosti zbraňového "
+"systému na stanici."
 
 #: dat/events/flf/flf_catastrophe.lua:51
 msgid ""
 "There's no time to lose. You go to the hangar bay and immediately take off."
-msgstr ""
+msgstr "Není času nazbyt. Jdeš do hangáru a okamžitě vzlétneš."
 
 #: dat/events/flf/flf_catastrophe.lua:53
 msgid "Escape and Live On"
-msgstr ""
+msgstr "Uniknout a žít dál"
 
 #: dat/events/flf/flf_catastrophe.lua:54
 msgid ""
@@ -3277,6 +3424,11 @@ msgid ""
 "immediately accept, and you see Benito on your screen once again. You hear "
 "sirens and explosions in the background, but you pay them no mind."
 msgstr ""
+"Když poslední výstřel pronikne do trupu Sindbadu, přijde na tebe pocit "
+"strachu. POF, Benito, tvoji kamarádi ... ne ...\n"
+"     Jak přemýšlíš, máš příchozí signál z explodující stanice. Okamžitě ho "
+"přijímáš a na obrazovce se znovu zobrazí Benito. Na pozadí slyšíte sirény a "
+"výbuchy, ale nevěnuješ jim pozornost."
 
 #: dat/events/flf/flf_catastrophe.lua:57
 #, lua-format
@@ -3292,10 +3444,19 @@ msgid ""
 "transmission then cuts as you are forced to watch Sindbad finally erupt in a "
 "fiery explosion."
 msgstr ""
+"„No, tak to je, vojáku. Náš poslední přenos. Nemůžu říct, že jsem chtěla, "
+"aby to šlo touto cestou, ale ...\n"
+"     „Poslouchej. Ten čip, který jsem ti předala? Je to mapa. Ukazuje "
+"umístění skrytého skoku z Iris do neznámého systému hluboko v mlhovině. Leť "
+"rovnou tam, hned teď. Unikni před Impériem, najdi to, co leží za ním, žij "
+"dál. Možná na svých budoucích cestách najdeš způsob, jak zničit Dvaeredy a "
+"Impérium, jednou provždy. “ Benito se usmívá, jak kolem ní stále více a více "
+"detonuje stanice. „Sbohem, %s. Zůstaň ve střehu.“ Přenos se potom ukončí, "
+"když jste nuceni sledovat, jak Sindbad konečně vybuchl v ohnivé explozi."
 
 #: dat/events/flf/flf_catastrophe.lua:60
 msgid "Strange Happenings"
-msgstr ""
+msgstr "Zvláštní události"
 
 #: dat/events/flf/flf_catastrophe.lua:61
 msgid ""
@@ -3307,6 +3468,13 @@ msgid ""
 "sigh of relief. An unfamiliar face appears on your viewscreen. She glares "
 "silently for what seems like an eternity. Finally, she speaks up."
 msgstr ""
+"Tvůj řídící panel se zblázní a tvá loď ztemní. Při pokusu o obnovení systémů "
+"nadáváš z plných plic. To není dobré. Jak by mohl selhat tvůj základní "
+"systém, a to v tak kritickém okamžiku? Bude to tvůj konec, stejně jako před "
+"chvílí Benito a dalších tvých kamarádů?\n"
+"     Jakmile začneš panikařit, Energie znovu naskočí a vydechnete si úlevou. "
+"Na obrazovce se zobrazí neznámá tvář. Mlčky hledí na to, co vypadá jako "
+"věčnost. Nakonec promluví."
 
 #: dat/events/flf/flf_catastrophe.lua:64
 msgid ""
@@ -3325,6 +3493,19 @@ msgid ""
 "don't have the guts for it, turn back now while you still can. But if you "
 "do, you turn back for good.\""
 msgstr ""
+"„Takže POF je minulostí, chápu. No, ne takovou minulostí jako stínem své "
+"bývalé slávy. Vidím, že se ti podařilo dosáhnout víceméně svého cíle; "
+"Dvaeredské síly se z hraničního prostoru z velké části stáhly. To byl meč s "
+"dvojitým ostřím, který jste ovládali, když jste zapojili piráty. Impérium by "
+"vás nenechalo žít, jakmile jste to udělali, ale dalo vám to výhodu, kterou "
+"jste potřebovali k dočasnému oslabení dvaeredských sil.\n"
+"     „Samozřejmě ne, že by na tom stejně záleželo. Konečný výsledek bude "
+"stejně stejný. Ale to není ani tady, ani tam. Pilote POF, vidím, že jste "
+"získali nějaké zasvěcené znalosti. Nicméně, stále vám uniká celkový obraz "
+"věcí. Takže vám řeknu co dělat: pokračujte k Metsys, pokud se odvážíte. Poté "
+"vše vysvětlím. Buďte obezřetný: mlhovina je zde velmi nestabilní, takže vaše "
+"štíty by měly být na stejné úrovni. Nemáte-li na to odvahu, vraťte se, dokud "
+"můžete. Ale pokud ano, už se nikdy neotáčejte. “"
 
 #: dat/events/flf/flf_catastrophe.lua:67
 msgid ""
@@ -3335,10 +3516,16 @@ msgid ""
 "figure said that you can only make this decision once, so you'd better make "
 "sure it's the right one."
 msgstr ""
+"Než vůbec budeš moci odpovědět, záhadná postava zmizí. Nedetekuješ poblíž "
+"žádnou přítomnost, ale všimneš si, že tvá loď byla nějakým způsobem "
+"natankována! Zvláštní. V každém případě to vypadá, že máš dvě možnosti: "
+"odvážíš se nebezpečí mlhoviny a budeš pokračovat k Metsys, nebo se nyní "
+"otočíš zpět? Postava říkala, že toto rozhodnutí můžeš učinit pouze jednou, "
+"takže se raději ujisti, že je to správné."
 
 #: dat/events/flf/flf_catastrophe.lua:69
 msgid "Welcome To the Nebula"
-msgstr ""
+msgstr "Vítejte v mlhovině"
 
 #: dat/events/flf/flf_catastrophe.lua:70
 msgid ""
@@ -3350,6 +3537,13 @@ msgid ""
 "    \"Well met,\" she says. \"I see you have made the right choice and "
 "survived the nebula. Very good.\""
 msgstr ""
+"Když přistaneš na tajemné stanici, ozbrojení strážci okamžitě obklopí tvou "
+"loď a doprovodí tě do hangáru. Vyhovíš a vezmou tě do místnosti, která "
+"vypadá jako výslechová místnost, kde počkáš pár nervy drásajících "
+"hektosekund. Nakonec bliká holoobrazovka, která ukazuje postavu, kterou jsi "
+"viděli dříve. Dívá se tvým směrem.\n"
+"     „Dobře,“ řekla. „Vidím, že jsi se rozhodl správně a přežil jsi "
+"mlhovinu. Velmi dobře.“"
 
 #: dat/events/flf/flf_catastrophe.lua:73
 msgid ""
@@ -3364,6 +3558,16 @@ msgid ""
 "computer, and so when they came after us, we uploaded ourselves and escaped "
 "into what are now our core systems to rebuild.\""
 msgstr ""
+"„Jsem si jistý, že se divíš, kdo jsme. My jsme Thurion, civilizace, která "
+"zbyla z jednoho z bývalých tajných projektů Impéria. Setkal jsi se se "
+"Za'leky? Kolektivem? I to byly„ skvělé projekty Impéria “. \", stejně jako "
+"nyní mrtvý Proteron. Ale byli jsme drženi mnohem více ve tmě.\"\n"
+"    „Vidíš, když se Impérium před mnoha cykly vzdalo Projektu Thurion, "
+"pokusili se nás zabít, aby se slovo o naší existenci nikdy nedostalo ven. "
+"Mysleli si, že jsme pro Impérium zklamání. Netušili však, že jsme objevili "
+"metodu nahrávání lidské mysli do počítače, a tak když za námi přišli, "
+"nahráli jsme sami sebe a utekli do našich dnešních základních systémů, "
+"abychom je mohli znovu sestavit. “"
 
 #: dat/events/flf/flf_catastrophe.lua:76
 msgid ""
@@ -3385,6 +3589,21 @@ msgid ""
 "anyhow, so we'll see when we get there, should you have an interest in being "
 "uploaded.\""
 msgstr ""
+"„Nyní je nahrána asi polovina z nás, včetně mě. Tvář, kterou vidíš, a tento "
+"hlas, který slyšíš, jsou jen projekce, odraz mého já, který jsem si svobodně "
+"vybral. Být nahraný je úžasné, musím říci; neexistuje utrpení, jsme "
+"nesmrtelní a můžeme mít jakékoli lidské zkušenosti, po kterých toužíme, a "
+"mnohem více. A když se rozhodneme, že jsme žili naplno, můžeme se vymazat a "
+"zmizet v prázdnotě, stejně jako kdokoli jiný, když zemře. Není to neobvyklé "
+"pro lidi, kteří se rozhodnou ukončit sebe sama poté, co byli nahráni asi na "
+"200 cyklů. Já se však od samého začátku pohybuji kolem. Moc mě baví "
+"sledovat, jak biologický Thurion roste, učí se a připojuje se k nám v "
+"nahraném vědomí když jejich lidská těla stárnou a jsou unavená.\n"
+"    „Bohužel si nemyslím, že vás lze nahrát. Proces nahrávání má tendenci "
+"selhat u lidí, kteří mají i sebemenší poškození mozku, a vy cizinci obvykle "
+"pijete příliš mnoho látek poškozujících mozek. Nicméně čas zkontrolovat, zda "
+"jste způsobilí pro nahrávání nebo ne, je mnoho cyklů daleko, takže uvidíme, "
+"až se tam dostaneme, pokud byste měl zájem o nahrávání. “"
 
 #: dat/events/flf/flf_catastrophe.lua:79
 #, lua-format
@@ -3410,6 +3629,24 @@ msgid ""
 "which has been refueled while you were gone. This should be an interesting "
 "experience...."
 msgstr ""
+"Fascinovaný, konečně promluvíte, vyvoláte úsměv u nahraného Thuriona a "
+"poměrně dlouhou, přátelskou diskusi o jejích zkušenostech jako nahraného "
+"Thuriona a vašich zkušenostech jako pilotky navenek. Zjistíte, že se jmenuje "
+"Alicia. Někde v rozhovoru vstoupila do místnosti dvojice lidských "
+"Thurionových strážců. Ptají se Alicie, jak to šlo, a ona říká, že jste byli "
+"správně seznámeni s Thurionovou kulturou a můžete věřit, že se budete volně "
+"pohybovat. Oba strážci se poté usmívají a potřásají vám rukou. „Vítejte v "
+"mlhovině, %s,“ říká jeden z nich. „Nyní máš povolení volně se toulat po "
+"Thurionově prostoru a podnikat. Samozřejmě věřím, že nikomu neprozradíš naše "
+"tajné místo. To by pro tebe bylo stejně špatné jako pro nás.“\n"
+"    Potvrzujete, že uchováte Thurionovo tajemství v bezpečí. „Ano, vítejte,“ "
+"říká Alicia. „A občas si prohlédněte naše bary a misijní počítače. "
+"Pravděpodobně pro vás můžeme mít v budoucnu nějaké mise. Mezitím si kupte "
+"jednu z našich lodí odolných vůči mlhovinám a udělejte si pohodlí. Jste náš "
+"čestný host a doufám, že první z mnoha cizinců, kteří se učí zázraky našeho "
+"způsobu života. “\n"
+"    Stráže vás poté pohotově, ale zdvořile doprovodí zpět na vaši loď, která "
+"byla natankována, když jste byli pryč. To by měla být zajímavá zkušenost ...."
 
 #: dat/events/flf/flf_catastrophe.lua:83
 #, lua-format
@@ -3423,12 +3660,22 @@ msgid ""
 "rise again and defeat the Dvaereds once and for all. Her last words were "
 "short, but memorable: \"Goodbye, %s. Stay vigilant.\""
 msgstr ""
+"Impérium objevilo Sindbad. Snažili jste se, jak jste mohli, ty a tvý "
+"kamarádi jste nemohli zastavit kombinovaný nápor Impéria a Dvaeredů a "
+"Sindbad vybuchl v ohnivé explozi a zabil Benito a všechny vaše další "
+"kamarády, kteří byli na Sindbadu. Než stanice explodovala, Benito vám dala "
+"mapu vedoucí do neznámých oblastí vnitřní mlhoviny a řekla vám, abyste "
+"pomocí mapy našli to, co leží uvnitř v naději, že jednoho dne můžete pomoci "
+"POF znovu povstat a jednou porazit Dvaeredy jednou pro vždy. Její poslední "
+"slova byla krátká, ale nezapomenutelná: „Sbohem, %s. Zůstaň ostražitý.“"
 
 #: dat/events/flf/flf_catastrophe.lua:85
 msgid ""
 "You turned on the FLF and helped the Empire and the Dvaereds destroy Sindbad "
 "for some reason."
 msgstr ""
+"Obrátil jsi se proti POS a pomohli Impériu a Dvaeredům z nějakého důvodu "
+"zničit Sindbad."
 
 #: dat/events/flf/flf_catastrophe.lua:87
 msgid ""
@@ -3450,6 +3697,22 @@ msgid ""
 "for you in the future and has also recommended that you buy one of the "
 "Thurion's nebula-resistant ships."
 msgstr ""
+"Když jsi proletěl mlhovinu, představila se ti Thurion Alicia, jedna z mnoha "
+"nahraných Thurionů. Thurion jsou zbytky tajného projektu iniciovaného "
+"Impériem, Projekt Thurion. Za'lek, Kolektiv a nyní mrtvý Proteron byli také „"
+"velkými projekty“ Impéria, ale Projekt Thurion byl považován za zklamání, "
+"což vedlo Impérium k pokusu Thuriony zabít, aby zmínka o jejich existenci "
+"nevyšla na veřejnost. Thurion se však naučil způsob, jak nahrát lidskou mysl "
+"do počítače, což jim umožnilo uniknout a přestavět.\n"
+"    Thurion nyní vytvořil tajnou civilizaci. Přibližně polovina populace "
+"Thurionů je nahrána a Alicia velmi vychvalovala ctnosti nahrávání, ale také "
+"poznamenala, že pravděpodobně se nebudeš moci nahrát kvůli pravděpodobnosti "
+"nadměrného poškození mozku.\n"
+"    V každém případě jsi získal důvěru Thurionůu a bylo vám uděleno povolení "
+"volně se toulat po Thurionském prostoru. Slíbil jsi, že uchováš tajemství "
+"Thurionů v bezpečí. Alicia uvedla, že Thurioné pro tebe můžou mít v budoucnu "
+"mise, a také doporučila, aby jsi si koupil jednu z Thurionských lodí "
+"odolných proti mlhovinám."
 
 #. Spawn FLF ships
 #. Spawn Empire ships
@@ -3480,11 +3743,11 @@ msgstr ""
 #. --
 #: dat/events/minerva/altercation1.lua:27
 msgid "Za'lek Belligerent"
-msgstr ""
+msgstr "Útočný Za'lek"
 
 #: dat/events/minerva/altercation1.lua:31
 msgid "Dvaered Hooligan"
-msgstr ""
+msgstr "Chuligán Dvaered"
 
 #. Create scuffle
 #: dat/events/minerva/altercation1.lua:45
@@ -3493,42 +3756,55 @@ msgid ""
 "approach you can make out what seems to be an altercation between a group of "
 "Za'lek and Dvaered ruffians."
 msgstr ""
+"V jednom z křídel stanice Minerva uslyšíte velký rozruch. Jak se přiblížíte, "
+"můžete zjistit, co se zdá být hádkou mezi skupinou Za'lekských a "
+"Dvaeredských rváčů."
 
 #: dat/events/minerva/altercation1.lua:47
 msgid ""
 "\"You were using a bloody computation drone to cheat your dirty Za'lek stink!"
 "\""
 msgstr ""
+"„K podvádění svého špinavého Za'leckého smradu jsi použil krvavý výpočetní "
+"dron!“"
 
 #: dat/events/minerva/altercation1.lua:48
 msgid ""
 "\"Your logic makes no sense. Are you sure the excessive amounts of alcohol "
 "are making your rotten brain hallucinate?\""
 msgstr ""
+"„Tvoje logika nedává smysl. Jsi si jistý, že díky nadměrnému množství "
+"alkoholu tvůj prohnilý mozek halucinuje?“"
 
 #: dat/events/minerva/altercation1.lua:49
 msgid ""
 "\"You won't trick me with your fancy words. I know a cheater when I see one!"
 "\""
 msgstr ""
+"„Mě neobalamutíš svými fantazijními slovy. Poznám podvodníka, když ho vidím!“"
 
 #: dat/events/minerva/altercation1.lua:50
 msgid ""
 "\"I wouldn't trust your judgment on bricks let alone anything that requires "
 "minimal intellect.\""
 msgstr ""
+"„Nevěřil bych tvému úsudku, natož čemukoliv, co vyžaduje minimální intelekt.“"
 
 #: dat/events/minerva/altercation1.lua:51
 msgid ""
 "\"You Za'lek punk. Bring your ass outside and I will fill your ship with "
 "holes just like your lies!\""
 msgstr ""
+"„Ty Za'lekský šmejde. Poleť ven a já naplním tvoji loď otvory, jako jsou "
+"tvoje lži!“"
 
 #: dat/events/minerva/altercation1.lua:52
 msgid ""
 "\"When you are getting eviscerated by my drones, I hope you realize you have "
 "brought this upon yourself, Dvaered trash!\""
 msgstr ""
+"„Až tě vykuchají moje drony, doufám, že si uvědomíš, že jsi si to vzal na "
+"sebe, Dvaeredská lůzo!“"
 
 #: dat/events/minerva/altercation1.lua:54
 msgid ""
@@ -3537,6 +3813,10 @@ msgid ""
 "It seems like it could be an opportunity to curry favour with either one of "
 "the factions if you wished to intervene in their fight."
 msgstr ""
+"Za'lekští a Dvaeredští rváči vtrhli na své lodě, aby očividně bojovali na "
+"život a na smrt, aby vyřešili svou hádku. Skutečně civilizovaní jedinci.\n"
+"Zdá se, že by to mohla být příležitost získat přízeň kterékoli z frakcí, "
+"pokud by jsi chtěli zasáhnout do jejich boje."
 
 #. Scuffle between Za'lek and Dvaered
 #. Set up system
@@ -3546,35 +3826,35 @@ msgstr ""
 #. Messages
 #: dat/events/minerva/altercation1.lua:98
 msgid "*incoherent expletives*"
-msgstr ""
+msgstr "* nesouvislé zvolání *"
 
 #: dat/events/minerva/altercation1.lua:99
 msgid "Disgusting Za'lek scum!"
-msgstr ""
+msgstr "Nechutná Za'lekská spodina!"
 
 #: dat/events/minerva/altercation1.lua:100
 msgid "Your head will make a fine trophy on my ships!"
-msgstr ""
+msgstr "Tvá hlava poslouží na mých lodích jako krásná trofej!"
 
 #: dat/events/minerva/altercation1.lua:102
 msgid "Za'lek trash!"
-msgstr ""
+msgstr "Za'lekský odpad!"
 
 #: dat/events/minerva/altercation1.lua:105
 msgid "My defense protocols will make short work of you!"
-msgstr ""
+msgstr "Moje obranné protokoly s tebou udělají krátký proces!"
 
 #: dat/events/minerva/altercation1.lua:106
 msgid "I'll teach you physics Dvaered punk!"
-msgstr ""
+msgstr "Naučím tě fyzikální zákony Dvaeredský zmetku!"
 
 #: dat/events/minerva/altercation1.lua:107
 msgid "My ship's hull is less thick than your Dvaered skull!"
-msgstr ""
+msgstr "Trup mé lodi je slabší než tvá Dvaeredská lebka!"
 
 #: dat/events/minerva/altercation1.lua:108
 msgid "You Dvaereds smell worse than my vials of thiol!"
-msgstr ""
+msgstr "Vy Dvaeredové smrdíte hůř než mé lahvičky s thiolem!"
 
 #. Set up hooks when it is over
 #. Take turns yelling
@@ -3582,27 +3862,31 @@ msgstr ""
 #: dat/events/minerva/altercation1.lua:158
 #: dat/events/minerva/altercation1.lua:171
 msgid "Et tu brute?"
-msgstr ""
+msgstr "Tyran?"
 
 #: dat/events/minerva/altercation1.lua:190
 msgid "Dust to dust."
-msgstr ""
+msgstr "Prach na prach."
 
 #: dat/events/minerva/altercation1.lua:204
 msgid ""
 "\"Thank you for the help with the Za'lek scum. Let us celebrate with a drink "
 "in the bar down at Minerva Station!\""
 msgstr ""
+"„Děkuji ti za pomoc s tou za'lekskou chátrou. Pojďme to oslavit drinkem v "
+"baru dole na stanici Minerva!“"
 
 #: dat/events/minerva/altercation1.lua:225
 msgid "Good riddance."
-msgstr ""
+msgstr "Dobrý odpad."
 
 #: dat/events/minerva/altercation1.lua:239
 msgid ""
 "\"As my computations predicted, the Dvaered scum was no match for the Za'lek "
 "superiority. Let us celebrate with a drink down at Minerva Station\""
 msgstr ""
+"„Jak předpovídaly mé výpočty, Dvaeredská sebranka nebyla pro za'lekskou "
+"převahu srovnatelná. Oslavme to drinkem na stanici Minerva.“"
 
 #. event ends on player leaving the system or landing
 #.
@@ -3629,7 +3913,7 @@ msgstr ""
 #: dat/events/minerva/altercation2.lua:26
 #: dat/missions/neutral/crimelord.lua:133 dat/missions/pirate/hitman.lua:35
 msgid "Thug"
-msgstr ""
+msgstr "Rváč"
 
 #: dat/events/minerva/altercation2.lua:40
 msgid ""
@@ -3637,40 +3921,45 @@ msgid ""
 "station. As you get closer you see what seems to be a group of people "
 "chasing something small... Wait, is that a chicken?"
 msgstr ""
+"V jednom z křídel stanice Minerva znovu uslyšíš velký rozruch. Když se "
+"přiblížíš, uvidíš skupinu lidí, kteří honí něco malého ... Počkat, je to "
+"kuře?"
 
 #: dat/events/minerva/altercation2.lua:64
 msgid "\"Get back here you thief! Give me back my tokens! There is no way \""
-msgstr ""
+msgstr "„Vrať se sem, zloději! Vrať mi moje žetony!\""
 
 #: dat/events/minerva/altercation2.lua:66
 msgid "\"Puk Puk Pukaaak! Quack!\""
-msgstr ""
+msgstr "\"Ko Ko Kodááák! Kvok!\""
 
 #: dat/events/minerva/altercation2.lua:69
 msgid "\"Filthy little animal! I'll beat you into a pulp!\""
-msgstr ""
+msgstr "„Špinavé zvíře! Rozdrtím tě na kaši!“"
 
 #: dat/events/minerva/altercation2.lua:72
 msgid "\"Cluck Quack Clukuk Pukaaaaaaaaak!\""
-msgstr ""
+msgstr "\"Kvik Kvok Kvikik Kvodááááááááák!\""
 
 #: dat/events/minerva/altercation2.lua:74
 msgid ""
 "Cyborg Chicken runs itself into a corner and it doesn't seem like station "
 "security will make it in time. What do you do?"
 msgstr ""
+"Cyborgová slepice se rozběhne do rohu a nezdá se, že by to zabezpečení "
+"stanice zvládlo včas. Co uděláš?"
 
 #: dat/events/minerva/altercation2.lua:76
 msgid "Try to intervene"
-msgstr ""
+msgstr "Zkusíš zasáhnout"
 
 #: dat/events/minerva/altercation2.lua:77
 msgid "Wait"
-msgstr ""
+msgstr "Počkáš"
 
 #: dat/events/minerva/altercation2.lua:81
 msgid "You approach the chicken and thug and try to mediate."
-msgstr ""
+msgstr "Přistoupíš ke kuřeti a násilníkovi a pokusíš se vyjednávat."
 
 #: dat/events/minerva/altercation2.lua:82
 msgid ""
