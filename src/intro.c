@@ -72,7 +72,7 @@ static int intro_load( const char *text )
    char *intro_buf;
    const char *cur_line;
    char *rest_of_file;
-   char img_src[128];     /* path to image to be displayed alongside text. */
+   char img_src[STRMAX_SHORT];     /* path to image to be displayed alongside text. */
    int length;
    int i, n;
    int mem;
