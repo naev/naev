@@ -161,6 +161,7 @@ She trails off.]]) )
       vn.label( "accept" )
       vn.func( function ()
          misn.accept()
+         misn.setDesc( misn_desc )
          misn_state = -1
          shiplog.createLog( logidstr, minerva.log.maikki.logname, minerva.log.maikki.logtype, true )
          shiplog.appendLog( logidstr, _("You have agreed to help Maikki find her father (Kex).") )

@@ -196,6 +196,7 @@ and %s in the %s system."]]),
       vn.label( "accept" )
       vn.func( function ()
          misn.accept()
+         misn.setDesc( misn_desc )
          misn_state = 0
          shiplog.appendLog( logidstr, _("You agreed to continue helping Maikki find her father. She told you to try to find hints from three Za'lek researchers.") )
       end )

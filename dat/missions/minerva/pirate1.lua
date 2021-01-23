@@ -99,6 +99,7 @@ They beam a smile at you.]]),_(runawaysys)))
    shiplog.appendLog( logidstr, _("You accepted a job from a shady individual to harass Dvaered thugs and make it seem like the Za'lek were involved.") )
 
    misn.accept()
+   misn.setDesc( misn_desc )
    osd = misn.osdCreate( _("Thug Decoy"),
          {_("Get the drone to follow you"),
           _("Harass the thugs"),
