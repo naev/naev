@@ -240,9 +240,11 @@ function annai()
     local speed = player.pilot():stats().speed_max - 1
     for i, p in ipairs(fleetFLF) do
         if p ~= nil and p:exists() then
+            if speed < p:stats().speed_max then
+                p:setSpeedLimit(speed)
+            end
             p:taskClear()
             p:control()
-            p:setSpeedLimit(speed)
             p:moveto(player.pos()) -- NOT the player pilot, or the task may not pop properly.
             p:moveto(waypoint2, false)
             p:moveto(waypoint1, false)
