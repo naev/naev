@@ -192,7 +192,7 @@ void info_update (void)
  */
 static void info_openMain( unsigned int wid )
 {
-   char str[128], **buf, creds[ECON_CRED_STRLEN];
+   char str[STRMAX_SHORT], **buf, creds[ECON_CRED_STRLEN];
    char **licenses;
    int nlicenses;
    int i;
@@ -215,7 +215,7 @@ static void info_openMain( unsigned int wid )
          "#nFuel:#0")
          );
    credits2str( creds, player.p->credits, 2 );
-   nsnprintf( str, 128,
+   nsnprintf( str, sizeof(str),
          _("%s\n"
          "%s\n"
          "%s\n"
