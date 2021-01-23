@@ -2798,6 +2798,8 @@ static int pilotL_setNoDisable( lua_State *L )
 /**
  * @brief Limits the speed of a pilot.
  *
+ * @note Can increase the pilot's speed limit over what would be physically possible.
+ *
  * @usage p:setSpeedLimit( 100 ) -- Sets maximumspeed to 100px/s.
  * @usage p:setSpeedLimit( 0 ) removes speed limit.
  *    @luatparam pilot p Pilot to set speed of.
