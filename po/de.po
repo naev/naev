@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-08 15:25-0500\n"
+"POT-Creation-Date: 2021-01-22 22:32-0500\n"
 "PO-Revision-Date: 2021-01-08 18:28+0100\n"
 "Last-Translator: Wuzzy <Wuzzy2@mail.ru>\n"
 "Language-Team: \n"
@@ -26892,9 +26892,6 @@ msgstr "Ein Pirateninformant"
 #. Failed to swap ship!
 #. Get rid of the temporary pilot
 #. Oh yeah, we stole the ship. \o/
-#. The old ship the player used will still be on the planet. I’m not
-#. too sure what to do about it, but, well…
-#. Equip the new ship.
 #. Hey, stealing a ship isn’t anything! (if you survive, that is)
 #. Let’s keep a counter. Just in case we want to know how many you
 #. stole in the future.
@@ -42056,7 +42053,7 @@ msgid_plural "Loaded %d AI Profiles"
 msgstr[0] "%d KI-Profil geladen"
 msgstr[1] "%d KI-Profile geladen"
 
-#: src/ai.c:620 src/land.c:1424
+#: src/ai.c:620 src/land.c:1425
 #, c-format
 msgid ""
 "Error loading file: %s\n"
@@ -43653,7 +43650,7 @@ msgstr "Planet „%s“ scheint Ware „%s“ definiert zu haben, aber keine Fra
 msgid "Planet '%s' has saved economy data but doesn't exist!"
 msgstr "Planet „%s“ hat gespeicherte Wirtschaftsdaten, aber existiert nicht!"
 
-#: src/equipment.c:271 src/land.c:288 src/land.c:554 src/land.c:1194
+#: src/equipment.c:271 src/land.c:288 src/land.c:554 src/land.c:1195
 #: src/land_outfits.c:167 src/land_shipyard.c:92 src/land_trade.c:70
 msgid "Take Off"
 msgstr "Abheben"
@@ -45629,7 +45626,7 @@ msgstr "Equipment"
 msgid "Commodity"
 msgstr "Waren"
 
-#: src/land.c:1178
+#: src/land.c:1179
 msgid ""
 "Stationed at:\n"
 "System:\n"
@@ -45641,17 +45638,17 @@ msgstr ""
 "Freier Platz:\n"
 "Geld:"
 
-#: src/land.c:1200
+#: src/land.c:1201
 msgid "No refueling services."
 msgstr "Kein Auftanken möglich."
 
-#: src/land.c:1317
+#: src/land.c:1318
 msgid "Ship not fit for flight"
 msgstr "Schiff flugunfähig"
 
 #. cleanup
 #. must be before cleaning up planet
-#: src/land.c:1370
+#: src/land.c:1371
 msgid ""
 "Failed to save game! You should exit and check the log to see what happened "
 "and then file a bug report!"
@@ -45660,13 +45657,13 @@ msgstr ""
 "Protokoll überprüfen, um zu sehen, was passiert ist, und dann einen "
 "Fehlerbericht einreichen!"
 
-#: src/land.c:1376
+#: src/land.c:1377
 #, c-format
 msgid "\aoTaking off from %s on %s."
 msgstr "\aoAbheben von %s bei %s."
 
 #. error has occurred
-#: src/land.c:1437
+#: src/land.c:1438
 #, c-format
 msgid "Rescue: 'rescue' : '%s'"
 msgstr "Rettung: „rescue“: „%s“"
@@ -71506,6 +71503,22 @@ msgstr "Nasin-Hai"
 msgid "Air Freshener"
 msgstr "Lufterfrischer"
 
+#. (itstool) path: general/typename
+#. (itstool) path: slot/display
+#: dat/outfits/accessory/air_freshener.xml:5
+#: dat/outfits/accessory/left_boot.xml:5
+#: dat/outfits/accessory/love_letter.xml:5
+#: dat/outfits/accessory/pentagram_of_valor.xml:5
+#: dat/outfits/accessory/racing_trophy.xml:5
+#: dat/outfits/accessory/sandwich_holder.xml:5
+#: dat/outfits/accessory/satellite_mockup.xml:5
+#: dat/outfits/accessory/star_of_valor.xml:5
+#: dat/outfits/accessory/swamp_bombing.xml:5
+#: dat/outfits/accessory/toy_drone.xml:5
+#: dat/outfits/accessory/ugly_statue.xml:5 dat/slots.xml:4
+msgid "Accessory"
+msgstr "Accessoire"
+
 #. (itstool) path: general/description
 #: dat/outfits/accessory/air_freshener.xml:11
 msgid ""
@@ -71863,6 +71876,45 @@ msgstr ""
 msgid "Heavy Bioship Brain Stage 1"
 msgstr "Schweres Bioschiffsgehirn Stufe 1"
 
+#. (itstool) path: general/typename
+#. (itstool) path: slot/display
+#: dat/outfits/biocore_brain/heavy_bioship_brain_stage_1.xml:4
+#: dat/outfits/biocore_brain/heavy_bioship_brain_stage_2.xml:4
+#: dat/outfits/biocore_brain/heavy_bioship_brain_stage_3.xml:5
+#: dat/outfits/biocore_brain/heavy_bioship_brain_stage_4.xml:5
+#: dat/outfits/biocore_brain/heavy_bioship_brain_stage_5.xml:5
+#: dat/outfits/biocore_brain/heavy_bioship_brain_stage_6.xml:5
+#: dat/outfits/biocore_brain/heavy_bioship_brain_stage_x.xml:5
+#: dat/outfits/biocore_brain/light_bioship_brain_stage_1.xml:4
+#: dat/outfits/biocore_brain/light_bioship_brain_stage_2.xml:5
+#: dat/outfits/biocore_brain/light_bioship_brain_stage_3.xml:5
+#: dat/outfits/biocore_brain/light_bioship_brain_stage_x.xml:5
+#: dat/outfits/biocore_brain/medium_bioship_brain_stage_1.xml:4
+#: dat/outfits/biocore_brain/medium_bioship_brain_stage_2.xml:4
+#: dat/outfits/biocore_brain/medium_bioship_brain_stage_3.xml:5
+#: dat/outfits/biocore_brain/medium_bioship_brain_stage_4.xml:5
+#: dat/outfits/biocore_brain/medium_bioship_brain_stage_x.xml:5
+#: dat/outfits/biocore_brain/mediumheavy_bioship_brain_stage_1.xml:4
+#: dat/outfits/biocore_brain/mediumheavy_bioship_brain_stage_2.xml:4
+#: dat/outfits/biocore_brain/mediumheavy_bioship_brain_stage_3.xml:5
+#: dat/outfits/biocore_brain/mediumheavy_bioship_brain_stage_4.xml:5
+#: dat/outfits/biocore_brain/mediumheavy_bioship_brain_stage_5.xml:5
+#: dat/outfits/biocore_brain/mediumheavy_bioship_brain_stage_x.xml:5
+#: dat/outfits/biocore_brain/superheavy_bioship_brain_stage_1.xml:4
+#: dat/outfits/biocore_brain/superheavy_bioship_brain_stage_2.xml:4
+#: dat/outfits/biocore_brain/superheavy_bioship_brain_stage_3.xml:4
+#: dat/outfits/biocore_brain/superheavy_bioship_brain_stage_4.xml:5
+#: dat/outfits/biocore_brain/superheavy_bioship_brain_stage_5.xml:5
+#: dat/outfits/biocore_brain/superheavy_bioship_brain_stage_6.xml:5
+#: dat/outfits/biocore_brain/superheavy_bioship_brain_stage_7.xml:5
+#: dat/outfits/biocore_brain/superheavy_bioship_brain_stage_x.xml:5
+#: dat/outfits/biocore_brain/ultralight_bioship_brain_stage_1.xml:4
+#: dat/outfits/biocore_brain/ultralight_bioship_brain_stage_2.xml:5
+#: dat/outfits/biocore_brain/ultralight_bioship_brain_stage_x.xml:5
+#: dat/slots.xml:27
+msgid "Bioship Brain"
+msgstr "Bioschiffsgehirn"
+
 #. (itstool) path: general/description
 #: dat/outfits/biocore_brain/heavy_bioship_brain_stage_1.xml:10
 #: dat/outfits/biocore_brain/heavy_bioship_brain_stage_2.xml:10
@@ -72087,6 +72139,76 @@ msgstr "Ultraleichtes Bioschiffsgehirn Stufe X"
 #: dat/outfits/biocore_fin/heavy_bioship_fast_fin_stage_1.xml:2
 msgid "Heavy Bioship Fast Fin Stage 1"
 msgstr "Schwere Bioschiffsschnellflosse Stufe 1"
+
+#. (itstool) path: general/typename
+#: dat/outfits/biocore_fin/heavy_bioship_fast_fin_stage_1.xml:4
+#: dat/outfits/biocore_fin/heavy_bioship_fast_fin_stage_2.xml:4
+#: dat/outfits/biocore_fin/heavy_bioship_fast_fin_stage_3.xml:5
+#: dat/outfits/biocore_fin/heavy_bioship_fast_fin_stage_4.xml:5
+#: dat/outfits/biocore_fin/heavy_bioship_fast_fin_stage_5.xml:5
+#: dat/outfits/biocore_fin/heavy_bioship_fast_fin_stage_6.xml:5
+#: dat/outfits/biocore_fin/heavy_bioship_fast_fin_stage_x.xml:4
+#: dat/outfits/biocore_fin/heavy_bioship_strong_fin_stage_1.xml:4
+#: dat/outfits/biocore_fin/heavy_bioship_strong_fin_stage_2.xml:4
+#: dat/outfits/biocore_fin/heavy_bioship_strong_fin_stage_3.xml:5
+#: dat/outfits/biocore_fin/heavy_bioship_strong_fin_stage_4.xml:5
+#: dat/outfits/biocore_fin/heavy_bioship_strong_fin_stage_5.xml:5
+#: dat/outfits/biocore_fin/heavy_bioship_strong_fin_stage_6.xml:5
+#: dat/outfits/biocore_fin/heavy_bioship_strong_fin_stage_x.xml:4
+#: dat/outfits/biocore_fin/light_bioship_fast_fin_stage_1.xml:4
+#: dat/outfits/biocore_fin/light_bioship_fast_fin_stage_2.xml:5
+#: dat/outfits/biocore_fin/light_bioship_fast_fin_stage_3.xml:5
+#: dat/outfits/biocore_fin/light_bioship_fast_fin_stage_x.xml:4
+#: dat/outfits/biocore_fin/light_bioship_strong_fin_stage_1.xml:4
+#: dat/outfits/biocore_fin/light_bioship_strong_fin_stage_2.xml:5
+#: dat/outfits/biocore_fin/light_bioship_strong_fin_stage_3.xml:5
+#: dat/outfits/biocore_fin/light_bioship_strong_fin_stage_x.xml:4
+#: dat/outfits/biocore_fin/medium_bioship_fast_fin_stage_1.xml:4
+#: dat/outfits/biocore_fin/medium_bioship_fast_fin_stage_2.xml:4
+#: dat/outfits/biocore_fin/medium_bioship_fast_fin_stage_3.xml:5
+#: dat/outfits/biocore_fin/medium_bioship_fast_fin_stage_4.xml:5
+#: dat/outfits/biocore_fin/medium_bioship_fast_fin_stage_x.xml:4
+#: dat/outfits/biocore_fin/medium_bioship_strong_fin_stage_1.xml:4
+#: dat/outfits/biocore_fin/medium_bioship_strong_fin_stage_2.xml:4
+#: dat/outfits/biocore_fin/medium_bioship_strong_fin_stage_3.xml:5
+#: dat/outfits/biocore_fin/medium_bioship_strong_fin_stage_4.xml:5
+#: dat/outfits/biocore_fin/medium_bioship_strong_fin_stage_x.xml:4
+#: dat/outfits/biocore_fin/mediumheavy_bioship_fast_fin_stage_1.xml:4
+#: dat/outfits/biocore_fin/mediumheavy_bioship_fast_fin_stage_2.xml:4
+#: dat/outfits/biocore_fin/mediumheavy_bioship_fast_fin_stage_3.xml:5
+#: dat/outfits/biocore_fin/mediumheavy_bioship_fast_fin_stage_4.xml:5
+#: dat/outfits/biocore_fin/mediumheavy_bioship_fast_fin_stage_5.xml:5
+#: dat/outfits/biocore_fin/mediumheavy_bioship_fast_fin_stage_x.xml:5
+#: dat/outfits/biocore_fin/mediumheavy_bioship_strong_fin_stage_1.xml:4
+#: dat/outfits/biocore_fin/mediumheavy_bioship_strong_fin_stage_2.xml:4
+#: dat/outfits/biocore_fin/mediumheavy_bioship_strong_fin_stage_3.xml:5
+#: dat/outfits/biocore_fin/mediumheavy_bioship_strong_fin_stage_4.xml:5
+#: dat/outfits/biocore_fin/mediumheavy_bioship_strong_fin_stage_5.xml:5
+#: dat/outfits/biocore_fin/mediumheavy_bioship_strong_fin_stage_x.xml:5
+#: dat/outfits/biocore_fin/superheavy_bioship_fast_fin_stage_1.xml:4
+#: dat/outfits/biocore_fin/superheavy_bioship_fast_fin_stage_2.xml:4
+#: dat/outfits/biocore_fin/superheavy_bioship_fast_fin_stage_3.xml:4
+#: dat/outfits/biocore_fin/superheavy_bioship_fast_fin_stage_4.xml:5
+#: dat/outfits/biocore_fin/superheavy_bioship_fast_fin_stage_5.xml:5
+#: dat/outfits/biocore_fin/superheavy_bioship_fast_fin_stage_6.xml:5
+#: dat/outfits/biocore_fin/superheavy_bioship_fast_fin_stage_7.xml:5
+#: dat/outfits/biocore_fin/superheavy_bioship_fast_fin_stage_x.xml:5
+#: dat/outfits/biocore_fin/superheavy_bioship_strong_fin_stage_1.xml:4
+#: dat/outfits/biocore_fin/superheavy_bioship_strong_fin_stage_2.xml:4
+#: dat/outfits/biocore_fin/superheavy_bioship_strong_fin_stage_3.xml:4
+#: dat/outfits/biocore_fin/superheavy_bioship_strong_fin_stage_4.xml:5
+#: dat/outfits/biocore_fin/superheavy_bioship_strong_fin_stage_5.xml:5
+#: dat/outfits/biocore_fin/superheavy_bioship_strong_fin_stage_6.xml:5
+#: dat/outfits/biocore_fin/superheavy_bioship_strong_fin_stage_7.xml:5
+#: dat/outfits/biocore_fin/superheavy_bioship_strong_fin_stage_x.xml:5
+#: dat/outfits/biocore_fin/ultralight_bioship_fast_fin_stage_1.xml:4
+#: dat/outfits/biocore_fin/ultralight_bioship_fast_fin_stage_2.xml:5
+#: dat/outfits/biocore_fin/ultralight_bioship_fast_fin_stage_x.xml:4
+#: dat/outfits/biocore_fin/ultralight_bioship_strong_fin_stage_1.xml:4
+#: dat/outfits/biocore_fin/ultralight_bioship_strong_fin_stage_2.xml:5
+#: dat/outfits/biocore_fin/ultralight_bioship_strong_fin_stage_x.xml:4
+msgid "Bioship Fin"
+msgstr "Bioschiffsflosse"
 
 #. (itstool) path: general/description
 #: dat/outfits/biocore_fin/heavy_bioship_fast_fin_stage_1.xml:9
@@ -72513,6 +72635,45 @@ msgstr "Ultraleichte Bioschiffsstarkflosse Stufe X"
 msgid "Heavy Bioship Shell Stage 1"
 msgstr "Schwere Bioschiffsschale Stufe 1"
 
+#. (itstool) path: general/typename
+#. (itstool) path: slot/display
+#: dat/outfits/biocore_shell/heavy_bioship_shell_stage_1.xml:4
+#: dat/outfits/biocore_shell/heavy_bioship_shell_stage_2.xml:4
+#: dat/outfits/biocore_shell/heavy_bioship_shell_stage_3.xml:5
+#: dat/outfits/biocore_shell/heavy_bioship_shell_stage_4.xml:5
+#: dat/outfits/biocore_shell/heavy_bioship_shell_stage_5.xml:5
+#: dat/outfits/biocore_shell/heavy_bioship_shell_stage_6.xml:5
+#: dat/outfits/biocore_shell/heavy_bioship_shell_stage_x.xml:4
+#: dat/outfits/biocore_shell/light_bioship_shell_stage_1.xml:4
+#: dat/outfits/biocore_shell/light_bioship_shell_stage_2.xml:5
+#: dat/outfits/biocore_shell/light_bioship_shell_stage_3.xml:5
+#: dat/outfits/biocore_shell/light_bioship_shell_stage_x.xml:4
+#: dat/outfits/biocore_shell/medium_bioship_shell_stage_1.xml:4
+#: dat/outfits/biocore_shell/medium_bioship_shell_stage_2.xml:4
+#: dat/outfits/biocore_shell/medium_bioship_shell_stage_3.xml:5
+#: dat/outfits/biocore_shell/medium_bioship_shell_stage_4.xml:5
+#: dat/outfits/biocore_shell/medium_bioship_shell_stage_x.xml:4
+#: dat/outfits/biocore_shell/mediumheavy_bioship_shell_stage_1.xml:4
+#: dat/outfits/biocore_shell/mediumheavy_bioship_shell_stage_2.xml:4
+#: dat/outfits/biocore_shell/mediumheavy_bioship_shell_stage_3.xml:5
+#: dat/outfits/biocore_shell/mediumheavy_bioship_shell_stage_4.xml:5
+#: dat/outfits/biocore_shell/mediumheavy_bioship_shell_stage_5.xml:5
+#: dat/outfits/biocore_shell/mediumheavy_bioship_shell_stage_x.xml:4
+#: dat/outfits/biocore_shell/superheavy_bioship_shell_stage_1.xml:4
+#: dat/outfits/biocore_shell/superheavy_bioship_shell_stage_2.xml:4
+#: dat/outfits/biocore_shell/superheavy_bioship_shell_stage_3.xml:4
+#: dat/outfits/biocore_shell/superheavy_bioship_shell_stage_4.xml:5
+#: dat/outfits/biocore_shell/superheavy_bioship_shell_stage_5.xml:5
+#: dat/outfits/biocore_shell/superheavy_bioship_shell_stage_6.xml:5
+#: dat/outfits/biocore_shell/superheavy_bioship_shell_stage_7.xml:5
+#: dat/outfits/biocore_shell/superheavy_bioship_shell_stage_x.xml:4
+#: dat/outfits/biocore_shell/ultralight_bioship_shell_stage_1.xml:4
+#: dat/outfits/biocore_shell/ultralight_bioship_shell_stage_2.xml:5
+#: dat/outfits/biocore_shell/ultralight_bioship_shell_stage_x.xml:4
+#: dat/slots.xml:33
+msgid "Bioship Shell"
+msgstr "Bioschiffsschale"
+
 #. (itstool) path: general/description
 #: dat/outfits/biocore_shell/heavy_bioship_shell_stage_1.xml:9
 #: dat/outfits/biocore_shell/heavy_bioship_shell_stage_2.xml:9
@@ -72738,6 +72899,40 @@ msgstr "Ultraleichte Bioschiffsschale Stufe X"
 #: dat/outfits/core_engine/beat_up_large_engine.xml:2
 msgid "Beat Up Large Engine"
 msgstr "Ausgeleierter großer Motor"
+
+#. (itstool) path: general/typename
+#: dat/outfits/core_engine/beat_up_large_engine.xml:4
+#: dat/outfits/core_engine/beat_up_medium_engine.xml:4
+#: dat/outfits/core_engine/beat_up_small_engine.xml:4
+#: dat/outfits/core_engine/dummy_engine.xml:4
+#: dat/outfits/core_engine/krain_remige_engine.xml:4
+#: dat/outfits/core_engine/melendez_buffalo_engine.xml:4
+#: dat/outfits/core_engine/melendez_buffalo_xl_engine.xml:4
+#: dat/outfits/core_engine/melendez_mammoth_engine.xml:4
+#: dat/outfits/core_engine/melendez_mammoth_xl_engine.xml:4
+#: dat/outfits/core_engine/melendez_ox_engine.xml:4
+#: dat/outfits/core_engine/melendez_ox_xl_engine.xml:4
+#: dat/outfits/core_engine/nexus_arrow_1200_engine.xml:4
+#: dat/outfits/core_engine/nexus_arrow_550_engine.xml:4
+#: dat/outfits/core_engine/nexus_bolt_4500_engine.xml:4
+#: dat/outfits/core_engine/nexus_bolt_6500_engine.xml:4
+#: dat/outfits/core_engine/nexus_dart_150_engine.xml:4
+#: dat/outfits/core_engine/nexus_dart_300_engine.xml:4
+#: dat/outfits/core_engine/tricon_cyclone_engine.xml:4
+#: dat/outfits/core_engine/tricon_cyclone_ii_engine.xml:4
+#: dat/outfits/core_engine/tricon_typhoon_engine.xml:4
+#: dat/outfits/core_engine/tricon_typhoon_ii_engine.xml:4
+#: dat/outfits/core_engine/tricon_zephyr_engine.xml:4
+#: dat/outfits/core_engine/tricon_zephyr_ii_engine.xml:4
+#: dat/outfits/core_engine/unicorp_eagle_4500_engine.xml:4
+#: dat/outfits/core_engine/unicorp_eagle_6500_engine.xml:4
+#: dat/outfits/core_engine/unicorp_falcon_1200_engine.xml:4
+#: dat/outfits/core_engine/unicorp_falcon_550_engine.xml:4
+#: dat/outfits/core_engine/unicorp_hawk_150_engine.xml:4
+#: dat/outfits/core_engine/unicorp_hawk_300_engine.xml:4
+#: dat/outfits/core_engine/zalek_test_engine.xml:4
+msgid "Core Systems (Engine)"
+msgstr "Hauptsysteme (Motor)"
 
 #. (itstool) path: general/description
 #: dat/outfits/core_engine/beat_up_large_engine.xml:9
@@ -73248,6 +73443,39 @@ msgstr ""
 msgid "Dummy Plating"
 msgstr "Dummy-Plattierung"
 
+#. (itstool) path: general/typename
+#: dat/outfits/core_hull/dummy_plating.xml:4
+#: dat/outfits/core_hull/patchwork_heavy_plating.xml:4
+#: dat/outfits/core_hull/patchwork_light_plating.xml:4
+#: dat/outfits/core_hull/patchwork_medium_plating.xml:4
+#: dat/outfits/core_hull/sk_heavy_combat_plating.xml:4
+#: dat/outfits/core_hull/sk_large_cargo_hull.xml:4
+#: dat/outfits/core_hull/sk_light_combat_plating.xml:4
+#: dat/outfits/core_hull/sk_light_stealth_plating.xml:4
+#: dat/outfits/core_hull/sk_medium_cargo_hull.xml:4
+#: dat/outfits/core_hull/sk_medium_combat_plating.xml:4
+#: dat/outfits/core_hull/sk_medium_stealth_plating.xml:4
+#: dat/outfits/core_hull/sk_mediumheavy_combat_plating.xml:4
+#: dat/outfits/core_hull/sk_mediumheavy_stealth_plating.xml:4
+#: dat/outfits/core_hull/sk_small_cargo_hull.xml:4
+#: dat/outfits/core_hull/sk_superheavy_combat_plating.xml:4
+#: dat/outfits/core_hull/sk_ultralight_combat_plating.xml:4
+#: dat/outfits/core_hull/sk_ultralight_stealth_plating.xml:4
+#: dat/outfits/core_hull/unicorp_b12_medium_plating.xml:4
+#: dat/outfits/core_hull/unicorp_b16_heavy_plating.xml:4
+#: dat/outfits/core_hull/unicorp_b20_heavy_plating.xml:4
+#: dat/outfits/core_hull/unicorp_b2_light_plating.xml:4
+#: dat/outfits/core_hull/unicorp_b4_light_plating.xml:4
+#: dat/outfits/core_hull/unicorp_b8_medium_plating.xml:4
+#: dat/outfits/core_hull/unicorp_d12_medium_plating.xml:4
+#: dat/outfits/core_hull/unicorp_d16_heavy_plating.xml:4
+#: dat/outfits/core_hull/unicorp_d20_heavy_plating.xml:4
+#: dat/outfits/core_hull/unicorp_d2_light_plating.xml:4
+#: dat/outfits/core_hull/unicorp_d4_light_plating.xml:4
+#: dat/outfits/core_hull/unicorp_d8_medium_plating.xml:4
+msgid "Core Systems (Hull)"
+msgstr "Hauptsysteme (Gerüst)"
+
 #. (itstool) path: general/description
 #: dat/outfits/core_hull/dummy_plating.xml:9
 msgid ""
@@ -73710,6 +73938,44 @@ msgstr ""
 #: dat/outfits/core_system/dummy_systems.xml:2
 msgid "Dummy Systems"
 msgstr "Dummy-Systeme"
+
+#. (itstool) path: general/typename
+#: dat/outfits/core_system/dummy_systems.xml:4
+#: dat/outfits/core_system/milspec_aegis_2201_core_system.xml:4
+#: dat/outfits/core_system/milspec_aegis_3601_core_system.xml:4
+#: dat/outfits/core_system/milspec_aegis_4701_core_system.xml:4
+#: dat/outfits/core_system/milspec_aegis_5401_core_system.xml:4
+#: dat/outfits/core_system/milspec_aegis_8501_core_system.xml:4
+#: dat/outfits/core_system/milspec_aegis_9801_core_system.xml:4
+#: dat/outfits/core_system/milspec_hermes_2202_core_system.xml:4
+#: dat/outfits/core_system/milspec_hermes_3602_core_system.xml:4
+#: dat/outfits/core_system/milspec_hermes_4702_core_system.xml:4
+#: dat/outfits/core_system/milspec_hermes_5402_core_system.xml:4
+#: dat/outfits/core_system/milspec_hermes_8502_core_system.xml:4
+#: dat/outfits/core_system/milspec_hermes_9802_core_system.xml:4
+#: dat/outfits/core_system/milspec_orion_2301_core_system.xml:4
+#: dat/outfits/core_system/milspec_orion_3701_core_system.xml:4
+#: dat/outfits/core_system/milspec_orion_4801_core_system.xml:4
+#: dat/outfits/core_system/milspec_orion_5501_core_system.xml:4
+#: dat/outfits/core_system/milspec_orion_8601_core_system.xml:4
+#: dat/outfits/core_system/milspec_orion_9901_core_system.xml:4
+#: dat/outfits/core_system/milspec_prometheus_2203_core_system.xml:4
+#: dat/outfits/core_system/milspec_prometheus_3603_core_system.xml:4
+#: dat/outfits/core_system/milspec_prometheus_4703_core_system.xml:4
+#: dat/outfits/core_system/milspec_prometheus_5403_core_system.xml:4
+#: dat/outfits/core_system/milspec_prometheus_8503_core_system.xml:4
+#: dat/outfits/core_system/milspec_prometheus_9803_core_system.xml:4
+#: dat/outfits/core_system/previous_generation_large_systems.xml:4
+#: dat/outfits/core_system/previous_generation_medium_systems.xml:4
+#: dat/outfits/core_system/previous_generation_small_systems.xml:4
+#: dat/outfits/core_system/unicorp_pt1000_core_system.xml:4
+#: dat/outfits/core_system/unicorp_pt100_core_system.xml:4
+#: dat/outfits/core_system/unicorp_pt200_core_system.xml:4
+#: dat/outfits/core_system/unicorp_pt500_core_system.xml:4
+#: dat/outfits/core_system/unicorp_pt600_core_system.xml:4
+#: dat/outfits/core_system/unicorp_pt900_core_system.xml:4
+msgid "Core Systems (System)"
+msgstr "Hauptsysteme (System)"
 
 #. (itstool) path: general/description
 #: dat/outfits/core_system/dummy_systems.xml:9
@@ -75375,6 +75641,15 @@ msgstr ""
 msgid "Active Plating"
 msgstr "Aktivplattierung"
 
+#. (itstool) path: general/typename
+#: dat/outfits/modifiers/active_plating.xml:4
+#: dat/outfits/modifiers/adaptive_stealth_plating.xml:4
+#: dat/outfits/modifiers/biometal_armour.xml:4
+#: dat/outfits/modifiers/nanobond_plating.xml:4
+#: dat/outfits/modifiers/plasteel_plating.xml:4
+msgid "Armour Modifier"
+msgstr "Panzerungsmodifikator"
+
 #. (itstool) path: general/description
 #: dat/outfits/modifiers/active_plating.xml:11
 msgid ""
@@ -75425,6 +75700,12 @@ msgstr ""
 #: dat/outfits/modifiers/battery.xml:2
 msgid "Battery"
 msgstr "Batterie"
+
+#. (itstool) path: general/typename
+#: dat/outfits/modifiers/battery.xml:4 dat/outfits/modifiers/battery_ii.xml:4
+#: dat/outfits/modifiers/battery_iii.xml:4
+msgid "Power Modifier"
+msgstr "Energiemodifikator"
 
 #. (itstool) path: general/description
 #: dat/outfits/modifiers/battery.xml:9
@@ -75488,6 +75769,12 @@ msgstr ""
 msgid "Boarding Androids MK1"
 msgstr "Enterandroiden MKI"
 
+#. (itstool) path: general/typename
+#: dat/outfits/modifiers/boarding_androids_mk1.xml:4
+#: dat/outfits/modifiers/boarding_androids_mk2.xml:4
+msgid "Crew enhancement"
+msgstr "Crewverbesserung"
+
 #. (itstool) path: general/description
 #: dat/outfits/modifiers/boarding_androids_mk1.xml:9
 msgid ""
@@ -75521,6 +75808,13 @@ msgstr ""
 msgid "Cargo Pod"
 msgstr "Frachtkapsel"
 
+#. (itstool) path: general/typename
+#: dat/outfits/modifiers/cargo_pod.xml:4
+#: dat/outfits/modifiers/large_cargo_pod.xml:4
+#: dat/outfits/modifiers/medium_cargo_pod.xml:4
+msgid "Cargo Expansion"
+msgstr "Frachtexpansion"
+
 #. (itstool) path: general/description
 #: dat/outfits/modifiers/cargo_pod.xml:9
 #: dat/outfits/modifiers/large_cargo_pod.xml:9
@@ -75534,6 +75828,11 @@ msgstr ""
 #: dat/outfits/modifiers/droid_repair_crew.xml:2
 msgid "Droid Repair Crew"
 msgstr "Droidenreparaturcrew"
+
+#. (itstool) path: general/typename
+#: dat/outfits/modifiers/droid_repair_crew.xml:4
+msgid "Armour Repair Modifier"
+msgstr "Panzerungsreparaturmodifikator"
 
 #. (itstool) path: general/description
 #: dat/outfits/modifiers/droid_repair_crew.xml:10
@@ -75556,6 +75855,14 @@ msgstr ""
 msgid "Engine Reroute"
 msgstr "Motorenumleitung"
 
+#. (itstool) path: general/typename
+#: dat/outfits/modifiers/engine_reroute.xml:4
+#: dat/outfits/modifiers/improved_stabilizer.xml:4
+#: dat/outfits/modifiers/steering_thrusters.xml:4
+#: dat/outfits/modifiers/thurion_engine_reroute.xml:4
+msgid "Manoevrability Modifier"
+msgstr "Manovrierfähigkeitsmodifikator"
+
 #. (itstool) path: general/description
 #: dat/outfits/modifiers/engine_reroute.xml:9
 #: dat/outfits/modifiers/thurion_engine_reroute.xml:10
@@ -75573,6 +75880,12 @@ msgstr ""
 msgid "Forward Shock Absorbers"
 msgstr "Vorwärtsschockabsorber"
 
+#. (itstool) path: general/typename
+#: dat/outfits/modifiers/forward_shock_absorbers.xml:4
+#: dat/outfits/modifiers/power_regulation_override.xml:4
+msgid "Weapon Modifier (Forward)"
+msgstr "Waffenmodifikator (vorwärts)"
+
 #. (itstool) path: general/description
 #: dat/outfits/modifiers/forward_shock_absorbers.xml:9
 msgid ""
@@ -75587,6 +75900,13 @@ msgstr ""
 msgid "Fuel Pod"
 msgstr "Treibstoffkapsel"
 
+#. (itstool) path: general/typename
+#: dat/outfits/modifiers/fuel_pod.xml:4
+#: dat/outfits/modifiers/large_fuel_pod.xml:4
+#: dat/outfits/modifiers/medium_fuel_pod.xml:4
+msgid "Fuel Expansion"
+msgstr "Treibstoffexansion"
+
 #. (itstool) path: general/description
 #: dat/outfits/modifiers/fuel_pod.xml:9
 #: dat/outfits/modifiers/large_fuel_pod.xml:9
@@ -75600,6 +75920,12 @@ msgstr ""
 #: dat/outfits/modifiers/improved_power_regulator.xml:2
 msgid "Improved Power Regulator"
 msgstr "Verbesserter Leistungsregler"
+
+#. (itstool) path: general/typename
+#: dat/outfits/modifiers/improved_power_regulator.xml:4
+#: dat/outfits/modifiers/improved_refrigeration_cycle.xml:4
+msgid "Weapon Modfier (Turret)"
+msgstr "Waffenmodifikator (Geschützturm)"
 
 #. (itstool) path: general/description
 #: dat/outfits/modifiers/improved_power_regulator.xml:10
@@ -75691,6 +76017,13 @@ msgstr "Große Treibstoffkapsel"
 msgid "Large Shield Booster"
 msgstr "Großer Schildverstärker"
 
+#. (itstool) path: general/typename
+#: dat/outfits/modifiers/large_shield_booster.xml:4
+#: dat/outfits/modifiers/medium_shield_booster.xml:4
+#: dat/outfits/modifiers/small_shield_booster.xml:4
+msgid "Shield Energy Modifier"
+msgstr "Schildenergiemodifikator"
+
 #. (itstool) path: general/description
 #: dat/outfits/modifiers/large_shield_booster.xml:9
 #: dat/outfits/modifiers/medium_shield_booster.xml:9
@@ -75762,6 +76095,16 @@ msgstr ""
 msgid "Nebular Shielding Prototype"
 msgstr "Nebelabschirmungsprototyp"
 
+#. (itstool) path: general/typename
+#: dat/outfits/modifiers/nebula_shielding0.xml:4
+#: dat/outfits/modifiers/shield_capacitor.xml:4
+#: dat/outfits/modifiers/shield_capacitor_ii.xml:4
+#: dat/outfits/modifiers/shield_capacitor_iii.xml:4
+#: dat/outfits/modifiers/shield_capacitor_iv.xml:4
+#: dat/outfits/modifiers/shield_nullifier.xml:4
+msgid "Shield Power Modifier"
+msgstr "Schildstärkenmodifikator"
+
 #. (itstool) path: general/description
 #: dat/outfits/modifiers/nebula_shielding0.xml:10
 msgid ""
@@ -75813,6 +76156,17 @@ msgstr ""
 #: dat/outfits/modifiers/reactor_class_i.xml:2
 msgid "Reactor Class I"
 msgstr "Reaktor, Klasse I"
+
+#. (itstool) path: general/typename
+#: dat/outfits/modifiers/reactor_class_i.xml:4
+#: dat/outfits/modifiers/reactor_class_ii.xml:4
+#: dat/outfits/modifiers/reactor_class_iii.xml:4
+#: dat/outfits/modifiers/reactor_thurion_i.xml:4
+#: dat/outfits/modifiers/reactor_thurion_ii.xml:4
+#: dat/outfits/modifiers/reactor_thurion_iii.xml:4
+#: dat/outfits/modifiers/solar_panel.xml:4
+msgid "Energy Modifier"
+msgstr "Energiemodifikator"
 
 #. (itstool) path: general/description
 #: dat/outfits/modifiers/reactor_class_i.xml:10
@@ -76027,6 +76381,11 @@ msgstr ""
 #: dat/outfits/modifiers/targeting_array.xml:2
 msgid "Targeting Array"
 msgstr "Zielfeld"
+
+#. (itstool) path: general/typename
+#: dat/outfits/modifiers/targeting_array.xml:4
+msgid "Weapon Modifier (Turret)"
+msgstr "Waffenmodifikator (Geschützturm)"
 
 #. (itstool) path: general/description
 #: dat/outfits/modifiers/targeting_array.xml:9
@@ -78514,11 +78873,6 @@ msgstr ""
 "ihre robusten Schilde machen sie zu einem guten Rückgrat der Flotte von Haus "
 "Za'lek."
 
-#. (itstool) path: slot/display
-#: dat/slots.xml:4
-msgid "Accessory"
-msgstr "Accessoire"
-
 #. (itstool) path: slot/description
 #: dat/slots.xml:5
 msgid ""
@@ -78577,11 +78931,6 @@ msgstr ""
 "was irgendwie wichtig ist. Motoren benötigen Energie aus dem Hauptsystem, um "
 "zu funktionieren."
 
-#. (itstool) path: slot/display
-#: dat/slots.xml:27
-msgid "Bioship Brain"
-msgstr "Bioschiffsgehirn"
-
 #. (itstool) path: slot/description
 #: dat/slots.xml:28
 msgid ""
@@ -78594,11 +78943,6 @@ msgstr ""
 "Hauptsystemen, verwendet. Das Gehirn eines Organismus ist für die Verwaltung "
 "der Funktion des restlichen Organismus und die Zuteilung von Energiereserven "
 "für die Batterie und den Schild verantwortlich."
-
-#. (itstool) path: slot/display
-#: dat/slots.xml:33
-msgid "Bioship Shell"
-msgstr "Bioschiffsschale"
 
 #. (itstool) path: slot/description
 #: dat/slots.xml:34
