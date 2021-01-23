@@ -237,7 +237,7 @@ function annai()
     poss[2] = vec2.new(50, -50)
     poss[3] = vec2.new(-50, -50)
     poss[4] = vec2.new(0,120)
-    local speed = player.pilot():stats().speed_max - 1
+    local speed = math.max(1, player.pilot():stats().speed_max - 5)
     for i, p in ipairs(fleetFLF) do
         if p ~= nil and p:exists() then
             if speed < p:stats().speed_max then
