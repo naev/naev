@@ -365,6 +365,12 @@ end
 
 
 function approach_hint1 ()
+   if not visitedhint1 then
+      visitedhint1 = true
+      misn.markerRm( markerhint1 )
+      visited()
+   end
+
    vn.clear()
    vn.scene()
    local prof = vn.newCharacter( hint1_name, { image=hint1_image, color=hint1_colour } )
@@ -386,16 +392,16 @@ Their excitement grows.]]))
 
    vn.fadeout()
    vn.run()
-
-   if not visitedhint1 then
-      visitedhint1 = true
-      misn.markerRm( markerhint1 )
-      visited()
-   end
 end
 
 
 function approach_hint2 ()
+   if not visitedhint2 then
+      visitedhint2 = true
+      misn.markerRm( markerhint2 )
+      visited()
+   end
+
    vn.clear()
    vn.scene()
    local prof = vn.newCharacter( hint2_name, { image=hint2_image, color=hint2_colour } )
@@ -420,16 +426,16 @@ They shudder when they says the word "work packages".]]))
 
    vn.fadeout()
    vn.run()
-
-   if not visitedhint2 then
-      visitedhint2 = true
-      misn.markerRm( markerhint2 )
-      visited()
-   end
 end
 
 
 function approach_hint3 ()
+   if not visitedhint3 then
+      visitedhint3 = true
+      misn.markerRm( markerhint3 )
+      visited()
+   end
+
    vn.clear()
    vn.scene()
    local prof = vn.newCharacter( hint3_name, { image=hint3_image, color=hint3_colour } )
@@ -451,12 +457,6 @@ function approach_hint3 ()
 
    vn.fadeout()
    vn.run()
-
-   if not visitedhint3 then
-      visitedhint3 = true
-      misn.markerRm( markerhint3 )
-      visited()
-   end
 end
 
 
