@@ -46595,7 +46595,7 @@ msgstr "존재하지 않는 화물 %d의 연결을 해제하려는 '%s' 임무."
 #: src/mission.c:518
 #, c-format
 msgid "Failed to remove mission cargo '%d' for mission '%s'."
-msgstr "임무 '%s'에 대한 임무화물 '%d'을 제거하지 못했습니다."
+msgstr "임무 '%2$s'에 대한 임무화물 '%1$d'을 제거하지 못했습니다."
 
 #: src/mission.c:784
 #, c-format
