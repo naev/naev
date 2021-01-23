@@ -1702,6 +1702,33 @@ void pilot_render( Pilot* p, const double dt )
 {
    (void) dt;
    double scalew, scaleh;
+   int i;
+   double x1, y1, x2, y2;
+   glColour c;
+   Vector2d* point;
+
+   /* Tracks. */
+   c = cWhite;
+   if (array_size(p->times) > 1){
+
+      /* Lastly created control point is replaced by ship's position */
+      gl_gameToScreenCoords( &x1, &y1, p->solid->pos.x, p->solid->pos.y );
+      point = &p->track[ array_size(p->track)-1 ];
+      gl_gameToScreenCoords( &x2, &y2, point->x, point->y );
+      //gl_drawLine( x1, y1, x2, y2, &c );
+      gl_drawTrack( x1, y1, x2, y2, ntime_get(), p->times[ array_size(p->times)-1 ], .005, &c );
+
+      if (array_size(p->times) > 2){
+         for ( i=array_size(p->times)-1; i>0; i--){
+            point = &p->track[i];
+            gl_gameToScreenCoords( &x1, &y1, point->x, point->y );
+            point = &p->track[i-1];
+            gl_gameToScreenCoords( &x2, &y2, point->x, point->y );
+            //gl_drawLine( x1, y1, x2, y2, &c );
+            gl_drawTrack( x1, y1, x2, y2, p->times[i-1], p->times[i], .005, &c );
+         }
+      }
+   }
 
    /* Check if needs scaling. */
    if (pilot_isFlag( p, PILOT_LANDING )) {
@@ -1806,7 +1833,7 @@ void pilot_update( Pilot* pilot, const double dt )
 {
    int i, cooling, nchg;
    int ammo_threshold;
-   unsigned int l;
+   unsigned int l, grow;
    Pilot *target;
    double a, px,py, vx,vy;
    char buf[16];
@@ -1815,6 +1842,7 @@ void pilot_update( Pilot* pilot, const double dt )
    Damage dmg;
    double stress_falloff;
    double efficiency, thrust;
+   ntime_t now;
 
    /* Check target validity. */
    if (pilot->target != pilot->id) {
@@ -2195,8 +2223,36 @@ void pilot_update( Pilot* pilot, const double dt )
    gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
          pilot->ship->gfx_space, pilot->solid->dir );
 
-   /* See if there is commodities to gather */
+   /* See if there is commodities to gather. */
    gatherable_gather( pilot->id );
+
+   /* Update the track. */
+   if (!space_isSimulation()) {
+      now = ntime_get();
+      grow = 0;
+
+      if (array_size(pilot->times) == 0)
+         grow = 1;
+
+      else {
+         /* Add a new dot to the track. */
+         if ( (array_back( pilot->times ) + 3000) <= now )
+            grow = 1;
+         /* Remove first elements if they're outdated. */
+         for (i=array_size(pilot->times)-1; i>=0; i--) {
+            if (pilot->times[i] < now - 50000) {
+               array_erase(&pilot->times, &pilot->times[0], &pilot->times[i]);
+               array_erase(&pilot->track, &pilot->track[0], &pilot->track[i]);
+               break;
+            }
+         }
+      }
+
+      if (grow) {
+         array_push_back( &pilot->times, now );
+         array_push_back( &pilot->track, pilot->solid->pos );
+      }
+   }
 
 }
 
@@ -2711,6 +2767,10 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    if (ai != NULL)
       ai_pinit( pilot, ai ); /* Must run before ai_create */
    pilot->shoot_indicator = 0;
+
+   /* Animated track. */
+   pilot->track = array_create( Vector2d );
+   pilot->times = array_create( ntime_t );
 }
 
 
@@ -2987,6 +3047,10 @@ void pilot_free( Pilot* p )
 
    /* Free messages. */
    luaL_unref(naevL, p->messages, LUA_REGISTRYINDEX);
+
+   /* Free animated track. */
+   array_free(p->track);
+   array_free(p->times);
 
 #ifdef DEBUGGING
    memset( p, 0, sizeof(Pilot) );

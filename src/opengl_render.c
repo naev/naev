@@ -746,6 +746,57 @@ void gl_drawLine( const double x1, const double y1,
 
 
 /**
+ * @brief Draws a track.
+ *
+ *    @param x1 X position of the first point in screen coordinates.
+ *    @param y1 Y position of the first point in screen coordinates.
+ *    @param x2 X position of the second point in screen coordinates.
+ *    @param y2 Y position of the second point in screen coordinates.
+ *    @param t1 time of the first point.
+ *    @param t2 time og the second point.
+ *    @param omega pulsation of the animation.
+ *    @param c Colour to use.
+ */
+void gl_drawTrack( const double x1, const double y1,
+      const double x2, const double y2, const int t1, const int t2,
+      const double omega, const glColour *c )
+{
+   gl_Matrix4 projection;
+   double a, s;
+
+   glUseProgram(shaders.track.program);
+
+   a = atan2( y2-y1, x2-x1 );
+   s = sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) );
+
+   /* Set vertex. */
+   projection = gl_Matrix4_Translate(gl_view_matrix, x1, y1, 0);
+   projection = gl_Matrix4_Rotate2d(projection, a);
+   projection = gl_Matrix4_Scale(projection, s, 20, 1); //TODO : adjustable thickness
+   glEnableVertexAttribArray( shaders.track.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.track.vertex, 0, 2, GL_FLOAT, 0 );
+
+   /* Set uniforms. */
+   gl_uniformColor(shaders.track.color, c);
+   gl_Matrix4_Uniform(shaders.track.projection, projection);
+   glUniform1f(shaders.track.t1, (float) t1);
+   glUniform1f(shaders.track.t2, (float) t2);
+   glUniform1f(shaders.track.omega, (float) omega);
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   glDisableVertexAttribArray( shaders.track.vertex );
+   glUseProgram(0);
+
+   /* Check errors. */
+   gl_checkErr();
+
+}
+
+
+/**
  * @brief Sets up 2d clipping planes around a rectangle.
  *
  *    @param x X position of the rectangle.
