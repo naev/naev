@@ -168,7 +168,7 @@ function enter()
         DVreinforcements = 20 -- Amount of reinforcement Dvaered bombers
         deathsFLF = 0
         deathsFLFneeded = 0
-        time = 0
+        timer = 0
         stage = 0
         standoff = 5000 -- The distance between the DV fleet and the base
         safestandoff = 2000 -- This is the distance from the base where DV ships will turn back
@@ -406,7 +406,7 @@ function nextStage()
        return
     end
     wavestarted = false
-    time = 0 -- Immediately recall the Dvaered escorts
+    timer = 0 -- Immediately recall the Dvaered escorts
     stage = stage + 1
     deathsFLF = 0
     deathsFLFneeded = 0
@@ -522,7 +522,7 @@ function controlFleet( fleetCur, pos, off )
             end
 
             -- Too close to base or recalled
-            if basedist < safestandoff or time <= 0 then
+            if basedist < safestandoff or timer <= 0 then
                 j:control()
                 j:moveto( pos[i + off] )
 
@@ -543,8 +543,8 @@ end
 -- Tries to whip the AI into behaving in a specific way
 function control()
     -- Timer to have them return
-    if time > 0 then
-        time = time - 500
+    if timer > 0 then
+        timer = timer - 500
     end
    
     -- Control the fleets
@@ -609,7 +609,7 @@ end
 
 -- Make escorts fight back, then return to their positions
 function attacked()
-    time = 3000
+    timer = 3000
     
     for i, j in ipairs(fleetDV) do
         if j:exists() and (not base:exists() or vec2.dist(j:pos(), base:pos()) > safestandoff) and vec2.dist(j:pos(), obstinate:pos()) < 1000 then
