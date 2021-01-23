@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-23 11:54-0500\n"
-"PO-Revision-Date: 2021-01-23 00:11+0000\n"
+"PO-Revision-Date: 2021-01-24 00:15+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
 "Language: de\n"
@@ -17568,10 +17568,8 @@ msgid "Artifact? C"
 msgstr "Artefakt? C"
 
 #: dat/commodity.xml:184
-#, fuzzy
-#| msgid "Bomber"
 msgid "Bomb"
-msgstr "Bomber"
+msgstr "Bombe"
 
 #: dat/commodity.xml:187
 msgid "Box"
@@ -17763,10 +17761,8 @@ msgid "Nebula Sensor Suit"
 msgstr "Nebelsensoranzug"
 
 #: dat/commodity.xml:308
-#, fuzzy
-#| msgid "Artifact? A"
 msgid "Nebula Artifact?"
-msgstr "Artefakt? A"
+msgstr "Nebel-Artefakt?"
 
 #: dat/faction.xml:4
 msgid "Dummy"
@@ -18051,17 +18047,15 @@ msgstr "Comingout_thugs"
 
 #: dat/faction.xml:568
 msgid "DHC"
-msgstr ""
+msgstr "HKD"
 
 #: dat/faction.xml:585
 msgid "Warlords"
-msgstr ""
+msgstr "Kriegsherrn"
 
 #: dat/faction.xml:588
-#, fuzzy
-#| msgid "Dvaered Patrol"
 msgid "Dvaered Warlords"
-msgstr "Dvaered-Patrouille"
+msgstr "Dvaered-Kriegsherrn"
 
 #: dat/faction.xml:600
 msgid "Strangelove"
@@ -29267,6 +29261,26 @@ msgid ""
 "you'll receive %s in the process. Oh yes, that's different from what you're "
 "used to! What do you say?\""
 msgstr ""
+"Der Pilot des Jägers nutzt den verschlüsselten Kanal: „Ich habe dich endlich "
+"gefunden, %s. Besser spät als nie. Meine Auftraggeber wollen dir dazu "
+"gratulieren, wie effektiv du mit Lord Battleaddict umgegangen bist. Ich "
+"fürchte, es wird nicht viele Leute geben, die um ihn trauern.“ Du "
+"antwortest, dass du nicht weißt, worum es geht, und dass, soweit du weißt, "
+"Lord Battleaddict in einem loyalen Zweikampf von General Klank getötet "
+"wurde. Der Gesprächspartner lacht: „Du spielst deine Rolle, was? Ich kann "
+"dich verstehen, schließlich bezahlen sie dich gut … Warte, nein, sie zahlen "
+"nicht gut. Ganz und gar nicht! Wie viel war es denn, dass du mit diesem EMP-"
+"Bombentrick zweimal dein Leben riskiert hast? %s? Har, har, har! Du kannst "
+"mit einer Frachtmission mehr Geld verdienen!\n"
+"   Ich habe sogar mal gehört, dass sie dich mit Gaußkanonen bezahlt haben! "
+"Diese Typen sind so erbärmlich, nicht wahr?\n"
+"   Jetzt mal im Ernst: Du willst Geld und ich will einen Piloten. Wir sind "
+"dafür gemacht, uns zu verstehen, du und ich! Ich brauche dich für eine "
+"besondere Aufgabe. Ich werde nicht leugnen, dass es bedeutet, gegen die "
+"Interessen von General Klank und Major Tam und Co. zu verstoßen, aber wenn "
+"du es gut machst, werden sie nie erfahren, dass du verwickelt bist, und du "
+"wirst dabei %s erhalten. Oh ja, das ist anders, als du es gewohnt bist! Was "
+"sagst du dazu?“"
 
 #: dat/events/dvaered/fwA_treason.lua:35 dat/missions/flf/flf_pre02.lua:90
 msgid "Accept the offer"
@@ -29286,23 +29300,23 @@ msgid ""
 "\"Very good choice, colleague!\" The pilot answers. \"Go to %s, and you will "
 "be hailed by an other Vendetta for your briefing.\""
 msgstr ""
+"„Sehr gute Wahl, Kollege!“ antwortet der Pilot. „Geh zu %s, und du wirst von "
+"einer anderen Vendetta für deine Einweisung gerufen.“"
 
 #: dat/events/dvaered/fwA_treason.lua:41
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:53
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:85
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:54
-#, fuzzy
-#| msgid "Too big!"
 msgid "Too bad"
-msgstr "Zu groß!"
+msgstr "Zu schade"
 
 #: dat/events/dvaered/fwA_treason.lua:42
 msgid "\"I see. Stay tuned, then, maybe we will see each other again!\""
-msgstr ""
+msgstr "„Verstehe. Dann bleib dran, vielleicht sehen wir uns ja wieder!“"
 
 #: dat/events/dvaered/fwA_treason.lua:44
 msgid "You are a loyal citizen of House Dvaered"
-msgstr ""
+msgstr "Du bist ein loyaler Bürger des Hauses Dvaered"
 
 #: dat/events/dvaered/fwA_treason.lua:45
 #, lua-format
@@ -29312,6 +29326,11 @@ msgid ""
 "passed the test. You remained loyal to our general, in spite of the absurdly "
 "high reward they had proposed to you for betraying us.\""
 msgstr ""
+"Als du landest, siehst du die Kapitänin Leblanc am Dock und sie gratuliert "
+"dir: „Ich habe schon viel Gutes von Ihnen gehört, Bürger %s. Es scheint, "
+"dass Sie die Prüfung bestanden haben. Sie sind unserem General gegenüber "
+"loyal geblieben, trotz der absurd hohen Belohnung, die sie dir für den "
+"Verrat an uns vorgeschlagen hatten.“"
 
 #: dat/events/dvaered/fwA_treason.lua:46
 msgid ""
@@ -29332,6 +29351,25 @@ msgid ""
 "doomed to fail, creating weird and ugly monsters like the Empire, House "
 "Sirius or the Soromid.\""
 msgstr ""
+"„Geldfragen sind zweitrangig, Pilot. An einem Tag ist man reich, und am "
+"nächsten ist man arm. Tapferkeit jedoch ist das, was im Leben wirklich "
+"zählt, denn Tapferkeit enthält alle anderen Eigenschaften, die ein Dvaered "
+"haben muss:\n"
+"   Rechtschaffenheit, um zu verstehen, was getan werden muss,\n"
+"   Loyalität, um zu wissen, wem Sie vertrauen können, um Ihnen bei Ihrer "
+"Pflicht zu helfen,\n"
+"   Stärke, um in der Lage zu sein, das zu tun, was Rechtschaffenheit und "
+"Loyalität von Ihnen verlangen.\n"
+"   Diese anspruchsvolle Moral kann von den Dvaered verlangen, ihr eigenes "
+"Leben zu riskieren oder für die Gemeinschaft zu töten, denn die Philosophie "
+"des Hauses Dvaered ist eine Philosophie des Lebens. Und das Leben kommt "
+"nicht ohne sein Gegenstück, dem Tod. Ein Dvaered zu sein bedeutet, die "
+"ultimative Regel des Universums zu akzeptieren, die Endlichkeit aller Dinge, "
+"im Gegensatz zu allen anderen Fraktionen, die hoffnungslos der Ewigkeit "
+"nachjagen. Ewigkeit in der Abfolge der Imperatoren, Ewigkeit im Glauben, "
+"Ewigkeit im Fortschritt der biologisch verbesserten Menschheit. Ihr Streben "
+"ist zum Scheitern verurteilt und bringt seltsame und hässliche Monster wie "
+"das Imperium, Haus Sirius oder die Soromiden hervor.“"
 
 #: dat/events/dvaered/fwA_treason.lua:51
 msgid ""
@@ -29357,6 +29395,30 @@ msgid ""
 "for several periods, with a huge risk of ending up bogged down and "
 "vulnerable to attacks on other fronts.\""
 msgstr ""
+"„Das Haus Dvaered wurde im Respekt vor dieser Ethik von Leben und Tod "
+"gebaut, die allen Kindern auf allen Welten im Dvaered-Raum beigebracht wird. "
+"Sie haben eine solche Erziehung nicht erhalten und trotzdem haben Sie den "
+"Loyalitätstest bestanden. Das bedeutet, dass das Dvaered-Oberkommando Ihnen "
+"vertrauen kann. Als Beweis für dieses Vertrauen kann ich Ihnen offenbaren, "
+"was einige in der Armee wissen, aber nie den Nicht-Dvaered offenbart wurde.\n"
+"   Seit einem Zyklus beobachten die Kriegsherrn gierig die Front-Planeten. "
+"Seit die FLF zerstört wurde, tut das Hohe Kommando der Dvaered alles in "
+"seiner Macht stehende, um sie zurückzuhalten, denn wir wissen, dass viele "
+"andere Fraktionen darauf warten, dass wir in einen Krieg in der Front "
+"verwickelt werden, um uns zu treffen. Aber der Zweck der Kriegsherrn ist es, "
+"in Welten einzudringen, und die Rolle des Hohen Kommando der Dvaered ist es, "
+"es nicht aufzuhalten, also werden wir diese Invasion letztendlich zulassen "
+"müssen.\n"
+"   Vor ein paar Dekaperioden ist General Klank zum General zweiter Klasse "
+"befördert worden, mit der Aufgabe, diese Invasion zu organisieren. Der erste "
+"Invasionsplan, der ihm vorgeschlagen wurde, sah vor, den einzelnen "
+"Kriegsherren große Freiheiten zu gewähren und ihnen die Wahl zu überlassen, "
+"welchen Planeten sie einnehmen und wie sie vorgehen wollten. Im Gegensatz zu "
+"den anderen Generälen verstand Klank jedoch bald, dass eine solche "
+"unorganisierte Invasion, bei der es unweigerlich zu Kämpfen zwischen den "
+"Kriegsherrn kommen würde, mehrere Perioden in Anspruch nehmen würde, mit dem "
+"großen Risiko, am Ende festgefahren und anfällig für Angriffe von anderen "
+"Fronten zu sein.“"
 
 #: dat/events/dvaered/fwA_treason.lua:54
 msgid ""
