@@ -482,7 +482,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
          return 0;
       }
       /* Get faction from string or number. */
-      lf = luaL_validfaction(L,3);
+      lf = luaL_validfaction(L,2);
    }
    else {
       flt = fleet_get( fltname );
