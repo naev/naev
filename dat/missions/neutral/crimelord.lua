@@ -82,10 +82,9 @@ function enter () --aforementioned triggered function
    hook.timer(4000, "spawnBaddies")
    
    if system.cur() == targetsystem then --when in target system
-      local defenderships = { "Lancelot", "Lancelot", "Admonisher", "Pacifier",
-      "Hawking", "Kestrel" }
-      defenders = addRawShips( defenderships, "dvaered", jump.pos(targetsystem, last_system),
-      "Associates" ) --add a defending force to help you
+      local defenderships = { "Lancelot", "Lancelot", "Admonisher", "Pacifier", "Hawking", "Kestrel" }
+      local jumpin = jump.pos(targetsystem, last_system)
+      defenders = addRawShips( 1, defenderships, "Associates", jumpin, "dvaered" ) --add a defending force to help you
       for pilot_number, pilot_object in pairs(defenders) do
          local rn = pilot_object:ship():nameRaw() 
          if rn == "Lancelot" then
@@ -128,7 +127,7 @@ function spawnBaddies ()
       sp = last_system
    end
 
-   thugs = addRawShips( "Admonisher", ai, sp, "Thugs", 4 )
+   thugs = addRawShips( 4, "Admonisher", "Thugs", sp, ai )
    for pilot_number, pilot_object in ipairs(thugs) do
       pilot_object:rename(_("Thug"))
       pilot_object:setHostile(true) --they don't like you

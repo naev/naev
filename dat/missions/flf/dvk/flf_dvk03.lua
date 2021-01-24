@@ -157,7 +157,7 @@ function enter ()
          ms, s = planet.get( "Marius Station" )
 
          -- Spawn Raelid Outpost ship
-         nf = pilot.add( "Raelid Outpost", nil, ro:pos() )
+         nf = pilot.add( "Raelid Outpost", ro:pos() )
          dv_base = nf[1]
          dv_base:rmOutfit( "all" )
          dv_base:rmOutfit( "cores" )
@@ -176,12 +176,12 @@ function enter ()
          -- Spawn Dvaered and Empire ships
          dv_fleet = {}
 
-         nf = pilot.add( "Empire Lge Attack", "empire_norun", ms:pos() )
+         nf = pilot.add( "Empire Lge Attack", ms:pos(), "empire_norun" )
          for i, j in ipairs( nf ) do
             dv_fleet[ #dv_fleet + 1 ] = j
          end
 
-         nf = pilot.add( "Dvaered Big Patrol", "dvaered_norun", ro:pos() )
+         nf = pilot.add( "Dvaered Big Patrol", ro:pos(), "dvaered_norun" )
          for i, j in ipairs( nf ) do
             dv_fleet[ #dv_fleet + 1 ] = j
          end
@@ -195,7 +195,7 @@ function enter ()
          -- Spawn FLF ships
          local jmp, jmp2
          jmp, jpm2 = jump.get( "Raelid", "Arcanis" )
-         flf_fleet = addShips( "FLF Vendetta", nil, jmp:pos(), 14 )
+         flf_fleet = addShips( 14, "FLF Vendetta", jmp:pos() )
 
          for i, j in ipairs( flf_fleet ) do
             j:control()
@@ -241,7 +241,7 @@ function timer_start ()
       local src = system.get( "Zacron" )
       for i = 1, 12 do
          local choice = choices[ rnd.rnd( 1, #choices ) ]
-         local nf = pilot.add( choice, nil, src )
+         local nf = pilot.add( choice, src )
          civ_fleet[ #civ_fleet + 1 ] = nf[1]
       end
 
@@ -263,7 +263,7 @@ function timer_pirates ()
 
    local src = system.get( "Zacron" )
 
-   pir_fleet = pilot.add( "Pirate Kestrel", nil, src )
+   pir_fleet = pilot.add( "Pirate Kestrel", src )
    pir_boss = pir_fleet[1]
    hook.pilot( pir_boss, "death", "pilot_death_kestrel" )
 
@@ -272,7 +272,7 @@ function timer_pirates ()
       "Pirate Vendetta", "Pirate Ancestor" }
    for i = 1, 9 do
       local choice = choices[ rnd.rnd( 1, #choices ) ]
-      local nf = pilot.add( choice, nil, src )
+      local nf = pilot.add( choice, src )
       pir_fleet[ #pir_fleet + 1 ] = nf[1]
    end
 

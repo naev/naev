@@ -292,7 +292,7 @@ end
 
 
 function spawn_drone ()
-   local p = pilot.addRaw( "Hyena", "baddie_norun", dest_planet, "Dummy" )
+   local p = pilot.addRaw( "Hyena", "Dummy", dest_planet, "baddie_norun" )
    p:rmOutfit( "all" )
    p:rmOutfit( "cores" )
    p:addOutfit( "Previous Generation Small Systems" )

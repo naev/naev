@@ -172,7 +172,7 @@ end
 
 function lets_go()
    -- spawns the Shark
-   sharkboy = pilot.addRaw( "Lancelot","baddie_norun", system.get("Raelid"), "Mercenary" )
+   sharkboy = pilot.addRaw( "Lancelot", "Mercenary", system.get("Raelid"), "baddie_norun" )
    sharkboy:setHostile()
    sharkboy:setHilight()
 

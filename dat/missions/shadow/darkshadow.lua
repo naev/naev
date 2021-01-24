@@ -216,7 +216,7 @@ end
 -- Enter hook
 function enter()
     if system.cur() == seirsys then
-        seiryuu = pilot.add("Seiryuu", nil, vec2.new(300, 300) + seirplanet:pos())[1]
+        seiryuu = pilot.add("Seiryuu", vec2.new(300, 300) + seirplanet:pos())[1]
         seiryuu:setInvincible(true)
         seiryuu:control()
         if stage == 1 or stage == 6 then
@@ -235,7 +235,7 @@ function enter()
         pilot.toggleSpawn(false)
         player.allowLand(false, _("Landing permission denied. Our docking clamps are currently undergoing maintenance."))
         -- Meet Joe, our informant.
-        joe = pilot.add("Four Winds Vendetta", nil, vec2.new(-500, -4000))[1]
+        joe = pilot.add("Four Winds Vendetta", vec2.new(-500, -4000))[1]
         joe:control()
         joe:rename(_("Four Winds Informant"))
         joe:setHilight(true)
@@ -316,11 +316,11 @@ function spawnSquads(highlight)
     leaderdest[5] = vec2.new(1000, -1500)
 
     squads = {}
-    squads[1] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[1])
-    squads[2] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[2])
-    squads[3] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[3])
-    squads[4] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[4])
-    squads[5] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[5])
+    squads[1] = pilot.add("Four Winds Vendetta Quad", leaderstart[1])
+    squads[2] = pilot.add("Four Winds Vendetta Quad", leaderstart[2])
+    squads[3] = pilot.add("Four Winds Vendetta Quad", leaderstart[3])
+    squads[4] = pilot.add("Four Winds Vendetta Quad", leaderstart[4])
+    squads[5] = pilot.add("Four Winds Vendetta Quad", leaderstart[5])
 
     for i, squad in ipairs(squads) do
         for j, k in ipairs(squad) do
@@ -411,7 +411,7 @@ end
 
 -- Spawns the Genbu
 function spawnGenbu(sys)
-    genbu = pilot.add("Genbu", nil, sys)[1]
+    genbu = pilot.add("Genbu", sys)[1]
     genbu:rmOutfit("all")
     genbu:addOutfit("Turbolaser", 3)
     genbu:addOutfit("Cheater's Ragnarok Beam", 3) -- You can't win. Seriously.
@@ -449,7 +449,7 @@ end
 
 -- Spawns a wing of Lancelots that intercept the player.
 function spawnInterceptors()
-    inters = pilot.add("Four Winds Lancelot Trio", nil, genbu:pos())
+    inters = pilot.add("Four Winds Lancelot Trio", genbu:pos())
     for _, j in ipairs(inters) do
         j:rmOutfit("all")
         j:addOutfit("Cheater's Laser Cannon", 4) -- Equip these fellas with unfair weaponry

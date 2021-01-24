@@ -163,7 +163,7 @@ end
 
 
 function drone_create( pos )
-   local d = pilot.addRaw( "Za'lek Scout Drone", "zalek", pos, fzalek )
+   local d = pilot.addRaw( "Za'lek Scout Drone", fzalek, pos, "zalek" )
    d:control()
    d:brake()
    hook.pilot( d, "death", "drone_death" )
@@ -247,7 +247,7 @@ function reinforcements_jumpin ()
       "Za'lek Demon",
    }
    for k,s in ipairs(ships) do
-      local p = pilot.addRaw( s, "zalek", system.get(jumpinsys), fzalek )
+      local p = pilot.addRaw( s, fzalek, system.get(jumpinsys), "zalek" )
       if drone2:exists() then
          p:setLeader( drone2 )
       end

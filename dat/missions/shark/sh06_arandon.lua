@@ -156,7 +156,7 @@ function wait_msg ()
 end
 
 function flf_people ()
-   pacifier = pilot.add( "FLF Pacifier", nil, system.get("Doeston") )[1]
+   pacifier = pilot.add( "FLF Pacifier", system.get("Doeston") )[1]
    pacifier:memory().aggressive = false
    pacifier:setFriendly( true )
    pacifier:setInvincible( true )

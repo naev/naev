@@ -261,14 +261,14 @@ function enter()
     if system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and shadowrun == 2 then
         pilot.clear()
         pilot.toggleSpawn(false)
-        pirates = pilot.add("Pirate Hyena Pack", "pirate", vec2.new(0,0))
+        pirates = pilot.add("Pirate Hyena Pack", vec2.new(0,0))
     elseif system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and shadowrun == 3 then
         pilot.clear()
         pilot.toggleSpawn(false)
-        pilot.add("Pirate Hyena Pack", "pirate", vec2.new(0,0))
-        pilot.add("Pirate Ancestor", "pirate", vec2.new(0,20))
-        pilot.add("Pirate Ancestor", "pirate", vec2.new(-20,0))
-        pilot.add("Pirate Ancestor", "pirate", vec2.new(0,-20))
+        pilot.add("Pirate Hyena Pack", vec2.new(0,0))
+        pilot.add("Pirate Ancestor", vec2.new(0,20))
+        pilot.add("Pirate Ancestor", vec2.new(-20,0))
+        pilot.add("Pirate Ancestor", vec2.new(0,-20))
     end
     
     -- Empire ships around planet
@@ -276,20 +276,20 @@ function enter()
         pilot.clear()
         pilot.toggleSpawn(false)
         planetpos = pnt:pos()
-        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(200,0))
-        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(130,130))
-        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(0,200))
-        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(-130,130))
-        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(-200,0))
-        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(-130,-130))
-        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(0,-200))
-        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(130,-130))
+        pilot.add("Empire Pacifier", planetpos + vec2.new(200,0), "empire_idle")
+        pilot.add("Empire Pacifier", planetpos + vec2.new(130,130), "empire_idle")
+        pilot.add("Empire Pacifier", planetpos + vec2.new(0,200), "empire_idle")
+        pilot.add("Empire Pacifier", planetpos + vec2.new(-130,130), "empire_idle")
+        pilot.add("Empire Pacifier", planetpos + vec2.new(-200,0), "empire_idle")
+        pilot.add("Empire Pacifier", planetpos + vec2.new(-130,-130), "empire_idle")
+        pilot.add("Empire Pacifier", planetpos + vec2.new(0,-200), "empire_idle")
+        pilot.add("Empire Pacifier", planetpos + vec2.new(130,-130), "empire_idle")
     end
 
     -- Handle the Seiryuu, the last stop on this mission
     if shadowrun >= 2 and system.cur() == sys2 then
         mypos = vec2.new(-1500, 600)
-        seiryuu = pilot.add( "Seiryuu", nil, mypos )[1]
+        seiryuu = pilot.add( "Seiryuu", mypos )[1]
 
         seiryuu:setActiveBoard(true)
         seiryuu:control()

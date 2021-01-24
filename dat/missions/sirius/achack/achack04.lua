@@ -203,7 +203,7 @@ end
 function jumpin()
    if system.cur() == destsys and stage == stages.killAssociates then
       bhfleet = {"Pirate Vendetta", "Pacifier", "Lancelot", "Hyena"}
-      bhfleet = addRawShips(bhfleet, "baddie_norun", vec2.new(-3000, -7000), "Achack_thugs")
+      bhfleet = addRawShips(1, bhfleet, "Achack_thugs", vec2.new(-3000, -7000), "baddie_norun")
       alive = #bhfleet
       for i, j in ipairs(bhfleet) do
          j:control()
@@ -225,7 +225,7 @@ end
 function enter()
    if stage == stages.finish then
       -- Remember, Harja will be with you. Always. Well, until the mission ends.
-      harja = addRawShips("Shark", "trader", enter_src, "Achack_sirius", 1)[1]
+      harja = addRawShips(1, "Shark", "Achack_sirius", enter_src, "trader")[1]
       harja:rename(_("Harja's Shark"))
       harja:control()
       harja:setInvincible(true)

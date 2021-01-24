@@ -128,7 +128,7 @@ function game_of_drones ()
    tk.msg(title[2], text[3]:format(t_pla[1]:name()))
    -- spawn drones 
 
-   t_drone = pilot.add("Za'lek Scout Drone", "trader",t_pla[1] )[1] -- prototype is a scout drone
+   t_drone = pilot.add("Za'lek Scout Drone", t_pla[1], "trader" )[1] -- prototype is a scout drone
    t_drone:addOutfit("Tricon Zephyr II Engine")
    -- add something so it is not insta-disabled with one shot?
    --t_drone:addOutfit("Tricon Zephyr II Engine")
@@ -237,7 +237,7 @@ end
 -- the drone behaves differently depending on through how many systems it has been chased so far
 function chase_of_drones ()
    tk.msg(title[3],text[10])
-   t_drone = pilot.add("Za'lek Scout Drone", "dummy",vec2.newP(rnd.rnd(0,system.cur():radius()/5),rnd.rnd(0,359)))[1] -- prototype is a scout drone
+   t_drone = pilot.add("Za'lek Scout Drone", vec2.newP(rnd.rnd(0,system.cur():radius()/5),rnd.rnd(0,359)), "dummy")[1] -- prototype is a scout drone
    t_drone:addOutfit("Tricon Zephyr II Engine")
    -- add something so it is not insta-disabled with one shot?
    t_drone:setFaction("Civilian")
@@ -389,13 +389,13 @@ function spawn_baddies(sp)
    -- has eventually to be trimmed
    -- so weird: ai does not work properly apparently? WTF is going on.. switching to dummy and switched from pilot.add to pilot.addRaw
    -- disabling some ships since this way it is really hard to win the mission
-   scom[1] = pilot.addRaw("Za'lek Light Drone","mercenary", sp, "Mercenary" )
-   scom[2] = pilot.addRaw("Za'lek Light Drone","mercenary", sp, "Mercenary" )
-   scom[3] = pilot.addRaw("Za'lek Heavy Drone","mercenary", sp, "Mercenary" )
-   scom[4] = pilot.addRaw("Za'lek Heavy Drone","mercenary", sp, "Mercenary" )
---   scom[5] = pilot.addRaw("Za'lek Heavy Drone","mercenary", sp, "Mercenary" )
---   scom[6] = pilot.addRaw("Za'lek Light Drone","mercenary", sp, "Mercenary" )
---   scom[7] = pilot.addRaw("Za'lek Light Drone","mercenary", sp, "Mercenary" )
+   scom[1] = pilot.addRaw("Za'lek Light Drone", "Mercenary", sp, "mercenary" )
+   scom[2] = pilot.addRaw("Za'lek Light Drone", "Mercenary", sp, "mercenary" )
+   scom[3] = pilot.addRaw("Za'lek Heavy Drone", "Mercenary", sp, "mercenary" )
+   scom[4] = pilot.addRaw("Za'lek Heavy Drone", "Mercenary", sp, "mercenary" )
+--   scom[5] = pilot.addRaw("Za'lek Heavy Drone", "Mercenary", sp, "mercenary" )
+--   scom[6] = pilot.addRaw("Za'lek Light Drone", "Mercenary", sp, "mercenary" )
+--   scom[7] = pilot.addRaw("Za'lek Light Drone", "Mercenary", sp, "mercenary" )
    for i=1,#scom do
      scom[i]:setHostile(false)
    end

@@ -143,7 +143,7 @@ function enter ()
          ro, s = planet.get( "Raglan Outpost" )
 
          -- Spawn Raglan Outpost ship
-         nf = pilot.add( "Raglan Outpost", nil, ro:pos() )
+         nf = pilot.add( "Raglan Outpost", ro:pos() )
          dv_base = nf[1]
          dv_base:rmOutfit( "all" )
          dv_base:rmOutfit( "cores" )
@@ -165,7 +165,7 @@ function enter ()
          local dv_ships = {
             "Dvaered Goddard", "Dvaered Big Patrol", "Dvaered Big Patrol",
             "Dvaered Home Guard", "Dvaered Ancestor", "Dvaered Ancestor"}
-         dv_fleet = addShips( dv_ships, "dvaered_norun", ro:pos(), 1 )
+         dv_fleet = addShips( 1, dv_ships, ro:pos(), "dvaered_norun" )
 
          for i, j in ipairs( dv_fleet ) do
             j:control()
@@ -176,8 +176,7 @@ function enter ()
          -- Spawn FLF ships
          local jmp, jmp2
          jmp, jpm2 = jump.get( "Haleb", "Theras" )
-         flf_fleet = addShips(
-            {"FLF Vendetta", "FLF Vendetta", "FLF Lancelot"}, nil, jmp:pos(), 4 )
+         flf_fleet = addShips( 4, {"FLF Vendetta", "FLF Vendetta", "FLF Lancelot"}, jmp:pos() )
 
          for i, j in ipairs( flf_fleet ) do
             j:control()
@@ -223,7 +222,7 @@ function timer_start ()
       local src = system.get( "Triap" )
       for i = 1, 16 do
          local choice = choices[ rnd.rnd( 1, #choices ) ]
-         local nf = pilot.add( choice, nil, src )
+         local nf = pilot.add( choice, src )
          civ_fleet[ #civ_fleet + 1 ] = nf[1]
       end
 
@@ -245,7 +244,7 @@ function timer_pirates ()
 
    local src = system.get( "Triap" )
 
-   pir_fleet = pilot.add( "Pirate Kestrel", nil, src )
+   pir_fleet = pilot.add( "Pirate Kestrel", src )
    pir_boss = pir_fleet[1]
    hook.pilot( pir_boss, "death", "pilot_death_kestrel" )
 
@@ -254,7 +253,7 @@ function timer_pirates ()
       "Pirate Vendetta", "Pirate Ancestor" }
    for i = 1, 9 do
       local choice = choices[ rnd.rnd( 1, #choices ) ]
-      local nf = pilot.add( choice, nil, src )
+      local nf = pilot.add( choice, src )
       pir_fleet[ #pir_fleet + 1 ] = nf[1]
    end
 

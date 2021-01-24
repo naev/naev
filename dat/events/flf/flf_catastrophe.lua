@@ -147,7 +147,7 @@ function takeoff ()
 
    ss, s = planet.get( "Sindbad" )
 
-   nf = pilot.add( "Sindbad", "flf_norun", ss:pos() )
+   nf = pilot.add( "Sindbad", ss:pos(), "flf_norun" )
    flf_base = nf[1]
    flf_base:rmOutfit( "all" )
    flf_base:rmOutfit( "cores" )
@@ -164,14 +164,14 @@ function takeoff ()
    shptypes = {
       "FLF Pacifier", "FLF Lancelot", "FLF Vendetta", "FLF Lancelot",
       "FLF Vendetta", "FLF Lancelot", "FLF Vendetta" }
-   flf_ships = addShips( shptypes, "flf_norun", ss:pos(), 5 )
+   flf_ships = addShips( 5, shptypes, ss:pos(), "flf_norun" )
    for i, j in ipairs( flf_ships ) do
       j:setVisible()
       j:memory( "aggressive", true )
    end
 
    -- Spawn Empire ships
-   emp_ships = addShips( emp_shptypes, "empire_norun", emp_srcsys )
+   emp_ships = addShips( 1, emp_shptypes, emp_srcsys, "empire_norun" )
    for i, j in ipairs( emp_ships ) do
       j:setHostile()
       j:setVisible()
@@ -188,7 +188,7 @@ function takeoff ()
       "Dvaered Phalanx", "Dvaered Ancestor", "Dvaered Ancestor",
       "Dvaered Ancestor", "Dvaered Vendetta", "Dvaered Vendetta",
       "Dvaered Vendetta", "Dvaered Vendetta" }
-   dv_ships = addShips( shptypes, "dvaered_norun", emp_srcsys )
+   dv_ships = addShips( 1, shptypes, emp_srcsys, "dvaered_norun" )
    for i, j in ipairs( dv_ships ) do
       j:setHostile()
       j:setVisible()
@@ -209,7 +209,7 @@ function pilot_death_emp( pilot, attacker, arg )
 
    if #emp_alive < emp_minsize or rnd.rnd() < 0.1 then
       emp_ships = emp_alive
-      local nf = addShips( emp_shptypes, "empire_norun", emp_srcsys )
+      local nf = addShips( 1, emp_shptypes, emp_srcsys, "empire_norun" )
       for i, j in ipairs( nf ) do
          j:setHostile()
          j:setVisible()

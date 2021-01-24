@@ -202,7 +202,7 @@ function enter()
       misn.finish(false)
    end
    
-   joanne = addRawShips("Sirius Fidelity", "sirius_norun", origin, "Achack_sirius")[1]
+   joanne = addRawShips(1, "Sirius Fidelity", "Achack_sirius", origin, "sirius_norun")[1]
    joanne:control()
    joanne:rename(_("Joanne"))
    joanne:rmOutfit("all")
@@ -245,7 +245,7 @@ end
 
 -- Sets up the ambush ships and trigger area.
 function ambushSet(ships, location)
-   ambush = addRawShips(ships, "baddie_norun", location, "Achack_thugs")
+   ambush = addRawShips(1, ships, "Achack_thugs", location, "baddie_norun")
    for _, j in ipairs(ambush) do
       j:control()
    end

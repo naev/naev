@@ -159,7 +159,7 @@ function enter_system()
       if this_system == system.cur() and defender == true then
          defend_system()
       elseif victory == true and defender == true then
-         pilot.add( "Trader Koala", "def", player.pos(), false)
+         pilot.add( "Trader Koala", player.pos(), "def" )
          hook.timer(1000, "ship_enters")
       elseif defender == true then
          player.msg( comm[8])
@@ -191,19 +191,19 @@ function defend_system()
       end
 
   -- Create a fleet of raiding pirates
-      raider_fleet = pilot.add( "DTS Raiders", "def", raider_position )
+      raider_fleet = pilot.add( "DTS Raiders", raider_position, "def" )
       for k,v in ipairs( raider_fleet) do
          v:setHostile()
       end
 
   -- And a fleet of defending independents
-      defense_fleet = pilot.add( "DTS Defense Fleet", "def", defense_position )
-      cadet1 = pilot.add( "Empire Lancelot", "def", defense_position )[1]
+      defense_fleet = pilot.add( "DTS Defense Fleet", defense_position, "def" )
+      cadet1 = pilot.add( "Empire Lancelot", defense_position, "def" )[1]
       do 
          cadet1_alive = true
          hook.pilot( cadet1, "death", "cadet1_dead")
       end
-      cadet2 = pilot.add( "Empire Lancelot", "def", defense_position )[1]
+      cadet2 = pilot.add( "Empire Lancelot", defense_position, "def" )[1]
       do
          cadet2_alive = true
          hook.pilot( cadet2, "death", "cadet2_dead")
@@ -261,7 +261,7 @@ end
 function second_wave_attacks()
 
       casualties = 0
-      second_wave = pilot.add( "Pirate Hyena Pack", "def", player.pos(), true)
+      second_wave = pilot.add( "Pirate Hyena Pack", player.pos(), "def" )
       for k, v in ipairs( second_wave) do
          v:setFaction( "Raider")
          v:setHostile()

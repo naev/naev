@@ -162,7 +162,7 @@ end
 function takeoff()
    if system.cur() == delivSys and droppedoff then
 
-      willie = pilot.add( "Trader Mule", "trader", player.pilot():pos() + vec2.new(-500,-500))[1]
+      willie = pilot.add( "Trader Mule", player.pilot():pos() + vec2.new(-500,-500))[1]
       willie:rename(_("Ol Bess"))
       willie:setFaction("Civilian")
       willie:setFriendly()

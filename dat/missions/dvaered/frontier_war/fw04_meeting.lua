@@ -345,29 +345,29 @@ end
 -- Spawn the Beta squadrons
 function spawnBeta()
    beta = {}
-   beta[1] = pilot.add( "Dvaered Vendetta", nil, targpla )[1]
+   beta[1] = pilot.add( "Dvaered Vendetta", targpla )[1]
    beta[1]:rename("B-Storks-4")
-   beta[2] = pilot.add( "Dvaered Vendetta", nil, targpla )[1]
+   beta[2] = pilot.add( "Dvaered Vendetta", targpla )[1]
    beta[2]:rename("B-Storks-3")
-   beta[3] = pilot.add( "Dvaered Vendetta", nil, targpla )[1]
+   beta[3] = pilot.add( "Dvaered Vendetta", targpla )[1]
    beta[3]:rename("B-Storks-2")
-   beta[4] = pilot.add( "Dvaered Vendetta", nil, targpla )[1]
+   beta[4] = pilot.add( "Dvaered Vendetta", targpla )[1]
    beta[4]:rename("B-Storks-Lead")
-   beta[5] = pilot.add( "Dvaered Ancestor", nil, targpla )[1]
+   beta[5] = pilot.add( "Dvaered Ancestor", targpla )[1]
    beta[5]:rename("B-Storks-7")
-   beta[6] = pilot.add( "Dvaered Ancestor", nil, targpla )[1]
+   beta[6] = pilot.add( "Dvaered Ancestor", targpla )[1]
    beta[6]:rename("B-Storks-6")
-   beta[7] = pilot.add( "Dvaered Ancestor", nil, targpla )[1]
+   beta[7] = pilot.add( "Dvaered Ancestor", targpla )[1]
    beta[7]:rename("B-Storks-5")
-   beta[8] = pilot.add( "Dvaered Phalanx", nil, targpla )[1]
+   beta[8] = pilot.add( "Dvaered Phalanx", targpla )[1]
    beta[8]:rename("B-Hammer-4")
-   beta[9] = pilot.add( "Dvaered Phalanx", nil, targpla )[1]
+   beta[9] = pilot.add( "Dvaered Phalanx", targpla )[1]
    beta[9]:rename("B-Hammer-4")
-   beta[10] = pilot.add( "Dvaered Phalanx", nil, targpla )[1]
+   beta[10] = pilot.add( "Dvaered Phalanx", targpla )[1]
    beta[10]:rename("B-Hammer-3")
-   beta[11] = pilot.add( "Dvaered Vigilance", nil, targpla )[1]
+   beta[11] = pilot.add( "Dvaered Vigilance", targpla )[1]
    beta[11]:rename("B-Hammer-2")
-   beta[12] = pilot.add( "Dvaered Goddard", nil, targpla )[1]
+   beta[12] = pilot.add( "Dvaered Goddard", targpla )[1]
    beta[12]:rename("B-Hammer-Lead")
 
    Bidlehooks = {}
@@ -382,15 +382,15 @@ end
 -- Spawn the alpha squadron
 function spawnAlpha()
    alpha = {}
-   alpha[1] = pilot.addRaw( "Hyena", "baddie", targpla, "Dvaered" )
-   alpha[1]:rename("Captain Leblanc")
-   alpha[2] = pilot.addRaw( "Hyena", "baddie", destpla, "Dvaered" )
+   alpha[1] = pilot.addRaw( "Hyena", "Dvaered", targpla, "baddie" )
+   alpha[1]:rename("Captain Leblanc")           
+   alpha[2] = pilot.addRaw( "Hyena", "Dvaered", destpla, "baddie" )
    alpha[2]:rename("Lieutenant Strafer")
-   alpha[3] = pilot.addRaw( "Hyena", "baddie", targpla, "Dvaered" )
-   alpha[3]:rename("A-NightClaws-3")
-   alpha[4] = pilot.addRaw( "Hyena", "baddie", targpla, "Dvaered" )
-   alpha[4]:rename("A-NightClaws-4")
-   alpha[5] = pilot.addRaw( "Hyena", "baddie", destpla, "Dvaered" )
+   alpha[3] = pilot.addRaw( "Hyena", "Dvaered", targpla, "baddie" )
+   alpha[3]:rename("A-NightClaws-3")            
+   alpha[4] = pilot.addRaw( "Hyena", "Dvaered", targpla, "baddie" )
+   alpha[4]:rename("A-NightClaws-4")            
+   alpha[5] = pilot.addRaw( "Hyena", "Dvaered", destpla, "baddie" )
    alpha[5]:rename("A-NightClaws-5")
 
    Aidlehooks = {}
@@ -456,7 +456,7 @@ end
 
 -- Spawn one warlord
 function spawn1Wrlrd( origin )
-   wrlrds[noWrlrd] = pilot.addRaw( "Dvaered Goddard", "baddie", origin, "Warlords" )
+   wrlrds[noWrlrd] = pilot.addRaw( "Dvaered Goddard", "Warlords", origin, "baddie" )
    wrlrds[noWrlrd]:rename( lords[noWrlrd] )
    wrlrds[noWrlrd]:control()
 
@@ -485,7 +485,7 @@ function spawnControl()
    types = { "Civilian Gawain", "Civilian Llama", "Civilian Schroedinger", "Civilian Hyena" }
    theTyp = types[ rnd.rnd(1,#types) ]
 
-   controls[noCtrl] = pilot.add( theTyp, nil, origin )[1]
+   controls[noCtrl] = pilot.add( theTyp, origin )[1]
    controls[noCtrl]:control()
    controls[noCtrl]:land(targpla)
 
@@ -591,7 +591,7 @@ end
 
 -- Spawn Hamelsen in a hyena
 function spawnHam()
-   hamelsen = pilot.add( "Civilian Hyena", nil, system.get("Beeklo") )[1]
+   hamelsen = pilot.add( "Civilian Hyena", system.get("Beeklo") )[1]
    equipHyena( hamelsen )
    hamelsen:control()
    hamelsen:land(targpla)
@@ -601,7 +601,7 @@ function spawnHam()
    hook.timer(500, "proximity", {location = targpos, radius = 10000, funcname = ("incomingHamelsen"), focus = hamelsen})
 
    -- Hamelsen's partner, whose purpose is to make a fight occur
-   jules = pilot.add( "Civilian Hyena", nil, system.get("Beeklo") )[1]
+   jules = pilot.add( "Civilian Hyena", system.get("Beeklo") )[1]
    equipHyena( jules )
    jules:control()
    jules:follow( hamelsen )
@@ -692,13 +692,13 @@ function StraferNspy()
 
    -- First, teleport Strafer far away from any backup
    alpha[2]:rm()
-   alpha[2] = pilot.addRaw( "Hyena", "baddie", strpos, "DHC" )
+   alpha[2] = pilot.addRaw( "Hyena", "DHC", strpos, "baddie" )
    alpha[2]:rename("Lieutenant Strafer")
    alpha[2]:setVisplayer()
    alpha[2]:control()
 
    -- Then put the fleeing spy
-   spy = pilot.addRaw( "Schroedinger", "baddie", spypos, "Warlords" )
+   spy = pilot.addRaw( "Schroedinger", "Warlords", spypos, "baddie" )
    spy:setVisplayer()
    spy:control()
    spy:hyperspace( system.get("Gremlin") )
@@ -726,7 +726,7 @@ function deathOfStrafer()
 
    attackers = {}
    for i = 1, 10 do
-      attackers[i] = pilot.addRaw( "Hyena", "baddie", system.get("Gremlin"), "Warlords" )
+      attackers[i] = pilot.addRaw( "Hyena", "Warlords", system.get("Gremlin"), "baddie" )
       attackers[i]:control()
       attackers[i]:attack( alpha[2] )
    end
@@ -759,9 +759,9 @@ function spawnKillers()
    misn.osdCreate( osd_title, {osd_text5} )
 
    killers = {}
-   killers[1] = pilot.addRaw( "Hyena", "baddie_norun", haltpla, "Warlords" )
-   killers[2] = pilot.addRaw( "Shark", "baddie_norun", haltpla, "Warlords" )
-   killers[3] = pilot.addRaw( "Lancelot", "baddie_norun", haltpla, "Warlords" )
+   killers[1] = pilot.addRaw( "Hyena", "Warlords", haltpla, "baddie_norun" )
+   killers[2] = pilot.addRaw( "Shark", "Warlords", haltpla, "baddie_norun" )
+   killers[3] = pilot.addRaw( "Lancelot", "Warlords", haltpla, "baddie_norun" )
 
    deadkillers = 0
    for i = 1, #killers do

@@ -1,17 +1,17 @@
 --[[
 -- @brief Wrapper for pilot.add() that can operate on tables of fleets.
 --
--- @usage pilots = addShips( "Pirate Hyena", "pirate", nil, 2 ) -- Creates two Pirate Hyenas with pirate AIs.
--- @usage pilots = addShips( { "Trader Rhino", "Trader Koala" }, nil, nil, 2 ) -- Creates a convoy of four trader ships with default AIs.
+-- @usage pilots = addShips( 2, "Pirate Hyena", nil, "pirate" ) -- Creates two Pirate Hyenas with pirate AIs. (Last 2 args optional.)
+-- @usage pilots = addShips( 2, { "Trader Rhino", "Trader Koala" }, nil, nil ) -- Creates a convoy of four trader ships with default AIs. (Last 2 args optional.)
 --
---    @luaparam ship Fleet to add.
---    @luaparam ai AI to override the default with.
---    @luaparam location Location to jump in from, take off from, or appear at.
 --    @luaparam count Number of times to repeat the pattern.
+--    @luaparam ship Fleet to add.
+--    @luaparam location Location to jump in from, take off from, or appear at.
+--    @luaparam ai AI to override the default with.
 --    @luareturn Table of created pilots.
--- @luafunc addShips( fleet, ai, location, count )
+-- @luafunc addShips
 --]]
-function addShips( ship, ai, location, count )
+function addShips( count, ship, location, ai )
    local ais = {}
    local locations = {}
    local out = {}
@@ -30,7 +30,7 @@ function addShips( ship, ai, location, count )
    end
    for i=1,count do -- Repeat the pattern as necessary.
       for k,v in ipairs(ship) do
-         out = _mergeTables( out, pilot.add( ship[k], ais[k], locations[k] ) )
+         out = _mergeTables( out, pilot.add( ship[k], locations[k], ais[k] ) )
       end
    end
    if #out > 1 then
@@ -43,18 +43,18 @@ end
 --[[
 -- @brief Wrapper for pilot.addRaw() that can operate on tables of ships.
 --
--- @usage pilots = addRawShips( "Hyena", "pirate", nil, "Pirate" ) -- Creates a facsimile of a Pirate Hyena.
--- @usage pilots = addRawShips( { "Rhino", "Koala" }, nil, nil, "Trader", 2 ) -- Creates four Trader ships.
+-- @usage pilots = addRawShips( 1, "Hyena", "Pirate", nil, "pirate" ) -- Creates a facsimile of a Pirate Hyena.
+-- @usage pilots = addRawShips( 2, { "Rhino", "Koala" }, "Trader" ) -- Creates four Trader ships.
 --
---    @luaparam ship Ship to add.
---    @luaparam ai AI to give the pilot.
---    @luaparam location Location to jump in from, take off from, or appear at.
---    @luaparam faction Faction to give the pilot.
 --    @luaparam count Number of times to repeat the pattern.
+--    @luaparam ship Ship to add.
+--    @luaparam faction Faction to give the pilot.
+--    @luaparam location Location to jump in from, take off from, or appear at.
+--    @luaparam ai AI to give the pilot.
 --    @luareturn Table of created pilots.
--- @luafunc addRawShips( ship, ai, location, faction, count )
+-- @luafunc addRawShips
 --]]
-function addRawShips( ship, ai, location, faction, count )
+function addRawShips( count, ship, faction, location, ai )
    local ais = {}
    local locations = {}
    local factions = {}
@@ -79,7 +79,7 @@ function addRawShips( ship, ai, location, faction, count )
    end
    for i=1,count do -- Repeat the pattern as necessary.
       for k,v in ipairs(ship) do
-         out[k+(i-1)*#ship] = pilot.addRaw( ship[k], ais[k], locations[k], factions[k] )
+         out[k+(i-1)*#ship] = pilot.addRaw( ship[k], factions[k], locations[k], ais[k] )
       end
    end
    if #out > 1 then

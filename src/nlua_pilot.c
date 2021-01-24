@@ -482,7 +482,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
          return 0;
       }
       /* Get faction from string or number. */
-      lf = luaL_validfaction(L,4);
+      lf = luaL_validfaction(L,3);
    }
    else {
       flt = fleet_get( fltname );
@@ -493,20 +493,14 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
       lf = flt->faction;
    }
 
-   /* Parse second argument - Fleet AI Override */
-   if ((lua_gettop(L) < 2) || lua_isnil(L,2))
-      fltai = NULL;
-   else
-      fltai = luaL_checkstring(L,2);
-
-   /* Handle third argument. */
-   if (lua_isvector(L,3)) {
-      vp = *lua_tovector(L,3);
+   /* Handle position/origin argument. */
+   if (lua_isvector(L,2+from_ship)) {
+      vp = *lua_tovector(L,2+from_ship);
       a = RNGF() * 2.*M_PI;
       vectnull( &vv );
    }
-   else if (lua_issystem(L,3)) {
-      ss = system_getIndex( lua_tosystem(L,3) );
+   else if (lua_issystem(L,2+from_ship)) {
+      ss = system_getIndex( lua_tosystem(L,2+from_ship) );
       for (i=0; i<cur_system->njumps; i++) {
          if ((cur_system->jumps[i].target == ss)
                && !jp_isFlag( cur_system->jumps[i].returnJump, JP_EXITONLY )) {
@@ -525,8 +519,8 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
                   fltname, ss->name, cur_system->name );
       }
    }
-   else if (lua_isplanet(L,3)) {
-      planet  = luaL_validplanet(L,3);
+   else if (lua_isplanet(L,2+from_ship)) {
+      planet  = luaL_validplanet(L,2+from_ship);
       pilot_setFlagRaw( flags, PILOT_TAKEOFF );
       a = RNGF() * 2. * M_PI;
       r = RNGF() * planet->radius;
@@ -540,7 +534,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    else {
       /* Check if we should ignore the strict rules. */
       ignore_rules = 0;
-      if (lua_isboolean(L,3) && lua_toboolean(L,3))
+      if (lua_isboolean(L,2+from_ship) && lua_toboolean(L,2+from_ship))
          ignore_rules = 1;
 
       /* Choose the spawn point and act in consequence.*/
@@ -561,6 +555,12 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
          vectnull( &vv );
       }
    }
+
+   /* Parse final argument - Fleet AI Override */
+   if ((lua_gettop(L) < 3+from_ship) || lua_isnil(L,3+from_ship))
+      fltai = NULL;
+   else
+      fltai = luaL_checkstring(L,3+from_ship);
 
    /* Set up velocities and such. */
    if (jump != NULL) {
@@ -623,15 +623,15 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
  *  - true: Acts like nil, but does not avoid jump points with no presence <br/>
  *
  * @usage p = pilot.add( "Pirate Hyena" ) -- Just adds the pilot (will jump in or take off).
- * @usage p = pilot.add( "Trader Llama", "dummy" ) -- Overrides AI with dummy ai.
- * @usage p = pilot.add( "Sml Trader Convoy", nil, vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
- * @usage p = pilot.add( "Empire Pacifier", nil, system.get("Goddard") ) -- Have the pilot jump in from the system.
- * @usage p = pilot.add( "Goddard Goddard", nil, planet.get("Zhiru") ) -- Have the pilot take off from a planet.
+ * @usage p = pilot.add( "Trader Llama", nil, "dummy" ) -- Overrides AI with dummy ai.
+ * @usage p = pilot.add( "Sml Trader Convoy", vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
+ * @usage p = pilot.add( "Empire Pacifier", system.get("Goddard") ) -- Have the pilot jump in from the system.
+ * @usage p = pilot.add( "Goddard Goddard", planet.get("Zhiru") ) -- Have the pilot take off from a planet.
  *
  *    @luatparam string fleetname Name of the fleet to add.
- *    @luatparam[opt] string|nil ai If set will override the standard fleet AI.  nil means use default.
  *    @luatparam System|Planet param Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
  *              a planet it'll try to take off from it.
+ *    @luatparam[opt] string|nil ai If set will override the standard fleet AI.  nil means use default.
  *    @luatreturn {Pilot,...} Table populated with all the pilots created.  The keys are ordered numbers.
  * @luafunc add
  */
@@ -645,12 +645,12 @@ static int pilotL_addFleet( lua_State *L )
 /**
  * @brief Adds a ship with an AI and faction to the system (instead of a predefined fleet).
  *
- * @usage p = pilot.addRaw( "Empire Shark", "empire", nil, "Empire" ) -- Creates a pilot analogous to the Empire Shark fleet.
+ * @usage p = pilot.addRaw( "Empire Shark", nil, "Empire", "empire" ) -- Creates a pilot analogous to the Empire Shark fleet.
  *
  *    @luatparam string shipname Name of the ship to add.
- *    @luatparam string|nil ai AI to give the pilot.
- *    @luatparam System|Planet|Vec2 param Position to create the pilot at. See pilot.add for further information.
  *    @luatparam Faction faction Faction to give the pilot.
+ *    @luatparam System|Planet|Vec2 param Position to create the pilot at. See pilot.add for further information.
+ *    @luatparam string|nil ai AI to give the pilot.
  *    @luatreturn Pilot The created pilot.
  * @luafunc addRaw
  */

@@ -140,7 +140,7 @@ end
 
 
 function spotdrone()
-   p = pilot.add("Collective Drone", "scout", vec2.new(8000, -20000))[1]
+   p = pilot.add("Collective Drone", vec2.new(8000, -20000), "scout")[1]
    p:control()
    p:setHilight(true)
    idle()

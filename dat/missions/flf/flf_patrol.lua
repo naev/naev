@@ -249,7 +249,7 @@ function patrol_spawnDV( n, boss )
          local shipnames = { "Dvaered Vendetta", "Dvaered Ancestor" }
          shipname = shipnames[ rnd.rnd( 1, #shipnames ) ]
       end
-      local pstk = pilot.add( shipname, "dvaered_norun", vec2.new( x, y ) )
+      local pstk = pilot.add( shipname, vec2.new( x, y ), "dvaered_norun" )
       local p = pstk[1]
       hook.pilot( p, "death", "pilot_death_dv" )
       p:setHostile()
@@ -265,8 +265,8 @@ end
 function patrol_spawnFLF( n, param, comm )
    if rnd.rnd() < 0.05 then n = n - 1 end
    local lancelots = rnd.rnd( n )
-   fleetFLF = addShips( "FLF Lancelot", "flf_norun", param, lancelots )
-   local vendetta_fleet = addShips( "FLF Vendetta", "flf_norun", param, n - lancelots )
+   fleetFLF = addShips( lancelots, "FLF Lancelot", param, "flf_norun" )
+   local vendetta_fleet = addShips( n - lancelots, "FLF Vendetta", param, "flf_norun" )
    for i, j in ipairs( vendetta_fleet ) do
       fleetFLF[ #fleetFLF + 1 ] = j
    end

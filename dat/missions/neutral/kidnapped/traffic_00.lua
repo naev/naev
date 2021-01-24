@@ -188,7 +188,7 @@ end
 function enter()
 
   if eavesdropped1 and eavesdropped2 and system.cur() == system.get(sysname2) and (not rescued) then
-    kidnappers = pilot.add("Trader Koala", nil, planet.get("Zhiru"):pos() + vec2.new(-800,-800))[1]
+    kidnappers = pilot.add("Trader Koala", planet.get("Zhiru"):pos() + vec2.new(-800,-800))[1]
     kidnappers:rename(_("Progeny"))
     kidnappers:setFaction("Kidnappers")
     kidnappers:setHilight(true)
@@ -218,9 +218,9 @@ function attackedkidnappers()
   end
   
   if needpirates then
-    bodyguard1 = pilot.add("Pirate Hyena", "pirate", vec2.new(800, 700))[1]
-    bodyguard2 = pilot.add("Pirate Hyena", "pirate", vec2.new(-900, 600))[1]
-    bodyguard3 = pilot.add("Pirate Hyena", "pirate", vec2.new(700, -500))[1]
+    bodyguard1 = pilot.add("Pirate Hyena", vec2.new(800, 700))[1]
+    bodyguard2 = pilot.add("Pirate Hyena", vec2.new(-900, 600))[1]
+    bodyguard3 = pilot.add("Pirate Hyena", vec2.new(700, -500))[1]
     bodyguard1:control()
     bodyguard2:control()
     bodyguard3:control()

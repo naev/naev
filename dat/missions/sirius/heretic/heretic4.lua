@@ -98,14 +98,14 @@ function accept()
 end
 
 function takeoff()
-   pilot.add("Sirius Assault Force",sirius,vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450))) --left over fleets from the prior mission.
-   pilot.add("Sirius Assault Force",sirius,vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)))
-   pilot.add("Sirius Assault Force",sirius,vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)))
-   pilot.add("Nasin Sml Civilian",nil,homeasset) --other escapees.
-   pilot.add("Nasin Sml Civilian",nil,homeasset)
-   pilot.add("Nasin Sml Civilian",nil,homeasset)
-   pilot.add("Nasin Sml Attack Fleet",nil,homeasset) --these are trying to help.
-   pilot.add("Nasin Sml Attack Fleet",nil,homeasset)
+   pilot.add("Sirius Assault Force", vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450))) --left over fleets from the prior mission.
+   pilot.add("Sirius Assault Force", vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)))
+   pilot.add("Sirius Assault Force", vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)))
+   pilot.add("Nasin Sml Civilian", homeasset) --other escapees.
+   pilot.add("Nasin Sml Civilian", homeasset)
+   pilot.add("Nasin Sml Civilian", homeasset)
+   pilot.add("Nasin Sml Attack Fleet", homeasset) --these are trying to help.
+   pilot.add("Nasin Sml Attack Fleet", homeasset)
 end
 
 function lastsys()
@@ -128,15 +128,15 @@ function attacked() --several systems where the Sirius have 'strategically place
    }
    for i,sys in ipairs(dangersystems) do
       if system.cur() == sys then
-         pilot.add("Sirius Assault Force",sirius,vec2.new(rnd.rnd(-300,300),rnd.rnd(-300,300)))
+         pilot.add("Sirius Assault Force", vec2.new(rnd.rnd(-300,300),rnd.rnd(-300,300)))
       end
    end
    local chance_help,chance_civvie = rnd.rnd(1,3),rnd.rnd(1,3) --attack fleet and civvies are meant as a distraction to help the player.
    if chance_help == 1 then
-      pilot.add("Nasin Sml Attack Fleet",nil,last_sys_in)
+      pilot.add("Nasin Sml Attack Fleet", last_sys_in)
    end
    for i = 1,chance_civvie do
-      pilot.add("Nasin Sml Civilian",nil,last_sys_in)
+      pilot.add("Nasin Sml Civilian", last_sys_in)
    end
 end
 

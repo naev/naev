@@ -143,7 +143,7 @@ function theFunBegins()
       end
    end
    --summon a preacher from the jump point and highlight him and take control and focus on him
-   preacher=pilot.addRaw("Sirius Reverence", "sirius_norun", curr, "Sirius")
+   preacher=pilot.addRaw("Sirius Reverence", "Sirius", curr, "sirius_norun")
    preacher:setHilight()
    preacher:setVisplayer()
    preacher:control()
@@ -174,7 +174,7 @@ function theFunBegins()
       followers[num] = followerShips[rnd.rnd(1, #followerShips)] -- Pick a follower ship at random.
    end
 
-   followers = addRawShips(followers, "sirius_norun", curr, "Sirius") -- The table now contains pilots, not ship names.
+   followers = addRawShips(1, followers, "Sirius", curr, "sirius_norun") -- The table now contains pilots, not ship names.
    for k,j in ipairs(followers) do
       j:rename( string.format( _("Converted %s"), j:name() ))
    end
@@ -191,7 +191,7 @@ function theFunBegins()
       sirianFollowerList[num] = sirianFollowers[rnd.rnd(1, #sirianFollowers)] -- Pick a follower ship at random.
    end
 
-   sirianFollowers = addRawShips(sirianFollowerList, "sirius_norun", curr, "Sirius") -- The table now contains pilots, not ship names.
+   sirianFollowers = addRawShips(1, sirianFollowerList, "Sirius", curr, "sirius_norun") -- The table now contains pilots, not ship names.
 
    for _, j in ipairs(sirianFollowers) do
       followers[#followers + 1] = j
@@ -259,7 +259,7 @@ function pirateSpawn()
    local shiptype={"Pirate Shark","Pirate Vendetta"}
    local thepilot
    for num=1,numships,1 do
-      thepilot = pilot.add(shiptype[rnd.rnd(1,#shiptype)], nil, curr)[1]
+      thepilot = pilot.add(shiptype[rnd.rnd(1,#shiptype)], curr)[1]
       if num==curiousNumber then
          thepilot:broadcast(whatHappened[rnd.rnd(1,#whatHappened)],true)
          camera.set(thepilot,true)

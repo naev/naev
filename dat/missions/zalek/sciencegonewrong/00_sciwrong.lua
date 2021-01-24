@@ -215,11 +215,11 @@ function call_the_police ()
 end
 
 function spwn_police ()
-      lance1 = pilot.add("Empire Lancelot", "empire", system.get("Provectus Nova"), "Empire")
+      lance1 = pilot.add("Empire Lancelot", system.get("Provectus Nova"))
       lance1 = lance1[1]
-      lance2 = pilot.add("Empire Lancelot", "empire", system.get("Provectus Nova"), "Empire")
+      lance2 = pilot.add("Empire Lancelot", system.get("Provectus Nova"))
       lance2 = lance2[1]
-      adm1 = pilot.add("Empire Admonisher", "empire", system.get("Provectus Nova"), "Empire")
+      adm1 = pilot.add("Empire Admonisher", system.get("Provectus Nova"))
       adm1 = adm1[1]
       -- Re-outfit the ships to use disable weapons. Make a proper function for that.
       lance1:rmOutfit("all")
