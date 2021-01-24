@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-23 23:07-0500\n"
-"PO-Revision-Date: 2021-01-23 00:11+0000\n"
+"PO-Revision-Date: 2021-01-24 22:32+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -20841,7 +20841,7 @@ msgid "Requesting assistance. We are under attack!"
 msgstr "Žádost o pomoc. Jsme pod útokem!"
 
 #: dat/ai/distress_behaviour.lua:16
-#, fuzzy, lua-format
+#, lua-format
 msgid "%s vessel under attack! Requesting help!"
 msgstr "%s plavidlo napadeno! Žádám o pomoc!"
 
@@ -20910,7 +20910,6 @@ msgid "\"Bribery carries a harsh penalty.\""
 msgstr "„Podplácení je přísně trestáno.“"
 
 #: dat/ai/dvaered.lua:24
-#, fuzzy
 msgid "\"House Dvaered does not lower itself to common scum.\""
 msgstr "„Rod Dvaered se nesnižuje k obyčejné spodině.“"
 
@@ -20920,7 +20919,7 @@ msgid "\"You are not worthy of my attention.\""
 msgstr "„Nejsi hoden mé pozornosti.“"
 
 #: dat/ai/dvaered.lua:37 dat/ai/frontier_police.lua:37
-#, fuzzy, lua-format
+#, lua-format
 msgid "\"For you I could make an exception for %s.\""
 msgstr "„Pro tebe bych mohl udělat výjimku za %s.“"
 
@@ -21124,9 +21123,8 @@ msgstr "„Nemohu ti dát palivo.“"
 #. Only 50% of actually taunting.
 #. some taunts
 #: dat/ai/flf.lua:61
-#, fuzzy
 msgid "For the Frontier!"
-msgstr "Za Frontier!"
+msgstr "Za Pohraničí!"
 
 #: dat/ai/flf.lua:62
 msgid "You'll make great target practice!"
@@ -21145,9 +21143,8 @@ msgid "I've killed scum far more dangerous than you."
 msgstr "Zabil jsem spodinu mnohem nebezpečnější než jsi ty."
 
 #: dat/ai/flf.lua:70
-#, fuzzy
 msgid "Death to the enemies of the Frontier!"
-msgstr "Smrt nepřátelům Frontier!"
+msgstr "Smrt nepřátelům Pohraničí!"
 
 #: dat/ai/frontier_police.lua:24
 msgid "\"The Frontier does not lower itself to common scum.\""
@@ -22305,7 +22302,6 @@ msgid "Sorry, but I'm a private tracker."
 msgstr "Promiň, ale jsem soukromý sledovač."
 
 #: dat/ai/pirate.lua:126
-#, fuzzy
 msgid "You think that you can take me on?"
 msgstr "Myslíš si, že si mě můžeš vzít?"
 
@@ -22996,7 +22992,6 @@ msgid "Dvaered forces engaged in combat with small terrorist group"
 msgstr "Dvaeredské síly zapojené do boje s malou teroristickou skupinou"
 
 #: dat/events/cinematic/DvdFLFbattle.lua:32
-#, fuzzy
 msgid ""
 "In what the Dvaered call a 'Mighty victory', a Dvaered force was attacked "
 "and damaged by a small group of underequipped and unorganized FLF, in the "
@@ -23007,9 +23002,9 @@ msgid ""
 msgstr ""
 "V tom, co Dvaeredové nazývají „mocné vítězství“, byla Dvaeredská síla "
 "napadena a poškozena malou nedostatečně vybavenou a neorganizovanou skupinou "
-"FLF v systému Tuoladis. Dvaeredům se podařilo přijít o mnoho lodí a posádek "
+"POF v systému Tuoladis. Dvaeredům se podařilo přijít o mnoho lodí a posádek "
 "v hodnotě desítek milionů kreditů oproti tomu malý gang lodí a vybavení "
-"nevalné hodnoty a relativní vítězství FLF je jen posílí, což povede k dalším "
+"nevalné hodnoty a relativní vítězství POF je jen posílí, což povede k dalším "
 "vnitřním sporům a násilí."
 
 #: dat/events/cinematic/DvdFLFbattle.lua:38
@@ -23101,26 +23096,7 @@ msgid "You are needed for a special job"
 msgstr "Je tě potřeba pro speciální práci"
 
 #: dat/events/dvaered/fwA_treason.lua:31
-#, fuzzy, lua-format
-#| msgid ""
-#| "The pilot of the fighter uses the encrypted channel: \"I have finally "
-#| "found you, %s. Better late than never. My employers want to congratulate "
-#| "you about how effective you have been with Lord Battleaddict. I am afraid "
-#| "there won't be many people to mourn him.\" You answer that you don't know "
-#| "what it is about, and that as far as you know, Lord Battleaddict has been "
-#| "killed in a loyal duel by the General Klank. The interlocutor laughs "
-#| "\"You're playing your part, eh? I can understand you, after all, they pay "
-#| "you well... Wait, no, they don't pay well. Not at all! How much was it "
-#| "for risking your life twice with this EMP bomb trick? %s? Haw haw haw! "
-#| "You can make better money with a cargo mission!\n"
-#| "   \"I've even heard that once, they paid you with gauss guns! Those guys "
-#| "are so pitiful, aren't they?\n"
-#| "   \"Now, let's talk seriously: you want money and I want a pilot. We're "
-#| "made to get along, you and me! I need you for a special task. I won't "
-#| "deny it implies going against the interests of General Klank and Major "
-#| "Tam and co, but if you do it well, they won't ever know that you are "
-#| "implied, and you'll receive %s in the process. Oh yes, that's different "
-#| "from what you're used to! What do you say?\""
+#, lua-format
 msgid ""
 "The pilot of the fighter says, over an encrypted channel: \"I have finally "
 "found you, %s. Better late than never. My employers want to congratulate you "
@@ -23141,8 +23117,8 @@ msgid ""
 "you'll receive %s in the process. Oh yes, that's different from what you're "
 "used to! What do you say?\""
 msgstr ""
-"Pilot stíhačky používá šifrovaný kanál: \"Konečně jsem tě našel, %s. Lepší "
-"pozdě než nikdy. Moji zaměstnavatelé ti chtějí poblahopřát k tomu, jak "
+"Pilot stíhačky mluví přes šifrovaný kanál: \"Konečně jsem tě našel, %s. "
+"Lepší pozdě než nikdy. Moji zaměstnavatelé ti chtějí poblahopřát k tomu, jak "
 "efektivní jsi byl s lordem Battleaddictem. Obávám se, že nebude mnoho lidí, "
 "co by ho oplakávali. “ Odpovíš, že nevíš, o čem je řeč, a že pokud víš, lord "
 "Battleaddict byl zabit v čestném souboji generálem Klankem. Účastník se "
@@ -23243,29 +23219,6 @@ msgstr ""
 "podivné a ošklivé příšery jako jsou Impérium, Siriané nebo Soromidé. “"
 
 #: dat/events/dvaered/fwA_treason.lua:51
-#, fuzzy
-#| msgid ""
-#| "\"House Dvaered has been built in respect of this ethic of life and "
-#| "death, that is taught to all children around all worlds in Dvaered space. "
-#| "You did not receive such an education and still, you passed the loyalty "
-#| "test. This means that Dvaered High Command can trust you. As a proof of "
-#| "this trust, I can reveal you what some among the army know, but was never "
-#| "revealed to non-Dvaered.\n"
-#| "   \"For one cycle now, the warlords have been greedily watching the "
-#| "Frontier planets. Since the FLF has been destroyed, Dvaered High Command "
-#| "does everything in its power to hold them back because we know that many "
-#| "other factions are waiting for us to get entangled in a war in the "
-#| "frontier in order to hit us. But the purpose of warlords is to invade "
-#| "worlds, and the role of the DHC is not to hinder that, so ultimately, we "
-#| "will have to allow this invasion.\n"
-#| "   \"A few decaperiods ago, General Klank has been promoted as second "
-#| "class general, with the task to organize this invasion. The first "
-#| "invasion plan that had been proposed to him was granting huge freedom to "
-#| "each warlord, allowing them to choose which planet to invade and how to "
-#| "proceed. However, contrary to the other generals, Klank soon understood "
-#| "that such a disorganized invasion, with inevitably battle between "
-#| "warlords, would take for several periods, with a huge risk of ending up "
-#| "bogged down and vulnerable to attacks on other fronts.\""
 msgid ""
 "\"House Dvaered has been built in respect of this ethic of life and death, "
 "that is taught to all children around all worlds in Dvaered space. You did "
@@ -23289,7 +23242,7 @@ msgid ""
 "periods, with a huge risk of ending up bogged down and vulnerable to attacks "
 "on other fronts.\""
 msgstr ""
-"„Dům Dvaered byl postaven s ohledem na tuto etiku života a smrti, kterou se "
+"„Rod Dvaered byl postaven s ohledem na tuto etiku života a smrti, kterou se "
 "učí všechny děti po celém světě v prostoru Dvaered. Takové vzdělání jste "
 "nedostali a přesto jste prošli testem věrnosti. To znamená, že Dvaeredské "
 "Vrchní Velení vám může věřit. Jako důkaz této důvěry vám mohu odhalit, co "
