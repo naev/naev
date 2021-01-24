@@ -789,6 +789,11 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       }
    } while (xml_nextNode(node));
 
+   /* Default offsets for the engine. */
+   temp->x_engine = 0;
+   temp->y_engine = 0;
+   temp->h_engine = 0;
+
    /* Load the rest of the data. */
    node = parent->xmlChildrenNode;
    do { /* load all the data */
@@ -926,6 +931,12 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       xmlr_strd(node,"fabricator",temp->fabricator);
       xmlr_strd(node,"description",temp->description);
       xmlr_int(node,"rarity",temp->rarity);
+      if (xml_isNode(node,"engine_offset")) {
+         xmlr_attr_float( node, "x", temp->x_engine );
+         xmlr_attr_float( node, "y", temp->y_engine );
+         xmlr_attr_float( node, "h", temp->h_engine );
+         continue;
+      }
       if (xml_isNode(node,"movement")) {
          cur = node->children;
          do {

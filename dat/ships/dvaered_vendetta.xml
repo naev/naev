@@ -8,6 +8,7 @@
  <class>Fighter</class>
  <price>400000</price>
  <time_mod>1</time_mod>
+ <engine_offset x="-20" y="0" h="0" />
  <fabricator>House Dvaered</fabricator>
  <license>Light Combat Vessel License</license>
  <description>This military grade version of the Vendetta has stronger armour and better weapon cooling facilities than the standard Vendetta, but its turning thrusters are less optimally placed than its standard counterpart to make space for the improved weapon cooling facilities, reducing the ship's turning rate slightly.</description>

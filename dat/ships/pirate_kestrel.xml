@@ -8,6 +8,7 @@
  <class>Cruiser</class>
  <price>2700000</price>
  <time_mod>1.625</time_mod>
+ <engine_offset x="-40" y="0" h="20" />
  <fabricator>Skull and Bones</fabricator>
  <description>The Kestrel is the best ship offered by the Skull and Bones. It is extremely agile for a cruiser yet doesn't lack the firepower necessary to question the authority of the Empire. A very strong ship for those pirates who can afford it.</description>
  <health>

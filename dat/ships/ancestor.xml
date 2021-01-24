@@ -7,6 +7,7 @@
  <class>Bomber</class>
  <price>500000</price>
  <time_mod>1</time_mod>
+ <engine_offset x="-10" y="0" h="0" />
  <fabricator>House Dvaered</fabricator>
  <license>Light Combat Vessel License</license>
  <description>Commonly referred to as the little Goddard, the Ancestor also has its roots in the primitive flying machines used by men many ages ago. Unlike the Goddard though, the electronics are done by House Dvaered, making it considerably inferior in that area.</description>

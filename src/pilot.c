@@ -1701,31 +1701,51 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
 void pilot_render( Pilot* p, const double dt )
 {
    (void) dt;
-   double scalew, scaleh;
+   double scalew, scaleh, a;
    int i;
-   double x1, y1, x2, y2;
-   glColour c;
+   double x1, y1, x2, y2, dx, dy;
+   glColour c1, c2;
    Vector2d* point;
+   int now;
 
    /* Tracks. */
-   c = cWhite;
+   //c.a = 0.25;
    if (array_size(p->times) > 1){
+      now = (int) ntime_get();
+
+      /* Compute the engine offset. TODO: function */
+      a  = p->solid->dir;
+      dx = p->ship->x_engine * cos(a) - p->ship->y_engine * sin(a);
+      dy = p->ship->x_engine * sin(a) + p->ship->y_engine * cos(a);
 
       /* Lastly created control point is replaced by ship's position */
-      gl_gameToScreenCoords( &x1, &y1, p->solid->pos.x, p->solid->pos.y );
-      point = &p->track[ array_size(p->track)-1 ];
+      gl_gameToScreenCoords( &x1, &y1, p->solid->pos.x + dx, p->solid->pos.y + dy*M_SQRT1_2 + p->ship->h_engine*M_SQRT1_2 );
+      point = &p->track[ array_size(p->track)-2 ];
       gl_gameToScreenCoords( &x2, &y2, point->x, point->y );
       //gl_drawLine( x1, y1, x2, y2, &c );
-      gl_drawTrack( x1, y1, x2, y2, ntime_get(), p->times[ array_size(p->times)-1 ], .005, &c );
+      gl_renderCross( x1, y1, 12., &cWhite );
+
+      /* Set the colour. TODO: function */
+      if (pilot_isFlag(p, PILOT_AFTERBURNER))
+         c1 = cGold;
+      else if (p->engine_glow > 0.)
+         c1 = cCyan;
+      else {
+         c1 = cWhite;
+         c1.a = .25;
+      }
+
+      c2 = p->colors[ array_size(p->colors)-2 ];
+      gl_drawTrack( x1, y1, x2, y2, now, p->times[ array_size(p->times)-2 ], now, &c1, &c2 );
 
       if (array_size(p->times) > 2){
-         for ( i=array_size(p->times)-1; i>0; i--){
+         for ( i=array_size(p->times)-2; i>0; i--){
             point = &p->track[i];
             gl_gameToScreenCoords( &x1, &y1, point->x, point->y );
             point = &p->track[i-1];
             gl_gameToScreenCoords( &x2, &y2, point->x, point->y );
             //gl_drawLine( x1, y1, x2, y2, &c );
-            gl_drawTrack( x1, y1, x2, y2, p->times[i-1], p->times[i], .005, &c );
+            gl_drawTrack( x1, y1, x2, y2, p->times[i], p->times[i-1], now, &p->colors[i], &p->colors[i-1] );
          }
       }
    }
@@ -1835,7 +1855,7 @@ void pilot_update( Pilot* pilot, const double dt )
    int ammo_threshold;
    unsigned int l, grow;
    Pilot *target;
-   double a, px,py, vx,vy;
+   double a, px,py, vx,vy, dx, dy;
    char buf[16];
    PilotOutfitSlot *o;
    double Q;
@@ -1843,6 +1863,8 @@ void pilot_update( Pilot* pilot, const double dt )
    double stress_falloff;
    double efficiency, thrust;
    ntime_t now;
+   Vector2d pos;
+   glColour col;
 
    /* Check target validity. */
    if (pilot->target != pilot->id) {
@@ -2243,14 +2265,31 @@ void pilot_update( Pilot* pilot, const double dt )
             if (pilot->times[i] < now - 50000) {
                array_erase(&pilot->times, &pilot->times[0], &pilot->times[i]);
                array_erase(&pilot->track, &pilot->track[0], &pilot->track[i]);
+               array_erase(&pilot->colors, &pilot->colors[0], &pilot->colors[i]);
                break;
             }
          }
       }
 
       if (grow) {
+         /* Compute the engine offset. */
+         a  = pilot->solid->dir;
+         dx = pilot->ship->x_engine * cos(a) - pilot->ship->y_engine * sin(a);
+         dy = pilot->ship->x_engine * sin(a) + pilot->ship->y_engine * cos(a);
+         vect_cset( &pos, pilot->solid->pos.x + dx, pilot->solid->pos.y + dy*M_SQRT1_2 + pilot->ship->h_engine*M_SQRT1_2 );
+
          array_push_back( &pilot->times, now );
-         array_push_back( &pilot->track, pilot->solid->pos );
+         array_push_back( &pilot->track, pos );
+         /* Set the colour. */
+         if (pilot_isFlag(pilot, PILOT_AFTERBURNER))
+            col = cGold;
+         else if (pilot->engine_glow > 0.)
+            col = cCyan;
+         else {
+            col = cWhite;
+            col.a = .25;
+         }
+         array_push_back( &pilot->colors, col );
       }
    }
 
@@ -2771,6 +2810,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* Animated track. */
    pilot->track = array_create( Vector2d );
    pilot->times = array_create( ntime_t );
+   pilot->colors = array_create( glColour );
 }
 
 
@@ -3049,6 +3089,7 @@ void pilot_free( Pilot* p )
    luaL_unref(naevL, p->messages, LUA_REGISTRYINDEX);
 
    /* Free animated track. */
+   array_free(p->colors);
    array_free(p->track);
    array_free(p->times);
 

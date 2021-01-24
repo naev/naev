@@ -7,6 +7,7 @@
  <class>Destroyer</class>
  <price>1000000</price>
  <time_mod>1.5</time_mod>
+ <engine_offset x="-35" y="0" h="0" />
  <fabricator>Nexus Shipyards</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>The Pacifier is one of the older and trustier designs of Nexus Shipyards. It was designed primarily as a border-patrol vessel, and as such it is able to withstand heavy punishment from raiding parties. The Pacifier features high fuel capacity to facilitate lengthy patrol routes.</description>

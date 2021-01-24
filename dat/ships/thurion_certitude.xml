@@ -8,6 +8,7 @@
  <class>Carrier</class>
  <price>9000000</price>
  <time_mod>2</time_mod>
+ <engine_offset x="-50" y="0" h="0" />
  <fabricator>Thurion shipyards</fabricator>
  <license>Heavy Combat Vessel License</license>
  <description>...</description>

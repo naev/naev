@@ -8,6 +8,7 @@
  <class>Bomber</class>
  <price>600000</price>
  <time_mod>1</time_mod>
+ <engine_offset x="-10" y="0" h="0" />
  <fabricator>House Dvaered</fabricator>
  <license>Light Combat Vessel License</license>
  <description>This military grade version of the Ancestor is equipped with slightly more armour than its standard counterpart, which improves the integrity of its hull at the cost of slightly increased base mass.</description>

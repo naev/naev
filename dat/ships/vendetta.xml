@@ -7,6 +7,7 @@
  <class>Fighter</class>
  <price>400000</price>
  <time_mod>1</time_mod>
+ <engine_offset x="-20" y="0" h="0" />
  <fabricator>House Dvaered</fabricator>
  <license>Light Combat Vessel License</license>
  <description>The Vendetta displays the House Dvaered philosophy very well. Give a ship many intimidating guns, layer it with heavy armour, and neglect the electronics. Due to the obsolete electronics used in the Vendetta, it is better suited to skirmishes than extended battles, as it possesses inferior shield and energy regeneration compared to other ships of its class, though it can unleash a truly fearsome barrage.</description>

@@ -8,6 +8,7 @@
  <class>Fighter</class>
  <price>380000</price>
  <time_mod>1</time_mod>
+ <engine_offset x="-15" y="0" h="0" />
  <fabricator>Nexus Shipyards</fabricator>
  <license>Light Combat Vessel License</license>
  <description>The Empire military grade version of the Shark is mostly identical in function to a standard Shark, but with slightly better armour, shields, and heat dissipation. The military-grade materials used also result in the ship being slightly lighter than its generic counterpart.</description>

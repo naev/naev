@@ -224,7 +224,8 @@ typedef struct Pilot_ {
    int tsx;          /**< current sprite x position, calculated on update. */
    int tsy;          /**< current sprite y position, calculated on update. */
    Vector2d* track;    /**< Control points for the pilot's track. */
-   ntime_t* times;       /**< Times associated with the pilot's track's control points. */
+   ntime_t* times;     /**< Times associated with the pilot's track's control points. */
+   glColour* colors;   /**< Colours associated with the pilot's track's control points. */
 
    /* Properties. */
    int cpu;       /**< Amount of CPU the pilot has left. */

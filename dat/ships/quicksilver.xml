@@ -7,6 +7,7 @@
  <class>Courier</class>
  <price>400000</price>
  <time_mod>1</time_mod>
+ <engine_offset x="-20" y="0" h="0" />
  <fabricator>Melendez Corp.</fabricator>
  <description>While still a cargo hauler, the Quicksilver is quite different from Melendez's other offerings. Featuring a streamlined frame and oversized engines, it's the prime choice for expedient shipping.</description>
  <health>

@@ -31,7 +31,7 @@ SHADERS = [
       vs_path = "track.vert",
       fs_path = "track.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "t1", "t2", "omega"]
+      uniforms = ["projection", "c1", "c2", "t1", "t2", "now"]
    ),
    Shader(
       name = "smooth",

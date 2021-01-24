@@ -759,29 +759,63 @@ void gl_drawLine( const double x1, const double y1,
  */
 void gl_drawTrack( const double x1, const double y1,
       const double x2, const double y2, const int t1, const int t2,
-      const double omega, const glColour *c )
+      const int now, const glColour *c1, const glColour *c2 )
 {
    gl_Matrix4 projection;
    double a, s;
+   double thick;
+   //GLfloat Cvertex[16];
+   //GLint color_inx;
 
    glUseProgram(shaders.track.program);
 
    a = atan2( y2-y1, x2-x1 );
    s = sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) );
+   thick = 4.;
+   //c2 = &cWhite;
 
    /* Set vertex. */
    projection = gl_Matrix4_Translate(gl_view_matrix, x1, y1, 0);
    projection = gl_Matrix4_Rotate2d(projection, a);
-   projection = gl_Matrix4_Scale(projection, s, 20, 1); //TODO : adjustable thickness
+   //projection = gl_Matrix4_Translate(projection, -thick, 0., 0);
+   //projection = gl_Matrix4_Scale(projection, s+2*thick, 2*thick, 1); //TODO : adjustable thickness
+   //projection = gl_Matrix4_Scale(projection, s, s, 1);
+   //projection = gl_Matrix4_Translate(projection, 0., -.5, 0);
+   projection = gl_Matrix4_Scale(projection, s, 2*thick, 1);
+   projection = gl_Matrix4_Translate(projection, 0., -.5, 0);
    glEnableVertexAttribArray( shaders.track.vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.track.vertex, 0, 2, GL_FLOAT, 0 );
 
+   /* Set colors. */
+/*   Cvertex[0]  = c1->r;*/
+/*   Cvertex[1]  = c1->g;*/
+/*   Cvertex[2]  = c1->b;*/
+/*   Cvertex[3]  = c1->a;*/
+/*   Cvertex[4]  = c2->r;*/
+/*   Cvertex[5]  = c2->g;*/
+/*   Cvertex[6]  = c2->b;*/
+/*   Cvertex[7]  = c2->a;*/
+/*   Cvertex[8]  = c2->r;*/
+/*   Cvertex[9]  = c2->g;*/
+/*   Cvertex[10] = c2->b;*/
+/*   Cvertex[11] = c2->a;*/
+/*   Cvertex[12] = c1->r;*/
+/*   Cvertex[13] = c1->g;*/
+/*   Cvertex[14] = c1->b;*/
+/*   Cvertex[15] = c1->a;*/
+/*   glBindBuffer( GL_ARRAY_BUFFER, Cvertex );*/
+/*   color_inx = glGetAttribLocation(shaders.track.program, "color");*/
+/*   glEnableVertexAttribArray( color_inx );*/
+/*   gl_vboActivateAttribOffset( Cvertex, shaders.track.vertex, 0, 2, GL_FLOAT, 0 );*/
+   //glVertexAttribPointer( color_inx, 3, GL_FLOAT, GL_FALSE, 0, nullptr );
+
    /* Set uniforms. */
-   gl_uniformColor(shaders.track.color, c);
+   gl_uniformColor(shaders.track.c1, c1);
+   gl_uniformColor(shaders.track.c2, c2);
    gl_Matrix4_Uniform(shaders.track.projection, projection);
    glUniform1f(shaders.track.t1, (float) t1);
    glUniform1f(shaders.track.t2, (float) t2);
-   glUniform1f(shaders.track.omega, (float) omega);
+   glUniform1f(shaders.track.now, (float) now);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );

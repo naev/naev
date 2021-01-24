@@ -7,6 +7,7 @@
  <class>Destroyer</class>
  <price>900000</price>
  <time_mod>1.5</time_mod>
+ <engine_offset x="-40" y="0" h="0" />
  <fabricator>House Dvaered</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>The Vigilance is the embodiment of Dvaered philosophy. Featuring immense energy reserves and six weapon hardpoints, it's designed to hit as hard as possible. Given its Dvaered origins, it possesses inferior technology relative to its counterparts.</description>

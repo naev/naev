@@ -8,6 +8,7 @@
  <class>Fighter</class>
  <price>500000</price>
  <time_mod>1</time_mod>
+ <engine_offset x="-25" y="0" h="0" />
  <fabricator>Nexus Shipyards</fabricator>
  <license>Light Combat Vessel License</license>
  <description>This military grade version of the Lancelot is mostly identical in function to a standard Lancelot, but with slightly better armour, shields, and heat dissipation.</description>
