@@ -330,6 +330,22 @@ const char* faction_longname( int f )
 
 
 /**
+ * @brief Gets the name of the default AI profile for the faction's pilots.
+ *
+ *    @param f Faction ID.
+ *    @return The faction's AI profile name.
+ */
+const char* faction_default_ai( int f )
+{
+   if (!faction_isFaction(f)) {
+      WARN(_("Faction id '%d' is invalid."), f);
+      return NULL;
+   }
+   return faction_stack[f].ai;
+}
+
+
+/**
  * @brief Gets the faction's small logo (64x64 or smaller).
  *
  *    @param f Faction to get the logo of.
