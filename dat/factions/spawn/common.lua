@@ -88,7 +88,7 @@ function scom.spawn( pilots, faction, guerilla )
          end
          p = pilot.add( v["pilot"], origin )
       else
-         p = scom.spawnRaw( origin, v["pilot"][1], v["pilot"][2], v["pilot"][3], v["pilot"][4] )
+         p = scom.spawnRaw( v["pilot"][1], v["pilot"][2], v["pilot"][3], v["pilot"][4], v["pilot"][5], origin )
       end
       if #p == 0 then
          error(_("No pilots added"))
@@ -110,7 +110,7 @@ end
 
 
 -- @brief spawn a pilot with addRaw
-function scom.spawnRaw( ship, name, ai, equip, faction, origin)
+function scom.spawnRaw( ship, name, ai, equip, faction, origin )
    local p = {pilot.addRaw( ship, equip, origin, ai )}
    p[1]:rename(name)
    p[1]:setFaction(faction)
