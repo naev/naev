@@ -219,7 +219,7 @@ function inRange()
     local mindist = 2000 -- definitely OOR.
     for i, p in ipairs(fleetFLF) do
         if p ~= nil and p:exists() then
-            mindist = math.min(mindist, vec2.dist(p:pos(), player.pilot():pos()))
+            mindist = math.min(mindist, vec2.dist(p:pos(), player.pos()))
         end
     end
     if mindist < 500 then
@@ -281,7 +281,7 @@ function outOfRange()
     local mindist = 2000 -- definitely OOR.
     for i, p in ipairs(fleetFLF) do
         if p ~= nil and p:exists() then
-            mindist = math.min(mindist, vec2.dist(p:pos(), player.pilot():pos()))
+            mindist = math.min(mindist, vec2.dist(p:pos(), player.pos()))
         end
     end
     if mindist < 1500 then

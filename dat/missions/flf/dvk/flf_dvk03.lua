@@ -216,7 +216,7 @@ end
 function timer_start ()
    if timer_start_hook ~= nil then hook.rm( timer_start_hook ) end
 
-   local player_pos = player.pilot():pos()
+   local player_pos = player.pos()
    local proximity = false
    for i, j in ipairs( flf_fleet ) do
       local dist = player_pos:dist( j:pos() )

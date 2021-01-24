@@ -639,7 +639,7 @@ function takeoff( )
       local dmin2 = 500^2
       zlkPilots = pilot.get( { faction.get("Za'lek") } )
       for i, p in ipairs(zlkPilots) do
-         if vec2.dist2(player.pilot():pos()-p:pos()) < dmin2 then
+         if vec2.dist2(player.pos()-p:pos()) < dmin2 then
             p:rm()
          end
       end

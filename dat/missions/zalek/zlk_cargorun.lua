@@ -159,7 +159,7 @@ end
 function takeoff()
    if system.cur() == delivSys and droppedoff then
 
-      logan = pilot.add( "Civilian Gawain", player.pilot():pos() + vec2.new(-500,-500))[1]
+      logan = pilot.add( "Civilian Gawain", player.pos() + vec2.new(-500,-500))[1]
       logan:rename(_("Dr. Logan"))
       logan:setFaction("Za'lek")
       logan:setFriendly()
@@ -168,7 +168,7 @@ function takeoff()
       logan:setHilight(true)
       logan:hailPlayer()
       logan:control()
-      logan:moveto(player.pilot():pos() + vec2.new( 150, 75), true)
+      logan:moveto(player.pos() + vec2.new( 150, 75), true)
       tk.msg( title[5], text[5] )
       hailhook = hook.pilot(logan, "hail", "hail")
    end
