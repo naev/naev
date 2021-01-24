@@ -2546,7 +2546,7 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
  *    @param ship Ship pilot will be flying.
  *    @param name Pilot's name, if NULL ship's name will be used.
  *    @param faction Faction of the pilot.
- *    @param ai Name of the AI profile to use for the pilot.
+ *    @param ai Name of the AI profile to use for the pilot, or NULL to use the faction's.
  *    @param dir Initial direction to face (radians).
  *    @param pos Initial position.
  *    @param vel Initial velocity.
@@ -2704,6 +2704,8 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->messages = luaL_ref(naevL, LUA_REGISTRYINDEX);
 
    /* AI */
+   if (ai == NULL)
+      ai = faction_default_ai( faction );
    if (ai != NULL)
       ai_pinit( pilot, ai ); /* Must run before ai_create */
    pilot->shoot_indicator = 0;
@@ -2749,7 +2751,7 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
  *    @param ship Ship for the pilot to use.
  *    @param name Name of the pilot ship (NULL uses ship name).
  *    @param faction Faction of the ship.
- *    @param ai AI to use.
+ *    @param ai AI to use, or NULL to use the faction's.
  *    @param flags Flags for tweaking, PILOT_EMPTY is added.
  *    @return Pointer to the new pilot (not added to stack).
  */
