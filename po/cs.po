@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-01-23 11:54-0500\n"
+"POT-Creation-Date: 2021-01-23 23:07-0500\n"
 "PO-Revision-Date: 2021-01-23 00:11+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -23101,24 +23101,43 @@ msgid "You are needed for a special job"
 msgstr "Je tě potřeba pro speciální práci"
 
 #: dat/events/dvaered/fwA_treason.lua:31
-#, lua-format
+#, fuzzy, lua-format
+#| msgid ""
+#| "The pilot of the fighter uses the encrypted channel: \"I have finally "
+#| "found you, %s. Better late than never. My employers want to congratulate "
+#| "you about how effective you have been with Lord Battleaddict. I am afraid "
+#| "there won't be many people to mourn him.\" You answer that you don't know "
+#| "what it is about, and that as far as you know, Lord Battleaddict has been "
+#| "killed in a loyal duel by the General Klank. The interlocutor laughs "
+#| "\"You're playing your part, eh? I can understand you, after all, they pay "
+#| "you well... Wait, no, they don't pay well. Not at all! How much was it "
+#| "for risking your life twice with this EMP bomb trick? %s? Haw haw haw! "
+#| "You can make better money with a cargo mission!\n"
+#| "   \"I've even heard that once, they paid you with gauss guns! Those guys "
+#| "are so pitiful, aren't they?\n"
+#| "   \"Now, let's talk seriously: you want money and I want a pilot. We're "
+#| "made to get along, you and me! I need you for a special task. I won't "
+#| "deny it implies going against the interests of General Klank and Major "
+#| "Tam and co, but if you do it well, they won't ever know that you are "
+#| "implied, and you'll receive %s in the process. Oh yes, that's different "
+#| "from what you're used to! What do you say?\""
 msgid ""
-"The pilot of the fighter uses the encrypted channel: \"I have finally found "
-"you, %s. Better late than never. My employers want to congratulate you about "
-"how effective you have been with Lord Battleaddict. I am afraid there won't "
-"be many people to mourn him.\" You answer that you don't know what it is "
-"about, and that as far as you know, Lord Battleaddict has been killed in a "
-"loyal duel by the General Klank. The interlocutor laughs \"You're playing "
-"your part, eh? I can understand you, after all, they pay you well... Wait, "
-"no, they don't pay well. Not at all! How much was it for risking your life "
-"twice with this EMP bomb trick? %s? Haw haw haw! You can make better money "
-"with a cargo mission!\n"
+"The pilot of the fighter says, over an encrypted channel: \"I have finally "
+"found you, %s. Better late than never. My employers want to congratulate you "
+"about how effective you have been with Lord Battleaddict. I am afraid there "
+"won't be many people to mourn him.\" You answer that you don't know what "
+"this is about, and that as far as you know, Lord Battleaddict has been "
+"killed in an honest duel by the General Klank. The interlocutor laughs "
+"\"You're playing your part, eh? I can understand you, after all, they pay "
+"you well... Wait, no, they don't pay well. Not at all! How much was it for "
+"risking your life twice with this EMP bomb trick? %s? Haw haw haw! You can "
+"make better money with a cargo mission!\n"
 "   \"I've even heard that once, they paid you with gauss guns! Those guys "
 "are so pitiful, aren't they?\n"
 "   \"Now, let's talk seriously: you want money and I want a pilot. We're "
 "made to get along, you and me! I need you for a special task. I won't deny "
 "it implies going against the interests of General Klank and Major Tam and "
-"co, but if you do it well, they won't ever know that you are implied, and "
+"co, but if you do it well, they won't ever know that you are implicated, and "
 "you'll receive %s in the process. Oh yes, that's different from what you're "
 "used to! What do you say?\""
 msgstr ""
@@ -23224,6 +23243,29 @@ msgstr ""
 "podivné a ošklivé příšery jako jsou Impérium, Siriané nebo Soromidé. “"
 
 #: dat/events/dvaered/fwA_treason.lua:51
+#, fuzzy
+#| msgid ""
+#| "\"House Dvaered has been built in respect of this ethic of life and "
+#| "death, that is taught to all children around all worlds in Dvaered space. "
+#| "You did not receive such an education and still, you passed the loyalty "
+#| "test. This means that Dvaered High Command can trust you. As a proof of "
+#| "this trust, I can reveal you what some among the army know, but was never "
+#| "revealed to non-Dvaered.\n"
+#| "   \"For one cycle now, the warlords have been greedily watching the "
+#| "Frontier planets. Since the FLF has been destroyed, Dvaered High Command "
+#| "does everything in its power to hold them back because we know that many "
+#| "other factions are waiting for us to get entangled in a war in the "
+#| "frontier in order to hit us. But the purpose of warlords is to invade "
+#| "worlds, and the role of the DHC is not to hinder that, so ultimately, we "
+#| "will have to allow this invasion.\n"
+#| "   \"A few decaperiods ago, General Klank has been promoted as second "
+#| "class general, with the task to organize this invasion. The first "
+#| "invasion plan that had been proposed to him was granting huge freedom to "
+#| "each warlord, allowing them to choose which planet to invade and how to "
+#| "proceed. However, contrary to the other generals, Klank soon understood "
+#| "that such a disorganized invasion, with inevitably battle between "
+#| "warlords, would take for several periods, with a huge risk of ending up "
+#| "bogged down and vulnerable to attacks on other fronts.\""
 msgid ""
 "\"House Dvaered has been built in respect of this ethic of life and death, "
 "that is taught to all children around all worlds in Dvaered space. You did "
@@ -23238,14 +23280,14 @@ msgid ""
 "in order to hit us. But the purpose of warlords is to invade worlds, and the "
 "role of the DHC is not to hinder that, so ultimately, we will have to allow "
 "this invasion.\n"
-"   \"A few decaperiods ago, General Klank has been promoted as second class "
+"   \"A few decaperiods ago, General Klank had been promoted as second class "
 "general, with the task to organize this invasion. The first invasion plan "
-"that had been proposed to him was granting huge freedom to each warlord, "
-"allowing them to choose which planet to invade and how to proceed. However, "
-"contrary to the other generals, Klank soon understood that such a "
-"disorganized invasion, with inevitably battle between warlords, would take "
-"for several periods, with a huge risk of ending up bogged down and "
-"vulnerable to attacks on other fronts.\""
+"that had been proposed to him was giving free rein to each warlord, allowing "
+"them to choose which planet to invade and how to proceed. However, contrary "
+"to the other generals, Klank soon realized that such a disorganized "
+"invasion, with inevitable battles between warlords, would take several "
+"periods, with a huge risk of ending up bogged down and vulnerable to attacks "
+"on other fronts.\""
 msgstr ""
 "„Dům Dvaered byl postaven s ohledem na tuto etiku života a smrti, kterou se "
 "učí všechny děti po celém světě v prostoru Dvaered. Takové vzdělání jste "
@@ -23361,7 +23403,7 @@ msgstr ""
 #. Because she is immortal and could kill the player
 #. The player is only allowed to land on special occasions
 #. Morgan Station
-#. Meet captain Hamfresser
+#. Meet Captain Hamfresser
 #. The player landed somewhere on Battleaddict's system
 #. Report back
 #. Epilogue
@@ -23587,7 +23629,7 @@ msgstr "Pohraniční válka"
 #. /!\ We did not claim this system /!#. Special case: JP from Arcturus to Goddard
 #. Functions for the escort
 #. Makes the carceral convoy enter the system
-#. escort[4] = pilot.add("Za'lek Heavy Drone", nil, prevsys)[1]
+#. escort[4] = pilot.add("Za'lek Heavy Drone", prevsys)[1]
 #. TODO: not possible to jump nor to land
 #. Hooks for the interception target
 #. Hack so that Strafer attacks them and not the Sting
@@ -24505,7 +24547,7 @@ msgstr ""
 #. save system you came from
 #. Mission details
 #: dat/events/minerva/altercation2.lua:26
-#: dat/missions/neutral/crimelord.lua:133 dat/missions/pirate/hitman.lua:35
+#: dat/missions/neutral/crimelord.lua:132 dat/missions/pirate/hitman.lua:35
 msgid "Thug"
 msgstr "Rváč"
 
@@ -32871,7 +32913,7 @@ msgid ""
 "   \"Warlords' forces can be requisitioned by DHC, but only to fight a "
 "menace to the integrity of the Dvaered Nation, so in practice, they are "
 "mostly left to themselves, and make war on each other. You know, foreigners "
-"sometimes think that the internicine conflicts between warlords are "
+"sometimes think that the internecine conflicts between warlords are "
 "pointless (I've even heard the word \"stupid\" once), but actually, they're "
 "the key to Dvaered philosophy. Without those wars, the Dvaered Nation would "
 "no longer exist as we know it, and we would have had to rely on "
@@ -32915,9 +32957,8 @@ msgid ""
 "once, as the planet belongs to his deadliest enemy, Lady Pointblank.\" As "
 "you ask to him what happened, he answers: \"You know, don't let Lord "
 "Battleaddict's reaction mislead you. He is not a bad person, he is just... "
-"hem... a bit old school. He is not in par with the ideas of the new "
-"generation of generals at Dvaered High Command, and wanted to make his point "
-"clear.\"\n"
+"hem... a bit old school. He disagrees with the ideas of the new generation "
+"of generals at Dvaered High Command, and wanted to make his point clear.\"\n"
 "   You ask Tam why the Dvaered patrol ships did not help you and he answers: "
 "\"Don't expect the regular police or army to help you when you're in trouble "
 "with a warlord. Dvaered know that it is better not to be involved in "
@@ -32930,10 +32971,10 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:93
 msgid ""
-"As your ship starts to recover its normal speed after jumping in, you "
-"realize that there are hostile ships around. An enemy Shark then broadcasts "
-"the following message: \"Tam, you small fearful weakling, did you believe "
-"Lord Battleaddict would really let you live? You're doomed!\""
+"As your ship decelerates to its normal speed after jumping in, you realize "
+"that there are hostile ships around. An enemy Shark then broadcasts the "
+"following message: \"Tam, you small fearful weakling, did you believe Lord "
+"Battleaddict would really let you live? You're doomed!\""
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:94
@@ -32975,8 +33016,8 @@ msgid ""
 "of expression for a warlord, but setting an ambush here denotes a true lack "
 "of respect.\"\n"
 "   \"He will have to answer for this, trust me.\" answers Tam, \"I will "
-"refer to the chief. Meanwhile, I still have an appointment with Lord Jim. I "
-"just hope he will not try to make us dance as well...\""
+"refer this matter to the chief. Meanwhile, I still have an appointment with "
+"Lord Jim. I just hope he will not try to make us dance as well...\""
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:104
@@ -33042,7 +33083,7 @@ msgid ""
 "emergency exit. He loudly drinks an orange juice through a pink straw and "
 "suspiciously examines the other customers. By the power of his eyes he "
 "cleared a large area around him as people seem to prefer to move away "
-"instead of supporting his half-robotic gaze. Unfortunately, he matches the "
+"instead of meeting his half-robotic gaze. Unfortunately, he matches the "
 "description of your contact, which means you will have to overcome your fear "
 "and talk to him."
 msgstr ""
@@ -33097,22 +33138,22 @@ msgstr ""
 #, lua-format
 msgid ""
 "\"The problem is that Battleaddict's plan is far too stupid. It would weaken "
-"the Dvaered Nation durably and leave us at the mercy of all the other "
-"nations around us, that are waiting for us to show a sign of weakness in "
-"order to attack us and impose their iniquitous and obsolete political system "
-"on our citizenry.\" Tam takes a deep breath and looks at you in the eyes. "
-"\"You don't know, citizen, all the dreadful enemies who are waiting in the "
-"shadows, their hearts filled with hatred against House Dvaered. Sometimes I "
-"look at the constellated sky and I wonder. I wonder why the Dvaered Nation "
-"has to be the only threatened islet of justice and compassion in this... in "
-"this Sea of Darkness.\n"
+"the Dvaered Nation in the long run and leave us at the mercy of all the "
+"other nations around us, that are waiting for us to show a sign of weakness "
+"in order to attack us and impose their iniquitous and obsolete political "
+"system on our citizenry.\" Tam takes a deep breath and looks at you in the "
+"eyes. \"You don't know, citizen, all the dreadful enemies who are waiting in "
+"the shadows, their hearts filled with hatred against House Dvaered. "
+"Sometimes I look at the constellated sky and I wonder. I wonder why the "
+"Dvaered Nation has to be the only threatened islet of justice and compassion "
+"in this... in this Sea of Darkness.\n"
 "   \"Hey, citizen! But I have good news! We won't fall to the Barbarian "
 "hordes! Because I myself, Major Archibald Tam, I have a plan. We will make "
 "sure that Lord Battleaddict loses his duel. Please note however that if the "
 "very existence of House Dvaered was not threatened, we would never allow "
 "ourselves to interfere in a honorable duel between two respectable "
-"gentlemen. Go to %s in %s and meet the Captain Hamfresser. (His portrait is "
-"attached in the data I will give to you.) He will explain the details. It is "
+"gentlemen. Go to %s in %s and meet Captain Hamfresser. (His portrait is "
+"attached in the data I will give you.) He will explain the details. It is "
 "very important that you use a civilian ship that can transport at least %s "
 "of cargo.\""
 msgstr ""
@@ -33137,14 +33178,13 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:70
 #, lua-format
 msgid ""
-"\"H... hi\", you say, softly shaking your hand \"Are you the captain "
-"Hamfresser?\". The soldier answers \"Of course, as it is written on my name "
-"tag.\" Showing a small label on his chest, where stay the letters "
-"\"Hamfresser\", beside his Captain's insignia and the logo of the Dvaered "
-"Space Infantry (a mace of arms with wings). Hamfresser looks at you from top "
-"to bottom \"You're the private pilot, right? Tell me your ship's dock "
-"number, and I'll meet you there. Oh, and please make room for %s of cargo."
-"\"\n"
+"\"H... hi\", you say, waving timidly. \"Are you Captain Hamfresser?\". The "
+"soldier answers \"Of course, as it is written on my name tag.\" Showing a "
+"small label on his chest, where stay the letters \"Hamfresser\", beside his "
+"Captain's insignia and the logo of the Dvaered Space Infantry (a mace of "
+"arms with wings). Hamfresser looks at you from top to bottom \"You're the "
+"private pilot, right? Tell me your ship's dock number, and I'll meet you "
+"there. Oh, and please make room for %s of cargo.\"\n"
 "   The captain then gets up, delicately puts his empty glass on the counter, "
 "and goes away. While his hair scratches the ceiling, you wonder if %s are "
 "enough for him. When you arrive at the dock, you see Hamfresser, with five "
@@ -33156,22 +33196,22 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:72
 msgid ""
-"\"Very well\" you abdicate. \"Do what you have to do\". Once the cargo is "
-"loaded and the team has taken place in the cabin, you start to talk with the "
-"captain. \"And I suppose this bomblet is destined for Battleaddict's "
-"Goddard. How are we supposed to put it there? Are we going to pretend it's a "
-"gift from the High Command to his granddaughter?\". Hamfresser looks at you "
-"surprised. \"No... that's not what the Major... do you think it could work?"
-"\" You realize it would take too long to explain that it was a sarcastic "
-"comment (assuming that this guy knew what sarcasm is) and simply ask him to "
-"explain the major's plan.\n"
-"   \"Last period, we intercepted a message from Battleaddict to the plumber. "
+"\"Very well\" you acquiesce. \"Do what you have to do\". Once the cargo is "
+"loaded and the team has taken their places in the cabin, you start to talk "
+"with the captain. \"And I suppose this bomblet is destined for "
+"Battleaddict's Goddard. How are we supposed to put it there? Are we going to "
+"pretend it's a gift from the High Command to his granddaughter?\". "
+"Hamfresser looks at you surprised. \"No... that's not what the Major... do "
+"you think it could work?\" You realize it would take too long to explain "
+"that it was a sarcastic comment (assuming that this guy knew what sarcasm "
+"is) and simply ask him to explain the major's plan.\n"
+"   \"Last period, we intercepted a message from Battleaddict to a plumber. "
 "His cruiser has issues with sewage disposal and he requested an "
 "intervention. So we abducted the plumber and we disguised an EMP bomb as a "
-"sewage emptier. We will dock with him, plant the bomb, repair the breakdown "
-"(so he won't suspect us) and go away. Private Ling here is a Goddard-"
-"plumber, so she will lead us.\" A young and smiling soldier raises her hand, "
-"saying \"Hi\"."
+"sewage emptier. We will dock with his ship, plant the bomb, repair the "
+"breakdown (so he won't suspect us) and go away. Private Ling here is a "
+"Goddard-plumber, so she will lead us.\" A young and smiling soldier raises "
+"her hand, saying \"Hi\"."
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:74
@@ -33287,7 +33327,7 @@ msgid ""
 "in %s by any means. For information, the leak is under control and the "
 "source has been dealt with.\" The voice makes a pause and continues: \"I "
 "really hope this messages catches you before you enter %s. Otherwise, may "
-"Dvaerius, the patron saint of mace rockets, have mercy for your souls...\" "
+"Dvaerius, the patron saint of mace rockets, have mercy on your souls...\" "
 "\"Good old Tamtam,\" Hamfresser says smiling, \"he always worries too much "
 "for us.\""
 msgstr ""
@@ -33398,7 +33438,7 @@ msgid ""
 "sure your disagreement cannot be solved by any other means?\"\n"
 "   A formal silence follows the words of the colonel, but soon Battleaddict "
 "and Klank respond: \"It can not, mister commissioner.\" And Urnus continues: "
-"\"I am guarantor of the fact that this duel is conform to the rules "
+"\"I am witness to the fact that this duel is conform to the rules "
 "established by our ancestors. I have controlled both ships and I attest that "
 "no irregularity is to be noticed. Let the fight begin, may the most virtuous "
 "of you both survive.\""
@@ -33595,7 +33635,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:176
 msgid ""
 "Major Tam's superior, General Klank, made a Goddard duel with Lord "
-"Battleaddict. You took part to an operation to sabotage Battleaddict's "
+"Battleaddict. You took part in an operation to sabotage Battleaddict's "
 "cruiser. Lord Battleaddict sabotaged Klank's cruiser as well, but at the end "
 "of the day, General Klank won the duel."
 msgstr ""
@@ -44008,28 +44048,28 @@ msgstr ""
 #. aforementioned triggered function
 #. when in target system
 #. add a defending force to help you
-#: dat/missions/neutral/crimelord.lua:92
+#: dat/missions/neutral/crimelord.lua:91
 msgid "Associate Lancelot"
 msgstr ""
 
-#: dat/missions/neutral/crimelord.lua:94
+#: dat/missions/neutral/crimelord.lua:93
 msgid "Associate Admonisher"
 msgstr ""
 
-#: dat/missions/neutral/crimelord.lua:96
+#: dat/missions/neutral/crimelord.lua:95
 msgid "Associate Pacifier"
 msgstr ""
 
-#: dat/missions/neutral/crimelord.lua:98
+#: dat/missions/neutral/crimelord.lua:97
 msgid "Associate Hawking"
 msgstr ""
 
-#: dat/missions/neutral/crimelord.lua:100
+#: dat/missions/neutral/crimelord.lua:99
 msgid "Associate Kestrel"
 msgstr ""
 
 #. I think they like you
-#: dat/missions/neutral/crimelord.lua:111
+#: dat/missions/neutral/crimelord.lua:110
 msgid "We've got your back. Engaging hostiles."
 msgstr ""
 
@@ -44039,19 +44079,19 @@ msgstr ""
 #. switch to manual control
 #. they attack you and only you
 #. trigger when one of them is killed
-#: dat/missions/neutral/crimelord.lua:153
+#: dat/missions/neutral/crimelord.lua:152
 msgid "Surrender now and we'll let you live."
 msgstr ""
 
-#: dat/missions/neutral/crimelord.lua:154
+#: dat/missions/neutral/crimelord.lua:153
 msgid "You're dead!"
 msgstr ""
 
-#: dat/missions/neutral/crimelord.lua:155
+#: dat/missions/neutral/crimelord.lua:154
 msgid "You won't make it out alive!"
 msgstr ""
 
-#: dat/missions/neutral/crimelord.lua:156
+#: dat/missions/neutral/crimelord.lua:155
 msgid "Get back here!"
 msgstr ""
 
@@ -58149,9 +58189,9 @@ msgstr ""
 #. has eventually to be trimmed
 #. so weird: ai does not work properly apparently? WTF is going on.. switching to dummy and switched from pilot.add to pilot.addRaw
 #. disabling some ships since this way it is really hard to win the mission
-#. scom[5] = pilot.addRaw("Za'lek Heavy Drone","mercenary", sp, "Mercenary" )
-#. scom[6] = pilot.addRaw("Za'lek Light Drone","mercenary", sp, "Mercenary" )
-#. scom[7] = pilot.addRaw("Za'lek Light Drone","mercenary", sp, "Mercenary" )
+#. scom[5] = pilot.addRaw("Za'lek Heavy Drone", "Mercenary", sp, "mercenary" )
+#. scom[6] = pilot.addRaw("Za'lek Light Drone", "Mercenary", sp, "mercenary" )
+#. scom[7] = pilot.addRaw("Za'lek Light Drone", "Mercenary", sp, "mercenary" )
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <mission name="Za'lek Shipping Delivery">
@@ -59125,15 +59165,15 @@ msgstr ""
 #.
 #. -- @brief Wrapper for pilot.add() that can operate on tables of fleets.
 #. --
-#. -- @usage pilots = addShips( "Pirate Hyena", "pirate", nil, 2 ) -- Creates two Pirate Hyenas with pirate AIs.
-#. -- @usage pilots = addShips( { "Trader Rhino", "Trader Koala" }, nil, nil, 2 ) -- Creates a convoy of four trader ships with default AIs.
+#. -- @usage pilots = addShips( 2, "Pirate Hyena", nil, "pirate" ) -- Creates two Pirate Hyenas with pirate AIs. (Last 2 args optional.)
+#. -- @usage pilots = addShips( 2, { "Trader Rhino", "Trader Koala" }, nil, nil ) -- Creates a convoy of four trader ships with default AIs. (Last 2 args optional.)
 #. --
-#. --    @luaparam ship Fleet to add.
-#. --    @luaparam ai AI to override the default with.
-#. --    @luaparam location Location to jump in from, take off from, or appear at.
 #. --    @luaparam count Number of times to repeat the pattern.
+#. --    @luaparam ship Fleet to add.
+#. --    @luaparam location Location to jump in from, take off from, or appear at.
+#. --    @luaparam ai AI to override the default with.
 #. --    @luareturn Table of created pilots.
-#. -- @luafunc addShips( fleet, ai, location, count )
+#. -- @luafunc addShips
 #. --
 #: dat/scripts/fleethelper.lua:20
 msgid "addShips: Error, ship list is not a fleet or table of fleets!"
@@ -59144,16 +59184,16 @@ msgstr ""
 #.
 #. -- @brief Wrapper for pilot.addRaw() that can operate on tables of ships.
 #. --
-#. -- @usage pilots = addRawShips( "Hyena", "pirate", nil, "Pirate" ) -- Creates a facsimile of a Pirate Hyena.
-#. -- @usage pilots = addRawShips( { "Rhino", "Koala" }, nil, nil, "Trader", 2 ) -- Creates four Trader ships.
+#. -- @usage pilots = addRawShips( 1, "Hyena", "Pirate", nil, "pirate" ) -- Creates a facsimile of a Pirate Hyena.
+#. -- @usage pilots = addRawShips( 2, { "Rhino", "Koala" }, "Trader" ) -- Creates four Trader ships.
 #. --
-#. --    @luaparam ship Ship to add.
-#. --    @luaparam ai AI to give the pilot.
-#. --    @luaparam location Location to jump in from, take off from, or appear at.
-#. --    @luaparam faction Faction to give the pilot.
 #. --    @luaparam count Number of times to repeat the pattern.
+#. --    @luaparam ship Ship to add.
+#. --    @luaparam faction Faction to give the pilot.
+#. --    @luaparam location Location to jump in from, take off from, or appear at.
+#. --    @luaparam ai AI to give the pilot.
 #. --    @luareturn Table of created pilots.
-#. -- @luafunc addRawShips( ship, ai, location, faction, count )
+#. -- @luafunc addRawShips
 #. --
 #: dat/scripts/fleethelper.lua:64
 msgid "addRawShips: Error, ship list is not a ship or table of ships!"
@@ -67496,12 +67536,12 @@ msgstr ""
 msgid "Fleet '%s' doesn't exist."
 msgstr ""
 
-#: src/nlua_pilot.c:519
+#: src/nlua_pilot.c:513
 #, c-format
 msgid "Fleet '%s' jumping in from non-adjacent system '%s' to '%s'."
 msgstr ""
 
-#: src/nlua_pilot.c:524
+#: src/nlua_pilot.c:518
 #, c-format
 msgid ""
 "Fleet '%s' attempting to jump in from '%s', but '%s' has no jump points."
