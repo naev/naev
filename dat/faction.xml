@@ -2,6 +2,7 @@
 <Factions>
  <faction>
   <name>Dummy</name>
+  <ai>dummy</ai>
   <static />
   <invisible />
   <player>0</player>
@@ -11,6 +12,7 @@
  </faction>
  <faction>
   <name>Independent</name>
+  <ai>independent</ai>
   <static />
   <invisible />
   <known />
@@ -27,6 +29,7 @@
  </faction>
  <faction>
   <name>Civilian</name>
+  <ai>civilian</ai>
   <static />
   <invisible />
   <known />
@@ -43,6 +46,7 @@
  </faction>
  <faction>
   <name>Trader</name>
+  <ai>trader</ai>
   <static />
   <invisible />
   <known />
@@ -59,6 +63,7 @@
  </faction>
  <faction>
   <name>Miner</name>
+  <ai>miner</ai>
   <static />
   <invisible />
   <known />
@@ -76,6 +81,7 @@
  </faction>
  <faction>
   <name>Proteron Dissident</name>
+  <ai>proteron_dissident</ai>
   <display>Civilian</display>
   <static />
   <invisible />
@@ -94,6 +100,7 @@
  </faction>
  <faction>
   <name>Pirate</name>
+  <ai>pirate</ai>
   <known />
   <logo>pirate</logo>
   <longname>Galactic Pirates</longname>
@@ -128,6 +135,7 @@
  </faction>
  <faction>
   <name>Empire</name>
+  <ai>empire</ai>
   <known />
   <logo>empire</logo>
   <colour>green</colour>
@@ -146,6 +154,7 @@
  </faction>
  <faction>
   <name>Proteron</name>
+  <ai>proteron</ai>
   <logo>proteron</logo>
   <longname>Proteron</longname>
   <player>3</player>
@@ -163,6 +172,7 @@
  </faction>
  <faction>
   <name>Frontier</name>
+  <ai>frontier_police</ai>
   <known />
   <logo>frontier</logo>
   <longname>Frontier Alliance</longname>
@@ -178,6 +188,7 @@
  </faction>
  <faction>
   <name>Traders Guild</name>
+  <ai>trader</ai>
   <known />
   <logo>trader</logo>
   <longname>Space Traders Guild</longname>
@@ -194,6 +205,7 @@
  </faction>
  <faction>
   <name>Soromid</name>
+  <ai>soromid</ai>
   <known />
   <logo>soromid</logo>
   <colour>orange</colour>
@@ -208,6 +220,7 @@
  </faction>
  <faction>
   <name>Thurion</name>
+  <ai>thurion</ai>
   <logo>thurion</logo>
   <colour>grey50</colour>
   <player>1</player>
@@ -220,6 +233,7 @@
  </faction>
  <faction>
   <name>Collective</name>
+  <ai>collective</ai>
   <known />
   <logo>collective</logo>
   <player>-100</player>
@@ -234,6 +248,7 @@
  </faction>
  <faction>
   <name>FLF</name>
+  <ai>flf</ai>
   <known />
   <logo>flf</logo>
   <longname>Frontier Liberation Front</longname>
@@ -251,6 +266,7 @@
  </faction>
  <faction>
   <name>Dvaered</name>
+  <ai>dvaered</ai>
   <known />
   <logo>dvaered</logo>
   <colour>brown</colour>
@@ -270,6 +286,7 @@
  </faction>
  <faction>
   <name>Za'lek</name>
+  <ai>zalek</ai>
   <known />
   <logo>zalek</logo>
   <colour>DarkRed</colour>
@@ -286,6 +303,7 @@
  </faction>
  <faction>
   <name>Sirius</name>
+  <ai>sirius</ai>
   <known />
   <logo>sirius</logo>
   <colour>aqua</colour>
@@ -304,6 +322,7 @@
  </faction>
  <faction>
   <name>Goddard</name>
+  <ai>goddard</ai>
   <known />
   <logo>goddard</logo>
   <colour>blue</colour>
@@ -321,6 +340,7 @@
  </faction>
  <faction>
   <name>Wanted Pirate</name>
+  <ai>pirate</ai>
   <display>Pirate</display>
   <static />
   <invisible />
@@ -349,6 +369,7 @@
  </faction>
  <faction>
   <name>Rogue FLF</name>
+  <ai>flf</ai>
   <static />
   <invisible />
   <known />
@@ -362,6 +383,7 @@
  </faction>
  <faction>
   <name>Rogue Pirate</name>
+  <ai>baddie_norun</ai>
   <display>Pirate</display>
   <static />
   <invisible />
@@ -377,6 +399,7 @@
  </faction>
  <faction>
   <name>Mercenary</name>
+  <ai>mercenary</ai>
   <static />
   <invisible />
   <known />
@@ -387,6 +410,7 @@
  </faction>
  <faction>
   <name>Raider</name>
+  <ai>pirate</ai>
   <static />
   <invisible />
   <known />
@@ -403,6 +427,7 @@
  </faction>
  <faction>
   <name>Derelict</name>
+  <ai>independent</ai>
   <static />
   <invisible />
   <player>0</player>
@@ -412,6 +437,7 @@
  </faction>
  <faction>
   <name>Four Winds</name>
+  <ai>baddie</ai>
   <static />
   <invisible />
   <known />
@@ -425,6 +451,7 @@
  </faction>
  <faction>
   <name>Rogue Four Winds</name>
+  <ai>trader</ai>
   <display>Four Winds</display>
   <static />
   <invisible />
@@ -438,6 +465,7 @@
  </faction>
  <faction>
   <name>Shadow_pirates</name>
+  <ai>baddie_norun</ai>
   <display>Pirate</display>
   <static />
   <invisible />
@@ -453,6 +481,7 @@
  </faction>
  <faction>
   <name>Diplomatic</name>
+  <ai>trader</ai>
   <static />
   <invisible />
   <player>0</player>
@@ -466,6 +495,7 @@
  </faction>
  <faction>
   <name>Associates</name>
+  <ai>dvaered</ai>
   <static />
   <invisible />
   <known />
@@ -478,6 +508,7 @@
  </faction>
  <faction>
   <name>Thugs</name>
+  <ai>dvaered</ai>
   <static />
   <invisible />
   <known />
@@ -490,6 +521,7 @@
  </faction>
  <faction>
   <name>Achack_sirius</name>
+  <ai>sirius_norun</ai>
   <display>Sirius</display>
   <static />
   <invisible />
@@ -503,6 +535,7 @@
  </faction>
  <faction>
   <name>Achack_thugs</name>
+  <ai>baddie_norun</ai>
   <display>Thugs</display>
   <static />
   <invisible />
@@ -516,6 +549,7 @@
  </faction>
  <faction>
   <name>Kidnappers</name>
+  <ai>trader</ai>
   <display>Pirate</display>
   <static />
   <invisible />
@@ -529,6 +563,7 @@
  </faction>
  <faction>
   <name>Nasin</name>
+  <ai>baddie</ai>
   <invisible />
   <logo>sirius</logo>
   <standing>nasin</standing>
@@ -540,6 +575,7 @@
  </faction>
  <faction>
   <name>Comingout_associates</name>
+  <ai>mercenary</ai>
   <display>Mercenary</display>
   <static />
   <invisible />
@@ -553,6 +589,7 @@
  </faction>
  <faction>
   <name>Comingout_thugs</name>
+  <ai>baddie</ai>
   <display>Thugs</display>
   <static />
   <invisible />
@@ -566,6 +603,7 @@
  </faction>
  <faction>
   <name>DHC</name>
+  <ai>baddie</ai>
   <logo>dvaered</logo>
   <colour>brown</colour>
   <longname>Dvaered High Command</longname>
@@ -583,6 +621,7 @@
  </faction>
  <faction>
   <name>Warlords</name>
+  <ai>baddie</ai>
   <logo>dvaered</logo>
   <colour>brown</colour>
   <longname>Dvaered Warlords</longname>
@@ -598,6 +637,7 @@
  </faction>
  <faction>
   <name>Strangelove</name>
+  <ai>zalek</ai>
   <display>Independent</display>
   <static />
   <invisible />

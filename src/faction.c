@@ -55,6 +55,7 @@ typedef struct Faction_ {
    char *name; /**< Normal Name. */
    char *longname; /**< Long Name. */
    char *displayname; /**< Display name. */
+   char *ai; /**< Name of the faction's default pilot AI. */
 
    /* Graphics. */
    glTexture *logo_small; /**< Small logo. */
@@ -1265,6 +1266,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       xmlr_strd(node,"name",temp->name);
       xmlr_strd(node,"longname",temp->longname);
       xmlr_strd(node,"display",temp->displayname);
+      xmlr_strd(node,"ai",temp->ai);
       if (xml_isNode(node, "colour")) {
          ctmp = xml_get(node);
          if (ctmp != NULL)
@@ -1568,6 +1570,7 @@ static void faction_freeOne( Faction *f )
    free(f->name);
    free(f->longname);
    free(f->displayname);
+   free(f->ai);
    gl_freeTexture(f->logo_small);
    gl_freeTexture(f->logo_tiny);
    array_free(f->allies);
@@ -1762,8 +1765,9 @@ void factions_clearDynamic (void)
  *    @param base Faction to base it off (negative for none).
  *    @param name Name of the faction to set.
  *    @param display Display name to use.
+ *    @param ai Default pilot AI to use (if NULL, inherit from base).
  */
-int faction_dynAdd( int base, const char *name, const char *display )
+int faction_dynAdd( int base, const char* name, const char* display, const char* ai )
 {
    Faction *f, *bf;
    int i, *tmp;
@@ -1771,7 +1775,8 @@ int faction_dynAdd( int base, const char *name, const char *display )
    f = &array_grow( &faction_stack );
    memset( f, 0, sizeof(Faction) );
    f->name        = strdup( name );
-   f->displayname = strdup( display );
+   f->displayname = display==NULL ? NULL : strdup( display );
+   f->ai          = ai==NULL ? NULL : strdup( ai );
    f->allies      = array_create( int );
    f->enemies     = array_create( int );
    f->equip_env   = LUA_NOREF;
@@ -1781,6 +1786,8 @@ int faction_dynAdd( int base, const char *name, const char *display )
    if (base>=0) {
       bf = &faction_stack[base];
 
+      if (bf->ai!=NULL && ai==NULL)
+         f->ai = strdup( bf->ai );
       if (bf->logo_small!=NULL)
          f->logo_small = gl_dupTexture( bf->logo_small );
       if (bf->logo_tiny!=NULL)

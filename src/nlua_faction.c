@@ -619,12 +619,13 @@ static int factionL_setknown( lua_State *L )
  *    @luatparam Faction base Faction to base it off of or nil for new faction.
  *    @luatparam string name Name to give the faction.
  *    @luatparam[opt] string display Display name to give the faction.
+ *    @luatparam[opt] string ai Default pilot AI to give the faction.
  * @luafunc dynAdd
  */
 static int factionL_dynAdd( lua_State *L )
 {
    LuaFaction fac;
-   const char *name, *display;
+   const char *name, *display, *ai;
 
    NLUA_CHECKRW(L);
 
@@ -634,12 +635,13 @@ static int factionL_dynAdd( lua_State *L )
       fac = -1;
    name = luaL_checkstring(L,2);
    display = luaL_optstring(L,3,name);
+   ai = luaL_optstring(L,4,name);
 
    /* Check if exists. */
    if (faction_exists(name))
       NLUA_ERROR(L,"Faction '%s' already exists!");
 
-   lua_pushfaction( L, faction_dynAdd( fac, name, display ) );
+   lua_pushfaction( L, faction_dynAdd( fac, name, display, ai ) );
    return 1;
 }
 
