@@ -259,7 +259,7 @@ function pirateSpawn()
    local shiptype={"Pirate Shark","Pirate Vendetta"}
    local thepilot
    for num=1,numships,1 do
-      thepilot = pilot.addFleet(shiptype[rnd.rnd(1,#shiptype)], curr)[1]
+      thepilot = pilot.add(shiptype[rnd.rnd(1,#shiptype)], "Pirate", curr)
       if num==curiousNumber then
          thepilot:broadcast(whatHappened[rnd.rnd(1,#whatHappened)],true)
          camera.set(thepilot,true)
