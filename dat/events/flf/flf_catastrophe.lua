@@ -96,8 +96,9 @@ function create ()
 
    emp_srcsys = system.get( "Arcanis" )
    emp_shptypes = {
-      "Empire Lge Attack", "Empire Shark", "Empire Shark",
-      "Empire Shark" }
+      "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot",
+      "Empire Admonisher", "Empire Admonisher", "Empire Admonisher", "Empire Pacifier", "Empire Hawking",
+      "Empire Peacemaker", "Empire Shark", "Empire Shark", "Empire Shark" }
    emp_minsize = 6
    found_thurion = false
    player_attacks = 0
@@ -143,7 +144,7 @@ function takeoff ()
    pilot.toggleSpawn( false )
    pilot.clear()
 
-   local nf, ss, s, shptypes
+   local nf, ss, s
 
    ss, s = planet.get( "Sindbad" )
 
@@ -161,17 +162,16 @@ function takeoff ()
    hook.pilot( flf_base, "death", "pilot_death_sindbad" )
 
    -- Spawn FLF ships
-   shptypes = {
-      "FLF Pacifier", "FLF Lancelot", "FLF Vendetta", "FLF Lancelot",
-      "FLF Vendetta", "FLF Lancelot", "FLF Vendetta" }
-   flf_ships = addFleetShips( 5, shptypes, ss:pos(), "flf_norun" )
+   shptypes = {"Pacifier", "Lancelot", "Vendetta", "Lancelot", "Vendetta", "Lancelot", "Vendetta"}
+   shpnames = {_("FLF Pacifier"), _("FLF Lancelot"), _("FLF Vendetta"), _("FLF Lancelot"), _("FLF Vendetta"), _("FLF Lancelot"), _("FLF Vendetta")}
+   flf_ships = addShips( 5, shptypes, "FLF", ss:pos(), shpnames, "flf_norun" )
    for i, j in ipairs( flf_ships ) do
       j:setVisible()
       j:memory( "aggressive", true )
    end
 
    -- Spawn Empire ships
-   emp_ships = addFleetShips( 1, emp_shptypes, emp_srcsys, "empire_norun" )
+   emp_ships = addShips( 1, emp_shptypes, "Empire", emp_srcsys, nil, "empire_norun" )
    for i, j in ipairs( emp_ships ) do
       j:setHostile()
       j:setVisible()
@@ -188,7 +188,7 @@ function takeoff ()
       "Dvaered Phalanx", "Dvaered Ancestor", "Dvaered Ancestor",
       "Dvaered Ancestor", "Dvaered Vendetta", "Dvaered Vendetta",
       "Dvaered Vendetta", "Dvaered Vendetta" }
-   dv_ships = addFleetShips( 1, shptypes, emp_srcsys, "dvaered_norun" )
+   dv_ships = addShips( 1, shptypes, "Dvaered", emp_srcsys, nil, "dvaered_norun" )
    for i, j in ipairs( dv_ships ) do
       j:setHostile()
       j:setVisible()
@@ -209,7 +209,7 @@ function pilot_death_emp( pilot, attacker, arg )
 
    if #emp_alive < emp_minsize or rnd.rnd() < 0.1 then
       emp_ships = emp_alive
-      local nf = addFleetShips( 1, emp_shptypes, emp_srcsys, "empire_norun" )
+      local nf = addShips( 1, emp_shptypes, "Empire", emp_srcsys, nil, "empire_norun" )
       for i, j in ipairs( nf ) do
          j:setHostile()
          j:setVisible()

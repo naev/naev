@@ -1,46 +1,4 @@
 --[[
--- @brief Wrapper for pilot.addFleet() that can operate on tables of fleets.
---
--- @usage pilots = addFleetShips( 2, "Pirate Hyena", nil, "pirate" ) -- Creates two Pirate Hyenas with pirate AIs. (Last 2 args optional.)
--- @usage pilots = addFleetShips( 2, { "Trader Rhino", "Trader Koala" }, nil, nil ) -- Creates a convoy of four trader ships with default AIs. (Last 2 args optional.)
---
---    @luaparam count Number of times to repeat the pattern.
---    @luaparam ship Fleet to add.
---    @luaparam location Location to jump in from, take off from, or appear at.
---    @luaparam ai AI to override the default with.
---    @luareturn Table of created pilots.
--- @luafunc addFleetShips
---]]
-function addFleetShips( count, ship, location, ai )
-   local ais = {}
-   local locations = {}
-   local out = {}
-
-   if type(ship) ~= "table" and type(ship) ~= "string" then
-      print(_("addFleetShips: Error, ship list is not a fleet or table of fleets!"))
-      return
-   elseif type(ship) == "string" then -- Put lone fleet into table.
-      ship = { ship }
-   end
-   ais       = _buildDupeTable( ai, #ship )
-   locations = _buildDupeTable( location, #ship )
-
-   if count == nil then
-      count = 1
-   end
-   for i=1,count do -- Repeat the pattern as necessary.
-      for k,v in ipairs(ship) do
-         out = _mergeTables( out, pilot.addFleet( ship[k], locations[k], ais[k] ) )
-      end
-   end
-   if #out > 1 then
-      _randomizePositions( out )
-   end
-   return out
-end
-
-
---[[
 -- @brief Wrapper for pilot.add() that can operate on tables of ships.
 --
 -- @usage pilots = addShips( 1, "Hyena", "Pirate" ) -- Creates a facsimile of a Pirate Hyena.
@@ -106,18 +64,6 @@ function _buildDupeTable( input, count )
       end
       return tmp
    end
-end
-
-
-function _mergeTables( old, new )
-   if type(old) ~= "table" or type(new) ~= "table" then
-      print(_("_mergeTables: Error, this function only accepts tables."))
-   end
-
-   for k,v in ipairs(new) do
-      table.insert(old, v )
-   end
-   return old
 end
 
 

@@ -160,12 +160,11 @@ function enter ()
          hook.pilot( dv_base, "death", "pilot_death_station" )
 
          -- Spawn Dvaered ships
-         dv_fleet = {}
-
          local dv_ships = {
-            "Dvaered Goddard", "Dvaered Big Patrol", "Dvaered Big Patrol",
-            "Dvaered Home Guard", "Dvaered Ancestor", "Dvaered Ancestor"}
-         dv_fleet = addFleetShips( 1, dv_ships, ro:pos(), "dvaered_norun" )
+            "Dvaered Goddard", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance", "Dvaered Ancestor", "Dvaered Ancestor",
+            "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta",
+            "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta"}
+         dv_fleet = addShips( 1, dv_ships, "Dvaered", ro:pos(), nil, "dvaered_norun" )
 
          for i, j in ipairs( dv_fleet ) do
             j:control()
@@ -176,7 +175,7 @@ function enter ()
          -- Spawn FLF ships
          local jmp, jmp2
          jmp, jpm2 = jump.get( "Haleb", "Theras" )
-         flf_fleet = addFleetShips( 4, {"FLF Vendetta", "FLF Vendetta", "FLF Lancelot"}, jmp:pos() )
+         flf_fleet = addShips( 4, {"Vendetta", "Vendetta", "Lancelot"}, "FLF", jmp:pos() , {_("FLF Vendetta"), _("FLF Vendetta"), _("FLF Lancelot")})
 
          for i, j in ipairs( flf_fleet ) do
             j:control()

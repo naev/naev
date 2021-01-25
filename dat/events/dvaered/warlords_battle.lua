@@ -111,7 +111,7 @@ function attack ()
    attAttHook = {}
    local n = rnd.rnd(3,6)
 
-   attackers = addFleetShips(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, source_system)
+   attackers = addShips(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, "Dvaered", source_system)
    attackers[2*n+1] = pilot.addFleet("Dvaered Phalanx", source_system)[1]
    attackers[2*n+2] = pilot.addFleet("Dvaered Phalanx", source_system)[1]
    attackers[2*n+3] = pilot.addFleet("Dvaered Vigilance", source_system)[1]
@@ -160,7 +160,7 @@ function defense ()
    defAttHook = {}
    local n = rnd.rnd(3,6)
 
-   defenders = addFleetShips(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, source_planet)
+   defenders = addShips(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, "Dvaered", source_planet)
    defenders[2*n+1] = pilot.addFleet("Dvaered Phalanx", source_planet)[1]
    defenders[2*n+2] = pilot.addFleet("Dvaered Phalanx", source_planet)[1]
    defenders[2*n+3] = pilot.addFleet("Dvaered Vigilance", source_planet)[1]
