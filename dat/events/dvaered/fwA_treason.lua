@@ -89,7 +89,7 @@ function begin ()
       evt.finish(false)
    end
 
-   vedetta = pilot.add("Dvaered Vendetta", source_system)[1]
+   vedetta = pilot.addFleet("Dvaered Vendetta", source_system)[1]
    finish1 = hook.pilot(vedetta, "jump", "finish")
    finish2 = hook.pilot(vedetta, "death", "finish")
    finish3 = hook.land("finish")

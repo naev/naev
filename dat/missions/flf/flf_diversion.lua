@@ -169,7 +169,7 @@ function timer_spawn_dv ()
       local shipnames = { "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance", "Dvaered Goddard", "Dvaered Small Patrol", "Dvaered Big Patrol" }
       local shipname = shipnames[ rnd.rnd( 1, #shipnames ) ]
       player.msg( msg:format( shipname ) )
-      for i, j in ipairs( pilot.add( shipname ) ) do
+      for i, j in ipairs( pilot.addFleet( shipname ) ) do
          add_attention( j )
       end
    end

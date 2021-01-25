@@ -159,7 +159,7 @@ end
 function takeoff()
    if system.cur() == delivSys and droppedoff then
 
-      logan = pilot.add( "Civilian Gawain", player.pos() + vec2.new(-500,-500))[1]
+      logan = pilot.addFleet( "Civilian Gawain", player.pos() + vec2.new(-500,-500))[1]
       logan:rename(_("Dr. Logan"))
       logan:setFaction("Za'lek")
       logan:setFriendly()

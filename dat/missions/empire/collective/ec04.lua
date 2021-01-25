@@ -117,8 +117,8 @@ function enter()
         local waypoint12 = vec2.new(1500, 3000)
         local waypoint22 = vec2.new(1500, -500)
 
-        fleet1 = pilot.add("Empire Flanking Fleet", fleetpos1, "empire_norun")
-        fleet2 = pilot.add("Empire Flanking Fleet", fleetpos2, "empire_norun")
+        fleet1 = pilot.addFleet("Empire Flanking Fleet", fleetpos1, "empire_norun")
+        fleet2 = pilot.addFleet("Empire Flanking Fleet", fleetpos2, "empire_norun")
         empireAttack(fleet1)
         empireAttack(fleet2)
 
@@ -135,8 +135,8 @@ function enter()
         system.mrkAdd(markername, waypoint1)
         system.mrkAdd(markername, waypoint2)
 
-        swarm1 = pilot.add("Collective Lge Swarm", misn_target:pos())
-        swarm2 = pilot.add("Collective Lge Swarm", misn_target:pos())
+        swarm1 = pilot.addFleet("Collective Lge Swarm", misn_target:pos())
+        swarm2 = pilot.addFleet("Collective Lge Swarm", misn_target:pos())
         for _, j in ipairs(swarm2) do
             swarm1[#swarm1 + 1] = j -- Combine the swarms into one swarm, for convenience.
         end
@@ -158,16 +158,16 @@ function enter()
 
         local pv = player.pos()
 
-        fleet1 = pilot.add("Empire Flanking Fleet", pv + vec2.new(-150, 500))
-        fleet2 = pilot.add("Empire Flanking Fleet", pv + vec2.new(-150, -500))
+        fleet1 = pilot.addFleet("Empire Flanking Fleet", pv + vec2.new(-150, 500))
+        fleet2 = pilot.addFleet("Empire Flanking Fleet", pv + vec2.new(-150, -500))
         empireRetreat(fleet1)
         empireRetreat(fleet2)
         fleet1[1]:comm(escort_msg2)
 
         -- TODO: Use heavier Collective ships here
-        swarm1 = pilot.add("Collective Lge Swarm", pv + vec2.new(-3000, 500))
-        swarm2 = pilot.add("Collective Lge Swarm", pv + vec2.new(-3000, 0))
-        swarm3 = pilot.add("Collective Lge Swarm", pv + vec2.new(-3000, -500))
+        swarm1 = pilot.addFleet("Collective Lge Swarm", pv + vec2.new(-3000, 500))
+        swarm2 = pilot.addFleet("Collective Lge Swarm", pv + vec2.new(-3000, 0))
+        swarm3 = pilot.addFleet("Collective Lge Swarm", pv + vec2.new(-3000, -500))
         for i, _ in ipairs(swarm1) do -- Let's be lazy.
             swarm1[i]:setVisplayer()
             swarm2[i]:setVisplayer()

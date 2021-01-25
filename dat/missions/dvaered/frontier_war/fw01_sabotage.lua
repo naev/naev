@@ -259,7 +259,7 @@ function enter()
       pilot.toggleSpawn("Pirate")
       pilot.clearSelect("Pirate")
 
-      warlord = pilot.add("Dvaered Goddard", sabotpla)[1]
+      warlord = pilot.addFleet("Dvaered Goddard", sabotpla)[1]
       warlord:rename( "Lord Battleaddict" )
       warlord:control(true)
       warlord:moveto( sabotpla:pos() + vec2.newP(rnd.rnd(1000), rnd.rnd(360)) )
@@ -269,16 +269,16 @@ function enter()
 
       p = {}
       for i = 1, 4 do
-         p[i] = pilot.add("Dvaered Vendetta", sabotpla)[1]
+         p[i] = pilot.addFleet("Dvaered Vendetta", sabotpla)[1]
          p[i]:setLeader(warlord)
       end
       for i = 1, 2 do
-         p[i+4] = pilot.add("Dvaered Ancestor", sabotpla)[1]
+         p[i+4] = pilot.addFleet("Dvaered Ancestor", sabotpla)[1]
          p[i+4]:setLeader(warlord)
       end
-      p[7] = pilot.add("Dvaered Phalanx", sabotpla)[1]
+      p[7] = pilot.addFleet("Dvaered Phalanx", sabotpla)[1]
       p[7]:setLeader(warlord)
-      p[8] = pilot.add("Dvaered Vigilance", sabotpla)[1]
+      p[8] = pilot.addFleet("Dvaered Vigilance", sabotpla)[1]
       p[8]:setLeader(warlord)
       p[8]:rename("Colonel Hamelsen")
       p[8]:setNoDeath()
@@ -304,13 +304,13 @@ function enter()
       mypos = duelpla:pos()
       step = 150
 
-      klank = pilot.add("Dvaered Goddard", mypos + vec2.new(-step, step/2))[1]
+      klank = pilot.addFleet("Dvaered Goddard", mypos + vec2.new(-step, step/2))[1]
       klank:rename( "General Klank" )
       klank:control(true)
       klank:setFaction("DHC")
       equipGoddard( klank, true ) -- Klank's superior equipment should ensure victory
 
-      battleaddict = pilot.add("Dvaered Goddard", mypos + vec2.new(step, step/2))[1]
+      battleaddict = pilot.addFleet("Dvaered Goddard", mypos + vec2.new(step, step/2))[1]
       battleaddict:rename( "Lord Battleaddict" )
       battleaddict:control(true)
       battleaddict:setFaction("Warlords")
@@ -319,27 +319,27 @@ function enter()
       klank:face(battleaddict)
       battleaddict:face(klank)
 
-      urnus = pilot.add("Dvaered Vigilance", mypos + vec2.new(0, 3*step/2))[1]
+      urnus = pilot.addFleet("Dvaered Vigilance", mypos + vec2.new(0, 3*step/2))[1]
       urnus:rename( "Colonel Urnus" )
       urnus:control(true)
       urnus:face( mypos + vec2.new(0, step/2) )
 
-      tam = pilot.add("Dvaered Vigilance", mypos + vec2.new(-2*step, 3*step/2))[1]
+      tam = pilot.addFleet("Dvaered Vigilance", mypos + vec2.new(-2*step, 3*step/2))[1]
       tam:rename( "Major Tam" )
       tam:control(true)
       tam:face(battleaddict)
 
-      leblanc = pilot.add("Dvaered Phalanx", mypos + vec2.new(-2*step, -step/2))[1]
+      leblanc = pilot.addFleet("Dvaered Phalanx", mypos + vec2.new(-2*step, -step/2))[1]
       leblanc:rename( "Captain Leblanc" )
       leblanc:control(true)
       leblanc:face(battleaddict)
 
-      hamelsen = pilot.add("Dvaered Vigilance", mypos + vec2.new(2*step, 3*step/2))[1]
+      hamelsen = pilot.addFleet("Dvaered Vigilance", mypos + vec2.new(2*step, 3*step/2))[1]
       hamelsen:rename( "Colonel Hamelsen" )
       hamelsen:control(true)
       hamelsen:face(klank)
 
-      randguy = pilot.add("Dvaered Vigilance", mypos + vec2.new(2*step, -step/2))[1]
+      randguy = pilot.addFleet("Dvaered Vigilance", mypos + vec2.new(2*step, -step/2))[1]
       randguy:control(true)
       randguy:face(klank)
 
@@ -440,7 +440,7 @@ end
 
 -- Spawn the Phalanx to disable
 function spawn_phalanx()
-   p = pilot.add("Dvaered Phalanx", intpla)[1]
+   p = pilot.addFleet("Dvaered Phalanx", intpla)[1]
    p:setFaction("Warlords")
    p:setHilight()
    p:rename("Gorgon")
@@ -580,13 +580,13 @@ end
 
 -- Fighter duel
 function fighterDuel()
-   klank2 = pilot.add("Dvaered Vendetta", klank:pos())[1]
+   klank2 = pilot.addFleet("Dvaered Vendetta", klank:pos())[1]
    klank2:rename( "General Klank" )
    klank2:control(true)
    klank2:setFaction("DHC")
    equipVendetta( klank2 ) -- Klank's superior equipment should ensure victory once more
 
-   battleaddict2 = pilot.add("Dvaered Vendetta", battleaddict:pos())[1]
+   battleaddict2 = pilot.addFleet("Dvaered Vendetta", battleaddict:pos())[1]
    battleaddict2:rename( "Lord Battleaddict" )
    battleaddict2:control(true)
    battleaddict2:setFaction("Warlords")

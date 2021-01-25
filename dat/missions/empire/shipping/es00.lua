@@ -154,7 +154,7 @@ function enter ()
       enter_vect = player.pos() + vec2.newP( rnd.rnd(1500, 2000), ang )
 
       -- Create some pilots to go after the player
-      p = pilot.add( "FLF Sml Force", enter_vect )
+      p = pilot.addFleet( "FLF Sml Force", enter_vect )
       -- Set hostile
       for k,v in ipairs(p) do
          v:setHostile()
@@ -166,11 +166,11 @@ function enter ()
 
       -- We'll put the FLF first
       enter_vect = battle_pos + vec2.newP( rnd.rnd(700, 1000), rnd.rnd(0, 360) )
-      pilot.add( "FLF Med Force", enter_vect )
+      pilot.addFleet( "FLF Med Force", enter_vect )
 
       -- Now the Dvaered
       enter_vect = battle_pos + vec2.newP( rnd.rnd(200, 300), rnd.rnd(0, 360) )
-      pilot.add( "Dvaered Med Force", enter_vect )
+      pilot.addFleet( "Dvaered Med Force", enter_vect )
 
       -- Player should not be able to reland
       player.allowLand(false,_("The docking stabilizers have been damaged by weapons fire!"))

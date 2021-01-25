@@ -127,8 +127,10 @@ class sanitizer:
 
         rawstr = r"""
         (?P<func>
+            pilot\.addFleet\(|
+            addFleetShips\(|
             pilot\.add\(|
-            pilot\.addRaw\(|
+            addShips\(|
             player\.addShip\(|
             addOutfit\(|
             diff\.apply\(|

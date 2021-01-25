@@ -166,7 +166,7 @@ end
 
 function ambush()
    -- Adds the drones.
-   badguy = addShips(4, {"Za'lek Light Drone", "Za'lek Heavy Drone", "Za'lek Bomber Drone"})
+   badguy = addFleetShips(4, {"Za'lek Light Drone", "Za'lek Heavy Drone", "Za'lek Bomber Drone"})
    badguyprox = {}
 
    for i, j in ipairs(badguy) do

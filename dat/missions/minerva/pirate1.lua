@@ -161,7 +161,7 @@ function enter ()
       fthugs = faction.dynAdd( "Dvaered", "Dvaered Thugs", _("Dvaered Thugs"), "dvaered" )
 
       local pos = thugpos
-      boss = pilot.addRaw( "Dvaered Vigilance", fthugs, pos )
+      boss = pilot.add( "Dvaered Vigilance", fthugs, pos )
       boss:control()
       boss:brake()
       hook.pilot( boss, "attacked", "thugs_attacked" )
@@ -169,7 +169,7 @@ function enter ()
       thugs = { boss }
       for i = 1,3 do
          pos = thugpos + vec2.newP( rnd.rnd(50,150), rnd.rnd(1,360) )
-         local p = pilot.addRaw( "Dvaered Vendetta", fthugs, pos )
+         local p = pilot.add( "Dvaered Vendetta", fthugs, pos )
          p:setLeader( boss )
          hook.pilot( p, "attacked", "thugs_attacked" )
          hook.pilot( p, "death", "thugs_dead" )
@@ -177,7 +177,7 @@ function enter ()
       end
 
       fdrone = faction.dynAdd( "Independent", "Drone", _("Drone"), "zalek" )
-      drone = pilot.addRaw( "Za'lek Light Drone", fdrone, dronepos )
+      drone = pilot.add( "Za'lek Light Drone", fdrone, dronepos )
       drone:control()
       drone:brake()
 

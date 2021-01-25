@@ -333,7 +333,7 @@ end
 
 function enter()
    if system.cur() == baronsys then
-      pinnacle = pilot.addRaw("Proteron Kahan", "Civilian", planet.get("Ulios"):pos() + vec2.new(-400,-400), _("Pinnacle"), "trader" )
+      pinnacle = pilot.add("Proteron Kahan", "Civilian", planet.get("Ulios"):pos() + vec2.new(-400,-400), _("Pinnacle"), "trader" )
       pinnacle:setInvincible(true)
       pinnacle:setFriendly()
       pinnacle:control()
@@ -355,7 +355,7 @@ function enter()
          count = 3
       end
       if choice <= 3 then
-         fleep = addRawShips( count, pilots, "Mercenary", nil, _("Artifact Hunter") );
+         fleep = addShips( count, pilots, "Mercenary", nil, _("Artifact Hunter") );
          for i, j in ipairs(fleep) do
             j:control()
             j:setHostile(true)

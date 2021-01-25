@@ -115,7 +115,7 @@ end
 
 
 function spawnChelseaShip( param )
-   chelsea = pilot.addRaw( "Rhino", "Comingout_associates", param, _("Chelsea") )
+   chelsea = pilot.add( "Rhino", "Comingout_associates", param, _("Chelsea") )
    chelsea:rmOutfit( "all" )
    chelsea:rmOutfit( "cores" )
    chelsea:addOutfit( "Unicorp PT-600 Core System" )
@@ -153,7 +153,7 @@ end
 function spawnThug( param )
    local shiptypes = { "Hyena", "Hyena", "Shark", "Lancelot", "Admonisher" }
    local shiptype = shiptypes[ rnd.rnd( 1, #shiptypes ) ]
-   thug = pilot.addRaw( shiptype, "Comingout_thugs", param, "Thug " .. shiptype )
+   thug = pilot.add( shiptype, "Comingout_thugs", param, "Thug " .. shiptype )
 
    thug:setHostile()
 

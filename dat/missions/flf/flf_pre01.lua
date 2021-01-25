@@ -148,10 +148,10 @@ function enter()
         pilot.clear()
 
         -- Add FLF ships that are to guide the player to the FLF base (but only after a battle!)
-        fleetFLF = addShips(3, "FLF Vendetta", jumppos, "flf_norun")
+        fleetFLF = addFleetShips(3, "FLF Vendetta", jumppos, "flf_norun")
         local c = player.pilot():ship():class()
         if c == "Cruiser" or c == "Carrier" then
-            local p = pilot.add("FLF Pacifier", jumppos, "flf_norun")[1]
+            local p = pilot.addFleet("FLF Pacifier", jumppos, "flf_norun")[1]
             fleetFLF[#fleetFLF + 1] = p
         end
         

@@ -144,7 +144,7 @@ function spawn ()
    local r = system.cur():radius()
    local x = rnd.rnd( -r, r )
    local y = rnd.rnd( -r, r )
-   local p = pilot.add( "Pirate Phalanx", vec2.new( x, y ) )[1]
+   local p = pilot.addFleet( "Pirate Phalanx", vec2.new( x, y ) )[1]
 
    hook.pilot( p, "death", "pirate_death" )
    p:setHostile()
@@ -152,7 +152,7 @@ function spawn ()
    p:setHilight( true )
 
    -- Spawn Chelsea
-   chelsea = pilot.addRaw( "Lancelot", "Comingout_associates", lastsys, _("Chelsea") )
+   chelsea = pilot.add( "Lancelot", "Comingout_associates", lastsys, _("Chelsea") )
    chelsea:rmOutfit( "all" )
    chelsea:rmOutfit( "cores" )
    chelsea:addOutfit( "Milspec Orion 3701 Core System" )

@@ -228,7 +228,7 @@ end
 
 -- Spawns the FLF base, ship version.
 function spawnbase()
-    base = pilot.add("Sindbad", basepos, "flf_norun")[1]
+    base = pilot.addFleet("Sindbad", basepos, "flf_norun")[1]
     base:rmOutfit("all")
     base:rmOutfit("cores")
     base:addOutfit("Dummy Systems")
@@ -293,7 +293,7 @@ end
 function spawnDV()
     updatepos()
 
-    obstinate = pilot.add("Dvaered Goddard", fleetpos[1], "dvaered_norun")[1]
+    obstinate = pilot.addFleet("Dvaered Goddard", fleetpos[1], "dvaered_norun")[1]
     obstinate:rename(_("Obstinate"))
     obstinate:setDir(90)
     obstinate:setFriendly()
@@ -314,7 +314,7 @@ function spawnDV()
     
     local i = 1
     while i <= 4 do
-        vigilance = pilot.add("Dvaered Vigilance", fleetpos[i + 1], "dvaered_norun")[1]
+        vigilance = pilot.addFleet("Dvaered Vigilance", fleetpos[i + 1], "dvaered_norun")[1]
         vigilance:setDir(90)
         vigilance:setFriendly()
         vigilance:control()
@@ -326,7 +326,7 @@ function spawnDV()
     
     local i = 1
     while i <= 6 do
-        vendetta = pilot.add("Dvaered Vendetta", fighterpos[i], "dvaered_norun")[1]
+        vendetta = pilot.addFleet("Dvaered Vendetta", fighterpos[i], "dvaered_norun")[1]
         vendetta:setDir(90)
         vendetta:setFriendly()
         vendetta:setVisplayer(true)
@@ -351,7 +351,7 @@ end
 function spawnFLFfighters()
     wavefirst = true
     wavestarted = true
-    local wingFLF = addShips( 3, "FLF Lancelot", base:pos(), "flf_norun" )
+    local wingFLF = addFleetShips( 3, "FLF Lancelot", base:pos(), "flf_norun" )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         setFLF( j )
@@ -360,7 +360,7 @@ end
 
 -- Spawns FLF bombers
 function spawnFLFbombers()
-    local wingFLF = addShips( 3, "FLF Vendetta", base:pos(), "flf_norun" )
+    local wingFLF = addFleetShips( 3, "FLF Vendetta", base:pos(), "flf_norun" )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         setFLF( j )
@@ -369,7 +369,7 @@ end
 
 -- Spawns FLF destroyers
 function spawnFLFdestroyers()
-    local wingFLF = addShips( 2, "FLF Pacifier", base:pos(), "flf_norun" )
+    local wingFLF = addFleetShips( 2, "FLF Pacifier", base:pos(), "flf_norun" )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         hook.pilot(j, "death", "deathFLF")
@@ -448,7 +448,7 @@ end
  
 -- Spawns the initial Dvaered bombers.
 function spawnDVbomber()
-    bomber = pilot.add("Dvaered Ancestor", obstinate:pos(), "dvaered_norun")[1]
+    bomber = pilot.addFleet("Dvaered Ancestor", obstinate:pos(), "dvaered_norun")[1]
     bomber:rmOutfit("all")
     foo = bomber:addOutfit("TeraCom Imperator Launcher", 1, true)
     bomber:addOutfit("Engine Reroute", 1)
@@ -560,7 +560,7 @@ function deathDVbomber()
         DVreinforcements = DVreinforcements - 1
         for i, j in ipairs(bombers) do
             if not j:exists() then
-                bomber = pilot.add("Dvaered Ancestor", obstinate:pos(), "dvaered_norun")[1]
+                bomber = pilot.addFleet("Dvaered Ancestor", obstinate:pos(), "dvaered_norun")[1]
                 bomber:rmOutfit("all")
                 bomber:addOutfit("TeraCom Imperator Launcher", 1, true)
                 bomber:addOutfit("Engine Reroute", 1)
