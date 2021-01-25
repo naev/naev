@@ -102,7 +102,7 @@ def generate_h_file(f):
 
     f.write("#include \"opengl.h\"\n\n")
 
-    f.write("typedef struct Shaders_ {")
+    f.write("typedef struct Shaders_ {\n")
 
     for shader in SHADERS:
         f.write("   struct {\n")
