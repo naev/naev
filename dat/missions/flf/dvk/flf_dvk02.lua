@@ -268,7 +268,7 @@ function enter ()
          local r = system.cur():radius()
          local vec = vec2.new( rnd.rnd( -r, r ), rnd.rnd( -r, r ) )
 
-         local bstk = pilot.add( "Pirate Kestrel", vec, "pirate_norun" )
+         local bstk = pilot.addFleet( "Pirate Kestrel", vec, "pirate_norun" )
          boss = bstk[1]
          hook.pilot( boss, "death", "pilot_death_boss" )
          hook.pilot( boss, "hail", "pilot_hail_boss" )
@@ -276,7 +276,7 @@ function enter ()
          boss:setHilight()
 
          pirates_left = 4
-         pirates = addShips( pirates_left, "Pirate Hyena", vec, "pirate_norun" )
+         pirates = addFleetShips( pirates_left, "Pirate Hyena", vec, "pirate_norun" )
          for i, j in ipairs( pirates ) do
             hook.pilot( j, "death", "pilot_death_pirate" )
             hook.pilot( j, "hail", "pilot_hail_pirate" )
@@ -295,7 +295,7 @@ function enter ()
          local r = system.cur():radius()
          local vec = vec2.new( rnd.rnd( -r, r ), rnd.rnd( -r, r ) )
 
-         local bstk = pilot.add( "Pirate Kestrel", vec, "pirate_norun" )
+         local bstk = pilot.addFleet( "Pirate Kestrel", vec, "pirate_norun" )
          boss = bstk[1]
          hook.pilot( boss, "death", "pilot_death_boss" )
          boss_hook = hook.pilot( boss, "hail", "pilot_hail_boss" )

@@ -239,7 +239,7 @@ function interceptors()
    --spawning high speed Hyenas
    number = {1,2,3,4}
    for i in ipairs(number) do
-      badguys[i] = pilot.addRaw( "Hyena", "Mercenary", nil, _("Mercenary") )
+      badguys[i] = pilot.add( "Hyena", "Mercenary", nil, _("Mercenary") )
       badguys[i]:setHostile()
 
       --Their outfits must be quite good
@@ -262,7 +262,7 @@ function hvy_intercept()
    --spawning Lancelots
    number = {1,2,3,4}
    for i in ipairs(number) do
-      badguys[i] = pilot.addRaw( "Lancelot", "Mercenary", nil, _("Mercenary") )
+      badguys[i] = pilot.add( "Lancelot", "Mercenary", nil, _("Mercenary") )
       badguys[i]:setHostile()
 
       --Their outfits must be quite good
@@ -287,7 +287,7 @@ function corvette()
    --spawning Admonishers
    number = {1,2}
    for i in ipairs(number) do
-      badguys[i] = pilot.addRaw( "Admonisher", "Mercenary", nil, _("Mercenary") )
+      badguys[i] = pilot.add( "Admonisher", "Mercenary", nil, _("Mercenary") )
       badguys[i]:setHostile()
 
       badguys[i]:rmOutfit("all")
@@ -307,7 +307,7 @@ end
 
 function cruiser()
    --spawning a Kestrel with massive missile weaponry
-   badguy = pilot.addRaw( "Kestrel", "Mercenary", nil, _("Mercenary") )
+   badguy = pilot.add( "Kestrel", "Mercenary", nil, _("Mercenary") )
    badguy:setHostile()
 
    badguy:rmOutfit("all")
@@ -332,7 +332,7 @@ function bombers()
    --spawning Ancestors
    number = {1,2,3}
    for i in ipairs(number) do
-      badguys[i] = pilot.addRaw( "Ancestor", "Mercenary", nil, _("Mercenary") )
+      badguys[i] = pilot.add( "Ancestor", "Mercenary", nil, _("Mercenary") )
       badguys[i]:setHostile()
 
       badguys[i]:rmOutfit("all")
@@ -356,7 +356,7 @@ end
 
 function add_llama()
    --adding an useless Llama
-   useless = pilot.addRaw( "Llama", "Mercenary", nil, _("Amateur Mercenary") )
+   useless = pilot.add( "Llama", "Mercenary", nil, _("Amateur Mercenary") )
    useless:setHostile()
 
    useless:rmOutfit("all")

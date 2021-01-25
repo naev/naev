@@ -81,7 +81,7 @@ end
 function merchant ()
    merShips = {"Trader Koala", "Trader Mule", "Trader Rhino", "Trader Llama"}
    mship = merShips[rnd.rnd(1,#merShips)]
-   trader = pilot.add(mship, source_system)[1]
+   trader = pilot.addFleet(mship, source_system)[1]
    hook.timer(2000, "hailme")
 end
 
@@ -111,15 +111,15 @@ function attack ()
    attAttHook = {}
    local n = rnd.rnd(3,6)
 
-   attackers = addShips(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, source_system)
-   attackers[2*n+1] = pilot.add("Dvaered Phalanx", source_system)[1]
-   attackers[2*n+2] = pilot.add("Dvaered Phalanx", source_system)[1]
-   attackers[2*n+3] = pilot.add("Dvaered Vigilance", source_system)[1]
-   attackers[2*n+4] = pilot.addRaw("Rhino", "Thugs", source_system) --some transport ships
-   attackers[2*n+5] = pilot.addRaw("Rhino", "Thugs", source_system)
-   attackers[2*n+6] = pilot.addRaw("Rhino", "Thugs", source_system)
-   attackers[2*n+7] = pilot.addRaw("Rhino", "Thugs", source_system)
-   attackers[2*n+8] = pilot.add("Dvaered Goddard", source_system)[1]
+   attackers = addFleetShips(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, source_system)
+   attackers[2*n+1] = pilot.addFleet("Dvaered Phalanx", source_system)[1]
+   attackers[2*n+2] = pilot.addFleet("Dvaered Phalanx", source_system)[1]
+   attackers[2*n+3] = pilot.addFleet("Dvaered Vigilance", source_system)[1]
+   attackers[2*n+4] = pilot.add("Rhino", "Thugs", source_system) --some transport ships
+   attackers[2*n+5] = pilot.add("Rhino", "Thugs", source_system)
+   attackers[2*n+6] = pilot.add("Rhino", "Thugs", source_system)
+   attackers[2*n+7] = pilot.add("Rhino", "Thugs", source_system)
+   attackers[2*n+8] = pilot.addFleet("Dvaered Goddard", source_system)[1]
 
    -- The transport ships tend to run away
    attackers[2*n+4]:memory().shield_run = 70
@@ -160,11 +160,11 @@ function defense ()
    defAttHook = {}
    local n = rnd.rnd(3,6)
 
-   defenders = addShips(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, source_planet)
-   defenders[2*n+1] = pilot.add("Dvaered Phalanx", source_planet)[1]
-   defenders[2*n+2] = pilot.add("Dvaered Phalanx", source_planet)[1]
-   defenders[2*n+3] = pilot.add("Dvaered Vigilance", source_planet)[1]
-   defenders[2*n+4] = pilot.add("Dvaered Goddard", source_planet)[1]
+   defenders = addFleetShips(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, source_planet)
+   defenders[2*n+1] = pilot.addFleet("Dvaered Phalanx", source_planet)[1]
+   defenders[2*n+2] = pilot.addFleet("Dvaered Phalanx", source_planet)[1]
+   defenders[2*n+3] = pilot.addFleet("Dvaered Vigilance", source_planet)[1]
+   defenders[2*n+4] = pilot.addFleet("Dvaered Goddard", source_planet)[1]
 
    defenders = arrangeList(defenders)  --The heaviest ships will surround the leader
 

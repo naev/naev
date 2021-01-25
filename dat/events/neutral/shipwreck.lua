@@ -43,7 +43,7 @@ function create ()
     angle = rnd.rnd() * 2 * math.pi
     dist  = rnd.rnd(2000, 3000) -- place it a ways out
     pos   = vec2.new( dist * math.cos(angle), dist * math.sin(angle) )
-    p     = pilot.add(ship, pos, "dummy")
+    p     = pilot.addFleet(ship, pos, "dummy")
     for k,v in ipairs(p) do
         v:setFaction("Derelict")
         v:disable()

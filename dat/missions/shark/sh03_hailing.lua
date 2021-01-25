@@ -134,7 +134,7 @@ end
 function enter()
    --the system where the player must look for the Hawking
    if system.cur() == missys then
-      hawking = pilot.addRaw("Hawking", "Frontier", mispla:pos() + vec2.new(-400,-400), _("Air Force One"), "trader" )
+      hawking = pilot.add("Hawking", "Frontier", mispla:pos() + vec2.new(-400,-400), _("Air Force One"), "trader" )
       hawking:setHilight(true)
       hailhook = hook.pilot(hawking, "hail", "hail")
    end

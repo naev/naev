@@ -158,7 +158,7 @@ function jumpin()
         if not ambush and system.cur():faction() == faction.get("Dvaered") and system.cur():jumpDist(t_sys[5]) < 5 then
             hook.timer(2000, "startAmbush")
         elseif system.cur()==system.get("Daan") or system.cur()==system.get("Provectus Nova") then
-            ambush = pilot.add("Trader Ambush 2", vec2.new(0,0), "baddie_norun")
+            ambush = pilot.addFleet("Trader Ambush 2", vec2.new(0,0), "baddie_norun")
             for i, j in ipairs(ambush) do
                 j:setHostile()
                 j:control(true)
@@ -280,7 +280,7 @@ function timer_transporterSafe()
 end
 
 function spawnTransporter()
-    transporter = pilot.add("Nebula Research Shuttle", origin)[1]
+    transporter = pilot.addFleet("Nebula Research Shuttle", origin)[1]
     hook.pilot(transporter, "death", "transporterDeath")
     hook.pilot(transporter, "jump", "transporterJump")
     hook.pilot(transporter, "land", "transporterLand")
@@ -297,7 +297,7 @@ function spawnTransporter()
 end
 
 function startAmbush()
-    ships = pilot.add("Dvaered Small Patrol", vec2.new(-1000,0), "dvaered_norun")
+    ships = pilot.addFleet("Dvaered Small Patrol", vec2.new(-1000,0), "dvaered_norun")
     for i, j in ipairs(ships) do
         j:control(true)
         j:moveto(vec2.new(-8000,0))

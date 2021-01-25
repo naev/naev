@@ -598,7 +598,7 @@ function enter ()
 
       local fdrone = faction.dynAdd( "Independent", "Feral Drone", _("Feral Drone"), "drone_miner" )
       local function spawn_single( ship, pos )
-         local p = pilot.addRaw( ship, "Feral Drone", pos )
+         local p = pilot.add( ship, "Feral Drone", pos )
          p:setNoJump(true)
          p:setNoLand(true)
          return p
@@ -646,7 +646,7 @@ function ecc_dist ()
       defense_systems = {}
       for k,v in ipairs(spawners) do
          local pos = eccpos + vec2.newP( rnd.rnd(0,100), rnd.rnd(0,359) )
-         local p = pilot.addRaw( v, "Strangelove", pos, _("Security Drone") )
+         local p = pilot.add( v, "Strangelove", pos, _("Security Drone") )
          p:control()
          p:setHostile()
          p:attack( pp )

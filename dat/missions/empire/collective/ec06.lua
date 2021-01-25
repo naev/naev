@@ -141,22 +141,22 @@ function jumpin ()
             local fleetCpos = vec2.new(0, 0)
             deathsC = 0
 
-            fleetE[#fleetE + 1] = pilot.add("Empire Peacemaker", last_sys)[1]
-            fleetE[#fleetE + 1] = pilot.add("Empire Hawking", last_sys)[1]
-            fleetE[#fleetE + 1] = pilot.add("Empire Hawking", last_sys)[1]
+            fleetE[#fleetE + 1] = pilot.addFleet("Empire Peacemaker", last_sys)[1]
+            fleetE[#fleetE + 1] = pilot.addFleet("Empire Hawking", last_sys)[1]
+            fleetE[#fleetE + 1] = pilot.addFleet("Empire Hawking", last_sys)[1]
             for i = 1, 6 do
-                fleetE[#fleetE + 1] = pilot.add("Empire Pacifier", last_sys)[1]
+                fleetE[#fleetE + 1] = pilot.addFleet("Empire Pacifier", last_sys)[1]
             end
             for i = 1, 15 do
-                fleetE[#fleetE + 1] = pilot.add("Empire Lancelot", last_sys)[1]
+                fleetE[#fleetE + 1] = pilot.addFleet("Empire Lancelot", last_sys)[1]
             end
             
-            fleetC[#fleetC + 1] = pilot.add("Starfire", fleetCpos)[1]
+            fleetC[#fleetC + 1] = pilot.addFleet("Starfire", fleetCpos)[1]
             hook.pilot(fleetC[#fleetC], "death", "col_dead")
             fleetC[#fleetC]:setNoDisable()
             fleetC[#fleetC]:setFaction( "Collective" )
             if var.peek("trinity") then
-                fleetC[#fleetC + 1] = pilot.add("Trinity", fleetCpos + vec2.new(300, 0))[1]
+                fleetC[#fleetC + 1] = pilot.addFleet("Trinity", fleetCpos + vec2.new(300, 0))[1]
                 hook.pilot(fleetC[#fleetC], "death", "col_dead")
                 fleetC[#fleetC]:setNoDisable()
                 fleetC[#fleetC]:setFaction( "Collective" )
@@ -165,9 +165,9 @@ function jumpin ()
             for i = 1, 60 do
                 local pos = fleetCpos + vec2.new(rnd.rnd(-10000, 10000), rnd.rnd(-10000, 10000))
                 if i <= 10 then
-                    droneC[#droneC + 1] = pilot.add("Collective Heavy Drone", pos)[1]
+                    droneC[#droneC + 1] = pilot.addFleet("Collective Heavy Drone", pos)[1]
                 else
-                    droneC[#droneC + 1] = pilot.add("Collective Drone", pos)[1]
+                    droneC[#droneC + 1] = pilot.addFleet("Collective Drone", pos)[1]
                 end
             end
             
@@ -226,7 +226,7 @@ end
 
 function addRefuelShip ()
    -- Create the pilot
-   refship = pilot.add( "Trader Mule", last_sys, "empire_refuel" )[1]
+   refship = pilot.addFleet( "Trader Mule", last_sys, "empire_refuel" )[1]
    refship:rename(_("Fuel Tanker"))
    refship:setFaction("Empire")
    refship:setFriendly()
@@ -242,8 +242,8 @@ function addRefuelShip ()
 
    -- Add some escorts
    refesc = {}
-   refesc[1] = pilot.add( "Empire Lancelot", last_sys, "empire_idle" )[1]
-   refesc[2] = pilot.add( "Empire Lancelot", last_sys, "empire_idle" )[1]
+   refesc[1] = pilot.addFleet( "Empire Lancelot", last_sys, "empire_idle" )[1]
+   refesc[2] = pilot.addFleet( "Empire Lancelot", last_sys, "empire_idle" )[1]
    for k,v in ipairs(refesc) do
       v:setFriendly()
    end

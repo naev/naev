@@ -21,6 +21,7 @@
 #include "camera.h"
 #include "damagetype.h"
 #include "escort.h"
+#include "fleet.h"
 #include "gui.h"
 #include "land_outfits.h"
 #include "log.h"
@@ -154,8 +155,8 @@ static int pilotL_hookClear( lua_State *L );
 static int pilotL_choosePoint( lua_State *L );
 static const luaL_Reg pilotL_methods[] = {
    /* General. */
-   { "addRaw", pilotL_addFleetRaw },
-   { "add", pilotL_addFleet },
+   { "add", pilotL_addFleetRaw },
+   { "addFleet", pilotL_addFleet },
    { "rm", pilotL_remove },
    { "get", pilotL_getPilots },
    { "__eq", pilotL_eq },
@@ -309,7 +310,7 @@ static int pilotL_setFlagWrapper( lua_State *L, int flag )
  *
  * An example would be:
  * @code
- * p = pilot.add( "Sml Trader Convoy" ) -- Create a trader convoy
+ * p = pilot.addFleet( "Sml Trader Convoy" ) -- Create a trader convoy
  * for k,v in pairs(p) do
  *    v:setFriendly() -- Make it friendly
  * end
@@ -612,31 +613,23 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
  *
  * You can then iterate over the pilots to change parameters like so:
  * @code
- * p = pilot.add( "Sml Trader Convoy" )
+ * p = pilot.addFleet( "Sml Trader Convoy" )
  * for k,v in pairs(p) do
  *    v:setHostile()
  * end
  * @endcode
  *
- * How param works (by type of value passed): <br/>
- *  - nil: spawns pilot randomly entering from jump points with presence of their faction or taking off from non-hostile planets <br/>
- *  - planet: pilot takes off from the planet <br/>
- *  - system: jumps pilot in from the system <br/>
- *  - vec2: pilot is created at the position (no jump/takeoff) <br/>
- *  - true: Acts like nil, but does not avoid jump points with no presence <br/>
- *
- * @usage p = pilot.add( "Pirate Hyena" ) -- Just adds the pilot (will jump in or take off).
- * @usage p = pilot.add( "Trader Llama", nil, "dummy" ) -- Overrides AI with dummy ai.
- * @usage p = pilot.add( "Sml Trader Convoy", vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
- * @usage p = pilot.add( "Empire Pacifier", system.get("Goddard") ) -- Have the pilot jump in from the system.
- * @usage p = pilot.add( "Goddard Goddard", planet.get("Zhiru") ) -- Have the pilot take off from a planet.
+ * @usage p = pilot.addFleet( "Pirate Hyena" ) -- Just adds the pilot (will jump in or take off).
+ * @usage p = pilot.addFleet( "Trader Llama", nil, "dummy" ) -- Overrides AI with dummy ai.
+ * @usage p = pilot.addFleet( "Sml Trader Convoy", vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
+ * @usage p = pilot.addFleet( "Empire Pacifier", system.get("Goddard") ) -- Have the pilot jump in from the system.
+ * @usage p = pilot.addFleet( "Goddard Goddard", planet.get("Zhiru") ) -- Have the pilot take off from a planet.
  *
  *    @luatparam string fleetname Name of the fleet to add.
- *    @luatparam System|Planet param Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
- *              a planet it'll try to take off from it.
+ *    @luatparam System|Planet|Vec2 param Position to create the pilot at. See pilot.add for further information.
  *    @luatparam[opt] string|nil ai If set will override the standard fleet AI.  nil means use default.
  *    @luatreturn {Pilot,...} Table populated with all the pilots created.  The keys are ordered numbers.
- * @luafunc add
+ * @luafunc addFleet
  */
 static int pilotL_addFleet( lua_State *L )
 {
@@ -648,15 +641,23 @@ static int pilotL_addFleet( lua_State *L )
 /**
  * @brief Adds a ship with an AI and faction to the system (instead of a predefined fleet).
  *
- * @usage p = pilot.addRaw( "Empire Shark", nil, "Empire", nil, "empire" ) -- Creates a pilot analogous to the Empire Shark fleet.
+ * @usage p = pilot.add( "Empire Shark", nil, "Empire", nil, "empire" ) -- Creates a pilot analogous to the Empire Shark fleet.
+ *
+ * How param works (by type of value passed): <br/>
+ *  - nil: spawns pilot randomly entering from jump points with presence of their faction or taking off from non-hostile planets <br/>
+ *  - planet: pilot takes off from the planet <br/>
+ *  - system: jumps pilot in from the system <br/>
+ *  - vec2: pilot is created at the position (no jump/takeoff) <br/>
+ *  - true: Acts like nil, but does not avoid jump points with no presence <br/>
  *
  *    @luatparam string shipname Name of the ship to add.
  *    @luatparam Faction faction Faction to give the pilot.
- *    @luatparam System|Planet|Vec2 param Position to create the pilot at. See pilot.add for further information.
+ *    @luatparam System|Planet param Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
+ *              a planet it'll try to take off from it.
  *    @luatparam[opt] string pilotname Name to give the pilot. Defaults to shipname.
  *    @luatparam[opt] string ai AI to give the pilot. Defaults to the faction's AI.
  *    @luatreturn Pilot The created pilot.
- * @luafunc addRaw
+ * @luafunc add
  */
 static int pilotL_addFleetRaw(lua_State *L )
 {

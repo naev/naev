@@ -86,7 +86,7 @@ function scom.spawn( pilots, faction, guerilla )
                leader:memory().formation = pilots.__formation
             end
          end
-         p = pilot.add( v["pilot"], origin )
+         p = pilot.addFleet( v["pilot"], origin )
       else
          p = scom.spawnRaw( v["pilot"][1], v["pilot"][2], v["pilot"][3], v["pilot"][4], v["pilot"][5], origin )
       end
@@ -109,9 +109,9 @@ function scom.spawn( pilots, faction, guerilla )
 end
 
 
--- @brief spawn a pilot with addRaw
+-- @brief spawn a pilot with pilot.add
 function scom.spawnRaw( ship, name, ai, equip, faction, origin )
-   local p = {pilot.addRaw( ship, equip, origin, name, ai )}
+   local p = {pilot.add( ship, equip, origin, name, ai )}
    p[1]:setFaction(faction)
    return p
 end

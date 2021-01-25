@@ -273,7 +273,7 @@ function enter()
    -- Enter after a fleeing enemy
    elseif stage == 4 then
       if system.cur() == nextt then
-         target = pilot.addRaw( shi:nameRaw(), "Mercenary", previous )
+         target = pilot.add( shi:nameRaw(), "Mercenary", previous )
          target:setHealth( arm, sld, str )
          target:setTemp( tem )
          target:setHilight()
@@ -336,7 +336,7 @@ end
 function spawnEscort( origin )
    escort = {}
    if alive[1] then
-      escort[1] = pilot.addRaw( "Schroedinger", "DHC", origin, _("Lieutenant Strafer") )
+      escort[1] = pilot.add( "Schroedinger", "DHC", origin, _("Lieutenant Strafer") )
 
       -- Give him nice outfits
       escort[1]:rmOutfit("all")
@@ -369,7 +369,7 @@ function spawnEscort( origin )
    end
 
    if alive[2] then
-      escort[2] = pilot.addRaw( "Vendetta", "DHC", origin )
+      escort[2] = pilot.add( "Vendetta", "DHC", origin )
       hook.pilot(escort[2], "hail", "escort_hailed")
       hook.pilot(escort[2], "death", "escort_died2")
       escort[2]:control()
@@ -379,7 +379,7 @@ function spawnEscort( origin )
       escort[2]:setVisplayer()
    end
    if alive[3] then
-      escort[3] = pilot.addRaw( "Phalanx", "DHC", origin )
+      escort[3] = pilot.add( "Phalanx", "DHC", origin )
       hook.pilot(escort[3], "hail", "escort_hailed")
       hook.pilot(escort[3], "death", "escort_died3")
       escort[3]:control()
@@ -394,16 +394,16 @@ end
 function spawnBaddies( origin )
    badguys = {}
    -- They're mercenaries to avoid getting too high outfits
-   badguys[1]  = pilot.addRaw( "Kestrel", "Mercenary", origin )
-   badguys[2]  = pilot.addRaw( "Pacifier", "Mercenary", origin )
-   badguys[3]  = pilot.addRaw( "Vigilance", "Mercenary", origin )
-   badguys[4]  = pilot.addRaw( "Phalanx", "Mercenary", origin )
-   badguys[5]  = pilot.addRaw( "Lancelot", "Mercenary", origin )
-   badguys[6]  = pilot.addRaw( "Lancelot", "Mercenary", origin )
-   badguys[7]  = pilot.addRaw( "Vendetta", "Mercenary", origin )
-   badguys[8]  = pilot.addRaw( "Vendetta", "Mercenary", origin )
-   badguys[9]  = pilot.addRaw( "Shark", "Mercenary", origin )
-   badguys[10] = pilot.addRaw( "Shark", "Mercenary", origin )
+   badguys[1]  = pilot.add( "Kestrel", "Mercenary", origin )
+   badguys[2]  = pilot.add( "Pacifier", "Mercenary", origin )
+   badguys[3]  = pilot.add( "Vigilance", "Mercenary", origin )
+   badguys[4]  = pilot.add( "Phalanx", "Mercenary", origin )
+   badguys[5]  = pilot.add( "Lancelot", "Mercenary", origin )
+   badguys[6]  = pilot.add( "Lancelot", "Mercenary", origin )
+   badguys[7]  = pilot.add( "Vendetta", "Mercenary", origin )
+   badguys[8]  = pilot.add( "Vendetta", "Mercenary", origin )
+   badguys[9]  = pilot.add( "Shark", "Mercenary", origin )
+   badguys[10] = pilot.add( "Shark", "Mercenary", origin )
 
    badguys[1]:memory().formation = "wedge"  -- I love wedge formation
    attackhooks = {}
@@ -429,10 +429,10 @@ end
 -- Spawn Tam and his crew
 function spawnTam( origin )
    tamteam = {}
-   tamteam[1] = pilot.add("Dvaered Vigilance", origin)[1]
-   tamteam[2] = pilot.add("Dvaered Phalanx", origin)[1]
-   tamteam[3] = pilot.add("Dvaered Vendetta", origin)[1]
-   tamteam[4] = pilot.add("Dvaered Vendetta", origin)[1]
+   tamteam[1] = pilot.addFleet("Dvaered Vigilance", origin)[1]
+   tamteam[2] = pilot.addFleet("Dvaered Phalanx", origin)[1]
+   tamteam[3] = pilot.addFleet("Dvaered Vendetta", origin)[1]
+   tamteam[4] = pilot.addFleet("Dvaered Vendetta", origin)[1]
 
    for i,p in ipairs(tamteam) do
       p:setFaction("DHC")
@@ -657,7 +657,7 @@ end
 
 -- Spawn Hamelsen and make her escape
 function spawnHamelsen( origin )
-   hamelsen = pilot.add( "Civilian Schroedinger", origin )[1]
+   hamelsen = pilot.addFleet( "Civilian Schroedinger", origin )[1]
    hamelsen:setInvincible()
    hamelsen:setFaction("Warlords")
    hamelsen:rename(_("Colonel Hamelsen"))

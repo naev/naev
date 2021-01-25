@@ -123,7 +123,7 @@ function patrol_spawnEmpire( n, boss )
          local shipnames = { "Empire Shark", "Empire Lancelot" }
          shipname = shipnames[ rnd.rnd( 1, #shipnames ) ]
       end
-      local pstk = pilot.add( shipname, vec2.new( x, y ), "empire_norun" )
+      local pstk = pilot.addFleet( shipname, vec2.new( x, y ), "empire_norun" )
       local p = pstk[1]
       hook.pilot( p, "death", "pilot_death_dv" )
       p:setHostile()

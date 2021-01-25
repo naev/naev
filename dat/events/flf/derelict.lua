@@ -31,9 +31,9 @@ function create()
     posDV = vec2.new(7400, 3000)
     posFLF = vec2.new(-10500, -8500)
     
-    fleetDV = pilot.add("Dvaered Vendetta", posDV, "dummy")
+    fleetDV = pilot.addFleet("Dvaered Vendetta", posDV, "dummy")
     shipDV = fleetDV[1]
-    fleetFLF = pilot.add("FLF Vendetta", posFLF, "dummy")
+    fleetFLF = pilot.addFleet("FLF Vendetta", posFLF, "dummy")
     shipFLF = fleetFLF[1]
     
     shipDV:disable()

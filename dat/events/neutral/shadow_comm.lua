@@ -43,7 +43,7 @@ function create ()
 
     -- Create a Vendetta who hails the player after a bit
     hail_time = nil
-    vendetta = pilot.add("Four Winds Vendetta", true)[1]
+    vendetta = pilot.addFleet("Four Winds Vendetta", true)[1]
     vendetta:control()
     vendetta:follow(player.pilot())
     hook.timer(500, "proximityScan", {focus = vendetta, funcname = "hailme"})
@@ -100,7 +100,7 @@ end
 
 function jumpin()
     if system.cur() == destsys then
-        seiryuu = pilot.add("Seiryuu", vec2.new(0, -2000))[1]
+        seiryuu = pilot.addFleet("Seiryuu", vec2.new(0, -2000))[1]
         seiryuu:control(true)
         seiryuu:setActiveBoard(true)
         seiryuu:setInvincible(true)
@@ -109,7 +109,7 @@ function jumpin()
         hook.pilot(seiryuu, "board", "board")
     elseif (hail_time == nil or time.get() > hail_time + time.create(0, 200, 0))
             and rnd.rnd() < 0.1 then
-        vendetta = pilot.add("Four Winds Vendetta", true)[1]
+        vendetta = pilot.addFleet("Four Winds Vendetta", true)[1]
         vendetta:control()
         vendetta:follow(player.pilot())
         hook.timer(500, "proximityScan", {focus = vendetta, funcname = "hailme"})

@@ -72,7 +72,7 @@ function create ()
     angle = rnd.rnd() * 2 * math.pi
     dist  = rnd.rnd(400, system.cur():radius() * 0.6)
     pos   = vec2.new( dist * math.cos(angle), dist * math.sin(angle) )
-    p     = pilot.add(ship, pos, "dummy")[1]
+    p     = pilot.addFleet(ship, pos, "dummy")[1]
     p:setFaction("Derelict")
     p:disable()
     p:rename("Derelict")
@@ -165,10 +165,10 @@ function badevent()
         destroyevent()
     elseif event == 3 then
         tk.msg(btitle, btext[3])
-        v1 = pilot.add("Pirate Vendetta", player.pos() + vec2.new( 300, 300))[1]
-        v2 = pilot.add("Pirate Vendetta", player.pos() + vec2.new(-300, 300))[1]
-        a1 = pilot.add("Pirate Ancestor", player.pos() + vec2.new(-300,-300))[1]
-        a2 = pilot.add("Pirate Ancestor", player.pos() + vec2.new( 300,-300))[1]
+        v1 = pilot.addFleet("Pirate Vendetta", player.pos() + vec2.new( 300, 300))[1]
+        v2 = pilot.addFleet("Pirate Vendetta", player.pos() + vec2.new(-300, 300))[1]
+        a1 = pilot.addFleet("Pirate Ancestor", player.pos() + vec2.new(-300,-300))[1]
+        a2 = pilot.addFleet("Pirate Ancestor", player.pos() + vec2.new( 300,-300))[1]
         v1:control()
         v1:attack(player.pilot())
         v2:control()
