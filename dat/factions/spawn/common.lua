@@ -111,8 +111,7 @@ end
 
 -- @brief spawn a pilot with addRaw
 function scom.spawnRaw( ship, name, ai, equip, faction, origin )
-   local p = {pilot.addRaw( ship, equip, origin, nil, ai )}
-   p[1]:rename(name)
+   local p = {pilot.addRaw( ship, equip, origin, name, ai )}
    p[1]:setFaction(faction)
    return p
 end

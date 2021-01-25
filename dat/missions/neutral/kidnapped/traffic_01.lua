@@ -223,10 +223,9 @@ function spawn_baddies(sp)
    badguys = {}
    --hyenas
    for i=1,2 do
-      badguys[i] = pilot.addRaw("Za'lek Light Drone", "Mercenary", sp )
+      badguys[i] = pilot.addRaw("Za'lek Light Drone", "Mercenary", sp, _("Mercenary") )
       badguys[i]:setHostile(false)
       
-      badguys[i]:rename(_("Mercenary"))
       --Their outfits must be quite good
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
@@ -243,10 +242,9 @@ function spawn_baddies(sp)
       badguys[i]:setEnergy(100)
    end
    for i=3,4 do
-      badguys[i] = pilot.addRaw( "Lancelot", "Mercenary", sp )
+      badguys[i] = pilot.addRaw( "Lancelot", "Mercenary", sp, _("Mercenary") )
       badguys[i]:setHostile(false)
       
-      badguys[i]:rename(_("Mercenary"))
       --Their outfits must be quite good
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
@@ -265,9 +263,8 @@ function spawn_baddies(sp)
    end
 
    for i=5,6 do
-      badguys[i] = pilot.addRaw( "Admonisher", "Mercenary", sp )
+      badguys[i] = pilot.addRaw( "Admonisher", "Mercenary", sp, _("Mercenary") )
       badguys[i]:setHostile(false)
-      badguys[i]:rename(_("Mercenary"))
       
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")

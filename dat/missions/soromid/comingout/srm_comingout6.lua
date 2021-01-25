@@ -152,7 +152,7 @@ function spawn ()
    p:setHilight( true )
 
    -- Spawn Chelsea
-   chelsea = pilot.addRaw( "Lancelot", "Comingout_associates", lastsys )
+   chelsea = pilot.addRaw( "Lancelot", "Comingout_associates", lastsys, _("Chelsea") )
    chelsea:rmOutfit( "all" )
    chelsea:rmOutfit( "cores" )
    chelsea:addOutfit( "Milspec Orion 3701 Core System" )
@@ -175,7 +175,6 @@ function spawn ()
    chelsea:setHilight()
    chelsea:setVisible()
    chelsea:setInvincPlayer()
-   chelsea:rename( "Chelsea" )
 
    hook.pilot( chelsea, "death", "chelsea_death" )
    hook.pilot( chelsea, "jump", "chelsea_leave" )

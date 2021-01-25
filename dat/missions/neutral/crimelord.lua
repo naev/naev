@@ -127,9 +127,8 @@ function spawnBaddies ()
       sp = last_system
    end
 
-   thugs = addRawShips( 4, "Admonisher", "Thugs", sp, nil, ai )
+   thugs = addRawShips( 4, "Admonisher", "Thugs", sp, _("Thug"), ai )
    for pilot_number, pilot_object in ipairs(thugs) do
-      pilot_object:rename(_("Thug"))
       pilot_object:setHostile(true) --they don't like you
       pilot_object:rmOutfit("all") --strip them down
       pilot_object:addOutfit("Laser Cannon MK2") --add everything but rockets

@@ -440,10 +440,9 @@ function enter()
          origin = lastSys
       end
 
-      strafer = pilot.addRaw("Vendetta", "DHC", origin, nil, "baddie_norun")
+      strafer = pilot.addRaw("Vendetta", "DHC", origin, _("Lieutenant Strafer"), "baddie_norun")
       strafer:setHilight()
       strafer:setVisplayer()
-      strafer:rename("Lieutenant Strafer")
 
       -- give him top equipment
       strafer:rmOutfit("all")
@@ -775,8 +774,7 @@ end
 
 -- Spawns the odd imperial pilot
 function spawnHewHew( origin )
-   hewhew = pilot.addRaw("Hyena", "Civilian", origin)
-   hewhew:rename("Strange Pilot")
+   hewhew = pilot.addRaw("Hyena", "Civilian", origin, _("Strange Pilot"))
    hewhew:setInvincible()  -- Don't wreck my Captain HewHew
    hewhew:hailPlayer()
    hailie = hook.pilot(hewhew, "hail", "hailMe")

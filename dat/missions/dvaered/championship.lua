@@ -284,7 +284,7 @@ function enter()
 
       shiplist = ships[level+1]
       oppotype = shiplist[ rnd.rnd(1,#shiplist) ]
-      opponent = pilot.addRaw( oppotype, "Thugs", mispla, nil, "baddie" )
+      opponent = pilot.addRaw( oppotype, "Thugs", mispla, opponame, "baddie" )
 
       opponent:rmOutfit("all")
       opponent:rmOutfit("cores")
@@ -322,7 +322,6 @@ function enter()
       opponent:setEnergy(100)
 
       --
-      opponent:rename(opponame)
       opponent:setHilight()
       opponent:setHostile()
 
@@ -330,12 +329,12 @@ function enter()
       opponent:moveto(mispla:pos() + vec2.new( 1000,  1500))
 
       --The TV and the security
-      tv1 = pilot.addRaw( "Gawain", "Dvaered", mispla, nil, "civilian" )
-      tv2 = pilot.addRaw( "Gawain", "Dvaered", mispla, nil, "civilian" )
-      sec11 = pilot.addRaw( "Hyena", "Dvaered", mispla )
-      sec12 = pilot.addRaw( "Hyena", "Dvaered", mispla )
-      sec21 = pilot.addRaw( "Hyena", "Dvaered", mispla )
-      sec22 = pilot.addRaw( "Hyena", "Dvaered", mispla )
+      tv1 = pilot.addRaw( "Gawain", "Dvaered", mispla, _("Holovision"), "civilian" )
+      tv2 = pilot.addRaw( "Gawain", "Dvaered", mispla, _("Holovision"), "civilian" )
+      sec11 = pilot.addRaw( "Hyena", "Dvaered", mispla, _("Security") )
+      sec12 = pilot.addRaw( "Hyena", "Dvaered", mispla, _("Security") )
+      sec21 = pilot.addRaw( "Hyena", "Dvaered", mispla, _("Security") )
+      sec22 = pilot.addRaw( "Hyena", "Dvaered", mispla, _("Security") )
 
       hooks = {}
 
@@ -343,13 +342,11 @@ function enter()
          k:rmOutfit("all")
          k:addOutfit("Shredder", 3)
          k:addOutfit("Improved Stabilizer")
-         k:rename("Security")
       end
 
       for i, k in ipairs({tv1,tv2}) do
          k:rmOutfit("all")
          k:addOutfit("Improved Stabilizer", 2)
-         k:rename("Holovision")
       end
 
       for i, k in ipairs({tv1, sec11, sec12, tv2, sec21, sec22}) do

@@ -173,7 +173,7 @@ function enter()
 
    if stage == 0 then   -- Go to first rendezvous
       if system.cur() == destsys1 then -- Spawn the Warlord
-         encounterWarlord( "Lady Bitterfly", destpla1 )
+         encounterWarlord( _("Lady Bitterfly"), destpla1 )
          hook.timer( 2000, "meeting_msg1" )
       else
          nextsys = getNextSystem(system.cur(), destsys1)
@@ -184,7 +184,7 @@ function enter()
 
    elseif stage == 2 then  -- Travel to second rendezvous
       if system.cur() == destsys2 then -- Spawn the Baddies
-         encounterWarlord( "Lord Battleaddict", destpla2 )
+         encounterWarlord( _("Lord Battleaddict"), destpla2 )
          jumpingTam = hook.pilot(majorTam, "jump", "tamJump")
          hook.timer( 2000, "meeting_msg2" )
       else
@@ -206,7 +206,7 @@ function enter()
    elseif stage == 5 then  -- Travel to third rendezvous
       if system.cur() == destsys3 then -- Spawn the Warlord and Hamelsen
          hamelsenAmbush()
-         encounterWarlord( "Lord Jim", destpla3 )
+         encounterWarlord( _("Lord Jim"), destpla3 )
          hook.timer( 2000, "meeting_msg3" )
       else
          nextsys = getNextSystem(system.cur(), destsys3)
@@ -249,7 +249,7 @@ function spawnTam( origin )
 --   end
 
    majorTam = pilot.add("Dvaered Vendetta", origin)[1]
-   majorTam:rename("Major Tam")
+   majorTam:rename(_("Major Tam"))
    majorTam:setHilight()
    majorTam:setVisplayer()
    majorTam:setFaction("DHC")
@@ -424,7 +424,7 @@ function moreBadGuys()
    end
    buff = pilot.add("Dvaered Vigilance", destpla2)[1]
    buff:setFaction("Warlords")
-   buff:rename("Colonel Hamelsen")
+   buff:rename(_("Colonel Hamelsen"))
    buff = pilot.add("Dvaered Phalanx", destpla2)[1]
    buff:setFaction("Warlords")
    warlord:setFaction("Warlords")
@@ -456,10 +456,9 @@ function hamelsenAmbush()
    x = 1000 * rnd.rnd() + 2000
    y = 1000 * rnd.rnd() + 2000
    pos = jp:pos() + vec2.new(x,y)
-   hamelsen = pilot.addRaw( "Shark", "Warlords", pos, nil, "baddie_norun" )
+   hamelsen = pilot.addRaw( "Shark", "Warlords", pos, _("Colonel Hamelsen"), "baddie_norun" )
 
    -- Nice outfits for Colonel Hamelsen (the Hellburner is her life insurance)
-   hamelsen:rename("Colonel Hamelsen")
    hamelsen:rmOutfit("all")
    hamelsen:rmOutfit("cores")
    hamelsen:addOutfit("S&K Ultralight Combat Plating")
@@ -488,7 +487,7 @@ function hamelsenAmbush()
 
       savers[i] = pilot.add( "Dvaered Vendetta", pos )[1]
    end
-   savers[1]:rename("Captain Leblanc")
+   savers[1]:rename(_("Captain Leblanc"))
    savers[1]:setNoDeath()
    savers[1]:setNoDisable()
 

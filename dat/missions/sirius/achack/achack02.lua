@@ -202,9 +202,8 @@ function enter()
       misn.finish(false)
    end
    
-   joanne = addRawShips(1, "Sirius Fidelity", "Achack_sirius", origin)[1]
+   joanne = addRawShips(1, "Sirius Fidelity", "Achack_sirius", origin, _("Joanne"))[1]
    joanne:control()
-   joanne:rename(_("Joanne"))
    joanne:rmOutfit("all")
    joanne:addOutfit("Razor MK2", 3)
    joanne:addOutfit("Reactor Class I", 1)

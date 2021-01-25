@@ -292,7 +292,7 @@ end
 
 
 function spawn_drone ()
-   local p = pilot.addRaw( "Hyena", "Dummy", dest_planet, nil, "baddie_norun" )
+   local p = pilot.addRaw( "Hyena", "Dummy", dest_planet, _("Practice Drone"), "baddie_norun" )
    p:rmOutfit( "all" )
    p:rmOutfit( "cores" )
    p:addOutfit( "Previous Generation Small Systems" )
@@ -304,7 +304,6 @@ function spawn_drone ()
    p:setTemp( 0 )
    p:setFuel( true )
 
-   p:rename( _("Practice Drone") )
    p:setHostile()
    p:setVisplayer()
    p:setHilight()

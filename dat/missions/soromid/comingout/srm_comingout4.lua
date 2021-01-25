@@ -175,8 +175,7 @@ function ambush_timer ()
    }
    local leaderthug
    for i, j in ipairs( thugships ) do
-      local p = pilot.addRaw( j, "Comingout_thugs", misplanet )
-      p:rename( "Thug " .. j )
+      local p = pilot.addRaw( j, "Comingout_thugs", misplanet, "Thug " .. j )
       p:setHostile()
       p:setLeader( leaderthug )
 

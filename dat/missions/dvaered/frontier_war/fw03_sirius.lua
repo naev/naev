@@ -336,8 +336,7 @@ end
 function spawnEscort( origin )
    escort = {}
    if alive[1] then
-      escort[1] = pilot.addRaw( "Schroedinger", "DHC", origin )
-      escort[1]:rename("Lieutenant Strafer")
+      escort[1] = pilot.addRaw( "Schroedinger", "DHC", origin, _("Lieutenant Strafer") )
 
       -- Give him nice outfits
       escort[1]:rmOutfit("all")
@@ -661,7 +660,7 @@ function spawnHamelsen( origin )
    hamelsen = pilot.add( "Civilian Schroedinger", origin )[1]
    hamelsen:setInvincible()
    hamelsen:setFaction("Warlords")
-   hamelsen:rename("Colonel Hamelsen")
+   hamelsen:rename(_("Colonel Hamelsen"))
 
    hamelsen:comm( ham_runaway )
    hamelsen:control()
