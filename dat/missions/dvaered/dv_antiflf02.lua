@@ -175,7 +175,7 @@ end
 function spawnDV()
     misn.osdActive(3)
     missionstarted = true
-    fleetDV = pilot.addFleet("Dvaered Strike Force", last_sys, "dvaered_norun")
+    fleetDV = addShips( 3, "Dvaered Vigilance", "Dvaered", last_sys, nil, "dvaered_norun" )
     -- The Dvaered ships should attack the player, so set them hostile.
     -- These are Vigilances, so we should tune them WAY down so the player doesn't insta-die.
     for i, j in ipairs(fleetDV) do

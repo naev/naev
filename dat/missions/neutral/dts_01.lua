@@ -181,7 +181,7 @@ function defend_system()
       end
 
   -- Create a fleet of raiding pirates
-      raider_fleet = pilot.addFleet( "DTS Raiders", raider_position, "def" )
+      raider_fleet = addShips( 18, "Hyena", "Raider", raider_position, _("Raider Hyena"), "def" )
       for k,v in ipairs( raider_fleet) do
          v:setHostile()
       end

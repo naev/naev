@@ -14,7 +14,7 @@ Then use Forma:setTask() to control the fleader
 Control the fleet's movements by controlling the fleet leader, or "fleader".
 
 example:
-my_fleet = pilot.addFleet("Pirate Hyena Pack")
+my_fleet = addShips( 4, "Hyena", "Pirate", _("Pirate Hyena") )
 my_fleet = Forma:new(my_fleet,"echelon left",1500)
 my_fleet:setTask("moveto",vec2.new(0,0))
 

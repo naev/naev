@@ -149,7 +149,7 @@ function enter()
       hawk:hyperspace(system.get(destjumpname))
       hawk:broadcast(string.format(chatter[0], destjumpname))
       fleethooks = {}
-      fleetdv = pilot.addFleet("Dvaered Home Guard", hawk:pos()-vec2.new(1000,1500), "dvaered_norun")
+      fleetdv = addShips( 14, "Dvaered Vendetta", "Dvaered", hawk:pos()-vec2.new(1000,1500), nil, "dvaered_norun" )
       for i, j in ipairs(fleetdv) do
          j:changeAI("dvaered_norun")
          j:setHilight(true)

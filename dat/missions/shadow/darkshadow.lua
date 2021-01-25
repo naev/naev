@@ -316,11 +316,11 @@ function spawnSquads(highlight)
     leaderdest[5] = vec2.new(1000, -1500)
 
     squads = {}
-    squads[1] = pilot.addFleet("Four Winds Vendetta Quad", leaderstart[1])
-    squads[2] = pilot.addFleet("Four Winds Vendetta Quad", leaderstart[2])
-    squads[3] = pilot.addFleet("Four Winds Vendetta Quad", leaderstart[3])
-    squads[4] = pilot.addFleet("Four Winds Vendetta Quad", leaderstart[4])
-    squads[5] = pilot.addFleet("Four Winds Vendetta Quad", leaderstart[5])
+    squads[1] = addShips( 4, "Vendetta", "Rogue Four Winds", leaderstart[1], _("Four Winds Vendetta") )
+    squads[2] = addShips( 4, "Vendetta", "Rogue Four Winds", leaderstart[2], _("Four Winds Vendetta") )
+    squads[3] = addShips( 4, "Vendetta", "Rogue Four Winds", leaderstart[3], _("Four Winds Vendetta") )
+    squads[4] = addShips( 4, "Vendetta", "Rogue Four Winds", leaderstart[4], _("Four Winds Vendetta") )
+    squads[5] = addShips( 4, "Vendetta", "Rogue Four Winds", leaderstart[5], _("Four Winds Vendetta") )
 
     for i, squad in ipairs(squads) do
         for j, k in ipairs(squad) do
@@ -449,7 +449,7 @@ end
 
 -- Spawns a wing of Lancelots that intercept the player.
 function spawnInterceptors()
-    inters = pilot.addFleet("Four Winds Lancelot Trio", genbu:pos())
+    inters = addShips( 3, "Lancelot", "Rogue Four Winds", genbu:pos(), _("Four Winds Lancelot") )
     for _, j in ipairs(inters) do
         j:rmOutfit("all")
         j:addOutfit("Cheater's Laser Cannon", 4) -- Equip these fellas with unfair weaponry

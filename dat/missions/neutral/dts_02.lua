@@ -191,7 +191,7 @@ function defend_system()
       end
 
   -- Create a fleet of raiding pirates
-      raider_fleet = pilot.addFleet( "DTS Raiders", raider_position, "def" )
+      raider_fleet = addShips( 18, "Hyena", "Raider", raider_position, _("Raider Hyena"), "def" )
       for k,v in ipairs( raider_fleet) do
          v:setHostile()
       end
@@ -261,7 +261,7 @@ end
 function second_wave_attacks()
 
       casualties = 0
-      second_wave = pilot.addFleet( "Pirate Hyena Pack", player.pos(), "def" )
+      second_wave = addShips( 4, "Hyena", "Pirate", player.pos(), _("Pirate Hyena"), "def" )
       for k, v in ipairs( second_wave) do
          v:setFaction( "Raider")
          v:setHostile()
