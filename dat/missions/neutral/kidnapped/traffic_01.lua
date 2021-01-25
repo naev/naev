@@ -152,7 +152,7 @@ function sys_enter ()
       end
    else
       hook.timer( 3000,"do_msg2")
-      broship = pilot.addFleet("Civilian Gawain", bropla:pos() + vec2.new(-200,-200), "trader")[1] -- fast Gawain
+      broship = pilot.add( "Gawain", "Civilian", bropla:pos() + vec2.new(-200,-200), _("Civilian Gawain"), "trader" ) -- fast Gawain
       broship:addOutfit("Tricon Zephyr II Engine")
       broship:setFaction("Civilian")
       broship:rename(_("Poppy Seed"))

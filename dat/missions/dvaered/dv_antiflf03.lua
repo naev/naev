@@ -228,7 +228,7 @@ end
 
 -- Spawns the FLF base, ship version.
 function spawnbase()
-    base = pilot.addFleet("Sindbad", basepos, "flf_norun")[1]
+    base = pilot.add( "Sindbad", "FLF", basepos, nil, "flf_norun" )
     base:rmOutfit("all")
     base:rmOutfit("cores")
     base:addOutfit("Dummy Systems")
@@ -293,7 +293,7 @@ end
 function spawnDV()
     updatepos()
 
-    obstinate = pilot.addFleet("Dvaered Goddard", fleetpos[1], "dvaered_norun")[1]
+    obstinate = pilot.add( "Dvaered Goddard", "Dvaered", fleetpos[1], nil, "dvaered_norun" )
     obstinate:rename(_("Obstinate"))
     obstinate:setDir(90)
     obstinate:setFriendly()
@@ -314,7 +314,7 @@ function spawnDV()
     
     local i = 1
     while i <= 4 do
-        vigilance = pilot.addFleet("Dvaered Vigilance", fleetpos[i + 1], "dvaered_norun")[1]
+        vigilance = pilot.add( "Dvaered Vigilance", "Dvaered", fleetpos[i + 1], nil, "dvaered_norun" )
         vigilance:setDir(90)
         vigilance:setFriendly()
         vigilance:control()
@@ -326,7 +326,7 @@ function spawnDV()
     
     local i = 1
     while i <= 6 do
-        vendetta = pilot.addFleet("Dvaered Vendetta", fighterpos[i], "dvaered_norun")[1]
+        vendetta = pilot.add( "Dvaered Vendetta", "Dvaered", fighterpos[i], nil, "dvaered_norun" )
         vendetta:setDir(90)
         vendetta:setFriendly()
         vendetta:setVisplayer(true)
@@ -448,7 +448,7 @@ end
  
 -- Spawns the initial Dvaered bombers.
 function spawnDVbomber()
-    bomber = pilot.addFleet("Dvaered Ancestor", obstinate:pos(), "dvaered_norun")[1]
+    bomber = pilot.add( "Dvaered Ancestor", "Dvaered", obstinate:pos(), nil, "dvaered_norun" )
     bomber:rmOutfit("all")
     foo = bomber:addOutfit("TeraCom Imperator Launcher", 1, true)
     bomber:addOutfit("Engine Reroute", 1)
@@ -560,7 +560,7 @@ function deathDVbomber()
         DVreinforcements = DVreinforcements - 1
         for i, j in ipairs(bombers) do
             if not j:exists() then
-                bomber = pilot.addFleet("Dvaered Ancestor", obstinate:pos(), "dvaered_norun")[1]
+                bomber = pilot.add( "Dvaered Ancestor", "Dvaered", obstinate:pos(), nil, "dvaered_norun" )
                 bomber:rmOutfit("all")
                 bomber:addOutfit("TeraCom Imperator Launcher", 1, true)
                 bomber:addOutfit("Engine Reroute", 1)

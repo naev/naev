@@ -31,7 +31,7 @@ function create ()
       evt.finish()
     end
 
-    hyena = pilot.addFleet("Civilian Hyena", true)[1]
+    hyena = pilot.add( "Hyena", "Civilian", true, _("Civilian Hyena") )
     
     hook.pilot(hyena, "jump", "finish")
     hook.pilot(hyena, "death", "finish")

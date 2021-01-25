@@ -89,7 +89,7 @@ function enter()
         dist = rnd.rnd() * system.cur():radius()
         angle = rnd.rnd() * 2 * math.pi
         location = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- Randomly spawn the Gawain in the system
-        target = pilot.addFleet("Civilian Gawain", location)[1]
+        target = pilot.add( "Gawain", "Civilian", location, _("Civilian Gawain") )
         target:control()
         target:rename(_("Credence"))
         target:setFaction("Dummy")

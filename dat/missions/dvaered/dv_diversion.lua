@@ -140,7 +140,7 @@ function enter()
       missionstarted = true
       j = jump.get(destsysname, destjumpname)
       v = j:pos()
-      hawk = pilot.addFleet("Dvaered Goddard", v-vec2.new(1500,8000), "dvaered_norun")[1]
+      hawk = pilot.add( "Dvaered Goddard", "Dvaered", v-vec2.new(1500,8000), nil, "dvaered_norun" )
       hawk:rename(_("Hawk"))
       hawk:setHilight(true)
       hawk:setVisible(true)

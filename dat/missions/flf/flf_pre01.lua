@@ -151,7 +151,7 @@ function enter()
         fleetFLF = addShips(3, "Vendetta", "FLF", jumppos, _("FLF Vendetta"), "flf_norun")
         local c = player.pilot():ship():class()
         if c == "Cruiser" or c == "Carrier" then
-            local p = pilot.addFleet("FLF Pacifier", jumppos, "flf_norun")[1]
+            local p = pilot.add( "Pacifier", "FLF", jumppos, _("FLF Pacifier"), "flf_norun" )
             fleetFLF[#fleetFLF + 1] = p
         end
         

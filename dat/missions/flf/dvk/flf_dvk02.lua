@@ -268,8 +268,7 @@ function enter ()
          local r = system.cur():radius()
          local vec = vec2.new( rnd.rnd( -r, r ), rnd.rnd( -r, r ) )
 
-         local bstk = pilot.addFleet( "Pirate Kestrel", vec, "pirate_norun" )
-         boss = bstk[1]
+         boss = pilot.add( "Pirate Kestrel", "Pirate", vec, nil, "pirate_norun" )
          hook.pilot( boss, "death", "pilot_death_boss" )
          hook.pilot( boss, "hail", "pilot_hail_boss" )
          boss:setHostile()
@@ -295,8 +294,7 @@ function enter ()
          local r = system.cur():radius()
          local vec = vec2.new( rnd.rnd( -r, r ), rnd.rnd( -r, r ) )
 
-         local bstk = pilot.addFleet( "Pirate Kestrel", vec, "pirate_norun" )
-         boss = bstk[1]
+         boss = pilot.add( "Pirate Kestrel", "Pirate", vec, nil, "pirate_norun" )
          hook.pilot( boss, "death", "pilot_death_boss" )
          boss_hook = hook.pilot( boss, "hail", "pilot_hail_boss" )
          boss:setFriendly()

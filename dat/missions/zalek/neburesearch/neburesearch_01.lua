@@ -280,7 +280,7 @@ function timer_transporterSafe()
 end
 
 function spawnTransporter()
-    transporter = pilot.addFleet("Nebula Research Shuttle", origin)[1]
+    transporter = pilot.add( "Rhino", "Za'lek", origin, _("Nebula Research Shuttle") )
     hook.pilot(transporter, "death", "transporterDeath")
     hook.pilot(transporter, "jump", "transporterJump")
     hook.pilot(transporter, "land", "transporterLand")

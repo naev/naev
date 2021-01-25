@@ -248,7 +248,7 @@ function spawnTam( origin )
 --      hook.rm(dyingTam)
 --   end
 
-   majorTam = pilot.addFleet("Dvaered Vendetta", origin)[1]
+   majorTam = pilot.add( "Dvaered Vendetta", "Dvaered", origin )
    majorTam:rename(_("Major Tam"))
    majorTam:setHilight()
    majorTam:setVisplayer()
@@ -274,7 +274,7 @@ function encounterWarlord( name, origin )
    pilot.toggleSpawn("Pirate", false) -- Make sure Pirates don't get on the way
    pilot.clearSelect("Pirate")
 
-   warlord = pilot.addFleet("Dvaered Goddard", origin)[1]
+   warlord = pilot.add( "Dvaered Goddard", "Dvaered", origin )
    warlord:rename( name )
    warlord:control(true)
    warlord:moveto( origin:pos() + vec2.newP(rnd.rnd(1000), rnd.rnd(360)) )
@@ -283,7 +283,7 @@ function encounterWarlord( name, origin )
 
    p = {}
    for i = 1, 2 do
-      p[i] = pilot.addFleet("Dvaered Vendetta", origin)[1]
+      p[i] = pilot.add( "Dvaered Vendetta", "Dvaered", origin )
       p[i]:control(true)
       p[i]:moveto( origin:pos() + vec2.newP(rnd.rnd(1000), rnd.rnd(360)) )
    end
@@ -370,7 +370,7 @@ function meeting()
       nextsys = fleesys
       tk.msg(meet_title2, meet_text2:format(nextsys:name()))
       stage = 3
-      quickie = pilot.addFleet("Dvaered Vendetta", destpla2)[1]
+      quickie = pilot.add( "Dvaered Vendetta", "Dvaered", destpla2 )
       quickie:setFaction("Warlords")
 
       majorTam:control()
@@ -419,13 +419,13 @@ end
 -- Battleaddict's bros
 function moreBadGuys()
    for i = 1, 3 do
-      buff = pilot.addFleet("Dvaered Ancestor", destpla2)[1]
+      buff = pilot.add( "Dvaered Ancestor", "Dvaered", destpla2 )
       buff:setFaction("Warlords")
    end
-   buff = pilot.addFleet("Dvaered Vigilance", destpla2)[1]
+   buff = pilot.add( "Dvaered Vigilance", "Dvaered", destpla2 )
    buff:setFaction("Warlords")
    buff:rename(_("Colonel Hamelsen"))
-   buff = pilot.addFleet("Dvaered Phalanx", destpla2)[1]
+   buff = pilot.add( "Dvaered Phalanx", "Dvaered", destpla2 )
    buff:setFaction("Warlords")
    warlord:setFaction("Warlords")
    warlord:control(false)
@@ -485,7 +485,7 @@ function hamelsenAmbush()
       y = 1000 * rnd.rnd() - 2000
       pos = jp:pos() + vec2.new(x,y)
 
-      savers[i] = pilot.addFleet( "Dvaered Vendetta", pos )[1]
+      savers[i] = pilot.add( "Dvaered Vendetta", "Dvaered", pos )
    end
    savers[1]:rename(_("Captain Leblanc"))
    savers[1]:setNoDeath()

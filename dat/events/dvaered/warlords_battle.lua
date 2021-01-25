@@ -112,14 +112,14 @@ function attack ()
    local n = rnd.rnd(3,6)
 
    attackers = addShips(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, "Dvaered", source_system)
-   attackers[2*n+1] = pilot.addFleet("Dvaered Phalanx", source_system)[1]
-   attackers[2*n+2] = pilot.addFleet("Dvaered Phalanx", source_system)[1]
-   attackers[2*n+3] = pilot.addFleet("Dvaered Vigilance", source_system)[1]
+   attackers[2*n+1] = pilot.add( "Dvaered Phalanx", "Dvaered", source_system )
+   attackers[2*n+2] = pilot.add( "Dvaered Phalanx", "Dvaered", source_system )
+   attackers[2*n+3] = pilot.add( "Dvaered Vigilance", "Dvaered", source_system )
    attackers[2*n+4] = pilot.add("Rhino", "Thugs", source_system) --some transport ships
    attackers[2*n+5] = pilot.add("Rhino", "Thugs", source_system)
    attackers[2*n+6] = pilot.add("Rhino", "Thugs", source_system)
    attackers[2*n+7] = pilot.add("Rhino", "Thugs", source_system)
-   attackers[2*n+8] = pilot.addFleet("Dvaered Goddard", source_system)[1]
+   attackers[2*n+8] = pilot.add( "Dvaered Goddard", "Dvaered", source_system )
 
    -- The transport ships tend to run away
    attackers[2*n+4]:memory().shield_run = 70
@@ -161,10 +161,10 @@ function defense ()
    local n = rnd.rnd(3,6)
 
    defenders = addShips(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, "Dvaered", source_planet)
-   defenders[2*n+1] = pilot.addFleet("Dvaered Phalanx", source_planet)[1]
-   defenders[2*n+2] = pilot.addFleet("Dvaered Phalanx", source_planet)[1]
-   defenders[2*n+3] = pilot.addFleet("Dvaered Vigilance", source_planet)[1]
-   defenders[2*n+4] = pilot.addFleet("Dvaered Goddard", source_planet)[1]
+   defenders[2*n+1] = pilot.add( "Dvaered Phalanx", "Dvaered", source_planet )
+   defenders[2*n+2] = pilot.add( "Dvaered Phalanx", "Dvaered", source_planet )
+   defenders[2*n+3] = pilot.add( "Dvaered Vigilance", "Dvaered", source_planet )
+   defenders[2*n+4] = pilot.add( "Dvaered Goddard", "Dvaered", source_planet )
 
    defenders = arrangeList(defenders)  --The heaviest ships will surround the leader
 

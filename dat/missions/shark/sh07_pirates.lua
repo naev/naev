@@ -213,9 +213,9 @@ function enter()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      baddie = pilot.addFleet( "Pirate Kestrel", vec2.new(0,0), "pirate_norun")[1]
-      ancestor = pilot.addFleet( "Pirate Ancestor", vec2.new(100,0))[1]
-      hyena = pilot.addFleet( "Pirate Hyena", vec2.new(0,100))[1]
+      baddie = pilot.add( "Pirate Kestrel", "Pirate", vec2.new(0,0), nil, "pirate_norun" )
+      ancestor = pilot.add( "Pirate Ancestor", "Pirate", vec2.new(100,0) )
+      hyena = pilot.add( "Hyena", "Pirate", vec2.new(0,100), _("Pirate Hyena") )
 
       baddie:rename(kername1)
       baddie:setHilight()
@@ -227,10 +227,10 @@ function enter()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      baddie = pilot.addFleet( "Pirate Kestrel", vec2.new(0,0), "pirate_norun")[1]
-      ancestor = pilot.addFleet( "Pirate Ancestor", vec2.new(100,0))[1]
-      shark = pilot.addFleet( "Pirate Shark", vec2.new(0,100))[1]
-      hyena = pilot.addFleet( "Pirate Hyena", vec2.new(100,100))[1]
+      baddie = pilot.add( "Pirate Kestrel", "Pirate", vec2.new(0,0), nil, "pirate_norun" )
+      ancestor = pilot.add( "Pirate Ancestor", "Pirate", vec2.new(100,0) )
+      shark = pilot.add( "Pirate Shark", "Pirate", vec2.new(0,100) )
+      hyena = pilot.add( "Hyena", "Pirate", vec2.new(100,100), _("Pirate Hyena") )
 
       baddie:rename(kername2)
       baddie:setHilight()
@@ -242,12 +242,12 @@ function enter()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      baddie = pilot.addFleet( "Goddard Goddard", vec2.new(0,0), "pirate_norun")[1] --Faction's ships come with upgraded weaponry
+      baddie = pilot.add( "Goddard", "Goddard", vec2.new(0,0), _("Goddard Goddard"), "pirate_norun" ) --Faction's ships come with upgraded weaponry
       baddie:setFaction("Pirate")
       baddie:changeAI( "pirate" )
 
-      ancestor = pilot.addFleet( "Pirate Ancestor", vec2.new(100,0))[1]
-      hyena = pilot.addFleet( "Pirate Hyena", vec2.new(0,100))[1]
+      ancestor = pilot.add( "Pirate Ancestor", "Pirate", vec2.new(100,0) )
+      hyena = pilot.add( "Hyena", "Pirate", vec2.new(0,100), _("Pirate Hyena") )
 
       baddie:rename(godname)
       baddie:setHilight()

@@ -144,7 +144,7 @@ function spawn ()
    local r = system.cur():radius()
    local x = rnd.rnd( -r, r )
    local y = rnd.rnd( -r, r )
-   local p = pilot.addFleet( "Pirate Phalanx", vec2.new( x, y ) )[1]
+   local p = pilot.add( "Pirate Phalanx", "Pirate", vec2.new( x, y ) )
 
    hook.pilot( p, "death", "pirate_death" )
    p:setHostile()

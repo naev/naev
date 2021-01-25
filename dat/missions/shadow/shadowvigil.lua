@@ -253,7 +253,7 @@ function jumpin()
         
     if stage == 4 then
         -- Spawn the diplomat.
-        diplomat = pilot.addFleet("Shadowvigil Diplomat", origin)[1]
+        diplomat = pilot.add( "Diplomatic Vessel", "Diplomatic", origin, _("Imperial Diplomat") )
         hook.pilot(diplomat, "death", "diplomatDeath")
         hook.pilot(diplomat, "jump", "diplomatJump")
         hook.pilot(diplomat, "attacked", "diplomatAttacked")
@@ -291,7 +291,7 @@ function jumpin()
                end
            end
         elseif system.cur() == misssys[3] then -- case join up with diplomat
-            diplomat = pilot.addFleet("Shadowvigil Diplomat", vec2.new(0, 0))[1]
+            diplomat = pilot.add( "Diplomatic Vessel", "Diplomatic", vec2.new(0, 0), _("Imperial Diplomat") )
             hook.pilot(diplomat, "death", "diplomatDeath")
             hook.pilot(diplomat, "jump", "diplomatJump")
             diplomat:control()
@@ -314,7 +314,7 @@ function jumpin()
                     j:follow(diplomat) -- Follow the diplomat.
                 end
             end
-            dvaerplomat = pilot.addFleet("Dvaered Vigilance", vec2.new(2000, 4000))[1]
+            dvaerplomat = pilot.add( "Dvaered Vigilance", "Dvaered", vec2.new(2000, 4000) )
             dvaerplomat:control()
             dvaerplomat:setHilight(true)
             dvaerplomat:setVisplayer()
@@ -365,7 +365,7 @@ function jumpin()
 
     elseif system.cur() == seirsys then -- not escorting.
         -- case enter system where Seiryuu is
-        seiryuu = pilot.addFleet("Seiryuu", vec2.new(0, -2000))[1]
+        seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(0, -2000), _("Seiryuu"), "trader" )
         seiryuu:setInvincible(true)
         if missend then
             seiryuu:setActiveBoard(true)

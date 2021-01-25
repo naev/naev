@@ -196,7 +196,7 @@ function enter ( from_sys )
          misn.osdActive(2)
 
          -- Position trinity on the other side of the player
-         trinity = pilot.addFleet("Trinity", vec2.new(-5000, 1500), "noidle")[1]
+         trinity = pilot.add( "Empire Hawking", "Empire", vec2.new(-5000, 1500), _("ESS Trinity"), "noidle" )
          trinity:setVisplayer()
          trinity:setHilight(true)
          trinity:setFaction("Empire") -- Starts out non-hostile
@@ -339,7 +339,7 @@ function add_escorts( landed )
    end
    
    if escorts == nil then escorts = {} end
-   paci = pilot.addFleet("Empire Pacifier", param, "escort_player")[1]
+   paci = pilot.add( "Empire Pacifier", "Empire", param, nil, "escort_player" )
    escorts[#escorts + 1] = paci
    paci:setFriendly()
    if trinity ~= nil then
@@ -347,7 +347,7 @@ function add_escorts( landed )
       paci:moveto( trinity:pos() )
    end
    for i=1, 6 do
-      local lance = pilot.addFleet("Empire Lancelot", param, "escort_player")[1]
+      local lance = pilot.add( "Empire Lancelot", "Empire", param, nil, "escort_player" )
       escorts[#escorts + 1] = lance
       lance:setFriendly()
       if trinity ~= nil then

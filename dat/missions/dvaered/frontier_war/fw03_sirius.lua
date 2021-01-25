@@ -429,10 +429,10 @@ end
 -- Spawn Tam and his crew
 function spawnTam( origin )
    tamteam = {}
-   tamteam[1] = pilot.addFleet("Dvaered Vigilance", origin)[1]
-   tamteam[2] = pilot.addFleet("Dvaered Phalanx", origin)[1]
-   tamteam[3] = pilot.addFleet("Dvaered Vendetta", origin)[1]
-   tamteam[4] = pilot.addFleet("Dvaered Vendetta", origin)[1]
+   tamteam[1] = pilot.add( "Dvaered Vigilance", "Dvaered", origin )
+   tamteam[2] = pilot.add( "Dvaered Phalanx", "Dvaered", origin )
+   tamteam[3] = pilot.add( "Dvaered Vendetta", "Dvaered", origin )
+   tamteam[4] = pilot.add( "Dvaered Vendetta", "Dvaered", origin )
 
    for i,p in ipairs(tamteam) do
       p:setFaction("DHC")
@@ -657,7 +657,7 @@ end
 
 -- Spawn Hamelsen and make her escape
 function spawnHamelsen( origin )
-   hamelsen = pilot.addFleet( "Civilian Schroedinger", origin )[1]
+   hamelsen = pilot.add( "Schroedinger", "Civilian", origin , _("Civilian Schroedinger") )
    hamelsen:setInvincible()
    hamelsen:setFaction("Warlords")
    hamelsen:rename(_("Colonel Hamelsen"))

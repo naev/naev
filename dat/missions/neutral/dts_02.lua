@@ -159,7 +159,7 @@ function enter_system()
       if this_system == system.cur() and defender == true then
          defend_system()
       elseif victory == true and defender == true then
-         pilot.addFleet( "Trader Koala", player.pos(), "def" )
+         pilot.add( "Koala", "Trader", player.pos(), _("Trader Koala"), "def" )
          hook.timer(1000, "ship_enters")
       elseif defender == true then
          player.msg( comm[8])
@@ -198,12 +198,12 @@ function defend_system()
 
   -- And a fleet of defending independents
       defense_fleet = pilot.addFleet( "DTS Defense Fleet", defense_position, "def" )
-      cadet1 = pilot.addFleet( "Empire Lancelot", defense_position, "def" )[1]
+      cadet1 = pilot.add( "Empire Lancelot", "Empire", defense_position, nil, "def" )
       do 
          cadet1_alive = true
          hook.pilot( cadet1, "death", "cadet1_dead")
       end
-      cadet2 = pilot.addFleet( "Empire Lancelot", defense_position, "def" )[1]
+      cadet2 = pilot.add( "Empire Lancelot", "Empire", defense_position, nil, "def" )
       do
          cadet2_alive = true
          hook.pilot( cadet2, "death", "cadet2_dead")

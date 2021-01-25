@@ -165,10 +165,10 @@ function badevent()
         destroyevent()
     elseif event == 3 then
         tk.msg(btitle, btext[3])
-        v1 = pilot.addFleet("Pirate Vendetta", player.pos() + vec2.new( 300, 300))[1]
-        v2 = pilot.addFleet("Pirate Vendetta", player.pos() + vec2.new(-300, 300))[1]
-        a1 = pilot.addFleet("Pirate Ancestor", player.pos() + vec2.new(-300,-300))[1]
-        a2 = pilot.addFleet("Pirate Ancestor", player.pos() + vec2.new( 300,-300))[1]
+        v1 = pilot.add( "Pirate Vendetta", "Pirate", player.pos() + vec2.new( 300, 300) )
+        v2 = pilot.add( "Pirate Vendetta", "Pirate", player.pos() + vec2.new(-300, 300) )
+        a1 = pilot.add( "Pirate Ancestor", "Pirate", player.pos() + vec2.new(-300,-300) )
+        a2 = pilot.add( "Pirate Ancestor", "Pirate", player.pos() + vec2.new( 300,-300) )
         v1:control()
         v1:attack(player.pilot())
         v2:control()

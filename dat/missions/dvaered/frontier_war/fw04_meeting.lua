@@ -345,29 +345,29 @@ end
 -- Spawn the Beta squadrons
 function spawnBeta()
    beta = {}
-   beta[1] = pilot.addFleet( "Dvaered Vendetta", targpla )[1]
+   beta[1] = pilot.add( "Dvaered Vendetta", "Dvaered", targpla )
    beta[1]:rename(_("B-Storks-4"))
-   beta[2] = pilot.addFleet( "Dvaered Vendetta", targpla )[1]
+   beta[2] = pilot.add( "Dvaered Vendetta", "Dvaered", targpla )
    beta[2]:rename(_("B-Storks-3"))
-   beta[3] = pilot.addFleet( "Dvaered Vendetta", targpla )[1]
+   beta[3] = pilot.add( "Dvaered Vendetta", "Dvaered", targpla )
    beta[3]:rename(_("B-Storks-2"))
-   beta[4] = pilot.addFleet( "Dvaered Vendetta", targpla )[1]
+   beta[4] = pilot.add( "Dvaered Vendetta", "Dvaered", targpla )
    beta[4]:rename(_("B-Storks-Lead"))
-   beta[5] = pilot.addFleet( "Dvaered Ancestor", targpla )[1]
+   beta[5] = pilot.add( "Dvaered Ancestor", "Dvaered", targpla )
    beta[5]:rename(_("B-Storks-7"))
-   beta[6] = pilot.addFleet( "Dvaered Ancestor", targpla )[1]
+   beta[6] = pilot.add( "Dvaered Ancestor", "Dvaered", targpla )
    beta[6]:rename(_("B-Storks-6"))
-   beta[7] = pilot.addFleet( "Dvaered Ancestor", targpla )[1]
+   beta[7] = pilot.add( "Dvaered Ancestor", "Dvaered", targpla )
    beta[7]:rename(_("B-Storks-5"))
-   beta[8] = pilot.addFleet( "Dvaered Phalanx", targpla )[1]
+   beta[8] = pilot.add( "Dvaered Phalanx", "Dvaered", targpla )
    beta[8]:rename(_("B-Hammer-4"))
-   beta[9] = pilot.addFleet( "Dvaered Phalanx", targpla )[1]
+   beta[9] = pilot.add( "Dvaered Phalanx", "Dvaered", targpla )
    beta[9]:rename(_("B-Hammer-4"))
-   beta[10] = pilot.addFleet( "Dvaered Phalanx", targpla )[1]
+   beta[10] = pilot.add( "Dvaered Phalanx", "Dvaered", targpla )
    beta[10]:rename(_("B-Hammer-3"))
-   beta[11] = pilot.addFleet( "Dvaered Vigilance", targpla )[1]
+   beta[11] = pilot.add( "Dvaered Vigilance", "Dvaered", targpla )
    beta[11]:rename(_("B-Hammer-2"))
-   beta[12] = pilot.addFleet( "Dvaered Goddard", targpla )[1]
+   beta[12] = pilot.add( "Dvaered Goddard", "Dvaered", targpla )
    beta[12]:rename(_("B-Hammer-Lead"))
 
    Bidlehooks = {}
@@ -585,7 +585,7 @@ end
 
 -- Spawn Hamelsen in a hyena
 function spawnHam()
-   hamelsen = pilot.addFleet( "Civilian Hyena", system.get("Beeklo") )[1]
+   hamelsen = pilot.add( "Hyena", "Civilian", system.get("Beeklo") , _("Civilian Hyena") )
    equipHyena( hamelsen )
    hamelsen:control()
    hamelsen:land(targpla)
@@ -595,7 +595,7 @@ function spawnHam()
    hook.timer(500, "proximity", {location = targpos, radius = 10000, funcname = ("incomingHamelsen"), focus = hamelsen})
 
    -- Hamelsen's partner, whose purpose is to make a fight occur
-   jules = pilot.addFleet( "Civilian Hyena", system.get("Beeklo") )[1]
+   jules = pilot.add( "Hyena", "Civilian", system.get("Beeklo") , _("Civilian Hyena") )
    equipHyena( jules )
    jules:control()
    jules:follow( hamelsen )

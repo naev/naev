@@ -158,7 +158,7 @@ function enter ()
       enter_vect = jump.pos(sys, prevsys)
       m,a = enter_vect:polar()
       enter_vect:setP( m-3000, a )
-      v = pilot.addFleet( "Trader Gawain", enter_vect, "dummy" )[1]
+      v = pilot.add( "Gawain", "Trader", enter_vect, _("Trader Gawain"), "dummy" )
 
       v:setPos( enter_vect )
       v:setVel( vec2.new( 0, 0 ) ) -- Clear velocity
@@ -176,7 +176,7 @@ function enter ()
          v:setHostile()
       end
       -- To make it more interesting a vendetta will solely target the player.
-      p = pilot.addFleet( "FLF Vendetta", enter_vect )[1]
+      p = pilot.add( "Vendetta", "FLF", enter_vect , _("FLF Vendetta") )
       p:control()
       p:setHostile()
       p:attack( player.pilot() )

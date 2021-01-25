@@ -216,7 +216,7 @@ end
 -- Enter hook
 function enter()
     if system.cur() == seirsys then
-        seiryuu = pilot.addFleet("Seiryuu", vec2.new(300, 300) + seirplanet:pos())[1]
+        seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(300, 300) + seirplanet:pos(), _("Seiryuu"), "trader" )
         seiryuu:setInvincible(true)
         seiryuu:control()
         if stage == 1 or stage == 6 then
@@ -235,7 +235,7 @@ function enter()
         pilot.toggleSpawn(false)
         player.allowLand(false, _("Landing permission denied. Our docking clamps are currently undergoing maintenance."))
         -- Meet Joe, our informant.
-        joe = pilot.addFleet("Four Winds Vendetta", vec2.new(-500, -4000))[1]
+        joe = pilot.add( "Vendetta", "Four Winds", vec2.new(-500, -4000), _("Four Winds Vendetta"), "trader" )
         joe:control()
         joe:rename(_("Four Winds Informant"))
         joe:setHilight(true)
@@ -411,7 +411,7 @@ end
 
 -- Spawns the Genbu
 function spawnGenbu(sys)
-    genbu = pilot.addFleet("Genbu", sys)[1]
+    genbu = pilot.add( "Pirate Kestrel", "Four Winds", sys, _("Genbu") )
     genbu:rmOutfit("all")
     genbu:addOutfit("Turbolaser", 3)
     genbu:addOutfit("Cheater's Ragnarok Beam", 3) -- You can't win. Seriously.

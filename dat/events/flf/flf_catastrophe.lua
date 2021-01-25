@@ -144,12 +144,11 @@ function takeoff ()
    pilot.toggleSpawn( false )
    pilot.clear()
 
-   local nf, ss, s
+   local ss, s
 
    ss, s = planet.get( "Sindbad" )
 
-   nf = pilot.addFleet( "Sindbad", ss:pos(), "flf_norun" )
-   flf_base = nf[1]
+   flf_base = pilot.add( "Sindbad", "FLF", ss:pos(), nil, "flf_norun" )
    flf_base:rmOutfit( "all" )
    flf_base:rmOutfit( "cores" )
    flf_base:addOutfit( "Dummy Systems" )

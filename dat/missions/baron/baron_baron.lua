@@ -166,7 +166,7 @@ end
 
 function jumpin()
    if talked and system.cur() == system.get(sysname2) then
-      pinnacle = pilot.addFleet("Proteron Kahan", planet.get("Ulios"):pos() + vec2.new(-400,-400), "trader")[1]
+      pinnacle = pilot.add( "Proteron Kahan", "Proteron", planet.get("Ulios"):pos() + vec2.new(-400,-400), nil, "trader" )
       pinnacle:setFaction("Civilian")
       pinnacle:rename(_("Pinnacle"))
       pinnacle:setInvincible(true)
@@ -235,8 +235,8 @@ end
 
 function takeoff()
    if talked and system.cur() == system.get(sysname1) then
-      vendetta1 = pilot.addFleet("Dvaered Vendetta", vec2.new(500,0), "dvaered_norun")[1]
-      vendetta2 = pilot.addFleet("Dvaered Vendetta", vec2.new(-500,0), "dvaered_norun")[1]
+      vendetta1 = pilot.add( "Dvaered Vendetta", "Dvaered", vec2.new(500,0), nil, "dvaered_norun" )
+      vendetta2 = pilot.add( "Dvaered Vendetta", "Dvaered", vec2.new(-500,0), nil, "dvaered_norun" )
       vendetta1:rename(_("Dvaered Police Vendetta"))
       vendetta2:rename(_("Dvaered Police Vendetta"))
       vendetta1:control()

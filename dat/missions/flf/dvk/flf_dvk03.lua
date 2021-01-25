@@ -157,8 +157,7 @@ function enter ()
          ms, s = planet.get( "Marius Station" )
 
          -- Spawn Raelid Outpost ship
-         nf = pilot.addFleet( "Raelid Outpost", ro:pos() )
-         dv_base = nf[1]
+         dv_base = pilot.add( "Raelid Outpost", "Dvaered", ro:pos() , nil, "dvaered_norun" )
          dv_base:rmOutfit( "all" )
          dv_base:rmOutfit( "cores" )
          dv_base:addOutfit( "Dummy Systems" )
@@ -263,8 +262,8 @@ function timer_pirates ()
 
    local src = system.get( "Zacron" )
 
-   pir_fleet = pilot.addFleet( "Pirate Kestrel", src )
-   pir_boss = pir_fleet[1]
+   pir_boss = pilot.add( "Pirate Kestrel", "Pirate", src )
+   pir_fleet = {pir_boss}
    hook.pilot( pir_boss, "death", "pilot_death_kestrel" )
 
    local choices = {
