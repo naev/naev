@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-23 23:07-0500\n"
-"PO-Revision-Date: 2021-01-25 12:32+0000\n"
+"PO-Revision-Date: 2021-01-25 21:32+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -1152,19 +1152,19 @@ msgstr "Amaroq III"
 
 #: dat/assets/amatiri_i.xml:2
 msgid "Amatiri I"
-msgstr ""
+msgstr "Amatiri I"
 
 #: dat/assets/amatiri_ia.xml:2
 msgid "Amatiri Ia"
-msgstr ""
+msgstr "Amatiri Ia"
 
 #: dat/assets/amatiri_ii.xml:2
 msgid "Amatiri II"
-msgstr ""
+msgstr "Amatiri II"
 
 #: dat/assets/ambre.xml:2
 msgid "Ambre"
-msgstr ""
+msgstr "Ambre"
 
 #: dat/assets/ambre.xml:29
 msgid ""
@@ -1176,6 +1176,12 @@ msgid ""
 "This was one of the important reasons the Emperor granted House Dvaered its "
 "independence."
 msgstr ""
+"Ambre byl jednou z planet, které hrály klíčovou roli v dělnických vzpourách, "
+"které nakonec vedly ke vzniku rodu Dvaeredů. V té době byla planeta domovem "
+"značného procenta imperiální pracovní síly v tomto sektoru vesmíru. Bez "
+"dělníků, kteří by pracovali v dolech a na staveništích, říše každý cyklus "
+"ztrácela astronomické částky peněz. To byl jeden z důležitých důvodů, proč "
+"císař udělil rodu Dvaeredům jeho nezávislost."
 
 #: dat/assets/ambre.xml:30
 msgid ""
@@ -1187,10 +1193,16 @@ msgid ""
 "into one of the only remaining spaces available, which was right over the "
 "freight lines."
 msgstr ""
+"Bar na Ambre není nikdy tichý. V pravidelných intervalech je veškerý další "
+"hluk v baru přehlušen zvukem nákladních zásobníků, které se stáčejí podél "
+"železnice těsně pod ním. Bar byl postaven relativně pozdě ve vývoji planety; "
+"imperiální vláda neviděla potřebu, když byl Ambre něco víc než pracovní "
+"tábor. Po získání nezávislosti byl bar vtěsnaný do jednoho z mála "
+"zbývajících dostupných prostor, který byl přímo nad nákladními linkami."
 
 #: dat/assets/amhurst.xml:2
 msgid "Amhurst"
-msgstr ""
+msgstr "Amhurst"
 
 #: dat/assets/amhurst.xml:30
 msgid ""
