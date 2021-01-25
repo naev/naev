@@ -389,13 +389,13 @@ function spawn_baddies(sp)
    -- has eventually to be trimmed
    -- so weird: ai does not work properly apparently? WTF is going on.. switching to dummy and switched from pilot.add to pilot.addRaw
    -- disabling some ships since this way it is really hard to win the mission
-   scom[1] = pilot.addRaw("Za'lek Light Drone", "Mercenary", sp, "mercenary" )
-   scom[2] = pilot.addRaw("Za'lek Light Drone", "Mercenary", sp, "mercenary" )
-   scom[3] = pilot.addRaw("Za'lek Heavy Drone", "Mercenary", sp, "mercenary" )
-   scom[4] = pilot.addRaw("Za'lek Heavy Drone", "Mercenary", sp, "mercenary" )
---   scom[5] = pilot.addRaw("Za'lek Heavy Drone", "Mercenary", sp, "mercenary" )
---   scom[6] = pilot.addRaw("Za'lek Light Drone", "Mercenary", sp, "mercenary" )
---   scom[7] = pilot.addRaw("Za'lek Light Drone", "Mercenary", sp, "mercenary" )
+   scom[1] = pilot.addRaw("Za'lek Light Drone", "Mercenary", sp )
+   scom[2] = pilot.addRaw("Za'lek Light Drone", "Mercenary", sp )
+   scom[3] = pilot.addRaw("Za'lek Heavy Drone", "Mercenary", sp )
+   scom[4] = pilot.addRaw("Za'lek Heavy Drone", "Mercenary", sp )
+--   scom[5] = pilot.addRaw("Za'lek Heavy Drone", "Mercenary", sp )
+--   scom[6] = pilot.addRaw("Za'lek Light Drone", "Mercenary", sp )
+--   scom[7] = pilot.addRaw("Za'lek Light Drone", "Mercenary", sp )
    for i=1,#scom do
      scom[i]:setHostile(false)
    end

@@ -456,7 +456,7 @@ end
 
 -- Spawn one warlord
 function spawn1Wrlrd( origin )
-   wrlrds[noWrlrd] = pilot.addRaw( "Dvaered Goddard", "Warlords", origin, "baddie" )
+   wrlrds[noWrlrd] = pilot.addRaw( "Dvaered Goddard", "Warlords", origin )
    wrlrds[noWrlrd]:rename( lords[noWrlrd] )
    wrlrds[noWrlrd]:control()
 
@@ -692,13 +692,13 @@ function StraferNspy()
 
    -- First, teleport Strafer far away from any backup
    alpha[2]:rm()
-   alpha[2] = pilot.addRaw( "Hyena", "DHC", strpos, "baddie" )
+   alpha[2] = pilot.addRaw( "Hyena", "DHC", strpos )
    alpha[2]:rename("Lieutenant Strafer")
    alpha[2]:setVisplayer()
    alpha[2]:control()
 
    -- Then put the fleeing spy
-   spy = pilot.addRaw( "Schroedinger", "Warlords", spypos, "baddie" )
+   spy = pilot.addRaw( "Schroedinger", "Warlords", spypos )
    spy:setVisplayer()
    spy:control()
    spy:hyperspace( system.get("Gremlin") )
@@ -726,7 +726,7 @@ function deathOfStrafer()
 
    attackers = {}
    for i = 1, 10 do
-      attackers[i] = pilot.addRaw( "Hyena", "Warlords", system.get("Gremlin"), "baddie" )
+      attackers[i] = pilot.addRaw( "Hyena", "Warlords", system.get("Gremlin") )
       attackers[i]:control()
       attackers[i]:attack( alpha[2] )
    end

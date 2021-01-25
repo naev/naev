@@ -332,10 +332,10 @@ function enter()
       --The TV and the security
       tv1 = pilot.addRaw( "Gawain", "Dvaered", mispla, "civilian" )
       tv2 = pilot.addRaw( "Gawain", "Dvaered", mispla, "civilian" )
-      sec11 = pilot.addRaw( "Hyena", "Dvaered", mispla, "dvaered" )
-      sec12 = pilot.addRaw( "Hyena", "Dvaered", mispla, "dvaered" )
-      sec21 = pilot.addRaw( "Hyena", "Dvaered", mispla, "dvaered" )
-      sec22 = pilot.addRaw( "Hyena", "Dvaered", mispla, "dvaered" )
+      sec11 = pilot.addRaw( "Hyena", "Dvaered", mispla )
+      sec12 = pilot.addRaw( "Hyena", "Dvaered", mispla )
+      sec21 = pilot.addRaw( "Hyena", "Dvaered", mispla )
+      sec22 = pilot.addRaw( "Hyena", "Dvaered", mispla )
 
       hooks = {}
 

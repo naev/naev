@@ -43,7 +43,8 @@ end
 --[[
 -- @brief Wrapper for pilot.addRaw() that can operate on tables of ships.
 --
--- @usage pilots = addRawShips( 1, "Hyena", "Pirate", nil, "pirate" ) -- Creates a facsimile of a Pirate Hyena.
+-- @usage pilots = addRawShips( 1, "Hyena", "Pirate" ) -- Creates a facsimile of a Pirate Hyena.
+-- @usage pilots = addRawShips( 1, "Hyena", "Pirate", nil, "pirate_norun" ) -- Ditto, but use the "norun" AI variant.
 -- @usage pilots = addRawShips( 2, { "Rhino", "Koala" }, "Trader" ) -- Creates four Trader ships.
 --
 --    @luaparam count Number of times to repeat the pattern.

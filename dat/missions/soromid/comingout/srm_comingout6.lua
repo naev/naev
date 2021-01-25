@@ -152,7 +152,7 @@ function spawn ()
    p:setHilight( true )
 
    -- Spawn Chelsea
-   chelsea = pilot.addRaw( "Lancelot", "Comingout_associates", lastsys, "mercenary" )
+   chelsea = pilot.addRaw( "Lancelot", "Comingout_associates", lastsys )
    chelsea:rmOutfit( "all" )
    chelsea:rmOutfit( "cores" )
    chelsea:addOutfit( "Milspec Orion 3701 Core System" )

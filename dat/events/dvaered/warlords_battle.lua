@@ -115,10 +115,10 @@ function attack ()
    attackers[2*n+1] = pilot.add("Dvaered Phalanx", source_system)[1]
    attackers[2*n+2] = pilot.add("Dvaered Phalanx", source_system)[1]
    attackers[2*n+3] = pilot.add("Dvaered Vigilance", source_system)[1]
-   attackers[2*n+4] = pilot.addRaw("Rhino", "Thugs", source_system, "dvaered") --some transport ships
-   attackers[2*n+5] = pilot.addRaw("Rhino", "Thugs", source_system, "dvaered")
-   attackers[2*n+6] = pilot.addRaw("Rhino", "Thugs", source_system, "dvaered")
-   attackers[2*n+7] = pilot.addRaw("Rhino", "Thugs", source_system, "dvaered")
+   attackers[2*n+4] = pilot.addRaw("Rhino", "Thugs", source_system) --some transport ships
+   attackers[2*n+5] = pilot.addRaw("Rhino", "Thugs", source_system)
+   attackers[2*n+6] = pilot.addRaw("Rhino", "Thugs", source_system)
+   attackers[2*n+7] = pilot.addRaw("Rhino", "Thugs", source_system)
    attackers[2*n+8] = pilot.add("Dvaered Goddard", source_system)[1]
 
    -- The transport ships tend to run away

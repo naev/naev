@@ -84,7 +84,7 @@ function enter () --aforementioned triggered function
    if system.cur() == targetsystem then --when in target system
       local defenderships = { "Lancelot", "Lancelot", "Admonisher", "Pacifier", "Hawking", "Kestrel" }
       local jumpin = jump.pos(targetsystem, last_system)
-      defenders = addRawShips( 1, defenderships, "Associates", jumpin, "dvaered" ) --add a defending force to help you
+      defenders = addRawShips( 1, defenderships, "Associates", jumpin ) --add a defending force to help you
       for pilot_number, pilot_object in pairs(defenders) do
          local rn = pilot_object:ship():nameRaw() 
          if rn == "Lancelot" then

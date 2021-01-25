@@ -174,9 +174,9 @@ function takeoff()
       j:setActiveBoard(true)
       j:setVisible(true)
    end
-   racers[1] = pilot.addRaw("Llama", "Civilian", curplanet, "civilian")
-   racers[2] = pilot.addRaw("Gawain", "Civilian", curplanet, "civilian")
-   racers[3] = pilot.addRaw("Llama", "Civilian", curplanet, "civilian")
+   racers[1] = pilot.addRaw("Llama", "Civilian", curplanet)
+   racers[2] = pilot.addRaw("Gawain", "Civilian", curplanet)
+   racers[3] = pilot.addRaw("Llama", "Civilian", curplanet)
    if choice == 1 then
       racers[1]:addOutfit("Engine Reroute")
       racers[2]:addOutfit("Steering Thrusters")

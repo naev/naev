@@ -775,7 +775,7 @@ end
 
 -- Spawns the odd imperial pilot
 function spawnHewHew( origin )
-   hewhew = pilot.addRaw("Hyena", "Civilian", origin, "civilian")
+   hewhew = pilot.addRaw("Hyena", "Civilian", origin)
    hewhew:rename("Strange Pilot")
    hewhew:setInvincible()  -- Don't wreck my Captain HewHew
    hewhew:hailPlayer()

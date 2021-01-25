@@ -356,7 +356,7 @@ function enter()
          count = 3
       end
       if choice <= 3 then
-         fleep = addRawShips( count, pilots, "Mercenary", nil, "mercenary" );
+         fleep = addRawShips( count, pilots, "Mercenary" );
          for i, j in ipairs(fleep) do
             j:control()
             j:setHostile(true)

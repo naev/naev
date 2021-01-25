@@ -203,7 +203,7 @@ end
 function jumpin()
    if system.cur() == destsys and stage == stages.killAssociates then
       bhfleet = {"Pirate Vendetta", "Pacifier", "Lancelot", "Hyena"}
-      bhfleet = addRawShips(1, bhfleet, "Achack_thugs", vec2.new(-3000, -7000), "baddie_norun")
+      bhfleet = addRawShips(1, bhfleet, "Achack_thugs", vec2.new(-3000, -7000))
       alive = #bhfleet
       for i, j in ipairs(bhfleet) do
          j:control()

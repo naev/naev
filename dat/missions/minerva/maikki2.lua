@@ -646,7 +646,7 @@ function ecc_dist ()
       defense_systems = {}
       for k,v in ipairs(spawners) do
          local pos = eccpos + vec2.newP( rnd.rnd(0,100), rnd.rnd(0,359) )
-         local p = pilot.addRaw( v, "Strangelove", pos, "zalek" )
+         local p = pilot.addRaw( v, "Strangelove", pos )
          p:rename(_("Security Drone"))
          p:control()
          p:setHostile()
