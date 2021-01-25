@@ -186,7 +186,7 @@ function enter ()
       drone1pos = vec2.new(  -2000, -15000 )
       drone2pos = vec2.new( -10000,   6000 )
 
-      fzalek = faction.dynAdd( "Za'lek", "zalek_thugs", "Za'lek", "zalek" )
+      fzalek = faction.dynAdd( "Za'lek", "zalek_thugs", _("Za'lek"), "zalek" )
 
       drone1 = drone_create( drone1pos )
       drone1marker = system.mrkAdd( _("Za'lek Drone"), drone1:pos() )

@@ -436,7 +436,7 @@ function enter ()
       -- cutscene
       local j = jump.get( cutscenesys, searchsys )
       local pos = j:pos() + vec2.new(3000,5000)
-      local fscav = faction.dynAdd( "Independent", "Scavenger", "Scavenger" )
+      local fscav = faction.dynAdd( "Independent", "Scavenger", _("Scavenger") )
       pscavB = pilot.addRaw( "Vendetta", "Scavenger", pos, _("Scavenger Vendetta"), "independent" )
       pscavB:control()
       pscavB:brake()
@@ -459,7 +459,7 @@ function enter ()
       local pos = waypoints[1]
       local posA = pos + vec2.new( 100, 80 )
       local posB = pos + vec2.new( -50, -20 )
-      local fscav = faction.dynAdd( "Independent", "Scavenger", "Scavenger" )
+      local fscav = faction.dynAdd( "Independent", "Scavenger", _("Scavenger") )
       pscavA = pilot.addRaw( "Shark", "Scavenger", posA, nil, "independent" )
       pscavB = pilot.addRaw( "Vendetta", "Scavenger", posB, nil, "independent" )
       for k,p in ipairs{ pscavA, pscavB } do
