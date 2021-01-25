@@ -14,7 +14,6 @@ typedef struct JumpPoint_ JumpPoint;
 #include "commodity.h"
 #include "explosion.h"
 #include "faction.h"
-#include "fleet.h"
 #include "mission.h"
 #include "opengl.h"
 #include "pilot.h"
@@ -313,11 +312,6 @@ struct StarSystem_ {
    AsteroidExclusion *astexclude; /**< Asteroid exclusion zones in the system */
    int nastexclude; /**< number of asteroid exclusion zones */
 
-   /* Fleets. */
-   Fleet** fleets; /**< fleets that can appear in the current system */
-   int nfleets; /**< total number of fleets */
-   double avg_pilot; /**< Target amount of pilots in the system. */
-
    /* Calculated. */
    double *prices; /**< Handles the prices in the system. */
 
@@ -402,8 +396,6 @@ int system_rmPlanet( StarSystem *sys, const char *planetname );
 int system_addJump( StarSystem *sys, xmlNodePtr node );
 int system_addJumpDiff( StarSystem *sys, xmlNodePtr node );
 int system_rmJump( StarSystem *sys, const char *jumpname );
-int system_addFleet( StarSystem *sys, Fleet *fleet );
-int system_rmFleet( StarSystem *sys, Fleet *fleet );
 
 /*
  * render

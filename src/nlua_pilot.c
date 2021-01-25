@@ -21,6 +21,7 @@
 #include "camera.h"
 #include "damagetype.h"
 #include "escort.h"
+#include "fleet.h"
 #include "gui.h"
 #include "land_outfits.h"
 #include "log.h"

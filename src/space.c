@@ -24,7 +24,6 @@
 #include "damagetype.h"
 #include "dev_uniedit.h"
 #include "economy.h"
-#include "fleet.h"
 #include "gui.h"
 #include "hook.h"
 #include "log.h"
@@ -2439,65 +2438,6 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
 
 
 /**
- * @brief Adds a fleet to a star system.
- *
- *    @param sys Star System to add fleet to.
- *    @param fleet Fleet to add.
- *    @return 0 on success.
- */
-int system_addFleet( StarSystem *sys, Fleet *fleet )
-{
-   if (sys == NULL)
-      return -1;
-
-   /* Add the fleet. */
-   sys->nfleets++;
-   sys->fleets = realloc( sys->fleets, sizeof(Fleet*) * sys->nfleets );
-   sys->fleets[sys->nfleets - 1] = fleet;
-
-   /* Adjust the system average. */
-   sys->avg_pilot += fleet->npilots;
-
-   return 0;
-}
-
-
-/**
- * @brief Removes a fleet from a star system.
- *
- *    @param sys Star System to remove fleet from.
- *    @param fleet Fleet to remove.
- *    @return 0 on success.
- */
-int system_rmFleet( StarSystem *sys, Fleet *fleet )
-{
-   int i;
-
-   if (sys == NULL)
-      return -1;
-
-   /* Find a matching fleet (will grab first since can be duplicates). */
-   for (i=0; i<sys->nfleets; i++)
-      if (fleet == sys->fleets[i])
-         break;
-
-   /* Not found. */
-   if (i >= sys->nfleets)
-      return -1;
-
-   /* Remove the fleet. */
-   sys->nfleets--;
-   memmove(&sys->fleets[i], &sys->fleets[i + 1], sizeof(Fleet*) * (sys->nfleets - i));
-   sys->fleets = realloc(sys->fleets, sizeof(Fleet*) * sys->nfleets);
-
-   /* Adjust the system average. */
-   sys->avg_pilot -= fleet->npilots;
-
-   return 0;
-}
-
-
-/**
  * @brief Initializes a new star system with null memory.
  */
 static void system_init( StarSystem *sys )
@@ -3703,7 +3643,6 @@ void space_exit (void)
    /* Free the systems. */
    for (i=0; i < array_size(systems_stack); i++) {
       free(systems_stack[i].name);
-      free(systems_stack[i].fleets);
       free(systems_stack[i].jumps);
       free(systems_stack[i].background);
       free(systems_stack[i].presence);

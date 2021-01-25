@@ -12,13 +12,6 @@ typedef struct Fleet_ Fleet;
 #include "pilot.h"
 
 
-/*
- * Flags.
- */
-#define fleet_setFlag(x,f)       ((x)->flags |= (f)) /**< Sets a fleet flag. */
-#define fleet_isFlag(x,f)        ((x)->flags & (f)) /**< Checks to see if fleet has flag. */
-
-
 /**
  * @brief Represents a pilot in a fleet.
  *
@@ -46,7 +39,6 @@ typedef struct Fleet_ {
    char *ai; /**< AI profile to use. */
    FleetPilot* pilots; /**< The pilots in the fleet. */
    int npilots; /**< Total number of pilots. */
-   unsigned int flags; /**< Fleet flags. */
 } Fleet;
 
 
