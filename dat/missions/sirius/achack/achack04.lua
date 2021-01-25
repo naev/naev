@@ -225,7 +225,7 @@ end
 function enter()
    if stage == stages.finish then
       -- Remember, Harja will be with you. Always. Well, until the mission ends.
-      harja = addRawShips(1, "Shark", "Achack_sirius", enter_src, "trader")[1]
+      harja = addRawShips(1, "Shark", "Achack_sirius", enter_src, nil, "trader")[1]
       harja:rename(_("Harja's Shark"))
       harja:control()
       harja:setInvincible(true)

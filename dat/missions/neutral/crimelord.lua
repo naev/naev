@@ -127,7 +127,7 @@ function spawnBaddies ()
       sp = last_system
    end
 
-   thugs = addRawShips( 4, "Admonisher", "Thugs", sp, ai )
+   thugs = addRawShips( 4, "Admonisher", "Thugs", sp, nil, ai )
    for pilot_number, pilot_object in ipairs(thugs) do
       pilot_object:rename(_("Thug"))
       pilot_object:setHostile(true) --they don't like you

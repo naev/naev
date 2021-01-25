@@ -163,9 +163,9 @@ function takeoff()
    else
       shiptype = "Koala"
    end
-   checkpoint[1] = pilot.addRaw(shiptype, "Trader", location1, "stationary")
-   checkpoint[2] = pilot.addRaw(shiptype, "Trader", location2, "stationary")
-   checkpoint[3] = pilot.addRaw(shiptype, "Trader", location3, "stationary")
+   checkpoint[1] = pilot.addRaw(shiptype, "Trader", location1, nil, "stationary")
+   checkpoint[2] = pilot.addRaw(shiptype, "Trader", location2, nil, "stationary")
+   checkpoint[3] = pilot.addRaw(shiptype, "Trader", location3, nil, "stationary")
    for i, j in ipairs(checkpoint) do
       j:rename(string.format(_("Checkpoint %s"), i))
       j:control()

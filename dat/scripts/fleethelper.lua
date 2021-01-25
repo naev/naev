@@ -44,18 +44,20 @@ end
 -- @brief Wrapper for pilot.addRaw() that can operate on tables of ships.
 --
 -- @usage pilots = addRawShips( 1, "Hyena", "Pirate" ) -- Creates a facsimile of a Pirate Hyena.
--- @usage pilots = addRawShips( 1, "Hyena", "Pirate", nil, "pirate_norun" ) -- Ditto, but use the "norun" AI variant.
+-- @usage pilots = addRawShips( 1, "Hyena", "Pirate", nil, nil, "pirate_norun" ) -- Ditto, but use the "norun" AI variant.
 -- @usage pilots = addRawShips( 2, { "Rhino", "Koala" }, "Trader" ) -- Creates four Trader ships.
 --
 --    @luaparam count Number of times to repeat the pattern.
 --    @luaparam ship Ship to add.
 --    @luaparam faction Faction to give the pilot.
 --    @luaparam location Location to jump in from, take off from, or appear at.
+--    @luaparam pilotname Name to give the pilot.
 --    @luaparam ai AI to give the pilot.
 --    @luareturn Table of created pilots.
 -- @luafunc addRawShips
 --]]
-function addRawShips( count, ship, faction, location, ai )
+function addRawShips( count, ship, faction, location, pilotname, ai )
+   local pilotnames = {}
    local ais = {}
    local locations = {}
    local factions = {}
@@ -67,6 +69,7 @@ function addRawShips( count, ship, faction, location, ai )
    elseif type(ship) == "string" then -- Put lone ship into table.
       ship = { ship }
    end
+   pilotnames= _buildDupeTable( pilotname, #ship )
    ais       = _buildDupeTable( ai, #ship )
    locations = _buildDupeTable( location, #ship )
    factions  = _buildDupeTable( faction, #ship )
@@ -80,7 +83,7 @@ function addRawShips( count, ship, faction, location, ai )
    end
    for i=1,count do -- Repeat the pattern as necessary.
       for k,v in ipairs(ship) do
-         out[k+(i-1)*#ship] = pilot.addRaw( ship[k], factions[k], locations[k], ais[k] )
+         out[k+(i-1)*#ship] = pilot.addRaw( ship[k], factions[k], locations[k], pilotnames[k], ais[k] )
       end
    end
    if #out > 1 then

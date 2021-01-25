@@ -440,7 +440,7 @@ function enter()
          origin = lastSys
       end
 
-      strafer = pilot.addRaw("Vendetta", "DHC", origin, "baddie_norun")
+      strafer = pilot.addRaw("Vendetta", "DHC", origin, nil, "baddie_norun")
       strafer:setHilight()
       strafer:setVisplayer()
       strafer:rename("Lieutenant Strafer")

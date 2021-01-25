@@ -333,7 +333,7 @@ end
 
 function enter()
    if system.cur() == baronsys then
-      pinnacle = pilot.addRaw("Proteron Kahan", "Civilian", planet.get("Ulios"):pos() + vec2.new(-400,-400), "trader" )
+      pinnacle = pilot.addRaw("Proteron Kahan", "Civilian", planet.get("Ulios"):pos() + vec2.new(-400,-400), nil, "trader" )
       pinnacle:rename(_("Pinnacle"))
       pinnacle:setInvincible(true)
       pinnacle:setFriendly()

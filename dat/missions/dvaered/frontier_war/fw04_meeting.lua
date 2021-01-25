@@ -382,15 +382,15 @@ end
 -- Spawn the alpha squadron
 function spawnAlpha()
    alpha = {}
-   alpha[1] = pilot.addRaw( "Hyena", "Dvaered", targpla, "baddie" )
+   alpha[1] = pilot.addRaw( "Hyena", "Dvaered", targpla, nil, "baddie" )
    alpha[1]:rename("Captain Leblanc")           
-   alpha[2] = pilot.addRaw( "Hyena", "Dvaered", destpla, "baddie" )
+   alpha[2] = pilot.addRaw( "Hyena", "Dvaered", destpla, nil, "baddie" )
    alpha[2]:rename("Lieutenant Strafer")
-   alpha[3] = pilot.addRaw( "Hyena", "Dvaered", targpla, "baddie" )
+   alpha[3] = pilot.addRaw( "Hyena", "Dvaered", targpla, nil, "baddie" )
    alpha[3]:rename("A-NightClaws-3")            
-   alpha[4] = pilot.addRaw( "Hyena", "Dvaered", targpla, "baddie" )
+   alpha[4] = pilot.addRaw( "Hyena", "Dvaered", targpla, nil, "baddie" )
    alpha[4]:rename("A-NightClaws-4")            
-   alpha[5] = pilot.addRaw( "Hyena", "Dvaered", destpla, "baddie" )
+   alpha[5] = pilot.addRaw( "Hyena", "Dvaered", destpla, nil, "baddie" )
    alpha[5]:rename("A-NightClaws-5")
 
    Aidlehooks = {}
@@ -759,9 +759,9 @@ function spawnKillers()
    misn.osdCreate( osd_title, {osd_text5} )
 
    killers = {}
-   killers[1] = pilot.addRaw( "Hyena", "Warlords", haltpla, "baddie_norun" )
-   killers[2] = pilot.addRaw( "Shark", "Warlords", haltpla, "baddie_norun" )
-   killers[3] = pilot.addRaw( "Lancelot", "Warlords", haltpla, "baddie_norun" )
+   killers[1] = pilot.addRaw( "Hyena", "Warlords", haltpla, nil, "baddie_norun" )
+   killers[2] = pilot.addRaw( "Shark", "Warlords", haltpla, nil, "baddie_norun" )
+   killers[3] = pilot.addRaw( "Lancelot", "Warlords", haltpla, nil, "baddie_norun" )
 
    deadkillers = 0
    for i = 1, #killers do

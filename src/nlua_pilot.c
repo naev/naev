@@ -481,6 +481,9 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
          NLUA_ERROR(L,_("Ship '%s' not found!"), fltname);
          return 0;
       }
+      /* Get pilotname argument if provided. */
+      if ((lua_gettop(L) >= 4) && !lua_isnil(L,4))
+         fltname = luaL_checkstring(L,4);
       /* Get faction from string or number. */
       lf = luaL_validfaction(L,2);
    }
@@ -557,10 +560,10 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    }
 
    /* Parse final argument - Fleet AI Override */
-   if ((lua_gettop(L) < 3+from_ship) || lua_isnil(L,3+from_ship))
+   if ((lua_gettop(L) < 3+2*from_ship) || lua_isnil(L,3+2*from_ship))
       fltai = NULL;
    else
-      fltai = luaL_checkstring(L,3+from_ship);
+      fltai = luaL_checkstring(L,3+2*from_ship);
 
    /* Set up velocities and such. */
    if (jump != NULL) {
@@ -645,11 +648,12 @@ static int pilotL_addFleet( lua_State *L )
 /**
  * @brief Adds a ship with an AI and faction to the system (instead of a predefined fleet).
  *
- * @usage p = pilot.addRaw( "Empire Shark", nil, "Empire", "empire" ) -- Creates a pilot analogous to the Empire Shark fleet.
+ * @usage p = pilot.addRaw( "Empire Shark", nil, "Empire", nil, "empire" ) -- Creates a pilot analogous to the Empire Shark fleet.
  *
  *    @luatparam string shipname Name of the ship to add.
  *    @luatparam Faction faction Faction to give the pilot.
  *    @luatparam System|Planet|Vec2 param Position to create the pilot at. See pilot.add for further information.
+ *    @luatparam[opt] string pilotname Name to give the pilot. Defaults to shipname.
  *    @luatparam[opt] string ai AI to give the pilot. Defaults to the faction's AI.
  *    @luatreturn Pilot The created pilot.
  * @luafunc addRaw

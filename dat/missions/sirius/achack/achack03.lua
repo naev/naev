@@ -150,7 +150,7 @@ function date()
       end
       spawnpoint = spawnpoints[rnd.rnd(#spawnpoints)]
 
-      harja = addRawShips(1, "Shark", "Achack_sirius", spawnpoint, "trader")[1]
+      harja = addRawShips(1, "Shark", "Achack_sirius", spawnpoint, nil, "trader")[1]
       harja:rename(_("Harja's Shark"))
       harja:memory().aggressive = true
       harja:control()
