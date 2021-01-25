@@ -351,7 +351,7 @@ end
 function spawnFLFfighters()
     wavefirst = true
     wavestarted = true
-    local wingFLF = addFleetShips( 3, "FLF Lancelot", base:pos(), "flf_norun" )
+    local wingFLF = addShips( 3, "Lancelot", "FLF", base:pos(), _("FLF Lancelot"), "flf_norun" )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         setFLF( j )
@@ -360,7 +360,7 @@ end
 
 -- Spawns FLF bombers
 function spawnFLFbombers()
-    local wingFLF = addFleetShips( 3, "FLF Vendetta", base:pos(), "flf_norun" )
+    local wingFLF = addShips( 3, "Vendetta", "FLF", base:pos(), _("FLF Vendetta"), "flf_norun" )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         setFLF( j )
@@ -369,7 +369,7 @@ end
 
 -- Spawns FLF destroyers
 function spawnFLFdestroyers()
-    local wingFLF = addFleetShips( 2, "FLF Pacifier", base:pos(), "flf_norun" )
+    local wingFLF = addShips( 2, "Pacifier", "FLF", base:pos(), _("FLF Pacifier"), "flf_norun" )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         hook.pilot(j, "death", "deathFLF")

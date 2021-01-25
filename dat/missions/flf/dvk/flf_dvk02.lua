@@ -276,7 +276,7 @@ function enter ()
          boss:setHilight()
 
          pirates_left = 4
-         pirates = addFleetShips( pirates_left, "Pirate Hyena", vec, "pirate_norun" )
+         pirates = addShips( pirates_left, "Hyena", "Pirate", vec, _("Pirate Hyena"), "pirate_norun" )
          for i, j in ipairs( pirates ) do
             hook.pilot( j, "death", "pilot_death_pirate" )
             hook.pilot( j, "hail", "pilot_hail_pirate" )
