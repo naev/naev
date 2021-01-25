@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-23 23:07-0500\n"
-"PO-Revision-Date: 2021-01-24 22:32+0000\n"
+"PO-Revision-Date: 2021-01-25 06:32+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -23,6 +23,8 @@ msgid ""
 "The night sky always draws our eyes. People look up with a question, or in "
 "wonder, and sometimes with a dream: to venture forth among the stars."
 msgstr ""
+"Noční obloha vždy přitahuje naše oči. Lidé vzhlížejí s otázkou nebo s údivem "
+"a někdy i se snem: vydat se mezi hvězdy."
 
 #: dat/intro:4
 msgid ""
@@ -30,6 +32,9 @@ msgid ""
 "of distant suns, far away but so clear. To reach out and grasp one would "
 "only cost a lifetime. Cheap at the price."
 msgstr ""
+"Ze Země první pozorovatelé vesmíru sledovali drobné drahokamy zářící světlem "
+"vzdálených sluncí, daleko, ale tak jasně. Natáhnout ruku a uchopit ji by "
+"stálo jen celý život. Levné za tu cenu."
 
 #: dat/intro:7
 msgid ""
@@ -37,6 +42,9 @@ msgid ""
 "hurled themselves out into the void. On arrival, they decanted and woke to "
 "find new stars staring coldly down from stranger skies."
 msgstr ""
+"Muži a ženy tedy uzamkli spící těla do mohutných kovových krabic. Vrhli se "
+"do prázdna. Po příjezdu se dekantovali a probudili se, aby našli nové hvězdy "
+"chladně hledící dolů z cizí oblohy."
 
 #: dat/intro:10
 msgid ""
@@ -45,6 +53,10 @@ msgid ""
 "civilisation spread, as it always has, with exponential enthusiasm -- "
 "ripples in the dark sea of space."
 msgstr ""
+"První vlna průzkumníků se plazila od hvězdy k hvězdě podprahovými "
+"rychlostmi, až vynález hyperprostorového pohonu urychlil druhý rozmach. Poté "
+"se civilizace rozšířila, jako vždy, s exponenciálním nadšením - vlnky v "
+"temném moři vesmíru."
 
 #: dat/intro:12
 msgid ""
@@ -53,12 +65,18 @@ msgid ""
 "food, and distrust sowed the seeds of discord. Once begun, the fever of war "
 "spread from world to world and became a holocaust."
 msgstr ""
+"Hrdinský věk objevů však trval jen tak dlouho, dokud lidská zvědavost "
+"předstihla chamtivost. Na koloniích příliš brzy vypukl konflikt. Půda, "
+"palivo, jídlo a nedůvěra zaseli semeno sváru. Jakmile začala válečná "
+"horečka, rozšířila se ze světa do světa a stala se holocaustem."
 
 #: dat/intro:15
 msgid ""
 "After a hundred years of interstellar conflict, on the ashes that remained, "
 "at last a new order built its foundations."
 msgstr ""
+"Po sto letech mezihvězdného konfliktu, na popelu, který zůstal, konečně nový "
+"řád postavil své základy."
 
 #: dat/intro:17
 msgid ""
@@ -67,6 +85,10 @@ msgid ""
 "military, relations between planets resumed; abandoned trade routes saw "
 "traffic for the first time in living memory."
 msgstr ""
+"Muž jménem Daedris prosadil vládu nad vyčerpanými světy. Založil Galaktickou "
+"říši a jmenoval se jejím vládcem. Pod železnou pěstí jeho armády se obnovily "
+"vztahy mezi planetami; opuštěné obchodní cesty viděly provoz poprvé v živé "
+"paměti."
 
 #: dat/intro:19
 msgid ""
@@ -74,6 +96,9 @@ msgid ""
 "irradiated rock was cleansed and dead planets brought back to life. Peace "
 "reigned in an imperial golden age."
 msgstr ""
+"Učenci tomu říkají zenit: technologie poskočila vpřed, kultura vzkvétala, "
+"ozářená skála byla očištěna a mrtvé planety přivedeny zpět k životu. Mír "
+"vládl v císařském zlatém věku."
 
 #: dat/intro:21
 msgid ""
@@ -82,18 +107,22 @@ msgid ""
 "the imperium went awry. In some regions, administration fell into the hands "
 "of other powers. The Great Houses now policed the space lanes."
 msgstr ""
+"Po Daedrisovi, pod jeho nástupci, světlo říše sláblo. Občanské spory a "
+"náboženské rozdělení oslabily sociální vazby. Velké projekty imperia se "
+"zhoršily. V některých regionech se správa dostala do rukou jiných mocností. "
+"Velké domy nyní hlídaly vesmírné cesty."
 
 #: dat/intro:23
 msgid "Rise and fall, the rhythm of history. "
-msgstr ""
+msgstr "Vzestup a pád, rytmus historie. "
 
 #: dat/intro:25
 msgid "But the march of history stumbled over the unknown, over the Incident."
-msgstr ""
+msgstr "Pochod historie však narazil na neznámo, na Incident."
 
 #: dat/intro:27
 msgid "It tore the heart out of the Empire."
-msgstr ""
+msgstr "Vytrhalo to srdce z Impéria."
 
 #: dat/intro:29
 msgid ""
@@ -102,10 +131,14 @@ msgid ""
 "the mysterious nebula left behind. Now the great, galaxy-spanning "
 "civilisation survives as a shadow of its former glory."
 msgstr ""
+"Ze Země proběhla vesmírem kataklyzmatická exploze, ničící hvězdy, vypařující "
+"světy. Miliardy zemřely. Desítky systémů zmizely v tajemné mlhovině po sobě "
+"zanechané. Nyní velká civilizace rozkládající se po galaxiích přežívá jako "
+"stín své bývalé slávy."
 
 #: dat/intro:32
 msgid "What else remains? Questions."
-msgstr ""
+msgstr "Co ještě zbývá? Dotazy."
 
 #: dat/intro:34
 msgid ""
@@ -113,178 +146,181 @@ msgid ""
 "decaying empire. After the Incident, corruption and piracy run rampant, but "
 "where there is chaos, there is also opportunity."
 msgstr ""
+"Deset standardních cyklů uplynulo ve vesmíru ovládaném střepy rozpadající se "
+"říše. Po incidentu je na denním pořádku korupce a pirátství, ale tam, kde je "
+"chaos, existuje také příležitost."
 
 #: dat/intro:36
 msgid "Welcome to the universe of Naev..."
-msgstr ""
+msgstr "Vítejte ve vesmíru Naev..."
 
 #: dat/AUTHORS:1
 msgid "Current Core Development Team"
-msgstr ""
+msgstr "Aktuální vývojový tým jádra"
 
 #: dat/AUTHORS:2 dat/AUTHORS:20 dat/AUTHORS:30 dat/AUTHORS:63 dat/AUTHORS:174
 msgid "---------------------------------------"
-msgstr ""
+msgstr "---------------------------------------"
 
 #: dat/AUTHORS:4
 msgid "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
-msgstr ""
+msgstr "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
 
 #: dat/AUTHORS:5
 msgid "   * Lead Developer"
-msgstr ""
+msgstr "   * Vedoucí vývojář"
 
 #: dat/AUTHORS:7
 msgid "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
-msgstr ""
+msgstr "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
 
 #: dat/AUTHORS:8
 msgid "   * Story Writer and Misc. Development"
-msgstr ""
+msgstr "   * Tvůrce příběhu a Vývojářský tým"
 
 #: dat/AUTHORS:10
 msgid "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
-msgstr ""
+msgstr "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
 
 #: dat/AUTHORS:11 dat/AUTHORS:14 dat/AUTHORS:26 dat/AUTHORS:55
 msgid "   * Misc. Development"
-msgstr ""
+msgstr "   * Vývojářský tým"
 
 #: dat/AUTHORS:13
 msgid "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
-msgstr ""
+msgstr "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
 
 #: dat/AUTHORS:16
 msgid "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
-msgstr ""
+msgstr "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
 
 #: dat/AUTHORS:17
 msgid "   * Code Carnage and Bug Beating"
-msgstr ""
+msgstr "   * Revize kódu a hledání chyb"
 
 #: dat/AUTHORS:19
 msgid "Past Development Team"
-msgstr ""
+msgstr "Minulý vývojový tým"
 
 #: dat/AUTHORS:22
 msgid "Nikola Whallon <6.saturn.6@gmail.com>"
-msgstr ""
+msgstr "Nikola Whallon <6.saturn.6@gmail.com>"
 
 #: dat/AUTHORS:23
 msgid "   * Bringer of Sound"
-msgstr ""
+msgstr "   * Zvukař"
 
 #: dat/AUTHORS:25
 msgid "Deiz"
-msgstr ""
+msgstr "Deiz"
 
 #: dat/AUTHORS:29
 msgid "Major Contributors"
-msgstr ""
+msgstr "Hlavní přispěvatelé"
 
 #: dat/AUTHORS:32
 msgid "Josiah Schwartfeger"
-msgstr ""
+msgstr "Josiah Schwartfeger"
 
 #: dat/AUTHORS:33
 msgid "   * Graphic Designer and Modeller"
-msgstr ""
+msgstr "   * Grafický designér a modelář"
 
 #: dat/AUTHORS:35
 msgid "Elderman"
-msgstr ""
+msgstr "Elderman"
 
 #: dat/AUTHORS:36
 msgid "   * Mission Development"
-msgstr ""
+msgstr "   * Vývoj misí"
 
 #: dat/AUTHORS:37
 msgid "   The first non-bobbens mission developer!"
-msgstr ""
+msgstr "   První vývojář misí, který není bobbens!"
 
 #: dat/AUTHORS:39
 msgid "Ingo Ruhnke <grumbel@gmx.de>"
-msgstr ""
+msgstr "Ingo Ruhnke <grumbel@gmx.de>"
 
 #: dat/AUTHORS:40
 msgid "   * NPC Portrait Artist"
-msgstr ""
+msgstr "   * NPC Portrétní umělec"
 
 #: dat/AUTHORS:42
 msgid "Enigmatic"
-msgstr ""
+msgstr "Enigmatic"
 
 #: dat/AUTHORS:43
 msgid "   * Ships for the Sirius, many other models and faction logos"
-msgstr ""
+msgstr "   * Lodě pro Sirius, mnoho dalších modelů a loga frakcí"
 
 #: dat/AUTHORS:45
 msgid "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
-msgstr ""
+msgstr "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
 
 #: dat/AUTHORS:46
 msgid "   * Naev logo, Lua GUI development"
-msgstr ""
+msgstr "   * Logo Naev, vývoj GUI Lua"
 
 #: dat/AUTHORS:48
 msgid "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
-msgstr ""
+msgstr "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
 
 #: dat/AUTHORS:49
 msgid "   * Ships for the Soromid and the Za'lek"
-msgstr ""
+msgstr "   * Lodě pro Soromidy a Za'leky"
 
 #: dat/AUTHORS:51
 msgid "Askyel"
-msgstr ""
+msgstr "Askyel"
 
 #: dat/AUTHORS:52
 msgid "   * Composer of nearly an hour of Naev-exclusive music."
-msgstr ""
+msgstr "   * Skladatel téměř hodiny exkluzivní hudby pro Naev."
 
 #: dat/AUTHORS:54
 msgid "nenau"
-msgstr ""
+msgstr "nenau"
 
 #: dat/AUTHORS:57
 msgid "Jack Greiner <jack@emoss.org>"
-msgstr ""
+msgstr "Jack Greiner <jack@emoss.org>"
 
 #: dat/AUTHORS:58
 msgid "   * CI dude"
-msgstr ""
+msgstr "   * CI týpek"
 
 #: dat/AUTHORS:59
 msgid "   * Bringer of automated releases"
-msgstr ""
+msgstr "   * Zprostředkovatel automatických vydání"
 
 #: dat/AUTHORS:60
 msgid "   * Various helper scripts and build system tweaks"
-msgstr ""
+msgstr "   * Různé pomocné skripty a vylepšení systému"
 
 #: dat/AUTHORS:62
 msgid "Contributions"
-msgstr ""
+msgstr "Příspěvky"
 
 #: dat/AUTHORS:65
 msgid "Vega Strike <http://vegastrike.sf.net>"
-msgstr ""
+msgstr "Vega Strike <http://vegastrike.sf.net>"
 
 #: dat/AUTHORS:66
 msgid "   * Ship Models"
-msgstr ""
+msgstr "   * Modely lodí"
 
 #: dat/AUTHORS:67
 msgid "   * Music"
-msgstr ""
+msgstr "   * Hudba"
 
 #: dat/AUTHORS:68
 msgid "   * Sounds"
-msgstr ""
+msgstr "   * Zvuky"
 
 #: dat/AUTHORS:69
 msgid "   * Planet images"
-msgstr ""
+msgstr "   * Obrázky Planet"
 
 #: dat/AUTHORS:70
 msgid ""
@@ -292,86 +328,94 @@ msgid ""
 "didn't actively participate, by allowing me to use their data they did me a "
 "great favour and let me concentrate on the coding."
 msgstr ""
+"   Bez týmu Vega Strike by to nebylo možné, ačkoli se aktivně nezúčastnili, "
+"tak mi umožnili používat jejich data a udělali mi velkou laskavost tím, že "
+"mě nechali soustředit se na kódování."
 
 #: dat/AUTHORS:72
 msgid "Joel Hans <wolorf@gmail.com>"
-msgstr ""
+msgstr "Joel Hans <wolorf@gmail.com>"
 
 #: dat/AUTHORS:73
 msgid "   * Planet Graphics"
-msgstr ""
+msgstr "   * Grafika planet"
 
 #: dat/AUTHORS:74
 msgid "   * Render Script"
-msgstr ""
+msgstr "   * Vykreslovací skript"
 
 #: dat/AUTHORS:75
 msgid "   Helped out when the project was starting. Great morale booster."
-msgstr ""
+msgstr "   Pomohli, když projekt začínal. Velký posilovač morálky."
 
 #: dat/AUTHORS:77
 msgid "Amir Taaki <genjix@gmail.com>"
-msgstr ""
+msgstr "Amir Taaki <genjix@gmail.com>"
 
 #: dat/AUTHORS:78
 msgid "Rob Loach <http://robloach.net>"
-msgstr ""
+msgstr "Rob Loach <http://robloach.net>"
 
 #: dat/AUTHORS:79
 msgid "   * SDL_collide"
-msgstr ""
+msgstr "   * SDL_collide"
 
 #: dat/AUTHORS:80
 msgid ""
 "   Although we don't use the SDL_collide library itself, it was "
 "inspirational for Naev's own collision routines."
 msgstr ""
+"   I když nepoužíváme samotnou knihovnu SDL_collide, bylo to inspirativní "
+"pro vlastní kolizní rutiny Naev."
 
 #: dat/AUTHORS:82
 msgid "Pete Shinners <pete@shinners.org>"
-msgstr ""
+msgstr "Pete Shinners <pete@shinners.org>"
 
 #: dat/AUTHORS:83
 msgid "   * SavePNG"
-msgstr ""
+msgstr "   * SavePNG"
 
 #: dat/AUTHORS:84
 msgid "   Great function ripped straight out of pygame. Works marvelously!"
-msgstr ""
+msgstr "   Skvělá funkce vytažená přímo z pygame. Funguje úžasně!"
 
 #: dat/AUTHORS:86
 msgid "Aurore D. \"Rore\" <aurore.d@gmail.com>"
-msgstr ""
+msgstr "Aurore D. \"Rore\" <aurore.d@gmail.com>"
 
 #: dat/AUTHORS:87
 msgid "   * Planet gimp script"
-msgstr ""
+msgstr "   * Planet gimp skript"
 
 #: dat/AUTHORS:88
 msgid ""
 "   Saved a lot of trouble by allowing us to quickly create space planet "
 "graphics."
 msgstr ""
+"   Ušetřili jsme spoustu problémů tím, že jsme mohli rychle vytvořit grafiku "
+"vesmírných planet."
 
 #: dat/AUTHORS:90
 msgid "Andrew Mustun"
-msgstr ""
+msgstr "Andrew Mustun"
 
 #: dat/AUTHORS:91
 msgid "   * Sprite gimp script"
-msgstr ""
+msgstr "   * Sprite gimp script"
 
 #: dat/AUTHORS:92
 msgid "   Although not used directly, it helped create our own sprite script."
 msgstr ""
+"   Ačkoli se nepoužíval přímo, pomohl vytvořit náš vlastní sprite skript."
 
 #: dat/AUTHORS:94
 msgid "J.C. Wilk"
-msgstr ""
+msgstr "J.C. Wilk"
 
 #: dat/AUTHORS:95
 msgid "   * Turbulence noise"
-msgstr ""
+msgstr "   * Turbulentní hluk"
 
 #: dat/AUTHORS:96
 msgid ""
@@ -379,239 +423,249 @@ msgid ""
 "turbulence noise seemed to do everything perfectly where we screwed up. With "
 "heavy optimization the code was introduced to Naev."
 msgstr ""
+"   Po strašlivém neúspěchu našeho vlastního pokusu o fraktální plazmu se "
+"zdálo, že TCODův turbulentní šum funguje perfektně tam, kde jsme to "
+"pokazili. S těžkou optimalizací byl kód představen Naevovi."
 
 #: dat/AUTHORS:98
 msgid "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
-msgstr ""
+msgstr "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
 
 #: dat/AUTHORS:99
 msgid "   * Mace Rocket model"
-msgstr ""
+msgstr "   * Model Mace Rakety"
 
 #: dat/AUTHORS:101
 msgid "Brian J. Cameron"
-msgstr ""
+msgstr "Brian J. Cameron"
 
 #: dat/AUTHORS:102
 msgid "   * Much artwork"
-msgstr ""
+msgstr "   * Mnoho uměleckých děl"
 
 #: dat/AUTHORS:103
 msgid "   Talented artist, one of the first in creating custom naev content."
 msgstr ""
+"   Talentovaný umělec, jeden z prvních ve vytváření vlastního obsahu Naev."
 
 #: dat/AUTHORS:105
 msgid "Camilo Polymeris <cpolymeris@gmx.net>"
-msgstr ""
+msgstr "Camilo Polymeris <cpolymeris@gmx.net>"
 
 #: dat/AUTHORS:106
 msgid "   * Art and code"
-msgstr ""
+msgstr "   * Umění a kód"
 
 #: dat/AUTHORS:107
 msgid ""
 "   Great to see someone else working on Naev code and Lua documentation."
 msgstr ""
+"   Je skvělé vidět někoho jiného pracovat na kódu Naev a Lua dokumentaci."
 
 #: dat/AUTHORS:109
 msgid "Dimitry Marakasov"
-msgstr ""
+msgstr "Dimitry Marakasov"
 
 #: dat/AUTHORS:110
 msgid "   * FreeBSD port and CMake"
-msgstr ""
+msgstr "   * Port FreeBSD a CMake"
 
 #: dat/AUTHORS:111
 msgid "   Talented coder who did the first official port of Naev."
-msgstr ""
+msgstr "   Talentovaný kodér, který provedl první oficiální port hry Naev."
 
 #: dat/AUTHORS:113
 msgid "Alexandru Mosoi <brtzsnr@gmail.com>"
-msgstr ""
+msgstr "Alexandru Mosoi <brtzsnr@gmail.com>"
 
 #: dat/AUTHORS:114
 msgid "   * Coded cool features"
-msgstr ""
+msgstr "   * Kódované skvělé funkce"
 
 #: dat/AUTHORS:115
 msgid ""
 "   First non-bobbens coder to make serious commits! Like the reason the maps "
 "are all over or the faction in the maps."
 msgstr ""
+"   První kodér kromě bobbense, který dělá vážné závazky! Jako důvod, proč "
+"jsou mapy k dispozici všude, nebo frakce v mapách."
 
 #: dat/AUTHORS:117
 msgid "Peter Johnson <zid@zid.yggdrasil.sk>"
-msgstr ""
+msgstr "Peter Johnson <zid@zid.yggdrasil.sk>"
 
 #: dat/AUTHORS:118
 msgid "   * Sped up nebula generation by a lot"
-msgstr ""
+msgstr "   * Hodně urychlil generování mlhovin"
 
 #: dat/AUTHORS:120
 msgid "Unavowed <unavowed@vexillium.org>"
-msgstr ""
+msgstr "Unavowed <unavowed@vexillium.org>"
 
 #: dat/AUTHORS:121
 msgid "   * Ported Naev's build system to autotools."
-msgstr ""
+msgstr "   * Přenesení systému sestavení hry Naev do autotools."
 
 #: dat/AUTHORS:122
 msgid "   Probably the cleanest autotools implementation I've ever seen."
 msgstr ""
+"   Pravděpodobně nejčistší implementace automatických nástrojů, jakou jsem "
+"kdy viděl."
 
 #: dat/AUTHORS:124
 msgid "Cypher3c <cypher3c@gmail.com>"
-msgstr ""
+msgstr "Cypher3c <cypher3c@gmail.com>"
 
 #: dat/AUTHORS:125
 msgid "   * Spiced up the boring generic cargo missios."
-msgstr ""
+msgstr "   * Oživil nudné generické nákladní mise."
 
 #: dat/AUTHORS:127
 msgid "Nathan Loewen <loewen.nathan@gmail.com>"
-msgstr ""
+msgstr "Nathan Loewen <loewen.nathan@gmail.com>"
 
 #: dat/AUTHORS:128
 msgid "   * Missions"
-msgstr ""
+msgstr "   * Mise"
 
 #: dat/AUTHORS:129
 msgid "   * Misc coding support"
-msgstr ""
+msgstr "   * Podpora různých kódování"
 
 #: dat/AUTHORS:131
 msgid "Fisherman"
-msgstr ""
+msgstr "Rybář"
 
 #: dat/AUTHORS:132
 msgid ""
 "   * Threading code to speed up nebula generation (and in the future who "
 "knows?)"
 msgstr ""
+"   * Kódování vláken pro urychlení generování mlhoviny (a v budoucnu kdo ví?)"
 
 #: dat/AUTHORS:133
 msgid "   * Hot dog mission"
-msgstr ""
+msgstr "   * Hot dog mise"
 
 #: dat/AUTHORS:135
 msgid "Ludovic Bellière \"xrogaan\""
-msgstr ""
+msgstr "Ludovic Bellière \"xrogaan\""
 
 #: dat/AUTHORS:136
 msgid "   * Python programmer extraordinaire"
-msgstr ""
+msgstr "   * Mimořádný programátor Pythonu"
 
 #: dat/AUTHORS:137
 msgid "His utilities save gray hairs for everyone."
-msgstr ""
+msgstr "Jeho nástroje ušetřili šedé vlasy všem."
 
 #: dat/AUTHORS:139
 msgid "Josh Combs"
-msgstr ""
+msgstr "Josh Combs"
 
 #: dat/AUTHORS:140
 msgid "   * Artist of most of the nebulae."
-msgstr ""
+msgstr "   * Umělec většiny mlhovin."
 
 #: dat/AUTHORS:142
 msgid "Galileus"
-msgstr ""
+msgstr "Galileus"
 
 #: dat/AUTHORS:143
 msgid "   * Modeller of the Shark and Rhino"
-msgstr ""
+msgstr "   * Modelář žraloka a nosorožce"
 
 #: dat/AUTHORS:145
 msgid "Devin Khan"
-msgstr ""
+msgstr "Devin Khan"
 
 #: dat/AUTHORS:146
 msgid "   * Modeller of the Phalanx"
-msgstr ""
+msgstr "   * Modelář lodě Phalanx"
 
 #: dat/AUTHORS:148
 msgid "Areze"
-msgstr ""
+msgstr "Areze"
 
 #: dat/AUTHORS:149
 msgid "   * Junior assistant galaxy creator"
-msgstr ""
+msgstr "   * Junior asistent tvůrce galaxie"
 
 #: dat/AUTHORS:151
 msgid "Old Man <oldtopman@gmail.com>"
-msgstr ""
+msgstr "Old Man <oldtopman@gmail.com>"
 
 #: dat/AUTHORS:152
 msgid "   * Desura Maintainer"
-msgstr ""
+msgstr "   * Desura Maintainer"
 
 #: dat/AUTHORS:154
 msgid "NeD"
-msgstr ""
+msgstr "NeD"
 
 #: dat/AUTHORS:155 dat/AUTHORS:161
 msgid "   * Mission contributor"
-msgstr ""
+msgstr "   * Přispěvatel misí"
 
 #: dat/AUTHORS:157
 msgid "Sudarshan S"
-msgstr ""
+msgstr "Sudarshan S"
 
 #: dat/AUTHORS:158
 msgid "   * Event contributor"
-msgstr ""
+msgstr "   * Přispěvatel událostí"
 
 #: dat/AUTHORS:160 dat/AUTHORS:179
 msgid "PhoenixRiver"
-msgstr ""
+msgstr "PhoenixRiver"
 
 #: dat/AUTHORS:162
 msgid "   * Misc fixes and typos"
-msgstr ""
+msgstr "   * Různé opravy a překlepy"
 
 #: dat/AUTHORS:164
 msgid "Alastair Basden"
-msgstr ""
+msgstr "Alastair Basden"
 
 #: dat/AUTHORS:165
 msgid "   * Economy development"
-msgstr ""
+msgstr "   * Rozvoj ekonomiky"
 
 #: dat/AUTHORS:166
 msgid "   * Ship log"
-msgstr ""
+msgstr "   * Lodní deník"
 
 #: dat/AUTHORS:167
 msgid "   * Solar system information screen"
-msgstr ""
+msgstr "   * Informační obrazovka sluneční soustavy"
 
 #: dat/AUTHORS:169
 msgid "Music by Matthew Pablo"
-msgstr ""
+msgstr "Hudba od Matthew Pablo"
 
 #: dat/AUTHORS:170
 msgid "http://www.matthewpablo.com"
-msgstr ""
+msgstr "http://www.matthewpablo.com"
 
 #: dat/AUTHORS:173
 msgid "Testers"
-msgstr ""
+msgstr "Testeři"
 
 #: dat/AUTHORS:176
 msgid "John Schwartfeger"
-msgstr ""
+msgstr "John Schwartfeger"
 
 #: dat/AUTHORS:177
 msgid "Leonardo Valeri Manera"
-msgstr ""
+msgstr "Leonardo Valeri Manera"
 
 #: dat/AUTHORS:178
 msgid "EvanR"
-msgstr ""
+msgstr "EvanR"
 
 #: dat/assets/abacus.xml:2
 msgid "Abacus"
-msgstr ""
+msgstr "Abacus"
 
 #: dat/assets/abacus.xml:26
 msgid ""
@@ -621,14 +675,18 @@ msgid ""
 "researchers on site at any one time. Tourism is out of the question, so is a "
 "bar."
 msgstr ""
+"Abacus je podle standardů skalnatých planet velmi velká planeta. Soromidové "
+"zde založili výzkumnou základnu, která má zjistit více o struktuře planety. "
+"Základna je docela malá a na místě může být jen několik desítek výzkumníků. "
+"Turismus zde nepřichází v úvahu, stejně jako bar."
 
 #: dat/assets/abandoned_station.xml:2
 msgid "Abandoned Station"
-msgstr ""
+msgstr "Opuštěná stanice"
 
 #: dat/assets/adham.xml:2
 msgid "Adham"
-msgstr ""
+msgstr "Adham"
 
 #: dat/assets/adham.xml:25
 msgid ""
@@ -638,14 +696,19 @@ msgid ""
 "considered neutral territory, most of the planet's surface is subject to the "
 "destructive sport that is so popular among Totoran's visitors."
 msgstr ""
+"Adham je chladná planeta bez života. Jediným důvodem, proč je zde přistávací "
+"dráha, je že planeta hostí tři arény s arktickou tematikou pro gladiátorské "
+"hry Totoranu. Zatímco přistávací zóna a malý nárazník kolem ní jsou "
+"považovány za neutrální území, většina povrchu planety podléhá "
+"destruktivnímu sportu, který je mezi návštěvníky Totoranu tak populární."
 
 #: dat/assets/adius.xml:2
 msgid "Adius"
-msgstr ""
+msgstr "Adius"
 
 #: dat/assets/adrian.xml:2
 msgid "Adrian"
-msgstr ""
+msgstr "Adrian"
 
 #: dat/assets/adrian.xml:27
 msgid ""
@@ -655,6 +718,11 @@ msgid ""
 "it was a matter of a few cycles before the Sirii came to power. Today Adrian "
 "persists, despite having served its only purpose."
 msgstr ""
+"Chladný a nepříjemný svět, Sirius založil svou kolonii na Adrianovi ve "
+"dnech, kdy se právě rozšiřovali do Eiderdownu. V té době byl systém řízen "
+"Impériem, ale s pevným předmostím v systému to bylo otázkou několika cyklů, "
+"než se Siriané dostali k moci. Dnes Adrian přetrvává, přestože splnil svůj "
+"jediný účel."
 
 #: dat/assets/adrian.xml:28
 msgid ""
@@ -662,10 +730,13 @@ msgid ""
 "kept at an acceptable, though uncomfortable, low. Most patrons of this "
 "spaceport bar are in full winter gear."
 msgstr ""
+"Vytápění na světech třídy P je často nákladná záležitost, takže teplota se "
+"udržuje na přijatelné, i když nepříjemné, nízké hodnotě. Většina patronů "
+"tohoto kosmodromu je v plné zimní výbavě."
 
 #: dat/assets/aera.xml:2
 msgid "Aera"
-msgstr ""
+msgstr "Aera"
 
 #: dat/assets/aera.xml:26
 msgid ""
@@ -674,14 +745,18 @@ msgid ""
 "subduction, which coaxes them out of the planet's dangerous core and into "
 "the upper atmosphere where they can be safely collected."
 msgstr ""
+"Tento plynový gigant je dostatečně bohatý na cenné minerály, takže se zde "
+"Proteron rozhodl založit těžební kolonii. Minerály jsou extrahovány tepelnou "
+"subdukcí OOA, která je přivádí z nebezpečného jádra planety do horních "
+"vrstev atmosféry, kde je lze bezpečně shromažďovat."
 
 #: dat/assets/aesir_iv.xml:2
 msgid "Aesir IV"
-msgstr ""
+msgstr "Aesir IV"
 
 #: dat/assets/agino.xml:2
 msgid "Agino"
-msgstr ""
+msgstr "Agino"
 
 #: dat/assets/agino.xml:29
 msgid ""
@@ -690,6 +765,10 @@ msgid ""
 "core but, this being a remote part of Soromid space, it is still a local "
 "highlight."
 msgstr ""
+"Agino je rušná planeta většinou plná Soromidských občanů střední třídy. "
+"Planeta nevyniká v žádné oblasti ve srovnání se světy v jádru říše Soromid, "
+"ale jelikož jde o vzdálenou část Soromidského prostoru, je stále místním "
+"vrcholem."
 
 #: dat/assets/agino.xml:30
 msgid ""
@@ -700,10 +779,16 @@ msgid ""
 "who you are and cheerfully pour you a drink. Some spacers secretly suspect "
 "he has an audiovisual database installed in his head."
 msgstr ""
+"Osoba, která provozuje tento kosmodrom, je statný Soromidský muž jménem "
+"Alverik Sogheem. Alverik obvykle obsluhuje bar sám a všechny své zákazníky "
+"zná podle jména a obličeje. Nezáleží na tom, jak dlouho jste pryč nebo kde "
+"jste byli v galaxii, při vašem návratu do Agino si Alverik pamatuje, kdo "
+"jste, a vesele vám nalije drink. Někteří vesmírní cestovatelé ho tajně "
+"podezřívají, že má v hlavě nainstalovanou audiovizuální databázi."
 
 #: dat/assets/ahmed.xml:2
 msgid "Ahmed"
-msgstr ""
+msgstr "Ahmed"
 
 #: dat/assets/ahmed.xml:28
 msgid ""
@@ -712,6 +797,10 @@ msgid ""
 "people not mining are doing administration or come here as traders and "
 "businessmen looking for turn a credit or two."
 msgstr ""
+"Měsíc Ahmed je malá kolonie vážně smýšlejících lidí, ale vzhledem k tomu, že "
+"jsou to většinou horníci, tak to není příliš překvapivé. Těch pár lidí, "
+"kteří netěží, dělají administrativu nebo sem přicházejí jako obchodníci a "
+"obchodníci, kteří hledají kde otočit kredit nebo dva."
 
 #: dat/assets/ahmed.xml:29
 msgid ""
@@ -720,10 +809,14 @@ msgid ""
 "gas extraction. The Soromid might understand comfort and how to have a good "
 "time but this is clearly not the place where they are doing it."
 msgstr ""
+"Velmi utilitární bar s poměrně laxním přístupem k pohodlí, přinejmenším "
+"podle standardů Impéria. Lidé sem chodí obchodovat a mluvit o těžbě rud, "
+"minerálů a plynu. Soromidové možná chápou pohodlí a jak se dobře bavit, ale "
+"zjevně toto není místo, kde to dělají."
 
 #: dat/assets/aillis.xml:2
 msgid "Aillis"
-msgstr ""
+msgstr "Aillis"
 
 #: dat/assets/aillis.xml:28
 msgid ""
@@ -733,6 +826,11 @@ msgid ""
 "valuable, and so Aillis offers a fair living for those who don't shun heavy, "
 "dangerous labor."
 msgstr ""
+"Aillis je operační základnou pro horníky, kteří těží Koralis VI. Samotný "
+"Koralis VI je vysoce radioaktivní, takže žádné lidské bydlení zde není možné "
+"ani nikdy nebude možné. Některé z těžkých prvků na planetě jsou však docela "
+"cenné, a proto Aillis nabízí spravedlivý život těm, kteří se nevyhýbají "
+"těžké a nebezpečné práci."
 
 #: dat/assets/aillis.xml:29
 msgid ""
@@ -740,10 +838,13 @@ msgid ""
 "very welcome. Running costs are kept low which means maintenance and service "
 "suffer. Nevertheless, it's quite possible to have a good time here."
 msgstr ""
+"Ačkoli tento bar není zrovna nehostinný, nedělá vám ani pocit, že jste zde "
+"zrovna vítáni. Provozní náklady jsou udržovány na nízké úrovni, což znamená, "
+"že utrpí údržba a servis. Přesto je docela možné se zde dobře pobavit."
 
 #: dat/assets/akios_station.xml:2
 msgid "Akios Station"
-msgstr ""
+msgstr "Stanice Akios"
 
 #: dat/assets/akios_station.xml:27
 msgid ""
@@ -753,14 +854,19 @@ msgid ""
 "(comparatively) little debate over the necessity over this station's "
 "existence."
 msgstr ""
+"Stanice Akios je hraniční stanice Za'lek, která má zabránit pirátům "
+"expandovat ze systému Kretogg, který je mimo za'lekský vesmír. Kvůli "
+"skutečné hrozbě, kterou odporní zločinci představují pro bezpečnost této "
+"velké frakce, se o nutnosti existence této stanice vede (poměrně) malá "
+"debata."
 
 #: dat/assets/akra_iii.xml:2
 msgid "Akra III"
-msgstr ""
+msgstr "Akra III"
 
 #: dat/assets/akra_station.xml:2
 msgid "Akra Station"
-msgstr ""
+msgstr "Stanice Akra"
 
 #: dat/assets/akra_station.xml:28
 msgid ""
@@ -769,24 +875,30 @@ msgid ""
 "system congregate here, leading to more inter-planetary personal "
 "relationships than normal."
 msgstr ""
+"Stanice Akra, postavená pro obsluhu lodí v této oblasti, slouží také jako "
+"základní komunikační a obchodní uzel pro obyvatele Akry. Shromažďují se zde "
+"lidé z celého systému, což vede k více meziplanetárním osobním vztahům, než "
+"je obvyklé."
 
 #: dat/assets/akra_station.xml:29
 msgid ""
 "The bar is bustling and seemingly constantly packed, yet never seems to "
 "cause anyone any problem due to how efficient everything is."
 msgstr ""
+"Bar je rušný a zdánlivě neustále nabitý, ale zdá se, že nikdy nikomu "
+"nezpůsobí žádný problém díky tomu, jak je všechno efektivní."
 
 #: dat/assets/akra_v.xml:2
 msgid "Akra V"
-msgstr ""
+msgstr "Akra V"
 
 #: dat/assets/akrikos.xml:2
 msgid "Akrikos"
-msgstr ""
+msgstr "Akrikos"
 
 #: dat/assets/aldarus.xml:2
 msgid "Aldarus"
-msgstr ""
+msgstr "Aldarus"
 
 #: dat/assets/aldarus.xml:29
 msgid ""
@@ -796,6 +908,11 @@ msgid ""
 "materials for all sorts of industries though, and the lack of pollution "
 "controls on the planet make it very attractive for corporations."
 msgstr ""
+"Aldarus má obrovské oceány naplněné organickým kalem, který má málo "
+"společného s vodou. Atmosféra je toxická a zabije nechráněného člověka během "
+"pár hektosekund. Kal v mořích je dobrým zdrojem surovin pro nejrůznější "
+"průmyslová odvětví a vzhledem k nedostatečné kontrole znečištění na planetě "
+"je pro podniky velmi atraktivní."
 
 #: dat/assets/aldarus.xml:30
 msgid ""
@@ -804,10 +921,14 @@ msgid ""
 "for private conversations, in case the bar's main area is a little too "
 "public for comfort. The music here can also be a bit grating on the ears."
 msgstr ""
+"Kosmodromový bar na Aldarusu nabízí celou řadu rekreačních aktivit, jako "
+"jsou hazardní hry a soutěžní hry. K dispozici jsou také zděné kabiny pro "
+"soukromé rozhovory, pro případ, že by hlavní oblast baru byla pro pohodlí "
+"příliš veřejná. Hudba zde může být také trochu drsná na uši."
 
 #: dat/assets/aldernael.xml:2
 msgid "Aldernael"
-msgstr ""
+msgstr "Aldernael"
 
 #: dat/assets/aldernael.xml:28
 msgid ""
@@ -818,6 +939,12 @@ msgid ""
 "going through a mainstream colonization phase. New immigrants arrive every "
 "day and Soromid habitation centres are constantly under construction."
 msgstr ""
+"Obyčejnému návštěvníkovi se Aldernael může zdát drsný a nepříjemný. Když "
+"vezmete v úvahu, že svět býval neživá planeta s toxickým povrchem a sotva "
+"jakoukoli atmosférou, o které by se dalo mluvit, stal se skutečně mnohem "
+"pohostinnějším, protože Soromidé jej začali terraformovat. V současné době "
+"planeta prochází fází kolonizace hlavního proudu. Každý den přicházejí noví "
+"přistěhovalci a centra osídlení Soromidů jsou neustále ve výstavbě."
 
 #: dat/assets/aldernael.xml:29
 msgid ""
@@ -827,10 +954,15 @@ msgid ""
 "more customers but also the occasional move from one building to another to "
 "make room for renovations."
 msgstr ""
+"Kvůli těžkému vývoji na Aldernaelu je místní bar čas od času přemístěn. "
+"Kosmodrom je samozřejmě ve středu toho všeho, a tak bar z toho střídavě trpí "
+"i těží. Tento růst vede k většímu počtu zákazníků, ale také k "
+"příležitostnému přechodu z jedné budovy do druhé, aby se vytvořil prostor "
+"pro renovace."
 
 #: dat/assets/aldous.xml:2
 msgid "Aldous"
-msgstr ""
+msgstr "Aldous"
 
 #: dat/assets/aldous.xml:27
 msgid ""
@@ -841,6 +973,12 @@ msgid ""
 "their home. The ocean may be toxic, but it also happens to be the perfect "
 "environment for producing high quality positronic circuitry."
 msgstr ""
+"Planeta Aldous je obří moře tekutiny toxické pro člověka. I ta nejmenší "
+"expozice toxickému materiálu v oceánu na Aldousu je smrtelná. Pokud jde o "
+"obyvatelnost, jsou mrtvé planety jako je tato, jako poslední na seznamu. "
+"Přesto se hrstka odvážných duší rozhodla udělat z této planety svůj domov. "
+"Oceán může být toxický, ale také se stává dokonalým prostředím pro výrobu "
+"vysoce kvalitních pozitronických obvodů."
 
 #: dat/assets/aldous.xml:28
 msgid ""
@@ -851,14 +989,20 @@ msgid ""
 "occurs. Some spacers even insist on wearing breathing masks, even in the "
 "spaceport bar, just to be on the safe side."
 msgstr ""
+"Zařízení kosmodromu je součástí větší stavby, ve které sídlí celé lidské "
+"obyvatelstvo této planety. Komplex víceméně plave na povrchu a je těsně "
+"utěsněn proti vnějšímu prostředí. Kromě toho je komplex velmi rozčleněný, "
+"pro případ, že by nějak došlo k úniku. Někteří vesmířané dokonce trvají na "
+"tom, aby na sobě nosily dýchací masky, a to i v baru kosmodromu, jen pro "
+"jistotu."
 
 #: dat/assets/aldous_moon.xml:2
 msgid "Aldous' moon"
-msgstr ""
+msgstr "Měsíc Aldousu"
 
 #: dat/assets/aleph.xml:2
 msgid "Aleph"
-msgstr ""
+msgstr "Aleph"
 
 #: dat/assets/aleph.xml:27
 msgid ""
@@ -867,6 +1011,10 @@ msgid ""
 "primarily residential and sports no superheavy industry, the wastefulness of "
 "the Dvaered inhabitants more than makes up for that."
 msgstr ""
+"V působivém deterraformingu, Dvaeredové transformovali Aleph z hraniční "
+"třídy M na pustou pustinu. Ačkoli svět je primárně rezidenční a sportovní, "
+"není tu žádný těžký průmysl, marnotratnost Dvaeredských obyvatel to více než "
+"vynahradí."
 
 #: dat/assets/aleph.xml:28
 msgid ""
@@ -875,14 +1023,17 @@ msgid ""
 "the staleness completely. The drinks do little to relieve the stuffiness "
 "either."
 msgstr ""
+"Vzduch v kosmodromu je dusný. Všude na této planetě je vzduch dusný. Žádné "
+"množství klimatizace a filtrování úplně tento problém neřeší. Nápoje také od "
+"dusnosti nepomáhají."
 
 #: dat/assets/alexian.xml:2
 msgid "Alexian"
-msgstr ""
+msgstr "Alexian"
 
 #: dat/assets/allan.xml:2
 msgid "Allan"
-msgstr ""
+msgstr "Allan"
 
 #: dat/assets/allan.xml:27
 msgid ""
@@ -891,6 +1042,10 @@ msgid ""
 "left behind. It is now barely maintained by a small contingent of Dvaered "
 "soldiers and engineers for the use of traders."
 msgstr ""
+"Allan byl kdysi hlídkovou stanicí vyslanou k hlídkování jižních oblastí "
+"vesmíru. S Incidentem a úpadkem imperiální moci zůstal Allan opuštěn. Nyní "
+"je sotva udržován malým kontingentem Dvaeredských vojáků a inženýrů pro "
+"použití obchodníků."
 
 #: dat/assets/allan.xml:28
 msgid ""
@@ -898,6 +1053,9 @@ msgid ""
 "with clean facilities, decent food and strong drink. For its patrons it "
 "provides a small respite from the harsh galaxy."
 msgstr ""
+"Allan nemá mnoho prostředků, ale bar vypadá dost slušně, s čistým zařízením, "
+"slušným jídlem a silnými nápoji. Pro své patrony poskytuje malou úlevu od "
+"drsné galaxie."
 
 #: dat/assets/alleyway.xml:2
 msgid "Alleyway"
