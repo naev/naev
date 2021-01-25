@@ -67,7 +67,7 @@ function _buildDupeTable( input, count )
 end
 
 
--- Randomize the locations of ships in the same manner than pilot.addFleet() does.
+-- Randomly stagger the locations of ships so they don't all spawn on top of each other.
 function _randomizePositions( ship, override )
    if type(ship) ~= "table" and type(ship) ~= "userdata" then
       print(_("_randomizePositions: Error, ship list is not a pilot or table of pilots!"))

@@ -387,7 +387,6 @@ function spawn_baddies(sp)
    -- light drones
    local scom = {}
    -- has eventually to be trimmed
-   -- so weird: ai does not work properly apparently? WTF is going on.. switching to dummy and switched from pilot.addFleet to pilot.add
    -- disabling some ships since this way it is really hard to win the mission
    scom[1] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
    scom[2] = pilot.add("Za'lek Light Drone", "Mercenary", sp )

@@ -310,10 +310,8 @@ static int pilotL_setFlagWrapper( lua_State *L, int flag )
  *
  * An example would be:
  * @code
- * p = pilot.addFleet( "Sml Trader Convoy" ) -- Create a trader convoy
- * for k,v in pairs(p) do
- *    v:setFriendly() -- Make it friendly
- * end
+ * p = pilot.add( "Llama", "Miner" ) -- Create a Miner Llama
+ * p:setFriendly() -- Make it friendly
  * @endcode
  *
  * @luamod pilot
@@ -611,19 +609,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
 /**
  * @brief Adds a fleet to the system.
  *
- * You can then iterate over the pilots to change parameters like so:
- * @code
- * p = pilot.addFleet( "Sml Trader Convoy" )
- * for k,v in pairs(p) do
- *    v:setHostile()
- * end
- * @endcode
- *
- * @usage p = pilot.addFleet( "Pirate Hyena" ) -- Just adds the pilot (will jump in or take off).
- * @usage p = pilot.addFleet( "Trader Llama", nil, "dummy" ) -- Overrides AI with dummy ai.
- * @usage p = pilot.addFleet( "Sml Trader Convoy", vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
- * @usage p = pilot.addFleet( "Empire Pacifier", system.get("Goddard") ) -- Have the pilot jump in from the system.
- * @usage p = pilot.addFleet( "Goddard Goddard", planet.get("Zhiru") ) -- Have the pilot take off from a planet.
+ * Do not use.
  *
  *    @luatparam string fleetname Name of the fleet to add.
  *    @luatparam System|Planet|Vec2 param Position to create the pilot at. See pilot.add for further information.
@@ -641,7 +627,12 @@ static int pilotL_addFleet( lua_State *L )
 /**
  * @brief Adds a ship with an AI and faction to the system (instead of a predefined fleet).
  *
- * @usage p = pilot.add( "Empire Shark", nil, "Empire", nil, "empire" ) -- Creates a pilot analogous to the Empire Shark fleet.
+ * @usage p = pilot.add( "Empire Shark", nil, "Empire" ) -- Creates a standard Empire Shark.
+ * @usage p = pilot.add( "Hyena", "Pirate", _("Pirate Hyena") ) -- Just adds the pilot (will jump in or take off).
+ * @usage p = pilot.add( "Llama", "Trader", nil, _("Trader Llama"), "dummy" ) -- Overrides AI with dummy ai.
+ * @usage p = pilot.add( "Gawain", "Civilian", vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
+ * @usage p = pilot.add( "Empire Pacifier", "Empire", system.get("Goddard") ) -- Have the pilot jump in from the system.
+ * @usage p = pilot.add( "Goddard", "Goddard", planet.get("Zhiru") , _("Goddard Goddard") ) -- Have the pilot take off from a planet.
  *
  * How param works (by type of value passed): <br/>
  *  - nil: spawns pilot randomly entering from jump points with presence of their faction or taking off from non-hostile planets <br/>

@@ -3,7 +3,7 @@ Control fleets, assign formations, have ships stick together.
 Created by Loki and BTAxis
 
 Usage:
-First create a fleet with pilot.addFleet()
+First create a fleet with addShips() (from fleethelper).
 Then pass that to the Forma:new() function.
 Then use Forma:setTask() to control the fleader
 -usage is: 
