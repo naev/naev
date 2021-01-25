@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-23 23:07-0500\n"
-"PO-Revision-Date: 2021-01-25 06:32+0000\n"
+"PO-Revision-Date: 2021-01-25 12:32+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -1059,7 +1059,7 @@ msgstr ""
 
 #: dat/assets/alleyway.xml:2
 msgid "Alleyway"
-msgstr ""
+msgstr "Alleyway"
 
 #: dat/assets/alleyway.xml:27
 msgid ""
@@ -1068,6 +1068,10 @@ msgid ""
 "hunters. Authorities have long ago given up any hope of controlling the "
 "chaos, so everyone knows to be armed and remain vigilant at all times."
 msgstr ""
+"Tato stanice, která měla být původně obchodním uzlem a zastávkou doplňování "
+"paliva pro obchodníky, se skutečně změnila v uzel pro piráty i lovce odměn. "
+"Úřady se již dávno vzdaly jakékoli naděje na ovládnutí chaosu, takže každý "
+"ví, že je ozbrojen a je stále v bdělosti."
 
 #: dat/assets/alleyway.xml:28
 msgid ""
@@ -1075,22 +1079,25 @@ msgid ""
 "merchants and gamblers. Fights often break out and it's hard to tell who to "
 "trust, so most people keep to themselves and avoid eye contact with others."
 msgstr ""
+"Bar je kombinací převážně pirátů a lovců odměn s hrstkou obchodníků a hráčů. "
+"Často zde propuknou boje a je těžké říct, komu věřit, takže většina lidí se "
+"drží stranou a vyhýbá se očnímu kontaktu s ostatními."
 
 #: dat/assets/allous_gg3.xml:2
 msgid "Allous GG-3"
-msgstr ""
+msgstr "Allous GG-3"
 
 #: dat/assets/allous_i.xml:2
 msgid "Allous I"
-msgstr ""
+msgstr "Allous I"
 
 #: dat/assets/allous_ii.xml:2
 msgid "Allous II"
-msgstr ""
+msgstr "Allous II"
 
 #: dat/assets/allous_station.xml:2
 msgid "Allous Station"
-msgstr ""
+msgstr "Stanice Allous"
 
 #: dat/assets/allous_station.xml:26
 msgid ""
@@ -1102,6 +1109,12 @@ msgid ""
 "need for them to pay for it as numerous warlords, with dreams of "
 "intellectualism, are happy to offer their patronage."
 msgstr ""
+"Navzdory jménu není Stanice Allous vojenskou základnou, je to spíše vědecké "
+"pozorovací středisko a observatoř hlubokého vesmíru. Původně měla být "
+"pozorovatelnou vysoce interferenční mlhoviny PSO. Dokonce i Dvaeredové mají "
+"vědeckou komunitu a tuto stanici platili ze svých kapes. Jakmile byla "
+"postavena, samozřejmě už za ni nebylo třeba platit, protože řada válečníků "
+"se sny o intelektualismu jim ráda nabídne patronát."
 
 #: dat/assets/allous_station.xml:27
 msgid ""
@@ -1109,30 +1122,33 @@ msgid ""
 "and soldiers are interacting with surprising friendliness and conviviality. "
 "Of course, the local warlords would, and do, tolerate nothing less."
 msgstr ""
+"Tento bar vypadá jako něco, co by se dalo očekávat od Za'lekského vesmírného "
+"prostoru. Vědci a vojáci komunikují s překvapivou vstřícností a "
+"pohostinností. Místní válečníci by samozřejmě netolerovali nic menšího."
 
 #: dat/assets/alteris_i.xml:2
 msgid "Alteris I"
-msgstr ""
+msgstr "Alteris I"
 
 #: dat/assets/alteris_iv.xml:2
 msgid "Alteris IV"
-msgstr ""
+msgstr "Alteris IV"
 
 #: dat/assets/alteris_v.xml:2
 msgid "Alteris V"
-msgstr ""
+msgstr "Alteris V"
 
 #: dat/assets/aluben.xml:2
 msgid "Aluben"
-msgstr ""
+msgstr "Aluben"
 
 #: dat/assets/amaroq_i.xml:2
 msgid "Amaroq I"
-msgstr ""
+msgstr "Amaroq I"
 
 #: dat/assets/amaroq_iii.xml:2
 msgid "Amaroq III"
-msgstr ""
+msgstr "Amaroq III"
 
 #: dat/assets/amatiri_i.xml:2
 msgid "Amatiri I"
