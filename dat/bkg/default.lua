@@ -1,4 +1,5 @@
-prng = require "prng"
+prng_lib = require "prng"
+prng = prng_lib.new()
 
 nebulae = {
    "nebula02.webp",
@@ -53,7 +54,7 @@ function background ()
    end
 
    -- Start up PRNG based on system name for deterministic nebula
-   prng.initHash( cur_sys:name() )
+   prng:setSeed( cur_sys:name() )
 
    -- Generate nebula
    background_nebula()
@@ -66,15 +67,15 @@ end
 function background_nebula ()
    -- Set up parameters
    local path  = "gfx/bkg/"
-   local nebula = nebulae[ prng.range(1,#nebulae) ]
+   local nebula = nebulae[ prng:random(1,#nebulae) ]
    local img   = tex.open( path .. nebula )
    local w,h   = img:dim()
-   local r     = prng.num() * cur_sys:radius()/2
-   local a     = 2*math.pi*prng.num()
+   local r     = prng:random() * cur_sys:radius()/2
+   local a     = 2*math.pi*prng:random()
    local x     = r*math.cos(a)
    local y     = r*math.sin(a)
-   local move  = 0.01 + prng.num()*0.01
-   local scale = 1 + (prng.num()*0.5 + 0.5)*((2000+2000)/(w+h))
+   local move  = 0.01 + prng:random()*0.01
+   local scale = 1 + (prng:random()*0.5 + 0.5)*((2000+2000)/(w+h))
    if scale > 1.9 then scale = 1.9 end
    bkg.image( img, x, y, move, scale )
 end
@@ -83,7 +84,7 @@ end
 function background_stars ()
    -- Chose number to generate
    local n
-   local r = prng.num()
+   local r = prng:random()
    if r > 0.97 then
       n = 3
    elseif r > 0.94 then
@@ -117,10 +118,10 @@ function star_add( added, num_added )
    -- Set up parameters
    local path  = "gfx/bkg/star/"
    -- Avoid repeating stars
-   local num   = prng.range(1,#stars)
+   local num   = prng:random(1,#stars)
    local i     = 0
    while added[num] and i < 10 do
-      num = prng.range(1,#stars)
+      num = prng:random(1,#stars)
       i   = i + 1
    end
    local star  = stars[ num ]
@@ -128,14 +129,14 @@ function star_add( added, num_added )
    local img   = tex.open( path .. star )
    local w,h   = img:dim()
    -- Position should depend on whether there's more than a star in the system
-   local r     = prng.num() * cur_sys:radius()/3
+   local r     = prng:random() * cur_sys:radius()/3
    if num_added > 0 then
       r        = r + cur_sys:radius()*2/3
    end
-   local a     = 2*math.pi*prng.num()
+   local a     = 2*math.pi*prng:random()
    local x     = r*math.cos(a)
    local y     = r*math.sin(a)
-   local nmove = math.max( .05, prng.num()*0.1 )
+   local nmove = math.max( .05, prng:random()*0.1 )
    local move  = 0.02 + nmove
    local scale = 1.0 - (1. - nmove/0.2)/5
    bkg.image( img, x, y, move, scale ) -- On the background
