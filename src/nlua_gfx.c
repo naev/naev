@@ -38,6 +38,8 @@ static int gfxL_fontSize( lua_State *L );
 /* TODO get rid of printDim and print in favour of printfDim and printf */
 static int gfxL_printfDim( lua_State *L );
 static int gfxL_printfWrap( lua_State *L );
+static int gfxL_printRestoreClear( lua_State *L );
+static int gfxL_printRestoreLast( lua_State *L );
 static int gfxL_printf( lua_State *L );
 static int gfxL_printDim( lua_State *L );
 static int gfxL_print( lua_State *L );
@@ -54,6 +56,8 @@ static const luaL_Reg gfxL_methods[] = {
    { "fontSize", gfxL_fontSize },
    { "printfDim", gfxL_printfDim },
    { "printfWrap", gfxL_printfWrap },
+   { "printRestoreClear", gfxL_printRestoreClear },
+   { "printRestoreLast", gfxL_printRestoreLast },
    { "printf", gfxL_printf },
    { "printDim", gfxL_printDim },
    { "print", gfxL_print },
@@ -468,6 +472,30 @@ static int gfxL_printfWrap( lua_State *L )
 
    free( tmp );
    return 2;
+}
+
+
+/**
+ * @brief Clears the saved internal colour state.
+ * @luafunc printRestoreClear
+ */
+static int gfxL_printRestoreClear( lua_State *L )
+{
+   (void) L;
+   gl_printRestoreClear();
+   return 0;
+}
+
+
+/**
+ * @brief Restores the last saved internal colour state.
+ * @luafunc printRestoreLast
+ */
+static int gfxL_printRestoreLast( lua_State *L )
+{
+   (void) L;
+   gl_printRestoreLast();
+   return 0;
 }
 
 
