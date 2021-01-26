@@ -108,13 +108,15 @@ int nlua_loadGFX( nlua_env env )
  *
  *    @luatreturn number The width of the Naev window.
  *    @luatreturn number The height of the Naev window.
+ *    @luatreturn scale The scaling factor.
  * @luafunc dim
  */
 static int gfxL_dim( lua_State *L )
 {
    lua_pushnumber( L, SCREEN_W );
    lua_pushnumber( L, SCREEN_H );
-   return 2;
+   lua_pushnumber( L, gl_screen.scale );
+   return 3;
 }
 
 
