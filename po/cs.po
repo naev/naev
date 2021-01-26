@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-23 23:07-0500\n"
-"PO-Revision-Date: 2021-01-25 21:32+0000\n"
+"PO-Revision-Date: 2021-01-26 18:05+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -1211,6 +1211,10 @@ msgid ""
 "has not been hit as hard as many, it has seen its population dip in recent "
 "cycles. Most of the population are miners and other working-class folk."
 msgstr ""
+"Tato planeta je oslavovaným světem těžby a obchodování a je jednou z obětí "
+"odlivu mozků ovlivňující jižní hranici Za'leku. I když nebyla zasažena tak "
+"silně jako mnohé, v posledních cyklech zaznamenala pokles populace. Většina "
+"populace jsou horníci a další příslušníci dělnické třídy."
 
 #: dat/assets/amhurst.xml:31
 msgid ""
@@ -1218,10 +1222,13 @@ msgid ""
 "rough aesthetic, the clientele, almost everything. There is little sign of "
 "the usual Za'lek trappings here."
 msgstr ""
+"Pokud by to někdo nevěděl lépe, předpokládali byste, že se jedná o "
+"dvaeredský bar. Drsná estetika, klientela, téměř všechno. Po obvyklé "
+"Za'lekské výzdobě je tu jen málo známek."
 
 #: dat/assets/amianta.xml:2
 msgid "Amianta"
-msgstr ""
+msgstr "Amianta"
 
 #: dat/assets/amianta.xml:27
 msgid ""
@@ -1229,10 +1236,12 @@ msgid ""
 "Proteron colonized it anyway due to the rich source of both food and water "
 "found underneath the ice."
 msgstr ""
+"Chladné teploty Amianty by některé lidi odháněly, ale Proteron ji stejně "
+"kolonizoval kvůli bohatému zdroji jídla i vody pod ledem."
 
 #: dat/assets/ammu.xml:2
 msgid "Ammu"
-msgstr ""
+msgstr "Ammu"
 
 #: dat/assets/ammu.xml:29
 msgid ""
@@ -1241,6 +1250,9 @@ msgid ""
 "subterranean spaceport but the way it doesn't seem to faze the locals "
 "reassures you."
 msgstr ""
+"Ammu je obecně klidná planeta, jakmile si člověk zvykne na neustálé dunění "
+"lávových proudů. Erupce lávy jsou často cítit v podzemním kosmodromu, ale "
+"způsob, jakým se nezdá, že by místní obyvatele obtěžoval, tě uklidňuje."
 
 #: dat/assets/ammu.xml:30
 msgid ""
@@ -1249,6 +1261,9 @@ msgid ""
 "known for its temperature, that's not to say you can't get a mean Pan-"
 "Galactic Gargle Blaster."
 msgstr ""
+"Bar na Ammu, známý jako „Chladič“ kvůli jeho chladným teplotám, je "
+"kontrastem se zbytkem stanice. I když je primárně známý svou teplotou, "
+"neznamená to, že nemůžete získat průměrného Pan-Galactic Gargle Blaster."
 
 #: dat/assets/amphion.xml:2
 msgid "Amphion"
