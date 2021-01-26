@@ -290,13 +290,17 @@ AC_SEARCH_LIBS([sqrt], [m])
 AC_CHECK_LIB([csparse], [cs_spalloc], [have_csparse_lib=yes], [have_csparse_lib=no])
 AC_CHECK_LIB([cxsparse], [cs_di_spalloc], [have_cxsparse_lib=yes], [have_cxsparse_lib=no])
 
-AS_IF([test "x$have_csparse_lib" = "xyes" -a "x$have_cxsparse_lib" = "xyes"], [
+AS_IF([test "x$have_csparse_lib" = "xyes" -o "x$have_cxsparse_lib" = "xyes"], [
     AC_CHECK_HEADERS([cs.h], [have_cs_h=yes], [have_cs_h=no])
     AC_CHECK_HEADERS([suitesparse/cs.h], [have_suitesparse_cs_h=yes], [have_suitesparse_cs_h=no])
 
     AS_IF([test $have_cs_h = yes -o $have_suitesparse_cs_h = yes], [
         used_csparse=shared
-        CSPARSE_LIBS="-lcsparse -lcxsparse"
+        AS_IF([test $have_cxsparse_lib = yes], [
+            CSPARSE_LIBS="-lcxsparse"
+        ], [
+            CSPARSE_LIBS="-lcsparse"
+        ])
     ], [
         used_csparse=internal
     ])
