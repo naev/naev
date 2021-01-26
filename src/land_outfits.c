@@ -130,8 +130,8 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
    if (outfits!=NULL) {
       data           = malloc( sizeof( LandOutfitData ) );
       data->noutfits = noutfits;
-      data->outfits  = malloc( data->noutfits * sizeof( Outfit ) );
-      memcpy( data->outfits, outfits, data->noutfits * sizeof( Outfit ) );
+      data->outfits  = malloc( data->noutfits * sizeof( Outfit* ) );
+      memcpy( data->outfits, outfits, data->noutfits * sizeof( Outfit* ) );
       window_setData( wid, data );
       window_onClose( wid, outfits_onClose );
    }
