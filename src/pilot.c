@@ -46,7 +46,6 @@
 #include "player.h"
 #include "player_autonav.h"
 #include "rng.h"
-#include "spfx.h"
 #include "weapon.h"
 
 
@@ -1701,51 +1700,45 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
 void pilot_render( Pilot* p, const double dt )
 {
    (void) dt;
-   double scalew, scaleh, a;
-   int i;
-   double x1, y1, x2, y2, dx, dy;
+   double scalew, scaleh;
+   int i, j, n;
+   double x1, y1, x2, y2;
    glColour c1, c2;
-   Vector2d* point;
+   Vector2d *point, pos;
    int now;
+   Trail_spfx* trail;
 
    /* Tracks. */
-   //c.a = 0.25;
-   if (array_size(p->times) > 1){
-      now = (int) ntime_get();
+   if (p->ship->trail_emitters == NULL) // TODO: store this value
+      n = 0;
+   else
+      n = array_size(p->ship->trail_emitters);
 
-      /* Compute the engine offset. TODO: function */
-      a  = p->solid->dir;
-      dx = p->ship->x_engine * cos(a) - p->ship->y_engine * sin(a);
-      dy = p->ship->x_engine * sin(a) + p->ship->y_engine * cos(a);
+   for (j=0; j<n; j++) {
+              // if (n>1) DEBUG("EXTERNAL %i",i);
+      if (array_size(p->trail[j].times) > 1){
+         now = (int) ntime_get();
+         c1 = pilot_compute_trail( p, &pos, j );
+         trail = &p->trail[j];
 
-      /* Lastly created control point is replaced by ship's position */
-      gl_gameToScreenCoords( &x1, &y1, p->solid->pos.x + dx, p->solid->pos.y + dy*M_SQRT1_2 + p->ship->h_engine*M_SQRT1_2 );
-      point = &p->track[ array_size(p->track)-2 ];
-      gl_gameToScreenCoords( &x2, &y2, point->x, point->y );
-      //gl_drawLine( x1, y1, x2, y2, &c );
-      gl_renderCross( x1, y1, 12., &cWhite );
+         /* Lastly created control point is replaced by ship's position */
+         gl_gameToScreenCoords( &x1, &y1, pos.x, pos.y );
+         //TODO: Its ugly. Put that in opengl_render all2gether
+         point = &trail->points[ array_size(trail->points)-2 ];
+         gl_gameToScreenCoords( &x2, &y2, point->x, point->y );
+         gl_renderCross( x1, y1, 12., &cWhite );
 
-      /* Set the colour. TODO: function */
-      if (pilot_isFlag(p, PILOT_AFTERBURNER))
-         c1 = cGold;
-      else if (p->engine_glow > 0.)
-         c1 = cCyan;
-      else {
-         c1 = cWhite;
-         c1.a = .25;
-      }
+         c2 = trail->colors[ array_size(trail->colors)-2 ];
+         gl_drawTrack( x1, y1, x2, y2, now, trail->times[ array_size(trail->times)-2 ], now, &c1, &c2 );
 
-      c2 = p->colors[ array_size(p->colors)-2 ];
-      gl_drawTrack( x1, y1, x2, y2, now, p->times[ array_size(p->times)-2 ], now, &c1, &c2 );
-
-      if (array_size(p->times) > 2){
-         for ( i=array_size(p->times)-2; i>0; i--){
-            point = &p->track[i];
-            gl_gameToScreenCoords( &x1, &y1, point->x, point->y );
-            point = &p->track[i-1];
-            gl_gameToScreenCoords( &x2, &y2, point->x, point->y );
-            //gl_drawLine( x1, y1, x2, y2, &c );
-            gl_drawTrack( x1, y1, x2, y2, p->times[i], p->times[i-1], now, &p->colors[i], &p->colors[i-1] );
+         if (array_size(trail->times) > 2){
+            for ( i=array_size(trail->times)-2; i>0; i--){
+               point = &trail->points[i];
+               gl_gameToScreenCoords( &x1, &y1, point->x, point->y );
+               point = &trail->points[i-1];
+               gl_gameToScreenCoords( &x2, &y2, point->x, point->y );
+               gl_drawTrack( x1, y1, x2, y2, trail->times[i], trail->times[i-1], now, &trail->colors[i], &trail->colors[i-1] );
+            }
          }
       }
    }
@@ -1851,20 +1844,17 @@ void pilot_renderOverlay( Pilot* p, const double dt )
  */
 void pilot_update( Pilot* pilot, const double dt )
 {
-   int i, cooling, nchg;
+   int i, cooling, nchg, n;
    int ammo_threshold;
-   unsigned int l, grow;
+   unsigned int l;
    Pilot *target;
-   double a, px,py, vx,vy, dx, dy;
+   double a, px,py, vx,vy;
    char buf[16];
    PilotOutfitSlot *o;
    double Q;
    Damage dmg;
    double stress_falloff;
    double efficiency, thrust;
-   ntime_t now;
-   Vector2d pos;
-   glColour col;
 
    /* Check target validity. */
    if (pilot->target != pilot->id) {
@@ -2250,50 +2240,54 @@ void pilot_update( Pilot* pilot, const double dt )
 
    /* Update the track. */
    if (!space_isSimulation()) {
-      now = ntime_get();
-      grow = 0;
+      if (pilot->ship->trail_emitters == NULL) // TODO: store this value
+         n = 0;
+      else
+         n = array_size(pilot->ship->trail_emitters);
 
-      if (array_size(pilot->times) == 0)
-         grow = 1;
-
-      else {
-         /* Add a new dot to the track. */
-         if ( (array_back( pilot->times ) + 3000) <= now )
-            grow = 1;
-         /* Remove first elements if they're outdated. */
-         for (i=array_size(pilot->times)-1; i>=0; i--) {
-            if (pilot->times[i] < now - 50000) {
-               array_erase(&pilot->times, &pilot->times[0], &pilot->times[i]);
-               array_erase(&pilot->track, &pilot->track[0], &pilot->track[i]);
-               array_erase(&pilot->colors, &pilot->colors[0], &pilot->colors[i]);
-               break;
-            }
-         }
-      }
-
-      if (grow) {
-         /* Compute the engine offset. */
-         a  = pilot->solid->dir;
-         dx = pilot->ship->x_engine * cos(a) - pilot->ship->y_engine * sin(a);
-         dy = pilot->ship->x_engine * sin(a) + pilot->ship->y_engine * cos(a);
-         vect_cset( &pos, pilot->solid->pos.x + dx, pilot->solid->pos.y + dy*M_SQRT1_2 + pilot->ship->h_engine*M_SQRT1_2 );
-
-         array_push_back( &pilot->times, now );
-         array_push_back( &pilot->track, pos );
-         /* Set the colour. */
-         if (pilot_isFlag(pilot, PILOT_AFTERBURNER))
-            col = cGold;
-         else if (pilot->engine_glow > 0.)
-            col = cCyan;
-         else {
-            col = cWhite;
-            col.a = .25;
-         }
-         array_push_back( &pilot->colors, col );
+      for (i=0; i<n; i++) {
+         spfx_trail_update( &pilot->trail[i], pilot, i );
       }
    }
 
 }
+
+
+/**
+ * @brief Computes the trail generation parameters.
+ *
+ *    @param p Pilot.
+ *    @param [out] pos Position.
+ *    @param generator Generator index
+ *    @return col Colour.
+ */
+glColour pilot_compute_trail( Pilot* p, Vector2d* pos, int generator )
+{
+   double a, dx, dy;
+   glColour col;
+
+   /* Compute the engine offset. */
+   a  = p->solid->dir;
+   dx = p->ship->trail_emitters[generator].x_engine * cos(a) -
+        p->ship->trail_emitters[generator].y_engine * sin(a);
+   dy = p->ship->trail_emitters[generator].x_engine * sin(a) +
+        p->ship->trail_emitters[generator].y_engine * cos(a);
+
+   vect_cset( pos, p->solid->pos.x + dx, 
+              p->solid->pos.y + dy*M_SQRT1_2 + p->ship->trail_emitters[generator].h_engine*M_SQRT1_2 );
+
+   /* Set the colour. */
+   if (pilot_isFlag(p, PILOT_AFTERBURNER))
+      col = cGold;
+   else if (p->engine_glow > 0.)
+      col = cCyan;
+   else {
+      col = cWhite;
+      col.a = .25;
+   }
+   return col;
+}
+
 
 /**
  * @brief Deletes a pilot.
@@ -2657,7 +2651,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
-   int i, p;
+   int i, p, n;
    PilotOutfitSlot* dslot;
 
    /* Clear memory. */
@@ -2808,9 +2802,16 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->shoot_indicator = 0;
 
    /* Animated track. */
-   pilot->track = array_create( Vector2d );
-   pilot->times = array_create( ntime_t );
-   pilot->colors = array_create( glColour );
+   if (pilot->ship->trail_emitters == NULL) // TODO: store this value
+      n = 0;
+   else
+      n = array_size(pilot->ship->trail_emitters);
+//DEBUG("%i",n);
+   pilot->trail = array_create_size( Trail_spfx, n );
+   for (i=0; i<n; i++)
+      spfx_trail_create( &pilot->trail[i] );
+      //pilot->trail[i] = spfx_trail_create();
+   //pilot->trail = spfx_trail_create();
 }
 
 
@@ -3052,6 +3053,8 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
  */
 void pilot_free( Pilot* p )
 {
+   int n, i;
+
    /* Clear up pilot hooks. */
    pilot_clearHooks(p);
 
@@ -3089,9 +3092,15 @@ void pilot_free( Pilot* p )
    luaL_unref(naevL, p->messages, LUA_REGISTRYINDEX);
 
    /* Free animated track. */
-   array_free(p->colors);
-   array_free(p->track);
-   array_free(p->times);
+   if (p->ship->trail_emitters == NULL) // TODO: store this value
+      n = 0;
+   else
+      n = array_size(p->ship->trail_emitters);
+
+   for (i=0; i<n; i++)
+      spfx_trail_remove(&p->trail[i]);
+   array_free(p->trail);
+   //spfx_trail_remove(p->trail);
 
 #ifdef DEBUGGING
    memset( p, 0, sizeof(Pilot) );

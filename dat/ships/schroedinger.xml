@@ -7,7 +7,7 @@
  <class>Scout</class>
  <price>180000</price>
  <time_mod>1</time_mod>
- <engine_offset x="-10" y="0" h="0" />
+ <trail_generator x="-10" y="0" h="0" />
  <fabricator>Sirius Systems</fabricator>
  <description>The Schroedinger is primarily used as a reconnaissance vessel. It requires a skeleton crew due to its advanced automation subsystems, and its proprietary fuel tanks allow it to have range much greater than most ships. The downside is that the ship is extremely vulnerable to attack due to its light armour and low amount of weapons space. It is also equipped with a pair of Eraedon engines, making it highly manoeuvrable.</description>
  <health>

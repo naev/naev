@@ -7,7 +7,10 @@
  <class>Corvette</class>
  <price>600000</price>
  <time_mod>1.25</time_mod>
- <engine_offset x="-25" y="0" h="0" />
+ <trail_generator x="-25" y="5" h="5" />
+ <trail_generator x="-25" y="-5" h="5" />
+ <trail_generator x="-25" y="5" h="-5" />
+ <trail_generator x="-25" y="-5" h="-5" />
  <fabricator>Nexus Shipyards</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>A very versatile combat ship. Nexus defines the Admonisher as a compromise between the ruggedness of the Pacifier and the agility of the Lancelot. Overall a very solid fighter.</description>

@@ -7,7 +7,10 @@
  <class>Cruiser</class>
  <price>6000000</price>
  <time_mod>1.75</time_mod>
- <engine_offset x="-40" y="0" h="0" />
+ <trail_generator x="-30" y="20" h="0" />
+ <trail_generator x="-30" y="40" h="0" />
+ <trail_generator x="-30" y="-20" h="0" />
+ <trail_generator x="-30" y="-40" h="0" />
  <fabricator>House Goddard</fabricator>
  <license>Heavy Combat Vessel License</license>
  <description>Designed by eccentric genius Eduard Manuel Goddard, the Goddard Battlecruiser is what skyrocketed House Goddard to fame and fortune. Production is entirely done on Zhiru in the Goddard system by House Goddard. Over time, specialization and improvements on the original design have kept it very competitive in the market. It's a classic of space.</description>

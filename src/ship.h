@@ -80,6 +80,16 @@ typedef struct ShipOutfitSlot_ {
 
 
 /**
+ * @brief Ship trail emitter.
+ */
+typedef struct ShipTrailEmitter_ {
+   double x_engine; /**< Offset x. */
+   double y_engine; /**< Offset y. */
+   double h_engine; /**< Offset z. */
+} ShipTrailEmitter;
+
+
+/**
  * @brief Represents a space ship.
  */
 typedef struct Ship_ {
@@ -125,9 +135,7 @@ typedef struct Ship_ {
    char* gfx_comm;   /**< Name of graphic for communication. */
    glTexture** gfx_overlays; /**< Store overlay graphics. */
    int gfx_noverlays; /**< Number of overlays. */
-   double x_engine; /**< Engine offset. */
-   double y_engine; /**< Engine offset. */
-   double h_engine; /**< Engine offset. */
+   ShipTrailEmitter* trail_emitters; /**< Trail emitters. */
 
    /* collision polygon */
    CollPoly *polygon; /**< Collision polygons. */

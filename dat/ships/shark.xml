@@ -7,7 +7,9 @@
  <class>Fighter</class>
  <price>280000</price>
  <time_mod>1</time_mod>
- <engine_offset x="-15" y="0" h="0" />
+ <trail_generator x="-10" y="7" h="7" />
+ <trail_generator x="-10" y="-7" h="7" />
+ <trail_generator x="-10" y="0" h="-10" />
  <fabricator>Nexus Shipyards</fabricator>
  <license>Light Combat Vessel License</license>
  <description>A newer Nexus Shipyards design, the Shark is an agile light fighter designed for in-system patrolling. While it's not as capable as its larger relative, the Lancelot, it's still an effective addition to any fleet.</description>

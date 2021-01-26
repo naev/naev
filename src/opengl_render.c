@@ -771,7 +771,7 @@ void gl_drawTrack( const double x1, const double y1,
 
    a = atan2( y2-y1, x2-x1 );
    s = sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) );
-   thick = 4.;
+   thick = 3.;
    //c2 = &cWhite;
 
    /* Set vertex. */

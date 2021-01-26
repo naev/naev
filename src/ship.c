@@ -767,6 +767,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    char str[PATH_MAX];
    int l, m, h, noengine;
    ShipStatList *ll;
+   ShipTrailEmitter trail;
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Ship) );
@@ -790,9 +791,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Default offsets for the engine. */
-   temp->x_engine = 0;
-   temp->y_engine = 0;
-   temp->h_engine = 0;
+   temp->trail_emitters = NULL;
 
    /* Load the rest of the data. */
    node = parent->xmlChildrenNode;
@@ -931,12 +930,28 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       xmlr_strd(node,"fabricator",temp->fabricator);
       xmlr_strd(node,"description",temp->description);
       xmlr_int(node,"rarity",temp->rarity);
-      if (xml_isNode(node,"engine_offset")) {
-         xmlr_attr_float( node, "x", temp->x_engine );
-         xmlr_attr_float( node, "y", temp->y_engine );
-         xmlr_attr_float( node, "h", temp->h_engine );
+
+      if (xml_isNode(node,"trail_generator")) {
+         xmlr_attr_float( node, "x", trail.x_engine );
+         xmlr_attr_float( node, "y", trail.y_engine );
+         xmlr_attr_float( node, "h", trail.h_engine );
+         if (temp->trail_emitters == NULL) {
+            temp->trail_emitters = array_create( ShipTrailEmitter );
+/*            xmlr_attr_float( node, "x", temp->trail_emitters[0].x_engine );*/
+/*            xmlr_attr_float( node, "y", temp->trail_emitters[0].y_engine );*/
+/*            xmlr_attr_float( node, "h", temp->trail_emitters[0].h_engine );*/
+            //temp->trail_emitters[0] = trail;
+         }
+         else {
+         //trail = array_grow( &temp->trail_emitters );
+
+         //array_push_back( &temp->trail_emitters, trail );
+//DEBUG("%s",temp->name);
+         }
+         array_push_back( &temp->trail_emitters, trail );
          continue;
       }
+
       if (xml_isNode(node,"movement")) {
          cur = node->children;
          do {
@@ -1210,6 +1225,9 @@ void ships_free (void)
          }
          free(s->polygon);
       }
+
+      /* Free trail generators. */
+      array_free(s->trail_emitters);
    }
 
    array_free(ship_stack);

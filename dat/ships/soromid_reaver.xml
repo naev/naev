@@ -8,6 +8,7 @@
  <class>Fighter</class>
  <price>500000</price>
  <time_mod>1</time_mod>
+ <trail_generator x="-20" y="0" h="0" />
  <fabricator>Soromid</fabricator>
  <license>Light Combat Vessel License</license>
  <description>Reavers are often found at the forefront of Soromid military engagements. Their good speed and maneuverability are compounded by their durability, making the Reaver one of the most effective heavy fighters in the galaxy.</description>

@@ -8,7 +8,8 @@
  <class>Destroyer</class>
  <price>2400000</price>
  <time_mod>1.5</time_mod>
- <engine_offset x="-35" y="0" h="0" />
+ <trail_generator x="-30" y="8" h="0" />
+ <trail_generator x="-30" y="-8" h="0" />
  <fabricator>Za'lek Fabricators</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>House Za'lek's ferociously-named destroyer has earned the moniker with disproportionately powerful shields and energy management, as well as size. Its handling suffers, and has poor armor like all Za'lek ships, but this comes as poor consolation to the Za'lek's enemies.</description>
