@@ -702,9 +702,6 @@ AI_Profile* ai_getProfile( char* name )
 {
    int i;
 
-   if (profiles == NULL)
-      return NULL;
-
    for (i=0; i<array_size(profiles); i++)
       if (strcmp(name,profiles[i].name)==0)
          return &profiles[i];

@@ -1028,11 +1028,6 @@ static int mapedit_mapsList_refresh (void)
  */
 mapOutfitsList_t *mapedit_mapsList_getList( int *n )
 {
-   if (mapList == NULL) {
-      *n = 0;
-      return NULL;
-   }
-
    *n = array_size( mapList );
    return mapList;
 }
@@ -1045,15 +1040,13 @@ static void mapsList_free (void)
 {
    unsigned int n, i;
 
-   if (mapList != NULL) {
-      n = array_size( mapList );
-      for (i=0; i<n; i++) {
-         free( mapList[i].fileName );
-         free( mapList[i].mapName );
-         free( mapList[i].description );
-      }
-      array_free(mapList);
+   n = array_size( mapList );
+   for (i=0; i<n; i++) {
+      free( mapList[i].fileName );
+      free( mapList[i].mapName );
+      free( mapList[i].description );
    }
+   array_free(mapList);
    mapList = NULL;
 
    free( mapedit_sLoadMapName );

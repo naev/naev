@@ -35,11 +35,9 @@ static char** gui_list = NULL; /**< List of GUIs the player has. */
 void player_guiCleanup (void)
 {
    int i;
-   if (gui_list != NULL) {
-      for (i=0; i<array_size(gui_list); i++)
-         free( gui_list[i] );
-      array_free( gui_list );
-   }
+   for (i=0; i<array_size(gui_list); i++)
+      free( gui_list[i] );
+   array_free( gui_list );
    gui_list = NULL;
 }
 
@@ -101,9 +99,6 @@ int player_guiCheck( char* name )
 {
    int i;
 
-   if (gui_list == NULL)
-      return 0;
-
    if (name == NULL)
       return 0;
 
@@ -120,11 +115,6 @@ int player_guiCheck( char* name )
  */
 char** player_guiList( int *n )
 {
-   if (gui_list == NULL) {
-      *n = 0;
-      return NULL;
-   }
-
    *n = array_size(gui_list);
    return gui_list;
 }

@@ -382,9 +382,6 @@ void osd_exit (void)
    int i;
    OSD_t *ll;
 
-   if (osd_list == NULL)
-      return;
-
    for (i=0; i<array_size(osd_list); i++) {
       ll = &osd_list[i];
       osd_free( ll );

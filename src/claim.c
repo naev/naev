@@ -110,21 +110,17 @@ int claim_test( Claim_t *claim )
       return 0;
 
    /* See if the system is claimed. */
-   if (claim->ids != NULL) {
-      for (i=0; i<array_size(claim->ids); i++) {
-         claimed = sys_isFlag( system_getIndex(claim->ids[i]), SYSTEM_CLAIMED );
-         if (claimed)
-            return 1;
-      }
+   for (i=0; i<array_size(claim->ids); i++) {
+      claimed = sys_isFlag( system_getIndex(claim->ids[i]), SYSTEM_CLAIMED );
+      if (claimed)
+         return 1;
    }
 
    /* Check strings. */
-   if ((claim->strs != NULL) && (claimed_strs != NULL)) {
-      for (i=0; i<array_size(claim->strs); i++) {
-         for (j=0; j<array_size(claimed_strs); j++) {
-            if (strcmp( claim->strs[i], claimed_strs[j] )==0)
-               return 1;
-         }
+   for (i=0; i<array_size(claim->strs); i++) {
+      for (j=0; j<array_size(claimed_strs); j++) {
+         if (strcmp( claim->strs[i], claimed_strs[j] )==0)
+            return 1;
       }
    }
 
@@ -145,10 +141,6 @@ int claim_testStr( Claim_t *claim, const char *str )
 
    /* Must actually have a claim. */
    if (claim == NULL)
-      return 0;
-
-   /* Make sure something to activate. */
-   if (claim->strs == NULL)
       return 0;
 
    /* Check strings. */
@@ -176,10 +168,6 @@ int claim_testSys( Claim_t *claim, int sys )
    if (claim == NULL)
       return 0;
 
-   /* Make sure something to activate. */
-   if (claim->ids == NULL)
-      return 0;
-
    /* See if the system is claimed. */
    for (i=0; i<array_size(claim->ids); i++)
       if (claim->ids[i] == sys)
@@ -198,19 +186,15 @@ void claim_destroy( Claim_t *claim )
 {
    int i;
 
-   if (claim->ids != NULL) {
-      if (claim->active)
-         for (i=0; i<array_size(claim->ids); i++)
-            sys_rmFlag( system_getIndex(claim->ids[i]), SYSTEM_CLAIMED );
-      array_free( claim->ids );
-   }
+   if (claim->active)
+      for (i=0; i<array_size(claim->ids); i++)
+         sys_rmFlag( system_getIndex(claim->ids[i]), SYSTEM_CLAIMED );
+   array_free( claim->ids );
 
-   if (claim->strs != NULL) {
-      if (claim->active)
-         for (i=0; i<array_size(claim->strs); i++)
-            free( claim->strs[i] );
-      array_free( claim->strs );
-   }
+   if (claim->active)
+      for (i=0; i<array_size(claim->strs); i++)
+         free( claim->strs[i] );
+   array_free( claim->strs );
    free(claim);
 }
 
@@ -229,12 +213,10 @@ void claim_clear (void)
    for (i=0; i<nsys; i++)
       sys_rmFlag( &sys[i], SYSTEM_CLAIMED );
 
-   if (claimed_strs != NULL) {
-      for (i=0; i<array_size(claimed_strs); i++)
-         free(claimed_strs[i]);
-      array_free(claimed_strs);
-      claimed_strs = NULL;
-   }
+   for (i=0; i<array_size(claimed_strs); i++)
+      free(claimed_strs[i]);
+   array_free(claimed_strs);
+   claimed_strs = NULL;
 }
 
 
@@ -260,19 +242,15 @@ void claim_activate( Claim_t *claim )
    char **s;
 
    /* Add flags. */
-   if (claim->ids != NULL) {
-      for (i=0; i<array_size(claim->ids); i++)
-         sys_setFlag( system_getIndex(claim->ids[i]), SYSTEM_CLAIMED );
-   }
+   for (i=0; i<array_size(claim->ids); i++)
+      sys_setFlag( system_getIndex(claim->ids[i]), SYSTEM_CLAIMED );
 
    /* Add strings. */
-   if (claim->strs != NULL) {
-      if (claimed_strs == NULL)
-         claimed_strs = array_create( char* );
-      for (i=0; i<array_size(claim->strs); i++) {
-         s = &array_grow( &claimed_strs );
-         *s = strdup( claim->strs[i] );
-      }
+   if ((claimed_strs == NULL) && (array_size(claim->strs) > 0))
+      claimed_strs = array_create( char* );
+   for (i=0; i<array_size(claim->strs); i++) {
+      s = &array_grow( &claimed_strs );
+      *s = strdup( claim->strs[i] );
    }
    claim->active = 1;
 }
@@ -294,21 +272,16 @@ int claim_xmlSave( xmlTextWriterPtr writer, Claim_t *claim )
    if (claim == NULL)
       return 0;
 
-   if (claim->ids != NULL) {
-      for (i=0; i<array_size(claim->ids); i++) {
-         sys = system_getIndex( claim->ids[i] );
-         if (sys != NULL) {
-            xmlw_elem( writer, "sys", "%s", sys->name );
-         }
-         else
-            WARN(_("System Claim has inexistent system"));
-      }
+   for (i=0; i<array_size(claim->ids); i++) {
+      sys = system_getIndex( claim->ids[i] );
+      if (sys != NULL)
+         xmlw_elem( writer, "sys", "%s", sys->name );
+      else
+         WARN(_("System Claim has inexistent system"));
    }
 
-   if (claim->strs != NULL) {
-      for (i=0; i<array_size(claim->strs); i++)
-         xmlw_elem( writer, "str", "%s", claim->strs[i] );
-   }
+   for (i=0; i<array_size(claim->strs); i++)
+      xmlw_elem( writer, "str", "%s", claim->strs[i] );
 
    return 0;
 }

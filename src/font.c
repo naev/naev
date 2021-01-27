@@ -1080,12 +1080,6 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
    glFontStashFreetype *ft;
    GLubyte *buffer;
 
-   /* Empty font. */
-   if (stsh->ft==NULL) {
-      WARN(_("Font has no freetype information!"));
-      return -1;
-   }
-
    len = array_size(stsh->ft);
    for (i=0; i<len; i++) {
       ft = &stsh->ft[i];

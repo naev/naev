@@ -105,9 +105,6 @@ Event_t *event_get( unsigned int eventid )
    int i;
    Event_t *ev;
 
-   if (event_active==NULL)
-      return NULL;
-
    /* Iterate. */
    for (i=0; i<array_size(event_active); i++) {
       ev = &event_active[i];
@@ -115,7 +112,6 @@ Event_t *event_get( unsigned int eventid )
          return ev;
    }
 
-   /*WARN( "Event '%u' not found in stack.", eventid );*/
    return NULL;
 }
 
@@ -332,9 +328,6 @@ void event_remove( unsigned int eventid )
    int i;
    Event_t *ev;
 
-   if (event_active==NULL)
-      return;
-
    /* Find the event. */
    for (i=0; i<array_size(event_active); i++) {
       ev = &event_active[i];
@@ -374,9 +367,6 @@ int event_alreadyRunning( int data )
 {
    int i;
    Event_t *ev;
-
-   if (event_active==NULL)
-      return 0;
 
    /* Find events. */
    for (i=0; i<array_size(event_active); i++) {
@@ -669,9 +659,6 @@ void events_cleanup (void)
 {
    int i;
 
-   if (event_active==NULL)
-      return;
-
    /* Free active events. */
    for (i=0; i<array_size(event_active); i++)
       event_cleanup( &event_active[i] );
@@ -690,11 +677,9 @@ void events_exit (void)
    events_cleanup();
 
    /* Free data. */
-   if (event_data != NULL) {
-      for (i=0; i<array_size(event_data); i++)
-         event_freeData( &event_data[i] );
-      array_free(event_data);
-   }
+   for (i=0; i<array_size(event_data); i++)
+      event_freeData( &event_data[i] );
+   array_free(event_data);
    event_data  = NULL;
 }
 
@@ -736,9 +721,6 @@ void event_activateClaims (void)
 {
    int i;
 
-   if (event_active==NULL)
-      return;
-
    /* Free active events. */
    for (i=0; i<array_size(event_active); i++)
       if (event_active[i].claims != NULL)
@@ -764,9 +746,6 @@ void event_checkValidity (void)
 {
    int i;
    Event_t *ev;
-
-   if (event_active==NULL)
-      return;
 
    /* Iterate. */
    for (i=0; i<array_size(event_active); i++) {
@@ -798,29 +777,27 @@ int events_saveActive( xmlTextWriterPtr writer )
 
    xmlw_startElem(writer,"events");
 
-   if (event_active != NULL) {
-      for (i=0; i<array_size(event_active); i++) {
-         ev = &event_active[i];
-         if (!ev->save) /* Only save events that want to be saved. */
-            continue;
+   for (i=0; i<array_size(event_active); i++) {
+      ev = &event_active[i];
+      if (!ev->save) /* Only save events that want to be saved. */
+         continue;
 
-         xmlw_startElem(writer,"event");
+      xmlw_startElem(writer,"event");
 
-         xmlw_attr(writer,"name","%s",event_dataName(ev->data));
-         xmlw_attr(writer,"id","%u",ev->id);
+      xmlw_attr(writer,"name","%s",event_dataName(ev->data));
+      xmlw_attr(writer,"id","%u",ev->id);
 
-         /* Claims. */
-         xmlw_startElem(writer,"claims");
-         claim_xmlSave( writer, ev->claims );
-         xmlw_endElem(writer); /* "claims" */
+      /* Claims. */
+      xmlw_startElem(writer,"claims");
+      claim_xmlSave( writer, ev->claims );
+      xmlw_endElem(writer); /* "claims" */
 
-         /* Write Lua magic */
-         xmlw_startElem(writer,"lua");
-         nxml_persistLua( ev->env, writer );
-         xmlw_endElem(writer); /* "lua" */
+      /* Write Lua magic */
+      xmlw_startElem(writer,"lua");
+      nxml_persistLua( ev->env, writer );
+      xmlw_endElem(writer); /* "lua" */
 
-         xmlw_endElem(writer); /* "event" */
-      }
+      xmlw_endElem(writer); /* "event" */
    }
 
    xmlw_endElem(writer); /* "events" */

@@ -80,17 +80,15 @@ int pilot_runHookParam( Pilot* p, int hook_type, HookParam* param, int nparam )
    }
 
    /* Run global hooks. */
-   if (pilot_globalHooks != NULL) {
-      for (i=0; i<array_size(pilot_globalHooks); i++) {
-         if (pilot_globalHooks[i].type != hook_type)
-            continue;
+   for (i=0; i<array_size(pilot_globalHooks); i++) {
+      if (pilot_globalHooks[i].type != hook_type)
+         continue;
 
-         ret = hook_runIDparam( pilot_globalHooks[i].id, hparam );
-         if (ret)
-            WARN(_("Pilot '%s' failed to run hook type %d"), p->name, hook_type);
-         else
-            run++;
-      }
+      ret = hook_runIDparam( pilot_globalHooks[i].id, hparam );
+      if (ret)
+         WARN(_("Pilot '%s' failed to run hook type %d"), p->name, hook_type);
+      else
+         run++;
    }
 
    /* Clean up. */
@@ -156,10 +154,6 @@ void pilots_addGlobalHook( int type, unsigned int hook )
 void pilots_rmGlobalHook( unsigned int hook )
 {
    int i;
-
-   /* Must exist pilot hook.s */
-   if (pilot_globalHooks == NULL )
-      return;
 
    for (i=0; i<array_size(pilot_globalHooks); i++) {
       if (pilot_globalHooks[i].id == hook) {

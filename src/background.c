@@ -308,10 +308,6 @@ static void background_renderImages( background_image_t *bkg_arr )
    background_image_t *bkg;
    double px,py, x,y, xs,ys, z;
 
-   /* Must have an image array created. */
-   if (bkg_arr == NULL)
-      return;
-
    /* Render images in order. */
    for (i=0; i<array_size(bkg_arr); i++) {
       bkg = &bkg_arr[i];
@@ -507,11 +503,6 @@ void background_getTextures(unsigned int *n, glTexture ***imgs)
 {
   unsigned int i;
   background_image_t *bkg;
-
-  if (bkg_image_arr_bk == NULL) {
-      *n = 0;
-      return;
-  }
 
   *n = array_size( bkg_image_arr_bk );
   *imgs = malloc( sizeof( glTexture * ) * ( *n ) );

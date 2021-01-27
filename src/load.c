@@ -256,19 +256,17 @@ void load_free (void)
    int i;
    nsave_t *ns;
 
-   if (load_saves != NULL) {
-      for (i=0; i<array_size(load_saves); i++) {
-         ns = &load_saves[i];
-         free(ns->path);
-         free(ns->name);
-         free(ns->version);
-         free(ns->data);
-         free(ns->planet);
-         free(ns->shipname);
-         free(ns->shipmodel);
-      }
-      array_free( load_saves );
+   for (i=0; i<array_size(load_saves); i++) {
+      ns = &load_saves[i];
+      free(ns->path);
+      free(ns->name);
+      free(ns->version);
+      free(ns->data);
+      free(ns->planet);
+      free(ns->shipname);
+      free(ns->shipmodel);
    }
+   array_free( load_saves );
    load_saves = NULL;
 }
 
@@ -278,11 +276,6 @@ void load_free (void)
  */
 nsave_t *load_getList( int *n )
 {
-   if (load_saves == NULL) {
-      *n = 0;
-      return NULL;
-   }
-
    *n = array_size( load_saves );
    return load_saves;
 }

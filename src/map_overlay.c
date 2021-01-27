@@ -574,9 +574,6 @@ static void ovr_mrkRenderAll( double res )
    ovr_marker_t *mrk;
    double x, y;
 
-   if (ovr_markers == NULL)
-      return;
-
    for (i=0; i<array_size(ovr_markers); i++) {
       mrk = &ovr_markers[i];
 
@@ -680,8 +677,6 @@ unsigned int ovr_mrkAddPoint( const char *text, double x, double y )
 void ovr_mrkRm( unsigned int id )
 {
    int i;
-   if (ovr_markers == NULL)
-      return;
    for (i=0; i<array_size(ovr_markers); i++) {
       if (id!=ovr_markers[i].id)
          continue;
