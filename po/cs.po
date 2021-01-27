@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-23 23:07-0500\n"
-"PO-Revision-Date: 2021-01-26 23:59+0000\n"
+"PO-Revision-Date: 2021-01-27 06:32+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -1296,7 +1296,7 @@ msgstr ""
 
 #: dat/assets/anarbalis_ii.xml:2
 msgid "Anarbalis II"
-msgstr ""
+msgstr "Anarbalis II"
 
 #: dat/assets/anarbalis_iii.xml:2
 msgid "Anarbalis III"
