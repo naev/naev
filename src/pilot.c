@@ -1726,7 +1726,7 @@ void pilot_render( Pilot* p, const double dt )
          //TODO: Its ugly. Put that in opengl_render all2gether
          point = &trail->points[ array_size(trail->points)-2 ];
          gl_gameToScreenCoords( &x2, &y2, point->x, point->y );
-         gl_renderCross( x1, y1, 12., &cWhite );
+         //gl_renderCross( x1, y1, 12., &cWhite );
 
          c2 = trail->colors[ array_size(trail->colors)-2 ];
          gl_drawTrack( x1, y1, x2, y2, now, trail->times[ array_size(trail->times)-2 ],

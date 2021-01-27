@@ -8,6 +8,8 @@
  <class>Bomber</class>
  <price>600000</price>
  <time_mod>1</time_mod>
+ <trail_generator x="7" y="8" h="0" />
+ <trail_generator x="7" y="-8" h="0" />
  <fabricator>Soromid</fabricator>
  <license>Light Combat Vessel License</license>
  <description>The Marauder was developed from the same base as the Brigand, but the two ships are quite different. The Marauder was developed to fill a bomber role, which calls for increased durability and ammunition chambers. This makes it quite a bit slower than its distant cousin.</description>

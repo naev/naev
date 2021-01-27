@@ -8,6 +8,9 @@
  <class>Fighter</class>
  <price>290000</price>
  <time_mod>0.875</time_mod>
+ <trail_generator x="-7" y="9" h="-9" />
+ <trail_generator x="-7" y="-9" h="-9" />
+ <trail_generator x="-7" y="0" h="13" />
  <fabricator>Proteron</fabricator>
  <license>Light Combat Vessel License</license>
  <description>While smaller and less intimidating than its bigger siblings in the Proteron arsenal, a pack of Derivatives is still a foe to be reckoned with. True to its name, it's the latest in a long line of largely carrier-based fighters. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
