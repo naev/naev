@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-23 23:07-0500\n"
-"PO-Revision-Date: 2021-01-27 06:32+0000\n"
+"PO-Revision-Date: 2021-01-28 00:35+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -1290,9 +1290,9 @@ msgid ""
 "cheery. You wind up making easy friends in the amiable and relaxing "
 "atmosphere."
 msgstr ""
-"Průměrný věk patronů se zde jeví jako pozdní středního věku. Samotný bar je "
-"připraven ve starosvětské hospůdce, nízký a temný, útulný a veselý. Nakonec "
-"se zde snadno spřátelíte v příjemné a uvolňující atmosféře."
+"Průměrný věk patronů se zde jeví jako pozdního středního věku. Samotný bar "
+"je připraven ve starosvětské hospůdce, nízký a temný, útulný a veselý. "
+"Nakonec se zde snadno spřátelíte v příjemné a uvolňující atmosféře."
 
 #: dat/assets/anarbalis_ii.xml:2
 msgid "Anarbalis II"
@@ -1300,27 +1300,27 @@ msgstr "Anarbalis II"
 
 #: dat/assets/anarbalis_iii.xml:2
 msgid "Anarbalis III"
-msgstr ""
+msgstr "Anarbalis III"
 
 #: dat/assets/andee_ii.xml:2
 msgid "Andee II"
-msgstr ""
+msgstr "Andee II"
 
 #: dat/assets/andee_iia.xml:2
 msgid "Andee IIa"
-msgstr ""
+msgstr "Andee IIa"
 
 #: dat/assets/andee_iii.xml:2
 msgid "Andee III"
-msgstr ""
+msgstr "Andee III"
 
 #: dat/assets/andee_iiia.xml:2
 msgid "Andee IIIa"
-msgstr ""
+msgstr "Andee IIIa"
 
 #: dat/assets/andors.xml:2
 msgid "Andors"
-msgstr ""
+msgstr "Andors"
 
 #: dat/assets/andors.xml:30
 msgid ""
@@ -1329,6 +1329,9 @@ msgid ""
 "resources. Unlike more developed Za'lek settlements, there is little in the "
 "way of scholarly presence here."
 msgstr ""
+"Tento pustý svět má pod minerálními kilometry ledu pohřben bohatý nerost a "
+"Za'lek nasadil značné zdroje, aby mohl své zdroje využít. Na rozdíl od "
+"rozvinutějších Za'lekských sídel se zde vědecké přítomnosti moc nenajde."
 
 #: dat/assets/andors.xml:31
 msgid ""
@@ -1337,10 +1340,13 @@ msgid ""
 "beverages and hearty food, and the patrons are almost exclusively off-duty "
 "Za'lek workers."
 msgstr ""
+"Tento bar slouží jako vítaná úleva od ostrých větrů a mrazivých teplot, "
+"které prostupují planetu. Nabídka se z velké části skládá z teplých nápojů a "
+"vydatného jídla a patrony jsou téměř výlučně pracovníci Za'leku mimo službu."
 
 #: dat/assets/andors_refining.xml:2
 msgid "Andors Refining"
-msgstr ""
+msgstr "Rafinérie Andors"
 
 #: dat/assets/andors_refining.xml:26
 msgid ""
@@ -1348,10 +1354,13 @@ msgid ""
 "into a more useful form and shipped out to other worlds to be turned into "
 "whatever is needed."
 msgstr ""
+"V této jednoduché rafinérii se ruda shromážděná na Andorsu přeměňuje na "
+"užitečnější formu a odesílá se do jiných světů, aby se z ní stalo vše, co je "
+"potřeba."
 
 #: dat/assets/anecu.xml:2
 msgid "Anecu"
-msgstr ""
+msgstr "Anecu"
 
 #: dat/assets/anecu.xml:30
 msgid ""
@@ -1362,6 +1371,11 @@ msgid ""
 "which use the high pressure of the water as a benchmark against which ships "
 "can be measured."
 msgstr ""
+"Anecu je zcela vodní planeta. Jeho povrch je zcela pokryt vodou, ale v "
+"mělkých oblastech jsou vybudována velká podmořská města. Klima nad vodou "
+"může být velmi drsné; Byly zaznamenány vlny vysoké až dva kilometry. Planeta "
+"se může pochlubit rozsáhlými konstrukcemi lodí, které snášejí tak vysoký "
+"tlak vody proti lodím jaký lze vůbec měřit."
 
 #: dat/assets/anecu.xml:31
 msgid ""
@@ -1371,38 +1385,42 @@ msgid ""
 "gelatinous creatures sliding around, barely illuminated by the bar's "
 "lighting."
 msgstr ""
+"Bar kosmodromu je přibližně tři kilometry pod povrchem planety. Stěny jsou "
+"vyrobeny z tvrzeného, průhledného polymeru, který vám umožní vidět do "
+"temnoty vody. Každou chvíli můžete vidět po nich klouzat želatinové tvory, "
+"sotva osvětlené barovým osvětlením."
 
 #: dat/assets/anger_i.xml:2
 msgid "Anger I"
-msgstr ""
+msgstr "Anger I"
 
 #: dat/assets/anger_ii.xml:2
 msgid "Anger II"
-msgstr ""
+msgstr "Anger II"
 
 #: dat/assets/anifta.xml:2
 msgid "Anifta"
-msgstr ""
+msgstr "Anifta"
 
 #: dat/assets/anker.xml:2
 msgid "Anker"
-msgstr ""
+msgstr "Anker"
 
 #: dat/assets/anku_i.xml:2
 msgid "An'ku I"
-msgstr ""
+msgstr "An'ku I"
 
 #: dat/assets/anku_ii.xml:2
 msgid "An'ku II"
-msgstr ""
+msgstr "An'ku II"
 
 #: dat/assets/anku_iii.xml:2
 msgid "An'ku III"
-msgstr ""
+msgstr "An'ku III"
 
 #: dat/assets/antica.xml:2
 msgid "Antica"
-msgstr ""
+msgstr "Antica"
 
 #: dat/assets/antica.xml:30
 msgid ""
@@ -1411,6 +1429,10 @@ msgid ""
 "transports stop at Antica to sell their wares before venturing deeper into "
 "Empire space."
 msgstr ""
+"I když je na oběžné dráze vojenská instalace hlavní obchodní byznys, Antica "
+"mísí podnikání a potěšení docela snadno. Vzhledem k jeho poloze se v Antice "
+"zastaví obrovské množství transportů, aby prodaly své zboží, než se pustí "
+"hlouběji do Imperiálního vesmíru."
 
 #: dat/assets/antica.xml:31
 msgid ""
@@ -1419,10 +1441,14 @@ msgid ""
 "finest food and drink, this Arcturian bar is often a traveller's "
 "introduction to Empire cuisine."
 msgstr ""
+"Bar na Antice je poměrně bohatá záležitost, na rozdíl od drsného exteriéru "
+"obíhající vojenské stanice. Tento Arkturiánský bar, který podává některé z "
+"nejlepších pokrmů a nápojů Impéria, je často cestovatelským úvodem do "
+"empírové kuchyně."
 
 #: dat/assets/anubis.xml:2
 msgid "Anubis"
-msgstr ""
+msgstr "Anubis"
 
 #: dat/assets/anubis.xml:30
 msgid ""
@@ -1435,6 +1461,14 @@ msgid ""
 "House Dvaered. Today, the Dvaered use Anubis to produce ammunition and light "
 "combat ships to supply Raelid Outpost."
 msgstr ""
+"Pojmenován podle egyptského boha smrti, Anubis byl založen jako těžební "
+"základna těžební frakce ještě před Válkou Frakcí. Díky hojnosti "
+"radioaktivních a těžkých prvků byla planeta dobrým místem pro výrobu zbraní, "
+"což je lukrativní podnik vzhledem k jeho blízkosti k Sol. Během Frakčních "
+"Válek byl Anubis anektován Impériem, ale místní obyvatelstvo se následně "
+"připojilo k protestnímu hnutí, které nakonec vedlo k založení rodu Dvaeredů. "
+"Dnes dvaeredové používají Anubis k výrobě munice a lehkých bojových lodí k "
+"zásobování Raelidské Základny."
 
 #: dat/assets/anubis.xml:31
 msgid ""
