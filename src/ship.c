@@ -935,18 +935,11 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          xmlr_attr_float( node, "x", trail.x_engine );
          xmlr_attr_float( node, "y", trail.y_engine );
          xmlr_attr_float( node, "h", trail.h_engine );
+         xmlr_attr_float( node, "t", trail.thick );
+         if (trail.thick <= 0.)
+            trail.thick = 3.;
          if (temp->trail_emitters == NULL) {
             temp->trail_emitters = array_create( ShipTrailEmitter );
-/*            xmlr_attr_float( node, "x", temp->trail_emitters[0].x_engine );*/
-/*            xmlr_attr_float( node, "y", temp->trail_emitters[0].y_engine );*/
-/*            xmlr_attr_float( node, "h", temp->trail_emitters[0].h_engine );*/
-            //temp->trail_emitters[0] = trail;
-         }
-         else {
-         //trail = array_grow( &temp->trail_emitters );
-
-         //array_push_back( &temp->trail_emitters, trail );
-//DEBUG("%s",temp->name);
          }
          array_push_back( &temp->trail_emitters, trail );
          continue;

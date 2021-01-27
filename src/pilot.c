@@ -1729,7 +1729,8 @@ void pilot_render( Pilot* p, const double dt )
          gl_renderCross( x1, y1, 12., &cWhite );
 
          c2 = trail->colors[ array_size(trail->colors)-2 ];
-         gl_drawTrack( x1, y1, x2, y2, now, trail->times[ array_size(trail->times)-2 ], now, &c1, &c2 );
+         gl_drawTrack( x1, y1, x2, y2, now, trail->times[ array_size(trail->times)-2 ],
+                       now, &c1, &c2, p->ship->trail_emitters[j].thick );
 
          if (array_size(trail->times) > 2){
             for ( i=array_size(trail->times)-2; i>0; i--){
@@ -1737,7 +1738,8 @@ void pilot_render( Pilot* p, const double dt )
                gl_gameToScreenCoords( &x1, &y1, point->x, point->y );
                point = &trail->points[i-1];
                gl_gameToScreenCoords( &x2, &y2, point->x, point->y );
-               gl_drawTrack( x1, y1, x2, y2, trail->times[i], trail->times[i-1], now, &trail->colors[i], &trail->colors[i-1] );
+               gl_drawTrack( x1, y1, x2, y2, trail->times[i], trail->times[i-1],
+                             now, &trail->colors[i], &trail->colors[i-1], p->ship->trail_emitters[j].thick );
             }
          }
       }
@@ -2277,7 +2279,9 @@ glColour pilot_compute_trail( Pilot* p, Vector2d* pos, int generator )
               p->solid->pos.y + dy*M_SQRT1_2 + p->ship->trail_emitters[generator].h_engine*M_SQRT1_2 );
 
    /* Set the colour. */
-   if (pilot_isFlag(p, PILOT_AFTERBURNER))
+   if (pilot_isFlag(p, PILOT_HYPERSPACE))
+      col = cPurple;
+   else if (pilot_isFlag(p, PILOT_AFTERBURNER))
       col = cGold;
    else if (p->engine_glow > 0.)
       col = cCyan;

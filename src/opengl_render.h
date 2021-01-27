@@ -88,7 +88,7 @@ void gl_drawLine( const double x1, const double y1,
       const double x2, const double y2, const glColour *c );
 void gl_drawTrack( const double x1, const double y1,
       const double x2, const double y2, const int t1, const int t2,
-      const int now, const glColour *c1, const glColour *c2 );
+      const int now, const glColour *c1, const glColour *c2, const double thick );
 
 /* Rectangles. */
 void gl_renderRect( double x, double y, double w, double h, const glColour *c );

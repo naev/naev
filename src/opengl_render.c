@@ -754,16 +754,16 @@ void gl_drawLine( const double x1, const double y1,
  *    @param y2 Y position of the second point in screen coordinates.
  *    @param t1 time of the first point.
  *    @param t2 time og the second point.
- *    @param omega pulsation of the animation.
  *    @param c Colour to use.
+ *    @param t Thickness to use.
  */
 void gl_drawTrack( const double x1, const double y1,
       const double x2, const double y2, const int t1, const int t2,
-      const int now, const glColour *c1, const glColour *c2 )
+      const int now, const glColour *c1, const glColour *c2, const double thick )
 {
    gl_Matrix4 projection;
    double a, s;
-   double thick;
+   //double thick;
    //GLfloat Cvertex[16];
    //GLint color_inx;
 
@@ -771,7 +771,7 @@ void gl_drawTrack( const double x1, const double y1,
 
    a = atan2( y2-y1, x2-x1 );
    s = sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) );
-   thick = 3.;
+   //thick = 3.;
    //c2 = &cWhite;
 
    /* Set vertex. */
