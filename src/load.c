@@ -423,7 +423,7 @@ static void load_menu_load( unsigned int wdw, char *str )
             "   Save version: #r%s#0\n"
             "   Naev version: %s\n"
             "Are you sure you want to load this game? It may lose data."),
-            save, ns->version, VERSION ))
+            save, ns[pos].version, VERSION ))
          return;
    }
 
