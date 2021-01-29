@@ -80,17 +80,15 @@ int pilot_runHookParam( Pilot* p, int hook_type, HookParam* param, int nparam )
    }
 
    /* Run global hooks. */
-   if (pilot_globalHooks != NULL) {
-      for (i=0; i<array_size(pilot_globalHooks); i++) {
-         if (pilot_globalHooks[i].type != hook_type)
-            continue;
+   for (i=0; i<array_size(pilot_globalHooks); i++) {
+      if (pilot_globalHooks[i].type != hook_type)
+         continue;
 
-         ret = hook_runIDparam( pilot_globalHooks[i].id, hparam );
-         if (ret)
-            WARN(_("Pilot '%s' failed to run hook type %d"), p->name, hook_type);
-         else
-            run++;
-      }
+      ret = hook_runIDparam( pilot_globalHooks[i].id, hparam );
+      if (ret)
+         WARN(_("Pilot '%s' failed to run hook type %d"), p->name, hook_type);
+      else
+         run++;
    }
 
    /* Clean up. */
@@ -157,10 +155,6 @@ void pilots_rmGlobalHook( unsigned int hook )
 {
    int i;
 
-   /* Must exist pilot hook.s */
-   if (pilot_globalHooks == NULL )
-      return;
-
    for (i=0; i<array_size(pilot_globalHooks); i++) {
       if (pilot_globalHooks[i].id == hook) {
          array_erase( &pilot_globalHooks, &pilot_globalHooks[i], &pilot_globalHooks[i+1] );
@@ -192,7 +186,6 @@ void pilots_rmHook( unsigned int hook )
 {
    int i, j;
    Pilot *p, **plist;
-   int n;
 
    /* Cleaning up a pilot's hooks. */
    if (pilot_hookCleanup)
@@ -201,8 +194,8 @@ void pilots_rmHook( unsigned int hook )
    /* Remove global hook first. */
    pilots_rmGlobalHook( hook );
 
-   plist = pilot_getAll( &n );
-   for (i=0; i<n; i++) {
+   plist = pilot_getAll();
+   for (i=0; i<array_size(plist); i++) {
       p = plist[i];
 
       for (j=0; j<p->nhooks; j++) {

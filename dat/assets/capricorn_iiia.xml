@@ -5,8 +5,8 @@
   <y>30320.000000</y>
  </pos>
  <GFX>
-  <space>moon-M00.png</space>
-  <exterior>forest.png</exterior>
+  <space>moon-M00.webp</space>
+  <exterior>forest.webp</exterior>
  </GFX>
  <general>
   <class>M</class>

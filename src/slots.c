@@ -122,16 +122,14 @@ void sp_cleanup (void)
 {
    int i;
    SlotProperty_t *sp;
-   if (sp_array != NULL) {
-      for (i=0; i<array_size(sp_array); i++) {
-         sp = &sp_array[i];
-         free( sp->name );
-         free( sp->display );
-         free( sp->description );
-      }
-      array_free( sp_array );
-      sp_array = NULL;
+   for (i=0; i<array_size(sp_array); i++) {
+      sp = &sp_array[i];
+      free( sp->name );
+      free( sp->display );
+      free( sp->description );
    }
+   array_free( sp_array );
+   sp_array = NULL;
 }
 
 

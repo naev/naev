@@ -309,6 +309,7 @@ function graphics.printf( text, ... )
    elseif align=="right" then
       atype = 3
    end
+   naev.gfx.printRestoreClear()
    for k,v in ipairs(wrapped) do
       local tx
       if atype==1 then
@@ -318,6 +319,7 @@ function graphics.printf( text, ... )
       elseif atype==3 then
          tx = x + (limit-v[2])
       end
+      naev.gfx.printRestoreLast()
       naev.gfx.printf( font.font, v[1], tx, y, col )
       y = y - font.lineheight
    end

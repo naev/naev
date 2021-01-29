@@ -108,10 +108,10 @@ function create()
    end
    
    if var.peek("achack02repeat") then
-      misn.setNPC(joannename2, "sirius/unique/joanne")
+      misn.setNPC(joannename2, "sirius/unique/joanne.png")
       misn.setDesc(joannedesc2)
    else
-      misn.setNPC(joannename1, "sirius/unique/joanne")
+      misn.setNPC(joannename1, "sirius/unique/joanne.png")
       misn.setDesc(joannedesc1)
    end
 end
@@ -202,9 +202,8 @@ function enter()
       misn.finish(false)
    end
    
-   joanne = addRawShips("Sirius Fidelity", "sirius_norun", origin, "Achack_sirius")[1]
+   joanne = addShips(1, "Sirius Fidelity", "Achack_sirius", origin, _("Joanne"))[1]
    joanne:control()
-   joanne:rename(_("Joanne"))
    joanne:rmOutfit("all")
    joanne:addOutfit("Razor MK2", 3)
    joanne:addOutfit("Reactor Class I", 1)
@@ -245,7 +244,7 @@ end
 
 -- Sets up the ambush ships and trigger area.
 function ambushSet(ships, location)
-   ambush = addRawShips(ships, "baddie_norun", location, "Achack_thugs")
+   ambush = addShips(1, ships, "Achack_thugs", location)
    for _, j in ipairs(ambush) do
       j:control()
    end

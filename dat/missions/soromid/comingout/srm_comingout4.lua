@@ -96,7 +96,7 @@ function create ()
 
    started = false
 
-   misn.setNPC( npc_name, "soromid/unique/chelsea" )
+   misn.setNPC( npc_name, "soromid/unique/chelsea.png" )
    misn.setDesc( npc_desc )
 end
 
@@ -175,8 +175,7 @@ function ambush_timer ()
    }
    local leaderthug
    for i, j in ipairs( thugships ) do
-      local p = pilot.addRaw( j, "baddie", misplanet, "Comingout_thugs" )
-      p:rename( "Thug " .. j )
+      local p = pilot.add( j, "Comingout_thugs", misplanet, "Thug " .. j )
       p:setHostile()
       p:setLeader( leaderthug )
 

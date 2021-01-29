@@ -83,11 +83,6 @@ int ndata_open (void);
 void ndata_close (void);
 
 /*
- * General.
- */
-int ndata_setPath( const char* path );
-
-/*
  * Individual file functions.
  */
 void* ndata_read( const char* filename, size_t *filesize );

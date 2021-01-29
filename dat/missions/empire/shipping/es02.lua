@@ -81,7 +81,7 @@ function create ()
    end
 
    -- Add NPC.
-   misn.setNPC( _("Soldner"), "empire/unique/soldner" )
+   misn.setNPC( _("Soldner"), "empire/unique/soldner.png" )
    misn.setDesc( bar_desc )
 end
 
@@ -158,7 +158,7 @@ function enter ()
       enter_vect = jump.pos(sys, prevsys)
       m,a = enter_vect:polar()
       enter_vect:setP( m-3000, a )
-      v = pilot.add( "Trader Gawain", "dummy", enter_vect )[1]
+      v = pilot.add( "Gawain", "Trader", enter_vect, _("Trader Gawain"), "dummy" )
 
       v:setPos( enter_vect )
       v:setVel( vec2.new( 0, 0 ) ) -- Clear velocity
@@ -171,19 +171,19 @@ function enter ()
       hook.pilot( v, "death", "death" )
 
       -- FLF Spawn around the Gawain
-      p = pilot.add( "FLF Med Force", nil, enter_vect )
+      p = pilot.addFleet( "FLF Med Force", enter_vect )
       for k,v in ipairs(p) do
          v:setHostile()
       end
       -- To make it more interesting a vendetta will solely target the player.
-      p = pilot.add( "FLF Vendetta", nil, enter_vect )[1]
+      p = pilot.add( "Vendetta", "FLF", enter_vect , _("FLF Vendetta") )
       p:control()
       p:setHostile()
       p:attack( player.pilot() )
       
       -- Now Dvaered
       -- They will jump together with you in the system at the jump point. (A.)
-      p = pilot.add( "Dvaered Med Force", nil, prevsys )
+      p = pilot.addFleet( "Dvaered Med Force", prevsys )
       for k,v in ipairs(p) do
          v:setFriendly()
       end
@@ -221,7 +221,7 @@ function delay_flf ()
    end
 
    -- More ships to pressure player from behind
-   p = pilot.add( "FLF Sml Force", nil, prevsys )
+   p = pilot.addFleet( "FLF Sml Force", prevsys )
    for k,v in ipairs(p) do
       v:setHostile()
    end

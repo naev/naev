@@ -141,7 +141,7 @@ log_text = _([[Baron Sauterfeldt sent you on a wild goose chase to find some anc
 
 function create ()
    -- Note: this mission makes no system claims.
-   misn.setNPC(npc_desc, "neutral/unique/unfamiliarman")
+   misn.setNPC(npc_desc, "neutral/unique/unfamiliarman.png")
    misn.setDesc(bar_desc)
 end
 
@@ -227,9 +227,9 @@ function land()
       sellnpc = misn.npcAdd("seller", _("Artifact seller"), portrait.get("Pirate"), sellerdesc, 4)
    elseif planet.cur() == flintplanet then
       if flintleyfirst then
-         flintnpc = misn.npcAdd("flintley", flint_npc1, "neutral/unique/flintley", flint_bar1, 4)
+         flintnpc = misn.npcAdd("flintley", flint_npc1, "neutral/unique/flintley.png", flint_bar1, 4)
       else
-         flintnpc = misn.npcAdd("flintley", flint_npc2, "neutral/unique/flintley", flint_bar2, 4)
+         flintnpc = misn.npcAdd("flintley", flint_npc2, "neutral/unique/flintley.png", flint_bar2, 4)
       end
    end
 end
@@ -333,8 +333,7 @@ end
 
 function enter()
    if system.cur() == baronsys then
-      pinnacle = pilot.addRaw("Proteron Kahan", "trader", planet.get("Ulios"):pos() + vec2.new(-400,-400), "Civilian" )
-      pinnacle:rename(_("Pinnacle"))
+      pinnacle = pilot.add("Proteron Kahan", "Civilian", planet.get("Ulios"):pos() + vec2.new(-400,-400), _("Pinnacle"), "trader" )
       pinnacle:setInvincible(true)
       pinnacle:setFriendly()
       pinnacle:control()
@@ -356,11 +355,10 @@ function enter()
          count = 3
       end
       if choice <= 3 then
-         fleep = addRawShips( pilots, "mercenary", nil, "Mercenary", count );
+         fleep = addShips( count, pilots, "Mercenary", nil, _("Artifact Hunter") );
          for i, j in ipairs(fleep) do
             j:control()
             j:setHostile(true)
-            j:rename(_("Artifact Hunter"))
             j:attack(player.pilot())
          end
       end

@@ -8,11 +8,11 @@
   <mass>53</mass>
   <price>65000</price>
   <description>The Heavy Laser is more or less an upscaled version of the Laser Cannon Turret, though some fundamental mechanisms had to be redesigned to adapt to the increased energy throughput found in this weapon.</description>
-  <gfx_store>laserturret2</gfx_store>
+  <gfx_store>laserturret2.png</gfx_store>
   <cpu>-30</cpu>
  </general>
  <specific type="turret bolt">
-  <gfx>laser3L</gfx>
+  <gfx>laser3L.png</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiM</spfx_shield>
   <spfx_armour>ExpM</spfx_armour>
@@ -20,7 +20,7 @@
   <speed>550</speed>
   <range>2200</range>
   <falloff>1600</falloff>
-  <gfx_end>laser2L</gfx_end>
+  <gfx_end>laser2L.png</gfx_end>
   <energy>72</energy>
   <heatup>50</heatup>
   <track>0.5</track>

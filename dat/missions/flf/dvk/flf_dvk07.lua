@@ -76,7 +76,7 @@ function create ()
    late_arrival = true
    late_arrival_delay = rnd.rnd( 10000, 120000 )
 
-   misn.setNPC( npc_name, "flf/unique/benito" )
+   misn.setNPC( npc_name, "flf/unique/benito.png" )
    misn.setDesc( npc_desc )
 end
 

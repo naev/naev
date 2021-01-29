@@ -4,6 +4,10 @@
  <trigger>land</trigger>
  <chance>100</chance>
  <cond>planet.cur():name()=="Minerva Station"</cond>
+ <notes>
+  <campaign>Minerva</campaign>
+  <provides name="Minerva Station" />
+ </notes>
 </event>
 --]]
 
@@ -15,6 +19,7 @@ local minerva = require "minerva"
 local portrait = require "portrait"
 local vn = require 'vn'
 local blackjack = require 'minigames.blackjack'
+local chuckaluck = require 'minigames.chuckaluck'
 local lg = require 'love.graphics'
 local window = require 'love.window'
 
@@ -22,12 +27,13 @@ local window = require 'love.window'
 gambling_priority = 3
 terminal = minerva.terminal
 blackjack_name = _("Blackjack")
-blackjack_portrait = "blackjack"
+blackjack_portrait = "blackjack.png"
 blackjack_desc = _("Seems to be one of the more popular card games where you can play blackjack against a \"cyborg chicken\".")
 blackjack_image = minerva.chicken.image
 chuckaluck_name = _("Chuck-a-luck")
-chuckaluck_portrait = "none" -- TODO replace
-chuckaluck_desc = _("A fast-paced luck-based betting game using dice. You can play against other patrons.")
+chuckaluck_portrait = "minervaceo.png" -- TODO replace
+chuckaluck_image = "minervaceo.png" -- TODO replace
+chuckaluck_desc = _("A fast-paced luck-based betting game using dice.")
 greeter_portrait = portrait.get() -- TODO replace?
 
 patron_names = {
@@ -77,7 +83,7 @@ function create()
    -- Create NPCs
    npc_terminal = evt.npcAdd( "approach_terminal", terminal.name, terminal.portrait, terminal.description, gambling_priority )
    npc_blackjack = evt.npcAdd( "approach_blackjack", blackjack_name, blackjack_portrait, blackjack_desc, gambling_priority )
-   --npc_chuckaluck = evt.npcAdd( "approach_chuckaluck", chuckaluck_name, chuckaluck_portrait, chuckaluck_desc, gambling_priority )
+   npc_chuckaluck = evt.npcAdd( "approach_chuckaluck", chuckaluck_name, chuckaluck_portrait, chuckaluck_desc, gambling_priority )
 
    -- Create random noise NPCs
    local npatrons = rnd.rnd(3,5)
@@ -406,6 +412,77 @@ function approach_blackjack()
 end
 
 function approach_chuckaluck ()
+   -- Not adding to queue first
+   vn.clear()
+   vn.scene()
+   local dealer = vn.newCharacter( _("Dealer"), {image=chuckaluck_image} )
+   vn.fadein()
+   vn.na(_("You approach the chuck-a-luck table."))
+   vn.na( "", true ) -- Clear buffer without waiting
+   vn.label("menu")
+   vn.menu( {
+      { _("Play"), "chuckaluck" },
+      { _("Explanation"), _("explanation") },
+      { _("Leave"), "leave" },
+   } )
+   vn.label( "explanation" )
+   dealer(_([["Chuck-a-luck is a straight-forward game. You make your bet and then place a wager on what number the dice will come up as. If the number you chose matches one die, you get win a token for each 1000 credits you bet. If you match two dice, you get double the amount of tokens. Furthermore, if you match all three dice, you get ten times the amount of tokens!"]]))
+   vn.jump("menu")
+
+   vn.label( "chuckaluck" )
+   -- Resize the window
+   local lw, lh = window.getDesktopDimensions()
+   local textbox_h = vn.textbox_h
+   local textbox_x = vn.textbox_x
+   local textbox_y = vn.textbox_y
+   local dealer_x, dealer_newx
+   local chuckaluck_h = 500
+   local chuckaluck_x = math.min( lw-vn.textbox_w-100, textbox_x+200 )
+   local chuckaluck_y = (lh-chuckaluck_h)/2
+   local setup_chuckaluck = function (alpha)
+      if dealer_x == nil then
+         dealer_x = dealer.offset -- dealer.offset is only set up when the they appear in the VN
+         dealer_newx = 0.2*lw
+      end
+      vn.textbox_h = textbox_h + (chuckaluck_h - textbox_h)*alpha
+      vn.textbox_x = textbox_x + (chuckaluck_x - textbox_x)*alpha
+      vn.textbox_y = textbox_y + (chuckaluck_y - textbox_y)*alpha
+      vn.namebox_alpha = 1-alpha
+      dealer.offset = dealer_x + (dealer_newx - dealer_x)*alpha
+   end
+   vn.animation( 0.5, function (alpha) setup_chuckaluck(alpha) end )
+   local cl = vn.custom()
+   cl._init = function( self )
+      -- TODO play some gambling music
+      chuckaluck.init( vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h, function ()
+         self.done = true
+         -- TODO go back to normal music
+      end )
+   end
+   cl._draw = function( self )
+      local x, y, w, h =  vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
+      -- Horrible hack where we draw ontop of the textbox a background
+      lg.setColor( 0.5, 0.5, 0.5 )
+      lg.rectangle( "fill", x, y, w, h )
+      lg.setColor( 0, 0, 0 )
+      lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
+
+      -- Draw chuckaluck game
+      chuckaluck.draw( x, y, w, h)
+   end
+   cl._keypressed = function( self, key )
+      chuckaluck.keypressed( key )
+   end
+   cl._mousepressed = function( self, mx, my, button )
+      chuckaluck.mousepressed( mx, my, button )
+   end
+   -- Undo the resize
+   vn.animation( 0.5, function (alpha) setup_chuckaluck(1-alpha) end )
+   vn.label( "leave" )
+   vn.na( _("You leave the chuck-a-luck table behind and head back to the main area.") )
+   vn.fadeout()
+   vn.run()
+
    -- Handle random bar events if necessary
    random_event()
 end

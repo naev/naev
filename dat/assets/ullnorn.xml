@@ -5,8 +5,8 @@
   <y>3600.000000</y>
  </pos>
  <GFX>
-  <space>A00.png</space>
-  <exterior>lava.png</exterior>
+  <space>A00.webp</space>
+  <exterior>lava.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

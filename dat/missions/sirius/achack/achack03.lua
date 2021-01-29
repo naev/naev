@@ -94,7 +94,7 @@ log_text = _([[Joanne hired you to interrogate Harja about his motives for tryin
 function create()
    -- Note: this mission does not make any system claims.
 
-   misn.setNPC(joannename, "sirius/unique/joanne")
+   misn.setNPC(joannename, "sirius/unique/joanne.png")
    misn.setDesc(joannedesc)
 end
 
@@ -138,11 +138,23 @@ function enter()
    end
 end
 
+-- Local helper function
+function _mergeTables( old, new )
+   if type(old) ~= "table" or type(new) ~= "table" then
+      print(_("_mergeTables: Error, this function only accepts tables."))
+   end
+
+   for k,v in ipairs(new) do
+      table.insert(old, v )
+   end
+   return old
+end
+
 -- Date hook.
 function date()
    if (harja == nil or not harja:exists()) and system.cur():presences()["Sirius"] then
       -- Determine spawn point. The reason why we don't use the normal random is that we don't want Harja spawning from the same place as the player.
-      local spawnpoints = _mergeTables(system.cur():adjacentSystems(), system.cur():planets()) -- _mergeTables() is defined in fleethelper.
+      local spawnpoints = _mergeTables(system.cur():adjacentSystems(), system.cur():planets())
       for i, j in ipairs(spawnpoints) do
          if j == origin then
             table.remove(spawnpoints, i) -- The place the player entered from is not a valid spawn point.
@@ -150,8 +162,7 @@ function date()
       end
       spawnpoint = spawnpoints[rnd.rnd(#spawnpoints)]
 
-      harja = addRawShips("Shark", "trader", spawnpoint, "Achack_sirius", 1)[1]
-      harja:rename(_("Harja's Shark"))
+      harja = addShips(1, "Shark", "Achack_sirius", spawnpoint, _("Harja's Shark"), "trader")[1]
       harja:memory().aggressive = true
       harja:control()
       harja:follow(player.pilot())

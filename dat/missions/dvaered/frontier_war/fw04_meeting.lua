@@ -262,8 +262,8 @@ function land()
 
    -- Player killed attackers, and can finally land for reward
    elseif (stage == 4 and planet.cur() == destpla) then
-      tk.msg( debrief_title, debrief_text1, ("portraits/"..portrait_tam..".png") )
-      tk.msg( debrief_title, debrief_text2:format(creditstring(reward)), ("portraits/"..portrait_tam..".png") )
+      tk.msg( debrief_title, debrief_text1, ("portraits/"..portrait_tam) )
+      tk.msg( debrief_title, debrief_text2:format(creditstring(reward)), ("portraits/"..portrait_tam) )
       player.pay(reward)
 
       shiplog.createLog( "frontier_war", _("Frontier War"), _("Dvaered") )
@@ -345,30 +345,30 @@ end
 -- Spawn the Beta squadrons
 function spawnBeta()
    beta = {}
-   beta[1] = pilot.add( "Dvaered Vendetta", nil, targpla )[1]
-   beta[1]:rename("B-Storks-4")
-   beta[2] = pilot.add( "Dvaered Vendetta", nil, targpla )[1]
-   beta[2]:rename("B-Storks-3")
-   beta[3] = pilot.add( "Dvaered Vendetta", nil, targpla )[1]
-   beta[3]:rename("B-Storks-2")
-   beta[4] = pilot.add( "Dvaered Vendetta", nil, targpla )[1]
-   beta[4]:rename("B-Storks-Lead")
-   beta[5] = pilot.add( "Dvaered Ancestor", nil, targpla )[1]
-   beta[5]:rename("B-Storks-7")
-   beta[6] = pilot.add( "Dvaered Ancestor", nil, targpla )[1]
-   beta[6]:rename("B-Storks-6")
-   beta[7] = pilot.add( "Dvaered Ancestor", nil, targpla )[1]
-   beta[7]:rename("B-Storks-5")
-   beta[8] = pilot.add( "Dvaered Phalanx", nil, targpla )[1]
-   beta[8]:rename("B-Hammer-4")
-   beta[9] = pilot.add( "Dvaered Phalanx", nil, targpla )[1]
-   beta[9]:rename("B-Hammer-4")
-   beta[10] = pilot.add( "Dvaered Phalanx", nil, targpla )[1]
-   beta[10]:rename("B-Hammer-3")
-   beta[11] = pilot.add( "Dvaered Vigilance", nil, targpla )[1]
-   beta[11]:rename("B-Hammer-2")
-   beta[12] = pilot.add( "Dvaered Goddard", nil, targpla )[1]
-   beta[12]:rename("B-Hammer-Lead")
+   beta[1] = pilot.add( "Dvaered Vendetta", "Dvaered", targpla )
+   beta[1]:rename(_("B-Storks-4"))
+   beta[2] = pilot.add( "Dvaered Vendetta", "Dvaered", targpla )
+   beta[2]:rename(_("B-Storks-3"))
+   beta[3] = pilot.add( "Dvaered Vendetta", "Dvaered", targpla )
+   beta[3]:rename(_("B-Storks-2"))
+   beta[4] = pilot.add( "Dvaered Vendetta", "Dvaered", targpla )
+   beta[4]:rename(_("B-Storks-Lead"))
+   beta[5] = pilot.add( "Dvaered Ancestor", "Dvaered", targpla )
+   beta[5]:rename(_("B-Storks-7"))
+   beta[6] = pilot.add( "Dvaered Ancestor", "Dvaered", targpla )
+   beta[6]:rename(_("B-Storks-6"))
+   beta[7] = pilot.add( "Dvaered Ancestor", "Dvaered", targpla )
+   beta[7]:rename(_("B-Storks-5"))
+   beta[8] = pilot.add( "Dvaered Phalanx", "Dvaered", targpla )
+   beta[8]:rename(_("B-Hammer-4"))
+   beta[9] = pilot.add( "Dvaered Phalanx", "Dvaered", targpla )
+   beta[9]:rename(_("B-Hammer-4"))
+   beta[10] = pilot.add( "Dvaered Phalanx", "Dvaered", targpla )
+   beta[10]:rename(_("B-Hammer-3"))
+   beta[11] = pilot.add( "Dvaered Vigilance", "Dvaered", targpla )
+   beta[11]:rename(_("B-Hammer-2"))
+   beta[12] = pilot.add( "Dvaered Goddard", "Dvaered", targpla )
+   beta[12]:rename(_("B-Hammer-Lead"))
 
    Bidlehooks = {}
    for i, p in ipairs(beta) do
@@ -382,16 +382,11 @@ end
 -- Spawn the alpha squadron
 function spawnAlpha()
    alpha = {}
-   alpha[1] = pilot.addRaw( "Hyena", "baddie", targpla, "Dvaered" )
-   alpha[1]:rename("Captain Leblanc")
-   alpha[2] = pilot.addRaw( "Hyena", "baddie", destpla, "Dvaered" )
-   alpha[2]:rename("Lieutenant Strafer")
-   alpha[3] = pilot.addRaw( "Hyena", "baddie", targpla, "Dvaered" )
-   alpha[3]:rename("A-NightClaws-3")
-   alpha[4] = pilot.addRaw( "Hyena", "baddie", targpla, "Dvaered" )
-   alpha[4]:rename("A-NightClaws-4")
-   alpha[5] = pilot.addRaw( "Hyena", "baddie", destpla, "Dvaered" )
-   alpha[5]:rename("A-NightClaws-5")
+   alpha[1] = pilot.add( "Hyena", "Dvaered", targpla, _("Captain Leblanc"), "baddie" )
+   alpha[2] = pilot.add( "Hyena", "Dvaered", destpla, _("Lieutenant Strafer"), "baddie" )
+   alpha[3] = pilot.add( "Hyena", "Dvaered", targpla, _("A-NightClaws-3"), "baddie" )
+   alpha[4] = pilot.add( "Hyena", "Dvaered", targpla, _("A-NightClaws-4"), "baddie" )
+   alpha[5] = pilot.add( "Hyena", "Dvaered", destpla, _("A-NightClaws-5"), "baddie" )
 
    Aidlehooks = {}
    for i, p in ipairs(alpha) do
@@ -456,8 +451,7 @@ end
 
 -- Spawn one warlord
 function spawn1Wrlrd( origin )
-   wrlrds[noWrlrd] = pilot.addRaw( "Dvaered Goddard", "baddie", origin, "Warlords" )
-   wrlrds[noWrlrd]:rename( lords[noWrlrd] )
+   wrlrds[noWrlrd] = pilot.add( "Dvaered Goddard", "Warlords", origin, lords[noWrlrd] )
    wrlrds[noWrlrd]:control()
 
    -- Decide if the Warlord will play ar shooting at the player
@@ -485,7 +479,7 @@ function spawnControl()
    types = { "Civilian Gawain", "Civilian Llama", "Civilian Schroedinger", "Civilian Hyena" }
    theTyp = types[ rnd.rnd(1,#types) ]
 
-   controls[noCtrl] = pilot.add( theTyp, nil, origin )[1]
+   controls[noCtrl] = pilot.addFleet( theTyp, origin )[1]
    controls[noCtrl]:control()
    controls[noCtrl]:land(targpla)
 
@@ -591,7 +585,7 @@ end
 
 -- Spawn Hamelsen in a hyena
 function spawnHam()
-   hamelsen = pilot.add( "Civilian Hyena", nil, system.get("Beeklo") )[1]
+   hamelsen = pilot.add( "Hyena", "Civilian", system.get("Beeklo") , _("Civilian Hyena") )
    equipHyena( hamelsen )
    hamelsen:control()
    hamelsen:land(targpla)
@@ -601,7 +595,7 @@ function spawnHam()
    hook.timer(500, "proximity", {location = targpos, radius = 10000, funcname = ("incomingHamelsen"), focus = hamelsen})
 
    -- Hamelsen's partner, whose purpose is to make a fight occur
-   jules = pilot.add( "Civilian Hyena", nil, system.get("Beeklo") )[1]
+   jules = pilot.add( "Hyena", "Civilian", system.get("Beeklo") , _("Civilian Hyena") )
    equipHyena( jules )
    jules:control()
    jules:follow( hamelsen )
@@ -652,7 +646,7 @@ end
 function checkHamelsen()
    tk.msg( noanswer_title, noanswer_text:format( player.name(), hamelsen:name() ) )
    hamelsen:setHostile()
-   --hamelsen:rename( "Suspect Hyena" )
+   --hamelsen:rename( _("Suspect Hyena") )
 
    hamelsen:taskClear()
    hamelsen:runaway( player.pilot(), true ) -- First run away (for hellburner) then land
@@ -692,13 +686,12 @@ function StraferNspy()
 
    -- First, teleport Strafer far away from any backup
    alpha[2]:rm()
-   alpha[2] = pilot.addRaw( "Hyena", "baddie", strpos, "DHC" )
-   alpha[2]:rename("Lieutenant Strafer")
+   alpha[2] = pilot.add( "Hyena", "DHC", strpos, _("Lieutenant Strafer") )
    alpha[2]:setVisplayer()
    alpha[2]:control()
 
    -- Then put the fleeing spy
-   spy = pilot.addRaw( "Schroedinger", "baddie", spypos, "Warlords" )
+   spy = pilot.add( "Schroedinger", "Warlords", spypos )
    spy:setVisplayer()
    spy:control()
    spy:hyperspace( system.get("Gremlin") )
@@ -726,7 +719,7 @@ function deathOfStrafer()
 
    attackers = {}
    for i = 1, 10 do
-      attackers[i] = pilot.addRaw( "Hyena", "baddie", system.get("Gremlin"), "Warlords" )
+      attackers[i] = pilot.add( "Hyena", "Warlords", system.get("Gremlin") )
       attackers[i]:control()
       attackers[i]:attack( alpha[2] )
    end
@@ -759,13 +752,12 @@ function spawnKillers()
    misn.osdCreate( osd_title, {osd_text5} )
 
    killers = {}
-   killers[1] = pilot.addRaw( "Hyena", "baddie_norun", haltpla, "Warlords" )
-   killers[2] = pilot.addRaw( "Shark", "baddie_norun", haltpla, "Warlords" )
-   killers[3] = pilot.addRaw( "Lancelot", "baddie_norun", haltpla, "Warlords" )
+   killers[1] = pilot.add( "Hyena", "Warlords", haltpla, _("Curiatius"), "baddie_norun" )
+   killers[2] = pilot.add( "Shark", "Warlords", haltpla, _("Curiatius"), "baddie_norun" )
+   killers[3] = pilot.add( "Lancelot", "Warlords", haltpla, _("Curiatius"), "baddie_norun" )
 
    deadkillers = 0
    for i = 1, #killers do
-      killers[i]:rename( "Curiatius" )
       hook.pilot( killers[i], "exploded", "killerDied" )
    end
 

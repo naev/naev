@@ -80,7 +80,7 @@ function create ()
    reward = rnd.rnd(40,60)*1000
 
    -- Spaceport bar stuff
-   misn.setNPC( _("Ordinary Woman"), "neutral/unique/fakesister" )
+   misn.setNPC( _("Ordinary Woman"), "neutral/unique/fakesister.png" )
    misn.setDesc( bar_desc )
 end
 
@@ -152,7 +152,7 @@ function sys_enter ()
       end
    else
       hook.timer( 3000,"do_msg2")
-      broship = pilot.add("Civilian Gawain", "trader", bropla:pos() + vec2.new(-200,-200))[1] -- fast Gawain
+      broship = pilot.add( "Gawain", "Civilian", bropla:pos() + vec2.new(-200,-200), _("Civilian Gawain"), "trader" ) -- fast Gawain
       broship:addOutfit("Tricon Zephyr II Engine")
       broship:setFaction("Civilian")
       broship:rename(_("Poppy Seed"))
@@ -223,10 +223,9 @@ function spawn_baddies(sp)
    badguys = {}
    --hyenas
    for i=1,2 do
-      badguys[i] = pilot.addRaw("Za'lek Light Drone","mercenary", sp, "Mercenary" )
+      badguys[i] = pilot.add("Za'lek Light Drone", "Mercenary", sp, _("Mercenary") )
       badguys[i]:setHostile(false)
       
-      badguys[i]:rename(_("Mercenary"))
       --Their outfits must be quite good
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
@@ -243,10 +242,9 @@ function spawn_baddies(sp)
       badguys[i]:setEnergy(100)
    end
    for i=3,4 do
-      badguys[i] = pilot.addRaw( "Lancelot","mercenary", sp, "Mercenary" )
+      badguys[i] = pilot.add( "Lancelot", "Mercenary", sp, _("Mercenary") )
       badguys[i]:setHostile(false)
       
-      badguys[i]:rename(_("Mercenary"))
       --Their outfits must be quite good
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
@@ -265,9 +263,8 @@ function spawn_baddies(sp)
    end
 
    for i=5,6 do
-      badguys[i] = pilot.addRaw( "Admonisher","mercenary", sp, "Mercenary" )
+      badguys[i] = pilot.add( "Admonisher", "Mercenary", sp, _("Mercenary") )
       badguys[i]:setHostile(false)
-      badguys[i]:rename(_("Mercenary"))
       
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")

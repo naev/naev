@@ -130,7 +130,6 @@ int gl_setupFullscreen (void);
 GLint gl_stringToFilter( const char *s );
 GLint gl_stringToClamp( const char *s );
 void gl_screenshot( const char *filename );
-int SDL_SavePNG( SDL_Surface *surface, const char *file );
 #ifdef DEBUGGING
 #define gl_checkErr()   gl_checkHandleError( __func__, __LINE__ )
 void gl_checkHandleError( const char *func, int line );

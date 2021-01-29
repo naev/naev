@@ -128,7 +128,6 @@ static nlua_env equip_env = LUA_NOREF; /**< Equipment enviornment. */
  * extern pilot hacks
  */
 extern Pilot** pilot_stack;
-extern int pilot_nstack;
 
 
 /*
@@ -171,6 +170,7 @@ static int aiL_minbrakedist( lua_State *L ); /* number minbrakedist( [number] ) 
 static int aiL_isbribed( lua_State *L ); /* bool isbribed( number ) */
 static int aiL_getstanding( lua_State *L ); /* number getstanding( number ) */
 static int aiL_getGatherable( lua_State *L ); /* integer getgatherable( radius ) */
+static int aiL_instantJump( lua_State *L ); /* bool instantJump() */
 
 /* boolean expressions */
 static int aiL_ismaxvel( lua_State *L ); /* boolean ismaxvel() */
@@ -276,6 +276,7 @@ static const luaL_Reg aiL_methods[] = {
    { "isbribed", aiL_isbribed },
    { "getstanding", aiL_getstanding },
    { "getgatherable", aiL_getGatherable },
+   { "instantJump", aiL_instantJump },
    /* movement */
    { "nearestplanet", aiL_getnearestplanet },
    { "rndplanet", aiL_getrndplanet },
@@ -700,9 +701,6 @@ static int ai_loadProfile( const char* filename )
 AI_Profile* ai_getProfile( char* name )
 {
    int i;
-
-   if (profiles == NULL)
-      return NULL;
 
    for (i=0; i<array_size(profiles); i++)
       if (strcmp(name,profiles[i].name)==0)
@@ -1274,11 +1272,11 @@ static int aiL_getrndpilot( lua_State *L )
 {
    int p;
 
-   p = RNG(0, pilot_nstack-1);
+   p = RNG(0, array_size(pilot_stack)-1);
    /* Make sure it can't be the same pilot. */
    if (pilot_stack[p]->id == cur_pilot->id) {
       p++;
-      if (p >= pilot_nstack)
+      if (p >= array_size(pilot_stack))
          p = 0;
    }
    /* Last check. */
@@ -1306,7 +1304,7 @@ static int aiL_getnearestpilot( lua_State *L )
 
    /*cycle through all the pilots and find the closest one that is not the pilot */
 
-   for (i = 0; i<pilot_nstack; i++)
+   for (i = 0; i<array_size(pilot_stack); i++)
    {
        if (pilot_stack[i]->id != cur_pilot->id && vect_dist(&pilot_stack[i]->solid->pos, &cur_pilot->solid->pos) < dist)
        {
@@ -1457,6 +1455,19 @@ static int aiL_isbribed( lua_State *L )
    Pilot *p;
    p = luaL_validpilot(L,1);
    lua_pushboolean(L, (p->id == PLAYER_ID) && pilot_isFlag(cur_pilot, PILOT_BRIBED));
+   return 1;
+}
+
+
+/**
+ * @brief Checks to see if pilot can instant jump.
+ *
+ *    @luatreturn boolean Whether the pilot can instant jump.
+ *    @luafunc instantJump
+ */
+static int aiL_instantJump( lua_State *L )
+{
+   lua_pushboolean(L, cur_pilot->stats.misc_instant_jump);
    return 1;
 }
 
@@ -1782,7 +1793,7 @@ static int aiL_careful_face( lua_State *L )
    vect_cset( &F1, F1.x * k_goal / dist, F1.y * k_goal / dist) ;
 
    /* Cycle through all the pilots in order to compute the force */
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
       p_i = pilot_stack[i];
 
       /* Valid pilot isn't self, is in range, isn't the target and isn't disabled */
@@ -2738,12 +2749,13 @@ static int aiL_weapSet( lua_State *L )
          }
       }
 
+      /* Active weapon sets only care about keypresses. */
       /* activate */
       if (type && !on)
          pilot_weapSetPress(p, id, +1 );
       /* deactivate */
       if (!type && on)
-         pilot_weapSetPress(p, id, -1 );
+         pilot_weapSetPress(p, id, +1 );
    }
    else {
       /* weapset type is weapon or change */
@@ -3192,7 +3204,7 @@ static int aiL_getBoss( lua_State *L )
 }
 
 /**
- * @brief Sets the pilot_nstack credits. Only call in create().
+ * @brief Sets the pilots credits. Only call in create().
  *
  *    @luatparam number num Number of credits.
  *    @luafunc setcredits

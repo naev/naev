@@ -4,7 +4,7 @@
   <mass>0</mass>
   <price>30000</price>
   <description>This map contains the main route between Dvaered and Soromid controlled space.</description>
-  <gfx_store>map</gfx_store>
+  <gfx_store>map.png</gfx_store>
  </general>
  <specific type="map">
   <sys name="Draygar">

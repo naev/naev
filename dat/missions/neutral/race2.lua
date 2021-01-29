@@ -101,7 +101,7 @@ function create ()
    end
    cursys = system.cur()
    curplanet = planet.cur()
-   misn.setNPC(NPCname, "neutral/unique/laidback")
+   misn.setNPC(NPCname, "neutral/unique/laidback.png")
    misn.setDesc(NPCdesc)
    credits_easy = rnd.rnd(20000, 100000)
    credits_hard = rnd.rnd(200000, 300000)
@@ -163,9 +163,9 @@ function takeoff()
    else
       shiptype = "Koala"
    end
-   checkpoint[1] = pilot.addRaw(shiptype, "stationary", location1, "Trader")
-   checkpoint[2] = pilot.addRaw(shiptype, "stationary", location2, "Trader")
-   checkpoint[3] = pilot.addRaw(shiptype, "stationary", location3, "Trader")
+   checkpoint[1] = pilot.add(shiptype, "Trader", location1, nil, "stationary")
+   checkpoint[2] = pilot.add(shiptype, "Trader", location2, nil, "stationary")
+   checkpoint[3] = pilot.add(shiptype, "Trader", location3, nil, "stationary")
    for i, j in ipairs(checkpoint) do
       j:rename(string.format(_("Checkpoint %s"), i))
       j:control()
@@ -174,9 +174,9 @@ function takeoff()
       j:setActiveBoard(true)
       j:setVisible(true)
    end
-   racers[1] = pilot.addRaw("Llama", "civilian", curplanet, "Civilian")
-   racers[2] = pilot.addRaw("Gawain", "civilian", curplanet, "Civilian")
-   racers[3] = pilot.addRaw("Llama", "civilian", curplanet, "Civilian")
+   racers[1] = pilot.add("Llama", "Civilian", curplanet)
+   racers[2] = pilot.add("Gawain", "Civilian", curplanet)
+   racers[3] = pilot.add("Llama", "Civilian", curplanet)
    if choice == 1 then
       racers[1]:addOutfit("Engine Reroute")
       racers[2]:addOutfit("Steering Thrusters")

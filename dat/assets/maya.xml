@@ -5,8 +5,8 @@
   <y>7700.000000</y>
  </pos>
  <GFX>
-  <space>moon-C00.png</space>
-  <exterior>station03.png</exterior>
+  <space>moon-C00.webp</space>
+  <exterior>station03.webp</exterior>
  </GFX>
  <general>
   <class>A</class>

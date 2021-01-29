@@ -43,7 +43,7 @@ int load_game( nsave_t *ns );
 
 int load_refresh (void);
 void load_free (void);
-nsave_t *load_getList( int *n );
+nsave_t *load_getList (void);
 
 
 #endif /* LOAD_H */

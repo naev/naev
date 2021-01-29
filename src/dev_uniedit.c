@@ -61,7 +61,7 @@
 #define UNIEDIT_NEWSYS     2  /**< New system editor mode. */
 
 
-extern int systems_nstack;
+extern StarSystem *systems_stack;
 
 
 static int uniedit_mode       = UNIEDIT_DEFAULT; /**< Editor mode. */
@@ -500,7 +500,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                return 1;
             }
 
-            for (i=0; i<systems_nstack; i++) {
+            for (i=0; i<array_size(systems_stack); i++) {
                sys = system_getIndex( i );
 
                /* get position */
@@ -643,7 +643,7 @@ static int uniedit_checkName( char *name )
    int i;
 
    /* Avoid name collisions. */
-   for (i=0; i<systems_nstack; i++) {
+   for (i=0; i<array_size(systems_stack); i++) {
       if (strcmp(name, system_getIndex(i)->name)==0) {
          dialogue_alert( _("The Star System '%s' already exists!"), name );
          return 1;

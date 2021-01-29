@@ -5,8 +5,8 @@
   <y>-496.705373</y>
  </pos>
  <GFX>
-  <space>moon-P01.png</space>
-  <exterior>snow.png</exterior>
+  <space>moon-P01.webp</space>
+  <exterior>snow.webp</exterior>
  </GFX>
  <general>
   <class>P</class>

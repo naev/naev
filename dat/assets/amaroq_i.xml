@@ -5,8 +5,8 @@
   <y>-4050.000000</y>
  </pos>
  <GFX>
-  <space>G03.png</space>
-  <exterior>methane.png</exterior>
+  <space>G03.webp</space>
+  <exterior>methane.webp</exterior>
  </GFX>
  <general>
   <class>G</class>

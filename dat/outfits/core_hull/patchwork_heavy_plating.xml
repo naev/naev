@@ -8,7 +8,7 @@
   <mass>720</mass>
   <price>0</price>
   <description>On the plus side, it keeps air from venting into space. But that's about it. This kind of hull maintenance is simply unacceptable.</description>
-  <gfx_store>plating_patchwork</gfx_store>
+  <gfx_store>plating_patchwork.png</gfx_store>
  </general>
  <specific type="modification">
   <cargo>50</cargo>

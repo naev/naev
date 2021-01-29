@@ -95,7 +95,7 @@ log_text = _([[You helped Dr. Geller obtain a "ghost ship piece" for his researc
 
 function create ()
    -- Spaceport bar stuff
-   misn.setNPC( _("A scientist"), "zalek/unique/geller" )
+   misn.setNPC( _("A scientist"), "zalek/unique/geller.png" )
    misn.setDesc( bar_desc )
 end
 function accept()
@@ -117,15 +117,15 @@ end
 
 function land1()
    if planet.cur() == planet.get(t_pla[1]) and not talked and not traded then
-      bar1pir1 = misn.npcAdd("first_trd", _("Trader"), "neutral/scientist3", trd1_desc)
+      bar1pir1 = misn.npcAdd("first_trd", _("Trader"), "neutral/scientist3.png", trd1_desc)
    elseif planet.cur() == planet.get(t_pla[1]) and talked and traded1 then
-      bar1pir1 = misn.npcAdd("third_trd", _("Trader"), "neutral/scientist3", trd1_desc)
+      bar1pir1 = misn.npcAdd("third_trd", _("Trader"), "neutral/scientist3.png", trd1_desc)
    end
 end
 
 function land2()
    if planet.cur() == planet.get(t_pla[2]) and talked and not traded1 then
-      bar2pir1 = misn.npcAdd("second_trd", _("Contact Person"), "neutral/unique/dealer", trd2_desc)
+      bar2pir1 = misn.npcAdd("second_trd", _("Contact Person"), "neutral/unique/dealer.png", trd2_desc)
    end
 end
 
@@ -215,12 +215,9 @@ function call_the_police ()
 end
 
 function spwn_police ()
-      lance1 = pilot.add("Empire Lancelot", "empire", system.get("Provectus Nova"), "Empire")
-      lance1 = lance1[1]
-      lance2 = pilot.add("Empire Lancelot", "empire", system.get("Provectus Nova"), "Empire")
-      lance2 = lance2[1]
-      adm1 = pilot.add("Empire Admonisher", "empire", system.get("Provectus Nova"), "Empire")
-      adm1 = adm1[1]
+      lance1 = pilot.add( "Empire Lancelot", "Empire", system.get("Provectus Nova") )
+      lance2 = pilot.add( "Empire Lancelot", "Empire", system.get("Provectus Nova") )
+      adm1 = pilot.add( "Empire Admonisher", "Empire", system.get("Provectus Nova") )
       -- Re-outfit the ships to use disable weapons. Make a proper function for that.
       lance1:rmOutfit("all")
       lance1:addOutfit("Heavy Ion Cannon", 1)

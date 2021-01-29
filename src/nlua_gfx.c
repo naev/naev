@@ -38,6 +38,8 @@ static int gfxL_fontSize( lua_State *L );
 /* TODO get rid of printDim and print in favour of printfDim and printf */
 static int gfxL_printfDim( lua_State *L );
 static int gfxL_printfWrap( lua_State *L );
+static int gfxL_printRestoreClear( lua_State *L );
+static int gfxL_printRestoreLast( lua_State *L );
 static int gfxL_printf( lua_State *L );
 static int gfxL_printDim( lua_State *L );
 static int gfxL_print( lua_State *L );
@@ -54,6 +56,8 @@ static const luaL_Reg gfxL_methods[] = {
    { "fontSize", gfxL_fontSize },
    { "printfDim", gfxL_printfDim },
    { "printfWrap", gfxL_printfWrap },
+   { "printRestoreClear", gfxL_printRestoreClear },
+   { "printRestoreLast", gfxL_printRestoreLast },
    { "printf", gfxL_printf },
    { "printDim", gfxL_printDim },
    { "print", gfxL_print },
@@ -104,13 +108,15 @@ int nlua_loadGFX( nlua_env env )
  *
  *    @luatreturn number The width of the Naev window.
  *    @luatreturn number The height of the Naev window.
+ *    @luatreturn scale The scaling factor.
  * @luafunc dim
  */
 static int gfxL_dim( lua_State *L )
 {
    lua_pushnumber( L, SCREEN_W );
    lua_pushnumber( L, SCREEN_H );
-   return 2;
+   lua_pushnumber( L, gl_screen.scale );
+   return 3;
 }
 
 
@@ -240,11 +246,11 @@ static int gfxL_renderTexRaw( lua_State *L )
 #endif /* DEBUGGING */
 
    /* Translate as needed. */
-   tx = (tx * t->sw + t->sw * (double)(sx)) / t->rw;
+   tx = (tx * t->sw + t->sw * (double)(sx)) / t->w;
    tw = tw * t->srw;
    if (tw < 0)
       tx -= tw;
-   ty = (ty * t->sh + t->sh * (t->sy - (double)sy-1)) / t->rh;
+   ty = (ty * t->sh + t->sh * (t->sy - (double)sy-1)) / t->h;
    th = th * t->srh;
    if (th < 0)
       ty -= th;
@@ -468,6 +474,30 @@ static int gfxL_printfWrap( lua_State *L )
 
    free( tmp );
    return 2;
+}
+
+
+/**
+ * @brief Clears the saved internal colour state.
+ * @luafunc printRestoreClear
+ */
+static int gfxL_printRestoreClear( lua_State *L )
+{
+   (void) L;
+   gl_printRestoreClear();
+   return 0;
+}
+
+
+/**
+ * @brief Restores the last saved internal colour state.
+ * @luafunc printRestoreLast
+ */
+static int gfxL_printRestoreLast( lua_State *L )
+{
+   (void) L;
+   gl_printRestoreLast();
+   return 0;
 }
 
 

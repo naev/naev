@@ -9,7 +9,7 @@
   <mass>0</mass>
   <price>1000000</price>
   <description>A fairly mediocre cocktail that you don't intend to drink. At least it looks good as an accessory.</description>
-  <gfx_store>placeholder</gfx_store>
+  <gfx_store>placeholder.webp</gfx_store>
  <rarity>6</rarity></general>
  <specific type="modification">
   <ew_hide>10</ew_hide>

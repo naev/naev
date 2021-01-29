@@ -97,8 +97,4 @@ if __name__ == "__main__":
    print(("   %d nodes and %d edges (%.3f%% sparse)" % (v, e, sparse*100)))
    print("Outputting as naev_universe")
    graph.write_raw('naev_universe.dot')
-   #graph.write_png('naev_universe.png', prog='neato', format='png')
    graph.write('naev_universe.png', prog='neato', format='png')
-
-
-

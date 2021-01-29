@@ -8,11 +8,11 @@
   <mass>40</mass>
   <price>68000</price>
   <description>While limited in range compared to true capital-class weaponry, the heavy ripper turret's pair of heavy ripper cannons deliver exceptional firepower for dealing with lighter threats such as corvettes.</description>
-  <gfx_store>ripperturret</gfx_store>
+  <gfx_store>ripperturret.png</gfx_store>
   <cpu>-26</cpu>
  </general>
  <specific type="turret bolt">
-  <gfx>ripperM</gfx>
+  <gfx>ripperM.png</gfx>
   <sound>ripper</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
@@ -20,7 +20,7 @@
   <speed>700</speed>
   <range>1400</range>
   <falloff>900</falloff>
-  <gfx_end>ripperM-end</gfx_end>
+  <gfx_end>ripperM-end.png</gfx_end>
   <energy>45</energy>
   <heatup>45</heatup>
   <track>1.0</track>

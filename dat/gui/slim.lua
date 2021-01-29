@@ -51,18 +51,18 @@ function create()
    --Load Images
    local base = "gfx/gui/slim/"
    player_pane_t = tex.open( base .. "frame_player_top.png" )
-   player_pane_m = tex.open( base .. "frame_player_middle.png" )
+   player_pane_m = tex.open( base .. "frame_player_middle.webp" )
    player_pane_b = tex.open( base .. "frame_player_bottom.png" )
    target_pane = tex.open( base .. "frame_target.png" )
    planet_pane_t = tex.open( base .. "frame_planet_top.png" )
-   planet_pane_m = tex.open( base .. "frame_planet_middle.png" )
+   planet_pane_m = tex.open( base .. "frame_planet_middle.webp" )
    planet_pane_b = tex.open( base .. "frame_planet_bottom.png" )
    radar_gfx = tex.open( base .. "radar.png" )
    target_bg = tex.open( base .. "target_image.png" )
    planet_bg = tex.open( base .. "planet_image.png" )
    icon_shield = tex.open( base .. "shield.png" )
    icon_armour = tex.open( base .. "armour.png" )
-   icon_energy = tex.open( base .. "energy.png" )
+   icon_energy = tex.open( base .. "energy.webp" )
    icon_speed = tex.open( base .. "speed.png" )
    icon_temperature = tex.open( base .. "heat.png" )
    icon_shield_sm = tex.open( base .. "shield_sm.png" )
@@ -1005,7 +1005,7 @@ function render( dt, dt_mod )
       end
 
       x1, y1 = vec2.get(planet.pos)
-      x2, y2 = vec2.get(player.pilot():pos())
+      x2, y2 = vec2.get(player.pos())
       ta_pnt_dir = math.atan2(y2 - y1, x2 - x1) + math.pi
 
       -- Render dir sprite.

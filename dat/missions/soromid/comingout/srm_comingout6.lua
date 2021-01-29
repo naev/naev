@@ -95,7 +95,7 @@ function create ()
    credits = 300000
    started = false
 
-   misn.setNPC( npc_name, "soromid/unique/chelsea" )
+   misn.setNPC( npc_name, "soromid/unique/chelsea.png" )
    misn.setDesc( npc_desc )
 end
 
@@ -144,7 +144,7 @@ function spawn ()
    local r = system.cur():radius()
    local x = rnd.rnd( -r, r )
    local y = rnd.rnd( -r, r )
-   local p = pilot.add( "Pirate Phalanx", "pirate", vec2.new( x, y ) )[1]
+   local p = pilot.add( "Pirate Phalanx", "Pirate", vec2.new( x, y ) )
 
    hook.pilot( p, "death", "pirate_death" )
    p:setHostile()
@@ -152,7 +152,7 @@ function spawn ()
    p:setHilight( true )
 
    -- Spawn Chelsea
-   chelsea = pilot.addRaw( "Lancelot", "mercenary", lastsys, "Comingout_associates" )
+   chelsea = pilot.add( "Lancelot", "Comingout_associates", lastsys, _("Chelsea") )
    chelsea:rmOutfit( "all" )
    chelsea:rmOutfit( "cores" )
    chelsea:addOutfit( "Milspec Orion 3701 Core System" )
@@ -175,7 +175,6 @@ function spawn ()
    chelsea:setHilight()
    chelsea:setVisible()
    chelsea:setInvincPlayer()
-   chelsea:rename( "Chelsea" )
 
    hook.pilot( chelsea, "death", "chelsea_death" )
    hook.pilot( chelsea, "jump", "chelsea_leave" )

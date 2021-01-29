@@ -5,8 +5,8 @@
   <y>-450.000000</y>
  </pos>
  <GFX>
-  <space>A01.png</space>
-  <exterior>forest2.png</exterior>
+  <space>A01.webp</space>
+  <exterior>forest2.webp</exterior>
  </GFX>
  <general>
   <class>A</class>

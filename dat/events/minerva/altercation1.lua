@@ -4,6 +4,11 @@
  <trigger>none</trigger>
  <chance>0</chance>
  <flags />
+ <notes>
+  <campaign>Minerva</campaign>
+  <requires name="Minerva Station">Random event when gained more than 10 tokens</requires>
+  <provides name="Minerva Altercation 1" />
+ </notes>
 </event>
 --]]
 
@@ -17,11 +22,11 @@
 local portrait = require "portrait"
 local vn = require 'vn'
 
-zalek_holo = "zalek_thug1"
+zalek_holo = "zalek_thug1.png"
 zalek_image = "zalek_thug1.png"
 zalek_name = _("Za'lek Belligerent")
 zalek_colour = {1, 0.4, 0.4}
-dvaered_holo = "dvaered_thug1"
+dvaered_holo = "dvaered_thug1.png"
 dvaered_image = "dvaered_thug1.png"
 dvaered_name = _("Dvaered Hooligan")
 dvaered_colour = {1, 0.7, 0.3}
@@ -69,13 +74,11 @@ function takeoff ()
    local zlpos = pos + vec2.newP( 500, 300 )
    local unused, dvface = (zlpos-dvpos):polar()
    local unused, zlface = (dvpos-zlpos):polar()
-   dv = pilot.addRaw("Dvaered Phalanx", "dvaered", dvpos, "dv_thug" )
+   dv = pilot.add("Dvaered Phalanx", "dv_thug", dvpos, dvaered_name, "dvaered" )
    dv:setDir( dvface )
-   dv:rename( dvaered_name )
    dv:setNoDisable( true )
-   zl = pilot.addRaw("Za'lek Sting", "zalek", zlpos, "zl_thug" )
+   zl = pilot.add("Za'lek Sting", "zl_thug", zlpos, zalek_name, "zalek" )
    zl:setDir( zlface )
-   zl:rename( zalek_name )
    zl:setNoDisable( true )
    dv:control()
    dv:face(zl)

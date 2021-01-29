@@ -71,7 +71,7 @@ function create()
    --set the mission stuff
    misn.setTitle(misn_title)
    misn.setReward(creditstring(reward))
-   misn.setNPC(npc_name, "sirius/unique/draga")
+   misn.setNPC(npc_name, "sirius/unique/draga.png")
    misn.setDesc(bar_desc)
 
    -- Format OSD
@@ -101,8 +101,8 @@ end
 function takeoff()
    pilot.clear()
    pilot.toggleSpawn("Sirius",false) --the only Sirius i want in the system currently is the recon force
-   recon = pilot.add("Sirius Recon Force",nil,system.get("Herakin"))
-   attackers = pilot.add("Nasin Sml Attack Fleet",nil,homeasset) --a little assistance
+   recon = pilot.addFleet("Sirius Recon Force", system.get("Herakin"))
+   attackers = pilot.addFleet("Nasin Sml Attack Fleet", homeasset) --a little assistance
    n_recon = #recon --using a deathcounter to track success
    for i,p in ipairs(recon) do
       p:setHilight(true)

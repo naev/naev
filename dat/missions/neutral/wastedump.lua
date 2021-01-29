@@ -201,7 +201,7 @@ function abort ()
 
       for n = 1, rnd.rnd( 2, 4 ) do
          for i, j in ipairs( system.cur():jumps() ) do
-            local p = pilot.add( choices[ rnd.rnd( 1, #choices ) ], nil, j:dest() )
+            local p = pilot.addFleet( choices[ rnd.rnd( 1, #choices ) ], j:dest() )
             for k, v in ipairs( p ) do
                v:setHostile()
             end

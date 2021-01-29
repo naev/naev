@@ -5,8 +5,8 @@
   <y>-5153.224088</y>
  </pos>
  <GFX>
-  <space>station-powerplant.png</space>
-  <exterior>traderoom.png</exterior>
+  <space>station-powerplant.webp</space>
+  <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>

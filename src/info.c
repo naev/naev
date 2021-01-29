@@ -15,6 +15,7 @@
 
 #include "info.h"
 
+#include "array.h"
 #include "dialogue.h"
 #include "equipment.h"
 #include "gui.h"
@@ -192,7 +193,7 @@ void info_update (void)
  */
 static void info_openMain( unsigned int wid )
 {
-   char str[128], **buf, creds[ECON_CRED_STRLEN];
+   char str[STRMAX_SHORT], **buf, creds[ECON_CRED_STRLEN];
    char **licenses;
    int nlicenses;
    int i;
@@ -215,7 +216,7 @@ static void info_openMain( unsigned int wid )
          "#nFuel:#0")
          );
    credits2str( creds, player.p->credits, 2 );
-   nsnprintf( str, 128,
+   nsnprintf( str, sizeof(str),
          _("%s\n"
          "%s\n"
          "%s\n"
@@ -242,7 +243,8 @@ static void info_openMain( unsigned int wid )
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSetGUI", _("Set GUI"), info_setGui );
 
-   buf = player_getLicenses( &nlicenses );
+   buf = player_getLicenses();
+   nlicenses = array_size( buf );
    /* List. */
    if(nlicenses == 0){
      licenses = malloc(sizeof(char*));
@@ -288,7 +290,8 @@ static void info_setGui( unsigned int wid, char* str )
    char **gui_copy;
 
    /* Get the available GUIs. */
-   guis = player_guiList( &nguis );
+   guis = player_guiList();
+   nguis = array_size( guis );
 
    /* In case there are none. */
    if (guis == NULL) {

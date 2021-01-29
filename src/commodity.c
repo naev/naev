@@ -22,6 +22,7 @@
 
 #include "commodity.h"
 
+#include "array.h"
 #include "economy.h"
 #include "hook.h"
 #include "log.h"
@@ -46,22 +47,13 @@
 
 /* commodity stack */
 Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
-int commodity_nstack       = 0; /**< Number of commodities in the stack. */
-
-
-/* standard commodities (ie. sellable and buyable anywhere) */
-static int* commodity_standard = NULL; /**< Contains all the standard commodity's indices. */
-static int commodity_nstandard = 0; /**< Number of standard commodities. */
-
 
 /* gatherables stack */
 static Gatherable* gatherable_stack = NULL; /**< Contains the gatherable stuff floating around. */
-static int gatherable_nstack        = 0; /**< Number of gatherables in the stack. */
-float noscoop_timer                 = 1.; /**< Timer for the "full cargo" message . */
+static float noscoop_timer                 = 1.; /**< Timer for the "full cargo" message . */
 
 /* @TODO remove externs. */
 extern int *econ_comm;
-extern int econ_nprices;
 
 
 /*
@@ -141,7 +133,7 @@ void tonnes2str( char *str, int tonnes )
 Commodity* commodity_get( const char* name )
 {
    int i;
-   for (i=0; i<commodity_nstack; i++)
+   for (i=0; i<array_size(commodity_stack); i++)
       if (strcmp(commodity_stack[i].name,name)==0)
          return &commodity_stack[i];
 
@@ -159,7 +151,7 @@ Commodity* commodity_get( const char* name )
 Commodity* commodity_getW( const char* name )
 {
    int i;
-   for (i=0; i<commodity_nstack; i++)
+   for (i=0; i<array_size(commodity_stack); i++)
       if (strcmp(commodity_stack[i].name, name) == 0)
          return &commodity_stack[i];
    return NULL;
@@ -170,9 +162,9 @@ Commodity* commodity_getW( const char* name )
  *
  *    @return Number of commodities globally.
  */
-int commodity_getN(void )
+int commodity_getN (void)
 {
-   return econ_nprices;
+   return array_size(econ_comm);
 }
 
 /**
@@ -183,7 +175,7 @@ int commodity_getN(void )
  */
 Commodity* commodity_getByIndex( const int indx )
 {
-   if ( indx < 0 || indx >= econ_nprices ) {
+   if ( indx < 0 || indx >= array_size(econ_comm) ) {
       WARN(_("Commodity with index %d not found"),indx);
       return NULL;
    }
@@ -258,18 +250,18 @@ int commodity_compareTech( const void *commodity1, const void *commodity2 )
  */
 Commodity ** standard_commodities( unsigned int *nb )
 {
-   int i;
-   Commodity **com;
-
-   *nb = commodity_nstandard;
-
-   if (commodity_nstandard == 0)
-      return NULL;
-
-   com = malloc( commodity_nstandard * sizeof(Commodity*) );
-   for (i=0; i<commodity_nstandard; i++) {
-      com[i] = &commodity_stack[ commodity_standard[i] ];
+   int i, j, n;
+   Commodity *c, **com;
+   
+   n = array_size(commodity_stack);
+   com = malloc( n * sizeof(Commodity*) );
+   j = 0;
+   for (i=0; i<n; i++) {
+      c = &commodity_stack[i];
+      if (c->standard)
+         com[j++] = c;
    }
+   *nb = j;
    return com;
 }
 
@@ -299,10 +291,10 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       xmlr_int(node, "price", temp->price);
       if (xml_isNode(node,"gfx_space"))
          temp->gfx_space = xml_parseTexture( node,
-               COMMODITY_GFX_PATH"space/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+               COMMODITY_GFX_PATH"space/%s", 1, 1, OPENGL_TEX_MIPMAPS );
       if (xml_isNode(node,"gfx_store")) {
          temp->gfx_store = xml_parseTexture( node,
-               COMMODITY_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+               COMMODITY_GFX_PATH"%s", 1, 1, OPENGL_TEX_MIPMAPS );
          if (temp->gfx_store != NULL) {
          } else {
             temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH"_default.png", 0 );
@@ -311,9 +303,6 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       }
       if (xml_isNode(node, "standard")) {
          temp->standard = 1;
-         /* There is a shortcut list containing the standard commodities. */
-         commodity_standard = realloc(commodity_standard, sizeof(int)*(++commodity_nstandard));
-         commodity_standard[ commodity_nstandard-1 ] = commodity_nstack-1;
          continue;
       }
       xmlr_float(node, "population_modifier", temp->population_modifier);
@@ -407,21 +396,20 @@ void commodity_Jettison( int pilot, Commodity* com, int quantity )
  */
 int gatherable_init( Commodity* com, Vector2d pos, Vector2d vel, double lifeleng, int qtt )
 {
-   gatherable_stack = realloc(gatherable_stack,
-                              sizeof(Gatherable)*(++gatherable_nstack));
+   Gatherable *g = &array_grow( &gatherable_stack );
 
-   gatherable_stack[gatherable_nstack-1].type = com;
-   gatherable_stack[gatherable_nstack-1].pos = pos;
-   gatherable_stack[gatherable_nstack-1].vel = vel;
-   gatherable_stack[gatherable_nstack-1].timer = 0.;
-   gatherable_stack[gatherable_nstack-1].quantity = qtt;
+   g->type = com;
+   g->pos = pos;
+   g->vel = vel;
+   g->timer = 0.;
+   g->quantity = qtt;
 
    if (lifeleng < 0.)
-      gatherable_stack[gatherable_nstack-1].lifeleng = RNGF()*100. + 50.;
+      g->lifeleng = RNGF()*100. + 50.;
    else
-      gatherable_stack[gatherable_nstack-1].lifeleng = lifeleng;
+      g->lifeleng = lifeleng;
 
-   return gatherable_nstack-1;
+   return g-gatherable_stack;
 }
 
 
@@ -433,22 +421,20 @@ int gatherable_init( Commodity* com, Vector2d pos, Vector2d vel, double lifeleng
 void gatherable_update( double dt )
 {
    int i;
+   Gatherable *g;
 
    /* Update the timer for "full cargo" message. */
    noscoop_timer += dt;
 
-   for (i=0; i < gatherable_nstack; i++) {
-      gatherable_stack[i].timer += dt;
-      gatherable_stack[i].pos.x += dt*gatherable_stack[i].vel.x;
-      gatherable_stack[i].pos.y += dt*gatherable_stack[i].vel.y;
+   for (i=0; i < array_size(gatherable_stack); i++) {
+      g = &gatherable_stack[i];
+      g->timer += dt;
+      g->pos.x += dt*gatherable_stack[i].vel.x;
+      g->pos.y += dt*gatherable_stack[i].vel.y;
 
       /* Remove the gatherable */
-      if (gatherable_stack[i].timer > gatherable_stack[i].lifeleng) {
-         gatherable_nstack--;
-         memmove( &gatherable_stack[i], &gatherable_stack[i+1],
-                 sizeof(Gatherable)*(gatherable_nstack-i) );
-         gatherable_stack = realloc(gatherable_stack,
-                                    sizeof(Gatherable) * gatherable_nstack);
+      if (g->timer > g->lifeleng) {
+         array_erase( &gatherable_stack, g, g+1 );
          i--;
       }
    }
@@ -460,9 +446,7 @@ void gatherable_update( double dt )
  */
 void gatherable_free( void )
 {
-   free(gatherable_stack);
-   gatherable_stack = NULL;
-   gatherable_nstack = 0;
+   array_erase( &gatherable_stack, array_begin(gatherable_stack), array_end(gatherable_stack) );
 }
 
 
@@ -474,7 +458,7 @@ void gatherable_render( void )
    int i;
    Gatherable *gat;
 
-   for (i=0; i < gatherable_nstack; i++) {
+   for (i=0; i < array_size(gatherable_stack); i++) {
       gat = &gatherable_stack[i];
       gl_blitSprite( gat->type->gfx_space, gat->pos.x, gat->pos.y, 0, 0, NULL );
    }
@@ -497,7 +481,7 @@ int gatherable_getClosest( Vector2d pos, double rad )
    curg = -1;
    mindist = INFINITY;
 
-   for (i=0; i < gatherable_nstack; i++) {
+   for (i=0; i < array_size(gatherable_stack); i++) {
       gat = &gatherable_stack[i];
       curdist = vect_dist(&pos, &gat->pos);
       if ( (curdist<mindist) && (curdist<rad) ) {
@@ -521,7 +505,7 @@ int gatherable_getPos( Vector2d* pos, Vector2d* vel, int id )
 {
    Gatherable *gat;
 
-   if ((id < 0) || (id > gatherable_nstack-1) ) {
+   if ((id < 0) || (id > array_size(gatherable_stack)-1) ) {
       vectnull( pos );
       vectnull( vel );
       return 0;
@@ -549,7 +533,7 @@ void gatherable_gather( int pilot )
 
    p = pilot_get( pilot );
 
-   for (i=0; i < gatherable_nstack; i++) {
+   for (i=0; i < array_size(gatherable_stack); i++) {
       gat = &gatherable_stack[i];
 
       if (vect_dist( &p->solid->pos, &gat->pos ) < GATHER_DIST ) {
@@ -570,11 +554,7 @@ void gatherable_gather( int pilot )
             }
 
             /* Remove the object from space. */
-            gatherable_nstack--;
-            memmove( &gatherable_stack[i], &gatherable_stack[i+1],
-                    sizeof(Gatherable)*(gatherable_nstack-i) );
-            gatherable_stack = realloc(gatherable_stack,
-                                       sizeof(Gatherable) * gatherable_nstack);
+            array_erase( &gatherable_stack, gat, gat+1 );
 
             /* Test if there is still cargo space */
             if ((pilot_cargoFree(p) < 1) && (pilot_isPlayer(p)))
@@ -598,6 +578,12 @@ int commodity_load (void)
 {
    xmlNodePtr node;
    xmlDocPtr doc;
+   Commodity *c;
+   int *e;
+
+   commodity_stack = array_create( Commodity );
+   econ_comm = array_create( int );
+   gatherable_stack = array_create( Gatherable );
 
    /* Load the file. */
    doc = xml_parsePhysFS( COMMODITY_DATA_PATH );
@@ -620,18 +606,14 @@ int commodity_load (void)
       xml_onlyNodes(node);
       if (xml_isNode(node, XML_COMMODITY_TAG)) {
 
-         /* Make room for commodity. */
-         commodity_stack = realloc(commodity_stack,
-               sizeof(Commodity)*(++commodity_nstack));
-
          /* Load commodity. */
-         commodity_parse(&commodity_stack[commodity_nstack-1], node);
+         c = &array_grow(&commodity_stack);
+         commodity_parse( c, node );
 
          /* See if should get added to commodity list. */
-         if (commodity_stack[commodity_nstack-1].price > 0.) {
-            econ_nprices++;
-            econ_comm = realloc(econ_comm, econ_nprices * sizeof(int));
-            econ_comm[econ_nprices-1] = commodity_nstack-1;
+         if (c->price > 0.) {
+            e = &array_grow( &econ_comm );
+            *e = array_size(commodity_stack)-1;
          }
       }
       else
@@ -640,7 +622,7 @@ int commodity_load (void)
 
    xmlFreeDoc(doc);
 
-   DEBUG( n_( "Loaded %d Commodity", "Loaded %d Commodities", commodity_nstack ), commodity_nstack );
+   DEBUG( n_( "Loaded %d Commodity", "Loaded %d Commodities", array_size(commodity_stack) ), array_size(commodity_stack) );
 
    return 0;
 
@@ -654,16 +636,16 @@ int commodity_load (void)
 void commodity_free (void)
 {
    int i;
-   for (i=0; i<commodity_nstack; i++)
+   for (i=0; i<array_size(commodity_stack); i++)
       commodity_freeOne( &commodity_stack[i] );
-   free( commodity_stack );
+   array_free( commodity_stack );
    commodity_stack = NULL;
-   commodity_nstack = 0;
-   free( commodity_standard );
-   commodity_standard = NULL;
-   commodity_nstandard = 0;
 
    /* More clean up. */
-   free( econ_comm );
+   array_free( econ_comm );
+   econ_comm = NULL;
+
+   array_free( gatherable_stack );
+   gatherable_stack = NULL;
 }
 

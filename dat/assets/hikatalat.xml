@@ -5,8 +5,8 @@
   <y>1920.000000</y>
  </pos>
  <GFX>
-  <space>S00.png</space>
-  <exterior>methane.png</exterior>
+  <space>S00.webp</space>
+  <exterior>methane.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

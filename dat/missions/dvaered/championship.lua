@@ -138,7 +138,9 @@ function create ()
    missys = system.get(sysname)
    mispla = planet.get(planame)
    
-   --No system claim
+   if not misn.claim ( missys ) then
+      misn.finish(false)
+   end
 
    officialFace = portrait.getMil( "Dvaered" )
    official = misn.setNPC(npc_desc[1], officialFace)
@@ -282,7 +284,7 @@ function enter()
 
       shiplist = ships[level+1]
       oppotype = shiplist[ rnd.rnd(1,#shiplist) ]
-      opponent = pilot.addRaw( oppotype, "baddie", mispla, "Thugs" )
+      opponent = pilot.add( oppotype, "Thugs", mispla, opponame, "baddie" )
 
       opponent:rmOutfit("all")
       opponent:rmOutfit("cores")
@@ -320,7 +322,6 @@ function enter()
       opponent:setEnergy(100)
 
       --
-      opponent:rename(opponame)
       opponent:setHilight()
       opponent:setHostile()
 
@@ -328,12 +329,12 @@ function enter()
       opponent:moveto(mispla:pos() + vec2.new( 1000,  1500))
 
       --The TV and the security
-      tv1 = pilot.addRaw( "Gawain", "civilian", mispla, "Dvaered" )
-      tv2 = pilot.addRaw( "Gawain", "civilian", mispla, "Dvaered" )
-      sec11 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )
-      sec12 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )
-      sec21 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )
-      sec22 = pilot.addRaw( "Hyena", "dvaered", mispla, "Dvaered" )
+      tv1 = pilot.add( "Gawain", "Dvaered", mispla, _("Holovision"), "civilian" )
+      tv2 = pilot.add( "Gawain", "Dvaered", mispla, _("Holovision"), "civilian" )
+      sec11 = pilot.add( "Hyena", "Dvaered", mispla, _("Security") )
+      sec12 = pilot.add( "Hyena", "Dvaered", mispla, _("Security") )
+      sec21 = pilot.add( "Hyena", "Dvaered", mispla, _("Security") )
+      sec22 = pilot.add( "Hyena", "Dvaered", mispla, _("Security") )
 
       hooks = {}
 
@@ -341,13 +342,11 @@ function enter()
          k:rmOutfit("all")
          k:addOutfit("Shredder", 3)
          k:addOutfit("Improved Stabilizer")
-         k:rename("Security")
       end
 
       for i, k in ipairs({tv1,tv2}) do
          k:rmOutfit("all")
          k:addOutfit("Improved Stabilizer", 2)
-         k:rename("Holovision")
       end
 
       for i, k in ipairs({tv1, sec11, sec12, tv2, sec21, sec22}) do

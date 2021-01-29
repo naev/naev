@@ -5,8 +5,8 @@
   <y>7007.406875</y>
  </pos>
  <GFX>
-  <space>station-shipyard.png</space>
-  <exterior>aquatic.png</exterior>
+  <space>station-shipyard.webp</space>
+  <exterior>aquatic.webp</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>

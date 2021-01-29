@@ -72,7 +72,7 @@ static int intro_load( const char *text )
    char *intro_buf;
    const char *cur_line;
    char *rest_of_file;
-   char img_src[128];     /* path to image to be displayed alongside text. */
+   char img_src[STRMAX_SHORT];     /* path to image to be displayed alongside text. */
    int length;
    int i, n;
    int mem;
@@ -205,7 +205,7 @@ static void initialize_image( intro_img_t *img )
  *
  *    @brief side Present image being displayed.
  *    @brief transition Image in transition or on deck.
- *    @brief img_file Path to the PNG on disk.
+ *    @brief img_file Path to the image file on disk.
  */
 static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
                                  const char *img_file )

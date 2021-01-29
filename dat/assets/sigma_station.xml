@@ -5,8 +5,8 @@
   <y>-2234.267876</y>
  </pos>
  <GFX>
-  <space>station-fleetbase.png</space>
-  <exterior>station03.png</exterior>
+  <space>station-fleetbase.webp</space>
+  <exterior>station03.webp</exterior>
  </GFX>
  <presence>
   <faction>Proteron</faction>

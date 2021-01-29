@@ -5,8 +5,8 @@
   <y>2128.040959</y>
  </pos>
  <GFX>
-  <space>moon-A00.png</space>
-  <exterior>traderoom.png</exterior>
+  <space>moon-A00.webp</space>
+  <exterior>traderoom.webp</exterior>
  </GFX>
  <general>
   <class>A</class>

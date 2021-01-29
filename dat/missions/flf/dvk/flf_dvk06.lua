@@ -89,7 +89,7 @@ function create ()
       misn.finish( false )
    end
 
-   misn.setNPC( npc_name, "flf/unique/benito" )
+   misn.setNPC( npc_name, "flf/unique/benito.png" )
    misn.setDesc( npc_desc )
 end
 
@@ -138,13 +138,12 @@ function enter ()
          pilot.clear()
          pilot.toggleSpawn( false )
 
-         local ro, ms, s, nf
+         local ro, ms, s
 
          ro, s = planet.get( "Raglan Outpost" )
 
          -- Spawn Raglan Outpost ship
-         nf = pilot.add( "Raglan Outpost", nil, ro:pos() )
-         dv_base = nf[1]
+         dv_base = pilot.add( "Raglan Outpost", "Dvaered", ro:pos() , nil, "dvaered_norun" )
          dv_base:rmOutfit( "all" )
          dv_base:rmOutfit( "cores" )
          dv_base:addOutfit( "Dummy Systems" )
@@ -160,12 +159,11 @@ function enter ()
          hook.pilot( dv_base, "death", "pilot_death_station" )
 
          -- Spawn Dvaered ships
-         dv_fleet = {}
-
          local dv_ships = {
-            "Dvaered Goddard", "Dvaered Big Patrol", "Dvaered Big Patrol",
-            "Dvaered Home Guard", "Dvaered Ancestor", "Dvaered Ancestor"}
-         dv_fleet = addShips( dv_ships, "dvaered_norun", ro:pos(), 1 )
+            "Dvaered Goddard", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance", "Dvaered Ancestor", "Dvaered Ancestor",
+            "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta",
+            "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta"}
+         dv_fleet = addShips( 1, dv_ships, "Dvaered", ro:pos(), nil, "dvaered_norun" )
 
          for i, j in ipairs( dv_fleet ) do
             j:control()
@@ -176,8 +174,7 @@ function enter ()
          -- Spawn FLF ships
          local jmp, jmp2
          jmp, jpm2 = jump.get( "Haleb", "Theras" )
-         flf_fleet = addShips(
-            {"FLF Vendetta", "FLF Vendetta", "FLF Lancelot"}, nil, jmp:pos(), 4 )
+         flf_fleet = addShips( 4, {"Vendetta", "Vendetta", "Lancelot"}, "FLF", jmp:pos() , {_("FLF Vendetta"), _("FLF Vendetta"), _("FLF Lancelot")})
 
          for i, j in ipairs( flf_fleet ) do
             j:control()
@@ -198,7 +195,7 @@ end
 function timer_start ()
    if timer_start_hook ~= nil then hook.rm( timer_start_hook ) end
 
-   local player_pos = player.pilot():pos()
+   local player_pos = player.pos()
    local proximity = false
    for i, j in ipairs( flf_fleet ) do
       local dist = player_pos:dist( j:pos() )
@@ -223,7 +220,7 @@ function timer_start ()
       local src = system.get( "Triap" )
       for i = 1, 16 do
          local choice = choices[ rnd.rnd( 1, #choices ) ]
-         local nf = pilot.add( choice, nil, src )
+         local nf = pilot.addFleet( choice, src )
          civ_fleet[ #civ_fleet + 1 ] = nf[1]
       end
 
@@ -245,8 +242,8 @@ function timer_pirates ()
 
    local src = system.get( "Triap" )
 
-   pir_fleet = pilot.add( "Pirate Kestrel", nil, src )
-   pir_boss = pir_fleet[1]
+   pir_boss = pilot.add( "Pirate Kestrel", "Pirate", src )
+   pir_fleet = {pir_boss}
    hook.pilot( pir_boss, "death", "pilot_death_kestrel" )
 
    local choices = {
@@ -254,7 +251,7 @@ function timer_pirates ()
       "Pirate Vendetta", "Pirate Ancestor" }
    for i = 1, 9 do
       local choice = choices[ rnd.rnd( 1, #choices ) ]
-      local nf = pilot.add( choice, nil, src )
+      local nf = pilot.addFleet( choice, src )
       pir_fleet[ #pir_fleet + 1 ] = nf[1]
    end
 

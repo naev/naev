@@ -116,11 +116,10 @@ Outfit* outfit_getW( const char* name )
 
 
 /**
- * @brief Gets all the outfits.
+ * @brief Gets the array (array.h) of all outfits.
  */
-Outfit* outfit_getAll( int *n )
+Outfit* outfit_getAll (void)
 {
-   *n = array_size(outfit_stack);
    return outfit_stack;
 }
 
@@ -1172,7 +1171,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       /* Graphics. */
       if (xml_isNode(node,"gfx")) {
          temp->u.blt.gfx_space = xml_parseTexture( node,
-               OUTFIT_GFX_PATH"space/%s.png", 6, 6,
+               OUTFIT_GFX_PATH"space/%s", 6, 6,
                OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
          xmlr_attr_strd(node, "spin", buf);
          if (buf != NULL) {
@@ -1194,7 +1193,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       }
       if (xml_isNode(node,"gfx_end")) {
          temp->u.blt.gfx_end = xml_parseTexture( node,
-               OUTFIT_GFX_PATH"space/%s.png", 6, 6,
+               OUTFIT_GFX_PATH"space/%s", 6, 6,
                OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
          continue;
       }
@@ -1344,7 +1343,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       /* Graphic stuff. */
       if (xml_isNode(node,"gfx")) {
          temp->u.bem.gfx = xml_parseTexture( node,
-               OUTFIT_GFX_PATH"space/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+               OUTFIT_GFX_PATH"space/%s", 1, 1, OPENGL_TEX_MIPMAPS );
          continue;
       }
       if (xml_isNode(node,"spfx_armour")) {
@@ -1523,7 +1522,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"energy",temp->u.amm.energy);
       if (xml_isNode(node,"gfx")) {
          temp->u.amm.gfx_space = xml_parseTexture( node,
-               OUTFIT_GFX_PATH"space/%s.png", 6, 6,
+               OUTFIT_GFX_PATH"space/%s", 6, 6,
                OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
          xmlr_attr_float(node, "spin", temp->u.amm.spin);
          if (temp->u.amm.spin != 0)
@@ -2152,7 +2151,7 @@ static int outfit_parse( Outfit* temp, const char* file )
             }
             else if (xml_isNode(cur,"gfx_store")) {
                temp->gfx_store = xml_parseTexture( cur,
-                     OUTFIT_GFX_PATH"store/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+                     OUTFIT_GFX_PATH"store/%s", 1, 1, OPENGL_TEX_MIPMAPS );
                continue;
             }
             else if (xml_isNode(cur,"gfx_overlays")) {
@@ -2168,7 +2167,7 @@ static int outfit_parse( Outfit* temp, const char* file )
                         temp->gfx_overlays = realloc( temp->gfx_overlays, m * sizeof( glTexture * ) );
                      }
                      temp->gfx_overlays[ temp->gfx_noverlays-1 ] = xml_parseTexture( ccur,
-                           OVERLAY_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+                           OVERLAY_GFX_PATH"%s", 1, 1, OPENGL_TEX_MIPMAPS );
                   }
                } while (xml_nextNode(ccur));
                continue;

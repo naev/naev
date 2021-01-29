@@ -6,6 +6,10 @@
  <flags>
   <unique />
  </flags>
+ <notes>
+  <campaign>Minerva</campaign>
+  <done_misn name="Maikki's Father 2">Random event</done_misn>
+ </notes>
 </event>
 --]]
 

@@ -7,11 +7,11 @@
   <mass>25</mass>
   <price>32500</price>
   <description>The MK2 turreted version of the Razor sees a lot of application on medium escort ships. They are often mounted alongside laser or gauss turrets to assist in de-shielding incoming attackers before they are ripped to shreds.</description>
-  <gfx_store>ionturret</gfx_store>
+  <gfx_store>ionturret.png</gfx_store>
   <cpu>-15</cpu>
  </general>
  <specific type="turret bolt">
-  <gfx>razorM</gfx>
+  <gfx>razorM.png</gfx>
   <sound>ion</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
@@ -19,7 +19,7 @@
   <speed>800</speed>
   <range>1600</range>
   <falloff>1100</falloff>
-  <gfx_end>razorM-end</gfx_end>
+  <gfx_end>razorM-end.png</gfx_end>
   <energy>13</energy>
   <heatup>35</heatup>
   <track>1.8</track>

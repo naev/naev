@@ -14,7 +14,6 @@ typedef struct JumpPoint_ JumpPoint;
 #include "commodity.h"
 #include "explosion.h"
 #include "faction.h"
-#include "fleet.h"
 #include "mission.h"
 #include "opengl.h"
 #include "pilot.h"
@@ -92,7 +91,7 @@ typedef struct Planet_ {
    int id; /**< Planet ID. */
    char* name; /**< planet name */
    Vector2d pos; /**< position in star system */
-   double radius; /**< Radius of the planet. */
+   double radius; /**< Radius of the planet. WARNING: lazy-loaded with gfx_space. */
 
    /* Planet details. */
    char *class; /**< Planet type. Uses Star Trek classification system (https://stexpanded.fandom.com/wiki/Planet_classifications) */
@@ -313,11 +312,6 @@ struct StarSystem_ {
    AsteroidExclusion *astexclude; /**< Asteroid exclusion zones in the system */
    int nastexclude; /**< number of asteroid exclusion zones */
 
-   /* Fleets. */
-   Fleet** fleets; /**< fleets that can appear in the current system */
-   int nfleets; /**< total number of fleets */
-   double avg_pilot; /**< Target amount of pilots in the system. */
-
    /* Calculated. */
    double *prices; /**< Handles the prices in the system. */
 
@@ -357,6 +351,7 @@ void space_exit (void);
  * planet stuff
  */
 Planet *planet_new (void);
+void planet_gfxLoad( Planet *p );
 int planet_hasSystem( const char* planetname );
 char* planet_getSystem( const char* planetname );
 Planet* planet_getAll( int *n );
@@ -380,7 +375,6 @@ char planet_getColourChar( Planet *p );
 const char *planet_getSymbol( Planet *p );
 const glColour* planet_getColour( Planet *p );
 void planet_updateLand( Planet *p );
-int planet_setRadiusFromGFX(Planet* planet);
 
 
 /*
@@ -402,8 +396,6 @@ int system_rmPlanet( StarSystem *sys, const char *planetname );
 int system_addJump( StarSystem *sys, xmlNodePtr node );
 int system_addJumpDiff( StarSystem *sys, xmlNodePtr node );
 int system_rmJump( StarSystem *sys, const char *jumpname );
-int system_addFleet( StarSystem *sys, Fleet *fleet );
-int system_rmFleet( StarSystem *sys, Fleet *fleet );
 
 /*
  * render

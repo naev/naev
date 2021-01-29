@@ -8,7 +8,7 @@
   <mass>15</mass>
   <price>10000</price>
   <description>A modification to the ship's shields that allows them to resist nebular volatility.</description>
-  <gfx_store>capacitor</gfx_store>
+  <gfx_store>capacitor.png</gfx_store>
  </general>
  <specific type="modification">
   <nebu_absorb_shield>40</nebu_absorb_shield>

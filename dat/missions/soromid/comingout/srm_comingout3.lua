@@ -91,7 +91,7 @@ function create ()
    credits = 500000
    started = false
 
-   misn.setNPC( npc_name, "soromid/unique/chelsea" )
+   misn.setNPC( npc_name, "soromid/unique/chelsea.png" )
    misn.setDesc( npc_desc )
 end
 
@@ -137,7 +137,7 @@ end
 
 
 function spawnChelseaShip( param )
-   chelsea = pilot.addRaw( "Llama", "mercenary", param, "Comingout_associates" )
+   chelsea = pilot.add( "Llama", "Comingout_associates", param, _("Chelsea") )
    chelsea:rmOutfit( "all" )
    chelsea:rmOutfit( "cores" )
    chelsea:addOutfit( "Unicorp PT-200 Core System" )
@@ -158,7 +158,6 @@ function spawnChelseaShip( param )
    chelsea:setHilight()
    chelsea:setVisible()
    chelsea:setInvincPlayer()
-   chelsea:rename( "Chelsea" )
 
    hook.pilot( chelsea, "death", "chelsea_death" )
    hook.pilot( chelsea, "jump", "chelsea_jump" )
@@ -172,10 +171,9 @@ end
 function spawnThug( param )
    local shiptypes = { "Hyena", "Hyena", "Hyena", "Shark", "Lancelot" }
    local shiptype = shiptypes[ rnd.rnd( 1, #shiptypes ) ]
-   thug = pilot.addRaw( shiptype, "baddie", param, "Comingout_thugs" )
+   thug = pilot.add( shiptype, "Comingout_thugs", param, "Thug " .. shiptype )
 
    thug:setHostile()
-   thug:rename( "Thug " .. shiptype )
 
    hook.pilot( thug, "death", "thug_removed" )
    hook.pilot( thug, "jump", "thug_removed" )

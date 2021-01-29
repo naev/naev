@@ -7,7 +7,7 @@
   <mass>18</mass>
   <price>110000</price>
   <description>A more powerful shield enhancer, providing better protection during skirmishes.</description>
-  <gfx_store>capacitor2</gfx_store>
+  <gfx_store>capacitor2.png</gfx_store>
  </general>
  <specific type="modification">
   <shield>75</shield>

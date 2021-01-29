@@ -132,7 +132,7 @@ local function _done( status )
    elseif d>21 or (p<=21 and d<p) then
       local won = bj.betamount / 1000
       minerva.tokens_pay( won )
-      msg = string.format(_("#gYou won #p%d Minerva Tokens#g!#0"), won)
+      msg = string.format(n_("#gYou won #p%d Minerva Token#g!#0","#gYou won #p%d Minerva Tokens#g!#0",won), won)
       if #bj.player == 2 and p==21 then
          msg = string.format(_("#pBlackjack!#0 %s"), msg)
          _chatter( "lost_blackjack" )
@@ -316,7 +316,7 @@ function bj.draw( bx, by, bw, bh)
    end
    y = bj.bets_y + h+3*b
    local tokens = minerva.tokens_get()
-   local s = string.format(_("You have %s credits and #p%s Minerva Tokens#0."), creditstring(player.credits()), numstring(tokens))
+   local s = string.format(n_("You have %s credits and #p%s Minerva Token#0.", "You have %s credits and #p%s Minerva Tokens#0.", tokens), creditstring(player.credits()), numstring(tokens))
    w = bj.font:getWidth( s )
    lg.print( s, bj.font, bx+(bw-w)/2, y )
 end

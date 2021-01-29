@@ -134,76 +134,6 @@ void gl_screenshot( const char *filename )
 }
 
 
-/**
- * @brief Saves a surface to a file as a png.
- *
- * Ruthlessly stolen from "pygame - Python Game Library"
- *    by Pete Shinners (pete@shinners.org)
- *
- *    @param surface Surface to save.
- *    @param file Path to save surface to.
- *    @return 0 on success.;
- */
-int SDL_SavePNG( SDL_Surface *surface, const char *file )
-{
-   png_bytep* ss_rows;
-   int ss_size;
-   int ss_w, ss_h;
-   SDL_Surface *ss_surface;
-   int r, i;
-   SDL_Rect rtemp;
-
-   /* Initialize parameters. */
-   ss_surface  = NULL;
-
-   /* Set size. */
-   ss_w        = surface->w;
-   ss_h        = surface->h;
-
-   /* Handle alpha. */
-   SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
-
-   /* Create base surface. */
-   ss_surface = SDL_CreateRGBSurface( 0, ss_w, ss_h, 32, RGBAMASK );
-   if (ss_surface == NULL) {
-      WARN(_("Unable to create RGB surface."));
-      return -1;
-   }
-   if (SDL_FillRect( ss_surface, NULL,
-            SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
-      WARN(_("Unable to fill rect: %s"), SDL_GetError());
-      return 0;
-   }
-
-
-   /* Blit to new surface. */
-   rtemp.x = rtemp.y = 0;
-   rtemp.w = surface->w;
-   rtemp.h = surface->h;
-   SDL_BlitSurface(surface, &rtemp, ss_surface, &rtemp);
-
-   /* Allocate space. */
-   ss_size = ss_h;
-   ss_rows = malloc(sizeof(png_bytep) * ss_size);
-   if (ss_rows == NULL)
-      return -1;
-
-   /* Copy pixels into data. */
-   for (i = 0; i < ss_h; i++)
-      ss_rows[i] = ((png_bytep)ss_surface->pixels) + i*ss_surface->pitch;
-
-   /* Save to PNG. */
-   r = write_png(file, ss_rows, surface->w, surface->h, PNG_COLOR_TYPE_RGB_ALPHA, 8);
-
-   /* Clean up. */
-   free(ss_rows);
-   SDL_FreeSurface(ss_surface);
-
-   return r;
-}
-
-
-
 /*
  *
  * G L O B A L
@@ -427,11 +357,10 @@ static int gl_getGLInfo (void)
          gl_screen.r, gl_screen.g, gl_screen.b, gl_screen.a,
          gl_has(OPENGL_DOUBLEBUF) ? _("yes") : _("no"),
          gl_screen.fsaa, gl_screen.tex_max);
-   DEBUG(_("vsync: %s, mm: %s, compress: %s, npot: %s"),
+   DEBUG(_("vsync: %s, mm: %s, compress: %s"),
          gl_has(OPENGL_VSYNC) ? _("yes") : _("no"),
          gl_texHasMipmaps() ? _("yes") : _("no"),
-         gl_texHasCompress() ? _("yes") : _("no"),
-         gl_needPOT() ? _("no") : _("yes") );
+         gl_texHasCompress() ? _("yes") : _("no"));
    DEBUG(_("Renderer: %s"), glGetString(GL_RENDERER));
    DEBUG(_("Version: %s"), glGetString(GL_VERSION));
 

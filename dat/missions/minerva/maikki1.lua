@@ -1,17 +1,21 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Maikki's Father 1">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>Minerva Station</planet>
-   <cond>player.evtDone("Minerva Station Altercation 1")</cond>
-  </avail>
- </mission>
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>100</chance>
+  <location>Bar</location>
+  <planet>Minerva Station</planet>
+  <cond>var.peek("minerva_altercation_probability")~=nil</cond>
+ </avail>
+ <notes>
+  <campaign>Minerva</campaign>
+  <requires name="Minerva Altercation 1" />
+ </notes>
+</mission>
 --]]
 
 --[[
@@ -39,6 +43,8 @@ local portrait = require 'portrait'
 local vn = require 'vn'
 require 'numstring'
 
+logidstr = minerva.log.maikki.idstr
+
 maikki_name = _("Distraught Young Woman")
 maikki_description = _("You see a small young woman sitting by herself. She has a worried expression on her face.")
 maikki_portrait = minerva.maikki.portrait
@@ -46,21 +52,21 @@ maikki_image = minerva.maikki.image
 maikki_colour = minerva.maikki.colour
 
 oldman_name = _("Old Man")
-oldman_portrait = "old_man"
+oldman_portrait = "old_man.png"
 oldman_description = _("You see a nonchalant old man sipping on his drink with a carefree aura.")
 oldman_image = "old_man.png"
 
 scav_name = _("Scavengers")
-scav_portrait = "scavenger1"
+scav_portrait = "scavenger1.png"
 scav_desc = _("You see a pair of dirty looking fellows talking loudly among themselves.")
 scavengera_image = "scavenger1.png"
 scavengerb_image = scavengera_image
-scavengera_portrait = "scavenger1"
+scavengera_portrait = "scavenger1.png"
 scavengerb_portrait = scavengera_portrait
 scavengera_colour = nil
 scavengerb_colour = nil
 
-misn_title = _("Finding Father")
+misn_title = _("Finding Maikki's Father")
 misn_reward = _("???")
 misn_desc = _("Maikki wants you to help her find her father.")
 
@@ -155,7 +161,10 @@ She trails off.]]) )
       vn.label( "accept" )
       vn.func( function ()
          misn.accept()
+         misn.setDesc( misn_desc )
          misn_state = -1
+         shiplog.createLog( logidstr, minerva.log.maikki.logname, minerva.log.maikki.logtype, true )
+         shiplog.appendLog( logidstr, _("You have agreed to help Maikki find her father (Kex).") )
       end )
       maikki(_([["I was told he would be here, but I've been here for ages and haven't gotten anywhere."
 She gives out a heavy sigh.]]))
@@ -220,6 +229,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
          misn_osd = misn.osdCreate( misn_title,
             { string.format(_("Look around the %s system"), _(searchsys)) } )
          misn_marker = misn.markerAdd( system.get(searchsys), "low" )
+         shiplog.appendLog( logidstr, _("You were told her father colud be near Doeston.") )
       end
    end )
    vn.jump( "menu_msg" )
@@ -244,6 +254,7 @@ She looks clearly excited at the possibility.]]))
       -- no reward, yet...
       vn.sfxVictory()
       mission_finish = true
+      shiplog.appendLog( logidstr, _("You gave Maikki the information you found in the nebula about her father.") )
    end )
    vn.fadeout()
    vn.done()
@@ -403,6 +414,7 @@ He pats his biceps in a fairly uninspiring way.]]))
                { string.format(_("Follow the scavengers in the %s system"), _(stealthsys)) } )
             misn.markerMove( misn_marker, system.get(stealthsys) )
             misn_state=4
+            shiplog.appendLog( logidstr, _("You overheard some scavengers talking about a wreck in Zerantix.") )
          end
       end )
    end
@@ -424,9 +436,8 @@ function enter ()
       -- cutscene
       local j = jump.get( cutscenesys, searchsys )
       local pos = j:pos() + vec2.new(3000,5000)
-      local fscav = faction.dynAdd( "Independent", "Scavenger", "Scavenger" )
-      pscavB = pilot.addRaw( "Vendetta", "independent", pos, "Scavenger" )
-      pscavB:rename(_("Scavenger Vendetta"))
+      local fscav = faction.dynAdd( "Independent", "Scavenger", _("Scavenger") )
+      pscavB = pilot.add( "Vendetta", "Scavenger", pos, _("Scavenger Vendetta"), "independent" )
       pscavB:control()
       pscavB:brake()
       cuttimer = hook.timer( 3000, "cutscene_timer" )
@@ -448,9 +459,9 @@ function enter ()
       local pos = waypoints[1]
       local posA = pos + vec2.new( 100, 80 )
       local posB = pos + vec2.new( -50, -20 )
-      local fscav = faction.dynAdd( "Independent", "Scavenger", "Scavenger" )
-      pscavA = pilot.addRaw( "Shark", "independent", posA, "Scavenger" )
-      pscavB = pilot.addRaw( "Vendetta", "independent", posB, "Scavenger" )
+      local fscav = faction.dynAdd( "Independent", "Scavenger", _("Scavenger") )
+      pscavA = pilot.add( "Shark", "Scavenger", posA, nil, "independent" )
+      pscavB = pilot.add( "Vendetta", "Scavenger", posB, nil, "independent" )
       for k,p in ipairs{ pscavA, pscavB } do
          p:control()
          p:setSpeedLimit( 200 )
@@ -556,6 +567,7 @@ function cutscene_hail ()
       misn_state = 2
       hook.rm( cuttimer ) -- reset timer
       pilot.toggleSpawn(true)
+      shiplog.appendLog( logidstr, _("You helped a scavenger in Arandon.") )
    end
 end
 
@@ -735,8 +747,7 @@ function stealthheartbeat ()
          -- Spawn the wreck
          if stealthtarget==4 then
             pos = waypoints[ #waypoints ] + vec2.new(-10, -50)
-            wreck = pilot.addRaw( "Rhino", "independent", pos, "Derelict" )
-            wreck:rename( _("Ship Wreck") )
+            wreck = pilot.add( "Rhino", "Derelict", pos, _("Ship Wreck") )
             wreck:disable()
             wreck:setInvincible()
             hook.pilot( wreck, "board", "board_wreck" )
@@ -824,6 +835,7 @@ He seems to be clutching his head. A headache perhaps?]]))
             p:taskClear()
             p:hyperspace( system.get(cutscenesys) )
          end
+         shiplog.appendLog( logidstr, _("You found a wreck and bribed scavengers so that they left.") )
       end
    end )
    vn.sfxMoney()
@@ -850,6 +862,7 @@ He seems to be clutching his head. A headache perhaps?]]))
          p:attack( player.pilot() )
          -- TODO add angry messages
       end
+      shiplog.appendLog( logidstr, _("You found a wreck and were attacked by scavengers.") )
    end )
 
    vn.fadeout()
@@ -917,6 +930,8 @@ function board_wreck ()
    vn.na(_("After your thorough investigation, you leave the wreck behind and get back into your ship."))
    vn.fadeout()
    vn.run()
+
+   shiplog.appendLog( logidstr, _("You boarded the wreck which seems to be Kex's ship. You found a picture of his family and signs that this was not an accident with possible Za'lek involvement.") )
 
    -- Move target back to origin
    misn_osd = misn.osdCreate( misn_title,

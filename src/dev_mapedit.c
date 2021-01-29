@@ -38,6 +38,9 @@
 #include "unidiff.h"
 
 
+extern StarSystem *systems_stack;
+
+
 #define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
@@ -73,8 +76,6 @@ typedef struct mapOutfitsList_s {
    credits_t price;
    int rarity;
 } mapOutfitsList_t;
-
-extern int systems_nstack;
 
 static mapOutfitsList_t *mapList = NULL; /* Array of map outfits for displaying in the Open window. */
 
@@ -126,7 +127,6 @@ static int mapedit_saveMap( StarSystem** uniedit_sys, mapOutfitsList_t* ns );
 void mapedit_setGlobalLoadedInfos( mapOutfitsList_t* ns );
 /* Management of Map files list. */
 static int  mapedit_mapsList_refresh (void);
-static mapOutfitsList_t *mapedit_mapsList_getList ( int *n );
 static void mapsList_free (void);
 
 
@@ -434,7 +434,7 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             mx -= w/2 - mapedit_xpos;
             my -= h/2 - mapedit_ypos;
 
-            for (i=0; i<systems_nstack; i++) {
+            for (i=0; i<array_size(systems_stack); i++) {
                sys = system_getIndex( i );
 
                /* get position */
@@ -644,7 +644,7 @@ void mapedit_loadMapMenu_open (void)
 {
    unsigned int wid;
    char **names;
-   mapOutfitsList_t *nslist, *ns;
+   mapOutfitsList_t *ns;
    int i, n;
 
    /* window */
@@ -659,11 +659,11 @@ void mapedit_loadMapMenu_open (void)
    mapedit_mapsList_refresh();
 
    /* Load the maps */
-   nslist = mapedit_mapsList_getList( &n );
+   n = array_size( mapList );
    if (n > 0) {
       names = malloc( sizeof(char*)*n );
       for (i=0; i<n; i++) {
-         ns       = &nslist[i];
+         ns       = &mapList[i];
          names[i] = strdup(ns->mapName);
       }
    }
@@ -701,7 +701,6 @@ static void mapedit_loadMapMenu_update( unsigned int wdw, char *str )
 {
    (void) str;
    int pos;
-   int n;
    mapOutfitsList_t *ns;
    char *save;
    char buf[1024];
@@ -713,8 +712,7 @@ static void mapedit_loadMapMenu_update( unsigned int wdw, char *str )
 
    /* Get position. */
    pos = toolkit_getListPos( wdw, "lstMapOutfits" );
-   ns  = mapedit_mapsList_getList( &n );
-   ns  = &ns[pos];
+   ns  = &mapList[pos];
 
    /* Display text. */
    nsnprintf( buf, sizeof(buf),
@@ -753,7 +751,7 @@ static void mapedit_loadMapMenu_close( unsigned int wdw, char *str )
 static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
 {
    (void)str;
-   int pos, n, len, compareLimit, i, found;
+   int pos, len, compareLimit, i, found;
    mapOutfitsList_t *ns;
    char *save, *file, *name, *systemName;
    xmlNodePtr node;
@@ -769,8 +767,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
 
    /* Get position. */
    pos = toolkit_getListPos( wdw, "lstMapOutfits" );
-   ns  = mapedit_mapsList_getList( &n );
-   ns  = &ns[pos];
+   ns  = &mapList[pos];
 
    /* Display text. */
    len  = strlen(MAP_DATA_PATH)+strlen(ns->fileName)+2;
@@ -832,7 +829,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
 
       /* Find system */
       found  = 0;
-      for (i=0; i<systems_nstack; i++) {
+      for (i=0; i<array_size(systems_stack); i++) {
          sys = system_getIndex( i );
          compareLimit = strlen(systemName);
          if (strncmp(systemName, sys->name, compareLimit)==0) {
@@ -1022,20 +1019,6 @@ static int mapedit_mapsList_refresh (void)
    return 0;
 }
 
-/**
- * @brief Gets the list of loaded maps.
- */
-mapOutfitsList_t *mapedit_mapsList_getList( int *n )
-{
-   if (mapList == NULL) {
-      *n = 0;
-      return NULL;
-   }
-
-   *n = array_size( mapList );
-   return mapList;
-}
-
 
 /**
  * @brief Frees the loaded map.
@@ -1044,15 +1027,13 @@ static void mapsList_free (void)
 {
    unsigned int n, i;
 
-   if (mapList != NULL) {
-      n = array_size( mapList );
-      for (i=0; i<n; i++) {
-         free( mapList[i].fileName );
-         free( mapList[i].mapName );
-         free( mapList[i].description );
-      }
-      array_free(mapList);
+   n = array_size( mapList );
+   for (i=0; i<n; i++) {
+      free( mapList[i].fileName );
+      free( mapList[i].mapName );
+      free( mapList[i].description );
    }
+   array_free(mapList);
    mapList = NULL;
 
    free( mapedit_sLoadMapName );
@@ -1096,7 +1077,7 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
    xmlw_elem( writer, "mass", "%d", 0 );
    xmlw_elem( writer, "price", "%"CREDITS_PRI, ns->price );
    xmlw_elem( writer, "description", "%s", ns->description );
-   xmlw_elem( writer, "gfx_store", "%s", "map" );
+   xmlw_elem( writer, "gfx_store", "%s", "map.png" );
    xmlw_endElem( writer ); /* "general" */
 
    xmlw_startElem( writer, "specific" );

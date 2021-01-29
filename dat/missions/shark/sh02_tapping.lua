@@ -97,7 +97,7 @@ function create ()
    paysys = system.get(psyname)
    paypla = planet.get(pplname)
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith")
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.png")
    misn.setDesc(bar_desc[1])
 end
 
@@ -133,7 +133,7 @@ end
 function land()
    --The player is landing on the mission planet to get the box
    if stage == 0 and planet.cur() == mispla then
-      agent = misn.npcAdd("beginrun", npc_desc[2], "neutral/unique/nexus_agent", bar_desc[2])
+      agent = misn.npcAdd("beginrun", npc_desc[2], "neutral/unique/nexus_agent.png", bar_desc[2])
    end
 
    --Job is done
@@ -239,10 +239,9 @@ function interceptors()
    --spawning high speed Hyenas
    number = {1,2,3,4}
    for i in ipairs(number) do
-      badguys[i] = pilot.addRaw( "Hyena","mercenary", nil, "Mercenary" )
+      badguys[i] = pilot.add( "Hyena", "Mercenary", nil, _("Mercenary") )
       badguys[i]:setHostile()
 
-      badguys[i]:rename(_("Mercenary"))
       --Their outfits must be quite good
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
@@ -263,10 +262,9 @@ function hvy_intercept()
    --spawning Lancelots
    number = {1,2,3,4}
    for i in ipairs(number) do
-      badguys[i] = pilot.addRaw( "Lancelot","mercenary", nil, "Mercenary" )
+      badguys[i] = pilot.add( "Lancelot", "Mercenary", nil, _("Mercenary") )
       badguys[i]:setHostile()
 
-      badguys[i]:rename(_("Mercenary"))
       --Their outfits must be quite good
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
@@ -289,9 +287,8 @@ function corvette()
    --spawning Admonishers
    number = {1,2}
    for i in ipairs(number) do
-      badguys[i] = pilot.addRaw( "Admonisher","mercenary", nil, "Mercenary" )
+      badguys[i] = pilot.add( "Admonisher", "Mercenary", nil, _("Mercenary") )
       badguys[i]:setHostile()
-      badguys[i]:rename(_("Mercenary"))
 
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
@@ -310,9 +307,8 @@ end
 
 function cruiser()
    --spawning a Kestrel with massive missile weaponry
-   badguy = pilot.addRaw( "Kestrel","mercenary", nil, "Mercenary" )
+   badguy = pilot.add( "Kestrel", "Mercenary", nil, _("Mercenary") )
    badguy:setHostile()
-   badguy:rename(_("Mercenary"))
 
    badguy:rmOutfit("all")
    badguy:rmOutfit("cores")
@@ -336,9 +332,8 @@ function bombers()
    --spawning Ancestors
    number = {1,2,3}
    for i in ipairs(number) do
-      badguys[i] = pilot.addRaw( "Ancestor","mercenary", nil, "Mercenary" )
+      badguys[i] = pilot.add( "Ancestor", "Mercenary", nil, _("Mercenary") )
       badguys[i]:setHostile()
-      badguys[i]:rename(_("Mercenary"))
 
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
@@ -361,9 +356,8 @@ end
 
 function add_llama()
    --adding an useless Llama
-   useless = pilot.addRaw( "Llama","mercenary", nil, "Mercenary" )
+   useless = pilot.add( "Llama", "Mercenary", nil, _("Amateur Mercenary") )
    useless:setHostile()
-   useless:rename(_("Amateur Mercenary"))
 
    useless:rmOutfit("all")
    useless:addOutfit("Laser Cannon MK1",2)

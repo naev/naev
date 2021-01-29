@@ -254,7 +254,7 @@ void dialogue_msg( const char* caption, const char *fmt, ... )
  * @brief Opens a dialogue window with an ok button, a message and an image.
  *
  *    @param caption Window title.
- *    @param img Path of the image file (*.png) to display.
+ *    @param img Path of the image file to display.
  *    @param fmt Printf style message to display.
  */
 void dialogue_msgImg( const char* caption, const char *img, const char *fmt, ... )
@@ -306,7 +306,7 @@ void dialogue_msgRaw( const char* caption, const char *msg )
  *
  *    @param caption Window title.
  *    @param msg Message to display.
- *    @param img Path of the image file (*.png) to display.
+ *    @param img Path of the image file to display.
  *    @param width Width of the image. Negative uses image width.
  *    @param height Height of the image. Negative uses image height.
  */

@@ -55,7 +55,7 @@ function create ()
    targetworld = planet.get("Halir")
 
 
-   misn.setNPC( _("Lieutenant"), "empire/unique/czesc" )
+   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.png" )
    misn.setDesc( bar_desc )
    if targetworld == startworld then --makes sure pilot is not currently on Gamma Polaris
        misn.finish(false)

@@ -1,17 +1,20 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Maikki's Father 2">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>Minerva Station</planet>
-   <done>Maikki's Father 1</done>
-  </avail>
- </mission>
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>100</chance>
+  <location>Bar</location>
+  <planet>Minerva Station</planet>
+  <done>Maikki's Father 1</done>
+ </avail>
+ <notes>
+  <campaign>Minerva</campaign>
+ </notes>
+</mission>
 --]]
 
 --[[
@@ -36,28 +39,30 @@ local portrait = require 'portrait'
 local vn = require 'vn'
 require 'numstring'
 
+logidstr = minerva.log.maikki.idstr
+
 -- TODO customize all the portraits/images/descriptions
 hint1_name = _("Prof. Sato") -- Computer Science / Mathematics
 hint1_description = _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.")
-hint1_portrait = "zalek1"
+hint1_portrait = "zalek1.png"
 hint1_image = "zalek1.png"
 hint1_colour = nil
 
 hint2_name = _("Prof. Stova") -- Material Science
 hint2_description = _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.")
-hint2_portrait = "zalek2"
+hint2_portrait = "zalek2.png"
 hint2_image = "zalek2.png"
 hint2_colour = nil
 
 hint3_name = _("Prof. Hsu") -- Philosophy
 hint3_description = _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.")
-hint3_portrait = "zalek3"
+hint3_portrait = "zalek3.png"
 hint3_image = "zalek3.png"
 hint3_colour = nil
 
 hint4_name = _("Dr. Cayne") -- Dr. Shrimp
 hint4_description = _("You see a young fellow intently reading a book. There seems to be a shrimp in a floating aquarium bowl floating around him.")
-hint4_portrait = "drshrimp"
+hint4_portrait = "drshrimp.png"
 hint4_image = "drshrimp.png"
 hint4_colour = nil
 
@@ -66,9 +71,9 @@ ecc_barname = _("Hologram Projector")
 ecc_portrait = strangelove.portrait
 ecc_description = _("A terminal with which you can check your current token balance and buy items with tokens.")
 
-misn_title = _("Finding Father")
+misn_title = _("Finding Maikki's Father")
 misn_reward = _("???")
-misn_desc = _("Maikki wants you to help her find her father.")
+misn_desc = _("Maikki wants you to help her find out what happened to her father.")
 
 hintpnt = {
    "Jorla",
@@ -151,6 +156,8 @@ function hintosd ()
       end
    elseif misn_state==1 then
       addhint(4)
+   else
+      return
    end
 
    misn.osdCreate( misn_title, osd )
@@ -189,7 +196,9 @@ and %s in the %s system."]]),
       vn.label( "accept" )
       vn.func( function ()
          misn.accept()
+         misn.setDesc( misn_desc )
          misn_state = 0
+         shiplog.appendLog( logidstr, _("You agreed to continue helping Maikki find her father. She told you to try to find hints from three Za'lek researchers.") )
       end )
       maikki(_([["I think we should be able to find out what happened to my father's ship in the nebula. It seems like someone is very interested on stuff that is being found in the nebula and is behind the scavengers you met. Whoever is behind them could also be related to whatever happened to the ship in the first place."]]))
       maikki(_([["I ran a check on Za'lek researchers that would likely be interested in stuff taken from the nebula and there seems to be less than I imagined. I was able to get a list of three researchers. I'll give you the details on them and you should pay them a visit to see if they know anything."]]))
@@ -275,6 +284,7 @@ Her eyes sparkle with determination.]]))
       vn.sfxVictory()
       mission_finish = true
       minerva.tokens_pay( 500 ) -- roughly 1M if you consider winning rates
+      shiplog.appendLog( logidstr, _("You reported to Maikki what Dr. Strangelove told you about her father. She doesn't have any leads at the moment, but it does seem like he is at Minerva Station." ) )
    end )
    vn.na(_("You recieve #p500 Minerva Tokens#0."))
    maikki(_([["I'll be around here if you find anything."]]))
@@ -340,6 +350,7 @@ function visited ()
    if misn_state==0 and visitedhints()==3 then
       misn_state = 1
       markerhint4 = misn.markerAdd( system.get(hintsys[4]), "low" )
+      shiplog.appendLog( logidstr, _("You met the three researchers that Maikki told you about and found out a lead about another researcher.") )
    end
    hintosd()
 end
@@ -355,6 +366,12 @@ end
 
 
 function approach_hint1 ()
+   if not visitedhint1 then
+      visitedhint1 = true
+      misn.markerRm( markerhint1 )
+      visited()
+   end
+
    vn.clear()
    vn.scene()
    local prof = vn.newCharacter( hint1_name, { image=hint1_image, color=hint1_colour } )
@@ -376,16 +393,16 @@ Their excitement grows.]]))
 
    vn.fadeout()
    vn.run()
-
-   if not visitedhint1 then
-      visitedhint1 = true
-      misn.markerRm( markerhint1 )
-      visited()
-   end
 end
 
 
 function approach_hint2 ()
+   if not visitedhint2 then
+      visitedhint2 = true
+      misn.markerRm( markerhint2 )
+      visited()
+   end
+
    vn.clear()
    vn.scene()
    local prof = vn.newCharacter( hint2_name, { image=hint2_image, color=hint2_colour } )
@@ -394,11 +411,11 @@ function approach_hint2 ()
    vn.na(_("You approach the professor."))
    prof(_([["What can I do for you?"]]))
    vn.me(_("You inquire to about whether or not they are interested in artifacts from the nebula."))
-   prof(_([[He rubs his temples.
+   prof(_([[They rubs their temples.
 "Ah, the nebula artifacts... Not very good experiences with those, no, not really interested in them anymore."]]))
    prof(_([["I was part of a really ambitious project to try to track down the origin of the incident, which just end up being a bureaucratic nightmare."]]))
    prof(_([["You see, the bigger the research project, the more the project leader and co-leaders want to have meetings and goals and work packages."
-They shudders when they says the word "work packages".]]))
+They shudder when they says the word "work packages".]]))
    prof(_([["At the end, we were just chaining meetings and answering e-mails and not getting anything done. We ended up handing in a 5 page report written by an internal for the mid-project evaluation and almost lost all the funding. The project leader panicked and it all went to hell from there."]]))
    prof(_([["All nebula research is doomed to end that way. I haven't seen a project succeed yet despite all the proposal calls attempting to address the issue."]]))
    vn.na(_("You inquire about other project members."))
@@ -410,16 +427,16 @@ They shudders when they says the word "work packages".]]))
 
    vn.fadeout()
    vn.run()
-
-   if not visitedhint2 then
-      visitedhint2 = true
-      misn.markerRm( markerhint2 )
-      visited()
-   end
 end
 
 
 function approach_hint3 ()
+   if not visitedhint3 then
+      visitedhint3 = true
+      misn.markerRm( markerhint3 )
+      visited()
+   end
+
    vn.clear()
    vn.scene()
    local prof = vn.newCharacter( hint3_name, { image=hint3_image, color=hint3_colour } )
@@ -436,17 +453,11 @@ function approach_hint3 ()
    prof(_([["Other members? I recall a few, but they liked me so much, they promoted me and gave me a windowless room in the basement. What an honour. Anyway, back to what I was saying."]]))
    prof(_([["We must also further question not only our sensorial organs, and the existence of nebula artifacts, but our own existence. We apparently are able to think and some would argue that by this, the only thing we can prove, given imperfect sensorial data, is our own existence. However, I argue that this too is an illusion, and that our existence itself is something we can't define."]]))
    prof(_([["Every instant, what we perceive as ourselves is ceasing to exist and a new existence, which while very close to the "ourselves" from the previous instance, is, arguably, a completely new existence. This fluidity makes it, not only impossible to perceive nor understand our self as it is, but also makes it impossible to draw a line between different individuals..."]]))
-   vn.na(_("You thank them and run away while they keeps on talking to himself."))
+   vn.na(_("You thank them and run away while they keeps on talking to themself."))
    lasthint( prof )
 
    vn.fadeout()
    vn.run()
-
-   if not visitedhint3 then
-      visitedhint3 = true
-      misn.markerRm( markerhint3 )
-      visited()
-   end
 end
 
 
@@ -560,6 +571,7 @@ He activates her food activation system and a pellet drops out.]]))
          misn.osdCreate( misn_title, {string.format(_("\tGo to %s"), _(eccsys))} )
          misn.markerRm( markerhint4 )
          marker_ecc = misn.markerAdd( system.get(eccsys), "low" )
+         shiplog.appendLog( logidstr, _("You found about a strange researcher who appears to be in Westhaven and is related to the nebula research.") )
       end
    end )
    vn.jump("menu_msg")
@@ -584,9 +596,9 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      local fdrone = faction.dynAdd( "Independent", "Feral Drone", "Feral Drone" )
+      local fdrone = faction.dynAdd( "Independent", "Feral Drone", _("Feral Drone"), "drone_miner" )
       local function spawn_single( ship, pos )
-         local p = pilot.addRaw( ship, "drone_miner", pos, "Feral Drone" )
+         local p = pilot.add( ship, "Feral Drone", pos )
          p:setNoJump(true)
          p:setNoLand(true)
          return p
@@ -634,8 +646,7 @@ function ecc_dist ()
       defense_systems = {}
       for k,v in ipairs(spawners) do
          local pos = eccpos + vec2.newP( rnd.rnd(0,100), rnd.rnd(0,359) )
-         local p = pilot.addRaw( v, "zalek", pos, "Strangelove" )
-         p:rename(_("Security Drone"))
+         local p = pilot.add( v, "Strangelove", pos, _("Security Drone") )
          p:control()
          p:setHostile()
          p:attack( pp )
@@ -670,6 +681,7 @@ function ecc_timer_dead ()
    --vn._sfx.eerie:play()
    diff.apply( eccdiff )
    misn_state = 3
+   shiplog.appendLog( logidstr, _("You were attacked by a Za'lek security system and found a laboratory disguised as an asteroid in Westhaven.") )
 end
 
 
@@ -689,6 +701,7 @@ function ecc_feral_boss_dead ()
    nebula_artifacts = misn.cargoAdd( "Nebula Artifact?", 0 )
    misn_state = 5
    misn.osdCreate( misn_title, {_("Go back to Dr. Strangelove")} )
+   shiplog.appendLog( logidstr, _("You recovered a nebula artifact that Dr. Strangelove wanted from feral drones.") )
 end
 
 drone_msgs = {
@@ -739,6 +752,7 @@ He cackles manically.]]))
 You glance at a crate labelled 'NEBULA ARTIFACTS #082' in the corner of the room.]]))
       dr(_([["Anyway, I am very busy now, yes? All the science won't do itself. Almost have a new specimen ready and it will be better than ever! The old ones were fairly inadequate."]]))
       ecc_visitedonce = true
+      shiplog.appendLog( logidstr, _("You met an eccentric researcher named Dr. Strangelove in Westhaven." ) )
    else
       vn.na(_("The hologram projector flickers and Dr. Strangelove comes into view. He doesn't look very happy to see you again."))
    end
@@ -791,6 +805,7 @@ He glares at you.]]))
    vn.func( function ()
       misn.osdCreate( misn_title, {string.format(_("Recover nebula artifacts from the %s asteroid field"),_(eccsys))} )
       misn_state = 4
+      shiplog.appendLog( logidstr, _("You accepted Dr. Strangelove's request to recover nebula artifacts from feral drones in Westhaven." ) )
    end )
    vn.jump("menu_msg")
 
@@ -853,6 +868,7 @@ His voice gets softer and softer as he keeps on mumbling.]]))
       misn.osdCreate( misn_title, {_("Report back to Maikki in the Limbo system")} )
       misn.markerAdd( system.get("Limbo"), "low")
       misn.markerRm( marker_ecc )
+      shiplog.appendLog( logidstr, _("You learned that Dr. Strangelove saved what appears to be Kex and another individual from a wreck in the nebula. Kex appears to have run away and is likely held by thugs at Minerva station." ) )
    end )
    vn.na(_("You leave behind the hologram project and hope you won't have to deal with Dr. Strangelove in the future."))
    vn.fadeout()

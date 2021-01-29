@@ -216,7 +216,7 @@ end
 -- Enter hook
 function enter()
     if system.cur() == seirsys then
-        seiryuu = pilot.add("Seiryuu", nil, vec2.new(300, 300) + seirplanet:pos())[1]
+        seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(300, 300) + seirplanet:pos(), _("Seiryuu"), "trader" )
         seiryuu:setInvincible(true)
         seiryuu:control()
         if stage == 1 or stage == 6 then
@@ -235,7 +235,7 @@ function enter()
         pilot.toggleSpawn(false)
         player.allowLand(false, _("Landing permission denied. Our docking clamps are currently undergoing maintenance."))
         -- Meet Joe, our informant.
-        joe = pilot.add("Four Winds Vendetta", nil, vec2.new(-500, -4000))[1]
+        joe = pilot.add( "Vendetta", "Four Winds", vec2.new(-500, -4000), _("Four Winds Vendetta"), "trader" )
         joe:control()
         joe:rename(_("Four Winds Informant"))
         joe:setHilight(true)
@@ -316,11 +316,11 @@ function spawnSquads(highlight)
     leaderdest[5] = vec2.new(1000, -1500)
 
     squads = {}
-    squads[1] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[1])
-    squads[2] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[2])
-    squads[3] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[3])
-    squads[4] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[4])
-    squads[5] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[5])
+    squads[1] = addShips( 4, "Vendetta", "Rogue Four Winds", leaderstart[1], _("Four Winds Vendetta") )
+    squads[2] = addShips( 4, "Vendetta", "Rogue Four Winds", leaderstart[2], _("Four Winds Vendetta") )
+    squads[3] = addShips( 4, "Vendetta", "Rogue Four Winds", leaderstart[3], _("Four Winds Vendetta") )
+    squads[4] = addShips( 4, "Vendetta", "Rogue Four Winds", leaderstart[4], _("Four Winds Vendetta") )
+    squads[5] = addShips( 4, "Vendetta", "Rogue Four Winds", leaderstart[5], _("Four Winds Vendetta") )
 
     for i, squad in ipairs(squads) do
         for j, k in ipairs(squad) do
@@ -411,7 +411,7 @@ end
 
 -- Spawns the Genbu
 function spawnGenbu(sys)
-    genbu = pilot.add("Genbu", nil, sys)[1]
+    genbu = pilot.add( "Pirate Kestrel", "Four Winds", sys, _("Genbu") )
     genbu:rmOutfit("all")
     genbu:addOutfit("Turbolaser", 3)
     genbu:addOutfit("Cheater's Ragnarok Beam", 3) -- You can't win. Seriously.
@@ -449,7 +449,7 @@ end
 
 -- Spawns a wing of Lancelots that intercept the player.
 function spawnInterceptors()
-    inters = pilot.add("Four Winds Lancelot Trio", nil, genbu:pos())
+    inters = addShips( 3, "Lancelot", "Rogue Four Winds", genbu:pos(), _("Four Winds Lancelot") )
     for _, j in ipairs(inters) do
         j:rmOutfit("all")
         j:addOutfit("Cheater's Laser Cannon", 4) -- Equip these fellas with unfair weaponry
@@ -469,9 +469,9 @@ function land()
     if planet.cur() == jorekplanet1 and stage == 2 then
         -- Thank you player, but our SHITMAN is in another castle.
         tk.msg(NPCtitle, NPCtext)
-        barmanNPC = misn.npcAdd("barman", "Barman", "neutral/barman", NPCdesc, 4)
+        barmanNPC = misn.npcAdd("barman", "Barman", "neutral/barman.png", NPCdesc, 4)
     elseif planet.cur() == jorekplanet2 and stage == 3 then
-        joreknpc = misn.npcAdd("jorek", "Jorek", "neutral/unique/jorek", Jordesc, 4)
+        joreknpc = misn.npcAdd("jorek", "Jorek", "neutral/unique/jorek.png", Jordesc, 4)
     end
 end
 

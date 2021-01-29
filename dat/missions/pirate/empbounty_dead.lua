@@ -557,7 +557,7 @@ function spawn_pirate( param )
    if not job_done and system.cur() == missys then
       if jumps_permitted >= 0 then
          misn.osdActive( 2 )
-         target_ship = pilot.add( ship, nil, param )[1]
+         target_ship = pilot.addFleet( ship, param )[1]
          target_ship:setHilight( true )
          hook.pilot( target_ship, "attacked", "pilot_attacked" )
          hook.pilot( target_ship, "death", "pilot_death" )

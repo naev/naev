@@ -109,7 +109,7 @@ function create ()
       misn.finish(false)
    end
  
-   misn.setNPC( _("Dimitri?"), "unknown" )
+   misn.setNPC( _("Dimitri?"), "unknown.png" )
    misn.setDesc( bar_desc )
    credits = 2000000
 end
@@ -196,7 +196,7 @@ function enter ( from_sys )
          misn.osdActive(2)
 
          -- Position trinity on the other side of the player
-         trinity = pilot.add("Trinity", "noidle", vec2.new(-5000, 1500))[1]
+         trinity = pilot.add( "Empire Hawking", "Empire", vec2.new(-5000, 1500), _("ESS Trinity"), "noidle" )
          trinity:setVisplayer()
          trinity:setHilight(true)
          trinity:setFaction("Empire") -- Starts out non-hostile
@@ -293,7 +293,7 @@ end
 
 -- Jump in support
 function call_drones_jump ()
-   drone_reinforcements = pilot.add("Collective Sml Swarm", nil, misn_flee_sys)
+   drone_reinforcements = pilot.addFleet("Collective Sml Swarm", misn_flee_sys)
    drone_controlled = true
    local tp = trinity:pos()
    for k,v in ipairs(drone_reinforcements) do
@@ -339,7 +339,7 @@ function add_escorts( landed )
    end
    
    if escorts == nil then escorts = {} end
-   paci = pilot.add("Empire Pacifier", "escort_player", param)[1]
+   paci = pilot.add( "Empire Pacifier", "Empire", param, nil, "escort_player" )
    escorts[#escorts + 1] = paci
    paci:setFriendly()
    if trinity ~= nil then
@@ -347,7 +347,7 @@ function add_escorts( landed )
       paci:moveto( trinity:pos() )
    end
    for i=1, 6 do
-      local lance = pilot.add("Empire Lancelot", "escort_player", param)[1]
+      local lance = pilot.add( "Empire Lancelot", "Empire", param, nil, "escort_player" )
       escorts[#escorts + 1] = lance
       lance:setFriendly()
       if trinity ~= nil then

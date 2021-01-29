@@ -1,76 +1,38 @@
 --[[
--- @brief Wrapper for pilot.add() that can operate on tables of fleets.
+-- @brief Wrapper for pilot.add() that can operate on tables of ships.
 --
--- @usage pilots = addShips( "Pirate Hyena", "pirate", nil, 2 ) -- Creates two Pirate Hyenas with pirate AIs.
--- @usage pilots = addShips( { "Trader Rhino", "Trader Koala" }, nil, nil, 2 ) -- Creates a convoy of four trader ships with default AIs.
+-- @usage pilots = addShips( 1, "Hyena", "Pirate" ) -- Creates a facsimile of a Pirate Hyena.
+-- @usage pilots = addShips( 1, "Hyena", "Pirate", nil, nil, "pirate_norun" ) -- Ditto, but use the "norun" AI variant.
+-- @usage pilots = addShips( 2, { "Rhino", "Koala" }, "Trader" ) -- Creates four Trader ships.
 --
---    @luaparam ship Fleet to add.
---    @luaparam ai AI to override the default with.
---    @luaparam location Location to jump in from, take off from, or appear at.
 --    @luaparam count Number of times to repeat the pattern.
---    @luareturn Table of created pilots.
--- @luafunc addShips( fleet, ai, location, count )
---]]
-function addShips( ship, ai, location, count )
-   local ais = {}
-   local locations = {}
-   local out = {}
-
-   if type(ship) ~= "table" and type(ship) ~= "string" then
-      print(_("addShips: Error, ship list is not a fleet or table of fleets!"))
-      return
-   elseif type(ship) == "string" then -- Put lone fleet into table.
-      ship = { ship }
-   end
-   ais       = _buildDupeTable( ai, #ship )
-   locations = _buildDupeTable( location, #ship )
-
-   if count == nil then
-      count = 1
-   end
-   for i=1,count do -- Repeat the pattern as necessary.
-      for k,v in ipairs(ship) do
-         out = _mergeTables( out, pilot.add( ship[k], ais[k], locations[k] ) )
-      end
-   end
-   if #out > 1 then
-      _randomizePositions( out )
-   end
-   return out
-end
-
-
---[[
--- @brief Wrapper for pilot.addRaw() that can operate on tables of ships.
---
--- @usage pilots = addRawShips( "Hyena", "pirate", nil, "Pirate" ) -- Creates a facsimile of a Pirate Hyena.
--- @usage pilots = addRawShips( { "Rhino", "Koala" }, nil, nil, "Trader", 2 ) -- Creates four Trader ships.
---
 --    @luaparam ship Ship to add.
---    @luaparam ai AI to give the pilot.
---    @luaparam location Location to jump in from, take off from, or appear at.
 --    @luaparam faction Faction to give the pilot.
---    @luaparam count Number of times to repeat the pattern.
+--    @luaparam location Location to jump in from, take off from, or appear at.
+--    @luaparam pilotname Name to give the pilot.
+--    @luaparam ai AI to give the pilot.
 --    @luareturn Table of created pilots.
--- @luafunc addRawShips( ship, ai, location, faction, count )
+-- @luafunc addShips
 --]]
-function addRawShips( ship, ai, location, faction, count )
+function addShips( count, ship, faction, location, pilotname, ai )
+   local pilotnames = {}
    local ais = {}
    local locations = {}
    local factions = {}
    local out = {}
 
    if type(ship) ~= "table" and type(ship) ~= "string" then
-      print(_("addRawShips: Error, ship list is not a ship or table of ships!"))
+      print(_("addShips: Error, ship list is not a ship or table of ships!"))
       return
    elseif type(ship) == "string" then -- Put lone ship into table.
       ship = { ship }
    end
+   pilotnames= _buildDupeTable( pilotname, #ship )
    ais       = _buildDupeTable( ai, #ship )
    locations = _buildDupeTable( location, #ship )
    factions  = _buildDupeTable( faction, #ship )
    if factions[1] == nil then
-      print(_("addRawShips: Error, raw ships must have factions!"))
+      print(_("addShips: Error, raw ships must have factions!"))
       return
    end
 
@@ -79,7 +41,7 @@ function addRawShips( ship, ai, location, faction, count )
    end
    for i=1,count do -- Repeat the pattern as necessary.
       for k,v in ipairs(ship) do
-         out[k+(i-1)*#ship] = pilot.addRaw( ship[k], ais[k], locations[k], factions[k] )
+         out[k+(i-1)*#ship] = pilot.add( ship[k], factions[k], locations[k], pilotnames[k], ais[k] )
       end
    end
    if #out > 1 then
@@ -105,19 +67,7 @@ function _buildDupeTable( input, count )
 end
 
 
-function _mergeTables( old, new )
-   if type(old) ~= "table" or type(new) ~= "table" then
-      print(_("_mergeTables: Error, this function only accepts tables."))
-   end
-
-   for k,v in ipairs(new) do
-      table.insert(old, v )
-   end
-   return old
-end
-
-
--- Randomize the locations of ships in the same manner than pilot.add() does.
+-- Randomly stagger the locations of ships so they don't all spawn on top of each other.
 function _randomizePositions( ship, override )
    if type(ship) ~= "table" and type(ship) ~= "userdata" then
       print(_("_randomizePositions: Error, ship list is not a pilot or table of pilots!"))

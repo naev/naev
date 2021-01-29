@@ -52,7 +52,7 @@
  *
  * An example would be:
  * @code
- * misn.setNPC( "Keer", "empire/unique/keer" )
+ * misn.setNPC( "Keer", "empire/unique/keer.png" )
  * misn.setDesc( "You see here Commodore Keer." )
  * @endcode
  *
@@ -419,12 +419,6 @@ static int misn_markerMove( lua_State *L )
 
    cur_mission = misn_getFromLua(L);
 
-   /* Mission must have markers. */
-   if (cur_mission->markers == NULL) {
-      NLUA_ERROR( L, _("Mission has no markers set!") );
-      return 0;
-   }
-
    /* Check id. */
    marker = NULL;
    n = array_size( cur_mission->markers );
@@ -467,12 +461,6 @@ static int misn_markerRm( lua_State *L )
 
    cur_mission = misn_getFromLua(L);
 
-   /* Mission must have markers. */
-   if (cur_mission->markers == NULL) {
-      /* Already removed. */
-      return 0;
-   }
-
    /* Check id. */
    marker = NULL;
    n = array_size( cur_mission->markers );
@@ -500,13 +488,13 @@ static int misn_markerRm( lua_State *L )
  * @brief Sets the current mission NPC.
  *
  * This is used in bar missions where you talk to a person. The portraits are
- *  the ones found in GFX_PATH/portraits without the png extension. So for
- *  GFX_PATH/portraits/none.png you would just use "none".
+ *  the ones found in GFX_PATH/portraits. (For GFX_PATH/portraits/none.png
+ *  you would use "none.png".)
  *
- * @usage misn.setNPC( "Invisible Man", "none" )
+ * @usage misn.setNPC( "Invisible Man", "none.png" )
  *
  *    @luatparam string name Name of the NPC.
- *    @luatparam string portrait Name of the portrait to use for the NPC.
+ *    @luatparam string portrait File name of the portrait to use for the NPC.
  * @luafunc setNPC
  */
 static int misn_setNPC( lua_State *L )
@@ -535,7 +523,7 @@ static int misn_setNPC( lua_State *L )
    cur_mission->npc = strdup(name);
 
    /* Set portrait. */
-   nsnprintf( buf, PATH_MAX, GFX_PATH"portraits/%s.png", str );
+   nsnprintf( buf, PATH_MAX, GFX_PATH"portraits/%s", str );
    cur_mission->portrait = gl_newImage( buf, 0 );
 
    return 0;
@@ -880,14 +868,14 @@ static int misn_osdGetActiveItem( lua_State *L )
  *
  * @note Do not use this at all in the "create" function. Use setNPC, setDesc and the "accept" function instead.
  *
- * @usage npc_id = misn.npcAdd( "my_func", "Mr. Test", "none", "A test." ) -- Creates an NPC.
+ * @usage npc_id = misn.npcAdd( "my_func", "Mr. Test", "none.png", "A test." ) -- Creates an NPC.
  *
  *    @luatparam string func Name of the function to run when approaching, gets passed the npc_id when called.
  *    @luatparam string name Name of the NPC
- *    @luatparam string portrait Portrait to use for the NPC (from GFX_PATH/portraits*.png).
+ *    @luatparam string portrait Portrait file name to use for the NPC (from GFX_PATH/portraits/).
  *    @luatparam string desc Description associated to the NPC.
  *    @luatparam[opt=5] number priority Optional priority argument (highest is 0, lowest is 10).
- *    @luatparam[opt=nil] string background Optional parameter specifying the background to use.
+ *    @luatparam[opt=nil] string background Background file name to use (from GFX_PATH/portraits/).
  *    @luatreturn number The ID of the NPC to pass to npcRm.
  * @luafunc npcAdd
  */
@@ -910,9 +898,9 @@ static int misn_npcAdd( lua_State *L )
    bg   = luaL_optstring(L,6,NULL);
 
    /* Set path. */
-   nsnprintf( portrait, PATH_MAX, GFX_PATH"portraits/%s.png", gfx );
+   nsnprintf( portrait, PATH_MAX, GFX_PATH"portraits/%s", gfx );
    if (bg!=NULL)
-      nsnprintf( background, PATH_MAX, GFX_PATH"portraits/%s.png", bg );
+      nsnprintf( background, PATH_MAX, GFX_PATH"portraits/%s", bg );
 
    cur_mission = misn_getFromLua(L);
 

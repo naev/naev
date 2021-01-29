@@ -74,7 +74,7 @@ log_text = _([[You stole something called a "quantum sharpener" from a Soromid s
 
 function create ()
    -- Spaceport bar stuff
-   misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller")
+   misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller.png")
    misn.setDesc( bar_desc )
 end
 function accept()
@@ -101,7 +101,7 @@ function sys_enter ()
       dist = rnd.rnd() * system.cur():radius() *1/2
       angle = rnd.rnd() * 2 * math.pi
       location = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- Randomly spawn the Ship in the system
-      target = pilot.add("Soromid Odium", nil, location)[1]
+      target = pilot.add( "Soromid Odium", "Soromid", location )
       target:control()
       target:rename(shpnm)
       target:setFaction("Soromid")

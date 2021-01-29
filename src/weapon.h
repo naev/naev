@@ -57,6 +57,7 @@ void weapons_render( const WeaponLayer layer, const double dt );
 /*
  * clean
  */
+void weapon_init (void);
 void weapon_clear (void);
 void weapon_exit (void);
 

@@ -85,7 +85,7 @@ misn_desc[1] = _("Fly to planet %s in the %s system and talk to Jorek. Once Jore
 -- NPC stuff
 jorek_npc = {}
 jorek_npc["name"] = _("An unpleasant man.")
-jorek_npc["portrait"] = "neutral/unique/jorek"
+jorek_npc["portrait"] = "neutral/unique/jorek.png"
 jorek_npc["desc"] = _("A middle-aged, cranky looking man is sitting at a table by himself. You are fairly certain that this is the fellow you're looking for.")
 jorek_title = {}
 jorek_title[1] = _("An unpleasant man")
@@ -146,7 +146,7 @@ function create ()
     timelimit1 = 20 -- In STP
     timelimit2 = 50 -- In STP
     
-    misn.setNPC( _("A dark-haired woman"), "neutral/unique/rebina_casual" )
+    misn.setNPC( _("A dark-haired woman"), "neutral/unique/rebina_casual.png" )
     misn.setDesc( bar_desc ) 
 end
 
@@ -261,14 +261,14 @@ function enter()
     if system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and shadowrun == 2 then
         pilot.clear()
         pilot.toggleSpawn(false)
-        pirates = pilot.add("Pirate Hyena Pack", "pirate", vec2.new(0,0))
+        pirates = addShips( 4, "Hyena", "Pirate", vec2.new(0,0), _("Pirate Hyena") )
     elseif system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and shadowrun == 3 then
         pilot.clear()
         pilot.toggleSpawn(false)
-        pilot.add("Pirate Hyena Pack", "pirate", vec2.new(0,0))
-        pilot.add("Pirate Ancestor", "pirate", vec2.new(0,20))
-        pilot.add("Pirate Ancestor", "pirate", vec2.new(-20,0))
-        pilot.add("Pirate Ancestor", "pirate", vec2.new(0,-20))
+        addShips( 4, "Hyena", "Pirate", vec2.new(0,0), _("Pirate Hyena") )
+        pilot.add( "Pirate Ancestor", "Pirate", vec2.new(0,20) )
+        pilot.add( "Pirate Ancestor", "Pirate", vec2.new(-20,0) )
+        pilot.add( "Pirate Ancestor", "Pirate", vec2.new(0,-20) )
     end
     
     -- Empire ships around planet
@@ -276,20 +276,20 @@ function enter()
         pilot.clear()
         pilot.toggleSpawn(false)
         planetpos = pnt:pos()
-        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(200,0))
-        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(130,130))
-        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(0,200))
-        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(-130,130))
-        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(-200,0))
-        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(-130,-130))
-        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(0,-200))
-        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(130,-130))
+        pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(200,0), nil, "empire_idle" )
+        pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(130,130), nil, "empire_idle" )
+        pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(0,200), nil, "empire_idle" )
+        pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(-130,130), nil, "empire_idle" )
+        pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(-200,0), nil, "empire_idle" )
+        pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(-130,-130), nil, "empire_idle" )
+        pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(0,-200), nil, "empire_idle" )
+        pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(130,-130), nil, "empire_idle" )
     end
 
     -- Handle the Seiryuu, the last stop on this mission
     if shadowrun >= 2 and system.cur() == sys2 then
         mypos = vec2.new(-1500, 600)
-        seiryuu = pilot.add( "Seiryuu", nil, mypos )[1]
+        seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", mypos , _("Seiryuu"), "trader" )
 
         seiryuu:setActiveBoard(true)
         seiryuu:control()

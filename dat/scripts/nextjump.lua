@@ -4,7 +4,7 @@ function getNextSystem( nowsys, finalsys, hidden )
        return nowsys
    end
 
-   path = nowsys:jumpPath( finalsys )
+   path = nowsys:jumpPath( finalsys, hidden )
    if not path then
       return nowsys
    end

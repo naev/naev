@@ -87,7 +87,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith")
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.png")
    misn.setDesc(bar_desc[1])
 end
 
@@ -156,7 +156,7 @@ function wait_msg ()
 end
 
 function flf_people ()
-   pacifier = pilot.add( "FLF Pacifier", nil, system.get("Doeston") )[1]
+   pacifier = pilot.add( "Pacifier", "FLF", system.get("Doeston") , _("FLF Pacifier") )
    pacifier:memory().aggressive = false
    pacifier:setFriendly( true )
    pacifier:setInvincible( true )

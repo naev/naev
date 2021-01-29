@@ -5,8 +5,8 @@
   <y>-15992.802931</y>
  </pos>
  <GFX>
-  <space>moon-P01.png</space>
-  <exterior>lava.png</exterior>
+  <space>moon-P01.webp</space>
+  <exterior>lava.webp</exterior>
  </GFX>
  <general>
   <class>P</class>

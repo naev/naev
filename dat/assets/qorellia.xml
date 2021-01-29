@@ -5,8 +5,8 @@
   <y>1500.000000</y>
  </pos>
  <GFX>
-  <space>moon-G01.png</space>
-  <exterior>mining2.png</exterior>
+  <space>moon-G01.webp</space>
+  <exterior>mining2.webp</exterior>
  </GFX>
  <presence>
   <faction>Pirate</faction>

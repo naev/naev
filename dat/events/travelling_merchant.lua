@@ -17,7 +17,7 @@ local vn = require 'vn'
 local portrait = require 'portrait'
 
 trader_name = _("Machiavellian Misi") -- Mireia Sibeko
-trader_portrait = "misi"
+trader_portrait = "misi.png"
 trader_colour = {1, 0.3, 1}
 store_name = string.format(_("%s's \"Fine\" Wares"), trader_name)
 broadcastmsg = {
@@ -46,8 +46,7 @@ function create ()
    end
 
    -- Create pilot
-   p = pilot.addRaw( "Mule", "trader", spawn_pos, 'Trader' )
-   p:rename( trader_name )
+   p = pilot.add( "Mule", "Trader", spawn_pos, trader_name )
    p:setFriendly()
    p:setInvincible()
    p:setVisplayer()

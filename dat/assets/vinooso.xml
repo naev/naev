@@ -5,8 +5,8 @@
   <y>-2078.153500</y>
  </pos>
  <GFX>
-  <space>moon-P00.png</space>
-  <exterior>snow.png</exterior>
+  <space>moon-P00.webp</space>
+  <exterior>snow.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

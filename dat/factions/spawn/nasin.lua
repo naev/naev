@@ -69,7 +69,7 @@ end
 scom.spawn = function( pilots )
    local spawned = {}
    for k,v in ipairs(pilots) do
-      local p = pilot.add( v["pilot"] )
+      local p = pilot.addFleet( v["pilot"] )
       if #p == 0 then
          error(_("No pilots added"))
       end

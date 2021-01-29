@@ -24,7 +24,7 @@ end
 -- Cards are designed to be drawn at 75 x 105 px
 --]]
 cardio.Card = class.inheritsFrom( lg.Drawable )
-function cardio.newcard()
+function cardio.newCard()
    local c = cardio.Card.new()
    return c
 end

@@ -33,7 +33,6 @@
 #define VSYNC_DEFAULT                        0     /**< Whether to wait for vertical sync. */
 #define MIPMAP_DEFAULT                       0     /**< Whether to use Mip Mapping. */
 #define TEXTURE_COMPRESSION_DEFAULT          0     /**< Whether to use texture compression. */
-#define NPOT_TEXTURES_DEFAULT                0     /**< Whether to allow non-power-of-two textures. */
 #define SCALE_FACTOR_DEFAULT                 1.    /**< Default scale factor. */
 #define SHOW_FPS_DEFAULT                     0     /**< Whether to display FPS on screen. */
 #define FPS_MAX_DEFAULT                      60    /**< Maximum FPS. */
@@ -80,7 +79,6 @@ typedef struct PlayerConf_s {
    int vsync; /**< Whether or not to use vsync. */
    int mipmaps; /**< Use mipmaps. */
    int compress; /**< Use texture compression. */
-   int npot; /**< Use NPOT textures if available. */
 
    /* Memory usage. */
    int engineglow; /**< Sets engine glow. */

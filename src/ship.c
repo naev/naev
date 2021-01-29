@@ -12,6 +12,7 @@
 /** @cond */
 #include <limits.h>
 #include "physfsrwops.h"
+#include "SDL_image.h"
 
 #include "naev.h"
 /** @endcond */
@@ -24,7 +25,6 @@
 #include "log.h"
 #include "ndata.h"
 #include "nfile.h"
-#include "npng.h"
 #include "nstring.h"
 #include "nxml.h"
 #include "shipstats.h"
@@ -117,11 +117,10 @@ const char *ship_existsCase( const char* name )
 
 
 /**
- * @brief Gets all the ships.
+ * @brief Gets the array (array.h) of all ships.
  */
-Ship* ship_getAll( int *n )
+Ship* ship_getAll (void)
 {
-   *n = array_size(ship_stack);
    return ship_stack;
 }
 
@@ -379,7 +378,6 @@ int ship_size( const Ship *s )
 static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 {
    SDL_Surface *gfx, *gfx_store;
-   int potw, poth, potw_store, poth_store;
    int x, y, sw, sh;
    SDL_Rect rtemp, dstrect;
 #if 0 /* Required for scanlines. */
@@ -394,27 +392,13 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    sw = temp->gfx_space->w / sx;
    sh = temp->gfx_space->h / sy;
 
-   /* POT size. */
-   if (gl_needPOT()) {
-      potw = gl_pot( sw );
-      poth = gl_pot( sh );
-      potw_store = gl_pot( SHIP_TARGET_W );
-      poth_store = gl_pot( SHIP_TARGET_H );
-   }
-   else {
-      potw = sw;
-      poth = sh;
-      potw_store = SHIP_TARGET_W;
-      poth_store = SHIP_TARGET_H;
-   }
-
    /* Create the surface. */
    SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
 
    /* create the temp POT surface */
-   gfx = SDL_CreateRGBSurface( 0, potw, poth,
+   gfx = SDL_CreateRGBSurface( 0, sw, sh,
          surface->format->BytesPerPixel*8, RGBAMASK );
-   gfx_store = SDL_CreateRGBSurface( 0, potw_store, poth_store,
+   gfx_store = SDL_CreateRGBSurface( 0, SHIP_TARGET_W, SHIP_TARGET_H,
          surface->format->BytesPerPixel*8, RGBAMASK );
 
    if (gfx == NULL) {
@@ -494,22 +478,18 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
  */
 static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
 {
-   png_uint_32 w, h;
    SDL_RWops *rw;
-   npng_t *npng;
    SDL_Surface *surface;
    int ret;
 
    /* Load the space sprite. */
    rw    = PHYSFSRWOPS_openRead( str );
-   npng  = npng_open( rw );
-   npng_dim( npng, &w, &h );
-   surface = npng_readSurface( npng, gl_needPOT(), 1 );
+   surface = IMG_Load_RW( rw, 0 );
 
    /* Load the texture. */
    temp->gfx_space = gl_loadImagePadTrans( str, surface, rw,
-         OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS,
-         w, h, sx, sy, 0 );
+         OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP,
+         surface->w, surface->h, sx, sy, 0 );
 
    /* Create the target graphic. */
    ret = ship_genTargetGFX( temp, surface, sx, sy );
@@ -517,7 +497,6 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
       return ret;
 
    /* Free stuff. */
-   npng_close( npng );
    SDL_RWclose( rw );
    SDL_FreeSurface( surface );
 
@@ -884,7 +863,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       }
 
       if (xml_isNode(node,"gfx_comm")) {
-
          /* Get path */
          buf = xml_get(node);
          if (buf==NULL) {
@@ -908,7 +886,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
                   temp->gfx_overlays = realloc( temp->gfx_overlays, m * sizeof( glTexture * ) );
                }
                temp->gfx_overlays[ temp->gfx_noverlays-1 ] = xml_parseTexture( cur,
-                     OVERLAY_GFX_PATH"%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+                     OVERLAY_GFX_PATH"%s", 1, 1, OPENGL_TEX_MIPMAPS );
             }
          } while (xml_nextNode(cur));
          continue;

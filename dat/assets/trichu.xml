@@ -5,8 +5,8 @@
   <y>11180.096085</y>
  </pos>
  <GFX>
-  <space>moon-G00.png</space>
-  <exterior>mining.png</exterior>
+  <space>moon-G00.webp</space>
+  <exterior>mining.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

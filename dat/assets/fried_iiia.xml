@@ -5,8 +5,8 @@
   <y>2550.000000</y>
  </pos>
  <GFX>
-  <space>moon-H01.png</space>
-  <exterior>desertic.png</exterior>
+  <space>moon-H01.webp</space>
+  <exterior>desertic.webp</exterior>
  </GFX>
  <general>
   <class>H</class>

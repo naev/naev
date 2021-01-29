@@ -308,10 +308,6 @@ static void background_renderImages( background_image_t *bkg_arr )
    background_image_t *bkg;
    double px,py, x,y, xs,ys, z;
 
-   /* Must have an image array created. */
-   if (bkg_arr == NULL)
-      return;
-
    /* Render images in order. */
    for (i=0; i<array_size(bkg_arr); i++) {
       bkg = &bkg_arr[i];
@@ -503,23 +499,13 @@ void background_free (void)
 /**
  * @brief returns the background images, and number of these
  */
-void background_getTextures(unsigned int *n, glTexture ***imgs)
+glTexture** background_getTextures (void)
 {
-  unsigned int i;
-  background_image_t *bkg;
+  int i;
+  glTexture **imgs;
 
-  if (bkg_image_arr_bk == NULL) {
-      *n = 0;
-      return;
-  }
-
-  *n = array_size( bkg_image_arr_bk );
-  *imgs = malloc( sizeof( glTexture * ) * ( *n ) );
-  for ( i=0; i<*n; i++ ) {
-    bkg = &bkg_image_arr_bk[i];
-    if ( bkg->image != NULL )
-      (*imgs)[i] = gl_dupTexture(bkg->image);
-    else
-      (*imgs)[i] = NULL;
-  }
+  imgs = array_create_size( glTexture*, array_size( bkg_image_arr_bk ));
+  for ( i=0; i<array_size(bkg_image_arr_bk); i++ )
+    array_push_back( &imgs, gl_dupTexture(bkg_image_arr_bk[i].image) );
+  return imgs;
 }

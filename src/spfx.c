@@ -34,8 +34,6 @@
 #define SPFX_XML_ID     "spfxs" /**< XML Document tag. */
 #define SPFX_XML_TAG    "spfx" /**< SPFX XML node tag. */
 
-#define SPFX_GFX_SUF    ".png" /**< Suffix of graphics. */
-
 #define SPFX_CHUNK_MAX  16384 /**< Maximum chunk to alloc when needed */
 #define SPFX_CHUNK_MIN  256 /**< Minimum chunk to alloc when needed */
 
@@ -141,7 +139,7 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
       xmlr_float(node, "ttl", temp->ttl);
       if (xml_isNode(node,"gfx")) {
          temp->gfx = xml_parseTexture( node,
-               SPFX_GFX_PATH"%s"SPFX_GFX_SUF, 6, 5, 0 );
+               SPFX_GFX_PATH"%s", 6, 5, 0 );
          continue;
       }
       WARN(_("SPFX '%s' has unknown node '%s'."), temp->name, node->name);

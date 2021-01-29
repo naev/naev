@@ -8,7 +8,7 @@
   <mass>25</mass>
   <price>225000</price>
   <description>Derived from the smaller Arrow 550, the Arrow 1200 is intended for use on destroyers and mid-sized freighters. With moderate power consumption and solid performance, it's found on many seasoned captains' ships.</description>
-  <gfx_store>engine14</gfx_store>
+  <gfx_store>engine14.png</gfx_store>
  </general>
  <specific type="modification">
   <thrust>87</thrust>

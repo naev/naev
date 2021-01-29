@@ -65,7 +65,7 @@ function create()
    --set the mission stuff
    misn.setReward(creditstring(reward))
    misn.setTitle(misn_title)
-   misn.setNPC(npc_name, "sirius/unique/strangeman")
+   misn.setNPC(npc_name, "sirius/unique/strangeman.png")
    misn.setDesc(bar_desc)
    osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())
    misn_desc = misn_desc:format(targetasset:name(),targetsystem:name())

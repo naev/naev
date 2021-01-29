@@ -5,7 +5,7 @@
   <mass>0</mass>
   <price>200000</price>
   <description>This map contains the position of hidden jump points leading straight into Za'lek space.</description>
-  <gfx_store>map</gfx_store>
+  <gfx_store>map.png</gfx_store>
  </general>
  <specific type="map">
   <sys name="Unicorn">

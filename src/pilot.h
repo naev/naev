@@ -385,7 +385,7 @@ typedef struct Pilot_ {
 /*
  * getting pilot stuff
  */
-Pilot** pilot_getAll( int *n );
+Pilot** pilot_getAll (void);
 Pilot* pilot_get( const unsigned int id );
 unsigned int pilot_getNextID( const unsigned int id, int mode );
 unsigned int pilot_getPrevID( const unsigned int id, int mode );
@@ -461,6 +461,7 @@ void pilot_delete( Pilot *p );
  * init/cleanup
  */
 void pilot_destroy(Pilot* p);
+void pilots_init (void);
 void pilots_free (void);
 void pilots_clean (int persist);
 void pilots_clear (void);

@@ -70,7 +70,7 @@ function create()
    end
    misn.setReward( creditstring( reward ) )
    misn.setTitle( misn_title )
-   misn.setNPC(npc_name, "sirius/unique/draga")
+   misn.setNPC(npc_name, "sirius/unique/draga.png")
    misn.setDesc(bar_desc)
 
    osd[1] = osd[1]:format(homeasset:name())
@@ -103,7 +103,7 @@ function takeoff() --for when the player takes off from the wringer.
    pilot.clear() --clearing out all the pilots, and
    pilot.toggleSpawn("Sirius",false) --making the Sirius not spawn. I want the assault fleet the only Sirius in there.
    deathcounter = 0 -- Counts destroyed Nasin ships.
-   sirius_be_serious = pilot.add("Sirius Assault Force",sirius,system.get("Herakin"))
+   sirius_be_serious = pilot.addFleet("Sirius Assault Force", system.get("Herakin"))
    
    for _,p in ipairs(sirius_be_serious) do
       p:setHilight()
@@ -112,8 +112,8 @@ function takeoff() --for when the player takes off from the wringer.
       p:setHostile() --just in case. makes thing easier.
    end
    
-   de_fence = pilot.add("Nasin Med Defense Fleet",nil,homeasset)
-   de_fence_2 = pilot.add("Nasin Med Defense Fleet",nil,vec2.new(rnd.rnd(25,75),rnd.rnd(100,350)))
+   de_fence = pilot.addFleet("Nasin Med Defense Fleet", homeasset)
+   de_fence_2 = pilot.addFleet("Nasin Med Defense Fleet", vec2.new(rnd.rnd(25,75),rnd.rnd(100,350)))
    
    for _,p in ipairs(de_fence) do
       p:setNoJump()
@@ -168,7 +168,7 @@ function out_sys_failure() --feel like jumping out? AWOL! its easier this way. t
 end
 
 function second_coming()
-   sirius_be_serious_2 = pilot.add("Sirius Assault Force",sirius,system.get("Herakin"))
+   sirius_be_serious_2 = pilot.addFleet("Sirius Assault Force", system.get("Herakin"))
    for i,p in ipairs(sirius_be_serious_2) do
       table.insert(sirius_be_serious,p) --inserting into the original table, for the death function.
       p:setHilight()

@@ -55,6 +55,7 @@ typedef struct Faction_ {
    char *name; /**< Normal Name. */
    char *longname; /**< Long Name. */
    char *displayname; /**< Display name. */
+   char *ai; /**< Name of the faction's default pilot AI. */
 
    /* Graphics. */
    glTexture *logo_small; /**< Small logo. */
@@ -92,6 +93,7 @@ static Faction* faction_stack = NULL; /**< Faction stack. */
  * Prototypes
  */
 /* static */
+static int faction_getRaw( const char *name );
 static void faction_freeOne( Faction *f );
 static void faction_sanitizePlayer( Faction* faction );
 static void faction_modPlayerLua( int f, double mod, const char *source, int secondary );
@@ -108,10 +110,9 @@ int pfaction_load( xmlNodePtr parent );
  *    @param name Name of the faction to seek.
  *    @return ID of the faction.
  */
-int faction_get( const char* name )
+static int faction_getRaw( const char* name )
 {
    int i;
-
    /* Escorts are part of the "player" faction. */
    if (strcmp(name, "Escort") == 0)
       return FACTION_PLAYER;
@@ -124,9 +125,34 @@ int faction_get( const char* name )
       if (i != array_size(faction_stack))
          return i;
    }
-
-   WARN(_("Faction '%s' not found in stack."), name);
    return -1;
+}
+
+
+/**
+ * @brief Checks to see if a faction exists by name.
+ *
+ *    @param name Name of the faction to seek.
+ *    @return ID of the faction.
+ */
+int faction_exists( const char* name )
+{
+   return faction_getRaw(name)!=-1;
+}
+
+
+/**
+ * @brief Gets a faction ID by name.
+ *
+ *    @param name Name of the faction to seek.
+ *    @return ID of the faction.
+ */
+int faction_get( const char* name )
+{
+   int id = faction_getRaw(name);
+   if (id<0)
+      WARN(_("Faction '%s' not found in stack."), name);
+   return id;
 }
 
 
@@ -300,6 +326,22 @@ const char* faction_longname( int f )
    if (faction_stack[f].longname != NULL)
       return _(faction_stack[f].longname);
    return _(faction_stack[f].name);
+}
+
+
+/**
+ * @brief Gets the name of the default AI profile for the faction's pilots.
+ *
+ *    @param f Faction ID.
+ *    @return The faction's AI profile name.
+ */
+const char* faction_default_ai( int f )
+{
+   if (!faction_isFaction(f)) {
+      WARN(_("Faction id '%d' is invalid."), f);
+      return NULL;
+   }
+   return faction_stack[f].ai;
 }
 
 
@@ -1240,6 +1282,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       xmlr_strd(node,"name",temp->name);
       xmlr_strd(node,"longname",temp->longname);
       xmlr_strd(node,"display",temp->displayname);
+      xmlr_strd(node,"ai",temp->ai);
       if (xml_isNode(node, "colour")) {
          ctmp = xml_get(node);
          if (ctmp != NULL)
@@ -1543,6 +1586,7 @@ static void faction_freeOne( Faction *f )
    free(f->name);
    free(f->longname);
    free(f->displayname);
+   free(f->ai);
    gl_freeTexture(f->logo_small);
    gl_freeTexture(f->logo_tiny);
    array_free(f->allies);
@@ -1551,7 +1595,7 @@ static void faction_freeOne( Faction *f )
       nlua_freeEnv( f->sched_env );
    if (f->env != LUA_NOREF)
       nlua_freeEnv( f->env );
-   if (f->equip_env != LUA_NOREF)
+   if (!faction_isFlag(f, FACTION_DYNAMIC) && (f->equip_env != LUA_NOREF))
       nlua_freeEnv( f->equip_env );
 }
 
@@ -1737,8 +1781,9 @@ void factions_clearDynamic (void)
  *    @param base Faction to base it off (negative for none).
  *    @param name Name of the faction to set.
  *    @param display Display name to use.
+ *    @param ai Default pilot AI to use (if NULL, inherit from base).
  */
-int faction_dynAdd( int base, const char *name, const char *display )
+int faction_dynAdd( int base, const char* name, const char* display, const char* ai )
 {
    Faction *f, *bf;
    int i, *tmp;
@@ -1746,7 +1791,8 @@ int faction_dynAdd( int base, const char *name, const char *display )
    f = &array_grow( &faction_stack );
    memset( f, 0, sizeof(Faction) );
    f->name        = strdup( name );
-   f->displayname = strdup( display );
+   f->displayname = display==NULL ? NULL : strdup( display );
+   f->ai          = ai==NULL ? NULL : strdup( ai );
    f->allies      = array_create( int );
    f->enemies     = array_create( int );
    f->equip_env   = LUA_NOREF;
@@ -1756,6 +1802,8 @@ int faction_dynAdd( int base, const char *name, const char *display )
    if (base>=0) {
       bf = &faction_stack[base];
 
+      if (bf->ai!=NULL && ai==NULL)
+         f->ai = strdup( bf->ai );
       if (bf->logo_small!=NULL)
          f->logo_small = gl_dupTexture( bf->logo_small );
       if (bf->logo_tiny!=NULL)
@@ -1772,7 +1820,11 @@ int faction_dynAdd( int base, const char *name, const char *display )
 
       f->player_def = bf->player_def;
       f->player = bf->player;
+      f->colour = bf->colour;
+
+      /* Lua stuff. */
+      f->equip_env = bf->equip_env;
    }
 
-   return array_size(faction_stack)-1;
+   return f-faction_stack;
 }

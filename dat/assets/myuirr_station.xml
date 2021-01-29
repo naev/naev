@@ -5,8 +5,8 @@
   <y>-8375.950143</y>
  </pos>
  <GFX>
-  <space>station-cylinder.png</space>
-  <exterior>station03.png</exterior>
+  <space>station-cylinder.webp</space>
+  <exterior>station03.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

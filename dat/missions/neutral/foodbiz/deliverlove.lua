@@ -62,7 +62,7 @@ function create () --No system shall be claimed by mission
    reward = 20000
    started = false
 
-   misn.setNPC( npc_name, "neutral/unique/michal" )
+   misn.setNPC( npc_name, "neutral/unique/michal.png" )
    misn.setDesc( bar_desc )
 end
 

@@ -238,7 +238,7 @@ end
 function timer ()
    if timer_hook ~= nil then hook.rm( timer_hook ) end
 
-   local player_pos = player.pilot():pos()
+   local player_pos = player.pos()
 
    if #points > 0 then
       misn.osdActive( 2 )

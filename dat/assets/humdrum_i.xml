@@ -5,8 +5,8 @@
   <y>-1080.000000</y>
  </pos>
  <GFX>
-  <space>moon-K00.png</space>
-  <exterior>lava.png</exterior>
+  <space>moon-K00.webp</space>
+  <exterior>lava.webp</exterior>
  </GFX>
  <general>
   <class>A</class>

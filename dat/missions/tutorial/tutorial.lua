@@ -168,7 +168,7 @@ function timer ()
 
    if stage == 1 then
       if system.cur() == missys
-            and player.pilot():pos():dist( start_planet:pos() ) <= start_planet_r then
+            and player.pos():dist( start_planet:pos() ) <= start_planet_r then
          stage = 2
          misn.osdActive( 2 )
 
@@ -179,7 +179,7 @@ function timer ()
       end
    elseif stage == 4 then
       if system.cur() == missys
-            and player.pilot():pos():dist(dest_planet:pos()) <= dest_planet_r then
+            and player.pos():dist(dest_planet:pos()) <= dest_planet_r then
          stage = 5
          misn.osdActive( 4 )
          tk.msg( tutorial_title, combat_text:format(
@@ -292,7 +292,7 @@ end
 
 
 function spawn_drone ()
-   local p = pilot.addRaw( "Hyena", "baddie_norun", dest_planet, "Dummy" )
+   local p = pilot.add( "Hyena", "Dummy", dest_planet, _("Practice Drone"), "baddie_norun" )
    p:rmOutfit( "all" )
    p:rmOutfit( "cores" )
    p:addOutfit( "Previous Generation Small Systems" )
@@ -304,7 +304,6 @@ function spawn_drone ()
    p:setTemp( 0 )
    p:setFuel( true )
 
-   p:rename( _("Practice Drone") )
    p:setHostile()
    p:setVisplayer()
    p:setHilight()

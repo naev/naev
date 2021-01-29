@@ -5,8 +5,8 @@
   <y>-6354.687071</y>
  </pos>
  <GFX>
-  <space>station-sphere.png</space>
-  <exterior>traderoom.png</exterior>
+  <space>station-sphere.webp</space>
+  <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>

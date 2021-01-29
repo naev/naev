@@ -8,7 +8,7 @@
   <mass>10</mass>
   <price>30000</price>
   <description>This powerful energy weapon is built to bombard a target from great range with ion bursts, causing debilitating damage to a target's shields and electrical systems, which can leave a ship effectively defenseless. It is unclear who originally designed this weapon: Robosys or the Za'lek. Either way, the drones that use this weapon are rightly feared and respected.</description>
-  <gfx_store>weapon01</gfx_store>
+  <gfx_store>weapon01.png</gfx_store>
   <cpu>-10</cpu>
  </general>
  <specific type="launcher" secondary="1">

@@ -49,7 +49,7 @@ reward_desc = _("A generous compensation") --reward description
 function create ()
    targetsystem = system.get("Ogat") --find target system
    
-   misn.setNPC( NPC_name, "neutral/unique/hunter") --spawn NPC
+   misn.setNPC( NPC_name, "neutral/unique/hunter.png") --spawn NPC
    misn.setDesc( bar_desc )
 end
 
@@ -82,10 +82,9 @@ function enter () --aforementioned triggered function
    hook.timer(4000, "spawnBaddies")
    
    if system.cur() == targetsystem then --when in target system
-      local defenderships = { "Lancelot", "Lancelot", "Admonisher", "Pacifier",
-      "Hawking", "Kestrel" }
-      defenders = addRawShips( defenderships, "dvaered", jump.pos(targetsystem, last_system),
-      "Associates" ) --add a defending force to help you
+      local defenderships = { "Lancelot", "Lancelot", "Admonisher", "Pacifier", "Hawking", "Kestrel" }
+      local jumpin = jump.pos(targetsystem, last_system)
+      defenders = addShips( 1, defenderships, "Associates", jumpin ) --add a defending force to help you
       for pilot_number, pilot_object in pairs(defenders) do
          local rn = pilot_object:ship():nameRaw() 
          if rn == "Lancelot" then
@@ -128,9 +127,8 @@ function spawnBaddies ()
       sp = last_system
    end
 
-   thugs = addRawShips( "Admonisher", ai, sp, "Thugs", 4 )
+   thugs = addShips( 4, "Admonisher", "Thugs", sp, _("Thug"), ai )
    for pilot_number, pilot_object in ipairs(thugs) do
-      pilot_object:rename(_("Thug"))
       pilot_object:setHostile(true) --they don't like you
       pilot_object:rmOutfit("all") --strip them down
       pilot_object:addOutfit("Laser Cannon MK2") --add everything but rockets

@@ -119,7 +119,7 @@ int nlua_loadTk( nlua_env env )
  *
  *    @luatparam string title Title of the window.
  *    @luatparam string message Message to display in the window.
- *    @luatparam[opt=-1] string image Image file (*.png) to display in the window.
+ *    @luatparam[opt=-1] string image Image file to display in the window.
  *    @luatparam[opt=-1] number width width of the image to display. Negative values use image width.
  *    @luatparam[opt=-1] number height height of the image to display. Negative values use image height.
  * @luafunc msg

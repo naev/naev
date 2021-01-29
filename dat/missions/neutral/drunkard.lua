@@ -85,7 +85,7 @@ log_text = _([[You helped some drunkard deliver goods for some countess. You tho
 function create ()
    -- Note: this mission does not make any system claims.
 
-   misn.setNPC( _("Drunkard"), "neutral/unique/drunkard" )  -- creates the drunkard at the bar
+   misn.setNPC( _("Drunkard"), "neutral/unique/drunkard.png" )  -- creates the drunkard at the bar
    misn.setDesc( bar_desc )           -- drunkard's description
 
    -- Planets
@@ -162,7 +162,7 @@ end
 function takeoff()
    if system.cur() == delivSys and droppedoff then
 
-      willie = pilot.add( "Trader Mule", "trader", player.pilot():pos() + vec2.new(-500,-500))[1]
+      willie = pilot.add( "Mule", "Trader", player.pos() + vec2.new(-500,-500), _("Trader Mule") )
       willie:rename(_("Ol Bess"))
       willie:setFaction("Civilian")
       willie:setFriendly()
@@ -171,7 +171,7 @@ function takeoff()
       willie:setHilight(true)
       willie:hailPlayer()
       willie:control()
-      willie:moveto(player.pilot():pos() + vec2.new( 150, 75), true)
+      willie:moveto(player.pos() + vec2.new( 150, 75), true)
       tk.msg( title[5], text[5] )
       hailhook = hook.pilot(willie, "hail", "hail")
    end

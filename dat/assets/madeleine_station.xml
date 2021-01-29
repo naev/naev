@@ -5,8 +5,8 @@
   <y>-4639.755662</y>
  </pos>
  <GFX>
-  <space>station-fleetbase3.png</space>
-  <exterior>station03.png</exterior>
+  <space>station-fleetbase3.webp</space>
+  <exterior>station03.webp</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>

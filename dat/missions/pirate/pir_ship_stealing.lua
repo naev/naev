@@ -329,7 +329,7 @@ function land()
    local landed = planet.cur()
    if landed == theship.planet then
       -- Try to swap ships
-      local tmp = pilot.addRaw( theship.exact_class, nil, nil, 'Independent' )
+      local tmp = pilot.add( theship.exact_class, "Independent" )
       equip_generic( tmp )
       if not swapship.swap( tmp ) then
          -- Failed to swap ship!

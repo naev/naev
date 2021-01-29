@@ -124,7 +124,7 @@ function create ()
       misn.finish( false )
    end
 
-   misn.setNPC( npc_name, "flf/unique/benito" )
+   misn.setNPC( npc_name, "flf/unique/benito.png" )
    misn.setDesc( npc_desc )
 end
 
@@ -268,15 +268,14 @@ function enter ()
          local r = system.cur():radius()
          local vec = vec2.new( rnd.rnd( -r, r ), rnd.rnd( -r, r ) )
 
-         local bstk = pilot.add( "Pirate Kestrel", "pirate_norun", vec )
-         boss = bstk[1]
+         boss = pilot.add( "Pirate Kestrel", "Pirate", vec, nil, "pirate_norun" )
          hook.pilot( boss, "death", "pilot_death_boss" )
          hook.pilot( boss, "hail", "pilot_hail_boss" )
          boss:setHostile()
          boss:setHilight()
 
          pirates_left = 4
-         pirates = addShips( "Pirate Hyena", "pirate_norun", vec, pirates_left )
+         pirates = addShips( pirates_left, "Hyena", "Pirate", vec, _("Pirate Hyena"), "pirate_norun" )
          for i, j in ipairs( pirates ) do
             hook.pilot( j, "death", "pilot_death_pirate" )
             hook.pilot( j, "hail", "pilot_hail_pirate" )
@@ -295,8 +294,7 @@ function enter ()
          local r = system.cur():radius()
          local vec = vec2.new( rnd.rnd( -r, r ), rnd.rnd( -r, r ) )
 
-         local bstk = pilot.add( "Pirate Kestrel", "pirate_norun", vec )
-         boss = bstk[1]
+         boss = pilot.add( "Pirate Kestrel", "Pirate", vec, nil, "pirate_norun" )
          hook.pilot( boss, "death", "pilot_death_boss" )
          boss_hook = hook.pilot( boss, "hail", "pilot_hail_boss" )
          boss:setFriendly()

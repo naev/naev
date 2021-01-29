@@ -7,11 +7,11 @@
   <mass>16</mass>
   <price>27500</price>
   <description>While somewhat hard to come by due to Imperial export restrictions, the Laser Point Defense MK3 represents the pinnacle of light laser weapons technology.</description>
-  <gfx_store>laserturret2</gfx_store>
+  <gfx_store>laserturret2.png</gfx_store>
   <cpu>-12</cpu>
  </general>
  <specific type="turret bolt">
-  <gfx>laser3S</gfx>
+  <gfx>laser3S.png</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
@@ -19,7 +19,7 @@
   <speed>550</speed>
   <range>600</range>
   <falloff>300</falloff>
-  <gfx_end>laser2S</gfx_end>
+  <gfx_end>laser2S.png</gfx_end>
   <energy>10</energy>
   <heatup>35</heatup>
   <track>3</track>

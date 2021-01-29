@@ -8,7 +8,7 @@
   <mass>0</mass>
   <price>175000</price>
   <description>This enhancement routes energy from the ship's energy supplies to the engine, giving the ship an increased thrust. It does not increase the ship's max speed nor turning abilities.</description>
-  <gfx_store>reroute</gfx_store>
+  <gfx_store>reroute.png</gfx_store>
   <cpu>-8</cpu>
  </general>
  <specific type="modification">

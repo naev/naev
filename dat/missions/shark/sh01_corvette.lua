@@ -100,7 +100,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith")
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.png")
    misn.setDesc(bar_desc[1])
 end
 
@@ -172,7 +172,7 @@ end
 
 function lets_go()
    -- spawns the Shark
-   sharkboy = pilot.addRaw( "Lancelot","baddie_norun", system.get("Raelid"), "Mercenary" )
+   sharkboy = pilot.add( "Lancelot", "Mercenary", system.get("Raelid"), nil, "baddie_norun" )
    sharkboy:setHostile()
    sharkboy:setHilight()
 

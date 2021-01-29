@@ -75,7 +75,7 @@ function create ()
         abort()
     end  
 
-   misn.setNPC( _("Lt. Commander"), "empire/unique/dimitri" )
+   misn.setNPC( _("Lt. Commander"), "empire/unique/dimitri.png" )
    misn.setDesc( bar_desc )
 end
 
@@ -140,7 +140,7 @@ end
 
 
 function spotdrone()
-   p = pilot.add("Collective Drone", "scout", vec2.new(8000, -20000))[1]
+   p = pilot.add( "Drone", "Collective", vec2.new(8000, -20000), _("Collective Drone"), "scout" )
    p:control()
    p:setHilight(true)
    idle()

@@ -18,6 +18,7 @@
 
 #include "nlua_audio.h"
 
+#include "conf.h"
 #include "nlua_vec2.h"
 #include "nluadef.h"
 #include "nlua_file.h"
@@ -198,23 +199,28 @@ static int audioL_new( lua_State *L )
    }
    else
       NLUA_INVALID_PARAMETER(L);
-   rw = PHYSFSRWOPS_openRead( name );
-   if (rw==NULL)
-      NLUA_ERROR(L,"Unable to open '%s'", name );
 
-   alGenSources( 1, &la.source );
-   alGenBuffers( 1, &la.buffer );
+   if (!conf.nosound) {
+      rw = PHYSFSRWOPS_openRead( name );
+      if (rw==NULL)
+         NLUA_ERROR(L,"Unable to open '%s'", name );
 
-   sound_al_buffer( &la.buffer, rw, name );
+      alGenSources( 1, &la.source );
+      alGenBuffers( 1, &la.buffer );
 
-   /* Attach buffer. */
-   alSourcei( la.source, AL_BUFFER, la.buffer );
+      sound_al_buffer( &la.buffer, rw, name );
 
-   /* Defaults. */
-   master = sound_getVolumeLog();
-   alSourcef( la.source, AL_GAIN, master );
+      /* Attach buffer. */
+      alSourcei( la.source, AL_BUFFER, la.buffer );
 
-   SDL_RWclose( rw );
+      /* Defaults. */
+      master = sound_getVolumeLog();
+      alSourcef( la.source, AL_GAIN, master );
+
+      SDL_RWclose( rw );
+   }
+   else
+      memset( &la, 0, sizeof(LuaAudio_t) );
 
    lua_pushaudio(L, la);
    return 1;
@@ -231,7 +237,8 @@ static int audioL_new( lua_State *L )
 static int audioL_play( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   alSourcePlay( la->source );
+   if (!conf.nosound)
+      alSourcePlay( la->source );
    lua_pushboolean(L,1);
    return 1;
 }
@@ -247,7 +254,8 @@ static int audioL_play( lua_State *L )
 static int audioL_pause( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   alSourcePause( la->source );
+   if (!conf.nosound)
+      alSourcePause( la->source );
    return 0;
 }
 
@@ -262,7 +270,8 @@ static int audioL_pause( lua_State *L )
 static int audioL_stop( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   alSourceStop( la->source );
+   if (!conf.nosound)
+      alSourceStop( la->source );
    return 0;
 }
 
@@ -279,7 +288,8 @@ static int audioL_setVolume( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    double volume = luaL_checknumber(L,2);
    double master = sound_getVolumeLog();
-   alSourcef( la->source, AL_GAIN, master * volume );
+   if (!conf.nosound)
+      alSourcef( la->source, AL_GAIN, master * volume );
    return 0;
 }
 
@@ -298,13 +308,13 @@ static int audioL_getVolume( lua_State *L )
    ALfloat alvol;
    if (lua_gettop(L)>0) {
       la = luaL_checkaudio(L,1);
-      alGetSourcef( la->source, AL_GAIN, &alvol );
+      if (!conf.nosound)
+         alGetSourcef( la->source, AL_GAIN, &alvol );
       master = sound_getVolumeLog();
       volume = alvol / master;
    }
-   else {
+   else
       volume = sound_getVolume();
-   }
    lua_pushnumber(L, volume);
    return 1;
 }
@@ -321,7 +331,8 @@ static int audioL_setLooping( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    int b = lua_toboolean(L,2);
-   alSourcei( la->source, AL_LOOPING, b );
+   if (!conf.nosound)
+      alSourcei( la->source, AL_LOOPING, b );
    return 0;
 }
 
@@ -337,7 +348,8 @@ static int audioL_setPitch( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    double pitch = luaL_checknumber(L,2);
-   alSourcei( la->source, AL_PITCH, pitch );
+   if (!conf.nosound)
+      alSourcei( la->source, AL_PITCH, pitch );
    return 0;
 }
 

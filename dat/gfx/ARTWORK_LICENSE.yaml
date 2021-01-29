@@ -7,23 +7,23 @@
        - plasteel.png
    planet:
      exterior:
-       - methane.png
+       - methane.webp
      space:
-       - moon-A00.png
-       - moon-C00.png
-       - moon-D01.png
-       - moon-G00.png
-       - moon-H00.png
-       - moon-H01.png
-       - moon-I00.png
-       - moon-J01.png
-       - moon-M01.png
-       - moon-M02.png
-       - moon-M04.png
-       - moon-O00.png
-       - moon-P00.png
-       - moon-P01.png
-       - moon-Y00.png
+       - moon-A00.webp
+       - moon-C00.webp
+       - moon-D01.webp
+       - moon-G00.webp
+       - moon-H00.webp
+       - moon-H01.webp
+       - moon-I00.webp
+       - moon-J01.webp
+       - moon-M01.webp
+       - moon-M02.webp
+       - moon-M04.webp
+       - moon-O00.webp
+       - moon-P00.webp
+       - moon-P01.webp
+       - moon-Y00.webp
 - Vega Strike:
    license: GPLv2+
    commodity:
@@ -113,7 +113,7 @@
      - first_class_passenger.png
      - forest_regenerators.png
      - fresh_water.png
-     - fullbody.png
+     - fullbody.webp
      - fusion_injectors.png
      - games.png
      - gold.png
@@ -275,40 +275,40 @@
        - drone_fighter.png
    planet:
      exterior:
-       - aquatic.png
-       - aquatic2.png
-       - aquatic3.png
-       - desertic.png
-       - desertic2.png
-       - desertic3.png
-       - desertic4.png
-       - forest.png
-       - forest2.png
-       - gas.png
-       - lava.png
-       - mining.png
-       - mining2.png
-       - mining3.png
-       - mining4.png
-       - mining5.png
-       - mining6.png
-       - oceanic.png
-       - oceanic2.png
-       - snow.png
-       - traderoom.png
-       - station00.png
-       - station01.png
-       - station02.png
-       - station03.png
-       - station04.png
-       - station05.png
+       - aquatic.webp
+       - aquatic2.webp
+       - aquatic3.webp
+       - desertic.webp
+       - desertic2.webp
+       - desertic3.webp
+       - desertic4.webp
+       - forest.webp
+       - forest2.webp
+       - gas.webp
+       - lava.webp
+       - mining.webp
+       - mining2.webp
+       - mining3.webp
+       - mining4.webp
+       - mining5.webp
+       - mining6.webp
+       - oceanic.webp
+       - oceanic2.webp
+       - snow.webp
+       - traderoom.webp
+       - station00.webp
+       - station01.webp
+       - station02.webp
+       - station03.webp
+       - station04.webp
+       - station05.webp
      space:
-       - 000.png
-       - 001.png
-       - 002.png
-       - 003.png
+       - 000.webp
+       - 001.webp
+       - 002.webp
+       - 003.webp
    spfx:
-     - cargo.png
+     - cargo.webp
    ship:
      - admonisher:
        - \*
@@ -379,8 +379,8 @@
    license: PD
    planet:
      space:
-       - moon-J00.png
-       - moon-M00.png
+       - moon-J00.webp
+       - moon-M00.webp
 - Jordi Pegueroles:
    license: PD
    outfit:
@@ -391,9 +391,9 @@
        - mace.png
        - macelauncher.png
    spfx:
-     - exps.png
-     - expm.png
-     - expl.png
+     - exps.webp
+     - expm.webp
+     - expl.webp
 - Basse:
    license: GPLv2+
    outfit:
@@ -418,18 +418,18 @@
    license: CC-by 3.0
    planet:
      space:
-       - moon-A01.png
-       - moon-G01.png
-       - moon-H02.png
-       - moon-I01.png
-       - moon-J02.png
-       - moon-K00.png
-       - moon-L00.png
-       - moon-M03.png
-       - moon-M05.png
-       - moon-M06.png
-       - moon-O01.png
-       - moon-P02.png
+       - moon-A01.webp
+       - moon-G01.webp
+       - moon-H02.webp
+       - moon-I01.webp
+       - moon-J02.webp
+       - moon-K00.webp
+       - moon-L00.webp
+       - moon-M03.webp
+       - moon-M05.webp
+       - moon-M06.webp
+       - moon-O01.webp
+       - moon-P02.webp
 - Camilo Polymeris <cpolymeris@gmx.net>:
    license: GPLv3
    gui:
@@ -455,12 +455,12 @@
        - beam_ragnarok_inv.png
        - banshee.png
    spfx:
-     - emps.png
-     - empm.png
-     - shis.png
-     - shim.png
-     - plas.png
-     - plam.png
+     - emps.webp
+     - empm.webp
+     - shis.webp
+     - shim.webp
+     - plas.webp
+     - plam.webp
 - Josiah Schwartfeger:
    license: CC-by 3.0
    root:
@@ -498,25 +498,25 @@
 - Renderwahn:
    license: CC-by 3.0
    spfx:
-     - debris0.png
-     - debris1.png
-     - debris2.png
-     - debris3.png
-     - debris4.png
-     - debris5.png
+     - debris0.webp
+     - debris1.webp
+     - debris2.webp
+     - debris3.webp
+     - debris4.webp
+     - debris5.webp
    logo:
      - pirate_*.png
    planet:
      space:
-       - K02.png
-       - K03.png
-       - K04.png
-       - O02.png
-       - S00.png
-       - S01.png
-       - X00.png
-       - X01.png
-       - Y00.png
+       - K02.webp
+       - K03.webp
+       - K04.webp
+       - O02.webp
+       - S00.webp
+       - S01.webp
+       - X00.webp
+       - X01.webp
+       - Y00.webp
 - Sean Hildebrand:
    license: CC-by 3.0
    gui:
@@ -527,8 +527,8 @@
      - yes.png
    planet:
      space:
-       - jumpbuoy.png
-       - jumppoint.png
+       - jumpbuoy.webp
+       - jumppoint.webp
    outfit:
      space:
        - gatling.png
@@ -550,8 +550,8 @@
        - caesarlauncher.png
        - caesar.png
    spfx:
-     - plas2.png
-     - plam2.png
+     - plas2.webp
+     - plam2.webp
 - Thomas Fedor:
    license: PD
    outfit:
@@ -811,81 +811,81 @@
      - shaman
    planet:
      - space:
-       - station-agriculture.png
-       - station-battlestation.png
-       - station-commerce.png
-       - station-commerce2.png
-       - station-commerce3.png
-       - station-cylinder.png
-       - station-fleetbase.png
-       - station-fleetbase2.png
-       - station-fleetbase3.png
-       - station-powerplant.png
-       - station-shipyard.png
-       - station-shipyard2.png
-       - station-sphere.png
+       - station-agriculture.webp
+       - station-battlestation.webp
+       - station-commerce.webp
+       - station-commerce2.webp
+       - station-commerce3.webp
+       - station-cylinder.webp
+       - station-fleetbase.webp
+       - station-fleetbase2.webp
+       - station-fleetbase3.webp
+       - station-powerplant.webp
+       - station-shipyard.webp
+       - station-shipyard2.webp
+       - station-sphere.webp
 - BTAxis:
    license: PD
    gui:
      - hail.png
    planet:
      - space:
-       - A00.png
-       - A01.png
-       - A02.png
-       - A03.png
-       - C00.png
-       - D00.png
-       - D01.png
-       - D02.png
-       - G00.png
-       - G01.png
-       - G02.png
-       - H00.png
-       - H01.png
-       - H02.png
-       - I00.png
-       - I01.png
-       - J00.png
-       - J01.png
-       - J02.png
-       - J03.png
-       - J04.png
-       - K00.png
-       - L00.png
-       - M00.png
-       - M01.png
-       - M02.png
-       - M03.png
-       - M04.png
-       - M05.png
-       - M06.png
-       - M07.png
-       - M08.png
-       - O00.png
-       - O01.png
-       - P00.png
-       - P01.png
-       - P02.png
+       - A00.webp
+       - A01.webp
+       - A02.webp
+       - A03.webp
+       - C00.webp
+       - D00.webp
+       - D01.webp
+       - D02.webp
+       - G00.webp
+       - G01.webp
+       - G02.webp
+       - H00.webp
+       - H01.webp
+       - H02.webp
+       - I00.webp
+       - I01.webp
+       - J00.webp
+       - J01.webp
+       - J02.webp
+       - J03.webp
+       - J04.webp
+       - K00.webp
+       - L00.webp
+       - M00.webp
+       - M01.webp
+       - M02.webp
+       - M03.webp
+       - M04.webp
+       - M05.webp
+       - M06.webp
+       - M07.webp
+       - M08.webp
+       - O00.webp
+       - O01.webp
+       - P00.webp
+       - P01.webp
+       - P02.webp
    bkg:
-     - nebula34.png
+     - nebula34.webp
      - star:
-       - blue01.png
-       - blue02.png
-       - blue04.png
-       - green01.png
-       - green02.png
-       - orange01.png
-       - orange02.png
-       - orange05.png
-       - redgiant01.png
-       - white01.png
-       - white02.png
-       - yellow01.png
-       - yellow02.png
+       - blue01.webp
+       - blue02.webp
+       - blue04.webp
+       - green01.webp
+       - green02.webp
+       - orange01.webp
+       - orange02.webp
+       - orange05.webp
+       - redgiant01.webp
+       - white01.webp
+       - white02.webp
+       - yellow01.webp
+       - yellow02.webp
    spfx:
-     - expm2.png
-     - expl2.png
+     - expm2.webp
+     - expl2.webp
 - Scaatis:
    license: CC-by 3.0
    root:
@@ -895,7 +895,7 @@
      - slimv2
      - brushed:
        - A.png
-       - barBg.png
+       - barBg.webp
        - barFrame.png
        - barFrameLight.png
        - barSheen.png
@@ -909,8 +909,8 @@
        - endRight.png
        - extRight.png
        - fieldBg.png
-       - fieldBgCenter1.png
-       - fieldBgCenter2.png
+       - fieldBgCenter1.webp
+       - fieldBgCenter2.webp
        - fieldBgLeft1.png
        - fieldBgRight1.png
        - fieldBgRight2.png
@@ -920,8 +920,8 @@
        - fieldSheen.png
        - fieldSheenLeft.png
        - iconArmour.png
-       - iconCargo.png
-       - iconEnergy.png
+       - iconCargo.webp
+       - iconEnergy.webp
        - iconFuel.png
        - iconMissions.png
        - iconMoney.png
@@ -934,7 +934,7 @@
        - kinetic.png
        - laser.png
        - light.png
-       - lock.png
+       - lock.webp
        - lockon.png
        - lockonCircle.png
        - main.png
@@ -949,17 +949,17 @@
        - radar_planet.png
        - radar_ship.png
        - refireCircle.png
-       - speedOff.png
+       - speedOff.webp
        - speedOn.png
        - store.png
        - targetBg.png
        - targetFrame.png
        - targetSheen.png
-       - tooltipEmpty.png
-       - tooltipRight.png
-       - tooltipRightBottom.png
+       - tooltipEmpty.webp
+       - tooltipRight.webp
+       - tooltipRightBottom.webp
        - tooltipRightSideLeft.png
-       - tooltipRightTop.png
+       - tooltipRightTop.webp
        - topbar.png
        - topbarCenter.png
        - topbarSheen.png
@@ -967,7 +967,7 @@
        - weapon1.png
        - weapon2.png
    portraits:
-     - news.png
+     - news.webp
    outfit:
      store:
        - brushedGUI.png
@@ -992,14 +992,14 @@
    license: GPLv3 / CC-by 3
    planet:
      space:
-       - P03.png
-       - moon-C01.png
+       - P03.webp
+       - moon-C01.webp
 - Vicki Li <LacrymosAmaya@gmail.com>:
    license: GPLv3 / CC-by 3
    planet:
      space:
-       - P04.png
-       - C01.png
+       - P04.webp
+       - C01.webp
 - Alexander Huitric <ahuitric@gmail.com>:
    license: CC-by-sa 3
    logo:
@@ -1009,20 +1009,20 @@
 - Josh Combs <http://freeorion.org>:
    license: CC-by-sa 3.0
    bkg:
-     - nebula20.png
-     - nebula21.png
-     - nebula22.png
-     - nebula23.png
-     - nebula24.png
-     - nebula25.png
-     - nebula26.png
-     - nebula27.png
-     - nebula28.png
-     - nebula29.png
-     - nebula30.png
-     - nebula31.png
-     - nebula32.png
-     - nebula33.png
+     - nebula20.webp
+     - nebula21.webp
+     - nebula22.webp
+     - nebula23.webp
+     - nebula24.webp
+     - nebula25.webp
+     - nebula26.webp
+     - nebula27.webp
+     - nebula28.webp
+     - nebula29.webp
+     - nebula30.webp
+     - nebula31.webp
+     - nebula32.webp
+     - nebula33.webp
 - Galileus:
    license: CC-by-sa 3.0
    loading:
@@ -1036,7 +1036,7 @@
      - rhino
    planet:
      space:
-       - wrath.png
+       - wrath.webp
 - bornloser:
    license: CC-by-sa 3.0
    ship:
@@ -1045,32 +1045,32 @@
    license: CC-by-sa 3.0
    planet:
      space:
-       - A04.png
-       - G03.png
-       - H03.png
-       - I02.png
-       - I03.png
-       - I04.png
-       - I05.png
-       - I06.png
-       - I07.png
-       - J05.png
-       - J06.png
-       - J07.png
-       - J08.png
-       - K05.png
-       - M09.png
-       - M11.png
-       - M12.png
-       - M13.png
-       - O03.png
-       - O05.png
-       - P05.png
-       - moon-D02.png
-       - moon-P03.png
+       - A04.webp
+       - G03.webp
+       - H03.webp
+       - I02.webp
+       - I03.webp
+       - I04.webp
+       - I05.webp
+       - I06.webp
+       - I07.webp
+       - J05.webp
+       - J06.webp
+       - J07.webp
+       - J08.webp
+       - K05.webp
+       - M09.webp
+       - M11.webp
+       - M12.webp
+       - M13.webp
+       - O03.webp
+       - O05.webp
+       - P05.webp
+       - moon-D02.webp
+       - moon-P03.webp
    bkg:
      star:
-       - redgiant02.png
+       - redgiant02.webp
 
 - M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>:
    license: CC-by-sa 3.0
@@ -1079,7 +1079,7 @@
        - zalek_drone_*_fighter.png
    planet:
      space:
-       - zalek_hq.png
+       - zalek_hq.webp
    ship:
      - arx:
        - \*
@@ -1268,102 +1268,102 @@
    license: CC-by-sa 3.0
    planet:
      space:
-       - H04.png
-       - J09.png
-       - M10.png
-       - moon-X00.png
-       - O04.png
+       - H04.webp
+       - J09.webp
+       - M10.webp
+       - moon-X00.webp
+       - O04.webp
 - NASA:
    license: PD
    bkg:
-     - nebula02.png
-     - nebula04.png
-     - nebula10.png
-     - nebula12.png
-     - nebula16.png
-     - nebula17.png
-     - nebula19.png
+     - nebula02.webp
+     - nebula04.webp
+     - nebula10.webp
+     - nebula12.webp
+     - nebula16.webp
+     - nebula17.webp
+     - nebula19.webp
 - NASA:
    license: PD (with modifications by PhoenixRiver, License PD)
    planet:
      space:
-       - D03.png
-       - D04.png
-       - D05.png
-       - D06.png
-       - D07.png
+       - D03.webp
+       - D04.webp
+       - D05.webp
+       - D06.webp
+       - D07.webp
        - asteroid:
-         - asteroid-D00.png
-         - asteroid-D01.png
-         - asteroid-D02.png
-         - asteroid-D03.png
-         - asteroid-D04.png
-         - asteroid-D05.png
-         - asteroid-D06.png
-         - asteroid-D07.png
-         - asteroid-D08.png
-         - asteroid-D09.png
-         - asteroid-D10.png
-         - asteroid-D11.png
-         - asteroid-D12.png
-         - asteroid-D13.png
-         - asteroid-D14.png
-         - asteroid-D15.png
-         - asteroid-D16.png
-         - asteroid-D17.png
-         - asteroid-D18.png
-         - asteroid-D19.png
-         - asteroid-D20.png
-         - asteroid-D21.png
-         - asteroid-D22.png
-         - asteroid-D23.png
-         - asteroid-D24.png
-         - asteroid-D25.png
-         - asteroid-D26.png
-         - asteroid-D27.png
-         - asteroid-D28.png
-         - asteroid-D29.png
-         - asteroid-D30.png
-         - asteroid-D31.png
-         - asteroid-D32.png
-         - asteroid-D33.png
-         - asteroid-D34.png
-         - asteroid-D35.png
-         - asteroid-D36.png
-         - asteroid-D37.png
-         - asteroid-D38.png
-         - asteroid-D39.png
-         - asteroid-D40.png
-         - asteroid-D41.png
-         - asteroid-D42.png
-         - asteroid-D43.png
-         - asteroid-D44.png
-         - asteroid-D45.png
-         - asteroid-D46.png
-         - asteroid-D47.png
-         - asteroid-D48.png
-         - asteroid-D49.png
-         - asteroid-D50.png
-         - asteroid-D51.png
-         - asteroid-D52.png
-         - asteroid-D53.png
-         - asteroid-D54.png
-         - asteroid-D55.png
-         - asteroid-D56.png
-         - asteroid-D57.png
-         - asteroid-D58.png
-         - asteroid-D59.png
-         - asteroid-D60.png
-         - asteroid-D61.png
-         - asteroid-D62.png
-         - asteroid-D63.png
+         - asteroid-D00.webp
+         - asteroid-D01.webp
+         - asteroid-D02.webp
+         - asteroid-D03.webp
+         - asteroid-D04.webp
+         - asteroid-D05.webp
+         - asteroid-D06.webp
+         - asteroid-D07.webp
+         - asteroid-D08.webp
+         - asteroid-D09.webp
+         - asteroid-D10.webp
+         - asteroid-D11.webp
+         - asteroid-D12.webp
+         - asteroid-D13.webp
+         - asteroid-D14.webp
+         - asteroid-D15.webp
+         - asteroid-D16.webp
+         - asteroid-D17.webp
+         - asteroid-D18.webp
+         - asteroid-D19.webp
+         - asteroid-D20.webp
+         - asteroid-D21.webp
+         - asteroid-D22.webp
+         - asteroid-D23.webp
+         - asteroid-D24.webp
+         - asteroid-D25.webp
+         - asteroid-D26.webp
+         - asteroid-D27.webp
+         - asteroid-D28.webp
+         - asteroid-D29.webp
+         - asteroid-D30.webp
+         - asteroid-D31.webp
+         - asteroid-D32.webp
+         - asteroid-D33.webp
+         - asteroid-D34.webp
+         - asteroid-D35.webp
+         - asteroid-D36.webp
+         - asteroid-D37.webp
+         - asteroid-D38.webp
+         - asteroid-D39.webp
+         - asteroid-D40.webp
+         - asteroid-D41.webp
+         - asteroid-D42.webp
+         - asteroid-D43.webp
+         - asteroid-D44.webp
+         - asteroid-D45.webp
+         - asteroid-D46.webp
+         - asteroid-D47.webp
+         - asteroid-D48.webp
+         - asteroid-D49.webp
+         - asteroid-D50.webp
+         - asteroid-D51.webp
+         - asteroid-D52.webp
+         - asteroid-D53.webp
+         - asteroid-D54.webp
+         - asteroid-D55.webp
+         - asteroid-D56.webp
+         - asteroid-D57.webp
+         - asteroid-D58.webp
+         - asteroid-D59.webp
+         - asteroid-D60.webp
+         - asteroid-D61.webp
+         - asteroid-D62.webp
+         - asteroid-D63.webp
 - Bobbens:
    license: PD (with modifications by PhoenixRiver, License PD)
    planet:
      exterior:
-       - asteroid.png
+       - asteroid.webp
      space:
-       - moon-D00.png
+       - moon-D00.webp
 - Ian D. Scott <ids1024>:
    license: PD
    outfit:
@@ -1396,53 +1396,53 @@
    license: PD
    planet:
      exterior:
-       - uninhabited-rocky-airless-00.png
-       - uninhabited-rocky-airless-01.png
-       - uninhabited-rocky-airless-02.png
-       - uninhabited-rocky-airless-03.png
-       - uninhabited-rocky-airless-04.png
+       - uninhabited-rocky-airless-00.webp
+       - uninhabited-rocky-airless-01.webp
+       - uninhabited-rocky-airless-02.webp
+       - uninhabited-rocky-airless-03.webp
+       - uninhabited-rocky-airless-04.webp
 - ESA:
    license: PD (with modifications by PhoenixRiver, License PD)
    planet:
      exterior:
-       - uninhabited-rocky-red-00.png
-       - uninhabited-rocky-red-01.png
-       - uninhabited-rocky-red-02.png
-       - uninhabited-rocky-red-03.png
-       - uninhabited-rocky-red-04.png
-       - uninhabited-rocky-blue-00.png
-       - uninhabited-rocky-blue-01.png
-       - uninhabited-rocky-blue-02.png
-       - uninhabited-rocky-blue-03.png
-       - uninhabited-rocky-blue-04.png
-       - uninhabited-rocky-cyan-00.png
-       - uninhabited-rocky-cyan-01.png
-       - uninhabited-rocky-cyan-02.png
-       - uninhabited-rocky-cyan-03.png
-       - uninhabited-rocky-cyan-04.png
-       - uninhabited-rocky-green-00.png
-       - uninhabited-rocky-green-01.png
-       - uninhabited-rocky-green-02.png
-       - uninhabited-rocky-green-03.png
-       - uninhabited-rocky-green-04.png
-       - uninhabited-rocky-yellow-00.png
-       - uninhabited-rocky-yellow-01.png
-       - uninhabited-rocky-yellow-02.png
-       - uninhabited-rocky-yellow-03.png
-       - uninhabited-rocky-yellow-04.png
-       - uninhabited-rocky-magenta-00.png
-       - uninhabited-rocky-magenta-01.png
-       - uninhabited-rocky-magenta-02.png
-       - uninhabited-rocky-magenta-03.png
-       - uninhabited-rocky-magenta-04.png
+       - uninhabited-rocky-red-00.webp
+       - uninhabited-rocky-red-01.webp
+       - uninhabited-rocky-red-02.webp
+       - uninhabited-rocky-red-03.webp
+       - uninhabited-rocky-red-04.webp
+       - uninhabited-rocky-blue-00.webp
+       - uninhabited-rocky-blue-01.webp
+       - uninhabited-rocky-blue-02.webp
+       - uninhabited-rocky-blue-03.webp
+       - uninhabited-rocky-blue-04.webp
+       - uninhabited-rocky-cyan-00.webp
+       - uninhabited-rocky-cyan-01.webp
+       - uninhabited-rocky-cyan-02.webp
+       - uninhabited-rocky-cyan-03.webp
+       - uninhabited-rocky-cyan-04.webp
+       - uninhabited-rocky-green-00.webp
+       - uninhabited-rocky-green-01.webp
+       - uninhabited-rocky-green-02.webp
+       - uninhabited-rocky-green-03.webp
+       - uninhabited-rocky-green-04.webp
+       - uninhabited-rocky-yellow-00.webp
+       - uninhabited-rocky-yellow-01.webp
+       - uninhabited-rocky-yellow-02.webp
+       - uninhabited-rocky-yellow-03.webp
+       - uninhabited-rocky-yellow-04.webp
+       - uninhabited-rocky-magenta-00.webp
+       - uninhabited-rocky-magenta-01.webp
+       - uninhabited-rocky-magenta-02.webp
+       - uninhabited-rocky-magenta-03.webp
+       - uninhabited-rocky-magenta-04.webp
 - Fernando L. Copercini \"Bisc88\" <fernandoluis1732@yahoo.com.br>:
    license: GPLv3+
    planet:
      exterior:
-       - scrapped_station.png
-       - snowy_cliffs.png
-       - rocky_small.png
-       - uninhabited-jungle.png
+       - scrapped_station.webp
+       - snowy_cliffs.webp
+       - rocky_small.webp
+       - uninhabited-jungle.webp
 - Kinniken:
    license: GPLv3
    map:

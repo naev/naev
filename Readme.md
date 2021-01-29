@@ -1,4 +1,4 @@
-![Nightly Release](https://github.com/naev/naev/workflows/Nightly%20Release/badge.svg) ![CI](https://github.com/naev/naev/workflows/CI/badge.svg) [![Packaging status](https://repology.org/badge/tiny-repos/naev.svg)](https://repology.org/project/naev/versions)
+[![Nightly Release Status](https://github.com/naev/naev/workflows/Nightly%20Release/badge.svg)](https://github.com/naev/naev/actions?query=workflow%3A%22Nightly+Release%22) [![CI Status](https://github.com/naev/naev/workflows/CI/badge.svg)](https://github.com/naev/naev/actions?query=workflow%3ACI) [![Packaging status](https://repology.org/badge/tiny-repos/naev.svg)](https://repology.org/project/naev/versions) [![Translation Status](https://hosted.weblate.org/widgets/naev/-/naev/svg-badge.svg)](https://hosted.weblate.org/projects/naev/)
 # NAEV README
 
 ![Naev Logo](https://naev.org/imgs/naev.png)
@@ -63,11 +63,29 @@ distributions.
 
 ## COMPILING
 
-Run:
+### CLONING AND SUBMODULES
+
+Naev requires the artwork submodule to run from git. You can check out the
+submodules from the cloned repository with:
 
 ```bash
 git submodule init
 git submodule update
+```
+
+Not that `git submodule update` has to be run every time you `git pull` to stay
+up to date. This can also be done automatically by setting the following
+configuration:
+
+```bash
+git config submodule.recurse true
+```
+
+### COMPILATION
+
+Run:
+
+```bash
 meson setup builddir .
 cd builddir
 meson compile
@@ -99,19 +117,40 @@ update the submodules with the following command.
 git submodule update
 ```
 
-## UPDATING PO FILES
+You can also set this to be done automatically on git pull with the following
+command:
+
+```bash
+git config submodule.recurse true
+```
+
+Afterwards, every time you perform a `git pull`, it will also update the
+artwork submodule.
+
+## TRANSLATION
+
+Naev supports unicode and gettext since version 0.8.0.
+
+### ONLINE TRANSLATION
+
+Naev is incorporated into Weblate. You can easily translate directly with a web
+interface to your chosen language at
+https://hosted.weblate.org/projects/naev/naev/ .
+
+### MANUAL TRANSLATION
 
 If you are a developer, you may need to update translation files as
 text is modified. You can update all translation files with the
 following commands:
 
 ```bash
-meson compile potfiles # only necessary if files have been added or removed
-meson compile naev-pot
-meson compile naev-update-po
+meson compile potfiles        # necessary if files have been added or removed
+meson compile naev-pot        # necessary if translatable strings changed
+meson compile naev-update-po  # necessary outside the main line, where Weblate handles it
 ```
 
-Again, you will only ever need to do this if you are a developer.
+This wil allow you to edit the translation files in `po/` manually to modify
+translations.
 
 ## CRASHES & PROBLEMS
 

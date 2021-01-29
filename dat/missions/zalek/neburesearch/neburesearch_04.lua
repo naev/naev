@@ -81,7 +81,7 @@ function create()
     dest_planet, dest_sys = planet.get("Jurai")
     
     -- Spaceport bar stuff
-    misn.setNPC(_("Dr. Mensing"), "zalek/unique/mensing")
+    misn.setNPC(_("Dr. Mensing"), "zalek/unique/mensing.png")
     misn.setDesc(bar_desc)
 end
 
@@ -161,9 +161,9 @@ function jumpin()
     if stage == 1 and system.cur() == dest_sys then
         local scom = {}
         stage = 2
-        scom[1] = pilot.addRaw("Za'lek Light Drone", "mercenary", dest_planet, "Mercenary")
-        scom[2] = pilot.addRaw("Za'lek Light Drone", "mercenary", dest_planet, "Mercenary")
-        scom[3] = pilot.addRaw("Za'lek Heavy Drone", "mercenary", dest_planet, "Mercenary")
+        scom[1] = pilot.add("Za'lek Light Drone", "Mercenary", dest_planet)
+        scom[2] = pilot.add("Za'lek Light Drone", "Mercenary", dest_planet)
+        scom[3] = pilot.add("Za'lek Heavy Drone", "Mercenary", dest_planet)
         for i=1,#scom do
             scom[i]:setHostile(false)
             scom[i]:control()
@@ -198,8 +198,8 @@ function startAmbush()
     origins[2] = system.get("Woreck")
     origins[3] = system.get("Damien")
     for i=1,#origins do
-        scom[2*i-1] = pilot.addRaw("Za'lek Light Drone", "mercenary", origins[i], "Mercenary")
-        scom[2*i] = pilot.addRaw("Za'lek Heavy Drone", "mercenary", origins[i], "Mercenary")
+        scom[2*i-1] = pilot.add("Za'lek Light Drone", "Mercenary", origins[i])
+        scom[2*i] = pilot.add("Za'lek Heavy Drone", "Mercenary", origins[i])
     end
     for i=1,#scom do
         scom[i]:setHostile(false)

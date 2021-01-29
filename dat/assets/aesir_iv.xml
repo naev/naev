@@ -5,8 +5,8 @@
   <y>-13900.000000</y>
  </pos>
  <GFX>
-  <space>J04.png</space>
-  <exterior>lava.png</exterior>
+  <space>J04.webp</space>
+  <exterior>lava.webp</exterior>
  </GFX>
  <general>
   <class>A</class>

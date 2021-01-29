@@ -97,26 +97,17 @@ function love_math.newRandomGenerator( low, high )
       seed = seed .. tostring(high)
    end
    local rng = love_math.RandomGenerator.new()
-   rng:setSeed( seed )
+   rng.prng = prng.new( seed )
    return rng
 end
 function love_math.RandomGenerator:setSeed( seed )
-   prng.initHash( seed )
-   self.z = prng.z
+   self.prng:setSeed( seed )
 end
 function love_math.RandomGenerator:random( min, max )
-   -- TODO get rid of this horrible hack and make prng return objects
-   prng.z = self.z
-   if min == nil then
-      return prng.num()
-   elseif max == nil then
-      return prng.range(1,min)
-   else
-      return prng.range(min,max)
-   end
+   return self.prng:random( min, max )
 end
-function love_math.RandomGenerator:getState() return self.z end
-function love_math.RandomGenerator:setState( state ) self.z = state end
+function love_math.RandomGenerator:getState() return self.prng.z end
+function love_math.RandomGenerator:setState( state ) self.prng.z = state end
 function love_math.random( min, max )
    if min == nil then
       return naev.rnd.rnd()

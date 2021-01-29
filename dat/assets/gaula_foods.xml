@@ -5,8 +5,8 @@
   <y>-2053.892577</y>
  </pos>
  <GFX>
-  <space>station-agriculture.png</space>
-  <exterior>station05.png</exterior>
+  <space>station-agriculture.webp</space>
+  <exterior>station05.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>

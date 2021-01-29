@@ -7,7 +7,7 @@
   <mass>600</mass>
   <price>2000000</price>
   <description>Milspec cares about your personal safety. Your protection is our concern. The Aegis 8501 grants your ship excellent shield strength while preserving a high level of subsystem control and energy capacity. Fly safe, fly Milspec.</description>
-  <gfx_store>core_system_shield_l1</gfx_store>
+  <gfx_store>core_system_shield_l1.png</gfx_store>
   <priority>3</priority>
  </general>
  <specific type="modification">
