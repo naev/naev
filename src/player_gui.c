@@ -113,9 +113,8 @@ int player_guiCheck( char* name )
 /**
  * @brief Gets the list of GUIs.
  */
-char** player_guiList( int *n )
+char** player_guiList (void)
 {
-   *n = array_size(gui_list);
    return gui_list;
 }
 

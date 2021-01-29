@@ -186,7 +186,6 @@ void pilots_rmHook( unsigned int hook )
 {
    int i, j;
    Pilot *p, **plist;
-   int n;
 
    /* Cleaning up a pilot's hooks. */
    if (pilot_hookCleanup)
@@ -195,8 +194,8 @@ void pilots_rmHook( unsigned int hook )
    /* Remove global hook first. */
    pilots_rmGlobalHook( hook );
 
-   plist = pilot_getAll( &n );
-   for (i=0; i<n; i++) {
+   plist = pilot_getAll();
+   for (i=0; i<array_size(plist); i++) {
       p = plist[i];
 
       for (j=0; j<p->nhooks; j++) {

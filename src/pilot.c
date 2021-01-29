@@ -85,9 +85,8 @@ static int pilot_getStackPos( const unsigned int id );
 /**
  * @brief Gets the pilot stack.
  */
-Pilot** pilot_getAll( int *n )
+Pilot** pilot_getAll (void)
 {
-   *n = array_size(pilot_stack);
    return pilot_stack;
 }
 

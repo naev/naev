@@ -383,7 +383,7 @@ typedef struct Pilot_ {
 /*
  * getting pilot stuff
  */
-Pilot** pilot_getAll( int *n );
+Pilot** pilot_getAll (void);
 Pilot* pilot_get( const unsigned int id );
 unsigned int pilot_getNextID( const unsigned int id, int mode );
 unsigned int pilot_getPrevID( const unsigned int id, int mode );

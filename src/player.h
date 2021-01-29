@@ -222,7 +222,7 @@ int player_eventAlreadyDone( int id );
  */
 NONNULL( 1 ) void player_addLicense( char *license );
 int player_hasLicense( char *license );
-char **player_getLicenses( int *nlicenses );
+char **player_getLicenses (void);
 
 
 /*

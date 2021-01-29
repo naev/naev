@@ -166,7 +166,7 @@ void ships_free (void);
 Ship* ship_get( const char* name );
 Ship* ship_getW( const char* name );
 const char *ship_existsCase( const char* name );
-Ship* ship_getAll( int *n );
+Ship* ship_getAll (void);
 char* ship_class( Ship* s );
 ShipClass ship_classFromString( char* str );
 credits_t ship_basePrice( const Ship* s );

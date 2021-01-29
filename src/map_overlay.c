@@ -490,7 +490,6 @@ void ovr_render( double dt )
    int i, j;
    Pilot **pstk;
    AsteroidAnchor *ast;
-   int n;
    double w, h, res;
    double x,y;
 
@@ -526,9 +525,9 @@ void ovr_render( double dt )
       gui_renderJumpPoint( player.p->nav_hyperspace, RADAR_RECT, w, h, res, 1 );
 
    /* Render pilots. */
-   pstk  = pilot_getAll( &n );
+   pstk  = pilot_getAll();
    j     = 0;
-   for (i=0; i<n; i++) {
+   for (i=0; i<array_size(pstk); i++) {
       if (pstk[i]->id == PLAYER_ID) /* Skip player. */
          continue;
       if (pstk[i]->id == player.p->target)

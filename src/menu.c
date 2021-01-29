@@ -109,7 +109,6 @@ static void menu_options_button( unsigned int wid, char *str );
 static int menu_main_bkg_system (void)
 {
    nsave_t *ns;
-   int n;
    const char *sys;
    Planet *pnt;
    double cx, cy;
@@ -122,10 +121,10 @@ static int menu_main_bkg_system (void)
    load_refresh();
 
    /* Load saves. */
-   ns = load_getList( &n );
+   ns = load_getList();
 
    /* Try to apply unidiff. */
-   if (n > 0) {
+   if (array_size( ns ) > 0) {
       load_gameDiff( ns[0].path );
 
       /* Get start position. */

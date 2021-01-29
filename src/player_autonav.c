@@ -17,6 +17,7 @@
 
 #include "player.h"
 
+#include "array.h"
 #include "conf.h"
 #include "pause.h"
 #include "pilot.h"
@@ -525,7 +526,7 @@ static int player_autonavBrake (void)
 int player_autonavShouldResetSpeed (void)
 {
    double failpc, shield, armour;
-   int i, n;
+   int i;
    Pilot **pstk;
    int hostiles, will_reset;
 
@@ -539,8 +540,8 @@ int player_autonavShouldResetSpeed (void)
    shield = player.p->shield / player.p->shield_max;
    armour = player.p->armour / player.p->armour_max;
 
-   pstk = pilot_getAll( &n );
-   for (i=0; i<n; i++) {
+   pstk = pilot_getAll();
+   for (i=0; i<array_size(pstk); i++) {
       if ( ( pstk[i]->id != PLAYER_ID ) && pilot_isHostile( pstk[i] )
             && pilot_inRangePilot( player.p, pstk[i], NULL ) == 1
             && !pilot_isDisabled( pstk[i] ) ) {

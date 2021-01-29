@@ -272,11 +272,10 @@ void load_free (void)
 
 
 /**
- * @brief Gets the list of loaded saves.
+ * @brief Gets the array (array.h) of loaded saves.
  */
-nsave_t *load_getList( int *n )
+nsave_t *load_getList (void)
 {
-   *n = array_size( load_saves );
    return load_saves;
 }
 
@@ -287,7 +286,7 @@ void load_loadGameMenu (void)
 {
    unsigned int wid;
    char **names, buf[PATH_MAX];
-   nsave_t *nslist, *ns;
+   nsave_t *ns;
    int i, n, len;
 
    /* window */
@@ -299,11 +298,11 @@ void load_loadGameMenu (void)
    load_refresh();
 
    /* load the saves */
-   nslist = load_getList( &n );
+   n = array_size( load_saves );
    if (n > 0) {
       names = malloc( sizeof(char*)*n );
       for (i=0; i<n; i++) {
-         ns       = &nslist[i];
+         ns       = &load_saves[i];
          len      = strlen(ns->path);
          if (strcmp(&ns->path[len-10],".ns.backup")==0) {
             nsnprintf( buf, sizeof(buf), _("%s #r(Backup)#0"), ns->name );
@@ -356,7 +355,6 @@ static void load_menu_update( unsigned int wid, char *str )
    (void) str;
    int pos;
    nsave_t *ns;
-   int n;
    char *save;
    char buf[256], credits[ECON_CRED_STRLEN], date[64];
 
@@ -367,8 +365,7 @@ static void load_menu_update( unsigned int wid, char *str )
 
    /* Get position. */
    pos = toolkit_getListPos( wid, "lstSaves" );
-   ns  = load_getList( &n );
-   ns  = &ns[pos];
+   ns  = &load_saves[pos];
 
    /* Display text. */
    credits2str( credits, ns->credits, 2 );
@@ -402,8 +399,6 @@ static void load_menu_load( unsigned int wdw, char *str )
    (void)str;
    char *save;
    int wid, pos;
-   nsave_t *ns;
-   int n;
    int diff;
 
    wid = window_get( "wdwLoadGameMenu" );
@@ -413,17 +408,16 @@ static void load_menu_load( unsigned int wdw, char *str )
       return;
 
    pos = toolkit_getListPos( wid, "lstSaves" );
-   ns  = load_getList( &n );
 
    /* Check version. */
-   diff = naev_versionCompare( ns[pos].version );
+   diff = naev_versionCompare( load_saves[pos].version );
    if (ABS(diff) >= 2) {
       if (!dialogue_YesNo( _("Save game version mismatch"),
             _("Save game '%s' version does not match Naev version:\n"
             "   Save version: #r%s#0\n"
             "   Naev version: %s\n"
             "Are you sure you want to load this game? It may lose data."),
-            save, ns[pos].version, VERSION ))
+            save, load_saves[pos].version, VERSION ))
          return;
    }
 
@@ -434,7 +428,7 @@ static void load_menu_load( unsigned int wdw, char *str )
    menu_main_close();
 
    /* Try to load the game. */
-   if (load_game( &ns[pos] )) {
+   if (load_game( &load_saves[pos] )) {
       /* Failed so reopen both. */
       menu_main();
       load_loadGameMenu();
@@ -450,8 +444,6 @@ static void load_menu_delete( unsigned int wdw, char *str )
    (void)str;
    char *save;
    int wid, pos;
-   nsave_t *ns;
-   int n;
 
    wid = window_get( "wdwLoadGameMenu" );
    save = toolkit_getList( wid, "lstSaves" );
@@ -465,8 +457,7 @@ static void load_menu_delete( unsigned int wdw, char *str )
 
    /* Remove it. */
    pos = toolkit_getListPos( wid, "lstSaves" );
-   ns  = load_getList( &n );
-   remove( ns[pos].path ); /* remove is portable and will call unlink on linux. */
+   remove( load_saves[pos].path ); /* remove is portable and will call unlink on linux. */
 
    /* need to reload the menu */
    load_menu_close(wdw, NULL);

@@ -127,7 +127,6 @@ static int mapedit_saveMap( StarSystem** uniedit_sys, mapOutfitsList_t* ns );
 void mapedit_setGlobalLoadedInfos( mapOutfitsList_t* ns );
 /* Management of Map files list. */
 static int  mapedit_mapsList_refresh (void);
-static mapOutfitsList_t *mapedit_mapsList_getList ( int *n );
 static void mapsList_free (void);
 
 
@@ -645,7 +644,7 @@ void mapedit_loadMapMenu_open (void)
 {
    unsigned int wid;
    char **names;
-   mapOutfitsList_t *nslist, *ns;
+   mapOutfitsList_t *ns;
    int i, n;
 
    /* window */
@@ -660,11 +659,11 @@ void mapedit_loadMapMenu_open (void)
    mapedit_mapsList_refresh();
 
    /* Load the maps */
-   nslist = mapedit_mapsList_getList( &n );
+   n = array_size( mapList );
    if (n > 0) {
       names = malloc( sizeof(char*)*n );
       for (i=0; i<n; i++) {
-         ns       = &nslist[i];
+         ns       = &mapList[i];
          names[i] = strdup(ns->mapName);
       }
    }
@@ -702,7 +701,6 @@ static void mapedit_loadMapMenu_update( unsigned int wdw, char *str )
 {
    (void) str;
    int pos;
-   int n;
    mapOutfitsList_t *ns;
    char *save;
    char buf[1024];
@@ -714,8 +712,7 @@ static void mapedit_loadMapMenu_update( unsigned int wdw, char *str )
 
    /* Get position. */
    pos = toolkit_getListPos( wdw, "lstMapOutfits" );
-   ns  = mapedit_mapsList_getList( &n );
-   ns  = &ns[pos];
+   ns  = &mapList[pos];
 
    /* Display text. */
    nsnprintf( buf, sizeof(buf),
@@ -754,7 +751,7 @@ static void mapedit_loadMapMenu_close( unsigned int wdw, char *str )
 static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
 {
    (void)str;
-   int pos, n, len, compareLimit, i, found;
+   int pos, len, compareLimit, i, found;
    mapOutfitsList_t *ns;
    char *save, *file, *name, *systemName;
    xmlNodePtr node;
@@ -770,8 +767,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
 
    /* Get position. */
    pos = toolkit_getListPos( wdw, "lstMapOutfits" );
-   ns  = mapedit_mapsList_getList( &n );
-   ns  = &ns[pos];
+   ns  = &mapList[pos];
 
    /* Display text. */
    len  = strlen(MAP_DATA_PATH)+strlen(ns->fileName)+2;
@@ -1021,15 +1017,6 @@ static int mapedit_mapsList_refresh (void)
    PHYSFS_freeList( map_files );
 
    return 0;
-}
-
-/**
- * @brief Gets the list of loaded maps.
- */
-mapOutfitsList_t *mapedit_mapsList_getList( int *n )
-{
-   *n = array_size( mapList );
-   return mapList;
 }
 
 

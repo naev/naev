@@ -117,11 +117,10 @@ const char *ship_existsCase( const char* name )
 
 
 /**
- * @brief Gets all the ships.
+ * @brief Gets the array (array.h) of all ships.
  */
-Ship* ship_getAll( int *n )
+Ship* ship_getAll (void)
 {
-   *n = array_size(ship_stack);
    return ship_stack;
 }
 

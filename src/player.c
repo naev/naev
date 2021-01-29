@@ -2814,14 +2814,10 @@ void player_addLicense( char *license )
 
 
 /**
- * @brief Gets the player's licenses.
- *
- *    @param nlicenses Amount of licenses the player has.
- *    @return Name of the licenses he has.
+ * @brief Gets the array (array.h) of license names in the player's inventory.
  */
-char **player_getLicenses( int *nlicenses )
+char **player_getLicenses ()
 {
-   *nlicenses = player_nlicenses;
    return player_licenses;
 }
 
@@ -2966,7 +2962,7 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
 int player_save( xmlTextWriterPtr writer )
 {
    char **guis;
-   int i, n;
+   int i;
    MissionData *m;
    const char *ev;
    int cycles, periods, seconds;
@@ -3005,8 +3001,8 @@ int player_save( xmlTextWriterPtr writer )
 
    /* GUIs. */
    xmlw_startElem(writer,"guis");
-   guis = player_guiList( &n );
-   for (i=0; i<n; i++)
+   guis = player_guiList();
+   for (i=0; i<array_size(guis); i++)
       xmlw_elem(writer,"gui","%s",guis[i]);
    xmlw_endElem(writer); /* "guis" */
 

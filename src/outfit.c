@@ -116,11 +116,10 @@ Outfit* outfit_getW( const char* name )
 
 
 /**
- * @brief Gets all the outfits.
+ * @brief Gets the array (array.h) of all outfits.
  */
-Outfit* outfit_getAll( int *n )
+Outfit* outfit_getAll (void)
 {
-   *n = array_size(outfit_stack);
    return outfit_stack;
 }
 
