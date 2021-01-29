@@ -108,7 +108,7 @@ static void menu_options_button( unsigned int wid, char *str );
  */
 static int menu_main_bkg_system (void)
 {
-   nsave_t *ns;
+   const nsave_t *ns;
    const char *sys;
    Planet *pnt;
    double cx, cy;

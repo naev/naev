@@ -378,7 +378,7 @@ typedef struct Outfit_ {
  */
 Outfit* outfit_get( const char* name );
 Outfit* outfit_getW( const char* name );
-Outfit* outfit_getAll (void);
+const Outfit* outfit_getAll (void);
 int outfit_compareTech( const void *outfit1, const void *outfit2 );
 /* outfit types */
 int outfit_isActive( const Outfit* o );

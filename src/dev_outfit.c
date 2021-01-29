@@ -28,11 +28,11 @@
  */
 void dout_csvBolt( const char *path )
 {
-   Outfit *o, *o_all;
+   const Outfit *o, *o_all;
    int i, l;
    SDL_RWops *rw;
    char buf[ 1024 ];
-   Damage *dmg;
+   const Damage *dmg;
 
    /* File to output to. */
    rw = SDL_RWFromFile( path, "w" );
@@ -88,11 +88,11 @@ void dout_csvBolt( const char *path )
  */
 void dout_csvBeam( const char *path )
 {
-   Outfit *o, *o_all;
+   const Outfit *o, *o_all;
    int i, l;
    SDL_RWops *rw;
    char buf[ 1024 ];
-   Damage *dmg;
+   const Damage *dmg;
 
    /* File to output to. */
    rw = SDL_RWFromFile( path, "w" );
@@ -145,7 +145,7 @@ void dout_csvBeam( const char *path )
  */
 void dout_csvLauncher( const char *path )
 {
-   Outfit *o, *o_all;
+   const Outfit *o, *o_all;
    int i, l;
    SDL_RWops *rw;
    char buf[ 1024 ];
@@ -197,12 +197,12 @@ void dout_csvLauncher( const char *path )
  */
 void dout_csvAmmo( const char *path )
 {
-   Outfit *o, *o_all;
+   const Outfit *o, *o_all;
    int i, j, l;
    SDL_RWops *rw;
    char buf[ 1024 ];
    char *ai;
-   Damage *dmg;
+   const Damage *dmg;
 
    /* File to output to. */
    rw = SDL_RWFromFile( path, "w" );
@@ -268,7 +268,7 @@ void dout_csvAmmo( const char *path )
  */
 void dout_csvMod( const char *path )
 {
-   Outfit *o, *o_all;
+   const Outfit *o, *o_all;
    int i, l;
    SDL_RWops *rw;
    char buf[ 1024 ];

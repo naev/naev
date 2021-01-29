@@ -28,7 +28,7 @@
  */
 void dship_csv( const char *path )
 {
-   Ship *s, *s_all;
+   const Ship *s, *s_all;
    int i, l;
    SDL_RWops *rw;
    char buf[ 1024 ];
@@ -88,7 +88,7 @@ void dship_csv( const char *path )
  */
 void dship_csvStat( const char *path )
 {
-   Ship *s, *s_all;
+   const Ship *s, *s_all;
    int i, l;
    SDL_RWops *rw;
    char buf[1024];

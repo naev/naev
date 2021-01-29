@@ -118,7 +118,7 @@ Outfit* outfit_getW( const char* name )
 /**
  * @brief Gets the array (array.h) of all outfits.
  */
-Outfit* outfit_getAll (void)
+const Outfit* outfit_getAll (void)
 {
    return outfit_stack;
 }

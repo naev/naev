@@ -274,7 +274,7 @@ void load_free (void)
 /**
  * @brief Gets the array (array.h) of loaded saves.
  */
-nsave_t *load_getList (void)
+const nsave_t *load_getList (void)
 {
    return load_saves;
 }
