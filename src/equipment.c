@@ -19,6 +19,7 @@
 
 #include "equipment.h"
 
+#include "array.h"
 #include "conf.h"
 #include "dialogue.h"
 #include "gui.h"
@@ -1326,7 +1327,7 @@ static void equipment_genLists( unsigned int wid )
  */
 static void equipment_genShipList( unsigned int wid )
 {
-   int i, l, n;
+   int i, l;
    ImageArrayCell *cships;
    int nships;
    int w, h;
@@ -1361,8 +1362,8 @@ static void equipment_genShipList( unsigned int wid )
       }
       if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
          player_shipsSort();
-         ps = player_getShipStack( &n );
-         for (i=1; i<n+1; i++) {
+         ps = player_getShipStack();
+         for (i=1; i<=array_size(ps); i++) {
             cships[i].image = gl_dupTexture( ps[i-1].p->ship->gfx_store );
             cships[i].caption = strdup( ps[i-1].p->name );
             cships[i].layers = gl_copyTexArray( ps[i-1].p->ship->gfx_overlays, ps[i-1].p->ship->gfx_noverlays, &cships[i].nlayers );

@@ -2422,14 +2422,10 @@ int player_ships( char** sships, glTexture** tships )
 
 
 /**
- * @brief Gets all of the player's ships.
- *
- *    @param[out] n Number of star systems gotten.
- *    @return The player's ships.
+ * @brief Gets the array (array.h) of the player's ships.
  */
-const PlayerShip_t* player_getShipStack( int *n )
+const PlayerShip_t* player_getShipStack (void)
 {
-   *n = array_size(player_stack);
    return player_stack;
 }
 
@@ -2557,15 +2553,11 @@ static int player_outfitCompare( const void *arg1, const void *arg2 )
 
 
 /**
- * @brief Returns the player's outfits.
- *
- *    @param[out] n Number of distinct outfits (not total quantity).
- *    @return Outfits the player owns.
+ * @brief Gets an array (array.h) of the player's outfits.
  */
-const PlayerOutfit_t* player_getOutfits( int *n )
+const PlayerOutfit_t* player_getOutfits (void)
 {
-   *n = array_size(player_outfits);
-   return (const PlayerOutfit_t*) player_outfits;
+   return player_outfits;
 }
 
 

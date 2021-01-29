@@ -21,6 +21,7 @@
 
 #include "nlua_player.h"
 
+#include "array.h"
 #include "board.h"
 #include "comm.h"
 #include "event.h"
@@ -766,13 +767,13 @@ static int playerL_commclose( lua_State *L )
  */
 static int playerL_ships( lua_State *L )
 {
-   int i, nships;
+   int i;
    const PlayerShip_t *ships;
 
-   ships = player_getShipStack( &nships );
+   ships = player_getShipStack();
 
    lua_newtable(L);
-   for (i=0; i<nships; i++) {
+   for (i=0; i<array_size(ships); i++) {
       lua_pushnumber(L, i+1);
       lua_pushstring(L, ships[i].p->name);
       lua_rawset(L, -3);
@@ -794,14 +795,14 @@ static int playerL_ships( lua_State *L )
 static int playerL_shipOutfits( lua_State *L )
 {
    const char *str;
-   int i, j, nships;
+   int i, j;
    const PlayerShip_t *ships;
    Pilot *p;
 
    /* Get name. */
    str = luaL_checkstring(L, 1);
 
-   ships = player_getShipStack( &nships );
+   ships = player_getShipStack();
 
    /* Get outfit. */
    lua_newtable(L);
@@ -810,7 +811,7 @@ static int playerL_shipOutfits( lua_State *L )
    if (strcmp(str, player.p->name)==0)
       p = player.p;
    else {
-      for (i=0; i<nships; i++) {
+      for (i=0; i<array_size(ships); i++) {
          if (strcmp(str, ships[i].p->name)==0) {
             p = ships[i].p;
             break;
@@ -851,13 +852,13 @@ static int playerL_shipOutfits( lua_State *L )
  */
 static int playerL_outfits( lua_State *L )
 {
-   int i, noutfits;
+   int i;
    const PlayerOutfit_t *outfits;
 
-   outfits = player_getOutfits( &noutfits );
+   outfits = player_getOutfits();
 
    lua_newtable(L);
-   for (i=0; i<noutfits; i++) {
+   for (i=0; i<array_size(outfits); i++) {
       lua_pushnumber(L, i+1);
       lua_pushoutfit(L, (Outfit*)outfits[i].o );
       lua_rawset(L, -3);
@@ -872,7 +873,7 @@ static int playerL_outfits( lua_State *L )
  *
  * @usage q = player.numOutfit( "Laser Cannon MK0", true ) -- Number of 'Laser Cannon MK0' the player owns (unequipped)
  *
- *    @luatparam string name Name of the outfit to give.
+ *    @luatparam string name Name of the outfit to remove.
  *    @luatparam[opt] bool unequipped_only Whether or not to check only the unequipped outfits and not equipped outfits. Defaults to false.
  *    @luatreturn number The quantity the player owns.
  * @luafunc numOutfit
@@ -942,9 +943,9 @@ static int playerL_addOutfit( lua_State *L  )
 static int playerL_rmOutfit( lua_State *L )
 {
    const char *str;
-   Outfit *o, **outfits;
+   const Outfit *o, **outfits;
    const PlayerOutfit_t *poutfits;
-   int i, q, noutfits;
+   int i, q;
 
    NLUA_CHECKRW(L);
    NLUA_MIN_ARGS(1);
@@ -959,23 +960,18 @@ static int playerL_rmOutfit( lua_State *L )
       str = luaL_checkstring(L, 1);
 
       if (strcmp(str,"all")==0) {
-         noutfits = player_numOutfits();
-         /* Removing nothing is a bad idea. */
-         if (noutfits == 0)
-            return 0;
+         poutfits = player_getOutfits();
+         outfits = array_create_size( const Outfit*, array_size( poutfits ) );
+         for (i=0; i<array_size(poutfits); i++)
+            array_push_back( &outfits, poutfits[i].o );
 
-         poutfits = player_getOutfits( &noutfits );
-         outfits = malloc( sizeof(Outfit*) * noutfits );
-         for (i=0; i<noutfits; i++)
-            outfits[i] = (Outfit*)poutfits[i].o;
-
-         for (i=0; i<noutfits; i++) {
+         for (i=0; i<array_size(outfits); i++) {
             o = outfits[i];
             q = player_outfitOwned(o);
             player_rmOutfit(o, q);
          }
          /* Clean up. */
-         free(outfits);
+         array_free(outfits);
 
          /* Update equipment list. */
          outfits_updateEquipmentOutfits();
