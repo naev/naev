@@ -77,7 +77,6 @@ static char *player_message_noland = NULL; /**< No landing message (when PLAYER_
  * Licenses.
  */
 static char **player_licenses = NULL; /**< Licenses player has. */
-static int player_nlicenses   = 0; /**< Number of licenses player has. */
 
 
 /*
@@ -726,13 +725,10 @@ void player_cleanup (void)
    events_mdone = 0;
 
    /* Clean up licenses. */
-   if (player_nlicenses > 0) {
-      for (i=0; i<player_nlicenses; i++)
-         free(player_licenses[i]);
-      free(player_licenses);
-      player_licenses = NULL;
-      player_nlicenses = 0;
-   }
+   for (i=0; i<array_size(player_licenses); i++)
+      free(player_licenses[i]);
+   array_free(player_licenses);
+   player_licenses = NULL;
 
    /* Clear claims. */
    claim_clear();
@@ -2784,10 +2780,10 @@ int player_eventAlreadyDone( int id )
 int player_hasLicense( char *license )
 {
    int i;
-   if (!license) /* Null input. */
+   if (license == NULL)
       return 1;
 
-   for (i=0; i<player_nlicenses; i++)
+   for (i=0; i<array_size(player_licenses); i++)
       if (strcmp(license, player_licenses[i])==0)
          return 1;
 
@@ -2802,14 +2798,11 @@ int player_hasLicense( char *license )
  */
 void player_addLicense( char *license )
 {
-   /* Player already has license. */
    if (player_hasLicense(license))
       return;
-
-   /* Add the license. */
-   player_nlicenses++;
-   player_licenses = realloc( player_licenses, sizeof(char*)*player_nlicenses );
-   player_licenses[player_nlicenses-1] = strdup(license);
+   if (player_licenses == NULL)
+      player_licenses = array_create( char* );
+   array_push_back( &player_licenses, strdup(license) );
 }
 
 
@@ -3018,7 +3011,7 @@ int player_save( xmlTextWriterPtr writer )
 
    /* Licenses. */
    xmlw_startElem(writer, "licenses");
-   for (i=0; i<player_nlicenses; i++)
+   for (i=0; i<array_size(player_licenses); i++)
       xmlw_elem(writer, "license", "%s", player_licenses[i]);
    xmlw_endElem(writer); /* "licenses" */
 
