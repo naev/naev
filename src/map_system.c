@@ -47,8 +47,7 @@ static int nameWidth = 0; /**< text width of planet name */
 static int nshow = 0; /**< number of planets shown. */
 static char infobuf[PATH_MAX];
 static unsigned int starCnt = 1;
-glTexture **bgImages; /**< nebula and star textures */
-unsigned int nBgImgs; /** number of images */
+glTexture **bgImages; /**< array (array.h) of nebula and star textures */
 
 #define MAP_SYSTEM_WDWNAME "wdwSystemMap"
 #define MAPSYS_OUTFITS "mapSysOutfits"
@@ -115,11 +114,9 @@ int map_system_load( void )
  */
 void map_system_exit( void )
 {
-   for ( unsigned int i=0; i<nBgImgs; i++ ) {
+   for ( int i=0; i<array_size(bgImages); i++ )
       gl_freeTexture( bgImages[i] );
-   }
-   nBgImgs = 0;
-   free( bgImages );
+   array_free( bgImages );
    bgImages=NULL;
 }
 
@@ -130,11 +127,9 @@ void map_system_close( unsigned int wid, char *str ) {
    if ( cur_sys_sel != cur_system ) {
      space_gfxUnload( cur_sys_sel );
    }
-   for ( unsigned int i=0; i<nBgImgs; i++ ) {
+   for ( int i=0; i<array_size(bgImages); i++ )
       gl_freeTexture( bgImages[i] );
-   }
-   nBgImgs = 0;
-   free( bgImages );
+   array_free( bgImages );
    bgImages=NULL;
    free( cur_planet_sel_outfits );
    cur_planet_sel_outfits = NULL;
@@ -215,10 +210,9 @@ void map_system_open( int sys_selected )
    /* load background images */
    background_clear();
    background_load ( cur_system->background );
-   background_getTextures( &nBgImgs, &bgImages);
-   if ( nBgImgs <= 1 ) {
+   bgImages = background_getTextures();
+   if ( array_size( bgImages ) <= 1 )
       starCnt = 0;
-   }
    background_clear();
    /* and reload the images for the current system */
    cur_system = tmp_sys;
@@ -290,8 +284,8 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    if ( phase > 150 ) {
       phase = 0;
       starCnt++;
-      if ( starCnt >= nBgImgs ) {
-         if ( nBgImgs <= 1)
+      if ( starCnt >= (unsigned int) array_size( bgImages ) ) {
+         if ( array_size( bgImages ) <= 1)
             starCnt = 0;
          else
             starCnt = 1;
@@ -324,22 +318,22 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    /* draw the star */
    ih=pitch;
    iw=ih;
-   if ( nBgImgs > 0 ) {
+   if ( array_size( bgImages ) > 0 ) {
       if ( bgImages[starCnt]->w > bgImages[starCnt]->h )
          ih = ih * bgImages[starCnt]->h / bgImages[starCnt]->w;
       else if ( bgImages[starCnt]->w < bgImages[starCnt]->h )
          iw = iw * bgImages[starCnt]->w / bgImages[starCnt]->h;
       ccol.r=ccol.g=ccol.b=ccol.a=1;
-      if ( phase > 120 && nBgImgs > 2 )
+      if ( phase > 120 && array_size( bgImages ) > 2 )
          ccol.a = cos ( (phase-121)/30. *M_PI/2.);
       gl_blitScale( bgImages[starCnt], bx+2 , by+(nshow-1)*pitch + (pitch-ih)/2 + offset, iw , ih, &ccol );
-      if ( phase > 120 && nBgImgs > 2) {
+      if ( phase > 120 && array_size( bgImages ) > 2) {
          /* fade in the next star */
          ih=pitch;
          iw=ih;
          i = starCnt + 1;
-         if ( i >= (int)nBgImgs ) {
-            if ( nBgImgs <= 1 )
+         if ( i >= array_size( bgImages ) ) {
+            if ( array_size( bgImages ) <= 1 )
                i=0;
             else
                i=1;
@@ -359,7 +353,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    }
    gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-0.5)*pitch + offset,
          (cur_planet_sel == 0 ? &cFontGreen : &cFontWhite), -1., _(sys->name) );
-   if ( cur_planet_sel == 0 && nBgImgs > 0 ) {
+   if ( cur_planet_sel == 0 && array_size( bgImages ) > 0 ) {
       /* make use of space to draw a nice nebula */
       double imgw,imgh;
       iw = w - 50 - pitch - nameWidth;
@@ -392,7 +386,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    buf[0]='\0';
    if ( cur_planet_sel == 0 ) {
       int infopos = 0;
-      int stars   = nBgImgs>0 ? nBgImgs-1 : 0;
+      int stars   = MAX( array_size( bgImages )-1, 0 );
       cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("System: %s\n"), _(sys->name) );
       /* display sun information */
       cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, n_("%d-star system\n", "%d-star system\n", stars), stars );
