@@ -354,7 +354,7 @@ Planet *planet_new (void);
 void planet_gfxLoad( Planet *p );
 int planet_hasSystem( const char* planetname );
 char* planet_getSystem( const char* planetname );
-Planet* planet_getAll( int *n );
+Planet* planet_getAll (void);
 Planet* planet_get( const char* planetname );
 Planet* planet_getIndex( int ind );
 void planet_setKnown( Planet *p );
@@ -428,7 +428,7 @@ void space_gfxUnload( StarSystem *sys );
 /*
  * Getting stuff.
  */
-StarSystem* system_getAll( int *nsys );
+StarSystem* system_getAll (void);
 int system_exists( const char* sysname );
 const char *system_existsCase( const char* sysname );
 char **system_searchFuzzyCase( const char* sysname, int *n );

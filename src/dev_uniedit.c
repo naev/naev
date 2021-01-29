@@ -1455,15 +1455,15 @@ static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
    (void) parent;
    (void) unused;
    unsigned int wid;
-   int i, j, n;
+   int i, j;
    Planet *p;
    char **str;
    int h;
 
    /* Get all assets. */
-   p  = planet_getAll( &n );
+   p  = planet_getAll();
    j  = 0;
-   for (i=0; i<n; i++)
+   for (i=0; i<array_size(p); i++)
       if (p[i].real == ASSET_VIRTUAL)
          j = 1;
    if (j==0) {
@@ -1476,9 +1476,9 @@ static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
    window_setCancel( wid, window_close );
 
    /* Add virtual asset list. */
-   str   = malloc( sizeof(char*) * n );
+   str   = malloc( sizeof(char*) * array_size(p) );
    j     = 0;
-   for (i=0; i<n; i++)
+   for (i=0; i<array_size(p); i++)
       if (p[i].real == ASSET_VIRTUAL)
          str[j++] = strdup( p[i].name );
    h = UNIEDIT_EDIT_HEIGHT-60-(BUTTON_HEIGHT+20);

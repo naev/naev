@@ -11,6 +11,7 @@
 
 #include "map_find.h"
 
+#include "array.h"
 #include "dialogue.h"
 #include "log.h"
 #include "map.h"
@@ -74,20 +75,20 @@ static char **map_shipsMatch( const char *name, int *len );
 static int map_knownInit (void)
 {
    int i, j;
-   int ntech, nsys, npnt;
+   int ntech, npnt;
    Planet *pnt, **planets;
    StarSystem *sys;
    tech_group_t **t;
 
    /* Allocate techs. */
-   planet_getAll( &npnt );
+   npnt = array_size( planet_getAll() );
    t        = malloc( sizeof(tech_group_t*) * npnt );
    planets  = malloc( sizeof(Planet*) * npnt );
-   sys      = system_getAll( &nsys );
+   sys      = system_getAll();
 
    /* Get techs. */
    ntech = 0;
-   for (i=0; i<nsys; i++) {
+   for (i=0; i<array_size(sys); i++) {
       if (!sys_isKnown( &sys[i] ))
          continue;
 

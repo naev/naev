@@ -752,14 +752,10 @@ int space_sysReachableFromSys( StarSystem *target, StarSystem *sys )
 }
 
 /**
- * @brief Gets all the star systems.
- *
- *    @param[out] nsys Number of star systems gotten.
- *    @return The star systems gotten.
+ * @brief Gets an array (array.h) of all star systems.
  */
-StarSystem* system_getAll( int *nsys )
+StarSystem* system_getAll (void)
 {
-   *nsys = array_size(systems_stack);
    return systems_stack;
 }
 
@@ -967,14 +963,10 @@ int planet_index( const Planet *p )
 
 
 /**
- * @brief Gets all the planets.
- *
- *    @param n Number of planets gotten.
- *    @return Array of gotten planets.
+ * @brief Gets an array (array.h) of all planets.
  */
-Planet* planet_getAll( int *n )
+Planet* planet_getAll (void)
 {
-   *n = array_size(planet_stack);
    return planet_stack;
 }
 

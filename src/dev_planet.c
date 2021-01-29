@@ -160,13 +160,12 @@ int dpl_savePlanet( const Planet *p )
 int dpl_saveAll (void)
 {
    int i;
-   int np;
    const Planet *p;
 
-   p = planet_getAll( &np );
+   p = planet_getAll();
 
    /* Write planets. */
-   for (i=0; i<np; i++)
+   for (i=0; i<array_size(p); i++)
       dpl_savePlanet( &p[i] );
 
    return 0;

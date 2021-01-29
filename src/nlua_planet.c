@@ -16,6 +16,7 @@
 
 #include "nlua_planet.h"
 
+#include "array.h"
 #include "land.h"
 #include "land_outfits.h"
 #include "log.h"
@@ -407,12 +408,12 @@ static int planetL_getLandable( lua_State *L )
 static int planetL_getAll( lua_State *L )
 {
    Planet *p;
-   int i, ind, n;
+   int i, ind;
 
    lua_newtable(L);
-   p = planet_getAll( &n );
+   p = planet_getAll();
    ind = 1;
-   for (i=0; i<n; i++) {
+   for (i=0; i<array_size(p); i++) {
       /* Ignore virtual assets. */
       if (p[i].real == ASSET_VIRTUAL)
          continue;

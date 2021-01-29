@@ -16,6 +16,7 @@
 
 #include "dev_system.h"
 
+#include "array.h"
 #include "conf.h"
 #include "dev_uniedit.h"
 #include "nstring.h"
@@ -238,13 +239,12 @@ int dsys_saveSystem( StarSystem *sys )
 int dsys_saveAll (void)
 {
    int i;
-   int nsys;
    StarSystem *sys;
 
-   sys = system_getAll( &nsys );
+   sys = system_getAll();
 
    /* Write systems. */
-   for (i=0; i<nsys; i++)
+   for (i=0; i<array_size(sys); i++)
       dsys_saveSystem( &sys[i] );
 
    return 0;

@@ -205,12 +205,11 @@ void claim_destroy( Claim_t *claim )
 void claim_clear (void)
 {
    StarSystem *sys;
-   int nsys;
    int i;
 
    /* Clears all the flags. */
-   sys = system_getAll( &nsys );
-   for (i=0; i<nsys; i++)
+   sys = system_getAll();
+   for (i=0; i<array_size(sys); i++)
       sys_rmFlag( &sys[i], SYSTEM_CLAIMED );
 
    for (i=0; i<array_size(claimed_strs); i++)

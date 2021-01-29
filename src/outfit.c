@@ -1893,7 +1893,6 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    StarSystem *sys, *system_stack;
    Planet *asset;
    JumpPoint *jump;
-   int nsys;
 
    node = parent->children;
 
@@ -1948,8 +1947,8 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
          nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX, "%s", xml_get(node) );
       }
       else if (xml_isNode(node,"all")) { /* Add everything to the map */
-         system_stack = system_getAll(&nsys);
-         for (i=0;i<nsys;i++) {
+         system_stack = system_getAll();
+         for (i=0;i<array_size(system_stack);i++) {
             array_grow( &temp->u.map->systems ) = &system_stack[i];
             for (j=0;j<system_stack[i].nplanets;j++)
                array_grow( &temp->u.map->assets ) = system_stack[i].planets[j];
