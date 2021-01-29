@@ -100,16 +100,19 @@ __inline__ static _private_container *_array_private_container(void *a)
 }
 
 /**
- * @brief Gets the end of the array.
- *
- *    @param a Array to get end of.
- *    @param e_size Size of array members.
- *    @return The end of the array a.
+ * @brief Gets the container of an array, given a const pointer.
  */
-__inline__ static void *_array_end_helper(void *a, size_t e_size)
+__inline__ static const _private_container *_array_private_container_const(const void *a)
 {
-   _private_container *c = _array_private_container(a);
-   return c->_array + c->_size * e_size;
+   assert("NULL array!" && (a != NULL));
+
+   _private_container *c = (_private_container *)a - 1;
+
+#ifdef DEBUGGING
+   assert("Sentinel not found. Use array_create() to create the array." && (c->_sentinel == ARRAY_SENTINEL));
+#endif
+
+   return c;
 }
 
 /**
@@ -187,11 +190,12 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
 
 /**
  * @brief Returns number of elements in the array.
+ * \warning macro, may evaluate argument twice.
  *
  *    @param array Array being manipulated.
  *    @return The size of the array (number of elements).
  */
-#define array_size(array) (int)((array==NULL) ? 0 : _array_private_container(array)->_size)
+#define array_size(array) (int)((array==NULL) ? 0 : _array_private_container_const(array)->_size)
 /**
  * @brief Returns number of elements reserved.
  *
@@ -208,11 +212,12 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
 #define array_begin(array) (array)
 /**
  * @brief Returns a pointer to the end of the reserved memory space.
+ * \warning macro, may evaluate argument twice.
  *
  *    @param array Array being manipulated.
  *    @return End of memory space.
  */
-#define array_end(array) ((__typeof__(array))_array_end_helper((array), sizeof((array)[0])))
+#define array_end(array) ((array) + array_size(array))
 /**
  * @brief Returns the first element in the array.
  *
