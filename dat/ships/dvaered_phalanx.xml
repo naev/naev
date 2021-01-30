@@ -8,7 +8,7 @@
  <class>Corvette</class>
  <price>650000</price>
  <time_mod>1.25</time_mod>
- <trail_generator x="-10" y="0" h="0" />
+ <trail_generator x="-10" y="0" h="0">fire</trail_generator>
  <fabricator>House Dvaered</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>This military grade version of the Phalanx has slightly stronger armour compared to its standard counterpart, and it also features a special cooling chamber for its forward-mounted weapons that doubles as additional cargo space.</description>

@@ -8,8 +8,8 @@
  <class>Destroyer</class>
  <price>1000000</price>
  <time_mod>1.5</time_mod>
- <trail_generator x="-25" y="8" h="0" />
- <trail_generator x="-25" y="-8" h="0" />
+ <trail_generator x="-25" y="8" h="0">fire</trail_generator>
+ <trail_generator x="-25" y="-8" h="0">fire</trail_generator>
  <fabricator>Soromid</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>The Nyx is the symbol of the Soromid's military might. Able to provide heavy firepower in heated battles and agile enough to withdraw when needed, this ship usually forms the backbone of any sizable Soromid fleet.</description>

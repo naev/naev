@@ -8,8 +8,8 @@
  <class>Fighter</class>
  <price>450000</price>
  <time_mod>1</time_mod>
- <trail_generator x="-5" y="4" h="0" />
- <trail_generator x="-5" y="-4" h="0" />
+ <trail_generator x="-5" y="4" h="0">fire</trail_generator>
+ <trail_generator x="-5" y="-4" h="0">fire</trail_generator>
  <fabricator>Skull and Bones</fabricator>
  <description>The Pirate Vendetta is even more intimidating than its regular counterpart. It's been heavily tweaked to be more adjusted to the pirate style of flying. Some of the armour has been removed to make more room for loot, while the reactor has been jacked up by a dubious technician. The ship ends up being substantially better than the original, but every so often the reactor goes nova destroying the ship. You hope it won't happen to you if you get in one.</description>
  <health>

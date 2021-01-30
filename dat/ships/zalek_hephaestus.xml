@@ -8,10 +8,10 @@
  <class>Carrier</class>
  <price>10000000</price>
  <time_mod>2</time_mod>
- <trail_generator x="-50" y="30" h="0" />
- <trail_generator x="-60" y="-25" h="-20" />
- <trail_generator x="45" y="25" h="20" />
- <trail_generator x="45" y="-30" h="0" />
+ <trail_generator x="-50" y="30" h="0">red</trail_generator>
+ <trail_generator x="-60" y="-25" h="-20">red</trail_generator>
+ <trail_generator x="45" y="25" h="20">red</trail_generator>
+ <trail_generator x="45" y="-30" h="0">red</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
  <license>Heavy Combat Vessel License</license>
  <description>The crown of the House Za'lek Defense Fleet, these proud buttresses of the Za'lek's ideals frequently serve as the nerve center of a Za'lek battle fleet, thanks to their superior sensor suite. The Hephaestus is rarely-seen, but commands respect.</description>

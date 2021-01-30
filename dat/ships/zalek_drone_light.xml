@@ -7,7 +7,7 @@
  <class>Drone</class>
  <price>120000</price>
  <time_mod>1</time_mod>
- <trail_generator x="-15" y="0" h="0" />
+ <trail_generator x="-15" y="0" h="0">red</trail_generator>
  <fabricator>Za'lek Robotics</fabricator>
  <description>This is the Za'lek Light Drone. Very weak, cheap and numerous. Not to be flown by the player.</description>
  <health>

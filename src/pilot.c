@@ -1704,13 +1704,8 @@ void pilot_render( Pilot* p, const double dt )
    Trail_spfx* trail;
 
    /* Tracks. */
-   if (p->ship->trail_emitters == NULL) // TODO: store this value
-      n = 0;
-   else
-      n = array_size(p->ship->trail_emitters);
-
+   n = array_size(p->ship->trail_emitters);
    for (j=0; j<n; j++) {
-              // if (n>1) DEBUG("EXTERNAL %i",i);
       if (array_size(p->trail[j].times) > 1){
          now = (int) ntime_get();
          c1 = pilot_compute_trail( p, &pos, j );
@@ -1721,7 +1716,6 @@ void pilot_render( Pilot* p, const double dt )
          //TODO: Its ugly. Put that in opengl_render all2gether
          point = &trail->points[ array_size(trail->points)-2 ];
          gl_gameToScreenCoords( &x2, &y2, point->x, point->y );
-         //gl_renderCross( x1, y1, 12., &cWhite );
 
          c2 = trail->colors[ array_size(trail->colors)-2 ];
          gl_drawTrack( x1, y1, x2, y2, now, trail->times[ array_size(trail->times)-2 ],
@@ -1852,6 +1846,8 @@ void pilot_update( Pilot* pilot, const double dt )
    Damage dmg;
    double stress_falloff;
    double efficiency, thrust;
+   Vector2d pos;
+   glColour col;
 
    /* Check target validity. */
    if (pilot->target != pilot->id) {
@@ -2237,13 +2233,12 @@ void pilot_update( Pilot* pilot, const double dt )
 
    /* Update the track. */
    if (!space_isSimulation()) {
-      if (pilot->ship->trail_emitters == NULL) // TODO: store this value
-         n = 0;
-      else
-         n = array_size(pilot->ship->trail_emitters);
-
+      n = array_size(pilot->ship->trail_emitters);
       for (i=0; i<n; i++) {
-         spfx_trail_update( &pilot->trail[i], pilot, i );
+         if (spfx_trail_update( &pilot->trail[i] )) {
+            col = pilot_compute_trail( pilot, &pos, i );
+            spfx_trail_grow( &pilot->trail[i], pos, col );
+         }
       }
    }
 
@@ -2275,15 +2270,14 @@ glColour pilot_compute_trail( Pilot* p, Vector2d* pos, int generator )
 
    /* Set the colour. */
    if (pilot_isFlag(p, PILOT_HYPERSPACE))
-      col = cPurple;
+      col = p->ship->trail_emitters[generator].trail->jmpn_col;
    else if (pilot_isFlag(p, PILOT_AFTERBURNER))
-      col = cGold;
+      col = p->ship->trail_emitters[generator].trail->aftb_col;
    else if (p->engine_glow > 0.)
-      col = cCyan;
-   else {
-      col = cWhite;
-      col.a = .25;
-   }
+      col = p->ship->trail_emitters[generator].trail->glow_col;
+   else
+      col = p->ship->trail_emitters[generator].trail->idle_col;
+
    return col;
 }
 
@@ -2803,16 +2797,11 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->shoot_indicator = 0;
 
    /* Animated track. */
-   if (pilot->ship->trail_emitters == NULL) // TODO: store this value
-      n = 0;
-   else
-      n = array_size(pilot->ship->trail_emitters);
-//DEBUG("%i",n);
+   n = array_size(pilot->ship->trail_emitters);
    pilot->trail = array_create_size( Trail_spfx, n );
    for (i=0; i<n; i++)
       spfx_trail_create( &pilot->trail[i] );
-      //pilot->trail[i] = spfx_trail_create();
-   //pilot->trail = spfx_trail_create();
+
 }
 
 
@@ -3084,15 +3073,10 @@ void pilot_free( Pilot* p )
    luaL_unref(naevL, p->messages, LUA_REGISTRYINDEX);
 
    /* Free animated track. */
-   if (p->ship->trail_emitters == NULL) // TODO: store this value
-      n = 0;
-   else
-      n = array_size(p->ship->trail_emitters);
-
+   n = array_size(p->ship->trail_emitters);
    for (i=0; i<n; i++)
       spfx_trail_remove(&p->trail[i]);
    array_free(p->trail);
-   //spfx_trail_remove(p->trail);
 
 #ifdef DEBUGGING
    memset( p, 0, sizeof(Pilot) );

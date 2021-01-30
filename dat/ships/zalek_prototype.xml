@@ -8,8 +8,8 @@
  <class>Cruiser</class>
  <price>8000000</price>
  <time_mod>1.75</time_mod>
- <trail_generator x="-40" y="8" h="0" />
- <trail_generator x="-40" y="-8" h="0" />
+ <trail_generator x="-40" y="8" h="0">red</trail_generator>
+ <trail_generator x="-40" y="-8" h="0">red</trail_generator>
  <fabricator>Za'lek Research Team</fabricator>
  <license>Heavy Combat Vessel License</license>
  <description>This is an experimental type of cruiser developed by Za'lek engineers. Little is known about it outside of the development team, but it is rumoured to have powerful upgrades and enhancements over much of the competition.</description>

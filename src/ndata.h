@@ -39,6 +39,7 @@
 #define TECH_DATA_PATH           "tech.xml"   /**< XML file containing techs. */
 #define ASTERO_DATA_PATH         "asteroids.xml" /**< Asteroid types XML file. */
 #define MAP_DECORATOR_DATA_PATH  "map.xml" /**< Where the map has background images. */
+#define TRAIL_DATA_PATH          "trails.xml" /**< Trail types XML file. */
 
 #define MISSION_LUA_PATH         "missions/" /**< Path to Lua files. */
 #define EVENT_LUA_PATH           "events/" /**< Path to Lua files. */

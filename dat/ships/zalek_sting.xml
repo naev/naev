@@ -8,8 +8,8 @@
  <class>Corvette</class>
  <price>770000</price>
  <time_mod>1.25</time_mod>
- <trail_generator x="-25" y="7" h="7" />
- <trail_generator x="-25" y="-7" h="-7" />
+ <trail_generator x="-25" y="7" h="7">red</trail_generator>
+ <trail_generator x="-25" y="-7" h="-7">red</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>The Sting Corvette is rather large for its size, but its advanced sensor suite, impressive weapons loadout, and tough shields makes it a good backbone to the fleet of House Za'lek.</description>

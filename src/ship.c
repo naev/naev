@@ -919,6 +919,10 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          if (temp->trail_emitters == NULL) {
             temp->trail_emitters = array_create( ShipTrailEmitter );
          }
+         buf = xml_get(node);
+         if (buf == NULL)
+            buf = "default";
+         trail.trail = &trail_col_stack[ trailType_get( buf ) ];
          array_push_back( &temp->trail_emitters, trail );
          continue;
       }

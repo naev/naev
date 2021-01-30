@@ -7,7 +7,7 @@
  <class>Courier</class>
  <price>260000</price>
  <time_mod>1</time_mod>
- <trail_generator x="-15" y="0" h="0" />
+ <trail_generator x="-15" y="0" h="0">fire</trail_generator>
  <fabricator>Melendez Corp.</fabricator>
  <description>The Koala is your standard cargo vessel. It's a small ship with little weapon space but a decent amount of cargo space. Good for the entrepreneur working his way to a vast space trade empire.</description>
  <health>

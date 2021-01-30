@@ -7,12 +7,10 @@
 #ifndef SPFX_H
 #  define SPFX_H
 
-typedef struct Trail_spfx_ Trail_spfx;
 
 #include "ntime.h"
 #include "opengl.h"
 #include "physics.h"
-#include "pilot.h"
 
 
 #define SPFX_LAYER_FRONT   0 /**< Front spfx layer. */
@@ -20,6 +18,18 @@ typedef struct Trail_spfx_ Trail_spfx;
 
 #define SHAKE_DECAY        0.3 /**< Rumble decay parameter */
 #define SHAKE_MAX          1.0 /**< Rumblemax parameter */
+
+
+/**
+ * @brief represents a set of colour for trails.
+ */
+typedef struct trailColour_ {
+   char* name;       /**< Colour set's name. */
+   glColour idle_col; /**< Colour when idle. */
+   glColour glow_col; /**< Colour when thrusting. */
+   glColour aftb_col; /**< Colour when afterburning. */
+   glColour jmpn_col; /**< Colour when jumping. */
+} trailColour;
 
 
 /**
@@ -35,9 +45,16 @@ typedef struct Trail_spfx_ {
 
 
 /*
+ * Array of trail colours
+ */
+trailColour* trail_col_stack;
+
+
+/*
  * stack manipulation
  */
 int spfx_get( char* name );
+int trailType_get( char* name );
 void spfx_add( const int effect,
       const double px, const double py,
       const double vx, const double vy,
@@ -51,7 +68,8 @@ void spfx_update( const double dt );
 void spfx_render( const int layer );
 void spfx_clear (void);
 void spfx_trail_create( Trail_spfx* );
-void spfx_trail_update( Trail_spfx* trail,  Pilot* pilot, int generator  );
+unsigned int spfx_trail_update( Trail_spfx* trail );
+void spfx_trail_grow( Trail_spfx* trail, Vector2d pos, glColour col  );
 void spfx_trail_remove( Trail_spfx* trail );
 
 

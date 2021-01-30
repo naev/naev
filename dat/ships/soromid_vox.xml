@@ -8,11 +8,11 @@
  <class>Cruiser</class>
  <price>9000000</price>
  <time_mod>1.75</time_mod>
- <trail_generator x="-60" y="0" h="-10" />
- <trail_generator x="-60" y="5" h="-15" />
- <trail_generator x="-60" y="5" h="-10" />
- <trail_generator x="-60" y="-5" h="-5" />
- <trail_generator x="-60" y="-5" h="-15" />
+ <trail_generator x="-60" y="0" h="-10">fire</trail_generator>
+ <trail_generator x="-60" y="5" h="-15">fire</trail_generator>
+ <trail_generator x="-60" y="5" h="-10">fire</trail_generator>
+ <trail_generator x="-60" y="-5" h="-5">fire</trail_generator>
+ <trail_generator x="-60" y="-5" h="-15">fire</trail_generator>
  <fabricator>Soromid</fabricator>
  <license>Heavy Combat Vessel License</license>
  <description>The Vox is the biggest vessel the Soromid field hands down. This dreadnought serves as the core of any given Soromid war fleet and only called upon in notable engagements.</description>
