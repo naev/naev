@@ -628,7 +628,7 @@ void gl_blitStatic( const glTexture* texture,
 /**
  * @brief Draws an empty circle.
  *
- *    @param cx X position of the center in screen coordinates..
+ *    @param cx X position of the center in screen coordinates.
  *    @param cy Y position of the center in screen coordinates.
  *    @param r Radius of the circle.
  *    @param c Colour to use.
@@ -698,7 +698,7 @@ static void gl_drawCircleFilled( const double cx, const double cy,
 /**
  * @brief Draws a circle.
  *
- *    @param cx X position of the center in screen coordinates..
+ *    @param cx X position of the center in screen coordinates.
  *    @param cy Y position of the center in screen coordinates.
  *    @param r Radius of the circle.
  *    @param c Colour to use.
