@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-27 20:07-0500\n"
-"PO-Revision-Date: 2021-01-24 00:15+0000\n"
+"PO-Revision-Date: 2021-01-30 19:41+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
 "Language: de\n"
@@ -29700,26 +29700,7 @@ msgid "You are needed for a special job"
 msgstr "Du wirst für eine besondere Aufgabe gebraucht"
 
 #: dat/events/dvaered/fwA_treason.lua:31
-#, fuzzy, lua-format
-#| msgid ""
-#| "The pilot of the fighter uses the encrypted channel: \"I have finally "
-#| "found you, %s. Better late than never. My employers want to congratulate "
-#| "you about how effective you have been with Lord Battleaddict. I am afraid "
-#| "there won't be many people to mourn him.\" You answer that you don't know "
-#| "what it is about, and that as far as you know, Lord Battleaddict has been "
-#| "killed in a loyal duel by the General Klank. The interlocutor laughs "
-#| "\"You're playing your part, eh? I can understand you, after all, they pay "
-#| "you well... Wait, no, they don't pay well. Not at all! How much was it "
-#| "for risking your life twice with this EMP bomb trick? %s? Haw haw haw! "
-#| "You can make better money with a cargo mission!\n"
-#| "   \"I've even heard that once, they paid you with gauss guns! Those guys "
-#| "are so pitiful, aren't they?\n"
-#| "   \"Now, let's talk seriously: you want money and I want a pilot. We're "
-#| "made to get along, you and me! I need you for a special task. I won't "
-#| "deny it implies going against the interests of General Klank and Major "
-#| "Tam and co, but if you do it well, they won't ever know that you are "
-#| "implied, and you'll receive %s in the process. Oh yes, that's different "
-#| "from what you're used to! What do you say?\""
+#, lua-format
 msgid ""
 "The pilot of the fighter says, over an encrypted channel: \"I have finally "
 "found you, %s. Better late than never. My employers want to congratulate you "
@@ -29740,12 +29721,12 @@ msgid ""
 "you'll receive %s in the process. Oh yes, that's different from what you're "
 "used to! What do you say?\""
 msgstr ""
-"Der Pilot des Jägers nutzt den verschlüsselten Kanal: „Ich habe dich endlich "
-"gefunden, %s. Besser spät als nie. Meine Auftraggeber wollen dir dazu "
-"gratulieren, wie effektiv du mit Lord Battleaddict umgegangen bist. Ich "
+"Der Pilot des Jägers sagt auf dem verschlüsselten Kanal: „Ich habe dich "
+"endlich gefunden, %s. Besser spät als nie. Meine Auftraggeber wollen dir "
+"dazu gratulieren, wie effektiv du mit Lord Kampfeslust umgegangen bist. Ich "
 "fürchte, es wird nicht viele Leute geben, die um ihn trauern.“ Du "
 "antwortest, dass du nicht weißt, worum es geht, und dass, soweit du weißt, "
-"Lord Battleaddict in einem loyalen Zweikampf von General Klank getötet "
+"Lord Kampfeslust in einem ehrlichen Zweikampf von General Klank getötet "
 "wurde. Der Gesprächspartner lacht: „Du spielst deine Rolle, was? Ich kann "
 "dich verstehen, schließlich bezahlen sie dich gut … Warte, nein, sie zahlen "
 "nicht gut. Ganz und gar nicht! Wie viel war es denn, dass du mit diesem EMP-"
@@ -29757,9 +29738,9 @@ msgstr ""
 "dafür gemacht, uns zu verstehen, du und ich! Ich brauche dich für eine "
 "besondere Aufgabe. Ich werde nicht leugnen, dass es bedeutet, gegen die "
 "Interessen von General Klank und Major Tam und Co. zu verstoßen, aber wenn "
-"du es gut machst, werden sie nie erfahren, dass du verwickelt bist, und du "
-"wirst dabei %s erhalten. Oh ja, das ist anders, als du es gewohnt bist! Was "
-"sagst du dazu?“"
+"du es gut machst, werden sie nie erfahren, dass du darin verwickelt bist, "
+"und du wirst dabei %s erhalten. Oh ja, das ist anders, als du es gewohnt "
+"bist! Was sagst du dazu?“"
 
 #: dat/events/dvaered/fwA_treason.lua:35 dat/missions/flf/flf_pre02.lua:90
 msgid "Accept the offer"
@@ -29851,29 +29832,6 @@ msgstr ""
 "das Imperium, Haus Sirius oder die Soromiden hervor.“"
 
 #: dat/events/dvaered/fwA_treason.lua:51
-#, fuzzy
-#| msgid ""
-#| "\"House Dvaered has been built in respect of this ethic of life and "
-#| "death, that is taught to all children around all worlds in Dvaered space. "
-#| "You did not receive such an education and still, you passed the loyalty "
-#| "test. This means that Dvaered High Command can trust you. As a proof of "
-#| "this trust, I can reveal you what some among the army know, but was never "
-#| "revealed to non-Dvaered.\n"
-#| "   \"For one cycle now, the warlords have been greedily watching the "
-#| "Frontier planets. Since the FLF has been destroyed, Dvaered High Command "
-#| "does everything in its power to hold them back because we know that many "
-#| "other factions are waiting for us to get entangled in a war in the "
-#| "frontier in order to hit us. But the purpose of warlords is to invade "
-#| "worlds, and the role of the DHC is not to hinder that, so ultimately, we "
-#| "will have to allow this invasion.\n"
-#| "   \"A few decaperiods ago, General Klank has been promoted as second "
-#| "class general, with the task to organize this invasion. The first "
-#| "invasion plan that had been proposed to him was granting huge freedom to "
-#| "each warlord, allowing them to choose which planet to invade and how to "
-#| "proceed. However, contrary to the other generals, Klank soon understood "
-#| "that such a disorganized invasion, with inevitably battle between "
-#| "warlords, would take for several periods, with a huge risk of ending up "
-#| "bogged down and vulnerable to attacks on other fronts.\""
 msgid ""
 "\"House Dvaered has been built in respect of this ethic of life and death, "
 "that is taught to all children around all worlds in Dvaered space. You did "
@@ -29914,7 +29872,7 @@ msgstr ""
 "   Vor ein paar Dekaperioden ist General Klank zum General zweiter Klasse "
 "befördert worden, mit der Aufgabe, diese Invasion zu organisieren. Der erste "
 "Invasionsplan, der ihm vorgeschlagen wurde, sah vor, den einzelnen "
-"Kriegsherren große Freiheiten zu gewähren und ihnen die Wahl zu überlassen, "
+"Kriegsherren viel Einfluss zu gewähren und ihnen die Wahl zu überlassen, "
 "welchen Planeten sie einnehmen und wie sie vorgehen wollten. Im Gegensatz zu "
 "den anderen Generälen verstand Klank jedoch bald, dass eine solche "
 "unorganisierte Invasion, bei der es unweigerlich zu Kämpfen zwischen den "
@@ -29933,10 +29891,19 @@ msgid ""
 "been weakened with Battleaddict's death, we will move to the diplomatic "
 "step. That is why you should expect to be summoned again by us.\""
 msgstr ""
+"„Deshalb hat General Klank einen effektiven Invasionsplan vorgeschlagen, der "
+"die Koordination der Bemühungen aller Kriegsherrn erfordert, sowie die "
+"Unterstützung durch eine Reserveflotte, die direkt vom HKD kommandiert wird. "
+"Das Problem ist, dass viele Kriegsherrn nicht wollen, dass die DHC "
+"entscheidet, wie sie ihre Truppen einsetzen. Der rücksichtsloseste von ihnen "
+"war Lord Kampfeslust, aber es gibt auch Lady Bitterkampf und Lord Jim. Nun, "
+"da der interne Widerstand gegen den Plan mit dem Tod von Kampflustig "
+"geschwächt wurde, werden wir zum diplomatischen Schritt übergehen. Deshalb "
+"sollten Sie damit rechnen, erneut von uns vorgeladen zu werden.“"
 
 #: dat/events/dvaered/fwA_treason.lua:56
 msgid "The amount of your rewards is pathetic"
-msgstr ""
+msgstr "Die Menge deiner Belohnungen ist erbärmlich"
 
 #: dat/events/dvaered/fwA_treason.lua:57
 msgid "Money is not important, captain"
@@ -29944,7 +29911,7 @@ msgstr "Geld ist nicht wichtig, Kapitän"
 
 #: dat/events/dvaered/fwA_treason.lua:59
 msgid "You tried to betray us"
-msgstr ""
+msgstr "Du hast versucht, uns zu verraten"
 
 #: dat/events/dvaered/fwA_treason.lua:60
 #, lua-format
@@ -29956,6 +29923,14 @@ msgid ""
 "stupid people. With regards to how well you have helped us in the past, we "
 "will exceptionally let you live, but don't expect us to trust you anymore!\""
 msgstr ""
+"Als du landest, siehst Sie die Kapitänin Leblanc am Dock und sie rügt dich: „"
+"Das war eine Falle, %s. Die Tatsache, dass Sie in sie hineingefallen sind, "
+"beweist, dass Sie illoyal sind. Illoyal und dumm übrigens, denn die Falle "
+"war ziemlich offensichtlich, wenn ich hinzufügen darf. Und das Hohe Kommando "
+"kann es sich nicht leisten, mit illoyalen und dummen Leuten zu arbeiten. In "
+"Anbetracht dessen, wie gut Sie uns in der Vergangenheit geholfen haben, "
+"werden wir Sie ausnahmsweise am Leben lassen, aber erwarten Sie nicht, dass "
+"wir Ihnen noch vertrauen!“"
 
 #: dat/events/dvaered/fwA_treason.lua:62
 msgid ""
@@ -29964,6 +29939,10 @@ msgid ""
 "you that they will soon need your services in the framework of the "
 "preparation of the invasion of the Frontier."
 msgstr ""
+"Major Tam und Kapitän Leblanc, vom HKD, hat deine Loyalität gegenüber "
+"General Klank getestet. Der Test hat sich als schlüssig erwiesen, und "
+"Leblanc hat dir offenbart, dass man bald deine Dienste im Rahmen der "
+"Vorbereitung der Invasion der Front benötigt."
 
 #: dat/events/dvaered/fwA_treason.lua:63
 msgid ""
@@ -29971,6 +29950,9 @@ msgid ""
 "General Klank... and you miserably failed. By chance, they did not kill you, "
 "but you'll have to find other employers."
 msgstr ""
+"Major Tam und Captain Leblanc vom HKD haben deine Loyalität gegenüber "
+"General Klank getestet … Und du hast kläglich versagt. Glücklicherweise "
+"ließen sie dich am Leben, aber du musst andere Arbeitgeber finden."
 
 #. Start at previous system
 #. TODO: not sure it's needed.
@@ -30018,7 +30000,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:325
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:647
 msgid "Dvaered Military Coordination"
-msgstr ""
+msgstr "Dvaered-Militärkoordination"
 
 #. Loyal
 #. Actually we don't care of the answer
@@ -30037,10 +30019,8 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:321
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:673
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:269
-#, fuzzy
-#| msgid "Frontier Patrol"
 msgid "Frontier War"
-msgstr "Front-Patrouille"
+msgstr "Front-Krieg"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -30147,10 +30127,8 @@ msgstr "Front-Patrouille"
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:252
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:42
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:43
-#, fuzzy
-#| msgid "Major"
 msgid "Major Tam"
-msgstr "Bedeutend"
+msgstr "Major Tam"
 
 #. Nice outfits for Colonel Hamelsen (the Hellburner is her life insurance)
 #. We can't afford to loose our main baddie
@@ -30203,7 +30181,7 @@ msgstr "Bedeutend"
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:51
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:385
 msgid "Captain Leblanc"
-msgstr ""
+msgstr "Kapitän Leblanc"
 
 #. Empire solution
 #. Pirate debt
@@ -30302,10 +30280,8 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:58
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:386
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:689
-#, fuzzy
-#| msgid "Lieutenant"
 msgid "Lieutenant Strafer"
-msgstr "Leutnant"
+msgstr "Leutnant Strafer"
 
 #: dat/events/dvaered/fwB_repay.lua:26
 msgid ""
@@ -30313,10 +30289,15 @@ msgid ""
 "major, sitting at a table with a few High Command officers that you don't "
 "happen to know."
 msgstr ""
+"In der für das Dvaered-Militär reservierten Kneipe, zu der du nun Zugang "
+"hast, siehst du den Major, der mit ein paar Offizieren des Hohen Kommandos, "
+"die du nicht kennst, an einem Tisch sitzt."
 
 #: dat/events/dvaered/fwB_repay.lua:27
 msgid "Leblanc is relaxing at a table, with a group of Dvaered pilots."
 msgstr ""
+"Leblanc entspannt sich an einem Tisch, zusammen mit einer Gruppe von Dvaered-"
+"Piloten."
 
 #: dat/events/dvaered/fwB_repay.lua:28
 msgid ""
@@ -30325,17 +30306,21 @@ msgid ""
 "the dead bodies of defeated enemies.\" As it is written on the Dvaered "
 "etiquette manual Strafer gave to you recently."
 msgstr ""
+"Strafer spielt mit ein paar anderen Soldaten Karten. Natürlich benutzen sie "
+"kein echtes Geld, denn „Dvaered-Krieger nehmen niemals Geld von anderen, "
+"außer den Leichen besiegter Feinde.“ So steht es auf dem Dvaered-Etikette-"
+"Handbuch, das Strafer dir kürzlich gegeben hat."
 
 #: dat/events/dvaered/fwB_repay.lua:30
-#, fuzzy
-#| msgid "What do you want to rename #r%s#0?"
 msgid "Do you want to repay DHC?"
-msgstr "Welchen neuen Namen wünschst du für #r%s#0?"
+msgstr "Möchtest du an das HKD zurückzahlen?"
 
 #: dat/events/dvaered/fwB_repay.lua:31
 #, lua-format
 msgid "You still owe %s credits to the High Command. Do you want to repay now?"
 msgstr ""
+"Du schuldest dem Hohen Kommando noch %s Credits. Möchtest du es jetzt "
+"zurückzahlen?"
 
 #: dat/events/dvaered/fwB_repay.lua:32
 #: dat/missions/neutral/seek_n_destroy.lua:77
@@ -30347,6 +30332,8 @@ msgid ""
 "You repaid the Dvaered High Command. For now, your collaboration with House "
 "Dvaered has not been lucrative AT ALL."
 msgstr ""
+"Du hast das Geld an das Hohe Kommando der Dvaered zurückgezahlt. Bis jetzt "
+"war deine Kooperation mit Haus Dvaered GAR NICHT lukrativ."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -31103,78 +31090,86 @@ msgid "Thug"
 msgstr "Schurke"
 
 #: dat/events/minerva/altercation2.lua:40
-#, fuzzy
-#| msgid ""
-#| "You hear a large commotion in one of the wings of Minerva Station. As you "
-#| "approach you can make out what seems to be an altercation between a group "
-#| "of Za'lek and Dvaered ruffians."
 msgid ""
 "You once again hear a large commotion in one of the wings of Minerva "
 "station. As you get closer you see what seems to be a group of people "
 "chasing something small... Wait, is that a chicken?"
 msgstr ""
-"Du hörst einen großen Aufruhr in einem der Flügel der Minerva-Station. Als "
-"du dich näherst, kannst du eine Auseinandersetzung zwischen einer Gruppe von "
-"Za'lek und Dvaered ausmachen, die wie eine Schlägerei aussieht."
+"Erneut hörst du einen großen Aufruhr in einem der Flügel der Minerva-"
+"Station. Als du näher kommst, siehst du eine Gruppe von Menschen, die etwas "
+"Kleines jagen … Moment, ist das ein Huhn?"
 
 #: dat/events/minerva/altercation2.lua:64
 msgid "\"Get back here you thief! Give me back my tokens! There is no way \""
 msgstr ""
+"„Komm zurück, du Dieb! Gib mir meine Jetons zurück. Das darf doch nicht wahr "
+"“"
 
 #: dat/events/minerva/altercation2.lua:66
 msgid "\"Puk Puk Pukaaak! Quack!\""
-msgstr ""
+msgstr "„Gack, Gack, Gack! Gork!“"
 
 #: dat/events/minerva/altercation2.lua:69
 msgid "\"Filthy little animal! I'll beat you into a pulp!\""
-msgstr ""
+msgstr "„Dreckiges kleines Tier! Dich schlag ich zu Brei!“"
 
 #: dat/events/minerva/altercation2.lua:72
 msgid "\"Cluck Quack Clukuk Pukaaaaaaaaak!\""
-msgstr ""
+msgstr "„Gackerdigackerdigack! Gackäääääää!“"
 
 #: dat/events/minerva/altercation2.lua:74
 msgid ""
 "Cyborg Chicken runs itself into a corner and it doesn't seem like station "
 "security will make it in time. What do you do?"
 msgstr ""
+"Cyborg-Huhn rennt in eine Ecke und es scheint nicht so, als würde es die "
+"Stationswache rechtzeitig schaffen. Was wirst du tun?"
 
 #: dat/events/minerva/altercation2.lua:76
-#, fuzzy
-#| msgid "Sorry, not interested"
 msgid "Try to intervene"
-msgstr "Tud mit Leid, nicht interessiert"
+msgstr "Versuchen, einzuschreiten"
 
 #: dat/events/minerva/altercation2.lua:77
 msgid "Wait"
-msgstr ""
+msgstr "Warten"
 
 #: dat/events/minerva/altercation2.lua:81
 msgid "You approach the chicken and thug and try to mediate."
 msgstr ""
+"Du gehst auf das Huhn und dem Rowdy zu und versuchst, die Situation zu "
+"besänftigen."
 
 #: dat/events/minerva/altercation2.lua:82
 msgid ""
 "As the thug is distracted by you, Cyborg Chicken suddenly sprints and runs "
 "past you. Did it wink at you?"
 msgstr ""
+"Da der Rowdy von dir abgelenkt ist, rennt Cyborg-Huhn plötzlich an dir "
+"vorbei. Hat es dir zugewinkt?"
 
 #: dat/events/minerva/altercation2.lua:86
 msgid ""
 "\"Not such a tough chicken anymore, huh? Going to beat you so bad we'll have "
 "chicken nuggets for lunch!\""
 msgstr ""
+"„Wohl kein so starkes Huhn, gell? Dich mach ich so fertig, es wird Chicken-"
+"Nuggets zum Essen geben!“"
 
 #: dat/events/minerva/altercation2.lua:87
 msgid ""
 "Cyborg Chicken blinks twice then sprints through the thugs legs and runs "
 "past you. The thug tries to chase but ends up bumping into you."
 msgstr ""
+"Cyborg-Huhn zwinkert zwei mal, dann sprintet es durch die Beine der Rowdys "
+"und es läuft an dir vorbei. Der Rowdy versucht, hinterherzurennen, aber er "
+"stößt mit dir zusammen."
 
 #: dat/events/minerva/altercation2.lua:102
 msgid ""
 "\"You let the chicken get away punk! How are you going to make up for this!\""
 msgstr ""
+"„Du hast das Huhn entkommen lassen, Punk! Wie wirst du das wieder "
+"gutmachen?!”"
 
 #: dat/events/minerva/altercation2.lua:103
 msgid ""
@@ -31182,6 +31177,10 @@ msgid ""
 "thug away. As you go back to what you were doing, you see cyborg chicken in "
 "the distance who seems to wink at you. What was that all about?"
 msgstr ""
+"Du schindest etwas Zeit und schließlich kommt der Sicherheitsdienst der "
+"Station und eskortiert den Schläger weg. Als du wieder zu dem zurückkehrst, "
+"was du gerade getan hast, siehst du in der Ferne Cyborg-Huhn, das dir "
+"zuzuzwinkern scheint. Was war das denn?"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -31234,14 +31233,8 @@ msgstr "Chuck a Luck"
 #. TODO replace
 #. TODO replace
 #: dat/events/minerva/station.lua:36
-#, fuzzy
-#| msgid ""
-#| "A fast-paced luck-based betting game using dice. You can play against "
-#| "other patrons."
 msgid "A fast-paced luck-based betting game using dice."
-msgstr ""
-"Ein hektisches glücksbasiertes Wettspiel mit Würfeln. Du kannst gegen andere "
-"Gäste spielen."
+msgstr "Ein hektisches glücksbasiertes Wettspiel mit Würfeln."
 
 #. TODO replace?
 #: dat/events/minerva/station.lua:40
@@ -31482,6 +31475,10 @@ msgid ""
 "here. As you enjoy your complementary drink, let me briefly explain to you "
 "how this wonderful place works. It is all very exciting!\""
 msgstr ""
+"„Willkommen im Ferienort Minerva-Station! Es scheint, als wären Sie zum "
+"ersten Mal hier. Während Sie Ihr Gratisgetränk genießen, lassen Sie mich "
+"Ihnen kurz erklären, wie dieser wunderbare Ort funktioniert. Es ist alles "
+"sehr aufregend!“"
 
 #: dat/events/minerva/station.lua:157
 msgid ""
@@ -31493,6 +31490,14 @@ msgid ""
 "of our resort. To start out your fun Minerva Adventure®, please enjoy these "
 "10 complementary Minerva Tokens!\""
 msgstr ""
+"„Die Währung, die wir auf dieser Station verwenden, sind Minerva-Jetons. Im "
+"Gegensatz zu Credits sind sie physisch und damit sehr hübsch! Sie können "
+"Minerva-Jetons nicht direkt kaufen, aber durch die Teilnahme und den Einsatz "
+"von Credits in den verschiedenen feinen Spielen, die es gibt, können Sie "
+"Minerva-Jetons erhalten. Wenn Sie genug Minerva-Jetons haben, können Sie "
+"fabelhafte Preise kaufen und weitere exklusive Bereiche unseres Resorts "
+"genießen. Um Ihr spaßiges Minerva-Abenteuer® zu beginnen, haben Sie Spaß mit "
+"diesen 10 zusätzlichen Minerva-Jetons!“"
 
 #: dat/events/minerva/station.lua:158
 msgid ""
@@ -31501,6 +31506,11 @@ msgid ""
 "our universe-famous Cyborg Chicken at the blackjack table, and always "
 "remember, 'life is short, spend it at Minerva Station'®!\""
 msgstr ""
+"„Wenn Sie weitere Informationen wünschen oder Ihren Kontostand überprüfen "
+"möchten, dann benutzen Sie bitte die Terminals, die sich überall in der "
+"Station befinden. Ich empfehle Ihnen dringend, unser weltberühmtes Cyborg-"
+"Huhn am Blackjack-Tisch auszuprobieren, und denken Sie immer daran: ‚Das "
+"Leben ist kurz, verbringen Sie es auf der Minerva-Station®‘!“"
 
 #. Have to remove
 #: dat/events/minerva/station.lua:168
@@ -31665,6 +31675,10 @@ msgid ""
 "REST ASSURED THAT THERE IS LESS THAN A 2% OF CHANCE OF TOTAL DESTRUCTION OF "
 "THE STATION.\""
 msgstr ""
+"„DIE MINERVA-STATION IST DER BESTE ORT, UM SICH ZURÜCKZULEHNEN UND "
+"ENTSPANNTE GLÜCKSSPIELE ZU GENIESSEN. OBWOHL DAS GEBIET VON DEN ZA'LEK UND "
+"DVAERED STARK UMKÄMPFT IST, KÖNNEN SIE SICHER SEIN, DASS DIE CHANCE EINER "
+"TOTALEN ZERSTÖRUNG DER STATION WENIGER ALS 2% BETRÄGT.“"
 
 #: dat/events/minerva/station.lua:206
 msgid ""
@@ -31736,7 +31750,13 @@ msgid_plural ""
 "OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d MINERVA "
 "TOKENS#0.\""
 msgstr[0] ""
+"„ES TUT MIR LEID, IHNEN MITTEILEN ZU MÜSSEN, DASS DER VON IHNEN GEWÜNSCHTE "
+"ARTIKEL DERZEIT AUSVERKAUFT IST. MÖCHTEN SIE IHN GEGEN ETWAS ANDERES "
+"EINTAUSCHEN? SIE HABEN #p%d MINERVA-JETON#0.“"
 msgstr[1] ""
+"„ES TUT MIR LEID, IHNEN MITTEILEN ZU MÜSSEN, DASS DER VON IHNEN GEWÜNSCHTE "
+"ARTIKEL DERZEIT AUSVERKAUFT IST. MÖCHTEN SIE IHN GEGEN ETWAS ANDERES "
+"EINTAUSCHEN? SIE HABEN #p%d MINERVA-JETONS#0.“"
 
 #: dat/events/minerva/station.lua:229
 #, lua-format
@@ -31747,7 +31767,11 @@ msgid_plural ""
 "\"YOU CAN TRADE IN YOUR PRECIOUS #p%d MINERVA TOKENS#0 FOR THE FOLLOWING "
 "GOODS.\""
 msgstr[0] ""
+"„SIE KÖNNEN IHREN KOSTBAREN #p%d MINERVA-JETON#0 GEGEN DIE FOLGENDEN WAREN "
+"EINTAUSCHEN.“"
 msgstr[1] ""
+"„SIE KÖNNEN IHRE KOSTBAREN #p%d MINERVA-JETONS#0 GEGEN DIE FOLGENDEN WAREN "
+"EINTAUSCHEN.“"
 
 #. Jump in case of 'Back'
 #. Not enough money.
@@ -31773,6 +31797,9 @@ msgid ""
 "FOLLOWS:\"\n"
 "#w%s#0"
 msgstr ""
+"„SIND SIE SICHER, DASS SIE FÜR ‚#w%s#0‘ EINTAUSCHEN MÖCHTEN? DIE "
+"BESCHREIBUNG LAUTET:“\n"
+"#w%s#0"
 
 #: dat/events/minerva/station.lua:296
 msgid "Trade"
@@ -31804,7 +31831,7 @@ msgstr "Erhalten: %s"
 
 #: dat/events/minerva/station.lua:315
 msgid "\"THANK YOU FOR YOUR BUSINESS.\""
-msgstr ""
+msgstr "„VIELEN DANK FÜR IHRE GESCHÄFTE.“"
 
 #. Handle random bar events if necessary
 #. Not adding to queue first
@@ -31815,6 +31842,10 @@ msgid ""
 "eventually have to elbow your way to the front to get a view of what is "
 "going on."
 msgstr ""
+"Du machst dich auf den Weg zum Blackjack-Tisch, der von vielen Gästen "
+"umringt zu sein scheint, von denen einige anscheinend Fotos von etwas "
+"machen. Du musst dich schließlich mit den Ellbogen nach vorne drängen, um "
+"einen Blick auf das Geschehen zu bekommen."
 
 #: dat/events/minerva/station.lua:336
 msgid ""
@@ -31825,12 +31856,21 @@ msgid ""
 "doing this for a while. You watch as the game progresses and the patron "
 "loses all his credits to the chicken, who seems unfazed."
 msgstr ""
+"Als du es nach vorne schaffst, wirst du von den kalten Augen von etwas "
+"begrüßt, was das Cyborg-Huhn zu sein scheint, von dem du gehört hast. Es "
+"scheint die Menge zu mustern, während es gegen einen Gast spielt. Die Art, "
+"wie es sich bewegt, ist sehr unheimlich, mit kurzen, präzisen mechanischen "
+"Bewegungen. Man merkt, dass es das schon eine ganze Weile macht. Du "
+"beobachtest, wie das Spiel fortschreitet und der Gast all seine Credits an "
+"das Huhn verliert, das unbeeindruckt zu sein scheint."
 
 #: dat/events/minerva/station.lua:342
 msgid ""
 "You elbow your way to the front of the table and are once again greeted by "
 "the cold mechanical eyes of Cyborg Chicken."
 msgstr ""
+"Du bahnst dir einen Weg nach vorne und wirst erneut von den kalten, "
+"mechanischen Augen von Cyborg-Huhn begrüßt."
 
 #. Clear buffer without waiting
 #: dat/events/minerva/station.lua:347 dat/events/minerva/station.lua:424
@@ -31855,18 +31895,17 @@ msgstr "Erklärung"
 #: dat/events/minerva/station.lua:406
 msgid "You leave the blackjack table behind and head back to the main area."
 msgstr ""
+"Du verlässt den Blackjack-Tisch und begibst dich zurück zum Hauptbereich."
 
 #. Handle random bar events if necessary
 #. Not adding to queue first
 #: dat/events/minerva/station.lua:418
-#, fuzzy
-#| msgid "Dealer: %s"
 msgid "Dealer"
-msgstr "Croupier: %s"
+msgstr "Croupier"
 
 #: dat/events/minerva/station.lua:420
 msgid "You approach the chuck-a-luck table."
-msgstr ""
+msgstr "Du gehst zum Chuck-a-Luck-Tisch."
 
 #: dat/events/minerva/station.lua:429
 msgid ""
@@ -31876,6 +31915,12 @@ msgid ""
 "match two dice, you get double the amount of tokens. Furthermore, if you "
 "match all three dice, you get ten times the amount of tokens!\""
 msgstr ""
+"„Chuck a Luck ist ein einfaches Spiel. Sie machen Ihren Einsatz und setzen "
+"dann darauf, welche Zahl die Würfel ergeben werden. Wenn die von Ihnen "
+"gewählte Zahl mit einem Würfel übereinstimmt, erhalten Sie einen Jeton für "
+"jede 1000 von Ihnen gesetzte Credits. Wenn Sie mit zwei Würfeln "
+"übereinstimmen, erhalten Sie die doppelte Anzahl an Jetons. Und wenn alle "
+"drei Würfel übereinstimmen, erhalten Sie die zehnfache Anzahl an Jetons!“"
 
 #. Resize the window
 #. dealer.offset is only set up when the they appear in the VN
@@ -31887,6 +31932,7 @@ msgstr ""
 #: dat/events/minerva/station.lua:482
 msgid "You leave the chuck-a-luck table behind and head back to the main area."
 msgstr ""
+"Du verlässt den Chuck-a-Luck-Tisch und begibst dich zurück zum Hauptbereich."
 
 #. Handle random bar events if necessary
 #. Just do random noise
@@ -34042,6 +34088,8 @@ msgid ""
 "\"Life is so boring here. I would love to go gamble with all the famous "
 "people at Minerva Station.\""
 msgstr ""
+"„Das Leben ist so langweilig hier. Ich würde gerne mit all den berühmten "
+"Leuten auf der Minerva-Station spielen gehen.“"
 
 #: dat/events/neutral/npc.lua:73
 msgid ""
@@ -41186,27 +41234,27 @@ msgstr "Hawk"
 #. 8) Land at last system
 #. --
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:41
-#, fuzzy
-#| msgid "Dvaered Ancestor"
 msgid "Dvaered officer"
-msgstr "Dvaered Ahne"
+msgstr "Dvaered-Offizier"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:42
 msgid ""
 "This Dvaered senior officer could be looking for a pilot for hire. Why else "
 "would he stay at this bar?"
 msgstr ""
+"Dieser Dvaered-Senior-Offizier könnte auf der Suche nach einem Piloten zum "
+"Anheuern sein. Warum sollte er sonst in dieser Bar bleiben?"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:45
 msgid ""
 "Major Tam is a very friendly man. At least by Dvaered military standards."
 msgstr ""
+"Major Tam ist ein sehr freundlicher Mann. Jedenfalls nach Dvaered-"
+"Militärstandards."
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:47
-#, fuzzy
-#| msgid "Find and Kill a pilot"
 msgid "In need of a pilot"
-msgstr "Finde und töte einen Piloten"
+msgstr "Pilot gesucht"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:48
 #, lua-format
@@ -41220,12 +41268,19 @@ msgid ""
 "now a simple escort mission. All that you need is a fast combat ship, that "
 "can keep up with my Vendetta. What do you say?\""
 msgstr ""
+"Als du dich dem Offizier näherst, ruft er dich. „Hallo, Bürger %s. Ich habe "
+"nach Ihnen gesucht. Natürlich kenne ich Ihren Namen, Sie sind einer der "
+"Piloten, die diese verdammte FLF-Basis in Surano zerstört haben. Darf ich "
+"mich vorstellen? Ich bin Major Tam, vom Hohen Kommando der Dvaered, genauer "
+"gesagt vom Weltraumkommando-Hauptquartier. Ich bin der Meinung, dass Sie ein "
+"zuverlässiger Pilot sind und das Hohe Kommando Ihre Dienste noch öfter in "
+"Anspruch nehmen könnte. Deshalb schlage ich Ihnen vorerst eine einfache "
+"Eskortmission vor. Alles, was Sie brauchen, ist ein schnelles Kampfschiff, "
+"das mit meiner Vendetta mithalten kann. Was sagen Sie dazu?“"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:50
-#, fuzzy
-#| msgid "Destruction"
 msgid "Instructions"
-msgstr "Destruktion"
+msgstr "Anweisungen"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:51
 #, lua-format
@@ -41235,18 +41290,23 @@ msgid ""
 "their respective Goddards in the systems %s, %s and %s. I need you to stick "
 "to my Vendetta and engage any hostile who could try to intercept me.\""
 msgstr ""
+"Tam scheint mit deiner Antwort zufrieden zu sein. „Ich werde drei "
+"Kriegsherrn einen Besuch abstatten, aus Gründen der militärischen "
+"Koordination. Sie werden in ihren jeweiligen Goddards in den Systemen %s, %s "
+"und %s auf mich warten. Ich möchte, dass Sie sich an meine Vendetta halten "
+"und jeden Feind angreifen, der versuchen könnte, mich abzufangen.“"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:54
 msgid ""
 "Tam seems disappointed by your answer. \"Mwell, then, maybe we will meet "
 "again later, who knows?\""
 msgstr ""
+"Tam scheint von deiner Antwort enttäuscht zu sein. „Na gut, vielleicht "
+"werden wir uns später treffen, wer weiß?“"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:57
-#, fuzzy
-#| msgid "You weren't supposed to go away."
 msgid "You were supposed to escort Major Tam, weren't you?"
-msgstr "Du hättest nicht wegfliegen dürfen."
+msgstr "Du hättest Major Tam begleiten sollen, nicht wahr?"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:59
 #: dat/missions/zalek/zlk_test.lua:69
@@ -41261,21 +41321,26 @@ msgid ""
 "career. \"Meh\", you finally think, \"I'm sure I will have another chance "
 "sooner or later.\""
 msgstr ""
+"Als du die letzte Explosion von Major Tams Schiff beobachtest, das die "
+"Überreste der einst stolzen Vendetta durch das System schickt, wird dir "
+"klar, dass du eigentlich über einen der bittersten Misserfolge deiner "
+"Karriere nachdenkst. „Ach was“, denkst du schließlich, „ich bin mir sicher, "
+"dass ich früher oder später eine weitere Chance haben werde.“"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:62
-#, fuzzy
-#| msgid "Your ship is to slow!"
 msgid "Your ship is too slow"
-msgstr "Dein Schiff ist zu langsam!"
+msgstr "Dein Schiff ist zu langsam"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:63
 msgid ""
 "Did you really expect to catch up with Major Tam with your current ship?"
 msgstr ""
+"Hast du wirklich gedacht, dass du Major Tam mit deinem jetzigen Schiff "
+"aufholen könntest?"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:65
 msgid "Everything is right"
-msgstr ""
+msgstr "Alles ist OK"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:66
 #, lua-format
@@ -41285,10 +41350,14 @@ msgid ""
 "\"Everything is right, we will now land on %s in order to refuel and rest "
 "for some time.\""
 msgstr ""
+"Nachdem Tam die Goddard betreten hat, wartest du etwa eine halbe Periode, "
+"bis sein Schiff vom Kreuzer des Kriegsherrn abdockt. Dann erhaltest du eine "
+"Nachricht von ihm: „Alles ist in Ordnung, wir werden jetzt auf %s landen, um "
+"aufzutanken und uns einige Zeit auszuruhen.“"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:68
 msgid "They're after me!"
-msgstr ""
+msgstr "Sie sind hinter mir her!"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:69
 #, lua-format
@@ -41297,21 +41366,27 @@ msgid ""
 "nearby fighters start to shoot at him. You receive a message \"That old fool "
 "tried to kill me! quick, we must head to %s! Let me jump first!\""
 msgstr ""
+"Tam betritt die Goddard. Ein paar Sekunden später dockt er eilig ab, während "
+"in der Nähe befindliche Jäger auf ihn zu schießen beginnen. Du erhältst eine "
+"Nachricht: „Dieser alte Narr hat versucht, mich zu töten! Schnell, wir "
+"müssen nach %s! Lassen Sie mich zuerst springen!“"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:71
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:82
 msgid "Major Tam is ready"
-msgstr ""
+msgstr "Major Tam ist bereit"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:72
 msgid ""
 "How do you do, citizen? Did you enjoy the trip so far? I'm ready for next "
 "stop. I'll follow you when you take off."
 msgstr ""
+"Wie geht es Ihnen, Bürger? Hat Ihnen die Reise bisher gefallen? Ich bin "
+"bereit für den nächsten Halt. Ich folge Ihnen, wenn Sie abheben."
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:74
 msgid "Major Tam is talkative today"
-msgstr ""
+msgstr "Major Tam ist heute redselig"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:75
 msgid ""
@@ -41319,10 +41394,14 @@ msgid ""
 "joke? It reminded me of my youth, when I used to belong to a fighter's "
 "squadron in Amaroq...\" Do you want to encourage Tam to talk about his past?"
 msgstr ""
+"„Hallo, Bürger? Haben Sie sich bereits von Lord Kampfeslusts letztem Witz "
+"erholt? Er erinnerte mich an meine Jugend, als ich zu einem Kampftrupp in "
+"Amarock gehörte …“ Möchtest du Tam ermutigen, über seine Vergangenheit zu "
+"reden?"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:77
 msgid "Major Tam before he was at the Headquarters"
-msgstr ""
+msgstr "Major Tam, bevor er am Hauptquartier war"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:78
 msgid ""
@@ -41514,7 +41593,7 @@ msgstr ""
 #. Spawn the Baddies
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:187
 msgid "Lord Battleaddict"
-msgstr ""
+msgstr "Lord Kampfeslust"
 
 #. Fleeing to flee planet
 #. Explain what happened
@@ -41523,7 +41602,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:209
 #: dat/missions/dvaered/frontier_war/fw_common.lua:22
 msgid "Lord Jim"
-msgstr ""
+msgstr "Lord Jim"
 
 #. Major Tam gives Gauss Guns instead of credits, because Major Tam is a freak.
 #. hook.rm(jumpingTam)
@@ -44255,18 +44334,16 @@ msgid "Lady Pointblank"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:25
-#, fuzzy
-#| msgid "Chainsaw"
 msgid "Lord Chainsaw"
-msgstr "Kettensäge"
+msgstr "Lord Kettensäge"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:26
 msgid "Lord Painbishop"
-msgstr ""
+msgstr "Lord Qualbischof"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:27
 msgid "Lord Kriegsreich Hundertfeuer"
-msgstr ""
+msgstr "Lord Kriegsreich Hundertfeuer"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:28
 msgid "Lady Blackswan"
@@ -44278,7 +44355,7 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:30
 msgid "Lord Richthofen"
-msgstr ""
+msgstr "Lord Richthofen"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:31
 #, fuzzy
@@ -44288,21 +44365,19 @@ msgstr "Lantern"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:32
 msgid "Lord Easytrigger"
-msgstr ""
+msgstr "Lord Lockerfinger"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:33
 msgid "Lady Sainte-Beuverie"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:34
-#, fuzzy
-#| msgid "Overture"
 msgid "Lord Louverture"
-msgstr "Ouvertüre"
+msgstr "Lord Louvertüre"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:35
 msgid "Lord Abdelkiller"
-msgstr ""
+msgstr "Lord Abdelkiller"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:36
 msgid "Lady Proserpina"
