@@ -79,6 +79,7 @@ static int pilot_validEnemy( const Pilot* p, const Pilot* target );
 /* Misc. */
 static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
+static glColour* pilot_compute_trail( Pilot* p, Vector2d* pos, int generator );
 
 
 /**
@@ -1697,11 +1698,15 @@ void pilot_render( Pilot* p, const double dt )
    (void) dt;
    double scalew, scaleh;
    int i, n;
+   Vector2d pos;
+   glColour *col;
 
    /* Tracks. */
    n = array_size(p->ship->trail_emitters);
-   for (i=0; i<n; i++)
-      spfx_trail_draw( &p->trail[i] );
+   for (i=0; i<n; i++) {
+      col = pilot_compute_trail( p, &pos, i );
+      spfx_trail_draw( &pos, col, &p->trail[i] );
+   }
 
    /* Check if needs scaling. */
    if (pilot_isFlag( p, PILOT_LANDING )) {
@@ -1816,7 +1821,8 @@ void pilot_update( Pilot* pilot, const double dt )
    double stress_falloff;
    double efficiency, thrust;
    Vector2d pos;
-   glColour col;
+   glColour *col;
+   Trail_spfx *trail;
 
    /* Check target validity. */
    if (pilot->target != pilot->id) {
@@ -2203,9 +2209,10 @@ void pilot_update( Pilot* pilot, const double dt )
    /* Update the track. */
    n = array_size(pilot->ship->trail_emitters);
    for (i=0; i<n; i++) {
-      if (spfx_trail_update( &pilot->trail[i], dt )) {
+      trail = &pilot->trail[i];
+      if (spfx_trail_update( trail, dt )) {
          col = pilot_compute_trail( pilot, &pos, i );
-         spfx_trail_grow( &pilot->trail[i], pos, col );
+         spfx_trail_grow( trail, pos, *col );
       }
    }
 }
@@ -2233,10 +2240,10 @@ void pilot_trailsClear( Pilot *p )
  *    @param generator Generator index
  *    @return col Colour.
  */
-glColour pilot_compute_trail( Pilot* p, Vector2d* pos, int generator )
+static glColour* pilot_compute_trail( Pilot* p, Vector2d* pos, int generator )
 {
    double a, dx, dy;
-   glColour col;
+   glColour *col;
 
    /* Compute the engine offset. */
    a  = p->solid->dir;
@@ -2250,13 +2257,13 @@ glColour pilot_compute_trail( Pilot* p, Vector2d* pos, int generator )
 
    /* Set the colour. */
    if (pilot_isFlag(p, PILOT_HYPERSPACE))
-      col = p->ship->trail_emitters[generator].trail->jmpn_col;
+      col = &p->ship->trail_emitters[generator].trail->jmpn_col;
    else if (pilot_isFlag(p, PILOT_AFTERBURNER))
-      col = p->ship->trail_emitters[generator].trail->aftb_col;
+      col = &p->ship->trail_emitters[generator].trail->aftb_col;
    else if (p->engine_glow > 0.)
-      col = p->ship->trail_emitters[generator].trail->glow_col;
+      col = &p->ship->trail_emitters[generator].trail->glow_col;
    else
-      col = p->ship->trail_emitters[generator].trail->idle_col;
+      col = &p->ship->trail_emitters[generator].trail->idle_col;
 
    return col;
 }

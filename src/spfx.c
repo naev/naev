@@ -46,7 +46,7 @@
 
 /* Trail stuff. */
 #define TRAIL_UPDATE_DT       0.05
-#define TRAIL_TTL_DT          2.
+#define TRAIL_TTL_DT          1.
 trailColour* trail_col_stack;
 
 
@@ -486,10 +486,10 @@ unsigned int spfx_trail_update( Trail_spfx* trail, double dt )
    grow = 0;
    /* Update all elements. */
    for (i=0; i<array_size(trail->points); i++)
-      trail->points[i].t -= dt * TRAIL_TTL_DT;
+      trail->points[i].t -= dt / TRAIL_TTL_DT;
 
    /* Add a new dot to the track. */
-   if (array_back(trail->points).t > TRAIL_UPDATE_DT)
+   if (array_back(trail->points).t < 1.-TRAIL_UPDATE_DT)
       grow = 1;
 
    /* Remove first elements if they're outdated. */
@@ -516,7 +516,7 @@ void spfx_trail_grow( Trail_spfx* trail, Vector2d pos, glColour col )
    trailPoint p;
    p.p = pos;
    p.c = col;
-   p.t = TRAIL_TTL_DT;
+   p.t = 1.;
    array_push_back( &trail->points, p );
 }
 
@@ -546,13 +546,23 @@ void spfx_trail_remove( Trail_spfx* trail )
 /**
  * @brief Draws a trail on screen.
  */
-void spfx_trail_draw( Trail_spfx* trail )
+void spfx_trail_draw( const Vector2d *hpos, const glColour *hcol, const Trail_spfx* trail )
 {
    double x1, y1, x2, y2;
    trailPoint *tp, *tpp;
    int i, n;
 
    n = array_size(trail->points);
+   if (n==0)
+      return;
+
+   /* Head trail. */
+   tp  = &trail->points[n-1];
+   gl_gameToScreenCoords( &x1, &y1, hpos->x, hpos->y );
+   gl_gameToScreenCoords( &x2, &y2, tp->p.x, tp->p.y );
+   gl_drawTrack( x1, y1, x2, y2, 1., tp->t, hcol, &tp->c, trail->thickness );
+
+   /* Rest. */
    for (i=1; i<n; i++) {
       tp  = &trail->points[i];
       tpp = &trail->points[i-1];
