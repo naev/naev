@@ -45,6 +45,8 @@
 
 
 /* Trail stuff. */
+#define TRAIL_UPDATE_DT       0.05
+#define TRAIL_TTL_DT          2.
 trailColour* trail_col_stack;
 
 
@@ -482,15 +484,15 @@ unsigned int spfx_trail_update( Trail_spfx* trail, double dt )
    grow = 0;
    /* Update all elements. */
    for (i=0; i<array_size(trail->points); i++)
-      trail->points[i].t += dt;
+      trail->points[i].t -= dt * TRAIL_TTL_DT;
 
    /* Add a new dot to the track. */
-   if (array_back(trail->points).t > 2.)
+   if (array_back(trail->points).t > TRAIL_UPDATE_DT)
       grow = 1;
 
    /* Remove first elements if they're outdated. */
    for (i=array_size(trail->points)-1; i>=0; i--) {
-      if (trail->points[i].t > 50.) {
+      if (trail->points[i].t < 0.) {
          array_erase(&trail->points, &trail->points[0], &trail->points[i]);
          break;
       }
@@ -507,12 +509,12 @@ unsigned int spfx_trail_update( Trail_spfx* trail, double dt )
  *    @param pos Position of the new control point.
  *    @param col Colour.
  */
-void spfx_trail_grow( Trail_spfx* trail, Vector2d pos, glColour col  )
+void spfx_trail_grow( Trail_spfx* trail, Vector2d pos, glColour col )
 {
    trailPoint p;
    p.p = pos;
    p.c = col;
-   p.t = 0.;
+   p.t = TRAIL_TTL_DT;
    array_push_back( &trail->points, p );
 }
 
