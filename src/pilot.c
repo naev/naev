@@ -1696,39 +1696,12 @@ void pilot_render( Pilot* p, const double dt )
 {
    (void) dt;
    double scalew, scaleh;
-   int i, j, n;
-   double x1, y1, x2, y2;
-   glColour c1;
-   Vector2d pos;
-   Trail_spfx* trail;
-   trailPoint *tp, *tpp;
+   int i, n;
 
    /* Tracks. */
    n = array_size(p->ship->trail_emitters);
-   for (j=0; j<n; j++) {
-      if (array_size(p->trail[j].points) > 1){
-         c1 = pilot_compute_trail( p, &pos, j );
-         trail = &p->trail[j];
-
-         /* Lastly created control point is replaced by ship's position */
-         gl_gameToScreenCoords( &x1, &y1, pos.x, pos.y );
-         //TODO: Its ugly. Put that in opengl_render all2gether
-         tp = &trail->points[ array_size(trail->points)-2 ];
-         gl_gameToScreenCoords( &x2, &y2, tp->p.x, tp->p.y );
-
-         gl_drawTrack( x1, y1, x2, y2, tp->t, 0., &c1, &tp->c, p->ship->trail_emitters[j].thick );
-
-         if (array_size(trail->points) > 2) {
-            for ( i=array_size(trail->points)-2; i>0; i--) {
-               tp  = &trail->points[i];
-               tpp = &trail->points[i-1];
-               gl_gameToScreenCoords( &x1, &y1,  tp->p.x,  tp->p.y );
-               gl_gameToScreenCoords( &x2, &y2, tpp->p.x, tpp->p.y );
-               gl_drawTrack( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, p->ship->trail_emitters[j].thick );
-            }
-         }
-      }
-   }
+   for (i=0; i<n; i++)
+      spfx_trail_draw( &p->trail[i] );
 
    /* Check if needs scaling. */
    if (pilot_isFlag( p, PILOT_LANDING )) {
@@ -2807,7 +2780,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    n = array_size(pilot->ship->trail_emitters);
    pilot->trail = array_create_size( Trail_spfx, n );
    for (i=0; i<n; i++)
-      spfx_trail_create( &pilot->trail[i] );
+      spfx_trail_create( &pilot->trail[i], pilot->ship->trail_emitters[i].thick );
 
 }
 

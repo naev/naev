@@ -457,11 +457,13 @@ static void spfx_updateShake( double dt )
 /**
  * @brief Initalizes a trail.
  *
- *    @param [out] trail Initialized trail.
+ *    @param[out] trail Initialized trail.
+ *    @param thickness Thickness of the trail to create.
  */
-void spfx_trail_create(Trail_spfx* trail)
+void spfx_trail_create(Trail_spfx* trail, double thickness)
 {
    memset( trail, 0, sizeof(Trail_spfx) );
+   trail->thickness = thickness;
    trail->points = array_create( trailPoint );
 }
 
@@ -538,6 +540,26 @@ void spfx_trail_clear( Trail_spfx* trail )
 void spfx_trail_remove( Trail_spfx* trail )
 {
    array_free(trail->points);
+}
+
+
+/**
+ * @brief Draws a trail on screen.
+ */
+void spfx_trail_draw( Trail_spfx* trail )
+{
+   double x1, y1, x2, y2;
+   trailPoint *tp, *tpp;
+   int i, n;
+
+   n = array_size(trail->points);
+   for (i=1; i<n; i++) {
+      tp  = &trail->points[i];
+      tpp = &trail->points[i-1];
+      gl_gameToScreenCoords( &x1, &y1,  tp->p.x,  tp->p.y );
+      gl_gameToScreenCoords( &x2, &y2, tpp->p.x, tpp->p.y );
+      gl_drawTrack( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, trail->thickness );
+   }
 }
 
 
