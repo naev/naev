@@ -3,22 +3,22 @@
  <trail>
   <id>default</id>
   <idle r="1" g="1" b="1" a="0.05" />
-  <glow r="0" g="1" b="1" a=".5" />
-  <afterburn r="1" g=".7" b="0" a=".7" />
-  <jumping r=".9" g=".1" b=".9" a=".7" />
+  <glow r="0" g="1" b="1" a=".7" />
+  <afterburn r="1" g=".7" b="0" a=".85" />
+  <jumping r=".9" g=".1" b=".9" a=".85" />
  </trail>
  <trail>
   <id>fire</id>
-  <idle r="1" g="1" b="1" a=".05" />
-  <glow r="1" g=".84" b="0" a=".5" />
-  <afterburn r="1" g=".7" b="0" a=".7" />
-  <jumping r=".9" g=".1" b=".9" a=".7" />
+  <idle r="1" g="1" b="1" a="0.05" />
+  <glow r="1" g=".84" b="0" a="0.7" />
+  <afterburn r="1" g=".7" b="0" a="0.85" />
+  <jumping r=".9" g=".1" b=".9" a="0.85" />
  </trail>
  <trail>
   <id>red</id>
   <idle r="1" g="1" b="1" a=".05" />
-  <glow r="1" g=".3" b=".3" a=".5" />
-  <afterburn r="1" g=".7" b="0" a=".7" />
-  <jumping r=".9" g=".1" b=".9" a=".7" />
+  <glow r="1" g=".3" b=".3" a="0.7" />
+  <afterburn r="1" g=".7" b="0" a="0.85" />
+  <jumping r=".9" g=".1" b=".9" a="0.85" />
  </trail>
 </Trail_types>
