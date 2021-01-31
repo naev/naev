@@ -44,6 +44,10 @@
 #define HAPTIC_UPDATE_INTERVAL   0.1 /**< Time between haptic updates. */
 
 
+/* Trail stuff. */
+trailColour* trail_col_stack;
+
+
 /*
  * special hard-coded special effects
  */
@@ -57,7 +61,7 @@ static int shake_off = 1; /**< 1 if shake is not active. */
 static perlin_data_t *shake_noise = NULL; /**< Shake noise. */
 static const double shake_fps_min   = 1./10.; /**< Minimum fps to run shake update at. */
 
-
+/* Haptic stuff. */
 extern SDL_Haptic *haptic; /**< From joystick.c */
 extern unsigned int haptic_query; /**< From joystick.c */
 static int haptic_rumble         = -1; /**< Haptic rumble effect ID. */

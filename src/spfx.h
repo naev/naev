@@ -47,7 +47,7 @@ typedef struct Trail_spfx_ {
 /*
  * Array of trail colours
  */
-trailColour* trail_col_stack;
+extern trailColour* trail_col_stack;
 
 
 /*
