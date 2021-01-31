@@ -460,9 +460,7 @@ static void spfx_updateShake( double dt )
 void spfx_trail_create(Trail_spfx* trail)
 {
    memset( trail, 0, sizeof(Trail_spfx) );
-   trail->points = array_create( Vector2d );
-   trail->times = array_create( ntime_t );
-   trail->colors = array_create( glColour );
+   trail->points = array_create( trailPoint );
 }
 
 
@@ -470,34 +468,31 @@ void spfx_trail_create(Trail_spfx* trail)
  * @brief Updates a trail.
  *
  *    @param trail Trail to update.
- *    @param pilot Emitter pilot.
- *    @param generator Trail generator.
+ *    @param dt Update interval.
  *    @return boolean wether the trail needs to grow.
  */
-unsigned int spfx_trail_update( Trail_spfx* trail )
+unsigned int spfx_trail_update( Trail_spfx* trail, double dt )
 {
-   ntime_t now;
    unsigned int grow;
    int i;
 
-   now = ntime_get();
-   grow = 0;
+   if (array_size(trail->points) == 0)
+      return 1;
 
-   if (array_size(trail->times) == 0)
+   grow = 0;
+   /* Update all elements. */
+   for (i=0; i<array_size(trail->points); i++)
+      trail->points[i].t += dt;
+
+   /* Add a new dot to the track. */
+   if (array_back(trail->points).t > 2.)
       grow = 1;
 
-   else {
-      /* Add a new dot to the track. */
-      if ( (array_back( trail->times ) + 2000) <= now )
-         grow = 1;
-      /* Remove first elements if they're outdated. */
-      for (i=array_size(trail->times)-1; i>=0; i--) {
-         if (trail->times[i] < now - 50000) {
-            array_erase(&trail->times, &trail->times[0], &trail->times[i]);
-            array_erase(&trail->points, &trail->points[0], &trail->points[i]);
-            array_erase(&trail->colors, &trail->colors[0], &trail->colors[i]);
-            break;
-         }
+   /* Remove first elements if they're outdated. */
+   for (i=array_size(trail->points)-1; i>=0; i--) {
+      if (trail->points[i].t > 50.) {
+         array_erase(&trail->points, &trail->points[0], &trail->points[i]);
+         break;
       }
    }
 
@@ -514,12 +509,11 @@ unsigned int spfx_trail_update( Trail_spfx* trail )
  */
 void spfx_trail_grow( Trail_spfx* trail, Vector2d pos, glColour col  )
 {
-   ntime_t now;
-   now = ntime_get();
-
-   array_push_back( &trail->times, now );
-   array_push_back( &trail->points, pos );
-   array_push_back( &trail->colors, col );
+   trailPoint p;
+   p.p = pos;
+   p.c = col;
+   p.t = 0.;
+   array_push_back( &trail->points, p );
 }
 
 
@@ -531,8 +525,6 @@ void spfx_trail_grow( Trail_spfx* trail, Vector2d pos, glColour col  )
 void spfx_trail_remove( Trail_spfx* trail )
 {
    array_free(trail->points);
-   array_free(trail->times);
-   array_free(trail->colors);
 }
 
 

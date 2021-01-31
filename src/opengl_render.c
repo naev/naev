@@ -757,9 +757,9 @@ void gl_drawLine( const double x1, const double y1,
  *    @param c Colour to use.
  *    @param t Thickness to use.
  */
-void gl_drawTrack( const double x1, const double y1,
-      const double x2, const double y2, const int t1, const int t2,
-      const int now, const glColour *c1, const glColour *c2, const double thick )
+void gl_drawTrack( double x1, double y1,
+      double x2, double y2, double t1, double t2,
+      const glColour *c1, const glColour *c2, double thick )
 {
    gl_Matrix4 projection;
    double a, s;
@@ -813,9 +813,8 @@ void gl_drawTrack( const double x1, const double y1,
    gl_uniformColor(shaders.track.c1, c1);
    gl_uniformColor(shaders.track.c2, c2);
    gl_Matrix4_Uniform(shaders.track.projection, projection);
-   glUniform1f(shaders.track.t1, (float) t1);
-   glUniform1f(shaders.track.t2, (float) t2);
-   glUniform1f(shaders.track.now, (float) now);
+   glUniform1f(shaders.track.t1, (GLfloat) t1);
+   glUniform1f(shaders.track.t2, (GLfloat) t2);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );

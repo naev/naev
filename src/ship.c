@@ -747,6 +747,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    int l, m, h, noengine;
    ShipStatList *ll;
    ShipTrailEmitter trail;
+   int trailtype;
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Ship) );
@@ -922,8 +923,11 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          buf = xml_get(node);
          if (buf == NULL)
             buf = "default";
-         trail.trail = &trail_col_stack[ trailType_get( buf ) ];
-         array_push_back( &temp->trail_emitters, trail );
+         trailtype = trailType_get( buf );
+         if (trailtype >= 0) {
+            trail.trail = &trail_col_stack[ trailtype ];
+            array_push_back( &temp->trail_emitters, trail );
+         }
          continue;
       }
 

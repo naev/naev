@@ -1698,37 +1698,33 @@ void pilot_render( Pilot* p, const double dt )
    double scalew, scaleh;
    int i, j, n;
    double x1, y1, x2, y2;
-   glColour c1, c2;
-   Vector2d *point, pos;
-   int now;
+   glColour c1;
+   Vector2d pos;
    Trail_spfx* trail;
+   trailPoint *tp, *tpp;
 
    /* Tracks. */
    n = array_size(p->ship->trail_emitters);
    for (j=0; j<n; j++) {
-      if (array_size(p->trail[j].times) > 1){
-         now = (int) ntime_get();
+      if (array_size(p->trail[j].points) > 1){
          c1 = pilot_compute_trail( p, &pos, j );
          trail = &p->trail[j];
 
          /* Lastly created control point is replaced by ship's position */
          gl_gameToScreenCoords( &x1, &y1, pos.x, pos.y );
          //TODO: Its ugly. Put that in opengl_render all2gether
-         point = &trail->points[ array_size(trail->points)-2 ];
-         gl_gameToScreenCoords( &x2, &y2, point->x, point->y );
+         tp = &trail->points[ array_size(trail->points)-2 ];
+         gl_gameToScreenCoords( &x2, &y2, tp->p.x, tp->p.y );
 
-         c2 = trail->colors[ array_size(trail->colors)-2 ];
-         gl_drawTrack( x1, y1, x2, y2, now, trail->times[ array_size(trail->times)-2 ],
-                       now, &c1, &c2, p->ship->trail_emitters[j].thick );
+         gl_drawTrack( x1, y1, x2, y2, tp->t, 0., &c1, &tp->c, p->ship->trail_emitters[j].thick );
 
-         if (array_size(trail->times) > 2){
-            for ( i=array_size(trail->times)-2; i>0; i--){
-               point = &trail->points[i];
-               gl_gameToScreenCoords( &x1, &y1, point->x, point->y );
-               point = &trail->points[i-1];
-               gl_gameToScreenCoords( &x2, &y2, point->x, point->y );
-               gl_drawTrack( x1, y1, x2, y2, trail->times[i], trail->times[i-1],
-                             now, &trail->colors[i], &trail->colors[i-1], p->ship->trail_emitters[j].thick );
+         if (array_size(trail->points) > 2) {
+            for ( i=array_size(trail->points)-2; i>0; i--) {
+               tp  = &trail->points[i];
+               tpp = &trail->points[i-1];
+               gl_gameToScreenCoords( &x1, &y1,  tp->p.x,  tp->p.y );
+               gl_gameToScreenCoords( &x2, &y2, tpp->p.x, tpp->p.y );
+               gl_drawTrack( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, p->ship->trail_emitters[j].thick );
             }
          }
       }
@@ -2235,7 +2231,7 @@ void pilot_update( Pilot* pilot, const double dt )
    if (!space_isSimulation()) {
       n = array_size(pilot->ship->trail_emitters);
       for (i=0; i<n; i++) {
-         if (spfx_trail_update( &pilot->trail[i] )) {
+         if (spfx_trail_update( &pilot->trail[i], dt )) {
             col = pilot_compute_trail( pilot, &pos, i );
             spfx_trail_grow( &pilot->trail[i], pos, col );
          }
