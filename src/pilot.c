@@ -2238,6 +2238,11 @@ void pilot_update( Pilot* pilot, const double dt )
 }
 
 
+/**
+ * @brief Clears the trails for a pilot.
+ *
+ *    @param p Pilot ot clear trails of.
+ */
 void pilot_trailsClear( Pilot *p )
 {
    int i, n;
