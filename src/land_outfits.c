@@ -144,12 +144,10 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
    outfits_getSize( wid, &w, &h, &iw, &ih, &bw, &bh );
 
    /* Initialize stored positions. */
-   if (outfits==NULL) {
-      if (iar_data == NULL)
-         iar_data = calloc( OUTFITS_NTABS, sizeof(iar_data_t) );
-      else
-         memset( iar_data, 0, sizeof(iar_data_t) * OUTFITS_NTABS );
-   }
+   if (iar_data == NULL)
+      iar_data = calloc( OUTFITS_NTABS, sizeof(iar_data_t) );
+   else
+      memset( iar_data, 0, sizeof(iar_data_t) * OUTFITS_NTABS );
    if (iar_outfits == NULL)
       iar_outfits = calloc( OUTFITS_NTABS, sizeof(Outfit**) );
    else {
