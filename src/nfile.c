@@ -46,14 +46,6 @@
 
 
 /**
- * @TODO try to use SDL_GetPrefPath and SDL_GetBasePath when possible.
- */
-
-
-#define BLOCK_SIZE      128*1024 /**< 128 kilobytes. */
-
-
-/**
  * @brief Struct containing a file's name and stat structure.
  */
 typedef struct filedata {
