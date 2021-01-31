@@ -8,6 +8,10 @@
  <class>Carrier</class>
  <price>9000000</price>
  <time_mod>2</time_mod>
+ <trail_generator x="-40" y="5" h="5" />
+ <trail_generator x="-40" y="-15" h="5" />
+ <trail_generator x="-40" y="5" h="-5" />
+ <trail_generator x="-40" y="-15" h="-5" />
  <fabricator>Thurion shipyards</fabricator>
  <license>Heavy Combat Vessel License</license>
  <description>...</description>

@@ -8,6 +8,12 @@
  <class>Cruiser</class>
  <price>4500000</price>
  <time_mod>1.75</time_mod>
+ <trail_generator x="-30" y="5" h="5" t="1">fire</trail_generator>
+ <trail_generator x="-30" y="5" h="-5" t="1">fire</trail_generator>
+ <trail_generator x="-30" y="12" h="0">fire</trail_generator>
+ <trail_generator x="-30" y="-5" h="5" t="1">fire</trail_generator>
+ <trail_generator x="-30" y="-5" h="-5" t="1">fire</trail_generator>
+ <trail_generator x="-30" y="-12" h="0">fire</trail_generator>
  <fabricator>Soromid</fabricator>
  <license>Heavy Combat Vessel License</license>
  <description>The Ira is the heaviest conventional combat vessel in Soromid service. Though lumbering and vulnerable when caught without escorts, it can deliver terrible punishment on enemy spaceships.</description>

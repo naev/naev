@@ -746,6 +746,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    char str[PATH_MAX];
    int l, m, h, noengine;
    ShipStatList *ll;
+   ShipTrailEmitter trail;
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Ship) );
@@ -767,6 +768,9 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          continue;
       }
    } while (xml_nextNode(node));
+
+   /* Default offsets for the engine. */
+   temp->trail_emitters = NULL;
 
    /* Load the rest of the data. */
    node = parent->xmlChildrenNode;
@@ -904,6 +908,25 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       xmlr_strd(node,"fabricator",temp->fabricator);
       xmlr_strd(node,"description",temp->description);
       xmlr_int(node,"rarity",temp->rarity);
+
+      if (xml_isNode(node,"trail_generator")) {
+         xmlr_attr_float( node, "x", trail.x_engine );
+         xmlr_attr_float( node, "y", trail.y_engine );
+         xmlr_attr_float( node, "h", trail.h_engine );
+         xmlr_attr_float( node, "t", trail.thick );
+         if (trail.thick <= 0.)
+            trail.thick = 3.;
+         if (temp->trail_emitters == NULL) {
+            temp->trail_emitters = array_create( ShipTrailEmitter );
+         }
+         buf = xml_get(node);
+         if (buf == NULL)
+            buf = "default";
+         trail.trail = &trail_col_stack[ trailType_get( buf ) ];
+         array_push_back( &temp->trail_emitters, trail );
+         continue;
+      }
+
       if (xml_isNode(node,"movement")) {
          cur = node->children;
          do {
@@ -1177,6 +1200,9 @@ void ships_free (void)
          }
          free(s->polygon);
       }
+
+      /* Free trail generators. */
+      array_free(s->trail_emitters);
    }
 
    array_free(ship_stack);

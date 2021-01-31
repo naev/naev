@@ -8,6 +8,7 @@
  <class>Armoured Transport</class>
  <price>1500000</price>
  <time_mod>1.5</time_mod>
+ <trail_generator x="-35" y="0" h="0" />
  <fabricator>Skull and Bones</fabricator>
  <description>The traditional Skull and Bones refit has left the Rhino substantially more manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay and durability, the Rhino has become an excellent scavenger ship.</description>
  <health>

@@ -28,7 +28,6 @@
 #include "pause.h"
 #include "perlin.h"
 #include "physics.h"
-#include "pilot.h"
 #include "rng.h"
 
 
@@ -64,6 +63,12 @@ extern unsigned int haptic_query; /**< From joystick.c */
 static int haptic_rumble         = -1; /**< Haptic rumble effect ID. */
 static SDL_HapticEffect haptic_rumbleEffect; /**< Haptic rumble effect. */
 static double haptic_lastUpdate  = 0.; /**< Timer to update haptic effect again. */
+
+
+/*
+ * Trail colours handling.
+ */
+int trailTypes_load (void);
 
 
 /**
@@ -240,6 +245,8 @@ int spfx_load (void)
    /* Clean up. */
    xmlFreeDoc(doc);
 
+   /* Trail colour sets. */
+   trailTypes_load();
 
    /*
     * Now initialize force feedback.
@@ -280,6 +287,9 @@ void spfx_free (void)
 
    /* Free the noise. */
    noise_delete( shake_noise );
+
+   /* Free the trail colour stack. */
+   array_free(trail_col_stack);
 }
 
 
@@ -435,6 +445,90 @@ static void spfx_updateShake( double dt )
 
    /* Update position. */
    vect_cadd( &shake_pos, shake_vel.x * dt, shake_vel.y * dt );
+}
+
+
+/**
+ * @brief Initalizes a trail.
+ *
+ *    @param [out] trail Initialized trail.
+ */
+void spfx_trail_create(Trail_spfx* trail)
+{
+   memset( trail, 0, sizeof(Trail_spfx) );
+   trail->points = array_create( Vector2d );
+   trail->times = array_create( ntime_t );
+   trail->colors = array_create( glColour );
+}
+
+
+/**
+ * @brief Updates a trail.
+ *
+ *    @param trail Trail to update.
+ *    @param pilot Emitter pilot.
+ *    @param generator Trail generator.
+ *    @return boolean wether the trail needs to grow.
+ */
+unsigned int spfx_trail_update( Trail_spfx* trail )
+{
+   ntime_t now;
+   unsigned int grow;
+   int i;
+
+   now = ntime_get();
+   grow = 0;
+
+   if (array_size(trail->times) == 0)
+      grow = 1;
+
+   else {
+      /* Add a new dot to the track. */
+      if ( (array_back( trail->times ) + 2000) <= now )
+         grow = 1;
+      /* Remove first elements if they're outdated. */
+      for (i=array_size(trail->times)-1; i>=0; i--) {
+         if (trail->times[i] < now - 50000) {
+            array_erase(&trail->times, &trail->times[0], &trail->times[i]);
+            array_erase(&trail->points, &trail->points[0], &trail->points[i]);
+            array_erase(&trail->colors, &trail->colors[0], &trail->colors[i]);
+            break;
+         }
+      }
+   }
+
+   return grow;
+}
+
+
+/**
+ * @brief Makes a trail grow.
+ *
+ *    @param trail Trail to update.
+ *    @param pos Position of the new control point.
+ *    @param col Colour.
+ */
+void spfx_trail_grow( Trail_spfx* trail, Vector2d pos, glColour col  )
+{
+   ntime_t now;
+   now = ntime_get();
+
+   array_push_back( &trail->times, now );
+   array_push_back( &trail->points, pos );
+   array_push_back( &trail->colors, col );
+}
+
+
+/**
+ * @brief Removes a trail.
+ *
+ *    @param trail Trail to remove.
+ */
+void spfx_trail_remove( Trail_spfx* trail )
+{
+   array_free(trail->points);
+   array_free(trail->times);
+   array_free(trail->colors);
 }
 
 
@@ -672,3 +766,102 @@ void spfx_render( const int layer )
    }
 }
 
+
+/**
+ * @brief Loads the trail colour sets.
+ *
+ *    @return 0 on success.
+ */
+int trailTypes_load (void)
+{
+   trailColour *tc;
+   xmlNodePtr node, cur;
+   xmlDocPtr doc;
+
+   /* Load the data. */
+   doc = xml_parsePhysFS( TRAIL_DATA_PATH );
+   if (doc == NULL)
+      return -1;
+
+   /* Get the root node. */
+   node = doc->xmlChildrenNode;
+   if (!xml_isNode(node,"Trail_types")) {
+      WARN( _("Malformed '%s' file: missing root element 'Trail_types'"), TRAIL_DATA_PATH);
+      return -1;
+   }
+
+   /* Get the first node. */
+   node = node->xmlChildrenNode; /* first event node */
+   if (node == NULL) {
+      WARN( _("Malformed '%s' file: does not contain elements"), TRAIL_DATA_PATH);
+      return -1;
+   }
+
+   trail_col_stack = array_create( trailColour );
+
+   do {
+      if (xml_isNode(node,"trail")) {
+
+         tc = &array_grow( &trail_col_stack );
+         memset( tc, 0, sizeof(trailColour) );
+         cur = node->children;
+
+         /* Load it. */
+         do {
+            if (xml_isNode(cur,"id"))
+               tc->name = xml_getStrd(cur);
+            else if (xml_isNode(cur,"idle")) {
+               xmlr_attr_float( cur, "r", tc->idle_col.r );
+               xmlr_attr_float( cur, "g", tc->idle_col.g );
+               xmlr_attr_float( cur, "b", tc->idle_col.b );
+               xmlr_attr_float( cur, "a", tc->idle_col.a );
+            }
+            else if (xml_isNode(cur,"glow")) {
+               xmlr_attr_float( cur, "r", tc->glow_col.r );
+               xmlr_attr_float( cur, "g", tc->glow_col.g );
+               xmlr_attr_float( cur, "b", tc->glow_col.b );
+               xmlr_attr_float( cur, "a", tc->glow_col.a );
+            }
+            else if (xml_isNode(cur,"afterburn")) {
+               xmlr_attr_float( cur, "r", tc->aftb_col.r );
+               xmlr_attr_float( cur, "g", tc->aftb_col.g );
+               xmlr_attr_float( cur, "b", tc->aftb_col.b );
+               xmlr_attr_float( cur, "a", tc->aftb_col.a );
+            }
+            else if (xml_isNode(cur,"jumping")) {
+               xmlr_attr_float( cur, "r", tc->jmpn_col.r );
+               xmlr_attr_float( cur, "g", tc->jmpn_col.g );
+               xmlr_attr_float( cur, "b", tc->jmpn_col.b );
+               xmlr_attr_float( cur, "a", tc->jmpn_col.a );
+            }
+         } while (xml_nextNode(cur));
+
+      }
+   } while (xml_nextNode(node));
+
+   array_shrink(&trail_col_stack);
+
+   /* Clean up. */
+   xmlFreeDoc(doc);
+
+   return 0;
+}
+
+
+/**
+ * @brief Gets a trail type by name.
+ *
+ *    @return index in trail_col_stack.
+ */
+int trailType_get( char* name )
+{
+   int i;
+
+   for (i=0; i<array_size(trail_col_stack); i++) {
+      if ( strcmp(trail_col_stack[i].name, name)==0 )
+         return i;
+   }
+
+   WARN(_("Trail type '%s' not found in stack"), name);
+   return -1;
+}

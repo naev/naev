@@ -1459,6 +1459,15 @@ void space_update( const double dt )
 
 
 /**
+ * @brief returns wether we're just simulating.
+ */
+unsigned int space_isSimulation( void )
+{
+   return space_simulating;
+}
+
+
+/**
  * @brief Initializes the system.
  *
  *    @param sysname Name of the system to initialize.

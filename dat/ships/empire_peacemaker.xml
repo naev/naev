@@ -8,6 +8,10 @@
  <class>Carrier</class>
  <price>8000000</price>
  <time_mod>2</time_mod>
+ <trail_generator x="5" y="5" h="-35" />
+ <trail_generator x="5" y="5" h="-45" />
+ <trail_generator x="5" y="-5" h="-35" />
+ <trail_generator x="5" y="-5" h="-45" />
  <fabricator>Nexus Shipyards</fabricator>
  <license>Heavy Combat Vessel License</license>
  <description>Built under contract for the Empire by Nexus Shipyards, the Peacemaker is one of the grandest vessels in the galaxy, dwarfing even the mighty Goddard. Peacemakers typically function as flag ships in Imperial fleets, and can provide the fighter and bomber squadrons with much needed resupplies. Like most capital ships, however, it is vulnerable to attack from enemy bombers.</description>

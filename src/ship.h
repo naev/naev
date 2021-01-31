@@ -14,6 +14,7 @@
 #include "opengl.h"
 #include "outfit.h"
 #include "sound.h"
+#include "spfx.h"
 
 
 /* target gfx dimensions */
@@ -80,6 +81,18 @@ typedef struct ShipOutfitSlot_ {
 
 
 /**
+ * @brief Ship trail emitter.
+ */
+typedef struct ShipTrailEmitter_ {
+   double x_engine;   /**< Offset x. */
+   double y_engine;   /**< Offset y. */
+   double h_engine;   /**< Offset z. */
+   double thick;      /**< Thickness. */
+   trailColour* trail; /**< Trail colour set. */
+} ShipTrailEmitter;
+
+
+/**
  * @brief Represents a space ship.
  */
 typedef struct Ship_ {
@@ -125,6 +138,7 @@ typedef struct Ship_ {
    char* gfx_comm;   /**< Name of graphic for communication. */
    glTexture** gfx_overlays; /**< Store overlay graphics. */
    int gfx_noverlays; /**< Number of overlays. */
+   ShipTrailEmitter* trail_emitters; /**< Trail emitters. */
 
    /* collision polygon */
    CollPoly *polygon; /**< Collision polygons. */

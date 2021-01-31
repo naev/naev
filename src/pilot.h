@@ -17,6 +17,7 @@
 #include "ship.h"
 #include "sound.h"
 #include "space.h"
+#include "spfx.h"
 
 
 #define PLAYER_ID       1 /**< Player pilot ID. */
@@ -223,6 +224,7 @@ typedef struct Pilot_ {
    double mass_outfit; /**< Amount of outfit mass added. */
    int tsx;          /**< current sprite x position, calculated on update. */
    int tsy;          /**< current sprite y position, calculated on update. */
+   Trail_spfx* trail;  /**< Pilot's trail(s). */
 
    /* Properties. */
    int cpu;       /**< Amount of CPU the pilot has left. */
@@ -436,6 +438,7 @@ int pilot_dock( Pilot *p, Pilot *target );
 ntime_t pilot_hyperspaceDelay( Pilot *p );
 void pilot_untargetAsteroid( int anchor, int asteroid );
 PilotOutfitSlot* pilot_getDockSlot( Pilot* p );
+glColour pilot_compute_trail( Pilot* p, Vector2d* pos, int generator );
 
 
 /*

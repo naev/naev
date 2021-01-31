@@ -418,6 +418,7 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount );
  * update.
  */
 void space_update( const double dt );
+unsigned int space_isSimulation( void );
 
 /*
  * Graphics.
