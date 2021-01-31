@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Trail_types>
+ <trail>
+  <id>default</id>
+  <idle r="1" g="1" b="1" a=".25" />
+  <glow r="0" g="1" b="1" a="1" />
+  <afterburn r="1" g=".7" b="0" a="1" />
+  <jumping r=".9" g=".1" b=".9" a="1" />
+ </trail>
+ <trail>
+  <id>fire</id>
+  <idle r="1" g="1" b="1" a=".25" />
+  <glow r="1" g=".84" b="0" a="1" />
+  <afterburn r="1" g=".7" b="0" a="1" />
+  <jumping r=".9" g=".1" b=".9" a="1" />
+ </trail>
+ <trail>
+  <id>red</id>
+  <idle r="1" g="1" b="1" a=".25" />
+  <glow r="1" g=".3" b=".3" a="1" />
+  <afterburn r="1" g=".7" b="0" a="1" />
+  <jumping r=".9" g=".1" b=".9" a="1" />
+ </trail>
+</Trail_types>
