@@ -46,6 +46,7 @@ typedef struct trailPoint_ {
  */
 typedef struct Trail_spfx_ {
    double thickness; /**< Thickness of the trail. */
+   /* TODO points should be a circular buffer or it moves too much memory around. */
    trailPoint *points; /**< Trail points. */
 } Trail_spfx;
 
