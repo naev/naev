@@ -126,6 +126,7 @@ function random_event()
    local alter_prob = var.peek("minerva_altercation_probability") or 0.4
    local alter2 = has_event("Minerva Station Altercation 2")
    local maikki2 = player.misnDone("Maikki's Father 2")
+   local spapropaganda = has_event("Spa Propaganda")
    local r = rnd.rnd()
    -- Altercations
    if not alter1 and minerva.tokens_get_gained() > 10 and r < 0.5 then
@@ -134,6 +135,10 @@ function random_event()
       hook.safe( "start_alter2" )
    elseif not alter1 and alter2 and not alter_helped and r < alter_prob then
       hook.safe( "start_alter1" )
+
+   -- Spa Propaganda
+   elseif maikki2 and player.misnActive("Minerva Pirates 3") then
+      --hook.safe( "start_spapropaganda" )
    end
 end
 
@@ -144,6 +149,9 @@ function start_alter1 ()
 end
 function start_alter2 ()
    naev.eventStart( "Minerva Station Altercation 2" )
+end
+function start_spapropaganda ()
+   naev.eventStart( "Spa Propaganda" )
 end
 
 function bargreeter()
