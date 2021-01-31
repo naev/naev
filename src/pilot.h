@@ -439,6 +439,7 @@ ntime_t pilot_hyperspaceDelay( Pilot *p );
 void pilot_untargetAsteroid( int anchor, int asteroid );
 PilotOutfitSlot* pilot_getDockSlot( Pilot* p );
 glColour pilot_compute_trail( Pilot* p, Vector2d* pos, int generator );
+void pilot_trailsClear( Pilot *p );
 
 
 /*

@@ -2228,16 +2228,22 @@ void pilot_update( Pilot* pilot, const double dt )
    gatherable_gather( pilot->id );
 
    /* Update the track. */
-   if (!space_isSimulation()) {
-      n = array_size(pilot->ship->trail_emitters);
-      for (i=0; i<n; i++) {
-         if (spfx_trail_update( &pilot->trail[i], dt )) {
-            col = pilot_compute_trail( pilot, &pos, i );
-            spfx_trail_grow( &pilot->trail[i], pos, col );
-         }
+   n = array_size(pilot->ship->trail_emitters);
+   for (i=0; i<n; i++) {
+      if (spfx_trail_update( &pilot->trail[i], dt )) {
+         col = pilot_compute_trail( pilot, &pos, i );
+         spfx_trail_grow( &pilot->trail[i], pos, col );
       }
    }
+}
 
+
+void pilot_trailsClear( Pilot *p )
+{
+   int i, n;
+   n = array_size(p->ship->trail_emitters);
+   for (i=0; i<n; i++)
+      spfx_trail_clear( &p->trail[i] );
 }
 
 

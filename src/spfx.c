@@ -520,6 +520,17 @@ void spfx_trail_grow( Trail_spfx* trail, Vector2d pos, glColour col )
 
 
 /**
+ * @brief Clears a trail.
+ *
+ *    @param trail Trail to clear.
+ */
+void spfx_trail_clear( Trail_spfx* trail )
+{
+   array_erase( &trail->points, array_begin(trail->points), array_end(trail->points) );
+}
+
+
+/**
  * @brief Removes a trail.
  *
  *    @param trail Trail to remove.
