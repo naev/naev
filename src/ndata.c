@@ -122,6 +122,7 @@ int ndata_open (void)
       PHYSFS_mount( buf, NULL, 1 );
    }
 
+   PHYSFS_mount( PHYSFS_getWriteDir(), NULL, 0 );
    ndata_testVersion();
    return 0;
 }
