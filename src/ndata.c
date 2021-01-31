@@ -271,3 +271,64 @@ static int ndata_enumerateCallback( void* data, const char* origdir, const char*
       free( path );
    return PHYSFS_ENUM_OK;
 }
+
+
+/**
+ * @brief Copy a file, if it exists.
+ *
+ *    @param file1 PhysicsFS relative pathname to copy from.
+ *    @param file2 PhysicsFS relative pathname to copy to.
+ *    @return 0 on success, or if file1 does not exist, -1 on error.
+ */
+int ndata_copyIfExists( const char* file1, const char* file2 )
+{
+   PHYSFS_File *f_in, *f_out;
+   char buf[ 8*1024 ];
+   PHYSFS_sint64 lr, lw;
+
+   if (file1 == NULL)
+      return -1;
+
+   /* Check if input file exists */
+   if (!PHYSFS_exists(file1))
+      return 0;
+
+   /* Open files. */
+   f_in  = PHYSFS_openRead( file1 );
+   f_out = PHYSFS_openWrite( file2 );
+   if ((f_in==NULL) || (f_out==NULL)) {
+      WARN( _("Failure to copy '%s' to '%s': %s"), file1, file2, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      if (f_in!=NULL)
+         PHYSFS_close(f_in);
+      return -1;
+   }
+
+   /* Copy data over. */
+   do {
+      lr = PHYSFS_readBytes( f_in, buf, sizeof(buf) );
+      if (lr == -1)
+         goto err;
+      else if (!lr) {
+         if (PHYSFS_eof( f_in ))
+            break;
+         goto err;
+      }
+
+      lw = PHYSFS_writeBytes( f_out, buf, lr );
+      if (lr != lw)
+         goto err;
+   } while (lr > 0);
+
+   /* Close files. */
+   PHYSFS_close( f_in );
+   PHYSFS_close( f_out );
+
+   return 0;
+
+err:
+   WARN( _("Failure to copy '%s' to '%s': %s"), file1, file2, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+   PHYSFS_close( f_in );
+   PHYSFS_close( f_out );
+
+   return -1;
+}
