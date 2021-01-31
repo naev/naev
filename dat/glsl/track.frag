@@ -16,14 +16,18 @@ float impulse( float x, float k )
 
 float fastdropoff( float x )
 {
-   return 1. - pow( max(0.0, abs(1.-x) * 2.0 - 1.0 ), 1.0 );
+  return x < 0.92 ? (0. - log(1.0 - x)) : (-20.0 * x) + 20.0 ;
 }
 
 /* k is the sharpness, more k == sharper.
  * Good default is 3.0 */
 float smoothbeam( float x, float k )
 {
-   return 1. - pow( abs( sin( M_PI * x / 2. ) ), k );
+   return 2.2 - pow( abs( sin( M_PI * x / 2. ) ), k );
+}
+
+float random (vec2 st) {
+  return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
 }
 
 void main(void) {
@@ -37,10 +41,12 @@ void main(void) {
    color_out.a *= fastdropoff( t );
 
    // Modulate alpha based on dispersion
+   m = impulse( 1. - t, 3. );
+
    // Modulate width
-   m = impulse( 1.-t, 5. );
-   d = smoothbeam( pos.y, 3.*m );
-   color_out.a *= d;
+   d = smoothbeam( pos.y, sin(t / 10.0) );
+
+   color_out.a *= d * (1. - (random(pos) * 1.));
 
 #include "colorblind.glsl"
 }
