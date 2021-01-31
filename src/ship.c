@@ -409,7 +409,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    /* Copy over for target. */
    gl_getSpriteFromDir( &x, &y, temp->gfx_space, M_PI* 5./4. );
    rtemp.x = sw * x;
-   rtemp.y = sh * (temp->gfx_space->sy-y-1);
+   rtemp.y = sh * y;
    rtemp.w = sw;
    rtemp.h = sh;
    dstrect.x = 0;
