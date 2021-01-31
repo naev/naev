@@ -179,37 +179,3 @@ void save_reload (void)
    nsnprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
    load_gameFile( path );
 }
-
-
-/**
- * @brief Checks to see if there's a saved game available.
- *
- *    @return 1 if a saved game is available, 0 otherwise.
- */
-int save_hasSave (void)
-{
-   char **files;
-   size_t nfiles, i, len;
-   int has_save;
-
-   /* Look for saved games. */
-   files = nfile_readDir( &nfiles, nfile_dataPath(), "saves" );
-   has_save = 0;
-   for (i=0; i<nfiles; i++) {
-      len = strlen(files[i]);
-
-      /* no save extension */
-      if ((len >= 5) && (strcmp(&files[i][len-3],".ns")==0)) {
-         has_save = 1;
-         break;
-      }
-   }
-
-   /* Clean up. */
-   for (i=0; i<nfiles; i++)
-      free(files[i]);
-   free(files);
-
-   return has_save;
-}
-

@@ -17,6 +17,7 @@
 
 #include "menu.h"
 
+#include "array.h"
 #include "board.h"
 #include "camera.h"
 #include "comm.h"
@@ -243,7 +244,7 @@ void menu_main (void)
          "btnExit", _("Exit"), menu_exit, SDLK_x );
 
    /* Disable load button if there are no saves. */
-   if (!save_hasSave()) {
+   if (array_size( load_getList() ) == 0) {
       window_disableButton( wid, "btnLoad" );
       window_setFocus( wid, "btnNew" );
    }
