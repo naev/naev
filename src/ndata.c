@@ -133,7 +133,6 @@ int ndata_open (void)
  */
 void ndata_close (void)
 {
-   PHYSFS_deinit();
 }
 
 

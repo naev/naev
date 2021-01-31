@@ -478,13 +478,13 @@ int main( int argc, char** argv )
    /* Clean up parser. */
    xmlCleanupParser();
 
-   PHYSFS_deinit();
-
    /* Clean up signal handler. */
    debug_sigClose();
 
    /* Delete logs if empty. */
    log_clean();
+
+   PHYSFS_deinit();
 
    /* all is well */
    exit(EXIT_SUCCESS);
