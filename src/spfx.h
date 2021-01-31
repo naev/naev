@@ -75,6 +75,7 @@ void spfx_clear (void);
 void spfx_trail_create( Trail_spfx* );
 unsigned int spfx_trail_update( Trail_spfx* trail, double dt );
 void spfx_trail_grow( Trail_spfx* trail, Vector2d pos, glColour col  );
+void spfx_trail_clear( Trail_spfx* trail );
 void spfx_trail_remove( Trail_spfx* trail );
 
 
