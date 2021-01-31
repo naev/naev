@@ -11,7 +11,6 @@ void main(void) {
    color_out = pos.x*(c2-c1) + c1;
    color_out.a *= 1. - clamp( pos.y*pos.y, 0., 1.);
    t = pos.x*(t2-t1) + t1;
-   //color_out.a *= (1. - (now-t)/50000) * (1. - (now-t)/50000);
    color_out.a *= t;
 
 #include "colorblind.glsl"
