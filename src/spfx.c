@@ -72,7 +72,7 @@ static double haptic_lastUpdate  = 0.; /**< Timer to update haptic effect again.
 /*
  * Trail colours handling.
  */
-int trailTypes_load (void);
+static int trailTypes_load (void);
 
 
 /**
@@ -776,7 +776,7 @@ void spfx_render( const int layer )
  *
  *    @return 0 on success.
  */
-int trailTypes_load (void)
+static int trailTypes_load (void)
 {
    trailColour *tc;
    xmlNodePtr node, cur;
