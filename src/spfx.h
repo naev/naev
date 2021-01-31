@@ -35,7 +35,7 @@ typedef struct trailColour_ {
 typedef struct trailPoint_ {
    Vector2d p;    /**< Control points for the trail. */
    glColour c;   /**< Colour associated with the trail's control points. */
-   double t; /**< Timer. */
+   double t; /**< Timer, normalized to the time to live of the trail (starts at 1, ends at 0). */
 } trailPoint;
 
 
