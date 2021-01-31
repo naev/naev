@@ -273,6 +273,28 @@ static int ndata_enumerateCallback( void* data, const char* origdir, const char*
 
 
 /**
+ * @brief Backup a file, if it exists.
+ *
+ *    @param path PhysicsFS relative pathname to back up.
+ *    @return 0 on success, or if file does not exist, -1 on error.
+ */
+int ndata_backupIfExists( const char *path )
+{
+   char backup[ PATH_MAX ];
+
+   if ( path == NULL )
+      return -1;
+
+   if ( !PHYSFS_exists( path ) )
+      return 0;
+
+   nsnprintf(backup, PATH_MAX, "%s.backup", path);
+
+   return ndata_copyIfExists( path, backup );
+}
+
+
+/**
  * @brief Copy a file, if it exists.
  *
  *    @param file1 PhysicsFS relative pathname to copy from.
