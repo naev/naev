@@ -560,7 +560,7 @@ void spfx_trail_draw( const Vector2d *hpos, const glColour *hcol, const Trail_sp
    tp  = &trail->points[n-1];
    gl_gameToScreenCoords( &x1, &y1, hpos->x, hpos->y );
    gl_gameToScreenCoords( &x2, &y2, tp->p.x, tp->p.y );
-   gl_drawTrack( x1, y1, x2, y2, 1., tp->t, hcol, &tp->c, trail->thickness );
+   gl_drawTrack( x1, y1, x2, y2, 1., tp->t, hcol, &tp->c, trail->thickness*2. );
 
    /* Rest. */
    for (i=1; i<n; i++) {
@@ -568,7 +568,7 @@ void spfx_trail_draw( const Vector2d *hpos, const glColour *hcol, const Trail_sp
       tpp = &trail->points[i-1];
       gl_gameToScreenCoords( &x1, &y1,  tp->p.x,  tp->p.y );
       gl_gameToScreenCoords( &x2, &y2, tpp->p.x, tpp->p.y );
-      gl_drawTrack( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, trail->thickness );
+      gl_drawTrack( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, trail->thickness*2. );
    }
 }
 
