@@ -16,6 +16,7 @@
 
 #include "dev_outfit.h"
 
+#include "array.h"
 #include "damagetype.h"
 #include "log.h"
 #include "nstring.h"
@@ -27,11 +28,11 @@
  */
 void dout_csvBolt( const char *path )
 {
-   Outfit *o, *o_all;
-   int i, n, l;
+   const Outfit *o, *o_all;
+   int i, l;
    SDL_RWops *rw;
    char buf[ 1024 ];
-   Damage *dmg;
+   const Damage *dmg;
 
    /* File to output to. */
    rw = SDL_RWFromFile( path, "w" );
@@ -51,8 +52,8 @@ void dout_csvBolt( const char *path )
          );
    SDL_RWwrite( rw, buf, l, 1 );
 
-   o_all = outfit_getAll( &n );
-   for (i=0; i<n; i++) {
+   o_all = outfit_getAll();
+   for (i=0; i<array_size(o_all); i++) {
       o = &o_all[i];
 
       /* Only handle bolt weapons. */
@@ -87,11 +88,11 @@ void dout_csvBolt( const char *path )
  */
 void dout_csvBeam( const char *path )
 {
-   Outfit *o, *o_all;
-   int i, n, l;
+   const Outfit *o, *o_all;
+   int i, l;
    SDL_RWops *rw;
    char buf[ 1024 ];
-   Damage *dmg;
+   const Damage *dmg;
 
    /* File to output to. */
    rw = SDL_RWFromFile( path, "w" );
@@ -110,8 +111,8 @@ void dout_csvBeam( const char *path )
       );
    SDL_RWwrite( rw, buf, l, 1 );
 
-   o_all = outfit_getAll( &n );
-   for (i=0; i<n; i++) {
+   o_all = outfit_getAll();
+   for (i=0; i<array_size(o_all); i++) {
       o = &o_all[i];
 
       /* Only handle bolt weapons. */
@@ -144,8 +145,8 @@ void dout_csvBeam( const char *path )
  */
 void dout_csvLauncher( const char *path )
 {
-   Outfit *o, *o_all;
-   int i, n, l;
+   const Outfit *o, *o_all;
+   int i, l;
    SDL_RWops *rw;
    char buf[ 1024 ];
 
@@ -165,8 +166,8 @@ void dout_csvLauncher( const char *path )
          );
    SDL_RWwrite( rw, buf, l, 1 );
 
-   o_all = outfit_getAll( &n );
-   for (i=0; i<n; i++) {
+   o_all = outfit_getAll();
+   for (i=0; i<array_size(o_all); i++) {
       o = &o_all[i];
 
       /* Only handle launchers. */
@@ -196,12 +197,12 @@ void dout_csvLauncher( const char *path )
  */
 void dout_csvAmmo( const char *path )
 {
-   Outfit *o, *o_all;
-   int i, j, n, l;
+   const Outfit *o, *o_all;
+   int i, j, l;
    SDL_RWops *rw;
    char buf[ 1024 ];
    char *ai;
-   Damage *dmg;
+   const Damage *dmg;
 
    /* File to output to. */
    rw = SDL_RWFromFile( path, "w" );
@@ -220,8 +221,8 @@ void dout_csvAmmo( const char *path )
          );
    SDL_RWwrite( rw, buf, l, 1 );
 
-   o_all = outfit_getAll( &n );
-   for (i=0; i<n; i++) {
+   o_all = outfit_getAll();
+   for (i=0; i<array_size(o_all); i++) {
       o = &o_all[i];
 
       /* Only handle ammo. */
@@ -267,8 +268,8 @@ void dout_csvAmmo( const char *path )
  */
 void dout_csvMod( const char *path )
 {
-   Outfit *o, *o_all;
-   int i, n, l;
+   const Outfit *o, *o_all;
+   int i, l;
    SDL_RWops *rw;
    char buf[ 1024 ];
    ShipStats base, stats;
@@ -294,8 +295,8 @@ void dout_csvMod( const char *path )
 
    ss_statsInit( &base );
 
-   o_all = outfit_getAll( &n );
-   for (i=0; i<n; i++) {
+   o_all = outfit_getAll();
+   for (i=0; i<array_size(o_all); i++) {
       o = &o_all[i];
 
       /* Only handle modifications. */

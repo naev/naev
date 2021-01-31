@@ -21,6 +21,7 @@
 
 #include "nlua_var.h"
 
+#include "array.h"
 #include "log.h"
 #include "nluadef.h"
 #include "nstring.h"
@@ -53,8 +54,6 @@ typedef struct misn_var_ {
  * variable stack
  */
 static misn_var* var_stack = NULL; /**< Stack of mission variables. */
-static int var_nstack      = 0; /**< Number of mission variables. */
-static int var_mstack      = 0; /**< Memory size of the mission variable stack. */
 
 
 /*
@@ -104,7 +103,7 @@ int var_save( xmlTextWriterPtr writer )
 
    xmlw_startElem(writer,"vars");
 
-   for (i=0; i<var_nstack; i++) {
+   for (i=0; i<array_size(var_stack); i++) {
       xmlw_startElem(writer,"var");
 
       xmlw_attr(writer,"name","%s",var_stack[i].name);
@@ -199,22 +198,23 @@ int var_load( xmlNodePtr parent )
 static int var_add( misn_var *new_var )
 {
    int i;
+   misn_var *mv;
 
-   if (var_nstack+1 > var_mstack) { /* more memory */
-      var_mstack += 64; /* overkill ftw */
-      var_stack = realloc( var_stack, var_mstack * sizeof(misn_var) );
-   }
+   if (var_stack==NULL)
+      var_stack = array_create( misn_var );
 
    /* check if already exists */
-   for (i=0; i<var_nstack; i++)
+   for (i=0; i<array_size(var_stack); i++) {
       if (strcmp(new_var->name,var_stack[i].name)==0) { /* overwrite */
          var_free( &var_stack[i] );
          var_stack[i] = *new_var;
          return 0;
       }
+   }
 
-   var_stack[var_nstack] = *new_var;
-   var_nstack++;
+   /* need new one. */
+   mv = &array_grow( &var_stack );
+   *mv = *new_var;
 
    return 0;
 }
@@ -249,7 +249,7 @@ int var_checkflag( char* str )
 {
    int i;
 
-   for (i=0; i<var_nstack; i++)
+   for (i=0; i<array_size(var_stack); i++)
       if (strcmp(var_stack[i].name,str)==0)
          return 1;
    return 0;
@@ -270,7 +270,7 @@ static int var_peek( lua_State *L )
    /* Get the parameter. */
    str = luaL_checkstring(L,1);
 
-   for (i=0; i<var_nstack; i++)
+   for (i=0; i<array_size(var_stack); i++)
       if (strcmp(str,var_stack[i].name)==0) {
          switch (var_stack[i].type) {
             case MISN_VAR_NIL:
@@ -308,11 +308,10 @@ static int var_pop( lua_State *L )
 
    str = luaL_checkstring(L,1);
 
-   for (i=0; i<var_nstack; i++)
+   for (i=0; i<array_size(var_stack); i++)
       if (strcmp(str,var_stack[i].name)==0) {
          var_free( &var_stack[i] );
-         memmove( &var_stack[i], &var_stack[i+1], sizeof(misn_var)*(var_nstack-i-1) );
-         var_nstack--;
+         array_erase( &var_stack, &var_stack[i], &var_stack[i+1] );
          return 0;
       }
 
@@ -391,12 +390,11 @@ static void var_free( misn_var* var )
 void var_cleanup (void)
 {
    int i;
-   for (i=0; i<var_nstack; i++)
+
+   for (i=0; i<array_size(var_stack); i++)
       var_free( &var_stack[i] );
 
-   free( var_stack );
+   array_free( var_stack );
    var_stack   = NULL;
-   var_nstack  = 0;
-   var_mstack  = 0;
 }
 

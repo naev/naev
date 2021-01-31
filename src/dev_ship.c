@@ -17,6 +17,7 @@
 
 #include "dev_ship.h"
 
+#include "array.h"
 #include "log.h"
 #include "nstring.h"
 #include "ship.h"
@@ -27,8 +28,8 @@
  */
 void dship_csv( const char *path )
 {
-   Ship *s, *s_all;
-   int i, n, l;
+   const Ship *s, *s_all;
+   int i, l;
    SDL_RWops *rw;
    char buf[ 1024 ];
 
@@ -52,8 +53,8 @@ void dship_csv( const char *path )
          );
    SDL_RWwrite( rw, buf, l, 1 );
 
-   s_all = ship_getAll( &n );
-   for (i=0; i<n; i++) {
+   s_all = ship_getAll();
+   for (i=0; i<array_size(s_all); i++) {
       s = &s_all[i];
 
       l = nsnprintf( buf, sizeof(buf),
@@ -87,8 +88,8 @@ void dship_csv( const char *path )
  */
 void dship_csvStat( const char *path )
 {
-   Ship *s, *s_all;
-   int i, n, l;
+   const Ship *s, *s_all;
+   int i, l;
    SDL_RWops *rw;
    char buf[1024];
 
@@ -106,8 +107,8 @@ void dship_csvStat( const char *path )
    l += ss_csv( NULL, &buf[l], sizeof(buf) - l );
    SDL_RWwrite( rw, buf, l, 1 );
 
-   s_all = ship_getAll( &n );
-   for (i=0; i<n; i++) {
+   s_all = ship_getAll();
+   for (i=0; i<array_size(s_all); i++) {
       s = &s_all[i];
 
       /* Prepend name. */

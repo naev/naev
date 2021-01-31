@@ -196,6 +196,7 @@ and %s in the %s system."]]),
       vn.label( "accept" )
       vn.func( function ()
          misn.accept()
+         misn.setDesc( misn_desc )
          misn_state = 0
          shiplog.appendLog( logidstr, _("You agreed to continue helping Maikki find her father. She told you to try to find hints from three Za'lek researchers.") )
       end )
@@ -365,6 +366,12 @@ end
 
 
 function approach_hint1 ()
+   if not visitedhint1 then
+      visitedhint1 = true
+      misn.markerRm( markerhint1 )
+      visited()
+   end
+
    vn.clear()
    vn.scene()
    local prof = vn.newCharacter( hint1_name, { image=hint1_image, color=hint1_colour } )
@@ -386,16 +393,16 @@ Their excitement grows.]]))
 
    vn.fadeout()
    vn.run()
-
-   if not visitedhint1 then
-      visitedhint1 = true
-      misn.markerRm( markerhint1 )
-      visited()
-   end
 end
 
 
 function approach_hint2 ()
+   if not visitedhint2 then
+      visitedhint2 = true
+      misn.markerRm( markerhint2 )
+      visited()
+   end
+
    vn.clear()
    vn.scene()
    local prof = vn.newCharacter( hint2_name, { image=hint2_image, color=hint2_colour } )
@@ -420,16 +427,16 @@ They shudder when they says the word "work packages".]]))
 
    vn.fadeout()
    vn.run()
-
-   if not visitedhint2 then
-      visitedhint2 = true
-      misn.markerRm( markerhint2 )
-      visited()
-   end
 end
 
 
 function approach_hint3 ()
+   if not visitedhint3 then
+      visitedhint3 = true
+      misn.markerRm( markerhint3 )
+      visited()
+   end
+
    vn.clear()
    vn.scene()
    local prof = vn.newCharacter( hint3_name, { image=hint3_image, color=hint3_colour } )
@@ -451,12 +458,6 @@ function approach_hint3 ()
 
    vn.fadeout()
    vn.run()
-
-   if not visitedhint3 then
-      visitedhint3 = true
-      misn.markerRm( markerhint3 )
-      visited()
-   end
 end
 
 
@@ -595,9 +596,9 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      local fdrone = faction.dynAdd( "Independent", "Feral Drone", "Feral Drone" )
+      local fdrone = faction.dynAdd( "Independent", "Feral Drone", _("Feral Drone"), "drone_miner" )
       local function spawn_single( ship, pos )
-         local p = pilot.addRaw( ship, "drone_miner", pos, "Feral Drone" )
+         local p = pilot.add( ship, "Feral Drone", pos )
          p:setNoJump(true)
          p:setNoLand(true)
          return p
@@ -645,8 +646,7 @@ function ecc_dist ()
       defense_systems = {}
       for k,v in ipairs(spawners) do
          local pos = eccpos + vec2.newP( rnd.rnd(0,100), rnd.rnd(0,359) )
-         local p = pilot.addRaw( v, "zalek", pos, "Strangelove" )
-         p:rename(_("Security Drone"))
+         local p = pilot.add( v, "Strangelove", pos, _("Security Drone") )
          p:control()
          p:setHostile()
          p:attack( pp )

@@ -419,12 +419,6 @@ static int misn_markerMove( lua_State *L )
 
    cur_mission = misn_getFromLua(L);
 
-   /* Mission must have markers. */
-   if (cur_mission->markers == NULL) {
-      NLUA_ERROR( L, _("Mission has no markers set!") );
-      return 0;
-   }
-
    /* Check id. */
    marker = NULL;
    n = array_size( cur_mission->markers );
@@ -466,12 +460,6 @@ static int misn_markerRm( lua_State *L )
    id    = luaL_checkinteger( L, 1 );
 
    cur_mission = misn_getFromLua(L);
-
-   /* Mission must have markers. */
-   if (cur_mission->markers == NULL) {
-      /* Already removed. */
-      return 0;
-   }
 
    /* Check id. */
    marker = NULL;

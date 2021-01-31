@@ -81,12 +81,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
    double time;
    Outfit *o;
 
-   /* Case no outfits. */
-   if (ws->slots == NULL)
-      return 0;
-
-   /* Fire. */
-   ret    = 0;
+   ret = 0;
    for (i=0; i<array_size(ws->slots); i++) {
       o = ws->slots[i].slot->outfit;
 
@@ -290,9 +285,8 @@ static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws )
    for (i=0; i<p->noutfits; i++)
       p->outfits[i]->level = -1;
 
-   if (ws->slots != NULL)
-      for (i=0; i<array_size(ws->slots); i++)
-         ws->slots[i].slot->level = ws->slots[i].level;
+   for (i=0; i<array_size(ws->slots); i++)
+      ws->slots[i].slot->level = ws->slots[i].level;
 }
 
 
@@ -327,10 +321,6 @@ void pilot_weapSetType( Pilot* p, int id, int type )
    ws->type = type;
 
    /* Set levels just in case. */
-   if (ws->slots == NULL)
-      return;
-
-   /* See if we must overwrite levels. */
    if ((ws->type == WEAPSET_TYPE_WEAPON) ||
          (ws->type == WEAPSET_TYPE_ACTIVE))
       for (i=0; i<array_size(ws->slots); i++)
@@ -375,7 +365,7 @@ const char *pilot_weapSetName( Pilot* p, int id )
 {
    PilotWeaponSet *ws;
    ws = pilot_weapSet(p,id);
-   if ((ws->slots == NULL) || (array_size(ws->slots)==0))
+   if (array_size(ws->slots)==0)
       return _("Unused");
    switch (ws->type) {
       case WEAPSET_TYPE_CHANGE: return _("Weapons - Switched");  break;
@@ -495,12 +485,7 @@ void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o )
    PilotWeaponSet *ws;
    int i, j;
 
-   /* Make sure it has slots. */
    ws = pilot_weapSet(p,id);
-   if (ws->slots == NULL)
-      return;
-
-   /* Find the slot. */
    for (i=0; i<array_size(ws->slots); i++) {
       if (ws->slots[i].slot != o)
          continue;
@@ -541,12 +526,7 @@ int pilot_weapSetCheck( Pilot* p, int id, PilotOutfitSlot *o )
    PilotWeaponSet *ws;
    int i;
 
-   /* Make sure it has slots. */
    ws = pilot_weapSet(p,id);
-   if (ws->slots == NULL)
-      return -1;
-
-   /* Find the slot. */
    for (i=0; i<array_size(ws->slots); i++)
       if (ws->slots[i].slot == o)
          return ws->slots[i].level;
@@ -569,15 +549,6 @@ static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
    int range_num[PILOT_WEAPSET_MAX_LEVELS];
    double speed_accum[PILOT_WEAPSET_MAX_LEVELS];
    int speed_num[PILOT_WEAPSET_MAX_LEVELS];
-
-   /* No slots. */
-   if (ws->slots == NULL) {
-      for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++) {
-         ws->range[i] = 0.;
-         ws->speed[i] = 0.;
-      }
-      return;
-   }
 
    /* Calculate ranges. */
    for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++) {
@@ -730,11 +701,6 @@ PilotWeaponSetOutfit* pilot_weapSetList( Pilot* p, int id, int *n )
    PilotWeaponSet *ws;
 
    ws = pilot_weapSet(p,id);
-   if (ws->slots == NULL) {
-      *n = 0;
-      return NULL;
-   }
-
    *n = array_size(ws->slots);
    return ws->slots;
 }
@@ -786,10 +752,6 @@ void pilot_shootStop( Pilot* p, int level )
 
    /* Get active set. */
    ws = pilot_weapSet( p, p->active_set );
-
-   /* Case no outfits. */
-   if (ws->slots == NULL)
-      return;
 
    /* Stop all beams. */
    recalc = 0;
@@ -1367,9 +1329,6 @@ void pilot_weaponSafe( Pilot *p )
 
    for (j=0; j<PILOT_WEAPON_SETS; j++) {
       ws = &p->weapon_sets[j];
-      if (ws->slots == NULL)
-         continue;
-
       l = array_size(ws->slots);
       n = 0;
       for (i=0; i<l; i++) {

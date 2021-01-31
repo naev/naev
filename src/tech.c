@@ -182,15 +182,13 @@ void tech_free (void)
 {
    int i, s;
 
-   if (tech_groups != NULL) {
-      /* Free all individual techs. */
-      s = array_size( tech_groups );
-      for (i=0; i<s; i++)
-         tech_freeGroup( &tech_groups[i] );
+   /* Free all individual techs. */
+   s = array_size( tech_groups );
+   for (i=0; i<s; i++)
+      tech_freeGroup( &tech_groups[i] );
 
-      /* Free the tech array. */
-      array_free( tech_groups );
-   }
+   /* Free the tech array. */
+   array_free( tech_groups );
 }
 
 
@@ -583,10 +581,6 @@ static int tech_getID( const char *name )
    int i, s;
    tech_group_t *tech;
 
-   /* NULL case. */
-   if (tech_groups == NULL)
-      return -1;
-
    s  = array_size( tech_groups );
    for (i=0; i<s; i++) {
       tech  = &tech_groups[i];
@@ -665,10 +659,6 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group
 {
    int i, j, size, f;
    tech_item_t *item;
-
-   /* Must have items. */
-   if (tech->items == NULL)
-      return items;
 
    /* Comfort. */
    size  = array_size( tech->items );

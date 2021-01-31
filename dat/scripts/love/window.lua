@@ -59,7 +59,10 @@ function window.getDesktopDimensions() return naev.gfx.dim() end
 --function window.getDimensions() return love.w, love.h end -- Removed in Love2D 10.0
 function window.getWidth() return love.w end
 function window.getHeight() return love.h end
-function window.getDPIScale() return 1 end -- TODO return scaling factor?
+function window.getDPIScale()
+   local w,h,scale = naev.gfx.dim()
+   return scale
+end
 function window.getMode()
    return love.w, love.h, { fullscreen=love.fullscreen, vsync=1, resizeable=false, borderless = false, centered=true, display=1, msaa=0 }
 end

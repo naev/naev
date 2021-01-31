@@ -94,7 +94,6 @@ static int gui_getMessage     = 1; /**< Whether or not the player should receive
  * pilot stuff for GUI
  */
 extern Pilot** pilot_stack; /**< @todo remove */
-extern int pilot_nstack; /**< @todo remove */
 
 
 extern unsigned int land_wid; /**< From land.c */
@@ -729,7 +728,7 @@ static void gui_renderBorder( double dt )
    }
 
    /* Draw pilots. */
-   for (i=1; i<pilot_nstack; i++) { /* skip the player */
+   for (i=1; i<array_size(pilot_stack); i++) { /* skip the player */
       plt = pilot_stack[i];
 
       /* See if in sensor range. */
@@ -1088,9 +1087,9 @@ void gui_radarRender( double x, double y )
          radar->shape, 1.-interference_alpha );
 
 
-   /* render the pilot_nstack */
+   /* render the pilot */
    j = 0;
-   for (i=1; i<pilot_nstack; i++) { /* skip the player */
+   for (i=1; i<array_size(pilot_stack); i++) { /* skip the player */
       if (pilot_stack[i]->id == player.p->target)
          j = i;
       else

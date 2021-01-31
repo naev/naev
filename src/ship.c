@@ -117,11 +117,10 @@ const char *ship_existsCase( const char* name )
 
 
 /**
- * @brief Gets all the ships.
+ * @brief Gets the array (array.h) of all ships.
  */
-Ship* ship_getAll( int *n )
+const Ship* ship_getAll (void)
 {
-   *n = array_size(ship_stack);
    return ship_stack;
 }
 
@@ -160,7 +159,7 @@ int ship_compareTech( const void *arg1, const void *arg2 )
  *    @param s Ship to get the class name from.
  *    @return The human readable class name.
  */
-char* ship_class( Ship* s )
+const char* ship_class( const Ship* s )
 {
    switch (s->class) {
       case SHIP_CLASS_NULL:
@@ -410,7 +409,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    /* Copy over for target. */
    gl_getSpriteFromDir( &x, &y, temp->gfx_space, M_PI* 5./4. );
    rtemp.x = sw * x;
-   rtemp.y = sh * (temp->gfx_space->sy-y-1);
+   rtemp.y = sh * y;
    rtemp.w = sw;
    rtemp.h = sh;
    dstrect.x = 0;
@@ -428,7 +427,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 
    /* Load the store surface. */
    nsnprintf( buf, sizeof(buf), "%s_gfx_store.png", temp->name );
-   temp->gfx_store = gl_loadImagePad( buf, gfx_store, 0, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
+   temp->gfx_store = gl_loadImagePad( buf, gfx_store, OPENGL_TEX_VFLIP, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
 
 #if 0 /* Disabled for now due to issues with larger sprites. */
    /* Some filtering. */
@@ -463,7 +462,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 
    /* Load the surface. */
    nsnprintf( buf, sizeof(buf), "%s_gfx_target.png", temp->name );
-   temp->gfx_target = gl_loadImagePad( buf, gfx, 0, sw, sh, 1, 1, 1 );
+   temp->gfx_target = gl_loadImagePad( buf, gfx, OPENGL_TEX_VFLIP, sw, sh, 1, 1, 1 );
 
    return 0;
 }

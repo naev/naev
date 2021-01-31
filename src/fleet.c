@@ -82,9 +82,7 @@ unsigned int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
    p = pilot_create( plt->ship,
          _(plt->name), /* Currently, FleetPilots come from static XML in English, but Pilots have translated names. */
          flt->faction,
-         (ai != NULL) ? ai :
-               (plt->ai != NULL) ? plt->ai :
-                     flt->ai,
+         (ai != NULL) ? ai : flt->ai,
          dir,
          pos,
          vel,
@@ -166,9 +164,6 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
                /* Check for name override */
                xmlr_attr(cur,"name",c);
                pilot->name = c; /* No need to free since it will have to later */
-
-               /* Check for AI override */
-               xmlr_attr(cur,"ai",pilot->ai);
 
                /* Load pilot's ship */
                xmlr_attr(cur,"ship",c);
@@ -281,10 +276,8 @@ void fleet_free (void)
    /* Free the fleet stack. */
    if (fleet_stack != NULL) {
       for (i=0; i<nfleets; i++) {
-         for (j=0; j<fleet_stack[i].npilots; j++) {
+         for (j=0; j<fleet_stack[i].npilots; j++)
             free(fleet_stack[i].pilots[j].name);
-            free(fleet_stack[i].pilots[j].ai);
-         }
          free(fleet_stack[i].name);
          free(fleet_stack[i].pilots);
          free(fleet_stack[i].ai);

@@ -490,7 +490,6 @@ void ovr_render( double dt )
    int i, j;
    Pilot **pstk;
    AsteroidAnchor *ast;
-   int n;
    double w, h, res;
    double x,y;
 
@@ -526,9 +525,9 @@ void ovr_render( double dt )
       gui_renderJumpPoint( player.p->nav_hyperspace, RADAR_RECT, w, h, res, 1 );
 
    /* Render pilots. */
-   pstk  = pilot_getAll( &n );
+   pstk  = pilot_getAll();
    j     = 0;
-   for (i=0; i<n; i++) {
+   for (i=0; i<array_size(pstk); i++) {
       if (pstk[i]->id == PLAYER_ID) /* Skip player. */
          continue;
       if (pstk[i]->id == player.p->target)
@@ -573,9 +572,6 @@ static void ovr_mrkRenderAll( double res )
    int i;
    ovr_marker_t *mrk;
    double x, y;
-
-   if (ovr_markers == NULL)
-      return;
 
    for (i=0; i<array_size(ovr_markers); i++) {
       mrk = &ovr_markers[i];
@@ -680,8 +676,6 @@ unsigned int ovr_mrkAddPoint( const char *text, double x, double y )
 void ovr_mrkRm( unsigned int id )
 {
    int i;
-   if (ovr_markers == NULL)
-      return;
    for (i=0; i<array_size(ovr_markers); i++) {
       if (id!=ovr_markers[i].id)
          continue;

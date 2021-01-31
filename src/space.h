@@ -14,7 +14,6 @@ typedef struct JumpPoint_ JumpPoint;
 #include "commodity.h"
 #include "explosion.h"
 #include "faction.h"
-#include "fleet.h"
 #include "mission.h"
 #include "opengl.h"
 #include "pilot.h"
@@ -313,11 +312,6 @@ struct StarSystem_ {
    AsteroidExclusion *astexclude; /**< Asteroid exclusion zones in the system */
    int nastexclude; /**< number of asteroid exclusion zones */
 
-   /* Fleets. */
-   Fleet** fleets; /**< fleets that can appear in the current system */
-   int nfleets; /**< total number of fleets */
-   double avg_pilot; /**< Target amount of pilots in the system. */
-
    /* Calculated. */
    double *prices; /**< Handles the prices in the system. */
 
@@ -360,7 +354,7 @@ Planet *planet_new (void);
 void planet_gfxLoad( Planet *p );
 int planet_hasSystem( const char* planetname );
 char* planet_getSystem( const char* planetname );
-Planet* planet_getAll( int *n );
+Planet* planet_getAll (void);
 Planet* planet_get( const char* planetname );
 Planet* planet_getIndex( int ind );
 void planet_setKnown( Planet *p );
@@ -402,8 +396,6 @@ int system_rmPlanet( StarSystem *sys, const char *planetname );
 int system_addJump( StarSystem *sys, xmlNodePtr node );
 int system_addJumpDiff( StarSystem *sys, xmlNodePtr node );
 int system_rmJump( StarSystem *sys, const char *jumpname );
-int system_addFleet( StarSystem *sys, Fleet *fleet );
-int system_rmFleet( StarSystem *sys, Fleet *fleet );
 
 /*
  * render
@@ -436,7 +428,7 @@ void space_gfxUnload( StarSystem *sys );
 /*
  * Getting stuff.
  */
-StarSystem* system_getAll( int *nsys );
+StarSystem* system_getAll (void);
 int system_exists( const char* sysname );
 const char *system_existsCase( const char* sysname );
 char **system_searchFuzzyCase( const char* sysname, int *n );

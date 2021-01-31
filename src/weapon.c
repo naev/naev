@@ -21,6 +21,7 @@
 
 #include "weapon.h"
 
+#include "array.h"
 #include "ai.h"
 #include "camera.h"
 #include "collision.h"
@@ -50,7 +51,6 @@
  * pilot stuff
  */
 extern Pilot** pilot_stack;
-extern int pilot_nstack;
 
 
 /**
@@ -90,19 +90,15 @@ typedef struct Weapon_ {
 } Weapon;
 
 
-/* behind pilot_nstack layer */
+/* behind player layer */
 static Weapon** wbackLayer = NULL; /**< behind pilots */
-static int nwbackLayer = 0; /**< number of elements */
-static int mwbacklayer = 0; /**< alloced memory size */
 /* behind player layer */
 static Weapon** wfrontLayer = NULL; /**< in front of pilots, behind player */
-static int nwfrontLayer = 0; /**< number of elements */
-static int mwfrontLayer = 0; /**< alloced memory size */
 
 /* Graphics. */
 static gl_vbo  *weapon_vbo     = NULL; /**< Weapon VBO. */
 static GLfloat *weapon_vboData = NULL; /**< Data of weapon VBO. */
-static int weapon_vboSize      = 0; /**< Size of the VBO. */
+static size_t weapon_vboSize   = 0; /**< Size of the VBO. */
 
 
 /* Internal stuff. */
@@ -152,6 +148,13 @@ static void weapon_setThrust( Weapon *w, double thrust );
 static void weapon_setTurn( Weapon *w, double turn );
 
 
+void weapon_init (void)
+{
+   wfrontLayer = array_create(Weapon*);
+   wbackLayer  = array_create(Weapon*);
+}
+
+
 /**
  * @brief Draws the minimap weapons (used in player.c).
  *
@@ -181,7 +184,7 @@ void weapon_minimap( const double res, const double w,
       rc = 0;
 
    /* Draw the points for weapons on all layers. */
-   for (i=0; i<nwbackLayer; i++) {
+   for (i=0; i<array_size(wbackLayer); i++) {
       wp = wbackLayer[i];
 
       /* Make sure is in range. */
@@ -227,7 +230,7 @@ void weapon_minimap( const double res, const double w,
       /* "Add" pixel. */
       p++;
    }
-   for (i=0; i<nwfrontLayer; i++) {
+   for (i=0; i<array_size(wfrontLayer); i++) {
       wp = wfrontLayer[i];
 
       /* Make sure is in range. */
@@ -318,7 +321,7 @@ static void think_seeker( Weapon* w, const double dt )
    if (w->target == w->parent)
       return; /* no self shooting */
 
-   p = pilot_get(w->target); /* no null pilot_nstack */
+   p = pilot_get(w->target); /* no null pilot */
    if (p==NULL) {
       weapon_setThrust( w, 0. );
       weapon_setTurn( w, 0. );
@@ -471,7 +474,6 @@ void weapons_update( const double dt )
 static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 {
    Weapon **wlayer;
-   int *nlayer;
    Weapon *w;
    int i;
    int spfx;
@@ -482,11 +484,9 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
    switch (layer) {
       case WEAPON_LAYER_BG:
          wlayer = wbackLayer;
-         nlayer = &nwbackLayer;
          break;
       case WEAPON_LAYER_FG:
          wlayer = wfrontLayer;
-         nlayer = &nwfrontLayer;
          break;
 
       default:
@@ -495,7 +495,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
    }
 
    i = 0;
-   while (i < *nlayer) {
+   while (i < array_size(wlayer)) {
       w = wlayer[i];
 
       switch (w->outfit->type) {
@@ -591,13 +591,13 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
       }
 
       /* Out of bounds, loop is over. */
-      if (i >= *nlayer)
+      if (i >= array_size(wlayer))
          break;
 
       /* Only increment if weapon wasn't deleted. */
       if (w == wlayer[i]) {
          weapon_update(w,dt,layer);
-         if ((i < *nlayer) && (w == wlayer[i]))
+         if ((i < array_size(wlayer)) && (w == wlayer[i]))
             i++;
       }
    }
@@ -613,17 +613,14 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 void weapons_render( const WeaponLayer layer, const double dt )
 {
    Weapon** wlayer;
-   int* nlayer;
    int i;
 
    switch (layer) {
       case WEAPON_LAYER_BG:
          wlayer = wbackLayer;
-         nlayer = &nwbackLayer;
          break;
       case WEAPON_LAYER_FG:
          wlayer = wfrontLayer;
-         nlayer = &nwfrontLayer;
          break;
 
       default:
@@ -631,7 +628,7 @@ void weapons_render( const WeaponLayer layer, const double dt )
          return;
    }
 
-   for (i=0; i<(*nlayer); i++)
+   for (i=0; i<array_size(wlayer); i++)
       weapon_render( wlayer[i], dt );
 }
 
@@ -875,7 +872,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
    }
 
-   for (i=0; i<pilot_nstack; i++) {
+   for (i=0; i<array_size(pilot_stack); i++) {
       p = pilot_stack[i];
 
       psx = pilot_stack[i]->tsx;
@@ -1050,7 +1047,7 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
          ai_attacked( p, shooter->id, dmg );
 
          /* Trigger a pseudo-distress that incurs no faction loss. */
-         for (i=0; i<pilot_nstack; i++) {
+         for (i=0; i<array_size(pilot_stack); i++) {
             /* Skip if unsuitable. */
             if ((pilot_stack[i]->ai == NULL) || (pilot_stack[i]->id == p->id) ||
                   (pilot_isFlag(pilot_stack[i], PILOT_DEAD)) ||
@@ -1626,10 +1623,9 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
       const Pilot *parent, unsigned int target, double time )
 {
    WeaponLayer layer;
-   Weapon *w;
-   Weapon **curLayer;
-   int *mLayer, *nLayer;
+   Weapon *w, **m;
    GLsizei size;
+   size_t bufsize;
 
    if (!outfit_isBolt(outfit) &&
          !outfit_isLauncher(outfit)) {
@@ -1643,41 +1639,22 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
    /* set the proper layer */
    switch (layer) {
       case WEAPON_LAYER_BG:
-         curLayer = wbackLayer;
-         nLayer = &nwbackLayer;
-         mLayer = &mwbacklayer;
+         m = &array_grow(&wbackLayer);
          break;
       case WEAPON_LAYER_FG:
-         curLayer = wfrontLayer;
-         nLayer = &nwfrontLayer;
-         mLayer = &mwfrontLayer;
+         m = &array_grow(&wfrontLayer);
          break;
 
       default:
          WARN(_("Unknown weapon layer!"));
          return;
    }
+   *m = w;
 
-   if (*mLayer > *nLayer) /* more memory alloced than needed */
-      curLayer[(*nLayer)++] = w;
-   else { /* need to allocate more memory */
-      if ((*mLayer) == 0)
-         (*mLayer) = WEAPON_CHUNK_MIN;
-      else
-         (*mLayer) += MIN( (*mLayer), WEAPON_CHUNK_MAX );
-
-      switch (layer) {
-         case WEAPON_LAYER_BG:
-            curLayer   = wbackLayer = realloc(curLayer, (*mLayer)*sizeof(Weapon*));
-            break;
-         case WEAPON_LAYER_FG:
-            curLayer   = wfrontLayer = realloc(curLayer, (*mLayer)*sizeof(Weapon*));
-            break;
-      }
-      curLayer[(*nLayer)++] = w;
-
-      /* Grow the vertex stuff. */
-      weapon_vboSize = mwfrontLayer + mwbacklayer;
+   /* Grow the vertex stuff if needed. */
+   bufsize = array_reserved(wfrontLayer) + array_reserved(wbackLayer);
+   if (bufsize != weapon_vboSize) {
+      weapon_vboSize = bufsize;
       size = sizeof(GLfloat) * (2+4) * weapon_vboSize;
       weapon_vboData = realloc( weapon_vboData, size );
       if (weapon_vbo == NULL)
@@ -1707,10 +1684,9 @@ unsigned int beam_start( const Outfit* outfit,
       PilotOutfitSlot *mount )
 {
    WeaponLayer layer;
-   Weapon *w;
-   Weapon **curLayer;
-   int *mLayer, *nLayer;
+   Weapon *w, **m;
    GLsizei size;
+   size_t bufsize;
 
    if (!outfit_isBeam(outfit)) {
       ERR(_("Trying to create a Beam Weapon from a non-beam outfit."));
@@ -1726,41 +1702,22 @@ unsigned int beam_start( const Outfit* outfit,
    /* set the proper layer */
    switch (layer) {
       case WEAPON_LAYER_BG:
-         curLayer = wbackLayer;
-         nLayer = &nwbackLayer;
-         mLayer = &mwbacklayer;
+         m = &array_grow(&wbackLayer);
          break;
       case WEAPON_LAYER_FG:
-         curLayer = wfrontLayer;
-         nLayer = &nwfrontLayer;
-         mLayer = &mwfrontLayer;
+         m = &array_grow(&wfrontLayer);
          break;
 
       default:
          ERR(_("Invalid WEAPON_LAYER specified"));
          return -1;
    }
+   *m = w;
 
-   if (*mLayer > *nLayer) /* more memory alloced than needed */
-      curLayer[(*nLayer)++] = w;
-   else { /* need to allocate more memory */
-      if ((*mLayer) == 0)
-         (*mLayer) = WEAPON_CHUNK_MIN;
-      else
-         (*mLayer) += MIN( (*mLayer), WEAPON_CHUNK_MAX );
-
-      switch (layer) {
-         case WEAPON_LAYER_BG:
-            curLayer = wbackLayer = realloc(curLayer, (*mLayer)*sizeof(Weapon*));
-            break;
-         case WEAPON_LAYER_FG:
-            curLayer = wfrontLayer = realloc(curLayer, (*mLayer)*sizeof(Weapon*));
-            break;
-      }
-      curLayer[(*nLayer)++] = w;
-
-      /* Grow the vertex stuff. */
-      weapon_vboSize = mwfrontLayer + mwbacklayer;
+   /* Grow the vertex stuff if needed. */
+   bufsize = array_reserved(wfrontLayer) + array_reserved(wbackLayer);
+   if (bufsize != weapon_vboSize) {
+      weapon_vboSize = bufsize;
       size = sizeof(GLfloat) * (2+4) * weapon_vboSize;
       weapon_vboData = realloc( weapon_vboData, size );
       if (weapon_vbo == NULL)
@@ -1783,7 +1740,6 @@ void beam_end( const unsigned int parent, unsigned int beam )
    int i;
    WeaponLayer layer;
    Weapon **curLayer;
-   int *nLayer;
 
    layer = (parent==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
 
@@ -1791,11 +1747,9 @@ void beam_end( const unsigned int parent, unsigned int beam )
    switch (layer) {
       case WEAPON_LAYER_BG:
          curLayer = wbackLayer;
-         nLayer = &nwbackLayer;
          break;
       case WEAPON_LAYER_FG:
          curLayer = wfrontLayer;
-         nLayer = &nwfrontLayer;
          break;
 
       default:
@@ -1805,7 +1759,7 @@ void beam_end( const unsigned int parent, unsigned int beam )
 
 
    /* Now try to destroy the beam. */
-   for (i=0; i<*nLayer; i++) {
+   for (i=0; i<array_size(curLayer); i++) {
       if (curLayer[i]->ID == beam) { /* Found it. */
          weapon_destroy(curLayer[i], layer);
          break;
@@ -1824,16 +1778,13 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
 {
    int i;
    Weapon** wlayer;
-   int *nlayer;
 
    switch (layer) {
       case WEAPON_LAYER_BG:
          wlayer = wbackLayer;
-         nlayer = &nwbackLayer;
          break;
       case WEAPON_LAYER_FG:
          wlayer = wfrontLayer;
-         nlayer = &nwfrontLayer;
          break;
 
       default:
@@ -1841,18 +1792,14 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
          return;
    }
 
-   for (i=0; (wlayer[i] != w) && (i < *nlayer); i++); /* get to the current position */
-   if (i >= *nlayer) {
+   for (i=0; (wlayer[i] != w) && (i < array_size(wlayer)); i++); /* get to the current position */
+   if (i >= array_size(wlayer)) {
       WARN(_("Trying to destroy weapon not found in stack!"));
       return;
    }
 
    weapon_free(wlayer[i]);
-   wlayer[i] = NULL;
-   (*nlayer)--;
-
-   for ( ; i < (*nlayer); i++)
-      wlayer[i] = wlayer[i+1];
+   array_erase( &wlayer, &wlayer[i], &wlayer[i+1] );
 }
 
 
@@ -1901,16 +1848,16 @@ void weapon_clear (void)
 {
    int i;
    /* Don't forget to stop the sounds. */
-   for (i=0; i < nwbackLayer; i++) {
+   for (i=0; i < array_size(wbackLayer); i++) {
       sound_stop(wbackLayer[i]->voice);
       weapon_free(wbackLayer[i]);
    }
-   nwbackLayer = 0;
-   for (i=0; i < nwfrontLayer; i++) {
+   array_erase( &wbackLayer, array_begin(wbackLayer), array_end(wbackLayer) );
+   for (i=0; i < array_size(wfrontLayer); i++) {
       sound_stop(wfrontLayer[i]->voice);
       weapon_free(wfrontLayer[i]);
    }
-   nwfrontLayer = 0;
+   array_erase( &wfrontLayer, array_begin(wfrontLayer), array_end(wfrontLayer) );
 }
 
 /**
@@ -1921,14 +1868,10 @@ void weapon_exit (void)
    weapon_clear();
 
    /* Destroy front layer. */
-   free(wbackLayer);
-   wbackLayer  = NULL;
-   mwbacklayer = 0;
+   array_free(wbackLayer);
 
    /* Destroy back layer. */
-   free(wfrontLayer);
-   wfrontLayer  = NULL;
-   mwfrontLayer = 0;
+   array_free(wfrontLayer);
 
    /* Destroy VBO. */
    free( weapon_vboData );
@@ -1962,18 +1905,15 @@ static void weapon_explodeLayer( WeaponLayer layer,
    (void)parent;
    int i;
    Weapon **curLayer;
-   int *nLayer;
    double dist, rad2;
 
    /* set the proper layer */
    switch (layer) {
       case WEAPON_LAYER_BG:
          curLayer = wbackLayer;
-         nLayer = &nwbackLayer;
          break;
       case WEAPON_LAYER_FG:
          curLayer = wfrontLayer;
-         nLayer = &nwfrontLayer;
          break;
 
       default:
@@ -1984,7 +1924,7 @@ static void weapon_explodeLayer( WeaponLayer layer,
    rad2 = radius*radius;
 
    /* Now try to destroy the weapons affected. */
-   for (i=0; i<*nLayer; i++) {
+   for (i=0; i<array_size(curLayer); i++) {
       if (((mode & EXPL_MODE_MISSILE) && outfit_isAmmo(curLayer[i]->outfit)) ||
             ((mode & EXPL_MODE_BOLT) && outfit_isBolt(curLayer[i]->outfit))) {
 

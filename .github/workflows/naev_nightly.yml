@@ -28,10 +28,10 @@ jobs:
 
       - name: Collect Artifacts
         run: |
-          mkdir -p build/dist/steam
+          mkdir -p build/dist
+          cp -r source/utils/ci/itch source/utils/ci/steam build/dist/
           mv build/meson-dist/naev-*.tar.xz build/dist/source.tar.xz
           cp source/dat/VERSION build/dist
-          cp -r source/utils/ci/steam/* build/dist/steam
 
       - name: Upload Source Artifact
         uses: actions/upload-artifact@v2
@@ -47,11 +47,18 @@ jobs:
           path: ${{ github.workspace }}/build/dist/VERSION
           if-no-files-found: error
 
-      - name: Upload Deployment Script Artifact
+      - name: Upload Steam Deployment Script Artifact
         uses: actions/upload-artifact@v2
         with:
           name: naev-steam-deployment
           path: ${{ github.workspace }}/build/dist/steam/*
+          if-no-files-found: error
+
+      - name: Upload Itch Deployment Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-itch-deployment
+          path: ${{ github.workspace }}/build/dist/itch/*
           if-no-files-found: error
 
   "Linux_Naev_Release":
@@ -265,7 +272,7 @@ jobs:
         if: ${{ matrix.releasetype == 'github' }}
 
       - name: Generate commit changelog
-        uses: Bullrich/generate-release-changelog@master
+        uses: Bullrich/generate-release-changelog@2.0.1
         if: ${{ matrix.releasetype == 'github' }}
         id: changelog
         env:
@@ -346,17 +353,39 @@ jobs:
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
         run: |
+          # Collect BUILD_DATE, VERSION and assemble SUFFIX for naming files.
+
           BUILD_DATE="$(date +%Y%m%d)"
           VERSION="$(<"build/staging/naev-version/VERSION")"
           SUFFIX="$VERSION.$BUILD_DATE"
 
-          mv build/staging/naev-linux-x86-64/*.AppImage build/dist/lin64/naev-$SUFFIX-linux-x86-64.AppImage
+          # Build Linux Release
+
+          cp build/staging/naev-itch-deployment/.itch.toml build/dist/lin64
+          sed -i "s/%EXECNAME%/naev-$SUFFIX-linux-x86-64.AppImage/" build/dist/lin64/.itch.toml
+          sed -i 's/%PLATFORM%/linux/' build/dist/lin64/.itch.toml
+          
+          cp build/staging/naev-linux-x86-64/*.AppImage build/dist/lin64/naev-$SUFFIX-linux-x86-64.AppImage
           chmod +x build/dist/lin64/naev-$SUFFIX-linux-x86-64.AppImage
 
-          mv build/staging/naev-macos/*.zip build/dist/macos/naev-$SUFFIX-macos.zip
+          # Build macOS Release
+
+          cp build/staging/naev-itch-deployment/.itch.toml build/dist/macos
+          sed -i 's/%EXECNAME%/Naev.app/' build/dist/macos/.itch.toml
+          sed -i 's/%PLATFORM%/osx/' build/dist/macos/.itch.toml
+
+          unzip build/staging/naev-macos/*.zip -d build/dist/macos
+
+          # Build Windows Release
+
+          cp build/staging/naev-itch-deployment/.itch.toml build/dist/win64
+          sed -i "s/%EXECNAME%/naev-$SUFFIX-win64.exe/" build/dist/win64/.itch.toml
+          sed -i 's/%PLATFORM%/windows/' build/dist/win64/.itch.toml
 
           tar -Jxf "build/staging/naev-win64/steam-win64.tar.xz" -C "build/dist/win64"
           tar -Jxf "build/staging/naev-ndata/steam-ndata.tar.xz" -C "build/dist/win64"
+
+          # Push builds to itch.io via butler
 
           ./butler push --userversion="$SUFFIX" build/dist/lin64 naev/naev:linux-x86-64-nightly
           ./butler push --userversion="$SUFFIX" build/dist/macos naev/naev:macos-x86-64-nightly

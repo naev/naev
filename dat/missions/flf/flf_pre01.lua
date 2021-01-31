@@ -148,10 +148,10 @@ function enter()
         pilot.clear()
 
         -- Add FLF ships that are to guide the player to the FLF base (but only after a battle!)
-        fleetFLF = addShips("FLF Vendetta", "flf_norun", jumppos, 3)
+        fleetFLF = addShips(3, "Vendetta", "FLF", jumppos, _("FLF Vendetta"), "flf_norun")
         local c = player.pilot():ship():class()
         if c == "Cruiser" or c == "Carrier" then
-            local p = pilot.add("FLF Pacifier", "flf_norun", jumppos)[1]
+            local p = pilot.add( "Pacifier", "FLF", jumppos, _("FLF Pacifier"), "flf_norun" )
             fleetFLF[#fleetFLF + 1] = p
         end
         
@@ -219,7 +219,7 @@ function inRange()
     local mindist = 2000 -- definitely OOR.
     for i, p in ipairs(fleetFLF) do
         if p ~= nil and p:exists() then
-            mindist = math.min(mindist, vec2.dist(p:pos(), player.pilot():pos()))
+            mindist = math.min(mindist, vec2.dist(p:pos(), player.pos()))
         end
     end
     if mindist < 500 then
@@ -237,12 +237,14 @@ function annai()
     poss[2] = vec2.new(50, -50)
     poss[3] = vec2.new(-50, -50)
     poss[4] = vec2.new(0,120)
-    local speed = player.pilot():stats().speed_max - 1
+    local speed = player.pilot():stats().speed_max * 0.9
     for i, p in ipairs(fleetFLF) do
         if p ~= nil and p:exists() then
+            if speed < p:stats().speed_max then
+                p:setSpeedLimit(speed)
+            end
             p:taskClear()
             p:control()
-            p:setSpeedLimit(speed)
             p:moveto(player.pos()) -- NOT the player pilot, or the task may not pop properly.
             p:moveto(waypoint2, false)
             p:moveto(waypoint1, false)
@@ -279,7 +281,7 @@ function outOfRange()
     local mindist = 2000 -- definitely OOR.
     for i, p in ipairs(fleetFLF) do
         if p ~= nil and p:exists() then
-            mindist = math.min(mindist, vec2.dist(p:pos(), player.pilot():pos()))
+            mindist = math.min(mindist, vec2.dist(p:pos(), player.pos()))
         end
     end
     if mindist < 1500 then

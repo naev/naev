@@ -188,20 +188,16 @@ void omsg_cleanup (void)
    int i;
 
    /* Free fonts. */
-   if (omsg_font_array != NULL) {
-      for (i=0; i<array_size( omsg_font_array ); i++)
-         gl_freeFont( &omsg_font_array[i].font );
-      array_free( omsg_font_array );
-      omsg_font_array = NULL;
-   }
+   for (i=0; i<array_size( omsg_font_array ); i++)
+      gl_freeFont( &omsg_font_array[i].font );
+   array_free( omsg_font_array );
+   omsg_font_array = NULL;
 
    /* Destroy messages. */
-   if (omsg_array != NULL) {
-      for (i=0; i<array_size(omsg_array); i++)
-         omsg_free( &omsg_array[i] );
-      array_free( omsg_array );
-      omsg_array = NULL;
-   }
+   for (i=0; i<array_size(omsg_array); i++)
+      omsg_free( &omsg_array[i] );
+   array_free( omsg_array );
+   omsg_array = NULL;
 }
 
 

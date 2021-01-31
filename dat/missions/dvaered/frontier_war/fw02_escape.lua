@@ -440,10 +440,9 @@ function enter()
          origin = lastSys
       end
 
-      strafer = pilot.addRaw("Vendetta", "baddie_norun", origin, "DHC")
+      strafer = pilot.add("Vendetta", "DHC", origin, _("Lieutenant Strafer"), "baddie_norun")
       strafer:setHilight()
       strafer:setVisplayer()
-      strafer:rename("Lieutenant Strafer")
 
       -- give him top equipment
       strafer:rmOutfit("all")
@@ -541,7 +540,7 @@ end
 
 -- Makes the carceral convoy enter the system
 function convoyEnter()
-   target = pilot.add("Za'lek Sting", nil, prevsys)[1]
+   target = pilot.add( "Za'lek Sting", "Za'lek", prevsys )
    target:memory().formation = "wedge"
    target:setHilight()
    target:setVisible()
@@ -549,10 +548,10 @@ function convoyEnter()
    target:hyperspace(nextsys)
 
    escort = {}
-   escort[1] = pilot.add("Za'lek Light Drone", nil, prevsys)[1]
-   escort[2] = pilot.add("Za'lek Light Drone", nil, prevsys)[1]
-   escort[3] = pilot.add("Za'lek Heavy Drone", nil, prevsys)[1]
-   --escort[4] = pilot.add("Za'lek Heavy Drone", nil, prevsys)[1]
+   escort[1] = pilot.add( "Za'lek Light Drone", "Za'lek", prevsys, nil, "collective" )
+   escort[2] = pilot.add( "Za'lek Light Drone", "Za'lek", prevsys, nil, "collective" )
+   escort[3] = pilot.add( "Za'lek Heavy Drone", "Za'lek", prevsys, nil, "collective" )
+   --escort[4] = pilot.add( "Za'lek Heavy Drone", "Za'lek", prevsys, nil, "collective" )
 
    athooks = {}
    for i, p in ipairs(escort) do
@@ -639,7 +638,7 @@ function takeoff( )
       local dmin2 = 500^2
       zlkPilots = pilot.get( { faction.get("Za'lek") } )
       for i, p in ipairs(zlkPilots) do
-         if vec2.dist2(player.pilot():pos()-p:pos()) < dmin2 then
+         if vec2.dist2(player.pos()-p:pos()) < dmin2 then
             p:rm()
          end
       end
@@ -648,30 +647,30 @@ end
 
 -- Drones are after the player after the hospital attack
 function spawnDrones()
-   pilot.add("Za'lek Light Drone", nil, lastPlanet)
-   pilot.add("Za'lek Light Drone", nil, lastPlanet)
-   pilot.add("Za'lek Heavy Drone", nil, lastPlanet)
+   pilot.add( "Za'lek Light Drone", "Za'lek", lastPlanet, nil, "collective" )
+   pilot.add( "Za'lek Light Drone", "Za'lek", lastPlanet, nil, "collective" )
+   pilot.add( "Za'lek Heavy Drone", "Za'lek", lastPlanet, nil, "collective" )
    tronkDeath = true -- This says that at next jump, Tronk will die
 end
 
 -- Spawn blockade ships
 function spawnZlkSquadron( pos, bloc )
    squad = {}
-   squad[1]  = pilot.add("Za'lek Mephisto", nil, pos)[1]
-   squad[2]  = pilot.add("Za'lek Demon", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
-   squad[3]  = pilot.add("Za'lek Demon", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
-   squad[4]  = pilot.add("Za'lek Sting", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
-   squad[5]  = pilot.add("Za'lek Sting", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
+   squad[1]  = pilot.add( "Za'lek Mephisto", "Za'lek", pos )
+   squad[2]  = pilot.add( "Za'lek Demon", "Za'lek", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300) )
+   squad[3]  = pilot.add( "Za'lek Demon", "Za'lek", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300) )
+   squad[4]  = pilot.add( "Za'lek Sting", "Za'lek", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300) )
+   squad[5]  = pilot.add( "Za'lek Sting", "Za'lek", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300) )
 
-   squad[6]  = pilot.add("Za'lek Light Drone", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
-   squad[7]  = pilot.add("Za'lek Light Drone", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
-   squad[8]  = pilot.add("Za'lek Heavy Drone", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
-   squad[9]  = pilot.add("Za'lek Heavy Drone", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
+   squad[6]  = pilot.add( "Za'lek Light Drone", "Za'lek", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300), nil, "collective" )
+   squad[7]  = pilot.add( "Za'lek Light Drone", "Za'lek", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300), nil, "collective" )
+   squad[8]  = pilot.add( "Za'lek Heavy Drone", "Za'lek", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300), nil, "collective" )
+   squad[9]  = pilot.add( "Za'lek Heavy Drone", "Za'lek", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300), nil, "collective" )
 
-   squad[10] = pilot.add("Za'lek Bomber Drone", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
-   squad[11] = pilot.add("Za'lek Bomber Drone", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
-   squad[12] = pilot.add("Za'lek Bomber Drone", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
-   squad[13] = pilot.add("Za'lek Bomber Drone", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
+   squad[10] = pilot.add( "Za'lek Bomber Drone", "Za'lek", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300), nil, "collective" )
+   squad[11] = pilot.add( "Za'lek Bomber Drone", "Za'lek", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300), nil, "collective" )
+   squad[12] = pilot.add( "Za'lek Bomber Drone", "Za'lek", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300), nil, "collective" )
+   squad[13] = pilot.add( "Za'lek Bomber Drone", "Za'lek", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300), nil, "collective" )
 
    for i, j in ipairs(squad) do
       j:setSpeedLimit( .0001 ) -- 0 disables the stuff so it's unusable
@@ -684,21 +683,21 @@ function spawnZlkSquadron( pos, bloc )
 end
 function spawnEmpSquadron( pos, bloc )
    squad = {}
-   squad[1]  = pilot.add("Empire Hawking", nil, pos)[1]
-   squad[2]  = pilot.add("Empire Pacifier", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
-   squad[3]  = pilot.add("Empire Pacifier", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
-   squad[4]  = pilot.add("Empire Admonisher", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
-   squad[5]  = pilot.add("Empire Admonisher", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
+   squad[1]  = pilot.add( "Empire Hawking", "Empire", pos )
+   squad[2]  = pilot.add( "Empire Pacifier", "Empire", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300) )
+   squad[3]  = pilot.add( "Empire Pacifier", "Empire", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300) )
+   squad[4]  = pilot.add( "Empire Admonisher", "Empire", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300) )
+   squad[5]  = pilot.add( "Empire Admonisher", "Empire", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300) )
 
-   squad[6]  = pilot.add("Empire Shark", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
-   squad[7]  = pilot.add("Empire Shark", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
-   squad[8]  = pilot.add("Empire Lancelot", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
-   squad[9]  = pilot.add("Empire Lancelot", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
+   squad[6]  = pilot.add( "Empire Shark", "Empire", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300) )
+   squad[7]  = pilot.add( "Empire Shark", "Empire", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300) )
+   squad[8]  = pilot.add( "Empire Lancelot", "Empire", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300) )
+   squad[9]  = pilot.add( "Empire Lancelot", "Empire", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300) )
 
-   squad[10] = pilot.add("Empire Lancelot", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
-   squad[11] = pilot.add("Empire Lancelot", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
-   squad[12] = pilot.add("Empire Lancelot", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
-   squad[13] = pilot.add("Empire Lancelot", nil, pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300))[1]
+   squad[10] = pilot.add( "Empire Lancelot", "Empire", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300) )
+   squad[11] = pilot.add( "Empire Lancelot", "Empire", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300) )
+   squad[12] = pilot.add( "Empire Lancelot", "Empire", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300) )
+   squad[13] = pilot.add( "Empire Lancelot", "Empire", pos + vec2.new(rnd.sigma()*300, rnd.sigma()*300) )
 
    for i, j in ipairs(squad) do
       j:setSpeedLimit( .0001 ) -- 0 disables the stuff so it's unusable
@@ -724,7 +723,7 @@ end
 
 -- Strafer enters the system
 function spawnStrafer()
-   strafer = pilot.add("Trader Gawain")[1]
+   strafer = pilot.add( "Gawain", "Trader", _("Trader Gawain") )
    strafer:setHilight(true)
    strafer:setVisible(true)
    strafer:control(true)
@@ -775,8 +774,7 @@ end
 
 -- Spawns the odd imperial pilot
 function spawnHewHew( origin )
-   hewhew = pilot.addRaw("Hyena", "civilian", origin, "Civilian")
-   hewhew:rename("Strange Pilot")
+   hewhew = pilot.add("Hyena", "Civilian", origin, _("Strange Pilot"))
    hewhew:setInvincible()  -- Don't wreck my Captain HewHew
    hewhew:hailPlayer()
    hailie = hook.pilot(hewhew, "hail", "hailMe")

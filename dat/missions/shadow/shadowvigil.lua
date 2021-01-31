@@ -226,7 +226,7 @@ end
 function enter()
     if system.cur() == misssys[1] and stage == 1 and missend == false then
         -- case enter system where escorts wait
-        escorts = pilot.add("Shadowvigil Escorts", nil, vec2.new(0, 0))
+        escorts = addShips( 3, "Lancelot", "Four Winds", vec2.new(0, 0), _("Four Winds Escort"), "baddie_norun" )
         for i, j in ipairs(escorts) do
             if not alive[i] then j:rm() end -- Dead escorts stay dead.
             if j:exists() then
@@ -253,7 +253,7 @@ function jumpin()
         
     if stage == 4 then
         -- Spawn the diplomat.
-        diplomat = pilot.add("Shadowvigil Diplomat", nil, origin)[1]
+        diplomat = pilot.add( "Diplomatic Vessel", "Diplomatic", origin, _("Imperial Diplomat") )
         hook.pilot(diplomat, "death", "diplomatDeath")
         hook.pilot(diplomat, "jump", "diplomatJump")
         hook.pilot(diplomat, "attacked", "diplomatAttacked")
@@ -270,7 +270,7 @@ function jumpin()
         pilot.clearSelect("Pirate")
 
         -- Spawn the escorts.
-        escorts = pilot.add("Shadowvigil Escorts", nil, origin)
+        escorts = addShips( 3, "Lancelot", "Four Winds", origin, _("Four Winds Escort"), "baddie_norun" )
         for i, j in ipairs(escorts) do
             if not alive[i] then j:rm() end -- Dead escorts stay dead.
             if j:exists() then
@@ -291,7 +291,7 @@ function jumpin()
                end
            end
         elseif system.cur() == misssys[3] then -- case join up with diplomat
-            diplomat = pilot.add("Shadowvigil Diplomat", nil, vec2.new(0, 0))[1]
+            diplomat = pilot.add( "Diplomatic Vessel", "Diplomatic", vec2.new(0, 0), _("Imperial Diplomat") )
             hook.pilot(diplomat, "death", "diplomatDeath")
             hook.pilot(diplomat, "jump", "diplomatJump")
             diplomat:control()
@@ -314,7 +314,7 @@ function jumpin()
                     j:follow(diplomat) -- Follow the diplomat.
                 end
             end
-            dvaerplomat = pilot.add("Dvaered Vigilance", nil, vec2.new(2000, 4000))[1]
+            dvaerplomat = pilot.add( "Dvaered Vigilance", "Dvaered", vec2.new(2000, 4000) )
             dvaerplomat:control()
             dvaerplomat:setHilight(true)
             dvaerplomat:setVisplayer()
@@ -343,7 +343,7 @@ function jumpin()
             end
             jp2go = system.cur():jumpDist(misssys[4])
             if jp2go <= 2 and jp2go > 0 then -- Encounter
-                ambush = pilot.add(string.format("Shadowvigil Ambush %i", 3 - jp2go), "baddie_norun", vec2.new(0, 0))
+                ambush = pilot.addFleet(string.format("Shadowvigil Ambush %i", 3 - jp2go), vec2.new(0, 0), "baddie_norun")
                 kills = 0
                 for i, j in ipairs(ambush) do
                     if j:exists() then
@@ -365,7 +365,7 @@ function jumpin()
 
     elseif system.cur() == seirsys then -- not escorting.
         -- case enter system where Seiryuu is
-        seiryuu = pilot.add("Seiryuu", nil, vec2.new(0, -2000))[1]
+        seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(0, -2000), _("Seiryuu"), "trader" )
         seiryuu:setInvincible(true)
         if missend then
             seiryuu:setActiveBoard(true)

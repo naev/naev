@@ -99,6 +99,7 @@ They beam a smile at you.]]),_(runawaysys)))
    shiplog.appendLog( logidstr, _("You accepted a job from a shady individual to harass Dvaered thugs and make it seem like the Za'lek were involved.") )
 
    misn.accept()
+   misn.setDesc( misn_desc )
    osd = misn.osdCreate( _("Thug Decoy"),
          {_("Get the drone to follow you"),
           _("Harass the thugs"),
@@ -157,10 +158,10 @@ function enter ()
       thugpos = vec2.new( 6000, -4000 )
       dronepos = vec2.new( -12000, -12000 )
 
-      fthugs = faction.dynAdd( "Dvaered", "Dvaered Thugs" )
+      fthugs = faction.dynAdd( "Dvaered", "Dvaered Thugs", _("Dvaered Thugs"), "dvaered" )
 
       local pos = thugpos
-      boss = pilot.addRaw( "Dvaered Vigilance", "dvaered", pos, fthugs )
+      boss = pilot.add( "Dvaered Vigilance", fthugs, pos )
       boss:control()
       boss:brake()
       hook.pilot( boss, "attacked", "thugs_attacked" )
@@ -168,15 +169,15 @@ function enter ()
       thugs = { boss }
       for i = 1,3 do
          pos = thugpos + vec2.newP( rnd.rnd(50,150), rnd.rnd(1,360) )
-         local p = pilot.addRaw( "Dvaered Vendetta", "dvaered", pos, fthugs )
+         local p = pilot.add( "Dvaered Vendetta", fthugs, pos )
          p:setLeader( boss )
          hook.pilot( p, "attacked", "thugs_attacked" )
          hook.pilot( p, "death", "thugs_dead" )
          table.insert( thugs, p )
       end
 
-      fdrone = faction.dynAdd( "Independent", "Drone" )
-      drone = pilot.addRaw( "Za'lek Light Drone", "zalek", dronepos, fdrone )
+      fdrone = faction.dynAdd( "Independent", "Drone", _("Drone"), "zalek" )
+      drone = pilot.add( "Za'lek Light Drone", fdrone, dronepos )
       drone:control()
       drone:brake()
 

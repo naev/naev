@@ -201,8 +201,6 @@ static int npc_rm( NPC_t *npc )
 static NPC_t *npc_arrayGet( unsigned int id )
 {
    int i;
-   if (npc_array == NULL)
-      return NULL;
    for (i=0; i<array_size( npc_array ); i++)
       if (npc_array[i].id == id)
          return &npc_array[i];
@@ -268,9 +266,6 @@ int npc_rm_parentEvent( unsigned int id )
    int i, n;
    NPC_t *npc;
 
-   if (npc_array == NULL)
-      return 0;
-
    n = 0;
    for (i=0; i<array_size(npc_array); i++) {
       npc = &npc_array[i];
@@ -296,9 +291,6 @@ int npc_rm_parentMission( Mission *misn )
 {
    int i, n;
    NPC_t *npc;
-
-   if (npc_array == NULL)
-      return 0;
 
    n = 0;
    for (i=0; i<array_size(npc_array); i++) {
@@ -442,9 +434,6 @@ void npc_clear (void)
 {
    int i;
 
-   if (npc_array == NULL)
-      return;
-
    /* First pass to clear the data. */
    for (i=0; i<array_size( npc_array ); i++)
       npc_free( &npc_array[i] );
@@ -459,9 +448,6 @@ void npc_clear (void)
  */
 int npc_getArraySize (void)
 {
-   if (npc_array == NULL)
-      return 0;
-
    return array_size( npc_array );
 }
 
@@ -584,7 +570,7 @@ int npc_approach( int i )
    NPC_t *npc;
 
    /* Make sure in bounds. */
-   if (i<0 || npc_array == NULL || i>=array_size(npc_array))
+   if (i<0 || i>=array_size(npc_array))
       return -1;
 
    /* Comfortability. */

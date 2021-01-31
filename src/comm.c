@@ -42,11 +42,6 @@ static glTexture *comm_graphic = NULL; /**< Pilot's graphic. */
 static int comm_commClose      = 0; /**< Close comm when done. */
 
 
-/* We need direct pilot access. */
-extern Pilot** pilot_stack;
-extern int pilot_nstack;
-
-
 /*
  * Prototypes.
  */

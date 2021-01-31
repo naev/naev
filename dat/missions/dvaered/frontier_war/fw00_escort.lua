@@ -76,7 +76,7 @@ discuss_text2 = _([["Hello, citizen. Did you already recover from Lord Battleadd
 
 discuss_title3 = _("Major Tam before he was at the Headquarters")
 discuss_text3 = _([["You know I've not always worked at the Headquarters. I started as a pilot at the DHC base on Rhaana. Oh, sorry, DHC stays for Dvaered High Command. You know, there are two kinds of Dvaered soldiers: there are those who directly report to DHC, like myself, and the freaks, as we call them (or the warriors, as they call themselves), the soldiers who report to local Warlords.
-   "Warlords' forces can be requisitioned by DHC, but only to fight a menace to the integrity of the Dvaered Nation, so in practice, they are mostly left to themselves, and make war on each other. You know, foreigners sometimes think that the internicine conflicts between warlords are pointless (I've even heard the word "stupid" once), but actually, they're the key to Dvaered philosophy. Without those wars, the Dvaered Nation would no longer exist as we know it, and we would have had to rely on totalitarianism, like the Empire, nostalgia of an idealized past, like the Frontier, oppressive technocracy like the Za'lek, or such...
+   "Warlords' forces can be requisitioned by DHC, but only to fight a menace to the integrity of the Dvaered Nation, so in practice, they are mostly left to themselves, and make war on each other. You know, foreigners sometimes think that the internecine conflicts between warlords are pointless (I've even heard the word "stupid" once), but actually, they're the key to Dvaered philosophy. Without those wars, the Dvaered Nation would no longer exist as we know it, and we would have had to rely on totalitarianism, like the Empire, nostalgia of an idealized past, like the Frontier, oppressive technocracy like the Za'lek, or such...
    "Hey, but am I deviating from our original subject? What was it already? Oh I don't remember. Anyway, citizen, if you want to take off, I'm ready."]])
 
 ready_title = _("Major Tam is ready")
@@ -86,11 +86,11 @@ end_title = _("Thank you, citizen")
 end_text = _([[As you land, Major Tam greets you at the spaceport. "After the losses they got today, I doubt those mercenaries will come back at me anytime soon. I need to report back at the Dvaer High Command station in Dvaer, and I don't need any more escorting. Oh, and, err... about the payment, I am afraid there is a little setback..." You start getting afraid he would try to stiff pay you, but he continues: "I don't know why, but the High Command has not credited the payment account yet... Well do you know what we are going to do? I will give you a set of Gauss Guns worth %s! One always needs Gauss Guns, no?"]])
 
 explain_title = _("That was really close!")
-explain_text = _([[You send a message to Major Tam to ask if you are safe now. "I think so" he answers, "Lord Battleaddict's troops won't follow us if we head to %s at once, as the planet belongs to his deadliest enemy, Lady Pointblank." As you ask to him what happened, he answers: "You know, don't let Lord Battleaddict's reaction mislead you. He is not a bad person, he is just... hem... a bit old school. He is not in par with the ideas of the new generation of generals at Dvaered High Command, and wanted to make his point clear."
+explain_text = _([[You send a message to Major Tam to ask if you are safe now. "I think so" he answers, "Lord Battleaddict's troops won't follow us if we head to %s at once, as the planet belongs to his deadliest enemy, Lady Pointblank." As you ask to him what happened, he answers: "You know, don't let Lord Battleaddict's reaction mislead you. He is not a bad person, he is just... hem... a bit old school. He disagrees with the ideas of the new generation of generals at Dvaered High Command, and wanted to make his point clear."
    You ask Tam why the Dvaered patrol ships did not help you and he answers: "Don't expect the regular police or army to help you when you're in trouble with a warlord. Dvaered know that it is better not to be involved in warlord's affairs."]])
 
 ambush_title = _("Say hello to my mace rockets")
-ambush_text = _([[As your ship starts to recover its normal speed after jumping in, you realize that there are hostile ships around. An enemy Shark then broadcasts the following message: "Tam, you small fearful weakling, did you believe Lord Battleaddict would really let you live? You're doomed!"]])
+ambush_text = _([[As your ship decelerates to its normal speed after jumping in, you realize that there are hostile ships around. An enemy Shark then broadcasts the following message: "Tam, you small fearful weakling, did you believe Lord Battleaddict would really let you live? You're doomed!"]])
 ambush_broadcast = _("You wanted to meet Lord Jim? What about you meet your doom instead?")
 
 saved_title1 = _("Hostiles eliminated")
@@ -99,7 +99,7 @@ saved_text1 = _([[As the remaining attackers run away, you remark that a Dvaered
 
 saved_title2 = _("Two attacks are one too many")
 saved_text2 = _([["Anyway," says Tam, "I am afraid this ambush is not acceptable." Leblanc responds: "True, sir. Attacking someone in one's system is a standard way of expression for a warlord, but setting an ambush here denotes a true lack of respect."
-   "He will have to answer for this, trust me." answers Tam, "I will refer to the chief. Meanwhile, I still have an appointment with Lord Jim. I just hope he will not try to make us dance as well..."]])
+   "He will have to answer for this, trust me." answers Tam, "I will refer this matter to the chief. Meanwhile, I still have an appointment with Lord Jim. I just hope he will not try to make us dance as well..."]])
 
 meeting_broadcast = _("%s should be waiting for us in orbit around %s.")
 
@@ -173,7 +173,7 @@ function enter()
 
    if stage == 0 then   -- Go to first rendezvous
       if system.cur() == destsys1 then -- Spawn the Warlord
-         encounterWarlord( "Lady Bitterfly", destpla1 )
+         encounterWarlord( _("Lady Bitterfly"), destpla1 )
          hook.timer( 2000, "meeting_msg1" )
       else
          nextsys = getNextSystem(system.cur(), destsys1)
@@ -184,7 +184,7 @@ function enter()
 
    elseif stage == 2 then  -- Travel to second rendezvous
       if system.cur() == destsys2 then -- Spawn the Baddies
-         encounterWarlord( "Lord Battleaddict", destpla2 )
+         encounterWarlord( _("Lord Battleaddict"), destpla2 )
          jumpingTam = hook.pilot(majorTam, "jump", "tamJump")
          hook.timer( 2000, "meeting_msg2" )
       else
@@ -206,7 +206,7 @@ function enter()
    elseif stage == 5 then  -- Travel to third rendezvous
       if system.cur() == destsys3 then -- Spawn the Warlord and Hamelsen
          hamelsenAmbush()
-         encounterWarlord( "Lord Jim", destpla3 )
+         encounterWarlord( _("Lord Jim"), destpla3 )
          hook.timer( 2000, "meeting_msg3" )
       else
          nextsys = getNextSystem(system.cur(), destsys3)
@@ -248,8 +248,8 @@ function spawnTam( origin )
 --      hook.rm(dyingTam)
 --   end
 
-   majorTam = pilot.add("Dvaered Vendetta", nil, origin, "DHC")[1]
-   majorTam:rename("Major Tam")
+   majorTam = pilot.add( "Dvaered Vendetta", "Dvaered", origin )
+   majorTam:rename(_("Major Tam"))
    majorTam:setHilight()
    majorTam:setVisplayer()
    majorTam:setFaction("DHC")
@@ -274,7 +274,7 @@ function encounterWarlord( name, origin )
    pilot.toggleSpawn("Pirate", false) -- Make sure Pirates don't get on the way
    pilot.clearSelect("Pirate")
 
-   warlord = pilot.add("Dvaered Goddard", nil, origin)[1]
+   warlord = pilot.add( "Dvaered Goddard", "Dvaered", origin )
    warlord:rename( name )
    warlord:control(true)
    warlord:moveto( origin:pos() + vec2.newP(rnd.rnd(1000), rnd.rnd(360)) )
@@ -283,7 +283,7 @@ function encounterWarlord( name, origin )
 
    p = {}
    for i = 1, 2 do
-      p[i] = pilot.add("Dvaered Vendetta", nil, origin)[1]
+      p[i] = pilot.add( "Dvaered Vendetta", "Dvaered", origin )
       p[i]:control(true)
       p[i]:moveto( origin:pos() + vec2.newP(rnd.rnd(1000), rnd.rnd(360)) )
    end
@@ -370,7 +370,7 @@ function meeting()
       nextsys = fleesys
       tk.msg(meet_title2, meet_text2:format(nextsys:name()))
       stage = 3
-      quickie = pilot.add("Dvaered Vendetta", nil, destpla2)[1]
+      quickie = pilot.add( "Dvaered Vendetta", "Dvaered", destpla2 )
       quickie:setFaction("Warlords")
 
       majorTam:control()
@@ -419,13 +419,13 @@ end
 -- Battleaddict's bros
 function moreBadGuys()
    for i = 1, 3 do
-      buff = pilot.add("Dvaered Ancestor", nil, destpla2)[1]
+      buff = pilot.add( "Dvaered Ancestor", "Dvaered", destpla2 )
       buff:setFaction("Warlords")
    end
-   buff = pilot.add("Dvaered Vigilance", nil, destpla2)[1]
+   buff = pilot.add( "Dvaered Vigilance", "Dvaered", destpla2 )
    buff:setFaction("Warlords")
-   buff:rename("Colonel Hamelsen")
-   buff = pilot.add("Dvaered Phalanx", nil, destpla2)[1]
+   buff:rename(_("Colonel Hamelsen"))
+   buff = pilot.add( "Dvaered Phalanx", "Dvaered", destpla2 )
    buff:setFaction("Warlords")
    warlord:setFaction("Warlords")
    warlord:control(false)
@@ -446,7 +446,7 @@ function hamelsenAmbush()
       y = 1000 * rnd.rnd() + 1000
       pos = jp:pos() + vec2.new(x,y)
 
-      ambush[i] = pilot.addRaw( "Shark", "baddie_norun", pos, "Warlords" )
+      ambush[i] = pilot.add( "Shark", "Warlords", pos, nil, "baddie_norun" )
       ambush[i]:setHostile()
       hook.pilot(ambush[i], "death", "ambushDied")
       hook.pilot(ambush[i], "land", "ambushDied")
@@ -456,10 +456,9 @@ function hamelsenAmbush()
    x = 1000 * rnd.rnd() + 2000
    y = 1000 * rnd.rnd() + 2000
    pos = jp:pos() + vec2.new(x,y)
-   hamelsen = pilot.addRaw( "Shark", "baddie_norun", pos, "Warlords" )
+   hamelsen = pilot.add( "Shark", "Warlords", pos, _("Colonel Hamelsen"), "baddie_norun" )
 
    -- Nice outfits for Colonel Hamelsen (the Hellburner is her life insurance)
-   hamelsen:rename("Colonel Hamelsen")
    hamelsen:rmOutfit("all")
    hamelsen:rmOutfit("cores")
    hamelsen:addOutfit("S&K Ultralight Combat Plating")
@@ -486,9 +485,9 @@ function hamelsenAmbush()
       y = 1000 * rnd.rnd() - 2000
       pos = jp:pos() + vec2.new(x,y)
 
-      savers[i] = pilot.add( "Dvaered Vendetta", nil, pos )[1]
+      savers[i] = pilot.add( "Dvaered Vendetta", "Dvaered", pos )
    end
-   savers[1]:rename("Captain Leblanc")
+   savers[1]:rename(_("Captain Leblanc"))
    savers[1]:setNoDeath()
    savers[1]:setNoDisable()
 

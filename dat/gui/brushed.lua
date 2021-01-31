@@ -917,7 +917,7 @@ function render( dt )
       end
 
       x1, y1 = vec2.get(planet.pos)
-      x2, y2 = vec2.get(player.pilot():pos())
+      x2, y2 = vec2.get(player.pos())
       ta_pnt_dir = math.atan2(y2 - y1, x2 - x1) + math.pi
 
       -- Space out the text.

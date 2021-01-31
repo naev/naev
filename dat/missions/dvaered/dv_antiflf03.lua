@@ -168,7 +168,7 @@ function enter()
         DVreinforcements = 20 -- Amount of reinforcement Dvaered bombers
         deathsFLF = 0
         deathsFLFneeded = 0
-        time = 0
+        timer = 0
         stage = 0
         standoff = 5000 -- The distance between the DV fleet and the base
         safestandoff = 2000 -- This is the distance from the base where DV ships will turn back
@@ -228,7 +228,7 @@ end
 
 -- Spawns the FLF base, ship version.
 function spawnbase()
-    base = pilot.add("Sindbad", "flf_norun", basepos)[1]
+    base = pilot.add( "Sindbad", "FLF", basepos, nil, "flf_norun" )
     base:rmOutfit("all")
     base:rmOutfit("cores")
     base:addOutfit("Dummy Systems")
@@ -293,7 +293,7 @@ end
 function spawnDV()
     updatepos()
 
-    obstinate = pilot.add("Dvaered Goddard", "dvaered_norun", fleetpos[1])[1]
+    obstinate = pilot.add( "Dvaered Goddard", "Dvaered", fleetpos[1], nil, "dvaered_norun" )
     obstinate:rename(_("Obstinate"))
     obstinate:setDir(90)
     obstinate:setFriendly()
@@ -314,7 +314,7 @@ function spawnDV()
     
     local i = 1
     while i <= 4 do
-        vigilance = pilot.add("Dvaered Vigilance", "dvaered_norun", fleetpos[i + 1])[1]
+        vigilance = pilot.add( "Dvaered Vigilance", "Dvaered", fleetpos[i + 1], nil, "dvaered_norun" )
         vigilance:setDir(90)
         vigilance:setFriendly()
         vigilance:control()
@@ -326,7 +326,7 @@ function spawnDV()
     
     local i = 1
     while i <= 6 do
-        vendetta = pilot.add("Dvaered Vendetta", "dvaered_norun", fighterpos[i])[1]
+        vendetta = pilot.add( "Dvaered Vendetta", "Dvaered", fighterpos[i], nil, "dvaered_norun" )
         vendetta:setDir(90)
         vendetta:setFriendly()
         vendetta:setVisplayer(true)
@@ -351,7 +351,7 @@ end
 function spawnFLFfighters()
     wavefirst = true
     wavestarted = true
-    local wingFLF = addShips( "FLF Lancelot", "flf_norun", base:pos(), 3 )
+    local wingFLF = addShips( 3, "Lancelot", "FLF", base:pos(), _("FLF Lancelot"), "flf_norun" )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         setFLF( j )
@@ -360,7 +360,7 @@ end
 
 -- Spawns FLF bombers
 function spawnFLFbombers()
-    local wingFLF = addShips( "FLF Vendetta", "flf_norun", base:pos(), 3 )
+    local wingFLF = addShips( 3, "Vendetta", "FLF", base:pos(), _("FLF Vendetta"), "flf_norun" )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         setFLF( j )
@@ -369,7 +369,7 @@ end
 
 -- Spawns FLF destroyers
 function spawnFLFdestroyers()
-    local wingFLF = addShips( "FLF Pacifier", "flf_norun", base:pos(), 2 )
+    local wingFLF = addShips( 2, "Pacifier", "FLF", base:pos(), _("FLF Pacifier"), "flf_norun" )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         hook.pilot(j, "death", "deathFLF")
@@ -406,7 +406,7 @@ function nextStage()
        return
     end
     wavestarted = false
-    time = 0 -- Immediately recall the Dvaered escorts
+    timer = 0 -- Immediately recall the Dvaered escorts
     stage = stage + 1
     deathsFLF = 0
     deathsFLFneeded = 0
@@ -448,7 +448,7 @@ end
  
 -- Spawns the initial Dvaered bombers.
 function spawnDVbomber()
-    bomber = pilot.add("Dvaered Ancestor", "dvaered_norun", obstinate:pos())[1]
+    bomber = pilot.add( "Dvaered Ancestor", "Dvaered", obstinate:pos(), nil, "dvaered_norun" )
     bomber:rmOutfit("all")
     foo = bomber:addOutfit("TeraCom Imperator Launcher", 1, true)
     bomber:addOutfit("Engine Reroute", 1)
@@ -522,7 +522,7 @@ function controlFleet( fleetCur, pos, off )
             end
 
             -- Too close to base or recalled
-            if basedist < safestandoff or time <= 0 then
+            if basedist < safestandoff or timer <= 0 then
                 j:control()
                 j:moveto( pos[i + off] )
 
@@ -543,8 +543,8 @@ end
 -- Tries to whip the AI into behaving in a specific way
 function control()
     -- Timer to have them return
-    if time > 0 then
-        time = time - 500
+    if timer > 0 then
+        timer = timer - 500
     end
    
     -- Control the fleets
@@ -560,7 +560,7 @@ function deathDVbomber()
         DVreinforcements = DVreinforcements - 1
         for i, j in ipairs(bombers) do
             if not j:exists() then
-                bomber = pilot.add("Dvaered Ancestor", "dvaered_norun", obstinate:pos())[1]
+                bomber = pilot.add( "Dvaered Ancestor", "Dvaered", obstinate:pos(), nil, "dvaered_norun" )
                 bomber:rmOutfit("all")
                 bomber:addOutfit("TeraCom Imperator Launcher", 1, true)
                 bomber:addOutfit("Engine Reroute", 1)
@@ -609,7 +609,7 @@ end
 
 -- Make escorts fight back, then return to their positions
 function attacked()
-    time = 3000
+    timer = 3000
     
     for i, j in ipairs(fleetDV) do
         if j:exists() and (not base:exists() or vec2.dist(j:pos(), base:pos()) > safestandoff) and vec2.dist(j:pos(), obstinate:pos()) < 1000 then

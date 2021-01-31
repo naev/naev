@@ -140,7 +140,7 @@ function enter()
       missionstarted = true
       j = jump.get(destsysname, destjumpname)
       v = j:pos()
-      hawk = pilot.add("Dvaered Goddard", "dvaered_norun", v-vec2.new(1500,8000))[1]
+      hawk = pilot.add( "Dvaered Goddard", "Dvaered", v-vec2.new(1500,8000), nil, "dvaered_norun" )
       hawk:rename(_("Hawk"))
       hawk:setHilight(true)
       hawk:setVisible(true)
@@ -149,7 +149,7 @@ function enter()
       hawk:hyperspace(system.get(destjumpname))
       hawk:broadcast(string.format(chatter[0], destjumpname))
       fleethooks = {}
-      fleetdv = pilot.add("Dvaered Home Guard", "dvaered_norun", hawk:pos()-vec2.new(1000,1500))
+      fleetdv = addShips( 14, "Dvaered Vendetta", "Dvaered", hawk:pos()-vec2.new(1000,1500), nil, "dvaered_norun" )
       for i, j in ipairs(fleetdv) do
          j:changeAI("dvaered_norun")
          j:setHilight(true)
@@ -287,7 +287,7 @@ function spawn_fleet() -- spawn warlord killing fleet
    player.cinematics(true)
    player.cinematics(false)
    jump_fleet_entered = true
-   jump_fleet = pilot.add("Dvaered Med Force", "dvaered_norun", system.get(destjumpname))
+   jump_fleet = pilot.addFleet("Dvaered Med Force", system.get(destjumpname), "dvaered_norun")
    broadcast_first(jump_fleet, string.format(chatter[8], destplanetname))
    for i, j in ipairs(jump_fleet) do
       j:changeAI("dvaered_norun")

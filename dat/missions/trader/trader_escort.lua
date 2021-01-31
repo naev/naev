@@ -280,27 +280,19 @@ function spawnConvoy ()
    end
 
    if convoysize == 1 then
-      ambush = pilot.add("Trader Ambush 1", "baddie_norun", ambush_src)
+      ambush = pilot.addFleet( "Trader Ambush 1", ambush_src, "baddie_norun" )
    elseif convoysize == 2 then
-      ambush = pilot.add(
-         string.format( "Trader Ambush %d", rnd.rnd(1,2) ), "baddie_norun",
-         ambush_src )
-   elseif convoysize == 3 then
-      ambush = pilot.add(
-         string.format( "Trader Ambush %d", rnd.rnd(2,3) ), "baddie_norun",
-         ambush_src )
-   elseif convoysize == 4 then
-      ambush = pilot.add(
-         string.format( "Trader Ambush %d", rnd.rnd(2,4) ), "baddie_norun",
-         ambush_src )
-   else
-      ambush = pilot.add(
-         string.format( "Trader Ambush %d", rnd.rnd(3,5) ), "baddie_norun",
-         ambush_src )
+      ambush = pilot.addFleet( string.format( "Trader Ambush %d", rnd.rnd(1,2) ), ambush_src, "baddie_norun" )
+   elseif convoysize == 3 then                                                                         
+      ambush = pilot.addFleet( string.format( "Trader Ambush %d", rnd.rnd(2,3) ), ambush_src, "baddie_norun" )
+   elseif convoysize == 4 then                                                                         
+      ambush = pilot.addFleet( string.format( "Trader Ambush %d", rnd.rnd(2,4) ), ambush_src, "baddie_norun" )
+   else                                                                                                
+      ambush = pilot.addFleet( string.format( "Trader Ambush %d", rnd.rnd(3,5) ), ambush_src, "baddie_norun" )
    end
 
    --Spawn the convoy
-   convoy = pilot.add(convoyname, nil, origin)
+   convoy = pilot.addFleet(convoyname, origin)
    local minspeed = nil
    for i, p in ipairs(convoy) do
       if alive ~= nil and alive < i then

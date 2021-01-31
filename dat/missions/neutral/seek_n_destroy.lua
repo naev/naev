@@ -300,7 +300,7 @@ function enter ()
          pilot.toggleSpawn( false )
          pilot.clear()
 
-         target_ship = pilot.add( ship, nil, pos )[1]
+         target_ship = pilot.addFleet( ship, pos )[1]
          target_ship:rename( name )
          target_ship:setHilight( true )
          target_ship:setVisplayer()
@@ -331,15 +331,15 @@ function trigger_ambush()
    x = 4000 * rnd.rnd() - 2000
    y = 4000 * rnd.rnd() - 2000
    pos = jp:pos() + vec2.new(x,y)
-   ambush[1] = pilot.add( aship, nil, pos )[1]
+   ambush[1] = pilot.addFleet( aship, pos )[1]
    x = 4000 * rnd.rnd() - 2000
    y = 4000 * rnd.rnd() - 2000
    pos = jp:pos() + vec2.new(x,y)
-   ambush[2] = pilot.add( bship, nil, pos )[1]
+   ambush[2] = pilot.addFleet( bship, pos )[1]
    x = 4000 * rnd.rnd() - 2000
    y = 4000 * rnd.rnd() - 2000
    pos = jp:pos() + vec2.new(x,y)
-   ambush[3] = pilot.add( bship, nil, pos )[1]
+   ambush[3] = pilot.addFleet( bship, pos )[1]
 
    ambush[1]:setHostile()
    ambush[2]:setHostile()
@@ -367,7 +367,7 @@ function spawn_advisor ()
    y = 4000 * rnd.rnd() - 2000
    pos = jp:pos() + vec2.new(x,y)
 
-   advisor = pilot.addRaw( "Lancelot", "baddie_norun", pos, "Mercenary" )
+   advisor = pilot.add( "Lancelot", "Mercenary", pos, nil, "baddie_norun" )
    hailie = hook.timer( 2000, "hailme" )
 
    hailed[#hailed+1] = advisor

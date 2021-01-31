@@ -229,8 +229,6 @@ int diff_isApplied( const char *name )
 static UniDiff_t* diff_get( const char *name )
 {
    int i;
-   if (diff_stack == NULL)
-      return NULL;
    for (i=0; i<array_size(diff_stack); i++)
       if (strcmp(diff_stack[i].name,name)==0)
          return &diff_stack[i];

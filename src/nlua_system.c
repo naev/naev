@@ -16,6 +16,7 @@
 
 #include "nlua_system.h"
 
+#include "array.h"
 #include "land.h"
 #include "land_outfits.h"
 #include "log.h"
@@ -273,13 +274,13 @@ static int systemL_get( lua_State *L )
 static int systemL_getAll( lua_State *L )
 {
    StarSystem *sys;
-   int i, ind, n;
+   int i, ind;
 
    lua_newtable(L);
-   sys = system_getAll( &n );
+   sys = system_getAll();
 
    ind = 1;
-   for (i=0; i<n; i++) {
+   for (i=0; i<array_size(sys); i++) {
       lua_pushnumber( L, ind++ );
       lua_pushsystem( L, system_index( &sys[i] ) );
       lua_settable(   L, -3 );

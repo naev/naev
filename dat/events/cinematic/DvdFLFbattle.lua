@@ -80,13 +80,13 @@ function FLFSpawn ()
     source_system = system.get("Zacron")
 
     flfguys[flfwave] = {}
-    flfguys[flfwave][1] = pilot.add("FLF Vendetta", nil, source_system)[1]
-    flfguys[flfwave][2] = pilot.add("FLF Vendetta", nil, source_system)[1]
-    flfguys[flfwave][3] = pilot.add("FLF Vendetta", nil, source_system)[1]
-    flfguys[flfwave][4] = pilot.add("FLF Vendetta", nil, source_system)[1]
-    flfguys[flfwave][5] = pilot.add("FLF Pacifier", nil, source_system)[1]
-    flfguys[flfwave][6] = pilot.add("FLF Lancelot", nil, source_system)[1]
-    flfguys[flfwave][7] = pilot.add("FLF Lancelot", nil, source_system)[1]
+    flfguys[flfwave][1] = pilot.add( "Vendetta", "FLF", source_system, _("FLF Vendetta") )
+    flfguys[flfwave][2] = pilot.add( "Vendetta", "FLF", source_system, _("FLF Vendetta") )
+    flfguys[flfwave][3] = pilot.add( "Vendetta", "FLF", source_system, _("FLF Vendetta") )
+    flfguys[flfwave][4] = pilot.add( "Vendetta", "FLF", source_system, _("FLF Vendetta") )
+    flfguys[flfwave][5] = pilot.add( "Pacifier", "FLF", source_system, _("FLF Pacifier") )
+    flfguys[flfwave][6] = pilot.add( "Lancelot", "FLF", source_system, _("FLF Lancelot") )
+    flfguys[flfwave][7] = pilot.add( "Lancelot", "FLF", source_system, _("FLF Lancelot") )
     
     flfwave = flfwave + 1
     if flfwave <=5 then
@@ -98,14 +98,14 @@ function DvaeredSpawn ()
     source_system = system.get("Doranthex")
 
     dvaeredguys[dvaeredwave] = {}
-    dvaeredguys[dvaeredwave][1] = pilot.add("Dvaered Vendetta", nil, source_system)[1]
-    dvaeredguys[dvaeredwave][2] = pilot.add("Dvaered Vendetta", nil, source_system)[1]
-    dvaeredguys[dvaeredwave][3] = pilot.add("Dvaered Vendetta", nil, source_system)[1]
-    dvaeredguys[dvaeredwave][4] = pilot.add("Dvaered Ancestor", nil, source_system)[1]
-    dvaeredguys[dvaeredwave][5] = pilot.add("Dvaered Ancestor", nil, source_system)[1]
-    dvaeredguys[dvaeredwave][6] = pilot.add("Dvaered Vigilance", nil, source_system)[1]
-    dvaeredguys[dvaeredwave][7] = pilot.add("Dvaered Vigilance", nil, source_system)[1]
-    dvaeredguys[dvaeredwave][8] = pilot.add("Dvaered Goddard", nil, source_system)[1]
+    dvaeredguys[dvaeredwave][1] = pilot.add( "Dvaered Vendetta", "Dvaered", source_system )
+    dvaeredguys[dvaeredwave][2] = pilot.add( "Dvaered Vendetta", "Dvaered", source_system )
+    dvaeredguys[dvaeredwave][3] = pilot.add( "Dvaered Vendetta", "Dvaered", source_system )
+    dvaeredguys[dvaeredwave][4] = pilot.add( "Dvaered Ancestor", "Dvaered", source_system )
+    dvaeredguys[dvaeredwave][5] = pilot.add( "Dvaered Ancestor", "Dvaered", source_system )
+    dvaeredguys[dvaeredwave][6] = pilot.add( "Dvaered Vigilance", "Dvaered", source_system )
+    dvaeredguys[dvaeredwave][7] = pilot.add( "Dvaered Vigilance", "Dvaered", source_system )
+    dvaeredguys[dvaeredwave][8] = pilot.add( "Dvaered Goddard", "Dvaered", source_system )
     
     dvaeredwave = dvaeredwave + 1
     if dvaeredwave <=5 then

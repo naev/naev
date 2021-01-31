@@ -61,7 +61,7 @@
 #define UNIEDIT_NEWSYS     2  /**< New system editor mode. */
 
 
-extern int systems_nstack;
+extern StarSystem *systems_stack;
 
 
 static int uniedit_mode       = UNIEDIT_DEFAULT; /**< Editor mode. */
@@ -500,7 +500,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                return 1;
             }
 
-            for (i=0; i<systems_nstack; i++) {
+            for (i=0; i<array_size(systems_stack); i++) {
                sys = system_getIndex( i );
 
                /* get position */
@@ -643,7 +643,7 @@ static int uniedit_checkName( char *name )
    int i;
 
    /* Avoid name collisions. */
-   for (i=0; i<systems_nstack; i++) {
+   for (i=0; i<array_size(systems_stack); i++) {
       if (strcmp(name, system_getIndex(i)->name)==0) {
          dialogue_alert( _("The Star System '%s' already exists!"), name );
          return 1;
@@ -1455,15 +1455,15 @@ static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
    (void) parent;
    (void) unused;
    unsigned int wid;
-   int i, j, n;
+   int i, j;
    Planet *p;
    char **str;
    int h;
 
    /* Get all assets. */
-   p  = planet_getAll( &n );
+   p  = planet_getAll();
    j  = 0;
-   for (i=0; i<n; i++)
+   for (i=0; i<array_size(p); i++)
       if (p[i].real == ASSET_VIRTUAL)
          j = 1;
    if (j==0) {
@@ -1476,9 +1476,9 @@ static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
    window_setCancel( wid, window_close );
 
    /* Add virtual asset list. */
-   str   = malloc( sizeof(char*) * n );
+   str   = malloc( sizeof(char*) * array_size(p) );
    j     = 0;
-   for (i=0; i<n; i++)
+   for (i=0; i<array_size(p); i++)
       if (p[i].real == ASSET_VIRTUAL)
          str[j++] = strdup( p[i].name );
    h = UNIEDIT_EDIT_HEIGHT-60-(BUTTON_HEIGHT+20);

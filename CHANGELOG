@@ -5,7 +5,12 @@
       * New missions
          * Follow happenings on "Minerva Station"
          * Invade the frontier with the Dvaered
+      * New translation(s) in progress
+         * Czech
    * Engine
+      * Added image format support beyond PNG (notably WebP)
+      * Game data now handled by PhysicsFS, allowing for multiple sources and easier modding
+      * Meson is now the only build system, and development builds can integrate all assets/translations without being installed
       * Fonts now use distance fields and much better in many cases
       * Improved how Lua was being loaded
       * Added library that supports lots of Love2D API in Naev

@@ -46,8 +46,7 @@ function create ()
    end
 
    -- Create pilot
-   p = pilot.addRaw( "Mule", "trader", spawn_pos, 'Trader' )
-   p:rename( trader_name )
+   p = pilot.add( "Mule", "Trader", spawn_pos, trader_name )
    p:setFriendly()
    p:setInvincible()
    p:setVisplayer()

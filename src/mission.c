@@ -407,9 +407,6 @@ void mission_sysMark (void)
       /* Must be a valid player mission. */
       if (player_missions[i]->id == 0)
          continue;
-      /* Must have markers. */
-      if (player_missions[i]->markers == NULL)
-         continue;
 
       n = array_size( player_missions[i]->markers );
       for (j=0; j<n; j++) {
@@ -438,12 +435,10 @@ void mission_sysComputerMark( Mission* misn )
    space_clearComputerMarkers();
 
    /* Set all the markers. */
-   if (misn->markers != NULL) {
-      n = array_size(misn->markers);
-      for (i=0; i<n; i++) {
-         sys = system_getIndex( misn->markers[i].sys );
-         sys_setFlag( sys,SYSTEM_CMARKED );
-      }
+   n = array_size(misn->markers);
+   for (i=0; i<n; i++) {
+      sys = system_getIndex( misn->markers[i].sys );
+      sys_setFlag( sys,SYSTEM_CMARKED );
    }
 }
 
@@ -1032,15 +1027,13 @@ int missions_saveActive( xmlTextWriterPtr writer )
 
          /* Markers. */
          xmlw_startElem( writer, "markers" );
-         if (player_missions[i]->markers != NULL) {
-            n = array_size( player_missions[i]->markers );
-            for (j=0; j<n; j++) {
-               xmlw_startElem(writer,"marker");
-               xmlw_attr(writer,"id","%d",player_missions[i]->markers[j].id);
-               xmlw_attr(writer,"type","%d",player_missions[i]->markers[j].type);
-               xmlw_str(writer,"%s", system_getIndex(player_missions[i]->markers[j].sys)->name);
-               xmlw_endElem(writer); /* "marker" */
-            }
+         n = array_size( player_missions[i]->markers );
+         for (j=0; j<n; j++) {
+            xmlw_startElem(writer,"marker");
+            xmlw_attr(writer,"id","%d",player_missions[i]->markers[j].id);
+            xmlw_attr(writer,"type","%d",player_missions[i]->markers[j].type);
+            xmlw_str(writer,"%s", system_getIndex(player_missions[i]->markers[j].sys)->name);
+            xmlw_endElem(writer); /* "marker" */
          }
          xmlw_endElem( writer ); /* "markers" */
 
