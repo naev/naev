@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-27 20:07-0500\n"
-"PO-Revision-Date: 2021-01-28 00:35+0000\n"
+"PO-Revision-Date: 2021-01-31 15:42+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -1479,10 +1479,15 @@ msgid ""
 "the locals know how unpleasant it is to have to work in such raging, "
 "radioactive conditions."
 msgstr ""
+"To, co je krásné, je často nebezpečné, ale někdy to funguje i naopak. Bar "
+"kosmodromu na Anubisu má výhled na rokli na povrchu planety a radioaktivní "
+"bouře, které jím často zuří, jsou docela na pohled. Oceňují to však pouze "
+"cizinci, většina místních obyvatel ví, jak nepříjemné je muset pracovat v "
+"takových zuřivých, radioaktivních podmínkách."
 
 #: dat/assets/anya.xml:2
 msgid "Anya"
-msgstr ""
+msgstr "Anya"
 
 #: dat/assets/anya.xml:28
 msgid ""
@@ -1494,6 +1499,12 @@ msgid ""
 "capital world. This is due, at least in part, to the geological "
 "instabilities of the planet."
 msgstr ""
+"Anya je dvojče planety Sabe, obíhající kolem jejich společného gravitačního "
+"pole v tandemu. Anya je však v důsledku geologické činnosti zahalena "
+"permanentní oblačností popela a sněhu. Malý počet Thurionů žije na povrchu "
+"Anyy, ale dosud nebylo zahájeno žádné kolonizační úsilí, a to navzdory "
+"blízkosti planety k Sabe, thurianskému hlavnímu světu. Důvodem je, alespoň "
+"zčásti, geologická nestabilita planety."
 
 #: dat/assets/anya.xml:29
 msgid ""
@@ -1501,26 +1512,29 @@ msgid ""
 "is usual for Thurion bars, no alcohol or other substances deemed to be "
 "damaging to the brain are served."
 msgstr ""
+"Bar na Anyě je malý a kuriózní, zalidněný místními obyvateli, kteří zde "
+"žijí. Jak je u thurionských barů obvyklé, nepodává se žádný alkohol ani jiné "
+"látky považované za škodlivé pro mozek."
 
 #: dat/assets/apez_ii.xml:2
 msgid "Apez II"
-msgstr ""
+msgstr "Apez II"
 
 #: dat/assets/apez_v.xml:2
 msgid "Apez V"
-msgstr ""
+msgstr "Apez V"
 
 #: dat/assets/apik_i.xml:2
 msgid "Apik I"
-msgstr ""
+msgstr "Apik I"
 
 #: dat/assets/apik_ii.xml:2
 msgid "Apik II"
-msgstr ""
+msgstr "Apik II"
 
 #: dat/assets/apik_shipyard.xml:2
 msgid "Apik Shipyard"
-msgstr ""
+msgstr "Loděnice Apik"
 
 #: dat/assets/apik_shipyard.xml:27
 msgid ""
@@ -1528,18 +1542,21 @@ msgid ""
 "needs of the general population. It efficiently churns out and services "
 "civilian vessels on an as-needed basis."
 msgstr ""
+"Na rozdíl od stanice Sigma na Proteře je loděnice Apik navržena tak, aby "
+"uspokojovala potřeby běžné populace. Účinně chrlí a obsluhuje civilní "
+"plavidla podle potřeby."
 
 #: dat/assets/aquilia.xml:2
 msgid "Aquilia"
-msgstr ""
+msgstr "Aquilia"
 
 #: dat/assets/arai.xml:2
 msgid "Arai"
-msgstr ""
+msgstr "Arai"
 
 #: dat/assets/arashu.xml:2
 msgid "Arashu"
-msgstr ""
+msgstr "Arashu"
 
 #: dat/assets/arashu.xml:30
 msgid ""
@@ -1551,6 +1568,12 @@ msgid ""
 "platforms so the workers and equipment are safe from the constant seismic "
 "activity."
 msgstr ""
+"Arashu je zvláštní planeta, je oceánská i vysoce vulkanická. Oceánská kůra "
+"planety je náchylná k zemětřesení, což způsobuje přílivové vlny, které se "
+"omývají několika oblastmi souše. Sirianská korporace investovala do využití "
+"energií uvolněných tímto procesem a přeměnila planetu na ziskový závod na "
+"výrobu zbraní. Veškerá výroba probíhá na plovoucích plošinách, takže "
+"pracovníci a vybavení jsou v bezpečí před neustálou seismickou činností."
 
 #: dat/assets/arashu.xml:31
 msgid ""
@@ -1560,10 +1583,15 @@ msgid ""
 "at the moment, so it is actually quite fascinating interesting to watch, "
 "especially once you can place the spaceport and bar!"
 msgstr ""
+"Bar je vybaven velkým displejem, který zobrazuje geologickou mapu planety, "
+"která díky tomu, že je většina světa pokryta oceánem, vytváří docela "
+"nezajímavou mapu. Displej také zobrazuje veškerou sopečnou činnost "
+"probíhající v aktuálním čase, takže je ve skutečnosti docela fascinující ho "
+"sledovat, zvláště když na něm vidíte kosmodrom a bar!"
 
 #: dat/assets/arcadia.xml:2
 msgid "Arcadia"
-msgstr ""
+msgstr "Arcadia"
 
 #: dat/assets/arcadia.xml:28
 msgid ""
@@ -1574,6 +1602,13 @@ msgid ""
 "technology and procedures. The project was in fact so successful that "
 "Arcadia became a hub for food distribution throughout localized Za'lek space."
 msgstr ""
+"Ironicky, přesto výstižně pojmenovaný, je svět Arcadie bombardovaný kyselými "
+"dešti a dalšími, stejně nepříjemnými povětrnostními podmínkami. Jako takový "
+"byl základním světem úspěšného experimentu, aby se zjistilo, zda takové "
+"prostředí může stále podporovat masivní kampaň pěstování plodin při správné "
+"izolační technologii a postupech. Projekt byl ve skutečnosti tak úspěšný, že "
+"se Arcadia stala centrem distribuce potravin v lokalizovaném Za'leckském "
+"prostoru."
 
 #: dat/assets/arcadia.xml:29
 msgid ""
@@ -1581,10 +1616,13 @@ msgid ""
 "discussing new and better ways to improve farming technology and get more "
 "and better food for less cost."
 msgstr ""
+"Mnoho kapitánů, zemědělců a vědců v nákladní dopravě se zde mírumilovně mísí "
+"a diskutují o nových a lepších způsobech, jak zlepšit zemědělskou "
+"technologii a získat více kvalitnějšího jídla za nižší cenu."
 
 #: dat/assets/arch_arai.xml:2
 msgid "Arch Arai"
-msgstr ""
+msgstr "Arch Arai"
 
 #: dat/assets/arch_arai.xml:30
 msgid ""
@@ -1593,6 +1631,10 @@ msgid ""
 "fairly law-abiding Sirius world, earning its existence through trade and "
 "industry like almost every other planet."
 msgstr ""
+"Kdysi nezávislý svět, který je domovem pirátů a obchodníků na černém trhu, "
+"Arch Arai již dávno propadl kouzlu Dotknutých. Nyní je to svět Sirius, který "
+"dodržuje zákony a vydělává na své existenci obchodem a průmyslem jako téměř "
+"každá jiná planeta."
 
 #: dat/assets/arch_arai.xml:31
 msgid ""
@@ -1601,10 +1643,13 @@ msgid ""
 "effect is contagious making newcomers follow the example of those who are "
 "already there, almost instinctively."
 msgstr ""
+"Tento bar je klidné místo. Ačkoli tu rozhodně nechybí patronát, zdá se, že "
+"lidé, kteří sem přicházejí, si z ničeho nic nedělají. Efekt je nakažlivý, "
+"takže nováčci téměř instinktivně následují příklad těch, kteří tu již jsou."
 
 #: dat/assets/arck.xml:2
 msgid "Arck"
-msgstr ""
+msgstr "Arck"
 
 #: dat/assets/arck.xml:28
 msgid ""
@@ -1615,6 +1660,11 @@ msgid ""
 "doing here is a form of reverse terraforming - an attempt to turn Arck into "
 "an X class planet."
 msgstr ""
+"S devíti miliardami obyvatel je Arck jedním z nejhustěji obydlených světů v "
+"galaxii. Většinu povrchu planety pokrývá obrovské, rozlehlé město. "
+"Přirozeně, s tolika obyvateli přichází ii obrovské znečištění životního "
+"prostředí, mnoho skeptiků věří, že to, co zde Dvaered dělají, je forma "
+"reverzního terraformingu - pokus proměnit Arck na planetu třídy X."
 
 #: dat/assets/arck.xml:29
 msgid ""
@@ -1624,10 +1674,15 @@ msgid ""
 "often irritates traders who come here to do business, only to find "
 "themselves in the middle of a Dvaered Turborave party."
 msgstr ""
+"Kosmodrom na Arcku se nachází přímo uprostřed obzvlášť hustě osídleného "
+"městského uzlu. Přidružený bar byl rozšířen a přeměněn na obecné zařízení "
+"pro volný čas pro místní obyvatele, něco, co často dráždí obchodníky, kteří "
+"sem přicházejí podnikat, jen aby se ocitli uprostřed dvaeredské Turborave "
+"párty."
 
 #: dat/assets/arcturus_gamma.xml:2
 msgid "Arcturus Gamma"
-msgstr ""
+msgstr "Arcturus Gamma"
 
 #: dat/assets/arcturus_gamma.xml:30
 msgid ""
