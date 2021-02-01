@@ -255,7 +255,7 @@ int main( int argc, char** argv )
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
 
    /* Set up I/O. */
-   PHYSFS_setWriteDir( nfile_dataPath() );
+   ndata_setupWriteDir();
 
    if (conf.redirect_file && log_copying()) {
       log_redirect();
@@ -271,8 +271,7 @@ int main( int argc, char** argv )
 #endif /* defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING) && defined(_GNU_SOURCE) */
 
    /* Open data. */
-   if (ndata_open() != 0)
-      ERR( _("Failed to open ndata.") );
+   ndata_setupReadDirs();
 
    /* We now know which translations to use. */
    gettext_setLanguage( conf.language );
@@ -465,8 +464,6 @@ int main( int argc, char** argv )
    gl_exit(); /* Kills video output */
    sound_exit(); /* Kills the sound */
    news_exit(); /* Destroys the news. */
-
-   ndata_close(); /* Free PhysicsFS resources. */
 
    /* Free the icon. */
    if (naev_icon)

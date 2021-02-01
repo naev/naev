@@ -111,39 +111,6 @@ static char * xdgGetRelativeHome( const char *envname, const char *relativefallb
 }
 #endif
 
-static char naev_dataPath[PATH_MAX] = "\0"; /**< Store Naev's data path. */
-/**
- * @brief Gets Naev's data path (for user data such as saves and screenshots)
- *
- *    @return The xdg data path.
- */
-const char* nfile_dataPath (void)
-{
-   const char *osDefault;
-
-   if (naev_dataPath[0] == '\0') {
-      /* Global override is set. */
-      if (conf.datapath) {
-         nsnprintf( naev_dataPath, PATH_MAX, "%s/", conf.datapath );
-         return naev_dataPath;
-      }
-#if HAS_MACOS
-      /* For historical reasons predating physfs adoption, this case is different. */
-      osDefault = PHYSFS_getPrefDir(".", "org.naev.Naev");
-#else
-      /* TODO: Test Windows; we want \<org>\<app>\ to resolve the same as \naev\. */
-      osDefault = PHYSFS_getPrefDir(".", "naev");
-#endif
-      if (osDefault == NULL) {
-         WARN(_("Cannot determine data path, using current directory."));
-         osDefault = "./naev/";
-      }
-      strncpy( naev_dataPath, osDefault, PATH_MAX-1 );
-   }
-
-   return naev_dataPath;
-}
-
 
 static char naev_configPath[PATH_MAX] = "\0"; /**< Store Naev's config path. */
 /**

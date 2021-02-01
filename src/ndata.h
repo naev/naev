@@ -76,15 +76,8 @@
 #define INTRO_PATH               "intro"
 #define RESCUE_PATH              "rescue.lua"
 
-/*
- * ndata open/close
- */
-int ndata_open (void);
-void ndata_close (void);
-
-/*
- * Individual file functions.
- */
+void ndata_setupWriteDir (void);
+void ndata_setupReadDirs (void);
 void* ndata_read( const char* filename, size_t *filesize );
 char** ndata_listRecursive( const char *path );
 int ndata_backupIfExists( const char *path );
