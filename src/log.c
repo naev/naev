@@ -11,6 +11,7 @@
 /** @cond */
 #include <stdarg.h>
 #include <stdio.h>
+#include <sys/stat.h>
 #include <time.h> /* strftime */
 #include "physfs.h"
 

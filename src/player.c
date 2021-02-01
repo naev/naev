@@ -2218,23 +2218,19 @@ void player_autohail (void)
       p = pilot_stack[i];
 
       /* Must be hailing. */
-      if (pilot_isFlag(p, PILOT_HAILING))
-         break;
+      if (pilot_isFlag(p, PILOT_HAILING)) {
+         /* Try to hail. */
+         pilot_setTarget( player.p, p->id );
+         gui_setTarget();
+         player_hail();
+
+         /* Clear hails if none found. */
+         player_checkHail();
+         return;
+      }
    }
 
-   /* Not found any. */
-   if (i >= array_size(pilot_stack)) {
-      player_message(_("#rYou haven't been hailed by any pilots."));
-      return;
-   }
-
-   /* Try to hail. */
-   pilot_setTarget( player.p, p->id );
-   gui_setTarget();
-   player_hail();
-
-   /* Clear hails if none found. */
-   player_checkHail();
+   player_message(_("#rYou haven't been hailed by any pilots."));
 }
 
 
