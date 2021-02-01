@@ -172,6 +172,8 @@ function bargreeter()
 end
 
 function approach_terminal()
+   local spaticketcost = 100
+
    local msgs = {
       _(" TODAY MIGHT BE YOUR LUCKY DAY."),
       _(" THIS IS SO EXCITING."),
@@ -253,6 +255,17 @@ function approach_terminal()
          return
       end
 
+      -- Special case
+      if idx=="spaticket" then
+         if spaticketcost > minerva.tokens_get() then
+            -- Not enough money.
+            vn.jump( "trade_notenough" )
+         else
+            vn.jump(idx)
+         end
+         return
+      end
+
       if idx < 0 then
          vn.jump( "trade_soldout" )
          return
@@ -290,6 +303,10 @@ function approach_terminal()
             opts[k] = { string.format(_("%s (#p%d Tokens#0)"), _(v[1]), tokens), k }
          end
       end
+      -- Add special ticket
+      if player.evtDone("Spa Propaganda") and var.peek("minerva_spa_ticket")==nil then
+         table.insert( opts, 1, {_("Special Spa Ticket (#p100 Tokens#0)"), "spaticket"} )
+      end
       table.insert( opts, {_("Back"), "start"} )
       return opts
    end, handler )
@@ -320,8 +337,23 @@ function approach_terminal()
    end )
    vn.label("trade_consumate")
    vn.sfxMoney()
-   t:say( _("\"THANK YOU FOR YOUR BUSINESS.\"") )
+   t:say(_([[""THANK YOU FOR YOUR BUSINESS."]]))
    vn.jump("trade")
+
+   -- Buying the ticket
+   vn.label("spaticket")
+   t(_([["ARE YOU SURE YOU WANT TO TRADE IN FOR THE PREMIUM AND EXCLUSIVE SPECIAL SPA TICKET?"
+"THIS TICKET WILL ALLOW YOU TO ENTER A LOTTERY TO WIN AN EXCLUSIVE RELAXING TIME AT THE MINERVA STATION ALL NATURAL SPA WITH CYBORG CHICKEN."]]))
+   vn.menu( {
+      {_("Trade"), "spabuyyes" },
+      {_("Cancel"), "trade" },
+   } )
+   vn.label("spabuyyes")
+   vn.func( function ()
+      minerva.tokens_pay( -spaticketcost )
+      var.push( "minerva_spa_ticket", true )
+   end )
+   vn.jump("trade_consumate")
 
    vn.label( "leave" )
    vn.fadeout()
