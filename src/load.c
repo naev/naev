@@ -30,7 +30,6 @@
 #include "mission.h"
 #include "news.h"
 #include "ndata.h"
-#include "nfile.h"
 #include "nlua_var.h"
 #include "nstring.h"
 #include "nxml.h"
@@ -94,10 +93,13 @@ static int load_load( nsave_t *save, const char *path );
 static int load_gameInternal( const char* file, const char* version );
 static int load_enumerateCallback( void* data, const char* origdir, const char* fname );
 static int load_sortCompare( const void *p1, const void *p2 );
+static xmlDocPtr load_xml_parsePhysFS( const char* filename );
 
 
 /**
  * @brief Loads an individual save.
+ * @param[out] save Structure to populate.
+ * @param path PhysicsFS path (i.e., relative path starting with "saves/").
  */
 static int load_load( nsave_t *save, const char *path )
 {
@@ -108,7 +110,7 @@ static int load_load( nsave_t *save, const char *path )
    memset( save, 0, sizeof(nsave_t) );
 
    /* Load the XML. */
-   doc   = xmlParseFile(path);
+   doc = load_xml_parsePhysFS( path );
    if (doc == NULL) {
       WARN( _("Unable to parse save path '%s'."), path);
       return -1;
@@ -230,7 +232,7 @@ int load_refresh (void)
    for (i=0; i<array_size(files); i++) {
       if (!ok)
          ns = &array_grow( &load_saves );
-      nsnprintf( buf, sizeof(buf), "%ssaves/%s", PHYSFS_getWriteDir(), files[i].name );
+      nsnprintf( buf, sizeof(buf), "saves/%s", files[i].name );
       ok = load_load( ns, buf );
    }
 
@@ -511,7 +513,7 @@ static void load_menu_delete( unsigned int wdw, char *str )
 
    /* Remove it. */
    pos = toolkit_getListPos( wid, "lstSaves" );
-   remove( load_saves[pos].path ); /* remove is portable and will call unlink on linux. */
+   PHYSFS_delete( load_saves[pos].path );
 
    /* need to reload the menu */
    load_menu_close(wdw, NULL);
@@ -564,7 +566,7 @@ static void load_compatSlots (void)
 /**
  * @brief Loads the diffs from game file.
  *
- *    @param file File that contains the new game.
+ *    @param file PhysicsFS path (i.e., relative path starting with "saves/").
  *    @return 0 on success.
  */
 int load_gameDiff( const char* file )
@@ -573,13 +575,13 @@ int load_gameDiff( const char* file )
    xmlDocPtr doc;
 
    /* Make sure it exists. */
-   if (!nfile_fileExists(file)) {
+   if (!PHYSFS_exists( file )) {
       dialogue_alert( _("Saved game file seems to have been deleted.") );
       return -1;
    }
 
    /* Load the XML. */
-   doc   = xmlParseFile(file);
+   doc = load_xml_parsePhysFS( file );
    if (doc == NULL)
       goto err;
    node  = doc->xmlChildrenNode; /* base node */
@@ -605,7 +607,7 @@ err:
 /**
  * @brief Loads the game from a file.
  *
- *    @param file File that contains the new game.
+ *    @param file PhysicsFS path (i.e., relative path starting with "saves/").
  *    @return 0 on success
  */
 int load_gameFile( const char *file )
@@ -629,7 +631,7 @@ int load_game( nsave_t *ns )
 /**
  * @brief Actually loads a new game.
  *
- *    @param file File that contains the new game.
+ *    @param file PhysicsFS path (i.e., relative path starting with "saves/").
  *    @param version Version string of game to load.
  *    @return 0 on success.
  */
@@ -641,13 +643,13 @@ static int load_gameInternal( const char* file, const char* version )
    int version_diff = (version!=NULL) ? naev_versionCompare(version) : 0;
 
    /* Make sure it exists. */
-   if (!nfile_fileExists(file)) {
+   if (!PHYSFS_exists( file )) {
       dialogue_alert( _("Saved game file seems to have been deleted.") );
       return -1;
    }
 
    /* Load the XML. */
-   doc   = xmlParseFile(file);
+   doc = load_xml_parsePhysFS( file );
    if (doc == NULL)
       goto err;
    node  = doc->xmlChildrenNode; /* base node */
@@ -726,3 +728,13 @@ err:
 }
 
 
+/**
+ * @brief Temporary (hopefully) wrapper around xml_parsePhysFS in support of gzipped XML (like .ns files).
+ */
+static xmlDocPtr load_xml_parsePhysFS( const char* filename )
+{
+   char buf[PATH_MAX];
+
+   nsnprintf( buf, sizeof(buf), "%s/%s", PHYSFS_getWriteDir(), filename);
+   return xmlParseFile( buf );
+}
