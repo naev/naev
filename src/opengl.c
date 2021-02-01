@@ -66,10 +66,6 @@ static int gl_view_h = 0; /* Viewport height. */
 gl_Matrix4 gl_view_matrix = {0};
 
 
-/* Whether Intel is the OpenGL vendor. */
-static int intel_vendor = 0;
-
-
 /*
  * prototypes
  */
@@ -147,20 +143,6 @@ GLboolean gl_hasVersion( int major, int minor )
    if (GLVersion.major >= major && GLVersion.minor >= minor)
       return GL_TRUE;
    return GL_FALSE;
-}
-
-
-/**
- * @brief Returns whether the OpenGL vendor is Intel.
- *
- * This is a bit ugly, but it seems that Intel integrated graphics tend to lie
- * about their capabilities with regards to smooth points and lines.
- *
- *    @return 1 if Intel is the vendor, 0 otherwise.
- */
-int gl_vendorIsIntel (void)
-{
-   return intel_vendor;
 }
 
 
@@ -326,7 +308,6 @@ static int gl_createWindow( unsigned int flags )
 static int gl_getGLInfo (void)
 {
    int doublebuf;
-   char *vendor;
 
    SDL_GL_GetAttribute( SDL_GL_RED_SIZE, &gl_screen.r );
    SDL_GL_GetAttribute( SDL_GL_GREEN_SIZE, &gl_screen.g );
@@ -342,10 +323,6 @@ static int gl_getGLInfo (void)
    /* Texture information */
    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &gl_screen.tex_max);
    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &gl_screen.multitex_max);
-
-   /* Ugly, but Intel hardware seems to be uniquely problematic. */
-   vendor = (char*)glGetString(GL_VENDOR);
-   intel_vendor = !!(nstrcasestr(vendor, "Intel") != NULL);
 
    /* Debug happiness */
    DEBUG(_("OpenGL Drawable Created: %dx%d@%dbpp"), gl_screen.rw, gl_screen.rh, gl_screen.depth);
