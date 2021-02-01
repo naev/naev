@@ -27,8 +27,7 @@ function create()
    -- TODO some announcement/happy music
    vn.clear()
    vn.scene()
-   local t = vn.newCharacter( terminal.name,
-         { image=terminal.image, color=terminal.colour } )
+   local t = vn.newCharacter( minerva.vn_terminal() )
    vn.fadein()
    vn.na(_("You are minding your own business when suddenly a big fanfare plays while the lights begin strobing."))
    t(_([[The terminals all turn on in union and start blasting out their loudspeakers.

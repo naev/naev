@@ -183,8 +183,7 @@ function approach_terminal()
    }
    vn.clear()
    vn.scene()
-   local t = vn.newCharacter( terminal.name,
-         { image=terminal.image, color=terminal.colour } )
+   local t = vn.newCharacter( minerva.vn_terminal() )
    vn.fadein()
    vn.label( "start" )
    t:say( function() return string.format(

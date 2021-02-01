@@ -63,6 +63,10 @@ function minerva.vn_maikki()
    return vn.Character.new( minerva.maikki.name,
          { image=minerva.maikki.image, color=minerva.maikki.colour } )
 end
+function minerva.vn_terminal()
+   return vn.Character.new( minerva.terminal.name,
+         { image=minerva.terminal.image, color=minerva.terminal.colour } )
+end
 
 -- Token stuff
 -- Roughly 1 token is 1000 credits
