@@ -32,10 +32,10 @@
 
 /** @cond */
 #include <png.h>
-#include <stdarg.h> /* va_list for gl_print */
 #include <stdio.h>
 #include <stdlib.h>
 #include <zlib.h> /* Z_DEFAULT_COMPRESSION */
+#include "physfs.h"
 #include "SDL.h"
 #include "SDL_error.h"
 #include "SDL_version.h"
@@ -48,7 +48,6 @@
 #include "conf.h"
 #include "gui.h"
 #include "log.h"
-#include "ndata.h"
 #include "nstring.h"
 
 
@@ -100,7 +99,7 @@ static int write_png( const char *file_name, png_bytep *rows,
 /**
  * @brief Takes a screenshot.
  *
- *    @param filename Name of the file to save screenshot as.
+ *    @param filename PhysicsFS path (e.g., "screenshots/screenshot042.png") of the file to save screenshot as.
  */
 void gl_screenshot( const char *filename )
 {
@@ -677,7 +676,7 @@ void gl_exit (void)
 /**
  * @brief Saves a png.
  *
- *    @param file_name Name of the file to save the png as.
+ *    @param filename PhysicsFS path (e.g., "screenshots/screenshot042.png") of the output file.
  *    @param rows Rows containing the data.
  *    @param w Width of the png.
  *    @param h Height of the png.
@@ -685,13 +684,15 @@ void gl_exit (void)
  *    @param bitdepth Bit depth of the png.
  *    @return 0 on success.
  */
-static int write_png( const char *file_name, png_bytep *rows,
+static int write_png( const char *filename, png_bytep *rows,
       int w, int h, int colourtype, int bitdepth )
 {
    png_structp png_ptr;
    png_infop info_ptr;
    FILE *fp;
+   char file_name[PATH_MAX];
 
+   nsnprintf( file_name, sizeof(file_name), "%s/%s", PHYSFS_getWriteDir(), filename );
    /* Open file for writing. */
    if (!(fp = fopen(file_name, "wb"))) {
       WARN(_("Unable to open '%s' for writing."), file_name);

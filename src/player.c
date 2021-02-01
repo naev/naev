@@ -2103,9 +2103,8 @@ void player_screenshot (void)
 
    /* Try to find current screenshots. */
    for ( ; screenshot_cur < 1000; screenshot_cur++) {
-      nsnprintf( filename, PATH_MAX, "%sscreenshots/screenshot%03d.png",
-            PHYSFS_getWriteDir(), screenshot_cur );
-      if (!nfile_fileExists( filename ))
+      nsnprintf( filename, PATH_MAX, "screenshots/screenshot%03d.png", screenshot_cur );
+      if (!PHYSFS_exists( filename ))
          break;
    }
 

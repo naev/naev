@@ -28,7 +28,6 @@ SENTINEL( 0 ) int _nfile_concatPaths( char buf[ static 1 ], int maxLength, const
 #define nfile_concatPaths( buf, maxLength, path, ... ) _nfile_concatPaths( buf, maxLength, path, ##__VA_ARGS__, NULL )
 
 
-const char *nfile_dataPath( void );
 const char *nfile_configPath( void );
 const char *nfile_cachePath( void );
 
