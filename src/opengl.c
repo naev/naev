@@ -31,11 +31,10 @@
 
 
 /** @cond */
-#include <png.h>
-#include <stdlib.h>
-#include "physfs.h"
+#include "physfsrwops.h"
 #include "SDL.h"
 #include "SDL_error.h"
+#include "SDL_image.h"
 
 #include "naev.h"
 /** @endcond */
@@ -77,11 +76,6 @@ static int gl_getGLInfo (void);
 static int gl_defState (void);
 static int gl_setupScaling (void);
 static int gl_hint (void);
-/* png */
-static int write_png( const char *filename, png_bytep *rows,
-      int w, int h, int colourtype, int bitdepth );
-static void write_png_writecb( png_structp png_ptr, png_bytep src, png_size_t size );
-static void write_png_flushcb( png_structp png_ptr );
 
 
 /*
@@ -97,32 +91,36 @@ static void write_png_flushcb( png_structp png_ptr );
 void gl_screenshot( const char *filename )
 {
    GLubyte *screenbuf;
-   png_bytep *rows;
+   SDL_RWops *rw;
+   SDL_Surface *surface;
    int i, w, h;
 
    /* Allocate data. */
    w           = gl_screen.rw;
    h           = gl_screen.rh;
    screenbuf   = malloc( sizeof(GLubyte) * 3 * w*h );
-   rows        = malloc( sizeof(png_bytep) * h );
+   surface     = SDL_CreateRGBSurface( 0, w, h, 24, RGBAMASK );
 
    /* Read pixels from buffer -- SLOW. */
    glPixelStorei(GL_PACK_ALIGNMENT, 1); /* Force them to pack the bytes. */
    glReadPixels( 0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, screenbuf );
 
    /* Convert data. */
-   for (i = 0; i < h; i++)
-      rows[i] = &screenbuf[ (h - i - 1) * (3*w) ];
+   for (i=0; i<h; i++)
+      memcpy( (GLubyte*)surface->pixels + i * (3*w), &screenbuf[ (h - i - 1) * (3*w) ], 3*w );
+   free( screenbuf );
 
    /* Save PNG. */
-   write_png( filename, rows, w, h, PNG_COLOR_TYPE_RGB, 8);
+   if (!(rw = PHYSFSRWOPS_openWrite( filename )))
+      WARN( _("Aborting screenshot") );
+   else
+      IMG_SavePNG_RW( surface, rw, 1 );
 
    /* Check to see if an error occurred. */
    gl_checkErr();
 
    /* Free memory. */
-   free( screenbuf );
-   free( rows );
+   SDL_FreeSurface( surface );
 }
 
 
@@ -644,76 +642,4 @@ void gl_exit (void)
 
    /* Shut down the subsystem */
    SDL_QuitSubSystem(SDL_INIT_VIDEO);
-}
-
-
-/**
- * @brief Saves a png.
- *
- *    @param filename PhysicsFS path (e.g., "screenshots/screenshot042.png") of the output file.
- *    @param rows Rows containing the data.
- *    @param w Width of the png.
- *    @param h Height of the png.
- *    @param colourtype Colour type of the png.
- *    @param bitdepth Bit depth of the png.
- *    @return 0 on success.
- */
-static int write_png( const char *filename, png_bytep *rows,
-      int w, int h, int colourtype, int bitdepth )
-{
-   png_structp png_ptr;
-   png_infop info_ptr;
-   PHYSFS_File *fp;
-
-   /* Open file for writing. */
-   if (!(fp = PHYSFS_openWrite( filename ))) {
-      WARN(_("Unable to open '%s' for writing."), filename);
-      return -1;
-   }
-   PHYSFS_setBuffer( fp, 8192 );
-
-   /* Create working structs. */
-   if (!(png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL))) {
-      WARN(_("Unable to create png write struct."));
-      goto ERR_FAIL;
-   }
-   if (!(info_ptr = png_create_info_struct(png_ptr))) {
-      WARN(_("Unable to create PNG info struct."));
-      goto ERR_FAIL;
-   }
-
-   /* Set image details. */
-   png_set_write_fn(png_ptr, fp, write_png_writecb, write_png_flushcb);
-   png_set_compression_level(png_ptr, PNG_Z_DEFAULT_COMPRESSION);
-   png_set_IHDR(png_ptr, info_ptr, w, h, bitdepth, colourtype,
-         PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT,
-         PNG_FILTER_TYPE_DEFAULT);
-
-   /* Write image. */
-   png_write_info(png_ptr, info_ptr);
-   png_write_image(png_ptr, rows);
-   png_write_end(png_ptr, NULL);
-
-   /* Clean up. */
-   PHYSFS_close( fp );
-   png_destroy_write_struct( &png_ptr, &info_ptr );
-
-   return 0;
-
-ERR_FAIL:
-   PHYSFS_close( fp );
-   png_destroy_write_struct( &png_ptr, &info_ptr );
-   return -1;
-}
-
-/** @brief libpng write callback for write_png(). */
-static void write_png_writecb( png_structp png_ptr, png_bytep src, png_size_t size )
-{
-   PHYSFS_writeBytes( png_get_io_ptr( png_ptr ), src, size );
-}
-
-/** @brief libpng flush callback for write_png(). */
-static void write_png_flushcb( png_structp png_ptr )
-{
-   PHYSFS_flush( png_get_io_ptr( png_ptr ) );
 }
