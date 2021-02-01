@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-01-27 20:07-0500\n"
-"PO-Revision-Date: 2021-01-31 15:42+0000\n"
+"PO-Revision-Date: 2021-02-01 13:19+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -1690,6 +1690,9 @@ msgid ""
 "core systems. Piracy is nearly non-existent in the core systems due to the "
 "large standing force stationed here and their routine patrols."
 msgstr ""
+"Arcturus Gamma je první linií obrany Impéria, pokud jde o její základní "
+"systémy. Pirátství v hlavních systémech téměř neexistuje díky přítomnosti "
+"obrovské vojenské síly a jejích rutinních hlídek."
 
 #: dat/assets/arcturus_gamma.xml:31
 msgid ""
@@ -1697,50 +1700,53 @@ msgid ""
 "meticulously maintained and full of off-duty Empire soldiers - not a place "
 "to get into a fight."
 msgstr ""
+"Bar na Arcturus Gamma, který je skutečně užitečným místem, je kovově šedý, "
+"pečlivě udržovaný a plný vojáků říše mimo službu - není to místo, kde byste "
+"se mohli dostat do šarvátky."
 
 #: dat/assets/arcturus_i.xml:2
 msgid "Arcturus I"
-msgstr ""
+msgstr "Arcturus I"
 
 #: dat/assets/arcturus_ii.xml:2
 msgid "Arcturus II"
-msgstr ""
+msgstr "Arcturus II"
 
 #: dat/assets/ariadus_ii.xml:2
 msgid "Ariadus II"
-msgstr ""
+msgstr "Ariadus II"
 
 #: dat/assets/ariadus_iv.xml:2
 msgid "Ariadus IV"
-msgstr ""
+msgstr "Ariadus IV"
 
 #: dat/assets/ariadus_vi.xml:2
 msgid "Ariadus VI"
-msgstr ""
+msgstr "Ariadus VI"
 
 #: dat/assets/ariadus_via.xml:2
 msgid "Ariadus VIa"
-msgstr ""
+msgstr "Ariadus VIa"
 
 #: dat/assets/ariadus_vib.xml:2
 msgid "Ariadus VIb"
-msgstr ""
+msgstr "Ariadus VIb"
 
 #: dat/assets/ariak.xml:2
 msgid "Ariak"
-msgstr ""
+msgstr "Ariak"
 
 #: dat/assets/armorhead_i1.xml:2
 msgid "Armorhead I-1"
-msgstr ""
+msgstr "Armorhead I-1"
 
 #: dat/assets/armorhead_i1_b.xml:2
 msgid "Armorhead I-1 b"
-msgstr ""
+msgstr "Armorhead I-1 b"
 
 #: dat/assets/arrakis.xml:2
 msgid "Arrakis"
-msgstr ""
+msgstr "Arrakis"
 
 #: dat/assets/arrakis.xml:28
 msgid ""
@@ -1748,6 +1754,9 @@ msgid ""
 "can rage for weeks. The locals are continuously discussing sandworms, though "
 "you're not sure what to make of it."
 msgstr ""
+"Arrakis je pouštní planeta bez přirozených srážek a prachové bouře zde mohou "
+"zuřit týdny. Místní obyvatelé neustále diskutují o pouštních červech, i když "
+"si nejste jisti, co si o tom myslet."
 
 #: dat/assets/arrakis.xml:29
 msgid ""
@@ -1756,10 +1765,14 @@ msgid ""
 "mercenaries can be found plying their trade. \"The spice must flow\", they "
 "say, it may not, but at least the rum does."
 msgstr ""
+"Arrakenská jídelna je jedním ze stinnějších barů v říšském prostoru. Z "
+"důvodu že se nachází na hranici Impéria, tudy prochází jen několik hlídek a "
+"bylo zde nalezeno mnoho darebáků a žoldáků, kteří zde provozují své obchody. "
+"„Koření musí téct,“ říkají, že nemusí, ale alespoň rum ano."
 
 #: dat/assets/arrentil.xml:2
 msgid "Arrentil"
-msgstr ""
+msgstr "Arrentil"
 
 #: dat/assets/arrentil.xml:28
 msgid ""
@@ -1770,6 +1783,11 @@ msgid ""
 "population is thriving and the economy is stable. By all means, Arrentil is "
 "an example of Soromid persistence."
 msgstr ""
+"Jak je pro Soromidské světy typické, zbytek lidstva by Arrentil považoval za "
+"naprosto nehostinný. Atmosféra je toxická a povrch nestabilní, ale Soromidům "
+"se podařilo tento svět zkrotit. Samozřejmě dokonce i oni potřebují žít na "
+"chráněných stanovištích, ale přesto se populaci daří a ekonomika je "
+"stabilní. Arrentil je ve všech případech příkladem vytrvalosti Soromidů."
 
 #: dat/assets/arrentil.xml:29
 msgid ""
@@ -1780,10 +1798,15 @@ msgid ""
 "but here in Soromid space it has given it a more organic feel, so much so "
 "that it almost feels like it is growing."
 msgstr ""
+"Při budování stanovišť tohoto nehostinného světa se uvažovalo o méně "
+"základním vybavení. Tento bar byl vybudován \"naroubováním\" na stranu "
+"kosmodromu. Kdekoli jinde v galaxii by takový nápad pravděpodobně vyústil v "
+"poněkud stísněný, zchátralý bar, ale tady v Soromidském prostoru mu to "
+"dodalo organičtější pocit, a to téměř tak, že téměř cítíte, že roste."
 
 #: dat/assets/astana.xml:2 dat/ssys/astana.xml:2
 msgid "Astana"
-msgstr ""
+msgstr "Astana"
 
 #: dat/assets/astana.xml:27
 msgid ""
@@ -1793,6 +1816,11 @@ msgid ""
 "ideal spot for this as, besides the scientists who work here, no one else "
 "wants to land on the planet."
 msgstr ""
+"Astana je domovem Imperiální Experimentální Zbraně Testovací Továrny. Právě "
+"zde je testována a kvalifikována pro aktivní službu většina novějších zbraní "
+"a oblečení vybavených říšskou armádou. Tato planeta je pro to ideálním "
+"místem, protože kromě vědců, kteří zde pracují, nikdo jiný nechce na planetě "
+"přistát."
 
 #: dat/assets/astana.xml:28
 msgid ""
@@ -1801,14 +1829,17 @@ msgid ""
 "than the IEWTF there is little reason to remain on the world for very long "
 "apart from the bar."
 msgstr ""
+"V baru je místo, kde si mnoho pracovníků IEZTT chvilku odpočine, několik z "
+"nich mluví o projektu, který vás nechá zmateného. Kromě IEZTT není žádný "
+"důvod zůstat na tomto světě příliš dlouho kromě baru."
 
 #: dat/assets/astana_iiv.xml:2
 msgid "Astana IIV"
-msgstr ""
+msgstr "Astana IIV"
 
 #: dat/assets/atalanta.xml:2
 msgid "Atalanta"
-msgstr ""
+msgstr "Atalanta"
 
 #: dat/assets/atalanta.xml:29
 msgid ""
@@ -1817,6 +1848,10 @@ msgid ""
 "making a decent enough living thanks to the caches of heavy elements trapped "
 "under the ice."
 msgstr ""
+"Atalanta je pojmenována přímo po koloniální lodi, která ji osídlila, "
+"Atalanta. Přestože je planeta příliš studená na to, aby měla skutečnou "
+"hodnotu, obyvatelstvo si díky ložiskům těžkých prvků uvězněných pod ledem "
+"vydělává dost slušně."
 
 #: dat/assets/atalanta.xml:30
 msgid ""
@@ -1826,14 +1861,18 @@ msgid ""
 "Atalanta's orbit makes this a rare occurrence but the bar's profits soar "
 "every cycle."
 msgstr ""
+"Stejně jako všechny struktury na planetě je bar Atalanty postaven pod ledem, "
+"ale je docela blízko povrchu. Je to proto, že efekt velkého osvětlení lze "
+"pozorovat nad hlavou, když slunce svítí přímo na led. Na oběžné dráze "
+"Atalanty je tento jev vzácný, ale zisky baru stoupají každým cyklem."
 
 #: dat/assets/atlantis_i.xml:2
 msgid "Atlantis I"
-msgstr ""
+msgstr "Atlantis I"
 
 #: dat/assets/atryssa.xml:2
 msgid "Atryssa"
-msgstr ""
+msgstr "Atryssa"
 
 #: dat/assets/atryssa.xml:30
 msgid ""
@@ -1842,6 +1881,10 @@ msgid ""
 "Ruadan. Beyond these two things there is little to recommend it (though one "
 "of these may, at least, be plenty enough)."
 msgstr ""
+"Atryssa je díky technologii Za'leků ekonomicky bohatým světem. Je to také "
+"nejbližší pozoruhodná planeta Za'leků, kde mohou přistát cizinci, k Ruadanu. "
+"Kromě těchto dvou věcí lze doporučit jen málo (i když alespoň jedna z nich "
+"může stačit)."
 
 #: dat/assets/atryssa.xml:31
 msgid ""
@@ -1850,10 +1893,14 @@ msgid ""
 "There are also one or two people wandering about with notepads, though "
 "everyone goes quiet when they approach."
 msgstr ""
+"Archetyp Za'lekského baru, i když velmi přeplněný. Dav se zdá být rozdělen "
+"do skupin lidí diskutujících o věcech tlumenými tóny. Také se zde potuluje "
+"jeden nebo dva lidé s poznámkovými bloky, i když každý ztichne, když se "
+"přiblíží."
 
 #: dat/assets/atryssa_iv.xml:2
 msgid "Atryssa IV"
-msgstr ""
+msgstr "Atryssa IV"
 
 #. Set mission details
 #. Another check since the previous block could change the result
@@ -1882,7 +1929,7 @@ msgstr ""
 #: dat/assets/august.xml:2 dat/events/neutral/shipwreck.lua:26
 #: dat/missions/neutral/spacefamily.lua:26
 msgid "August"
-msgstr ""
+msgstr "August"
 
 #: dat/assets/august.xml:28
 msgid ""
@@ -1891,16 +1938,23 @@ msgid ""
 "residential world, primarily for the scientists working on Warnecke who, "
 "after a hard week's work, don't want to see another lab for a while."
 msgstr ""
+"August je celkem standardní, i když chladný svět. Výjmečně na planetu "
+"Za'leků na ní není tolik výzkumných stanic. Je to téměř čistě obytný svět, "
+"především pro vědce pracující na Warnecke, kteří po náročném týdnu práce "
+"nechtějí na chvíli vidět jinou laboratoř."
 
 #: dat/assets/august.xml:29
 msgid ""
 "This bar has the feel of an old-world pub, with plenty of wood furnishing on "
 "display, good food and better beer. A great place to relax and unwind."
 msgstr ""
+"Tento bar má atmosféru starosvětské hospody se spoustou vystaveného "
+"dřevěného nábytku, dobrým jídlem a lepším pivem. Skvělé místo k uvolnění a "
+"odpočinku."
 
 #: dat/assets/avoss.xml:2
 msgid "Avoss"
-msgstr ""
+msgstr "Avoss"
 
 #: dat/assets/avoss.xml:26
 msgid ""
@@ -1913,46 +1967,53 @@ msgid ""
 "devastated, a mere shadow of its former self. The colonists have managed to "
 "survive, however, and the hardy remain even today."
 msgstr ""
+"Avoss byl původně průměrný, ale obyvatelný svět. Když dorazila čtrnáctá loď "
+"kolonií, Petrovsk, považovali se její kolonisté za docela šťastné, že našli "
+"místo, které by mohli nazvat domovem. Asi padesát let poté, co se expedice "
+"vylodila, se svět začal měnit. Seismická aktivita všude začala eskalovat z "
+"grafů a způsobovala zemětřesení a sopečné erupce po celém světě. Svět je "
+"nyní zpustošen, pouhý stín jeho bývalého já. Kolonistům se však podařilo "
+"přežít a houževnatě zde setrvávají dodnes."
 
 #: dat/assets/awowa_iv.xml:2
 msgid "Awowa IV"
-msgstr ""
+msgstr "Awowa IV"
 
 #: dat/assets/awowa_v.xml:2
 msgid "Awowa V"
-msgstr ""
+msgstr "Awowa V"
 
 #: dat/assets/baba_yaga.xml:2
 msgid "Baba Yaga"
-msgstr ""
+msgstr "Baba Yaga"
 
 #: dat/assets/babylon_i.xml:2
 msgid "Babylon I"
-msgstr ""
+msgstr "Babylon I"
 
 #: dat/assets/babylon_ii.xml:2
 msgid "Babylon II"
-msgstr ""
+msgstr "Babylon II"
 
 #: dat/assets/babylon_iia.xml:2
 msgid "Babylon IIa"
-msgstr ""
+msgstr "Babylon IIa"
 
 #: dat/assets/baf_i.xml:2
 msgid "Baf I"
-msgstr ""
+msgstr "Baf I"
 
 #: dat/assets/baf_iv.xml:2
 msgid "Baf IV"
-msgstr ""
+msgstr "Baf IV"
 
 #: dat/assets/basel_i.xml:2
 msgid "Basel I"
-msgstr ""
+msgstr "Basel I"
 
 #: dat/assets/bastion_station.xml:2
 msgid "Bastion Station"
-msgstr ""
+msgstr "Stanice Bastion"
 
 #: dat/assets/bastion_station.xml:27
 msgid ""
@@ -1962,10 +2023,16 @@ msgid ""
 "Za'lek political scene. The House Za'lek Defense Force conducts most of "
 "their foreign contact here, where they can keep an eye on affairs."
 msgstr ""
+"Stanice Bastion je jednou ze dvou primárních obranných, pohraničních a "
+"hlídkových základnových stanic vedoucích do Za'lekského prostoru. Jako "
+"takový je to jeden z mála vojenských výdajů, který (většinou) nezpochybňuje "
+"ani Za'lekská notoricky známá politická scéna. Zde zabírají většinu svých "
+"zahraničních kontaktů obranné síly frakce Za'lek, kde mohou dohlížet na "
+"záležitosti."
 
 #: dat/assets/bedimann_shipyards.xml:2
 msgid "Bedimann Shipyards"
-msgstr ""
+msgstr "Loděnice Bedimann"
 
 #: dat/assets/bedimann_shipyards.xml:27
 msgid ""
@@ -1973,14 +2040,17 @@ msgid ""
 "sent out to the defense forces. It also maintains a small contingent of "
 "Za'lek vessels at home to serve as a in-system guard."
 msgstr ""
+"Tyto loděnice jsou jedním z míst, kde jsou za'lekská plavidla stavěna a "
+"posílána k obranným silám. Udržují zde také malý kontingent za'lekských "
+"plavidel, který slouží jako vnitřní obrana v systému."
 
 #: dat/assets/beeklo_ii.xml:2
 msgid "Beeklo II"
-msgstr ""
+msgstr "Beeklo II"
 
 #: dat/assets/beene.xml:2
 msgid "Beene"
-msgstr ""
+msgstr "Beene"
 
 #: dat/assets/beene.xml:30
 msgid ""
@@ -1990,6 +2060,11 @@ msgid ""
 "bioships. This supply of minerals means Beene is quite an important "
 "strategic location for Soromid fleets."
 msgstr ""
+"Beene je bohatý na nejrůznější běžné minerály, takže Soromidé využívají "
+"tento svět stejným způsobem jako kdokoli jiný: jako zdroj surovin. Zde "
+"vytěžené prvky jsou zpracovány do standardních balíčků, které využívají "
+"Soromidské biologické lodě. Tato zásoba minerálů znamená, že Beene je pro "
+"flotily Soromidů velmi důležitým strategickým místem."
 
 #: dat/assets/beene.xml:31
 msgid ""
@@ -1999,14 +2074,19 @@ msgid ""
 "population. As such, having a drink in Beene's bar is a bit of an ordeal. "
 "It's one of the less popular places among traders looking for a drink."
 msgstr ""
+"Pilotům se doporučuje, aby při návštěvě baru na Beene nosili vzduchotěsné "
+"obleky. Atmosféra planety může běžným lidem způsobit vážné problémy a "
+"Soromidé se neobtěžovali instalovat dekontaminační filtry pro místní "
+"obyvatelstvo. Proto je pití v baru trochu utrpení. Je to jedno z těch méně "
+"populárních míst mezi obchodníky, kteří hledají drink."
 
 #: dat/assets/behemoth.xml:2
 msgid "Behemoth"
-msgstr ""
+msgstr "Behemoth"
 
 #: dat/assets/belltower_station.xml:2
 msgid "Belltower Station"
-msgstr ""
+msgstr "Stanice Belltower"
 
 #: dat/assets/belltower_station.xml:28
 msgid ""
@@ -2016,6 +2096,11 @@ msgid ""
 "start to wonder if they're really part of the Soromid collective at all. "
 "Belltower is here to remind them that they are."
 msgstr ""
+"Stanice Belltower je malá Soromidská vojenská základna, jejímž hlavním "
+"účelem je udržovat systém Adiadus v souladu. Někteří obyvatelé systémů, "
+"které jsou tak daleko od jádra Soromidů a mají malý mezihvězdný provoz, si "
+"občas začnou klást otázku, zda jsou vůbec ještě součástí Soromidského "
+"kolektivu. Belltower je tu, aby jim připomněla, že jsou."
 
 #: dat/assets/belltower_station.xml:29
 msgid ""
@@ -2025,10 +2110,14 @@ msgid ""
 "offenders are transferred to the penal facilities on Agino, in the Zintar "
 "system."
 msgstr ""
+"Bar má dveře, které vedou přímo do vězeňského bloku. Vězni zde obvykle "
+"nezůstávají příliš dlouho. Belltower nemá ani kapacitu, ani pravomoc "
+"individuálně jednat s více než drobnými zločinci. Vážnější pachatelé jsou "
+"převezeni do trestních zařízení na Agino v systému Zintar."
 
 #: dat/assets/benedict.xml:2
 msgid "Benedict"
-msgstr ""
+msgstr "Benedict"
 
 #: dat/assets/benedict.xml:30
 msgid ""
@@ -2038,6 +2127,11 @@ msgid ""
 "elements used to produce them, this makes it an, almost literal, gold mine "
 "for Soromid building materials."
 msgstr ""
+"Další plynový gigant, další základna Soromidů. Tato konkrétní základna je "
+"spíše větší než ostatní kvůli velkému množství těžby minerálů a prvků, která "
+"se zde provádí. Planeta má vysoký obsah organické hmoty i prvků použitých k "
+"jejich výrobě, což z ní dělá téměř doslovný zlatý důl pro stavební materiály "
+"Soromidů."
 
 #: dat/assets/benedict.xml:31
 msgid ""
@@ -2047,10 +2141,15 @@ msgid ""
 "with straws, which is a thoughtful touch for those traders who are forced to "
 "wear air-breathers."
 msgstr ""
+"Pokud jde o mnoho Soromidských barů na méně než pohostinných místech, "
+"atmosféra v tomto baru je poměrně dusná s prvkem nebezpečí pro nesoromidy, "
+"vzduch také není příliš skvělý. Většina nápojů se zde podává s brčky, což je "
+"promyšlená vychytávka pro ty obchodníky, kteří jsou nuceni nosit dýchací "
+"přístroje."
 
 #: dat/assets/benteen.xml:2
 msgid "Benteen"
-msgstr ""
+msgstr "Benteen"
 
 #: dat/assets/benteen.xml:27
 msgid ""
@@ -2058,16 +2157,21 @@ msgid ""
 "crops that are bound for the western systems. It is a quiet world, with "
 "little in the way of the bustle and fuss of other, more core, planets."
 msgstr ""
+"Benteen je jedním z primárních agrosvětů Impéria. Pěstuje většinu plodin, "
+"které jsou určeny pro západní systémy. Je to klidný svět, jenž je v rozporu "
+"s ruchem a rozruchem jiných, více centrálních planet."
 
 #: dat/assets/benteen.xml:28
 msgid ""
 "The bar is a place to relax after a long trip or a hard day's work. The beer "
 "is fine and the locals seem friendly enough. Mostly harmless."
 msgstr ""
+"Bar je místem k odpočinku po dlouhé cestě nebo náročném pracovním dni. Pivo "
+"je v pořádku a místní se zdají dost přátelští. Většinou neškodní."
 
 #: dat/assets/berkhere.xml:2
 msgid "Berkhere"
-msgstr ""
+msgstr "Berkhere"
 
 #: dat/assets/berkhere.xml:28
 msgid ""
@@ -2076,6 +2180,10 @@ msgid ""
 "mineral wealth for survival. Crops will not grow on this arid planet, so all "
 "food has to be imported."
 msgstr ""
+"Většina povrchu Berkhere je kámen, prach a písek. Ale pod tímto povrchem "
+"leží vzácné a cenné drahokamy a minerály. Kolonie zde spoléhá na toto "
+"minerální bohatství pro přežití. Na této vyprahlé planetě nebudou růst "
+"plodiny, takže je nutné veškeré jídlo dovážet."
 
 #: dat/assets/berkhere.xml:29
 msgid ""
@@ -2086,26 +2194,32 @@ msgid ""
 "sold, the reasoning goes, Berkhere's future isn't in peril. Needless to say, "
 "the gem is heavily protected by security systems."
 msgstr ""
+"Bar kosmodromu je uspořádán kolem centrální oblasti, která slouží jako "
+"výkladní skříň největšího neopracovaného drahokamu, jaký se kdy našel pod "
+"pískem Berkhere. Návštěvníkům i místním obyvatelům připomíná, že Berkhere je "
+"stále bohatý. Dokud drahokam na displeji nemusí být prodáván, znamená to, že "
+"budoucnost Berkhere není ohrožena. Není třeba říkat, že klenot je silně "
+"chráněn bezpečnostními systémy."
 
 #: dat/assets/beth.xml:2
 msgid "Beth"
-msgstr ""
+msgstr "Beth"
 
 #: dat/assets/bgg1356.xml:2
 msgid "BGG-1356"
-msgstr ""
+msgstr "BGG-1356"
 
 #: dat/assets/big_fred.xml:2
 msgid "Big Fred"
-msgstr ""
+msgstr "Big Fred"
 
 #: dat/assets/blackwell_i.xml:2
 msgid "Blackwell I"
-msgstr ""
+msgstr "Blackwell I"
 
 #: dat/assets/blackwell_iix.xml:2
 msgid "Blackwell IIX"
-msgstr ""
+msgstr "Blackwell IIX"
 
 #: dat/assets/blackwell_vii.xml:2
 msgid "Blackwell VII"
