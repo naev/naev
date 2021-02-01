@@ -32,13 +32,10 @@
 
 /** @cond */
 #include <png.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <zlib.h> /* Z_DEFAULT_COMPRESSION */
 #include "physfs.h"
 #include "SDL.h"
 #include "SDL_error.h"
-#include "SDL_version.h"
 
 #include "naev.h"
 /** @endcond */
@@ -46,9 +43,7 @@
 #include "opengl.h"
 
 #include "conf.h"
-#include "gui.h"
 #include "log.h"
-#include "nstring.h"
 
 
 /*
@@ -87,8 +82,10 @@ static int gl_defState (void);
 static int gl_setupScaling (void);
 static int gl_hint (void);
 /* png */
-static int write_png( const char *file_name, png_bytep *rows,
+static int write_png( const char *filename, png_bytep *rows,
       int w, int h, int colourtype, int bitdepth );
+static void write_png_writecb( png_structp png_ptr, png_bytep src, png_size_t size );
+static void write_png_flushcb( png_structp png_ptr );
 
 
 /*
@@ -689,15 +686,14 @@ static int write_png( const char *filename, png_bytep *rows,
 {
    png_structp png_ptr;
    png_infop info_ptr;
-   FILE *fp;
-   char file_name[PATH_MAX];
+   PHYSFS_File *fp;
 
-   nsnprintf( file_name, sizeof(file_name), "%s/%s", PHYSFS_getWriteDir(), filename );
    /* Open file for writing. */
-   if (!(fp = fopen(file_name, "wb"))) {
-      WARN(_("Unable to open '%s' for writing."), file_name);
+   if (!(fp = PHYSFS_openWrite( filename ))) {
+      WARN(_("Unable to open '%s' for writing."), filename);
       return -1;
    }
+   PHYSFS_setBuffer( fp, 8192 );
 
    /* Create working structs. */
    if (!(png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL))) {
@@ -710,8 +706,8 @@ static int write_png( const char *filename, png_bytep *rows,
    }
 
    /* Set image details. */
-   png_init_io(png_ptr, fp);
-   png_set_compression_level(png_ptr, Z_DEFAULT_COMPRESSION);
+   png_set_write_fn(png_ptr, fp, write_png_writecb, write_png_flushcb);
+   png_set_compression_level(png_ptr, PNG_Z_DEFAULT_COMPRESSION);
    png_set_IHDR(png_ptr, info_ptr, w, h, bitdepth, colourtype,
          PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT,
          PNG_FILTER_TYPE_DEFAULT);
@@ -722,15 +718,25 @@ static int write_png( const char *filename, png_bytep *rows,
    png_write_end(png_ptr, NULL);
 
    /* Clean up. */
-   fclose(fp);
+   PHYSFS_close( fp );
    png_destroy_write_struct( &png_ptr, &info_ptr );
 
    return 0;
 
 ERR_FAIL:
-   fclose(fp);
+   PHYSFS_close( fp );
    png_destroy_write_struct( &png_ptr, &info_ptr );
    return -1;
 }
 
+/** @brief libpng write callback for write_png(). */
+static void write_png_writecb( png_structp png_ptr, png_bytep src, png_size_t size )
+{
+   PHYSFS_writeBytes( png_get_io_ptr( png_ptr ), src, size );
+}
 
+/** @brief libpng flush callback for write_png(). */
+static void write_png_flushcb( png_structp png_ptr )
+{
+   PHYSFS_flush( png_get_io_ptr( png_ptr ) );
+}
