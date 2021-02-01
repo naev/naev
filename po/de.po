@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-02-01 08:20-0500\n"
+"POT-Creation-Date: 2021-02-01 09:14-0500\n"
 "PO-Revision-Date: 2021-01-30 19:41+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
@@ -78275,6 +78275,95 @@ msgstr "Schadenstyp „%d“ ist ungültig."
 msgid "No debris special effects found."
 msgstr "Keine Trümmerspezialeffekte gefunden."
 
+#: src/debug.c:52
+msgid "SIGFPE (raised by program)"
+msgstr "SIGFPE (vom Programm ausgelöst)"
+
+#: src/debug.c:53
+msgid "SIGFPE (integer divide by zero)"
+msgstr "SIGFPE (Division einer Ganzzahl durch Null)"
+
+#: src/debug.c:54
+msgid "SIGFPE (integer overflow)"
+msgstr "SIGFPE (Ganzzahlüberlauf)"
+
+#: src/debug.c:55
+msgid "SIGFPE (floating-point divide by zero)"
+msgstr "SIGFPE (Division einer Fließkommazahl durch Null)"
+
+#: src/debug.c:56
+msgid "SIGFPE (floating-point overflow)"
+msgstr "SIGFPE (Fließkommazahlüberlauf)"
+
+#: src/debug.c:57
+msgid "SIGFPE (floating-point underflow)"
+msgstr "SIGFPE (Fließkommazahlunterlauf)"
+
+#: src/debug.c:58
+msgid "SIGFPE (floating-point inexact result)"
+msgstr "SIGFPE (Fließkommazahl: ungenaues Ergebnis)"
+
+#: src/debug.c:59
+msgid "SIGFPE (floating-point invalid operation)"
+msgstr "SIGFPE (Fließkommazahl: ungültige Aktion)"
+
+#: src/debug.c:60
+msgid "SIGFPE (subscript out of range)"
+msgstr "SIGFPE (Subscript außerhalb des Wertebereichs)"
+
+#: src/debug.c:61
+msgid "SIGFPE"
+msgstr "SIGFPE"
+
+#: src/debug.c:65
+msgid "SIGSEGV (raised by program)"
+msgstr "SIGSEGV (vom Programm ausgelöst)"
+
+#: src/debug.c:66
+msgid "SIGSEGV (address not mapped to object)"
+msgstr "SIGSEGV (Addresse nicht zum Objekt gemappt)"
+
+#: src/debug.c:67
+msgid "SIGSEGV (invalid permissions for mapped object)"
+msgstr "SIGSEGV (ungültige Erlaubnisse für gemapptes Objekt)"
+
+#: src/debug.c:68
+msgid "SIGSEGV"
+msgstr "SIGSEGV"
+
+#: src/debug.c:72
+msgid "SIGABRT (raised by program)"
+msgstr "SIGABRT (vom Programm ausgelöst)"
+
+#: src/debug.c:73
+msgid "SIGABRT"
+msgstr "SIGABRT"
+
+#: src/debug.c:150
+#, c-format
+msgid "Naev received %s!"
+msgstr "Naev hat %s erhalten!"
+
+#: src/debug.c:158
+msgid "Report this to project maintainer with the backtrace."
+msgstr "Melde dies dem Projektverwalter mit dem Backtrace."
+
+#: src/debug.c:204
+msgid "Unable to set up SIGSEGV signal handler."
+msgstr "SIGSEGV-Signalbehandlung konnte nicht aufgesetzt werden."
+
+#: src/debug.c:207
+msgid "Unable to set up SIGFPE signal handler."
+msgstr "SIGFPE-Signalbehandlung konnte nicht aufgesetzt werden."
+
+#: src/debug.c:210
+msgid "Unable to set up SIGABRT signal handler."
+msgstr "SIGABRT-Signalbehandlung konnte nicht aufgesetzt werden."
+
+#: src/debug.c:211
+msgid "BFD backtrace catching enabled."
+msgstr "BFD-Backtrace-Catching aktiviert."
+
 #: src/dev.c:33
 msgid "Generating CSV data..."
 msgstr "CSV-Daten generieren …"
@@ -82196,27 +82285,27 @@ msgid "Music thread did not exit when asked, ignoring..."
 msgstr ""
 "Musik-Thread hat sich nach einer Anfrage nicht beendet, wird ignoriert …"
 
-#: src/naev.c:196 src/naev.c:1111
+#: src/naev.c:175 src/naev.c:1088
 #, c-format
 msgid "Failed to parse version string '%s'!"
 msgstr "Versionszeichenkette „%s“ konnte nicht geparst werden!"
 
-#: src/naev.c:208
+#: src/naev.c:187
 #, c-format
 msgid "Unable to initialize SDL: %s"
 msgstr "Konnte SDL nicht initialisieren: %s"
 
-#: src/naev.c:225 src/opengl.c:477
+#: src/naev.c:204 src/opengl.c:477
 #, c-format
 msgid "Unable to initialize SDL Video: %s"
 msgstr "Konnte SDL Video nicht initialisieren: %s"
 
-#: src/naev.c:249
+#: src/naev.c:228
 #, c-format
 msgid "Unable to create config directory '%s'"
 msgstr "Konnte Konfigurationsverzeichnis „%s“ nicht erzeugen"
 
-#: src/naev.c:281
+#: src/naev.c:258
 msgid "Failed to load module start data."
 msgstr "Konnte Modulstartdaten nicht öffnen."
 
@@ -82224,48 +82313,48 @@ msgstr "Konnte Modulstartdaten nicht öffnen."
 #. * OpenGL
 #.
 #. initializes video output
-#: src/naev.c:296
+#: src/naev.c:273
 msgid "Initializing video output failed, exiting..."
 msgstr "Initalisierung von Videoausgabe fehlgeschlagen. Beenden …"
 
-#: src/naev.c:313
+#: src/naev.c:290
 msgid "Initializing subsystems..."
 msgstr "Initialisiere Untersysteme …"
 
-#: src/naev.c:321
+#: src/naev.c:298
 msgid "Error initializing joystick input"
 msgstr "Fehler bei Initialisierung von Joystickeingabe"
 
-#: src/naev.c:324 src/naev.c:331
+#: src/naev.c:301 src/naev.c:308
 msgid "Failure to open any joystick, falling back to default keybinds"
 msgstr ""
 "Fehler beim Öffnen von Joysticks, es wird ersatzweise die "
 "Standardtastenbelegung benutzt"
 
-#: src/naev.c:340
+#: src/naev.c:317
 msgid "Sound is disabled!"
 msgstr "Ton ist deaktiviert!"
 
-#: src/naev.c:345
+#: src/naev.c:322
 msgid "Problem setting up sound!"
 msgstr "Problem beim Aufsetzen des Tons!"
 
 #. Misc graphics init
 #. Initializes the nebula
 #. An error has happened
-#: src/naev.c:354
+#: src/naev.c:331
 msgid "Unable to initialize the Nebula subsystem!"
 msgstr "Das Nebeluntersystem konnte nicht initialisiert werden!"
 
-#: src/naev.c:380
+#: src/naev.c:357
 msgid "Reached main menu"
 msgstr "Hauptmenü erreicht"
 
-#: src/naev.c:401
+#: src/naev.c:378
 msgid "Welcome to Naev"
 msgstr "Willkommen bei Naev"
 
-#: src/naev.c:402
+#: src/naev.c:379
 #, c-format
 msgid ""
 "Welcome to Naev version %s, and thank you for playing! We hope you enjoy "
@@ -82299,208 +82388,119 @@ msgstr ""
 "schau dir naev.org an; dort findest du alle relevanten Links. Und nochmals, "
 "danke fürs Spielen!"
 
-#: src/naev.c:506
+#: src/naev.c:483
 msgid "No loading screens found!"
 msgstr "Keine Ladebildschirme gefunden!"
 
 #. order is very important as they're interdependent
-#: src/naev.c:620
+#: src/naev.c:597
 msgid "Loading Commodities..."
 msgstr "Waren laden …"
 
 #. dep for space
-#: src/naev.c:622
+#: src/naev.c:599
 msgid "Loading Factions..."
 msgstr "Fraktionen laden …"
 
 #. dep for fleet, space, missions, AI
-#: src/naev.c:624
+#: src/naev.c:601
 msgid "Loading AI..."
 msgstr "KI laden …"
 
 #. dep for fleets
-#: src/naev.c:626
+#: src/naev.c:603
 msgid "Loading Missions..."
 msgstr "Missionen laden …"
 
 #. no dep
-#: src/naev.c:628
+#: src/naev.c:605
 msgid "Loading Events..."
 msgstr "Ereignisse laden …"
 
 #. no dep
-#: src/naev.c:630
+#: src/naev.c:607
 msgid "Loading Special Effects..."
 msgstr "Spezialeffekte laden …"
 
 #. no dep
-#: src/naev.c:632
+#: src/naev.c:609
 msgid "Loading Damage Types..."
 msgstr "Schadenstypen laden …"
 
 #. no dep
-#: src/naev.c:634
+#: src/naev.c:611
 msgid "Loading Outfits..."
 msgstr "Ausstattungen laden …"
 
 #. dep for ships
-#: src/naev.c:636
+#: src/naev.c:613
 msgid "Loading Ships..."
 msgstr "Schiffe laden …"
 
 #. dep for fleet
-#: src/naev.c:638
+#: src/naev.c:615
 msgid "Loading Fleets..."
 msgstr "Flotten laden …"
 
 #. dep for space
-#: src/naev.c:640
+#: src/naev.c:617
 msgid "Loading Techs..."
 msgstr "Technologien laden …"
 
 #. dep for space
-#: src/naev.c:642
+#: src/naev.c:619
 msgid "Loading the Universe..."
 msgstr "Das Universum laden …"
 
-#: src/naev.c:644
+#: src/naev.c:621
 msgid "Loading the UniDiffs..."
 msgstr "UniDiffs laden …"
 
-#: src/naev.c:646
+#: src/naev.c:623
 msgid "Populating Maps..."
 msgstr "Karten bevölkern …"
 
 #. Initialize player stuff.
-#: src/naev.c:654
+#: src/naev.c:631
 msgid "Loading Completed!"
 msgstr "Ladevorgang abgeschlossen!"
 
-#: src/naev.c:793
+#: src/naev.c:770
 msgid "clock_gettime failed, disabling POSIX time."
 msgstr "clock_gettime fehlgeschlagen, posix-Zeit wird deaktiviert."
 
-#: src/naev.c:818
+#: src/naev.c:795
 msgid "clock_gettime failed!"
 msgstr "clock_gettime fehlgeschlagen!"
 
-#: src/naev.c:1027
+#: src/naev.c:1004
 msgid "PAUSED"
 msgstr "PAUSIERT"
 
-#: src/naev.c:1052
+#: src/naev.c:1029
 msgid "Icon (icon.png) not found!"
 msgstr "Icon (icon.png) nicht gefunden!"
 
-#: src/naev.c:1057
+#: src/naev.c:1034
 msgid "Unable to load icon.png!"
 msgstr "Konnte icon.png nicht laden!"
 
-#: src/naev.c:1082
+#: src/naev.c:1059
 msgid " debug"
 msgstr " debug"
 
-#: src/naev.c:1137
+#: src/naev.c:1114
 #, c-format
 msgid "SDL: %d.%d.%d [compiled: %d.%d.%d]"
 msgstr "SDL: %d.%d.%d [kompiliert: %d.%d.%d]"
 
-#: src/naev.c:1147
+#: src/naev.c:1124
 msgid "SDL is newer than compiled version"
 msgstr "SDL ist neuer als die kompilierte Version"
 
-#: src/naev.c:1149
+#: src/naev.c:1126
 msgid "SDL is older than compiled version."
 msgstr "SDL ist älter als die kompilierte Version."
-
-#: src/naev.c:1165
-msgid "SIGFPE (raised by program)"
-msgstr "SIGFPE (vom Programm ausgelöst)"
-
-#: src/naev.c:1166
-msgid "SIGFPE (integer divide by zero)"
-msgstr "SIGFPE (Division einer Ganzzahl durch Null)"
-
-#: src/naev.c:1167
-msgid "SIGFPE (integer overflow)"
-msgstr "SIGFPE (Ganzzahlüberlauf)"
-
-#: src/naev.c:1168
-msgid "SIGFPE (floating-point divide by zero)"
-msgstr "SIGFPE (Division einer Fließkommazahl durch Null)"
-
-#: src/naev.c:1169
-msgid "SIGFPE (floating-point overflow)"
-msgstr "SIGFPE (Fließkommazahlüberlauf)"
-
-#: src/naev.c:1170
-msgid "SIGFPE (floating-point underflow)"
-msgstr "SIGFPE (Fließkommazahlunterlauf)"
-
-#: src/naev.c:1171
-msgid "SIGFPE (floating-point inexact result)"
-msgstr "SIGFPE (Fließkommazahl: ungenaues Ergebnis)"
-
-#: src/naev.c:1172
-msgid "SIGFPE (floating-point invalid operation)"
-msgstr "SIGFPE (Fließkommazahl: ungültige Aktion)"
-
-#: src/naev.c:1173
-msgid "SIGFPE (subscript out of range)"
-msgstr "SIGFPE (Subscript außerhalb des Wertebereichs)"
-
-#: src/naev.c:1174
-msgid "SIGFPE"
-msgstr "SIGFPE"
-
-#: src/naev.c:1178
-msgid "SIGSEGV (raised by program)"
-msgstr "SIGSEGV (vom Programm ausgelöst)"
-
-#: src/naev.c:1179
-msgid "SIGSEGV (address not mapped to object)"
-msgstr "SIGSEGV (Addresse nicht zum Objekt gemappt)"
-
-#: src/naev.c:1180
-msgid "SIGSEGV (invalid permissions for mapped object)"
-msgstr "SIGSEGV (ungültige Erlaubnisse für gemapptes Objekt)"
-
-#: src/naev.c:1181
-msgid "SIGSEGV"
-msgstr "SIGSEGV"
-
-#: src/naev.c:1185
-msgid "SIGABRT (raised by program)"
-msgstr "SIGABRT (vom Programm ausgelöst)"
-
-#: src/naev.c:1186
-msgid "SIGABRT"
-msgstr "SIGABRT"
-
-#: src/naev.c:1263
-#, c-format
-msgid "Naev received %s!"
-msgstr "Naev hat %s erhalten!"
-
-#: src/naev.c:1271
-msgid "Report this to project maintainer with the backtrace."
-msgstr "Melde dies dem Projektverwalter mit dem Backtrace."
-
-#: src/naev.c:1317
-msgid "Unable to set up SIGSEGV signal handler."
-msgstr "SIGSEGV-Signalbehandlung konnte nicht aufgesetzt werden."
-
-#: src/naev.c:1320
-msgid "Unable to set up SIGFPE signal handler."
-msgstr "SIGFPE-Signalbehandlung konnte nicht aufgesetzt werden."
-
-#: src/naev.c:1323
-msgid "Unable to set up SIGABRT signal handler."
-msgstr "SIGABRT-Signalbehandlung konnte nicht aufgesetzt werden."
-
-#: src/naev.c:1324
-msgid "BFD backtrace catching enabled."
-msgstr "BFD-Backtrace-Catching aktiviert."
 
 #: src/ndata.c:70
 msgid ""
