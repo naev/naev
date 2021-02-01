@@ -16,7 +16,11 @@ float impulse( float x, float k )
 
 float fastdropoff( float x )
 {
-  return x < 0.92 ? (0. - .63348*log(1.0 - x)) : (-20.0 * x) + 20.0 ;
+   return 1. - pow( max(0.0, abs(1.-x) * 2.0 - 1.0 ), 1.0 );
+   float s = step( x, 0.92 );
+   float a = (0. - .63348*log(1.0 - x));
+   float b = (-20.0 * x) + 20.0;
+   return s*a + (1-s)*b;
 }
 
 /* k is the sharpness, more k == sharper.
@@ -44,6 +48,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    color_out.a *= fastdropoff( t );
 
    // Modulate alpha based on dispersion
+   m = 0.5 + 0.5*impulse( 1.-t, 30. );
    m = impulse( 1.-t, 5. );
 
    // Modulate width
