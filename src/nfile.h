@@ -74,15 +74,6 @@ int _nfile_backupIfExists( const char *path );
 
 int nfile_copyIfExists( const char *path1, const char *path2 );
 
-char **_nfile_readDir( size_t *nfiles, const char *path );
-// clang-format off
-#define nfile_readDir( nfiles, ... )                                         \
-   ({                                                                        \
-      *nfiles = 0;                                                           \
-      _nfile_path_macro( _nfile_readDir, NULL, ( nfiles, ), ##__VA_ARGS__ ); \
-   })
-// clang-format on
-
 char *_nfile_readFile( size_t *filesize, const char *path );
 #define nfile_readFile( filesize, ... ) _nfile_path_macro( _nfile_readFile, NULL, ( filesize, ), ##__VA_ARGS__ )
 
