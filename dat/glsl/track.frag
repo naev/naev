@@ -1,5 +1,7 @@
 #include "math.h"
 
+// For ideas: https://thebookofshaders.com/05/
+
 uniform vec4 c1;
 uniform vec4 c2;
 uniform float t1;
