@@ -338,7 +338,7 @@ double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double track )
    if (t->ew_evasion * t->ew_movement < limit)
       lead = 1.;
    else
-      lead = MAX( 0., 1. - 0.5*((t->ew_evasion  * t->ew_movement)/limit - 1.));
+      lead = MAX( 0., 1. - 0.5*((t->ew_evasion * t->ew_movement)/limit - 1.));
    return lead;
 }
 
