@@ -25,7 +25,6 @@
 #include "economy.h"
 #include "map.h"
 #include "ndata.h"
-#include "nfile.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "opengl_render.h"
@@ -442,7 +441,7 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
          nsnprintf(newName, 16 + strlen(filtered), "dat/assets/%s.xml", filtered);
          free(filtered);
 
-         nfile_rename(oldName, newName);
+         rename(oldName, newName);
 
          free(oldName);
          free(newName);
@@ -474,7 +473,7 @@ static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
             filtered = uniedit_nameFilter( sysedit_sys->planets[ sel->u.planet ]->name );
             file = malloc(16 + strlen(filtered));
             nsnprintf(file, 16 + strlen(filtered), "dat/assets/%s.xml", filtered);
-            nfile_delete(file);
+            remove(file);
 
             free(filtered);
             free(file);

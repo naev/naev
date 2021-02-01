@@ -2096,7 +2096,7 @@ void player_screenshot (void)
 {
    char filename[PATH_MAX];
 
-   if (nfile_dirMakeExist(nfile_dataPath()) < 0 || nfile_dirMakeExist(nfile_dataPath(), "screenshots") < 0) {
+   if (PHYSFS_mkdir("screenshots") == 0) {
       WARN(_("Aborting screenshot"));
       return;
    }
@@ -2104,7 +2104,7 @@ void player_screenshot (void)
    /* Try to find current screenshots. */
    for ( ; screenshot_cur < 1000; screenshot_cur++) {
       nsnprintf( filename, PATH_MAX, "%sscreenshots/screenshot%03d.png",
-            nfile_dataPath(), screenshot_cur );
+            PHYSFS_getWriteDir(), screenshot_cur );
       if (!nfile_fileExists( filename ))
          break;
    }

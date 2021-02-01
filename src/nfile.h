@@ -83,11 +83,6 @@ int _nfile_touch( const char *path );
 int _nfile_writeFile( const char *data, size_t len, const char *path );
 #define nfile_writeFile( data, len, ... ) _nfile_path_macro( _nfile_writeFile, -1, ( data, len, ), ##__VA_ARGS__ )
 
-int _nfile_delete( const char *file );
-#define nfile_delete( ... ) _nfile_path_macro( _nfile_delete, -1, (), ##__VA_ARGS__ )
-
-int nfile_rename( const char *oldname, const char *newname );
-
 int nfile_isSeparator( uint32_t c );
 
 
