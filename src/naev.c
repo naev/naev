@@ -254,6 +254,9 @@ int main( int argc, char** argv )
    conf_loadConfig(buf); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
 
+   /* Set up I/O. */
+   PHYSFS_setWriteDir( nfile_dataPath() );
+
    if (conf.redirect_file && log_copying()) {
       log_redirect();
       log_copy(0);
@@ -475,13 +478,13 @@ int main( int argc, char** argv )
    /* Clean up parser. */
    xmlCleanupParser();
 
-   PHYSFS_deinit();
-
    /* Clean up signal handler. */
    debug_sigClose();
 
    /* Delete logs if empty. */
    log_clean();
+
+   PHYSFS_deinit();
 
    /* all is well */
    exit(EXIT_SUCCESS);

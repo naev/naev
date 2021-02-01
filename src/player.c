@@ -11,6 +11,7 @@
 
 /** @cond */
 #include <stdlib.h>
+#include "physfs.h"
 
 #include "naev.h"
 /** @endcond */
@@ -263,8 +264,8 @@ void player_new (void)
       return;
    }
 
-   nsnprintf( buf, sizeof(buf), "%ssaves/%s.ns", nfile_dataPath(), player.name);
-   if (nfile_fileExists(buf)) {
+   nsnprintf( buf, sizeof(buf), "saves/%s.ns", player.name);
+   if (PHYSFS_exists( buf )) {
       r = dialogue_YesNo(_("Overwrite"),
             _("You already have a pilot named %s. Overwrite?"),player.name);
       if (r==0) { /* no */
