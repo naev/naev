@@ -17,7 +17,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <sys/stat.h>
 #include "physfs.h"
 
@@ -301,9 +300,12 @@ static int mkpath( const char *path )
 
 
 /**
- * @see nfile_dirMakeExist
+ * @brief Creates a directory if it doesn't exist.
+ *
+ *    @param path Path to create directory if it doesn't exist.
+ *    @return 0 on success.
  */
-int _nfile_dirMakeExist( const char *path )
+int nfile_dirMakeExist( const char *path )
 {
    if ( path == NULL )
       return -1;
@@ -327,7 +329,13 @@ int _nfile_dirMakeExist( const char *path )
 }
 
 
-int _nfile_dirExists( const char *path )
+/**
+ * @brief Checks to see if a directory exists.
+ *
+ * @param path Path to directory
+ * @return 1 on exists, 0 otherwise
+ */
+int nfile_dirExists( const char *path )
 {
    DIR *d;
 
@@ -348,7 +356,7 @@ int _nfile_dirExists( const char *path )
  *    @param path string pointing to the file to check for existence.
  *    @return 1 if file exists, 0 if it doesn't or -1 on error.
  */
-int _nfile_fileExists( const char *path )
+int nfile_fileExists( const char *path )
 {
    struct stat buf;
 
@@ -376,7 +384,7 @@ int _nfile_fileExists( const char *path )
  *    @param path printf formatted string pointing to the file to backup.
  *    @return 0 on success, or if file does not exist, -1 on error.
  */
-int _nfile_backupIfExists( const char *path )
+int nfile_backupIfExists( const char *path )
 {
    char backup[ PATH_MAX ];
 
@@ -460,7 +468,7 @@ err:
  *    @param path Path of the file.
  *    @return The file data.
  */
-char *_nfile_readFile( size_t *filesize, const char *path )
+char *nfile_readFile( size_t *filesize, const char *path )
 {
    int n;
    char *buf;
@@ -546,7 +554,7 @@ char *_nfile_readFile( size_t *filesize, const char *path )
  *
  *    @param path Path of the file to create.
  */
-int _nfile_touch( const char *path )
+int nfile_touch( const char *path )
 {
    FILE *f;
 
@@ -573,7 +581,7 @@ int _nfile_touch( const char *path )
  *    @param path Path of the file.
  *    @return 0 on success, -1 on error.
  */
-int _nfile_writeFile( const char *data, size_t len, const char *path )
+int nfile_writeFile( const char *data, size_t len, const char *path )
 {
    size_t n;
    FILE *file;

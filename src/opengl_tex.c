@@ -394,7 +394,9 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
 
       if (cachefile != NULL) {
          /* Cache newly-generated transparency map. */
-         nfile_dirMakeExist( nfile_cachePath(), "collisions/" );
+         char dirpath[PATH_MAX];
+	 nsnprintf( dirpath, sizeof(dirpath), "%s/%s", nfile_cachePath(), "collisions/" );
+         nfile_dirMakeExist( dirpath );
          nfile_writeFile( (char*)trans, cachesize, cachefile );
          free(cachefile);
       }
