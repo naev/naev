@@ -9,6 +9,7 @@
 
 void debug_sigInit (void);
 void debug_sigClose (void);
+void debug_enableFPUExcept (void);
 
 
 #endif /* DEBUG_H */

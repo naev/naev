@@ -8,13 +8,15 @@
  * @brief Handles low-level debugging hooks.
  */
 
+/* This module uses GNU extensions to enable FPU exceptions. */
+#define _GNU_SOURCE
 
 /** @cond */
 #include "naev.h"
 
-#if defined(HAVE_FENV_H) && defined(DEBUGGING) && defined(_GNU_SOURCE)
+#if defined(HAVE_FENV_H) && defined(DEBUGGING)
 #include <fenv.h>
-#endif /* defined(HAVE_FENV_H) && defined(DEBUGGING) && defined(_GNU_SOURCE) */
+#endif /* defined(HAVE_FENV_H) && defined(DEBUGGING) */
 
 #if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
 #include <signal.h>
@@ -219,4 +221,15 @@ void debug_sigClose (void)
 #if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
    bfd_close( abfd );
 #endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
+}
+
+
+/**
+ * @brief Enables FPU exceptions. Artificially limited to Linux until link issues are figured out.
+ */
+void debug_enableFPUExcept (void)
+{
+#if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING) && HAS_LINUX
+      feenableexcept( FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW );
+#endif /* defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING) && HAS_LINUX */
 }

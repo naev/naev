@@ -25,10 +25,6 @@
 #include <time.h>
 #include <unistd.h>
 #endif /* HAS_POSIX */
-
-#if defined(HAVE_FENV_H) && defined(DEBUGGING) && defined(_GNU_SOURCE)
-#include <fenv.h>
-#endif /* defined(HAVE_FENV_H) && defined(DEBUGGING) && defined(_GNU_SOURCE) */
 /** @endcond */
 
 #include "ai.h"
@@ -248,10 +244,8 @@ int main( int argc, char** argv )
       log_purge();
 
    /* Enable FPU exceptions. */
-#if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING) && defined(_GNU_SOURCE)
    if (conf.fpu_except)
-      feenableexcept( FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW );
-#endif /* defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING) && defined(_GNU_SOURCE) */
+      debug_enableFPUExcept();
 
    /* Open data. */
    ndata_setupReadDirs();
