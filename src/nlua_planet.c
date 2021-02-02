@@ -245,7 +245,6 @@ static int planetL_getBackend( lua_State *L, int landable )
    int *factions;
    int nfactions;
    char **planets;
-   int nplanets;
    const char *rndplanet;
    LuaSystem luasys;
    LuaFaction f;
@@ -255,7 +254,6 @@ static int planetL_getBackend( lua_State *L, int landable )
 
    rndplanet = NULL;
    planets   = NULL;
-   nplanets  = 0;
 
    /* If boolean return random. */
    if (lua_isboolean(L,1)) {
@@ -269,7 +267,7 @@ static int planetL_getBackend( lua_State *L, int landable )
    /* Get a planet by faction */
    else if (lua_isfaction(L,1)) {
       f        = lua_tofaction(L,1);
-      planets  = space_getFactionPlanet( &nplanets, &f, 1, landable );
+      planets  = space_getFactionPlanet( &f, 1, landable );
    }
 
    /* Get a planet by name */
@@ -305,20 +303,17 @@ static int planetL_getBackend( lua_State *L, int landable )
       }
 
       /* get the planets */
-      planets = space_getFactionPlanet( &nplanets, factions, nfactions, landable );
+      planets = space_getFactionPlanet( factions, nfactions, landable );
       free(factions);
    }
    else
       NLUA_INVALID_PARAMETER(L); /* Bad Parameter */
 
-   /* No suitable planet found */
-   if ((rndplanet == NULL) && ((planets == NULL) || nplanets == 0))
-      return 0;
    /* Pick random planet */
-   else if (rndplanet == NULL) {
-      planets = (char**) arrayShuffle( (void**)planets, nplanets );
+   if (rndplanet == NULL) {
+      arrayShuffle( (void**)planets );
 
-      for (i=0; i<nplanets; i++) {
+      for (i=0; i<array_size(planets); i++) {
          if (landable) {
             /* Check landing. */
             pnt = planet_get( planets[i] );
@@ -333,8 +328,12 @@ static int planetL_getBackend( lua_State *L, int landable )
          rndplanet = planets[i];
          break;
       }
-      free(planets);
    }
+   array_free(planets);
+
+   /* No suitable planet found */
+   if (rndplanet == NULL && array_size( planets ) == 0)
+      return 0;
 
    /* Push the planet */
    pnt = planet_get(rndplanet); /* The real planet */

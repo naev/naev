@@ -437,7 +437,7 @@ int system_index( StarSystem *sys );
 int space_sysReachable( StarSystem *sys );
 int space_sysReallyReachable( char* sysname );
 int space_sysReachableFromSys( StarSystem *target, StarSystem *sys );
-char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int landable );
+char** space_getFactionPlanet( int *factions, int nfactions, int landable );
 char* space_getRndPlanet( int landable, unsigned int services,
       int (*filter)(Planet *p));
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y );

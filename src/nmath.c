@@ -16,6 +16,7 @@
 
 #include "nmath.h"
 
+#include "array.h"
 #include "log.h"
 #include "rng.h"
 
@@ -73,25 +74,19 @@ double min3( double v1, double v2, double v3 )
 }
 
 /**
- *  @brief Randomly sorts an array with the Fisher-Yates shuffle.
- *
- *    @param array Array to be sorted.
- *    @param n Number of elements in the array.
- *    @return Randomly-ordered array.
+ *  @brief Randomly sorts an array (array.h) of pointers in place with the Fisher-Yates shuffle.
  */
-void** arrayShuffle( void** array, int n)
+void arrayShuffle( void** array )
 {
    void* tmp;
-   int k;
+   int n, k;
 
-   while (n > 1) {
+   for (n = array_size( array ); n > 1; ) {
       k        = RNG(0, n);
       tmp      = array[--n];
       array[n] = array[k];
       array[k] = tmp;
    }
-
-   return array;
 }
 
 

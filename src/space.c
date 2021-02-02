@@ -60,7 +60,6 @@
 #define PLANET_GFX_EXTERIOR_PATH_W 400 /**< Planet exterior graphic width. */
 #define PLANET_GFX_EXTERIOR_PATH_H 400 /**< Planet exterior graphic height. */
 
-#define CHUNK_SIZE            32 /**< Size to allocate by. */
 #define CHUNK_SIZE_SMALL       8 /**< Smaller size to allocate chunks by. */
 
 /* used to overcome warnings due to 0 values */
@@ -400,23 +399,18 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
 /**
  * @brief Gets the name of all the planets that belong to factions.
  *
- *    @param[out] nplanets Number of planets found.
  *    @param factions Factions to check against.
  *    @param nfactions Number of factions in factions.
  *    @param landable Whether the search is limited to landable planets.
- *    @return An array of faction names.  Individual names are not allocated.
+ *    @return An array (array.h) of faction names.  Individual names are not allocated.
  */
-char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int landable )
+char** space_getFactionPlanet( int *factions, int nfactions, int landable )
 {
    int i,j,k, f;
    Planet* planet;
    char **tmp;
-   int ntmp;
-   int mtmp;
 
-   ntmp = 0;
-   mtmp = CHUNK_SIZE;
-   tmp = malloc(sizeof(char*) * mtmp);
+   tmp = array_create( char* );
 
    for (i=0; i<array_size(systems_stack); i++) {
       for (j=0; j<systems_stack[i].nplanets; j++) {
@@ -448,17 +442,11 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int 
          if (!space_sysReallyReachable( systems_stack[i].name ))
             continue;
 
-         ntmp++;
-         if (ntmp > mtmp) { /* need more space */
-            mtmp *= 2;
-            tmp = realloc(tmp, sizeof(char*) * mtmp);
-         }
-         tmp[ntmp-1] = planet->name;
+         array_push_back( &tmp, planet->name );
          break; /* no need to check all factions */
       }
    }
 
-   (*nplanets) = ntmp;
    return tmp;
 }
 
@@ -477,13 +465,10 @@ char* space_getRndPlanet( int landable, unsigned int services,
    int i,j;
    Planet **tmp;
    char *res;
-   int ntmp, mtmp;
    Planet *pnt;
 
-   ntmp  = 0;
    res   = NULL;
-   mtmp  = CHUNK_SIZE;
-   tmp   = malloc( sizeof(Planet*) * mtmp );
+   tmp   = array_create( Planet* );
 
    for (i=0; i<array_size(systems_stack); i++) {
       for (j=0; j<systems_stack[i].nplanets; j++) {
@@ -498,18 +483,13 @@ char* space_getRndPlanet( int landable, unsigned int services,
          if (filter != NULL && !filter(pnt))
             continue;
 
-         ntmp++;
-         if (ntmp > mtmp) { /* need more space */
-            mtmp *= 2;
-            tmp = realloc(tmp, sizeof(Planet*) * mtmp);
-         }
-         tmp[ntmp-1] = pnt;
+         array_push_back( &tmp, pnt );
       }
    }
 
    /* Second filter. */
-   tmp = (Planet**)arrayShuffle( (void**)tmp, ntmp);
-   for (i=0; i < ntmp; i++) {
+   arrayShuffle( (void**)tmp );
+   for (i=0; i < array_size(tmp); i++) {
       pnt = tmp[i];
 
       /* We put expensive calculations here to minimize executions. */
@@ -525,7 +505,7 @@ char* space_getRndPlanet( int landable, unsigned int services,
       res = tmp[i]->name;
       break;
    }
-   free(tmp);
+   array_free(tmp);
 
    return res;
 }
