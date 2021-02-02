@@ -2189,11 +2189,6 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    if (sys == NULL)
       return -1;
 
-   /* Check if need to grow the star system planet stack. */
-   if (sys->planets == NULL) {
-      sys->planets   = array_create( Planet* );
-      sys->planetsid = array_create( int );
-   }
    planet = planet_get(planetname);
    if (planet == NULL)
       return -1;
@@ -2367,6 +2362,8 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
 static void system_init( StarSystem *sys )
 {
    memset( sys, 0, sizeof(StarSystem) );
+   sys->planets   = array_create( Planet* );
+   sys->planetsid = array_create( int );
    sys->faction   = -1;
 }
 
@@ -2546,6 +2543,9 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 
       DEBUG(_("Unknown node '%s' in star system '%s'"),node->name,sys->name);
    } while (xml_nextNode(node));
+
+   array_shrink( &sys->planets );
+   array_shrink( &sys->planetsid );
 
 #define MELEMENT(o,s)      if (o) WARN(_("Star System '%s' missing '%s' element"), sys->name, s)
    if (sys->name == NULL) WARN(_("Star System '%s' missing 'name' tag"), sys->name);
