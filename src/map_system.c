@@ -150,6 +150,16 @@ static int map_system_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod 
       map_system_close( wid, NULL );
       return 1;
    }
+   if (key == SDLK_UP) {
+      cur_planet_sel = MAX( cur_planet_sel-1, 0 );
+      map_system_updateSelected( wid );
+      return 1;
+   }
+   if (key == SDLK_DOWN) {
+      cur_planet_sel = MIN( cur_planet_sel+1, nshow );
+      map_system_updateSelected( wid );
+      return 1;
+   }
    return 0;
 }
 
