@@ -243,25 +243,20 @@ int commodity_compareTech( const void *commodity1, const void *commodity2 )
 
 
 /**
- * @brief Return the list of standard commodities.
- *
- *    @param[out] Commodity* List of commodities.
- *    @return size of the list.
+ * @brief Return an array (array.h) of standard commodities. Free with array_free. (Don't free contents.)
  */
-Commodity ** standard_commodities( unsigned int *nb )
+Commodity ** standard_commodities (void)
 {
-   int i, j, n;
+   int i, n;
    Commodity *c, **com;
    
    n = array_size(commodity_stack);
-   com = malloc( n * sizeof(Commodity*) );
-   j = 0;
+   com = array_create_size( Commodity*, n );
    for (i=0; i<n; i++) {
       c = &commodity_stack[i];
       if (c->standard)
-         com[j++] = c;
+         array_push_back( &com, c );
    }
-   *nb = j;
    return com;
 }
 

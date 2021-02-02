@@ -130,7 +130,7 @@ static double interference_timer  = 0.; /**< Interference timer. */
  * Internal Prototypes.
  */
 /* planet load */
-static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList, int stdNb );
+static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList );
 static int space_parseAssets( xmlNodePtr parent, StarSystem* sys );
 /* system load */
 static void system_init( StarSystem *sys );
@@ -1727,7 +1727,6 @@ static int planets_load ( void )
    Planet *p;
    size_t i, len;
    Commodity **stdList;
-   unsigned int stdNb;
 
    /* Load landing stuff. */
    landing_env = nlua_newEnv(0);
@@ -1746,7 +1745,7 @@ static int planets_load ( void )
       planet_stack = array_create_size(Planet, 256);
 
    /* Extract the list of standard commodities. */
-   stdList = standard_commodities( &stdNb );
+   stdList = standard_commodities();
 
    /* Load XML stuff. */
    planet_files = PHYSFS_enumerateFiles( PLANET_DATA_PATH );
@@ -1770,7 +1769,7 @@ static int planets_load ( void )
 
       if (xml_isNode(node,XML_PLANET_TAG)) {
          p = planet_new();
-         planet_parse( p, node, stdList, stdNb );
+         planet_parse( p, node, stdList );
       }
 
       /* Clean up. */
@@ -1780,7 +1779,7 @@ static int planets_load ( void )
 
    /* Clean up. */
    PHYSFS_freeList( planet_files );
-   free(stdList);
+   array_free(stdList);
 
    return 0;
 }
@@ -1975,11 +1974,10 @@ void space_gfxUnload( StarSystem *sys )
  *
  *    @param planet Planet to fill up.
  *    @param parent Node that contains planet data.
- *    @param[in] stdList The list of standard commodities.
- *    @param stdNb The number of standard commodities.
+ *    @param[in] stdList The array of standard commodities.
  *    @return 0 on success.
  */
-static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList, int stdNb )
+static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList )
 {
    int mem, i;
    char str[PATH_MAX], *tmp;
@@ -2184,12 +2182,12 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
    /* Build commodities list */
    if (planet_hasService(planet, PLANET_SERVICE_COMMODITY)) {
       /* First, store all the standard commodities and prices. */
-      planet->ncommodities = stdNb;
-      mem = stdNb;
-      if (stdNb > 0) {
-         planet->commodityPrice = malloc( stdNb * sizeof(CommodityPrice) );
-         planet->commodities    = malloc( stdNb * sizeof(Commodity*) );
-         for (i=0; i<stdNb; i++) {
+      mem = array_size( stdList );
+      planet->ncommodities = mem;
+      if (mem > 0) {
+         planet->commodityPrice = malloc( mem * sizeof(CommodityPrice) );
+         planet->commodities    = malloc( mem * sizeof(Commodity*) );
+         for (i=0; i<mem; i++) {
             planet->commodities[i]          = stdList[i];
             planet->commodityPrice[i].price = planet->commodities[i]->price;
          }
