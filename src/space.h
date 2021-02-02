@@ -303,8 +303,7 @@ struct StarSystem_ {
 
    /* Asteroids. */
    AsteroidAnchor *asteroids; /**< Array (array.h): Asteroid fields in the system */
-   AsteroidExclusion *astexclude; /**< Asteroid exclusion zones in the system */
-   int nastexclude; /**< number of asteroid exclusion zones */
+   AsteroidExclusion *astexclude; /**< Array (array.h): Asteroid exclusion zones in the system */
 
    /* Calculated. */
    double *prices; /**< Handles the prices in the system. */

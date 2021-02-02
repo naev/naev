@@ -669,7 +669,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    }
 
    /* Render asteroid exclusions */
-   for (i=0; i<sys->nastexclude; i++) {
+   for (i=0; i<array_size(sys->astexclude); i++) {
       aexcl = &sys->astexclude[i];
       selected = 0;
       sysedit_renderAsteroidExclusion( x, y, aexcl, selected );

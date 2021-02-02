@@ -2366,6 +2366,7 @@ static void system_init( StarSystem *sys )
    sys->planetsid = array_create( int );
    sys->jumps = array_create( JumpPoint );
    sys->asteroids = array_create( AsteroidAnchor );
+   sys->astexclude = array_create( AsteroidExclusion );
    sys->faction   = -1;
 }
 
@@ -2944,8 +2945,7 @@ static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys
    int pos;
 
    /* Allocate more space. */
-   sys->astexclude = realloc( sys->astexclude, (sys->nastexclude+1)*sizeof(AsteroidExclusion) );
-   a = &sys->astexclude[ sys->nastexclude ];
+   a = &array_grow( &sys->astexclude );
    memset( a, 0, sizeof(*a) );
 
    /* Initialize stuff. */
@@ -2976,9 +2976,6 @@ static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys
    if (a->radius == 0.)
       WARN(_("Asteroid exclusion in %s has no radius."), sys->name);
 
-   /* Added asteroid exclusion. */
-   sys->nastexclude++;
-
    return 0;
 }
 
@@ -3008,6 +3005,7 @@ static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys )
    } while (xml_nextNode(node));
 
    array_shrink( &sys->asteroids );
+   array_shrink( &sys->astexclude );
 }
 
 
@@ -3561,7 +3559,7 @@ void space_exit (void)
          free(ast->type);
       }
       array_free(sys->asteroids);
-      free(sys->astexclude);
+      array_free(sys->astexclude);
 
    }
    array_free(systems_stack);
@@ -4066,7 +4064,7 @@ int space_isInField ( Vector2d *p )
    AsteroidExclusion *e;
 
    /* Always return -1 if in an exclusion zone */
-   for (i=0; i < cur_system->nastexclude; i++) {
+   for (i=0; i < array_size(cur_system->astexclude); i++) {
       e = &cur_system->astexclude[i];
       if (vect_dist( p, &e->pos ) <= e->radius)
          return -1;
