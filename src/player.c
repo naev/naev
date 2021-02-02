@@ -1320,7 +1320,7 @@ void player_targetPlanetSet( int id )
 {
    int old;
 
-   if (id >= cur_system->nplanets) {
+   if (id >= array_size(cur_system->planets)) {
       WARN(_("Trying to set player's planet target to invalid ID '%d'"), id);
       return;
    }
@@ -1399,14 +1399,14 @@ void player_targetPlanet (void)
       return;
 
    /* Find next planet target. */
-   for (id=player.p->nav_planet+1; id<cur_system->nplanets; id++)
+   for (id=player.p->nav_planet+1; id<array_size(cur_system->planets); id++)
       if (planet_isKnown( cur_system->planets[id] ))
          break;
 
    /* Try to select the lowest-indexed valid planet. */
-   if (id >= cur_system->nplanets ) {
+   if (id >= array_size(cur_system->planets) ) {
       id = -1;
-      for (i=0; i<cur_system->nplanets; i++)
+      for (i=0; i<array_size(cur_system->planets); i++)
          if (planet_isKnown( cur_system->planets[i] )) {
             id = i;
             break;
@@ -1446,7 +1446,7 @@ void player_land (void)
       return;
 
    /* Check if there are planets to land on. */
-   if (cur_system->nplanets == 0) {
+   if (array_size(cur_system->planets) == 0) {
       player_messageRaw( _("#rThere are no planets to land on.") );
       return;
    }
@@ -1454,7 +1454,7 @@ void player_land (void)
    if (player.p->nav_planet == -1) { /* get nearest planet target */
       td = -1; /* temporary distance */
       tp = -1; /* temporary planet */
-      for (i=0; i<cur_system->nplanets; i++) {
+      for (i=0; i<array_size(cur_system->planets); i++) {
          planet = cur_system->planets[i];
          d = vect_dist(&player.p->solid->pos,&planet->pos);
          if (pilot_inRangePlanet( player.p, i ) &&

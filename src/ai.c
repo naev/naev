@@ -2111,10 +2111,8 @@ static int aiL_getnearestplanet( lua_State *L )
    int i, j;
    LuaPlanet planet;
 
-   if (cur_system->nplanets == 0) return 0; /* no planets */
-
    /* cycle through planets */
-   for (dist=1./0., j=-1, i=0; i<cur_system->nplanets; i++) {
+   for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->planets); i++) {
       if (!planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED))
          continue;
       d = vect_dist( &cur_system->planets[i]->pos, &cur_pilot->solid->pos );
@@ -2147,10 +2145,10 @@ static int aiL_getrndplanet( lua_State *L )
    LuaPlanet planet;
    int p;
 
-   if (cur_system->nplanets == 0) return 0; /* no planets */
+   if (array_size(cur_system->planets) == 0) return 0; /* no planets */
 
    /* get a random planet */
-   p = RNG(0, cur_system->nplanets-1);
+   p = RNG(0, array_size(cur_system->planets)-1);
 
    /* Copy the data into a vector */
    planet = cur_system->planets[p]->id;
@@ -2169,14 +2167,10 @@ static int aiL_getrndplanet( lua_State *L )
 static int aiL_getlandplanet( lua_State *L )
 {
    int *ind;
-   int nplanets, i;
+   int i;
    LuaPlanet planet;
    Planet *p;
    int only_friend;
-
-   /* Must have planets. */
-   if (cur_system->nplanets == 0)
-      return 0; /* no planets */
 
    /* If pilot can't land ignore. */
    if (pilot_isFlag(cur_pilot, PILOT_NOLAND))
@@ -2186,10 +2180,10 @@ static int aiL_getlandplanet( lua_State *L )
    only_friend = lua_toboolean(L, 1);
 
    /* Allocate memory. */
-   ind = malloc( sizeof(int) * cur_system->nplanets );
+   ind = array_create_size( int, array_size(cur_system->planets) );
 
    /* Copy friendly planet.s */
-   for (nplanets=0, i=0; i<cur_system->nplanets; i++) {
+   for (i=0; i<array_size(cur_system->planets); i++) {
       if (!planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED))
          continue;
 
@@ -2200,22 +2194,22 @@ static int aiL_getlandplanet( lua_State *L )
          continue;
 
       /* Add it. */
-      ind[ nplanets++ ] = i;
+      array_push_back( &ind, i );
    }
 
    /* no planet to land on found */
-   if (nplanets==0) {
-      free(ind);
+   if (array_size(ind)==0) {
+      array_free(ind);
       return 0;
    }
 
    /* we can actually get a random planet now */
-   i = RNG(0,nplanets-1);
+   i = RNG(0,array_size(ind)-1);
    p = cur_system->planets[ ind[i] ];
    planet = p->id;
    lua_pushplanet( L, planet );
    cur_pilot->nav_planet   = ind[ i ];
-   free(ind);
+   array_free(ind);
 
    return 1;
 }

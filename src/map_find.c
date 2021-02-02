@@ -88,7 +88,7 @@ static int map_knownInit (void)
       if (!sys_isKnown( &sys[i] ))
          continue;
 
-      for (j=0; j<sys[i].nplanets; j++) {
+      for (j=0; j<array_size(sys[i].planets); j++) {
          pnt = sys[i].planets[j];
 
          /* Must be real. */

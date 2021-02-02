@@ -296,9 +296,8 @@ struct StarSystem_ {
    char *background; /**< Background script. */
 
    /* Planets. */
-   Planet **planets; /**< planets */
-   int *planetsid; /**< IDs of the planets. */
-   int nplanets; /**< total number of planets */
+   Planet **planets; /**< Array (array.h): planets */
+   int *planetsid; /**< Array (array.h): IDs of the planets. */
    int faction; /**< overall faction */
 
    /* Jumps. */

@@ -1950,7 +1950,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
          system_stack = system_getAll();
          for (i=0;i<array_size(system_stack);i++) {
             array_grow( &temp->u.map->systems ) = &system_stack[i];
-            for (j=0;j<system_stack[i].nplanets;j++)
+            for (j=0;j<array_size(system_stack[i].planets);j++)
                array_grow( &temp->u.map->assets ) = system_stack[i].planets[j];
             for (j=0;j<system_stack[i].njumps;j++)
                array_grow( &temp->u.map->jumps ) = &system_stack[i].jumps[j];

@@ -674,7 +674,7 @@ static void gui_renderBorder( double dt )
    gl_renderRect( 15., SCREEN_H - 15., SCREEN_W - 30., 15., &cBlackHilight );
 
    /* Draw planets. */
-   for (i=0; i<cur_system->nplanets; i++) {
+   for (i=0; i<array_size(cur_system->planets); i++) {
       /* Check that it's real. */
       if (cur_system->planets[i]->real != ASSET_REAL)
          continue;
@@ -1065,7 +1065,7 @@ void gui_radarRender( double x, double y )
    /*
     * planets
     */
-   for (i=0; i<cur_system->nplanets; i++)
+   for (i=0; i<array_size(cur_system->planets); i++)
       if ((cur_system->planets[ i ]->real == ASSET_REAL) && (i != player.p->nav_planet))
          gui_renderPlanet( i, radar->shape, radar->w, radar->h, radar->res, 0 );
    if (player.p->nav_planet > -1)

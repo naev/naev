@@ -306,7 +306,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
 
    j=0;
    offset = h - pitch*nshow;
-   for ( i=0; i<sys->nplanets; i++ ) {
+   for ( i=0; i<array_size(sys->planets); i++ ) {
      p=sys->planets[i];
      if ( planet_isKnown(p) && (p->real == ASSET_REAL) ) {
        j++;
@@ -440,7 +440,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       }
       /* Faction */
       f = -1;
-      for ( i=0; i<sys->nplanets; i++ ) {
+      for ( i=0; i<array_size(sys->planets); i++ ) {
          if (sys->planets[i]->real == ASSET_REAL && planet_isKnown( sys->planets[i] ) ) {
             if ((f==-1) && (sys->planets[i]->faction>0) ) {
                f = sys->planets[i]->faction;
@@ -453,7 +453,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       if (f == -1 ) {
          cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Faction: N/A\n") );
       }  else {
-         if (i==sys->nplanets) /* saw them all and all the same */
+         if (i==array_size(sys->planets)) /* saw them all and all the same */
             cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Faction: %s\nStanding: %s\n"), faction_longname(f), faction_getStandingText( f ) );
          /* display the logo */
          logo = faction_logoSmall( f );
@@ -756,7 +756,7 @@ void map_system_updateSelected( unsigned int wid )
    float g,o,s;
    nameWidth = 0; /* get the widest planet/star name */
    nshow=1;/* start at 1 for the sun*/
-   for ( i=0; i<sys->nplanets; i++) {
+   for ( i=0; i<array_size(sys->planets); i++) {
       p = sys->planets[i];
       if ( planet_isKnown( p ) && (p->real == ASSET_REAL) ) {
          textw = gl_printWidthRaw( &gl_smallFont, _(p->name) );

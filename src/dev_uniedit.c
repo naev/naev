@@ -1343,7 +1343,7 @@ static void uniedit_editGenList( unsigned int wid )
 
    /* Check to see if it actually has virtual assets. */
    sys   = uniedit_sys[0];
-   n     = sys->nplanets;
+   n     = array_size( sys->planets );
    has_assets = 0;
    for (i=0; i<n; i++) {
       p     = sys->planets[i];

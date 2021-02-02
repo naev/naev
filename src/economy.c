@@ -246,7 +246,7 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std 
    }
    for ( i=0; i<array_size(systems_stack) ; i++) {
       sys = &systems_stack[i];
-      for ( j=0; j<sys->nplanets; j++) {
+      for ( j=0; j<array_size(sys->planets); j++) {
          p = sys->planets[j];
          /* and get the index on this planet */
          for ( k=0; k<array_size(p->commodities); k++) {
@@ -690,7 +690,7 @@ static void economy_modifySystemCommodityPrice(StarSystem *sys)
    CommodityPrice *avprice=NULL;
    int nav=0;
 
-   for ( i=0; i<sys->nplanets; i++ ) {
+   for ( i=0; i<array_size(sys->planets); i++ ) {
       planet=sys->planets[i];
       for ( j=0; j<array_size(planet->commodityPrice); j++ ) {
         /* Largest is approx 35000.  Increased radius will increase price since further to travel,
@@ -741,7 +741,7 @@ static void economy_modifySystemCommodityPrice(StarSystem *sys)
       avprice[k].sysVariation/=avprice[k].updateTime;
    }
    /* And now apply the averaging */
-   for ( i=0; i<sys->nplanets; i++ ) {
+   for ( i=0; i<array_size(sys->planets); i++ ) {
       planet=sys->planets[i];
       for ( j=0; j<array_size(planet->commodities); j++ ) {
          for ( k=0; k<nav; k++ ) {
@@ -809,7 +809,7 @@ static void economy_calcUpdatedCommodityPrice(StarSystem *sys)
       avprice[j].price=0.5*(avprice[j].price + avprice[j].sum);
    }
    /*and finally modify assets based on the means */
-   for ( i=0; i<sys->nplanets; i++ ) {
+   for ( i=0; i<array_size(sys->planets); i++ ) {
       planet=sys->planets[i];
       for ( j=0; j<array_size(planet->commodities); j++ ) {
          for ( k=0; k<nav; k++ ) {
@@ -846,7 +846,7 @@ void economy_initialiseCommodityPrices(void)
    /* First use planet attributes to set prices and variability */
    for (k=0; k<array_size(systems_stack); k++) {
       sys = &systems_stack[k];
-      for ( j=0; j<sys->nplanets; j++ ) {
+      for ( j=0; j<array_size(sys->planets); j++ ) {
          planet = sys->planets[j];
          /* Set up the commodity prices on the system, based on its attributes. */
          for ( i=0; i<array_size(planet->commodities); i++ ) {
@@ -965,7 +965,7 @@ void economy_clearKnown (void)
    CommodityPrice *cp;
    for (i=0; i<array_size(systems_stack); i++) {
       sys = &systems_stack[i];
-      for (j=0; j<sys->nplanets; j++) {
+      for (j=0; j<array_size(sys->planets); j++) {
          p=sys->planets[j];
          for (k=0; k<array_size(p->commodityPrice); k++) {
             cp=&p->commodityPrice[k];
@@ -1095,7 +1095,7 @@ int economy_sysSave( xmlTextWriterPtr writer )
    for (i=0; i<array_size(systems_stack); i++) {
       doneSys=0;
       sys=&systems_stack[i];
-      for (j=0; j<sys->nplanets; j++) {
+      for (j=0; j<array_size(sys->planets); j++) {
          p=sys->planets[j];
          donePlanet=0;
          for ( k=0; k<array_size(p->commodities); k++) {

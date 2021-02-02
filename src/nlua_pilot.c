@@ -3823,12 +3823,12 @@ static int pilotL_land( lua_State *L )
 
    if (pnt != NULL) {
       /* Find the jump. */
-      for (i=0; i < cur_system->nplanets; i++) {
+      for (i=0; i < array_size(cur_system->planets); i++) {
          if (cur_system->planets[i] == pnt) {
             break;
          }
       }
-      if (i >= cur_system->nplanets) {
+      if (i >= array_size(cur_system->planets)) {
          NLUA_ERROR( L, _("Planet '%s' not found in system '%s'"), pnt->name, cur_system->name );
          return 0;
       }

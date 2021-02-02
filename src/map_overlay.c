@@ -160,9 +160,9 @@ void ovr_refresh (void)
 
    /* Calculate max size. */
    items = 0;
-   pos = calloc(cur_system->njumps + cur_system->nplanets, sizeof(Vector2d*));
-   mo  = calloc(cur_system->njumps + cur_system->nplanets, sizeof(MapOverlayPos*));
-   moo = calloc(cur_system->njumps + cur_system->nplanets, sizeof(MapOverlayPosOpt));
+   pos = calloc(cur_system->njumps + array_size(cur_system->planets), sizeof(Vector2d*));
+   mo  = calloc(cur_system->njumps + array_size(cur_system->planets), sizeof(MapOverlayPos*));
+   moo = calloc(cur_system->njumps + array_size(cur_system->planets), sizeof(MapOverlayPosOpt));
    max_x = 0.;
    max_y = 0.;
    for (i=0; i<cur_system->njumps; i++) {
@@ -180,7 +180,7 @@ void ovr_refresh (void)
       items++;
    }
    jumpitems = items;
-   for (i=0; i<cur_system->nplanets; i++) {
+   for (i=0; i<array_size(cur_system->planets); i++) {
       pnt = cur_system->planets[i];
       max_x = MAX( max_x, ABS(pnt->pos.x) );
       max_y = MAX( max_y, ABS(pnt->pos.y) );
@@ -511,7 +511,7 @@ void ovr_render( double dt )
    gl_renderRect( (double)gui_getMapOverlayBoundLeft(), (double)gui_getMapOverlayBoundRight(), w, h, &c );
 
    /* Render planets. */
-   for (i=0; i<cur_system->nplanets; i++)
+   for (i=0; i<array_size(cur_system->planets); i++)
       if ((cur_system->planets[ i ]->real == ASSET_REAL) && (i != player.p->nav_planet))
          gui_renderPlanet( i, RADAR_RECT, w, h, res, 1 );
    if (player.p->nav_planet > -1)

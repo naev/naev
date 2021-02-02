@@ -823,7 +823,7 @@ static int systemL_planets( lua_State *L )
    /* Push all planets. */
    lua_newtable(L);
    key = 0;
-   for (i=0; i<s->nplanets; i++) {
+   for (i=0; i<array_size(s->planets); i++) {
       if (s->planets[i]->real == ASSET_REAL) {
          key++;
          lua_pushnumber(L,key); /* key */
@@ -983,13 +983,13 @@ static int systemL_setknown( lua_State *L )
 
    if (r) {
       if (b) {
-         for (i=0; i < sys->nplanets; i++)
+         for (i=0; i < array_size(sys->planets); i++)
             planet_setKnown( sys->planets[i] );
          for (i=0; i < sys->njumps; i++)
             jp_setFlag( &sys->jumps[i], JP_KNOWN );
      }
      else {
-         for (i=0; i < sys->nplanets; i++)
+         for (i=0; i < array_size(sys->planets); i++)
             planet_rmFlag( sys->planets[i], PLANET_KNOWN );
          for (i=0; i < sys->njumps; i++)
             jp_rmFlag( &sys->jumps[i], JP_KNOWN );

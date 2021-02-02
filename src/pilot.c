@@ -1174,7 +1174,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int 
 
    if ((attacker == player.p) && !pilot_isFlag(p, PILOT_DISTRESSED)) {
       /* Check if planet is in range. */
-      for (i=0; i<cur_system->nplanets; i++) {
+      for (i=0; i<array_size(cur_system->planets); i++) {
          if (planet_hasService(cur_system->planets[i], PLANET_SERVICE_INHABITED) &&
                (!ignore_int && pilot_inRangePlanet(p, i)) &&
                !areEnemies(p->faction, cur_system->planets[i]->faction)) {
@@ -2852,7 +2852,7 @@ Pilot* pilot_copy( Pilot* src )
  */
 void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf, int ignore_rules, int guerilla )
 {
-   int nind, i, j, *ind;
+   int i, j, *ind;
    int nfact, *fact;
    double chance, limit;
    JumpPoint **validJumpPoints;
@@ -2864,15 +2864,11 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
    vectnull( vp );
 
    /* Build landable planet table. */
-   ind   = NULL;
-   nind  = 0;
-   if (cur_system->nplanets > 0) {
-      ind = malloc( sizeof(int) * cur_system->nplanets );
-      for (i=0; i<cur_system->nplanets; i++)
-         if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
-               !areEnemies(lf,cur_system->planets[i]->faction))
-            ind[ nind++ ] = i;
-   }
+   ind = array_create_size( int, array_size(cur_system->planets) );
+   for (i=0; i<array_size(cur_system->planets); i++)
+      if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
+            !areEnemies(lf,cur_system->planets[i]->faction))
+         array_push_back( &ind, i );
 
    /* Build jumpable jump table. */
    validJumpPoints = array_create_size( JumpPoint*, cur_system->njumps );
@@ -2900,7 +2896,7 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
    }
 
    /* Unusual case no landable nor presence, we'll just jump in randomly. */
-   if ((nind == 0) && (array_size(validJumpPoints)==0)) {
+   if (array_size(ind)==0 && array_size(validJumpPoints)==0) {
       if (guerilla) /* Guerilla ships are created far away in deep space. */
          vect_pset ( vp, 1.5*cur_system->radius, RNGF()*2*M_PI );
       else if (cur_system->njumps > 0) {
@@ -2914,21 +2910,20 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
    }
 
    /* Calculate jump chance. */
-   if ((nind > 0) || (array_size(validJumpPoints) > 0)) {
+   if (array_size(ind)>0 || array_size(validJumpPoints)>0) {
       chance = array_size(validJumpPoints);
-      chance = chance / (chance + nind);
+      chance = chance / (chance + array_size(ind));
 
       /* Random jump in. */
-      if ((ind == NULL) || ((RNGF() <= chance) && (validJumpPoints != NULL)))
+      if ((RNGF() <= chance) && (validJumpPoints != NULL))
          *jump = validJumpPoints[ RNG_BASE(0,array_size(validJumpPoints)-1) ];
       /* Random take off. */
-      else if (ind !=NULL && nind != 0) {
-         *planet = cur_system->planets[ ind[ RNG_BASE(0,nind-1) ] ];
-      }
+      else if (array_size(ind) != 0)
+         *planet = cur_system->planets[ ind[ RNG_BASE(0, array_size(ind)-1) ] ];
    }
 
    /* Free memory allocated. */
-   free( ind );
+   array_free( ind );
    array_free(validJumpPoints);
 }
 

@@ -352,7 +352,7 @@ static void map_update_commod_av_price()
             double sumPrice=0;
             int sumCnt=0;
             double thisPrice;
-            for ( j=0 ; j<sys->nplanets; j++) {
+            for ( j=0 ; j<array_size(sys->planets); j++) {
                p=sys->planets[j];
                for ( k=0; k<array_size(p->commodities); k++) {
                   if ( p->commodities[k] == c ) {
@@ -491,7 +491,7 @@ static void map_update( unsigned int wid )
    window_modifyText( wid, "txtSysname", _(sys->name) );
 
    f         = -1;
-   for (i=0; i<sys->nplanets; i++) {
+   for (i=0; i<array_size(sys->planets); i++) {
       if (sys->planets[i]->real != ASSET_REAL)
          continue;
       if (!planet_isKnown(sys->planets[i]))
@@ -516,7 +516,7 @@ static void map_update( unsigned int wid )
       h = gl_smallFont.h;
    }
    else {
-      if (i==sys->nplanets) /* saw them all and all the same */
+      if (i==array_size(sys->planets)) /* saw them all and all the same */
          nsnprintf( buf, PATH_MAX, "%s", faction_longname(f) );
 
       /* Modify the image. */
@@ -555,7 +555,7 @@ static void map_update( unsigned int wid )
    hasPlanets = 0;
    p = 0;
    buf[0] = '\0';
-   for (i=0; i<sys->nplanets; i++) {
+   for (i=0; i<array_size(sys->planets); i++) {
       if (sys->planets[i]->real != ASSET_REAL)
          continue;
       if (!planet_isKnown(sys->planets[i]))
@@ -592,7 +592,7 @@ static void map_update( unsigned int wid )
    window_moveWidget( wid, "txtSServices", x, y );
    window_moveWidget( wid, "txtServices", x + 50, y-gl_smallFont.h-5 );
    services = 0;
-   for (i=0; i<sys->nplanets; i++)
+   for (i=0; i<array_size(sys->planets); i++)
       if (planet_isKnown(sys->planets[i]))
          services |= sys->planets[i]->services;
    buf[0] = '\0';
@@ -1354,7 +1354,7 @@ void map_renderCommod( double bx, double by, double x, double y,
          if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
             minPrice=0;
             maxPrice=0;
-            for ( j=0 ; j<sys->nplanets; j++) {
+            for ( j=0 ; j<array_size(sys->planets); j++) {
                p=sys->planets[j];
                for ( k=0; k<array_size(p->commodities); k++) {
                   if ( p->commodities[k] == c ) {
@@ -1400,7 +1400,7 @@ void map_renderCommod( double bx, double by, double x, double y,
          if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
             minPrice=0;
             maxPrice=0;
-            for ( j=0 ; j<sys->nplanets; j++) {
+            for ( j=0 ; j<array_size(sys->planets); j++) {
                p=sys->planets[j];
                for ( k=0; k<array_size(p->commodities); k++) {
                   if ( p->commodities[k] == c ) {
@@ -1462,7 +1462,7 @@ void map_renderCommod( double bx, double by, double x, double y,
          if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
             double sumPrice=0;
             int sumCnt=0;
-            for ( j=0 ; j<sys->nplanets; j++) {
+            for ( j=0 ; j<array_size(sys->planets); j++) {
                p=sys->planets[j];
                for ( k=0; k<array_size(p->commodities); k++) {
                   if ( p->commodities[k] == c ) {
@@ -1709,7 +1709,7 @@ static void map_genModeList(void)
    memset(commod_known,0,sizeof(Commodity*)*commodity_getN());
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
-      for ( j=0 ; j<sys->nplanets; j++) {
+      for ( j=0 ; j<array_size(sys->planets); j++) {
          p = sys->planets[j];
          tot += array_size( p->commodities );
          for ( k=0; k<array_size(p->commodities); k++) {
@@ -2410,7 +2410,7 @@ int localmap_map( const Outfit *lmap )
    }
 
    detect = lmap->u.lmap.asset_detect;
-   for (i=0; i<cur_system->nplanets; i++) {
+   for (i=0; i<array_size(cur_system->planets); i++) {
       p = cur_system->planets[i];
       if (p->real != ASSET_REAL)
          continue;
@@ -2445,7 +2445,7 @@ int localmap_isMapped( const Outfit *lmap )
    }
 
    detect = lmap->u.lmap.asset_detect;
-   for (i=0; i<cur_system->nplanets; i++) {
+   for (i=0; i<array_size(cur_system->planets); i++) {
       p = cur_system->planets[i];
       if (p->real != ASSET_REAL)
          continue;
