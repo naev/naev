@@ -934,9 +934,6 @@ void diff_remove( const char *name )
  */
 void diff_clear (void)
 {
-   if (diff_stack==NULL)
-      return;
-
    while (array_size(diff_stack) > 0)
       diff_removeDiff(&diff_stack[array_size(diff_stack)-1]);
 

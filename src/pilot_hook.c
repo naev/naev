@@ -169,11 +169,7 @@ void pilots_rmGlobalHook( unsigned int hook )
  */
 void pilots_clearGlobalHooks (void)
 {
-   /* Must exist pilot hook.s */
-   if (pilot_globalHooks == NULL )
-      return;
-
-   array_erase( &pilot_globalHooks, pilot_globalHooks, &pilot_globalHooks[ array_size(pilot_globalHooks) ] );
+   array_erase( &pilot_globalHooks, array_begin(pilot_globalHooks), array_end(pilot_globalHooks) );
 }
 
 
