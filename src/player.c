@@ -127,17 +127,13 @@ static double player_timer = 0.; /**< For death and such. */
 /*
  * unique mission stack.
  */
-static int* missions_done  = NULL; /**< Saves position of completed missions. */
-static int missions_mdone  = 0; /**< Memory size of completed missions. */
-static int missions_ndone  = 0; /**< Number of completed missions. */
+static int* missions_done  = NULL; /**< Array (array.h): Saves position of completed missions. */
 
 
 /*
  * unique event stack.
  */
-static int* events_done  = NULL; /**< Saves position of completed events. */
-static int events_mdone  = 0; /**< Memory size of completed events. */
-static int events_ndone  = 0; /**< Number of completed events. */
+static int* events_done  = NULL; /**< Array (array.h): Saves position of completed events. */
 
 
 /*
@@ -715,15 +711,11 @@ void player_cleanup (void)
    array_free(player_outfits);
    player_outfits  = NULL;
 
-   free(missions_done);
+   array_free(missions_done);
    missions_done = NULL;
-   missions_ndone = 0;
-   missions_mdone = 0;
 
-   free(events_done);
+   array_free(events_done);
    events_done = NULL;
-   events_ndone = 0;
-   events_mdone = 0;
 
    /* Clean up licenses. */
    for (i=0; i<array_size(player_licenses); i++)
@@ -2697,12 +2689,9 @@ void player_missionFinished( int id )
       return;
 
    /* Mark as done. */
-   missions_ndone++;
-   if (missions_ndone > missions_mdone) { /* need to grow */
-      missions_mdone += 25;
-      missions_done = realloc( missions_done, sizeof(int) * missions_mdone);
-   }
-   missions_done[ missions_ndone-1 ] = id;
+   if (missions_done == NULL)
+      missions_done = array_create( int );
+   array_push_back( &missions_done, id );
 }
 
 
@@ -2715,7 +2704,7 @@ void player_missionFinished( int id )
 int player_missionAlreadyDone( int id )
 {
    int i;
-   for (i=0; i<missions_ndone; i++)
+   for (i=0; i<array_size(missions_done); i++)
       if (missions_done[i] == id)
          return 1;
    return 0;
@@ -2733,13 +2722,10 @@ void player_eventFinished( int id )
    if (player_eventAlreadyDone(id))
       return;
 
-   /* Add to done. */
-   events_ndone++;
-   if (events_ndone > events_mdone) { /* need to grow */
-      events_mdone += 25;
-      events_done = realloc( events_done, sizeof(int) * events_mdone);
-   }
-   events_done[ events_ndone-1 ] = id;
+   /* Mark as done. */
+   if (events_done == NULL)
+      events_done = array_create( int );
+   array_push_back( &events_done, id );
 }
 
 
@@ -2752,7 +2738,7 @@ void player_eventFinished( int id )
 int player_eventAlreadyDone( int id )
 {
    int i;
-   for (i=0; i<events_ndone; i++)
+   for (i=0; i<array_size(events_done); i++)
       if (events_done[i] == id)
          return 1;
    return 0;
@@ -3007,7 +2993,7 @@ int player_save( xmlTextWriterPtr writer )
 
    /* Mission the player has done. */
    xmlw_startElem(writer,"missions_done");
-   for (i=0; i<missions_ndone; i++) {
+   for (i=0; i<array_size(missions_done); i++) {
       m = mission_get(missions_done[i]);
       if (m != NULL) /* In case mission name changes between versions */
          xmlw_elem(writer, "done", "%s", m->name);
@@ -3016,7 +3002,7 @@ int player_save( xmlTextWriterPtr writer )
 
    /* Events the player has done. */
    xmlw_startElem(writer, "events_done");
-   for (i=0; i<events_ndone; i++) {
+   for (i=0; i<array_size(events_done); i++) {
       ev = event_dataName(events_done[i]);
       if (ev != NULL) /* In case mission name changes between versions */
          xmlw_elem(writer, "done", "%s", ev);
@@ -3905,5 +3891,3 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
    return 0;
 }
-
-
