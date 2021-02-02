@@ -1979,20 +1979,18 @@ void space_gfxUnload( StarSystem *sys )
  */
 static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList )
 {
-   int mem, i;
+   int i;
    char str[PATH_MAX], *tmp;
    xmlNodePtr node, cur, ccur;
    unsigned int flags;
    Commodity *com;
    Commodity **comms;
-   int ncomms;
 
    /* Clear up memory for safe defaults. */
    flags          = 0;
    planet->real   = ASSET_REAL;
    planet->hide   = 0.01;
-   comms          = NULL;
-   ncomms         = 0;
+   comms          = array_create( Commodity* );
 
    /* Get the name. */
    xmlr_attr_strd( parent, "name", planet->name );
@@ -2108,7 +2106,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
 
             else if (xml_isNode(cur, "commodities")) {
                ccur = cur->children;
-               mem = 0;
 
                do {
                   if (xml_isNode(ccur,"commodity")) {
@@ -2117,19 +2114,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
                      if (com->standard == 1)
                         continue;
 
-                     ncomms++;
-                     if (ncomms > mem) {
-                        if (mem == 0)
-                           mem = CHUNK_SIZE_SMALL;
-                        else
-                           mem *= 2;
-
-                        if (comms == NULL)
-                           comms = malloc( mem * sizeof(Commodity*) );
-                        else
-                           comms = realloc( comms, mem * sizeof(Commodity*) );
-                     }
-                     comms[ncomms-1] = com;
+                     array_push_back( &comms, com );
                   }
                } while (xml_nextNode(ccur));
             }
@@ -2173,7 +2158,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
                planet_hasService(planet,PLANET_SERVICE_SHIPYARD)) &&
             (planet->tech==NULL), "tech" );
       /*MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
-            (planet->ncommodities==0),"commodity" );*/
+            (array_size(planet->commodities)==0),"commodity" );*/
       /*MELEMENT( (flags&FLAG_FACTIONSET) && (planet->presenceAmount == 0.),
             "presence" );*/
    }
@@ -2182,46 +2167,29 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
    /* Build commodities list */
    if (planet_hasService(planet, PLANET_SERVICE_COMMODITY)) {
       /* First, store all the standard commodities and prices. */
-      mem = array_size( stdList );
-      planet->ncommodities = mem;
-      if (mem > 0) {
-         planet->commodityPrice = malloc( mem * sizeof(CommodityPrice) );
-         planet->commodities    = malloc( mem * sizeof(Commodity*) );
-         for (i=0; i<mem; i++) {
-            planet->commodities[i]          = stdList[i];
-            planet->commodityPrice[i].price = planet->commodities[i]->price;
+      if (array_size( stdList ) > 0) {
+         planet->commodityPrice = array_create( CommodityPrice );
+         planet->commodities = array_create( Commodity* );
+         for (i=0; i<array_size(stdList); i++) {
+            array_grow(&planet->commodities) = stdList[i];
+            array_grow(&planet->commodityPrice).price = stdList[i]->price;
          }
       }
 
       /* Now add extra commodities */
-      for (i=0; i<ncomms; i++) {
+      for (i=0; i<array_size(comms); i++) {
          com = comms[i];
 
-         planet->ncommodities++;
-         /* Memory must grow. */
-         if (planet->ncommodities > mem) {
-            if (mem == 0)
-               mem = CHUNK_SIZE_SMALL;
-            else
-               mem *= 2;
-            planet->commodities = realloc(planet->commodities,
-                  mem * sizeof(Commodity*));
-            planet->commodityPrice = realloc(planet->commodityPrice,
-                  mem * sizeof(CommodityPrice));
-         }
-         planet->commodities[planet->ncommodities-1] = com;
+         array_grow(&planet->commodities) = com;
          /* Set commodity price on this planet to the base price */
-         planet->commodityPrice[planet->ncommodities-1].price
-            = planet->commodities[planet->ncommodities-1]->price;
+         array_grow(&planet->commodityPrice).price = com->price;
       }
       /* Shrink to minimum size. */
-      planet->commodities = realloc(planet->commodities,
-            planet->ncommodities * sizeof(Commodity*));
-      planet->commodityPrice = realloc(planet->commodityPrice,
-            planet->ncommodities * sizeof(CommodityPrice));
+      array_shrink( &planet->commodities );
+      array_shrink( &planet->commodityPrice );
    }
    /* Free temporary comms list. */
-   free(comms);
+   array_free(comms);
 
    /* Square to allow for linear multiplication with squared distances. */
    planet->hide = pow2(planet->hide);
@@ -3625,8 +3593,8 @@ void space_exit (void)
          tech_groupDestroy( pnt->tech );
 
       /* commodities */
-      free(pnt->commodities);
-      free(pnt->commodityPrice);
+      array_free(pnt->commodities);
+      array_free(pnt->commodityPrice);
    }
    array_free(planet_stack);
 

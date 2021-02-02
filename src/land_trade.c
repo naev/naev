@@ -20,6 +20,7 @@
 
 #include "land_trade.h"
 
+#include "array.h"
 #include "commodity.h"
 #include "dialogue.h"
 #include "economy.h"
@@ -105,8 +106,8 @@ void commodity_exchange_open( unsigned int wid )
          "txtDesc", &gl_smallFont, NULL, NULL );
 
    /* goods list */
-   if (land_planet->ncommodities > 0) {
-      ngoods = land_planet->ncommodities;
+   if (array_size(land_planet->commodities) > 0) {
+      ngoods = array_size( land_planet->commodities );
       cgoods = calloc( ngoods, sizeof(ImageArrayCell) );
       for (i=0; i<ngoods; i++) {
          cgoods[i].image = gl_dupTexture(land_planet->commodities[i]->gfx_store);
@@ -154,7 +155,7 @@ void commodity_update( unsigned int wid, char* str )
    char buf_tonnes_owned[ECON_MASS_STRLEN], buf_tonnes_free[ECON_MASS_STRLEN];
    int owned;
    i = toolkit_getImageArrayPos( wid, "iarTrade" );
-   if (i < 0 || land_planet->ncommodities == 0) {
+   if (i < 0 || array_size(land_planet->commodities) == 0) {
       credits2str( buf_credits, player.p->credits, 2 );
       tonnes2str( buf_tonnes_free, pilot_cargoFree(player.p) );
       nsnprintf( buf, PATH_MAX,

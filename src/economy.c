@@ -139,11 +139,11 @@ credits_t economy_getPriceAtTime( const Commodity *com,
    }
 
    /* and get the index on this planet */
-   for ( i=0; i<p->ncommodities; i++) {
+   for ( i=0; i<array_size(p->commodities); i++) {
      if ( ( strcmp(p->commodities[i]->name, com->name) == 0 ) )
        break;
    }
-   if (i >= p->ncommodities) {
+   if (i >= array_size(p->commodities)) {
      WARN(_("Price for commodity '%s' not known on this planet."), com->name);
      return 0;
    }
@@ -188,11 +188,11 @@ int economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credit
    }
 
    /* and get the index on this planet */
-   for ( i=0; i<p->ncommodities; i++) {
+   for ( i=0; i<array_size(p->commodities); i++) {
      if ( ( strcmp(p->commodities[i]->name, com->name) == 0 ) )
        break;
    }
-   if (i >= p->ncommodities) {
+   if (i >= array_size(p->commodities)) {
       WARN(_("Price for commodity '%s' not known on this planet."), com->name);
       *mean = 0;
       *std = 0;
@@ -249,11 +249,11 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std 
       for ( j=0; j<sys->nplanets; j++) {
          p = sys->planets[j];
          /* and get the index on this planet */
-         for ( k=0; k<p->ncommodities; k++) {
+         for ( k=0; k<array_size(p->commodities); k++) {
             if ( ( strcmp(p->commodities[k]->name, com->name) == 0 ) )
                break;
          }
-         if (k < p->ncommodities) {
+         if (k < array_size(p->commodityPrice)) {
             commPrice=&p->commodityPrice[k];
             if ( commPrice->cnt>0) {
                av+=commPrice->sum/commPrice->cnt;
@@ -692,7 +692,7 @@ static void economy_modifySystemCommodityPrice(StarSystem *sys)
 
    for ( i=0; i<sys->nplanets; i++ ) {
       planet=sys->planets[i];
-      for ( j=0; j<planet->ncommodities; j++ ) {
+      for ( j=0; j<array_size(planet->commodityPrice); j++ ) {
         /* Largest is approx 35000.  Increased radius will increase price since further to travel,
            and also increase stability, since longer for prices to fluctuate, but by a larger amount when they do.*/
          planet->commodityPrice[j].price *= 1 + sys->radius/200000;
@@ -743,7 +743,7 @@ static void economy_modifySystemCommodityPrice(StarSystem *sys)
    /* And now apply the averaging */
    for ( i=0; i<sys->nplanets; i++ ) {
       planet=sys->planets[i];
-      for ( j=0; j<planet->ncommodities; j++ ) {
+      for ( j=0; j<array_size(planet->commodities); j++ ) {
          for ( k=0; k<nav; k++ ) {
             if ( ( strcmp( planet->commodities[j]->name, avprice[k].name ) == 0 ) ) {
                planet->commodityPrice[j].price*=0.25;
@@ -811,7 +811,7 @@ static void economy_calcUpdatedCommodityPrice(StarSystem *sys)
    /*and finally modify assets based on the means */
    for ( i=0; i<sys->nplanets; i++ ) {
       planet=sys->planets[i];
-      for ( j=0; j<planet->ncommodities; j++ ) {
+      for ( j=0; j<array_size(planet->commodities); j++ ) {
          for ( k=0; k<nav; k++ ) {
             if ( ( strcmp(avprice[k].name, planet->commodities[j]->name) == 0 ) ) {
                planet->commodityPrice[j].price = (
@@ -849,7 +849,7 @@ void economy_initialiseCommodityPrices(void)
       for ( j=0; j<sys->nplanets; j++ ) {
          planet = sys->planets[j];
          /* Set up the commodity prices on the system, based on its attributes. */
-         for ( i=0; i<planet->ncommodities; i++ ) {
+         for ( i=0; i<array_size(planet->commodities); i++ ) {
             if (economy_calcPrice(planet, planet->commodities[i], &planet->commodityPrice[i]))
                return;
          }
@@ -902,7 +902,7 @@ void economy_initialiseCommodityPrices(void)
 void economy_initialiseSingleSystem( StarSystem *sys, Planet *planet )
 {
    int i;
-   for ( i=0; i<planet->ncommodities; i++ ) {
+   for ( i=0; i<array_size(planet->commodities); i++ ) {
       economy_calcPrice(planet, planet->commodities[i], &planet->commodityPrice[i]);
    }
    economy_modifySystemCommodityPrice(sys);
@@ -917,7 +917,7 @@ void economy_averageSeenPrices( const Planet *p )
    CommodityPrice *cp;
    credits_t price;
    t = ntime_get();
-   for ( i = 0 ; i < p->ncommodities ; i++ ) {
+   for ( i = 0; i < array_size(p->commodities); i++ ) {
       c=p->commodities[i];
       cp=&p->commodityPrice[i];
       if ( cp->updateTime < t ) { /* has not yet been updated at present time. */
@@ -940,7 +940,7 @@ void economy_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate )
    CommodityPrice *cp;
    credits_t price;
    t = ntime_get();
-   for ( i = 0 ; i < p->ncommodities ; i++ ) {
+   for ( i = 0; i < array_size(p->commodities); i++ ) {
       c=p->commodities[i];
       cp=&p->commodityPrice[i];
       if ( cp->updateTime < t ) { /* has not yet been updated at present time. */
@@ -967,7 +967,7 @@ void economy_clearKnown (void)
       sys = &systems_stack[i];
       for (j=0; j<sys->nplanets; j++) {
          p=sys->planets[j];
-         for (k=0; k<p->ncommodities; k++) {
+         for (k=0; k<array_size(p->commodityPrice); k++) {
             cp=&p->commodityPrice[k];
             cp->cnt=0;
             cp->sum=0;
@@ -988,7 +988,7 @@ void economy_clearSinglePlanet(Planet *p)
 {
    CommodityPrice *cp;
    int k;
-   for ( k=0; k<p->ncommodities; k++ ) {
+   for ( k=0; k<array_size(p->commodityPrice); k++ ) {
       cp=&p->commodityPrice[k];
       cp->cnt=0;
       cp->sum=0;
@@ -1037,7 +1037,7 @@ int economy_sysLoad( xmlNodePtr parent )
                         if (xml_isNode(nodeCommodity, "commodity")) {
                            xmlr_attr_strd(nodeCommodity,"name",str);
                            cp = NULL;
-                           for (i=0; i<planet->ncommodities; i++) {
+                           for (i=0; i<array_size(planet->commodities); i++) {
                               if ( (strcmp(str,planet->commodities[i]->name) == 0) ) {
                                  cp = &planet->commodityPrice[i];
                                  break;
@@ -1098,7 +1098,7 @@ int economy_sysSave( xmlTextWriterPtr writer )
       for (j=0; j<sys->nplanets; j++) {
          p=sys->planets[j];
          donePlanet=0;
-         for ( k=0; k<p->ncommodities; k++) {
+         for ( k=0; k<array_size(p->commodities); k++) {
             cp=&p->commodityPrice[k];
             if ( cp->cnt > 0 ) {/* Player has seen this commodity at this location */
                if ( doneSys==0 ) {

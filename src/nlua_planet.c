@@ -834,7 +834,7 @@ static int planetL_commoditiesSold( lua_State *L )
 
    /* Push results in a table. */
    lua_newtable(L);
-   for (i=0; i<p->ncommodities; i++) {
+   for (i=0; i<array_size(p->commodities); i++) {
       lua_pushnumber(L,i+1); /* index, starts with 1 */
       lua_pushcommodity(L,p->commodities[i]); /* value = LuaCommodity */
       lua_rawset(L,-3); /* store the value in the table */

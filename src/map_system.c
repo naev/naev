@@ -811,7 +811,7 @@ void map_system_updateSelected( unsigned int wid )
          free( outfits );
          ships = tech_getShip( cur_planetObj_sel->tech, &nships );
          free( ships );
-         ngoods = cur_planetObj_sel->ncommodities;
+         ngoods = array_size( cur_planetObj_sel->commodities );
 	 /* to buy commodity info, need to be landed, and the selected system must sell them! */
 	 if ( landed && planet_hasService( cur_planetObj_sel, PLANET_SERVICE_COMMODITY ) ) {
 	   window_enableButton( wid, "btnBuyCommodPrice" );
@@ -965,7 +965,7 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
    if ( cur_planetObj_sel == NULL ) {
       ngoods = 0;
    } else {
-      ngoods = cur_planetObj_sel->ncommodities;
+      ngoods = array_size( cur_planetObj_sel->commodities );
    }
    if ( ngoods > 0 ) {
       cgoods = calloc( ngoods, sizeof(ImageArrayCell) );
@@ -1021,7 +1021,7 @@ void map_system_buyCommodPrice( unsigned int wid, char *str )
    credits2str( coststr, cost, -1 );
    if ( !player_hasCredits( cost ) ) {
       dialogue_msg( _("You can't afford that"), _("Sorry, but we are selling this information for %s, which you don't have."), coststr );
-   } else if ( cur_planetObj_sel->ncommodities == 0 ) {
+   } else if ( array_size( cur_planetObj_sel->commodities ) == 0 ) {
       dialogue_msgRaw( _("No commodities sold here"),_("There are no commodities sold here, as far as we are aware!"));
    } else if ( cur_planetObj_sel->commodityPrice[0].updateTime >= t ) {
       dialogue_msgRaw( _("You already have newer information"), _("I've checked your computer, and you already have newer information than we can sell.") );

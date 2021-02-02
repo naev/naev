@@ -118,9 +118,8 @@ typedef struct Planet_ {
    char* description; /**< planet description */
    char* bar_description; /**< spaceport bar description */
    unsigned int services; /**< what services they offer */
-   Commodity **commodities; /**< what commodities they sell */
-   CommodityPrice *commodityPrice; /**< the base cost of a commodity on this planet */
-   int ncommodities; /**< the amount they have */
+   Commodity **commodities; /**< array: what commodities they sell */
+   CommodityPrice *commodityPrice; /**< array: the base cost of a commodity on this planet */
    tech_group_t *tech; /**< Planet tech. */
 
    /* Graphics. */
