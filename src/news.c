@@ -18,8 +18,8 @@
 
 #include "news.h"
 
+#include "array.h"
 #include "log.h"
-#include "ndata.h"
 #include "nlua.h"
 #include "nlua_diff.h"
 #include "nlua_faction.h"
@@ -54,10 +54,8 @@ static unsigned int news_tick = 0; /**< Last news tick. */
 static int news_drag          = 0; /**< Is dragging news? */
 static double news_pos        = 0.; /**< Position of the news feed. */
 static glFont *news_font      = &gl_defFont; /**< Font to use. */
-static char **news_lines      = NULL; /**< Text per line. */
-static glFontRestore *news_restores = NULL; /**< Restorations. */
-static int news_nlines        = 0; /**< Number of lines used. */
-static int news_mlines        = 0; /**< Lines allocated. */
+static char **news_lines      = NULL; /**< Array (array.h) of each line's text. */
+static glFontRestore *news_restores = NULL; /**< Array (array.h) of restorations. */
 static double textlength      = 0.;
 
 /**
@@ -183,6 +181,8 @@ int news_init (void)
       news_exit();
 
    news_list = calloc(sizeof(news_t), 1);
+   news_lines = array_create( char* );
+   news_restores = array_create( glFontRestore );
 
    return 0;
 }
@@ -213,18 +213,12 @@ void news_exit (void)
       free(temp);
    }
 
-   if (news_nlines != 0) {
-      for (i=0; i<news_nlines; i++)
-         free(news_lines[i]);
-      news_nlines = 0;
-   }
-
-   free(news_lines);
-   free(news_restores);
+   for (i=0; i<array_size(news_lines); i++)
+      free(news_lines[i]);
+   array_free(news_lines);
+   array_free(news_restores);
    news_lines  = NULL;
    news_restores = NULL;
-   news_nlines = 0;
-   news_mlines = 0;
    textlength  = 0;
 
    news_list = NULL;
@@ -332,40 +326,26 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    news_pos    = h/3;
    news_tick   = SDL_GetTicks();
 
-   if (news_nlines>0)
-      clear_newslines();
-
+   clear_newslines();
 
    /* Now load up the text. */
    p = 0;
-   news_nlines = 0;
 
    while (p < len) {
-
       /* Get the length. */
       i = gl_printWidthForText( NULL, &buf[p], w-40, NULL );
 
       /* Copy the line. */
-      if (news_nlines+1 > news_mlines) {
-         if (news_mlines == 0)
-            news_mlines = 256;
-         else
-            news_mlines *= 2;
-         news_lines    = realloc( news_lines, sizeof(char*) * news_mlines );
-         news_restores = realloc( news_restores, sizeof(glFontRestore) * news_mlines );
-      }
-      news_lines[ news_nlines ]    = malloc( i + 1 );
-      strncpy( news_lines[news_nlines], buf+p, i );
-      news_lines[ news_nlines ][i] = '\0';
-      if (news_nlines == 0)
-         gl_printRestoreInit( &news_restores[ news_nlines ] );
+      array_push_back( &news_lines, nstrndup( buf+p, i ) );
+      if (array_size( news_restores ) == 0)
+         gl_printRestoreInit( &array_grow( &news_restores ) );
       else {
-         news_restores[ news_nlines ] = news_restores[ news_nlines-1 ];
-         gl_printStore( &news_restores[ news_nlines ], news_lines[ news_nlines-1 ] );
+         glFontRestore restore = array_back( news_restores );
+         gl_printStore( &restore, news_lines[ array_size(news_lines)-2 ] );
+         array_push_back( &news_restores, restore );
       }
 
       p += i + 1;    /* Move pointer. */
-      news_nlines++; /* New line. */
    }
    /* </load text> */
 
@@ -379,10 +359,11 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
 void clear_newslines (void)
 {
    int i;
-   for (i=0; i<news_nlines; i++)
+   for (i=0; i<array_size(news_lines); i++)
       free(news_lines[i]);
 
-   news_nlines = 0;
+   array_resize(&news_lines, 0);
+   array_resize(&news_restores, 0);
 }
 
 
@@ -477,21 +458,20 @@ static void news_render( double bx, double by, double w, double h, void *data )
    /* Render the text. */
    p = (int)ceil( news_pos / (news_font->h + 5.));
    m = (int)ceil(        h / (news_font->h + 5.));
-   if (p > news_nlines + m + 1) {
+   if (p > array_size( news_lines ) + m + 1) {
       news_pos = 0.;
       return;
    }
 
    /* Get positions to make sure inbound. */
    s = MAX(0, p - m);
-   p = MIN(p + 1, news_nlines - 1);
+   p = MIN(p + 1, array_size( news_lines ) - 1);
 
    /* Get start position. */
    y = news_pos - s * (news_font->h+5.);
 
    /* Draw loop. */
    for (i=s; i<p; i++) {
-
       gl_printRestore( &news_restores[i] );
       gl_printMidRaw( news_font, w-40.,
             bx+10, by+y, &cFontGreen, -1., news_lines[i] );
@@ -499,7 +479,6 @@ static void news_render( double bx, double by, double w, double h, void *data )
       /* Increment line and position. */
       y -= news_font->h + 5.;
    }
-
 }
 
 /*

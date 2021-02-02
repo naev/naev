@@ -58,8 +58,7 @@ static int cur_commod         = -1; /**< Current commodity selected. */
 static int cur_commod_mode    = 0; /**< 0 for difference, 1 for cost. */
 static int commod_counter = 0; /**< used to fade back in the faction smudges */
 static Commodity **commod_known = NULL; /**< index of known commodities */
-static int nmap_modes = 0; /**< number of map modes (depends on number of commodities) */
-static char** map_modes = NULL; /**< Holds the names of the different map modes. */
+static char** map_modes = NULL; /**< Array (array.h) of the map modes' names, e.g. "Gold: Cost". */
 static int listMapModeVisible = 0; /**< Whether the map mode list widget is visible. */
 static double commod_av_gal_price = 0; /**< Average price across the galaxy. */
 /* VBO. */
@@ -1729,24 +1728,21 @@ static void map_genModeList(void)
          }
       }
    }
-   if ( map_modes != NULL ) {
-      for ( i=0 ; i<nmap_modes ; i++)
-         free( map_modes[i] );
-      free ( map_modes );
-   }
-   nmap_modes = 2*totGot + 1;
-   map_modes = calloc( sizeof(char*), nmap_modes );
-   map_modes[0] = strdup(_("Travel (Default)"));
+   for ( i=0; i<array_size(map_modes); i++)
+      free( map_modes[i] );
+   array_free ( map_modes );
+   map_modes = array_create_size( char*, 2*totGot + 1 );
+   array_push_back( &map_modes, strdup(_("Travel (Default)")) );
 
    odd_template = _("%s: Cost");
    even_template = _("%s: Trade");
    for ( i=0; i<totGot; i++ ) {
       commod_text = _(commod_known[i]->name);
       l = strlen(odd_template) + strlen(commod_text) - 2 /*"%s"*/ + 1 /* '\0' */;
-      map_modes[ 2*i + 1 ] = malloc(l);
+      array_push_back( &map_modes, malloc(l) );
       nsnprintf( map_modes[2*i+1], l, odd_template, commod_text );
       l = strlen(even_template) + strlen(commod_text) - 2 /*"%s"*/ + 1 /* '\0' */;
-      map_modes[ 2*i + 2 ] = malloc(l);
+      array_push_back( &map_modes, malloc(l) );
       nsnprintf( map_modes[2*i+2], l, even_template, commod_text );
    }
 }
@@ -1807,7 +1803,7 @@ static void map_buttonCommodity( unsigned int wid, char* str )
          cur_commod_mode_last = cur_commod_mode;
          cur_commod = -1;
       }
-      if ( cur_commod >= (nmap_modes-1)/2 )
+      if ( cur_commod >= (array_size(map_modes)-1)/2 )
          cur_commod = -1;
       /* And hide the list if it was visible. */
       if ( listMapModeVisible) {
@@ -1822,8 +1818,8 @@ static void map_buttonCommodity( unsigned int wid, char* str )
          listMapModeVisible = 0;
          window_destroyWidget( wid, "lstMapMode" );
       } else {/* show the list widget */
-         this_map_modes = calloc( sizeof(char*), nmap_modes );
-         for (int i=0; i<nmap_modes;i++) {
+         this_map_modes = calloc( sizeof(char*), array_size(map_modes) );
+         for (int i=0; i<array_size(map_modes);i++) {
             this_map_modes[i]=strdup(map_modes[i]);
          }
          listMapModeVisible = 2;
@@ -1833,7 +1829,7 @@ static void map_buttonCommodity( unsigned int wid, char* str )
             defpos = cur_commod*2 + 2 - cur_commod_mode;
 
          window_addList( wid, -10, 60, 200, 200, "lstMapMode",
-                         this_map_modes, nmap_modes, defpos, map_modeUpdate, NULL );
+                         this_map_modes, array_size(map_modes), defpos, map_modeUpdate, NULL );
       }
    }
 }
@@ -1847,12 +1843,10 @@ static void map_window_close( unsigned int wid, char *str )
    int i;
    free ( commod_known );
    commod_known = NULL;
-   if ( map_modes != NULL ) {
-      for ( i=0; i<nmap_modes; i++ )
-         free ( map_modes[i] );
-      free ( map_modes );
-      map_modes = NULL;
-   }
+   for ( i=0; i<array_size(map_modes); i++ )
+      free ( map_modes[i] );
+   array_free ( map_modes );
+   map_modes = NULL;
    cur_commod = -1;
    window_close(wid,str);
 }
