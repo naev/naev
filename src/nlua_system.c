@@ -789,7 +789,7 @@ static int systemL_presences( lua_State *L )
 
    /* Return result in table */
    lua_newtable(L);
-   for (i=0; i<s->npresence; i++) {
+   for (i=0; i<array_size(s->presence); i++) {
       /* Only return positive presences. */
       if (s->presence[i].value <= 0)
          continue;

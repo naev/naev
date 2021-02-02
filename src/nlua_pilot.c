@@ -734,7 +734,7 @@ static int pilotL_toggleSpawn( lua_State *L )
          b = !lua_toboolean(L,2);
 
          /* Find the faction and set. */
-         for (i=0; i<cur_system->npresence; i++) {
+         for (i=0; i<array_size(cur_system->presence); i++) {
             if (cur_system->presence[i].faction != f)
                continue;
             cur_system->presence[i].disabled = b;

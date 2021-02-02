@@ -465,7 +465,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       /* Get presence. */
       hasPresence = 0;
       unknownPresence = 0;
-      for ( i=0; i < sys->npresence; i++ ) {
+      for ( i=0; i < array_size(sys->presence); i++ ) {
          if (sys->presence[i].value <= 0)
             continue;
          hasPresence = 1;

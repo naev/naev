@@ -1095,7 +1095,7 @@ static void system_scheduler( double dt, int init )
    Pilot *pilot;
 
    /* Go through all the factions and reduce the timer. */
-   for (i=0; i < cur_system->npresence; i++) {
+   for (i=0; i < array_size(cur_system->presence); i++) {
       p = &cur_system->presence[i];
       env = faction_getScheduler( p->faction );
 
@@ -1545,7 +1545,7 @@ void space_init( const char* sysname )
    pilot_updateSensorRange();
 
    /* Reset any schedules and used presence. */
-   for (i=0; i<cur_system->npresence; i++) {
+   for (i=0; i<array_size(cur_system->presence); i++) {
       cur_system->presence[i].curUsed  = 0;
       cur_system->presence[i].timer    = 0.;
       cur_system->presence[i].disabled = 0;
@@ -2485,8 +2485,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 
    /* Clear memory for safe defaults. */
    flags          = 0;
-   sys->presence  = NULL;
-   sys->npresence = 0;
+   sys->presence  = array_create( SystemPresence );
    sys->ownerpresence = 0.;
 
    xmlr_attr_strd( parent, "name", sys->name );
@@ -2601,11 +2600,11 @@ void system_setFaction( StarSystem *sys )
    Planet *pnt;
 
    /* Sort presences in descending order. */
-   if (sys->npresence != 0)
-      qsort( sys->presence, sys->npresence, sizeof(SystemPresence), sys_cmpSysFaction );
+   if (array_size(sys->presence) != 0)
+      qsort( sys->presence, array_size(sys->presence), sizeof(SystemPresence), sys_cmpSysFaction );
 
    sys->faction = -1;
-   for (i=0; i<sys->npresence; i++) {
+   for (i=0; i<array_size(sys->presence); i++) {
       for (j=0; j<array_size(sys->planets); j++) { /** @todo Handle multiple different factions. */
          pnt = sys->planets[j];
          if (pnt->real != ASSET_REAL)
@@ -3545,7 +3544,7 @@ void space_exit (void)
       free(systems_stack[i].name);
       array_free(systems_stack[i].jumps);
       free(systems_stack[i].background);
-      free(systems_stack[i].presence);
+      array_free(systems_stack[i].presence);
       array_free(systems_stack[i].planets);
       array_free(systems_stack[i].planetsid);
 
@@ -3856,15 +3855,13 @@ static int getPresenceIndex( StarSystem *sys, int faction )
    }
 
    /* Go through the array (if created), looking for the faction. */
-   for (i = 0; i < sys->npresence; i++)
+   for (i = 0; i < array_size(sys->presence); i++)
       if (sys->presence[i].faction == faction)
          return i;
 
    /* Grow the array. */
-   i = sys->npresence;
-   sys->npresence++;
-   sys->presence = realloc(sys->presence, sizeof(SystemPresence) * sys->npresence);
-   memset(&sys->presence[i], 0, sizeof(SystemPresence));
+   i = array_size(sys->presence);
+   memset(&array_grow(&sys->presence), 0, sizeof(SystemPresence));
    sys->presence[i].faction = faction;
 
    return i;
@@ -3989,12 +3986,8 @@ double system_getPresence( StarSystem *sys, int faction )
       return 0;
    }
 
-   /* If there is no array, there is no presence. */
-   if (sys->presence == NULL)
-      return 0;
-
    /* Go through the array, looking for the faction. */
-   for (i = 0; i < sys->npresence; i++) {
+   for (i = 0; i < array_size(sys->presence); i++) {
       if (sys->presence[i].faction == faction)
          return MAX(sys->presence[i].value, 0);
    }
@@ -4033,9 +4026,8 @@ void space_reconstructPresences( void )
 
    /* Reset the presence in each system. */
    for (i=0; i<array_size(systems_stack); i++) {
-      free(systems_stack[i].presence);
-      systems_stack[i].presence  = NULL;
-      systems_stack[i].npresence = 0;
+      array_free(systems_stack[i].presence);
+      systems_stack[i].presence  = array_create( SystemPresence );
       systems_stack[i].ownerpresence = 0.;
    }
 
