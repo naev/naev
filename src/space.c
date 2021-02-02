@@ -93,7 +93,6 @@ static Planet *planet_stack = NULL; /**< Planet stack. */
  * Asteroid types stack.
  */
 static AsteroidType *asteroid_types = NULL; /**< Asteroid types stack. */
-static int asteroid_ntypes = 0; /**< Asteroid types stack size. */
 
 /*
  * Misc.
@@ -2891,7 +2890,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 
          name = xml_get(cur);
          /* Find the ID */
-         for (i=0; i<asteroid_ntypes; i++) {
+         for (i=0; i<array_size(asteroid_types); i++) {
             if ( (strcmp(asteroid_types[i].ID,name)==0) )
                a->type[a->ntype-1] = i;
          }
@@ -3134,13 +3133,11 @@ static int asteroidTypes_load (void)
       return -1;
    }
 
+   asteroid_types = array_create( AsteroidType );
    do {
       if (xml_isNode(node,"asteroid")) {
-         /* Grow memory. */
-         asteroid_types = realloc(asteroid_types, sizeof(AsteroidType)*(asteroid_ntypes+1));
-
          /* Load it. */
-         at = &asteroid_types[asteroid_ntypes];
+         at = &array_grow( &asteroid_types );
          at->gfxs = array_create( glTexture* );
          at->material = array_create( Commodity* );
          at->quantity = array_create( int );
@@ -3185,13 +3182,11 @@ static int asteroidTypes_load (void)
 
          if (array_size(at->gfxs)==0)
             WARN(_("Asteroid type has no gfx associated."));
-
-         asteroid_ntypes++;
       }
    } while (xml_nextNode(node));
 
    /* Shrink to minimum. */
-   asteroid_types = realloc(asteroid_types, sizeof(AsteroidType)*asteroid_ntypes);
+   array_shrink( &asteroid_types );
 
    /* Clean up. */
    xmlFreeDoc(doc);
@@ -3579,7 +3574,7 @@ void space_exit (void)
    systems_stack = NULL;
 
    /* Free the asteroid types. */
-   for (i=0; i < asteroid_ntypes; i++) {
+   for (i=0; i < array_size(asteroid_types); i++) {
       at = &asteroid_types[i];
       free(at->ID);
       array_free(at->material);
@@ -3588,9 +3583,8 @@ void space_exit (void)
          gl_freeTexture(at->gfxs[j]);
       array_free(at->gfxs);
    }
-   free(asteroid_types);
+   array_free(asteroid_types);
    asteroid_types = NULL;
-   asteroid_ntypes = 0;
 
    /* Free the gatherable stack. */
    gatherable_free();
