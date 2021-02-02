@@ -58,8 +58,7 @@ static int cur_commod         = -1; /**< Current commodity selected. */
 static int cur_commod_mode    = 0; /**< 0 for difference, 1 for cost. */
 static int commod_counter = 0; /**< used to fade back in the faction smudges */
 static Commodity **commod_known = NULL; /**< index of known commodities */
-static int nmap_modes = 0; /**< number of map modes (depends on number of commodities) */
-static char** map_modes = NULL; /**< Holds the names of the different map modes. */
+static char** map_modes = NULL; /**< Array (array.h) of the map modes' names, e.g. "Gold: Cost". */
 static int listMapModeVisible = 0; /**< Whether the map mode list widget is visible. */
 static double commod_av_gal_price = 0; /**< Average price across the galaxy. */
 /* VBO. */
@@ -353,9 +352,9 @@ static void map_update_commod_av_price()
             double sumPrice=0;
             int sumCnt=0;
             double thisPrice;
-            for ( j=0 ; j<sys->nplanets; j++) {
+            for ( j=0 ; j<array_size(sys->planets); j++) {
                p=sys->planets[j];
-               for ( k=0; k<p->ncommodities; k++) {
+               for ( k=0; k<array_size(p->commodities); k++) {
                   if ( p->commodities[k] == c ) {
                      if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
                         thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
@@ -492,7 +491,7 @@ static void map_update( unsigned int wid )
    window_modifyText( wid, "txtSysname", _(sys->name) );
 
    f         = -1;
-   for (i=0; i<sys->nplanets; i++) {
+   for (i=0; i<array_size(sys->planets); i++) {
       if (sys->planets[i]->real != ASSET_REAL)
          continue;
       if (!planet_isKnown(sys->planets[i]))
@@ -517,7 +516,7 @@ static void map_update( unsigned int wid )
       h = gl_smallFont.h;
    }
    else {
-      if (i==sys->nplanets) /* saw them all and all the same */
+      if (i==array_size(sys->planets)) /* saw them all and all the same */
          nsnprintf( buf, PATH_MAX, "%s", faction_longname(f) );
 
       /* Modify the image. */
@@ -556,7 +555,7 @@ static void map_update( unsigned int wid )
    hasPlanets = 0;
    p = 0;
    buf[0] = '\0';
-   for (i=0; i<sys->nplanets; i++) {
+   for (i=0; i<array_size(sys->planets); i++) {
       if (sys->planets[i]->real != ASSET_REAL)
          continue;
       if (!planet_isKnown(sys->planets[i]))
@@ -593,7 +592,7 @@ static void map_update( unsigned int wid )
    window_moveWidget( wid, "txtSServices", x, y );
    window_moveWidget( wid, "txtServices", x + 50, y-gl_smallFont.h-5 );
    services = 0;
-   for (i=0; i<sys->nplanets; i++)
+   for (i=0; i<array_size(sys->planets); i++)
       if (planet_isKnown(sys->planets[i]))
          services |= sys->planets[i]->services;
    buf[0] = '\0';
@@ -1337,7 +1336,7 @@ void map_renderCommod( double bx, double by, double x, double y,
       curMinPrice=0.;
       sys = system_getIndex( map_selected );
       if ( sys == cur_system && landed ) {
-         for ( k=0; k<land_planet->ncommodities; k++ ) {
+         for ( k=0; k<array_size(land_planet->commodities); k++ ) {
             if ( land_planet->commodities[k] == c ) {
                /* current planet has the commodity of interest */
                curMinPrice = land_planet->commodityPrice[k].sum / land_planet->commodityPrice[k].cnt;
@@ -1345,7 +1344,7 @@ void map_renderCommod( double bx, double by, double x, double y,
                break;
             }
          }
-         if ( k == land_planet->ncommodities ) { /* commodity of interest not found */
+         if ( k == array_size(land_planet->commodities) ) { /* commodity of interest not found */
             map_renderCommodIgnorance( x, y, sys, c );
             map_renderSysBlack(bx,by,x,y,w,h,r,editor);
             return;
@@ -1355,9 +1354,9 @@ void map_renderCommod( double bx, double by, double x, double y,
          if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
             minPrice=0;
             maxPrice=0;
-            for ( j=0 ; j<sys->nplanets; j++) {
+            for ( j=0 ; j<array_size(sys->planets); j++) {
                p=sys->planets[j];
-               for ( k=0; k<p->ncommodities; k++) {
+               for ( k=0; k<array_size(p->commodities); k++) {
                   if ( p->commodities[k] == c ) {
                      if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
                         thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
@@ -1401,9 +1400,9 @@ void map_renderCommod( double bx, double by, double x, double y,
          if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
             minPrice=0;
             maxPrice=0;
-            for ( j=0 ; j<sys->nplanets; j++) {
+            for ( j=0 ; j<array_size(sys->planets); j++) {
                p=sys->planets[j];
-               for ( k=0; k<p->ncommodities; k++) {
+               for ( k=0; k<array_size(p->commodities); k++) {
                   if ( p->commodities[k] == c ) {
                      if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
                         thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
@@ -1463,9 +1462,9 @@ void map_renderCommod( double bx, double by, double x, double y,
          if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
             double sumPrice=0;
             int sumCnt=0;
-            for ( j=0 ; j<sys->nplanets; j++) {
+            for ( j=0 ; j<array_size(sys->planets); j++) {
                p=sys->planets[j];
-               for ( k=0; k<p->ncommodities; k++) {
+               for ( k=0; k<array_size(p->commodities); k++) {
                   if ( p->commodities[k] == c ) {
                      if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
                         thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
@@ -1710,10 +1709,10 @@ static void map_genModeList(void)
    memset(commod_known,0,sizeof(Commodity*)*commodity_getN());
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
-      for ( j=0 ; j<sys->nplanets; j++) {
-         p=sys->planets[j];
-         tot+=p->ncommodities;
-         for ( k=0; k<p->ncommodities; k++) {
+      for ( j=0 ; j<array_size(sys->planets); j++) {
+         p = sys->planets[j];
+         tot += array_size( p->commodities );
+         for ( k=0; k<array_size(p->commodities); k++) {
             if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
                /* find out which commodity this is */
                for ( l=0 ; l<totGot; l++) {
@@ -1729,24 +1728,21 @@ static void map_genModeList(void)
          }
       }
    }
-   if ( map_modes != NULL ) {
-      for ( i=0 ; i<nmap_modes ; i++)
-         free( map_modes[i] );
-      free ( map_modes );
-   }
-   nmap_modes = 2*totGot + 1;
-   map_modes = calloc( sizeof(char*), nmap_modes );
-   map_modes[0] = strdup(_("Travel (Default)"));
+   for ( i=0; i<array_size(map_modes); i++)
+      free( map_modes[i] );
+   array_free ( map_modes );
+   map_modes = array_create_size( char*, 2*totGot + 1 );
+   array_push_back( &map_modes, strdup(_("Travel (Default)")) );
 
    odd_template = _("%s: Cost");
    even_template = _("%s: Trade");
    for ( i=0; i<totGot; i++ ) {
       commod_text = _(commod_known[i]->name);
       l = strlen(odd_template) + strlen(commod_text) - 2 /*"%s"*/ + 1 /* '\0' */;
-      map_modes[ 2*i + 1 ] = malloc(l);
+      array_push_back( &map_modes, malloc(l) );
       nsnprintf( map_modes[2*i+1], l, odd_template, commod_text );
       l = strlen(even_template) + strlen(commod_text) - 2 /*"%s"*/ + 1 /* '\0' */;
-      map_modes[ 2*i + 2 ] = malloc(l);
+      array_push_back( &map_modes, malloc(l) );
       nsnprintf( map_modes[2*i+2], l, even_template, commod_text );
    }
 }
@@ -1807,7 +1803,7 @@ static void map_buttonCommodity( unsigned int wid, char* str )
          cur_commod_mode_last = cur_commod_mode;
          cur_commod = -1;
       }
-      if ( cur_commod >= (nmap_modes-1)/2 )
+      if ( cur_commod >= (array_size(map_modes)-1)/2 )
          cur_commod = -1;
       /* And hide the list if it was visible. */
       if ( listMapModeVisible) {
@@ -1822,8 +1818,8 @@ static void map_buttonCommodity( unsigned int wid, char* str )
          listMapModeVisible = 0;
          window_destroyWidget( wid, "lstMapMode" );
       } else {/* show the list widget */
-         this_map_modes = calloc( sizeof(char*), nmap_modes );
-         for (int i=0; i<nmap_modes;i++) {
+         this_map_modes = calloc( sizeof(char*), array_size(map_modes) );
+         for (int i=0; i<array_size(map_modes);i++) {
             this_map_modes[i]=strdup(map_modes[i]);
          }
          listMapModeVisible = 2;
@@ -1833,7 +1829,7 @@ static void map_buttonCommodity( unsigned int wid, char* str )
             defpos = cur_commod*2 + 2 - cur_commod_mode;
 
          window_addList( wid, -10, 60, 200, 200, "lstMapMode",
-                         this_map_modes, nmap_modes, defpos, map_modeUpdate, NULL );
+                         this_map_modes, array_size(map_modes), defpos, map_modeUpdate, NULL );
       }
    }
 }
@@ -1847,12 +1843,10 @@ static void map_window_close( unsigned int wid, char *str )
    int i;
    free ( commod_known );
    commod_known = NULL;
-   if ( map_modes != NULL ) {
-      for ( i=0; i<nmap_modes; i++ )
-         free ( map_modes[i] );
-      free ( map_modes );
-      map_modes = NULL;
-   }
+   for ( i=0; i<array_size(map_modes); i++ )
+      free ( map_modes[i] );
+   array_free ( map_modes );
+   map_modes = NULL;
    cur_commod = -1;
    window_close(wid,str);
 }
@@ -2416,7 +2410,7 @@ int localmap_map( const Outfit *lmap )
    }
 
    detect = lmap->u.lmap.asset_detect;
-   for (i=0; i<cur_system->nplanets; i++) {
+   for (i=0; i<array_size(cur_system->planets); i++) {
       p = cur_system->planets[i];
       if (p->real != ASSET_REAL)
          continue;
@@ -2451,7 +2445,7 @@ int localmap_isMapped( const Outfit *lmap )
    }
 
    detect = lmap->u.lmap.asset_detect;
-   for (i=0; i<cur_system->nplanets; i++) {
+   for (i=0; i<array_size(cur_system->planets); i++) {
       p = cur_system->planets[i];
       if (p->real != ASSET_REAL)
          continue;

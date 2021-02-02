@@ -1320,7 +1320,7 @@ void player_targetPlanetSet( int id )
 {
    int old;
 
-   if (id >= cur_system->nplanets) {
+   if (id >= array_size(cur_system->planets)) {
       WARN(_("Trying to set player's planet target to invalid ID '%d'"), id);
       return;
    }
@@ -1399,14 +1399,14 @@ void player_targetPlanet (void)
       return;
 
    /* Find next planet target. */
-   for (id=player.p->nav_planet+1; id<cur_system->nplanets; id++)
+   for (id=player.p->nav_planet+1; id<array_size(cur_system->planets); id++)
       if (planet_isKnown( cur_system->planets[id] ))
          break;
 
    /* Try to select the lowest-indexed valid planet. */
-   if (id >= cur_system->nplanets ) {
+   if (id >= array_size(cur_system->planets) ) {
       id = -1;
-      for (i=0; i<cur_system->nplanets; i++)
+      for (i=0; i<array_size(cur_system->planets); i++)
          if (planet_isKnown( cur_system->planets[i] )) {
             id = i;
             break;
@@ -1446,7 +1446,7 @@ void player_land (void)
       return;
 
    /* Check if there are planets to land on. */
-   if (cur_system->nplanets == 0) {
+   if (array_size(cur_system->planets) == 0) {
       player_messageRaw( _("#rThere are no planets to land on.") );
       return;
    }
@@ -1454,7 +1454,7 @@ void player_land (void)
    if (player.p->nav_planet == -1) { /* get nearest planet target */
       td = -1; /* temporary distance */
       tp = -1; /* temporary planet */
-      for (i=0; i<cur_system->nplanets; i++) {
+      for (i=0; i<array_size(cur_system->planets); i++) {
          planet = cur_system->planets[i];
          d = vect_dist(&player.p->solid->pos,&planet->pos);
          if (pilot_inRangePlanet( player.p, i ) &&
@@ -2099,16 +2099,15 @@ void player_screenshot (void)
 {
    char filename[PATH_MAX];
 
-   if (nfile_dirMakeExist(nfile_dataPath()) < 0 || nfile_dirMakeExist(nfile_dataPath(), "screenshots") < 0) {
+   if (PHYSFS_mkdir("screenshots") == 0) {
       WARN(_("Aborting screenshot"));
       return;
    }
 
    /* Try to find current screenshots. */
    for ( ; screenshot_cur < 1000; screenshot_cur++) {
-      nsnprintf( filename, PATH_MAX, "%sscreenshots/screenshot%03d.png",
-            nfile_dataPath(), screenshot_cur );
-      if (!nfile_fileExists( filename ))
+      nsnprintf( filename, PATH_MAX, "screenshots/screenshot%03d.png", screenshot_cur );
+      if (!PHYSFS_exists( filename ))
          break;
    }
 
@@ -2221,23 +2220,19 @@ void player_autohail (void)
       p = pilot_stack[i];
 
       /* Must be hailing. */
-      if (pilot_isFlag(p, PILOT_HAILING))
-         break;
+      if (pilot_isFlag(p, PILOT_HAILING)) {
+         /* Try to hail. */
+         pilot_setTarget( player.p, p->id );
+         gui_setTarget();
+         player_hail();
+
+         /* Clear hails if none found. */
+         player_checkHail();
+         return;
+      }
    }
 
-   /* Not found any. */
-   if (i >= array_size(pilot_stack)) {
-      player_message(_("#rYou haven't been hailed by any pilots."));
-      return;
-   }
-
-   /* Try to hail. */
-   pilot_setTarget( player.p, p->id );
-   gui_setTarget();
-   player_hail();
-
-   /* Clear hails if none found. */
-   player_checkHail();
+   player_message(_("#rYou haven't been hailed by any pilots."));
 }
 
 

@@ -126,11 +126,11 @@ int dsys_saveSystem( StarSystem *sys )
    xmlw_endElem( writer ); /* "pos" */
 
    /* Planets. */
-   sorted_planets = malloc( sizeof(Planet*) * sys->nplanets);
-   memcpy( sorted_planets, sys->planets, sizeof(Planet*) * sys->nplanets );
-   qsort( sorted_planets, sys->nplanets, sizeof(Planet*), dsys_compPlanet );
+   sorted_planets = malloc( sizeof(Planet*) * array_size(sys->planets) );
+   memcpy( sorted_planets, sys->planets, sizeof(Planet*) * array_size(sys->planets) );
+   qsort( sorted_planets, array_size(sys->planets), sizeof(Planet*), dsys_compPlanet );
    xmlw_startElem( writer, "assets" );
-   for (i=0; i<sys->nplanets; i++)
+   for (i=0; i<array_size(sys->planets); i++)
       xmlw_elem( writer, "asset", "%s", sorted_planets[i]->name );
    xmlw_endElem( writer ); /* "assets" */
    free(sorted_planets);

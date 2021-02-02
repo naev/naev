@@ -2483,6 +2483,8 @@ src/damagetype.c
 src/damagetype.h
 src/debris.c
 src/debris.h
+src/debug.c
+src/debug.h
 src/dev.c
 src/dev.h
 src/dev_mapedit.c

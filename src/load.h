@@ -19,7 +19,7 @@
  */
 typedef struct nsave_s {
    char *name; /**< Player name. */
-   char *path; /**< File path. */
+   char *path; /**< File path relative to PhysicsFS write directory. */
 
    /* Naev info. */
    char *version; /**< Naev version. */

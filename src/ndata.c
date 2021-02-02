@@ -14,7 +14,6 @@
 #include <limits.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#include <string.h>
 #if HAS_WIN32
 #include <windows.h>
 #endif /* HAS_WIN32 */
@@ -89,11 +88,32 @@ static void ndata_testVersion (void)
 
 
 /**
- * @brief Opens the ndata directory.
- *
- *    @return 0 on success.
+ * @brief Gets Naev's data path (for user data such as saves and screenshots)
  */
-int ndata_open (void)
+void ndata_setupWriteDir (void)
+{
+   /* Global override is set. */
+   if (conf.datapath) {
+      PHYSFS_setWriteDir( conf.datapath );
+      return;
+   }
+#if HAS_MACOS
+   /* For historical reasons predating physfs adoption, this case is different. */
+   PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "org.naev.Naev" ) );
+#else
+   PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "naev" ) );
+#endif
+   if (PHYSFS_getWriteDir() == NULL) {
+      WARN(_("Cannot determine data path, using current directory."));
+      PHYSFS_setWriteDir( "./naev/" );
+   }
+}
+
+
+/**
+ * @brief Sets up the PhysicsFS search path.
+ */
+void ndata_setupReadDirs (void)
 {
    char buf[ PATH_MAX ];
 
@@ -124,15 +144,6 @@ int ndata_open (void)
 
    PHYSFS_mount( PHYSFS_getWriteDir(), NULL, 0 );
    ndata_testVersion();
-   return 0;
-}
-
-
-/**
- * @brief Closes and cleans up the ndata directory.
- */
-void ndata_close (void)
-{
 }
 
 
@@ -269,6 +280,28 @@ static int ndata_enumerateCallback( void* data, const char* origdir, const char*
    else
       free( path );
    return PHYSFS_ENUM_OK;
+}
+
+
+/**
+ * @brief Backup a file, if it exists.
+ *
+ *    @param path PhysicsFS relative pathname to back up.
+ *    @return 0 on success, or if file does not exist, -1 on error.
+ */
+int ndata_backupIfExists( const char *path )
+{
+   char backup[ PATH_MAX ];
+
+   if ( path == NULL )
+      return -1;
+
+   if ( !PHYSFS_exists( path ) )
+      return 0;
+
+   nsnprintf(backup, PATH_MAX, "%s.backup", path);
+
+   return ndata_copyIfExists( path, backup );
 }
 
 

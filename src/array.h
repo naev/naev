@@ -8,7 +8,7 @@
  * @brief Provides macros to work with dynamic arrays.
  *
  * @note Except were noted, macros do not have side effects from
- * expations.
+ * expansions.
  *
  * Usage example:
  *
@@ -23,7 +23,7 @@
  *    need_fill = fill_array_member( &array_grow( &my_array ) );
  *
  * // Shrink to minimum (if static it's a good idea).
- * array_shrink( my_array );
+ * array_shrink( &my_array );
  *
  * // Do stuff
  * for (i=0; i<array_size( my_array ); i++)

@@ -60,9 +60,6 @@
 #define PLANET_GFX_EXTERIOR_PATH_W 400 /**< Planet exterior graphic width. */
 #define PLANET_GFX_EXTERIOR_PATH_H 400 /**< Planet exterior graphic height. */
 
-#define CHUNK_SIZE            32 /**< Size to allocate by. */
-#define CHUNK_SIZE_SMALL       8 /**< Smaller size to allocate chunks by. */
-
 /* used to overcome warnings due to 0 values */
 #define FLAG_XSET             (1<<0) /**< Set the X position value. */
 #define FLAG_YSET             (1<<1) /**< Set the Y position value. */
@@ -130,7 +127,7 @@ static double interference_timer  = 0.; /**< Interference timer. */
  * Internal Prototypes.
  */
 /* planet load */
-static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList, int stdNb );
+static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList );
 static int space_parseAssets( xmlNodePtr parent, StarSystem* sys );
 /* system load */
 static void system_init( StarSystem *sys );
@@ -400,26 +397,21 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
 /**
  * @brief Gets the name of all the planets that belong to factions.
  *
- *    @param[out] nplanets Number of planets found.
  *    @param factions Factions to check against.
  *    @param nfactions Number of factions in factions.
  *    @param landable Whether the search is limited to landable planets.
- *    @return An array of faction names.  Individual names are not allocated.
+ *    @return An array (array.h) of faction names.  Individual names are not allocated.
  */
-char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int landable )
+char** space_getFactionPlanet( int *factions, int nfactions, int landable )
 {
    int i,j,k, f;
    Planet* planet;
    char **tmp;
-   int ntmp;
-   int mtmp;
 
-   ntmp = 0;
-   mtmp = CHUNK_SIZE;
-   tmp = malloc(sizeof(char*) * mtmp);
+   tmp = array_create( char* );
 
    for (i=0; i<array_size(systems_stack); i++) {
-      for (j=0; j<systems_stack[i].nplanets; j++) {
+      for (j=0; j<array_size(systems_stack[i].planets); j++) {
          planet = systems_stack[i].planets[j];
 
          /* Important to ignore virtual assets. */
@@ -448,17 +440,11 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int 
          if (!space_sysReallyReachable( systems_stack[i].name ))
             continue;
 
-         ntmp++;
-         if (ntmp > mtmp) { /* need more space */
-            mtmp *= 2;
-            tmp = realloc(tmp, sizeof(char*) * mtmp);
-         }
-         tmp[ntmp-1] = planet->name;
+         array_push_back( &tmp, planet->name );
          break; /* no need to check all factions */
       }
    }
 
-   (*nplanets) = ntmp;
    return tmp;
 }
 
@@ -477,16 +463,13 @@ char* space_getRndPlanet( int landable, unsigned int services,
    int i,j;
    Planet **tmp;
    char *res;
-   int ntmp, mtmp;
    Planet *pnt;
 
-   ntmp  = 0;
    res   = NULL;
-   mtmp  = CHUNK_SIZE;
-   tmp   = malloc( sizeof(Planet*) * mtmp );
+   tmp   = array_create( Planet* );
 
    for (i=0; i<array_size(systems_stack); i++) {
-      for (j=0; j<systems_stack[i].nplanets; j++) {
+      for (j=0; j<array_size(systems_stack[i].planets); j++) {
          pnt = systems_stack[i].planets[j];
 
          if (pnt->real != ASSET_REAL)
@@ -498,18 +481,13 @@ char* space_getRndPlanet( int landable, unsigned int services,
          if (filter != NULL && !filter(pnt))
             continue;
 
-         ntmp++;
-         if (ntmp > mtmp) { /* need more space */
-            mtmp *= 2;
-            tmp = realloc(tmp, sizeof(Planet*) * mtmp);
-         }
-         tmp[ntmp-1] = pnt;
+         array_push_back( &tmp, pnt );
       }
    }
 
    /* Second filter. */
-   tmp = (Planet**)arrayShuffle( (void**)tmp, ntmp);
-   for (i=0; i < ntmp; i++) {
+   arrayShuffle( (void**)tmp );
+   for (i=0; i < array_size(tmp); i++) {
       pnt = tmp[i];
 
       /* We put expensive calculations here to minimize executions. */
@@ -525,7 +503,7 @@ char* space_getRndPlanet( int landable, unsigned int services,
       res = tmp[i]->name;
       break;
    }
-   free(tmp);
+   array_free(tmp);
 
    return res;
 }
@@ -559,7 +537,7 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
    d    = INFINITY;
 
    /* Planets. */
-   for (i=0; i<sys->nplanets; i++) {
+   for (i=0; i<array_size(sys->planets); i++) {
       p  = sys->planets[i];
       if (p->real != ASSET_REAL)
          continue;
@@ -642,7 +620,7 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
    a    = ang + M_PI;
 
    /* Planets. */
-   for (i=0; i<sys->nplanets; i++) {
+   for (i=0; i<array_size(sys->planets); i++) {
       p  = sys->planets[i];
       if (p->real != ASSET_REAL)
          continue;
@@ -1322,7 +1300,7 @@ void space_update( const double dt )
 
    /* Faction updates. */
    if (space_fchg) {
-      for (i=0; i<cur_system->nplanets; i++)
+      for (i=0; i<array_size(cur_system->planets); i++)
          planet_updateLand( cur_system->planets[i] );
 
       /* Verify land authorization is still valid. */
@@ -1336,7 +1314,7 @@ void space_update( const double dt )
    if (!space_simulating) {
       found_something = 0;
       /* Planet updates */
-      for (i=0; i<cur_system->nplanets; i++) {
+      for (i=0; i<array_size(cur_system->planets); i++) {
          if (( !planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i ))) {
             planet_setKnown( cur_system->planets[i] );
             player_message( _("You discovered #%c%s#0."),
@@ -1533,7 +1511,7 @@ void space_init( const char* sysname )
    }
 
    /* Set up planets. */
-   for (i=0; i<cur_system->nplanets; i++) {
+   for (i=0; i<array_size(cur_system->planets); i++) {
       pnt = cur_system->planets[i];
       pnt->bribed = 0;
       pnt->land_override = 0;
@@ -1736,7 +1714,6 @@ static int planets_load ( void )
    Planet *p;
    size_t i, len;
    Commodity **stdList;
-   unsigned int stdNb;
 
    /* Load landing stuff. */
    landing_env = nlua_newEnv(0);
@@ -1755,7 +1732,7 @@ static int planets_load ( void )
       planet_stack = array_create_size(Planet, 256);
 
    /* Extract the list of standard commodities. */
-   stdList = standard_commodities( &stdNb );
+   stdList = standard_commodities();
 
    /* Load XML stuff. */
    planet_files = PHYSFS_enumerateFiles( PLANET_DATA_PATH );
@@ -1779,7 +1756,7 @@ static int planets_load ( void )
 
       if (xml_isNode(node,XML_PLANET_TAG)) {
          p = planet_new();
-         planet_parse( p, node, stdList, stdNb );
+         planet_parse( p, node, stdList );
       }
 
       /* Clean up. */
@@ -1789,7 +1766,7 @@ static int planets_load ( void )
 
    /* Clean up. */
    PHYSFS_freeList( planet_files );
-   free(stdList);
+   array_free(stdList);
 
    return 0;
 }
@@ -1957,7 +1934,7 @@ void planet_gfxLoad( Planet *planet )
 void space_gfxLoad( StarSystem *sys )
 {
    int i;
-   for (i=0; i<sys->nplanets; i++)
+   for (i=0; i<array_size(sys->planets); i++)
       planet_gfxLoad( sys->planets[i] );
 }
 
@@ -1971,7 +1948,7 @@ void space_gfxUnload( StarSystem *sys )
 {
    int i;
    Planet *planet;
-   for (i=0; i<sys->nplanets; i++) {
+   for (i=0; i<array_size(sys->planets); i++) {
       planet = sys->planets[i];
       gl_freeTexture( planet->gfx_space );
       planet->gfx_space = NULL;
@@ -1984,26 +1961,23 @@ void space_gfxUnload( StarSystem *sys )
  *
  *    @param planet Planet to fill up.
  *    @param parent Node that contains planet data.
- *    @param[in] stdList The list of standard commodities.
- *    @param stdNb The number of standard commodities.
+ *    @param[in] stdList The array of standard commodities.
  *    @return 0 on success.
  */
-static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList, int stdNb )
+static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList )
 {
-   int mem, i;
+   int i;
    char str[PATH_MAX], *tmp;
    xmlNodePtr node, cur, ccur;
    unsigned int flags;
    Commodity *com;
    Commodity **comms;
-   int ncomms;
 
    /* Clear up memory for safe defaults. */
    flags          = 0;
    planet->real   = ASSET_REAL;
    planet->hide   = 0.01;
-   comms          = NULL;
-   ncomms         = 0;
+   comms          = array_create( Commodity* );
 
    /* Get the name. */
    xmlr_attr_strd( parent, "name", planet->name );
@@ -2119,7 +2093,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
 
             else if (xml_isNode(cur, "commodities")) {
                ccur = cur->children;
-               mem = 0;
 
                do {
                   if (xml_isNode(ccur,"commodity")) {
@@ -2128,19 +2101,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
                      if (com->standard == 1)
                         continue;
 
-                     ncomms++;
-                     if (ncomms > mem) {
-                        if (mem == 0)
-                           mem = CHUNK_SIZE_SMALL;
-                        else
-                           mem *= 2;
-
-                        if (comms == NULL)
-                           comms = malloc( mem * sizeof(Commodity*) );
-                        else
-                           comms = realloc( comms, mem * sizeof(Commodity*) );
-                     }
-                     comms[ncomms-1] = com;
+                     array_push_back( &comms, com );
                   }
                } while (xml_nextNode(ccur));
             }
@@ -2184,7 +2145,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
                planet_hasService(planet,PLANET_SERVICE_SHIPYARD)) &&
             (planet->tech==NULL), "tech" );
       /*MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
-            (planet->ncommodities==0),"commodity" );*/
+            (array_size(planet->commodities)==0),"commodity" );*/
       /*MELEMENT( (flags&FLAG_FACTIONSET) && (planet->presenceAmount == 0.),
             "presence" );*/
    }
@@ -2193,46 +2154,29 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
    /* Build commodities list */
    if (planet_hasService(planet, PLANET_SERVICE_COMMODITY)) {
       /* First, store all the standard commodities and prices. */
-      planet->ncommodities = stdNb;
-      mem = stdNb;
-      if (stdNb > 0) {
-         planet->commodityPrice = malloc( stdNb * sizeof(CommodityPrice) );
-         planet->commodities    = malloc( stdNb * sizeof(Commodity*) );
-         for (i=0; i<stdNb; i++) {
-            planet->commodities[i]          = stdList[i];
-            planet->commodityPrice[i].price = planet->commodities[i]->price;
+      if (array_size( stdList ) > 0) {
+         planet->commodityPrice = array_create( CommodityPrice );
+         planet->commodities = array_create( Commodity* );
+         for (i=0; i<array_size(stdList); i++) {
+            array_grow(&planet->commodities) = stdList[i];
+            array_grow(&planet->commodityPrice).price = stdList[i]->price;
          }
       }
 
       /* Now add extra commodities */
-      for (i=0; i<ncomms; i++) {
+      for (i=0; i<array_size(comms); i++) {
          com = comms[i];
 
-         planet->ncommodities++;
-         /* Memory must grow. */
-         if (planet->ncommodities > mem) {
-            if (mem == 0)
-               mem = CHUNK_SIZE_SMALL;
-            else
-               mem *= 2;
-            planet->commodities = realloc(planet->commodities,
-                  mem * sizeof(Commodity*));
-            planet->commodityPrice = realloc(planet->commodityPrice,
-                  mem * sizeof(CommodityPrice));
-         }
-         planet->commodities[planet->ncommodities-1] = com;
+         array_grow(&planet->commodities) = com;
          /* Set commodity price on this planet to the base price */
-         planet->commodityPrice[planet->ncommodities-1].price
-            = planet->commodities[planet->ncommodities-1]->price;
+         array_grow(&planet->commodityPrice).price = com->price;
       }
       /* Shrink to minimum size. */
-      planet->commodities = realloc(planet->commodities,
-            planet->ncommodities * sizeof(Commodity*));
-      planet->commodityPrice = realloc(planet->commodityPrice,
-            planet->ncommodities * sizeof(CommodityPrice));
+      array_shrink( &planet->commodities );
+      array_shrink( &planet->commodityPrice );
    }
    /* Free temporary comms list. */
-   free(comms);
+   array_free(comms);
 
    /* Square to allow for linear multiplication with squared distances. */
    planet->hide = pow2(planet->hide);
@@ -2251,34 +2195,24 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
 int system_addPlanet( StarSystem *sys, const char *planetname )
 {
    Planet *planet;
-   char **sn, **pn;
 
    if (sys == NULL)
       return -1;
 
    /* Check if need to grow the star system planet stack. */
-   sys->nplanets++;
    if (sys->planets == NULL) {
-      sys->planets   = malloc( sizeof(Planet*) * CHUNK_SIZE_SMALL );
-      sys->planetsid = malloc( sizeof(int) * CHUNK_SIZE_SMALL );
-   }
-   else if (sys->nplanets > CHUNK_SIZE_SMALL) {
-      sys->planets   = realloc( sys->planets, sizeof(Planet*) * sys->nplanets );
-      sys->planetsid = realloc( sys->planetsid, sizeof(int) * sys->nplanets );
+      sys->planets   = array_create( Planet* );
+      sys->planetsid = array_create( int );
    }
    planet = planet_get(planetname);
-   if (planet == NULL) {
-      sys->nplanets--; /* Try to keep safety if possible. */
+   if (planet == NULL)
       return -1;
-   }
-   sys->planets[sys->nplanets-1]    = planet;
-   sys->planetsid[sys->nplanets-1]  = planet->id;
+   array_push_back( &sys->planets, planet );
+   array_push_back( &sys->planetsid, planet->id );
 
    /* add planet <-> star system to name stack */
-   pn = &array_grow( &planetname_stack );
-   sn = &array_grow( &systemname_stack );
-   *pn = planet->name;
-   *sn = sys->name;
+   array_push_back( &planetname_stack, planet->name );
+   array_push_back( &systemname_stack, sys->name );
 
    economy_addQueuedUpdate();
    /* This is required to clear the player statistics for this planet */
@@ -2317,20 +2251,19 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
 
    /* Try to find planet. */
    planet = planet_get( planetname );
-   for (i=0; i<sys->nplanets; i++)
+   for (i=0; i<array_size(sys->planets); i++)
       if (sys->planets[i] == planet)
          break;
 
    /* Planet not found. */
-   if (i>=sys->nplanets) {
+   if (i>=array_size(sys->planets)) {
       WARN(_("Planet '%s' not found in system '%s' for removal."), planetname, sys->name);
       return -1;
    }
 
    /* Remove planet from system. */
-   sys->nplanets--;
-   memmove( &sys->planets[i], &sys->planets[i+1], sizeof(Planet*) * (sys->nplanets-i) );
-   memmove( &sys->planetsid[i], &sys->planetsid[i+1], sizeof(int) * (sys->nplanets-i) );
+   array_erase( &sys->planets, &sys->planets[i], &sys->planets[i+1] );
+   array_erase( &sys->planetsid, &sys->planetsid[i], &sys->planetsid[i+1] );
 
    /* Remove the presence. */
    system_addPresence( sys, planet->faction, -(planet->presenceAmount), planet->presenceRange );
@@ -2542,7 +2475,7 @@ void systems_reconstructPlanets (void)
 
    for (i=0; i<array_size(systems_stack); i++) {
       sys = &systems_stack[i];
-      for (j=0; j<sys->nplanets; j++)
+      for (j=0; j<array_size(sys->planetsid); j++)
          sys->planets[j] = &planet_stack[ sys->planetsid[j] ];
    }
 }
@@ -2680,7 +2613,7 @@ void system_setFaction( StarSystem *sys )
 
    sys->faction = -1;
    for (i=0; i<sys->npresence; i++) {
-      for (j=0; j<sys->nplanets; j++) { /** @todo Handle multiple different factions. */
+      for (j=0; j<array_size(sys->planets); j++) { /** @todo Handle multiple different factions. */
          pnt = sys->planets[j];
          if (pnt->real != ASSET_REAL)
             continue;
@@ -3450,7 +3383,7 @@ void planets_render (void)
       space_renderJumpPoint( &cur_system->jumps[i], i );
 
    /* Render the planets. */
-   for (i=0; i < cur_system->nplanets; i++)
+   for (i=0; i < array_size(cur_system->planets); i++)
       if (cur_system->planets[i]->real == ASSET_REAL)
          space_renderPlanet( cur_system->planets[i] );
 
@@ -3636,8 +3569,8 @@ void space_exit (void)
          tech_groupDestroy( pnt->tech );
 
       /* commodities */
-      free(pnt->commodities);
-      free(pnt->commodityPrice);
+      array_free(pnt->commodities);
+      array_free(pnt->commodityPrice);
    }
    array_free(planet_stack);
 
@@ -3647,8 +3580,8 @@ void space_exit (void)
       free(systems_stack[i].jumps);
       free(systems_stack[i].background);
       free(systems_stack[i].presence);
-      free(systems_stack[i].planets);
-      free(systems_stack[i].planetsid);
+      array_free(systems_stack[i].planets);
+      array_free(systems_stack[i].planetsid);
 
       /* Free the asteroids. */
       sys = &systems_stack[i];
@@ -3850,9 +3783,9 @@ int space_sysSave( xmlTextWriterPtr writer )
 
       sys = &systems_stack[i];
 
-      for (j=0; j<sys->nplanets; j++) {
+      for (j=0; j<array_size(sys->planets); j++) {
          if (!planet_isKnown(sys->planets[j])) continue; /* not known */
-         xmlw_elem(writer,"planet","%s",(sys->planets[j])->name);
+         xmlw_elem(writer, "planet", "%s", sys->planets[j]->name);
       }
 
       for (j=0; j<sys->njumps; j++) {
@@ -4122,7 +4055,7 @@ void system_addAllPlanetsPresence( StarSystem *sys )
       return;
    }
 
-   for (i=0; i<sys->nplanets; i++)
+   for (i=0; i<array_size(sys->planets); i++)
       system_addPresence(sys, sys->planets[i]->faction, sys->planets[i]->presenceAmount, sys->planets[i]->presenceRange);
 }
 
@@ -4288,7 +4221,7 @@ int system_hasPlanet( const StarSystem *sys )
    }
 
    /* Go through all the assets and look for a real one. */
-   for (i = 0; i < sys->nplanets; i++)
+   for (i = 0; i < array_size(sys->planets); i++)
       if (sys->planets[i]->real == ASSET_REAL)
          return 1;
 

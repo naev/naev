@@ -150,6 +150,16 @@ static int map_system_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod 
       map_system_close( wid, NULL );
       return 1;
    }
+   if (key == SDLK_UP) {
+      cur_planet_sel = MAX( cur_planet_sel-1, 0 );
+      map_system_updateSelected( wid );
+      return 1;
+   }
+   if (key == SDLK_DOWN) {
+      cur_planet_sel = MIN( cur_planet_sel+1, nshow );
+      map_system_updateSelected( wid );
+      return 1;
+   }
    return 0;
 }
 
@@ -296,7 +306,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
 
    j=0;
    offset = h - pitch*nshow;
-   for ( i=0; i<sys->nplanets; i++ ) {
+   for ( i=0; i<array_size(sys->planets); i++ ) {
      p=sys->planets[i];
      if ( planet_isKnown(p) && (p->real == ASSET_REAL) ) {
        j++;
@@ -430,7 +440,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       }
       /* Faction */
       f = -1;
-      for ( i=0; i<sys->nplanets; i++ ) {
+      for ( i=0; i<array_size(sys->planets); i++ ) {
          if (sys->planets[i]->real == ASSET_REAL && planet_isKnown( sys->planets[i] ) ) {
             if ((f==-1) && (sys->planets[i]->faction>0) ) {
                f = sys->planets[i]->faction;
@@ -443,7 +453,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       if (f == -1 ) {
          cnt+=nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Faction: N/A\n") );
       }  else {
-         if (i==sys->nplanets) /* saw them all and all the same */
+         if (i==array_size(sys->planets)) /* saw them all and all the same */
             cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Faction: %s\nStanding: %s\n"), faction_longname(f), faction_getStandingText( f ) );
          /* display the logo */
          logo = faction_logoSmall( f );
@@ -746,7 +756,7 @@ void map_system_updateSelected( unsigned int wid )
    float g,o,s;
    nameWidth = 0; /* get the widest planet/star name */
    nshow=1;/* start at 1 for the sun*/
-   for ( i=0; i<sys->nplanets; i++) {
+   for ( i=0; i<array_size(sys->planets); i++) {
       p = sys->planets[i];
       if ( planet_isKnown( p ) && (p->real == ASSET_REAL) ) {
          textw = gl_printWidthRaw( &gl_smallFont, _(p->name) );
@@ -801,7 +811,7 @@ void map_system_updateSelected( unsigned int wid )
          free( outfits );
          ships = tech_getShip( cur_planetObj_sel->tech, &nships );
          free( ships );
-         ngoods = cur_planetObj_sel->ncommodities;
+         ngoods = array_size( cur_planetObj_sel->commodities );
 	 /* to buy commodity info, need to be landed, and the selected system must sell them! */
 	 if ( landed && planet_hasService( cur_planetObj_sel, PLANET_SERVICE_COMMODITY ) ) {
 	   window_enableButton( wid, "btnBuyCommodPrice" );
@@ -955,7 +965,7 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
    if ( cur_planetObj_sel == NULL ) {
       ngoods = 0;
    } else {
-      ngoods = cur_planetObj_sel->ncommodities;
+      ngoods = array_size( cur_planetObj_sel->commodities );
    }
    if ( ngoods > 0 ) {
       cgoods = calloc( ngoods, sizeof(ImageArrayCell) );
@@ -1011,7 +1021,7 @@ void map_system_buyCommodPrice( unsigned int wid, char *str )
    credits2str( coststr, cost, -1 );
    if ( !player_hasCredits( cost ) ) {
       dialogue_msg( _("You can't afford that"), _("Sorry, but we are selling this information for %s, which you don't have."), coststr );
-   } else if ( cur_planetObj_sel->ncommodities == 0 ) {
+   } else if ( array_size( cur_planetObj_sel->commodities ) == 0 ) {
       dialogue_msgRaw( _("No commodities sold here"),_("There are no commodities sold here, as far as we are aware!"));
    } else if ( cur_planetObj_sel->commodityPrice[0].updateTime >= t ) {
       dialogue_msgRaw( _("You already have newer information"), _("I've checked your computer, and you already have newer information than we can sell.") );

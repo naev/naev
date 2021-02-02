@@ -118,9 +118,8 @@ typedef struct Planet_ {
    char* description; /**< planet description */
    char* bar_description; /**< spaceport bar description */
    unsigned int services; /**< what services they offer */
-   Commodity **commodities; /**< what commodities they sell */
-   CommodityPrice *commodityPrice; /**< the base cost of a commodity on this planet */
-   int ncommodities; /**< the amount they have */
+   Commodity **commodities; /**< array: what commodities they sell */
+   CommodityPrice *commodityPrice; /**< array: the base cost of a commodity on this planet */
    tech_group_t *tech; /**< Planet tech. */
 
    /* Graphics. */
@@ -297,9 +296,8 @@ struct StarSystem_ {
    char *background; /**< Background script. */
 
    /* Planets. */
-   Planet **planets; /**< planets */
-   int *planetsid; /**< IDs of the planets. */
-   int nplanets; /**< total number of planets */
+   Planet **planets; /**< Array (array.h): planets */
+   int *planetsid; /**< Array (array.h): IDs of the planets. */
    int faction; /**< overall faction */
 
    /* Jumps. */
@@ -439,7 +437,7 @@ int system_index( StarSystem *sys );
 int space_sysReachable( StarSystem *sys );
 int space_sysReallyReachable( char* sysname );
 int space_sysReachableFromSys( StarSystem *target, StarSystem *sys );
-char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int landable );
+char** space_getFactionPlanet( int *factions, int nfactions, int landable );
 char* space_getRndPlanet( int landable, unsigned int services,
       int (*filter)(Planet *p));
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y );

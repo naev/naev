@@ -68,6 +68,8 @@ void _array_erase_helper(void **a, size_t e_size, void *first, void *last)
 {
    intptr_t diff = (char *)last - (char *)first;
 
+   if (!diff)
+      return;
    /* copies the memory */
    _private_container *c = _array_private_container(*a);
    char *end = c->_array + c->_size * e_size;
@@ -163,7 +165,7 @@ int main() {
       assert(array[i - 1] == i + size / 2);
 
    /* erases all elements */
-   array_erase(&array, array, array + array_size(array));
+   array_erase(&array, array_begin(array), array_end(array));
    assert(array_size(array) == 0);
 
    /* shrinks */

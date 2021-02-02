@@ -16,6 +16,7 @@
 
 #include "dev_uniedit.h"
 
+#include "array.h"
 #include "conf.h"
 #include "dev_planet.h"
 #include "dev_sysedit.h"
@@ -24,7 +25,6 @@
 #include "economy.h"
 #include "map.h"
 #include "map_find.h"
-#include "nfile.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "pause.h"
@@ -711,7 +711,7 @@ static void uniedit_renameSys (void)
       nsnprintf(newName, 14 + strlen(filtered), "dat/ssys/%s.xml", filtered);
       free(filtered);
 
-      nfile_rename(oldName,newName);
+      rename(oldName, newName);
 
       free(oldName);
       free(newName);
@@ -1343,7 +1343,7 @@ static void uniedit_editGenList( unsigned int wid )
 
    /* Check to see if it actually has virtual assets. */
    sys   = uniedit_sys[0];
-   n     = sys->nplanets;
+   n     = array_size( sys->planets );
    has_assets = 0;
    for (i=0; i<n; i++) {
       p     = sys->planets[i];

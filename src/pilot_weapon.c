@@ -1180,8 +1180,7 @@ void pilot_weaponClear( Pilot *p )
 
    for (i=0; i<PILOT_WEAPON_SETS; i++) {
       ws = pilot_weapSet( p, i );
-      if (ws->slots != NULL)
-         array_erase( &ws->slots, &ws->slots[0], &ws->slots[ array_size(ws->slots) ] );
+      array_erase( &ws->slots, array_begin(ws->slots), array_end(ws->slots) );
    }
 }
 
