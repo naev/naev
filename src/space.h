@@ -212,10 +212,8 @@ extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
 typedef struct AsteroidType_ {
    char *ID; /**< ID of the asteroid type. */
    glTexture **gfxs; /**< asteroid possible gfxs. */
-   int ngfx; /**< nb of gfx. */
    Commodity **material; /**< Materials contained in the asteroid. */
    int *quantity; /**< Quantities of materials. */
-   int nmaterial; /**< size of both material stacks. */
    double armour; /**< Starting "armour" of the asteroid. */
 } AsteroidType;
 

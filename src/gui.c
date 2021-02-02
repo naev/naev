@@ -491,7 +491,7 @@ static void gui_renderPlanetTarget( double dt )
 
       /* Recover the right gfx */
       at = space_getType( ast->type );
-      if (ast->gfxID > at->ngfx+1)
+      if (ast->gfxID >= array_size(at->gfxs))
          WARN(_("Gfx index out of range"));
 
       x = ast->pos.x - at->gfxs[ast->gfxID]->w / 2.;

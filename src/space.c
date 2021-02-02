@@ -1611,7 +1611,7 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    ast->type = field->type[i];
    /* randomly init the gfx ID */
    at = &asteroid_types[ast->type];
-   ast->gfxID = RNG(0,at->ngfx-1);
+   ast->gfxID = RNG(0, array_size(at->gfxs)-1);
    ast->armour = at->armour;
 
    do {
@@ -3109,7 +3109,7 @@ int space_load (void)
  */
 static int asteroidTypes_load (void)
 {
-   int i, j, len, namdef, qttdef;
+   int len, namdef, qttdef;
    AsteroidType *at;
    char *str, file[PATH_MAX];
    xmlNodePtr node, cur, child;
@@ -3136,27 +3136,23 @@ static int asteroidTypes_load (void)
 
    do {
       if (xml_isNode(node,"asteroid")) {
-
          /* Grow memory. */
          asteroid_types = realloc(asteroid_types, sizeof(AsteroidType)*(asteroid_ntypes+1));
 
          /* Load it. */
          at = &asteroid_types[asteroid_ntypes];
-         at->gfxs = NULL;
-         at->material = NULL;
-         at->quantity = NULL;
+         at->gfxs = array_create( glTexture* );
+         at->material = array_create( Commodity* );
+         at->quantity = array_create( int );
          at->armour = 0.;
 
          cur = node->children;
-         i = 0; j = 0;
          do {
             if (xml_isNode(cur,"gfx")) {
-               at->gfxs = realloc( at->gfxs, sizeof(glTexture*)*(i+1) );
                str = xml_get(cur);
                len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(str)+10);
                nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str);
-               at->gfxs[i] = gl_newImage( file, OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
-               i++;
+               array_push_back( &at->gfxs, gl_newImage( file, OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ) );
             }
 
             else if (xml_isNode(cur,"id"))
@@ -3166,38 +3162,30 @@ static int asteroidTypes_load (void)
                at->armour = xml_getFloat(cur);
 
             else if (xml_isNode(cur,"commodity")) {
-               at->material = realloc( at->material, sizeof(Commodity*)*(j+1) );
-               at->quantity  = realloc( at->quantity, sizeof(int)*(j+1) );
-
                /* Check that name and quantity are defined. */
                namdef = 0; qttdef = 0;
 
                child = cur->children;
-               do{
+               do {
                   if (xml_isNode(child,"name")) {
                      str = xml_get(child);
-                     at->material[j] = commodity_get( str );
+                     array_push_back( &at->material, commodity_get( str ) );
                      namdef = 1;
                   }
                   else if (xml_isNode(child,"quantity")) {
-                     at->quantity[j] = xml_getInt(child);
+                     array_push_back( &at->quantity, xml_getInt(child) );
                      qttdef = 1;
                   }
                } while (xml_nextNode(child));
 
                if (namdef == 0 || qttdef == 0)
-                  WARN(_("Asteroid type's commodity lacks name or quantity."));
-
-               j++;
+                  ERR(_("Asteroid type's commodity lacks name or quantity."));
             }
-
          } while (xml_nextNode(cur));
 
-         if (i==0)
+         if (array_size(at->gfxs)==0)
             WARN(_("Asteroid type has no gfx associated."));
 
-         at->ngfx = i;
-         at->nmaterial = j;
          asteroid_ntypes++;
       }
    } while (xml_nextNode(node));
@@ -3473,7 +3461,7 @@ static void space_renderAsteroid( Asteroid *a )
    /* Add the commodities if scanned. */
    if (!a->scanned) return;
    gl_gameToScreenCoords( &nx, &ny, a->pos.x, a->pos.y );
-   for (i=0; i<at->nmaterial; i++) {
+   for (i=0; i<array_size(at->material); i++) {
       com = at->material[i];
       gl_blitSprite( com->gfx_space, a->pos.x, a->pos.y-10.*i, 0, 0, NULL );
       nsnprintf(c, sizeof(c), "x%i", at->quantity[i]);
@@ -3594,12 +3582,11 @@ void space_exit (void)
    for (i=0; i < asteroid_ntypes; i++) {
       at = &asteroid_types[i];
       free(at->ID);
-      free(at->material);
-      free(at->quantity);
-      for (j=0; j<at->ngfx; j++) {
+      array_free(at->material);
+      array_free(at->quantity);
+      for (j=0; j<array_size(at->gfxs); j++)
          gl_freeTexture(at->gfxs[j]);
-      }
-      free(at->gfxs);
+      array_free(at->gfxs);
    }
    free(asteroid_types);
    asteroid_types = NULL;
@@ -4172,7 +4159,7 @@ static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_rewa
       /* Release commodity. */
       at = &asteroid_types[a->type];
 
-      for (i=0; i < at->nmaterial; i++) {
+      for (i=0; i < array_size(at->material); i++) {
          nb = RNG(0,at->quantity[i]);
          com = at->material[i];
          for (j=0; j < nb; j++) {
