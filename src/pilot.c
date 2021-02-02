@@ -2871,9 +2871,9 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
          array_push_back( &ind, i );
 
    /* Build jumpable jump table. */
-   validJumpPoints = array_create_size( JumpPoint*, cur_system->njumps );
-   if (cur_system->njumps > 0) {
-      for (i=0; i<cur_system->njumps; i++) {
+   validJumpPoints = array_create_size( JumpPoint*, array_size(cur_system->jumps) );
+   if (array_size(cur_system->jumps) > 0) {
+      for (i=0; i<array_size(cur_system->jumps); i++) {
          /* The jump into the system must not be exit-only, and unless
           * ignore_rules is set, must also be non-hidden
           * (excepted if the pilot is guerilla) and have faction
@@ -2899,8 +2899,8 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
    if (array_size(ind)==0 && array_size(validJumpPoints)==0) {
       if (guerilla) /* Guerilla ships are created far away in deep space. */
          vect_pset ( vp, 1.5*cur_system->radius, RNGF()*2*M_PI );
-      else if (cur_system->njumps > 0) {
-         for (i=0; i<cur_system->njumps; i++)
+      else if (array_size(cur_system->jumps) > 0) {
+         for (i=0; i<array_size(cur_system->jumps); i++)
             array_push_back(&validJumpPoints, cur_system->jumps[i].returnJump);
       }
       else {

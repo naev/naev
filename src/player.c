@@ -1614,7 +1614,7 @@ void player_targetHyperspaceSet( int id )
 {
    int old;
 
-   if (id >= cur_system->njumps) {
+   if (id >= array_size(cur_system->jumps)) {
       WARN(_("Trying to set player's hyperspace target to invalid ID '%d'"), id);
       return;
    }
@@ -1647,14 +1647,14 @@ void player_targetHyperspace (void)
 
    map_clear(); /* clear the current map path */
 
-   for (id=player.p->nav_hyperspace+1; id<cur_system->njumps; id++)
+   for (id=player.p->nav_hyperspace+1; id<array_size(cur_system->jumps); id++)
       if (jp_isKnown( &cur_system->jumps[id]))
          break;
 
    /* Try to find the lowest-indexed valid jump. */
-   if (id >= cur_system->njumps) {
+   if (id >= array_size(cur_system->jumps)) {
       id = -1;
-      for (i=0; i<cur_system->njumps; i++)
+      for (i=0; i<array_size(cur_system->jumps); i++)
          if (jp_isUsable( &cur_system->jumps[i])) {
             id = i;
             break;
@@ -1750,7 +1750,7 @@ int player_jump (void)
    if (player.p->nav_hyperspace == -1) {
       j        = -1;
       mindist  = INFINITY;
-      for (i=0; i<cur_system->njumps; i++) {
+      for (i=0; i<array_size(cur_system->jumps); i++) {
          dist = vect_dist2( &player.p->solid->pos, &cur_system->jumps[i].pos );
          if (dist < mindist && jp_isUsable(&cur_system->jumps[i])) {
             mindist  = dist;

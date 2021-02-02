@@ -556,7 +556,7 @@ static int systemL_adjacent( lua_State *L )
 
    /* Push all adjacent systems. */
    lua_newtable(L);
-   for (i=0; i<s->njumps; i++) {
+   for (i=0; i<array_size(s->jumps); i++) {
       if (jp_isFlag(&s->jumps[i], JP_EXITONLY ))
          continue;
       if (!h && jp_isFlag(&s->jumps[i], JP_HIDDEN))
@@ -595,7 +595,7 @@ static int systemL_jumps( lua_State *L )
 
    /* Push all jumps. */
    lua_newtable(L);
-   for (i=0; i<s->njumps; i++) {
+   for (i=0; i<array_size(s->jumps); i++) {
       /* Skip exit-only jumps if requested. */
       if ((exitonly) && (jp_isFlag( &s->jumps[i],  JP_EXITONLY)))
             continue;
@@ -985,13 +985,13 @@ static int systemL_setknown( lua_State *L )
       if (b) {
          for (i=0; i < array_size(sys->planets); i++)
             planet_setKnown( sys->planets[i] );
-         for (i=0; i < sys->njumps; i++)
+         for (i=0; i < array_size(sys->jumps); i++)
             jp_setFlag( &sys->jumps[i], JP_KNOWN );
      }
      else {
          for (i=0; i < array_size(sys->planets); i++)
             planet_rmFlag( sys->planets[i], PLANET_KNOWN );
-         for (i=0; i < sys->njumps; i++)
+         for (i=0; i < array_size(sys->jumps); i++)
             jp_rmFlag( &sys->jumps[i], JP_KNOWN );
      }
    }

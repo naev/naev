@@ -721,7 +721,7 @@ static void uniedit_renameSys (void)
       dsys_saveSystem(sys);
 
       /* Re-save adjacent systems. */
-      for (j=0; j<sys->njumps; j++)
+      for (j=0; j<array_size(sys->jumps); j++)
          dsys_saveSystem( sys->jumps[j].target );
    }
 }
@@ -784,7 +784,7 @@ static void uniedit_toggleJump( StarSystem *sys )
    for (i=0; i<uniedit_nsys; i++) {
       isys  = uniedit_sys[i];
       rm    = 0;
-      for (j=0; j<isys->njumps; j++) {
+      for (j=0; j<array_size(isys->jumps); j++) {
          target = isys->jumps[j].target;
          /* Target already exists, remove. */
          if (target == sys) {
@@ -826,9 +826,7 @@ static void uniedit_jumpAdd( StarSystem *sys, StarSystem *targ )
    JumpPoint *jp;
 
    /* Add the jump. */
-   sys->njumps++;
-   sys->jumps  = realloc( sys->jumps, sizeof(JumpPoint) * sys->njumps );
-   jp          = &sys->jumps[ sys->njumps-1 ];
+   jp          = &array_grow( &sys->jumps );
    memset( jp, 0, sizeof(JumpPoint) );
 
    /* Fill it out with basics. */
@@ -848,19 +846,18 @@ static void uniedit_jumpRm( StarSystem *sys, StarSystem *targ )
    int i;
 
    /* Find associated jump. */
-   for (i=0; i<sys->njumps; i++)
+   for (i=0; i<array_size(sys->jumps); i++)
       if (sys->jumps[i].target == targ)
          break;
 
    /* Not found. */
-   if (i >= sys->njumps) {
+   if (i >= array_size(sys->jumps)) {
       WARN(_("Jump for system '%s' not found in system '%s' for removal."), targ->name, sys->name);
       return;
    }
 
    /* Remove the jump. */
-   sys->njumps--;
-   memmove( &sys->jumps[i], &sys->jumps[i+1], sizeof(JumpPoint) * (sys->njumps - i) );
+   array_erase( &sys->jumps, &sys->jumps[i], &sys->jumps[i+1] );
 }
 
 

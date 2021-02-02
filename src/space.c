@@ -352,7 +352,7 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
 
    /* Find the entry system. */
    jp = NULL;
-   for (i=0; i<in->njumps; i++)
+   for (i=0; i<array_size(in->jumps); i++)
       if (in->jumps[i].target == out)
          jp = &in->jumps[i];
 
@@ -574,7 +574,7 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
    }
 
    /* Jump points. */
-   for (i=0; i<sys->njumps; i++) {
+   for (i=0; i<array_size(sys->jumps); i++) {
       j  = &sys->jumps[i];
       if (!jp_isKnown(j))
          continue;
@@ -651,7 +651,7 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
    }
 
    /* Jump points. */
-   for (i=0; i<sys->njumps; i++) {
+   for (i=0; i<array_size(sys->jumps); i++) {
       j  = &sys->jumps[i];
       ta = atan2( y - j->pos.y, x - j->pos.x);
       if ( ABS(angle_diff(ang, ta)) < ABS(angle_diff(ang, a))) {
@@ -680,7 +680,7 @@ int space_sysReachable( StarSystem *sys )
       return 1; /* it is known */
 
    /* check to see if it is adjacent to known */
-   for (i=0; i<sys->njumps; i++) {
+   for (i=0; i<array_size(sys->jumps); i++) {
       jp = sys->jumps[i].returnJump;
       if (jp && jp_isKnown( jp ))
          return 1;
@@ -1037,7 +1037,7 @@ JumpPoint* jump_get( const char* jumpname, const StarSystem* sys )
       return NULL;
    }
 
-   for (i=0; i<sys->njumps; i++) {
+   for (i=0; i<array_size(sys->jumps); i++) {
       jp = &sys->jumps[i];
       if (strcmp(jp->target->name,jumpname)==0)
          return jp;
@@ -1059,7 +1059,7 @@ JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys )
 {
    int i;
    JumpPoint *jp;
-   for (i=0; i<sys->njumps; i++) {
+   for (i=0; i<array_size(sys->jumps); i++) {
       jp = &sys->jumps[i];
       if (jp->target == target)
          return jp;
@@ -1330,7 +1330,7 @@ void space_update( const double dt )
       }
 
       /* Jump point updates */
-      for (i=0; i<cur_system->njumps; i++) {
+      for (i=0; i<array_size(cur_system->jumps); i++) {
          if (( !jp_isKnown( &cur_system->jumps[i] )) && ( pilot_inRangeJump( player.p, i ))) {
             jp_setFlag( &cur_system->jumps[i], JP_KNOWN );
             player_message( _("You discovered a Jump Point.") );
@@ -2334,18 +2334,18 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
 
    /* Try to find planet. */
    jump = jump_get( jumpname, sys );
-   for (i=0; i<sys->njumps; i++)
+   for (i=0; i<array_size(sys->jumps); i++)
       if (&sys->jumps[i] == jump)
          break;
 
    /* Planet not found. */
-   if (i>=sys->njumps) {
+   if (i>=array_size(sys->jumps)) {
       WARN(_("Jump point '%s' not found in system '%s' for removal."), jumpname, sys->name);
       return -1;
    }
 
    /* Remove jump from system. */
-   sys->njumps--;
+   array_erase( &sys->jumps, &sys->jumps[i], &sys->jumps[i+1] );
 
    /* Refresh presence */
    system_setFaction(sys);
@@ -2364,6 +2364,7 @@ static void system_init( StarSystem *sys )
    memset( sys, 0, sizeof(StarSystem) );
    sys->planets   = array_create( Planet* );
    sys->planetsid = array_create( int );
+   sys->jumps = array_create( JumpPoint );
    sys->faction   = -1;
 }
 
@@ -2409,7 +2410,7 @@ void system_reconstructJumps (StarSystem *sys)
    JumpPoint *jp;
    double a;
 
-   for (j=0; j<sys->njumps; j++) {
+   for (j=0; j<array_size(sys->jumps); j++) {
       jp             = &sys->jumps[j];
       jp->from       = sys;
       jp->target     = system_getIndex( jp->targetid );
@@ -2650,7 +2651,7 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
 
 #ifdef DEBUGGING
    int i;
-   for (i=0; i<sys->njumps; i++) {
+   for (i=0; i<array_size(sys->jumps); i++) {
       j = &sys->jumps[i];
       if (j->targetid != target->id)
          continue;
@@ -2662,8 +2663,7 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
 #endif /* DEBUGGING */
 
    /* Allocate more space. */
-   sys->jumps = realloc( sys->jumps, (sys->njumps+1)*sizeof(JumpPoint) );
-   j = &sys->jumps[ sys->njumps ];
+   j = &array_grow( &sys->jumps );
    memset( j, 0, sizeof(JumpPoint) );
 
    /* Handle jump point position. We want both x and y, or we autoposition the jump point. */
@@ -2704,9 +2704,6 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
    /* Square to allow for linear multiplication with squared distances. */
    j->hide = pow2(j->hide);
 
-   /* Added jump. */
-   sys->njumps++;
-
    return 0;
 }
 
@@ -2743,7 +2740,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
 
 #ifdef DEBUGGING
    int i;
-   for (i=0; i<sys->njumps; i++) {
+   for (i=0; i<array_size(sys->jumps); i++) {
       j = &sys->jumps[i];
       if (j->targetid != target->id)
          continue;
@@ -2755,8 +2752,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
 #endif /* DEBUGGING */
 
    /* Allocate more space. */
-   sys->jumps = realloc( sys->jumps, (sys->njumps+1)*sizeof(JumpPoint) );
-   j = &sys->jumps[ sys->njumps ];
+   j = &array_grow( &sys->jumps );
    memset( j, 0, sizeof(JumpPoint) );
 
    /* Set some stuff. */
@@ -2797,9 +2793,6 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
 
    /* Square to allow for linear multiplication with squared distances. */
    j->hide = pow2(j->hide);
-
-   /* Added jump. */
-   sys->njumps++;
 
    return 0;
 }
@@ -2842,6 +2835,8 @@ static void system_parseJumps( const xmlNodePtr parent )
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
+
+   array_shrink( &sys->jumps );
 }
 
 
@@ -3087,7 +3082,7 @@ int space_load (void)
       sys = &systems_stack[i];
 
       /* Save jump indexes. */
-      for (j=0; j<sys->njumps; j++)
+      for (j=0; j<array_size(sys->jumps); j++)
          sys->jumps[j].targetid = sys->jumps[j].target->id;
       sys->ownerpresence = system_getPresence( sys, sys->faction );
    }
@@ -3353,7 +3348,7 @@ void planets_render (void)
       return;
 
    /* Render the jumps. */
-   for (i=0; i < cur_system->njumps; i++)
+   for (i=0; i < array_size(cur_system->jumps); i++)
       space_renderJumpPoint( &cur_system->jumps[i], i );
 
    /* Render the planets. */
@@ -3551,7 +3546,7 @@ void space_exit (void)
    /* Free the systems. */
    for (i=0; i < array_size(systems_stack); i++) {
       free(systems_stack[i].name);
-      free(systems_stack[i].jumps);
+      array_free(systems_stack[i].jumps);
       free(systems_stack[i].background);
       free(systems_stack[i].presence);
       array_free(systems_stack[i].planets);
@@ -3606,7 +3601,7 @@ void space_clearKnown (void)
    for (i=0; i<array_size(systems_stack); i++) {
       sys = &systems_stack[i];
       sys_rmFlag(sys,SYSTEM_KNOWN);
-      for (j=0; j<sys->njumps; j++)
+      for (j=0; j<array_size(sys->jumps); j++)
          jp_rmFlag(&sys->jumps[j],JP_KNOWN);
    }
    for (j=0; j<array_size(planet_stack); j++)
@@ -3760,7 +3755,7 @@ int space_sysSave( xmlTextWriterPtr writer )
          xmlw_elem(writer, "planet", "%s", sys->planets[j]->name);
       }
 
-      for (j=0; j<sys->njumps; j++) {
+      for (j=0; j<array_size(sys->jumps); j++) {
          if (!jp_isKnown(&sys->jumps[j])) continue; /* not known */
          xmlw_elem(writer,"jump","%s",(&sys->jumps[j])->target->name);
       }
@@ -3922,7 +3917,7 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
    qn             = q_create();
 
    /* Create the initial queue consisting of sys adjacencies. */
-   for (i=0; i < sys->njumps; i++) {
+   for (i=0; i < array_size(sys->jumps); i++) {
       if (sys->jumps[i].target->spilled == 0 && !jp_isFlag( &sys->jumps[i], JP_HIDDEN ) && !jp_isFlag( &sys->jumps[i], JP_EXITONLY )) {
          q_enqueue( q, sys->jumps[i].target );
          sys->jumps[i].target->spilled = 1;
@@ -3948,7 +3943,7 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
          break;
 
       /* Enqueue all its adjacencies to the next range queue. */
-      for (i=0; i<cur->njumps; i++) {
+      for (i=0; i<array_size(cur->jumps); i++) {
          if (cur->jumps[i].target->spilled == 0 && !jp_isFlag( &cur->jumps[i], JP_HIDDEN ) && !jp_isFlag( &cur->jumps[i], JP_EXITONLY )) {
             q_enqueue( qn, cur->jumps[i].target );
             cur->jumps[i].target->spilled = 1;

@@ -503,7 +503,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    }
    else if (lua_issystem(L,2+from_ship)) {
       ss = system_getIndex( lua_tosystem(L,2+from_ship) );
-      for (i=0; i<cur_system->njumps; i++) {
+      for (i=0; i<array_size(cur_system->jumps); i++) {
          if ((cur_system->jumps[i].target == ss)
                && !jp_isFlag( cur_system->jumps[i].returnJump, JP_EXITONLY )) {
             jump = cur_system->jumps[i].returnJump;
@@ -511,10 +511,10 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
          }
       }
       if (jump == NULL) {
-         if (cur_system->njumps > 0) {
+         if (array_size(cur_system->jumps) > 0) {
             WARN(_("Fleet '%s' jumping in from non-adjacent system '%s' to '%s'."),
                   fltname, ss->name, cur_system->name );
-            jump = cur_system->jumps[RNG_BASE(0,cur_system->njumps-1)].returnJump;
+            jump = cur_system->jumps[RNG_BASE(0, array_size(cur_system->jumps)-1)].returnJump;
          }
          else
             WARN(_("Fleet '%s' attempting to jump in from '%s', but '%s' has no jump points."),
@@ -3760,7 +3760,7 @@ static int pilotL_hyperspace( lua_State *L )
    if (ss == NULL)
       return 0;
    /* Find the jump. */
-   for (i=0; i < cur_system->njumps; i++) {
+   for (i=0; i < array_size(cur_system->jumps); i++) {
       jp = &cur_system->jumps[i];
       if (jp->target != ss)
          continue;

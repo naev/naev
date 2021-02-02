@@ -1001,14 +1001,14 @@ void map_renderJumps( double x, double y, int editor)
       gl_vboActivateAttribOffset( map_vbo, shaders.smooth.vertex, 0, 2, GL_FLOAT, 0 );
       gl_vboActivateAttribOffset( map_vbo, shaders.smooth.vertex_color,
             sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
-      for (j = 0; j < sys->njumps; j++) {
+      for (j = 0; j < array_size(sys->jumps); j++) {
          jsys = sys->jumps[j].target;
          if (!space_sysReachableFromSys(jsys,sys) && !editor)
             continue;
 
          /* Choose colours. */
          cole = &cLightBlue;
-         for (k = 0; k < jsys->njumps; k++) {
+         for (k = 0; k < array_size(jsys->jumps); k++) {
             if (jsys->jumps[k].target == sys) {
                if (jp_isFlag(&jsys->jumps[k], JP_EXITONLY))
                   cole = &cWhite;
@@ -1201,7 +1201,7 @@ void map_renderNames( double bx, double by, double x, double y,
 
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
-      for (j=0; j<sys->njumps; j++) {
+      for (j=0; j<array_size(sys->jumps); j++) {
          jsys = sys->jumps[j].target;
          /* Calculate offset. */
          vx  = jsys->pos.x - sys->pos.x;
@@ -1951,7 +1951,7 @@ void map_jump (void)
          memmove( &map_path[0], &map_path[1], sizeof(StarSystem*) * map_npath );
 
          /* set the next jump to be to the next in path */
-         for (j=0; j<cur_system->njumps; j++) {
+         for (j=0; j<array_size(cur_system->jumps); j++) {
             if (map_path[0] == cur_system->jumps[j].target) {
                /* Restore selected system. */
                map_selected = map_path[ map_npath ] - systems_stack;
@@ -1961,7 +1961,7 @@ void map_jump (void)
             }
          }
          /* Overrode jump route manually, must clear target. */
-         if (j>=cur_system->njumps)
+         if (j>=array_size(cur_system->jumps))
             player_targetHyperspaceSet( -1 );
       }
    }
@@ -2017,7 +2017,7 @@ void map_select( StarSystem *sys, char shifted )
          }
          else  {
             /* see if it is a valid hyperspace target */
-            for (i=0; i<cur_system->njumps; i++) {
+            for (i=0; i<array_size(cur_system->jumps); i++) {
                if (map_path[0] == cur_system->jumps[i].target) {
                   player_hyperspacePreempt(1);
                   player_targetHyperspaceSet( i );
@@ -2225,7 +2225,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    }
 
    /* Check self. */
-   if ((ssys == esys) || (ssys->njumps==0)) {
+   if (ssys==esys || array_size(ssys->jumps)==0) {
       (*njumps) = 0;
       free( old_data );
       return NULL;
@@ -2262,7 +2262,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
       closed = A_add( closed, cur );
       cost   = A_g(cur) + 1; /* Base unit is jump and always increases by 1. */
 
-      for (i=0; i<cur->sys->njumps; i++) {
+      for (i=0; i<array_size(cur->sys->jumps); i++) {
          jp  = &cur->sys->jumps[i];
          sys = jp->target;
 
@@ -2401,7 +2401,7 @@ int localmap_map( const Outfit *lmap )
    mod = pow2( 200. / (cur_system->interference + 200.) );
 
    detect = lmap->u.lmap.jump_detect;
-   for (i=0; i<cur_system->njumps; i++) {
+   for (i=0; i<array_size(cur_system->jumps); i++) {
       jp = &cur_system->jumps[i];
       if (jp_isFlag(jp, JP_EXITONLY) || jp_isFlag(jp, JP_HIDDEN))
          continue;
@@ -2436,7 +2436,7 @@ int localmap_isMapped( const Outfit *lmap )
    mod = pow2( 200. / (cur_system->interference + 200.) );
 
    detect = lmap->u.lmap.jump_detect;
-   for (i=0; i<cur_system->njumps; i++) {
+   for (i=0; i<array_size(cur_system->jumps); i++) {
       jp = &cur_system->jumps[i];
       if (jp_isFlag(jp, JP_EXITONLY) || jp_isFlag(jp, JP_HIDDEN))
          continue;

@@ -374,7 +374,7 @@ static int econ_createGMatrix (void)
       Rsum = 0.;
 
       /* Set some values. */
-      for (j=0; j < sys->njumps; j++) {
+      for (j=0; j < array_size(sys->jumps); j++) {
 
          /* Get the resistances. */
          R     = econ_calcJumpR( sys, sys->jumps[j].target );
@@ -706,7 +706,7 @@ static void economy_modifySystemCommodityPrice(StarSystem *sys)
 
          /* Use number of jumps to determine sytsem time period.  More jumps means more options for trade
             so shorter period.  Between 1 to 6 jumps.  Make the base time 1000.*/
-         planet->commodityPrice[j].sysPeriod = 2000. / (sys->njumps + 1);
+         planet->commodityPrice[j].sysPeriod = 2000. / (array_size(sys->jumps) + 1);
 
          for ( k=0; k<nav; k++) {
             if ( ( strcmp( planet->commodities[j]->name, avprice[k].name ) == 0 ) ) {
@@ -776,7 +776,7 @@ static void economy_smoothCommodityPrice(StarSystem *sys)
    for ( j =0; j<nav; j++ ) {/* for each commodity in this system */
       price=0.;
       n=0;
-      for ( i=0; i<sys->njumps; i++ ) {/* for each neighbouring system */
+      for ( i=0; i<array_size(sys->jumps); i++ ) {/* for each neighbouring system */
          neighbour=sys->jumps[i].target;
          for ( k=0; k<neighbour->ncommodities; k++ ) {
             if ( ( strcmp( neighbour->averagePrice[k].name, avprice[j].name ) == 0 ) ) {

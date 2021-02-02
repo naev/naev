@@ -489,7 +489,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       (void)cnt;
 
       /* Jumps. */
-      for (  i=0; i<sys->njumps; i++ ) {
+      for (  i=0; i<array_size(sys->jumps); i++ ) {
          if ( jp_isUsable ( &sys->jumps[i] ) ) {
             if ( infopos == 0) /* First jump */
                infopos = nsnprintf( infobuf, PATH_MAX, _("   Jump points to:\n") );

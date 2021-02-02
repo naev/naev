@@ -160,12 +160,12 @@ void ovr_refresh (void)
 
    /* Calculate max size. */
    items = 0;
-   pos = calloc(cur_system->njumps + array_size(cur_system->planets), sizeof(Vector2d*));
-   mo  = calloc(cur_system->njumps + array_size(cur_system->planets), sizeof(MapOverlayPos*));
-   moo = calloc(cur_system->njumps + array_size(cur_system->planets), sizeof(MapOverlayPosOpt));
+   pos = calloc(array_size(cur_system->jumps) + array_size(cur_system->planets), sizeof(Vector2d*));
+   mo  = calloc(array_size(cur_system->jumps) + array_size(cur_system->planets), sizeof(MapOverlayPos*));
+   moo = calloc(array_size(cur_system->jumps) + array_size(cur_system->planets), sizeof(MapOverlayPosOpt));
    max_x = 0.;
    max_y = 0.;
-   for (i=0; i<cur_system->njumps; i++) {
+   for (i=0; i<array_size(cur_system->jumps); i++) {
       jp = &cur_system->jumps[i];
       max_x = MAX( max_x, ABS(jp->pos.x) );
       max_y = MAX( max_y, ABS(jp->pos.y) );
@@ -518,7 +518,7 @@ void ovr_render( double dt )
       gui_renderPlanet( player.p->nav_planet, RADAR_RECT, w, h, res, 1 );
 
    /* Render jump points. */
-   for (i=0; i<cur_system->njumps; i++)
+   for (i=0; i<array_size(cur_system->jumps); i++)
       if ((i != player.p->nav_hyperspace) && !jp_isFlag(&cur_system->jumps[i], JP_EXITONLY))
          gui_renderJumpPoint( i, RADAR_RECT, w, h, res, 1 );
    if (player.p->nav_hyperspace > -1)

@@ -701,7 +701,7 @@ static void gui_renderBorder( double dt )
    }
 
    /* Draw jump routes. */
-   for (i=0; i<cur_system->njumps; i++) {
+   for (i=0; i<array_size(cur_system->jumps); i++) {
       jp  = &cur_system->jumps[i];
 
       /* Skip if unknown or exit-only. */
@@ -1074,7 +1074,7 @@ void gui_radarRender( double x, double y )
    /*
     * Jump points.
     */
-   for (i=0; i<cur_system->njumps; i++)
+   for (i=0; i<array_size(cur_system->jumps); i++)
       if (i != player.p->nav_hyperspace && jp_isUsable(&cur_system->jumps[i]))
          gui_renderJumpPoint( i, radar->shape, radar->w, radar->h, radar->res, 0 );
    if (player.p->nav_hyperspace > -1)

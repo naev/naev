@@ -299,8 +299,7 @@ struct StarSystem_ {
    int faction; /**< overall faction */
 
    /* Jumps. */
-   JumpPoint *jumps; /**< Jump points in the system */
-   int njumps; /**< number of adjacent jumps */
+   JumpPoint *jumps; /**< Array (array.h): Jump points in the system */
 
    /* Asteroids. */
    AsteroidAnchor *asteroids; /**< Asteroid fields in the system */

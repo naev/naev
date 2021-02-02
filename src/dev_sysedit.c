@@ -563,7 +563,7 @@ void sysedit_sysScale( StarSystem *sys, double factor )
    }
 
    /* Scale jumps. */
-   for (i=0; i<sys->njumps; i++) {
+   for (i=0; i<array_size(sys->jumps); i++) {
       jp    = &sys->jumps[i];
       vect_cset( &jp->pos, jp->pos.x*factor, jp->pos.y*factor );
    }
@@ -636,7 +636,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    }
 
    /* Render jump points. */
-   for (i=0; i<sys->njumps; i++) {
+   for (i=0; i<array_size(sys->jumps); i++) {
       jp    = &sys->jumps[i];
 
       /* Choose colour. */
@@ -942,7 +942,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             }
 
             /* Check jump points. */
-            for (i=0; i<sys->njumps; i++) {
+            for (i=0; i<array_size(sys->jumps); i++) {
                jp = &sys->jumps[i];
 
                /* Position. */

@@ -136,12 +136,12 @@ int dsys_saveSystem( StarSystem *sys )
    free(sorted_planets);
 
    /* Jumps. */
-   sorted_jumps = malloc( sizeof(JumpPoint*) * sys->njumps );
-   for (i=0; i<sys->njumps; i++)
+   sorted_jumps = malloc( sizeof(JumpPoint*) * array_size(sys->jumps) );
+   for (i=0; i<array_size(sys->jumps); i++)
       sorted_jumps[i] = &sys->jumps[i];
-   qsort( sorted_jumps, sys->njumps, sizeof(JumpPoint*), dsys_compJump );
+   qsort( sorted_jumps, array_size(sys->jumps), sizeof(JumpPoint*), dsys_compJump );
    xmlw_startElem( writer, "jumps" );
-   for (i=0; i<sys->njumps; i++) {
+   for (i=0; i<array_size(sys->jumps); i++) {
       jp = sorted_jumps[i];
       xmlw_startElem( writer, "jump" );
       xmlw_attr( writer, "target", "%s", jp->target->name );
