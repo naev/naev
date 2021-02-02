@@ -951,7 +951,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
    /* Collide with asteroids*/
    if (outfit_isAmmo(w->outfit)) {
-      for (i=0; i<cur_system->nasteroids; i++) {
+      for (i=0; i<array_size(cur_system->asteroids); i++) {
          ast = &cur_system->asteroids[i];
          for (j=0; j<ast->nb; j++) {
             a = &ast->asteroids[j];
@@ -967,7 +967,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
    }
    else if (outfit_isBolt(w->outfit)) {
-      for (i=0; i<cur_system->nasteroids; i++) {
+      for (i=0; i<array_size(cur_system->asteroids); i++) {
          ast = &cur_system->asteroids[i];
          for (j=0; j<ast->nb; j++) {
             a = &ast->asteroids[j];
@@ -983,7 +983,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
    }
    else if (b) { /* Beam */
-      for (i=0; i<cur_system->nasteroids; i++) {
+      for (i=0; i<array_size(cur_system->asteroids); i++) {
          ast = &cur_system->asteroids[i];
          for (j=0; j<ast->nb; j++) {
             a = &ast->asteroids[j];

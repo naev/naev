@@ -550,7 +550,7 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
    }
 
    /* Asteroids. */
-   for (i=0; i<sys->nasteroids; i++) {
+   for (i=0; i<array_size(sys->asteroids); i++) {
       f = &sys->asteroids[i];
       for (k=0; k<f->nb; k++) {
          as = &f->asteroids[k];
@@ -631,7 +631,7 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
    }
 
    /* Asteroids. */
-   for (i=0; i<sys->nasteroids; i++) {
+   for (i=0; i<array_size(sys->asteroids); i++) {
       f  = &sys->asteroids[i];
       for (k=0; k<f->nb; k++) {
          as = &f->asteroids[k];
@@ -1353,7 +1353,7 @@ void space_update( const double dt )
    gatherable_update(dt);
 
    /* Asteroids/Debris update */
-   for (i=0; i<cur_system->nasteroids; i++) {
+   for (i=0; i<array_size(cur_system->asteroids); i++) {
       ast = &cur_system->asteroids[i];
 
       for (j=0; j<ast->nb; j++) {
@@ -1509,7 +1509,7 @@ void space_init( const char* sysname )
    }
 
    /* Set up asteroids. */
-   for (i=0; i<cur_system->nasteroids; i++) {
+   for (i=0; i<array_size(cur_system->asteroids); i++) {
       ast = &cur_system->asteroids[i];
       ast->id = i;
 
@@ -2365,6 +2365,7 @@ static void system_init( StarSystem *sys )
    sys->planets   = array_create( Planet* );
    sys->planetsid = array_create( int );
    sys->jumps = array_create( JumpPoint );
+   sys->asteroids = array_create( AsteroidAnchor );
    sys->faction   = -1;
 }
 
@@ -2857,8 +2858,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    int pos;
 
    /* Allocate more space. */
-   sys->asteroids = realloc( sys->asteroids, (sys->nasteroids+1)*sizeof(AsteroidAnchor) );
-   a = &sys->asteroids[ sys->nasteroids ];
+   a = &array_grow( &sys->asteroids );
    memset( a, 0, sizeof(AsteroidAnchor) );
 
    /* Initialize stuff. */
@@ -2924,9 +2924,6 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    /* Compute number of asteroids */
    a->nb      = floor( ABS(a->area) / 500000 * a->density );
    a->ndebris = floor(100*a->density);
-
-   /* Added asteroid. */
-   sys->nasteroids++;
 
    return 0;
 }
@@ -3009,6 +3006,8 @@ static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys )
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
+
+   array_shrink( &sys->asteroids );
 }
 
 
@@ -3315,7 +3314,7 @@ void space_renderOverlay( const double dt )
    pplayer = pilot_get( PLAYER_ID );
    if (pplayer != NULL) {
       psolid  = pplayer->solid;
-      for (i=0; i < cur_system->nasteroids; i++) {
+      for (i=0; i < array_size(cur_system->asteroids); i++) {
          ast = &cur_system->asteroids[i];
          x = psolid->pos.x - SCREEN_W/2;
          y = psolid->pos.y - SCREEN_H/2;
@@ -3362,7 +3361,7 @@ void planets_render (void)
       psolid  = pplayer->solid;
 
    /* Render the asteroids & debris. */
-   for (i=0; i < cur_system->nasteroids; i++) {
+   for (i=0; i < array_size(cur_system->asteroids); i++) {
       ast = &cur_system->asteroids[i];
       for (j=0; j < ast->nb; j++)
         space_renderAsteroid( &ast->asteroids[j] );
@@ -3555,13 +3554,13 @@ void space_exit (void)
       /* Free the asteroids. */
       sys = &systems_stack[i];
 
-      for (j=0; j < sys->nasteroids; j++) {
+      for (j=0; j < array_size(sys->asteroids); j++) {
          ast = &sys->asteroids[j];
          free(ast->asteroids);
          free(ast->debris);
          free(ast->type);
       }
-      free(sys->asteroids);
+      array_free(sys->asteroids);
       free(sys->astexclude);
 
    }
@@ -4074,7 +4073,7 @@ int space_isInField ( Vector2d *p )
    }
 
    /* Check if in asteroid field */
-   for (i=0; i < cur_system->nasteroids; i++) {
+   for (i=0; i < array_size(cur_system->asteroids); i++) {
       a = &cur_system->asteroids[i];
       if (vect_dist( p, &a->pos ) <= a->radius)
          return i;

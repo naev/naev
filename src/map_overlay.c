@@ -548,7 +548,7 @@ void ovr_render( double dt )
    }
 
    /* render the asteroids */
-   for (i=0; i<cur_system->nasteroids; i++) {
+   for (i=0; i<array_size(cur_system->asteroids); i++) {
       ast = &cur_system->asteroids[i];
       for (j=0; j<ast->nb; j++)
          gui_renderAsteroid( &ast->asteroids[j], w, h, res, 1 );

@@ -302,8 +302,7 @@ struct StarSystem_ {
    JumpPoint *jumps; /**< Array (array.h): Jump points in the system */
 
    /* Asteroids. */
-   AsteroidAnchor *asteroids; /**< Asteroid fields in the system */
-   int nasteroids; /**< number of asteroid fields */
+   AsteroidAnchor *asteroids; /**< Array (array.h): Asteroid fields in the system */
    AsteroidExclusion *astexclude; /**< Asteroid exclusion zones in the system */
    int nastexclude; /**< number of asteroid exclusion zones */
 

@@ -662,7 +662,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    }
 
    /* Render asteroids */
-   for (i=0; i<sys->nasteroids; i++) {
+   for (i=0; i<array_size(sys->asteroids); i++) {
       ast = &sys->asteroids[i];
       selected = 0;
       sysedit_renderAsteroidsField( x, y, ast, selected );

@@ -431,9 +431,9 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Interference: Light\n") );
       }
       /* Asteroids. */
-      if (sys->nasteroids > 0 ) {
+      if (array_size(sys->asteroids) > 0 ) {
          density = 0.;
-         for ( i=0; i<sys->nasteroids; i++ ) {
+         for ( i=0; i<array_size(sys->asteroids); i++ ) {
             density += sys->asteroids[i].area * sys->asteroids[i].density;
          }
          cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _(" Asteroid Field density %g\n"), density );

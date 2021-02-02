@@ -647,14 +647,14 @@ static void map_update( unsigned int wid )
             p += nsnprintf(&buf[p], PATH_MAX-p, _("Interference"));
       }
       /* Asteroids. */
-      if (sys->nasteroids > 0) {
+      if (array_size(sys->asteroids) > 0) {
          double density;
 
          if (buf[0] != '\0')
             p += nsnprintf(&buf[p], PATH_MAX-p, _(", "));
 
          density = 0.;
-         for (i=0; i<sys->nasteroids; i++) {
+         for (i=0; i<array_size(sys->asteroids); i++) {
             density += sys->asteroids[i].area * sys->asteroids[i].density;
          }
 

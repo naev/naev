@@ -626,8 +626,8 @@ static int systemL_asteroid( lua_State *L )
    int bad_asteroid;
    int i;
 
-   if (cur_system->nasteroids > 0) {
-      field = RNG(0,cur_system->nasteroids-1);
+   if (array_size(cur_system->asteroids) > 0) {
+      field = RNG(0,array_size(cur_system->asteroids)-1);
       ast   = RNG(0,cur_system->asteroids[field].nb-1);
       bad_asteroid = 0;
       if ( (cur_system->asteroids[field].asteroids[ast].appearing == ASTEROID_INVISIBLE) ||
@@ -676,7 +676,7 @@ static int systemL_asteroidPos( lua_State *L )
    field = luaL_checkint(L,1);
    ast   = luaL_checkint(L,2);
 
-   if ( field >= cur_system->nasteroids ) {
+   if ( field >= array_size(cur_system->asteroids) ) {
       WARN(_("field index %d too high"), field);
       return 0;
    }
@@ -709,7 +709,7 @@ static int systemL_asteroidDestroyed( lua_State *L )
    field = luaL_checkint(L,1);
    ast   = luaL_checkint(L,2);
 
-   if ( field >= cur_system->nasteroids ) {
+   if ( field >= array_size(cur_system->asteroids) ) {
       WARN(_("field index %d too high"), field);
       return 0;
    }

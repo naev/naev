@@ -169,9 +169,9 @@ int dsys_saveSystem( StarSystem *sys )
    free(sorted_jumps);
 
    /* Asteroids. */
-   if (sys->nasteroids > 0 || sys->nastexclude > 0) {
+   if (array_size(sys->asteroids) > 0 || sys->nastexclude > 0) {
       xmlw_startElem( writer, "asteroids" );
-      for (i=0; i<sys->nasteroids; i++) {
+      for (i=0; i<array_size(sys->asteroids); i++) {
          ast = &sys->asteroids[i];
          xmlw_startElem( writer, "asteroid" );
 
