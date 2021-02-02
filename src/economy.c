@@ -687,9 +687,9 @@ static void economy_modifySystemCommodityPrice(StarSystem *sys)
 {
    int i,j,k;
    Planet *planet;
-   CommodityPrice *avprice=NULL;
-   int nav=0;
+   CommodityPrice *avprice;
 
+   avprice = array_create( CommodityPrice );
    for ( i=0; i<array_size(sys->planets); i++ ) {
       planet=sys->planets[i];
       for ( j=0; j<array_size(planet->commodityPrice); j++ ) {
@@ -708,7 +708,7 @@ static void economy_modifySystemCommodityPrice(StarSystem *sys)
             so shorter period.  Between 1 to 6 jumps.  Make the base time 1000.*/
          planet->commodityPrice[j].sysPeriod = 2000. / (array_size(sys->jumps) + 1);
 
-         for ( k=0; k<nav; k++) {
+         for ( k=0; k<array_size(avprice); k++) {
             if ( ( strcmp( planet->commodities[j]->name, avprice[k].name ) == 0 ) ) {
                avprice[k].updateTime++;
                avprice[k].price+=planet->commodityPrice[j].price;
@@ -719,9 +719,8 @@ static void economy_modifySystemCommodityPrice(StarSystem *sys)
                break;
             }
          }
-         if ( k == nav ) {/* first visit of this commodity for this system */
-            nav++;
-            avprice=realloc( avprice, nav * sizeof(CommodityPrice) );
+         if ( k == array_size(avprice) ) {/* first visit of this commodity for this system */
+            (void)array_grow( &avprice );
             avprice[k].name=planet->commodities[j]->name;
             avprice[k].updateTime=1;
             avprice[k].price=planet->commodityPrice[j].price;
@@ -733,7 +732,7 @@ static void economy_modifySystemCommodityPrice(StarSystem *sys)
       }
    }
    /* Do some inter-planet averaging */
-   for ( k=0; k<nav; k++ ) {
+   for ( k=0; k<array_size(avprice); k++ ) {
       avprice[k].price/=avprice[k].updateTime;
       avprice[k].planetPeriod/=avprice[k].updateTime;
       avprice[k].sysPeriod/=avprice[k].updateTime;
@@ -744,7 +743,7 @@ static void economy_modifySystemCommodityPrice(StarSystem *sys)
    for ( i=0; i<array_size(sys->planets); i++ ) {
       planet=sys->planets[i];
       for ( j=0; j<array_size(planet->commodities); j++ ) {
-         for ( k=0; k<nav; k++ ) {
+         for ( k=0; k<array_size(avprice); k++ ) {
             if ( ( strcmp( planet->commodities[j]->name, avprice[k].name ) == 0 ) ) {
                planet->commodityPrice[j].price*=0.25;
                planet->commodityPrice[j].price+=0.75*avprice[k].price;
@@ -753,8 +752,8 @@ static void economy_modifySystemCommodityPrice(StarSystem *sys)
          }
       }
    }
-   sys->averagePrice=avprice;
-   sys->ncommodities=nav;
+   array_shrink( &avprice );
+   sys->averagePrice = avprice;
 }
 
 
@@ -766,19 +765,18 @@ static void economy_modifySystemCommodityPrice(StarSystem *sys)
 static void economy_smoothCommodityPrice(StarSystem *sys)
 {
    StarSystem *neighbour;
-   int nav=sys->ncommodities;
    CommodityPrice *avprice=sys->averagePrice;
    double price;
    int n,i,j,k;
    /*Now modify based on neighbouring systems */
    /*First, calculate mean price of neighbouring systems */
 
-   for ( j =0; j<nav; j++ ) {/* for each commodity in this system */
+   for ( j =0; j<array_size(avprice); j++ ) {/* for each commodity in this system */
       price=0.;
       n=0;
       for ( i=0; i<array_size(sys->jumps); i++ ) {/* for each neighbouring system */
          neighbour=sys->jumps[i].target;
-         for ( k=0; k<neighbour->ncommodities; k++ ) {
+         for ( k=0; k<array_size(neighbour->averagePrice); k++ ) {
             if ( ( strcmp( neighbour->averagePrice[k].name, avprice[j].name ) == 0 ) ) {
                price+=neighbour->averagePrice[k].price;
                n++;
@@ -800,11 +798,10 @@ static void economy_smoothCommodityPrice(StarSystem *sys)
  */
 static void economy_calcUpdatedCommodityPrice(StarSystem *sys)
 {
-   int nav=sys->ncommodities;
    CommodityPrice *avprice=sys->averagePrice;
    Planet *planet;
    int i,j,k;
-   for ( j=0; j<nav; j++ ) {
+   for ( j=0; j<array_size(avprice); j++ ) {
       /*Use mean price to adjust current price */
       avprice[j].price=0.5*(avprice[j].price + avprice[j].sum);
    }
@@ -812,7 +809,7 @@ static void economy_calcUpdatedCommodityPrice(StarSystem *sys)
    for ( i=0; i<array_size(sys->planets); i++ ) {
       planet=sys->planets[i];
       for ( j=0; j<array_size(planet->commodities); j++ ) {
-         for ( k=0; k<nav; k++ ) {
+         for ( k=0; k<array_size(avprice); k++ ) {
             if ( ( strcmp(avprice[k].name, planet->commodities[j]->name) == 0 ) ) {
                planet->commodityPrice[j].price = (
                      0.25*planet->commodityPrice[j].price
@@ -827,9 +824,8 @@ static void economy_calcUpdatedCommodityPrice(StarSystem *sys)
          }
       }
    }
-   free( sys->averagePrice );
+   array_free( sys->averagePrice );
    sys->averagePrice=NULL;
-   sys->ncommodities=0;
 }
 
 /**
