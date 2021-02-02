@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-02-01 09:14-0500\n"
-"PO-Revision-Date: 2021-02-01 13:19+0000\n"
+"PO-Revision-Date: 2021-02-02 10:41+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -2223,15 +2223,15 @@ msgstr "Blackwell IIX"
 
 #: dat/assets/blackwell_vii.xml:2
 msgid "Blackwell VII"
-msgstr ""
+msgstr "Blackwell VII"
 
 #: dat/assets/blunderbuss_ii.xml:2
 msgid "Blunderbuss II"
-msgstr ""
+msgstr "Blunderbuss II"
 
 #: dat/assets/bolero.xml:2
 msgid "Bolero"
-msgstr ""
+msgstr "Bolero"
 
 #: dat/assets/bolero.xml:28
 msgid ""
@@ -2240,6 +2240,9 @@ msgid ""
 "is still treated as something of a backwater, it is becoming increasingly "
 "important in Imperial politics."
 msgstr ""
+"Bolero je jednou z nejúspěšnějších planet říše. Populace je prosperující "
+"úspěšná a podmínky planety jsou mírné. Přestože se s ním stále zachází jako "
+"se vzdutím, v imperiální politice je stále důležitější."
 
 #: dat/assets/bolero.xml:29
 msgid ""
@@ -2247,10 +2250,13 @@ msgid ""
 "good food. The atmosphere is warm and welcoming, the clients are all polite "
 "and cheerful and the bouncers barely loom at all."
 msgstr ""
+"V místní bar je hospoda ve starozemském stylu s nízkým stropem, teplým pivem "
+"a dobrým jídlem. Atmosféra je vřelá a příjemná, klienti jsou zdvořilí a "
+"veselí a vyhazovači se zde téměř nevyskytují."
 
 #: dat/assets/bon_sebb.xml:2
 msgid "Bon Sebb"
-msgstr ""
+msgstr "Bon Sebb"
 
 #: dat/assets/bon_sebb.xml:30
 msgid ""
@@ -2259,6 +2265,10 @@ msgid ""
 "gigantic junk yard, known as the \"Junkle\", where the locals \"hunt\" for "
 "useful equipment they can sell to each other, or to passing travellers."
 msgstr ""
+"Bon Sebb je tajemné místo. Objekty z celé galaxie mají ve zvyku se sem "
+"otáčet. Ve skutečnosti je velkou částí povrchu planety gigantické haraburdí, "
+"známý jako „Junkle“, kde místní obyvatelé „loví“ užitečné vybavení, které si "
+"mohou navzájem prodat nebo předat cestujícím."
 
 #: dat/assets/bon_sebb.xml:31
 msgid ""
@@ -2267,18 +2277,22 @@ msgid ""
 "only somewhat symmetrical feature of the bar is a holoportrait of the "
 "Creator of the Universe, hanging over the lopsided bar."
 msgstr ""
+"Bar na Bon Sebb je postaven z věcí vyrabovaných z \"Junkle\". Stěny a "
+"nábytek jsou patchwork různých designů a materiálů. Jediným poněkud "
+"symetrickým rysem baru je holoportrét Stvořitele vesmíru, visícího nad "
+"šikmým barem."
 
 #: dat/assets/bonanza_i.xml:2
 msgid "Bonanza I"
-msgstr ""
+msgstr "Bonanza I"
 
 #: dat/assets/bonanza_ii.xml:2
 msgid "Bonanza II"
-msgstr ""
+msgstr "Bonanza II"
 
 #: dat/assets/boowoy.xml:2
 msgid "Boowoy"
-msgstr ""
+msgstr "Boowoy"
 
 #: dat/assets/boowoy.xml:29
 msgid ""
@@ -2288,6 +2302,11 @@ msgid ""
 "the planet's ecosystem has been terminally disrupted, causing most of the "
 "surface to erode into desert."
 msgstr ""
+"Boowoy nikdy nebyl velmi úctyhodnou kolonií. Byl osídlen v naději, že svět "
+"bude možné terraformovat na pěknou obytnou planetu třídy M. Ale "
+"přetrvávající korupce a špatné vedení způsobily, že se snaha zhoršila. Nyní "
+"byl ekosystém planety terminálně narušen, což způsobilo, že většina povrchu "
+"erodovala do pouště."
 
 #: dat/assets/boowoy.xml:30
 msgid ""
@@ -2297,14 +2316,18 @@ msgid ""
 "local patrons makes it clear they'd prefer it if you weren't here for long, "
 "at all."
 msgstr ""
+"Místní nemají rádi cizince, ale udržují kosmodrom v chodu, protože odříznutí "
+"od galaxie by bylo pro svět tak závislý na dovozu fatální. Pohledy, které "
+"získáte od pracovního personálu a místních patronů, nicméně jasně ukazují, "
+"že by to upřednostňovali, kdybyste tu vůbec nebyli dlouho."
 
 #: dat/assets/botarn_i.xml:2
 msgid "Botarn I"
-msgstr ""
+msgstr "Botarn I"
 
 #: dat/assets/brandt_station.xml:2
 msgid "Brandt Station"
-msgstr ""
+msgstr "Stanice Brandt"
 
 #: dat/assets/brandt_station.xml:26
 msgid ""
@@ -2313,6 +2336,10 @@ msgid ""
 "and Anarbalis. The ships here, however, are not equipped to handle the "
 "stress of the border conflicts with the Dvaered at Eye of Night."
 msgstr ""
+"Stanice Brandt slouží jako místní bezpečnostní kontrolní stanoviště a "
+"provozuje dvě lehké letky lodí. Stanice je zodpovědná hlavně za Niger, "
+"Lazuli a Anarbalis. Lodě zde však nejsou vybaveny, aby zvládly stres z "
+"hraničních konfliktů s Dvaeredy v Eye of Night."
 
 #: dat/assets/brandt_station.xml:27
 msgid ""
@@ -2320,34 +2347,37 @@ msgid ""
 "Sirian echelons in any way. However, the soldiers and sailors stationed on "
 "Brandt Station all know their place and treat each other accordingly."
 msgstr ""
+"Kupodivu se zdá, že tento dokovací bar s nijak nerozlišuje mezi třemi "
+"sirianskými vrstvami. Vojáci a námořníci umístění na stanici Brandt však "
+"všichni znají své místo a podle toho se k sobě chovají."
 
 #: dat/assets/brendon_i.xml:2
 msgid "Brendon I"
-msgstr ""
+msgstr "Brendon I"
 
 #: dat/assets/brimstone_i.xml:2
 msgid "Brimstone I"
-msgstr ""
+msgstr "Brimstone I"
 
 #: dat/assets/brimstone_ia.xml:2
 msgid "Brimstone Ia"
-msgstr ""
+msgstr "Brimstone Ia"
 
 #: dat/assets/brimstone_ib.xml:2
 msgid "Brimstone Ib"
-msgstr ""
+msgstr "Brimstone Ib"
 
 #: dat/assets/brimstone_ii.xml:2
 msgid "Brimstone II"
-msgstr ""
+msgstr "Brimstone II"
 
 #: dat/assets/brimstone_iii.xml:2
 msgid "Brimstone III"
-msgstr ""
+msgstr "Brimstone III"
 
 #: dat/assets/brock.xml:2
 msgid "Brock"
-msgstr ""
+msgstr "Brock"
 
 #: dat/assets/brock.xml:29
 msgid ""
@@ -2356,6 +2386,10 @@ msgid ""
 "for this purpose and no other, comfort was the last thing on the designers' "
 "minds."
 msgstr ""
+"Zde se nachází jedna z těžařských operací Dvaered. Plyn je rafinován a "
+"přeměněn na palivo pro Dvaeredské lodě. Zařízení zde jsou postavena výhradně "
+"pro tento účel a nic jiného, pohodlí bylo to poslední, na co designéři "
+"mysleli."
 
 #: dat/assets/brock.xml:30
 msgid ""
@@ -2364,10 +2398,14 @@ msgid ""
 "bars. Unlike most Dvaered bars, this one is small and rather clean. Rather "
 "shocking, especially for outsiders."
 msgstr ""
+"Bar je plný horníků a posádkových jednotek, jako většina Dvaeredských barů. "
+"Bohaté pití je také zcela jistě na kartách, jako u většiny Dvaeredských "
+"barů. Na rozdíl od většiny je tento malý a poměrně čistý. Spíše šokující, "
+"zejména pro cizince."
 
 #: dat/assets/brooks.xml:2
 msgid "Brooks"
-msgstr ""
+msgstr "Brooks"
 
 #: dat/assets/brooks.xml:28
 msgid ""
@@ -2377,6 +2415,11 @@ msgid ""
 "economic and political weight within the Empire, the Imperial Navy protects "
 "Arcturus for Brooks' sake, as much as for the Imperial core systems."
 msgstr ""
+"Brooks je rušná, vysoce osídlená imperiální civilní planeta. S úpadkem "
+"Impéria se ocitla na hranici nebezpečného prostoru, což je docela nepohodlné "
+"postavení. Jelikož je Brooks bohatá planeta s velkou ekonomickou a "
+"politickou váhou v říši, chrání císařské námořnictvo Arcturus právě kvůli "
+"planetě Brooks, stejně důkladně jako imperiální centrální systémy."
 
 #: dat/assets/brooks.xml:29
 msgid ""
@@ -2385,10 +2428,14 @@ msgid ""
 "prices for refreshments and services at the spaceport bar, Brooks, after "
 "all, is a boom world and where profit is to made."
 msgstr ""
+"Na planetě Brooks je všechno drahé, je to něco, co přichází s nejvíce "
+"ekonomicky vzkvétajícími světy. Většina obchodníků však snáší nadsazené ceny "
+"za občerstvení a služby v baru kosmodromu, Brooks je koneckonců svět boomu a "
+"kde se má dosahovat zisku."
 
 #: dat/assets/buritt.xml:2
 msgid "Buritt"
-msgstr ""
+msgstr "Buritt"
 
 #: dat/assets/buritt.xml:29
 msgid ""
@@ -2398,6 +2445,10 @@ msgid ""
 "natural environment but, with the Dvaered being Dvaered, no attempt is being "
 "made to address this."
 msgstr ""
+"Buritt není tak pěkný jako Varia v systému Darkstone, přesto je rozumně "
+"obyvatelným světem. Najdete zde hodně příslušníků střední třídy Dvaeredů. "
+"Najdete zde také rozsáhlé znečištění přírodního prostředí, ale vzhledem k "
+"tomu, že Dvaeredé jsou Dvaeredé, nepokouší se to řešit."
 
 #: dat/assets/buritt.xml:30
 msgid ""
@@ -2405,10 +2456,13 @@ msgid ""
 "brain-melting music, it would be quite a comfortable place to be. But it "
 "does, so it isn't."
 msgstr ""
+"Pokud by tento kosmodrom nehrál lokálně produkovanou, nepřetržitou hlučnou "
+"hudbu, která ničí mozek, bylo by to docela pohodlné místo. Nic ale "
+"nenasvědčuje tomu že by se to mělo změnit, takže není."
 
 #: dat/assets/burnan.xml:2
 msgid "Burnan"
-msgstr ""
+msgstr "Burnan"
 
 #: dat/assets/burnan.xml:30
 msgid ""
@@ -2417,6 +2471,11 @@ msgid ""
 "hyperspace jumps. Burnan has a large political district in its primary city, "
 "this also houses one of the largest Sirian temples in all of Sirius space."
 msgstr ""
+"Burnan se počítá jako neoficiální hlavní planeta. Aesir je daleko a mnoho "
+"vládních služeb je lépe poskytováno lokálně než na vzdálenost mnoha "
+"hyperprostorových skoků. Burnan má ve svém hlavním městě velkou politickou "
+"čtvrť, kde se také nachází jeden z největších sirianských chrámů v celém "
+"prostoru Sirius."
 
 #: dat/assets/burnan.xml:31
 msgid ""
@@ -2427,14 +2486,19 @@ msgid ""
 "elevated area that has tables for visitors to sit down at, where they won't "
 "get in the way of the bustle and traffic of the main floor."
 msgstr ""
+"Burnan nemá samostatný bar tak jako mnoho jiných světů. Bar a hlavní hala "
+"kosmodromu jsou místo toho jedna a ta samá věc. Na všech stranách jsou "
+"východy k terminálům a centrální oblasti dominuje ostrov servisních rozhraní "
+"a přepážek. K dispozici je vyvýšená oblast se stoly, kde si návštěvníci "
+"mohou sednout, kde jim nebude překážet ruch a provoz v hlavním patře."
 
 #: dat/assets/burnans_moon.xml:2
 msgid "Burnan's moon"
-msgstr ""
+msgstr "Burnan's moon"
 
 #: dat/assets/caladan.xml:2
 msgid "Caladan"
-msgstr ""
+msgstr "Caladan"
 
 #: dat/assets/caladan.xml:30
 msgid ""
@@ -2448,6 +2512,14 @@ msgid ""
 "for its people. Other traditional products include wine and various "
 "livestock, most prominently cattle."
 msgstr ""
+"Povrch planety je převážně pokryt vodou a planetární klima se vyznačuje "
+"bohatými srážkami a silným větrem, i když dostatečně snesitelným, aby "
+"zbytečně nepotřebovalo nákladné zařízení pro úpravu počasí. Obyvatelnou půdu "
+"často charakterizují měkké louky, bažiny a husté lesy. Zdrojovou základnu "
+"Caladanu tvoří hlavně zemědělství a biomasa, jejímž hlavním vývozem je "
+"místně chovaná a pěstovaná rýže pundi a rybolov, který je pro její obyvatele "
+"tradičním zdrojem obživy. Mezi další tradiční produkty patří víno a různá "
+"hospodářská zvířata, zejména dobytek."
 
 #: dat/assets/caladan.xml:31
 msgid ""
