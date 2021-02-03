@@ -2786,8 +2786,6 @@ Pilot* pilot_copy( Pilot* src )
    /* Copy names. */
    if (src->name)
       dest->name = strdup(src->name);
-   if (src->title)
-      dest->title = strdup(src->title);
 
    /* Copy solid. */
    dest->solid = malloc(sizeof(Solid));
@@ -2957,7 +2955,6 @@ void pilot_free( Pilot* p )
       ai_destroy(p); /* Must be destroyed first if applicable. */
 
    free(p->name);
-   free(p->title);
    /* Case if pilot is the player. */
    if (player.p==p)
       player.p = NULL;

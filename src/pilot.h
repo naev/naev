@@ -209,7 +209,6 @@ typedef struct Pilot_ {
 
    unsigned int id;  /**< pilot's id, used for many functions */
    char* name;       /**< pilot's name (if unique) */
-   char* title;      /**< title - usually indicating special properties - @todo use */
 
    /* Fleet/faction management. */
    int faction;      /**< Pilot's faction. */
