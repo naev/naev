@@ -4026,7 +4026,7 @@ static int pilotL_followers( lua_State *L ) {
    p = luaL_validpilot(L, 1);
 
    lua_newtable(L);
-   for (i = 0; i < p->nescorts; i++) {
+   for (i = 0; i < array_size(p->escorts); i++) {
       lua_pushnumber(L, i+1);
       lua_pushpilot(L, p->escorts[i].id);
       lua_rawset(L, -3);

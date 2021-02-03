@@ -235,16 +235,16 @@ int pilot_dock( Pilot *p, Pilot *target )
       return -1;
 
    /* Remove from pilot's escort list. */\
-   for (i=0; i<target->nescorts; i++) {
+   for (i=0; i<array_size(target->escorts); i++) {
       if ((target->escorts[i].type == ESCORT_TYPE_BAY) &&
             (target->escorts[i].id == p->id))
          break;
    }
    /* Not found as pilot's escorts. */
-   if (i >= target->nescorts)
+   if (i >= array_size(target->escorts))
       return -1;
    /* Free if last pilot. */
-   if (target->nescorts == 1)
+   if (array_size(target->escorts) == 1)
       escort_freeList(target);
    else
       escort_rmListIndex(target, i);

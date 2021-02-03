@@ -2015,7 +2015,7 @@ void player_targetEscort( int prev )
    int i;
 
    /* Check if current target is an escort. */
-   for (i=0; i<player.p->nescorts; i++) {
+   for (i=0; i<array_size(player.p->escorts); i++) {
       if (player.p->target == player.p->escorts[i].id) {
 
          /* Cycle targets. */
@@ -2023,7 +2023,7 @@ void player_targetEscort( int prev )
             pilot_setTarget( player.p, (i > 0) ?
                   player.p->escorts[i-1].id : player.p->id );
          else
-            pilot_setTarget( player.p, (i < player.p->nescorts-1) ?
+            pilot_setTarget( player.p, (i < array_size(player.p->escorts)-1) ?
                   player.p->escorts[i+1].id : player.p->id );
 
          break;
@@ -2031,16 +2031,14 @@ void player_targetEscort( int prev )
    }
 
    /* Not found in loop. */
-   if (i >= player.p->nescorts) {
-
+   if (i >= array_size(player.p->escorts)) {
       /* Check to see if he actually has escorts. */
-      if (player.p->nescorts > 0) {
-
+      if (array_size(player.p->escorts) > 0) {
          /* Cycle forward or backwards. */
          if (prev)
-            pilot_setTarget( player.p, player.p->escorts[player.p->nescorts-1].id );
+            pilot_setTarget( player.p, array_back(player.p->escorts).id );
          else
-            pilot_setTarget( player.p, player.p->escorts[0].id );
+            pilot_setTarget( player.p, array_front(player.p->escorts).id );
       }
       else
          pilot_setTarget( player.p, player.p->id );
@@ -2847,7 +2845,7 @@ int player_addEscorts (void)
    /* Clear escorts first. */
    player_clearEscorts();
 
-   for (i=0; i<player.p->nescorts; i++) {
+   for (i=0; i<array_size(player.p->escorts); i++) {
       if (!player.p->escorts[i].persist) {
          escort_rmListIndex(player.p, i);
          i--;
@@ -2907,7 +2905,7 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
 {
    int i;
 
-   for (i=0; i<player.p->nescorts; i++) {
+   for (i=0; i<array_size(player.p->escorts); i++) {
       if (player.p->escorts[i].persist) {
          xmlw_startElem(writer, "escort");
          xmlw_attr(writer,"type","bay"); /**< @todo other types. */

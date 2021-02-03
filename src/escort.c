@@ -14,6 +14,7 @@
 
 #include "escort.h"
 
+#include "array.h"
 #include "dialogue.h"
 #include "hook.h"
 #include "log.h"
@@ -21,10 +22,6 @@
 #include "nluadef.h"
 #include "nstring.h"
 #include "player.h"
-
-
-#define ESCORT_PREALLOC    8 /**< Number of escorts to automatically allocate first. */
-
 
 
 /*
@@ -47,12 +44,15 @@ static int escort_command( Pilot *parent, const char *cmd, unsigned int index );
 int escort_addList( Pilot *p, char *ship, EscortType_t type,
       unsigned int id, int persist )
 {
-   p->nescorts++;
-   p->escorts = realloc( p->escorts, sizeof(Escort_t) * p->nescorts );
-   p->escorts[p->nescorts-1].ship = strdup(ship);
-   p->escorts[p->nescorts-1].type = type;
-   p->escorts[p->nescorts-1].id   = id;
-   p->escorts[p->nescorts-1].persist = persist;
+   Escort_t *escort;
+
+   if (p->escorts == NULL)
+      p->escorts = array_create( Escort_t );
+   escort = &array_grow( &p->escorts );
+   escort->ship = strdup(ship);
+   escort->type = type;
+   escort->id   = id;
+   escort->persist = persist;
 
    return 0;
 }
@@ -67,11 +67,10 @@ int escort_addList( Pilot *p, char *ship, EscortType_t type,
 void escort_freeList( Pilot *p ) {
    int i;
 
-   for (i=0; i<p->nescorts; i++)
+   for (i=0; i<array_size(p->escorts); i++)
       free(p->escorts[i].ship);
-   free(p->escorts);
+   array_free(p->escorts);
    p->escorts = NULL;
-   p->nescorts = 0;
 }
 
 
@@ -83,10 +82,8 @@ void escort_freeList( Pilot *p ) {
 
  */
 void escort_rmListIndex( Pilot *p, int i ) {
-   p->nescorts--;
    free(p->escorts[i].ship);
-   memmove( &p->escorts[i], &p->escorts[i+1],
-         sizeof(Escort_t)*(p->nescorts-i) );
+   array_erase( &p->escorts, &p->escorts[i], &p->escorts[i+1] );
 }
 
 
@@ -100,7 +97,7 @@ void escort_rmListIndex( Pilot *p, int i ) {
 void escort_rmList( Pilot *p, unsigned int id ) {
    int i;
 
-   for (i=0; i<p->nescorts; i++) {
+   for (i=0; i<array_size(p->escorts); i++) {
       if (p->escorts[i].id == id) {
          escort_rmListIndex( p, i );
          break;
@@ -169,10 +166,10 @@ static int escort_command( Pilot *parent, const char *cmd, unsigned int idx )
    int i;
    Pilot *e;
 
-   if (parent->nescorts == 0)
+   if (array_size(parent->escorts) == 0)
       return 1;
 
-   for (i=0; i<parent->nescorts; i++) {
+   for (i=0; i<array_size(parent->escorts); i++) {
       e = pilot_get( parent->escorts[i].id );
       if (e == NULL) /* Most likely died. */
          continue;

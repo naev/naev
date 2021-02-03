@@ -321,8 +321,7 @@ typedef struct Pilot_ {
 
    /* Escort stuff. */
    unsigned int parent; /**< Pilot's parent. */
-   Escort_t *escorts; /**< Pilot's escorts. */
-   int nescorts;     /**< Number of pilot escorts. */
+   Escort_t *escorts; /**< Array (array.h): Pilot's escorts. */
    unsigned int dockpilot; /**< Pilot's dock pilot (the pilot it originates from). This is
                           separate from parent because it needs to be set in sync with
                           dockslot (below). Used to unset dockslot when the dock pilot

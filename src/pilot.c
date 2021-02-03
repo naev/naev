@@ -2791,7 +2791,6 @@ Pilot* pilot_copy( Pilot* src )
 
    /* Copy has no escorts. */
    dest->escorts         = NULL;
-   dest->nescorts        = 0;
 
    /* AI is not copied. */
    dest->task            = NULL;
