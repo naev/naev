@@ -505,7 +505,7 @@ static int tk_customDone( lua_State *L )
 static int cust_pcall( lua_State *L, int nargs, int nresults, custom_functions_t *cf )
 {
    /* I would like to propagate the error to the original function calling the
-    * dialogue, however, tthat causes the game to segfault. Code is disabled
+    * dialogue, however, that causes the game to segfault. Code is disabled
     * for now. TODO Fix the error propagation. */
 #if 0
    if (lua_pcall(L, nargs, nresults, 0)) {
