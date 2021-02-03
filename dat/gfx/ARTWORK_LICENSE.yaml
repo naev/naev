@@ -1439,6 +1439,7 @@
    license: GPLv3+
    planet:
      exterior:
+       - agricultural.webp
        - scrapped_station.webp
        - snowy_cliffs.webp
        - rocky_small.webp
