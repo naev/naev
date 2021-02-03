@@ -2594,12 +2594,12 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* Allocate outfit memory. */
    /* Slot types. */
-   pilot->outfit_nstructure = ship->outfit_nstructure;
-   pilot->outfit_structure = calloc( ship->outfit_nstructure, sizeof(PilotOutfitSlot) );
-   pilot->outfit_nutility  = ship->outfit_nutility;
-   pilot->outfit_utility   = calloc( ship->outfit_nutility, sizeof(PilotOutfitSlot) );
-   pilot->outfit_nweapon   = ship->outfit_nweapon;
-   pilot->outfit_weapon    = calloc( ship->outfit_nweapon, sizeof(PilotOutfitSlot) );
+   pilot->outfit_nstructure = array_size( ship->outfit_structure );
+   pilot->outfit_structure = calloc( pilot->outfit_nstructure, sizeof(PilotOutfitSlot) );
+   pilot->outfit_nutility  = array_size( ship->outfit_utility );
+   pilot->outfit_utility   = calloc( pilot->outfit_nutility, sizeof(PilotOutfitSlot) );
+   pilot->outfit_nweapon   = array_size( ship->outfit_weapon );
+   pilot->outfit_weapon    = calloc( pilot->outfit_nweapon, sizeof(PilotOutfitSlot) );
    /* Global. */
    pilot->noutfits = pilot->outfit_nstructure + pilot->outfit_nutility + pilot->outfit_nweapon;
    pilot->outfits  = calloc( pilot->noutfits, sizeof(PilotOutfitSlot*) );

@@ -20,6 +20,7 @@
 
 #include "land_shipyard.h"
 
+#include "array.h"
 #include "dialogue.h"
 #include "hook.h"
 #include "land_takeoff.h"
@@ -47,7 +48,7 @@ static void shipyard_buy( unsigned int wid, char* str );
 static void shipyard_trade( unsigned int wid, char* str );
 static void shipyard_rmouse( unsigned int wid, char* widget_name );
 static void shipyard_renderSlots( double bx, double by, double bw, double bh, void *data );
-static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s, int n );
+static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s );
 static void shipyard_find( unsigned int wid, char* str );
 
 
@@ -591,22 +592,22 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
 
    /* Weapon slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_WEAPON), ship->outfit_weapon, ship->outfit_nweapon );
+   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_WEAPON), ship->outfit_weapon );
 
    /* Utility slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_UTILITY), ship->outfit_utility, ship->outfit_nutility );
+   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_UTILITY), ship->outfit_utility );
 
    /* Structure slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_STRUCTURE), ship->outfit_structure, ship->outfit_nstructure );
+   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_STRUCTURE), ship->outfit_structure );
 }
 
 
 /**
  * @brief Renders a row of ship slots.
  */
-static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s, int n )
+static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s )
 {
    (void) bw;
    int i;
@@ -619,7 +620,7 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, const char
    gl_printMidRaw( &gl_smallFont, 30, bx-15, by, &cFontWhite, -1, str );
 
    /* Draw squares. */
-   for (i=0; i<n; i++) {
+   for (i=0; i<array_size(s); i++) {
       c = outfit_slotSizeColour( &s[i].slot );
       if (c == NULL)
          c = &cBlack;

@@ -301,17 +301,17 @@ credits_t ship_buyPrice( const Ship* s )
    /* Get base price. */
    price = ship_basePrice(s);
 
-   for (i=0; i<s->outfit_nstructure; i++) {
+   for (i=0; i<array_size(s->outfit_structure); i++) {
       o = s->outfit_structure[i].data;
       if (o != NULL)
          price += o->price;
    }
-   for (i=0; i<s->outfit_nutility; i++) {
+   for (i=0; i<array_size(s->outfit_utility); i++) {
       o = s->outfit_utility[i].data;
       if (o != NULL)
          price += o->price;
    }
-   for (i=0; i<s->outfit_nweapon; i++) {
+   for (i=0; i<array_size(s->outfit_weapon); i++) {
       o = s->outfit_weapon[i].data;
       if (o != NULL)
          price += o->price;
@@ -653,6 +653,8 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
    char *buf, *typ;
    Outfit *o;
 
+   /* Initialize. */
+   memset( slot, 0, sizeof(ShipOutfitSlot) );
    /* Parse size. */
    xmlr_attr_strd( node, "size", buf );
    if (buf != NULL)
@@ -744,7 +746,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    int sx, sy;
    char *buf;
    char str[PATH_MAX];
-   int l, m, h, noengine;
+   int noengine;
    ShipStatList *ll;
 
    /* Clear memory. */
@@ -871,7 +873,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       }
       if (xml_isNode(node,"gfx_overlays")) {
          cur = node->children;
-         m = 2;
+         int m = 2;
          temp->gfx_overlays = malloc( m*sizeof(glTexture*) );
          do {
             xml_onlyNodes(cur);
@@ -948,42 +950,27 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          continue;
       }
       if (xml_isNode(node,"slots")) {
-         /* First pass, get number of mounts. */
+         /* Allocate the space. */
+         temp->outfit_structure  = array_create( ShipOutfitSlot );
+         temp->outfit_utility    = array_create( ShipOutfitSlot );
+         temp->outfit_weapon     = array_create( ShipOutfitSlot );
+
+         /* Initialize the mounts. */
          cur = node->children;
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur,"structure"))
-               temp->outfit_nstructure++;
-            else if (xml_isNode(cur,"utility"))
-               temp->outfit_nutility++;
-            else if (xml_isNode(cur,"weapon"))
-               temp->outfit_nweapon++;
+               ship_parseSlot( temp, &array_grow(&temp->outfit_structure), OUTFIT_SLOT_STRUCTURE, cur );
+	    else if (xml_isNode(cur,"utility"))
+               ship_parseSlot( temp, &array_grow(&temp->outfit_utility), OUTFIT_SLOT_UTILITY, cur );
+	    else if (xml_isNode(cur,"weapon"))
+               ship_parseSlot( temp, &array_grow(&temp->outfit_weapon), OUTFIT_SLOT_WEAPON, cur );
             else
                WARN(_("Ship '%s' has unknown slot node '%s'."), temp->name, cur->name);
          } while (xml_nextNode(cur));
-
-         /* Allocate the space. */
-         temp->outfit_structure  = calloc( temp->outfit_nstructure, sizeof(ShipOutfitSlot) );
-         temp->outfit_utility    = calloc( temp->outfit_nutility, sizeof(ShipOutfitSlot) );
-         temp->outfit_weapon     = calloc( temp->outfit_nweapon, sizeof(ShipOutfitSlot) );
-         /* Second pass, initialize the mounts. */
-         l = m = h = 0;
-         cur = node->children;
-         do {
-            xml_onlyNodes(cur);
-            if (xml_isNode(cur,"structure")) {
-               ship_parseSlot( temp, &temp->outfit_structure[l], OUTFIT_SLOT_STRUCTURE, cur );
-               l++;
-            }
-            if (xml_isNode(cur,"utility")) {
-               ship_parseSlot( temp, &temp->outfit_utility[m], OUTFIT_SLOT_UTILITY, cur );
-               m++;
-            }
-            if (xml_isNode(cur,"weapon")) {
-               ship_parseSlot( temp, &temp->outfit_weapon[h], OUTFIT_SLOT_WEAPON, cur );
-               h++;
-            }
-         } while (xml_nextNode(cur));
+         array_shrink( &temp->outfit_structure );
+         array_shrink( &temp->outfit_utility );
+         array_shrink( &temp->outfit_weapon );
          continue;
       }
 
@@ -1147,15 +1134,15 @@ void ships_free (void)
       free(s->desc_stats);
 
       /* Free outfits. */
-      for (j=0; j<s->outfit_nstructure; j++)
+      for (j=0; j<array_size(s->outfit_structure); j++)
          outfit_freeSlot( &s->outfit_structure[j].slot );
-      for (j=0; j<s->outfit_nutility; j++)
+      for (j=0; j<array_size(s->outfit_utility); j++)
          outfit_freeSlot( &s->outfit_utility[j].slot );
-      for (j=0; j<s->outfit_nweapon; j++)
+      for (j=0; j<array_size(s->outfit_weapon); j++)
          outfit_freeSlot( &s->outfit_weapon[j].slot );
-      free(s->outfit_structure);
-      free(s->outfit_utility);
-      free(s->outfit_weapon);
+      array_free(s->outfit_structure);
+      array_free(s->outfit_utility);
+      array_free(s->outfit_weapon);
 
       ss_free( s->stats );
 
