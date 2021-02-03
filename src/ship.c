@@ -873,19 +873,12 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       }
       if (xml_isNode(node,"gfx_overlays")) {
          cur = node->children;
-         int m = 2;
-         temp->gfx_overlays = malloc( m*sizeof(glTexture*) );
+         temp->xxxgfx_overlays = array_create_size( glTexture*, 2 );
          do {
             xml_onlyNodes(cur);
-            if (xml_isNode(cur,"gfx_overlay")) {
-               temp->gfx_noverlays += 1;
-               if (temp->gfx_noverlays > m) {
-                  m *= 2;
-                  temp->gfx_overlays = realloc( temp->gfx_overlays, m * sizeof( glTexture * ) );
-               }
-               temp->gfx_overlays[ temp->gfx_noverlays-1 ] = xml_parseTexture( cur,
-                     OVERLAY_GFX_PATH"%s", 1, 1, OPENGL_TEX_MIPMAPS );
-            }
+            if (xml_isNode(cur,"gfx_overlay"))
+               array_push_back( &temp->xxxgfx_overlays,
+                     xml_parseTexture( cur, OVERLAY_GFX_PATH"%s", 1, 1, OPENGL_TEX_MIPMAPS ) );
          } while (xml_nextNode(cur));
          continue;
       }
@@ -1152,9 +1145,9 @@ void ships_free (void)
       gl_freeTexture(s->gfx_target);
       gl_freeTexture(s->gfx_store);
       free(s->gfx_comm);
-      for (j=0; j<s->gfx_noverlays; j++)
-         gl_freeTexture(s->gfx_overlays[j]);
-      free(s->gfx_overlays);
+      for (j=0; j<array_size(s->xxxgfx_overlays); j++)
+         gl_freeTexture(s->xxxgfx_overlays[j]);
+      array_free(s->xxxgfx_overlays);
 
       /* Free collision polygons. */
       if (s->npolygon != 0) {

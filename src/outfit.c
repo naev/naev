@@ -2102,7 +2102,7 @@ static int outfit_parse( Outfit* temp, const char* file )
    xmlNodePtr cur, ccur, node, parent;
    char *prop, *desc_extra;
    const char *cprop;
-   int group, m, l;
+   int group, l;
    ShipStatList *ll;
 
    xmlDocPtr doc = xml_parsePhysFS( file );
@@ -2155,19 +2155,12 @@ static int outfit_parse( Outfit* temp, const char* file )
             }
             else if (xml_isNode(cur,"gfx_overlays")) {
                ccur = cur->children;
-               m = 2;
-               temp->gfx_overlays = malloc( m*sizeof(glTexture*) );
+               temp->xxxgfx_overlays = array_create_size( glTexture*, 2 );
                do {
                   xml_onlyNodes(ccur);
-                  if (xml_isNode(ccur,"gfx_overlay")) {
-                     temp->gfx_noverlays += 1;
-                     if (temp->gfx_noverlays > m) {
-                        m *= 2;
-                        temp->gfx_overlays = realloc( temp->gfx_overlays, m * sizeof( glTexture * ) );
-                     }
-                     temp->gfx_overlays[ temp->gfx_noverlays-1 ] = xml_parseTexture( ccur,
-                           OVERLAY_GFX_PATH"%s", 1, 1, OPENGL_TEX_MIPMAPS );
-                  }
+                  if (xml_isNode(ccur,"gfx_overlay"))
+                     array_push_back( &temp->xxxgfx_overlays,
+                           xml_parseTexture( ccur, OVERLAY_GFX_PATH"%s", 1, 1, OPENGL_TEX_MIPMAPS ) );
                } while (xml_nextNode(ccur));
                continue;
             }
@@ -2605,9 +2598,9 @@ void outfit_free (void)
       free(o->license);
       free(o->name);
       gl_freeTexture(o->gfx_store);
-      for (j=0; j<o->gfx_noverlays; j++)
-         gl_freeTexture(o->gfx_overlays[j]);
-      free(o->gfx_overlays);
+      for (j=0; j<array_size(o->xxxgfx_overlays); j++)
+         gl_freeTexture(o->xxxgfx_overlays[j]);
+      array_free(o->xxxgfx_overlays);
    }
 
    array_free(outfit_stack);
