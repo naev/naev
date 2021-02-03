@@ -41,8 +41,6 @@ typedef struct CommodityModifier_ CommodityModifier;
  * @struct Commodity
  *
  * @brief Represents a commodity.
- *
- * @todo Use inverse normal?
  */
 typedef struct Commodity_ {
    char* name; /**< Name of the commodity. */
