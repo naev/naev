@@ -1989,7 +1989,7 @@ void pilot_update( Pilot* pilot, const double dt )
          pilot_runHook( pilot, PILOT_HOOK_EXPLODED );
 
          /* Release cargo */
-         for (i=0; i<pilot->ncommodities; i++)
+         for (i=0; i<array_size(pilot->commodities); i++)
             commodity_Jettison( pilot->id, pilot->commodities[i].commodity,
                   pilot->commodities[i].quantity );
       }
@@ -2798,12 +2798,11 @@ Pilot* pilot_copy( Pilot* src )
    /* Set pointers and friends to NULL. */
    /* Commodities. */
    dest->commodities     = NULL;
-   dest->ncommodities    = 0;
    /* Calculate stats. */
    pilot_calcStats(dest);
 
    /* Copy commodities. */
-   for (i=0; i<src->ncommodities; i++)
+   for (i=0; i<array_size(src->commodities); i++)
       pilot_cargoAdd( dest, src->commodities[i].commodity,
             src->commodities[i].quantity, src->commodities[i].id );
 

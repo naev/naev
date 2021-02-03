@@ -3134,7 +3134,7 @@ static int pilotL_cargoList( lua_State *L )
 
    p = luaL_validpilot(L,1);
    lua_newtable(L); /* t */
-   for (i=0; i<p->ncommodities; i++) {
+   for (i=0; i<array_size(p->commodities); i++) {
       lua_pushnumber(L, i+1); /* t, i */
 
       /* Represents the cargo. */

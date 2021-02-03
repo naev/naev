@@ -3082,7 +3082,7 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship )
 
    /* save the commodities */
    xmlw_startElem(writer,"commodities");
-   for (i=0; i<ship->ncommodities; i++) {
+   for (i=0; i<array_size(ship->commodities); i++) {
       /* Remove cargo with id and no mission. */
       if (ship->commodities[i].id > 0) {
          found = 0;
@@ -3750,7 +3750,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                 */
                pilot_cargoAddRaw( ship, com, quantity, 0 );
                if (i != 0)
-                  ship->commodities[ ship->ncommodities-1 ].id = i;
+                  array_back(ship->commodities).id = i;
             }
          } while (xml_nextNode(cur));
       }

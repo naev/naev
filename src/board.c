@@ -243,7 +243,7 @@ static void board_stealCargo( unsigned int wdw, char* str )
 
    p = pilot_get(player.p->target);
 
-   if (p->ncommodities==0) { /* no cargo */
+   if (array_size(p->commodities)==0) { /* no cargo */
       player_message(_("#oThe ship has no cargo."));
       return;
    }
@@ -256,7 +256,7 @@ static void board_stealCargo( unsigned int wdw, char* str )
 
    /** steal as much as possible until full - @todo let player choose */
    q = 1;
-   while ((p->ncommodities > 0) && (q!=0)) {
+   while ((array_size(p->commodities) > 0) && (q!=0)) {
       q = pilot_cargoAdd( player.p, p->commodities[0].commodity,
             p->commodities[0].quantity, 0 );
       pilot_cargoRm( p, p->commodities[0].commodity, q );
@@ -477,11 +477,11 @@ static void board_update( unsigned int wdw )
    j += nsnprintf( &str[j], PATH_MAX, "%s\n", cred );
 
    /* Commodities. */
-   if ((p->ncommodities==0) && (j < PATH_MAX))
+   if ((array_size(p->commodities)==0) && (j < PATH_MAX))
       j += nsnprintf( &str[j], PATH_MAX-j, _("none\n") );
    else {
       total_cargo = 0;
-      for (i=0; i<p->ncommodities; i++) {
+      for (i=0; i<array_size(p->commodities); i++) {
          if (j > PATH_MAX)
             break;
          if (p->commodities[i].commodity == NULL)

@@ -312,7 +312,6 @@ typedef struct Pilot_ {
    /* Cargo */
    credits_t credits; /**< monies the pilot has */
    PilotCommodity* commodities; /**< commodity and quantity */
-   int ncommodities; /**< number of commodities. */
    int cargo_free;   /**< Free commodity space. */
 
    /* Hook attached to the pilot */
