@@ -2489,6 +2489,7 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
 
    /* Remove jump from system. */
    sys->njumps--;
+   memmove( &sys->jumps[i], &sys->jumps[i+1], sizeof(JumpPoint*) * (sys->njumps-i) );
 
    /* Refresh presence */
    system_setFaction(sys);
