@@ -826,7 +826,7 @@ static int playerL_shipOutfits( lua_State *L )
 
    lua_newtable( L );
    j = 1;
-   for (i=0; i<p->noutfits; i++) {
+   for (i=0; i<array_size(p->outfits); i++) {
       if (p->outfits[i]->outfit == NULL)
          continue;
 

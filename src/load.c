@@ -540,7 +540,7 @@ static void load_compatSlots (void)
       if (i >= 0)
          ship = player_getShip( sships[i] );
       /* Remove all outfits. */
-      for (j=0; j<ship->noutfits; j++) {
+      for (j=0; j<array_size(ship->outfits); j++) {
          if (ship->outfits[j]->outfit != NULL) {
             player_addOutfit( ship->outfits[j]->outfit, 1 );
             pilot_rmOutfitRaw( ship, ship->outfits[j] );

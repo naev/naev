@@ -15,6 +15,7 @@
 #include "naev.h"
 /** @endcond */
 
+#include "array.h"
 #include "escort.h"
 #include "gui.h"
 #include "log.h"
@@ -122,7 +123,7 @@ void pilot_lockClear( Pilot *p )
    int i;
    PilotOutfitSlot *o;
 
-   for (i=0; i<p->noutfits; i++) {
+   for (i=0; i<array_size(p->outfits); i++) {
       o = p->outfits[i];
       if (o->outfit == NULL)
          continue;
@@ -218,7 +219,7 @@ int pilot_dock( Pilot *p, Pilot *target )
 
    /* Grab dock ammo */
    i = p->dockslot;
-   if (p->dockslot < target->noutfits)
+   if (p->dockslot < array_size(target->outfits))
       o = outfit_ammo(target->outfits[i]->outfit);
 
    /* Try to add fighter. */
@@ -264,7 +265,7 @@ int pilot_dock( Pilot *p, Pilot *target )
 int pilot_hasDeployed( Pilot *p )
 {
    int i;
-   for (i=0; i<p->noutfits; i++) {
+   for (i=0; i<array_size(p->outfits); i++) {
       if (p->outfits[i]->outfit == NULL)
          continue;
       if (outfit_isFighterBay(p->outfits[i]->outfit))
@@ -465,7 +466,7 @@ int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s )
 int pilot_slotsCheckSafety( Pilot *p )
 {
    int i;
-   for (i=0; i<p->noutfits; i++)
+   for (i=0; i<array_size(p->outfits); i++)
       if ((p->outfits[i]->outfit != NULL) &&
             !outfit_fitsSlot( p->outfits[i]->outfit, &p->outfits[i]->sslot->slot ))
          return 0;
@@ -482,15 +483,15 @@ int pilot_slotsCheckRequired( Pilot *p )
 {
    int i;
 
-   for (i=0; i < p->outfit_nstructure; i++)
+   for (i=0; i < array_size(p->outfit_structure); i++)
       if (p->outfit_structure[i].sslot->required && p->outfit_structure[i].outfit == NULL)
          return 0;
 
-   for (i=0; i < p->outfit_nutility; i++)
+   for (i=0; i < array_size(p->outfit_utility); i++)
       if (p->outfit_utility[i].sslot->required && p->outfit_utility[i].outfit == NULL)
          return 0;
 
-   for (i=0; i < p->outfit_nweapon; i++)
+   for (i=0; i < array_size(p->outfit_weapon); i++)
       if (p->outfit_weapon[i].sslot->required && p->outfit_weapon[i].outfit == NULL)
          return 0;
 
@@ -620,7 +621,7 @@ static int pilot_hasOutfitLimit( Pilot *p, const char *limit )
 {
    int i;
    Outfit *o;
-   for (i = 0; i<p->noutfits; i++) {
+   for (i = 0; i<array_size(p->outfits); i++) {
       o = p->outfits[i]->outfit;
       if (o == NULL)
          continue;
@@ -777,7 +778,7 @@ int pilot_countAmmo( Pilot* pilot )
    int nammo = 0, i;
    PilotOutfitSlot* po;
    Outfit* outfit;
-   for (i=0; i<pilot->noutfits; i++) {
+   for (i=0; i<array_size(pilot->outfits); i++) {
      po = pilot->outfits[i];
      if (po == NULL)
         continue;
@@ -803,7 +804,7 @@ int pilot_maxAmmo( Pilot* pilot )
   int max = 0, i;
   PilotOutfitSlot* po;
   Outfit* outfit;
-  for (i=0; i<pilot->noutfits; i++) {
+  for (i=0; i<array_size(pilot->outfits); i++) {
      po = pilot->outfits[i];
      if (po == NULL)
         continue;
@@ -845,7 +846,7 @@ void pilot_fillAmmo( Pilot* pilot )
    int i, ammo_threshold;
    Outfit *o, *ammo;
 
-   for (i=0; i<pilot->noutfits; i++) {
+   for (i=0; i<array_size(pilot->outfits); i++) {
       o = pilot->outfits[i]->outfit;
 
       /* Must be valid outfit. */
@@ -888,7 +889,7 @@ char* pilot_getOutfits( const Pilot* pilot )
    buf = malloc(len);
    buf[0] = '\0';
    p = 0;
-   for (i=1; i<pilot->noutfits; i++) {
+   for (i=1; i<array_size(pilot->outfits); i++) {
       if (pilot->outfits[i]->outfit == NULL)
          continue;
       p += nsnprintf( &buf[p], len-p, (p==0) ? "%s" : ", %s",
@@ -959,7 +960,7 @@ void pilot_calcStats( Pilot* pilot )
     * Now add outfit changes
     */
    pilot->mass_outfit   = 0.;
-   for (i=0; i<pilot->noutfits; i++) {
+   for (i=0; i<array_size(pilot->outfits); i++) {
       slot = pilot->outfits[i];
       o    = slot->outfit;
 

@@ -289,14 +289,10 @@ typedef struct Pilot_ {
    void (*render_overlay)(struct Pilot_*, const double); /**< For rendering the pilot overlay. */
 
    /* Outfit management */
-   int noutfits;     /**< Total amount of slots. */
-   int outfit_nstructure; /**< Number of structure slots. */
-   int outfit_nutility; /**< Number of utility slots. */
-   int outfit_nweapon; /**< Number of weapon slots. */
-   PilotOutfitSlot **outfits;        /**< Total outfits. */
-   PilotOutfitSlot * outfit_structure; /**< The structure slots. */
-   PilotOutfitSlot * outfit_utility;   /**< The utility slots. */
-   PilotOutfitSlot *outfit_weapon; /**< The weapon slots. */
+   PilotOutfitSlot **outfits;        /**< Array (array.h): Pointers to all outfits. */
+   PilotOutfitSlot * outfit_structure; /**< Array (array.h): The structure slots. */
+   PilotOutfitSlot * outfit_utility;   /**< Array (array.h): The utility slots. */
+   PilotOutfitSlot * outfit_weapon; /**< Array (array.h): The weapon slots. */
 
    /* Primarily for AI usage. */
    int ncannons;      /**< Number of cannons equipped. */

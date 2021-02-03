@@ -15,6 +15,7 @@
 
 #include "board.h"
 
+#include "array.h"
 #include "commodity.h"
 #include "damagetype.h"
 #include "hook.h"
@@ -334,7 +335,7 @@ static void board_stealAmmo( unsigned int wdw, char* str )
      if (board_fail(wdw))
         return;
      /* Steal the ammo */
-     for (i=0; i<p->noutfits; i++) {
+     for (i=0; i<array_size(p->outfits); i++) {
         target_outfit_slot = p->outfits[i];
         if (target_outfit_slot == NULL)
            continue;
@@ -353,7 +354,7 @@ static void board_stealAmmo( unsigned int wdw, char* str )
         if (nammo <= 0) {
            continue;
         }
-        for (x=0; x<player.p->noutfits; x++) {
+        for (x=0; x<array_size(player.p->outfits); x++) {
            int nadded = 0;
            player_outfit_slot = player.p->outfits[x];
            if (player_outfit_slot == NULL)

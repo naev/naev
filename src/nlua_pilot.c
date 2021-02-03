@@ -1142,7 +1142,7 @@ static int pilotL_weapset( lua_State *L )
 
    /* Push set. */
    if (all)
-      n = p->noutfits;
+      n = array_size(p->outfits);
    else
       po_list = pilot_weapSetList( p, id, &n );
 
@@ -1373,7 +1373,7 @@ static int pilotL_weapsetHeat( lua_State *L )
 
    /* Push set. */
    if (all)
-      n = p->noutfits;
+      n = array_size(p->outfits);
    else
       po_list = pilot_weapSetList( p, id, &n );
 
@@ -1477,15 +1477,15 @@ static int pilotL_actives( lua_State *L )
    lua_newtable(L);
 
    if (sort) {
-      outfits = malloc( sizeof(PilotOutfitSlot*) * p->noutfits );
-      memcpy( outfits, p->outfits, sizeof(PilotOutfitSlot*) * p->noutfits );
-      qsort( outfits, p->noutfits, sizeof(PilotOutfitSlot*), outfit_compareActive );
+      outfits = array_create_size( PilotOutfitSlot*, array_size(p->outfits) );
+      array_resize( &outfits, array_size(p->outfits) );
+      memcpy( outfits, p->outfits, sizeof(PilotOutfitSlot*) * array_size(p->outfits) );
+      qsort( outfits, array_size(p->outfits), sizeof(PilotOutfitSlot*), outfit_compareActive );
    }
    else
       outfits  = p->outfits;
 
-   for (i=0; i<p->noutfits; i++) {
-
+   for (i=0; i<array_size(outfits); i++) {
       /* Get active outfits. */
       o = outfits[i];
       if (o->outfit == NULL)
@@ -1568,7 +1568,7 @@ static int pilotL_actives( lua_State *L )
 
    /* Clean up. */
    if (sort)
-      free(outfits);
+      array_free(outfits);
 
    return 1;
 }
@@ -1635,7 +1635,7 @@ static int pilotL_outfits( lua_State *L )
 
    j  = 1;
    lua_newtable( L );
-   for (i=0; i<p->noutfits; i++) {
+   for (i=0; i<array_size(p->outfits); i++) {
 
       /* Get outfit. */
       if (p->outfits[i]->outfit == NULL)
@@ -2387,7 +2387,7 @@ static int pilotL_addOutfit( lua_State *L )
 
    /* Add outfit. */
    added = 0;
-   for (i=0; i<p->noutfits; i++) {
+   for (i=0; i<array_size(p->outfits); i++) {
       /* Must still have to add outfit. */
       if (q <= 0)
          break;
@@ -2475,7 +2475,7 @@ static int pilotL_rmOutfit( lua_State *L )
 
       /* If outfit is "all", we remove everything except cores. */
       if (strcmp(outfit,"all")==0) {
-         for (i=0; i<p->noutfits; i++) {
+         for (i=0; i<array_size(p->outfits); i++) {
             if (p->outfits[i]->sslot->required)
                continue;
             pilot_rmOutfitRaw( p, p->outfits[i] );
@@ -2486,7 +2486,7 @@ static int pilotL_rmOutfit( lua_State *L )
       }
       /* If outfit is "cores", we remove cores only. */
       else if (strcmp(outfit,"cores")==0) {
-         for (i=0; i<p->noutfits; i++) {
+         for (i=0; i<array_size(p->outfits); i++) {
             if (!p->outfits[i]->sslot->required)
                continue;
             pilot_rmOutfitRaw( p, p->outfits[i] );
@@ -2501,7 +2501,7 @@ static int pilotL_rmOutfit( lua_State *L )
       o = luaL_validoutfit(L,2);
 
       /* Remove the outfit outfit. */
-      for (i=0; i<p->noutfits; i++) {
+      for (i=0; i<array_size(p->outfits); i++) {
          /* Must still need to remove. */
          if (q <= 0)
             break;
@@ -2635,7 +2635,7 @@ static int pilotL_setTemp( lua_State *L )
 
    /* Handle pilot outfits (maybe). */
    if (setOutfits)
-      for (i = 0; i < p->noutfits; i++)
+      for (i = 0; i < array_size(p->outfits); i++)
          p->outfits[i]->heat_T = kelvins;
 
    return 0;

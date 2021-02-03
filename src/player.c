@@ -2819,7 +2819,7 @@ static void player_clearEscorts (void)
 {
    int i;
 
-   for (i=0; i<player.p->noutfits; i++) {
+   for (i=0; i<array_size(player.p->outfits); i++) {
       if (player.p->outfits[i]->outfit == NULL)
          continue;
 
@@ -2862,7 +2862,7 @@ int player_addEscorts (void)
       if (player.p->escorts[i].type != ESCORT_TYPE_BAY)
          continue;
 
-      for (j=0; j<player.p->noutfits; j++) {
+      for (j=0; j<array_size(player.p->outfits); j++) {
          /* Must have outfit. */
          if (player.p->outfits[j]->outfit == NULL)
             continue;
@@ -3061,21 +3061,21 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship )
 
    /* save the outfits */
    xmlw_startElem(writer,"outfits_structure");
-   for (i=0; i<ship->outfit_nstructure; i++) {
+   for (i=0; i<array_size(ship->outfit_structure); i++) {
       if (ship->outfit_structure[i].outfit==NULL)
          continue;
       player_saveShipSlot( writer, &ship->outfit_structure[i], i );
    }
    xmlw_endElem(writer); /* "outfits_structure" */
    xmlw_startElem(writer,"outfits_utility");
-   for (i=0; i<ship->outfit_nutility; i++) {
+   for (i=0; i<array_size(ship->outfit_utility); i++) {
       if (ship->outfit_utility[i].outfit==NULL)
          continue;
       player_saveShipSlot( writer, &ship->outfit_utility[i], i );
    }
    xmlw_endElem(writer); /* "outfits_utility" */
    xmlw_startElem(writer,"outfits_weapon");
-   for (i=0; i<ship->outfit_nweapon; i++) {
+   for (i=0; i<array_size(ship->outfit_weapon); i++) {
       if (ship->outfit_weapon[i].outfit==NULL)
          continue;
       player_saveShipSlot( writer, &ship->outfit_weapon[i], i );
@@ -3672,7 +3672,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), "player", flags );
 
    /* Ship should not have default outfits. */
-   for (i=0; i<ship->noutfits; i++)
+   for (i=0; i<array_size(ship->outfits); i++)
       pilot_rmOutfitRaw( ship, ship->outfits[i] );
 
    /* Clean up. */
@@ -3696,7 +3696,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
                xmlr_attr_atoi_neg1( cur, "slot", n );
-               if ((n<0) || (n >= ship->outfit_nstructure)) {
+               if ((n<0) || (n >= array_size(ship->outfit_structure))) {
                   name = xml_get(cur);
                   o = outfit_get(name);
                   player_addOutfit( o, 1 );
@@ -3712,7 +3712,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
                xmlr_attr_atoi_neg1( cur, "slot", n );
-               if ((n<0) || (n >= ship->outfit_nutility)) {
+               if ((n<0) || (n >= array_size(ship->outfit_utility))) {
                   WARN(_("Outfit slot out of range, not adding."));
                   continue;
                }
@@ -3725,7 +3725,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
                xmlr_attr_atoi_neg1( cur, "slot", n );
-               if ((n<0) || (n >= ship->outfit_nweapon)) {
+               if ((n<0) || (n >= array_size(ship->outfit_weapon))) {
                   WARN(_("Outfit slot out of range, not adding."));
                   continue;
                }
@@ -3770,7 +3770,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       DEBUG(_("Player ship '%s' failed slot validity check , removing all outfits and adding to stock."),
             ship->name );
       /* Remove all outfits. */
-      for (i=0; i<ship->noutfits; i++) {
+      for (i=0; i<array_size(ship->outfits); i++) {
          o = ship->outfits[i]->outfit;
          ret = pilot_rmOutfitRaw( ship, ship->outfits[i] );
          if (ret==0)
@@ -3863,9 +3863,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                continue;
             }
             weapid = xml_getInt(ccur);
-            if ((weapid < 0) || (weapid >= ship->noutfits)) {
+            if ((weapid < 0) || (weapid >= array_size(ship->outfits))) {
                WARN(_("Player ship '%s' has invalid weapon id %d [max %d]."),
-                     ship->name, weapid, ship->noutfits-1 );
+                     ship->name, weapid, array_size(ship->outfits)-1 );
                continue;
             }
 
