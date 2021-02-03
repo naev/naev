@@ -123,7 +123,7 @@ typedef struct Ship_ {
    glTexture *gfx_target; /**< Targeting window graphic. */
    glTexture *gfx_store; /**< Store graphic. */
    char* gfx_comm;   /**< Name of graphic for communication. */
-   glTexture** xxxgfx_overlays; /**< Array (array.h): Store overlay graphics. */
+   glTexture** gfx_overlays; /**< Array (array.h): Store overlay graphics. */
 
    /* collision polygon */
    CollPoly *polygon; /**< Collision polygons. */

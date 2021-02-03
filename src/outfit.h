@@ -346,7 +346,7 @@ typedef struct Outfit_ {
    int priority;     /**< Sort priority, highest first. */
 
    glTexture* gfx_store; /**< Store graphic. */
-   glTexture** xxxgfx_overlays; /**< Array (array.h): Store overlay graphics. */
+   glTexture** gfx_overlays; /**< Array (array.h): Store overlay graphics. */
 
    unsigned int properties; /**< Properties stored bitwise. */
    unsigned int group; /**< Weapon group to use when autoweap is enabled. */

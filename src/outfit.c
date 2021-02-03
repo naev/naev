@@ -2155,11 +2155,11 @@ static int outfit_parse( Outfit* temp, const char* file )
             }
             else if (xml_isNode(cur,"gfx_overlays")) {
                ccur = cur->children;
-               temp->xxxgfx_overlays = array_create_size( glTexture*, 2 );
+               temp->gfx_overlays = array_create_size( glTexture*, 2 );
                do {
                   xml_onlyNodes(ccur);
                   if (xml_isNode(ccur,"gfx_overlay"))
-                     array_push_back( &temp->xxxgfx_overlays,
+                     array_push_back( &temp->gfx_overlays,
                            xml_parseTexture( ccur, OVERLAY_GFX_PATH"%s", 1, 1, OPENGL_TEX_MIPMAPS ) );
                } while (xml_nextNode(ccur));
                continue;
@@ -2598,9 +2598,9 @@ void outfit_free (void)
       free(o->license);
       free(o->name);
       gl_freeTexture(o->gfx_store);
-      for (j=0; j<array_size(o->xxxgfx_overlays); j++)
-         gl_freeTexture(o->xxxgfx_overlays[j]);
-      array_free(o->xxxgfx_overlays);
+      for (j=0; j<array_size(o->gfx_overlays); j++)
+         gl_freeTexture(o->gfx_overlays[j]);
+      array_free(o->gfx_overlays);
    }
 
    array_free(outfit_stack);

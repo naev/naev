@@ -656,7 +656,7 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
          }
 
          /* Layers. */
-         coutfits[i].layers = gl_copyTexArray( o->xxxgfx_overlays, &coutfits[i].nlayers );
+         coutfits[i].layers = gl_copyTexArray( o->gfx_overlays, &coutfits[i].nlayers );
          if (o->rarity > 0) {
             t = rarity_texture( o->rarity );
             coutfits[i].layers = gl_addTexArray( coutfits[i].layers, &coutfits[i].nlayers, t );
