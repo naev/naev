@@ -34,6 +34,8 @@ misn_reward = _("Cold hard credits")
 misn_desc = _("Someone wants you to find a Dvaered spy that appears to be located at Minerva Station.")
 reward_amount = 200000 -- 200k
 
+harper_portrait = portrait.get() -- TODO replace?
+
 mainsys = "Limbo"
 -- Mission states:
 --  nil: mission not accepted yet
@@ -107,7 +109,7 @@ function approach_pir ()
          {_("Accept the job"), "accept"},
          {_("Kindly decline"), "decline"},
       } )
-      
+
       vn.label("decline")
       vn.na(_("You decline their offer and take your leave."))
       vn.fadeout()
@@ -143,7 +145,7 @@ They take out a metallic object from their pocket and show it to you. You don't 
             table.insert( opts, 1, {_("Show them the Spa Ticket"), "spaticket" } ) 
          end
       end
-      
+
       return opts
    end )
 
@@ -208,7 +210,64 @@ end
 
 
 function enter ()
-   if misn_state==3 and system.cur()==system.get("Limbo") then
+   if misn_state==3 and not harper_nospawn and system.cur()==system.get("Limbo") then
       -- Spawn Harper Bowdoin and stuff
+      local pos = ...
+      harper = pilot.add("Gawain", "Independent", pos, "Harper", "civilian" )
+      local mem = harper:memory()
+      mem.loiter = math.huge -- Should make them loiter forever
+      harper:setHilight(true)
+      harper:setNoLand(true)
+      harper:setNoJump(true)
+      hook.pilot( harper, "attacked", "harper_attacked" )
+      hook.pilot( harper, "death", "harper_death" )
+      hook.pilot( harper, "board", "harper_board" )
+      hook.pilot( harper, "hail", "harper_hail" )
    end
 end
+
+
+function harper_death ()
+   harper_killed = true
+   harper_nospawn = true
+end
+
+
+function harper_board ()
+   harper_gotticket = true
+   harper_nospawn = true
+
+   vn.clear()
+   vn.scene()
+   vn.fadein()
+   vn.na(_("Foo."))
+   vn.fadeout()
+   vn.run()
+end
+
+
+function harper_attacked ()
+end
+
+
+function harper_hail ()
+   vn.clear()
+   vn.scene()
+   local h = vn.newCharacter( _("Harper"),
+         { image=portrait.hologram( harper_portrait ) } )
+   vn.fadein()
+   vn.na(_("You hail Harper's vessel and you see him appear into view."))
+   h(_([["What do you want? Can't you see I'm celebrating my luck?"]]))
+   vn.menu( {
+      {_("Foo."), "foo" },
+   } )
+
+   vn.func( function ()
+      harper_gotticket = true
+      harper_nospawn = true
+   end )
+   vn.fadeout()
+   vn.run()
+end
+
+
