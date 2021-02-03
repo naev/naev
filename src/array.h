@@ -79,6 +79,7 @@ void _array_resize_helper(void **a, size_t e_size, size_t new_size);
 void _array_erase_helper(void **a, size_t e_size, void *first, void *last);
 void _array_shrink_helper(void **a, size_t e_size);
 void _array_free_helper(void *a);
+void *_array_copy_helper(size_t e_size, void *a);
 
 /**
  * @brief Gets the container of an array.
@@ -232,6 +233,9 @@ __inline__ static const _private_container *_array_private_container_const(const
  *    @return The last element in the array.
  */
 #define array_back(ptr_array) (*(array_end(ptr_array) - 1))
+/** @brief Returns a shallow copy of the input array.  */
+#define array_copy(basic_type, ptr_array) \
+      ((basic_type *)(_array_copy_helper(sizeof(basic_type), (void *)(ptr_array))))
 
 
 #endif /* ARRAY_H */

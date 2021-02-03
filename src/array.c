@@ -100,6 +100,14 @@ void _array_free_helper(void *a)
    free(_array_private_container(a));
 }
 
+void *_array_copy_helper(size_t e_size, void *a)
+{
+   _private_container *c = _array_private_container(a);
+   void *copy = _array_create_helper( e_size, c->_size );
+   _array_resize_helper( &copy, e_size, c->_size );
+   return memcpy( copy, a, e_size * c->_size );
+}
+
 #if 0
 int main() {
    const int size = 100;

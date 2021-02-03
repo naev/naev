@@ -2773,19 +2773,10 @@ Pilot* pilot_copy( Pilot* src )
    *dest->solid = *src->solid;
 
    /* Copy outfits. */
-   dest->outfits  = array_create_size( PilotOutfitSlot*, array_size(src->outfits) );
-   dest->outfit_structure  = array_create_size( PilotOutfitSlot, array_size(src->outfit_structure) );
-   array_resize( &dest->outfit_structure, array_size(src->outfit_structure) );
-   memcpy( dest->outfit_structure, src->outfit_structure,
-         sizeof(PilotOutfitSlot) * array_size(dest->outfit_structure) );
-   dest->outfit_utility  = array_create_size( PilotOutfitSlot, array_size(src->outfit_utility) );
-   array_resize( &dest->outfit_utility, array_size(src->outfit_utility) );
-   memcpy( dest->outfit_utility, src->outfit_utility,
-         sizeof(PilotOutfitSlot) * array_size(dest->outfit_utility) );
-   dest->outfit_weapon  = array_create_size( PilotOutfitSlot, array_size(src->outfit_weapon) );
-   array_resize( &dest->outfit_weapon, array_size(src->outfit_weapon) );
-   memcpy( dest->outfit_weapon, src->outfit_weapon,
-         sizeof(PilotOutfitSlot) * array_size(dest->outfit_weapon) );
+   dest->outfits = array_create_size( PilotOutfitSlot*, array_size(src->outfits) );
+   dest->outfit_structure = array_copy( PilotOutfitSlot, src->outfit_structure );
+   dest->outfit_utility = array_copy( PilotOutfitSlot, src->outfit_utility );
+   dest->outfit_weapon = array_copy( PilotOutfitSlot, src->outfit_weapon );
    for (i=0; i<array_size(dest->outfit_structure); i++)
       array_push_back( &dest->outfits, &dest->outfit_structure[i] );
    for (i=0; i<array_size(dest->outfit_utility); i++)

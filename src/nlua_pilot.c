@@ -1477,10 +1477,8 @@ static int pilotL_actives( lua_State *L )
    lua_newtable(L);
 
    if (sort) {
-      outfits = array_create_size( PilotOutfitSlot*, array_size(p->outfits) );
-      array_resize( &outfits, array_size(p->outfits) );
-      memcpy( outfits, p->outfits, sizeof(PilotOutfitSlot*) * array_size(p->outfits) );
-      qsort( outfits, array_size(p->outfits), sizeof(PilotOutfitSlot*), outfit_compareActive );
+      outfits = array_copy( PilotOutfitSlot*, p->outfits );
+      qsort( outfits, array_size(outfits), sizeof(PilotOutfitSlot*), outfit_compareActive );
    }
    else
       outfits  = p->outfits;
