@@ -57,7 +57,7 @@ static unsigned int pilot_id = PLAYER_ID; /**< Stack of pilot ids to assure uniq
 
 
 /* stack of pilots */
-/* TODO replace with array.h infrastructure and make non-public. */
+/* TODO make non-public? */
 Pilot** pilot_stack = NULL; /**< Not static, used in player.c, weapon.c, pause.c, space.c and ai.c */
 
 
