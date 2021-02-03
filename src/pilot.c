@@ -2787,7 +2787,6 @@ Pilot* pilot_copy( Pilot* src )
 
    /* Hooks get cleared. */
    dest->hooks           = NULL;
-   dest->nhooks          = 0;
 
    /* Copy has no escorts. */
    dest->escorts         = NULL;

@@ -316,8 +316,7 @@ typedef struct Pilot_ {
    int cargo_free;   /**< Free commodity space. */
 
    /* Hook attached to the pilot */
-   PilotHook *hooks; /**< Pilot hooks. */
-   int nhooks;       /**< Number of pilot hooks. */
+   PilotHook *hooks; /**< Array (array.h): Pilot hooks. */
 
    /* Escort stuff. */
    unsigned int parent; /**< Pilot's parent. */
