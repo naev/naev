@@ -1935,6 +1935,10 @@ void pilot_update( Pilot* pilot, const double dt )
    /* Update electronic warfare. */
    pilot_ewUpdateDynamic( pilot );
 
+   /* Update already-emitted trails. */
+   for (i=0; i<array_size(pilot->ship->trail_emitters); i++)
+      spfx_trail_update( &pilot->trail[i], dt );
+
    /* Update stress. */
    if (!pilot_isFlag(pilot, PILOT_DISABLED)) { /* Case pilot is not disabled. */
       stress_falloff = 4.; /* TODO: make a function of the pilot's ship and/or its outfits. */
@@ -2080,10 +2084,6 @@ void pilot_update( Pilot* pilot, const double dt )
             pilot->engine_glow = 0.;
       }
 
-      /* Trail decay. */
-      for (i=0; i<array_size(pilot->ship->trail_emitters); i++)
-         spfx_trail_update( &pilot->trail[i], dt );
-
       return;
    }
 
@@ -2214,7 +2214,7 @@ void pilot_update( Pilot* pilot, const double dt )
    n = array_size(pilot->ship->trail_emitters);
    for (i=0; i<n; i++) {
       trail = &pilot->trail[i];
-      if (spfx_trail_update( trail, dt )) {
+      if (spfx_trail_should_grow( trail, dt )) {
          col = pilot_compute_trail( pilot, &pos, i );
          spfx_trail_grow( trail, pos, *col );
       }

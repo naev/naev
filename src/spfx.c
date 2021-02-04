@@ -475,30 +475,27 @@ void spfx_trail_create(Trail_spfx* trail, double thickness)
  *
  *    @param trail Trail to update.
  *    @param dt Update interval.
- *    @return boolean wether the trail needs to grow.
  */
-unsigned int spfx_trail_update( Trail_spfx* trail, double dt )
+void spfx_trail_update( Trail_spfx* trail, double dt )
 {
-   unsigned int grow;
    size_t i;
 
-   if (trail_size(trail) == 0)
-      return 1;
-
-   grow = 0;
    /* Update all elements. */
    for (i=trail->iread; i<trail->iwrite; i++)
       trail_at( trail, i ).t -= dt / TRAIL_TTL_DT;
 
-   /* Add a new dot to the track. */
-   if (trail_back(trail).t < 1.-TRAIL_UPDATE_DT)
-      grow = 1;
-
    /* Remove first elements if they're outdated. */
    while (trail->iread < trail->iwrite && trail_front(trail).t < 0.)
       trail->iread++;
+}
 
-   return grow;
+
+/**
+ * @brief Returns true if the trail needs a new sample (\see trail_grow), false if the caller needn't bother.
+ */
+int spfx_trail_should_grow( Trail_spfx* trail )
+{
+   return (trail_size(trail) == 0) || (trail_back(trail).t < 1.-TRAIL_UPDATE_DT);
 }
 
 
