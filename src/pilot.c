@@ -2214,7 +2214,7 @@ void pilot_update( Pilot* pilot, const double dt )
    n = array_size(pilot->ship->trail_emitters);
    for (i=0; i<n; i++) {
       trail = &pilot->trail[i];
-      if (spfx_trail_should_grow( trail, dt )) {
+      if (spfx_trail_should_grow( trail )) {
          col = pilot_compute_trail( pilot, &pos, i );
          spfx_trail_grow( trail, pos, *col );
       }
