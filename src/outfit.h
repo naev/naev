@@ -153,8 +153,7 @@ typedef struct OutfitBoltData_ {
    int spfx_shield;  /**< special effect on hit. */
 
    /* collision polygon */
-   CollPoly *polygon; /**< Collision polygons. */
-   int npolygon; /**< Number of collision polygons. */
+   CollPoly *polygon; /**< Array (array.h): Collision polygons. */
 } OutfitBoltData;
 
 /**
@@ -225,8 +224,7 @@ typedef struct OutfitAmmoData_ {
    int spfx_shield;  /**< special effect on hit */
 
    /* collision polygon */
-   CollPoly *polygon; /**< Collision polygons. */
-   int npolygon; /**< Number of collision polygons. */
+   CollPoly *polygon; /**< Array (array.h): Collision polygons. */
 } OutfitAmmoData;
 
 /**

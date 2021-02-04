@@ -863,11 +863,11 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
       /* See if the outfit has a collision polygon. */
       if (outfit_isBolt(w->outfit)) {
-         if (w->outfit->u.blt.npolygon == 0)
+         if (array_size(w->outfit->u.blt.polygon) == 0)
             usePoly = 0;
       }
       else if (outfit_isAmmo(w->outfit)) {
-         if (w->outfit->u.amm.npolygon == 0)
+         if (array_size(w->outfit->u.amm.polygon) == 0)
             usePoly = 0;
       }
    }
@@ -881,7 +881,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       if (w->parent == pilot_stack[i]->id) continue; /* pilot is self */
 
       /* See if the ship has a collision polygon. */
-      if (p->ship->npolygon == 0)
+      if (array_size(p->ship->polygon) == 0)
          usePoly = 0;
 
       /* Beam weapons have special collisions. */

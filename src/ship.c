@@ -56,7 +56,7 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
  * Prototypes
  */
 static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine );
-static int ship_loadPLG( Ship *temp, char *buf );
+static int ship_loadPLG( Ship *temp, char *buf, int size_hint );
 static int ship_parse( Ship *temp, xmlNodePtr parent );
 
 
@@ -573,16 +573,15 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
  *
  *    @param temp Ship to load into.
  *    @param buf Name of the file.
+ *    @param size_hint Expected array length required.
  */
-static int ship_loadPLG( Ship *temp, char *buf )
+static int ship_loadPLG( Ship *temp, char *buf, int size_hint )
 {
    char *file;
    int sl;
    CollPoly *polygon;
    xmlDocPtr doc;
    xmlNodePtr node, cur;
-
-   temp->npolygon = 0;
 
    sl   = strlen(buf)+strlen(SHIP_POLYGON_PATH)+strlen(".xml")+1;
    file = malloc( sl );
@@ -620,13 +619,10 @@ static int ship_loadPLG( Ship *temp, char *buf )
    do { /* load the polygon data */
       if (xml_isNode(node,"polygons")) {
          cur = node->children;
-         temp->polygon = malloc( sizeof(CollPoly) );
+         temp->polygon = array_create_size( CollPoly, size_hint );
          do {
             if (xml_isNode(cur,"polygon")) {
-               temp->npolygon++;
-               temp->polygon = realloc( temp->polygon, sizeof(CollPoly) * temp->npolygon );
-               polygon = &temp->polygon[temp->npolygon-1];
-
+               polygon = &array_grow( &temp->polygon );
                LoadPolygon( polygon, cur );
             }
          } while (xml_nextNode(cur));
@@ -800,13 +796,13 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          ship_loadGFX( temp, buf, sx, sy, !noengine );
 
          /* Load the polygon. */
-         ship_loadPLG( temp, buf );
+         ship_loadPLG( temp, buf, sx*sy );
 
          /* Validity check: there must be 1 polygon per sprite. */
-         if (temp->npolygon != sx*sy) {
+         if (array_size(temp->polygon) != sx*sy) {
             WARN(_("Ship '%s': the number of collision polygons is wrong.\n \
                     npolygon = %i and sx*sy = %i"),
-                    temp->name, temp->npolygon, sx*sy);
+                    temp->name, array_size(temp->polygon), sx*sy);
          }
 
          continue;
@@ -1150,13 +1146,11 @@ void ships_free (void)
       array_free(s->gfx_overlays);
 
       /* Free collision polygons. */
-      if (s->npolygon != 0) {
-         for (j=0; j<s->npolygon; j++) {
-            free(s->polygon[j].x);
-            free(s->polygon[j].y);
-         }
-         free(s->polygon);
+      for (j=0; j<array_size(s->polygon); j++) {
+         free(s->polygon[j].x);
+         free(s->polygon[j].y);
       }
+      array_free(s->polygon);
    }
 
    array_free(ship_stack);

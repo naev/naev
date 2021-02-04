@@ -1045,11 +1045,6 @@ static int outfit_loadPLG( Outfit *temp, char *buf, unsigned int bolt )
    xmlDocPtr doc;
    xmlNodePtr node, cur;
 
-   if (bolt)
-      temp->u.blt.npolygon = 0;
-   else
-      temp->u.amm.npolygon = 0;
-
    sl   = strlen(buf)+strlen(OUTFIT_POLYGON_PATH)+strlen(".xml")+1;
    file = malloc( sl );
 
@@ -1086,12 +1081,10 @@ that can be found in Naev's artwork repo."), file);
       do { /* load the polygon data */
          if (xml_isNode(node,"polygons")) {
             cur = node->children;
-            temp->u.blt.polygon = malloc( sizeof(CollPoly) );
+            temp->u.blt.polygon = array_create_size( CollPoly, 36 );
             do {
                if (xml_isNode(cur,"polygon")) {
-                  temp->u.blt.npolygon++;
-                  temp->u.blt.polygon = realloc( temp->u.blt.polygon, sizeof(CollPoly) * temp->u.blt.npolygon );
-                  polygon = &temp->u.blt.polygon[temp->u.blt.npolygon-1];
+                  polygon = &array_grow( &temp->u.blt.polygon );
                   LoadPolygon( polygon, cur );
                }
             } while (xml_nextNode(cur));
@@ -1102,12 +1095,10 @@ that can be found in Naev's artwork repo."), file);
       do { /* Second case: outfit is an ammo */
          if (xml_isNode(node,"polygons")) {
             cur = node->children;
-            temp->u.amm.polygon = malloc( sizeof(CollPoly) );
+            temp->u.amm.polygon = array_create_size( CollPoly, 36 );
             do {
                if (xml_isNode(cur,"polygon")) {
-                  temp->u.amm.npolygon++;
-                  temp->u.amm.polygon = realloc( temp->u.amm.polygon, sizeof(CollPoly) * temp->u.amm.npolygon );
-                  polygon = &temp->u.amm.polygon[temp->u.amm.npolygon-1];
+                  polygon = &array_grow( &temp->u.amm.polygon );
                   LoadPolygon( polygon, cur );
                }
             } while (xml_nextNode(cur));
@@ -1184,10 +1175,10 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          outfit_loadPLG( temp, buf, 1 );
 
          /* Validity check: there must be 1 polygon per sprite. */
-         if (temp->u.blt.npolygon != 36) {
+         if (array_size(temp->u.blt.polygon) != 36) {
             WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
                     npolygon = %i and sx*sy = %i"),
-                    temp->name, temp->u.blt.npolygon, 36);
+                    temp->name, array_size(temp->u.blt.polygon), 36);
          }
          continue;
       }
@@ -1532,10 +1523,10 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          outfit_loadPLG( temp, buf, 0 );
 
          /* Validity check: there must be 1 polygon per sprite. */
-         if (temp->u.amm.npolygon != 36) {
+         if (array_size(temp->u.amm.polygon) != 36) {
             WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
                     npolygon = %i and sx*sy = %i"),
-                    temp->name, temp->u.amm.npolygon, 36);
+                    temp->name, array_size(temp->u.amm.polygon), 36);
          }
          continue;
       }
@@ -2555,25 +2546,21 @@ void outfit_free (void)
 
       if (outfit_isAmmo(o)) {
          /* Free collision polygons. */
-         if (o->u.amm.npolygon != 0) {
-            for (j=0; j<o->u.amm.npolygon; j++) {
-               free(o->u.amm.polygon[j].x);
-               free(o->u.amm.polygon[j].y);
-            }
-            free(o->u.amm.polygon);
+         for (j=0; j<array_size(o->u.amm.polygon); j++) {
+            free(o->u.amm.polygon[j].x);
+            free(o->u.amm.polygon[j].y);
          }
+         array_free(o->u.amm.polygon);
       }
       /* Type specific. */
       if (outfit_isBolt(o)) {
          gl_freeTexture(o->u.blt.gfx_end);
          /* Free collision polygons. */
-         if (o->u.blt.npolygon != 0) {
-            for (j=0; j<o->u.blt.npolygon; j++) {
-               free(o->u.blt.polygon[j].x);
-               free(o->u.blt.polygon[j].y);
-            }
-            free(o->u.blt.polygon);
+         for (j=0; j<array_size(o->u.blt.polygon); j++) {
+            free(o->u.blt.polygon[j].x);
+            free(o->u.blt.polygon[j].y);
          }
+         array_free(o->u.blt.polygon);
       }
       if (outfit_isLauncher(o))
          free(o->u.lau.ammo_name);

@@ -126,8 +126,7 @@ typedef struct Ship_ {
    glTexture** gfx_overlays; /**< Array (array.h): Store overlay graphics. */
 
    /* collision polygon */
-   CollPoly *polygon; /**< Collision polygons. */
-   int npolygon; /**< Number of collision polygons. */
+   CollPoly *polygon; /**< Array (array.h): Collision polygons. */
 
    /* GUI interface */
    char* gui;        /**< Name of the GUI the ship uses by default. */
