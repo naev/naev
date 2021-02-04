@@ -2080,6 +2080,10 @@ void pilot_update( Pilot* pilot, const double dt )
             pilot->engine_glow = 0.;
       }
 
+      /* Trail decay. */
+      for (i=0; i<array_size(pilot->ship->trail_emitters); i++)
+         spfx_trail_update( &pilot->trail[i], dt );
+
       return;
    }
 
