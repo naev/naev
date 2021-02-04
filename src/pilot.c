@@ -2768,7 +2768,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    n = array_size(pilot->ship->trail_emitters);
    pilot->trail = array_create_size( Trail_spfx, n );
    for (i=0; i<n; i++)
-      spfx_trail_create( &pilot->trail[i], pilot->ship->trail_emitters[i].thick );
+      spfx_trail_create( &pilot->trail[i], pilot->ship->trail_emitters[i].style->thick );
 
 }
 

@@ -29,6 +29,7 @@ typedef struct trailStyle_ {
    glColour glow_col; /**< Colour when thrusting. */
    glColour aftb_col; /**< Colour when afterburning. */
    glColour jmpn_col; /**< Colour when jumping. */
+   double thick;      /**< Thickness. */
 } trailStyle;
 
 
