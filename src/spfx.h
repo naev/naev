@@ -46,10 +46,20 @@ typedef struct trailPoint_ {
  */
 typedef struct Trail_spfx_ {
    double thickness; /**< Thickness of the trail. */
-   /* TODO points should be a circular buffer or it moves too much memory around. */
-   trailPoint *points; /**< Trail points. */
+   trailPoint *point_ringbuf; /**< Circular buffer (malloced/freed) of trail points. */
+   size_t capacity; /**< Buffer size, guaranteed to be a power of 2. */
+   size_t iread; /**< Start index (NOT reduced modulo capacity). */
+   size_t iwrite; /**< End index (NOT reduced modulo capacity). */
 } Trail_spfx;
 
+/** @brief Indexes into a trail's circular buffer.  */
+#define trail_at( trail, i ) ( (trail)->point_ringbuf[ (i) & ((trail)->capacity - 1) ] )
+/** @brief Returns the number of elements of a trail's circular buffer.  */
+#define trail_size( trail ) ( (trail)->iwrite - (trail)->iread )
+/** @brief Returns the first element of a trail's circular buffer.  */
+#define trail_front( trail ) trail_at( trail, (trail)->iread )
+/** @brief Returns the last element of a trail's circular buffer.  */
+#define trail_back( trail ) trail_at( trail, (trail)->iwrite-1 )
 
 /*
  * Array of trail colours

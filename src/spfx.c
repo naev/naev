@@ -464,7 +464,9 @@ void spfx_trail_create(Trail_spfx* trail, double thickness)
 {
    memset( trail, 0, sizeof(Trail_spfx) );
    trail->thickness = thickness;
-   trail->points = array_create( trailPoint );
+   trail->capacity = 1;
+   trail->iread = trail->iwrite = 0;
+   trail->point_ringbuf = calloc( trail->capacity, sizeof(trailPoint) );
 }
 
 
@@ -478,27 +480,23 @@ void spfx_trail_create(Trail_spfx* trail, double thickness)
 unsigned int spfx_trail_update( Trail_spfx* trail, double dt )
 {
    unsigned int grow;
-   int i;
+   size_t i;
 
-   if (array_size(trail->points) == 0)
+   if (trail_size(trail) == 0)
       return 1;
 
    grow = 0;
    /* Update all elements. */
-   for (i=0; i<array_size(trail->points); i++)
-      trail->points[i].t -= dt / TRAIL_TTL_DT;
+   for (i=trail->iread; i<trail->iwrite; i++)
+      trail_at( trail, i ).t -= dt / TRAIL_TTL_DT;
 
    /* Add a new dot to the track. */
-   if (array_back(trail->points).t < 1.-TRAIL_UPDATE_DT)
+   if (trail_back(trail).t < 1.-TRAIL_UPDATE_DT)
       grow = 1;
 
    /* Remove first elements if they're outdated. */
-   for (i=array_size(trail->points)-1; i>=0; i--) {
-      if (trail->points[i].t < 0.) {
-         array_erase(&trail->points, &trail->points[0], &trail->points[i]);
-         break;
-      }
-   }
+   while (trail->iread < trail->iwrite && trail_front(trail).t < 0.)
+      trail->iread++;
 
    return grow;
 }
@@ -517,7 +515,15 @@ void spfx_trail_grow( Trail_spfx* trail, Vector2d pos, glColour col )
    p.p = pos;
    p.c = col;
    p.t = 1.;
-   array_push_back( &trail->points, p );
+   if (trail_size(trail) == trail->capacity) {
+      /* Full! Double capacity, and make the elements contiguous. (We've made space to grow rightward.) */
+      trail->point_ringbuf = realloc( trail->point_ringbuf, 2 * trail->capacity * sizeof(trailPoint) );
+      trail->iread %= trail->capacity;
+      trail->iwrite = trail->iread + trail->capacity;
+      memmove( &trail->point_ringbuf[trail->capacity], trail->point_ringbuf, trail->iread * sizeof(trailPoint) );
+      trail->capacity *= 2;
+   }
+   trail_at( trail, trail->iwrite++ ) = p;
 }
 
 
@@ -528,7 +534,7 @@ void spfx_trail_grow( Trail_spfx* trail, Vector2d pos, glColour col )
  */
 void spfx_trail_clear( Trail_spfx* trail )
 {
-   array_erase( &trail->points, array_begin(trail->points), array_end(trail->points) );
+   trail->iread = trail->iwrite = 0;
 }
 
 
@@ -539,7 +545,7 @@ void spfx_trail_clear( Trail_spfx* trail )
  */
 void spfx_trail_remove( Trail_spfx* trail )
 {
-   array_free(trail->points);
+   free(trail->point_ringbuf);
 }
 
 
@@ -550,22 +556,22 @@ void spfx_trail_draw( const Vector2d *hpos, const glColour *hcol, const Trail_sp
 {
    double x1, y1, x2, y2;
    trailPoint *tp, *tpp;
-   int i, n;
+   size_t i, n;
 
-   n = array_size(trail->points);
+   n = trail_size(trail);
    if (n==0)
       return;
 
    /* Head trail. */
-   tp  = &trail->points[n-1];
+   tp  = &trail_back( trail );
    gl_gameToScreenCoords( &x1, &y1, hpos->x, hpos->y );
    gl_gameToScreenCoords( &x2, &y2, tp->p.x, tp->p.y );
    gl_drawTrack( x1, y1, x2, y2, 1., tp->t, hcol, &tp->c, trail->thickness*2. );
 
    /* Rest. */
-   for (i=1; i<n; i++) {
-      tp  = &trail->points[i];
-      tpp = &trail->points[i-1];
+   for (i = trail->iread + 1; i < trail->iwrite; i++) {
+      tp  = &trail_at( trail, i );
+      tpp = &trail_at( trail, i-1 );
       gl_gameToScreenCoords( &x1, &y1,  tp->p.x,  tp->p.y );
       gl_gameToScreenCoords( &x2, &y2, tpp->p.x, tpp->p.y );
       gl_drawTrack( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, trail->thickness*2. );
