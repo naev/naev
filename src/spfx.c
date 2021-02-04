@@ -47,7 +47,7 @@
 /* Trail stuff. */
 #define TRAIL_UPDATE_DT       0.05
 #define TRAIL_TTL_DT          1.
-trailColour* trail_col_stack;
+static trailStyle* trail_style_stack;
 
 
 /*
@@ -295,7 +295,7 @@ void spfx_free (void)
    noise_delete( shake_noise );
 
    /* Free the trail colour stack. */
-   array_free(trail_col_stack);
+   array_free(trail_style_stack);
 }
 
 
@@ -821,7 +821,7 @@ void spfx_render( const int layer )
  */
 static int trailTypes_load (void)
 {
-   trailColour *tc;
+   trailStyle *tc;
    xmlNodePtr node, cur;
    xmlDocPtr doc;
 
@@ -844,13 +844,13 @@ static int trailTypes_load (void)
       return -1;
    }
 
-   trail_col_stack = array_create( trailColour );
+   trail_style_stack = array_create( trailStyle );
 
    do {
       if (xml_isNode(node,"trail")) {
 
-         tc = &array_grow( &trail_col_stack );
-         memset( tc, 0, sizeof(trailColour) );
+         tc = &array_grow( &trail_style_stack );
+         memset( tc, 0, sizeof(trailStyle) );
          cur = node->children;
 
          /* Load it. */
@@ -886,7 +886,7 @@ static int trailTypes_load (void)
       }
    } while (xml_nextNode(node));
 
-   array_shrink(&trail_col_stack);
+   array_shrink(&trail_style_stack);
 
    /* Clean up. */
    xmlFreeDoc(doc);
@@ -896,19 +896,19 @@ static int trailTypes_load (void)
 
 
 /**
- * @brief Gets a trail type by name.
+ * @brief Gets a trail style by name.
  *
- *    @return index in trail_col_stack.
+ *    @return trailStyle reference if found, else NULL.
  */
-int trailType_get( char* name )
+const trailStyle* trailStyle_get( const char* name )
 {
    int i;
 
-   for (i=0; i<array_size(trail_col_stack); i++) {
-      if ( strcmp(trail_col_stack[i].name, name)==0 )
-         return i;
+   for (i=0; i<array_size(trail_style_stack); i++) {
+      if ( strcmp(trail_style_stack[i].name, name)==0 )
+         return &trail_style_stack[i];
    }
 
    WARN(_("Trail type '%s' not found in stack"), name);
-   return -1;
+   return NULL;
 }

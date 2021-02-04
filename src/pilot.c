@@ -79,7 +79,7 @@ static int pilot_validEnemy( const Pilot* p, const Pilot* target );
 /* Misc. */
 static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
-static glColour* pilot_compute_trail( Pilot* p, Vector2d* pos, int generator );
+static const glColour* pilot_compute_trail( Pilot* p, Vector2d* pos, int generator );
 
 
 /**
@@ -1699,7 +1699,7 @@ void pilot_render( Pilot* p, const double dt )
    double scalew, scaleh;
    int i, n;
    Vector2d pos;
-   glColour *col;
+   const glColour *col;
 
    /* Tracks. */
    n = array_size(p->ship->trail_emitters);
@@ -1821,7 +1821,7 @@ void pilot_update( Pilot* pilot, const double dt )
    double stress_falloff;
    double efficiency, thrust;
    Vector2d pos;
-   glColour *col;
+   const glColour *col;
    Trail_spfx *trail;
 
    /* Check target validity. */
@@ -2240,10 +2240,10 @@ void pilot_trailsClear( Pilot *p )
  *    @param generator Generator index
  *    @return col Colour.
  */
-static glColour* pilot_compute_trail( Pilot* p, Vector2d* pos, int generator )
+static const glColour* pilot_compute_trail( Pilot* p, Vector2d* pos, int generator )
 {
    double a, dx, dy;
-   glColour *col;
+   const glColour *col;
 
    /* Compute the engine offset. */
    a  = p->solid->dir;
@@ -2257,13 +2257,13 @@ static glColour* pilot_compute_trail( Pilot* p, Vector2d* pos, int generator )
 
    /* Set the colour. */
    if (pilot_isFlag(p, PILOT_HYPERSPACE))
-      col = &p->ship->trail_emitters[generator].trail->jmpn_col;
+      col = &p->ship->trail_emitters[generator].style->jmpn_col;
    else if (pilot_isFlag(p, PILOT_AFTERBURNER))
-      col = &p->ship->trail_emitters[generator].trail->aftb_col;
+      col = &p->ship->trail_emitters[generator].style->aftb_col;
    else if (p->engine_glow > 0.)
-      col = &p->ship->trail_emitters[generator].trail->glow_col;
+      col = &p->ship->trail_emitters[generator].style->glow_col;
    else
-      col = &p->ship->trail_emitters[generator].trail->idle_col;
+      col = &p->ship->trail_emitters[generator].style->idle_col;
 
    return col;
 }

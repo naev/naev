@@ -23,13 +23,13 @@
 /**
  * @brief represents a set of colour for trails.
  */
-typedef struct trailColour_ {
+typedef struct trailStyle_ {
    char* name;       /**< Colour set's name. */
    glColour idle_col; /**< Colour when idle. */
    glColour glow_col; /**< Colour when thrusting. */
    glColour aftb_col; /**< Colour when afterburning. */
    glColour jmpn_col; /**< Colour when jumping. */
-} trailColour;
+} trailStyle;
 
 
 typedef struct trailPoint_ {
@@ -61,17 +61,12 @@ typedef struct Trail_spfx_ {
 /** @brief Returns the last element of a trail's circular buffer.  */
 #define trail_back( trail ) trail_at( trail, (trail)->iwrite-1 )
 
-/*
- * Array of trail colours
- */
-extern trailColour* trail_col_stack;
-
 
 /*
  * stack manipulation
  */
 int spfx_get( char* name );
-int trailType_get( char* name );
+const trailStyle* trailStyle_get( const char* name );
 void spfx_add( const int effect,
       const double px, const double py,
       const double vx, const double vy,
