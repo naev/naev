@@ -431,9 +431,9 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _("Interference: Light\n") );
       }
       /* Asteroids. */
-      if (sys->nasteroids > 0 ) {
+      if (array_size(sys->asteroids) > 0 ) {
          density = 0.;
-         for ( i=0; i<sys->nasteroids; i++ ) {
+         for ( i=0; i<array_size(sys->asteroids); i++ ) {
             density += sys->asteroids[i].area * sys->asteroids[i].density;
          }
          cnt += nsnprintf( &buf[cnt], sizeof(buf)-cnt, _(" Asteroid Field density %g\n"), density );
@@ -465,7 +465,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       /* Get presence. */
       hasPresence = 0;
       unknownPresence = 0;
-      for ( i=0; i < sys->npresence; i++ ) {
+      for ( i=0; i < array_size(sys->presence); i++ ) {
          if (sys->presence[i].value <= 0)
             continue;
          hasPresence = 1;
@@ -489,7 +489,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       (void)cnt;
 
       /* Jumps. */
-      for (  i=0; i<sys->njumps; i++ ) {
+      for (  i=0; i<array_size(sys->jumps); i++ ) {
          if ( jp_isUsable ( &sys->jumps[i] ) ) {
             if ( infopos == 0) /* First jump */
                infopos = nsnprintf( infobuf, PATH_MAX, _("   Jump points to:\n") );

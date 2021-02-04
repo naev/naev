@@ -136,13 +136,11 @@ typedef struct Ship_ {
    glTexture *gfx_target; /**< Targeting window graphic. */
    glTexture *gfx_store; /**< Store graphic. */
    char* gfx_comm;   /**< Name of graphic for communication. */
-   glTexture** gfx_overlays; /**< Store overlay graphics. */
-   int gfx_noverlays; /**< Number of overlays. */
+   glTexture** gfx_overlays; /**< Array (array.h): Store overlay graphics. */
    ShipTrailEmitter* trail_emitters; /**< Trail emitters. */
 
    /* collision polygon */
-   CollPoly *polygon; /**< Collision polygons. */
-   int npolygon; /**< Number of collision polygons. */
+   CollPoly *polygon; /**< Array (array.h): Collision polygons. */
 
    /* GUI interface */
    char* gui;        /**< Name of the GUI the ship uses by default. */
@@ -151,12 +149,9 @@ typedef struct Ship_ {
    int sound;        /**< Sound motor uses. */
 
    /* outfits */
-   int outfit_nstructure; /**< Number of structure outfit slots. */
-   ShipOutfitSlot *outfit_structure; /**< Outfit structure slots. */
-   int outfit_nutility; /**< Number of utility outfit slots. */
-   ShipOutfitSlot *outfit_utility; /**< Outfit utility slots. */
-   int outfit_nweapon; /**< Number of weapon outfit slots. */
-   ShipOutfitSlot *outfit_weapon; /**< Outfit weapons slots. */
+   ShipOutfitSlot *outfit_structure; /**< Array (array.h): Outfit structure slots. */
+   ShipOutfitSlot *outfit_utility; /**< Array (array.h): Outfit utility slots. */
+   ShipOutfitSlot *outfit_weapon; /**< Array (array.h): Outfit weapons slots. */
 
    /* mounts */
    double mangle;    /**< Mount angle to simplify mount calculations. */

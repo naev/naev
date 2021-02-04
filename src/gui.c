@@ -491,7 +491,7 @@ static void gui_renderPlanetTarget( double dt )
 
       /* Recover the right gfx */
       at = space_getType( ast->type );
-      if (ast->gfxID > at->ngfx+1)
+      if (ast->gfxID >= array_size(at->gfxs))
          WARN(_("Gfx index out of range"));
 
       x = ast->pos.x - at->gfxs[ast->gfxID]->w / 2.;
@@ -701,7 +701,7 @@ static void gui_renderBorder( double dt )
    }
 
    /* Draw jump routes. */
-   for (i=0; i<cur_system->njumps; i++) {
+   for (i=0; i<array_size(cur_system->jumps); i++) {
       jp  = &cur_system->jumps[i];
 
       /* Skip if unknown or exit-only. */
@@ -1074,7 +1074,7 @@ void gui_radarRender( double x, double y )
    /*
     * Jump points.
     */
-   for (i=0; i<cur_system->njumps; i++)
+   for (i=0; i<array_size(cur_system->jumps); i++)
       if (i != player.p->nav_hyperspace && jp_isUsable(&cur_system->jumps[i]))
          gui_renderJumpPoint( i, radar->shape, radar->w, radar->h, radar->res, 0 );
    if (player.p->nav_hyperspace > -1)
@@ -1100,7 +1100,7 @@ void gui_radarRender( double x, double y )
       gui_renderPilot( pilot_stack[j], radar->shape, radar->w, radar->h, radar->res, 0 );
 
    /* render the asteroids */
-   for (i=0; i<cur_system->nasteroids; i++) {
+   for (i=0; i<array_size(cur_system->asteroids); i++) {
       ast = &cur_system->asteroids[i];
       for (j=0; j<ast->nb; j++)
          gui_renderAsteroid( &ast->asteroids[j], radar->w, radar->h, radar->res, 0 );

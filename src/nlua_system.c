@@ -556,7 +556,7 @@ static int systemL_adjacent( lua_State *L )
 
    /* Push all adjacent systems. */
    lua_newtable(L);
-   for (i=0; i<s->njumps; i++) {
+   for (i=0; i<array_size(s->jumps); i++) {
       if (jp_isFlag(&s->jumps[i], JP_EXITONLY ))
          continue;
       if (!h && jp_isFlag(&s->jumps[i], JP_HIDDEN))
@@ -595,7 +595,7 @@ static int systemL_jumps( lua_State *L )
 
    /* Push all jumps. */
    lua_newtable(L);
-   for (i=0; i<s->njumps; i++) {
+   for (i=0; i<array_size(s->jumps); i++) {
       /* Skip exit-only jumps if requested. */
       if ((exitonly) && (jp_isFlag( &s->jumps[i],  JP_EXITONLY)))
             continue;
@@ -626,8 +626,8 @@ static int systemL_asteroid( lua_State *L )
    int bad_asteroid;
    int i;
 
-   if (cur_system->nasteroids > 0) {
-      field = RNG(0,cur_system->nasteroids-1);
+   if (array_size(cur_system->asteroids) > 0) {
+      field = RNG(0,array_size(cur_system->asteroids)-1);
       ast   = RNG(0,cur_system->asteroids[field].nb-1);
       bad_asteroid = 0;
       if ( (cur_system->asteroids[field].asteroids[ast].appearing == ASTEROID_INVISIBLE) ||
@@ -676,7 +676,7 @@ static int systemL_asteroidPos( lua_State *L )
    field = luaL_checkint(L,1);
    ast   = luaL_checkint(L,2);
 
-   if ( field >= cur_system->nasteroids ) {
+   if ( field >= array_size(cur_system->asteroids) ) {
       WARN(_("field index %d too high"), field);
       return 0;
    }
@@ -709,7 +709,7 @@ static int systemL_asteroidDestroyed( lua_State *L )
    field = luaL_checkint(L,1);
    ast   = luaL_checkint(L,2);
 
-   if ( field >= cur_system->nasteroids ) {
+   if ( field >= array_size(cur_system->asteroids) ) {
       WARN(_("field index %d too high"), field);
       return 0;
    }
@@ -789,7 +789,7 @@ static int systemL_presences( lua_State *L )
 
    /* Return result in table */
    lua_newtable(L);
-   for (i=0; i<s->npresence; i++) {
+   for (i=0; i<array_size(s->presence); i++) {
       /* Only return positive presences. */
       if (s->presence[i].value <= 0)
          continue;
@@ -985,13 +985,13 @@ static int systemL_setknown( lua_State *L )
       if (b) {
          for (i=0; i < array_size(sys->planets); i++)
             planet_setKnown( sys->planets[i] );
-         for (i=0; i < sys->njumps; i++)
+         for (i=0; i < array_size(sys->jumps); i++)
             jp_setFlag( &sys->jumps[i], JP_KNOWN );
      }
      else {
          for (i=0; i < array_size(sys->planets); i++)
             planet_rmFlag( sys->planets[i], PLANET_KNOWN );
-         for (i=0; i < sys->njumps; i++)
+         for (i=0; i < array_size(sys->jumps); i++)
             jp_rmFlag( &sys->jumps[i], JP_KNOWN );
      }
    }

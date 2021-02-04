@@ -73,7 +73,7 @@ void dship_csv( const char *path )
             s->armour, s->armour_regen,
             s->shield, s->shield_regen,
             s->energy, s->energy_regen,
-            s->outfit_nweapon, s->outfit_nutility, s->outfit_nstructure
+            array_size(s->outfit_weapon), array_size(s->outfit_utility), array_size(s->outfit_structure)
             );
       SDL_RWwrite( rw, buf, l, 1 );
    }

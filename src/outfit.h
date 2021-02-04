@@ -153,8 +153,7 @@ typedef struct OutfitBoltData_ {
    int spfx_shield;  /**< special effect on hit. */
 
    /* collision polygon */
-   CollPoly *polygon; /**< Collision polygons. */
-   int npolygon; /**< Number of collision polygons. */
+   CollPoly *polygon; /**< Array (array.h): Collision polygons. */
 } OutfitBoltData;
 
 /**
@@ -225,8 +224,7 @@ typedef struct OutfitAmmoData_ {
    int spfx_shield;  /**< special effect on hit */
 
    /* collision polygon */
-   CollPoly *polygon; /**< Collision polygons. */
-   int npolygon; /**< Number of collision polygons. */
+   CollPoly *polygon; /**< Array (array.h): Collision polygons. */
 } OutfitAmmoData;
 
 /**
@@ -346,8 +344,7 @@ typedef struct Outfit_ {
    int priority;     /**< Sort priority, highest first. */
 
    glTexture* gfx_store; /**< Store graphic. */
-   glTexture** gfx_overlays; /**< Store overlay graphics. */
-   int gfx_noverlays; /**< Number of overlays. */
+   glTexture** gfx_overlays; /**< Array (array.h): Store overlay graphics. */
 
    unsigned int properties; /**< Properties stored bitwise. */
    unsigned int group; /**< Weapon group to use when autoweap is enabled. */

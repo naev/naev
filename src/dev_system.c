@@ -136,12 +136,12 @@ int dsys_saveSystem( StarSystem *sys )
    free(sorted_planets);
 
    /* Jumps. */
-   sorted_jumps = malloc( sizeof(JumpPoint*) * sys->njumps );
-   for (i=0; i<sys->njumps; i++)
+   sorted_jumps = malloc( sizeof(JumpPoint*) * array_size(sys->jumps) );
+   for (i=0; i<array_size(sys->jumps); i++)
       sorted_jumps[i] = &sys->jumps[i];
-   qsort( sorted_jumps, sys->njumps, sizeof(JumpPoint*), dsys_compJump );
+   qsort( sorted_jumps, array_size(sys->jumps), sizeof(JumpPoint*), dsys_compJump );
    xmlw_startElem( writer, "jumps" );
-   for (i=0; i<sys->njumps; i++) {
+   for (i=0; i<array_size(sys->jumps); i++) {
       jp = sorted_jumps[i];
       xmlw_startElem( writer, "jump" );
       xmlw_attr( writer, "target", "%s", jp->target->name );
@@ -169,9 +169,9 @@ int dsys_saveSystem( StarSystem *sys )
    free(sorted_jumps);
 
    /* Asteroids. */
-   if (sys->nasteroids > 0 || sys->nastexclude > 0) {
+   if (array_size(sys->asteroids) > 0 || array_size(sys->astexclude) > 0) {
       xmlw_startElem( writer, "asteroids" );
-      for (i=0; i<sys->nasteroids; i++) {
+      for (i=0; i<array_size(sys->asteroids); i++) {
          ast = &sys->asteroids[i];
          xmlw_startElem( writer, "asteroid" );
 
@@ -196,7 +196,7 @@ int dsys_saveSystem( StarSystem *sys )
          xmlw_elem( writer, "density", "%f", ast->density );
          xmlw_endElem( writer ); /* "asteroid" */
       }
-      for (i=0; i<sys->nastexclude; i++) {
+      for (i=0; i<array_size(sys->astexclude); i++) {
          aexcl = &sys->astexclude[i];
          xmlw_startElem( writer, "exclusion" );
 

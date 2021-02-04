@@ -18,6 +18,7 @@
 
 #include "pilot_heat.h"
 
+#include "array.h"
 #include "log.h"
 
 
@@ -105,7 +106,7 @@ void pilot_heatReset( Pilot *p )
    int i;
 
    p->heat_T = CONST_SPACE_STAR_TEMP;
-   for (i=0; i<p->noutfits; i++)
+   for (i=0; i<array_size(p->outfits); i++)
       p->outfits[i]->heat_T = CONST_SPACE_STAR_TEMP;
 }
 
@@ -253,7 +254,7 @@ void pilot_heatUpdateCooldown( Pilot *p )
    p->heat_T = p->heat_start - CONST_SPACE_STAR_TEMP - (p->heat_start -
          CONST_SPACE_STAR_TEMP) * t + CONST_SPACE_STAR_TEMP;
 
-   for (i=0; i<p->noutfits; i++) {
+   for (i=0; i<array_size(p->outfits); i++) {
       o = p->outfits[i];
       o->heat_T = o->heat_start - CONST_SPACE_STAR_TEMP - (o->heat_start -
             CONST_SPACE_STAR_TEMP) * t + CONST_SPACE_STAR_TEMP;

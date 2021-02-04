@@ -210,7 +210,6 @@ typedef struct Pilot_ {
 
    unsigned int id;  /**< pilot's id, used for many functions */
    char* name;       /**< pilot's name (if unique) */
-   char* title;      /**< title - usually indicating special properties - @todo use */
 
    /* Fleet/faction management. */
    int faction;      /**< Pilot's faction. */
@@ -292,14 +291,10 @@ typedef struct Pilot_ {
    void (*render_overlay)(struct Pilot_*, const double); /**< For rendering the pilot overlay. */
 
    /* Outfit management */
-   int noutfits;     /**< Total amount of slots. */
-   int outfit_nstructure; /**< Number of structure slots. */
-   int outfit_nutility; /**< Number of utility slots. */
-   int outfit_nweapon; /**< Number of weapon slots. */
-   PilotOutfitSlot **outfits;        /**< Total outfits. */
-   PilotOutfitSlot * outfit_structure; /**< The structure slots. */
-   PilotOutfitSlot * outfit_utility;   /**< The utility slots. */
-   PilotOutfitSlot *outfit_weapon; /**< The weapon slots. */
+   PilotOutfitSlot **outfits;        /**< Array (array.h): Pointers to all outfits. */
+   PilotOutfitSlot * outfit_structure; /**< Array (array.h): The structure slots. */
+   PilotOutfitSlot * outfit_utility;   /**< Array (array.h): The utility slots. */
+   PilotOutfitSlot * outfit_weapon; /**< Array (array.h): The weapon slots. */
 
    /* Primarily for AI usage. */
    int ncannons;      /**< Number of cannons equipped. */
@@ -319,17 +314,14 @@ typedef struct Pilot_ {
    /* Cargo */
    credits_t credits; /**< monies the pilot has */
    PilotCommodity* commodities; /**< commodity and quantity */
-   int ncommodities; /**< number of commodities. */
    int cargo_free;   /**< Free commodity space. */
 
    /* Hook attached to the pilot */
-   PilotHook *hooks; /**< Pilot hooks. */
-   int nhooks;       /**< Number of pilot hooks. */
+   PilotHook *hooks; /**< Array (array.h): Pilot hooks. */
 
    /* Escort stuff. */
    unsigned int parent; /**< Pilot's parent. */
-   Escort_t *escorts; /**< Pilot's escorts. */
-   int nescorts;     /**< Number of pilot escorts. */
+   Escort_t *escorts; /**< Array (array.h): Pilot's escorts. */
    unsigned int dockpilot; /**< Pilot's dock pilot (the pilot it originates from). This is
                           separate from parent because it needs to be set in sync with
                           dockslot (below). Used to unset dockslot when the dock pilot

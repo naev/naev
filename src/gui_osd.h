@@ -17,7 +17,7 @@ int osd_destroy( unsigned int osd );
 int osd_active( unsigned int osd, int msg );
 int osd_getActive( unsigned int osd );
 char *osd_getTitle( unsigned int osd );
-char **osd_getItems( unsigned int osd, int *nitems );
+char **osd_getItems( unsigned int osd );
 
 
 /*

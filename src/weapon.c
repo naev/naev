@@ -863,11 +863,11 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
       /* See if the outfit has a collision polygon. */
       if (outfit_isBolt(w->outfit)) {
-         if (w->outfit->u.blt.npolygon == 0)
+         if (array_size(w->outfit->u.blt.polygon) == 0)
             usePoly = 0;
       }
       else if (outfit_isAmmo(w->outfit)) {
-         if (w->outfit->u.amm.npolygon == 0)
+         if (array_size(w->outfit->u.amm.polygon) == 0)
             usePoly = 0;
       }
    }
@@ -881,7 +881,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       if (w->parent == pilot_stack[i]->id) continue; /* pilot is self */
 
       /* See if the ship has a collision polygon. */
-      if (p->ship->npolygon == 0)
+      if (array_size(p->ship->polygon) == 0)
          usePoly = 0;
 
       /* Beam weapons have special collisions. */
@@ -951,7 +951,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
    /* Collide with asteroids*/
    if (outfit_isAmmo(w->outfit)) {
-      for (i=0; i<cur_system->nasteroids; i++) {
+      for (i=0; i<array_size(cur_system->asteroids); i++) {
          ast = &cur_system->asteroids[i];
          for (j=0; j<ast->nb; j++) {
             a = &ast->asteroids[j];
@@ -967,7 +967,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
    }
    else if (outfit_isBolt(w->outfit)) {
-      for (i=0; i<cur_system->nasteroids; i++) {
+      for (i=0; i<array_size(cur_system->asteroids); i++) {
          ast = &cur_system->asteroids[i];
          for (j=0; j<ast->nb; j++) {
             a = &ast->asteroids[j];
@@ -983,7 +983,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
    }
    else if (b) { /* Beam */
-      for (i=0; i<cur_system->nasteroids; i++) {
+      for (i=0; i<array_size(cur_system->asteroids); i++) {
          ast = &cur_system->asteroids[i];
          for (j=0; j<ast->nb; j++) {
             a = &ast->asteroids[j];

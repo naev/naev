@@ -16,6 +16,7 @@
 
 #include "pilot_cargo.h"
 
+#include "array.h"
 #include "economy.h"
 #include "gui.h"
 #include "log.h"
@@ -43,7 +44,7 @@ int pilot_cargoOwned( Pilot* pilot, const char* commodityname )
 {
    int i;
 
-   for (i=0; i<pilot->ncommodities; i++)
+   for (i=0; i<array_size(pilot->commodities); i++)
       if (!pilot->commodities[i].id &&
             strcmp(commodityname, pilot->commodities[i].commodity->name)==0)
          return pilot->commodities[i].quantity;
@@ -83,13 +84,12 @@ int pilot_cargoMove( Pilot* dest, Pilot* src )
    }
 
    /* Copy over. */
-   for (i=0; i<src->ncommodities; i++)
+   for (i=0; i<array_size(src->commodities); i++)
       pilot_cargoAddNeglectingStats( dest, src->commodities[i].commodity,
             src->commodities[i].quantity, src->commodities[i].id );
 
    /* Clean src. */
-   free(src->commodities);
-   src->ncommodities = 0;
+   array_free(src->commodities);
    src->commodities  = NULL;
 
    return 0;
@@ -108,12 +108,13 @@ static int pilot_cargoAddNeglectingStats( Pilot* pilot, Commodity* cargo,
       int quantity, unsigned int id )
 {
    int i, q;
+   PilotCommodity *pc;
 
    q = quantity;
 
    /* If not mission cargo check to see if already exists. */
    if (id == 0) {
-      for (i=0; i<pilot->ncommodities; i++)
+      for (i=0; i<array_size(pilot->commodities); i++)
          if (!pilot->commodities[i].id &&
                (pilot->commodities[i].commodity == cargo)) {
             pilot->commodities[i].quantity += q;
@@ -122,12 +123,12 @@ static int pilot_cargoAddNeglectingStats( Pilot* pilot, Commodity* cargo,
    }
 
    /* Create the memory space. */
-   pilot->commodities = realloc( pilot->commodities,
-         sizeof(PilotCommodity) * (pilot->ncommodities+1));
-   pilot->commodities[ pilot->ncommodities ].commodity = cargo;
-   pilot->commodities[ pilot->ncommodities ].id       = id;
-   pilot->commodities[ pilot->ncommodities ].quantity = q;
-   pilot->ncommodities++;
+   if (pilot->commodities == NULL)
+      pilot->commodities = array_create( PilotCommodity );
+   pc = &array_grow( &pilot->commodities );
+   pc->commodity = cargo;
+   pc->id       = id;
+   pc->quantity = q;
 
    return q;
 }
@@ -193,7 +194,7 @@ int pilot_cargoUsed( Pilot* pilot )
    int i, q;
 
    q = 0;
-   for (i=0; i<pilot->ncommodities; i++)
+   for (i=0; i<array_size(pilot->commodities); i++)
       q += pilot->commodities[i].quantity;
 
    return q;
@@ -232,7 +233,7 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity
 
    /* Check for collisions with pilot and set ID generator to the max. */
    max_id = 0;
-   for (i=0; i<pilot->ncommodities; i++)
+   for (i=0; i<array_size(pilot->commodities); i++)
       if (pilot->commodities[i].id > max_id)
          max_id = pilot->commodities[i].id;
    if (max_id >= id) {
@@ -260,10 +261,10 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
    int i;
 
    /* check if pilot has it */
-   for (i=0; i<pilot->ncommodities; i++)
+   for (i=0; i<array_size(pilot->commodities); i++)
       if (pilot->commodities[i].id == cargo_id)
          break;
-   if (i>=pilot->ncommodities)
+   if (i >= array_size(pilot->commodities))
       return 1; /* pilot doesn't have it */
 
    if (jettison)
@@ -274,19 +275,10 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
    pilot->cargo_free    += pilot->commodities[i].quantity;
    pilot->mass_cargo    -= pilot->commodities[i].quantity;
    pilot->solid->mass   -= pilot->stats.cargo_inertia * pilot->commodities[i].quantity;
-   pilot->ncommodities--;
-   if (pilot->ncommodities <= 0) {
-      if (pilot->commodities != NULL) {
-         free( pilot->commodities );
-         pilot->commodities   = NULL;
-      }
-      pilot->ncommodities  = 0;
-   }
-   else {
-      memmove( &pilot->commodities[i], &pilot->commodities[i+1],
-            sizeof(PilotCommodity) * (pilot->ncommodities-i) );
-      pilot->commodities = realloc( pilot->commodities,
-            sizeof(PilotCommodity) * pilot->ncommodities );
+   array_erase( &pilot->commodities, &pilot->commodities[i], &pilot->commodities[i+1] );
+   if (array_size(pilot->commodities) <= 0) {
+      array_free( pilot->commodities );
+      pilot->commodities   = NULL;
    }
 
    /* Update mass. */
@@ -313,7 +305,7 @@ int pilot_cargoRmRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup 
 
    /* check if pilot has it */
    q = quantity;
-   for (i=0; i<pilot->ncommodities; i++) {
+   for (i=0; i<array_size(pilot->commodities); i++) {
       if (pilot->commodities[i].commodity != cargo)
          continue;
 
@@ -325,19 +317,10 @@ int pilot_cargoRmRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup 
          q = pilot->commodities[i].quantity;
 
          /* remove cargo */
-         pilot->ncommodities--;
-         if (pilot->ncommodities <= 0) {
-            if (pilot->commodities != NULL) {
-               free( pilot->commodities );
-               pilot->commodities   = NULL;
-            }
-            pilot->ncommodities  = 0;
-         }
-         else {
-            memmove( &pilot->commodities[i], &pilot->commodities[i+1],
-                  sizeof(PilotCommodity) * (pilot->ncommodities-i) );
-            pilot->commodities = realloc( pilot->commodities,
-                  sizeof(PilotCommodity) * pilot->ncommodities );
+         array_erase( &pilot->commodities, &pilot->commodities[i], &pilot->commodities[i+1] );
+         if (array_size(pilot->commodities) <= 0) {
+            array_free( pilot->commodities );
+            pilot->commodities = NULL;
          }
       }
       else

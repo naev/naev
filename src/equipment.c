@@ -85,12 +85,12 @@ static void equipment_genOutfitList( unsigned int wid );
 /* Widget. */
 static void equipment_genLists( unsigned int wid );
 static void equipment_renderColumn( double x, double y, double w, double h,
-      int n, PilotOutfitSlot *lst, const char *txt,
+      PilotOutfitSlot *lst, const char *txt,
       int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt );
 static void equipment_renderSlots( double bx, double by, double bw, double bh, void *data );
 static void equipment_renderMisc( double bx, double by, double bw, double bh, void *data );
 static void equipment_renderOverlayColumn( double x, double y, double h,
-      int n, PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt );
+      PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt );
 static void equipment_renderOverlaySlots( double bx, double by, double bw, double bh,
       void *data );
 static void equipment_renderShip( double bx, double by,
@@ -123,7 +123,6 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
    (void)str;
    Outfit* o;
    int i, active;
-   int outfit_n;
    PilotOutfitSlot* slots;
    Pilot *p;
 
@@ -139,15 +138,12 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
    /* Figure out which slot this stuff fits into */
    switch (o->slot.type) {
       case OUTFIT_SLOT_STRUCTURE:
-         outfit_n = eq_wgt.selected->outfit_nstructure;
          slots    = eq_wgt.selected->outfit_structure;
          break;
       case OUTFIT_SLOT_UTILITY:
-         outfit_n = eq_wgt.selected->outfit_nutility;
          slots    = eq_wgt.selected->outfit_utility;
          break;
       case OUTFIT_SLOT_WEAPON:
-         outfit_n = eq_wgt.selected->outfit_nweapon;
          slots    = eq_wgt.selected->outfit_weapon;
          break;
       default:
@@ -155,8 +151,7 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
    }
 
    /* Loop through outfit slots of the right type, try to find an empty one */
-   for (i=0; i<outfit_n; i++) {
-
+   for (i=0; i<array_size(slots); i++) {
       /* Slot full. */
       if (slots[i].outfit != NULL)
          continue;
@@ -367,7 +362,7 @@ void equipment_slotWidget( unsigned int wid,
  * @brief Renders an outfit column.
  */
 static void equipment_renderColumn( double x, double y, double w, double h,
-      int n, PilotOutfitSlot *lst, const char *txt,
+      PilotOutfitSlot *lst, const char *txt,
       int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt )
 {
    int i, level;
@@ -383,7 +378,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          x-15., y+h+10., c, -1., txt );
 
    /* Iterate for all the slots. */
-   for (i=0; i<n; i++) {
+   for (i=0; i<array_size(lst); i++) {
       /* Choose default colour. */
       if (wgt->weapons >= 0) {
          level = pilot_weapSetCheck( p, wgt->weapons, &lst[i] );
@@ -465,7 +460,7 @@ static void equipment_calculateSlots( Pilot *p, double bw, double bh,
    int tm;
 
    /* Calculate size. */
-   tm = MAX( MAX( p->outfit_nweapon, p->outfit_nutility ), p->outfit_nstructure );
+   tm = MAX( MAX( array_size(p->outfit_weapon), array_size(p->outfit_utility) ), array_size(p->outfit_structure) );
    th = bh / (double)tm;
    tw = bw / 3.;
    s  = MIN( th, tw ) - 20.;
@@ -514,23 +509,23 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    x  = bx + (tw-w)/2;
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
-         p->outfit_nweapon, p->outfit_weapon, _("Weapon"),
+         p->outfit_weapon, _("Weapon"),
          selected, wgt->outfit, wgt->selected, wgt );
 
    /* Draw systems outfits. */
-   selected -= p->outfit_nweapon;
+   selected -= array_size(p->outfit_weapon);
    x += tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
-         p->outfit_nutility, p->outfit_utility, _("Utility"),
+         p->outfit_utility, _("Utility"),
          selected, wgt->outfit, wgt->selected, wgt );
 
    /* Draw structure outfits. */
-   selected -= p->outfit_nutility;
+   selected -= array_size(p->outfit_utility);
    x += tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
-         p->outfit_nstructure, p->outfit_structure, _("Structure"),
+         p->outfit_structure, _("Structure"),
          selected, wgt->outfit, wgt->selected, wgt );
 }
 /**
@@ -607,13 +602,12 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
  *    @param x X position to render at.
  *    @param y Y position to render at.
  *    @param h Height.
- *    @param n Number of elements.
- *    @param lst List of elements.
+ *    @param lst Array (array.h) of elements.
  *    @param mover Slot for which mouseover is active
  *    @param wgt Widget rendering.
  */
 static void equipment_renderOverlayColumn( double x, double y, double h,
-      int n, PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt )
+      PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt )
 {
    int i;
    const glColour *c;
@@ -623,7 +617,7 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
    int subtitle;
 
    /* Iterate for all the slots. */
-   for (i=0; i<n; i++) {
+   for (i=0; i<array_size(lst); i++) {
       subtitle = 0;
       if (lst[i].outfit != NULL) {
          /* See if needs a subtitle. */
@@ -730,30 +724,30 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    x  = bx + (tw-w)/2;
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderOverlayColumn( x, y, h,
-         p->outfit_nweapon, p->outfit_weapon, mover, wgt );
-   mover    -= p->outfit_nweapon;
+         p->outfit_weapon, mover, wgt );
+   mover    -= array_size(p->outfit_weapon);
    x += tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderOverlayColumn( x, y, h,
-         p->outfit_nutility, p->outfit_utility, mover, wgt );
-   mover    -= p->outfit_nutility;
+         p->outfit_utility, mover, wgt );
+   mover    -= array_size(p->outfit_utility);
    x += tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderOverlayColumn( x, y, h,
-         p->outfit_nstructure, p->outfit_structure, mover, wgt );
+         p->outfit_structure, mover, wgt );
 
    /* Mouse must be over something. */
    if (wgt->mouseover < 0)
       return;
 
    /* Get the slot. */
-   if (wgt->mouseover < p->outfit_nweapon)
+   if (wgt->mouseover < array_size(p->outfit_weapon))
       slot = &p->outfit_weapon[wgt->mouseover];
-   else if (wgt->mouseover < p->outfit_nweapon + p->outfit_nutility)
-      slot = &p->outfit_utility[ wgt->mouseover - p->outfit_nweapon ];
+   else if (wgt->mouseover < array_size(p->outfit_weapon) + array_size(p->outfit_utility))
+      slot = &p->outfit_utility[ wgt->mouseover - array_size(p->outfit_weapon) ];
    else
       slot = &p->outfit_structure[ wgt->mouseover -
-         p->outfit_nweapon - p->outfit_nutility ];
+         array_size(p->outfit_weapon) - array_size(p->outfit_utility) ];
 
    /* For comfortability. */
    o = slot->outfit;
@@ -852,7 +846,7 @@ static void equipment_renderShip( double bx, double by,
    toolkit_drawRect( x-5, y-5, w+10, h+10, &cBlack, NULL );
    gl_blitScaleSprite( p->ship->gfx_space,
          px, py, sx, sy, pw, ph, NULL );
-   if ((eq_wgt.slot >= 0) && (eq_wgt.slot < p->outfit_nweapon)) {
+   if ((eq_wgt.slot >= 0) && (eq_wgt.slot < array_size(p->outfit_weapon))) {
       p->tsx = sx;
       p->tsy = sy;
       pilot_getMount( p, &p->outfit_weapon[eq_wgt.slot], &v );
@@ -899,19 +893,18 @@ static int equipment_mouseInColumn( double y, double h, int n, double my )
  *    @param my Mouse Y event position.
  *    @param y Y position of the column.
  *    @param h Height of the column.
- *    @param n Number of elements in the column.
- *    @param os Pointer to elements in the column.
+ *    @param os Array (array.h) of elements in the column.
  *    @param p Pilot to which the elements belong.
  *    @param selected Currently selected element.
  *    @param wgt Slot widget.
  */
 static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
-      double mx, double my, double y, double h, int n, PilotOutfitSlot* os,
+      double mx, double my, double y, double h, PilotOutfitSlot* os,
       Pilot *p, int selected, CstSlotWidget *wgt )
 {
    int ret, exists, level;
 
-   ret = equipment_mouseInColumn( y, h, n, my );
+   ret = equipment_mouseInColumn( y, h, array_size(os), my );
    if (ret < 0)
       return 0;
 
@@ -1023,23 +1016,23 @@ static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
    y  = bh - (h+20) + (h+20-h)/2 - 10;
    if ((mx > x-10) && (mx < x+w+10)) {
       ret = equipment_mouseColumn( wid, event, mx, my, y, h,
-            p->outfit_nweapon, p->outfit_weapon, p, selected, wgt );
+            p->outfit_weapon, p, selected, wgt );
       if (ret)
          return !!(event->type == SDL_MOUSEBUTTONDOWN);
    }
-   selected += p->outfit_nweapon;
+   selected += array_size(p->outfit_weapon);
    x += tw;
    if ((mx > x-10) && (mx < x+w+10)) {
       ret = equipment_mouseColumn( wid, event, mx, my, y, h,
-            p->outfit_nutility, p->outfit_utility, p, selected, wgt );
+            p->outfit_utility, p, selected, wgt );
       if (ret)
          return !!(event->type == SDL_MOUSEBUTTONDOWN);
    }
-   selected += p->outfit_nutility;
+   selected += array_size(p->outfit_utility);
    x += tw;
    if ((mx > x-10) && (mx < x+w+10)) {
       ret = equipment_mouseColumn( wid, event, mx, my, y, h,
-            p->outfit_nstructure, p->outfit_structure, p, selected, wgt );
+            p->outfit_structure, p, selected, wgt );
       if (ret)
          return !!(event->type == SDL_MOUSEBUTTONDOWN);
    }
@@ -1249,7 +1242,7 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
    eps = 0.;
    /* Calculate damage and energy per second. */
    if (dpseps) {
-      for (j=0; j<s->noutfits; j++) {
+      for (j=0; j<array_size(s->outfits); j++) {
          o = s->outfits[j]->outfit;
          if (o==NULL)
             continue;
@@ -1352,7 +1345,7 @@ static void equipment_genShipList( unsigned int wid )
       /* Add player's current ship. */
       cships[0].image = gl_dupTexture(player.p->ship->gfx_store);
       cships[0].caption = strdup(player.p->name);
-      cships[0].layers = gl_copyTexArray( player.p->ship->gfx_overlays, player.p->ship->gfx_noverlays, &cships[0].nlayers );
+      cships[0].layers = gl_copyTexArray( player.p->ship->gfx_overlays, &cships[0].nlayers );
       t = gl_newImage( OVERLAY_GFX_PATH"active.png", OPENGL_TEX_MIPMAPS );
       cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
       if (player.p->ship->rarity > 0) {
@@ -1366,7 +1359,7 @@ static void equipment_genShipList( unsigned int wid )
          for (i=1; i<=array_size(ps); i++) {
             cships[i].image = gl_dupTexture( ps[i-1].p->ship->gfx_store );
             cships[i].caption = strdup( ps[i-1].p->name );
-            cships[i].layers = gl_copyTexArray( ps[i-1].p->ship->gfx_overlays, ps[i-1].p->ship->gfx_noverlays, &cships[i].nlayers );
+            cships[i].layers = gl_copyTexArray( ps[i-1].p->ship->gfx_overlays, &cships[i].nlayers );
             if (ps[i-1].p->ship->rarity > 0) {
                nsnprintf( r, sizeof(r), OVERLAY_GFX_PATH"rarity_%d.png", ps[i-1].p->ship->rarity );
                t = gl_newImage( r, OPENGL_TEX_MIPMAPS );
@@ -1770,7 +1763,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
     * unequip if it's carrying more cargo than the ship normally fits, i.e.
     * by equipping cargo pods.
     */
-   for (i=0; i<ship->noutfits; i++) {
+   for (i=0; i<array_size(ship->outfits); i++) {
       /* Must have outfit. */
       if (ship->outfits[i]->outfit == NULL)
          continue;
@@ -1793,7 +1786,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
       return;
 
    /* Remove all outfits. */
-   for (i=0; i<ship->noutfits; i++) {
+   for (i=0; i<array_size(ship->outfits); i++) {
       o = ship->outfits[i]->outfit;
 
       /* Skip null outfits. */

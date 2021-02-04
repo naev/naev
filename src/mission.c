@@ -1008,7 +1008,6 @@ void missions_cleanup (void)
 int missions_saveActive( xmlTextWriterPtr writer )
 {
    int i,j,n;
-   int nitems;
    char **items;
 
    xmlw_startElem(writer,"missions");
@@ -1048,13 +1047,13 @@ int missions_saveActive( xmlTextWriterPtr writer )
             xmlw_startElem(writer,"osd");
 
             /* Save attributes. */
-            items = osd_getItems(player_missions[i]->osd, &nitems);
+            items = osd_getItems(player_missions[i]->osd);
             xmlw_attr(writer,"title","%s",osd_getTitle(player_missions[i]->osd));
-            xmlw_attr(writer,"nitems","%d",nitems);
+            xmlw_attr(writer,"nitems","%d",array_size(items));
             xmlw_attr(writer,"active","%d",osd_getActive(player_missions[i]->osd));
 
             /* Save messages. */
-            for (j=0; j<nitems; j++)
+            for (j=0; j<array_size(items); j++)
                xmlw_elem(writer,"msg","%s",items[j]);
 
             xmlw_endElem(writer); /* "osd" */

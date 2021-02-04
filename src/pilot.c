@@ -56,7 +56,7 @@ static unsigned int pilot_id = PLAYER_ID; /**< Stack of pilot ids to assure uniq
 
 
 /* stack of pilots */
-/* TODO replace with array.h infrastructure and make non-public. */
+/* TODO make non-public? */
 Pilot** pilot_stack = NULL; /**< Not static, used in player.c, weapon.c, pause.c, space.c and ai.c */
 
 
@@ -894,7 +894,7 @@ void pilot_cooldown( Pilot *p )
    /* Calculate the ship's overall heat. */
    heat_capacity = p->heat_C;
    heat_mean = p->heat_T * p->heat_C;
-   for (i=0; i<p->noutfits; i++) {
+   for (i=0; i<array_size(p->outfits); i++) {
       o = p->outfits[i];
       o->heat_start = o->heat_T;
       heat_capacity += p->outfits[i]->heat_C;
@@ -1857,7 +1857,7 @@ void pilot_update( Pilot* pilot, const double dt )
    a = -1.;
    Q = 0.;
    nchg = 0; /* Number of outfits that change state, processed at the end. */
-   for (i=0; i<pilot->noutfits; i++) {
+   for (i=0; i<array_size(pilot->outfits); i++) {
       o = pilot->outfits[i];
 
       /* Picky about our outfits. */
@@ -2002,7 +2002,7 @@ void pilot_update( Pilot* pilot, const double dt )
          pilot_runHook( pilot, PILOT_HOOK_EXPLODED );
 
          /* Release cargo */
-         for (i=0; i<pilot->ncommodities; i++)
+         for (i=0; i<array_size(pilot->commodities); i++)
             commodity_Jettison( pilot->id, pilot->commodities[i].commodity,
                   pilot->commodities[i].quantity );
       }
@@ -2554,7 +2554,7 @@ int pilot_numOutfit( const Pilot *p, const Outfit *o )
 {
    int i, q;
    q = 0;
-   for (i=0; i<p->noutfits; i++) {
+   for (i=0; i<array_size(p->outfits); i++) {
       if (p->outfits[i]->outfit == o)
          q++;
    }
@@ -2631,8 +2631,10 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
-   int i, p, n;
-   PilotOutfitSlot* dslot;
+   int i, j, n;
+   PilotOutfitSlot *dslot, *slot;
+   PilotOutfitSlot **pilot_list_ptr[] = { &pilot->outfit_structure, &pilot->outfit_utility, &pilot->outfit_weapon };
+   ShipOutfitSlot *ship_list[] = { ship->outfit_structure, ship->outfit_utility, ship->outfit_weapon };
 
    /* Clear memory. */
    memset(pilot, 0, sizeof(Pilot));
@@ -2667,44 +2669,23 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->stress = 0.; /* No stress. */
 
    /* Allocate outfit memory. */
-   /* Slot types. */
-   pilot->outfit_nstructure = ship->outfit_nstructure;
-   pilot->outfit_structure = calloc( ship->outfit_nstructure, sizeof(PilotOutfitSlot) );
-   pilot->outfit_nutility  = ship->outfit_nutility;
-   pilot->outfit_utility   = calloc( ship->outfit_nutility, sizeof(PilotOutfitSlot) );
-   pilot->outfit_nweapon   = ship->outfit_nweapon;
-   pilot->outfit_weapon    = calloc( ship->outfit_nweapon, sizeof(PilotOutfitSlot) );
-   /* Global. */
-   pilot->noutfits = pilot->outfit_nstructure + pilot->outfit_nutility + pilot->outfit_nweapon;
-   pilot->outfits  = calloc( pilot->noutfits, sizeof(PilotOutfitSlot*) );
+   pilot->outfits  = array_create( PilotOutfitSlot* );
    /* First pass copy data. */
-   p = 0;
-   for (i=0; i<pilot->outfit_nstructure; i++) {
-      pilot->outfits[p] = &pilot->outfit_structure[i];
-      pilot->outfits[ p ]->id    = p;
-      pilot->outfits[p]->sslot = &ship->outfit_structure[i];
-      pilot->outfits[p]->weapset = -1;
-      if (ship->outfit_structure[i].data != NULL)
-         pilot_addOutfitRaw( pilot, ship->outfit_structure[i].data, pilot->outfits[p] );
-      p++;
+   for (i=0; i<3; i++) {
+      *pilot_list_ptr[i] = array_create_size( PilotOutfitSlot, array_size(ship_list[i]) );
+      for (j=0; j<array_size(ship_list[i]); j++) {
+         slot = &array_grow( pilot_list_ptr[i] );
+         memset( slot, 0, sizeof(PilotOutfitSlot) );
+         slot->id    = array_size(pilot->outfits)-1;
+         slot->sslot = &ship_list[i][j];
+         array_push_back( &pilot->outfits, slot );
+         if (pilot_list_ptr[i] != &pilot->outfit_weapon)
+            slot->weapset = -1;
+         if (slot->sslot->data != NULL)
+            pilot_addOutfitRaw( pilot, slot->sslot->data, slot );
+      }
    }
-   for (i=0; i<pilot->outfit_nutility; i++) {
-      pilot->outfits[p] = &pilot->outfit_utility[i];
-      pilot->outfits[ p ]->id    = p;
-      pilot->outfits[p]->sslot = &ship->outfit_utility[i];
-      pilot->outfits[p]->weapset = -1;
-      if (ship->outfit_utility[i].data != NULL)
-         pilot_addOutfitRaw( pilot, ship->outfit_utility[i].data, pilot->outfits[p] );
-      p++;
-   }
-   for (i=0; i<pilot->outfit_nweapon; i++) {
-      pilot->outfits[p] = &pilot->outfit_weapon[i];
-      pilot->outfits[ p ]->id  = p;
-      pilot->outfits[p]->sslot = &ship->outfit_weapon[i];
-      if (ship->outfit_weapon[i].data != NULL)
-         pilot_addOutfitRaw( pilot, ship->outfit_weapon[i].data, pilot->outfits[p] );
-      p++;
-   }
+   array_shrink( &pilot->outfits );
 
    /* cargo - must be set before calcStats */
    pilot->cargo_free = pilot->ship->cap_cargo; /* should get redone with calcCargo */
@@ -2858,7 +2839,7 @@ Pilot* pilot_createEmpty( Ship* ship, const char* name,
  */
 Pilot* pilot_copy( Pilot* src )
 {
-   int i, p;
+   int i;
    Pilot *dest = malloc(sizeof(Pilot));
 
    /* Copy data over, we'll have to reset all the pointers though. */
@@ -2867,44 +2848,29 @@ Pilot* pilot_copy( Pilot* src )
    /* Copy names. */
    if (src->name)
       dest->name = strdup(src->name);
-   if (src->title)
-      dest->title = strdup(src->title);
 
    /* Copy solid. */
    dest->solid = malloc(sizeof(Solid));
    *dest->solid = *src->solid;
 
    /* Copy outfits. */
-   dest->noutfits = src->noutfits;
-   dest->outfits  = malloc( sizeof(PilotOutfitSlot*) * dest->noutfits );
-   dest->outfit_nstructure = src->outfit_nstructure;
-   dest->outfit_structure  = malloc( sizeof(PilotOutfitSlot) * dest->outfit_nstructure );
-   memcpy( dest->outfit_structure, src->outfit_structure,
-         sizeof(PilotOutfitSlot) * dest->outfit_nstructure );
-   dest->outfit_nutility = src->outfit_nutility;
-   dest->outfit_utility  = malloc( sizeof(PilotOutfitSlot) * dest->outfit_nutility );
-   memcpy( dest->outfit_utility, src->outfit_utility,
-         sizeof(PilotOutfitSlot) * dest->outfit_nutility );
-   dest->outfit_nweapon = src->outfit_nweapon;
-   dest->outfit_weapon  = malloc( sizeof(PilotOutfitSlot) * dest->outfit_nweapon );
-   memcpy( dest->outfit_weapon, src->outfit_weapon,
-         sizeof(PilotOutfitSlot) * dest->outfit_nweapon );
-   p = 0;
-   for (i=0; i<dest->outfit_nstructure; i++)
-      dest->outfits[p++] = &dest->outfit_structure[i];
-   for (i=0; i<dest->outfit_nutility; i++)
-      dest->outfits[p++] = &dest->outfit_utility[i];
-   for (i=0; i<dest->outfit_nweapon; i++)
-      dest->outfits[p++] = &dest->outfit_weapon[i];
+   dest->outfits = array_create_size( PilotOutfitSlot*, array_size(src->outfits) );
+   dest->outfit_structure = array_copy( PilotOutfitSlot, src->outfit_structure );
+   dest->outfit_utility = array_copy( PilotOutfitSlot, src->outfit_utility );
+   dest->outfit_weapon = array_copy( PilotOutfitSlot, src->outfit_weapon );
+   for (i=0; i<array_size(dest->outfit_structure); i++)
+      array_push_back( &dest->outfits, &dest->outfit_structure[i] );
+   for (i=0; i<array_size(dest->outfit_utility); i++)
+      array_push_back( &dest->outfits, &dest->outfit_utility[i] );
+   for (i=0; i<array_size(dest->outfit_weapon); i++)
+      array_push_back( &dest->outfits, &dest->outfit_weapon[i] );
    dest->afterburner = NULL;
 
    /* Hooks get cleared. */
    dest->hooks           = NULL;
-   dest->nhooks          = 0;
 
    /* Copy has no escorts. */
    dest->escorts         = NULL;
-   dest->nescorts        = 0;
 
    /* AI is not copied. */
    dest->task            = NULL;
@@ -2913,12 +2879,11 @@ Pilot* pilot_copy( Pilot* src )
    /* Set pointers and friends to NULL. */
    /* Commodities. */
    dest->commodities     = NULL;
-   dest->ncommodities    = 0;
    /* Calculate stats. */
    pilot_calcStats(dest);
 
    /* Copy commodities. */
-   for (i=0; i<src->ncommodities; i++)
+   for (i=0; i<array_size(src->commodities); i++)
       pilot_cargoAdd( dest, src->commodities[i].commodity,
             src->commodities[i].quantity, src->commodities[i].id );
 
@@ -2952,9 +2917,9 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
          array_push_back( &ind, i );
 
    /* Build jumpable jump table. */
-   validJumpPoints = array_create_size( JumpPoint*, cur_system->njumps );
-   if (cur_system->njumps > 0) {
-      for (i=0; i<cur_system->njumps; i++) {
+   validJumpPoints = array_create_size( JumpPoint*, array_size(cur_system->jumps) );
+   if (array_size(cur_system->jumps) > 0) {
+      for (i=0; i<array_size(cur_system->jumps); i++) {
          /* The jump into the system must not be exit-only, and unless
           * ignore_rules is set, must also be non-hidden
           * (excepted if the pilot is guerilla) and have faction
@@ -2980,8 +2945,8 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
    if (array_size(ind)==0 && array_size(validJumpPoints)==0) {
       if (guerilla) /* Guerilla ships are created far away in deep space. */
          vect_pset ( vp, 1.5*cur_system->radius, RNGF()*2*M_PI );
-      else if (cur_system->njumps > 0) {
-         for (i=0; i<cur_system->njumps; i++)
+      else if (array_size(cur_system->jumps) > 0) {
+         for (i=0; i<array_size(cur_system->jumps); i++)
             array_push_back(&validJumpPoints, cur_system->jumps[i].returnJump);
       }
       else {
@@ -3026,10 +2991,10 @@ void pilot_free( Pilot* p )
 
    pilot_weapSetFree(p);
 
-   free(p->outfits);
-   free(p->outfit_structure);
-   free(p->outfit_utility);
-   free(p->outfit_weapon);
+   array_free(p->outfits);
+   array_free(p->outfit_structure);
+   array_free(p->outfit_utility);
+   array_free(p->outfit_weapon);
 
    while (p->commodities != NULL)
       pilot_cargoRmRaw( p, p->commodities[0].commodity,
@@ -3040,7 +3005,6 @@ void pilot_free( Pilot* p )
       ai_destroy(p); /* Must be destroyed first if applicable. */
 
    free(p->name);
-   free(p->title);
    /* Case if pilot is the player. */
    if (player.p==p)
       player.p = NULL;
@@ -3313,7 +3277,7 @@ void pilot_clearTimers( Pilot *pilot )
    for (i=0; i<MAX_AI_TIMERS; i++)
       pilot->timer[i] = 0.; /* Specific AI timers. */
    n = 0;
-   for (i=0; i<pilot->noutfits; i++) {
+   for (i=0; i<array_size(pilot->outfits); i++) {
       o = pilot->outfits[i];
       o->timer    = 0.; /* Last used timer. */
       o->stimer   = 0.; /* State timer. */
@@ -3357,7 +3321,7 @@ double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
    Outfit *o;
    const Damage *dmg;
 
-   for (i=0; i<p->outfit_nweapon; i++) {
+   for (i=0; i<array_size(p->outfit_weapon); i++) {
       o = p->outfit_weapon[i].outfit;
       if (o == NULL)
          continue;
@@ -3371,7 +3335,7 @@ double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
          DPSaccum_target += ( damage_cache/delay_cache );
    }
 
-   for (i=0; i<cur_pilot->outfit_nweapon; i++) {
+   for (i=0; i<array_size(cur_pilot->outfit_weapon); i++) {
       o = cur_pilot->outfit_weapon[i].outfit;
       if (o == NULL)
          continue;
@@ -3420,11 +3384,11 @@ credits_t pilot_worth( const Pilot *p )
 
    /* Ship price is base price + outfit prices. */
    price = ship_basePrice( p->ship );
-   for (i=0; i<p->noutfits; i++) {
+   for (i=0; i<array_size(p->outfits); i++) {
       if (p->outfits[i]->outfit == NULL)
          continue;
       /* Don't count unique outfits. */
-      if (outfit_isProp(p->outfits[i]->outfit,OUTFIT_PROP_UNIQUE))
+      if (outfit_isProp(p->outfits[i]->outfit, OUTFIT_PROP_UNIQUE))
          continue;
       price += p->outfits[i]->outfit->price;
    }

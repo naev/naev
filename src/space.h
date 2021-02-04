@@ -212,10 +212,8 @@ extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
 typedef struct AsteroidType_ {
    char *ID; /**< ID of the asteroid type. */
    glTexture **gfxs; /**< asteroid possible gfxs. */
-   int ngfx; /**< nb of gfx. */
    Commodity **material; /**< Materials contained in the asteroid. */
    int *quantity; /**< Quantities of materials. */
-   int nmaterial; /**< size of both material stacks. */
    double armour; /**< Starting "armour" of the asteroid. */
 } AsteroidType;
 
@@ -301,21 +299,17 @@ struct StarSystem_ {
    int faction; /**< overall faction */
 
    /* Jumps. */
-   JumpPoint *jumps; /**< Jump points in the system */
-   int njumps; /**< number of adjacent jumps */
+   JumpPoint *jumps; /**< Array (array.h): Jump points in the system */
 
    /* Asteroids. */
-   AsteroidAnchor *asteroids; /**< Asteroid fields in the system */
-   int nasteroids; /**< number of asteroid fields */
-   AsteroidExclusion *astexclude; /**< Asteroid exclusion zones in the system */
-   int nastexclude; /**< number of asteroid exclusion zones */
+   AsteroidAnchor *asteroids; /**< Array (array.h): Asteroid fields in the system */
+   AsteroidExclusion *astexclude; /**< Array (array.h): Asteroid exclusion zones in the system */
 
    /* Calculated. */
    double *prices; /**< Handles the prices in the system. */
 
    /* Presence. */
-   SystemPresence *presence; /**< Pointer to an array of presences in this system. */
-   int npresence; /**< Number of elements in the presence array. */
+   SystemPresence *presence; /**< Array (array.h): Pointer to an array of presences in this system. */
    int spilled; /**< If the system has been spilled to yet. */
    double ownerpresence; /**< Amount of presence the owning faction has in a system. */
 
@@ -327,7 +321,6 @@ struct StarSystem_ {
 
    /* Economy. */
    CommodityPrice *averagePrice;
-   int ncommodities;
 
    /* Misc. */
    unsigned int flags; /**< flags for system properties */

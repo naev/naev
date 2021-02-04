@@ -16,6 +16,7 @@
 
 #include "nlua_ship.h"
 
+#include "array.h"
 #include "log.h"
 #include "nlua_outfit.h"
 #include "nlua_tex.h"
@@ -343,9 +344,9 @@ static int shipL_slots( lua_State *L )
    s  = luaL_validship(L,1);
 
    /* Push slot numbers. */
-   lua_pushnumber(L, s->outfit_nweapon);
-   lua_pushnumber(L, s->outfit_nutility);
-   lua_pushnumber(L, s->outfit_nstructure);
+   lua_pushnumber(L, array_size(s->outfit_weapon));
+   lua_pushnumber(L, array_size(s->outfit_utility));
+   lua_pushnumber(L, array_size(s->outfit_structure));
    return 3;
 }
 
@@ -362,61 +363,44 @@ static int shipL_slots( lua_State *L )
  */
 static int shipL_getSlots( lua_State *L )
 {
-   int i, j, k, outfit_type;
-   Ship *s;
+   int i, j, k;
    OutfitSlot *slot;
    ShipOutfitSlot *sslot;
+   Ship *s = luaL_validship(L,1);
    char *outfit_types[] = {"structure", "utility", "weapon"};
-
-   s = luaL_validship(L,1);
+   ShipOutfitSlot *outfit_arrays[] = {s->outfit_structure, s->outfit_utility, s->outfit_weapon};
 
    lua_newtable(L);
    k=1;
-   for (i=0; i < s->outfit_nstructure + s->outfit_nutility + s->outfit_nweapon ; i++) {
+   for (i=0; i<3 ; i++) {
+      for (j=0; j<array_size(outfit_arrays[i]) ; j++) {
+         slot  = &outfit_arrays[i][j].slot;
+         sslot = &outfit_arrays[i][j];
 
-         /* get the slot */
-      if (i < s->outfit_nstructure) {
-         j     = i;
-         slot  = &s->outfit_structure[j].slot;
-         sslot = &s->outfit_structure[j];
-         outfit_type = 0;
-      }
-      else if (i < s->outfit_nstructure + s->outfit_nutility) {
-         j     = i - s->outfit_nstructure;
-         slot  = &s->outfit_utility[j].slot;
-         sslot = &s->outfit_utility[j];
-         outfit_type = 1;
-      }
-      else {
-         j     = i - (s->outfit_nstructure + s->outfit_nutility);
-         slot  = &s->outfit_weapon[j].slot;
-         sslot = &s->outfit_weapon[j];
-         outfit_type = 2;
-      }
+         /* make the slot table and put it in */
+         lua_pushnumber(L, k++); /* slot table key */
+         lua_newtable(L);
 
-      /* make the slot table and put it in */
-      lua_pushnumber(L, k++); /* slot table key */
-      lua_newtable(L);
+         lua_pushstring(L, "type"); /* key */
+         lua_pushstring(L, outfit_types[i]); /* value */
+         lua_rawset(L, -3); /* table[key = value ]*/
 
-      lua_pushstring(L, "type"); /* key */
-      lua_pushstring(L, outfit_types[outfit_type]); /* value */
-      lua_rawset(L, -3); /* table[key = value ]*/
-
-      lua_pushstring(L, "size"); /* key */
-      lua_pushstring(L, slotSize( slot->size) );
-      lua_rawset(L, -3); /* table[key] = value */
-
-      lua_pushstring(L, "property"); /* key */
-      lua_pushstring( L, sp_display(slot->spid)); /* value */
-      lua_rawset(L, -3); /* table[key] = value */
-
-      if (sslot->data != NULL) {
-         lua_pushstring(L, "outfit"); /* key */
-         lua_pushoutfit(L, sslot->data); /* value*/
+         lua_pushstring(L, "size"); /* key */
+         lua_pushstring(L, slotSize( slot->size) );
          lua_rawset(L, -3); /* table[key] = value */
-      }
 
-      lua_rawset(L, -3);   /* put the slot table in */
+         lua_pushstring(L, "property"); /* key */
+         lua_pushstring( L, sp_display(slot->spid)); /* value */
+         lua_rawset(L, -3); /* table[key] = value */
+
+         if (sslot->data != NULL) {
+            lua_pushstring(L, "outfit"); /* key */
+            lua_pushoutfit(L, sslot->data); /* value*/
+            lua_rawset(L, -3); /* table[key] = value */
+         }
+
+         lua_rawset(L, -3);   /* put the slot table in */
+      }
    }
 
    return 1;

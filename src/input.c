@@ -15,6 +15,7 @@
 
 #include "input.h"
 
+#include "array.h"
 #include "board.h"
 #include "camera.h"
 #include "conf.h"
@@ -1312,7 +1313,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
 
       /* Recover the right gfx */
       at = space_getType( ast->type );
-      if (ast->gfxID > at->ngfx+1)
+      if (ast->gfxID >= array_size(at->gfxs))
          WARN(_("Gfx index out of range"));
       r  = MAX( MAX( at->gfxs[ast->gfxID]->w * zoom, minr ),
                 at->gfxs[ast->gfxID]->h * zoom );

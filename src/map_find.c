@@ -313,7 +313,7 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
 
    /* Distance to first jump point. */
    vs = &player.p->solid->pos;
-   for (j=0; j < cur_system->njumps; j++) {
+   for (j=0; j < array_size(cur_system->jumps); j++) {
       if (cur_system->jumps[j].target == slist[0]) {
          ve = &cur_system->jumps[j].pos;
          break;
@@ -331,7 +331,7 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
       ss = slist[i];
 
       /* Search jump points. */
-      for (j=0; j < ss->njumps; j++) {
+      for (j=0; j < array_size(ss->jumps); j++) {
 
          /* Get previous jump. */
          if (i == 0) {
@@ -369,7 +369,7 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
    if (pnt != NULL) {
       if (i > 0) {
          ss = slist[ i ];
-         for (j=0; j < ss->njumps; j++) {
+         for (j=0; j < array_size(ss->jumps); j++) {
             if (ss->jumps[j].target == slist[i-1]) {
                vs = &ss->jumps[j].pos;
                break;
