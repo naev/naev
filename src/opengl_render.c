@@ -753,8 +753,8 @@ void gl_drawLine( const double x1, const double y1,
  *    @param x2 X position of the second point in screen coordinates.
  *    @param y2 Y position of the second point in screen coordinates.
  *    @param t1 time of the first point.
- *    @param t2 time og the second point.
- *    @param c1 Colour to for first point.
+ *    @param t2 time of the second point.
+ *    @param c1 Colour to use for first point.
  *    @param c2 Colour to use for second point.
  *    @param thick Thickness to use.
  */
