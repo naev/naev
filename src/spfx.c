@@ -294,8 +294,10 @@ void spfx_free (void)
    /* Free the noise. */
    noise_delete( shake_noise );
 
-   /* Free the trail colour stack. */
-   array_free(trail_style_stack);
+   /* Free the trail styles. */
+   for (i=0; i<array_size(trail_style_stack); i++)
+      free( trail_style_stack[i].name );
+   array_free( trail_style_stack );
 }
 
 
