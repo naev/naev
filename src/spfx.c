@@ -20,6 +20,7 @@
 #include "spfx.h"
 
 #include "array.h"
+#include "camera.h"
 #include "debris.h"
 #include "log.h"
 #include "ndata.h"
@@ -624,7 +625,7 @@ static void spfx_trail_draw( const Trail_spfx* trail )
       tpp = &trail_at( trail, i-1 );
       gl_gameToScreenCoords( &x1, &y1,  tp->p.x,  tp->p.y );
       gl_gameToScreenCoords( &x2, &y2, tpp->p.x, tpp->p.y );
-      gl_drawTrack( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, trail->thickness*2. );
+      gl_drawTrack( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, trail->thickness*cam_getZoom() );
    }
 }
 
