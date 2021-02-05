@@ -13,6 +13,7 @@
 #include "opengl.h"
 #include "shipstats.h"
 #include "sound.h"
+#include "spfx.h"
 
 
 /*
@@ -222,6 +223,8 @@ typedef struct OutfitAmmoData_ {
    int sound_hit;    /**< Sound to play on hit. */
    int spfx_armour;  /**< special effect on hit */
    int spfx_shield;  /**< special effect on hit */
+   const trailStyle* trail_style; /**< Trail style if applicable, else NULL. */
+   double trail_x_offset;         /**< Offset x. */
 
    /* collision polygon */
    CollPoly *polygon; /**< Array (array.h): Collision polygons. */

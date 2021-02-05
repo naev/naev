@@ -81,6 +81,7 @@ typedef struct Weapon_ {
    double strength; /**< Calculated with falloff. */
    int sx; /**< Current X sprite to use. */
    int sy; /**< Current Y sprite to use. */
+   Trail_spfx *trail; /**< Trail graphic if applicable, else NULL. */
 
    /* position update and render */
    void (*update)(struct Weapon_*, const double, WeaponLayer); /**< Updates the weapon */
@@ -123,6 +124,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
 static void weapon_render( Weapon* w, const double dt );
 static void weapons_updateLayer( const double dt, const WeaponLayer layer );
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer );
+static void weapon_compute_trail( Weapon* w );
 /* Destruction. */
 static void weapon_destroy( Weapon* w, WeaponLayer layer );
 static void weapon_free( Weapon* w );
@@ -1011,6 +1013,38 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    /* Update the sound. */
    sound_updatePos(w->voice, w->solid->pos.x, w->solid->pos.y,
          w->solid->vel.x, w->solid->vel.y);
+
+   /* Update the trail. */
+   if (w->trail != NULL)
+      weapon_compute_trail( w );
+}
+
+
+/**
+ * @brief Updates the animated trail for a weapon.
+ */
+static void weapon_compute_trail( Weapon* w )
+{
+   double a, dx, dy;
+   glColour col;
+   Vector2d pos;
+
+   /* Compute the engine offset. */
+   a  = w->solid->dir;
+   dx = w->outfit->u.amm.trail_x_offset * cos(a);
+   dy = w->outfit->u.amm.trail_x_offset * sin(a);
+
+   vect_cset( &pos, w->solid->pos.x + dx, w->solid->pos.y + dy*M_SQRT1_2 );
+
+   /* Set the colour. */
+   if (w->solid->thrust > 0)
+      col = w->outfit->u.amm.trail_style->aftb_col;
+   else if (w->solid->dir_vel != 0.)
+      col = w->outfit->u.amm.trail_style->glow_col;
+   else
+      col = w->outfit->u.amm.trail_style->idle_col;
+
+   spfx_trail_sample( w->trail, pos, col );
 }
 
 
@@ -1500,6 +1534,10 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    /* Set facing direction. */
    gfx = outfit_gfx( w->outfit );
    gl_getSpriteFromDir( &w->sx, &w->sy, gfx, w->solid->dir );
+
+   /* Set up trails. */
+   if (ammo->u.amm.trail_style != NULL)
+      w->trail = spfx_trail_create( ammo->u.amm.trail_style );
 }
 
 
@@ -1833,6 +1871,9 @@ static void weapon_free( Weapon* w )
 
    /* Free the solid. */
    solid_free(w->solid);
+
+   /* Free the trail, if any. */
+   spfx_trail_remove(w->trail);
 
 #ifdef DEBUGGING
    memset(w, 0, sizeof(Weapon));

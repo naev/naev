@@ -590,7 +590,8 @@ static void spfx_trail_clear( Trail_spfx* trail )
  */
 void spfx_trail_remove( Trail_spfx* trail )
 {
-   trail->refcount--;
+   if (trail != NULL)
+      trail->refcount--;
 }
 
 
