@@ -2016,7 +2016,7 @@ void gui_setCargo (void)
 
 
 /**
- * @brief PlNULLayer just changed their nav computer target.
+ * @brief Player just changed their nav computer target.
  */
 void gui_setNav (void)
 {
