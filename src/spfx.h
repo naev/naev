@@ -82,10 +82,8 @@ void spfx_update( const double dt );
 void spfx_render( const int layer );
 void spfx_clear (void);
 Trail_spfx* spfx_trail_create( const trailStyle* style );
-int spfx_trail_should_grow( Trail_spfx* trail );
 void spfx_trail_grow( Trail_spfx* trail, Vector2d pos, glColour col  );
 void spfx_trail_remove( Trail_spfx* trail );
-void spfx_trail_draw( const Vector2d *hpos, const glColour *hcol, const Trail_spfx* trail );
 
 
 /*

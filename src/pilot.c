@@ -1697,16 +1697,6 @@ void pilot_render( Pilot* p, const double dt )
 {
    (void) dt;
    double scalew, scaleh;
-   int i, n;
-   Vector2d pos;
-   const glColour *col;
-
-   /* Tracks. */
-   n = array_size(p->ship->trail_emitters);
-   for (i=0; i<n; i++) {
-      col = pilot_compute_trail( p, &pos, i );
-      spfx_trail_draw( &pos, col, p->trail[i] );
-   }
 
    /* Check if needs scaling. */
    if (pilot_isFlag( p, PILOT_LANDING )) {
@@ -2210,10 +2200,8 @@ void pilot_update( Pilot* pilot, const double dt )
    n = array_size(pilot->ship->trail_emitters);
    for (i=0; i<n; i++) {
       trail = pilot->trail[i];
-      if (spfx_trail_should_grow( trail )) {
-         col = pilot_compute_trail( pilot, &pos, i );
-         spfx_trail_grow( trail, pos, *col );
-      }
+      col = pilot_compute_trail( pilot, &pos, i );
+      spfx_trail_grow( trail, pos, *col );
    }
 }
 

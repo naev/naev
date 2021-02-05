@@ -129,6 +129,7 @@ static void spfx_hapticRumble( double mod );
 /* Trail. */
 static void spfx_update_trails( double dt );
 static void spfx_trail_update( Trail_spfx* trail, double dt );
+static void spfx_trail_draw( const Trail_spfx* trail );
 static void spfx_trail_clear( Trail_spfx* trail );
 static void spfx_trail_free( Trail_spfx* trail );
 
@@ -538,15 +539,6 @@ static void spfx_trail_update( Trail_spfx* trail, double dt )
 
 
 /**
- * @brief Returns true if the trail needs a new sample (\see trail_grow), false if the caller needn't bother.
- */
-int spfx_trail_should_grow( Trail_spfx* trail )
-{
-   return (trail_size(trail) == 0) || (trail_back(trail).t < 1.-TRAIL_UPDATE_DT);
-}
-
-
-/**
  * @brief Makes a trail grow.
  *
  *    @param trail Trail to update.
@@ -559,6 +551,15 @@ void spfx_trail_grow( Trail_spfx* trail, Vector2d pos, glColour col )
    p.p = pos;
    p.c = col;
    p.t = 1.;
+
+   /* The "back" of the trail should always reflect our most recent state.  */
+   trail_back( trail ) = p;
+
+   /* We may need to insert a control point, but not if our last sample was recent enough. */
+   if (trail_size(trail) > 1 && trail_at( trail, trail->iwrite-2 ).t >= 1.-TRAIL_UPDATE_DT)
+      return;
+
+   /* If the last time we inserted a control point was recent enough, we don't need a new one. */
    if (trail_size(trail) == trail->capacity) {
       /* Full! Double capacity, and make the elements contiguous. (We've made space to grow rightward.) */
       trail->point_ringbuf = realloc( trail->point_ringbuf, 2 * trail->capacity * sizeof(trailPoint) );
@@ -607,7 +608,7 @@ static void spfx_trail_free( Trail_spfx* trail )
 /**
  * @brief Draws a trail on screen.
  */
-void spfx_trail_draw( const Vector2d *hpos, const glColour *hcol, const Trail_spfx* trail )
+static void spfx_trail_draw( const Trail_spfx* trail )
 {
    double x1, y1, x2, y2;
    trailPoint *tp, *tpp;
@@ -617,13 +618,6 @@ void spfx_trail_draw( const Vector2d *hpos, const glColour *hcol, const Trail_sp
    if (n==0)
       return;
 
-   /* Head trail. */
-   tp  = &trail_back( trail );
-   gl_gameToScreenCoords( &x1, &y1, hpos->x, hpos->y );
-   gl_gameToScreenCoords( &x2, &y2, tp->p.x, tp->p.y );
-   gl_drawTrack( x1, y1, x2, y2, 1., tp->t, hcol, &tp->c, trail->thickness*2. );
-
-   /* Rest. */
    for (i = trail->iread + 1; i < trail->iwrite; i++) {
       tp  = &trail_at( trail, i );
       tpp = &trail_at( trail, i-1 );
@@ -830,7 +824,6 @@ void spfx_render( const int layer )
    int sx, sy;
    double time;
 
-
    /* get the appropriate layer */
    switch (layer) {
       case SPFX_LAYER_FRONT:
@@ -845,6 +838,11 @@ void spfx_render( const int layer )
          WARN(_("Rendering invalid SPFX layer."));
          return;
    }
+
+   /* Trails are special (for now?). */
+   if (layer == SPFX_LAYER_BACK)
+      for (i=0; i<array_size(trail_spfx_stack); i++)
+         spfx_trail_draw( trail_spfx_stack[i] );
 
    /* Now render the layer */
    for (i=array_size(spfx_stack)-1; i>=0; i--) {
