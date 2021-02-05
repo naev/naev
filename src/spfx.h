@@ -51,6 +51,7 @@ typedef struct Trail_spfx_ {
    size_t capacity; /**< Buffer size, guaranteed to be a power of 2. */
    size_t iread; /**< Start index (NOT reduced modulo capacity). */
    size_t iwrite; /**< End index (NOT reduced modulo capacity). */
+   int refcount;      /**< Number of referrers. If 0, trail dies after its TTL. */
 } Trail_spfx;
 
 /** @brief Indexes into a trail's circular buffer.  */
@@ -80,11 +81,9 @@ void spfx_add( const int effect,
 void spfx_update( const double dt );
 void spfx_render( const int layer );
 void spfx_clear (void);
-void spfx_trail_create( Trail_spfx*, double thickness );
-void spfx_trail_update( Trail_spfx* trail, double dt );
+Trail_spfx* spfx_trail_create( const trailStyle* style );
 int spfx_trail_should_grow( Trail_spfx* trail );
 void spfx_trail_grow( Trail_spfx* trail, Vector2d pos, glColour col  );
-void spfx_trail_clear( Trail_spfx* trail );
 void spfx_trail_remove( Trail_spfx* trail );
 void spfx_trail_draw( const Vector2d *hpos, const glColour *hcol, const Trail_spfx* trail );
 

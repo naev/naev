@@ -48,6 +48,7 @@
 #define TRAIL_UPDATE_DT       0.05
 #define TRAIL_TTL_DT          1.
 static trailStyle* trail_style_stack;
+static Trail_spfx** trail_spfx_stack;
 
 
 /*
@@ -125,6 +126,11 @@ static void spfx_update_layer( SPFX *layer, const double dt );
 /* Haptic. */
 static int spfx_hapticInit (void);
 static void spfx_hapticRumble( double mod );
+/* Trail. */
+static void spfx_update_trails( double dt );
+static void spfx_trail_update( Trail_spfx* trail, double dt );
+static void spfx_trail_clear( Trail_spfx* trail );
+static void spfx_trail_free( Trail_spfx* trail );
 
 
 /**
@@ -294,6 +300,11 @@ void spfx_free (void)
    /* Free the noise. */
    noise_delete( shake_noise );
 
+   /* Free the trails. */
+   for (i=0; i<array_size(trail_spfx_stack); i++)
+      spfx_trail_free( trail_spfx_stack[i] );
+   array_free( trail_spfx_stack );
+
    /* Free the trail styles. */
    for (i=0; i<array_size(trail_style_stack); i++)
       free( trail_style_stack[i].name );
@@ -355,12 +366,16 @@ void spfx_add( int effect,
  */
 void spfx_clear (void)
 {
+   int i;
+
    /* Clear rumble */
    shake_set = 0;
    shake_off = 1;
    shake_force_mod = 0.;
    vectnull( &shake_pos );
    vectnull( &shake_vel );
+   for (i=0; i<array_size(trail_spfx_stack); i++)
+      spfx_trail_clear( trail_spfx_stack[i] );
 }
 
 
@@ -373,6 +388,7 @@ void spfx_update( const double dt )
 {
    spfx_update_layer( spfx_stack_front, dt );
    spfx_update_layer( spfx_stack_back, dt );
+   spfx_update_trails( dt );
 }
 
 
@@ -459,16 +475,45 @@ static void spfx_updateShake( double dt )
 /**
  * @brief Initalizes a trail.
  *
- *    @param[out] trail Initialized trail.
- *    @param thickness Thickness of the trail to create.
+ *    @param style Trail style to use.
+ *    @return Pointer to initialized trail. When done (due e.g. to pilot death), call spfx_trail_remove.
  */
-void spfx_trail_create(Trail_spfx* trail, double thickness)
+Trail_spfx* spfx_trail_create( const trailStyle* style )
 {
-   memset( trail, 0, sizeof(Trail_spfx) );
-   trail->thickness = thickness;
+   Trail_spfx *trail;
+
+   trail = calloc( 1, sizeof(Trail_spfx) );
+   trail->thickness = style->thick;
    trail->capacity = 1;
    trail->iread = trail->iwrite = 0;
    trail->point_ringbuf = calloc( trail->capacity, sizeof(trailPoint) );
+   trail->refcount = 1;
+
+   if ( trail_spfx_stack == NULL )
+      trail_spfx_stack = array_create( Trail_spfx* );
+   array_push_back( &trail_spfx_stack, trail );
+
+   return trail;
+}
+
+
+/**
+ * @brief Updates all trails (handling dispersal/fadeout).
+ *
+ *    @param dt Update interval.
+ */
+void spfx_update_trails( double dt ) {
+   int i;
+   Trail_spfx *trail;
+
+   for (i=0; i<array_size(trail_spfx_stack); i++) {
+      trail = trail_spfx_stack[i];
+      spfx_trail_update( trail, dt );
+      if (!trail->refcount && !trail_size(trail) ) {
+         spfx_trail_free( trail );
+         array_erase( &trail_spfx_stack, &trail_spfx_stack[i], &trail_spfx_stack[i+1] );
+      }
+   }
 }
 
 
@@ -478,7 +523,7 @@ void spfx_trail_create(Trail_spfx* trail, double thickness)
  *    @param trail Trail to update.
  *    @param dt Update interval.
  */
-void spfx_trail_update( Trail_spfx* trail, double dt )
+static void spfx_trail_update( Trail_spfx* trail, double dt )
 {
    size_t i;
 
@@ -531,7 +576,7 @@ void spfx_trail_grow( Trail_spfx* trail, Vector2d pos, glColour col )
  *
  *    @param trail Trail to clear.
  */
-void spfx_trail_clear( Trail_spfx* trail )
+static void spfx_trail_clear( Trail_spfx* trail )
 {
    trail->iread = trail->iwrite = 0;
 }
@@ -544,7 +589,18 @@ void spfx_trail_clear( Trail_spfx* trail )
  */
 void spfx_trail_remove( Trail_spfx* trail )
 {
+   trail->refcount--;
+}
+
+
+/**
+ * @brief Deallocates an unreferenced, expired trail.
+ */
+static void spfx_trail_free( Trail_spfx* trail )
+{
+   assert(trail->refcount == 0);
    free(trail->point_ringbuf);
+   free(trail);
 }
 
 

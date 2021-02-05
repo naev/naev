@@ -1705,7 +1705,7 @@ void pilot_render( Pilot* p, const double dt )
    n = array_size(p->ship->trail_emitters);
    for (i=0; i<n; i++) {
       col = pilot_compute_trail( p, &pos, i );
-      spfx_trail_draw( &pos, col, &p->trail[i] );
+      spfx_trail_draw( &pos, col, p->trail[i] );
    }
 
    /* Check if needs scaling. */
@@ -1934,10 +1934,6 @@ void pilot_update( Pilot* pilot, const double dt )
 
    /* Update electronic warfare. */
    pilot_ewUpdateDynamic( pilot );
-
-   /* Update already-emitted trails. */
-   for (i=0; i<array_size(pilot->ship->trail_emitters); i++)
-      spfx_trail_update( &pilot->trail[i], dt );
 
    /* Update stress. */
    if (!pilot_isFlag(pilot, PILOT_DISABLED)) { /* Case pilot is not disabled. */
@@ -2213,26 +2209,12 @@ void pilot_update( Pilot* pilot, const double dt )
    /* Update the track. */
    n = array_size(pilot->ship->trail_emitters);
    for (i=0; i<n; i++) {
-      trail = &pilot->trail[i];
+      trail = pilot->trail[i];
       if (spfx_trail_should_grow( trail )) {
          col = pilot_compute_trail( pilot, &pos, i );
          spfx_trail_grow( trail, pos, *col );
       }
    }
-}
-
-
-/**
- * @brief Clears the trails for a pilot.
- *
- *    @param p Pilot ot clear trails of.
- */
-void pilot_trailsClear( Pilot *p )
-{
-   int i, n;
-   n = array_size(p->ship->trail_emitters);
-   for (i=0; i<n; i++)
-      spfx_trail_clear( &p->trail[i] );
 }
 
 
@@ -2770,10 +2752,9 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* Animated track. */
    n = array_size(pilot->ship->trail_emitters);
-   pilot->trail = array_create_size( Trail_spfx, n );
+   pilot->trail = array_create_size( Trail_spfx*, n );
    for (i=0; i<n; i++)
-      spfx_trail_create( &pilot->trail[i], pilot->ship->trail_emitters[i].style->thick );
-
+      array_push_back( &pilot->trail, spfx_trail_create( pilot->ship->trail_emitters[i].style ) );
 }
 
 
@@ -3025,7 +3006,7 @@ void pilot_free( Pilot* p )
    /* Free animated track. */
    n = array_size(p->ship->trail_emitters);
    for (i=0; i<n; i++)
-      spfx_trail_remove(&p->trail[i]);
+      spfx_trail_remove( p->trail[i] );
    array_free(p->trail);
 
 #ifdef DEBUGGING

@@ -1866,9 +1866,6 @@ void player_brokeHyperspace (void)
       }
    }
 
-   /* Clear trail emitters. */
-   pilot_trailsClear( player.p );
-
    /* Safe since this is run in the player hook section. */
    hooks_run( "jumpin" );
    hooks_run( "enter" );
