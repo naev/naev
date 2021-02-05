@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-02-01 09:14-0500\n"
-"PO-Revision-Date: 2021-02-03 07:42+0000\n"
+"PO-Revision-Date: 2021-02-04 18:42+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -2560,18 +2560,24 @@ msgid ""
 "technology and the fact that at least half of the populace look like "
 "scientists, researchers, or engineers."
 msgstr ""
+"Tento bar odpovídá názvu samotné stanice. Ve skutečnosti se zdá, že je to "
+"hlavní atrakce, masivní prstenovitá místnost kasína s mnoha barmany, kteří "
+"se starají o patrony, hudba v pozadí a dobré jídlo. Jediným znakem původu "
+"Za'leku je neformální používání nepochopitelně pokročilé technologie a "
+"skutečnost, že alespoň polovina populace vypadá jako vědci, výzkumníci nebo "
+"inženýři."
 
 #: dat/assets/capricorn_ii.xml:2
 msgid "Capricorn II"
-msgstr ""
+msgstr "Capricorn II"
 
 #: dat/assets/capricorn_iii.xml:2
 msgid "Capricorn III"
-msgstr ""
+msgstr "Capricorn III"
 
 #: dat/assets/capricorn_iiia.xml:2
 msgid "Capricorn IIIa"
-msgstr ""
+msgstr "Capricorn IIIa"
 
 #: dat/assets/castellan_epsilon.xml:2
 msgid "Castellan Epsilon"

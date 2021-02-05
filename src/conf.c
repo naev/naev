@@ -126,18 +126,8 @@ void conf_setDefaults (void)
 {
    conf_cleanup();
 
-   /* ndata. */
-   free(conf.ndata);
-   conf.ndata        = NULL;
-
-   /* Language. */
-   free(conf.language);
-   conf.language     = NULL;
-
    /* Joystick. */
    conf.joystick_ind = -1;
-   free(conf.joystick_nam);
-   conf.joystick_nam = NULL;
 
    /* GUI. */
    conf.mesg_visible = 5;
@@ -169,7 +159,6 @@ void conf_setDefaults (void)
    conf.devmode      = 0;
    conf.devautosave  = 0;
    conf.devcsv       = 0;
-   free( conf.lastversion );
    conf.lastversion = strdup( "" );
 
    /* Gameplay. */
@@ -188,11 +177,8 @@ void conf_setDefaults (void)
    conf.fpu_except   = 0; /* Causes many issues. */
 
    /* Editor. */
-   free( conf.dev_save_sys );
    conf.dev_save_sys = strdup( DEV_SAVE_SYSTEM_DEFAULT );
-   free( conf.dev_save_map );
    conf.dev_save_map = strdup( DEV_SAVE_MAP_DEFAULT );
-   free( conf.dev_save_asset );
    conf.dev_save_asset = strdup( DEV_SAVE_ASSET_DEFAULT );
 }
 
@@ -288,12 +274,11 @@ void conf_setVideoDefaults (void)
  */
 void conf_cleanup (void)
 {
+   free(conf.datapath);
    free(conf.ndata);
    free(conf.language);
    free(conf.joystick_nam);
-
    free(conf.lastversion);
-
    free(conf.dev_save_sys);
    free(conf.dev_save_map);
    free(conf.dev_save_asset);
