@@ -9,7 +9,7 @@
  </trail>
  <trail>
   <id>thin</id>
-  <thickness>1</thickness>
+  <thickness>2</thickness>
   <idle r="1" g="1" b="1" a="0.05" />
   <glow r="0" g="1" b="1" a=".7" />
   <afterburn r="1" g=".7" b="0" a=".85" />
@@ -23,8 +23,8 @@
   <jumping r=".9" g=".1" b=".9" a="0.85" />
  </trail>
  <trail>
-  <id>fire1</id>
-  <thickness>1</thickness>
+  <id>fire-thin</id>
+  <thickness>2</thickness>
   <idle r="1" g="1" b="1" a="0.05" />
   <glow r="1" g=".84" b="0" a="0.7" />
   <afterburn r="1" g=".7" b="0" a="0.85" />
@@ -38,16 +38,16 @@
   <jumping r=".9" g=".1" b=".9" a="0.85" />
  </trail>
  <trail>
-  <id>red5</id>
-  <thickness>5</thickness>
+  <id>red10</id>
+  <thickness>10</thickness>
   <idle r="1" g="1" b="1" a=".05" />
   <glow r="1" g=".3" b=".3" a="0.7" />
   <afterburn r="1" g=".7" b="0" a="0.85" />
   <jumping r=".9" g=".1" b=".9" a="0.85" />
  </trail>
  <trail>
-  <id>red6</id>
-  <thickness>6</thickness>
+  <id>red12</id>
+  <thickness>12</thickness>
   <idle r="1" g="1" b="1" a=".05" />
   <glow r="1" g=".3" b=".3" a="0.7" />
   <afterburn r="1" g=".7" b="0" a="0.85" />

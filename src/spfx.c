@@ -905,7 +905,7 @@ static int trailTypes_load (void)
       if (xml_isNode(node,"trail")) {
          tc = &array_grow( &trail_style_stack );
          memset( tc, 0, sizeof(trailStyle) );
-         tc->thick = 3;
+         tc->thick = 6;
          cur = node->children;
 
          /* Load it. */
