@@ -1557,6 +1557,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          if (buf == NULL)
             buf = "default";
          temp->u.amm.trail_style = trailStyle_get( buf );
+         continue;
       }
       if (xml_isNode(node,"ai")) {
          buf = xml_get(node);
