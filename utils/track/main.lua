@@ -49,7 +49,6 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 
    // Modulate alpha based on dispersion
    m = 0.5 + 0.5*impulse( 1.-t, 30. );
-   m = impulse( 1.-t, 5. );
 
    // Modulate width
    d = smoothbeam( pos.y, 3.*m );
