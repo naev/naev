@@ -545,7 +545,7 @@ static void spfx_trail_update( Trail_spfx* trail, double dt )
  *    @param pos Position of the new control point.
  *    @param col Colour.
  */
-void spfx_trail_grow( Trail_spfx* trail, Vector2d pos, glColour col )
+void spfx_trail_sample( Trail_spfx* trail, Vector2d pos, glColour col )
 {
    trailPoint p;
    p.p = pos;

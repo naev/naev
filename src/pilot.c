@@ -2201,7 +2201,7 @@ void pilot_update( Pilot* pilot, const double dt )
    for (i=0; i<n; i++) {
       trail = pilot->trail[i];
       col = pilot_compute_trail( pilot, &pos, i );
-      spfx_trail_grow( trail, pos, *col );
+      spfx_trail_sample( trail, pos, *col );
    }
 }
 
