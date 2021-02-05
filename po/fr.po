@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-02-01 09:14-0500\n"
 "PO-Revision-Date: 2021-02-06 00:39+0000\n"
-"Last-Translator: rhebok-git <geneenkei@gmail.com>\n"
+"Last-Translator: nouara <amminouara1999@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -130,7 +130,7 @@ msgstr "Mais la marche de l'histoire a trébuché sur l'inconnu, sur l'Incident.
 
 #: dat/intro:27
 msgid "It tore the heart out of the Empire."
-msgstr ""
+msgstr "Cela a déchiré le cœur de l'Empire."
 
 #: dat/intro:29
 #, fuzzy
@@ -148,7 +148,7 @@ msgstr ""
 
 #: dat/intro:32
 msgid "What else remains? Questions."
-msgstr ""
+msgstr "Que reste-t-il d'autre ? Des questions."
 
 #: dat/intro:34
 msgid ""
