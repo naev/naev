@@ -27,9 +27,9 @@ SHADERS = [
       uniforms = ["projection", "color"]
    ),
    Shader(
-      name = "track",
-      vs_path = "track.vert",
-      fs_path = "track.frag",
+      name = "trail",
+      vs_path = "trail.vert",
+      fs_path = "trail.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "c1", "c2", "t1", "t2" ]
    ),

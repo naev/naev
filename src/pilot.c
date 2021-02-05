@@ -2196,7 +2196,7 @@ void pilot_update( Pilot* pilot, const double dt )
    /* See if there is commodities to gather. */
    gatherable_gather( pilot->id );
 
-   /* Update the track. */
+   /* Update the trail. */
    n = array_size(pilot->ship->trail_emitters);
    for (i=0; i<n; i++) {
       trail = pilot->trail[i];
@@ -2738,7 +2738,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       ai_pinit( pilot, ai ); /* Must run before ai_create */
    pilot->shoot_indicator = 0;
 
-   /* Animated track. */
+   /* Animated trail. */
    n = array_size(pilot->ship->trail_emitters);
    pilot->trail = array_create_size( Trail_spfx*, n );
    for (i=0; i<n; i++)
@@ -2991,7 +2991,7 @@ void pilot_free( Pilot* p )
    /* Free messages. */
    luaL_unref(naevL, p->messages, LUA_REGISTRYINDEX);
 
-   /* Free animated track. */
+   /* Free animated trail. */
    n = array_size(p->ship->trail_emitters);
    for (i=0; i<n; i++)
       spfx_trail_remove( p->trail[i] );

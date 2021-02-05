@@ -746,7 +746,7 @@ void gl_drawLine( const double x1, const double y1,
 
 
 /**
- * @brief Draws a track.
+ * @brief Draws a trail.
  *
  *    @param x1 X position of the first point in screen coordinates.
  *    @param y1 Y position of the first point in screen coordinates.
@@ -758,14 +758,14 @@ void gl_drawLine( const double x1, const double y1,
  *    @param c2 Colour to use for second point.
  *    @param thick Thickness to use.
  */
-void gl_drawTrack( double x1, double y1,
+void gl_drawTrail( double x1, double y1,
       double x2, double y2, double t1, double t2,
       const glColour *c1, const glColour *c2, double thick )
 {
    gl_Matrix4 projection;
    double a, s;
 
-   glUseProgram(shaders.track.program);
+   glUseProgram(shaders.trail.program);
 
    a = atan2( y2-y1, x2-x1 );
    s = sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) );
@@ -775,24 +775,24 @@ void gl_drawTrack( double x1, double y1,
    projection = gl_Matrix4_Rotate2d(projection, a);
    projection = gl_Matrix4_Scale(projection, s, 2*thick, 1);
    projection = gl_Matrix4_Translate(projection, 0., -.5, 0);
-   glEnableVertexAttribArray( shaders.track.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.track.vertex, 0, 2, GL_FLOAT, 0 );
+   glEnableVertexAttribArray( shaders.trail.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.trail.vertex, 0, 2, GL_FLOAT, 0 );
 
    /* There was some ambitious code here to pass the colours to the vertex shader.
     * Would advise looking at toolkit_drawOutline in src/toolkit.c for reference if retrying that. */
 
    /* Set uniforms. */
-   gl_uniformColor(shaders.track.c1, c1);
-   gl_uniformColor(shaders.track.c2, c2);
-   gl_Matrix4_Uniform(shaders.track.projection, projection);
-   glUniform1f(shaders.track.t1, (GLfloat) t1);
-   glUniform1f(shaders.track.t2, (GLfloat) t2);
+   gl_uniformColor(shaders.trail.c1, c1);
+   gl_uniformColor(shaders.trail.c2, c2);
+   gl_Matrix4_Uniform(shaders.trail.projection, projection);
+   glUniform1f(shaders.trail.t1, (GLfloat) t1);
+   glUniform1f(shaders.trail.t2, (GLfloat) t2);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
-   glDisableVertexAttribArray( shaders.track.vertex );
+   glDisableVertexAttribArray( shaders.trail.vertex );
    glUseProgram(0);
 
    /* Check errors. */

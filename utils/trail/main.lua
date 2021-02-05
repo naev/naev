@@ -1,5 +1,5 @@
 --[[
--- Run with `love track`
+-- Run with `love trail`
 --]]
 
 
