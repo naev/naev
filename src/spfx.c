@@ -871,8 +871,9 @@ void spfx_render( const int layer )
 }
 
 
-static int trailTypes_parse( xmlNodePtr cur, trailStyle *tc )
+static int trailTypes_parse( xmlNodePtr node, trailStyle *tc )
 {
+   xmlNodePtr cur = node->children;
    do {
       xml_onlyNodes(cur);
       if (xml_isNode(cur,"thickness"))
@@ -917,7 +918,7 @@ static int trailTypes_parse( xmlNodePtr cur, trailStyle *tc )
 static int trailTypes_load (void)
 {
    trailStyle *tc, *parent;
-   xmlNodePtr node, cur;
+   xmlNodePtr node;
    xmlDocPtr doc;
    char *name, *inherits;
 
@@ -949,12 +950,11 @@ static int trailTypes_load (void)
          memset( tc, 0, sizeof(trailStyle) );
          xmlr_attr_strd( node, "name", tc->name );
          tc->thick = 6;
-         cur = node->children;
 
          /* Do the first pass for non-inheriting trails. */
          xmlr_attr_strd( node, "inherits", inherits );
          if (inherits == NULL)
-            trailTypes_parse( cur, tc );
+            trailTypes_parse( node, tc );
          else
             free( inherits );
       }
@@ -990,7 +990,7 @@ static int trailTypes_load (void)
          tc->thick = parent->thick;
 
          /* Load remaining properties (overrides parent). */
-         trailTypes_parse( node->children, tc );
+         trailTypes_parse( node, tc );
       }
    } while (xml_nextNode(node));
 
