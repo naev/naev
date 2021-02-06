@@ -8,20 +8,25 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-02-01 09:14-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-02-06 00:39+0000\n"
+"Last-Translator: rhebok-git <geneenkei@gmail.com>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.5-dev\n"
 
 #: dat/intro:2
+#, fuzzy
 msgid ""
 "The night sky always draws our eyes. People look up with a question, or in "
 "wonder, and sometimes with a dream: to venture forth among the stars."
 msgstr ""
+"Le ciel nocturne attire toujours nos yeux. Les gens lèvent les yeux avec une "
+"question, ou avec émerveillement, et parfois avec un rêve : s'aventurer "
+"parmi les étoiles."
 
 #: dat/intro:4
 msgid ""
@@ -29,6 +34,9 @@ msgid ""
 "of distant suns, far away but so clear. To reach out and grasp one would "
 "only cost a lifetime. Cheap at the price."
 msgstr ""
+"Depuis la Terre, les premiers spationautes ont aperçu de minuscules joyaux "
+"brillants à la lumière de soleils lointains, lointains mais si clairs. Pour "
+"les atteindre et les saisir ne coûterait qu’une vie. Bon marché à ce prix."
 
 #: dat/intro:7
 msgid ""
@@ -36,6 +44,10 @@ msgid ""
 "hurled themselves out into the void. On arrival, they decanted and woke to "
 "find new stars staring coldly down from stranger skies."
 msgstr ""
+"Ainsi, les hommes et les femmes ont enfermé leurs corps endormis dans "
+"d'immenses boîtes métalliques. Ils se sont précipités dans le vide. À leur "
+"arrivée, ils ont décanté et se sont réveillés pour trouver de nouvelles "
+"étoiles regardant froidement depuis des cieux étrangers."
 
 #: dat/intro:10
 msgid ""
@@ -44,6 +56,11 @@ msgid ""
 "civilisation spread, as it always has, with exponential enthusiasm -- "
 "ripples in the dark sea of space."
 msgstr ""
+"La première vague d'explorateurs s'est glissée d'étoile en étoile à des "
+"vitesses infraluminiques, jusqu'à ce que l'invention de la pulsion de "
+"l'hyperespace entraîne une seconde croissance. Puis la civilisation s'est "
+"répandue, comme elle l'a toujours fait, avec un enthousiasme exponentiel -- "
+"des ondulations dans la mer sombre de l'espace."
 
 #: dat/intro:12
 msgid ""
@@ -52,12 +69,19 @@ msgid ""
 "food, and distrust sowed the seeds of discord. Once begun, the fever of war "
 "spread from world to world and became a holocaust."
 msgstr ""
+"Cependant, l'âge héroïque de la découverte n'a duré que tant que la "
+"curiosité humaine a dépassé la cupidité. Trop tôt, des conflits ont éclaté "
+"dans les colonies. La terre, le carburant, la nourriture et la méfiance ont "
+"semé les graines de la discorde. Une fois commencée, la fièvre de la guerre "
+"se répandit de monde en monde et devint un holocauste."
 
 #: dat/intro:15
 msgid ""
 "After a hundred years of interstellar conflict, on the ashes that remained, "
 "at last a new order built its foundations."
 msgstr ""
+"Après cent ans de conflits interstellaires, sur les cendres qui sont "
+"restées, un nouvel ordre a construit ses fondations."
 
 #: dat/intro:17
 msgid ""
@@ -66,6 +90,11 @@ msgid ""
 "military, relations between planets resumed; abandoned trade routes saw "
 "traffic for the first time in living memory."
 msgstr ""
+"Un homme nommé Daedris a affirmé la domination sur les mondes épuisés. Il "
+"fonda un Empire Galactique et s’en nomma souverain. Sous la main de fer de "
+"ses militaires, les relations entre les planètes reprirent; les routes "
+"commerciales abandonnées ont vu le trafic pour la première fois dans la "
+"mémoire d'homme."
 
 #: dat/intro:19
 msgid ""
@@ -73,6 +102,9 @@ msgid ""
 "irradiated rock was cleansed and dead planets brought back to life. Peace "
 "reigned in an imperial golden age."
 msgstr ""
+"Les érudits l'appellent le zénith : la technologie a bondi en avant, la "
+"culture a prospéré, la roche irradiée a été nettoyée et les planètes mortes "
+"ont été ramenées à la vie. La paix régnait dans un âge d'or impérial."
 
 #: dat/intro:21
 msgid ""
@@ -81,26 +113,38 @@ msgid ""
 "the imperium went awry. In some regions, administration fell into the hands "
 "of other powers. The Great Houses now policed the space lanes."
 msgstr ""
+"Après Daedris, sous ses successeurs, la lumière de l'empire s'est affaibli. "
+"Les troubles civils et la division religieuse affaiblissent les liens "
+"sociaux. Les grands projets de l'imperium tournent mal. Dans certaines "
+"régions, l'administration est tombée entre les mains d'autres puissances. "
+"Les Grandes Maisons surveillaient maintenant les voies spatiales."
 
 #: dat/intro:23
+#, fuzzy
 msgid "Rise and fall, the rhythm of history. "
-msgstr ""
+msgstr "Montée et chute, le rythme de l’histoire. "
 
 #: dat/intro:25
 msgid "But the march of history stumbled over the unknown, over the Incident."
-msgstr ""
+msgstr "Mais la marche de l'histoire a trébuché sur l'inconnu, sur l'Incident."
 
 #: dat/intro:27
 msgid "It tore the heart out of the Empire."
 msgstr ""
 
 #: dat/intro:29
+#, fuzzy
 msgid ""
 "From Earth, a cataclysmic explosion ripped through space, annihilating "
 "stars, vaporising worlds. Billions died. Dozens of systems disappeared into "
 "the mysterious nebula left behind. Now the great, galaxy-spanning "
 "civilisation survives as a shadow of its former glory."
 msgstr ""
+"Depuis la Terre, une explosion cataclysmique s'est déchiré à travers "
+"l'espace, anéantissant les étoiles, vaporisant des mondes. Des milliards "
+"sont morts. Des dizaines de systèmes planétaires ont disparu dans la "
+"mystérieuse nébuleuse laissée derrière. Aujourd'hui, la grande civilisation "
+"galactique survit comme l'ombre de sa gloire passée."
 
 #: dat/intro:32
 msgid "What else remains? Questions."
@@ -115,7 +159,7 @@ msgstr ""
 
 #: dat/intro:36
 msgid "Welcome to the universe of Naev..."
-msgstr ""
+msgstr "Bienvenue dans l'univers de Naev..."
 
 #: dat/AUTHORS:1
 msgid "Current Core Development Team"
