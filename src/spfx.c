@@ -905,15 +905,14 @@ static int trailTypes_load (void)
       if (xml_isNode(node,"trail")) {
          tc = &array_grow( &trail_style_stack );
          memset( tc, 0, sizeof(trailStyle) );
+         xmlr_attr_strd( node, "name", tc->name );
          tc->thick = 6;
          cur = node->children;
 
          /* Load it. */
          do {
-            if (xml_isNode(cur,"id")) {
-               tc->name = xml_getStrd(cur);
-            }
-            else if (xml_isNode(cur,"thickness"))
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur,"thickness"))
                tc->thick = xml_getFloat(cur);
             else if (xml_isNode(cur,"idle")) {
                xmlr_attr_float( cur, "r", tc->idle_col.r );
@@ -939,9 +938,8 @@ static int trailTypes_load (void)
                xmlr_attr_float( cur, "b", tc->jmpn_col.b );
                xmlr_attr_float( cur, "a", tc->jmpn_col.a );
             }
-            else {
-               WARN(_("Trail has unknown node '%s'."), cur->name);
-            }
+            else
+               WARN(_("Trail '%s' has unknown node '%s'."), tc->name, cur->name);
          } while (xml_nextNode(cur));
 
       }

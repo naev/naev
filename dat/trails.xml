@@ -1,52 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Trail_types>
- <trail>
-  <id>default</id>
+ <trail name="default">
   <idle r="1" g="1" b="1" a="0.05" />
   <glow r="0" g="1" b="1" a=".7" />
   <afterburn r="1" g=".7" b="0" a=".85" />
   <jumping r=".9" g=".1" b=".9" a=".85" />
  </trail>
- <trail>
-  <id>thin</id>
+ <trail name="thin">
   <thickness>2</thickness>
   <idle r="1" g="1" b="1" a="0.05" />
   <glow r="0" g="1" b="1" a=".7" />
   <afterburn r="1" g=".7" b="0" a=".85" />
   <jumping r=".9" g=".1" b=".9" a=".85" />
  </trail>
- <trail>
-  <id>fire</id>
+ <trail name="fire">
   <idle r="1" g="1" b="1" a="0.05" />
   <glow r="1" g=".84" b="0" a="0.7" />
   <afterburn r="1" g=".7" b="0" a="0.85" />
   <jumping r=".9" g=".1" b=".9" a="0.85" />
  </trail>
- <trail>
-  <id>fire-thin</id>
+ <trail name="fire-thin">
   <thickness>2</thickness>
   <idle r="1" g="1" b="1" a="0.05" />
   <glow r="1" g=".84" b="0" a="0.7" />
   <afterburn r="1" g=".7" b="0" a="0.85" />
   <jumping r=".9" g=".1" b=".9" a="0.85" />
  </trail>
- <trail>
-  <id>red</id>
+ <trail name="red">
   <idle r="1" g="1" b="1" a=".05" />
   <glow r="1" g=".3" b=".3" a="0.7" />
   <afterburn r="1" g=".7" b="0" a="0.85" />
   <jumping r=".9" g=".1" b=".9" a="0.85" />
  </trail>
- <trail>
-  <id>red10</id>
+ <trail name="red10">
   <thickness>10</thickness>
   <idle r="1" g="1" b="1" a=".05" />
   <glow r="1" g=".3" b=".3" a="0.7" />
   <afterburn r="1" g=".7" b="0" a="0.85" />
   <jumping r=".9" g=".1" b=".9" a="0.85" />
  </trail>
- <trail>
-  <id>red12</id>
+ <trail name="red12">
   <thickness>12</thickness>
   <idle r="1" g="1" b="1" a=".05" />
   <glow r="1" g=".3" b=".3" a="0.7" />
