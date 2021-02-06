@@ -13,6 +13,14 @@
   <thickness>2</thickness>
   <ttl>1</ttl>
  </trail>
+ <trail name="missile" inherits="default">
+  <thickness>2</thickness>
+  <ttl>0.3</ttl>
+ </trail>
+ <trail name="missileL" inherits="default">
+  <thickness>4</thickness>
+  <ttl>0.5</ttl>
+ </trail>
 
  <!-- Fire type of engines-->
  <trail name="fire">
@@ -26,6 +34,14 @@
  <trail name="fire-thin" inherits="fire">
   <thickness>2</thickness>
   <ttl>1</ttl>
+ </trail>
+ <trail name="fire-missile" inherits="fire">
+  <thickness>2</thickness>
+  <ttl>0.3</ttl>
+ </trail>
+ <trail name="fire-missileL" inherits="fire">
+  <thickness>4</thickness>
+  <ttl>0.5</ttl>
  </trail>
 
  <!-- Red type of engines -->
@@ -44,5 +60,13 @@
  <trail name="red12" inherits="red">
   <thickness>12</thickness>
   <ttl>2</ttl>
+ </trail>
+ <trail name="red-missile" inherits="red">
+  <thickness>2</thickness>
+  <ttl>0.3</ttl>
+ </trail>
+ <trail name="red-missileL" inherits="red">
+  <thickness>4</thickness>
+  <ttl>0.5</ttl>
  </trail>
 </Trail_types>
