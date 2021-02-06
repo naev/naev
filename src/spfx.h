@@ -23,21 +23,30 @@
 /**
  * @brief represents a set of colour for trails.
  */
-typedef struct trailStyle_ {
-   char* name;       /**< Colour set's name. */
-   glColour idle_col;/**< Colour when idle. */
-   glColour glow_col;/**< Colour when thrusting. */
-   glColour aftb_col;/**< Colour when afterburning. */
-   glColour jmpn_col;/**< Colour when jumping. */
-   double thick;     /**< Thickness (in px). */
-   double ttl;       /**< Time To Life (in seconds). */
-} trailStyle;
+typedef struct TrailStyle_ {
+   glColour col; /**< Colour. */
+   double thick; /**< Thickness. */
+} TrailStyle;
+
+
+/**
+ * @brief represents a set of styles for trails.
+ */
+typedef struct TrailSpec_ {
+   char* name;      /**< Trail definition's name. */
+   double ttl;      /**< Time To Life (in seconds). */
+   TrailStyle idle; /**< Colour when idle. */
+   TrailStyle glow; /**< Colour when thrusting. */
+   TrailStyle aftb; /**< Colour when afterburning. */
+   TrailStyle jmpn; /**< Colour when jumping. */
+} TrailSpec;
 
 
 typedef struct trailPoint_ {
    Vector2d p;    /**< Control points for the trail. */
    glColour c;   /**< Colour associated with the trail's control points. */
    double t; /**< Timer, normalized to the time to live of the trail (starts at 1, ends at 0). */
+   double thickness; /**< Thickness of the trail. */
 } trailPoint;
 
 
@@ -48,7 +57,6 @@ typedef struct trailPoint_ {
  */
 typedef struct Trail_spfx_ {
    double ttl;       /**< Time To Life (in seconds). */
-   double thickness; /**< Thickness of the trail. */
    trailPoint *point_ringbuf; /**< Circular buffer (malloced/freed) of trail points. */
    size_t capacity; /**< Buffer size, guaranteed to be a power of 2. */
    size_t iread; /**< Start index (NOT reduced modulo capacity). */
@@ -70,7 +78,7 @@ typedef struct Trail_spfx_ {
  * stack manipulation
  */
 int spfx_get( char* name );
-const trailStyle* trailStyle_get( const char* name );
+const TrailSpec* trailSpec_get( const char* name );
 void spfx_add( const int effect,
       const double px, const double py,
       const double vx, const double vy,
@@ -83,8 +91,8 @@ void spfx_add( const int effect,
 void spfx_update( const double dt );
 void spfx_render( const int layer );
 void spfx_clear (void);
-Trail_spfx* spfx_trail_create( const trailStyle* style );
-void spfx_trail_sample( Trail_spfx* trail, Vector2d pos, glColour col  );
+Trail_spfx* spfx_trail_create( const TrailSpec* spec );
+void spfx_trail_sample( Trail_spfx* trail, Vector2d pos, TrailStyle style );
 void spfx_trail_remove( Trail_spfx* trail );
 
 

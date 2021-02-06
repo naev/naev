@@ -87,7 +87,7 @@ typedef struct ShipTrailEmitter_ {
    double x_engine;   /**< Offset x. */
    double y_engine;   /**< Offset y. */
    double h_engine;   /**< Offset z. */
-   const trailStyle* style; /**< Style characteristics. */
+   const TrailSpec* trail_spec; /**< Trail type to emit. */
 } ShipTrailEmitter;
 
 

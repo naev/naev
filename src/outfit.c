@@ -1485,7 +1485,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    temp->u.amm.spfx_shield = -1;
    temp->u.amm.sound       = -1;
    temp->u.amm.sound_hit   = -1;
-   temp->u.amm.trail_style = NULL;
+   temp->u.amm.trail_spec  = NULL;
    temp->u.amm.ai          = -1;
 
    do { /* load all the data */
@@ -1556,7 +1556,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          buf = xml_get(node);
          if (buf == NULL)
             buf = "default";
-         temp->u.amm.trail_style = trailStyle_get( buf );
+         temp->u.amm.trail_spec = trailSpec_get( buf );
          continue;
       }
       if (xml_isNode(node,"ai")) {

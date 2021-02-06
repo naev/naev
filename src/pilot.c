@@ -79,7 +79,7 @@ static int pilot_validEnemy( const Pilot* p, const Pilot* target );
 /* Misc. */
 static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
-static const glColour* pilot_compute_trail( Pilot* p, Vector2d* pos, int generator );
+static void pilot_sample_trail( Pilot* p, int generator );
 
 
 /**
@@ -1810,9 +1810,6 @@ void pilot_update( Pilot* pilot, const double dt )
    Damage dmg;
    double stress_falloff;
    double efficiency, thrust;
-   Vector2d pos;
-   const glColour *col;
-   Trail_spfx *trail;
 
    /* Check target validity. */
    if (pilot->target != pilot->id) {
@@ -2198,26 +2195,22 @@ void pilot_update( Pilot* pilot, const double dt )
 
    /* Update the trail. */
    n = array_size(pilot->ship->trail_emitters);
-   for (i=0; i<n; i++) {
-      trail = pilot->trail[i];
-      col = pilot_compute_trail( pilot, &pos, i );
-      spfx_trail_sample( trail, pos, *col );
-   }
+   for (i=0; i<n; i++)
+      pilot_sample_trail( pilot, i );
 }
 
 
 /**
- * @brief Computes the trail generation parameters.
+ * @brief Updates the indicated trail.
  *
  *    @param p Pilot.
- *    @param [out] pos Position.
  *    @param generator Generator index
- *    @return col Colour.
  */
-static const glColour* pilot_compute_trail( Pilot* p, Vector2d* pos, int generator )
+static void pilot_sample_trail( Pilot* p, int generator )
 {
    double a, dx, dy;
-   const glColour *col;
+   TrailStyle style;
+   Vector2d pos;
 
    /* Compute the engine offset. */
    a  = p->solid->dir;
@@ -2226,20 +2219,20 @@ static const glColour* pilot_compute_trail( Pilot* p, Vector2d* pos, int generat
    dy = p->ship->trail_emitters[generator].x_engine * sin(a) +
         p->ship->trail_emitters[generator].y_engine * cos(a);
 
-   vect_cset( pos, p->solid->pos.x + dx, 
+   vect_cset( &pos, p->solid->pos.x + dx,
               p->solid->pos.y + dy*M_SQRT1_2 + p->ship->trail_emitters[generator].h_engine*M_SQRT1_2 );
 
    /* Set the colour. */
    if (pilot_isFlag(p, PILOT_HYPERSPACE))
-      col = &p->ship->trail_emitters[generator].style->jmpn_col;
+      style = p->ship->trail_emitters[generator].trail_spec->jmpn;
    else if (pilot_isFlag(p, PILOT_AFTERBURNER))
-      col = &p->ship->trail_emitters[generator].style->aftb_col;
+      style = p->ship->trail_emitters[generator].trail_spec->aftb;
    else if (p->engine_glow > 0.)
-      col = &p->ship->trail_emitters[generator].style->glow_col;
+      style = p->ship->trail_emitters[generator].trail_spec->glow;
    else
-      col = &p->ship->trail_emitters[generator].style->idle_col;
+      style = p->ship->trail_emitters[generator].trail_spec->idle;
 
-   return col;
+   spfx_trail_sample( p->trail[generator], pos, style );
 }
 
 
@@ -2742,7 +2735,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    n = array_size(pilot->ship->trail_emitters);
    pilot->trail = array_create_size( Trail_spfx*, n );
    for (i=0; i<n; i++)
-      array_push_back( &pilot->trail, spfx_trail_create( pilot->ship->trail_emitters[i].style ) );
+      array_push_back( &pilot->trail, spfx_trail_create( pilot->ship->trail_emitters[i].trail_spec ) );
 }
 
 

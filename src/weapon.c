@@ -124,7 +124,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
 static void weapon_render( Weapon* w, const double dt );
 static void weapons_updateLayer( const double dt, const WeaponLayer layer );
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer );
-static void weapon_compute_trail( Weapon* w );
+static void weapon_sample_trail( Weapon* w );
 /* Destruction. */
 static void weapon_destroy( Weapon* w, WeaponLayer layer );
 static void weapon_free( Weapon* w );
@@ -1016,17 +1016,17 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
    /* Update the trail. */
    if (w->trail != NULL)
-      weapon_compute_trail( w );
+      weapon_sample_trail( w );
 }
 
 
 /**
  * @brief Updates the animated trail for a weapon.
  */
-static void weapon_compute_trail( Weapon* w )
+static void weapon_sample_trail( Weapon* w )
 {
    double a, dx, dy;
-   glColour col;
+   TrailStyle style;
    Vector2d pos;
 
    /* Compute the engine offset. */
@@ -1038,13 +1038,13 @@ static void weapon_compute_trail( Weapon* w )
 
    /* Set the colour. */
    if (w->solid->thrust > 0)
-      col = w->outfit->u.amm.trail_style->aftb_col;
+      style = w->outfit->u.amm.trail_spec->aftb;
    else if (w->solid->dir_vel != 0.)
-      col = w->outfit->u.amm.trail_style->glow_col;
+      style = w->outfit->u.amm.trail_spec->glow;
    else
-      col = w->outfit->u.amm.trail_style->idle_col;
+      style = w->outfit->u.amm.trail_spec->idle;
 
-   spfx_trail_sample( w->trail, pos, col );
+   spfx_trail_sample( w->trail, pos, style );
 }
 
 
@@ -1536,8 +1536,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    gl_getSpriteFromDir( &w->sx, &w->sy, gfx, w->solid->dir );
 
    /* Set up trails. */
-   if (ammo->u.amm.trail_style != NULL)
-      w->trail = spfx_trail_create( ammo->u.amm.trail_style );
+   if (ammo->u.amm.trail_spec != NULL)
+      w->trail = spfx_trail_create( ammo->u.amm.trail_spec );
 }
 
 

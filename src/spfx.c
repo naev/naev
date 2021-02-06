@@ -47,7 +47,7 @@
 
 /* Trail stuff. */
 #define TRAIL_UPDATE_DT       0.05
-static trailStyle* trail_style_stack;
+static TrailSpec* trail_spec_stack;
 static Trail_spfx** trail_spfx_stack;
 
 
@@ -75,9 +75,9 @@ static double haptic_lastUpdate  = 0.; /**< Timer to update haptic effect again.
 /*
  * Trail colours handling.
  */
-static int trailTypes_load (void);
-static int trailTypes_parse( xmlNodePtr cur, trailStyle *tc );
-static trailStyle* trailStyle_getRaw( const char* name );
+static int trailSpec_load (void);
+static void trailSpec_parse( xmlNodePtr cur, TrailSpec *tc );
+static TrailSpec* trailSpec_getRaw( const char* name );
 
 
 /**
@@ -261,7 +261,7 @@ int spfx_load (void)
    xmlFreeDoc(doc);
 
    /* Trail colour sets. */
-   trailTypes_load();
+   trailSpec_load();
 
    /*
     * Now initialize force feedback.
@@ -309,9 +309,9 @@ void spfx_free (void)
    array_free( trail_spfx_stack );
 
    /* Free the trail styles. */
-   for (i=0; i<array_size(trail_style_stack); i++)
-      free( trail_style_stack[i].name );
-   array_free( trail_style_stack );
+   for (i=0; i<array_size(trail_spec_stack); i++)
+      free( trail_spec_stack[i].name );
+   array_free( trail_spec_stack );
 }
 
 
@@ -478,16 +478,14 @@ static void spfx_updateShake( double dt )
 /**
  * @brief Initalizes a trail.
  *
- *    @param style Trail style to use.
  *    @return Pointer to initialized trail. When done (due e.g. to pilot death), call spfx_trail_remove.
  */
-Trail_spfx* spfx_trail_create( const trailStyle* style )
+Trail_spfx* spfx_trail_create( const TrailSpec* spec )
 {
    Trail_spfx *trail;
 
    trail = calloc( 1, sizeof(Trail_spfx) );
-   trail->thickness = style->thick;
-   trail->ttl = style->ttl;
+   trail->ttl = spec->ttl;
    trail->capacity = 1;
    trail->iread = trail->iwrite = 0;
    trail->point_ringbuf = calloc( trail->capacity, sizeof(trailPoint) );
@@ -546,14 +544,15 @@ static void spfx_trail_update( Trail_spfx* trail, double dt )
  *
  *    @param trail Trail to update.
  *    @param pos Position of the new control point.
- *    @param col Colour.
+ *    @param style Style.
  */
-void spfx_trail_sample( Trail_spfx* trail, Vector2d pos, glColour col )
+void spfx_trail_sample( Trail_spfx* trail, Vector2d pos, TrailStyle style )
 {
    trailPoint p;
    p.p = pos;
-   p.c = col;
+   p.c = style.col;
    p.t = 1.;
+   p.thickness = style.thick;
 
    /* The "back" of the trail should always reflect our most recent state.  */
    trail_back( trail ) = p;
@@ -614,7 +613,7 @@ static void spfx_trail_free( Trail_spfx* trail )
  */
 static void spfx_trail_draw( const Trail_spfx* trail )
 {
-   double x1, y1, x2, y2;
+   double x1, y1, x2, y2, z;
    trailPoint *tp, *tpp;
    size_t i, n;
 
@@ -623,11 +622,12 @@ static void spfx_trail_draw( const Trail_spfx* trail )
       return;
 
    for (i = trail->iread + 1; i < trail->iwrite; i++) {
+      z   = cam_getZoom();
       tp  = &trail_at( trail, i );
       tpp = &trail_at( trail, i-1 );
       gl_gameToScreenCoords( &x1, &y1,  tp->p.x,  tp->p.y );
       gl_gameToScreenCoords( &x2, &y2, tpp->p.x, tpp->p.y );
-      gl_drawTrail( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, trail->thickness*cam_getZoom() );
+      gl_drawTrail( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, tp->thickness * z, tpp->thickness * z );
    }
 }
 
@@ -871,49 +871,65 @@ void spfx_render( const int layer )
 }
 
 
-static int trailTypes_parse( xmlNodePtr node, trailStyle *tc )
+static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
 {
    xmlNodePtr cur = node->children;
+   /* Thick resolution forces a mess. Precedence: specific > base > inherited > DEFAULT. */
+   double base_thick = 0;
+   double idle_thick = 0;
+   double glow_thick = 0;
+   double aftb_thick = 0;
+   double jmpn_thick = 0;
+
    do {
       xml_onlyNodes(cur);
       if (xml_isNode(cur,"thickness"))
-         tc->thick = xml_getFloat(cur);
+         base_thick = xml_getFloat(cur);
       else if (xml_isNode(cur, "ttl"))
          tc->ttl = xml_getFloat(cur);
       else if (xml_isNode(cur,"idle")) {
-         xmlr_attr_float( cur, "r", tc->idle_col.r );
-         xmlr_attr_float( cur, "g", tc->idle_col.g );
-         xmlr_attr_float( cur, "b", tc->idle_col.b );
-         xmlr_attr_float( cur, "a", tc->idle_col.a );
+         xmlr_attr_float( cur, "r", tc->idle.col.r );
+         xmlr_attr_float( cur, "g", tc->idle.col.g );
+         xmlr_attr_float( cur, "b", tc->idle.col.b );
+         xmlr_attr_float( cur, "a", tc->idle.col.a );
+         xmlr_attr_float( cur, "t", idle_thick );
       }
       else if (xml_isNode(cur,"glow")) {
-         xmlr_attr_float( cur, "r", tc->glow_col.r );
-         xmlr_attr_float( cur, "g", tc->glow_col.g );
-         xmlr_attr_float( cur, "b", tc->glow_col.b );
-         xmlr_attr_float( cur, "a", tc->glow_col.a );
+         xmlr_attr_float( cur, "r", tc->glow.col.r );
+         xmlr_attr_float( cur, "g", tc->glow.col.g );
+         xmlr_attr_float( cur, "b", tc->glow.col.b );
+         xmlr_attr_float( cur, "a", tc->glow.col.a );
+         xmlr_attr_float( cur, "t", glow_thick );
       }
       else if (xml_isNode(cur,"afterburn")) {
-         xmlr_attr_float( cur, "r", tc->aftb_col.r );
-         xmlr_attr_float( cur, "g", tc->aftb_col.g );
-         xmlr_attr_float( cur, "b", tc->aftb_col.b );
-         xmlr_attr_float( cur, "a", tc->aftb_col.a );
+         xmlr_attr_float( cur, "r", tc->aftb.col.r );
+         xmlr_attr_float( cur, "g", tc->aftb.col.g );
+         xmlr_attr_float( cur, "b", tc->aftb.col.b );
+         xmlr_attr_float( cur, "a", tc->aftb.col.a );
+         xmlr_attr_float( cur, "t", aftb_thick );
       }
       else if (xml_isNode(cur,"jumping")) {
-         xmlr_attr_float( cur, "r", tc->jmpn_col.r );
-         xmlr_attr_float( cur, "g", tc->jmpn_col.g );
-         xmlr_attr_float( cur, "b", tc->jmpn_col.b );
-         xmlr_attr_float( cur, "a", tc->jmpn_col.a );
+         xmlr_attr_float( cur, "r", tc->jmpn.col.r );
+         xmlr_attr_float( cur, "g", tc->jmpn.col.g );
+         xmlr_attr_float( cur, "b", tc->jmpn.col.b );
+         xmlr_attr_float( cur, "a", tc->jmpn.col.a );
+         xmlr_attr_float( cur, "t", jmpn_thick );
       }
       else
          WARN(_("Trail '%s' has unknown node '%s'."), tc->name, cur->name);
    } while (xml_nextNode(cur));
 
+#define OR( var, fallback ) (var ? var : (fallback))
+   tc->idle.thick = OR( idle_thick, OR( base_thick, tc->idle.thick ) );
+   tc->glow.thick = OR( glow_thick, OR( base_thick, tc->glow.thick ) );
+   tc->aftb.thick = OR( aftb_thick, OR( base_thick, tc->aftb.thick ) );
+   tc->jmpn.thick = OR( jmpn_thick, OR( base_thick, tc->jmpn.thick ) );
+#undef OR
+
 #define MELEMENT(o,s)   if (o) WARN(_("Trail '%s' missing '%s' element"), tc->name, s)
-   MELEMENT( tc->thick==0, "thick" );
+   MELEMENT( !tc->idle.thick || !tc->glow.thick || !tc->aftb.thick || !tc->jmpn.thick, "thickness" );
    MELEMENT( tc->ttl==0, "ttl" );
 #undef MELEMENT
-
-   return 0;
 }
 
 
@@ -922,9 +938,9 @@ static int trailTypes_parse( xmlNodePtr node, trailStyle *tc )
  *
  *    @return 0 on success.
  */
-static int trailTypes_load (void)
+static int trailSpec_load (void)
 {
-   trailStyle *tc, *parent;
+   TrailSpec *tc, *parent;
    xmlNodePtr first, node;
    xmlDocPtr doc;
    char *name, *inherits;
@@ -948,20 +964,20 @@ static int trailTypes_load (void)
       return -1;
    }
 
-   trail_style_stack = array_create( trailStyle );
+   trail_spec_stack = array_create( TrailSpec );
 
    node = first;
    do {
       xml_onlyNodes( node );
       if (xml_isNode(node,"trail")) {
-         tc = &array_grow( &trail_style_stack );
-         memset( tc, 0, sizeof(trailStyle) );
+         tc = &array_grow( &trail_spec_stack );
+         memset( tc, 0, sizeof(TrailSpec) );
          xmlr_attr_strd( node, "name", tc->name );
 
          /* Do the first pass for non-inheriting trails. */
          xmlr_attr_strd( node, "inherits", inherits );
          if (inherits == NULL)
-            trailTypes_parse( node, tc );
+            trailSpec_parse( node, tc );
          else
             free( inherits );
       }
@@ -976,11 +992,11 @@ static int trailTypes_load (void)
          xmlr_attr_strd( node, "inherits", inherits );
          if (inherits == NULL)
             continue;
-         parent = trailStyle_getRaw( inherits );
+         parent = trailSpec_getRaw( inherits );
 
          /* Get the style itself. */
          xmlr_attr_strd( node, "name", name );
-         tc = trailStyle_getRaw( name );
+         tc = trailSpec_getRaw( name );
 
          /* Make sure we found stuff. */
          if ((tc==NULL) || (parent==NULL)) {
@@ -991,18 +1007,18 @@ static int trailTypes_load (void)
          free( name );
 
          /* Set properties. */
-         tc->idle_col = parent->idle_col;
-         tc->glow_col = parent->glow_col;
-         tc->aftb_col = parent->aftb_col;
-         tc->jmpn_col = parent->jmpn_col;
-         tc->thick = parent->thick;
+         tc->ttl  = parent->ttl;
+         tc->idle = parent->idle;
+         tc->glow = parent->glow;
+         tc->aftb = parent->aftb;
+         tc->jmpn = parent->jmpn;
 
          /* Load remaining properties (overrides parent). */
-         trailTypes_parse( node, tc );
+         trailSpec_parse( node, tc );
       }
    } while (xml_nextNode(node));
 
-   array_shrink(&trail_style_stack);
+   array_shrink(&trail_spec_stack);
 
    /* Clean up. */
    xmlFreeDoc(doc);
@@ -1011,13 +1027,13 @@ static int trailTypes_load (void)
 }
 
 
-static trailStyle* trailStyle_getRaw( const char* name )
+static TrailSpec* trailSpec_getRaw( const char* name )
 {
    int i;
 
-   for (i=0; i<array_size(trail_style_stack); i++) {
-      if ( strcmp(trail_style_stack[i].name, name)==0 )
-         return &trail_style_stack[i];
+   for (i=0; i<array_size(trail_spec_stack); i++) {
+      if ( strcmp(trail_spec_stack[i].name, name)==0 )
+         return &trail_spec_stack[i];
    }
 
    WARN(_("Trail type '%s' not found in stack"), name);
@@ -1028,9 +1044,9 @@ static trailStyle* trailStyle_getRaw( const char* name )
 /**
  * @brief Gets a trail style by name.
  *
- *    @return trailStyle reference if found, else NULL.
+ *    @return TrailSpec reference if found, else NULL.
  */
-const trailStyle* trailStyle_get( const char* name )
+const TrailSpec* trailSpec_get( const char* name )
 {
-   return trailStyle_getRaw( name );
+   return trailSpec_getRaw( name );
 }

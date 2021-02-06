@@ -756,11 +756,12 @@ void gl_drawLine( const double x1, const double y1,
  *    @param t2 time of the second point.
  *    @param c1 Colour to use for first point.
  *    @param c2 Colour to use for second point.
- *    @param thick Thickness to use.
+ *    @param thick1 Thickness to use for first point.
+ *    @param thick2 Thickness to use for second point.
  */
-void gl_drawTrail( double x1, double y1,
-      double x2, double y2, double t1, double t2,
-      const glColour *c1, const glColour *c2, double thick )
+void gl_drawTrail( double x1, double y1, double x2, double y2,
+      double t1, double t2, const glColour *c1,
+      const glColour *c2, double thick1, double thick2 )
 {
    gl_Matrix4 projection;
    double a, s;
@@ -773,7 +774,7 @@ void gl_drawTrail( double x1, double y1,
    /* Set vertex. */
    projection = gl_Matrix4_Translate(gl_view_matrix, x1, y1, 0);
    projection = gl_Matrix4_Rotate2d(projection, a);
-   projection = gl_Matrix4_Scale(projection, s, 2*thick, 1);
+   projection = gl_Matrix4_Scale(projection, s, thick1+thick2, 1);
    projection = gl_Matrix4_Translate(projection, 0., -.5, 0);
    glEnableVertexAttribArray( shaders.trail.vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.trail.vertex, 0, 2, GL_FLOAT, 0 );

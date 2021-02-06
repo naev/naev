@@ -910,8 +910,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          buf = xml_get(node);
          if (buf == NULL)
             buf = "default";
-         trail.style = trailStyle_get( buf );
-         if (trail.style != NULL)
+         trail.trail_spec = trailSpec_get( buf );
+         if (trail.trail_spec != NULL)
             array_push_back( &temp->trail_emitters, trail );
          continue;
       }
