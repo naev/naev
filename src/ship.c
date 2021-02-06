@@ -787,12 +787,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          }
 
          /* Get sprite size. */
-         xmlr_attr_atoi_neg1( node, "sx", sx );
-         if (sx == -1)
-            sx = 8;
-         xmlr_attr_atoi_neg1( node, "sy", sy );
-         if (sy == -1)
-            sy = 8;
+         xmlr_attr_int_def( node, "sx", sx, 8 );
+         xmlr_attr_int_def( node, "sy", sy, 8 );
 
          xmlr_attr_int(node, "noengine", noengine );
 
@@ -823,12 +819,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          nsnprintf( str, PATH_MAX, GFX_PATH"%s", buf );
 
          /* Get sprite size. */
-         xmlr_attr_atoi_neg1( node, "sx", sx );
-         if (sx == -1)
-            sx = 8;
-         xmlr_attr_atoi_neg1( node, "sy", sy );
-         if (sy == -1)
-            sy = 8;
+         xmlr_attr_int_def( node, "sx", sx, 8 );
+         xmlr_attr_int_def( node, "sy", sy, 8 );
 
          /* Load the graphics. */
          ship_loadSpaceImage( temp, str, sx, sy );
@@ -847,12 +839,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          nsnprintf( str, PATH_MAX, GFX_PATH"%s", buf );
 
          /* Get sprite size. */
-         xmlr_attr_atoi_neg1( node, "sx", sx );
-         if (sx == -1)
-            sx = 8;
-         xmlr_attr_atoi_neg1( node, "sy", sy );
-         if (sy == -1)
-            sy = 8;
+         xmlr_attr_int_def( node, "sx", sx, 8 );
+         xmlr_attr_int_def( node, "sy", sy, 8 );
 
          /* Load the graphics. */
          ship_loadEngineImage( temp, str, sx, sy );

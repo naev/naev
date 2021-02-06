@@ -3693,7 +3693,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
-               xmlr_attr_atoi_neg1( cur, "slot", n );
+               xmlr_attr_int_def( cur, "slot", n, -1 );
                if ((n<0) || (n >= array_size(ship->outfit_structure))) {
                   name = xml_get(cur);
                   o = outfit_get(name);
@@ -3709,7 +3709,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
-               xmlr_attr_atoi_neg1( cur, "slot", n );
+               xmlr_attr_int_def( cur, "slot", n, -1 );
                if ((n<0) || (n >= array_size(ship->outfit_utility))) {
                   WARN(_("Outfit slot out of range, not adding."));
                   continue;
@@ -3722,7 +3722,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
-               xmlr_attr_atoi_neg1( cur, "slot", n );
+               xmlr_attr_int_def( cur, "slot", n, -1 );
                if ((n<0) || (n >= array_size(ship->outfit_weapon))) {
                   WARN(_("Outfit slot out of range, not adding."));
                   continue;
@@ -3798,7 +3798,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       xmlr_attr_int( node, "autoweap", autoweap );
 
       /* Load the last weaponset the player used on this ship. */
-      xmlr_attr_atoi_neg1( node, "active_set", active_set );
+      xmlr_attr_int_def( node, "active_set", active_set, -1 );
 
       /* Check for aim_lines. */
       xmlr_attr_int( node, "aim_lines", aim_lines );
@@ -3814,7 +3814,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          }
 
          /* Get id. */
-         xmlr_attr_atoi_neg1(cur,"id",i);
+         xmlr_attr_int_def(cur, "id", i, -1);
          if (i == -1) {
             WARN(_("Player ship '%s' missing 'id' tag for weapon set."),ship->name);
             continue;
@@ -3834,7 +3834,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
             continue;
 
          /* Set type mode. */
-         xmlr_attr_atoi_neg1( cur, "type", weap_type );
+         xmlr_attr_int_def( cur, "type", weap_type, -1 );
          if (weap_type == -1) {
             WARN(_("Player ship '%s' missing 'type' tag for weapon set."),ship->name);
             continue;
@@ -3855,7 +3855,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
             }
 
             /* Get level. */
-            xmlr_attr_atoi_neg1( ccur, "level", level);
+            xmlr_attr_int_def( ccur, "level", level, -1 );
             if (level == -1) {
                WARN(_("Player ship '%s' missing 'level' tag for weapon set weapon."), ship->name);
                continue;
