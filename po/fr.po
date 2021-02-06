@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-02-01 09:14-0500\n"
 "PO-Revision-Date: 2021-02-07 01:50+0000\n"
-"Last-Translator: Nassim sayed <sabrine.nassim1@gmail.com>\n"
+"Last-Translator: nouara <amminouara1999@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -498,11 +498,11 @@ msgstr "   Talentueux développeur qui a fait le premier port officiel de Naev."
 
 #: dat/AUTHORS:113
 msgid "Alexandru Mosoi <brtzsnr@gmail.com>"
-msgstr ""
+msgstr "Alexandru Mosoi <brtzsnr@gmail.com>"
 
 #: dat/AUTHORS:114
 msgid "   * Coded cool features"
-msgstr ""
+msgstr "   * Fonctionnalités intéressantes codées"
 
 #: dat/AUTHORS:115
 msgid ""
@@ -514,7 +514,7 @@ msgstr ""
 
 #: dat/AUTHORS:117
 msgid "Peter Johnson <zid@zid.yggdrasil.sk>"
-msgstr ""
+msgstr "Peter Johnson <zid@zid.yggdrasil.sk>"
 
 #: dat/AUTHORS:118
 msgid "   * Sped up nebula generation by a lot"
@@ -522,7 +522,7 @@ msgstr "   * Accéléré la génération de nébuleuses de beaucoup"
 
 #: dat/AUTHORS:120
 msgid "Unavowed <unavowed@vexillium.org>"
-msgstr ""
+msgstr "Unavowed <unavowed@vexillium.org>"
 
 #: dat/AUTHORS:121
 msgid "   * Ported Naev's build system to autotools."
@@ -532,10 +532,12 @@ msgstr ""
 #: dat/AUTHORS:122
 msgid "   Probably the cleanest autotools implementation I've ever seen."
 msgstr ""
+"   Probablement l'implémentation d'autotools la plus propre que je n'ai "
+"jamais vue."
 
 #: dat/AUTHORS:124
 msgid "Cypher3c <cypher3c@gmail.com>"
-msgstr ""
+msgstr "Cypher3c <cypher3c@gmail.com>"
 
 #: dat/AUTHORS:125
 msgid "   * Spiced up the boring generic cargo missios."
@@ -543,11 +545,11 @@ msgstr "   * Pimenté les missios de fret génériques ennuyeux."
 
 #: dat/AUTHORS:127
 msgid "Nathan Loewen <loewen.nathan@gmail.com>"
-msgstr ""
+msgstr "Nathan Loewen <loewen.nathan@gmail.com>"
 
 #: dat/AUTHORS:128
 msgid "   * Missions"
-msgstr ""
+msgstr "   * Missions"
 
 #: dat/AUTHORS:129
 msgid "   * Misc coding support"
@@ -562,6 +564,8 @@ msgid ""
 "   * Threading code to speed up nebula generation (and in the future who "
 "knows?)"
 msgstr ""
+"   * Threading code pour accélérer la génération de nébuleuses (et dans le "
+"futur qui sait?)"
 
 #: dat/AUTHORS:133
 msgid "   * Hot dog mission"
@@ -625,7 +629,7 @@ msgstr ""
 
 #: dat/AUTHORS:155 dat/AUTHORS:161
 msgid "   * Mission contributor"
-msgstr ""
+msgstr "   * Contributeur à la mission"
 
 #: dat/AUTHORS:157
 msgid "Sudarshan S"
@@ -657,7 +661,7 @@ msgstr ""
 
 #: dat/AUTHORS:167
 msgid "   * Solar system information screen"
-msgstr ""
+msgstr "   * Écran d'information du système solaire"
 
 #: dat/AUTHORS:169
 msgid "Music by Matthew Pablo"
@@ -669,7 +673,7 @@ msgstr ""
 
 #: dat/AUTHORS:173
 msgid "Testers"
-msgstr ""
+msgstr "Testeurs"
 
 #: dat/AUTHORS:176
 msgid "John Schwartfeger"
@@ -698,7 +702,7 @@ msgstr ""
 
 #: dat/assets/abandoned_station.xml:2
 msgid "Abandoned Station"
-msgstr ""
+msgstr "Station abandonnée"
 
 #: dat/assets/adham.xml:2
 msgid "Adham"
@@ -712,6 +716,13 @@ msgid ""
 "considered neutral territory, most of the planet's surface is subject to the "
 "destructive sport that is so popular among Totoran's visitors."
 msgstr ""
+"Adham est une planète froide et sans vie. La seule raison pour laquelle une "
+"piste d'atterrissage se trouve ici est que la planète abrite les trois "
+"arènes à thème arctique pour les jeux de gladiateurs de Totoran. Bien que la "
+"zone d'atterrissage et une petite zone tampon autour de celle-ci soient "
+"considérées comme des territoires neutres, la majeure partie de la surface "
+"de la planète est soumise au sport destructeur si populaire auprès des "
+"visiteurs de Totoran."
 
 #: dat/assets/adius.xml:2
 msgid "Adius"
@@ -719,7 +730,7 @@ msgstr ""
 
 #: dat/assets/adrian.xml:2
 msgid "Adrian"
-msgstr ""
+msgstr "Adrian"
 
 #: dat/assets/adrian.xml:27
 msgid ""
@@ -736,6 +747,10 @@ msgid ""
 "kept at an acceptable, though uncomfortable, low. Most patrons of this "
 "spaceport bar are in full winter gear."
 msgstr ""
+"Le chauffage dans les mondes de classe P est souvent une affaire coûteuse, "
+"de sorte que la température est maintenue à un niveau acceptable, quoique "
+"inconfortable. La plupart des clients de ce bar spatial sont en tenue "
+"d'hiver."
 
 #: dat/assets/aera.xml:2
 msgid "Aera"
@@ -748,6 +763,10 @@ msgid ""
 "subduction, which coaxes them out of the planet's dangerous core and into "
 "the upper atmosphere where they can be safely collected."
 msgstr ""
+"Cette géante gazeuse  est suffisamment riche en minéraux précieux pour que "
+"le Proteron décide d'établir une colonie minière. Les minéraux sont extraits "
+"par subduction thermique OOA, qui les fait sortir du noyau dangereux de la "
+"planète pour les envoyer dans la haute atmosphère o"
 
 #: dat/assets/aesir_iv.xml:2
 msgid "Aesir IV"
@@ -764,6 +783,10 @@ msgid ""
 "core but, this being a remote part of Soromid space, it is still a local "
 "highlight."
 msgstr ""
+"Agino est une planète très animée, essentiellement peuplée de citoyens "
+"soromides de la classe moyenne. La planète n'excelle dans aucun domaine par "
+"rapport aux mondes du noyau soromide mais, comme il s'agit d'une partie "
+"éloignée de l'espace soromide, elle reste un point d'attraction local."
 
 #: dat/assets/agino.xml:30
 msgid ""
@@ -794,6 +817,11 @@ msgid ""
 "gas extraction. The Soromid might understand comfort and how to have a good "
 "time but this is clearly not the place where they are doing it."
 msgstr ""
+"Un bar très utilitaire avec une attitude plutôt laxiste au confort, du moins "
+"selon les normes de l’Empire. Les gens viennent ici pour faire des affaires "
+"et parler d’extraction de minerai, de minéraux et de gaz. Le Soromide "
+"pourrait comprendre le confort et comment passer un bon moment, mais ce n’"
+"est clairement pas l’endroit où ils le font."
 
 #: dat/assets/aillis.xml:2
 msgid "Aillis"
@@ -834,7 +862,7 @@ msgstr ""
 
 #: dat/assets/akra_station.xml:2
 msgid "Akra Station"
-msgstr ""
+msgstr "Station Akra"
 
 #: dat/assets/akra_station.xml:28
 msgid ""
@@ -870,6 +898,12 @@ msgid ""
 "materials for all sorts of industries though, and the lack of pollution "
 "controls on the planet make it very attractive for corporations."
 msgstr ""
+"Aldarus possède de vastes océans remplis de boues organiques qui n'ont pas "
+"grand-chose à voir avec l'eau. L'atmosphère est toxique et tuera un être "
+"humain non protégé en quelques hectosecondes. Les boues dans les mers sont "
+"cependant une bonne source de matières premières pour toutes sortes "
+"d'industries, et le manque de contrôle de la pollution sur la planète la "
+"rend très attractive pour les entreprises."
 
 #: dat/assets/aldarus.xml:30
 msgid ""
@@ -878,6 +912,11 @@ msgid ""
 "for private conversations, in case the bar's main area is a little too "
 "public for comfort. The music here can also be a bit grating on the ears."
 msgstr ""
+"Le bar du port spatial sur Aldarus propose une variété d'activités de "
+"loisirs, telles que les jeux de hasard et les jeux de compétition. Il existe "
+"également des cabines murées pour des conversations privées, au cas où la "
+"zone principale du bar serait un peu trop publique pour le confort. La "
+"musique ici peut aussi être un peu grinçante pour les oreilles."
 
 #: dat/assets/aldernael.xml:2
 msgid "Aldernael"
@@ -3188,7 +3227,7 @@ msgstr ""
 
 #: dat/assets/dvaered_high_command.xml:2 dat/faction.xml:609
 msgid "Dvaered High Command"
-msgstr ""
+msgstr "Haut commandement Dvaered"
 
 #: dat/assets/dvaered_high_command.xml:27
 msgid ""
