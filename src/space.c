@@ -2697,10 +2697,7 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
       jp_setFlag(j,JP_EXITONLY);
    free( buf );
 
-   /* Handle jump point hide. FIXME: Read optional float instead of int. */
-   xmlr_attr_atoi_neg1( node, "hide", j->hide );
-   if (j->hide == -1)
-      j->hide = HIDE_DEFAULT_JUMP;
+   xmlr_attr_float_def( node, "hide", j->hide, HIDE_DEFAULT_JUMP);
 
    /* Set some stuff. */
    j->target = target;

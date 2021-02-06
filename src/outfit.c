@@ -2226,7 +2226,7 @@ static int outfit_parse( Outfit* temp, const char* file )
          }
 
          /* Check for manually-defined group. */
-         xmlr_attr_atoi_neg1(node, "group", group);
+         xmlr_attr_int_def(node, "group", group, -1);
          if (group != -1) {
             if (group > PILOT_WEAPON_SETS || group < 1) {
                WARN(_("Outfit '%s' has group '%d', should be in the 1-%d range"),
