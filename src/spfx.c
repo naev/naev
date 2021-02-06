@@ -77,6 +77,8 @@ static double haptic_lastUpdate  = 0.; /**< Timer to update haptic effect again.
  * Trail colours handling.
  */
 static int trailTypes_load (void);
+static int trailTypes_parse( xmlNodePtr cur, trailStyle *tc );
+static trailStyle* trailStyle_getRaw( const char* name );
 
 
 /**
@@ -869,6 +871,44 @@ void spfx_render( const int layer )
 }
 
 
+static int trailTypes_parse( xmlNodePtr cur, trailStyle *tc )
+{
+   do {
+      xml_onlyNodes(cur);
+      if (xml_isNode(cur,"thickness"))
+         tc->thick = xml_getFloat(cur);
+      else if (xml_isNode(cur,"idle")) {
+         xmlr_attr_float( cur, "r", tc->idle_col.r );
+         xmlr_attr_float( cur, "g", tc->idle_col.g );
+         xmlr_attr_float( cur, "b", tc->idle_col.b );
+         xmlr_attr_float( cur, "a", tc->idle_col.a );
+      }
+      else if (xml_isNode(cur,"glow")) {
+         xmlr_attr_float( cur, "r", tc->glow_col.r );
+         xmlr_attr_float( cur, "g", tc->glow_col.g );
+         xmlr_attr_float( cur, "b", tc->glow_col.b );
+         xmlr_attr_float( cur, "a", tc->glow_col.a );
+      }
+      else if (xml_isNode(cur,"afterburn")) {
+         xmlr_attr_float( cur, "r", tc->aftb_col.r );
+         xmlr_attr_float( cur, "g", tc->aftb_col.g );
+         xmlr_attr_float( cur, "b", tc->aftb_col.b );
+         xmlr_attr_float( cur, "a", tc->aftb_col.a );
+      }
+      else if (xml_isNode(cur,"jumping")) {
+         xmlr_attr_float( cur, "r", tc->jmpn_col.r );
+         xmlr_attr_float( cur, "g", tc->jmpn_col.g );
+         xmlr_attr_float( cur, "b", tc->jmpn_col.b );
+         xmlr_attr_float( cur, "a", tc->jmpn_col.a );
+      }
+      else
+         WARN(_("Trail '%s' has unknown node '%s'."), tc->name, cur->name);
+   } while (xml_nextNode(cur));
+
+   return 0;
+}
+
+
 /**
  * @brief Loads the trail colour sets.
  *
@@ -876,9 +916,10 @@ void spfx_render( const int layer )
  */
 static int trailTypes_load (void)
 {
-   trailStyle *tc;
+   trailStyle *tc, *parent;
    xmlNodePtr node, cur;
    xmlDocPtr doc;
+   char *name, *inherits;
 
    /* Load the data. */
    doc = xml_parsePhysFS( TRAIL_DATA_PATH );
@@ -902,6 +943,7 @@ static int trailTypes_load (void)
    trail_style_stack = array_create( trailStyle );
 
    do {
+      xml_onlyNodes( node );
       if (xml_isNode(node,"trail")) {
          tc = &array_grow( &trail_style_stack );
          memset( tc, 0, sizeof(trailStyle) );
@@ -909,39 +951,46 @@ static int trailTypes_load (void)
          tc->thick = 6;
          cur = node->children;
 
-         /* Load it. */
-         do {
-            xml_onlyNodes(cur);
-            if (xml_isNode(cur,"thickness"))
-               tc->thick = xml_getFloat(cur);
-            else if (xml_isNode(cur,"idle")) {
-               xmlr_attr_float( cur, "r", tc->idle_col.r );
-               xmlr_attr_float( cur, "g", tc->idle_col.g );
-               xmlr_attr_float( cur, "b", tc->idle_col.b );
-               xmlr_attr_float( cur, "a", tc->idle_col.a );
-            }
-            else if (xml_isNode(cur,"glow")) {
-               xmlr_attr_float( cur, "r", tc->glow_col.r );
-               xmlr_attr_float( cur, "g", tc->glow_col.g );
-               xmlr_attr_float( cur, "b", tc->glow_col.b );
-               xmlr_attr_float( cur, "a", tc->glow_col.a );
-            }
-            else if (xml_isNode(cur,"afterburn")) {
-               xmlr_attr_float( cur, "r", tc->aftb_col.r );
-               xmlr_attr_float( cur, "g", tc->aftb_col.g );
-               xmlr_attr_float( cur, "b", tc->aftb_col.b );
-               xmlr_attr_float( cur, "a", tc->aftb_col.a );
-            }
-            else if (xml_isNode(cur,"jumping")) {
-               xmlr_attr_float( cur, "r", tc->jmpn_col.r );
-               xmlr_attr_float( cur, "g", tc->jmpn_col.g );
-               xmlr_attr_float( cur, "b", tc->jmpn_col.b );
-               xmlr_attr_float( cur, "a", tc->jmpn_col.a );
-            }
-            else
-               WARN(_("Trail '%s' has unknown node '%s'."), tc->name, cur->name);
-         } while (xml_nextNode(cur));
+         /* Do the first pass for non-inheriting trails. */
+         xmlr_attr_strd( node, "inherits", inherits );
+         if (inherits == NULL)
+            trailTypes_parse( cur, tc );
+         else
+            free( inherits );
+      }
+   } while (xml_nextNode(node));
 
+   /* Second pass to complete inheritence. */
+   do {
+      xml_onlyNodes( node );
+      if (xml_isNode(node,"trail")) {
+         /* Only interested in inherits. */
+         xmlr_attr_strd( node, "inherits", inherits );
+         if (inherits == NULL)
+            continue;
+         parent = trailStyle_getRaw( inherits );
+
+         /* Get the style itself. */
+         xmlr_attr_strd( node, "name", name );
+         tc = trailStyle_getRaw( name );
+
+         /* Make sure we found stuff. */
+         if ((tc==NULL) || (parent==NULL)) {
+            WARN(_("Trail '%s' that inherits from '%s' has missing reference!"), name, inherits );
+            continue;
+         }
+         free( inherits );
+         free( name );
+
+         /* Set properties. */
+         tc->idle_col = parent->idle_col;
+         tc->glow_col = parent->glow_col;
+         tc->aftb_col = parent->aftb_col;
+         tc->jmpn_col = parent->jmpn_col;
+         tc->thick = parent->thick;
+
+         /* Load remaining properties (overrides parent). */
+         trailTypes_parse( node->children, tc );
       }
    } while (xml_nextNode(node));
 
@@ -954,12 +1003,7 @@ static int trailTypes_load (void)
 }
 
 
-/**
- * @brief Gets a trail style by name.
- *
- *    @return trailStyle reference if found, else NULL.
- */
-const trailStyle* trailStyle_get( const char* name )
+static trailStyle* trailStyle_getRaw( const char* name )
 {
    int i;
 
@@ -970,4 +1014,15 @@ const trailStyle* trailStyle_get( const char* name )
 
    WARN(_("Trail type '%s' not found in stack"), name);
    return NULL;
+}
+
+
+/**
+ * @brief Gets a trail style by name.
+ *
+ *    @return trailStyle reference if found, else NULL.
+ */
+const trailStyle* trailStyle_get( const char* name )
+{
+   return trailStyle_getRaw( name );
 }
