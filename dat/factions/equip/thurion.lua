@@ -3,13 +3,13 @@ require("factions/equip/generic")
 
 equip_typeOutfits_weapons["Perspicacity"] = {
    {
-      "Energy Dart", "Ripper Cannon"
+      "Energy Dart", "Laser Cannon MK1"
    }
 }
 equip_typeOutfits_weapons["Ingenuity"] = {
    {
       varied = true;
-      "Energy Dart", "Ripper Cannon", "Ion Cannon", "Laser Cannon MK3"
+      "Energy Dart", "Ion Cannon", "Laser Cannon MK2"
    }
 }
 equip_typeOutfits_weapons["Scintillation"] = {
@@ -29,7 +29,7 @@ equip_typeOutfits_weapons["Virtuosity"] = {
    },
    {
       varied = true;
-      "Energy Dart", "Ripper Cannon", "Ion Cannon", "Laser Cannon MK3"
+      "Energy Dart", "Ripper Cannon", "Ion Cannon"
    }
 }
 equip_typeOutfits_weapons["Taciturnity"] = {

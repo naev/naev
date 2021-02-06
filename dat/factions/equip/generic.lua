@@ -161,13 +161,13 @@ equip_classOutfits_hulls = {
 equip_classOutfits_weapons = {
    ["Yacht"] = {
       {
-         "Laser Cannon MK1", "Laser Cannon MK2", "Razor MK1", "Razor MK2",
+         "Laser Cannon MK1", "Razor MK1", "Razor MK2",
          "Laser PD MK1", "Turreted Gauss Gun"
       }
    },
    ["Luxury Yacht"] = {
       {
-         "Laser Cannon MK1", "Laser Cannon MK2", "Razor MK1", "Razor MK2"
+         "Laser Cannon MK1", "Razor MK1", "Razor MK2"
       }
    },
    ["Scout"] = {
@@ -208,11 +208,11 @@ equip_classOutfits_weapons = {
          "Mass Driver MK1", "Ion Cannon", "Unicorp Mace Launcher",
          "Unicorp Banshee Launcher", "Orion Lance", "Shattershield Lance",
          "Unicorp Headhunter Launcher", "Unicorp Fury Launcher",
-         "Unicorp Medusa Launcher", "Ripper Cannon"
+         "Unicorp Medusa Launcher", "Laser Cannon MK2"
       },
       {
          "Plasma Blaster MK1", "Plasma Blaster MK2", "Gauss Gun",
-         "Vulcan Gun", "Ripper Cannon"
+         "Vulcan Gun", "Laser Cannon MK2"
       }
    },
    ["Bomber"] = {
@@ -238,8 +238,7 @@ equip_classOutfits_weapons = {
          "Laser Turret MK1", "Plasma Turret MK2", "Razor Turret MK2"
       },
       {
-         "Ripper Cannon", "Plasma Blaster MK2", "Laser Cannon MK2",
-         "Vulcan Gun", "Ion Cannon"
+         "Ripper Cannon", "Plasma Blaster MK2", "Shredder", "Ion Cannon"
       }
    },
    ["Destroyer"] = {
@@ -930,7 +929,7 @@ equip_shipOutfits_weapons = {
          "Heavy Ripper Cannon"
       },
       {
-         "Ripper Cannon"
+         "Laser Cannon MK2"
       }
    },
    ["Sirius Fidelity"] = {

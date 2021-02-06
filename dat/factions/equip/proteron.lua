@@ -34,10 +34,10 @@ equip_typeOutfits_hulls["Archimedes"] = {
 equip_typeOutfits_weapons["Derivative"] = {
    {
       num = 1;
-      "Unicorp Banshee Launcher", "Ripper Cannon",
+      "Unicorp Banshee Launcher", "Laser Cannon MK1",
    },
    {
-      "Ripper Cannon", "Laser Cannon MK3",
+      "Laser Cannon MK1",
    }
 }
 equip_typeOutfits_weapons["Kahan"] = {

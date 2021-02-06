@@ -4,7 +4,6 @@
  <tech name="All Outfits">
   <item>Laser Cannon MK1</item>
   <item>Laser Cannon MK2</item>
-  <item>Laser Cannon MK3</item>
   <item>Ripper Cannon</item>
   <item>Heavy Ripper Cannon</item>
   <item>Laser PD MK1</item>
@@ -392,7 +391,6 @@
  </tech>
  <tech name="Laser 2">
   <item>Laser Cannon MK2</item>
-  <item>Laser Cannon MK3</item>
   <item>Laser PD MK2</item>
   <item>Laser PD MK3</item>
   <item>Laser Turret MK2</item>

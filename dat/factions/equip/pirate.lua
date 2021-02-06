@@ -29,15 +29,14 @@ equip_typeOutfits_engines["Rhino"] = {
 equip_typeOutfits_weapons["Hyena"] = {
    {
       varied = true;
-      "Ion Cannon", "Ripper Cannon", "Plasma Blaster MK1",
-      "Plasma Blaster MK2", "Gauss Gun", "Vulcan Gun", "Laser Cannon MK2",
-      "Laser Cannon MK3", "Razor MK2"
+      "Ion Cannon", "Laser Cannon MK1", "Plasma Blaster MK1",
+      "Gauss Gun", "Razor MK1",
    }
 }
 equip_typeOutfits_weapons["Shark"] = {
    {
       varied = true;
-      "Ion Cannon", "Ripper Cannon", "Plasma Blaster MK2", "Vulcan Gun",
+      "Ion Cannon", "Laser Cannon MK1", "Plasma Blaster MK2", "Vulcan Gun",
       "Shredder", "Razor MK2", "Razor MK3", "Unicorp Mace Launcher",
       "Unicorp Banshee Launcher"
    }
@@ -46,7 +45,7 @@ equip_typeOutfits_weapons["Vendetta"] = equip_typeOutfits_weapons["Shark"]
 equip_typeOutfits_weapons["Lancelot"] = {
    {
       varied = true;
-      "Ion Cannon", "Ripper Cannon", "Plasma Blaster MK2", "Vulcan Gun",
+      "Ion Cannon", "Laser Cannon MK2", "Plasma Blaster MK2", "Vulcan Gun",
       "Shredder", "Razor MK2", "Razor MK3", "Unicorp Mace Launcher",
       "Unicorp Banshee Launcher", "Unicorp Medusa Launcher",
       "TeraCom Medusa Launcher", "Heavy Ion Cannon", "Unicorp Fury Launcher",

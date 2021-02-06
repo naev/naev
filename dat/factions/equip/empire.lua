@@ -64,7 +64,7 @@ equip_typeOutfits_weapons["Shark"] = {
       "Unicorp Banshee Launcher", "Ripper Cannon"
    },
    {
-      "Ripper Cannon", "Laser Cannon MK3"
+      "Laser Cannon MK1"
    }
 }
 equip_typeOutfits_weapons["Lancelot"] = equip_shipOutfits_weapons["Empire Lancelot"]
