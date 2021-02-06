@@ -918,7 +918,7 @@ static int trailTypes_parse( xmlNodePtr node, trailStyle *tc )
 static int trailTypes_load (void)
 {
    trailStyle *tc, *parent;
-   xmlNodePtr node;
+   xmlNodePtr first, node;
    xmlDocPtr doc;
    char *name, *inherits;
 
@@ -935,7 +935,7 @@ static int trailTypes_load (void)
    }
 
    /* Get the first node. */
-   node = node->xmlChildrenNode; /* first event node */
+   first = node->xmlChildrenNode; /* first event node */
    if (node == NULL) {
       WARN( _("Malformed '%s' file: does not contain elements"), TRAIL_DATA_PATH);
       return -1;
@@ -943,6 +943,7 @@ static int trailTypes_load (void)
 
    trail_style_stack = array_create( trailStyle );
 
+   node = first;
    do {
       xml_onlyNodes( node );
       if (xml_isNode(node,"trail")) {
@@ -961,6 +962,7 @@ static int trailTypes_load (void)
    } while (xml_nextNode(node));
 
    /* Second pass to complete inheritence. */
+   node = first;
    do {
       xml_onlyNodes( node );
       if (xml_isNode(node,"trail")) {
