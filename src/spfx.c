@@ -910,9 +910,10 @@ static int trailTypes_load (void)
 
          /* Load it. */
          do {
-            if (xml_isNode(cur,"id"))
+            if (xml_isNode(cur,"id")) {
                tc->name = xml_getStrd(cur);
-            if (xml_isNode(cur,"thickness"))
+            }
+            else if (xml_isNode(cur,"thickness"))
                tc->thick = xml_getFloat(cur);
             else if (xml_isNode(cur,"idle")) {
                xmlr_attr_float( cur, "r", tc->idle_col.r );
@@ -937,6 +938,9 @@ static int trailTypes_load (void)
                xmlr_attr_float( cur, "g", tc->jmpn_col.g );
                xmlr_attr_float( cur, "b", tc->jmpn_col.b );
                xmlr_attr_float( cur, "a", tc->jmpn_col.a );
+            }
+            else {
+               WARN(_("Trail has unknown node '%s'."), cur->name);
             }
          } while (xml_nextNode(cur));
 
