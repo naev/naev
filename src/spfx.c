@@ -47,7 +47,6 @@
 
 /* Trail stuff. */
 #define TRAIL_UPDATE_DT       0.05
-#define TRAIL_TTL_DT          1.
 static trailStyle* trail_style_stack;
 static Trail_spfx** trail_spfx_stack;
 
@@ -488,6 +487,7 @@ Trail_spfx* spfx_trail_create( const trailStyle* style )
 
    trail = calloc( 1, sizeof(Trail_spfx) );
    trail->thickness = style->thick;
+   trail->ttl = style->ttl;
    trail->capacity = 1;
    trail->iread = trail->iwrite = 0;
    trail->point_ringbuf = calloc( trail->capacity, sizeof(trailPoint) );
@@ -533,7 +533,7 @@ static void spfx_trail_update( Trail_spfx* trail, double dt )
 
    /* Update all elements. */
    for (i=trail->iread; i<trail->iwrite; i++)
-      trail_at( trail, i ).t -= dt / TRAIL_TTL_DT;
+      trail_at( trail, i ).t -= dt / trail->ttl;
 
    /* Remove first elements if they're outdated. */
    while (trail->iread < trail->iwrite && trail_front(trail).t < 0.)
@@ -878,6 +878,8 @@ static int trailTypes_parse( xmlNodePtr node, trailStyle *tc )
       xml_onlyNodes(cur);
       if (xml_isNode(cur,"thickness"))
          tc->thick = xml_getFloat(cur);
+      else if (xml_isNode(cur, "ttl"))
+         tc->ttl = xml_getFloat(cur);
       else if (xml_isNode(cur,"idle")) {
          xmlr_attr_float( cur, "r", tc->idle_col.r );
          xmlr_attr_float( cur, "g", tc->idle_col.g );
