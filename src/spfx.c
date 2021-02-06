@@ -1000,6 +1000,7 @@ static int trailSpec_load (void)
 
          /* Set properties. */
          tc->ttl  = parent->ttl;
+         tc->def_thick = parent->def_thick;
          tc->idle = parent->idle;
          tc->glow = parent->glow;
          tc->aftb = parent->aftb;
