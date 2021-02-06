@@ -2223,7 +2223,7 @@ static void pilot_sample_trail( Pilot* p, int generator )
               p->solid->pos.y + dy*M_SQRT1_2 + p->ship->trail_emitters[generator].h_engine*M_SQRT1_2 );
 
    /* Set the colour. */
-   if (pilot_isFlag(p, PILOT_HYPERSPACE))
+   if (pilot_isFlag(p, PILOT_HYPERSPACE) || pilot_isFlag(p, PILOT_HYP_END))
       style = p->ship->trail_emitters[generator].trail_spec->jmpn;
    else if (pilot_isFlag(p, PILOT_AFTERBURNER))
       style = p->ship->trail_emitters[generator].trail_spec->aftb;
