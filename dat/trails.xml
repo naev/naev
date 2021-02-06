@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Trail_types>
  <trail name="default">
+  <thickness>6</thickness>
   <ttl>1.5</ttl>
   <idle r="1" g="1" b="1" a="0.05" />
   <glow r="0" g="1" b="1" a=".7" />
@@ -12,6 +13,7 @@
   <ttl>1</ttl>
  </trail>
  <trail name="fire">
+  <thickness>6</thickness>
   <ttl>1.5</ttl>
   <idle r="1" g="1" b="1" a="0.05" />
   <glow r="1" g=".84" b="0" a="0.7" />
@@ -23,6 +25,7 @@
   <ttl>1</ttl>
  </trail>
  <trail name="red">
+  <thickness>6</thickness>
   <ttl>1</ttl>
   <idle r="1" g="1" b="1" a=".05" />
   <glow r="1" g=".3" b=".3" a="0.7" />

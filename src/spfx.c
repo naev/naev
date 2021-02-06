@@ -908,6 +908,11 @@ static int trailTypes_parse( xmlNodePtr node, trailStyle *tc )
          WARN(_("Trail '%s' has unknown node '%s'."), tc->name, cur->name);
    } while (xml_nextNode(cur));
 
+#define MELEMENT(o,s)   if (o) WARN(_("Trail '%s' missing '%s' element"), tc->name, s)
+   MELEMENT( tc->thick==0, "thick" );
+   MELEMENT( tc->ttl==0, "ttl" );
+#undef MELEMENT
+
    return 0;
 }
 
@@ -952,7 +957,6 @@ static int trailTypes_load (void)
          tc = &array_grow( &trail_style_stack );
          memset( tc, 0, sizeof(trailStyle) );
          xmlr_attr_strd( node, "name", tc->name );
-         tc->thick = 6;
 
          /* Do the first pass for non-inheriting trails. */
          xmlr_attr_strd( node, "inherits", inherits );
