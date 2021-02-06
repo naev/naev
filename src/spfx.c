@@ -871,63 +871,54 @@ void spfx_render( const int layer )
 }
 
 
+/**
+ * @brief Parses raw values out of a "trail" element.
+ * \warning This means values like idle->thick aren't ready to use.
+ */
 static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
 {
    xmlNodePtr cur = node->children;
-   /* Thick resolution forces a mess. Precedence: specific > base > inherited > DEFAULT. */
-   double base_thick = 0;
-   double idle_thick = 0;
-   double glow_thick = 0;
-   double aftb_thick = 0;
-   double jmpn_thick = 0;
 
    do {
       xml_onlyNodes(cur);
       if (xml_isNode(cur,"thickness"))
-         base_thick = xml_getFloat(cur);
+         tc->def_thick = xml_getFloat( cur );
       else if (xml_isNode(cur, "ttl"))
-         tc->ttl = xml_getFloat(cur);
+         tc->ttl = xml_getFloat( cur );
       else if (xml_isNode(cur,"idle")) {
-         xmlr_attr_float( cur, "r", tc->idle.col.r );
-         xmlr_attr_float( cur, "g", tc->idle.col.g );
-         xmlr_attr_float( cur, "b", tc->idle.col.b );
-         xmlr_attr_float( cur, "a", tc->idle.col.a );
-         xmlr_attr_float( cur, "t", idle_thick );
+         xmlr_attr_float_opt( cur, "r", tc->idle.col.r );
+         xmlr_attr_float_opt( cur, "g", tc->idle.col.g );
+         xmlr_attr_float_opt( cur, "b", tc->idle.col.b );
+         xmlr_attr_float_opt( cur, "a", tc->idle.col.a );
+         xmlr_attr_float_opt( cur, "scale", tc->idle.thick );
       }
       else if (xml_isNode(cur,"glow")) {
-         xmlr_attr_float( cur, "r", tc->glow.col.r );
-         xmlr_attr_float( cur, "g", tc->glow.col.g );
-         xmlr_attr_float( cur, "b", tc->glow.col.b );
-         xmlr_attr_float( cur, "a", tc->glow.col.a );
-         xmlr_attr_float( cur, "t", glow_thick );
+         xmlr_attr_float_opt( cur, "r", tc->glow.col.r );
+         xmlr_attr_float_opt( cur, "g", tc->glow.col.g );
+         xmlr_attr_float_opt( cur, "b", tc->glow.col.b );
+         xmlr_attr_float_opt( cur, "a", tc->glow.col.a );
+         xmlr_attr_float_opt( cur, "scale", tc->glow.thick );
       }
       else if (xml_isNode(cur,"afterburn")) {
-         xmlr_attr_float( cur, "r", tc->aftb.col.r );
-         xmlr_attr_float( cur, "g", tc->aftb.col.g );
-         xmlr_attr_float( cur, "b", tc->aftb.col.b );
-         xmlr_attr_float( cur, "a", tc->aftb.col.a );
-         xmlr_attr_float( cur, "t", aftb_thick );
+         xmlr_attr_float_opt( cur, "r", tc->aftb.col.r );
+         xmlr_attr_float_opt( cur, "g", tc->aftb.col.g );
+         xmlr_attr_float_opt( cur, "b", tc->aftb.col.b );
+         xmlr_attr_float_opt( cur, "a", tc->aftb.col.a );
+         xmlr_attr_float_opt( cur, "scale", tc->aftb.thick );
       }
       else if (xml_isNode(cur,"jumping")) {
-         xmlr_attr_float( cur, "r", tc->jmpn.col.r );
-         xmlr_attr_float( cur, "g", tc->jmpn.col.g );
-         xmlr_attr_float( cur, "b", tc->jmpn.col.b );
-         xmlr_attr_float( cur, "a", tc->jmpn.col.a );
-         xmlr_attr_float( cur, "t", jmpn_thick );
+         xmlr_attr_float_opt( cur, "r", tc->jmpn.col.r );
+         xmlr_attr_float_opt( cur, "g", tc->jmpn.col.g );
+         xmlr_attr_float_opt( cur, "b", tc->jmpn.col.b );
+         xmlr_attr_float_opt( cur, "a", tc->jmpn.col.a );
+         xmlr_attr_float_opt( cur, "scale", tc->jmpn.thick );
       }
       else
          WARN(_("Trail '%s' has unknown node '%s'."), tc->name, cur->name);
    } while (xml_nextNode(cur));
 
-#define OR( var, fallback ) (var ? var : (fallback))
-   tc->idle.thick = OR( idle_thick, OR( base_thick, tc->idle.thick ) );
-   tc->glow.thick = OR( glow_thick, OR( base_thick, tc->glow.thick ) );
-   tc->aftb.thick = OR( aftb_thick, OR( base_thick, tc->aftb.thick ) );
-   tc->jmpn.thick = OR( jmpn_thick, OR( base_thick, tc->jmpn.thick ) );
-#undef OR
-
 #define MELEMENT(o,s)   if (o) WARN(_("Trail '%s' missing '%s' element"), tc->name, s)
-   MELEMENT( !tc->idle.thick || !tc->glow.thick || !tc->aftb.thick || !tc->jmpn.thick, "thickness" );
+   MELEMENT( tc->def_thick==0, "thickness" );
    MELEMENT( tc->ttl==0, "ttl" );
 #undef MELEMENT
 }
@@ -972,6 +963,7 @@ static int trailSpec_load (void)
       if (xml_isNode(node,"trail")) {
          tc = &array_grow( &trail_spec_stack );
          memset( tc, 0, sizeof(TrailSpec) );
+         tc->idle.thick = tc->glow.thick = tc->aftb.thick = tc->jmpn.thick = 1.;
          xmlr_attr_strd( node, "name", tc->name );
 
          /* Do the first pass for non-inheriting trails. */
@@ -983,7 +975,7 @@ static int trailSpec_load (void)
       }
    } while (xml_nextNode(node));
 
-   /* Second pass to complete inheritence. */
+   /* Second pass to complete inheritance. */
    node = first;
    do {
       xml_onlyNodes( node );
@@ -1018,6 +1010,12 @@ static int trailSpec_load (void)
       }
    } while (xml_nextNode(node));
 
+   for (tc=array_begin(trail_spec_stack); tc!=array_end(trail_spec_stack); tc++) {
+      tc->idle.thick *= tc->def_thick;
+      tc->glow.thick *= tc->def_thick;
+      tc->aftb.thick *= tc->def_thick;
+      tc->jmpn.thick *= tc->def_thick;
+   }
    array_shrink(&trail_spec_stack);
 
    /* Clean up. */

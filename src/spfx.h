@@ -35,6 +35,7 @@ typedef struct TrailStyle_ {
 typedef struct TrailSpec_ {
    char* name;      /**< Trail definition's name. */
    double ttl;      /**< Time To Life (in seconds). */
+   double def_thick;/**< Default thickness, relevant while loading. */
    TrailStyle idle; /**< Colour when idle. */
    TrailStyle glow; /**< Colour when thrusting. */
    TrailStyle aftb; /**< Colour when afterburning. */
